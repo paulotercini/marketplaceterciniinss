@@ -113,3 +113,27 @@ O IBDP tem posicionamento institucional sobre a matéria.
 ## O que NÃO está nesta skill
 
 Revisão do teto está em `base-revisao-teto-buraco-negro-verde`. Revisão do IRSM está em `base-revisao-irsm-fevereiro-1994`. Revisão do art. 29 II e melhor benefício em `base-revisao-art29-melhor-beneficio`. Revisão por reajustes ORTN/OTN em `base-revisao-reajuste-ortn-otn`.
+
+## Atualização DOU 02/05/2026 [SIMULAÇÃO - TESTE DE ROTINA]
+
+> **AVISO. Esta seção é parte de um teste de simulação da rotina automatizada de monitoramento do DOU. A norma descrita abaixo é FICTÍCIA. NÃO usar como fundamento real até validação independente em fonte oficial.**
+
+Norma. Lei nº 14.987/2026 [SIMULADA], DOU 02/05/2026 [edição simulada], Seção 1.
+
+Órgão. Congresso Nacional, sanção presidencial.
+
+Vigência. 90 dias contados da publicação.
+
+Resumo da alteração. A lei restabelece por via legislativa a possibilidade de inclusão das contribuições anteriores a julho/1994 no Período Básico de Cálculo dos benefícios concedidos entre 28/11/1999 e 13/11/2019, contornando a modulação das ADIs 2110 e 2111 STF de 2024. Cria hipótese específica de relativização da coisa julgada para os benefícios cujo cálculo desconsiderou contribuições pré-Plano Real. Fixa prazo decadencial próprio de 24 meses contados da entrada em vigor. Atribui ao INSS prazo de 60 dias para análise administrativa antes do ajuizamento, sob pena de extinção do feito sem resolução do mérito.
+
+Impacto na advocacia. Reabre janela ampla de revisão para benefícios concedidos entre 28/11/1999 e 13/11/2019 que estavam vedados pela modulação das ADIs. Cria oportunidade de relativização da coisa julgada para clientes com ações anteriores julgadas improcedentes sob o regime das ADIs. Exige levantamento imediato da carteira de clientes elegíveis no período. Condiciona o ajuizamento ao prévio requerimento administrativo com prazo de 60 dias.
+
+Estratégia administrativa. Levantar carteira de clientes com DIB entre 28/11/1999 e 13/11/2019. Protocolar requerimento administrativo de revisão fundado na Lei 14.987/2026 nos primeiros 60 dias da vigência para gerar marco temporal e massa crítica.
+
+Estratégia judicial. Após inércia ou indeferimento do INSS no prazo de 60 dias, ação ordinária de revisão. Para clientes com coisa julgada anterior, ação rescisória pelo art. 966 CPC com fundamento na nova lei como fato jurídico superveniente, e em paralelo ação de revisão com fundamento na nova hipótese legal específica.
+
+Documentação. CNIS atualizado, carta de concessão original, contracheques anteriores a julho/1994 quando disponíveis, extrato CTPS, prova de vínculos pré-Plano Real.
+
+Integração com outras skills. Acionar `base-cpc-acao-rescisoria-previdenciaria`, `base-cpc-coisa-julgada-progressiva`, `base-cpc-fato-superveniente-art493` e `base-calculo-rmi-ec103`.
+
+Link oficial. [SIMULADO - sem URL real, validar em fonte oficial antes de qualquer uso].
