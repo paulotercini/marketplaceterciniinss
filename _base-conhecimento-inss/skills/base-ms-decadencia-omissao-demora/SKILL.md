@@ -83,6 +83,10 @@ Terceiro, MS preventivo não tem decadência, mas exige iminência.
 
 Quarto, em pedido administrativo pendente há mais de 90 dias, impetrar é estratégico antes de perder janela.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Hely Lopes Meirelles, Arnoldo Wald, Gilmar Ferreira Mendes.

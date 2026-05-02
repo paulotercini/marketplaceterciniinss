@@ -38,6 +38,10 @@ Terceiro, jurisprudência somente após verificação em fonte primária oficial
 
 Quarto, o risco de eletroplessão é qualitativo. A exposição, ainda que em momento específico da jornada, é fator suficiente.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina reconhecida
 
 Frederico Amado, em Direito Previdenciário, sustenta a manutenção do enquadramento por eletricidade após a Lei 9.032/95, desde que presente a exposição acima de 250 volts. Hugo Goes, em Manual, reforça a natureza qualitativa do risco elétrico. Fábio Zambitte Ibrahim, em Curso, defende a integração sistemática entre o Decreto 53.831/64 e a NR-10. Wladimir Novaes Martinez enfrenta a lógica do risco de morte iminente. O IBDP, em teses institucionais, sustenta que o risco elétrico dispensa tempo mínimo e permanência contínua.

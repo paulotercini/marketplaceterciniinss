@@ -105,6 +105,10 @@ Quarto, honorários sucumbenciais têm base diferente em JEF e rito ordinário.
 
 Quinto, impugnação do INSS exige resposta técnica pelo segurado.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Frederico Amado, execução contra INSS.

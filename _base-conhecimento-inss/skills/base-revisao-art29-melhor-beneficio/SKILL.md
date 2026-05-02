@@ -96,6 +96,10 @@ Quarto, congelamento da DIB por melhor benefício exige implementação completa
 
 Quinto, nos benefícios concedidos pós EC 103/2019, o melhor benefício tende a seguir a regra única e a discussão sobre art. 29 II perde espaço relativo, mas permanece em situações específicas.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Wladimir Novaes Martinez, teoria do melhor benefício.

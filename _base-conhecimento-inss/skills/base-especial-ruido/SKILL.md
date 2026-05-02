@@ -81,6 +81,10 @@ Ao organizar defesa probatória contra cerceamento, acione `defesa-probatoria-es
 Ao verificar precedentes vinculantes, acione `precedentes-previdenciarios`.
 Ao apontar vício do PPP e pedir retificação à empresa, acione `retificacao-ppp`.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## O que NÃO está nesta skill
 
 Não há cálculo de RMI. Não há orientação sobre outros agentes. Não há roteiro de perícia judicial genérica. Para cada um desses tópicos, outra skill é responsável.

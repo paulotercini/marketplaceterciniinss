@@ -86,6 +86,10 @@ Segundo, benefícios acima do teto do RGPS sofrem limitação. A RMI é calculad
 
 Terceiro, contribuições abaixo do mínimo após EC 103 exigem complementação, nos termos do §14 do art. 195 da CF com redação da EC 103. Acionar `contribuicoes-complementacao-ec103`.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta a análise crítica do cálculo pós-reforma e defende o afastamento da regra dos 80% maiores.

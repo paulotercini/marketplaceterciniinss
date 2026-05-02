@@ -99,6 +99,14 @@ Quarto, acumulação é vedada em regra, salvo as exceções legais.
 
 Quinto, em ações judiciais, usar jurisprudência regional do TRF da área (TRF3, TRF4, TRF5) dependendo do local.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
+## Autodeclaração rural
+
+Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta proteção ampla ao pescador artesanal.

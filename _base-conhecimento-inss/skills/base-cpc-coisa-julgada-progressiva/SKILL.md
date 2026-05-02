@@ -89,6 +89,10 @@ Terceiro, cumprimento provisório contra Fazenda é restrito. Tema 28/STF.
 
 Quarto, em JEF a dialeticidade é mais rigorosa. Súmula 284/STF.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Fredie Didier Jr, Leonardo Carneiro da Cunha.

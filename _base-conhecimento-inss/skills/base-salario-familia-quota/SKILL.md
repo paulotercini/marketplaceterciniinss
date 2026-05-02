@@ -108,6 +108,10 @@ Quarto, aposentado por incapacidade permanente e aposentado rural por idade são
 
 Quinto, comprovação anual é dever contínuo para manutenção da quota.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta interpretação extensiva do conceito de filho equiparado.

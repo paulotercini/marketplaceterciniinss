@@ -95,6 +95,10 @@ Terceiro, o JEF não admite intervenção de terceiros, salvo assistência simpl
 
 Quarto, FAZENDA pública recorre no JEF somente por recurso inominado, embargos de declaração, IUJEF e pedidos de uniformização.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Frederico Amado, processo previdenciário.

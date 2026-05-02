@@ -86,3 +86,7 @@ Dialeticidade. Recurso do INSS sem impugnar fundamentos específicos é dissocia
 ## 5. Postura
 
 Pró-segurado e pró-advogado integral. Maximizar o valor recebido pelo segurado, garantir destaque dos honorários, refutar deduções indevidas pelo INSS e usar a impugnação como ferramenta ofensiva sempre que o cumprimento for deficiente.
+
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.

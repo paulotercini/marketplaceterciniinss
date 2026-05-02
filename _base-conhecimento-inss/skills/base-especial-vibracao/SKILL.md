@@ -38,6 +38,10 @@ Terceiro, jurisprudência somente após verificação em fonte primária oficial
 
 Quarto, quando o PPP for omisso, acionar `retificacao-ppp` e Tema 213 TNU para inversão do ônus.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina reconhecida
 
 Frederico Amado, em Direito Previdenciário, sustenta o uso das NHO da Fundacentro como critério técnico-legal para vibração. Hugo Goes, em Manual, reforça que a ausência de limite numérico no regulamento previdenciário não pode prejudicar o segurado. Fábio Zambitte Ibrahim, em Curso, defende a integração sistemática com a NR-15. Wladimir Novaes Martinez enfrenta a dinâmica do risco em motoristas, tratoristas e operadores de máquinas. O IBDP, em teses institucionais, sustenta a superação de barreiras metrológicas indevidas, com ônus probatório invertido em favor do segurado.

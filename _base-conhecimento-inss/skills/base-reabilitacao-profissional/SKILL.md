@@ -85,6 +85,10 @@ Terceiro, empregador não cumpridor de cota sujeito a sanção (Lei 8.213/91).
 
 Quarto, segurado com PRP inconcluso pode pleitear manutenção.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Frederico Amado, reabilitação.

@@ -38,6 +38,10 @@ Terceiro, jurisprudência somente após verificação em fonte primária oficial
 
 Quarto, quando o agente for cancerígeno LINACH, a tese é direta. Enquadramento automático, sem limite de tolerância, sem consideração ao EPI.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina reconhecida
 
 Frederico Amado, em Direito Previdenciário, sustenta a prevalência do enquadramento qualitativo para os agentes da NR-15 com avaliação qualitativa. Hugo Goes, em Manual, reforça a exigência de medição apenas para os Anexos 11 e 12. Fábio Zambitte Ibrahim, em Curso, defende a interpretação ampla do Anexo 13 com presunção de nocividade para os agentes listados. Wladimir Novaes Martinez trata do princípio in dubio pro operario em matéria probatória previdenciária. O IBDP sustenta em teses institucionais a superação de exigências quantitativas indevidas.

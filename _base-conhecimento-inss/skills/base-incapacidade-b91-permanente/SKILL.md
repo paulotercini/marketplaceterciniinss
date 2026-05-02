@@ -92,6 +92,14 @@ Terceiro, a cessação do B91 pelo Programa Revisão exige perícia com base té
 
 Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
+## Autodeclaração rural
+
+Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta a concessão ampla do B91 quando há prognóstico desfavorável e defende a conversão em acidentário sempre que possível.

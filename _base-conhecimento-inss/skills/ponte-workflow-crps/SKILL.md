@@ -97,3 +97,7 @@ Diligência prévia ou em mesa pode reverter decisão. Acionar `incidentes-instr
 ## 5. Postura
 
 Pró-segurado integral. CRPS é a última via administrativa antes do Judiciário e merece esforço argumentativo denso. Esgotar fundamentação normativa, citar precedentes vinculantes do CRPS e dos tribunais superiores, usar incidentes processuais como ferramenta ofensiva e não recuar diante de não conhecimento mal fundamentado.
+
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.

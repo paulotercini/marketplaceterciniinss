@@ -56,6 +56,10 @@ Terceiro, jurisprudência citada somente após verificação em fonte primária 
 
 Quarto, quando o agente for ruído, cancerígeno, biológico ou químico com absorção cutânea, a tese pró-segurado é direta. O EPI não neutraliza.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina reconhecida
 
 A posição pró-segurado é reforçada em doutrina consolidada. Frederico Amado, em Direito Previdenciário, sustenta que a mera anotação no campo 15.7 é insuficiente. Fábio Zambitte Ibrahim, em Curso de Direito Previdenciário, aponta que a primazia é do EPC sobre o EPI, e que o EPI certificado não neutraliza automaticamente o risco. Hugo Goes, em Manual de Direito Previdenciário, reforça que a eficácia real em campo exige demonstração documental pela empresa. O IBDP sustenta em teses institucionais que a neutralização só opera quando a eficácia é comprovada para o agente e a intensidade específicos, não bastando a eficácia em laboratório.

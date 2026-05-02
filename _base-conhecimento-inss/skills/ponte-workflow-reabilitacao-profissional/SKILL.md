@@ -74,3 +74,7 @@ Certificado de reabilitação é direito. INSS não pode encerrar PRP sem emitir
 ## 5. Postura
 
 Pró-segurado integral. Reabilitação profissional é direito subjetivo do segurado e o INSS atua como executor. Identificar atos coativos, omissões e violações ao devido processo administrativo, e atacar pela via mais rápida disponível, geralmente o mandado de segurança.
+
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.

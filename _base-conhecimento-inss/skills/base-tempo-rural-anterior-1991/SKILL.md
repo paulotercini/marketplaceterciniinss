@@ -92,6 +92,14 @@ Terceiro, autodeclaração tem força probatória, mas precisa de início docume
 
 Quarto, perspectiva de gênero reduz rigor probatório em trabalho rural feminino.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
+## Autodeclaração rural
+
+Autodeclaração rural e ratificação pelos arts. 92, 93 e 94 da Portaria 990/2022. Acionar `base-segurado-especial-autodeclaracao-arts-92-93-94` quando houver período de atividade rural em regime de economia familiar a comprovar (segurado especial).
+
 ## Doutrina de apoio
 
 Frederico Amado, tempo rural.

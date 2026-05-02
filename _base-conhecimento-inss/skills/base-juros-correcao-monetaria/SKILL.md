@@ -92,6 +92,10 @@ Terceiro, unificação SELIC em 09/12/2021 é marco crucial.
 
 Quarto, INSS frequentemente aplica critérios favoráveis à autarquia. Conferir e impugnar.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Frederico Amado, correção monetária.

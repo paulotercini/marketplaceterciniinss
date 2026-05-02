@@ -117,6 +117,10 @@ Quarto, direito à acessibilidade é absoluto. Segurado com deficiência tem dir
 
 Quinto, tempo de perícia insuficiente é cerceamento. Em casos complexos, a perícia deve ter tempo adequado.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, defende o direito à perícia completa e contraditório na PMF.

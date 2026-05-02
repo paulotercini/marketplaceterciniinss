@@ -65,6 +65,10 @@ Terceiro, tutela em MS não é tutela antecipada, é liminar (Lei 12.016/2009 ar
 
 Quarto, suspensão de segurança pela Presidência (Lei 8.437/92) é risco concreto, preparar contrarrazões.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Fredie Didier Jr, Rafael Oliveira, Paula Sarno Braga, Curso de Direito Processual Civil vol. 2.

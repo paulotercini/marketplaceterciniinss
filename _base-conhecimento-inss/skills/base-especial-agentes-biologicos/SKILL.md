@@ -56,6 +56,10 @@ Terceiro, jurisprudência somente após verificação em fonte primária oficial
 
 Quarto, invocar sempre de forma combinada o Tema 211 TNU e o Tema 205 TNU para afastar a tese da exposição eventual.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina reconhecida
 
 Frederico Amado, em Direito Previdenciário, sustenta que o Anexo 14 da NR-15 traz presunção de insalubridade para atividades em ambiente hospitalar e afins. Hugo Goes, em Manual, reforça a avaliação qualitativa em biológicos. Fábio Zambitte Ibrahim, em Curso, defende interpretação ampla do rol diante da natureza do risco biológico. Wladimir Novaes Martinez enfrenta a falácia da exposição eventual, lembrando que a jornada de profissionais da saúde integra o risco de forma indissociável. O IBDP, em teses institucionais, sustenta a irrelevância do EPI em biológicos, salvo demonstração robusta e impossível em regra pelo INSS.

@@ -111,6 +111,10 @@ Terceiro, ausência de pontuação domínio a domínio é vício.
 
 Quarto, retroatividade da DID exige prova de cada momento.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Frederico Amado.

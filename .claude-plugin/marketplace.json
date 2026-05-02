@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado, cobrindo aposentadoria especial, regras EC 103/2019, RMI e atividades concomitantes pelo Tema 1.070/STJ, benefícios por incapacidade, reabilitação profissional, auxílio-acidente B94, dependentes e programáticos, BPC/LOAS, aposentadoria PCD pela LC 142/2013 e PCD aprofundada, revisões estruturantes, facultativo de baixa renda, dano moral previdenciário, irrepetibilidade, RPPS na ótica do RGPS, reclamatória trabalhista como prova, DIB por espécie, carência por espécie/art. 27-A, cômputo do tempo de contribuição, processualística previdenciária, CPC previdenciário, MS, aposentadoria do professor, temas transversais, patologia administrativa do INSS, EPI em agentes biológicos pelo Tema 383/TNU e fungibilidade previdenciária. A 1.10.0 entregou a Onda 20 sobre erros administrativos. A 1.11.0 entregou a Onda Corretiva 21 sobre Parecer Fundacentro. A versão 1.12.0 entrega a Onda 22, dedicada à fungibilidade previdenciária à luz do REsp 2.246.096/MG (Informativo 885/STJ, Min. Gurgel de Faria, Primeira Turma, 14/04/2026), que fixa a vedação à conversão prejudicial de benefício e ao julgamento extra petita em prejuízo do segurado. Cria a skill base-fungibilidade-previdenciaria com cobertura completa do precedente, da fungibilidade ampliativa pelo Tema 217/TNU, Tema 1018/STJ direito de opção, Tema 995/STJ reafirmação da DER, Tema 350/STF, Tema 334/STF, Tema 1124/STJ instrução administrativa e Tema 1007/STJ aposentadoria híbrida, da vedação à reformatio in pejus pela Súmula 45/STJ por simetria, das condições pessoais e sociais pela Súmula 47/TNU, do auxílio-acidente sem grau pelo Tema 416/STJ e Súmulas 88 e 89/TNU, da fungibilidade administrativa pelo CRPS, dos modelos de pedido sucessivo pelo art. 326 do CPC e da cláusula obrigatória de fungibilidade só em favor do segurado. Cross-reference massivo em 31 skills base-* relevantes (incapacidade, BPC, aposentadorias, professor, dependentes, programáticos). Versão 1.12.0, 102 skills ao todo (95 base-*, 6 ponte-* e 1 operacional).",
-      "version": "1.12.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado, com cobertura abrangente das Portarias DPMF/DIRBEN/INSS, autodeclaração do segurado especial, fungibilidade previdenciária e patologia administrativa. A 1.11.0 entregou a Onda Corretiva 21 sobre Parecer Fundacentro Tema 383/TNU. A 1.12.0 entregou a Onda 22 sobre fungibilidade previdenciária pelo REsp 2.246.096/MG. A versão 1.13.0 entrega a Onda 23 sobre o hub completo das Portarias DPMF/DIRBEN/INSS aplicáveis a TODA análise de benefício e o detalhamento aprofundado da autodeclaração do segurado especial pelos arts. 92, 93 e 94 da Portaria 990/2022. Cria duas skills novas. base-portarias-dpmf-inss-hub consolida o universo das Portarias 990/2022 (CNIS, RAC, indicadores), 991/2022 (concessão e revisão administrativa), 992/2022 (cálculo da RMI), 1056/2022, 1231/2024, 1309/2025 e 1318/2025 (IEA), 1310/2025 e 1333/2026 (reabilitação), MPS 462/2026 (RICRPS), Portarias Conjuntas 13, 14 e 15/2026 (análise documental B31, B91, B94), 19/2026 (Teleperícia), MTP 672/2021 (EPI), MTP 6.734/2020 (PCMSO), Conjunta SPS/INSS/SNAS 2/2014 (BPC biopsicossocial) e Interministerial 1/2015 (IF-BrA aposentadoria PCD). base-segurado-especial-autodeclaracao-arts-92-93-94 detalha a ratificação por bases governamentais pelo InfoDAP, CAFIR, RGP, SDPA, SIPRA, SNCR, MEI Rural e eSocial, os 36 incisos do art. 93 com alterações Portarias 1209/2024 (quilombolas) e 1299/2025 (indígenas), a cláusula de flexibilização do art. 94 §5º como porta de entrada do segurado, com aplicação por modalidade de aposentadoria e confronto com Tema 1115/STJ, Tema 1007/STJ aposentadoria híbrida, Súmula 14/TNU, Súmula 73/TNU, Súmula 577/STJ. Cross-reference massivo em 101 skills do plugin. Versão 1.13.0, 104 skills ao todo (97 base-*, 6 ponte-* e 1 operacional).",
+      "version": "1.13.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
@@ -87,7 +87,17 @@
         "tema-995-stj",
         "reformatio-in-pejus",
         "extra-petita",
-        "pedidos-sucessivos"
+        "pedidos-sucessivos",
+        "portarias-dpmf",
+        "portaria-990",
+        "portaria-991",
+        "portaria-992",
+        "autodeclaracao-rural",
+        "art-94-paragrafo-5",
+        "ratificacao-bases-governamentais",
+        "tema-1115-stj",
+        "tema-1007-stj",
+        "tema-642-stj"
       ]
     }
   ]

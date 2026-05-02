@@ -91,6 +91,10 @@ Terceiro, documentos muito antigos podem estar indisponíveis. Solicitar ao INSS
 
 Quarto, cautela extrema na abertura de ações. Risco de sucumbência.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Wladimir Novaes Martinez, planos econômicos e previdência.

@@ -94,6 +94,10 @@ Terceiro, CTC tem efeitos próprios. Aguardar emissão correta.
 
 Quarto, recusa administrativa de averbação permite mandado de segurança.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Frederico Amado, contagem recíproca.

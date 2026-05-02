@@ -96,6 +96,10 @@ Quinto, EC 103/2019 reforçou a vedação.
 
 Sexto, o advogado deve alertar o cliente sobre o risco antes de propor a tese.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Frederico Amado, desaposentação.

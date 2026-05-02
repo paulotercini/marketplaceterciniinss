@@ -85,6 +85,10 @@ Terceiro, se o INSS não se manifesta, há silêncio. Alguns tribunais exigem aq
 
 Quarto, em ação rescisória, o fato superveniente é diferente, aplica-se art. 966 CPC.
 
+## Hub de portarias administrativas
+
+Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
 ## Doutrina de apoio
 
 Fredie Didier Jr, Curso de Direito Processual Civil.
