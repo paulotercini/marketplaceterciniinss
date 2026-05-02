@@ -154,6 +154,21 @@ Marco Aurélio Serau Junior analisa a proteção social.
 
 O IBDP sustenta a proteção integral.
 
+## Atualização DOU 02/04/2026
+
+### Portaria Conjunta MDS/MPS/INSS nº 37, de 1º de abril de 2026
+Norma: Portaria Conjunta MDS/MPS/INSS, nº 37, 01/04/2026
+Órgão: Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome, Ministério da Previdência Social e INSS
+Vigência: 2 de abril de 2026 (data de publicação no DOU)
+Publicação no DOU: 02/04/2026, Seção 1
+Link oficial: https://www.legisweb.com.br/legislacao/?id=493676
+
+Resumo da alteração. A Portaria Conjunta MDS/MPS/INSS nº 37/2026 altera a Portaria Conjunta MDS/INSS nº 2, de 30 de março de 2015, acrescentando aos Anexos I e II (avaliação médica e avaliação social do BPC) uma terceira pergunta obrigatória: se o impedimento é permanente, irreversível ou irrecuperável. Este quesito operacionaliza a Lei nº 15.157/2025, que dispensa a reavaliação bienal quando o impedimento for classificado como permanente. Simultaneamente, a norma cria novo critério de indeferimento: quando as alterações corporais ou funcionais puderem ser resolvidas em prazo inferior a 2 anos, o benefício deve ser indeferido, pois não configura impedimento de longo prazo para fins do art. 20, §10, da LOAS.
+
+Impacto na advocacia. Duplo efeito para os clientes em avaliação de BPC. Para o segurado com impedimento permanente, irreversível ou irrecuperável, a Portaria 37/2026 cria base normativa expressa para dispensar a reavaliação bienal (art. 21 da LOAS), reduzindo o risco de cessação futura. Para o segurado em primeiro requerimento ou reavaliação, o novo critério de resolução em menos de 2 anos aumenta o risco de indeferimento em casos de condições potencialmente reversíveis. A estratégia para esses casos deve enfatizar o prognóstico desfavorável com documentação médica explícita, laudos de especialistas que atestem irreversibilidade, e perícia social que registre as barreiras ambientais. Em recurso ao CRPS, impugnar a conclusão de resolubilidade com evidências de progressão ou cronicidade. Em ação judicial, requerer perícia médica federal judicial com quesito específico sobre prognóstico de irreversibilidade.
+
+Documentação que o cliente deve preparar desde já. Laudo médico especializado com prognóstico expresso. Histórico de tratamentos sem remissão. Exames de imagem ou laboratoriais que demonstrem progressão ou estabilização sem melhora. Relatório de equipe multidisciplinar (quando disponível). Avaliação de assistente social sobre barreiras ambientais. Para clientes em reavaliação bienal com histórico de BPC ativo, reforçar o dossiê com documentação de não-reversibilidade para acionar o gatilho de dispensa da próxima reavaliação.
+
 ## O que NÃO está nesta skill
 
 Requisitos estruturais estão em `base-bpc-loas-requisitos`. Renda em `base-bpc-renda-per-capita-miserabilidade`. Aposentadoria PCD LC 142 em `base-aposentadoria-pcd-lc142`. Procedimentos em `base-bpc-aposentadoria-pcd-procedimentos`.

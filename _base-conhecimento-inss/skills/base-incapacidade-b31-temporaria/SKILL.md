@@ -106,6 +106,30 @@ Wladimir Novaes Martinez analisa a transitoriedade do benefício e defende a con
 
 O IBDP sustenta institucionalmente o direito do segurado à concessão ampla do B31 e à proteção durante a recuperação da capacidade laboral.
 
+## Atualização DOU 30/04/2026
+
+### Portaria Conjunta MPS/INSS nº 13, de 23 de março de 2026
+Norma: Portaria Conjunta, nº 13, 23/03/2026
+Órgão: Ministério da Previdência Social e INSS
+Vigência: 30 de março de 2026
+Publicação no DOU: 24/03/2026, Seção 1
+Link oficial: https://www.in.gov.br/en/web/dou
+
+Resumo da alteração. A Portaria Conjunta MPS/INSS nº 13/2026 regulamenta integralmente a análise documental para concessão e prorrogação do B31, com base no art. 60, §11-A, da Lei 8.213/1991. Revoga oito portarias anteriores (nº 38/2023, 6/2023, 7/2024, 19/2024, 59/2025, 72/2025, 82/2025 e 83/2025). O limite máximo total de auxílio concedido via análise documental (Atestmed) foi ampliado de 60 para 90 dias. Cada benefício individual por análise documental permanece limitado a 30 dias por pedido (art. 60, §11-A, Lei 8.213/91). A prorrogação após o limite de 90 dias exige perícia presencial obrigatória (perícia presencial ou telemedicina). Após três indeferimentos consecutivos por análise documental, todos os requerimentos subsequentes da mesma espécie obrigam perícia presencial. O perito médico federal tem autonomia para estabelecer prazos distintos dos indicados pelo médico assistente, com fundamentação em evidências clínicas. A documentação mínima aceita deve conter identificação do segurado, data de emissão, diagnóstico com CID, assinatura do profissional com número de registro no Conselho de Classe e, se houver, exames complementares.
+
+Impacto na advocacia. Clientes com B31 em vigor sob portarias anteriores passam a ser regidos pela nova regulamentação. O fluxo de prorrogação muda. Orientar o cliente a requerer a prorrogação até 15 dias antes do término do benefício. Documentação inicial deve ser mais robusta, pois um laudo incompleto pode provocar indeferimento e consumir uma das três tentativas antes da trava de perícia presencial.
+
+### IN PRES/INSS nº 203, de 22 de abril de 2026
+Norma: Instrução Normativa PRES/INSS, nº 203, 22/04/2026
+Órgão: INSS — Presidência
+Vigência: 24 de abril de 2026 (data de publicação no DOU)
+Publicação no DOU: 24/04/2026, Seção 1
+Link oficial: https://legisjet.com.br/conteudo/instrucao-normativa-presinss-n-203-de-22-de-abril-de-2026-dou-de-24-04-2026/
+
+Resumo da alteração. A IN 203/2026 inclui o art. 576-A na IN PRES/INSS 128/2022, vedando a apresentação de novo requerimento pelo interessado enquanto houver processo em curso referente à mesma espécie de benefício. O parágrafo primeiro define que o processo está em curso enquanto não transcorrido o prazo de 30 dias para interposição de recurso administrativo. A única exceção expressa é o pedido de revisão, que continua admissível mesmo com processo pendente. A norma revoga a Resolução nº 438/PRES/INSS, de 03/09/2014.
+
+Impacto na advocacia. Clientes com benefício indeferido não poderão mais reapresentar imediatamente novo requerimento com documentação complementar enquanto o prazo recursal de 30 dias ainda correr. A estratégia operacional muda. Em caso de indeferimento com documentação incompleta, há duas rotas: (a) recurso administrativo ao CRPS dentro dos 30 dias, juntando os documentos faltantes; (b) aguardar o transcurso dos 30 dias e então novo requerimento. A rota (a) é preferível para preservar a DIB mais favorável. Controle rigoroso de prazos a partir de 24/04/2026 é obrigatório. Acionar `ponte-workflow-crps` para estratégia recursal.
+
 ## O que NÃO está nesta skill
 
 Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`.

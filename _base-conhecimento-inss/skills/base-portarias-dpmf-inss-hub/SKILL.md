@@ -1,6 +1,6 @@
 ---
 name: base-portarias-dpmf-inss-hub
-description: "Hub completo das Portarias DPMF, DIRBEN e correlatas do INSS, aplicáveis a TODA análise de benefício previdenciário. Use SEMPRE que mencionar Portaria DPMF INSS, Portaria DIRBEN INSS, Portaria 990/2022 CNIS RAC, Portaria 991/2022 concessão revisão, Portaria 992/2022 RMI, Portaria 1316/2025, Portarias 1056/2022 1231/2024 1309/2025 1318/2025 IEA, Portarias 1310/2025 1333/2026 reabilitação, Portaria MPS 462/2026 RICRPS, Portarias 1079/2022 1209/2024 1240/2024 1251/2025 1299/2025 alterações 990, Portaria 19/2026 Teleperícia, Portarias Conjuntas 13 14 15/2026 análise documental B31 B91 B94, Portaria MTP 672/2021 EPI, Portaria 6734/2020 PCMSO, Portaria Conjunta SPS INSS SNAS 2/2014 BPC, Portaria Interministerial 1/2015 IF-BrA. Cruza com cnis-acerto-indicadores, base-erro-administrativo-iea-13975, base-segurado-especial-autodeclaracao-arts-92-93-94, peticao-previdenciaria, precedentes-previdenciarios."
+description: "Hub completo das Portarias DPMF, DIRBEN e correlatas do INSS, aplicáveis a TODA análise de benefício previdenciário. Use SEMPRE que mencionar Portaria DPMF INSS, Portaria DIRBEN INSS, Portaria 990/2022 CNIS RAC, Portaria 991/2022 concessão revisão, Portaria 992/2022 RMI, Portaria 1316/2025, Portarias 1056/2022 1231/2024 1309/2025 1318/2025 IEA, Portarias 1310/2025 1333/2026 reabilitação, Portaria MPS 462/2026 RICRPS, Portarias 1079/2022 1209/2024 1240/2024 1251/2025 1299/2025 alterações 990, Portaria 19/2026 Teleperícia, Portarias Conjuntas 13 14 15/2026 análise documental B31 B91 B94, Portaria MTP 672/2021 EPI, Portaria 6734/2020 PCMSO, Portaria Conjunta SPS INSS SNAS 2/2014 BPC, Portaria Interministerial 1/2015 IF-BrA, IN 203/2026 vedação novo requerimento processo em curso art 576-A, art 576-A IN 128/2022, prazo recursal 30 dias vedação requerimento, Portaria Conjunta 15/2026 auxílio-acidente análise documental, Resolução 438/2014 revogada. Cruza com cnis-acerto-indicadores, base-erro-administrativo-iea-13975, base-segurado-especial-autodeclaracao-arts-92-93-94, peticao-previdenciaria, precedentes-previdenciarios."
 ---
 
 # Hub das Portarias DPMF, DIRBEN e correlatas. INSS
@@ -378,6 +378,27 @@ Marco Aurélio Serau Junior. Direito Previdenciário e Processo Judicial Previde
 Daniel Pulino. Aposentadoria por Invalidez.
 
 José Antônio Savaris. Direito Processual Previdenciário.
+
+## Atualização DOU 30/04/2026
+
+### IN PRES/INSS nº 203, de 22 de abril de 2026
+Norma: Instrução Normativa PRES/INSS, nº 203, 22/04/2026
+Órgão: INSS — Presidência
+Vigência: 24 de abril de 2026
+Publicação no DOU: 24/04/2026, Seção 1
+Link oficial: https://legisjet.com.br/conteudo/instrucao-normativa-presinss-n-203-de-22-de-abril-de-2026-dou-de-24-04-2026/
+
+Resumo da alteração. A IN 203/2026 acrescenta o art. 576-A à IN PRES/INSS 128/2022 (Instrução Normativa-mãe), vedando expressamente a apresentação de novo requerimento pelo interessado enquanto houver processo em curso referente à mesma espécie de benefício. O parágrafo primeiro define que o processo permanece em curso enquanto não transcorrido o prazo de 30 dias para interposição de recurso administrativo. Único exceção: o pedido de revisão do benefício é admissível mesmo com processo pendente (parágrafo segundo). A norma revoga a Resolução nº 438/PRES/INSS, de 03/09/2014, que regulava a organização do atendimento nas agências INSS quanto a documentos de identificação, biometria e regras de agendamento.
+
+Impacto na advocacia. Toda a estratégia de recuperação de documentação complementar pós-indeferimento precisa ser revisada. Até 24/04/2026, era possível reapresentar novo requerimento imediatamente após indeferimento, juntando os documentos faltantes. A partir de 24/04/2026, isso é vedado enquanto correr o prazo recursal de 30 dias. O escritório deve implantar controle de prazo de 30 dias a partir da ciência do indeferimento para todos os casos ativos. Em caso de indeferimento com documentação incompleta, a rota mais eficiente é o recurso ao CRPS dentro dos 30 dias, juntando novos documentos em fase recursal, preservando assim a DIB mais favorável. Acionar `ponte-workflow-crps`. A rota alternativa de novo requerimento só se abre após o transcurso dos 30 dias, resultando em DIB posterior.
+
+### Portaria Conjunta MPS/INSS nº 15, de 23 de março de 2026
+Norma: Portaria Conjunta MPS/INSS, nº 15, 23/03/2026
+Órgão: Ministério da Previdência Social e INSS
+Vigência: 24 de março de 2026
+Publicação no DOU: 24/03/2026, Seção 1
+
+Resumo da alteração. Institui análise documental prévia para requerimentos de auxílio-acidente (art. 86 da Lei 8.213/91). A Perícia Médica Federal verifica documentalmente se há acidente, sequela e redução permanente da capacidade laborativa antes de agendar perícia presencial. Documentação mínima exigida: documento oficial com foto, documentação médica legível com descrição da lesão, data do acidente, nexo causal, identificação do profissional com registro no Conselho de Classe e assinatura (eletrônica aceita). O indeferimento por análise documental não encerra o processo, admitindo recurso ao CRPS. Cruza com `base-b94-nexo-acidentario-ntep` e `base-auxilio-acidente-b94-pos-reforma`.
 
 ## 23. O que NÃO está nesta skill
 
