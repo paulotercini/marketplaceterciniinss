@@ -144,6 +144,10 @@ Quinto, tutela de urgência em prova pré-constituída.
 
 Sexto, dispensa de reavaliação pela Lei 15.157/2025.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado detalha procedimentos.

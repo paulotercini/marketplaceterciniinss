@@ -75,6 +75,10 @@ Segundo, o art. 57 §8º da Lei 8.213/91 veda o retorno à atividade especial ap
 
 Terceiro, em caso de conversão de tempo especial em comum para períodos pré-reforma, aplicar os fatores tradicionais (1,40 para homem e 1,20 para mulher para risco baixo, com variações). A conversão só é vedada para tempo pós-reforma.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta a ampla preservação do acervo de tempo especial e a escolha da regra mais favorável ao segurado.

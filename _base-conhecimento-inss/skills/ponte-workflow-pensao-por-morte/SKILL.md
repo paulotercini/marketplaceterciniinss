@@ -80,3 +80,7 @@ Perda de qualidade do falecido por afastamento longo. Verificar prorrogações d
 ## 5. Postura
 
 Pró-segurado integral. Identificar a vulnerabilidade do dependente, explorar presunção de dependência econômica, refutar barreiras infralegais e exigências documentais excessivas com base na Lei 13.460/2017.
+
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).

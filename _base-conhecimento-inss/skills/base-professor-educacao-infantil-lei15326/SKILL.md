@@ -93,6 +93,10 @@ Terceiro, cômputo em regra de idade progressiva (art. 16 §2º).
 
 Quarto, cômputo em direito adquirido EC 20.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado.

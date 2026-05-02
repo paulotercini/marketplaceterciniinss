@@ -113,6 +113,10 @@ Terceiro, idade progressiva (art. 16 §2º) para quem tem tempo mínimo mas não
 
 Quarto, direito adquirido (EC 20) para quem preencheu antes da EC 103.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado.

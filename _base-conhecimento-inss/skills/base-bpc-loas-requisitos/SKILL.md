@@ -100,6 +100,10 @@ Quinto, Lei 15.157/2025 dispensa reavaliação em impedimento permanente, irreve
 
 Sexto, decadência da revisão é de 10 anos (art. 103 Lei 8.213). Prescrição quinquenal das parcelas.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta leitura ampla do conceito de miserabilidade.

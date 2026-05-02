@@ -97,6 +97,10 @@ Terceiro, Lei 13.846/2019 introduziu exigências rigorosas de prova material da 
 
 Quarto, a vedação de acumulação do art. 24 da EC 103/2019 deve ser aplicada com regra de transição e complementação parcial, não integral.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta a proteção ampla da família e a interpretação extensiva do conceito de dependente.

@@ -121,3 +121,7 @@ Pipeline. (1) `auditoria-ppp` no documento. (2) `base-especial-ruido` para funda
 ## 6. Postura
 
 Postura exclusivamente pró-segurado. Toda a orquestração deve identificar fragilidades da posição adversária e converter conhecimento normativo em vantagem processual concreta para o segurado.
+
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).

@@ -88,6 +88,10 @@ Segundo, o acréscimo de 25% do art. 45 deve ser pedido expressamente. O INSS n�
 
 Terceiro, a cessação do B91 pelo Programa Revisão exige perícia com base técnica robusta. Cessações em massa sem exame específico são impugnáveis.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta a concessão ampla do B91 quando há prognóstico desfavorável e defende a conversão em acidentário sempre que possível.

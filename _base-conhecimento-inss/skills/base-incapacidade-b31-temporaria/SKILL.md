@@ -82,6 +82,10 @@ Segundo, a cessação antecipada (Alta Programada) pode ser impugnada via P1 ou 
 
 Terceiro, a trava dos três indeferimentos do art. 60 §11-A impede novo requerimento por 180 dias. Contra essa barreira, em caso de agravamento, MS pela urgência e pela violação do direito ao requerimento.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta a preponderância da prova médica sobre a triagem documental e a necessidade de perícia judicial em casos conflitantes.

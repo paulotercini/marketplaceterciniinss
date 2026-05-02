@@ -72,6 +72,10 @@ Segundo, a RMI nas transições adota percentual de 60% da média das contribui�
 
 Terceiro, cuidado com a retroatividade do requerimento. A DER escolhida deve coincidir com o preenchimento dos requisitos da transição eleita. Em caso de requerimento prematuro, cabe reafirmação da DER (Tema 995 STJ).
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta que a escolha da regra é direito subjetivo do segurado, com comparativo obrigatório pelo INSS.

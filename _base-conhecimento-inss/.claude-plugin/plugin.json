@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.11.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado por benefício, pressuposto, tema processual, tese relevante, revisão estruturante, cômputo de tempo de contribuição, processualística previdenciária (JEF, recursos JEF, rito ordinário TRF, CRPS, cumprimento de sentença/RPV/precatório), CPC aplicado ao previdenciário, mandado de segurança previdenciário, aposentadoria do professor, aposentadoria PCD aprofundada, auxílio-acidente B94 aprofundado, aposentadoria especial complementar e patologia administrativa do INSS. A versão 1.11.0 entrega a Onda Corretiva 21, dedicada à incorporação dos Pareceres nº 2/2025/SLEP/CAP/DPA e nº 3/2025/SATP/DPA da Fundacentro (Ofício Eletrônico nº 221/2025/PRES-FUNDACENTRO de 30/10/2025) sobre Tema 383/TNU em EPI e agentes biológicos. Cria a skill base-tema383-tnu-fundacentro-epi-biologicos com cobertura completa da distinção eficácia/efetividade, FPA/FPMR, método de opinião de especialistas (LENHART 2004), critério ALARP (NBR IEC 31010:2021), hierarquia de controle de riscos NIOSH 2024, dados numéricos do estudo TIAN et al. 2022 (191.004 trabalhadores, redução média 10,42%, risco residual 10,28%), VIMIEIRO et al. 2025, ARAÚJO et al. 2023 e BELLINI et al. 2022, com a conclusão pró-segurado contundente da Fundacentro de que os EPIs constantes do PPP, isoladamente, são incapazes de neutralizar a exposição nociva. Atualiza também base-especial-agentes-biologicos e base-especial-epi com referência ao parecer e nova seção dedicada. A versão 1.10.0 entregou a Onda 20 sobre erros administrativos e canais extrajudiciais. A 1.9.0 entregou a Onda Corretiva 19. A 1.8.1 entregou a Onda de Polimento. A 1.8.0 entregou a Onda 18 de Integração. 101 skills ao todo (94 base-* + 6 ponte-* + 1 operacional), verificadas em fontes oficiais e orientadas exclusivamente à defesa do segurado do INSS.",
+  "version": "1.12.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado por benefício, pressuposto, tema processual, tese relevante, revisão estruturante, cômputo de tempo de contribuição, processualística previdenciária, CPC previdenciário, mandado de segurança, aposentadoria do professor, aposentadoria PCD aprofundada, auxílio-acidente B94, aposentadoria especial complementar, patologia administrativa do INSS e fungibilidade previdenciária. A versão 1.12.0 entrega a Onda 22, dedicada à fungibilidade previdenciária à luz do REsp 2.246.096/MG (Informativo 885/STJ, Min. Gurgel de Faria, Primeira Turma, 14/04/2026), que fixa a vedação à conversão prejudicial de benefício e ao julgamento extra petita em prejuízo do segurado. Cria a skill base-fungibilidade-previdenciaria com cobertura completa do precedente, da fungibilidade ampliativa (Tema 217/TNU, Tema 1018/STJ, Tema 995/STJ, Tema 350/STF, Tema 334/STF, Tema 1124/STJ, Tema 1007/STJ), da vedação à reformatio in pejus (Súmula 45/STJ por simetria), das condições pessoais e sociais (Súmula 47/TNU), do auxílio-acidente sem grau (Tema 416/STJ, Súmulas 88 e 89/TNU), da fungibilidade administrativa pelo CRPS, dos modelos de pedido sucessivo (art. 326 CPC) e da cláusula de fungibilidade só em favor do segurado. Cross-reference massivo em 31 skills base-* relevantes (incapacidade, BPC, aposentadorias, professor, dependentes, programáticos). A versão 1.11.0 entregou a Onda Corretiva 21 sobre Parecer Fundacentro Tema 383/TNU. A 1.10.0 entregou a Onda 20 sobre erros administrativos. A 1.9.0 entregou a Onda Corretiva 19. A 1.8.0 a Onda 18 de Integração. 102 skills ao todo (95 base-* + 6 ponte-* + 1 operacional), verificadas em fontes oficiais e orientadas exclusivamente à defesa do segurado do INSS.",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"
@@ -68,6 +68,15 @@
     "alarp",
     "niosh",
     "n95-pff2",
-    "fpa-fpmr"
+    "fpa-fpmr",
+    "fungibilidade",
+    "resp-2246096",
+    "informativo-885",
+    "tema-217-tnu",
+    "tema-1018-stj",
+    "tema-995-stj",
+    "reformatio-in-pejus",
+    "extra-petita",
+    "pedidos-sucessivos"
   ]
 }

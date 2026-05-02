@@ -98,6 +98,10 @@ Terceiro, a vedação da acumulação com aposentadoria vale apenas para concess
 
 Quarto, o B94 cessa apenas com a aposentadoria do segurado (art. 86 §3º). Cessações intermediárias são impugnáveis.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta a natureza indenizatória e o caráter exemplificativo do Anexo III.

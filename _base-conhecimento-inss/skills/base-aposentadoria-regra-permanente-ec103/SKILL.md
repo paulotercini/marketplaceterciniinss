@@ -68,6 +68,10 @@ Segundo, a regra permanente rural permanece mais favorável que a urbana, com id
 
 Terceiro, atenção ao acerto de CNIS antes de requerer benefício pela regra permanente. Períodos faltantes ou pendências podem inviabilizar o cômputo da carência. Acionar `cnis-acerto-indicadores`.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta a indisponibilidade dos direitos previdenciários e o dever de o INSS aplicar a regra mais favorável, mesmo quando o segurado recorre à regra permanente.

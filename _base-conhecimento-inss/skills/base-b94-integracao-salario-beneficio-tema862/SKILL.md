@@ -99,6 +99,10 @@ Terceiro, fator previdenciário pode ser elidido em revisões com aplicação do
 
 Quarto, decadência da revisão é tema sensível. Verificar prazo.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado.

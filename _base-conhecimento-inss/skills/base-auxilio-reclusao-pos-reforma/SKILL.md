@@ -85,6 +85,10 @@ Terceiro, progressão de regime é controvérsia viva. Tese pró-dependente sust
 
 Quarto, monitoramento eletrônico isolado (sem prisão) não gera B25.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta interpretação extensiva do conceito de baixa renda e proteção dos dependentes.

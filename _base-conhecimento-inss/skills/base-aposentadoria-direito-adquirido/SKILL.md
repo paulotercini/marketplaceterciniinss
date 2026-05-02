@@ -67,6 +67,10 @@ Segundo, cuidado com a revisão da vida toda. O Tema 1102 STF foi modulado pelo 
 
 Terceiro, a desaposentação foi vedada pelo Tema 503 STF, mas a revisão da aposentadoria por direito adquirido e melhor benefício permanece cabível, inclusive para afastar aplicação indevida do fator previdenciário em quem já atingiu a regra 85/95.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta a proteção absoluta do direito adquirido previdenciário pelo art. 5º, XXXVI, da CF.

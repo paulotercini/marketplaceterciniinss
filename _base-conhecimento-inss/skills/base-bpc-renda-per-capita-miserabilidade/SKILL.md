@@ -108,6 +108,10 @@ Quinto, indeferimento fora desses critérios é ilegal.
 
 Sexto, irrepetibilidade de valores de boa-fé segue pelo Enunciado 17 CRPS.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado sustenta a flexibilização.

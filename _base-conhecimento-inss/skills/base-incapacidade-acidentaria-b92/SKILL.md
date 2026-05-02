@@ -97,6 +97,10 @@ Terceiro, em doença preexistente, o INSS tende a negar nexo. Enfrentar com agra
 
 Quarto, estabilidade provisória do art. 118 é direito paralelo na esfera trabalhista. Orientar ação paralela se houver rescisão no período.
 
+## Fungibilidade aplicável
+
+Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
+
 ## Doutrina de apoio
 
 Frederico Amado, em Direito Previdenciário, sustenta a concessão ampla do caráter acidentário e a interpretação extensiva do art. 21.
