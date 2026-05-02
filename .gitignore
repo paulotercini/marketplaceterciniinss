@@ -1,2 +1,4 @@
 graph_tokens.json
 graph_device.json
+__pycache__/
+*.pyc
