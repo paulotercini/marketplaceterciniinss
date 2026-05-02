@@ -392,3 +392,21 @@ Texto integral das Portarias. Consultar fontes oficiais.
 ## 24. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+
+## Atualização DOU 30/04/2026
+
+Norma 1: Portaria Conjunta MGI/MDS/MPS nº 23, de 29 de abril de 2026
+Órgão: Ministério da Gestão e Inovação (MGI), Ministério do Desenvolvimento Social (MDS), Ministério da Previdência Social (MPS)
+Vigência: a partir de 30/04/2026 (DOU Seção 1)
+Resumo da alteração: Exige biometria CIN (Carteira de Identidade Nacional) até 31/12/2026 para concessão, manutenção e renovação de salário-maternidade, auxílio por incapacidade, pensão por morte, seguro-desemprego e abono salarial, bem como do Programa Bolsa Família. Beneficiários impossibilitados de se deslocar por mais de 30 dias por motivo de saúde ou deficiência ficam dispensados mediante atestado médico.
+Impacto na advocacia: Adicionar verificação de biometria ao checklist de instrução de todos os benefícios listados. Para novos requerimentos, exigir CIN com biometria como documento obrigatório. Mapear clientes com benefícios vigentes para alertá-los.
+Estratégia: Ver skill `base-biometria-cin-seguridade-social`.
+Link oficial: https://www.in.gov.br/web/dou/-/portaria-conjunta-mgi/mds/mps-n-23-de-29-de-abril-de-2026-702405857
+
+Norma 2: Instrução Normativa PRES/INSS nº 203, de 22 de abril de 2026
+Órgão: INSS (Presidência)
+Vigência: imediata a partir de 24/04/2026 (DOU Seção 1)
+Resumo da alteração: Alterou o art. 576-A da IN PRES/INSS 128/2022, vedando novo requerimento enquanto houver processo em curso. O processo é considerado em curso durante a tramitação administrativa e pelo prazo de 30 dias do recurso ordinário ao CRPS. Afastou a regra da IN 164/2024 que permitia reprotocolar imediatamente após ciência do indeferimento.
+Impacto na advocacia: Estratégia de reprotocolo imediato pós-indeferimento está vedada. Escritório deve orientar o cliente a interpor recurso ordinário ao CRPS nos 30 dias ou aguardar o encerramento do processo para novo requerimento.
+Estratégia: Ver skill `base-incapacidade-b31-temporaria` e `ponte-workflow-crps`.
+Link oficial: https://www.in.gov.br/en/web/dou (DOU Seção 1 de 24/04/2026)

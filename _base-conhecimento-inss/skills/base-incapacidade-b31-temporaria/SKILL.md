@@ -108,4 +108,14 @@ O IBDP sustenta institucionalmente o direito do segurado à concessão ampla do 
 
 ## O que NÃO está nesta skill
 
-Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`.
+Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Biometria CIN e exigências relacionadas estão em `base-biometria-cin-seguridade-social`.
+
+## Atualização DOU 30/04/2026
+
+Norma: Instrução Normativa PRES/INSS nº 203, de 22 de abril de 2026
+Órgão: INSS
+Vigência: imediata a partir de 24/04/2026 (data de publicação no DOU Seção 1)
+Resumo da alteração: A IN 203/2026 alterou o art. 576-A da IN PRES/INSS 128/2022, revertendo a regra anterior (IN 164/2024) que permitia novo requerimento imediatamente após ciência do indeferimento. Com a nova redação, é vedada a apresentação de novo requerimento pelo interessado enquanto houver processo em curso. O processo é considerado em curso tanto durante a tramitação administrativa quanto durante os 30 dias do prazo recursal ao CRPS. Apenas a revisão do art. 103 da Lei 8.213/91 (decadência decenária) permanece disponível quando houver fato novo.
+Impacto na advocacia: A estratégia de reprotocolar imediatamente após indeferimento, antes de interpor recurso ao CRPS, ficou vedada. O escritório deve agora optar entre recurso ao CRPS ou novo requerimento, não podendo fazê-los simultaneamente nem em sobreposição de prazos.
+Estratégia: Protocolar recurso ordinário ao CRPS dentro dos 30 dias. Reservar o novo requerimento para depois da decisão final do CRPS, quando então estará extinto o processo anterior. Em casos urgentes com risco de vida, avaliar mandado de segurança para afastar a vedação com base na proporcionalidade e no direito à proteção social imediata.
+Link oficial: https://www.in.gov.br/en/web/dou (publicação DOU Seção 1 de 24/04/2026)

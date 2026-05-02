@@ -130,4 +130,20 @@ O IBDP sustenta a proteção integral ao requerente do BPC.
 
 ## O que NÃO está nesta skill
 
-Renda per capita, critérios de miserabilidade, exclusões e Decreto 12.534/2025 estão em `base-bpc-renda-per-capita-miserabilidade`. Impedimento de longo prazo, avaliação biopsicossocial, TCQ, IFBrM estão em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD pela LC 142/2013 está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos detalhados estão em `base-bpc-aposentadoria-pcd-procedimentos`.
+Renda per capita, critérios de miserabilidade, exclusões e Decreto 12.534/2025 estão em `base-bpc-renda-per-capita-miserabilidade`. Impedimento de longo prazo, avaliação biopsicossocial, TCQ, IFBrM estão em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD pela LC 142/2013 está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos detalhados estão em `base-bpc-aposentadoria-pcd-procedimentos`. Biometria CIN e exigências relacionadas estão em `base-biometria-cin-seguridade-social`.
+
+## Atualização DOU 30/04/2026
+
+Norma: Portaria Conjunta MGI/MDS/MPS nº 23, de 29 de abril de 2026
+Órgão: Ministério da Gestão e Inovação (MGI), Ministério do Desenvolvimento Social (MDS) e Ministério da Previdência Social (MPS)
+Vigência: a partir de 30/04/2026 (data de publicação no DOU Seção 1)
+Resumo da alteração: A Portaria Conjunta 23/2026 estabelece que o cadastramento biométrico pela Carteira de Identidade Nacional (CIN) é requisito obrigatório para concessão, manutenção e renovação do BPC, além de salário-maternidade, auxílio por incapacidade, pensão por morte, seguro-desemprego e abono salarial. O prazo para regularização é 31 de dezembro de 2026. Beneficiários impossibilitados de se deslocar por mais de 30 dias por motivo de saúde ou deficiência ficam dispensados mediante atestado médico comprobatório.
+Impacto na advocacia: Clientes com BPC vigente que ainda não fizeram a biometria CIN correm risco de bloqueio de pagamento a partir de 01/01/2027. É necessário identificar todos os clientes em situação irregular e orientá-los a emitir a CIN com dados biométricos.
+Estratégia: Mapear imediatamente a carteira de clientes com BPC. Orientar a emissão gratuita da CIN com biometria junto ao posto do Instituto de Identificação do estado de residência. Para clientes com impossibilidade de deslocamento, coletar atestado médico e protocolar dispensa junto ao INSS. Se o bloqueio ocorrer indevidamente, ingressar com mandado de segurança pleiteando liminar de restabelecimento com fundamento no direito adquirido ao benefício e na ausência de notificação prévia adequada.
+Link oficial: https://www.in.gov.br/web/dou/-/portaria-conjunta-mgi/mds/mps-n-23-de-29-de-abril-de-2026-702405857
+
+Norma complementar: Portaria Conjunta MDS/INSS nº 36, de 10 de fevereiro de 2026
+Órgão: Ministério do Desenvolvimento Social (MDS) e INSS
+Vigência: a partir de 11/02/2026 (data de publicação no DOU)
+Resumo da alteração: Regulamenta o procedimento de coleta biométrica específico para o BPC. O cadastro biométrico é requisito obrigatório para concessão, manutenção e revisão do BPC. Após notificação pelo INSS, o beneficiário tem 90 dias para regularizar. Ficam dispensados os residentes em municípios em situação de emergência ou calamidade pública e os enquadrados nas hipóteses da Portaria Conjunta MGI/MDS/MPS nº 76/2025.
+Estratégia: Ficar atento às notificações do INSS de clientes BPC e monitorar o prazo de 90 dias a partir da ciência. Preparar o cliente para o procedimento biométrico ou documentar dispensa.
