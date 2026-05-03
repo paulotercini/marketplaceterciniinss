@@ -105,6 +105,28 @@ Para cabimento, acionar `base-ms-cabimento-direito-liquido-certo`.
 Para autoridade coatora, acionar `base-ms-competencia-autoridade-coatora-inss-crps`.
 Para detalhes processuais, acionar `mandado-seguranca-previdenciario`.
 Para Lei 13.460, acionar `lei-13460-usuario-servico-publico`.
+Para diagnóstico da mora via sistemas administrativos (PAT, Meu INSS, INFBEN) antes de impetrar, acionar `base-meu-inss-pat-gerid-fluxo`.
+Para identificar mora em pedido de aposentadoria pendente em carteira potencial, acionar `base-aposentadoria-futura-pipeline`.
+Para fluxo de delegação do monitoramento de prazos administrativos a Amanda, acionar `processos-amanda-administrativo`.
+Para erro material com pedido de revisão administrativa anterior ao MS, acionar `base-erro-administrativo-iea-13975`.
+
+## Volume operacional no escritório
+
+A auditoria de carteira de tarefas no Microsoft To Do identificou 50 mandados de segurança em tarefas abertas, distribuídos em 🌻 INSS (6), 🖥 Conselho de Recursos (20), 👪 Judicial (14) e demais. O MS por mora é instrumento processual recorrente no escritório, sendo a forma mais frequente de pressionar o INSS quando o protocolo passa de 60 dias sem decisão.
+
+Critério prático para impetração:
+
+Primeiro, requerimento administrativo protocolado há mais de 45 dias sem decisão e sem exigência pendente, configurando inércia administrativa. Skill `base-meu-inss-pat-gerid-fluxo` orienta a verificação no PAT.
+
+Segundo, pedido com exigência cumprida e o INSS continua sem decidir após 30 dias da resposta. Caracteriza nova rodada de mora.
+
+Terceiro, acórdão CRPS favorável ao segurado mas o INSS não cumpre a decisão. Mora absoluta. MS de cumprimento via `base-ms-cumprimento-inss`.
+
+Quarto, exigência abusiva e persistente, em que o INSS pede documentação impossível ou já apresentada, caracterizando ato comissivo continuado.
+
+Antes de impetrar, sempre tentar provocação administrativa pela Ouvidoria/CGU/FALA.BR (skill `base-canais-falabr-corregedoria-cgu`), gerando registro de tentativa amigável que reforça a mora caracterizada quando o MS for ajuizado.
+
+Após decisão favorável no MS, o cumprimento da ordem é monitorado pela `base-meu-inss-pat-gerid-fluxo` (HISCRE para implantação, PAT para confirmação administrativa).
 
 ## O que NÃO está nesta skill
 
