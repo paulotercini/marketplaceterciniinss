@@ -109,8 +109,8 @@
     {
       "name": "tercini-operacional",
       "source": "./_tercini-operacional",
-      "description": "Plugin operacional pró-segurado do escritório Paulo Roberto Tercini Filho para automação do dia a dia. Concentra slash commands, scripts utilitários e templates para integração com Microsoft To Do (via Microsoft Graph), auditoria de carteira de tarefas, triagem inteligente, gestão de Aposentadorias Futuras, cobrança de honorários contratuais e monitoramento do Diário Oficial da União. Use SEMPRE que mencionar triagem do dia, tarefas atribuídas, auditoria do Microsoft To Do, lembrete em massa, maturação de aposentadoria futura, cobrança de honorários, monitor DOU, plataforma de procuradores, slash command operacional, fluxo Amanda, fluxo André, fluxo Ingrid. Complementa o plugin base-conhecimento-inss (skills jurídicas) sem duplicar. Versão 0.1.0, primeira release com 6 slash commands (/triagem, /triagem-data, /inspect-tarefa, /maturacao, /cobrancas, /dou), 14 scripts Python (graph utilities, audit, automação) e infraestrutura para 12 templates de comunicação a serem construídos.",
-      "version": "0.1.0",
+      "description": "Plugin operacional pró-segurado do escritório Paulo Roberto Tercini Filho para automação do dia a dia. Concentra slash commands, scripts utilitários e templates de WhatsApp para integração com Microsoft To Do (via Microsoft Graph), auditoria de carteira de tarefas, triagem inteligente, gestão de Aposentadorias Futuras, cobrança de honorários contratuais e monitoramento do Diário Oficial da União. Use SEMPRE que mencionar triagem do dia, tarefas atribuídas, auditoria do Microsoft To Do, lembrete em massa, maturação de aposentadoria futura, cobrança de honorários, monitor DOU, plataforma de procuradores, slash command operacional, fluxo Amanda, fluxo André, fluxo Ingrid, mensagem WhatsApp, templates de mensagem, voz do escritório, padrões WhatsApp, golpe falso advogado, perícia D-7, lembrete cliente. Complementa o plugin base-conhecimento-inss (skills jurídicas) sem duplicar. A versão 0.2.0 adiciona o documento canônico padroes-v3.md com 173 templates oficiais de WhatsApp em 20 blocos (Bot, Saudações, Agendamento, Perícia, Documentos, Concessão, Pagamento, Indeferimento, Análise técnica, Cumprimento, Acessórias, PPP/CTC, Golpes, Transferência, Encerramento, Recursos, Golpe sofisticado, PCD/Servidor, Indicações, Boas práticas), o mapping integracao-to-do.md (contexto da tarefa → template apropriado), o README de vozes do escritório (Dr. Paulo Tercini, Dra. Amanda Garcez, Dr. Marcos, André Dellavechia, Ingrid) e o slash command /mensagem que sugere mensagem pronta para WhatsApp com template adequado, voz correta e placeholders preenchidos a partir do contexto da tarefa do To Do. Versão 0.2.0, com 7 slash commands (/triagem, /triagem-data, /inspect-tarefa, /mensagem, /maturacao, /cobrancas, /dou), 14 scripts Python e 173 templates oficiais de comunicação consolidados a partir de 39 conversas reais.",
+      "version": "0.2.0",
       "category": "operational",
       "tags": [
         "operacional",
@@ -132,7 +132,12 @@
         "diario-oficial",
         "previdenciario",
         "tercini",
-        "escritorio"
+        "escritorio",
+        "templates-whatsapp",
+        "voz-escritorio",
+        "padroes-comunicacao",
+        "golpe-falso-advogado",
+        "atendimento-cliente"
       ]
     }
   ]

@@ -43,7 +43,10 @@ O usuário forneceu uma busca: $ARGUMENTS
    - Se há entrada antiga com `(P) Aguardar até X` e X já passou — propor reativar
    - Se há tarefa em 💵 Pagamentos sem registro recente — propor cobrar
 
-6. Se o usuário pedir para **gerar mensagem para o cliente**, use as skills do plugin `base-conhecimento-inss` quando aplicável e o glossário do escritório (Solicitei → Em análise → Aguardar até → Verifiquei).
+6. Se o usuário pedir para **gerar mensagem para o cliente**, use o slash command `/mensagem <CPF ou nome>` ou consulte diretamente:
+   - `templates/whatsapp/padroes-v3.md` (173 templates oficiais)
+   - `templates/whatsapp/integracao-to-do.md` (tabela contexto → template)
+   - Cross-reference com skills jurídicas do plugin `base-conhecimento-inss` quando aplicável.
 
 ## Privacidade
 

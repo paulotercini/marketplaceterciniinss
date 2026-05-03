@@ -17,6 +17,7 @@ Plugin pró-segurado do escritório Paulo Roberto Tercini Filho focado em **auto
 | `/triagem` | Lista as tarefas suas (P) e delegadas com vencimento hoje, agrupadas por categoria |
 | `/triagem-data DD/MM/AAAA` | Mesma triagem para uma data específica |
 | `/inspect-tarefa <CPF ou nome>` | Mostra todas as tarefas do cliente em todas as listas |
+| `/mensagem <CPF ou nome>` | Sugere mensagem WhatsApp pronta com template adequado e voz correta |
 | `/maturacao` | Aposentadorias Futuras maturando nos próximos 60 dias |
 | `/cobrancas` | Pagamentos pendentes na lista 💵 Pagamentos |
 | `/dou` | Roda o monitor diário do Diário Oficial da União |
@@ -26,12 +27,16 @@ Plugin pró-segurado do escritório Paulo Roberto Tercini Filho focado em **auto
 ```
 tercini-operacional/
 ├── .claude-plugin/marketplace.json
-├── commands/                  Slash commands (.md)
+├── commands/                       Slash commands (.md)
 ├── scripts/
-│   ├── graph/                 Conector Microsoft Graph (To Do)
-│   ├── audit/                 Auditoria em 7 etapas
+│   ├── graph/                      Conector Microsoft Graph (To Do)
+│   ├── audit/                      Auditoria em 7 etapas
 │   └── (outros utilitários)
-└── templates/                 Templates de mensagens (futuro)
+└── templates/
+    └── whatsapp/
+        ├── padroes-v3.md           173 templates oficiais (20 blocos)
+        ├── README.md               Guia rápido + vozes + placeholders
+        └── integracao-to-do.md     Mapping contexto → template
 ```
 
 ## Pré-requisitos
