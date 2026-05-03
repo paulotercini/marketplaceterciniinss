@@ -80,10 +80,34 @@ Categoria profissional pré-1995 enquadrada por presunção de exposição. Acio
 
 Pró-segurado integral. Identificar fragilidades probatórias da posição do INSS, explorar a presunção qualitativa para agentes biológicos, químicos e cancerígenos, e levar o caso ao rito mais favorável.
 
-## Fungibilidade aplicável
+## 6. Fungibilidade aplicável
 
 Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para análise da relação entre este benefício e outros eventualmente cabíveis (REsp 2.246.096/MG, Tema 217 TNU, Tema 1018 STJ, Tema 995 STJ, vedação à conversão prejudicial).
 
-## Hub de portarias administrativas
+## 7. Hub de portarias administrativas
 
 Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
+## 8. Volume operacional no escritório
+
+A auditoria de carteira de tarefas no Microsoft To Do identificou aposentadoria especial como segundo maior tema em recurso administrativo, com 28 tarefas abertas em 🖥 Conselho de Recursos. Adicionalmente, 12 tarefas em 👪 Judicial envolvem aposentadoria especial e 43 tarefas em 🙏 Aposentadorias Futuras aguardam o momento de protocolo. A especialização do escritório em aposentadoria especial é declarada e fundamenta o investimento em 15+ skills temáticas dedicadas.
+
+Para cada tarefa em 🖥 Conselho de Recursos sobre aposentadoria especial, dueDateTime deve refletir o prazo do recurso (30 dias da intimação para recurso ordinário, 30 dias para recurso especial às Câmaras de Julgamento), conforme `base-meu-inss-pat-gerid-fluxo` para verificar a intimação no PAT.
+
+Para casos em que o INSS demora a julgar o recurso, acionar `base-ms-decadencia-omissao-demora` para mora administrativa e impetrar MS com fundamento no Tema 1066 STF.
+
+Para casos em que o cliente está em 🙏 Aposentadorias Futuras aguardando completar tempo especial, acionar `base-aposentadoria-futura-pipeline` para gestão dos marcos D-90, D-60 e D-0 antes do protocolo.
+
+Para fluxo de delegação à Amanda da auditoria preliminar de PPP e cumprimento de exigência simples, acionar `processos-amanda-administrativo`. Auditoria final do PPP, definição de tese e redação da peça permanecem com Paulo.
+
+## 9. Integração com skills operacionais da Onda 24
+
+`base-meu-inss-pat-gerid-fluxo` para acompanhamento do protocolo administrativo no PAT, conferência de implantação no HISCRE após concessão e auditoria do INFBEN para verificar se o tempo especial foi computado corretamente.
+
+`base-aposentadoria-futura-pipeline` para clientes que ainda não completaram o tempo especial necessário e estão em hibernação no escritório.
+
+`base-honorarios-contratuais-cobranca` para cobrança após êxito (atrasados + 1 mensalidade) e destaque no RPV/precatório pelo art. 22 §4º EAOAB.
+
+`processos-amanda-administrativo` para delegação dos atos repetíveis (cumprir exigência, monitorar PAT, conferir HISCRE) à Amanda, liberando Paulo para análise técnica e estratégia recursal.
+
+`base-ms-decadencia-omissao-demora` quando o INSS atrasa decisão sobre o pedido de aposentadoria especial ou sobre o recurso ao CRPS.
