@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado, cobrindo aposentadoria especial, regras EC 103/2019, RMI e atividades concomitantes pelo Tema 1.070/STJ, benefícios por incapacidade, reabilitação profissional, auxílio-acidente B94 aprofundado, dependentes e programáticos, BPC/LOAS, aposentadoria PCD pela LC 142/2013 e PCD aprofundada, revisões estruturantes, facultativo de baixa renda, dano moral previdenciário, irrepetibilidade, RPPS na ótica do RGPS, reclamatória trabalhista como prova, DIB por espécie, carência por espécie/art. 27-A, cômputo do tempo de contribuição, processualística previdenciária, CPC previdenciário, MS, aposentadoria do professor, temas transversais, patologia administrativa do INSS e EPI em agentes biológicos pelo Tema 383/TNU. A versão 1.8.0 incorporou a Onda 18 de Integração. A 1.8.1 fechou a Onda de Polimento. A 1.9.0 entregou a Onda Corretiva 19 das fontes obrigatórias. A 1.10.0 entregou a Onda 20 sobre erros administrativos e canais extrajudiciais de provocação. A versão 1.11.0 entrega a Onda Corretiva 21, dedicada à incorporação dos Pareceres nº 2/2025/SLEP/CAP/DPA e nº 3/2025/SATP/DPA da Fundacentro (Ofício 221/2025/PRES-FUNDACENTRO de 30/10/2025) sobre EPI e agentes biológicos no Tema 383/TNU. Cria a skill base-tema383-tnu-fundacentro-epi-biologicos com a distinção eficácia/efetividade, FPA/FPMR, método qualitativo de opinião de especialistas (LENHART 2004), critério ALARP (NBR IEC 31010:2021), hierarquia de controle NIOSH 2024, dados estatísticos do estudo TIAN et al. 2022 (191.004 trabalhadores, redução média 10,42%, risco residual 10,28%), VIMIEIRO et al. 2025, ARAÚJO et al. 2023 e BELLINI et al. 2022, e a conclusão pró-segurado contundente da Fundacentro de que os EPIs do PPP, isoladamente, são incapazes de neutralizar a exposição nociva. Atualiza também base-especial-agentes-biologicos e base-especial-epi. Versão 1.11.0, 101 skills ao todo (94 base-*, 6 ponte-* e 1 operacional).",
-      "version": "1.11.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado, cobrindo aposentadoria especial, regras EC 103/2019, RMI e atividades concomitantes pelo Tema 1.070/STJ, benefícios por incapacidade, reabilitação profissional, auxílio-acidente B94 aprofundado, dependentes e programáticos, BPC/LOAS, aposentadoria PCD pela LC 142/2013 e PCD aprofundada, revisões estruturantes, facultativo de baixa renda, dano moral previdenciário, irrepetibilidade, RPPS na ótica do RGPS, reclamatória trabalhista como prova, DIB por espécie, carência por espécie/art. 27-A, cômputo do tempo de contribuição, processualística previdenciária, CPC previdenciário, MS, aposentadoria do professor, temas transversais, patologia administrativa do INSS e EPI em agentes biológicos pelo Tema 383/TNU. A versão 1.8.0 incorporou a Onda 18 de Integração. A 1.8.1 fechou a Onda de Polimento. A 1.9.0 entregou a Onda Corretiva 19 das fontes obrigatórias. A 1.10.0 entregou a Onda 20 sobre erros administrativos e canais extrajudiciais de provocação. A versão 1.11.0 entregou a Onda Corretiva 21, dedicada à incorporação dos Pareceres nº 2/2025/SLEP/CAP/DPA e nº 3/2025/SATP/DPA da Fundacentro (Ofício 221/2025/PRES-FUNDACENTRO de 30/10/2025) sobre EPI e agentes biológicos no Tema 383/TNU. A versão 1.12.0 entrega a Onda Operacional, formalizando processos do escritório a partir da auditoria de 4.333 tarefas no Microsoft To Do. Cria 4 novas skills de operação. base-aposentadoria-futura-pipeline para gestão sistemática da carteira de 377 clientes em 🙏 Aposentadorias Futuras com regra de 3 marcos D-90, D-60 e D-0. base-meu-inss-pat-gerid-fluxo consolidando o uso correto de Meu INSS, PAT, GERID, HISCRE, INFBEN, CNIS, DataPrev e Gov.br. base-honorarios-contratuais-cobranca distinguindo do contratual da sucumbência, com modelo padrão pró-segurado de 30% atrasados + 1 mensalidade e fluxo de cobrança preventiva escalonada. processos-amanda-administrativo formalizando a delegação à Amanda com quadro de decisões autônomas e plano de redundância via André e Ingrid para descongestionar Paulo do gargalo decisório. Versão 1.12.0, 105 skills ao todo (94 base-*, 6 ponte-*, 4 operacionais novas e 1 operacional anterior).",
+      "version": "1.12.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
@@ -78,7 +78,13 @@
         "alarp",
         "niosh",
         "n95-pff2",
-        "fpa-fpmr"
+        "fpa-fpmr",
+        "operacional",
+        "microsoft-to-do",
+        "delegacao-redundancia",
+        "carteira-aposentadoria-futura",
+        "honorarios-contratuais",
+        "meu-inss-pat-gerid"
       ]
     }
   ]
