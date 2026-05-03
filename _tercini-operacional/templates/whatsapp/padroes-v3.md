@@ -6,13 +6,13 @@
 Paulo Roberto Tercini Filho — OAB/SP 331.110
 Monte Alto/SP
 
-*Versão 3 — Consolidação de 39 conversas reais — 20 blocos | 173 templates*
+*Versão 3.1 — Consolidação de 39 conversas reais — 22 blocos | 182 templates*
 
 ---
 
 ## Sumário
 
-A organização segue 20 blocos. Cada bloco reúne templates relacionados a uma situação específica do atendimento previdenciário.
+A organização segue 22 blocos. Cada bloco reúne templates relacionados a uma situação específica do atendimento previdenciário.
 
 - Bloco I — Bot e Triagem Inicial — 15 templates
 - Bloco II — Saudações Humanas — 5 templates
@@ -20,7 +20,7 @@ A organização segue 20 blocos. Cada bloco reúne templates relacionados a uma 
 - Bloco IV — Comunicação Sobre Perícia — 14 templates
 - Bloco V — Documentos Médicos e Solicitações — 11 templates
 - Bloco VI — Concessão, Cessação e Prorrogação — 9 templates
-- Bloco VII — Pagamento e Atrasados — 12 templates
+- Bloco VII — Pagamento e Atrasados — 15 templates (3.1: estendido com cobrança escalonada)
 - Bloco VIII — Indeferimento Administrativo — 6 templates
 - Bloco IX — Análise Técnica de Aposentadoria — 7 templates
 - Bloco X — Cumprimento de Sentença e Implantação — 7 templates
@@ -34,6 +34,8 @@ A organização segue 20 blocos. Cada bloco reúne templates relacionados a uma 
 - Bloco XVIII — Servidor Público, Direitos PCD e Cota — 4 templates
 - Bloco XIX — Indicações, Procuração e Outras Áreas — 7 templates
 - Bloco XX — Boas Práticas de Uso dos Templates — 8 templates
+- Bloco XXI — Aniversários — 3 templates (3.1: novo)
+- Bloco XXII — Maturação de Aposentadorias Futuras — 3 templates (3.1: novo)
 
 ---
 
@@ -813,6 +815,52 @@ O escritório fica na Rua Rui Barbosa, 663, Centro, Monte Alto-SP, em frente ao 
 > Provavelmente deve ser para fazer empréstimo consignado. Quando a pessoa aposenta os bancos ficam ligando para oferecer empréstimo. Esses empréstimos não valem a pena pq se paga muito juros.
 >
 > Quando o {{BANCO}} ligar para o {{NOME}} pede para explicarem se é um empréstimo. E também pede para o {{NOME}} não enviar foto dos documentos dele pq os bancos estão fazendo empréstimos mesmo sem a pessoa autorizar.
+
+### 7.13 — Cobrança amigável D+30 (novo na v3.1)
+
+**Quando usar.** Cliente já recebeu crédito do INSS há 30 dias e não pagou os honorários combinados. Primeiro toque formal, tom respeitoso.
+
+> *Dr. Paulo Tercini:*
+>
+> {{NOME}}, {{TURNO}}! Tudo bem?
+>
+> Como combinamos, depois da implantação ficou devida a parte dos honorários. Vi aqui que o pagamento ainda não foi acertado.
+>
+> Se houve alguma dificuldade, podemos conversar tranquilo. Se preferir parcelar, também consigo organizar.
+>
+> O valor é R${{VALOR_HONORARIO}}. PIX 224.627.048-09 (CPF Paulo Roberto Tercini Filho).
+>
+> Aguardo {{TRATAMENTO_POSSESSIVO}} retorno!
+
+### 7.14 — Última tentativa amigável D+60 (novo na v3.1)
+
+**Quando usar.** Cliente não respondeu à 7.13 e está há 60+ dias sem pagar. Última tentativa antes de escalar para o Dr. Paulo.
+
+> *Dr. Marcos:*
+>
+> {{NOME}}, {{TURNO}}.
+>
+> Estou retomando porque ainda não recebemos os honorários combinados desde a implantação do {{TIPO_BENEFICIO}} em {{DATA_IMPLANTACAO}}.
+>
+> Valor R${{VALOR_HONORARIO}}, PIX 224.627.048-09.
+>
+> Caso não consiga acertar agora, peço que entre em contato pra a gente alinhar uma forma viável. Caso contrário, em alguns dias precisaremos formalizar a cobrança pelo escritório.
+
+### 7.15 — Notificação extrajudicial preliminar D+90 (novo na v3.1)
+
+**Quando usar.** Cliente não respondeu a duas tentativas. Última mensagem antes de notificação extrajudicial via OAB. Tom formal, escalado para Dr. Paulo.
+
+> *Dr. Paulo Tercini:*
+>
+> {{NOME}}, {{TURNO}}.
+>
+> Foram feitas duas tentativas amigáveis em {{DATA_TENT_1}} e {{DATA_TENT_2}} sem retorno {{TRATAMENTO_POSSESSIVO}} para o pagamento dos honorários combinados em contrato.
+>
+> Os honorários no valor de R${{VALOR_HONORARIO}} são devidos desde {{DATA_IMPLANTACAO}} (implantação do {{TIPO_BENEFICIO}}). O contrato é título executivo extrajudicial nos termos do art. 24 do Estatuto da OAB.
+>
+> Caso não tenhamos retorno em 7 dias, precisaremos encaminhar a cobrança pela via formal. Antes disso, prefiro conversar — pode me chamar a qualquer momento.
+
+> **Observação operacional.** Após este toque, escalar para Dr. Paulo decidir notificação extrajudicial via OAB ou cartório (skill `base-notificacao-extrajudicial-mapeamento-institucional`) ou ação de execução do contrato (skill `base-honorarios-contratuais-cobranca`).
 
 ---
 
@@ -1694,3 +1742,112 @@ O escritório fica na Rua Rui Barbosa, 663, Centro, Monte Alto-SP, em frente ao 
 Estes templates devem ser revisados e atualizados sempre que houver mudança normativa relevante (Portarias do INSS, Decisões da Justiça Federal, Resoluções do CRPS). Sugere-se revisão periódica para incluir novas situações encontradas na rotina diária do escritório.
 
 Este documento serve como referência operacional, não substitui o uso técnico das skills jurídicas em casos concretos. Antes de qualquer petição, recurso ou auditoria, devem ser consultadas as skills do ecossistema do escritório com o rigor técnico aplicável.
+
+---
+
+## Bloco XXI — Aniversários (novo na v3.1)
+
+Bloco criado a partir da auditoria do Microsoft To Do, que identificou 10 tarefas com marcador `🎂 Aniversário` mas sem template oficial associado. As mensagens são curtas, humanas e respeitam o contexto do cliente.
+
+### 21.1 — Aniversário cordial (cliente em atendimento ativo)
+
+**Quando usar.** Cliente com tarefa aberta no escritório completa idade. Toque humano breve.
+
+> *Dr. Paulo Tercini:*
+>
+> {{NOME}}! 🎂
+>
+> Passando para desejar **muitos parabéns pelos seus {{IDADE}} anos**! Que o {{TURNO_DESEJO}} seja repleto de saúde, paz e que muitas conquistas venham pela frente.
+>
+> Conte sempre com o escritório.
+
+> **Variantes de `{{TURNO_DESEJO}}`:** "novo ano", "ciclo que se inicia", "dia".
+
+### 21.2 — Aniversário + lembrete proximidade aposentadoria
+
+**Quando usar.** Cliente em 🙏 Aposentadorias Futuras completa idade que o aproxima do direito (ex: 60 anos quando precisa 65, ou completou 65 e o direito amadureceu).
+
+> *Dr. Paulo Tercini:*
+>
+> {{NOME}}! 🎂
+>
+> Muitos parabéns pelos seus {{IDADE}} anos!
+>
+> {{COMPLEMENTO_IDADE}}
+>
+> {{TRATAMENTO}} sabe que pode contar comigo. Vamos avançar com a documentação assim que {{TRATAMENTO}} puder.
+
+> **Variantes de `{{COMPLEMENTO_IDADE}}`:**
+> - "Aproveito para lembrar que em {{ANOS_FALTANTES}} anos {{TRATAMENTO}} já pode pedir a aposentadoria por idade. Vale a pena começarmos a organizar os documentos."
+> - "Hoje {{TRATAMENTO}} já completou a idade necessária para a aposentadoria. Podemos protocolar quando {{TRATAMENTO}} estiver com a documentação em mãos."
+> - "Faltam pouco mais de {{ANOS_FALTANTES}} anos para a aposentadoria. Já estamos com tudo preparado por aqui."
+
+### 21.3 — Aniversário curto (cliente encerrado)
+
+**Quando usar.** Cliente cuja tarefa já foi concluída. Manter relacionamento sem invadir.
+
+> *Dr. Paulo Tercini:*
+>
+> {{NOME}}, parabéns pelos seus {{IDADE}} anos! 🎂
+>
+> Saúde e muitas alegrias. Conte com a gente sempre que precisar.
+
+---
+
+## Bloco XXII — Maturação de Aposentadorias Futuras (novo na v3.1)
+
+Bloco criado para acionamento sistemático da carteira em 🙏 Aposentadorias Futuras conforme a regra dos 3 marcos D-90, D-60 e D-0 da skill `base-aposentadoria-futura-pipeline`. A auditoria identificou 74 clientes vencendo nos próximos 180 dias e 154 abandonados que precisam de retomada.
+
+### 22.1 — Contato preventivo D-90 (90 dias antes da data alvo)
+
+**Quando usar.** Cliente em 🙏 Aposentadorias Futuras a 90 dias do direito amadurecer. Reativa relacionamento sem pedir ação imediata.
+
+> *Dr. Paulo Tercini:*
+>
+> {{NOME}}, {{TURNO}}! Tudo bem?
+>
+> Estou passando porque já estamos chegando perto da data em que {{TRATAMENTO}} pode dar entrada na {{TIPO_BENEFICIO}} — em {{DATA_ALVO}}.
+>
+> Quero confirmar que podemos seguir com {{TRATAMENTO_POSSESSIVO}} pedido normalmente quando chegar a hora. Daqui a um ou dois meses pediremos os documentos atualizados ({{LISTA_DOCUMENTOS}}). Por enquanto é só confirmar comigo se {{TRATAMENTO}} continua de acordo.
+>
+> Qualquer dúvida estou aqui. Abraço!
+
+> **Variantes de `{{LISTA_DOCUMENTOS}}`:**
+> - "CTPS atualizada, comprovante de residência recente, identidade vigente"
+> - "CTPS, CNIS atualizado e comprovante de residência"
+> - "documentos pessoais e CNIS"
+
+### 22.2 — Contato operacional D-60 (60 dias antes — solicitar documentos)
+
+**Quando usar.** Cliente em 🙏 Aposentadorias Futuras a 60 dias do direito. Solicita documentos atualizados e marca atendimento prévio ao protocolo.
+
+> *Dr. Paulo Tercini:*
+>
+> {{NOME}}, {{TURNO}}! Tudo bem?
+>
+> Estamos a cerca de 60 dias da {{DATA_ALVO}}, quando podemos protocolar {{TRATAMENTO_POSSESSIVO}} pedido de {{TIPO_BENEFICIO}}.
+>
+> Para que tudo flua certinho, peço:
+>
+> 1. CTPS atualizada (se houver vínculo recente)
+> 2. CNIS atualizado (extrato pode ser feito no MEU INSS — ajudo se precisar)
+> 3. Comprovante de residência dos últimos 90 dias
+> 4. Documento de identidade vigente
+>
+> Vamos combinar um atendimento na {{DIA_AGENDADO}} pra acertarmos tudo? Pode ser presencial em Monte Alto ou por ligação, como {{TRATAMENTO}} preferir.
+
+### 22.3 — Acionamento D-0 (data alvo chegou — protocolar imediato)
+
+**Quando usar.** Cliente em 🙏 Aposentadorias Futuras chegou na data em que cumpre o requisito. Protocolar no Meu INSS.
+
+> *Dr. Paulo Tercini:*
+>
+> {{NOME}}, {{TURNO}}!
+>
+> A partir de hoje {{TRATAMENTO}} cumpre os requisitos da {{TIPO_BENEFICIO}}. Já posso protocolar {{TRATAMENTO_POSSESSIVO}} pedido pelo MEU INSS.
+>
+> Já estou com toda a documentação aqui. Vou solicitar agora mesmo e te aviso assim que o INSS retornar.
+>
+> 🙏
+
+> **Cross-reference operacional.** Após o protocolo, criar tarefa em 🌻 INSS movendo da 🙏 Aposentadorias Futuras. Acompanhamento da DER no PAT/Meu INSS pela skill `base-meu-inss-pat-gerid-fluxo`. MS por mora se INSS atrasar mais de 60 dias (skill `base-ms-decadencia-omissao-demora`).

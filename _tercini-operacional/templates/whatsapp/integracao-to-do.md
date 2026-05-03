@@ -65,11 +65,11 @@ A coluna **Lista To Do** aponta a lista do escritório. A coluna **Sinal no body
 
 | Sinal | Template | Voz |
 |---|---|---|
-| Data alvo D-90 (90 dias antes) | **GAP — proposta 22.1** (criar) | Dr. Paulo |
-| Data alvo D-60 | **GAP — proposta 22.2** (criar) | Dr. Paulo |
-| Data alvo D-0 (chegou) | **GAP — proposta 22.3** (protocolar imediato) | Dr. Paulo |
+| Data alvo D-90 (90 dias antes) | 22.1 Contato preventivo D-90 | Dr. Paulo |
+| Data alvo D-60 | 22.2 Contato operacional D-60 (solicitar documentos) | Dr. Paulo |
+| Data alvo D-0 (chegou) | 22.3 Acionamento D-0 (protocolar imediato) | Dr. Paulo |
 | `Pagar competência` (CI) | 11.10 Lembrete proativo de contribuição | Dr. Paulo |
-| Cliente parado >180 dias | **GAP — sem template** (talvez retomada) | Dr. Paulo |
+| Cliente parado >180 dias | 22.1 (retomada com tom de pré-acionamento) | Dr. Paulo |
 | `Atinge {{IDADE}} em {{DATA}}` | 9.1 Cálculo de aposentadoria por idade — projeção | Dr. Paulo |
 
 ### 💵 Pagamentos
@@ -79,9 +79,9 @@ A coluna **Lista To Do** aponta a lista do escritório. A coluna **Sinal no body
 | `Implantado, falta cobrar honorários` | 7.1 + 7.9 + 7.10 (PIX) | Dr. Paulo |
 | `Cliente confirmou recebimento` | 7.10 (PIX) ou 15.1 (agradecimento) | Dr. Paulo / Atendente |
 | `Atrasados em ação judicial` | 7.4/7.5/7.6 (esclarecer fluxo) | Dr. Paulo |
-| `Sem pagamento >30 dias` | **GAP — proposta 7.13** (cobrança amigável) | Atendente |
-| `Sem pagamento >60 dias` | **GAP — proposta 7.14** (última tentativa) | Dr. Marcos |
-| `Sem pagamento >90 dias` | **GAP — proposta 7.15** (notificação extrajudicial) | Dr. Paulo |
+| `Sem pagamento >30 dias` | 7.13 Cobrança amigável D+30 | Dr. Paulo |
+| `Sem pagamento >60 dias` | 7.14 Última tentativa amigável D+60 | Dr. Marcos |
+| `Sem pagamento >90 dias` | 7.15 Notificação extrajudicial preliminar D+90 | Dr. Paulo |
 | Body vazio em Pagamentos | ⚠️ Não cobrar — preencher contexto antes | — |
 
 ### 🙋 Escritório — operacional
@@ -106,8 +106,9 @@ Casos cíveis (indenização, despejo, busca e apreensão) NÃO têm template pr
 
 | Sinal | Template | Voz |
 |---|---|---|
-| `🎂 Aniversário` (ativo) | **GAP — proposta 21.1** (criar) | Dr. Paulo |
-| `🎂 Aniversário` próximo da aposentadoria | **GAP — proposta 21.2** (dual: parabéns + lembrete) | Dr. Paulo |
+| `🎂 Aniversário` (ativo) | 21.1 Aniversário cordial | Dr. Paulo |
+| `🎂 Aniversário` próximo da aposentadoria | 21.2 Aniversário + lembrete proximidade | Dr. Paulo |
+| `🎂 Aniversário` (cliente encerrado) | 21.3 Aniversário curto | Dr. Paulo |
 
 ## Detecção automática de voz
 
@@ -142,18 +143,18 @@ SE cliente <40 e contato informal                 → você
 DEFAULT (sem informação)                          → senhor/senhora (formal)
 ```
 
-## Gaps identificados (templates a criar)
+## Templates incorporados na v3.1
 
-| ID proposto | Bloco | Conteúdo |
+A versão 3.1 do `padroes-v3.md` adicionou 9 templates a partir dos gaps identificados pela auditoria do Microsoft To Do. Total agora: **22 blocos, 182 templates**.
+
+| ID | Bloco | Conteúdo |
 |---|---|---|
-| 7.13 | Pagamento | D+30 cobrança amigável |
-| 7.14 | Pagamento | D+60 última tentativa amigável |
-| 7.15 | Pagamento | D+90 notificação extrajudicial preliminar |
-| 21.1 | Aniversário (novo) | Cordial cliente ativo |
-| 21.2 | Aniversário (novo) | Cordial + lembrete proximidade aposentadoria |
-| 21.3 | Aniversário (novo) | Curto cliente encerrado |
-| 22.1 | Maturação AF (novo) | D-90 contato preventivo |
-| 22.2 | Maturação AF (novo) | D-60 solicitar documentos atualizados |
-| 22.3 | Maturação AF (novo) | D-0 protocolar imediato |
-
-Os textos sugeridos para esses 9 gaps estão para aprovação no chat antes de incorporar à v3.
+| 7.13 | VII Pagamento (estendido) | D+30 cobrança amigável |
+| 7.14 | VII Pagamento (estendido) | D+60 última tentativa amigável |
+| 7.15 | VII Pagamento (estendido) | D+90 notificação extrajudicial preliminar |
+| 21.1 | XXI Aniversário (novo) | Cordial cliente ativo |
+| 21.2 | XXI Aniversário (novo) | Cordial + lembrete proximidade aposentadoria |
+| 21.3 | XXI Aniversário (novo) | Curto cliente encerrado |
+| 22.1 | XXII Maturação AF (novo) | D-90 contato preventivo |
+| 22.2 | XXII Maturação AF (novo) | D-60 solicitar documentos atualizados |
+| 22.3 | XXII Maturação AF (novo) | D-0 protocolar imediato |
