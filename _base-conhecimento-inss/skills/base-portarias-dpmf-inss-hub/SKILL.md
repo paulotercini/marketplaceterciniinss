@@ -1,6 +1,6 @@
 ---
 name: base-portarias-dpmf-inss-hub
-description: "Hub completo das Portarias DPMF, DIRBEN e correlatas do INSS, aplicáveis a TODA análise de benefício previdenciário. Use SEMPRE que mencionar Portaria DPMF INSS, Portaria DIRBEN INSS, Portaria 990/2022 CNIS RAC, Portaria 991/2022 concessão revisão, Portaria 992/2022 RMI, Portaria 1316/2025, Portarias 1056/2022 1231/2024 1309/2025 1318/2025 IEA, Portarias 1310/2025 1333/2026 reabilitação, Portaria MPS 462/2026 RICRPS, Portarias 1079/2022 1209/2024 1240/2024 1251/2025 1299/2025 alterações 990, Portaria 19/2026 Teleperícia, Portarias Conjuntas 13 14 15/2026 análise documental B31 B91 B94, Portaria MTP 672/2021 EPI, Portaria 6734/2020 PCMSO, Portaria Conjunta SPS INSS SNAS 2/2014 BPC, Portaria Interministerial 1/2015 IF-BrA. Cruza com cnis-acerto-indicadores, base-erro-administrativo-iea-13975, base-segurado-especial-autodeclaracao-arts-92-93-94, peticao-previdenciaria, precedentes-previdenciarios."
+description: "Hub completo das Portarias DPMF, DIRBEN e correlatas do INSS, aplicáveis a TODA análise de benefício previdenciário. Use SEMPRE que mencionar Portaria DPMF INSS, Portaria DIRBEN INSS, Portaria 990/2022 CNIS RAC, Portaria 991/2022 concessão revisão, Portaria 992/2022 RMI, Portaria 1316/2025, Portarias 1056/2022 1231/2024 1309/2025 1318/2025 IEA, Portarias 1310/2025 1333/2026 reabilitação, Portaria MPS 462/2026 RICRPS, Portarias 1079/2022 1209/2024 1240/2024 1251/2025 1299/2025 alterações 990, Portaria 19/2026 Teleperícia, Portarias Conjuntas 13 14 15/2026 análise documental B31 B91 B94, Portaria MTP 672/2021 EPI, Portaria 6734/2020 PCMSO, Portaria Conjunta SPS INSS SNAS 2/2014 BPC, Portaria Interministerial 1/2015 IF-BrA, Portaria Conjunta MGI/MDS/MPS nº 23/2026 biometria CIN seguridade social, cadastro biométrico obrigatório benefício INSS prazo 31 dezembro 2026. Cruza com cnis-acerto-indicadores, base-erro-administrativo-iea-13975, base-segurado-especial-autodeclaracao-arts-92-93-94, peticao-previdenciaria, precedentes-previdenciarios, base-biometria-cin-seguridade-social."
 ---
 
 # Hub das Portarias DPMF, DIRBEN e correlatas. INSS
@@ -191,7 +191,25 @@ TCQ (Teste de Conjugação Qualitativa). Lógica de avaliação multidisciplinar
 
 Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-longo-prazo` e `analise-bpc-loas`.
 
-## 16. Tabela síntese das portarias por tema
+## 16. Portaria Conjunta MGI/MDS/MPS nº 23, de 29/04/2026. Biometria CIN. Benefícios da Seguridade Social
+
+Publicada no DOU em 30/04/2026 (Seção 1, ID 702405857).
+
+Estabelece prazo de 31/12/2026 para que beneficiários de Bolsa Família, salário-maternidade, auxílio por incapacidade, pensão por morte, seguro-desemprego e abono salarial realizem cadastramento biométrico junto ao sistema da CIN.
+
+Dispensa para impossibilitados de locomoção por mais de 30 dias mediante atestado médico expresso.
+
+Fluxo de não cumprimento: bloqueio do valor (reversível), defesa administrativa, suspensão, regularização em 30 dias, cessação (exige novo requerimento).
+
+Prazos diferenciados: sem biometria anterior, prazo para CIN é jan/2027; com biometria TSE/CNH/passaporte, CIN obrigatória a partir de jan/2028.
+
+Aplicação. Toda análise de manutenção, renovação ou novo requerimento de benefício deve verificar se o titular possui cadastro biométrico vigente.
+
+Detalhamento completo em `base-biometria-cin-seguridade-social`.
+
+Link oficial: https://www.in.gov.br/web/dou/-/portaria-conjunta-mgi/mds/mps-n-23-de-29-de-abril-de-2026-702405857
+
+## 17. Tabela síntese das portarias por tema
 
 | Tema | Portaria | Skill detalhada |
 |---|---|---|
@@ -210,56 +228,57 @@ Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-lon
 | PCMSO | MTP 6734/2020 | (transversal em saúde ocupacional) |
 | IF-BrA aposentadoria PCD | Interministerial 1/2015 | base-pcd-if-bra-metodologia |
 | BPC biopsicossocial | Conjunta SPS/INSS/SNAS 2/2014 | base-bpc-impedimento-longo-prazo |
+| Biometria CIN seguridade social | Conjunta MGI/MDS/MPS 23/2026 | base-biometria-cin-seguridade-social |
 
-## 17. Aplicação a cada análise de benefício
+## 18. Aplicação a cada análise de benefício
 
-### 17.1. Aposentadoria por idade
+### 18.1. Aposentadoria por idade
 
 Verificar CNIS e indicadores via Portaria 990/2022. Aplicar Portaria 991/2022 para procedimento. Aplicar Portaria 992/2022 para cálculo da RMI. Em caso de período rural, aplicar arts. 92-94 da 990 (autodeclaração).
 
-### 17.2. Aposentadoria por tempo de contribuição
+### 18.2. Aposentadoria por tempo de contribuição
 
 Mesmo fluxo. Adicionalmente verificar reafirmação DER e melhor benefício.
 
-### 17.3. Aposentadoria especial
+### 18.3. Aposentadoria especial
 
 Portarias correlatas. Portaria 990/2022 para CNIS. Portaria 991/2022 para procedimento. Portaria MTP 672/2021 para EPI.
 
-### 17.4. Aposentadoria PCD
+### 18.4. Aposentadoria PCD
 
 Portarias correlatas. Portaria Interministerial 1/2015 para IF-BrA. Portaria 991/2022 para procedimento.
 
-### 17.5. Auxílio-doença, aposentadoria por invalidez, auxílio-acidente
+### 18.5. Auxílio-doença, aposentadoria por invalidez, auxílio-acidente
 
-Portarias correlatas. Portarias Conjuntas MPS/INSS 13, 14 e 15/2026 para análise documental. Portaria DPMF/INSS 19/2026 para Teleperícia. Portaria 991/2022 para procedimento. Portarias DIRBEN 1310/2025 e 1333/2026 para reabilitação.
+Portarias correlatas. Portarias Conjuntas MPS/INSS 13, 14 e 15/2026 para análise documental. Portaria DPMF/INSS 19/2026 para Teleperícia. Portaria 991/2022 para procedimento. Portarias DIRBEN 1310/2025 e 1333/2026 para reabilitação. Portaria Conjunta MGI/MDS/MPS 23/2026 para verificação de biometria do titular.
 
-### 17.6. Pensão por morte
+### 18.6. Pensão por morte
 
-Portaria 991/2022 para procedimento. Portaria 992/2022 para cálculo.
+Portaria 991/2022 para procedimento. Portaria 992/2022 para cálculo. Portaria Conjunta MGI/MDS/MPS 23/2026 para verificação de biometria do requerente.
 
-### 17.7. BPC/LOAS
+### 18.7. BPC/LOAS
 
-Portaria Conjunta SPS/INSS/SNAS 2/2014 para avaliação biopsicossocial. Portaria 991/2022 para procedimento.
+Portaria Conjunta SPS/INSS/SNAS 2/2014 para avaliação biopsicossocial. Portaria 991/2022 para procedimento. Portaria Conjunta MGI/MDS/MPS 23/2026 para biometria (ver `base-biometria-cin-seguridade-social`).
 
-### 17.8. Salário-maternidade
+### 18.8. Salário-maternidade
 
-Portaria 991/2022 para procedimento. Em rural, arts. 92-94 da 990 (autodeclaração).
+Portaria 991/2022 para procedimento. Em rural, arts. 92-94 da 990 (autodeclaração). Portaria Conjunta MGI/MDS/MPS 23/2026 para verificação de biometria.
 
-### 17.9. Auxílio-reclusão
+### 18.9. Auxílio-reclusão
 
 Portaria 991/2022 para procedimento.
 
-### 17.10. Recurso administrativo CRPS
+### 18.10. Recurso administrativo CRPS
 
 Portaria MPS 462/2026 para o RICRPS.
 
-### 17.11. Erro administrativo (IEA)
+### 18.11. Erro administrativo (IEA)
 
 Portarias DIRBEN 1056/2022, 1231/2024, 1309/2025, 1318/2025.
 
-## 18. Estratégias pró-segurado em cada portaria
+## 19. Estratégias pró-segurado em cada portaria
 
-### 18.1. Em geral
+### 19.1. Em geral
 
 A Portaria não vincula o juízo. Em sede judicial, é apenas referência.
 
@@ -267,35 +286,39 @@ Toda exigência da Portaria que extrapole a Lei é derrotável.
 
 Em recurso administrativo, atacar tanto o ato concreto quanto a interpretação restritiva da própria Portaria.
 
-### 18.2. Portaria 990/2022
+### 19.2. Portaria 990/2022
 
 Em CNIS com indicadores, aplicar acerto via RAC. Ver `cnis-acerto-indicadores`.
 
 Em autodeclaração rural, aplicar §5º do art. 94 sempre que possível. Ver `base-segurado-especial-autodeclaracao-arts-92-93-94`.
 
-### 18.3. Portaria 991/2022
+### 19.3. Portaria 991/2022
 
 Em mora administrativa, aplicar prazos do art. 49 da Lei 9.784/1999, art. 41-A §5º da Lei 8.213/1991 e parâmetro do RE 1.171.152/SC (90 dias).
 
 Em silêncio administrativo, MS por omissão.
 
-### 18.4. Portaria 992/2022
+### 19.4. Portaria 992/2022
 
 Em RMI inferior à esperada, verificar atividade concomitante (Tema 1.070/STJ), revisão da vida toda (Tema 1.102/STF), revisão do teto, art. 29 II, IRSM, ORTN/OTN.
 
-### 18.5. Portarias DIRBEN 1056-1309 (IEA)
+### 19.5. Portarias DIRBEN 1056-1309 (IEA)
 
 Provocar nominalmente as autoridades legitimadas a abrir IEA. Ver `base-erro-administrativo-iea-13975`.
 
-### 18.6. Portarias Conjuntas 13, 14, 15/2026
+### 19.6. Portarias Conjuntas 13, 14, 15/2026
 
 Em análise documental rejeitada, requerer Teleperícia. Em recusa de Teleperícia, fundamentar como cerceamento de defesa.
 
-### 18.7. Portaria 19/2026 (Teleperícia)
+### 19.7. Portaria 19/2026 (Teleperícia)
 
 Em casos complexos, requerer perícia presencial.
 
-## 19. Documentos institucionais consultáveis
+### 19.8. Portaria Conjunta MGI/MDS/MPS 23/2026 (Biometria)
+
+Orientar clientes a regularizar biometria antes de 31/12/2026. Em bloqueio indevido, protocolar defesa imediatamente. Em cessação sem notificação prévia, impugnar como cerceamento de defesa. Para impossibilitados de locomoção, protocolar atestado médico expresso antes do bloqueio. Detalhamento em `base-biometria-cin-seguridade-social`.
+
+## 20. Documentos institucionais consultáveis
 
 Diário Oficial da União (DOU) para todas as Portarias.
 
@@ -311,13 +334,13 @@ Portal SciELO. Para doutrina aplicada.
 
 Portal CRPS. Para Resoluções e Enunciados.
 
-## 20. Integração com outras skills
+## 21. Integração com outras skills
 
 Detalhamento de cada portaria em skills específicas. Esta skill é hub orquestrador.
 
 CNIS. `cnis-acerto-indicadores`.
 
-Autodeclaração rural. `base-segurado-especial-autodeclaracao-arts-92-93-94`.
+Autodeclaração rural. `base-segurado-especial-autodeclaracao-arts-92-93-oca-arts-92-93-94`.
 
 IEA. `base-erro-administrativo-iea-13975`.
 
@@ -335,6 +358,8 @@ BPC. `analise-bpc-loas`, `base-bpc-impedimento-longo-prazo`.
 
 Aposentadoria PCD. `aposentadoria-deficiencia`, `base-pcd-if-bra-metodologia`.
 
+Biometria CIN. `base-biometria-cin-seguridade-social`.
+
 Triagem. `triagem-caso-novo`.
 
 Petição. `peticao-previdenciaria`.
@@ -345,7 +370,7 @@ Precedentes. `precedentes-previdenciarios`.
 
 Fungibilidade. `base-fungibilidade-previdenciaria`.
 
-## 21. Alertas
+## 22. Alertas
 
 Primeiro, sempre verificar a vigência das Portarias antes de citar (DOU).
 
@@ -361,7 +386,9 @@ Sexto, em todo procedimento administrativo, identificar QUAL Portaria rege QUAL 
 
 Sétimo, em estratégia processual, mapear todas as Portarias aplicáveis ao caso e usar como reforço normativo.
 
-## 22. Doutrina de apoio
+Oitavo, a IN PRES/INSS 203/2026 (DOU 24/04/2026) inseriu o art. 576-A na IN 128/2022, vedando novo requerimento enquanto houver processo em curso da mesma espécie (exceto pedido de revisão). Monitorar os efeitos sobre a estratégia de refazimento de requerimentos.
+
+## 23. Doutrina de apoio
 
 Frederico Amado. Direito Previdenciário.
 
@@ -379,7 +406,7 @@ Daniel Pulino. Aposentadoria por Invalidez.
 
 José Antônio Savaris. Direito Processual Previdenciário.
 
-## 23. O que NÃO está nesta skill
+## 24. O que NÃO está nesta skill
 
 Detalhamento operacional de cada Portaria. Está em skills específicas.
 
@@ -389,6 +416,15 @@ Cálculo concreto de RMI. Está em skills de cálculo.
 
 Texto integral das Portarias. Consultar fontes oficiais.
 
-## 24. Fontes
+## 25. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+
+## Atualização DOU 30/04/2026
+Norma: Portaria Conjunta, nº 23, 29 de abril de 2026
+Órgão: Ministério da Gestão e da Inovação em Serviços Públicos, Ministério do Desenvolvimento Social, Ministério da Previdência Social
+Vigência: 30 de abril de 2026
+Resumo da alteração: Inserida na Seção 16 e na Tabela 17 nova entrada referente à obrigatoriedade do cadastro biométrico CIN para benefícios da seguridade social. Prazo de 31/12/2026 para regularização. Todas as análises de manutenção ou renovação de benefício devem verificar situação biométrica do titular. Detalhamento em skill específica base-biometria-cin-seguridade-social.
+Impacto na advocacia: Ação imediata de triagem de clientes sem biometria. Risco de bloqueio a partir de jan/2027 para quem não regularizar.
+Estratégia: Ver base-biometria-cin-seguridade-social para o protocolo completo.
+Link oficial: https://www.in.gov.br/web/dou/-/portaria-conjunta-mgi/mds/mps-n-23-de-29-de-abril-de-2026-702405857
