@@ -131,3 +131,12 @@ O IBDP sustenta a proteção integral ao requerente do BPC.
 ## O que NÃO está nesta skill
 
 Renda per capita, critérios de miserabilidade, exclusões e Decreto 12.534/2025 estão em `base-bpc-renda-per-capita-miserabilidade`. Impedimento de longo prazo, avaliação biopsicossocial, TCQ, IFBrM estão em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD pela LC 142/2013 está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos detalhados estão em `base-bpc-aposentadoria-pcd-procedimentos`.
+
+## Atualização DOU 05/05/2026
+Norma: Instrução Normativa nº 54/SENARC/MDS, de 30 de abril de 2026
+Órgão: MDS — Secretaria Nacional de Renda de Cidadania (SENARC)
+Vigência: 5 de maio de 2026 (data de publicação no DOU)
+Resumo da alteração: A IN 54/SENARC/MDS estabelece procedimentos para o desligamento voluntário de famílias beneficiárias do Programa Bolsa Família (PBF). O ato normativo prevê três modalidades de solicitação de desligamento: por gestão municipal, pelo aplicativo Bolsa Família e pelo INSS no momento do requerimento do BPC, quando o próprio sistema constata incompatibilidade de renda entre o PBF e os critérios de acesso ao BPC. O desligamento via INSS ocorre mediante anuência registrada pelo requerente na abertura do processo de BPC. A norma não altera os requisitos de concessão do BPC, mas formaliza e padroniza o fluxo de saída automática do PBF quando a família opta pelo BPC.
+Impacto na advocacia: Clientes que recebem Bolsa Família e pretendem requerer BPC devem ser orientados sobre o desligamento automático do PBF que ocorrerá ao protocolar o requerimento de BPC com declaração de anuência. Esse desligamento é irrevogável pelo canal eletrônico; se o BPC for indeferido, a família precisará se recadastrar no PBF por via municipal ou pelo aplicativo. O escritório deve documentar a ciência do cliente sobre esse efeito antes de abrir o requerimento de BPC.
+Estratégia: Antes de protocolar BPC para cliente que recebe PBF, confirmar por escrito (whatsapp ou e-mail no prontuário) que o cliente tem ciência do desligamento automático e do risco de perda temporária do PBF em caso de indeferimento. Verificar se o perfil do cliente já indica alto grau de êxito no BPC antes de aceitar o desligamento. Em caso de indeferimento posterior, orientar imediato recadastramento no CadÚnico municipal e recurso administrativo ao CRPS com pedido de efeito suspensivo.
+Link oficial: https://idprevidenciario.com.br/instrucao-normativa-no-54-senarc-mds-de-30-de-abril-de-2026/

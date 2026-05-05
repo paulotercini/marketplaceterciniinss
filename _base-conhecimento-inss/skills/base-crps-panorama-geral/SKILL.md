@@ -120,3 +120,12 @@ IBDP, advocacia administrativa.
 ## O que NÃO está nesta skill
 
 Admissibilidade em detalhe em `admissibilidade-barreiras-crps`. Recurso especial e Pleno em `recursos-superiores-crps`. Embargos, diligências e incidentes em `incidentes-instrucao-crps`.
+
+## Atualização DOU 05/05/2026
+Norma: Instrução Normativa PRES/INSS nº 203, de 22 de abril de 2026
+Órgão: INSS — Presidência
+Vigência: 24 de abril de 2026 (data de publicação no DOU)
+Resumo da alteração: O prazo recursal de 30 dias para o CRPS ganhou consequência adicional a partir de 24/04/2026. Enquanto esse prazo estiver em curso, o segurado fica impedido de protocolar novo requerimento para a mesma espécie de benefício (art. 576-A inserido na IN 128/2022 pela IN 203/2026). O bloqueio é automático no Meu INSS. Isso reforça a importância estratégica de interpor o recurso ordinário ao CRPS dentro do prazo: não interpor recurso significa esperar 30 dias em branco antes de poder reprotocolar, com nova DIB prejudicada. A revisão administrativa permanece disponível como alternativa e não está sujeita à vedação.
+Impacto na advocacia: O advogado deve tratar o recurso ao CRPS como via preferencial imediata após qualquer indeferimento de aposentadoria, pensão por morte ou BPC, mesmo quando a documentação precisaria ser complementada. A complementação de documentos se faz no bojo do recurso, não por meio de reprotocolo. Clientes que naturalmente pediriam novo protocolo com novo documento devem ser orientados a constituir recurso primeiro.
+Estratégia: Ao receber ciência de indeferimento, abrir contagem de 30 dias para recurso ordinário. Protocolar o recurso com os documentos disponíveis e requerer diligência para complementação se necessário. Isso preserva a DER original, impede bloqueio e mantém o processo ativo no CRPS. Somente após esgotado o prazo e não interposto recurso é possível reprotocolar.
+Link oficial: https://legisjet.com.br/conteudo/instrucao-normativa-presinss-n-203-de-22-de-abril-de-2026-dou-de-24-04-2026/

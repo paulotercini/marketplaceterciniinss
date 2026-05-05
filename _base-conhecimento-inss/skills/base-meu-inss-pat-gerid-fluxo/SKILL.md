@@ -136,3 +136,12 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 05/05/2026
+Norma: Instrução Normativa PRES/INSS nº 203, de 22 de abril de 2026
+Órgão: INSS — Presidência
+Vigência: 24 de abril de 2026 (data de publicação no DOU)
+Resumo da alteração: A IN 203/2026 inseriu o art. 576-A na IN PRES/INSS nº 128/2022, vedando expressamente a apresentação de novo requerimento enquanto houver processo em curso referente à mesma espécie de benefício. Para fins da norma, o processo é considerado pendente enquanto não transcorrer o prazo de 30 dias para interposição de recurso ao CRPS. A vedação incide sobre aposentadorias, pensão por morte e BPC, mas não alcança os benefícios por incapacidade (auxílio-doença e aposentadoria por invalidez). O bloqueio é automático no sistema Meu INSS — o portal impede o protocolo de nova solicitação idêntica antes de encerrado o prazo recursal. A revisão permanece disponível como via alternativa ao novo requerimento.
+Impacto na advocacia: O escritório precisa adotar protocolo reforçado de pré-análise antes de qualquer reprotocolo administrativo. Clientes que tiveram benefício indeferido e ainda estejam no prazo recursal de 30 dias não conseguirão abrir novo pedido no Meu INSS. Casos em que a estratégia era reprotocolar com documentação complementar devem ser revistos: a partir de agora, a via correta é o recurso ao CRPS dentro do prazo, não o reprotocolo. A DIB do reprotocolo seria posterior de qualquer forma; o recurso preserva a DER original.
+Estratégia: Ao receber indeferimento, protocolar recurso ordinário ao CRPS dentro dos 30 dias, juntando a documentação que embasaria o reprotocolo. Somente após esgotado o prazo recursal e não interposto recurso o segurado poderá apresentar novo requerimento. Em casos de urgência (benefício por incapacidade bloqueado), verificar se a espécie é excluída da vedação e, se for, instruir normalmente. Para bloqueios indevidos por falha do sistema, preservar a tentativa de protocolo com print da tela para argüir força maior.
+Link oficial: https://legisjet.com.br/conteudo/instrucao-normativa-presinss-n-203-de-22-de-abril-de-2026-dou-de-24-04-2026/
