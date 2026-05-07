@@ -128,6 +128,12 @@ Marco Aurélio Serau Junior analisa a proteção social brasileira.
 
 O IBDP sustenta a proteção integral ao requerente do BPC.
 
+## Cruzamento com Onda 24
+
+Para anuência ao desligamento do PBF no requerimento do BPC pela IN 54/SENARC/MDS/2026, vício de consentimento e Termo de Anuência Condicional, acionar `base-bpc-pbf-anuencia-in54-2026`.
+
+Para validação formal de laudo médico de deficiência funcional pelo Checklist B do escritório (BPC e Aposentadoria PCD), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
+
 ## O que NÃO está nesta skill
 
-Renda per capita, critérios de miserabilidade, exclusões e Decreto 12.534/2025 estão em `base-bpc-renda-per-capita-miserabilidade`. Impedimento de longo prazo, avaliação biopsicossocial, TCQ, IFBrM estão em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD pela LC 142/2013 está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos detalhados estão em `base-bpc-aposentadoria-pcd-procedimentos`.
+Renda per capita, critérios de miserabilidade, exclusões e Decreto 12.534/2025 estão em `base-bpc-renda-per-capita-miserabilidade`. Impedimento de longo prazo, avaliação biopsicossocial, TCQ, IFBrM estão em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD pela LC 142/2013 está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos detalhados estão em `base-bpc-aposentadoria-pcd-procedimentos`. Anuência ao desligamento do PBF está em `base-bpc-pbf-anuencia-in54-2026`.

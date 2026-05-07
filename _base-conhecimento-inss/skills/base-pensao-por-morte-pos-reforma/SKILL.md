@@ -121,6 +121,10 @@ Wladimir Novaes Martinez analisa a comprovação da união estável e defende a 
 
 O IBDP sustenta institucionalmente o direito dos dependentes à proteção integral.
 
+## Cruzamento com Onda 24
+
+Para acumulação de pensão por morte com aposentadoria sob EC 103/2019 art. 24, redutores progressivos e direito adquirido, acionar `base-acumulacao-beneficios-ec103-art24`.
+
 ## O que NÃO está nesta skill
 
-Não está aqui o auxílio-reclusão B25, objeto de `base-auxilio-reclusao-pos-reforma`. Não estão aqui os detalhes administrativos de requerimento, objeto de `requerimento-administrativo-inss`. Não está aqui o cálculo específico de RMI da aposentadoria originária, objeto de `base-calculo-rmi-ec103`.
+Não está aqui o auxílio-reclusão B25, objeto de `base-auxilio-reclusao-pos-reforma`. Não estão aqui os detalhes administrativos de requerimento, objeto de `requerimento-administrativo-inss`. Não está aqui o cálculo específico de RMI da aposentadoria originária, objeto de `base-calculo-rmi-ec103`. Não está aqui a acumulação sob EC 103/2019 art. 24, objeto de `base-acumulacao-beneficios-ec103-art24`.
