@@ -1,6 +1,6 @@
 ---
 name: base-salario-maternidade-pos-reforma
-description: "Salário-maternidade B80/B81 pós EC 103/2019, ótica pró-segurada. Use SEMPRE que mencionar salário-maternidade, B80, B81, B82, B83, licença-maternidade, art. 71 Lei 8.213, art. 72, art. 73, 120 dias maternidade, parto, adoção, guarda judicial para adoção, aborto não criminoso, natimorto, segurada especial rural maternidade, MEI maternidade, desempregada salário-maternidade, LC 146/2014 prorrogação morte mãe, Lei 12.873/2013 pai adotante, Lei 14.457/2022, prorrogação 180 dias Empresa Cidadã, art. 26 VI isenção carência maternidade, carência 10 contribuições CI/facultativa, carência desempregada 10 contribuições, Tema 149 TNU, Súmula 37 TNU, Tema 245 TNU, aborto espontâneo, óbito mãe pai, natimorto B81, qualidade segurada DIB, Portaria 991/2022, Portaria 992/2022. Cruza com peticao-previdenciaria, documentos-comprobatorios-in128, periodo-graca-qualidade-segurado, segurado-especial-rural, perspectiva-genero-previdenciario e precedentes-previdenciarios."
+description: "Salário-maternidade B80/B81 pós EC 103/2019, ótica pró-segurada. Use SEMPRE que mencionar salário-maternidade, B80, B81, B82, B83, licença-maternidade, art. 71 Lei 8.213, art. 72, art. 73, 120 dias maternidade, parto, adoção, guarda judicial para adoção, aborto não criminoso, natimorto, segurada especial rural maternidade, MEI maternidade, desempregada salário-maternidade, LC 146/2014 prorrogação morte mãe, Lei 12.873/2013 pai adotante, Lei 14.457/2022, prorrogação 180 dias Empresa Cidadã, art. 26 VI isenção carência maternidade, carência 10 contribuições CI/facultativa, carência desempregada 10 contribuições, Tema 149 TNU, Súmula 37 TNU, Tema 245 TNU, aborto espontâneo, óbito mãe pai, natimorto B81, qualidade segurada DIB, Portaria 991/2022, Portaria 992/2022, biometria salário-maternidade, CIN maternidade, Portaria Conjunta nº 23/2026 salário-maternidade, biometria concessão maternidade. Cruza com peticao-previdenciaria, documentos-comprobatorios-in128, periodo-graca-qualidade-segurado, segurado-especial-rural, perspectiva-genero-previdenciario, base-biometria-cin-beneficios-inss e precedentes-previdenciarios."
 ---
 
 # Salário-Maternidade (B80/B81) Pós EC 103/2019
@@ -140,3 +140,12 @@ O IBDP sustenta institucionalmente a proteção integral à maternidade.
 ## O que NÃO está nesta skill
 
 Não está aqui o salário-família, objeto de `base-salario-familia-quota`. Não está aqui o seguro-defeso feminino, objeto de `base-seguro-defeso-pescador-artesanal`. Não está aqui a pensão por morte em caso de óbito da mãe, objeto de `base-pensao-por-morte-pos-reforma`.
+
+## Atualização DOU 07/05/2026
+Norma: Portaria Conjunta MGI/MDS/MPS nº 23, de 29 de abril de 2026
+Órgão: Ministério da Gestão e Inovação, Ministério do Desenvolvimento Social, Ministério da Previdência Social
+Vigência: a partir de 30/04/2026; prazo-limite para novas concessões/manutenções: 31/12/2026
+Resumo da alteração: A Portaria Conjunta nº 23/2026 inclui o salário-maternidade entre os benefícios que exigirão biometria CIN para concessão e manutenção a partir de 31/12/2026. Seguradas sem cadastro biométrico na CIN que solicitarem o salário-maternidade após essa data precisarão regularizar a biometria para que o benefício seja processado. Pessoas impossibilitadas de comparecer por motivo de saúde por período superior a 30 dias têm direito à dispensa mediante atestado médico.
+Impacto na advocacia: Seguradas clientes do escritório que estejam gestantes ou em licença-maternidade com DIB após 31/12/2026 devem ser orientadas a emitir a CIN com urgência. Seguradas que solicitaram o benefício antes do prazo e ainda estão em gozo não são afetadas pela exigência enquanto o benefício vigente estiver ativo.
+Estratégia: Incluir verificação de CIN/biometria no checklist de documentação para concessão de salário-maternidade. Para seguradas impossibilitadas por condição obstétrica ou de saúde: protocolar dispensa com atestado médico.
+Link oficial: https://www.in.gov.br/web/dou/-/portaria-conjunta-mgi/mds/mps-n-23-de-29-de-abril-de-2026-702405857
