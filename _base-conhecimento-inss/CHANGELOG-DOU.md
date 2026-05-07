@@ -4,6 +4,23 @@ Registro automático de alterações no plugin oriundas da rotina diária de mon
 
 ---
 
+## 07/05/2026 - Compilado DOU 03 a 06/05/2026
+
+**Nota:** 03/05 foi domingo (sem edição). Varredura das edições 81 (04/05), 82 (05/05) e 83 (06/05) via dou_busca.py com curl.
+
+### Skill criada: base-inss-empresa-portaria156-2026
+Norma: Portaria DTI/DIRBEN/INSS nº 156, de 28 de abril de 2026
+Órgão: INSS — Diretoria de Tecnologia da Informação e Diretoria de Benefícios
+Vigência: a partir de 15/05/2026
+Resumo: Institui o sistema INSS Empresa, canal digital que permite a empregadores consultar dados de benefícios previdenciários dos empregados (espécie, datas de requerimento, concessão, início, cessação e situação atual). Acesso via certificado digital CNPJ/gov.br, com delegação a terceiros. Entra em vigor em 15/05/2026. Skill cobre riscos de dispensa discriminatória, violação da LGPD e estratégias de defesa do segurado.
+Link oficial: https://www.in.gov.br/web/dou/-/portaria-dti/dirben/inss-n-156-de-28-de-abril-de-2026-703477073
+
+### Skill já existente referenciada: base-consignado-inss-in204-2026
+Norma: Instrução Normativa PRES/INSS nº 204, de 04 de maio de 2026 (edição 81)
+Nota: skill criada no ciclo de 07/05/2026; nenhuma atualização adicional necessária.
+
+---
+
 ## 07/05/2026 - Monitoramento DOU
 
 **Nota sobre disponibilidade:** Portal in.gov.br retornou HTTP 502 em todos os endpoints. Varredura realizada via gov.br, Legisweb, Agência Brasil e portais especializados.
