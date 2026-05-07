@@ -55,6 +55,10 @@ Ao discutir cerceamento de defesa por ausência de perícia, acione `defesa-prob
 Ao verificar precedentes vinculantes, acione `precedentes-previdenciarios`.
 Ao pedir retificação do PPP à empresa, acione `retificacao-ppp`.
 
+## Cruzamento com Onda 24
+
+Para tolueno via cutânea com aplicação do Anexo 13 da NR-15 e ratio do Tema 382/TNU PUIL 5012678 estendida ao tolueno por absorção dérmica, acionar `base-tolueno-tema-382-tnu-via-cutanea`. Esta skill é fonte primária para sapateiro, gráfica, oficina mecânica, indústria de tintas e frentista.
+
 ## O que NÃO está nesta skill
 
-Não há regras sobre ruído, vibração, eletricidade, periculosidade, calor ou agentes biológicos. Cada um tem skill específica.
+Não há regras sobre ruído, vibração, eletricidade, periculosidade, calor ou agentes biológicos. Cada um tem skill específica. Tolueno via cutânea com Tema 382/TNU em `base-tolueno-tema-382-tnu-via-cutanea`.

@@ -132,6 +132,10 @@ Marco Aurélio Serau Junior analisa a proteção social.
 
 O IBDP sustenta a proteção integral.
 
+## Cruzamento com Onda 24
+
+Para anuência ao desligamento do PBF no requerimento do BPC pela IN 54/SENARC/MDS/2026, vício de consentimento e Termo de Anuência Condicional, acionar `base-bpc-pbf-anuencia-in54-2026`. Esta skill é diretamente complementar pelo Decreto 12.534/2025.
+
 ## O que NÃO está nesta skill
 
-Requisitos estruturais gerais estão em `base-bpc-loas-requisitos`. Impedimento de longo prazo está em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos estão em `base-bpc-aposentadoria-pcd-procedimentos`.
+Requisitos estruturais gerais estão em `base-bpc-loas-requisitos`. Impedimento de longo prazo está em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos estão em `base-bpc-aposentadoria-pcd-procedimentos`. Anuência ao desligamento do PBF está em `base-bpc-pbf-anuencia-in54-2026`.

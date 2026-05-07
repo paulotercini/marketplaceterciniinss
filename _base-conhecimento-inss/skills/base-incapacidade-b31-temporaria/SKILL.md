@@ -106,6 +106,10 @@ Wladimir Novaes Martinez analisa a transitoriedade do benefício e defende a con
 
 O IBDP sustenta institucionalmente o direito do segurado à concessão ampla do B31 e à proteção durante a recuperação da capacidade laboral.
 
+## Cruzamento com Onda 24
+
+Para validação formal de relatório médico de incapacidade pelo Checklist A do escritório (B31, B91, B92, B94), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
+
 ## O que NÃO está nesta skill
 
-Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`.
+Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.
