@@ -119,6 +119,12 @@ Jane Berwanger, processo previdenciário.
 
 IBDP, advocacia previdenciária.
 
+## Cruzamento com Onda 26
+
+Para filtro crítico de admissibilidade de PUIL/PEDILEF na TNU/TRU pela Súmula 43/TNU (vedação à matéria processual) e estratégia de revestimento da tese como direito material, acionar OBRIGATORIAMENTE `base-puil-pedilef-vedacao-materia-processual` ANTES de redigir qualquer PUIL ou PEDILEF.
+
+A lição é. Argumentos puramente processuais (cerceamento de defesa, ônus da prova, regularidade procedimental) levam à inadmissão automática pela Súmula 43/TNU. Toda tese deve ser revestida como interpretação de NORMA DE DIREITO MATERIAL. Endurecimento jurisprudencial recente em PUIL 1028473-09.2022.4.01.3600 (TNU 12/12/2025).
+
 ## O que NÃO está nesta skill
 
-Rito ordinário e apelação estão em `base-rito-ordinario-trf`. CRPS está em `base-crps-panorama-geral`. Execução está em `base-cumprimento-sentenca-rpv-precatorio`.
+Rito ordinário e apelação estão em `base-rito-ordinario-trf`. CRPS está em `base-crps-panorama-geral`. Execução está em `base-cumprimento-sentenca-rpv-precatorio`. Filtro crítico de admissibilidade de PUIL/PEDILEF está em `base-puil-pedilef-vedacao-materia-processual`.

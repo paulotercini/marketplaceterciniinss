@@ -321,7 +321,11 @@ Cruzamento com `pedilef-cotejo-analitico-tnu`.
 
 `base-portarias-dpmf-inss-hub` para Portarias DPMF.
 
-## 16. O que NÃO está nesta skill
+## 16. Cruzamento com Onda 26
+
+Para filtro crítico de admissibilidade de PUIL/PEDILEF na TNU/TRU pela Súmula 43/TNU (vedação à matéria processual) e estratégia de revestimento da tese como direito material, acionar OBRIGATORIAMENTE `base-puil-pedilef-vedacao-materia-processual` ANTES de redigir qualquer PUIL ou PEDILEF contra acórdão que aplicou Tema 1124 de ofício. A reformulação do argumento processual como divergência sobre a interpretação do art. 17 da Lei 10.259/2001 + Tema 350/STF é fundamental para a admissibilidade.
+
+## 17. O que NÃO está nesta skill
 
 Análise do mérito do Tema 1124 na fase administrativa em `tema-1124-instrucao-administrativa`.
 
@@ -329,6 +333,8 @@ Estratégia genérica de aposentadoria em `peticao-previdenciaria`.
 
 Cruzamento com a fungibilidade em `base-fungibilidade-previdenciaria`.
 
-## 17. Fontes
+Filtro de admissibilidade de PUIL/PEDILEF em `base-puil-pedilef-vedacao-materia-processual`.
+
+## 18. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
