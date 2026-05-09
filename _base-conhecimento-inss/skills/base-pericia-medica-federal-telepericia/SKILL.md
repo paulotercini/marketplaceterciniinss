@@ -104,26 +104,8 @@ Para B94, acione `base-auxilio-acidente-b94-pos-reforma`.
 Para BPC, acione `analise-bpc-loas` e `bpc-renda-grupo-familiar`.
 Para aposentadoria PCD, acione `aposentadoria-deficiencia`.
 Para MS contra demora ou cerceamento, acione `mandado-seguranca-previdenciario` e `ms-competencia-autoridade-coatora`.
-Para acessar e acompanhar a perícia agendada nos sistemas administrativos, acione `base-meu-inss-pat-gerid-fluxo`.
-Para fluxo de delegação do acompanhamento da perícia (D-7, D-3, D-1) ao apoio operacional, acione `processos-amanda-administrativo`.
-Para casos em que a perícia é etapa de protocolo de aposentadoria pendente, acione `base-aposentadoria-futura-pipeline`.
-
-## Volume operacional no escritório
-
-A auditoria de carteira de tarefas no Microsoft To Do identificou 158 menções a perícia médica em tarefas abertas, distribuídas principalmente em 🌻 INSS (59), 👪 Judicial (39), 🖥 Conselho de Recursos (13) e 🗓 Tarefas com Prazo (9). A perícia médica é, portanto, o ato administrativo mais frequente no pipeline operacional. Cada perícia agendada deve disparar:
-
-Primeiro, registro no body da tarefa em formato `[PERÍCIA]: DD/MM/AAAA - Local - Hora - Modalidade (presencial / Teleperícia / documental)`.
-
-Segundo, dueDateTime configurado para a data da perícia, e reminderDateTime configurado D-7 (lembrete ao escritório para preparar) e D-1 (lembrete ao cliente para confirmar comparecimento).
-
-Terceiro, lembrete ao cliente em D-7, D-3 e D-1 via WhatsApp com instruções (documentos a levar, antecedência, vestuário adequado, identidade vigente). Esta etapa é delegável a Amanda ou Ingrid pelo `processos-amanda-administrativo`.
-
-Quarto, no D+1, registrar resultado preliminar (compareceu / faltou / adiada) e iniciar o monitoramento do laudo via `base-meu-inss-pat-gerid-fluxo` (PAT mostra o laudo logo que disponível).
-
-Quinto, recebido o laudo, acionar `auditoria-laudo-pericial` e, se desfavorável, este SKILL.md para o caminho de impugnação ou recurso.
 
 ## Alertas
-
 
 Primeiro, Teleperícia não substitui perícia presencial quando há necessidade de exame físico. Cerceamento impugnável.
 
