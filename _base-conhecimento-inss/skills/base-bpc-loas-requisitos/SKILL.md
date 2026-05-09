@@ -134,6 +134,12 @@ Para anuência ao desligamento do PBF no requerimento do BPC pela IN 54/SENARC/M
 
 Para validação formal de laudo médico de deficiência funcional pelo Checklist B do escritório (BPC e Aposentadoria PCD), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
 
+## Cruzamento com Onda 27
+
+Para Cadastro Domiciliar do CadÚnico pelas INs SAGICAD/MDS 20/2026 e 21/2026, modalidade preferencial para PCD com mobilidade reduzida, obrigatoriedade para famílias unipessoais com BPC, dispensa em 8 hipóteses excepcionais (área de violência, indígena, quilombola, situação de rua, domicílio coletivo, etc.) e vedação ao caráter fiscalizatório, acionar `base-cadastro-domiciliar-cadunico-in21-2026`.
+
+REGRA CRÍTICA. A integração CadÚnico-CNIS NÃO autoriza a exclusão de membro do grupo familiar (Anexo I item 5.5 da IN 21/2026).
+
 ## O que NÃO está nesta skill
 
-Renda per capita, critérios de miserabilidade, exclusões e Decreto 12.534/2025 estão em `base-bpc-renda-per-capita-miserabilidade`. Impedimento de longo prazo, avaliação biopsicossocial, TCQ, IFBrM estão em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD pela LC 142/2013 está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos detalhados estão em `base-bpc-aposentadoria-pcd-procedimentos`. Anuência ao desligamento do PBF está em `base-bpc-pbf-anuencia-in54-2026`.
+Renda per capita, critérios de miserabilidade, exclusões e Decreto 12.534/2025 estão em `base-bpc-renda-per-capita-miserabilidade`. Impedimento de longo prazo, avaliação biopsicossocial, TCQ, IFBrM estão em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD pela LC 142/2013 está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos detalhados estão em `base-bpc-aposentadoria-pcd-procedimentos`. Anuência ao desligamento do PBF está em `base-bpc-pbf-anuencia-in54-2026`. Cadastro Domiciliar do CadÚnico está em `base-cadastro-domiciliar-cadunico-in21-2026`.

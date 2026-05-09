@@ -245,6 +245,10 @@ ADI 7765 (em construção). Pendente análise de constitucionalidade do Decreto 
 
 Acionar `base-portarias-dpmf-inss-hub` e `base-bpc-aposentadoria-pcd-procedimentos` para as Portarias aplicáveis ao procedimento.
 
-## 15. Fontes
+## 15. Cruzamento com Onda 27
+
+Para Cadastro Domiciliar do CadÚnico pelas INs SAGICAD/MDS 20/2026 e 21/2026 (modalidade preferencial PCD mobilidade reduzida, obrigatória famílias unipessoais BPC/PBF, dispensa em 8 hipóteses, vedação ao caráter fiscalizatório), acionar `base-cadastro-domiciliar-cadunico-in21-2026`. Esta skill é diretamente complementar à IN 54/2026.
+
+## 16. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.

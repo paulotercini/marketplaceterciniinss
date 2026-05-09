@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.16.0 entrega a Onda 26 Corretiva sobre admissibilidade de PUIL/PEDILEF na TNU/TRU. Cria a skill base-puil-pedilef-vedacao-materia-processual com cobertura completa da Súmula 43/TNU (vedação à matéria processual), do art. 14 da Lei 10.259/2001, das Resoluções CJF 586/2019 e CJF3R 80/2022, da distinção crítica entre direito material e direito processual, da estratégia de revestimento da tese processual aparente como divergência sobre interpretação de norma material, dos casos típicos do escritório (cerceamento por ausência de perícia em aposentadoria especial, NTEP afastado, DID retroativa não reconhecida, prova testemunhal rural rejeitada, reafirmação DER negada, Tema 1124 aplicado de ofício, análise documental indeferida em B31, avaliação biopsicossocial deficiente em BPC), do endurecimento jurisprudencial recente da PUIL 1028473-09.2022.4.01.3600 (TNU 12/12/2025) que repudia o tempero antigo (legitimidade, competência, direito de ação) e da estratégia recursal exaustiva (embargos de declaração com prequestionamento, agravo contra inadmissão monocrática, REsp subsequente, MS contra ato judicial). Atualiza base-recursos-jef e base-efeito-translativo-tema-1124-defesa com cross-references obrigatórias. A 1.15.0 entregou Onda 25 (Pacote Multi-Tema com 6 skills). A 1.14.0 Onda 24 Operacional. Versão 1.16.0, 115 skills ao todo (107 base-*, 6 ponte-* e 2 operacionais).",
-      "version": "1.16.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.17.0 entrega a Onda 27 Corretiva sobre Cadastro Domiciliar do CadÚnico, com fundamento nas INs SAGICAD/MDS 20/2026 (DOU 22/01/2026, dispensas) e 21/2026 (DOU 07/05/2026, regra geral) + Anexo I técnico. Cria a skill base-cadastro-domiciliar-cadunico-in21-2026 com cobertura do Cadastro Domiciliar como modalidade preferencial para PCD com mobilidade reduzida (art. 2º §1º), obrigatória para famílias unipessoais BPC/PBF (Lei 15.077/2024), das 8 hipóteses de dispensa (área de violência, localidade de difícil acesso, calamidade, programa de proteção, situação de rua, indígena, quilombola, domicílio coletivo), da distinção entre Visita Domiciliar e Cadastro Domiciliar, do CBO 4241-30 do entrevistador social, do Diário e Formulário de Campo (Anexo II), da vedação ao caráter fiscalizatório, da inviolabilidade do domicílio (CF art. 5º XI), da equipe mínima de dois servidores, da interrupção legítima em risco e da REGRA CRÍTICA de vedação à exclusão de membro familiar por renda no CNIS (Anexo I item 5.5). Atualiza base-bpc-loas-requisitos e base-bpc-pbf-anuencia-in54-2026 com cross-references obrigatórias. A 1.16.0 entregou Onda 26 (PUIL/PEDILEF Súmula 43/TNU). A 1.15.0 Onda 25 (Multi-Tema). A 1.14.0 Onda 24 Operacional. Versão 1.17.0, 116 skills ao todo (108 base-*, 6 ponte-* e 2 operacionais).",
+      "version": "1.17.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
@@ -157,7 +157,28 @@
         "endurecimento-tnu-2025",
         "revestimento-direito-material",
         "cerceamento-defesa-puil",
-        "cotejo-analitico"
+        "cotejo-analitico",
+        "onda-27",
+        "cadastro-domiciliar",
+        "cadunico",
+        "in-20-2026-sagicad",
+        "in-21-2026-sagicad",
+        "lei-15077-2024",
+        "familias-unipessoais",
+        "dispensa-cadastro-domiciliar",
+        "area-violencia-cadunico",
+        "familia-indigena-cadunico",
+        "familia-quilombola-cadunico",
+        "situacao-rua-cadunico",
+        "domicilio-coletivo",
+        "vedacao-fiscalizatoria-cadunico",
+        "criminalizacao-pobreza",
+        "asilo-inviolavel",
+        "cbo-4241-30",
+        "diario-campo",
+        "formulario-campo",
+        "exclusao-renda-cnis-vedada",
+        "ruf-responsavel-unidade-familiar"
       ]
     }
   ]
