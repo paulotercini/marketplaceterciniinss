@@ -487,6 +487,20 @@ Cartão de vacinação (BPC para crianças).
 
 `base-bpc-aposentadoria-pcd-procedimentos` para procedimentos BPC e PCD.
 
-## 13. Fontes
+## 13. Cruzamento com Onda 28 (Modelos Geradores)
+
+Para GERAR o modelo de relatório médico antes de enviar ao médico assistente (e depois usar esta skill para VALIDAR o que o médico devolver), acionar.
+
+`base-modelo-relatorio-medico-incapacidade-b31-b91-b92` para B31, B91, B92.
+
+`base-modelo-relatorio-medico-auxilio-acidente-b94` para B94.
+
+`base-modelo-relatorio-medico-aposentadoria-pcd-lc142` para aposentadoria PCD LC 142/2013.
+
+`base-modelo-relatorio-medico-bpc-loas-deficiente` para BPC/LOAS.
+
+Fluxo. Acionar skill geradora para preparar modelo personalizado. Enviar ao médico assistente. Médico preenche. Acionar esta skill validadora (Checklist A para incapacidade/B94, Checklist B para PCD/BPC) para auditar antes do protocolo administrativo ou judicial.
+
+## 14. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.

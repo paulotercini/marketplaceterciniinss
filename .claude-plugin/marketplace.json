@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.17.0 entrega a Onda 27 Corretiva sobre Cadastro Domiciliar do CadÚnico, com fundamento nas INs SAGICAD/MDS 20/2026 (DOU 22/01/2026, dispensas) e 21/2026 (DOU 07/05/2026, regra geral) + Anexo I técnico. Cria a skill base-cadastro-domiciliar-cadunico-in21-2026 com cobertura do Cadastro Domiciliar como modalidade preferencial para PCD com mobilidade reduzida (art. 2º §1º), obrigatória para famílias unipessoais BPC/PBF (Lei 15.077/2024), das 8 hipóteses de dispensa (área de violência, localidade de difícil acesso, calamidade, programa de proteção, situação de rua, indígena, quilombola, domicílio coletivo), da distinção entre Visita Domiciliar e Cadastro Domiciliar, do CBO 4241-30 do entrevistador social, do Diário e Formulário de Campo (Anexo II), da vedação ao caráter fiscalizatório, da inviolabilidade do domicílio (CF art. 5º XI), da equipe mínima de dois servidores, da interrupção legítima em risco e da REGRA CRÍTICA de vedação à exclusão de membro familiar por renda no CNIS (Anexo I item 5.5). Atualiza base-bpc-loas-requisitos e base-bpc-pbf-anuencia-in54-2026 com cross-references obrigatórias. A 1.16.0 entregou Onda 26 (PUIL/PEDILEF Súmula 43/TNU). A 1.15.0 Onda 25 (Multi-Tema). A 1.14.0 Onda 24 Operacional. Versão 1.17.0, 116 skills ao todo (108 base-*, 6 ponte-* e 2 operacionais).",
-      "version": "1.17.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.18.0 entrega a Onda 28, pacote de modelos geradores de relatório médico para advocacia previdenciária. Cria 4 skills novas. base-modelo-relatorio-medico-incapacidade-b31-b91-b92 gera modelo narrativo enxuto (1 folha) para B31, B91 e B92 com sub-modelos por especialidade. base-modelo-relatorio-medico-auxilio-acidente-b94 gera modelo focado em SEQUELA consolidada e REDUÇÃO da capacidade laborativa. base-modelo-relatorio-medico-aposentadoria-pcd-lc142 gera modelo com abordagem dos 7 domínios do IF-BrA, DID retroativa e grau de deficiência. base-modelo-relatorio-medico-bpc-loas-deficiente gera modelo com abordagem biopsicossocial e IFBrM (físico, mental, intelectual, sensorial). Cada skill tem MODELO-BASE.md e MODELOS-POR-ESPECIALIDADE.md cobrindo 6 especialidades (Ortopedista, Psiquiatra, Reumatologista, Clínico Geral, Oftalmologista, Cardiologista). Estilo narrativo enxuto baseado nos modelos atuais do escritório (Delgina/Rogério). Atualiza base-validacao-formal-laudo-medico-checklist-ab com cross-reference bidirecional. A 1.17.0 entregou Onda 27 (Cadastro Domiciliar CadÚnico). A 1.16.0 Onda 26 (PUIL/PEDILEF). A 1.15.0 Onda 25 (Multi-Tema). Versão 1.18.0, 120 skills ao todo (112 base-*, 6 ponte-* e 2 operacionais).",
+      "version": "1.18.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
@@ -178,7 +178,25 @@
         "diario-campo",
         "formulario-campo",
         "exclusao-renda-cnis-vedada",
-        "ruf-responsavel-unidade-familiar"
+        "ruf-responsavel-unidade-familiar",
+        "onda-28",
+        "modelo-relatorio-medico",
+        "relatorio-medico-incapacidade",
+        "relatorio-medico-b94",
+        "relatorio-medico-pcd",
+        "relatorio-medico-bpc",
+        "modelo-laudo-medico",
+        "narrativo-1-folha",
+        "ortopedista",
+        "psiquiatra",
+        "reumatologista",
+        "clinico-geral",
+        "oftalmologista",
+        "cardiologista",
+        "if-bra-7-dominios",
+        "ifbrm",
+        "checklist-a-b-validacao",
+        "carta-medico-assistente"
       ]
     }
   ]
