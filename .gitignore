@@ -3,3 +3,5 @@ graph_device.json
 __pycache__/
 *.pyc
 audit_excel/
+.claude/state/
+.claude/settings.local.json
