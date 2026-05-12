@@ -1,6 +1,6 @@
 ---
 name: base-auxilio-acidente-b94-pos-reforma
-description: "Auxílio-acidente B94 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B94, auxílio-acidente, sequela, redução da capacidade laboral, consolidação de lesões, art. 86 Lei 8.213, Anexo III Decreto 3.048, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 TNU, Tema 862 STJ, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, PUIL 5000733, PUIL 5026380, art. 31 integração salário-de-contribuição, cálculo RMI B94, 50% média, período de graça B94, indenizatório, acumulação aposentadoria B94 antes Lei 13.846, reabilitação profissional B94, cessação B94, MS auxílio-acidente, Portaria Conjunta 15/2026, análise documental B94, sequela mínima Anexo III exemplificativo. Postura pró-segurado, Portaria 991/2022, Portaria 992/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, analise-documental-incapacidade, base-incapacidade-acidentaria-b92 e base-incapacidade-b31-temporaria."
+description: "Auxílio-acidente B94 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B94, auxílio-acidente, sequela, redução da capacidade laboral, consolidação de lesões, art. 86 Lei 8.213, Anexo III Decreto 3.048, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 TNU, Tema 862 STJ, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, PUIL 5000733, PUIL 5026380, art. 31 integração salário-de-contribuição, cálculo RMI B94, 50% média, período de graça B94, indenizatório, acumulação aposentadoria B94 antes Lei 13.846, reabilitação profissional B94, cessação B94, MS auxílio-acidente, Portaria Conjunta 15/2026, análise documental B94, sequela mínima Anexo III exemplificativo, vedação novo requerimento art. 576-A IN 203/2026. Postura pró-segurado, Portaria 991/2022, Portaria 992/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, analise-documental-incapacidade, base-incapacidade-acidentaria-b92 e base-incapacidade-b31-temporaria."
 ---
 
 # Auxílio-Acidente (B94) Pós EC 103/2019
@@ -87,6 +87,7 @@ Ao tratar incapacidade permanente acidentária, acione `base-incapacidade-aciden
 Ao analisar perícia documental do B94, acione `analise-documental-incapacidade`.
 Ao calcular RMI, acione `base-calculo-rmi-ec103`.
 Ao orientar para perícia, acione `orientacao-cliente-pericia`.
+Ao verificar restrição a novo requerimento concomitante, acione `base-vedacao-protocolo-paralelo-in203-2026`.
 
 ## Alertas
 
@@ -97,6 +98,8 @@ Segundo, RMI do B94 é de 50% do salário de benefício, com caráter indenizat�
 Terceiro, a vedação da acumulação com aposentadoria vale apenas para concessões após a Lei 13.846/2019. Direito adquirido para concessões anteriores, independente da DIB da aposentadoria.
 
 Quarto, o B94 cessa apenas com a aposentadoria do segurado (art. 86 §3º). Cessações intermediárias são impugnáveis.
+
+Quinto, a IN PRES/INSS nº 203/2026 (vigência 24/04/2026) inseriu o art. 576-A na IN 128/2022, vedando novo requerimento da mesma espécie de benefício enquanto houver processo em curso. Antes de orientar qualquer novo pedido de B94, verificar se há processo ativo de mesma espécie do mesmo segurado. Acionar `base-vedacao-protocolo-paralelo-in203-2026`.
 
 ## Fungibilidade aplicável
 
@@ -120,4 +123,13 @@ O IBDP sustenta institucionalmente o caráter indenizatório e a proteção cont
 
 ## O que NÃO está nesta skill
 
-Não está aqui o B31 temporário (antes da consolidação), objeto de `base-incapacidade-b31-temporaria`. Não está aqui o B92 (incapacidade permanente acidentária), objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o B91 (incapacidade permanente), objeto de `base-incapacidade-b91-permanente`. Não está aqui a perícia em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`.
+Não está aqui o B31 temporário (antes da consolidação), objeto de `base-incapacidade-b31-temporaria`. Não está aqui o B92 (incapacidade permanente acidentária), objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o B91 (incapacidade permanente), objeto de `base-incapacidade-b91-permanente`. Não está aqui a perícia em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui a vedação de protocolo paralelo em detalhe, objeto de `base-vedacao-protocolo-paralelo-in203-2026`.
+
+## Atualização DOU 12/05/2026
+Norma: IN PRES/INSS nº 203, de 22/04/2026
+Órgão: INSS/PRES
+Vigência: 24/04/2026
+Resumo da alteração: Insere o art. 576-A na IN 128/2022, vedando expressamente novo requerimento da mesma espécie de benefício enquanto houver processo em curso. Revoga a Resolução nº 438/PRES/INSS de 2014. Aplica-se a todos os benefícios, incluindo B94.
+Impacto na advocacia: Antes de protocolar novo pedido de B94, verificar se há processo ativo de mesma espécie. Em consolidação de lesões com B31 ativo, a vedação pode impedir o protocolo simultâneo do B94. Estratégia: aguardar cessação do B31 antes de requerer B94, ou impugnar a vedação em sede judicial se houver urgência comprovada.
+Estratégia: Mapear os processos ativos antes de qualquer novo pedido. Avaliar MS preventivo em situações urgentes.
+Link oficial: https://www.legisweb.com.br/legislacao/?id=494667
