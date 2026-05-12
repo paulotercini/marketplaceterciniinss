@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.18.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.18.0 entrega a Onda 28, pacote de modelos geradores de relatório médico para advocacia previdenciária. Cria 4 skills novas. base-modelo-relatorio-medico-incapacidade-b31-b91-b92 gera modelo narrativo enxuto (1 folha) para B31, B91 e B92 com sub-modelos por especialidade. base-modelo-relatorio-medico-auxilio-acidente-b94 gera modelo focado em SEQUELA consolidada e REDUÇÃO da capacidade laborativa para auxílio-acidente. base-modelo-relatorio-medico-aposentadoria-pcd-lc142 gera modelo com abordagem dos 7 domínios do IF-BrA, DID retroativa e grau de deficiência para aposentadoria PCD pela LC 142/2013. base-modelo-relatorio-medico-bpc-loas-deficiente gera modelo com abordagem biopsicossocial e IFBrM (físico, mental, intelectual, sensorial) para BPC/LOAS. Cada skill tem MODELO-BASE.md e MODELOS-POR-ESPECIALIDADE.md cobrindo 6 especialidades (Ortopedista, Psiquiatra, Reumatologista, Clínico Geral, Oftalmologista, Cardiologista). Estilo narrativo enxuto baseado nos modelos atuais do escritório. Atualiza base-validacao-formal-laudo-medico-checklist-ab com cross-reference bidirecional (geração + validação). A 1.17.0 entregou Onda 27 (Cadastro Domiciliar CadÚnico). 120 skills ao todo (112 base-* + 6 ponte-* + 2 operacionais), verificadas em fontes oficiais.",
+  "version": "1.19.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.19.0 entrega a Onda 29, espelho versionado do padrão visual integral das petições previdenciárias do escritório. Cria a skill base-peticao-previdenciaria-padrao-visual replicando no plugin a skill peticao-previdenciaria do escritório com formatação A4 e margens específicas, Bookman Old Style 12pt e espaçamento 1,5, cabeçalho timbrado com logo e identificação, títulos de seção em tabelas pretas com texto branco em negrito, recuo de 2 cm (judicial) ou 4 cm (CRPS), proibição absoluta do uso de dois-pontos lógicos, 5 componentes Visual Law (linha do tempo, quadro-resumo, fatos incontroversos, tabela comparativa, tabela pedido x fundamento), seção obrigatória de Efeitos Financeiros pelo Tema 1124/STJ, política de tutela de urgência e liminar, regras de qualidade redacional (proibição de argumentação genérica, técnica de demonstração de urgência, estrutura de réplica, memorial framework EVO, confronto de depoimentos) e implementação técnica completa em docx-js. A 1.18.0 entregou Onda 28 (4 modelos de relatório médico). A 1.17.0 Onda 27 (Cadastro Domiciliar). 121 skills ao todo (113 base-* + 6 ponte-* + 2 operacionais).",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"
@@ -180,6 +180,26 @@
     "if-bra-7-dominios",
     "ifbrm",
     "checklist-a-b-validacao",
-    "carta-medico-assistente"
+    "carta-medico-assistente",
+    "onda-29",
+    "padrao-visual-peticao",
+    "formatacao-tercini",
+    "timbre-escritorio",
+    "titulo-preto-secao",
+    "visual-law-peticao",
+    "docx-js-tercini",
+    "bookman-old-style",
+    "espacamento-1-5",
+    "recuo-2-cm-judicial",
+    "recuo-4-cm-crps",
+    "proibicao-dois-pontos",
+    "linha-do-tempo-peticao",
+    "quadro-resumo-peticao",
+    "fatos-incontroversos",
+    "tabela-comparativa",
+    "tabela-pedido-fundamento",
+    "efeitos-financeiros-obrigatorio",
+    "memorial-framework-evo",
+    "replica-previdenciaria"
   ]
 }
