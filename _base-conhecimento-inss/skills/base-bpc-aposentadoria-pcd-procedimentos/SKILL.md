@@ -81,6 +81,15 @@ Aplicável a casos de menor complexidade. Casos complexos exigem presencial. Rec
 
 Atualização contínua. Em cessação por CadÚnico desatualizado, regularizar e restabelecer retroativamente.
 
+## Atualização DOU 13/05/2026
+Norma: Portaria Conjunta MDS/INSS nº 36, de 10 de fevereiro de 2026 + Portaria SGD/MGI nº 2.907, de 6 de abril de 2026
+Órgão: MDS/INSS e Secretaria de Governo Digital / MGI
+Vigência: Portaria MDS/INSS 36 desde 11/02/2026; Portaria SGD/MGI 2.907 desde 30/04/2026
+Resumo da alteração: A Portaria MDS/INSS 36/2026 exige cadastro biométrico para concessão, manutenção e revisão do BPC. Para novas concessões, o prazo de uso de bases alternativas (CNH, PF, TSE) expirou em 30/04/2026. A partir de maio de 2026, a exigência operacional é de CIN para quem não possui biometria em nenhuma das bases aceitas. A Portaria SGD/MGI 2.907/2026 estabelece que quem não tem biometria em nenhum documento tem até 01/01/2027 para emitir a CIN; quem já tem biometria em CNH ou TSE tem até 01/01/2028. Exceções: municípios em calamidade/emergência federal, maiores de 80 anos, dificuldade de locomoção por saúde, área de difícil acesso, migrantes, refugiados e residentes no exterior.
+Impacto na advocacia: Orientar o cliente a emitir CIN antes de protocolar novo pedido de BPC ou aposentadoria PCD. A emissão é gratuita na primeira via. O fluxo administrativo precisa incluir a verificação prévia da biometria como etapa zero.
+Estratégia: Em caso de indeferimento com fundamento exclusivo na ausência de biometria, verificar se o cliente se enquadra em exceção. Se não houver exceção aplicável, orientar emissão imediata da CIN e reabertura do requerimento. Em caso de demora abusiva causada pela exigência burocrática, avaliar MS.
+Link oficial: https://www.gov.br/inss/pt-br/assuntos/cadastro-biometrico-passa-a-ser-obrigatorio-para-novos-pedidos-de-beneficios-no-inss
+
 ## Recurso ao CRPS
 
 Junta de Recursos. Instância inicial. Câmara de Julgamento. Instância recursal especial. Conselho Pleno em casos de divergência.
