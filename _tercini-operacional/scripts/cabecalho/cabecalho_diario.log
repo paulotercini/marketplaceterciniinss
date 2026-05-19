@@ -1,8 +1,0 @@
-[2026-05-17 22:51:53] ============================================================
-[2026-05-17 22:51:53] Iniciando — data de hoje: 17/05/2026
-[2026-05-17 22:51:53] Token do Microsoft Graph atualizado.
-[2026-05-17 22:51:53] FALHA GERAL: FileNotFoundError: [Errno 2] No such file or directory: 'graph_tokens.json'
-[2026-05-17 22:52:13] ============================================================
-[2026-05-17 22:52:13] Iniciando — data de hoje: 17/05/2026
-[2026-05-17 22:52:13] Token do Microsoft Graph atualizado.
-[2026-05-17 22:53:12] Concluido — 0 cabecalhos inseridos | 0 ja tinham | 0 erros

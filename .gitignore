@@ -3,3 +3,8 @@ graph_device.json
 __pycache__/
 *.pyc
 audit_excel/
+
+# Logs e saidas de runtime dos scripts
+*.log
+_tercini-operacional/scripts/recursos/saida/
+_tercini-operacional/scripts/recursos/.perfil_navegador/
