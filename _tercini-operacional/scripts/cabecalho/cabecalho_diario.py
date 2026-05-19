@@ -107,9 +107,17 @@ def inserir(body, nova):
 
 def main():
     log("=" * 60)
-    hoje = date.today()
+    # data alvo: argumento DD/MM/AAAA opcional; padrao = hoje
+    if len(sys.argv) > 1:
+        try:
+            hoje = datetime.strptime(sys.argv[1], "%d/%m/%Y").date()
+        except ValueError:
+            log(f"ERRO: data invalida '{sys.argv[1]}' — use DD/MM/AAAA")
+            sys.exit(1)
+    else:
+        hoje = date.today()
     nova = hoje.strftime("%d.%m.%Y") + " (P): "
-    log(f"Iniciando — data de hoje: {hoje.strftime('%d/%m/%Y')}")
+    log(f"Iniciando — data alvo: {hoje.strftime('%d/%m/%Y')}")
 
     atualizar_token()
 
