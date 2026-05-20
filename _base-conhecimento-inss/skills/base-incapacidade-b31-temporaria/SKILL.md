@@ -15,7 +15,9 @@ Lei 8.213/91, art. 59. Concede B31 ao segurado que, por motivo de doença ou aci
 
 Lei 8.213/91, art. 60, §11-A. Introduziu o regime de análise documental para concessão e prorrogação de B31, com parecer de verossimilhança, limites de 30 dias por pedido, trava de 180 dias em 12 meses e trava de três indeferimentos.
 
-Portaria Conjunta MPS/INSS 13/2026. Regulamenta a análise documental do B31. Acionar `analise-documental-incapacidade`.
+Portaria Conjunta MPS/INSS 13/2026. Regulamenta a análise documental do B31. Prazo máximo padrão de 30 dias via análise documental. Após três indeferimentos consecutivos via análise documental, o quarto requerimento exige perícia presencial. Revogou oito portarias anteriores (2023-2025). Vigência a partir de 30/03/2026. Acionar `analise-documental-incapacidade`.
+
+Portaria Conjunta MPS/INSS 14/2026. Caráter excepcional e transitório. Amplia o limite máximo de duração do B31 concedido via análise documental para até 90 dias (consecutivos ou não). Vigência de 180 dias a contar da publicação (24/03/2026), portanto válida até aproximadamente 20/09/2026. Após esse período, retorna-se ao limite padrão de 30 dias da Portaria 13/2026. Beneficiário não pode acumular mais de 90 dias totais em análise documental durante a vigência desta portaria. Estratégia pró-segurado: aproveitar a janela transitória para beneficiários que necessitam de cobertura prolongada enquanto aguardam perícia presencial.
 
 Lei 8.213/91, art. 26, II. Isenção de carência para acidente de qualquer natureza, acidente de trabalho e doenças constantes da lista do Ministério da Saúde.
 

@@ -94,6 +94,8 @@ Quando Meu INSS está fora do ar, comum em fim de mês. Tentativas devem ser reg
 
 ## Hipóteses-armadilha
 
+**Novo requerimento bloqueado enquanto processo em curso — IN 203/2026.** A partir de 24/04/2026 (vigência imediata, sem vacatio legis), o art. 576-A inserido na IN PRES/INSS 128/2022 pela IN 203/2026 veda a apresentação de novo requerimento pelo interessado enquanto houver processo em curso referente à mesma espécie de benefício. Um processo é considerado "em curso" enquanto não transcorrer o prazo para recurso administrativo ao CRPS (em regra 30 dias da notificação da decisão). Exceção expressa para pedidos de revisão de benefício já concedido. Estratégia pró-segurado: se o primeiro requerimento foi indeferido, o cliente deve interpor recurso administrativo dentro dos 30 dias ou aguardar o prazo transcorrer antes de protocolar novo pedido. Não cabe nova entrada enquanto o prazo recursal não esgotou. Risco de bloqueio automático pelo sistema: escritório deve orientar cliente a não tentar protocolar novo requerimento nas primeiras semanas após indeferimento.
+
 **Cliente "concedido" mas sem pagamento.** Verificar HISCRE. Implantação pode atrasar 30 dias. Se passar disso sem crédito, MS de cumprimento. Skill `base-ms-cumprimento-inss`.
 
 **Indeferimento por exigência não cumprida.** Verificar PAT para identificar qual exigência. Se a exigência foi cumprida no Meu INSS mas o INSS alegou descumprimento, juntar prova do upload e formular recurso.
