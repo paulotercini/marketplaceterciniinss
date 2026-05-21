@@ -121,3 +121,14 @@ Para acumulação de B91 com pensão por morte sob EC 103/2019 art. 24, redutore
 ## O que NÃO está nesta skill
 
 Não está aqui o B31 temporário, objeto de `base-incapacidade-b31-temporaria`. Não estão aqui os detalhes do caráter acidentário e da RMI integral, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia médica em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`. Não está aqui a acumulação sob EC 103/2019 art. 24, objeto de `base-acumulacao-beneficios-ec103-art24`.
+
+## Atualização DOU 20/05/2026
+
+Norma: Instrução Normativa PRES/INSS nº 208, de 19 de maio de 2026
+Órgão: Ministério da Previdência Social / Instituto Nacional do Seguro Social
+Publicação: DOU nº 93, Seção 1, p. 78, de 20/05/2026
+Vigência: imediata (20/05/2026)
+Resumo da alteração: A IN 208/2026 acrescentou parágrafo único ao art. 576-A da IN 128/2022, esclarecendo que a vedação de novo requerimento enquanto houver processo em curso não se aplica automaticamente ao B91. Para este benefício, os arts. 340 e 346 da IN 128/2022 continuam regendo o procedimento específico, com exigência do prazo de 30 dias contado da DRE, DCB ou DCA. A norma desfaz a aplicação abusiva e irrestrita do art. 576-A, introduzido pela IN 203/2026 (22/04/2026), que impedia novo requerimento enquanto houvesse pedido pendente, sem distinguir os benefícios por incapacidade dos demais.
+Impacto na advocacia: Clientes com pedido de B91 bloqueado por aplicação do art. 576-A devem ter os casos revisados. O escritório deve identificar negativas de protocolo ocorridas entre 22/04/2026 (vigência da IN 203) e 20/05/2026 (vigência da IN 208) e verificar se o bloqueio foi regular ou abusivo. Casos de bloqueio indevido sustentam mandado de segurança para garantia do protocolo.
+Estratégia: Via administrativa, protocolar o B91 e, se houver recusa com fundamento no art. 576-A, indicar o parágrafo único acrescentado pela IN 208 e os arts. 340 e 346 da IN 128/2022. Via judicial, mandado de segurança com pedido liminar para garantir o protocolo imediato. Acionar `base-ms-cabimento-direito-liquido-certo` e `base-ms-liminar-art7-iii`.
+Link oficial: https://www.in.gov.br/web/dou/-/instrucao-normativa-pres/inss-n-208-de-19-de-maio-de-2026-706589525

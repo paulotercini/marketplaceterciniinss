@@ -113,3 +113,14 @@ Para validação formal de relatório médico de incapacidade pelo Checklist A d
 ## O que NÃO está nesta skill
 
 Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.
+
+## Atualização DOU 20/05/2026
+
+Norma: Instrução Normativa PRES/INSS nº 208, de 19 de maio de 2026
+Órgão: Ministério da Previdência Social / Instituto Nacional do Seguro Social
+Publicação: DOU nº 93, Seção 1, p. 78, de 20/05/2026
+Vigência: imediata (20/05/2026)
+Resumo da alteração: A IN 208/2026 acrescentou parágrafo único ao art. 576-A da IN 128/2022, esclarecendo expressamente que a vedação de apresentação de novo requerimento enquanto houver processo em curso não se aplica automaticamente aos benefícios por incapacidade. Para o B31, o procedimento específico permanece regido pelos arts. 340 e 346 da IN 128/2022, que exigem observância do prazo de 30 dias contado da Data do Resultado do Exame Pericial (DRE), da Data de Cessação do Benefício (DCB) ou da Data de Cessação Administrativa (DCA). A norma reverte a aplicação irrestrita do art. 576-A, introduzido pela IN 203/2026, que vedava genéricamente novo requerimento enquanto houvesse processo pendente.
+Impacto na advocacia: Clientes com B31 indeferido ou cessado cujo novo requerimento tiver sido bloqueado com fundamento exclusivo no art. 576-A da IN 128 (sem observância dos arts. 340 e 346) têm argumento imediato para impugnar o bloqueio administrativo. O escritório deve revisar os casos em que houve negativa de protocolo desde a vigência da IN 203/2026 (22/04/2026) e verificar se a vedação foi aplicada corretamente ou de forma abusiva.
+Estratégia: Via administrativa, protocolar novo requerimento e, se bloqueado, impugnar por petição indicando o parágrafo único do art. 576-A inserido pela IN 208/2026. Via judicial, mandado de segurança para garantir protocolo do pedido quando a agência recusar indevidamente com fundamento no art. 576-A. Acionar `base-ms-cabimento-direito-liquido-certo` e `ponte-workflow-crps`.
+Link oficial: https://www.in.gov.br/web/dou/-/instrucao-normativa-pres/inss-n-208-de-19-de-maio-de-2026-706589525
