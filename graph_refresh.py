@@ -3,7 +3,7 @@ import json, urllib.parse, urllib.request, pathlib
 
 CLIENT_ID = "14d82eec-204b-4c2f-b7e8-296a70dab67e"
 AUTHORITY = "https://login.microsoftonline.com/consumers"
-SCOPE = "Tasks.ReadWrite Mail.Read offline_access"
+SCOPE = "Tasks.ReadWrite Mail.ReadWrite Mail.Send offline_access"
 TOKENS_PATH = pathlib.Path("graph_tokens.json")
 
 
