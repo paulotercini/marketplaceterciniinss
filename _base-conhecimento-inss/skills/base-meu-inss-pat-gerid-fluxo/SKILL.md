@@ -136,3 +136,12 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 20/05/2026
+Norma: Instrução Normativa PRES/INSS nº 208, de 19 de maio de 2026
+Órgão: Instituto Nacional do Seguro Social — INSS
+Vigência: 20 de maio de 2026 (data da publicação)
+Resumo da alteração: A IN 208/2026 incluiu o Art. 576-A na IN PRES/INSS 128/2022, criando uma vedação expressa ao protocolo de novo requerimento relativo à mesma espécie de benefício antes de dois eventos sequenciais: primeiro, a decisão administrativa do requerimento anterior; segundo, o decurso do prazo de trinta dias para interposição de recurso ordinário administrativo. A regra tem duas exceções previstas no parágrafo único: pedidos de revisão, que continuam regidos por normas próprias, e benefícios por incapacidade, para os quais se aplicam os arts. 340 e 346 da IN 128/2022.
+Impacto na advocacia: Qualquer reprotocolo intempestivo para a mesma espécie de benefício agora será recusado pelo sistema. O advogado deve confirmar no PAT se a decisão administrativa já foi emitida e aguardar o prazo de trinta dias antes de protocolar novo requerimento pela mesma espécie, salvo as exceções de incapacidade. Recomenda-se incluir na tarefa do cliente o controle desse prazo de 30 dias pós-decisão como etapa obrigatória antes de novo protocolo.
+Estratégia: Antes de protocolar, consultar PAT para confirmar status "decidido" e data da decisão. Calcular a janela de 30 dias. Se houver urgência e o prazo ainda não decorreu, avaliar: (a) aguardar o prazo; (b) protocolar espécie diferente se cabível; (c) para incapacidade, verificar se as regras dos arts. 340 e 346 permitem reprotocolo imediato. Se o sistema recusar o protocolo sem fundamento válido, impugnar via recurso + Ouvidoria.
+Link oficial: https://www.in.gov.br/en/web/dou/-/instrucao-normativa-pres-inss-n.-208-de-19-de-maio-de-2026
