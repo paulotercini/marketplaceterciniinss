@@ -8,3 +8,4 @@ audit_excel/
 *.log
 _tercini-operacional/scripts/recursos/saida/
 _tercini-operacional/scripts/recursos/.perfil_navegador/
+graph_device_mail.json
