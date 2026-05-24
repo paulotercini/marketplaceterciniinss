@@ -9,3 +9,7 @@ audit_excel/
 _tercini-operacional/scripts/recursos/saida/
 _tercini-operacional/scripts/recursos/.perfil_navegador/
 graph_device_mail.json
+
+# Dados sensíveis de clientes (não versionar)
+processo.txt
+*-processo.txt
