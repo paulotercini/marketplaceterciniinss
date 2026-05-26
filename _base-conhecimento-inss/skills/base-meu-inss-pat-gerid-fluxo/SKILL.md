@@ -1,6 +1,6 @@
 ---
 name: base-meu-inss-pat-gerid-fluxo
-description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
+description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico, Art. 576-A IN 128/2022, IN 203/2026, IN 208/2026, veda novo requerimento mesma espécie, prazo 30 dias antes de protocolar, verificar prazo pré-protocolo, vedação novo pedido após indeferimento. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
 ---
 
 # Sistemas Administrativos do INSS - Fluxo Operacional
@@ -104,6 +104,8 @@ Quando Meu INSS está fora do ar, comum em fim de mês. Tentativas devem ser reg
 
 **Bloqueio por suspeita de fraude.** Cliente notificado de bloqueio. Verificar PAT para motivo. Pode ser causa de defesa administrativa via Ouvidoria + CGU.
 
+**Tentativa de novo requerimento bloqueada após indeferimento recente.** A partir de 24/04/2026 (IN 203/2026, com alteração pela IN 208/2026), o Art. 576-A da IN 128/2022 veda novo requerimento da mesma espécie enquanto o prazo de 30 dias para recurso ao CRPS não transcorrer. Antes de protocolar novo pedido pelo Meu INSS, verificar no PAT a data da decisão de indeferimento e calcular se os 30 dias já se esgotaram. Exceção para benefícios por incapacidade (arts. 340 e 346) e pedidos de revisão. Cruzar com base-crps-panorama-geral.
+
 ## Estratégia administrativa
 
 Sempre tentar resolver pelo PAT/Meu INSS antes de judicializar. Após DER, oferecer ao INSS oportunidade de cumprir o que deve. Insistência administrativa é mais barata e rápida quando funciona, e quando falha justifica a judicialização.
@@ -136,3 +138,13 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 26/05/2026
+Norma: Instrução Normativa PRES/INSS nº 203, de 22 de abril de 2026, com posterior alteração pela IN PRES/INSS nº 208, de 19 de maio de 2026
+Órgão: Instituto Nacional do Seguro Social
+Vigência: A partir de 24 de abril de 2026 (IN 203), com alteração a partir de 20 de maio de 2026 (IN 208)
+Resumo da alteração: O Art. 576-A inserido pela IN 203/2026 na IN 128/2022 veda novo requerimento da mesma espécie enquanto houver processo em curso (prazo recursal de 30 dias não transcorrido). A IN 208/2026 manteve a vedação e acrescentou parágrafo único com dois incisos de exceção: inciso I para pedidos de revisão e inciso II para benefícios por incapacidade com observância dos arts. 340 e 346. Para o fluxo operacional do Meu INSS, a consequência prática é que o sistema pode recusar o protocolo de novo pedido da mesma espécie quando a decisão anterior tiver sido proferida há menos de 30 dias e o prazo recursal ainda estiver aberto.
+Impacto na advocacia: O checklist pré-protocolo do escritório deve incluir verificação obrigatória da data da última decisão de indeferimento no PAT e cálculo do prazo de 30 dias. Clientes com indeferimento recente que chegam pedindo novo protocolo devem ser orientados sobre a vedação e sobre a alternativa do recurso administrativo ao CRPS. Para benefícios por incapacidade, verificar se o caso cai na exceção do inciso II antes de protocolar.
+Estratégia: Incluir no checklist padrão de pré-protocolo a etapa de verificação do Art. 576-A: consultar PAT, identificar data da decisão anterior, calcular prazo de 30 dias, decidir entre recurso ao CRPS ou aguardar vencimento. Cruzar com base-crps-panorama-geral para a estratégia de recurso administrativo.
+Link oficial IN 203: https://legismap.com.br/leis-e-normas/instrucao-normativa-pres-inss-n-203-de-22-04-2026
+Link oficial IN 208: https://www.legisweb.com.br/legislacao/?id=495991
