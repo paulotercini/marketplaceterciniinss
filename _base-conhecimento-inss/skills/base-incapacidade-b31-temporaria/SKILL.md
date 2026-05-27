@@ -110,6 +110,15 @@ O IBDP sustenta institucionalmente o direito do segurado à concessão ampla do 
 
 Para validação formal de relatório médico de incapacidade pelo Checklist A do escritório (B31, B91, B92, B94), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
 
+## Atualização DOU 27/05/2026
+Norma: Instrução Normativa PRES/INSS nº 208, de 19 de maio de 2026 (DOU 20/05/2026), alterando art. 576-A da IN PRES/INSS nº 128/2022
+Órgão: INSS — Presidência
+Vigência: A partir de 20/05/2026
+Resumo da alteração: O art. 576-A, inserido pela IN 203/2026 e complementado pela IN 208/2026, impõe que o interessado somente pode apresentar novo requerimento da mesma espécie de benefício após decisão do requerimento anterior e decurso de 30 dias para interposição de recurso. O dispositivo excepciona expressamente os benefícios por incapacidade (arts. 340 e 346 da IN 128/2022), o que significa que segurados que solicitam prorrogação (P1) ou restabelecimento do B31 estão, em princípio, fora da vedação geral. Porém, novo requerimento de benefício de espécie distinta ainda se submete à regra quando o processo anterior da mesma espécie estiver pendente. A revogação da Resolução 438/2014 pela IN 203/2026 exige atenção ao fluxo de DER quando há segundo protocolo.
+Impacto na advocacia: Prorrogação (P1) dentro do prazo não é atingida pela vedação. Porém, encerrada a DCB e esgotado o prazo de P1, novo requerimento de B31 após indeferimento anterior da mesma espécie deve aguardar a decisão do processo pendente mais 30 dias. Em situações de agravamento que justificariam nova DII, manter documentação médica datada para sustentar que se trata de novo fato gerador.
+Estratégia: Antes de protocolar novo B31 verificar no PAT se há processo da mesma espécie em aberto. Sendo o processo anterior já decidido, verificar se decorreram 30 dias. Em caso de urgência médica com risco de cessação indevida, acionar imediatamente a via do recurso administrativo ou tutela provisória na JEF antes de tentar novo protocolo.
+Link oficial: https://www.legisweb.com.br/legislacao/?id=495991
+
 ## O que NÃO está nesta skill
 
 Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.

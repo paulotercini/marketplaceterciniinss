@@ -136,3 +136,12 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 27/05/2026
+Norma: Instrução Normativa PRES/INSS nº 203, de 24 de abril de 2026 (DOU 24/04/2026) e Instrução Normativa PRES/INSS nº 208, de 19 de maio de 2026 (DOU 20/05/2026)
+Órgão: INSS — Presidência
+Vigência: Ambas na data de publicação (24/04/2026 e 20/05/2026, respectivamente)
+Resumo da alteração: A IN 203/2026 acrescentou o art. 576-A à IN PRES/INSS nº 128/2022, vedando expressamente que o interessado apresente novo requerimento referente à mesma espécie de benefício enquanto houver processo em curso. Revogou também a Resolução 438/2014, que regia o protocolo da Data de Entrada do Requerimento (DER), impondo revisão dos procedimentos de DER. A IN 208/2026 complementou o mesmo art. 576-A, acrescentando que o interessado somente poderá apresentar novo requerimento após a decisão do requerimento anterior e o decurso do prazo de trinta dias para interposição de recurso ordinário administrativo. As exceções expressas são revisão de benefício e benefícios por incapacidade temporária (arts. 340 e 346 da IN 128/2022).
+Impacto na advocacia: Protocolar novo requerimento antes de expirado o prazo recursal de 30 dias resulta em indeferimento liminar. A estratégia de reapresentação imediata com novos documentos após indeferimento ficou inviabilizada. Clientes negados precisam recorrer ao CRPS ou aguardar 30 dias antes de tentar nova via administrativa.
+Estratégia: Na negativa, optar imediatamente pelo recurso ao CRPS (ou recurso ordinário administrativo) para preservar o prazo e o vínculo processual. Somente após decisão do recurso — ou decurso dos 30 dias sem recurso — protocolar novo requerimento. Em situações urgentes com deterioração do estado de saúde, avaliar MS perante a JEF para garantir acesso à perícia médica antes do prazo.
+Link oficial: https://www.legisweb.com.br/legislacao/?id=495991
