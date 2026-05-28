@@ -1,6 +1,6 @@
 ---
 name: base-meu-inss-pat-gerid-fluxo
-description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
+description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico, IN 203/2026 vedação novo requerimento, IN 208/2026 vedação reprotocolo mesmo benefício, proibição requerimento processo em curso, INSS Empresa Portaria 156/2026 consulta empresas afastamentos. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
 ---
 
 # Sistemas Administrativos do INSS - Fluxo Operacional
@@ -136,3 +136,23 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 28/05/2026 — Norma A
+
+Norma: Instrução Normativa PRES/INSS nº 208, de 19 de maio de 2026
+Órgão: Instituto Nacional do Seguro Social
+Vigência: 20 de maio de 2026 (DOU nº 93, de 20/05/2026)
+Resumo da alteração: A IN 208/2026 inseriu o art. 576-A na IN PRES/INSS 128/2022 com a seguinte regra: o interessado somente pode apresentar novo requerimento da mesma espécie de benefício após a decisão do requerimento anterior e o decurso do prazo de 30 dias para interposição de recurso ordinário administrativo. A vedação não se aplica a pedidos de revisão. Para benefícios por incapacidade (B31, B91, B92) há exceções previstas nos arts. 340 e 346 da IN 128/2022. A norma complementa a IN 203/2026 (de 22/04/2026, DOU de 24/04/2026), que inaugurou a regra, e revogou a Resolução nº 438/PRES/INSS de 2014.
+Impacto na advocacia: Quando um requerimento é indeferido, o segurado não pode imediatamente reprotocolar. Deve aguardar a decisão definitiva ou o decurso do prazo recursal de 30 dias. A estratégia do escritório muda: (a) antes de protocolar o requerimento inicial, a documentação deve estar completa para evitar indeferimento; (b) se houver indeferimento, a opção prioritária é o recurso administrativo (art. 126 Lei 8.213/91) e não o reprotocolo; (c) apenas após decisão do recurso ou escoamento dos 30 dias é possível novo requerimento. O escritório deve monitorar datas via PAT/GERID e Meu INSS para não perder a janela de reprotocolo.
+Estratégia: Revisar documentação antes do protocolo, usando os checklists de cada espécie de benefício. Em caso de indeferimento, analisar imediatamente se cabe recurso administrativo ao CRPS (acionar `base-crps-panorama-geral`) ou judicial via mandado de segurança (acionar `base-ms-cabimento-direito-liquido-certo`). Registrar no PAT a data de ciência do indeferimento para controle do prazo de 30 dias.
+Link oficial: https://www.legisweb.com.br/legislacao/?id=495991
+
+## Atualização DOU 28/05/2026 — Norma B
+
+Norma: Portaria DTI/DIRBEN/INSS nº 156, de 28 de abril de 2026
+Órgão: Diretoria de Tecnologia da Informação e Diretoria de Benefícios do INSS
+Vigência: 15 de maio de 2026 (publicada no DOU de 06/05/2026)
+Resumo da alteração: A Portaria 156/2026 institui o sistema INSS Empresa como canal oficial para que empresas consultem informações sobre afastamentos e benefícios de seus empregados junto ao INSS. O acesso é feito via conta gov.br com certificado digital vinculado ao CNPJ da empresa. O sistema disponibiliza espécie do benefício, datas de requerimento, concessão, início e cessação, e status atual. A medida está alinhada à LGPD e substitui canais informais anteriores.
+Impacto na advocacia: O escritório pode usar o INSS Empresa para confirmar, junto às empresas-clientes ou em casos de segurado-empregado, o status de benefícios que estejam em disputa trabalhista ou previdenciária. Empresas têm acesso mais rápido para verificar se o afastamento do empregado foi concedido, o que afeta obrigações de FGTS, retorno ao trabalho e gestão de planos de saúde. Em casos de acidente de trabalho, o sistema pode confirmar a existência do B92/CAT registrado.
+Estratégia: Orientar clientes empresariais (quando o escritório também atende empregadores) a cadastrar acesso ao INSS Empresa para gestão preventiva. Para segurados-empregados, avaliar se a empresa tem acesso ao sistema como instrumento de prova do status do benefício em ação trabalhista conexa.
+Link oficial: https://www.rsdata.com.br/portaria-inss-156-2026-inss-empresa-consulta-beneficios-afastamentos/

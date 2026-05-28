@@ -113,3 +113,13 @@ Para validação formal de relatório médico de incapacidade pelo Checklist A d
 ## O que NÃO está nesta skill
 
 Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.
+
+## Atualização DOU 28/05/2026
+
+Norma: Portaria Conjunta MPS/INSS nº 14, de 23 de março de 2026
+Órgão: Ministério da Previdência Social e INSS
+Vigência: 30 de março de 2026 (publicada no DOU de 24/03/2026), em caráter transitório por 180 dias
+Resumo da alteração: A Portaria 14/2026 amplia, em caráter excepcional e transitório, o prazo máximo de duração do auxílio por incapacidade temporária concedido por análise documental (Atestmed) de 30 dias para 90 dias, ainda que não consecutivos, por segurado. A vigência da ampliação é de 180 dias a contar da publicação, ou seja, até aproximadamente 26 de setembro de 2026. Após esse período, volta a valer o limite de 30 dias da Portaria Conjunta MPS/INSS 13/2026. A Portaria 15/2026 (mesma data) estende a análise documental ao requerimento de auxílio-acidente (art. 86 Lei 8.213/91).
+Impacto na advocacia: Segurados com necessidade de afastamento prolongado por doença ou lesão podem acumular até 90 dias de B31 via análise documental sem necessidade de perícia médica presencial até setembro de 2026. O escritório deve identificar casos em que o segurado já esgotou o limite de 30 dias anteriores, mas ainda está incapaz, e protocolar nova solicitação de análise documental até o limite de 90 dias antes de setembro de 2026. Atentar ao prazo de 180 dias: após 26/09/2026 o limite volta para 30 dias, e segurados que ainda necessitarem do benefício precisarão de perícia presencial ou conversão para B91 se a incapacidade for definitiva.
+Estratégia: Mapear todos os clientes com B31 em análise documental ativo ou recém-cessado. Para quem ainda está incapaz mas atingiu 30 dias, protocolar extensão até 90 dias antes de setembro de 2026. Para quem ultrapassa 90 dias, preparar documentação para perícia presencial ou avaliar conversão para B91 com laudo especializado. Cruzar com `base-incapacidade-b91-permanente` e `base-validacao-formal-laudo-medico-checklist-ab`.
+Link oficial: https://www.legisweb.com.br/legislacao/?id=492950
