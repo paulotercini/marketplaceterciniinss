@@ -140,3 +140,19 @@ O IBDP sustenta institucionalmente a proteção integral à maternidade.
 ## O que NÃO está nesta skill
 
 Não está aqui o salário-família, objeto de `base-salario-familia-quota`. Não está aqui o seguro-defeso feminino, objeto de `base-seguro-defeso-pescador-artesanal`. Não está aqui a pensão por morte em caso de óbito da mãe, objeto de `base-pensao-por-morte-pos-reforma`.
+
+## Atualização DOU 29/05/2026
+
+Norma: Lei nº 15.415, de 25 de maio de 2026
+
+Órgão: Presidência da República (sancionada por Luiz Inácio Lula da Silva)
+
+Vigência: 26 de maio de 2026 (data de publicação no DOU)
+
+Resumo da alteração: A Lei 15.415/2026 altera a Lei 8.213/91 inserindo o art. 73-A, que estabelece prazo máximo de 30 dias, contados do requerimento administrativo, para concessão do salário-maternidade pago diretamente pela Previdência Social. O descumprimento do prazo acarreta a concessão provisória e automática do benefício, independentemente de análise prévia dos requisitos. A concessão provisória não prejudica a análise posterior da Previdência Social, que pode converter o benefício em definitivo (se os requisitos forem atendidos), determinar a cessação imediata sem devolução (se os requisitos não forem atendidos sem má-fé do requerente) ou exigir devolução por meio de cobrança administrativa (se constatada má-fé).
+
+Impacto na advocacia: Toda cliente com requerimento de salário-maternidade pendente há mais de 30 dias passou a ter direito subjetivo à concessão provisória automática. O escritório deve auditar os casos ativos de salário-maternidade e peticionar imediatamente nas hipóteses em que o prazo já foi ultrapassado. Em novos casos, o prazo de 30 dias deve ser monitorado desde a DER.
+
+Estratégia: Administrativamente, protocolar petição no Meu INSS invocando o art. 73-A da Lei 8.213/91, com redação conforme a Lei 15.415/2026, solicitando a concessão provisória imediata. Judicialmente, se o INSS não cumprir, MS por mora e omissão é cabível, fundado na violação de prazo legal expresso e direito líquido e certo reconhecido por lei federal. Acionar `base-ms-decadencia-omissao-demora`.
+
+Link oficial: https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2026/lei/l15415.htm

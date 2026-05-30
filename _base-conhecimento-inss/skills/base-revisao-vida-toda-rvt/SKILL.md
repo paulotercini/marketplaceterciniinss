@@ -117,3 +117,19 @@ O IBDP tem posicionamento institucional sobre a matéria.
 ## O que NÃO está nesta skill
 
 Revisão do teto está em `base-revisao-teto-buraco-negro-verde`. Revisão do IRSM está em `base-revisao-irsm-fevereiro-1994`. Revisão do art. 29 II e melhor benefício em `base-revisao-art29-melhor-beneficio`. Revisão por reajustes ORTN/OTN em `base-revisao-reajuste-ortn-otn`.
+
+## Atualização DOU 29/05/2026
+
+Norma: ADI 2111 STF — Embargos de Declaração (4ª série) — Julgamento definitivo
+
+Órgão: Supremo Tribunal Federal (STF)
+
+Vigência: Efeitos retroativos ao julgamento das ADIs 2110 e 2111 de 2024. Encerramento dos recursos ocorreu em 19 de maio de 2026.
+
+Resumo da alteração: O STF encerrou definitivamente a questão da Revisão da Vida Toda em maio de 2026. O julgamento virtual dos embargos de declaração da CNTM (Confederação Nacional dos Trabalhadores Metalúrgicos) começou em 1º de maio, foi suspenso em 6 de maio por pedido de vista do Ministro Alexandre de Moraes, foi retomado e a maioria de 6 ministros contra e 2 a favor formou-se em 11 de maio. Em 19 de maio, o Ministro Fachin (presidente do STF) retirou o pedido de destaque que havia levado o caso ao plenário físico, permitindo que o resultado virtual de 7 votos a 1 prevalecesse. O STF negou a tese da modulação ampliada para quem ajuizou ações entre 2019 e 2024, encerrando o caminho de recursos.
+
+Impacto na advocacia: A RVT está definitivamente encerrada no STF. Não há mais recurso viável em nenhuma instância superior. Hipóteses remanescentes são apenas as expressamente previstas nas seções anteriores desta skill (DIB anterior a novembro/1999 com direito adquirido à regra original, e coisa julgada formada antes do julgamento das ADIs 2110 e 2111 de 2024). Clientes com ações pendentes exclusivamente fundadas na RVT pós-1999 devem ser comunicados com urgência sobre a inviabilidade de prosseguimento.
+
+Estratégia: Auditar todos os processos ativos em que a RVT seja o único ou o principal fundamento. Para cada processo, avaliar: existência de coisa julgada favorável anterior a março de 2024 (protegida), existência de DIB anterior a novembro/1999 (hipótese residual ainda viável), ou ausência de fundamento remanescente (comunicar ao cliente e avaliar desistência para evitar sucumbência). Não ajuizar novas ações exclusivamente fundadas na RVT pós-1999.
+
+Link oficial: https://portal.stf.jus.br (ADI 2111, embargos de declaração, julgamento de 19/05/2026)

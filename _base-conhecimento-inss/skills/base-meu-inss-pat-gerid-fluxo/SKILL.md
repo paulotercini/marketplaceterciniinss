@@ -136,3 +136,19 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 29/05/2026
+
+Norma: Portaria PRES/INSS nº 1.959, de 25 de maio de 2026
+
+Órgão: Instituto Nacional do Seguro Social (PRES/INSS)
+
+Vigência: 26 de maio de 2026 (imediata, DOU nº 97)
+
+Resumo da alteração: A Portaria 1.959/2026 altera a Portaria PRES/INSS 1.919/2026 para incluir o auxílio-acidente (B94) e as demandas judiciais (implantação de benefícios, revisões e pagamentos atrasados) no rol de benefícios e processos sujeitos às regras excepcionais e temporárias do Programa de Gerenciamento de Benefícios (PGB) e do Programa de Pagamento Extraordinário (PEPGB). O PGB opera com regras temporárias que permitem atuação extraordinária de servidores vinculada a pagamento adicional por produtividade. Auxílios-acidente em análise há mais de 45 dias passam a integrar a fila de preferências do PGB.
+
+Impacto na advocacia: A inclusão de demandas judiciais no PGB pode acelerar o cumprimento de ordens judiciais de implantação de benefícios e revisões. Em casos de B94 com mais de 45 dias de análise sem decisão, o Meu INSS pode indicar status de prioridade no PGB. Monitorar via PAT se os processos judiciais em fase de cumprimento de sentença foram incluídos no PGB da unidade responsável. Se o INSS invocar o PGB como justificativa para dilação de prazo, verificar se o prazo legal (45 dias do art. 49 da Lei 9.784/1999) já foi ultrapassado antes de aceitar.
+
+Estratégia: Em B94 com mais de 45 dias sem decisão, verificar no PAT se há marcação de PGB. Se não houver, protocolar petição requerendo inclusão. Em cumprimento de sentença com demora de implantação, verificar se a demanda judicial foi inserida no PGB da unidade do réu. Acionar `base-ms-cumprimento-inss` se a implantação não ocorrer no prazo legal.
+
+Link oficial: https://www.in.gov.br/en/web/dou (Portaria PRES/INSS 1.959/2026, DOU nº 97, 26/05/2026)
