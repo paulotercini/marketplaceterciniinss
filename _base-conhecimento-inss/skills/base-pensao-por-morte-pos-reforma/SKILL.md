@@ -1,6 +1,6 @@
 ---
 name: base-pensao-por-morte-pos-reforma
-description: "Pensão por morte B21/B93 pós EC 103/2019, ótica pró-segurado. Use SEMPRE que mencionar pensão por morte, B21, B93, dependentes, cônjuge, companheiro, união estável INSS, filho inválido, menor sob guarda, equiparado, arts. 74 a 80 Lei 8.213, art. 16 dependentes, art. 77 quotas, art. 77 §2º duração, EC 103 art. 23, cota familiar 50% mais 10% por dependente, pensão acidentária B93, acumulação pensões, Lei 13.135/2015, Lei 13.846/2019, Tema 7 TNU, Tema 15 TNU, Tema 81 TNU, Tema 32 TNU, Tema 45 TNU, Tema 148 TNU, Súmula 37 TNU, Súmula 63 TNU, IRDR 35 TRF4, pensão pós-morte qualidade, complementação post mortem, Lei 15.108/2025, Portaria DIRBEN 4/2025, concubinato, ex-cônjuge pensão alimentícia, filho universitário, cessação pensão, rateio entre dependentes, Portaria 991/2022, Portaria 992/2022. Cruza com pensao-por-morte, documentos-comprobatorios-in128, peticao-previdenciaria, periodo-graca-qualidade-segurado, ms-competencia-autoridade-coatora e precedentes-previdenciarios."
+description: "Pensão por morte B21/B93 pós EC 103/2019, ótica pró-segurado. Use SEMPRE que mencionar pensão por morte, B21, B93, dependentes, cônjuge, companheiro, união estável INSS, filho inválido, menor sob guarda, equiparado, arts. 74 a 80 Lei 8.213, art. 16 dependentes, art. 77 quotas, art. 77 §2º duração, EC 103 art. 23, cota familiar 50% mais 10% por dependente, pensão acidentária B93, acumulação pensões, Lei 13.135/2015, Lei 13.846/2019, Tema 7 TNU, Tema 15 TNU, Tema 81 TNU, Tema 32 TNU, Tema 45 TNU, Tema 148 TNU, Súmula 37 TNU, Súmula 63 TNU, IRDR 35 TRF4, pensão pós-morte qualidade, complementação post mortem, Lei 15.108/2025, Portaria DIRBEN 4/2025, concubinato, ex-cônjuge pensão alimentícia, filho universitário, cessação pensão, rateio entre dependentes, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com pensao-por-morte, documentos-comprobatorios-in128, peticao-previdenciaria, periodo-graca-qualidade-segurado, ms-competencia-autoridade-coatora e precedentes-previdenciarios."
 ---
 
 # Pensão por Morte (B21/B93) Pós EC 103/2019
@@ -33,7 +33,7 @@ Portaria DIRBEN 4/2025. Disciplina administrativa sobre pensão por morte no INS
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 CF/88, art. 201, V e §2º. Pensão por morte como benefício previdenciário não inferior ao salário-mínimo.
 

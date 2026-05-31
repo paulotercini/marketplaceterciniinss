@@ -1,6 +1,6 @@
 ---
 name: base-incapacidade-b31-temporaria
-description: "Auxílio por incapacidade temporária B31 pós EC 103, ótica exclusiva do segurado. Use SEMPRE que mencionar B31, auxílio-doença, art. 59 Lei 8.213, art. 60 §11-A, carência 12 meses, isenção art. 26 II, art. 151, DII DID, perícia documental, Portaria Conjunta 13/2026, Tema 1421 STF limbo, P1 P2 prorrogação, Alta Programada, cessação antecipada, restabelecimento B31, RMI 91% média, qualidade segurado, art. 27-A, art. 42 §2º, segurado especial rural, MEI B31, doméstica B31, Tema 246 TNU, Súmula 63 TNU, Súmula 47 TNU, Súmula 77 TNU, Tema 1083 STJ, trava três indeferimentos, 180 dias, agravamento, reabertura. Postura pró-segurado, Portaria 991/2022, Portaria 992/2022. Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, periodo-graca-qualidade-segurado, ntep-nexo-acidentario, base-incapacidade-b91-permanente e orientacao-cliente-pericia."
+description: "Auxílio por incapacidade temporária B31 pós EC 103, ótica exclusiva do segurado. Use SEMPRE que mencionar B31, auxílio-doença, art. 59 Lei 8.213, art. 60 §11-A, carência 12 meses, isenção art. 26 II, art. 151, DII DID, perícia documental, Portaria Conjunta 13/2026, Tema 1421 STF limbo, P1 P2 prorrogação, Alta Programada, cessação antecipada, restabelecimento B31, RMI 91% média, qualidade segurado, art. 27-A, art. 42 §2º, segurado especial rural, MEI B31, doméstica B31, Tema 246 TNU, Súmula 63 TNU, Súmula 47 TNU, Súmula 77 TNU, Tema 1083 STJ, trava três indeferimentos, 180 dias, agravamento, reabertura. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, periodo-graca-qualidade-segurado, ntep-nexo-acidentario, base-incapacidade-b91-permanente e orientacao-cliente-pericia."
 ---
 
 # Auxílio por Incapacidade Temporária (B31) Pós EC 103/2019
@@ -25,7 +25,7 @@ EC 103/2019, art. 26, §3º, I. Fixa RMI do B31 em 91% da média pelo novo cálc
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Requisitos cumulativos
 

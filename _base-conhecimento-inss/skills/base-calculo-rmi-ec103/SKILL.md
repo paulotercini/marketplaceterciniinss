@@ -1,6 +1,6 @@
 ---
 name: base-calculo-rmi-ec103
-description: "Cálculo da RMI pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar cálculo RMI EC 103, art. 26 EC 103, média 100% PBC, 60% mais 2% ano excedente, divisor mínimo art. 26 §6º, renda mensal inicial pós-reforma, salário-de-benefício pós EC 103, RMI pedágio 100%, RMI 100% média, fator previdenciário afastado regra nova, Tema 1102 STF e modulação, revisão da vida toda, afastar regra 80% maiores, art. 29 Lei 8.213, RMI auxílios, pensão por morte pós-reforma, cálculo B31 B91 B92 B94 pós-reforma, benefícios acima do teto, Tema 1070 STJ concomitantes, Tema 862 STJ auxílio-acidente, Súmula 557 STJ teto. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 992/2022. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, base-aposentadoria-transicao-ec103, base-aposentadoria-regra-permanente-ec103 e impugnacao-cumprimento-concomitantes."
+description: "Cálculo da RMI pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar cálculo RMI EC 103, art. 26 EC 103, média 100% PBC, 60% mais 2% ano excedente, divisor mínimo art. 26 §6º, renda mensal inicial pós-reforma, salário-de-benefício pós EC 103, RMI pedágio 100%, RMI 100% média, fator previdenciário afastado regra nova, Tema 1102 STF e modulação, revisão da vida toda, afastar regra 80% maiores, art. 29 Lei 8.213, RMI auxílios, pensão por morte pós-reforma, cálculo B31 B91 B92 B94 pós-reforma, benefícios acima do teto, Tema 1070 STJ concomitantes, Tema 862 STJ auxílio-acidente, Súmula 557 STJ teto. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (Livro II - cálculo do reconhecimento), IN 128/2022. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, base-aposentadoria-transicao-ec103, base-aposentadoria-regra-permanente-ec103, impugnacao-cumprimento-concomitantes e base-legislacao-fontes-primarias."
 ---
 
 # Cálculo da RMI Pós EC 103/2019
@@ -23,7 +23,7 @@ Lei 8.213/91, art. 29 (para benefícios pré-reforma) e art. 29-C (professor pr�
 
 Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Regra permanente e pedágio 100%
 

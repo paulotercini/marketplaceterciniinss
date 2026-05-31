@@ -1,6 +1,6 @@
 ---
 name: base-aposentadoria-pcd-lc142
-description: "Aposentadoria da pessoa com deficiência pela LC 142/2013, ótica pró-segurado. Use SEMPRE que mencionar LC 142, LC 142/2013, aposentadoria PCD, aposentadoria por tempo de contribuição PCD, aposentadoria por idade PCD, IF-BrA, IFBr, grau de deficiência, método Fuzzy, avaliação biopsicossocial LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015, domínios da deficiência PCD, pontuação IF-BrA, conversão tempo deficiência tempo comum, impedimento longo prazo LC 142, fibromialgia como deficiência Lei 15.176/2025, CID M79.7, DID Data Início Deficiência, formação documentação DID, idade PCD 55 60, tempo PCD 20 25 28 30 33, reconhecimento retroativo deficiência, cegueira monocular Súmula 377, deficiência auditiva Lei 14.768/2023, fator vedado LC 142, Portaria 991/2022, Portaria 992/2022. Aciona aposentadoria-deficiencia. Cruza com aposentadoria-deficiencia, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, formacao-documentacao-did-pcd e precedentes-previdenciarios."
+description: "Aposentadoria da pessoa com deficiência pela LC 142/2013, ótica pró-segurado. Use SEMPRE que mencionar LC 142, LC 142/2013, aposentadoria PCD, aposentadoria por tempo de contribuição PCD, aposentadoria por idade PCD, IF-BrA, IFBr, grau de deficiência, método Fuzzy, avaliação biopsicossocial LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015, domínios da deficiência PCD, pontuação IF-BrA, conversão tempo deficiência tempo comum, impedimento longo prazo LC 142, fibromialgia como deficiência Lei 15.176/2025, CID M79.7, DID Data Início Deficiência, formação documentação DID, idade PCD 55 60, tempo PCD 20 25 28 30 33, reconhecimento retroativo deficiência, cegueira monocular Súmula 377, deficiência auditiva Lei 14.768/2023, fator vedado LC 142, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona aposentadoria-deficiencia. Cruza com aposentadoria-deficiencia, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, formacao-documentacao-did-pcd e precedentes-previdenciarios."
 ---
 
 # Aposentadoria da Pessoa com Deficiência. LC 142/2013
@@ -41,7 +41,7 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Tempo de contribuição exigido
 

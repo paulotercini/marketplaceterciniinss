@@ -1,6 +1,6 @@
 ---
 name: base-incapacidade-acidentaria-b92
-description: "Aposentadoria por incapacidade permanente acidentária B92 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B92, auxílio-doença acidentário B91, acidente de trabalho, doença ocupacional, doença profissional, doença do trabalho, nexo acidentário, NTEP, CAT Comunicação Acidente Trabalho, art. 19 Lei 8.213, art. 20 Lei 8.213, art. 21 Lei 8.213, art. 21-A NTEP, Anexo II Decreto 3.048, Tema 1083 STJ, Tema 862 STJ, ADI 3931, Lista B, Lista C, concausa, acidente trajeto, equiparação acidente, art. 118 estabilidade, FGTS afastamento, RMI 100% acidentário, art. 26 §3º III EC 103, doença preexistente agravada, burnout QD85, transtorno mental ocupacional, PGR, NR-1 riscos psicossociais, responsabilidade empresa. Postura pró-segurado, Portaria 991/2022, Portaria 992/2022, TJSP. Cruza com auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, base-incapacidade-b31-temporaria, base-incapacidade-b91-permanente e base-auxilio-acidente-b94-pos-reforma."
+description: "Aposentadoria por incapacidade permanente acidentária B92 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B92, auxílio-doença acidentário B91, acidente de trabalho, doença ocupacional, doença profissional, doença do trabalho, nexo acidentário, NTEP, CAT Comunicação Acidente Trabalho, art. 19 Lei 8.213, art. 20 Lei 8.213, art. 21 Lei 8.213, art. 21-A NTEP, Anexo II Decreto 3.048, Tema 1083 STJ, Tema 862 STJ, ADI 3931, Lista B, Lista C, concausa, acidente trajeto, equiparação acidente, art. 118 estabilidade, FGTS afastamento, RMI 100% acidentário, art. 26 §3º III EC 103, doença preexistente agravada, burnout QD85, transtorno mental ocupacional, PGR, NR-1 riscos psicossociais, responsabilidade empresa. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, base-incapacidade-b31-temporaria, base-incapacidade-b91-permanente e base-auxilio-acidente-b94-pos-reforma."
 ---
 
 # Incapacidade Permanente Acidentária (B92) Pós EC 103/2019
@@ -31,7 +31,7 @@ ADI 3931 (STF). Reconhece a constitucionalidade do NTEP como regra de inversão 
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
 

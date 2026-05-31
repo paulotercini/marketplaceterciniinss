@@ -1,6 +1,6 @@
 ---
 name: base-b94-integracao-salario-beneficio-tema862
-description: "Integração do auxílio-acidente B94 ao salário-de-benefício de aposentadoria pelo Tema 862 STJ, art. 31 Lei 8.213/91, Súmula 507 STJ, regra do tempo da prestação e direito adquirido sobre acumulação até MP 1.596-14/1997. Use SEMPRE que mencionar integração B94 SB, Tema 862 STJ, art. 31 Lei 8.213, Súmula 507 STJ, B94 entra na média da aposentadoria, acumulação B94 e aposentadoria, MP 1.596-14/1997, marco temporal acumulação, B94 anterior à aposentadoria, soma B94 contribuição, integração da renda mensal, base de cálculo aposentadoria com B94, RMI com integração de auxílio-acidente, Portaria 991/2022, Portaria 992/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-tema201 e base-calculo-rmi-ec103."
+description: "Integração do auxílio-acidente B94 ao salário-de-benefício de aposentadoria pelo Tema 862 STJ, art. 31 Lei 8.213/91, Súmula 507 STJ, regra do tempo da prestação e direito adquirido sobre acumulação até MP 1.596-14/1997. Use SEMPRE que mencionar integração B94 SB, Tema 862 STJ, art. 31 Lei 8.213, Súmula 507 STJ, B94 entra na média da aposentadoria, acumulação B94 e aposentadoria, MP 1.596-14/1997, marco temporal acumulação, B94 anterior à aposentadoria, soma B94 contribuição, integração da renda mensal, base de cálculo aposentadoria com B94, RMI com integração de auxílio-acidente, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-tema201 e base-calculo-rmi-ec103."
 ---
 
 # Integração do B94 ao Salário-de-Benefício
@@ -25,7 +25,7 @@ IN 128/2022.
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
 
