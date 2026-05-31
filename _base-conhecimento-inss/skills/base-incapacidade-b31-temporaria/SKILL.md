@@ -113,3 +113,12 @@ Para validação formal de relatório médico de incapacidade pelo Checklist A d
 ## O que NÃO está nesta skill
 
 Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.
+
+## Atualização DOU 20/05/2026
+Norma: Instrução Normativa PRES/INSS nº 208, de 19 de maio de 2026
+Órgão: Presidência do INSS
+Vigência: publicação no DOU 20/05/2026, Seção 1
+Resumo da alteração: Insere o art. 576-A na IN 128/2022. Regra geral estabelece que o interessado só pode apresentar novo requerimento da mesma espécie de benefício após a decisão do requerimento anterior E após o decurso do prazo de 30 dias para interposição de recurso ordinário administrativo. Exceções expressas do parágrafo único: pedidos de revisão (regem-se por normas próprias) e benefício por incapacidade (regem-se pelos arts. 340 e 346 da IN 128/2022). O B31 está portanto EXCLUÍDO da regra geral do art. 576-A. Para o B31 continuam valendo as regras dos arts. 340 e 346 da IN 128 e a trava dos três indeferimentos do art. 60 §11-A da Lei 8.213/91. A IN 208 complementa a IN 203/2026, que já havia vedado novo requerimento enquanto houver processo em curso para as demais espécies.
+Impacto na advocacia para B31: O escritório não precisa alterar a estratégia de requerimento de B31. A exceção é expressa. O alerta é de não confundir o B31 com outras espécies de benefício ao orientar o cliente: para aposentadoria, pensão por morte, salário-maternidade, BPC e demais espécies, a regra do art. 576-A se aplica e impede o protocolo imediato de novo pedido após indeferimento.
+Estratégia para demais benefícios: Em caso de indeferimento de aposentadoria, pensão, salário-maternidade ou BPC, o escritório deve aguardar o decurso do prazo recursal de 30 dias (ou recorrer dentro desse prazo ao CRPS) antes de protocolar novo requerimento da mesma espécie. Protocolo imediato após indeferimento passou a ser vedado para essas espécies.
+Link oficial: https://www.gov.br/inss/pt-br/centrais-de-conteudo/legislacao/instrucao-normativa/2026/instrucao-normativa-pres-inss-no-208-de-19-de-maio-de-2026

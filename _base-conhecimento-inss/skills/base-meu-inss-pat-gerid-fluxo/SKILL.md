@@ -136,3 +136,19 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 20/05/2026 — Vedação de Novo Requerimento (IN 208/2026)
+Norma: Instrução Normativa PRES/INSS nº 208, de 19 de maio de 2026 (complementa IN 203/2026)
+Órgão: Presidência do INSS
+Vigência: publicação no DOU 20/05/2026, Seção 1
+Resumo da alteração: Insere o art. 576-A na IN 128/2022. A regra geral veda que o interessado apresente novo requerimento da mesma espécie de benefício enquanto houver processo pendente (IN 203) e após o decurso do prazo de 30 dias para recurso ordinário (IN 208). Exceções: pedidos de revisão e benefício por incapacidade (B31, B91, B92), que seguem as regras dos arts. 340 e 346 da IN 128.
+Impacto operacional no escritório: O padrão anterior de protocolar imediatamente novo requerimento após indeferimento de aposentadoria, pensão por morte, salário-maternidade ou BPC está vedado. O escritório deve registrar na tarefa a data da decisão de indeferimento e só protocolar novo pedido da mesma espécie após 30 dias (prazo recursal). Alternativa mais eficiente é recorrer ao CRPS dentro do prazo de 30 dias em vez de fazer novo protocolo.
+Ajuste no fluxo do escritório: Na tarefa de cada benefício indeferido (exceto B31 e B91), adicionar um checkpoint de data "Prazo para recurso CRPS/novo protocolo expira em [DER + 30 dias]". Não protocolar novo pedido antes dessa data ou do retorno do recurso.
+
+## Atualização DOU 26/05/2026 — Portaria 1.959/2026 (PGB Fila Única)
+Norma: Portaria PRES/INSS nº 1.959, de 25 de maio de 2026
+Órgão: Presidência do INSS
+Vigência: publicação no DOU 26/05/2026, Seção 1
+Resumo da alteração: Altera a Portaria PRES/INSS nº 1.919/2026, que rege o Programa de Gerenciamento de Benefícios (PGB) e o Pagamento Extraordinário do PGB. A Portaria 1.919 implantou a fila única nacional para análise de benefícios, permitindo que servidores de qualquer UF trabalhem nos processos de outras UFs. A 1.959 traz ajustes nas regras excepcionais e temporárias desse programa.
+Impacto operacional: Pode haver variação no tempo médio de análise por UF, já que a fila é nacional. O escritório pode perceber mudanças no padrão de resposta do INSS conforme o PGB evolui. Monitorar o PAT para verificar se o responsável pela análise mudou de UF. Não afeta os prazos legais nem a estratégia recursal.
+Link oficial: https://www.gov.br/inss/pt-br/centrais-de-conteudo/legislacao/portarias/2026/portaria-pres-inss-no-1-919-de-12-de-janeiro-de-2026
