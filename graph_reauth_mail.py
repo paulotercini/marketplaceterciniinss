@@ -1,9 +1,9 @@
-"""Reautoriza o Microsoft Graph adicionando Mail.Read (alem de Tasks.ReadWrite)."""
+"""Reautoriza o Microsoft Graph (Tasks + Mail + Contacts.Read)."""
 import json, sys, time, urllib.parse, urllib.request, urllib.error, pathlib
 
 CLIENT_ID = "14d82eec-204b-4c2f-b7e8-296a70dab67e"
 AUTHORITY = "https://login.microsoftonline.com/consumers"
-SCOPE = "Tasks.ReadWrite Mail.ReadWrite Mail.Send offline_access"
+SCOPE = "Tasks.ReadWrite Mail.ReadWrite Mail.Send Contacts.Read offline_access"
 TOKENS_PATH = pathlib.Path("graph_tokens.json")
 DEVICE_PATH = pathlib.Path("graph_device_mail.json")
 
