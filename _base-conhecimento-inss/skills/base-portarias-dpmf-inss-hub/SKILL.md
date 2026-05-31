@@ -1,6 +1,6 @@
 ---
 name: base-portarias-dpmf-inss-hub
-description: "Hub completo das Portarias DPMF, DIRBEN e correlatas do INSS, aplicáveis a TODA análise de benefício previdenciário. Use SEMPRE que mencionar Portaria DPMF INSS, Portaria DIRBEN INSS, Portaria 990/2022 CNIS RAC, Portaria 991/2022 concessão revisão, Portaria 992/2022 RMI, Portaria 1316/2025, Portarias 1056/2022 1231/2024 1309/2025 1318/2025 IEA, Portarias 1310/2025 1333/2026 reabilitação, Portaria MPS 462/2026 RICRPS, Portarias 1079/2022 1209/2024 1240/2024 1251/2025 1299/2025 alterações 990, Portaria 19/2026 Teleperícia, Portarias Conjuntas 13 14 15/2026 análise documental B31 B91 B94, Portaria MTP 672/2021 EPI, Portaria 6734/2020 PCMSO, Portaria Conjunta SPS INSS SNAS 2/2014 BPC, Portaria Interministerial 1/2015 IF-BrA. Cruza com cnis-acerto-indicadores, base-erro-administrativo-iea-13975, base-segurado-especial-autodeclaracao-arts-92-93-94, peticao-previdenciaria, precedentes-previdenciarios."
+description: "Hub completo das Portarias DPMF, DIRBEN e correlatas do INSS, aplicáveis a TODA análise de benefício previdenciário. Use SEMPRE que mencionar Portaria DPMF INSS, Portaria DIRBEN INSS, Portaria 990/2022 CNIS RAC Livro I, Portaria 991/2022 concessão revisão Livro II, Portaria 992/2022 manutenção Livro III (NÃO cálculo RMI), Portaria 993/2022 processo administrativo Livro IV, Portaria 994/2022 acumulação Livro V, Portaria 995/2022 acordos internacionais Livro VI, Portaria 996/2022 recursos Livro VII, Portaria 1316/2025, Portarias 1056/2022 1231/2024 1309/2025 1318/2025 IEA, Portarias 1310/2025 1333/2026 reabilitação, Portaria MPS 462/2026 RICRPS, Portarias 1079/2022 1209/2024 1240/2024 1251/2025 1299/2025 alterações 990, Portaria 19/2026 Teleperícia, Portarias Conjuntas 13 14 15/2026 análise documental B31 B91 B94, Portaria MTP 672/2021 EPI, Portaria 6734/2020 PCMSO, Portaria Conjunta SPS INSS SNAS 2/2014 BPC, Portaria Interministerial 1/2015 IF-BrA. Taxonomia corrigida das Portarias 990 a 996/2022 verificada contra fontes oficiais em 31/05/2026. Cruza com cnis-acerto-indicadores, base-erro-administrativo-iea-13975, base-segurado-especial-autodeclaracao-arts-92-93-94, peticao-previdenciaria, precedentes-previdenciarios, base-legislacao-fontes-primarias."
 ---
 
 # Hub das Portarias DPMF, DIRBEN e correlatas. INSS
@@ -95,21 +95,19 @@ Arts. 61 a 100. Diretrizes específicas por espécie de benefício.
 
 Aplicação transversal. Toda análise de benefício é orientada pela Portaria 991.
 
-## 6. Portaria DPMF/INSS 992/2022. Cálculo da Renda Mensal Inicial (RMI)
+## 6. Portaria DPMF/INSS 992/2022. Manutenção de Benefícios e Serviços (Livro III)
 
-Disciplina os critérios de cálculo da RMI dos benefícios previdenciários.
+CORREÇÃO. A Portaria 992/2022 NÃO trata de cálculo de RMI. Aprova o Livro III da regulamentação consolidada da IN 128/2022, com tema MANUTENÇÃO de benefícios e serviços. 330 artigos.
 
-Aplicação. Indispensável para análise de questões de cálculo, atividade concomitante (Tema 1.070/STJ), revisão da vida toda (Tema 1.102/STF), revisão do teto, revisão do art. 29 II, IRSM e ORTN/OTN.
+Disciplina folha de pagamento, atualização cadastral, descontos, consignações, suspensão e cessação de benefícios.
 
-Arts. 1º a 20. Disposições gerais. Salários-de-contribuição, divisor mínimo, atualização monetária.
+Aplicação. Indispensável para análise de manutenção do benefício já concedido, situações de descontos indevidos, suspensão sem contraditório, cessação por revisão, atualização de dados do beneficiário e revisão administrativa em fase de manutenção.
 
-Arts. 21 a 50. Cálculo por espécie. Aposentadorias, pensão, auxílio-doença, BPC.
+Estrutura. Arts. sobre folha de pagamento, descontos (consignações, IR, contribuições), atualização cadastral, prova de vida, suspensão e cessação de benefícios.
 
-Arts. 51 a 100. Atividades concomitantes. Tema 1.070/STJ.
+A RMI é regulada pela IN 128/2022 e pela Portaria 991/2022 (Livro II - Reconhecimento de Benefícios), NÃO pela 992.
 
-Anexos. Tabelas e exemplos.
-
-Aplicação transversal. Análise crítica de RMI em concessão e revisão.
+Aplicação transversal. Análise crítica de manutenção, defesa contra cessação irregular e impugnação de descontos.
 
 ## 7. Portarias DIRBEN sobre Indicação de Erro Administrativo (IEA)
 
@@ -197,7 +195,8 @@ Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-lon
 |---|---|---|
 | CNIS, indicadores, RAC | DPMF/INSS 990/2022 (e alterações) | cnis-acerto-indicadores |
 | Concessão e revisão administrativa | DPMF/INSS 991/2022 | aplicação transversal |
-| Cálculo da RMI | DPMF/INSS 992/2022 | base-calculo-rmi-ec103 |
+| Manutenção de benefícios (folha, descontos, suspensão, cessação) | DPMF/INSS 992/2022 (Livro III) | (transversal) |
+| Cálculo da RMI | IN 128/2022 e Portaria 991/2022 (Livro II - Reconhecimento) | base-calculo-rmi-ec103 |
 | Indicação de Erro Administrativo (IEA) | DIRBEN 1056, 1231, 1309, 1318 | base-erro-administrativo-iea-13975 |
 | Reabilitação Profissional | DIRBEN 1310/2025, 1333/2026 | base-reabilitacao-profissional-portaria-1310-1333 |
 | RICRPS (CRPS) | MPS 462/2026 | admissibilidade-barreiras-crps |
@@ -215,7 +214,7 @@ Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-lon
 
 ### 17.1. Aposentadoria por idade
 
-Verificar CNIS e indicadores via Portaria 990/2022. Aplicar Portaria 991/2022 para procedimento. Aplicar Portaria 992/2022 para cálculo da RMI. Em caso de período rural, aplicar arts. 92-94 da 990 (autodeclaração).
+Verificar CNIS e indicadores via Portaria 990/2022. Aplicar Portaria 991/2022 para procedimento de reconhecimento (concessão e revisão), inclusive cálculo da RMI. Aplicar Portaria 992/2022 para questões de manutenção (folha, descontos, suspensão, cessação) após concessão. Em caso de período rural, aplicar arts. 92-94 da 990 (autodeclaração).
 
 ### 17.2. Aposentadoria por tempo de contribuição
 
@@ -235,7 +234,7 @@ Portarias correlatas. Portarias Conjuntas MPS/INSS 13, 14 e 15/2026 para anális
 
 ### 17.6. Pensão por morte
 
-Portaria 991/2022 para procedimento. Portaria 992/2022 para cálculo.
+Portaria 991/2022 para procedimento de reconhecimento e cálculo. Portaria 992/2022 para manutenção (descontos, suspensão, cessação por óbito do dependente ou perda da qualidade).
 
 ### 17.7. BPC/LOAS
 
@@ -279,9 +278,9 @@ Em mora administrativa, aplicar prazos do art. 49 da Lei 9.784/1999, art. 41-A �
 
 Em silêncio administrativo, MS por omissão.
 
-### 18.4. Portaria 992/2022
+### 18.4. Portaria 992/2022 (Manutenção)
 
-Em RMI inferior à esperada, verificar atividade concomitante (Tema 1.070/STJ), revisão da vida toda (Tema 1.102/STF), revisão do teto, art. 29 II, IRSM, ORTN/OTN.
+Em desconto indevido no benefício, exigir relatório detalhado de descontos e impugnar consignações não autorizadas. Em suspensão por revisão administrativa, exigir contraditório prévio (art. 41-A §1º Lei 8.213). Em cessação por óbito presumido, exigir prova efetiva. Para questões de RMI inferior à esperada, ver Portaria 991/2022 e IN 128/2022 (Reconhecimento), verificando atividade concomitante (Tema 1.070/STJ), revisão da vida toda (Tema 1.102/STF), revisão do teto, art. 29 II, IRSM, ORTN/OTN.
 
 ### 18.5. Portarias DIRBEN 1056-1309 (IEA)
 

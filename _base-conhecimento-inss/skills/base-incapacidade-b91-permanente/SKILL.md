@@ -1,6 +1,6 @@
 ---
 name: base-incapacidade-b91-permanente
-description: "Aposentadoria por incapacidade permanente B91 pós EC 103/2019, ótica pró-segurado. Use SEMPRE que mencionar B91, aposentadoria por invalidez, arts. 42 a 48 Lei 8.213, acréscimo 25% grande invalidez, art. 42 §2º doença preexistente, conversão B31 em B91, prognóstico desfavorável, laudo B91, RMI B91 60% mais 2% excedente, RMI B91 acidentária 100%, art. 26 §3º II EC 103, Tema 1083 STJ agravamento, Tema 982 STJ, assistência permanente, insuscetibilidade reabilitação, reavaliação periódica, MP 739/2016, Programa Revisão, Portaria Conjunta 14/2026, análise documental B91, Portaria 991/2022, Portaria 992/2022. Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, base-incapacidade-b31-temporaria, base-incapacidade-acidentaria-b92, ntep-nexo-acidentario, base-calculo-rmi-ec103 e orientacao-cliente-pericia."
+description: "Aposentadoria por incapacidade permanente B91 pós EC 103/2019, ótica pró-segurado. Use SEMPRE que mencionar B91, aposentadoria por invalidez, arts. 42 a 48 Lei 8.213, acréscimo 25% grande invalidez, art. 42 §2º doença preexistente, conversão B31 em B91, prognóstico desfavorável, laudo B91, RMI B91 60% mais 2% excedente, RMI B91 acidentária 100%, art. 26 §3º II EC 103, Tema 1083 STJ agravamento, Tema 982 STJ, assistência permanente, insuscetibilidade reabilitação, reavaliação periódica, MP 739/2016, Programa Revisão, Portaria Conjunta 14/2026, análise documental B91, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, base-incapacidade-b31-temporaria, base-incapacidade-acidentaria-b92, ntep-nexo-acidentario, base-calculo-rmi-ec103 e orientacao-cliente-pericia."
 ---
 
 # Aposentadoria por Incapacidade Permanente (B91) Pós EC 103/2019
@@ -31,7 +31,7 @@ Portaria Conjunta MPS/INSS 14/2026. Regulamenta a análise documental do B91. Ac
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Requisitos cumulativos
 

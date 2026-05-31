@@ -1,6 +1,6 @@
 ---
 name: base-auxilio-acidente-b94-pos-reforma
-description: "Auxílio-acidente B94 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B94, auxílio-acidente, sequela, redução da capacidade laboral, consolidação de lesões, art. 86 Lei 8.213, Anexo III Decreto 3.048, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 TNU, Tema 862 STJ, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, PUIL 5000733, PUIL 5026380, art. 31 integração salário-de-contribuição, cálculo RMI B94, 50% média, período de graça B94, indenizatório, acumulação aposentadoria B94 antes Lei 13.846, reabilitação profissional B94, cessação B94, MS auxílio-acidente, Portaria Conjunta 15/2026, análise documental B94, sequela mínima Anexo III exemplificativo. Postura pró-segurado, Portaria 991/2022, Portaria 992/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, analise-documental-incapacidade, base-incapacidade-acidentaria-b92 e base-incapacidade-b31-temporaria."
+description: "Auxílio-acidente B94 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B94, auxílio-acidente, sequela, redução da capacidade laboral, consolidação de lesões, art. 86 Lei 8.213, Anexo III Decreto 3.048, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 TNU, Tema 862 STJ, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, PUIL 5000733, PUIL 5026380, art. 31 integração salário-de-contribuição, cálculo RMI B94, 50% média, período de graça B94, indenizatório, acumulação aposentadoria B94 antes Lei 13.846, reabilitação profissional B94, cessação B94, MS auxílio-acidente, Portaria Conjunta 15/2026, análise documental B94, sequela mínima Anexo III exemplificativo. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, analise-documental-incapacidade, base-incapacidade-acidentaria-b92 e base-incapacidade-b31-temporaria."
 ---
 
 # Auxílio-Acidente (B94) Pós EC 103/2019
@@ -31,7 +31,7 @@ Lei 8.213/91, art. 26, I. B94 é isento de carência.
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
 

@@ -1,6 +1,6 @@
 ---
 name: base-aposentadoria-transicao-ec103
-description: "Regras de transição da EC 103/2019 para aposentadoria por tempo de contribuição, sob a ótica exclusiva do segurado. Use SEMPRE que mencionar regra de transição EC 103, art. 15 EC 103, art. 16 EC 103, art. 17 EC 103, art. 20 EC 103, pontos progressivos, fórmula 86/96 progressiva, pedágio 50%, pedágio 100%, idade mínima progressiva, professor transição, art. 20 §1º EC 103, escolha da regra mais vantajosa, comparativo entre regras, melhor regra de transição, mitigar impacto reforma, art. 4º EC 103, tempo de contribuição mínimo 35 30, carência 180, Tema 334 STF melhor benefício na transição, aplicação simultânea Lei 13.183/2015 na transição, direito de escolha, fator previdenciário nas transições, divisor mínimo nas transições. Portaria 991/2022, Portaria 992/2022. Aciona peticao-previdenciaria. Cruza com peticao-previdenciaria, base-aposentadoria-direito-adquirido, base-aposentadoria-regra-permanente-ec103, base-calculo-rmi-ec103, reafirmacao-der, precedentes-previdenciarios e revisao-peticao."
+description: "Regras de transição da EC 103/2019 para aposentadoria por tempo de contribuição, sob a ótica exclusiva do segurado. Use SEMPRE que mencionar regra de transição EC 103, art. 15 EC 103, art. 16 EC 103, art. 17 EC 103, art. 20 EC 103, pontos progressivos, fórmula 86/96 progressiva, pedágio 50%, pedágio 100%, idade mínima progressiva, professor transição, art. 20 §1º EC 103, escolha da regra mais vantajosa, comparativo entre regras, melhor regra de transição, mitigar impacto reforma, art. 4º EC 103, tempo de contribuição mínimo 35 30, carência 180, Tema 334 STF melhor benefício na transição, aplicação simultânea Lei 13.183/2015 na transição, direito de escolha, fator previdenciário nas transições, divisor mínimo nas transições. Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona peticao-previdenciaria. Cruza com peticao-previdenciaria, base-aposentadoria-direito-adquirido, base-aposentadoria-regra-permanente-ec103, base-calculo-rmi-ec103, reafirmacao-der, precedentes-previdenciarios e revisao-peticao."
 ---
 
 # Regras de Transição da EC 103/2019 (Aposentadoria por Tempo)
@@ -25,7 +25,7 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Regra geral e as quatro portas de transição
 

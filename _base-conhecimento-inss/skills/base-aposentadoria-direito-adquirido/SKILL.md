@@ -1,6 +1,6 @@
 ---
 name: base-aposentadoria-direito-adquirido
-description: "Direito adquirido à aposentadoria pré-reforma EC 103/2019, proteção exclusiva do segurado. Use SEMPRE que mencionar direito adquirido aposentadoria, regras pré-reforma, art. 3º EC 103, Súmula 359 STF, RE 630.501, Tema 334 STF, melhor benefício, aposentadoria por tempo de contribuição 35 25, aposentadoria proporcional, EC 20 art. 9º §1º, pedágio 20%, aposentadoria especial pré-reforma, requisitos antes 13/11/2019, reafirmação DER, acervo contributivo pré-reforma, tempus regit actum, afastar regra nova menos vantajosa, professor 30 25, art. 53 Lei 8.213, fator previdenciário, regra 85/95 progressiva Lei 13.183/2015, desaposentação Tema 503 STF, revisão da vida toda Tema 1102 STF e modulação. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022, Portaria 992/2022. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao e reafirmacao-der."
+description: "Direito adquirido à aposentadoria pré-reforma EC 103/2019, proteção exclusiva do segurado. Use SEMPRE que mencionar direito adquirido aposentadoria, regras pré-reforma, art. 3º EC 103, Súmula 359 STF, RE 630.501, Tema 334 STF, melhor benefício, aposentadoria por tempo de contribuição 35 25, aposentadoria proporcional, EC 20 art. 9º §1º, pedágio 20%, aposentadoria especial pré-reforma, requisitos antes 13/11/2019, reafirmação DER, acervo contributivo pré-reforma, tempus regit actum, afastar regra nova menos vantajosa, professor 30 25, art. 53 Lei 8.213, fator previdenciário, regra 85/95 progressiva Lei 13.183/2015, desaposentação Tema 503 STF, revisão da vida toda Tema 1102 STF e modulação. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao e reafirmacao-der."
 ---
 
 # Aposentadoria com Direito Adquirido Pré EC 103/2019
@@ -25,7 +25,7 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Cenários operacionais pró-segurado
 
