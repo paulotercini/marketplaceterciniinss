@@ -1,6 +1,6 @@
 ---
 name: base-meu-inss-pat-gerid-fluxo
-description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
+description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico, IN 203/2026, IN 208/2026, art 576-A vedação novo requerimento, reprotocolo bloqueado, processo pendente mesma espécie, biometria CIN 2026, Portaria SGD/MGI 2907/2026, prazo biometria 31/12/2026, bloqueio benefício biometria, CIN Carteira Identidade Nacional. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
 ---
 
 # Sistemas Administrativos do INSS - Fluxo Operacional
@@ -129,6 +129,26 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Tempo médio entre DER e diagnóstico no PAT (meta menos de 7 dias após disponibilidade da análise)
 - Tempo médio entre concessão e implantação efetiva no HISCRE (meta menos de 45 dias)
 - Quantidade de tarefas paradas por problema de acesso ao sistema (meta zero)
+
+## Atualização DOU 01/06/2026 — Vedação de novo requerimento (IN 203/208-2026)
+
+Norma: IN PRES/INSS nº 208, de 19 de maio de 2026 (DOU 20/05/2026) e IN PRES/INSS nº 203, de 22 de abril de 2026 (DOU 24/04/2026)
+Órgão: Instituto Nacional do Seguro Social — Presidência
+Vigência: 24/04/2026 (IN 203) e 20/05/2026 (IN 208)
+Resumo da alteração: O art. 576-A da IN 128/2022 passa a vedar a apresentação de novo requerimento da mesma espécie de benefício enquanto houver processo em curso. O prazo de pendência inclui os trinta dias para recurso ordinário ao CRPS após a decisão. Única exceção é o pedido de revisão. Na prática operacional, após protocolo de requerimento no Meu INSS ou no PAT, o cliente não pode reprotocolar o mesmo benefício até decisão final e escoamento do prazo recursal.
+Impacto na advocacia: Verificar no PAT/Meu INSS se há processo pendente ANTES de sugerir novo protocolo. Reprotocolo com documentação adicional feito enquanto há processo pendente será indeferido de plano por vedação procedimental. Checklist pré-protocolo deve incluir consulta a processos ativos da mesma espécie.
+Estratégia: Incorporar ao fluxo operacional a consulta ao PAT na etapa de triagem, identificar se já há processo pendente da mesma espécie, e, caso haja, usar a via recursal (CRPS) em vez de novo protocolo.
+Link oficial: https://www.legisweb.com.br/legislacao/?id=495991
+
+## Atualização DOU 01/06/2026 — Biometria obrigatória CIN/INSS (Portaria SGD/MGI 2.907/2026)
+
+Norma: Portaria SGD/MGI nº 2.907/2026 (publicada em maio de 2026)
+Órgão: Secretaria de Governo Digital — Ministério da Gestão e Inovação em Serviços Públicos
+Vigência: a partir de 30 de abril de 2026; prazo para cumprimento até 31/12/2026
+Resumo da alteração: A portaria reformula o cronograma de exigência da validação biométrica unificada pela nova Carteira de Identidade Nacional (CIN) para concessão e manutenção de benefícios do INSS e benefícios sociais. Cidadãos sem registro biométrico prévio têm até 31 de dezembro de 2026 para emitir a CIN. Para portadores de CNH ou registro no TSE, a obrigatoriedade migra para janeiro de 2028. A ausência de validação biométrica unificada pode impedir aprovação de novos requerimentos e gerar bloqueio de pagamentos de benefícios em curso, com notificação prévia por escrito. A emissão da CIN é gratuita.
+Impacto na advocacia: Clientes em protocolo ou com benefício ativo precisam ser orientados a emitir a CIN até 31/12/2026. Bloqueio de pagamento de benefício já concedido por falta de biometria constitui ato ilegal impugnável por MS. Checar no Meu INSS e Gov.br o status biométrico do cliente antes de protocolar novo requerimento.
+Estratégia: Incluir no checklist de atendimento a verificação do status de validação biométrica do cliente no Gov.br. Em caso de bloqueio de pagamento por ausência de biometria sem notificação prévia formal, impugnar administrativamente e, se necessário, por MS liminar.
+Link oficial: https://www.gov.br/inss/pt-br/assuntos/governo-amplia-prazo-para-uso-obrigatorio-da-biometria-da-cin-em-beneficios-do-inss-e-sociais
 
 ## Link operacional
 

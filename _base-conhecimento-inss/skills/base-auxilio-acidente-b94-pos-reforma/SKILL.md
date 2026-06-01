@@ -121,3 +121,13 @@ O IBDP sustenta institucionalmente o caráter indenizatório e a proteção cont
 ## O que NÃO está nesta skill
 
 Não está aqui o B31 temporário (antes da consolidação), objeto de `base-incapacidade-b31-temporaria`. Não está aqui o B92 (incapacidade permanente acidentária), objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o B91 (incapacidade permanente), objeto de `base-incapacidade-b91-permanente`. Não está aqui a perícia em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`.
+
+## Atualização DOU 01/06/2026
+
+Norma: Portaria PRES/INSS nº 1.959, de 25 de maio de 2026 (DOU 26/05/2026), que modifica a Portaria PRES/INSS nº 1.919, de 12 de janeiro de 2026
+Órgão: Instituto Nacional do Seguro Social — Presidência
+Vigência: 26 de maio de 2026
+Resumo da alteração: A portaria inclui o auxílio-acidente (B94) e as demandas judiciais entre as categorias abrangidas pelo Programa de Gerenciamento de Benefícios e Pagamento Extraordinário, que antes cobria apenas outras espécies. A inclusão pode significar priorização de análise ou gestão diferenciada de processos B94 no âmbito administrativo, especialmente os com demanda judicial em curso.
+Impacto na advocacia: Casos B94 em fase de demanda judicial podem ser triados pelo INSS dentro do programa de gerenciamento, o que pode acelerar implantações ou revisões administrativas durante o processo judicial. Monitorar no PAT se processos judicializados com B94 recebem tratamento diferenciado após 26/05/2026.
+Estratégia: Em casos B94 com demanda judicial ativa, verificar no PAT e Meu INSS se houve movimentação administrativa após 26/05/2026 decorrente da inclusão no programa. Usar eventual análise administrativa favorável como reforço para acordo ou como fundamento de pedido de implantação imediata.
+Link oficial: https://www.legisweb.com.br/legislacao/?id=496207
