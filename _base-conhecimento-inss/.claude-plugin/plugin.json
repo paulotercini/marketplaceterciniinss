@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.22.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.22.0 entrega a Onda Corretiva 32, varredura completa do plugin que corrige a taxonomia errada da Portaria DIRBEN/INSS 992/2022 (que NÃO trata de cálculo de RMI conforme repetido entre Ondas 23 e 30, mas sim do Livro III - Manutenção de Benefícios e Serviços conforme verificação contra fontes oficiais na Onda 31). Substitui em 17 SKILL.md a frase 'Portaria 992/2022 cálculo da RMI' por 'Portaria 992/2022 manutenção (Livro III)' e atualiza a hub base-portarias-dpmf-inss-hub para refletir a taxonomia correta dos 7 livros. A 1.21.0 entregou Onda 31 (repositório de fontes primárias). A 1.20.0 Onda 30 (Manual TNU 10ª edição). 123 skills ao todo (115 base-* + 6 ponte-* + 2 operacionais).",
+  "version": "1.23.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.23.0 entrega a Onda 33, skill aprimorada base-revisao-peticao-aprofundada versionada no plugin como evolução da skill revisao-peticao do escritório. Adiciona quinta camada de auditoria (Integridade Probatória), quarto nível de severidade (BLOQUEANTE), 22 anti-patterns expandidos (de 13 para 22), checklist por rito ampliado para 10 ritos, protocolo anti-alucinação integrado de 5 níveis cruzado com base-legislacao-fontes-primarias (Onda 31), hub de acionamento de 16+ skills do plugin. A 1.22.0 entregou Onda 32 (taxonomia Portarias). A 1.21.0 Onda 31 (fontes primárias). 124 skills ao todo (116 base-* + 6 ponte-* + 2 operacionais).",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"
