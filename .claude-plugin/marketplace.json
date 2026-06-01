@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.22.0 entrega a Onda Corretiva 32, varredura completa do plugin para corrigir a taxonomia errada da Portaria DIRBEN/INSS 992/2022 e atualizar a descrição de todas as Portarias 990-996/2022 conforme verificação contra fontes oficiais na Onda 31. Corrige 17 SKILL.md (frases de descrição rápida, descriptions de frontmatter e tabelas) substituindo 'Portaria 992/2022 cálculo da RMI' por 'Portaria 992/2022 manutenção do benefício (Livro III)' e ajustando a hub base-portarias-dpmf-inss-hub para refletir a taxonomia correta dos 7 livros (990 CNIS, 991 Reconhecimento, 992 Manutenção, 993 Processo Administrativo, 994 Acumulação, 995 Acordos Internacionais, 996 Recursos). A 1.21.0 entregou Onda 31 (repositório de fontes primárias). A 1.20.0 entregou Onda 30 (Manual TNU 10ª edição). 123 skills ao todo (115 base-* + 6 ponte-* + 2 operacionais).",
-      "version": "1.22.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.23.0 entrega a Onda 33, criação da skill aprimorada base-revisao-peticao-aprofundada versionada no plugin como evolução completa da skill revisao-peticao do escritório. Adiciona quinta camada de auditoria (Integridade Probatória) sobre as 4 anteriores (Formal, Normativa, Fática, Argumentativa), quarto nível de severidade (BLOQUEANTE acima de CRÍTICO), 22 anti-patterns catalogados com exemplos pró e contra (expandindo de 13 para 22 ao incluir cotejo analítico ausente em PUIL, paradigma de TRF, Portaria 992/2022 como cálculo de RMI, Súmula 86/TNU como vigente, RVT sem modulação, tutela sem fumus e periculum concretos, ausência de seção de Efeitos Financeiros, matéria processual em PUIL, citação de norma sem leitura verificada), checklist por rito ampliado para 10 ritos (JEF, ordinário federal, CRPS, MS, PUIL/TNU, RE, réplica, memorial, petição administrativa, cumprimento de sentença), protocolo anti-alucinação integrado de 5 níveis (existência, vigência, redação literal, modulação, número de processo) cruzado com base-legislacao-fontes-primarias (Onda 31), hub de acionamento de 16+ skills relevantes do plugin. A 1.22.0 entregou Onda 32 (taxonomia Portarias). A 1.21.0 entregou Onda 31 (fontes primárias). 124 skills ao todo (116 base-* + 6 ponte-* + 2 operacionais).",
+      "version": "1.23.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
@@ -298,7 +298,24 @@
         "lei-15415-2026",
         "lei-15363-2026",
         "lei-15157-2025",
-        "lei-15249-2025"
+        "lei-15249-2025",
+        "onda-33",
+        "revisao-peticao-aprofundada",
+        "5-camadas-auditoria",
+        "integridade-probatoria",
+        "severidade-bloqueante",
+        "22-anti-patterns",
+        "checklist-10-ritos",
+        "hub-acionamento-16-skills",
+        "anti-alucinacao-integrado",
+        "segundo-advogado-escritorio",
+        "memorial-evo-2-paginas",
+        "von-restorff-destaques",
+        "regra-tipografia-juridica",
+        "regra-mostre-nao-diga",
+        "regra-clareza-latim",
+        "regra-limite-uma-pagina",
+        "teste-do-leigo"
       ]
     }
   ]
