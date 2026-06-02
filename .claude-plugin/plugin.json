@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.23.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.23.0 entrega a Onda 33, skill aprimorada base-revisao-peticao-aprofundada versionada no plugin como evolução da skill revisao-peticao do escritório. Adiciona quinta camada de auditoria (Integridade Probatória), quarto nível de severidade (BLOQUEANTE), 22 anti-patterns expandidos (de 13 para 22), checklist por rito ampliado para 10 ritos, protocolo anti-alucinação integrado de 5 níveis cruzado com base-legislacao-fontes-primarias (Onda 31), hub de acionamento de 16+ skills do plugin. A 1.22.0 entregou Onda 32 (taxonomia Portarias). A 1.21.0 Onda 31 (fontes primárias). 124 skills ao todo (116 base-* + 6 ponte-* + 2 operacionais).",
+  "version": "1.24.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.24.0 entrega a Onda 34, skill base-recurso-crps-peca-enxuta para padrão de redação enxuta, direta e clara em recursos ao CRPS (recurso ordinário, recurso especial, embargos, agravo ao Pleno, PUJ, reclamação), com fundamentação puramente normativa (Constituição, Leis, Decretos, IN 128/2022, Portarias DIRBEN/INSS, Portaria MPS 125/2026 RICRPS, Pareceres CONJUR/AGU vinculantes, Enunciados e Resoluções do CRPS) e vedação a julgados judiciais como fundamento principal. SKILL.md + 4 references (modelos enxutos + catálogo normativo hierárquico). Atualiza base-crps-panorama-geral e ponte-workflow-crps para refletir o padrão enxuto. A 1.23.0 entregou Onda 33 (revisão aprofundada). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"

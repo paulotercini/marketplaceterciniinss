@@ -69,15 +69,33 @@ Quinto, decisões do CRPS vinculam o INSS.
 
 Primeiro, aproveitar o recurso administrativo antes da via judicial, quando estratégico.
 
-Segundo, protocolar recurso ordinário no prazo, com contrarrazões densas.
+Segundo, protocolar recurso ordinário no prazo, com peça ENXUTA, DIRETA E CLARA. Vide skill `base-recurso-crps-peca-enxuta` para o padrão de redação.
 
 Terceiro, pleitear sustentação oral em temas relevantes.
 
-Quarto, invocar enunciados, súmulas e pareceres vinculantes.
+Quarto, invocar enunciados, súmulas, resoluções e pareceres CONJUR/AGU vinculantes COMO FUNDAMENTO PRINCIPAL. CRPS é vinculado ao normativo administrativo, não ao jurisprudencial judicial.
 
-Quinto, em caso de divergência ou contrariedade, recurso especial.
+Quinto, em caso de divergência ou contrariedade, recurso especial às Câmaras.
 
 Sexto, em caso de afronta ao Pleno, reclamação.
+
+## Padrão de Redação Enxuta no CRPS
+
+Recurso CRPS pró-segurado segue padrão de redação ENXUTA, conforme skill `base-recurso-crps-peca-enxuta`. O CRPS é órgão administrativo vinculado a normativo e precedentes administrativos, NÃO a julgados judiciais.
+
+Tamanho esperado.
+- Recurso ordinário. 3 a 6 páginas.
+- Recurso especial. 5 a 8 páginas.
+- Embargos. 1 a 2 páginas, máximo 3.
+- Agravo ao Pleno. 3 a 5 páginas.
+- PUJ. 5 a 8 páginas.
+- Reclamação. 3 a 5 páginas.
+
+Fundamentação preferencial.
+- Constituição, leis, decretos, IN 128/2022, Portarias DIRBEN/INSS, Portaria MPS 125/2026 (RICRPS).
+- Pareceres CONJUR/AGU vinculantes (art. 108 RICRPS).
+- Enunciados, Resoluções e Súmulas do CRPS (art. 114 RICRPS).
+- Julgados judiciais SOMENTE quando vinculantes pelo art. 109 RICRPS (repercussão geral STF, repetitivo STJ, IRDR, IAC, súmula vinculante), em frase curta SEM transcrição de ementa.
 
 ## Integração com outras skills
 
