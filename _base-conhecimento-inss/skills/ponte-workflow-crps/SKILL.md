@@ -76,7 +76,16 @@ CNIS via `cnis-acerto-indicadores` para divergências cadastrais que sustentem o
 
 ### Passo 10. Redação da peça e revisão
 
-Acionar `peticao-previdenciaria` no padrão CRPS (recuo 5cm, fonte Bookman Old Style 12pt, espaçamento 1,5, argumentação densa). Acionar `revisao-peticao`.
+Acionar `base-recurso-crps-peca-enxuta` (Onda 34) para diretrizes de redação enxuta, direta e clara no padrão CRPS pró-segurado. A peça deve ser puramente fundada em normativo (Constituição, leis, decretos, IN 128/2022, Portarias DIRBEN/INSS, Portaria MPS 125/2026 RICRPS, Pareceres CONJUR/AGU vinculantes, Enunciados, Resoluções e Súmulas do CRPS), com vedação ao uso de julgados judiciais como fundamento principal.
+
+Acionar `peticao-previdenciaria` ou `base-peticao-previdenciaria-padrao-visual` no padrão CRPS (recuo 5cm, fonte Bookman Old Style 12pt, espaçamento 1,5).
+
+Tamanho típico esperado.
+- Recurso ordinário. 3 a 6 páginas.
+- Recurso especial. 5 a 8 páginas.
+- Embargos. 1 a 2 páginas, máximo 3.
+
+Acionar `base-revisao-peticao-aprofundada` (Onda 33) para auditoria pós-redação. Atenção especial aos anti-patterns 5 (argumentação genérica), 6 (excesso de jurisprudência judicial transcrita) e 11 (excesso de destaques).
 
 ## 3. Documentos essenciais
 

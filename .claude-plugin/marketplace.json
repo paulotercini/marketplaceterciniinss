@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.23.0 entrega a Onda 33, criação da skill aprimorada base-revisao-peticao-aprofundada versionada no plugin como evolução completa da skill revisao-peticao do escritório. Adiciona quinta camada de auditoria (Integridade Probatória) sobre as 4 anteriores (Formal, Normativa, Fática, Argumentativa), quarto nível de severidade (BLOQUEANTE acima de CRÍTICO), 22 anti-patterns catalogados com exemplos pró e contra (expandindo de 13 para 22 ao incluir cotejo analítico ausente em PUIL, paradigma de TRF, Portaria 992/2022 como cálculo de RMI, Súmula 86/TNU como vigente, RVT sem modulação, tutela sem fumus e periculum concretos, ausência de seção de Efeitos Financeiros, matéria processual em PUIL, citação de norma sem leitura verificada), checklist por rito ampliado para 10 ritos (JEF, ordinário federal, CRPS, MS, PUIL/TNU, RE, réplica, memorial, petição administrativa, cumprimento de sentença), protocolo anti-alucinação integrado de 5 níveis (existência, vigência, redação literal, modulação, número de processo) cruzado com base-legislacao-fontes-primarias (Onda 31), hub de acionamento de 16+ skills relevantes do plugin. A 1.22.0 entregou Onda 32 (taxonomia Portarias). A 1.21.0 entregou Onda 31 (fontes primárias). 124 skills ao todo (116 base-* + 6 ponte-* + 2 operacionais).",
-      "version": "1.23.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.24.0 entrega a Onda 34, criação da skill base-recurso-crps-peca-enxuta estabelecendo padrão de redação enxuta, direta e clara para recursos destinados ao Conselho de Recursos da Previdência Social (CRPS), com fundamentação puramente NORMATIVA (Constituição, Leis 8.213/91, 8.212/91, 8.742/93 LOAS, LC 142/2013, Lei 13.146/2015 EPCD, Lei 13.460/2017, Decreto 3.048/99 RPS, Decreto 6.214/2007 BPC, IN 128/2022, Portarias DIRBEN/INSS 990-996/2022, Portaria MPS 125/2026 RICRPS, Pareceres CONJUR/AGU vinculantes art. 108 RICRPS, Enunciados e Súmulas e Resoluções do CRPS art. 114 RICRPS) e vedação ao uso de julgados judiciais como fundamento principal. Inclui 4 modelos de peça enxuta (recurso ordinário, recurso especial, embargos de declaração, catálogo normativo hierárquico). Atualiza base-crps-panorama-geral e ponte-workflow-crps para refletir o padrão enxuto. Tamanho típico esperado. Recurso ordinário 3-6 págs, recurso especial 5-8, embargos 1-2 max 3, agravo ao Pleno 3-5, PUJ 5-8, reclamação 3-5, memorial 2 absoluto. A 1.23.0 entregou Onda 33 (revisão aprofundada). A 1.22.0 Onda 32 (taxonomia Portarias). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
+      "version": "1.24.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
@@ -315,7 +315,32 @@
         "regra-mostre-nao-diga",
         "regra-clareza-latim",
         "regra-limite-uma-pagina",
-        "teste-do-leigo"
+        "teste-do-leigo",
+        "onda-34",
+        "recurso-crps-peca-enxuta",
+        "fundamentacao-normativa-pura",
+        "vedacao-julgados-judiciais",
+        "padrao-crps-enxuto",
+        "art-126-lei-8213",
+        "art-91-ricrps-recurso-especial",
+        "art-92-ricrps-embargos",
+        "art-116-ricrps-agravo",
+        "arts-120-124-ricrps-puj",
+        "art-108-ricrps-pareceres-conjur",
+        "art-109-ricrps-precedentes-judiciais",
+        "art-114-ricrps-normas-vinculantes",
+        "enunciados-crps",
+        "resolucoes-crps",
+        "sumulas-crps",
+        "pareceres-conjur-agu-vinculantes",
+        "lei-13460-usuario-servico-publico-crps",
+        "recuo-5-cm-crps",
+        "junta-de-recursos-jr",
+        "camara-de-julgamento-caj",
+        "conselho-pleno-crps",
+        "embargos-crps-1-2-paginas",
+        "recurso-ordinario-3-6-paginas",
+        "recurso-especial-5-8-paginas"
       ]
     }
   ]
