@@ -1,13 +1,11 @@
 name: Deploy site (GitHub Pages)
 
 on:
-  push:
-    branches:
-      - claude/advocacia-previdenciaria-review-L9qmp
-      - main
-    paths:
-      - "docs/**"
-      - ".github/workflows/deploy-pages.yml"
+  # Após ligar o GitHub Pages com Source = "GitHub Actions", reative o gatilho
+  # de push abaixo descomentando-o. Enquanto isso, o deploy roda sob demanda.
+  # push:
+  #   branches: [main]
+  #   paths: ["docs/**", ".github/workflows/deploy-pages.yml"]
   workflow_dispatch:
 
 permissions:
@@ -31,8 +29,6 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
