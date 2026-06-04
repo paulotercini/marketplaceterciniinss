@@ -1,37 +1,42 @@
 {
   "slug": "aposentadoria-incapacidade",
   "category": "Benefícios por Incapacidade",
-  "title": "Aposentadoria por Incapacidade Permanente (antiga Aposentadoria por Invalidez)",
+  "title": "Aposentadoria por Incapacidade Permanente (Invalidez)",
   "nav_label": "Aposentadoria por Incapacidade",
   "order": 2,
-  "meta_description": "Aposentadoria por incapacidade permanente (B91 e acidentária B92): requisitos, acréscimo de 25% e caráter acidentário. Orientação em Monte Alto/SP.",
-  "hero_subtitle": "Benefício devido ao segurado considerado total e permanentemente incapaz e insuscetível de reabilitação para o trabalho.",
+  "meta_description": "Aposentadoria por incapacidade permanente (B91), antiga aposentadoria por invalidez: requisitos, acréscimo de 25% e modalidade acidentária. Orientação em Monte Alto/SP.",
+  "hero_subtitle": "Benefício devido ao segurado considerado total e permanentemente incapaz para o trabalho e insuscetível de reabilitação profissional.",
   "intro": [
-    "A aposentadoria por incapacidade permanente (espécie B91), antes chamada de aposentadoria por invalidez, é concedida ao segurado considerado incapaz e insuscetível de reabilitação para atividade que lhe garanta a subsistência, conforme o art. 42 da Lei 8.213/91.",
-    "Quando a incapacidade decorre de acidente de trabalho ou doença ocupacional, reconhece-se o caráter acidentário (espécie B92), o que altera o cálculo da renda e gera proteções específicas. Por isso, a investigação do nexo com o trabalho é parte essencial da análise."
+    "A aposentadoria por incapacidade permanente (espécie B91), antes chamada de aposentadoria por invalidez, está prevista nos arts. 42 a 48 da Lei 8.213/91. É devida ao segurado considerado incapaz e insuscetível de reabilitação para atividade que lhe garanta a subsistência.",
+    "Pode ser concedida diretamente ou resultar da conversão do benefício por incapacidade temporária (B31), quando o quadro de saúde se agrava e o prognóstico se torna desfavorável. Em caso de origem acidentária, há regras de cálculo mais favoráveis."
   ],
   "sections": [
     {
       "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "É o benefício pago ao segurado total e permanentemente incapaz para o trabalho e que não pode ser reabilitado para outra atividade que garanta sua subsistência. Pode ser concedido diretamente ou resultar da conversão de um benefício por incapacidade temporária (B31) cujo quadro se agravou. Em regra, a data de início corresponde ao dia seguinte à cessação do benefício temporário ou à data do laudo pericial, conforme os arts. 42 e 43 da Lei 8.213/91."}
+        {"type": "p", "text": "O benefício (B91) é pago ao segurado total e permanentemente incapaz para qualquer atividade laborativa que garanta seu sustento, quando não há possibilidade de reabilitação. Após a Emenda Constitucional 103/2019, a renda mensal inicial do B91 não acidentário é de 60% da média dos salários de contribuição, acrescida de 2% por ano que exceder 20 anos de contribuição (homem) ou 15 anos (mulher). Já o B91 de origem acidentária tem renda de 100% da média."},
+        {"type": "callout", "text": "Investigar o caráter acidentário é decisivo: a renda do benefício acidentário (100% da média) costuma ser bem superior à do não acidentário (60% mais 2% por ano excedente)."}
       ]
     },
     {
-      "heading": "B91 e B92: a importância do caráter acidentário",
+      "heading": "Quem tem direito",
       "blocks": [
-        {"type": "p", "text": "Após a Emenda Constitucional 103/2019, a renda mensal inicial do benefício não acidentário (B91) corresponde a 60% da média de contribuições, acrescidos de 2% por ano que exceder 20 anos de contribuição (homem) ou 15 anos (mulher). Já o benefício acidentário (B92), quando reconhecido o nexo com o trabalho, é calculado com 100% da média. Por essa diferença, verificar o caráter acidentário é determinante para o segurado."},
-        {"type": "callout", "text": "Quando a incapacidade decorre de acidente de trabalho ou doença ocupacional, o nexo pode ser reconhecido, entre outras formas, pelo Nexo Técnico Epidemiológico (NTEP) do art. 21-A da Lei 8.213/91, cuja constitucionalidade foi reconhecida pelo STF na ADI 3931."}
+        {"type": "ul", "items": [
+          "Segurado que estava em auxílio-doença (B31) e teve o quadro agravado, com prognóstico desfavorável, levando à conversão em B91;",
+          "Segurado com doença grave de incapacidade total confirmada, como neoplasia maligna avançada, que pode ter isenção de carência (art. 26, II);",
+          "Segurado com acidente que cause incapacidade total e permanente, hipótese de benefício acidentário com renda integral;",
+          "Segurado em reabilitação profissional cuja recuperação se mostre inviável."
+        ]}
       ]
     },
     {
       "heading": "Requisitos",
       "blocks": [
-        {"type": "p", "text": "São exigidos requisitos cumulativos:"},
+        {"type": "p", "text": "A concessão depende do preenchimento cumulativo de quatro requisitos:"},
         {"type": "ul", "items": [
-          "Qualidade de segurado na data de início da incapacidade.",
-          "Carência de 12 contribuições mensais, salvo isenção do art. 26, II, da Lei 8.213/91 (acidente de qualquer natureza e doenças graves listadas).",
-          "Incapacidade total e permanente para qualquer atividade que garanta a subsistência.",
+          "Qualidade de segurado na data do início da incapacidade (DII);",
+          "Carência de 12 contribuições mensais, salvo isenção do art. 26, II, da Lei 8.213/91;",
+          "Incapacidade total e permanente para qualquer atividade que garanta a subsistência;",
           "Insuscetibilidade de reabilitação profissional."
         ]}
       ]
@@ -39,53 +44,48 @@
     {
       "heading": "Acréscimo de 25% (grande invalidez)",
       "blocks": [
-        {"type": "p", "text": "O art. 45 da Lei 8.213/91 prevê acréscimo de 25% ao valor do benefício para o segurado que necessite de assistência permanente de outra pessoa (grande invalidez), como nos casos de cegueira total, tetraplegia ou quadros equivalentes. Esse acréscimo precisa ser requerido e comprovado, pois não é concedido automaticamente."}
+        {"type": "p", "text": "O art. 45 da Lei 8.213/91 garante um acréscimo de 25% ao valor do benefício quando o segurado necessita de assistência permanente de outra pessoa, situação conhecida como grande invalidez (por exemplo, tetraplegia, cegueira total ou demência avançada)."},
+        {"type": "ul", "items": [
+          "O acréscimo deve ser pedido expressamente, pois o INSS não o concede de ofício;",
+          "É necessário comprovar a necessidade de assistência permanente;",
+          "Discute-se a extensão do acréscimo a outros benefícios (Tema 982 do STJ)."
+        ]}
       ]
     },
     {
       "heading": "Pontos de atenção",
       "blocks": [
         {"type": "ul", "items": [
-          "Doença preexistente, por si só, não impede o benefício: ele é devido quando a incapacidade resulta de progressão ou agravamento da doença, conforme o art. 42, §2º, da Lei 8.213/91.",
-          "O benefício pode passar por reavaliação periódica; cessações sem base técnica adequada podem ser questionadas.",
-          "Sempre vale investigar o caráter acidentário, pela diferença de renda entre o B91 e o B92 e pelas proteções associadas, como a estabilidade do art. 118.",
-          "O acréscimo de 25% deve ser pleiteado expressamente, com prova da necessidade de assistência permanente."
+          "Doença preexistente só afasta o benefício se a incapacidade não decorrer de progressão ou agravamento (art. 42, §2º), interpretação favorável ao segurado;",
+          "O INSS pode tentar manter o segurado em auxílio-doença para postergar a aposentadoria definitiva, o que se enfrenta com laudos especializados e prognóstico desfavorável;",
+          "O benefício passa por reavaliação periódica; cessações sem base técnica robusta, como em revisões em massa, são questionáveis;",
+          "Sempre se deve verificar o caráter acidentário, que assegura renda integral (100% da média) e estabilidade no emprego após a cessação (art. 118)."
         ]}
       ]
     },
     {
       "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Podemos avaliar o conjunto de provas médicas, verificar qualidade de segurado e carência, investigar o eventual caráter acidentário (nexo com o trabalho) e orientar sobre o pedido do acréscimo de 25%, além de acompanhar reavaliações e, conforme o caso, recursos administrativos ou ação judicial com perícia. A análise é sempre individual."}
+        {"type": "p", "text": "Podemos avaliar a qualidade de segurado, a carência e o conjunto de provas médicas, verificar o eventual caráter acidentário e o direito ao acréscimo de 25%, e atuar contra indeferimentos e cessações indevidas, na via administrativa ou judicial, com pedido de perícia quando necessário. Cada caso é avaliado individualmente."}
       ]
     }
   ],
   "documentos": [
     "Documento de identidade e CPF",
-    "Número do CNIS ou extrato de contribuições do INSS",
-    "Laudos médicos atualizados que descrevam a incapacidade e o prognóstico",
-    "Exames complementares, relatórios de especialistas e histórico de internações",
-    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento ou cessação, se houver",
-    "Comunicação de Acidente de Trabalho (CAT) e documentos da empresa (PPP, LTCAT, PGR), quando houver",
-    "Comprovação da necessidade de assistência permanente, nos casos de grande invalidez"
+    "Comprovantes de vínculos e de recolhimentos ao INSS",
+    "Laudos, relatórios e atestados médicos detalhando a incapacidade e o prognóstico",
+    "Exames complementares e histórico de internações e tratamentos",
+    "Relatórios de médicos especialistas que acompanham o caso",
+    "Documentação que comprove a necessidade de assistência permanente, no caso de grande invalidez",
+    "Comunicação de Acidente de Trabalho (CAT) e documentos da empresa, quando houver caráter acidentário",
+    "Comprovante de requerimento e carta de indeferimento ou de cessação do INSS (se houver)"
   ],
   "faq": [
-    {
-      "q": "Qual a diferença entre o benefício acidentário e o não acidentário?",
-      "a": "O benefício não acidentário (B91) é calculado, após a reforma, com 60% da média mais 2% por ano que exceder 20 anos (homem) ou 15 anos (mulher). O acidentário (B92), quando reconhecido o nexo com o trabalho, é calculado com 100% da média. Por isso a verificação do caráter acidentário é tão relevante."
-    },
-    {
-      "q": "Tenho uma doença anterior à filiação ao INSS. Posso ter direito?",
-      "a": "Sim, é possível. A doença preexistente só afasta o benefício se a incapacidade não decorrer de seu agravamento ou progressão, conforme o art. 42, §2º, da Lei 8.213/91. Cada situação deve ser analisada com base nas provas médicas."
-    },
-    {
-      "q": "O que é o acréscimo de 25%?",
-      "a": "É um adicional previsto no art. 45 da Lei 8.213/91 para quem precisa de assistência permanente de outra pessoa (grande invalidez). Deve ser solicitado expressamente e comprovado, pois não é concedido automaticamente."
-    },
-    {
-      "q": "O INSS pode cancelar a aposentadoria por incapacidade?",
-      "a": "O benefício pode ser submetido a reavaliação periódica. Contudo, a cessação exige base técnica adequada que demonstre a real recuperação da capacidade; cessações sem esse fundamento podem ser questionadas."
-    }
+    {"q": "Aposentadoria por invalidez e aposentadoria por incapacidade permanente são a mesma coisa?", "a": "Sim. A antiga aposentadoria por invalidez passou a ser chamada de aposentadoria por incapacidade permanente (espécie B91), regulada pelos arts. 42 a 48 da Lei 8.213/91, com as alterações de cálculo trazidas pela Emenda Constitucional 103/2019."},
+    {"q": "Uma doença que eu já tinha antes de me filiar pode impedir o benefício?", "a": "Não necessariamente. O art. 42, §2º, da Lei 8.213/91 prevê que a doença preexistente só afasta o benefício quando a incapacidade não decorrer de sua progressão ou agravamento. Se a incapacidade resulta da evolução da doença, há possibilidade de concessão."},
+    {"q": "Como funciona o acréscimo de 25%?", "a": "O art. 45 da Lei 8.213/91 prevê um acréscimo de 25% ao valor do benefício para quem necessita de assistência permanente de outra pessoa (grande invalidez). Ele deve ser pedido expressamente, com prova da necessidade dessa assistência, pois o INSS não o concede automaticamente."},
+    {"q": "Por que o caráter acidentário importa tanto?", "a": "Porque a renda mensal do benefício acidentário é de 100% da média dos salários de contribuição, enquanto a do não acidentário é de 60% mais 2% por ano excedente. Além disso, o benefício acidentário garante estabilidade provisória no emprego após a cessação (art. 118)."},
+    {"q": "Posso perder a aposentadoria por incapacidade permanente?", "a": "O benefício passa por reavaliação periódica, e a recuperação da capacidade pode levar à cessação. Contudo, cessações sem perícia com base técnica adequada, como em programas de revisão em massa, podem ser questionadas administrativa ou judicialmente."}
   ],
   "related": ["auxilio-doenca", "auxilio-acidente", "reabilitacao-profissional"]
 }
