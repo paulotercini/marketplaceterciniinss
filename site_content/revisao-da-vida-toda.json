@@ -1,0 +1,81 @@
+{
+  "slug": "revisao-da-vida-toda",
+  "category": "Revisões e Planejamento",
+  "title": "Revisão da Vida Toda",
+  "nav_label": "Revisão da Vida Toda",
+  "order": 2,
+  "meta_description": "Revisao da Vida Toda (Tema 1102 STF) apos as ADIs 2110 e 2111 e a modulacao de 2024: entenda o estado atual da tese e quando ainda vale analisar o caso.",
+  "hero_subtitle": "Tese que discute a inclusão de contribuições anteriores a julho de 1994 no cálculo do benefício, hoje bastante restringida após decisão do STF.",
+  "intro": [
+    "A Revisão da Vida Toda (RVT) é a tese que defende a inclusão das contribuições anteriores a julho de 1994 no Período Básico de Cálculo (PBC) do benefício, quando isso resultar em renda maior para o segurado.",
+    "É fundamental ser transparente quanto ao estado atual da tese. Embora o Tema 1102 do STF (2022) tenha sido favorável em um primeiro momento, o julgamento das ADIs 2110 e 2111 em 2024 declarou constitucional a regra que limita o cálculo a partir de julho de 1994 e modulou os efeitos da decisão. Com isso, a RVT ficou fortemente restringida, e o espaço remanescente passou a ser limitado a hipóteses residuais. Não há, hoje, garantia de êxito, e cada caso precisa ser analisado individualmente."
+  ],
+  "sections": [
+    {
+      "heading": "O que é",
+      "blocks": [
+        {"type": "p", "text": "A regra de transição da Lei 9.876/1999 fixou o Período Básico de Cálculo a partir de julho de 1994, desprezando as contribuições anteriores a essa data. A Revisão da Vida Toda discute, com base no art. 29 da Lei 8.213/91 em sua redação original, a possibilidade de o segurado utilizar também as contribuições anteriores a julho de 1994, quando isso lhe for mais vantajoso."},
+        {"type": "callout", "text": "Após o julgamento das ADIs 2110 e 2111 pelo STF, em 2024, a regra que limita o cálculo a julho de 1994 foi declarada constitucional, com modulação de efeitos. A RVT está, portanto, bastante restringida. Não se trata de uma revisão garantida nem de um direito automático: o espaço atual é residual e depende de análise individual."}
+      ]
+    },
+    {
+      "heading": "Em que situações ainda pode haver espaço",
+      "blocks": [
+        {"type": "p", "text": "Segundo o estado atual da tese, o espaço remanescente tende a ser limitado a hipóteses específicas, que precisam ser confirmadas caso a caso:"},
+        {"type": "ul", "items": [
+          "Benefícios com data de início (DIB) anterior a novembro de 1999, em que pode haver direito adquirido à regra original do art. 29.",
+          "Processos com coisa julgada formada antes do julgamento das ADIs, em que a revisão já havia sido deferida.",
+          "Situações em que o cálculo pela regra original, com os salários anteriores ao PBC, produz renda maior de forma concretamente demonstrada.",
+          "Hipóteses em que o direito adquirido se consolidou antes de 13/11/2019 e ainda estão dentro do prazo de decadência do art. 103 da Lei 8.213/91."
+        ]}
+      ]
+    },
+    {
+      "heading": "Pontos de atenção",
+      "blocks": [
+        {"type": "ul", "items": [
+          "A tese foi fortemente restringida após o julgamento das ADIs 2110 e 2111 pelo STF em 2024; abrir novas ações puramente de RVT depois da modulação exige cautela.",
+          "Só faz sentido prosseguir quando uma simulação demonstra vantagem concreta; em muitos casos não há ganho, e isso precisa ser dito com franqueza.",
+          "A decadência decenal do art. 103 da Lei 8.213/91 conta-se do primeiro pagamento do benefício; em benefícios concedidos em 2015 ou antes, ela tende a já estar esgotada.",
+          "As parcelas anteriores aos cinco anos do pedido prescrevem (Súmula 85 do STJ).",
+          "A interpretação da modulação ainda está em curso no STJ e na TNU, e há casos com ação já protocolada antes do julgamento que podem ter situação diferenciada.",
+          "Em ações já ajuizadas, pode ser necessário aguardar o desfecho e avaliar alternativas conforme a jurisprudência atualizada."
+        ]}
+      ]
+    },
+    {
+      "heading": "Como o escritório pode ajudar",
+      "blocks": [
+        {"type": "p", "text": "Podemos analisar honestamente o seu caso: verificar a data de início do benefício, eventual direito adquirido antes de 13/11/2019, o prazo de decadência e se uma simulação pela regra original realmente produziria renda maior. Se não houver vantagem ou se a decadência estiver esgotada, comunicamos isso com clareza. O objetivo é uma orientação franca sobre o estado atual da tese e sobre o risco processual, sem qualquer promessa de resultado."}
+      ]
+    }
+  ],
+  "documentos": [
+    "Documento de identidade e CPF",
+    "Carta de concessão e memória de cálculo do benefício",
+    "Número do CNIS ou extrato de contribuições do INSS",
+    "Comprovantes de contribuições anteriores a julho de 1994",
+    "Carteira de trabalho e comprovantes de vínculos antigos",
+    "Comprovante da data de início do benefício (DIB)",
+    "Documentos de eventual ação judicial já existente sobre o tema"
+  ],
+  "faq": [
+    {
+      "q": "A Revisão da Vida Toda ainda é possível?",
+      "a": "Depois do julgamento das ADIs 2110 e 2111 pelo STF em 2024, a tese ficou bastante restringida. O espaço remanescente é limitado a hipóteses específicas, como benefícios com início anterior a novembro de 1999 ou casos com coisa julgada anterior. Por isso, cada situação precisa ser analisada individualmente, sem garantia de êxito."
+    },
+    {
+      "q": "Tenho direito garantido à revisão?",
+      "a": "Não. Não existe direito automático ou garantido à Revisão da Vida Toda. É necessário verificar a data de início do benefício, eventual direito adquirido, o prazo de decadência e se o cálculo pela regra original realmente seria mais vantajoso no seu caso concreto."
+    },
+    {
+      "q": "Como sei se vale a pena no meu caso?",
+      "a": "Somente uma simulação de cálculo, comparando a regra de transição com a regra original do art. 29, permite saber se há vantagem concreta. Em muitas situações não há ganho, e nesses casos a orientação é não ajuizar a ação."
+    },
+    {
+      "q": "Existe prazo para pedir?",
+      "a": "Sim. A revisão está sujeita à decadência decenal do art. 103 da Lei 8.213/91, contada do primeiro pagamento do benefício. Em benefícios concedidos em 2015 ou antes, esse prazo tende a já estar esgotado, o que precisa ser verificado logo no início da análise."
+    }
+  ],
+  "related": ["revisoes-de-beneficio", "planejamento-previdenciario", "aposentadoria-tempo-idade"]
+}

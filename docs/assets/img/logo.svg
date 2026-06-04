@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-label="Tercini Advocacia Previdenciária">
+  <!-- Marca: dois picos (montanhas em formato "M") + conchas da balança da Justiça.
+       Recriação vetorial fiel às cores da logo do escritório. -->
+  <defs>
+    <clipPath id="leftHalf"><rect x="0" y="0" width="119" height="200"/></clipPath>
+  </defs>
+  <!-- pico da direita (cinza claro) -->
+  <polygon points="135,24 206,151 182,151 135,80 88,151 70,151" fill="#9a9ca0"/>
+  <!-- pico da esquerda (cinza escuro), à frente -->
+  <polygon points="86,50 150,151 128,151 86,100 46,151 26,151" fill="#595b5f"/>
+  <!-- balança/barco: forma completa em vermelho (metade direita) -->
+  <path d="M40 150 Q120 156 200 150 Q120 208 40 150 Z" fill="#a4282a"/>
+  <!-- metade esquerda em cinza escuro (mesma forma, recortada ao meio) -->
+  <path d="M40 150 Q120 156 200 150 Q120 208 40 150 Z" fill="#595b5f" clip-path="url(#leftHalf)"/>
+</svg>
