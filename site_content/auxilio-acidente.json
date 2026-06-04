@@ -1,0 +1,90 @@
+{
+  "slug": "auxilio-acidente",
+  "category": "Benefícios por Incapacidade",
+  "title": "Auxílio-Acidente (Indenização por Sequela)",
+  "nav_label": "Auxílio-Acidente",
+  "order": 3,
+  "meta_description": "Auxílio-acidente (B94): indenização ao segurado com sequela que reduz a capacidade de trabalho, mesmo leve. Orientação previdenciária em Monte Alto/SP.",
+  "hero_subtitle": "Benefício de caráter indenizatório pago ao segurado que fica com sequela que reduz sua capacidade para o trabalho habitual.",
+  "intro": [
+    "O auxílio-acidente (espécie B94) é um benefício de caráter indenizatório, devido ao segurado que, após a consolidação das lesões decorrentes de acidente de qualquer natureza, fica com sequela que reduz a capacidade para o trabalho que exercia, conforme o art. 86 da Lei 8.213/91.",
+    "Diferentemente dos benefícios por incapacidade, ele não substitui a renda do trabalho: é pago como complemento, justamente porque o segurado continua trabalhando, porém com maior esforço ou limitação em razão da sequela."
+  ],
+  "sections": [
+    {
+      "heading": "O que é",
+      "blocks": [
+        {"type": "p", "text": "O auxílio-acidente é uma indenização mensal devida quando, encerrado o tratamento e consolidadas as lesões, permanece sequela que reduz a capacidade para o trabalho habitualmente exercido. Corresponde a 50% do salário de benefício (art. 86, §1º, da Lei 8.213/91), é isento de carência (art. 26, I) e, em regra, é devido a partir do dia seguinte à cessação do benefício por incapacidade temporária que originou a sequela."}
+      ]
+    },
+    {
+      "heading": "Sequela e nexo: o que basta para ter direito",
+      "blocks": [
+        {"type": "p", "text": "Não é necessário que a sequela seja grave: basta que haja redução real, ainda que parcial, da capacidade para a atividade habitual. O Anexo III do Decreto 3.048/99 traz uma lista de sequelas, mas a jurisprudência (Súmulas 88 e 89 da TNU e Tema 416 do STJ) entende que essa lista é exemplificativa, não exaustiva."},
+        {"type": "ul", "items": [
+          "O acidente pode ser de qualquer natureza, inclusive doméstico ou de trânsito, não precisando ser acidente de trabalho.",
+          "Quando há relação com o trabalho, o nexo acidentário pode ser reconhecido por diversas vias, inclusive pelo Nexo Técnico Epidemiológico (NTEP), do art. 21-A da Lei 8.213/91, cuja constitucionalidade foi reconhecida pelo STF na ADI 3931.",
+          "Sequelas fora do rol do Anexo III também podem dar direito ao benefício, desde que comprovada a redução da capacidade."
+        ]}
+      ]
+    },
+    {
+      "heading": "Requisitos",
+      "blocks": [
+        {"type": "p", "text": "São exigidos requisitos cumulativos:"},
+        {"type": "ul", "items": [
+          "Qualidade de segurado na data do acidente (não precisa persistir na data de início do benefício).",
+          "Consolidação das lesões, ou seja, encerramento do tratamento curativo.",
+          "Sequela permanente que reduza a capacidade para o trabalho habitual.",
+          "Nexo entre o acidente ou a doença e a sequela apresentada."
+        ]}
+      ]
+    },
+    {
+      "heading": "Pontos de atenção",
+      "blocks": [
+        {"type": "ul", "items": [
+          "Por ter caráter indenizatório, o auxílio-acidente é pago junto com a remuneração do trabalho.",
+          "O benefício cessa, em regra, apenas com a aposentadoria do segurado (art. 86, §3º); cessações antes disso podem ser questionadas.",
+          "O valor do auxílio-acidente integra o salário de contribuição para o cálculo de outros benefícios, nos termos do art. 31 da Lei 8.213/91.",
+          "A Lei 13.846/2019 vedou a acumulação do auxílio-acidente concedido após sua vigência com aposentadoria; para concessões anteriores, há discussão sobre direito adquirido à acumulação."
+        ]}
+      ]
+    },
+    {
+      "heading": "Como o escritório pode ajudar",
+      "blocks": [
+        {"type": "p", "text": "Podemos analisar a sequela e sua relação com a atividade exercida, reunir laudos que demonstrem a redução da capacidade, investigar eventual nexo acidentário e orientar sobre o requerimento, o restabelecimento em caso de cessação indevida e a revisão do valor quando cabível. Cada caso é avaliado individualmente."}
+      ]
+    }
+  ],
+  "documentos": [
+    "Documento de identidade e CPF",
+    "Número do CNIS ou extrato de contribuições do INSS",
+    "Laudos e relatórios médicos que descrevam a sequela e a redução de capacidade",
+    "Exames de imagem e demais exames complementares",
+    "Documentos do benefício por incapacidade temporária anterior, se houver",
+    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento, se houver",
+    "Comunicação de Acidente de Trabalho (CAT), quando existir",
+    "Documentos que demonstrem a atividade habitual do segurado"
+  ],
+  "faq": [
+    {
+      "q": "Preciso ter sofrido acidente de trabalho para receber o auxílio-acidente?",
+      "a": "Não. O auxílio-acidente decorre de acidente de qualquer natureza, inclusive doméstico ou de trânsito. O essencial é que a sequela reduza a capacidade para o trabalho habitual, conforme o art. 86 da Lei 8.213/91 e o Tema 416 do STJ."
+    },
+    {
+      "q": "A minha sequela é leve. Ainda assim tenho direito?",
+      "a": "Pode ter. Não se exige sequela grave, basta a redução real da capacidade para a atividade habitual. As Súmulas 88 e 89 da TNU reconhecem que a lista do Anexo III do Decreto 3.048/99 é exemplificativa."
+    },
+    {
+      "q": "Posso trabalhar e receber o auxílio-acidente ao mesmo tempo?",
+      "a": "Sim. Por ter natureza indenizatória, o auxílio-acidente é pago juntamente com a remuneração do trabalho, justamente porque o segurado continua trabalhando, mas com limitação decorrente da sequela."
+    },
+    {
+      "q": "Até quando o auxílio-acidente é pago?",
+      "a": "Em regra, ele é pago até a aposentadoria do segurado, conforme o art. 86, §3º, da Lei 8.213/91. Cessações ocorridas antes desse momento podem ser questionadas."
+    }
+  ],
+  "related": ["auxilio-doenca", "aposentadoria-incapacidade", "reabilitacao-profissional"]
+}
