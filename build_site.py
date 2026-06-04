@@ -206,6 +206,7 @@ def document(title, description, body, pages_by_cat, og_title=None):
   <meta property="og:title" content="{esc(og_title or title)}">
   <meta property="og:description" content="{esc(description)}">
   <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
