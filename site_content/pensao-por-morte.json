@@ -4,90 +4,100 @@
   "title": "Pensão por Morte (B21/B93)",
   "nav_label": "Pensão por Morte",
   "order": 2,
-  "meta_description": "Pensão por morte do INSS aos dependentes do segurado falecido, sob as regras da EC 103/2019 e da Lei 8.213/91. Análise do seu caso em Monte Alto/SP.",
-  "hero_subtitle": "Benefício pago aos dependentes do segurado que falece, com regras de cotas e duração definidas pela Lei 8.213/91 e pela Reforma da Previdência (EC 103/2019).",
+  "meta_description": "Pensão por morte (B21/B93) após a EC 103/2019: dependentes, cotas, duração e prova de união estável. Orientação previdenciária em Monte Alto/SP.",
+  "hero_subtitle": "Benefício pago aos dependentes do segurado do INSS que falece, conforme as regras da Lei 8.213/91 e da Emenda Constitucional 103/2019.",
   "intro": [
-    "A pensão por morte é o benefício devido aos dependentes do segurado que falece, tenha ele se aposentado ou não, conforme o art. 74 da Lei 8.213/91. Trata-se de um direito que busca proteger a família diante da perda de quem contribuía para o sustento.",
-    "Após a Reforma da Previdência (EC 103/2019), o valor passou a ser calculado em cotas e a duração do benefício do cônjuge ou companheiro varia conforme a idade na data do óbito e o tempo de relacionamento. Compreender essas regras é essencial para receber o que é devido."
+    "A pensão por morte é o benefício devido aos dependentes do segurado que falece, esteja ele aposentado ou não. Está prevista nos arts. 74 a 80 da Lei 8.213/91 e teve regras importantes alteradas pela Emenda Constitucional 103/2019.",
+    "Depois da reforma, o valor da pensão e a sua duração passaram a depender de fatores como o número de dependentes, a idade do cônjuge ou companheiro na data do óbito e o tempo de casamento ou de união estável. A correta verificação desses pontos é essencial para preservar o direito da família."
   ],
   "sections": [
     {
       "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "A pensão por morte (espécies B21 e, no caso de óbito por acidente de trabalho, B93) é o benefício previdenciário pago aos dependentes do segurado falecido. Está prevista nos arts. 74 a 80 da Lei 8.213/91 e teve regras de valor e duração alteradas pela EC 103/2019."}
+        {"type": "p", "text": "A pensão por morte (espécies B21 e, no caso acidentário, B93) é concedida aos dependentes do segurado falecido, nos termos do art. 74 da Lei 8.213/91. É um direito dos dependentes, repartido entre eles na forma do art. 77, e tem como pressuposto a qualidade de segurado do instituidor na data do óbito, salvo direito adquirido ou prorrogação do período de graça."}
       ]
     },
     {
       "heading": "Quem tem direito",
       "blocks": [
-        {"type": "p", "text": "A Lei 8.213/91, em seu art. 16, organiza os dependentes em três classes, e a existência de dependente de uma classe afasta as seguintes:"},
+        {"type": "p", "text": "Os dependentes estão organizados em três classes no art. 16 da Lei 8.213/91. A existência de dependentes de uma classe afasta as seguintes."},
         {"type": "ul", "items": [
-          "Classe I: cônjuge, companheiro(a) em união estável, filho menor de 21 anos, inválido ou com deficiência — dependência econômica presumida;",
-          "Classe II: pais — dependência econômica a comprovar;",
-          "Classe III: irmão menor de 21 anos, inválido ou com deficiência — dependência econômica a comprovar;",
-          "Ex-cônjuge que recebia pensão alimentícia, conforme entendimento da jurisprudência (Tema 45 da TNU);",
-          "Filho inválido ou com deficiência intelectual ou mental grave pode manter a pensão após os 21 anos (Tema 15 e Súmula 37 da TNU);",
-          "Menor sob guarda, equiparado a filho conforme entendimento dos tribunais superiores."
+          "Classe I: cônjuge, companheiro(a) em união estável, filho menor de 21 anos, filho inválido ou filho com deficiência. Para essa classe, a dependência econômica é presumida.",
+          "Classe II: os pais do segurado, que precisam comprovar a dependência econômica.",
+          "Classe III: irmão menor de 21 anos ou irmão inválido, também com necessidade de comprovar a dependência.",
+          "O ex-cônjuge que recebia pensão alimentícia pode ter direito à pensão por morte (Tema 45 da TNU), assim como o menor sob guarda, equiparado a filho em julgados dos tribunais superiores."
         ]}
       ]
     },
     {
       "heading": "Requisitos",
       "blocks": [
-        {"type": "p", "text": "São requisitos que devem estar presentes em conjunto:"},
+        {"type": "p", "text": "São requisitos cumulativos para a concessão:"},
         {"type": "ul", "items": [
-          "Qualidade de segurado do falecido na data do óbito — salvo direito adquirido (quando já havia preenchido os requisitos de aposentadoria) ou prorrogação do período de graça;",
-          "Condição de dependente (presumida na Classe I; comprovada nas Classes II e III);",
-          "Óbito comprovado por certidão ou por sentença declaratória."
+          "Qualidade de segurado do instituidor na data do óbito, salvo direito adquirido a aposentadoria antes da perda dessa qualidade (Súmula 416 do STJ) ou prorrogação do período de graça.",
+          "Condição de dependente, presumida na classe I e comprovada nas classes II e III.",
+          "Comprovação do óbito por certidão ou por sentença declaratória de morte presumida."
         ]}
       ]
     },
     {
-      "heading": "Valor e duração",
+      "heading": "Valor e duração após a reforma",
       "blocks": [
-        {"type": "p", "text": "Pela EC 103/2019 (art. 23), a pensão corresponde a 50% do valor do benefício ou da aposentadoria a que o falecido teria direito, acrescidos de 10% por dependente, até o limite de 100%. Assim, um cônjuge sozinho recebe, em regra, 60%; com um filho, 70%."},
+        {"type": "p", "text": "Pela EC 103/2019 (art. 23), o valor da pensão corresponde a 50% do benefício que o segurado recebia ou a que teria direito, somados 10% por dependente, até o limite de 100%. Assim, um cônjuge sem outros dependentes recebe 60%; com um filho, 70%, e assim por diante."},
         {"type": "ul", "items": [
-          "A duração da pensão do cônjuge ou companheiro varia conforme a idade na data do óbito e o tempo de casamento ou união estável (tabela do art. 77, §2º, V, da Lei 8.213/91);",
-          "A pensão pode ser vitalícia quando o cônjuge ou companheiro tiver 45 anos ou mais na data do óbito, atendidos os demais requisitos;",
-          "O casamento ou a nova união estável do pensionista, por si só, não cessa a pensão por morte;",
-          "Quando há vários dependentes da mesma classe, o valor é rateado entre eles."
+          "A duração da pensão do cônjuge ou companheiro varia conforme a idade dele na data do óbito e o tempo de casamento ou de união estável, segundo a tabela introduzida pela Lei 13.135/2015. Em geral, é vitalícia quando o beneficiário tem 45 anos ou mais e são preenchidos os demais requisitos.",
+          "Casamentos ou uniões muito recentes e instituidores com poucas contribuições podem implicar pensão de curta duração.",
+          "O filho inválido ou com deficiência intelectual ou mental grave pode manter a pensão mesmo após os 21 anos (Tema 15 e Súmula 37 da TNU).",
+          "A EC 103/2019 (art. 24) trata da vedação à acumulação de pensões e de pensão com aposentadoria, com regra de opção pelo benefício mais vantajoso e complementação parcial."
         ]}
       ]
     },
     {
-      "heading": "Pontos de atenção",
+      "heading": "Pontos de atenção (união estável)",
       "blocks": [
         {"type": "ul", "items": [
-          "A Lei 13.846/2019 passou a exigir início de prova material contemporâneo para comprovar a união estável; a prova testemunhal complementa esse início (Súmula 63 da TNU);",
-          "A exigência de escritura pública de união estável é questionável quando há outras provas suficientes da convivência;",
-          "A vedação de acumular pensão com aposentadoria (art. 24 da EC 103/2019) deve observar regras de transição e complementação parcial, não integral;",
-          "No óbito de contribuinte individual sem recolhimentos regulares, pode ser cabível a indenização de contribuições em atraso para o falecido."
+          "A Lei 13.846/2019 passou a exigir início de prova material contemporâneo para a união estável (art. 16, §5º), o que torna importante reunir documentos da época da convivência.",
+          "Servem como início de prova material, por exemplo, certidão de nascimento de filho comum, conta bancária conjunta, plano de saúde com dependente, declaração de imposto de renda, escritura pública e fotografias datadas.",
+          "A prova testemunhal complementa o início de prova material, conforme a Súmula 63 da TNU; a exigência de escritura pública tende a ser considerada abusiva quando há outras provas suficientes.",
+          "A contemporaneidade não exige prova mês a mês, mas a demonstração da continuidade da relação.",
+          "A redução do valor pela EC 103/2019 afeta especialmente famílias pequenas, o que reforça a importância de verificar a quantidade correta de dependentes e a duração devida."
         ]}
       ]
     },
     {
       "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Podemos avaliar a qualidade de segurado do falecido, organizar o conjunto probatório da união estável ou da dependência econômica, analisar o cálculo das cotas e a duração devida e atuar contra indeferimentos baseados em suposta falta de qualidade, de dependência ou de prova. A análise é sempre individual."}
+        {"type": "p", "text": "Podemos analisar a situação da família, verificar a qualidade de segurado do falecido, identificar todos os dependentes e a cota de cada um, e organizar a prova da união estável ou da dependência econômica. Também orientamos sobre o cálculo da duração da pensão, sobre as regras de acumulação e sobre eventual recurso administrativo ou ação judicial. Cada caso é avaliado individualmente, à luz da legislação e das provas disponíveis."}
       ]
     }
   ],
   "documentos": [
     "Certidão de óbito do segurado",
-    "Documento de identidade e CPF do dependente",
-    "Certidão de casamento ou prova da união estável (declaração de IR, conta conjunta, plano de saúde, contratos, fotografias datadas)",
-    "Certidão de nascimento dos filhos dependentes",
-    "Documentos do falecido que comprovem a qualidade de segurado (CNIS, carnês, carteira de trabalho)",
-    "Comprovação de dependência econômica, quando exigida (Classes II e III)",
-    "Laudos médicos, no caso de filho ou irmão inválido ou com deficiência",
-    "Comprovante de pensão alimentícia, no caso de ex-cônjuge"
+    "Documento de identidade e CPF dos dependentes",
+    "Certidão de casamento ou documentos de comprovação da união estável",
+    "Início de prova material da convivência (conta conjunta, IR, plano de saúde, fotografias datadas)",
+    "Certidão de nascimento dos filhos",
+    "Número do CNIS ou extrato de contribuições do falecido",
+    "Documentos médicos, em caso de filho inválido ou com deficiência",
+    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento, se houver"
   ],
   "faq": [
-    {"q": "Quem pode receber a pensão por morte?", "a": "Os dependentes do segurado falecido, organizados em três classes pela Lei 8.213/91. A Classe I (cônjuge, companheiro, filho menor de 21 anos, inválido ou com deficiência) tem dependência econômica presumida e afasta as classes seguintes. Pais e irmãos só recebem na ausência da Classe I e precisam comprovar a dependência."},
-    {"q": "Como é calculado o valor da pensão após a Reforma?", "a": "Pela EC 103/2019, a pensão corresponde a 50% do benefício a que o falecido teria direito, somados 10% por dependente, até o limite de 100%. Um cônjuge sozinho recebe, em regra, 60%; com um filho, 70%."},
-    {"q": "A pensão é sempre vitalícia?", "a": "Não. A duração do benefício do cônjuge ou companheiro varia conforme a idade na data do óbito e o tempo de casamento ou união estável. A pensão pode ser vitalícia quando o cônjuge ou companheiro tem 45 anos ou mais na data do óbito, atendidos os demais requisitos da tabela legal."},
-    {"q": "Vivíamos em união estável sem registro. Tenho direito?", "a": "Sim, a união estável não precisa de registro para gerar pensão. O que se exige é início de prova material contemporâneo da convivência, que pode ser complementado por prova testemunhal (Súmula 63 da TNU). Documentos como conta conjunta, declaração de IR e plano de saúde ajudam a demonstrar a relação."},
-    {"q": "O falecido não tinha mais contribuições recentes. A pensão ainda é possível?", "a": "Pode ser. Mesmo sem qualidade de segurado na data do óbito, a pensão é devida se o falecido já havia preenchido os requisitos de aposentadoria (direito adquirido) ou se estava em período de graça, como na prorrogação por desemprego involuntário. É preciso analisar o histórico contributivo."}
+    {
+      "q": "Quanto vale a pensão por morte hoje?",
+      "a": "Após a EC 103/2019, o valor é de 50% do benefício do segurado mais 10% por dependente, até o limite de 100%. Por exemplo, um cônjuge sem outros dependentes recebe 60%; com um filho, 70%. O benefício não pode ser inferior ao salário mínimo."
+    },
+    {
+      "q": "A pensão é sempre vitalícia?",
+      "a": "Não. A duração da pensão do cônjuge ou companheiro depende da idade dele na data do óbito e do tempo de casamento ou união estável, conforme a tabela da Lei 13.135/2015. Em regra, é vitalícia quando o beneficiário tem 45 anos ou mais e são cumpridos os demais requisitos."
+    },
+    {
+      "q": "Vivíamos em união estável, mas não tínhamos registro. Tenho direito?",
+      "a": "É possível. A união estável pode ser comprovada por início de prova material contemporâneo, complementado por prova testemunhal, conforme a Súmula 63 da TNU. A exigência de escritura pública costuma ser afastada quando há outras provas suficientes da convivência."
+    },
+    {
+      "q": "O filho maior de idade pode receber pensão?",
+      "a": "Em regra, o filho recebe a pensão até os 21 anos. Contudo, o filho inválido ou com deficiência intelectual ou mental grave pode manter o benefício após essa idade, conforme o Tema 15 e a Súmula 37 da TNU, mediante prova da condição."
+    }
   ],
   "related": ["bpc-loas", "auxilio-reclusao", "salario-maternidade"]
 }

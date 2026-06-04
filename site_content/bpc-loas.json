@@ -4,41 +4,52 @@
   "title": "BPC/LOAS — Benefício Assistencial",
   "nav_label": "BPC/LOAS",
   "order": 1,
-  "meta_description": "BPC/LOAS: benefício assistencial de um salário mínimo ao idoso 65+ e à pessoa com deficiência em situação de miserabilidade. Análise em Monte Alto/SP.",
-  "hero_subtitle": "Benefício assistencial de um salário mínimo mensal ao idoso de 65 anos ou mais e à pessoa com deficiência em situação de miserabilidade, sem exigência de contribuições.",
+  "meta_description": "BPC/LOAS (Lei 8.742/93): benefício assistencial de um salário mínimo ao idoso 65+ e à pessoa com deficiência em situação de miserabilidade. Monte Alto/SP.",
+  "hero_subtitle": "Benefício assistencial de um salário mínimo mensal pago à pessoa com deficiência e ao idoso de 65 anos ou mais que não têm meios de prover a própria manutenção.",
   "intro": [
-    "O Benefício de Prestação Continuada (BPC), previsto na Lei Orgânica da Assistência Social (LOAS, Lei 8.742/1993) e no art. 203, V, da Constituição, garante um salário mínimo por mês a quem não tem meios de prover a própria manutenção, nem de tê-la provida pela família.",
-    "Por ser um benefício assistencial, e não previdenciário, o BPC não exige que você tenha contribuído ao INSS. O foco está na idade (65 anos ou mais) ou na deficiência, somada à situação de baixa renda familiar."
+    "O Benefício de Prestação Continuada (BPC), também conhecido como LOAS, é um benefício da assistência social, e não da previdência. Está previsto no art. 203, V, da Constituição e na Lei 8.742/93 (LOAS) e garante um salário mínimo mensal a quem se enquadra nos seus requisitos.",
+    "Por ser assistencial, o BPC não exige contribuições ao INSS. Ele atende a pessoa idosa com 65 anos ou mais e a pessoa com deficiência, em ambos os casos quando há situação de miserabilidade, aferida principalmente pela renda do grupo familiar."
   ],
   "sections": [
     {
       "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "O BPC/LOAS é um benefício da assistência social, regulado pela Lei 8.742/1993 e pelo Decreto 6.214/2007, que assegura um salário mínimo mensal. Diferentemente das aposentadorias e pensões, ele não depende de contribuições prévias ao INSS, mas de comprovar a situação de miserabilidade e o enquadramento como idoso ou pessoa com deficiência."},
-        {"type": "callout", "text": "O BPC não paga 13º salário e não gera pensão por morte aos familiares, características próprias dos benefícios assistenciais."}
+        {"type": "p", "text": "O BPC/LOAS é a garantia de um salário mínimo mensal à pessoa com deficiência e ao idoso que não tenham meios de prover a própria manutenção ou de tê-la provida por sua família, conforme o art. 203, V, da Constituição e o art. 20 da Lei 8.742/93. É um benefício assistencial, regulamentado pelo Decreto 6.214/2007, e por isso independe de contribuições prévias ao INSS."},
+        {"type": "callout", "text": "Por não ter natureza contributiva, o BPC não gera 13º salário e não deixa pensão por morte aos dependentes."}
       ]
     },
     {
       "heading": "Quem tem direito",
       "blocks": [
         {"type": "ul", "items": [
-          "Idoso com 65 anos ou mais, que não possa prover o próprio sustento nem tê-lo provido pela família;",
-          "Pessoa com deficiência de qualquer idade, com impedimento de longo prazo (físico, mental, intelectual ou sensorial);",
-          "Brasileiros e estrangeiros residentes no Brasil, conforme o Estatuto da Pessoa com Deficiência (Lei 13.146/2015);",
-          "Em ambos os casos, a renda familiar deve estar dentro do critério de miserabilidade previsto na LOAS."
+          "Pessoa idosa com 65 anos ou mais, em situação de miserabilidade, sendo dispensada a avaliação biopsicossocial.",
+          "Pessoa com deficiência, de qualquer idade, com impedimento de longo prazo (mínimo de 2 anos) de natureza física, mental, intelectual ou sensorial.",
+          "Brasileiros e estrangeiros residentes no país, observado o Estatuto da Pessoa com Deficiência (Lei 13.146/2015).",
+          "Em ambos os casos, é exigida residência e domicílio no Brasil e a inscrição atualizada no CadÚnico."
         ]}
       ]
     },
     {
       "heading": "Requisitos",
       "blocks": [
-        {"type": "p", "text": "Além do enquadramento como idoso ou pessoa com deficiência, a LOAS prevê requisitos comuns:"},
+        {"type": "p", "text": "São requisitos comuns ao idoso e à pessoa com deficiência:"},
         {"type": "ul", "items": [
-          "Renda mensal por pessoa do grupo familiar não superior a 1/4 do salário mínimo (critério que pode ser flexibilizado pela via judicial, conforme o Tema 27 do STF e o REsp 1.112.557 do STJ, quando demonstrada a miserabilidade concreta);",
-          "Inscrição e atualização no CadÚnico;",
-          "Residência e domicílio no Brasil;",
-          "Não acumular o BPC com outro benefício da Seguridade Social, salvo exceções legais (como pensão especial de natureza indenizatória e assistência médica);",
-          "Para a pessoa com deficiência: impedimento de longo prazo de, no mínimo, 2 anos, aferido por avaliação biopsicossocial (médica e social)."
+          "Renda per capita familiar não superior a 1/4 do salário mínimo, critério que admite flexibilização pela jurisprudência (Tema 27 do STF e REsp 1.112.557 do STJ) quando demonstrada a miserabilidade concreta.",
+          "Inscrição e atualização no Cadastro Único (CadÚnico).",
+          "Não acumular o BPC com outro benefício da Seguridade Social, salvo exceções como a pensão especial de natureza indenizatória e a assistência médica.",
+          "Residência e domicílio no Brasil."
+        ]},
+        {"type": "p", "text": "Para a pessoa com deficiência, exige-se ainda o impedimento de longo prazo, aferido por avaliação biopsicossocial (médica e social) do INSS. Para o idoso, basta comprovar a idade de 65 anos ou mais por documento oficial."}
+      ]
+    },
+    {
+      "heading": "Como funcionam a renda e a deficiência",
+      "blocks": [
+        {"type": "p", "text": "O grupo familiar segue um rol taxativo do art. 20, §1º, da LOAS: cônjuge, companheiro, pais, padrasto ou madrasta, filhos e irmãos não emancipados menores de 21 anos ou inválidos, desde que vivam sob o mesmo teto. Parentes como tios, sobrinhos, cunhados, avós e netos não compõem o grupo familiar, ainda que morem na mesma casa."},
+        {"type": "ul", "items": [
+          "Existem exclusões de renda, como outro BPC ou aposentadoria de até um salário mínimo de idoso ou pessoa com deficiência no mesmo grupo (art. 20, §14) e gastos com medicamentos, fraldas e alimentação especial não cobertos pelo SUS.",
+          "A avaliação da deficiência é biopsicossocial, combinando a perícia médica e a avaliação social, e considera o impedimento em interação com as barreiras enfrentadas pela pessoa.",
+          "A Lei 15.157/2025 dispensa a reavaliação periódica em casos de impedimento permanente, irreversível e irrecuperável."
         ]}
       ]
     },
@@ -46,18 +57,18 @@
       "heading": "Pontos de atenção",
       "blocks": [
         {"type": "ul", "items": [
-          "O INSS costuma indeferir por renda acima do critério, por deficiência considerada não configurada ou por CadÚnico desatualizado;",
-          "Determinados rendimentos e gastos podem ser excluídos do cálculo da renda (como outro BPC ou aposentadoria de até um salário mínimo de idoso ou PCD no grupo, e despesas de saúde como medicamentos e fraldas);",
-          "O rol de membros do grupo familiar é definido em lei; parentes como tios, sobrinhos, cunhados e avós não o integram, mesmo morando sob o mesmo teto;",
-          "A revisão a cada dois anos pode levar à cessação; a Lei 15.157/2025 dispensa a reavaliação em casos de impedimento permanente, irreversível e irrecuperável;",
-          "Valores recebidos de boa-fé são, em regra, irrepetíveis."
+          "O impedimento de longo prazo exigido para o BPC não se confunde com a incapacidade para o trabalho exigida nos benefícios por incapacidade da Lei 8.213/91.",
+          "O benefício é devido desde a data do requerimento (DER), quando preenchidos os requisitos.",
+          "A revisão bienal pode levar à cessação; manter a documentação médica e o CadÚnico atualizados ajuda a preservar o benefício.",
+          "Valores recebidos de boa-fé tendem a ser irrepetíveis, conforme o Enunciado 17 do CRPS.",
+          "Indeferimentos por excesso marginal de renda ou por deficiência supostamente não configurada podem ser discutidos com base na miserabilidade concreta e em documentação robusta."
         ]}
       ]
     },
     {
       "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Podemos analisar a composição do grupo familiar e a renda à luz das exclusões legais e da jurisprudência sobre miserabilidade, orientar você sobre a avaliação biopsicossocial e a documentação médica, organizar a inscrição e a atualização no CadÚnico e atuar contra indeferimentos ou cessações que não observem a LOAS. Cada caso é avaliado individualmente."}
+        {"type": "p", "text": "Podemos analisar a sua situação, verificar a composição do grupo familiar e a renda per capita, identificar exclusões de renda aplicáveis e organizar a documentação médica e social para a avaliação biopsicossocial. Também orientamos sobre a inscrição e atualização no CadÚnico, sobre a revisão bienal e sobre eventual recurso administrativo ou ação judicial. Cada caso é avaliado individualmente, à luz da LOAS e das provas disponíveis."}
       ]
     }
   ],
@@ -65,18 +76,29 @@
     "Documento de identidade e CPF do requerente e dos membros do grupo familiar",
     "Comprovante de inscrição e atualização no CadÚnico",
     "Comprovante de residência",
-    "Comprovantes de renda de todos os integrantes do grupo familiar (ou declaração de ausência de renda)",
-    "Laudos médicos, exames, prontuários e relatórios (no caso de pessoa com deficiência)",
-    "Comprovantes de despesas de saúde, como medicamentos, fraldas e órteses",
-    "Documento que comprove a idade de 65 anos ou mais (no caso do idoso)",
-    "Certidões de nascimento, casamento ou união estável que demonstrem a composição familiar"
+    "Comprovantes de renda de todos os integrantes do grupo familiar",
+    "Comprovante de idade (para o BPC do idoso de 65 anos ou mais)",
+    "Laudos, exames, relatórios e prontuários médicos (para a pessoa com deficiência)",
+    "Notas fiscais e receituários de gastos com medicamentos, fraldas e alimentação especial",
+    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento, se houver"
   ],
   "faq": [
-    {"q": "Preciso ter contribuído ao INSS para receber o BPC?", "a": "Não. O BPC/LOAS é um benefício assistencial, previsto na Lei 8.742/1993 e na Constituição. Ele não exige contribuições prévias; o que se analisa é o enquadramento como idoso de 65 anos ou mais, ou pessoa com deficiência, somado à situação de baixa renda familiar."},
-    {"q": "Qual é o critério de renda do BPC?", "a": "A lei prevê renda por pessoa do grupo familiar não superior a 1/4 do salário mínimo. Esse critério pode ser flexibilizado na via judicial quando se demonstra a miserabilidade concreta, conforme entendimento do STF (Tema 27) e do STJ (REsp 1.112.557). Determinadas rendas e despesas também podem ser excluídas do cálculo."},
-    {"q": "O BPC dá direito a 13º salário e pensão por morte?", "a": "Não. Por ser benefício assistencial, o BPC não paga 13º salário e não gera pensão por morte aos familiares quando o beneficiário falece."},
-    {"q": "O que é a avaliação biopsicossocial?", "a": "Para a pessoa com deficiência, o INSS realiza uma avaliação composta por exame médico e avaliação social, que verifica o impedimento de longo prazo (mínimo de 2 anos) e sua interação com as barreiras enfrentadas. É importante reunir documentação médica e se preparar para essa avaliação."},
-    {"q": "Posso perder o BPC depois de concedido?", "a": "O BPC passa por revisão periódica, em regra a cada dois anos, que pode levar à cessação se os requisitos não forem mais verificados. A Lei 15.157/2025 dispensa a reavaliação em casos de impedimento permanente, irreversível e irrecuperável. Manter a documentação atualizada é importante."}
+    {
+      "q": "Preciso ter contribuído ao INSS para receber o BPC?",
+      "a": "Não. O BPC/LOAS é um benefício assistencial previsto na Lei 8.742/93 e independe de contribuições. O que se avalia é a situação de miserabilidade e, conforme o caso, a idade de 65 anos ou mais ou a existência de impedimento de longo prazo."
+    },
+    {
+      "q": "Qual é o critério de renda para ter direito ao BPC?",
+      "a": "A regra é a renda per capita familiar não superior a 1/4 do salário mínimo. Esse critério, porém, pode ser flexibilizado pela jurisprudência (Tema 27 do STF e REsp 1.112.557 do STJ) quando a miserabilidade for demonstrada por outras provas, e há exclusões de renda previstas em lei."
+    },
+    {
+      "q": "Quem mora na mesma casa entra no cálculo da renda?",
+      "a": "Nem sempre. A LOAS traz um rol taxativo de quem compõe o grupo familiar (como cônjuge, companheiro, pais, filhos e irmãos não emancipados menores de 21 anos ou inválidos). Tios, sobrinhos, cunhados, avós e netos não compõem o grupo familiar, mesmo vivendo sob o mesmo teto."
+    },
+    {
+      "q": "O BPC pode ser cancelado depois de concedido?",
+      "a": "Pode. A Lei 8.742/93 prevê revisão a cada dois anos para verificar se as condições permanecem. Manter a documentação médica e o CadÚnico atualizados ajuda a preservar o benefício, e a cessação indevida pode ser discutida administrativa ou judicialmente."
+    }
   ],
   "related": ["aposentadoria-pcd", "pensao-por-morte", "auxilio-reclusao"]
 }
