@@ -5,16 +5,17 @@
    ========================================================================= */
 
 :root {
-  --red:        #C8102E;   /* vermelho da marca (provisório) */
-  --red-dark:   #9E0C24;
-  --red-soft:   #fbe9ec;
+  --red:        #A4282A;   /* vermelho tijolo da marca */
+  --red-dark:   #82201F;
+  --red-soft:   #f6e8e8;
   --black:      #161616;
-  --gray-900:   #1f2227;
-  --gray-700:   #3f444d;
-  --gray-600:   #5b616b;
-  --gray-400:   #9aa0a8;
-  --gray-200:   #e4e6ea;
-  --gray-100:   #f3f4f6;
+  --gray-900:   #3a3c40;   /* cinza-escuro da marca */
+  --gray-800:   #595b5f;   /* cinza-escuro (picos/concha) */
+  --gray-700:   #6c6e72;
+  --gray-600:   #7e8084;
+  --gray-400:   #9a9ca0;   /* cinza-claro da marca */
+  --gray-200:   #e3e4e6;
+  --gray-100:   #f4f4f5;
   --white:      #ffffff;
 
   --font-head:  "Georgia", "Times New Roman", serif;
@@ -90,13 +91,12 @@ p { margin: 0 0 1rem; }
 }
 .brand { display: flex; align-items: center; gap: .7rem; }
 .brand__logo {
-  width: 46px; height: 46px; border-radius: 8px;
-  background: var(--black); color: var(--white);
+  width: 56px; height: 48px; border-radius: 8px;
+  background: var(--white); color: var(--gray-800);
   display: grid; place-items: center;
   font-family: var(--font-head); font-weight: 700; font-size: 1.5rem;
-  border: 2px solid var(--red);
 }
-.brand__logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+.brand__logo img { width: 100%; height: 100%; object-fit: contain; }
 .brand__name { font-family: var(--font-head); font-weight: 700; color: var(--black); line-height: 1.1; font-size: 1.05rem; }
 .brand__name span { display: block; font-family: var(--font-body); font-weight: 400; font-size: .72rem; color: var(--gray-600); letter-spacing: .02em; }
 
