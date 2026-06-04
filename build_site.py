@@ -23,6 +23,7 @@ OUT_DIR = ROOT / "docs"
 # --------------------------------------------------------------------------
 OFFICE = {
     "advogado": "Paulo Roberto Tercini Filho",
+    "advogado_curto": "Paulo Tercini",
     "marca": "Tercini Advocacia Previdenciária",
     "oab": "OAB/SP 331.110",
     "endereco": "Rua Rui Barbosa, nº 663, Centro — Monte Alto/SP",
@@ -268,7 +269,7 @@ def service_page(page, pages_by_cat):
     <div class="container">
       <div>
         <h2>Ficou com dúvida sobre {esc(page['title'])}?</h2>
-        <p style="margin:0;">Agende uma análise do seu caso com o Dr. {esc(OFFICE['advogado'].split()[0])} {esc(OFFICE['advogado'].split()[-1])}.</p>
+        <p style="margin:0;">Agende uma análise do seu caso com o Dr. {esc(OFFICE['advogado_curto'])}.</p>
       </div>
       <a class="btn btn--primary" href="{WA_URL}" target="_blank" rel="noopener">Falar no WhatsApp</a>
     </div>
