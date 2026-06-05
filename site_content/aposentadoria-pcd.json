@@ -3,7 +3,7 @@
   "category": "Aposentadorias",
   "title": "Aposentadoria da Pessoa com Deficiência",
   "nav_label": "Pessoa com Deficiência",
-  "order": 3,
+  "order": 4,
   "meta_description": "Aposentadoria da pessoa com deficiência pela LC 142/2013: por tempo de contribuição ou idade, com avaliação biopsicossocial. Análise em Monte Alto/SP.",
   "hero_subtitle": "Benefício com requisitos reduzidos para o segurado(a) que é pessoa com deficiência, conforme o grau (leve, moderado ou grave), previsto na Lei Complementar 142/2013.",
   "intro": [
@@ -88,5 +88,5 @@
       "a": "A Lei 15.176/2025 reconheceu a fibromialgia como deficiência. O grau é mensurado pela avaliação biopsicossocial (IF-BrA), como nas demais situações."
     }
   ],
-  "related": ["aposentadoria-tempo-idade", "aposentadoria-especial", "bpc-loas"]
+  "related": ["aposentadoria-tempo-contribuicao", "aposentadoria-especial", "bpc-loas"]
 }

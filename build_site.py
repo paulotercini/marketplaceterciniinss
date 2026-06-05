@@ -43,15 +43,15 @@ TEL_URL = f"tel:+55{OFFICE['tel_fixo_link']}"
 # Ordem fixa das categorias no menu e na home
 CATEGORY_ORDER = [
     "Aposentadorias",
-    "Benefícios por Incapacidade",
-    "Assistencial e Família",
+    "Incapacidade",
+    "Assistencial",
     "Revisões e Planejamento",
 ]
 
 CATEGORY_INTRO = {
     "Aposentadorias": "Regras de transição, direito adquirido e modalidades especiais após a Reforma da Previdência (EC 103/2019).",
-    "Benefícios por Incapacidade": "Auxílios e aposentadorias para quem teve a capacidade de trabalho afetada por doença ou acidente.",
-    "Assistencial e Família": "Proteção a quem depende do amparo do Estado e aos dependentes do segurado.",
+    "Incapacidade": "Auxílios e aposentadorias para quem teve a capacidade de trabalho afetada por doença ou acidente.",
+    "Assistencial": "Proteção a quem depende do amparo do Estado e aos dependentes do segurado.",
     "Revisões e Planejamento": "Revisar benefícios já concedidos e planejar a melhor aposentadoria possível.",
 }
 
@@ -72,8 +72,8 @@ def icon(name):
 
 CATEGORY_ICON = {
     "Aposentadorias": "clock",
-    "Benefícios por Incapacidade": "heart",
-    "Assistencial e Família": "family",
+    "Incapacidade": "heart",
+    "Assistencial": "family",
     "Revisões e Planejamento": "refresh",
 }
 
@@ -232,7 +232,7 @@ def document(title, description, body, pages_by_cat, og_title=None):
   <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -343,6 +343,11 @@ def home_page(pages_by_cat):
         <div class="hero__actions">
           <a class="btn btn--primary" href="{WA_URL}" target="_blank" rel="noopener">Falar no WhatsApp</a>
           <a class="btn btn--ghost" href="#servicos">Ver áreas de atuação</a>
+        </div>
+        <div class="hero__meta">
+          <span>{esc(OFFICE['oab'])}</span>
+          <span>Monte Alto/SP e região</span>
+          <span>Atendimento presencial e on-line</span>
         </div>
       </div>
       <div class="hero__emblem">

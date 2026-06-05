@@ -23,7 +23,7 @@
   --white:      #ffffff;
 
   --font-head:  "Libre Baskerville", Georgia, "Times New Roman", serif;
-  --font-body:  "Lora", Georgia, "Times New Roman", serif;
+  --font-body:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   --maxw: 1160px;
   --radius: 14px;
@@ -297,4 +297,43 @@ p { margin: 0 0 1.1rem; }
   .footer-grid { grid-template-columns: 1fr; gap: 1.8rem; }
   .nav__cta .btn { display: none; }
   .cta-strip .container { flex-direction: column; align-items: flex-start; }
+}
+
+/* =========================================================================
+   Modernização (camada complementar)
+   ========================================================================= */
+:root { --radius: 16px; --radius-sm: 11px; }
+body { font-size: 1.02rem; }
+.section { padding: 5.5rem 0; }
+.section--tight { padding: 3.75rem 0; }
+
+/* Herói: textura sutil + credenciais */
+.hero { position: relative; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+.hero__inner { position: relative; z-index: 1; padding: 5.5rem 0; }
+.hero h1 { font-size: clamp(2.3rem, 5.2vw, 3.6rem); }
+.hero__meta { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-top: 1.8rem; color: rgba(255,255,255,.72); font-size: .9rem; }
+.hero__meta span { display: inline-flex; align-items: center; gap: .5rem; }
+.hero__meta span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
+.hero__emblem .seal { box-shadow: 0 30px 70px rgba(0,0,0,.35), inset 0 0 0 10px rgba(255,255,255,.6); }
+
+/* Cabeçalho ganha sombra ao rolar */
+.site-header { transition: box-shadow .2s ease, background .2s ease; }
+.site-header.scrolled { box-shadow: 0 6px 24px rgba(35,38,43,.09); }
+
+/* Cartões e blocos um pouco mais arejados */
+.card { border-radius: var(--radius); }
+.step { border-radius: var(--radius); }
+.section__head { margin-bottom: 3.5rem; }
+
+/* Animações de entrada (revelar ao rolar) */
+.reveal { transition: opacity .6s ease, transform .6s cubic-bezier(.22,.61,.36,1); }
+body.reveal-on .reveal { opacity: 0; transform: translateY(20px); }
+.reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  body.reveal-on .reveal { opacity: 1 !important; transform: none !important; transition: none; }
 }
