@@ -55,6 +55,28 @@ CATEGORY_INTRO = {
     "Revisões e Planejamento": "Revisar benefícios já concedidos e planejar a melhor aposentadoria possível.",
 }
 
+# Ícones (linha, herdam currentColor)
+ICONS = {
+    "clock":   '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    "heart":   '<path d="M20.8 6.6a5.5 5.5 0 0 0-9-1.8L12 6l-.3-.2a5.5 5.5 0 1 0-7.7 7.9L12 21l8-7.3a5.5 5.5 0 0 0 .8-7.1z"/>',
+    "family":  '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="17.5" cy="9" r="2.2"/><path d="M21 19c0-2.2-1.7-3.9-4-4.2"/>',
+    "refresh": '<path d="M20 11a8 8 0 1 0-1.7 5"/><path d="M20 5v6h-6"/>',
+    "pin":     '<path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+    "doc":     '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/>',
+    "chat":    '<path d="M21 12a8 8 0 0 1-8 8H7l-4 3V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/>',
+}
+
+def icon(name):
+    return (f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+            f'stroke-linecap="round" stroke-linejoin="round">{ICONS.get(name, "")}</svg>')
+
+CATEGORY_ICON = {
+    "Aposentadorias": "clock",
+    "Benefícios por Incapacidade": "heart",
+    "Assistencial e Família": "family",
+    "Revisões e Planejamento": "refresh",
+}
+
 # --------------------------------------------------------------------------
 # Helpers de render
 # --------------------------------------------------------------------------
@@ -132,10 +154,8 @@ def nav_html(pages_by_cat, active=""):
   <header class="site-header">
     <nav class="nav container">
       <a class="brand" href="index.html">
-        <span class="brand__logo"><img src="assets/img/logo.svg" alt="Logo {esc(OFFICE['marca'])}" onerror="this.replaceWith(document.createTextNode('m'))"></span>
-        <span class="brand__name">{esc(OFFICE['marca'])}
-          <span>{esc(OFFICE['advogado'])} · {esc(OFFICE['oab'])}</span>
-        </span>
+        <span class="brand__logo"><img src="assets/img/logo.svg" alt="Advocacia Previdenciária"></span>
+        <span class="brand__name">Advocacia Previdenciária</span>
       </a>
       <button class="nav__toggle" aria-label="Abrir menu"><span></span><span></span><span></span></button>
       <ul class="nav__links">
@@ -167,7 +187,10 @@ def footer_html(pages_by_cat):
     <div class="container">
       <div class="footer-grid">
         <div>
-          <h4>{esc(OFFICE['marca'])}</h4>
+          <div class="footer-brand">
+            <img src="assets/img/logo.svg" alt="Advocacia Previdenciária">
+            <span>Advocacia Previdenciária</span>
+          </div>
           <p>{esc(OFFICE['advogado'])}<br>{esc(OFFICE['oab'])}</p>
           <p>{esc(OFFICE['endereco'])}<br><small>{esc(OFFICE['endereco_obs'])}</small></p>
           <p>
@@ -207,6 +230,9 @@ def document(title, description, body, pages_by_cat, og_title=None):
   <meta property="og:description" content="{esc(description)}">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -298,43 +324,67 @@ def home_page(pages_by_cat):
           <span class="card__link">Ver detalhes</span>
         </a>""")
         cat_sections.append(f"""
-      <div style="margin-bottom:2.5rem;">
-        <h2>{esc(cat)}</h2>
-        <p class="lead" style="margin-bottom:1.5rem;">{esc(CATEGORY_INTRO.get(cat,''))}</p>
+      <div class="cat-block">
+        <div class="cat-block__head">
+          <span class="cat-block__ico">{icon(CATEGORY_ICON.get(cat,''))}</span>
+          <h2>{esc(cat)}</h2>
+        </div>
+        <p class="cat-block__desc">{esc(CATEGORY_INTRO.get(cat,''))}</p>
         <div class="grid grid--3">{''.join(cards)}</div>
       </div>""")
 
     body = f"""
   <section class="hero">
-    <div class="container">
-      <span class="hero__badge">Advocacia exclusivamente previdenciária · Monte Alto/SP e região</span>
-      <h1>Seus direitos junto ao INSS, tratados com técnica e atenção.</h1>
-      <p>Atuação focada em aposentadorias, benefícios por incapacidade, BPC/LOAS, pensões e revisões — na via administrativa e judicial. Análise individual de cada caso, com linguagem clara e acompanhamento próximo.</p>
-      <div class="hero__actions">
-        <a class="btn btn--primary" href="{WA_URL}" target="_blank" rel="noopener">Falar no WhatsApp</a>
-        <a class="btn btn--ghost" href="#servicos">Ver áreas de atuação</a>
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <span class="hero__badge">Advocacia exclusivamente previdenciária · Monte Alto/SP e região</span>
+        <h1>Seus direitos junto ao INSS, tratados com técnica e atenção.</h1>
+        <p>Atuação focada em aposentadorias, benefícios por incapacidade, BPC/LOAS, pensões e revisões — na via administrativa e judicial, com análise individual e linguagem clara.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="{WA_URL}" target="_blank" rel="noopener">Falar no WhatsApp</a>
+          <a class="btn btn--ghost" href="#servicos">Ver áreas de atuação</a>
+        </div>
+      </div>
+      <div class="hero__emblem">
+        <div class="seal"><img src="assets/img/logo.svg" alt="Advocacia Previdenciária"></div>
       </div>
     </div>
   </section>
 
-  <section class="section section--gray">
+  <section class="section section--tight section--gray">
     <div class="container">
-      <div class="grid grid--3">
-        <div class="card"><h3>Atendimento próximo</h3><p>Escritório em frente ao INSS de Monte Alto, com atendimento presencial e a distância.</p></div>
-        <div class="card"><h3>Análise individual</h3><p>Cada benefício é estudado a partir do seu histórico de contribuições (CNIS) e da sua realidade.</p></div>
-        <div class="card"><h3>Linguagem clara</h3><p>Explicamos cada etapa sem juridiquês, para você entender seus direitos e decidir com segurança.</p></div>
+      <div class="features">
+        <div class="feature"><span class="feature__ico">{icon('pin')}</span><div><h3>Atendimento próximo</h3><p>Escritório em frente ao INSS de Monte Alto, com atendimento presencial e a distância.</p></div></div>
+        <div class="feature"><span class="feature__ico">{icon('doc')}</span><div><h3>Análise individual</h3><p>Cada benefício é estudado a partir do seu histórico de contribuições (CNIS) e da sua realidade.</p></div></div>
+        <div class="feature"><span class="feature__ico">{icon('chat')}</span><div><h3>Linguagem clara</h3><p>Explicamos cada etapa sem juridiquês, para você entender seus direitos com segurança.</p></div></div>
       </div>
     </div>
   </section>
 
   <section class="section" id="servicos">
     <div class="container">
-      <div style="text-align:center;max-width:680px;margin:0 auto 3rem;">
+      <div class="section__head">
         <div class="eyebrow">Áreas de atuação</div>
         <h2>Em que podemos ajudar você</h2>
         <p class="lead">Conteúdo organizado por tipo de benefício. Escolha o tema mais próximo da sua situação.</p>
+        <div class="rule"></div>
       </div>
       {''.join(cat_sections)}
+    </div>
+  </section>
+
+  <section class="section section--gray">
+    <div class="container">
+      <div class="section__head">
+        <div class="eyebrow">Como funciona</div>
+        <h2>Do primeiro contato à solução</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step__num">1</div><h3>Conversa inicial</h3><p>Você relata sua situação pelo WhatsApp ou presencialmente. Entendemos o que você precisa.</p></div>
+        <div class="step"><div class="step__num">2</div><h3>Análise do caso</h3><p>Estudamos seu CNIS e seus documentos para identificar o melhor caminho — administrativo ou judicial.</p></div>
+        <div class="step"><div class="step__num">3</div><h3>Acompanhamento</h3><p>Conduzimos o pedido e mantemos você informado de cada etapa, em linguagem clara.</p></div>
+      </div>
     </div>
   </section>
 
@@ -342,7 +392,7 @@ def home_page(pages_by_cat):
     <div class="container">
       <div>
         <h2>Não encontrou o seu caso?</h2>
-        <p style="margin:0;">Fale com o escritório. A primeira conversa serve para entender sua situação e indicar o caminho.</p>
+        <p>Fale com o escritório. A primeira conversa serve para entender sua situação e indicar o caminho.</p>
       </div>
       <a class="btn btn--primary" href="{WA_URL}" target="_blank" rel="noopener">Falar no WhatsApp</a>
     </div>

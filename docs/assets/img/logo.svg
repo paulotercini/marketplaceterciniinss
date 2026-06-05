@@ -1,15 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" role="img" aria-label="Tercini Advocacia Previdenciária">
-  <!-- Marca: dois picos (montanhas em formato "M") + conchas da balança da Justiça.
-       Recriação vetorial fiel às cores da logo do escritório. -->
-  <defs>
-    <clipPath id="leftHalf"><rect x="0" y="0" width="119" height="200"/></clipPath>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="Advocacia Previdenciária">
+  <!-- Marca do escritório: dois picos ("M") + conchas da balança da Justiça. -->
   <!-- pico da direita (cinza claro) -->
-  <polygon points="135,24 206,151 182,151 135,80 88,151 70,151" fill="#9a9ca0"/>
+  <polygon points="140,16 210,150 188,150 140,66 92,150 72,150" fill="#8b8e92"/>
   <!-- pico da esquerda (cinza escuro), à frente -->
-  <polygon points="86,50 150,151 128,151 86,100 46,151 26,151" fill="#595b5f"/>
-  <!-- balança/barco: forma completa em vermelho (metade direita) -->
-  <path d="M40 150 Q120 156 200 150 Q120 208 40 150 Z" fill="#a4282a"/>
-  <!-- metade esquerda em cinza escuro (mesma forma, recortada ao meio) -->
-  <path d="M40 150 Q120 156 200 150 Q120 208 40 150 Z" fill="#595b5f" clip-path="url(#leftHalf)"/>
+  <polygon points="92,44 152,150 130,150 92,92 50,150 30,150" fill="#54565a"/>
+  <!-- concha esquerda (cinza) -->
+  <path d="M44 150 Q92 150 122 156 Q92 187 44 150 Z" fill="#6c6e72"/>
+  <!-- concha direita (vermelho), maior e à frente -->
+  <path d="M98 150 Q150 150 208 141 Q150 201 98 150 Z" fill="#a82a2b"/>
 </svg>
