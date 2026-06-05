@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.24.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.24.0 entrega a Onda 34, skill base-recurso-crps-peca-enxuta para padrão de redação enxuta, direta e clara em recursos ao CRPS (recurso ordinário, recurso especial, embargos, agravo ao Pleno, PUJ, reclamação), com fundamentação puramente normativa (Constituição, Leis, Decretos, IN 128/2022, Portarias DIRBEN/INSS, Portaria MPS 125/2026 RICRPS, Pareceres CONJUR/AGU vinculantes, Enunciados e Resoluções do CRPS) e vedação a julgados judiciais como fundamento principal. SKILL.md + 4 references (modelos enxutos + catálogo normativo hierárquico). Atualiza base-crps-panorama-geral e ponte-workflow-crps para refletir o padrão enxuto. A 1.23.0 entregou Onda 33 (revisão aprofundada). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
+  "version": "1.25.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.25.0 entrega a Onda Corretiva 35, correção do carregamento do logo no cabeçalho timbrado das petições. Implementa função carregarLogoTercini() com fallback em 12 caminhos de busca (priorizando C:\\Users\\VAIO\\INSS\\assets\\logo-tercini.png), suporte automático a PNG (com transparência) e JPG/JPEG com detecção dinâmica de tipo, alerta no console quando logo não é encontrado. Cria pasta assets/ com README-LOGO.md de procedimento de configuração e troubleshooting. Cria pasta C:\\Users\\VAIO\\INSS\\assets\\ no workspace. A 1.24.0 entregou Onda 34 (recurso CRPS enxuto). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"
