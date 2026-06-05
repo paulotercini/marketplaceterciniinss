@@ -4,82 +4,82 @@
   "title": "Aposentadoria do Professor",
   "nav_label": "Professor",
   "order": 4,
-  "meta_description": "Aposentadoria do professor da educacao basica apos a EC 103/2019: regras de transicao, direito adquirido e tempo de magisterio. Analise em Monte Alto/SP.",
-  "hero_subtitle": "Beneficio com requisitos reduzidos para o professor(a) que comprova tempo exclusivo de magisterio na educacao basica.",
+  "meta_description": "Aposentadoria do professor da educação básica após a EC 103/2019: regras de transição, direito adquirido e tempo de magistério. Análise em Monte Alto/SP.",
+  "hero_subtitle": "Benefício com requisitos reduzidos para o professor(a) que comprova tempo exclusivo de magistério na educação básica.",
   "intro": [
-    "O professor(a) que atua no magisterio da educacao basica tem direito a uma aposentadoria com requisitos reduzidos em relacao a regra comum, em razao da natureza da atividade (CF/88, art. 201, §8º).",
-    "Com a Reforma da Previdencia (EC 103/2019), o professor que ingressou no RGPS ate 13/11/2019 pode contar com regras de transicao especificas, alem de eventual direito adquirido. A escolha da regra mais vantajosa depende da analise do tempo de magisterio e da idade."
+    "O professor(a) que atua no magistério da educação básica tem direito a uma aposentadoria com requisitos reduzidos em relação à regra comum, em razão da natureza da atividade (CF/88, art. 201, §8º).",
+    "Com a Reforma da Previdência (EC 103/2019), o professor que ingressou no RGPS até 13/11/2019 pode contar com regras de transição específicas, além de eventual direito adquirido. A escolha da regra mais vantajosa depende da análise do tempo de magistério e da idade."
   ],
   "sections": [
     {
-      "heading": "O que e e quem se enquadra",
+      "heading": "O que é e quem se enquadra",
       "blocks": [
-        {"type": "p", "text": "E a aposentadoria destinada ao professor(a) que comprova tempo exclusivo de magisterio na educacao basica. As funcoes de magisterio incluem, alem da docencia, a direcao, a coordenacao e o assessoramento pedagogico, conforme a Lei 11.301/2006, confirmada pelo STF na ADI 3772. O professor universitario nao se insere nessa regra diferenciada."}
+        {"type": "p", "text": "É a aposentadoria destinada ao professor(a) que comprova tempo exclusivo de magistério na educação básica. As funções de magistério incluem, além da docência, a direção, a coordenação e o assessoramento pedagógico, conforme a Lei 11.301/2006, confirmada pelo STF na ADI 3772. O professor universitário não se insere nessa regra diferenciada."}
       ]
     },
     {
-      "heading": "Regras de transicao da EC 103/2019",
+      "heading": "Regras de transição da EC 103/2019",
       "blocks": [
-        {"type": "p", "text": "O professor filiado ao RGPS ate 13/11/2019 pode optar pela regra de transicao mais vantajosa. As principais sao:"},
+        {"type": "p", "text": "O professor filiado ao RGPS até 13/11/2019 pode optar pela regra de transição mais vantajosa. As principais são:"},
         {"type": "ul", "items": [
-          "Pontos (art. 15, §3º): exige 25 anos de magisterio (mulher) ou 30 anos (homem) e uma pontuacao que comecou em 81 (mulher) e 91 (homem) em 2020, subindo 1 ponto por ano ate 92 (mulher) e 100 (homem).",
-          "Idade progressiva (art. 16, §2º): exige o mesmo tempo minimo de magisterio e idade minima que comecou em 51 anos (mulher) e 56 anos (homem) em 2020, com acrescimo de 6 meses por ano, ate o limite de 57 (mulher) e 60 (homem). Em 2026, a idade exigida e de 54 anos (mulher) e 59 anos (homem).",
-          "Pedagio de 100% (art. 20, §1º): exige idade minima de 52 anos (mulher) ou 55 anos (homem), o tempo minimo de magisterio (25 ou 30 anos) e o cumprimento do dobro do tempo que faltava em 13/11/2019 para atingir esse minimo."
+          "Pontos (art. 15, §3º): exige 25 anos de magistério (mulher) ou 30 anos (homem) e uma pontuação que começou em 81 (mulher) e 91 (homem) em 2020, subindo 1 ponto por ano até 92 (mulher) e 100 (homem).",
+          "Idade progressiva (art. 16, §2º): exige o mesmo tempo mínimo de magistério e idade mínima que começou em 51 anos (mulher) e 56 anos (homem) em 2020, com acréscimo de 6 meses por ano, até o limite de 57 (mulher) e 60 (homem). Em 2026, a idade exigida é de 54 anos (mulher) e 59 anos (homem).",
+          "Pedágio de 100% (art. 20, §1º): exige idade mínima de 52 anos (mulher) ou 55 anos (homem), o tempo mínimo de magistério (25 ou 30 anos) e o cumprimento do dobro do tempo que faltava em 13/11/2019 para atingir esse mínimo."
         ]}
       ]
     },
     {
       "heading": "Direito adquirido",
       "blocks": [
-        {"type": "p", "text": "Quem preencheu todos os requisitos antes da EC 103/2019 mantem o direito a aposentadoria pelas regras anteriores (CF/88, art. 5º, XXXVI, e Sumula 359 do STF). Para o professor que estava em atividade em 16/12/1998, a EC 20/1998 (art. 9º, §2º) preve um acrescimo (bonus) sobre o tempo de magisterio exercido ate aquela data: 17% para mulher e 20% para homem."},
-        {"type": "callout", "text": "O fator previdenciario nao incide sobre a aposentadoria do professor, conforme a Sumula 726 do STF. Por isso, em muitos casos vale comparar o direito adquirido com as regras de transicao antes de decidir."}
+        {"type": "p", "text": "Quem preencheu todos os requisitos antes da EC 103/2019 mantém o direito à aposentadoria pelas regras anteriores (CF/88, art. 5º, XXXVI, e Súmula 359 do STF). Para o professor que estava em atividade em 16/12/1998, a EC 20/1998 (art. 9º, §2º) prevê um acréscimo (bônus) sobre o tempo de magistério exercido até aquela data: 17% para mulher e 20% para homem."},
+        {"type": "callout", "text": "O fator previdenciário não incide sobre a aposentadoria do professor, conforme a Súmula 726 do STF. Por isso, em muitos casos vale comparar o direito adquirido com as regras de transição antes de decidir."}
       ]
     },
     {
-      "heading": "Pontos de atencao",
+      "heading": "Pontos de atenção",
       "blocks": [
         {"type": "ul", "items": [
-          "O tempo deve ser exclusivamente de magisterio; periodos intercalados com outras atividades exigem mapeamento da carreira.",
-          "Funcoes como direcao, coordenacao e assessoramento pedagogico podem ser computadas, mas exigem prova (Lei 11.301/2006 e ADI 3772 do STF).",
-          "O professor universitario nao se enquadra na regra diferenciada.",
-          "Quando o requerimento e feito antes de completar os requisitos, pode caber a reafirmacao da DER.",
-          "Para contagem reciproca com regime proprio (RPPS), e necessaria certidao especifica de tempo de magisterio."
+          "O tempo deve ser exclusivamente de magistério; períodos intercalados com outras atividades exigem mapeamento da carreira.",
+          "Funções como direção, coordenação e assessoramento pedagógico podem ser computadas, mas exigem prova (Lei 11.301/2006 e ADI 3772 do STF).",
+          "O professor universitário não se enquadra na regra diferenciada.",
+          "Quando o requerimento é feito antes de completar os requisitos, pode caber a reafirmação da DER.",
+          "Para contagem recíproca com regime próprio (RPPS), é necessária certidão específica de tempo de magistério."
         ]}
       ]
     },
     {
-      "heading": "Como o escritorio pode ajudar",
+      "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Analisamos o seu historico contributivo e a documentacao escolar para apurar o tempo de magisterio, inclusive funcoes de direcao e coordenacao, e simulamos as regras de transicao por pontos, idade progressiva e pedagio, alem de eventual direito adquirido com o bonus da EC 20/1998. Acompanhamos o requerimento administrativo e, quando necessario, a discussao judicial. Convidamos voce a uma analise individualizada do seu caso em Monte Alto/SP."}
+        {"type": "p", "text": "Analisamos o seu histórico contributivo e a documentação escolar para apurar o tempo de magistério, inclusive funções de direção e coordenação, e simulamos as regras de transição por pontos, idade progressiva e pedágio, além de eventual direito adquirido com o bônus da EC 20/1998. Acompanhamos o requerimento administrativo e, quando necessário, a discussão judicial. Convidamos você a uma análise individualizada do seu caso em Monte Alto/SP."}
       ]
     }
   ],
   "documentos": [
     "Documento de identidade e CPF",
-    "Comprovante de residencia",
-    "Extrato do CNIS (Cadastro Nacional de Informacoes Sociais)",
-    "Carteira de Trabalho (CTPS) e contratos de trabalho no magisterio",
-    "Declaracoes das escolas com funcao exercida e periodos de magisterio",
-    "Documentos de funcoes de direcao, coordenacao ou assessoramento pedagogico",
-    "Certidao de tempo de magisterio, se houver tempo em regime proprio (RPPS)",
-    "Cartas de indeferimento ou concessao anteriores do INSS"
+    "Comprovante de residência",
+    "Extrato do CNIS (Cadastro Nacional de Informações Sociais)",
+    "Carteira de Trabalho (CTPS) e contratos de trabalho no magistério",
+    "Declarações das escolas com função exercida e períodos de magistério",
+    "Documentos de funções de direção, coordenação ou assessoramento pedagógico",
+    "Certidão de tempo de magistério, se houver tempo em regime próprio (RPPS)",
+    "Cartas de indeferimento ou concessão anteriores do INSS"
   ],
   "faq": [
     {
-      "q": "Quanto tempo de magisterio preciso ter?",
-      "a": "As regras de transicao exigem, em geral, 25 anos de magisterio para a mulher e 30 anos para o homem, sempre em tempo exclusivo na educacao basica, alem do requisito de idade ou pontuacao de cada regra."
+      "q": "Quanto tempo de magistério preciso ter?",
+      "a": "As regras de transição exigem, em geral, 25 anos de magistério para a mulher e 30 anos para o homem, sempre em tempo exclusivo na educação básica, além do requisito de idade ou pontuação de cada regra."
     },
     {
-      "q": "Direcao e coordenacao pedagogica contam como magisterio?",
-      "a": "Sim. Pela Lei 11.301/2006, confirmada pelo STF na ADI 3772, as funcoes de magisterio incluem direcao, coordenacao e assessoramento pedagogico, desde que comprovadas."
+      "q": "Direção e coordenação pedagógica contam como magistério?",
+      "a": "Sim. Pela Lei 11.301/2006, confirmada pelo STF na ADI 3772, as funções de magistério incluem direção, coordenação e assessoramento pedagógico, desde que comprovadas."
     },
     {
-      "q": "Professor universitario tem direito a essa regra?",
-      "a": "Nao. A regra diferenciada do professor abrange o magisterio na educacao basica. O professor universitario nao se insere, conforme a ADI 3772 do STF."
+      "q": "Professor universitário tem direito a essa regra?",
+      "a": "Não. A regra diferenciada do professor abrange o magistério na educação básica. O professor universitário não se insere, conforme a ADI 3772 do STF."
     },
     {
-      "q": "O fator previdenciario reduz a aposentadoria do professor?",
-      "a": "O fator previdenciario nao incide sobre a aposentadoria do professor, conforme a Sumula 726 do STF. O calculo segue as regras aplicaveis a modalidade escolhida."
+      "q": "O fator previdenciário reduz a aposentadoria do professor?",
+      "a": "O fator previdenciário não incide sobre a aposentadoria do professor, conforme a Súmula 726 do STF. O cálculo segue as regras aplicáveis à modalidade escolhida."
     }
   ],
   "related": ["aposentadoria-tempo-idade", "aposentadoria-especial", "planejamento-previdenciario"]
