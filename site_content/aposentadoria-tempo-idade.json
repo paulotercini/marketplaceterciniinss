@@ -4,93 +4,93 @@
   "title": "Aposentadoria por Tempo de Contribuição e Idade",
   "nav_label": "Tempo e Idade",
   "order": 1,
-  "meta_description": "Aposentadoria por tempo de contribuicao e idade apos a EC 103/2019: direito adquirido, regras de transicao e regra permanente. Analise em Monte Alto/SP.",
-  "hero_subtitle": "Entenda as portas de acesso a aposentadoria comum apos a Reforma da Previdencia e como identificar a regra mais favoravel ao seu caso.",
+  "meta_description": "Aposentadoria por tempo de contribuição e idade após a EC 103/2019: direito adquirido, regras de transição e regra permanente. Análise em Monte Alto/SP.",
+  "hero_subtitle": "Entenda as portas de acesso à aposentadoria comum após a Reforma da Previdência e como identificar a regra mais favorável ao seu caso.",
   "intro": [
-    "A Reforma da Previdencia (Emenda Constitucional 103/2019), promulgada em 13 de novembro de 2019, alterou as regras de aposentadoria do INSS. Quem ja havia preenchido os requisitos antes dessa data mantem o direito as regras antigas. Quem ainda estava no caminho pode contar com regras de transicao, e quem ingressou depois segue a chamada regra permanente.",
-    "Cada situacao tem requisitos proprios de idade, tempo de contribuicao e pontuacao. Por isso, a analise do seu historico contributivo (CNIS) e fundamental para verificar qual caminho se aplica e qual e mais vantajoso."
+    "A Reforma da Previdência (Emenda Constitucional 103/2019), promulgada em 13 de novembro de 2019, alterou as regras de aposentadoria do INSS. Quem já havia preenchido os requisitos antes dessa data mantém o direito às regras antigas. Quem ainda estava no caminho pode contar com regras de transição, e quem ingressou depois segue a chamada regra permanente.",
+    "Cada situação tem requisitos próprios de idade, tempo de contribuição e pontuação. Por isso, a análise do seu histórico contributivo (CNIS) é fundamental para verificar qual caminho se aplica e qual é mais vantajoso."
   ],
   "sections": [
     {
-      "heading": "O que e",
+      "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "A aposentadoria por tempo de contribuicao e idade e o beneficio destinado ao segurado(a) que cumpre, ao longo da vida laboral, os requisitos de tempo de contribuicao e, conforme o caso, de idade minima e pontuacao. Apos a EC 103/2019, esse beneficio passou a se organizar em tres grandes grupos: o direito adquirido (regras anteriores a reforma), as regras de transicao e a regra permanente."}
+        {"type": "p", "text": "A aposentadoria por tempo de contribuição e idade é o benefício destinado ao segurado(a) que cumpre, ao longo da vida laboral, os requisitos de tempo de contribuição e, conforme o caso, de idade mínima e pontuação. Após a EC 103/2019, esse benefício passou a se organizar em três grandes grupos: o direito adquirido (regras anteriores à reforma), as regras de transição e a regra permanente."}
       ]
     },
     {
       "heading": "Direito adquirido (antes da reforma)",
       "blocks": [
-        {"type": "p", "text": "Pelo art. 3o da EC 103/2019 e pelo art. 5o, XXXVI, da Constituicao Federal (e Sumula 359 do STF), quem cumpriu os requisitos ate 13 de novembro de 2019 mantem o direito a aposentadoria pelas regras antigas, inclusive quanto ao calculo, mesmo que tenha continuado trabalhando depois."},
+        {"type": "p", "text": "Pelo art. 3º da EC 103/2019 e pelo art. 5º, XXXVI, da Constituição Federal (e Súmula 359 do STF), quem cumpriu os requisitos até 13 de novembro de 2019 mantém o direito à aposentadoria pelas regras antigas, inclusive quanto ao cálculo, mesmo que tenha continuado trabalhando depois."},
         {"type": "ul", "items": [
-          "Homem com 35 anos de contribuicao ou mulher com 30 anos completos ate 13/11/2019: aposentadoria por tempo de contribuicao integral, sem idade minima e sem pedagio.",
-          "Quem atingiu a regra 85/95 progressiva (Lei 13.183/2015) ate a reforma: aposentadoria sem incidencia do fator previdenciario desvantajoso.",
-          "Quem reuniu tempo somado ao pedagio de 20% da EC 20/1998: direito a aposentadoria proporcional, com coeficiente da tabela do art. 53 da Lei 8.213/91."
+          "Homem com 35 anos de contribuição ou mulher com 30 anos completos até 13/11/2019: aposentadoria por tempo de contribuição integral, sem idade mínima e sem pedágio.",
+          "Quem atingiu a regra 85/95 progressiva (Lei 13.183/2015) até a reforma: aposentadoria sem incidência do fator previdenciário desvantajoso.",
+          "Quem reuniu tempo somado ao pedágio de 20% da EC 20/1998: direito à aposentadoria proporcional, com coeficiente da tabela do art. 53 da Lei 8.213/91."
         ]}
       ]
     },
     {
-      "heading": "Regras de transicao da EC 103/2019",
+      "heading": "Regras de transição da EC 103/2019",
       "blocks": [
-        {"type": "p", "text": "O segurado(a) filiado ao RGPS ate 13 de novembro de 2019 pode optar pela regra de transicao mais vantajosa entre as quatro disponiveis. A escolha e um direito do segurado(a), e nao uma imposicao do INSS. Sao elas:"},
+        {"type": "p", "text": "O segurado(a) filiado ao RGPS até 13 de novembro de 2019 pode optar pela regra de transição mais vantajosa entre as quatro disponíveis. A escolha é um direito do segurado(a), e não uma imposição do INSS. São elas:"},
         {"type": "ul", "items": [
-          "Pontos (art. 15): exige 35 anos de contribuicao (homem) ou 30 anos (mulher) e uma pontuacao crescente (soma de idade e tempo). A pontuacao comecou em 96 para homem e 86 para mulher, subindo 1 ponto por ano ate 105 e 100, respectivamente.",
-          "Idade minima progressiva (art. 16): exige o mesmo tempo minimo de contribuicao e idade minima crescente, que comecou em 61 anos (homem) e 56 anos (mulher), aumentando 6 meses a cada ano.",
-          "Pedagio de 50% (art. 17): destinado a quem estava a menos de 2 anos de completar o tempo minimo em 13/11/2019. Exige cumprir o tempo que faltava acrescido de metade desse tempo.",
-          "Pedagio de 100% (art. 20): exige idade minima de 60 anos (homem) ou 57 anos (mulher) e o cumprimento do dobro do tempo que faltava em 13/11/2019."
+          "Pontos (art. 15): exige 35 anos de contribuição (homem) ou 30 anos (mulher) e uma pontuação crescente (soma de idade e tempo). A pontuação começou em 96 para homem e 86 para mulher, subindo 1 ponto por ano até 105 e 100, respectivamente.",
+          "Idade mínima progressiva (art. 16): exige o mesmo tempo mínimo de contribuição e idade mínima crescente, que começou em 61 anos (homem) e 56 anos (mulher), aumentando 6 meses a cada ano.",
+          "Pedágio de 50% (art. 17): destinado a quem estava a menos de 2 anos de completar o tempo mínimo em 13/11/2019. Exige cumprir o tempo que faltava acrescido de metade desse tempo.",
+          "Pedágio de 100% (art. 20): exige idade mínima de 60 anos (homem) ou 57 anos (mulher) e o cumprimento do dobro do tempo que faltava em 13/11/2019."
         ]},
-        {"type": "callout", "text": "A renda inicial nas transicoes segue, em regra, o art. 26 da EC 103: 60% da media das contribuicoes mais 2% por ano que exceder 20 anos (homem) ou 15 anos (mulher). A excecao e o pedagio de 100%, que mantem 100% da media."}
+        {"type": "callout", "text": "A renda inicial nas transições segue, em regra, o art. 26 da EC 103: 60% da média das contribuições mais 2% por ano que exceder 20 anos (homem) ou 15 anos (mulher). A exceção é o pedágio de 100%, que mantém 100% da média."}
       ]
     },
     {
       "heading": "Regra permanente",
       "blocks": [
-        {"type": "p", "text": "A regra permanente do art. 19 da EC 103/2019 aplica-se a quem ingressou no RGPS a partir de 14 de novembro de 2019 e a quem, filiado antes, nao tem regra de transicao mais vantajosa. Exige idade minima de 65 anos (homem) ou 62 anos (mulher), com tempo minimo de contribuicao de 20 anos (homem) ou 15 anos (mulher) e carencia de 180 contribuicoes (art. 25, II, da Lei 8.213/91). Na aposentadoria por idade rural, a idade permanece reduzida: 60 anos (homem) e 55 anos (mulher), com 15 anos de atividade rural (art. 48 da Lei 8.213/91)."}
+        {"type": "p", "text": "A regra permanente do art. 19 da EC 103/2019 aplica-se a quem ingressou no RGPS a partir de 14 de novembro de 2019 e a quem, filiado antes, não tem regra de transição mais vantajosa. Exige idade mínima de 65 anos (homem) ou 62 anos (mulher), com tempo mínimo de contribuição de 20 anos (homem) ou 15 anos (mulher) e carência de 180 contribuições (art. 25, II, da Lei 8.213/91). Na aposentadoria por idade rural, a idade permanece reduzida: 60 anos (homem) e 55 anos (mulher), com 15 anos de atividade rural (art. 48 da Lei 8.213/91)."}
       ]
     },
     {
-      "heading": "Pontos de atencao",
+      "heading": "Pontos de atenção",
       "blocks": [
         {"type": "ul", "items": [
-          "O INSS nem sempre apresenta o comparativo entre as regras e pode aplicar aquela que gera renda menor. A planilha comparativa pode ser exigida em recurso administrativo ou acao judicial.",
-          "A data do requerimento (DER) deve coincidir com o efetivo cumprimento dos requisitos da regra escolhida. Em requerimento prematuro, pode caber a reafirmacao da DER (Tema 995 do STJ).",
-          "Periodos faltantes ou pendencias no CNIS podem inviabilizar o computo da carencia ou do tempo. O acerto do cadastro antes de requerer e importante.",
-          "Tempo especial reconhecido ate 13/11/2019 pode ser convertido e aproveitado para compor o tempo de contribuicao das regras comuns."
+          "O INSS nem sempre apresenta o comparativo entre as regras e pode aplicar aquela que gera renda menor. A planilha comparativa pode ser exigida em recurso administrativo ou ação judicial.",
+          "A data do requerimento (DER) deve coincidir com o efetivo cumprimento dos requisitos da regra escolhida. Em requerimento prematuro, pode caber a reafirmação da DER (Tema 995 do STJ).",
+          "Períodos faltantes ou pendências no CNIS podem inviabilizar o cômputo da carência ou do tempo. O acerto do cadastro antes de requerer é importante.",
+          "Tempo especial reconhecido até 13/11/2019 pode ser convertido e aproveitado para compor o tempo de contribuição das regras comuns."
         ]}
       ]
     },
     {
-      "heading": "Como o escritorio pode ajudar",
+      "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Realizamos a leitura do seu historico contributivo, identificamos eventual direito adquirido e simulamos cada porta de transicao e a regra permanente, para verificar qual caminho se ajusta melhor ao seu caso. Tambem acompanhamos o requerimento administrativo e, quando necessario, a discussao judicial. Convidamos voce a uma analise individualizada do seu caso em Monte Alto/SP."}
+        {"type": "p", "text": "Realizamos a leitura do seu histórico contributivo, identificamos eventual direito adquirido e simulamos cada porta de transição e a regra permanente, para verificar qual caminho se ajusta melhor ao seu caso. Também acompanhamos o requerimento administrativo e, quando necessário, a discussão judicial. Convidamos você a uma análise individualizada do seu caso em Monte Alto/SP."}
       ]
     }
   ],
   "documentos": [
     "Documento de identidade e CPF",
-    "Comprovante de residencia",
-    "Extrato do CNIS (Cadastro Nacional de Informacoes Sociais)",
+    "Comprovante de residência",
+    "Extrato do CNIS (Cadastro Nacional de Informações Sociais)",
     "Carteira de Trabalho (CTPS) e contratos de trabalho",
-    "Carnes de contribuicao (contribuinte individual ou facultativo)",
+    "Carnês de contribuição (contribuinte individual ou facultativo)",
     "PPP e laudos, se houve atividade especial a ser convertida",
     "Documentos de eventual atividade rural anterior a 1991",
-    "Cartas de indeferimento ou concessao anteriores do INSS"
+    "Cartas de indeferimento ou concessão anteriores do INSS"
   ],
   "faq": [
     {
-      "q": "Continuei trabalhando depois de completar o tempo em 2019. Perco o direito as regras antigas?",
-      "a": "Nao. O direito adquirido nao decai pela simples continuidade do trabalho. Quem cumpriu os requisitos ate 13/11/2019 mantem o direito a aposentadoria pelas regras anteriores, inclusive quanto ao calculo, conforme o art. 3o da EC 103/2019 e a Sumula 359 do STF."
+      "q": "Continuei trabalhando depois de completar o tempo em 2019. Perco o direito às regras antigas?",
+      "a": "Não. O direito adquirido não decai pela simples continuidade do trabalho. Quem cumpriu os requisitos até 13/11/2019 mantém o direito à aposentadoria pelas regras anteriores, inclusive quanto ao cálculo, conforme o art. 3º da EC 103/2019 e a Súmula 359 do STF."
     },
     {
-      "q": "Posso escolher a regra de transicao que me beneficia?",
-      "a": "Sim. A escolha da regra de transicao mais vantajosa e um direito do segurado(a). O ideal e simular cada uma das quatro regras, alem do direito adquirido e da regra permanente, antes de decidir."
+      "q": "Posso escolher a regra de transição que me beneficia?",
+      "a": "Sim. A escolha da regra de transição mais vantajosa é um direito do segurado(a). O ideal é simular cada uma das quatro regras, além do direito adquirido e da regra permanente, antes de decidir."
     },
     {
-      "q": "O que muda na regra permanente para quem comecou a contribuir depois da reforma?",
-      "a": "Quem ingressou no RGPS a partir de 14/11/2019 segue a regra permanente: 65 anos (homem) ou 62 anos (mulher), com tempo minimo de 20 anos (homem) ou 15 anos (mulher) e carencia de 180 contribuicoes."
+      "q": "O que muda na regra permanente para quem começou a contribuir depois da reforma?",
+      "a": "Quem ingressou no RGPS a partir de 14/11/2019 segue a regra permanente: 65 anos (homem) ou 62 anos (mulher), com tempo mínimo de 20 anos (homem) ou 15 anos (mulher) e carência de 180 contribuições."
     },
     {
-      "q": "O que e a reafirmacao da DER?",
-      "a": "E a possibilidade de considerar como data do requerimento o momento em que os requisitos foram efetivamente cumpridos, quando o pedido foi feito antes da hora. O tema foi tratado pelo STJ no Tema 995."
+      "q": "O que é a reafirmação da DER?",
+      "a": "É a possibilidade de considerar como data do requerimento o momento em que os requisitos foram efetivamente cumpridos, quando o pedido foi feito antes da hora. O tema foi tratado pelo STJ no Tema 995."
     }
   ],
   "related": ["aposentadoria-especial", "aposentadoria-professor", "planejamento-previdenciario"]
