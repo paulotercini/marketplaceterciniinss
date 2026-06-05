@@ -1,0 +1,68 @@
+name: Bot de Avisos To Do (diario 03h Brasil)
+
+on:
+  schedule:
+    # 06:00 UTC = 03:00 Brasil (UTC-3, sem horário de verão desde 2019)
+    - cron: '0 6 * * *'
+  workflow_dispatch:  # permite rodar manualmente pela aba Actions
+
+permissions:
+  contents: read
+
+jobs:
+  rodar-bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: bot-avisos
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Restaurar graph_tokens.json do Secret
+        env:
+          GRAPH_TOKENS_JSON: ${{ secrets.GRAPH_TOKENS_JSON }}
+        run: |
+          if [ -z "$GRAPH_TOKENS_JSON" ]; then
+            echo "ERRO: secret GRAPH_TOKENS_JSON nao configurado"
+            exit 1
+          fi
+          printf '%s' "$GRAPH_TOKENS_JSON" > graph_tokens.json
+          # validar JSON
+          python3 -c "import json; json.load(open('graph_tokens.json'))"
+          echo "Token restaurado OK"
+
+      - name: Renovar access_token
+        run: |
+          python3 graph_refresh.py
+
+      - name: Rodar bot de avisos
+        run: |
+          python3 bot_avisos.py
+
+      - name: Persistir graph_tokens.json (refresh_token rotaciona)
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "AVISO: secret GH_PAT nao configurado — refresh_token NAO sera atualizado."
+            echo "Sem isso, o workflow para de funcionar quando o refresh_token rotacionar."
+            exit 0
+          fi
+          # Atualiza o secret GRAPH_TOKENS_JSON com o conteudo atualizado
+          gh secret set GRAPH_TOKENS_JSON \
+            --body "$(cat graph_tokens.json)" \
+            --repo "${{ github.repository }}"
+          echo "Secret GRAPH_TOKENS_JSON atualizado com sucesso"
+
+      - name: Limpar arquivos sensiveis
+        if: always()
+        run: |
+          rm -f graph_tokens.json graph_device.json || true
