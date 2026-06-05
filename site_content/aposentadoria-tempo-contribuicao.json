@@ -1,0 +1,87 @@
+{
+  "slug": "aposentadoria-tempo-contribuicao",
+  "category": "Aposentadorias",
+  "title": "Aposentadoria por Tempo de Contribuição",
+  "nav_label": "Tempo de Contribuição",
+  "order": 1,
+  "meta_description": "Aposentadoria por tempo de contribuição após a EC 103/2019: direito adquirido e as quatro regras de transição. Análise do seu caso em Monte Alto/SP.",
+  "hero_subtitle": "Direito adquirido e as regras de transição que substituíram a antiga aposentadoria por tempo de contribuição após a Reforma da Previdência.",
+  "intro": [
+    "A Reforma da Previdência (Emenda Constitucional 103/2019), promulgada em 13 de novembro de 2019, extinguiu a aposentadoria por tempo de contribuição na forma antiga para quem ainda não havia completado os requisitos. Em seu lugar, criaram-se regras de transição para quem já contribuía.",
+    "Quem completou o tempo exigido até 13 de novembro de 2019 mantém o direito adquirido às regras anteriores. Quem ainda estava no caminho pode optar pela regra de transição mais vantajosa. Por isso, a leitura do seu histórico contributivo (CNIS) é o ponto de partida."
+  ],
+  "sections": [
+    {
+      "heading": "O que é",
+      "blocks": [
+        {"type": "p", "text": "A aposentadoria por tempo de contribuição é o benefício voltado ao segurado(a) que reúne, ao longo da vida laboral, o tempo de contribuição exigido. Após a EC 103/2019, esse acesso passou a se organizar em dois grandes grupos: o direito adquirido (regras anteriores à reforma) e as regras de transição, para quem já era filiado ao INSS antes da reforma."}
+      ]
+    },
+    {
+      "heading": "Direito adquirido (antes da reforma)",
+      "blocks": [
+        {"type": "p", "text": "Pelo art. 3º da EC 103/2019 e pelo art. 5º, XXXVI, da Constituição Federal (e Súmula 359 do STF), quem cumpriu os requisitos até 13 de novembro de 2019 mantém o direito à aposentadoria pelas regras antigas, inclusive quanto ao cálculo, mesmo que tenha continuado trabalhando depois."},
+        {"type": "ul", "items": [
+          "Homem com 35 anos de contribuição ou mulher com 30 anos completos até 13/11/2019: aposentadoria por tempo de contribuição integral, sem idade mínima e sem pedágio.",
+          "Quem atingiu a regra 85/95 progressiva (Lei 13.183/2015) até a reforma: aposentadoria sem a incidência do fator previdenciário desvantajoso.",
+          "Quem reuniu tempo somado ao pedágio de 20% da EC 20/1998: direito à aposentadoria proporcional, com o coeficiente da tabela do art. 53 da Lei 8.213/91."
+        ]}
+      ]
+    },
+    {
+      "heading": "As regras de transição da EC 103/2019",
+      "blocks": [
+        {"type": "p", "text": "O segurado(a) filiado ao RGPS até 13 de novembro de 2019 pode optar pela regra de transição mais vantajosa entre as quatro disponíveis. A escolha é um direito do segurado(a), e não uma imposição do INSS. São elas:"},
+        {"type": "ul", "items": [
+          "Pontos (art. 15): exige 35 anos de contribuição (homem) ou 30 anos (mulher) e uma pontuação crescente (soma de idade e tempo). A pontuação começou em 96 para o homem e 86 para a mulher, subindo 1 ponto por ano até 105 e 100, respectivamente.",
+          "Idade mínima progressiva (art. 16): exige o mesmo tempo mínimo de contribuição e uma idade mínima crescente, que começou em 61 anos (homem) e 56 anos (mulher), aumentando 6 meses a cada ano.",
+          "Pedágio de 50% (art. 17): destinado a quem estava a menos de 2 anos de completar o tempo mínimo em 13/11/2019. Exige cumprir o tempo que faltava acrescido de metade desse tempo.",
+          "Pedágio de 100% (art. 20): exige idade mínima de 60 anos (homem) ou 57 anos (mulher) e o cumprimento do dobro do tempo que faltava em 13/11/2019."
+        ]},
+        {"type": "callout", "text": "A renda inicial nas transições segue, em regra, o art. 26 da EC 103: 60% da média das contribuições mais 2% por ano que exceder 20 anos (homem) ou 15 anos (mulher). A exceção é o pedágio de 100%, que mantém 100% da média."}
+      ]
+    },
+    {
+      "heading": "Pontos de atenção",
+      "blocks": [
+        {"type": "ul", "items": [
+          "O INSS nem sempre apresenta o comparativo entre as regras e pode aplicar aquela que gera renda menor. A planilha comparativa pode ser exigida em recurso administrativo ou ação judicial.",
+          "A data do requerimento (DER) deve coincidir com o efetivo cumprimento dos requisitos da regra escolhida. Em requerimento prematuro, pode caber a reafirmação da DER (Tema 995 do STJ).",
+          "Períodos faltantes ou pendências no CNIS podem inviabilizar o cômputo da carência ou do tempo. O acerto do cadastro antes de requerer é importante.",
+          "Tempo especial reconhecido até 13/11/2019 pode ser convertido e aproveitado para compor o tempo de contribuição das regras comuns."
+        ]}
+      ]
+    },
+    {
+      "heading": "Como o escritório pode ajudar",
+      "blocks": [
+        {"type": "p", "text": "Realizamos a leitura do seu histórico contributivo, identificamos eventual direito adquirido e simulamos cada uma das quatro regras de transição, para verificar qual caminho se ajusta melhor ao seu caso. Também acompanhamos o requerimento administrativo e, quando necessário, a discussão judicial. Convidamos você a uma análise individualizada do seu caso em Monte Alto/SP."}
+      ]
+    }
+  ],
+  "documentos": [
+    "Documento de identidade e CPF",
+    "Comprovante de residência",
+    "Extrato do CNIS (Cadastro Nacional de Informações Sociais)",
+    "Carteira de Trabalho (CTPS) e contratos de trabalho",
+    "Carnês de contribuição (contribuinte individual ou facultativo)",
+    "PPP e laudos, se houve atividade especial a ser convertida",
+    "Documentos de eventual atividade rural anterior a 1991",
+    "Cartas de indeferimento ou concessão anteriores do INSS"
+  ],
+  "faq": [
+    {
+      "q": "Continuei trabalhando depois de completar o tempo em 2019. Perco o direito às regras antigas?",
+      "a": "Não. O direito adquirido não decai pela simples continuidade do trabalho. Quem cumpriu os requisitos até 13/11/2019 mantém o direito à aposentadoria pelas regras anteriores, inclusive quanto ao cálculo, conforme o art. 3º da EC 103/2019 e a Súmula 359 do STF."
+    },
+    {
+      "q": "Posso escolher a regra de transição que me beneficia?",
+      "a": "Sim. A escolha da regra de transição mais vantajosa é um direito do segurado(a). O ideal é simular cada uma das quatro regras, além do direito adquirido, antes de decidir."
+    },
+    {
+      "q": "O que é a reafirmação da DER?",
+      "a": "É a possibilidade de considerar como data do requerimento o momento em que os requisitos foram efetivamente cumpridos, quando o pedido foi feito antes da hora. O tema foi tratado pelo STJ no Tema 995."
+    }
+  ],
+  "related": ["aposentadoria-idade", "aposentadoria-especial", "planejamento-previdenciario"]
+}

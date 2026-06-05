@@ -3,7 +3,7 @@
   "category": "Aposentadorias",
   "title": "Aposentadoria do Professor",
   "nav_label": "Professor",
-  "order": 4,
+  "order": 5,
   "meta_description": "Aposentadoria do professor da educação básica após a EC 103/2019: regras de transição, direito adquirido e tempo de magistério. Análise em Monte Alto/SP.",
   "hero_subtitle": "Benefício com requisitos reduzidos para o professor(a) que comprova tempo exclusivo de magistério na educação básica.",
   "intro": [
@@ -82,5 +82,5 @@
       "a": "O fator previdenciário não incide sobre a aposentadoria do professor, conforme a Súmula 726 do STF. O cálculo segue as regras aplicáveis à modalidade escolhida."
     }
   ],
-  "related": ["aposentadoria-tempo-idade", "aposentadoria-especial", "planejamento-previdenciario"]
+  "related": ["aposentadoria-tempo-contribuicao", "aposentadoria-especial", "planejamento-previdenciario"]
 }

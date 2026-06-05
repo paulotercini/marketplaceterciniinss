@@ -3,7 +3,7 @@
   "category": "Aposentadorias",
   "title": "Aposentadoria Rural",
   "nav_label": "Rural",
-  "order": 5,
+  "order": 6,
   "meta_description": "Aposentadoria rural e segurado especial: tempo rural anterior a 1991, autodeclaração e prova da atividade no campo. Análise do seu caso em Monte Alto/SP.",
   "hero_subtitle": "Benefício para quem trabalhou na atividade rural, inclusive em regime de economia familiar, com requisitos e formas de comprovação próprias.",
   "intro": [
@@ -87,5 +87,5 @@
       "a": "Sim. O tempo rural anterior a novembro de 1991 pode ser computado como tempo de contribuição, mesmo sem recolhimento (art. 55, §2º, da Lei 8.213/91 e Súmula 272 do STJ). Para a carência, há regras específicas e, em alguns casos, necessidade de indenização."
     }
   ],
-  "related": ["aposentadoria-tempo-idade", "planejamento-previdenciario", "pensao-por-morte"]
+  "related": ["aposentadoria-tempo-contribuicao", "planejamento-previdenciario", "pensao-por-morte"]
 }

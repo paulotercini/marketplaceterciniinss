@@ -3,7 +3,7 @@
   "category": "Aposentadorias",
   "title": "Aposentadoria Especial",
   "nav_label": "Especial",
-  "order": 2,
+  "order": 3,
   "meta_description": "Aposentadoria especial para quem trabalhou exposto a agentes nocivos: ruído, agentes químicos e mais, antes e após a EC 103/2019. Análise em Monte Alto/SP.",
   "hero_subtitle": "Benefício destinado a quem trabalhou exposto a agentes nocivos à saúde, como ruído, calor, agentes químicos e biológicos, em condições que justificam aposentadoria com tempo reduzido.",
   "intro": [
@@ -100,5 +100,5 @@
       "a": "Não. A EC 103/2019 alterou os requisitos a partir de 14/11/2019, criando a transição por pontos (66, 76 ou 86) e a regra permanente com idade mínima (55, 58 ou 60 anos). Quem já tinha o tempo completo até 13/11/2019 mantém o direito adquirido à regra anterior."
     }
   ],
-  "related": ["aposentadoria-tempo-idade", "aposentadoria-pcd", "planejamento-previdenciario"]
+  "related": ["aposentadoria-tempo-contribuicao", "aposentadoria-pcd", "planejamento-previdenciario"]
 }
