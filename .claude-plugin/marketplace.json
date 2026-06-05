@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.24.0 entrega a Onda 34, criação da skill base-recurso-crps-peca-enxuta estabelecendo padrão de redação enxuta, direta e clara para recursos destinados ao Conselho de Recursos da Previdência Social (CRPS), com fundamentação puramente NORMATIVA (Constituição, Leis 8.213/91, 8.212/91, 8.742/93 LOAS, LC 142/2013, Lei 13.146/2015 EPCD, Lei 13.460/2017, Decreto 3.048/99 RPS, Decreto 6.214/2007 BPC, IN 128/2022, Portarias DIRBEN/INSS 990-996/2022, Portaria MPS 125/2026 RICRPS, Pareceres CONJUR/AGU vinculantes art. 108 RICRPS, Enunciados e Súmulas e Resoluções do CRPS art. 114 RICRPS) e vedação ao uso de julgados judiciais como fundamento principal. Inclui 4 modelos de peça enxuta (recurso ordinário, recurso especial, embargos de declaração, catálogo normativo hierárquico). Atualiza base-crps-panorama-geral e ponte-workflow-crps para refletir o padrão enxuto. Tamanho típico esperado. Recurso ordinário 3-6 págs, recurso especial 5-8, embargos 1-2 max 3, agravo ao Pleno 3-5, PUJ 5-8, reclamação 3-5, memorial 2 absoluto. A 1.23.0 entregou Onda 33 (revisão aprofundada). A 1.22.0 Onda 32 (taxonomia Portarias). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
-      "version": "1.24.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.25.0 entrega a Onda Corretiva 35, correção do carregamento do logo do escritório no cabeçalho timbrado das petições geradas pela skill base-peticao-previdenciaria-padrao-visual. Implementa função carregarLogoTercini() com fallback inteligente em 12 caminhos de busca (priorizando C:\\Users\\VAIO\\INSS\\assets\\logo-tercini.png como localização recomendada que sobrevive a atualizações do plugin), suporte automático a PNG (preferencial, transparência) e JPG/JPEG com detecção dinâmica do parâmetro type do ImageRun pela extensão do arquivo. Quando logo não é encontrado, gera petição SEM logo e emite alerta no console indicando ao usuário como configurar. Cria pasta assets/ na skill com arquivo README-LOGO.md detalhando procedimento de configuração, troubleshooting, características visuais do logo (duas formas triangulares cinza sobre curva vermelha estilizando balança da justiça em PNG transparente), dimensões EMU e técnica de carregamento. Cria também a pasta C:\\Users\\VAIO\\INSS\\assets\\ no workspace do usuário. A 1.24.0 entregou Onda 34 (recurso CRPS enxuto). A 1.23.0 Onda 33 (revisão aprofundada). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
+      "version": "1.25.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
@@ -340,7 +340,17 @@
         "conselho-pleno-crps",
         "embargos-crps-1-2-paginas",
         "recurso-ordinario-3-6-paginas",
-        "recurso-especial-5-8-paginas"
+        "recurso-especial-5-8-paginas",
+        "onda-35",
+        "logo-tercini",
+        "logo-cabecalho-peticao",
+        "carregar-logo-fallback",
+        "logo-png-transparente",
+        "logo-multiplos-caminhos",
+        "assets-logo-readme",
+        "workspace-assets-inss",
+        "detecao-formato-imagem",
+        "alerta-logo-ausente"
       ]
     }
   ]

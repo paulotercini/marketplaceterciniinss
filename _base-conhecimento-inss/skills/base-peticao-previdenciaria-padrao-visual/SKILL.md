@@ -629,7 +629,66 @@ function parCorpo(opts) {
 **Importante.** Todos os parágrafos do header e do footer devem ter `spacing: { before: 0, after: 0, line: 240, lineRule: ... }` explícito. Sem isso, o estilo default do documento (com `before: 240, after: 240, line: 360`) sobrepõe e empurra o bloco do timbre para baixo, descolando "ADVOCACIA" de "PREVIDENCIÁRIA" e separando as linhas de identificação. Use `lineRule: "auto"` para os parágrafos do nome do escritório e `lineRule: "exact"` para "DR. PAULO ROBERTO TERCINI FILHO" e "OAB/SP 331.110", reproduzindo o padrão XML original.
 
 ```javascript
-const logoBuffer = fs.readFileSync(path.join(__dirname, 'assets', 'logo.jpg'));
+// Carrega logo com fallback em múltiplos caminhos e suporte a PNG/JPG.
+// Atualizado na Onda 35 (v1.25.0) para suportar PNG transparente.
+function carregarLogoTercini() {
+  const candidatos = [
+    'C:\\Users\\VAIO\\INSS\\assets\\logo-tercini.png',
+    'C:\\Users\\VAIO\\INSS\\assets\\logo-tercini.jpg',
+    'C:\\Users\\VAIO\\INSS\\assets\\logo.png',
+    'C:\\Users\\VAIO\\INSS\\assets\\logo.jpg',
+    path.join(__dirname, 'assets', 'logo-tercini.png'),
+    path.join(__dirname, 'assets', 'logo-tercini.jpg'),
+    path.join(__dirname, 'assets', 'logo.png'),
+    path.join(__dirname, 'assets', 'logo.jpg'),
+    './assets/logo-tercini.png',
+    './assets/logo-tercini.jpg',
+    './assets/logo.png',
+    './assets/logo.jpg'
+  ];
+  for (const candidato of candidatos) {
+    try {
+      if (fs.existsSync(candidato)) {
+        const buffer = fs.readFileSync(candidato);
+        const ext = path.extname(candidato).slice(1).toLowerCase();
+        const tipo = ext === 'jpeg' ? 'jpg' : ext;
+        return { buffer, tipo, caminho: candidato };
+      }
+    } catch (e) { /* continue */ }
+  }
+  return null;
+}
+
+const logo = carregarLogoTercini();
+if (!logo) {
+  console.warn('[ALERTA] Logo do escritório NÃO localizado em nenhum dos caminhos de busca. Petição será gerada SEM logo. Salve logo-tercini.png em C:\\Users\\VAIO\\INSS\\assets\\ e regenere.');
+}
+
+const logoCell = logo
+  ? new TableCell({
+      width: { size: 1668, type: WidthType.DXA },
+      borders: noBorders(),
+      margins: { top: 0, bottom: 0, left: 0, right: 0 },
+      children: [
+        new Paragraph({
+          alignment: AlignmentType.RIGHT,
+          spacing: { before: 0, after: 0 },
+          children: [
+            new ImageRun({
+              data: logo.buffer,
+              type: logo.tipo, // detectado dinamicamente: "png" ou "jpg"
+              transformation: { width: 83, height: 75 } // ≈ 791210x712470 EMU
+            })
+          ]
+        })
+      ]
+    })
+  : new TableCell({
+      width: { size: 1668, type: WidthType.DXA },
+      borders: noBorders(),
+      margins: { top: 0, bottom: 0, left: 0, right: 0 },
+      children: [new Paragraph({ spacing: { before: 0, after: 0 } })]
+    });
 
 const headerFirst = new Header({
   children: [
@@ -648,24 +707,7 @@ const headerFirst = new Header({
         new TableRow({
           height: { value: 993, rule: HeightRule.ATLEAST },
           children: [
-            new TableCell({
-              width: { size: 1668, type: WidthType.DXA },
-              borders: noBorders(),
-              margins: { top: 0, bottom: 0, left: 0, right: 0 },
-              children: [
-                new Paragraph({
-                  alignment: AlignmentType.RIGHT,
-                  spacing: { before: 0, after: 0 },
-                  children: [
-                    new ImageRun({
-                      data: logoBuffer,
-                      type: "jpg",
-                      transformation: { width: 83, height: 75 } // ≈ 791210x712470 EMU
-                    })
-                  ]
-                })
-              ]
-            }),
+            logoCell,
             new TableCell({
               width: { size: 7620, type: WidthType.DXA },
               borders: noBorders(),
@@ -874,9 +916,52 @@ python /mnt/skills/public/docx/scripts/office/validate.py /mnt/user-data/outputs
 
 ## Logo do Escritório
 
-O logo do escritório deve estar disponível no ambiente de geração. Se não estiver acessível, gerar a petição sem logo e alertar o usuário ao final do output para que ele insira manualmente. Padrão de localização recomendado: `assets/logo-tercini.jpg` no diretório de trabalho.
+### Caminhos de Busca (Atualizado Onda 35 - v1.25.0)
 
-Dimensões do logo no header (EMU): cx=791210, cy=712470. Em pixels a 96 DPI, aproximadamente 83×75. O parâmetro `transformation: { width: 83, height: 75 }` no `ImageRun` reproduz fielmente o tamanho original.
+A skill geradora procura o logo na ordem abaixo e usa o primeiro encontrado.
+
+1. `C:\Users\VAIO\INSS\assets\logo-tercini.png` (RECOMENDADO - sobrevive a atualizações do plugin).
+2. `C:\Users\VAIO\INSS\assets\logo-tercini.jpg`.
+3. `C:\Users\VAIO\INSS\assets\logo.png`.
+4. `C:\Users\VAIO\INSS\assets\logo.jpg`.
+5. `<diretório da skill>/assets/logo-tercini.png` (versionado no plugin).
+6. `<diretório da skill>/assets/logo-tercini.jpg`.
+7. `<diretório da skill>/assets/logo.png`.
+8. `<diretório da skill>/assets/logo.jpg`.
+9. `./assets/logo-tercini.png` (diretório de trabalho atual).
+10. `./assets/logo-tercini.jpg`.
+11. `./assets/logo.png`.
+12. `./assets/logo.jpg`.
+
+### Suporte a Formato
+
+A implementação detecta automaticamente o formato pela extensão. Suporta PNG (preferencial, com transparência), JPG e JPEG. O parâmetro `type` do `ImageRun` é definido dinamicamente conforme a extensão do arquivo encontrado.
+
+### Configuração Inicial pelo Usuário
+
+Caso a skill detecte que o logo não está disponível, o output da petição é gerado SEM logo e um alerta no console indica.
+
+```
+[ALERTA] Logo do escritório NÃO localizado em nenhum dos caminhos de busca. Petição será gerada SEM logo. Salve logo-tercini.png em C:\Users\VAIO\INSS\assets\ e regenere.
+```
+
+Para resolver, o usuário deve.
+
+1. Criar a pasta `C:\Users\VAIO\INSS\assets\` se não existir.
+2. Salvar o arquivo do logo do escritório nela como `logo-tercini.png`.
+3. Re-rodar a geração da petição.
+
+### Dimensões
+
+Dimensões do logo no header (EMU). cx=791210, cy=712470. Em pixels a 96 DPI, aproximadamente 83×75. O parâmetro `transformation: { width: 83, height: 75 }` no `ImageRun` reproduz fielmente o tamanho original.
+
+### Característica Visual do Logo
+
+O logo do escritório consiste em duas formas triangulares em tons de cinza (claro e escuro) sobrepostas em uma curva vermelha estilizando uma balança da justiça. PNG com fundo transparente para integração com cabeçalho timbrado.
+
+### Documentação Completa
+
+Ver `assets/README-LOGO.md` na pasta da skill para o procedimento completo de configuração e troubleshooting do logo.
 
 ---
 
