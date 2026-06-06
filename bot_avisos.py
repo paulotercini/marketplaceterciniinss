@@ -68,6 +68,7 @@ CATEGORIAS = [
     {
         "nome": "PERICIA_MEDICA",
         "padroes": [r"per[ií]cia(?!\s+social)", r"avalia[cç][aã]o m[eé]dica"],
+        "modo": "ANTES",
         "antecedencias": [7, 1],
         "exclui": [r"per[ií]cia social", r"avalia[cç][aã]o social"],
         "msg_template": (
@@ -94,104 +95,64 @@ CATEGORIAS = [
         ),
     },
     {
-        "nome": "AVALIACAO_SOCIAL",
-        "padroes": [r"avalia[cç][aã]o social", r"per[ií]cia social"],
-        "antecedencias": [7, 1],
-        "msg_template": (
-            "Olá {nome}, sua avaliação social no INSS está agendada para {data_evento} "
-            "às {hora}{local}. Leve documentos pessoais, comprovante de residência e "
-            "exames recentes. — Dr. Paulo Tercini"
-        ),
-        "msg_vespera": (
-            "{nome}, lembrete: avaliação social AMANHÃ ({data_evento}) às {hora}{local}. "
-            "Chegue 30 min antes. — Dr. Paulo"
-        ),
-    },
-    {
-        "nome": "AUDIENCIA_JUDICIAL",
-        "padroes": [r"audi[eê]ncia", r"sala virtual"],
-        "antecedencias": [7, 1],
-        "msg_template": (
-            "Olá {nome}, sua audiência judicial está agendada para {data_evento} "
-            "às {hora}. Combinaremos os últimos detalhes nesta semana. — Dr. Paulo Tercini"
-        ),
-        "msg_vespera": (
-            "{nome}, lembrete: audiência AMANHÃ ({data_evento}) às {hora}. — Dr. Paulo"
-        ),
-    },
-    {
-        "nome": "DCB_CESSACAO",
+        "nome": "POS_PROTOCOLO_JUDICIAL",
         "padroes": [
-            r"\bdcb\b", r"data de cessa[cç][aã]o", r"cessa[cç][aã]o em [\d/]+",
-            r"cessa[rç][aá] em", r"cessar em", r"prorrogado at[eé] [\d/]+",
-            r"prorrogado - cessa[cç][aã]o em",
-            r"b[eê]nef[ií]cio concedido (?:de|por) [\d/]+ a [\d/]+",
-            r"cessa[cç][aã]o do benef[ií]cio",
+            r"inicial distribu[ií]da", r"processo distribu[ií]do",
+            r"a[cç][aã]o distribu[ií]da", r"distribu[ií] a a[cç][aã]o",
+            r"distribu[ií] a inicial", r"protocol(?:ei|ada) a inicial",
+            r"protocolada a a[cç][aã]o", r"a[cç][aã]o protocolada",
+            r"distribu[ií]da a a[cç][aã]o",
         ],
-        "antecedencias": [30],
+        "modo": "DEPOIS",
+        "antecedencias": [0, 1, 2, 3],
+        "lista_inclui": ["judicial"],  # somente lista 👪 Judicial
         "msg_template": (
-            "Olá {nome}, seu benefício previdenciário será cessado em {data_evento}. "
-            "Para evitar interrupção, precisamos protocolar pedido de prorrogação. "
-            "Por favor, traga relatório médico atualizado nesta semana. — Dr. Paulo Tercini"
+            "PROCESSO DISTRIBUÍDO\n\n"
+            "{nome}, informamos que seu processo judicial foi devidamente "
+            "protocolado em {data_evento}.\n\n"
+            "Caso seja necessário apresentar novos documentos ou qualquer outra "
+            "providência, entraremos em contato.\n\n"
+            "Pedimos especial atenção ao golpe do falso advogado. O nosso contato "
+            "por WhatsApp é somente por esse número de celular. Não solicitamos "
+            "PIX/transferência para liberação de valores e não agendamos audiência "
+            "por vídeo ou telefone.\n\n"
+            "Qualquer dúvida, estamos à disposição."
         ),
     },
     {
-        "nome": "PRORROGACAO",
-        "padroes": [r"pedir prorroga", r"solicitar prorroga", r"renova[cç][aã]o em"],
-        "antecedencias": [15],
-        "msg_template": (
-            "Olá {nome}, está chegando o prazo para pedirmos prorrogação do seu benefício. "
-            "Pode trazer relatório médico atualizado nesta semana? — Dr. Paulo Tercini"
-        ),
-    },
-    {
-        "nome": "NOVO_PROTOCOLO",
+        "nome": "POS_PROTOCOLO_INSS",
         "padroes": [
-            r"solicitar o benef[ií]cio em", r"solicitar novo benef[ií]cio em",
-            r"poder[aá] (?:ser )?solicitad", r"abr(?:e|irá) (?:a )?janela",
-            r"solicitar benef[ií]cio a partir de",
+            r"protocol(?:ei|ado|ada)\s+(?:o\s+|a\s+)?benef[ií]cio",
+            r"protocol(?:ei|ado|ada)\s+(?:o\s+)?requerimento(?!\s+(?:de\s+)?extin)",
+            r"protocol(?:ei|ado|ada)\s+(?:o\s+)?pedido\s+(?:de\s+)?(?:aux[ií]lio|aposentad|bpc|loas|pens[aã]o|salário|benef[ií]cio)",
+            r"benef[ií]cio (?:solicitado|protocolado|requerido)",
+            r"requerimento protocolado",
+            r"solicitei o benef[ií]cio", r"requeri o benef[ií]cio",
+            r"deu entrada (?:o|no) (?:pedido|requerimento|benef[ií]cio)",
         ],
-        "antecedencias": [7],
+        "exclui": [r"extin[cç][aã]o", r"recurso", r"emenda", r"contestação", r"contestacao"],
+        "modo": "DEPOIS",
+        "antecedencias": [0, 1, 2, 3],
+        "lista_exclui": ["judicial"],  # NAO na lista Judicial
         "msg_template": (
-            "Olá {nome}, em {data_evento} abre a janela para solicitarmos seu novo benefício. "
-            "Está tudo certo com os documentos médicos? Posso agendar um horário para "
-            "revisarmos? — Dr. Paulo Tercini"
-        ),
-    },
-    {
-        "nome": "EXIGENCIA_INSS",
-        "padroes": [r"exig[eê]ncia", r"cumprir exig", r"prazo (?:para|de) exig"],
-        "antecedencias": [5, 1],
-        "msg_template": (
-            "Olá {nome}, há uma exigência do INSS no seu processo com prazo até {data_evento}. "
-            "Por favor, providencie/entregue o documento até essa data. — Dr. Paulo Tercini"
-        ),
-        "msg_vespera": (
-            "{nome}, ÚLTIMO DIA da exigência do INSS é AMANHÃ ({data_evento}). "
-            "Confirma que conseguiu providenciar? — Dr. Paulo"
-        ),
-    },
-    {
-        "nome": "PRAZO_RECURSAL",
-        "padroes": [r"prazo recursal", r"prazo para recurso", r"recorrer at[eé]"],
-        "antecedencias": [5],
-        "msg_template": (
-            "Olá {nome}, o prazo para interpor recurso administrativo termina em "
-            "{data_evento}. Estamos finalizando a peça. — Dr. Paulo Tercini"
-        ),
-    },
-    {
-        "nome": "ATESTADO_VENCE",
-        "padroes": [r"atestado vence", r"atestado v[aá]lido at[eé]"],
-        "antecedencias": [30],
-        "msg_template": (
-            "Olá {nome}, seu atestado médico que serve para o INSS vence em {data_evento}. "
-            "Marque consulta com seu médico para renovar nesta semana. — Dr. Paulo Tercini"
+            "PROTOCOLO REALIZADO\n\n"
+            "{nome}, informamos que seu pedido de benefício foi devidamente "
+            "protocolado no INSS em {data_evento}.\n\n"
+            "Caso seja necessário apresentar novos documentos ou qualquer outra "
+            "providência, entraremos em contato.\n\n"
+            "Caso receba ligação ou mensagem em nome do INSS, confirme conosco "
+            "antes de fornecer informações.\n\n"
+            "Qualquer dúvida, estamos à disposição."
         ),
     },
 ]
 
 RE_DATA = re.compile(r"(\d{2})/(\d{2})/(\d{4})")
+# Cabeçalho de entrada do escritório: "DD.MM.AAAA (P/A/D/I/M):" no início da linha
+RE_ENTRADA = re.compile(
+    r"^(\d{2})\.(\d{2})\.(\d{4})\s*\(([PADIM]+)\):(.+?)(?=\n\d{2}\.\d{2}\.\d{4}\s*\([PADIM]+\):|\Z)",
+    re.MULTILINE | re.DOTALL,
+)
 RE_HORA = re.compile(r"(?:as|às)\s*(\d{1,2})[:h](\d{2})?", re.I)
 RE_LOCAL = re.compile(r"(?:no\s+)?INSS\s+(?:de\s+)?([A-Z][A-Za-zÀ-ÿ\s]+?)(?:[.,;]|$)", re.I)
 RE_BOT_PREFIX = re.compile(r"^\d{2}\.\d{2}\.\d{4}\s*\(BOT[^)]*\):", re.M)
@@ -211,22 +172,35 @@ def extrair_local(ctx):
     return f" no INSS de {nome}" if nome else ""
 
 
-def classificar(ctx_low, full_low):
+def classificar(ctx_low, full_low, lista_nome, modo_alvo=None):
+    lista_low = lista_nome.lower()
     for cat in CATEGORIAS:
+        if modo_alvo and cat.get("modo", "ANTES") != modo_alvo: continue
         if any(re.search(p, ctx_low) for p in cat.get("exclui", [])): continue
+        if "lista_inclui" in cat:
+            if not any(s in lista_low for s in cat["lista_inclui"]): continue
+        if "lista_exclui" in cat:
+            if any(s in lista_low for s in cat["lista_exclui"]): continue
         if any(re.search(p, ctx_low) for p in cat["padroes"]):
             return cat
     return None
 
 
-def detectar_eventos(task):
-    """Retorna lista [(categoria, data_evento, ctx)] de eventos futuros nesta tarefa."""
+def detectar_eventos(task, lista_nome):
+    """Retorna lista [(categoria, data_evento, ctx)] de eventos nesta tarefa.
+
+    Considera eventos:
+      - FUTUROS (proximos 90 dias) para categorias modo='ANTES'
+      - PASSADOS (ultimos 30 dias) para categorias modo='DEPOIS'
+    """
     titulo = task.get("title", "") or ""
     body = (task.get("body", {}) or {}).get("content", "") or ""
     full = titulo + "\n" + body
     full_low = full.lower()
     eventos = []
-    vistos = set()  # evita contar a mesma data 2x
+    vistos = set()
+
+    # (1) EVENTOS FUTUROS (modo=ANTES): datas em formato DD/MM/AAAA no texto
     for m in RE_DATA.finditer(full):
         try:
             d = datetime(int(m.group(3)), int(m.group(2)), int(m.group(1))).date()
@@ -236,17 +210,45 @@ def detectar_eventos(task):
         if delta < 0 or delta > 90: continue
         ctx = full[max(0, m.start() - 150): m.end() + 50]
         ctx_low = ctx.lower()
-        cat = classificar(ctx_low, full_low)
+        cat = classificar(ctx_low, full_low, lista_nome, modo_alvo="ANTES")
         if not cat: continue
         key = (cat["nome"], d.isoformat())
         if key in vistos: continue
         vistos.add(key)
         eventos.append((cat, d, ctx))
+
+    # (2) EVENTOS PASSADOS (modo=DEPOIS): cabecalho de entrada do escritorio
+    #     "DD.MM.AAAA (P/A/D/I/M): conteudo da entrada"
+    #     A data eh a data da entrada; ctx eh o CONTEUDO da entrada apenas.
+    for m in RE_ENTRADA.finditer(body):  # so no body, nao no titulo
+        try:
+            d = datetime(int(m.group(3)), int(m.group(2)), int(m.group(1))).date()
+        except Exception:
+            continue
+        delta = (d - HOJE).days
+        if delta < -30 or delta > 0: continue
+        conteudo_entrada = m.group(5).strip()
+        ctx_low = conteudo_entrada.lower()
+        cat = classificar(ctx_low, full_low, lista_nome, modo_alvo="DEPOIS")
+        if not cat: continue
+        key = (cat["nome"], d.isoformat())
+        if key in vistos: continue
+        vistos.add(key)
+        eventos.append((cat, d, conteudo_entrada))
     return eventos
 
 
 def janela_e_msg(cat, dias_ate):
     """Retorna (template, tipo) onde tipo é 'VESP' ou 'AVISO', ou (None, None)."""
+    modo = cat.get("modo", "ANTES")
+    if modo == "DEPOIS":
+        if dias_ate > 0: return None, None
+        dias_passados = -dias_ate
+        max_ant = max(cat["antecedencias"])
+        if 0 <= dias_passados <= max_ant:
+            return cat["msg_template"], "AVISO"
+        return None, None
+    # modo ANTES
     antecedencias = cat["antecedencias"]
     if dias_ate <= 1 and 1 in antecedencias and "msg_vespera" in cat:
         return cat["msg_vespera"], "VESP"
@@ -301,7 +303,7 @@ def main():
         for t in tasks:
             if t.get("status") == "completed": continue
             n_proc += 1
-            eventos = detectar_eventos(t)
+            eventos = detectar_eventos(t, lst["displayName"])
             if not eventos: continue
             body = (t.get("body", {}) or {}).get("content", "") or ""
             titulo = t.get("title", "") or ""
