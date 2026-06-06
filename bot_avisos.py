@@ -69,22 +69,11 @@ CATEGORIAS = [
         "nome": "PERICIA_MEDICA",
         "padroes": [r"per[ií]cia(?!\s+social)", r"avalia[cç][aã]o m[eé]dica"],
         "modo": "ANTES",
-        "antecedencias": [7, 1],
+        "antecedencias": [7],  # somente 7 dias antes; vespera eh feita manualmente
         "exclui": [r"per[ií]cia social", r"avalia[cç][aã]o social"],
         "msg_template": (
             "LEMBRETE DE PERÍCIA\n\n"
             "{nome}, sua perícia médica do INSS está marcada para {data_evento} "
-            "às {hora}, na agência da [endereço completo].\n\n"
-            "Leve documento de identidade com foto, carteira de trabalho, os exames, "
-            "laudos e receitas originais, e as caixas dos medicamentos que você usa.\n\n"
-            "Chegue 15 minutos antes para a triagem.\n\n"
-            "O comparecimento é obrigatório. Se não puder ir nesse dia, avise nosso "
-            "escritório imediatamente para reagendarmos.\n\n"
-            "Qualquer dúvida, estamos à disposição."
-        ),
-        "msg_vespera": (
-            "LEMBRETE DE PERÍCIA — AMANHÃ\n\n"
-            "{nome}, sua perícia médica do INSS está marcada para AMANHÃ, {data_evento} "
             "às {hora}, na agência da [endereço completo].\n\n"
             "Leve documento de identidade com foto, carteira de trabalho, os exames, "
             "laudos e receitas originais, e as caixas dos medicamentos que você usa.\n\n"
