@@ -58,7 +58,9 @@ def main():
         for t in list_all_tasks(lst["id"]):
             body = (t.get("body", {}) or {}).get("content", "") or ""
             if not re_bot.search(body): continue
-            novo = re_bot.sub("", body).lstrip("\n")
+            novo = re_bot.sub("", body)
+            # Colapsa 3+ quebras em 2 (limpa rastros da remocao)
+            novo = re.sub(r"\n{3,}", "\n\n", novo).strip("\n")
             # também marca importance=normal (desfaz o "high")
             titulo = t.get("title", "")
             print(f"  Limpa: {titulo[:55]}")

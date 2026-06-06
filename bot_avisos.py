@@ -72,7 +72,7 @@ CATEGORIAS = [
         "antecedencias": [7],  # somente 7 dias antes; vespera eh feita manualmente
         "exclui": [r"per[ií]cia social", r"avalia[cç][aã]o social"],
         "msg_template": (
-            "LEMBRETE DE PERÍCIA\n\n"
+            "MENSAGEM AUTOMÁTICA - LEMBRETE DE PERÍCIA\n\n"
             "{nome}, sua perícia médica do INSS está marcada para {data_evento} "
             "às {hora}, {local}.\n\n"
             "Leve documento de identidade com foto, carteira de trabalho, os exames, "
@@ -96,7 +96,7 @@ CATEGORIAS = [
         "antecedencias": [0, 1, 2, 3],
         "lista_inclui": ["judicial"],  # somente lista 👪 Judicial
         "msg_template": (
-            "PROCESSO DISTRIBUÍDO\n\n"
+            "MENSAGEM AUTOMÁTICA - PROCESSO DISTRIBUÍDO\n\n"
             "{nome}, informamos que seu processo judicial foi devidamente "
             "protocolado em {data_evento}.\n\n"
             "Caso seja necessário apresentar novos documentos ou qualquer outra "
@@ -124,7 +124,7 @@ CATEGORIAS = [
         "antecedencias": [0, 1, 2, 3],
         "lista_exclui": ["judicial"],  # NAO na lista Judicial
         "msg_template": (
-            "PROTOCOLO REALIZADO\n\n"
+            "MENSAGEM AUTOMÁTICA - PROTOCOLO REALIZADO\n\n"
             "{nome}, informamos que seu pedido de benefício foi devidamente "
             "protocolado no INSS em {data_evento}.\n\n"
             "Caso seja necessário apresentar novos documentos ou qualquer outra "
@@ -142,6 +142,8 @@ RE_ENTRADA = re.compile(
     r"^(\d{2})\.(\d{2})\.(\d{4})\s*\(([PADIM]+)\):(.+?)(?=\n\d{2}\.\d{2}\.\d{4}\s*\([PADIM]+\):|\Z)",
     re.MULTILINE | re.DOTALL,
 )
+# Primeiro cabeçalho de andamento datado no body — delimita texto fixo (acima) e andamentos (abaixo)
+RE_FIRST_DATE = re.compile(r"^\d{2}\.\d{2}\.\d{4}\s*\([PADIM]+\):", re.MULTILINE)
 RE_HORA = re.compile(r"(?:as|às)\s*(\d{1,2})[:h](\d{2})?", re.I)
 RE_LOCAL = re.compile(r"(?:no\s+)?INSS\s+(?:de\s+)?([A-Z][A-Za-zÀ-ÿ\s]+?)(?:[.,;]|$)", re.I)
 RE_BOT_PREFIX = re.compile(r"^\d{2}\.\d{2}\.\d{4}\s*\(BOT[^)]*\):", re.M)
@@ -274,6 +276,26 @@ def ja_avisado(body, cat_nome, tipo, data_evento):
     return tag in body
 
 
+def inserir_avisos_no_body(body, novas_linhas):
+    """Insere os avisos ABAIXO do texto fixo (sem data) e ACIMA do primeiro
+    andamento datado. Se nao houver andamento datado, anexa no fim.
+
+    novas_linhas: lista de strings, cada uma um aviso completo com [/BOT].
+    """
+    adicao = "\n\n".join(novas_linhas)
+    m = RE_FIRST_DATE.search(body)
+    if not m:
+        # Sem andamentos datados — colocar no fim
+        if body.strip():
+            return body.rstrip() + "\n\n" + adicao
+        return adicao
+    fixo = body[: m.start()].rstrip()
+    andamentos = body[m.start():]
+    if fixo:
+        return fixo + "\n\n" + adicao + "\n\n" + andamentos
+    return adicao + "\n\n" + andamentos
+
+
 def patch_task(list_id, task_id, novo_body):
     return _req("PATCH", f"/me/todo/lists/{list_id}/tasks/{task_id}",
                 body={"body": {"content": novo_body, "contentType": "text"},
@@ -306,9 +328,8 @@ def main():
                 if ja_avisado(body, cat["nome"], tipo, data_evento): continue
                 novas_linhas.append((cat["nome"], data_evento, linha))
             if not novas_linhas: continue
-            # Prepend ao body
-            adicao = "\n".join(l[2] for l in novas_linhas)
-            novo_body = adicao + "\n\n" + body
+            # Insere ABAIXO do texto fixo (sem data) e ACIMA do primeiro andamento datado
+            novo_body = inserir_avisos_no_body(body, [l[2] for l in novas_linhas])
             n_avisos += len(novas_linhas)
             relatorio.append({
                 "tarefa": titulo[:60],
