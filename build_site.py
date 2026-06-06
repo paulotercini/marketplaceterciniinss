@@ -64,6 +64,8 @@ ICONS = {
     "pin":     '<path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
     "doc":     '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/>',
     "chat":    '<path d="M21 12a8 8 0 0 1-8 8H7l-4 3V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/>',
+    "alert":   '<path d="M12 3 2 21h20L12 3z"/><path d="M12 10v4"/><path d="M12 17.5v.3"/>',
+    "shield":  '<path d="M12 3l7 3v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/>',
 }
 
 def icon(name):
@@ -83,6 +85,16 @@ CATEGORY_IMG = {
     "Assistencial": "cat-assistencial.jpg",
     "Revisões e Planejamento": "cat-revisoes.jpg",
 }
+
+# Entrada por situação de vida (linguagem simples para o cliente leigo/idoso)
+SITUATIONS = [
+    ("clock",  "Quero me aposentar",            "Descubra a melhor regra e o melhor valor antes de dar entrada no pedido.",       "planejamento-previdenciario.html"),
+    ("alert",  "Meu pedido foi negado",         "O INSS negou ou cortou seu benefício? Em muitos casos é possível reverter.",     "contato.html"),
+    ("heart",  "Adoeci e não consigo trabalhar","Auxílio-doença ou aposentadoria por incapacidade, quando a saúde não permite.",  "auxilio-doenca.html"),
+    ("family", "Perdi um familiar",             "Pensão por morte para quem dependia financeiramente da pessoa.",                 "pensao-por-morte.html"),
+    ("shield", "Tenho deficiência ou baixa renda","BPC/LOAS: um salário mínimo para idosos e pessoas com deficiência.",            "bpc-loas.html"),
+    ("refresh","Já recebo e quero revisar",     "Será que o seu benefício pode estar com valor menor do que deveria?",            "revisoes-de-beneficio.html"),
+]
 
 # --------------------------------------------------------------------------
 # Helpers de render
@@ -239,7 +251,7 @@ def document(title, description, body, pages_by_cat, og_title=None):
   <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -344,16 +356,24 @@ def home_page(pages_by_cat):
         <div class="grid grid--3">{''.join(cards)}</div>
       </div>""")
 
+    sit_cards = "".join(f'''
+        <a class="card situation" href="{href}">
+          <span class="feature__ico">{icon(ic)}</span>
+          <h3>{esc(t)}</h3>
+          <p>{esc(d)}</p>
+          <span class="card__link">Ver como funciona</span>
+        </a>''' for ic, t, d, href in SITUATIONS)
+
     body = f"""
   <section class="hero">
     <div class="container hero__inner">
       <div class="hero__text">
-        <span class="hero__badge">Advocacia exclusivamente previdenciária · Monte Alto/SP e região</span>
-        <h1>Seus direitos junto ao INSS, tratados com técnica e atenção.</h1>
-        <p>Atuação focada em aposentadorias, benefícios por incapacidade, BPC/LOAS, pensões e revisões — na via administrativa e judicial, com análise individual e linguagem clara.</p>
+        <span class="hero__badge">Advocacia exclusivamente previdenciária</span>
+        <h1>Seus direitos no INSS, resolvidos sem complicação.</h1>
+        <p>Aposentadoria, auxílios, BPC, pensão e revisões explicados em linguagem simples — com atendimento humano em Monte Alto/SP e on-line para todo o Brasil.</p>
         <div class="hero__actions">
-          <a class="btn btn--primary" href="{WA_URL}" target="_blank" rel="noopener">Falar no WhatsApp</a>
-          <a class="btn btn--ghost" href="#servicos">Ver áreas de atuação</a>
+          <a class="btn btn--primary" href="{WA_URL}" target="_blank" rel="noopener">Quero saber se tenho direito</a>
+          <a class="btn btn--ghost" href="#situacoes">Ver a minha situação</a>
         </div>
         <div class="hero__meta">
           <span>{esc(OFFICE['oab'])}</span>
@@ -370,26 +390,38 @@ def home_page(pages_by_cat):
   <section class="section section--tight section--gray">
     <div class="container">
       <div class="features">
-        <div class="feature"><span class="feature__ico">{icon('pin')}</span><div><h3>Atendimento próximo</h3><p>Escritório em frente ao INSS de Monte Alto, com atendimento presencial e a distância.</p></div></div>
-        <div class="feature"><span class="feature__ico">{icon('doc')}</span><div><h3>Análise individual</h3><p>Cada benefício é estudado a partir do seu histórico de contribuições (CNIS) e da sua realidade.</p></div></div>
-        <div class="feature"><span class="feature__ico">{icon('chat')}</span><div><h3>Linguagem clara</h3><p>Explicamos cada etapa sem juridiquês, para você entender seus direitos com segurança.</p></div></div>
+        <div class="feature"><span class="feature__ico">{icon('shield')}</span><div><h3>Só de Previdenciário</h3><p>Cuidamos exclusivamente de casos do INSS. É o que fazemos todos os dias.</p></div></div>
+        <div class="feature"><span class="feature__ico">{icon('pin')}</span><div><h3>Pertinho de você</h3><p>Escritório em frente ao INSS de Monte Alto e atendimento on-line para todo o Brasil.</p></div></div>
+        <div class="feature"><span class="feature__ico">{icon('chat')}</span><div><h3>Sem juridiquês</h3><p>Explicamos tudo em palavras simples e acompanhamos você em cada passo.</p></div></div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="servicos">
+  <section class="section" id="situacoes">
+    <div class="container">
+      <div class="section__head">
+        <div class="eyebrow">Comece por aqui</div>
+        <h2>Em qual situação você está?</h2>
+        <p class="lead">Escolha a opção mais parecida com o seu caso. A gente te orienta com clareza, sem compromisso.</p>
+        <div class="rule"></div>
+      </div>
+      <div class="grid grid--3">{sit_cards}</div>
+    </div>
+  </section>
+
+  <section class="section section--gray" id="servicos">
     <div class="container">
       <div class="section__head">
         <div class="eyebrow">Áreas de atuação</div>
-        <h2>Em que podemos ajudar você</h2>
-        <p class="lead">Conteúdo organizado por tipo de benefício. Escolha o tema mais próximo da sua situação.</p>
+        <h2>Todos os benefícios que cuidamos</h2>
+        <p class="lead">Se preferir, veja por tipo de benefício. Toque para entender cada um em palavras simples.</p>
         <div class="rule"></div>
       </div>
       {''.join(cat_sections)}
     </div>
   </section>
 
-  <section class="section section--gray">
+  <section class="section">
     <div class="container">
       <div class="section__head">
         <div class="eyebrow">Como funciona</div>
@@ -404,13 +436,28 @@ def home_page(pages_by_cat):
     </div>
   </section>
 
+  <section class="section section--gray">
+    <div class="container">
+      <div class="section__head">
+        <div class="eyebrow">Fique atento</div>
+        <h2>Não desista do seu direito</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="features">
+        <div class="feature"><span class="feature__ico">{icon('alert')}</span><div><h3>O INSS negou?</h3><p>Um “não” do INSS nem sempre é o fim. Muitas decisões podem ser revistas por recurso ou na Justiça.</p></div></div>
+        <div class="feature"><span class="feature__ico">{icon('refresh')}</span><div><h3>Recebe só o mínimo?</h3><p>Alguns benefícios saem com valor menor do que o devido. Vale conferir se o seu pode aumentar.</p></div></div>
+        <div class="feature"><span class="feature__ico">{icon('clock')}</span><div><h3>Cuidado com os prazos</h3><p>Certos direitos têm prazo para serem pedidos ou revisados. Quanto antes você analisar, melhor.</p></div></div>
+      </div>
+    </div>
+  </section>
+
   <section class="cta-strip section">
     <div class="container">
       <div>
-        <h2>Não encontrou o seu caso?</h2>
-        <p>Fale com o escritório. A primeira conversa serve para entender sua situação e indicar o caminho.</p>
+        <h2>Ainda com dúvida? A gente te ajuda.</h2>
+        <p>A primeira conversa é para entender a sua situação e dizer, com sinceridade, se você tem direito.</p>
       </div>
-      <a class="btn btn--primary" href="{WA_URL}" target="_blank" rel="noopener">Falar no WhatsApp</a>
+      <a class="btn btn--primary" href="{WA_URL}" target="_blank" rel="noopener">Falar no WhatsApp agora</a>
     </div>
   </section>"""
     return document(
