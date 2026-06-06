@@ -71,15 +71,26 @@ CATEGORIAS = [
         "antecedencias": [7, 1],
         "exclui": [r"per[ií]cia social", r"avalia[cç][aã]o social"],
         "msg_template": (
-            "Olá {nome}, lembrete: sua perícia médica no INSS está agendada para "
-            "{data_evento} às {hora}{local}. Leve todos os exames, atestados e "
-            "relatórios médicos atualizados. Chegue 30 minutos antes. "
-            "Qualquer dúvida, estou à disposição. — Dr. Paulo Tercini"
+            "LEMBRETE DE PERÍCIA\n\n"
+            "{nome}, sua perícia médica do INSS está marcada para {data_evento} "
+            "às {hora}, na agência da [endereço completo].\n\n"
+            "Leve documento de identidade com foto, carteira de trabalho, os exames, "
+            "laudos e receitas originais, e as caixas dos medicamentos que você usa.\n\n"
+            "Chegue 15 minutos antes para a triagem.\n\n"
+            "O comparecimento é obrigatório. Se não puder ir nesse dia, avise nosso "
+            "escritório imediatamente para reagendarmos.\n\n"
+            "Qualquer dúvida, estamos à disposição."
         ),
         "msg_vespera": (
-            "{nome}, lembrete final: sua perícia médica é AMANHÃ ({data_evento}) "
-            "às {hora}{local}. Não esqueça documento com foto, exames e relatórios. "
-            "Chegue 30 min antes. — Dr. Paulo"
+            "LEMBRETE DE PERÍCIA — AMANHÃ\n\n"
+            "{nome}, sua perícia médica do INSS está marcada para AMANHÃ, {data_evento} "
+            "às {hora}, na agência da [endereço completo].\n\n"
+            "Leve documento de identidade com foto, carteira de trabalho, os exames, "
+            "laudos e receitas originais, e as caixas dos medicamentos que você usa.\n\n"
+            "Chegue 15 minutos antes para a triagem.\n\n"
+            "O comparecimento é obrigatório. Se não puder ir nesse dia, avise nosso "
+            "escritório imediatamente para reagendarmos.\n\n"
+            "Qualquer dúvida, estamos à disposição."
         ),
     },
     {
@@ -260,7 +271,8 @@ def montar_linha(nome, cat, data_evento, ctx):
     )
     hoje_str = HOJE.strftime("%d.%m.%Y")
     tag = f"({cat['nome']}-{tipo}-{data_evento.strftime('%d%m')})"
-    return f"{hoje_str} (BOT) {tag}: {msg}", tipo
+    # Marcador [/BOT] no fim para que bot_limpar possa cortar com segurança
+    return f"{hoje_str} (BOT) {tag}:\n{msg}\n[/BOT]", tipo
 
 
 def ja_avisado(body, cat_nome, tipo, data_evento):
