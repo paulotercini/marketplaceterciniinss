@@ -39,29 +39,35 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--categoria", default="", help="Categoria a limpar (vazio = todas)")
+    p.add_argument("--log-only", action="store_true",
+                   help="Remove apenas marcadores [BOT-LOG], preservando mensagens completas")
     args = p.parse_args()
 
-    # Regex: linha "DD.MM.AAAA (BOT) (CAT-TIPO-DDMM):" + mensagem ate
-    #   (a) marcador [/BOT] (novo formato), ou
-    #   (b) proxima entrada do escritorio "DD.MM.AAAA (P/A/D/I/M):" (legacy), ou
-    #   (c) fim do body
     cat_pat = args.categoria if args.categoria else r"[A-Z_]+"
-    pat = (
+
+    # (1) Regex para mensagem completa antiga: "(BOT) (CAT-TIPO-DDMM): ... [/BOT]"
+    pat_msg = (
         rf"^\d{{2}}\.\d{{2}}\.\d{{4}}\s*\(BOT\)\s*\({cat_pat}-[A-Z]+-\d{{4}}\):"
         r".*?"
         r"(?:\[/BOT\]\s*|(?=\n\n\d{2}\.\d{2}\.\d{4}\s*\([PADIM]+\):)|\Z)"
     )
-    re_bot = re.compile(pat, re.DOTALL | re.MULTILINE)
+    re_msg = re.compile(pat_msg, re.DOTALL | re.MULTILINE)
+
+    # (2) Regex para marcador minimalista: "[BOT-LOG] CAT-TIPO-DDMM em DD.MM.AAAA"
+    pat_log = rf"\[BOT-LOG\]\s*{cat_pat}-[A-Z]+-\d{{4}}\s+em\s+\d{{2}}\.\d{{2}}\.\d{{4}}"
+    re_log = re.compile(pat_log)
 
     n_limpas = 0
     for lst in list_lists():
         for t in list_all_tasks(lst["id"]):
             body = (t.get("body", {}) or {}).get("content", "") or ""
-            if not re_bot.search(body): continue
-            novo = re_bot.sub("", body)
-            # Colapsa 3+ quebras em 2 (limpa rastros da remocao)
+            tem_msg = (not args.log_only) and re_msg.search(body)
+            tem_log = re_log.search(body)
+            if not (tem_msg or tem_log): continue
+            novo = body
+            if tem_msg: novo = re_msg.sub("", novo)
+            if tem_log: novo = re_log.sub("", novo)
             novo = re.sub(r"\n{3,}", "\n\n", novo).strip("\n")
-            # também marca importance=normal (desfaz o "high")
             titulo = t.get("title", "")
             print(f"  Limpa: {titulo[:55]}")
             if not args.dry_run:
