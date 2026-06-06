@@ -414,16 +414,54 @@ def patch_body(list_id, task_id, novo_body):
 
 
 def enviar_email(subject, body_text):
-    """Envia email via Microsoft Graph /me/sendMail (escopo Mail.Send)."""
+    """Envia email via Microsoft Graph /me/sendMail (escopo Mail.Send).
+
+    Quando o envio eh de si para si (self-to-self), o Outlook auto-arquiva
+    o email na pasta 'Archive' em vez de entrega-lo na Caixa de Entrada.
+    Apos enviar, tentamos LOCALIZAR o email arquivado pelo assunto e
+    MOVE-LO para a Caixa de Entrada. Tambem marca importance=high.
+    """
     payload = {
         "message": {
             "subject": subject,
+            "importance": "high",
             "body": {"contentType": "Text", "content": body_text},
             "toRecipients": [{"emailAddress": {"address": EMAIL_DESTINO}}],
         },
         "saveToSentItems": True,
     }
     _req("POST", "/me/sendMail", body=payload)
+    # Espera ~5s para o Graph processar e indexar
+    time.sleep(5)
+    _mover_para_inbox(subject)
+
+
+def _mover_para_inbox(subject):
+    """Localiza email arquivado pelo assunto (nao lido) e move para Inbox."""
+    try:
+        # Pega o id da Inbox
+        folders = _req("GET", "/me/mailFolders?$top=50")
+        inbox_id = None
+        for f in folders.get("value", []):
+            if f.get("displayName") in ("Caixa de Entrada", "Inbox"):
+                inbox_id = f["id"]; break
+        if not inbox_id:
+            print("AVISO: Caixa de Entrada nao localizada — email pode estar em Archive")
+            return
+        # Busca o email pelo assunto exato
+        import urllib.parse as _up
+        q = _up.quote(f'"{subject}"')
+        r = _req("GET", f"/me/messages?$search={q}&$top=5&$select=id,subject,parentFolderId,isRead")
+        for m in r.get("value", []):
+            if m.get("subject") != subject: continue
+            if m.get("isRead"): continue  # pula a copia de Itens Enviados
+            if m.get("parentFolderId") == inbox_id: continue  # ja esta lah
+            _req("POST", f"/me/messages/{m['id']}/move", body={"destinationId": inbox_id})
+            print(f"✔ Email movido para Caixa de Entrada")
+            return
+        print("AVISO: email enviado nao localizado para mover (pode estar em Inbox ja)")
+    except Exception as e:
+        print(f"AVISO: falha ao mover email para Inbox: {e}")
 
 
 def main():
