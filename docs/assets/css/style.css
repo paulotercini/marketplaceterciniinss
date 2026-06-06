@@ -19,10 +19,10 @@
   --gray-300:   #cdd0d4;
   --gray-200:   #e5e7ea;
   --gray-100:   #f1f2f4;
-  --gray-50:    #f8f9fa;
+  --gray-50:    #f7f6f3;
   --white:      #ffffff;
 
-  --font-head:  "Libre Baskerville", Georgia, "Times New Roman", serif;
+  --font-head:  "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-body:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   --maxw: 1160px;
@@ -45,10 +45,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 { font-family: var(--font-head); color: var(--charcoal); line-height: 1.22; font-weight: 700; letter-spacing: .005em; }
-h1 { font-size: clamp(2.1rem, 5vw, 3.2rem); margin: 0 0 1rem; }
-h2 { font-size: clamp(1.6rem, 3.4vw, 2.3rem); margin: 0 0 1rem; }
-h3 { font-size: 1.3rem; margin: 0 0 .5rem; }
+h1, h2, h3, h4 { font-family: var(--font-head); color: var(--charcoal); line-height: 1.14; font-weight: 600; letter-spacing: 0; }
+h1 { font-size: clamp(2.6rem, 5.8vw, 4.1rem); margin: 0 0 1rem; }
+h2 { font-size: clamp(1.95rem, 3.9vw, 2.75rem); margin: 0 0 1rem; }
+h3 { font-size: 1.45rem; margin: 0 0 .5rem; }
 
 a { color: var(--red); text-decoration: none; transition: color .15s ease; }
 a:hover { color: var(--red-dark); }
@@ -97,7 +97,7 @@ p { margin: 0 0 1.1rem; }
 .brand { display: flex; align-items: center; gap: .7rem; }
 .brand__logo { width: 52px; height: 40px; display: grid; place-items: center; }
 .brand__logo img { width: 100%; height: 100%; object-fit: contain; }
-.brand__name { font-family: var(--font-head); font-weight: 700; color: var(--charcoal); font-size: 1.18rem; letter-spacing: -.01em; line-height: 1; }
+.brand__name { font-family: var(--font-head); font-weight: 700; color: var(--charcoal); font-size: 1.45rem; letter-spacing: 0; line-height: 1; }
 
 .nav__links { display: flex; align-items: center; gap: .15rem; list-style: none; margin: 0; padding: 0; }
 .nav__links > li { position: relative; }
@@ -315,7 +315,7 @@ body { font-size: 1.02rem; }
   background-size: 22px 22px;
 }
 .hero__inner { position: relative; z-index: 1; padding: 5.5rem 0; }
-.hero h1 { font-size: clamp(2.3rem, 5.2vw, 3.6rem); }
+.hero h1 { font-size: clamp(2.9rem, 6.2vw, 4.6rem); }
 .hero__meta { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin-top: 1.8rem; color: rgba(255,255,255,.72); font-size: .9rem; }
 .hero__meta span { display: inline-flex; align-items: center; gap: .5rem; }
 .hero__meta span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--red); }
@@ -336,4 +336,23 @@ body.reveal-on .reveal { opacity: 0; transform: translateY(20px); }
 .reveal.is-visible { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   body.reveal-on .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+}
+
+/* =========================================================================
+   Fotos (herói, banners de categoria, páginas internas)
+   ========================================================================= */
+.hero__photo { border-radius: 18px; overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,.42); aspect-ratio: 4 / 3; border: 1px solid rgba(255,255,255,.12); }
+.hero__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.cat-banner { position: relative; border-radius: var(--radius); overflow: hidden; background-size: cover; background-position: center; margin-bottom: 1.8rem; box-shadow: var(--shadow); }
+.cat-banner::before { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(31,33,37,.94) 0%, rgba(31,33,37,.72) 50%, rgba(168,42,43,.5) 130%); }
+.cat-banner__inner { position: relative; display: flex; gap: 1.1rem; align-items: center; padding: 1.7rem 1.9rem; min-height: 150px; }
+.cat-banner__inner h2 { color: #fff; margin: 0 0 .3rem; }
+.cat-banner__inner p { color: rgba(255,255,255,.9); margin: 0; max-width: 62ch; }
+.cat-banner .cat-block__ico { background: rgba(255,255,255,.16); color: #fff; }
+
+.page-hero { background-size: cover; background-position: center; }
+
+@media (max-width: 700px) {
+  .cat-banner__inner { flex-direction: column; align-items: flex-start; }
 }
