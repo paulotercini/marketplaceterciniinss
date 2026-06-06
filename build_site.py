@@ -77,6 +77,13 @@ CATEGORY_ICON = {
     "Revisões e Planejamento": "refresh",
 }
 
+CATEGORY_IMG = {
+    "Aposentadorias": "cat-aposentadorias.jpg",
+    "Incapacidade": "cat-incapacidade.jpg",
+    "Assistencial": "cat-assistencial.jpg",
+    "Revisões e Planejamento": "cat-revisoes.jpg",
+}
+
 # --------------------------------------------------------------------------
 # Helpers de render
 # --------------------------------------------------------------------------
@@ -232,7 +239,7 @@ def document(title, description, body, pages_by_cat, og_title=None):
   <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -274,7 +281,7 @@ def service_page(page, pages_by_cat):
                     for i, p in enumerate(page.get("intro", [])))
 
     body = f"""
-  <section class="page-hero">
+  <section class="page-hero" style="background-image: linear-gradient(135deg, rgba(31,33,37,.93), rgba(43,45,49,.82)), url('assets/img/{CATEGORY_IMG.get(page['category'],'')}');">
     <div class="container">
       <div class="breadcrumb"><a href="index.html">Início</a> › {esc(page['category'])} › {esc(page['title'])}</div>
       <h1>{esc(page['title'])}</h1>
@@ -325,11 +332,15 @@ def home_page(pages_by_cat):
         </a>""")
         cat_sections.append(f"""
       <div class="cat-block">
-        <div class="cat-block__head">
-          <span class="cat-block__ico">{icon(CATEGORY_ICON.get(cat,''))}</span>
-          <h2>{esc(cat)}</h2>
+        <div class="cat-banner" style="background-image:url('assets/img/{CATEGORY_IMG.get(cat,'')}')">
+          <div class="cat-banner__inner">
+            <span class="cat-block__ico">{icon(CATEGORY_ICON.get(cat,''))}</span>
+            <div>
+              <h2>{esc(cat)}</h2>
+              <p>{esc(CATEGORY_INTRO.get(cat,''))}</p>
+            </div>
+          </div>
         </div>
-        <p class="cat-block__desc">{esc(CATEGORY_INTRO.get(cat,''))}</p>
         <div class="grid grid--3">{''.join(cards)}</div>
       </div>""")
 
@@ -351,7 +362,7 @@ def home_page(pages_by_cat):
         </div>
       </div>
       <div class="hero__emblem">
-        <div class="seal"><img src="assets/img/logo.svg" alt="Advocacia Previdenciária"></div>
+        <div class="hero__photo"><img src="assets/img/hero.jpg" alt="Atendimento jurídico previdenciário" loading="lazy"></div>
       </div>
     </div>
   </section>
@@ -413,7 +424,7 @@ def home_page(pages_by_cat):
 # --------------------------------------------------------------------------
 def about_page(pages_by_cat):
     body = f"""
-  <section class="page-hero">
+  <section class="page-hero" style="background-image: linear-gradient(135deg, rgba(31,33,37,.93), rgba(43,45,49,.82)), url('assets/img/about.jpg');">
     <div class="container">
       <div class="breadcrumb"><a href="index.html">Início</a> › O Escritório</div>
       <h1>O Escritório</h1>
