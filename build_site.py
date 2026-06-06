@@ -251,7 +251,7 @@ def document(title, description, body, pages_by_cat, og_title=None):
   <link rel="icon" type="image/svg+xml" href="assets/img/logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
