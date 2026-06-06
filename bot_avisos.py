@@ -74,7 +74,7 @@ CATEGORIAS = [
         "msg_template": (
             "LEMBRETE DE PERÍCIA\n\n"
             "{nome}, sua perícia médica do INSS está marcada para {data_evento} "
-            "às {hora}, na agência da [endereço completo].\n\n"
+            "às {hora}, {local}.\n\n"
             "Leve documento de identidade com foto, carteira de trabalho, os exames, "
             "laudos e receitas originais, e as caixas dos medicamentos que você usa.\n\n"
             "Chegue 15 minutos antes para a triagem.\n\n"
@@ -156,9 +156,11 @@ def extrair_hora(ctx):
 
 def extrair_local(ctx):
     m = RE_LOCAL.search(ctx)
-    if not m: return ""
+    if not m: return "[local da perícia]"
     nome = re.split(r"\s{2,}|[,.]", m.group(1).strip())[0].strip()
-    return f" no INSS de {nome}" if nome else ""
+    if not nome: return "[local da perícia]"
+    # As pericias da regiao do escritorio sao no estado de SP
+    return f"no INSS de {nome}-SP"
 
 
 def classificar(ctx_low, full_low, lista_nome, modo_alvo=None):
