@@ -1,0 +1,67 @@
+name: Portal de Andamentos (rebuild a cada 30min)
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild-portal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: portal
+      cancel-in-progress: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Restaurar graph_tokens.json do Secret
+        env:
+          GRAPH_TOKENS_JSON: ${{ secrets.GRAPH_TOKENS_JSON }}
+        run: |
+          if [ -z "$GRAPH_TOKENS_JSON" ]; then
+            echo "ERRO: secret GRAPH_TOKENS_JSON nao configurado"
+            exit 1
+          fi
+          printf '%s' "$GRAPH_TOKENS_JSON" > graph_tokens.json
+          python3 -c "import json; json.load(open('graph_tokens.json'))"
+
+      - name: Renovar access_token
+        run: python3 graph_refresh.py
+
+      - name: Gerar JSONs do portal
+        run: python3 portal/gerar_portal.py
+
+      - name: Persistir graph_tokens.json no Secret
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "AVISO: GH_PAT nao configurado; refresh_token nao sera atualizado"
+            exit 0
+          fi
+          gh secret set GRAPH_TOKENS_JSON \
+            --body "$(cat graph_tokens.json)" \
+            --repo "${{ github.repository }}"
+
+      - name: Limpar arquivo sensivel
+        if: always()
+        run: rm -f graph_tokens.json graph_device.json || true
+
+      - name: Publicar em gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./portal/site
+          publish_branch: gh-pages
+          commit_message: "portal: rebuild ${{ github.run_number }}"
