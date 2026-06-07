@@ -98,9 +98,24 @@ function renderProcesso(p) {
     wrap.appendChild(loc);
   }
 
-  const status = el("div", "status-box",
-    "<strong>Situação:</strong> " + esc(p.status));
-  wrap.appendChild(status);
+  // Último andamento — card grande em destaque
+  if (p.timeline && p.timeline.length > 0) {
+    const ult = p.timeline[0];
+    const card = el("div", "ultimo-andamento");
+    card.appendChild(el("div", "ua-label", "ÚLTIMO ANDAMENTO"));
+    const linha = el("div", "ua-linha");
+    linha.appendChild(el("span", "ua-data", ult.data_br));
+    linha.appendChild(el("span", "ua-tipo", esc(ult.tipo)));
+    card.appendChild(linha);
+    if (ult.descricao && ult.descricao.toLowerCase() !== ult.tipo.toLowerCase()) {
+      card.appendChild(el("div", "ua-desc", esc(ult.descricao)));
+    }
+    wrap.appendChild(card);
+  } else if (p.status) {
+    const status = el("div", "status-box",
+      "<strong>Situação:</strong> " + esc(p.status));
+    wrap.appendChild(status);
+  }
 
   if (p.notas_publicas && p.notas_publicas.length) {
     wrap.appendChild(el("div", "subt", "Comunicados"));
@@ -114,10 +129,10 @@ function renderProcesso(p) {
     wrap.appendChild(cont);
   }
 
-  if (p.timeline && p.timeline.length) {
-    wrap.appendChild(el("div", "subt", "Historico"));
+  if (p.timeline && p.timeline.length > 1) {
+    wrap.appendChild(el("div", "subt", "Andamentos anteriores"));
     const tl = el("div", "timeline");
-    p.timeline.slice(0, 8).forEach((m) => {
+    p.timeline.slice(1, 9).forEach((m) => {
       const it = el("div", "item");
       it.appendChild(el("div", "data", m.data_br));
       it.appendChild(el("div", "tipo", esc(m.tipo)));
