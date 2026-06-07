@@ -136,13 +136,16 @@ button.link:hover { background: transparent; color: var(--azul); }
   font-weight: 600;
   margin-bottom: 0.85rem;
 }
+.processo .loc-box,
 .processo .status-box {
   background: #f0f7ff;
   border-left: 4px solid var(--azul-claro);
   padding: 0.85rem 1rem;
   border-radius: 6px;
-  margin: 0.85rem 0;
+  margin: 0.5rem 0;
 }
+.processo .loc-box { background: #ecfdf5; border-left-color: var(--ok); }
+.processo .loc-box strong { color: var(--ok); }
 .processo .status-box strong { color: var(--azul); }
 
 .proximo {
