@@ -92,14 +92,10 @@ def head(title, desc, extra_css):
 <body>"""
 
 def header(pages_by_cat):
-    megas = ""
+    cols = ""
     for cat in CATEGORY_ORDER:
-        links = "".join(f'<a href="{p["slug"]}.html"><b>{esc(p["nav_label"])}</b></a>' for p in pages_by_cat.get(cat, []))
-        megas += f"""
-      <div class="nav-item">
-        <button type="button">{esc(cat)} {CARET}</button>
-        <div class="mega">{links}</div>
-      </div>"""
+        links = "".join(f'<a href="{p["slug"]}.html">{esc(p["nav_label"])}</a>' for p in pages_by_cat.get(cat, []))
+        cols += f'<div class="mcol"><h6>{esc(cat)}</h6>{links}</div>'
     return f"""
 <header class="site-head" id="head">
   <div class="wrap head-row">
@@ -108,8 +104,20 @@ def header(pages_by_cat):
       <span class="bk"><b>Advocacia Previdenciária</b><span>Paulo Roberto Tercini Filho</span></span>
     </a>
     <nav class="nav" aria-label="Principal">
-      <div class="nav-item"><a href="index.html">Início</a></div>{megas}
-      <div class="nav-item"><a href="sobre.html">O Escritório</a></div>
+      <div class="nav-item"><a href="index.html">Início</a></div>
+      <div class="nav-item">
+        <button type="button">Escritório {CARET}</button>
+        <div class="mega">
+          <a href="sobre.html#sec1"><b>Quem somos</b></a>
+          <a href="sobre.html#sec2"><b>Como trabalhamos</b></a>
+          <a href="sobre.html#sec3"><b>Áreas de atuação</b></a>
+          <a href="contato.html"><b>Localização</b></a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <button type="button">Benefícios {CARET}</button>
+        <div class="mega mega-wide">{cols}</div>
+      </div>
       <div class="nav-item"><a href="contato.html">Contato</a></div>
     </nav>
     <div class="head-cta">
@@ -319,7 +327,7 @@ def home_page(pages_by_cat):
   </div>
 </section>
 
-<section class="section areas">
+<section class="section areas" id="servicos">
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <span class="eyebrow">Áreas de atuação</span>
