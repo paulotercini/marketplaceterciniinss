@@ -47,13 +47,34 @@ LISTAS_EXCLUIR = {
     "Conceitos de Direito Previdenciário", "Capital 2", "Arkad",
     "🎓 Fluxo de Trabalho", "🔧 Operacional", "🛄 Mensagens",
     "💵 Pagamentos", "💡 Vídeos Explicativos",
-    "🔎 Leilões", "🖥 Conselho de Recursos",
+    "🔎 Leilões",
     "Clientes Agroambiental", "Clientes Encerrados", "Audiências",
     "Clientes em Andamento", "💫 Willian Braga Marcussi",
     "Lista sem título", "Lista sem título 1", "Lista sem título 2",
     "Lista sem título (1)", "Lista sem título 1 (1)",
     "Izildo Aparecido Machado Fumes",
 }
+
+# Mapeia o nome da lista do To Do -> rotulo "Localizacao" que vai pro cliente.
+# Substring matching, case-insensitive, primeira chave que casa ganha.
+LOCALIZACAO_POR_LISTA = [
+    ("conselho de recursos", "Conselho de Recursos"),
+    ("judicial",             "Justiça (Judicial)"),
+    ("tarefas com prazo",    "Para apresentação de petição"),
+    ("inss",                 "INSS"),
+    ("escritório",           "INSS"),
+    ("escritorio",           "INSS"),
+    ("aposentadorias",       "INSS"),
+    ("marcos",               "Justiça (Judicial)"),
+]
+
+
+def localizacao_da_lista(nome_lista):
+    n = (nome_lista or "").lower()
+    for chave, rotulo in LOCALIZACAO_POR_LISTA:
+        if chave in n:
+            return rotulo
+    return "Em andamento"
 
 # Regex
 RE_CPF_TITULO = re.compile(r"#\s*(\d{11})\b")
@@ -83,23 +104,101 @@ PAD_JUDICIAL = [
 ]
 PAD_INSS_PROT = [
     r"protocol(?:ei|ado|ada)\s+(?:o\s+|a\s+)?benef[ií]cio",
-    r"protocol(?:ei|ado|ada)\s+(?:o\s+)?requerimento(?!\s+(?:de\s+)?extin)",
+    r"protocol(?:ei|ado|ada)\s+(?:o\s+)?requerimento\s+(?:de\s+)?(?:aux[ií]lio|aposentad|bpc|loas|pens[aã]o|sal[aá]rio|benef[ií]cio)",
     r"benef[ií]cio (?:solicitado|protocolado|requerido)",
-    r"requerimento protocolado",
     r"solicitei o benef[ií]cio",
     r"deu entrada (?:o|no) (?:pedido|requerimento|benef[ií]cio)",
+]
+# Exclui contexto de recurso administrativo (CRPS/JR/CAJ/e-SISREC) — la o
+# "requerimento protocolado" se refere a tarefa do recurso, nao ao beneficio
+EXC_INSS_PROT = [
+    r"e-?sisrec", r"\bCRPS\b", r"\bJR\b", r"\bCAJ\b",
+    r"c[aâ]mara de julgamento", r"junta de recursos",
+    r"conselho de recursos", r"recurso (?:especial|ordin[aá]rio|inominado)",
 ]
 PAD_DECISAO = [
     r"benef[ií]cio (?:deferido|concedido|implantado)",
     r"decis[aã]o favor[aá]vel", r"sentença procedente",
     r"a[cç][aã]o julgada procedente",
+    r"deu provimento (?:ao recurso|integral)",
+    r"recurso provido", r"acolheu (?:o\s+)?recurso",
 ]
 PAD_INDEFERIMENTO = [
     r"benef[ií]cio (?:indeferido|negado)", r"decis[aã]o desfavor[aá]vel",
     r"sentença improcedente", r"a[cç][aã]o julgada improcedente",
+    r"recurso (?:negado|n[aã]o conhecido|improvido)",
+    r"negou provimento", r"n[aã]o (?:foi )?(?:dado|deu) provimento",
 ]
 PAD_PRORROGACAO = [r"prorrog[aá]", r"prorroga[cç][aã]o"]
 PAD_DCB = [r"\bDCB\b", r"cessa[cç][aã]o.*benef[ií]cio", r"data de cessa[cç][aã]o"]
+
+# --- Recurso administrativo (CRPS / JR / CAJ / e-SISREC) ---
+PAD_RECURSO_PROT = [
+    r"recurso (?:especial|ordin[aá]rio|inominado)\s+(?:protocolado|interposto)",
+    r"protocol(?:ei|ado|ada)\s+(?:o\s+)?recurso",
+    r"interpus (?:o\s+)?recurso",
+    r"recurso interposto",
+    # so casa "requerimento protocolado" se houver contexto de recurso adm
+    r"requerimento protocolado.*(?:tarefa|e-?sisrec|crps|cajul|c[aâ]mara)",
+]
+PAD_EMBARGOS = [
+    r"embargos de declara[cç][aã]o",
+    r"interpus embargos", r"apresentei embargos", r"opus embargos",
+    r"protocolei embargos",
+]
+PAD_SESSAO_JULGAMENTO = [
+    r"sess[aã]o de julgamento",
+    r"agendou julgamento", r"julgamento (?:ordin[aá]ri[oa]|monocr[aá]tic[oa])",
+    r"pauta de julgamento", r"incluido em pauta",
+]
+PAD_ENCAMINHAMENTO_ADM = [
+    r"encaminhamento\s*(?:-|\()?\s*(?:CRPS|JR|CAJ|\d+\s*ª\s*(?:JR|CAJ))",
+    r"distribu[ií]do ao conselheiro",
+    r"distribu[ií]do (?:a|para)\s+conselheir",
+    r"distribu[ií]\w*\s+ao relator",
+]
+PAD_AGUARDANDO = [
+    r"aguardando\s+(?:sess[aã]o|julgamento|an[aá]lise)",
+    r"em an[aá]lise\s+(?:no\s+)?(?:inss|crps|jr|caj)",
+    r"situa[cç][aã]o.*aguardando",
+]
+PAD_SEM_MOVIMENTACAO = [
+    r"n[aã]o houve movimenta[cç][aã]o",
+    r"sem movimenta[cç][aã]o",
+    r"sem andamento",
+]
+PAD_EXIGENCIA = [
+    r"exig[eê]ncia(?:s)?\s+(?:do\s+)?inss",
+    r"intima[cç][aã]o.*exig[eê]ncia",
+    r"cumprir exig[eê]ncia",
+]
+PAD_DOCS_RECEBIDOS = [
+    r"documentos recebidos",
+    r"recebi os documentos",
+    r"cliente trouxe os documentos",
+]
+
+# Remove ruido interno do final do conteudo (ex: "(P): Ok.", "(A): ok!", "(M): ok")
+RE_RESPOSTA_INTERNA = re.compile(
+    r"\(\s*[PADIM]\s*\)\s*:\s*\w{1,5}[.!]?\s*$", re.MULTILINE
+)
+# Remove andamentos automaticos do e-SISREC / PAT (verbosos e tecnicos)
+RE_LINHAS_RUIDO = re.compile(
+    r"^(?:"
+    r"protocolo\s+\([^)]+\)\s*:.*|"
+    r"cliente\s+\(senha\).*|"
+    r"enviado em \d{2}/\d{2}/\d{4}.*|"
+    r"\d{2}/\d{2}/\d{4}\s+\d{2}:\d{2}:\d{2}.*|"
+    r"atualiza[cç][aã]o e-?sisrec.*|"
+    r"situa[cç][aã]o do processo\s*:.*|"
+    r"[oó]rg[aã]o\s*:.*|"
+    r"localiza[cç][aã]o\s*:.*|"
+    r"data\s+de\s+entrada\s+do\s+requerimento.*"
+    r")$",
+    re.MULTILINE | re.IGNORECASE,
+)
+# "Ultimo evento: X" -> "X" (mantem o texto util sem o cabecalho)
+RE_ULTIMO_EVENTO = re.compile(r"[uú]ltimo\s+(?:evento|andamento)\s*:\s*", re.IGNORECASE)
 
 
 def normalizar_cpf(s):
@@ -177,6 +276,8 @@ def extrair_proximo_evento(titulo, body):
             tipo = "Avaliacao social"
         elif hit(ctx_low, PAD_AUDIENCIA):
             tipo = "Audiencia"
+        elif hit(ctx_low, PAD_SESSAO_JULGAMENTO):
+            tipo = "Sessao de julgamento"
         if not tipo:
             continue
         hora = ""
@@ -199,6 +300,53 @@ def extrair_proximo_evento(titulo, body):
     return sorted(candidatos, key=lambda x: x["data"])[0]
 
 
+def limpar_descricao(conteudo):
+    """Devolve uma descricao curta e limpa para mostrar ao cliente."""
+    txt = RE_BOT_LOG.sub("", conteudo)
+    txt = RE_RESPOSTA_INTERNA.sub("", txt)
+    txt = RE_LINHAS_RUIDO.sub("", txt)
+    # "Último evento: Sessão X" -> "Sessão X"
+    txt = RE_ULTIMO_EVENTO.sub("", txt)
+    # colapsa multiplas quebras / espacos
+    txt = re.sub(r"\n+", " ", txt)
+    txt = re.sub(r"\s{2,}", " ", txt).strip()
+    # primeira frase ate 240 chars
+    primeira = re.split(r"(?<=[.!?])\s+", txt)[0][:240]
+    return primeira.strip()
+
+
+# (categoria, padroes, exclusoes) — avaliados em ordem; o primeiro hit ganha.
+# Decisao vem ANTES de Embargos: "Recurso negado. Verificar embargos" eh decisao.
+TIMELINE_CATEGORIAS = [
+    ("Ação judicial protocolada", PAD_JUDICIAL, None),
+    ("Decisão favorável", PAD_DECISAO, None),
+    ("Decisão desfavorável", PAD_INDEFERIMENTO, None),
+    ("Embargos de declaração", PAD_EMBARGOS, None),
+    ("Sessão de julgamento agendada", PAD_SESSAO_JULGAMENTO, None),
+    ("Recurso administrativo protocolado", PAD_RECURSO_PROT, None),
+    ("Encaminhamento administrativo", PAD_ENCAMINHAMENTO_ADM, None),
+    ("Cessação programada (DCB)", PAD_DCB, None),
+    ("Prorrogação", PAD_PRORROGACAO, None),
+    ("Perícia médica", PAD_PERICIA, EXC_PERICIA),
+    ("Avaliação social", PAD_SOCIAL, None),
+    ("Audiência", PAD_AUDIENCIA, None),
+    ("Exigência do INSS", PAD_EXIGENCIA, None),
+    ("Documentos recebidos", PAD_DOCS_RECEBIDOS, None),
+    ("Benefício requerido ao INSS", PAD_INSS_PROT, EXC_INSS_PROT),
+    ("Aguardando andamento", PAD_AGUARDANDO, None),
+    ("Sem movimentação", PAD_SEM_MOVIMENTACAO, None),
+]
+
+
+def categorizar_entrada(conteudo):
+    """Retorna o nome da categoria ou None."""
+    ctx_low = conteudo.lower()
+    for nome, padroes, exclui in TIMELINE_CATEGORIAS:
+        if hit(ctx_low, padroes, exclui):
+            return nome
+    return None
+
+
 def extrair_timeline(body):
     """Le entradas DD.MM.AAAA (X): e categoriza marcos relevantes.
 
@@ -210,39 +358,17 @@ def extrair_timeline(body):
         if not d:
             continue
         conteudo = m.group(5).strip()
-        # remove [BOT-LOG] e marcadores internos
         conteudo = RE_BOT_LOG.sub("", conteudo).strip()
         if not conteudo:
             continue
-        ctx_low = conteudo.lower()
-        tipo = None
-        if hit(ctx_low, PAD_JUDICIAL):
-            tipo = "Acao judicial protocolada"
-        elif hit(ctx_low, PAD_INSS_PROT):
-            tipo = "Beneficio requerido ao INSS"
-        elif hit(ctx_low, PAD_DECISAO):
-            tipo = "Decisao favoravel"
-        elif hit(ctx_low, PAD_INDEFERIMENTO):
-            tipo = "Decisao desfavoravel"
-        elif hit(ctx_low, PAD_PRORROGACAO):
-            tipo = "Prorrogacao"
-        elif hit(ctx_low, PAD_DCB):
-            tipo = "Cessacao programada (DCB)"
-        elif hit(ctx_low, PAD_PERICIA, EXC_PERICIA):
-            tipo = "Pericia medica"
-        elif hit(ctx_low, PAD_SOCIAL):
-            tipo = "Avaliacao social"
-        elif hit(ctx_low, PAD_AUDIENCIA):
-            tipo = "Audiencia"
+        tipo = categorizar_entrada(conteudo)
         if not tipo:
             continue
-        # primeira frase (max 200 chars)
-        primeira = re.split(r"(?<=[.!?])\s+", conteudo)[0][:200]
         timeline.append({
             "data": d.isoformat(),
             "data_br": d.strftime("%d/%m/%Y"),
             "tipo": tipo,
-            "descricao": primeira,
+            "descricao": limpar_descricao(conteudo),
         })
     # dedupe por (data, tipo)
     visto = set(); out = []
@@ -275,18 +401,24 @@ def extrair_notas_publicas(body):
     return sorted(notas, key=lambda x: x["data"], reverse=True)
 
 
-def status_atual(titulo, body, proximo, timeline):
-    """Gera frase de status curta a partir do que detectamos."""
+def status_atual(proximo, timeline):
+    """Gera frase de status curta deixando claro o que e data do evento e
+    o que e data da ultima atualizacao."""
     if proximo:
         d = datetime.fromisoformat(proximo["data"]).date()
         dias = (d - HOJE).days
-        quando = "hoje" if dias == 0 else f"em {dias} dia{'s' if dias != 1 else ''}"
-        h = f" as {proximo['hora']}" if proximo["hora"] else ""
-        l = f" ({proximo['local']})" if proximo["local"] else ""
-        return f"{proximo['tipo']} agendada {quando}: {proximo['data_br']}{h}{l}"
+        if dias == 0:
+            quando = "hoje"
+        elif dias == 1:
+            quando = "amanhã"
+        else:
+            quando = f"em {dias} dias"
+        h = f" às {proximo['hora']}" if proximo["hora"] else ""
+        l = f" — {proximo['local']}" if proximo["local"] else ""
+        return f"{proximo['tipo']} marcada para {proximo['data_br']} ({quando}){h}{l}"
     if timeline:
         m = timeline[0]
-        return f"{m['tipo']} em {m['data_br']}"
+        return f"Última atualização em {m['data_br']}: {m['tipo']}"
     return "Em andamento"
 
 
@@ -311,8 +443,9 @@ def processar_tarefa(t, lista_nome):
         "dn": dn,
         "nome": nome_cliente(titulo),
         "lista": lista_nome,
+        "localizacao": localizacao_da_lista(lista_nome),
         "titulo_tarefa": re.sub(r"#\s*\d+", "", titulo).strip(" 🤖-"),
-        "status": status_atual(titulo, body, proximo, timeline),
+        "status": status_atual(proximo, timeline),
         "proximo_evento": proximo,
         "timeline": timeline,
         "notas_publicas": notas_pub,

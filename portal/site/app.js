@@ -92,8 +92,14 @@ function renderProcesso(p) {
     wrap.appendChild(box);
   }
 
+  if (p.localizacao) {
+    const loc = el("div", "loc-box",
+      "<strong>Localização:</strong> " + esc(p.localizacao));
+    wrap.appendChild(loc);
+  }
+
   const status = el("div", "status-box",
-    "<strong>Situacao:</strong> " + esc(p.status));
+    "<strong>Situação:</strong> " + esc(p.status));
   wrap.appendChild(status);
 
   if (p.notas_publicas && p.notas_publicas.length) {
