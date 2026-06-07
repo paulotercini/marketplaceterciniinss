@@ -27,9 +27,6 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Instala dependências
-        run: pip install anthropic
-
       - name: Cria graph_tokens.json a partir do secret
         run: |
           echo '{"refresh_token": "${{ secrets.GRAPH_REFRESH_TOKEN }}"}' > graph_tokens.json
@@ -39,7 +36,6 @@ jobs:
 
       - name: Executa rotina de monitoramento do DOU
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           DATA_ALVO: ${{ github.event.inputs.data_alvo }}
         run: python dou_rotina.py
 

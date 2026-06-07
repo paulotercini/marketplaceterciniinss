@@ -1,17 +1,15 @@
 """
 Rotina diária de monitoramento do DOU para advocacia previdenciária.
-Executa varredura, analisa via Claude API e cria tarefa no Microsoft To Do.
+Executa varredura, classifica por regras e cria tarefa no Microsoft To Do.
 """
 
 import datetime
-import json
 import os
 import pathlib
 import re
 import urllib.parse
 import urllib.request
 
-import anthropic
 import graph_client as gc
 
 UA = (
@@ -161,91 +159,90 @@ def buscar_secoes(data: datetime.date) -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
-# Análise via Claude
+# Classificação por regras (sem IA externa)
 # ---------------------------------------------------------------------------
 
-PROMPT_ANALISE = """Você é analista jurídico especializado em direito previdenciário brasileiro.
-Analise as publicações do DOU abaixo e retorne um JSON estruturado com a classificação.
-
-PUBLICAÇÕES:
-{publicacoes}
-
-Retorne APENAS um JSON válido, sem texto adicional, no formato:
-{{
-  "alertas_urgentes": [
-    {{
-      "titulo": "...",
-      "orgao": "...",
-      "link": "...",
-      "pagina": "...",
-      "sintese": "...",
-      "risco": "...",
-      "mitigacao_adm": "...",
-      "mitigacao_judicial": "...",
-      "skill_sugerida": "..."
-    }}
-  ],
-  "importantes": [
-    {{
-      "titulo": "...",
-      "orgao": "...",
-      "link": "...",
-      "pagina": "...",
-      "sintese": "...",
-      "skill_sugerida": "..."
-    }}
-  ],
-  "informativos": [
-    {{
-      "titulo": "...",
-      "orgao": "...",
-      "link": "...",
-      "sintese_curta": "..."
-    }}
-  ],
-  "descartados": [
-    {{"titulo": "...", "motivo": "..."}}
-  ]
-}}
-
-Critérios de classificação:
-- ALERTA URGENTE: muda regra, prazo, procedimento, valor ou cria risco de bloqueio, indeferimento ou cessação para clientes em atendimento
-- IMPORTANTE: relevante para a prática mas sem impacto imediato em clientes ativos
-- INFORMATIVO: apenas para conhecimento, sem reflexo na atividade-fim
-- DESCARTAR: atos de pessoal interno (nomeação, exoneração, designação, licença), contratos administrativos, RPPS (regime próprio de servidores), previdência complementar fechada, mero aparecimento de palavra em órgão alheio
-"""
+_TIPOS_NORMATIVOS = [
+    "instrução normativa", "portaria", "decreto", "resolução", "resolucao",
+    "medida provisória", "medida provisoria", "lei complementar",
+    "emenda constitucional", "circular",
+]
+_VERBOS_URGENTES = [
+    "suspende", "suspensão", "suspensao", "cessa", "cessação", "cessacao",
+    "cancela", "cancelamento", "revoga", "revogação", "revogacao",
+    "altera", "alteração", "alteracao", "veda", "proíbe", "proibição",
+    "prazo", "obrigatório", "obrigatorio",
+]
+_VERBOS_IMPORTANTES = [
+    "institui", "estabelece", "regulamenta", "aprova", "autoriza",
+    "define", "determina", "dispõe", "dispoe", "cria", "fixa", "homologa",
+]
+_TITULOS_DESCARTAR = [
+    "nomeação", "nomeacao", "exoneração", "exoneracao", "designação", "designacao",
+    "licença sem remuneração", "extrato de contrato", "extrato do contrato",
+    "dispensa de licitação", "dispensa de licitacao", "termo de rescisão",
+]
 
 
-def analisar_com_claude(items: list[dict], data: datetime.date) -> dict:
+def classificar_por_regras(items: list[dict], data: datetime.date) -> dict:
     if not items:
         return {"alertas_urgentes": [], "importantes": [], "informativos": [], "descartados": []}
 
-    publicacoes = []
+    alertas_urgentes = []
+    importantes = []
+    informativos = []
+    descartados = []
+
     for item in items:
         url = f"https://www.in.gov.br/web/dou/-/{item.get('urlTitle', '')}"
-        publicacoes.append(
-            f"TÍTULO: {item.get('title', '')}\n"
-            f"ÓRGÃO: {item.get('artType', '')} | Página: {item.get('numberPage', '')}\n"
-            f"LINK: {url}\n"
-            f"CONTEÚDO: {item.get('content', '')[:2000]}\n"
-        )
+        titulo = item.get("title", "")
+        conteudo = item.get("content", "")
+        art_type = item.get("artType", "")
+        texto = (titulo + " " + conteudo + " " + art_type).lower()
+        titulo_lower = titulo.lower()
 
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
-    msg = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=4096,
-        messages=[
-            {
-                "role": "user",
-                "content": PROMPT_ANALISE.format(publicacoes="\n---\n".join(publicacoes)),
-            }
-        ],
-    )
-    raw = msg.content[0].text.strip()
-    # Remove possível markdown
-    raw = re.sub(r"^```(?:json)?\s*", "", raw)
-    raw = re.sub(r"\s*```$", "", raw)
-    return json.loads(raw)
+        if any(kw in titulo_lower for kw in _TITULOS_DESCARTAR):
+            descartados.append({"titulo": titulo, "motivo": "Ato de pessoal ou administrativo"})
+            continue
+
+        is_normativo = any(kw in texto for kw in _TIPOS_NORMATIVOS)
+        has_urgente = any(kw in texto for kw in _VERBOS_URGENTES)
+
+        if is_normativo or has_urgente:
+            alertas_urgentes.append({
+                "titulo": titulo,
+                "orgao": art_type,
+                "link": url,
+                "pagina": item.get("numberPage", ""),
+                "sintese": conteudo[:600].strip(),
+                "risco": "Verificar impacto em benefícios ativos",
+                "mitigacao_adm": "Analisar integralmente o ato normativo",
+                "mitigacao_judicial": "Verificar jurisprudência aplicável",
+                "skill_sugerida": "",
+            })
+        elif any(kw in texto for kw in _VERBOS_IMPORTANTES):
+            importantes.append({
+                "titulo": titulo,
+                "orgao": art_type,
+                "link": url,
+                "pagina": item.get("numberPage", ""),
+                "sintese": conteudo[:600].strip(),
+                "skill_sugerida": "",
+            })
+        else:
+            informativos.append({
+                "titulo": titulo,
+                "orgao": art_type,
+                "link": url,
+                "sintese_curta": conteudo[:250].strip(),
+            })
+
+    return {
+        "alertas_urgentes": alertas_urgentes,
+        "importantes": importantes,
+        "informativos": informativos,
+        "descartados": descartados,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -391,9 +388,9 @@ def main():
     todos_items = items_s1 + items_s23
     print(f"Total para análise: {len(todos_items)}")
 
-    # Analisa com Claude
-    print("Analisando com Claude...")
-    analise = analisar_com_claude(todos_items, data)
+    # Classifica por regras
+    print("Classificando matérias...")
+    analise = classificar_por_regras(todos_items, data)
 
     n_a = len(analise.get("alertas_urgentes", []))
     n_i = len(analise.get("importantes", []))
