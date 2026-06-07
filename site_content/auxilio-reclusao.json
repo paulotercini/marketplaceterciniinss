@@ -1,9 +1,9 @@
 {
   "slug": "auxilio-reclusao",
-  "category": "Assistencial",
+  "category": "Outros benefícios",
   "title": "Auxílio-Reclusão (B25)",
   "nav_label": "Auxílio-Reclusão",
-  "order": 4,
+  "order": 3,
   "meta_description": "Auxílio-reclusão (B25) após a EC 103/2019: dependentes do segurado de baixa renda preso, carência e critério de renda. Orientação em Monte Alto/SP.",
   "hero_subtitle": "Benefício pago aos dependentes do segurado de baixa renda recolhido à prisão em regime fechado.",
   "intro": [
@@ -101,5 +101,5 @@
       "a": "Há controvérsia sobre o tema. Após a Lei 13.846/2019, o benefício é, em regra, restrito ao regime fechado, mas existe tese que defende a manutenção do auxílio em favor dos dependentes por direito adquirido. Cada caso deve ser analisado individualmente."
     }
   ],
-  "related": ["pensao-por-morte", "bpc-loas", "salario-maternidade"]
+  "related": ["pensao-por-morte", "bpc-deficiente", "salario-maternidade"]
 }
