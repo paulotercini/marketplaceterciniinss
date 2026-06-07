@@ -1,9 +1,9 @@
 {
   "slug": "pensao-por-morte",
-  "category": "Assistencial",
+  "category": "Outros benefícios",
   "title": "Pensão por Morte (B21/B93)",
   "nav_label": "Pensão por Morte",
-  "order": 2,
+  "order": 1,
   "meta_description": "Pensão por morte (B21/B93) após a EC 103/2019: dependentes, cotas, duração e prova de união estável. Orientação previdenciária em Monte Alto/SP.",
   "hero_subtitle": "Benefício pago aos dependentes do segurado do INSS que falece, conforme as regras da Lei 8.213/91 e da Emenda Constitucional 103/2019.",
   "intro": [
@@ -99,5 +99,5 @@
       "a": "Em regra, o filho recebe a pensão até os 21 anos. Contudo, o filho inválido ou com deficiência intelectual ou mental grave pode manter o benefício após essa idade, conforme o Tema 15 e a Súmula 37 da TNU, mediante prova da condição."
     }
   ],
-  "related": ["bpc-loas", "auxilio-reclusao", "salario-maternidade"]
+  "related": ["bpc-deficiente", "auxilio-reclusao", "salario-maternidade"]
 }
