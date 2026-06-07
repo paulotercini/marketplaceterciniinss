@@ -1,0 +1,48 @@
+name: Monitor DOU Previdenciário
+
+on:
+  schedule:
+    # Roda de segunda a sexta às 11h UTC (08h BRT)
+    - cron: '0 11 * * 1-5'
+  workflow_dispatch:
+    # Permite rodar manualmente pelo GitHub Actions
+    inputs:
+      data_alvo:
+        description: 'Data alvo no formato DD-MM-YYYY (deixe vazio para usar hoje)'
+        required: false
+        default: ''
+
+jobs:
+  monitorar-dou:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v4
+
+      - name: Configura Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Cria graph_tokens.json a partir do secret
+        run: |
+          echo '{"refresh_token": "${{ secrets.GRAPH_REFRESH_TOKEN }}"}' > graph_tokens.json
+
+      - name: Renova token Microsoft Graph
+        run: python graph_refresh.py
+
+      - name: Executa rotina de monitoramento do DOU
+        env:
+          DATA_ALVO: ${{ github.event.inputs.data_alvo }}
+        run: python dou_rotina.py
+
+      - name: Salva relatório como artefato
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-dou-${{ github.run_id }}
+          path: relatorio_dou_*.txt
+          retention-days: 30
