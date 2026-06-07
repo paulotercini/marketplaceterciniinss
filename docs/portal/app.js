@@ -94,7 +94,7 @@ function renderProcesso(p) {
 
   if (p.localizacao) {
     const loc = el("div", "loc-box",
-      "<strong>Localização:</strong> " + esc(p.localizacao));
+      "<strong>Localização no Escritório:</strong> " + esc(p.localizacao));
     wrap.appendChild(loc);
   }
 
