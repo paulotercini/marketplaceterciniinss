@@ -209,7 +209,13 @@ RE_ENTRADA = re.compile(
 RE_PUB = re.compile(r"\(PUB\)\s*[:;]\s*(.+?)(?=\n\d{2}\.\d{2}\.\d{4}\s*\([A-Z]+\)\s*[:;]|\Z)",
                     re.MULTILINE | re.DOTALL)
 RE_HORA = re.compile(r"(?:as|às)\s*(\d{1,2})[:h](\d{2})?", re.I)
-RE_LOCAL = re.compile(r"(?:no\s+)?INSS\s+(?:de\s+)?([A-Z][A-Za-zÀ-ÿ\s]+?)(?:[.,;]|$)", re.I)
+# Detecta cidade — varios padroes, em ordem de prioridade.
+RE_LOCAIS = [
+    re.compile(r"INSS\s+(?:de\s+)?([A-ZÀ-Ý][A-Za-zÀ-ÿ\s]+?)(?:[.,;\n)]|$)"),
+    re.compile(r"ag[eê]ncia\s+(?:de\s+)?([A-ZÀ-Ý][A-Za-zÀ-ÿ\s]+?)(?:[.,;\n)]|$)", re.I),
+    re.compile(r"(?:ambas?|sera|sera[oõ])\s+em\s+([A-ZÀ-Ý][A-Za-zÀ-ÿ]+(?:\s+[A-Z][A-Za-zÀ-ÿ]+){0,2})\b", re.I),
+    re.compile(r"\bem\s+([A-ZÀ-Ý][A-Za-zÀ-ÿ]+(?:\s+[A-Z][A-Za-zÀ-ÿ]+){0,2})(?:[.,;\n)]|$)"),
+]
 RE_BOT_LOG = re.compile(r"^\[BOT-LOG\].*$", re.MULTILINE)
 
 # Detectores de eventos (timeline) - reaproveita logica do bot_avisos
@@ -411,6 +417,32 @@ def list_all_tasks(list_id):
     return out
 
 
+_STOP_LOCAL = {
+    "analise", "análise", "andamento", "atendimento", "anexo", "casa",
+    "contato", "documentos", "drive", "escritorio", "escritório",
+    "exames", "envelope", "frente", "geral", "honorarios", "honorários",
+    "ligacao", "ligação", "mesa", "obs", "pasta", "papeis", "papéis",
+    "razao", "razão", "relatorio", "relatório", "recepcao", "recepção",
+    "telefone", "verificar", "vista",
+}
+
+
+def detectar_local(texto):
+    """Procura a cidade no texto. Devolve 'INSS de Cidade' ou ''."""
+    for rx in RE_LOCAIS:
+        m = rx.search(texto)
+        if not m:
+            continue
+        nome = re.split(r"\s{2,}|[,.]", m.group(1).strip())[0].strip()
+        # filtra falsos positivos: palavras comuns que nao sao cidade
+        if not nome or nome.lower() in _STOP_LOCAL:
+            continue
+        if len(nome) < 3:
+            continue
+        return f"INSS de {nome}"
+    return ""
+
+
 def extrair_proximo_evento(titulo, body):
     """Acha o evento futuro mais proximo (pericia/audiencia/avaliacao) e
     devolve dict {tipo, data, hora, local} ou None.
@@ -480,10 +512,12 @@ def extrair_proximo_evento(titulo, body):
         mh = RE_HORA.search(ctx)
         if mh:
             hora = f"{int(mh.group(1)):02d}:{mh.group(2) or '00'}"
-        local = ""
-        ml = RE_LOCAL.search(ctx)
-        if ml:
-            local = "INSS de " + re.split(r"\s{2,}|[,.]", ml.group(1).strip())[0].strip()
+        # Local: tenta na sentenca primeiro; se nada, tenta na entrada
+        # inteira (ate ~400 chars depois do match)
+        local = detectar_local(ctx)
+        if not local:
+            ctx_amplo = full[max(0, start - 80): min(len(full), end + 400)]
+            local = detectar_local(ctx_amplo)
         candidatos.append({
             "tipo": tipo,
             "data": d.isoformat(),
