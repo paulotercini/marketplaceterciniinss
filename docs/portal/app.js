@@ -92,25 +92,27 @@ function renderProcesso(p) {
     wrap.appendChild(box);
   }
 
+  // Localizacao no Escritorio — card grande em DESTAQUE
   if (p.localizacao) {
-    const loc = el("div", "loc-box",
-      "<strong>Localização no Escritório:</strong> " + esc(p.localizacao));
-    wrap.appendChild(loc);
+    const card = el("div", "loc-destaque");
+    card.appendChild(el("div", "ld-label", "LOCALIZAÇÃO NO ESCRITÓRIO"));
+    card.appendChild(el("div", "ld-valor", esc(p.localizacao)));
+    wrap.appendChild(card);
   }
 
-  // Último andamento — card grande em destaque
+  // Ultimo andamento — caixa discreta
   if (p.timeline && p.timeline.length > 0) {
     const ult = p.timeline[0];
-    const card = el("div", "ultimo-andamento");
-    card.appendChild(el("div", "ua-label", "ÚLTIMO ANDAMENTO"));
-    const linha = el("div", "ua-linha");
-    linha.appendChild(el("span", "ua-data", ult.data_br));
-    linha.appendChild(el("span", "ua-tipo", esc(ult.tipo)));
-    card.appendChild(linha);
+    const box = el("div", "ult-andamento");
+    const cab = el("div", "ua-cab");
+    cab.appendChild(el("span", "ua-tag", "ÚLTIMO ANDAMENTO"));
+    cab.appendChild(el("span", "ua-data", ult.data_br));
+    box.appendChild(cab);
+    box.appendChild(el("div", "ua-tipo", esc(ult.tipo)));
     if (ult.descricao && ult.descricao.toLowerCase() !== ult.tipo.toLowerCase()) {
-      card.appendChild(el("div", "ua-desc", esc(ult.descricao)));
+      box.appendChild(el("div", "ua-desc", esc(ult.descricao)));
     }
-    wrap.appendChild(card);
+    wrap.appendChild(box);
   } else if (p.status) {
     const status = el("div", "status-box",
       "<strong>Situação:</strong> " + esc(p.status));
