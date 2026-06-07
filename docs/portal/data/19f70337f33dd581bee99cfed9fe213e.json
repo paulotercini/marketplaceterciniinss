@@ -1,6 +1,6 @@
 {
   "nome": "Maria Dias Veloso",
-  "atualizado_em": "07/06/2026 as 15:22",
+  "atualizado_em": "07/06/2026 as 15:34",
   "processos": [
     {
       "cpf": "29143739881",
@@ -9,9 +9,15 @@
       "lista": "🗓 Tarefas com Prazo",
       "localizacao": "Para apresentação de petição",
       "titulo_tarefa": "Maria Dias Veloso",
-      "status": "Última atualização em 12/05/2026: Sessão de julgamento agendada",
+      "status": "Última atualização em 22/05/2026: Acórdão: negou provimento ao recurso",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-05-22",
+          "data_br": "22/05/2026",
+          "tipo": "Acórdão: negou provimento ao recurso",
+          "descricao": "Negou provimento ao recurso."
+        },
         {
           "data": "2026-05-12",
           "data_br": "12/05/2026",
@@ -55,7 +61,14 @@
           "descricao": "Recurso negado provimento."
         }
       ],
-      "notas_publicas": []
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://www.gov.br/inss/pt-br/canais_atendimento/cidadao-1/conselho-de-recursos-da-previdencia-social-crps/e-sisrec-acesso",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
     }
   ]
 }

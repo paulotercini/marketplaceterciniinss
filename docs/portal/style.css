@@ -256,6 +256,50 @@ button.link:hover { background: transparent; color: var(--azul); }
 }
 .notas .nota .data { color: var(--cinza); font-size: 0.8rem; font-weight: 600; display: block; }
 
+.links-externos { margin-top: 0.25rem; }
+.link-ext {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  color: var(--azul);
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.link-ext:hover {
+  background: #e0f2fe;
+  border-color: var(--azul-claro);
+}
+.link-ext:active { transform: scale(0.99); }
+.link-ext .le-label {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.link-ext .le-obs {
+  font-size: 0.78rem;
+  color: var(--cinza);
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+.link-ext .le-seta {
+  font-size: 1.2rem;
+  color: var(--azul-claro);
+  font-weight: 700;
+}
+@media (max-width: 480px) {
+  .link-ext { flex-wrap: wrap; }
+  .link-ext .le-obs {
+    flex-basis: 100%;
+    margin-top: 0.2rem;
+    margin-right: 0;
+  }
+}
+
 .aviso { border-left: 4px solid var(--aviso); }
 .aviso h2 { color: var(--aviso); }
 
