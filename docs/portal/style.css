@@ -148,6 +148,48 @@ button.link:hover { background: transparent; color: var(--azul); }
 .processo .loc-box strong { color: var(--ok); }
 .processo .status-box strong { color: var(--azul); }
 
+.ultimo-andamento {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
+  color: white;
+  padding: 1.25rem 1.4rem;
+  border-radius: 10px;
+  margin: 0.75rem 0 0.85rem 0;
+  box-shadow: 0 4px 12px rgba(31, 58, 100, 0.18);
+}
+.ultimo-andamento .ua-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  opacity: 0.78;
+  margin-bottom: 0.6rem;
+}
+.ultimo-andamento .ua-linha {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 0.45rem;
+}
+.ultimo-andamento .ua-data {
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.18);
+  padding: 0.18rem 0.65rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.ultimo-andamento .ua-tipo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.ultimo-andamento .ua-desc {
+  font-size: 0.92rem;
+  opacity: 0.92;
+  line-height: 1.45;
+  margin-top: 0.3rem;
+}
+
 .proximo {
   background: #fef3c7;
   border-left: 4px solid var(--aviso);
