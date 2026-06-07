@@ -55,26 +55,145 @@ LISTAS_EXCLUIR = {
     "Izildo Aparecido Machado Fumes",
 }
 
-# Mapeia o nome da lista do To Do -> rotulo "Localizacao" que vai pro cliente.
-# Substring matching, case-insensitive, primeira chave que casa ganha.
-LOCALIZACAO_POR_LISTA = [
-    ("conselho de recursos", "Conselho de Recursos"),
-    ("judicial",             "Justiça (Judicial)"),
-    ("tarefas com prazo",    "Para apresentação de petição"),
-    ("inss",                 "INSS"),
-    ("escritório",           "INSS"),
-    ("escritorio",           "INSS"),
-    ("aposentadorias",       "INSS"),
-    ("marcos",               "Justiça (Judicial)"),
+# Indicadores de que o recurso esta na CAJ (Camara de Julgamento), nao na JR.
+INDIC_CAJ = [
+    r"c[aâ]mara(?:s)?\s+de\s+julgamento",
+    r"\bcaj\b",
+    r"\d+\s*ª?\s*caj",
+    r"recurso\s+especial",
+    r"embargos\s+de\s+declara[cç][aã]o",
 ]
 
 
-def localizacao_da_lista(nome_lista):
-    n = (nome_lista or "").lower()
-    for chave, rotulo in LOCALIZACAO_POR_LISTA:
-        if chave in n:
-            return rotulo
+def localizacao_no_escritorio(lista_nome, body):
+    """Mapeia (lista do To Do, body) -> rotulo Localizacao no Escritorio.
+
+    Para Conselho de Recursos, distingue JR x CAJ pelo conteudo do body.
+    """
+    n = (lista_nome or "").lower()
+    body_low = (body or "").lower()
+
+    if "tarefas com prazo" in n:
+        return "Para apresentação de petição pelo advogado"
+
+    if "judicial" in n or "marcos" in n:
+        return "Aguardando Decisão Judicial"
+
+    if "conselho de recursos" in n:
+        if any(re.search(p, body_low) for p in INDIC_CAJ):
+            return "Aguardando decisão da Câmara de Julgamento"
+        return "Aguardando decisão da Junta de Recursos"
+
+    if ("inss" in n or "escritório" in n or "escritorio" in n
+            or "aposentadorias" in n):
+        return "Aguardando decisão do INSS"
+
     return "Em andamento"
+
+
+# Catalogo de links externos para o cliente consultar andamentos.
+LINKS_CATALOGO = {
+    "e-sisrec": {
+        "label": "Consultar no e-SISREC",
+        "url": "https://www.gov.br/inss/pt-br/canais_atendimento/cidadao-1/conselho-de-recursos-da-previdencia-social-crps/e-sisrec-acesso",
+        "obs": "Use seu CPF e sua senha gov.br",
+    },
+    "meu-inss": {
+        "label": "Consultar no Meu INSS",
+        "url": "https://meu.inss.gov.br/",
+        "obs": "Use seu CPF e sua senha gov.br",
+    },
+    "pje1-trf3": {
+        "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+        "url": "https://pje1g.trf3.jus.br/pje/login.seam",
+    },
+    "pje2-trf3": {
+        "label": "PJe TRF3 — 2º grau",
+        "url": "https://pje2g.trf3.jus.br/pje/login.seam",
+    },
+    "esaj": {
+        "label": "ESAJ — TJSP (Justiça Estadual)",
+        "url": "https://esaj.tjsp.jus.br/cpopg/open.do",
+    },
+    "eproc": {
+        "label": "Eproc — Justiça Federal",
+        "url": "https://eproc.jfsp.jus.br/eprocV2/",
+    },
+    "stj": {
+        "label": "STJ — Superior Tribunal de Justiça",
+        "url": "https://processo.stj.jus.br/processo/pesquisa/",
+    },
+    "tnu": {
+        "label": "TNU — Turma Nacional de Uniformização",
+        "url": "https://www.cjf.jus.br/cjf/turmas-recursais/turma-nacional-de-uniformizacao",
+    },
+}
+
+
+def links_para_processo(localizacao, body):
+    """Devolve lista de links externos para o cliente consultar andamentos.
+
+    Detecta por conteudo do body (mais especifico); se nao houver indicio,
+    cai no padrao da Localizacao.
+    """
+    body_low = (body or "").lower()
+    out = []
+
+    # Recurso administrativo: e-SISREC sempre que body tiver indicios CRPS/JR/CAJ
+    indic_rec_adm = ["e-sisrec", "esisrec", "crps", "câmara de julgamento",
+                     "camara de julgamento", "junta de recursos",
+                     "conselho de recursos"]
+    if any(s in body_low for s in indic_rec_adm):
+        out.append("e-sisrec")
+        return [LINKS_CATALOGO[k] for k in out]
+
+    # MEU INSS — quando localizacao for INSS ou body indicar
+    if localizacao == "Aguardando decisão do INSS" or any(
+            s in body_low for s in ["meu inss", "meuinss", "pat/gerid",
+                                     "benefício solicitado",
+                                     "beneficio solicitado"]):
+        out.append("meu-inss")
+        return [LINKS_CATALOGO[k] for k in out]
+
+    # Judicial — detecta sistema especifico via body
+    indic_judicial = ["pje", "esaj", "eproc", "tjsp", "trf3", "stj", "tnu",
+                      "vara federal", "vara civel", "vara cível",
+                      "distribuída", "distribuida", "processo judicial",
+                      "juízo", "juizo"]
+    eh_judicial = (localizacao == "Aguardando Decisão Judicial"
+                   or any(s in body_low for s in indic_judicial))
+    if eh_judicial:
+        if "pje1" in body_low or "1º grau" in body_low or "1 grau" in body_low \
+                or "primeira instância" in body_low:
+            out.append("pje1-trf3")
+        if "pje2" in body_low or "2º grau" in body_low or "2 grau" in body_low \
+                or "segunda instância" in body_low:
+            out.append("pje2-trf3")
+        if "esaj" in body_low or "tjsp" in body_low or "tj sp" in body_low:
+            out.append("esaj")
+        if "eproc" in body_low:
+            out.append("eproc")
+        if "stj" in body_low:
+            out.append("stj")
+        if "tnu" in body_low:
+            out.append("tnu")
+        if not out:
+            # nao deu pra detectar — mostra as opcoes mais comuns
+            out = ["pje1-trf3", "pje2-trf3", "esaj"]
+        # dedupe preservando ordem
+        seen = set(); uniq = []
+        for k in out:
+            if k not in seen:
+                seen.add(k); uniq.append(k)
+        return [LINKS_CATALOGO[k] for k in uniq]
+
+    # Tarefas com Prazo / Conselho de Recursos sem indicio claro -> e-SISREC
+    if localizacao in ("Para apresentação de petição pelo advogado",
+                       "Aguardando decisão da Junta de Recursos",
+                       "Aguardando decisão da Câmara de Julgamento"):
+        return [LINKS_CATALOGO["e-sisrec"]]
+
+    return []
 
 # Regex
 RE_CPF_TITULO = re.compile(r"#\s*(\d{11})\b")
@@ -477,17 +596,19 @@ def processar_tarefa(t, lista_nome):
     proximo = extrair_proximo_evento(titulo, body)
     timeline = extrair_timeline(body)
     notas_pub = extrair_notas_publicas(body)
+    loc = localizacao_no_escritorio(lista_nome, body)
     return {
         "cpf": cpf,
         "dn": dn,
         "nome": nome_cliente(titulo),
         "lista": lista_nome,
-        "localizacao": localizacao_da_lista(lista_nome),
+        "localizacao": loc,
         "titulo_tarefa": re.sub(r"#\s*\d+", "", titulo).strip(" 🤖-"),
         "status": status_atual(proximo, timeline),
         "proximo_evento": proximo,
         "timeline": timeline,
         "notas_publicas": notas_pub,
+        "links_externos": links_para_processo(loc, body),
     }
 
 

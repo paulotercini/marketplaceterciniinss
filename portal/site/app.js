@@ -94,7 +94,7 @@ function renderProcesso(p) {
 
   if (p.localizacao) {
     const loc = el("div", "loc-box",
-      "<strong>Localização:</strong> " + esc(p.localizacao));
+      "<strong>Localização no Escritório:</strong> " + esc(p.localizacao));
     wrap.appendChild(loc);
   }
 
@@ -140,6 +140,34 @@ function renderProcesso(p) {
       tl.appendChild(it);
     });
     wrap.appendChild(tl);
+  }
+
+  if (p.links_externos && p.links_externos.length) {
+    wrap.appendChild(el("div", "subt", "Consulte todos os andamentos"));
+    const cont = el("div", "links-externos");
+    p.links_externos.forEach((lnk) => {
+      const a = document.createElement("a");
+      a.className = "link-ext";
+      a.href = lnk.url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      const lbl = document.createElement("span");
+      lbl.className = "le-label";
+      lbl.textContent = lnk.label;
+      a.appendChild(lbl);
+      if (lnk.obs) {
+        const obs = document.createElement("span");
+        obs.className = "le-obs";
+        obs.textContent = lnk.obs;
+        a.appendChild(obs);
+      }
+      const seta = document.createElement("span");
+      seta.className = "le-seta";
+      seta.textContent = "→";
+      a.appendChild(seta);
+      cont.appendChild(a);
+    });
+    wrap.appendChild(cont);
   }
 
   return wrap;
