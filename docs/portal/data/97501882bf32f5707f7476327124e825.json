@@ -1,0 +1,56 @@
+{
+  "nome": "Antonio Cesar de Natale",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "05222798801",
+      "dn": "23051964",
+      "nome": "Antonio Cesar de Natale",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Antonio Cesar de Natale",
+      "status": "Pericia medica marcada para 25/06/2026 (em 18 dias)",
+      "proximo_evento": {
+        "tipo": "Pericia medica",
+        "data": "2026-06-25",
+        "data_br": "25/06/2026",
+        "hora": "",
+        "local": ""
+      },
+      "timeline": [
+        {
+          "data": "2025-07-17",
+          "data_br": "17/07/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido até 01/09/2025."
+        },
+        {
+          "data": "2025-07-04",
+          "data_br": "04/07/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado - em análise."
+        },
+        {
+          "data": "2025-06-23",
+          "data_br": "23/06/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Agendei a perícia para o dia 25/06, mas o cliente não vai comparecer."
+        },
+        {
+          "data": "2025-05-13",
+          "data_br": "13/05/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Solicitei o benefício por incapacidade por Jaboticabal."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

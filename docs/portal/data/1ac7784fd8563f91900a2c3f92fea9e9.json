@@ -1,0 +1,38 @@
+{
+  "nome": "Maria Teresinha de Araujo Natale",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "10171620852",
+      "dn": "12031962",
+      "nome": "Maria Teresinha de Araujo Natale",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Maria Teresinha de Araujo Natale",
+      "status": "Última atualização em 01/06/2026: Benefício deferido pelo INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-06-01",
+          "data_br": "01/06/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Anexada ao drive."
+        },
+        {
+          "data": "2026-05-05",
+          "data_br": "05/05/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Solicitei o benefício."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

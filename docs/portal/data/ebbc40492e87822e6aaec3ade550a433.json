@@ -1,0 +1,44 @@
+{
+  "nome": "Cristina Elena Gomes",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "17037214892",
+      "dn": "17081972",
+      "nome": "Cristina Elena Gomes",
+      "lista": "🙋 Escritório",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Cristina Elena Gomes",
+      "status": "Última atualização em 09/04/2026: Ação judicial protocolada",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-04-09",
+          "data_br": "09/04/2026",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Assinei a petição inicial hoje com concordância da Cristina."
+        },
+        {
+          "data": "2025-08-10",
+          "data_br": "10/08/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido, mas falta carta de concessão e HISCRE."
+        },
+        {
+          "data": "2025-04-17",
+          "data_br": "17/04/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Conversei com a cliente e ela enviou print do agendamento no sistema do MEUINSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "nome": "Dalva Mara Faria Squebola",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "13855734810",
+      "dn": "21051962",
+      "nome": "Dalva Mara Faria Squebola",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Dalva Mara Faria Squebola",
+      "status": "Última atualização em 19/01/2026: Benefício deferido pelo INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-01-19",
+          "data_br": "19/01/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

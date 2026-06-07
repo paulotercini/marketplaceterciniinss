@@ -1,0 +1,44 @@
+{
+  "nome": "Marcia Padilha Trigueiro",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "02191661882",
+      "dn": "20011962",
+      "nome": "Marcia Padilha Trigueiro",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Junta de Recursos",
+      "titulo_tarefa": "Marcia Padilha Trigueiro",
+      "status": "Última atualização em 22/01/2025: Acórdão: deu provimento parcial ao recurso",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-01-22",
+          "data_br": "22/01/2025",
+          "tipo": "Acórdão: deu provimento parcial ao recurso",
+          "descricao": "Verificar o parcial provimento do recurso."
+        },
+        {
+          "data": "2025-01-16",
+          "data_br": "16/01/2025",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Reclamação na ouvidoria: Número de protocolo: 36777007762202489 - Marcia Padilha Trigueiro Número de protocolo: 36777007872202441 - Sessão de julgamento agendada para 21/01/2025"
+        },
+        {
+          "data": "2024-05-22",
+          "data_br": "22/05/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

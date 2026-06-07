@@ -1,0 +1,38 @@
+{
+  "nome": "Luiz Carlos Minjono",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "10643662871",
+      "dn": "06031965",
+      "nome": "Luiz Carlos Minjono",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Luiz Carlos Minjono",
+      "status": "Pericia medica marcada para 06/07/2026 (em 29 dias)",
+      "proximo_evento": {
+        "tipo": "Pericia medica",
+        "data": "2026-07-06",
+        "data_br": "06/07/2026",
+        "hora": "",
+        "local": ""
+      },
+      "timeline": [
+        {
+          "data": "2025-05-08",
+          "data_br": "08/05/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "O Luiz disse que esse número novo da Joyce está funcionando e que da para contata-lo com ele 11.04.2023: Documento médico novo apresentado na data de hoje que não comprova incapacidade."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

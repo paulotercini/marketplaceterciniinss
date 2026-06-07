@@ -1,0 +1,32 @@
+{
+  "nome": "Maurício José Deronze",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "01988102880",
+      "dn": "14031962",
+      "nome": "Maurício José Deronze",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Maurício José Deronze",
+      "status": "Última atualização em 07/05/2026: Prorrogação",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-05-07",
+          "data_br": "07/05/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Está em benefício até 30/11/2026."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Antonio Fabricio Costa",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "08367312805",
+      "dn": "05101964",
+      "nome": "Antonio Fabricio Costa",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Antonio Fabricio Costa",
+      "status": "Última atualização em 14/10/2025: Prorrogação",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-10-14",
+          "data_br": "14/10/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Concedido até 14/11!"
+        },
+        {
+          "data": "2025-10-01",
+          "data_br": "01/10/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Teve acidente de trabalho onde cortou pedaço do dedo indicador da mão direita (trabalha no sítio)."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

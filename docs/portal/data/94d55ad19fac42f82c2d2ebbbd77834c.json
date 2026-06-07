@@ -1,0 +1,32 @@
+{
+  "nome": "Roseli Dias",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "28321796818",
+      "dn": "20061968",
+      "nome": "Roseli Dias",
+      "lista": "🙋 Escritório",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Roseli Dias",
+      "status": "Última atualização em 16/04/2026: Perícia médica",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-04-16",
+          "data_br": "16/04/2026",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para o dia 14/05 às 08h40."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

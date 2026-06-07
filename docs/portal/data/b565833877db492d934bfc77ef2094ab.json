@@ -1,0 +1,50 @@
+{
+  "nome": "Maria das Graças de Lisboa Pierre",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "01525183982",
+      "dn": "28071969",
+      "nome": "Maria das Graças de Lisboa Pierre",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
+      "titulo_tarefa": "Maria das Graças de Lisboa Pierre",
+      "status": "Última atualização em 15/05/2025: Embargos de declaração interpostos",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-05-15",
+          "data_br": "15/05/2025",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração apresentado."
+        },
+        {
+          "data": "2025-05-03",
+          "data_br": "03/05/2025",
+          "tipo": "Recurso Ordinário interposto",
+          "descricao": "Requerimento protocolado - Tarefa de Recurso Ordinário - 73042857."
+        },
+        {
+          "data": "2024-12-02",
+          "data_br": "02/12/2024",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso protocolado."
+        },
+        {
+          "data": "2024-09-13",
+          "data_br": "13/09/2024",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

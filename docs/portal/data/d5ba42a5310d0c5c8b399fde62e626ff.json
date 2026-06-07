@@ -1,0 +1,25 @@
+{
+  "nome": "Andresa Funari",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "29511765892",
+      "dn": "24021980",
+      "nome": "Andresa Funari",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Andresa Funari",
+      "status": "Em andamento",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

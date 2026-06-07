@@ -1,0 +1,44 @@
+{
+  "nome": "Madilaine Aparecida Curti",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "18643165867",
+      "dn": "17081966",
+      "nome": "Madilaine Aparecida Curti",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Madilaine Aparecida Curti",
+      "status": "Última atualização em 16/08/2024: Benefício deferido pelo INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2024-08-16",
+          "data_br": "16/08/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido até 26/01/2025."
+        },
+        {
+          "data": "2024-08-08",
+          "data_br": "08/08/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido até 26/01/2025, carta de concessão em anexo, hiscre indisponível - OBS: Na parte de benefícios por incapacidade consta em análise."
+        },
+        {
+          "data": "2024-08-02",
+          "data_br": "02/08/2024",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Dona Madilaine enviou um atestado médico - está em anexo."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

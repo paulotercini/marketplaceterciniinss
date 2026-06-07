@@ -1,0 +1,25 @@
+{
+  "nome": "Adelicia Maria Carinhanha de Araujo",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "68187653434",
+      "dn": "23121967",
+      "nome": "Adelicia Maria Carinhanha de Araujo",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Adelicia Maria Carinhanha de Araujo",
+      "status": "Em andamento",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

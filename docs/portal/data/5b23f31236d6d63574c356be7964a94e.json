@@ -1,0 +1,32 @@
+{
+  "nome": "Neusa de Oliveira Quecore",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "28503719800",
+      "dn": "30071958",
+      "nome": "Neusa de Oliveira Quecore",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Neusa de Oliveira Quecore",
+      "status": "Última atualização em 27/06/2024: Benefício deferido pelo INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2024-06-27",
+          "data_br": "27/06/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido (carta de concessão em anexo) e atualização em análise."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

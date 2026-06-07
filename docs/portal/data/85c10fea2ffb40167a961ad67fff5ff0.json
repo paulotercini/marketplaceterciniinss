@@ -1,0 +1,38 @@
+{
+  "nome": "Rosangela Eva Ferreira Silvério",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "09250577893",
+      "dn": "08111966",
+      "nome": "Rosangela Eva Ferreira Silvério",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Rosangela Eva Ferreira Silvério",
+      "status": "Última atualização em 16/12/2025: Benefício deferido pelo INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-12-16",
+          "data_br": "16/12/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido."
+        },
+        {
+          "data": "2025-11-15",
+          "data_br": "15/11/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "nome": "Keli Cristina de Carvalho",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "41572638800",
+      "dn": "03011993",
+      "nome": "Keli Cristina de Carvalho",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Keli Cristina de Carvalho",
+      "status": "Avaliacao social marcada para 25/09/2026 (em 110 dias) às 10:00 — INSS de Jaboticabal",
+      "proximo_evento": {
+        "tipo": "Avaliacao social",
+        "data": "2026-09-25",
+        "data_br": "25/09/2026",
+        "hora": "10:00",
+        "local": "INSS de Jaboticabal"
+      },
+      "timeline": [
+        {
+          "data": "2026-01-11",
+          "data_br": "11/01/2026",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Inicial distribuída."
+        },
+        {
+          "data": "2025-11-09",
+          "data_br": "09/11/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Benefício indeferido."
+        },
+        {
+          "data": "2025-09-17",
+          "data_br": "17/09/2025",
+          "tipo": "Avaliação social",
+          "descricao": "Reagendou a avaliação social para o dia 25/09 as 10:00h no INSS de Jaboticabal."
+        },
+        {
+          "data": "2025-08-28",
+          "data_br": "28/08/2025",
+          "tipo": "Avaliação social",
+          "descricao": "Perícia médica agendada para o dia 26/09 às 07h00 em Matão Avaliação social agendada para o dia 14/10 às 08h00."
+        },
+        {
+          "data": "2025-03-19",
+          "data_br": "19/03/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Trouxe relatório médico e receituário e audiometria."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ]
+    }
+  ]
+}

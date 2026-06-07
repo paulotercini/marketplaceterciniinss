@@ -1,0 +1,63 @@
+{
+  "nome": "Lidia Martiliano Santos Parra",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "08204333811",
+      "dn": "03081965",
+      "nome": "Lidia Martiliano dos Santos Parra",
+      "lista": "🙋 Escritório",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Lidia Martiliano dos Santos Parra",
+      "status": "Pericia medica marcada para 02/07/2026 (em 25 dias) às 10:20 — INSS de Bebodouro",
+      "proximo_evento": {
+        "tipo": "Pericia medica",
+        "data": "2026-07-02",
+        "data_br": "02/07/2026",
+        "hora": "10:20",
+        "local": "INSS de Bebodouro"
+      },
+      "timeline": [
+        {
+          "data": "2026-03-25",
+          "data_br": "25/03/2026",
+          "tipo": "Perícia médica",
+          "descricao": "A perícia foi a reagendada para o dia 06/05 às 09h00 em Matão, tendo em vista o requerimento ser do final de 2025."
+        },
+        {
+          "data": "2025-12-05",
+          "data_br": "05/12/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Solicitei o benefício por Bebedouro."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    },
+    {
+      "cpf": "08204333811",
+      "dn": "03081965",
+      "nome": "Lidia Martiliano Santos Parra",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Lidia Martiliano Santos Parra",
+      "status": "Em andamento",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

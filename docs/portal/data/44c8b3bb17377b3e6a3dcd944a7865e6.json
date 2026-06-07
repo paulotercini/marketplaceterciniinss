@@ -1,0 +1,38 @@
+{
+  "nome": "Valdemir Jose Brambilla",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "09455075857",
+      "dn": "29051968",
+      "nome": "Valdemir Jose Brambilla",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Valdemir Jose Brambilla",
+      "status": "Última atualização em 10/09/2025: Benefício deferido pelo INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-09-10",
+          "data_br": "10/09/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Sistema fora do ar hoje, mesmo nos horários que costuma funcionar, chequei às 7:30 e 8:30."
+        },
+        {
+          "data": "2025-08-27",
+          "data_br": "27/08/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Solicitei o benefício por incapacidade por Matão."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

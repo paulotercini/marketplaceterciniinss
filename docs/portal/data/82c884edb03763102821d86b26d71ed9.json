@@ -1,0 +1,56 @@
+{
+  "nome": "Marino Aparecido Gonçalves",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "01990994806",
+      "dn": "24051960",
+      "nome": "Marino Aparecido Gonçalves",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
+      "titulo_tarefa": "Marino Aparecido Gonçalves",
+      "status": "Última atualização em 24/02/2026: Acórdão: deu provimento parcial ao recurso",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-02-24",
+          "data_br": "24/02/2026",
+          "tipo": "Acórdão: deu provimento parcial ao recurso",
+          "descricao": "Julgamento do recurso com parcial provimento."
+        },
+        {
+          "data": "2026-02-03",
+          "data_br": "03/02/2026",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Agendou julgamento."
+        },
+        {
+          "data": "2025-09-09",
+          "data_br": "09/09/2025",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso protocolado via PAT."
+        },
+        {
+          "data": "2025-08-12",
+          "data_br": "12/08/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido."
+        },
+        {
+          "data": "2025-05-24",
+          "data_br": "24/05/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

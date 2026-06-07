@@ -1,0 +1,122 @@
+{
+  "nome": "Helia Truguilo Alves",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "09000391830",
+      "dn": "19041967",
+      "nome": "Helia Truguilo Alves",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Helia Truguilo Alves",
+      "status": "Pericia medica marcada para 02/08/2026 (em 56 dias) às 10:20 — INSS de Monte Alto",
+      "proximo_evento": {
+        "tipo": "Pericia medica",
+        "data": "2026-08-02",
+        "data_br": "02/08/2026",
+        "hora": "10:20",
+        "local": "INSS de Monte Alto"
+      },
+      "timeline": [
+        {
+          "data": "2025-03-17",
+          "data_br": "17/03/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para o dia 25/03/2025."
+        },
+        {
+          "data": "2024-11-20",
+          "data_br": "20/11/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido até 16/03/2025."
+        },
+        {
+          "data": "2024-09-17",
+          "data_br": "17/09/2024",
+          "tipo": "Perícia médica",
+          "descricao": "A cliente não irá comparecer na perícia no dia 23/09."
+        },
+        {
+          "data": "2024-09-08",
+          "data_br": "08/09/2024",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para 23/09/2024 as 09:20h no INSS de Jaboticabal."
+        },
+        {
+          "data": "2024-08-04",
+          "data_br": "04/08/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Prorrogação indeferida."
+        },
+        {
+          "data": "2024-07-29",
+          "data_br": "29/07/2024",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para 02/08 as 10:20h no INSS de Monte Alto."
+        },
+        {
+          "data": "2024-07-25",
+          "data_br": "25/07/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Em atenção à sua Solicitação de Prorrogação, apresentada no dia 25/06/2024, informamos que foi reconhecido o direito à prorrogação do benefício por incapacidade, a partir da data 10/07/2024, inclusive."
+        },
+        {
+          "data": "2024-06-26",
+          "data_br": "26/06/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Amanda avisa a Helia que foi prorrogado o benefício até 08/08."
+        },
+        {
+          "data": "2024-06-25",
+          "data_br": "25/06/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Prorrogação solicitada - ver resultado"
+        },
+        {
+          "data": "2024-06-13",
+          "data_br": "13/06/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Relatório médico em anexo."
+        },
+        {
+          "data": "2024-05-28",
+          "data_br": "28/05/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Amanda informa pra ela que o benefício foi prorrogado e que a partir do dia 25/06 poderemos solicitar nova prorrogação, mas que será necessário um novo relatório médico."
+        },
+        {
+          "data": "2024-05-27",
+          "data_br": "27/05/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Prorrogação solicitada."
+        },
+        {
+          "data": "2024-04-29",
+          "data_br": "29/04/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Já foi informada."
+        },
+        {
+          "data": "2024-04-26",
+          "data_br": "26/04/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação solicitada."
+        },
+        {
+          "data": "2024-04-11",
+          "data_br": "11/04/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Está em benefício até 10/05/2024."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

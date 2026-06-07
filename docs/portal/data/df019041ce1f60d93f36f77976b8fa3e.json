@@ -1,0 +1,92 @@
+{
+  "nome": "Ivane Aparecida Minharro",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "10909407851",
+      "dn": "09051968",
+      "nome": "Ivane Aparecida Minharro",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Ivane Aparecida Minharro",
+      "status": "Pericia medica marcada para 15/07/2026 (em 38 dias) às 09:40",
+      "proximo_evento": {
+        "tipo": "Pericia medica",
+        "data": "2026-07-15",
+        "data_br": "15/07/2026",
+        "hora": "09:40",
+        "local": ""
+      },
+      "timeline": [
+        {
+          "data": "2025-08-18",
+          "data_br": "18/08/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para o dia 13/10 as 10:05 no INSS de Bebedouro."
+        },
+        {
+          "data": "2025-07-17",
+          "data_br": "17/07/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Senha corrigida."
+        },
+        {
+          "data": "2025-06-27",
+          "data_br": "27/06/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Solicitei o benefício por Matão e foi agendada perícia para o dia 15/07 as 09:40h."
+        },
+        {
+          "data": "2025-04-30",
+          "data_br": "30/04/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Solicitei o benefício por incapacidade por Monte Alto."
+        },
+        {
+          "data": "2025-03-23",
+          "data_br": "23/03/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido."
+        },
+        {
+          "data": "2025-02-13",
+          "data_br": "13/02/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido de 03/01/2025 a 08/02/2025."
+        },
+        {
+          "data": "2025-02-03",
+          "data_br": "03/02/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para 12/02."
+        },
+        {
+          "data": "2025-01-07",
+          "data_br": "07/01/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado - em análise."
+        },
+        {
+          "data": "2024-11-27",
+          "data_br": "27/11/2024",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para o dia 02/01 às 10h00 em Jaboticabal."
+        },
+        {
+          "data": "2024-01-03",
+          "data_br": "03/01/2024",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Benefício indeferido."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "nome": "Edson Alberto Moretto",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "16603352800",
+      "dn": "22071970",
+      "nome": "Edson Alberto Moretto",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Edson Alberto Moretto",
+      "status": "Última atualização em 03/06/2026: Pedido protocolado no INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-06-03",
+          "data_br": "03/06/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado - em análise."
+        },
+        {
+          "data": "2025-07-25",
+          "data_br": "25/07/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado - em análise"
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

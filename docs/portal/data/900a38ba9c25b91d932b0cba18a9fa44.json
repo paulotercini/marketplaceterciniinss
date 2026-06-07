@@ -1,0 +1,32 @@
+{
+  "nome": "Adriana Del Grossi Conde Neves",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "15194180861",
+      "dn": "24101971",
+      "nome": "Adriana Del Grossi Conde Neves",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Adriana Del Grossi Conde Neves",
+      "status": "Última atualização em 20/12/2024: Benefício deferido pelo INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2024-12-20",
+          "data_br": "20/12/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido até 19.05.2025 - Resultado e HISCRE em anexo."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

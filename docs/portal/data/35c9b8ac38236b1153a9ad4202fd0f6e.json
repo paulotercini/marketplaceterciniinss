@@ -1,0 +1,32 @@
+{
+  "nome": "Cicero João do Nascimento",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "84202351487",
+      "dn": "02021971",
+      "nome": "Cicero João do Nascimento",
+      "lista": "🙏 Aposentadorias Futuras",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Cicero João do Nascimento",
+      "status": "Última atualização em 21/01/2026: Prorrogação",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-01-21",
+          "data_br": "21/01/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Está recebendo benefício por incapacidade temporária desde 2022 e com previsão de cessação em 26/07/2026."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

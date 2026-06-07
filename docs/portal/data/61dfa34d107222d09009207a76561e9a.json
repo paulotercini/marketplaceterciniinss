@@ -1,0 +1,57 @@
+{
+  "nome": "Lucas Jose Deronze",
+  "atualizado_em": "07/06/2026 as 17:29",
+  "processos": [
+    {
+      "cpf": "38396085897",
+      "dn": "26051988",
+      "nome": "Lucas Jose Deronze",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Lucas Jose Deronze",
+      "status": "Última atualização em 13/11/2025: Perícia médica",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-11-13",
+          "data_br": "13/11/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para o dia Data: 03-12-2025 Horário: 16:00h."
+        },
+        {
+          "data": "2025-08-26",
+          "data_br": "26/08/2025",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Inicial distribuída."
+        },
+        {
+          "data": "2025-05-08",
+          "data_br": "08/05/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Benefício indeferido."
+        },
+        {
+          "data": "2025-04-17",
+          "data_br": "17/04/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para o dia 06.05.2025."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ]
+    }
+  ]
+}
