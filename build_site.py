@@ -52,6 +52,16 @@ SITUATIONS = [
     ("Já recebo e quero revisar", "Será que o seu benefício pode estar com valor menor do que deveria?", "revisoes-de-beneficio.html"),
 ]
 
+# Avaliações reais (Google) selecionadas
+TESTIMONIALS = [
+    ("Paulo Eduardo Correia", "Local Guide · Google", "Excelente atendimento, acompanhamento real e exclusivo. Mais que recomendo."),
+    ("Carla Barroso", "Atendimento on-line", "Recomendo! Dr. Paulo é um advogado que entende do assunto, prestativo e com excelente atendimento. Mesmo morando fora do Brasil, pude esclarecer minhas dúvidas."),
+    ("Rosemary A. P. Beltrame", "Avaliação no Google", "Muito gratificante. Ótimos profissionais e todas as dúvidas foram sanadas. Pontualidade no atendimento. Recomendo."),
+    ("Cleibi Barroso", "Atendimento on-line", "Quero expressar minha sincera gratidão ao Dr. Paulo Tercini Filho por esclarecer o meu caso, daqui do Japão."),
+    ("Sérgio Lindo", "Avaliação no Google", "Vim a uma consulta com o Dr. Paulo Tercini Filho. Previdenciário, um excelente profissional. Recomendo."),
+    ("Cristiana Rodrigues", "Avaliação no Google", "Excelente atendimento, desde a recepção até os advogados."),
+]
+
 # ---------------- SVGs ----------------
 WA_SVG = ('<svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.929-1.616z"/></svg>')
 ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
@@ -268,6 +278,14 @@ def home_page(pages_by_cat):
             for p in pages)
         panels += f'<div class="panel{" show" if k==0 else ""}" id="{CAT_TAB[cat]}"><p class="panel-intro">{esc(CATEGORY_INTRO[cat])}</p><div class="ben-grid">{cards}</div></div>'
 
+    quotes_html = "".join(f'''
+      <div class="quote-card" data-reveal>
+        <div class="qm">“</div>
+        <div class="stars">{STAR*5}</div>
+        <p>{esc(t)}</p>
+        <div class="who"><span class="av">{esc("".join(w[0] for w in n.split()[:2]).upper())}</span><div><b>{esc(n)}</b><span>{esc(s)}</span></div></div>
+      </div>''' for n, s, t in TESTIMONIALS)
+
     body = f"""
 <section class="hero">
   {peaks("hero-bg-peaks")}
@@ -390,12 +408,8 @@ def home_page(pages_by_cat):
         <div class="gtxt"><b>Ver avaliações</b>no nosso perfil do Google</div>
       </a>
     </div>
-    <div class="quote-grid">
-      <div class="quote-card" data-reveal><div class="qm">“</div><div class="stars">{STAR*5}</div><p>Espaço reservado para um depoimento real. Cole aqui o texto de uma avaliação do seu Google Meu Negócio.</p><div class="who"><span class="av">FOTO</span><div><b>Nome do cliente</b><span>Monte Alto/SP</span></div></div></div>
-      <div class="quote-card" data-reveal><div class="qm">“</div><div class="stars">{STAR*5}</div><p>Espaço reservado para um depoimento real. Depoimentos verdadeiros transmitem confiança e respeitam as regras da OAB.</p><div class="who"><span class="av">FOTO</span><div><b>Nome do cliente</b><span>Atendimento on-line</span></div></div></div>
-      <div class="quote-card" data-reveal><div class="qm">“</div><div class="stars">{STAR*5}</div><p>Espaço reservado para um depoimento real. Posso conectar este bloco às suas avaliações do Google, se preferir.</p><div class="who"><span class="av">FOTO</span><div><b>Nome do cliente</b><span>Região de Monte Alto</span></div></div></div>
+    <div class="quote-grid">{quotes_html}
     </div>
-    <p class="quote-note">Depoimentos são exemplos — substitua pelos textos reais das suas avaliações do Google.</p>
     <div style="margin-top:26px"><a class="btn btn-ghost" href="{GOOGLE_URL}" target="_blank" rel="noopener">Ver todas as avaliações no Google {ARROW}</a></div>
   </div>
 </section>
