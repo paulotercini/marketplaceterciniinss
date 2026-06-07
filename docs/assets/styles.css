@@ -165,3 +165,15 @@ a:hover .tlink svg,.tlink:hover svg{transform:translateX(4px)}
 
 /* stats: manter 13+ e 100% na mesma linha */
 .stat b{white-space:nowrap}
+
+/* ---------- Mega largo (Benefícios) ---------- */
+.mega.mega-wide{min-width:min(720px,92vw);padding:14px}
+.nav-item.open .mega.mega-wide{display:grid;grid-template-columns:repeat(2,1fr);gap:2px 18px}
+.mega-wide .mcol h6{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:8px 8px 4px}
+.mega-wide .mcol a{font-size:.9rem}
+@media(max-width:1040px){ .nav-item.open .mega.mega-wide{display:block} }
+
+/* correções do mega largo */
+.mega.mega-wide{left:auto;right:0}
+.mega-wide .mcol a{display:block}
+@media(max-width:1040px){ .mega.mega-wide{left:0;right:auto} }
