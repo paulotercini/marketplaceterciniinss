@@ -105,7 +105,7 @@ def header(pages_by_cat):
   <div class="wrap head-row">
     <a class="brand" href="index.html" aria-label="Início">
       <img src="assets/logo.svg" alt="Advocacia Previdenciária" />
-      <span class="bk"><b>Advocacia Previdenciária</b><span>Monte Alto · SP</span></span>
+      <span class="bk"><b>Advocacia Previdenciária</b><span>Paulo Roberto Tercini Filho</span></span>
     </a>
     <nav class="nav" aria-label="Principal">
       <div class="nav-item"><a href="index.html">Início</a></div>{megas}
@@ -113,7 +113,6 @@ def header(pages_by_cat):
       <div class="nav-item"><a href="contato.html">Contato</a></div>
     </nav>
     <div class="head-cta">
-      <span class="head-phone">OAB/SP <b>331.110</b></span>
       <a class="btn btn-primary" href="{wa()}" target="_blank" rel="noopener">{WA_SVG} WhatsApp</a>
     </div>
     <button class="burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
@@ -270,11 +269,6 @@ def home_page(pages_by_cat):
       <div class="hero-cta">
         <a class="btn btn-primary" href="{wa()}" target="_blank" rel="noopener">Quero saber se tenho direito {ARROW}</a>
         <a class="btn btn-ghost" href="#situacoes">Ver a minha situação</a>
-      </div>
-      <div class="hero-trust">
-        <div class="ht"><b>OAB/SP 331.110</b><span>Inscrição regular</span></div>
-        <div class="ht"><b>Monte Alto/SP</b><span>Em frente ao INSS</span></div>
-        <div class="ht"><b>Presencial &amp; on-line</b><span>Todo o Brasil</span></div>
       </div>
     </div>
     <div class="hero-visual" data-reveal>

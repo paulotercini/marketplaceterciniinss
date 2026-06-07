@@ -1,11 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" role="img" aria-label="Advocacia Previdenciária">
-  <!-- Marca do escritório: dois picos ("M") + conchas da balança da Justiça. -->
-  <!-- pico da direita (cinza claro) -->
-  <polygon points="140,16 210,150 188,150 140,66 92,150 72,150" fill="#8b8e92"/>
-  <!-- pico da esquerda (cinza escuro), à frente -->
-  <polygon points="92,44 152,150 130,150 92,92 50,150 30,150" fill="#54565a"/>
-  <!-- concha esquerda (cinza) -->
-  <path d="M44 150 Q92 150 122 156 Q92 187 44 150 Z" fill="#6c6e72"/>
-  <!-- concha direita (vermelho), maior e à frente -->
-  <path d="M98 150 Q150 150 208 141 Q150 201 98 150 Z" fill="#a82a2b"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 430" role="img" aria-label="Advocacia Previdenciária">
+  <polygon points="326,22 528,300 300,300" fill="#8d9095"/>
+  <polygon points="252,52 300,300 30,300" fill="#56585c"/>
+  <path d="M28 348 Q150 370 250 360 Q150 400 28 348 Z" fill="#6c6e72"/>
+  <path d="M256 358 Q392 360 522 312 Q392 420 256 360 Z" fill="#a82a2b"/>
 </svg>
