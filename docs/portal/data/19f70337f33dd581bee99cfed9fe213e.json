@@ -1,6 +1,6 @@
 {
   "nome": "Maria Dias Veloso",
-  "atualizado_em": "07/06/2026 as 15:38",
+  "atualizado_em": "07/06/2026 as 16:06",
   "processos": [
     {
       "cpf": "29143739881",
@@ -65,7 +65,7 @@
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
-          "url": "https://www.gov.br/inss/pt-br/canais_atendimento/cidadao-1/conselho-de-recursos-da-previdencia-social-crps/e-sisrec-acesso",
+          "url": "https://consultaprocessos.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
       ]
