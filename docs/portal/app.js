@@ -92,10 +92,10 @@ function renderProcesso(p) {
     wrap.appendChild(box);
   }
 
-  // Localizacao no Escritorio — card grande em DESTAQUE
+  // Localizacao Atual no Escritorio — card grande em DESTAQUE
   if (p.localizacao) {
     const card = el("div", "loc-destaque");
-    card.appendChild(el("div", "ld-label", "LOCALIZAÇÃO NO ESCRITÓRIO"));
+    card.appendChild(el("div", "ld-label", "LOCALIZAÇÃO ATUAL NO ESCRITÓRIO"));
     card.appendChild(el("div", "ld-valor", esc(p.localizacao)));
     wrap.appendChild(card);
   }
