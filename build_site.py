@@ -111,7 +111,7 @@ def header(pages_by_cat):
 <header class="site-head" id="head">
   <div class="wrap head-row">
     <a class="brand" href="index.html" aria-label="Início">
-      <img src="assets/logo.svg" alt="Advocacia Previdenciária" />
+      <img src="assets/logo.png" alt="Advocacia Previdenciária" onerror="this.onerror=null;this.src='assets/logo.svg'" />
       <span class="bk"><b>Advocacia Previdenciária</b><span>Paulo Roberto Tercini Filho</span></span>
     </a>
     <nav class="nav" aria-label="Principal">
@@ -155,7 +155,7 @@ def footer(pages_by_cat):
   <div class="wrap">
     <div class="foot-top">
       <div class="foot-brand">
-        <img src="assets/logo-white.svg" alt="Advocacia Previdenciária" />
+        <img src="assets/logo.png" alt="Advocacia Previdenciária" onerror="this.onerror=null;this.src='assets/logo-white.svg'" />
         <div class="bk"><b>Advocacia Previdenciária</b><span>{esc(OFFICE['advogado'])} · {esc(OFFICE['oab'])}</span></div>
         <p class="foot-addr">
           {esc(OFFICE['endereco'])}<br/>{esc(OFFICE['endereco_obs'])}<br/><br/>
