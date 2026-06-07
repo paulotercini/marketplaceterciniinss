@@ -116,66 +116,89 @@ EXC_INSS_PROT = [
     r"c[aâ]mara de julgamento", r"junta de recursos",
     r"conselho de recursos", r"recurso (?:especial|ordin[aá]rio|inominado)",
 ]
-PAD_DECISAO = [
+# --- Decisao do INSS sobre o beneficio (inicial) ---
+PAD_BEN_DEFERIDO = [
     r"benef[ií]cio (?:deferido|concedido|implantado)",
+    r"INSS deferiu",
+    r"pedido deferido", r"requerimento deferido",
+]
+PAD_INDEFERIMENTO_INSS = [
+    r"benef[ií]cio indeferido",
+    r"INSS (?:indeferiu|negou)\s+(?:o\s+)?(?:pedido|requerimento|benef[ií]cio)",
+    r"indeferimento (?:do|no) INSS",
+    r"pedido indeferido", r"requerimento indeferido",
+]
+
+# --- Resultado de acordao (recurso administrativo: JR / CAJ) ---
+PAD_PARCIAL = [
+    r"(?:deu\s+)?provimento\s+parcial",
+    r"parcial(?:mente)?\s+provido",
+    r"parcial\s+provimento",
+    r"deu\s+parcial",
+]
+PAD_DEU_PROV = [
+    r"deu\s+provimento\s+(?:ao\s+recurso|integral)?",
+    r"recurso\s+(?:integralmente\s+)?provido",
+    r"acolheu\s+(?:o\s+)?recurso",
+    r"provimento\s+integral",
+]
+PAD_NEGOU = [
+    r"negou\s+provimento",
+    r"recurso\s+negado(?:\s+provimento)?",
+    r"n[aã]o\s+(?:foi\s+)?(?:dado|deu)\s+provimento",
+    r"recurso\s+improvido",
+    r"recurso\s+n[aã]o\s+conhecido",
+]
+
+# --- Decisao judicial ---
+PAD_DECISAO_JUD = [
     r"decis[aã]o favor[aá]vel", r"sentença procedente",
     r"a[cç][aã]o julgada procedente",
-    r"deu provimento (?:ao recurso|integral)",
-    r"recurso provido", r"acolheu (?:o\s+)?recurso",
 ]
-PAD_INDEFERIMENTO = [
-    r"benef[ií]cio (?:indeferido|negado)", r"decis[aã]o desfavor[aá]vel",
+PAD_INDEFERIMENTO_JUD = [
+    r"decis[aã]o desfavor[aá]vel",
     r"sentença improcedente", r"a[cç][aã]o julgada improcedente",
-    r"recurso (?:negado|n[aã]o conhecido|improvido)",
-    r"negou provimento", r"n[aã]o (?:foi )?(?:dado|deu) provimento",
 ]
+
 PAD_PRORROGACAO = [r"prorrog[aá]", r"prorroga[cç][aã]o"]
 PAD_DCB = [r"\bDCB\b", r"cessa[cç][aã]o.*benef[ií]cio", r"data de cessa[cç][aã]o"]
 
 # --- Recurso administrativo (CRPS / JR / CAJ / e-SISREC) ---
-PAD_RECURSO_PROT = [
-    r"recurso (?:especial|ordin[aá]rio|inominado)\s+(?:protocolado|interposto)",
-    r"protocol(?:ei|ado|ada)\s+(?:o\s+)?recurso",
-    r"interpus (?:o\s+)?recurso",
-    r"recurso interposto",
-    # so casa "requerimento protocolado" se houver contexto de recurso adm
-    r"requerimento protocolado.*(?:tarefa|e-?sisrec|crps|cajul|c[aâ]mara)",
+PAD_RECURSO_ESP = [
+    r"recurso\s+especial(?:\s+(?:protocolado|interposto|enviado))?",
+    r"protocol(?:ei|ado|ada)\s+(?:o\s+)?recurso\s+especial",
+    r"interpus\s+(?:o\s+)?recurso\s+especial",
+    r"recurso\s+(?:para\s+)?(?:as?\s+)?c[aâ]mara(?:s)?\s+de\s+julgamento",
+    r"recurso\s+(?:para\s+)?CAJ\b",
+]
+PAD_RECURSO_ORD = [
+    r"recurso\s+ordin[aá]rio(?:\s+(?:protocolado|interposto|enviado))?",
+    r"protocol(?:ei|ado|ada)\s+(?:o\s+)?recurso\s+ordin[aá]rio",
+    r"interpus\s+(?:o\s+)?recurso\s+ordin[aá]rio",
+    r"recurso\s+(?:para\s+)?(?:a\s+)?junta\s+de\s+recursos",
+    r"recurso\s+(?:para\s+)?JR\b",
 ]
 PAD_EMBARGOS = [
-    r"embargos de declara[cç][aã]o",
-    r"interpus embargos", r"apresentei embargos", r"opus embargos",
-    r"protocolei embargos",
+    r"embargos\s+de\s+declara[cç][aã]o",
+    r"interpus\s+embargos", r"apresentei\s+embargos",
+    r"protocol(?:ei|ado|ada)\s+embargos", r"opus\s+embargos",
 ]
+# fallback generico (quando nao da pra dizer se eh RE/RO)
+PAD_RECURSO_PROT = [
+    r"recurso\s+(?:protocolado|interposto)",
+    r"interpus\s+(?:o\s+)?recurso",
+    r"requerimento protocolado.*(?:tarefa|e-?sisrec|crps|cajul|c[aâ]mara)",
+]
+# Sessao agendada — exige indicio positivo (numero da sessao, data, ou "agendou")
+# para nao casar com "Aguardando sessao" generico.
 PAD_SESSAO_JULGAMENTO = [
-    r"sess[aã]o de julgamento",
-    r"agendou julgamento", r"julgamento (?:ordin[aá]ri[oa]|monocr[aá]tic[oa])",
-    r"pauta de julgamento", r"incluido em pauta",
-]
-PAD_ENCAMINHAMENTO_ADM = [
-    r"encaminhamento\s*(?:-|\()?\s*(?:CRPS|JR|CAJ|\d+\s*ª\s*(?:JR|CAJ))",
-    r"distribu[ií]do ao conselheiro",
-    r"distribu[ií]do (?:a|para)\s+conselheir",
-    r"distribu[ií]\w*\s+ao relator",
-]
-PAD_AGUARDANDO = [
-    r"aguardando\s+(?:sess[aã]o|julgamento|an[aá]lise)",
-    r"em an[aá]lise\s+(?:no\s+)?(?:inss|crps|jr|caj)",
-    r"situa[cç][aã]o.*aguardando",
-]
-PAD_SEM_MOVIMENTACAO = [
-    r"n[aã]o houve movimenta[cç][aã]o",
-    r"sem movimenta[cç][aã]o",
-    r"sem andamento",
-]
-PAD_EXIGENCIA = [
-    r"exig[eê]ncia(?:s)?\s+(?:do\s+)?inss",
-    r"intima[cç][aã]o.*exig[eê]ncia",
-    r"cumprir exig[eê]ncia",
-]
-PAD_DOCS_RECEBIDOS = [
-    r"documentos recebidos",
-    r"recebi os documentos",
-    r"cliente trouxe os documentos",
+    r"sess[aã]o.*N[ºo°]?\s*\d+",                  # "Sessão ... Nº 0180/2026"
+    r"sess[aã]o.*\d{2}/\d{2}/\d{2,4}",             # "Sessão ... 22/05/26"
+    r"agendou\s+(?:o\s+)?julgamento",
+    r"julgamento\s+(?:ordin[aá]ri[oa]|monocr[aá]tic[oa])",
+    r"pauta\s+de\s+julgamento",
+    r"inclu[ií]do\s+em\s+pauta",
+    r"julgamento\s+(?:agendado|marcado)",
 ]
 
 # Remove ruido interno do final do conteudo (ex: "(P): Ok.", "(A): ok!", "(M): ok")
@@ -316,25 +339,41 @@ def limpar_descricao(conteudo):
 
 
 # (categoria, padroes, exclusoes) — avaliados em ordem; o primeiro hit ganha.
-# Decisao vem ANTES de Embargos: "Recurso negado. Verificar embargos" eh decisao.
+# Mais especifico antes; resultados antes de interposicao.
 TIMELINE_CATEGORIAS = [
+    # judicial
     ("Ação judicial protocolada", PAD_JUDICIAL, None),
-    ("Decisão favorável", PAD_DECISAO, None),
-    ("Decisão desfavorável", PAD_INDEFERIMENTO, None),
-    ("Embargos de declaração", PAD_EMBARGOS, None),
-    ("Sessão de julgamento agendada", PAD_SESSAO_JULGAMENTO, None),
+    ("Decisão judicial favorável", PAD_DECISAO_JUD, None),
+    ("Decisão judicial desfavorável", PAD_INDEFERIMENTO_JUD, None),
+
+    # acordao do recurso administrativo (resultado)
+    # parcial antes de "deu provimento" porque "deu parcial" tambem casa o segundo
+    ("Acórdão: deu provimento parcial ao recurso", PAD_PARCIAL, None),
+    ("Acórdão: deu provimento ao recurso", PAD_DEU_PROV, None),
+    ("Acórdão: negou provimento ao recurso", PAD_NEGOU, None),
+
+    # decisao inicial do INSS sobre o beneficio
+    ("Benefício deferido pelo INSS", PAD_BEN_DEFERIDO, None),
+    ("Indeferimento do INSS", PAD_INDEFERIMENTO_INSS, None),
+
+    # recursos — especifico antes de generico
+    ("Recurso Especial interposto", PAD_RECURSO_ESP, None),
+    ("Embargos de declaração interpostos", PAD_EMBARGOS, None),
+    ("Recurso Ordinário interposto", PAD_RECURSO_ORD, None),
     ("Recurso administrativo protocolado", PAD_RECURSO_PROT, None),
-    ("Encaminhamento administrativo", PAD_ENCAMINHAMENTO_ADM, None),
+
+    # agendamento
+    ("Sessão de julgamento agendada", PAD_SESSAO_JULGAMENTO, None),
+
+    # eventos previdenciarios
     ("Cessação programada (DCB)", PAD_DCB, None),
     ("Prorrogação", PAD_PRORROGACAO, None),
     ("Perícia médica", PAD_PERICIA, EXC_PERICIA),
     ("Avaliação social", PAD_SOCIAL, None),
     ("Audiência", PAD_AUDIENCIA, None),
-    ("Exigência do INSS", PAD_EXIGENCIA, None),
-    ("Documentos recebidos", PAD_DOCS_RECEBIDOS, None),
-    ("Benefício requerido ao INSS", PAD_INSS_PROT, EXC_INSS_PROT),
-    ("Aguardando andamento", PAD_AGUARDANDO, None),
-    ("Sem movimentação", PAD_SEM_MOVIMENTACAO, None),
+
+    # entrada inicial no INSS — fica por ultimo (fallback)
+    ("Pedido protocolado no INSS", PAD_INSS_PROT, EXC_INSS_PROT),
 ]
 
 
