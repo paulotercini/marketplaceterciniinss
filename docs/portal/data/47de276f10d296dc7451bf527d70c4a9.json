@@ -1,0 +1,96 @@
+{
+  "nome": "João da Silva Teste",
+  "atualizado_em": "07/06/2026 as 17:30",
+  "processos": [
+    {
+      "cpf": "11122233344",
+      "dn": "07061990",
+      "nome": "João da Silva Teste",
+      "lista": "🌻 INSS",
+      "titulo_tarefa": "João da Silva Teste",
+      "status": "Pericia medica agendada em 5 dias: 12/06/2026 as 10:30 (INSS de Matao)",
+      "proximo_evento": {
+        "tipo": "Pericia medica",
+        "data": "2026-06-12",
+        "data_br": "12/06/2026",
+        "hora": "10:30",
+        "local": "INSS de Matao"
+      },
+      "timeline": [
+        {
+          "data": "2026-06-07",
+          "data_br": "07/06/2026",
+          "tipo": "Pericia medica",
+          "descricao": "Documentos recebidos."
+        },
+        {
+          "data": "2026-05-20",
+          "data_br": "20/05/2026",
+          "tipo": "Pericia medica",
+          "descricao": "Pericia agendada para o dia 12/06/2026 as 10:30h no INSS de Matao."
+        },
+        {
+          "data": "2026-05-15",
+          "data_br": "15/05/2026",
+          "tipo": "Beneficio requerido ao INSS",
+          "descricao": "Beneficio solicitado - em analise."
+        }
+      ],
+      "notas_publicas": [
+        {
+          "data": "2026-06-07",
+          "data_br": "07/06/2026",
+          "texto": "Documentos recebidos. Aguardando a pericia medica na proxima semana."
+        }
+      ]
+    },
+    {
+      "cpf": "11122233344",
+      "dn": "07061990",
+      "nome": "João da Silva Teste",
+      "lista": "👪 Judicial",
+      "titulo_tarefa": "João da Silva Teste",
+      "status": "Acao judicial protocolada em 01/06/2026",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-06-01",
+          "data_br": "01/06/2026",
+          "tipo": "Acao judicial protocolada",
+          "descricao": "Peticao inicial distribuida."
+        }
+      ],
+      "notas_publicas": [
+        {
+          "data": "2026-06-03",
+          "data_br": "03/06/2026",
+          "texto": "Acao judicial distribuida. Vamos acompanhar e avisar dos andamentos."
+        }
+      ]
+    },
+    {
+      "cpf": "11122233344",
+      "dn": "07061990",
+      "nome": "João da Silva Teste",
+      "lista": "🙋 Escritório",
+      "titulo_tarefa": "João da Silva Teste",
+      "status": "Audiencia agendada em 72 dias: 18/08/2026 as 14:00",
+      "proximo_evento": {
+        "tipo": "Audiencia",
+        "data": "2026-08-18",
+        "data_br": "18/08/2026",
+        "hora": "14:00",
+        "local": ""
+      },
+      "timeline": [
+        {
+          "data": "2026-06-05",
+          "data_br": "05/06/2026",
+          "tipo": "Audiencia",
+          "descricao": "Audiencia designada para o dia 18/08/2026 as 14h00 na 1a Vara Federal."
+        }
+      ],
+      "notas_publicas": []
+    }
+  ]
+}
