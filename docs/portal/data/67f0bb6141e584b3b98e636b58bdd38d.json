@@ -1,6 +1,6 @@
 {
   "nome": "Damião Marques da Silva",
-  "atualizado_em": "07/06/2026 as 17:29",
+  "atualizado_em": "07/06/2026 as 17:55",
   "processos": [
     {
       "cpf": "24023094404",
@@ -15,8 +15,8 @@
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
       ]

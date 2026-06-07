@@ -1,6 +1,6 @@
 {
   "nome": "Eudete Batista da Fonseca",
-  "atualizado_em": "07/06/2026 as 17:29",
+  "atualizado_em": "07/06/2026 as 17:55",
   "processos": [
     {
       "cpf": "17391501808",
@@ -28,9 +28,16 @@
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
       ]
     }

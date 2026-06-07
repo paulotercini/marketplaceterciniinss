@@ -1,6 +1,6 @@
 {
   "nome": "Marcio Roberto de Andrade",
-  "atualizado_em": "07/06/2026 as 17:29",
+  "atualizado_em": "07/06/2026 as 17:55",
   "processos": [
     {
       "cpf": "13299473808",
@@ -28,13 +28,13 @@
           "data": "2025-11-24",
           "data_br": "24/11/2025",
           "tipo": "Perícia médica",
-          "descricao": "Marcio enviou o documento médico, somente anexar?"
+          "descricao": "Somente aguardar para que leve na perícia no dia 15/12."
         },
         {
           "data": "2025-10-08",
           "data_br": "08/10/2025",
           "tipo": "Perícia médica",
-          "descricao": "Ele disse que a consulta do dia 02, foi reagendada para o dia 23."
+          "descricao": "(P): Ok, fiz o requerimento do benefício e agendou a perícia para o dia 15/12 as 08:00h no INSS de Bebedouro."
         },
         {
           "data": "2025-08-11",
@@ -52,9 +52,16 @@
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
       ]
     }

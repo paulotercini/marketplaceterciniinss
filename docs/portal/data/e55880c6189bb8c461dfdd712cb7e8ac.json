@@ -1,6 +1,6 @@
 {
   "nome": "Ivani Aparecida Belmiro Bueno",
-  "atualizado_em": "07/06/2026 as 17:29",
+  "atualizado_em": "07/06/2026 as 17:55",
   "processos": [
     {
       "cpf": "14761884835",
@@ -31,10 +31,16 @@
           "descricao": "Perícia agendada para o dia 11/06 às 09h20."
         },
         {
-          "data": "2025-03-10",
-          "data_br": "10/03/2025",
+          "data": "2025-02-26",
+          "data_br": "26/02/2025",
           "tipo": "Benefício deferido pelo INSS",
-          "descricao": "Chama, faz barulhos de alguns bipes e cai na caixa postal."
+          "descricao": "Benefício concedido - O início do benefício foi fixado em 18/01/2025 e a cessação será em 16/03/2025."
+        },
+        {
+          "data": "2025-01-20",
+          "data_br": "20/01/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado - Em análise."
         },
         {
           "data": "2024-12-06",
@@ -46,7 +52,7 @@
           "data": "2024-11-26",
           "data_br": "26/11/2024",
           "tipo": "Pedido protocolado no INSS",
-          "descricao": "Trouxe os exames do médico."
+          "descricao": "(P): Ok, solicitei o benefício usando somente o relatório médico da psiquiatra."
         },
         {
           "data": "2023-10-27",
@@ -58,7 +64,7 @@
           "data": "2023-09-06",
           "data_br": "06/09/2023",
           "tipo": "Perícia médica",
-          "descricao": "Laudo ainda não disponível."
+          "descricao": "11.07.2023: Perícia remarcada para o dia 31 de agosto (comprovante em anexo)."
         },
         {
           "data": "2023-08-31",
@@ -70,9 +76,16 @@
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
       ]
     }

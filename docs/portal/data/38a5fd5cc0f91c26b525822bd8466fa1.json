@@ -1,6 +1,6 @@
 {
   "nome": "Antonio Fabricio Costa",
-  "atualizado_em": "07/06/2026 as 17:29",
+  "atualizado_em": "07/06/2026 as 17:55",
   "processos": [
     {
       "cpf": "08367312805",
@@ -16,13 +16,13 @@
           "data": "2025-10-14",
           "data_br": "14/10/2025",
           "tipo": "Prorrogação",
-          "descricao": "Concedido até 14/11!"
+          "descricao": "Também informa pra ele que se quiser prorrogar o benefício irá precisar de um novo relatório médico."
         },
         {
           "data": "2025-10-01",
           "data_br": "01/10/2025",
           "tipo": "Prorrogação",
-          "descricao": "Teve acidente de trabalho onde cortou pedaço do dedo indicador da mão direita (trabalha no sítio)."
+          "descricao": "Depois será necessário ver sobre prorrogação (pedi pra ele conseguir novo relatório médico para afastar mais tempo) ou auxílio-acidente (precisaremos ver se tem sequela)."
         }
       ],
       "notas_publicas": [],

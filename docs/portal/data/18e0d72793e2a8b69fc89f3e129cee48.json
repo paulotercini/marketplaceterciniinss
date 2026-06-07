@@ -1,6 +1,6 @@
 {
   "nome": "Madalena Ramos Mendes",
-  "atualizado_em": "07/06/2026 as 17:29",
+  "atualizado_em": "07/06/2026 as 17:55",
   "processos": [
     {
       "cpf": "10643658840",
@@ -16,19 +16,19 @@
           "data": "2026-03-09",
           "data_br": "09/03/2026",
           "tipo": "Cessação programada (DCB)",
-          "descricao": "Benefício não foi prorrogado."
+          "descricao": "É necessário validar uma contribuição após a cessação do benefício por incapacidade."
         },
         {
           "data": "2026-01-25",
           "data_br": "25/01/2026",
           "tipo": "Prorrogação",
-          "descricao": "Verifiquei que tem perícia agendada em 06/03/2026."
+          "descricao": "Em 09/03/2026 verificar se o benefício foi prorrogado."
         },
         {
           "data": "2025-12-30",
           "data_br": "30/12/2025",
           "tipo": "Cessação programada (DCB)",
-          "descricao": "O benefício 7247395673 foi prorrogado."
+          "descricao": "Data da cessação do benefício: 29/01/2026."
         },
         {
           "data": "2025-11-29",

@@ -1,6 +1,6 @@
 {
   "nome": "Ivanildo Cândido Ribeiro",
-  "atualizado_em": "07/06/2026 as 17:29",
+  "atualizado_em": "07/06/2026 as 17:55",
   "processos": [
     {
       "cpf": "10909422818",
@@ -16,15 +16,22 @@
           "data": "2024-11-21",
           "data_br": "21/11/2024",
           "tipo": "Prorrogação",
-          "descricao": "1) Ajuizar processo para requerer o benefício por incapacidade desde 16//07/2024 até 24/10/2024."
+          "descricao": "3) Também em 11/12/2024 verificarmos sobre a prorrogação do benefício que encerrará em 23/12."
         }
       ],
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
       ]
     }
