@@ -95,7 +95,7 @@ def localizacao_no_escritorio(lista_nome, body):
 LINKS_CATALOGO = {
     "e-sisrec": {
         "label": "Consultar no e-SISREC",
-        "url": "https://www.gov.br/inss/pt-br/canais_atendimento/cidadao-1/conselho-de-recursos-da-previdencia-social-crps/e-sisrec-acesso",
+        "url": "https://consultaprocessos.inss.gov.br/",
         "obs": "Use seu CPF e sua senha gov.br",
     },
     "meu-inss": {
