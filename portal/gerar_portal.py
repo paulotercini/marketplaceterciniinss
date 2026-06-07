@@ -130,67 +130,67 @@ LINKS_CATALOGO = {
 }
 
 
+def _links_judicial(body_low):
+    """Detecta o sistema judicial pelo body; se nao detectar, devolve as
+    opcoes mais comuns (PJe 1g, PJe 2g, ESAJ)."""
+    out = []
+    if ("pje1" in body_low or "1º grau" in body_low or "1 grau" in body_low
+            or "primeira instância" in body_low):
+        out.append("pje1-trf3")
+    if ("pje2" in body_low or "2º grau" in body_low or "2 grau" in body_low
+            or "segunda instância" in body_low):
+        out.append("pje2-trf3")
+    if "esaj" in body_low or "tjsp" in body_low or "tj sp" in body_low:
+        out.append("esaj")
+    if "eproc" in body_low:
+        out.append("eproc")
+    if "stj" in body_low:
+        out.append("stj")
+    if "tnu" in body_low:
+        out.append("tnu")
+    if not out:
+        out = ["pje1-trf3", "pje2-trf3", "esaj"]
+    # dedupe preservando ordem
+    seen = set(); uniq = []
+    for k in out:
+        if k not in seen:
+            seen.add(k); uniq.append(k)
+    return uniq
+
+
 def links_para_processo(localizacao, body):
     """Devolve lista de links externos para o cliente consultar andamentos.
 
-    Detecta por conteudo do body (mais especifico); se nao houver indicio,
-    cai no padrao da Localizacao.
+    Prioriza a Localizacao Atual no Escritorio. Se a localizacao indicar
+    judicial, mostra apenas links judiciais (mesmo que o body mencione
+    INSS no historico). Se for INSS, mostra Meu INSS. Etc.
     """
     body_low = (body or "").lower()
-    out = []
 
-    # Recurso administrativo: e-SISREC sempre que body tiver indicios CRPS/JR/CAJ
-    indic_rec_adm = ["e-sisrec", "esisrec", "crps", "câmara de julgamento",
-                     "camara de julgamento", "junta de recursos",
-                     "conselho de recursos"]
-    if any(s in body_low for s in indic_rec_adm):
-        out.append("e-sisrec")
-        return [LINKS_CATALOGO[k] for k in out]
+    # Por localizacao (prioritario)
+    if localizacao == "Aguardando Decisão Judicial":
+        return [LINKS_CATALOGO[k] for k in _links_judicial(body_low)]
 
-    # MEU INSS — quando localizacao for INSS ou body indicar
-    if localizacao == "Aguardando decisão do INSS" or any(
-            s in body_low for s in ["meu inss", "meuinss", "pat/gerid",
-                                     "benefício solicitado",
-                                     "beneficio solicitado"]):
-        out.append("meu-inss")
-        return [LINKS_CATALOGO[k] for k in out]
-
-    # Judicial — detecta sistema especifico via body
-    indic_judicial = ["pje", "esaj", "eproc", "tjsp", "trf3", "stj", "tnu",
-                      "vara federal", "vara civel", "vara cível",
-                      "distribuída", "distribuida", "processo judicial",
-                      "juízo", "juizo"]
-    eh_judicial = (localizacao == "Aguardando Decisão Judicial"
-                   or any(s in body_low for s in indic_judicial))
-    if eh_judicial:
-        if "pje1" in body_low or "1º grau" in body_low or "1 grau" in body_low \
-                or "primeira instância" in body_low:
-            out.append("pje1-trf3")
-        if "pje2" in body_low or "2º grau" in body_low or "2 grau" in body_low \
-                or "segunda instância" in body_low:
-            out.append("pje2-trf3")
-        if "esaj" in body_low or "tjsp" in body_low or "tj sp" in body_low:
-            out.append("esaj")
-        if "eproc" in body_low:
-            out.append("eproc")
-        if "stj" in body_low:
-            out.append("stj")
-        if "tnu" in body_low:
-            out.append("tnu")
-        if not out:
-            # nao deu pra detectar — mostra as opcoes mais comuns
-            out = ["pje1-trf3", "pje2-trf3", "esaj"]
-        # dedupe preservando ordem
-        seen = set(); uniq = []
-        for k in out:
-            if k not in seen:
-                seen.add(k); uniq.append(k)
-        return [LINKS_CATALOGO[k] for k in uniq]
-
-    # Tarefas com Prazo / Conselho de Recursos sem indicio claro -> e-SISREC
-    if localizacao in ("Para apresentação de petição pelo advogado",
-                       "Aguardando decisão da Junta de Recursos",
+    if localizacao in ("Aguardando decisão da Junta de Recursos",
                        "Aguardando decisão da Câmara de Julgamento"):
+        return [LINKS_CATALOGO["e-sisrec"]]
+
+    if localizacao == "Aguardando decisão do INSS":
+        return [LINKS_CATALOGO["meu-inss"]]
+
+    if localizacao == "Para apresentação de petição pelo advogado":
+        # ambivalente: petição pode ser judicial OU CRPS. Decide pelo body.
+        indic_rec_adm = ["e-sisrec", "esisrec", "crps", "câmara de julgamento",
+                         "camara de julgamento", "junta de recursos",
+                         "conselho de recursos"]
+        if any(s in body_low for s in indic_rec_adm):
+            return [LINKS_CATALOGO["e-sisrec"]]
+        indic_judicial = ["pje", "esaj", "eproc", "tjsp", "trf3",
+                          "vara federal", "vara civel", "vara cível",
+                          "distribuída", "distribuida", "processo judicial"]
+        if any(s in body_low for s in indic_judicial):
+            return [LINKS_CATALOGO[k] for k in _links_judicial(body_low)]
+        # default: assume recurso administrativo
         return [LINKS_CATALOGO["e-sisrec"]]
 
     return []
@@ -199,6 +199,20 @@ def links_para_processo(localizacao, body):
 RE_CPF_TITULO = re.compile(r"#\s*(\d{11})\b")
 RE_DN_BODY = re.compile(r"^\s*DN\s*[:=]\s*(\d{2})/(\d{2})/(\d{4})\s*$", re.MULTILINE | re.IGNORECASE)
 RE_DATA_BR = re.compile(r"\b(\d{2})/(\d{2})/(\d{4})\b")
+# Cabecalho de entrada DD.MM.AAAA (X): no MEIO da linha (sem \n antes).
+# Acontece quando Paulo digita "...Verificar em 17/03.07.03.2025 (A): ..."
+# (data nova colada na data anterior). Pre-processamos para inserir \n.
+RE_HEADER_INLINE = re.compile(
+    r"(?<!^)(?<!\n)(\d{2}\.\d{2}\.\d{4}\s*\([A-Z]+\)\s*[:;])"
+)
+
+
+def normalizar_body(body):
+    """Insere quebra de linha antes de cabecalhos de entrada que estao
+    no meio de outra linha. Evita que multiplas entradas virem uma so."""
+    if not body:
+        return body
+    return RE_HEADER_INLINE.sub(r"\n\1", body)
 # Data curta DD/MM (sem ano) — usado para inferir ano corrente
 RE_DATA_CURTA = re.compile(r"\b(\d{2})/(\d{2})\b(?!/)")
 # Aceita ":" ou ";" no separador (typos comuns no body)
@@ -488,6 +502,7 @@ def extrair_proximo_evento(titulo, body):
 
     Aceita datas no formato DD/MM/AAAA OU DD/MM (infere ano corrente).
     """
+    body = normalizar_body(body)
     full = (titulo or "") + "\n" + (body or "")
     candidatos = []
 
@@ -569,8 +584,12 @@ def extrair_proximo_evento(titulo, body):
     return sorted(candidatos, key=lambda x: x["data"])[0]
 
 
-def limpar_descricao(conteudo):
-    """Devolve uma descricao curta e limpa para mostrar ao cliente."""
+def limpar_descricao(conteudo, padroes=None):
+    """Devolve uma descricao curta e limpa para mostrar ao cliente.
+
+    Se 'padroes' for fornecido, escolhe a primeira SENTENCA que casa
+    com algum padrao (em vez de pegar simplesmente a 1a frase).
+    """
     txt = RE_BOT_LOG.sub("", conteudo)
     txt = RE_RESPOSTA_INTERNA.sub("", txt)
     txt = RE_LINHAS_RUIDO.sub("", txt)
@@ -579,9 +598,14 @@ def limpar_descricao(conteudo):
     # colapsa multiplas quebras / espacos
     txt = re.sub(r"\n+", " ", txt)
     txt = re.sub(r"\s{2,}", " ", txt).strip()
-    # primeira frase ate 240 chars
-    primeira = re.split(r"(?<=[.!?])\s+", txt)[0][:240]
-    return primeira.strip()
+    sentencas = re.split(r"(?<=[.!?])\s+", txt)
+    # escolhe a sentenca relevante para a categoria, se aplicavel
+    if padroes:
+        for s in sentencas:
+            s_low = s.lower()
+            if any(re.search(p, s_low) for p in padroes):
+                return s.strip()[:240]
+    return sentencas[0][:240].strip() if sentencas else ""
 
 
 # (categoria, padroes, exclusoes) — avaliados em ordem; o primeiro hit ganha.
@@ -626,11 +650,15 @@ TIMELINE_CATEGORIAS = [
 
 
 def categorizar_entrada(conteudo):
-    """Retorna o nome da categoria ou None."""
+    """Retorna (nome, padroes_que_casaram) ou None.
+
+    Os padroes sao devolvidos para que limpar_descricao escolha a
+    sentenca relevante, em vez de simplesmente pegar a primeira.
+    """
     ctx_low = conteudo.lower()
     for nome, padroes, exclui in TIMELINE_CATEGORIAS:
         if hit(ctx_low, padroes, exclui):
-            return nome
+            return nome, padroes
     return None
 
 
@@ -639,6 +667,7 @@ def extrair_timeline(body):
 
     Retorna lista ordenada por data desc: [{data, data_br, tipo, descricao}].
     """
+    body = normalizar_body(body)
     timeline = []
     for m in RE_ENTRADA.finditer(body or ""):
         d = parse_data(m.group(1), m.group(2), m.group(3))
@@ -648,14 +677,15 @@ def extrair_timeline(body):
         conteudo = RE_BOT_LOG.sub("", conteudo).strip()
         if not conteudo:
             continue
-        tipo = categorizar_entrada(conteudo)
-        if not tipo:
+        cat = categorizar_entrada(conteudo)
+        if not cat:
             continue
+        nome, padroes = cat
         timeline.append({
             "data": d.isoformat(),
             "data_br": d.strftime("%d/%m/%Y"),
-            "tipo": tipo,
-            "descricao": limpar_descricao(conteudo),
+            "tipo": nome,
+            "descricao": limpar_descricao(conteudo, padroes=padroes),
         })
     # dedupe por (data, tipo)
     visto = set(); out = []
@@ -669,6 +699,7 @@ def extrair_timeline(body):
 
 def extrair_notas_publicas(body):
     """Entradas marcadas (PUB): vao para o cliente, na integra."""
+    body = normalizar_body(body)
     notas = []
     for m in RE_ENTRADA.finditer(body or ""):
         if m.group(4) != "PUB":
