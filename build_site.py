@@ -33,21 +33,22 @@ TEL_URL = f"tel:+{OFFICE['tel_link']}"
 def wa(text="Olá, gostaria de tirar uma dúvida previdenciária."):
     return f"https://wa.me/{OFFICE['wa_link']}?text=" + urllib.parse.quote(text)
 
-CATEGORY_ORDER = ["Aposentadorias", "Incapacidade", "Assistencial", "Revisões e Planejamento"]
+CATEGORY_ORDER = ["Aposentadorias", "Incapacidade", "Outros benefícios", "Assistencial", "Revisões e Planejamento"]
 CATEGORY_INTRO = {
     "Aposentadorias": "Regras de transição, direito adquirido e modalidades especiais após a Reforma da Previdência (EC 103/2019).",
     "Incapacidade": "Auxílios e aposentadorias para quem teve a capacidade de trabalho afetada por doença ou acidente.",
-    "Assistencial": "Proteção a quem depende do amparo do Estado e aos dependentes do segurado.",
+    "Outros benefícios": "Benefícios pagos aos dependentes do segurado e à maternidade.",
+    "Assistencial": "Amparo assistencial (BPC/LOAS) ao idoso e à pessoa com deficiência em situação de miserabilidade — sem exigir contribuições.",
     "Revisões e Planejamento": "Revisar benefícios já concedidos e planejar a melhor aposentadoria possível.",
 }
-CAT_TAB = {"Aposentadorias": "apo", "Incapacidade": "inc", "Assistencial": "ass", "Revisões e Planejamento": "rev"}
+CAT_TAB = {"Aposentadorias": "apo", "Incapacidade": "inc", "Outros benefícios": "out", "Assistencial": "ass", "Revisões e Planejamento": "rev"}
 
 SITUATIONS = [
     ("Quero me aposentar", "Descubra a melhor regra e o melhor valor antes de dar entrada no pedido.", "planejamento-previdenciario.html"),
     ("Meu pedido foi negado", "O INSS negou ou cortou seu benefício? Em muitos casos é possível reverter.", "contato.html"),
     ("Adoeci e não consigo trabalhar", "Auxílio-doença ou aposentadoria por incapacidade, quando a saúde não permite.", "auxilio-doenca.html"),
     ("Perdi um familiar", "Pensão por morte para quem dependia financeiramente da pessoa.", "pensao-por-morte.html"),
-    ("Tenho deficiência ou baixa renda", "BPC/LOAS: um salário mínimo para idosos e pessoas com deficiência.", "bpc-loas.html"),
+    ("Tenho deficiência ou baixa renda", "BPC/LOAS: um salário mínimo para idosos e pessoas com deficiência.", "bpc-deficiente.html"),
     ("Já recebo e quero revisar", "Será que o seu benefício pode estar com valor menor do que deveria?", "revisoes-de-beneficio.html"),
 ]
 
@@ -132,7 +133,8 @@ def footer(pages_by_cat):
     mais = (
         '<a href="auxilio-doenca.html">Auxílio-Doença</a>'
         '<a href="auxilio-acidente.html">Auxílio-Acidente</a>'
-        '<a href="bpc-loas.html">BPC/LOAS</a>'
+        '<a href="bpc-idoso.html">BPC ao Idoso</a>'
+        '<a href="bpc-deficiente.html">BPC ao Deficiente</a>'
         '<a href="pensao-por-morte.html">Pensão por Morte</a>'
         '<a href="revisoes-de-beneficio.html">Revisões</a>'
         '<a href="sobre.html">O Escritório</a>'
