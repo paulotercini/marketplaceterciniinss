@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 CONTENT_DIR = ROOT / "site_content"
 OUT_DIR = ROOT / "docs"
-ASSET_V = "7"
+ASSET_V = "8"
 
 OFFICE = {
     "advogado": "Paulo Roberto Tercini Filho",
