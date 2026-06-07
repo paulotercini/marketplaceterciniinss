@@ -1,9 +1,9 @@
 {
   "slug": "salario-maternidade",
-  "category": "Assistencial",
+  "category": "Outros benefícios",
   "title": "Salário-Maternidade (B80/B81)",
   "nav_label": "Salário-Maternidade",
-  "order": 3,
+  "order": 2,
   "meta_description": "Salário-maternidade (B80/B81): requisitos, carência e regras para empregada, contribuinte individual, segurada especial e adoção. Monte Alto/SP.",
   "hero_subtitle": "Benefício pago à segurada do INSS em razão de parto, adoção, guarda para adoção, aborto não criminoso ou natimorto.",
   "intro": [
@@ -99,5 +99,5 @@
       "a": "Sim. Em caso de óbito da mãe, o salário-maternidade pode ser transferido ao pai ou cônjuge sobrevivente pelo período restante, nos termos da LC 146/2014."
     }
   ],
-  "related": ["pensao-por-morte", "bpc-loas", "aposentadoria-rural"]
+  "related": ["pensao-por-morte", "bpc-deficiente", "aposentadoria-rural"]
 }
