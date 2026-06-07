@@ -417,6 +417,45 @@ def list_all_tasks(list_id):
     return out
 
 
+def list_checklist_items(list_id, task_id):
+    """Devolve items do checklist da tarefa, ou [] em caso de erro."""
+    try:
+        r = _req("GET", f"/me/todo/lists/{list_id}/tasks/{task_id}/checklistItems")
+        return r.get("value", [])
+    except Exception:
+        return []
+
+
+# Data isolada no item do checklist: "10/09/1964", "DN: 10/09/1964", etc.
+RE_DATA_CHECKLIST = re.compile(r"\b(\d{2})/(\d{2})/(\d{4})\b")
+
+
+def extrair_dn_do_checklist(items):
+    """Procura uma DN plausivel nos items do checklist.
+
+    Aceita qualquer item cujo displayName contenha DD/MM/AAAA.
+    Filtra para evitar confundir com DER/data de protocolo: a DN
+    precisa ser de uma pessoa com pelo menos 16 anos.
+    """
+    for it in items:
+        name = (it.get("displayName") or "").strip()
+        m = RE_DATA_CHECKLIST.search(name)
+        if not m:
+            continue
+        try:
+            d = datetime(int(m.group(3)), int(m.group(2)), int(m.group(1))).date()
+        except Exception:
+            continue
+        if d > HOJE or d.year < 1900:
+            continue
+        # Pelo menos 16 anos atras (filtra DERs e datas de andamento)
+        idade_anos = (HOJE - d).days / 365.25
+        if idade_anos < 16:
+            continue
+        return m.group(1), m.group(2), m.group(3)
+    return None
+
+
 _STOP_LOCAL = {
     "analise", "análise", "andamento", "atendimento", "anexo", "casa",
     "contato", "documentos", "drive", "escritorio", "escritório",
@@ -670,17 +709,24 @@ def status_atual(proximo, timeline):
     return "Em andamento"
 
 
-def processar_tarefa(t, lista_nome):
+def processar_tarefa(t, lista_nome, dn_partes=None):
+    """Monta o registro do processo para um cliente.
+
+    dn_partes (opcional): tupla (DD, MM, AAAA) ja obtida (do checklist,
+    por ex.). Se None, busca a DN no body.
+    """
     titulo = t.get("title", "") or ""
     body = (t.get("body", {}) or {}).get("content", "") or ""
     m_cpf = RE_CPF_TITULO.search(titulo)
     if not m_cpf:
         return None
     cpf = m_cpf.group(1)
-    m_dn = RE_DN_BODY.search(body)
-    if not m_dn:
-        return None
-    dn = normalizar_dn(m_dn.group(1), m_dn.group(2), m_dn.group(3))
+    if dn_partes is None:
+        m_dn = RE_DN_BODY.search(body)
+        if not m_dn:
+            return None
+        dn_partes = (m_dn.group(1), m_dn.group(2), m_dn.group(3))
+    dn = normalizar_dn(*dn_partes)
     if not dn:
         return None
     proximo = extrair_proximo_evento(titulo, body)
@@ -719,6 +765,7 @@ def main():
     tarefas_sem_cpf = 0
     tarefas_sem_dn = 0
     tarefas_completas = 0
+    dn_do_checklist = 0
 
     for lst in listas:
         nome_lista = lst["displayName"]
@@ -733,11 +780,21 @@ def main():
                 tarefas_sem_cpf += 1
                 continue
             body = (t.get("body", {}) or {}).get("content", "") or ""
-            if not RE_DN_BODY.search(body):
+            # Tenta DN no body primeiro; se nao, no checklist
+            dn_partes = None
+            m_dn = RE_DN_BODY.search(body)
+            if m_dn:
+                dn_partes = (m_dn.group(1), m_dn.group(2), m_dn.group(3))
+            else:
+                items = list_checklist_items(lst["id"], t["id"])
+                dn_partes = extrair_dn_do_checklist(items)
+                if dn_partes:
+                    dn_do_checklist += 1
+            if not dn_partes:
                 tarefas_sem_dn += 1
                 continue
             tarefas_completas += 1
-            p = processar_tarefa(t, nome_lista)
+            p = processar_tarefa(t, nome_lista, dn_partes=dn_partes)
             if not p:
                 continue
             chave = (p["cpf"], p["dn"])
@@ -746,6 +803,7 @@ def main():
 
     print(f"[portal] {tarefas_completas} tarefas validas; "
           f"{tarefas_sem_cpf} sem CPF; {tarefas_sem_dn} sem DN")
+    print(f"[portal] {dn_do_checklist} DN(s) obtidas via checklist")
     print(f"[portal] {len(processos_por_cliente)} clientes unicos com CPF+DN")
 
     # grava um JSON por cliente
