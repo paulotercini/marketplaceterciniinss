@@ -136,59 +136,78 @@ button.link:hover { background: transparent; color: var(--azul); }
   font-weight: 600;
   margin-bottom: 0.85rem;
 }
-.processo .loc-box,
-.processo .status-box {
+/* Card grande em destaque: Localizacao no Escritorio */
+.loc-destaque {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
+  color: white;
+  padding: 1.5rem 1.5rem;
+  border-radius: 10px;
+  margin: 0.75rem 0 0.85rem 0;
+  box-shadow: 0 4px 12px rgba(31, 58, 100, 0.18);
+  text-align: center;
+}
+.loc-destaque .ld-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  opacity: 0.8;
+  margin-bottom: 0.65rem;
+}
+.loc-destaque .ld-valor {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* Caixa discreta: Ultimo andamento */
+.ult-andamento {
+  background: #f0f7ff;
+  border-left: 4px solid var(--azul-claro);
+  padding: 0.85rem 1rem;
+  border-radius: 6px;
+  margin: 0.85rem 0;
+}
+.ult-andamento .ua-cab {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.35rem;
+}
+.ult-andamento .ua-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--azul);
+  background: #dbeafe;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+.ult-andamento .ua-data {
+  font-size: 0.82rem;
+  color: var(--cinza);
+  font-weight: 600;
+}
+.ult-andamento .ua-tipo {
+  font-weight: 700;
+  color: var(--texto);
+  font-size: 0.98rem;
+  line-height: 1.3;
+}
+.ult-andamento .ua-desc {
+  color: var(--cinza);
+  font-size: 0.88rem;
+  margin-top: 0.3rem;
+  line-height: 1.4;
+}
+
+.status-box {
   background: #f0f7ff;
   border-left: 4px solid var(--azul-claro);
   padding: 0.85rem 1rem;
   border-radius: 6px;
   margin: 0.5rem 0;
 }
-.processo .loc-box { background: #ecfdf5; border-left-color: var(--ok); }
-.processo .loc-box strong { color: var(--ok); }
-.processo .status-box strong { color: var(--azul); }
-
-.ultimo-andamento {
-  background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
-  color: white;
-  padding: 1.25rem 1.4rem;
-  border-radius: 10px;
-  margin: 0.75rem 0 0.85rem 0;
-  box-shadow: 0 4px 12px rgba(31, 58, 100, 0.18);
-}
-.ultimo-andamento .ua-label {
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  font-weight: 700;
-  opacity: 0.78;
-  margin-bottom: 0.6rem;
-}
-.ultimo-andamento .ua-linha {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0.7rem;
-  margin-bottom: 0.45rem;
-}
-.ultimo-andamento .ua-data {
-  font-size: 0.85rem;
-  font-weight: 600;
-  background: rgba(255,255,255,0.18);
-  padding: 0.18rem 0.65rem;
-  border-radius: 999px;
-  white-space: nowrap;
-}
-.ultimo-andamento .ua-tipo {
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.25;
-}
-.ultimo-andamento .ua-desc {
-  font-size: 0.92rem;
-  opacity: 0.92;
-  line-height: 1.45;
-  margin-top: 0.3rem;
-}
+.status-box strong { color: var(--azul); }
 
 .proximo {
   background: #fef3c7;
