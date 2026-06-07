@@ -1,21 +1,82 @@
 {
   "nome": "Maria Dias Veloso",
-  "atualizado_em": "07/06/2026 as 14:54",
+  "atualizado_em": "07/06/2026 as 15:07",
   "processos": [
     {
       "cpf": "29143739881",
       "dn": "29081960",
       "nome": "Maria Dias Veloso",
-      "lista": "🗝 Tarefas com Prazo",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição",
       "titulo_tarefa": "Maria Dias Veloso",
-      "status": "Beneficio requerido ao INSS em 06/04/2025",
+      "status": "Última atualização em 12/05/2026: Sessão de julgamento agendada",
       "proximo_evento": null,
       "timeline": [
         {
+          "data": "2026-05-12",
+          "data_br": "12/05/2026",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Sessão de Julgamento Ordinária Monocrática - Nº 0180/2026 - 22/05/26 08:10."
+        },
+        {
+          "data": "2026-02-27",
+          "data_br": "27/02/2026",
+          "tipo": "Embargos de declaração",
+          "descricao": "Apresentei embargos de declaração."
+        },
+        {
+          "data": "2026-02-26",
+          "data_br": "26/02/2026",
+          "tipo": "Decisão desfavorável",
+          "descricao": "Negou provimento ao recurso."
+        },
+        {
+          "data": "2026-02-03",
+          "data_br": "03/02/2026",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Agendou julgamento."
+        },
+        {
+          "data": "2026-01-09",
+          "data_br": "09/01/2026",
+          "tipo": "Sem movimentação",
+          "descricao": "Não houve movimentação."
+        },
+        {
+          "data": "2025-12-30",
+          "data_br": "30/12/2025",
+          "tipo": "Sem movimentação",
+          "descricao": "Não houve movimentação."
+        },
+        {
+          "data": "2025-09-02",
+          "data_br": "02/09/2025",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Encaminhamento - 21150513 para CRPS."
+        },
+        {
           "data": "2025-04-06",
           "data_br": "06/04/2025",
-          "tipo": "Beneficio requerido ao INSS",
-          "descricao": "Último andamento:\nRequerimento protocolado - Tarefa: 308750292\n25/01/2025 16:30:33\nÉ sobre o recurso para as Câmaras de Julgamento."
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Requerimento protocolado - Tarefa: 308750292 É sobre o recurso para as Câmaras de Julgamento."
+        },
+        {
+          "data": "2025-01-25",
+          "data_br": "25/01/2025",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso Especial protocolado."
+        },
+        {
+          "data": "2025-01-17",
+          "data_br": "17/01/2025",
+          "tipo": "Decisão desfavorável",
+          "descricao": "Recurso negado provimento."
+        },
+        {
+          "data": "2024-01-03",
+          "data_br": "03/01/2024",
+          "tipo": "Encaminhamento administrativo",
+          "descricao": "Houve alteração no recurso: Distribuído ao Conselheiro Relator - Conselheiro: CAROLINA MOREIRA _____________________________"
         }
       ],
       "notas_publicas": []

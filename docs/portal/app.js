@@ -50,6 +50,7 @@ async function derivarHash(cpf, dn, salt, iter) {
     { name: "PBKDF2", salt: saltBytes, iterations: iter, hash: "SHA-256" },
     key, 256
   );
+  // hash final = SHA-256(derived), pega 16 bytes (32 hex)
   const hash = await crypto.subtle.digest("SHA-256", bits);
   return Array.from(new Uint8Array(hash))
               .slice(0, 16)
@@ -91,8 +92,14 @@ function renderProcesso(p) {
     wrap.appendChild(box);
   }
 
+  if (p.localizacao) {
+    const loc = el("div", "loc-box",
+      "<strong>Localização:</strong> " + esc(p.localizacao));
+    wrap.appendChild(loc);
+  }
+
   const status = el("div", "status-box",
-    "<strong>Situacao:</strong> " + esc(p.status));
+    "<strong>Situação:</strong> " + esc(p.status));
   wrap.appendChild(status);
 
   if (p.notas_publicas && p.notas_publicas.length) {
