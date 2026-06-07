@@ -199,21 +199,35 @@ def links_para_processo(localizacao, body):
 RE_CPF_TITULO = re.compile(r"#\s*(\d{11})\b")
 RE_DN_BODY = re.compile(r"^\s*DN\s*[:=]\s*(\d{2})/(\d{2})/(\d{4})\s*$", re.MULTILINE | re.IGNORECASE)
 RE_DATA_BR = re.compile(r"\b(\d{2})/(\d{2})/(\d{4})\b")
+# Data curta DD/MM (sem ano) — usado para inferir ano corrente
+RE_DATA_CURTA = re.compile(r"\b(\d{2})/(\d{2})\b(?!/)")
+# Aceita ":" ou ";" no separador (typos comuns no body)
 RE_ENTRADA = re.compile(
-    r"^(\d{2})\.(\d{2})\.(\d{4})\s*\(([A-Z]+)\):\s*(.+?)(?=\n\d{2}\.\d{2}\.\d{4}\s*\([A-Z]+\):|\Z)",
+    r"^(\d{2})\.(\d{2})\.(\d{4})\s*\(([A-Z]+)\)\s*[:;]\s*(.+?)(?=\n\d{2}\.\d{2}\.\d{4}\s*\([A-Z]+\)\s*[:;]|\Z)",
     re.MULTILINE | re.DOTALL,
 )
-RE_PUB = re.compile(r"\(PUB\)\s*:\s*(.+?)(?=\n\d{2}\.\d{2}\.\d{4}\s*\([A-Z]+\):|\Z)",
+RE_PUB = re.compile(r"\(PUB\)\s*[:;]\s*(.+?)(?=\n\d{2}\.\d{2}\.\d{4}\s*\([A-Z]+\)\s*[:;]|\Z)",
                     re.MULTILINE | re.DOTALL)
 RE_HORA = re.compile(r"(?:as|às)\s*(\d{1,2})[:h](\d{2})?", re.I)
 RE_LOCAL = re.compile(r"(?:no\s+)?INSS\s+(?:de\s+)?([A-Z][A-Za-zÀ-ÿ\s]+?)(?:[.,;]|$)", re.I)
 RE_BOT_LOG = re.compile(r"^\[BOT-LOG\].*$", re.MULTILINE)
 
 # Detectores de eventos (timeline) - reaproveita logica do bot_avisos
-PAD_PERICIA = [r"per[ií]cia(?!\s+social)", r"avalia[cç][aã]o m[eé]dica"]
+# Exige indicio de evento real (agendada/marcada/data) para evitar mencoes genericas
+PAD_PERICIA = [
+    r"per[ií]cia\s+(?:m[eé]dica\s+)?(?:agendada|marcada|reagendada|designada|remarcada)",
+    r"per[ií]cia\s+(?:m[eé]dica\s+)?(?:para\s+(?:o\s+)?dia|em|no\s+dia|para)\s*\d{1,2}/\d{1,2}",
+    r"avalia[cç][aã]o\s+m[eé]dica\s+(?:agendada|marcada|designada|para)",
+]
 EXC_PERICIA = [r"per[ií]cia social", r"avalia[cç][aã]o social"]
-PAD_SOCIAL = [r"per[ií]cia social", r"avalia[cç][aã]o social"]
-PAD_AUDIENCIA = [r"audi[eê]ncia"]
+PAD_SOCIAL = [
+    r"per[ií]cia\s+social\s+(?:agendada|marcada|designada|para)",
+    r"avalia[cç][aã]o\s+social\s+(?:agendada|marcada|designada|para)",
+]
+PAD_AUDIENCIA = [
+    r"audi[eê]ncia\s+(?:agendada|marcada|designada|remarcada|para)",
+    r"audi[eê]ncia\s+(?:em|no\s+dia|para\s+(?:o\s+)?dia)\s*\d{1,2}/\d{1,2}",
+]
 PAD_JUDICIAL = [
     r"inicial distribu[ií]da", r"processo distribu[ií]do",
     r"a[cç][aã]o distribu[ií]da", r"distribu[ií] a a[cç][aã]o",
@@ -399,17 +413,57 @@ def list_all_tasks(list_id):
 
 def extrair_proximo_evento(titulo, body):
     """Acha o evento futuro mais proximo (pericia/audiencia/avaliacao) e
-    devolve dict {tipo, data, hora, local} ou None."""
+    devolve dict {tipo, data, hora, local} ou None.
+
+    Aceita datas no formato DD/MM/AAAA OU DD/MM (infere ano corrente).
+    """
     full = (titulo or "") + "\n" + (body or "")
     candidatos = []
+
+    # 1. DD/MM/AAAA
+    encontradas = []
     for m in RE_DATA_BR.finditer(full):
         d = parse_data(m.group(1), m.group(2), m.group(3))
-        if not d:
+        if d:
+            encontradas.append((d, m.start(), m.end()))
+
+    # 2. DD/MM (sem ano) — infere ano corrente ou proximo
+    # Pula os matches que ja foram cobertos pelo DD/MM/AAAA acima.
+    spans_completos = [(s, e) for (_, s, e) in encontradas]
+    for m in RE_DATA_CURTA.finditer(full):
+        # filtro: nao casa se a posicao ja esta dentro de um DD/MM/AAAA
+        sobreposto = any(s <= m.start() < e or s < m.end() <= e
+                          for s, e in spans_completos)
+        if sobreposto:
             continue
+        try:
+            dia, mes = int(m.group(1)), int(m.group(2))
+            d_atual = datetime(HOJE.year, mes, dia).date()
+            d_proximo = datetime(HOJE.year + 1, mes, dia).date()
+        except Exception:
+            continue
+        # Escolhe o ano que da uma data futura nos proximos 180 dias
+        if 0 <= (d_atual - HOJE).days <= 180:
+            d = d_atual
+        elif 0 <= (d_proximo - HOJE).days <= 180:
+            d = d_proximo
+        else:
+            continue
+        encontradas.append((d, m.start(), m.end()))
+
+    for d, start, end in encontradas:
         delta = (d - HOJE).days
         if delta < 0 or delta > 180:
             continue
-        ctx = full[max(0, m.start() - 200): m.end() + 80]
+        # Usa a SENTENCA que contem a data como contexto.
+        # Limites: ponto final/quebra de linha antes e depois.
+        ini = start
+        while ini > 0 and full[ini - 1] not in ".!?\n":
+            ini -= 1
+        fim = end
+        while fim < len(full) and full[fim] not in ".!?\n":
+            fim += 1
+        ctx = full[ini:fim].strip()
         ctx_low = ctx.lower()
         tipo = None
         if hit(ctx_low, PAD_PERICIA, EXC_PERICIA):
@@ -487,12 +541,14 @@ TIMELINE_CATEGORIAS = [
     # eventos previdenciarios
     ("Cessação programada (DCB)", PAD_DCB, None),
     ("Prorrogação", PAD_PRORROGACAO, None),
+
+    # entrada inicial no INSS - antes das pericias/avaliacoes, porque a
+    # entrada do protocolo costuma listar tambem as pericias agendadas
+    ("Pedido protocolado no INSS", PAD_INSS_PROT, EXC_INSS_PROT),
+
     ("Perícia médica", PAD_PERICIA, EXC_PERICIA),
     ("Avaliação social", PAD_SOCIAL, None),
     ("Audiência", PAD_AUDIENCIA, None),
-
-    # entrada inicial no INSS — fica por ultimo (fallback)
-    ("Pedido protocolado no INSS", PAD_INSS_PROT, EXC_INSS_PROT),
 ]
 
 
