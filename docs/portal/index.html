@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Consulta de Andamento - Tercini Advocacia</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="container">
+    <h1>Tercini Advocacia</h1>
+    <p class="sub">Consulta de andamento do seu processo / benefício</p>
+  </div>
+</header>
+
+<main class="container">
+  <section id="tela-login">
+    <div class="card">
+      <h2>Acesso do cliente</h2>
+      <p class="hint">Informe seu CPF e sua data de nascimento para consultar.</p>
+      <form id="form-login" autocomplete="off">
+        <label for="cpf">CPF</label>
+        <input id="cpf" name="cpf" type="text" inputmode="numeric"
+               placeholder="000.000.000-00" maxlength="14" required>
+        <label for="dn">Data de nascimento</label>
+        <input id="dn" name="dn" type="text" inputmode="numeric"
+               placeholder="DD/MM/AAAA" maxlength="10" required>
+        <button type="submit" id="btn-consultar">Consultar</button>
+        <p id="erro" class="erro" hidden></p>
+      </form>
+    </div>
+    <p class="rodape-login">
+      Esta consulta é meramente informativa. Em caso de dúvidas, entre em
+      contato pelos nossos canais oficiais.
+    </p>
+  </section>
+
+  <section id="tela-resultado" hidden>
+    <div class="topo-resultado">
+      <div>
+        <h2 id="saudacao">Olá</h2>
+        <p class="atualizacao" id="atualizacao"></p>
+      </div>
+      <button id="btn-sair" class="link">Sair</button>
+    </div>
+    <div id="processos"></div>
+  </section>
+
+  <section id="tela-vazio" hidden>
+    <div class="card aviso">
+      <h2>Nenhum andamento encontrado</h2>
+      <p>Não localizamos cadastro com esses dados. Confira o CPF e a data de
+      nascimento e tente novamente. Em caso de dúvida, fale com o escritório.</p>
+      <button id="btn-voltar" class="link">Tentar novamente</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Tercini Advocacia &middot;
+    <a href="mailto:contato@tercini.adv.br">contato@tercini.adv.br</a></p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
