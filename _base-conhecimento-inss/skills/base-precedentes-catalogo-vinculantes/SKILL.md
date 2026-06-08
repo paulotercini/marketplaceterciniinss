@@ -155,23 +155,55 @@ Pelos precedentes catalogados, identifica-se um conjunto de teses estratégicas 
 
 ## ATENÇÃO ESPECIAL A TEMAS SUSPENSOS, CANCELADOS OU AGUARDANDO
 
-Temas SUSPENSOS pelo STJ (verificar status atualizado antes de citar).
-- Tema 1124, 1140, 1157, 1162, 1220, 1291, 1307, 1321, 1328, 1341.
+### STATUS ATUALIZADO EM 08/06/2026 - VER ATUALIZACAO-STATUS-2026-06.md
 
-Temas AGUARDANDO JULGAMENTO pelo STF.
-- Tema 1209, 1271, 1298, 1300, 1353, 1370.
+A reference `ATUALIZACAO-STATUS-2026-06.md` consolida a verificação feita via Comet (Claude in Chrome MCP) em junho de 2026 nas fontes oficiais (STF, STJ, TNU, gov.br) e veículos de imprensa jurídica especializada.
 
-Temas CANCELADOS.
+### Temas STJ que SAÍRAM do status SUSPENSO
+
+- **Tema 1124/STJ** - JULGADO. Acórdão publicado em 05/02/2026.
+- **Tema 1157/STJ** - JULGADO. Informativo STJ 889 (19/05/2026). Tese contra segurado.
+- **Tema 1162/STJ** - JULGADO em 17/11/2025. Define flexibilização do critério econômico do auxílio-reclusão.
+- **Tema 1291/STJ** - JULGADO em maio de 2026. Tese pró-segurado (contribuinte individual não cooperado).
+- **Tema 1307/STJ** - JULGADO em 07/05/2026. Tese pró-segurado (motoristas de ônibus/caminhão por penosidade).
+
+### Temas STJ que CONTINUAM suspensos/afetados
+
+- Tema 1140/STJ. Forma de cálculo da readequação aos tetos das EC 20/98 e 41/2003.
+- Tema 1220/STJ. Memorando-Circular 21 como marco interruptivo do prazo prescricional.
+- Tema 1321/STJ. Prescrição contra pessoa com deficiência mental.
+- Tema 1328/STJ. Dano moral in re ipsa em RMC.
+- Tema 1341/STJ. Em julgamento. Filho maior inválido com benefício próprio recebendo pensão por morte.
+
+### Temas STF que SAÍRAM do status AGUARDANDO
+
+- **Tema 1209/STF** - JULGADO em 18/02/2026. Tese CONTRA vigilante (não é especial).
+- **Tema 1300/STF** - JULGADO. Acórdão publicado em 10/04/2026. Tese pró-INSS (cálculo aposentadoria por incapacidade EC 103).
+- **Tema 1370/STF** - JULGADO em 17/12/2025. Tese pró-segurada (violência doméstica).
+
+### Temas STF que CONTINUAM aguardando
+
+- Tema 1271/STF. Exclusão criança/adolescente sob guarda EC 103.
+- Tema 1298/STF. Pensão a mulher transexual.
+- Tema 1353/STF. Auxílio-doença a gestante de alto risco sem carência.
+
+### Temas CANCELADOS confirmados em fontes oficiais
+
 - Tema 30/TNU (cancelado em favor do Tema 692/STJ).
 - Tema 66/TNU (revisado pelo Tema 355).
 - Tema 338/TNU (cancelado em favor do Tema 255).
 - Tema 375/TNU (cancelado em favor do Tema 130).
-- Tema 1066/STF (cancelado).
+- Tema 1066/STF (cancelado em 22/02/2021).
 
-Tema SUPERADO.
+### Súmula CANCELADA com data corrigida
+
+- **Súmula 86/TNU** - Cancelada em **26/08/2021** (Sexta Sessão Ordinária por videoconferência), DOU nº 166 de 01/09/2021. Precedente PEDILEF 0521830-35.2020.4.05.8100, Relatora Juíza Federal Suzana Galia. **Correção da data** anteriormente registrada como 26/08/2021.
+
+### Tema SUPERADO
+
 - Tema 58/TNU (superado por Tema 694/STJ e Tema 174/TNU).
 
-Para CADA citação destes temas, aplicar protocolo de verificação dinâmica em até Nível 2 para confirmar status atual.
+Para CADA citação destes temas, aplicar protocolo de verificação dinâmica em até Nível 2 para confirmar status atual. Esta atualização foi feita pela Onda Corretiva 38 (v1.28.0).
 
 ## ATUALIZAÇÃO DO CATÁLOGO
 
@@ -208,6 +240,6 @@ Em TODA peça que citar precedente, o Claude DEVE.
 5. Conferir vigência (suspenso, cancelado, aguardando).
 6. Aplicar ao caso concreto.
 
-NUNCA inventar tese. NUNCA presumir vigência. NUNCA confundir números (cf. caso prático da Onda 33 com Súmula 86/TNU que foi cancelada em 25/08/2021).
+NUNCA inventar tese. NUNCA presumir vigência. NUNCA confundir números (cf. caso prático da Onda 33 com Súmula 86/TNU que foi cancelada em 26/08/2021).
 
 Honestidade radical não admite exceções.

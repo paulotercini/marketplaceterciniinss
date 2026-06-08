@@ -132,7 +132,7 @@ Avaliar direito adquirido ou tempus regit actum se a tese se ancora em situaçã
 
 Verificar.
 - Houve overruling posterior? (Caso clássico. Tema 503/STF superou desaposentação.)
-- A súmula foi cancelada? (Caso clássico. Súmula 86/TNU cancelada em 25/08/2021.)
+- A súmula foi cancelada? (Caso clássico. Súmula 86/TNU cancelada em 26/08/2021.)
 - O tema foi superado por novo julgamento?
 
 Se houver overruling ou cancelamento, alertar como CRÍTICO.
@@ -147,7 +147,7 @@ Se houver overruling ou cancelamento, alertar como CRÍTICO.
 
 ### 2.4 Súmulas Canceladas a Atentar
 
-- **Súmula 86/TNU** - CANCELADA em 25/08/2021 (PEDILEF 0521830-35.2020.4.05.8100/CE). Era. "Não cabe incidente de uniformização que tenha como objeto principal questão controvertida de natureza constitucional ainda não definida pelo STF em sua jurisprudência dominante."
+- **Súmula 86/TNU** - CANCELADA em 26/08/2021 (PEDILEF 0521830-35.2020.4.05.8100/CE). Era. "Não cabe incidente de uniformização que tenha como objeto principal questão controvertida de natureza constitucional ainda não definida pelo STF em sua jurisprudência dominante."
 
 ## NÍVEL 3 - REDAÇÃO LITERAL
 
@@ -240,7 +240,7 @@ O art. 103 tem 3 redações sucessivas (original, MP 871/2019, Lei 13.846/2019 c
 
 ### Caso 4 - Súmula 86/TNU como vigente
 
-Súmula CANCELADA em 25/08/2021. Não pode ser citada como vigente.
+Súmula CANCELADA em 26/08/2021. Não pode ser citada como vigente.
 
 ## OPERAÇÃO PRÁTICA DA REVISÃO
 
