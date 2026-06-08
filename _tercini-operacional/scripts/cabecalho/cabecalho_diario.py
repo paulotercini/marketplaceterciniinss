@@ -37,6 +37,21 @@ os.chdir(REPO)
 
 LOG = PASTA / "cabecalho_diario.log"
 
+# Somente estas listas sao consideradas tarefas do Paulo. Outras listas
+# (Pagamentos, Leiloes, Escritorio, etc.) tem tarefas de outros
+# colaboradores que mencionam Paulo mas nao sao responsabilidade dele.
+LISTAS_PAULO = [
+    "tarefas com prazo",
+    "conselho de recursos",
+    "judicial",
+    "inss",
+]
+
+
+def lista_eh_de_paulo(nome_lista):
+    n = (nome_lista or "").lower()
+    return any(s in n for s in LISTAS_PAULO)
+
 RE_DATA = re.compile(r"^\d{2}\.\d{2}\.\d{4}")
 RE_HISTORICO = re.compile(r"(—{10,}\s*\n\s*HIST[ÓO]RICO:?\s*\n\s*—{10,}\s*\n+)")
 
@@ -128,7 +143,11 @@ def main():
     aplicados = 0
     pulados = 0
     erros = 0
+    listas_puladas = 0
     for l in listas:
+        if not lista_eh_de_paulo(l["displayName"]):
+            listas_puladas += 1
+            continue
         try:
             tarefas = list_tasks(l["id"])
         except Exception as e:
@@ -155,7 +174,8 @@ def main():
                 log(f"ERRO em '{t.get('title','')[:40]}': {type(e).__name__}")
 
     log(f"Concluido — {aplicados} cabecalhos inseridos | "
-        f"{pulados} ja tinham | {erros} erros")
+        f"{pulados} ja tinham | {erros} erros | "
+        f"{listas_puladas} listas puladas (nao sao do Paulo)")
 
 
 if __name__ == "__main__":
