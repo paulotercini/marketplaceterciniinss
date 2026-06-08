@@ -627,6 +627,69 @@ def extrair_proximo_evento(titulo, body):
     return sorted(candidatos, key=lambda x: x["data"])[0]
 
 
+# Verbos em 1a pessoa do escritorio -> base do participio passivo
+VERBO_PARTICIPIO = {
+    "Apresentei": "Apresentad",
+    "Solicitei": "Solicitad",
+    "Protocolei": "Protocolad",
+    "Enviei": "Enviad",
+    "Interpus": "Interpost",
+    "Opus": "Opost",
+    "Juntei": "Juntad",
+    "Anexei": "Anexad",
+    "Manifestei": "Manifestad",
+    "Recebi": "Recebid",
+    "Pedi": "Pedid",
+    "Agendei": "Agendad",
+    "Reagendei": "Reagendad",
+}
+# Substantivos femininos que vem depois do verbo, para flexao
+FEM_SUBSTANTIVOS = {
+    "inicial", "manifestacao", "manifestação", "replica", "réplica",
+    "alegacoes", "alegações", "impugnacao", "impugnação", "peticao",
+    "petição", "audiencia", "audiência", "pericia", "perícia",
+    "decisao", "decisão", "sentenca", "sentença", "juntada",
+    "contestacao", "contestação", "execucao", "execução",
+    "procuracao", "procuração", "exigencia", "exigência",
+}
+
+
+def _flexionar(base, proxima):
+    """Devolve a forma flexionada do participio."""
+    if not proxima:
+        return base + "o"
+    p = proxima.lower().rstrip(",.;!?:")
+    artigos = {"o": "o", "a": "a", "os": "os", "as": "as",
+               "um": "o", "uma": "a", "uns": "os", "umas": "as"}
+    if p in artigos:
+        return base + artigos[p]
+    # plural se termina em 's' e tem >3 caracteres
+    plural = p.endswith("s") and len(p) > 3
+    base_subst = p[:-1] if plural else p
+    fem = (base_subst in FEM_SUBSTANTIVOS or p in FEM_SUBSTANTIVOS
+           or base_subst.endswith("a") or base_subst.endswith("ção")
+           or base_subst.endswith("cao") or base_subst.endswith("agem")
+           or base_subst.endswith("idade") or base_subst.endswith("ude"))
+    if plural and fem: return base + "as"
+    if plural:         return base + "os"
+    if fem:            return base + "a"
+    return base + "o"
+
+
+def terceirizar_descricao(texto):
+    """Converte 'Apresentei recurso' -> 'Apresentado recurso', etc.
+    Aplica em qualquer ocorrencia dentro do texto."""
+    if not texto:
+        return texto
+    for verbo, base in VERBO_PARTICIPIO.items():
+        rx = re.compile(rf"\b{verbo}\b\s*(\S*)")
+        def _sub(m, base=base):
+            proxima = m.group(1)
+            return _flexionar(base, proxima) + (" " + proxima if proxima else "")
+        texto = rx.sub(_sub, texto)
+    return texto
+
+
 def limpar_descricao(conteudo, padroes=None):
     """Devolve uma descricao curta e limpa para mostrar ao cliente.
 
@@ -643,12 +706,17 @@ def limpar_descricao(conteudo, padroes=None):
     txt = re.sub(r"\s{2,}", " ", txt).strip()
     sentencas = re.split(r"(?<=[.!?])\s+", txt)
     # escolhe a sentenca relevante para a categoria, se aplicavel
+    escolhida = None
     if padroes:
         for s in sentencas:
             s_low = s.lower()
             if any(re.search(p, s_low) for p in padroes):
-                return s.strip()[:240]
-    return sentencas[0][:240].strip() if sentencas else ""
+                escolhida = s
+                break
+    if escolhida is None:
+        escolhida = sentencas[0] if sentencas else ""
+    # despessoaliza: "Apresentei recurso" -> "Apresentado recurso"
+    return terceirizar_descricao(escolhida.strip())[:240]
 
 
 # (categoria, padroes, exclusoes) — avaliados em ordem; o primeiro hit ganha.
