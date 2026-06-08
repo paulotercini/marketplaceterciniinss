@@ -189,3 +189,21 @@ A reexecução desta atualização deve ser feita em onda corretiva específica 
 ## LIMITAÇÃO CONHECIDA
 
 Esta skill APONTA para os arquivos no workspace, NÃO duplica o conteúdo nas references. Isso preserva o tamanho do plugin. O acesso ao texto literal exige o workspace do escritório Tercini disponível. Em sessões sem o workspace, a skill ainda serve como índice e protocolo, e a verificação deve ser feita via WebFetch direto da URL oficial registrada no índice acima.
+
+## VERIFICAÇÃO DINÂMICA EM CASCATA (Onda 36 - v1.26.0)
+
+Quando o artigo solicitado NÃO estiver no repositório local (cobre 19 normas), esta skill aciona a cascata de verificação dinâmica documentada em `base-revisao-peticao-aprofundada/references/PROTOCOLO-VERIFICACAO-DINAMICA.md`.
+
+**Fluxo automatizado.**
+
+1. Nível 1 - Repositório local em `INSS\base-legislacao\`.
+2. Nível 2 - WebFetch direto da URL oficial registrada no índice.
+3. Nível 3 - WebSearch + WebFetch em fonte alternativa.
+4. Nível 4 - Navegador Comet/Chrome via MCP (requer autorização do usuário).
+5. Nível 5 - Reporte de falha apenas se TUDO falhar.
+
+A skill NUNCA registra "verificação não realizada" antes de esgotar os 4 níveis automáticos.
+
+**URLs oficiais prioritárias.** Conforme catálogo na seção INDICE-FONTES-COMPLETO.md.
+
+**Operação.** Esta skill é fonte de URLs oficiais e do repositório literal. A execução da cascata é responsabilidade da skill `base-revisao-peticao-aprofundada` quando acionada durante revisão de petição.

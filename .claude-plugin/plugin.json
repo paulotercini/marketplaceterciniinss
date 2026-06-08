@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.25.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.25.0 entrega a Onda Corretiva 35, correção do carregamento do logo no cabeçalho timbrado das petições. Implementa função carregarLogoTercini() com fallback em 12 caminhos de busca (priorizando C:\\Users\\VAIO\\INSS\\assets\\logo-tercini.png), suporte automático a PNG (com transparência) e JPG/JPEG com detecção dinâmica de tipo, alerta no console quando logo não é encontrado. Cria pasta assets/ com README-LOGO.md de procedimento de configuração e troubleshooting. Cria pasta C:\\Users\\VAIO\\INSS\\assets\\ no workspace. A 1.24.0 entregou Onda 34 (recurso CRPS enxuto). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
+  "version": "1.26.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.26.0 entrega a Onda 36, protocolo de VERIFICAÇÃO DINÂMICA EM CASCATA para eliminar achados passivos de verificação não realizada na skill base-revisao-peticao-aprofundada. 4 níveis automáticos. Nível 1 repositório local. Nível 2 WebFetch direto. Nível 3 WebSearch + WebFetch alternativo. Nível 4 navegador Comet/Chrome via MCP com autorização. Nível 5 reporte só após esgotamento. Atualiza base-revisao-peticao-aprofundada e base-legislacao-fontes-primarias. Cria reference PROTOCOLO-VERIFICACAO-DINAMICA.md detalhada. A 1.25.0 entregou Onda 35 (logo cabeçalho). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"
