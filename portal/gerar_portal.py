@@ -254,6 +254,7 @@ PAD_JUDICIAL = [
     r"distribu[ií] a inicial", r"protocol(?:ei|ada) a inicial",
     r"protocolada a a[cç][aã]o", r"a[cç][aã]o protocolada",
     r"distribu[ií]da a a[cç][aã]o",
+    r"inicial protocolada",
 ]
 PAD_INSS_PROT = [
     r"protocol(?:ei|ado|ada)\s+(?:o\s+|a\s+)?benef[ií]cio",
@@ -274,12 +275,41 @@ PAD_BEN_DEFERIDO = [
     r"benef[ií]cio (?:deferido|concedido|implantado)",
     r"INSS deferiu",
     r"pedido deferido", r"requerimento deferido",
+    # standalone no inicio da frase: "Concedido!" ou "Concedido."
+    r"(?:^|[.!?;\n])\s*concedido[!.\s]",
 ]
 PAD_INDEFERIMENTO_INSS = [
     r"benef[ií]cio indeferido",
     r"INSS (?:indeferiu|negou)\s+(?:o\s+)?(?:pedido|requerimento|benef[ií]cio)",
     r"indeferimento (?:do|no) INSS",
     r"pedido indeferido", r"requerimento indeferido",
+    # standalone: "Indeferido." no inicio da frase
+    r"(?:^|[.!?;\n])\s*indeferido[!.\s]",
+]
+
+# Recurso INOMINADO (judicial — JEF/Turma Recursal)
+PAD_RECURSO_INOMINADO = [
+    r"recurso\s+inominado",
+    r"recurso\s+(?:para\s+(?:a\s+)?)?turma\s+recursal",
+]
+
+# Manifestacoes/quesitos no processo judicial
+PAD_MANIFESTACAO = [
+    r"apresent(?:ei|ada|amos)\s+(?:os\s+)?quesitos",
+    r"protocol(?:ei|ada)\s+quesitos",
+    r"juntad[ao]\s+de\s+quesitos",
+    r"apresent(?:ei|ada|amos)\s+manifesta[cç][aã]o",
+    r"manifesta[cç][aã]o\s+(?:protocolada|apresentada)",
+    r"manifestei\s+sobre",
+    r"alega[cç][oõ]es\s+finais\s+(?:protocoladas|apresentadas)",
+    r"replica\s+(?:protocolada|apresentada)",
+    r"impugna[cç][aã]o\s+(?:protocolada|apresentada)",
+]
+
+# Laudo pericial juntado / disponivel
+PAD_LAUDO_PERICIAL = [
+    r"laudo\s+(?:pericial|m[eé]dico)?\s*(?:dispon[ií]vel|juntado|anexado|recebido|liberado)",
+    r"juntad[ao]\s+(?:de\s+)?laudo",
 ]
 
 # --- Resultado de acordao (recurso administrativo: JR / CAJ) ---
@@ -500,11 +530,28 @@ def extrair_proximo_evento(titulo, body):
     """Acha o evento futuro mais proximo (pericia/audiencia/avaliacao) e
     devolve dict {tipo, data, hora, local} ou None.
 
-    Aceita datas no formato DD/MM/AAAA OU DD/MM (infere ano corrente).
+    Aceita datas no formato DD/MM/AAAA OU DD/MM. Para DD/MM, usa o ano
+    do cabecalho de entrada (DD.MM.AAAA (X):) que contem a data, com
+    fallback para o ano corrente.
     """
     body = normalizar_body(body)
     full = (titulo or "") + "\n" + (body or "")
     candidatos = []
+
+    # Mapa posicao -> ano da entrada anterior (para inferir DD/MM)
+    offset_body = len(titulo or "") + 1
+    headers = []
+    for m in RE_ENTRADA.finditer(body or ""):
+        headers.append((m.start() + offset_body, int(m.group(3))))
+
+    def ano_da_entrada(pos):
+        ano = HOJE.year
+        for h_pos, h_ano in headers:
+            if h_pos < pos:
+                ano = h_ano
+            else:
+                break
+        return ano
 
     # 1. DD/MM/AAAA
     encontradas = []
@@ -513,27 +560,23 @@ def extrair_proximo_evento(titulo, body):
         if d:
             encontradas.append((d, m.start(), m.end()))
 
-    # 2. DD/MM (sem ano) — infere ano corrente ou proximo
-    # Pula os matches que ja foram cobertos pelo DD/MM/AAAA acima.
+    # 2. DD/MM (sem ano) — usa ano da entrada que contem
     spans_completos = [(s, e) for (_, s, e) in encontradas]
     for m in RE_DATA_CURTA.finditer(full):
-        # filtro: nao casa se a posicao ja esta dentro de um DD/MM/AAAA
         sobreposto = any(s <= m.start() < e or s < m.end() <= e
                           for s, e in spans_completos)
         if sobreposto:
             continue
         try:
             dia, mes = int(m.group(1)), int(m.group(2))
-            d_atual = datetime(HOJE.year, mes, dia).date()
-            d_proximo = datetime(HOJE.year + 1, mes, dia).date()
+            ano_base = ano_da_entrada(m.start())
+            d = datetime(ano_base, mes, dia).date()
         except Exception:
             continue
-        # Escolhe o ano que da uma data futura nos proximos 180 dias
-        if 0 <= (d_atual - HOJE).days <= 180:
-            d = d_atual
-        elif 0 <= (d_proximo - HOJE).days <= 180:
-            d = d_proximo
-        else:
+        # so aceita se for futuro nos proximos 180 dias.
+        # NAO tenta ano_base+1 — se a entrada eh de 2025 e diz "11/06",
+        # entao eh 11/06/2025 (passou). Nao inventa evento futuro.
+        if not (0 <= (d - HOJE).days <= 180):
             continue
         encontradas.append((d, m.start(), m.end()))
 
@@ -615,6 +658,9 @@ TIMELINE_CATEGORIAS = [
     ("Ação judicial protocolada", PAD_JUDICIAL, None),
     ("Decisão judicial favorável", PAD_DECISAO_JUD, None),
     ("Decisão judicial desfavorável", PAD_INDEFERIMENTO_JUD, None),
+    ("Recurso inominado interposto", PAD_RECURSO_INOMINADO, None),
+    ("Laudo pericial juntado", PAD_LAUDO_PERICIAL, None),
+    ("Manifestação no processo judicial", PAD_MANIFESTACAO, None),
 
     # acordao do recurso administrativo (resultado)
     # parcial antes de "deu provimento" porque "deu parcial" tambem casa o segundo
