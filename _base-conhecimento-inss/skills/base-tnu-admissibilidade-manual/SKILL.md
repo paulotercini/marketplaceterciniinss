@@ -168,7 +168,7 @@ DETALHAMENTO. Esta skill é complementar à skill base-puil-pedilef-vedacao-mate
 
 ## 10 SÚMULA 86/TNU - CANCELADA
 
-**Súmula 86/TNU foi CANCELADA** em sessão de 25/08/2021 (PEDILEF 0521830-35.2020.4.05.8100/CE, relatora Suzana Galia). A TNU passou a admitir análise de matéria constitucional em caráter incidental, para fins de prequestionamento perante o STF.
+**Súmula 86/TNU foi CANCELADA** em sessão de 26/08/2021 (PEDILEF 0521830-35.2020.4.05.8100/CE, relatora Suzana Galia). A TNU passou a admitir análise de matéria constitucional em caráter incidental, para fins de prequestionamento perante o STF.
 
 Significado prático. Hoje a TNU integra o sistema jurisdicional específico do qual não se exclui o controle difuso da constitucionalidade. Aplicação relevante para casos em que a tese se ancora em interpretação que dialoga com norma constitucional incidental.
 
@@ -395,7 +395,7 @@ A reclamação tem contornos ESTREITOS. As decisões da TNU não têm efeito vin
 
 **Súmula 43/TNU.** Não cabe PUIL que verse sobre matéria processual.
 
-**Súmula 86/TNU - CANCELADA em 25/08/2021.** Era. "Não cabe incidente de uniformização que tenha como objeto principal questão controvertida de natureza constitucional ainda não definida pelo STF em sua jurisprudência dominante."
+**Súmula 86/TNU - CANCELADA em 26/08/2021.** Era. "Não cabe incidente de uniformização que tenha como objeto principal questão controvertida de natureza constitucional ainda não definida pelo STF em sua jurisprudência dominante."
 
 **Súmula 203/STJ.** Não cabe recurso especial contra decisão proferida por órgão de segundo grau dos Juizados Especiais.
 

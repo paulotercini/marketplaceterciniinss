@@ -224,7 +224,7 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 
 **Severidade.** CRÍTICO.
 
-**Regra.** A Súmula 86/TNU foi CANCELADA em 25/08/2021 (PEDILEF 0521830-35.2020.4.05.8100/CE, relatora Suzana Galia). A TNU passou a admitir análise de matéria constitucional em caráter incidental.
+**Regra.** A Súmula 86/TNU foi CANCELADA em 26/08/2021 (PEDILEF 0521830-35.2020.4.05.8100/CE, relatora Suzana Galia). A TNU passou a admitir análise de matéria constitucional em caráter incidental.
 
 **Correção.** Suspender a citação. Se a tese pretendida é a contrária ao cancelamento, fundamentar diretamente no novo entendimento.
 

@@ -101,7 +101,7 @@ Confirmar que o artigo, tema ou súmula está VIGENTE na data do caso concreto. 
 
 Para artigos, ler INTEIRO incluindo notas de rodapé. Verificar marcações de "Revogado pela Lei X.XXX" ou "Vide". Se revogado, alertar expressamente "O artigo X da Lei Y FOI REVOGADO pela Lei Z em ano W. Avaliar direito adquirido ou tempus regit actum se aplicável".
 
-Para precedentes, verificar se houve OVERRULING (Tema 503/STF que superou desaposentação, Súmula 86/TNU cancelada em 25/08/2021, etc).
+Para precedentes, verificar se houve OVERRULING (Tema 503/STF que superou desaposentação, Súmula 86/TNU cancelada em 26/08/2021, etc).
 
 ### Nível 3 - Redação Literal
 
@@ -230,7 +230,7 @@ Critérios principais (ver detalhamento exaustivo no catálogo):
 14. **Cotejo analítico ausente em PUIL** (novo, derivado da Onda 30).
 15. **Paradigma de TRF em PUIL** (novo, derivado da Onda 30 - QO 48/TNU).
 16. **Citação de Portaria 992/2022 como cálculo de RMI** (novo, derivado da Onda 32).
-17. **Citação de Súmula 86/TNU como vigente** (novo, foi cancelada em 25/08/2021).
+17. **Citação de Súmula 86/TNU como vigente** (novo, foi cancelada em 26/08/2021).
 18. **Citação de tese de Revisão da Vida Toda sem mencionar a modulação** (novo).
 19. **Pedido genérico de tutela sem demonstração concreta de urgência**.
 20. **Petição sem seção de Efeitos Financeiros** (Tema 1124/STJ).

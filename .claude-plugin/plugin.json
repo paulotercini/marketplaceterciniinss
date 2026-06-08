@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.27.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.27.0 entrega a Onda 37, skill base-precedentes-catalogo-vinculantes com 290 precedentes vinculantes catalogados em texto literal. 56 Temas STF (RG), 60 Temas STJ (Repetitivos), 156 Temas TNU (Representativos) e 18 Enunciados CRPS. Ativa o Nível 1 do protocolo de verificação dinâmica (Onda 36) para precedentes. Alerta sobre temas suspensos, cancelados, aguardando ou superados. Atualiza base-revisao-peticao-aprofundada para apontar para o catálogo. A 1.26.0 entregou Onda 36 (verificação dinâmica). 126 skills ao todo (118 base-* + 6 ponte-* + 2 operacionais).",
+  "version": "1.28.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.28.0 entrega a Onda Corretiva 38, atualização do status atual dos temas vinculantes via Comet. Tema 1124/STJ JULGADO 05/02/2026. Tema 1157/STJ, 1162/STJ, 1291/STJ, 1307/STJ JULGADOS. Tema 1209/STF JULGADO 18/02/2026 (contra vigilante). Tema 1300/STF JULGADO 10/04/2026. Tema 1370/STF JULGADO 17/12/2025 (pró-violência doméstica). Continuam suspensos 1140, 1220, 1321, 1328, 1341/STJ e 1271, 1298, 1353/STF. Súmula 86/TNU data corrigida para 26/08/2021. Cria reference ATUALIZACAO-STATUS-2026-06.md. A 1.27.0 entregou Onda 37 (catálogo). 126 skills ao todo (118 base-* + 6 ponte-* + 2 operacionais).",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"
