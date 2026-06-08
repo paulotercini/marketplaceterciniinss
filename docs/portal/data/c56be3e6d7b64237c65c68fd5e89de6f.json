@@ -1,6 +1,6 @@
 {
   "nome": "Nereide Aparecida Sartor Bertolazzi",
-  "atualizado_em": "07/06/2026 as 21:48",
+  "atualizado_em": "07/06/2026 as 22:15",
   "processos": [
     {
       "cpf": "12951965818",
@@ -19,25 +19,6 @@
           "descricao": "(P): Benefício concedido."
         }
       ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
-        }
-      ]
-    },
-    {
-      "cpf": "12951965818",
-      "dn": "08081961",
-      "nome": "Nereide Aparecida Sartor Bertolazzi",
-      "lista": "🙏 Aposentadorias Futuras",
-      "localizacao": "Aguardando decisão do INSS",
-      "titulo_tarefa": "Nereide Aparecida Sartor Bertolazzi",
-      "status": "Em andamento",
-      "proximo_evento": null,
-      "timeline": [],
       "notas_publicas": [],
       "links_externos": [
         {
