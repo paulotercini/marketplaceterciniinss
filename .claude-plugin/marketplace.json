@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.25.0 entrega a Onda Corretiva 35, correção do carregamento do logo do escritório no cabeçalho timbrado das petições geradas pela skill base-peticao-previdenciaria-padrao-visual. Implementa função carregarLogoTercini() com fallback inteligente em 12 caminhos de busca (priorizando C:\\Users\\VAIO\\INSS\\assets\\logo-tercini.png como localização recomendada que sobrevive a atualizações do plugin), suporte automático a PNG (preferencial, transparência) e JPG/JPEG com detecção dinâmica do parâmetro type do ImageRun pela extensão do arquivo. Quando logo não é encontrado, gera petição SEM logo e emite alerta no console indicando ao usuário como configurar. Cria pasta assets/ na skill com arquivo README-LOGO.md detalhando procedimento de configuração, troubleshooting, características visuais do logo (duas formas triangulares cinza sobre curva vermelha estilizando balança da justiça em PNG transparente), dimensões EMU e técnica de carregamento. Cria também a pasta C:\\Users\\VAIO\\INSS\\assets\\ no workspace do usuário. A 1.24.0 entregou Onda 34 (recurso CRPS enxuto). A 1.23.0 Onda 33 (revisão aprofundada). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
-      "version": "1.25.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.26.0 entrega a Onda 36, protocolo de VERIFICAÇÃO DINÂMICA EM CASCATA para a skill base-revisao-peticao-aprofundada. Elimina achados passivos de 'verificação não realizada' que dependiam do usuário. Cria reference PROTOCOLO-VERIFICACAO-DINAMICA.md com 4 níveis automáticos de verificação literal de artigos, parágrafos, incisos, enunciados, súmulas e precedentes. Nível 1 - repositório local em INSS/base-legislacao/. Nível 2 - WebFetch direto da URL oficial (Planalto, gov.br/inss, gov.br/previdencia, sirc.gov.br, CJF). Nível 3 - WebSearch + WebFetch em fonte alternativa confiável. Nível 4 - navegador Comet/Chrome via MCP com autorização do usuário. Nível 5 - reporte de falha apenas após esgotamento da cascata. Atualiza base-revisao-peticao-aprofundada com seção PROTOCOLO DE VERIFICAÇÃO DINÂMICA e log estruturado de verificações no final do relatório. Atualiza base-legislacao-fontes-primarias com fluxo automatizado de cascata e operação distribuída. A 1.25.0 entregou Onda 35 (logo cabeçalho). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
+      "version": "1.26.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
@@ -350,7 +350,16 @@
         "assets-logo-readme",
         "workspace-assets-inss",
         "detecao-formato-imagem",
-        "alerta-logo-ausente"
+        "alerta-logo-ausente",
+        "onda-36",
+        "verificacao-dinamica-cascata",
+        "4-niveis-verificacao",
+        "elimina-achados-passivos",
+        "webfetch-fontes-primarias",
+        "comet-chrome-mcp-verificacao",
+        "log-estruturado-verificacao",
+        "autonomia-revisao-peticao",
+        "verificacao-literal-automatizada"
       ]
     }
   ]

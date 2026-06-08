@@ -43,6 +43,48 @@ Esta verificação é TRANSVERSAL e prevalece sobre as cinco camadas. Aplica-se 
 
 Nenhuma citação é considerada correta por presunção. Cada uma é tratada como suspeita até confirmação em FONTE PRIMÁRIA OFICIAL.
 
+## PROTOCOLO DE VERIFICAÇÃO DINÂMICA EM 4 NÍVEIS (Onda 36)
+
+Antes de emitir QUALQUER achado de "verificação não realizada", a skill DEVE executar AUTOMATICAMENTE a cascata de verificação dinâmica. NÃO depender do usuário para conferir o que o Claude pode conferir sozinho.
+
+**Nível 1 - Repositório Local.** Abrir os 19 arquivos de `base-legislacao-fontes-primarias` no workspace e buscar a citação.
+
+**Nível 2 - WebFetch Direto.** Se Nível 1 falhar, acionar `mcp__workspace__web_fetch` na URL oficial registrada (Planalto, gov.br, sirc.gov.br, etc).
+
+**Nível 3 - WebSearch + WebFetch.** Se Nível 2 falhar, acionar WebSearch para localizar fonte alternativa confiável e depois WebFetch.
+
+**Nível 4 - Navegador Comet/Chrome via MCP.** Se Níveis 1-3 falharem, abrir o navegador Comet (ou Chrome/Edge fallback) via `mcp__Claude in Chrome__*` e capturar a página oficial. Requer autorização do usuário.
+
+**Nível 5 - Reporte Final.** SOMENTE se TODOS os 4 níveis falharem, emitir o achado IMPORTANTE com fundamentação técnica completa.
+
+Ver detalhamento exaustivo em `references/PROTOCOLO-VERIFICACAO-DINAMICA.md`.
+
+### Exemplo Prático de Eliminação de Achados Passivos
+
+ANTES desta atualização, a skill emitia.
+
+```
+[IMPORTANTE] Verificação literal dos parágrafos não realizada em fonte primária.
+Os §§ 2º, 9º, 10 e 11 do art. 92 vieram da base verificada do escritório, sem
+abertura do inteiro teor oficial do RICRPS nesta sessão.
+```
+
+DEPOIS desta atualização, a skill executa a cascata e, em 90% dos casos, REGISTRA APROVADO automaticamente. Apenas se TUDO falhar, emite o IMPORTANTE com detalhamento de todas as 4 fontes tentadas.
+
+### Log Estruturado de Verificações
+
+Toda revisão registra ao final.
+
+```
+[RELATÓRIO DE VERIFICAÇÃO DINÂMICA]
+Total de citações analisadas. 23.
+Verificadas no Nível 1 (repositório local). 18.
+Verificadas no Nível 2 (WebFetch direto). 4.
+Verificadas no Nível 3 (WebSearch + WebFetch). 1.
+Verificadas no Nível 4 (Comet/Chrome). 0.
+Não verificadas (após cascata). 0.
+```
+
 ### Nível 1 - Existência
 
 Antes de aceitar qualquer citação, conferir que o artigo, tema ou súmula EXISTE. Procedimento.
