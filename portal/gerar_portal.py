@@ -37,23 +37,34 @@ DATA_DIR = Path(__file__).parent / "site" / "data"
 SALT = b"portal-tercini-2026-v1"  # publico; serve so para impedir rainbow table
 PBKDF_ITER = 200_000
 
-# Listas que NUNCA entram no portal (internas)
-LISTAS_EXCLUIR = {
-    "Bancos", "DOU", "Escrita", "Escritorio", "Escritório",
-    "Jurisprudência", "Leiloeiros", "Pai", "Pietra",
-    "Paulo Acessos", "Petição Inicial", "Recurso Administrativo",
-    "REsp, RE, TNU e TRU", "Recurso ou Contrarrazões Judiciais",
-    "Tarefas", "Vídeos Explicativos", "Impugnações", "CNIS",
-    "Conceitos de Direito Previdenciário", "Capital 2", "Arkad",
-    "🎓 Fluxo de Trabalho", "🔧 Operacional", "🛄 Mensagens",
-    "💵 Pagamentos", "💡 Vídeos Explicativos",
-    "🔎 Leilões",
-    "Clientes Agroambiental", "Clientes Encerrados", "Audiências",
-    "Clientes em Andamento", "💫 Willian Braga Marcussi",
-    "Lista sem título", "Lista sem título 1", "Lista sem título 2",
-    "Lista sem título (1)", "Lista sem título 1 (1)",
-    "Izildo Aparecido Machado Fumes",
-}
+# Allowlist: apenas estas listas entram no portal (substring, case-insensitive).
+LISTAS_INCLUIR = [
+    "tarefas com prazo",        # 🗓 Tarefas com Prazo
+    "conselho de recursos",     # 🖥 Conselho de Recursos
+    "judicial",                 # 👪 Judicial
+    "inss",                     # 🌻 INSS (NAO casa "Pagamentos" / "Marcos" / etc.)
+]
+
+
+def lista_no_portal(nome_lista):
+    """True se a lista deve aparecer no portal."""
+    n = (nome_lista or "").lower()
+    return any(chave in n for chave in LISTAS_INCLUIR)
+
+
+# Padroes de pagamento — sentencas com qualquer um destes NAO vao para o
+# portal (filtradas em limpar_descricao).
+PAD_PAGAMENTO = [
+    r"\bpagamento\b", r"\bpagar\b", r"\bpagamos\b", r"\bpagou\b",
+    r"\bhonor[aá]rio", r"R\$\s*\d", r"\bHISCRE\b",
+    r"\bvalor\s+de\b", r"\bparcela\b", r"\bmensalidade",
+    r"\batrasados\b", r"\bcusta(?:s)?\b", r"\bpagas?\b",
+]
+
+
+def contem_pagamento(texto):
+    t = (texto or "").lower()
+    return any(re.search(p, t, re.IGNORECASE) for p in PAD_PAGAMENTO)
 
 # Indicadores de que o recurso esta na CAJ (Camara de Julgamento), nao na JR.
 INDIC_CAJ = [
@@ -705,6 +716,10 @@ def limpar_descricao(conteudo, padroes=None):
     txt = re.sub(r"\n+", " ", txt)
     txt = re.sub(r"\s{2,}", " ", txt).strip()
     sentencas = re.split(r"(?<=[.!?])\s+", txt)
+    # filtra sentencas com mencao a pagamento (privado)
+    sentencas = [s for s in sentencas if not contem_pagamento(s)]
+    if not sentencas:
+        return ""
     # escolhe a sentenca relevante para a categoria, se aplicavel
     escolhida = None
     if padroes:
@@ -714,7 +729,7 @@ def limpar_descricao(conteudo, padroes=None):
                 escolhida = s
                 break
     if escolhida is None:
-        escolhida = sentencas[0] if sentencas else ""
+        escolhida = sentencas[0]
     # despessoaliza: "Apresentei recurso" -> "Apresentado recurso"
     return terceirizar_descricao(escolhida.strip())[:240]
 
@@ -823,7 +838,7 @@ def extrair_notas_publicas(body):
             continue
         texto = m.group(5).strip()
         texto = RE_BOT_LOG.sub("", texto).strip()
-        if not texto:
+        if not texto or contem_pagamento(texto):
             continue
         notas.append({
             "data": d.isoformat(),
@@ -914,7 +929,7 @@ def main():
 
     for lst in listas:
         nome_lista = lst["displayName"]
-        if nome_lista in LISTAS_EXCLUIR:
+        if not lista_no_portal(nome_lista):
             continue
         tasks = list_all_tasks(lst["id"])
         for t in tasks:
