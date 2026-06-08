@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.26.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.26.0 entrega a Onda 36, protocolo de VERIFICAÇÃO DINÂMICA EM CASCATA para eliminar achados passivos de verificação não realizada na skill base-revisao-peticao-aprofundada. 4 níveis automáticos. Nível 1 repositório local. Nível 2 WebFetch direto. Nível 3 WebSearch + WebFetch alternativo. Nível 4 navegador Comet/Chrome via MCP com autorização. Nível 5 reporte só após esgotamento. Atualiza base-revisao-peticao-aprofundada e base-legislacao-fontes-primarias. Cria reference PROTOCOLO-VERIFICACAO-DINAMICA.md detalhada. A 1.25.0 entregou Onda 35 (logo cabeçalho). 125 skills ao todo (117 base-* + 6 ponte-* + 2 operacionais).",
+  "version": "1.27.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.27.0 entrega a Onda 37, skill base-precedentes-catalogo-vinculantes com 290 precedentes vinculantes catalogados em texto literal. 56 Temas STF (RG), 60 Temas STJ (Repetitivos), 156 Temas TNU (Representativos) e 18 Enunciados CRPS. Ativa o Nível 1 do protocolo de verificação dinâmica (Onda 36) para precedentes. Alerta sobre temas suspensos, cancelados, aguardando ou superados. Atualiza base-revisao-peticao-aprofundada para apontar para o catálogo. A 1.26.0 entregou Onda 36 (verificação dinâmica). 126 skills ao todo (118 base-* + 6 ponte-* + 2 operacionais).",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"
