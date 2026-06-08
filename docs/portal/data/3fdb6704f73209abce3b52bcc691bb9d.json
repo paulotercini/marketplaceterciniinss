@@ -1,6 +1,6 @@
 {
   "nome": "Marisa Bandeira Schineider",
-  "atualizado_em": "07/06/2026 as 21:25",
+  "atualizado_em": "07/06/2026 as 21:48",
   "processos": [
     {
       "cpf": "13855660867",
@@ -46,7 +46,7 @@
           "data": "2026-02-12",
           "data_br": "12/02/2026",
           "tipo": "Prorrogação",
-          "descricao": "Solicitei a prorrogação do benefício."
+          "descricao": "Solicitada a prorrogação do benefício."
         },
         {
           "data": "2026-01-26",
@@ -76,7 +76,7 @@
           "data": "2025-10-23",
           "data_br": "23/10/2025",
           "tipo": "Pedido protocolado no INSS",
-          "descricao": "Solicitei o benefício por Matão e agendou para o dia 02/12 as 08:40h."
+          "descricao": "Solicitado o benefício por Matão e agendou para o dia 02/12 as 08:40h."
         },
         {
           "data": "2025-05-23",
@@ -88,7 +88,7 @@
           "data": "2025-05-02",
           "data_br": "02/05/2025",
           "tipo": "Pedido protocolado no INSS",
-          "descricao": "(P): Solicitei o benefício por Jaboticabal."
+          "descricao": "(P): Solicitado o benefício por Jaboticabal."
         }
       ],
       "notas_publicas": [],
