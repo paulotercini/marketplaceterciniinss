@@ -20,6 +20,12 @@ A verificação só é REPORTADA como pendente em três cenários extremos.
 
 Buscar o artigo nos 19 arquivos do repositório `base-legislacao-fontes-primarias` em `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/` ou `C:\Users\VAIO\INSS\base-legislacao\`.
 
+Para PRECEDENTES (Tema STF, Tema STJ, Tema TNU, Enunciado CRPS), buscar no catálogo da skill `base-precedentes-catalogo-vinculantes` (Onda 37) nos arquivos.
+- `CATALOGO-TEMAS-STF.md` (56 Temas RG).
+- `CATALOGO-TEMAS-STJ.md` (60 Temas Repetitivos).
+- `CATALOGO-TEMAS-TNU.md` (156 Temas Representativos).
+- `CATALOGO-ENUNCIADOS-CRPS.md` (18 Enunciados).
+
 Procedimento.
 
 1. Identificar a norma citada (ex. "art. 92, §§ 2º e 9º RICRPS").
