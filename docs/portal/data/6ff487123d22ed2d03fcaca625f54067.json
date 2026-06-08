@@ -1,6 +1,6 @@
 {
   "nome": "Izilda Aparecida Braga Pimentel",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "16214645806",
@@ -9,9 +9,15 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Izilda Aparecida Braga Pimentel",
-      "status": "Última atualização em 26/02/2026: Perícia médica",
+      "status": "Última atualização em 20/04/2026: Indeferimento do INSS",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-04-20",
+          "data_br": "20/04/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Indeferido."
+        },
         {
           "data": "2026-02-26",
           "data_br": "26/02/2026",

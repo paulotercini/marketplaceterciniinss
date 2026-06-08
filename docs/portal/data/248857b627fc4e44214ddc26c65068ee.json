@@ -1,6 +1,6 @@
 {
   "nome": "Simone Gallo Carvalho",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "27707845870",
@@ -9,14 +9,8 @@
       "lista": "🙏 Aposentadorias Futuras",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Simone Gallo Carvalho",
-      "status": "Pericia medica marcada para 14/10/2026 (em 129 dias) às 09:00 — INSS de Matão",
-      "proximo_evento": {
-        "tipo": "Pericia medica",
-        "data": "2026-10-14",
-        "data_br": "14/10/2026",
-        "hora": "09:00",
-        "local": "INSS de Matão"
-      },
+      "status": "Última atualização em 13/02/2026: Indeferimento do INSS",
+      "proximo_evento": null,
       "timeline": [
         {
           "data": "2026-02-13",

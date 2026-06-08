@@ -1,6 +1,6 @@
 {
   "nome": "Keli Cristina de Carvalho",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "41572638800",
@@ -9,14 +9,8 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Keli Cristina de Carvalho",
-      "status": "Avaliacao social marcada para 25/09/2026 (em 110 dias) às 10:00 — INSS de Jaboticabal",
-      "proximo_evento": {
-        "tipo": "Avaliacao social",
-        "data": "2026-09-25",
-        "data_br": "25/09/2026",
-        "hora": "10:00",
-        "local": "INSS de Jaboticabal"
-      },
+      "status": "Última atualização em 11/01/2026: Ação judicial protocolada",
+      "proximo_evento": null,
       "timeline": [
         {
           "data": "2026-01-11",

@@ -1,6 +1,6 @@
 {
   "nome": "Conceição de Souza Amaral Braga",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "33487275880",
@@ -9,14 +9,8 @@
       "lista": "🗓 Tarefas com Prazo",
       "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "Conceição de Souza Amaral Braga",
-      "status": "Sessao de julgamento marcada para 28/10/2026 (em 143 dias)",
-      "proximo_evento": {
-        "tipo": "Sessao de julgamento",
-        "data": "2026-10-28",
-        "data_br": "28/10/2026",
-        "hora": "",
-        "local": ""
-      },
+      "status": "Última atualização em 27/05/2026: Sessão de julgamento agendada",
+      "proximo_evento": null,
       "timeline": [
         {
           "data": "2026-05-27",

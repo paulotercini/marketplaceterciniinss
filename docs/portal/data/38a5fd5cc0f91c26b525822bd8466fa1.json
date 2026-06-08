@@ -1,6 +1,6 @@
 {
   "nome": "Antonio Fabricio Costa",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "08367312805",
@@ -9,14 +9,14 @@
       "lista": "🙏 Aposentadorias Futuras",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Antonio Fabricio Costa",
-      "status": "Última atualização em 14/10/2025: Prorrogação",
+      "status": "Última atualização em 14/10/2025: Benefício deferido pelo INSS",
       "proximo_evento": null,
       "timeline": [
         {
           "data": "2025-10-14",
           "data_br": "14/10/2025",
-          "tipo": "Prorrogação",
-          "descricao": "Também informa pra ele que se quiser prorrogar o benefício irá precisar de um novo relatório médico."
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Concedido até 14/11!"
         },
         {
           "data": "2025-10-01",

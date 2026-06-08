@@ -1,6 +1,6 @@
 {
   "nome": "Cassia Regina Suffin de Biaggi",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "14100569882",
@@ -9,15 +9,15 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Cassia Regina Suffin de Biaggi",
-      "status": "Pericia medica marcada para 22/09/2026 (em 107 dias) às 09:00 — INSS de Araraquara",
-      "proximo_evento": {
-        "tipo": "Pericia medica",
-        "data": "2026-09-22",
-        "data_br": "22/09/2026",
-        "hora": "09:00",
-        "local": "INSS de Araraquara"
-      },
+      "status": "Última atualização em 21/10/2025: Indeferimento do INSS",
+      "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2025-10-21",
+          "data_br": "21/10/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Indeferido."
+        },
         {
           "data": "2025-09-19",
           "data_br": "19/09/2025",

@@ -1,6 +1,6 @@
 {
   "nome": "Lucas Jose Deronze",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "38396085897",
@@ -9,9 +9,21 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Lucas Jose Deronze",
-      "status": "Última atualização em 13/11/2025: Perícia médica",
+      "status": "Última atualização em 18/02/2026: Recurso inominado interposto",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-02-18",
+          "data_br": "18/02/2026",
+          "tipo": "Recurso inominado interposto",
+          "descricao": "Apresentei o recurso inominado."
+        },
+        {
+          "data": "2025-12-16",
+          "data_br": "16/12/2025",
+          "tipo": "Manifestação no processo judicial",
+          "descricao": "Apresentei quesitos complementares."
+        },
         {
           "data": "2025-11-13",
           "data_br": "13/11/2025",

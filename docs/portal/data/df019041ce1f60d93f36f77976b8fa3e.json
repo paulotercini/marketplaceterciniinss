@@ -1,6 +1,6 @@
 {
   "nome": "Ivane Aparecida Minharro",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "10909407851",
@@ -9,14 +9,8 @@
       "lista": "🙏 Aposentadorias Futuras",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Ivane Aparecida Minharro",
-      "status": "Pericia medica marcada para 15/07/2026 (em 38 dias) às 09:40",
-      "proximo_evento": {
-        "tipo": "Pericia medica",
-        "data": "2026-07-15",
-        "data_br": "15/07/2026",
-        "hora": "09:40",
-        "local": ""
-      },
+      "status": "Última atualização em 18/08/2025: Perícia médica",
+      "proximo_evento": null,
       "timeline": [
         {
           "data": "2025-08-18",
@@ -35,6 +29,12 @@
           "data_br": "27/06/2025",
           "tipo": "Pedido protocolado no INSS",
           "descricao": "Solicitei o benefício por Matão e foi agendada perícia para o dia 15/07 as 09:40h."
+        },
+        {
+          "data": "2025-05-20",
+          "data_br": "20/05/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Concedido!"
         },
         {
           "data": "2025-04-30",

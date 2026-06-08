@@ -1,6 +1,6 @@
 {
   "nome": "Lucineide de Paula Caputti",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "65396324953",
@@ -9,14 +9,8 @@
       "lista": "🙏 Aposentadorias Futuras",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Lucineide de Paula Caputti",
-      "status": "Pericia medica marcada para 04/10/2026 (em 119 dias)",
-      "proximo_evento": {
-        "tipo": "Pericia medica",
-        "data": "2026-10-04",
-        "data_br": "04/10/2026",
-        "hora": "",
-        "local": ""
-      },
+      "status": "Última atualização em 05/06/2025: Indeferimento do INSS",
+      "proximo_evento": null,
       "timeline": [
         {
           "data": "2025-06-05",

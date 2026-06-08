@@ -1,6 +1,6 @@
 {
   "nome": "Marisa Bandeira Schineider",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "13855660867",
@@ -77,6 +77,12 @@
           "data_br": "23/10/2025",
           "tipo": "Pedido protocolado no INSS",
           "descricao": "Solicitei o benefício por Matão e agendou para o dia 02/12 as 08:40h."
+        },
+        {
+          "data": "2025-05-23",
+          "data_br": "23/05/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Concedido!"
         },
         {
           "data": "2025-05-02",

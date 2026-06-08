@@ -1,6 +1,6 @@
 {
   "nome": "Antonio Cesar de Natale",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "05222798801",
@@ -9,14 +9,8 @@
       "lista": "🙏 Aposentadorias Futuras",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Antonio Cesar de Natale",
-      "status": "Pericia medica marcada para 25/06/2026 (em 18 dias)",
-      "proximo_evento": {
-        "tipo": "Pericia medica",
-        "data": "2026-06-25",
-        "data_br": "25/06/2026",
-        "hora": "",
-        "local": ""
-      },
+      "status": "Última atualização em 17/07/2025: Benefício deferido pelo INSS",
+      "proximo_evento": null,
       "timeline": [
         {
           "data": "2025-07-17",

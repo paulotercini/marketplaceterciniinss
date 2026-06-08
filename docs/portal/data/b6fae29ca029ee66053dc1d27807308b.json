@@ -1,6 +1,6 @@
 {
   "nome": "Helia Truguilo Alves",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "09000391830",
@@ -9,14 +9,8 @@
       "lista": "🙏 Aposentadorias Futuras",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Helia Truguilo Alves",
-      "status": "Pericia medica marcada para 02/08/2026 (em 56 dias) às 10:20 — INSS de Monte Alto",
-      "proximo_evento": {
-        "tipo": "Pericia medica",
-        "data": "2026-08-02",
-        "data_br": "02/08/2026",
-        "hora": "10:20",
-        "local": "INSS de Monte Alto"
-      },
+      "status": "Última atualização em 17/03/2025: Perícia médica",
+      "proximo_evento": null,
       "timeline": [
         {
           "data": "2025-03-17",

@@ -1,6 +1,6 @@
 {
   "nome": "Roseli Maria Custodio Schisatti",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "20153712813",
@@ -41,6 +41,12 @@
           "data_br": "09/11/2025",
           "tipo": "Embargos de declaração interpostos",
           "descricao": "Apresentei embargos de declaração."
+        },
+        {
+          "data": "2025-05-20",
+          "data_br": "20/05/2025",
+          "tipo": "Manifestação no processo judicial",
+          "descricao": "Apresentei manifestação dos esclarecimentos do perito e quesitos para a avaliação social que está agendada a partir de 27/06."
         },
         {
           "data": "2024-11-22",

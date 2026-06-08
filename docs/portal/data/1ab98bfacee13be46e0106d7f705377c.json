@@ -1,6 +1,6 @@
 {
   "nome": "Luiz Carlos Minjono",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "10643662871",
@@ -9,14 +9,8 @@
       "lista": "🙏 Aposentadorias Futuras",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Luiz Carlos Minjono",
-      "status": "Pericia medica marcada para 06/07/2026 (em 29 dias)",
-      "proximo_evento": {
-        "tipo": "Pericia medica",
-        "data": "2026-07-06",
-        "data_br": "06/07/2026",
-        "hora": "",
-        "local": ""
-      },
+      "status": "Última atualização em 08/05/2025: Benefício deferido pelo INSS",
+      "proximo_evento": null,
       "timeline": [
         {
           "data": "2025-05-08",

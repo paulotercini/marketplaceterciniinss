@@ -1,6 +1,6 @@
 {
   "nome": "Eudete Batista da Fonseca",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "17391501808",
@@ -9,9 +9,15 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Eudete Batista da Fonseca",
-      "status": "Última atualização em 09/02/2026: Indeferimento do INSS",
+      "status": "Última atualização em 03/04/2026: Ação judicial protocolada",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-04-03",
+          "data_br": "03/04/2026",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Petição inicial protocolada."
+        },
         {
           "data": "2026-02-09",
           "data_br": "09/02/2026",

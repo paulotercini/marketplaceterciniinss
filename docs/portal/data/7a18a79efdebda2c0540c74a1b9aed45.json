@@ -1,6 +1,6 @@
 {
   "nome": "Edilson de Jesus Moretto",
-  "atualizado_em": "07/06/2026 as 17:55",
+  "atualizado_em": "07/06/2026 as 21:25",
   "processos": [
     {
       "cpf": "10643928812",
@@ -9,9 +9,16 @@
       "lista": "🙏 Aposentadorias Futuras",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Edilson de Jesus Moretto",
-      "status": "Em andamento",
+      "status": "Última atualização em 03/03/2024: Ação judicial protocolada",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2024-03-03",
+          "data_br": "03/03/2024",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Petição Inicial protocolada."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
