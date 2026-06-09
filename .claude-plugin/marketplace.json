@@ -9,7 +9,7 @@
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
       "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.28.0 entrega a Onda Corretiva 38, atualização do status atual dos temas vinculantes via verificação executada com navegador Comet (Claude in Chrome MCP) em junho/2026. Tema 1124/STJ JULGADO em 05/02/2026. Tema 1157/STJ JULGADO (Informativo 889 do STJ). Tema 1162/STJ JULGADO em 17/11/2025. Tema 1291/STJ JULGADO em maio/2026 (pró-autônomo). Tema 1307/STJ JULGADO em 07/05/2026 (pró-motorista). Tema 1209/STF JULGADO em 18/02/2026 (CONTRA vigilante). Tema 1300/STF JULGADO em 10/04/2026. Tema 1370/STF JULGADO em 17/12/2025 (pró-violência doméstica). Mantidos como suspensos os Temas 1140, 1220, 1321, 1328, 1341/STJ e 1271, 1298, 1353/STF. Confirmado cancelamento do Tema 1066/STF em 22/02/2021. CORREÇÃO da data do cancelamento da Súmula 86/TNU de 25/08/2021 para 26/08/2021 (data oficial Sexta Sessão Ordinária por videoconferência, DOU 166 de 01/09/2021). Cria reference ATUALIZACAO-STATUS-2026-06.md com detalhamento de cada tema. A 1.27.0 entregou Onda 37 (catálogo precedentes). 126 skills ao todo (118 base-* + 6 ponte-* + 2 operacionais).",
-      "version": "1.28.0",
+      "version": "1.29.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
