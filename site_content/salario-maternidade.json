@@ -4,6 +4,7 @@
   "title": "Salário-Maternidade (B80/B81)",
   "nav_label": "Salário-Maternidade",
   "order": 2,
+  "facts": [["Duração", "120 dias (regra geral)"], ["Quem tem", "Mãe segurada / adoção"]],
   "meta_description": "Salário-maternidade (B80/B81): requisitos, carência e regras para empregada, contribuinte individual, segurada especial e adoção. Monte Alto/SP.",
   "hero_subtitle": "Benefício pago à segurada do INSS em razão de parto, adoção, guarda para adoção, aborto não criminoso ou natimorto.",
   "intro": [

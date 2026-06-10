@@ -4,6 +4,7 @@
   "title": "Auxílio-Acidente (B94)",
   "nav_label": "Auxílio-Acidente",
   "order": 3,
+  "facts": [["Natureza", "Indenizatória (B94)"], ["Renda", "50% do salário de benefício"]],
   "meta_description": "Auxílio-acidente (B94): indenização ao segurado que fica com sequela permanente que reduz a capacidade de trabalho. Orientação em Monte Alto/SP.",
   "hero_subtitle": "Benefício de caráter indenizatório pago ao segurado que, após a consolidação de lesões, fica com sequela permanente que reduz sua capacidade de trabalho.",
   "intro": [

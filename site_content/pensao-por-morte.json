@@ -4,6 +4,7 @@
   "title": "Pensão por Morte (B21/B93)",
   "nav_label": "Pensão por Morte",
   "order": 1,
+  "facts": [["Quem recebe", "Dependentes"], ["Cálculo", "50% + 10% por dependente"]],
   "meta_description": "Pensão por morte (B21/B93) após a EC 103/2019: dependentes, cotas, duração e prova de união estável. Orientação previdenciária em Monte Alto/SP.",
   "hero_subtitle": "Benefício pago aos dependentes do segurado do INSS que falece, conforme as regras da Lei 8.213/91 e da Emenda Constitucional 103/2019.",
   "intro": [
