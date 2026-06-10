@@ -4,6 +4,7 @@
   "title": "BPC à Pessoa com Deficiência",
   "nav_label": "BPC ao Deficiente",
   "order": 2,
+  "facts": [["Contribuição", "Não exigida"], ["Requisito", "Impedimento de longo prazo"], ["Renda", "Até 1/4 do salário mínimo*"]],
   "meta_description": "BPC/LOAS à pessoa com deficiência (Lei 8.742/93): um salário mínimo mensal a quem tem impedimento de longo prazo e baixa renda, sem exigir contribuições. Monte Alto/SP.",
   "hero_subtitle": "Benefício assistencial de um salário mínimo mensal para a pessoa com deficiência, de qualquer idade, com impedimento de longo prazo e em situação de miserabilidade.",
   "intro": [
