@@ -4,6 +4,7 @@
   "title": "Revisões de Benefício",
   "nav_label": "Revisões de Benefício",
   "order": 3,
+  "facts": [["Para quem", "Quem já recebe benefício"], ["Objetivo", "Recalcular a renda mensal"]],
   "meta_description": "Revisões de benefício do INSS: atividades concomitantes (Tema 1070), teto (buraco negro e verde, Tema 327) e melhor benefício do art. 29 (Tema 334).",
   "hero_subtitle": "Teses que discutem o recálculo da renda mensal de benefícios já concedidos quando o cálculo original pode ter sido feito de forma desfavorável ao segurado.",
   "intro": [

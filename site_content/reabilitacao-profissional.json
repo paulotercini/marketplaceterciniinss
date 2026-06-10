@@ -4,6 +4,7 @@
   "title": "Reabilitação Profissional (B26)",
   "nav_label": "Reabilitação Profissional",
   "order": 4,
+  "facts": [["O que é", "Readaptação profissional"], ["Oferecido por", "INSS"]],
   "meta_description": "Reabilitação profissional (B26) do INSS: programa de readaptação e recolocação do segurado no mercado de trabalho. Orientação em Monte Alto/SP.",
   "hero_subtitle": "Serviço do INSS voltado a readaptar o segurado e prepará-lo para uma nova atividade compatível com sua capacidade, com vistas à recolocação no mercado de trabalho.",
   "intro": [

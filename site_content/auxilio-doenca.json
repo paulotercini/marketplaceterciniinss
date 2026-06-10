@@ -4,6 +4,7 @@
   "title": "Auxílio-Doença (Benefício por Incapacidade Temporária)",
   "nav_label": "Auxílio-Doença",
   "order": 1,
+  "facts": [["Natureza", "Temporária (B31)"], ["Carência", "12 contribuições*"], ["Avaliação", "Perícia médica"]],
   "meta_description": "Auxílio-doença (benefício por incapacidade temporária - B31): requisitos, carência, prorrogação e restabelecimento. Orientação em Monte Alto/SP.",
   "hero_subtitle": "Benefício pago ao segurado do INSS que fica temporariamente incapaz para o trabalho habitual por motivo de doença ou acidente.",
   "intro": [

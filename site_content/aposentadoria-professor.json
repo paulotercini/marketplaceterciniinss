@@ -4,6 +4,7 @@
   "title": "Aposentadoria do Professor",
   "nav_label": "Professor",
   "order": 5,
+  "facts": [["Quem", "Magistério na educação básica"], ["Benefício", "Idade/tempo reduzidos"]],
   "meta_description": "Aposentadoria do professor da educação básica após a EC 103/2019: regras de transição, direito adquirido e tempo de magistério. Análise em Monte Alto/SP.",
   "hero_subtitle": "Benefício com requisitos reduzidos para o professor(a) que comprova tempo exclusivo de magistério na educação básica.",
   "intro": [

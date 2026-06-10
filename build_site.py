@@ -214,8 +214,7 @@ def service_page(page, pages_by_cat):
         for n, (i_id, label, inner) in enumerate(items))
 
     intro = "".join(f"<p>{esc(p)}</p>" for p in page.get("intro", []))
-    fc = [("Área", cat), ("Atendimento", "Presencial e on-line"),
-          ("Abrangência", "Monte Alto/SP e Brasil"), ("Primeira conversa", "Sem compromisso")]
+    fc = [("Área", cat)] + [tuple(x) for x in page.get("facts", [])] + [("Atendimento", "Presencial e on-line")]
     facts = "".join(f'<div class="fact-row"><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>' for k, v in fc)
 
     body = f"""
