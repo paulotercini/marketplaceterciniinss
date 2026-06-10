@@ -4,6 +4,7 @@
   "title": "Aposentadoria por Incapacidade Permanente (Invalidez)",
   "nav_label": "Aposentadoria por Incapacidade",
   "order": 2,
+  "facts": [["Natureza", "Permanente (B91/B92)"], ["Avaliação", "Perícia médica"]],
   "meta_description": "Aposentadoria por incapacidade permanente (B91), antiga aposentadoria por invalidez: requisitos, acréscimo de 25% e modalidade acidentária. Orientação em Monte Alto/SP.",
   "hero_subtitle": "Benefício devido ao segurado considerado total e permanentemente incapaz para o trabalho e insuscetível de reabilitação profissional.",
   "intro": [

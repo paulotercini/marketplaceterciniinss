@@ -4,6 +4,7 @@
   "title": "Planejamento Previdenciário",
   "nav_label": "Planejamento Previdenciário",
   "order": 1,
+  "facts": [["O que é", "Estudo do CNIS"], ["Objetivo", "Melhor regra e valor"]],
   "meta_description": "Planejamento previdenciário: simulação de cenários, melhor DER, direito adquirido e regras de transição da EC 103/2019 para decidir quando se aposentar.",
   "hero_subtitle": "Estudo do seu histórico de contribuições para identificar a regra e o momento mais vantajosos para requerer a aposentadoria.",
   "intro": [

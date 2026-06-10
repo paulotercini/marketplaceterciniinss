@@ -4,6 +4,7 @@
   "title": "Aposentadoria Especial",
   "nav_label": "Especial",
   "order": 3,
+  "facts": [["Tempo", "15, 20 ou 25 anos"], ["Prova", "PPP e LTCAT"]],
   "meta_description": "Aposentadoria especial para quem trabalhou exposto a agentes nocivos: ruído, agentes químicos e mais, antes e após a EC 103/2019. Análise em Monte Alto/SP.",
   "hero_subtitle": "Benefício destinado a quem trabalhou exposto a agentes nocivos à saúde, como ruído, calor, agentes químicos e biológicos, em condições que justificam aposentadoria com tempo reduzido.",
   "intro": [

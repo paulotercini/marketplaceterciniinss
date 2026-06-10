@@ -4,6 +4,7 @@
   "title": "BPC ao Idoso (65+)",
   "nav_label": "BPC ao Idoso",
   "order": 1,
+  "facts": [["Contribuição", "Não exigida"], ["Idade", "65 anos ou mais"], ["Renda", "Até 1/4 do salário mínimo*"]],
   "meta_description": "BPC/LOAS ao idoso (Lei 8.742/93): um salário mínimo mensal à pessoa com 65 anos ou mais em situação de miserabilidade, sem exigir contribuições. Monte Alto/SP.",
   "hero_subtitle": "Benefício assistencial de um salário mínimo mensal para a pessoa idosa, com 65 anos ou mais, que não tem meios de prover a própria manutenção.",
   "intro": [

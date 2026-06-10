@@ -4,6 +4,7 @@
   "title": "Aposentadoria Rural",
   "nav_label": "Rural",
   "order": 6,
+  "facts": [["Idade", "60 (h) / 55 (m)"], ["Prova", "Início de prova material"]],
   "meta_description": "Aposentadoria rural e segurado especial: tempo rural anterior a 1991, autodeclaração e prova da atividade no campo. Análise do seu caso em Monte Alto/SP.",
   "hero_subtitle": "Benefício para quem trabalhou na atividade rural, inclusive em regime de economia familiar, com requisitos e formas de comprovação próprias.",
   "intro": [
