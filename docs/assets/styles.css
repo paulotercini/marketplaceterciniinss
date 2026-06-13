@@ -178,3 +178,6 @@ a:hover .tlink svg,.tlink:hover svg{transform:translateX(4px)}
 .mega.mega-wide{left:auto;right:0}
 .mega-wide .mcol a{display:block}
 @media(max-width:1040px){ .mega.mega-wide{left:0;right:auto} }
+
+/* logo real no rodapé escuro: chip branco para contraste */
+.foot-brand img{background:#fff;border-radius:10px;padding:8px;width:64px;height:50px}
