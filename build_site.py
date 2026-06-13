@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 CONTENT_DIR = ROOT / "site_content"
 OUT_DIR = ROOT / "docs"
-ASSET_V = "10"
+ASSET_V = "11"
 
 OFFICE = {
     "advogado": "Paulo Roberto Tercini Filho",
@@ -299,11 +299,7 @@ def home_page(pages_by_cat):
       </div>
     </div>
     <div class="hero-visual" data-reveal>
-      <div class="ph hero-photo">
-        <span class="hero-float-oab">Foto sugerida</span>
-        <svg class="ph__peaks" viewBox="0 0 200 120" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"><polyline points="8,114 68,16 128,114"/><polyline points="72,114 132,28 192,114"/></svg>
-        <span class="ph__tag">Retrato · advogado no escritório</span>
-      </div>
+      <div class="ph hero-photo"><img src="assets/hero.jpg" alt="Pessoa idosa — público da advocacia previdenciária" loading="lazy"></div>
       <div class="hero-badge">{SCALE_SVG}<p><b>13 anos exclusivos</b>Atuação só em Direito Previdenciário — todos os dias.</p></div>
     </div>
   </div>
@@ -381,10 +377,7 @@ def home_page(pages_by_cat):
 
 <section class="section about">
   <div class="wrap about-grid">
-    <div class="about-photo ph" data-reveal>
-      <svg class="ph__peaks" viewBox="0 0 200 120" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"><polyline points="8,114 68,16 128,114"/><polyline points="72,114 132,28 192,114"/></svg>
-      <span class="ph__tag">Foto · Dr. Paulo no escritório</span>
-    </div>
+    <div class="about-photo ph" data-reveal><img src="assets/about.jpg" alt="Atendimento jurídico previdenciário" loading="lazy"></div>
     <div data-reveal>
       <span class="eyebrow">O escritório</span>
       <h2>Atendimento humano, foco total no seu benefício</h2>
