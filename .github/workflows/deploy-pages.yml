@@ -1,11 +1,12 @@
 name: Deploy site (GitHub Pages)
 
 on:
-  # Após ligar o GitHub Pages com Source = "GitHub Actions", reative o gatilho
-  # de push abaixo descomentando-o. Enquanto isso, o deploy roda sob demanda.
-  # push:
-  #   branches: [main]
-  #   paths: ["docs/**", ".github/workflows/deploy-pages.yml"]
+  # Publica automaticamente a cada push na main que altere o site (docs/) ou
+  # este próprio workflow. Requer GitHub Pages com Source = "GitHub Actions".
+  # O deploy também pode ser disparado sob demanda (workflow_dispatch).
+  push:
+    branches: [main]
+    paths: ["docs/**", ".github/workflows/deploy-pages.yml"]
   workflow_dispatch:
 
 permissions:
