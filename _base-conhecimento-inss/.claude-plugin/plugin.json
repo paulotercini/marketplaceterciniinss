@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.31.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.28.0 entrega a Onda Corretiva 38, atualização do status atual dos temas vinculantes via Comet. Tema 1124/STJ JULGADO 05/02/2026. Tema 1157/STJ, 1162/STJ, 1291/STJ, 1307/STJ JULGADOS. Tema 1209/STF JULGADO 18/02/2026 (contra vigilante). Tema 1300/STF JULGADO 10/04/2026. Tema 1370/STF JULGADO 17/12/2025 (pró-violência doméstica). Continuam suspensos 1140, 1220, 1321, 1328, 1341/STJ e 1271, 1298, 1353/STF. Súmula 86/TNU data corrigida para 26/08/2021. Cria reference ATUALIZACAO-STATUS-2026-06.md. A 1.27.0 entregou Onda 37 (catálogo). 126 skills ao todo (118 base-* + 6 ponte-* + 2 operacionais).",
+  "version": "1.32.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.32.0 entrega a Onda 42, skill base-tru-trf3-sumulas-jurisprudencia consolidando integralmente as 23 Súmulas da Turma Regional de Uniformização (TRU) dos JEFs da 3ª Região com redação literal verificada nos PDFs oficiais do TRF3 (DEJF3R 109/2015 Súmulas 1 a 19 e DEJF3R 198/2015 Súmulas 20 a 23). Inclui análise pró-segurado de cada Súmula, distinguishing para Súmulas 18 e 23 (desfavoráveis), tabela operacional por bloco temático (BPC, Aposentadoria por Idade, Incapacidade, Pensão, Especial, Revisão, Procedimental, Carência). Paradigma direto para PUIL Regional TRU 3, contrarrazões e peças no JEF da 3ª Região. Cruza com base-jef-trf3-manual-2025 (Onda 41), base-jef-previdenciario, base-tnu-admissibilidade-manual, peticao-previdenciaria, revisao-peticao, base-bpc-*, aposentadoria-idade-hibrida, incapacidade-b31-b91. A versão anterior 1.31.0 entregou Onda 41 (Manual JEF TRF3 2025 com 52 hipóteses art. 20 §2º). A 1.28.0 entregou Onda Corretiva 38. 127 skills ao todo (119 base-* + 6 ponte-* + 2 operacionais).",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"
@@ -260,6 +260,34 @@
     "portaria-mps-125-2026-ricrps",
     "sha-256-verificado",
     "correcao-portaria-992",
-    "protocolo-5-niveis-verificacao"
+    "protocolo-5-niveis-verificacao",
+    "onda-42",
+    "tru-trf3",
+    "turma-regional-uniformizacao-3-regiao",
+    "sumula-trf3",
+    "sumula-tru-3",
+    "23-sumulas-tru-trf3",
+    "dejf3r-109-2015",
+    "dejf3r-198-2015",
+    "puil-regional-trf3",
+    "paradigma-tru-trf3",
+    "sumula-4-tru-miserabilidade",
+    "sumula-7-tru-pensao-pais",
+    "sumula-8-tru-idade-sem-qualidade",
+    "sumula-11-tru-qualidade-dii",
+    "sumula-13-tru-requisitos-nao-simultaneos",
+    "sumula-14-tru-idoso-65-um-sm",
+    "sumula-19-tru-art-142",
+    "sumula-20-tru-vedacao-ms-jef",
+    "sumula-21-tru-bpc-meio-sm",
+    "sumula-22-tru-um-sm-excluido",
+    "sumula-23-tru-distinguishing",
+    "sumula-3-tru-irsm-fevereiro-1994",
+    "sumula-6-tru-art-21-lei-8880",
+    "sumula-9-tru-tempus-regit-actum-especial",
+    "sumula-16-tru-correcao-monetaria-administrativa",
+    "verificacao-pdf-oficial-trf3",
+    "distinguishing-sumula-23-tru",
+    "distinguishing-sumula-18-tru"
   ]
 }
