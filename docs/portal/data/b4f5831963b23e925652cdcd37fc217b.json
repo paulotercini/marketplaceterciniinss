@@ -1,6 +1,6 @@
 {
   "nome": "José Roberto Gonçalves",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "02656549809",
@@ -9,16 +9,36 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Câmara de Julgamento",
       "titulo_tarefa": "José Roberto Gonçalves",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 05/07/2025: Recurso Especial interposto",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-07-05",
+          "data_br": "05/07/2025",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Recurso Especial interposto."
+        },
+        {
+          "data": "2025-06-22",
+          "data_br": "22/06/2025",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Sessão de julgamento agendada."
+        },
+        {
+          "data": "2021-12-06",
+          "data_br": "06/12/2021",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
           "url": "https://consultaprocessos.inss.gov.br/"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

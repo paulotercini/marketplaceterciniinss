@@ -1,6 +1,6 @@
 {
   "nome": "Ana Justina da Silva",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "08163060875",
@@ -9,16 +9,138 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Junta de Recursos",
       "titulo_tarefa": "Ana Justina da Silva",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 11/06/2026: Sessão de julgamento agendada",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-06-11",
+          "data_br": "11/06/2026",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Sessão de julgamento agendada."
+        },
+        {
+          "data": "2025-11-25",
+          "data_br": "25/11/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-10-24",
+          "data_br": "24/10/2025",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso administrativo protocolado."
+        },
+        {
+          "data": "2025-08-21",
+          "data_br": "21/08/2025",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso administrativo protocolado."
+        },
+        {
+          "data": "2025-08-21",
+          "data_br": "21/08/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-06-12",
+          "data_br": "12/06/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-06-01",
+          "data_br": "01/06/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2025-05-21",
+          "data_br": "21/05/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-05-15",
+          "data_br": "15/05/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-02-18",
+          "data_br": "18/02/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-01-25",
+          "data_br": "25/01/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-01-16",
+          "data_br": "16/01/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-09-16",
+          "data_br": "16/09/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-09-11",
+          "data_br": "11/09/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2024-09-06",
+          "data_br": "06/09/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2024-08-30",
+          "data_br": "30/08/2024",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2024-08-18",
+          "data_br": "18/08/2024",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2024-08-02",
+          "data_br": "02/08/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-03-01",
+          "data_br": "01/03/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2023-05-17",
+          "data_br": "17/05/2023",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
           "url": "https://consultaprocessos.inss.gov.br/"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

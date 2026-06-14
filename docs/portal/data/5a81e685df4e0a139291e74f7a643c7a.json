@@ -1,6 +1,6 @@
 {
   "nome": "Evandro Romano",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "25700213850",
@@ -9,16 +9,24 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Junta de Recursos",
       "titulo_tarefa": "Evandro Romano",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 07/07/2025: Pedido protocolado no INSS",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-07-07",
+          "data_br": "07/07/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
           "url": "https://consultaprocessos.inss.gov.br/"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

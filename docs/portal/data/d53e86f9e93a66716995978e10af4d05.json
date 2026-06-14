@@ -1,6 +1,6 @@
 {
   "nome": "Gildo Alexandre Buzinaro",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "06554575855",
@@ -9,16 +9,36 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Câmara de Julgamento",
       "titulo_tarefa": "Gildo Alexandre Buzinaro",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 14/09/2025: Acórdão: negou provimento ao recurso",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-09-14",
+          "data_br": "14/09/2025",
+          "tipo": "Acórdão: negou provimento ao recurso",
+          "descricao": "Acórdão: recurso não provido."
+        },
+        {
+          "data": "2025-09-12",
+          "data_br": "12/09/2025",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Sessão de julgamento agendada."
+        },
+        {
+          "data": "2025-03-28",
+          "data_br": "28/03/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
           "url": "https://consultaprocessos.inss.gov.br/"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

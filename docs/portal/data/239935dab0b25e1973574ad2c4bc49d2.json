@@ -1,6 +1,6 @@
 {
   "nome": "Valentim Leonardo",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "15613987807",
@@ -9,9 +9,52 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Valentim Leonardo",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 24/11/2025: Ação judicial protocolada",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-11-24",
+          "data_br": "24/11/2025",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Ação judicial protocolada."
+        },
+        {
+          "data": "2025-11-11",
+          "data_br": "11/11/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-10-27",
+          "data_br": "27/10/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-10-16",
+          "data_br": "16/10/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-09-12",
+          "data_br": "12/09/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2024-09-16",
+          "data_br": "16/09/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-09-12",
+          "data_br": "12/09/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -19,7 +62,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     },
     {
       "cpf": "15613987807",
@@ -28,16 +72,24 @@
       "lista": "🗓 Tarefas com Prazo",
       "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "Valentim Leonardo",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 16/10/2025: Indeferimento do INSS",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-10-16",
+          "data_br": "16/10/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
           "url": "https://consultaprocessos.inss.gov.br/"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

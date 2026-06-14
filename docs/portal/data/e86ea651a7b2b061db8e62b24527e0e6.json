@@ -1,6 +1,6 @@
 {
   "nome": "Alessandro Francisco Rodrigues",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "14432411805",
@@ -9,16 +9,24 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Junta de Recursos",
       "titulo_tarefa": "Alessandro Francisco Rodrigues",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 27/07/2023: Recurso administrativo protocolado",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2023-07-27",
+          "data_br": "27/07/2023",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso administrativo protocolado."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
           "url": "https://consultaprocessos.inss.gov.br/"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

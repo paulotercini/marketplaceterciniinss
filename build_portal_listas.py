@@ -173,10 +173,38 @@ def split_blocks(body):
     return blocks
 
 
+# Marcos inequivocos exibidos no modo "alta confianca" (publico). Tipos vagos
+# como "Manifestação no processo judicial" ficam de fora — texto livre demais.
+ALTA_CONFIANCA = {
+    "Acórdão: deu provimento parcial ao recurso",
+    "Acórdão: negou provimento ao recurso",
+    "Acórdão: deu provimento ao recurso",
+    "Embargos de declaração interpostos",
+    "Recurso inominado interposto",
+    "Recurso Especial interposto",
+    "Recurso Ordinário interposto",
+    "Sessão de julgamento agendada",
+    "Laudo pericial juntado",
+    "Recurso administrativo protocolado",
+    "Ação judicial protocolada",
+    "Cessação programada (DCB)",
+    "Prorrogação",
+    "Indeferimento do INSS",
+    "Benefício deferido pelo INSS",
+    "Pedido protocolado no INSS",
+}
+
+
+def _kw_match(kw, texto):
+    # casamento por palavra inteira (limite \b no inicio): evita que, p.ex.,
+    # "reclamação protocolada" case a regra "ação protocolada".
+    return re.search(r"\b" + re.escape(kw), texto) is not None
+
+
 def classify(texto):
     t = texto.lower()
     for tipo, desc, kws in REGRAS:
-        if any(k in t for k in kws):
+        if any(_kw_match(k, t) for k in kws):
             return tipo, desc
     return None, None
 
@@ -228,12 +256,23 @@ def parse_pericia(blocks):
     return None
 
 
+def headline(texto):
+    """Primeira linha nao-vazia do bloco, sem o marcador de autor ('A):', 'P):').
+    O evento de uma data e o que esta escrito na CABECA do bloco; o resto e
+    narrativa/historico colado do sistema e nao deve virar evento daquela data."""
+    for line in (texto or "").splitlines():
+        line = re.sub(r"^\s*[A-Za-zÀ-ú]{0,3}\)\s*:?\s*", "", line.strip())
+        if line:
+            return line
+    return ""
+
+
 def build_timeline(body):
     """Retorna lista de eventos canonicos (mais novo primeiro)."""
     eventos = []
     vistos = set()
     for dt, texto in split_blocks(body):
-        tipo, desc = classify(texto)
+        tipo, desc = classify(headline(texto))
         if not tipo:
             continue
         chave = (dt.isoformat(), tipo)
@@ -327,14 +366,15 @@ def montar_processo(cpf, dn, item):
     }
 
 
-def montar_processo_conservador(cpf, dn, item):
-    """Processo SEGURO para clientes ainda nao publicados: localizacao fixa,
-    status com pericia futura (se houver) ou generico, e timeline VAZIA.
-    Nao reproduz a curadoria manual de marcos (impossivel de inferir)."""
+def montar_processo_safe(cpf, dn, item):
+    """Processo gerado automaticamente em modo ALTA CONFIANCA: timeline apenas
+    com marcos inequivocos (ALTA_CONFIANCA), descartando o ambiguo. Localizacao
+    fixa e status derivado do ultimo marco confiavel ou da pericia futura."""
     lista, body = item["lista"], item["body"]
+    timeline = [e for e in build_timeline(body) if e["tipo"] in ALTA_CONFIANCA]
     pericia = parse_pericia(split_blocks(body))
-    if pericia:
-        status = status_line([], pericia)
+    if timeline or pericia:
+        status = status_line(timeline, pericia)
     else:
         status = "Em acompanhamento pelo escritório"
     return {
@@ -342,13 +382,14 @@ def montar_processo_conservador(cpf, dn, item):
         "dn": dn,
         "nome": item["nome"],
         "lista": lista,
-        "localizacao": localizacao_for(lista, [], body),
+        "localizacao": localizacao_for(lista, timeline, body),
         "titulo_tarefa": item["nome"],
         "status": status,
         "proximo_evento": None,
-        "timeline": [],
+        "timeline": timeline,
         "notas_publicas": [],
         "links_externos": LINKS[lista],
+        "origem": "auto",
     }
 
 
@@ -399,10 +440,15 @@ def main():
         return
 
     novas_fichas = 0      # arquivos criados do zero
-    proc_adicionados = 0  # processos novos acrescentados a fichas existentes
-    intactas = 0          # clientes ja totalmente publicados (nada a fazer)
+    regeneradas = 0       # fichas com processos auto (re)gerados
+    intactas = 0          # clientes 100% curados (nada a (re)gerar)
     sem_dn = []
     agora = HOJE.strftime("%d/%m/%Y") + " às " + datetime.datetime.now().strftime("%H:%M")
+
+    def ordem(p):
+        L = p.get("lista")
+        return PRIORIDADE.index(L) if L in PRIORIDADE else 99
+
     for cpf, procs in by_cpf.items():
         dn = cpf2dn.get(cpf)
         if not dn:
@@ -421,22 +467,26 @@ def main():
                 existentes = json.loads(path.read_text()).get("processos", [])
             except Exception:
                 existentes = []
-        listas_publicadas = {p.get("lista") for p in existentes}
 
-        faltantes = [por_lista[L] for L in PRIORIDADE if L in por_lista and L not in listas_publicadas]
-        if not faltantes:
+        # preserva o que e curado a mao; o resto (auto) e regerado do To Do
+        curados = [p for p in existentes if p.get("origem") == "curado"]
+        curado_listas = {p.get("lista") for p in curados}
+        autos = [montar_processo_safe(cpf, dn, por_lista[L])
+                 for L in PRIORIDADE if L in por_lista and L not in curado_listas]
+
+        if not autos:
             intactas += 1
-            continue  # tudo ja publicado/curado — NAO reescreve
+            continue  # nada auto a gerar (cliente totalmente curado)
 
-        novos = [montar_processo_conservador(cpf, dn, item) for item in faltantes]
+        processos = sorted(curados + autos, key=ordem)
         ficha = {
-            "nome": nomes.get(cpf, novos[0]["nome"]),
+            "nome": nomes.get(cpf, processos[0]["nome"]),
             "atualizado_em": agora,
-            "processos": existentes + novos,  # preserva curadas + Escritorio
+            "processos": processos,
         }
         path.write_text(json.dumps(ficha, ensure_ascii=False, indent=2))
         if existentes:
-            proc_adicionados += len(novos)
+            regeneradas += 1
         else:
             novas_fichas += 1
 
@@ -446,8 +496,8 @@ def main():
     (DATA_DIR / "_meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2))
 
     print(f"Fichas novas criadas: {novas_fichas}")
-    print(f"Processos acrescentados a fichas existentes: {proc_adicionados}")
-    print(f"Clientes ja publicados (intactos): {intactas}")
+    print(f"Fichas regeneradas (auto): {regeneradas}")
+    print(f"Clientes 100% curados (intactos): {intactas}")
     print(f"Total de fichas no portal: {total}")
     print(f"Sem DN resolvivel (NAO publicados): {len(sem_dn)}")
     for nome, cpf in sem_dn:

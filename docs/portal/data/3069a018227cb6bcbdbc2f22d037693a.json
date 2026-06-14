@@ -1,6 +1,6 @@
 {
   "nome": "Marcelo da Silva Okanha",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "17550863857",
@@ -11,7 +11,206 @@
       "titulo_tarefa": "Marcelo da Silva Okanha",
       "status": "Perícia médica marcada para 21/07/2026 (em 37 dias)",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-06-01",
+          "data_br": "01/06/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2026-05-27",
+          "data_br": "27/05/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2026-05-15",
+          "data_br": "15/05/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2026-03-17",
+          "data_br": "17/03/2026",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        },
+        {
+          "data": "2025-11-24",
+          "data_br": "24/11/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-10-15",
+          "data_br": "15/10/2025",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        },
+        {
+          "data": "2025-09-17",
+          "data_br": "17/09/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-09-12",
+          "data_br": "12/09/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-09-04",
+          "data_br": "04/09/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-07-17",
+          "data_br": "17/07/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-03-17",
+          "data_br": "17/03/2025",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        },
+        {
+          "data": "2025-02-11",
+          "data_br": "11/02/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2024-12-10",
+          "data_br": "10/12/2024",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2024-08-22",
+          "data_br": "22/08/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-07-29",
+          "data_br": "29/07/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-07-03",
+          "data_br": "03/07/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-06-28",
+          "data_br": "28/06/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-06-27",
+          "data_br": "27/06/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-05-31",
+          "data_br": "31/05/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-05-29",
+          "data_br": "29/05/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-05-28",
+          "data_br": "28/05/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-04-30",
+          "data_br": "30/04/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-04-26",
+          "data_br": "26/04/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-04-02",
+          "data_br": "02/04/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-03-01",
+          "data_br": "01/03/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-02-29",
+          "data_br": "29/02/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-02-02",
+          "data_br": "02/02/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2024-02-01",
+          "data_br": "01/02/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-01-03",
+          "data_br": "03/01/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2023-12-11",
+          "data_br": "11/12/2023",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2023-11-08",
+          "data_br": "08/11/2023",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2023-11-07",
+          "data_br": "07/11/2023",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2023-10-04",
+          "data_br": "04/10/2023",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -19,7 +218,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     },
     {
       "cpf": "17550863857",
@@ -28,9 +228,16 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Marcelo da Silva Okanha",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 15/05/2026: Embargos de declaração interpostos",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-05-15",
+          "data_br": "15/05/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -45,7 +252,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

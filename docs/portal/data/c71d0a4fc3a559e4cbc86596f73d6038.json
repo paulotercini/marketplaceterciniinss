@@ -1,6 +1,6 @@
 {
   "nome": "Elaine Cristina Crizol",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "27778494809",
@@ -9,9 +9,64 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Elaine Cristina Crizol",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 26/05/2026: Pedido protocolado no INSS",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-05-26",
+          "data_br": "26/05/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2026-05-25",
+          "data_br": "25/05/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2026-01-22",
+          "data_br": "22/01/2026",
+          "tipo": "Laudo pericial juntado",
+          "descricao": "Laudo pericial juntado aos autos."
+        },
+        {
+          "data": "2026-01-21",
+          "data_br": "21/01/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-10-09",
+          "data_br": "09/10/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2025-02-25",
+          "data_br": "25/02/2025",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Ação judicial protocolada."
+        },
+        {
+          "data": "2025-01-21",
+          "data_br": "21/01/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2024-08-05",
+          "data_br": "05/08/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2024-07-30",
+          "data_br": "30/07/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -19,7 +74,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     },
     {
       "cpf": "27778494809",
@@ -28,9 +84,16 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Elaine Cristina Crizol",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 21/01/2026: Recurso inominado interposto",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-01-21",
+          "data_br": "21/01/2026",
+          "tipo": "Recurso inominado interposto",
+          "descricao": "Recurso inominado interposto."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -45,7 +108,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

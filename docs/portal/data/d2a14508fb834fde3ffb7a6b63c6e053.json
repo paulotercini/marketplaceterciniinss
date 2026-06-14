@@ -1,6 +1,6 @@
 {
   "nome": "William Munhoz",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "06636726865",
@@ -9,9 +9,76 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "William Munhoz",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 11/12/2025: Indeferimento do INSS",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-12-11",
+          "data_br": "11/12/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-10-23",
+          "data_br": "23/10/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-10-22",
+          "data_br": "22/10/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-03-18",
+          "data_br": "18/03/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-02-28",
+          "data_br": "28/02/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-02-27",
+          "data_br": "27/02/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-02-16",
+          "data_br": "16/02/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-02-13",
+          "data_br": "13/02/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-01-02",
+          "data_br": "02/01/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2024-10-01",
+          "data_br": "01/10/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-09-11",
+          "data_br": "11/09/2024",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -26,7 +93,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

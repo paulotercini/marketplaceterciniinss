@@ -1,6 +1,6 @@
 {
   "nome": "Neide Ambrosio da Silva",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "13572763894",
@@ -11,7 +11,38 @@
       "titulo_tarefa": "Neide Ambrosio da Silva",
       "status": "Perícia médica marcada para 18/08/2026 (em 65 dias)",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-01-13",
+          "data_br": "13/01/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2025-10-01",
+          "data_br": "01/10/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-09-29",
+          "data_br": "29/09/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2025-09-22",
+          "data_br": "22/09/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2025-09-07",
+          "data_br": "07/09/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -19,7 +50,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "nome": "Ana Martinez de Paula",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "41248343816",
@@ -9,9 +9,16 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Ana Martinez de Paula",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 15/03/2024: Indeferimento do INSS",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2024-03-15",
+          "data_br": "15/03/2024",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -19,7 +26,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

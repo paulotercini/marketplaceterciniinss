@@ -1,6 +1,6 @@
 {
   "nome": "Agnaldo de Castilho",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "28454851828",
@@ -19,7 +19,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     },
     {
       "cpf": "28454851828",
@@ -28,9 +29,16 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Agnaldo de Castilho",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 22/10/2025: Indeferimento do INSS",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-10-22",
+          "data_br": "22/10/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -45,7 +53,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

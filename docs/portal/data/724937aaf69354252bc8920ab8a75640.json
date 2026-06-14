@@ -1,6 +1,6 @@
 {
   "nome": "Eucharis Felicio Freire",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "24566193829",
@@ -9,9 +9,16 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Eucharis Felicio Freire",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 08/04/2026: Indeferimento do INSS",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-04-08",
+          "data_br": "08/04/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -19,7 +26,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }
