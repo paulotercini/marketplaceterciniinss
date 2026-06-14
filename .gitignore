@@ -1,6 +1,7 @@
 graph_tokens.json
 graph_device.json
 triagem_hoje.json
+todo_backups/
 __pycache__/
 *.pyc
 audit_excel/
