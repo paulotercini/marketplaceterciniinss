@@ -1,0 +1,51 @@
+{
+  "nome": "Lucimara Aparecida Silva Feitoza",
+  "atualizado_em": "14/06/2026 às 16:53",
+  "processos": [
+    {
+      "cpf": "16612560827",
+      "dn": "25021975",
+      "nome": "Lucimara Aparecida Silva Feitoza",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Lucimara Aparecida Silva Feitoza",
+      "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    },
+    {
+      "cpf": "16612560827",
+      "dn": "25021975",
+      "nome": "Lucimara Aparecida Silva Feitoza",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Lucimara Aparecida Silva Feitoza",
+      "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ]
+    }
+  ]
+}

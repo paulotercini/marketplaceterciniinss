@@ -1,0 +1,24 @@
+{
+  "nome": "Antonio Celio Fenerick",
+  "atualizado_em": "14/06/2026 às 16:53",
+  "processos": [
+    {
+      "cpf": "04473206882",
+      "dn": "20021963",
+      "nome": "Antonio Celio Fenerick",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
+      "titulo_tarefa": "Antonio Celio Fenerick",
+      "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ]
+    }
+  ]
+}

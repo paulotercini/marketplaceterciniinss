@@ -1,0 +1,24 @@
+{
+  "nome": "Paulo Benedito Baptista",
+  "atualizado_em": "14/06/2026 às 16:53",
+  "processos": [
+    {
+      "cpf": "10027526801",
+      "dn": "28121966",
+      "nome": "Paulo Benedito Baptista",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Junta de Recursos",
+      "titulo_tarefa": "Paulo Benedito Baptista",
+      "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ]
+    }
+  ]
+}

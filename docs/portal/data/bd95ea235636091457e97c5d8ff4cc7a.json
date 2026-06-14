@@ -1,0 +1,24 @@
+{
+  "nome": "Marcela dos Santos",
+  "atualizado_em": "14/06/2026 às 16:53",
+  "processos": [
+    {
+      "cpf": "31146533837",
+      "dn": "09091981",
+      "nome": "Marcela dos Santos",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
+      "titulo_tarefa": "Marcela dos Santos",
+      "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ]
+    }
+  ]
+}

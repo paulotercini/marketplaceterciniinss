@@ -1,0 +1,25 @@
+{
+  "nome": "Rosalina Bonezo Martins",
+  "atualizado_em": "14/06/2026 às 16:53",
+  "processos": [
+    {
+      "cpf": "12928080805",
+      "dn": "18021969",
+      "nome": "Rosalina Bonezo Martins",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Rosalina Bonezo Martins",
+      "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}

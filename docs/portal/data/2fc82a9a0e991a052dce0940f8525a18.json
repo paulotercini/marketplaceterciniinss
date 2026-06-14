@@ -1,0 +1,42 @@
+{
+  "nome": "Maximo Vicente Serra",
+  "atualizado_em": "14/06/2026 às 16:53",
+  "processos": [
+    {
+      "cpf": "98168487834",
+      "dn": "22011959",
+      "nome": "Maximo Vicente Serra",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Junta de Recursos",
+      "titulo_tarefa": "Maximo Vicente Serra",
+      "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ]
+    },
+    {
+      "cpf": "98168487834",
+      "dn": "22011959",
+      "nome": "Maximo Vicente Serra",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
+      "titulo_tarefa": "Maximo Vicente Serra",
+      "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ]
+    }
+  ]
+}
