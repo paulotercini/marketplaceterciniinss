@@ -43,14 +43,16 @@ def all_authors(body: str):
 
 
 def is_paulo_task(body: str):
+    # (C) = Claude (assistente IA). Entradas (C) sao analise/insumo para Paulo,
+    # entao contam como se fossem dele para fins de cabecalho diario.
     if not body:
         return True
     la = last_author(body)
-    if la == "P":
+    if la in {"P", "C"}:
         return True
     if la is None:
         return True
-    aa = all_authors(body)
+    aa = all_authors(body) - {"C"}
     if aa == {"P"}:
         return True
     if la in {"L", "G"} and "P" in aa:
