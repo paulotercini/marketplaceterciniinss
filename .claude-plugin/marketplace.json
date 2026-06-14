@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. Versão 1.32.0 entrega a Onda 42, skill base-tru-trf3-sumulas-jurisprudencia consolidando as 23 Súmulas da Turma Regional de Uniformização (TRU) dos JEFs da 3ª Região com redação literal verificada nos PDFs oficiais (DEJF3R 109/2015 Súmulas 1 a 19 e DEJF3R 198/2015 Súmulas 20 a 23). Postura pró-segurado exclusiva. Distinguishing obrigatório para Súmulas 18 (reajuste) e 23 (BPC subsidiário dever alimentar). Paradigma válido para PUIL Regional TRU 3 e contrarrazões. Tabela operacional por bloco temático (BPC, Aposentadoria por Idade, Incapacidade, Pensão, Especial, Revisão, Procedimental, Carência). Cruza com base-jef-trf3-manual-2025 (Onda 41), base-tnu-admissibilidade-manual, peticao-previdenciaria, revisao-peticao. 127 skills ao todo (119 base-* + 6 ponte-* + 2 operacionais).",
-      "version": "1.32.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. Versão 1.33.0 entrega a Onda 43 com (1) nova skill base-siglas-inss, glossário consolidado de mais de 100 siglas e acrônimos do INSS, da Previdência Social e do contencioso previdenciário em 17 blocos temáticos e (2) atualização da skill base-auxilio-acidente-b94-pos-reforma incorporando o padrão estrutural OBRIGATÓRIO da Vara do Núcleo Especializado de Justiça 4.0 do TJSP - Acidentes do Trabalho do Interior e do Litoral (Portaria Conjunta TJSP 10.507/2024, Comunicado Conjunto 868/2024, decisão paradigma 1013616-41.2026.8.26.0381). 9 tópicos obrigatórios para petição inicial, paradigma do AI 2061943-13.2025.8.26.0000 (Rel. Des. Richard Pae Kim) dispensando novo requerimento administrativo, isenção art. 129 par. único Lei 8.213, checklist de 14 pontos pré-protocolo. 128 skills ao todo (120 base-* + 6 ponte-* + 2 operacionais).",
+      "version": "1.33.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
