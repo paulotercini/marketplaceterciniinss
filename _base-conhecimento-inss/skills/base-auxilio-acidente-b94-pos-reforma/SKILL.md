@@ -1,6 +1,6 @@
 ---
 name: base-auxilio-acidente-b94-pos-reforma
-description: "Auxílio-acidente B94 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B94, auxílio-acidente, sequela, redução da capacidade laboral, consolidação de lesões, art. 86 Lei 8.213, Anexo III Decreto 3.048, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 TNU, Tema 862 STJ, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, PUIL 5000733, PUIL 5026380, art. 31 integração salário-de-contribuição, cálculo RMI B94, 50% média, período de graça B94, indenizatório, acumulação aposentadoria B94 antes Lei 13.846, reabilitação profissional B94, cessação B94, MS auxílio-acidente, Portaria Conjunta 15/2026, análise documental B94, sequela mínima Anexo III exemplificativo. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, analise-documental-incapacidade, base-incapacidade-acidentaria-b92 e base-incapacidade-b31-temporaria."
+description: "Auxílio-acidente B94 pós EC 103/2019, ótica exclusiva do segurado, com padrão estrutural OBRIGATÓRIO da Vara do Núcleo Especializado de Justiça 4.0 - Acidentes do Trabalho do Interior e do Litoral (TJSP) instituído pela Portaria Conjunta 10.507/2024 e Comunicado Conjunto 868/2024, conforme decisão paradigma proferida pelo Juiz Matheus de Souza Parducci Camargo em 22/05/2026 no processo 1013616-41.2026.8.26.0381. Use SEMPRE que mencionar B94, auxílio-acidente, sequela, redução da capacidade laboral, consolidação de lesões, art. 86 Lei 8.213, art. 129 par. único Lei 8.213 isenção custas, art. 129-A Lei 8.213 com Lei 14.331/2022, Anexo III Decreto 3.048, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 STF dispensa novo requerimento, Tema 660 STJ, Tema 862 STJ, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, PUIL 5000733, PUIL 5026380, art. 31 integração salário-de-contribuição, cálculo RMI B94, 50% média, período de graça B94, indenizatório, acumulação aposentadoria B94 antes Lei 13.846, reabilitação profissional B94, cessação B94, MS auxílio-acidente, Portaria Conjunta 15/2026, análise documental B94, sequela mínima Anexo III exemplificativo, Núcleo 4.0 TJSP, Vara Especializada Acidentes Trabalho TJSP, Comunicado Conjunto 868/2024 TJSP, Portaria Conjunta 10.507/2024 TJSP, 17ª Câmara Direito Público TJSP, AI 2061943-13.2025.8.26.0000, Richard Pae Kim, 9 tópicos petição acidentária, emenda inicial Núcleo 4.0, B91 acidentário B92 B94 Justiça Estadual, art. 109 I CF acidentárias. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, analise-documental-incapacidade, base-incapacidade-acidentaria-b92, base-incapacidade-b31-temporaria, base-siglas-inss."
 ---
 
 # Auxílio-Acidente (B94) Pós EC 103/2019
@@ -34,6 +34,102 @@ Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativ
 Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
+
+Portaria Conjunta TJSP nº 10.507/2024. Criação da Vara do Núcleo Especializado de Justiça 4.0 - Acidentes do Trabalho do Interior e do Litoral.
+
+Comunicado Conjunto TJSP nº 868/2024. Disciplinamento operacional do Núcleo 4.0 - Acidentes do Trabalho.
+
+Lei 14.331/2022. Inseriu o art. 129-A na Lei 8.213/91. Estabelece peculiaridades das ações acidentárias com obrigatoriedade de descrição clara da doença/acidente, das limitações laborais e da indicação das atividades para as quais a parte está incapacitada.
+
+## ESTRUTURA OBRIGATÓRIA DA PETIÇÃO INICIAL NO NÚCLEO 4.0 TJSP - PADRÃO
+
+Toda petição inicial de ação acidentária (B91 acidentário, B92, B94) ajuizada no Núcleo Especializado de Justiça 4.0 do TJSP DEVE conter, sob pena de emenda obrigatória (CPC art. 330 IV e art. 485 I), os 9 tópicos abaixo. Fonte. Decisão paradigma do Juiz Matheus de Souza Parducci Camargo no processo 1013616-41.2026.8.26.0381 (22/05/2026).
+
+### Bloco A - Descrição do quadro clínico e funcional
+
+**Tópico 3.1.** Descrição clara da doença ou do acidente do trabalho e das limitações laborais que a parte autora eventualmente apresente.
+
+**Tópico 3.2.** Indicação das atividades para as quais a parte autora alega estar incapacitada, relacionando-as com as limitações laborais e esclarecendo se há prejuízo ou não para o trabalho habitual, assim considerado aquele no qual gerada a doença do trabalho ou a doença profissional ou, ainda, no qual ocorrido o acidente do trabalho.
+
+### Bloco B - Inconsistências da avaliação administrativa
+
+**Tópico 3.3.** Possíveis inconsistências da avaliação médico-pericial eventualmente realizada na via administrativa, fazendo o devido confronto com outros laudos médicos ou exames laboratoriais.
+
+### Bloco C - Declaração processual
+
+**Tópico 3.4.** Declaração quanto à existência ou não de ação judicial anterior com pretensão semelhante à presente, esclarecendo os motivos pelos quais se entende não haver litispendência ou coisa julgada, quando for o caso.
+
+### Bloco D - Documentação obrigatória
+
+**Tópico 3.5.** Comprovante de residência em nome da parte autora.
+
+**Tópico 3.6.** Procuração com assinatura eletrônica em plataforma credenciada pela ICP-Brasil (art. 1º §2º III "a" Lei 11.419/2006 e MP 2.200-2/2001).
+
+**Tópico 3.7.** Comprovante de indeferimento do benefício ou de sua não prorrogação. ATENÇÃO PRÓ-SEGURADO. Em pedido de revisão, restabelecimento ou manutenção de benefício anteriormente concedido, DISPENSA-SE o prévio requerimento administrativo (paradigma. AI 2061943-13.2025.8.26.0000, Rel. Des. Richard Pae Kim, 17ª Câmara de Direito Público, j. 10/03/2025, fundado no Tema 350/STF e Tema 660/STJ).
+
+**Tópico 3.8.** Comprovante da ocorrência do acidente do trabalho, sempre que houver acidente apontado como causa da incapacidade.
+
+**Tópico 3.9.** Documentação médica de que dispuser relativa à doença alegada como causa da incapacidade.
+
+### Bloco E - Forma de apresentação
+
+Petição de emenda DEVE ser apresentada EM TÓPICOS, com indicação expressa das folhas onde se encontram os documentos juntados.
+
+### Bloco F - Prazo e sanção
+
+Prazo. 15 dias úteis para emenda. Sanção. Indeferimento e extinção sem mérito (art. 330 IV e art. 485 I CPC).
+
+## ESTRATÉGIA PRÓ-SEGURADO NO NÚCLEO 4.0
+
+Primeira regra. PROTOCOLAR JÁ NO PADRÃO. Eliminar o risco de emenda da inicial é estratégia de celeridade. Cada emenda atrasa o processo em 15 a 60 dias.
+
+Segunda regra. NO TÓPICO 3.2, definir com PRECISÃO a profissão habitual e o conceito legal de "trabalho habitual" (art. 129-A §1º Lei 8.213/91 com Lei 14.331/2022). Trabalho habitual NÃO é qualquer trabalho. É aquele EM QUE foi gerada a doença ou ocorrido o acidente.
+
+Terceira regra. NO TÓPICO 3.3, sempre confrontar o laudo administrativo com.
+- Laudos do médico assistente (cruzar com `relatorio-medico-assistente`).
+- Exames complementares.
+- CAT (se houver).
+- Histórico do CNIS.
+- LTCAT/PPP da empresa (se houver).
+
+Cruzar com `auditoria-laudo-pericial`.
+
+Quarta regra. NO TÓPICO 3.7, em revisão/restabelecimento, INVOCAR o paradigma do TJSP (AI 2061943-13.2025.8.26.0000), o Tema 350/STF (RE 631.240/MG) e o Tema 660/STJ. Dispensa-se o requerimento administrativo.
+
+Quinta regra. NO TÓPICO 3.8, juntar CAT e cruzar com `ntep-nexo-acidentario`. Lembrar a presunção do art. 21-A Lei 8.213/91 quando aplicável o NTEP.
+
+Sexta regra. NO TÓPICO 3.9, modelo de relatório médico que segue os parâmetros do art. 129-A Lei 8.213 deve ser pedido ao médico assistente. Cruzar com `base-modelo-relatorio-medico-auxilio-acidente-b94`.
+
+Sétima regra. ISENÇÃO DE CUSTAS. Art. 129 par. único Lei 8.213/91. O segurado é isento "do pagamento de quaisquer custas e de verbas relativas à sucumbência". NÃO requerer gratuidade da justiça. Apenas declarar a isenção legal.
+
+## TUTELA DE URGÊNCIA NO NÚCLEO 4.0
+
+Pedido de tutela de urgência (CPC art. 300) deve estar AMARRADO aos 9 tópicos. Demonstrar.
+
+1. Probabilidade do direito. Pelos documentos médicos (tópico 3.1, 3.9) + laudo administrativo confrontado (tópico 3.3).
+2. Perigo da demora. Período sem renda, despesas com tratamento, dependentes.
+3. Reversibilidade.
+
+Acompanhar com `peticao-previdenciaria` para padrão visual.
+
+## CHECKLIST PRÉ-PROTOCOLO NO NÚCLEO 4.0
+
+Antes de protocolar inicial acidentária no Núcleo 4.0, varrer.
+
+- [ ] Tópico 3.1. Descrição clara da doença/acidente e limitações.
+- [ ] Tópico 3.2. Atividades incapacitadas com vínculo ao trabalho habitual.
+- [ ] Tópico 3.3. Confronto com laudo administrativo, se houver.
+- [ ] Tópico 3.4. Declaração sobre ação anterior.
+- [ ] Tópico 3.5. Comprovante de residência (180 dias).
+- [ ] Tópico 3.6. Procuração ICP-Brasil ou física com poderes específicos.
+- [ ] Tópico 3.7. Indeferimento, não prorrogação OU paradigma TJSP (AI 2061943-13.2025.8.26.0000) em revisão/restabelecimento.
+- [ ] Tópico 3.8. CAT ou comprovante de acidente (se aplicável).
+- [ ] Tópico 3.9. Documentos médicos com CRM e CID.
+- [ ] Apresentação em TÓPICOS.
+- [ ] Indicação das folhas onde se encontra cada documento.
+- [ ] Declaração da isenção do art. 129 par. único Lei 8.213.
+- [ ] Quesitos para o perito.
+- [ ] Pedido de tutela de urgência fundamentado nos 9 tópicos.
 
 ## Requisitos cumulativos
 

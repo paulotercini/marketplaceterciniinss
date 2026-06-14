@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.32.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.32.0 entrega a Onda 42, skill base-tru-trf3-sumulas-jurisprudencia consolidando integralmente as 23 Súmulas da Turma Regional de Uniformização (TRU) dos JEFs da 3ª Região com redação literal verificada nos PDFs oficiais do TRF3 (DEJF3R 109/2015 Súmulas 1 a 19 e DEJF3R 198/2015 Súmulas 20 a 23). Inclui análise pró-segurado de cada Súmula, distinguishing para Súmulas 18 e 23 (desfavoráveis), tabela operacional por bloco temático (BPC, Aposentadoria por Idade, Incapacidade, Pensão, Especial, Revisão, Procedimental, Carência). Paradigma direto para PUIL Regional TRU 3, contrarrazões e peças no JEF da 3ª Região. Cruza com base-jef-trf3-manual-2025 (Onda 41), base-jef-previdenciario, base-tnu-admissibilidade-manual, peticao-previdenciaria, revisao-peticao, base-bpc-*, aposentadoria-idade-hibrida, incapacidade-b31-b91. A versão anterior 1.31.0 entregou Onda 41 (Manual JEF TRF3 2025 com 52 hipóteses art. 20 §2º). A 1.28.0 entregou Onda Corretiva 38. 127 skills ao todo (119 base-* + 6 ponte-* + 2 operacionais).",
+  "version": "1.33.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.33.0 entrega a Onda 43 com (1) nova skill base-siglas-inss consolidando glossário completo de mais de 100 siglas e acrônimos do INSS, da Previdência Social e do contencioso previdenciário organizados em 17 blocos temáticos (cadastros, datas, cálculo, órgãos, benefícios, documentos, sistemas, regimes, FAP/nexo, guias, indicadores CNIS, execução, processuais, reabilitação/PCD, assistência social, recursais, tributação) e (2) atualização robusta da skill base-auxilio-acidente-b94-pos-reforma incorporando o padrão estrutural OBRIGATÓRIO da Vara do Núcleo Especializado de Justiça 4.0 - Acidentes do Trabalho do Interior e do Litoral do TJSP (Portaria Conjunta TJSP 10.507/2024, Comunicado Conjunto 868/2024 e decisão paradigma do Juiz Matheus de Souza Parducci Camargo no processo 1013616-41.2026.8.26.0381, 22/05/2026). Padrão de 9 tópicos obrigatórios, com paradigma do AI 2061943-13.2025.8.26.0000 (17ª Câmara DP TJSP, Rel. Des. Richard Pae Kim) dispensando novo requerimento administrativo em pedidos de revisão/restabelecimento/manutenção (Tema 350/STF e Tema 660/STJ), isenção de custas do art. 129 par. único Lei 8.213, art. 129-A Lei 8.213 com Lei 14.331/2022 e checklist de 14 pontos pré-protocolo. A versão anterior 1.32.0 entregou Onda 42 (Súmulas TRU TRF3). 128 skills ao todo (120 base-* + 6 ponte-* + 2 operacionais).",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"
@@ -288,6 +288,29 @@
     "sumula-16-tru-correcao-monetaria-administrativa",
     "verificacao-pdf-oficial-trf3",
     "distinguishing-sumula-23-tru",
-    "distinguishing-sumula-18-tru"
+    "distinguishing-sumula-18-tru",
+    "onda-43",
+    "base-siglas-inss",
+    "glossario-inss",
+    "siglas-previdenciarias",
+    "acronimos-inss",
+    "cnis-apis-cat-der-dib-dcb",
+    "nucleo-especializado-justica-4-0",
+    "portaria-conjunta-tjsp-10507-2024",
+    "comunicado-conjunto-868-2024-tjsp",
+    "vara-acidentes-trabalho-tjsp",
+    "art-129a-lei-8213-lei-14331-2022",
+    "9-topicos-peticao-acidentaria",
+    "ai-2061943-13-2025-8-26-0000",
+    "richard-pae-kim",
+    "17a-camara-direito-publico-tjsp",
+    "matheus-parducci-camargo",
+    "1013616-41-2026-8-26-0381",
+    "tema-350-stf-restabelecimento",
+    "tema-660-stj-revisao",
+    "art-129-isencao-custas-acidentaria",
+    "checklist-14-pontos-pre-protocolo",
+    "icp-brasil-procuracao-eletronica",
+    "trabalho-habitual-art-129a"
   ]
 }
