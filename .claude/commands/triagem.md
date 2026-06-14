@@ -1,55 +1,71 @@
 ---
-description: Triagem diaria das tarefas do To Do atribuidas a Paulo (vencendo hoje), cruzando com o Drive e gravando conclusao + parecer
+description: Triagem diaria das tarefas do To Do atribuidas a Paulo (vencendo hoje), cruzando com o Drive, base de conhecimento e CNIS, gravando conclusao + parecer
 ---
 
-Execute a triagem diaria completa do escritorio. Siga EXATAMENTE os passos abaixo.
+Execute a triagem diaria do escritorio. Leia antes o `CLAUDE.md` (doutrina do
+assistente, legenda das iniciais, limitacoes das ferramentas, regras de
+nomenclatura e estilo). Siga EXATAMENTE os passos abaixo.
 
 ## 1. Garantir acesso ao Microsoft Graph
-Rode `python3 graph_bootstrap.py` para garantir que o token esta valido.
+Rode `python3 graph_bootstrap.py`.
 
 ## 2. Coletar as tarefas do dia
 Rode `python3 triagem_do_dia.py` (sem argumento = hoje, horario de Brasilia).
-Isso grava `triagem_hoje.json`. Leia esse arquivo.
-- Se `total` = 0, informe que nao ha tarefas atribuidas a Paulo vencendo hoje e PARE.
-- Caso contrario, cada item traz: `lista`, `list_id`, `task_id`, `title`
-  (padrao "Nome do Cliente #CPF"), `body`, `checklist` e `anexos`.
+Grava `triagem_hoje.json` — leia-o.
+- Se `total` = 0, informe que nao ha tarefas atribuidas ao Paulo vencendo hoje e PARE.
+- Cada item traz: `lista`, `list_id`, `task_id`, `title` ("Nome #CPF"), `body`,
+  `checklist`, `anexos`.
 
-## 3. Processar CADA tarefa (gravacao automatica, sem revisao previa)
-Para nao sobrecarregar o contexto, processe os clientes em paralelo delegando cada
-um a um subagente general-purpose. De a cada subagente o item correspondente do
-JSON e estas instrucoes:
+## 3. Processar CADA tarefa (gravacao automatica, sem aprovacao previa)
+Para nao sobrecarregar o contexto, delegue cada cliente a um subagente
+general-purpose, passando o item do JSON e estas instrucoes. Lembre o subagente
+de ler o `CLAUDE.md` primeiro.
 
-a) Entender a pendencia pelo `body` (entradas mais recentes no topo, formato
-   `DD.MM.AAAA (X):`), pelo `checklist` e pelos `anexos`.
-b) Localizar a pasta do cliente no Drive via `mcp__3253ed5d-045d-444e-9865-d53d8b387f77__search_files`
-   (`title contains 'NOME'` ou `fullText contains 'CPF'`) e listar os arquivos
-   (`parentId = '<id_da_pasta>'`).
-c) Ler os documentos relevantes a pendencia com
-   `mcp__3253ed5d-045d-444e-9865-d53d8b387f77__read_file_content`. Se a pendencia
-   citar um anexo da tarefa ("em anexo"), ler com
-   `python3 todo_anexo.py "<list_id>" "<task_id>" "trecho do nome"`.
-d) Gerar uma CONCLUSAO objetiva, NO MAXIMO 4 LINHAS, focada na pendencia: o que
-   foi verificado, o achado e o proximo passo. NAO iniciar com data/prefixo (o
-   script adiciona "DD.MM.AAAA (C): " sozinho). Nunca inventar dados que nao
-   estejam nos documentos; se faltar documento, dizer claramente.
-e) Gravar a conclusao no To Do:
+a) **Entender a pendencia** pelo `body` (entradas (P)/(D)/(M)/(I)/(A)/(C), mais
+   recentes no topo), pelo `checklist` e pelos `anexos`. Identificar o **beneficio
+   pleiteado** e o que o Paulo precisaria fazer.
+b) **Consultar a base de conhecimento** `_base-conhecimento-inss/skills/` para o
+   beneficio em questao (ex.: especial→base-especial-*, MS→base-ms-*, rural→
+   base-segurado-especial-autodeclaracao-*, relatorio medico→base-modelo-*).
+c) **Localizar a pasta do cliente** no Drive via
+   `mcp__3253ed5d-045d-444e-9865-d53d8b387f77__search_files`
+   (`title contains 'NOME'` ou `fullText contains 'CPF'`) e listar arquivos
+   (`parentId = '<pasta>'`). Ler os documentos relevantes com `read_file_content`.
+   Se a pendencia citar anexo da tarefa, ler com
+   `python3 todo_anexo.py "<list_id>" "<task_id>" "trecho"`.
+d) **Aplicar a doutrina do assistente** (secao correspondente do CLAUDE.md):
+   - Conferir se a documentacao do beneficio esta correta/completa; faltando algo
+     importante (ex.: RG), destacar.
+   - Analisar o **CNIS** e apontar indicadores a corrigir antes de protocolar.
+   - Reler o historico e alertar **pendencias esquecidas** (ex.: PPP nunca trazido).
+   - Documento a terminar (ex.: autodeclaracao) → buscar/criar ja preenchido.
+   - "Verificar digitalizacao" → analisar os docs digitalizados no contexto.
+   - MS → listar documentos que faltam.
+   - Apontar **renomeacoes sugeridas** (nome atual → nome correto), pois NAO da
+     para renomear no Drive.
+   - Se precisar avisar o cliente, **redigir a mensagem pronta para copiar**.
+e) **Gerar a CONCLUSAO** objetiva, **max. 4 linhas**, com achado + proximo passo.
+   NAO iniciar com data/prefixo (o script adiciona "DD.MM.AAAA (C): "). Nunca
+   inventar dados; se faltar documento, dizer claramente.
+f) **Gravar a conclusao** no To Do:
    `python3 todo_conclusao.py "<list_id>" "<task_id>" "<conclusao>"`
-f) Garantir a subpasta "Claude" na pasta do cliente (search_files por
-   `title = 'Claude' and parentId = '<pasta>'`; se vazio, criar com create_file
-   mime `application/vnd.google-apps.folder`). Salvar um parecer mais completo
-   nessa subpasta com create_file (`text/plain` vira Google Doc), titulo
-   "Parecer - <Cliente> - <DD.MM.AAAA>".
-g) Retornar 1 linha de status: cliente, conclusao resumida, link do parecer e se
-   ha documento faltante.
+g) **Salvar o parecer completo** na subpasta `Claude` da pasta do cliente
+   (criar com create_file mime `application/vnd.google-apps.folder` se nao existir),
+   titulo `Parecer - <Cliente> - DD.MM.AAAA` (text/plain → Google Doc). Incluir:
+   contexto, checklist de documentos (faltantes em destaque), analise do CNIS,
+   pendencias do historico, lista de renomeacoes sugeridas e mensagem ao cliente.
+h) Retornar 1 linha de status: cliente, conclusao resumida, link do parecer,
+   pendencias criticas (doc faltante, indicador CNIS, prazo).
 
 ## 4. Relatorio final
-Consolide os retornos dos subagentes numa tabela: Cliente | Conclusao | Parecer |
-Pendencia. Destaque no topo as tarefas que ficaram bloqueadas por documento
-faltante ou prazo a confirmar.
+Tabela: Cliente | Conclusao | Parecer | Pendencia critica. No topo, destaque as
+tarefas bloqueadas por documento faltante (ex.: RG), indicador de CNIS ou prazo
+a confirmar.
 
 ## Regras
-- Escopo: somente tarefas atribuidas a Paulo (P) vencendo hoje (ja filtradas).
+- Escopo: somente tarefas atribuidas ao Paulo (P) vencendo hoje (ja filtradas).
 - Conclusao SEMPRE <= 4 linhas, em portugues, direta.
 - Gravacao automatica em todas; sem etapa de aprovacao.
-- Apague quaisquer scripts/arquivos temporarios que criar (mantenha apenas os
-  pareceres no Drive e as conclusoes no To Do).
+- NAO renomear/apagar no Drive (so listar renomeacoes). NAO enviar mensagens (so
+  deixar prontas). NAO usar Gmail salvo pedido explicito.
+- Apagar arquivos temporarios locais que criar.
