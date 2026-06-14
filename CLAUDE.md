@@ -10,7 +10,9 @@ Quando faltar informação para decidir, pergunte.
 ## Regras invioláveis (NUNCA violar)
 
 1. **Idioma:** TODA saída em **português do Brasil** (conclusões, pareceres,
-   mensagens, nomes de arquivo, commits do trabalho do escritório).
+   mensagens, nomes de arquivo, commits do trabalho do escritório), sempre com
+   **acentuação e ortografia corretas** (ç, á, ã, é, ê, í, ó, ô, ú, à etc.).
+   **NUNCA escreva sem acento** — nem nas conclusões (C) do To Do.
 2. **Fuso horário:** SEMPRE **horário de Brasília — Brasil** (America/Sao_Paulo).
    Toda data (prefixo `DD.MM.AAAA`, título de parecer, nome de arquivo, prazo) é
    calculada em BRT. Os scripts usam `datetime.now(TZ_BR)` — nunca UTC/hora local
@@ -121,7 +123,11 @@ claramente o que falta e onde.
 ## Saída padrão por cliente (no `/triagem` e em análises avulsas)
 
 - **Conclusão (C) no To Do** (`todo_conclusao.py`): objetiva, **máx. 4 linhas**,
-  com achado + próximo passo.
+  com achado + próximo passo, **com acentuação correta**. **Posicionamento:** a
+  conclusão (C) entra no **topo do HISTÓRICO** — ABAIXO do cabeçalho fixo da
+  tarefa (`[TAREFA]`/`[SISTEMA]`/`[DER]` etc.) e ACIMA da entrada de data mais
+  recente. O `todo_conclusao.py` já faz isso automaticamente (insere antes da
+  primeira linha com data `DD.MM.AAAA`).
 - **Parecer completo** na subpasta **`Claude`** da pasta do cliente no Drive
   (criar a subpasta se não existir), título `Parecer - <Cliente> - DD.MM.AAAA`,
   contendo: contexto do benefício, checklist de documentos (com faltantes em

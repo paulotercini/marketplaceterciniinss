@@ -67,12 +67,15 @@ python3 -c "import sys; sys.path.insert(0,'/home/user/marketplaceterciniinss'); 
 ```
 
 ## Passo 7 — Gravar a conclusão (C) no To Do
-Texto **objetivo, no máximo 4 linhas**, achado + próximo passo, em pt-BR, **sem**
-começar com data (o script põe o prefixo). Rode:
+Texto **objetivo, no máximo 4 linhas**, achado + próximo passo, em pt-BR **com
+acentuação e ortografia corretas** (NUNCA sem acento), **sem** começar com data
+(o script põe o prefixo). Rode:
 ```
 cd /home/user/marketplaceterciniinss && python3 todo_conclusao.py "<LIST_ID>" "<TASK_ID>" "<conclusao>"
 ```
-(O script faz backup do corpo original e preserva todo o histórico — confira a saída "OK".)
+O script: (a) faz backup do corpo original; (b) preserva todo o histórico; e
+(c) **posiciona a conclusão no topo do HISTÓRICO automaticamente** — abaixo do
+cabeçalho fixo da tarefa e acima da data mais recente. Confira a saída "OK".
 
 ## Passo 8 — Salvar o parecer no Drive (subpasta `Claude`)
 Verifique a subpasta `Claude` na pasta do cliente
