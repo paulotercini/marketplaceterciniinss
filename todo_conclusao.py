@@ -1,10 +1,21 @@
-"""Prepende uma conclusao datada do Claude ao corpo de uma tarefa do To Do,
-preservando TODO o historico existente.
+"""Insere uma conclusao datada do Claude (C) no corpo de uma tarefa do To Do,
+no lugar correto e preservando TODO o historico existente.
 
-SALVAGUARDAS (regra inviolavel do escritorio — nunca perder historico):
+POSICIONAMENTO (regra do escritorio):
+  A conclusao (C) entra no TOPO do HISTORICO, ou seja:
+    - ABAIXO do cabecalho fixo da tarefa ([TAREFA]/[SISTEMA]/[DER], etc.);
+    - ACIMA da entrada de data mais recente.
+  Na pratica: inserimos imediatamente ANTES da primeira linha que comeca com
+  uma data 'DD.MM.AAAA'. Tudo que vem antes (texto fixo) e tudo que vem depois
+  (historico anterior) e preservado intacto.
+
+SALVAGUARDAS (regra inviolavel — nunca perder historico):
   1. Antes de qualquer escrita, faz backup do corpo original em todo_backups/.
-  2. So grava por PREPEND (acrescenta no topo); nunca substitui o corpo.
-  3. Aborta se a nova versao nao contiver integralmente o corpo anterior.
+  2. Aborta se alguma linha de texto do corpo original sumir da nova versao.
+
+IDIOMA: o texto da conclusao deve vir em portugues do Brasil COM ACENTUACAO
+correta. Este script nao altera o texto recebido (alem de adicionar o prefixo
+de data) — quem chama e responsavel por escrever com acentos.
 
 O prefixo 'DD.MM.AAAA (C): ' usa a data de hoje em horario de Brasilia.
 
@@ -12,6 +23,7 @@ Uso:
     python3 todo_conclusao.py "<list_id>" "<task_id>" "texto da conclusao"
 """
 import os
+import re
 import sys
 from datetime import datetime
 
@@ -19,6 +31,9 @@ from triagem import TZ_BR
 from graph_client import get_task, _req
 
 BACKUP_DIR = "todo_backups"
+
+# Linha que comeca (inicio de linha) com uma data DD.MM.AAAA
+RE_DATA = re.compile(r"^\d{2}\.\d{2}\.\d{4}", re.MULTILINE)
 
 
 def _backup(task_id, body):
@@ -28,6 +43,28 @@ def _backup(task_id, body):
     with open(path, "w", encoding="utf-8") as f:
         f.write(body or "")
     return path
+
+
+def montar_corpo(old, entry, ctype="text"):
+    """Insere `entry` no topo do historico de `old`, abaixo do cabecalho fixo
+    e acima da entrada de data mais recente. Retorna o novo corpo."""
+    if ctype == "html":
+        # Tarefas do escritorio sao texto; para html, rede de seguranca simples.
+        entry_html = "<div>" + entry.replace("\n", "<br>") + "</div>"
+        m = RE_DATA.search(old)
+        if not m:
+            return entry_html + "<br>" + old
+        pos = m.start()
+        return old[:pos] + entry_html + "<br><br>" + old[pos:]
+
+    m = RE_DATA.search(old)
+    if not m:
+        # Sem datas no corpo: prepend simples (caso raro).
+        return entry + "\n\n" + old if old.strip() else entry
+    pos = m.start()
+    head = old[:pos]          # cabecalho fixo (termina em \n quando existe)
+    rest = old[pos:]          # historico (comeca na data mais recente)
+    return head + entry + "\n\n" + rest
 
 
 def prepend(list_id, task_id, texto):
@@ -44,16 +81,15 @@ def prepend(list_id, task_id, texto):
     # Salvaguarda 1 — backup do corpo original antes de gravar.
     bkp = _backup(task_id, old)
 
-    if ctype == "html":
-        novo = f"<div>{texto.replace(chr(10), '<br>')}</div><br>{old}"
-    else:
-        novo = texto + "\n\n" + old
+    novo = montar_corpo(old, texto, ctype)
 
-    # Salvaguarda 3 — jamais sobrescrever/excluir o historico existente.
-    if old.strip() and old not in novo:
-        raise RuntimeError(
-            f"Abortado: a nova versao nao preserva o corpo original. Backup em {bkp}"
-        )
+    # Salvaguarda 2 — nenhuma linha de texto do corpo original pode sumir.
+    for linha in old.splitlines():
+        if linha.strip() and linha not in novo:
+            raise RuntimeError(
+                f"Abortado: a nova versao nao preserva a linha do corpo original: "
+                f"{linha[:60]!r}. Backup em {bkp}"
+            )
 
     _req(
         "PATCH",
