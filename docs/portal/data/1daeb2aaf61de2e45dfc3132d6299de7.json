@@ -1,6 +1,6 @@
 {
   "nome": "Keli Cristina de Carvalho",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "41572638800",
@@ -9,9 +9,28 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Keli Cristina de Carvalho",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 09/11/2025: Indeferimento do INSS",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-11-09",
+          "data_br": "09/11/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-08-27",
+          "data_br": "27/08/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2022-08-23",
+          "data_br": "23/08/2022",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -26,7 +45,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

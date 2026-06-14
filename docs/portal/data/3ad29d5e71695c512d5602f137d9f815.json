@@ -1,6 +1,6 @@
 {
   "nome": "Adauto Carcinoni",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "09031543829",
@@ -11,7 +11,38 @@
       "titulo_tarefa": "Adauto Carcinoni",
       "status": "Avaliação social marcada para 08/07/2026 (em 24 dias) às 16:30",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-03-10",
+          "data_br": "10/03/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2026-02-09",
+          "data_br": "09/02/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-12-03",
+          "data_br": "03/12/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-10-30",
+          "data_br": "30/10/2025",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        },
+        {
+          "data": "2025-09-25",
+          "data_br": "25/09/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -19,7 +50,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

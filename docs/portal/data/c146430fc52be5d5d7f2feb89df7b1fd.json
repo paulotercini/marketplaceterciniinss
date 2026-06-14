@@ -1,6 +1,6 @@
 {
   "nome": "Marcia Aparecida Mussato",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "17029697898",
@@ -19,7 +19,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     },
     {
       "cpf": "17029697898",
@@ -28,9 +29,22 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Marcia Aparecida Mussato",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 13/03/2026: Embargos de declaração interpostos",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-03-13",
+          "data_br": "13/03/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2026-03-12",
+          "data_br": "12/03/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -45,7 +59,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     },
     {
       "cpf": "17029697898",
@@ -54,16 +69,36 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Câmara de Julgamento",
       "titulo_tarefa": "Marcia Aparecida Mussato",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 05/09/2025: Recurso Ordinário interposto",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-09-05",
+          "data_br": "05/09/2025",
+          "tipo": "Recurso Ordinário interposto",
+          "descricao": "Recurso Ordinário interposto."
+        },
+        {
+          "data": "2024-07-25",
+          "data_br": "25/07/2024",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2024-02-15",
+          "data_br": "15/02/2024",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
           "url": "https://consultaprocessos.inss.gov.br/"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "nome": "Valdeli Soares de Souza",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "08734566880",
@@ -11,7 +11,20 @@
       "titulo_tarefa": "Valdeli Soares de Souza",
       "status": "Perícia médica marcada para 07/07/2026 (em 23 dias) às 09:40 — INSS de Bebedouro",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-04-17",
+          "data_br": "17/04/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2026-01-16",
+          "data_br": "16/01/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -19,7 +32,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

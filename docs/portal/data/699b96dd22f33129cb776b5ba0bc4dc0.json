@@ -1,6 +1,6 @@
 {
   "nome": "Roseli Maria Custodio Schisatti",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "20153712813",
@@ -80,7 +80,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "curado"
     },
     {
       "cpf": "20153712813",
@@ -89,9 +90,22 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Roseli Maria Custodio Schisatti",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 15/05/2026: Embargos de declaração interpostos",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-05-15",
+          "data_br": "15/05/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2026-05-07",
+          "data_br": "07/05/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -106,7 +120,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

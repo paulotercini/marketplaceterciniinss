@@ -1,6 +1,6 @@
 {
   "nome": "Sergio Henrique Cheme",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "14813463851",
@@ -9,9 +9,22 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Sergio Henrique Cheme",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 17/11/2025: Embargos de declaração interpostos",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-11-17",
+          "data_br": "17/11/2025",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2025-11-13",
+          "data_br": "13/11/2025",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -26,7 +39,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "nome": "Maria Alves de Oliveira Lima",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "17110663892",
@@ -19,7 +19,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     },
     {
       "cpf": "17110663892",
@@ -28,9 +29,34 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Maria Alves de Oliveira Lima",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 30/03/2025: Embargos de declaração interpostos",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-03-30",
+          "data_br": "30/03/2025",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2025-03-14",
+          "data_br": "14/03/2025",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2022-06-20",
+          "data_br": "20/06/2022",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2022-01-06",
+          "data_br": "06/01/2022",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Ação judicial protocolada."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -45,7 +71,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

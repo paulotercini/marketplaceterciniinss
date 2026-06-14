@@ -1,20 +1,26 @@
 {
-  "nome": "Rosalina Bonezo Martins",
+  "nome": "Antonia Edinalva Alves de Oliveira",
   "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
-      "cpf": "12928080805",
-      "dn": "18021969",
-      "nome": "Rosalina Bonezo Martins",
+      "cpf": "35565027802",
+      "dn": "25081985",
+      "nome": "Antonia Edinalva Alves de Oliveira",
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
-      "titulo_tarefa": "Rosalina Bonezo Martins",
-      "status": "Última atualização em 09/06/2026: Pedido protocolado no INSS",
+      "titulo_tarefa": "Antonia Edinalva Alves de Oliveira",
+      "status": "Última atualização em 31/03/2026: Benefício deferido pelo INSS",
       "proximo_evento": null,
       "timeline": [
         {
-          "data": "2026-06-09",
-          "data_br": "09/06/2026",
+          "data": "2026-03-31",
+          "data_br": "31/03/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2026-01-24",
+          "data_br": "24/01/2026",
           "tipo": "Pedido protocolado no INSS",
           "descricao": "Pedido de benefício protocolado junto ao INSS."
         }

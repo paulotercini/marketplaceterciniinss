@@ -1,6 +1,6 @@
 {
   "nome": "Luzia de Lourdes dos Reis",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "18127817848",
@@ -9,9 +9,16 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Luzia de Lourdes dos Reis",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 13/08/2025: Cessação programada (DCB)",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-08-13",
+          "data_br": "13/08/2025",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -19,7 +26,8 @@
           "url": "https://meu.inss.gov.br/",
           "obs": "Use seu CPF e sua senha gov.br"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

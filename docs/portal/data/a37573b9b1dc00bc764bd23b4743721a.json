@@ -1,6 +1,6 @@
 {
   "nome": "Sueli Aparecida Roque de Castilho",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "11141214873",
@@ -9,9 +9,28 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Sueli Aparecida Roque de Castilho",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 24/11/2025: Laudo pericial juntado",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-11-24",
+          "data_br": "24/11/2025",
+          "tipo": "Laudo pericial juntado",
+          "descricao": "Laudo pericial juntado aos autos."
+        },
+        {
+          "data": "2025-05-24",
+          "data_br": "24/05/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-05-02",
+          "data_br": "02/05/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
@@ -26,7 +45,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

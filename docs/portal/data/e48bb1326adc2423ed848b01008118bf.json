@@ -1,6 +1,6 @@
 {
   "nome": "Luciana da Silva Sirino",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "08861042899",
@@ -9,16 +9,30 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Junta de Recursos",
       "titulo_tarefa": "Luciana da Silva Sirino",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 06/05/2026: Indeferimento do INSS",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-05-06",
+          "data_br": "06/05/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2026-03-14",
+          "data_br": "14/03/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
           "url": "https://consultaprocessos.inss.gov.br/"
         }
-      ]
+      ],
+      "origem": "auto"
     },
     {
       "cpf": "08861042899",
@@ -27,16 +41,24 @@
       "lista": "🗓 Tarefas com Prazo",
       "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "Luciana da Silva Sirino",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 13/06/2026: Recurso Ordinário interposto",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-06-13",
+          "data_br": "13/06/2026",
+          "tipo": "Recurso Ordinário interposto",
+          "descricao": "Recurso Ordinário interposto."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
           "url": "https://consultaprocessos.inss.gov.br/"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }

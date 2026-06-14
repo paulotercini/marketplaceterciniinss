@@ -1,6 +1,6 @@
 {
   "nome": "Luis Agnaldo de Carvalho",
-  "atualizado_em": "14/06/2026 às 16:53",
+  "atualizado_em": "14/06/2026 às 19:22",
   "processos": [
     {
       "cpf": "14443413839",
@@ -26,7 +26,8 @@
           "label": "ESAJ — TJSP (Justiça Estadual)",
           "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
         }
-      ]
+      ],
+      "origem": "auto"
     },
     {
       "cpf": "14443413839",
@@ -35,16 +36,36 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Câmara de Julgamento",
       "titulo_tarefa": "Luis Agnaldo de Carvalho",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 08/04/2025: Pedido protocolado no INSS",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-04-08",
+          "data_br": "08/04/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2025-03-17",
+          "data_br": "17/03/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2024-11-01",
+          "data_br": "01/11/2024",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Ação judicial protocolada."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
           "label": "Consultar no e-SISREC",
           "url": "https://consultaprocessos.inss.gov.br/"
         }
-      ]
+      ],
+      "origem": "auto"
     }
   ]
 }
