@@ -115,6 +115,18 @@ def digits(s):
     return re.sub(r"\D", "", s or "")
 
 
+def dn_from_aniversario(items):
+    """Item explicitamente rotulado 'Aniversário'/'nascimento': aceita qualquer
+    ano plausivel (inclui menores de idade — casos BPC)."""
+    for it in items:
+        name = it.get("displayName", "")
+        if re.search(r"anivers|nascime", name, re.I):
+            m = re.search(r"\b(\d{2})[/.](\d{2})[/.](\d{4})\b", name)
+            if m and 1900 <= int(m.group(3)) <= HOJE.year:
+                return m.group(1) + m.group(2) + m.group(3)
+    return None
+
+
 def dn_from_items(items):
     for it in items:
         m = re.search(r"\b(\d{2})[/.](\d{2})[/.](\d{4})\b", it.get("displayName", ""))
@@ -285,7 +297,7 @@ def coletar():
             if not cpf:
                 continue
             body = t.get("body", {}).get("content", "") or ""
-            dn = dn_from_items(items) or dn_from_body(body)
+            dn = dn_from_aniversario(items) or dn_from_items(items) or dn_from_body(body)
             if dn and cpf not in cpf2dn:
                 cpf2dn[cpf] = dn
             if nome_lista in ALVO:
