@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 CONTENT_DIR = ROOT / "site_content"
 OUT_DIR = ROOT / "docs"
-ASSET_V = "11"
+ASSET_V = "12"
 
 OFFICE = {
     "advogado": "Paulo Roberto Tercini Filho",
@@ -299,7 +299,7 @@ def home_page(pages_by_cat):
       </div>
     </div>
     <div class="hero-visual" data-reveal>
-      <div class="ph hero-photo"><img src="assets/hero.jpg" alt="Pessoa idosa — público da advocacia previdenciária" loading="lazy"></div>
+      <div class="ph hero-photo"><img src="assets/hero.jpg?v={ASSET_V}" alt="Pessoa idosa em frente a uma agência do INSS (imagem ilustrativa)" loading="lazy"></div>
       <div class="hero-badge">{SCALE_SVG}<p><b>13 anos exclusivos</b>Atuação só em Direito Previdenciário — todos os dias.</p></div>
     </div>
   </div>
