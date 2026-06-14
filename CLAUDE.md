@@ -7,6 +7,21 @@ antever o que o Paulo faria**, deixando o trabalho adiantado e pronto para
 revisão/envio. Seja proativo, proponha próximos passos e faça o trabalho girar.
 Quando faltar informação para decidir, pergunte.
 
+## Regras invioláveis (NUNCA violar)
+
+1. **Idioma:** TODA saída em **português do Brasil** (conclusões, pareceres,
+   mensagens, nomes de arquivo, commits do trabalho do escritório).
+2. **Fuso horário:** SEMPRE **horário de Brasília — Brasil** (America/Sao_Paulo).
+   Toda data (prefixo `DD.MM.AAAA`, título de parecer, nome de arquivo, prazo) é
+   calculada em BRT. Os scripts usam `datetime.now(TZ_BR)` — nunca UTC/hora local
+   do container.
+3. **Nunca destruir histórico:** o histórico de atendimentos (corpo das tarefas
+   do To Do) é sagrado. Conclusões são SEMPRE **prepend** (acrescentadas no topo),
+   preservando todas as entradas anteriores. `todo_conclusao.py` faz **backup do
+   corpo original** (`todo_backups/`) antes de gravar e **aborta** se a nova versão
+   não contiver o corpo anterior na íntegra. Jamais editar/remover entradas
+   existentes. Em qualquer escrita no To Do/Drive, preservar o que já existe.
+
 ## Legenda das iniciais (atendimentos no To Do)
 
 Os corpos das tarefas no Microsoft To Do são o registro de atendimentos. Cada
