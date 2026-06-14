@@ -161,6 +161,8 @@ Prazo. 5 dias.
 
 Forma. Peça MUITO ENXUTA. Indica o vício e propõe o saneamento.
 
+ALERTA TÉCNICO CRÍTICO. A contradição que autoriza embargos de declaração é EXCLUSIVAMENTE a contradição INTERNA ao próprio julgado, entre suas premissas, fundamentos e dispositivo. NÃO se admite embargos por contradição EXTERNA, ou seja, contradição entre o decidido e a prova dos autos, a jurisprudência divergente, a tese da parte ou a legislação invocada. O inconformismo com a conclusão do julgado se enfrenta com recurso especial (REA à CAJ), não com embargos. Embargos opostos com fundamento em contradição externa são rejeitados como manifestamente protelatórios e podem caracterizar litigância de má-fé. Detalhamento em `references/CONTRADICAO-INTERNA-EXTERNA-ED.md`.
+
 ### Agravo (art. 116 RICRPS)
 
 Cabimento. Contra decisão monocrática do Presidente ou relator que não conhecer recurso, declarar perda de objeto, etc.
