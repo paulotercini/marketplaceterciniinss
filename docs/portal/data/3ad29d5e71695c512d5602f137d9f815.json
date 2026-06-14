@@ -1,0 +1,25 @@
+{
+  "nome": "Adauto Carcinoni",
+  "atualizado_em": "14/06/2026 às 16:53",
+  "processos": [
+    {
+      "cpf": "09031543829",
+      "dn": "22031965",
+      "nome": "Adauto Carcinoni",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Adauto Carcinoni",
+      "status": "Avaliação social marcada para 08/07/2026 (em 24 dias) às 16:30",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ]
+    }
+  ]
+}
