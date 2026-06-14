@@ -85,7 +85,8 @@ Verifique a subpasta `Claude` na pasta do cliente
 `parentId` = pasta do cliente, `title` = `Claude`).
 Salve o parecer com `create_file` (`contentMimeType: text/plain` → vira Google
 Doc), `parentId` = id da subpasta `Claude`, `title` = `Parecer - <Cliente> - <DD.MM.AAAA>`.
-O parecer deve conter, em pt-BR: contexto do benefício; checklist de documentos
+O parecer deve conter, em **português do Brasil com acentuação e ortografia
+corretas (NUNCA sem acento)**: contexto do benefício; checklist de documentos
 (faltantes em destaque); análise do CNIS; pendências do histórico; lista de
 renomeações sugeridas; e mensagem pronta ao cliente quando aplicável.
 
