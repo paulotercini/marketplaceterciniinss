@@ -32,6 +32,9 @@ from graph_client import get_task, _req
 
 BACKUP_DIR = "todo_backups"
 
+# Caracteres acentuados do portugues (para a trava de acentuacao).
+ACENTOS = set("áàâãéêíóôõúüçÁÀÂÃÉÊÍÓÔÕÚÜÇ")
+
 # Linha que comeca (inicio de linha) com uma data DD.MM.AAAA
 RE_DATA = re.compile(r"^\d{2}\.\d{2}\.\d{4}", re.MULTILINE)
 
@@ -70,6 +73,15 @@ def montar_corpo(old, entry, ctype="text"):
 def prepend(list_id, task_id, texto):
     hoje = datetime.now(TZ_BR).strftime("%d.%m.%Y")
     texto = texto.strip()
+
+    # Trava de acentuacao: conclusao longa em pt-BR sempre tem algum acento.
+    # Se vier sem nenhum, recusa para forcar a reescrita correta.
+    if len(texto) > 80 and not (set(texto) & ACENTOS):
+        raise RuntimeError(
+            "Conclusao sem nenhum acento. Reescreva em portugues do Brasil com "
+            "acentuacao correta (ç, á, ã, é, ê, í, ó, ô, ú etc.) e rode de novo."
+        )
+
     if not texto.startswith(hoje):
         texto = f"{hoje} (C): {texto}"
 
