@@ -310,7 +310,7 @@ def home_page(pages_by_cat):
     <div class="stat" data-reveal><b>13<span class="u">+</span></b><span>anos atuando exclusivamente com Direito Previdenciário</span></div>
     <div class="stat" data-reveal><b>100<span class="u">%</span></b><span>foco no INSS — nenhuma outra área de atuação</span></div>
     <div class="stat" data-reveal><b>Brasil</b><span>atendimento presencial em Monte Alto e on-line para todo o país</span></div>
-    <div class="stat" data-reveal><b>OAB/SP</b><span>331.110 — inscrição regular e atuação ética</span></div>
+    <div class="stat" data-reveal><b>Especialistas</b><span>Advogados experientes com pós-graduação em Direito Previdenciário</span></div>
   </div>
 </section>
 
