@@ -1,6 +1,6 @@
 ---
 name: base-meu-inss-pat-gerid-fluxo
-description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
+description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico, procuração eletrônica Meu INSS, Portaria Conjunta DTI DIRBEN INSS 21/2026, nível Prata Gov.br procuração, nível Ouro Gov.br procuração, advogado iniciar procuração Meu INSS, upgrade conta Gov.br representante INSS. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
 ---
 
 # Sistemas Administrativos do INSS - Fluxo Operacional
@@ -57,11 +57,31 @@ Plataforma de identidade unificada. Login nível Prata ou Ouro habilita o segura
 
 **Atenção a recadastramento.** Periodicamente o Gov.br força o usuário a renovar senha ou cadastrar segundo fator. Quando isso ocorre, o login do escritório falha e o cliente precisa recadastrar pessoalmente. É causa frequente de tarefa parada por incapacidade de acesso.
 
+**Nível de conta Gov.br para procuração eletrônica.** Após a Portaria Conjunta DTI/DIRBEN/INSS nº 21/2026 (vigente desde 02/06/2026), tanto o advogado quanto o cliente precisam ter conta Gov.br no nível Prata ou Ouro para utilizar a procuração eletrônica no Meu INSS. Clientes com conta Bronze precisam fazer upgrade antes de conceder a procuração. Incluir verificação do nível Gov.br como item do checklist de onboarding.
+
 ### CNIS (Cadastro Nacional de Informações Sociais)
 
 Histórico de vínculos de emprego, contribuições e remunerações do segurado. Acessível pelo Meu INSS ou diretamente pelo INSS Digital.
 
 **Como o escritório usa.** Auditoria pré-protocolo. Identificar contribuições faltantes, lacunas, vínculos não computados, divergências entre CTPS e CNIS.
+
+## Procuração eletrônica no Meu INSS (regras a partir de 02/06/2026)
+
+A Portaria Conjunta DTI/DIRBEN/INSS nº 21, de 9 de junho de 2026 (DOU Extraordinário de 10/06/2026, com vigência retroativa a 02/06/2026), alterou a Portaria Conjunta DTI/DIRBEN/INSS nº 10/2025 e atualizou as regras da procuração eletrônica na plataforma Meu INSS.
+
+Regras vigentes desde 02/06/2026:
+
+Primeiro, o advogado pode iniciar o pedido de procuração eletrônica a partir da própria conta Gov.br no Meu INSS, sem precisar que o cliente dê o primeiro passo. Isso agiliza o onboarding.
+
+Segundo, ambas as partes (advogado e cliente) precisam de conta Gov.br no nível Prata ou Ouro. Conta Bronze não é aceita para este serviço. Se o cliente tiver Bronze, orientá-lo a fazer o upgrade antes de iniciar o processo.
+
+Terceiro, a confirmação da procuração exige assinatura eletrônica do titular do benefício via Gov.br. O cliente confirma pelo próprio celular ou computador após receber a solicitação do escritório.
+
+Quarto, o escopo dos serviços que o advogado poderá acessar em nome do cliente deve ser especificado no momento da concessão da procuração. Não é uma autorização global; é serviço a serviço.
+
+Quinto, a revogação pode ser feita digitalmente por qualquer das partes, a qualquer momento, sem necessidade de comparecimento presencial. Isso facilita o encerramento de procurações ao final do mandato.
+
+**Impacto operacional para o escritório.** Verificar nível da conta Gov.br de cada cliente como parte do fluxo de onboarding. Para clientes com conta Bronze, enviar roteiro de upgrade antes de tentar cadastrar a procuração. O advogado que inicia a solicitação passa a ter controle maior do cronograma, sem depender da iniciativa do cliente.
 
 ## Atalhos operacionais
 
@@ -104,6 +124,8 @@ Quando Meu INSS está fora do ar, comum em fim de mês. Tentativas devem ser reg
 
 **Bloqueio por suspeita de fraude.** Cliente notificado de bloqueio. Verificar PAT para motivo. Pode ser causa de defesa administrativa via Ouvidoria + CGU.
 
+**Procuração eletrônica negada por nível insuficiente.** Após 02/06/2026, verificar se o cliente possui conta Gov.br Prata ou Ouro. Conta Bronze impede a concessão da procuração eletrônica. Orientar o cliente a atualizar o cadastro biométrico ou a utilizar outro método de verificação de identidade (CNH, passaporte, banco conveniado).
+
 ## Estratégia administrativa
 
 Sempre tentar resolver pelo PAT/Meu INSS antes de judicializar. Após DER, oferecer ao INSS oportunidade de cumprir o que deve. Insistência administrativa é mais barata e rápida quando funciona, e quando falha justifica a judicialização.
@@ -136,3 +158,19 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 10/06/2026 (Edição Extraordinária)
+
+Norma: Portaria Conjunta DTI/DIRBEN/INSS nº 21, de 9 de junho de 2026
+
+Órgão: INSS / Diretoria de Tecnologia da Informação (DTI) / Diretoria de Benefícios (DIRBEN)
+
+Vigência: retroativa a 02/06/2026
+
+Resumo da alteração: A portaria alterou a Portaria Conjunta DTI/DIRBEN/INSS nº 10/2025 para atualizar as regras da procuração eletrônica na plataforma digital Meu INSS. As mudanças principais são: o advogado ou representante pode iniciar o pedido de procuração a partir da própria conta Gov.br, sem que o segurado precise iniciar o processo; ambos precisam de conta Gov.br no nível Prata ou Ouro; a confirmação exige assinatura eletrônica do titular; os serviços autorizados são especificados no ato; a revogação é digital e imediata.
+
+Impacto na advocacia: O escritório passa a poder iniciar o cadastro de procuração eletrônica proativamente, sem aguardar o cliente. Clientes com conta Gov.br Bronze precisam fazer upgrade antes de conceder a procuração. Incluir verificação do nível Gov.br como etapa obrigatória do onboarding. Mapear a base atual de clientes para identificar quem precisa de upgrade.
+
+Estratégia: Criar roteiro de onboarding com verificação do nível Gov.br como primeiro passo. Para clientes que já têm processo em andamento e conta Bronze, agendamento de orientação para upgrade presencial ou digital.
+
+Link oficial: https://www.contabeis.com.br/noticias/77380/inss-altera-regras-da-procuracao-eletronica-no-meu-inss/
