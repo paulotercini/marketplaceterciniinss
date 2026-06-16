@@ -120,6 +120,29 @@ pronto:
 Nunca invente dados que não estejam nos documentos/histórico. Se faltar, diga
 claramente o que falta e onde.
 
+## Modelos de petição — Padrão Ouro (usar SEMPRE ao redigir peças)
+
+Os modelos oficiais do escritório ("padrão ouro") ficam no Google Drive em
+**Acervo de Modelos / Petições Ouro** (pasta id `1mKNCwgZz1dcEzkkY1twbzkLpYXfyag-1`;
+há um "Índice do Acervo de Modelos"). A pasta é organizada **por tipo de benefício**
+(subpastas, ex.: `Auxílio-Acidente (B94)` id `1olieNbcKdEmed9of7ZQtIxO7bs6VJnoe`,
+`BPC Deficiente` id `18xrQC5VxLvR9DbAwqy8SBIH5nPRdgokg`), e cada uma traz um
+**MODELO OURO por tipo de peça** (Petição Inicial, Recurso Inominado, Apelação e
+Contrarrazões, Embargos de Declaração, Agravo Interno, Recurso Especial ao STJ,
+Impugnação à Contestação, Manifestação sobre Laudo, Não Aceite de Acordo, Quesitos
+e Alegações Finais etc.), distinguindo **Federal / Estadual / JEF** (há "ADENDO
+NÚCLEO 4.0" para peças estaduais do TJSP).
+
+**Regras invioláveis ao redigir qualquer peça:**
+1. Antes de redigir, **localize e LEIA o MODELO OURO** correspondente (benefício +
+   tipo de peça + esfera) na pasta Petições Ouro e **siga exatamente a estrutura,
+   a formatação e o estilo dele**.
+2. Quando a peça for **direcionada a um processo** (petição para protocolar),
+   **entregue-a já no formato correto e PRONTA**, salva na subpasta **Claude** da
+   pasta do cliente (não apenas um esboço).
+3. Se não existir modelo ouro para aquele tipo, use o mais próximo + a skill
+   `base-peticao-previdenciaria-padrao-visual`, e **sinalize a ausência** do modelo.
+
 ## Saída padrão por cliente (no `/triagem` e em análises avulsas)
 
 - **Conclusão (C) no To Do** (`todo_conclusao.py`): objetiva, **máx. 4 linhas**,
