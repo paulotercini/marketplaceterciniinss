@@ -1,6 +1,6 @@
 ---
 name: base-meu-inss-pat-gerid-fluxo
-description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
+description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, procuração eletrônica Meu INSS, procuração digital INSS, Gov.br nível prata, Gov.br nível ouro, confiabilidade Gov.br, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
 ---
 
 # Sistemas Administrativos do INSS - Fluxo Operacional
@@ -57,6 +57,8 @@ Plataforma de identidade unificada. Login nível Prata ou Ouro habilita o segura
 
 **Atenção a recadastramento.** Periodicamente o Gov.br força o usuário a renovar senha ou cadastrar segundo fator. Quando isso ocorre, o login do escritório falha e o cliente precisa recadastrar pessoalmente. É causa frequente de tarefa parada por incapacidade de acesso.
 
+**Nível de confiabilidade Gov.br para procuração eletrônica.** A partir da Portaria Conjunta DTI/DIRBEN/INSS Nº 21/2026 (DOU 12/06/2026), tanto o outorgante quanto o outorgado precisam de conta Gov.br com nível de confiabilidade Prata ou Ouro para usar a procuração eletrônica no Meu INSS. Conta básica não é suficiente. Verificar o nível do cliente antes de instruir sobre autorização eletrônica. Para elevar o nível, orientar o cliente a fazer reconhecimento facial pelo aplicativo Gov.br, usar CNH digital, certificado digital ICP-Brasil ou fazer cadastro biométrico em banco conveniado.
+
 ### CNIS (Cadastro Nacional de Informações Sociais)
 
 Histórico de vínculos de emprego, contribuições e remunerações do segurado. Acessível pelo Meu INSS ou diretamente pelo INSS Digital.
@@ -104,6 +106,8 @@ Quando Meu INSS está fora do ar, comum em fim de mês. Tentativas devem ser reg
 
 **Bloqueio por suspeita de fraude.** Cliente notificado de bloqueio. Verificar PAT para motivo. Pode ser causa de defesa administrativa via Ouvidoria + CGU.
 
+**Procuração eletrônica bloqueada por nível insuficiente de conta Gov.br.** A partir de 12/06/2026, o sistema rejeita a procuração eletrônica se o outorgante ou outorgado não tiver conta Gov.br com nível Prata ou Ouro. Verificar o nível antes de tentar registrar a procuração. Orientar o cliente sobre como elevar o nível de confiabilidade.
+
 ## Estratégia administrativa
 
 Sempre tentar resolver pelo PAT/Meu INSS antes de judicializar. Após DER, oferecer ao INSS oportunidade de cumprir o que deve. Insistência administrativa é mais barata e rápida quando funciona, e quando falha justifica a judicialização.
@@ -136,3 +140,13 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 16/06/2026
+
+Norma: Portaria Conjunta DTI/DIRBEN/INSS Nº 21, de 9 de junho de 2026
+Órgão: INSS - Diretoria de Tecnologia da Informação (DTI) e Diretoria de Benefícios e Relacionamento com o Cidadão (DIRBEN)
+Vigência: 12 de junho de 2026, com efeitos retroativos a 2 de junho de 2026
+Resumo da alteração: A portaria altera a Portaria Conjunta DTI/DIRBEN/INSS nº 10/2025 e moderniza as regras de procuração eletrônica na plataforma Meu INSS. O artigo 3º elimina a exigência de comparecimento presencial para autorizar representante, permitindo que a outorga ocorra integralmente pela plataforma digital. O artigo 4º passa a exigir que tanto o outorgante quanto o outorgado possuam conta Gov.br com nível de confiabilidade Prata ou Ouro, vedando o uso de contas básicas para esse fim. O artigo 6º permite que o representado especifique quais serviços do Meu INSS deseja autorizar o representante a acessar e pode revisar essa autorização a qualquer momento. O artigo 8º faculta a qualquer das partes revogar a procuração eletrônica sem necessidade de justificativa.
+Impacto na advocacia: O escritório precisa verificar o nível de confiabilidade Gov.br do cliente antes de orientá-lo a emitir a procuração eletrônica. Clientes com conta Gov.br básica não conseguirão autorizar o acesso do advogado pelo sistema digital e precisarão primeiro elevar o nível da conta. Adicionalmente, os advogados do escritório também precisam ter conta Gov.br com nível Prata ou Ouro para figurar como outorgados. A portaria amplia a flexibilidade de gestão da procuração mas ao mesmo tempo cria um pré-requisito técnico que pode bloquear a operação para clientes menos digitalizados.
+Estratégia: Incluir verificação do nível Gov.br (Prata/Ouro) como etapa obrigatória no onboarding digital de novos clientes. Para clientes com conta básica, orientar sobre os métodos para elevar o nível de confiabilidade: reconhecimento facial pelo aplicativo Gov.br, validação pela CNH digital, uso de certificado digital ICP-Brasil, ou cadastro biométrico em banco conveniado (Banco do Brasil, Caixa Econômica, Bradesco e outros). Criar checklist específico para esta verificação no corpo da tarefa do cliente.
+Link oficial: https://idprevidenciario.com.br/portaria-conjunta-dti-dirben-inss-no-21-de-9-de-junho-de-2026/
