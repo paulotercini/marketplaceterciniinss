@@ -59,6 +59,16 @@ Se não encontrar a pasta, diga isso claramente no parecer e na conclusão.
   arquivo + data de confecção DDMMAAAA; PPP + empresa; identificar tipo de exame).
   NÃO renomeie (o conector não permite) — só liste.
 - Se for preciso avisar o cliente, **redigir a mensagem pronta para copiar**.
+- **Ao redigir QUALQUER peça processual**, localize e LEIA antes o **MODELO OURO**
+  correspondente em `Acervo de Modelos / Petições Ouro` (pasta id
+  `1mKNCwgZz1dcEzkkY1twbzkLpYXfyag-1`), na subpasta do benefício (ex.:
+  `Auxílio-Acidente (B94)` id `1olieNbcKdEmed9of7ZQtIxO7bs6VJnoe`, `BPC Deficiente`
+  id `18xrQC5VxLvR9DbAwqy8SBIH5nPRdgokg`) e do tipo de peça/esfera (Federal/
+  Estadual/JEF; há "ADENDO NÚCLEO 4.0" para peças estaduais). **Siga exatamente a
+  estrutura/formatação do modelo.** Quando a peça for direcionada a um processo,
+  **entregue-a PRONTA** (não esboço) e salve na subpasta `Claude` do cliente. Se
+  não houver modelo ouro do tipo, use o mais próximo + `base-peticao-previdenciaria-padrao-visual`
+  e sinalize a ausência.
 - **Nunca invente dados** que não estejam nos documentos/histórico.
 
 ## Passo 6 — Data de hoje (BRT)
