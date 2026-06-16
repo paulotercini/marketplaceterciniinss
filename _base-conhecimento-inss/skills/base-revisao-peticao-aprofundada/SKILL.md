@@ -27,6 +27,8 @@ Evolução desta versão em relação à anterior do escritório.
 
 7. **Checklists adicionais por rito** - inclui TNU, recurso administrativo CRPS e cumprimento de sentença.
 
+8. **Rotina de verificação temporal Brasil** (Onda 45) - Cruzamento automático com fuso `America/Sao_Paulo` e idioma `pt-BR` antes de protocolo. Aciona comando de sistema `TZ='America/Sao_Paulo' date` em 3 cenários críticos. (i) prazo recursal (CPC, JEF, CRPS, TNU). (ii) decadência art. 103 Lei 8.213/91 e prescrição quinquenal. (iii) cessação iminente de benefício temporário (B31, BPC, B25). Detalhamento em `references/VERIFICACAO-TEMPORAL-BRASIL.md`.
+
 ## MOMENTO DE ATIVAÇÃO
 
 Acionada imediatamente após geração do .docx pela skill geradora de peças. O fluxo completo é o seguinte.
