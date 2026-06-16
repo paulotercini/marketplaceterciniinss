@@ -77,6 +77,19 @@ O script: (a) faz backup do corpo original; (b) preserva todo o histórico; e
 (c) **posiciona a conclusão no topo do HISTÓRICO automaticamente** — abaixo do
 cabeçalho fixo da tarefa e acima da data mais recente. Confira a saída "OK".
 
+## Passo 7-B — Redigir peça processual (quando a tarefa pedir)
+Se a tarefa exigir uma PEÇA (petição inicial, recurso, impugnação, manifestação
+sobre laudo etc.), use SEMPRE o **MODELO OURO** do escritório como base. Localize-o
+no Drive em `Acervo de Modelos / Petições Ouro` (pasta id
+`1mKNCwgZz1dcEzkkY1twbzkLpYXfyag-1`) → subpasta do benefício → peça correspondente
+(ex.: `Auxílio-Acidente (B94)` id `1olieNbcKdEmed9of7ZQtIxO7bs6VJnoe`,
+`BPC Deficiente` id `18xrQC5VxLvR9DbAwqy8SBIH5nPRdgokg`), respeitando a esfera
+(Federal/Estadual/JEF). LEIA o modelo ouro com `read_file_content` e siga sua
+estrutura/formatação. Quando a peça for para protocolar, entregue-a **pronta** (não
+só esboço), salva como documento próprio na subpasta `Claude`, com os campos a
+confirmar entre [colchetes]. Se não houver modelo ouro do tipo, use o mais próximo
++ `base-peticao-previdenciaria-padrao-visual` e sinalize a ausência.
+
 ## Passo 8 — Salvar o parecer no Drive (subpasta `Claude`)
 Verifique a subpasta `Claude` na pasta do cliente
 (`search_files` com `title = 'Claude' and parentId = '<pasta>'`,
