@@ -120,6 +120,40 @@ pronto:
 Nunca invente dados que não estejam nos documentos/histórico. Se faltar, diga
 claramente o que falta e onde.
 
+## Leitura de documentos, processos e recursos (cadeia de pensamento OBRIGATÓRIA)
+
+Antes de constar QUALQUER análise/resumo no To Do (ou parecer) a partir de
+documentos, processos ou recursos, siga a cadeia de pensamento abaixo **sem pular
+nenhuma etapa**. Os arquivos estão em PDF anexos à tarefa (`todo_anexo.py`) ou na
+pasta do cliente no Drive.
+
+**Regra de ouro (vale para os três casos):**
+1. Obtenha o(s) arquivo(s) em PDF (anexo da tarefa ou Drive).
+2. **Mapeie TODOS os documentos com leitura INTEGRAL** do conteúdo (não amostragem).
+3. **Confirme com o Paulo quantas páginas existem e o que diz cada uma** antes de
+   fechar o resumo.
+4. Depois de mapear da **primeira para a última** página, **refaça da última para a
+   primeira (conferência)**, aplicando **OCR em português** quando necessário.
+5. Ao final, **confirme explicitamente se leu tudo e se a conferência foi feita**.
+   **Identifique exatamente quais folhas não conseguiu ler** e tente de novo por
+   **outro método** (OCR, baixar/abrir de outra forma, reabrir o anexo). Se ainda
+   assim não conseguir, **avise** — e **registre no To Do (conclusão C) que tais
+   folhas/documentos não puderam ser lidos**, identificando-as.
+6. **CNIS, PPP, documentos rurais e documentos médicos: leitura OBRIGATÓRIA da
+   INTEGRALIDADE.** Havendo **dúvida ou rasura**, peça confirmação ao Paulo.
+7. **Qualquer problema, avise.** Não deixe de executar nenhuma etapa da cadeia.
+
+**Recurso administrativo (e-SISREC/CRPS) — além da regra de ouro:**
+- Mapeie os **principais atos do recurso citando as folhas ou o ID**.
+- Na conferência, identifique a **ordem cronológica dos atos** distinguindo
+  **recurso ordinário, embargos de declaração e recurso especial**.
+- Faça o **resumo completo dos autos destacando o que é controverso** e se há
+  **pedidos não analisados, contradição, obscuridade, dúvida ou erro material**.
+
+**Processo (judicial/administrativo) — além da regra de ouro:**
+- Mapeie os **principais atos do processo citando as folhas ou o ID**, em ordem
+  cronológica, da primeira à última página e na conferência inversa.
+
 ## Análise de PPP (padrão OBRIGATÓRIO — modelo: Israel Luis Marques, 18.06.2026)
 
 SEMPRE que houver um PPP (no Drive ou anexo da tarefa), faça a análise técnica
