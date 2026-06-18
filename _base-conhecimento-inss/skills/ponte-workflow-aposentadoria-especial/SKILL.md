@@ -19,6 +19,16 @@ Solicitar ao cliente todos os PPP, LTCAT, PGR, laudos técnicos, CAT e CTPS. Sol
 
 Acionar `auditoria-ppp` em cada PPP recebido. A auditoria gera diagnóstico técnico do agente nocivo, do enquadramento e dos vícios de preenchimento. Se houver vício, acionar `retificacao-ppp` para gerar a notificação à empresa antes do peticionamento.
 
+Padrão obrigatório do escritório — analisar **CADA período/vínculo** do PPP e registrar, nesta ordem (modelo de referência: análise de Israel Luis Marques, 18.06.2026):
+
+1. **Período de trabalho** (`DD/MM/AAAA a DD/MM/AAAA`) e **nome da empresa**.
+2. **Fatores de risco** — abordar TODOS. Para cada agente: **intensidade/dose** (ex.: ruído em dB(A)), **técnica/metodologia** de medição (dosimetria/NHO-01, decibelímetro, NA etc.), **EPI e CA do EPI**, e se **enquadra ou não** e por quê. Ruído acima de 85 dB não é neutralizado por EPI (Tema 555/STF); químicos/biológicos/cancerígenos têm presunção qualitativa; medição pontual por decibelímetro e ausência de NEN após 18/11/2003 são teses do INSS refutáveis.
+3. **Responsável pelos registros ambientais** — nome e se é **médico ou engenheiro**, e o **período** de vigência do laudo, para confirmar se é ou não **extemporâneo** ao período trabalhado.
+4. **Observações sobre extemporaneidade** — verificar o campo de observações do PPP (ex.: declaração de manutenção do layout, que valida laudo extemporâneo).
+5. **Resultado: ENQUADRA / NÃO ENQUADRA** — quando não enquadrar, distinguir **definitivo** de **sanável** (PPP retificável, LTCAT/PGR a pedir, perícia indireta para empresa extinta — Súmula 198/TFR). Períodos pré-1995 podem enquadrar por categoria profissional mesmo sem PPP; posteriores a 13/11/2019 seguem a EC 103.
+
+Encerrar com **CONCLUSÃO consolidada** (períodos que enquadram, total de tempo especial, impacto no benefício e o que falta).
+
 ### Passo 3. Fundamentação normativa pela base-*
 
 Acionar a skill base-* correspondente ao agente nocivo identificado.

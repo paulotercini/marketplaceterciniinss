@@ -120,6 +120,40 @@ pronto:
 Nunca invente dados que não estejam nos documentos/histórico. Se faltar, diga
 claramente o que falta e onde.
 
+## Análise de PPP (padrão OBRIGATÓRIO — modelo: Israel Luis Marques, 18.06.2026)
+
+SEMPRE que houver um PPP (no Drive ou anexo da tarefa), faça a análise técnica
+**período a período** e registre-a na conclusão (C) do To Do e no parecer. Antes,
+consulte a skill do agente nocivo (`base-especial-*`) e a
+`ponte-workflow-aposentadoria-especial`. Para **CADA período/vínculo** do PPP,
+constar nesta ordem:
+
+1. **Período de trabalho** (`DD/MM/AAAA a DD/MM/AAAA`) e **nome da empresa**.
+2. **Fatores de risco** — abordar **TODOS** os que constam. Para cada agente,
+   informar: **intensidade/dose** (ex.: ruído em dB(A)), **técnica/metodologia**
+   de medição (dosimetria/NHO-01, decibelímetro, NA etc.), **uso de EPI e o CA do
+   EPI**, e dizer se **enquadra ou não** e por quê. Pró-segurado: ruído acima de
+   85 dB **não** é neutralizado por EPI (Tema 555/STF); agentes químicos,
+   biológicos e cancerígenos têm presunção qualitativa; medição pontual por
+   decibelímetro e ausência de NEN após 18/11/2003 são teses do INSS
+   **refutáveis** (ver `base-especial-ruido` e `base-especial-agentes-quimicos`).
+3. **Responsável pelos registros ambientais** — nome e se é **médico ou
+   engenheiro**, e o **período** de responsabilidade/vigência do laudo, para
+   confirmar se é ou não **extemporâneo** em relação ao período trabalhado.
+4. **Observações sobre extemporaneidade** — verificar no campo de observações do
+   PPP se há algo (ex.: declaração de manutenção do layout/inalteração do
+   ambiente, que valida o laudo extemporâneo).
+5. **Resultado: ENQUADRA** ou **NÃO ENQUADRA**. Quando não enquadrar, distinguir
+   se é **definitivo** ou **sanável** (PPP retificável, LTCAT/PGR a solicitar,
+   perícia indireta para empresa extinta — Súmula 198/TFR), para não descartar
+   período recuperável. Lembrar que períodos pré-1995 podem enquadrar por
+   **categoria profissional** (Decretos 53.831/64 e 83.080/79) mesmo sem PPP, e
+   que períodos posteriores a 13/11/2019 seguem a EC 103.
+
+Ao final, **CONCLUSÃO consolidada**: quais períodos enquadram, total de tempo
+especial e impacto no benefício, e o que falta (PPP/LTCAT pendente, retificações,
+divergências de data PPP × CNIS a alinhar).
+
 ## Modelos de petição — Padrão Ouro (usar SEMPRE ao redigir peças)
 
 Os modelos oficiais do escritório ("padrão ouro") ficam no Google Drive em
