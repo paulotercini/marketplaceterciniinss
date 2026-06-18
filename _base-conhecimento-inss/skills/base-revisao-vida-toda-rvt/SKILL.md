@@ -29,11 +29,13 @@ Tema 1102 STF (RE 1.276.977). Julgado em dezembro/2022. Fixou tese favorável à
 
 ADIs 2110 e 2111 STF. Julgadas em 2024. Declararam constitucional o art. 3º da Lei 9.876/1999. Com modulação de efeitos, atingindo a prática da RVT na maior parte dos casos posteriores a novembro/1999.
 
+Embargos de Declaração nas ADIs 2110 e 2111, julgados em junho/2026. Por 7 votos a 1, o STF rejeitou a tentativa de ampliar a modulação. Voto favorável apenas do Ministro Dias Toffoli. Encerramento definitivo da tese fora das hipóteses residuais.
+
 Tema 1117 STF. Parâmetros sobre repercussão geral correlata.
 
 Tema 1157 STF. Discussão sobre modulação e efeitos.
 
-Honestidade radical. Após o julgamento das ADIs 2110 e 2111 em 2024, a RVT foi fortemente restringida. O espaço remanescente é limitado.
+Honestidade radical. Após o julgamento das ADIs 2110 e 2111 em 2024 e a rejeição dos embargos em junho/2026, a RVT está definitivamente encerrada para novas ações fora das hipóteses residuais.
 
 ## Espaço remanescente pró-segurado
 
@@ -59,7 +61,7 @@ Em benefício concedido em 2015 ou anterior, decadência tende a estar esgotada.
 
 ## Regra e estratégia pró-segurado
 
-A regra geral, após 2024, é restrita. Honestidade radical obriga a verificar caso a caso.
+A regra geral, após 2024 e confirmada em junho/2026, é restrita. Honestidade radical obriga a verificar caso a caso.
 
 Primeiro, diagnóstico sobre a DIB e o direito adquirido antes de 13/11/2019.
 
@@ -69,9 +71,9 @@ Terceiro, cálculo do prazo decadencial.
 
 Quarto, se a decadência estiver esgotada, comunicar franca e imediatamente.
 
-Quinto, em ações já ajuizadas, aguardar o desfecho e estudar transação ou desistência conforme jurisprudência atualizada.
+Quinto, em ações já ajuizadas fora das hipóteses residuais, comunicar o resultado dos embargos de junho/2026 e avaliar desistência estratégica para evitar condenação em custas.
 
-Sexto, cautela em abertura de novas ações puramente RVT pós-modulação das ADIs 2110 e 2111.
+Sexto, não propor novas ações puramente RVT fora das hipóteses residuais.
 
 ## Integração com outras skills
 
@@ -86,13 +88,15 @@ Em revisão geral, acionar `revisao-peticao`.
 
 Primeiro, RVT está restrita após julgamento das ADIs 2110 e 2111 STF em 2024.
 
-Segundo, só propor com simulação vantajosa.
+Segundo, os Embargos de Declaração foram rejeitados por 7 a 1 em junho/2026, encerrando definitivamente qualquer perspectiva de ampliação da modulação.
 
-Terceiro, decadência decenal é crítica.
+Terceiro, só propor com simulação vantajosa e dentro das hipóteses residuais mapeadas.
 
-Quarto, honorários podem depender do êxito (Tema 1050 STJ). Cautela.
+Quarto, decadência decenal é crítica.
 
-Quinto, comunicar ao cliente com honestidade radical o risco processual.
+Quinto, honorários podem depender do êxito (Tema 1050 STJ). Cautela.
+
+Sexto, comunicar ao cliente com honestidade radical o risco processual e a posição definitiva do STF.
 
 ## Hub de portarias administrativas
 
@@ -117,3 +121,13 @@ O IBDP tem posicionamento institucional sobre a matéria.
 ## O que NÃO está nesta skill
 
 Revisão do teto está em `base-revisao-teto-buraco-negro-verde`. Revisão do IRSM está em `base-revisao-irsm-fevereiro-1994`. Revisão do art. 29 II e melhor benefício em `base-revisao-art29-melhor-beneficio`. Revisão por reajustes ORTN/OTN em `base-revisao-reajuste-ortn-otn`.
+
+## Atualização monitoramento 18/06/2026
+
+Norma: Embargos de Declaração nas ADIs 2110 e 2111, STF, Plenário, julgamento junho/2026
+Órgão: Supremo Tribunal Federal
+Vigência: Encerramento definitivo da tese da Revisão da Vida Toda para novas ações fora das hipóteses residuais
+Resumo da alteração: Por 7 votos a 1, o STF rejeitou os embargos de declaração opostos na tentativa de ampliar a modulação das ADIs 2110 e 2111. O único voto favorável foi do Ministro Dias Toffoli, que sustentou a aplicação da revisão para processos ajuizados entre 16/12/2019 e 05/04/2024. A posição não prevaleceu. A tese da RVT está definitivamente encerrada para novas ações fora das hipóteses residuais já mapeadas nesta skill (DIB anterior a novembro/1999, coisa julgada prévia ao julgamento das ADIs, prazo decadencial vigente comprovado).
+Impacto na advocacia: Confirma de forma irrecorrível que não há espaço para novas ações de Revisão da Vida Toda fora das hipóteses residuais. Ações em andamento baseadas na tese genérica têm perspectiva de extinção ou improcedência. Recomendar ao cliente comunicação honesta sobre o encerramento definitivo da tese e avaliar desistência estratégica para evitar condenação em custas e honorários de sucumbência.
+Estratégia: Não propor novas ações de RVT. Para ações em curso fora das hipóteses residuais, comunicar a rejeição dos embargos e avaliar desistência. Para hipóteses residuais, manter o posicionamento já descrito nesta skill e verificar decadência com rigor antes de qualquer ajuizamento.
+Link oficial: https://www.migalhas.com.br/quentes/458066/stf-nega-recurso-contra-decisao-que-derrubou-revisao-da-vida-toda
