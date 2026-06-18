@@ -323,8 +323,22 @@ Antes de protocolar QUALQUER inicial no JEF TRF3, executar.
 5. Decisão sobre Instrução Concentrada (se há prova testemunhal essencial).
 6. Acionar `base-revisao-peticao-aprofundada` para revisão final.
 
+## NÚCLEOS DE JUSTIÇA 4.0 DO TRF3 (REMESSA E PERMANÊNCIA)
+
+A partir dos Provimentos CJF3R 73/2023, 82/2023, 103/2024 (matriz, 02/08/2024), 142/2025, 143/2025 e 175/2025, em conformidade com as Resoluções CNJ 385/2021 e 398/2021, os processos de JEFs federais selecionados podem ser REMETIDOS aos Núcleos de Justiça 4.0 do TRF3 para julgamento.
+
+A remessa, em regra, é PRÓ-SEGURADO (maior celeridade, atendimento dedicado por Balcão Virtual e e-mail, audiências telepresenciais). Há, porém, hipóteses em que a permanência no juízo de origem deve ser requerida.
+
+Recebido o despacho de remessa, a parte autora tem **5 dias úteis** para requerer fundamentadamente a permanência, sob pena de preclusão (art. 20 do Provimento CJF3R 103/2024).
+
+A intimação do INSS é DISPENSADA na remessa, por força do Ofício 00012/2024/NGAPGER/PRF3R/PGF/AGU (PRF3/AGU manifestou prévia e geral aceitação em 14/05/2024).
+
+NÃO CONFUNDIR com o Núcleo Especializado de Justiça 4.0 do TJSP (Acidentes do Trabalho - Justiça Estadual), disciplinado por norma diversa e tratado em `base-auxilio-acidente-b94-pos-reforma/references/NUCLEO-4-0-TJSP-PADRAO-ACIDENTARIO.md`.
+
+Detalhamento operacional completo em `references/NUCLEOS-JUSTICA-4-0-TRF3.md`, com modelo de petição de permanência e tabela dos Provimentos verificados.
+
 ## ALERTA FINAL
 
 Extinção sem mérito por inércia na regularização (art. 47) é A CAUSA MAIS COMUM de perda processual evitável no JEF TRF3. A revisão prévia de qualquer inicial deve passar OBRIGATORIAMENTE pelo checklist das 52 irregularidades.
 
-Para detalhamento operacional dos Fluxos Especiais e do JECRIM, ver `references/FLUXOS-ESPECIAIS-E-PERICIAS.md` e `references/CHECKLIST-52-IRREGULARIDADES.md`.
+Para detalhamento operacional dos Fluxos Especiais e do JECRIM, ver `references/FLUXOS-ESPECIAIS-E-PERICIAS.md` e `references/CHECKLIST-52-IRREGULARIDADES.md`. Para Núcleos 4.0 TRF3, ver `references/NUCLEOS-JUSTICA-4-0-TRF3.md`.
