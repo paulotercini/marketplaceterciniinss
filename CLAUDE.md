@@ -261,8 +261,8 @@ documentos prontos para anexar**; nunca protocola/envia. Diferenças-chave:
    de trabalho** (ler o PPP) → **Relatórios médicos** (cronológico) → **Exames**
    (cronológico) → **Documentos rurais** (cronológico pelo conteúdo — NF 1999 antes
    de contrato de parceria 2008) → demais (CNIS, CadÚnico, autodeclaração etc.).
-   PDFs combinados são fatiados com `pdf_split.py`; respeitar o limite de tamanho
-   por arquivo do Meu INSS.
+   PDFs combinados são fatiados com `pdf_split.py`; **limite de tamanho por arquivo
+   do Meu INSS é 5 MB** — quebrar o que exceder em partes (`... (parte 1 de N)`).
 3. **Petição administrativa de no máximo 1 folha** (`00 - Requerimento
    Administrativo - DDMMAAAA`): um **norte** para o analista bater o olho — só o que
    se requer (benefício/B, DER) + rol de anexos, **sem explicações, sem lei/decreto**;
