@@ -211,6 +211,42 @@ NÚCLEO 4.0" para peças estaduais do TJSP).
 3. Se não existir modelo ouro para aquele tipo, use o mais próximo + a skill
    `base-peticao-previdenciaria-padrao-visual`, e **sinalize a ausência** do modelo.
 
+## Fluxo `/inicial` — montar a inicial e o jogo de provas
+
+Comando em `.claude/commands/inicial.md`. Pega um cliente já triado e deixa a
+**petição inicial e os documentos prontos para distribuir** (PJe/ESAJ/Eproc).
+Gravação automática, com relatório de prontidão ao final; nunca protocola/envia.
+Cadeia obrigatória:
+
+1. **Ler tudo** — todos os documentos da pasta do cliente no Drive (leitura
+   INTEGRAL, cadeia obrigatória) **e** todas as instruções do To Do; mais a inicial
+   existente e o MODELO OURO do benefício.
+2. **Conferir citações** — cada súmula/Tema/Enunciado/REsp/lei é verificada no
+   catálogo interno (`base-precedentes-catalogo-vinculantes`) e, quando a rede
+   permitir, na fonte oficial (web). Marcar `[CONFERIDO]`/`[NÃO CONFIRMADO]`.
+   **Nunca** manter ou inventar citação não verificada.
+3. **Leitura adversária (red-team)** — simular a contestação do INSS e blindar a
+   peça contra cada defesa (prévio requerimento Tema 350/STF e Tema 1124, decadência,
+   prescrição quinquenal, qualidade de segurado, PPP extemporâneo/sem NEN, EPI
+   Tema 555, coabitação etc.).
+4. **Coerência fato × prova × valor** — toda alegação e o valor da causa amparados
+   por documento; todo documento citado; apontar fatos órfãos e provas órfãs.
+5. **Curadoria** — juntar **só** prova que ajuda; **excluir** documento incorreto/
+   prejudicial (ex.: PPP errado), com seção **"NÃO JUNTAR"** no parecer justificando
+   cada exclusão; para prova fraca porém sanável, indicar como fortalecê-la.
+6. **Ajustar a peça** sem sobrescrever — nova versão `Petição Inicial - <Cliente> -
+   DDMMAAAA (revisada)` na subpasta `Claude`.
+7. **Montar `Documentos da Petição Inicial`** na pasta do cliente — cada documento
+   em PDF próprio, nomeado `NN - <Tipo> - DDMMAAAA.pdf` (NN = ordem de distribuição).
+   PDFs combinados são **fatiados** com `pdf_split.py` (baixar em base64 → separar →
+   subir via `create_file`; originais ficam intactos). Primeiro arquivo:
+   `00 - Índice de Provas` (documento → fato → item da inicial + checklist por
+   sistema/rito). Quebrar arquivos que excedam o limite do sistema.
+8. **Gravar** conclusão (C) + parecer e entregar o **relatório de prontidão**
+   (pronto para distribuir? sistema/rito; bloqueios). Limitação conhecida: download
+   do Drive trava acima de ~10 MB — sinalizar arquivo grande não lido. Utilitário:
+   `pdf_split.py "<entrada>.pdf" "1-2:Procuração Judicial" "3:Declaração de Hipossuficiência" ...`.
+
 ## Saída padrão por cliente (no `/triagem` e em análises avulsas)
 
 - **Conclusão (C) no To Do** (`todo_conclusao.py`): objetiva, **máx. 4 linhas**,
