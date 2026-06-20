@@ -140,6 +140,16 @@ Para Cadastro Domiciliar do CadÚnico pelas INs SAGICAD/MDS 20/2026 e 21/2026, m
 
 REGRA CRÍTICA. A integração CadÚnico-CNIS NÃO autoriza a exclusão de membro do grupo familiar (Anexo I item 5.5 da IN 21/2026).
 
+## Atualização DOU 19/06/2026
+
+Norma: Medida Provisória Nº 1.369, de 18 de junho de 2026
+Órgão: Presidência da República
+Vigência: imediata a partir de 19/06/2026
+Resumo da alteração: A MP 1.369/2026 reduziu de 45 para 30 dias o prazo de espera administrativo que habilita processos de BPC/LOAS ao Programa de Gerenciamento de Benefícios (PGB), criado pela Lei 15.201/2025. Processos de BPC com prazo judicial expirado também passam a ser prioritários no PGB.
+Impacto na advocacia: Requerimentos de BPC protocolados há mais de 30 dias sem decisão estão habilitados à priorização via PGB. Antes de entrar com MS por mora em processos de BPC em análise, verificar se o INSS já incluiu o processo no PGB via extrato do Meu INSS. Se não incluiu, protocolar reclamação via FalaBr citando a MP 1.369/2026.
+Estratégia: Acionar `base-pgb-mp1369-prazo-30dias` para todos os casos de BPC com DER há mais de 30 dias sem decisão. O prazo de 30 dias da MP reforça o cabimento de MS por mora nesses casos.
+Link oficial: https://www.in.gov.br/en/web/dou/-/medida-provisoria-n-1.369-de-18-de-junho-de-2026-713284056
+
 ## O que NÃO está nesta skill
 
 Renda per capita, critérios de miserabilidade, exclusões e Decreto 12.534/2025 estão em `base-bpc-renda-per-capita-miserabilidade`. Impedimento de longo prazo, avaliação biopsicossocial, TCQ, IFBrM estão em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD pela LC 142/2013 está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos detalhados estão em `base-bpc-aposentadoria-pcd-procedimentos`. Anuência ao desligamento do PBF está em `base-bpc-pbf-anuencia-in54-2026`. Cadastro Domiciliar do CadÚnico está em `base-cadastro-domiciliar-cadunico-in21-2026`.
