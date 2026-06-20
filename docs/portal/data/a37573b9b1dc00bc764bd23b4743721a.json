@@ -1,6 +1,6 @@
 {
   "nome": "Sueli Aparecida Roque de Castilho",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "11141214873",
@@ -9,7 +9,7 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Sueli Aparecida Roque de Castilho",
-      "status": "Última atualização em 24/11/2025: Laudo pericial juntado",
+      "status": "Última atualização em 24/11/2025: Laudo pericial juntado aos autos",
       "proximo_evento": null,
       "timeline": [
         {
@@ -19,16 +19,40 @@
           "descricao": "Laudo pericial juntado aos autos."
         },
         {
+          "data": "2025-10-13",
+          "data_br": "13/10/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 22/10/2025 às 10:00."
+        },
+        {
+          "data": "2025-10-11",
+          "data_br": "11/10/2025",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
+        },
+        {
+          "data": "2025-10-08",
+          "data_br": "08/10/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
+        },
+        {
+          "data": "2025-07-11",
+          "data_br": "11/07/2025",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
+        {
           "data": "2025-05-24",
           "data_br": "24/05/2025",
-          "tipo": "Indeferimento do INSS",
-          "descricao": "Pedido indeferido pelo INSS."
+          "tipo": "Avaliação social realizada",
+          "descricao": "Avaliação social realizada."
         },
         {
           "data": "2025-05-02",
           "data_br": "02/05/2025",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Pedido de benefício protocolado junto ao INSS."
+          "tipo": "Avaliação social agendada",
+          "descricao": "Avaliação social agendada para 23/05/2025 às 07:00."
         }
       ],
       "notas_publicas": [],

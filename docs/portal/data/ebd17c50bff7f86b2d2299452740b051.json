@@ -1,6 +1,6 @@
 {
   "nome": "Maria Aparecida Ivo Leite",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "19545498811",
@@ -23,6 +23,12 @@
           "data_br": "13/10/2024",
           "tipo": "Recurso Especial interposto",
           "descricao": "Recurso Especial interposto."
+        },
+        {
+          "data": "2024-09-24",
+          "data_br": "24/09/2024",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Sessão de julgamento agendada."
         }
       ],
       "notas_publicas": [],

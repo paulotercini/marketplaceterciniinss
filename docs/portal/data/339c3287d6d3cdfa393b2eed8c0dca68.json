@@ -1,6 +1,6 @@
 {
   "nome": "José Aparecido Sena e Silva",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "10887912800",
@@ -56,6 +56,12 @@
           "data_br": "26/05/2026",
           "tipo": "Acórdão: negou provimento ao recurso",
           "descricao": "Acórdão: recurso não provido."
+        },
+        {
+          "data": "2026-05-07",
+          "data_br": "07/05/2026",
+          "tipo": "Processo distribuído ao relator",
+          "descricao": "Processo distribuído ao conselheiro relator."
         },
         {
           "data": "2026-03-31",

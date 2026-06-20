@@ -1,6 +1,6 @@
 {
   "nome": "Elisabete Maria Colatrello Silverio",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "09115865800",
@@ -144,9 +144,22 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Elisabete Maria Colatrello Silverio",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 24/04/2025: Réplica protocolada nos autos",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-04-24",
+          "data_br": "24/04/2025",
+          "tipo": "Réplica protocolada",
+          "descricao": "Réplica protocolada nos autos."
+        },
+        {
+          "data": "2024-06-07",
+          "data_br": "07/06/2024",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {

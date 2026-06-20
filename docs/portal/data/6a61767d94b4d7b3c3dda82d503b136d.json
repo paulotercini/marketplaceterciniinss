@@ -1,13 +1,13 @@
 {
   "nome": "José Aparecido Carmonzino",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "32783529807",
       "dn": "10121962",
       "nome": "José Aparecido Carmonzino",
-      "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Junta de Recursos",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "José Aparecido Carmonzino",
       "status": "Última atualização em 28/09/2025: Recurso administrativo protocolado",
       "proximo_evento": null,
@@ -17,12 +17,6 @@
           "data_br": "28/09/2025",
           "tipo": "Recurso administrativo protocolado",
           "descricao": "Recurso administrativo protocolado."
-        },
-        {
-          "data": "2024-09-09",
-          "data_br": "09/09/2024",
-          "tipo": "Benefício deferido pelo INSS",
-          "descricao": "Benefício deferido pelo INSS."
         }
       ],
       "notas_publicas": [],

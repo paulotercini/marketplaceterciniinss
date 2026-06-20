@@ -1,6 +1,6 @@
 {
   "nome": "Evandro Romano",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "25700213850",
@@ -9,9 +9,15 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Junta de Recursos",
       "titulo_tarefa": "Evandro Romano",
-      "status": "Última atualização em 07/07/2025: Pedido protocolado no INSS",
+      "status": "Última atualização em 08/01/2026: Perícia médica agendada para 21/01/2026 às 08:30 em Araraquara",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-01-08",
+          "data_br": "08/01/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 21/01/2026 às 08:30 em Araraquara."
+        },
         {
           "data": "2025-07-07",
           "data_br": "07/07/2025",

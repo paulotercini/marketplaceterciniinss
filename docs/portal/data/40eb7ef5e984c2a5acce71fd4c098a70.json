@@ -1,13 +1,13 @@
 {
   "nome": "Cleverson Aparecido Nunes",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "32692635892",
       "dn": "20021984",
       "nome": "Cleverson Aparecido Nunes",
-      "lista": "🌻 INSS",
-      "localizacao": "Aguardando decisão do INSS",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "Cleverson Aparecido Nunes",
       "status": "Em acompanhamento pelo escritório",
       "proximo_evento": null,
@@ -15,9 +15,8 @@
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
         }
       ],
       "origem": "auto"

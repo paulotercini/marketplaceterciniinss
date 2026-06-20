@@ -1,6 +1,6 @@
 {
   "nome": "Francisco Felix Almeida",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "03496730390",
@@ -9,9 +9,16 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Francisco Felix Almeida",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 15/06/2026: Cessação programada do benefício (DCB)",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-06-15",
+          "data_br": "15/06/2026",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {

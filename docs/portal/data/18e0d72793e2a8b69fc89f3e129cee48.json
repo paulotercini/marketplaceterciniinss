@@ -1,14 +1,36 @@
 {
   "nome": "Madalena Ramos Mendes",
-  "atualizado_em": "14/06/2026 às 00:47",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
-      "lista": "🙋 Escritório",
-      "localizacao": "Aguardando documento/providência do cliente",
+      "cpf": "10643658840",
+      "dn": "10081967",
+      "nome": "Madalena Ramos Mendes",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Madalena Ramos Mendes",
-      "status": "Em atendimento pelo escritório",
+      "status": "Última atualização em 25/01/2026: Perícia médica agendada",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-01-25",
+          "data_br": "25/01/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
+        },
+        {
+          "data": "2025-11-29",
+          "data_br": "29/11/2025",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-10-31",
+          "data_br": "31/10/2025",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {

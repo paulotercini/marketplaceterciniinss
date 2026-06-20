@@ -1,6 +1,6 @@
 {
   "nome": "Valentim Leonardo",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "15613987807",
@@ -9,9 +9,21 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Valentim Leonardo",
-      "status": "Última atualização em 24/11/2025: Ação judicial protocolada",
+      "status": "Última atualização em 30/05/2026: Perícia médica agendada para 12/06/2026 às 10:10 em Monte Alto",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-05-30",
+          "data_br": "30/05/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 12/06/2026 às 10:10 em Monte Alto."
+        },
+        {
+          "data": "2026-03-28",
+          "data_br": "28/03/2026",
+          "tipo": "Exigência cumprida",
+          "descricao": "Exigência do INSS cumprida."
+        },
         {
           "data": "2025-11-24",
           "data_br": "24/11/2025",
@@ -21,8 +33,8 @@
         {
           "data": "2025-11-11",
           "data_br": "11/11/2025",
-          "tipo": "Indeferimento do INSS",
-          "descricao": "Pedido indeferido pelo INSS."
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
         },
         {
           "data": "2025-10-27",
@@ -33,26 +45,32 @@
         {
           "data": "2025-10-16",
           "data_br": "16/10/2025",
-          "tipo": "Indeferimento do INSS",
-          "descricao": "Pedido indeferido pelo INSS."
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 10/11/2025."
         },
         {
           "data": "2025-09-12",
           "data_br": "12/09/2025",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Pedido de benefício protocolado junto ao INSS."
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 10/11/2025 às 09:30."
         },
         {
-          "data": "2024-09-16",
-          "data_br": "16/09/2024",
-          "tipo": "Prorrogação",
-          "descricao": "Pedido de prorrogação do benefício."
+          "data": "2025-09-03",
+          "data_br": "03/09/2025",
+          "tipo": "Avaliação social realizada",
+          "descricao": "Avaliação social realizada."
+        },
+        {
+          "data": "2025-08-05",
+          "data_br": "05/08/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 01/09/2025."
         },
         {
           "data": "2024-09-12",
           "data_br": "12/09/2024",
-          "tipo": "Benefício deferido pelo INSS",
-          "descricao": "Benefício deferido pelo INSS."
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
         }
       ],
       "notas_publicas": [],
@@ -72,9 +90,27 @@
       "lista": "🗓 Tarefas com Prazo",
       "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "Valentim Leonardo",
-      "status": "Última atualização em 16/10/2025: Indeferimento do INSS",
+      "status": "Última atualização em 12/05/2026: Perícia médica realizada",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-05-12",
+          "data_br": "12/05/2026",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
+        },
+        {
+          "data": "2026-03-23",
+          "data_br": "23/03/2026",
+          "tipo": "Réplica protocolada",
+          "descricao": "Réplica protocolada nos autos."
+        },
+        {
+          "data": "2026-02-03",
+          "data_br": "03/02/2026",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
         {
           "data": "2025-10-16",
           "data_br": "16/10/2025",

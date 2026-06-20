@@ -1,6 +1,6 @@
 {
   "nome": "Antonia Edinalva Alves de Oliveira",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "35565027802",
@@ -17,6 +17,18 @@
           "data_br": "31/03/2026",
           "tipo": "Benefício deferido pelo INSS",
           "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2026-02-20",
+          "data_br": "20/02/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 30/03/2026 às 08:40 em Monte Alto."
+        },
+        {
+          "data": "2026-02-18",
+          "data_br": "18/02/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
         },
         {
           "data": "2026-01-24",

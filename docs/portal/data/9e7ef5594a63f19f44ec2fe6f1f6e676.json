@@ -1,6 +1,6 @@
 {
   "nome": "Leonardo Ramos",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "26504613818",
@@ -9,14 +9,20 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Leonardo Ramos",
-      "status": "Última atualização em 30/05/2025: Recurso inominado interposto",
+      "status": "Última atualização em 10/06/2025: Recurso protocolado",
       "proximo_evento": null,
       "timeline": [
         {
-          "data": "2025-05-30",
-          "data_br": "30/05/2025",
-          "tipo": "Recurso inominado interposto",
-          "descricao": "Recurso inominado interposto."
+          "data": "2025-06-10",
+          "data_br": "10/06/2025",
+          "tipo": "Recurso protocolado",
+          "descricao": "Recurso protocolado."
+        },
+        {
+          "data": "2024-09-10",
+          "data_br": "10/09/2024",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 05/02/2025 às 09:00 em Catanduva."
         }
       ],
       "notas_publicas": [],

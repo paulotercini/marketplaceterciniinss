@@ -1,6 +1,6 @@
 {
   "nome": "Adauto Carcinoni",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "09031543829",
@@ -9,9 +9,27 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Adauto Carcinoni",
-      "status": "Avaliação social marcada para 08/07/2026 (em 24 dias) às 16:30",
+      "status": "Avaliação social marcada para 08/07/2026 (em 18 dias) às 16:30",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-06-02",
+          "data_br": "02/06/2026",
+          "tipo": "Avaliação social agendada",
+          "descricao": "Avaliação social agendada para 15/07/2026 às 09:05 em Araraquara."
+        },
+        {
+          "data": "2026-05-21",
+          "data_br": "21/05/2026",
+          "tipo": "Avaliação social agendada",
+          "descricao": "Avaliação social agendada às 07:30 em Araraquara."
+        },
+        {
+          "data": "2026-05-21",
+          "data_br": "21/05/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 22/05/2026 às 08:30 em Araraquara."
+        },
         {
           "data": "2026-03-10",
           "data_br": "10/03/2026",
@@ -19,16 +37,28 @@
           "descricao": "Pedido de prorrogação do benefício."
         },
         {
+          "data": "2026-02-10",
+          "data_br": "10/02/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 09/03/2026 às 10:20 em Monte Alto."
+        },
+        {
           "data": "2026-02-09",
           "data_br": "09/02/2026",
-          "tipo": "Prorrogação",
-          "descricao": "Pedido de prorrogação do benefício."
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
         },
         {
           "data": "2025-12-03",
           "data_br": "03/12/2025",
           "tipo": "Prorrogação",
           "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2025-11-26",
+          "data_br": "26/11/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 03/12/2025."
         },
         {
           "data": "2025-10-30",
@@ -39,8 +69,14 @@
         {
           "data": "2025-09-25",
           "data_br": "25/09/2025",
-          "tipo": "Prorrogação",
-          "descricao": "Pedido de prorrogação do benefício."
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 29/10/2025 em Matão."
+        },
+        {
+          "data": "2025-02-04",
+          "data_br": "04/02/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
         }
       ],
       "notas_publicas": [],

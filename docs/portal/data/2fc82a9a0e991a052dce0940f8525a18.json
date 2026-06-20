@@ -1,6 +1,6 @@
 {
   "nome": "Maximo Vicente Serra",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "98168487834",
@@ -53,7 +53,7 @@
       "lista": "🗓 Tarefas com Prazo",
       "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "Maximo Vicente Serra",
-      "status": "Última atualização em 16/05/2026: Pedido protocolado no INSS",
+      "status": "Última atualização em 16/05/2026: Pedido de benefício protocolado junto ao INSS",
       "proximo_evento": null,
       "timeline": [
         {
@@ -75,16 +75,16 @@
           "descricao": "Recurso administrativo protocolado."
         },
         {
-          "data": "2025-10-07",
-          "data_br": "07/10/2025",
-          "tipo": "Benefício deferido pelo INSS",
-          "descricao": "Benefício deferido pelo INSS."
-        },
-        {
           "data": "2025-06-22",
           "data_br": "22/06/2025",
           "tipo": "Sessão de julgamento agendada",
           "descricao": "Sessão de julgamento agendada."
+        },
+        {
+          "data": "2025-04-06",
+          "data_br": "06/04/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
         },
         {
           "data": "2024-12-20",
@@ -97,6 +97,12 @@
           "data_br": "19/12/2024",
           "tipo": "Sessão de julgamento agendada",
           "descricao": "Sessão de julgamento agendada."
+        },
+        {
+          "data": "2024-11-26",
+          "data_br": "26/11/2024",
+          "tipo": "Processo distribuído ao relator",
+          "descricao": "Processo distribuído ao conselheiro relator."
         },
         {
           "data": "2024-04-11",

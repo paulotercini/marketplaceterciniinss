@@ -1,6 +1,6 @@
 {
   "nome": "Mauro Antonio Jacometto",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "04278961855",
@@ -9,9 +9,16 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Mauro Antonio Jacometto",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 10/01/2022: Recurso protocolado",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2022-01-10",
+          "data_br": "10/01/2022",
+          "tipo": "Recurso protocolado",
+          "descricao": "Recurso protocolado."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {

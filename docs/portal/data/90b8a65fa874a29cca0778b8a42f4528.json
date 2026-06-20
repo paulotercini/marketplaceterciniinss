@@ -1,6 +1,6 @@
 {
   "nome": "Maria Mercedes Coutinho Rocha",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "97961396853",
@@ -9,14 +9,38 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Maria Mercedes Coutinho Rocha",
-      "status": "Perícia médica marcada para 23/06/2026 (em 9 dias) às 08:50 — INSS de Bebedouro",
+      "status": "Perícia médica marcada para 23/06/2026 (em 3 dias) às 08:50 — INSS de Bebedouro",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-03-27",
+          "data_br": "27/03/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 23/06/2026 às 08:50 em Bebedouro."
+        },
+        {
+          "data": "2026-01-24",
+          "data_br": "24/01/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 31/03/2026 às 08:30 em Bebedouro."
+        },
         {
           "data": "2025-12-24",
           "data_br": "24/12/2025",
           "tipo": "Pedido protocolado no INSS",
           "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2025-07-14",
+          "data_br": "14/07/2025",
+          "tipo": "Exigência cumprida",
+          "descricao": "Exigência do INSS cumprida."
+        },
+        {
+          "data": "2025-03-11",
+          "data_br": "11/03/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
         }
       ],
       "notas_publicas": [],

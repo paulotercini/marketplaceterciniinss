@@ -1,6 +1,6 @@
 {
   "nome": "Jose Carlos Martins",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "06588879806",
@@ -9,16 +9,9 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Jose Carlos Martins",
-      "status": "Última atualização em 05/12/2025: Pedido protocolado no INSS",
+      "status": "Em acompanhamento pelo escritório",
       "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2025-12-05",
-          "data_br": "05/12/2025",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Pedido de benefício protocolado junto ao INSS."
-        }
-      ],
+      "timeline": [],
       "notas_publicas": [],
       "links_externos": [
         {

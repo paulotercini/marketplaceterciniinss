@@ -1,6 +1,6 @@
 {
   "nome": "Jaqueline Fernanda Escola Baldassarini",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "38676669899",
@@ -9,7 +9,7 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Jaqueline Fernanda Escola Baldassarini",
-      "status": "Perícia médica marcada para 13/07/2026 (em 29 dias)",
+      "status": "Perícia médica marcada para 13/07/2026 (em 23 dias)",
       "proximo_evento": null,
       "timeline": [
         {
@@ -17,6 +17,12 @@
           "data_br": "29/04/2026",
           "tipo": "Prorrogação",
           "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2026-03-20",
+          "data_br": "20/03/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 28/04/2026 às 08:40."
         },
         {
           "data": "2026-01-18",
@@ -29,6 +35,12 @@
           "data_br": "08/01/2026",
           "tipo": "Benefício deferido pelo INSS",
           "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-11-17",
+          "data_br": "17/11/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 06/01/2026 às 07:00 em Matão."
         }
       ],
       "notas_publicas": [],

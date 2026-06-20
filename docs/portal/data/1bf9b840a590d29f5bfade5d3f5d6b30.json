@@ -1,6 +1,6 @@
 {
   "nome": "Sonia Maria Alves de Mello",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "09941097844",
@@ -17,6 +17,12 @@
           "data_br": "05/05/2026",
           "tipo": "Embargos de declaração interpostos",
           "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2024-01-12",
+          "data_br": "12/01/2024",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
         }
       ],
       "notas_publicas": [],
