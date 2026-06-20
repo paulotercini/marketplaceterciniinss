@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 CONTENT_DIR = ROOT / "site_content"
 OUT_DIR = ROOT / "docs"
-ASSET_V = "11"
+ASSET_V = "13"
 
 OFFICE = {
     "advogado": "Paulo Roberto Tercini Filho",
@@ -111,7 +111,7 @@ def header(pages_by_cat):
 <header class="site-head" id="head">
   <div class="wrap head-row">
     <a class="brand" href="index.html" aria-label="Início">
-      <img src="assets/logo.png" alt="Advocacia Previdenciária" onerror="this.onerror=null;this.src='assets/logo.svg'" />
+      <img src="assets/logo.png?v={ASSET_V}" alt="Advocacia Previdenciária" onerror="this.onerror=null;this.src='assets/logo.svg'" />
       <span class="bk"><b>Advocacia Previdenciária</b><span>Paulo Roberto Tercini Filho</span></span>
     </a>
     <nav class="nav" aria-label="Principal">
@@ -155,7 +155,7 @@ def footer(pages_by_cat):
   <div class="wrap">
     <div class="foot-top">
       <div class="foot-brand">
-        <img src="assets/logo.png" alt="Advocacia Previdenciária" onerror="this.onerror=null;this.src='assets/logo-white.svg'" />
+        <img src="assets/logo.png?v={ASSET_V}" alt="Advocacia Previdenciária" onerror="this.onerror=null;this.src='assets/logo-white.svg'" />
         <div class="bk"><b>Advocacia Previdenciária</b><span>{esc(OFFICE['advogado'])} · {esc(OFFICE['oab'])}</span></div>
         <p class="foot-addr">
           {esc(OFFICE['endereco'])}<br/>{esc(OFFICE['endereco_obs'])}<br/><br/>
@@ -299,7 +299,7 @@ def home_page(pages_by_cat):
       </div>
     </div>
     <div class="hero-visual" data-reveal>
-      <div class="ph hero-photo"><img src="assets/hero.jpg" alt="Pessoa idosa — público da advocacia previdenciária" loading="lazy"></div>
+      <div class="ph hero-photo"><img src="assets/hero.jpg?v={ASSET_V}" alt="Pessoa idosa em frente a uma agência do INSS (imagem ilustrativa)" loading="lazy"></div>
       <div class="hero-badge">{SCALE_SVG}<p><b>13 anos exclusivos</b>Atuação só em Direito Previdenciário — todos os dias.</p></div>
     </div>
   </div>
@@ -310,7 +310,7 @@ def home_page(pages_by_cat):
     <div class="stat" data-reveal><b>13<span class="u">+</span></b><span>anos atuando exclusivamente com Direito Previdenciário</span></div>
     <div class="stat" data-reveal><b>100<span class="u">%</span></b><span>foco no INSS — nenhuma outra área de atuação</span></div>
     <div class="stat" data-reveal><b>Brasil</b><span>atendimento presencial em Monte Alto e on-line para todo o país</span></div>
-    <div class="stat" data-reveal><b>OAB/SP</b><span>331.110 — inscrição regular e atuação ética</span></div>
+    <div class="stat" data-reveal><b>Especialistas</b><span>Advogados experientes com pós-graduação em Direito Previdenciário</span></div>
   </div>
 </section>
 
