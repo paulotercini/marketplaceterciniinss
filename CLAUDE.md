@@ -247,6 +247,33 @@ Cadeia obrigatória:
    do Drive trava acima de ~10 MB — sinalizar arquivo grande não lido. Utilitário:
    `pdf_split.py "<entrada>.pdf" "1-2:Procuração Judicial" "3:Declaração de Hipossuficiência" ...`.
 
+## Fluxo `/inicial-inss` — montar o protocolo administrativo (Meu INSS)
+
+Comando em `.claude/commands/inicial-inss.md`. Irmão do `/inicial`, mas o destino é
+o **Meu INSS** (administrativo), não o Judiciário. Deixa o **requerimento e os
+documentos prontos para anexar**; nunca protocola/envia. Diferenças-chave:
+
+1. **Subpasta `Documentos Protocolo INSS`** (na pasta do cliente).
+2. **Numeração por ordem de leitura (prefixo 2 dígitos)** seguindo a **lógica do
+   INSS por categoria**, e **dentro de cada categoria por ordem cronológica do que
+   está escrito no documento** (não a data do arquivo): Procuração Administrativa →
+   Identificação → Certidão (Nascimento/Casamento) → **PPPs na ordem dos períodos
+   de trabalho** (ler o PPP) → **Relatórios médicos** (cronológico) → **Exames**
+   (cronológico) → **Documentos rurais** (cronológico pelo conteúdo — NF 1999 antes
+   de contrato de parceria 2008) → demais (CNIS, CadÚnico, autodeclaração etc.).
+   PDFs combinados são fatiados com `pdf_split.py`; respeitar o limite de tamanho
+   por arquivo do Meu INSS.
+3. **Petição administrativa de no máximo 1 folha** (`00 - Requerimento
+   Administrativo - DDMMAAAA`): um **norte** para o analista bater o olho — só o que
+   se requer (benefício/B, DER) + rol de anexos, **sem explicações, sem lei/decreto**;
+   se indispensável citar legislação, **apenas IN do INSS ou portarias**.
+4. **Checklist de documentos obrigatórios (IN 128/2022)** do benefício, com
+   faltantes em destaque (evita carta de exigência).
+5. **Antecipar a carta de exigência** (red-team do analista) e já anexar/sinalizar.
+6. **Seção "NÃO JUNTAR"** — curadoria, exclui documento prejudicial/incorreto.
+7. **Ficha de Protocolo INSS** (folha de cola na subpasta `Claude`): serviço a
+   selecionar, dados do segurado (NIT/NIS, DER) e ordem de upload dos anexos.
+
 ## Saída padrão por cliente (no `/triagem` e em análises avulsas)
 
 - **Conclusão (C) no To Do** (`todo_conclusao.py`): objetiva, **máx. 4 linhas**,
