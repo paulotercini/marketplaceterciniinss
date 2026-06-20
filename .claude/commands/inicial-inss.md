@@ -71,7 +71,8 @@ administrativa de 1 folha, sem lei/decreto).
   1 folha do passo 7).
 - **Fatie PDFs combinados** com `pdf_split.py` (baixar base64 -> separar por faixas
   -> subir via `create_file`); originais ficam intactos. Respeite o **limite de
-  tamanho por arquivo do Meu INSS** (quebre o que exceder). Apague os temporarios.
+  tamanho por arquivo do Meu INSS: 5 MB** — todo arquivo que exceder 5 MB deve ser
+  quebrado em partes que caibam (nomear `... (parte 1 de N)`). Apague os temporarios.
 
 ## 7. Peticao administrativa de 1 folha (norte para o analista)
 - **No maximo uma folha.** E um norte para bater o olho e entender o pedido — **sem
@@ -98,7 +99,7 @@ administrativa de 1 folha, sem lei/decreto).
   sugeridas e mensagem pronta ao cliente quando aplicavel).
 - **Relatorio de prontidao**: "Pronto para protocolar? SIM/NAO", beneficio/servico,
   e bloqueios (ex.: falta procuracao assinada, falta RG, CadUnico desatualizado,
-  PPP a retificar, arquivo > limite).
+  PPP a retificar, arquivo > 5 MB a quebrar).
 
 ## Regras
 - So juntar documento que ajuda; nunca anexar prova prejudicial/inutil. Peticao de 1
