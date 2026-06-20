@@ -107,7 +107,26 @@ REGRAS = [
         ["solicitei o benefício", "solicitado o benefício", "benefício solicitado", "solicita o benefício",
          "solicitei o beneficio", "solicitado o beneficio", "beneficio solicitado", "solicita o beneficio",
          "protocolei o pedido", "deu entrada", "requeri o benefício", "requerido o benefício",
-         "solicitei a aposentadoria", "pedido protocolado no inss"]),
+         "solicitei a aposentadoria", "pedido protocolado no inss", "requerimento protocolado"]),
+    ("Exigência cumprida", "Exigência do INSS cumprida.",
+        ["exigência cumprida", "exigencia cumprida", "cumpri a exigência", "cumpri a exigencia"]),
+    # --- andamentos judiciais (ação em curso) ---
+    ("Petição inicial protocolada", "Petição inicial protocolada / distribuída.",
+        ["petição inicial protocolada", "peticao inicial protocolada", "petição inicial distribuída",
+         "peticao inicial distribuida", "inicial protocolada", "inicial distribuída", "inicial distribuida",
+         "distribuí a inicial", "distribui a inicial"]),
+    ("Réplica protocolada", "Réplica protocolada nos autos.",
+        ["réplica protocolada", "replica protocolada", "réplica apresentada", "replica apresentada"]),
+    ("Petição protocolada", "Petição protocolada nos autos.",
+        ["petição protocolada", "peticao protocolada", "petição apresentada", "peticao apresentada"]),
+    ("Juntada de documentos", "Juntada de documentos ao processo.",
+        ["juntada de documentos", "juntada de informações", "juntada de informacoes", "juntada de petição"]),
+    # --- andamentos no Conselho de Recursos (CRPS) ---
+    ("Processo distribuído ao relator", "Processo distribuído ao conselheiro relator.",
+        ["distribuído ao conselheiro", "distribuido ao conselheiro", "distribuído ao relator", "distribuido ao relator"]),
+    # genérico: só após os recursos específicos (inominado/especial/ordinário/administrativo) acima
+    ("Recurso protocolado", "Recurso protocolado.",
+        ["recurso protocolado", "recurso apresentado", "recurso interposto"]),
 ]
 
 
@@ -186,12 +205,24 @@ ALTA_CONFIANCA = {
     "Sessão de julgamento agendada",
     "Laudo pericial juntado",
     "Recurso administrativo protocolado",
+    "Recurso protocolado",
     "Ação judicial protocolada",
+    "Petição inicial protocolada",
+    "Réplica protocolada",
+    "Petição protocolada",
+    "Juntada de documentos",
+    "Processo distribuído ao relator",
+    "Exigência cumprida",
     "Cessação programada (DCB)",
     "Prorrogação",
     "Indeferimento do INSS",
     "Benefício deferido pelo INSS",
     "Pedido protocolado no INSS",
+    # perícia / avaliação social (agendada e realizada) — eventos de timeline
+    "Perícia médica agendada",
+    "Perícia médica realizada",
+    "Avaliação social agendada",
+    "Avaliação social realizada",
 }
 
 
@@ -256,15 +287,136 @@ def parse_pericia(blocks):
     return None
 
 
+# ---- proteção contra vazamento de notas internas / itens sem relevância ----
+_NOISE = (
+    "sem alteração", "sem alteracao", "em análise", "em analise", "segue em análise",
+    "segue em analise", "ainda em análise", "ainda em analise", "continua em análise",
+    "continua em analise", "não houve alteração", "nao houve alteracao", "não houve movimentação",
+    "nao houve movimentacao", "sem movimentação", "sem movimentacao", "idem", "ok",
+    "sem benefício ativo", "sem beneficio ativo", "sem novidade", "aguardando", "nada a fazer",
+    "sem alteração no recurso", "nao houve alteracao no recurso", "não houve alteração no recurso",
+    "sem alteração desde", "sem alteracao desde", "ainda sem alteração", "ainda sem alteracao",
+)
+# verbos no infinitivo/imperativo = instrução para a equipe (a fazer), não um fato ocorrido
+_INSTRUCAO = re.compile(
+    r"^(agendar|agenda|reagendar|reagenda|fazer|faz|manifestar|manifeste|manifesta|apresentar|"
+    r"apresente|cumprir|ver|verificar|verifique|verifica|responder|responda|responde|solicitar|"
+    r"solicite|relembrar|relembre|lembrar|lembre|arquivar|arquive|aguardar|aguarde|conferir|confira|"
+    r"providenciar|providencie|enviar|envie|ligar|ligue|retornar|retorne|peticionar|protocolar|"
+    r"informar|informe|informa|entrar em contato|entra em contato|necess[áa]rio|prazo para|cobrar|"
+    r"cobre|analisar|analise|checar|cheque|acompanhar|acompanhe|baixar|baixe|juntar|colher|tirar)\b",
+    re.I,
+)
+
+
+def is_internal(h):
+    """True se o cabeçalho for ruído (status quo) ou nota interna do escritório —
+    nesses casos o bloco NÃO deve virar evento público."""
+    if not h:
+        return True
+    low = h.lower().strip()
+    if any(low == n or low.startswith(n) for n in _NOISE):
+        return True
+    if "ouvidoria" in low or "senha" in low:
+        return True
+    if _INSTRUCAO.match(low):
+        return True
+    # nota endereçada a um membro da equipe: "Amanda, ...", "Marcão, ..."
+    if re.match(r"^[A-ZÀ-Ú][a-zà-úA-ZÀ-Ú']+,\s", h.strip()):
+        return True
+    return False
+
+
+def _hora_cidade(texto):
+    mh = re.search(r"(\d{1,2})\s*(?:h|:)\s*(\d{2})", texto.lower())
+    hora = f"{int(mh.group(1)):02d}:{mh.group(2)}" if mh else None
+    cidade = None
+    mc = re.search(r"\b(?:em|de)\s+([A-ZÀ-Ú][\wà-ú]+(?:\s+[A-ZÀ-Ú][\wà-ú]+){0,2})", texto)
+    if mc:
+        cidade = mc.group(1).strip().rstrip(".")
+    return hora, cidade
+
+
+def _pericia_data(texto, base):
+    """Extrai a data-alvo da perícia ('para o dia 12/06/2026'). Ano implícito vira
+    o do registro; se cair muito antes do registro, assume o ano seguinte."""
+    md = re.search(r"\bdia\s+(\d{1,2})[/.](\d{1,2})(?:[/.](\d{2,4}))?", texto)
+    if not md:
+        md = re.search(r"\bpara\s+(?:o\s+dia\s+)?(\d{1,2})[/.](\d{1,2})(?:[/.](\d{2,4}))?", texto)
+    if not md:
+        return None
+    dd, mm, yy = int(md.group(1)), int(md.group(2)), md.group(3)
+    if yy:
+        yy = int(yy); yy = yy + 2000 if yy < 100 else yy
+    else:
+        yy = base.year
+    try:
+        d = datetime.date(yy, mm, dd)
+    except ValueError:
+        return None
+    if not md.group(3) and (d - base).days < -15:
+        try:
+            d = datetime.date(yy + 1, mm, dd)
+        except ValueError:
+            return None
+    return d
+
+
+def pericia_evento(headline_low, block_text, base):
+    """A partir do cabeçalho, devolve (tipo, descricao) para perícia/avaliação
+    AGENDADA ou REALIZADA, ou None. Imperativos ('agendar perícia') já foram
+    barrados por is_internal antes de chegar aqui."""
+    if not any(k in headline_low for k in ("perí", "peri", "avaliação social", "avaliacao social")):
+        return None
+    kind = "Avaliação social" if ("avaliação social" in headline_low or "avaliacao social" in headline_low) else "Perícia médica"
+    realizada = any(w in headline_low for w in (
+        "não reconheceu", "nao reconheceu", "reconheceu a incap", "realizada", "realizou",
+        "compareceu", "passou hoje por perícia", "passou por perícia", "passou pela perícia",
+        "passou hoje por pericia", "foi à perícia", "compareci"))
+    if realizada:
+        if "não reconheceu" in headline_low or "nao reconheceu" in headline_low:
+            return (f"{kind} realizada", f"{kind} realizada — incapacidade não reconhecida.")
+        return (f"{kind} realizada", f"{kind} realizada.")
+    agendada = any(w in headline_low for w in (
+        "agendad", "marcad", "remarcad", "reagendad", "agendei", "agendou", "agendamento"))
+    if agendada:
+        pdate = _pericia_data(headline_low, base) or _pericia_data(block_text.lower(), base)
+        hora, cidade = _hora_cidade(block_text)
+        desc = f"{kind} agendada"
+        if pdate:
+            desc += f" para {pdate.strftime('%d/%m/%Y')}"
+        if hora:
+            desc += f" às {hora}"
+        if cidade:
+            desc += f" em {cidade}"
+        return (f"{kind} agendada", desc + ".")
+    return None
+
+
+# rótulos cujo conteúdo real está na linha seguinte
+_LABELS = {
+    "último andamento", "ultimo andamento", "houve alteração no recurso",
+    "houve alteracao no recurso", "alteração no recurso", "alteracao no recurso",
+    "andamento", "último andamento no processo", "movimentação", "movimentacao",
+}
+
+
 def headline(texto):
-    """Primeira linha nao-vazia do bloco, sem o marcador de autor ('A):', 'P):').
-    O evento de uma data e o que esta escrito na CABECA do bloco; o resto e
-    narrativa/historico colado do sistema e nao deve virar evento daquela data."""
+    """Primeira linha relevante do bloco, sem o marcador de autor ('A):', 'P):').
+    Quando a primeira linha é só um rótulo ('Último andamento:', 'Houve alteração
+    no recurso:'), o evento real está na linha seguinte."""
+    linhas = []
     for line in (texto or "").splitlines():
-        line = re.sub(r"^\s*[A-Za-zÀ-ú]{0,3}\)\s*:?\s*", "", line.strip())
-        if line:
-            return line
-    return ""
+        s = re.sub(r"^\s*[A-Za-zÀ-ú]{0,3}\)\s*:?\s*", "", line.strip())
+        if s:
+            linhas.append(s)
+    if not linhas:
+        return ""
+    if linhas[0].lower().rstrip(": ").strip() in _LABELS:
+        for cand in linhas[1:]:
+            if cand.lower().rstrip(": ").strip() not in _LABELS:
+                return cand
+    return linhas[0]
 
 
 def build_timeline(body):
@@ -272,7 +424,14 @@ def build_timeline(body):
     eventos = []
     vistos = set()
     for dt, texto in split_blocks(body):
-        tipo, desc = classify(headline(texto))
+        h = headline(texto)
+        if is_internal(h):
+            continue  # ruído / nota interna do escritório — não expõe
+        pe = pericia_evento(h.lower(), texto, dt)
+        if pe:
+            tipo, desc = pe
+        else:
+            tipo, desc = classify(h)
         if not tipo:
             continue
         chave = (dt.isoformat(), tipo)
@@ -301,7 +460,8 @@ def status_line(timeline, pericia):
         return s
     if timeline:
         ev = timeline[0]
-        return f"Última atualização em {ev['data_br']}: {ev['tipo']}"
+        texto = (ev.get("descricao") or ev["tipo"]).rstrip(".")
+        return f"Última atualização em {ev['data_br']}: {texto}"
     return "Em andamento"
 
 
