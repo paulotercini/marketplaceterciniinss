@@ -138,3 +138,13 @@ Indicadores a acompanhar mensalmente:
 Lista no Microsoft To Do, `🙏 Aposentadorias Futuras`. Acessível pelo conector Microsoft Graph com escopo `Tasks.ReadWrite`.
 
 Script auxiliar `maturacao_aposentadorias.py` (em construção no repositório `paulotercini/marketplaceterciniinss`).
+
+## Atualização DOU 19/06/2026
+
+Norma: Medida Provisória Nº 1.369, de 18 de junho de 2026
+Órgão: Presidência da República
+Vigência: imediata a partir de 19/06/2026
+Resumo da alteração: A MP 1.369/2026 reduziu de 45 para 30 dias o prazo de espera que habilita processos administrativos do INSS ao Programa de Gerenciamento de Benefícios (PGB), criado pela Lei 15.201/2025. Também incluiu processos com prazo judicial expirado. O PGB paga R$ 68 por processo ao servidor do INSS e R$ 75 por perícia ao perito médico federal.
+Impacto na advocacia: Clientes em 🙏 Aposentadorias Futuras cujo requerimento já foi protocolado e está em análise há mais de 30 dias são agora candidatos ao PGB. A rotina D-60 deve checar, via extrato do Meu INSS, se o processo está na fila do PGB. Se não estiver, protocolar reclamação via FalaBr antes de entrar com MS por mora. O threshold para MS por mora passa a ter respaldo normativo explícito nos 30 dias (além do prazo geral de 30+30 dias da Lei 9.784/1999).
+Estratégia: Incluir na rotina D-60 um passo de verificação do PGB. Para clientes com DER há mais de 30 dias sem decisão, acionar `base-pgb-mp1369-prazo-30dias` antes de qualquer medida judicial.
+Link oficial: https://www.in.gov.br/en/web/dou/-/medida-provisoria-n-1.369-de-18-de-junho-de-2026-713284056
