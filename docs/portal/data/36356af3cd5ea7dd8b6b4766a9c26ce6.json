@@ -1,6 +1,6 @@
 {
   "nome": "Fabiana Taccola Venturini",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "25132945805",
@@ -9,15 +9,9 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Fabiana Taccola Venturini",
-      "status": "Última atualização em 09/03/2026: Laudo pericial juntado",
+      "status": "Última atualização em 17/06/2025: Recurso inominado interposto",
       "proximo_evento": null,
       "timeline": [
-        {
-          "data": "2026-03-09",
-          "data_br": "09/03/2026",
-          "tipo": "Laudo pericial juntado",
-          "descricao": "Laudo pericial juntado aos autos."
-        },
         {
           "data": "2025-06-17",
           "data_br": "17/06/2025",
@@ -25,10 +19,16 @@
           "descricao": "Recurso inominado interposto."
         },
         {
-          "data": "2025-06-02",
-          "data_br": "02/06/2025",
-          "tipo": "Recurso inominado interposto",
-          "descricao": "Recurso inominado interposto."
+          "data": "2024-11-14",
+          "data_br": "14/11/2024",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 05/12/2024."
+        },
+        {
+          "data": "2024-03-11",
+          "data_br": "11/03/2024",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
         },
         {
           "data": "2024-01-19",
@@ -41,6 +41,12 @@
           "data_br": "16/01/2024",
           "tipo": "Indeferimento do INSS",
           "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2023-12-19",
+          "data_br": "19/12/2023",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 12/01/2024 às 10:20."
         }
       ],
       "notas_publicas": [],

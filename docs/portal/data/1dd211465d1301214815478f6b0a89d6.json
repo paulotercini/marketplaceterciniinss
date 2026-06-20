@@ -1,6 +1,6 @@
 {
   "nome": "Jurandy Caraciole dos Santos",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "12667198816",
@@ -9,7 +9,7 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Jurandy Caraciole dos Santos",
-      "status": "Perícia médica marcada para 14/10/2026 (em 122 dias)",
+      "status": "Perícia médica marcada para 14/10/2026 (em 116 dias)",
       "proximo_evento": null,
       "timeline": [
         {
@@ -19,10 +19,10 @@
           "descricao": "Cessação programada do benefício (DCB)."
         },
         {
-          "data": "2025-10-06",
-          "data_br": "06/10/2025",
-          "tipo": "Prorrogação",
-          "descricao": "Pedido de prorrogação do benefício."
+          "data": "2025-10-08",
+          "data_br": "08/10/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 12/11/2025 às 09:10 em Matão."
         },
         {
           "data": "2025-09-11",
@@ -35,6 +35,18 @@
           "data_br": "11/06/2025",
           "tipo": "Benefício deferido pelo INSS",
           "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-05-26",
+          "data_br": "26/05/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 10/06/2025 às 09:20."
+        },
+        {
+          "data": "2025-04-26",
+          "data_br": "26/04/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 04/06/2025 às 08:10."
         },
         {
           "data": "2024-12-07",
@@ -59,6 +71,12 @@
           "data_br": "24/09/2024",
           "tipo": "Indeferimento do INSS",
           "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2024-07-17",
+          "data_br": "17/07/2024",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
         }
       ],
       "notas_publicas": [],

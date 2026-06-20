@@ -1,6 +1,6 @@
 {
   "nome": "Gildo Alexandre Buzinaro",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "06554575855",
@@ -9,9 +9,15 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Câmara de Julgamento",
       "titulo_tarefa": "Gildo Alexandre Buzinaro",
-      "status": "Última atualização em 14/09/2025: Acórdão: negou provimento ao recurso",
+      "status": "Última atualização em 22/09/2025: Recurso protocolado",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2025-09-22",
+          "data_br": "22/09/2025",
+          "tipo": "Recurso protocolado",
+          "descricao": "Recurso protocolado."
+        },
         {
           "data": "2025-09-14",
           "data_br": "14/09/2025",
@@ -23,6 +29,12 @@
           "data_br": "12/09/2025",
           "tipo": "Sessão de julgamento agendada",
           "descricao": "Sessão de julgamento agendada."
+        },
+        {
+          "data": "2025-04-25",
+          "data_br": "25/04/2025",
+          "tipo": "Recurso protocolado",
+          "descricao": "Recurso protocolado."
         },
         {
           "data": "2025-03-28",

@@ -1,17 +1,29 @@
 {
   "nome": "Eloa Lemes Bigheti",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "61112381830",
       "dn": "20072023",
       "nome": "Eloa Lemes Bigheti",
-      "lista": "🌻 INSS",
-      "localizacao": "Aguardando decisão do INSS",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "Eloa Lemes Bigheti",
-      "status": "Última atualização em 08/06/2026: Benefício deferido pelo INSS",
+      "status": "Última atualização em 17/06/2026: Acórdão: recurso provido",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-06-17",
+          "data_br": "17/06/2026",
+          "tipo": "Acórdão: deu provimento ao recurso",
+          "descricao": "Acórdão: recurso provido."
+        },
+        {
+          "data": "2026-06-15",
+          "data_br": "15/06/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
         {
           "data": "2026-06-08",
           "data_br": "08/06/2026",
@@ -28,9 +40,8 @@
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
         }
       ],
       "origem": "auto"

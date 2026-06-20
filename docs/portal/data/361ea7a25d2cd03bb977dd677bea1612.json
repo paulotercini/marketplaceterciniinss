@@ -1,6 +1,6 @@
 {
   "nome": "Ana Beatriz Ferreira Santos",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "48990061873",
@@ -44,6 +44,12 @@
           "data_br": "06/07/2025",
           "tipo": "Recurso Especial interposto",
           "descricao": "Recurso Especial interposto."
+        },
+        {
+          "data": "2025-05-06",
+          "data_br": "06/05/2025",
+          "tipo": "Processo distribuído ao relator",
+          "descricao": "Processo distribuído ao conselheiro relator."
         },
         {
           "data": "2024-11-04",

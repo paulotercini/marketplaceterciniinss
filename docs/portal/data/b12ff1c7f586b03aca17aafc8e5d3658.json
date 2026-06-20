@@ -1,6 +1,6 @@
 {
   "nome": "Vilson Pedro da Silva",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "91914973968",
@@ -9,9 +9,15 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Vilson Pedro da Silva",
-      "status": "Avaliação social marcada para 24/08/2026 (em 71 dias) — INSS de Jaboticabal",
+      "status": "Avaliação social marcada para 24/08/2026 (em 65 dias) — INSS de Jaboticabal",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-05-08",
+          "data_br": "08/05/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 27/05/2026 às 07:30 em Matão."
+        },
         {
           "data": "2026-03-26",
           "data_br": "26/03/2026",
@@ -21,12 +27,6 @@
         {
           "data": "2025-03-29",
           "data_br": "29/03/2025",
-          "tipo": "Recurso administrativo protocolado",
-          "descricao": "Recurso administrativo protocolado."
-        },
-        {
-          "data": "2024-12-11",
-          "data_br": "11/12/2024",
           "tipo": "Recurso administrativo protocolado",
           "descricao": "Recurso administrativo protocolado."
         },

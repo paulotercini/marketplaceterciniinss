@@ -1,6 +1,6 @@
 {
   "nome": "Marcelo Pinheiro de Padua",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "14762068802",
@@ -9,7 +9,7 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Marcelo Pinheiro de Padua",
-      "status": "Última atualização em 04/05/2026: Laudo pericial juntado",
+      "status": "Última atualização em 04/05/2026: Laudo pericial juntado aos autos",
       "proximo_evento": null,
       "timeline": [
         {
@@ -19,10 +19,28 @@
           "descricao": "Laudo pericial juntado aos autos."
         },
         {
+          "data": "2026-03-24",
+          "data_br": "24/03/2026",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
+        },
+        {
+          "data": "2025-07-07",
+          "data_br": "07/07/2025",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
+        {
           "data": "2025-06-26",
           "data_br": "26/06/2025",
           "tipo": "Indeferimento do INSS",
           "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-05-27",
+          "data_br": "27/05/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 06/06/2025 às 10:40 em Matão."
         },
         {
           "data": "2025-04-19",

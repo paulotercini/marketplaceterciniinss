@@ -1,6 +1,6 @@
 {
   "nome": "Walter José Raymundo",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "08213687884",
@@ -25,16 +25,16 @@
           "descricao": "Sessão de julgamento agendada."
         },
         {
+          "data": "2026-01-23",
+          "data_br": "23/01/2026",
+          "tipo": "Processo distribuído ao relator",
+          "descricao": "Processo distribuído ao conselheiro relator."
+        },
+        {
           "data": "2026-01-12",
           "data_br": "12/01/2026",
           "tipo": "Recurso Ordinário interposto",
           "descricao": "Recurso Ordinário interposto."
-        },
-        {
-          "data": "2025-09-15",
-          "data_br": "15/09/2025",
-          "tipo": "Recurso administrativo protocolado",
-          "descricao": "Recurso administrativo protocolado."
         }
       ],
       "notas_publicas": [],

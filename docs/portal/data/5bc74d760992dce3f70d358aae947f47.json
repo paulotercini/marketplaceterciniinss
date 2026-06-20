@@ -1,6 +1,6 @@
 {
   "nome": "Marcos Gomes",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "04734000816",
@@ -17,6 +17,18 @@
           "data_br": "19/11/2025",
           "tipo": "Ação judicial protocolada",
           "descricao": "Ação judicial protocolada."
+        },
+        {
+          "data": "2025-05-09",
+          "data_br": "09/05/2025",
+          "tipo": "Réplica protocolada",
+          "descricao": "Réplica protocolada nos autos."
+        },
+        {
+          "data": "2024-10-08",
+          "data_br": "08/10/2024",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
         }
       ],
       "notas_publicas": [],

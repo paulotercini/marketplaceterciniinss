@@ -1,6 +1,6 @@
 {
   "nome": "Elisabete dos Reis Carneiro",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "07986006838",
@@ -23,6 +23,12 @@
           "data_br": "08/11/2024",
           "tipo": "Benefício deferido pelo INSS",
           "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2024-09-24",
+          "data_br": "24/09/2024",
+          "tipo": "Recurso protocolado",
+          "descricao": "Recurso protocolado."
         },
         {
           "data": "2021-10-12",

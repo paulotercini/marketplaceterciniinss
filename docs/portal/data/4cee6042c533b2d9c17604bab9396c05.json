@@ -1,6 +1,6 @@
 {
   "nome": "João Batista da Costa",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "02656433843",
@@ -9,9 +9,16 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "João Batista da Costa",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 25/01/2025: Petição inicial protocolada / distribuída",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-01-25",
+          "data_br": "25/01/2025",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {

@@ -1,22 +1,34 @@
 {
   "nome": "Leandro Antônio Rezende",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "30286528894",
       "dn": "23091982",
       "nome": "Leandro Antônio Rezende",
-      "lista": "🌻 INSS",
-      "localizacao": "Aguardando decisão do INSS",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "Leandro Antônio Rezende",
-      "status": "Última atualização em 21/08/2025: Pedido protocolado no INSS",
+      "status": "Última atualização em 17/06/2026: Cessação programada do benefício (DCB)",
       "proximo_evento": null,
       "timeline": [
         {
-          "data": "2025-08-21",
-          "data_br": "21/08/2025",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Pedido de benefício protocolado junto ao INSS."
+          "data": "2026-06-17",
+          "data_br": "17/06/2026",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        },
+        {
+          "data": "2026-06-15",
+          "data_br": "15/06/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2026-03-31",
+          "data_br": "31/03/2026",
+          "tipo": "Exigência cumprida",
+          "descricao": "Exigência do INSS cumprida."
         },
         {
           "data": "2025-05-28",
@@ -58,9 +70,8 @@
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
         }
       ],
       "origem": "auto"

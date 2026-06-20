@@ -1,6 +1,6 @@
 {
   "nome": "Elisabete Farhat",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "03151725848",
@@ -9,9 +9,16 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Elisabete Farhat",
-      "status": "Em acompanhamento pelo escritório",
+      "status": "Última atualização em 18/08/2025: Petição inicial protocolada / distribuída",
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2025-08-18",
+          "data_br": "18/08/2025",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {

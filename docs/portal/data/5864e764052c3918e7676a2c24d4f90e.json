@@ -1,6 +1,6 @@
 {
   "nome": "Daniel Antonio Ferreira",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "34129334816",
@@ -9,14 +9,14 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Daniel Antonio Ferreira",
-      "status": "Perícia médica marcada para 21/07/2026 (em 37 dias) às 11:00 — INSS de Jaboticabal",
+      "status": "Perícia médica marcada para 21/07/2026 (em 31 dias) às 11:00 — INSS de Jaboticabal",
       "proximo_evento": null,
       "timeline": [
         {
           "data": "2026-05-26",
           "data_br": "26/05/2026",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Pedido de benefício protocolado junto ao INSS."
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada em Jaboticabal."
         },
         {
           "data": "2026-04-28",
@@ -51,14 +51,32 @@
         {
           "data": "2025-08-20",
           "data_br": "20/08/2025",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Pedido de benefício protocolado junto ao INSS."
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 17/09/2025 às 08:20 em Matão."
+        },
+        {
+          "data": "2025-06-06",
+          "data_br": "06/06/2025",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
         },
         {
           "data": "2025-05-14",
           "data_br": "14/05/2025",
           "tipo": "Indeferimento do INSS",
           "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-04-17",
+          "data_br": "17/04/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 12/05/2025."
+        },
+        {
+          "data": "2025-04-03",
+          "data_br": "03/04/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada às 07:20."
         },
         {
           "data": "2025-02-15",
@@ -73,10 +91,22 @@
           "descricao": "Benefício deferido pelo INSS."
         },
         {
+          "data": "2024-09-01",
+          "data_br": "01/09/2024",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
+        },
+        {
           "data": "2024-08-19",
           "data_br": "19/08/2024",
           "tipo": "Indeferimento do INSS",
           "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2024-08-12",
+          "data_br": "12/08/2024",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 23/08/2024 às 10:20 em Monte Alto."
         },
         {
           "data": "2024-07-31",
@@ -150,12 +180,6 @@
         {
           "data": "2026-03-16",
           "data_br": "16/03/2026",
-          "tipo": "Recurso inominado interposto",
-          "descricao": "Recurso inominado interposto."
-        },
-        {
-          "data": "2026-03-11",
-          "data_br": "11/03/2026",
           "tipo": "Recurso inominado interposto",
           "descricao": "Recurso inominado interposto."
         },

@@ -1,6 +1,6 @@
 {
   "nome": "Sedemir José da Silva",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "26750360807",
@@ -9,9 +9,15 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Sedemir José da Silva",
-      "status": "Última atualização em 13/02/2026: Prorrogação",
+      "status": "Última atualização em 20/02/2026: Perícia médica agendada para 19/03/2026 às 09:10 em Matão",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-02-20",
+          "data_br": "20/02/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 19/03/2026 às 09:10 em Matão."
+        },
         {
           "data": "2026-02-13",
           "data_br": "13/02/2026",
@@ -25,10 +31,16 @@
           "descricao": "Pedido de prorrogação do benefício."
         },
         {
-          "data": "2025-05-16",
-          "data_br": "16/05/2025",
-          "tipo": "Benefício deferido pelo INSS",
-          "descricao": "Benefício deferido pelo INSS."
+          "data": "2025-10-10",
+          "data_br": "10/10/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 07/11/2025 às 09:00."
+        },
+        {
+          "data": "2025-10-07",
+          "data_br": "07/10/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
         }
       ],
       "notas_publicas": [],

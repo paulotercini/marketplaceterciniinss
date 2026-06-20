@@ -1,6 +1,6 @@
 {
   "nome": "Jose Aparecido da Silva",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "05166615824",
@@ -9,14 +9,26 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Jose Aparecido da Silva",
-      "status": "Perícia médica marcada para 14/02/2027 (em 245 dias)",
+      "status": "Perícia médica marcada para 14/02/2027 (em 239 dias)",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-05-19",
+          "data_br": "19/05/2026",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
         {
           "data": "2026-05-06",
           "data_br": "06/05/2026",
           "tipo": "Indeferimento do INSS",
           "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2026-04-06",
+          "data_br": "06/04/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada às 07:20 em Matão."
         },
         {
           "data": "2026-04-01",

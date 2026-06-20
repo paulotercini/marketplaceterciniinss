@@ -1,6 +1,6 @@
 {
   "nome": "Fabio Henrique Barbieri",
-  "atualizado_em": "14/06/2026 às 19:22",
+  "atualizado_em": "20/06/2026 às 17:42",
   "processos": [
     {
       "cpf": "26457488803",
@@ -9,9 +9,15 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Fabio Henrique Barbieri",
-      "status": "Perícia médica marcada para 17/06/2026 (em 3 dias)",
+      "status": "Última atualização em 18/05/2026: Perícia médica agendada para 17/06/2026",
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-05-18",
+          "data_br": "18/05/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 17/06/2026."
+        },
         {
           "data": "2026-02-26",
           "data_br": "26/02/2026",
