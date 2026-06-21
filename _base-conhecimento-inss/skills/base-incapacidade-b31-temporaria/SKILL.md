@@ -110,6 +110,24 @@ O IBDP sustenta institucionalmente o direito do segurado à concessão ampla do 
 
 Para validação formal de relatório médico de incapacidade pelo Checklist A do escritório (B31, B91, B92, B94), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
 
+## PROGRAMA DE REVISÃO DE BENEFÍCIOS POR INCAPACIDADE DE LONGA DURAÇÃO - PRBI (Onda 49)
+
+Instituído pela Lei 13.846/2019 e operacionalizado pela Portaria INSS nº 914, de 06/08/2021.
+
+Convocação por carta com AR digital ao endereço cadastrado. Segurado tem 30 dias para agendar perícia (Meu INSS, app ou Central 135) e apenas 1 remarcação permitida (até 1 dia antes da data). Decorrido sem agendamento, suspensão pelo art. 77 RPS. Decorridos mais 60 dias da suspensão sem agendamento, CESSAÇÃO DEFINITIVA. Resultado disponível em 21h pela Central 135 ou Meu INSS. Prazo de 30 dias para recurso ao CRPS em caso de não concordância.
+
+Critérios de seleção. Orientação Interna SPREV/SEPRT nº 03, de 02/09/2019 (alterada por OI 03 de 08/06/2021).
+
+ESTRATÉGIA PRÓ-SEGURADO. Em caso de cessação por PRBI.
+1. Conferir se a notificação foi REGULAR (carta com AR efetivamente recebida no endereço atualizado).
+2. Reativação por agendamento durante a suspensão (60 dias) é direito automático.
+3. Após cessação definitiva, recurso ao CRPS em 30 dias.
+4. Em caso de notificação irregular, MS pode reverter a suspensão ou cessação.
+
+Texto integral da Portaria 914/2021 disponível em `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/06-Portarias/Portaria-INSS-914-2021-PRBI.md` (Onda 49).
+
+Cruzar com `analise-documental-incapacidade`, `admissibilidade-barreiras-crps`, `mandado-seguranca-previdenciario` para estratégia recursal e MS.
+
 ## O que NÃO está nesta skill
 
 Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.
