@@ -85,13 +85,35 @@ administrativa de 1 folha, sem lei/decreto).
   separador logico. Salve como `00 - Requerimento Administrativo - DDMMAAAA` na
   subpasta e tambem na subpasta `Claude`.
 
-## 8. Ficha de protocolo (Meu INSS) — folha de cola
+## 8. Revisao aprofundada OBRIGATORIA (base-revisao-peticao-aprofundada) — autocorrecao
+- SEMPRE, antes de fechar, rode a skill `base-revisao-peticao-aprofundada` sobre o
+  requerimento de 1 folha (passo 7) e sobre a coerencia do conjunto: protocolo
+  anti-alucinacao de 5 niveis e as 5 camadas, com severidade quadrupla (BLOQUEANTE /
+  CRITICO / IMPORTANTE / MENOR).
+- **Foco no rito administrativo:** a peca **nao cita lei/decreto** (so IN/portaria do
+  INSS, se indispensavel — conferir a taxonomia correta via
+  `base-portarias-dpmf-inss-hub`); revalidar o **checklist da IN 128/2022** do
+  beneficio (faltantes em destaque), o cruzamento **CNIS x documentos** e a
+  **ordenacao** por categoria/cronologia interna (passo 5).
+- **Corrija automaticamente** os achados sanaveis, sem voltar a perguntar: retirar
+  lei/decreto indevidos, dois-pontos logicos, divergencia de dado (nome, NIT, datas,
+  periodos) contra os documentos lidos, ordem dos anexos, citacao de portaria com
+  taxonomia errada. Gere a versao corrigida do requerimento (subpasta `Claude` e
+  `00 - Requerimento Administrativo`), **sem sobrescrever** o original.
+- **Honestidade radical:** dado que nao foi lido em documento, ou citacao nao
+  confirmada em fonte primaria, e **removido/marcado "a confirmar"**, nunca
+  inventado. Achado BLOQUEANTE que dependa de decisao do Paulo ou de documento
+  faltante **nao se resolve sozinho** — sinalize em destaque no relatorio.
+- Registre o **log da revisao** no parecer e no relatorio (achados por severidade, o
+  que foi autocorrigido, o que permanece pendente).
+
+## 9. Ficha de protocolo (Meu INSS) — folha de cola
 - Gere `Ficha de Protocolo INSS - <Cliente> - DDMMAAAA` (na subpasta `Claude`) para
   quem vai protocolar: **servico/beneficio a selecionar** no Meu INSS, **dados do
   segurado** (nome, CPF, NIT/NIS, nascimento), **DER pretendida**, e a **ordem de
   upload** dos anexos (00 -> NN). Inclua avisos (ex.: atualizar CadUnico antes).
 
-## 9. Gravar e relatar
+## 10. Gravar e relatar
 - Conclusao (C) no To Do (`todo_conclusao.py`): max. 4 linhas, com o que foi
   montado, documentos obrigatorios faltantes, exclusoes e bloqueios.
 - Atualize/crie o parecer na subpasta `Claude` (checklist IN 128/2022 com faltantes

@@ -61,7 +61,31 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
   a versao ajustada como **NOVO** arquivo na subpasta `Claude`:
   `Peticao Inicial - <Cliente> - DDMMAAAA (revisada)`. Preserve o original.
 
-## 8. Montar a subpasta "Documentos da Peticao Inicial"
+## 8. Revisao aprofundada OBRIGATORIA (base-revisao-peticao-aprofundada) — autocorrecao
+- SEMPRE, antes de fechar a peca, rode a skill `base-revisao-peticao-aprofundada`
+  sobre a versao revisada (passo 7): protocolo anti-alucinacao de 5 niveis
+  (existencia, vigencia, redacao literal, modulacao, numero de processo/precedente)
+  e as 5 camadas (formal, normativa, fatica, argumentativa, integridade probatoria),
+  com severidade quadrupla (BLOQUEANTE / CRITICO / IMPORTANTE / MENOR).
+- **Corrija automaticamente** os achados sanaveis, sem voltar a perguntar (coerente
+  com a gravacao automatica deste fluxo): padrao visual/formatacao, dois-pontos
+  logicos, referencia por ID, redacao literal de artigos, numero/tese de precedente
+  trocado (substituir pela versao `[CONFERIDO]`), competencia territorial/material,
+  fato classificado como "incontroverso" que o INSS impugnou (reclassificar como
+  controvertido), fatos orfaos e provas orfas. Gere a peca ja corrigida mantendo o
+  versionamento do passo 7 — **sem sobrescrever** o original.
+- **Honestidade radical (nao autocorrigir as cegas):** citacao de norma ou
+  precedente NAO CONFIRMADA em fonte primaria e **removida/suspensa**, jamais
+  inventada ou mantida. Achado BLOQUEANTE que exija decisao estrategica do Paulo
+  (tese central apoiada em precedente inexistente, pedido incompativel com o rito,
+  ausencia de previo requerimento Tema 1124/STJ, dado fatico que contraria o CNIS)
+  **nao se resolve sozinho** — aplique o que for tecnico e **sinalize o restante em
+  destaque** no relatorio de prontidao.
+- Registre no parecer e no relatorio o **log da revisao**: total de achados por
+  severidade, o que foi autocorrigido e o que permanece pendente (com localizacao e
+  a correcao aplicada/sugerida).
+
+## 9. Montar a subpasta "Documentos da Peticao Inicial"
 - Crie, dentro da pasta do cliente, a subpasta **`Documentos da Peticao Inicial`**
   (mime folder).
 - Para cada documento a juntar, garanta um PDF proprio nomeado
@@ -80,7 +104,7 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
   inclusive previo requerimento administrativo.
 - Apague os arquivos temporarios locais criados no fatiamento.
 
-## 9. Gravar e relatar
+## 10. Gravar e relatar
 - Conclusao (C) no To Do (`todo_conclusao.py`): max. 4 linhas, com o que foi
   montado, citacoes corrigidas/nao confirmadas, provas excluidas e bloqueios.
 - Atualize o parecer na subpasta `Claude` (inclua a secao "NAO JUNTAR", o indice de
