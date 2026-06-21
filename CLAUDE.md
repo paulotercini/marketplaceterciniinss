@@ -23,6 +23,19 @@ Quando faltar informação para decidir, pergunte.
    corpo original** (`todo_backups/`) antes de gravar e **aborta** se a nova versão
    não contiver o corpo anterior na íntegra. Jamais editar/remover entradas
    existentes. Em qualquer escrita no To Do/Drive, preservar o que já existe.
+4. **NUNCA inventar (honestidade radical sobre os fatos):** todo dado afirmado
+   (nome, data, estado civil, agente nocivo, período, CID, NIT etc.) tem de vir
+   **lido de um documento**, não suposto. **Proibido preencher lacuna com
+   plausibilidade.** Antes de afirmar, conclua a **cadeia de leitura integral**
+   (seção "Leitura de documentos…"): leitura da **integralidade**, **frente→verso
+   e conferência verso→frente com OCR em português**, **confirmação ao Paulo de
+   quantas páginas há e o que diz cada uma**, e indicação **exata das folhas que
+   não conseguiu ler** (tentar outro método; persistindo, avisar). Documento de
+   imagem/escaneado **só com OCR** — nunca deduzir do título do arquivo. Mudança
+   de estado civil/nome exige a **prova** (averbação de separação/divórcio na
+   certidão, sentença) — ler **as averbações à margem**. Em dúvida ou rasura,
+   **pergunte ao Paulo** antes de gravar. Se um dado não estiver no documento,
+   escreva "não consta / a confirmar" — jamais um valor inventado.
 
 ## Legenda das iniciais (atendimentos no To Do)
 
