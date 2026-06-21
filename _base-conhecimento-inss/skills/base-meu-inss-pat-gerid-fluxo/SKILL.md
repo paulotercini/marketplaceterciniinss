@@ -1,6 +1,6 @@
 ---
 name: base-meu-inss-pat-gerid-fluxo
-description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
+description: "Fluxo operacional pró-segurado dos sistemas administrativos do INSS, incluindo Meu INSS, PAT/GERID, HISCRE, INFBEN, DataPrev, Gov.br e protocolo eletrônico de requerimentos. Use SEMPRE que mencionar Meu INSS, MEUINSS, PAT, GERID, HISCRE, INFBEN, DataPrev, Gov.br, protocolo INSS, requerimento eletrônico INSS, exigência eletrônica, INFBEN, OCAB, telegrama INSS, recurso pelo Meu INSS, recurso pelo PAT, agendamento de perícia, agendamento de PRP, atendimento INSS, login Gov.br, certificado digital INSS, gerador de senha INSS, recadastrar Meu INSS, plataforma de procuradores, gestão de procurações INSS, anexar documentos Meu INSS, comunicar autorizado, prova de vida digital, recadastramento biométrico, procuração eletrônica INSS, procuração digital INSS, representante Gov.br INSS, permissão específica procuração INSS, revogar procuração INSS, selo prata Gov.br, selo ouro Gov.br, procuração Portaria 21 2026. Cruza com base-cnis-conferencia-divergencias, base-pericia-medica-federal-telepericia, base-canais-falabr-corregedoria-cgu, base-pfe-inss-anpd-dpu-conade, base-aposentadoria-futura-pipeline e base-erro-administrativo-iea-13975."
 ---
 
 # Sistemas Administrativos do INSS - Fluxo Operacional
@@ -136,3 +136,31 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 10/06/2026 — Portaria Conjunta DTI/DIRBEN/INSS Nº 21/2026
+
+Norma: Portaria Conjunta DTI/DIRBEN/INSS Nº 21, de 9 de junho de 2026  
+Órgão: INSS (Diretoria de Tecnologia da Informação e Diretoria de Benefícios)  
+Vigência: efeitos retroativos a 2 de junho de 2026  
+Resumo da alteração: Altera a Portaria Conjunta DTI/DIRBEN/INSS Nº 10/2025 que instituiu a procuração eletrônica no Meu INSS. As mudanças transformam a dinâmica de acesso do escritório à plataforma.  
+Impacto na advocacia: o representante (advogado) pode agora iniciar o fluxo de procuração pelo próprio Gov.br, sem depender da iniciativa do segurado. As permissões passam a ser específicas por serviço, não mais genéricas. Ambas as partes podem revogar a qualquer momento.  
+Link oficial: https://www.in.gov.br/web/dou (DOU 10/06/2026, Seção 1)
+
+### Novas regras de procuração eletrônica (Portaria Nº 21/2026)
+
+**Quem pode iniciar o processo.** Antes da Portaria Nº 21/2026, o fluxo de procuração dependia da iniciativa do segurado. Com a atualização, o representante (advogado ou terceiro autorizado) pode iniciar o pedido pelo próprio Gov.br. A procuração só produz efeitos após consentimento do segurado, formalizado por assinatura eletrônica na plataforma Gov.br.
+
+**Exigência de conta Gov.br com selo Prata ou Ouro.** Tanto o representante quanto o representado precisam de conta Gov.br com nível de confiança Prata ou Ouro para solicitar ou aceitar a procuração eletrônica. Conta com nível Bronze não habilita esse recurso. Orientar clientes que ainda têm conta Bronze a elevar o nível antes de precisar da procuração.
+
+**Permissões específicas por serviço.** A autorização deixou de ser genérica. No momento do registro da procuração, devem ser indicados expressamente os serviços que o representante poderá consultar e o prazo de validade da procuração. O escritório deve definir junto ao cliente quais serviços específicos do Meu INSS serão incluídos (consulta de requerimentos, acompanhamento de perícias, download de documentos, etc.).
+
+**Direito de revogação bilateral.** Novidade importante: tanto o representante quanto o representado podem revogar a procuração eletrônica a qualquer tempo pelo Gov.br. Antes da Portaria Nº 21/2026, apenas o titular (segurado) podia encerrar a autorização. Na prática, o escritório também pode encerrar o vínculo quando o caso for encerrado, sem depender de ação do cliente.
+
+**Responsabilidade do representante.** O representante indicado na procuração é responsável pelo uso adequado das informações acessadas em nome do representado, observando os princípios de boa-fé, legalidade, finalidade e confidencialidade. Uso das informações para fins diferentes dos autorizados pode gerar responsabilidade civil, administrativa e criminal.
+
+**Checklist de adaptação do escritório.**
+- Verificar se os advogados do escritório possuem conta Gov.br com selo Prata ou Ouro
+- Atualizar o fluxo de integração com clientes para incluir instrução de elevar conta Gov.br para Prata/Ouro
+- Ao registrar nova procuração, listar explicitamente os serviços autorizados (não mais genérico)
+- Ao encerrar caso, revogar procuração eletrônica pelo Gov.br do advogado responsável
+- Atualizar modelo de contrato de honorários para incluir cláusula sobre procuração eletrônica e revogação ao final do mandato
