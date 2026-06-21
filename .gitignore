@@ -5,3 +5,4 @@ todo_backups/
 __pycache__/
 *.pyc
 audit_excel/
+inicial_tmp/
