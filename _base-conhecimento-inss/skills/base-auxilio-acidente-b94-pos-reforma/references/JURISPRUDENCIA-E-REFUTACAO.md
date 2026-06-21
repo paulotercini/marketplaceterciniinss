@@ -50,13 +50,13 @@ Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Preserva acumulação em direito adquirido.
 
-### Tema 201 TNU
+### Tema 201 TNU (RESTRITIVO — corrigido)
 
-Tese. O B94 não depende de acidente de trabalho stricto sensu, bastando acidente de qualquer natureza.
+Tese real (catálogo interno + CJF). O contribuinte individual NÃO faz jus ao auxílio-acidente, diante de expressa exclusão legal. NÃO é a fonte da regra do "acidente de qualquer natureza" — esta decorre do próprio art. 86 da Lei 8.213/91.
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Amplia acesso.
+Aplicação. Restritiva. Serve apenas para confirmar que o autor é segurado com direito ao B94 (empregado, avulso ou especial); nunca como ampliação de acesso.
 
 ### Tema 322 TNU
 
@@ -76,11 +76,11 @@ Aplicação pró-segurado. Não há óbice à concessão durante B31 vigente.
 
 ### Súmula 47 TNU
 
-Tese. Uma vez reconhecido o direito ao benefício por incapacidade, cabe implantação imediata.
+Tese real. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez." (Trata de B91/invalidez, não de B94.)
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Extensível ao B94 por analogia para implantação imediata.
+Aplicação. Própria dos benefícios por incapacidade (B91). Para implantação imediata do B94, usar a tutela de urgência (art. 300 do CPC / art. 4º da Lei 10.259/2001), não a Súmula 47/TNU.
 
 ## 2. Refutação aos argumentos típicos do INSS
 
@@ -100,7 +100,7 @@ Refutação. Súmula 89 TNU. Rol é exemplificativo. Cabe perícia para atestar 
 
 Argumento adversário. O acidente foi doméstico ou de trânsito, não de trabalho.
 
-Refutação. Art. 86 fala em acidente de qualquer natureza. Tema 201 TNU. B94 devido independentemente do local ou natureza do acidente.
+Refutação. O art. 86 da Lei 8.213/91 fala em acidente de qualquer natureza, de modo que o B94 é devido independentemente do local ou natureza do acidente. (Não invocar o Tema 201/TNU aqui — é restritivo.)
 
 ### Argumento 4 — Perda auditiva não gera B94
 

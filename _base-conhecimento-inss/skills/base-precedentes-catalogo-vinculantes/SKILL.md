@@ -19,7 +19,8 @@ A skill foi criada na Onda 37 (v1.27.0) a partir do material consolidado pelo es
 | Temas Repetitivos do STJ | 60 | `references/CATALOGO-TEMAS-STJ.md` |
 | Temas Representativos de Controvérsia da TNU | 156 | `references/CATALOGO-TEMAS-TNU.md` |
 | Enunciados do CRPS | 18 | `references/CATALOGO-ENUNCIADOS-CRPS.md` |
-| **Total geral** | **290** | |
+| Súmulas da TNU (em expansão) | 1 | `references/CATALOGO-SUMULAS-TNU.md` |
+| **Total geral** | **291** | |
 
 ## PROTOCOLO DE USO OBRIGATÓRIO
 
