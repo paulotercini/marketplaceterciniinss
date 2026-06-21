@@ -121,7 +121,7 @@ Cruzamento com `base-b94-anexo-iii-quadros`.
 
 ### 6.5. Sequela mínima
 
-Tema 201/TNU. Sequela mínima admite B94 se há demonstração funcional.
+Sequela mínima admite B94 se há demonstração funcional (art. 86 da Lei 8.213/91 + Tema 416/STJ; Anexo III exemplificativo). NÃO citar o Tema 201/TNU, que é restritivo (contribuinte individual não faz jus ao B94).
 
 Cruzamento com `base-b94-sequela-minima-tema201`.
 

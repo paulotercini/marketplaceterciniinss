@@ -76,7 +76,7 @@ Refutação. Causa de pedir diversa, Tema 629 STJ.
 
 Argumento adversário. Severidade.
 
-Refutação. Tema 201 TNU e Tema 862.
+Refutação. Art. 86 da Lei 8.213/91 (basta redução) e Tema 862/STJ. (Não invocar o Tema 201/TNU — é restritivo.)
 
 ### Argumento 8 — Cálculo do INSS é correto
 
