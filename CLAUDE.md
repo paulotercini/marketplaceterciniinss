@@ -249,13 +249,21 @@ Cadeia obrigatória:
    cada exclusão; para prova fraca porém sanável, indicar como fortalecê-la.
 6. **Ajustar a peça** sem sobrescrever — nova versão `Petição Inicial - <Cliente> -
    DDMMAAAA (revisada)` na subpasta `Claude`.
-7. **Montar `Documentos da Petição Inicial`** na pasta do cliente — cada documento
+7. **Revisão aprofundada OBRIGATÓRIA** — rodar SEMPRE a skill
+   `base-revisao-peticao-aprofundada` sobre a peça (5 níveis anti-alucinação + 5
+   camadas, severidade BLOQUEANTE/CRÍTICO/IMPORTANTE/MENOR) e **corrigir
+   automaticamente** os achados sanáveis (formatação, dois-pontos, ID, redação
+   literal, precedente trocado, competência, fato incontroverso impugnado, fatos/
+   provas órfãos). Citação não confirmada é **removida** (nunca inventada); achado
+   BLOQUEANTE que exija decisão do Paulo é **sinalizado em destaque** no relatório.
+   Registrar o **log da revisão** (achados por severidade, o que foi autocorrigido).
+8. **Montar `Documentos da Petição Inicial`** na pasta do cliente — cada documento
    em PDF próprio, nomeado `NN - <Tipo> - DDMMAAAA.pdf` (NN = ordem de distribuição).
    PDFs combinados são **fatiados** com `pdf_split.py` (baixar em base64 → separar →
    subir via `create_file`; originais ficam intactos). Primeiro arquivo:
    `00 - Índice de Provas` (documento → fato → item da inicial + checklist por
    sistema/rito). Quebrar arquivos que excedam o limite do sistema.
-8. **Gravar** conclusão (C) + parecer e entregar o **relatório de prontidão**
+9. **Gravar** conclusão (C) + parecer e entregar o **relatório de prontidão**
    (pronto para distribuir? sistema/rito; bloqueios). Limitação conhecida: download
    do Drive trava acima de ~10 MB — sinalizar arquivo grande não lido. Utilitário:
    `pdf_split.py "<entrada>.pdf" "1-2:Procuração Judicial" "3:Declaração de Hipossuficiência" ...`.
@@ -284,7 +292,14 @@ documentos prontos para anexar**; nunca protocola/envia. Diferenças-chave:
    faltantes em destaque (evita carta de exigência).
 5. **Antecipar a carta de exigência** (red-team do analista) e já anexar/sinalizar.
 6. **Seção "NÃO JUNTAR"** — curadoria, exclui documento prejudicial/incorreto.
-7. **Ficha de Protocolo INSS** (folha de cola na subpasta `Claude`): serviço a
+7. **Revisão aprofundada OBRIGATÓRIA** — rodar SEMPRE a skill
+   `base-revisao-peticao-aprofundada` sobre o requerimento de 1 folha e o conjunto, e
+   **corrigir automaticamente** os achados sanáveis (lei/decreto indevidos, dois-
+   pontos, divergência de nome/NIT/datas contra os documentos, ordem dos anexos,
+   portaria com taxonomia errada, checklist IN 128/2022). Dado não lido em documento
+   e citação não confirmada são **removidos/“a confirmar”** (nunca inventados);
+   BLOQUEANTE que dependa do Paulo é **sinalizado em destaque**. Registrar o **log**.
+8. **Ficha de Protocolo INSS** (folha de cola na subpasta `Claude`): serviço a
    selecionar, dados do segurado (NIT/NIS, DER) e ordem de upload dos anexos.
 
 ## Saída padrão por cliente (no `/triagem` e em análises avulsas)
