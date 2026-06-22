@@ -63,6 +63,12 @@ Art. 1.015 CPC. Decisões interlocutórias.
 
 Art. 1.021 CPC. Decisões monocráticas.
 
+### Embargos de declaração
+
+Art. 1.022 CPC. Omissão, contradição, obscuridade ou erro material. Prazo de 5 dias úteis. Cabem contra sentença, acórdão e decisão interlocutória.
+
+ALERTA TÉCNICO CRÍTICO. A contradição que autoriza embargos de declaração é EXCLUSIVAMENTE a INTERNA ao próprio julgado (entre fundamentos, entre fundamento e dispositivo, entre dispositivos). NÃO se admite ED por contradição EXTERNA entre o decidido e a prova dos autos, a jurisprudência divergente ou a tese da parte. Para inconformismo com o resultado, o caminho é a apelação (art. 1.009 CPC), o agravo de instrumento (art. 1.015 CPC) ou o recurso especial/extraordinário, conforme o caso. Embargos opostos com fundamento em contradição externa são rejeitados como protelatórios e podem gerar multa de até 2% (art. 1.026 §2º CPC), agravada para até 10% na reiteração. Detalhamento em `base-recurso-crps-peca-enxuta/references/CONTRADICAO-INTERNA-EXTERNA-ED.md`.
+
 ### Embargos de divergência
 
 Art. 1.043 CPC. Divergência em Tribunal Superior.

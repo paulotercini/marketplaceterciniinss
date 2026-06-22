@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. Versão 1.32.0 entrega a Onda 42, skill base-tru-trf3-sumulas-jurisprudencia consolidando as 23 Súmulas da Turma Regional de Uniformização (TRU) dos JEFs da 3ª Região com redação literal verificada nos PDFs oficiais (DEJF3R 109/2015 Súmulas 1 a 19 e DEJF3R 198/2015 Súmulas 20 a 23). Postura pró-segurado exclusiva. Distinguishing obrigatório para Súmulas 18 (reajuste) e 23 (BPC subsidiário dever alimentar). Paradigma válido para PUIL Regional TRU 3 e contrarrazões. Tabela operacional por bloco temático (BPC, Aposentadoria por Idade, Incapacidade, Pensão, Especial, Revisão, Procedimental, Carência). Cruza com base-jef-trf3-manual-2025 (Onda 41), base-tnu-admissibilidade-manual, peticao-previdenciaria, revisao-peticao. 127 skills ao todo (119 base-* + 6 ponte-* + 2 operacionais).",
-      "version": "1.32.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. Versão 1.34.0 entrega a Onda 44, regra técnica de que a contradição que autoriza embargos de declaração é EXCLUSIVAMENTE a INTERNA ao próprio julgado (entre fundamentos, entre fundamento e dispositivo, entre dispositivos), JAMAIS a contradição EXTERNA entre o decidido e a prova dos autos, a jurisprudência divergente ou a tese da parte. Alerta técnico inserido em 4 skills (base-recurso-crps-peca-enxuta, base-recursos-jef, base-rito-ordinario-trf, base-tnu-admissibilidade-manual). Nova reference compartilhada CONTRADICAO-INTERNA-EXTERNA-ED.md com quadro resumo, casos cabíveis e não cabíveis, fundamento normativo (art. 1.022 CPC, art. 92 RICRPS, art. 48 Lei 9.099/95, art. 16 RITNU), risco de multa por embargos protelatórios (art. 1.026 §2º CPC) e prequestionamento ficto (art. 1.025 CPC). 128 skills ao todo (120 base-* + 6 ponte-* + 2 operacionais).",
+      "version": "1.40.0",
       "category": "knowledge-base",
       "tags": [
         "inss",

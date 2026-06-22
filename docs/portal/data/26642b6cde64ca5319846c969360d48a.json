@@ -1,0 +1,32 @@
+{
+  "nome": "Ricardo Alexandre Martins",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "17876598870",
+      "dn": "25081975",
+      "nome": "Ricardo Alexandre Martins",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Junta de Recursos",
+      "titulo_tarefa": "Ricardo Alexandre Martins",
+      "status": "Última atualização em 23/07/2025: Recurso protocolado",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-07-23",
+          "data_br": "23/07/2025",
+          "tipo": "Recurso protocolado",
+          "descricao": "Recurso protocolado."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

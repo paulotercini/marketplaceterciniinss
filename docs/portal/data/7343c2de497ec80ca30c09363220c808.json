@@ -1,0 +1,58 @@
+{
+  "nome": "Paulo Cesar Lucente",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "11190455846",
+      "dn": "05061967",
+      "nome": "Paulo Cesar Lucente",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Paulo Cesar Lucente",
+      "status": "Última atualização em 13/04/2026: Recurso Especial interposto",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-04-13",
+          "data_br": "13/04/2026",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Recurso Especial interposto."
+        },
+        {
+          "data": "2024-08-18",
+          "data_br": "18/08/2024",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
+        {
+          "data": "2024-07-18",
+          "data_br": "18/07/2024",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2024-05-28",
+          "data_br": "28/05/2024",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 03/06/2024 às 08:00 em Monte Alto."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

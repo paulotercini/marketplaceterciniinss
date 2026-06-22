@@ -1,0 +1,56 @@
+{
+  "nome": "Antonio Celio Fenerick",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "04473206882",
+      "dn": "20021963",
+      "nome": "Antonio Celio Fenerick",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
+      "titulo_tarefa": "Antonio Celio Fenerick",
+      "status": "Última atualização em 16/06/2026: Sessão de julgamento agendada",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-06-16",
+          "data_br": "16/06/2026",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Sessão de julgamento agendada."
+        },
+        {
+          "data": "2026-05-13",
+          "data_br": "13/05/2026",
+          "tipo": "Processo distribuído ao relator",
+          "descricao": "Processo distribuído ao conselheiro relator."
+        },
+        {
+          "data": "2024-04-27",
+          "data_br": "27/04/2024",
+          "tipo": "Recurso protocolado",
+          "descricao": "Recurso protocolado."
+        },
+        {
+          "data": "2021-07-12",
+          "data_br": "12/07/2021",
+          "tipo": "Juntada de documentos",
+          "descricao": "Juntada de documentos ao processo."
+        },
+        {
+          "data": "2021-07-05",
+          "data_br": "05/07/2021",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

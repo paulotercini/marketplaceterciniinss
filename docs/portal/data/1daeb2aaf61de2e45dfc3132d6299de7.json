@@ -1,0 +1,82 @@
+{
+  "nome": "Keli Cristina de Carvalho",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "41572638800",
+      "dn": "22092020",
+      "nome": "Keli Cristina de Carvalho",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Keli Cristina de Carvalho",
+      "status": "Última atualização em 17/04/2026: Perícia médica realizada",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-04-17",
+          "data_br": "17/04/2026",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
+        },
+        {
+          "data": "2026-01-11",
+          "data_br": "11/01/2026",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
+        {
+          "data": "2025-11-09",
+          "data_br": "09/11/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-09-17",
+          "data_br": "17/09/2025",
+          "tipo": "Avaliação social agendada",
+          "descricao": "Avaliação social agendada para 25/09/2025 às 10:00 em Jaboticabal."
+        },
+        {
+          "data": "2025-09-12",
+          "data_br": "12/09/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 14/10/2025."
+        },
+        {
+          "data": "2025-08-28",
+          "data_br": "28/08/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 26/09/2025 às 07:00 em Matão\nAvaliação."
+        },
+        {
+          "data": "2025-08-25",
+          "data_br": "25/08/2025",
+          "tipo": "Avaliação social agendada",
+          "descricao": "Avaliação social agendada."
+        },
+        {
+          "data": "2022-08-23",
+          "data_br": "23/08/2022",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

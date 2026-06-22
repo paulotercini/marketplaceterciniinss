@@ -1,0 +1,58 @@
+{
+  "nome": "Thiago Costa Veiga",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "33075319805",
+      "dn": "10111984",
+      "nome": "Thiago Costa Veiga",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Thiago Costa Veiga",
+      "status": "Última atualização em 23/06/2025: Perícia médica agendada às 15:30",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-06-23",
+          "data_br": "23/06/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada às 15:30."
+        },
+        {
+          "data": "2025-04-06",
+          "data_br": "06/04/2025",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
+        {
+          "data": "2024-09-25",
+          "data_br": "25/09/2024",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2024-09-13",
+          "data_br": "13/09/2024",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada às 07:30."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

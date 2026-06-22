@@ -1,6 +1,6 @@
 ---
 name: base-bpc-loas-requisitos
-description: "BPC/LOAS requisitos estruturais e marco normativo, ótica pró-segurado. Use SEMPRE que mencionar BPC, LOAS, benefício assistencial, idoso 65 anos, PCD assistencial, Lei 8.742/1993, art. 20 LOAS, Decreto 6.214/2007, Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014, Portaria 34/2025, Portaria 37/2026, Lei 15.157/2025, avaliação biopsicossocial requisitos, impedimento longo prazo requisito, deficiência equiparável, PCD idosa, idoso 65 requisitos, inscrição CadÚnico BPC, revisão bienal BPC, cessação BPC, reativação BPC, auxílio-inclusão, irrepetibilidade valores BPC, Enunciado 17 CRPS, acúmulo BPC aposentadoria vedação, dispensa reavaliação impedimento permanente, CadÚnico atualizado, Teleperícia BPC, Portaria 19/2026 BPC, art. 203 V CF, princípio da dignidade BPC, assistência social, prescrição quinquenal BPC. Cruza com analise-bpc-loas, bpc-renda-grupo-familiar, peticao-previdenciaria, documentos-comprobatorios-in128 e precedentes-previdenciarios."
+description: "BPC/LOAS requisitos estruturais e marco normativo, ótica pró-segurado, atualizada para o Decreto 12.534/2025 que reformou o Decreto 6.214/2007. Use SEMPRE que mencionar BPC, LOAS, benefício assistencial, idoso 65 anos, PCD assistencial, Lei 8.742/1993, art. 20 LOAS, Decreto 6.214/2007, Decreto 12.534/2025, Portaria Conjunta SPS/INSS/SNAS nº 2 de 19/09/2014, Portaria 34/2025, Portaria 37/2026, Lei 15.157/2025, Lei 15.077/2024 prazos CadÚnico, critério renda igual ou inferior 1/4 SM, novas exclusões de renda art. 4º §2º (rompimento barragens VII, BPC concedido a outro idoso ou PcD da mesma família VIII, benefício previdenciário 1 SM idoso 65+/PcD IX, auxílio-inclusão X), revogação exclusões antigas I II IV V Decreto 12.534/2025, acumulação com transferências de renda Bolsa Família Renda Básica Cidadania Lei 10.835/2004 art. 203 VI CF, avaliação biopsicossocial pela perícia médica federal e serviço social INSS, registro obrigatório CID, registro biométrico requisito, art. 47-B 47-C 47-D 47-E notificação bloqueio suspensão cessação, revogação art. 19 par. único, revogação art. 16 §11 dispensa reavaliação, revogação art. 42 §3º §5º critérios decisão judicial em revisão, retrocesso social BPC, inconstitucionalidade Decreto 12.534, coisa julgada decisão judicial BPC, avaliação biopsicossocial requisitos, impedimento longo prazo requisito, deficiência equiparável, PCD idosa, idoso 65 requisitos, inscrição CadÚnico BPC, revisão bienal BPC, cessação BPC, reativação BPC, auxílio-inclusão, irrepetibilidade valores BPC, Enunciado 17 CRPS, acúmulo BPC aposentadoria vedação, dispensa reavaliação impedimento permanente, CadÚnico atualizado, Teleperícia BPC, Portaria 19/2026 BPC, art. 203 V CF, princípio da dignidade BPC, assistência social, prescrição quinquenal BPC. Cruza com analise-bpc-loas, bpc-renda-grupo-familiar, base-bpc-renda-per-capita-miserabilidade, base-bpc-comprometimento-renda, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, documentos-comprobatorios-in128, mandado-seguranca-previdenciario, coisa-julgada-previdenciaria, base-devolucao-valores-irrepetibilidade-tema979-tema1034 e precedentes-previdenciarios."
 ---
 
 # BPC/LOAS. Requisitos Estruturais Pós EC 103/2019
@@ -139,6 +139,48 @@ Para validação formal de laudo médico de deficiência funcional pelo Checklis
 Para Cadastro Domiciliar do CadÚnico pelas INs SAGICAD/MDS 20/2026 e 21/2026, modalidade preferencial para PCD com mobilidade reduzida, obrigatoriedade para famílias unipessoais com BPC, dispensa em 8 hipóteses excepcionais (área de violência, indígena, quilombola, situação de rua, domicílio coletivo, etc.) e vedação ao caráter fiscalizatório, acionar `base-cadastro-domiciliar-cadunico-in21-2026`.
 
 REGRA CRÍTICA. A integração CadÚnico-CNIS NÃO autoriza a exclusão de membro do grupo familiar (Anexo I item 5.5 da IN 21/2026).
+
+## DECRETO 12.534/2025 - REFORMA PROFUNDA DO REGULAMENTO DO BPC (Onda 48)
+
+O Decreto 12.534/2025 promoveu reforma estrutural do Decreto 6.214/2007. Síntese pró-segurado.
+
+### Avanços (pró-segurado)
+
+1. Critério renda. **"igual ou inferior" a 1/4 SM** (era apenas "inferior"). Art. 8º II e art. 9º II. Amplia o universo de beneficiários.
+
+2. **Acumulação com Bolsa Família** e Renda Básica de Cidadania (Lei 10.835/2004) e art. 203 VI CF expressamente permitida. Art. 5º caput e arts. 8º III, 9º III.
+
+3. Novas exclusões de renda no art. 4º §2º.
+   - VII - rompimento e colapso de barragens.
+   - VIII - BPC concedido a outra pessoa idosa OU pessoa com deficiência da mesma família (consagrando regulamentarmente a Súmula 14 TRU 3 ampliada para PcD).
+   - IX - benefício previdenciário até 1 SM a idoso 65+ ou PcD (Estatuto do Idoso art. 34 par. único agora positivado).
+   - X - auxílio-inclusão e remuneração de seu beneficiário.
+
+4. Avaliação biopsicossocial pela perícia médica federal e serviço social do INSS. Art. 16 §3º.
+
+5. **CID obrigatório** no laudo, com sigilo médico. Art. 16 §3º-A. Facilita auditoria.
+
+### Retrocessos (anti-segurado)
+
+1. **REVOGADAS** as exclusões antigas do art. 4º §2º (I auxílios eventuais, II Bolsa Família, IV pensão indenizatória, V renda sazonal). A pensão indenizatória ficou só como exceção de acumulação no caput do art. 5º.
+
+2. **REVOGADA** a hipótese de dispensa de reavaliação por impedimento permanente. Art. 16 §11 (excluído).
+
+3. **REVOGADO** o critério de revisão observando a decisão judicial. Art. 42 §3º e §5º (excluídos). Decisões judiciais transitadas em julgado agora podem ser reavaliadas com critérios diferentes da sentença - violação possível de coisa julgada (art. 5º XXXVI CF). Cabe MS.
+
+4. Novo procedimento de NOTIFICAÇÃO/BLOQUEIO/SUSPENSÃO/CESSAÇÃO nos arts. 47-B a 47-E com 30 dias para defesa após notificação, 30 dias para reavaliação, 45/90 dias para CadÚnico, 90 dias para biometria. Aumenta carga formal.
+
+5. **Registro biométrico** como requisito (Art. 12). Obstáculo para idosos/PcD com mobilidade reduzida.
+
+### Estratégia pró-segurado
+
+Em casos concretos.
+- Em cessação por reavaliação aplicando critério diferente da sentença, **MS por descumprimento de coisa julgada** (cruzar com `mandado-seguranca-previdenciario`, `coisa-julgada-previdenciaria`).
+- Em cessação por falta de biometria, requerer DISPENSA por impossibilidade física.
+- Em cessação por falta de CadÚnico, conferir prazo (45 dias pequeno porte, 90 médio/grande).
+- Em revisão de cálculo de renda, aplicar a regra mais favorável (transição) e arguir incidentalmente o retrocesso social das revogações.
+
+Mapa exaustivo das alterações em `references/DECRETO-6214-2007-ATUALIZACAO-2025.md`.
 
 ## O que NÃO está nesta skill
 

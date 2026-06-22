@@ -1,0 +1,39 @@
+{
+  "nome": "Dedeuza Gomes da Silva",
+  "atualizado_em": "14/06/2026 às 19:22",
+  "processos": [
+    {
+      "cpf": "03168470465",
+      "dn": "17011980",
+      "nome": "Dedeuza Gomes da Silva",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Dedeuza Gomes da Silva",
+      "status": "Última atualização em 14/06/2026: Recurso Ordinário interposto",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-06-14",
+          "data_br": "14/06/2026",
+          "tipo": "Recurso Ordinário interposto",
+          "descricao": "Recurso Ordinário interposto."
+        },
+        {
+          "data": "2026-06-14",
+          "data_br": "14/06/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

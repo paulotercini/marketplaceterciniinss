@@ -1,0 +1,46 @@
+{
+  "nome": "Leonardo Ramos",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "26504613818",
+      "dn": "24021978",
+      "nome": "Leonardo Ramos",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Leonardo Ramos",
+      "status": "Última atualização em 10/06/2025: Recurso protocolado",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-06-10",
+          "data_br": "10/06/2025",
+          "tipo": "Recurso protocolado",
+          "descricao": "Recurso protocolado."
+        },
+        {
+          "data": "2024-09-10",
+          "data_br": "10/09/2024",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 05/02/2025 às 09:00 em Catanduva."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

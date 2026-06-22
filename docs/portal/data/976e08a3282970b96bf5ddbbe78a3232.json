@@ -1,0 +1,64 @@
+{
+  "nome": "Maria de Lourdes de Oliveira Terribele",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "35658809886",
+      "dn": "21041959",
+      "nome": "Maria de Lourdes de Oliveira Terribele",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Maria de Lourdes de Oliveira Terribele",
+      "status": "Última atualização em 11/01/2026: Petição inicial protocolada / distribuída",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-01-11",
+          "data_br": "11/01/2026",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
+        {
+          "data": "2025-09-22",
+          "data_br": "22/09/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 23/10/2025 às 10:20."
+        },
+        {
+          "data": "2025-09-18",
+          "data_br": "18/09/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
+        },
+        {
+          "data": "2025-04-29",
+          "data_br": "29/04/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-03-24",
+          "data_br": "24/03/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "nome": "Sergio Henrique Cheme",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "14813463851",
+      "dn": "30061971",
+      "nome": "Sergio Henrique Cheme",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Sergio Henrique Cheme",
+      "status": "Última atualização em 17/11/2025: Embargos de declaração interpostos",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-11-17",
+          "data_br": "17/11/2025",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2025-05-27",
+          "data_br": "27/05/2025",
+          "tipo": "Petição protocolada",
+          "descricao": "Petição protocolada nos autos."
+        },
+        {
+          "data": "2025-04-01",
+          "data_br": "01/04/2025",
+          "tipo": "Réplica protocolada",
+          "descricao": "Réplica protocolada nos autos."
+        },
+        {
+          "data": "2024-06-10",
+          "data_br": "10/06/2024",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

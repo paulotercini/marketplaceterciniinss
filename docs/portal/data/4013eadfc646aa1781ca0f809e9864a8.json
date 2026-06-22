@@ -1,0 +1,25 @@
+{
+  "nome": "Andreza de Melo Dias Alves",
+  "atualizado_em": "14/06/2026 às 19:22",
+  "processos": [
+    {
+      "cpf": "32745071807",
+      "dn": "11081980",
+      "nome": "Andreza de Melo Dias Alves",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
+      "titulo_tarefa": "Andreza de Melo Dias Alves",
+      "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}
