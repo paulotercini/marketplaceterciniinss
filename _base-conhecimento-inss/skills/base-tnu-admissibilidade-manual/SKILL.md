@@ -198,6 +198,8 @@ PROCEDIMENTO. Acórdão da TR omite a tese > opor ED no prazo de 5 dias úteis (
 
 PREQUESTIONAMENTO FICTO. Aplicar também o art. 1.025 CPC para preservar o cabimento mesmo que os ED sejam rejeitados ("Consideram-se incluídos no acórdão os elementos que o embargante suscitou, para fins de pré-questionamento, ainda que os embargos de declaração sejam inadmitidos ou rejeitados, caso o tribunal superior considere existentes erro, omissão, contradição ou obscuridade").
 
+ALERTA TÉCNICO CRÍTICO SOBRE A CONTRADIÇÃO. A contradição que autoriza ED (e, por consequência, o prequestionamento ficto do art. 1.025 CPC) é EXCLUSIVAMENTE a INTERNA ao próprio acórdão (entre fundamentos, entre fundamento e dispositivo, entre dispositivos). NÃO se admite ED por contradição EXTERNA entre o decidido e a prova dos autos, a jurisprudência divergente ou a tese da parte. Inconformismo com a conclusão do acórdão da Turma Recursal se resolve com PUIL/PEDILEF, não com ED. Embargos opostos com fundamento em contradição externa são rejeitados como protelatórios (art. 1.026 §2º CPC, multa de até 2% sobre o valor da causa, agravada para 10% na reiteração), e a sua rejeição NÃO interrompe o prazo do PUIL (art. 1.026 §3º c/c §1º CPC). Detalhamento completo em `base-recurso-crps-peca-enxuta/references/CONTRADICAO-INTERNA-EXTERNA-ED.md`.
+
 ## 14 QUESTÃO DE ORDEM 10/TNU - TESE INOVADORA
 
 **QO 10/TNU.** "Não cabe o incidente de uniformização quando a parte que o deduz apresenta tese jurídica inovadora, não ventilada nas fases anteriores do processo e sobre a qual não se pronunciou expressamente a Turma Recursal no acórdão recorrido."

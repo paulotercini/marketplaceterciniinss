@@ -43,10 +43,20 @@ recursais (página X) e consiste em [tese específica].
 A omissão deve ser sanada com pronunciamento expresso sobre a tese
 pretendida.
 
-OPÇÃO 2 - CONTRADIÇÃO
+OPÇÃO 2 - CONTRADIÇÃO INTERNA
 
-Há contradição entre [trecho A] (página X do acórdão) e [trecho B]
-(página Y do acórdão). [Identificar com objetividade a antinomia.]
+ATENÇÃO TÉCNICA. A contradição que autoriza os embargos é exclusivamente
+a INTERNA ao próprio acórdão, ou seja, entre suas premissas, entre seus
+fundamentos, ou entre os fundamentos e o dispositivo. JAMAIS é cabível
+arguir contradição EXTERNA (entre o decidido e a prova dos autos,
+entre o decidido e a tese da parte, entre o decidido e jurisprudência
+divergente). Para inconformismo com a conclusão, o caminho é o recurso
+especial (REA à CAJ).
+
+Há contradição INTERNA entre [trecho A] (página X do acórdão) e
+[trecho B] (página Y do acórdão). [Identificar com objetividade a
+antinomia INTRA-acórdão, especificando se é. (i) entre fundamentos;
+(ii) entre fundamento e dispositivo; (iii) entre dispositivos.]
 
 A contradição deve ser sanada com a definição da tese vencedora.
 

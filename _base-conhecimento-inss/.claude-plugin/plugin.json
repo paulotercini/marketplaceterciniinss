@@ -1,7 +1,7 @@
 {
   "name": "base-conhecimento-inss",
-  "version": "1.32.0",
-  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.32.0 entrega a Onda 42, skill base-tru-trf3-sumulas-jurisprudencia consolidando integralmente as 23 Súmulas da Turma Regional de Uniformização (TRU) dos JEFs da 3ª Região com redação literal verificada nos PDFs oficiais do TRF3 (DEJF3R 109/2015 Súmulas 1 a 19 e DEJF3R 198/2015 Súmulas 20 a 23). Inclui análise pró-segurado de cada Súmula, distinguishing para Súmulas 18 e 23 (desfavoráveis), tabela operacional por bloco temático (BPC, Aposentadoria por Idade, Incapacidade, Pensão, Especial, Revisão, Procedimental, Carência). Paradigma direto para PUIL Regional TRU 3, contrarrazões e peças no JEF da 3ª Região. Cruza com base-jef-trf3-manual-2025 (Onda 41), base-jef-previdenciario, base-tnu-admissibilidade-manual, peticao-previdenciaria, revisao-peticao, base-bpc-*, aposentadoria-idade-hibrida, incapacidade-b31-b91. A versão anterior 1.31.0 entregou Onda 41 (Manual JEF TRF3 2025 com 52 hipóteses art. 20 §2º). A 1.28.0 entregou Onda Corretiva 38. 127 skills ao todo (119 base-* + 6 ponte-* + 2 operacionais).",
+  "version": "1.40.0",
+  "description": "Base de conhecimento previdenciário do escritório Paulo Roberto Tercini Filho, organizada em skills temáticas pró-segurado. A versão 1.34.0 entrega a Onda 44, regra técnica de que a contradição que autoriza embargos de declaração é EXCLUSIVAMENTE a INTERNA ao próprio julgado (entre fundamentos, entre fundamento e dispositivo, entre dispositivos), JAMAIS a contradição EXTERNA entre o decidido e a prova dos autos, a jurisprudência divergente ou a tese da parte. Inclui alerta técnico em 4 skills (base-recurso-crps-peca-enxuta, base-recursos-jef, base-rito-ordinario-trf, base-tnu-admissibilidade-manual) e cria reference compartilhada CONTRADICAO-INTERNA-EXTERNA-ED.md com quadro resumo, casos cabíveis e não cabíveis, fundamento normativo (art. 1.022 CPC, art. 92 RICRPS, art. 48 Lei 9.099/95, art. 16 RITNU), risco de multa por embargos protelatórios (art. 1.026 §2º CPC), prequestionamento ficto (art. 1.025 CPC) e checklist pré-protocolo. A versão anterior 1.33.0 entregou Onda 43 (Siglas INSS + Núcleo 4.0 TJSP). 128 skills ao todo (120 base-* + 6 ponte-* + 2 operacionais).",
   "author": {
     "name": "Paulo Roberto Tercini Filho",
     "email": "paulotercini@hotmail.com"
@@ -288,6 +288,29 @@
     "sumula-16-tru-correcao-monetaria-administrativa",
     "verificacao-pdf-oficial-trf3",
     "distinguishing-sumula-23-tru",
-    "distinguishing-sumula-18-tru"
+    "distinguishing-sumula-18-tru",
+    "onda-43",
+    "base-siglas-inss",
+    "glossario-inss",
+    "siglas-previdenciarias",
+    "acronimos-inss",
+    "cnis-apis-cat-der-dib-dcb",
+    "nucleo-especializado-justica-4-0",
+    "portaria-conjunta-tjsp-10507-2024",
+    "comunicado-conjunto-868-2024-tjsp",
+    "vara-acidentes-trabalho-tjsp",
+    "art-129a-lei-8213-lei-14331-2022",
+    "9-topicos-peticao-acidentaria",
+    "ai-2061943-13-2025-8-26-0000",
+    "richard-pae-kim",
+    "17a-camara-direito-publico-tjsp",
+    "matheus-parducci-camargo",
+    "1013616-41-2026-8-26-0381",
+    "tema-350-stf-restabelecimento",
+    "tema-660-stj-revisao",
+    "art-129-isencao-custas-acidentaria",
+    "checklist-14-pontos-pre-protocolo",
+    "icp-brasil-procuracao-eletronica",
+    "trabalho-habitual-art-129a"
   ]
 }

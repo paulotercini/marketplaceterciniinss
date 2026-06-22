@@ -59,7 +59,7 @@ Cabível para atacar decisão não atacável por recurso. Foro da própria Turma
 
 Primeiro, em sentença desfavorável ou parcialmente favorável, avaliar recurso inominado.
 
-Segundo, em decisão com omissão, contradição, obscuridade ou erro material, embargos de declaração com prequestionamento.
+Segundo, em decisão com omissão, contradição, obscuridade ou erro material, embargos de declaração com prequestionamento. ALERTA TÉCNICO. A contradição que autoriza ED é EXCLUSIVAMENTE a INTERNA ao próprio julgado (entre fundamentos, entre fundamento e dispositivo, entre dispositivos). NÃO é cabível ED por contradição EXTERNA entre o decidido e a prova dos autos, jurisprudência divergente ou tese da parte. Inconformismo com o resultado se enfrenta com recurso inominado ou PUIL, não com ED. Detalhamento completo em `base-recurso-crps-peca-enxuta/references/CONTRADICAO-INTERNA-EXTERNA-ED.md`.
 
 Terceiro, em divergência entre Turmas da mesma Região, IUJEF.
 
