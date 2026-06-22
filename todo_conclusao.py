@@ -35,6 +35,22 @@ BACKUP_DIR = "todo_backups"
 # Caracteres acentuados do portugues (para a trava de acentuacao).
 ACENTOS = set("áàâãéêíóôõúüçÁÀÂÃÉÊÍÓÔÕÚÜÇ")
 
+# Palavras que em pt-BR sao quase sempre acentuadas. Se aparecerem na forma SEM
+# acento, e sinal de conclusao mal escrita (a trava de "algum acento" nao basta,
+# pois uma unica palavra acentuada no texto inteiro a burlava). Lista em minusculas
+# e na forma ERRADA (sem acento); o texto correto nunca casa com ela.
+PALAVRAS_OBRIGATORIAS_ACENTO = frozenset({
+    "medico", "medicos", "medica", "medicas", "relatorio", "relatorios",
+    "ausencia", "nao", "sao", "voce", "tambem", "porem", "apos", "area",
+    "padrao", "dominio", "dominios", "metalurgico", "contribuicao",
+    "contribuicoes", "periodo", "periodos", "beneficio", "beneficios",
+    "pericia", "analise", "pendencia", "pendencias", "proximo", "proxima",
+    "proximos", "conclusao", "decisao", "historico", "salario", "necessario",
+    "obrigatorio", "vinculo", "vinculos", "invalido", "cronico", "ortopedico",
+    "publico", "sera", "calculo", "pre", "pos", "orgao", "obito",
+})
+RE_PALAVRA = re.compile(r"[0-9A-Za-zÀ-ÿ]+")
+
 # Linha que comeca (inicio de linha) com uma data DD.MM.AAAA
 RE_DATA = re.compile(r"^\d{2}\.\d{2}\.\d{4}", re.MULTILINE)
 
@@ -80,6 +96,18 @@ def prepend(list_id, task_id, texto):
         raise RuntimeError(
             "Conclusao sem nenhum acento. Reescreva em portugues do Brasil com "
             "acentuacao correta (ç, á, ã, é, ê, í, ó, ô, ú etc.) e rode de novo."
+        )
+
+    # Trava reforcada: palavras frequentes escritas SEM acento reprovam o texto
+    # (uma unica palavra acentuada nao basta para considerar o texto correto).
+    achadas = sorted({
+        w for w in RE_PALAVRA.findall(texto.lower())
+        if w in PALAVRAS_OBRIGATORIAS_ACENTO
+    })
+    if achadas:
+        raise RuntimeError(
+            "Conclusao com palavra(s) sem acento: " + ", ".join(achadas) + ". "
+            "Reescreva em portugues do Brasil com acentuacao correta e rode de novo."
         )
 
     if not texto.startswith(hoje):
