@@ -168,13 +168,12 @@ os pedidos correntes do escritório:
 - relatório/laudo médico → `base-modelo-relatorio-medico-*`, `base-validacao-formal-laudo-medico-checklist-ab`
 - cálculo RMI → `base-calculo-rmi-ec103` (sem CNIS completo, não calcule)
 - CRPS / recurso → `ponte-workflow-crps`, `base-recurso-crps-peca-enxuta`, `base-crps-panorama-geral`
+- acerto de indicadores do CNIS → `base-cnis-acerto-indicadores` (catálogo de indicadores atualizado; cruzar com a documentação antes de protocolar)
+- documentos comprobatórios / IN 128/2022 → `base-documentos-comprobatorios-in128` (checklist por benefício + carta de documentos do escritório)
 - orquestração geral → `ponte-orquestrador-previdenciario`
 
-**Lacunas conhecidas (não existe skill própria, trate pelo CLAUDE.md + base
-correlata e sinalize):** acerto de indicadores do CNIS (use a doutrina do CNIS
-deste arquivo e o formulário Anexo I do acervo); checklist de documentos
-comprobatórios da IN 128/2022 (use o texto da IN e os fluxos `/inicial-inss`).
-Quando uma lacuna dessas reaparecer, sugira ao Paulo **criar a skill**.
+Quando aparecer um tema recorrente sem skill própria, sinalize ao Paulo e sugira
+**criar a skill**.
 
 ### Verificações automáticas obrigatórias
 
