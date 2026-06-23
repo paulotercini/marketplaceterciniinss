@@ -378,6 +378,18 @@ Daniel Pulino. Aposentadoria por Invalidez.
 
 José Antônio Savaris. Direito Processual Previdenciário.
 
+## Atualização DOU 23/06/2026
+
+Norma: Portaria Conjunta DTI/DIRBEN/INSS nº 21, de 9 de junho de 2026
+Órgão: DTI e DIRBEN do INSS
+Vigência: efeitos a partir de 2 de junho de 2026; publicada em edição extra do DOU de 10/06/2026
+Resumo da alteração: Altera a Portaria Conjunta DTI/DIRBEN/INSS nº 10/2025 sobre o uso da procuração eletrônica na plataforma Meu INSS. Modifica o regime de autorização de representantes digitais no sistema. Representante pode iniciar o processo pela própria conta Gov.br; autorização é específica por serviço e por prazo; ambas as partes podem revogar a qualquer tempo; nível de conta Gov.br exigido é prata ou ouro.
+Impacto na advocacia: Afeta diretamente a operação do escritório no Meu INSS, especialmente o fluxo de procuração eletrônica para representação de segurados. Detalhamento completo em `base-meu-inss-pat-gerid-fluxo`.
+Estratégia: Ver `base-meu-inss-pat-gerid-fluxo`.
+Link oficial: https://www.contabeis.com.br/noticias/77380/inss-altera-regras-da-procuracao-eletronica-no-meu-inss/ (portal in.gov.br indisponível em 23/06/2026)
+
+Norma adicional monitorada: Portaria PRES/INSS nº 1.962, de 1º de junho de 2026 (DOU nº 102, 02/06/2026, Seção 1, p. 67). Altera a Portaria PRES/INSS nº 1.919/2026, que dispõe sobre regras excepcionais do Programa de Gerenciamento de Benefícios e Pagamento Extraordinário, incluindo explicitamente "Recurso - Acórdão com Implantação de Benefício/BI" e "Recurso - Acórdão com Implantação de Benefício/Loas" e "Atualizar Vínculos e Remunerações e Código de Pagamento". Relevante para casos com acórdão do CRPS pendente de implantação. Skill `base-crps-panorama-geral` deve ser acionada em conjunto nesses casos.
+
 ## 23. O que NÃO está nesta skill
 
 Detalhamento operacional de cada Portaria. Está em skills específicas.
