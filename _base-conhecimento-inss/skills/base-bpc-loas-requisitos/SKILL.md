@@ -182,6 +182,22 @@ Em casos concretos.
 
 Mapa exaustivo das alterações em `references/DECRETO-6214-2007-ATUALIZACAO-2025.md`.
 
+## PEDILEF 5001885-13.2023.4.04.7209/SC TNU (Onda 51) - TAXATIVIDADE DO ROL DO §1º ART. 20 LOAS
+
+Julgado em 10/12/2025 pela TNU, Rel. Juiz Federal João Carlos Cabrelon de Oliveira, decisão UNÂNIME.
+
+**Tese pró-segurado.** O rol do §1º do art. 20 da Lei 8.742/1993 é TAXATIVO. Para cálculo da renda mensal per capita do BPC, somente entram os valores recebidos por pessoas elencadas no rol legal (requerente, cônjuge ou companheiro, pais, irmãos solteiros, filhos e enteados solteiros, menores tutelados, desde que vivam sob o mesmo teto).
+
+Outros parentes que residam no mesmo imóvel e contribuam para o sustento (irmão casado, cunhado, sobrinho, tia, prima, avó sem guarda, etc) NÃO entram no cálculo. Eventual ajuda financeira deles pode ser ponderada na análise GLOBAL da miserabilidade, mas não compõe matematicamente o cálculo da renda per capita.
+
+**Aplicação operacional.** QO 20/TNU. Acórdão recorrido que somar renda de pessoa fora do rol é anulado, com retorno à TR de origem para readequação.
+
+**CONTEXTO CRÍTICO PÓS DECRETO 12.534/2025.** A reforma do BPC revogou exclusões antigas do art. 4º §2º Decreto 6.214 (auxílios eventuais, Bolsa Família, pensão indenizatória, renda sazonal). Este PEDILEF AFIRMA a TAXATIVIDADE do rol legal do §1º art. 20 LOAS, contrapondo eventual interpretação ampliativa que o INSS possa fazer com base na nova redação do Decreto.
+
+**Estratégia pró-segurado.** Em casos de indeferimento de BPC por cômputo de renda de parentes extra-rol, invocar este PEDILEF + PEDILEF 0000020-09.3808.7.01.3419/DF (TNU, 19/06/2020) + PEDILEF 0003636-52.2018.4.01.3306/BA (TNU, 23/09/2025).
+
+Detalhamento integral em `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.
+
 ## O que NÃO está nesta skill
 
 Renda per capita, critérios de miserabilidade, exclusões e Decreto 12.534/2025 estão em `base-bpc-renda-per-capita-miserabilidade`. Impedimento de longo prazo, avaliação biopsicossocial, TCQ, IFBrM estão em `base-bpc-impedimento-longo-prazo`. Aposentadoria PCD pela LC 142/2013 está em `base-aposentadoria-pcd-lc142`. Procedimentos administrativos detalhados estão em `base-bpc-aposentadoria-pcd-procedimentos`. Anuência ao desligamento do PBF está em `base-bpc-pbf-anuencia-in54-2026`. Cadastro Domiciliar do CadÚnico está em `base-cadastro-domiciliar-cadunico-in21-2026`.
