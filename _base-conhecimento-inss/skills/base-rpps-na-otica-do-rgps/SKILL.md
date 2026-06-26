@@ -50,3 +50,13 @@ Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISP
 ## Hub de portarias administrativas
 
 Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
+## Atualização DOU 26/06/2026
+
+Norma: Acórdão TCU 1528/2026-Plenário (Incidente de Uniformização de Jurisprudência), publicado na ATA Nº 23, de 17 de junho de 2026.
+Órgão: Tribunal de Contas da União — Plenário.
+Vigência: Eficácia imediata para fins de controle externo dos atos de concessão de RPPS. Possível súmula em elaboração.
+Resumo da alteração: O TCU fixou que, nas aposentadorias do RPPS com direito adquirido anterior à EC 103/2019, as remunerações percebidas após a vigência da emenda não entram na média de cálculo, e o teto de referência é o cargo efetivo na data da concessão (art. 1º, §5º, Lei 10.887/2004). O ato foi comunicado ao MPS, o que pode refletir em orientações cruzadas entre RPPS e RGPS.
+Impacto na advocacia: Para clientes que possuem tempo no RPPS e migram para o RGPS (contagem recíproca), a deliberação confirma que o período pós-EC 103 no RPPS tem regra de cálculo autônoma. Não impede a averbação da CTC no RGPS, mas deverá ser observada ao calcular proventos mistos ou em ações que discutam o cálculo de tempo recíproco. Monitorar a resposta do MPS à comunicação do TCU, pois pode resultar em nota técnica ou instrução normativa com reflexo no RGPS.
+Estratégia: Em casos de clientes com vínculo RPPS que ainda não se aposentaram, verificar se as contribuições pós-EC 103 no RPPS influenciam a base de cálculo da CTC. Acionar `base-aposentadoria-direito-adquirido` para o cruzamento com os argumentos de direito adquirido no RGPS.
+Link oficial: https://www.in.gov.br/web/dou/-/ata-n-23-de-17-de-junho-de-2026-714712952
