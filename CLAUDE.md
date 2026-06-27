@@ -226,15 +226,20 @@ rode a skill `base-revisao-peticao-aprofundada` sobre a minuta (5 níveis
 anti-alucinação + 5 camadas), corrija o sanável e só então produza o .docx. Citação
 não confirmada é removida, jamais inventada.
 
-**Procuração.** Use SEMPRE o modelo padrão do Drive, pasta `_Modelos de Procurações`,
-arquivo `Nova Procuração…`. Não redija procuração do zero.
+**Procuração.** Use SEMPRE o modelo padrão (pasta `_Modelos de Procurações`, arquivo
+`Nova Procuração…` no Drive; cópia versionada em `modelos/`, referência em
+`modelos/procuracao-pacote-modelo.md`). É um pacote (procuração administrativa e
+judicial, declaração de pobreza, contrato de honorários, termos e Anexo XXIV da IN
+128), preencher os campos `<NOMESEGURADO>`, `<CPF>`, `<RG>`, `<ENDERECO>` etc. Não
+redija procuração do zero.
 
 **Relatório médico (modelo).** Quando pedirem modelo de relatório médico, primeiro
 **identifique a espécie do benefício** (B94, LC 142, incapacidade B31/B91/B92, BPC) e
 a skill `base-modelo-relatorio-medico-*` correspondente, e siga o **MODELO OURO do
 escritório**, o relatório de **Reginaldo Augusto Garcia (CPF 259.294.728-07)** na
-pasta dele no Drive. O relatório ocupa **no máximo uma folha**, com conteúdo completo
-em **linguagem simples**, próprio para o médico preencher e assinar.
+pasta dele no Drive (cópia versionada em `modelos/`, estrutura e exemplo em
+`modelos/relatorio-medico-modelo.md`). O relatório ocupa **no máximo uma folha**, com
+conteúdo completo em **linguagem simples**, próprio para o médico preencher e assinar.
 
 **Encaminhamento a colaborador.** Se a tarefa for, na verdade, de outro colaborador
 (Marcão, Amanda, Ingrid, André), faça o **encaminhamento no parecer** dizendo de quem
