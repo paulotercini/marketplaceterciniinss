@@ -137,9 +137,12 @@ g) **Salvar o parecer em .docx, no máximo UMA página**, no padrão do escritó
      e atualizada** (o que foi resolvido sai, o que continua pendente permanece, o
      que surgiu entra). É o alerta que mantém o caso organizado e impede esquecer o
      que falta.
+   - **OBRIGATÓRIO, terminar com a linha "Próximo passo recomendado"** (ver CLAUDE.md,
+     "Encadeamento dos fluxos"), classificando o caso em **Pronto para `/inicial`**,
+     **Pronto para `/inicial-inss`** ou **Aguardando <documento/decisão>**.
 
 h) Retornar 1 linha de status: cliente, modo (completo ou complemento), conclusão
-   resumida, link do parecer, pendências em aberto.
+   resumida, link do parecer, pendências em aberto, **próximo passo recomendado**.
 
 ## 3.5 Porta de qualidade (revisar ANTES de gravar a conclusão e o parecer)
 Antes de gravar qualquer coisa, releia o que escreveu e só prossiga se passar nos três:
@@ -167,6 +170,11 @@ CNIS ou prazo a confirmar, consolidando as pendências de todos os clientes.
 - NÃO renomear nem apagar no Drive (só listar renomeações). NÃO enviar mensagens
   (só deixar prontas). NÃO usar Gmail salvo pedido explícito.
 - Apagar arquivos temporários locais que criar.
+- **Encadeamento (handoff)**, por padrão a triagem só diagnostica e recomenda o
+  próximo passo. Quando o Paulo pedir ("montar"/"seguir" ou pedido explícito) E o
+  caso estiver **Pronto** (sem pendência bloqueante), encadeie executando o fluxo
+  recomendado (`inicial` ou `inicial-inss`) para aquele cliente, reaproveitando o
+  parecer já gravado. Nunca encadeie havendo pendência bloqueante.
 
 ## Dependencias (necessarias no ambiente, inclusive no cowork)
 Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
