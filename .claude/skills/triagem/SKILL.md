@@ -58,12 +58,25 @@ b) **Entender a pendência** pelo `body` (entradas (P)/(D)/(M)/(I)/(A)/(C), mais
    anterior; não contrarie premissa de parecer anterior sem dizer expressamente
    por quê.
 
-c) **Ativar as skills certas** (ver "Mapa de ativação de skills" no CLAUDE.md).
-   Leia a(s) skill(s) do benefício e dos agentes/temas envolvidos em
-   `_base-conhecimento-inss/skills/`, e SEMPRE `base-precedentes-catalogo-vinculantes`
-   antes de afirmar qualquer tese. Rode as verificações automáticas obrigatórias
-   do CLAUDE.md que couberem (Tema 1124, decadência do art. 103, qualidade de
-   segurado, tutela de urgência, IN 128/2022 etc.).
+c) **Ativar e LER as skills certas (porta OBRIGATÓRIA, antes de qualquer tese).**
+   1. Nomeie o **benefício** pleiteado.
+   2. Resolva, pelo "Mapa de ativação de skills" do `CLAUDE.md`, os nomes EXATOS
+      das skills `base-*`/`ponte-*` desse benefício e dos agentes/temas envolvidos.
+      Se tiver dúvida sobre o nome, use **Grep/Glob em `_base-conhecimento-inss/
+      skills/`** para achar o arquivo certo. Nunca chute nome de skill nem invente.
+   3. **ABRA E LEIA, com a ferramenta Read, o `SKILL.md` de cada skill resolvida**
+      (e os arquivos em `references/` quando houver), ANTES de afirmar qualquer
+      coisa. SEMPRE leia `base-precedentes-catalogo-vinculantes` e o seu
+      `references/CATALOGO-*` antes de citar Tema, Súmula ou Enunciado; SEMPRE
+      `base-cnis-acerto-indicadores` ao analisar CNIS; SEMPRE
+      `base-documentos-comprobatorios-in128` para o checklist de documentos.
+   4. Toda tese, precedente, artigo e regra afirmada tem de vir de **uma skill lida
+      ou de um documento**, marcada `[CONFERIDO]`. O que não estiver em skill nem em
+      documento é "Não localizado" ou `[NÃO CONFIRMADO]`, jamais de memória.
+   5. No parecer e no status, registre a linha **"Skills consultadas: <lista>"**.
+   6. Rode as verificações automáticas obrigatórias do CLAUDE.md que couberem
+      (Tema 1124, decadência do art. 103, qualidade de segurado, tutela de urgência,
+      acumulação EC 103, EPI/ruído Tema 555, IN 128/2022 etc.).
 
 d) **Localizar a pasta do cliente** no Drive via `search_files`
    (`title contains 'NOME'` ou `fullText contains 'CPF'`) e listar arquivos
@@ -110,6 +123,18 @@ g) **Salvar o parecer** na subpasta `Claude` da pasta do cliente (criar com
 
 h) Retornar 1 linha de status: cliente, modo (completo ou complemento), conclusão
    resumida, link do parecer, pendências em aberto.
+
+## 3.5 Porta de qualidade (revisar ANTES de gravar a conclusão e o parecer)
+Antes de gravar qualquer coisa, releia o que escreveu e só prossiga se passar nos três:
+- **Português**, ortografia e acentuação corretas em TODO o texto, inclusive no
+  PARECER (não só na conclusão, que já tem trava). Sem dois pontos como separador
+  lógico, sem travessão, sem "não é X, é Y".
+- **Direito**, cada benefício, tese, artigo e precedente está ancorado em skill lida
+  ou em documento. Nenhum dado, número, data, Tema ou Súmula inventado. Precedente
+  não conferido foi removido ou marcado `[NÃO CONFIRMADO]`. Postura pró-segurado.
+- **Skills**, você de fato LEU `base-precedentes-catalogo-vinculantes` e a(s) skill(s)
+  do benefício (passo c). Se não leu, volte ao passo c antes de afirmar. A linha
+  "Skills consultadas" tem de existir no parecer.
 
 ## 4. Relatório final
 Tabela: Cliente | Modo | Conclusão | Parecer | Pendências em aberto. No topo,
