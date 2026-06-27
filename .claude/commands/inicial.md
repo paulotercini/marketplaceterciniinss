@@ -9,6 +9,10 @@ legenda P/M/I/D/A/C; limitacoes do Drive; **Modelos de peticao - Padrao Ouro**;
 nome + DDMMAAAA; estilo do escritorio). Gravacao automatica, com relatorio ao
 final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
 
+**Handoff da `/triagem`.** Se a triagem marcou "Pronto para /inicial", comece lendo
+o **parecer** e a secao **"Pendencias em aberto"** do cliente (subpasta `Claude`) como
+ponto de partida, em vez de refazer o diagnostico.
+
 ## 1. Acesso e carregamento
 - `python3 graph_bootstrap.py`.
 - Localize a tarefa do cliente no To Do (por nome/CPF) com `graph_client`

@@ -9,6 +9,10 @@ OBRIGATORIA**; nomenclatura nome + DDMMAAAA; estilo do escritorio) e a(s)
 skill(s) do beneficio (`ponte-*`, `base-*`). Gravacao automatica, com relatorio
 ao final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
 
+**Handoff da `/triagem`.** Se a triagem marcou "Pronto para /inicial-inss", comece
+lendo o **parecer** e a secao **"Pendencias em aberto"** do cliente (subpasta `Claude`)
+como ponto de partida, em vez de refazer o diagnostico.
+
 Diferenca para o `/inicial`: aqui o destino e o **Meu INSS** (administrativo), nao o
 Judiciario. Muda a subpasta, a numeracao/ordem dos arquivos e a peca (peticao
 administrativa de 1 folha, sem lei/decreto).

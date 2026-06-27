@@ -472,6 +472,28 @@ Comando em `.claude/commands/triagem.md`. Processa as tarefas atribuídas ao Pau
 vencendo **hoje**, cruza com o Drive, grava conclusão (C) e parecer, e entrega
 relatório consolidado. Gravação automática (sem aprovação prévia).
 
+## Encadeamento dos fluxos (handoff triagem → inicial/inicial-inss)
+
+Os três fluxos se compõem. A `/triagem` **diagnostica**, a `/inicial` e a
+`/inicial-inss` **montam a peça**, e a `base-revisao-peticao-aprofundada` roda
+**dentro** delas (não ao lado).
+
+**Linha obrigatória no fim de todo parecer e do relatório, "Próximo passo
+recomendado".** Classifique o caso em um dos três:
+
+- **Pronto para `/inicial`** (Judiciário), sem pendência bloqueante e via judicial
+  (ação a distribuir, ou administrativo já exaurido/indeferido).
+- **Pronto para `/inicial-inss`** (Meu INSS), sem pendência bloqueante e via
+  administrativa (requerimento ainda não protocolado).
+- **Aguardando**, falta documento ou decisão do Paulo, nomear exatamente o que falta.
+
+**Encadeamento automático (opcional, sob pedido).** Por padrão a triagem só
+diagnostica e recomenda. Quando o Paulo pedir (ex.: argumento "montar"/"seguir" ou
+pedido explícito) **e** o caso estiver **Pronto** (sem pendência bloqueante),
+encadeie executando o fluxo recomendado (`/inicial` ou `/inicial-inss`) para aquele
+cliente, reaproveitando o parecer e as "Pendências em aberto" já gravados. **Nunca
+encadeie** se houver pendência bloqueante, aponte o que falta e pare.
+
 ## Scripts utilitários
 
 - `graph_bootstrap.py` — renova token do Microsoft Graph.
