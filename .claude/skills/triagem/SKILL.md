@@ -80,11 +80,16 @@ c) **Ativar e LER as skills certas (porta OBRIGATÓRIA, antes de qualquer tese).
 
 d) **Localizar a pasta do cliente** no Drive via `search_files`
    (`title contains 'NOME'` ou `fullText contains 'CPF'`) e listar arquivos
-   (`parentId = '<pasta>'`). Ler os documentos relevantes com `read_file_content`,
-   seguindo a cadeia de leitura integral do CLAUDE.md (CNIS, PPP, rurais e médicos
-   têm leitura obrigatória da integralidade; documento de imagem só com OCR; em
-   dúvida ou rasura, perguntar ao Paulo). Se a pendência citar anexo da tarefa,
-   ler com `python3 todo_anexo.py "<list_id>" "<task_id>" "trecho"`.
+   (`parentId = '<pasta>'`). Anexo da tarefa lê-se com
+   `python3 todo_anexo.py "<list_id>" "<task_id>" "trecho"` (canal do To Do, sem o
+   limite de 10 MB do Drive; PDF grande baixa local e lê-se com a ferramenta Read).
+   **Cadeia de leitura obrigatória** (CLAUDE.md), mapear TODOS os documentos com
+   leitura INTEGRAL, **refazer da última para a primeira página (conferência)** com
+   **OCR em português**, e **identificar exatamente as folhas que não conseguiu ler**,
+   tentando outro método. CNIS, PPP, rurais e médicos têm leitura integral
+   obrigatória; dúvida ou rasura vira **alerta para o Paulo confirmar**. Na triagem
+   **NÃO pause**, REPORTE no parecer quantas páginas há, o que diz cada documento e o
+   resultado da conferência (e o que não foi lido).
 
 e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
    - Conferir se a documentação do benefício está correta e completa; faltando
@@ -99,20 +104,32 @@ e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
    - Apontar **renomeações sugeridas** (nome atual para nome correto), pois NÃO dá
      para renomear no Drive.
    - Precisando avisar o cliente, **redigir a mensagem pronta para copiar**.
+   - **Incapacidade** (B31/B91/B92, auxílio-acidente), verificar carência, qualidade
+     de segurado e **DII dentro do período de manutenção**, com alerta se a DII cair
+     fora, e checar **doença que isenta de carência**.
+   - **PCD**, identificar se aplica **IF-BrA** (LC 142) ou **IF-BrM** (BPC).
+   - **Documento a produzir**, procurar o modelo primeiro na **pasta do cliente** e
+     depois nas **Petições Ouro**; petição passa por `base-revisao-peticao-aprofundada`
+     antes de gerar; procuração pelo modelo `_Modelos de Procurações / Nova Procuração…`;
+     relatório médico pela espécie + MODELO OURO (Reginaldo Augusto Garcia), 1 folha.
+   - **Tarefa de outro colaborador** (Marcão, Amanda, Ingrid, André), fazer o
+     **encaminhamento no parecer** (de quem é e o que precisa fazer), sem executar
+     fora do escopo.
 
-f) **Gerar a CONCLUSÃO** objetiva, **máx. 4 linhas**, com achado e próximo passo.
-   NÃO iniciar com data ou prefixo (o script adiciona "DD.MM.AAAA (C): "). Nunca
-   inventar dados; faltando documento, dizer claramente. No modo complemento, a
-   conclusão registra só o que foi feito na nova data.
+f) **Gerar a CONCLUSÃO** **ultraenxuta, 2 a 3 linhas**, só o achado e o próximo passo,
+   leitura direta e sem enrolação. NÃO iniciar com data ou prefixo (o script adiciona
+   "DD.MM.AAAA (C): "). Nunca inventar; faltando documento, dizer claramente. No modo
+   complemento, registra só o que foi feito na nova data.
    `python3 todo_conclusao.py "<list_id>" "<task_id>" "<conclusão>"`
 
-g) **Salvar o parecer** na subpasta `Claude` da pasta do cliente (criar com
-   create_file mime `application/vnd.google-apps.folder` se não existir), título
-   `Parecer - <Cliente> - DD.MM.AAAA` (não sobrescreve o anterior, pois o Drive não
-   atualiza nem apaga; cada data é um arquivo novo). O parecer contém contexto do
-   benefício, checklist de documentos com faltantes em destaque, análise do CNIS,
-   pendências do histórico, lista de renomeações sugeridas e mensagem ao cliente
-   quando aplicável.
+g) **Salvar o parecer em .docx, no máximo UMA página**, no padrão do escritório
+   (gerar com `docx_escritorio.py`), na subpasta `Claude` da pasta do cliente (criar
+   se não existir), título `Parecer - <Cliente> - DD.MM.AAAA` (arquivo novo a cada
+   data; o Drive não atualiza nem apaga). Texto **enxuto e humano**, como o Paulo
+   escreveria. Antes de fechar, **revise nas skills** (toda tese ancorada em skill
+   lida ou documento, proibido inventar). Conteúdo, contexto do benefício, checklist
+   de documentos com faltantes em destaque, achados do CNIS, pendências do histórico,
+   lista de renomeações sugeridas e mensagem ao cliente quando aplicável.
    - **OBRIGATÓRIO em todo parecer, uma seção final "Pendências em aberto"**, em
      destaque, listando tudo o que ainda falta (ex.: falta RG, falta PPP da Cica,
      falta comprovante de residência, indicador de CNIS a corrigir, prazo a
