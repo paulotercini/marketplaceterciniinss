@@ -200,15 +200,51 @@ análise/peça:
   químicos/biológicos/cancerígenos na análise de PPP, pró-segurado.
 - **Acumulação de benefícios** sob o art. 24 da EC 103 quando houver mais de um
   benefício (calcular o abatimento antes de definir DER).
+- **Benefício por incapacidade (B31/B91/B92, auxílio-acidente)** — verificar SEMPRE
+  os três, **carência**, **qualidade de segurado** e **DII (data de início da
+  incapacidade) dentro do período de manutenção da qualidade de segurado**. Se a DII
+  cair **fora** do período de manutenção, **alertar em destaque** (risco de
+  indeferimento por perda da qualidade na data da incapacidade). Verificar também se
+  é **doença que isenta de carência** (art. 151 da Lei 8.213/91 e lista do
+  Ministério da Saúde/Previdência), o que muda a análise.
+- **PCD (LC 142, BPC deficiente)** — identificar qual instrumento de avaliação se
+  aplica, **IF-BrA** (avaliação para a LC 142, aposentadoria da pessoa com
+  deficiência) ou **IF-BrM** (modelo do BPC). Não confundir os dois.
 
 ### Padrão de documentos formais
 
 Petições, recursos e documentos formais saem em **.docx** no padrão do escritório
-(fonte Bookman Old Style 12, espaçamento 1,5, recuo de 2 cm no JEF e 5 cm no CRPS,
-timbre e rodapé), seguindo `base-peticao-previdenciaria-padrao-visual` e o MODELO
-OURO do benefício. Adapte a profundidade ao rito, enxuto no JEF, denso no rito
-ordinário e no CRPS. No PJe, referencie documento sempre por **ID**, nunca
-"conforme anexo". Análises e discussões intermediárias ficam no corpo da conversa.
+(gerar com `docx_escritorio.py`, fonte Bookman Old Style 12, espaçamento 1,5, recuo
+de 2 cm no JEF e 5 cm no CRPS, timbre e rodapé), seguindo
+`base-peticao-previdenciaria-padrao-visual` e o MODELO OURO do benefício. Adapte a
+profundidade ao rito, enxuto no JEF, denso no rito ordinário e no CRPS. No PJe,
+referencie documento sempre por **ID**, nunca "conforme anexo". Análises e
+discussões intermediárias ficam no corpo da conversa.
+
+**Revisão aprofundada ANTES de gerar.** Antes de gerar o texto de QUALQUER petição,
+rode a skill `base-revisao-peticao-aprofundada` sobre a minuta (5 níveis
+anti-alucinação + 5 camadas), corrija o sanável e só então produza o .docx. Citação
+não confirmada é removida, jamais inventada.
+
+**Procuração.** Use SEMPRE o modelo padrão do Drive, pasta `_Modelos de Procurações`,
+arquivo `Nova Procuração…`. Não redija procuração do zero.
+
+**Relatório médico (modelo).** Quando pedirem modelo de relatório médico, primeiro
+**identifique a espécie do benefício** (B94, LC 142, incapacidade B31/B91/B92, BPC) e
+a skill `base-modelo-relatorio-medico-*` correspondente, e siga o **MODELO OURO do
+escritório**, o relatório de **Reginaldo Augusto Garcia (CPF 259.294.728-07)** na
+pasta dele no Drive. O relatório ocupa **no máximo uma folha**, com conteúdo completo
+em **linguagem simples**, próprio para o médico preencher e assinar.
+
+**Encaminhamento a colaborador.** Se a tarefa for, na verdade, de outro colaborador
+(Marcão, Amanda, Ingrid, André), faça o **encaminhamento no parecer** dizendo de quem
+é e o que ele precisa fazer, em vez de executar fora do seu escopo.
+
+**Pareceres mais humanos e curtos.** O parecer sai em **.docx de no máximo uma
+página** no padrão, e a conclusão no To Do **ainda mais enxuta**, só o essencial,
+leitura direta e sem enrolação. Escreva com **tom humano e natural**, como o Paulo
+escreveria, sem soar robótico ou de IA, e sem deixar de aplicar o direito com rigor
+(toda tese ancorada em skill lida ou documento, nunca de memória).
 
 ## Doutrina do assistente — o que fazer em cada situação
 
@@ -410,17 +446,20 @@ documentos prontos para anexar**; nunca protocola/envia. Diferenças-chave:
 
 ## Saída padrão por cliente (no `/triagem` e em análises avulsas)
 
-- **Conclusão (C) no To Do** (`todo_conclusao.py`): objetiva, **máx. 4 linhas**,
-  com achado + próximo passo, **com acentuação correta**. **Posicionamento:** a
-  conclusão (C) entra no **topo do HISTÓRICO** — ABAIXO do cabeçalho fixo da
-  tarefa (`[TAREFA]`/`[SISTEMA]`/`[DER]` etc.) e ACIMA da entrada de data mais
-  recente. O `todo_conclusao.py` já faz isso automaticamente (insere antes da
-  primeira linha com data `DD.MM.AAAA`).
-- **Parecer completo** na subpasta **`Claude`** da pasta do cliente no Drive
-  (criar a subpasta se não existir), título `Parecer - <Cliente> - DD.MM.AAAA`,
-  contendo: contexto do benefício, checklist de documentos (com faltantes em
-  destaque), análise do CNIS, pendências do histórico, **lista de renomeações
-  sugeridas** e **mensagem pronta ao cliente** quando aplicável.
+- **Conclusão (C) no To Do** (`todo_conclusao.py`): **ultraenxuta**, no máximo 2 a 3
+  linhas, só o achado e o próximo passo, leitura direta e sem enrolação, **com
+  acentuação correta**. **Posicionamento**, a conclusão (C) entra no **topo do
+  HISTÓRICO**, ABAIXO do cabeçalho fixo da tarefa (`[TAREFA]`/`[SISTEMA]`/`[DER]`
+  etc.) e ACIMA da entrada de data mais recente. O `todo_conclusao.py` já faz isso
+  automaticamente (insere antes da primeira linha com data `DD.MM.AAAA`).
+- **Parecer em .docx, no máximo UMA página**, no padrão do escritório
+  (`docx_escritorio.py`), salvo na subpasta **`Claude`** da pasta do cliente (criar
+  se não existir), título `Parecer - <Cliente> - DD.MM.AAAA`. Conteúdo enxuto e
+  **humano**, contexto do benefício, checklist de documentos (faltantes em
+  destaque), achados do CNIS, pendências do histórico, **lista de renomeações
+  sugeridas** e **mensagem pronta ao cliente** quando aplicável, terminando com a
+  seção **"Pendências em aberto"**. Antes de fechar, **revise nas skills** (toda
+  tese ancorada em skill lida ou documento, proibido inventar).
 
 ## Fluxo `/triagem`
 

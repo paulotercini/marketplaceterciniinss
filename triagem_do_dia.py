@@ -17,6 +17,20 @@ from graph_client import list_lists, list_tasks, _req
 
 OUT = "triagem_hoje.json"
 
+# Listas de atendimento de cliente que entram na fila diaria (decisao do escritorio).
+# 'Aposentadorias Futuras' fica de fora (monitoramento de longo prazo, nao fila do dia).
+# Comparacao robusta: ignora o emoji inicial e compara o texto (minusculo).
+NOMES_CASO = {
+    "escritório", "tarefas com prazo", "judicial", "inss",
+    "pagamentos", "conselho de recursos", "marcos",
+}
+
+
+def _eh_lista_caso(nome):
+    import re
+    txt = re.sub(r"^[^0-9A-Za-zÀ-ÿ]+", "", nome or "").strip().lower()
+    return txt in NOMES_CASO
+
 
 def _checklist(lid, tid):
     try:
@@ -45,7 +59,14 @@ def main():
 
     selecionadas = []
     for l in list_lists():
-        for t in list_tasks(l["id"]):
+        if not _eh_lista_caso(l.get("displayName", "")):
+            continue
+        try:
+            tarefas = list_tasks(l["id"])
+        except Exception as e:  # lista lenta/instavel: pula em vez de travar tudo
+            print(f"[aviso] lista '{l.get('displayName')}' pulada: {e}", file=sys.stderr)
+            continue
+        for t in tarefas:
             if t.get("status") == "completed":
                 continue
             if parse_due(t) != alvo:
