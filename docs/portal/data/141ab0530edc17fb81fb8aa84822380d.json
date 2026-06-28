@@ -1,6 +1,6 @@
 {
   "nome": "Maria José da Silva Grandolfo",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "28/06/2026 às 20:33",
   "processos": [
     {
       "cpf": "00544478878",
@@ -10,6 +10,23 @@
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Maria José da Silva Grandolfo",
       "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    },
+    {
+      "lista": "🙋 Escritório",
+      "localizacao": "Em análise pelo escritório",
+      "titulo_tarefa": "Maria José da Silva Grandolfo",
+      "status": "Em atendimento pelo escritório",
       "proximo_evento": null,
       "timeline": [],
       "notas_publicas": [],
