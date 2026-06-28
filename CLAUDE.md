@@ -210,6 +210,13 @@ análise/peça:
 - **PCD (LC 142, BPC deficiente)** — identificar qual instrumento de avaliação se
   aplica, **IF-BrA** (avaliação para a LC 142, aposentadoria da pessoa com
   deficiência) ou **IF-BrM** (modelo do BPC). Não confundir os dois.
+- **BPC deficiente, Portaria Conjunta SPS/INSS/SNAS nº 2/2014** (essencial em LOAS,
+  ver `base-bpc-impedimento-longo-prazo`) — o impedimento de longo prazo é aferido
+  pela **conjugação da avaliação médica com a avaliação social**, pela TCQ (Tabela
+  Conclusiva de Qualificadores, qualificadores funcionais + contextuais). Nunca ler
+  a pontuação médica isolada; conjugá-la com a avaliação social. O uso de prótese
+  (ex.: AASI) e a "melhora" clínica não afastam a deficiência (avaliação
+  biopsicossocial, art. 20 §2º da LOAS e Lei 13.146/2015).
 
 ### Padrão de documentos formais
 
