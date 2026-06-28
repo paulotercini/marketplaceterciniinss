@@ -56,6 +56,8 @@ def _runs_md(paragraph, texto, nome=FONTE, tamanho=12, base_negrito=False, cor=N
     import re
     partes = re.split(r"\*\*(.+?)\*\*", texto)
     for i, parte in enumerate(partes):
+        if i % 2 == 0:
+            parte = parte.replace("**", "")  # remove marcador solto (Word nao entende **)
         if parte == "":
             continue
         neg = base_negrito or (i % 2 == 1)  # trechos capturados (impares) = negrito
@@ -141,14 +143,14 @@ class Peca:
     def enderecamento(self, texto):
         p = self.doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        _set_fonte(p.add_run(texto), negrito=True)
+        _runs_md(p, texto, base_negrito=True)
         self.doc.add_paragraph()
         return p
 
     def processo(self, texto, negrito=True):
         p = self.doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        _set_fonte(p.add_run(texto), negrito=negrito)
+        _runs_md(p, texto, base_negrito=negrito)
         self.doc.add_paragraph()
         return p
 
@@ -162,8 +164,8 @@ class Peca:
         shd.set(qn("w:color"), "auto")
         shd.set(qn("w:fill"), "000000")
         pPr.append(shd)
-        _set_fonte(p.add_run(" " + texto), tamanho=10, negrito=True,
-                   cor=RGBColor(0xFF, 0xFF, 0xFF))
+        _runs_md(p, " " + texto, tamanho=10, base_negrito=True,
+                 cor=RGBColor(0xFF, 0xFF, 0xFF))
         return p
 
     def paragrafo(self, texto, recuar=True, negrito=False, centralizado=False):
@@ -184,7 +186,7 @@ class Peca:
         p = self.doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         p.paragraph_format.left_indent = Twips(2268)
-        r = p.add_run(texto)
+        r = p.add_run(texto.replace("**", ""))  # citacao nao usa negrito embutido
         _set_fonte(r, tamanho=11)
         r.italic = True
         return p
@@ -193,7 +195,7 @@ class Peca:
         self.doc.add_paragraph()
         p = self.doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        _set_fonte(p.add_run(texto))
+        _runs_md(p, texto)
         self.doc.add_paragraph()
         return p
 
