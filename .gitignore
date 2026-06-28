@@ -6,3 +6,6 @@ __pycache__/
 *.pyc
 audit_excel/
 inicial_tmp/
+gdrive_tokens.json
+gdrive_oauth.json
+gdrive_device.json

@@ -501,6 +501,11 @@ encadeie** se houver pendência bloqueante, aponte o que falta e pare.
   `triagem_hoje.json`.
 - `todo_conclusao.py "<list_id>" "<task_id>" "texto"` — prepende conclusão (C).
 - `todo_anexo.py "<list_id>" "<task_id>" "trecho do nome"` — lê anexo da tarefa.
+- `gdrive_download.py <file_id> [destino]` — baixa arquivo do Drive por ID DIRETO
+  para o disco, **sem o limite de ~10 MB** do conector MCP (que trava arquivos
+  grandes por trafegar o conteúdo pelo contexto). Use para ler PDF de processo, CNIS
+  ou laudo acima de 10 MB, depois leia/renderize o arquivo local ou fatie com
+  `pdf_split.py`. Requer o token do Google (`gdrive_devflow.py`, ver `GDRIVE_SETUP.md`).
 
 ## Aprimoramento contínuo
 
