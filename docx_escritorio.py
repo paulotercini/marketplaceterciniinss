@@ -49,6 +49,20 @@ def _set_fonte(run, nome=FONTE, tamanho=12, negrito=False, cor=None):
     rfonts.set(qn("w:cs"), nome)
 
 
+def _runs_md(paragraph, texto, nome=FONTE, tamanho=12, base_negrito=False, cor=None):
+    """Adiciona o texto ao paragrafo interpretando **...** como negrito EMBUTIDO.
+    Use o negrito so no que for realmente principal, para destacar. Fora dos
+    marcadores, o texto segue `base_negrito`."""
+    import re
+    partes = re.split(r"\*\*(.+?)\*\*", texto)
+    for i, parte in enumerate(partes):
+        if parte == "":
+            continue
+        neg = base_negrito or (i % 2 == 1)  # trechos capturados (impares) = negrito
+        _set_fonte(paragraph.add_run(parte), nome=nome, tamanho=tamanho,
+                   negrito=neg, cor=cor)
+
+
 class Peca:
     def __init__(self, recuo="jef"):
         doc = Document()
@@ -157,13 +171,13 @@ class Peca:
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER if centralizado else WD_ALIGN_PARAGRAPH.JUSTIFY
         if recuar and not centralizado:
             p.paragraph_format.first_line_indent = self.recuo
-        _set_fonte(p.add_run(texto), negrito=negrito)
+        _runs_md(p, texto, base_negrito=negrito)
         return p
 
     def item(self, texto):
         p = self.doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-        _set_fonte(p.add_run(texto))
+        _runs_md(p, texto)
         return p
 
     def citacao(self, texto):
