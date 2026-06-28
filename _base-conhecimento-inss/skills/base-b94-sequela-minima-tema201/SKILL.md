@@ -1,13 +1,25 @@
 ---
 name: base-b94-sequela-minima-tema201
-description: "Sequela mínima e auxílio-acidente B94 pelo Tema 201 TNU, redução parcial mesmo pequena, exigência de demonstração funcional, Súmula 88 e 89 TNU, Tema 416 STJ e estratégia probatória pró-segurado contra rejeição por insignificância. Use SEMPRE que mencionar sequela mínima B94, redução pequena, Tema 201 TNU, sequela funcional pequena, perda parcial mínima, indeferimento por insignificância, B94 sequela leve, redução habitual mínima, demonstração funcional B94, prova de redução leve, sequela permanente leve, sequela mínima permanente, perda funcional pequena admite B94, redução desprezível B94, art. 86 redução parcial, Súmula 88 TNU mínima, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-integracao-salario-beneficio-tema862, base-b94-cessacao-acumulacao-vedacao e base-b94-nexo-acidentario-ntep."
+description: "Sequela mínima e auxílio-acidente B94 com base no art. 86 da Lei 8.213/91 e no Tema 416 STJ, redução parcial mesmo pequena, exigência de demonstração funcional, Anexo III exemplificativo (Súmula 88 TNU) e estratégia probatória pró-segurado contra rejeição por insignificância. ATENÇÃO o Tema 201 TNU é RESTRITIVO (o contribuinte individual não faz jus ao B94) e NÃO ampara sequela mínima. Use SEMPRE que mencionar sequela mínima B94, redução pequena, Tema 201 TNU, sequela funcional pequena, perda parcial mínima, indeferimento por insignificância, B94 sequela leve, redução habitual mínima, demonstração funcional B94, prova de redução leve, sequela permanente leve, sequela mínima permanente, perda funcional pequena admite B94, redução desprezível B94, art. 86 redução parcial, Súmula 88 TNU mínima, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-integracao-salario-beneficio-tema862, base-b94-cessacao-acumulacao-vedacao e base-b94-nexo-acidentario-ntep."
 ---
 
 # Sequela Mínima e B94
 
 ## Escopo
 
-Skill pró-segurado sobre sequela mínima e auxílio-acidente, Tema 201 TNU e admissão de redução pequena desde que demonstrada.
+Skill pró-segurado sobre sequela mínima e auxílio-acidente — admissão de redução pequena, desde que demonstrada funcionalmente.
+
+## ⚠️ CORREÇÃO — não citar o Tema 201/TNU como amparo de sequela mínima
+
+O Tema 201/TNU **NÃO trata de sequela mínima**. Sua tese, conforme o catálogo
+interno (`base-precedentes-catalogo-vinculantes`, `CATALOGO-TEMAS-TNU.md`) e a
+fonte oficial (CJF/TNU), é **RESTRITIVA** — "o contribuinte individual não faz jus
+ao auxílio-acidente, diante de expressa exclusão legal". Logo, o Tema 201/TNU só
+serve para **confirmar que o autor é segurado com direito ao B94** (empregado,
+trabalhador avulso ou segurado especial), **NUNCA como fundamento de concessão por
+redução pequena**. O amparo correto da tese de sequela mínima é o **art. 86 da Lei
+8.213/91** (basta a REDUÇÃO da capacidade), o **Tema 416/STJ** (redução, não
+incapacidade) e o **Anexo III exemplificativo** (Súmula 88/TNU).
 
 ## Marco normativo central
 
@@ -25,11 +37,15 @@ TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefício
 
 ## Marco jurisprudencial
 
-### Tema 201 TNU
+### Tema 201 TNU (RESTRITIVO — atenção)
 
-Sequela mínima.
+Tese real. O contribuinte individual NÃO faz jus ao auxílio-acidente, diante de expressa exclusão legal. NÃO ampara sequela mínima — usar só para confirmar que o autor é segurado com direito (empregado, avulso ou especial).
 
 Fonte oficial em https://www.cjf.jus.br
+
+### Art. 86 da Lei 8.213/91 + Tema 416 STJ (amparo correto da sequela mínima)
+
+Basta a REDUÇÃO da capacidade para o trabalho habitual (art. 86); o Tema 416/STJ confirma que o B94 exige redução, não incapacidade.
 
 ### Súmula 88 TNU
 
@@ -51,7 +67,7 @@ Segundo, exigência é demonstração funcional.
 
 Terceiro, sequela permanente independe de severidade.
 
-Quarto, Tema 201 TNU é vinculante na matéria.
+Quarto, o amparo é o art. 86 da Lei 8.213/91 e o Tema 416/STJ (o Tema 201/TNU é restritivo e não se aplica à sequela mínima).
 
 ## Aplicação pró-segurado
 
@@ -61,11 +77,11 @@ Segundo, redução habitual mínima.
 
 Terceiro, perícia detalhada.
 
-Quarto, fundamentação Súmula 88 e Tema 201.
+Quarto, fundamentação no art. 86 da Lei 8.213/91, na Súmula 88/TNU (Anexo III exemplificativo) e no Tema 416/STJ.
 
 ## Cenários pró-segurado
 
-Cenário A, dedo com perda parcial mínima. B94. Tema 201 TNU.
+Cenário A, dedo com perda parcial mínima. B94 (art. 86 da Lei 8.213/91 + Tema 416/STJ).
 
 Cenário B, joelho com sequela leve. B94.
 
@@ -75,7 +91,7 @@ Cenário D, ofensa estética leve mas permanente. B94.
 
 ## Alertas
 
-Primeiro, INSS frequentemente indefere por insignificância. Tema 201 refuta.
+Primeiro, INSS frequentemente indefere por insignificância. Refuta-se com o art. 86 da Lei 8.213/91 (basta redução) e o Tema 416/STJ; o Anexo III é exemplificativo.
 
 Segundo, sequela leve permanente é suficiente.
 

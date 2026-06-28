@@ -2,9 +2,9 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 201 TNU
+### Tema 201 TNU (RESTRITIVO)
 
-Sequela mínima admitida.
+Tese real. O contribuinte individual NÃO faz jus ao auxílio-acidente (exclusão legal). NÃO ampara sequela mínima — ver o art. 86 da Lei 8.213/91 e o Tema 416/STJ.
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -40,7 +40,7 @@ Fonte oficial em https://www.in.gov.br
 
 Argumento adversário. Severidade.
 
-Refutação. Tema 201 TNU admite mínima.
+Refutação. O art. 86 da Lei 8.213/91 (basta redução) e o Tema 416/STJ admitem a sequela mínima; Anexo III exemplificativo.
 
 ### Argumento 2 — Sem severidade
 
@@ -112,7 +112,7 @@ IBDP.
 
 Primeiro, perícia técnica.
 
-Segundo, fundamentação Tema 201 TNU.
+Segundo, fundamentação no art. 86 da Lei 8.213/91 e no Tema 416/STJ.
 
 Terceiro, recurso ou ação.
 
@@ -124,7 +124,7 @@ Sexto, integração com SB.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 201 TNU.
+Acompanhar a jurisprudência do TJSP e da TNU sobre sequela mínima (sem apoiar-se no Tema 201/TNU, que é restritivo).
 
 Revalidar Súmulas 88 e 89.
 

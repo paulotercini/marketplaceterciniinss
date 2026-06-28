@@ -1,7 +1,10 @@
-import json, urllib.parse, urllib.request, pathlib
+import json, urllib.parse, urllib.request, pathlib, time
 
 GRAPH = "https://graph.microsoft.com/v1.0"
 TOKENS_PATH = pathlib.Path("graph_tokens.json")
+
+TRANSIENT_STATUS = {429, 500, 502, 503, 504}
+MAX_RETRIES = 5
 
 
 def _token():
@@ -11,18 +14,35 @@ def _token():
 def _req(method, path, body=None):
     url = path if path.startswith("http") else f"{GRAPH}{path}"
     data = json.dumps(body).encode("utf-8") if body is not None else None
-    req = urllib.request.Request(
-        url,
-        data=data,
-        method=method,
-        headers={
-            "Authorization": f"Bearer {_token()}",
-            "Content-Type": "application/json",
-        },
-    )
-    with urllib.request.urlopen(req) as r:
-        raw = r.read()
-        return json.loads(raw) if raw else None
+    last_exc = None
+    for attempt in range(MAX_RETRIES):
+        req = urllib.request.Request(
+            url,
+            data=data,
+            method=method,
+            headers={
+                "Authorization": f"Bearer {_token()}",
+                "Content-Type": "application/json",
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=120) as r:
+                raw = r.read()
+                return json.loads(raw) if raw else None
+        except urllib.error.HTTPError as e:
+            last_exc = e
+            if e.code in TRANSIENT_STATUS and attempt < MAX_RETRIES - 1:
+                time.sleep(2 ** attempt)
+                continue
+            raise
+        except (urllib.error.URLError, TimeoutError) as e:
+            last_exc = e
+            if attempt < MAX_RETRIES - 1:
+                time.sleep(2 ** attempt)
+                continue
+            raise
+    if last_exc:
+        raise last_exc
 
 
 def list_lists():
