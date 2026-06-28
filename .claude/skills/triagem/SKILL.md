@@ -77,6 +77,10 @@ c) **Ativar e LER as skills certas (porta OBRIGATÓRIA, antes de qualquer tese).
    6. Rode as verificações automáticas obrigatórias do CLAUDE.md que couberem
       (Tema 1124, decadência do art. 103, qualidade de segurado, tutela de urgência,
       acumulação EC 103, EPI/ruído Tema 555, IN 128/2022 etc.).
+   7. **Pesquisa de jurisprudência na web (sempre ativa)** — além do catálogo, use
+      `WebSearch` para **achar julgados FAVORÁVEIS** à tese, confirme na fonte oficial
+      com `WebFetch` quando abrir (CJF/STF/Planalto) e marque `[CONFERIDO]`/`[NÃO
+      CONFIRMADO]` (ver CLAUDE.md, "Pesquisa de jurisprudência na web"). Nada inventado.
 
 d) **Localizar a pasta do cliente** no Drive via `search_files`
    (`title contains 'NOME'` ou `fullText contains 'CPF'`) e listar arquivos

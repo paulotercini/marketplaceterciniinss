@@ -218,6 +218,29 @@ análise/peça:
   (ex.: AASI) e a "melhora" clínica não afastam a deficiência (avaliação
   biopsicossocial, art. 20 §2º da LOAS e Lei 13.146/2015).
 
+### Pesquisa de jurisprudência na web (SEMPRE ativa, pró-segurado)
+
+Em toda `/triagem` e `/inicial`, além de conferir as citações, **pesquise ATIVAMENTE
+julgados FAVORÁVEIS à tese do segurado** para fortalecer o texto e citar decisões que
+ajudem na procedência. É rotina, não só confirmação. Ordem:
+
+1. **Catálogo interno** primeiro (`base-precedentes-catalogo-vinculantes`), curado e rápido.
+2. **WebSearch** do tema/tese (ex.: "TNU impedimento de longo prazo BPC aparelho auditivo",
+   "STJ Tema 416 auxílio-acidente sequela mínima", "TRF3 PPP ruído NEN insalubridade")
+   para achar temas, súmulas e acórdãos favoráveis e os links oficiais.
+3. **WebFetch na FONTE OFICIAL** quando o link abre, para ler a tese/ementa e marcar
+   `[CONFERIDO]`. **Abrem** o CJF (temas da TNU), o STF e o Planalto (lei), e em geral
+   páginas de documento direto. **NÃO abrem** (bloqueio 403/503) os portais de busca
+   STJ SCON, TRF3 jurisprudência e eproc TNU, e os acórdãos do `web.trf3.jus.br`.
+4. **Honestidade radical.** Só cite como `[CONFERIDO]` o que está no catálogo OU foi lido
+   na fonte oficial. Julgado favorável que só apareceu em fonte secundária (ex.: Jusbrasil)
+   ou em portal bloqueado entra como `[NÃO CONFIRMADO, conferir na fonte]`, com o que se
+   tem (tribunal, tema/processo, ano) para o Paulo confirmar. **Nunca invente ementa,
+   número de processo, relator ou data.** Cite só jurisprudência que **favorece o segurado**.
+5. O `WebSearch` complementa, não substitui a busca manual no portal oficial (é geográfica
+   e não exaustiva). Os achados confirmados entram na peça; os não confirmados, como
+   sugestão a verificar, registrada no parecer.
+
 ### Padrão de documentos formais
 
 Petições, recursos e documentos formais saem em **.docx** no padrão do escritório
