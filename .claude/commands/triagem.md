@@ -40,9 +40,11 @@ Grava `triagem_hoje.json`, leia-o.
   grave a mesma conclusão (C) em cada tarefa referenciando a outra, evitando conflito
   e capturando **litispendência/duplicidade**. O script imprime a seção "CLIENTES COM
   MÚLTIPLAS TAREFAS".
-- **Já triado hoje (evitar conflito no cowork).** Se `ja_triado_hoje` for `true`, já
-  há conclusão (C) de hoje no corpo (outra execução/sessão já tratou). Não reprocesse;
-  no máximo complemente o que faltar, sem duplicar.
+- **Já triado hoje (evitar conflito, sempre COMPLEMENTAR).** Se `ja_triado_hoje` for
+  `true`, já há conclusão (C) de hoje no corpo (outra execução/sessão já tratou). NÃO
+  refaça do zero e NÃO duplique, mas também **NÃO ignore**, LEIA o que já foi gravado e
+  **COMPLEMENTE** só o que ainda falta ou o que a entrada mais nova pede, somando ao que
+  existe. Nada a acrescentar, registre que já estava triado e siga, sem regravar.
 
 ## 3. Processar CADA tarefa (gravação automática, sem aprovação prévia)
 Para não sobrecarregar o contexto, delegue cada cliente a um subagente

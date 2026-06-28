@@ -45,10 +45,14 @@ Grava `triagem_hoje.json`, leia-o.
   **litispendência/duplicidade** (pedido administrativo e ação judicial sobre o mesmo
   benefício, como manda a verificação do Tema 1124/Tema 350). O relatório do script já
   imprime a seção "CLIENTES COM MÚLTIPLAS TAREFAS", confira-a.
-- **Já triado hoje (evitar conflito no cowork).** Se `ja_triado_hoje` for `true`, já
-  existe conclusão (C) com a data de hoje no corpo, sinal de que outra execução/sessão
-  do cowork já tratou o cliente. **Não reprocesse**; no máximo leia o que foi feito e
-  complemente o que faltar, sem sobrescrever nem duplicar Drive.
+- **Já triado hoje (evitar conflito, sempre COMPLEMENTAR).** Se `ja_triado_hoje` for
+  `true`, já existe conclusão (C) com a data de hoje no corpo, sinal de que outra
+  execução/sessão do cowork já tratou o cliente. NÃO refaça do zero e NÃO duplique
+  (nem nova (C) repetida, nem parecer/arquivo repetido no Drive). Mas também **NÃO
+  ignore**, esse é o ponto, LEIA a conclusão (C) e o parecer já gravados e
+  **COMPLEMENTE** apenas o que ainda falta ou o que a entrada mais nova pede, somando
+  ao que existe (mesma lógica do modo COMPLEMENTO do passo a). Não havendo nada a
+  acrescentar, registre que já estava triado e siga, sem regravar.
 
 ## 3. Processar CADA tarefa (gravação automática, sem aprovação prévia)
 Para não sobrecarregar o contexto, delegue cada cliente a um subagente
