@@ -20,7 +20,8 @@ A skill foi criada na Onda 37 (v1.27.0) a partir do material consolidado pelo es
 | Temas Representativos de Controvérsia da TNU | 156 | `references/CATALOGO-TEMAS-TNU.md` |
 | Enunciados do CRPS | 18 | `references/CATALOGO-ENUNCIADOS-CRPS.md` |
 | Súmulas da TNU (em expansão) | 1 | `references/CATALOGO-SUMULAS-TNU.md` |
-| **Total geral** | **291** | |
+| PEDILEFs Paradigmáticos TNU (não repetitivos) | 1 | `references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md` |
+| **Total geral** | **292** | |
 
 ## PROTOCOLO DE USO OBRIGATÓRIO
 
