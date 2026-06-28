@@ -36,6 +36,13 @@ ponto de partida, em vez de refazer o diagnostico.
 - Marque cada citacao como `[CONFERIDO]` ou `[NAO CONFIRMADO - revisar]`. **Nunca**
   mantenha citacao nao verificada nem invente jurisprudencia. Corrija numeros/teses
   trocados.
+- **Pesquisa ATIVA de julgados favoraveis (nao so confirmacao).** Use `WebSearch` para
+  encontrar temas, sumulas e acordaos FAVORAVEIS a tese e fortalecer a peca, e citar
+  decisoes que ajudem na procedencia. Confirme na fonte oficial com `WebFetch` quando
+  abrir (CJF/STF/Planalto), os portais STJ SCON, TRF3 e eproc TNU NAO abrem (403/503).
+  Favoravel confirmado entra como `[CONFERIDO]`, favoravel nao confirmado como
+  `[NAO CONFIRMADO]` (lead para o Paulo conferir), nunca inventado. Ver CLAUDE.md,
+  "Pesquisa de jurisprudencia na web".
 
 ## 4. Leitura adversaria (red-team)
 - Simule a contestacao do INSS/procuradoria. Cheque se a inicial antecipa cada
