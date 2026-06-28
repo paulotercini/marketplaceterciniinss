@@ -207,6 +207,73 @@ class Peca:
         p2.alignment = WD_ALIGN_PARAGRAPH.CENTER
         _set_fonte(p2.add_run("OAB/SP 331.110"), negrito=True)
 
-    def salvar(self, caminho):
+    def salvar(self, caminho, encolher=True):
         self.doc.save(caminho)
+        if encolher:
+            _encolher_docx(caminho)
         return caminho
+
+
+# Partes que o python-docx inclui no template padrao mas que so incham o .docx
+# (o stylesWithEffects e uma copia legada do styles.xml; o thumbnail e dispensavel).
+# Removidas com limpeza das referencias para o upload base64 nao falhar por tamanho.
+_PARTES_DESCARTAVEIS = ("word/stylesWithEffects.xml", "docProps/thumbnail.jpeg",
+                        "docProps/thumbnail.emf", "docProps/thumbnail.wmf")
+
+
+def _encolher_docx(caminho):
+    """Reescreve o .docx sem as partes descartaveis e suas referencias.
+
+    E uma operacao best-effort e SEGURA, valida o resultado abrindo com python-docx
+    e, em qualquer falha, preserva o arquivo original (nunca devolve docx corrompido).
+    """
+    import os
+    import zipfile
+    import re as _re
+    try:
+        with zipfile.ZipFile(caminho, "r") as zin:
+            nomes = zin.namelist()
+            descartar = [n for n in nomes if n in _PARTES_DESCARTAVEIS]
+            if not descartar:
+                return caminho  # nada a fazer
+            itens = {n: zin.read(n) for n in nomes if n not in descartar}
+
+        # remove os Override/Default do [Content_Types].xml apontando para as partes
+        ct = "[Content_Types].xml"
+        if ct in itens:
+            txt = itens[ct].decode("utf-8")
+            for parte in descartar:
+                alvo = "/" + parte
+                txt = _re.sub(r"<Override[^>]*PartName=\"" + _re.escape(alvo)
+                              + r"\"[^>]*/>", "", txt)
+            txt = _re.sub(r"<Default[^>]*Extension=\"(jpeg|emf|wmf)\"[^>]*/>", "", txt)
+            itens[ct] = txt.encode("utf-8")
+
+        # remove as Relationship que referenciam as partes (em qualquer .rels)
+        alvos_rel = {parte.split("/")[-1] for parte in descartar}
+        alvos_rel |= {parte for parte in descartar}
+        for nome in list(itens):
+            if nome.endswith(".rels"):
+                txt = itens[nome].decode("utf-8")
+                novo = _re.sub(
+                    r"<Relationship[^>]*Target=\"[^\"]*"
+                    r"(stylesWithEffects\.xml|thumbnail\.(jpeg|emf|wmf))\"[^>]*/>",
+                    "", txt)
+                itens[nome] = novo.encode("utf-8")
+
+        tmp = caminho + ".tmp"
+        with zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zout:
+            for nome, dados in itens.items():
+                zout.writestr(nome, dados)
+
+        # valida antes de substituir
+        Document(tmp)
+        os.replace(tmp, caminho)
+    except Exception:
+        try:
+            if os.path.exists(caminho + ".tmp"):
+                os.remove(caminho + ".tmp")
+        except OSError:
+            pass
+        # mantem o arquivo original intacto
+    return caminho
