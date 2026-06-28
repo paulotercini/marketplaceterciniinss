@@ -21,8 +21,9 @@ Google. Setup uma vez.
    adicione a conta Google do escritório (a dona dos arquivos). Deixe o app em
    **modo de teste** (não precisa de verificação para usuários de teste).
 4. **APIs e Serviços → Credenciais → Criar credenciais → ID do cliente OAuth**, tipo
-   de aplicativo **TVs e dispositivos com entrada limitada**. Copie o **client_id** e
-   o **client_secret**.
+   de aplicativo **Aplicativo para computador** (Desktop app). Copie o **client_id**
+   e o **client_secret**. (O tipo "TVs e dispositivos com entrada limitada" NÃO serve,
+   o device flow do Google não aceita escopos do Drive.)
 
 ## 2. Guardar as credenciais (não vão para o Git)
 
@@ -34,19 +35,23 @@ Crie na raiz do projeto o arquivo `gdrive_oauth.json` (já está no `.gitignore`
 
 (Ou exporte `GDRIVE_CLIENT_ID` e `GDRIVE_CLIENT_SECRET` como variáveis de ambiente.)
 
-## 3. Fazer o login (uma vez, device flow)
+## 3. Fazer o login (uma vez, authorization code)
+
+O Drive não funciona com device flow (o Google rejeita o escopo), então usa-se o
+fluxo de código de autorização, que funciona pelo celular.
 
 ```
-python3 gdrive_devflow.py start
+python3 gdrive_authcode.py url
 ```
 
-Mostra uma URL (google.com/device) e um código. Abra a URL, digite o código, **faça
-login com a conta Google do escritório** e autorize. Como o app está em modo de
-teste, aparece um aviso de "app não verificado", prossiga como usuário de teste.
-Depois:
+Mostra uma URL. Abra no navegador, **faça login com a conta Google do escritório** e
+autorize (como o app está em modo de teste, aparece o aviso de "app não verificado",
+prossiga como usuário de teste). O navegador será redirecionado para
+`http://localhost/?code=...` e dará "não foi possível acessar", **isso é normal**.
+Copie a **URL inteira** da barra de endereço. Depois:
 
 ```
-python3 gdrive_devflow.py poll
+python3 gdrive_authcode.py exchange "<URL_colada_ou_code>"
 ```
 
 Grava o `gdrive_tokens.json` (gitignored). A partir daí o token se renova sozinho.
