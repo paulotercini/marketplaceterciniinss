@@ -89,6 +89,8 @@ def montar_corpo(old, entry, ctype="text"):
 def prepend(list_id, task_id, texto):
     hoje = datetime.now(TZ_BR).strftime("%d.%m.%Y")
     texto = texto.strip()
+    # To Do e texto puro: remove marcador markdown '**' que apareceria literalmente.
+    texto = texto.replace("**", "")
 
     # Trava de acentuacao: conclusao longa em pt-BR sempre tem algum acento.
     # Se vier sem nenhum, recusa para forcar a reescrita correta.

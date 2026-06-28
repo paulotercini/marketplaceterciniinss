@@ -231,8 +231,11 @@ discussões intermediárias ficam no corpo da conversa.
 **Negrito nos textos em Word (parecer e peça).** Destaque com **negrito** apenas o
 que for **realmente principal** (o benefício, a tese central, o pedido, a data ou o
 dado decisivo), nunca o texto todo. O `docx_escritorio.py` interpreta `**...**` como
-negrito embutido dentro do parágrafo (em `paragrafo` e `item`), use com parcimônia,
-só para o leitor achar o essencial. Vale para `/triagem`, `/inicial` e `/inicial-inss`.
+negrito embutido no parágrafo, use com parcimônia, só para o leitor achar o essencial.
+Vale para `/triagem`, `/inicial` e `/inicial-inss`. **Atenção:** o `**` só vira
+negrito no `.docx` gerado pelo `docx_escritorio.py` (marcador solto é removido). NÃO
+use `**` na conclusão (C) do To Do nem em Google Doc, ali ele apareceria literalmente
+(o `todo_conclusao.py` remove o `**` por segurança). O Word não entende markdown.
 
 **Revisão aprofundada ANTES de gerar.** Antes de gerar o texto de QUALQUER petição,
 rode a skill `base-revisao-peticao-aprofundada` sobre a minuta (5 níveis
