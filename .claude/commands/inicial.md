@@ -18,6 +18,13 @@ ponto de partida, em vez de refazer o diagnostico.
 - Localize a tarefa do cliente no To Do (por nome/CPF) com `graph_client`
   (`list_lists`/`list_tasks`); use a tarefa ATIVA. Extraia list_id, task_id e
   **leia TODAS as instrucoes do corpo** (historico inteiro), checklist e anexos.
+- **Procure TODAS as tarefas do mesmo cliente em TODAS as listas** (por CPF e por
+  nome), nao so a que originou o pedido. E comum o mesmo cliente ter tarefa na lista
+  **INSS** e outra na **Judicial**. Leia todas e cruze antes de montar a peca, isso
+  evita conflito e capta **litispendencia/duplicidade** (acao judicial e requerimento
+  administrativo sobre o mesmo beneficio). Use `python3 triagem_do_dia.py`
+  (`outras_tarefas`) ou `graph_client`. Havendo tarefa paralela, **sinalize em
+  destaque** e ajuste a estrategia.
 
 ## 2. Leitura integral (cadeia obrigatoria)
 - Localize a pasta do cliente no Drive e **leia a INTEGRALIDADE** de cada documento

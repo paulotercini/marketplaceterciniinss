@@ -21,6 +21,13 @@ administrativa de 1 folha, sem lei/decreto).
 - `python3 graph_bootstrap.py`.
 - Localize a tarefa do cliente no To Do (por nome/CPF) com `graph_client`; use a
   tarefa ATIVA. Leia TODAS as instrucoes do corpo (historico), checklist e anexos.
+- **Procure TODAS as tarefas do mesmo cliente em TODAS as listas** (por CPF e por
+  nome). O mesmo cliente costuma ter tarefa na lista **INSS** e outra na **Judicial**.
+  Leia todas e cruze antes de montar o protocolo, isso evita conflito e capta
+  **litispendencia/duplicidade** (requerimento administrativo enquanto corre acao
+  judicial sobre o mesmo beneficio). Use `python3 triagem_do_dia.py`
+  (`outras_tarefas`) ou `graph_client`. Havendo via judicial paralela, **sinalize em
+  destaque** e reavalie se o protocolo administrativo e mesmo o caminho.
 - Identifique o **beneficio pretendido** e a **DER pretendida**.
 
 ## 2. Leitura integral (cadeia obrigatoria)

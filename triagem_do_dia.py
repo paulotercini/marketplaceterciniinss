@@ -2,6 +2,14 @@
 data alvo (default: hoje em horario de Brasilia) e grava em triagem_hoje.json os
 dados necessarios para a triagem (corpo, checklist e metadados dos anexos).
 
+Alem disso, monta um INDICE DE CLIENTES cruzando TODAS as listas de caso, para
+detectar quando o mesmo cliente tem MAIS DE UMA tarefa (ex.: uma na lista INSS e
+outra na lista Judicial). Cada tarefa selecionada carrega o campo
+`outras_tarefas` com as demais tarefas ativas do mesmo cliente (em qualquer
+lista), e o campo `ja_triado_hoje` indicando se ja existe conclusao (C) com a
+data de hoje no corpo (sinal de que outra execucao/sessao ja tratou o cliente,
+para evitar conflito/retrabalho no cowork).
+
 Reaproveita a logica de 'atribuida a Paulo' e parse de data de triagem.py.
 
 Uso:
@@ -9,7 +17,9 @@ Uso:
     python3 triagem_do_dia.py 13/06/2026 # data especifica
 """
 import json
+import re
 import sys
+import unicodedata
 from datetime import datetime
 
 from triagem import TZ_BR, parse_due, is_paulo_task, last_author
@@ -17,19 +27,63 @@ from graph_client import list_lists, list_tasks, _req
 
 OUT = "triagem_hoje.json"
 
-# Listas de atendimento de cliente que entram na fila diaria (decisao do escritorio).
-# 'Aposentadorias Futuras' fica de fora (monitoramento de longo prazo, nao fila do dia).
+# Listas de atendimento de cliente que entram na FILA DIARIA (decisao do escritorio).
 # Comparacao robusta: ignora o emoji inicial e compara o texto (minusculo).
 NOMES_CASO = {
     "escritório", "tarefas com prazo", "judicial", "inss",
     "pagamentos", "conselho de recursos", "marcos",
 }
 
+# Listas varridas para o INDICE DE CLIENTES (cruzamento entre listas). Por ora,
+# as mesmas listas de caso, ja cobrem o cenario central (mesmo cliente na INSS e na
+# Judicial). 'Aposentadorias Futuras' fica de fora por desempenho (lista grande de
+# monitoramento de longo prazo); inclua aqui se quiser cruzar tambem com ela.
+NOMES_INDICE = set(NOMES_CASO)
+
+
+def _norm_lista(nome):
+    return re.sub(r"^[^0-9A-Za-zÀ-ÿ]+", "", nome or "").strip().lower()
+
 
 def _eh_lista_caso(nome):
-    import re
-    txt = re.sub(r"^[^0-9A-Za-zÀ-ÿ]+", "", nome or "").strip().lower()
-    return txt in NOMES_CASO
+    return _norm_lista(nome) in NOMES_CASO
+
+
+def _eh_lista_indice(nome):
+    return _norm_lista(nome) in NOMES_INDICE
+
+
+def _cpf_de(title):
+    """Extrai o CPF (11 digitos) do titulo, normalmente apos '#'."""
+    m = re.search(r"#\s*([\d.\-]{11,18})", title or "")
+    if not m:
+        return None
+    dig = re.sub(r"\D", "", m.group(1))
+    return dig if len(dig) == 11 else None
+
+
+def _norm_nome(title):
+    """Nome normalizado (sem acento, sem CPF, minusculo) para casar clientes sem CPF."""
+    txt = re.sub(r"#.*$", "", title or "")            # remove o CPF e o que vier depois
+    txt = re.sub(r"^[^0-9A-Za-zÀ-ÿ]+", "", txt)        # remove emoji inicial
+    txt = unicodedata.normalize("NFKD", txt).encode("ascii", "ignore").decode()
+    txt = re.sub(r"[^A-Za-z0-9 ]", " ", txt).lower()
+    return re.sub(r"\s+", " ", txt).strip()
+
+
+def _chave_cliente(title):
+    """Chave estavel do cliente: CPF quando houver, senao o nome normalizado."""
+    cpf = _cpf_de(title)
+    if cpf:
+        return "cpf:" + cpf
+    nome = _norm_nome(title)
+    return ("nome:" + nome) if nome else None
+
+
+def _tem_conclusao_hoje(body, alvo):
+    """True se o corpo ja traz uma conclusao (C) com a data alvo (DD.MM.AAAA)."""
+    d = alvo.strftime("%d.%m.%Y")
+    return bool(re.search(re.escape(d) + r"\s*\(C\)", body or ""))
 
 
 def _checklist(lid, tid):
@@ -57,14 +111,41 @@ def main():
     else:
         alvo = datetime.now(TZ_BR).date()
 
-    selecionadas = []
+    # 1) Busca as tarefas das listas de indice UMA vez (reusa no cruzamento e na fila).
+    cache = {}  # list_id -> (displayName, [tasks])
     for l in list_lists():
-        if not _eh_lista_caso(l.get("displayName", "")):
+        nome = l.get("displayName", "")
+        if not _eh_lista_indice(nome):
             continue
         try:
             tarefas = list_tasks(l["id"])
         except Exception as e:  # lista lenta/instavel: pula em vez de travar tudo
-            print(f"[aviso] lista '{l.get('displayName')}' pulada: {e}", file=sys.stderr)
+            print(f"[aviso] lista '{nome}' pulada: {e}", file=sys.stderr)
+            continue
+        cache[l["id"]] = (nome, tarefas)
+
+    # 2) Indice de clientes: chave -> [tarefas ativas em qualquer lista].
+    indice = {}
+    for lid, (nome, tarefas) in cache.items():
+        for t in tarefas:
+            if t.get("status") == "completed":
+                continue
+            chave = _chave_cliente(t.get("title", ""))
+            if not chave:
+                continue
+            due = parse_due(t)
+            indice.setdefault(chave, []).append({
+                "lista": nome,
+                "list_id": lid,
+                "task_id": t["id"],
+                "title": t.get("title", ""),
+                "due": due.isoformat() if due else None,
+            })
+
+    # 3) Fila do dia: so as listas da fila diaria, tarefa do Paulo, vencendo na data.
+    selecionadas = []
+    for lid, (nome, tarefas) in cache.items():
+        if not _eh_lista_caso(nome):
             continue
         for t in tarefas:
             if t.get("status") == "completed":
@@ -74,28 +155,59 @@ def main():
             body = t.get("body", {}).get("content", "") or ""
             if not is_paulo_task(body):
                 continue
+            chave = _chave_cliente(t.get("title", ""))
+            outras = [x for x in indice.get(chave, []) if x["task_id"] != t["id"]] if chave else []
             selecionadas.append(
                 {
-                    "lista": l["displayName"],
-                    "list_id": l["id"],
+                    "lista": nome,
+                    "list_id": lid,
                     "task_id": t["id"],
                     "title": t.get("title", ""),
                     "importance": t.get("importance"),
                     "due": alvo.isoformat(),
                     "ultimo_autor": last_author(body),
                     "body": body,
-                    "checklist": _checklist(l["id"], t["id"]),
-                    "anexos": _anexos(l["id"], t["id"]),
+                    "checklist": _checklist(lid, t["id"]),
+                    "anexos": _anexos(lid, t["id"]),
+                    "cliente_chave": chave,
+                    "outras_tarefas": outras,
+                    "ja_triado_hoje": _tem_conclusao_hoje(body, alvo),
                 }
             )
 
-    data = {"data_alvo": alvo.strftime("%d/%m/%Y"), "total": len(selecionadas), "tarefas": selecionadas}
+    data = {
+        "data_alvo": alvo.strftime("%d/%m/%Y"),
+        "total": len(selecionadas),
+        "tarefas": selecionadas,
+    }
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
     print(f"TRIAGEM {alvo.strftime('%d/%m/%Y')} - {len(selecionadas)} tarefa(s) de Paulo vencendo hoje")
     for i, s in enumerate(selecionadas, 1):
-        print(f"{i}. [{s['lista']}] {s['title']}  (anexos: {len(s['anexos'])})")
+        flags = ""
+        if s["outras_tarefas"]:
+            flags += f"  [+{len(s['outras_tarefas'])} tarefa(s) do mesmo cliente]"
+        if s["ja_triado_hoje"]:
+            flags += "  [JA TRIADO HOJE]"
+        print(f"{i}. [{s['lista']}] {s['title']}  (anexos: {len(s['anexos'])}){flags}")
+
+    mult = [s for s in selecionadas if s["outras_tarefas"]]
+    if mult:
+        print("\n*** CLIENTES COM MULTIPLAS TAREFAS (cruzar ANTES de processar) ***")
+        for s in mult:
+            outras = "; ".join(
+                f"{o['lista']}" + (f" (vence {o['due']})" if o['due'] else " (sem prazo)")
+                for o in s["outras_tarefas"]
+            )
+            print(f"  - {s['title']} [{s['lista']}] tambem em: {outras}")
+
+    ja = [s for s in selecionadas if s["ja_triado_hoje"]]
+    if ja:
+        print("\n*** JA TRIADOS HOJE (possivel conflito/retrabalho, conferir antes) ***")
+        for s in ja:
+            print(f"  - {s['title']} [{s['lista']}]")
+
     print(f"\nDetalhes completos em {OUT}")
 
 
