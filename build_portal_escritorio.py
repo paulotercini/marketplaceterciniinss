@@ -18,6 +18,7 @@ Requer graph_tokens.json valido (rode graph_devflow.py / graph_refresh.py).
 """
 import re, json, hashlib, pathlib, datetime
 from graph_client import list_lists, list_tasks, _req
+from build_portal_listas import split_blocks
 
 DATA_DIR = pathlib.Path("docs/portal/data")
 LISTA_ESCRITORIO = "🙋 Escritório"
@@ -48,22 +49,51 @@ def cpf_from_task(title, items):
     return None
 
 
+# Frases que indicam, SEM ambiguidade, uma pendência ABERTA do lado do cliente.
+# Propositalmente específicas (exigem "cliente"/"documento"/"falta"): evita os
+# falsos positivos do match solto antigo ('trazer ', 'procuração', e 'trouxe' —
+# que significa o OPOSTO, o cliente já trouxe).
+_AGUARDA_CLIENTE = (
+    "aguardando documento", "aguardando o cliente", "aguardando a cliente",
+    "aguardando providência do cliente", "aguardando providencia do cliente",
+    "cliente vai trazer", "cliente irá trazer", "cliente ira trazer",
+    "cliente vai enviar", "cliente irá enviar", "cliente ira enviar",
+    "cliente precisa trazer", "cliente precisa enviar", "cliente vai providenciar",
+    "precisa trazer o", "falta o cliente", "falta a cliente", "falta documento",
+    "falta o documento", "faltam documentos", "falta o comprovante",
+    "pendente com o cliente", "pendência do cliente", "pendencia do cliente",
+    "aguardando o cliente trazer", "cliente ficou de trazer", "ficou de trazer",
+    "trazer o comprovante", "enviar o documento", "passar para buscar",
+)
+# Frases que indicam trabalho EM ANDAMENTO no escritório (petição em elaboração,
+# pronta, a protocolar/distribuir) — não é culpa/pendência do cliente.
+_ELABORACAO = (
+    "montar a inicial", "fazer a inicial", "redigir", "minutar", "minuta",
+    "elaborar a", "petição inicial", "peticao inicial", "inicial pronta",
+    "inicial concluíd", "inicial concluido", "pronto para distribuir",
+    "pronta para distribuir", "pronto para protocolar", "pronta para protocolar",
+    "para distribuir", "distribuir a", "distribuída", "distribuida",
+    "aguardando assinatura", "revisão/assinatura", "revisão e assinatura",
+    "assinatura do", "deixar pronto", "deixa pronto", "em elaboração",
+)
+
+
+def _texto_recente(body):
+    """Decide o status pela nota MAIS RECENTE (estado atual do caso), não pelo
+    histórico inteiro — assim notas antigas de 'cliente vai trazer X' não
+    contaminam um caso que já avançou."""
+    blocks = split_blocks(body)
+    if blocks:
+        topo = blocks[0][0]                      # data mais recente
+        return " \n ".join(t for d, t in blocks if d == topo).lower()
+    return (body or "").lower()
+
+
 def infer_status(body):
-    b = (body or "").lower()
-    aguardando = [
-        "irá trazer", "ira trazer", "vai trazer", "trazer ", "trará",
-        "aguardando documento", "precisa trazer", "passar para buscar",
-        "comprovante de endereço", "comprovante de endereco",
-        "enviar o documento", "trouxe", "irá passar", "ira passar", "buscar na",
-    ]
-    elaboracao = [
-        "montar a inicial", "fazer a inicial", "redigir", "minutar",
-        "elaborar a", "petição inicial", "peticao inicial",
-        "deixa pronto as procuraç", "procuração", "procuracao", "protocolar",
-    ]
-    if any(x in b for x in aguardando):
+    b = _texto_recente(body)
+    if any(x in b for x in _AGUARDA_CLIENTE):
         return "Aguardando documento/providência do cliente"
-    if any(x in b for x in elaboracao):
+    if any(x in b for x in _ELABORACAO):
         return "Em elaboração de petição pelo escritório"
     return "Em análise pelo escritório"
 
@@ -110,26 +140,57 @@ def main():
     gerados = 0
     for cpf, e in by_cpf.items():
         dn = cpf2dn[cpf]
-        ficha = {
-            "nome": e["nome"],
-            "atualizado_em": agora,
-            "processos": [{
-                "lista": LISTA_ESCRITORIO,
-                "localizacao": infer_status(e["body"]),
-                "titulo_tarefa": e["nome"],
-                "status": "Em atendimento pelo escritório",
-                "proximo_evento": None,
-                "timeline": [],
-                "notas_publicas": [],
-                "links_externos": [{
-                    "label": "Consultar no Meu INSS",
-                    "url": "https://meu.inss.gov.br/",
-                    "obs": "Use seu CPF e sua senha gov.br",
-                }],
+        loc = infer_status(e["body"])
+        esc_proc = {
+            "lista": LISTA_ESCRITORIO,
+            "localizacao": loc,
+            "titulo_tarefa": e["nome"],
+            "status": "Em atendimento pelo escritório",
+            "proximo_evento": None,
+            "timeline": [],
+            "notas_publicas": [],
+            "links_externos": [{
+                "label": "Consultar no Meu INSS",
+                "url": "https://meu.inss.gov.br/",
+                "obs": "Use seu CPF e sua senha gov.br",
             }],
+            "origem": "auto",
         }
         h = derivar_hash(cpf, dn, salt, iters)
-        (DATA_DIR / f"{h}.json").write_text(json.dumps(ficha, ensure_ascii=False, indent=2))
+        path = DATA_DIR / f"{h}.json"
+        existentes, nome_existente = [], None
+        if path.exists():
+            try:
+                d0 = json.loads(path.read_text())
+                existentes = d0.get("processos", [])
+                nome_existente = d0.get("nome")
+            except Exception:
+                existentes = []
+
+        # MERGE não-destrutivo: preserva todos os processos de outras listas e os
+        # processos Escritório CURADOS; para o Escritório auto, só atualiza a
+        # localizacao (estado inferido), mantendo o resto do registro.
+        processos, achou = [], False
+        for p in existentes:
+            if p.get("lista") == LISTA_ESCRITORIO:
+                achou = True
+                if p.get("origem") == "curado":
+                    processos.append(p)            # curado à mão: não toca
+                else:
+                    p["localizacao"] = loc
+                    p.setdefault("origem", "auto")
+                    processos.append(p)
+            else:
+                processos.append(p)                # INSS/Judicial/Conselho/etc.: intactos
+        if not achou:
+            processos.append(esc_proc)
+
+        ficha = {
+            "nome": nome_existente or e["nome"],
+            "atualizado_em": agora,
+            "processos": processos,
+        }
+        path.write_text(json.dumps(ficha, ensure_ascii=False, indent=2))
         gerados += 1
 
     # 3) atualiza _meta.json
