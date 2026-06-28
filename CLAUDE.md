@@ -515,6 +515,21 @@ Comando em `.claude/commands/triagem.md`. Processa as tarefas atribuídas ao Pau
 vencendo **hoje**, cruza com o Drive, grava conclusão (C) e parecer, e entrega
 relatório consolidado. Gravação automática (sem aprovação prévia).
 
+**Múltiplas tarefas do mesmo cliente.** O `triagem_do_dia.py` monta um índice por
+CPF (e nome) cruzando todas as listas de caso. Quando o mesmo cliente tem mais de
+uma tarefa (ex.: uma na lista **INSS** e outra na **Judicial**), o campo
+`outras_tarefas` as liga, e o cliente é tratado **uma vez só**, com conclusão
+consolidada e atenção a **litispendência** (administrativo correndo junto com o
+judicial). Vale para `/triagem`, `/inicial` e `/inicial-inss`, sempre procurar
+TODAS as tarefas do cliente antes de processar.
+
+**Evitar conflito no cowork (sinal `ja_triado_hoje`, sempre COMPLEMENTAR).** Se a
+tarefa já tem conclusão (C) com a data de hoje (outra execução/sessão do cowork já
+tratou), NÃO refaça do zero e NÃO duplique, mas **NÃO ignore**, leia o que já foi
+gravado e **complemente** apenas o que ainda falta ou o que a entrada mais nova
+pede, somando ao que existe (coerente com o modo COMPLEMENTO e com a regra de
+nunca destruir histórico).
+
 ## Encadeamento dos fluxos (handoff triagem → inicial/inicial-inss)
 
 Os três fluxos se compõem. A `/triagem` **diagnostica**, a `/inicial` e a
