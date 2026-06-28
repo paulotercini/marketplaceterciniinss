@@ -1,4 +1,4 @@
-import json, urllib.parse, urllib.request, pathlib
+import json, urllib.parse, urllib.request, urllib.error, pathlib, time, ssl
 
 GRAPH = "https://graph.microsoft.com/v1.0"
 TOKENS_PATH = pathlib.Path("graph_tokens.json")
@@ -8,21 +8,37 @@ def _token():
     return json.loads(TOKENS_PATH.read_text())["access_token"]
 
 
-def _req(method, path, body=None):
+def _req(method, path, body=None, _tentativas=5):
     url = path if path.startswith("http") else f"{GRAPH}{path}"
     data = json.dumps(body).encode("utf-8") if body is not None else None
-    req = urllib.request.Request(
-        url,
-        data=data,
-        method=method,
-        headers={
-            "Authorization": f"Bearer {_token()}",
-            "Content-Type": "application/json",
-        },
-    )
-    with urllib.request.urlopen(req) as r:
-        raw = r.read()
-        return json.loads(raw) if raw else None
+    ultimo_erro = None
+    for i in range(_tentativas):
+        req = urllib.request.Request(
+            url,
+            data=data,
+            method=method,
+            headers={
+                "Authorization": f"Bearer {_token()}",
+                "Content-Type": "application/json",
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                raw = r.read()
+                return json.loads(raw) if raw else None
+        except urllib.error.HTTPError as e:
+            # HTTPError É subclasse de URLError — tratar ANTES. Só retenta 5xx/429.
+            if e.code in (429, 500, 502, 503, 504) and i < _tentativas - 1:
+                ultimo_erro = e
+                time.sleep(2 ** i)
+                continue
+            raise
+        except (ssl.SSLError, urllib.error.URLError, TimeoutError, ConnectionError) as e:
+            # erros de rede transitórios (SSL EOF, reset, timeout) — backoff e retenta
+            ultimo_erro = e
+            if i < _tentativas - 1:
+                time.sleep(2 ** i)
+    raise ultimo_erro
 
 
 def list_lists():
