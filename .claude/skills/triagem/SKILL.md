@@ -34,7 +34,21 @@ Grava `triagem_hoje.json`, leia-o.
 - Se `total` = 0, informe que não há tarefas atribuídas ao Paulo vencendo hoje e
   PARE.
 - Cada item traz `lista`, `list_id`, `task_id`, `title` ("Nome #CPF"), `body`,
-  `checklist`, `anexos`.
+  `checklist`, `anexos`, `cliente_chave` (CPF ou nome), `outras_tarefas` (as demais
+  tarefas ATIVAS do mesmo cliente em QUALQUER lista, com `lista`/`due`/`task_id`) e
+  `ja_triado_hoje`.
+- **Múltiplas tarefas do mesmo cliente (OBRIGATÓRIO cruzar).** Quando `outras_tarefas`
+  não estiver vazio, o cliente tem mais de uma tarefa (ex.: uma na lista **INSS** e
+  outra na **Judicial**). Antes de processar, **leia TODAS elas**, trate o cliente
+  **uma vez só** com uma análise consolidada e grave **a mesma conclusão (C) em cada
+  tarefa** referenciando a outra. Isso evita conflito e captura risco de
+  **litispendência/duplicidade** (pedido administrativo e ação judicial sobre o mesmo
+  benefício, como manda a verificação do Tema 1124/Tema 350). O relatório do script já
+  imprime a seção "CLIENTES COM MÚLTIPLAS TAREFAS", confira-a.
+- **Já triado hoje (evitar conflito no cowork).** Se `ja_triado_hoje` for `true`, já
+  existe conclusão (C) com a data de hoje no corpo, sinal de que outra execução/sessão
+  do cowork já tratou o cliente. **Não reprocesse**; no máximo leia o que foi feito e
+  complemente o que faltar, sem sobrescrever nem duplicar Drive.
 
 ## 3. Processar CADA tarefa (gravação automática, sem aprovação prévia)
 Para não sobrecarregar o contexto, delegue cada cliente a um subagente
