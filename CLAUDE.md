@@ -228,6 +228,10 @@ ajudem na procedência. É rotina, não só confirmação. Ordem:
 2. **WebSearch** do tema/tese (ex.: "TNU impedimento de longo prazo BPC aparelho auditivo",
    "STJ Tema 416 auxílio-acidente sequela mínima", "TRF3 PPP ruído NEN insalubridade")
    para achar temas, súmulas e acórdãos favoráveis e os links oficiais.
+   **PRIORIDADE de fonte (somos jurisdição do TRF3), `TRF3`, `TNU` e `STJ`.** Julgado de
+   **outros TRFs** (TRF1, TRF4, TRF5 etc.) só quando NÃO houver no TRF3, e ainda assim
+   como persuasivo/analógico, sinalizando que é de outra região. Inclua o tribunal-alvo
+   na query (ex.: "TRF3 ...", "TNU ...", "STJ ...").
 3. **WebFetch na FONTE OFICIAL** quando o link abre, para ler a tese/ementa e marcar
    `[CONFERIDO]`. **Abrem** o CJF (temas da TNU), o STF e o Planalto (lei), e em geral
    páginas de documento direto. **NÃO abrem** (bloqueio 403/503) os portais de busca
