@@ -149,14 +149,20 @@ f) **Gerar a CONCLUSÃO** **ultraenxuta, 2 a 3 linhas**, só o achado e o próxi
    complemento, registra só o que foi feito na nova data.
    `python3 todo_conclusao.py "<list_id>" "<task_id>" "<conclusão>"`
 
-g) **Salvar o parecer em .docx, no máximo UMA página**, no padrão do escritório
-   (gerar com `docx_escritorio.py`), na subpasta `Claude` da pasta do cliente (criar
-   se não existir), título `Parecer - <Cliente> - DD.MM.AAAA` (arquivo novo a cada
-   data; o Drive não atualiza nem apaga). Texto **enxuto e humano**, como o Paulo
-   escreveria. Antes de fechar, **revise nas skills** (toda tese ancorada em skill
-   lida ou documento, proibido inventar). Conteúdo, contexto do benefício, checklist
-   de documentos com faltantes em destaque, achados do CNIS, pendências do histórico,
-   lista de renomeações sugeridas e mensagem ao cliente quando aplicável.
+g) **Salvar o parecer SEMPRE em .docx (Word), no máximo UMA página**, no padrão do
+   escritório (gerar com `docx_escritorio.py`), **NÃO em Google Doc**. Suba para a
+   subpasta `Claude` do cliente (criar com `create_file` mime folder se não existir) com
+   `python3 gdrive_upload.py "<arquivo.docx>" "<id_subpasta_Claude>" "Parecer -
+   <Cliente> - DD.MM.AAAA.docx"` (upload direto pela API, sem base64 pelo contexto).
+   **Todos os documentos gerados** (parecer, procuração, RAC, relatório, autodeclaração)
+   ficam na subpasta `Claude`, subidos pelo mesmo `gdrive_upload.py`; apague o temporário
+   local depois. Falhando por falta de escopo de escrita, avise para reautenticar
+   (`gdrive_authcode.py`) e, como contingência, entregue o .docx pelo chat e registre a
+   pendência. Texto **enxuto e humano**, como o Paulo escreveria. Antes de fechar,
+   **revise nas skills** (toda tese ancorada em skill lida ou documento, proibido
+   inventar). Conteúdo, contexto do benefício, checklist de documentos com faltantes em
+   destaque, achados do CNIS, pendências do histórico, lista de renomeações sugeridas e
+   mensagem ao cliente quando aplicável.
    - **OBRIGATÓRIO em todo parecer, uma seção final "Pendências em aberto"**, em
      destaque, listando tudo o que ainda falta (ex.: falta RG, falta PPP da Cica,
      falta comprovante de residência, indicador de CNIS a corrigir, prazo a
