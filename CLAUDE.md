@@ -589,9 +589,12 @@ documentos prontos para anexar**; nunca protocola/envia. Diferenças-chave:
   HISTÓRICO**, ABAIXO do cabeçalho fixo da tarefa (`[TAREFA]`/`[SISTEMA]`/`[DER]`
   etc.) e ACIMA da entrada de data mais recente. O `todo_conclusao.py` já faz isso
   automaticamente (insere antes da primeira linha com data `DD.MM.AAAA`).
-- **Parecer em .docx, no máximo UMA página**, no padrão do escritório
-  (`docx_escritorio.py`), salvo na subpasta **`Claude`** da pasta do cliente (criar
-  se não existir), título `Parecer - <Cliente> - DD.MM.AAAA`. Conteúdo enxuto e
+- **Parecer SEMPRE em .docx (Word), no máximo UMA página**, no padrão do escritório
+  (`docx_escritorio.py`), **nunca em Google Doc**, subido à subpasta **`Claude`** da
+  pasta do cliente (criar se não existir) com `gdrive_upload.py` (upload direto pela
+  API, sem base64 pelo contexto), título `Parecer - <Cliente> - DD.MM.AAAA.docx`.
+  **Todos os documentos gerados** (parecer, procuração, RAC, relatório, autodeclaração)
+  ficam na subpasta `Claude`, subidos pelo mesmo `gdrive_upload.py`. Conteúdo enxuto e
   **humano**, contexto do benefício, checklist de documentos (faltantes em
   destaque), achados do CNIS, pendências do histórico, **lista de renomeações
   sugeridas** e **mensagem pronta ao cliente** quando aplicável, terminando com a
@@ -653,6 +656,12 @@ encadeie** se houver pendência bloqueante, aponte o que falta e pare.
   grandes por trafegar o conteúdo pelo contexto). Use para ler PDF de processo, CNIS
   ou laudo acima de 10 MB, depois leia/renderize o arquivo local ou fatie com
   `pdf_split.py`. Requer o token do Google (`gdrive_devflow.py`, ver `GDRIVE_SETUP.md`).
+- `gdrive_upload.py "<arquivo_local>" "<id_pasta>" ["Título"]` — **sobe** um arquivo
+  local (ex.: parecer/procuração/RAC em .docx) para uma pasta do Drive (a subpasta
+  `Claude` do cliente) lendo do disco e enviando direto pela API, **sem trafegar
+  base64 pelo contexto** (resolve a fricção do `create_file` do MCP com .docx). Requer
+  token com **escopo de escrita** (`gdrive_client.SCOPE = .../auth/drive`); trocar o
+  escopo exige reautenticar uma vez com `gdrive_authcode.py` (`url` e depois `exchange`).
 
 ## Aprimoramento contínuo
 

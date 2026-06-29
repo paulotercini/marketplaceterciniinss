@@ -23,7 +23,10 @@ TOKENS_PATH = pathlib.Path("gdrive_tokens.json")
 OAUTH_PATH = pathlib.Path("gdrive_oauth.json")
 TOKEN_URI = "https://oauth2.googleapis.com/token"
 DRIVE_API = "https://www.googleapis.com/drive/v3"
-SCOPE = "https://www.googleapis.com/auth/drive.readonly"
+UPLOAD_API = "https://www.googleapis.com/upload/drive/v3/files"
+# Leitura E escrita, para baixar (gdrive_download.py) e SUBIR (gdrive_upload.py) sem
+# trafegar base64 pelo contexto do modelo. Trocar o escopo exige reautenticar uma vez.
+SCOPE = "https://www.googleapis.com/auth/drive"
 
 # Arquivos nativos do Google nao tem bytes "crus", exporta-se para um formato Office.
 _EXPORT = {
@@ -104,3 +107,36 @@ def download(file_id, dest=None):
     with urllib.request.urlopen(req, timeout=600) as r, open(dest, "wb") as f:
         shutil.copyfileobj(r, f, length=256 * 1024)  # streaming, nunca pelo contexto
     return dest
+
+
+def upload(path, parent_id, name=None, mime=None):
+    """Sobe um arquivo LOCAL para uma pasta do Drive (multipart), lendo do disco e
+    enviando direto pela API, SEM passar base64 pelo contexto do modelo. Resolve a
+    friccao do create_file do MCP com .docx. Retorna o dict do arquivo criado (id etc.).
+    Requer token com escopo de escrita (SCOPE = .../auth/drive)."""
+    import mimetypes
+    token = refresh()
+    p = pathlib.Path(path)
+    data = p.read_bytes()
+    name = name or p.name
+    if mime is None:
+        mime = mimetypes.guess_type(name)[0] or "application/octet-stream"
+    meta = {"name": name, "parents": [parent_id]}
+    boundary = "===============gdriveupload7e2b=="
+    pre = (
+        "--" + boundary + "\r\n"
+        "Content-Type: application/json; charset=UTF-8\r\n\r\n"
+        + json.dumps(meta) + "\r\n"
+        "--" + boundary + "\r\n"
+        "Content-Type: " + mime + "\r\n\r\n"
+    ).encode("utf-8")
+    post = ("\r\n--" + boundary + "--\r\n").encode("utf-8")
+    body = pre + data + post
+    url = (UPLOAD_API + "?uploadType=multipart&supportsAllDrives=true"
+           "&fields=id,name,mimeType,parents,webViewLink")
+    req = urllib.request.Request(url, data=body, method="POST", headers={
+        "Authorization": f"Bearer {token}",
+        "Content-Type": f"multipart/related; boundary={boundary}",
+    })
+    with urllib.request.urlopen(req, timeout=600) as r:
+        return json.loads(r.read())
