@@ -109,6 +109,39 @@ def download(file_id, dest=None):
     return dest
 
 
+def meta(file_id, fields="id,name,mimeType,size,parents,trashed"):
+    """Metadados do arquivo (para CONFERIR antes de apagar). Requer token valido."""
+    token = refresh()
+    url = f"{DRIVE_API}/files/{file_id}?fields={fields}&supportsAllDrives=true"
+    req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return json.loads(r.read())
+
+
+def list_children(folder_id):
+    """Lista os filhos (id, name) de uma pasta, para conferir se esta vazia."""
+    token = refresh()
+    q = urllib.parse.quote(f"'{folder_id}' in parents and trashed=false")
+    url = (f"{DRIVE_API}/files?q={q}&fields=files(id,name,mimeType)"
+           "&supportsAllDrives=true&includeItemsFromAllDrives=true")
+    req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return json.loads(r.read()).get("files", [])
+
+
+def delete(file_id):
+    """Apaga (lixeira) um arquivo/pasta do Drive por ID. IRREVERSIVEL na pratica.
+    Usa trash (vai para a lixeira), reversivel por 30 dias no proprio Drive.
+    Requer token com escopo de escrita."""
+    token = refresh()
+    url = f"{DRIVE_API}/files/{file_id}?supportsAllDrives=true"
+    body = json.dumps({"trashed": True}).encode("utf-8")
+    req = urllib.request.Request(url, data=body, method="PATCH", headers={
+        "Authorization": f"Bearer {token}", "Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return json.loads(r.read())
+
+
 def upload(path, parent_id, name=None, mime=None):
     """Sobe um arquivo LOCAL para uma pasta do Drive (multipart), lendo do disco e
     enviando direto pela API, SEM passar base64 pelo contexto do modelo. Resolve a
