@@ -136,3 +136,23 @@ Quando o sistema administrativo falha, MS é o remédio rápido para mora ou des
 - Gov.br https://acesso.gov.br
 - Plataforma de procuradores https://www.gov.br/inss/pt-br/canais_atendimento/procuradores
 - PAT (acesso restrito a advogados com certificado A3)
+
+## Atualização DOU 12/06/2026 — Procuração Eletrônica
+Norma: Portaria Conjunta DTI/DIRBEN/INSS nº 21, de 9 de junho de 2026
+Órgão: Diretoria de Tecnologia da Informação e Diretoria de Benefícios do INSS
+Vigência: 2 de junho de 2026 (retroativa, publicada em 12/06/2026)
+Localização: DOU Edição 108, Seção 1, Página 96
+Link oficial: https://www.in.gov.br
+Resumo da alteração: A portaria modifica a Portaria nº 10/2025 e flexibiliza o fluxo de procuração eletrônica no Meu INSS. A principal mudança é que agora o REPRESENTANTE (advogado) também pode iniciar o pedido de procuração, sem necessidade de o cliente entrar na plataforma primeiro. O cliente (representado) precisa anuir com assinatura eletrônica. Ambas as partes exigem conta Gov.br com selo prata ou ouro. Ambas as partes podem revogar a procuração a qualquer momento.
+Impacto na advocacia: O escritório pode agora solicitar a procuração eletrônica diretamente, reduzindo a dependência de o cliente iniciar o processo. No entanto, o cliente AINDA precisa de conta Gov.br com selo prata ou ouro para anuir. Clientes sem esse nível de confiabilidade precisam regularizar o Gov.br antes. Atualizar o checklist de integração de novo cliente para incluir verificação do nível de confiabilidade Gov.br.
+Estratégia: No onboarding do novo cliente, incluir passo de verificação do Gov.br (nível prata/ouro). Se o cliente não tiver, orientar a subir o nível usando biometria facial no aplicativo Gov.br ou comparecimento em banco conveniado. Apenas depois solicitar procuração eletrônica pela plataforma do escritório.
+
+## Atualização DOU 22/06/2026 — Biometria Obrigatória e Risco de Desistência
+Norma: Portaria DIRBEN/INSS nº 1.347, de 18 de junho de 2026
+Órgão: Diretoria de Benefícios do INSS
+Vigência: 22 de junho de 2026
+Localização: DOU Edição 114-D, Seção 1-Extra D, Página 60
+Link oficial: https://www.in.gov.br
+Resumo da alteração: Após protocolo de requerimento de benefício previdenciário ou assistencial, o cliente tem 30 dias para apresentar comprovação de biometria (via CIN, título eleitoral ou CNH). O descumprimento CARACTERIZA DESISTÊNCIA DO PEDIDO e implica arquivamento. São dispensados os requerentes de salário-maternidade, benefício por incapacidade e pensão por morte, além de maiores de 80 anos, migrantes, residentes no exterior e pessoas com impossibilidade de deslocamento por doença comprovada.
+Impacto na advocacia: O Meu INSS não necessariamente gera alerta visível ao advogado sobre o prazo da biometria. O escritório deve monitorar o PAT para verificar se houve abertura de prazo biométrico após a DER, com alerta interno de 20 dias após o protocolo para confirmar cumprimento ou documentar dispensa.
+Estratégia: Criar campo de controle na tarefa do cliente para "data DER + 30 dias = prazo biometria". Monitorar via PAT. Se o prazo foi descumprido por causa não documentada, contestar o arquivamento como requerimento novo ou impugnar a desistência por vício de intimação adequada.

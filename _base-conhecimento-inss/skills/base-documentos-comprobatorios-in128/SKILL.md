@@ -363,3 +363,13 @@ Documento ENVIADO ao INSS no requerimento administrativo é IMPRESCINDÍVEL para
 Documento NÃO ENVIADO administrativamente pode causar EXTINÇÃO SEM MÉRITO na via judicial por falta de prévio requerimento adequado.
 
 Verificar checklist do escritório ANTES do requerimento administrativo e ANTES da petição judicial.
+
+## Atualização DOU 24/04/2026 — Vedação de Novo Requerimento Durante Processo em Curso
+Norma: Instrução Normativa PRES/INSS nº 203, de 22 de abril de 2026
+Órgão: Presidência do INSS
+Vigência: imediata (publicada em 24/04/2026)
+Localização: DOU, Seção 1, 24/04/2026
+Link oficial: https://www.in.gov.br
+Resumo da alteração: A IN 203/2026 modifica o art. 576-A da IN 128/2022 e veda a apresentação de novo requerimento da MESMA ESPÉCIE de benefício enquanto houver processo em curso referente àquela espécie. O cliente é obrigado a escolher entre (a) aguardar o resultado do processo em curso, (b) recorrer ao CRPS no prazo de 30 dias após a decisão desfavorável, ou (c) pedir revisão administrativa. Não é possível protocolar novo NB da mesma espécie enquanto o anterior estiver pendente de análise ou dentro do prazo recursal.
+Impacto na advocacia: A vedação elimina a estratégia de protocolar novo requerimento enquanto o anterior ainda está em fase recursal, que era usada para fixar nova DER mais favorável ou construir nova instrução documental. Agora é necessário escolher entre o recurso ao CRPS (Livro VII, Portaria 996/2022) ou aguardar o arquivamento definitivo antes de protocolar novamente.
+Estratégia: No momento do indeferimento, calcular imediatamente se o recurso ao CRPS tem mais chance que novo requerimento. Se o recurso for fraco, orientar o cliente a aguardar o prazo recursal se esgotar ou apresentar desistência expressa do processo anterior antes de protocolar novo requerimento. Se o recurso for forte, priorizar o CRPS. Documentar no body da tarefa a opção escolhida e o fundamento.

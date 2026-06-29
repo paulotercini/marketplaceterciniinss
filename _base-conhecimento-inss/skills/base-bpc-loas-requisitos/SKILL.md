@@ -132,6 +132,16 @@ O IBDP sustenta a proteção integral ao requerente do BPC.
 
 Para anuência ao desligamento do PBF no requerimento do BPC pela IN 54/SENARC/MDS/2026, vício de consentimento e Termo de Anuência Condicional, acionar `base-bpc-pbf-anuencia-in54-2026`.
 
+## Atualização DOU 22/06/2026
+Norma: Portaria DIRBEN/INSS nº 1.347, de 18 de junho de 2026
+Órgão: Diretoria de Benefícios do INSS
+Vigência: 22 de junho de 2026 (publicação na data)
+Localização: DOU Edição 114-D, Seção 1-Extra D, Página 60
+Link oficial: https://www.in.gov.br
+Resumo da alteração: A portaria consolida em norma própria as diretrizes sobre obrigatoriedade do cadastro biométrico para concessão de benefícios previdenciários e assistenciais, com base na Lei 15.077/2024. A biometria pode ser comprovada pela Carteira de Identidade Nacional, Título Eleitoral ou CNH. O prazo para apresentação é de 30 dias a partir do requerimento. O descumprimento caracteriza DESISTÊNCIA DO PEDIDO, com arquivamento do processo (art. 5º). Estão DISPENSADOS: maiores de 80 anos, migrantes/refugiados/apátridas, residentes no exterior, com impossibilidade de deslocamento por doença por mais de 30 dias, em localidades de difícil acesso, e requerentes de salário-maternidade, benefício por incapacidade e pensão por morte.
+Impacto na advocacia: Risco elevado de arquivamento silencioso de requerimentos de BPC nos casos em que o cliente não possui documento com biometria válida ou não consegue comparecer dentro do prazo de 30 dias. Verificar ANTES de protocolar se o cliente tem CIN, título eleitoral ou CNH atualizado. Para clientes com impossibilidade de deslocamento por doença, coletar atestado médico indicando o período de impossibilidade (mínimo 30 dias) e juntar ao requerimento.
+Estratégia: Incluir na carta de documentos ao cliente, ANTES do protocolo, a verificação da biometria disponível. Se o cliente não tiver documento com biometria, orientar a providenciar CIN na Casa da Cidadania ou cartório antes da DER. Em caso de arquivamento indevido por descumprimento da biometria, impugnar administrativamente alegando dispensa legal ou impedimento documentado, e em seguida mandado de segurança por ilegalidade da exigência em casos de dispensa não reconhecida.
+
 Para validação formal de laudo médico de deficiência funcional pelo Checklist B do escritório (BPC e Aposentadoria PCD), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
 
 ## Cruzamento com Onda 27
