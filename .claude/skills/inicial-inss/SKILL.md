@@ -71,6 +71,17 @@ administrativa de 1 folha, sem lei/decreto).
   7. **Documentos rurais** — ordem cronologica pelo conteudo (ex.: NF 1999 antes do
      contrato de parceria 2008)
   8. Demais (CNIS, comprovante de residencia, CadUnico, autodeclaracao etc.)
+- **Documentos a PRODUZIR pelos modelos vivos do Drive** (nunca do zero, ver CLAUDE.md
+  "Modelos e formulários do escritório"). Procuracao administrativa pelo pacote `Novo -
+  Procuracao Adm. e Judicial...Docs1.docx` (ou, sendo auxilio-doenca direto no INSS, a
+  `Procuracao Adm. e Contrato Auxilio Doenca.docx`), preenchendo os campos `<...>`,
+  removendo o campo do dado que faltar, assinalando o beneficio e a Atualizacao
+  Cadastral no Termo de Representacao e ajustando o Contrato pelo realce de cor (e
+  retirando o realce). RAC pelo Anexo certo de `Formularios IN128`; Autodeclaracao de
+  segurado especial e demais formularios (contribuicoes em atraso, declaracao de
+  endereco) pela mesma pasta. CNIS com erro corrigivel, **montar a RAC mesmo sem pedido**.
+  Calculo de tempo/RMI e no **Previus** (alertar). Deixe os documentos prontos na
+  subpasta `Claude` e inclua a procuracao no jogo do protocolo.
 
 ## 6. Montar a subpasta "Documentos Protocolo INSS"
 - Crie, dentro da pasta do cliente, a subpasta **`Documentos Protocolo INSS`**.

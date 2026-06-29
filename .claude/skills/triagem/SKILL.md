@@ -116,9 +116,16 @@ d) **Localizar a pasta do cliente** no Drive via `search_files`
 e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
    - Conferir se a documentação do benefício está correta e completa; faltando
      algo importante (ex.: RG), destacar.
-   - Analisar o **CNIS** e apontar indicadores a corrigir antes de protocolar
-     (PREC, PEXT, PVNC, IGN, vínculo sem data fim, concomitância, competência
-     abaixo do mínimo a complementar ou agrupar).
+   - Analisar o **CNIS** (leitura obrigatória, costuma estar na pasta) e apontar
+     indicadores a corrigir antes de protocolar (PREC, PEXT, PVNC, IGN, vínculo sem
+     data fim, concomitância, competência abaixo do mínimo a complementar ou agrupar).
+     **RAC proativa**, achando erro que precise de correção, **monte a RAC mesmo sem
+     pedido** (vínculo sem data fim, extemporâneo, ausente comprovado pela CTPS/CAGED/
+     RAIS, divergência de rescisão), escolhendo o Anexo certo da pasta `Formulários
+     IN128` (ver CLAUDE.md, "Modelos e formulários"). Não faça RAC só por contribuição
+     abaixo do mínimo. Cálculo de tempo/RMI/valor da causa é no **Prévius** (você não
+     acessa), deixe o alerta pedindo o cálculo e procure na pasta o que o Paulo já
+     deixou.
    - Reler o histórico e alertar **pendências esquecidas** (ex.: PPP nunca trazido).
    - Documento a terminar (ex.: autodeclaração) buscar ou criar já preenchido.
    - "Verificar digitalização" analisar os documentos digitalizados no contexto.
@@ -130,10 +137,21 @@ e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
      de segurado e **DII dentro do período de manutenção**, com alerta se a DII cair
      fora, e checar **doença que isenta de carência**.
    - **PCD**, identificar se aplica **IF-BrA** (LC 142) ou **IF-BrM** (BPC).
-   - **Documento a produzir**, procurar o modelo primeiro na **pasta do cliente** e
-     depois nas **Petições Ouro**; petição passa por `base-revisao-peticao-aprofundada`
-     antes de gerar; procuração pelo modelo `_Modelos de Procurações / Nova Procuração…`;
-     relatório médico pela espécie + MODELO OURO (Reginaldo Augusto Garcia), 1 folha.
+   - **Documento a produzir (tome a iniciativa, deixe pronto na subpasta `Claude`).**
+     Use os modelos vivos do Drive, NUNCA do zero (ver CLAUDE.md, "Modelos e
+     formulários do escritório"). **Procuração** pelo pacote `Novo - Procuração Adm. e
+     Judicial - D. Pobreza - Contrato - Recibo de Entrega de Docs1.docx` (preencher os
+     campos `<...>`, remover o campo do dado que faltar, assinalar o benefício e a
+     Atualização Cadastral no Termo de Representação, ajustar o Contrato pelo realce de
+     cor e retirar o realce, paginar uma peça por folha; só não finalizar se faltar
+     nome, CPF e endereço). **Auxílio-doença direto no INSS**, procuração própria
+     `Procuração Adm. e Contrato Auxílio Doença.docx`, já de prontidão. **RAC e
+     formulários** (atualização de contribuições em atraso, Autodeclaração de segurado
+     especial, declaração de endereço etc.) pela pasta `Formulários IN128` e
+     `_Modelos Procurações`, escolhendo o Anexo certo. **Petição** passa por
+     `base-revisao-peticao-aprofundada` antes de gerar e busca o modelo nas Petições
+     Ouro. **Relatório médico** pela espécie + MODELO OURO (Reginaldo Augusto Garcia),
+     1 folha.
    - **Tarefa de outro colaborador** (Marcão, Amanda, Ingrid, André), fazer o
      **encaminhamento no parecer** (de quem é e o que precisa fazer), sem executar
      fora do escopo.

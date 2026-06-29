@@ -106,6 +106,13 @@ ponto de partida, em vez de refazer o diagnostico.
 ## 9. Montar a subpasta "Documentos da Peticao Inicial"
 - Crie, dentro da pasta do cliente, a subpasta **`Documentos da Peticao Inicial`**
   (mime folder).
+- **Procuracao judicial e documentos a produzir** pelos modelos vivos do Drive (nunca
+  do zero, ver CLAUDE.md "Modelos e formularios do escritorio"). Pacote `Novo -
+  Procuracao Adm. e Judicial...Docs1.docx`, preenchendo `<...>`, removendo o campo do
+  dado que faltar, assinalando o beneficio e a Atualizacao Cadastral no Termo,
+  ajustando o Contrato pelo realce de cor (e retirando o realce), com a Declaracao de
+  Hipossuficiencia do mesmo pacote. CNIS com erro, montar a RAC pelo Anexo certo de
+  `Formularios IN128`. Tempo/RMI e **valor da causa** sao no **Previus** (alertar).
 - Para cada documento a juntar, garanta um PDF proprio nomeado
   **`NN - <Tipo do Documento> - DDMMAAAA.pdf`** (NN = ordem de distribuicao, 2
   digitos). Ex.: `01 - Procuracao Judicial - 17062026.pdf`.
