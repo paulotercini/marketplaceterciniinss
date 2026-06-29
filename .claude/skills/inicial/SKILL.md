@@ -112,8 +112,9 @@ ponto de partida, em vez de refazer o diagnostico.
   do zero, ver CLAUDE.md "Modelos e formularios do escritorio"). Use o pacote `Novo -
   Procuracao Adm. e Judicial...Docs1.docx`, preenchendo os campos `<...>`, removendo o
   campo do dado que faltar, assinalando o beneficio e a Atualizacao Cadastral no Termo,
-  ajustando o Contrato de Honorarios pelo realce de cor (aposentadoria azul,
-  incapacidade amarelo, etc.) e **retirando o realce**, com a Declaracao de
+  ajustando o Contrato de Honorarios pelo realce de cor (azul = concessao de
+  aposentadoria/pensao/auxilio-acidente/auxilio-reclusao/BPC; amarelo = incapacidade;
+  verde = revisao) e **retirando o realce**, com a Declaracao de
   Hipossuficiencia/Pobreza do mesmo pacote. CNIS com erro, montar a RAC pelo Anexo
   certo de `Formularios IN128`. Calculo de tempo/RMI e **valor da causa** sao no
   **Previus** (alertar e buscar o que o Paulo deixou na pasta).

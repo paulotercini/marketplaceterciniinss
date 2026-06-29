@@ -325,11 +325,13 @@ Regras de preenchimento:
   Remunerações"). Marque **SEMPRE também "Atualização Cadastral"** (nunca se sabe
   quando será preciso).
 - **Contrato de Honorários (ajuste por benefício, pelo realce de cor)**, o texto traz
-  trechos realçados por cor para identificar a hipótese. Mantenha o realce da cor do
-  benefício pleiteado e exclua os demais. **Aposentadoria, azul**; **benefício por
-  incapacidade, amarelo**; e assim por diante para as outras cores (verde etc.), pela
-  hipótese. **Antes de entregar, RETIRE todo o realce** (o realce só serve para
-  identificar, não pode aparecer no documento final).
+  trechos realçados por cor para identificar a hipótese. **Mantenha apenas o trecho da
+  cor do benefício pleiteado e exclua os das outras cores.** O mapa é, **azul**, para
+  **concessão** de aposentadorias, pensão por morte, auxílio-acidente, auxílio-reclusão
+  e BPC/LOAS; **amarelo**, para **benefícios por incapacidade**; **verde**, para
+  **revisão de benefícios**. **Antes de entregar, RETIRE todo o realce** (ele só serve
+  para identificar e não pode aparecer no documento final). Na dúvida sobre a cor de um
+  trecho, abra o arquivo e confira pelo texto antes de cortar.
 - **Paginação para impressão** (uma peça por folha), Procuração Administrativa em 1
   folha, Procuração Judicial em outra, Contrato de Honorários em 2 folhas, Termo de
   Representação em outra, Declaração de Não Recebimento de Benefício em outra.
