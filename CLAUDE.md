@@ -269,12 +269,13 @@ rode a skill `base-revisao-peticao-aprofundada` sobre a minuta (5 níveis
 anti-alucinação + 5 camadas), corrija o sanável e só então produza o .docx. Citação
 não confirmada é removida, jamais inventada.
 
-**Procuração.** Use SEMPRE o modelo padrão (pasta `_Modelos de Procurações`, arquivo
-`Nova Procuração…` no Drive; cópia versionada em `modelos/`, referência em
-`modelos/procuracao-pacote-modelo.md`). É um pacote (procuração administrativa e
-judicial, declaração de pobreza, contrato de honorários, termos e Anexo XXIV da IN
-128), preencher os campos `<NOMESEGURADO>`, `<CPF>`, `<RG>`, `<ENDERECO>` etc. Não
-redija procuração do zero.
+**Procuração e formulários.** NUNCA redija do zero. Use SEMPRE os modelos vivos do
+escritório no Drive, pasta **`Processos / _Modelos Procurações`** e subpastas. As
+regras detalhadas de preenchimento (qual arquivo usar, como tratar campos sem dado,
+o Termo de Representação, o realce por cor do Contrato de Honorários, a paginação por
+folha, a RAC certa, os formulários da IN 128, a Autodeclaração, o Prévius e a RAC
+proativa a partir do CNIS) estão na seção **"Modelos e formulários do escritório
+(orquestração do Drive)"** abaixo. Cumpra-a à risca.
 
 **Relatório médico (modelo).** Quando pedirem modelo de relatório médico, primeiro
 **identifique a espécie do benefício** (B94, LC 142, incapacidade B31/B91/B92, BPC) e
@@ -293,6 +294,92 @@ página** no padrão, e a conclusão no To Do **ainda mais enxuta**, só o essen
 leitura direta e sem enrolação. Escreva com **tom humano e natural**, como o Paulo
 escreveria, sem soar robótico ou de IA, e sem deixar de aplicar o direito com rigor
 (toda tese ancorada em skill lida ou documento, nunca de memória).
+
+## Modelos e formulários do escritório (orquestração do Drive)
+
+Todo documento operacional (procuração, RAC, requerimento, autodeclaração,
+declaração de endereço etc.) sai de um **modelo vivo** no Drive, NUNCA do zero. A
+pasta-fonte é **`Processos / _Modelos Procurações`** (id `1Usk27BwaqdbFbF5ubsTp0ngWR9XBN1zX`)
+e suas subpastas, o equivalente, para formulários, do que **`Acervo de Modelos /
+Petições Ouro`** é para as peças do `/inicial`. Preencha o modelo com os dados do
+cliente (lidos de documento, jamais inventados) e **deixe o arquivo pronto na subpasta
+`Claude` do cliente**. Tome a **iniciativa**, se a tarefa ou o histórico do To Do
+indicam que um documento é necessário (ex.: "preciso de Declaração de Endereço",
+"fazer a procuração", "fazer a RAC"), produza-o sem esperar ordem expressa. Não
+existindo modelo na pasta, crie o documento do zero, mas só então.
+
+**Procuração (pacote completo, judicial + administrativo).** Use o arquivo
+**`Novo - Procuração Adm. e Judicial - D. Pobreza - Contrato - Recibo de Entrega de
+Docs1.docx`** (id `1YdXTKkR4ORK_uPqIuDvd-r-eJ404YSrW`). É um pacote com Procuração
+Administrativa, Procuração Judicial, Declaração de Pobreza, Contrato de Honorários,
+Termo de Representação e Declaração de Não Beneficiário de Benefício em Outro Regime.
+Regras de preenchimento:
+- Substitua os campos marcados (`<NOMESEGURADO>`, `<DATANASCIMENTO>`, `<CPF>`, `<RG>`,
+  `<ENDERECO>`, `<ESTADOCIVIL>` etc.) pelos dados do cliente.
+- **Dado que você não tem, REMOVA o campo** do texto (ex.: não sabendo o estado civil,
+  apague o trecho do `<ESTADOCIVIL>`), nunca deixe o marcador `<...>` no documento.
+- **Só não finalize se faltar nome completo, CPF e endereço.** Com esses três, deixe
+  pronto para impressão; o resto remova se não tiver.
+- **Termo de Representação**, assinale o benefício pleiteado. Se houver campo próprio,
+  marque-o; não havendo, escreva na parte **"Outros"** (ex.: "Acerto de Vínculos e
+  Remunerações"). Marque **SEMPRE também "Atualização Cadastral"** (nunca se sabe
+  quando será preciso).
+- **Contrato de Honorários (ajuste por benefício, pelo realce de cor)**, o texto traz
+  trechos realçados por cor para identificar a hipótese. Mantenha o realce da cor do
+  benefício pleiteado e exclua os demais. **Aposentadoria, azul**; **benefício por
+  incapacidade, amarelo**; e assim por diante para as outras cores (verde etc.), pela
+  hipótese. **Antes de entregar, RETIRE todo o realce** (o realce só serve para
+  identificar, não pode aparecer no documento final).
+- **Paginação para impressão** (uma peça por folha), Procuração Administrativa em 1
+  folha, Procuração Judicial em outra, Contrato de Honorários em 2 folhas, Termo de
+  Representação em outra, Declaração de Não Recebimento de Benefício em outra.
+- Salve pronto na subpasta `Claude` do cliente.
+
+**Procuração só para auxílio-doença no INSS (extrajudicial).** Quando o pedido for
+**requerer auxílio-doença / benefício por incapacidade direto no INSS** (parte
+extrajudicial), use o arquivo **`Procuração Adm. e Contrato Auxílio Doença.docx`**
+(id `1LneSKgZL8B3pgdWVsJfu2c06HD1yvlkW`), não o pacote completo. Quando o Paulo
+indicar que vamos pedir o auxílio-doença no INSS, **já crie esse documento de
+prontidão** e deixe na subpasta `Claude`.
+
+**RAC e formulários da IN 128.** Subpasta **`Formulários IN128`** (id
+`1RtJvHImjPPpq2F10OuBWe1W2pi4nxR07`). Ao fazer uma RAC, **escolha primeiro o modelo
+certo** lendo o que o caso exige:
+- `AnexoI - RAC.docx` (id `11UCHnpMERsoYYmiljpwHdFepA_Xvg3CH`), RAC **completa** (quando
+  envolve mais de uma qualidade, ex.: empregado e contribuinte individual).
+- `AnexoI-A-2.1 - RAC Acerto de Dados - Atualização Cadastral` (id `1Tg444ATzbWXmSbrHnJuplC0_9zWFOSCE`).
+- `AnexoI-B-2.2 - RAC Empregado e Empregado Doméstico` (id `17iAQAPhmnvaxnXdIvrnq9MoneOgRpKh3`).
+- `AnexoI-D-2.4 - RAC Contribuinte Individual` (id `1XLTzntpAPwoNcjVwhJbnw-7_PWFBcvcX`).
+- `AnexoI-E-2.5 - RAC Reconhecimento de Filiação e Atualização de Atividade` (id `1Hz4IxIb_NkESESka4KJNirr92fyXlbwD`).
+- `AnexoI-F-2.6 - RAC Acerto de Contribuições` (id `1n8FBizJM-MJpc1OWJFqz0lcGA6lX0aXh`), inclui correção de código de pagamento.
+- `AnexoVII - Requerimento para Atualização de Contribuições em Atraso` (id `1lrj6KBbhmIEr1V6RSyrkWAeuxKVKmqUD`), quando se pretende **pagar contribuições em atraso**.
+- **Autodeclaração de segurado especial**, preencher quando for segurado especial
+  (procurar o modelo nesta pasta; não havendo, usar a skill
+  `base-segurado-especial-autodeclaracao-arts-92-93-94` e criar). Preencha as datas e
+  os vínculos lidos da CTPS, do CAGED e da RAIS, nunca supostos.
+
+**Cálculo, o programa é o Prévius.** O cálculo previdenciário do escritório (tempo de
+contribuição, descarte, RMI, valor da causa) é feito no **Prévius**, que você não
+acessa. Quando não conseguir fechar um cálculo de tempo de contribuição ou precisar do
+**valor da causa**, **deixe o alerta no parecer pedindo o cálculo no Prévius** e que o
+arquivo seja colocado na pasta do cliente. O Paulo costuma deixar esses cálculos (e o
+print do Prévius/Prévius 2.0/3.0) na pasta para você analisar, então procure-os antes
+de pedir.
+
+**CNIS, leitura obrigatória e RAC proativa.** O CNIS costuma estar na pasta do cliente
+e é de **leitura obrigatória**, para achar erro que precise de correção. Achando erro,
+**já monte a RAC mesmo sem o Paulo pedir** (proatividade), escolhendo o Anexo certo
+acima. Não precisa de RAC para **contribuição abaixo do salário mínimo** (trata-se por
+complementação/agrupamento da EC 103 no cálculo), mas **monte** para **vínculo sem data
+fim**, **vínculo extemporâneo**, vínculo ausente que a CTPS/CAGED/RAIS comprovem,
+divergência de data de rescisão, indicadores como **PEXT/PVNC/IGN** etc. Para saber se
+algo é necessário, **conheça o histórico do To Do** do cliente.
+
+**Orquestração.** Mantenha a ligação entre as pastas e o Microsoft To Do. A tarefa do
+To Do diz o que falta; a pasta `_Modelos Procurações` tem o modelo; a pasta do cliente
+tem os dados (CNIS, CTPS, procuração anterior) e a subpasta `Claude` recebe o
+documento pronto. Busque o dado na fonte certa e deixe o resultado onde o próximo passo
+o encontre.
 
 ## Doutrina do assistente — o que fazer em cada situação
 
