@@ -304,8 +304,8 @@ escreveria, sem soar robótico ou de IA, e sem deixar de aplicar o direito com r
 Todo documento operacional (procuração, RAC, requerimento, autodeclaração,
 declaração de endereço etc.) sai de um **modelo vivo** no Drive, NUNCA do zero. A
 pasta-fonte é **`Processos / _Modelos Procurações`** (id `1Usk27BwaqdbFbF5ubsTp0ngWR9XBN1zX`)
-e suas subpastas, o equivalente, para formulários, do que **`Acervo de Modelos /
-Petições Ouro`** é para as peças do `/inicial`. Preencha o modelo com os dados do
+e suas subpastas, o equivalente, para formulários, do que **`Modelos Ouro 2.0`**
+é para as peças do `/inicial`. Preencha o modelo com os dados do
 cliente (lidos de documento, jamais inventados) e **deixe o arquivo pronto na subpasta
 `Claude` do cliente**. Tome a **iniciativa**, se a tarefa ou o histórico do To Do
 indicam que um documento é necessário (ex.: "preciso de Declaração de Endereço",
@@ -499,21 +499,25 @@ divergências de data PPP × CNIS a alinhar).
 
 ## Modelos de petição — Padrão Ouro (usar SEMPRE ao redigir peças)
 
-Os modelos oficiais do escritório ("padrão ouro") ficam no Google Drive em
-**Acervo de Modelos / Petições Ouro** (pasta id `1mKNCwgZz1dcEzkkY1twbzkLpYXfyag-1`;
-há um "Índice do Acervo de Modelos"). A pasta é organizada **por tipo de benefício**
-(subpastas, ex.: `Auxílio-Acidente (B94)` id `1olieNbcKdEmed9of7ZQtIxO7bs6VJnoe`,
-`BPC Deficiente` id `18xrQC5VxLvR9DbAwqy8SBIH5nPRdgokg`), e cada uma traz um
-**MODELO OURO por tipo de peça** (Petição Inicial, Recurso Inominado, Apelação e
-Contrarrazões, Embargos de Declaração, Agravo Interno, Recurso Especial ao STJ,
-Impugnação à Contestação, Manifestação sobre Laudo, Não Aceite de Acordo, Quesitos
-e Alegações Finais etc.), distinguindo **Federal / Estadual / JEF** (há "ADENDO
-NÚCLEO 4.0" para peças estaduais do TJSP).
+Os modelos oficiais do escritório ("padrão ouro") ficam no Google Drive na pasta
+**`Modelos Ouro 2.0`** (id `10WkDbxiBnmSSFMFzkW-rcPqTqk6614Rm`), reestruturada no
+padrão 2.0 (curto, direto, foco na prova e no ponto controverso, persuasivo e legível
+por IA, com **TODA citação conferida** no catálogo ou fonte oficial — citação não
+confirmada é removida, jamais inventada). É organizada **por tipo de benefício**
+(subpastas, ex.: `Incapacidade (B31 e B91)`, `BPC-LOAS (Idoso e Deficiente)` id
+`1zOaqjRZWnISVsZxeGauHL0ExB284NHW3`), e cada uma traz um **MODELO OURO por tipo de
+peça** (Petição Inicial, Recurso Inominado, Contrarrazões, Manifestação sobre Laudo,
+Quesitos/Alegações Finais, Embargos de Declaração etc.), distinguindo **Federal /
+Estadual / JEF** (ADENDO NÚCLEO 4.0 para peças estaduais do TJSP). Cada modelo abre
+com um **GUIA DE USO** (filosofia 2.0, campos `[CAMPO]` a preencher, banco de teses
+conferido, defesa antecipada e seção "A CONFERIR — NÃO USAR" das citações em
+quarentena). A antiga pasta **Petições Ouro** (id `1mKNCwgZz1dcEzkkY1twbzkLpYXfyag-1`)
+está sendo **substituída** e será excluída pelo Paulo, não use mais como fonte.
 
 **Regras invioláveis ao redigir qualquer peça:**
 1. Antes de redigir, **localize e LEIA o MODELO OURO** correspondente (benefício +
-   tipo de peça + esfera) na pasta Petições Ouro e **siga exatamente a estrutura,
-   a formatação e o estilo dele**.
+   tipo de peça + esfera) na pasta **Modelos Ouro 2.0** e **siga exatamente a
+   estrutura, a formatação e o estilo dele**.
 2. Quando a peça for **direcionada a um processo** (petição para protocolar),
    **entregue-a já no formato correto e PRONTA**, salva na subpasta **Claude** da
    pasta do cliente (não apenas um esboço).

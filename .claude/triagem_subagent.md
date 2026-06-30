@@ -60,10 +60,10 @@ Se não encontrar a pasta, diga isso claramente no parecer e na conclusão.
   NÃO renomeie (o conector não permite) — só liste.
 - Se for preciso avisar o cliente, **redigir a mensagem pronta para copiar**.
 - **Ao redigir QUALQUER peça processual**, localize e LEIA antes o **MODELO OURO**
-  correspondente em `Acervo de Modelos / Petições Ouro` (pasta id
-  `1mKNCwgZz1dcEzkkY1twbzkLpYXfyag-1`), na subpasta do benefício (ex.:
-  `Auxílio-Acidente (B94)` id `1olieNbcKdEmed9of7ZQtIxO7bs6VJnoe`, `BPC Deficiente`
-  id `18xrQC5VxLvR9DbAwqy8SBIH5nPRdgokg`) e do tipo de peça/esfera (Federal/
+  correspondente em `Modelos Ouro 2.0` (pasta id
+  `10WkDbxiBnmSSFMFzkW-rcPqTqk6614Rm`; a antiga "Petições Ouro" será excluída), na
+  subpasta do benefício (ex.: `Incapacidade (B31 e B91)`, `BPC-LOAS (Idoso e
+  Deficiente)` id `1zOaqjRZWnISVsZxeGauHL0ExB284NHW3`) e do tipo de peça/esfera (Federal/
   Estadual/JEF; há "ADENDO NÚCLEO 4.0" para peças estaduais). **Siga exatamente a
   estrutura/formatação do modelo.** Quando a peça for direcionada a um processo,
   **entregue-a PRONTA** (não esboço) e salve na subpasta `Claude` do cliente. Se
@@ -90,10 +90,10 @@ cabeçalho fixo da tarefa e acima da data mais recente. Confira a saída "OK".
 ## Passo 7-B — Redigir peça processual (quando a tarefa pedir)
 Se a tarefa exigir uma PEÇA (petição inicial, recurso, impugnação, manifestação
 sobre laudo etc.), use SEMPRE o **MODELO OURO** do escritório como base. Localize-o
-no Drive em `Acervo de Modelos / Petições Ouro` (pasta id
-`1mKNCwgZz1dcEzkkY1twbzkLpYXfyag-1`) → subpasta do benefício → peça correspondente
-(ex.: `Auxílio-Acidente (B94)` id `1olieNbcKdEmed9of7ZQtIxO7bs6VJnoe`,
-`BPC Deficiente` id `18xrQC5VxLvR9DbAwqy8SBIH5nPRdgokg`), respeitando a esfera
+no Drive em `Modelos Ouro 2.0` (pasta id
+`10WkDbxiBnmSSFMFzkW-rcPqTqk6614Rm`; a antiga "Petições Ouro" será excluída) →
+subpasta do benefício → peça correspondente (ex.: `Incapacidade (B31 e B91)`,
+`BPC-LOAS (Idoso e Deficiente)` id `1zOaqjRZWnISVsZxeGauHL0ExB284NHW3`), respeitando a esfera
 (Federal/Estadual/JEF). LEIA o modelo ouro com `read_file_content` e siga sua
 estrutura/formatação. Quando a peça for para protocolar, entregue-a **pronta** (não
 só esboço), salva como documento próprio na subpasta `Claude`, com os campos a

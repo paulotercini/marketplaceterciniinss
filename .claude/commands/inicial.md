@@ -40,7 +40,8 @@ ponto de partida, em vez de refazer o diagnostico.
 - **Competencia (foro)**, cliente de **Monte Alto/SP** litiga na Justica Federal da
   **Subseccao de Catanduva/SP** (TRF3), foro federal padrao do escritorio.
 - Localize e leia a **peticao inicial ja existente** (subpasta `Claude`) e o
-  **MODELO OURO** correspondente (beneficio + esfera) na pasta Peticoes Ouro.
+  **MODELO OURO** correspondente (beneficio + esfera) na pasta Modelos Ouro 2.0
+  (id `10WkDbxiBnmSSFMFzkW-rcPqTqk6614Rm`; a antiga "Peticoes Ouro" sera excluida).
 
 ## 3. Conferencia de citacoes (anti-citacao falsa)
 - Para CADA sumula, Tema (STF/STJ/TNU), Enunciado CRPS, REsp/precedente e

@@ -141,7 +141,7 @@ e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
      Doença.docx` de prontidão. **RAC/formulários** (contribuições em atraso,
      Autodeclaração de segurado especial, declaração de endereço) pela pasta
      `Formulários IN128`/`_Modelos Procurações`. **Petição** passa por
-     `base-revisao-peticao-aprofundada` e busca o MODELO OURO nas Petições Ouro.
+     `base-revisao-peticao-aprofundada` e busca o MODELO OURO em Modelos Ouro 2.0.
      **Relatório médico** pela espécie + MODELO OURO (Reginaldo Augusto Garcia), 1 folha.
    - **Tarefa de outro colaborador** (Marcão, Amanda, Ingrid, André), fazer o
      **encaminhamento no parecer** (de quem é e o que precisa fazer), sem executar
