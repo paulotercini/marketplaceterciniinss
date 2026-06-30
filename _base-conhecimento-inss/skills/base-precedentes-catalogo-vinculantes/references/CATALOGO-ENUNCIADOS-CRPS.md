@@ -1,71 +1,129 @@
 # Lista Completa dos Enunciados do Conselho de Recursos da Previdência Social (CRPS)
 
-Este documento consolida todos os Enunciados vigentes do CRPS, que uniformizam a interpretação administrativa em matéria previdenciária.
+Este documento consolida o texto OFICIAL e vigente dos Enunciados do CRPS, que
+uniformizam a interpretação administrativa em matéria previdenciária. Texto conferido
+contra a fonte oficial do escritório (atualização 2026). Citar SEMPRE pelo número e
+inciso corretos; em caso de divergência, prevalece este texto.
 
-**ENUNCIADO Nº 1:** A Previdência Social deve conceder o melhor benefício a que o segurado fizer jus, cabendo ao servidor orientá-lo nesse sentido.
+**ENUNCIADO Nº 1:** A Previdência Social deve conceder o melhor benefício a que o beneficiário fizer jus, cabendo ao servidor orientá-lo nesse sentido.
 I - Satisfeitos os requisitos para a concessão de mais de um tipo de benefício, o INSS oferecerá ao interessado o direito de opção, mediante a apresentação dos demonstrativos financeiros de cada um deles.
-II - Preenchidos os requisitos para mais de uma espécie de benefício na Data de Entrada do Requerimento (DER) e não tendo sido oferecido ao interessado o direito de opção pelo melhor benefício, este poderá solicitar revisão e alteração para espécie que lhe é mais vantajosa, cujos efeitos financeiros remontarão à DER do benefício concedido originariamente, observada a decadência e a prescrição.
+II - Preenchidos os requisitos para mais de uma espécie de benefício na Data de Entrada do Requerimento (DER) e em não tendo sido oferecido ao interessado o direito de opção pelo melhor benefício, este poderá solicitar revisão e alteração para espécie que lhe é mais vantajosa, cujos efeitos financeiros remontarão à DER do benefício concedido originariamente, observada a decadência e a prescrição quinquenal.
 III - Implementados os requisitos para o reconhecimento do direito em momento posterior ao requerimento administrativo, poderá ser reafirmada a DER até a data do cumprimento da decisão do CRPS.
-IV - Retornando os autos ao INSS, cabe ao interessado a opção pela reafirmação da DER mediante expressa concordância, aplicando-se a todas as situações que resultem em benefício mais vantajoso.
+IV - Retornando os autos ao INSS, cabe ao interessado a opção pela reafirmação da DER mediante expressa concordância, aplicando-se a todas as situações que resultem em benefício mais vantajoso ao interessado.
 
 **ENUNCIADO Nº 2:** Não se indefere benefício sob fundamento de falta de recolhimento de contribuição previdenciária quando a responsabilidade tributária não competir ao segurado.
 I - Considera-se presumido o recolhimento das contribuições do segurado empregado, inclusive o doméstico, do trabalhador avulso e, a partir da competência abril de 2003, do contribuinte individual prestador de serviço.
 II - Não é absoluto o valor probatório da Carteira de Trabalho e Previdência Social (CTPS), mas é possível formar prova suficiente para fins previdenciários se esta não tiver defeito formal que lhe comprometa a fidedignidade, salvo existência de dúvida devidamente fundamentada.
-III - A concessão de benefícios no valor mínimo ao segurado empregado doméstico independe de prova do recolhimento das contribuições, inclusive a primeira sem atraso, exceto para fins de carência.
+III - A concessão de benefícios no valor mínimo ao segurado empregado doméstico independe de prova do recolhimento das contribuições, inclusive a primeira sem atraso, desde que atendidos os demais requisitos legais exigidos, exceto para fins de contagem recíproca.
+IV - O vínculo do segurado como empregado doméstico será computado para fins de carência, ainda que esteja filiado ao Regime Geral de Previdência Social (RGPS) em categoria diversa na Data de Entrada do Requerimento (DER).
+V - É permitida a contagem, como tempo de contribuição, do tempo exercido na condição de aluno-aprendiz, exceto para fins de contagem recíproca, referente ao período de aprendizado profissional realizado em escolas técnicas, desde que comprovada a remuneração, mesmo que indireta, à conta do orçamento público e o vínculo empregatício, admitindo-se, como confirmação deste, o trabalho prestado na execução de atividades com vistas a atender encomendas de terceiros.
 
-**ENUNCIADO Nº 3:** A comprovação do tempo de contribuição, por meio de prova material, inclusive para o exercício de atividade rural, pode ser feita por qualquer meio de prova idôneo e contemporâneo, que permita um juízo de certeza da atividade exercida, no período a ser comprovado.
-I - A prova exclusivamente testemunhal não basta à comprovação da atividade rural, para efeito de obtenção de benefícios previdenciários.
-II - A prova material da atividade rural, para os períodos a que se refere o art. 143 da Lei nº 8.213/91, deve ser contemporânea à época dos fatos, não se admitindo prova extemporânea, exceto para os períodos anteriores a 1991.
-III - A comprovação da atividade rural para os trabalhadores em regime de economia familiar, boias-frias, diaristas e volantes, pode ser feita por meio de autodeclaração, homologada por entidades públicas credenciadas, nos termos do art. 13 da Lei nº 12.188/2010.
+**ENUNCIADO Nº 3:** A comprovação do tempo de contribuição, mediante ação trabalhista transitada em julgado, somente produzirá efeitos para fins previdenciários quando baseada em início de prova material contemporânea aos fatos, constantes nos autos do processo judicial ou administrativo.
+I - Não será admitida, para os fins previstos na legislação previdenciária, prova exclusivamente testemunhal, exceto na ocorrência de motivo de força maior ou caso fortuito.
+II - Não será exigido início de prova material se o objeto da ação trabalhista for a reintegração ou a complementação de remuneração, desde que devidamente comprovado o vínculo anterior em ambos os casos.
 
-**ENUNCIADO Nº 4:** A perda da qualidade de segurado não será considerada para a concessão das aposentadorias por tempo de contribuição e especial, se o segurado contar com o tempo de contribuição mínimo exigido para a concessão do benefício.
+**ENUNCIADO Nº 4:** A comprovação de união estável e de dependência econômica, mediante ação judicial transitada em julgado, somente produzirá efeitos para fins previdenciários quando baseada em início de prova material contemporânea aos fatos, constantes nos autos do processo judicial ou administrativo.
+I - A dependência econômica pode ser parcial, devendo, no entanto, representar um auxílio substancial, permanente e necessário, cuja falta acarretaria desequilíbrio dos meios de subsistência do dependente.
+II - O recebimento de ajuda econômica ou financeira, sob qualquer forma, ainda que superveniente, poderá caracterizar a dependência econômica parcial, observados os demais elementos de prova no caso concreto.
+III - A habilitação tardia de beneficiários menores, incapazes ou ausentes, em benefícios previdenciários já com dependentes anteriormente habilitados, somente produzirá efeitos financeiros a contar da Data de Entrada do Requerimento (DER), sendo incabível a retroação da Data do Início do Pagamento (DIP) para permitir a entrega de valores a partir do fato gerador do benefício.
+IV - É devida a pensão por morte aos dependentes do segurado que, apesar de ter perdido essa qualidade, preencheu os requisitos legais para a obtenção de benefício previdenciário até a data do seu óbito.
+V - A concessão da pensão por morte ao cônjuge ou companheiro do sexo masculino, no período compreendido entre a promulgação da Constituição Federal de 1988 e o advento da Lei nº 8.213 de 1991, rege-se pelas normas do Decreto nº 83.080, de 24 de janeiro de 1979, seguido pela Consolidação das Leis da Previdência Social (CLPS) expedida pelo Decreto nº 89.312, de 23 de janeiro de 1984, que continuaram a viger até o advento da Lei nº 8.213/91, aplicando-se tanto ao trabalhador do regime previdenciário rural quanto ao segurado do regime urbano.
 
-**ENUNCIADO Nº 5:** A remuneração do segurado empregado, para fins de cálculo do salário de benefício, é a totalidade dos seus rendimentos, devidamente comprovados, sobre os quais incidiram contribuições previdenciárias.
-I - As parcelas de natureza indenizatória, como diárias para viagem, ajuda de custo, e outras, não integram o salário de contribuição.
-II - A remuneração do segurado contribuinte individual, para fins de cálculo do salário de benefício, é o valor por ele declarado, observados os limites mínimo e máximo do salário de contribuição.
+**ENUNCIADO Nº 5:** O recolhimento em atraso de contribuições previdenciárias devidas pelo contribuinte individual exige a comprovação do efetivo exercício de atividade remunerada, na forma do art. 55, §3º da Lei nº 8.213/91.
+I - A concessão de prestações ao contribuinte individual em débito ou aos seus dependentes é condicionada ao recolhimento prévio, pelo segurado, das contribuições necessárias à reaquisição da qualidade de segurado, salvo em relação ao prestador de serviço à empresa, a partir da competência abril de 2003.
+II - Perde a qualidade de segurado o contribuinte individual que, embora em exercício de atividade remunerada, deixa de recolher suas respectivas contribuições por tempo superior ao período de graça (art. 15, §4º da Lei nº 8.213/91), salvo quando não for o responsável pelo seu recolhimento.
+III - As contribuições recolhidas em atraso pelo contribuinte individual após o período de graça não serão computadas como carência, nem para fins de manutenção da qualidade de segurado, mas apenas como tempo de contribuição.
+IV - Havendo perda da qualidade de segurado, somente serão consideradas para fins de carência as contribuições efetivadas sem atraso, após nova filiação do contribuinte individual ao Regime Geral de Previdência Social.
+V - As contribuições do contribuinte individual empresário não se presumem descontadas e recolhidas, nos termos do art. 4º da Lei nº 10.666/03, quando exercida atividade na empresa da qual seja titular, diretor não empregado, membro de conselho de administração, sócio ou administrador não empregado.
+VI - A carência do segurado empresário até 24/07/1991, véspera da publicação da Lei nº 8.213/91, será computada a partir da data de sua filiação, podendo ser reconhecidas como carência as contribuições referentes até esta data, mesmo recolhidas em atraso, desde que comprovado o efetivo exercício de atividade nessa categoria.
 
-**ENUNCIADO Nº 6:** A incapacidade para o trabalho deve ser analisada levando-se em conta as condições pessoais do segurado, como idade, grau de instrução, atividade habitual e mercado de trabalho.
-I - A análise da incapacidade não se restringe apenas ao aspecto médico, devendo ser consideradas também as condições sociais e culturais do segurado.
-II - A existência de incapacidade parcial e permanente, que impeça o segurado de exercer sua atividade habitual, mas não o impeça de exercer outra atividade, enseja a concessão de auxílio-acidente, se preenchidos os demais requisitos.
+**ENUNCIADO Nº 6:** Cabe ao INSS conceder o salário-maternidade à gestante demitida sem justa causa no curso da gravidez, preenchidos os demais requisitos legais, pagando-o diretamente.
+I - É vedado, em qualquer caso, o pagamento do salário-maternidade em duplicidade, caso a segurada tenha sido indenizada pelo empregador.
+II - Poderá ser solicitada diligência a fim de comprovar se houve pagamento do valor correspondente ao salário-maternidade pelo ex-empregador, enquanto não transcorrer o prazo prescricional para pretensão de créditos trabalhistas.
 
-**ENUNCIADO Nº 7:** Não há direito a benefício por incapacidade quando o seu fato gerador é preexistente ao reingresso do segurado no RGPS, salvo agravamento ou progressão da doença.
-I - Fixada a Data de Início da Incapacidade (DII) antes da perda da qualidade de segurado, a falta de contribuição posterior não prejudica o seu direito.
-II - Não será considerada a perda da qualidade de segurado decorrente da própria moléstia incapacitante.
-III - A revisão dos parâmetros médicos em benefício por incapacidade não enseja a devolução de valores recebidos, se presente a boa-fé.
-IV - É devido o auxílio-doença ao segurado temporariamente incapaz, de forma total ou parcial, que permita sua reabilitação para outras atividades.
-V - Para acumulação de auxílio-acidente com aposentadoria, a consolidação das lesões e a concessão da aposentadoria devem ser anteriores a 11/11/1997.
+**ENUNCIADO Nº 7:** Não há direito a benefício por incapacidade quando o seu fato gerador é preexistente ao reingresso do segurado no Regime Geral da Previdência Social (RGPS), salvo agravamento ou progressão da doença.
+I - Fixada a Data de Início da Incapacidade (DII) antes da perda da qualidade de segurado, a falta de contribuição posterior não prejudica o seu direito às prestações previdenciárias.
+II - Não será considerada a perda da qualidade de segurado decorrente da própria moléstia incapacitante para a concessão de prestações previdenciárias.
+III - A revisão dos parâmetros médicos efetuada em sede de benefício por incapacidade não enseja a devolução dos valores recebidos, se presente a boa-fé objetiva.
+IV - É devido o auxílio-doença ao segurado temporariamente incapaz, de forma total ou parcial, atendidos os demais requisitos legais, entendendo-se por incapacidade parcial aquela que permita sua reabilitação para outras atividades laborais.
+V - Para a acumulação do auxílio-acidente com proventos de aposentadoria, a consolidação das lesões decorrentes de acidentes de qualquer natureza que resulte sequelas definitivas e a concessão da aposentadoria devem ser anteriores a 11/11/1997, data da publicação da Medida Provisória nº 1.596-14, convertida na Lei nº 9.528/97.
+VI - Não se aplica o disposto no artigo 76 do Regulamento da Previdência Social, aprovado pelo Decreto 3048/99, para justificar a retroação do termo inicial do benefício auxílio doença requerido após o trigésimo dia do afastamento da atividade, nos casos em que a perícia médica fixar o início da atividade anterior à data de entrada do requerimento, tendo em vista que esta hipótese não implica em ciência pretérita da Previdência Social.
 
-**ENUNCIADO Nº 8:** É vedada a contagem de tempo de serviço em dobro ou com acréscimo, salvo as exceções legais.
-I - O tempo de serviço militar, obrigatório ou voluntário, é contado para todos os fins, exceto para carência.
-II - O tempo de serviço público, federal, estadual ou municipal, pode ser contado para fins de aposentadoria no RGPS, desde que não tenha sido utilizado para aposentadoria em outro regime.
+**ENUNCIADO Nº 8:** A atividade do trabalhador rural pode ser computada para fins de obtenção de benefícios no Regime Geral de Previdência Social - RGPS, conforme os critérios estabelecidos nos incisos a seguir:
+I - O tempo de atividade do segurado especial, anterior à Lei nº 8.213, de 24 de julho de 1991, pode ser utilizado para contagem recíproca, desde que sejam indenizadas as respectivas contribuições previdenciárias;
+II - A atividade agropecuária efetivamente explorada em área de até 4 módulos fiscais, individualmente ou em regime de economia familiar na condição de produtor, devidamente comprovada nos autos do processo, não descaracteriza a condição de segurado especial, independente da área total do imóvel rural;
+III - O exercício de atividade urbana por um dos integrantes do grupo familiar não implica, por si só, na descaracterização dos demais membros como segurado especial, condição que deve ser devidamente comprovada no caso concreto;
+IV - É considerado segurado especial a pessoa que, além de realizar tarefas domésticas em seu domicílio, exerce atividade rural em regime de economia familiar, sendo permitido o aproveitamento das provas em nome do cônjuge ou companheiro(a), corroboradas por outros meios de prova.
+V - Com fundamento na decisão proferida na Ação Civil Pública de n.º 5017267-34.2013.4.04.7100, poderá ser relativizada a idade mínima exigida para o reconhecimento da condição de segurado especial, desde que comprovada a participação ativa e indispensável na atividade rural, em regime de economia familiar, conforme estabelece o art. 9º, inciso VII, letra "c" combinado com o § 5º do mesmo dispositivo, do Decreto 3.048, de 06 de maio de 1999.
+VI - A comprovação do exercício da atividade rural deverá ser realizada por meio de autodeclaração ratificada por entidades públicas credenciadas ou bases governamentais.
+VII - Na ausência ou insuficiência dos elementos referidos no inciso anterior, será admitida a apresentação de documentos complementares, nos termos do § 11, art. 19-D, do Decreto nº 3.048, de 6 de maio de 1999, ou no art. 106, da Lei nº 8.213, de 24 de julho de 1991.
+VIII - A justificação administrativa não deverá ser realizada se a autodeclaração for ratificada por bases governamentais ou por elementos comprobatórios contemporâneos admitidos na forma da legislação.
+IX - Os efeitos dos documentos apresentados em sede de justificação administrativa aplicam-se exclusivamente à pessoa a quem se referirem, sendo vedada sua utilização por terceiros, ainda que para fins de comprovação da condição de segurado especial.
 
-**ENUNCIADO Nº 9:** O direito à aposentadoria especial não fica prejudicado pelo exercício de atividade em cargo de chefia, supervisão ou gerência, desde que o segurado tenha exercido, no mesmo ambiente de trabalho, atividade considerada especial.
+**ENUNCIADO Nº 9:** O segurado que exerça funções de magistério, nos termos da Lei de Diretrizes Básicas da Educação, poderá ser considerado professor para fins de redução do tempo de contribuição necessário à aposentadoria (B-57), observados os demais elementos de prova no caso concreto.
+I - Consideram-se funções de magistério as efetivamente exercidas nas instituições de educação básica, incluídas, além do exercício da docência, as de direção de unidade escolar e as de coordenação e assessoramento pedagógico, inclusive nos casos de reintegração trabalhista transitada em julgado.
+II - As funções de direção, coordenação e assessoramento pedagógico integram a carreira do magistério, desde que exercidas, em estabelecimentos de ensino básico, por professores de carreira, excluídos os especialistas em educação.
+III - Os estabelecimentos de educação básica não se confundem com as secretarias ou outros órgãos municipais, estaduais ou distritais de educação.
+IV - É vedada a conversão de tempo de serviço especial em comum na função de magistério após 09/07/1981, data da publicação da Emenda Constitucional nº 18/1981.
 
-**ENUNCIADO Nº 10:** A decadência prevista no art. 103-A da Lei 8.213/91 não se aplica aos atos administrativos tendentes à cessação de benefícios ou quotas cuja manutenção seja indevida.
-I - O prazo decadencial para revisão de atos praticados antes da Lei 9.784/99 começa a correr a partir de 01/02/99.
-II - Não se aplica decadência às revisões de reajustamento e às estabelecidas em lei.
-III - A má-fé, comprovada em procedimento próprio, afasta a decadência.
-IV - Não se aplica decadência ao auxílio por incapacidade temporária, aposentadoria por incapacidade permanente e benefícios assistenciais sujeitos a revisão periódica.
+**ENUNCIADO Nº 10:** A decadência prevista no art. 103-A da Lei nº 8.213/91 não se aplica aos atos administrativos praticados pela Administração Previdenciária tendentes à cessação da manutenção de benefícios ou quotas cuja continuidade da percepção seja indevida em face da legislação previdenciária de regência.
+I - O prazo decadencial previsto no art. 103-A da Lei 8.213/91, para revisão dos atos praticados pela Previdência Social antes da Lei nº 9.784/99, somente começa a correr a partir de 1º/02/99.
+II - Não se aplica o instituto da decadência às revisões de reajustamento e às estabelecidas em dispositivo legal.
+III - A má-fé afasta a decadência, mas não a prescrição, e deve ser comprovada em procedimento próprio, no caso concreto, assegurado o contraditório e a ampla defesa.
+IV - Não se aplica a decadência prevista no art. 103-A da Lei nº 8.213/91 ao auxílio por incapacidade temporária, à aposentadoria por incapacidade permanente e aos benefícios assistenciais sujeitos a revisão periódica prevista na legislação.
+V - A decadência prevista do art. 103 da Lei 8.213/91 não se aplica à revisão de atos de indeferimento, cancelamento ou cessação de benefícios.
+VI - Transcorridos mais de dez anos da data da concessão do benefício, não poderá haver sua suspensão ou cancelamento na hipótese de o interessado não mais possuir a documentação que instruiu o pedido, exceto em caso de fraude ou má-fé.
+VII - O pecúlio previsto no inciso II do artigo 81 da Lei nº 8.213/91, em sua redação original, que não foi pago em vida ao segurado aposentado que retornou à atividade quando dela se afastou, é devido aos seus dependentes ou sucessores, relativamente às contribuições vertidas até 14/04/94, salvo se prescrito.
 
-**ENUNCIADO Nº 11:** O tempo de serviço rural, anterior à Lei nº 8.213/91, pode ser comprovado por meio de início de prova material, complementado por prova testemunhal.
-I - A prova material não precisa abranger todo o período a ser comprovado, podendo ser contemporânea ao início ou ao fim do período.
-II - Documentos em nome de terceiros, como pais, cônjuge, ou outros membros do grupo familiar, podem ser admitidos como início de prova material, desde que corroborados por prova testemunhal.
+**ENUNCIADO Nº 11:** O Perfil Profissiográfico Previdenciário (PPP) é documento hábil à comprovação da efetiva exposição do segurado a todos os agentes nocivos, sendo dispensável o Laudo Técnico de Condições Ambientais de Trabalho (LTCAT) para requerimentos feitos a partir de 1º/1/2004, inclusive abrangendo períodos anteriores a esta data.
+I - Considera-se trabalho permanente aquele no qual o trabalhador, necessária e obrigatoriamente, está exposto ao agente nocivo para exercer suas atividades, em razão da indissociabilidade da produção do bem ou da prestação do serviço, mesmo que a exposição não se dê em toda a jornada de trabalho.
+II - A nocividade será caracterizada quando a exposição ultrapassar os limites de tolerância para os agentes nocivos avaliados pelo critério quantitativo, sendo suficiente para os agentes avaliados pelo critério qualitativo a sua efetiva presença no ambiente de trabalho.
+III - A avaliação quanto à existência de permanência e nocividade será realizada com base nas informações descritas no PPP ou no LTCAT.
+IV - Poderá ser solicitado o LTCAT em caso de dúvidas ou divergências em relação às informações contidas no PPP ou no processo administrativo.
+V - O LTCAT ou as demonstrações ambientais substitutas extemporâneos que informem quaisquer alterações no meio ambiente do trabalho ao longo do tempo são aptos a comprovar o exercício de atividade especial, desde que a empresa informe expressamente que, ainda assim, havia efetiva exposição ao agente nocivo.
+VI - Não se exigirá o LTCAT para períodos de atividades anteriores 14/10/96, data da publicação da Medida Provisória nº 1.523/96, facultando-se ao segurado a comprovação da efetiva exposição a agentes nocivos por qualquer meio de prova em direito admitido, exceto em relação a ruído.
 
-**ENUNCIADO Nº 12:** O exercício de atividade urbana, intercalado com atividade rural, não impede a concessão de benefício previdenciário rural, desde que preenchidos os requisitos legais.
+**ENUNCIADO Nº 12:** O fornecimento de equipamento de proteção individual (EPI) não descaracteriza a atividade exercida em condições especiais que prejudiquem a saúde ou a integridade física, devendo ser considerado todo o ambiente de trabalho.
+I - Se o EPI for realmente capaz de neutralizar a nocividade, não há direito à aposentadoria especial.
+II - A utilização de Equipamentos de Proteção Coletiva-EPC e/ou EPI não elide a exposição aos agentes reconhecidamente cancerígenos, a ruído acima dos limites de tolerância, ainda que considerados eficazes;
+III - A eficácia do EPI não obsta o reconhecimento de atividade especial exercida antes de 3/12/1998, data de início da vigência da MP 1.729/98, convertida na Lei n. 9.732/98, para qualquer agente nocivo.
 
 **ENUNCIADO Nº 13:** Atendidas as demais condições legais, considera-se especial, no âmbito do RGPS, a atividade exercida com exposição a ruído superior a 80 decibéis até 05/03/97, superior a 90 decibéis desta data até 18/11/2003, e superior a 85 decibéis a partir de então.
-I - Os níveis de ruído devem ser medidos conforme a NR-15, e, a partir de 19/11/2003, conforme a NHO-01 da Fundacentro.
-II - A partir de 01/01/2004, é obrigatória a apresentação de Perfil Profissiográfico Previdenciário (PPP) para comprovação da exposição a ruído.
+I - Os níveis de ruído devem ser medidos, observado o disposto na Norma Regulamentadora nº 15 (NR-15), anexos 1 e 2, com aparelho medidor de nível de pressão sonora, operando nos circuitos de compensação - dB (A) para ruído contínuo ou intermitente e dB (C) ou dB (linear) para ruído de impacto.
+II - Até 31 de dezembro de 2003, para a aferição de ruído contínuo ou intermitente, é obrigatória a utilização das metodologias contidas na NR-15, devendo ser aceitos ou o nível de pressão sonora pontual ou a média de ruído, podendo ser informado decibelímetro, dosímetro ou medição pontual no campo "Técnica Utilizada" do Perfil Profissiográfico Previdenciário (PPP).
+III - Revogado.
+IV - Em caso de omissão ou dúvida quanto à indicação da técnica/metodologia utilizada para aferição da exposição nociva ao agente ruído, o PPP não deve ser admitido como prova da especialidade, devendo ser apresentado o respectivo Laudo Técnico de Condições Ambientais do Trabalho (LTCAT) ou solicitada inspeção no ambiente de trabalho, para fins de verificar a técnica utilizada na medição.
 
-**ENUNCIADO Nº 14:** O tempo de serviço especial, exercido em condições prejudiciais à saúde ou à integridade física, pode ser convertido em tempo de serviço comum, para fins de concessão de aposentadoria por tempo de contribuição.
+**ENUNCIADO Nº 14:** A atividade especial efetivamente desempenhada pelo segurado, permite o enquadramento por categoria profissional até 28/04/1995 nos anexos dos Decretos nº 53.831/64 e 83.080/79, ainda que divergente do registro em Carteira de Trabalho e Previdência Social (CTPS), Ficha ou Livro de Registro de Empregados, desde que comprovado o exercício nas mesmas condições de insalubridade, periculosidade ou penosidade.
+I - É dispensável a apresentação de PPP ou outro formulário para enquadramento de atividade especial por categoria profissional, desde que a profissão ou atividade comprovadamente exercida pelo segurado conste nos anexos dos Decretos nº 53.831/64 e 83.080/79.
+II - O enquadramento do guarda, vigia ou vigilante no código 2.5.7 do Decreto nº 53.831/64 independe do uso, porte ou posse de arma de fogo.
 
-**ENUNCIADO Nº 15:** Não se presume a continuidade do exercício de atividade rural após a última prova material apresentada, devendo haver elementos que permitam essa conclusão.
+**ENUNCIADO Nº 15:** Os períodos laborados pelo empregado rural anteriores a 25/07/91, data da publicação da Lei nº 8.213, com vinculação exclusivamente à Previdência Social Urbana à época, poderão ser enquadrados como tempo especial no código 2.2.1 do quadro anexo ao Decreto nº 53.831/64, considerando-se presumido o recolhimento das suas contribuições, observados os incisos I e II.
+I - Para fins de enquadramento como atividade especial até 24/07/91, considera-se vinculado à Previdência Urbana o empregado que exerceu o seu labor no setor rural de pessoa jurídica, seja ela agroindústria, empresa industrial ou comercial.
+II - A atividade desenvolvida pelo empregado no setor rural deve estar diretamente ligada à extração da produção rural utilizada ou comercializada, independentemente de ter sido prestado na agropecuária, na agricultura ou na pecuária.
+III - Entre 25/07/91 e 28/04/95, data da publicação da Lei nº 9.032, admite-se o enquadramento como especial do tempo laborado pelo empregado rural na agropecuária, agricultura ou pecuária prestado a pessoa física ou jurídica, observado o inciso II.
+IV - Considera-se agroindústria a pessoa jurídica cuja atividade econômica é a produção rural e a industrialização da produção rural própria ou da produção rural própria e da adquirida de terceiros.
+V - Considera-se agropecuária a atividade humana destinada ao cultivo da terra (agricultura) e à criação de animais (pecuária), nas suas relações mútuas.
+VI - Considera-se produção rural os produtos de origem animal ou vegetal, em estado natural ou submetidos a processos de beneficiamento ou de industrialização rudimentar, bem como os subprodutos e os resíduos obtidos por esses processos.
 
-**ENUNCIADO Nº 16:** A pensão por morte será devida ao filho inválido, ainda que a invalidez seja posterior à maioridade ou emancipação, desde que anterior ao óbito do segurado.
+**ENUNCIADO Nº 16:** A suspeita de fraude na concessão de benefício previdenciário ou assistencial não enseja, de plano, a sua suspensão ou cancelamento, mas dependerá de apuração em procedimento administrativo, observados os princípios do contraditório e da ampla defesa e as disposições do art. 69 da Lei nº 8.212/91.
 
-**ENUNCIADO Nº 17:** São repetíveis os pagamentos indevidos de benefícios previdenciários do RGPS decorrentes de erro administrativo (material ou operacional), exceto quando comprovada a boa-fé objetiva pelo interessado, sobretudo quando não lhe era possível constatar o erro.
+**ENUNCIADO Nº 17:** São repetíveis os pagamentos indevidos de benefícios previdenciários do Regime Geral de Previdência Social decorrentes de erro administrativo (material ou operacional), exceto quando comprovada a boa-fé objetiva pelo interessado, sobretudo quando há demonstração de que não lhe era possível constatar o erro no pagamento.
+I - Os pagamentos indevidos feitos em benefícios previdenciários embasados em interpretação errônea ou equivocada da lei pela Administração são irrepetíveis, independentemente da comprovação de má-fé.
+II - São repetíveis os pagamentos indevidos decorrentes do BPC/LOAS somente quando estiver comprovada a má-fé do beneficiário, nos termos do art. 49 do Decreto nº 6.214/07.
 
-**ENUNCIado Nº 18:** Para requerimentos a partir de 29/01/2009, é garantido o cômputo dos períodos em que o segurado esteve em fruição de benefício por incapacidade, para fins de carência, desde que intercalados com períodos de contribuição ou atividade.
-I - O disposto se aplica aos segurados facultativos.
-II - Períodos em gozo de benefício por incapacidade acidentário independem de intercalação.
-III - O auxílio por incapacidade temporária e a aposentadoria por incapacidade permanente, decorrentes da mesma moléstia, são considerados para fins de carência.
+**ENUNCIADO Nº 18:** Para requerimentos protocolados a partir de 29 de janeiro de 2009, é garantido o cômputo dos períodos em que o segurado esteve em fruição de benefício por incapacidade, para fins de carência, desde que intercalados com períodos de contribuição ou atividade laborativa.
+I - O disposto no caput também se aplica aos segurados facultativos;
+II - Os períodos em gozo de benefício por incapacidade acidentário independem de períodos de contribuição ou atividade intercalados;
+III - O auxílio por incapacidade temporária e a aposentadoria por incapacidade permanente, decorrente de sua conversão, por se originarem da mesma moléstia incapacitante, são considerados para fins de carência;
+IV - O cômputo dos períodos em que o segurado esteve em gozo de benefício por incapacidade, para fins de carência, é aplicável em todo o território brasileiro.
+
+**ENUNCIADO Nº 19:** É inexigível a carência para a concessão do benefício de salário-maternidade, prevista no art. 25, inc. III, da Lei nº 8.213, de 24 de julho de 1991, na redação dada pelo art. 2º da Lei nº 9.876, de 26 de novembro de 1999, e pelo art. 24 da Lei nº 13.846, de 18 de junho de 2019, mantendo-se a necessidade de comprovação da qualidade de segurado, observando-se os seguintes requisitos:
+I - O contribuinte individual, na ausência de inscrição formal junto ao INSS, deverá comprovar o efetivo exercício de atividade remunerada, bem como o recolhimento de, ao menos, uma contribuição previdenciária, mediante a apresentação de documentação idônea.
+II - O Segurado Especial que contribui para auferir benefício acima do salário-mínimo deve comprovar o exercício de atividade rural em ao menos um dos 12 meses que antecedem o fato gerador e o recolhimento de ao menos uma contribuição previdenciária;
+III - Para fins de comprovação da qualidade de segurado, exige-se do Segurado Especial a demonstração, ainda que de forma descontínua, do exercício de atividade rural nos 12 (doze) meses anteriores ao fato gerador, não se exigindo a demonstração de exercício contínuo da atividade durante todo o período, nos termos do art. 39, parágrafo único, da Lei 8.213, de 24 de julho de 1991;
+IV - O Contribuinte Facultativo deve comprovar o pagamento da contribuição;
+V - O segurado que desempenhar atividades concomitantes terá direito ao salário-maternidade em relação a cada uma delas, desde que comprove o efetivo exercício na data do parto, conforme os critérios estabelecidos no art. 98 do Decreto nº 3.048, de 6 de maio de 1999.
+§1º A convalidação da filiação na qualidade de contribuinte individual para a condição de contribuinte facultativo somente poderá ser efetivada mediante manifestação expressa de concordância por parte do segurado;
+§2º O pagamento das contribuições previdenciárias devidas pelos segurados contribuinte individual, especial e facultativo deverá ser efetuado até o vencimento da respectiva competência, ainda que o parto ocorra em data anterior a esse vencimento, observado, no que couber, o Enunciado nº 5 do Conselho de Recursos da Previdência Social - CRPS;
+§3º Para fins de concessão do salário-maternidade em atividades concomitantes, exige-se a comprovação da contribuição até a data do fato gerador, salvo se presumido o recolhimento, ou, no caso de contribuinte individual por conta própria, se o fato gerador tiver ocorrido antes do prazo legal para pagamento de contribuição em dia, hipóteses em que deve comprovar o exercício da atividade.
