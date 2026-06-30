@@ -192,6 +192,10 @@ análise/peça:
   (B31/B32) e pela pensão por morte aos dependentes.
 - **Tutela de urgência** avaliada em toda petição inicial.
 - **Competência territorial e material** em toda inicial e MS (`base-ms-competencia-autoridade-coatora-inss-crps`).
+  **Regra do escritório**, para os moradores de **Monte Alto/SP**, a Justiça Federal
+  competente é a **Subseção Judiciária de Catanduva/SP** (TRF3, JEF de Catanduva). Use
+  Catanduva como foro federal padrão dos nossos clientes de Monte Alto, salvo prova de
+  domicílio em outra subseção.
 - **Tempestividade** em fase recursal; alerte risco de intempestividade.
 - **CNIS cruzado com a documentação** sempre que houver CNIS, com alerta de
   divergência, vínculo ausente, indicador de pendência, competência abaixo do
@@ -445,6 +449,19 @@ pasta do cliente no Drive.
 **Processo (judicial/administrativo) — além da regra de ouro:**
 - Mapeie os **principais atos do processo citando as folhas ou o ID**, em ordem
   cronológica, da primeira à última página e na conferência inversa.
+
+**Processo administrativo de auxílio-acidente ou benefício por incapacidade — SEMPRE
+localizar dois documentos:**
+- **A(s) folha(s) da PERÍCIA MÉDICA FEDERAL (laudo SABI/CADMED).** Em regra fica nas
+  **últimas folhas** do PA. É o **documento controverso** que a petição inicial precisa
+  **desconstituir**, lendo cada ponto e **rebatendo um a um** o que for desfavorável
+  (CID fixado a menos, conclusão de capacidade, DII negada, exame genérico, omissão de
+  doença ou de exame, laudo padronizado, etc.). Transcreva o que o perito concluiu e
+  oponha a prova documental contrária.
+- **A DECISÃO/COMUNICAÇÃO DE INDEFERIMENTO** (Despacho/Carta), que **sempre está no PA**
+  quando o processo foi concluído. Dela extraia o **NB, a data e o MOTIVO exato** do
+  indeferimento (mérito médico, renda, carência, qualidade etc.), pois é o que define a
+  causa de pedir e o prévio requerimento (Tema 350/STF). Não suponha o motivo, leia.
 
 ## Análise de PPP (padrão OBRIGATÓRIO — modelo: Israel Luis Marques, 18.06.2026)
 
