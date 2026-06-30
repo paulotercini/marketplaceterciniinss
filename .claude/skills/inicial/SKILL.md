@@ -34,6 +34,15 @@ ponto de partida, em vez de refazer o diagnostico.
   `download_file_content` em base64 quando `read_file_content` falhar; se um arquivo
   exceder ~10 MB para download, **sinalize** e registre como nao lido.
 - Leia tambem os anexos da tarefa (`todo_anexo.py`).
+- **No processo administrativo (auxilio-acidente ou beneficio por incapacidade),
+  SEMPRE localize e leia dois documentos** (ver CLAUDE.md, "Processo administrativo de
+  auxilio-acidente ou beneficio por incapacidade"):
+  1. **A(s) folha(s) da PERICIA MEDICA FEDERAL (laudo SABI/CADMED)**, em regra nas
+     ULTIMAS folhas do PA. E o documento CONTROVERSO a desconstituir, a inicial deve
+     **rebater ponto a ponto** o que for desfavoravel (CID a menos, conclusao de
+     capacidade, DII negada, exame generico, omissao de doenca/exame, laudo padronizado).
+  2. **A decisao/comunicacao de INDEFERIMENTO** (sempre no PA concluido), de onde se
+     extrai o **NB, a data e o MOTIVO exato** do indeferimento. Nao suponha, leia.
 - Localize e leia a **peticao inicial ja existente** (subpasta `Claude`) e o
   **MODELO OURO** correspondente (beneficio + esfera) na pasta Peticoes Ouro.
 
@@ -61,6 +70,9 @@ ponto de partida, em vez de refazer o diagnostico.
 - Consulte `base-revisao-peticao-aprofundada`, `base-efeito-translativo-tema-1124-defesa`
   e as `base-especial-*`/`defesa-probatoria` pertinentes. Reforce a peca contra cada
   fragilidade encontrada.
+- **Competencia (foro), regra do escritorio**, cliente morador de **Monte Alto/SP** tem
+  a Justica Federal na **Subseccao Judiciaria de Catanduva/SP** (TRF3, JEF de Catanduva).
+  Use Catanduva como foro federal padrao, salvo prova de domicilio em outra subseccao.
 
 ## 5. Coerencia fato x prova x valor
 - Toda alegacao de fato e o valor da causa devem estar amparados por um documento

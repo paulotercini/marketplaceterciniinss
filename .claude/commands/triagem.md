@@ -104,6 +104,10 @@ d) **Localizar a pasta do cliente** no Drive via `search_files`
    obrigatória; dúvida ou rasura vira **alerta para o Paulo confirmar**. Na triagem
    **NÃO pause**, REPORTE no parecer quantas páginas há, o que diz cada documento e o
    resultado da conferência (e o que não foi lido).
+   - **No PA de auxílio-acidente ou benefício por incapacidade, SEMPRE localize a(s)
+     folha(s) da PERÍCIA MÉDICA FEDERAL** (laudo SABI/CADMED, em regra nas ÚLTIMAS
+     folhas, o documento controverso a desconstituir) **e a decisão de INDEFERIMENTO**
+     (sempre no PA concluído), extraindo NB, data e MOTIVO exato. Não suponha, leia.
 
 e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
    - Conferir se a documentação do benefício está correta e completa; faltando

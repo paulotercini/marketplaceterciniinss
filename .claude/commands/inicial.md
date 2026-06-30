@@ -32,6 +32,13 @@ ponto de partida, em vez de refazer o diagnostico.
   `download_file_content` em base64 quando `read_file_content` falhar; se um arquivo
   exceder ~10 MB para download, **sinalize** e registre como nao lido.
 - Leia tambem os anexos da tarefa (`todo_anexo.py`).
+- **No PA de auxilio-acidente ou beneficio por incapacidade, SEMPRE localize e leia (a)
+  a(s) folha(s) da PERICIA MEDICA FEDERAL** (laudo SABI/CADMED, em regra nas ULTIMAS
+  folhas), o documento CONTROVERSO que a inicial deve **rebater ponto a ponto**, **e (b)
+  a decisao/comunicacao de INDEFERIMENTO** (sempre no PA concluido), de onde se extrai o
+  NB, a data e o MOTIVO exato. Nao suponha, leia. Ver CLAUDE.md.
+- **Competencia (foro)**, cliente de **Monte Alto/SP** litiga na Justica Federal da
+  **Subseccao de Catanduva/SP** (TRF3), foro federal padrao do escritorio.
 - Localize e leia a **peticao inicial ja existente** (subpasta `Claude`) e o
   **MODELO OURO** correspondente (beneficio + esfera) na pasta Peticoes Ouro.
 
