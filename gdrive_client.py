@@ -142,6 +142,24 @@ def delete(file_id):
         return json.loads(r.read())
 
 
+def update_media(file_id, path, mime=None):
+    """Atualiza o CONTEUDO de um arquivo existente no Drive (mantem o mesmo id e pasta),
+    lendo do disco local. Util para corrigir um modelo ja subido sem criar duplicata.
+    Requer escopo de escrita."""
+    import mimetypes
+    token = refresh()
+    p = pathlib.Path(path)
+    data = p.read_bytes()
+    if mime is None:
+        mime = mimetypes.guess_type(p.name)[0] or "text/plain"
+    url = (f"https://www.googleapis.com/upload/drive/v3/files/{file_id}"
+           "?uploadType=media&supportsAllDrives=true&fields=id,name")
+    req = urllib.request.Request(url, data=data, method="PATCH", headers={
+        "Authorization": f"Bearer {token}", "Content-Type": mime})
+    with urllib.request.urlopen(req, timeout=120) as r:
+        return json.loads(r.read())
+
+
 def create_folder(name, parent_id):
     """Cria uma subpasta no Drive e retorna o dict (id, name). Requer escopo de escrita."""
     token = refresh()
