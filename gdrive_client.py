@@ -142,6 +142,21 @@ def delete(file_id):
         return json.loads(r.read())
 
 
+def create_folder(name, parent_id):
+    """Cria uma subpasta no Drive e retorna o dict (id, name). Requer escopo de escrita."""
+    token = refresh()
+    url = f"{DRIVE_API}/files?supportsAllDrives=true&fields=id,name"
+    body = json.dumps({
+        "name": name,
+        "mimeType": "application/vnd.google-apps.folder",
+        "parents": [parent_id],
+    }).encode("utf-8")
+    req = urllib.request.Request(url, data=body, method="POST", headers={
+        "Authorization": f"Bearer {token}", "Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return json.loads(r.read())
+
+
 def upload(path, parent_id, name=None, mime=None):
     """Sobe um arquivo LOCAL para uma pasta do Drive (multipart), lendo do disco e
     enviando direto pela API, SEM passar base64 pelo contexto do modelo. Resolve a
