@@ -153,8 +153,14 @@ f) **Gerar a CONCLUSÃO** **ultraenxuta, 2 a 3 linhas**, só o achado e o próxi
    complemento, registra só o que foi feito na nova data.
    `python3 todo_conclusao.py "<list_id>" "<task_id>" "<conclusão>"`
 
-g) **Salvar o parecer SEMPRE em .docx (Word), no máximo UMA página**, no padrão do
-   escritório (gerar com `docx_escritorio.py`), **NÃO em Google Doc**. Suba para a
+g) **Salvar o parecer SEMPRE em .docx (Word)**, no padrão do escritório (gerar com
+   `docx_escritorio.py`), **NÃO em Google Doc**. Casos simples, **máximo UMA página**.
+   Casos de **aposentadoria/tempo, PPP, períodos rurais ou processo judicial** seguem a
+   estrutura de divisões da **"Análise da Vida Completa"** do CLAUDE.md (cabeçalho
+   tabelado, conclusão no topo, vida contributiva cronológica com PPP período a período
+   e rural, contagem de tempo, o que o cliente obteve, caminhos possíveis a/b/c), aqui a
+   regra de uma página é exceção. **Sempre apurar se o cliente tem ação contra o INSS**
+   (litispendência/averbação pendente). Suba para a
    subpasta `Claude` do cliente (criar com `create_file` mime folder se não existir) com
    `python3 gdrive_upload.py "<arquivo.docx>" "<id_subpasta_Claude>" "Parecer -
    <Cliente> - DD.MM.AAAA.docx"` (upload direto pela API, sem base64 pelo contexto).

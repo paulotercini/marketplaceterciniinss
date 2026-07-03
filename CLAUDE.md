@@ -622,6 +622,55 @@ documentos prontos para anexar**; nunca protocola/envia. Diferenças-chave:
   seção **"Pendências em aberto"**. Antes de fechar, **revise nas skills** (toda
   tese ancorada em skill lida ou documento, proibido inventar).
 
+### Parecer de "Análise da Vida Completa" (casos de aposentadoria e histórico rico)
+
+Para **aposentadoria** (tempo de contribuição, especial, PCD/LC 142, idade, rural,
+híbrida) e sempre que o cliente tiver **vida contributiva/laboral densa, PPP,
+períodos rurais ou processo judicial**, o parecer segue a estrutura de **divisões**
+abaixo (modelo do **Parecer de Viabilidade do Silvio Biancardi Serrano**, o padrão
+ouro deste tipo de análise). Aqui a regra da **uma página é exceção**, a análise da
+vida completa pode ocupar o quanto precisar para ficar clara, com títulos de seção,
+datas e valores em **negrito** e a **conclusão no topo**. Divisões, nesta ordem:
+
+1. **Cabeçalho tabelado**, cliente (nome + data de nascimento), CPF, benefício/ação
+   pretendida, DER, foro/nº do processo (se houver), sistema.
+2. **Conclusão em destaque, logo no topo**, o veredito direto (tem direito? a qual
+   benefício? em que data se aposenta?), antes de qualquer histórico.
+3. **Vida contributiva e laboral (cronológica)**, todos os vínculos e períodos em
+   ordem, cada um com a natureza e o resultado:
+   - **Períodos rurais**, datas, início de prova material, se reconhecido, pendente
+     ou a reajuizar (ver `base-tempo-rural-anterior-1991`, `base-segurado-especial-*`).
+   - **Análise de PPP período a período** (padrão OBRIGATÓRIO da seção "Análise de
+     PPP", empresa, período, agente/dose, técnica, EPI/CA, responsável, enquadra ou
+     não), com o subtotal de tempo especial.
+   - **Períodos comuns** e as competências a acertar (abaixo do mínimo por
+     complementação/agrupamento da EC 103, indicadores do CNIS).
+   - **Benefícios já concedidos/indeferidos**, NB, espécie, datas e o motivo exato.
+   - **Processos judiciais contra o INSS**, nº, vara, o que foi reconhecido, trânsito
+     em julgado, e se há **averbação/cumprimento pendente** (destravar sempre).
+4. **Contagem de tempo (a matemática)**, o total antes e depois de cada ajuste, com
+   datas, e a comparação com o requisito (35 anos, 86/pontos, idade). Mostrar o
+   impacto de cada período (ex.: "com o rural, 39a2m6d; sem ele, 31a4m22d, abaixo dos
+   35"). O cálculo fino é do **Prévius** (alertar quando faltar).
+5. **O que o cliente efetivamente tem/obteve**, separar o ganho real (ex.: averbação
+   de tempo especial reconhecida em juízo) do que ainda falta para o benefício.
+6. **Caminhos possíveis (ranqueados, a/b/c)**, cada via com o fundamento, o benefício
+   resultante, o valor estimado e o que falta, comparando pelo **melhor benefício**
+   (Tema 1018/STJ). Ex.: reajuizar o rural extinto sem mérito × nova DER com o especial
+   já averbado × aposentadoria por idade.
+7. **Pendências em aberto** e **Próximo passo recomendado** (Pronto para `/inicial`,
+   `/inicial-inss`, ou Aguardando o quê).
+
+**Verificação obrigatória, processos contra o INSS.** Em toda triagem/análise,
+apurar se o cliente **já teve ou tem ação contra o INSS** (litispendência, coisa
+julgada, averbação pendente). Fontes, o PDF do processo na pasta do Drive, o
+histórico do To Do, o CNIS/PA, e a **consulta unificada do CNJ/PDPJ**
+(`portaldeservicos.pdpj.jus.br/consulta`). O assistente **não loga no gov.br**, então
+peça ao Paulo a lista de processos por CPF quando precisar do retrato completo, ou
+trabalhe com o número do processo que ele fornecer (consulta pública do tribunal ou
+API do DataJud). Um processo transitado com **tempo reconhecido mas não averbado** é
+prioridade, destrava o benefício.
+
 ## Fluxo `/triagem`
 
 Comando em `.claude/commands/triagem.md`. Processa as tarefas atribuídas ao Paulo
