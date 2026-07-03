@@ -102,8 +102,11 @@ administrativa de 1 folha, sem lei/decreto).
   - **rol de documentos anexados** na ordem (espelha a subpasta).
 - **NAO citar lei nem decreto.** Se for indispensavel citar legislacao, **apenas
   Instrucao Normativa do INSS ou suas portarias**. Tom direto, sem dois-pontos como
-  separador logico. Salve como `00 - Requerimento Administrativo - DDMMAAAA` na
-  subpasta e tambem na subpasta `Claude`.
+  separador logico. **Gere e entregue SEMPRE em .docx editavel** (`docx_escritorio.py`),
+  pois o Paulo pode precisar ajustar antes de protocolar; a conversao para PDF e so para
+  o upload final no Meu INSS, apos a revisao dele. Salve como `00 - Requerimento
+  Administrativo - DDMMAAAA` (.docx) na subpasta `Documentos Protocolo INSS` e tambem na
+  subpasta `Claude`.
 
 ## 8. Revisao aprofundada OBRIGATORIA (base-revisao-peticao-aprofundada) — autocorrecao
 - SEMPRE, antes de fechar, rode a skill `base-revisao-peticao-aprofundada` sobre o

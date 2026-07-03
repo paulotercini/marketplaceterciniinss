@@ -587,7 +587,10 @@ documentos prontos para anexar**; nunca protocola/envia. Diferenças-chave:
 3. **Petição administrativa de no máximo 1 folha** (`00 - Requerimento
    Administrativo - DDMMAAAA`): um **norte** para o analista bater o olho — só o que
    se requer (benefício/B, DER) + rol de anexos, **sem explicações, sem lei/decreto**;
-   se indispensável citar legislação, **apenas IN do INSS ou portarias**.
+   se indispensável citar legislação, **apenas IN do INSS ou portarias**. **Entregar
+   SEMPRE em .docx editável** (o Paulo pode precisar ajustar antes de protocolar),
+   gerado pelo `docx_escritorio.py` e subido à subpasta `Claude`; a conversão para PDF
+   é só para o upload final no Meu INSS, depois da revisão do Paulo.
 4. **Checklist de documentos obrigatórios (IN 128/2022)** do benefício, com
    faltantes em destaque (evita carta de exigência).
 5. **Antecipar a carta de exigência** (red-team do analista) e já anexar/sinalizar.
