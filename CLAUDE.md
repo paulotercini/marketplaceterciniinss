@@ -193,9 +193,13 @@ análise/peça:
 - **Tutela de urgência** avaliada em toda petição inicial.
 - **Competência territorial e material** em toda inicial e MS (`base-ms-competencia-autoridade-coatora-inss-crps`).
   **Regra do escritório**, para os moradores de **Monte Alto/SP**, a Justiça Federal
-  competente é a **Subseção Judiciária de Catanduva/SP** (TRF3, JEF de Catanduva). Use
-  Catanduva como foro federal padrão dos nossos clientes de Monte Alto, salvo prova de
-  domicílio em outra subseção.
+  competente é a **Subseção Judiciária de Catanduva/SP** (TRF3). Use Catanduva como foro
+  federal padrão dos nossos clientes de Monte Alto, salvo prova de domicílio em outra
+  subseção. **Atenção ao rito**, as ações de benefício de até 60 salários mínimos vão ao
+  **JEF de Catanduva**, mas o **Mandado de Segurança é EXCLUÍDO do Juizado** (art. 3º, §1º,
+  I, da Lei 10.259/2001), então o MS vai à **Vara Federal COMUM de Catanduva**, nunca ao
+  JEF. No MS, a competência firma-se pela **sede da autoridade coatora** (Gerente-Executivo
+  do INSS), confira-a.
 - **Tempestividade** em fase recursal; alerte risco de intempestividade.
 - **CNIS cruzado com a documentação** sempre que houver CNIS, com alerta de
   divergência, vínculo ausente, indicador de pendência, competência abaixo do
