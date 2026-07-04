@@ -64,7 +64,7 @@ Refutação. Súmula 85 STJ para parcelas e prazo prescricional autônomo para d
 
 Argumento adversário. Atraso é tolerável.
 
-Refutação. Demora abusiva acima de 90 dias gera dano. Tema 1066 STF.
+Refutação. Demora abusiva acima de 90 dias gera dano. Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99.
 
 ### Argumento 6 — Suspensão por suspeita
 
@@ -124,4 +124,4 @@ Sexto, conferência de cumprimento.
 
 ## 5. Diligência de atualização
 
-Acompanhar STJ sobre quantum. Revalidar Súmula 387 STJ. Monitorar Tema 1066 STF.
+Acompanhar STJ sobre quantum. Revalidar Súmula 387 STJ. Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).

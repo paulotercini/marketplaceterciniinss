@@ -92,7 +92,7 @@ Refutação. Assistência profissional de calculista. Direito à igualdade de ar
 
 Argumento adversário. Efeitos financeiros somente do ajuizamento.
 
-Refutação. Reconhecimento retroage à DIB, com prescrição quinquenal. Tema 1124 STJ cuida do interesse de agir, não da eficácia material.
+Refutação. Reconhecimento retroage à DIB, com prescrição quinquenal. O alcance do Tema 1124 STJ nesse ponto deve ser confirmado na fonte (julgado, acórdão publicado em 05/02/2026, tese literal a confirmar).
 
 ## 4. Cláusulas doutrinárias de apoio
 

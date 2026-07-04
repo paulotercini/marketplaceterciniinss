@@ -382,7 +382,7 @@ Ver detalhamento completo em `references/CHECKLIST-POR-RITO.md`. Resumo abaixo.
 
 **CRPS.** Revisão completa. Verificações específicas de admissibilidade e processo administrativo. Recuo de 4 cm.
 
-**Mandado de segurança.** Verificação obrigatória de cabimento, direito líquido e certo, autoridade coatora, competência territorial, prazo decadencial de 120 dias (art. 23 Lei 12.016/2009), pedido liminar e fundamentos no Tema 1066/STF se houver demora administrativa.
+**Mandado de segurança.** Verificação obrigatória de cabimento, direito líquido e certo, autoridade coatora, competência territorial, prazo decadencial de 120 dias (art. 23 Lei 12.016/2009), pedido liminar e fundamentos na duração razoável do processo (art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99) se houver demora administrativa. Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 **PUIL/PEDILEF (TNU).** Verificação obrigatória das 4 hipóteses de cabimento (art. 12 §1º RITNU), paradigma válido (não TRF/STF/TST/TSE - QO 48), cotejo analítico em duas etapas, prequestionamento (QO 10/35/36 + Súmulas 282/356 STF + art. 1.025 CPC), não incidência das Súmulas 42/TNU (reexame fato) e 43/TNU (matéria processual), dialeticidade. Acionar OBRIGATORIAMENTE `base-tnu-admissibilidade-manual` e `pedilef-cotejo-analitico-tnu`.
 

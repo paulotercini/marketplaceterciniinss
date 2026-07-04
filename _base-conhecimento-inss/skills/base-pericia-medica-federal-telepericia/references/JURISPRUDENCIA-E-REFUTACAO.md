@@ -50,13 +50,15 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Define o pressuposto e não o limite substantivo.
 
-### Tema 1066 STF
+### Duração razoável do processo administrativo
 
-Tese. Obrigação do INSS de análise tempestiva de requerimentos administrativos.
+Fundamento vigente. Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99 (prazo de 30 dias para decidir, prorrogável por igual período).
 
-Fonte oficial em https://portal.stf.jus.br
+Fonte oficial em https://www.planalto.gov.br
 
 Aplicação pró-segurado. Fundamento para MS contra demora em perícia.
+
+Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ## 2. Refutação aos argumentos típicos do INSS
 

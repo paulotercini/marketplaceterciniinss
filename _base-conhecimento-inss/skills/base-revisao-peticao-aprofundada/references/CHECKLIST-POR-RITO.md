@@ -103,7 +103,7 @@ Skills relevantes. `mandado-seguranca-previdenciario`, `ms-competencia-autoridad
 - [ ] Pedido principal compatível com a Súmula 269/STF (não pode ser pago atrasado) e Súmula 271/STF (efeitos a partir da impetração).
 - [ ] Litisconsórcio passivo necessário (autarquia + autoridade) quando aplicável.
 
-**Verificação obrigatória.** Política de tutela de urgência. Tema 1066/STF se houver demora administrativa.
+**Verificação obrigatória.** Política de tutela de urgência. Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99 se houver demora administrativa. Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ## RITO 5 - PUIL/PEDILEF (Turma Nacional de Uniformização)
 

@@ -12,19 +12,21 @@ Aplicação. Impõe prévio requerimento administrativo.
 
 ### Tema 1124 STJ
 
-Tese. Interesse de agir em benefícios previdenciários. Necessidade de prévio requerimento e instrução mínima no PA.
+Julgado, acórdão publicado em 05/02/2026. Tese literal a confirmar na fonte antes de citar. Como cautela, manter o prévio requerimento e a instrução mínima no PA.
 
 Fonte oficial em https://www.stj.jus.br
 
 Aplicação. Cautela estratégica para evitar extinção sem mérito.
 
-### Tema 1066 STF
+### Duração razoável do processo administrativo
 
-Tese. Silêncio administrativo e ativismo do segurado.
+Fundamento vigente. Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99 (prazo de 30 dias para decidir, prorrogável por igual período).
 
-Fonte oficial em https://portal.stf.jus.br
+Fonte oficial em https://www.planalto.gov.br
 
-Aplicação pró-segurado.
+Aplicação pró-segurado contra o silêncio administrativo.
+
+Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ### Súmula 376 STJ
 
@@ -80,7 +82,7 @@ Refutação. Lei 13.460/2017. Formalismo excessivo vedado. Atualização gera re
 
 Argumento adversário. PA sem decisão por meses.
 
-Refutação. MS por mora. Tema 1066 STF. Razoável duração do processo.
+Refutação. MS por mora. Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99. Razoável duração do processo.
 
 ### Argumento 4 — Reavaliação bienal cessou benefício
 
@@ -104,7 +106,7 @@ Refutação. Requerimento de nova perícia. Assistente técnico. Laudos compleme
 
 Argumento adversário. INSS alega extravio.
 
-Refutação. MS para reabertura do PA. Tema 1066 STF.
+Refutação. MS para reabertura do PA. Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99.
 
 ### Argumento 8 — Indeferimento sem motivação
 

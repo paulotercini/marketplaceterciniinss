@@ -1,6 +1,6 @@
 ---
 name: base-ms-decadencia-omissao-demora
-description: "Decadência em mandado de segurança previdenciário (art. 23 Lei 12.016/2009), prazo de 120 dias, termo inicial em ato comissivo e omissivo, renovação em omissão, Súmula 632 STJ, demora INSS e duração razoável do processo administrativo pelo Tema 1066 STF. Use SEMPRE que mencionar decadência em MS, prazo 120 dias, art. 23 Lei 12.016, termo inicial MS, ato comissivo, ato omissivo, renovação em omissão, Súmula 632 STJ, demora INSS MS, Tema 1066 STF, duração razoável PA, art. 49 Lei 9.784/1999, Lei 13.460/2017, paralisação administrativa. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e lei-13460-usuario-servico-publico."
+description: "Decadência em mandado de segurança previdenciário (art. 23 Lei 12.016/2009), prazo de 120 dias, termo inicial em ato comissivo e omissivo, renovação em omissão, Súmula 632 STJ, demora INSS e duração razoável do processo administrativo (art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99). Use SEMPRE que mencionar decadência em MS, prazo 120 dias, art. 23 Lei 12.016, termo inicial MS, ato comissivo, ato omissivo, renovação em omissão, Súmula 632 STJ, demora INSS MS, duração razoável PA, art. 49 Lei 9.784/1999, Lei 13.460/2017, paralisação administrativa. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e lei-13460-usuario-servico-publico."
 ---
 
 # Decadência e Omissão em MS Previdenciário
@@ -27,11 +27,13 @@ Decadência e suspensão.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 1066 STF
+### Duração razoável do PA
 
-Duração razoável do PA.
+Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99 (prazo de 30 dias para decidir, prorrogável por igual período).
 
-Fonte oficial em https://portal.stf.jus.br
+Fonte oficial em https://www.planalto.gov.br
+
+Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ### Tema 374 STF
 

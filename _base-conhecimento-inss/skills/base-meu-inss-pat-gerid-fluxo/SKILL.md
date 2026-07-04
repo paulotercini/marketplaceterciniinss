@@ -86,7 +86,7 @@ Pelo Meu INSS o segurado anexa documentos para cumprir exigência. PDF de até 5
 
 ### Tempo de processamento
 
-Após DER, INSS tem prazo legal de 45 dias para análise (Lei 9.784/1999, art. 49). Na prática a mediana é 90 a 180 dias. Após 60 dias sem decisão, MS por mora cabível pelo Tema 1066 STF. Skill `base-ms-decadencia-omissao-demora`.
+Após DER, INSS tem prazo legal de 30 dias para decidir, prorrogável por igual período (Lei 9.784/1999, art. 49). Na prática a mediana é 90 a 180 dias. Após 60 dias sem decisão, MS por mora cabível pela duração razoável do processo (art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99). Skill `base-ms-decadencia-omissao-demora`. Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ### Sistema fora do ar
 

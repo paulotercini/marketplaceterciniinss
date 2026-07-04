@@ -2,13 +2,15 @@
 
 ## 1. Tema 1124/STJ
 
-### 1.1. Tese fixada
+### 1.1. Tese (literal a confirmar na fonte)
+
+Tema julgado, acórdão publicado em 05/02/2026. A redação abaixo é a divulgada e deve ser confirmada na íntegra do acórdão antes de citar.
 
 "O segurado, no exercício do seu direito de ação, deverá comprovar a existência de prévio requerimento administrativo perante o INSS, salvo nas hipóteses excepcionais firmadas no Tema 350/STF (RE 631.240)".
 
-### 1.2. Modulação
+### 1.2. Modulação (a confirmar na fonte)
 
-DJe 30/03/2022. Aplicação prospectiva.
+DJe 30/03/2022. Aplicação prospectiva. Dado a confirmar na íntegra do acórdão publicado em 05/02/2026.
 
 ### 1.3. Aplicação restritiva pró-segurado
 
@@ -38,15 +40,17 @@ Ações de tutela coletiva.
 
 Em qualquer destas hipóteses, dispensa-se o prévio requerimento administrativo.
 
-## 3. Tema 1066/STF
+## 3. Duração razoável do processo administrativo
 
-### 3.1. Tese fixada
+### 3.1. Fundamento vigente
 
-Reconhecimento da duração razoável do processo administrativo previdenciário.
+Art. 5º, LXXVIII, da CF (duração razoável do processo) e art. 49 da Lei 9.784/99 (prazo de 30 dias para decidir, prorrogável por igual período).
+
+Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ### 3.2. Aplicação ao Tema 1124
 
-Demora superior aos prazos legais (45 dias da Lei 9.784/1999) caracteriza indeferimento implícito.
+Demora superior aos prazos legais (art. 49 da Lei 9.784/99, 30 dias prorrogáveis por igual período) caracteriza indeferimento implícito.
 
 Aplicação por extensão da hipótese excepcional do Tema 350/STF.
 
@@ -124,7 +128,7 @@ A multa do art. 1.026, § 2º, CPC é inaplicável.
 
 ### 8.3. Tese 3 do INSS. "Tema 1124 se aplica retroativamente"
 
-Refutação. A modulação fixou aplicação prospectiva a partir de 30/03/2022.
+Refutação. A modulação fixou aplicação prospectiva a partir de 30/03/2022 (termos exatos a confirmar na íntegra do acórdão publicado em 05/02/2026).
 
 Ações ajuizadas antes não devem ser atingidas.
 
@@ -132,9 +136,9 @@ A aplicação retroativa viola o ato jurídico perfeito (art. 5º, XXXVI, CF).
 
 ### 8.4. Tese 4 do INSS. "Demora administrativa não justifica ação"
 
-Refutação. Tema 1066/STF. Tema 350/STF. Demora superior aos prazos legais caracteriza indeferimento implícito.
+Refutação. Art. 5º, LXXVIII, da CF. Tema 350/STF. Demora superior aos prazos legais caracteriza indeferimento implícito.
 
-Lei 9.784/1999, art. 49 (45 dias). Lei 13.460/2017.
+Lei 9.784/1999, art. 49 (30 dias, prorrogáveis por igual período). Lei 13.460/2017.
 
 ### 8.5. Tese 5 do INSS. "Pretensão de revisão exige novo PA"
 
@@ -310,9 +314,9 @@ STJ para MS contra ato de TRF.
 
 | Tese | Fundamento normativo | Tribunal | Aplicação |
 | --- | --- | --- | --- |
-| Tema 1124/STJ aplicação restrita | Modulação | STJ | Prospectiva 30/03/2022 |
+| Tema 1124/STJ aplicação restrita | Modulação (a confirmar na fonte) | STJ | Prospectiva 30/03/2022 (a confirmar) |
 | Tema 350/STF hipóteses excepcionais | Const | STF | Revisão / notório / MS preventivo |
-| Tema 1066/STF demora administrativa | Art. 5º LXXVIII CF | STF | >45 dias |
+| Demora administrativa | Art. 5º LXXVIII CF e art. 49 Lei 9.784/99 | Lei vigente | Prazo de 30 dias, prorrogável |
 | Súmula 98/STJ embargos prequestionadores | Procedimental | STJ | Embargos sem multa |
 | Tema 698/STJ | Vinculante | STJ | Aplicação obrigatória |
 | Tema 660/STF prequestionamento ficto | Art. 1.025 CPC | STF | Embargos improvidos |

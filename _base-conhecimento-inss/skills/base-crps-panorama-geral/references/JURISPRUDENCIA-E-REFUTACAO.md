@@ -18,11 +18,13 @@ Fonte oficial em https://www.gov.br/conselho-de-recursos-da-previdencia-social
 
 Vinculantes para o INSS e CRPS.
 
-### Tema 1066 STF
+### Duração razoável
 
-Duração razoável.
+Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99 (prazo de 30 dias para decidir, prorrogável).
 
-Fonte oficial em https://portal.stf.jus.br
+Fonte oficial em https://www.planalto.gov.br
+
+Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ### Tema 1124 STJ
 

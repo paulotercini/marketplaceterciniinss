@@ -54,7 +54,7 @@ Fonte oficial em https://www.planalto.gov.br
 
 Argumento adversário. Prazo indefinido.
 
-Refutação. MS por mora. Tema 1066 STF. Razoável duração do processo.
+Refutação. MS por mora. Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99. Razoável duração do processo.
 
 ### Argumento 2 — Recusa de averbação
 
@@ -145,3 +145,5 @@ Acompanhar acórdãos do STJ sobre Tema 609.
 Acompanhar decisões do STF sobre Tema 176.
 
 Revisar IN 128/2022 e regulamentos dos entes públicos.
+
+Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
