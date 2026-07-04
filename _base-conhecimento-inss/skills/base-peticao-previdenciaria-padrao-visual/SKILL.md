@@ -630,39 +630,69 @@ function parCorpo(opts) {
 
 ```javascript
 // Carrega logo com fallback em múltiplos caminhos e suporte a PNG/JPG.
-// Atualizado na Onda 35 (v1.25.0) para suportar PNG transparente.
+// Atualizado na Onda 54 (v1.44.0) com busca case-insensitive nas extensões
+// e cálculo dinâmico de dimensões preservando aspect ratio do arquivo real.
 function carregarLogoTercini() {
-  const candidatos = [
-    'C:\\Users\\VAIO\\INSS\\assets\\logo-tercini.png',
-    'C:\\Users\\VAIO\\INSS\\assets\\logo-tercini.jpg',
-    'C:\\Users\\VAIO\\INSS\\assets\\logo.png',
-    'C:\\Users\\VAIO\\INSS\\assets\\logo.jpg',
-    path.join(__dirname, 'assets', 'logo-tercini.png'),
-    path.join(__dirname, 'assets', 'logo-tercini.jpg'),
-    path.join(__dirname, 'assets', 'logo.png'),
-    path.join(__dirname, 'assets', 'logo.jpg'),
-    './assets/logo-tercini.png',
-    './assets/logo-tercini.jpg',
-    './assets/logo.png',
-    './assets/logo.jpg'
+  // Bases sem extensão. Cada base é testada com cada extensão candidata.
+  const bases = [
+    'C:\\Users\\VAIO\\INSS\\assets\\logo-tercini',
+    'C:\\Users\\VAIO\\INSS\\assets\\logo',
+    path.join(__dirname, 'assets', 'logo-tercini'),
+    path.join(__dirname, 'assets', 'logo'),
+    './assets/logo-tercini',
+    './assets/logo'
   ];
-  for (const candidato of candidatos) {
-    try {
-      if (fs.existsSync(candidato)) {
-        const buffer = fs.readFileSync(candidato);
-        const ext = path.extname(candidato).slice(1).toLowerCase();
-        const tipo = ext === 'jpeg' ? 'jpg' : ext;
-        return { buffer, tipo, caminho: candidato };
-      }
-    } catch (e) { /* continue */ }
+  // Extensões testadas em ambas as caixas (case-insensitive para robustez).
+  const extensoes = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG'];
+  for (const base of bases) {
+    for (const ext of extensoes) {
+      const candidato = base + ext;
+      try {
+        if (fs.existsSync(candidato)) {
+          const buffer = fs.readFileSync(candidato);
+          const extLower = ext.slice(1).toLowerCase();
+          const tipo = extLower === 'jpeg' ? 'jpg' : extLower;
+          return { buffer, tipo, caminho: candidato };
+        }
+      } catch (e) { /* continue */ }
+    }
   }
   return null;
+}
+
+// Calcula dimensões preservando aspect ratio do arquivo real.
+// Altura padrão de 75 px. Largura calculada a partir da proporção real da imagem.
+// Fallback para 83x75 se a leitura de dimensões falhar.
+function calcularDimensoesLogo(buffer, tipo) {
+  const ALTURA_PADRAO = 75;
+  const FALLBACK = { width: 83, height: 75 };
+  try {
+    // Leitura direta do cabeçalho do PNG. Bytes 16-19 = width, bytes 20-23 = height.
+    if (tipo === 'png') {
+      const larguraReal = buffer.readUInt32BE(16);
+      const alturaReal = buffer.readUInt32BE(20);
+      if (larguraReal > 0 && alturaReal > 0) {
+        const proporcao = larguraReal / alturaReal;
+        return {
+          width: Math.round(ALTURA_PADRAO * proporcao),
+          height: ALTURA_PADRAO
+        };
+      }
+    }
+    // Para JPG, leitura do SOF marker (mais complexa - fica como TODO).
+    // Por ora, para JPG usa fallback.
+  } catch (e) {
+    console.warn('[ALERTA] Falha ao ler dimensões do logo. Usando fallback.', e.message);
+  }
+  return FALLBACK;
 }
 
 const logo = carregarLogoTercini();
 if (!logo) {
   console.warn('[ALERTA] Logo do escritório NÃO localizado em nenhum dos caminhos de busca. Petição será gerada SEM logo. Salve logo-tercini.png em C:\\Users\\VAIO\\INSS\\assets\\ e regenere.');
 }
+
+const dimensoesLogo = logo ? calcularDimensoesLogo(logo.buffer, logo.tipo) : { width: 83, height: 75 };
 
 const logoCell = logo
   ? new TableCell({
@@ -677,7 +707,7 @@ const logoCell = logo
             new ImageRun({
               data: logo.buffer,
               type: logo.tipo, // detectado dinamicamente: "png" ou "jpg"
-              transformation: { width: 83, height: 75 } // ≈ 791210x712470 EMU
+              transformation: dimensoesLogo // calculadas dinamicamente preservando aspect ratio
             })
           ]
         })
@@ -951,9 +981,28 @@ Para resolver, o usuário deve.
 2. Salvar o arquivo do logo do escritório nela como `logo-tercini.png`.
 3. Re-rodar a geração da petição.
 
-### Dimensões
+### Dimensões (atualizado Onda 54)
 
-Dimensões do logo no header (EMU). cx=791210, cy=712470. Em pixels a 96 DPI, aproximadamente 83×75. O parâmetro `transformation: { width: 83, height: 75 }` no `ImageRun` reproduz fielmente o tamanho original.
+**A partir da Onda 54 (v1.44.0), as dimensões são calculadas DINAMICAMENTE preservando o aspect ratio do arquivo real.**
+
+Comportamento.
+- A função `calcularDimensoesLogo` lê os bytes 16-23 do PNG para obter width/height nativos.
+- Fixa altura em **75 px** (padrão do layout do header).
+- Calcula largura proporcional. `Math.round(75 × larguraReal / alturaReal)`.
+- Fallback para `83×75` se a leitura falhar.
+
+**Motivação da mudança.** O logo atual do escritório tem 538×421 px (proporção 1.278), mas a versão anterior forçava 83×75 (proporção 1.107). Isso comprimia verticalmente a imagem, distorcendo o design da balança. Agora a proporção original é preservada.
+
+**Exemplos práticos.**
+
+| Logo real | Proporção | Width calculado | Height final |
+|-----------|-----------|-----------------|--------------|
+| 538×421 px | 1.278 | 96 px | 75 px |
+| 512×512 px | 1.000 | 75 px | 75 px |
+| 400×300 px | 1.333 | 100 px | 75 px |
+| 600×450 px | 1.333 | 100 px | 75 px |
+
+Para JPG, ainda usa fallback `83×75` (leitura de dimensões via SOF marker será implementada em onda futura).
 
 ### Característica Visual do Logo
 
