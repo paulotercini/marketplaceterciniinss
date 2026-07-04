@@ -14,6 +14,8 @@ OU
 
 `logo.jpg` (legado, mantido por compatibilidade)
 
+**A partir da Onda 54 (v1.44.0), a busca é CASE-INSENSITIVE nas extensões.** Você pode salvar como `.png` OU `.PNG` OU `.jpg` OU `.JPG` OU `.jpeg` OU `.JPEG`. A skill localiza corretamente em qualquer caso.
+
 ## LOCAIS DE BUSCA DO LOGO
 
 A skill geradora `peticao-previdenciaria` busca o logo na ordem abaixo. O primeiro encontrado é utilizado.
@@ -56,7 +58,7 @@ Se nenhum arquivo for encontrado, a petição é gerada SEM logo. Um alerta é e
 
 2. Confirmar que o arquivo é PNG ou JPG.
 
-3. Confirmar que as dimensões sejam aproximadamente 83x75 px (a 96 DPI) ou múltiplo. Dimensões muito diferentes serão redimensionadas pelo `transformation` do `ImageRun`.
+3. **A partir da Onda 54 (v1.44.0), qualquer dimensão é aceita.** A skill lê os pixels reais do PNG e calcula largura preservando aspect ratio (altura fixa em 75 px). Não há mais distorção. Recomenda-se ao menos 300 px de altura no arquivo fonte para preservar qualidade visual quando renderizado no docx.
 
 4. Próxima petição gerada já trará o logo no cabeçalho.
 
