@@ -26,19 +26,19 @@ Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Permite prova ampla da miserabilidade.
 
-### Tema 312 TNU
+### Tema 312 STF
 
 Tese. Concessão de BPC e cômputo de benefício excluído.
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado.
 
-### Tema 640 TNU
+### Tema 640 STJ
 
 Tese. Flexibilização e exclusões de renda em hipóteses específicas.
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado.
 

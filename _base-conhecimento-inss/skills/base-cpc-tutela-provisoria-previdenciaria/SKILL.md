@@ -39,7 +39,7 @@ Primeiro, probabilidade do direito. Caráter alimentar reforça. Tema 313/STJ (e
 
 Segundo, perigo de dano. Presunção pró-segurado em benefício alimentar.
 
-Terceiro, reversibilidade. Súmula 729/STF modulada. Recebimento de boa-fé afasta devolução (Tema 692/STF, Tema 1009/STJ com cuidado).
+Terceiro, reversibilidade. Súmula 729/STF modulada. Recebimento de boa-fé afasta devolução (Tema 692/STJ, Tema 1009/STJ com cuidado).
 
 ## Cenários pró-segurado
 

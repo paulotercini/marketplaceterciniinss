@@ -1,6 +1,6 @@
 ---
 name: base-bpc-renda-per-capita-miserabilidade
-description: "BPC/LOAS critério de renda per capita, miserabilidade e Decreto 12.534/2025 (Bolsa Família), ótica pró-segurado. Use SEMPRE que mencionar renda per capita BPC, miserabilidade BPC, 1/4 salário mínimo, grupo familiar BPC, art. 20 §3º LOAS, Tema 27 STF, RE 567985, REsp 1112557 STJ, flexibilização critério renda, exclusões renda BPC, benefício excluído cálculo, art. 20 §14 LOAS, renda conjuntural temporária, deduções despesas saúde Anexo I Portaria 34 MDS, Decreto 12.534/2025, Bolsa Família renda BPC, cessação BPC Bolsa Família, revogação art. 4º §2º Decreto 6.214, inconstitucionalidade Decreto 12.534, retrocesso social, irrepetibilidade BPC, Enunciado 17 CRPS, Tema 73 STJ, Tema 312 640 TNU, rol taxativo família BPC, composição grupo familiar, cunhado sobrinho grupo familiar, renda informal BPC, PBF Programa Bolsa Família, auxílio-inclusão. Aciona analise-bpc-loas. Cruza com base-bpc-loas-requisitos, bpc-renda-grupo-familiar, analise-bpc-loas, peticao-previdenciaria e precedentes-previdenciarios."
+description: "BPC/LOAS critério de renda per capita, miserabilidade e Decreto 12.534/2025 (Bolsa Família), ótica pró-segurado. Use SEMPRE que mencionar renda per capita BPC, miserabilidade BPC, 1/4 salário mínimo, grupo familiar BPC, art. 20 §3º LOAS, Tema 27 STF, RE 567985, REsp 1112557 STJ, flexibilização critério renda, exclusões renda BPC, benefício excluído cálculo, art. 20 §14 LOAS, renda conjuntural temporária, deduções despesas saúde Anexo I Portaria 34 MDS, Decreto 12.534/2025, Bolsa Família renda BPC, cessação BPC Bolsa Família, revogação art. 4º §2º Decreto 6.214, inconstitucionalidade Decreto 12.534, retrocesso social, irrepetibilidade BPC, Enunciado 17 CRPS, Tema 73 STJ, Tema 312 STF, Tema 640 STJ, rol taxativo família BPC, composição grupo familiar, cunhado sobrinho grupo familiar, renda informal BPC, PBF Programa Bolsa Família, auxílio-inclusão. Aciona analise-bpc-loas. Cruza com base-bpc-loas-requisitos, bpc-renda-grupo-familiar, analise-bpc-loas, peticao-previdenciaria e precedentes-previdenciarios."
 ---
 
 # BPC/LOAS. Renda Per Capita e Miserabilidade
@@ -63,7 +63,7 @@ Antes do Decreto 12.534/2025, Bolsa Família era excluído da renda por força d
 
 ## Flexibilização jurisprudencial
 
-Tema 27 STF abre a flexibilização em caso concreto. REsp 1.112.557 STJ autoriza prova ampla da miserabilidade por todas as circunstâncias. Tema 73 STJ integra a leitura pró-segurado. Tema 312 e Tema 640 TNU complementam.
+Tema 27 STF abre a flexibilização em caso concreto. REsp 1.112.557 STJ autoriza prova ampla da miserabilidade por todas as circunstâncias. Tema 73 STJ integra a leitura pró-segurado. Tema 312 STF e Tema 640 STJ complementam.
 
 ## Deduções de despesas de saúde
 

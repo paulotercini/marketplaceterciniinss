@@ -130,5 +130,5 @@ Para CONTRIBUIÇÕES PREVIDENCIÁRIAS. Discussão técnica. A regra é a prescri
 - Súmula Vinculante 53 STF.
 - Súmula 31/TNU (sentença trabalhista como prova previdenciária).
 - Tema 297/TNU (requisitos para uso da sentença).
-- Tema 1188/STF (participação do INSS no processo trabalhista).
+- Tema 1188/STJ (sentença trabalhista homologatória e anotação em CTPS como início de prova material).
 - Súmula 149/STJ (prova testemunhal isolada).

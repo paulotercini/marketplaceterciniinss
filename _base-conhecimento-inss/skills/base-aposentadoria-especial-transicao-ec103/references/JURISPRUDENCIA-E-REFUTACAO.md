@@ -42,11 +42,11 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado. Refuta tese de tempo mínimo.
 
-### Tema 942 STJ
+### Tema 942 STF
 
 Tese. A conversão do tempo especial em comum é direito do segurado, observados os fatores correspondentes ao período. A vedação só se aplica após a EC 103/2019.
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Garante a conversão de todo tempo especial pré-reforma.
 
@@ -92,7 +92,7 @@ Refutação. Tema 1090 STJ e Tema 555 STF. Em hipóteses excepcionais, especialm
 
 Argumento adversário. A conversão de tempo especial em comum foi totalmente vedada após a reforma.
 
-Refutação. Art. 25, §2º, da EC 103 e Tema 942 STJ. A conversão permanece viva para períodos cumpridos até 13 de novembro de 2019. A vedação só alcança tempo pós-reforma.
+Refutação. Art. 25, §2º, da EC 103 e Tema 942 STF. A conversão permanece viva para períodos cumpridos até 13 de novembro de 2019. A vedação só alcança tempo pós-reforma.
 
 ### Argumento 4 — Aplicação de regra permanente em quem tinha direito adquirido
 

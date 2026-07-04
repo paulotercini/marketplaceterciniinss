@@ -30,11 +30,11 @@ Lei 10.259/2001 JEF, art. 4º. Cabimento no JEF.
 
 ## 4. Marco jurisprudencial central
 
-### Tema 692 STF
+### Tema 692 STJ
 
 Devolução de valores recebidos de boa-fé em tutela revogada.
 
-Fonte oficial em https://portal.stf.jus.br
+Fonte oficial em https://www.stj.jus.br
 
 ### Tema 1009 STJ
 
@@ -94,7 +94,7 @@ Liminar art. 7º III Lei 12.016/2009. Regime próprio.
 
 ### Cenário H — Reversibilidade discutida
 
-Se INSS recorrer com sucesso, segurado pode devolver. Tema 692/STF afasta em boa-fé.
+Se INSS recorrer com sucesso, segurado pode devolver. Tema 692/STJ afasta em boa-fé.
 
 ### Cenário I — Suspensão de segurança
 
@@ -122,7 +122,7 @@ Sexto, sustentar em caso de suspensão.
 
 Risco de indeferimento liminar. Interpor agravo de instrumento.
 
-Risco de revogação posterior. Tema 692/STF e Tema 1009/STJ afastam devolução em boa-fé.
+Risco de revogação posterior. Tema 692/STJ e Tema 1009/STJ afastam devolução em boa-fé.
 
 Risco de suspensão de segurança. Preparar defesa.
 

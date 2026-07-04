@@ -6,9 +6,9 @@
 
 Tempo no RPPS e direito adquirido. Fonte oficial em https://portal.stf.jus.br
 
-### Tema 942 STJ
+### Tema 942 STF
 
-Contagem recíproca. Fonte oficial em https://www.stj.jus.br
+Contagem recíproca. Fonte oficial em https://portal.stf.jus.br
 
 ### CF/88, art. 201 §9º
 

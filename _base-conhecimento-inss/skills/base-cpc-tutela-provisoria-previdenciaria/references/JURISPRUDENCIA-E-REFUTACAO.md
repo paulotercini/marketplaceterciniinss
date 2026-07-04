@@ -2,11 +2,11 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 692 STF
+### Tema 692 STJ
 
-RE 638.115. Recebidos de boa-fé em tutela revogada. Não devolução.
+Recebidos de boa-fé em tutela revogada. Não devolução.
 
-Fonte oficial em https://portal.stf.jus.br
+Fonte oficial em https://www.stj.jus.br
 
 ### Tema 1009 STJ
 
@@ -72,7 +72,7 @@ Refutação. Documentos anexados e tese consolidada conferem probabilidade. Art.
 
 Argumento adversário. Art. 300 §3º CPC.
 
-Refutação. Tema 692 STF. Boa-fé afasta devolução. Caráter alimentar.
+Refutação. Tema 692 STJ. Boa-fé afasta devolução. Caráter alimentar.
 
 ### Argumento 3 — Ausência de perigo de dano
 
@@ -108,7 +108,7 @@ Refutação. Cabível em tutela antecedente art. 303 se INSS não recorrer.
 
 Argumento adversário. Enriquecimento sem causa.
 
-Refutação. Tema 692 STF e Tema 1009 STJ. Boa-fé afasta.
+Refutação. Tema 692 STJ e Tema 1009 STJ. Boa-fé afasta.
 
 ### Argumento 9 — Suspensão de segurança
 
@@ -158,4 +158,4 @@ Acompanhar Tema 1085 STJ sobre estabilização.
 
 Revalidar modulação da Súmula 729 STF.
 
-Acompanhar Tema 692 STF em cumprimento.
+Acompanhar Tema 692 STJ em cumprimento.

@@ -34,19 +34,19 @@ Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado.
 
-### Tema 312 TNU
+### Tema 312 STF
 
 Tese. Cômputo de benefício excluído.
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado.
 
-### Tema 640 TNU
+### Tema 640 STJ
 
 Tese. Exclusões de renda em situações específicas.
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado.
 

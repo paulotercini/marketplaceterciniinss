@@ -66,9 +66,9 @@ REsp 1.112.557 STJ. Prova ampla da miserabilidade.
 
 Tema 73 STJ. Integração pró-segurado.
 
-Tema 312 TNU. Cômputo de benefício excluído.
+Tema 312 STF. Cômputo de benefício excluído.
 
-Tema 640 TNU. Exclusões específicas.
+Tema 640 STJ. Exclusões específicas.
 
 ## 7. Cenários operacionais pró-segurado
 

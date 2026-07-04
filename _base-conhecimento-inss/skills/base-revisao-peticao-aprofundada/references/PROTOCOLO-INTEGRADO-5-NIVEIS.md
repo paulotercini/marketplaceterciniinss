@@ -188,8 +188,8 @@ Casos clássicos de modulação a atentar.
 
 - **Tema 1102/STF** (Revisão da Vida Toda) teve modulação em 2024 que limitou efeitos.
 - **Tema 1124/STJ** (prévio requerimento administrativo em concessão de benefícios), julgado com acórdão publicado em 05/02/2026, modulação a confirmar na fonte.
-- **Tema 942/STJ** (aposentadoria especial e direito ao melhor benefício).
-- **Tema 709/STJ** (aposentadoria especial e vedação retorno atividade especial).
+- **Tema 942/STF** (aposentadoria especial e direito ao melhor benefício).
+- **Tema 709/STF** (aposentadoria especial e vedação retorno atividade especial).
 
 Achado se modulação não foi mencionada quando aplicável. IMPORTANTE.
 

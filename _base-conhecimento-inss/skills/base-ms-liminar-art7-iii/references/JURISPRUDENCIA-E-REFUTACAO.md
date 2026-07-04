@@ -22,7 +22,7 @@ Fonte oficial em https://www.planalto.gov.br
 
 Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
-### Tema 692 STF
+### Tema 692 STJ
 
 Devolução em boa-fé.
 
@@ -56,7 +56,7 @@ Refutação. Documentação idônea assegura.
 
 Argumento adversário. Art. 7º §3º.
 
-Refutação. Caráter alimentar. Tema 692 STF.
+Refutação. Caráter alimentar. Tema 692 STJ.
 
 ### Argumento 3 — Vedação do §2º
 
@@ -136,6 +136,6 @@ Sexto, resistência a suspensão.
 
 ## 6. Diligência de atualização
 
-Revalidar Tema 692 STF.
+Revalidar Tema 692 STJ.
 
 Acompanhar modulações da Súmula 729 STF.
