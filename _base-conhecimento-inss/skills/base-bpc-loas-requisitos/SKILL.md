@@ -182,6 +182,28 @@ Em casos concretos.
 
 Mapa exaustivo das alterações em `references/DECRETO-6214-2007-ATUALIZACAO-2025.md`.
 
+## TEMA 385/TNU (Onda 52) - BPC NÃO EXIGE INCAPACIDADE PARA O TRABALHO
+
+**Julgado em 24/06/2026 pela TNU**. Precedente PARADIGMÁTICO para toda ação de BPC.
+
+**Tese central pró-segurado.** "Para fins de concessão do BPC/LOAS, a caracterização da deficiência NÃO EXIGE a demonstração de incapacidade para o trabalho. O requisito legal é o impedimento de longo prazo de natureza física, mental, intelectual ou sensorial, entendido como alteração ou perda significativas na função ou estrutura do corpo, que, em interação com barreiras, obstrua a participação plena e efetiva do requerente na sociedade em igualdade de condições com as demais pessoas, devendo sua aferição ser realizada por meio de avaliação biopsicossocial."
+
+**3 Parâmetros de Economia Processual (aplicação prática).**
+
+**Parâmetro (i).** Constatação judicial, com base em perícia médica, de INEXISTÊNCIA de impedimento, IMPEDIMENTO DE GRAU LEVE ou IMPEDIMENTO PASSÍVEL DE RESOLUÇÃO EM MENOS DE 2 ANOS = DISPENSA a avaliação biopsicossocial (afasta pressuposto da deficiência).
+
+**Parâmetro (ii).** Constatação de INCAPACIDADE TOTAL DE LONGO PRAZO para qualquer atividade laborativa = gera PRESUNÇÃO RELATIVA (iuris tantum) DE DEFICIÊNCIA, DISPENSANDO a avaliação biopsicossocial. Ressalvada a possibilidade de o julgador afastá-la diante de elementos concretos que indiquem ausência de barreiras relevantes no caso específico.
+
+**Parâmetro (iii).** Constatação de impedimento de GRAU MODERADO ou GRAVE sem incapacidade total de longo prazo = EXIGE a avaliação biopsicossocial, com análise, feita por assistente social, dos fatores ambientais, das limitações de atividade e das restrições de participação social.
+
+**A avaliação biopsicossocial NÃO SE CONFUNDE com a análise de miserabilidade** exigida para o segundo requisito do BPC.
+
+**Estratégia pró-segurado.** Em caso de INSS negar BPC por "capacidade laborativa preservada", invocar o Tema 385/TNU. A rigor. deficiência não é incapacidade laboral. Ambos podem existir separadamente.
+
+**Aplicação combinada com o Parâmetro (ii).** Em segurados com laudo de incapacidade total permanente (B91), há PRESUNÇÃO de deficiência para fins de BPC, sem necessidade de nova avaliação biopsicossocial. Cabe pedido cumulativo ou sucessivo.
+
+Detalhamento na reference `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-TNU.md` (entrada Tema 385).
+
 ## PEDILEF 5001885-13.2023.4.04.7209/SC TNU (Onda 51) - TAXATIVIDADE DO ROL DO §1º ART. 20 LOAS
 
 Julgado em 10/12/2025 pela TNU, Rel. Juiz Federal João Carlos Cabrelon de Oliveira, decisão UNÂNIME.

@@ -50,3 +50,17 @@ Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISP
 ## Hub de portarias administrativas
 
 Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
+## TRABALHO DOMÉSTICO NÃO REMUNERADO EQUIPARADO AO REMUNERADO (Onda 52)
+
+**Precedente vinculante regional.** TRU 4ª Região, PUIL 5002876-10.2023.4.04.7202/TRF, Rel. Juíza Federal Susana Sbrogio Galia, sessão de 26/06/2026 em SJSC.
+
+**Tese 1.** Salvo comprovação em sentido contrário, a execução de trabalho doméstico não remunerado impõe exigência física e riscos ergonômicos EQUIPARADOS ao trabalho doméstico remunerado.
+
+**Tese 2.** NÃO SE PRESUME que o(a) segurado(a) facultativo(a), inserido(a) em categoria de filiação previdenciária que não exerce atividade remunerada (Decreto 3.048/99, art. 11), realiza trabalho doméstico com menor exigência física e menos riscos ergonômicos do que o(a) trabalhador(a) doméstico(a) remunerado(a).
+
+**Aplicação pró-segurada.** A dona de casa segurada facultativa (baixa renda ou comum) que fica incapaz para as tarefas domésticas cotidianas tem direito ao B31/B91/B92. INSS ou juiz que negue com base em "atividade doméstica menor esforço" viola esta tese.
+
+Esta tese vincula regionalmente as Turmas Recursais da 4ª Região. Em outras regiões (TRF3 incluído), usar como precedente persuasivo em conjunto com a Resolução CNJ 492/2023 (Protocolo de Gênero).
+
+Detalhamento em `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.

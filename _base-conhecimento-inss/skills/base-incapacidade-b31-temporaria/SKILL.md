@@ -128,6 +128,18 @@ Texto integral da Portaria 914/2021 disponível em `/sessions/fervent-bold-lovel
 
 Cruzar com `analise-documental-incapacidade`, `admissibilidade-barreiras-crps`, `mandado-seguranca-previdenciario` para estratégia recursal e MS.
 
+## TRABALHO DOMÉSTICO NÃO REMUNERADO - INCAPACIDADE DA DONA DE CASA (Onda 52)
+
+**Precedente vinculante regional.** TRU 4ª Região, PUIL 5002876-10.2023.4.04.7202/TRF, Rel. Juíza Federal Susana Sbrogio Galia, sessão de 26/06/2026 em SJSC.
+
+**Tese.** A execução de trabalho doméstico não remunerado impõe exigência física e riscos ergonômicos EQUIPARADOS ao trabalho doméstico remunerado, salvo comprovação em sentido contrário.
+
+**Aplicação prática ao B31.** Segurada facultativa (ou facultativa de baixa renda) dona de casa que sofre incapacidade para as tarefas domésticas cotidianas TEM DIREITO ao B31. INSS não pode negar sob o argumento de que "trabalho doméstico não remunerado exige menos esforço".
+
+**Prova.** Basta laudo médico atestando as limitações. A tese TRU4 gera presunção favorável à segurada.
+
+Cruzar com `base-facultativo-baixa-renda`, `perspectiva-genero-previdenciario` (skill local) e `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.
+
 ## O que NÃO está nesta skill
 
 Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.

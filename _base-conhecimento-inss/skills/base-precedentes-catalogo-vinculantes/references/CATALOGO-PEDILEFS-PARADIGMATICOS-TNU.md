@@ -98,6 +98,50 @@ Documento eletrônico assinado por JOÃO CARLOS CABRELON DE OLIVEIRA, Juiz Relat
 
 Anexada ao plugin via documento original fornecido pelo escritório.
 
+## PUIL/PEDILEF Regional 5002876-10.2023.4.04.7202/TRF - TRU 4ª Região
+
+**Tribunal.** Turma Regional de Uniformização dos Juizados Especiais Federais da 4ª Região (TRU/JEFs 4ª Região).
+
+**Local da sessão.** Seção Judiciária de Santa Catarina (SJSC), Florianópolis.
+
+**Data.** 26/06/2026 (sexta-feira, conforme publicação oficial do TRF4).
+
+**Relatora.** Juíza Federal Susana Sbrogio Galia.
+
+**Fonte primária verificada.** Notícia oficial do TRF4 (www.trf4.jus.br) e post oficial @trf4_oficial em 25/06/2026.
+
+### Tese Firmada pela TRU 4ª Região
+
+**Tese 1.** "Salvo comprovação em sentido contrário, a execução de trabalho doméstico não remunerado impõe exigência física e riscos ergonômicos equiparados ao trabalho doméstico remunerado."
+
+**Tese 2.** "Não se presume que o(a) segurado(a) facultativo(a), inserido(a) em categoria de filiação previdenciária que não exerce atividade remunerada (Decreto 3.048/99, art. 11), realiza trabalho doméstico com menor exigência física e menos riscos ergonômicos do que o(a) trabalhador(a) doméstico(a) remunerado(a)."
+
+### Voto Literal da Relatora
+
+"A execução de trabalho doméstico não remunerado impõe exigência física e riscos ergonômicos equiparados ao trabalho doméstico remunerado, salvo comprovação em sentido contrário; não se presume que, por se inserir o segurado facultativo em categoria de filiação previdenciária que não exerce atividade remunerada, ao realizar trabalho doméstico (não remunerado), estará sujeito a menor exigência física e menos riscos ergonômicos do que o trabalhador doméstico remunerado."
+
+### Contexto Fático
+
+Pedido de benefício por incapacidade feito por uma DONA DE CASA. TR de origem havia negado sob o entendimento de que trabalho doméstico não remunerado teria menor exigência física. TRU 4 acolheu incidente para determinar novo julgamento.
+
+### Aplicação Pró-Segurado
+
+**Cenário 1.** Segurada facultativa dona de casa que fica incapaz para as tarefas domésticas cotidianas. INSS ou juiz pode alegar que "atividade doméstica não remunerada exige menos esforço". Este precedente derruba a presunção.
+
+**Cenário 2.** Segurada especial rural que também realiza trabalho doméstico. Cabe reforço nas alegações de incapacidade para atividade habitual.
+
+**Cenário 3.** Segurada em manutenção de qualidade que exerce trabalho doméstico não remunerado antes da DII. Reforço da noção de "atividade habitual" para fins de B31/B91.
+
+### Cruzamento com Perspectiva de Gênero
+
+Este precedente dialoga com a Resolução CNJ 492/2023 (Protocolo para Julgamento com Perspectiva de Gênero) porque o trabalho doméstico não remunerado é, majoritariamente, realizado por mulheres. A tese uniformiza que este trabalho merece igual proteção previdenciária que o trabalho doméstico formal.
+
+Cruzar com `perspectiva-genero-previdenciario`, `base-facultativo-baixa-renda`, `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`.
+
+### Efeito Vinculante
+
+Por ser PUIL regional acolhido, a tese vincula todas as Turmas Recursais da 4ª Região. Para uso em SP/MS (TRF3) e outras regiões, cita-se como precedente persuasivo (não vinculante regionalmente).
+
 ## OUTROS PEDILEFs PARADIGMÁTICOS A INCORPORAR
 
 A reference é incremental. Novos PEDILEFs paradigmáticos confirmados em fonte primária podem ser adicionados.

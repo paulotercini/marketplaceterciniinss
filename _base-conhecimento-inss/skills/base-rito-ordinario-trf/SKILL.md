@@ -137,6 +137,22 @@ Jane Berwanger, processo previdenciário.
 
 IBDP, advocacia previdenciária.
 
+## ART. 343-A DO RISTJ - RESUMO ANALÍTICO OBRIGATÓRIO (Onda 52)
+
+**Vigente desde junho/2026.** Novo artigo do Regimento Interno do STJ que impõe RESUMO ANALÍTICO em toda petição destinada ao STJ.
+
+**Redação.** "Art. 343-A. Nos termos de ato regulamentar da Presidência, todas as iniciais de ações originárias e as petições de recurso dirigidas ao Superior Tribunal de Justiça deverão conter resumo dos fundamentos de fato e de direito, dos pedidos formulados, do teor das eventuais decisões impugnadas e dos dispositivos legais invocados pelo autor ou pelo recorrente, conforme o caso."
+
+**Aplicação obrigatória em.** REsp, AREsp, Agravo Interno, Reclamação, Embargos de Divergência, HC, HD, MS contra ato de Ministro.
+
+**4 elementos do resumo.**
+1. Fundamentos de fato e de direito.
+2. Pedidos formulados.
+3. Teor das eventuais decisões impugnadas.
+4. Dispositivos legais invocados.
+
+Detalhamento operacional com modelo de estrutura em `references/ART-343-A-RISTJ-RESUMO-ANALITICO.md`.
+
 ## O que NÃO está nesta skill
 
 JEF está em `base-jef-previdenciario` e `base-recursos-jef`. CRPS está em `base-crps-panorama-geral`. Cumprimento está em `base-cumprimento-sentenca-rpv-precatorio`.
