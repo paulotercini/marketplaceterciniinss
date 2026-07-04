@@ -37,7 +37,9 @@ A solução pelo CPC/2015 é a observância do contraditório prévio, mesmo nas
 
 ## 3. O Tema 1124/STJ na perspectiva do efeito translativo
 
-### 3.1. Tese fixada no Tema 1124
+### 3.1. Tese do Tema 1124 (literal a confirmar na fonte)
+
+Tema julgado, acórdão publicado em 05/02/2026. A redação abaixo é a divulgada e deve ser confirmada na íntegra do acórdão antes de citar.
 
 "O segurado, no exercício do seu direito de ação, deverá comprovar a existência de prévio requerimento administrativo perante o INSS, salvo nas hipóteses excepcionais firmadas no Tema 350/STF (RE 631.240)".
 
@@ -155,9 +157,9 @@ Tema 1124/STJ na perspectiva do efeito translativo.
 
 ### 8.1. Datas-chave
 
-DJe 30/03/2022. Publicação da tese.
+DJe 30/03/2022. Publicação da tese. Dado a confirmar na fonte, pois o acórdão do julgamento foi publicado em 05/02/2026.
 
-Modulação. Aplicação a partir da publicação, com proteção das ações ajuizadas em momento anterior.
+Modulação. Aplicação a partir da publicação, com proteção das ações ajuizadas em momento anterior. Confirmar os termos exatos da modulação na íntegra do acórdão.
 
 ### 8.2. Aplicação prática
 

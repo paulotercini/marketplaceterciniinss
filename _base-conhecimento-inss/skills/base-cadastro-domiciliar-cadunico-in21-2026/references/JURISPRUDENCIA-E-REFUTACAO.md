@@ -94,11 +94,13 @@ Aplicação por extensão. Restrições infralegais ao BPC, incluindo as relacio
 
 Critérios para o reconhecimento da deficiência.
 
-### 3.3. Tema 1066/STF
+### 3.3. Duração razoável do processo administrativo
 
-Duração razoável do processo administrativo.
+Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99 (prazo de 30 dias para decidir, prorrogável).
 
 Aplicação. Demora do gestor municipal em realizar o Cadastro Domiciliar configura ofensa a direito.
+
+Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ### 3.4. Tema 979/STJ (REsp 1.401.560)
 

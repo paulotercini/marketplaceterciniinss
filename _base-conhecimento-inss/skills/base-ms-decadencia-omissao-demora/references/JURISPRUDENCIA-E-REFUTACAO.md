@@ -8,11 +8,13 @@ Decadência.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 1066 STF
+### Duração razoável
 
-Duração razoável.
+Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99 (prazo de 30 dias para decidir, prorrogável).
 
-Fonte oficial em https://portal.stf.jus.br
+Fonte oficial em https://www.planalto.gov.br
+
+Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ### Tema 374 STF
 
@@ -84,7 +86,7 @@ Refutação. Exige iminência.
 
 Argumento adversário. Administrativa.
 
-Refutação. Tema 1066 STF afirma duração razoável.
+Refutação. Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99 asseguram duração razoável.
 
 ### Argumento 9 — Prorrogação PA afasta MS
 
@@ -127,8 +129,6 @@ Quinto, fundamentação.
 Sexto, preservar MS.
 
 ## 6. Diligência de atualização
-
-Acompanhar Tema 1066 STF.
 
 Revalidar Lei 13.460/2017.
 

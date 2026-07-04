@@ -28,9 +28,9 @@ Lei 8.213/91.
 
 Decadência em MS.
 
-### Tema 1066 STF
+### Duração razoável PA
 
-Duração razoável PA.
+Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99. Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ### Tema 374 STF
 

@@ -88,7 +88,7 @@ Refutação. Até três testemunhas por parte é usual. Tempo rural pode exigir 
 
 Argumento adversário. Prazo superado.
 
-Refutação. MS por mora. Tema 1066 STF.
+Refutação. MS por mora. Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99.
 
 ### Argumento 9 — Valor excedente em revisão
 
@@ -137,3 +137,5 @@ Acompanhar enunciados FONAJEF.
 Acompanhar Turmas Recursais locais.
 
 Revalidar Tema 1030 STJ.
+
+Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).

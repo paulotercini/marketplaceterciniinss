@@ -39,9 +39,9 @@ MS é instrumento de compensação tributária.
 
 Arquivamento de PA e reabertura.
 
-### Tema 1066 STF
+### Duração razoável do processo administrativo
 
-Duração razoável do processo administrativo.
+Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99 (prazo de 30 dias para decidir, prorrogável). Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ### Tema 1124 STJ
 
@@ -59,7 +59,7 @@ Quarto, decadência respeitada (120 dias).
 
 ## Hipóteses de cabimento pró-segurado
 
-Primeiro, demora injustificada na análise de requerimento. Tema 1066 STF.
+Primeiro, demora injustificada na análise de requerimento. Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99.
 
 Segundo, exigência documental não prevista em lei. Lei 13.460/2017.
 

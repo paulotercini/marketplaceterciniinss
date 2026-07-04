@@ -110,7 +110,7 @@ Quando o cliente PODE escolher entre regras (transição vs permanente), simular
 
 ## Estratégia judicial
 
-Se INSS demora mais de 60 dias após DER, MS por mora administrativa pelo Tema 1066 STF. Skill `base-ms-decadencia-omissao-demora`.
+Se INSS demora mais de 60 dias após DER, MS por mora administrativa com fundamento no art. 5º, LXXVIII, da CF e no art. 49 da Lei 9.784/99. Skill `base-ms-decadencia-omissao-demora`. Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 Se INSS indefere DER cumprida, recurso ordinário ao CRPS em 30 dias. Skill `ponte-workflow-crps`.
 

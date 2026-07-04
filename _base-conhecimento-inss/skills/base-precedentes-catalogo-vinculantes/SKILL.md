@@ -61,7 +61,7 @@ Pelos precedentes catalogados, identifica-se um conjunto de teses estratégicas 
 
 **Acesso ao benefício e instrução administrativa.**
 - Tema 350/STF (necessidade de prévio requerimento administrativo).
-- Tema 1124/STJ (efeitos financeiros de prova não submetida ao INSS - SUSPENSO).
+- Tema 1124/STJ (efeitos financeiros de prova não submetida ao INSS - julgado, acórdão publicado em 05/02/2026, tese literal a confirmar na fonte).
 - Tema 995/STJ (reafirmação da DER em qualquer fase).
 
 **Decadência e revisão.**

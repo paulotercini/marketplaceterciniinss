@@ -24,9 +24,9 @@ Fonte oficial em https://www.stj.jus.br
 
 Alçada.
 
-### Tema 1066 STF
+### Duração razoável
 
-Duração razoável.
+Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99 (prazo de 30 dias para decidir, prorrogável). Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ## 2. Marco legislativo
 

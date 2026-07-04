@@ -160,7 +160,7 @@ Demonstrar a demora superior a 45 dias (art. 49 da Lei 9.784/1999).
 
 Aplicação do Tema 350/STF (hipótese excepcional).
 
-Reforço com a Lei 13.460/2017 e Tema 1066/STF.
+Reforço com a Lei 13.460/2017 e o art. 5º, LXXVIII, da CF.
 
 ### 6.4. Cenário D. Cliente com revisão
 
@@ -252,9 +252,9 @@ Tema 1124/STJ.
 
 Tema 350/STF (RE 631.240).
 
-Tema 1066/STF.
-
 Tema 660/STF (prequestionamento ficto).
+
+Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
 ## 8. Modelos de embargos de declaração
 
@@ -433,7 +433,7 @@ Cruzamento com `pedilef-cotejo-analitico-tnu`.
 | --- | --- | --- | --- |
 | Tribunal aplica de ofício sem oitiva | Art. 10 CPC | Embargos de declaração | REsp + PUIL |
 | Levanta na pauta sem vista | Art. 933 CPC | Petição prévia + sustentação oral | Embargos |
-| Sem PA por demora | Tema 350/STF | Demonstrar demora >45d | Reforço Tema 1066/STF |
+| Sem PA por demora | Tema 350/STF | Demonstrar demora superior ao art. 49 da Lei 9.784/99 | Reforço art. 5º, LXXVIII, da CF |
 | Pretensão de revisão | Tema 350/STF | Aplicação da exceção | Sem necessidade de novo PA |
 | Ação pré-modulação | Modulação | Argumentar aplicação prospectiva | Distinguishing |
 | PA extraviado | Boa-fé do segurado | Hipótese excepcional | Documentação alternativa |

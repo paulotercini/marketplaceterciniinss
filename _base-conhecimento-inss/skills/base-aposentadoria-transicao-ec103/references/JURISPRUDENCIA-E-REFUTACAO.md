@@ -20,7 +20,7 @@ Aplicação pró-segurado. Permite a postergação da DER para o dia em que o se
 
 ### Tema 1124 STJ
 
-Tese. Exige prévio requerimento administrativo como condição de interesse de agir, salvo nos casos de resistência manifesta ou desnecessidade comprovada.
+Julgado, acórdão publicado em 05/02/2026. Tese literal a confirmar na fonte antes de citar. Como cautela, exigir prévio requerimento administrativo antes do ajuizamento, ressalvadas as hipóteses excepcionais reconhecidas na jurisprudência.
 
 Fonte oficial em https://www.stj.jus.br
 

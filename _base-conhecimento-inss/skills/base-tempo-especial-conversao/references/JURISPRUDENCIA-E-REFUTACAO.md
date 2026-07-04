@@ -32,7 +32,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 1124 STJ
 
-Tese. Instrução mínima administrativa.
+Julgado, acórdão publicado em 05/02/2026. Tese literal a confirmar na fonte antes de citar. Como cautela, manter a instrução mínima administrativa.
 
 Fonte oficial em https://www.stj.jus.br
 
