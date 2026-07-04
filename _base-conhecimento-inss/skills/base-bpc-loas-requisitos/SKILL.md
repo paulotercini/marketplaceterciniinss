@@ -182,27 +182,39 @@ Em casos concretos.
 
 Mapa exaustivo das alterações em `references/DECRETO-6214-2007-ATUALIZACAO-2025.md`.
 
-## TEMA 385/TNU (Onda 52) - BPC NÃO EXIGE INCAPACIDADE PARA O TRABALHO
+## TEMA 385/TNU (Onda 52 corrigida na Onda 53) - BPC NÃO EXIGE INCAPACIDADE PARA O TRABALHO
 
-**Julgado em 24/06/2026 pela TNU**. Precedente PARADIGMÁTICO para toda ação de BPC.
+**PEDILEF 1005655-57.2022.4.01.3602/MT.** Julgado em 24/06/2026 pela TNU **POR MAIORIA**, Rel. Juiz Federal FÁBIO DE SOUZA SILVA. Voto vencido parcial da Juíza Federal LILIAN OLIVEIRA DA COSTA TOURINHO. Precedente PARADIGMÁTICO para toda ação de BPC.
+
+**Fundamentação convencional/constitucional.** Convenção de Nova Iorque com **status de emenda constitucional** (Decreto 6.949/2009 com quórum EC). Resolução CNJ nº 630/2025 (Instrumento Unificado de Avaliação Biopsicossocial, vigência 02/03/2026). Portaria Conjunta MDS/INSS nº 2/2015. CIF/OMS.
 
 **Tese central pró-segurado.** "Para fins de concessão do BPC/LOAS, a caracterização da deficiência NÃO EXIGE a demonstração de incapacidade para o trabalho. O requisito legal é o impedimento de longo prazo de natureza física, mental, intelectual ou sensorial, entendido como alteração ou perda significativas na função ou estrutura do corpo, que, em interação com barreiras, obstrua a participação plena e efetiva do requerente na sociedade em igualdade de condições com as demais pessoas, devendo sua aferição ser realizada por meio de avaliação biopsicossocial."
 
-**3 Parâmetros de Economia Processual (aplicação prática).**
+**3 Parâmetros de Economia Processual - REDAÇÃO LITERAL VERIFICADA NO ACÓRDÃO.**
 
-**Parâmetro (i).** Constatação judicial, com base em perícia médica, de INEXISTÊNCIA de impedimento, IMPEDIMENTO DE GRAU LEVE ou IMPEDIMENTO PASSÍVEL DE RESOLUÇÃO EM MENOS DE 2 ANOS = DISPENSA a avaliação biopsicossocial (afasta pressuposto da deficiência).
+**Parâmetro (i).** Constatação judicial, com base em perícia médica, de INEXISTÊNCIA de impedimento, IMPEDIMENTO DE GRAU LEVE ou IMPEDIMENTO PASSÍVEL DE RESOLUÇÃO EM MENOS DE 2 ANOS = **DISPENSA a realização de AVALIAÇÃO BIOPSICOSSOCIAL** (afasta pressuposto necessário à caracterização da deficiência).
 
-**Parâmetro (ii).** Constatação de INCAPACIDADE TOTAL DE LONGO PRAZO para qualquer atividade laborativa = gera PRESUNÇÃO RELATIVA (iuris tantum) DE DEFICIÊNCIA, DISPENSANDO a avaliação biopsicossocial. Ressalvada a possibilidade de o julgador afastá-la diante de elementos concretos que indiquem ausência de barreiras relevantes no caso específico.
+**Parâmetro (ii).** Constatação de INCAPACIDADE TOTAL DE LONGO PRAZO para qualquer atividade laborativa = gera PRESUNÇÃO RELATIVA (iuris tantum) DE DEFICIÊNCIA, **DISPENSANDO A AVALIAÇÃO SOCIAL** (não a biopsicossocial completa). Ressalvada a possibilidade de o julgador afastá-la diante de elementos concretos que indiquem ausência de barreiras relevantes no caso específico. **CORREÇÃO IMPORTANTE.** A redação literal fala "avaliação social" (não biopsicossocial). Basta a perícia médica que atestou a incapacidade total.
 
 **Parâmetro (iii).** Constatação de impedimento de GRAU MODERADO ou GRAVE sem incapacidade total de longo prazo = EXIGE a avaliação biopsicossocial, com análise, feita por assistente social, dos fatores ambientais, das limitações de atividade e das restrições de participação social.
 
 **A avaliação biopsicossocial NÃO SE CONFUNDE com a análise de miserabilidade** exigida para o segundo requisito do BPC.
 
-**Estratégia pró-segurado.** Em caso de INSS negar BPC por "capacidade laborativa preservada", invocar o Tema 385/TNU. A rigor. deficiência não é incapacidade laboral. Ambos podem existir separadamente.
+**Argumentos-chave pró-segurado extraídos da ementa.**
 
-**Aplicação combinada com o Parâmetro (ii).** Em segurados com laudo de incapacidade total permanente (B91), há PRESUNÇÃO de deficiência para fins de BPC, sem necessidade de nova avaliação biopsicossocial. Cabe pedido cumulativo ou sucessivo.
+1. **Distinção estrutural.** Deficiência (Direito Assistencial/Constitucional) ≠ Incapacidade laborativa (Direito Previdenciário).
 
-Detalhamento na reference `base-precedentes-catalogo-vinculantes/references/CATALOGO-TEMAS-TNU.md` (entrada Tema 385).
+2. **CAPACITISMO VEDADO.** "Exigir incapacidade laborativa como condição para o reconhecimento da deficiência configura capacitismo vedado pelo ordenamento constitucional e convencional." (Item 3 da ementa).
+
+3. **Art. 21-A LOAS** pressupõe que PCD pode exercer atividade remunerada.
+
+4. **Requisitos autônomos e cumulativos.** "Não possuir meios de prover à própria manutenção" refere-se à ausência de RENDA, não à impossibilidade de trabalhar.
+
+5. **Sem impedimento moderado, não há BPC.** Item 4 da ementa.
+
+**Aplicação combinada com o Parâmetro (ii).** Em segurados com laudo de incapacidade total permanente (B91), há PRESUNÇÃO iuris tantum de deficiência para fins de BPC, dispensando apenas a AVALIAÇÃO SOCIAL. Cabe pedido cumulativo ou sucessivo.
+
+Detalhamento integral em `base-precedentes-catalogo-vinculantes/references/TEMA-385-TNU-FUNDAMENTACAO-COMPLETA.md` (Onda 53) com os 9 itens da ementa transcritos literalmente do acórdão.
 
 ## PEDILEF 5001885-13.2023.4.04.7209/SC TNU (Onda 51) - TAXATIVIDADE DO ROL DO §1º ART. 20 LOAS
 
