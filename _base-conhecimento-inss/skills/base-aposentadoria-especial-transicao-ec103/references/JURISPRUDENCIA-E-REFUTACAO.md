@@ -50,7 +50,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Garante a conversão de todo tempo especial pré-reforma.
 
-### Tema 709 STJ
+### Prova alternativa ao PPP (ex-"Tema 709 STJ" removido, teor oficial diverso (auditoria 06/07/2026); fundamento, Tema 208/TNU e perícia)
 
 Tese. É possível o reconhecimento de tempo especial mediante prova complementar ao PPP, em caso de laudo extemporâneo ou de inadimplemento formal do empregador.
 
@@ -110,7 +110,7 @@ Refutação. Art. 21 da EC 103. A transição exige simultaneamente o tempo mín
 
 Argumento adversário. PPP sem preenchimento completo impede reconhecimento do tempo especial.
 
-Refutação. Tema 709 STJ. Prova alternativa é admitida. Acionar `retificacao-ppp` e `defesa-probatoria-especial`.
+Refutação. A prova alternativa é admitida (Tema 208/TNU, LTCAT supre; perícia direta ou indireta). Acionar `retificacao-ppp` e `defesa-probatoria-especial` (auditoria 06/07/2026).
 
 ### Argumento 7 — Exigência de dosimetria de ruído
 

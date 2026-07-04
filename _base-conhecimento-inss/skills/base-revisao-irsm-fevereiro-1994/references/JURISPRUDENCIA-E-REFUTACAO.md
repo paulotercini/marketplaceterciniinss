@@ -2,9 +2,9 @@
 
 ## 1. Precedentes vinculantes
 
-### Tema 415 STJ, REsp 1.168.657
+### IRSM de fevereiro de 1994 (39,67%)
 
-Tese. Os salários de contribuição anteriores à conversão em URV devem ser corrigidos pelo IRSM de fevereiro de 1994, no percentual de 39,67%, antes da apuração da RMI.
+Tese. Os salários de contribuição anteriores à conversão em URV devem ser corrigidos pelo IRSM de fevereiro de 1994 (39,67%) antes da apuração da RMI. Fundamento, art. 21, §1º, da Lei 8.880/1994 e Tema 130/TNU. O número "Tema 415/STJ" foi removido (teor oficial diverso); o repetitivo específico e o REsp 1.168.657 ficam a confirmar na fonte (auditoria 06/07/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -62,7 +62,7 @@ Refutação. Verificar CNIS completo. Em alguns casos, períodos antigos foram o
 
 Argumento adversário. INSS aplicou índice parcial.
 
-Refutação. O Tema 415 fixou 39,67%. Qualquer aplicação inferior é incompleta. Pedido de diferença é cabível.
+Refutação. O índice de 39,67% decorre do art. 21, §1º, da Lei 8.880/1994. Qualquer aplicação inferior é incompleta. Pedido de diferença é cabível.
 
 ### Argumento 6 — Revisão não cabe em pensão por morte
 
@@ -98,7 +98,7 @@ Refutação. Reconhecimento retroage à DIB, com prescrição quinquenal. O alca
 
 Wladimir Novaes Martinez, análise do Plano Real.
 
-Frederico Amado, Tema 415 STJ.
+Frederico Amado, IRSM 39,67% (repetitivo a confirmar na fonte).
 
 Hugo Goes, cálculo com IRSM.
 
@@ -126,7 +126,7 @@ Sexto, pedido de implantação imediata após trânsito em julgado.
 
 ## 6. Diligência de atualização
 
-Acompanhar acórdãos do STJ sobre a aplicação concreta do Tema 415.
+Acompanhar acórdãos do STJ sobre a aplicação concreta do IRSM (repetitivo a confirmar).
 
 Acompanhar IACs dos TRFs.
 

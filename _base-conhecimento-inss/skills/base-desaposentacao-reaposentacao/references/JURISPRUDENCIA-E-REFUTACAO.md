@@ -8,9 +8,9 @@ RE 661.256. Desaposentação vedada, por ausência de previsão legal.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Tema 381 STF
+### Nota da auditoria
 
-Devolução de valores em boa-fé.
+O "Tema 381/STF" citado aqui tem teor oficial diverso (plano de saúde) e foi removido. A irrepetibilidade por boa-fé de verba alimentar é tese a confirmar na fonte, sem precedente vinculante catalogado (auditoria 06/07/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -56,7 +56,7 @@ Refutação. Honestidade radical. Tese isolada rejeitada. Alternativas existem. 
 
 Argumento adversário. Exigência em caso de renúncia.
 
-Refutação. Tema 381 STF. Boa-fé afasta devolução.
+Refutação. A irrepetibilidade por boa-fé de verba alimentar é tese defensável, sem precedente vinculante catalogado (a confirmar na fonte (auditoria 06/07/2026)).
 
 ### Argumento 3 — Contribuição pós-DIB sem efeito
 
@@ -92,7 +92,7 @@ Refutação. Tema 334 STF admite direito adquirido em casos específicos. Analis
 
 Argumento adversário. Cálculo.
 
-Refutação. Tema 381 STF. Valor líquido preserva o benefício.
+Refutação. O valor líquido preserva o benefício (tese a confirmar na fonte (auditoria 06/07/2026)).
 
 ### Argumento 9 — Demandas em aberto
 

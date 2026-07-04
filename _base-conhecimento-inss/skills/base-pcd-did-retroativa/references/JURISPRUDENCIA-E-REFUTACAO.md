@@ -8,9 +8,9 @@ Deficiência intelectual.
 
 Fonte oficial em https://www.cjf.jus.br
 
-### Tema 305 TNU
+### Nota da auditoria
 
-Avaliação biopsicossocial.
+O "Tema 305/TNU" citado aqui tem teor oficial diverso (auxílio emergencial) e foi removido. A avaliação biopsicossocial da LC 142 apoia-se na própria LC 142/2013, no IF-BrA (Portaria Interministerial 1/2014) e na LBI (Lei 13.146/2015, art. 2º) (auditoria 06/07/2026).
 
 ### Súmula 149 STJ
 
@@ -126,7 +126,7 @@ Sexto, monitoramento.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 305 TNU.
+Acompanhar a jurisprudência da TNU sobre avaliação biopsicossocial na LC 142.
 
 Revalidar Súmulas 149 e 577 STJ.
 

@@ -34,7 +34,7 @@ Patrimoniais.
 
 Cobrança.
 
-### Tema 394 STJ
+### Efeitos patrimoniais pretéritos (nota da auditoria, ex-"Tema 394 STJ", removido (auditoria 06/07/2026))
 
 Pagamento pretérito.
 

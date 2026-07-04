@@ -35,11 +35,11 @@ Quarto, tutela de evidência (art. 311), especialmente inciso II (tese firmada e
 
 ## Requisitos pró-segurado
 
-Primeiro, probabilidade do direito. Caráter alimentar reforça. Tema 313/STJ (efetividade).
+Primeiro, probabilidade do direito. Caráter alimentar reforça.
 
 Segundo, perigo de dano. Presunção pró-segurado em benefício alimentar.
 
-Terceiro, reversibilidade. Súmula 729/STF modulada. Recebimento de boa-fé afasta devolução (Tema 692/STJ, Tema 1009/STJ com cuidado).
+Terceiro, reversibilidade. Súmula 729/STF (conferir na fonte). ATENÇÃO, o Tema 692/STJ determina a devolução dos valores recebidos por tutela antecipada posteriormente revogada, com desconto de até 30 por cento do benefício. Informar esse risco ao cliente antes de pedir a tutela; a boa-fé não afasta a devolução nessa hipótese (auditoria 06/07/2026).
 
 ## Cenários pró-segurado
 
@@ -49,7 +49,7 @@ Cenário B, restabelecimento de B31 cessado sem perícia. Tutela cabível.
 
 Cenário C, implantação de B91 com laudo pericial judicial favorável. Tutela cabível.
 
-Cenário D, tutela de evidência em tese firmada (Tema 1102/STF RVT, Tema 327/STF teto). Quanto ao Tema 1124/STJ, julgado com acórdão publicado em 05/02/2026, confirmar a tese literal na fonte antes de invocá-lo como tese firmada.
+Cenário D, tutela de evidência em tese firmada (Tema 76/STF teto; a RVT do Tema 1102/STF exige cautela pós-ADIs 2110/2111). Quanto ao Tema 1124/STJ, julgado com acórdão publicado em 05/02/2026, confirmar a tese literal na fonte antes de invocá-lo como tese firmada.
 
 ## Estabilização (art. 304)
 

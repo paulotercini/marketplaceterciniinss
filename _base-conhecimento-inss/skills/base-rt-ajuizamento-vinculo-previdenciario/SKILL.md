@@ -119,7 +119,7 @@ Importante. Esse prazo de 5 anos só começa a correr DEPOIS da constituição d
 
 A IN 128/2022 INSS, em seu Livro I, Título I, Capítulo I, Seção XIX, trata especificamente da reclamatória trabalhista e seus efeitos para o INSS. O administrador previdenciário deve.
 
-1. Aceitar a sentença trabalhista como prova quando fundada em prova material (cf. Súmula 31/TNU).
+1. Aceitar a sentença trabalhista como prova quando fundada em prova material (Tema 1188/STJ; a Súmula 31/TNU foi REVOGADA em 22/11/2023 (auditoria 06/07/2026)).
 2. Computar o tempo de contribuição reconhecido.
 3. Calcular o salário-de-contribuição com base nas verbas reconhecidas.
 4. Cobrar contribuições devidas conforme a legislação tributária.

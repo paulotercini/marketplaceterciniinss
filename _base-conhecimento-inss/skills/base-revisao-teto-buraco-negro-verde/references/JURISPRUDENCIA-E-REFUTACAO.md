@@ -2,7 +2,7 @@
 
 ## 1. Precedentes vinculantes
 
-### Tema 327 STF, RE 564.354
+### Tema 76/STF, RE 564.354
 
 Tese. Cabível a readequação dos benefícios concedidos antes das ECs 20/1998 e 41/2003 aos novos tetos, para os segurados cuja RMI teria sido maior se o novo teto já estivesse em vigor.
 
@@ -12,7 +12,7 @@ Aplicação. Fundamento nuclear.
 
 ### RE 937.595 STF
 
-Tese. Aplicação concreta do Tema 327 sobre benefícios de aposentadoria e pensão.
+Tese. Aplicação concreta do Tema 76/STF sobre benefícios de aposentadoria e pensão.
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -84,7 +84,7 @@ Refutação. Verificar causa de pedir. Se a ação anterior tratou apenas de uma
 
 ### Argumento 4 — Aplicação automática pelo INSS
 
-Argumento adversário. O INSS já aplicou o Tema 327 administrativamente.
+Argumento adversário. O INSS já aplicou o Tema 76/STF administrativamente.
 
 Refutação. Verificar extrato de pagamento e memória de cálculo. Na prática, aplicações parciais são frequentes. Recálculo independente obrigatório.
 
@@ -128,7 +128,7 @@ Refutação. Justiça gratuita (art. 98 CPC) e análise prévia rigorosa. Calibr
 
 Wladimir Novaes Martinez, teto previdenciário e revisão.
 
-Frederico Amado, Tema 327 STF.
+Frederico Amado, Tema 76/STF (RE 564.354).
 
 Hugo Goes, cálculo da revisão do teto.
 
@@ -156,7 +156,7 @@ Sexto, pedido de implantação imediata após trânsito em julgado.
 
 ## 6. Diligência de atualização
 
-Acompanhar acórdãos do STF e STJ sobre Tema 327 e pensões derivadas.
+Acompanhar acórdãos do STF e STJ sobre Tema 76/STF e pensões derivadas.
 
 Acompanhar IACs e IRDRs dos TRFs sobre decadência autônoma para dependentes.
 

@@ -34,7 +34,7 @@ Constitucionalidade.
 
 Deficiência intelectual.
 
-### Tema 305 TNU
+### Avaliação biopsicossocial (LC 142/IF-BrA/LBI; ex-"Tema 305 TNU" removido (auditoria 06/07/2026))
 
 Avaliação biopsicossocial.
 

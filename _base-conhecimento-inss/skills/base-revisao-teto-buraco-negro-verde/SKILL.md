@@ -1,6 +1,6 @@
 ---
 name: base-revisao-teto-buraco-negro-verde
-description: "Revisão do teto previdenciário, buraco negro e buraco verde, com aplicação das ECs 20/1998 e 41/2003, Tema 327 STF (RE 564.354), revisão do art. 26 da Lei 8.870/1994 e revisão pelo art. 144 da Lei 8.213/91. Use SEMPRE que mencionar revisão do teto, aplicação do teto previdenciário, limitador de RMI, buraco negro (outubro 1988 a abril 1991), buraco verde (março 1994 a fevereiro 1997), art. 144 Lei 8.213/91, art. 26 Lei 8.870/1994, Tema 327 STF, RE 564.354, EC 20/1998, EC 41/2003, readequação ao novo teto, RMI glosada pelo teto, salário de benefício limitado, valores acima do teto, revisão do teto aposentadorias, integração teto pensão por morte, teto após reforma, decadência revisão teto, prescrição parcelas teto. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103 e precedentes-previdenciarios."
+description: "Revisão do teto previdenciário, buraco negro e buraco verde, com aplicação das ECs 20/1998 e 41/2003, Tema 76/STF (RE 564.354), revisão do art. 26 da Lei 8.870/1994 e revisão pelo art. 144 da Lei 8.213/91. Use SEMPRE que mencionar revisão do teto, aplicação do teto previdenciário, limitador de RMI, buraco negro (outubro 1988 a abril 1991), buraco verde (março 1994 a fevereiro 1997), art. 144 Lei 8.213/91, art. 26 Lei 8.870/1994, Tema 76/STF, RE 564.354, EC 20/1998, EC 41/2003, readequação ao novo teto, RMI glosada pelo teto, salário de benefício limitado, valores acima do teto, revisão do teto aposentadorias, integração teto pensão por morte, teto após reforma, decadência revisão teto, prescrição parcelas teto. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103 e precedentes-previdenciarios."
 ---
 
 # Revisão do Teto Previdenciário (Buraco Negro e Buraco Verde)
@@ -27,13 +27,13 @@ EC 41/2003. Novo teto.
 
 ## Marco jurisprudencial
 
-Tema 327 STF, RE 564.354. Julgado em 2010. Fixou tese pela readequação dos benefícios concedidos antes das ECs 20/1998 e 41/2003 aos novos tetos, observada a parcela que excederia o teto anterior. Precedente nuclear da revisão do teto.
+Tema 76/STF, RE 564.354. Julgado em 2010. Fixou tese pela readequação dos benefícios concedidos antes das ECs 20/1998 e 41/2003 aos novos tetos, observada a parcela que excederia o teto anterior. Precedente nuclear da revisão do teto.
 
 Fonte oficial em https://portal.stf.jus.br
 
 Súmula 260 ex-TFR. Reajuste integral dos benefícios pela maior variação salarial antes da Lei 6.423/1977.
 
-RE 937.595 e RE 1.054.232. Aplicação do Tema 327 com correção monetária.
+RE 937.595 e RE 1.054.232. Aplicação do Tema 76/STF com correção monetária.
 
 ## Espaço pró-segurado
 
@@ -94,7 +94,7 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 
 Wladimir Novaes Martinez, teto previdenciário.
 
-Frederico Amado, Tema 327 STF.
+Frederico Amado, Tema 76/STF (RE 564.354).
 
 Hugo Goes, cálculo.
 

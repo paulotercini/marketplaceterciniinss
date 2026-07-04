@@ -18,9 +18,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado em leitura integrada.
 
-### Tema 73 STJ
+### Tema 185/STJ (número corrigido)
 
-Tese. Flexibilização do critério de miserabilidade.
+Tese. A limitação do valor da renda per capita não é o único critério de aferição da miserabilidade (o antigo "Tema 73/STJ" tinha teor tributário e foi corrigido (auditoria 06/07/2026)).
 
 Fonte oficial em https://www.stj.jus.br
 

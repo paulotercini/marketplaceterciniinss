@@ -1,28 +1,20 @@
 # Jurisprudência e Refutação. Tolueno via Cutânea
 
-## 1. Tema 382/TNU PUIL 5012678
+## 1. Tema 382/TNU (TESE ADVERSA, corrigido pela auditoria de 06/07/2026)
 
-### 1.1. Conteúdo
+### 1.1. Conteúdo verificado na fonte oficial (CJF)
 
-PUIL 5012678-29.2017.4.04.7000/PR.
+PEDILEF 5012678-57.2022.4.04.7108/RS. Julgado em 15/04/2026, trânsito em julgado em 26/05/2026.
 
-Relator. Juiz Federal Bianor Arruda Bezerra Neto.
+Tese fixada (literal). "A exposição ao tolueno por via cutânea, inclusive na sua forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15)."
 
-Tese fixada. "É possível o reconhecimento da especialidade da atividade laboral pela exposição ao agente nocivo benzeno em concentração superior aos limites de tolerância previstos na NR-15 do MTE, mesmo após 13/10/1995, em atenção ao princípio do tempus regit actum, sendo desnecessária a aferição quantitativa para o reconhecimento da nocividade do agente, dada sua classificação como cancerígeno (LINACH/grupo 1)".
+### 1.2. Consequência prática
 
-### 1.2. Ratio decidendi (aplicável por analogia ao tolueno)
+O Tema 382/TNU trata do TOLUENO e é DESFAVORÁVEL ao enquadramento qualitativo por via cutânea. NÃO citar a favor. A versão anterior desta skill atribuía ao tema uma tese do benzeno que a fonte oficial desmente (auditoria 06/07/2026, ver CATALOGO-COMPLEMENTAR-VERIFICADO).
 
-Para agentes químicos com nocividade comprovada por mecanismo sistêmico (cancerígeno, absorção cutânea), a quantificação é dispensável.
+### 1.3. Como contornar (pró-segurado)
 
-A presença do agente na atividade já configura o risco juridicamente protegido.
-
-### 1.3. Distinguishing impróprio do INSS
-
-O INSS frequentemente sustenta que o Tema 382/TNU é restrito ao benzeno, não se estendendo ao tolueno.
-
-Refutação. A ratio do Tema 382 é a desnecessidade de quantificação para agentes com nocividade sistêmica comprovada. O tolueno do Anexo 13 da NR-15 atende essa ratio por absorção cutânea.
-
-A aplicação restritiva ignora a estrutura argumentativa do julgado.
+Primeiro, via QUANTITATIVA, dose de tolueno acima do limite da NR-15 no PPP/LTCAT (a tese só veda a análise qualitativa cutânea). Segundo, coexposição documentada a BENZENO ou outro cancerígeno LINACH grupo 1, com a presunção qualitativa própria desse agente. Terceiro, agentes concomitantes (ruído etc.). Quarto, categoria profissional até 28/04/1995. Quinto, dúvida sobre EPI favorece o segurado (Tema 1090/STJ).
 
 ## 2. Outros precedentes da TNU
 
@@ -76,7 +68,7 @@ Aplicação. Há excepcionalidade reconhecida pelo próprio STF para agentes em 
 
 ### 5.1. TRF3
 
-Decisões reconhecendo o tolueno do Anexo 13 da NR-15 como agente qualitativo, especialmente em hipóteses de sapateiros e gráficas.
+Decisões antigas reconheciam o tolueno do Anexo 13 como agente qualitativo (sapateiros, gráficas). Esse entendimento foi encerrado pelo Tema 382/TNU (seção 1); só aproveitam períodos com dose quantitativa ou coexposição (auditoria 06/07/2026).
 
 Verificar inteiro teor das decisões antes de citar com número de processo.
 
@@ -96,15 +88,11 @@ Verificar inteiro teor antes de citar.
 
 ### 6.1. Tese 1 do INSS. "O tolueno só tem enquadramento quantitativo (Anexo 11)"
 
-Refutação. O tolueno está no Anexo 11 (78 ppm) e no Anexo 13 (absorção cutânea). Os dois regimes são cumulativos, não excludentes.
+Refutação parcial. O tolueno está no Anexo 11 (78 ppm) e no Anexo 13 (absorção cutânea). ATENÇÃO, após o Tema 382/TNU (trânsito em 26/05/2026) a via qualitativa cutânea do Anexo 13 está VEDADA para o tolueno; a via segura é a quantitativa do Anexo 11, dose acima do limite comprovada em PPP/LTCAT (auditoria 06/07/2026).
 
-Onde há contato cutâneo, aplica-se o Anexo 13 com enquadramento qualitativo.
+### 6.2. Tese 2 do INSS. Invocação do Tema 382/TNU contra o enquadramento
 
-### 6.2. Tese 2 do INSS. "O Tema 382/TNU é restrito ao benzeno"
-
-Refutação. A ratio do Tema 382 é a desnecessidade de quantificação para agentes com nocividade sistêmica. O tolueno do Anexo 13 atende essa ratio por absorção cutânea.
-
-Distinguishing impróprio.
+Atenção, a tese do Tema 382/TNU é realmente desfavorável à análise qualitativa cutânea do tolueno (ver seção 1). Não há refutação frontal; a resposta é o DESLOCAMENTO do fundamento, dose quantitativa acima do limite, coexposição a cancerígeno LINACH, agentes concomitantes ou categoria até 28/04/1995 (auditoria 06/07/2026, ver CATALOGO-COMPLEMENTAR-VERIFICADO).
 
 ### 6.3. Tese 3 do INSS. "EPI marcado como eficaz no PPP descaracteriza"
 
@@ -180,7 +168,7 @@ Aplicação subsidiária do limite ACGIH 20 ppm.
 
 ### 8.3. Pedido cumulativo
 
-Reconhecimento da co-exposição com benzeno (quando aplicável) com aplicação direta do Tema 382/TNU.
+Reconhecimento da coexposição com benzeno (quando documentada), com a presunção qualitativa própria do agente cancerígeno LINACH grupo 1 (fundamento autônomo, não o Tema 382/TNU).
 
 ### 8.4. Pedido subsidiário
 
@@ -194,11 +182,11 @@ Implantação imediata do benefício após reconhecimento dos requisitos.
 
 ### 9.1. Cabimento
 
-Quando o INSS indeferir requerimento administrativo de aposentadoria especial com base em interpretação restritiva do Tema 382/TNU.
+Quando houver ilegalidade flagrante e prova pré-constituída (ex.: INSS ignorar dose quantitativa acima do limite constante do PPP). Lembrar que a tese do Tema 382/TNU hoje ampara o INSS na via qualitativa cutânea; o MS não serve para rediscuti-la.
 
 ### 9.2. Direito líquido e certo
 
-Reconhecimento do tolueno como agente qualitativo do Anexo 13 da NR-15.
+Dose quantitativa de tolueno acima do limite do Anexo 11 da NR-15, documentada em PPP/LTCAT (a via qualitativa do Anexo 13 caiu com o Tema 382/TNU) (auditoria 06/07/2026).
 
 ### 9.3. Pedido
 
@@ -207,6 +195,8 @@ Concessão da aposentadoria especial. Subsidiariamente, anulação da decisão a
 ## 10. Doutrina pró-segurado
 
 ### 10.1. Wladimir Novaes Martinez
+
+ATENÇÃO, a doutrina abaixo é anterior ao Tema 382/TNU; a via qualitativa cutânea que ela defende está vedada para o tolueno (auditoria 06/07/2026).
 
 "Comentários ao Decreto 3.048/99". Hidrocarbonetos aromáticos como agentes qualitativos do Anexo 13. Reconhecimento da via cutânea como mecanismo de exposição.
 

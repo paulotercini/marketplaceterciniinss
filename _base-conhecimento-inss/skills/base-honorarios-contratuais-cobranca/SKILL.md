@@ -11,7 +11,7 @@ Skill operacional pró-segurado do escritório Paulo Roberto Tercini Filho. Dife
 
 ## Premissa central
 
-Honorário contratual é receita do escritório. Honorário de sucumbência é prêmio adicional. Os dois NÃO se confundem. Súmula 47 STJ. O cliente paga o contratual; o vencido paga a sucumbência. Quando a parte é vencedora, o escritório recebe os dois. Quando perde, recebe apenas o contratual já pago.
+Honorário contratual é receita do escritório. Honorário de sucumbência é prêmio adicional. Os dois NÃO se confundem (a "Súmula 47/STJ" antes citada tem teor oficial diverso, Justiça Militar, e foi removida; fundamento, arts. 22 e 23 da Lei 8.906/94 (auditoria 06/07/2026)). O cliente paga o contratual; o vencido paga a sucumbência. Quando a parte é vencedora, o escritório recebe os dois. Quando perde, recebe apenas o contratual já pago.
 
 A boa gestão do contratual garante o caixa do escritório e elimina o conflito posterior com o cliente. A má gestão acumula tarefas em 💵 Pagamentos sem clareza, vira dívida de difícil recuperação.
 
