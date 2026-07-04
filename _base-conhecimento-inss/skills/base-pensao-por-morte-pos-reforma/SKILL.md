@@ -55,7 +55,7 @@ Terceiro, ex-cônjuge beneficiário de pensão alimentícia. Direito à pensão 
 
 Quarto, filho inválido ou com deficiência intelectual/mental grave mantém pensão após 21 anos. Tema 15 TNU e Súmula 37 TNU.
 
-Quinto, menor sob guarda equiparado a filho (Tema 732 STJ/STF reconhecido). Direito à pensão por morte do guardião.
+Quinto, menor sob guarda equiparado a filho (Tema 732 STJ reconhecido). Direito à pensão por morte do guardião.
 
 Sexto, concubinato de longa duração com dependência econômica. Discussão no STJ e TNU, tese pró-segurada em reconstrução.
 

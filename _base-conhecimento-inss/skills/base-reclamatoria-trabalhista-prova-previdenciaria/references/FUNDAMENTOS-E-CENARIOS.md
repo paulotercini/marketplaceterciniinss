@@ -2,7 +2,7 @@
 
 ## 1. Marco normativo aplicável
 
-CF/88, art. 5º LV. CPC, arts. 374, 442, 506. CLT, arts. 39, 40. Súmula 31/TNU. Súmula 149/STJ. Tema 297/TNU. Tema 1.188/STF. Lei 8.213/91, art. 55 §3º. IN 128/2022.
+CF/88, art. 5º LV. CPC, arts. 374, 442, 506. CLT, arts. 39, 40. Súmula 31/TNU. Súmula 149/STJ. Tema 297/TNU. Tema 1.188/STJ. Lei 8.213/91, art. 55 §3º. IN 128/2022.
 
 ## 2. Cenário 1 — Sentença com prova documental
 
@@ -22,7 +22,7 @@ Vínculo declarado em sentença. CTPS anotada. INSS deve aceitar.
 
 ## 6. Cenário 5 — Diferenças salariais
 
-Diferenças deferidas em sentença integram salário-de-contribuição. Tema 1.188/STF.
+Diferenças deferidas em sentença integram salário-de-contribuição. Tema 1.188/STJ.
 
 ## 7. Cenário 6 — Verbas indenizatórias
 
@@ -30,7 +30,7 @@ Verbas não integram salário-de-contribuição. Cabe distinção.
 
 ## 8. Cenário 7 — Participação do INSS no processo
 
-INSS pode participar como terceiro. Tema 1.188/STF.
+INSS pode participar como terceiro. Tema 1.188/STJ.
 
 ## 9. Cenário 8 — INSS ausente no processo trabalhista
 

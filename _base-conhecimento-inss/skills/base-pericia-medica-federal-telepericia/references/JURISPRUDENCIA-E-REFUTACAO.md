@@ -26,11 +26,11 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado. Documentação médica pode superar perícia administrativa.
 
-### Súmula 44 TNU
+### Súmula 44 STJ
 
-Tese. Para efeito de B94, a redução de capacidade é aferida em relação à atividade habitualmente exercida.
+Tese. A definição em ato regulamentar de grau mínimo de disacusia não exclui, por si só, a concessão do benefício, aferida a redução de capacidade em relação à atividade habitualmente exercida.
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Exige avaliação contextualizada, não abstrata.
 

@@ -153,7 +153,7 @@ Quarto, segurado com B94 e aposentadoria anterior à Lei 13.846/2019. Direito ad
 
 Quinto, segurado com B94 concedido com RMI equivocada. Cabe revisão para incluir verbas da integração, conforme art. 31.
 
-Sexto, segurado com redução auditiva (Tema 322 TNU). Súmula 44 TNU admite o B94 desde que comprovada redução real.
+Sexto, segurado com redução auditiva (Tema 322 TNU). Súmula 44 STJ admite o B94 desde que comprovada redução real.
 
 Sétimo, segurado com B94 cessado indevidamente antes da aposentadoria. Art. 86, §3º. Cessação apenas pela aposentadoria. Restabelecimento cabível.
 

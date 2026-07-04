@@ -37,7 +37,7 @@ Concessão e efeitos.
 
 Art. 5º, LXXVIII, da CF e art. 49 da Lei 9.784/99. Tema 1066/STF cancelado em 22/02/2021, não citar como vigente (auditoria 06/07/2026).
 
-### Tema 692 STF
+### Tema 692 STJ
 
 Devolução de valores em boa-fé.
 
@@ -95,7 +95,7 @@ Terceiro, requisitos da suspensão são restritivos.
 
 Primeiro, a liminar pode ser revogada na sentença ou em grau recursal.
 
-Segundo, Tema 692/STF afasta devolução em caso de revogação em boa-fé.
+Segundo, Tema 692/STJ afasta devolução em caso de revogação em boa-fé.
 
 Terceiro, atenção ao caráter alimentar para afastar irreversibilidade.
 

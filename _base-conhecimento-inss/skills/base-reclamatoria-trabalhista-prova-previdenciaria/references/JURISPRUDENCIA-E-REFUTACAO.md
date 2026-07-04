@@ -14,9 +14,9 @@ Exige início de prova material. Fonte oficial em https://www.stj.jus.br
 
 Requisitos da prova. Fonte oficial em https://www.cjf.jus.br
 
-### Tema 1.188/STF
+### Tema 1.188/STJ
 
-Participação do INSS. Fonte oficial em https://portal.stf.jus.br
+Sentença trabalhista homologatória e anotação em CTPS como início de prova material. Fonte oficial em https://www.stj.jus.br
 
 ### CF/88, art. 5º LV
 
@@ -58,7 +58,7 @@ Refutação. Acordo homologado é início de prova.
 
 Argumento adversário. Sem contraditório.
 
-Refutação. Súmula 31 TNU resguarda. Tema 1.188/STF.
+Refutação. Súmula 31 TNU resguarda. Tema 1.188/STJ.
 
 ### Argumento 5 — Tríplice identidade
 
@@ -76,7 +76,7 @@ Refutação. Fé pública após trânsito.
 
 Argumento adversário. Sem repercussão previdenciária.
 
-Refutação. Tema 1.188 STF.
+Refutação. Tema 1.188 STJ.
 
 ### Argumento 8 — Verbas indenizatórias
 
@@ -124,4 +124,4 @@ Sexto, monitoramento.
 
 ## 5. Diligência de atualização
 
-Acompanhar Súmula 31/TNU. Revalidar Tema 297/TNU. Monitorar Tema 1.188/STF.
+Acompanhar Súmula 31/TNU. Revalidar Tema 297/TNU. Monitorar Tema 1.188/STJ.
