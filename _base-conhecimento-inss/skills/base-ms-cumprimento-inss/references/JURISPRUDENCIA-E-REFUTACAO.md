@@ -14,9 +14,9 @@ Cobrança por ordinária.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Tema 394 STJ
+### Nota da auditoria
 
-Pretérito.
+O "Tema 394/STJ" citado aqui tem teor oficial tributário e foi removido. Os efeitos patrimoniais pretéritos do MS regem-se pelas Súmulas 269 e 271 do STF (conferir na fonte) e pela via ordinária (auditoria 06/07/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -126,7 +126,7 @@ Sexto, recursos.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 394 STJ.
+Acompanhar a jurisprudência sobre efeitos patrimoniais do MS (Súmulas 269/271 STF, conferir na fonte).
 
 Revalidar Súmulas 269 e 271 STF.
 

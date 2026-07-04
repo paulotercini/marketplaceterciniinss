@@ -1,6 +1,6 @@
 ---
 name: base-ms-cumprimento-inss
-description: "Cumprimento da ordem em mandado de segurança previdenciário, implantação de benefício, restabelecimento, obrigação de fazer, multa diária art. 497 CPC, crime de desobediência art. 26 Lei 12.016/2009, ofício requisitório e efeitos patrimoniais limitados pelas Súmulas 269 e 271 STF. Use SEMPRE que mencionar cumprimento de MS previdenciário, implantação por MS, ordem judicial INSS, multa diária em MS, astreintes em MS, art. 26 Lei 12.016, crime de desobediência INSS, ofício requisitório MS, Súmula 269 STF, Súmula 271 STF, Tema 394 STJ, efeitos patrimoniais MS, cumprimento de decisão MS, limbo pós-sentença, demora de cumprimento INSS. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e execucao-cumprimento-previdenciario."
+description: "Cumprimento da ordem em mandado de segurança previdenciário, implantação de benefício, restabelecimento, obrigação de fazer, multa diária art. 497 CPC, crime de desobediência art. 26 Lei 12.016/2009, ofício requisitório e efeitos patrimoniais limitados pelas Súmulas 269 e 271 STF. Use SEMPRE que mencionar cumprimento de MS previdenciário, implantação por MS, ordem judicial INSS, multa diária em MS, astreintes em MS, art. 26 Lei 12.016, crime de desobediência INSS, ofício requisitório MS, Súmula 269 STF, Súmula 271 STF, efeitos patrimoniais MS, cumprimento de decisão MS, limbo pós-sentença, demora de cumprimento INSS. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e execucao-cumprimento-previdenciario."
 ---
 
 # Cumprimento da Ordem em MS Previdenciário
@@ -37,7 +37,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 Cobrança por ação ordinária.
 
-### Tema 394 STJ
+### Efeitos patrimoniais pretéritos (Súmulas 269/271 STF, conferir na fonte; ex-"Tema 394 STJ" removido (auditoria 06/07/2026))
 
 Efeitos patrimoniais pretéritos.
 
@@ -79,7 +79,7 @@ Primeiro, Súmula 271 STF. Parcelas entre impetração e cumprimento.
 
 Segundo, parcelas anteriores à impetração por ação ordinária.
 
-Terceiro, Tema 394 STJ. Limite.
+Terceiro, efeitos patrimoniais pretéritos ficam à via ordinária (Súmulas 269/271 STF, conferir na fonte; ex-"Tema 394 STJ" removido (auditoria 06/07/2026)).
 
 ## Cenários pró-segurado
 

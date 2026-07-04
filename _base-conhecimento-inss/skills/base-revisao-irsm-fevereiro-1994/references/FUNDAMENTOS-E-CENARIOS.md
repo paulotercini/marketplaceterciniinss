@@ -20,7 +20,7 @@ Lei 8.213/91, art. 103. Decadência decenal.
 
 ## 4. Marco jurisprudencial central
 
-### Tema 415 STJ, REsp 1.168.657
+### IRSM 39,67% (art. 21, §1º, Lei 8.880/1994; Tema 130/TNU; repetitivo do STJ a confirmar (auditoria 06/07/2026))
 
 Tese firmada em 2010. Os salários de contribuição anteriores à conversão para URV devem ser corrigidos pelo IRSM de fevereiro de 1994, no percentual de 39,67%, antes do cálculo da RMI.
 

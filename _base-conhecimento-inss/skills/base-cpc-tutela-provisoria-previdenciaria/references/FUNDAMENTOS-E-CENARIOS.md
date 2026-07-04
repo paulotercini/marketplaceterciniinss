@@ -32,19 +32,19 @@ Lei 10.259/2001 JEF, art. 4º. Cabimento no JEF.
 
 ### Tema 692 STJ
 
-Devolução de valores recebidos de boa-fé em tutela revogada.
+Tese DESFAVORÁVEL. Determina a devolução dos valores de tutela antecipada revogada, com desconto de até 30 por cento do benefício (auditoria 06/07/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 1009 STJ
+### Tema 1009 STJ (não citar nesta matéria)
 
-Devolução de valores, revisão posterior.
+Teor oficial diverso (erro administrativo a servidores). Citação removida (auditoria 06/07/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 313 STJ
+### Tema 313 STJ (não citar nesta matéria)
 
-Efetividade da tutela.
+Teor oficial tributário (PIS/COFINS). Citação removida (auditoria 06/07/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -56,7 +56,7 @@ Tutela contra Fazenda Pública, modulação.
 
 RVT, tese firmada permite tutela de evidência.
 
-### Tema 327 STF
+### Tema 76/STF (RE 564.354, teto)
 
 Revisão do teto, tese firmada.
 
@@ -122,7 +122,7 @@ Sexto, sustentar em caso de suspensão.
 
 Risco de indeferimento liminar. Interpor agravo de instrumento.
 
-Risco de revogação posterior. Tema 692/STJ e Tema 1009/STJ afastam devolução em boa-fé.
+Risco de revogação posterior. O Tema 692/STJ determina a devolução com desconto de até 30 por cento; informar o cliente antes de pedir a tutela (auditoria 06/07/2026).
 
 Risco de suspensão de segurança. Preparar defesa.
 

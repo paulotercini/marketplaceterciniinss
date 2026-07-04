@@ -18,17 +18,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação. Limita a RVT às hipóteses residuais preservadas pela modulação.
 
-### Tema 1117 STF
+### Nota da auditoria
 
-Tese. Parâmetros para aplicação de teses vinculantes e efeitos prospectivos.
-
-Fonte oficial em https://portal.stf.jus.br
-
-### Tema 1157 STF
-
-Tese. Discussão complementar sobre modulação.
-
-Fonte oficial em https://portal.stf.jus.br
+Temas 1117 e 1157 do STF removidos pela auditoria de 06/07/2026, os teores oficiais não tratam da RVT (previdência complementar e admissão sem concurso). O quadro da RVT é o Tema 1102/STF com as ADIs 2110/2111.
 
 ### Súmula 85 STJ
 

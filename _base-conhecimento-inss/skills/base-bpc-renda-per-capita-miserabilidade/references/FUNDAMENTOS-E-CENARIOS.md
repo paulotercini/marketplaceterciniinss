@@ -64,7 +64,7 @@ Tema 27 STF. Análise concreta da miserabilidade. Possibilidade de afastar ¼ SM
 
 REsp 1.112.557 STJ. Prova ampla da miserabilidade.
 
-Tema 73 STJ. Integração pró-segurado.
+Tema 185/STJ. A renda per capita não é o único critério (número corrigido (auditoria 06/07/2026)).
 
 Tema 312 STF. Cômputo de benefício excluído.
 

@@ -64,7 +64,7 @@ Refutação. Lei 13.846/2019 eliminou a distinção. Tema 1.070 STJ aplicou retr
 
 Argumento adversário. Soma é proporcional ao teto.
 
-Refutação. Soma integral até o teto, com correção pelos Temas 327 STF e 102 TNU.
+Refutação. Soma integral até o teto, com correção pelos Tema 76/STF (RE 564.354) e Tema 102/TNU.
 
 ### Argumento 6 — Cooperativa não é vínculo
 

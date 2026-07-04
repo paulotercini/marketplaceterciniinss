@@ -28,7 +28,7 @@ IN 128/2022.
 
 RE 661.256. Desaposentação vedada.
 
-### Tema 381 STF
+### Devolução e boa-fé (ex-"Tema 381 STF", removido (auditoria 06/07/2026))
 
 Devolução de valores.
 
@@ -74,7 +74,7 @@ Honestidade radical. Probabilidade mínima de êxito. Tema 503 STF.
 
 ### Cenário G — Devolução de valores
 
-Tema 381 STF afasta, se boa-fé.
+A boa-fé pode afastar a devolução (tese a confirmar na fonte, sem precedente vinculante catalogado).
 
 ### Cenário H — Cômputo de contribuições pós-DIB
 

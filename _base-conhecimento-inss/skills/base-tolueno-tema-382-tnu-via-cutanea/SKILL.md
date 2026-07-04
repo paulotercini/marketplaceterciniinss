@@ -11,21 +11,19 @@ Acione SEMPRE que houver exposição a tolueno como agente nocivo em pleito de a
 
 Hipóteses típicas. Sapateiro, gráfica, oficina mecânica, indústria de tintas, indústria química, frentista, polidor, soldador, ajudante de produção química, operador de máquina com solvente.
 
-A skill é fonte primária pró-segurado para distinguir o tolueno do benzeno e afastar a aplicação restritiva do Tema 382/TNU como obstáculo ao enquadramento qualitativo.
+A skill orienta o enquadramento do tolueno DIANTE da tese desfavorável do Tema 382/TNU (ver seção 2), privilegiando a via quantitativa e as coexposições. Corrigida pela auditoria de 06/07/2026.
 
-## 2. O Tema 382/TNU PUIL 5012678
+## 2. O Tema 382/TNU (CORRIGIDO PELA AUDITORIA DE 06/07/2026 — TESE ADVERSA)
 
-PUIL 5012678-29.2017.4.04.7000/PR.
+AVISO DE CORREÇÃO. A versão anterior desta skill atribuía ao Tema 382/TNU uma tese favorável sobre o benzeno, com número de processo divergente. A conferência na fonte oficial (CJF) desmentiu essa premissa. Dados verificados a seguir; ver CATALOGO-COMPLEMENTAR-VERIFICADO.
 
-Relator. Juiz Federal Bianor Arruda Bezerra Neto.
+PEDILEF 5012678-57.2022.4.04.7108/RS. Julgado em 15/04/2026, trânsito em julgado em 26/05/2026.
 
-Julgamento. Tema 382/TNU.
+Tese fixada (literal, fonte CJF). "A exposição ao tolueno por via cutânea, inclusive na sua forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15)."
 
-Tese fixada. "É possível o reconhecimento da especialidade da atividade laboral pela exposição ao agente nocivo benzeno em concentração superior aos limites de tolerância previstos na NR-15 do MTE, mesmo após 13/10/1995, em atenção ao princípio do tempus regit actum, sendo desnecessária a aferição quantitativa para o reconhecimento da nocividade do agente, dada sua classificação como cancerígeno (LINACH/grupo 1)".
+O Tema 382/TNU trata do TOLUENO e a tese é DESFAVORÁVEL ao segurado. Não citar como fundamento do enquadramento qualitativo por via cutânea; tratá-lo como tese adversa a contornar.
 
-ATENÇÃO. O Tema 382/TNU trata do BENZENO, não do tolueno.
-
-A confusão é frequente porque ambos são hidrocarbonetos aromáticos monocíclicos e usados em conjunto em muitos ambientes industriais. O INSS frequentemente aplica o Tema 382 ao benzeno e nega o enquadramento qualitativo do tolueno por suposta ausência de previsão equivalente.
+Caminhos pró-segurado que permanecem. Primeiro, a via QUANTITATIVA, dose de tolueno acima do limite de tolerância da NR-15 aferida em PPP/LTCAT (a tese veda só a análise qualitativa cutânea). Segundo, a coexposição documentada ao BENZENO ou a outro agente cancerígeno do LINACH grupo 1, com a presunção qualitativa própria desse agente. Terceiro, os demais agentes concomitantes do ambiente (ruído, outros químicos). Quarto, período anterior a 29/04/1995 por categoria profissional (Decretos 53.831/64 e 83.080/79), quando couber. Quinto, EPI, a dúvida sobre a eficácia favorece o segurado (Tema 1090/STJ) e o creme de proteção não elide absorção respiratória concomitante quando a dose for o fundamento.
 
 ## 3. Distinção técnica entre tolueno e benzeno
 
@@ -57,9 +55,9 @@ NHO-08 da Fundacentro. Procedimento de avaliação da exposição a vapores org�
 
 Tolueno tem efeitos. Neurotoxicidade. Hepatotoxicidade. Fetotoxicidade (categoria 2 GHS). Irritação dérmica e ocular.
 
-## 4. Tese central pró-segurado
+## 4. Tese central pró-segurado (REVISTA após o Tema 382/TNU)
 
-O tolueno é agente químico do Anexo 13 da NR-15 (substâncias com absorção pela via cutânea). A simples presença, sem nem mesmo aferição quantitativa, autoriza o enquadramento qualitativo.
+A tese da presença qualitativa cutânea CAIU com o Tema 382/TNU (trânsito em 26/05/2026, ver seção 2). A tese central passa a ser a via QUANTITATIVA, dose de tolueno acima do limite do Anexo 11 da NR-15 comprovada em PPP/LTCAT, somada às coexposições (benzeno/LINACH, ruído) e à categoria profissional até 28/04/1995 (auditoria 06/07/2026).
 
 Isso porque o Anexo 13 da NR-15 é taxativo na enumeração das substâncias com risco grave por absorção cutânea, e a exposição a essas substâncias não admite gradação por concentração no ar (a via cutânea independe do ar).
 
@@ -105,7 +103,7 @@ Aplicação. A NR-15 é norma técnica complementar ao Decreto 3.048/99 e ao Ane
 
 Tese. A NR-15 prevê dois regimes distintos para o tolueno. Anexo 11 trata da exposição respiratória e exige aferição quantitativa pelo limite de tolerância. Anexo 13 trata da absorção cutânea e dispensa quantificação.
 
-Quando há contato cutâneo com tolueno (como em sapateiros, frentistas, polidores), aplica-se o Anexo 13, com enquadramento qualitativo.
+ATENÇÃO, após o Tema 382/TNU a via do Anexo 13 (qualitativa cutânea) está vedada para o tolueno. O argumento migra para o Anexo 11, dose quantitativa, e para as coexposições (auditoria 06/07/2026).
 
 ### 6.2. Argumento 2. ACGIH 20 ppm como reforço subsidiário
 
@@ -135,7 +133,7 @@ Cruzamento com `base-especial-epi`.
 
 ### 6.6. Argumento 6. PEDILEF 0136882-37.2014.4.05.8300/PE e PEDILEF 5001032-25.2014.4.04.7204/SC
 
-Tese. Há jurisprudência da TNU reconhecendo o tolueno como agente nocivo qualitativo em hipóteses de exposição cutânea.
+Tese SUPERADA. A jurisprudência qualitativa cutânea do tolueno foi encerrada pelo Tema 382/TNU (tese desfavorável, seção 2). Não citar esses PEDILEFs a favor (auditoria 06/07/2026).
 
 ATENÇÃO. Verificar inteiro teor antes de citar com número de processo. PEDILEF 0136882 e PEDILEF 5001032 NÃO foram localizados em fonte primária oficial até a data desta skill. Verificar no portal da TNU.
 

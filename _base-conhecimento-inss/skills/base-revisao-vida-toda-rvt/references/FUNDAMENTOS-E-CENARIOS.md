@@ -36,13 +36,9 @@ Julgadas em 2024. Declararam constitucional o art. 3º da Lei 9.876/1999 com mod
 
 Modulação. Preservados direitos em casos específicos, conforme decisão final do STF. A leitura da modulação está sendo consolidada pelos tribunais em curso.
 
-### Tema 1117 STF
+### Nota da auditoria
 
-Parâmetros sobre aplicação de tese vinculante e prospectiva.
-
-### Tema 1157 STF
-
-Discussão complementar.
+Temas 1117 e 1157 do STF removidos pela auditoria de 06/07/2026, os teores oficiais não tratam da RVT (previdência complementar e admissão sem concurso). O quadro da RVT é o Tema 1102/STF com as ADIs 2110/2111.
 
 ## 5. Cenários residuais pró-segurado
 

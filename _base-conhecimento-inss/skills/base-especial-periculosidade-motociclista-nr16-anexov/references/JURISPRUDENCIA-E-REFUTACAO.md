@@ -2,9 +2,9 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 132 STJ
+### Nota da auditoria
 
-Reconhece a periculosidade fora do rol regulamentar quando comprovada a exposição a risco à integridade. Fonte oficial em https://www.stj.jus.br
+O "Tema 132/STJ" citado aqui tem teor oficial tributário (ISS) e foi removido. A periculosidade fora do rol apoia-se na NR-16, Anexo V, e no caráter exemplificativo do rol, com precedente específico a confirmar na fonte (auditoria 06/07/2026).
 
 ### Súmula 198 TFR
 
@@ -40,7 +40,7 @@ Mototaxistas. Fonte oficial em https://www.planalto.gov.br
 
 Argumento adversário. Sem rol, sem reconhecimento.
 
-Refutação. O Tema 132 STJ admite reconhecimento fora do rol regulamentar. A NR-16 Anexo V supre.
+Refutação. O rol regulamentar é exemplificativo e a NR-16, Anexo V, supre (precedente específico a confirmar na fonte (auditoria 06/07/2026)).
 
 ### Argumento 2 — Lei 12.997/2014 não retroage
 
@@ -82,7 +82,7 @@ Refutação. A Lei 8.213/91 admite contribuinte individual com tempo especial. P
 
 Argumento adversário. Norma de outra esfera.
 
-Refutação. A NR-16 é norma técnica integradora. Tema 132 STJ vincula.
+Refutação. A NR-16 é norma técnica integradora (precedente vinculante específico a confirmar na fonte).
 
 ### Argumento 9 — Portaria MTE 2.021/2025 restringiu
 
@@ -100,7 +100,7 @@ Refutação. Para fins previdenciários, podem coexistir critérios distintos. T
 
 Sebastião Geraldo de Oliveira reconhece o motociclista como profissional em risco extremo.
 
-Frederico Amado destaca a aplicação do Tema 132 STJ aos motociclistas.
+Frederico Amado defende a periculosidade dos motociclistas (precedente a confirmar na fonte).
 
 Hugo Goes admite a conversão por periculosidade na NR-16 Anexo V.
 

@@ -14,9 +14,9 @@ Deficiência intelectual.
 
 Fonte oficial em https://www.cjf.jus.br
 
-### Tema 305 TNU
+### Nota da auditoria
 
-Avaliação biopsicossocial.
+O "Tema 305/TNU" citado aqui tem teor oficial diverso (auxílio emergencial) e foi removido. A avaliação biopsicossocial da LC 142 apoia-se na própria LC 142/2013, no IF-BrA (Portaria Interministerial 1/2014) e na LBI (Lei 13.146/2015, art. 2º) (auditoria 06/07/2026).
 
 ### Tema 327 TNU
 
@@ -42,7 +42,7 @@ Fonte oficial em https://www.planalto.gov.br
 
 Argumento adversário. Restrição clínica.
 
-Refutação. Avaliação biopsicossocial é obrigatória. Tema 305 TNU.
+Refutação. A avaliação biopsicossocial é obrigatória (LC 142/2013, IF-BrA e LBI, art. 2º (auditoria 06/07/2026)).
 
 ### Argumento 2 — Pontuação binária
 

@@ -28,7 +28,7 @@ CPC, art. 525 §§12 a 15.
 
 ## 4. Marco jurisprudencial central
 
-### Tema 1370 STJ
+### Rescisória e precedentes (ex-"Tema 1370 STJ" removido deste contexto (auditoria 06/07/2026))
 
 Precedentes qualificados.
 
@@ -120,7 +120,7 @@ Segundo, peticionar dentro do biênio.
 
 Terceiro, fundamentar hipótese objetiva.
 
-Quarto, invocar Tema 1370.
+Quarto, invocar a violação manifesta de norma (art. 966, V, CPC), com precedente específico a confirmar na fonte.
 
 Quinto, comparar com repropositura.
 

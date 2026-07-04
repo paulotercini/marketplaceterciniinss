@@ -36,7 +36,7 @@ EC 41/2003. Novo teto em dezembro de 2003.
 
 ## 4. Marco jurisprudencial central
 
-### Tema 327 STF, RE 564.354
+### Tema 76/STF, RE 564.354
 
 Decidiu pela aplicação retroativa dos novos tetos aos benefícios concedidos antes das ECs 20/1998 e 41/2003, em favor do segurado cuja RMI teria sido maior se o novo teto já vigesse à época.
 
@@ -50,7 +50,7 @@ Incidência da decadência nas revisões do teto.
 
 ### RE 937.595 STF
 
-Aplicação concreta do Tema 327.
+Aplicação concreta do Tema 76/STF.
 
 ## 5. Buraco negro — outubro de 1988 a abril de 1991
 

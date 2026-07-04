@@ -4,19 +4,19 @@
 
 ### Tema 692 STJ
 
-Recebidos de boa-fé em tutela revogada. Não devolução.
+Tese DESFAVORÁVEL. Determina a devolução dos valores recebidos por força de tutela antecipada posteriormente revogada, com desconto de até 30 por cento do benefício. Informar o risco ao cliente (auditoria 06/07/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 1009 STJ
+### Tema 1009 STJ (não citar nesta matéria)
 
-Devolução em tutela antecipada previdenciária.
+O teor oficial trata de devolução por erro administrativo a servidores, não de tutela previdenciária. Citação removida (auditoria 06/07/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 313 STJ
+### Tema 313 STJ (não citar nesta matéria)
 
-Efetividade.
+O teor oficial é tributário (PIS/COFINS), não trata de efetividade da tutela. Citação removida (auditoria 06/07/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -30,7 +30,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 RVT. Tese firmada.
 
-### Tema 327 STF
+### Tema 76/STF (RE 564.354)
 
 Revisão do teto.
 
@@ -90,7 +90,7 @@ Refutação. Demora impõe dano alimentar. Tutela exigível.
 
 Argumento adversário. Tese não firmada.
 
-Refutação. Temas 1102 STF e 327 STF firmados. Art. 311 II CPC.
+Refutação. Tema 76/STF (teto, RE 564.354) firmado; quanto ao Tema 1102/STF (RVT), ver o status pós-ADIs 2110/2111 antes de invocar. Art. 311 II CPC.
 
 ### Argumento 6 — Súmula 729 STF veda
 
@@ -108,7 +108,7 @@ Refutação. Cabível em tutela antecedente art. 303 se INSS não recorrer.
 
 Argumento adversário. Enriquecimento sem causa.
 
-Refutação. Tema 692 STJ e Tema 1009 STJ. Boa-fé afasta.
+Atenção, não há refutação segura. O Tema 692/STJ determina a devolução com desconto de até 30 por cento. A defesa é circunstancial (verba alimentar consumida, hipossuficiência), sem precedente vinculante confirmado (auditoria 06/07/2026).
 
 ### Argumento 9 — Suspensão de segurança
 

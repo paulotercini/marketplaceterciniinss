@@ -8,9 +8,9 @@ Categoria profissional.
 
 Fonte oficial em https://www.cjf.jus.br
 
-### Súmula 555 STJ
+### Súmula 555 STJ (não citar nesta matéria)
 
-Atividade especial.
+O teor oficial é de decadência tributária (CTN). Para categoria profissional, os Decretos 53.831/64 e 83.080/79; para EPI/ruído, o Tema 555/STF (auditoria 06/07/2026).
 
 Fonte oficial em https://www.stj.jus.br
 

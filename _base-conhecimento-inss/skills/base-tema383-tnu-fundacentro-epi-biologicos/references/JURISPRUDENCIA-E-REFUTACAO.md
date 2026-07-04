@@ -2,6 +2,8 @@
 
 ## 1. Tema 383/TNU. Status
 
+STATUS OFICIAL (CJF), AFETADO E EM JULGAMENTO, SEM TESE FIRMADA. Não citar como tese; usar como controvérsia pendente com a manifestação da Fundacentro a favor (auditoria 06/07/2026).
+
 Pedido de Uniformização nº 1004356-32.2019.4.01.3802/MG. Tema 383 da TNU.
 
 Trata da repercussão do EPI declarado eficaz no PPP para fins de caracterização de tempo especial em atividade exposta a agentes biológicos.

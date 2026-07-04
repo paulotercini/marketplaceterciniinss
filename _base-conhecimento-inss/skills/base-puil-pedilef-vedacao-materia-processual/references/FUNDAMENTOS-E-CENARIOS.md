@@ -479,7 +479,7 @@ MS em hipóteses excepcionais.
 
 Quando a controvérsia for sobre revisão de benefício já concedido, cuidar para não cair em matéria processual.
 
-Reformular como divergência sobre a interpretação da norma material da revisão (Tema 1102/STF para RVT, Tema 327/STF para teto, art. 144 para buraco verde).
+Reformular como divergência sobre a interpretação da norma material da revisão (Tema 1102/STF para RVT, Tema 76/STF (RE 564.354) para teto, art. 144 para buraco verde).
 
 Cruzamento com `base-revisao-vida-toda-rvt`, `base-revisao-teto-buraco-negro-verde`, `base-revisao-art29-melhor-beneficio`.
 

@@ -2,7 +2,7 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 176 STF
+### Contagem recíproca (ex-"Tema 176 STF" removido, teor oficial diverso (auditoria 06/07/2026); fundamento, art. 94 da Lei 8.213/91 e art. 201, §9º, da CF)
 
 Aspectos constitucionais da contagem recíproca.
 
@@ -142,7 +142,7 @@ Quinto, em caso de recusa, via judicial.
 
 Acompanhar acórdãos do STJ sobre Tema 609.
 
-Acompanhar decisões do STF sobre Tema 176.
+Acompanhar a jurisprudência sobre contagem recíproca (precedente vinculante específico a confirmar na fonte).
 
 Revisar IN 128/2022 e regulamentos dos entes públicos.
 

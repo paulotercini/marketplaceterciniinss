@@ -48,9 +48,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação analógica pró-segurada.
 
-### Tema 73 STJ
+### Nota da auditoria
 
-Tese. Flexibilização de critérios em benefícios assistenciais e previdenciários pode ser aplicada em situações específicas (referência contextual).
+O antigo "Tema 73/STJ" citado aqui tem teor oficial tributário e foi removido; a flexibilização de miserabilidade é o Tema 185/STJ (assistencial), sem transposição automática ao salário-maternidade (auditoria 06/07/2026).
 
 Fonte oficial em https://www.stj.jus.br
 

@@ -2,7 +2,11 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 1370 STJ
+### Nota da auditoria (ex-"Tema 1370 STJ")
+
+O Tema 1370/STJ real (afetado em 08/2025) trata de prazos decadenciais autônomos em revisão, não de rescisória por precedente qualificado. Número removido deste contexto (auditoria 06/07/2026).
+
+### Rescisória e precedentes qualificados
 
 Rescisória e precedentes.
 
@@ -84,7 +88,7 @@ Refutação. Coisa julgada desfavorável. Interesse presente.
 
 Argumento adversário. Interpretação razoável.
 
-Refutação. Violação a precedente qualificado. Tema 1370 STJ.
+Refutação. Violação manifesta a norma jurídica (art. 966, V, do CPC), inclusive a precedente qualificado (precedente vinculante específico a confirmar na fonte (auditoria 06/07/2026)).
 
 ### Argumento 7 — Erro de fato exige documento
 
@@ -140,7 +144,7 @@ Sexto, sustentar em contrarrazões.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 1370 STJ.
+Acompanhar o Tema 1370/STJ real (prazos decadenciais em revisão, afetado em 08/2025) e a jurisprudência de rescisória por precedente.
 
 Revalidar Tema 100 STF.
 

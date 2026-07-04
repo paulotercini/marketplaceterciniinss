@@ -2,7 +2,7 @@
 
 ## 1. Precedentes relevantes
 
-### Súmula 31/TNU
+### Súmula 31/TNU (REVOGADA em 22/11/2023, não citar como vigente (auditoria 06/07/2026); usar o Tema 1188/STJ)
 
 Aceita sentença trabalhista. Fonte oficial em https://www.cjf.jus.br
 
@@ -40,7 +40,7 @@ Anotação na CTPS. Fonte oficial em https://www.planalto.gov.br
 
 Argumento adversário. INSS é terceiro.
 
-Refutação. Súmula 31 TNU. Início de prova material vincula.
+Refutação. Tema 1188/STJ, sentença trabalhista fundada em início de prova material serve à comprovação (a Súmula 31/TNU foi revogada).
 
 ### Argumento 2 — Súmula 149 STJ afasta sentença
 
@@ -58,7 +58,7 @@ Refutação. Acordo homologado é início de prova.
 
 Argumento adversário. Sem contraditório.
 
-Refutação. Súmula 31 TNU resguarda. Tema 1.188/STJ.
+Refutação. Tema 1188/STJ resguarda (a Súmula 31/TNU foi revogada).
 
 ### Argumento 5 — Tríplice identidade
 
@@ -94,7 +94,7 @@ Refutação. Cabe ao INSS provar fraude.
 
 Argumento adversário. Declaração tardia é frágil.
 
-Refutação. Súmula 31 TNU não distingue tempo.
+Refutação. O fundamento vigente (Tema 1188/STJ) não distingue tempo (a Súmula 31/TNU foi revogada).
 
 ## 3. Cláusulas doutrinárias de apoio
 
@@ -124,4 +124,4 @@ Sexto, monitoramento.
 
 ## 5. Diligência de atualização
 
-Acompanhar Súmula 31/TNU. Revalidar Tema 297/TNU. Monitorar Tema 1.188/STJ.
+Monitorar o Tema 1188/STJ (a Súmula 31/TNU foi revogada; o "Tema 297/TNU" tem teor oficial diverso e não deve ser citado nesta matéria).

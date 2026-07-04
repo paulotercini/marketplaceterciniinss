@@ -18,7 +18,7 @@ Reafirmam o cômputo como tempo de contribuição e excluem carência.
 
 Fonte oficial em https://www.jf.jus.br
 
-### Tema 176 STF
+### Contagem recíproca (ex-"Tema 176 STF" removido, teor oficial diverso (auditoria 06/07/2026); fundamento, art. 94 da Lei 8.213/91 e art. 201, §9º, da CF)
 
 Contagem recíproca, aspectos constitucionais.
 
