@@ -206,6 +206,19 @@ A reference `ATUALIZACAO-STATUS-2026-06.md` consolida a verificação feita via 
 
 Para CADA citação destes temas, aplicar protocolo de verificação dinâmica em até Nível 2 para confirmar status atual. Esta atualização foi feita pela Onda Corretiva 38 (v1.28.0).
 
+## JURISPRUDÊNCIA REGIONAL PERSUASIVA (NÃO VINCULANTE)
+
+Esta seção reúne acórdãos regionais de turma úteis à tese, sem força vinculante. Servem como reforço argumentativo, jamais como precedente obrigatório. NUNCA citar como se obrigassem o juízo. Verificados em fonte oficial na Onda 55 (v1.45.0).
+
+### Justificação Administrativa. MS para processamento
+
+Tese. Indeferir ou obstar o processamento da Justificação Administrativa, presente início de prova material, é ato ilegal que fere direito líquido e certo à instrução probatória do processo administrativo. Cabe MS para obrigar o INSS a processar a JA. O objeto do MS é o processamento, não o mérito. Fundamento no art. 108 da Lei 8.213/91 e no art. 142 do Decreto 3.048/99, redação do Decreto 10.410/2020. A JA só produz efeito com início de prova material contemporânea, art. 55, §3º, da Lei 8.213/91.
+
+- TRF4, APELREEX 5021710-82.2014.4.04.7200/SC, 5ª Turma, Rel. Des. Federal Rogerio Favreto, julgado em 02/12/2014, juntado aos autos em 09/12/2014. Negou provimento à remessa e à apelação do INSS, mantida a segurança. Fonte oficial https://eproc-jur.trf4.jus.br
+- TRF3, ApCiv 5012265-04.2020.4.03.6183, 4ª Turma, Rel. Des. Federal Marcelo Saraiva. Deu provimento à apelação do segurado e concedeu a segurança para o processamento da JA. Data do julgamento não consta do inteiro teor arquivado, conferir no andamento antes de datar em peça. Fonte oficial https://web.trf3.jus.br
+
+Detalhamento da tese, cenários e ressalvas em `base-ms-cabimento-direito-liquido-certo`.
+
 ## ATUALIZAÇÃO DO CATÁLOGO
 
 O catálogo deve ser revisado periodicamente conforme.
