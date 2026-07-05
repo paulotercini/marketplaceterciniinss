@@ -136,7 +136,7 @@
 
 - **Tema 1096:** A enfermidade ou doença mental, ainda que tenha sido estabelecida a curatela, não configura, por si, elemento suficiente para determinar que a pessoa com deficiência não tenha discernimento para os atos da vida civil.
 
-- **Tema 1102:** O segurado que implementou as condições para o benefício previdenciário após a vigência da Lei 9.876/99 e antes da vigência das novas regras da EC 103/2019, tem o direito de optar pela regra definitiva do art. 29, I e II, da Lei 8.213/91, caso esta lhe seja mais favorável.
+- **Tema 1102:** [TESE SUPERADA — trânsito em julgado em 15/05/2026, após as ADIs 2110/2111; a tese oficial ATUAL é a OPOSTA, o segurado NÃO pode optar pela regra definitiva do art. 29, I e II, com modulação de irrepetibilidade até 05/04/2024 — ver redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO] Redação antiga (2022, não citar): o segurado que implementou as condições após a Lei 9.876/99 e antes da EC 103/2019 teria direito de optar pela regra definitiva do art. 29, I e II, se mais favorável.
 
 - **Tema 1104:** É infraconstitucional a controvérsia relativa à definição e ao preenchimento dos requisitos legais necessários para a concessão de aposentadoria híbrida.
 
