@@ -4,7 +4,7 @@
 
 ### IRSM de fevereiro de 1994 (39,67%)
 
-Tese. Os salários de contribuição anteriores à conversão em URV devem ser corrigidos pelo IRSM de fevereiro de 1994 (39,67%) antes da apuração da RMI. Fundamento, art. 21, §1º, da Lei 8.880/1994 e Tema 130/TNU. O número "Tema 415/STJ" foi removido (teor oficial diverso); o repetitivo específico e o REsp 1.168.657 ficam a confirmar na fonte (auditoria 06/07/2026).
+Tese. Os salários de contribuição anteriores à conversão em URV devem ser corrigidos pelo IRSM de fevereiro de 1994 (39,67%) antes da apuração da RMI. Fundamento, art. 21, §1º, da Lei 8.880/1994, art. 41, II, da Lei 8.213/91 e Tema 130/TNU. CONFERIDO (conferido pelo Paulo na fonte oficial em 04/07/2026), NÃO existe repetitivo da matéria e o REsp 1.168.657 é tributário; a âncora é a jurisprudência consolidada da Terceira Seção, REsp 523.680/SP (ementa literal no CATALOGO-COMPLEMENTAR-VERIFICADO) e leading cases REsp 163.754/SP, 245.148/SC e 226.909/SC.
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -92,13 +92,13 @@ Refutação. Assistência profissional de calculista. Direito à igualdade de ar
 
 Argumento adversário. Efeitos financeiros somente do ajuizamento.
 
-Refutação. Reconhecimento retroage à DIB, com prescrição quinquenal. O alcance do Tema 1124 STJ nesse ponto deve ser confirmado na fonte (julgado, acórdão publicado em 05/02/2026, tese literal a confirmar).
+Refutação. Reconhecimento retroage à DIB, com prescrição quinquenal. O alcance do Tema 1124 STJ nesse ponto deve ser confirmado na fonte (julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO)).
 
 ## 4. Cláusulas doutrinárias de apoio
 
 Wladimir Novaes Martinez, análise do Plano Real.
 
-Frederico Amado, IRSM 39,67% (repetitivo a confirmar na fonte).
+Frederico Amado, IRSM 39,67% (jurisprudência consolidada da Terceira Seção, sem repetitivo).
 
 Hugo Goes, cálculo com IRSM.
 
@@ -126,7 +126,7 @@ Sexto, pedido de implantação imediata após trânsito em julgado.
 
 ## 6. Diligência de atualização
 
-Acompanhar acórdãos do STJ sobre a aplicação concreta do IRSM (repetitivo a confirmar).
+Acompanhar acórdãos do STJ sobre a aplicação concreta do IRSM (matéria consolidada, sem repetitivo).
 
 Acompanhar IACs dos TRFs.
 

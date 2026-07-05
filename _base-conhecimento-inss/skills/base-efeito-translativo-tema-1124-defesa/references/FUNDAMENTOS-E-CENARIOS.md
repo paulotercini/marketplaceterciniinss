@@ -172,7 +172,7 @@ Aplicação direta da exceção do Tema 350/STF (revisão de benefício já conc
 
 Demonstração do PA original que gerou a aposentadoria.
 
-### 6.5. Cenário E. Ação ajuizada antes de 30/03/2022
+### 6.5. Cenário E. Extinção com base no Tema 1124 (tese conferida em 04/07/2026, sem modulação por data na redação)
 
 Quadro. Ação ajuizada em 2020 com base em jurisprudência consolidada da época. Em 2024, tribunal aplica Tema 1124.
 

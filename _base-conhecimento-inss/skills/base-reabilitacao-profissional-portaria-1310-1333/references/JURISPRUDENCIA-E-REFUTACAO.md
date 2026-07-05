@@ -78,7 +78,7 @@ Refutação. A Portaria 1.333/2026 admite reagendamento excepcional em até 30 d
 
 Argumento adversário. Conversão de B31 em B91 demanda novo requerimento.
 
-Refutação. Conversão é dever de cooperação, pois o INSS já analisou a incapacidade, e exigir novo requerimento configura barreira administrativa abusiva (art. 6º III Lei 13.460/2017). O alcance do Tema 1124 STJ nesse ponto deve ser confirmado na fonte (julgado, acórdão publicado em 05/02/2026, tese literal a confirmar).
+Refutação. Conversão é dever de cooperação, pois o INSS já analisou a incapacidade, e exigir novo requerimento configura barreira administrativa abusiva (art. 6º III Lei 13.460/2017). O alcance do Tema 1124 STJ nesse ponto deve ser confirmado na fonte (julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO)).
 
 ### Argumento 9 — Função compatível em qualquer mercado
 
@@ -120,4 +120,4 @@ Sexto, monitoramento das Portarias DIRBEN futuras.
 
 ## 5. Diligência de atualização
 
-Acompanhar atos normativos do INSS sobre reabilitação. Tema 1124 STJ julgado, acórdão publicado em 05/02/2026, tese literal a confirmar na fonte. Monitorar súmulas TNU pertinentes.
+Acompanhar atos normativos do INSS sobre reabilitação. Tema 1124 STJ julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO). Monitorar súmulas TNU pertinentes.

@@ -39,7 +39,7 @@ A solução pelo CPC/2015 é a observância do contraditório prévio, mesmo nas
 
 ### 3.1. Tese do Tema 1124 (literal a confirmar na fonte)
 
-Tema julgado, acórdão publicado em 05/02/2026. A redação abaixo é a divulgada e deve ser confirmada na íntegra do acórdão antes de citar.
+Tema julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO). A redação abaixo é a divulgada e deve ser confirmada na íntegra do acórdão antes de citar.
 
 "O segurado, no exercício do seu direito de ação, deverá comprovar a existência de prévio requerimento administrativo perante o INSS, salvo nas hipóteses excepcionais firmadas no Tema 350/STF (RE 631.240)".
 
@@ -157,13 +157,13 @@ Tema 1124/STJ na perspectiva do efeito translativo.
 
 ### 8.1. Datas-chave
 
-DJe 30/03/2022. Publicação da tese. Dado a confirmar na fonte, pois o acórdão do julgamento foi publicado em 05/02/2026.
+A tese foi firmada em 08/10/2025, com acórdão publicado em 06/11/2025 (conferido pelo Paulo na fonte oficial em 04/07/2026). A antiga referência a publicação no DJe de 30/03/2022 estava ERRADA e foi removida; qualquer tese de corte temporal por essa data cai.
 
 Modulação. Aplicação a partir da publicação, com proteção das ações ajuizadas em momento anterior. Confirmar os termos exatos da modulação na íntegra do acórdão.
 
 ### 8.2. Aplicação prática
 
-Ações ajuizadas antes de 30/03/2022 não devem ser atingidas pelo Tema 1124.
+Eventual modulação temporal deve ser extraída do próprio acórdão publicado em 06/11/2025 (ler a íntegra antes de sustentar corte por data de ajuizamento; a redação da tese conferida não traz modulação por data).
 
 Em caso de aplicação retroativa, argumentar.
 
@@ -249,7 +249,7 @@ Quadro. Pretensão de revisão de benefício já concedido.
 
 Estratégia. Aplicação direta da exceção do Tema 350/STF (revisão dispensa novo PA).
 
-### 11.5. Cenário E. Tribunal extingue ação ajuizada antes de 30/03/2022
+### 11.5. Cenário E. Tribunal extingue ação com base no Tema 1124 (verificar a tese conferida)
 
 Quadro. Ação ajuizada em 2020, julgamento em 2024. Tribunal aplica Tema 1124.
 

@@ -4,7 +4,7 @@
 
 ### Tema 692 STJ
 
-Tese DESFAVORÁVEL. Determina a devolução dos valores recebidos por força de tutela antecipada posteriormente revogada, com desconto de até 30 por cento do benefício. Informar o risco ao cliente (auditoria 06/07/2026).
+Tese DESFAVORÁVEL, CONFERIDA (conferido pelo Paulo na fonte oficial em 04/07/2026) (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO; complementada em 09/10/2024 na Pet 12.482/DF, trânsito em 10/12/2024). Determina a devolução dos valores de tutela revogada, com desconto de até 30 por cento e liquidação nos mesmos autos. Informar o risco ao cliente. Distinguir do Tema 979/STJ (boa-fé em erro administrativo).
 
 Fonte oficial em https://www.stj.jus.br
 

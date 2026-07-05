@@ -49,7 +49,7 @@ Cenário B, restabelecimento de B31 cessado sem perícia. Tutela cabível.
 
 Cenário C, implantação de B91 com laudo pericial judicial favorável. Tutela cabível.
 
-Cenário D, tutela de evidência em tese firmada (Tema 76/STF teto; a RVT do Tema 1102/STF exige cautela pós-ADIs 2110/2111). Quanto ao Tema 1124/STJ, julgado com acórdão publicado em 05/02/2026, confirmar a tese literal na fonte antes de invocá-lo como tese firmada.
+Cenário D, tutela de evidência em tese firmada (Tema 76/STF teto; a RVT do Tema 1102/STF exige cautela pós-ADIs 2110/2111). Quanto ao Tema 1124/STJ, julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO), confirmar a tese literal na fonte antes de invocá-lo como tese firmada.
 
 ## Estabilização (art. 304)
 

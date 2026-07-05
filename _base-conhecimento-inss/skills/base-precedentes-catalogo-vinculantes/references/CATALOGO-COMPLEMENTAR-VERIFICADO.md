@@ -475,3 +475,124 @@ expressa que permitisse confirmar):
 
 Registro completo da auditoria de 04.07.2026 (vereditos item a item):
 /tmp/auditoria/veredito_top.json
+
+
+---
+
+# CONFERIDOS PELO PAULO NA FONTE OFICIAL DO STJ (04/07/2026)
+
+Itens conferidos pelo Paulo diretamente em processo.stj.jus.br/repetitivos e scon.stj.jus.br, com redação literal (arquivo-fonte na pasta do Drive "_Auditoria - Fontes Oficiais"). Status, CONFIRMADO_FONTE_OFICIAL.
+
+## Tema 1124/STJ
+
+**Órgão julgador.** Primeira Seção
+**Ramo do direito.** Direito Previdenciário
+**Situação.** Acórdão publicado. Julgado em 08/10/2025, acórdão publicado em 06/11/2025
+**Processos.** REsp 1913152/SP, REsp 1905830/SP e REsp 1912784/SP, todos oriundos do TRF3
+
+**Questão submetida a julgamento (redação atual, alterada em 22/5/2024).**
+
+> "Caso superada a ausência do interesse de agir, definir o termo inicial dos efeitos financeiros dos benefícios previdenciários concedidos ou revisados judicialmente, por meio de prova não submetida ao crivo administrativo do INSS, se a contar da data do requerimento administrativo ou da citação da autarquia previdenciária."
+
+**Tese firmada.**
+
+> "1) Configuração do interesse de agir para a propositura da ação judicial previdenciária: 1.1) O segurado deve apresentar requerimento administrativo apto, ou seja, com documentação minimamente suficiente para viabilizar a compreensão e a análise do requerimento. 1.2) A apresentação de requerimento sem as mínimas condições de admissão ('indeferimento forçado') pode levar ao indeferimento imediato por parte do INSS. 1.3) O indeferimento de requerimento administrativo por falta de documentação mínima, configurando indeferimento forçado, ou a omissão do segurado na complementação da documentação após ser intimado, impede o reconhecimento do interesse de agir do segurado; ao reunir a documentação necessária, o segurado deverá apresentar novo requerimento administrativo. 1.4) Quando o requerimento administrativo for acompanhado de documentação apta ao seu conhecimento, porém insuficiente à concessão do benefício, o INSS tem o dever legal de intimar o segurado a complementar a documentação ou a prova, por carta de exigência ou outro meio idôneo. Caso o INSS não o faça, o interesse de agir estará configurado. 1.5) Sempre caberá a análise fundamentada, pelo Juiz, sobre se houve ou não desídia do segurado na apresentação de documentos ou de provas de seu alegado direito ou, por outro lado, se ocorreu uma ação não colaborativa do INSS ao deixar de oportunizar ao segurado a complementação da documentação ou a produção de prova. 1.6) O interesse de agir do segurado se configura quando este levar a Juízo os mesmos fatos e as mesmas provas que levou ao processo administrativo. Se desejar apresentar novos documentos ou arguir novos fatos para pleitear seu benefício, deverá apresentar novo requerimento administrativo (Tema 350/STF). A ação judicial proposta nessas condições deve ser extinta sem julgamento do mérito por falta de interesse de agir. A exceção a este tópico ocorrerá apenas quando o segurado apresentar em juízo documentos tidos pelo juiz como não essenciais, mas complementares ou em reforço à prova já apresentada na via administrativa e considerada pelo Juiz como apta, por si só, a levar à concessão do benefício. 2) Data do início do benefício e seus efeitos financeiros: 2.1) Configurado o interesse de agir, por serem levados a Juízo os mesmos fatos e mesmas provas apresentadas ao INSS no processo administrativo, em caso de procedência da ação o Magistrado fixará a Data do Início do Benefício na Data de Entrada do Requerimento, se entender que os requisitos já estariam preenchidos quando da apresentação do requerimento administrativo, a partir da análise da prova produzida no processo administrativo ou da prova produzida em juízo que confirme o conjunto probatório do processo administrativo. Se entender que os requisitos foram preenchidos depois, fixará a DIB na data do preenchimento posterior dos requisitos, nos termos do Tema 995/STJ. 2.2) Quando o INSS, ao receber um pedido administrativo apto, mas com instrução deficiente, deixar de oportunizar a complementação da prova, quando tinha a obrigação de fazê-lo, e a prova for levada a Juízo pelo segurado ou produzida em Juízo, o magistrado poderá fixar a Data do Início do Benefício na Data da Entrada do Requerimento Administrativo, quando entender que o segurado já faria jus ao benefício na DER, ou em data posterior em que os requisitos para o benefício teriam sido cumpridos, ainda que anterior à citação, reafirmando a DER nos termos do Tema 995/STJ. 2.3) Quando presente o interesse de agir e for apresentada prova somente em juízo, não levada ao conhecimento do INSS na via administrativa porque surgida após a propositura da ação ou por comprovada impossibilidade material (como por exemplo uma perícia judicial que reconheça atividade especial, um PPP novo ou LTCAT, o reconhecimento de vínculo ou de trabalho rural a partir de prova surgida após a propositura da ação), o juiz fixará a Data do Início do Benefício na citação válida ou na data posterior em que preenchidos os requisitos, nos termos do Tema 995/STJ. 2.4) Em qualquer caso deve ser respeitada a prescrição das parcelas anteriores aos cinco últimos anos contados da propositura da ação."
+
+**ALERTA.** Tese firmada apenas em 08/10/2025, com acórdão publicado em 06/11/2025. Skill que trate o Tema 1124 como pendente de julgamento ou que reproduza redação anterior está desatualizada e precisa reancorar por esta redação.
+
+**Fonte oficial.** https://processo.stj.jus.br/repetitivos/temas_repetitivos/
+
+---
+
+## Tema 905/STJ
+
+**Órgão julgador.** Primeira Seção
+**Ramo do direito.** Direito Civil (abrange condenações previdenciárias no item 3.2)
+**Situação.** Trânsito em julgado
+**Vínculo.** Repercussão geral Tema 810/STF, além dos Temas 1170 e 1361 do STF
+
+**Tese firmada (transcrição integral).**
+
+> "1. Correção monetária: o art. 1º-F da Lei 9.494/97 (com redação dada pela Lei 11.960/2009), para fins de correção monetária, não é aplicável nas condenações judiciais impostas à Fazenda Pública, independentemente de sua natureza. 1.1 Impossibilidade de fixação apriorística da taxa de correção monetária. No presente julgamento, o estabelecimento de índices que devem ser aplicados a título de correção monetária não implica pré-fixação (ou fixação apriorística) de taxa de atualização monetária. Do contrário, a decisão baseia-se em índices que, atualmente, refletem a correção monetária ocorrida no período correspondente. Nesse contexto, em relação às situações futuras, a aplicação dos índices em comento, sobretudo o INPC e o IPCA-E, é legítima enquanto tais índices sejam capazes de captar o fenômeno inflacionário. 1.2 Não cabimento de modulação dos efeitos da decisão. A modulação dos efeitos da decisão que declarou inconstitucional a atualização monetária dos débitos da Fazenda Pública com base no índice oficial de remuneração da caderneta de poupança, no âmbito do Supremo Tribunal Federal, objetivou reconhecer a validade dos precatórios expedidos ou pagos até 25 de março de 2015, impedindo, desse modo, a rediscussão do débito baseada na aplicação de índices diversos. Assim, mostra-se descabida a modulação em relação aos casos em que não ocorreu expedição ou pagamento de precatório. 2. Juros de mora: o art. 1º-F da Lei 9.494/97 (com redação dada pela Lei 11.960/2009), na parte em que estabelece a incidência de juros de mora nos débitos da Fazenda Pública com base no índice oficial de remuneração da caderneta de poupança, aplica-se às condenações impostas à Fazenda Pública, excepcionadas as condenações oriundas de relação jurídico-tributária. 3. Índices aplicáveis a depender da natureza da condenação. [itens 3.1, 3.1.1, 3.1.2 sobre administrativo em geral, servidores e desapropriação suprimidos nesta transcrição, constam na fonte] 3.2 Condenações judiciais de natureza previdenciária. As condenações impostas à Fazenda Pública de natureza previdenciária sujeitam-se à incidência do INPC, para fins de correção monetária, no que se refere ao período posterior à vigência da Lei 11.430/2006, que incluiu o art. 41-A na Lei 8.213/91. Quanto aos juros de mora, incidem segundo a remuneração oficial da caderneta de poupança (art. 1º-F da Lei 9.494/97, com redação dada pela Lei n. 11.960/2009). 3.3 Condenações judiciais de natureza tributária. A correção monetária e a taxa de juros de mora incidentes na repetição de indébitos tributários devem corresponder às utilizadas na cobrança de tributo pago em atraso [...]. 4. Preservação da coisa julgada. Não obstante os índices estabelecidos para atualização monetária e compensação da mora, de acordo com a natureza da condenação imposta à Fazenda Pública, cumpre ressalvar eventual coisa julgada que tenha determinado a aplicação de índices diversos, cuja constitucionalidade/legalidade há de ser aferida no caso concreto."
+
+O ponto de aplicação previdenciária está no item 3.2 (INPC para correção e poupança para juros). Os itens do bloco 3.1 e o 3.3 constam integralmente na fonte oficial.
+
+**Fonte oficial.** https://processo.stj.jus.br/repetitivos/temas_repetitivos/
+
+---
+
+## Tema 1030/STJ
+
+**Órgão julgador.** Primeira Seção
+**Ramo do direito.** Direito Processual Civil e do Trabalho
+**Situação.** Trânsito em julgado. REsp 1807665/SC, trânsito em 20/09/2021
+
+**Questão submetida a julgamento.**
+
+> "Possibilidade, ou não, à luz do art. 3º da Lei n. 10.259/2001, de a parte renunciar ao valor excedente a sessenta salários mínimos, aí incluídas prestações vincendas, para poder demandar no âmbito dos juizados especiais federais."
+
+**Tese firmada (redação já com a complementação por embargos de declaração).**
+
+> "Ao autor que deseje litigar no âmbito de Juizado Especial Federal Cível, é lícito renunciar, de modo expresso e para fins de atribuição de valor à causa, ao montante que exceda os 60 (sessenta) salários mínimos previstos no art. 3º, caput, da Lei 10.259/2001, aí incluídas, sendo o caso, até doze prestações vincendas, nos termos do art. 3º, § 2º, da referida lei, c/c o art. 292, §§ 1º e 2º, do CPC/2015."
+
+**Fonte oficial.** https://processo.stj.jus.br/repetitivos/temas_repetitivos/
+
+---
+
+## Tema 692/STJ
+
+**Órgão julgador.** Primeira Seção
+**Ramo do direito.** Direito Previdenciário
+**Situação.** Trânsito em julgado. Pet 12482/DF, trânsito em 10/12/2024
+**Vínculo.** Repercussão geral Tema 799/STF
+
+**Tese firmada (redação vigente após a complementação da Primeira Seção em 09/10/2024).**
+
+> "A reforma da decisão que antecipa os efeitos da tutela final obriga o autor da ação a devolver os valores dos benefícios previdenciários ou assistenciais recebidos, o que pode ser feito por meio de desconto em valor que não exceda 30% (trinta por cento) da importância de eventual benefício que ainda lhe estiver sendo pago, restituindo-se as partes ao estado anterior e liquidando-se eventuais prejuízos nos mesmos autos, na forma do art. 520, II, do CPC/2015 (art. 475-O, II, do CPC/73)."
+
+**Entendimento anterior (que a revisão superou), firmado no REsp 1.401.560/MT.**
+
+> "A reforma da decisão que antecipa a tutela obriga o autor da ação a devolver os benefícios previdenciários indevidamente recebidos."
+
+**ALERTA.** A tese foi complementada em 09/10/2024 para inserir o limite de desconto de até 30% e o mecanismo de liquidação nos mesmos autos. Skill que ainda reproduza a redação antiga do REsp 1.401.560/MT precisa reancorar por esta redação. Distinguir do Tema 979/STJ, que trata de valores recebidos de boa-fé por erro administrativo.
+
+**Fonte oficial.** https://processo.stj.jus.br/repetitivos/temas_repetitivos/
+
+---
+
+## Súmula 555/STJ
+
+**Órgão julgador.** Primeira Seção
+**Ramo do direito.** Direito Tributário (crédito tributário)
+**Situação.** Em vigor. Julgada em 09/12/2015, DJe 15/12/2015
+
+**Enunciado.**
+
+> "Quando não houver declaração do débito, o prazo decadencial quinquenal para o Fisco constituir o crédito tributário conta-se exclusivamente na forma do art. 173, I, do CTN, nos casos em que a legislação atribui ao sujeito passivo o dever de antecipar o pagamento sem prévio exame da autoridade administrativa."
+
+Conferido. O teor é integralmente tributário, decadência do lançamento pelo art. 173, I, do CTN. Não há conteúdo previdenciário. Qualquer citação da Súmula 555 em peça previdenciária é impertinente.
+
+**Fonte oficial.** https://scon.stj.jus.br/SCON/sumstj/
+
+---
+
+## IRSM de fevereiro de 1994 (39,67%)
+
+**Natureza.** Jurisprudência consolidada da Terceira Seção do STJ, sem tema repetitivo
+**Base normativa.** Art. 21, § 1º, da Lei 8.880/94 e art. 41, II, da Lei 8.213/91
+
+**ALERTA.** Não existe tema repetitivo com o número atribuído nas skills. A pesquisa nos Precedentes Qualificados do STJ por "IRSM" e por "39,67%" não retorna nenhum recurso repetitivo sobre a matéria. O "Tema 415" citado está errado. O REsp 1.168.657 também está errado, pois corresponde a um AgRg em matéria tributária de parcelamento de débito (art. 34 da Lei 9.249/95), julgado pela Sexta Turma, sem qualquer relação com IRSM.
+
+O entendimento de inclusão do IRSM de fevereiro de 1994, no percentual de 39,67%, na atualização monetária dos salários de contribuição para apuração da renda mensal inicial de benefícios concedidos após março de 1994 foi firmado pela Terceira Seção e reiterado pela Quinta Turma do STJ. A ementa representativa é a do REsp 523680/SP (Quinta Turma, Rel. Min. Jorge Scartezzini, DJ 24/05/2004).
+
+> "Na atualização monetária dos salários-de-contribuição, para fins de apuração da renda mensal inicial do benefício, deve ser aplicado o IRSM integral do mês de fevereiro/94, da ordem de 39,67%. Entendimento firmado na Eg. Terceira Seção desta Corte."
+
+**Leading cases** citados de forma reiterada como fundamento. REsp 163.754/SP, REsp 245.148/SC e REsp 226.909/SC.
+
+Para reancorar a skill de revisão do IRSM, o correto é substituir a referência a tema repetitivo por referência à jurisprudência consolidada da Terceira Seção, à base normativa do art. 21, § 1º, da Lei 8.880/94 e do art. 41, II, da Lei 8.213/91, e aos leading cases acima.
+
+**Fonte oficial.** https://scon.stj.jus.br/SCON/pesquisar.jsp?tp=P&b=ACOR&livre=IRSM+e+39%2C67
+
+---
+
+Todas as redações acima reproduzem o texto exibido nas páginas oficiais do STJ na data de consulta indicada. Recomenda-se salvar, em complemento, o print ou o PDF da página oficial de cada item na pasta de auditoria, para lastro documental da conferência.

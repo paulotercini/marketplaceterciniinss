@@ -9,7 +9,7 @@ Objetivo. Corrigir o status do catálogo base anterior ao incorporar julgamentos
 ### Tema 1124/STJ - **JULGADO COM ACÓRDÃO PUBLICADO**
 
 Status anterior. Suspenso.
-Status atual. **JULGADO. Acórdão publicado em 05/02/2026.**
+Status atual. **JULGADO. Acórdão publicado em 06/11/2025 (data corrigida pela conferência do Paulo em 04/07/2026; julgado em 08/10/2025).**
 Fonte. Informativos Trilhante, IBDP, gov.br/Comunicação STJ, TRF1, TRF4, JOTA.
 Tese. O processo judicial de concessão deve, em regra, analisar aquilo que foi apresentado no requerimento administrativo. Detalhamento da tese a ser confirmado na publicação completa.
 

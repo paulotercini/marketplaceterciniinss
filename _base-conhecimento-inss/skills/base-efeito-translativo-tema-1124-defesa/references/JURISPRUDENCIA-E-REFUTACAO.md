@@ -4,13 +4,13 @@
 
 ### 1.1. Tese (literal a confirmar na fonte)
 
-Tema julgado, acórdão publicado em 05/02/2026. A redação abaixo é a divulgada e deve ser confirmada na íntegra do acórdão antes de citar.
+Tema julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO). A redação abaixo é a divulgada e deve ser confirmada na íntegra do acórdão antes de citar.
 
 "O segurado, no exercício do seu direito de ação, deverá comprovar a existência de prévio requerimento administrativo perante o INSS, salvo nas hipóteses excepcionais firmadas no Tema 350/STF (RE 631.240)".
 
 ### 1.2. Modulação (a confirmar na fonte)
 
-DJe 30/03/2022. Aplicação prospectiva. Dado a confirmar na íntegra do acórdão publicado em 05/02/2026.
+Tese firmada em 08/10/2025, acórdão publicado em 06/11/2025 (conferido pelo Paulo na fonte oficial em 04/07/2026), redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO. A antiga menção a DJe 30/03/2022 estava errada e foi removida.
 
 ### 1.3. Aplicação restritiva pró-segurado
 
@@ -128,7 +128,7 @@ A multa do art. 1.026, § 2º, CPC é inaplicável.
 
 ### 8.3. Tese 3 do INSS. "Tema 1124 se aplica retroativamente"
 
-Refutação. A modulação fixou aplicação prospectiva a partir de 30/03/2022 (termos exatos a confirmar na íntegra do acórdão publicado em 05/02/2026).
+Refutação. A modulação fixou aplicação prospectiva a partir de 30/03/2022 (termos exatos a confirmar na íntegra do julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO)).
 
 Ações ajuizadas antes não devem ser atingidas.
 

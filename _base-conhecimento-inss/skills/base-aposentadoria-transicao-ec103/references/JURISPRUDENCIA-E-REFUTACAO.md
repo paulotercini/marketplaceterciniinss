@@ -20,7 +20,7 @@ Aplicação pró-segurado. Permite a postergação da DER para o dia em que o se
 
 ### Tema 1124 STJ
 
-Julgado, acórdão publicado em 05/02/2026. Tese literal a confirmar na fonte antes de citar. Como cautela, exigir prévio requerimento administrativo antes do ajuizamento, ressalvadas as hipóteses excepcionais reconhecidas na jurisprudência.
+Julgado, julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO). Tese literal a confirmar na fonte antes de citar. Como cautela, exigir prévio requerimento administrativo antes do ajuizamento, ressalvadas as hipóteses excepcionais reconhecidas na jurisprudência.
 
 Fonte oficial em https://www.stj.jus.br
 

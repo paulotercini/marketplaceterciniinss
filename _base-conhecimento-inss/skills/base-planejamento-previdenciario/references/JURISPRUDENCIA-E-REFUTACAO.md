@@ -134,6 +134,6 @@ Sexto, revisão preventiva.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 334 STF e Tema 995 STJ. Tema 1124 STJ julgado, acórdão publicado em 05/02/2026, tese literal a confirmar na fonte.
+Acompanhar Tema 334 STF e Tema 995 STJ. Tema 1124 STJ julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO).
 
 Revalidar IN 128/2022 e Manual de Procedimentos.
