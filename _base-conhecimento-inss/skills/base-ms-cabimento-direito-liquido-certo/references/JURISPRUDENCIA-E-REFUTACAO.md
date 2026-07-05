@@ -144,4 +144,4 @@ Sexto, sentença.
 
 Revalidar Súmula 628 STJ.
 
-Tema 1124 STJ julgado, acórdão publicado em 05/02/2026, tese literal a confirmar na fonte.
+Tema 1124 STJ julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO).

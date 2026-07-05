@@ -117,7 +117,7 @@ PEDILEF 0501880-97.2015.4.01.3507/GO. Trânsito em julgado no STF em 23/08/2022.
 
 ### 4.6. Tema 1124/STJ (instrução administrativa)
 
-REsp 1.905.830, Min. Paulo Sérgio Domingues, Primeira Seção. Julgado, acórdão publicado em 05/02/2026. Tese literal a confirmar na fonte antes de citar.
+REsp 1.905.830, Min. Paulo Sérgio Domingues, Primeira Seção. Julgado, julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO). Tese literal a confirmar na fonte antes de citar.
 
 Detalhamento noticiado, a confirmar na íntegra do acórdão. Quando a prova já constava do administrativo, a DIB recai na DER. Quando o INSS deveria ter pedido complementação probatória e não o fez, a DIB pode ser fixada na DER. Quando a prova é genuinamente nova, surgida após o ajuizamento, a DIB é fixada na citação válida ou em data posterior.
 

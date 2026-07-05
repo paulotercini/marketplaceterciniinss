@@ -230,7 +230,7 @@ Tema 995/STJ. https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa
 
 Tema 1018/STJ. Acórdãos publicados.
 
-Tema 1124/STJ. Julgado, acórdão publicado em 05/02/2026, tese literal a confirmar na fonte.
+Tema 1124/STJ. Julgado, julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO).
 
 Tema 350/STF. https://portal.stf.jus.br/jurisprudenciaRepercussao/.
 

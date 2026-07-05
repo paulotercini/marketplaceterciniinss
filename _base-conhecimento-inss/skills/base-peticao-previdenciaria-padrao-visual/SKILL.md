@@ -226,7 +226,7 @@ Citações longas (ementas, trechos de lei) devem ser formatadas em **itálico**
 
 Toda petição inicial de concessão ou revisão de benefício previdenciário DEVE conter uma seção própria intitulada "DOS EFEITOS FINANCEIROS" (ou variação adequada ao caso, como "DOS EFEITOS FINANCEIROS — DA PROVA PRODUZIDA NA DER [data]"), renderizada com o título preto padrão.
 
-Esta seção é obrigatória porque o Tema 1124/STJ (julgado, acórdão publicado em 05/02/2026, tese literal a confirmar na fonte) trata do termo inicial dos efeitos financeiros conforme o momento em que a prova foi produzida. Sem fundamentação expressa, o juiz pode deslocar a DIB da DER para a citação, causando perda substancial de atrasados.
+Esta seção é obrigatória porque o Tema 1124/STJ (julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO)) trata do termo inicial dos efeitos financeiros conforme o momento em que a prova foi produzida. Sem fundamentação expressa, o juiz pode deslocar a DIB da DER para a citação, causando perda substancial de atrasados.
 
 **Conteúdo obrigatório.**
 

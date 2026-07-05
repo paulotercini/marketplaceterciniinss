@@ -12,7 +12,7 @@ Aplicação. Impõe prévio requerimento administrativo.
 
 ### Tema 1124 STJ
 
-Julgado, acórdão publicado em 05/02/2026. Tese literal a confirmar na fonte antes de citar. Como cautela, manter o prévio requerimento e a instrução mínima no PA.
+Julgado, julgado em 08/10/2025, acórdão publicado em 06/11/2025, tese firmada conferida na fonte oficial pelo Paulo em 04/07/2026 (redação literal no CATALOGO-COMPLEMENTAR-VERIFICADO). Tese literal a confirmar na fonte antes de citar. Como cautela, manter o prévio requerimento e a instrução mínima no PA.
 
 Fonte oficial em https://www.stj.jus.br
 

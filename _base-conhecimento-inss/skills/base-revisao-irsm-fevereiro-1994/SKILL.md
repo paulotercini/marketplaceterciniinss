@@ -1,6 +1,6 @@
 ---
 name: base-revisao-irsm-fevereiro-1994
-description: "Revisão pelo IRSM de fevereiro/1994 (39,67%) sobre os salários de contribuição anteriores à conversão em URV, com fundamento no art. 21 da Lei 8.880/1994 e Tema 415 STJ (REsp 1.168.657). Use SEMPRE que mencionar revisão do IRSM, revisão pelo IRSM de fevereiro de 1994, IRSM 39,67%, Índice de Reajuste do Salário Mínimo, Plano Real, conversão para URV, Lei 8.880/1994, art. 21 Lei 8.880, Tema 415 STJ, REsp 1.168.657, salários de contribuição anteriores a março de 1994, recomposição de salários de contribuição, correção inflacionária SC, RMI com IRSM, benefícios com DIB entre março de 1994 e fevereiro de 1998, decadência IRSM, prescrição quinquenal parcelas IRSM, revisão reflexa em pensão por morte. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103, base-revisao-teto-buraco-negro-verde e precedentes-previdenciarios."
+description: "Revisão pelo IRSM de fevereiro/1994 (39,67%) sobre os salários de contribuição anteriores à conversão em URV, com fundamento no art. 21 da Lei 8.880/1994 e na jurisprudência consolidada da Terceira Seção do STJ (REsp 523.680/SP). Use SEMPRE que mencionar revisão do IRSM, revisão pelo IRSM de fevereiro de 1994, IRSM 39,67%, Índice de Reajuste do Salário Mínimo, Plano Real, conversão para URV, Lei 8.880/1994, art. 21 Lei 8.880, IRSM 39,67 por cento, jurisprudência consolidada da Terceira Seção do STJ, salários de contribuição anteriores a março de 1994, recomposição de salários de contribuição, correção inflacionária SC, RMI com IRSM, benefícios com DIB entre março de 1994 e fevereiro de 1998, decadência IRSM, prescrição quinquenal parcelas IRSM, revisão reflexa em pensão por morte. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103, base-revisao-teto-buraco-negro-verde e precedentes-previdenciarios."
 ---
 
 # Revisão pelo IRSM de Fevereiro/1994
@@ -21,11 +21,11 @@ Lei 8.213/91, art. 103. Decadência decenal.
 
 ## Marco jurisprudencial
 
-Tema 415 STJ, REsp 1.168.657 (repetitivo). Fixou tese pela aplicação do IRSM de fevereiro de 1994, no percentual de 39,67%, aos salários de contribuição anteriores à conversão em URV, antes do cálculo do Salário de Benefício. Precedente vinculante.
+NÃO EXISTE tema repetitivo do IRSM (conferido pelo Paulo na fonte oficial em 04/07/2026), e o REsp 1.168.657 antes citado é tributário (parcelamento), sem relação com a matéria. O fundamento é a jurisprudência CONSOLIDADA da Terceira Seção do STJ, ementa representativa no REsp 523.680/SP (Quinta Turma, Rel. Min. Jorge Scartezzini, DJ 24/05/2004), 'Na atualização monetária dos salários-de-contribuição, para fins de apuração da renda mensal inicial do benefício, deve ser aplicado o IRSM integral do mês de fevereiro/94, da ordem de 39,67%'. Leading cases, REsp 163.754/SP, REsp 245.148/SC e REsp 226.909/SC. Base normativa, art. 21, §1º, da Lei 8.880/94 e art. 41, II, da Lei 8.213/91.
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação obrigatória pelo INSS após o julgamento do repetitivo.
+Aplicação pacificada na jurisprudência (não há repetitivo; a força vem da consolidação na Terceira Seção).
 
 Súmula 85 STJ. Prescrição quinquenal das parcelas.
 

@@ -136,7 +136,7 @@ Este documento reúne teses firmadas pelo Superior Tribunal de Justiça (STJ) em
 
 - **Tema 1117:** O marco inicial da fluência do prazo decadencial, previsto no caput do art. 103 da Lei n. 8.213/1991, quando houver pedido de revisão da RMI para incluir verbas remuneratórias recebidas em ação trabalhista, deve ser o trânsito em julgado da sentença na respectiva reclamatória.
 
-- **Tema 1124:** [Julgado, acórdão publicado em 05/02/2026; tese literal a confirmar na fonte antes de citar — ver ATUALIZACAO-STATUS-2026-06] Definir o termo inicial dos efeitos financeiros dos benefícios previdenciários concedidos ou revisados judicialmente, por meio de prova não submetida ao crivo administrativo do INSS.
+- **Tema 1124:** [Julgado em 08/10/2025, acórdão publicado em 06/11/2025, TESE FIRMADA conferida pelo Paulo na fonte oficial em 04/07/2026 — redação literal integral no CATALOGO-COMPLEMENTAR-VERIFICADO] Síntese, (1) interesse de agir exige requerimento administrativo apto (indeferimento forçado não configura; INSS deve intimar a complementar, senão o interesse está configurado; fatos/provas novos exigem novo requerimento, salvo prova complementar de reforço); (2) DIB na DER quando os requisitos já estavam preenchidos com a prova do PA (ou confirmada em juízo); prova nova impossível de apresentar antes leva a DIB na citação, tudo com reafirmação pelo Tema 995/STJ e prescrição quinquenal.
 
 - **Tema 1140:** [Suspenso] Definir a forma de cálculo da renda mensal para adequação dos benefícios concedidos antes da CF/88 aos tetos das EC 20/98 e 41/2003.
 
