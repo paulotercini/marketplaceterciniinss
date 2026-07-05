@@ -8,8 +8,8 @@
     {
       "name": "base-conhecimento-inss",
       "source": "./_base-conhecimento-inss",
-      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. Versão 1.34.0 entrega a Onda 44, regra técnica de que a contradição que autoriza embargos de declaração é EXCLUSIVAMENTE a INTERNA ao próprio julgado (entre fundamentos, entre fundamento e dispositivo, entre dispositivos), JAMAIS a contradição EXTERNA entre o decidido e a prova dos autos, a jurisprudência divergente ou a tese da parte. Alerta técnico inserido em 4 skills (base-recurso-crps-peca-enxuta, base-recursos-jef, base-rito-ordinario-trf, base-tnu-admissibilidade-manual). Nova reference compartilhada CONTRADICAO-INTERNA-EXTERNA-ED.md com quadro resumo, casos cabíveis e não cabíveis, fundamento normativo (art. 1.022 CPC, art. 92 RICRPS, art. 48 Lei 9.099/95, art. 16 RITNU), risco de multa por embargos protelatórios (art. 1.026 §2º CPC) e prequestionamento ficto (art. 1.025 CPC). 128 skills ao todo (120 base-* + 6 ponte-* + 2 operacionais).",
-      "version": "1.44.0",
+      "description": "Base de conhecimento previdenciário em skills temáticas pró-segurado. A versão 1.45.0 entrega a Onda 55, tese de mandado de segurança para obrigar o INSS a processar a Justificação Administrativa indeferida ou obstada quando presente início de prova material, com direito líquido e certo à instrução probatória do processo administrativo (art. 108 da Lei 8.213/91 e art. 142 do Decreto 3.048/99, redação do Decreto 10.410/2020), ressalva do art. 55, §3º, e os acórdãos regionais persuasivos TRF4 APELREEX 5021710-82.2014.4.04.7200 e TRF3 ApCiv 5012265-04.2020.4.03.6183, inseridos em base-ms-cabimento-direito-liquido-certo e base-precedentes-catalogo-vinculantes. A versão 1.34.0 entregou a Onda 44, regra técnica de que a contradição que autoriza embargos de declaração é EXCLUSIVAMENTE a INTERNA ao próprio julgado (entre fundamentos, entre fundamento e dispositivo, entre dispositivos), JAMAIS a contradição EXTERNA entre o decidido e a prova dos autos, a jurisprudência divergente ou a tese da parte. Alerta técnico inserido em 4 skills (base-recurso-crps-peca-enxuta, base-recursos-jef, base-rito-ordinario-trf, base-tnu-admissibilidade-manual). Nova reference compartilhada CONTRADICAO-INTERNA-EXTERNA-ED.md com quadro resumo, casos cabíveis e não cabíveis, fundamento normativo (art. 1.022 CPC, art. 92 RICRPS, art. 48 Lei 9.099/95, art. 16 RITNU), risco de multa por embargos protelatórios (art. 1.026 §2º CPC) e prequestionamento ficto (art. 1.025 CPC). 128 skills ao todo (120 base-* + 6 ponte-* + 2 operacionais).",
+      "version": "1.45.0",
       "category": "knowledge-base",
       "tags": [
         "inss",
@@ -389,7 +389,18 @@
         "temas-aguardando-stf",
         "temas-cancelados-tnu",
         "tema-58-tnu-superado",
-        "sumula-86-tnu-cancelada-2021"
+        "sumula-86-tnu-cancelada-2021",
+        "onda-55",
+        "justificacao-administrativa",
+        "ms-justificacao-administrativa",
+        "processamento-ja",
+        "art-108-lei-8213",
+        "art-142-decreto-3048",
+        "decreto-10410-2020",
+        "instrucao-probatoria-pa",
+        "trf4-5021710-82-2014",
+        "trf3-5012265-04-2020",
+        "jurisprudencia-regional-persuasiva"
       ]
     }
   ]
