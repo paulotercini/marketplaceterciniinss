@@ -242,9 +242,13 @@ ajudem na procedência. É rotina, não só confirmação. Ordem:
    como persuasivo/analógico, sinalizando que é de outra região. Inclua o tribunal-alvo
    na query (ex.: "TRF3 ...", "TNU ...", "STJ ...").
 3. **WebFetch na FONTE OFICIAL** quando o link abre, para ler a tese/ementa e marcar
-   `[CONFERIDO]`. **Abrem** o CJF (temas da TNU), o STF e o Planalto (lei), e em geral
-   páginas de documento direto. **NÃO abrem** (bloqueio 403/503) os portais de busca
-   STJ SCON, TRF3 jurisprudência e eproc TNU, e os acórdãos do `web.trf3.jus.br`.
+   `[CONFERIDO]`. **Abrem** o CJF (temas da TNU), o Planalto (lei), o LexML e o
+   **STF via `./fetch_oficial.sh <url>`** (o helper resolve a cadeia TLS incompleta do
+   portal.stf.jus.br com o intermediário GlobalSign em `certs/` e envia User-Agent de
+   navegador; nunca desabilita TLS). **NÃO abrem desta rede** (reset/403 por faixa de
+   IP de datacenter na origem, sem solução local) o STJ SCON, o `web.trf3.jus.br` e o
+   eproc TNU; nesses, pedir ao Paulo o PDF/print pelo navegador dele para a pasta do
+   cliente.
 4. **Honestidade radical.** Só cite como `[CONFERIDO]` o que está no catálogo OU foi lido
    na fonte oficial. Julgado favorável que só apareceu em fonte secundária (ex.: Jusbrasil)
    ou em portal bloqueado entra como `[NÃO CONFIRMADO, conferir na fonte]`, com o que se
