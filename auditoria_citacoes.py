@@ -58,9 +58,9 @@ def carrega_catalogo():
     comp = os.path.join(CATDIR, 'CATALOGO-COMPLEMENTAR-VERIFICADO.md')
     if os.path.exists(comp):
         txt = norm(open(comp, encoding='utf-8').read())
-        for m in re.finditer(r'\*\*Súmula (\d+)/(TNU|STF|STJ|TFR)', txt):
+        for m in re.finditer(r'(?:\*\*|## )Súmula (\d+)/(TNU|STF|STJ|TFR)', txt):
             cat['SUMULA'].setdefault(int(m.group(1)), {}).setdefault(m.group(2), 'OK_COMPLEMENTAR')
-        for m in re.finditer(r'\*\*Tema (\d+)/(TNU|STF|STJ)', txt):
+        for m in re.finditer(r'(?:\*\*|## )Tema (\d+)/(TNU|STF|STJ)', txt):
             cat['TEMA'].setdefault(int(m.group(1)), {}).setdefault(m.group(2), 'OK_COMPLEMENTAR')
     return cat
 
