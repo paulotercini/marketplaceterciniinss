@@ -749,7 +749,7 @@ encadeie** se houver pendência bloqueante, aponte o que falta e pare.
 
 ## Aprimoramento contínuo
 
-Este arquivo é a memória viva do assistente. Sempre que aprender uma regra,
+Este arquivo é a memória viva do assistente. A personalização pessoal do Paulo (a que ele cola no perfil do Claude) está versionada em `PERSONALIZACAO-PAULO.md`; quando uma regra mudar aqui (skill nova, verificação, fluxo), confira se ela também precisa ser refletida lá, e vice-versa. Sempre que aprender uma regra,
 preferência ou padrão novo do escritório (legenda, nomenclatura, fluxo de um
 benefício, jeito de redigir mensagem), **atualize este CLAUDE.md** e/ou a skill
 correspondente, e faça commit. O objetivo é ficar cada vez mais alinhado à
