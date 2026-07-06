@@ -38,27 +38,25 @@ Erro de RMI, DIB, DCB, espécie ou enquadramento. Cabe Solicitação de Correç�
 
 ### 2.1. Linha do tempo
 
-Portaria DIRBEN/INSS nº 1.056, de 2022. Disciplina originária da Supervisão Técnica em Benefícios e da Indicação de Erro Administrativo.
+Portaria DIRBEN/INSS nº 1.056, de 2022. REVOGADA pelo art. 44, III, da Portaria DIRBEN/INSS nº 1.309/2025. Disciplina originária da Supervisão Técnica em Benefícios e da Indicação de Erro Administrativo, hoje sem vigência.
 
-Portaria DIRBEN/INSS nº 1.231, de 15/10/2024 (DOU 06/11/2024). Alterou o art. 13 da Portaria 1.056/2022, conferindo a redação atualmente invocada para o rol exaustivo de chefias legitimadas e para os prazos internos.
+Portaria DIRBEN/INSS nº 1.231, de 15/10/2024 (DOU 06/11/2024). REVOGADA pelo art. 44, V, da Portaria DIRBEN/INSS nº 1.309/2025. Conferiu ao art. 13 da Portaria 1.056/2022 a redação que hoje figura no art. 26 da Portaria 1.309/2025.
 
-Portaria DIRBEN/INSS nº 1.309, de 21/10/2025 (DOU 04/11/2025). Revogou expressamente as Portarias 1.056/2022 e 1.231/2024 (art. 44, III e V), passando a regular o tema. Reproduziu integralmente o conteúdo do art. 13 §1º no art. 26 §1º, com inclusão da nova espécie de Supervisão Técnica em Benefícios por Incapacidade (código 19056).
+Portaria DIRBEN/INSS nº 1.309, de 21/10/2025 (DOU 04/11/2025). NORMA VIGENTE. Revogou expressamente as Portarias 1.056/2022 e 1.231/2024 (art. 44, III e V). Regula integralmente a Supervisão Técnica em Benefícios e a Indicação de Erro Administrativo. Reproduziu o conteúdo do antigo art. 13 §1º no art. 26 §1º, com inclusão da nova espécie de Supervisão Técnica em Benefícios por Incapacidade (código 19056).
 
-Portaria DIRBEN/INSS nº 1.318, de 19/12/2025. Alterou pontualmente a Portaria 1.309/2025.
+Portaria DIRBEN/INSS nº 1.318, de 19/12/2025. NORMA VIGENTE. Alterou pontualmente a Portaria 1.309/2025 sem revogá-la. Deve ser sempre citada em conjunto com a 1.309/2025 para retratar a redação atualmente em vigor.
 
-### 2.2. Recomendação técnica de invocação simultânea
+### 2.2. Recomendação técnica de invocação
 
-Em abril de 2026, a fundamentação atualizada deve invocar simultaneamente.
+A fundamentação atualizada deve invocar a Portaria DIRBEN/INSS nº 1.309/2025 (norma vigente) com as alterações da Portaria DIRBEN/INSS nº 1.318/2025.
 
-Art. 13, §§ 1º a 9º, da Portaria DIRBEN/INSS nº 1.056/2022, com a redação dada pela Portaria DIRBEN/INSS nº 1.231/2024 (até 03/11/2025).
+Art. 26, §§ 1º a 9º, da Portaria DIRBEN/INSS nº 1.309/2025, em vigor desde 04/11/2025 (com alterações pela Portaria 1.318/2025).
 
-Art. 26, §§ 1º a 8º, da Portaria DIRBEN/INSS nº 1.309/2025, em vigor desde 04/11/2025 (com alterações pela Portaria 1.318/2025).
+Só se invocam as Portarias 1.056/2022 e 1.231/2024 quando o ato viciado for anterior a 04/11/2025, e ainda assim em conjunto com a 1.309/2025, sob o fundamento da continuidade normativa da autotutela. Nunca como norma vigente autônoma.
 
-A invocação simultânea preserva a tese para casos cuja conduta administrativa viciada se estenda do regime anterior ao posterior.
+## 3. Texto literal do art. 26 §1º (Portaria 1.309/2025)
 
-## 3. Texto literal do art. 13 §1º (Portaria 1.231/2024) e art. 26 §1º (Portaria 1.309/2025)
-
-Ambos os dispositivos delimitam, em rol exaustivo, quem pode (e portanto deve, sob pena de omissão funcional) abrir a tarefa "Indicação de Erro Administrativo" (Código 13975), encaminhando-a ao SGBEN da Gerência Executiva de vinculação do servidor responsável pela análise inicial.
+O dispositivo vigente, com redação atualizada pela Portaria 1.318/2025 e sucessor do antigo art. 13 §1º da revogada Portaria 1.231/2024, delimita, em rol exaustivo, quem pode (e portanto deve, sob pena de omissão funcional) abrir a tarefa "Indicação de Erro Administrativo" (Código 13975), encaminhando-a ao SGBEN da Gerência Executiva de vinculação do servidor responsável pela análise inicial.
 
 §1º. Somente poderão realizar a "Indicação de Erro Administrativo" (Código 13975).
 
@@ -73,7 +71,7 @@ VIII. Chefias das Coordenações, Divisões e Serviços das Superintendências R
 
 ## 4. Vedação expressa de requerimento externo
 
-O §9º (Port. 1.231/2024) e dispositivo equivalente da Port. 1.309/2025 firmam. "A indicação de erro administrativo é um ato interno e em hipótese nenhuma poderá ser objeto de requerimento externo".
+O art. 26, §9º, da Portaria DIRBEN/INSS 1.309/2025 (norma vigente, alterada pela Portaria 1.318/2025) firma. "A indicação de erro administrativo é um ato interno e em hipótese nenhuma poderá ser objeto de requerimento externo".
 
 Daí decorre a recusa do INSS em abrir a tarefa por petição direta do advogado. É justamente por isso que a estratégia correta consiste em provocar as autoridades nominalmente legitimadas (gerente da APS, chefes da SARD/SAMB/SADJ/SAMC/SGREC/SAREC, chefe do SGBEN, COBEN/COREC da Superintendência) para que, no exercício de seu poder-dever de autotutela (art. 53 da Lei 9.784/1999 e Súmula 473 do STF), abram a IEA de ofício.
 
@@ -93,13 +91,13 @@ Supervisão Técnica em Benefícios por Incapacidade (código 19056). Espécie i
 
 ### 5.2. Subtarefas correlatas
 
-Acompanhamento da Revisão de Ofício (código 13976). Subtarefa criada pelo §9º do art. 16 (Portaria 1.231/2024) quando há recusa injustificada ou impossibilidade do servidor responsável. O SGBEN deverá comunicar à chefia imediata do servidor supervisionado e à chefia da SARD. Elemento processual relevante para responsabilização funcional.
+Acompanhamento da Revisão de Ofício (código 13976). Subtarefa regida atualmente pelo dispositivo equivalente na Portaria DIRBEN/INSS 1.309/2025 (alterada pela Portaria 1.318/2025), sucessor do antigo §9º do art. 16 da revogada Portaria 1.231/2024, quando há recusa injustificada ou impossibilidade do servidor responsável. O SGBEN deverá comunicar à chefia imediata do servidor supervisionado e à chefia da SARD. Elemento processual relevante para responsabilização funcional.
 
 Solicitação de Correção de Erro Formal em Tarefa (código 9428). Aplicável quando o erro for meramente formal. Acionar simultaneamente fecha qualquer escapatória classificatória da Administração.
 
 ## 6. Prazos internos
 
-Prazo de 5 dias úteis para iniciar a revisão. Prazo de 5 dias úteis para concluí-la, após cumpridos os prazos legais (art. 16, §2º, da Port. 1.231/2024 e dispositivo equivalente da Port. 1.309/2025).
+Prazo de 5 dias úteis para iniciar a revisão. Prazo de 5 dias úteis para concluí-la, após cumpridos os prazos legais (dispositivo equivalente na Portaria DIRBEN/INSS 1.309/2025, alterada pela Portaria 1.318/2025, sucessor do antigo art. 16, §2º da revogada Portaria 1.231/2024).
 
 O início da contagem do "prazo razoável", para fins do MS, dá-se da data em que a tarefa deveria ter sido aberta pelo SGBEN (5 dias úteis após o recebimento da provocação fundamentada).
 
