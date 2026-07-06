@@ -122,6 +122,28 @@ Para detalhes operacionais, acionar `ms-competencia-autoridade-coatora`.
 Para detalhes processuais, acionar `mandado-seguranca-previdenciario`.
 Para redação, acionar `peticao-previdenciaria`.
 
+## ALERTA CRÍTICO TRF3 - COMPETÊNCIA EM MS POR MORA ADMINISTRATIVA (Onda 63)
+
+O TRF3 tem jurisprudência firme do **Órgão Especial** no sentido de que o MS que busca APENAS compelir o INSS a apreciar ou implementar requerimento administrativo, sem pedido de concessão ou revisão em juízo, tem natureza ADMINISTRATIVA e NÃO PREVIDENCIÁRIA. Competência da **Vara Federal Cível**, não da Vara Federal Previdenciária.
+
+**Precedentes vinculantes por reiteração no TRF3.**
+- CC 5014490-19.2020.4.03.0000, Órgão Especial, Rel. Newton De Lucca, j. 28/08/2020.
+- CC 0034848-47.2007.4.03.0000, Órgão Especial, Rel. Ramza Tartuce, j. 27/02/2008.
+- CC 0025630-92.2007.4.03.0000, Órgão Especial, Rel. Baptista Pereira, j. 09/08/2007.
+- CC 5006551-85.2020.4.03.0000, Órgão Especial, Rel. Baptista Pereira, j. 24/06/2020.
+- CC 5014493-71.2020.4.03.0000, Órgão Especial, Rel. Nekatschalow, j. 08/07/2020.
+
+**Distinção decisiva.**
+- Pedido APENAS de mora (impulsionar procedimento) → Vara CÍVEL Federal.
+- Pedido de mora CUMULADO com concessão/revisão do benefício → Vara PREVIDENCIÁRIA.
+- Distribuição da inicial deve refletir a estratégia.
+
+**Base normativa.** Provimentos 186/1999 e 228/2002 do CJF3R (competência das Varas Previdenciárias limitada a feitos que versem sobre benefícios previdenciários) + Regimento Interno do TRF3.
+
+**Corrente divergente.** Há vertente do próprio Órgão Especial (CC 5015421-22.2020, Rel. Marisa Ferreira dos Santos, e CC 5007662-41.2019, Rel. Nekatschalow) que reconhece a matéria como direito administrativo mas mantém no âmbito das TURMAS da 2ª Seção, não do Órgão Especial. Em qualquer caso, AFASTA da Previdenciária.
+
+Detalhamento integral, com fundamentação verificada em fonte primária (PDF do CC 5026411-72.2020.4.03.0000, Rel. Nelton dos Santos, sessão de 06/07/2026), estratégia pró-segurado com 3 opções de distribuição e petição estratégica para atos urgentes, em `references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md`.
+
 ## O que NÃO está nesta skill
 
 Cabimento em `base-ms-cabimento-direito-liquido-certo`. Liminar em `base-ms-liminar-art7-iii`. Cumprimento em `base-ms-cumprimento-inss`.
