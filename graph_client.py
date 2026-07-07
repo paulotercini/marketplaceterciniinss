@@ -1,14 +1,33 @@
-import json, urllib.parse, urllib.request, urllib.error, pathlib, time, ssl
+import json, os, sys, urllib.parse, urllib.request, urllib.error, pathlib, time, ssl
+
+import graph_access_log as gal
 
 GRAPH = "https://graph.microsoft.com/v1.0"
 TOKENS_PATH = pathlib.Path("graph_tokens.json")
+
+_acesso_registrado = False
 
 
 def _token():
     return json.loads(TOKENS_PATH.read_text())["access_token"]
 
 
+def _registrar_acesso_uma_vez():
+    """Registra, uma vez por processo, o primeiro acesso ao Graph pela rotina."""
+    global _acesso_registrado
+    if _acesso_registrado:
+        return
+    _acesso_registrado = True
+    try:
+        origem = os.path.basename(sys.argv[0]) or "graph_client.py"
+        gal.registrar("acesso", origem, token_hash=gal.token_hash(_token()))
+    except Exception:
+        # log de acesso jamais deve derrubar a rotina
+        pass
+
+
 def _req(method, path, body=None, _tentativas=5):
+    _registrar_acesso_uma_vez()
     url = path if path.startswith("http") else f"{GRAPH}{path}"
     data = json.dumps(body).encode("utf-8") if body is not None else None
     ultimo_erro = None
