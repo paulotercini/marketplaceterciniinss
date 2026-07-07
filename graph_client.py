@@ -1,24 +1,27 @@
 import json, urllib.parse, urllib.request, urllib.error, pathlib, time, ssl
+import graph_auth
 
 GRAPH = "https://graph.microsoft.com/v1.0"
 TOKENS_PATH = pathlib.Path("graph_tokens.json")
 
 
-def _token():
-    return json.loads(TOKENS_PATH.read_text())["access_token"]
+def _token(force_refresh=False):
+    # renova sozinho quando o access_token esta perto de expirar
+    return graph_auth.access_token(force_refresh=force_refresh)
 
 
 def _req(method, path, body=None, _tentativas=5):
     url = path if path.startswith("http") else f"{GRAPH}{path}"
     data = json.dumps(body).encode("utf-8") if body is not None else None
     ultimo_erro = None
+    _refresh_forcado = False
     for i in range(_tentativas):
         req = urllib.request.Request(
             url,
             data=data,
             method=method,
             headers={
-                "Authorization": f"Bearer {_token()}",
+                "Authorization": f"Bearer {_token(force_refresh=_refresh_forcado)}",
                 "Content-Type": "application/json",
             },
         )
@@ -27,7 +30,13 @@ def _req(method, path, body=None, _tentativas=5):
                 raw = r.read()
                 return json.loads(raw) if raw else None
         except urllib.error.HTTPError as e:
-            # HTTPError É subclasse de URLError — tratar ANTES. Só retenta 5xx/429.
+            # HTTPError É subclasse de URLError — tratar ANTES.
+            # 401: token invalido/revogado — força um refresh e retenta uma vez.
+            if e.code == 401 and not _refresh_forcado and i < _tentativas - 1:
+                _refresh_forcado = True
+                ultimo_erro = e
+                continue
+            # Só retenta 5xx/429.
             if e.code in (429, 500, 502, 503, 504) and i < _tentativas - 1:
                 ultimo_erro = e
                 time.sleep(2 ** i)
