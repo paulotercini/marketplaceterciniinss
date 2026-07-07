@@ -1,5 +1,7 @@
 """Renova o access_token usando refresh_token salvo em graph_tokens.json."""
-import json, urllib.parse, urllib.request, pathlib
+import json, urllib.parse, urllib.request, urllib.error, pathlib
+
+import graph_access_log as gal
 
 CLIENT_ID = "14d82eec-204b-4c2f-b7e8-296a70dab67e"
 AUTHORITY = "https://login.microsoftonline.com/consumers"
@@ -22,9 +24,22 @@ def main():
         data=body,
         headers={"Content-Type": "application/x-www-form-urlencoded"},
     )
-    with urllib.request.urlopen(req) as r:
-        new = json.loads(r.read())
+    try:
+        with urllib.request.urlopen(req) as r:
+            new = json.loads(r.read())
+    except urllib.error.HTTPError as e:
+        gal.registrar(
+            "refresh", "graph_refresh.py", resultado="erro",
+            detalhe=f"HTTP {e.code}",
+        )
+        raise
     TOKENS_PATH.write_text(json.dumps(new))
+    gal.registrar(
+        "refresh", "graph_refresh.py", resultado="ok",
+        expires_in=new.get("expires_in"),
+        scope=new.get("scope"),
+        token_hash=gal.token_hash(new.get("access_token")),
+    )
     print("REFRESHED, expires_in:", new.get("expires_in"))
 
 
