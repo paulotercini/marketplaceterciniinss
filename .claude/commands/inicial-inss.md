@@ -3,7 +3,8 @@ description: Monta o protocolo administrativo pronto para anexar no Meu INSS - l
 ---
 
 Monte o requerimento administrativo de UM cliente, pronto para anexar no Meu INSS.
-ARGUMENTO: `<Cliente|CPF>`. Leia ANTES o `CLAUDE.md` (doutrina; legenda P/M/I/D/A/C;
+ARGUMENTO: `<Cliente|CPF>`. Leia ANTES o `CLAUDE.md` **e o `CLAUDE-OPERACIONAL.md`**
+(doutrina; legenda P/M/I/D/A/C;
 limitacoes do Drive; **Analise de PPP**; **Leitura de documentos - cadeia
 OBRIGATORIA**; nomenclatura nome + DDMMAAAA; estilo do escritorio) e a(s)
 skill(s) do beneficio (`ponte-*`, `base-*`). Gravacao automatica, com relatorio
