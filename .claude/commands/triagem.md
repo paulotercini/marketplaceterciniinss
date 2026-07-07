@@ -2,7 +2,8 @@
 description: Triagem diária das tarefas do To Do atribuídas a Paulo (vencendo hoje), cruzando com o Drive, base de conhecimento e CNIS, gravando conclusão + parecer. Complementa pareceres já existentes (não refaz) e mantém a lista de pendências em aberto.
 ---
 
-Execute a triagem diária do escritório. Leia antes o `CLAUDE.md` por inteiro
+Execute a triagem diária do escritório. Leia antes o `CLAUDE.md` **e o
+`CLAUDE-OPERACIONAL.md`** por inteiro
 (doutrina do assistente, personalização do Paulo, legenda das iniciais,
 limitações das ferramentas, nomenclatura, estilo e mapa de ativação de skills).
 Siga EXATAMENTE os passos abaixo.
@@ -49,7 +50,7 @@ Grava `triagem_hoje.json`, leia-o.
 ## 3. Processar CADA tarefa (gravação automática, sem aprovação prévia)
 Para não sobrecarregar o contexto, delegue cada cliente a um subagente
 general-purpose, passando o item do JSON e estas instruções. Lembre o subagente
-de ler o `CLAUDE.md` primeiro.
+de ler o `CLAUDE.md` **e o `CLAUDE-OPERACIONAL.md`** primeiro.
 
 a) **Verificar se já existe parecer do cliente** na subpasta `Claude` da pasta
    dele no Drive (`search_files` por `title contains 'Parecer'` dentro do

@@ -4,7 +4,8 @@ description: Monta a petição inicial pronta para distribuir - lê toda a pasta
 ---
 
 Monte a peticao inicial e o jogo de provas de UM cliente, deixando tudo pronto
-para distribuicao. ARGUMENTO: `<Cliente|CPF>`. Leia ANTES o `CLAUDE.md` (doutrina;
+para distribuicao. ARGUMENTO: `<Cliente|CPF>`. Leia ANTES o `CLAUDE.md` **e o
+`CLAUDE-OPERACIONAL.md`** (doutrina;
 legenda P/M/I/D/A/C; limitacoes do Drive; **Modelos de peticao - Padrao Ouro**;
 **Analise de PPP**; **Leitura de documentos - cadeia OBRIGATORIA**; nomenclatura
 nome + DDMMAAAA; estilo do escritorio). Gravacao automatica, com relatorio ao

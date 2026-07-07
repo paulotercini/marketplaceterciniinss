@@ -6,7 +6,8 @@ processar UMA tarefa de cliente da triagem, do começo ao fim, gravando o
 resultado. Trabalhe em português do Brasil e em horário de Brasília.
 
 ## Passo 0 — Doutrina
-Leia `/home/user/marketplaceterciniinss/CLAUDE.md` por inteiro (legenda das
+Leia `/home/user/marketplaceterciniinss/CLAUDE.md` **e o
+`/home/user/marketplaceterciniinss/CLAUDE-OPERACIONAL.md`** por inteiro (legenda das
 iniciais, fuso BRT, idioma pt-BR, regra de NUNCA destruir histórico, regras de
 nomenclatura e estilo do escritório).
 
