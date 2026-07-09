@@ -219,6 +219,16 @@ Antes de gravar qualquer coisa, releia o que escreveu e só prossiga se passar n
   do benefício (passo c). Se não leu, volte ao passo c antes de afirmar. A linha
   "Skills consultadas" tem de existir no parecer.
 
+## 3.6 Revisão Sistema 2 — Antiviés (LER e aplicar `sistema-2-antivies`)
+Passada a porta de qualidade, rode a skill **`sistema-2-antivies`** sobre a própria
+análise, antes de gravar. Percorra os seis vieses (ancoragem, recência, deferência
+à perícia, confirmação a favor da própria tese, enquadramento do benefício,
+negligência de base), corrija o que estiver enviesado e **nomeie o gargalo honesto**
+da tese. Registre no parecer a seção **"Revisão Sistema 2 — Antiviés"** (vieses
+encontrados e corrigidos, e os afastados), e leve o gargalo para "Pendências em
+aberto". A revisão pode **rebaixar** o próximo passo (de Pronto para Aguardando
+documento) quando expuser pendência bloqueante, isso é acerto do método.
+
 ## 4. Relatório final
 Tabela: Cliente | Modo | Conclusão | Parecer | Pendências em aberto. No topo,
 destaque as tarefas bloqueadas por documento faltante (ex.: RG), indicador de
