@@ -61,6 +61,42 @@ Antes de emitir QUALQUER achado de "verificação não realizada", a skill DEVE 
 
 Ver detalhamento exaustivo em `references/PROTOCOLO-VERIFICACAO-DINAMICA.md`.
 
+## REGRA DE COMET PARA JULGADOS COM DÚVIDA (Onda 65)
+
+Sempre que houver QUALQUER DÚVIDA sobre um julgado (Tema STF, Tema STJ, Tema TNU, Súmula, Enunciado CRPS, IRDR, IAC, PUIL, PEDILEF, REsp, ARE, RE, HC, AC, acórdão, tese fixada, ementa, número de processo, órgão julgador, relator, data de julgamento, trânsito em julgado, modulação de efeitos), a skill deve ABRIR IMEDIATAMENTE o Comet via `mcp__claude-in-chrome__*` e fazer a conferência em fonte primária, SEM aguardar a falha dos Níveis 2 e 3.
+
+Situações que ATIVAM automaticamente o gatilho da dúvida.
+
+Primeiro, precedente citado sem confirmação prévia no catálogo local `base-precedentes-catalogo-vinculantes` ou no arquivo `references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.
+
+Segundo, precedente cuja tese, número, relator ou data pareça inconsistente com a memória local do escritório.
+
+Terceiro, precedente novo (posterior à última atualização do catálogo local) ou reafirmado após overruling.
+
+Quarto, precedente cuja aplicação depende de modulação, tese complementar ou ADI/ADPF em curso.
+
+Quinto, precedente citado pelo adversário para refutar tese da parte segurada, cuja veracidade deve ser conferida antes do enfrentamento.
+
+Sexto, precedente-paradigma em PUIL/PEDILEF, hipótese em que o cotejo analítico exige transcrição literal e conferência no portal oficial do órgão (STF, STJ, CJF/TNU).
+
+Portais oficiais para conferência direta no Comet.
+
+STF em `https://portal.stf.jus.br` (Jurisprudência, Repercussão Geral, Súmulas).
+
+STJ em `https://www.stj.jus.br` (Jurisprudência, Repetitivos, Súmulas).
+
+TNU em `https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao` (Temas, Súmulas, Questões de Ordem).
+
+TRFs em `https://www.trf3.jus.br`, `https://www.trf4.jus.br`, `https://www.trf5.jus.br`, `https://www.trf1.jus.br`, `https://www.trf2.jus.br` (Consulta processual e jurisprudência regional).
+
+CRPS em `https://www.gov.br/previdencia/pt-br/assuntos/previdencia-social/conselho-de-recursos-do-seguro-social-crss` (Enunciados, Resoluções, Comunicados).
+
+TJSP em `https://www.tjsp.jus.br` (Jurisprudência da 17ª Câmara e demais órgãos).
+
+Nunca aceitar o precedente citado por presunção quando houver dúvida. Sempre abrir o Comet e conferir. Se a fonte primária divergir da citação da peça, alterar a peça e registrar achado BLOQUEANTE de "dado objetivo fabricado ou incorreto".
+
+Detalhamento operacional em `references/PROTOCOLO-VERIFICACAO-DINAMICA.md`, seção "Regra Comet para Julgados com Dúvida".
+
 ### Exemplo Prático de Eliminação de Achados Passivos
 
 ANTES desta atualização, a skill emitia.
@@ -135,6 +171,8 @@ A data de julgamento está correta.
 O nome do relator está correto.
 A tese fixada está corretamente parafraseada ou transcrita.
 O número do REsp/RE/PEDILEF/AgInt corresponde ao tema.
+
+Se QUALQUER destes elementos gerar dúvida, aplicar a REGRA DE COMET PARA JULGADOS COM DÚVIDA (Onda 65) e abrir o Comet via MCP para conferência direta no portal oficial do órgão. Nunca protocolar peça com precedente cuja veracidade não tenha sido confirmada em fonte primária.
 
 Dado objetivo fabricado (número de processo, relator ou data sem origem verificável) é achado **BLOQUEANTE** automático e impede o protocolo da peça.
 
