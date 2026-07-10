@@ -4,7 +4,16 @@
   "title": "Auxílio-Reclusão (B25)",
   "nav_label": "Auxílio-Reclusão",
   "order": 3,
-  "facts": [["Quem recebe", "Dependentes (baixa renda)"], ["Regime", "Fechado"]],
+  "facts": [
+    [
+      "Quem recebe",
+      "Dependentes (baixa renda)"
+    ],
+    [
+      "Regime",
+      "Fechado"
+    ]
+  ],
   "meta_description": "Auxílio-reclusão (B25) após a EC 103/2019: dependentes do segurado de baixa renda preso, carência e critério de renda. Orientação em Monte Alto/SP.",
   "hero_subtitle": "Benefício pago aos dependentes do segurado de baixa renda recolhido à prisão em regime fechado.",
   "intro": [
@@ -15,62 +24,89 @@
     {
       "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "O auxílio-reclusão (espécie B25) é concedido aos dependentes do segurado de baixa renda recolhido à prisão em regime fechado, nos termos do art. 80 da Lei 8.213/91 e do art. 116 do Decreto 3.048/99. A Emenda Constitucional 103/2019 não alterou estruturalmente o benefício, mantendo o regime da Lei 13.846/2019."},
-        {"type": "callout", "text": "O critério de baixa renda é verificado pelo salário-de-contribuição do segurado na data da prisão, e não pela renda dos dependentes."}
+        {
+          "type": "p",
+          "text": "O auxílio-reclusão (espécie B25) é concedido aos dependentes do segurado de baixa renda recolhido à prisão em regime fechado, nos termos do art. 80 da Lei 8.213/91 e do art. 116 do Decreto 3.048/99. Após a EC 103/2019, o valor é calculado na forma da pensão por morte e não pode ultrapassar um salário mínimo (art. 27, §1º, da EC 103)."
+        },
+        {
+          "type": "callout",
+          "text": "O critério de baixa renda é verificado pela renda do próprio segurado — pela regra atual, a média dos 12 últimos salários-de-contribuição anteriores à prisão —, e não pela renda dos dependentes."
+        }
       ]
     },
     {
       "heading": "Quem tem direito",
       "blocks": [
-        {"type": "ul", "items": [
-          "Os dependentes do segurado, na forma do art. 16 da Lei 8.213/91 (cônjuge, companheiro, filhos e demais classes de dependentes).",
-          "Desde que o segurado seja de baixa renda na data da prisão e esteja recolhido em regime fechado.",
-          "O segurado desempregado e sem renda também pode atender ao critério de baixa renda (REsp 2.240.220 do STJ).",
-          "Em situações excepcionais, o critério de renda pode ser flexibilizado quando há dependentes em vulnerabilidade (Tema 896 do STJ)."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "Os dependentes do segurado, na forma do art. 16 da Lei 8.213/91 (cônjuge, companheiro, filhos e demais classes de dependentes).",
+            "Desde que o segurado seja de baixa renda na data da prisão e esteja recolhido em regime fechado.",
+            "O segurado desempregado e sem renda também pode atender ao critério de baixa renda (REsp 2.240.220 do STJ).",
+            "Em situações excepcionais, o critério de renda pode ser flexibilizado quando há dependentes em vulnerabilidade (Tema 896 do STJ)."
+          ]
+        }
       ]
     },
     {
       "heading": "Requisitos",
       "blocks": [
-        {"type": "p", "text": "São requisitos cumulativos para a concessão:"},
-        {"type": "ul", "items": [
-          "Qualidade de segurado na data da prisão.",
-          "Baixa renda do segurado, aferida pelo último salário-de-contribuição na data da prisão.",
-          "Carência de 24 contribuições mensais, exigida após a Lei 13.846/2019 (art. 25, IV).",
-          "Recolhimento à prisão em regime fechado, conforme a redação dada pela Lei 13.846/2019.",
-          "Existência de dependentes no sentido do art. 16 da Lei 8.213/91."
-        ]}
+        {
+          "type": "p",
+          "text": "São requisitos cumulativos para a concessão:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Qualidade de segurado na data da prisão.",
+            "Baixa renda do segurado, aferida pela média dos 12 salários-de-contribuição imediatamente anteriores à prisão, comparada ao limite atualizado anualmente por portaria (art. 80, §4º).",
+            "Carência de 24 contribuições mensais, exigida após a Lei 13.846/2019 (art. 25, IV).",
+            "Recolhimento à prisão em regime fechado, conforme a redação dada pela Lei 13.846/2019.",
+            "Existência de dependentes no sentido do art. 16 da Lei 8.213/91."
+          ]
+        }
       ]
     },
     {
       "heading": "Mudanças após a Lei 13.846/2019",
       "blocks": [
-        {"type": "p", "text": "A MP 871/2019, convertida na Lei 13.846/2019, trouxe alterações relevantes ao benefício, que devem ser observadas conforme a data da prisão (regra do tempus regit actum)."},
-        {"type": "ul", "items": [
-          "Passou a ser exigida a carência de 24 contribuições mensais, antes não prevista.",
-          "O benefício foi restringido ao regime fechado, deixando de alcançar o regime semiaberto.",
-          "Para prisões anteriores à lei, aplica-se a regra vigente à época, admitindo-se o regime semiaberto e sem a exigência das 24 contribuições.",
-          "O critério de baixa renda é verificado pela média dos 12 salários-de-contribuição imediatamente anteriores à prisão (Tema 357 da TNU)."
-        ]}
+        {
+          "type": "p",
+          "text": "A MP 871/2019, convertida na Lei 13.846/2019, trouxe alterações relevantes ao benefício, que devem ser observadas conforme a data da prisão (regra do tempus regit actum)."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Passou a ser exigida a carência de 24 contribuições mensais, antes não prevista.",
+            "O benefício foi restringido ao regime fechado, deixando de alcançar o regime semiaberto.",
+            "Para prisões anteriores à lei, aplica-se a regra vigente à época, admitindo-se o regime semiaberto e sem a exigência das 24 contribuições.",
+            "O critério de baixa renda passou a ser a média dos 12 salários-de-contribuição imediatamente anteriores à prisão (Tema 357 da TNU); no regime anterior, considerava-se o último salário-de-contribuição."
+          ]
+        }
       ]
     },
     {
       "heading": "Pontos de atenção",
       "blocks": [
-        {"type": "ul", "items": [
-          "A data da prisão é decisiva para definir qual regra se aplica (antes ou depois da Lei 13.846/2019).",
-          "Em caso de progressão de regime, há discussão sobre a manutenção do benefício, com tese que sustenta o direito adquirido em favor dos dependentes.",
-          "O monitoramento eletrônico isolado, sem o recolhimento à prisão, não gera direito ao auxílio-reclusão.",
-          "É importante manter a documentação atualizada que comprove a permanência do segurado no regime fechado, como o atestado de recolhimento.",
-          "A data de início do benefício pode retroagir à data da prisão, observados os prazos legais de requerimento."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "A data da prisão é decisiva para definir qual regra se aplica (antes ou depois da Lei 13.846/2019).",
+            "Em caso de progressão de regime, há discussão sobre a manutenção do benefício, com tese que sustenta o direito adquirido em favor dos dependentes.",
+            "O monitoramento eletrônico isolado, sem o recolhimento à prisão, não gera direito ao auxílio-reclusão.",
+            "É importante manter a documentação atualizada que comprove a permanência do segurado no regime fechado, como o atestado de recolhimento.",
+            "A data de início retroage à data da prisão se o pedido for feito em até 180 dias (dependentes menores de 16 anos) ou 90 dias (demais dependentes); após esses prazos, vale a data do requerimento."
+          ]
+        }
       ]
     },
     {
       "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Podemos analisar a situação da família, verificar a qualidade de segurado e o critério de baixa renda na data da prisão, conferir a carência aplicável e identificar a regra vigente conforme a época do recolhimento. Também orientamos sobre a documentação carcerária, sobre a progressão de regime e sobre eventual recurso administrativo ou ação judicial. Cada caso é avaliado individualmente, à luz da legislação e das provas disponíveis."}
+        {
+          "type": "p",
+          "text": "Podemos analisar a situação da família, verificar a qualidade de segurado e o critério de baixa renda na data da prisão, conferir a carência aplicável e identificar a regra vigente conforme a época do recolhimento. Também orientamos sobre a documentação carcerária, sobre a progressão de regime e sobre eventual recurso administrativo ou ação judicial. Cada caso é avaliado individualmente, à luz da legislação e das provas disponíveis."
+        }
       ]
     }
   ],
@@ -87,7 +123,7 @@
   "faq": [
     {
       "q": "A baixa renda considerada é a do preso ou a da família?",
-      "a": "É a renda do próprio segurado, aferida pelo último salário-de-contribuição na data da prisão, e não a renda dos dependentes. Esse é um ponto frequentemente confundido nos pedidos de auxílio-reclusão."
+      "a": "É a renda do próprio segurado, e não a dos dependentes. Pela regra atual, considera-se a média dos 12 últimos salários-de-contribuição anteriores à prisão, comparada ao limite de baixa renda atualizado por portaria. Esse é um ponto frequentemente confundido nos pedidos de auxílio-reclusão."
     },
     {
       "q": "O segurado estava desempregado quando foi preso. A família pode receber?",
@@ -102,5 +138,9 @@
       "a": "Há controvérsia sobre o tema. Após a Lei 13.846/2019, o benefício é, em regra, restrito ao regime fechado, mas existe tese que defende a manutenção do auxílio em favor dos dependentes por direito adquirido. Cada caso deve ser analisado individualmente."
     }
   ],
-  "related": ["pensao-por-morte", "bpc-deficiente", "salario-maternidade"]
+  "related": [
+    "pensao-por-morte",
+    "bpc-deficiente",
+    "salario-maternidade"
+  ]
 }
