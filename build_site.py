@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 CONTENT_DIR = ROOT / "site_content"
 OUT_DIR = ROOT / "docs"
-ASSET_V = "13"
+ASSET_V = "14"
 
 OFFICE = {
     "advogado": "Paulo Roberto Tercini Filho",
@@ -37,7 +37,7 @@ CATEGORY_ORDER = ["Aposentadorias", "Incapacidade", "Outros benefícios", "Assis
 CATEGORY_INTRO = {
     "Aposentadorias": "Regras de transição, direito adquirido e modalidades especiais após a Reforma da Previdência (EC 103/2019).",
     "Incapacidade": "Auxílios e aposentadorias para quem teve a capacidade de trabalho afetada por doença ou acidente.",
-    "Outros benefícios": "Benefícios pagos aos dependentes do segurado e à maternidade.",
+    "Outros benefícios": "Pensão por morte, auxílio-reclusão e salário-maternidade.",
     "Assistencial": "Amparo assistencial (BPC/LOAS) ao idoso e à pessoa com deficiência em situação de miserabilidade — sem exigir contribuições.",
     "Revisões e Planejamento": "Revisar benefícios já concedidos e planejar a melhor aposentadoria possível.",
 }
@@ -52,7 +52,9 @@ SITUATIONS = [
     ("Já recebo e quero revisar", "Será que o seu benefício pode estar com valor menor do que deveria?", "revisoes-de-beneficio.html"),
 ]
 
-# Avaliações reais (Google) selecionadas
+# Avaliações reais (Google). As transcrições foram retiradas das páginas por
+# cautela ética (Prov. 205/2021 — autopromoção/captação); o site exibe apenas
+# o selo e o link para o perfil público do Google. Lista mantida como registro.
 TESTIMONIALS = [
     ("Paulo Eduardo Correia", "Local Guide · Google", "Excelente atendimento, acompanhamento real e exclusivo. Mais que recomendo."),
     ("Carla Barroso", "Atendimento on-line", "Recomendo! Dr. Paulo é um advogado que entende do assunto, prestativo e com excelente atendimento. Mesmo morando fora do Brasil, pude esclarecer minhas dúvidas."),
@@ -190,7 +192,14 @@ def render_blocks(blocks):
             out.append(f'<div class="callout">{INFO_SVG}<p><b>Importante</b> {esc(b["text"])}</p></div>')
     return "\n".join(out)
 
+PAGES_BY_SLUG = {}
+
 def service_page(page, pages_by_cat):
+    rel = [PAGES_BY_SLUG[s] for s in page.get("related", []) if s in PAGES_BY_SLUG]
+    rel_html = ""
+    if rel:
+        chips = "".join(f'<a class="btn btn-ghost" href="{r["slug"]}.html">{esc(r["title"])}</a>' for r in rel)
+        rel_html = f'<div class="rel-links"><h5>Veja também</h5><div class="rel-chips">{chips}</div></div>'
     cat = page["category"]
     # monta itens numerados (seções + documentos + faq)
     items = []  # (id, label, inner_html)
@@ -244,6 +253,7 @@ def service_page(page, pages_by_cat):
     <article class="prose">
       {intro}
       {secs}
+      {rel_html}
       <div class="page-cta">
         {peaks("cp")}
         <h3>Precisa de orientação sobre {esc(page['title'])}?</h3>
@@ -277,21 +287,13 @@ def home_page(pages_by_cat):
             for p in pages)
         panels += f'<div class="panel{" show" if k==0 else ""}" id="{CAT_TAB[cat]}"><p class="panel-intro">{esc(CATEGORY_INTRO[cat])}</p><div class="ben-grid">{cards}</div></div>'
 
-    quotes_html = "".join(f'''
-      <div class="quote-card" data-reveal>
-        <div class="qm">“</div>
-        <div class="stars">{STAR*5}</div>
-        <p>{esc(t)}</p>
-        <div class="who"><span class="av">{esc("".join(w[0] for w in n.split()[:2]).upper())}</span><div><b>{esc(n)}</b><span>{esc(s)}</span></div></div>
-      </div>''' for n, s, t in TESTIMONIALS)
-
     body = f"""
 <section class="hero">
   {peaks("hero-bg-peaks")}
   <div class="wrap hero-grid">
     <div class="hero-copy" data-reveal>
       <span class="eyebrow">Advocacia exclusivamente previdenciária</span>
-      <h1>Seus direitos no INSS, resolvidos <em>sem complicação.</em></h1>
+      <h1>Seus direitos no INSS, tratados <em>sem complicação.</em></h1>
       <p class="lede">Aposentadoria, auxílios, BPC, pensão e revisões explicados em linguagem simples — com atendimento humano em Monte Alto/SP e on-line para todo o Brasil.</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href="{wa()}" target="_blank" rel="noopener">Quero saber se tenho direito {ARROW}</a>
@@ -336,7 +338,7 @@ def home_page(pages_by_cat):
     <div class="sec-head" data-reveal>
       <span class="eyebrow">Comece por aqui</span>
       <h2>Em qual situação você está?</h2>
-      <p>Escolha a opção mais parecida com o seu caso. A gente te orienta com clareza, sem compromisso.</p>
+      <p>Escolha a opção mais parecida com o seu caso. A gente orienta você com clareza.</p>
     </div>
     <div class="sit-grid">{sit}</div>
   </div>
@@ -346,7 +348,7 @@ def home_page(pages_by_cat):
   <div class="wrap">
     <div class="sec-head" data-reveal>
       <span class="eyebrow">Áreas de atuação</span>
-      <h2>Todos os benefícios que cuidamos</h2>
+      <h2>Todos os benefícios de que cuidamos</h2>
       <p>Veja por tipo de benefício. Toque numa categoria para entender cada um em palavras simples.</p>
     </div>
     <div class="tabs" data-reveal role="tablist">{tabs}</div>
@@ -400,9 +402,8 @@ def home_page(pages_by_cat):
         <div class="gtxt"><b>Ver avaliações</b>no nosso perfil do Google</div>
       </a>
     </div>
-    <div class="quote-grid">{quotes_html}
-    </div>
-    <div style="margin-top:26px"><a class="btn btn-ghost" href="{GOOGLE_URL}" target="_blank" rel="noopener">Ver todas as avaliações no Google {ARROW}</a></div>
+    <p class="panel-intro" data-reveal>As avaliações dos nossos clientes são públicas e podem ser lidas diretamente no nosso perfil do Google, sem filtro e sem edição.</p>
+    <div><a class="btn btn-ghost" href="{GOOGLE_URL}" target="_blank" rel="noopener">Ver todas as avaliações no Google {ARROW}</a></div>
   </div>
 </section>
 
@@ -433,10 +434,10 @@ def home_page(pages_by_cat):
   <div class="wrap">
     <div class="cta-box" data-reveal>
       {peaks("cta-peaks")}
-      <div><h2>Ainda com dúvida? A gente te ajuda.</h2><p>A primeira conversa é para entender a sua situação e dizer, com sinceridade, se você tem direito.</p></div>
+      <div><h2>Ainda com dúvida? Estamos aqui para ajudar.</h2><p>A primeira conversa é para entender a sua situação e dizer, com sinceridade, se você tem direito.</p></div>
       <div class="btns">
         <a class="btn btn-primary" href="{wa()}" target="_blank" rel="noopener">{WA_SVG} Falar no WhatsApp agora</a>
-        <span class="note">Sem compromisso · resposta no mesmo dia</span>
+        <span class="note">Atendimento presencial e on-line · retorno em horário comercial</span>
       </div>
     </div>
   </div>
@@ -482,7 +483,7 @@ def about_page(pages_by_cat):
           <li><strong>Via administrativa e judicial.</strong> Sempre que possível, buscamos a solução diretamente no INSS; quando necessário, levamos o caso ao Judiciário.</li>
           <li><strong>Transparência.</strong> Você acompanha cada etapa e recebe explicações claras, sem juridiquês.</li>
         </ul>
-        <div class="callout">{INFO_SVG}<p><b>A primeira conversa é sem compromisso</b> Serve para entender a sua situação e indicar, com sinceridade, o melhor caminho para o seu caso.</p></div>
+        <div class="callout">{INFO_SVG}<p><b>Como começamos</b> A primeira conversa serve para entender a sua situação e indicar, com sinceridade, o melhor caminho para o seu caso.</p></div>
       </section>
       <section id="sec3"><h2><span class="n">03</span> Áreas de atuação</h2>
         <p>Aposentadorias (por tempo de contribuição, idade, especial, da pessoa com deficiência, do professor e rural), benefícios por incapacidade (auxílio-doença, aposentadoria por incapacidade e auxílio-acidente), benefício assistencial (BPC/LOAS), pensão por morte, salário-maternidade, auxílio-reclusão, além de revisões de benefícios já concedidos e planejamento previdenciário.</p>
@@ -540,6 +541,7 @@ def main():
         if f.name.startswith("_"):
             continue
         pages.append(json.loads(f.read_text(encoding="utf-8")))
+    PAGES_BY_SLUG.update({p["slug"]: p for p in pages})
     by_cat = {}
     for p in pages:
         by_cat.setdefault(p["category"], []).append(p)
