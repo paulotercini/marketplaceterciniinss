@@ -67,7 +67,7 @@ Em reavaliação periódica (Programa Revisão de Benefícios por Incapacidade, 
 
 Sempre verificar caráter acidentário. Se presente, converter para B91 acidentário (B92) com RMI integral. Acionar `ntep-nexo-acidentario` e `base-incapacidade-acidentaria-b92`.
 
-Sempre verificar direito ao acréscimo de 25% (grande invalidez), com avaliação da necessidade de assistência permanente. Art. 45 da Lei 8.213/91 e Tema 982 STJ sobre extensão a outros benefícios.
+Sempre verificar direito ao acréscimo de 25% (grande invalidez), com avaliação da necessidade de assistência permanente. Art. 45 da Lei 8.213/91. Atenção: o STF (Tema 1095, RE 1.221.446, j. 2021) restringiu o acréscimo de 25% à aposentadoria por incapacidade permanente, superando a extensão a outros benefícios que se discutia no Tema 982 STJ.
 
 ## Integração com outras skills
 

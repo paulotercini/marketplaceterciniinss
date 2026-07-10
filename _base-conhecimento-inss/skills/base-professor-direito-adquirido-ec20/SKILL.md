@@ -33,7 +33,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Súmula 726 STF
 
-Fator previdenciário não incide ao professor.
+Enunciado real: para a aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula. NÃO trata de fator previdenciário. Entendimento restritivo superado, em parte, pela Lei 11.301/2006 e pela ADI 3772 (direção, coordenação e assessoramento pedagógico contam).
 
 ### ADI 3772 STF
 
@@ -59,7 +59,7 @@ Primeiro, direito adquirido preservado pelo art. 5º XXXVI CF frente à EC 103.
 
 Segundo, opção pela regra anterior quando mais vantajosa.
 
-Terceiro, fator previdenciário NÃO incide sobre aposentadoria do professor. Súmula 726.
+Terceiro, no cálculo pré-reforma o fator previdenciário incidia normalmente na aposentadoria do professor do RGPS (a Lei 9.876/99 não criou exceção). Simular o impacto e comparar com as regras de transição.
 
 Quarto, funções de magistério incluem direção, coordenação e assessoramento.
 
@@ -83,7 +83,7 @@ Segundo, requer comprovação formal.
 
 Terceiro, não se aplica a professor universitário. ADI 3772.
 
-Quarto, verificar fator previdenciário. Súmula 726 exclui.
+Quarto, verificar o impacto do fator previdenciário no cálculo pré-reforma. Atenção: a Súmula 726 STF não trata de fator — trata do cômputo do tempo fora da sala de aula.
 
 ## Comparação
 

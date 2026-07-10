@@ -15,9 +15,9 @@ CF/88, art. 203, V. Garantia constitucional.
 
 Lei 8.742/1993 (LOAS), art. 20, §3º. Critério objetivo de ¼ do salário mínimo.
 
-Lei 8.742/1993, art. 20, §1º. Rol taxativo do grupo familiar. Cônjuge, companheiro, pais, filhos, irmãos não emancipados menores de 21 ou inválidos, que vivam sob o mesmo teto.
+Lei 8.742/1993, art. 20, §1º (redação da Lei 12.435/2011). Rol taxativo do grupo familiar: o requerente, o cônjuge ou companheiro, os pais (na ausência de um deles, a madrasta ou o padrasto), os irmãos solteiros, os filhos e enteados solteiros e os menores tutelados, desde que vivam sob o mesmo teto.
 
-Lei 8.742/1993, art. 20, §14. Exclusão do BPC ou aposentadoria de ½ salário mínimo de idoso ou PCD.
+Lei 8.742/1993, art. 20, §14. Exclusão, do cálculo da renda, de outro BPC ou benefício previdenciário de até 1 salário mínimo pago a idoso ou PCD do grupo familiar.
 
 Lei 8.742/1993, art. 20, §11. Possibilidade de avaliação de outros elementos probatórios.
 
@@ -37,7 +37,7 @@ CF/88, art. 204. Diretrizes da assistência social, em especial a descentraliza�
 
 ## Rol taxativo do grupo familiar
 
-Cônjuge. Companheiro. Pais. Filhos (biológicos ou adotivos). Irmãos não emancipados menores de 21 ou inválidos. Padrasto ou madrasta. Tudo desde que vivam sob o mesmo teto.
+Requerente. Cônjuge ou companheiro. Pais (na ausência de um deles, madrasta ou padrasto). Irmãos solteiros. Filhos e enteados solteiros. Menores tutelados. Tudo desde que vivam sob o mesmo teto (Lei 12.435/2011).
 
 Não compõem o grupo familiar. Cunhados. Tios. Sobrinhos. Avós. Netos. Parentes colaterais. Mesmo vivendo sob o mesmo teto.
 
