@@ -6,6 +6,10 @@
           {
             "type": "command",
             "command": "python3 graph_bootstrap.py"
+          },
+          {
+            "type": "command",
+            "command": "python3 gdrive_bootstrap.py"
           }
         ]
       }
