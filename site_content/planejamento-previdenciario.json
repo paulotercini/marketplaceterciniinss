@@ -4,7 +4,16 @@
   "title": "Planejamento Previdenciário",
   "nav_label": "Planejamento Previdenciário",
   "order": 1,
-  "facts": [["O que é", "Estudo do CNIS"], ["Objetivo", "Melhor regra e valor"]],
+  "facts": [
+    [
+      "O que é",
+      "Estudo do CNIS"
+    ],
+    [
+      "Objetivo",
+      "Melhor regra e valor"
+    ]
+  ],
   "meta_description": "Planejamento previdenciário: simulação de cenários, melhor DER, direito adquirido e regras de transição da EC 103/2019 para decidir quando se aposentar.",
   "hero_subtitle": "Estudo do seu histórico de contribuições para identificar a regra e o momento mais vantajosos para requerer a aposentadoria.",
   "intro": [
@@ -15,54 +24,79 @@
     {
       "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "Planejar a aposentadoria significa diagnosticar o seu CNIS e os seus vínculos, simular o benefício em mais de uma regra e avaliar se existe direito adquirido a uma regra anterior à EC 103/2019, muitas vezes mais favorável do que a regra nova. O trabalho considera a Lei 8.213/91, a Lei 9.876/1999 (que trata do fator previdenciário) e as Emendas Constitucionais 20/1998, 41/2003 e 103/2019."},
-        {"type": "p", "text": "A partir dessa análise, é possível recomendar por escrito o melhor caminho e acompanhar o segurado até o requerimento, em vez de protocolar um pedido sem saber qual o resultado mais provável."}
+        {
+          "type": "p",
+          "text": "Planejar a aposentadoria significa diagnosticar o seu CNIS e os seus vínculos, simular o benefício em mais de uma regra e avaliar se existe direito adquirido a uma regra anterior à EC 103/2019, muitas vezes mais favorável do que a regra nova. O trabalho considera a Lei 8.213/91, a Lei 9.876/1999 (que trata do fator previdenciário) e as Emendas Constitucionais 20/1998, 41/2003 e 103/2019."
+        },
+        {
+          "type": "p",
+          "text": "A partir dessa análise, é possível recomendar por escrito o melhor caminho e acompanhar o segurado até o requerimento, em vez de protocolar um pedido sem saber qual o resultado mais provável."
+        }
       ]
     },
     {
       "heading": "Para quem pode interessar",
       "blocks": [
-        {"type": "ul", "items": [
-          "Quem está se aproximando da idade ou do tempo de contribuição e quer saber qual a melhor data para requerer o benefício.",
-          "Quem pode ter direito adquirido a regras anteriores à EC 103/2019 e deseja comparar com as regras atuais.",
-          "Quem está em dúvida entre as regras de transição (pedágio de 50%, pedágio de 100%, idade progressiva, pontos, transição da aposentadoria especial e do professor).",
-          "Quem ainda contribui e quer organizar as contribuições futuras de forma estratégica para o salário-de-benefício.",
-          "Quem tem vínculos a acertar ou pendências no CNIS que precisam ser resolvidas antes do pedido."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "Quem está se aproximando da idade ou do tempo de contribuição e quer saber qual a melhor data para requerer o benefício.",
+            "Quem pode ter direito adquirido a regras anteriores à EC 103/2019 e deseja comparar com as regras atuais.",
+            "Quem está em dúvida entre as regras de transição (pedágio de 50%, pedágio de 100%, idade progressiva, pontos, transição da aposentadoria especial e do professor).",
+            "Quem ainda contribui e quer organizar as contribuições futuras de forma estratégica para o salário-de-benefício.",
+            "Quem tem vínculos a acertar ou pendências no CNIS que precisam ser resolvidas antes do pedido."
+          ]
+        }
       ]
     },
     {
       "heading": "Como funciona",
       "blocks": [
-        {"type": "p", "text": "O planejamento costuma seguir etapas encadeadas, sempre a partir de dados completos e confiáveis:"},
-        {"type": "ul", "items": [
-          "Auditoria do CNIS e dos vínculos, identificando divergências e períodos a acertar.",
-          "Simulação do benefício em múltiplas regras, comparando os resultados.",
-          "Avaliação de eventual direito adquirido a regra anterior à reforma.",
-          "Escolha da melhor DER e, quando vantajosa, estudo da reafirmação da DER (Tema 995 do STJ).",
-          "Análise de contribuições futuras e de revisões preventivas de possíveis vícios.",
-          "Recomendação escrita ao cliente e acompanhamento até o requerimento."
-        ]},
-        {"type": "callout", "text": "Quando o cliente está em fase de espera, com o direito ainda amadurecendo, o escritório pode organizar o acompanhamento por marcos de contato preventivo, para preparar a documentação no momento adequado e protocolar assim que o requisito for cumprido."}
+        {
+          "type": "p",
+          "text": "O planejamento costuma seguir etapas encadeadas, sempre a partir de dados completos e confiáveis:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Auditoria do CNIS e dos vínculos, identificando divergências e períodos a acertar.",
+            "Simulação do benefício em múltiplas regras, comparando os resultados.",
+            "Avaliação de eventual direito adquirido a regra anterior à reforma.",
+            "Escolha da melhor DER e, quando vantajosa, estudo da reafirmação da DER (Tema 995 do STJ).",
+            "Análise de contribuições futuras e de revisões preventivas de possíveis vícios.",
+            "Recomendação escrita ao cliente e acompanhamento até o requerimento."
+          ]
+        },
+        {
+          "type": "callout",
+          "text": "Quando o cliente está em fase de espera, com o direito ainda amadurecendo, o escritório pode organizar o acompanhamento por marcos de contato preventivo, para preparar a documentação no momento adequado e protocolar assim que o requisito for cumprido."
+        }
       ]
     },
     {
       "heading": "Pontos de atenção",
       "blocks": [
-        {"type": "ul", "items": [
-          "O planejamento exige dados completos. Sem um CNIS confiável, a simulação perde precisão e isso precisa ser comunicado com transparência.",
-          "As simulações disponíveis no Meu INSS podem ser imprecisas e devem ser conferidas.",
-          "A escolha de uma regra inadequada pode levar a um benefício menor; por isso a comparação entre regras é essencial.",
-          "A contribuição facultativa estratégica exige análise de custo e benefício, caso a caso.",
-          "Revisões preventivas têm prazos de decadência que precisam ser controlados.",
-          "O protocolo no Meu INSS, em regra, deve ser feito quando o requisito é efetivamente cumprido; pedidos antecipados tendem a ser indeferidos por ausência de requisito."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "O planejamento exige dados completos. Sem um CNIS confiável, a simulação perde precisão e isso precisa ser comunicado com transparência.",
+            "As simulações disponíveis no Meu INSS podem ser imprecisas e devem ser conferidas.",
+            "A escolha de uma regra inadequada pode levar a um benefício menor; por isso a comparação entre regras é essencial.",
+            "A contribuição facultativa estratégica exige análise de custo e benefício, caso a caso.",
+            "Revisões preventivas têm prazos de decadência que precisam ser controlados.",
+            "O protocolo no Meu INSS, em regra, deve ser feito quando o requisito é efetivamente cumprido; pedidos antecipados tendem a ser indeferidos por ausência de requisito.",
+            "Quem para de contribuir enquanto espera completar os requisitos pode perder a qualidade de segurado e a cobertura para benefícios por incapacidade e pensão — o planejamento também cuida desse risco."
+          ]
+        }
       ]
     },
     {
       "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Podemos auditar o seu CNIS, levantar os vínculos, simular o benefício em diferentes regras e comparar o direito adquirido com as regras de transição e permanentes. A partir disso, apresentamos uma recomendação escrita sobre a melhor DER e acompanhamos o processo até o requerimento. Cada situação é analisada individualmente, sem promessa de resultado, com base na legislação e nos dados disponíveis."}
+        {
+          "type": "p",
+          "text": "Podemos auditar o seu CNIS, levantar os vínculos, simular o benefício em diferentes regras e comparar o direito adquirido com as regras de transição e permanentes. A partir disso, apresentamos uma recomendação escrita sobre a melhor DER e acompanhamos o processo até o requerimento. Cada situação é analisada individualmente, sem promessa de resultado, com base na legislação e nos dados disponíveis."
+        }
       ]
     }
   ],
@@ -94,5 +128,8 @@
       "a": "A simulação do Meu INSS é uma ferramenta útil, mas pode conter imprecisões e nem sempre considera direito adquirido, tempo especial ou vínculos a acertar. Por isso ela deve ser conferida com base no CNIS e nos documentos."
     }
   ],
-  "related": ["revisoes-de-beneficio", "aposentadoria-tempo-contribuicao"]
+  "related": [
+    "revisoes-de-beneficio",
+    "aposentadoria-tempo-contribuicao"
+  ]
 }

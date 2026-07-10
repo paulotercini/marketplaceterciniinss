@@ -4,7 +4,16 @@
   "title": "Auxílio-Acidente (B94)",
   "nav_label": "Auxílio-Acidente",
   "order": 3,
-  "facts": [["Natureza", "Indenizatória (B94)"], ["Renda", "50% do salário de benefício"]],
+  "facts": [
+    [
+      "Natureza",
+      "Indenizatória (B94)"
+    ],
+    [
+      "Renda",
+      "50% do salário de benefício"
+    ]
+  ],
   "meta_description": "Auxílio-acidente (B94): indenização ao segurado que fica com sequela permanente que reduz a capacidade de trabalho. Orientação em Monte Alto/SP.",
   "hero_subtitle": "Benefício de caráter indenizatório pago ao segurado que, após a consolidação de lesões, fica com sequela permanente que reduz sua capacidade de trabalho.",
   "intro": [
@@ -15,59 +24,87 @@
     {
       "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "O B94 é uma indenização paga ao segurado que ficou com sequela permanente, após o fim do tratamento (consolidação das lesões), reduzindo sua capacidade laboral. Sua renda mensal é de 50% do salário de benefício (art. 86, §1º). O acidente pode ser de qualquer natureza, inclusive doméstico ou de trânsito, não precisando ser de trabalho (Tema 416 do STJ confirma essa amplitude)."},
-        {"type": "callout", "text": "O auxílio-acidente é compatível com o trabalho: você pode continuar trabalhando e contribuindo, recebendo o benefício como indenização pela redução da sua capacidade."}
+        {
+          "type": "p",
+          "text": "O B94 é uma indenização paga ao segurado que ficou com sequela permanente, após o fim do tratamento (consolidação das lesões), reduzindo sua capacidade laboral. Sua renda mensal é de 50% do salário de benefício (art. 86, §1º). O acidente pode ser de qualquer natureza, inclusive doméstico ou de trânsito, não precisando ser de trabalho (Tema 416 do STJ confirma essa amplitude)."
+        },
+        {
+          "type": "callout",
+          "text": "O auxílio-acidente é compatível com o trabalho: você pode continuar trabalhando e contribuindo, recebendo o benefício como indenização pela redução da sua capacidade."
+        }
       ]
     },
     {
       "heading": "Quem tem direito",
       "blocks": [
-        {"type": "ul", "items": [
-          "Segurado com sequela de acidente de qualquer natureza que reduza a capacidade para o trabalho habitual;",
-          "Segurado cuja sequela não conste do rol do Anexo III do Decreto 3.048/99, mas que comprovadamente reduz a capacidade (o rol é exemplificativo, conforme as Súmulas 88 e 89 da TNU);",
-          "Segurado com lesão mínima, desde que comprovada a redução real da capacidade (Tema 416 do STJ; Súmula 89 da TNU);",
-          "Segurado com redução auditiva, desde que demonstrada a redução real (Tema 322 e Súmula 44 da TNU)."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "Segurado com sequela de acidente de qualquer natureza que reduza a capacidade para o trabalho habitual;",
+            "Segurado cuja sequela não conste do rol do Anexo III do Decreto 3.048/99, mas que comprovadamente reduz a capacidade (o rol é exemplificativo, conforme as Súmulas 88 e 89 da TNU);",
+            "Segurado com lesão mínima, desde que comprovada a redução real da capacidade (Tema 416 do STJ; Tema 201 e Súmula 89 da TNU);",
+            "Segurado com redução auditiva, desde que demonstrada a redução real (Tema 322 e Súmula 44 da TNU)."
+          ]
+        }
       ]
     },
     {
       "heading": "Requisitos",
       "blocks": [
-        {"type": "p", "text": "A concessão depende do preenchimento cumulativo de quatro requisitos:"},
-        {"type": "ul", "items": [
-          "Qualidade de segurado na data do acidente (não precisa persistir na data de início do benefício);",
-          "Consolidação das lesões, com cicatrização e fim do tratamento curativo;",
-          "Sequela permanente que reduza a capacidade laborativa;",
-          "Nexo entre o acidente ou a doença e a sequela. O benefício é isento de carência (art. 26, I)."
-        ]}
+        {
+          "type": "p",
+          "text": "A concessão depende do preenchimento cumulativo de quatro requisitos:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Qualidade de segurado na data do acidente (não precisa persistir na data de início do benefício);",
+            "Consolidação das lesões, com cicatrização e fim do tratamento curativo;",
+            "Sequela permanente que reduza a capacidade laborativa;",
+            "Nexo entre o acidente ou a doença e a sequela. O benefício é isento de carência (art. 26, I).",
+            "O benefício é devido a partir do dia seguinte à cessação do auxílio-doença que o antecedeu (art. 86, §2º)."
+          ]
+        }
       ]
     },
     {
       "heading": "Nexo acidentário e NTEP",
       "blocks": [
-        {"type": "p", "text": "Quando a sequela tem origem ocupacional, o nexo com o trabalho pode ser demonstrado por diferentes vias. O Nexo Técnico Epidemiológico (NTEP), do art. 21-A da Lei 8.213/91, presume a natureza acidentária quando há correspondência entre o CID da doença e o CNAE da atividade da empresa, com inversão do ônus da prova em favor do segurado, cuja constitucionalidade foi reconhecida pelo STF na ADI 3931."},
-        {"type": "ul", "items": [
-          "O NTEP deve ser aplicado de ofício pelo INSS; quando negado, o nexo pode ser comprovado por CAT, laudos e documentação da empresa (PGR, LTCAT, PPP);",
-          "Em lesões por esforço repetitivo e doenças ocupacionais, é comum a sequência de conversão do B31 em B91 com pedido cumulativo de auxílio-acidente pela sequela remanescente;",
-          "A Comunicação de Acidente de Trabalho (CAT) pode ser emitida pelo próprio segurado, sindicato, médico assistente ou autoridade pública, e reforça o reconhecimento do nexo."
-        ]}
+        {
+          "type": "p",
+          "text": "Quando a sequela tem origem ocupacional, o nexo com o trabalho pode ser demonstrado por diferentes vias. O Nexo Técnico Epidemiológico (NTEP), do art. 21-A da Lei 8.213/91, presume a natureza acidentária quando há correspondência entre o CID da doença e o CNAE da atividade da empresa, com inversão do ônus da prova em favor do segurado, cuja constitucionalidade foi reconhecida pelo STF na ADI 3931."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "O NTEP deve ser aplicado de ofício pelo INSS; quando negado, o nexo pode ser comprovado por CAT, laudos e documentação da empresa (PGR, LTCAT, PPP);",
+            "Em lesões por esforço repetitivo e doenças ocupacionais, é comum a sequência de conversão do B31 em B91 com pedido cumulativo de auxílio-acidente pela sequela remanescente;",
+            "A Comunicação de Acidente de Trabalho (CAT) pode ser emitida pelo próprio segurado, sindicato, médico assistente ou autoridade pública, e reforça o reconhecimento do nexo."
+          ]
+        }
       ]
     },
     {
       "heading": "Pontos de atenção",
       "blocks": [
-        {"type": "ul", "items": [
-          "O INSS tende a indeferir alegando que a sequela é mínima ou que não consta do Anexo III; esse argumento é enfrentado com as Súmulas 88 e 89 da TNU e o Tema 416 do STJ;",
-          "O auxílio-acidente cessa apenas com a aposentadoria do segurado (art. 86, §3º); cessações antes disso são questionáveis;",
-          "A Lei 13.846/2019 vedou a acumulação do auxílio-acidente com aposentadoria para benefícios concedidos após sua vigência; há direito adquirido para concessões anteriores (Tema 555 do STJ);",
-          "O valor do auxílio-acidente integra o salário de contribuição (art. 31), repercutindo no cálculo de benefícios futuros, o que pode justificar pedido de revisão."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "O INSS tende a indeferir alegando que a sequela é mínima ou que não consta do Anexo III; esse argumento é enfrentado com as Súmulas 88 e 89 da TNU e o Tema 416 do STJ;",
+            "O auxílio-acidente é pago até a véspera do início de qualquer aposentadoria ou até o óbito do segurado (art. 86, §2º); cessações antes disso são questionáveis;",
+            "A acumulação com aposentadoria só é possível quando a lesão e a aposentadoria são anteriores a 11/11/1997 (MP 1.596-14, depois Lei 9.528/97; Súmula 507 do STJ e Tema 555); nos demais casos não há acumulação, mas o valor recebido entra no cálculo da futura aposentadoria;",
+            "O valor do auxílio-acidente integra o salário de contribuição (art. 31), repercutindo no cálculo de benefícios futuros, o que pode justificar pedido de revisão."
+          ]
+        }
       ]
     },
     {
       "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Podemos analisar a sequela e a redução de capacidade à luz da jurisprudência da TNU e do STJ, verificar o nexo acidentário e a aplicação do NTEP, atuar contra indeferimentos e cessações indevidas e avaliar o direito a revisão e à acumulação em concessões anteriores à Lei 13.846/2019. Cada caso é avaliado individualmente."}
+        {
+          "type": "p",
+          "text": "Podemos analisar a sequela e a redução de capacidade à luz da jurisprudência da TNU e do STJ, verificar o nexo acidentário e a aplicação do NTEP, atuar contra indeferimentos e cessações indevidas e avaliar o direito a revisão e, nos casos antigos (lesão e aposentadoria anteriores a 11/11/1997), a acumulação com a aposentadoria. Cada caso é avaliado individualmente."
+        }
       ]
     }
   ],
@@ -82,11 +119,30 @@
     "Comprovante de requerimento e carta de indeferimento ou de cessação do INSS (se houver)"
   ],
   "faq": [
-    {"q": "Preciso estar incapaz para receber o auxílio-acidente?", "a": "Não. O auxílio-acidente não exige incapacidade. Ele é uma indenização paga justamente porque o segurado continua trabalhando, mas com a capacidade reduzida por uma sequela permanente. Por isso, é compatível com o trabalho e com novas contribuições."},
-    {"q": "O acidente precisa ter sido no trabalho?", "a": "Não. O art. 86 da Lei 8.213/91 fala em acidente de qualquer natureza, o que inclui acidentes domésticos e de trânsito, por exemplo. O Tema 416 do STJ confirma essa amplitude. O que importa é a sequela permanente que reduz a capacidade laboral."},
-    {"q": "Minha sequela não está na lista do INSS. Tenho direito?", "a": "Possivelmente. O Anexo III do Decreto 3.048/99 é exemplificativo, e não exaustivo, conforme as Súmulas 88 e 89 da TNU. Mesmo sequelas não listadas, ou consideradas leves, podem gerar o benefício quando comprovam redução real da capacidade para a atividade habitual."},
-    {"q": "Posso acumular o auxílio-acidente com a aposentadoria?", "a": "Depende da data. A Lei 13.846/2019 vedou a acumulação para auxílios-acidente concedidos após sua vigência. Para concessões anteriores, há direito adquirido à acumulação, conforme o Tema 555 do STJ. Cada situação deve ser analisada individualmente."},
-    {"q": "Até quando recebo o auxílio-acidente?", "a": "O art. 86, §3º, da Lei 8.213/91 prevê que o benefício é pago até a aposentadoria do segurado. Cessações intermediárias, antes da aposentadoria, são questionáveis e podem ensejar pedido de restabelecimento."}
+    {
+      "q": "Preciso estar incapaz para receber o auxílio-acidente?",
+      "a": "Não. O auxílio-acidente não exige incapacidade. Ele é uma indenização paga justamente porque o segurado continua trabalhando, mas com a capacidade reduzida por uma sequela permanente. Por isso, é compatível com o trabalho e com novas contribuições."
+    },
+    {
+      "q": "O acidente precisa ter sido no trabalho?",
+      "a": "Não. O art. 86 da Lei 8.213/91 fala em acidente de qualquer natureza, o que inclui acidentes domésticos e de trânsito, por exemplo. O Tema 416 do STJ confirma essa amplitude. O que importa é a sequela permanente que reduz a capacidade laboral."
+    },
+    {
+      "q": "Minha sequela não está na lista do INSS. Tenho direito?",
+      "a": "Possivelmente. O Anexo III do Decreto 3.048/99 é exemplificativo, e não exaustivo, conforme as Súmulas 88 e 89 da TNU. Mesmo sequelas não listadas, ou consideradas leves, podem gerar o benefício quando comprovam redução real da capacidade para a atividade habitual."
+    },
+    {
+      "q": "Posso acumular o auxílio-acidente com a aposentadoria?",
+      "a": "Em regra, não. Desde 11/11/1997 (MP 1.596-14, convertida na Lei 9.528/97), o auxílio-acidente não pode ser acumulado com aposentadoria — a acumulação só é possível quando a lesão e a aposentadoria são anteriores a essa data (Súmula 507 do STJ e Tema 555). Em compensação, o valor recebido integra o salário de contribuição e aumenta o cálculo da futura aposentadoria (art. 31 da Lei 8.213/91)."
+    },
+    {
+      "q": "Até quando recebo o auxílio-acidente?",
+      "a": "O art. 86, §2º, da Lei 8.213/91 prevê que o benefício é pago até a véspera do início de qualquer aposentadoria ou até o óbito. Cessações intermediárias, antes da aposentadoria, são questionáveis e podem ensejar pedido de restabelecimento."
+    }
   ],
-  "related": ["auxilio-doenca", "aposentadoria-incapacidade", "reabilitacao-profissional"]
+  "related": [
+    "auxilio-doenca",
+    "aposentadoria-incapacidade",
+    "reabilitacao-profissional"
+  ]
 }
