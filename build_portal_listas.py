@@ -24,11 +24,10 @@ Uso:
   python3 build_portal_listas.py              # grava as fichas
 Requer graph_tokens.json valido (rode graph_devflow.py / graph_refresh.py).
 """
-import re, json, hashlib, pathlib, datetime, sys
+import re, json, datetime, sys
 from graph_client import list_lists, list_tasks, _req
-
-DATA_DIR = pathlib.Path("docs/portal/data")
-HOJE = datetime.date.today()
+from portal_common import (DATA_DIR, HOJE, digits, dn_from_aniversario, dn_from_items,
+                           dn_from_body, cpf_from_task, split_blocks, derivar_hash)
 
 # DN recuperada manualmente (ex.: do CNIS no Drive) para clientes cujo checklist
 # nao traz a data de nascimento. CPF (11 digitos) -> DN (DDMMAAAA).
@@ -128,68 +127,6 @@ REGRAS = [
     ("Recurso protocolado", "Recurso protocolado.",
         ["recurso protocolado", "recurso apresentado", "recurso interposto"]),
 ]
-
-
-def digits(s):
-    return re.sub(r"\D", "", s or "")
-
-
-def dn_from_aniversario(items):
-    """Item explicitamente rotulado 'Aniversário'/'nascimento': aceita qualquer
-    ano plausivel (inclui menores de idade — casos BPC)."""
-    for it in items:
-        name = it.get("displayName", "")
-        if re.search(r"anivers|nascime", name, re.I):
-            m = re.search(r"\b(\d{2})[/.](\d{2})[/.](\d{4})\b", name)
-            if m and 1900 <= int(m.group(3)) <= HOJE.year:
-                return m.group(1) + m.group(2) + m.group(3)
-    return None
-
-
-def dn_from_items(items):
-    for it in items:
-        m = re.search(r"\b(\d{2})[/.](\d{2})[/.](\d{4})\b", it.get("displayName", ""))
-        if m and 1920 <= int(m.group(3)) <= 2012:
-            return m.group(1) + m.group(2) + m.group(3)
-    return None
-
-
-def dn_from_body(body):
-    m = re.search(r"\bDN[:\s]+(\d{2})[/.](\d{2})[/.](\d{4})\b", body or "", re.I)
-    if m and 1920 <= int(m.group(3)) <= 2012:
-        return m.group(1) + m.group(2) + m.group(3)
-    return None
-
-
-def cpf_from_task(title, items):
-    for m in re.findall(r"(\d[\d.\-]{9,})", title or ""):
-        if len(digits(m)) == 11:
-            return digits(m)
-    for it in items:
-        if len(digits(it.get("displayName", ""))) == 11:
-            return digits(it.get("displayName", ""))
-    return None
-
-
-def split_blocks(body):
-    """Quebra o corpo em blocos datados. Retorna [(date, texto)] do mais novo
-    ao mais antigo. Aceita DD.MM.AAAA e DD/MM/AAAA no inicio da linha."""
-    body = (body or "").replace("\r\n", "\n")
-    # encontra todos os inicios de bloco datados
-    pat = re.compile(r"(?m)^\s*(\d{2})[./](\d{2})[./](\d{4})\s*[\(\):;.-]")
-    marks = list(pat.finditer(body))
-    blocks = []
-    for i, m in enumerate(marks):
-        d, mo, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
-        try:
-            dt = datetime.date(y, mo, d)
-        except ValueError:
-            continue
-        end = marks[i + 1].start() if i + 1 < len(marks) else len(body)
-        texto = body[m.end():end]
-        blocks.append((dt, texto))
-    blocks.sort(key=lambda x: x[0], reverse=True)
-    return blocks
 
 
 # Marcos inequivocos exibidos no modo "alta confianca" (publico). Tipos vagos
@@ -472,11 +409,6 @@ def localizacao_for(lista, timeline, body):
             return "Aguardando decisão da Câmara de Julgamento"
         return "Aguardando decisão da Junta de Recursos"
     return LOCALIZACAO[lista]
-
-
-def derivar_hash(cpf, dn, salt, iters):
-    bits = hashlib.pbkdf2_hmac("sha256", (cpf + "|" + dn).encode(), salt.encode(), iters, dklen=32)
-    return hashlib.sha256(bits).digest()[:16].hex()
 
 
 def coletar():
