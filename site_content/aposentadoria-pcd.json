@@ -4,7 +4,16 @@
   "title": "Aposentadoria da Pessoa com Deficiência",
   "nav_label": "Pessoa com Deficiência",
   "order": 4,
-  "facts": [["Base legal", "LC 142/2013"], ["Avaliação", "Conforme o grau"]],
+  "facts": [
+    [
+      "Base legal",
+      "LC 142/2013"
+    ],
+    [
+      "Requisitos",
+      "Variam conforme o grau"
+    ]
+  ],
   "meta_description": "Aposentadoria da pessoa com deficiência pela LC 142/2013: por tempo de contribuição ou idade, com avaliação biopsicossocial. Análise em Monte Alto/SP.",
   "hero_subtitle": "Benefício com requisitos reduzidos para o segurado(a) que é pessoa com deficiência, conforme o grau (leve, moderado ou grave), previsto na Lei Complementar 142/2013.",
   "intro": [
@@ -15,49 +24,73 @@
     {
       "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "É o benefício destinado ao segurado(a) que se enquadra no conceito de pessoa com deficiência (LC 142/2013, art. 2º, e Estatuto da Pessoa com Deficiência, Lei 13.146/2015), com impedimento de longo prazo. O grau da deficiência (leve, moderado ou grave) é apurado por avaliação biopsicossocial e define os requisitos de tempo de contribuição."}
+        {
+          "type": "p",
+          "text": "É o benefício destinado ao segurado(a) que se enquadra no conceito de pessoa com deficiência (LC 142/2013, art. 2º, e Estatuto da Pessoa com Deficiência, Lei 13.146/2015), com impedimento de longo prazo. O grau da deficiência (leve, moderado ou grave) é apurado por avaliação biopsicossocial e define os requisitos de tempo de contribuição."
+        }
       ]
     },
     {
       "heading": "Quem tem direito",
       "blocks": [
-        {"type": "p", "text": "Por tempo de contribuição, na condição de pessoa com deficiência (LC 142/2013, art. 3º):"},
-        {"type": "ul", "items": [
-          "Deficiência grave: 25 anos (homem) e 20 anos (mulher).",
-          "Deficiência moderada: 29 anos (homem) e 24 anos (mulher).",
-          "Deficiência leve: 33 anos (homem) e 28 anos (mulher)."
-        ]},
-        {"type": "p", "text": "Por idade (LC 142/2013, art. 4º): 60 anos (homem) e 55 anos (mulher), em ambos os casos com pelo menos 15 anos de contribuição na condição de pessoa com deficiência, independentemente do grau."}
+        {
+          "type": "p",
+          "text": "Por tempo de contribuição, na condição de pessoa com deficiência (LC 142/2013, art. 3º):"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Deficiência grave: 25 anos (homem) e 20 anos (mulher).",
+            "Deficiência moderada: 29 anos (homem) e 24 anos (mulher).",
+            "Deficiência leve: 33 anos (homem) e 28 anos (mulher)."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Por idade (LC 142/2013, art. 4º): 60 anos (homem) e 55 anos (mulher), em ambos os casos com pelo menos 15 anos de contribuição na condição de pessoa com deficiência, independentemente do grau."
+        }
       ]
     },
     {
       "heading": "Como funciona a avaliação",
       "blocks": [
-        {"type": "p", "text": "A avaliação é biopsicossocial e usa o IF-BrA (Instrumento Funcional Brasileiro de Avaliação), com base na Portaria Interministerial nº 1, de 27/01/2015. São avaliados nove domínios (entre eles sensorial, comunicação, mobilidade, cuidados pessoais, vida doméstica, educação, trabalho, vida econômica e socialização), e o método Fuzzy combina as pontuações para classificar o grau."},
-        {"type": "ul", "items": [
-          "A avaliação envolve perícia médica e avaliação social, ambas obrigatórias.",
-          "A DID (Data de Início da Deficiência) define a partir de quando o tempo conta como período de pessoa com deficiência; o tempo anterior à DID conta como tempo comum.",
-          "O tempo na condição de pessoa com deficiência pode ser convertido em tempo comum, conforme o grau e o gênero (a conversão inversa, de comum para deficiente, é vedada).",
-          "O cálculo segue a própria LC 142/2013 (art. 5º), com média dos 80% maiores salários desde 07/1994 e, em regra, sem fator previdenciário."
-        ]}
+        {
+          "type": "p",
+          "text": "A avaliação é biopsicossocial e usa o IF-BrA (Índice de Funcionalidade Brasileiro Aplicado para fins de Aposentadoria), com base na Portaria Interministerial nº 1, de 27/01/2015. São avaliados nove domínios (sensorial, comunicação, mobilidade, cuidados pessoais, vida doméstica, educação, trabalho, vida econômica e socialização), e o método Fuzzy (modelo matemático que pondera os resultados da avaliação) combina as pontuações para classificar o grau."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "A avaliação envolve perícia médica e avaliação social, ambas obrigatórias.",
+            "A DID (Data de Início da Deficiência) define a partir de quando o tempo conta como período de pessoa com deficiência; o tempo anterior à DID conta como tempo comum.",
+            "O tempo na condição de pessoa com deficiência pode ser convertido em tempo comum, conforme o grau e o gênero (a conversão inversa, de comum para deficiente, é vedada).",
+            "O cálculo segue a própria LC 142/2013 (art. 5º), com média dos 80% maiores salários desde 07/1994 e, em regra, sem fator previdenciário."
+          ]
+        }
       ]
     },
     {
       "heading": "Pontos de atenção",
       "blocks": [
-        {"type": "ul", "items": [
-          "A fixação da DID é o ponto de maior disputa e deve ser sustentada com documentação médica robusta, inclusive pretérita.",
-          "Tempo de deficiência anterior à LC 142/2013 pode ser aproveitado (Súmula 45 da TNU).",
-          "A fibromialgia foi reconhecida como deficiência pela Lei 15.176/2025, com mensuração pelo IF-BrA.",
-          "A deficiência auditiva teve sua avaliação aperfeiçoada pela Lei 14.768/2023; a cegueira monocular é equiparada por analogia (Súmula 377 do STJ).",
-          "Se o grau atribuído na avaliação for subestimado, ele pode ser impugnado, domínio a domínio."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "A fixação da DID é o ponto de maior disputa e deve ser sustentada com documentação médica robusta, inclusive pretérita.",
+            "Tempo de deficiência anterior à LC 142/2013 pode ser aproveitado (Súmula 45 da TNU).",
+            "A fibromialgia foi reconhecida como deficiência pela Lei 15.176/2025, com mensuração pelo IF-BrA.",
+            "A deficiência auditiva teve sua avaliação aperfeiçoada pela Lei 14.768/2023; a cegueira monocular é equiparada por analogia (Súmula 377 do STJ).",
+            "Se o grau atribuído na avaliação for subestimado, ele pode ser impugnado, domínio a domínio."
+          ]
+        }
       ]
     },
     {
       "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Avaliamos o seu histórico contributivo e a documentação médica para mapear a DID e o grau de deficiência, orientamos quanto à avaliação biopsicossocial e verificamos qual modalidade (tempo de contribuição ou idade) se ajusta ao seu caso. Acompanhamos o requerimento administrativo e, quando necessário, a discussão judicial, inclusive a impugnação do grau. Convidamos você a uma análise individualizada do seu caso em Monte Alto/SP."}
+        {
+          "type": "p",
+          "text": "Avaliamos o seu histórico contributivo e a documentação médica para mapear a DID e o grau de deficiência, orientamos quanto à avaliação biopsicossocial e verificamos qual modalidade (tempo de contribuição ou idade) se ajusta ao seu caso. Acompanhamos o requerimento administrativo e, quando necessário, a discussão judicial, inclusive a impugnação do grau. Converse com o escritório para avaliar o enquadramento do seu caso."
+        }
       ]
     }
   ],
@@ -89,5 +122,9 @@
       "a": "A Lei 15.176/2025 reconheceu a fibromialgia como deficiência. O grau é mensurado pela avaliação biopsicossocial (IF-BrA), como nas demais situações."
     }
   ],
-  "related": ["aposentadoria-tempo-contribuicao", "aposentadoria-especial", "bpc-deficiente"]
+  "related": [
+    "aposentadoria-tempo-contribuicao",
+    "aposentadoria-especial",
+    "bpc-deficiente"
+  ]
 }

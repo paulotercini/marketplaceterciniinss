@@ -4,7 +4,16 @@
   "title": "Aposentadoria por Idade",
   "nav_label": "Idade",
   "order": 2,
-  "facts": [["Idade mínima", "65 (h) / 62 (m)"], ["Carência", "180 contribuições"]],
+  "facts": [
+    [
+      "Idade mínima",
+      "65 (h) / 62 (m)"
+    ],
+    [
+      "Carência",
+      "180 contribuições"
+    ]
+  ],
   "meta_description": "Aposentadoria por idade após a EC 103/2019: idade mínima, tempo mínimo de contribuição, transição e regra rural. Análise do seu caso em Monte Alto/SP.",
   "hero_subtitle": "A porta de acesso de quem alcança a idade mínima com o tempo mínimo de contribuição, na cidade ou no campo.",
   "intro": [
@@ -15,48 +24,72 @@
     {
       "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "É o benefício concedido ao segurado(a) que atinge a idade mínima prevista em lei e comprova o tempo mínimo de contribuição e a carência. Diferentemente da aposentadoria por tempo de contribuição, aqui a idade é o requisito central, o que costuma favorecer quem começou a contribuir mais tarde ou teve períodos intercalados."}
+        {
+          "type": "p",
+          "text": "É o benefício concedido ao segurado(a) que atinge a idade mínima prevista em lei e comprova o tempo mínimo de contribuição e a carência. Diferentemente da aposentadoria por tempo de contribuição, aqui a idade é o requisito central, o que costuma favorecer quem começou a contribuir mais tarde ou teve períodos intercalados."
+        }
       ]
     },
     {
       "heading": "Quem tem direito (regra permanente)",
       "blocks": [
-        {"type": "p", "text": "A regra permanente do art. 19 da EC 103/2019 aplica-se a quem ingressou no RGPS a partir de 14 de novembro de 2019 e a quem, filiado antes, não tem regra mais vantajosa:"},
-        {"type": "ul", "items": [
-          "Idade mínima de 65 anos (homem) ou 62 anos (mulher).",
-          "Tempo mínimo de contribuição de 15 anos para a mulher e para o homem já filiado antes da reforma; 20 anos para o homem que ingressou a partir de 14/11/2019.",
-          "Carência de 180 contribuições mensais (art. 25, II, da Lei 8.213/91)."
-        ]},
-        {"type": "callout", "text": "A renda inicial segue, em regra, o art. 26 da EC 103: 60% da média das contribuições, mais 2% por ano que exceder 15 anos (mulher) ou 20 anos (homem). Contribuir além do mínimo pode aumentar o valor do benefício."}
+        {
+          "type": "p",
+          "text": "A regra permanente (arts. 18 e 19 da EC 103/2019) aplica-se a quem ingressou no RGPS a partir de 14 de novembro de 2019 e a quem, filiado antes, não tem regra mais vantajosa:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Idade mínima de 65 anos (homem) ou 62 anos (mulher).",
+            "Tempo mínimo de contribuição de 15 anos para a mulher e para o homem já filiado antes da reforma; 20 anos para o homem que ingressou a partir de 14/11/2019.",
+            "Carência de 180 contribuições mensais (art. 25, II, da Lei 8.213/91)."
+          ]
+        },
+        {
+          "type": "callout",
+          "text": "A renda inicial segue, em regra, o art. 26 da EC 103: 60% da média das contribuições, mais 2% por ano que exceder 15 anos (mulher) ou 20 anos (homem). Contribuir além do mínimo pode aumentar o valor do benefício."
+        }
       ]
     },
     {
       "heading": "Regra de transição da idade",
       "blocks": [
-        {"type": "p", "text": "Para quem já era filiado em 13/11/2019, a EC 103 previu uma transição na idade da mulher (art. 18): a idade mínima, que era de 60 anos, subiu 6 meses a cada ano a partir de 2020, até alcançar 62 anos em 2023. A idade do homem permaneceu em 65 anos. Exige-se, ainda, o tempo mínimo de 15 anos de contribuição e a carência de 180 contribuições."}
+        {
+          "type": "p",
+          "text": "Para quem já era filiado em 13/11/2019, a EC 103 previu uma transição na idade da mulher (art. 18): a idade mínima, que era de 60 anos, subiu 6 meses a cada ano a partir de 2020, até alcançar 62 anos em 2023. A idade do homem permaneceu em 65 anos. Exige-se, ainda, o tempo mínimo de 15 anos de contribuição e a carência de 180 contribuições."
+        }
       ]
     },
     {
       "heading": "Aposentadoria por idade rural",
       "blocks": [
-        {"type": "p", "text": "A EC 103/2019 preservou a idade reduzida para o trabalhador rural (art. 48 da Lei 8.213/91): 60 anos (homem) e 55 anos (mulher), com a comprovação de 15 anos (180 meses) de atividade rural, ainda que de forma descontínua. A prova do trabalho no campo é tratada na página de Aposentadoria Rural."}
+        {
+          "type": "p",
+          "text": "A EC 103/2019 preservou a idade reduzida para o trabalhador rural (art. 48 da Lei 8.213/91): 60 anos (homem) e 55 anos (mulher), com a comprovação de 15 anos (180 meses) de atividade rural, ainda que de forma descontínua. Há ainda a modalidade híbrida, que soma tempo rural e urbano, com idade de 65 anos (homem) ou 62 anos (mulher). A prova do trabalho no campo é tratada na página de Aposentadoria Rural."
+        }
       ]
     },
     {
       "heading": "Pontos de atenção",
       "blocks": [
-        {"type": "ul", "items": [
-          "Pendências e vínculos faltantes no CNIS podem reduzir a carência reconhecida. O acerto do cadastro antes de requerer costuma ser decisivo.",
-          "Em alguns casos, vale comparar a aposentadoria por idade com as regras de transição por tempo de contribuição para identificar a mais vantajosa.",
-          "Contribuições posteriores ao cumprimento dos requisitos podem elevar o valor; em pedido prematuro, pode caber a reafirmação da DER (Tema 995 do STJ).",
-          "Períodos de atividade rural, de trabalho urbano informal ou especiais podem ser somados para compor o tempo e a carência."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "Pendências e vínculos faltantes no CNIS podem reduzir a carência reconhecida. O acerto do cadastro antes de requerer costuma ser decisivo.",
+            "Em alguns casos, vale comparar a aposentadoria por idade com as regras de transição por tempo de contribuição para identificar a mais vantajosa.",
+            "Contribuições posteriores ao cumprimento dos requisitos podem elevar o valor; em pedido prematuro, pode caber a reafirmação da DER (Tema 995 do STJ).",
+            "Períodos de atividade rural, de trabalho urbano informal ou especiais podem ser somados para compor o tempo e a carência."
+          ]
+        }
       ]
     },
     {
       "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Analisamos o seu histórico contributivo, verificamos o cumprimento da idade, do tempo mínimo e da carência e comparamos a aposentadoria por idade com as demais regras, para indicar o caminho mais favorável. Acompanhamos o requerimento administrativo e, quando necessário, a discussão judicial. Convidamos você a uma análise individualizada do seu caso em Monte Alto/SP."}
+        {
+          "type": "p",
+          "text": "Analisamos o seu histórico contributivo, verificamos o cumprimento da idade, do tempo mínimo e da carência e comparamos a aposentadoria por idade com as demais regras, para indicar o caminho mais favorável. Acompanhamos o requerimento administrativo e, quando necessário, a discussão judicial. O primeiro passo é uma conversa para entender o seu histórico de contribuições."
+        }
       ]
     }
   ],
@@ -87,5 +120,9 @@
       "a": "Pode valer. Contribuições além do tempo mínimo aumentam o percentual de cálculo (2% por ano adicional). A decisão deve ser tomada com base em uma simulação do seu caso."
     }
   ],
-  "related": ["aposentadoria-tempo-contribuicao", "aposentadoria-rural", "planejamento-previdenciario"]
+  "related": [
+    "aposentadoria-tempo-contribuicao",
+    "aposentadoria-rural",
+    "planejamento-previdenciario"
+  ]
 }
