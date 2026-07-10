@@ -20,11 +20,11 @@ Cômputo entre regimes.
 
 Fonte oficial em https://www.agu.gov.br
 
-### Enunciado 6 CRPS
+### Alerta corretivo Onda 66
 
-CTC e efeitos.
+O Enunciado 6 do CRPS, na redação oficial publicada no DOU de 12/11/2019 e conferida via Comet na fonte primária, dispõe sobre salário-maternidade da gestante demitida sem justa causa. Não trata de CTC nem de contagem recíproca. Nenhum Enunciado do CRPS entre os Enunciados 1 a 19 vigentes trata especificamente de CTC e efeitos.
 
-Fonte oficial em https://www.gov.br/conselho-de-recursos-da-previdencia-social
+Fonte primária dos Enunciados 1 a 19 do CRPS em https://www.gov.br/previdencia/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/conselho-de-recursos-da-previdencia-social/enunciados-e-editais/enunciadosn1aon19dou_08-09-2025-atualizado.pdf
 
 ### Tema 1124 STJ
 

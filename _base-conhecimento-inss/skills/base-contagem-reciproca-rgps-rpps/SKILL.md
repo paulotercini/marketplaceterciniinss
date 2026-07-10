@@ -39,7 +39,7 @@ Tema 609 STJ. Indenização de contribuições para contagem recíproca.
 
 Fonte oficial em https://www.stj.jus.br
 
-Enunciado 6 CRPS. CTC e efeitos.
+Nota corretiva (Onda 66, verificado no DOU de 12/11/2019 via Comet). O Enunciado 6 do CRPS trata do salário-maternidade à gestante demitida sem justa causa, não da CTC. Não há Enunciado do CRPS específico sobre CTC e efeitos entre os Enunciados 1 a 19 vigentes. A tese de CTC e efeitos para contagem recíproca deve ser sustentada pelo art. 96 da Lei 8.213/91, pelo art. 130 da IN 128/2022, pelo Livro IX da Portaria DIRBEN/INSS 998/2022 e pelos Temas 176 STF e 609 STJ.
 
 ## Espaço pró-segurado
 
