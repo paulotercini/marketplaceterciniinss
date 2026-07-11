@@ -7,7 +7,7 @@ description: "BPC/LOAS, impedimento de longo prazo, avaliação biopsicossocial,
 
 ## Escopo
 
-Skill temática pró-segurado. Focaliza o requisito específico do impedimento de longo prazo para concessão do BPC à pessoa com deficiência. Trata da avaliação biopsicossocial (conjunta médica e social), do Instrumento de Avaliação Biopsicossocial da Miserabilidade (IFBrM), da TCQ (Tabela Conclusiva de Qualificadores), dos gatilhos de elevação e da jurisprudência dominante. Objetivo único é a defesa integral do requerente.
+Skill temática pró-segurado. Focaliza o requisito específico do impedimento de longo prazo para concessão do BPC à pessoa com deficiência. Trata da avaliação biopsicossocial (conjunta médica e social), do Índice de Funcionalidade Brasileiro Modificado (IFBrM), da TCQ (Tabela Conclusiva de Qualificadores), dos gatilhos de elevação e da jurisprudência dominante. Objetivo único é a defesa integral do requerente.
 
 ## Marco normativo central
 
@@ -57,7 +57,7 @@ Qualificadores especiais. L (labor/incapacidade laboral). N (necessidade de cuid
 
 Lei 15.157/2025. Suprime incisos específicos do art. 8º do Decreto 6.214/2007, dispensando reavaliação em impedimento permanente, irreversível e irrecuperável.
 
-## IFBrM (Instrumento Funcional Brasileiro aplicado ao BPC)
+## IFBrM (Índice de Funcionalidade Brasileiro Modificado, aplicado ao BPC)
 
 Diferente do IF-BrA aplicado à aposentadoria PCD pela LC 142/2013. Não aplica o método Fuzzy, usado apenas no IF-BrA. No BPC, soma-se avaliação médica + social.
 
@@ -101,7 +101,7 @@ Sexto, em Teleperícia, avaliar se há cerceamento.
 
 Sétimo, em recurso, impugnar TCQ com crítica técnica.
 
-Oitavo, em MS por mora, competência Federal ou JEF.
+Em MS por mora, competência da Vara Federal comum (MS não tramita no JEF — art. 3º, §1º, I, da Lei 10.259/2001).
 
 ## Integração com outras skills
 

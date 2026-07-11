@@ -1,6 +1,6 @@
 ---
 name: base-desaposentacao-reaposentacao
-description: "Desaposentação e reaposentação, Tema 503 STF RE 661.256, Tema 381 STF, vedação constitucional após Lei 13.183/2015 e EC 103/2019, alternativas ao segurado e comparação com reafirmação da DER. Use SEMPRE que mencionar desaposentação, reaposentação, renúncia a aposentadoria, Tema 503 STF, RE 661.256, Tema 381 STF, Lei 13.183/2015, art. 18 §2º Lei 8.213, EC 103/2019 art. 6º, devolução de valores desaposentação, contribuições após aposentadoria, cômputo pós-aposentadoria, aposentado que voltou a trabalhar, melhor benefício pós-aposentação, substituição de benefício, segurado com contribuições após DIB, revisão por contribuições posteriores, desaposentação judicial. Cruza com peticao-previdenciaria, precedentes-previdenciarios, reafirmacao-der, base-planejamento-previdenciario, base-calculo-rmi-ec103, decadencia-revisao-previdenciaria e coisa-julgada-previdenciaria."
+Tema 1207 STF: vedação também à reaposentação e disciplina dos efeitos e da devolução de valores (par do Tema 503).
 ---
 
 # Desaposentação e Reaposentação
@@ -29,17 +29,17 @@ RE 661.256. Desaposentação vedada, por ausência de previsão legal. Cabe ao l
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Tema 381 STF
+Tema 1207 STF: vedação também à reaposentação e disciplina dos efeitos e da devolução de valores (par do Tema 503).
 
 Devolução de valores. Desnecessidade em boa-fé.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Súmula 557 STJ
+Atenção: a Súmula 557 STJ trata da RMI da aposentadoria por invalidez precedida de auxílio-doença — não versa sobre desaposentação; não a utilize neste tema.
 
 Tema análogo, vedação pacificada.
 
-### Tema 381 STF (modulação)
+Tema 1207 STF: vedação também à reaposentação e disciplina dos efeitos e da devolução de valores (par do Tema 503).
 
 Efeitos para processos antes da decisão.
 

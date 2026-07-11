@@ -27,13 +27,13 @@ Foro do domicílio do impetrante em ações contra autarquia.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Súmula 689 STF
+### Súmula 689 STF — o segurado pode ajuizar contra a instituição previdenciária no juízo federal do seu domicílio ou nas varas federais da capital do Estado.
 
-Competência do local do ato.
+Enunciado real: o segurado pode ajuizar contra a instituição previdenciária no juízo federal do seu domicílio ou nas varas federais da capital do Estado-Membro.
 
-### Súmula 206 STJ
+### Súmula 206 STJ — a existência de vara privativa, instituída por lei estadual, não altera a competência territorial resultante das leis de processo.
 
-Competência no local do benefício.
+Enunciado real: a existência de vara privativa, instituída por lei estadual, não altera a competência territorial resultante das leis de processo.
 
 ## Competência territorial
 
@@ -49,7 +49,7 @@ Primeiro, Justiça Federal. Art. 109 I CF.
 
 Segundo, onde houver Vara Previdenciária especializada, ela atrai. Portarias do TRF.
 
-Terceiro, no JEF, valor de alçada de 60 SM, mas MS não se sujeita a alçada (Súmula 376/STJ).
+Terceiro, MS não tramita no JEF por exclusão expressa do art. 3º, §1º, I, da Lei 10.259/2001 (a Súmula 376 STJ trata de MS contra ato do próprio juizado, julgado pela Turma Recursal).
 
 ## Autoridade coatora no INSS
 

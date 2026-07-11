@@ -1,6 +1,6 @@
 ---
 name: base-professor-direito-adquirido-ec20
-description: "Direito adquirido do professor pela EC 20/98 art. 9º §2º com bônus de 17 por cento mulher e 20 por cento homem sobre tempo de magistério até 16/12/1998, integração com regras de transição da EC 103/2019 e direito adquirido preservado pelo art. 5º XXXVI CF. Use SEMPRE que mencionar direito adquirido professor EC 20, art. 9º §2º EC 20/98, acréscimo 17 por cento professor, acréscimo 20 por cento professor, bônus magistério pré-98, tempo professor antes 16/12/1998, proporcional professor, integral professor, opção direito adquirido professor, fator previdenciário professor direito adquirido, Súmula 726 STF, tempo misto professor. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, aposentadoria-professor-rgps, base-professor-regra-transicao-pontos-ec103, base-professor-regra-transicao-pedagio-ec103 e base-professor-regra-transicao-idade-progressiva-ec103."
+description: "Direito adquirido do professor pela EC 20/98 art. 9º §2º com bônus de 17 por cento homem e 20 por cento mulher sobre tempo de magistério até 16/12/1998, integração com regras de transição da EC 103/2019 e direito adquirido preservado pelo art. 5º XXXVI CF. Use SEMPRE que mencionar direito adquirido professor EC 20, art. 9º §2º EC 20/98, acréscimo 17 por cento professor homem, acréscimo 20 por cento professora mulher, bônus magistério pré-98, tempo professor antes 16/12/1998, proporcional professor, integral professor, opção direito adquirido professor, fator previdenciário professor direito adquirido, Súmula 726 STF, tempo misto professor. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, aposentadoria-professor-rgps, base-professor-regra-transicao-pontos-ec103, base-professor-regra-transicao-pedagio-ec103 e base-professor-regra-transicao-idade-progressiva-ec103."
 ---
 
 # Direito Adquirido do Professor pela EC 20/98
@@ -47,7 +47,7 @@ Coordenação pedagógica.
 
 Primeiro, aplicável a quem era professor em 16/12/1998.
 
-Segundo, bônus de 17 por cento mulher e 20 por cento homem sobre o tempo de magistério até 16/12/1998.
+Segundo, bônus de 17 por cento (homem) e 20 por cento (mulher) sobre o tempo de magistério até 16/12/1998 (EC 20/98, art. 9º, §2º).
 
 Terceiro, aplicável na aposentadoria proporcional e em conversão.
 
@@ -65,9 +65,9 @@ Quarto, funções de magistério incluem direção, coordenação e assessoramen
 
 ## Cenários pró-segurado
 
-Cenário A, professora com 15 anos de magistério até 16/12/1998. Bônus 17 por cento = 2,55 anos. Total 17,55 anos pré-EC 20 somado ao pós.
+Cenário A, professora com 15 anos de magistério até 16/12/1998. Bônus de 20 por cento = 3 anos. Total 18 anos pré-EC 20 somado ao pós.
 
-Cenário B, professor com 10 anos até 16/12/1998. Bônus 20 por cento = 2 anos. Total 12 anos pré somado ao pós.
+Cenário B, professor com 10 anos até 16/12/1998. Bônus de 17 por cento = 1,7 ano. Total 11,7 anos pré somado ao pós.
 
 Cenário C, professora que preencheu todos os requisitos antes da EC 103. Direito adquirido pleno.
 

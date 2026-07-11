@@ -11,7 +11,7 @@ Acione SEMPRE que houver indício de dano moral atribuível ao INSS, especialmen
 
 ## 2. Marco normativo
 
-A Constituição Federal no art. 5º X assegura indenização por dano moral. O art. 37 §6º estabelece responsabilidade objetiva do Estado. O art. 186 do Código Civil define o ato ilícito. O art. 927 estabelece o dever de indenizar. A Súmula 387 STJ admite cumulação com danos materiais.
+A Constituição Federal no art. 5º X assegura indenização por dano moral. O art. 37 §6º estabelece responsabilidade objetiva do Estado. O art. 186 do Código Civil define o ato ilícito. O art. 927 estabelece o dever de indenizar. A Súmula 37 STJ admite cumulação de dano material e moral (a 387 STJ trata de dano estético + moral).
 
 A jurisprudência admite dano moral quando o ato administrativo extrapola o erro tolerável e atinge a dignidade do segurado.
 

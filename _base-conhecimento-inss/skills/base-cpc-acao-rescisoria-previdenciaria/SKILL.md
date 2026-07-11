@@ -15,9 +15,9 @@ CPC, art. 966. Hipóteses.
 
 CPC, art. 968. Petição inicial.
 
-CPC, art. 969. Deferimento.
+CPC, art. 969. A propositura não impede o cumprimento da decisão rescindenda, salvo tutela provisória.
 
-CPC, art. 974. Documentos.
+CPC, art. 968. Petição inicial, documentos e depósito de 5% (o art. 974 trata do julgamento).
 
 CPC, art. 975. Prazo decadencial de 2 anos.
 

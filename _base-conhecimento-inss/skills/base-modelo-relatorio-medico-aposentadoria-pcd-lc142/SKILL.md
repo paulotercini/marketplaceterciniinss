@@ -13,7 +13,7 @@ A skill é fonte primária pró-segurado para produzir modelo narrativo enxuto (
 
 DID (data de início da deficiência) retroativa.
 
-Abordagem dos 7 domínios do IF-BrA (sensorial, cognição, mobilidade, interações, cuidados pessoais, vida doméstica, vida em sociedade).
+Abordagem dos 7 domínios do IF-BrA (sensorial; comunicação; mobilidade; cuidados pessoais; vida doméstica; educação, trabalho e vida econômica; socialização e vida comunitária).
 
 Grau de deficiência (leve, moderada, grave) para aplicação dos multiplicadores.
 
@@ -29,7 +29,7 @@ O laudo deve abordar.
 
 Funcionalidade conforme CIF (Classificação Internacional de Funcionalidade).
 
-Sete domínios do IF-BrA (Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015).
+Sete domínios do IF-BrA (Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014).
 
 Barreiras enfrentadas (físicas, atitudinais, de comunicação, tecnológicas).
 

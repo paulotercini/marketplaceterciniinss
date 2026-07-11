@@ -29,7 +29,7 @@ A definição de atividade principal e secundária era arbitrária e prejudicava
 
 ## 4. Fragilidades adversárias mais comuns
 
-O INSS limita a revisão a benefícios pós-Lei 9.876/99. Refute com Tema 1.070 STJ que admite revisão também de benefícios anteriores.
+Atenção ao alcance: o Tema 1.070/STJ é ancorado no período APÓS a Lei 9.876/99 — a janela revisável é, em regra, DIB entre 29/11/1999 e 17/06/2019; para DIB anterior vigora o art. 32 original (cálculo proporcional).
 
 O INSS recusa o cômputo de atividade autônoma concomitante. Refute com art. 32 Lei 8.213/91 e CNIS.
 

@@ -89,7 +89,7 @@ Prazo recursal. 30 dias úteis.
 
 ## MS por mora
 
-Competência. JEF se valor da causa até 60 SM. Federal Cível acima. Art. 109 §2º CF. Foro do domicílio ou da autoridade coatora.
+MS por mora: competência sempre da Vara Federal comum (MS não tramita no JEF — art. 3º, §1º, I, da Lei 10.259/2001).
 
 Autoridade coatora. Gerente Executivo do INSS no domicílio, Gerente da CEAB em atos centralizados.
 

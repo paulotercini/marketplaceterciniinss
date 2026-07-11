@@ -41,7 +41,7 @@ Professor e magistério.
 
 ### Súmula 726 STF
 
-Fator previdenciário não incide.
+Enunciado real: para a aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula. Não trata de fator previdenciário. Entendimento restritivo superado, em parte, pela Lei 11.301/2006 e pela ADI 3772 (direção, coordenação e assessoramento pedagógico contam).
 
 ## Requisitos (art. 16 §2º EC 103)
 

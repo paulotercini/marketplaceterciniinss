@@ -19,7 +19,7 @@ Lei 8.213/91, art. 25, IV. Carência de 24 contribuições para auxílio-reclus�
 
 MP 871/2019, convertida na Lei 13.846/2019. Alterações substanciais. Introdução da carência de 24 contribuições. Alteração do critério de baixa renda. Restrição ao regime fechado.
 
-EC 103/2019. Não alterou estruturalmente o B25, mantendo o regime da Lei 13.846/2019.
+EC 103/2019, art. 27, caput e §1º: o auxílio-reclusão passou a ser calculado na forma da pensão por morte, limitado a 1 salário mínimo, e o critério de baixa renda tem valor atualizado periodicamente.
 
 Decreto 3.048/99, art. 116. Detalha o B25.
 
@@ -29,7 +29,7 @@ Portaria MPS que define o teto de baixa renda (valor atualizado periodicamente).
 
 Primeiro, qualidade de segurado na data da prisão.
 
-Segundo, baixa renda do segurado na data da prisão (último salário-de-contribuição).
+Segundo, baixa renda do segurado na data da prisão, aferida pela média dos 12 salários-de-contribuição imediatamente anteriores (art. 80, §4º, Lei 8.213; divisor fixo 12). O critério do último salário-de-contribuição vale apenas para prisões anteriores à Lei 13.846/2019.
 
 Terceiro, carência de 24 contribuições (após Lei 13.846/2019).
 
@@ -79,7 +79,7 @@ Acionar `ms-competencia-autoridade-coatora` em MS.
 
 Primeiro, Lei 13.846/2019 restringiu muito o B25. Atuar tempestivamente para enquadrar caso a regime anterior quando a prisão for pretérita.
 
-Segundo, critério de baixa renda é pelo salário-de-contribuição do segurado na prisão, não pela renda do dependente (distinção crítica).
+Segundo, o critério de baixa renda é a média dos 12 salários-de-contribuição anteriores à prisão (regra atual, art. 80, §4º), comparada ao limite atualizado por portaria.
 
 Terceiro, progressão de regime é controvérsia viva. Tese pró-dependente sustenta manutenção por direito adquirido.
 
