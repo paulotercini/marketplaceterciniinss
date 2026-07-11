@@ -15,11 +15,11 @@ A Lei 8.213/91, no art. 25, estabelece a carência específica de cada benefíci
 
 ## 3. Eixos centrais pró-segurado
 
-A carência do auxílio-doença é de 12 contribuições (art. 25 I). Aposentadoria por idade e tempo é de 180 contribuições (art. 25 II). Pensão por morte é de 18 contribuições (Lei 13.846). Salário-maternidade é de 10 contribuições para CI e facultativo (art. 25 III).
+Pensão por morte: SEM carência (art. 26, I). As 18 contribuições mensais (Lei 13.135/2015) afetam apenas a DURAÇÃO da cota do cônjuge — com menos de 18 contribuições do falecido ou menos de 2 anos de casamento/união, a pensão dura 4 meses.
 
 A isenção de carência aplica-se em acidente de trabalho, doença grave (art. 26 II) e doenças listadas em portaria.
 
-O reingresso após perda da qualidade exige metade da carência integral, conforme art. 27-A. Ou seja, 90 contribuições para aposentadoria por idade após perda, e não as 180 originais.
+O art. 27-A (Lei 13.846/2019) aplica a metade da carência APENAS a auxílio por incapacidade temporária (6), salário-maternidade (5) e auxílio-reclusão (12). A aposentadoria por idade está FORA do art. 27-A: as 180 contribuições do art. 25, II, somam-se ao longo da vida, e a perda da qualidade de segurado é irrelevante (art. 3º, §1º, Lei 10.666/2003).
 
 A perda da qualidade não apaga as contribuições anteriores. As contribuições somam-se ao reingresso.
 

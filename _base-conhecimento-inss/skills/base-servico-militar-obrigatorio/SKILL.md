@@ -15,7 +15,7 @@ CF/88, art. 143. Serviço militar obrigatório.
 
 CF/88, art. 201, §9º. Contagem recíproca.
 
-Lei 8.213/91, art. 55, I. Cômputo de tempo anterior à Lei 3.807/1960, incluindo o serviço militar.
+Lei 8.213/91, art. 55, I. Cômputo do tempo de serviço militar, inclusive voluntário, ainda que anterior à filiação ao RGPS (texto do art. 55, I).
 
 Lei 4.375/1964. Lei do Serviço Militar.
 

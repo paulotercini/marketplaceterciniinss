@@ -1,6 +1,6 @@
 ---
 name: base-ms-liminar-art7-iii
-description: "Liminar em mandado de segurança previdenciário (art. 7º III Lei 12.016/2009), fumus boni iuris, periculum in mora, requisitos pró-segurado, vedações, impedimentos e rito do agravo contra decisão liminar. Use SEMPRE que mencionar liminar em MS previdenciário, art. 7º III Lei 12.016, fumus boni iuris MS, periculum in mora MS, concessão de liminar INSS, suspensão de liminar, agravo de instrumento MS, revogação de liminar, implantação liminar de benefício, restabelecimento liminar, liminar contra CEAB, liminar contra CRPS, liminar pericial, Súmula 212 STJ, vedação de compensação tributária, caráter irreversível. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e peticao-previdenciaria."
+A Súmula 212 STJ foi CANCELADA pela 1ª Seção em 2022, em decorrência da ADI 4.296.
 ---
 
 # Liminar em MS Previdenciário
@@ -23,7 +23,7 @@ Lei 9.494/97. Restrições.
 
 ## Marco jurisprudencial
 
-### Súmula 212 STJ
+A Súmula 212 STJ foi CANCELADA pela 1ª Seção em 2022, em decorrência da ADI 4.296.
 
 Compensação tributária via liminar vedada.
 
@@ -37,7 +37,7 @@ Concessão e efeitos.
 
 Duração razoável.
 
-### Tema 692 STF
+Atenção (risco): o Tema 692 é do STJ e determina a DEVOLUÇÃO dos valores recebidos por tutela/liminar posteriormente revogada. Não o utilize como fundamento de irrepetibilidade.
 
 Devolução de valores em boa-fé.
 
@@ -61,7 +61,7 @@ Quinto, liminar contra exigência abusiva.
 
 Sexto, liminar contra cessação por demora de perícia.
 
-## Vedações do art. 7º §2º
+## Vedações do art. 7º §2º — DISPOSITIVO INCONSTITUCIONAL (ADI 4.296, STF, 09/06/2021): as vedações abaixo NÃO vigoram; registro apenas histórico
 
 Primeiro, não cabe em matéria de compensação tributária.
 
@@ -95,7 +95,7 @@ Terceiro, requisitos da suspensão são restritivos.
 
 Primeiro, a liminar pode ser revogada na sentença ou em grau recursal.
 
-Segundo, Tema 692/STF afasta devolução em caso de revogação em boa-fé.
+Atenção (risco): o Tema 692 é do STJ e determina a DEVOLUÇÃO dos valores recebidos por tutela/liminar posteriormente revogada. Não o utilize como fundamento de irrepetibilidade.
 
 Terceiro, atenção ao caráter alimentar para afastar irreversibilidade.
 

@@ -1,6 +1,6 @@
 ---
 name: base-pcd-if-bra-metodologia
-description: "Metodologia do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado) para aposentadoria da pessoa com deficiência da LC 142/2013, sete domínios, escala genebra, lógica fuzzy, pontuação por grau e definição de leve, moderada ou grave. Use SEMPRE que mencionar IF-BrA, Índice de Funcionalidade Brasileiro Aplicado, lógica fuzzy LC 142, sete domínios deficiência, sensorial cognição mobilidade interações domésticas educação trabalho, escala genebra IF-BrA, pontuação 25 50 75 100 IF-BrA, deficiência leve moderada grave LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015, conversão tempo deficiência, perícia biopsicossocial, avaliação funcional INSS, médico assistente social INSS. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-did-retroativa, base-pcd-conversao-tempo-especial-pcd, base-pcd-fibromialgia-lei15176 e formacao-documentacao-did-pcd."
+description: "Metodologia do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado) para aposentadoria da pessoa com deficiência da LC 142/2013, sete domínios, escala genebra, lógica fuzzy, pontuação por grau e definição de leve, moderada ou grave. Use SEMPRE que mencionar IF-BrA, Índice de Funcionalidade Brasileiro Aplicado, lógica fuzzy LC 142, sete domínios deficiência, sensorial cognição mobilidade interações domésticas educação trabalho, escala genebra IF-BrA, pontuação 25 50 75 100 IF-BrA, deficiência leve moderada grave LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014, conversão tempo deficiência, perícia biopsicossocial, avaliação funcional INSS, médico assistente social INSS. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-did-retroativa, base-pcd-conversao-tempo-especial-pcd, base-pcd-fibromialgia-lei15176 e formacao-documentacao-did-pcd."
 ---
 
 # Metodologia do IF-BrA na Aposentadoria PCD
@@ -17,7 +17,7 @@ LC 142/2013.
 
 Decreto 8.145/2013.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014.
 
 IN 128/2022.
 
@@ -73,7 +73,7 @@ Quarto, conversão de tempo aplicável a cada grau.
 
 ## Lógica fuzzy
 
-Primeiro, a Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015 adotou lógica fuzzy.
+Primeiro, a Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 adotou lógica fuzzy.
 
 Segundo, permite ponderação contínua entre os domínios.
 

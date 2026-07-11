@@ -275,11 +275,11 @@ Limites jurisprudenciais ao art. 94 (vinculantes para o juízo).
 
 Súmula 14/TNU. "Para a concessão de aposentadoria rural por idade, não se exige que o início de prova material corresponda a todo o período equivalente à carência do benefício."
 
-Súmula 73/TNU. "O exercício de atividade urbana intercalada não impede a concessão de benefício previdenciário de trabalhador rural, condição que deve ser analisada no caso concreto."
+Súmula 46/TNU: o exercício de atividade urbana intercalada não impede a concessão de benefício previdenciário de trabalhador rural, condição que deve ser analisada no caso concreto.
 
 Súmula 577/STJ. "É possível reconhecer o tempo de serviço rural anterior ao documento mais antigo apresentado, desde que amparado em convincente prova testemunhal colhida sob o contraditório."
 
-Tema 532/STJ (REsp 1.348.633). É possível a comprovação do tempo de serviço rural mediante apresentação de início de prova material referente a período diverso do de carência, desde que corroborado por prova testemunhal idônea.
+Tema 638/STJ (REsp 1.348.633): é possível reconhecer tempo rural anterior ao documento mais antigo apresentado (origem da Súmula 577 STJ). Já o Tema 532/STJ (REsp 1.321.493) mitiga a exigência de prova material para o boia-fria/diarista.
 
 ### 7.2. Aposentadoria por idade híbrida
 
@@ -333,7 +333,7 @@ Súmula 5/TNU. Labor rural a partir de 12 anos cômputável.
 
 Súmula 6/TNU. Certidão de casamento aproveita ao outro cônjuge.
 
-Súmula 73/TNU. Não é exigida atividade ininterrupta na carência rural.
+Súmula 73/TNU (enunciado real): o tempo de gozo de auxílio-doença ou aposentadoria por invalidez, intercalado com atividade, conta como tempo de contribuição e carência.
 
 Súmula 149/STJ. Rol exemplificativo de prova material.
 

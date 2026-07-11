@@ -1,6 +1,6 @@
 ---
 name: base-tempo-rural-anterior-1991
-description: "Cômputo do tempo de atividade rural anterior a novembro/1991 como tempo de contribuição, vedação de carência sem indenização, Súmula 272 STJ, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ. Use SEMPRE que mencionar tempo rural anterior a 1991, segurado especial pré-1991, boia-fria pré-1991, diarista rural pré-1991, art. 55 §2º Lei 8.213/91, carência tempo rural, Súmula 272 STJ, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ, Tema 642 STJ, prova material rural, prova testemunhal rural, início de prova documental, economia familiar pré-1991, contagem recíproca rural, indenização para carência rural, averbação tempo rural RGPS, Tema 327 TNU gênero rural, certidão rural, Portaria 990/2022, Portaria 1.316/2025. Cruza com segurado-especial-rural, documentos-comprobatorios-in128, peticao-previdenciaria, perspectiva-genero-previdenciario, base-contagem-reciproca-rgps-rpps e indenizacao-contribuicoes-atraso."
+Súmula 272 STJ (enunciado real): o trabalhador rural, na condição de segurado especial, somente faz jus à aposentadoria por tempo de serviço/contribuição se recolher contribuições facultativas. O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
 ---
 
 # Tempo Rural Anterior a Novembro de 1991
@@ -25,7 +25,7 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 ## Marco jurisprudencial
 
-Súmula 272 STJ. Trabalhador rural, comprovada a atividade, tem direito ao cômputo para tempo de contribuição sem recolhimento, observada a vedação quanto à carência.
+Súmula 272 STJ (enunciado real): o trabalhador rural, na condição de segurado especial, somente faz jus à aposentadoria por tempo de serviço/contribuição se recolher contribuições facultativas. O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -63,7 +63,7 @@ Quinto, menor de 12 ou 14 anos trabalhador rural. Cômputo admitido em juízo co
 
 Primeiro, levantamento de prova material (certidão de casamento, de nascimento, bloco de notas, ITR, título de eleitor com profissão lavrador, carteira sindical, CAF/DAP, certidões escolares, fichas médicas).
 
-Segundo, autodeclaração rural (Lei 11.718/2008).
+Segundo, autodeclaração rural ratificada (art. 38-B da Lei 8.213/91, incluído pela Lei 13.846/2019).
 
 Terceiro, audiência com prova testemunhal.
 

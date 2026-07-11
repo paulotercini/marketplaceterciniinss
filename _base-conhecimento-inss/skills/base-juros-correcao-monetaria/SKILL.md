@@ -53,7 +53,7 @@ Primeiro, correção monetária desde cada vencimento.
 
 Segundo, juros de mora desde a citação, salvo hipóteses específicas.
 
-Terceiro, IPCA-E como índice adequado, inclusive após o Tema 810 STF.
+Terceiro, Para BENEFÍCIOS PREVIDENCIÁRIOS a correção é pelo INPC (art. 41-A da Lei 8.213; Tema 905 STJ) até 08/12/2021 — o IPCA-E do Tema 810 é a regra geral das condenações não tributárias.
 
 Quarto, a partir de 09/12/2021, unificação pela SELIC (EC 113/2021).
 
@@ -65,7 +65,7 @@ Sexto, RRA pode diferir a tributação.
 
 Primeiro, planilha com termos iniciais corretos.
 
-Segundo, IPCA-E até 08/12/2021.
+Segundo, INPC até 08/12/2021 (benefícios previdenciários — Tema 905 STJ).
 
 Terceiro, SELIC a partir de 09/12/2021.
 

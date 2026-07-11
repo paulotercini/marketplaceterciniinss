@@ -23,7 +23,7 @@ Lei 8.213/91, art. 77, §2º, V. Duração da pensão do cônjuge ou companheiro
 
 EC 103/2019, art. 23. Fixa a RMI da pensão em 50% do valor do benefício ou da aposentadoria a que teria direito, acrescidos de 10% por dependente, até o máximo de 100%.
 
-EC 103/2019, art. 24. Veda acumulação de pensões e de pensão com aposentadoria, com regra de opção pelo mais vantajoso e complementação parcial.
+EC 103/2019, art. 24. Veda a acumulação de mais de uma pensão no MESMO regime (caput); a acumulação de pensão com aposentadoria é PERMITIDA, com percepção integral do benefício mais vantajoso e faixas redutoras sobre o menos vantajoso (§2º).
 
 Lei 13.846/2019. Introduziu novas regras sobre comprovação de união estável e dependência econômica.
 
@@ -53,7 +53,7 @@ Segundo, companheira em união estável comprovada por provas materiais (declara
 
 Terceiro, ex-cônjuge beneficiário de pensão alimentícia. Direito à pensão por morte (Tema 45 TNU).
 
-Quarto, filho inválido ou com deficiência intelectual/mental grave mantém pensão após 21 anos. Tema 15 TNU e Súmula 37 TNU.
+Quarto, filho inválido ou com deficiência intelectual/mental grave mantém a pensão após os 21 anos (Tema 15 TNU). Atenção: a Súmula 37 TNU trata de outro assunto — veda a prorrogação ao filho universitário.
 
 Quinto, menor sob guarda equiparado a filho (Tema 732 STJ/STF reconhecido). Direito à pensão por morte do guardião.
 
