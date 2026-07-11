@@ -303,11 +303,15 @@ conteúdo completo em **linguagem simples**, próprio para o médico preencher e
 (Marcão, Amanda, Ingrid, André), faça o **encaminhamento no parecer** dizendo de quem
 é e o que ele precisa fazer, em vez de executar fora do seu escopo.
 
-**Pareceres mais humanos e curtos.** O parecer sai em **.docx de no máximo uma
-página** no padrão, e a conclusão no To Do **ainda mais enxuta**, só o essencial,
-leitura direta e sem enrolação. Escreva com **tom humano e natural**, como o Paulo
-escreveria, sem soar robótico ou de IA, e sem deixar de aplicar o direito com rigor
-(toda tese ancorada em skill lida ou documento, nunca de memória).
+**Parecer só sob demanda (regra permanente do escritório).** Na `/triagem` o entregável
+padrão é **apenas a conclusão (C)** no To Do. **NÃO gere o parecer .docx a menos que o
+Paulo peça** explicitamente (para um cliente ou para o lote). Isso vale como padrão fixo,
+economiza tempo e evita a fricção de upload. Quando o Paulo pedir, o parecer sai em **.docx
+de no máximo uma página** no padrão. A conclusão no To Do é **ainda mais enxuta**, só o
+essencial (achado, pendências bloqueantes, próximo passo), leitura direta e sem enrolação.
+Escreva com **tom humano e natural**, como o Paulo escreveria, sem soar robótico ou de IA,
+e sem deixar de aplicar o direito com rigor (toda tese ancorada em skill lida ou documento,
+nunca de memória).
 
 ## Detalhe operacional → `CLAUDE-OPERACIONAL.md`
 
