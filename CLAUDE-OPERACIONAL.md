@@ -326,10 +326,12 @@ documentos prontos para anexar**; nunca protocola/envia. Diferenças-chave:
   HISTÓRICO**, ABAIXO do cabeçalho fixo da tarefa (`[TAREFA]`/`[SISTEMA]`/`[DER]`
   etc.) e ACIMA da entrada de data mais recente. O `todo_conclusao.py` já faz isso
   automaticamente (insere antes da primeira linha com data `DD.MM.AAAA`).
-- **Parecer SEMPRE em .docx (Word), no máximo UMA página**, no padrão do escritório
-  (`docx_escritorio.py`), **nunca em Google Doc**, subido à subpasta **`Claude`** da
-  pasta do cliente (criar se não existir) com `gdrive_upload.py` (upload direto pela
-  API, sem base64 pelo contexto), título `Parecer - <Cliente> - DD.MM.AAAA.docx`.
+- **Parecer .docx SÓ SOB DEMANDA (regra permanente do escritório).** Por padrão a
+  `/triagem` entrega apenas a conclusão (C); **não gere o parecer a menos que o Paulo
+  peça**. Quando pedido, sai **em .docx (Word), no máximo UMA página**, no padrão do
+  escritório (`docx_escritorio.py`), **nunca em Google Doc**, subido à subpasta
+  **`Claude`** da pasta do cliente (criar se não existir) com `gdrive_upload.py` (upload
+  direto pela API, sem base64 pelo contexto), título `Parecer - <Cliente> - DD.MM.AAAA.docx`.
   **Todos os documentos gerados** (parecer, procuração, RAC, relatório, autodeclaração)
   ficam na subpasta `Claude`, subidos pelo mesmo `gdrive_upload.py`. Conteúdo enxuto e
   **humano**, contexto do benefício, checklist de documentos (faltantes em

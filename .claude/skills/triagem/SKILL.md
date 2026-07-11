@@ -1,6 +1,6 @@
 ---
 name: triagem
-description: Triagem diária das tarefas do To Do atribuídas a Paulo (vencendo hoje), cruzando com o Drive, base de conhecimento e CNIS, gravando conclusão + parecer. Complementa pareceres já existentes (não refaz) e mantém a lista de pendências em aberto. Use para processar a fila do dia, ou para triar um cliente específico passado como argumento.
+description: Triagem diária das tarefas do To Do atribuídas a Paulo (vencendo hoje), cruzando com o Drive, base de conhecimento e CNIS, gravando a conclusão (C). Parecer .docx só sob demanda (regra permanente do escritório), nunca por padrão. Complementa análises já existentes (não refaz) e mantém a lista de pendências em aberto. Use para processar a fila do dia, ou para triar um cliente específico passado como argumento.
 ---
 
 Execute a triagem diária do escritório. Leia antes o `CLAUDE.md` **e o
@@ -168,9 +168,13 @@ f) **Gerar a CONCLUSÃO** **ultraenxuta, 2 a 3 linhas**, só o achado e o próxi
    complemento, registra só o que foi feito na nova data.
    `python3 todo_conclusao.py "<list_id>" "<task_id>" "<conclusão>"`
 
-g) **Salvar o parecer SEMPRE em .docx (Word)**, no padrão do escritório, gerado com
-   `docx_escritorio.py` (auto-shrink no `salvar()`). **NÃO use Google Doc para o
-   parecer.** Casos simples, **máximo UMA página**. Casos de **aposentadoria/tempo,
+g) **Parecer .docx SÓ SOB DEMANDA (regra permanente do escritório, decisão do Paulo).**
+   Por padrão a triagem entrega **apenas a conclusão (C)** no To Do (passo f), que é o
+   **registro primário**. **NÃO gere o parecer .docx a menos que o Paulo peça
+   explicitamente.** Sem parecer, leve para a conclusão (C) o essencial (achado,
+   pendências bloqueantes e próximo passo). **Quando o Paulo pedir o parecer**, aí sim
+   gere em .docx no padrão do escritório com `docx_escritorio.py` (auto-shrink no
+   `salvar()`). **NÃO use Google Doc para o parecer.** Casos simples, **máximo UMA página**. Casos de **aposentadoria/tempo,
    PPP, períodos rurais ou processo judicial** seguem a estrutura de divisões da
    **"Análise da Vida Completa"** do CLAUDE.md (cabeçalho tabelado, conclusão no topo,
    vida contributiva cronológica com PPP período a período e rural, contagem de tempo,
@@ -193,8 +197,9 @@ g) **Salvar o parecer SEMPRE em .docx (Word)**, no padrão do escritório, gerad
    benefício, checklist de documentos com faltantes em destaque, achados do CNIS,
    pendências do histórico, lista de renomeações sugeridas e mensagem ao cliente quando
    aplicável.
-   - **OBRIGATÓRIO em todo parecer, uma seção final "Pendências em aberto"**, em
-     destaque, listando tudo o que ainda falta (ex.: falta RG, falta PPP da Cica,
+   - **OBRIGATÓRIO as "Pendências em aberto"** (de forma enxuta na conclusão (C) por
+     padrão, e como seção final em destaque quando houver parecer), listando tudo o que
+     ainda falta (ex.: falta RG, falta PPP da Cica,
      falta comprovante de residência, indicador de CNIS a corrigir, prazo a
      confirmar). No modo complemento, essa seção é **carregada do parecer anterior
      e atualizada** (o que foi resolvido sai, o que continua pendente permanece, o
@@ -205,7 +210,8 @@ g) **Salvar o parecer SEMPRE em .docx (Word)**, no padrão do escritório, gerad
      **Pronto para `/inicial-inss`** ou **Aguardando <documento/decisão>**.
 
 h) Retornar 1 linha de status: cliente, modo (completo ou complemento), conclusão
-   resumida, link do parecer, pendências em aberto, **próximo passo recomendado**.
+   resumida, link do parecer **(quando gerado sob demanda)**, pendências em aberto,
+   **próximo passo recomendado**.
 
 ## 3.5 Porta de qualidade (revisar ANTES de gravar a conclusão e o parecer)
 Antes de gravar qualquer coisa, releia o que escreveu e só prossiga se passar nos três:
@@ -217,15 +223,17 @@ Antes de gravar qualquer coisa, releia o que escreveu e só prossiga se passar n
   não conferido foi removido ou marcado `[NÃO CONFIRMADO]`. Postura pró-segurado.
 - **Skills**, você de fato LEU `base-precedentes-catalogo-vinculantes` e a(s) skill(s)
   do benefício (passo c). Se não leu, volte ao passo c antes de afirmar. A linha
-  "Skills consultadas" tem de existir no parecer.
+  "Skills consultadas" tem de existir no parecer, quando gerado sob demanda.
 
 ## 3.6 Revisão Sistema 2 — Antiviés (LER e aplicar `sistema-2-antivies`)
 Passada a porta de qualidade, rode a skill **`sistema-2-antivies`** sobre a própria
 análise, antes de gravar. Percorra os seis vieses (ancoragem, recência, deferência
 à perícia, confirmação a favor da própria tese, enquadramento do benefício,
 negligência de base), corrija o que estiver enviesado e **nomeie o gargalo honesto**
-da tese. Registre no parecer a seção **"Revisão Sistema 2 — Antiviés"** (vieses
-encontrados e corrigidos, e os afastados), e leve o gargalo para "Pendências em
+da tese. Por padrão isso se reflete na **conclusão (C)** e no status (o gargalo vai
+para as pendências e pode mudar o próximo passo). Quando houver parecer sob demanda,
+registre nele a seção **"Revisão Sistema 2 — Antiviés"** (vieses encontrados e
+corrigidos, e os afastados), e leve o gargalo para "Pendências em
 aberto". A revisão pode **rebaixar** o próximo passo (de Pronto para Aguardando
 documento) quando expuser pendência bloqueante, isso é acerto do método.
 
