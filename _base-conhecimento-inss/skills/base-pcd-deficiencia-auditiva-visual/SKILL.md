@@ -23,7 +23,7 @@ Decreto 5.296/2004.
 
 Decreto 6.949/2009. Convenção sobre os Direitos das Pessoas com Deficiência.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014.
 
 ## Marco jurisprudencial
 

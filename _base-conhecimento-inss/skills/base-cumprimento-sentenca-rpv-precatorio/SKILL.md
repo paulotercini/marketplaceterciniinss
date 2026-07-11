@@ -53,9 +53,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Honorários sobre parcelas vencidas até a sentença.
 
-### Súmula 443 STJ
+### Súmula 345 STJ e art. 85, §1º, CPC
 
-Honorários em execução.
+Honorários em execução contra a Fazenda (a Súmula 443 STJ é matéria penal — não usar).
 
 ## Espaço pró-segurado
 

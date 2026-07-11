@@ -21,7 +21,7 @@ CPC, art. 304. Estabilização.
 
 CPC, art. 311. Tutela de evidência.
 
-Lei 8.213/91, art. 101. Implantação.
+Lei 8.213/91, art. 41-A, §5º. Prazo de 45 dias para o primeiro pagamento (implantação).
 
 ## Espécies aplicáveis
 
@@ -39,7 +39,7 @@ Primeiro, probabilidade do direito. Caráter alimentar reforça. Tema 313/STJ (e
 
 Segundo, perigo de dano. Presunção pró-segurado em benefício alimentar.
 
-Terceiro, reversibilidade. Súmula 729/STF modulada. Recebimento de boa-fé afasta devolução (Tema 692/STF, Tema 1009/STJ com cuidado).
+Atenção (risco): o Tema 692 do STJ determina a DEVOLUÇÃO dos valores recebidos por tutela antecipada posteriormente revogada (com desconto de até 30% do benefício). Não o invoque como escudo de boa-fé; a irrepetibilidade deve ser buscada em fundamentos próprios (ex.: benefício assistencial; Tema 979 com boa-fé objetiva), com cautela.
 
 ## Cenários pró-segurado
 
@@ -53,7 +53,7 @@ Cenário D, tutela de evidência em tese firmada (Tema 1102/STF RVT, Tema 327/ST
 
 ## Estabilização (art. 304)
 
-Segurado obtém tutela antecipada antecedente. INSS não recorre. Processo é extinto com estabilização. Art. 304 §6º exige ação revisional em 2 anos. Tema 1085/STJ em discussão.
+Segurado obtém tutela antecipada antecedente. INSS não recorre. Processo é extinto com estabilização. Art. 304, §5º, CPC exige ação revisional em 2 anos (o §6º trata da ausência de coisa julgada). Tema 1085/STJ em discussão.
 
 ## Alertas
 

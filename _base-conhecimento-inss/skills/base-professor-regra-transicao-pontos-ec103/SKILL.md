@@ -45,13 +45,13 @@ Professor e magistério.
 
 ### Súmula 726 STF
 
-Tempo de professor e fator previdenciário.
+Enunciado real: para a aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula. Não trata de fator previdenciário. Entendimento restritivo superado, em parte, pela Lei 11.301/2006 e pela ADI 3772 (direção, coordenação e assessoramento pedagógico contam).
 
 ## Regra de pontos (art. 15 §3º EC 103)
 
 Primeiro, tempo mínimo de contribuição. 25 anos mulher, 30 anos homem, exclusivos em magistério.
 
-Segundo, pontos em 2020. Soma idade + tempo = 81 mulher, 91 homem.
+Segundo, pontos na promulgação (2019): 81 mulher, 91 homem; a partir de 1º/1/2020, +1 ponto por ano (2020 = 82/92; 2026 = 88/98), até 92 mulher e 100 homem.
 
 Terceiro, progressão anual. +1 ponto por ano até 92 mulher e 100 homem.
 
@@ -79,9 +79,9 @@ Quarto, tempo rural anterior a 1991 na educação rural pode ser considerado, me
 
 ## Cenários pró-segurado
 
-Cenário A, professora mulher com 27 anos de magistério e 55 de idade em 2026. Pontos 82. Pontos exigidos 85 (81 em 2020 + 4 incrementos). Faltam 3 pontos.
+Cenário A, professora em 2026 com 82 pontos. Exigidos 88 (81 em 2019 + 7 incrementos). Faltam 6 pontos.
 
-Cenário B, professor homem com 32 anos e 57 de idade. Pontos 89. Exigidos 95. Insuficiente.
+Cenário B, professor em 2026 com 89 pontos. Exigidos 98 (91 em 2019 + 7). Faltam 9 pontos.
 
 Cenário C, professora com cargo híbrido em creche e educação infantil. Aplicar Lei 15.326/2026.
 

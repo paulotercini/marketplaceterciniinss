@@ -67,7 +67,7 @@ Terceiro, discussão sobre natureza das verbas em repetitivos STJ (Tema 985, por
 
 Quarto, revisão preventiva de salário-de-contribuição errado no CNIS.
 
-Quinto, em incidência sobre 13º, integra o salário-de-contribuição anual para fins de cálculo.
+Quinto, o 13º salário integra o salário-de-contribuição para CUSTEIO (art. 28, §7º, Lei 8.212), mas NÃO integra o cálculo do salário de benefício desde a Lei 8.870/94 (art. 29, §3º, Lei 8.213) — não o utilize para elevar a média, salvo requisitos implementados antes de 16/04/1994.
 
 ## Regra pró-segurado
 

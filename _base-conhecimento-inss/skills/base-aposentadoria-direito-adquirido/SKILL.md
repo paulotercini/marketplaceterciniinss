@@ -1,6 +1,6 @@
 ---
 name: base-aposentadoria-direito-adquirido
-description: "Direito adquirido à aposentadoria pré-reforma EC 103/2019, proteção exclusiva do segurado. Use SEMPRE que mencionar direito adquirido aposentadoria, regras pré-reforma, art. 3º EC 103, Súmula 359 STF, RE 630.501, Tema 334 STF, melhor benefício, aposentadoria por tempo de contribuição 35 25, aposentadoria proporcional, EC 20 art. 9º §1º, pedágio 20%, aposentadoria especial pré-reforma, requisitos antes 13/11/2019, reafirmação DER, acervo contributivo pré-reforma, tempus regit actum, afastar regra nova menos vantajosa, professor 30 25, art. 53 Lei 8.213, fator previdenciário, regra 85/95 progressiva Lei 13.183/2015, desaposentação Tema 503 STF, revisão da vida toda Tema 1102 STF e modulação. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao e reafirmacao-der."
+description: "Direito adquirido à aposentadoria pré-reforma EC 103/2019, proteção exclusiva do segurado. Use SEMPRE que mencionar direito adquirido aposentadoria, regras pré-reforma, art. 3º EC 103, Súmula 359 STF, RE 630.501, Tema 334 STF, melhor benefício, aposentadoria por tempo de contribuição 35 25, aposentadoria proporcional, EC 20 art. 9º, pedágio 20% integral, pedágio 40% proporcional, aposentadoria especial pré-reforma, requisitos antes 13/11/2019, reafirmação DER, acervo contributivo pré-reforma, tempus regit actum, afastar regra nova menos vantajosa, professor 30 25, art. 53 Lei 8.213, fator previdenciário, regra 85/95 progressiva Lei 13.183/2015, desaposentação Tema 503 STF, revisão da vida toda Tema 1102 STF e modulação. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao e reafirmacao-der."
 ---
 
 # Aposentadoria com Direito Adquirido Pré EC 103/2019
@@ -19,7 +19,7 @@ Lei 8.213/91, art. 53. Tabela de aposentadoria proporcional aplicável a quem im
 
 Lei 13.183/2015. Instituiu a regra 85/95 progressiva que continua aplicável a quem atingiu a fórmula antes da reforma.
 
-EC 20/1998, art. 9º, §1º. Pedágio de 20% para aposentadoria proporcional pré-EC 20.
+EC 20/1998, art. 9º. Transição: integral com pedágio de 20% (caput) e proporcional com pedágio de 40% sobre o tempo faltante em 16/12/1998 (§1º), ambas com idade mínima de 53 anos (homem) ou 48 anos (mulher).
 
 Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
@@ -33,7 +33,7 @@ Primeiro, segurado homem que em 13 de novembro de 2019 tinha 35 anos de contribu
 
 Segundo, segurada mulher que em 13 de novembro de 2019 tinha 30 anos de contribuição. Mesmo raciocínio, direito adquirido à aposentadoria por tempo integral.
 
-Terceiro, segurado que em 13 de novembro de 2019 tinha 30 anos de contribuição (homem) ou 25 anos (mulher) e mais 5 anos de pedágio (EC 20/98). Direito adquirido à aposentadoria proporcional, com coeficiente da tabela do art. 53 da Lei 8.213/91.
+Terceiro, segurado que até 13 de novembro de 2019 cumpriu os requisitos da proporcional da EC 20/98 (art. 9º, §1º): idade mínima de 53 anos (homem) ou 48 anos (mulher), 30/25 anos de contribuição e pedágio de 40% do tempo que faltava em 16/12/1998. Direito adquirido à aposentadoria proporcional, com coeficiente da tabela do art. 53 da Lei 8.213/91.
 
 Quarto, segurado que em 13 de novembro de 2019 atingiu a regra 85/95 progressiva da Lei 13.183/2015. Direito adquirido à aposentadoria por tempo de contribuição sem fator previdenciário, afastando a desvantagem.
 

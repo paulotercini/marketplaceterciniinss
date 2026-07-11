@@ -39,7 +39,7 @@ Lei 13.146/2015, art. 9º, VII. Prioridade na tramitação processual e nos proc
 
 Decreto nº 10.995/2022. Estrutura Regimental do INSS.
 
-Súmula 376/STJ. Compete à Justiça Federal o julgamento de causas em que o INSS seja parte.
+Art. 109, I, da CF: compete à Justiça Federal julgar as causas em que o INSS é parte.
 
 ## 3. Mapeamento institucional do INSS
 

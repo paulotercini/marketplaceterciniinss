@@ -47,7 +47,7 @@ Direito adquirido.
 
 ### REsp 1.296.673 STJ
 
-Cálculo RMI.
+Repetitivo dos Temas 555 e 556 STJ. Acumulação de auxílio-acidente com aposentadoria exige lesão incapacitante e aposentadoria anteriores a 11/11/1997. Origem da Súmula 507 STJ.
 
 ## Tema 862 STJ
 
@@ -65,13 +65,13 @@ Primeiro, antes da MP 1.596-14/1997 (11/11/1997), B94 podia acumular com aposent
 
 Segundo, Súmula 507 STJ assegura direito adquirido.
 
-Terceiro, B94 concedido antes dessa data acumula.
+Terceiro, acumula apenas quando a lesão incapacitante e a aposentadoria são ambas anteriores a essa data.
 
 Quarto, depois dessa data, há vedação à acumulação.
 
 ## Aplicação pró-segurado
 
-Primeiro, B94 anterior a 11/11/1997 acumula com aposentadoria.
+Primeiro, acumula com aposentadoria somente se a lesão incapacitante e a aposentadoria forem ambas anteriores a 11/11/1997.
 
 Segundo, B94 posterior integra o SB pela Tema 862.
 
@@ -81,7 +81,7 @@ Quarto, fator de recálculo aplicável.
 
 ## Cenários pró-segurado
 
-Cenário A, segurado com B94 desde 1995. Acumula com aposentadoria. Súmula 507 STJ.
+Cenário A, segurado com B94 desde 1995 e aposentadoria também anterior a 11/11/1997. Acumula. Súmula 507 STJ. Se a aposentadoria for posterior ao marco, não acumula; resta a integração ao SB.
 
 Cenário B, segurado com B94 desde 2010. Integra SB. Tema 862 STJ.
 
@@ -93,7 +93,7 @@ Cenário D, dupla aplicação. Direito adquirido e integração.
 
 Primeiro, INSS frequentemente nega integração. Tema 862 STJ é vinculante.
 
-Segundo, B94 anterior a 11/11/1997 não pode ser cessado pela aposentadoria.
+Segundo, a cessação pela aposentadoria só é afastada quando lesão incapacitante e aposentadoria são ambas anteriores a 11/11/1997 (Súmula 507 STJ).
 
 Terceiro, fator previdenciário pode ser elidido em revisões com aplicação do art. 29-C.
 

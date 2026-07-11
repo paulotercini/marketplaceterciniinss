@@ -41,7 +41,7 @@ Professor e magistério.
 
 ### Súmula 726 STF
 
-Fator previdenciário não incide.
+Enunciado real: para a aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula. Não trata de fator previdenciário. Entendimento restritivo superado, em parte, pela Lei 11.301/2006 e pela ADI 3772 (direção, coordenação e assessoramento pedagógico contam).
 
 ## Requisitos (art. 16 §2º EC 103)
 
@@ -49,25 +49,29 @@ Primeiro, ingresso no RGPS até 13/11/2019.
 
 Segundo, tempo mínimo de magistério. 25 mulher, 30 homem.
 
-Terceiro, idade mínima progressiva. Em 2020, 51 mulher e 56 homem. Acréscimo de 6 meses por ano.
+Terceiro, idade mínima progressiva. Na promulgação (13/11/2019), 51 mulher e 56 homem; a partir de 1º/1/2020, acréscimo de 6 meses a cada ano (EC 103, art. 16, §§1º e 2º).
 
 Quarto, exclusividade em magistério.
 
 ## Idade progressiva em detalhes
 
-2020, 51 mulher, 56 homem.
+2019 (13/11 a 31/12), 51 mulher, 56 homem.
 
-2021, 51 anos 6 meses mulher, 56 anos 6 meses homem.
+2020, 51 anos e 6 meses mulher, 56 anos e 6 meses homem.
 
-2022, 52 mulher, 57 homem.
+2021, 52 mulher, 57 homem.
 
-2023, 52 anos 6 meses mulher, 57 anos 6 meses homem.
+2022, 52 anos e 6 meses mulher, 57 anos e 6 meses homem.
 
-2024, 53 mulher, 58 homem.
+2023, 53 mulher, 58 homem.
 
-2025, 53 anos 6 meses mulher, 58 anos 6 meses homem.
+2024, 53 anos e 6 meses mulher, 58 anos e 6 meses homem.
 
-2026, 54 mulher, 59 homem.
+2025, 54 mulher, 59 homem.
+
+2026, 54 anos e 6 meses mulher, 59 anos e 6 meses homem.
+
+Conferência: é a mesma progressão que levou a mulher da regra comum (art. 18) de 60 anos em 2019 a 62 anos em 2023.
 
 Limite final, 57 mulher, 60 homem.
 
@@ -83,9 +87,9 @@ Quarto, professor universitário NÃO se insere.
 
 ## Cenários pró-segurado
 
-Cenário A, professora com 25 anos de magistério e 54 de idade em 2026. Idade exigida 54. Aposenta.
+Cenário A, professora com 25 anos de magistério e 54 anos completos em 2025. Idade exigida em 2025: 54. Aposenta.
 
-Cenário B, professor com 30 anos e 59 de idade em 2026. Idade exigida 59. Aposenta.
+Cenário B, professor com 30 anos de magistério e 59 anos em 2025. Idade exigida em 2025: 59. Aposenta.
 
 Cenário C, coordenadora pedagógica. Conta.
 

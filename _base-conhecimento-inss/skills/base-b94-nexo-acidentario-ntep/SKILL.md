@@ -3,6 +3,9 @@ name: base-b94-nexo-acidentario-ntep
 description: "Nexo acidentário do B94, NTEP, art. 21-A Lei 8.213/91, Lista B Anexo II Decreto 3.048/99, conversão B31 para B91 com pedido de B94, ADI 3931 STF, presunção e refutação INSS. Use SEMPRE que mencionar nexo acidentário B94, NTEP B94, art. 21-A B94, Lista B B94, conversão B31 B91 com B94, ADI 3931 STF, presunção NTEP, refutação NTEP INSS, doença ocupacional B94, acidente trabalho B94, CAT B94, CNAE CID B94, concausa B94, doença equiparada acidente, art. 19 21 Lei 8.213, equiparação acidente, agressão trabalho B94, viagem serviço B94, refeição descanso B94, contaminação acidental B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-integracao-salario-beneficio-tema862, base-b94-sequela-minima-tema201 e ntep-nexo-acidentario."
 ---
 
+Nota de convenção de espécies INSS: B31 = auxílio-doença previdenciário; B91 = auxílio-doença acidentário; B32 = aposentadoria por incapacidade permanente previdenciária; B92 = acidentária; B94 = auxílio-acidente.
+
+
 # Nexo Acidentário do B94
 
 ## Escopo
