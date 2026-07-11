@@ -17,13 +17,13 @@ Decreto 3.048/99, arts. 303 a 310.
 
 Portaria MDSA 116/2017 (Regimento Interno), sucessivamente revisada.
 
-Portaria 462/2026. Atual marco regulatório do CRPS.
+Portaria MPS 125/2026 (RICRPS), alterada pelas Portarias MPS 235/2026 e 462/2026. Atual marco regulatório do CRPS.
 
 Pareceres vinculantes da CONJUR/AGU.
 
 Enunciados, súmulas e resoluções do CRPS.
 
-Portaria MPS 462/2026 (novo RICRPS). Regimento Interno do Conselho de Recursos.
+Portaria MPS 125/2026 (RICRPS), com alterações das Portarias 235/2026 e 462/2026. Regimento Interno do Conselho de Recursos.
 
 ## Estrutura
 

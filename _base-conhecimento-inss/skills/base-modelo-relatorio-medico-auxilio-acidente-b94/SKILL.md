@@ -52,6 +52,8 @@ Parágrafo central. Demonstrar irreversibilidade. Material de síntese definitiv
 
 ### 3.5. Nexo causal
 
+Hipótese adicional obrigatória: acidente de QUALQUER natureza (art. 86, caput, Lei 8.213/91; Tema 416 STJ) — o nexo laboral só é exigível quando se pleiteia a natureza acidentária/competência estadual.
+
 Indicar expressamente.
 
 Acidente típico (art. 19 Lei 8.213/91) com data e descrição.

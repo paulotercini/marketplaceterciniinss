@@ -1,13 +1,13 @@
 ---
 name: base-aposentadoria-pcd-lc142
-description: "Aposentadoria da pessoa com deficiência pela LC 142/2013, ótica pró-segurado. Use SEMPRE que mencionar LC 142, LC 142/2013, aposentadoria PCD, aposentadoria por tempo de contribuição PCD, aposentadoria por idade PCD, IF-BrA, IFBr, grau de deficiência, método Fuzzy, avaliação biopsicossocial LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015, domínios da deficiência PCD, pontuação IF-BrA, conversão tempo deficiência tempo comum, impedimento longo prazo LC 142, fibromialgia como deficiência Lei 15.176/2025, CID M79.7, DID Data Início Deficiência, formação documentação DID, idade PCD 55 60, tempo PCD 20 25 28 30 33, reconhecimento retroativo deficiência, cegueira monocular Súmula 377, deficiência auditiva Lei 14.768/2023, fator vedado LC 142, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona aposentadoria-deficiencia. Cruza com aposentadoria-deficiencia, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, formacao-documentacao-did-pcd e precedentes-previdenciarios."
+description: "Aposentadoria da pessoa com deficiência pela LC 142/2013, ótica pró-segurado. Use SEMPRE que mencionar LC 142, LC 142/2013, aposentadoria PCD, aposentadoria por tempo de contribuição PCD, aposentadoria por idade PCD, IF-BrA, IFBr, grau de deficiência, método Fuzzy, avaliação biopsicossocial LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014, domínios da deficiência PCD, pontuação IF-BrA, conversão tempo deficiência tempo comum, impedimento longo prazo LC 142, fibromialgia como deficiência Lei 15.176/2025, CID M79.7, DID Data Início Deficiência, formação documentação DID, idade PCD 55 60, tempo PCD 20 25 28 30 33, reconhecimento retroativo deficiência, cegueira monocular Súmula 377, deficiência auditiva Lei 14.768/2023, fator vedado LC 142, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona aposentadoria-deficiencia. Cruza com aposentadoria-deficiencia, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, formacao-documentacao-did-pcd e precedentes-previdenciarios."
 ---
 
 # Aposentadoria da Pessoa com Deficiência. LC 142/2013
 
 ## Escopo
 
-Skill temática pró-segurado. Focaliza a aposentadoria por tempo de contribuição e por idade da pessoa com deficiência na LC 142/2013. Trata da avaliação biopsicossocial com IF-BrA (Instrumento Funcional Brasileiro de Avaliação), método Fuzzy, domínios, conversão de tempo especial, DID (Data de Início da Deficiência), fibromialgia pela Lei 15.176/2025 e particularidades da deficiência auditiva pela Lei 14.768/2023. Objetivo único é a defesa integral do segurado PCD.
+Skill temática pró-segurado. Focaliza a aposentadoria por tempo de contribuição e por idade da pessoa com deficiência na LC 142/2013. Trata da avaliação biopsicossocial com IF-BrA (Índice de Funcionalidade Brasileiro Aplicado), método Fuzzy, domínios, conversão de tempo especial, DID (Data de Início da Deficiência), fibromialgia pela Lei 15.176/2025 e particularidades da deficiência auditiva pela Lei 14.768/2023. Objetivo único é a defesa integral do segurado PCD.
 
 ## Marco normativo central
 
@@ -25,7 +25,7 @@ LC 142/2013, art. 8º. Conversão de tempo de deficiência em tempo comum e vice
 
 Decreto 8.145/2013. Regulamento.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015. IF-BrA, domínios, método Fuzzy.
+Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014. IF-BrA, domínios, método Fuzzy.
 
 Lei 15.176/2025. Fibromialgia reconhecida como deficiência.
 
@@ -61,7 +61,7 @@ Mulher 55 anos com 15 anos de contribuição na condição de PCD.
 
 Diferente do BPC. Aqui usa-se IF-BrA (não IFBrM). Aplica-se método Fuzzy para conversão da pontuação em grau.
 
-Domínios IF-BrA. Primeiro, sensorial. Segundo, comunicação. Terceiro, mobilidade. Quarto, cuidados pessoais. Quinto, vida doméstica. Sexto, educação. Sétimo, trabalho. Oitavo, vida econômica. Nono, socialização.
+Domínios IF-BrA (sete, conforme a Portaria Interministerial nº 1/2014): Primeiro, sensorial. Segundo, comunicação. Terceiro, mobilidade. Quarto, cuidados pessoais. Quinto, vida doméstica. Sexto, educação, trabalho e vida econômica (domínio único). Sétimo, socialização e vida comunitária.
 
 Pontuação. Cada domínio é pontuado. O método Fuzzy combina as pontuações para classificar em grave, moderado ou leve.
 
@@ -75,7 +75,7 @@ Efeitos. Define o tempo de contribuição como PCD. Converte tempo posterior à 
 
 ## Cálculo do benefício
 
-Regra da LC 142. Média aritmética simples dos 80% maiores salários desde 07/1994. Sem fator previdenciário em regra. 100% da média (não 70% + 1% por ano como a regra geral EC 103).
+Regra da LC 142. Média aritmética simples dos 80% maiores salários desde 07/1994. Sem fator previdenciário em regra. 100% da média (não 60% + 2% por ano excedente, regra geral do art. 26 da EC 103).
 
 Exceção. Em aposentadoria por idade PCD, 70% da média + 1% por grupo de 12 contribuições adicionais (verificar regra vigente).
 

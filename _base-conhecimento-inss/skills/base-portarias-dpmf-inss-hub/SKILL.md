@@ -131,7 +131,7 @@ Portaria DIRBEN/INSS 1.333/2026. Alterações e atualizações da reabilitação
 
 Aplicação. Sempre que houver auxílio-doença prolongado, decisão sobre invalidez parcial, encaminhamento à reabilitação. Combinar com Súmula 47/TNU (condições pessoais e sociais).
 
-## 9. Portaria MPS 462/2026. Novo Regimento Interno do CRPS (RICRPS)
+## 9. Portaria MPS 125/2026. Regimento Interno do CRPS (RICRPS), alterado pelas Portarias MPS 235/2026 e 462/2026 (RICRPS)
 
 Disciplina o procedimento recursal administrativo no Conselho de Recursos da Previdência Social.
 
@@ -173,7 +173,7 @@ Disciplina o Programa de Controle Médico de Saúde Ocupacional (PCMSO).
 
 Aplicação. Documentação ambiental para B31, B91, B92, B94 e aposentadoria especial. Cruza com NR-32 e PGR.
 
-## 14. Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015
+## 14. Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014
 
 Disciplina a avaliação biopsicossocial para aposentadoria PCD da LC 142/2013.
 

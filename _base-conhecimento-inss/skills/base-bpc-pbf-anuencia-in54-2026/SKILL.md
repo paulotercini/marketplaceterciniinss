@@ -53,7 +53,7 @@ Em casos extremos, o segurado fica meses sem nenhum benefício, em afronta à di
 
 A IN 54/2026 é ato infralegal de hierarquia normativa inferior. Não pode criar restrição ao acesso do BPC sem suporte em lei (art. 5º, II, CF, princípio da legalidade).
 
-O Decreto 12.534/2025 trata da exclusão da renda do PBF do cálculo da renda per capita do BPC, mas não autoriza o desligamento como pressuposto procedimental.
+O Decreto 12.534/2025 trata da INCLUSÃO dos valores do PBF no cálculo da renda per capita do BPC (revogada a exclusão anterior), mas não autoriza o desligamento como pressuposto procedimental.
 
 ## 4. Marco normativo
 
@@ -71,7 +71,7 @@ Lei 8.742/93. LOAS.
 
 Lei 8.742/93, art. 20. Requisitos do BPC.
 
-Lei 8.742/93, art. 20, § 14 (incluído pela Lei 13.982/2020). Definição de família.
+Lei 8.742/93, art. 20, §1º. Definição do grupo familiar (o §14 trata da exclusão, do cálculo da renda, de outro BPC ou benefício previdenciário de até 1 SM de idoso/PCD).
 
 Lei 8.742/93, art. 21. Revisão bienal.
 

@@ -1,7 +1,10 @@
 ---
 name: base-incapacidade-acidentaria-b92
-description: "Aposentadoria por incapacidade permanente acidentária B92 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B92, auxílio-doença acidentário B91, acidente de trabalho, doença ocupacional, doença profissional, doença do trabalho, nexo acidentário, NTEP, CAT Comunicação Acidente Trabalho, art. 19 Lei 8.213, art. 20 Lei 8.213, art. 21 Lei 8.213, art. 21-A NTEP, Anexo II Decreto 3.048, Tema 1083 STJ, Tema 862 STJ, ADI 3931, Lista B, Lista C, concausa, acidente trajeto, equiparação acidente, art. 118 estabilidade, FGTS afastamento, RMI 100% acidentário, art. 26 §3º III EC 103, doença preexistente agravada, burnout QD85, transtorno mental ocupacional, PGR, NR-1 riscos psicossociais, responsabilidade empresa. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, base-incapacidade-b31-temporaria, base-incapacidade-b91-permanente e base-auxilio-acidente-b94-pos-reforma."
+description: "Aposentadoria por incapacidade permanente acidentária B92 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B92, auxílio-doença acidentário B91, acidente de trabalho, doença ocupacional, doença profissional, doença do trabalho, nexo acidentário, NTEP, CAT Comunicação Acidente Trabalho, art. 19 Lei 8.213, art. 20 Lei 8.213, art. 21 Lei 8.213, art. 21-A NTEP, Anexo II Decreto 3.048, Tema 862 STJ, ADI 3931, Lista B, Lista C, concausa, acidente trajeto, equiparação acidente, art. 118 estabilidade, FGTS afastamento, RMI 100% acidentário, art. 26 §3º II EC 103, doença preexistente agravada, burnout QD85, transtorno mental ocupacional, PGR, NR-1 riscos psicossociais, responsabilidade empresa. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, base-incapacidade-b31-temporaria, base-incapacidade-b91-permanente e base-auxilio-acidente-b94-pos-reforma."
 ---
+
+Nota de convenção de espécies INSS: B31 = auxílio-doença previdenciário; B91 = auxílio-doença acidentário; B32 = aposentadoria por incapacidade permanente previdenciária; B92 = acidentária; B94 = auxílio-acidente.
+
 
 # Incapacidade Permanente Acidentária (B92) Pós EC 103/2019
 
@@ -21,9 +24,9 @@ Lei 8.213/91, art. 21-A. Nexo Técnico Epidemiológico (NTEP). Presume a naturez
 
 Decreto 3.048/99, Anexo II. Lista B (agentes patogênicos causadores de doenças profissionais) e Lista C (doenças relacionadas com o trabalho).
 
-EC 103/2019, art. 26, §3º, III, combinado com §2º, II. RMI do B92 (B91 acidentário) é de 100% da média aritmética dos salários de contribuição.
+EC 103/2019, art. 26, §3º, II. RMI do B92 (aposentadoria por incapacidade permanente acidentária) é de 100% da média aritmética dos salários de contribuição.
 
-EC 103/2019, art. 26, §3º, I. RMI do B91 (B31) acidentário é de 91% da média, sendo o B31 acidentário também denominado B91 no sistema.
+Lei 8.213/91, art. 61. RMI do auxílio-doença acidentário (B91) é de 91% do salário de benefício, com a média apurada na forma do art. 26 da EC 103/2019.
 
 Lei 8.213/91, art. 118. Estabilidade provisória de 12 meses após a cessação do B91 acidentário.
 
@@ -53,7 +56,7 @@ Terceiro, burnout (CID QD85 na CID-11 ou Z73.0 na CID-10). Classificado como fen
 
 Quarto, acidente de trajeto com incapacidade. Art. 21, IV, d, Lei 8.213/91 equipara a acidente de trabalho. B92 devido, mesmo após MP 905/2019 (revogada).
 
-Quinto, doença preexistente agravada pela atividade. Tema 1083 STJ reconhece nexo acidentário por concausa.
+Quinto, doença preexistente agravada pela atividade. O agravamento/concausa gera nexo acidentário (art. 21, I, da Lei 8.213/91, c/c arts. 42, §2º, e 59, §1º).
 
 Sexto, segurado com CAT emitida. Presunção reforçada de acidentariedade, ainda que CAT tardia.
 
@@ -71,7 +74,7 @@ Segundo, buscar CAT (pode ser emitida pelo segurado, sindicato, médico assisten
 
 Terceiro, obter PGR, LTCAT e PPP da empresa para demonstrar exposição.
 
-Quarto, em doença preexistente, enfrentar com concausa (Tema 1083 STJ).
+Quarto, em doença preexistente, enfrentar com agravamento/concausa (art. 21, I, da Lei 8.213/91).
 
 Quinto, em transtornos mentais, usar Portaria MTE 1.419/2024 e NR-1 sobre riscos psicossociais.
 
@@ -93,7 +96,7 @@ Primeiro, a diferença entre RMI de B91 não acidentário (60% + 2%) e B92 (100%
 
 Segundo, CAT pode ser emitida por médico assistente, sindicato, segurado ou autoridade pública, não dependendo da empresa. Sua ausência não afasta nexo, mas sua presença reforça.
 
-Terceiro, em doença preexistente, o INSS tende a negar nexo. Enfrentar com agravamento e concausa nos termos do art. 42 §2º e Tema 1083 STJ.
+Terceiro, em doença preexistente, o INSS tende a negar nexo. Enfrentar com agravamento e concausa nos termos dos arts. 21, I, 42, §2º, e 59, §1º, da Lei 8.213/91.
 
 Quarto, estabilidade provisória do art. 118 é direito paralelo na esfera trabalhista. Orientar ação paralela se houver rescisão no período.
 

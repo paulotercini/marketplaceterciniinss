@@ -75,7 +75,7 @@ Quarto, em acúmulo indevido segundo o INSS, debater natureza dos benefícios.
 
 Quinto, em indeferimento por CadÚnico, exigir regularização e ressalva pela boa-fé.
 
-Sexto, em MS por mora, competência Federal Cível ou JEF conforme valor da causa.
+Em MS por mora, competência sempre da Vara Federal comum (MS não tramita no JEF — art. 3º, §1º, I, da Lei 10.259/2001).
 
 ## Integração com outras skills
 
@@ -228,7 +228,7 @@ Outros parentes que residam no mesmo imóvel e contribuam para o sustento (irmã
 
 **CONTEXTO CRÍTICO PÓS DECRETO 12.534/2025.** A reforma do BPC revogou exclusões antigas do art. 4º §2º Decreto 6.214 (auxílios eventuais, Bolsa Família, pensão indenizatória, renda sazonal). Este PEDILEF AFIRMA a TAXATIVIDADE do rol legal do §1º art. 20 LOAS, contrapondo eventual interpretação ampliativa que o INSS possa fazer com base na nova redação do Decreto.
 
-**Estratégia pró-segurado.** Em casos de indeferimento de BPC por cômputo de renda de parentes extra-rol, invocar este PEDILEF + PEDILEF 0000020-09.3808.7.01.3419/DF (TNU, 19/06/2020) + PEDILEF 0003636-52.2018.4.01.3306/BA (TNU, 23/09/2025).
+**Estratégia pró-segurado.** Em casos de indeferimento de BPC por cômputo de renda de parentes extra-rol, invocar este PEDILEF + PEDILEF (numeração a conferir em fonte primária antes de citar — registro original inconsistente: 0000020-09.3808.7.01.3419/DF) (TNU, 19/06/2020) + PEDILEF 0003636-52.2018.4.01.3306/BA (TNU, 23/09/2025).
 
 Detalhamento integral em `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.
 

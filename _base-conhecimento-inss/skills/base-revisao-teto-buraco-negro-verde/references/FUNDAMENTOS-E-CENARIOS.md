@@ -8,7 +8,7 @@ Primeira frente. Readequação do benefício aos novos tetos das ECs 20/1998 e 4
 
 Segunda frente. Revisão do buraco negro, benefícios concedidos entre outubro de 1988 e abril de 1991, com fundamento no art. 144 da Lei 8.213/91.
 
-Terceira frente. Revisão do buraco verde, benefícios concedidos entre março de 1994 e fevereiro de 1997, com fundamento na limitação imposta pelo art. 26 da Lei 8.870/1994 e jurisprudência sobre a correção integral pelos índices legais.
+Terceira frente. Revisão do buraco verde, benefícios concedidos para benefícios com DIB entre 05/04/1991 e 31/12/1993, com fundamento na limitação imposta pelo art. 26 da Lei 8.870/1994 e jurisprudência sobre a correção integral pelos índices legais.
 
 ## 2. Fundamento constitucional
 
@@ -60,7 +60,7 @@ Cenário A. Benefício concedido nesse período sem a revisão do art. 144. Veri
 
 Cenário B. Pensão derivada de instituidor falecido após 1991, mas com benefício originário concedido no buraco negro. Revisão reflexa.
 
-## 6. Buraco verde — março de 1994 a fevereiro de 1997
+## 6. Buraco verde — DIB de 05/04/1991 a 31/12/1993
 
 Benefícios concedidos nesse período sofreram distorções decorrentes do art. 26 da Lei 8.870/1994 e da conversão para URV. A tese busca a recomposição do Salário de Benefício e a readequação ao teto.
 

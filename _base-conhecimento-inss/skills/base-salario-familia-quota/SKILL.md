@@ -31,7 +31,7 @@ Lei 8.213/91, art. 70. Acumulação entre pai e mãe, se ambos segurados.
 
 Lei 8.213/91, art. 26, VI. Isenção de carência.
 
-Lei 14.442/2022 e Lei Complementar 150/2015. Ampliação à empregada doméstica.
+EC 72/2013 e Lei Complementar 150/2015. Extensão à empregada doméstica.
 
 Decreto 3.048/99, arts. 81 a 92. Regulamentação.
 
@@ -53,7 +53,7 @@ Quarto, apresentação da certidão de nascimento, caderneta de vacinação até
 
 ## Quem NÃO tem direito ao salário-família
 
-Contribuinte individual. Facultativo. Segurado especial rural. Aposentado por tempo de contribuição. Aposentado por idade urbana. Empregado com remuneração acima do teto.
+Atenção (art. 65, parágrafo único, Lei 8.213): TÊM direito ao salário-família o aposentado por invalidez e o aposentado por idade (urbana ou rural); os demais aposentados, a partir de 65 anos (homem) ou 60 (mulher).
 
 ## Cenários operacionais pró-segurado
 
