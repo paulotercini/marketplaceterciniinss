@@ -18,7 +18,7 @@ A skill foi criada na Onda 37 (v1.27.0) a partir do material consolidado pelo es
 | Temas de Repercussão Geral do STF | 56 | `references/CATALOGO-TEMAS-STF.md` |
 | Temas Repetitivos do STJ | 60 | `references/CATALOGO-TEMAS-STJ.md` |
 | Temas Representativos de Controvérsia da TNU | 156 | `references/CATALOGO-TEMAS-TNU.md` |
-| Enunciados do CRPS | 18 | `references/CATALOGO-ENUNCIADOS-CRPS.md` |
+| Enunciados do CRPS | 19 (texto oficial DOU, reescrito em 11/07/2026) | `references/CATALOGO-ENUNCIADOS-CRPS.md` |
 | PEDILEFs Paradigmáticos TNU (não repetitivos) | 1 | `references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md` |
 | **Total geral** | **291** | |
 
@@ -60,7 +60,7 @@ Pelos precedentes catalogados, identifica-se um conjunto de teses estratégicas 
 
 **Acesso ao benefício e instrução administrativa.**
 - Tema 350/STF (necessidade de prévio requerimento administrativo).
-- Tema 1124/STJ (efeitos financeiros de prova não submetida ao INSS - SUSPENSO).
+- Tema 1124/STJ (interesse de agir e efeitos financeiros de prova não submetida ao INSS - JULGADO em 08/10/2025, acórdão publicado em 06/11/2025, tese literal no catálogo).
 - Tema 995/STJ (reafirmação da DER em qualquer fase).
 
 **Decadência e revisão.**
@@ -160,17 +160,17 @@ Pelos precedentes catalogados, identifica-se um conjunto de teses estratégicas 
 
 A reference `ATUALIZACAO-STATUS-2026-06.md` consolida a verificação feita via Comet (Claude in Chrome MCP) em junho de 2026 nas fontes oficiais (STF, STJ, TNU, gov.br) e veículos de imprensa jurídica especializada.
 
-### Temas STJ que SAÍRAM do status SUSPENSO
+### Temas STJ que SAÍRAM do status SUSPENSO (datas conferidas na página oficial em 11/07/2026)
 
-- **Tema 1124/STJ** - JULGADO. Acórdão publicado em 05/02/2026.
-- **Tema 1157/STJ** - JULGADO. Informativo STJ 889 (19/05/2026). Tese contra segurado.
-- **Tema 1162/STJ** - JULGADO em 17/11/2025. Define flexibilização do critério econômico do auxílio-reclusão.
-- **Tema 1291/STJ** - JULGADO em maio de 2026. Tese pró-segurado (contribuinte individual não cooperado).
-- **Tema 1307/STJ** - JULGADO em 07/05/2026. Tese pró-segurado (motoristas de ônibus/caminhão por penosidade).
+- **Tema 1124/STJ** - JULGADO em 08/10/2025. Acórdão publicado em 06/11/2025.
+- **Tema 1140/STJ** - JULGADO em 14/08/2024. Acórdão publicado em 27/08/2024 (RE pendente). Readequação aos tetos com limitadores da época.
+- **Tema 1157/STJ** - JULGADO em 07/05/2026. Acórdão publicado em 06/07/2026. Tese contra segurado.
+- **Tema 1162/STJ** - JULGADO em 12/11/2025. Acórdão publicado em 19/11/2025. Flexibilização do critério econômico do auxílio-reclusão só pré-MP 871/2019, com modulação.
+- **Tema 1291/STJ** - JULGADO em 10/09/2025. Acórdão publicado em 18/09/2025 (RE pendente). Tese pró-segurado (contribuinte individual não cooperado).
+- **Tema 1307/STJ** - JULGADO em 07/05/2026. Acórdão publicado em 20/05/2026. Tese pró-segurado (motoristas de ônibus/caminhão por penosidade).
 
-### Temas STJ que CONTINUAM suspensos/afetados
+### Temas STJ que CONTINUAM suspensos/afetados (conferido em 11/07/2026)
 
-- Tema 1140/STJ. Forma de cálculo da readequação aos tetos das EC 20/98 e 41/2003.
 - Tema 1220/STJ. Memorando-Circular 21 como marco interruptivo do prazo prescricional.
 - Tema 1321/STJ. Prescrição contra pessoa com deficiência mental.
 - Tema 1328/STJ. Dano moral in re ipsa em RMC.
@@ -179,8 +179,8 @@ A reference `ATUALIZACAO-STATUS-2026-06.md` consolida a verificação feita via 
 ### Temas STF que SAÍRAM do status AGUARDANDO
 
 - **Tema 1209/STF** - JULGADO em 18/02/2026. Tese CONTRA vigilante (não é especial).
-- **Tema 1300/STF** - JULGADO. Acórdão publicado em 10/04/2026. Tese pró-INSS (cálculo aposentadoria por incapacidade EC 103).
-- **Tema 1370/STF** - JULGADO em 17/12/2025. Tese pró-segurada (violência doméstica).
+- **Tema 1300/STF** - JULGADO em 18/12/2025. Acórdão publicado em 10/04/2026 e transitado em julgado em 18/04/2026. Tese pró-INSS (cálculo aposentadoria por incapacidade EC 103).
+- **Tema 1370/STF** - Mérito JULGADO em 16/12/2025 (RE 1.520.468, Rel. Min. Flávio Dino). Tese pró-segurada (violência doméstica), literal no catálogo STF.
 
 ### Temas STF que CONTINUAM aguardando
 
