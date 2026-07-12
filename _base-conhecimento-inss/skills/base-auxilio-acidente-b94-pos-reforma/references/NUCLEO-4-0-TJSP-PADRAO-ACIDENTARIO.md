@@ -8,9 +8,13 @@ Comunicado Conjunto TJSP nº 868/2024. Disciplinamento operacional.
 
 Lei 14.331/2022. Inseriu o art. 129-A na Lei 8.213/91.
 
-Decisão paradigma. Processo 1013616-41.2026.8.26.0381, Juiz Matheus de Souza Parducci Camargo, em 22/05/2026. Decisão de emenda à inicial que sistematiza o padrão estrutural exigido.
+Decisão paradigma. Processo 1013616-41.2026.8.26.0381, Juiz Matheus de Souza Parducci Camargo, liberada nos autos em 22/05/2026. Decisão de emenda à inicial que sistematiza o padrão estrutural exigido (itens 3.1 a 3.9). [CONFERIDO em 12/07/2026 por cópia oficial dos autos extraída do ESAJ, processo do próprio escritório. Os 9 tópicos desta reference correspondem literalmente aos itens 3.1 a 3.9 da decisão.]
 
-Acórdão paradigma sobre dispensa de novo requerimento administrativo. AI 2061943-13.2025.8.26.0000, Rel. Des. Richard Pae Kim, 17ª Câmara de Direito Público do TJSP, j. 10/03/2025.
+Acórdão paradigma sobre dispensa de novo requerimento administrativo. AI 2061943-13.2025.8.26.0000, Rel. Des. Richard Pae Kim, 17ª Câmara de Direito Público do TJSP, sessão permanente e virtual, julgado em 10/03/2025, votação unânime, Registro 2025.0000223191, Voto nº 4.703, participação dos Des. Carlos Monnerat (presidente sem voto), Antonio Moliterno e Ricardo Graccho. Origem, a própria Vara do Núcleo 4.0. [CONFERIDO em 12/07/2026 pelo inteiro teor. A decisão paradigma de 22/05/2026 transcreve esta ementa como fundamento do item 3.7.]
+
+Regras adicionais da decisão paradigma, conferidas no inteiro teor. Primeira, documento indisponível que a parte repute não imprescindível exige justificativa fundamentada da ausência, para apreciação judicial da suficiência. Segunda, documentos já juntados devem ter as folhas indicadas expressamente. Terceira, a emenda deve vir em tópicos. Quarta, o próprio juízo registra que o despacho padronizador não ostenta cunho decisório. Quinta, na não prorrogação de benefício é desnecessário comprovar indeferimento administrativo, bastando esclarecer a situação e anexar a documentação pertinente.
+
+Precedentes adicionais da 17ª Câmara de Direito Público colhidos do inteiro teor do AI (persuasivos, mesma tese). ApCiv 1003449-09.2022.8.26.0347, Rel. Des. Ricardo Graccho, j. 19/06/2023. AI 2050562-76.2023.8.26.0000, Rel. Des. Aldemar Silva, j. 07/06/2023. ApCiv 1001624-93.2022.8.26.0326, Rel. Des. Carlos Monnerat, j. 06/06/2023. ApCiv 1000385-70.2023.8.26.0568, Rel. Des. Antônio Moliterno, j. 02/06/2023 (este último aplica a dispensa também a requerimento pendente com prazo de análise excedido).
 
 ## OBRIGATORIEDADE
 
