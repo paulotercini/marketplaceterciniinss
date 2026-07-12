@@ -99,6 +99,26 @@ Fase 5. `revisao-peticao`.
 
 Skill-ponte dedicada. `ponte-workflow-reabilitacao-profissional`.
 
+### 3.10 Recurso contra decisão contrária
+
+Fase 1. `base-analise-decisao-tres-eixos` para a auditoria forense da decisão e o mapa de ataque.
+Fase 2. Skill base-* do mérito controvertido. `base-precedentes-catalogo-vinculantes` para o contra-precedente conferido.
+Fase 3. `base-cpc-embargos-declaracao` para vício de integração. `base-recursos-jef`, `base-recurso-crps-peca-enxuta` ou `base-rito-ordinario-trf` conforme o rito.
+Fase 4. `peticao-previdenciaria` para a peça.
+Fase 5. `revisao-peticao`.
+
+Skill-ponte dedicada. `ponte-workflow-recurso-sentenca`.
+
+### 3.11 Réplica à contestação do INSS
+
+Fase 1. `base-analise-contestacao-inss` para a leitura forense da contestação e o mapa de ataque.
+Fase 2. Skill base-* do mérito. `base-cpc-onus-prova-art373` para o ônus e `base-precedentes-catalogo-vinculantes` para o contraponto.
+Fase 3. `especificacao-provas` para a fase probatória.
+Fase 4. `peticao-previdenciaria` para a peça.
+Fase 5. `revisao-peticao`.
+
+Skill-ponte dedicada. `ponte-workflow-replica-contestacao`.
+
 ## 4. Verificações automáticas obrigatórias
 
 Antes de fechar o pipeline, verificar.
