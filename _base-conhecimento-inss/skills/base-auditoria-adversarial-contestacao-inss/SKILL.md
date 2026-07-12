@@ -3,6 +3,11 @@ name: base-auditoria-adversarial-contestacao-inss
 description: "Skill de auditoria adversarial de contestação, parecer da PFE-INSS, decisão administrativa ou acórdão do CRPS contrário ao segurado, para desconstruir a peça do adversário antes da réplica ou impugnação. Use SEMPRE que mencionar auditar contestação, analisar contestação do INSS, réplica à contestação, impugnação à contestação, parecer da Procuradoria contrário, desconstruir parecer do INSS, acórdão desfavorável do CRPS, encontrar falácia na defesa, alegação sem prova do INSS, contradição na contestação, distinguishing de acórdão colado pelo INSS, blefe argumentativo da autarquia, narrativa vazia sem lastro probatório, ou qualquer situação em que o INSS ou a autarquia apresentar defesa, parecer ou decisão a ser rebatida. NÃO use para auditoria de laudo pericial médico (skill auditoria-laudo-pericial) nem para auditoria de PPP (skill auditoria-ppp). Acionar em conjunto com precedentes-previdenciarios, base-analise-decisao-tres-eixos, base-cpc-onus-prova-art373, base-cpc-fundamentacao-art489 e peticao-previdenciaria."
 ---
 
+## NOTA DE COEXISTÊNCIA (unificação de linhas, Onda 67, 12/07/2026)
+
+O plugin passou a conter duas famílias de skills sobre leitura de peças adversárias, vindas de linhas paralelas de trabalho unificadas na Onda 67. A família base-analise-contestacao-inss com ponte-workflow-replica-contestacao e ponte-workflow-recurso-sentenca, e a família base-auditoria-adversarial-contestacao-inss com base-auditoria-adversarial-decisao-judicial. Enquanto não houver racionalização definitiva pelo escritório, usar as duas de forma complementar e, em caso de conflito de orientação, prevalece a que tiver citação [CONFERIDO] em fonte primária. Não citar em peça nada que apenas uma delas afirme sem selo de conferência.
+
+
 # Auditoria Adversarial de Contestação, Parecer e Decisão Contrária
 
 ## Objetivo

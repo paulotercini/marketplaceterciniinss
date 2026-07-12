@@ -3,6 +3,11 @@ name: ponte-workflow-recurso-sentenca
 description: "Workflow pró-segurado para atacar decisão contrária ao segurado, do diagnóstico à arquitetura do recurso por rito, costurando embargos, preliminares, mérito e precedentes conferidos até a peça. Use SEMPRE que mencionar workflow recurso, arquitetura da apelação, arquitetura do recurso, atacar sentença, destruir a fundamentação do juiz, recurso inominado, apelação, recurso ordinário ao CRPS, embargos de declaração, estrutura de tópicos de mérito, tom de inconformismo técnico, próximo passo após sentença contrária. Encadeia base-analise-decisao-tres-eixos, os eixos do CPC e a redação da peça. Cruza com base-analise-decisao-tres-eixos, base-cpc-embargos-declaracao, base-cpc-fundamentacao-art489, base-cpc-apelacao-efeitos-art1013, base-cpc-teoria-capitulos-sentenca, base-recursos-jef, base-rito-ordinario-trf, base-precedentes-catalogo-vinculantes, peticao-previdenciaria e revisao-peticao. NÃO use para contestação (use ponte-workflow-replica-contestacao) nem para mandado de segurança."
 ---
 
+## NOTA DE COEXISTÊNCIA (unificação de linhas, Onda 67, 12/07/2026)
+
+O plugin passou a conter duas famílias de skills sobre leitura de peças adversárias, vindas de linhas paralelas de trabalho unificadas na Onda 67. A família base-analise-contestacao-inss com ponte-workflow-replica-contestacao e ponte-workflow-recurso-sentenca, e a família base-auditoria-adversarial-contestacao-inss com base-auditoria-adversarial-decisao-judicial. Enquanto não houver racionalização definitiva pelo escritório, usar as duas de forma complementar e, em caso de conflito de orientação, prevalece a que tiver citação [CONFERIDO] em fonte primária. Não citar em peça nada que apenas uma delas afirme sem selo de conferência.
+
+
 # Workflow Recurso contra Decisão
 
 ## 1. Quando acionar
