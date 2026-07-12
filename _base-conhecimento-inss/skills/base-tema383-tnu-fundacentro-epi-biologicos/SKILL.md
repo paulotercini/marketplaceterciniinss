@@ -185,7 +185,7 @@ Refutação. O Parecer 3/2025 conclui categoricamente que "os EPIs constantes do
 
 ### 6.5. "Tema 1090/STJ exclui especialidade quando há EPI eficaz"
 
-Refutação. O Tema 1090/STJ trata de hipóteses excepcionais. O Tema 555/STF abre exceções para cancerígenos, biológicos e ruído. O Parecer Fundacentro reforça a hipótese excepcional para biológicos. Em IRDR 15/TRF4 e Tema 213/TNU, há flexibilização do ônus probatório quando EPI declarado não corresponde à efetividade real.
+Refutação. O Tema 1090/STJ trata de hipóteses excepcionais. O Tema 555/STF firmou exceção expressa para o ruído; para cancerígenos e biológicos, as exceções decorrem do Tema 1090/STJ e do IRDR 15/TRF4. O Parecer Fundacentro reforça a hipótese excepcional para biológicos. Em IRDR 15/TRF4 e Tema 213/TNU, há flexibilização do ônus probatório quando EPI declarado não corresponde à efetividade real.
 
 ## 7. Documentos essenciais
 

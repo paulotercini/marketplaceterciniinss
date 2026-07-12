@@ -15,13 +15,13 @@ CF/88, art. 203, V. Garantia constitucional.
 
 Lei 8.742/1993 (LOAS), art. 20, §3º. Critério objetivo de ¼ do salário mínimo.
 
-Lei 8.742/1993, art. 20, §1º. Rol taxativo do grupo familiar. Cônjuge, companheiro, pais, filhos, irmãos não emancipados menores de 21 ou inválidos, que vivam sob o mesmo teto.
+Lei 8.742/1993, art. 20, §1º (redação da Lei 12.435/2011). Rol taxativo do grupo familiar: o requerente, o cônjuge ou companheiro, os pais (na ausência de um deles, a madrasta ou o padrasto), os irmãos solteiros, os filhos e enteados solteiros e os menores tutelados, desde que vivam sob o mesmo teto.
 
-Lei 8.742/1993, art. 20, §14. Exclusão do BPC ou aposentadoria de ½ salário mínimo de idoso ou PCD.
+Lei 8.742/1993, art. 20, §14. Exclusão, do cálculo da renda, de outro BPC ou benefício previdenciário de até 1 salário mínimo pago a idoso ou PCD do grupo familiar.
 
 Lei 8.742/1993, art. 20, §11. Possibilidade de avaliação de outros elementos probatórios.
 
-Lei 8.742/1993, art. 20, §12. Exclusões de renda (medicamento, fraldas, alimentação especial).
+Lei 8.742/1993, art. 20-B, I a III (Lei 14.176/2021). Consideração de gastos com medicamentos, fraldas e alimentação especial (o §12 do art. 20 exige CPF e CadÚnico).
 
 Decreto 6.214/2007. Regulamentação do BPC, inclusive definições de renda.
 
@@ -37,7 +37,7 @@ CF/88, art. 204. Diretrizes da assistência social, em especial a descentraliza�
 
 ## Rol taxativo do grupo familiar
 
-Cônjuge. Companheiro. Pais. Filhos (biológicos ou adotivos). Irmãos não emancipados menores de 21 ou inválidos. Padrasto ou madrasta. Tudo desde que vivam sob o mesmo teto.
+Requerente. Cônjuge ou companheiro. Pais (na ausência de um deles, madrasta ou padrasto). Irmãos solteiros. Filhos e enteados solteiros. Menores tutelados. Tudo desde que vivam sob o mesmo teto (Lei 12.435/2011).
 
 Não compõem o grupo familiar. Cunhados. Tios. Sobrinhos. Avós. Netos. Parentes colaterais. Mesmo vivendo sob o mesmo teto.
 
@@ -47,7 +47,7 @@ Primeiro, outro BPC ou aposentadoria de até 1 SM de idoso ou PCD no mesmo grupo
 
 Segundo, rendimentos eventuais e irrepetíveis (remuneração eventual).
 
-Terceiro, renda com medicamentos, fraldas, alimentação especial e outros gastos essenciais não cobertos pelo SUS (§12 art. 20).
+Terceiro, renda com medicamentos, fraldas, alimentação especial e outros gastos essenciais não cobertos pelo SUS (art. 20-B).
 
 Quarto, rendimentos de estágios e bolsas de estudo, conforme doutrina e jurisprudência dominantes.
 
@@ -83,7 +83,7 @@ Quarto, invocar flexibilização do Tema 27 STF e REsp 1.112.557 STJ quando o ex
 
 Quinto, em cessação por inclusão do Bolsa Família na renda, impugnar o Decreto 12.534/2025.
 
-Sexto, em MS por mora, competência Federal ou JEF.
+Em MS por mora, competência da Vara Federal comum (MS não tramita no JEF — art. 3º, §1º, I, da Lei 10.259/2001).
 
 ## Integração com outras skills
 

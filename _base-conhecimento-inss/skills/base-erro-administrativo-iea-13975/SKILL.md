@@ -1,6 +1,6 @@
 ---
 name: base-erro-administrativo-iea-13975
-description: "Indicação de Erro Administrativo (IEA, código 13975) e autotutela do INSS, Portarias DIRBEN/INSS 1.056/2022, 1.231/2024, 1.309/2025 e 1.318/2025. Use SEMPRE que mencionar erro administrativo INSS, IEA, código 13975, indicação de erro, supervisão técnica em benefícios, código 16335, 16355, 16375, 12921, 19056, código 9428 correção formal, subtarefa 13976, autotutela, art. 53 Lei 9.784, Súmula 473 STF, art. 13 Portaria 1.231/2024, art. 26 Portaria 1.309/2025, rol exaustivo chefias legitimadas, APS, SARD, SAMB, SADJ, SAMC, SGREC, SAREC, SGBEN, COBEN, COREC, recusa abrir IEA, ato interno hipótese alguma requerimento externo, conclusão sem perícia, decisão viciada, prevaricação CP 319, omissão funcional, prazo 5 dias úteis SGBEN, recusa injustificada, anulação ato administrativo, art. 174 Decreto 3.048, art. 41-A Lei 8.213. Cruza com base-canais-falabr-corregedoria-cgu, base-notificacao-extrajudicial-mapeamento-institucional, mandado-seguranca-previdenciario, peticao-previdenciaria."
+description: "Indicação de Erro Administrativo (IEA, código 13975) e autotutela do INSS regida pela Portaria DIRBEN/INSS 1.309/2025 (alterada pela Portaria DIRBEN/INSS 1.318/2025), que revogou expressamente as Portarias 1.056/2022 e 1.231/2024. Use SEMPRE que mencionar erro administrativo INSS, IEA, código 13975, indicação de erro, supervisão técnica em benefícios, código 16335, 16355, 16375, 12921, 19056, código 9428 correção formal, subtarefa 13976, autotutela, art. 53 Lei 9.784, Súmula 473 STF, art. 26 Portaria 1.309/2025, art. 27 Portaria 1.309/2025, Portaria 1.318/2025, rol exaustivo chefias legitimadas, APS, SARD, SAMB, SADJ, SAMC, SGREC, SAREC, SGBEN, COBEN, COREC, recusa abrir IEA, ato interno hipótese alguma requerimento externo, conclusão sem perícia, decisão viciada, prevaricação CP 319, omissão funcional, prazo 5 dias úteis SGBEN, recusa injustificada, anulação ato administrativo, art. 174 Decreto 3.048, art. 41-A Lei 8.213. Cruza com base-canais-falabr-corregedoria-cgu, base-notificacao-extrajudicial-mapeamento-institucional, mandado-seguranca-previdenciario, peticao-previdenciaria."
 ---
 
 # Indicação de Erro Administrativo. IEA Código 13975
@@ -9,7 +9,7 @@ description: "Indicação de Erro Administrativo (IEA, código 13975) e autotute
 
 Acione SEMPRE que houver erro material, formal ou de mérito em processo administrativo do INSS que justifique autotutela, e o servidor responsável recusar abrir a tarefa interna 13975 ou se omitir além do prazo. Acione também em caso de conclusão sem perícia, indeferimento sem fundamentação, juntada indevida de documento de terceiro, exigência abusiva, ou qualquer ato viciado que reclame revisão de ofício.
 
-A IEA é instrumento interno de provocação da autotutela. Não pode ser objeto de requerimento externo, conforme texto literal do art. 13, §9º da Portaria DIRBEN/INSS 1.231/2024 e do art. 26 §9º da Portaria DIRBEN/INSS 1.309/2025. Daí a estratégia ser provocar nominalmente as autoridades legitimadas a abrir a tarefa.
+A IEA é instrumento interno de provocação da autotutela. Não pode ser objeto de requerimento externo, conforme texto literal do art. 26, §9º da Portaria DIRBEN/INSS 1.309/2025 (norma vigente, alterada pela Portaria DIRBEN/INSS 1.318/2025). Daí a estratégia ser provocar nominalmente as autoridades legitimadas a abrir a tarefa.
 
 ## 2. Marco normativo
 
@@ -25,19 +25,17 @@ Decreto 3.048/1999, art. 174. Idem, prazo de 45 dias.
 
 Lei 13.460/2017, arts. 5º, 6º, 9º a 16. Direitos básicos do usuário, manifestação em ouvidorias com decisão administrativa final em 30 dias prorrogáveis uma vez por igual período (art. 16). Prioridade legal para pessoas com deficiência (art. 5º, IV).
 
-Portaria DIRBEN/INSS nº 1.056/2022. Disciplinou originalmente a Supervisão Técnica em Benefícios e a Indicação de Erro Administrativo.
+Portaria DIRBEN/INSS nº 1.309, de 21/10/2025 (DOU 04/11/2025). Norma vigente. Revogou expressamente a Portaria 1.056/2022 e a Portaria 1.231/2024 (art. 44, III e V), passando a regular integralmente a Supervisão Técnica em Benefícios, a Indicação de Erro Administrativo e a Revisão de Ofício. O art. 26 concentra o núcleo do regime da IEA, com o rol exaustivo de chefias legitimadas no §1º e a vedação de requerimento externo no §9º. O art. 27 disciplina a decisão do SGBEN entre as espécies de Supervisão Técnica. Inclui novas espécies de Supervisão Técnica, como a de Benefícios por Incapacidade, código 19056.
 
-Portaria DIRBEN/INSS nº 1.231, de 15/10/2024 (DOU 06/11/2024). Conferiu ao art. 13 a redação atualmente invocada.
+Portaria DIRBEN/INSS nº 1.318, de 19/12/2025. Alterou a Portaria 1.309/2025 sem, contudo, revogar seu núcleo de tratamento da IEA. Deve ser invocada em conjunto com a 1.309/2025 para retratar a redação atualmente vigente.
 
-Portaria DIRBEN/INSS nº 1.309, de 21/10/2025 (DOU 04/11/2025). Revogou expressamente a Portaria 1.056/2022 e a Portaria 1.231/2024 (art. 44, III e V), passando a regular o tema. Reproduziu integralmente o conteúdo no art. 26, §1º (com inclusão de novas espécies de Supervisão Técnica, como a de Benefícios por Incapacidade, código 19056).
+Portaria DIRBEN/INSS nº 1.056/2022. Revogada expressamente pelo art. 44, III, da Portaria 1.309/2025. Referência puramente histórica. Não invocar como norma vigente.
 
-Portaria DIRBEN/INSS nº 1.318, de 19/12/2025. Alterou a Portaria 1.309/2025.
-
-A invocação simultânea das duas portarias é tecnicamente recomendável para preservar a tese, dada a vigência intertemporal e a possibilidade de o erro administrativo ter sido praticado antes de 04/11/2025.
+Portaria DIRBEN/INSS nº 1.231, de 15/10/2024 (DOU 06/11/2024). Revogada expressamente pelo art. 44, V, da Portaria 1.309/2025. Referência puramente histórica. Só invocar quando o erro administrativo tiver sido praticado entre 06/11/2024 e 03/11/2025, sob a lógica do tempus regit actum, e ainda assim em conjunto com a 1.309/2025 para reforçar a continuidade normativa da autotutela.
 
 ## 3. Rol exaustivo das chefias legitimadas
 
-O art. 13, §1º da Portaria 1.231/2024 e o dispositivo equivalente na Portaria 1.309/2025 (art. 26, §1º) firmam, em rol exaustivo, quem pode (e portanto deve, sob pena de omissão funcional) abrir a tarefa "Indicação de Erro Administrativo" (Código 13975), encaminhando-a ao SGBEN da Gerência Executiva de vinculação do servidor responsável pela análise inicial.
+O art. 26, §1º da Portaria DIRBEN/INSS 1.309/2025 (norma vigente, alterada pela Portaria 1.318/2025) firma, em rol exaustivo, quem pode (e portanto deve, sob pena de omissão funcional) abrir a tarefa "Indicação de Erro Administrativo" (Código 13975), encaminhando-a ao SGBEN da Gerência Executiva de vinculação do servidor responsável pela análise inicial. O dispositivo reproduz e sucede o antigo art. 13, §1º da Portaria 1.231/2024, expressamente revogada.
 
 I. Gerentes de Agência da Previdência Social, APS.
 
@@ -59,7 +57,7 @@ A estratégia correta consiste em provocar nominal e simultaneamente as autorida
 
 ## 4. Espécies de Supervisão Técnica e códigos correlatos
 
-O art. 14 da Portaria 1.231/2024 e o art. 27 da Portaria 1.309/2025 cabem ao SGBEN (ou quem por ele indicado), uma vez recebida a IEA, a decisão entre cadastrar.
+Cabem ao SGBEN (ou quem por ele indicado), uma vez recebida a IEA, a decisão entre cadastrar, nos termos do art. 27 da Portaria DIRBEN/INSS 1.309/2025 (norma vigente, alterada pela Portaria 1.318/2025 e sucessora do antigo art. 14 da Portaria 1.231/2024, expressamente revogada).
 
 Supervisão Técnica em Benefícios (código 16335).
 
@@ -71,13 +69,13 @@ Supervisão Técnica SDPA (código 12921).
 
 Supervisão Técnica em Benefícios por Incapacidade (código 19056). Espécie introduzida pela Portaria 1.309/2025.
 
-Subtarefa Acompanhamento da Revisão de Ofício (código 13976). Introduzida pelo §9º do art. 16 da Portaria 1.231/2024 quando há recusa injustificada ou impossibilidade do servidor responsável. O SGBEN comunica à chefia imediata do servidor supervisionado e à chefia da SARD, criando elemento processual relevante para responsabilização funcional.
+Subtarefa Acompanhamento da Revisão de Ofício (código 13976). Regida atualmente pelo dispositivo equivalente ao antigo §9º do art. 16 da revogada Portaria 1.231/2024, hoje incorporado à Portaria DIRBEN/INSS 1.309/2025 (alterada pela Portaria 1.318/2025), aplicável quando há recusa injustificada ou impossibilidade do servidor responsável. O SGBEN comunica à chefia imediata do servidor supervisionado e à chefia da SARD, criando elemento processual relevante para responsabilização funcional.
 
 Solicitação de Correção de Erro Formal em Tarefa (código 9428). Aplicável quando o erro for meramente formal. Acionar simultaneamente fecha qualquer escapatória classificatória da Administração.
 
 ## 5. Prazos internos
 
-Prazo de 5 dias úteis para iniciar a revisão. Prazo de 5 dias úteis para concluí-la, após cumpridos os prazos legais (art. 16, §2º da Portaria 1.231/2024 e dispositivo equivalente na Portaria 1.309/2025).
+Prazo de 5 dias úteis para iniciar a revisão. Prazo de 5 dias úteis para concluí-la, após cumpridos os prazos legais (dispositivo equivalente na Portaria DIRBEN/INSS 1.309/2025, alterada pela Portaria 1.318/2025, sucessora do antigo art. 16, §2º da revogada Portaria 1.231/2024).
 
 Prazo geral da Lei 9.784/1999, art. 49. 30 dias prorrogáveis uma única vez por igual período. Total máximo 60 dias.
 
@@ -126,9 +124,9 @@ Tema 1124 em `tema-1124-instrucao-administrativa`.
 
 Primeiro, a IEA é interna. Não tente protocolar IEA por petição direta do advogado, porque o ato será recusado.
 
-Segundo, sempre provoque nominalmente todas as autoridades do rol do art. 13/26, §1º. Endereçamento múltiplo neutraliza alegação posterior de não recebimento.
+Segundo, sempre provoque nominalmente todas as autoridades do rol do art. 26, §1º da Portaria DIRBEN/INSS 1.309/2025. Endereçamento múltiplo neutraliza alegação posterior de não recebimento.
 
-Terceiro, invoque simultaneamente a Portaria 1.231/2024 e a Portaria 1.309/2025. A vigência intertemporal protege a tese.
+Terceiro, fundamente sempre na Portaria DIRBEN/INSS 1.309/2025 (norma vigente) e nas alterações da Portaria DIRBEN/INSS 1.318/2025. Só invoque a revogada Portaria 1.231/2024 se o ato viciado for anterior a 04/11/2025, e mesmo assim em conjunto com a 1.309/2025 sob o fundamento da continuidade normativa da autotutela. Nunca cite a Portaria 1.056/2022 como fundamento vigente.
 
 Quarto, identifique a espécie correta de Supervisão Técnica para forçar classificação adequada. Em caso de erro formal, invoque também o código 9428.
 

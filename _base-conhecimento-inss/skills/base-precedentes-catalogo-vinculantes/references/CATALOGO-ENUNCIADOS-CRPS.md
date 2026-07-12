@@ -2,6 +2,8 @@
 
 REESCRITO INTEGRALMENTE em 11/07/2026 (auditoria de veracidade). Fonte primária. PDF consolidado oficial do CRPS "Enunciados nº 1 ao nº 19" (gov.br/previdencia, seção CRPS > Enunciados e Editais, atualizado com DOU de 08/09/2025). A versão anterior deste arquivo continha redações incorretas em 11 dos 18 enunciados e foi descartada. Cada enunciado abaixo indica o DOU de origem.
 
+CONVERGÊNCIA (12/07/2026). Este catálogo foi cruzado com a auditoria paralela da Onda 66 (reference AUDITORIA-ENUNCIADOS-CRPS-ONDA-66.md), feita sobre a mesma fonte primária com complemento da Imprensa Nacional. As duas auditorias convergem integralmente nos Enunciados 1, 6, 8, 12, 13 e 17. Os ganhos da Onda 66 (inciso V integral do Enunciado 8, caput e incisos VI e VII do Enunciado 10, data de publicação da Resolução 29/2024) foram incorporados abaixo.
+
 AVISO OPERACIONAL. Antes de transcrever em peça, conferir incisos no PDF oficial. Nos Enunciados 8 e 19 a extração automática do PDF truncou trechos, sinalizados como [TRECHO A CONFERIR NO DOU].
 
 ## ENUNCIADO 1 (DOU 12/11/2019)
@@ -104,7 +106,7 @@ III - O exercício de atividade urbana por um dos integrantes do grupo familiar 
 
 IV - É considerado segurado especial a pessoa que, além de realizar tarefas domésticas em seu lar, exerce atividade rural, admitindo-se provas em nome do cônjuge ou companheiro(a), corroboradas por outros meios de prova. [TRECHO A CONFERIR NO DOU, extração parcialmente truncada]
 
-V - Com fundamento na decisão proferida na Ação Civil Pública nº 5017267-34.2013.4.04.7100, poderá ser relativizada a idade mínima exigida para o reconhecimento da condição de segurado especial. [TRECHO A CONFERIR NO DOU, extração parcialmente truncada]
+V - Com fundamento na decisão proferida na Ação Civil Pública nº 5017267-34.2013.4.04.7100, poderá ser relativizada a idade mínima exigida para o reconhecimento da condição de segurado especial, desde que comprovada a participação ativa e indispensável na atividade rural, em regime de economia familiar. [Texto integral confirmado pela auditoria da Onda 66 na fonte primária.]
 
 VI - A comprovação do exercício da atividade rural deverá ser realizada por meio de autodeclaração ratificada por entidades públicas credenciadas ou bases governamentais.
 
@@ -136,6 +138,8 @@ IV - Não se aplica a decadência prevista no art. 103-A da Lei nº 8.213/91 ao 
 
 V - A decadência prevista no art. 103 da Lei 8.213/91 não se aplica à revisão de atos de indeferimento, cancelamento ou cessação de benefícios.
 
+NOTA DE HARMONIZAÇÃO (12/07/2026, cruzamento com a auditoria da Onda 66). A auditoria paralela da Onda 66, com pesquisa complementar na Imprensa Nacional (in.gov.br), apurou para este Enunciado 10 um caput expresso ("A decadência prevista no art. 103-A da Lei nº 8.213/91 não se aplica aos atos administrativos praticados pela Administração Previdenciária tendentes à cessação da manutenção de benefícios ou quotas cuja continuidade da percepção seja indevida em face da legislação previdenciária de regência") e dois incisos adicionais, VI (vedação de suspensão por falta de documentação após 10 anos da concessão, salvo fraude ou má-fé) e VII (pecúlio), que não constam legíveis do PDF consolidado. Conferir o texto integral na Imprensa Nacional antes de citar caput, VI ou VII. ALERTA ESTRATÉGICO (apurado na Onda 66 e confirmado). O caput e o inciso IV são CONTRA o segurado, afastam a decadência administrativa que o protegeria de cessações tardias em B31, B91 e benefícios de revisão periódica. O uso pró-segurado está no inciso V (indeferimento, cancelamento e cessação impugnáveis a qualquer tempo) e, se confirmado, no inciso VI.
+
 ## ENUNCIADO 11 (alterado, DOU 06/12/2021)
 
 O Perfil Profissiográfico Previdenciário (PPP) é documento hábil à comprovação da efetiva exposição do segurado a todos os agentes nocivos, sendo dispensável o Laudo Técnico de Condições Ambientais de Trabalho (LTCAT) para requerimentos feitos a partir de 1º/1/2004, inclusive abrangendo períodos anteriores a esta data.
@@ -162,7 +166,7 @@ II - A utilização de Equipamentos de Proteção Coletiva (EPC) e/ou EPI não e
 
 III - A eficácia do EPI não obsta o reconhecimento de atividade especial exercida antes de 3/12/1998, data de início da vigência da MP 1.729/98, convertida na Lei nº 9.732/98, para qualquer agente nocivo.
 
-## ENUNCIADO 13 (revisado pela Resolução nº 29, de 09/12/2024, que REVOGOU o inciso III)
+## ENUNCIADO 13 (revisado pela Resolução nº 29, de 09/12/2024, DOU de 19/12/2024, que REVOGOU o inciso III)
 
 Atendidas as demais condições legais, considera-se especial, no âmbito do RGPS, a atividade exercida com exposição a ruído superior a 80 decibéis até 05/03/97, superior a 90 decibéis desta data até 18/11/2003, e superior a 85 decibéis a partir de então.
 

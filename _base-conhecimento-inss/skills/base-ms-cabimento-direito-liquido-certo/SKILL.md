@@ -37,7 +37,7 @@ MS é instrumento de compensação tributária.
 
 ### Súmula 628 STJ
 
-Arquivamento de PA e reabertura.
+Teoria da encampação: vínculo hierárquico, defesa do mérito nas informações e ausência de modificação de competência.
 
 ### Tema 1066 STF
 

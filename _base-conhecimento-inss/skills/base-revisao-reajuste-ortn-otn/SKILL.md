@@ -25,7 +25,7 @@ Plano Cruzado Novo. URP e congelamentos.
 
 ## Marco jurisprudencial
 
-Súmula 260 ex-TFR. "No cálculo da renda mensal de benefícios previdenciários, o salário de benefício deve ser reajustado pela maior variação salarial." Aplicação supletiva e histórica, para benefícios concedidos até a edição da Lei 6.423/1977.
+Súmula 260 do ex-TFR (texto autêntico): 'No primeiro reajuste do benefício previdenciário, deve-se aplicar o índice integral do aumento verificado, independentemente do mês da concessão, considerado, nos reajustes subsequentes, o salário mínimo então atualizado.' Aplicável a benefícios anteriores à CF/88.
 
 Fonte oficial em https://www.jusbrasil.com.br (consulta de súmulas históricas do TFR).
 

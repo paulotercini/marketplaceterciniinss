@@ -84,15 +84,69 @@ Se WebFetch e WebSearch falharem (caso extremo, normalmente por restrição de a
 
 Procedimento.
 
-1. Identificar que `mcp__Claude in Chrome__*` está disponível.
+1. Identificar que `mcp__claude-in-chrome__*` está disponível.
 2. Abrir Comet (navegador padrão do Tercini) ou Chrome.
 3. Navegar para a URL oficial.
-4. Capturar conteúdo via `mcp__Claude in Chrome__read_page` ou `get_page_text`.
+4. Capturar conteúdo via `mcp__claude-in-chrome__read_page` ou `get_page_text`.
 5. Confirmar literalmente.
 
 Tempo médio. 60 a 120 segundos.
 
-CONFIGURAÇÃO. Conforme `mcp__Claude in Chrome__list_connected_browsers`. O Comet é navegador instalado no computador do usuário em `C:\Users\VAIO\AppData\Local\Programs\Comet\` (instalação típica da Perplexity).
+CONFIGURAÇÃO. Conforme `mcp__claude-in-chrome__list_connected_browsers`. O Comet é navegador instalado no computador do usuário em `C:\Users\VAIO\AppData\Local\Programs\Comet\` (instalação típica da Perplexity).
+
+## REGRA COMET PARA JULGADOS COM DÚVIDA (Onda 65)
+
+REGRA PRIORITÁRIA. Sempre que houver qualquer dúvida sobre um julgado, a cascata NÃO precisa esgotar os Níveis 2 e 3. A skill deve saltar direto ao Nível 4 (Comet) e conferir na fonte primária do órgão julgador.
+
+Gatilhos automáticos da dúvida.
+
+Primeiro, o julgado citado NÃO está no catálogo local `base-precedentes-catalogo-vinculantes` nem em `references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.
+
+Segundo, tese, número, relator ou data pareçam divergir da memória local.
+
+Terceiro, precedente novo (posterior à última atualização dos catálogos locais em maio de 2025) ou reafirmado após overruling.
+
+Quarto, precedente cuja aplicação depende de modulação, ADI, ADPF ou tese complementar em curso.
+
+Quinto, precedente citado pelo adversário para refutar a tese do segurado.
+
+Sexto, precedente-paradigma em PUIL/PEDILEF, hipótese em que o cotejo analítico exige transcrição literal e conferência direta no portal oficial.
+
+Fluxo de conferência no Comet.
+
+1. Acionar `mcp__claude-in-chrome__list_connected_browsers` para confirmar Comet ativo. Se ausente, pedir autorização ao usuário para abrir Comet ou Chrome fallback.
+
+2. Acionar `mcp__claude-in-chrome__navigate` para o portal oficial correspondente.
+
+3. Localizar o julgado por número, tema ou súmula usando `mcp__claude-in-chrome__find` ou `mcp__claude-in-chrome__read_page`.
+
+4. Capturar o inteiro teor da tese, número, órgão, relator, data e ementa via `get_page_text`.
+
+5. Confrontar com a citação da peça.
+
+6. Se conforme, registrar `VERIFICADO via Nível 4 (Comet - portal oficial [órgão])` no relatório.
+
+7. Se divergente, emitir achado BLOQUEANTE e corrigir a peça antes do protocolo.
+
+Portais oficiais mapeados.
+
+STF em `https://portal.stf.jus.br/jurisprudencia`, `https://portal.stf.jus.br/servicos/jurisprudencia/`, `https://portal.stf.jus.br/jurisprudenciaRepercussao` (Repercussão Geral), `https://portal.stf.jus.br/servicos/sumulasVinculantes` (Súmulas Vinculantes).
+
+STJ em `https://www.stj.jus.br/sites/portalp/Paginas/Comunicacao/Noticias.aspx`, `https://scon.stj.jus.br/SCON` (busca jurisprudencial), `https://processo.stj.jus.br/repetitivos/temas_repetitivos/` (Repetitivos), `https://scon.stj.jus.br/SCON/sumanot/` (Súmulas).
+
+TNU em `https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/temas-representativos`, `https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/sumulas-da-tnu`, `https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/questoes-de-ordem`.
+
+TRF3 em `https://www.trf3.jus.br/jurisprudencia/`.
+
+TRF4 em `https://jurisprudencia.trf4.jus.br`.
+
+TRF1, TRF2, TRF5 em seus respectivos portais de jurisprudência.
+
+CRPS em `https://www.gov.br/previdencia/pt-br/assuntos/previdencia-social/conselho-de-recursos-do-seguro-social-crss/enunciados-do-crps`.
+
+TJSP em `https://esaj.tjsp.jus.br/cjsg/consultaCompleta.do` (jurisprudência) e `https://esaj.tjsp.jus.br/cposg/open.do` (consulta processual).
+
+Postura pró-segurado. Nunca aceitar por presunção precedente citado por adversário sem conferência via Comet. Toda dúvida do próprio Claude sobre precedente que ele próprio pretenda citar em peça do segurado deve resolver-se por conferência no Comet, e não por inclusão condicional na peça.
 
 ### Nível 5 - Reporte Final ao Usuário (ÚLTIMO RECURSO)
 

@@ -4,7 +4,16 @@
   "title": "Aposentadoria Rural",
   "nav_label": "Rural",
   "order": 6,
-  "facts": [["Idade", "60 (h) / 55 (m)"], ["Prova", "Início de prova material"]],
+  "facts": [
+    [
+      "Idade",
+      "60 (h) / 55 (m)"
+    ],
+    [
+      "Prova",
+      "Início de prova material"
+    ]
+  ],
   "meta_description": "Aposentadoria rural e segurado especial: tempo rural anterior a 1991, autodeclaração e prova da atividade no campo. Análise do seu caso em Monte Alto/SP.",
   "hero_subtitle": "Benefício para quem trabalhou na atividade rural, inclusive em regime de economia familiar, com requisitos e formas de comprovação próprias.",
   "intro": [
@@ -15,48 +24,71 @@
     {
       "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "A aposentadoria rural abrange situações diferentes. Na aposentadoria por idade rural pura, o segurado especial se aposenta com idade reduzida (60 anos para homem e 55 anos para mulher) e 180 meses de atividade rural. Também é possível a aposentadoria híbrida, que soma tempo rural e urbano, e o aproveitamento do tempo rural anterior a 1991 como tempo de contribuição em outras aposentadorias."}
+        {
+          "type": "p",
+          "text": "A aposentadoria rural abrange situações diferentes. Na aposentadoria por idade rural pura, o segurado especial se aposenta com idade reduzida (60 anos para homem e 55 anos para mulher) e 180 meses de atividade rural. Também é possível a aposentadoria híbrida, que soma tempo rural e urbano, e o aproveitamento do tempo rural anterior a 1991 como tempo de contribuição em outras aposentadorias."
+        }
       ]
     },
     {
       "heading": "Tempo rural anterior a novembro de 1991",
       "blocks": [
-        {"type": "p", "text": "O tempo de atividade rural exercido antes da vigência plena da Lei 8.213/91 pode ser computado como tempo de contribuição, mesmo sem recolhimento (art. 55, §2º, da Lei 8.213/91 e Súmula 272 do STJ). Isso vale inclusive para quem trabalhou em regime de economia familiar, como boia-fria e diarista rural."},
-        {"type": "ul", "items": [
-          "Para fins de carência, esse tempo rural anterior a 1991, em regra, não conta, salvo indenização das contribuições. Há exceções na aposentadoria rural por idade e na híbrida.",
-          "A prova exclusivamente testemunhal não basta (Súmula 149 do STJ); é preciso início de prova documental, complementado por testemunhas (Súmula 577 do STJ).",
-          "Na atividade rural feminina, a prova pode ser flexibilizada pela perspectiva de gênero (Tema 327 da TNU)."
-        ]}
+        {
+          "type": "p",
+          "text": "O tempo de atividade rural exercido antes da vigência plena da Lei 8.213/91 pode ser computado como tempo de contribuição, mesmo sem recolhimento (art. 55, §2º, da Lei 8.213/91 e Súmula 272 do STJ). Isso vale inclusive para quem trabalhou em regime de economia familiar, e também para o boia-fria e o diarista rural."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Para fins de carência, esse tempo rural anterior a 1991, em regra, não conta, salvo indenização das contribuições. Há exceções na aposentadoria rural por idade e na híbrida.",
+            "A prova exclusivamente testemunhal não basta (Súmula 149 do STJ); é preciso início de prova documental, complementado por testemunhas (Súmula 577 do STJ).",
+            "Na atividade rural feminina, a prova pode ser flexibilizada pela perspectiva de gênero (Tema 327 da TNU)."
+          ]
+        }
       ]
     },
     {
       "heading": "Segurado especial e autodeclaração",
       "blocks": [
-        {"type": "p", "text": "O segurado especial comprova a atividade por autodeclaração rural, ratificada por bases governamentais e por documentos (art. 38-B da Lei 8.213/91 e arts. 92 a 94 da Portaria 990/2022). A área do imóvel acima de 4 módulos fiscais, por si só, não descaracteriza o segurado especial, desde que comprovado o regime de economia familiar (Tema 1115 do STJ)."},
-        {"type": "ul", "items": [
-          "A autodeclaração tem força probatória, mas precisa de início de prova documental e pode ser confirmada por bases como CAF/DAP, CAFIR e outras.",
-          "Um único documento de longa duração, que cubra as duas metades da carência, pode ratificar todo o período (art. 94, §5º, da Portaria 990/2022).",
-          "Para a mulher segurada especial, documentos em que o marido aparece como lavrador podem servir de início de prova (Súmula 6 da TNU).",
-          "Na aposentadoria híbrida, é irrelevante a natureza da última atividade exercida (Tema 1007 do STJ)."
-        ]}
+        {
+          "type": "p",
+          "text": "O segurado especial comprova a atividade por autodeclaração rural, ratificada por bases governamentais e por documentos (art. 38-B da Lei 8.213/91 e arts. 92 a 94 da Portaria 990/2022). A área do imóvel acima de 4 módulos fiscais, por si só, não descaracteriza o segurado especial, desde que comprovado o regime de economia familiar (Tema 1115 do STJ)."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "A autodeclaração tem força probatória, mas precisa de início de prova documental e pode ser confirmada por bases como CAF/DAP, CAFIR e outras.",
+            "Um único documento de longa duração, que cubra as duas metades da carência, pode ratificar todo o período (art. 94, §5º, da Portaria 990/2022).",
+            "Para a mulher segurada especial, documentos em que o marido aparece como lavrador podem servir de início de prova (Súmula 6 da TNU).",
+            "Na aposentadoria híbrida, é irrelevante a natureza da última atividade exercida (Tema 1007 do STJ)."
+          ]
+        }
       ]
     },
     {
       "heading": "Pontos de atenção",
       "blocks": [
-        {"type": "ul", "items": [
-          "Documentos antigos têm grande valor, pois ajudam a cobrir a primeira metade do período a ser comprovado.",
-          "Contrato de comodato ou arrendamento, na via administrativa, em regra precisa de registro ou reconhecimento de firma em cartório.",
-          "O trabalho rural na infância e adolescência pode ser computado, com prova adequada (Súmula 5 da TNU).",
-          "Antes de buscar a via judicial, é importante apresentar toda a documentação no requerimento administrativo (Tema 1124 do STJ).",
-          "Empregado rural, contribuinte individual rural e trabalhador avulso rural não são segurados especiais e comprovam a atividade por meios próprios da categoria."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "Documentos antigos têm grande valor, pois ajudam a cobrir a primeira metade do período a ser comprovado.",
+            "Contrato de comodato ou arrendamento, na via administrativa, em regra precisa de registro ou reconhecimento de firma em cartório.",
+            "O trabalho rural na infância e adolescência pode ser computado, com prova adequada (Súmula 5 da TNU).",
+            "Antes de buscar a via judicial, é importante apresentar toda a documentação no requerimento administrativo (Tema 1124 do STJ).",
+            "Empregado rural, contribuinte individual rural e trabalhador avulso rural não são segurados especiais e comprovam a atividade por meios próprios da categoria.",
+            "Na aposentadoria híbrida, somam-se períodos rurais e urbanos, com idade de 65 anos (homem) ou 62 anos (mulher) e 180 meses de carência, independentemente de qual foi a última atividade (Tema 1007 do STJ).",
+            "Na aposentadoria por idade rural pura, a carência deve estar no período imediatamente anterior ao requerimento ou ao implemento da idade (Tema 642 do STJ) — quem deixou o campo há muitos anos precisa de análise cuidadosa."
+          ]
+        }
       ]
     },
     {
       "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Reunimos e organizamos a prova material da atividade rural, orientamos a autodeclaração e a coleta de prova testemunhal e verificamos qual modalidade (idade rural pura, híbrida ou aproveitamento do tempo rural em outra aposentadoria) se ajusta ao seu caso. Acompanhamos o requerimento administrativo e, quando necessário, a discussão judicial. Convidamos você a uma análise individualizada do seu caso em Monte Alto/SP."}
+        {
+          "type": "p",
+          "text": "Reunimos e organizamos a prova material da atividade rural, orientamos a autodeclaração e a coleta de prova testemunhal e verificamos qual modalidade (idade rural pura, híbrida ou aproveitamento do tempo rural em outra aposentadoria) se ajusta ao seu caso. Acompanhamos o requerimento administrativo e, quando necessário, a discussão judicial. Converse com o escritório para avaliar as provas do seu tempo rural."
+        }
       ]
     }
   ],
@@ -88,5 +120,9 @@
       "a": "Sim. O tempo rural anterior a novembro de 1991 pode ser computado como tempo de contribuição, mesmo sem recolhimento (art. 55, §2º, da Lei 8.213/91 e Súmula 272 do STJ). Para a carência, há regras específicas e, em alguns casos, necessidade de indenização."
     }
   ],
-  "related": ["aposentadoria-tempo-contribuicao", "planejamento-previdenciario", "pensao-por-morte"]
+  "related": [
+    "aposentadoria-tempo-contribuicao",
+    "planejamento-previdenciario",
+    "pensao-por-morte"
+  ]
 }

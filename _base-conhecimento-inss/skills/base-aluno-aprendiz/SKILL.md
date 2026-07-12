@@ -13,7 +13,7 @@ Skill temática pró-segurado. Orienta o cômputo do tempo de aluno-aprendiz em 
 
 CF/88, art. 201, §9º. Contagem recíproca de tempo de contribuição.
 
-Lei 8.213/91, art. 55, inc. I. Cômputo do tempo anterior à Lei 3.807/1960.
+Fundamentos próprios do aluno-aprendiz: Súmula 96 TCU, Súmula 18 TNU, Súmula 24 AGU e art. 201, §9º, CF (o art. 55, I, da Lei 8.213 trata de serviço militar).
 
 Decreto 4.073/1942. Lei Orgânica do Ensino Industrial.
 

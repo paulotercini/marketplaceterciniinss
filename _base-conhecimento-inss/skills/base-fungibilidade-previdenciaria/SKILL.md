@@ -136,7 +136,7 @@ Quando a prova já constava do administrativo, a DIB recai na DER. Quando o INSS
 
 ### 5.1. Conversão prejudicial sem postulação
 
-A jurisprudência do STJ no REsp 2.246.096/MG vedou a conversão de B91 (auxílio-doença) em B94 (auxílio-acidente) sem postulação do segurado, quando isso reduz o valor recebido. O fundamento é a violação aos arts. 141 e 492 do CPC.
+A jurisprudência do STJ no REsp 2.246.096/MG vedou a conversão de B91 (auxílio-doença acidentário) em B94 (auxílio-acidente) sem postulação do segurado, quando isso reduz o valor recebido. O fundamento é a violação aos arts. 141 e 492 do CPC.
 
 ### 5.2. Reformatio in pejus
 
@@ -160,7 +160,7 @@ Quando a flexibilização indevida implica rateio menor com inclusão de depende
 
 ### 6.1. Benefícios por incapacidade
 
-Relação clássica fungível. B31 (auxílio-doença) e B91 (aposentadoria por invalidez). Segurado pleiteia B91, perícia constata incapacidade temporária. Cabível conceder B31 (REsp 824.075/PR, jurisprudência consolidada da TNU).
+Relação clássica fungível. B31 (auxílio-doença) e B32/B92 (aposentadoria por incapacidade permanente). Segurado pleiteia B91, perícia constata incapacidade temporária. Cabível conceder B31 (REsp 824.075/PR, jurisprudência consolidada da TNU).
 
 Inversa vedada pelo REsp 2.246.096/MG. Quando reduzir amparo, B91 não pode ser convertido em B31 nem em B94.
 
@@ -228,7 +228,7 @@ Formular pedidos sucessivos e alternativos (art. 326 do CPC). Indicar hierarquia
 
 Modelo recomendado.
 
-"a) concessão de aposentadoria por incapacidade permanente (B91), e, sucessivamente, na hipótese de não acolhimento, b) auxílio por incapacidade temporária (B31), e, somente na ausência de ambos, c) auxílio-acidente (B94), respeitada sempre a opção do autor pelo benefício mais vantajoso na fase de cumprimento, nos termos do Tema 1018/STJ".
+"a) concessão de aposentadoria por incapacidade permanente (B32; B92 quando acidentária), e, sucessivamente, na hipótese de não acolhimento, b) auxílio por incapacidade temporária (B31), e, somente na ausência de ambos, c) auxílio-acidente (B94), respeitada sempre a opção do autor pelo benefício mais vantajoso na fase de cumprimento, nos termos do Tema 1018/STJ".
 
 Cláusula de reserva. "Manifesta-se expressamente que a fungibilidade só pode ser aplicada em favor do segurado, jamais em prejuízo, com fundamento no REsp 2.246.096/MG e nos arts. 141 e 492 do CPC".
 

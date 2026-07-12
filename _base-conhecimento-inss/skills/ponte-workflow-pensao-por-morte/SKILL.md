@@ -67,7 +67,7 @@ Certidão de óbito. CNIS do falecido. CTPS do falecido. Carteiras de filiação
 
 ## 4. Pontos críticos pró-segurado
 
-Recusa do INSS em aceitar prova testemunhal pura. Refutar com Súmula 63/TNU e art. 22 do Decreto 3.048/99.
+Recusa do INSS em aceitar prova testemunhal pura. Para óbitos ANTERIORES à Lei 13.846/2019 (18/06/2019), refutar com Súmula 63/TNU e art. 22 do Decreto 3.048/99; para óbitos posteriores, o art. 16, §5º, da Lei 8.213/91 exige início de prova material contemporânea (vedada prova exclusivamente testemunhal, salvo força maior/caso fortuito).
 
 Exigência de escritura pública de união estável. Refutar com art. 1.723 CC e Súmula 63/TNU.
 

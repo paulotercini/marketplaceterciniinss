@@ -69,7 +69,7 @@ Pelos precedentes catalogados, identifica-se um conjunto de teses estratégicas 
 - Tema 966/STJ (decadência alcança direito adquirido ao melhor benefício).
 - Tema 975/STJ (decadência para questão não apreciada na concessão).
 - Tema 1117/STJ (termo inicial da decadência por sentença trabalhista).
-- Enunciado 10/CRPS (decadência não se aplica a benefícios de revisão periódica).
+- Enunciado 10/CRPS (Resolução 28/CRPS de 07/07/2023, republicada em 02/08/2023). Redação verificada via Comet no DOU. CUIDADO. O caput e o inciso IV são ANTI-SEGURADO (afastam a decadência do art. 103-A para cessação de benefícios pelo INSS, incluindo B31, B91 e BPC/LOAS sujeitos a revisão periódica). Só o inciso V é pró-segurado, ao afastar a decadência do art. 103 em atos de indeferimento, cancelamento ou cessação de benefícios. Invocar apenas o inciso V em favor do segurado. Nunca citar o Enunciado 10 em bloco sem qualificação, sob pena de reforçar tese que amplia o poder de cessação do INSS.
 
 **Direito ao melhor benefício.**
 - Tema 334/STF (cálculo do melhor benefício).

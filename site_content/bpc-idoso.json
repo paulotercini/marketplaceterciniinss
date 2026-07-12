@@ -4,7 +4,20 @@
   "title": "BPC ao Idoso (65+)",
   "nav_label": "BPC ao Idoso",
   "order": 1,
-  "facts": [["Contribuição", "Não exigida"], ["Idade", "65 anos ou mais"], ["Renda", "Até 1/4 do salário mínimo*"]],
+  "facts": [
+    [
+      "Contribuição",
+      "Não exigida"
+    ],
+    [
+      "Idade",
+      "65 anos ou mais"
+    ],
+    [
+      "Renda",
+      "Até 1/4 do salário mínimo"
+    ]
+  ],
   "meta_description": "BPC/LOAS ao idoso (Lei 8.742/93): um salário mínimo mensal à pessoa com 65 anos ou mais em situação de miserabilidade, sem exigir contribuições. Monte Alto/SP.",
   "hero_subtitle": "Benefício assistencial de um salário mínimo mensal para a pessoa idosa, com 65 anos ou mais, que não tem meios de prover a própria manutenção.",
   "intro": [
@@ -15,58 +28,85 @@
     {
       "heading": "O que é",
       "blocks": [
-        {"type": "p", "text": "O BPC ao idoso é a garantia de um salário mínimo mensal à pessoa de 65 anos ou mais que não tenha meios de prover a própria manutenção nem de tê-la provida por sua família, conforme o art. 203, V, da Constituição e o art. 20 da Lei 8.742/93. É um benefício assistencial, regulamentado pelo Decreto 6.214/2007, e por isso independe de contribuições prévias ao INSS."},
-        {"type": "callout", "text": "Por não ter natureza contributiva, o BPC não gera 13º salário e não deixa pensão por morte aos dependentes."}
+        {
+          "type": "p",
+          "text": "O BPC ao idoso é a garantia de um salário mínimo mensal à pessoa de 65 anos ou mais que não tenha meios de prover a própria manutenção nem de tê-la provida por sua família, conforme o art. 203, V, da Constituição e o art. 20 da Lei 8.742/93. É um benefício assistencial, regulamentado pelo Decreto 6.214/2007, e por isso independe de contribuições prévias ao INSS."
+        },
+        {
+          "type": "callout",
+          "text": "Por não ter natureza contributiva, o BPC não gera 13º salário e não deixa pensão por morte aos dependentes."
+        }
       ]
     },
     {
       "heading": "Quem tem direito",
       "blocks": [
-        {"type": "ul", "items": [
-          "Pessoa com 65 anos ou mais, brasileira ou estrangeira residente no país.",
-          "Em situação de miserabilidade, aferida principalmente pela renda do grupo familiar.",
-          "Com residência e domicílio no Brasil e inscrição atualizada no Cadastro Único (CadÚnico).",
-          "Para o idoso, é dispensada a avaliação de deficiência: basta comprovar a idade por documento oficial."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "Pessoa com 65 anos ou mais, brasileira ou estrangeira residente no país.",
+            "Em situação de miserabilidade, aferida principalmente pela renda do grupo familiar.",
+            "Com residência e domicílio no Brasil e inscrição atualizada no Cadastro Único (CadÚnico).",
+            "Para o idoso, é dispensada a avaliação de deficiência: basta comprovar a idade por documento oficial."
+          ]
+        }
       ]
     },
     {
       "heading": "Requisitos",
       "blocks": [
-        {"type": "ul", "items": [
-          "Idade de 65 anos ou mais, comprovada por documento oficial.",
-          "Renda per capita familiar não superior a 1/4 do salário mínimo, critério que admite flexibilização pela jurisprudência (Tema 27 do STF e REsp 1.112.557 do STJ) quando demonstrada a miserabilidade concreta.",
-          "Inscrição e atualização no CadÚnico.",
-          "Não acumular o BPC com outro benefício da Seguridade Social, salvo exceções como a pensão especial de natureza indenizatória e a assistência médica.",
-          "Residência e domicílio no Brasil."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "Idade de 65 anos ou mais, comprovada por documento oficial.",
+            "Renda per capita familiar não superior a 1/4 do salário mínimo, critério que admite flexibilização pela jurisprudência (Tema 27 do STF e REsp 1.112.557 do STJ) quando demonstrada a miserabilidade concreta.",
+            "Inscrição e atualização no CadÚnico.",
+            "Não acumular o BPC com outro benefício da Seguridade Social, salvo exceções como a pensão especial de natureza indenizatória e a assistência médica.",
+            "Residência e domicílio no Brasil."
+          ]
+        }
       ]
     },
     {
       "heading": "Como funciona a renda da família",
       "blocks": [
-        {"type": "p", "text": "O grupo familiar segue um rol taxativo do art. 20, §1º, da LOAS: cônjuge, companheiro, pais, padrasto ou madrasta, filhos e irmãos não emancipados menores de 21 anos ou inválidos, desde que vivam sob o mesmo teto. Parentes como tios, sobrinhos, cunhados, avós e netos não compõem o grupo familiar, ainda que morem na mesma casa."},
-        {"type": "ul", "items": [
-          "Existe exclusão de renda quando, no mesmo grupo, há outro BPC ou aposentadoria de até um salário mínimo recebida por idoso ou pessoa com deficiência (art. 20, §14).",
-          "Gastos comprovados com medicamentos, fraldas e alimentação especial não cobertos pelo SUS também podem ser considerados na análise da miserabilidade."
-        ]}
+        {
+          "type": "p",
+          "text": "O grupo familiar segue um rol taxativo do art. 20, §1º, da LOAS: o requerente, o cônjuge ou companheiro, os pais (e, na ausência de um deles, a madrasta ou o padrasto), os irmãos solteiros, os filhos e enteados solteiros e os menores tutelados, desde que vivam sob o mesmo teto. Parentes como tios, sobrinhos, cunhados, avós e netos não compõem o grupo familiar, ainda que morem na mesma casa."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Existe exclusão de renda quando, no mesmo grupo, há outro BPC ou benefício previdenciário de até um salário mínimo recebido por idoso ou pessoa com deficiência (art. 20, §14).",
+            "Gastos comprovados com medicamentos, fraldas e alimentação especial não cobertos pelo SUS também podem ser considerados na análise da miserabilidade."
+          ]
+        }
       ]
     },
     {
       "heading": "Pontos de atenção",
       "blocks": [
-        {"type": "ul", "items": [
-          "O benefício é devido desde a data do requerimento (DER), quando preenchidos os requisitos.",
-          "A revisão a cada dois anos pode levar à cessação; manter o CadÚnico atualizado ajuda a preservar o benefício.",
-          "Valores recebidos de boa-fé tendem a ser irrepetíveis, conforme o Enunciado 17 do CRPS.",
-          "Indeferimentos por excesso marginal de renda podem ser discutidos com base na miserabilidade concreta e em documentação robusta."
-        ]}
+        {
+          "type": "ul",
+          "items": [
+            "O benefício é devido desde a data do requerimento (DER), quando preenchidos os requisitos.",
+            "A revisão a cada dois anos pode levar à cessação; manter o CadÚnico atualizado ajuda a preservar o benefício.",
+            "Valores recebidos de boa-fé tendem a ser irrepetíveis, conforme o Enunciado 17 do CRPS.",
+            "Indeferimentos por excesso marginal de renda podem ser discutidos com base na miserabilidade concreta e em documentação robusta.",
+            "O Decreto 12.534/2025 atualizou as regras do BPC: valores do Bolsa Família passaram a contar no cálculo da renda, o registro biométrico tornou-se requisito e foram criados novos fluxos de notificação e bloqueio, com prazo de defesa de 30 dias.",
+            "Quem recebe Bolsa Família e pede o BPC deve ter cuidado com termos de desligamento do programa apresentados no atendimento (IN 54/2026) — não assine sem orientação.",
+            "O idoso que mora sozinho e recebe BPC tem Cadastro Domiciliar obrigatório no CadÚnico (IN 21/2026); quem tem dificuldade de locomoção pode exigir o cadastramento em casa."
+          ]
+        }
       ]
     },
     {
       "heading": "Como o escritório pode ajudar",
       "blocks": [
-        {"type": "p", "text": "Analisamos a sua situação, verificamos a composição do grupo familiar e a renda per capita, identificamos exclusões de renda aplicáveis e orientamos sobre a inscrição e atualização no CadÚnico, sobre a revisão bienal e sobre eventual recurso administrativo ou ação judicial. Cada caso é avaliado individualmente, à luz da LOAS e das provas disponíveis."}
+        {
+          "type": "p",
+          "text": "Analisamos a sua situação, verificamos a composição do grupo familiar e a renda per capita, identificamos exclusões de renda aplicáveis e orientamos sobre a inscrição e atualização no CadÚnico, sobre a revisão bienal e sobre eventual recurso administrativo ou ação judicial. Cada caso é avaliado individualmente, à luz da LOAS e das provas disponíveis."
+        }
       ]
     }
   ],
@@ -90,12 +130,16 @@
     },
     {
       "q": "Quem mora na mesma casa entra no cálculo da renda?",
-      "a": "Nem sempre. A LOAS traz um rol taxativo de quem compõe o grupo familiar (cônjuge, companheiro, pais, filhos e irmãos não emancipados menores de 21 anos ou inválidos). Tios, sobrinhos, cunhados, avós e netos não compõem o grupo familiar, mesmo vivendo sob o mesmo teto."
+      "a": "Nem sempre. A LOAS traz um rol taxativo de quem compõe o grupo familiar (o requerente, o cônjuge ou companheiro, os pais (e, na ausência de um deles, a madrasta ou o padrasto), os irmãos solteiros, os filhos e enteados solteiros e os menores tutelados). Tios, sobrinhos, cunhados, avós e netos não compõem o grupo familiar, mesmo vivendo sob o mesmo teto."
     },
     {
       "q": "O BPC pode ser cancelado depois de concedido?",
       "a": "Pode. A Lei 8.742/93 prevê revisão a cada dois anos para verificar se as condições permanecem. Manter o CadÚnico atualizado ajuda a preservar o benefício, e a cessação indevida pode ser discutida administrativa ou judicialmente."
     }
   ],
-  "related": ["bpc-deficiente", "aposentadoria-idade", "planejamento-previdenciario"]
+  "related": [
+    "bpc-deficiente",
+    "aposentadoria-idade",
+    "planejamento-previdenciario"
+  ]
 }

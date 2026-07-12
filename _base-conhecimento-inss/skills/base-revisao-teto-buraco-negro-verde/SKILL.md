@@ -7,7 +7,7 @@ description: "Revisão do teto previdenciário, buraco negro e buraco verde, com
 
 ## Escopo
 
-Skill temática pró-segurado. Orienta a discussão da revisão por aplicação de novos tetos constitucionais aos benefícios cujo Salário de Benefício foi originariamente glosado pelo teto vigente à época da concessão. Inclui a revisão do buraco negro, período entre outubro de 1988 e abril de 1991, e a revisão do buraco verde, período entre março de 1994 e fevereiro de 1997, além da readequação após as ECs 20/1998 e 41/2003.
+Skill temática pró-segurado. Orienta a discussão da revisão por aplicação de novos tetos constitucionais aos benefícios cujo Salário de Benefício foi originariamente glosado pelo teto vigente à época da concessão. Inclui a revisão do buraco negro, período entre outubro de 1988 e abril de 1991, e a revisão do buraco verde, período para benefícios com DIB entre 05/04/1991 e 31/12/1993, além da readequação após as ECs 20/1998 e 41/2003.
 
 ## Marco normativo central
 
@@ -19,7 +19,7 @@ Lei 8.213/91, art. 33. Limites do Salário de Benefício ao teto do Salário de 
 
 Lei 8.213/91, art. 144. Reajuste de benefícios concedidos entre outubro de 1988 e abril de 1991 (buraco negro).
 
-Lei 8.870/1994, art. 26. Congelamento temporário, origem do buraco verde (março de 1994 a fevereiro de 1997).
+Lei 8.870/1994, art. 26. Congelamento temporário, origem do buraco verde (DIB de 05/04/1991 a 31/12/1993).
 
 EC 20/1998. Novo teto.
 
@@ -41,7 +41,7 @@ Primeiro, benefícios com DIB antes de dezembro de 1998 cuja RMI teria superado 
 
 Segundo, benefícios concedidos entre outubro de 1988 e abril de 1991, sem aplicação do art. 144 da Lei 8.213/91.
 
-Terceiro, benefícios concedidos entre março de 1994 e fevereiro de 1997, pelo buraco verde, com limitação pelo art. 26 da Lei 8.870/1994.
+Terceiro, benefícios concedidos para benefícios com DIB entre 05/04/1991 e 31/12/1993, pelo buraco verde, com limitação pelo art. 26 da Lei 8.870/1994.
 
 Quarto, pensões derivadas de benefícios revisáveis, com direito à revisão reflexa.
 
@@ -51,7 +51,7 @@ Art. 103 da Lei 8.213/91. Decadência decenal contada do primeiro pagamento.
 
 Súmula 85 STJ. Prescrição quinquenal das parcelas.
 
-Benefícios concedidos há mais de 10 anos estão com decadência consumada. Para benefícios em que a decadência ainda não se implementou, verificar a tempestividade.
+A readequação aos tetos das ECs 20/98 e 41/03 (RE 564.354) NÃO se sujeita à decadência do art. 103, por não rever o ato de concessão — apenas as parcelas prescrevem (Súmula 85 STJ).
 
 ## Regra pró-segurado
 
@@ -78,7 +78,7 @@ Em revisão geral, acionar `revisao-peticao`.
 
 ## Alertas
 
-Primeiro, decadência decenal é crítica. Benefícios concedidos antes de 2015 tendem a estar esgotados.
+A decadência decenal permanece aplicável apenas às revisões de RMI propriamente ditas (art. 144 da Lei 8.213 e art. 26 da Lei 8.870/94); a readequação ao teto escapa dela.
 
 Segundo, pensões derivadas seguem a sorte do benefício originário, com decadência autônoma para os dependentes, conforme IAC 11 TRF4 e leitura do STJ.
 

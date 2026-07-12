@@ -11,7 +11,7 @@ Acione SEMPRE que houver atividades simultâneas no período básico de cálculo
 
 ## 2. Marco normativo
 
-A Lei 13.846/2019 alterou o art. 32 da Lei 8.213/91, eliminando a distinção entre atividade principal e secundária. A partir de 13/11/2019 (vigência da MP 871/2019 convertida na Lei 13.846/2019), a regra é a soma integral dos salários de contribuição, observado o teto.
+A Lei 13.846/2019 alterou o art. 32 da Lei 8.213/91, eliminando a distinção entre atividade principal e secundária. A partir de 18/01/2019 (vigência da MP 871/2019, convertida na Lei 13.846/2019, publicada em 18/06/2019), a regra é a soma integral dos salários de contribuição, observado o teto.
 
 Antes disso, vigorava a redação original do art. 32, com cálculo proporcional. O Tema 1.070/STJ pacificou a possibilidade de revisão para benefícios concedidos sob a redação anterior, com aplicação favorável da nova redação a partir da Lei 9.876/99 quando comprovada a soma adequada.
 
@@ -21,7 +21,7 @@ A IN INSS 128/2022 nos arts. 246 e 247 regulamenta o procedimento administrativo
 
 A regra atual é a soma integral dos salários de contribuição até o teto. Não há mais redução proporcional pela atividade secundária.
 
-Os benefícios concedidos antes de 13/11/2019, com cálculo proporcional, são revisáveis com fundamento no Tema 1.070/STJ.
+Os benefícios concedidos antes da vigência da MP 871/2019 (18/01/2019), com cálculo proporcional, são revisáveis com fundamento no Tema 1.070/STJ.
 
 A revisão alcança os 5 anos anteriores ao requerimento administrativo (Súmula 85 STJ) e respeita o prazo decadencial do art. 103 da Lei 8.213/91.
 
@@ -29,7 +29,7 @@ A definição de atividade principal e secundária era arbitrária e prejudicava
 
 ## 4. Fragilidades adversárias mais comuns
 
-O INSS limita a revisão a benefícios pós-Lei 9.876/99. Refute com Tema 1.070 STJ que admite revisão também de benefícios anteriores.
+Atenção ao alcance: o Tema 1.070/STJ é ancorado no período APÓS a Lei 9.876/99 — a janela revisável é, em regra, DIB entre 29/11/1999 e 17/06/2019; para DIB anterior vigora o art. 32 original (cálculo proporcional).
 
 O INSS recusa o cômputo de atividade autônoma concomitante. Refute com art. 32 Lei 8.213/91 e CNIS.
 

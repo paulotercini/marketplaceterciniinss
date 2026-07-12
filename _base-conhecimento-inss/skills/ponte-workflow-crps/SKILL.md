@@ -93,7 +93,7 @@ Decisão recorrida (cópia). Comprovante de ciência. Procuração com poderes e
 
 ## 4. Pontos críticos pró-segurado
 
-Tempestividade é a primeira barreira. Recurso intempestivo não conhecido pode ser superado por relevação fundamentada (art. 112 da Lei 8.213/91 e jurisprudência do CRPS).
+Tempestividade é a primeira barreira. Recurso intempestivo não conhecido pode ser superado por relevação fundamentada (dispositivo próprio do RICRPS (Portaria MPS 125/2026) e jurisprudência do CRPS — atenção: o art. 112 da Lei 8.213/91 trata de valores não recebidos em vida pelo segurado).
 
 Renúncia tácita por ação judicial simultânea pode ser evitada com desistência da ação ou esclarecimento da diversidade de causas de pedir.
 
