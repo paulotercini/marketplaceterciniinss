@@ -114,6 +114,18 @@ ERRO DE RÓTULO DETECTADO. A Lei 15.108, de 13/03/2025 (DOU 14/03/2025), tem eme
 
 NÃO CONFIRMADAS NESTA RODADA (quarentena leve, conferir no DOU antes de citar). Portaria 37/2026 (IFBrM), IN 188/2025, Lei 15.077/2024 (prazos CadÚnico) e Lei 14.768/2023 (deficiência auditiva). Sem indício de invenção, apenas sem indexação localizada.
 
+## ACHADOS DA ETAPA 5 DA AUDITORIA (novidades e fechamento do ciclo, 12/07/2026)
+
+- **Quarentenas da Etapa 4 parcialmente levantadas.** IN 188, de 08/07/2025, CONFERIDA (altera a IN 128/2022, aposentadoria híbrida independentemente da qualidade de segurado no requerimento, salário-maternidade, formulários do art. 273). Lei 15.077/2024 CONFERIDA (endurecimento do BPC, CadÚnico e biometria obrigatória, sancionada com veto). Permanecem sem selo a Portaria 37/2026 (IFBrM) e a Lei 14.768/2023 (deficiência auditiva), conferir no DOU antes de citar.
+
+- **Novidade incorporada, Lei 15.415/2026.** Art. 73-A da Lei 8.213/91, prazo máximo de 30 dias para o INSS conceder salário-maternidade. Nota inserida na base-salario-maternidade-pos-reforma. Uso imediato em MS por demora.
+
+- **Novidade incorporada, Portaria DPMF/SRGPS/MPS 587/2026.** Implementação operacional da Teleperícia, ao lado da Portaria Conjunta 19/2026. Nota inserida na base-pericia-medica-federal-telepericia.
+
+- **Skills homólogas harmonizadas.** Nota de coexistência inserida nas duas famílias de leitura de peças adversárias (base-analise-contestacao-inss + pontes, e base-auditoria-adversarial-*), com regra de prevalência pelo selo [CONFERIDO]. Racionalização definitiva é decisão editorial do escritório.
+
+- **Pacotes .skill do escritório regenerados na Etapa 5.** pensao-por-morte e auxilio-reclusao-previdenciario atualizados com o Tema 1421/STJ julgado (tese literal, alerta de triagem dos 180 dias, estratégia pós-julgamento) e carta-servicos-inss com o rótulo da Lei 15.108/2025 corrigido (menor sob guarda) e o Tema 1421 incluído.
+
 ## PRÓXIMA REVISÃO
 
 Repetir trimestralmente com consulta às páginas oficiais dos temas (não usar imprensa especializada como fonte final de data ou tese). Registrar sempre a data da conferência.

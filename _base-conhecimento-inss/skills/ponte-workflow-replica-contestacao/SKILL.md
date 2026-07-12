@@ -3,6 +3,11 @@ name: ponte-workflow-replica-contestacao
 description: "Workflow pró-segurado para responder à contestação do INSS, do diagnóstico à arquitetura da réplica, fixando o incontroverso, repelindo preliminares e desmontando o mérito defensivo ponto a ponto até a peça. Use SEMPRE que mencionar workflow réplica, pipeline réplica, arquitetura da réplica, responder contestação, impugnar contestação, réplica à contestação, preliminares do INSS, fatos incontroversos, impugnação específica, especificação de provas, próximo passo após contestação. Encadeia base-analise-contestacao-inss, os eixos do CPC e a redação da peça. Cruza com base-analise-contestacao-inss, base-cpc-onus-prova-art373, base-cpc-prova-documental-juntada, base-cpc-nulidades-cerceamento, base-cpc-prescricao-decadencia-processual, tema-1124-instrucao-administrativa, coisa-julgada-previdenciaria, especificacao-provas, base-precedentes-catalogo-vinculantes, peticao-previdenciaria e revisao-peticao. NÃO use para decisão judicial (use ponte-workflow-recurso-sentenca) nem para mandado de segurança."
 ---
 
+## NOTA DE COEXISTÊNCIA (unificação de linhas, Onda 67, 12/07/2026)
+
+O plugin passou a conter duas famílias de skills sobre leitura de peças adversárias, vindas de linhas paralelas de trabalho unificadas na Onda 67. A família base-analise-contestacao-inss com ponte-workflow-replica-contestacao e ponte-workflow-recurso-sentenca, e a família base-auditoria-adversarial-contestacao-inss com base-auditoria-adversarial-decisao-judicial. Enquanto não houver racionalização definitiva pelo escritório, usar as duas de forma complementar e, em caso de conflito de orientação, prevalece a que tiver citação [CONFERIDO] em fonte primária. Não citar em peça nada que apenas uma delas afirme sem selo de conferência.
+
+
 # Workflow Réplica à Contestação
 
 ## 1. Quando acionar

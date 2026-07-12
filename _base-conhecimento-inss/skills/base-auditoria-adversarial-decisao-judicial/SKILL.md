@@ -3,6 +3,11 @@ name: base-auditoria-adversarial-decisao-judicial
 description: "Skill de auditoria adversarial de decisão judicial contrária ao segurado (sentença, acórdão de Turma Recursal, acórdão de TRF, acórdão de STJ ou STF em capítulos desfavoráveis, decisão monocrática de relator, decisão interlocutória, tutela indeferida) para desconstruir o julgado antes de redigir recurso ou incidente. Use SEMPRE que mencionar auditar sentença, analisar sentença desfavorável, auditar acórdão, analisar acórdão contrário, preparar apelação, preparar recurso inominado, preparar embargos de declaração, preparar agravo interno, preparar PUIL, preparar recurso especial, encontrar falha na sentença, decisão sem fundamentação, art. 489 §1º violado, distinguishing de precedente colado pelo juiz, contradição interna do acórdão, decisão surpresa, argumento não enfrentado. NÃO use para auditoria de contestação, parecer da PFE-INSS ou acórdão do CRPS (skill base-auditoria-adversarial-contestacao-inss). NÃO use para triagem inicial de eixos processuais (skill base-analise-decisao-tres-eixos, que roda ANTES desta). NÃO use para auditoria de laudo pericial (skill auditoria-laudo-pericial) nem de PPP (skill auditoria-ppp). Acionar em conjunto com base-analise-decisao-tres-eixos (triagem prévia), base-cpc-fundamentacao-art489, base-cpc-embargos-declaracao, base-cpc-apelacao-efeitos-art1013, base-cpc-agravo-instrumento-art1015, base-recursos-jef, base-recurso-crps-peca-enxuta, base-tnu-admissibilidade-manual, base-precedentes-catalogo-vinculantes e peticao-previdenciaria."
 ---
 
+## NOTA DE COEXISTÊNCIA (unificação de linhas, Onda 67, 12/07/2026)
+
+O plugin passou a conter duas famílias de skills sobre leitura de peças adversárias, vindas de linhas paralelas de trabalho unificadas na Onda 67. A família base-analise-contestacao-inss com ponte-workflow-replica-contestacao e ponte-workflow-recurso-sentenca, e a família base-auditoria-adversarial-contestacao-inss com base-auditoria-adversarial-decisao-judicial. Enquanto não houver racionalização definitiva pelo escritório, usar as duas de forma complementar e, em caso de conflito de orientação, prevalece a que tiver citação [CONFERIDO] em fonte primária. Não citar em peça nada que apenas uma delas afirme sem selo de conferência.
+
+
 # Auditoria Adversarial de Decisão Judicial Contrária
 
 ## Objetivo

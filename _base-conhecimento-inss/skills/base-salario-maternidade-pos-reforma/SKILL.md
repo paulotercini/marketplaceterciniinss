@@ -3,6 +3,11 @@ name: base-salario-maternidade-pos-reforma
 description: "Salário-maternidade B80/B81 pós EC 103/2019, ótica pró-segurada. Use SEMPRE que mencionar salário-maternidade, B80, B81, B82, B83, licença-maternidade, art. 71 Lei 8.213, art. 72, art. 73, 120 dias maternidade, parto, adoção, guarda judicial para adoção, aborto não criminoso, natimorto, segurada especial rural maternidade, MEI maternidade, desempregada salário-maternidade, LC 146/2014 prorrogação morte mãe, Lei 12.873/2013 pai adotante, Lei 14.457/2022, prorrogação 180 dias Empresa Cidadã, art. 26 VI isenção carência maternidade, carência 10 contribuições CI/facultativa, carência desempregada 10 contribuições, Tema 149 TNU, Súmula 37 TNU, Tema 245 TNU, aborto espontâneo, óbito mãe pai, natimorto B81, qualidade segurada DIB, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, documentos-comprobatorios-in128, periodo-graca-qualidade-segurado, segurado-especial-rural, perspectiva-genero-previdenciario e precedentes-previdenciarios."
 ---
 
+## ATUALIZAÇÃO LEGISLATIVA (Etapa 5 da auditoria, 12/07/2026)
+
+Lei 15.415/2026 (conferida em fontes convergentes, selo no Planalto pendente). Inseriu o art. 73-A na Lei 8.213/91 e fixou prazo máximo de 30 dias para o INSS conceder o salário-maternidade, com regime de concessão diante da mora administrativa. Usar em MS por demora e em pedido administrativo de salário-maternidade parado além do prazo. Conferir o texto do art. 73-A no Planalto antes de transcrever em peça.
+
+
 # Salário-Maternidade (B80/B81) Pós EC 103/2019
 
 ## Escopo

@@ -3,6 +3,11 @@ name: base-analise-contestacao-inss
 description: "Leitura forense da contestação do INSS para montar o mapa de ataque da réplica, ótica pró-segurado. Use SEMPRE que receber ou mencionar contestação do INSS, defesa da autarquia, contestação previdenciária, analisar contestação, auditar contestação, preliminares do INSS, falta de interesse de agir, ausência de prévio requerimento, impugnação específica, fato incontroverso, ônus da impugnação art. 341, mérito defensivo, réplica, próximo passo após contestação. Conduz cinco passos, preliminares, fatos incontroversos, mérito defensivo, impugnação à prova e mapa de ataque para a réplica. Cruza com base-cpc-onus-prova-art373, base-cpc-prova-documental-juntada, base-cpc-prescricao-decadencia-processual, tema-1124-instrucao-administrativa, coisa-julgada-previdenciaria, base-precedentes-catalogo-vinculantes, especificacao-provas, ponte-workflow-replica-contestacao, peticao-previdenciaria e revisao-peticao. NÃO use para decisão judicial (use base-analise-decisao-tres-eixos) nem para redigir a réplica final."
 ---
 
+## NOTA DE COEXISTÊNCIA (unificação de linhas, Onda 67, 12/07/2026)
+
+O plugin passou a conter duas famílias de skills sobre leitura de peças adversárias, vindas de linhas paralelas de trabalho unificadas na Onda 67. A família base-analise-contestacao-inss com ponte-workflow-replica-contestacao e ponte-workflow-recurso-sentenca, e a família base-auditoria-adversarial-contestacao-inss com base-auditoria-adversarial-decisao-judicial. Enquanto não houver racionalização definitiva pelo escritório, usar as duas de forma complementar e, em caso de conflito de orientação, prevalece a que tiver citação [CONFERIDO] em fonte primária. Não citar em peça nada que apenas uma delas afirme sem selo de conferência.
+
+
 # Análise de Contestação do INSS
 
 ## Escopo
