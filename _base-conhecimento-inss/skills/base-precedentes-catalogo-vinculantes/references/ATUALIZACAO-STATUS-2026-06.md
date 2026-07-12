@@ -1,161 +1,91 @@
-# Atualização de Status dos Temas - Verificação em 08/06/2026
+# Atualização de Status dos Temas - REVISADA EM 11/07/2026 (fonte primária)
 
-Verificação realizada via navegador Comet (Claude in Chrome MCP) em junho de 2026, consultando fontes oficiais (portal STF, portal STJ, TJRO/Rondônia, TJMG, CJF/TNU, gov.br) e veículos de imprensa jurídica especializada (IEPREV, IBDP, JOTA, TRF4, TRF3, TRF2, TJPI, TJSP).
+Esta reference foi INTEGRALMENTE REVISADA em 11/07/2026 mediante consulta direta às páginas oficiais dos temas (processo.stj.jus.br/repetitivos e portal.stf.jus.br). A versão anterior (08/06/2026, apurada por imprensa especializada) continha DATAS ERRADAS nos Temas 1124, 1162 e 1291 do STJ e mantinha como suspenso o Tema 1140/STJ, julgado desde 2024. Não reutilizar a versão anterior.
 
-Objetivo. Corrigir o status do catálogo base anterior ao incorporar julgamentos ocorridos entre a data dos arquivos do escritório (set/2025) e a data da verificação.
+As teses literais completas estão nos catálogos CATALOGO-TEMAS-STJ.md e CATALOGO-TEMAS-STF.md. Aqui, somente o quadro de status.
 
-## ATUALIZAÇÃO 1 - TEMAS STJ QUE SAÍRAM DO STATUS "SUSPENSO"
+## STJ - TEMAS JULGADOS (datas da página oficial do tema)
 
-### Tema 1124/STJ - **JULGADO COM ACÓRDÃO PUBLICADO**
+- **Tema 1124/STJ.** Julgado em 08/10/2025. Acórdão publicado em 06/11/2025. Rel. Min. Paulo Sérgio Domingues. REsp 1.913.152/SP, 1.905.830/SP e 1.912.784/SP (origem TRF3). Tese em 10 itens no catálogo. Central para interesse de agir e efeitos financeiros.
 
-Status anterior. Suspenso.
-Status atual. **JULGADO. Acórdão publicado em 05/02/2026.**
-Fonte. Informativos Trilhante, IBDP, gov.br/Comunicação STJ, TRF1, TRF4, JOTA.
-Tese. O processo judicial de concessão deve, em regra, analisar aquilo que foi apresentado no requerimento administrativo. Detalhamento da tese a ser confirmado na publicação completa.
+- **Tema 1140/STJ.** Julgado em 14/08/2024. Acórdão publicado em 27/08/2024. Situação oficial "Acórdão Publicado - RE Pendente". Readequação aos tetos das EC 20/98 e 41/2003 com aplicação dos limitadores da época (menor e maior valor-teto).
 
-ALERTA CRÍTICO. Esta tese é central para o trabalho do escritório. Atualizar a skill `tema-1124-instrucao-administrativa` e a skill `base-efeito-translativo-tema-1124-defesa` com a tese literal definitiva.
+- **Tema 1157/STJ.** Julgado em 07/05/2026. Acórdão publicado em 06/07/2026. Rel. Min. Herman Benjamin. REsp 1.985.189/SP e 1.985.190/SP. Tese contra o segurado (cancelamento administrativo de benefício por incapacidade concedido judicialmente, com devido processo e perícia).
 
-### Tema 1157/STJ - **JULGADO COM TESE FIXADA**
+- **Tema 1162/STJ.** Julgado em 12/11/2025. Acórdão publicado em 19/11/2025. Rel. Min. Teodoro Silva Santos. Flexibilização do critério econômico do auxílio-reclusão só no regime pré-MP 871/2019 (excedente ínfimo); vedada após a MP 871/2019, salvo ausência de correção anual do teto. Modulação para prisões a partir de 27/11/2024.
 
-Status anterior. Suspenso.
-Status atual. **JULGADO. Informativo de Jurisprudência STJ n. 889 (19/05/2026).**
-Tese fixada. "É lícito ao INSS promover o cancelamento administrativo de benefícios previdenciários por incapacidade [...] concedidos judicialmente." (a continuação da tese precisa ser confirmada na fonte oficial).
+- **Tema 1291/STJ.** Julgado em 10/09/2025. Acórdão publicado em 18/09/2025. Situação oficial "Acórdão Publicado - RE Pendente". Rel. Min. Gurgel de Faria. Pró-segurado (tempo especial do contribuinte individual não cooperado após a Lei 9.032/95, sem exigência de formulário de empresa).
 
-ALERTA. Tese contrária ao segurado. Estratégia de defesa deve articular limites do contraditório, prazo decadencial e proteção da coisa julgada.
+- **Tema 1307/STJ.** Julgado em 07/05/2026. Acórdão publicado em 20/05/2026. Rel. Min. Gurgel de Faria. Pró-segurado (penosidade de motorista/cobrador de ônibus e motorista de caminhão pós-Lei 9.032/95, mediante perícia técnica individualizada).
 
-### Tema 1162/STJ - **JULGADO**
+## STJ - TEMAS PENDENTES (situação oficial em 11/07/2026)
 
-Status anterior. Suspenso.
-Status atual. **JULGADO em 17/11/2025. Acórdão publicado.**
-Fonte. IEPREV (Instituto de Estudos Previdenciários), TJRO/NUGEPNAC.
-Tese. Define quando é possível flexibilizar o critério econômico para concessão de auxílio-reclusão.
+- **Tema 1220/STJ.** Afetado. Memorando-Circular Conjunto 21/DIRBEN/PFEINSS como marco interruptivo da prescrição.
+- **Tema 1321/STJ.** Afetado. Prescrição e decadência contra pessoa com deficiência mental ou intelectual após a Lei 13.146/2015.
+- **Tema 1328/STJ.** Afetado. Dano moral in re ipsa na invalidação de RMC.
+- **Tema 1341/STJ.** Em Julgamento. Filho maior inválido com benefício próprio e pensão por morte.
 
-### Tema 1291/STJ - **JULGADO COM TESE PRÓ-SEGURADO**
+## STF - TEMAS JULGADOS
 
-Status anterior. Suspenso.
-Status atual. **JULGADO em maio de 2026 (sessão virtual encerrada em 13/02/2026).**
-Fonte. Barbieri Advogados (referência), IBDP.
-Tese. Garantiu aposentadoria especial ao contribuinte individual autônomo (não cooperado) após 29/04/1995.
+- **Tema 1209/STF.** Julgado em 18/02/2026. Acórdão de mérito publicado em 04/03/2026. RE 1.368.225, Rel. Min. Nunes Marques. Tese CONTRA o vigilante.
+- **Tema 1300/STF.** Julgado em 18/12/2025. Acórdão publicado em 10/04/2026. Trânsito em julgado em 18/04/2026. RE 1.469.150, Rel. Min. Barroso. Tese pró-INSS (constitucionalidade do art. 26, §2º, III, da EC 103/2019 para incapacidade posterior à reforma).
+- **Tema 1370/STF.** Mérito julgado em 16/12/2025. RE 1.520.468, Rel. Min. Flávio Dino. Tese pró-segurada (prestação à mulher vítima de violência doméstica, sem carência quando segurada).
 
-### Tema 1307/STJ - **JULGADO COM TESE PRÓ-SEGURADO**
+## STF - TEMAS AINDA SEM MÉRITO (situação oficial em 11/07/2026)
 
-Status anterior. Suspenso.
-Status atual. **JULGADO em 07/05/2026. Acórdão publicado.**
-Fonte. STJ - Informativo 889, TJRO/NUGEPNAC, Mozer Advogados.
-Tese acolhida. Possibilidade de reconhecimento da especialidade da atividade de motorista/cobrador de ônibus ou motorista de caminhão por penosidade após o advento da Lei 9.032/1995.
+- **Tema 1271/STF.** RE 1.442.021. Repercussão geral reconhecida (acórdão de RG publicado em 22/09/2023). Mérito pendente. Menor sob guarda e EC 103/2019.
+- **Tema 1298/STF.** RE 1.471.538. Repercussão geral reconhecida (24/04/2024). Mérito pendente. Pensão a mulher transexual.
+- **Tema 1353/STF.** RE 1.455.046. Repercussão geral reconhecida (14/11/2024). Mérito pendente. Auxílio-doença a gestante de alto risco sem carência.
 
-## ATUALIZAÇÃO 2 - TEMAS STJ QUE CONTINUAM SUSPENSOS
+## CANCELAMENTOS E SUPERAÇÕES (mantidos da verificação anterior)
 
-### Tema 1140/STJ - **CONTINUA AFETADO**
+- Tema 1066/STF cancelado em 22/02/2021 (acordo homologado em 09/12/2020 sobre prazos do INSS).
+- Súmula 86/TNU cancelada em 26/08/2021, DOU nº 166 de 01/09/2021, Seção 1, pág. 330. PEDILEF 0521830-35.2020.4.05.8100.
+- Temas 30, 66, 338 e 375 da TNU cancelados/revisados conforme catálogo TNU.
+- Tema 58/TNU superado (Tema 694/STJ e Tema 174/TNU).
 
-Status mantido. Suspenso/Afetado.
-Tema. Forma de cálculo da readequação aos tetos das EC 20/1998 e EC 41/2003 para benefícios concedidos antes da CF/88.
+## SÚMULAS TNU DE AUXÍLIO-ACIDENTE E EPI (ERRATA de 11/07/2026, mesma data)
 
-### Tema 1220/STJ - **CONTINUA AFETADO COM SUSPENSÃO NACIONAL**
+ERRATA. A primeira versão desta auditoria declarou inexistentes as Súmulas 88 e 89 da TNU com base em trecho truncado da lista oficial. A conferência direta na página oficial de cada súmula (cjf.jus.br/phpdoc/virtus/sumula.php) DESMENTIU a inexistência. Ambas existem, aprovadas por unanimidade na Sessão Ordinária de 17/04/2024, DJeN de 24/04/2024, publicadas em 25/04/2024. Registro mantido como lição de método, snippet de busca não é fonte.
 
-Status mantido. Suspenso/Afetado.
-Fonte. TJRO/NUGEPNAC, TJPI (13/02/2026).
-Tema. Memorando-Circular Conjunto 21/DIRBEN/PFEINSS como marco interruptivo do prazo prescricional.
+- **Súmula 88/TNU (texto literal).** "A existência de limitação, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessão do benefício de auxílio-acidente, em observância a tese fixada sob o Tema 416 do Superior Tribunal de Justiça."
 
-### Tema 1321/STJ - **CONTINUA AFETADO**
+- **Súmula 89/TNU (texto literal).** "Não há direito à concessão de benefício de auxílio-acidente quando, após consolidação das lesões decorrentes de acidente de qualquer natureza, resultarem sequelas que não reduzem a capacidade laborativa habitual nem sequer demandam dispêndio de maior esforço na execução da atividade habitual."
 
-Status mantido. Suspenso/Afetado.
-Tema. Incidência de prescrição contra pessoa com deficiência mental ou intelectual após a vigência da Lei 13.146/2015.
+- **Súmula 87/TNU (texto literal, DOU de 26/02/2019).** "A eficácia do EPI não obsta o reconhecimento de atividade especial exercida antes de 03/12/1998, data de início da vigência da MP 1.729/98, convertida na Lei n. 9.732/98." Atenção, a skill base-especial-epi atribuía redação diversa a esta súmula, corrigida na Etapa 2.
 
-### Tema 1328/STJ - **CONTINUA AFETADO**
+- Não confundir com a **Súmula 89/STJ** ("A ação acidentária prescinde do exaurimento da via administrativa"), que segue válida no contexto acidentário estadual.
 
-Status mantido. Suspenso/Afetado.
-Fonte. TJMG (decisão publicada em 17/03/2026), TRF2 (Boletim NUGEPNAC nº 55).
-Tema. Dano moral in re ipsa na invalidação de RMC em benefício previdenciário.
+- **Tema 201/TNU** (este achado PERMANECE, confirmado em fonte oficial). Tese real contrária ao contribuinte individual em B94: "O contribuinte individual não faz jus ao auxílio-acidente, diante de expressa exclusão legal." NUNCA citar como tese de "sequela mínima". A tese de sequela mínima é a Súmula 88/TNU c/c Tema 416/STJ.
 
-### Tema 1341/STJ - **EM JULGAMENTO**
+## ACHADOS DA ETAPA 2 DA AUDITORIA (TNU, 11/07/2026, fonte oficial CJF)
 
-Status mantido. Em julgamento (não mais apenas afetado).
-Fonte. TJRO/NUGEPNAC, IBDP (06/05/2026).
-Tema. Filho maior inválido com renda auferida de benefício previdenciário pode receber pensão por morte.
+- **Súmula 31/TNU REVOGADA em 22/11/2023.** Tratava da sentença trabalhista como prova. A matéria é regida pelo Tema 1188/STJ (transitado em julgado, tese literal no catálogo STJ). Skills corrigidas, base-reclamatoria-trabalhista-prova-previdenciaria e base-rt-ajuizamento-vinculo-previdenciario.
 
-## ATUALIZAÇÃO 3 - TEMAS STF QUE SAÍRAM DO "AGUARDANDO JULGAMENTO"
+- **Tema 365/TNU com tese trocada no catálogo.** A tese real, julgada em 13/11/2025 (PEDILEF 0500120-68.2021.4.05.8311/PE), é CONTRA o segurado, veda o cômputo de benefício por incapacidade intercalado nas 120 contribuições da prorrogação do período de graça (art. 15, §1º, Lei 8.213/91). A tese antes registrada (complementação do facultativo baixa renda) não pertence a este tema. Os efeitos financeiros da complementação de contribuições estão no Tema 384/TNU, AINDA SEM TESE em 11/07/2026.
 
-### Tema 1209/STF - **JULGADO COM TESE CONTRA SEGURADO**
+- **Tema 382/TNU julgado em 15/04/2026 CONTRA o segurado.** "A exposição ao tolueno por via cutânea, inclusive na sua forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15)." PEDILEF 5012678-57.2022.4.04.7108/RS, Rel. Juíza Federal Lilian Oliveira da Costa Tourinho. A skill do tolueno atribuía ao tema tese inexistente sobre benzeno, com relator e processo falsos. Corrigida.
 
-Status anterior. Aguardando julgamento.
-Status atual. **JULGADO em 18/02/2026. Acórdão de mérito publicado em 04/03/2026.**
-Fonte. TRT2, SindiVigilantes do Sul, TJRO/NUGEPNAC, Bocchi Advogados, IEPREV.
-Tese. "A atividade de vigilante, com ou sem o uso de arma de fogo, não se caracteriza [como especial para fins de aposentadoria]."
+- **Tema 385/TNU com status conflitante.** Julgamento noticiado como concluído por maioria (24/06/2026) em fontes especializadas, mas a página oficial do CJF constava "Em Julgamento" em 11/07/2026. Confirmar publicação do acórdão antes de citar como vinculante.
 
-ALERTA. Tese profundamente prejudicial ao segurado vigilante. Possíveis estratégias residuais. (a) direito adquirido para casos pré-EC 103/2019 com requisitos completos, (b) Tema 1031/STJ ainda aplicável a períodos pré-EC 103, (c) impugnação por modulação de efeitos se houver acórdão modulado.
+- **Confirmados em fonte oficial com tese literal.** Tema 343 (julgado 14/04/2025), Tema 349 (julgado 16/10/2024), Tema 217 (julgado 21/08/2020, com a parte final sobre contraditório e arts. 9º e 10 do CPC), Tema 174 (redação integral com vedação de medição pontual), Tema 201 (contribuinte individual sem direito a B94).
 
-### Tema 1300/STF - **JULGADO**
+- **Súmulas TNU, varredura completa das 39 citadas nas skills.** Todas existem e estão vigentes com teor compatível, exceto Súmula 31 (revogada, acima), Súmula 86 (cancelada em 26/08/2021) e Súmula 87, cuja redação estava errada na skill base-especial-epi (a oficial limita-se a atividade anterior a 03/12/1998), corrigida. Canceladas sem uso nas skills, 3, 11, 15, 16, 32, 51, 60, 61, 64. Atenção à Súmula 26/TNU (vigilante equiparado a guarda), formalmente vigente, mas de citação arriscada após a tese contrária do Tema 1209/STF, usar apenas para períodos pré-28/04/1995 por categoria profissional e com ressalva expressa.
 
-Status anterior. Aguardando julgamento.
-Status atual. **JULGADO. Acórdão publicado em 10/04/2026.**
-Fonte. TJMG (10/04/2026), gov.br/Comunicação Social AGU (18/12/2025), IEPREV, JOTA.
-Tese. STF declarou constitucional regra do cálculo da aposentadoria por incapacidade permanente (art. 26 §2º III EC 103/2019).
+## ACHADOS DA ETAPA 3 DA AUDITORIA (números de processo, 12/07/2026)
 
-ALERTA. Tese pró-INSS. Reduz expectativa de pagamento integral para doença grave após EC 103/2019.
+- **REsp 2.246.096-MG CONFERIDO** no Informativo 885 do STJ (portal oficial). Dados e tese literal da skill base-fungibilidade-previdenciaria batem integralmente. Tese restritiva com uso defensivo pró-segurado (veda conversão de ofício em benefício inferior, arts. 141 e 492 do CPC).
 
-### Tema 1370/STF - **JULGADO COM TESE PRÓ-SEGURADA**
+- **PUILs de B94 no período de graça CONFERIDOS como existentes e no sentido registrado.** PUIL 5000733-56.2021.4.04.7222/SC (categoria do segurado quando o acidente ocorre no período de graça de vínculo como empregado, com determinação de adequação às turmas) e PEDILEF 5026380-43.2022.4.02.5001/ES (prevalência da condição anterior mais favorável). Verificação por fontes convergentes, incluindo Boletim TNU do TRF3.
 
-Status anterior. Aguardando julgamento.
-Status atual. **JULGADO. Acórdão de mérito publicado.** Concluído em 17/12/2025.
-Fonte. TJRO/NUGEPNAC, Marco Serau (Instagram oficial), Min. Previdência.
-Tese. Mulher vítima de violência doméstica, afastada do trabalho como medida de proteção, tem direito a benefício previdenciário ou assistencial.
+- **Tema 318/TNU.** Sobrestado (PEDILEF 5000742-54.2021.4.04.7016/PR) aguardando ADIs sobre o art. 26, §2º, III, da EC 103. Matéria resolvida na prática pelo Tema 1300/STF contra o segurado. Nota. Fontes de imprensa atribuem erroneamente o número do Tema 318 ao PUIL 5000733, não repetir o erro.
 
-## ATUALIZAÇÃO 4 - TEMAS STF QUE CONTINUAM AGUARDANDO
+- **TJSP Núcleo 4.0 CONFERIDO.** Portaria Conjunta 10.507/2024 e Comunicado Conjunto 868/2024 confirmados em fontes oficiais do TJSP (ESAJ legislação e Corregedoria), com roteiro oficial de peticionamento atualizado em 05/02/2026. Desembargador Richard Pae Kim e 17ª Câmara de Direito Público conferem.
 
-### Tema 1271/STF - **CONTINUA AGUARDANDO**
+- **EM QUARENTENA (não verificáveis por fonte pública).** AI 2061943-13.2025.8.26.0000 e o processo paradigma 1013616-41.2026.8.26.0381 (Juiz Matheus de Souza Parducci Camargo, 22/05/2026), citados na base-auxilio-acidente-b94-pos-reforma. Provável origem em acervo interno do escritório. Conferir no ESAJ antes de citar em peça.
 
-Status mantido. Aguardando julgamento.
-Tema. Exclusão da criança e do adolescente sob guarda do rol de beneficiários, na condição de dependentes, do RGPS pela EC 103/2019.
+- **Pendências da Etapa 3 (rodada complementar).** REsp 2.240.220 e 2.256.869 (auxílio-reclusão), REsp 2.103.603 (pensão), PUIL 5000577-65 e ApCivs TRF3 do contribuinte em dobro, PEDILEFs 0136882 e 5001032 (químicos), IRDRs 15, 18 e 35 do TRF4, demais 150 números CNJ de menor uso.
 
-### Tema 1298/STF - **CONTINUA AGUARDANDO**
+## PRÓXIMA REVISÃO
 
-Status mantido. Aguardando julgamento.
-Tema. Recebimento de pensão previdenciária por mulher transexual.
-
-### Tema 1353/STF - **CONTINUA AGUARDANDO COM SUSPENSÃO NACIONAL**
-
-Status mantido. Aguardando julgamento.
-Fonte. TJPI (13/02/2026).
-Tema. Auxílio-doença à segurada em gestação de alto risco independentemente de carência.
-
-## ATUALIZAÇÃO 5 - CONFIRMAÇÕES DE CANCELAMENTO E SUPERAÇÃO
-
-### Tema 1066/STF - **CANCELAMENTO CONFIRMADO**
-
-Status mantido. Cancelado.
-Data oficial do cancelamento. **22/02/2021** (confirmado pelo TJMG e TJRO/NUGEPNAC).
-Tema original. Estabelecimento de prazo para o INSS realizar perícia médica.
-Observação. Cancelado após acordo homologado em 09/12/2020 entre INSS, AGU, DPU e MPF, com prazos administrativos negociados.
-
-### Súmula 86/TNU - **CANCELAMENTO CONFIRMADO COM CORREÇÃO DE DATA**
-
-Status mantido. Cancelada.
-Data CORRETA do cancelamento. **26/08/2021** (Sexta Sessão Ordinária de Julgamento por videoconferência), NÃO 25/08/2021 como anteriormente registrado.
-Publicação. DOU nº 166, 01/09/2021, Seção 1, pg. 00330.
-Precedente. PEDILEF 0521830-35.2020.4.05.8100.
-Relatora. Juíza Federal Suzana Galia.
-
-Correção a propagar. Em todas as menções à Súmula 86/TNU no plugin, ajustar a data de 25/08/2021 para 26/08/2021.
-
-## RESUMO QUANTITATIVO DA ATUALIZAÇÃO
-
-**Temas que saíram do status SUSPENSO/AGUARDANDO no STJ.** 5 (1124, 1157, 1162, 1291, 1307).
-
-**Temas que saíram do status AGUARDANDO no STF.** 3 (1209, 1300, 1370).
-
-**Temas que continuam SUSPENSOS no STJ.** 5 (1140, 1220, 1321, 1328, 1341).
-
-**Temas que continuam AGUARDANDO no STF.** 3 (1271, 1298, 1353).
-
-**Cancelamentos confirmados.** Tema 1066/STF (22/02/2021), Súmula 86/TNU (data corrigida para 26/08/2021).
-
-## RECOMENDAÇÃO PARA PRÓXIMA REVISÃO
-
-Esta verificação deve ser repetida.
-
-- Trimestralmente, em ondas corretivas dedicadas.
-- Quando o escritório identificar tese vinculante nova citada em peça do INSS ou em decisão judicial.
-- Antes de qualquer petição que cite temas sob risco (suspensos, aguardando ou recém-julgados).
-
-A skill `base-revisao-peticao-aprofundada` deve ATIVAR esta reference no Nível 1 da cascata dinâmica antes de citar qualquer tema da lista acima.
+Repetir trimestralmente com consulta às páginas oficiais dos temas (não usar imprensa especializada como fonte final de data ou tese). Registrar sempre a data da conferência.

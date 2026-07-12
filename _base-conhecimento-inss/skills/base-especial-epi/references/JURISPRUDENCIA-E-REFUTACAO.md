@@ -38,11 +38,11 @@ Tese. Prevalência da EPC sobre o EPI.
 
 Aplicação pró-segurado. Ausência ou precariedade de EPC é suficiente para afastar a neutralização, ainda que o PPP declare EPI eficaz.
 
-### Súmula 87 TNU
+### Súmula 87 TNU (texto literal conferido na página oficial do CJF em 11/07/2026)
 
-Tese. A simples anotação de eficácia de EPI no PPP não descaracteriza o tempo especial.
+"A eficácia do EPI não obsta o reconhecimento de atividade especial exercida antes de 03/12/1998, data de início da vigência da MP 1.729/98, convertida na Lei n. 9.732/98." (DOU nº 40, de 26/02/2019)
 
-Fonte oficial em https://www.cjf.jus.br, confirmar vigência antes de citar.
+CORREÇÃO DE AUDITORIA. A versão anterior desta reference atribuía à Súmula 87 redação genérica inexistente ("a simples anotação de eficácia de EPI no PPP não descaracteriza o tempo especial"). A súmula real tem recorte temporal preciso, atividade anterior a 03/12/1998. Para períodos posteriores, os fundamentos são o Tema 555/STF, o Tema 1090/STJ e o Tema 213/TNU, nunca a Súmula 87.
 
 ## 2. Refutação aos argumentos típicos do INSS
 
@@ -50,9 +50,9 @@ Fonte oficial em https://www.cjf.jus.br, confirmar vigência antes de citar.
 
 Argumento adversário. O INSS afirma que a própria empresa declara que o EPI é eficaz, logo há presunção de neutralização.
 
-Refutação. A presunção é afastada em todas as hipóteses do Tema 1090 STJ. Mesmo fora dessas hipóteses, a fundada dúvida desloca o ônus probatório ao INSS, por força do Tema 213 TNU e da Súmula 87 TNU. O segurado não precisa provar a ineficácia. O INSS precisa provar a eficácia concreta, demonstrando ficha técnica, CA vigente, treinamento registrado, troca periódica documentada e fiscalização.
+Refutação. A presunção é afastada em todas as hipóteses do Tema 1090 STJ. Mesmo fora dessas hipóteses, a fundada dúvida desloca a conclusão em favor do segurado, por força do Tema 213 TNU. Para períodos anteriores a 03/12/1998, a eficácia declarada é irrelevante por força da Súmula 87 TNU. O segurado não precisa provar a ineficácia. O INSS precisa provar a eficácia concreta, demonstrando ficha técnica, CA vigente, treinamento registrado, troca periódica documentada e fiscalização.
 
-Precedentes. Tema 555 STF, Tema 1090 STJ, Tema 213 TNU, Súmula 87 TNU.
+Precedentes. Tema 555 STF, Tema 1090 STJ, Tema 213 TNU e, para períodos anteriores a 03/12/1998, Súmula 87 TNU.
 
 ### Argumento 2 — Tema 555 STF exige eficácia declarada
 

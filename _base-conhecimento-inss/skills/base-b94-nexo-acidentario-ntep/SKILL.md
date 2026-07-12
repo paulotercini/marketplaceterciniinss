@@ -3,6 +3,17 @@ name: base-b94-nexo-acidentario-ntep
 description: "Nexo acidentário do B94, NTEP, art. 21-A Lei 8.213/91, Lista B Anexo II Decreto 3.048/99, conversão B31 para B91 com pedido de B94, ADI 3931 STF, presunção e refutação INSS. Use SEMPRE que mencionar nexo acidentário B94, NTEP B94, art. 21-A B94, Lista B B94, conversão B31 B91 com B94, ADI 3931 STF, presunção NTEP, refutação NTEP INSS, doença ocupacional B94, acidente trabalho B94, CAT B94, CNAE CID B94, concausa B94, doença equiparada acidente, art. 19 21 Lei 8.213, equiparação acidente, agressão trabalho B94, viagem serviço B94, refeição descanso B94, contaminação acidental B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-integracao-salario-beneficio-tema862, base-b94-sequela-minima-tema201 e ntep-nexo-acidentario."
 ---
 
+## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
+
+Conferencia em fonte oficial (CJF e STJ) sobre citacoes usadas nesta skill.
+
+1. Sumulas 88 e 89 da TNU EXISTEM e estao VIGENTES (aprovadas na Sessao Ordinaria de 17/04/2024, DJeN 24/04/2024). Texto literal da Sumula 88/TNU. "A existencia de limitacao, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessao do beneficio de auxilio-acidente, em observancia a tese fixada sob o Tema 416 do Superior Tribunal de Justica." Texto literal da Sumula 89/TNU. "Nao ha direito a concessao de beneficio de auxilio-acidente quando, apos consolidacao das lesoes decorrentes de acidente de qualquer natureza, resultarem sequelas que nao reduzem a capacidade laborativa habitual nem sequer demandam dispendio de maior esforco na execucao da atividade habitual." Usar sempre estes textos, nao parafrasear.
+2. Tema 201/TNU tem tese CONTRARIA ao contribuinte individual. "O contribuinte individual nao faz jus ao auxilio-acidente, diante de expressa exclusao legal." Nao usar como fundamento de sequela minima nem em favor da concessao. A tese de sequela minima e a Sumula 88/TNU c/c Tema 416/STJ.
+3. Nao confundir com a Sumula 89/STJ ("A acao acidentaria prescinde do exaurimento da via administrativa"), valida no contexto acidentario estadual.
+
+Quadro completo e errata em base-precedentes-catalogo-vinculantes/references/ATUALIZACAO-STATUS-2026-06.md.
+
+
 # Nexo Acidentário do B94
 
 ## Escopo

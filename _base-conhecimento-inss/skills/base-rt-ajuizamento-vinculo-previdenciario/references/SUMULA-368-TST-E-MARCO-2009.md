@@ -128,7 +128,7 @@ Para CONTRIBUIÇÕES PREVIDENCIÁRIAS. Discussão técnica. A regra é a prescri
 - Súmula 368 TST (incisos I a VI).
 - Súmula Vinculante 8 STF.
 - Súmula Vinculante 53 STF.
-- Súmula 31/TNU (sentença trabalhista como prova previdenciária).
+- Tema 1188/STJ (sentença trabalhista homologatória e documentos decorrentes como início de prova material, exigidos elementos contemporâneos; a Súmula 31/TNU foi revogada em 22/11/2023).
 - Tema 297/TNU (requisitos para uso da sentença).
 - Tema 1188/STF (participação do INSS no processo trabalhista).
 - Súmula 149/STJ (prova testemunhal isolada).

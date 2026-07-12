@@ -57,8 +57,8 @@ Ao pedir retificação do PPP à empresa, acione `retificacao-ppp`.
 
 ## Cruzamento com Onda 24
 
-Para tolueno via cutânea com aplicação do Anexo 13 da NR-15 e ratio do Tema 382/TNU PUIL 5012678 estendida ao tolueno por absorção dérmica, acionar `base-tolueno-tema-382-tnu-via-cutanea`. Esta skill é fonte primária para sapateiro, gráfica, oficina mecânica, indústria de tintas e frentista.
+Para tolueno, acionar `base-tolueno-tema-382-tnu-via-cutanea`. ATENÇÃO (auditoria de 11/07/2026). O Tema 382/TNU foi julgado em 15/04/2026 CONTRA o enquadramento qualitativo do tolueno pela via cutânea ("A exposição ao tolueno por via cutânea, inclusive na sua forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15)"). Para tolueno, exigir análise quantitativa pelo Anexo 11 da NR-15. A skill do tolueno traz a estratégia residual para sapateiro, gráfica, oficina mecânica, indústria de tintas e frentista.
 
 ## O que NÃO está nesta skill
 
-Não há regras sobre ruído, vibração, eletricidade, periculosidade, calor ou agentes biológicos. Cada um tem skill específica. Tolueno via cutânea com Tema 382/TNU em `base-tolueno-tema-382-tnu-via-cutanea`.
+Não há regras sobre ruído, vibração, eletricidade, periculosidade, calor ou agentes biológicos. Cada um tem skill específica. Tolueno e o Tema 382/TNU (tese contrária ao qualitativo pela via cutânea, julgado 15/04/2026) em `base-tolueno-tema-382-tnu-via-cutanea`.

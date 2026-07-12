@@ -3,6 +3,17 @@ name: base-modelo-relatorio-medico-auxilio-acidente-b94
 description: "Modelo narrativo enxuto (1 folha) de relatório médico para auxílio-acidente B94, com sub-modelos por especialidade. Foco em SEQUELA consolidada e redução da capacidade laborativa. Use SEMPRE que mencionar modelo relatório médico B94, modelo laudo auxílio-acidente, modelo laudo sequela, modelo laudo consolidação lesões, relatório ortopedista B94, relatório psiquiatra B94, relatório reumatologista B94, relatório clínico geral B94, relatório oftalmologista B94, relatório cardiologista B94, sequela permanente, consolidação lesões, redução capacidade laborativa, Anexo III Decreto 3.048, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, nexo acidentário NTEP B94, carta médico B94, gerar relatório auxílio-acidente. Cruza com base-validacao-formal-laudo-medico-checklist-ab, base-auxilio-acidente-b94-pos-reforma, auxilio-acidente-b94, base-b94-anexo-iii-quadros, base-b94-sequela-minima-tema201, base-b94-nexo-acidentario-ntep, auditoria-laudo-pericial, ntep-nexo-acidentario, peticao-previdenciaria."
 ---
 
+## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
+
+Conferencia em fonte oficial (CJF e STJ) sobre citacoes usadas nesta skill.
+
+1. Sumulas 88 e 89 da TNU EXISTEM e estao VIGENTES (aprovadas na Sessao Ordinaria de 17/04/2024, DJeN 24/04/2024). Texto literal da Sumula 88/TNU. "A existencia de limitacao, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessao do beneficio de auxilio-acidente, em observancia a tese fixada sob o Tema 416 do Superior Tribunal de Justica." Texto literal da Sumula 89/TNU. "Nao ha direito a concessao de beneficio de auxilio-acidente quando, apos consolidacao das lesoes decorrentes de acidente de qualquer natureza, resultarem sequelas que nao reduzem a capacidade laborativa habitual nem sequer demandam dispendio de maior esforco na execucao da atividade habitual." Usar sempre estes textos, nao parafrasear.
+2. Tema 201/TNU tem tese CONTRARIA ao contribuinte individual. "O contribuinte individual nao faz jus ao auxilio-acidente, diante de expressa exclusao legal." Nao usar como fundamento de sequela minima nem em favor da concessao. A tese de sequela minima e a Sumula 88/TNU c/c Tema 416/STJ.
+3. Nao confundir com a Sumula 89/STJ ("A acao acidentaria prescinde do exaurimento da via administrativa"), valida no contexto acidentario estadual.
+
+Quadro completo e errata em base-precedentes-catalogo-vinculantes/references/ATUALIZACAO-STATUS-2026-06.md.
+
+
 # Modelo de Relatório Médico para Auxílio-Acidente (B94)
 
 ## 1. Quando acionar esta skill
