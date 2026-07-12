@@ -106,6 +106,14 @@ ERRATA. A primeira versão desta auditoria declarou inexistentes as Súmulas 88 
 
 - **Skills do escritório a atualizar via Settings (fora do repo).** auxilio-reclusao-previdenciario, pensao-por-morte e carta-servicos-inss citam os REsp do Tema 1421 sem o número do tema e sem a direção da tese, e o IRDR 35 sem a nota de absorção.
 
+## ACHADOS DA ETAPA 4 DA AUDITORIA (legislação e atos 2025/2026, 12/07/2026)
+
+CONFERIDAS com existência, data e matéria compatíveis com o uso nas skills. Lei 15.157/2025 (DOU 02/07/2025, dispensa de reavaliação em impedimento permanente, irreversível ou irrecuperável, altera Lei 8.213 e LOAS). Lei 15.176/2025 (sancionada 24/07/2025, fibromialgia com equiparação a PCD condicionada à avaliação). Lei 15.326, de 06/01/2026 (professor de educação infantil integra o magistério, com Nota Informativa do MPS sobre efeitos previdenciários). Decreto 12.534/2025 (altera o Decreto 6.214/2007, Bolsa Família na renda do BPC, com controvérsia de constitucionalidade e precedente do TRF5 afastando o cômputo). Portaria MPS 125, de 26/01/2026 (NOVO RICRPS, PDF oficial consolidado até 20/03/2026, substitui a Portaria MTP 4.061/2022, que só deve ser citada como regimento histórico). Portaria MPS 462, de 19/03/2026 (DOU 20/03/2026, ALTERA o RICRPS 125/2026, inclusive arts. 64 e 112, citar sempre como alteradora do regimento). Portarias Conjuntas MPS/INSS 13, 14 e 15, todas de 23/03/2026 (análise documental B31, B91 e B94). Portaria Conjunta DPMF/INSS 19/2026 (Teleperícia, implementada com a Portaria DPMF/SRGPS/MPS 587/2026, de abril de 2026, norma nova ainda não citada nas skills). IN SAGICAD/MDS 20, de 21/01/2026, e IN SAGICAD/MDS 21, de 04/05/2026 (Cadastro Domiciliar, PDF oficial). IN 54/SENARC/MDS, de 30/04/2026 (desligamento voluntário do PBF e fluxo com o BPC, página oficial do MDS). Portaria Conjunta 34/2025 do MDS (deduções e grupo familiar do BPC) e Portaria DIRBEN/INSS 1.316/2025 (Anexo V, siglas e indicadores do CNIS) conferidas em substância por fonte especializada, selo em fonte oficial pendente.
+
+ERRO DE RÓTULO DETECTADO. A Lei 15.108, de 13/03/2025 (DOU 14/03/2025), tem ementa oficial no Planalto de alteração do §2º do art. 16 da Lei 8.213/91 (menor sob guarda equiparado a filho e dependência de netos, sobrinhos e enteados). As skills do escritório pensao-por-morte e carta-servicos-inss a rotulam como "complementação post mortem", matéria diversa (Tema 286/TNU). Corrigir nos pacotes .skill.
+
+NÃO CONFIRMADAS NESTA RODADA (quarentena leve, conferir no DOU antes de citar). Portaria 37/2026 (IFBrM), IN 188/2025, Lei 15.077/2024 (prazos CadÚnico) e Lei 14.768/2023 (deficiência auditiva). Sem indício de invenção, apenas sem indexação localizada.
+
 ## PRÓXIMA REVISÃO
 
 Repetir trimestralmente com consulta às páginas oficiais dos temas (não usar imprensa especializada como fonte final de data ou tese). Registrar sempre a data da conferência.
