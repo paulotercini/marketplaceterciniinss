@@ -86,6 +86,26 @@ ERRATA. A primeira versão desta auditoria declarou inexistentes as Súmulas 88 
 
 - **Pendências da Etapa 3 (rodada complementar).** REsp 2.240.220 e 2.256.869 (auxílio-reclusão), REsp 2.103.603 (pensão), PUIL 5000577-65 e ApCivs TRF3 do contribuinte em dobro, PEDILEFs 0136882 e 5001032 (químicos), IRDRs 15, 18 e 35 do TRF4, demais 150 números CNJ de menor uso.
 
+## ACHADOS DA ETAPA 3B DA AUDITORIA (números remanescentes, 12/07/2026)
+
+- **Tema 1421/STJ (novo no catálogo).** REsp 2.256.869/SP e 2.240.220/PR CONFERIDOS na página oficial. Julgado em 10/06/2026, publicado em 17/06/2026, Rel. Min. Maria Thereza de Assis Moura. Tese contrária à retroação da DIB de pensão por morte e auxílio-reclusão de menor de 16 anos requeridas após 180 dias (regime da Lei 13.846/2019). Tese literal no catálogo STJ. Não confundir com o Tema 1421 do STF.
+
+- **REsp 2.103.603/PB CONFERIDO.** Primeira Turma, Rel. Min. Gurgel de Faria, julgado em 09/09/2025 (fontes convergentes registram a sessão em 09 ou 10/09/2025). Termo inicial da pensão por morte de menor impúbere com distinção entre DIB e prescrição. Sentido compatível com o uso na skill pensao-por-morte.
+
+- **IRDR 15/TRF4 CONFERIDO.** 3ª Seção, julgado em 22/11/2017, eficácia do EPI com rol de agentes não neutralizáveis. Uso correto nas skills de especial.
+
+- **IRDR 18/TRF4 CONFERIDO em substância.** Cumprimento definitivo imediato de parcela transitada em julgado (coisa julgada progressiva). Redação literal a selar em rodada futura na página do TRF4.
+
+- **IRDR 35/TRF4 CONFERIDO.** Processo 5044350-33.2023.4.04.0000, Rel. Des. Federal Cláudia Cristina Cristofani. Matéria absorvida nacionalmente pelo Tema 1421/STJ, citar o repetitivo como fundamento principal.
+
+- **PEDILEF 0136882-97.2017.4.02.5167/RJ CONFERIDO.** Juiz Federal Neian Milhomem Cruz, provimento pela TNU em fevereiro de 2026, hidrocarbonetos, óleos e graxas (contexto do Tema 298/TNU). Número completo agora registrado.
+
+- **Contribuinte em dobro, correção aplicada.** O representativo real da TNU é o PUIL 0003636-92.2018.4.01.3810/MG (Boletim TNU TRF3/GACO 04/2024), recolhimento em dobro só conta se TEMPESTIVO, dentro do período de graça. O "PUIL 5000577-65" antes citado NÃO FOI CONFIRMADO e saiu da skill base-contribuinte-em-dobro-lops-art9.
+
+- **EM QUARENTENA (não verificáveis por fonte pública indexada).** PEDILEF "5001032" (químicos), ApCiv 5002176-54.2023, 5005822-78.2023, 5005407-17.2022 e ApRem 0004116-78.2005 do TRF3. Conferir nos sítios oficiais antes de citar.
+
+- **Skills do escritório a atualizar via Settings (fora do repo).** auxilio-reclusao-previdenciario, pensao-por-morte e carta-servicos-inss citam os REsp do Tema 1421 sem o número do tema e sem a direção da tese, e o IRDR 35 sem a nota de absorção.
+
 ## PRÓXIMA REVISÃO
 
 Repetir trimestralmente com consulta às páginas oficiais dos temas (não usar imprensa especializada como fonte final de data ou tese). Registrar sempre a data da conferência.

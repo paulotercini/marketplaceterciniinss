@@ -1,9 +1,17 @@
 ---
 name: base-contribuinte-em-dobro-lops-art9
-description: "Cômputo de contribuinte em dobro do art. 9º da Lei 3.807/60 (LOPS) para tempo de contribuição, três níveis de defesa pró-segurado. Use SEMPRE que mencionar contribuinte em dobro, LOPS art. 9º, Lei 3.807/60, autônomo em dobro pré-1991, contribuição em dobro INSS, art. 21 IN 128/2022, art. 11 §11 IN 128, recolhimento em dobro pré CLPS 1984, presunção continuidade, art. 3º Lei 10.666 desvinculação qualidade, reclassificação como facultativo, PUIL TNU 5000577-65, ApCiv 5002176-54.2023 TRF3, ApCiv 5005822-78.2023 TRF3, ApCiv 5005407-17.2022 TRF3, ApRem 0004116-78.2005 TRF3, contribuinte em dobro 1985-1991, ABENT GPS antiga, GR-3 GR-4, Súmula 81 TFR, CLPS 1984, contribuinte em dobro aposentadoria tempo. Cruza com peticao-previdenciaria, indenizacao-contribuicoes-atraso, cnis-acerto-indicadores, contribuinte-individual-in128, contribuicoes-complementacao-ec103, base-tempo-rural-anterior-1991, precedentes-previdenciarios."
+description: "Cômputo de contribuinte em dobro do art. 9º da Lei 3.807/60 (LOPS) para tempo de contribuição, três níveis de defesa pró-segurado. Use SEMPRE que mencionar contribuinte em dobro, LOPS art. 9º, Lei 3.807/60, autônomo em dobro pré-1991, contribuição em dobro INSS, art. 21 IN 128/2022, art. 11 §11 IN 128, recolhimento em dobro pré CLPS 1984, presunção continuidade, art. 3º Lei 10.666 desvinculação qualidade, reclassificação como facultativo, PUIL 0003636-92.2018.4.01.3810 TNU, ApCiv 5002176-54.2023 TRF3, ApCiv 5005822-78.2023 TRF3, ApCiv 5005407-17.2022 TRF3, ApRem 0004116-78.2005 TRF3, contribuinte em dobro 1985-1991, ABENT GPS antiga, GR-3 GR-4, Súmula 81 TFR, CLPS 1984, contribuinte em dobro aposentadoria tempo. Cruza com peticao-previdenciaria, indenizacao-contribuicoes-atraso, cnis-acerto-indicadores, contribuinte-individual-in128, contribuicoes-complementacao-ec103, base-tempo-rural-anterior-1991, precedentes-previdenciarios."
 ---
 
 # Contribuinte em Dobro do art. 9º da Lei 3.807/60 (LOPS). Defesa Pró-Segurado
+
+## NOTA DE AUDITORIA (12/07/2026), LIMITE JURISPRUDENCIAL OBRIGATÓRIO
+
+O representativo da TNU sobre a matéria é o **PUIL 0003636-92.2018.4.01.3810/MG** (identificado no Boletim TNU do TRF3/GACO de abril de 2024). Conclusão firmada. O contribuinte em dobro do art. 9º da LOPS preordena-se a assegurar a manutenção da qualidade de segurado e PRESSUPÕE o pagamento tempestivo das contribuições ANTES de findar o período de graça. Recolhimentos vertidos APÓS encerrada a filiação ao RGPS não podem ser computados para carência nem tempo de serviço.
+
+Consequência para a tese desta skill. O cômputo "independentemente da qualidade de segurado posterior" vale para recolhimentos TEMPESTIVOS (feitos dentro do período de graça), que não se perdem com a perda superveniente da qualidade. Não vale para recolhimentos feitos depois de expirado o período de graça. A defesa deve sempre demonstrar a tempestividade, explorando o alongamento do período de graça (120 contribuições, desemprego involuntário, art. 15 da Lei 8.213/91).
+
+O número "PUIL 5000577-65", citado em versões anteriores, NÃO FOI CONFIRMADO em nenhuma fonte e não deve ser citado. As ApCiv 5002176-54.2023, 5005822-78.2023, 5005407-17.2022 e ApRem 0004116-78.2005 do TRF3 não foram verificáveis por fonte pública indexada, conferir no sítio do TRF3 antes de citar em peça.
 
 ## 1. Quando acionar esta skill
 
