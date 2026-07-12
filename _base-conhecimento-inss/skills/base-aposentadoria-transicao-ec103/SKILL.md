@@ -35,15 +35,15 @@ Cada regra tem trade-off próprio. Pontos exige maior tempo de contribuição ma
 
 ## Cenários operacionais pró-segurado
 
-Primeiro, segurado que em 2026 completa 100 pontos e tem 35 anos de contribuição. Regra dos pontos (art. 15). RMI com possível acréscimo além dos 60% base, conforme tempo excedente.
+Primeiro, segurado (homem) que em 2026 soma 103 pontos e tem 35 anos de contribuição. Regra dos pontos (art. 15) — em 2026 exigem-se 103 pontos do homem e 93 da mulher.
 
-Segundo, segurada que em 2026 completa 58 anos e 30 anos de contribuição. Regra da idade progressiva (art. 16).
+Segundo, segurada que em 2026 completa 59 anos e 6 meses de idade e 30 anos de contribuição. Regra da idade progressiva (art. 16) — a idade exigida da mulher em 2026 é 59a6m (homem: 64a6m).
 
 Terceiro, segurado que em 13 de novembro de 2019 faltavam apenas 1 ano e 8 meses para completar 35 anos de contribuição. Pedágio de 50% (art. 17). Acesso mais rápido ao benefício.
 
-Quarto, segurado que em 2026 completa 60 anos de idade e tem 35 anos de contribuição. Pode optar pelo pedágio de 100% (art. 20) com RMI integral (100% da média), o que pode ser mais vantajoso em certos perfis remuneratórios.
+Quarto, segurado que em 13/11/2019 estava próximo do tempo mínimo: no pedágio de 100% (art. 20), exige-se idade de 60 (homem) ou 57 (mulher), o tempo mínimo de 35/30 anos E o cumprimento do dobro do tempo que faltava na promulgação — a conta do pedágio é indispensável.
 
-Quinto, professor com 25 ou 30 anos de magistério e enquadramento em transição específica (art. 15 §2º, art. 16 §2º, art. 20 §2º), com redução de 5 anos em relação aos demais segurados.
+Quinto, professor com 25 ou 30 anos de magistério e enquadramento em transição específica (art. 15 §3º, art. 16 §2º, art. 20 §1º), com redução de 5 anos em relação aos demais segurados.
 
 Sexto, segurado com tempo especial convertido até 13 de novembro de 2019. Aproveitamento do tempo especial convertido para compor o tempo de contribuição da transição, conforme `base-aposentadoria-especial-transicao-ec103` e `auditoria-ppp`.
 
@@ -68,7 +68,7 @@ Ao buscar jurisprudência, acione `precedentes-previdenciarios`.
 
 Primeiro, a escolha da regra é do segurado. O INSS frequentemente aplica a regra que gera RMI menor sem apresentar o comparativo. Exigir planilha comparativa em recurso administrativo ou ação judicial.
 
-Segundo, a RMI nas transições adota percentual de 60% da média das contribuições mais 2% por ano excedente a 20 anos (homem) ou 15 anos (mulher), nos termos do art. 26 da EC 103. A única exceção é o pedágio de 100%, que mantém 100% da média.
+As exceções são duas: o pedágio de 100% (art. 20), que mantém 100% da média, e o pedágio de 50% (art. 17), cujo cálculo é a média multiplicada pelo fator previdenciário (art. 17, parágrafo único).
 
 Terceiro, cuidado com a retroatividade do requerimento. A DER escolhida deve coincidir com o preenchimento dos requisitos da transição eleita. Em caso de requerimento prematuro, cabe reafirmação da DER (Tema 995 STJ).
 

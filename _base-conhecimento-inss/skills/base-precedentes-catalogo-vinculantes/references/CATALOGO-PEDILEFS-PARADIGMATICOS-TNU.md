@@ -142,6 +142,50 @@ Cruzar com `perspectiva-genero-previdenciario`, `base-facultativo-baixa-renda`, 
 
 Por ser PUIL regional acolhido, a tese vincula todas as Turmas Recursais da 4ª Região. Para uso em SP/MS (TRF3) e outras regiões, cita-se como precedente persuasivo (não vinculante regionalmente).
 
+## PRECEDENTES DO TRF3 - Competência em MS por Mora Administrativa
+
+Bloco dedicado aos conflitos de competência do TRF3 sobre o tema. Verificação em fonte primária do PDF do CC 5026411-72.2020.4.03.0000 (Rel. Nelton dos Santos), sessão em 06/07/2026. Detalhamento operacional em `base-ms-competencia-autoridade-coatora-inss-crps/references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md` (Onda 63).
+
+### Tese firmada pelo Órgão Especial
+
+MS que APENAS busca compelir o INSS a apreciar ou implementar requerimento administrativo, sem pedido de concessão ou revisão em juízo, tem natureza administrativa (não previdenciária). Competência da Vara Cível Federal (2ª Seção), não da Vara Previdenciária (3ª Seção).
+
+### Precedentes que fixam Competência da Vara CÍVEL
+
+**CC 5014490-19.2020.4.03.0000.** TRF3, Órgão Especial. Rel. Des. Fed. Newton De Lucca. Julgado 28/08/2020. Publicado 01/09/2020.
+
+**CC 0034848-47.2007.4.03.0000.** TRF3, Órgão Especial. Rel. Desª Fed. Ramza Tartuce. Julgado 27/02/2008. Publicado DJU 26/03/2008 pg. 130.
+
+**CC 0025630-92.2007.4.03.0000.** TRF3, Órgão Especial. Rel. Des. Fed. Baptista Pereira. Julgado 09/08/2007. Publicado DJU 30/08/2007 pg. 392.
+
+**CC 5006551-85.2020.4.03.0000.** TRF3, Órgão Especial. Rel. Des. Fed. Baptista Pereira. Julgado 24/06/2020. Publicado DJe 07/07/2020.
+
+**CC 5014493-71.2020.4.03.0000.** TRF3, Órgão Especial. Rel. Des. Fed. André Nekatschalow. Julgado 08/07/2020. Publicado DJe 14/07/2020.
+
+### Precedentes que fixam competência do Órgão Especial para julgar o CC
+
+**CC 5010765-22.2020.4.03.0000.** TRF3, 2ª Seção. Rel. Des. Fed. Marcelo Saraiva. Julgado 01/12/2020. Unânime, com remessa ao Órgão Especial.
+
+**CC 0017072-19.2016.4.03.0000.** TRF3, 2ª Seção. Rel. Des. Fed. Marcelo Saraiva. Julgado 02/05/2017. Publicado e-DJF3 12/05/2017.
+
+**CC 5026411-72.2020.4.03.0000.** TRF3, 2ª Seção. Rel. Des. Fed. Nelton dos Santos. POR MAIORIA (voto vencido Nery Júnior, divergente Johonsom di Salvo). Remessa ao Órgão Especial. Acórdão paradigma verificado.
+
+### Corrente divergente (afasta Previdenciária, mas mantém nas Turmas da 2ª Seção)
+
+**CC 5015421-22.2020.4.03.0000.** TRF3, Órgão Especial. Rel. Desª Fed. Marisa Ferreira dos Santos. Julgado 12/02/2021. Sustenta que a mora administrativa é matéria de direito administrativo, competência das Turmas da 2ª Seção.
+
+**CC 5007662-41.2019.4.03.0000.** TRF3, Órgão Especial. Rel. Des. Fed. André Nekatschalow. Publicado 14/06/2019. Mesma tese da corrente divergente. Cita precedentes CC 0003547-33.2017.4.03.0000 (Rel. Nery Júnior, 11/04/2018), CC 0003622-72.2017.4.03.0000 (Rel. Nelton dos Santos, 25/10/2017) e CC 0014775-39.2016.4.03.0000 (Rel. Nekatschalow, 10/05/2017).
+
+### Base normativa
+
+- Provimento nº 186, de 28/10/1999, do Conselho da Justiça Federal da 3ª Região.
+- Provimento nº 228/2002 do CJF3R.
+- Regimento Interno do TRF3, arts. 10, §§ 1º a 3º; art. 11, parágrafo único, "i"; art. 12, II; art. 22, III.
+
+### Distinção decisiva pró-segurado
+
+O que se pede em juízo determina a competência. Pedido APENAS de mora, Vara Cível. Pedido cumulativo de concessão/revisão + mora, Vara Previdenciária. Distribuir a inicial conforme a estratégia.
+
 ## OUTROS PEDILEFs PARADIGMÁTICOS A INCORPORAR
 
 A reference é incremental. Novos PEDILEFs paradigmáticos confirmados em fonte primária podem ser adicionados.

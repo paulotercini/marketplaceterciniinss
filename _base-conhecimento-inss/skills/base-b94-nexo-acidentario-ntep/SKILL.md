@@ -13,6 +13,8 @@ Conferencia em fonte oficial (CJF e STJ) sobre citacoes usadas nesta skill.
 
 Quadro completo e errata em base-precedentes-catalogo-vinculantes/references/ATUALIZACAO-STATUS-2026-06.md.
 
+Nota de convenção de espécies INSS: B31 = auxílio-doença previdenciário; B91 = auxílio-doença acidentário; B32 = aposentadoria por incapacidade permanente previdenciária; B92 = acidentária; B94 = auxílio-acidente.
+
 
 # Nexo Acidentário do B94
 

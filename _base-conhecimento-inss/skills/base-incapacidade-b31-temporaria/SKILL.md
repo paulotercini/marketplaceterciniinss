@@ -1,6 +1,6 @@
 ---
 name: base-incapacidade-b31-temporaria
-description: "Auxílio por incapacidade temporária B31 pós EC 103, ótica exclusiva do segurado. Use SEMPRE que mencionar B31, auxílio-doença, art. 59 Lei 8.213, art. 60 §11-A, carência 12 meses, isenção art. 26 II, art. 151, DII DID, perícia documental, Portaria Conjunta 13/2026, Tema 1421 STF limbo, P1 P2 prorrogação, Alta Programada, cessação antecipada, restabelecimento B31, RMI 91% média, qualidade segurado, art. 27-A, art. 42 §2º, segurado especial rural, MEI B31, doméstica B31, Tema 246 TNU, Súmula 63 TNU, Súmula 47 TNU, Súmula 77 TNU, Tema 1083 STJ, trava três indeferimentos, 180 dias, agravamento, reabertura. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, periodo-graca-qualidade-segurado, ntep-nexo-acidentario, base-incapacidade-b91-permanente e orientacao-cliente-pericia."
+description: "Auxílio por incapacidade temporária B31 pós EC 103, ótica exclusiva do segurado. Use SEMPRE que mencionar B31, auxílio-doença, art. 59 Lei 8.213, art. 60 §11-A, carência 12 meses, isenção art. 26 II, art. 151, DII DID, perícia documental, Portaria Conjunta 13/2026, Tema 1421 STF limbo, P1 P2 prorrogação, Alta Programada, cessação antecipada, restabelecimento B31, RMI 91% média, qualidade segurado, art. 27-A, art. 42 §2º, segurado especial rural, MEI B31, doméstica B31, Tema 246 TNU, Súmula 63 TNU, Súmula 47 TNU, Súmula 77 TNU, trava três indeferimentos, 180 dias, agravamento, reabertura. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, periodo-graca-qualidade-segurado, ntep-nexo-acidentario, base-incapacidade-b91-permanente e orientacao-cliente-pericia."
 ---
 
 # Auxílio por Incapacidade Temporária (B31) Pós EC 103/2019
@@ -21,7 +21,7 @@ Lei 8.213/91, art. 26, II. Isenção de carência para acidente de qualquer natu
 
 Lei 8.213/91, art. 27-A. Reabertura de qualidade exige 1/2 da carência após novo vínculo para quem perdeu qualidade (com matizes jurisprudenciais).
 
-EC 103/2019, art. 26, §3º, I. Fixa RMI do B31 em 91% da média pelo novo cálculo da reforma.
+Lei 8.213/91, art. 61. Fixa a RMI do B31 em 91% do salário de benefício, com a média apurada na forma do art. 26 da EC 103/2019.
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 

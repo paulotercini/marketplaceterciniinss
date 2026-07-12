@@ -1,6 +1,6 @@
 ---
 name: base-auxilio-acidente-b94-pos-reforma
-description: "Auxílio-acidente B94 pós EC 103/2019, ótica exclusiva do segurado, com padrão estrutural OBRIGATÓRIO da Vara do Núcleo Especializado de Justiça 4.0 - Acidentes do Trabalho do Interior e do Litoral (TJSP) instituído pela Portaria Conjunta 10.507/2024 e Comunicado Conjunto 868/2024, conforme decisão paradigma proferida pelo Juiz Matheus de Souza Parducci Camargo em 22/05/2026 no processo 1013616-41.2026.8.26.0381. Use SEMPRE que mencionar B94, auxílio-acidente, sequela, redução da capacidade laboral, consolidação de lesões, art. 86 Lei 8.213, art. 129 par. único Lei 8.213 isenção custas, art. 129-A Lei 8.213 com Lei 14.331/2022, Anexo III Decreto 3.048, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 STF dispensa novo requerimento, Tema 660 STJ, Tema 862 STJ, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, PUIL 5000733, PUIL 5026380, art. 31 integração salário-de-contribuição, cálculo RMI B94, 50% média, período de graça B94, indenizatório, acumulação aposentadoria B94 antes Lei 13.846, reabilitação profissional B94, cessação B94, MS auxílio-acidente, Portaria Conjunta 15/2026, análise documental B94, sequela mínima Anexo III exemplificativo, Núcleo 4.0 TJSP, Vara Especializada Acidentes Trabalho TJSP, Comunicado Conjunto 868/2024 TJSP, Portaria Conjunta 10.507/2024 TJSP, 17ª Câmara Direito Público TJSP, AI 2061943-13.2025.8.26.0000, Richard Pae Kim, 9 tópicos petição acidentária, emenda inicial Núcleo 4.0, B91 acidentário B92 B94 Justiça Estadual, art. 109 I CF acidentárias. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, analise-documental-incapacidade, base-incapacidade-acidentaria-b92, base-incapacidade-b31-temporaria, base-siglas-inss."
+description: "Auxílio-acidente B94 pós EC 103/2019, ótica exclusiva do segurado, com padrão estrutural OBRIGATÓRIO da Vara do Núcleo Especializado de Justiça 4.0 - Acidentes do Trabalho do Interior e do Litoral (TJSP) instituído pela Portaria Conjunta 10.507/2024 e Comunicado Conjunto 868/2024, conforme decisão paradigma proferida pelo Juiz Matheus de Souza Parducci Camargo em 22/05/2026 no processo 1013616-41.2026.8.26.0381. Use SEMPRE que mencionar B94, auxílio-acidente, sequela, redução da capacidade laboral, consolidação de lesões, art. 86 Lei 8.213, art. 129 par. único Lei 8.213 isenção custas, art. 129-A Lei 8.213 com Lei 14.331/2022, Anexo III Decreto 3.048, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 STF dispensa novo requerimento, Tema 660 STJ, Tema 862 STJ, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, PUIL 5000733, PUIL 5026380, art. 31 integração salário-de-contribuição, cálculo RMI B94, 50% média, período de graça B94, indenizatório, acumulação aposentadoria B94 lesão anterior 11/11/1997 MP 1.596-14, reabilitação profissional B94, cessação B94, MS auxílio-acidente, Portaria Conjunta 15/2026, análise documental B94, sequela mínima Anexo III exemplificativo, Núcleo 4.0 TJSP, Vara Especializada Acidentes Trabalho TJSP, Comunicado Conjunto 868/2024 TJSP, Portaria Conjunta 10.507/2024 TJSP, 17ª Câmara Direito Público TJSP, AI 2061943-13.2025.8.26.0000, Richard Pae Kim, 9 tópicos petição acidentária, emenda inicial Núcleo 4.0, B91 acidentário B92 B94 Justiça Estadual, art. 109 I CF acidentárias. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, analise-documental-incapacidade, base-incapacidade-acidentaria-b92, base-incapacidade-b31-temporaria, base-siglas-inss."
 ---
 
 ## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
@@ -31,13 +31,13 @@ Lei 8.213/91, art. 86, §1º. RMI de 50% do salário de benefício. Caráter ind
 
 Lei 8.213/91, art. 86, §2º. DIB a partir do dia seguinte à cessação do B31 que originou a sequela.
 
-Lei 8.213/91, art. 86, §3º. Cessação apenas com a aposentadoria do segurado.
+Lei 8.213/91, art. 86, §2º (redação da MP 1.596-14/97). Pagamento até a véspera do início de qualquer aposentadoria ou até o óbito.
 
 Lei 8.213/91, art. 31. Integração do B94 ao salário-de-contribuição para fins de cálculo de outros benefícios.
 
 Portaria Conjunta MPS/INSS 15/2026. Regulamenta a análise documental do B94. Acionar `analise-documental-incapacidade`.
 
-Lei 13.846/2019. Vedou a acumulação de B94 concedido após sua vigência com aposentadoria. Direito adquirido para concessões anteriores.
+MP 1.596-14/1997 (convertida na Lei 9.528/97). Desde 11/11/1997, vedou a acumulação de B94 com aposentadoria. Direito adquirido apenas quando a lesão e a aposentadoria são anteriores a 11/11/1997 (Súmula 507 STJ). Nos demais casos, o B94 integra o salário-de-contribuição (art. 31; Tema 862 STJ).
 
 Lei 8.213/91, art. 26, I. B94 é isento de carência.
 
@@ -161,13 +161,13 @@ Segundo, segurado com sequela não listada no Anexo III do Decreto 3.048/99 mas 
 
 Terceiro, segurado com lesão mínima mas com redução comprovada de capacidade. Tema 416 STJ. Súmula 89 TNU. Não há exigência de sequela grave, bastando redução real.
 
-Quarto, segurado com B94 e aposentadoria anterior à Lei 13.846/2019. Direito adquirido à acumulação. Tema 555 STJ.
+Quarto, segurado com lesão e aposentadoria anteriores a 11/11/1997. Direito adquirido à acumulação. Súmula 507 STJ e Tema 555 STJ.
 
 Quinto, segurado com B94 concedido com RMI equivocada. Cabe revisão para incluir verbas da integração, conforme art. 31.
 
 Sexto, segurado com redução auditiva (Tema 322 TNU). Súmula 44 TNU admite o B94 desde que comprovada redução real.
 
-Sétimo, segurado com B94 cessado indevidamente antes da aposentadoria. Art. 86, §3º. Cessação apenas pela aposentadoria. Restabelecimento cabível.
+Sétimo, segurado com B94 cessado indevidamente antes da aposentadoria. Art. 86, §2º. Cessação apenas pela aposentadoria ou óbito. Restabelecimento cabível.
 
 Oitavo, segurado com B94 aguardando período de graça. PUIL 5000733 do TNU sobre período de graça em B94 (aplicar com cautela, verificar tese definitiva em `precedentes-previdenciarios`).
 
@@ -183,7 +183,7 @@ Terceiro, em caso de rol do Anexo III, usar como reforço. Em caso fora do rol, 
 
 Quarto, em cessação indevida, restabelecer com pedido de implantação imediata (Súmula 47 TNU).
 
-Quinto, em concessões antes da Lei 13.846/2019, reivindicar acumulação com aposentadoria.
+Quinto, quando lesão e aposentadoria forem anteriores a 11/11/1997, reivindicar a acumulação com aposentadoria (Súmula 507 STJ).
 
 ## Integração com outras skills
 
@@ -202,9 +202,9 @@ Primeiro, Anexo III do Decreto 3.048/99 é exemplificativo, não taxativo. O INS
 
 Segundo, RMI do B94 é de 50% do salário de benefício, com caráter indenizatório. Integração ao salário-de-contribuição pelo art. 31 garante inclusão em benefício posterior.
 
-Terceiro, a vedação da acumulação com aposentadoria vale apenas para concessões após a Lei 13.846/2019. Direito adquirido para concessões anteriores, independente da DIB da aposentadoria.
+Terceiro, a vedação da acumulação com aposentadoria vige desde 11/11/1997 (MP 1.596-14, convertida na Lei 9.528/97). Só há direito adquirido quando a lesão incapacitante E a aposentadoria são anteriores a 11/11/1997 (Súmula 507 STJ).
 
-Quarto, o B94 cessa apenas com a aposentadoria do segurado (art. 86 §3º). Cessações intermediárias são impugnáveis.
+Quarto, o B94 cessa apenas com a aposentadoria ou o óbito do segurado (art. 86, §2º). Cessações intermediárias são impugnáveis.
 
 ## Fungibilidade aplicável
 

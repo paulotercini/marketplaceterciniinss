@@ -39,7 +39,7 @@ A solução pelo CPC/2015 é a observância do contraditório prévio, mesmo nas
 
 ### 3.1. Tese fixada no Tema 1124
 
-"O segurado, no exercício do seu direito de ação, deverá comprovar a existência de prévio requerimento administrativo perante o INSS, salvo nas hipóteses excepcionais firmadas no Tema 350/STF (RE 631.240)".
+Distinção essencial: a exigência de PRÉVIO REQUERIMENTO ADMINISTRATIVO como condição da ação é o Tema 350/STF (RE 631.240), com suas exceções. O Tema 1124/STJ (REsp 1.905.830) trata do TERMO INICIAL DOS EFEITOS FINANCEIROS do benefício concedido ou revisado judicialmente com base em prova não submetida ao INSS: DER quando a prova já constava do processo administrativo; citação quando a prova é genuinamente nova.
 
 ### 3.2. Aplicação pelo tribunal
 
@@ -155,13 +155,13 @@ Tema 1124/STJ na perspectiva do efeito translativo.
 
 ### 8.1. Datas-chave
 
-DJe 30/03/2022. Publicação da tese.
+O Tema 1124/STJ foi julgado pela 1ª Seção em 2025; a modulação e os marcos de aplicação devem ser conferidos no inteiro teor do acórdão (REsp 1.905.830) antes de qualquer invocação em peça.
 
 Modulação. Aplicação a partir da publicação, com proteção das ações ajuizadas em momento anterior.
 
 ### 8.2. Aplicação prática
 
-Ações ajuizadas antes de 30/03/2022 não devem ser atingidas pelo Tema 1124.
+A aplicação a processos em curso segue o que o próprio acórdão do Tema 1124 dispuser — não presuma marcos sem conferir.
 
 Em caso de aplicação retroativa, argumentar.
 
@@ -187,7 +187,7 @@ Ações de tutela coletiva.
 
 Demora administrativa caracterizadora de indeferimento implícito.
 
-Demora superior a 45 dias (Lei 9.784/1999, art. 49).
+Demora superior a 30 dias, prorrogáveis por mais 30 (Lei 9.784/1999, art. 49).
 
 Demora superior aos prazos da Lei 13.460/2017.
 
@@ -323,7 +323,7 @@ Cruzamento com `pedilef-cotejo-analitico-tnu`.
 
 ## 16. Cruzamento com Onda 26
 
-Para filtro crítico de admissibilidade de PUIL/PEDILEF na TNU/TRU pela Súmula 43/TNU (vedação à matéria processual) e estratégia de revestimento da tese como direito material, acionar OBRIGATORIAMENTE `base-puil-pedilef-vedacao-materia-processual` ANTES de redigir qualquer PUIL ou PEDILEF contra acórdão que aplicou Tema 1124 de ofício. A reformulação do argumento processual como divergência sobre a interpretação do art. 17 da Lei 10.259/2001 + Tema 350/STF é fundamental para a admissibilidade.
+Para filtro crítico de admissibilidade de PUIL/PEDILEF na TNU/TRU pela Súmula 43/TNU (vedação à matéria processual) e estratégia de revestimento da tese como direito material, acionar OBRIGATORIAMENTE `base-puil-pedilef-vedacao-materia-processual` ANTES de redigir qualquer PUIL ou PEDILEF contra acórdão que aplicou Tema 1124 de ofício. A reformulação do argumento processual como divergência sobre a interpretação do art. 18 da Lei 8.213/91 + Tema 350/STF é fundamental para a admissibilidade.
 
 ## 17. O que NÃO está nesta skill
 

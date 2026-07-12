@@ -49,7 +49,7 @@ A regra geral é de que a regra permanente é de último acesso. O planejamento 
 
 Para segurados com filiação após a reforma, a regra permanente é a única via por tempo e idade (além da aposentadoria por incapacidade permanente e da aposentadoria especial). Contudo, o planejamento pode otimizar contribuições para maximizar a RMI, nos termos do art. 26 da EC 103 (acionar `base-calculo-rmi-ec103`).
 
-Cuidado com o divisor mínimo. O §6º do art. 26 da EC 103 estabelece que o divisor da média é sempre o valor correspondente a 60% do período contributivo, com mínimo de 108 contribuições para quem se enquadra em alguns cenários. Quanto mais contribuições descartadas pelos 20% menores, melhor a média. Análise de afastamento da regra dos 60% pode ser estratégia para certos perfis.
+O art. 26, §6º, da EC 103 traz regra pró-segurado: podem ser EXCLUÍDAS, a pedido, as contribuições que reduzam o valor do benefício, desde que mantido o tempo mínimo. O divisor mínimo de 108 contribuições vem do art. 135-A da Lei 8.213/91 (Lei 14.331/2022). Pós-EC 103 a média usa 100% dos salários desde 07/1994 — não existe mais o descarte automático dos 20% menores (regra do art. 3º da Lei 9.876/99, aplicável só a direito adquirido pré-reforma).
 
 ## Integração com outras skills
 

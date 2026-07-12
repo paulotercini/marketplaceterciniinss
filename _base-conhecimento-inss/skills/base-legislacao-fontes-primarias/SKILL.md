@@ -100,7 +100,7 @@ Caminho base no Linux mount. `/sessions/fervent-bold-lovelace/mnt/INSS/base-legi
 
 **Decreto-53831-1964-quadro-agentes-nocivos.md** (23 KB) — A JOIA DO REPOSITÓRIO
 - Decreto 53.831/1964 com QUADRO ANEXO em formato tabular.
-- Status. REVOGADO em 1979, mas seu Quadro Anexo continua sendo aplicado para enquadramento por categoria profissional até 28/04/1995, por força da Súmula 198/TFR e Súmula 555/STJ.
+- Status. Revogado pelo Decreto 62.755/68, restabelecido pela Lei 5.527/68; conviveu com o Decreto 83.080/79 e foi superado pelo Decreto 2.172/97 (aplicável ao enquadramento até 05/03/1997; categoria profissional até 28/04/1995), mas seu Quadro Anexo continua sendo aplicado para enquadramento por categoria profissional até 28/04/1995, por força da Súmula 198/TFR e Lei 9.032/95 (marco de 28/04/1995).
 - Fonte do HTML. https://www.planalto.gov.br/ccivil_03/decreto/D53831.htm
 - Fonte do Quadro Anexo. https://www.planalto.gov.br/ccivil_03/decreto/1950-1969/anexo/an53831-64.pdf
 - SHA-256. `da9f86fe9d7fca79b36696fb9f013473b084809e9a59903f8b74961fee42f424`

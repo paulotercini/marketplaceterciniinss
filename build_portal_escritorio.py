@@ -16,37 +16,11 @@ global montado a partir de TODAS as listas do To Do.
 
 Requer graph_tokens.json valido (rode graph_devflow.py / graph_refresh.py).
 """
-import re, json, hashlib, pathlib, datetime
+import re, json, datetime
 from graph_client import list_lists, list_tasks, _req
-from build_portal_listas import split_blocks
+from portal_common import DATA_DIR, dn_from_items, cpf_from_task, split_blocks, derivar_hash
 
-DATA_DIR = pathlib.Path("docs/portal/data")
 LISTA_ESCRITORIO = "🙋 Escritório"
-
-
-def digits(s):
-    return re.sub(r"\D", "", s or "")
-
-
-def dn_from_items(items):
-    """Extrai uma data de nascimento plausivel (1920-2012) de um checklist."""
-    for it in items:
-        m = re.search(r"\b(\d{2})[/.](\d{2})[/.](\d{4})\b", it.get("displayName", ""))
-        if m and 1920 <= int(m.group(3)) <= 2012:
-            return m.group(1) + m.group(2) + m.group(3)
-    return None
-
-
-def cpf_from_task(title, items):
-    for m in re.findall(r"(\d[\d.\-]{9,})", title):
-        d = digits(m)
-        if len(d) == 11:
-            return d
-    for it in items:
-        d = digits(it.get("displayName", ""))
-        if len(d) == 11:
-            return d
-    return None
 
 
 # Frases que indicam, SEM ambiguidade, uma pendência ABERTA do lado do cliente.
@@ -97,10 +71,6 @@ def infer_status(body):
         return "Em elaboração de petição pelo escritório"
     return "Em análise pelo escritório"
 
-
-def derivar_hash(cpf, dn, salt, iters):
-    bits = hashlib.pbkdf2_hmac("sha256", (cpf + "|" + dn).encode(), salt.encode(), iters, dklen=32)
-    return hashlib.sha256(bits).digest()[:16].hex()
 
 
 def main():

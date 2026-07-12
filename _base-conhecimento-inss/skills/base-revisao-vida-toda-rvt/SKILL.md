@@ -25,7 +25,7 @@ EC 103/2019, art. 26. Nova regra de cálculo para benefícios concedidos após 1
 
 ## Marco jurisprudencial
 
-Tema 1102 STF (RE 1.276.977). Julgado em dezembro/2022. Fixou tese favorável à RVT, admitindo que o segurado com direito adquirido anterior à Lei 9.876/1999 possa escolher entre a regra original e a de transição, se lhe for mais vantajosa.
+Tese do Tema 1102 (2022): o segurado FILIADO ANTES da Lei 9.876/99 que implementou os requisitos APÓS ela (e antes da EC 103) poderia optar pela regra definitiva do art. 29 da Lei 8.213 em vez da transição do art. 3º da Lei 9.876 — desfecho posterior nas ADIs 2110/2111 (2024) validou o art. 3º e esvaziou a tese.
 
 ADIs 2110 e 2111 STF. Julgadas em 2024. Declararam constitucional o art. 3º da Lei 9.876/1999. Com modulação de efeitos, atingindo a prática da RVT na maior parte dos casos posteriores a novembro/1999.
 
@@ -37,7 +37,7 @@ Honestidade radical. Após o julgamento das ADIs 2110 e 2111 em 2024, a RVT foi 
 
 ## Espaço remanescente pró-segurado
 
-Primeiro, benefícios com DIB anterior a novembro/1999 (vigência da Lei 9.876/1999). Nesses casos, pode haver direito adquirido à regra originária do art. 29.
+Primeiro, benefícios com DIB anterior a 29/11/1999 (vigência da Lei 9.876/1999): tecnicamente não é RVT — é direito adquirido comum ao cálculo pela regra originária do art. 29, sem a regra de transição.
 
 Segundo, processos com coisa julgada formada antes do julgamento das ADIs, em que a revisão já foi deferida.
 

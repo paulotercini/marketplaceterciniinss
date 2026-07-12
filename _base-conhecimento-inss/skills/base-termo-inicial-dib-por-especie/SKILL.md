@@ -21,7 +21,7 @@ A DIB do auxílio-doença não empregado é a DER ou a data do afastamento se DE
 
 A DIB da aposentadoria por idade, tempo de contribuição e especial é a DER (art. 49).
 
-A DIB da pensão por morte é o óbito, se requerida em até 90 dias para dependente menor de 16 anos (art. 74). Para outros, até 180 dias da Lei 13.846/2019.
+A DIB da pensão por morte é a data do óbito quando requerida em até 180 dias (filhos menores de 16 anos) ou em até 90 dias (demais dependentes) — art. 74, I, redação da Lei 13.846/2019; após os prazos, a DIB é a DER.
 
 A DIB do BPC é a DER (art. 21 LOAS).
 

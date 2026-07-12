@@ -47,19 +47,19 @@ Conversão e regra do tempo de prestação.
 
 ## Conversão por grau
 
-Primeiro, deficiência grave. Tempo de contribuição reduzido para 25 mulher e 30 homem.
+Primeiro, deficiência grave. Tempo de contribuição de 25 anos (homem) e 20 anos (mulher) — LC 142/2013, art. 3º.
 
-Segundo, moderada. 28 mulher e 33 homem.
+Segundo, deficiência moderada. 29 anos (homem) e 24 anos (mulher).
 
-Terceiro, leve. 30 mulher e 35 homem.
+Terceiro, deficiência leve. 33 anos (homem) e 28 anos (mulher).
 
 Quarto, regra de transição com cálculo proporcional.
 
 ## Multiplicadores
 
-Primeiro, mulher. Grave 0,8333. Moderada 0,9333. Leve 1,000.
+Para a conversão entre graus (e entre tempo comum e tempo com deficiência), aplicam-se os fatores da tabela do art. 70-E do Decreto 3.048/99, calculados a partir dos tempos da LC 142 (mulher: 20/24/28; homem: 25/29/33) e do tempo comum (30/35) — o fator varia conforme o grau de origem e o de destino.
 
-Segundo, homem. Grave 0,8571. Moderada 0,9428. Leve 1,000.
+Exemplos: mulher, tempo comum para grave = 20/30; grave para comum = 30/20 = 1,50. Homem, comum para grave = 25/35; grave para comum = 35/25 = 1,40. Conferir sempre a tabela do art. 70-E para o par exato.
 
 Terceiro, multiplicadores aplicam-se sobre o tempo comum para projetar tempo PCD necessário.
 
