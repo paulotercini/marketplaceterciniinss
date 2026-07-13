@@ -166,7 +166,13 @@ f) **Gerar a CONCLUSÃO ultracurta (regra do Paulo, quanto mais retriagem, mais 
    Na PRIMEIRA triagem do cliente, uma ou duas frases com o achado essencial, nada
    além. Nas SEGUINTES (retriagem/complemento), registre APENAS o delta desde a última
    (C) ("Nada novo desde DD.MM" quando for o caso), sem repetir o que o histórico logo
-   abaixo já guarda. Direto sem perder conteúdo, o conteúdo detalhado fica no histórico
+   abaixo já guarda. **Obrigação da retriagem (função de lembrete, decisão do Paulo,
+   NUNCA remover): antes de escrever o delta, RELEIA o histórico e as pendências
+   listadas abaixo no corpo da tarefa e VERIFIQUE se algo listado ficou sem fazer
+   (documento nunca trazido, prazo se aproximando, providência anotada e esquecida).
+   O que estiver pendente e dormindo entra no delta como lembrete expresso ("segue
+   pendente desde DD.MM: X"), porque o valor da triagem é justamente lembrar o que
+   passaria despercebido.** Direto sem perder conteúdo, o conteúdo detalhado fica no histórico
    e no fecho. SEMPRE terminar com o **fecho estruturado em uma linha**, que é o estado
    do caso que a próxima triagem lê primeiro (e por isso barateia as triagens 2ª, 3ª e
    4ª do mesmo cliente):
