@@ -438,7 +438,9 @@ encadeie** se houver pendência bloqueante, aponte o que falta e pare.
 - `auditoria_citacoes.py skills|modelos [--baixar]` — varre skills/Modelos Ouro e cruza
   toda citação (Tema/Súmula/Enunciado) com o catálogo; base da skill `auditoria-citacoes`.
 - `triagem_do_dia.py [DD/MM/AAAA]` — coleta tarefas do Paulo vencendo na data →
-  `triagem_hoje.json`.
+  `triagem_hoje.json`. Por padrão identifica as tarefas do Paulo pela convenção `(P)`
+  no corpo; se existir o arquivo de atribuição real (ver "Atribuição real (assignee)"
+  abaixo), filtra pela atribuição do app em vez do palpite.
 - `todo_conclusao.py "<list_id>" "<task_id>" "texto"` — prepende conclusão (C).
 - `todo_anexo.py "<list_id>" "<task_id>" "trecho do nome"` — lê anexo da tarefa.
 - `gdrive_download.py <file_id> [destino]` — baixa arquivo do Drive por ID DIRETO
@@ -452,4 +454,38 @@ encadeie** se houver pendência bloqueante, aponte o que falta e pare.
   base64 pelo contexto** (resolve a fricção do `create_file` do MCP com .docx). Requer
   token com **escopo de escrita** (`gdrive_client.SCOPE = .../auth/drive`); trocar o
   escopo exige reautenticar uma vez com `gdrive_authcode.py` (`url` e depois `exchange`).
+
+## Atribuição real das tarefas (assignee) via Windows-MCP
+
+O Microsoft To Do guarda **a quem cada tarefa está atribuída** (Paulo, Marcão, Amanda,
+André, Ingrid) apenas no **banco local do app** (`todosqlite.db`), NÃO na API do Graph.
+Confirmado por leitura do dado bruto, o `todoTask` do Graph (v1.0 e beta) não traz
+nenhum campo de atribuição, e o To Do não tem etiquetas editáveis pelo usuário. Logo,
+sem o banco local, a triagem só consegue **adivinhar** as tarefas do Paulo pela
+convenção `(P)` no corpo (`is_paulo_task`).
+
+**Como obter o assignee real (roda na máquina do Paulo, com o Windows-MCP conectado).**
+Pela ferramenta `mcp__Windows-MCP__PowerShell` (o terminal, não o clique por
+coordenada nem o Snapshot, que falharam), localizar o `todosqlite.db` em
+`%LOCALAPPDATA%\Packages\Microsoft.Todos_*`, **copiá-lo** para uma pasta temporária e
+rodar Python com `sqlite3` sobre a cópia. As tabelas úteis são `assignments`, `tasks`,
+`task_folders` e `members`. Cruzar `assignments.assignee_id` com `members` (`online_id`
+→ `display_name`) dá o mapa de responsáveis, e `tasks` guarda o **`online_id`**, que é
+o **mesmo id** que o Graph usa em `task["id"]`.
+
+**Mapa de responsáveis (confiança, id interno do banco local, não oficial da Microsoft).**
+- Paulo Roberto Tercini Filho = `14C625ADBD56ECFA` (bateu 279 tarefas ativas contra os
+  283 da tela "Atribuído a mim", coincidência que sustenta a identidade).
+- Marcão, Amanda, André, Ingrid, a levantar pela mesma consulta em `members`.
+Como é id interno, para rigor total conferir a contagem na tela "Atribuído a mim" ou
+casar com o Graph após reautenticar com escopo `User.Read` (o token atual é só de Tasks,
+`/me` dá 403).
+
+**Integração com a triagem.** No lado do Windows-MCP, gerar um JSON com a lista de
+`online_id` das tarefas **incompletas atribuídas ao Paulo** e salvá-lo como
+`todo_assignee_paulo.json` na raiz do repo (ou apontar `TRIAGEM_ASSIGNEE_FILE`).
+Havendo esse arquivo, o `triagem_do_dia.py` filtra pela **atribuição real** em vez da
+convenção `(P)`; sem ele, mantém o fallback `(P)`. Se o filtro casar 0 tarefas mas
+houver `(P)` no dia, o script avisa que o formato do `online_id` pode divergir do
+`task id` do Graph (aí conferir a coluna certa do `tasks`).
 

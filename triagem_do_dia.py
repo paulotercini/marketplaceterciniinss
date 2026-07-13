@@ -17,6 +17,7 @@ Uso:
     python3 triagem_do_dia.py 13/06/2026 # data especifica
 """
 import json
+import os
 import re
 import sys
 import unicodedata
@@ -26,6 +27,34 @@ from triagem import TZ_BR, parse_due, is_paulo_task, last_author
 from graph_client import list_lists, list_tasks, _req
 
 OUT = "triagem_hoje.json"
+
+# Filtro de ATRIBUICAO REAL (opcional). O Microsoft To Do guarda a quem cada tarefa
+# esta atribuida so no banco local `todosqlite.db` (tabelas assignments x members); o
+# Graph NAO expoe esse campo. Extraia pelo Windows-MCP (PowerShell + sqlite3) a lista
+# de `online_id` das tarefas incompletas atribuidas ao Paulo (assignee_id
+# 14C625ADBD56ECFA) e salve num JSON. O `online_id` do banco local e o MESMO id que o
+# Graph usa em task["id"]. Havendo esse arquivo, a fila usa a atribuicao REAL em vez do
+# palpite pela convencao (P) do corpo; sem ele, cai no fallback (P). Caminho: variavel
+# TRIAGEM_ASSIGNEE_FILE ou, por padrao, o arquivo abaixo na raiz do repo.
+ASSIGNEE_FILE = os.environ.get("TRIAGEM_ASSIGNEE_FILE", "todo_assignee_paulo.json")
+
+
+def _carregar_assignee():
+    """Set de online_id (task ids do Graph) atribuidos ao Paulo, do arquivo de
+    atribuicao. Retorna None quando o arquivo nao existe/esta vazio/ilegivel (a fila
+    entao usa o fallback pela convencao (P)). Aceita `["id", ...]` ou
+    `{"online_ids": [...]}`."""
+    try:
+        with open(ASSIGNEE_FILE, encoding="utf-8") as f:
+            dados = json.load(f)
+    except (OSError, ValueError):
+        return None
+    if isinstance(dados, dict):
+        ids = dados.get("online_ids") or dados.get("ids") or []
+    else:
+        ids = dados
+    ids = {str(x).strip() for x in ids if str(x).strip()}
+    return ids or None
 
 # Listas de atendimento de cliente que entram na FILA DIARIA (decisao do escritorio).
 # Comparacao robusta: ignora o emoji inicial e compara o texto (minusculo).
@@ -111,6 +140,9 @@ def main():
     else:
         alvo = datetime.now(TZ_BR).date()
 
+    assignee = _carregar_assignee()
+    modo_filtro = "atribuicao real (assignee)" if assignee else "convencao (P) no corpo"
+
     # 1) Busca as tarefas das listas de indice UMA vez (reusa no cruzamento e na fila).
     cache = {}  # list_id -> (displayName, [tasks])
     for l in list_lists():
@@ -143,7 +175,10 @@ def main():
             })
 
     # 3) Fila do dia: so as listas da fila diaria, tarefa do Paulo, vencendo na data.
+    #    Filtro: usa a ATRIBUICAO REAL (assignee) quando ha o arquivo de online_ids;
+    #    senao cai no palpite pela convencao (P) do corpo.
     selecionadas = []
+    p_conv_no_dia = 0  # diagnostico: quantas casariam pela convencao (P) no dia
     for lid, (nome, tarefas) in cache.items():
         if not _eh_lista_caso(nome):
             continue
@@ -153,7 +188,13 @@ def main():
             if parse_due(t) != alvo:
                 continue
             body = t.get("body", {}).get("content", "") or ""
-            if not is_paulo_task(body):
+            eh_paulo_conv = is_paulo_task(body)
+            if eh_paulo_conv:
+                p_conv_no_dia += 1
+            if assignee is not None:
+                if t["id"] not in assignee:
+                    continue
+            elif not eh_paulo_conv:
                 continue
             chave = _chave_cliente(t.get("title", ""))
             outras = [x for x in indice.get(chave, []) if x["task_id"] != t["id"]] if chave else []
@@ -183,7 +224,13 @@ def main():
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-    print(f"TRIAGEM {alvo.strftime('%d/%m/%Y')} - {len(selecionadas)} tarefa(s) de Paulo vencendo hoje")
+    print(f"TRIAGEM {alvo.strftime('%d/%m/%Y')} [filtro: {modo_filtro}] - "
+          f"{len(selecionadas)} tarefa(s) de Paulo vencendo hoje")
+    if assignee is not None and len(selecionadas) == 0 and p_conv_no_dia > 0:
+        print(f"[aviso] o filtro por atribuicao (assignee) casou 0 tarefas, mas "
+              f"{p_conv_no_dia} bateriam pela convencao (P). Provavel divergencia de "
+              f"formato entre o online_id do banco local e o task id do Graph. "
+              f"Confira o arquivo {ASSIGNEE_FILE}.", file=sys.stderr)
     for i, s in enumerate(selecionadas, 1):
         flags = ""
         if s["outras_tarefas"]:
