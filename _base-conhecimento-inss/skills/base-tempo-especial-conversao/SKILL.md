@@ -3,6 +3,11 @@ name: base-tempo-especial-conversao
 description: "Conversão de tempo especial em comum, fator 1,4 (homem) e 1,2 (mulher), marco temporal 13/11/2019 da EC 103/2019, Tema 422 STJ (REsp 1.310.034), Súmula 50 TNU e regime jurídico aplicável. Use SEMPRE que mencionar conversão de tempo especial, fator de conversão, tempo especial em comum, 1,4 homem, 1,2 mulher, art. 70 Decreto 3.048/1999, art. 57 §5º Lei 8.213/91, EC 103/2019 art. 25 §2º, limite 13/11/2019, Tema 422 STJ, REsp 1.310.034, Súmula 50 TNU, tempus regit actum, lei vigente à prestação do serviço, regime jurídico do tempo especial, conversão antes Lei 9.032/1995, conversão de especial para comum, tempo trabalhado antes de 1998, tempo trabalhado entre 1995 e 1998, períodos especiais fracionados, direito adquirido conversão, Portaria 990/2022, Portaria 1.316/2025. Cruza com auditoria-ppp, tempo-especial-peticoes-por-rito, peticao-previdenciaria, base-especial-ruido, base-aposentadoria-especial-transicao-ec103 e precedentes-previdenciarios."
 ---
 
+## NOTA DA ADI 6309 (12/07/2026)
+
+O STF, na ADI 6309 julgada em 03/06/2026, declarou CONSTITUCIONAL a vedação de conversão de tempo especial em comum para períodos posteriores a 13/11/2019. O marco temporal desta skill fica reforçado, conversão pelo fator 1,4 ou 1,2 somente para tempo especial prestado ATÉ 13/11/2019 (Tema 422/STJ e art. 25, §2º, da EC 103). Não sustentar mais a inconstitucionalidade da vedação. Na mesma ADI, o STF invalidou a idade mínima da aposentadoria especial, ver base-aposentadoria-especial-transicao-ec103.
+
+
 # Conversão de Tempo Especial em Comum
 
 ## Escopo
