@@ -172,6 +172,7 @@ os pedidos correntes do escritório:
 - documentos comprobatórios / IN 128/2022 → `base-documentos-comprobatorios-in128` (checklist por benefício + carta de documentos do escritório)
 - orquestração geral → `ponte-orquestrador-previdenciario`
 - revisão antiviés / Sistema 2 / releitura crítica da própria análise → `sistema-2-antivies` (roda ao fechar `/triagem`, `/inicial`, `/inicial-inss`, depois de conferir precedentes e CNIS)
+- mensagem pronta para cliente (WhatsApp) → `estilo-mensagens-paulo` (tom autêntico do Paulo, com os antipadrões do chatbot e dos colaboradores; usar SEMPRE que redigir mensagem na triagem ou em qualquer fluxo)
 - auditoria de veracidade das skills/modelos ouro → skill do repositório `auditoria-citacoes` (roda `auditoria_citacoes.py` e verifica na fonte oficial)
 
 Quando aparecer um tema recorrente sem skill própria, sinalize ao Paulo e sugira
