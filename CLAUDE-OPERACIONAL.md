@@ -320,9 +320,15 @@ documentos prontos para anexar**; nunca protocola/envia. Diferenças-chave:
 
 ## Saída padrão por cliente (no `/triagem` e em análises avulsas)
 
-- **Conclusão (C) no To Do** (`todo_conclusao.py`): **ultraenxuta**, no máximo 2 a 3
-  linhas, só o achado e o próximo passo, leitura direta e sem enrolação, **com
-  acentuação correta**. **Posicionamento**, a conclusão (C) entra no **topo do
+- **Conclusão (C) no To Do** (`todo_conclusao.py`): **ultracurta** (regra do Paulo).
+  Primeira triagem do cliente, uma ou duas frases com o achado essencial. Retriagens
+  (2ª, 3ª, 4ª...), **apenas o delta** desde a última (C) ("Nada novo desde DD.MM"
+  quando for o caso), sem repetir o histórico. Toda conclusão termina com o **fecho
+  estruturado em uma linha**, `PRÓXIMO: <ação> | BLOQUEIO: <o que falta ou "nenhum"> |
+  QUEM: <P/M/A/I/D/C>` (dois-pontos estruturais, formato de log, mesma exceção do
+  prefixo). É esse fecho que a triagem seguinte lê primeiro, o que encurta e barateia
+  as releituras sem perder conteúdo. Sempre **com acentuação correta**.
+  **Posicionamento**, a conclusão (C) entra no **topo do
   HISTÓRICO**, ABAIXO do cabeçalho fixo da tarefa (`[TAREFA]`/`[SISTEMA]`/`[DER]`
   etc.) e ACIMA da entrada de data mais recente. O `todo_conclusao.py` já faz isso
   automaticamente (insere antes da primeira linha com data `DD.MM.AAAA`).

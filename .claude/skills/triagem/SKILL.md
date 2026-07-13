@@ -162,10 +162,18 @@ e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
      **encaminhamento no parecer** (de quem é e o que precisa fazer), sem executar
      fora do escopo.
 
-f) **Gerar a CONCLUSÃO** **ultraenxuta, 2 a 3 linhas**, só o achado e o próximo passo,
-   leitura direta e sem enrolação. NÃO iniciar com data ou prefixo (o script adiciona
-   "DD.MM.AAAA (C): "). Nunca inventar; faltando documento, dizer claramente. No modo
-   complemento, registra só o que foi feito na nova data.
+f) **Gerar a CONCLUSÃO ultracurta (regra do Paulo, quanto mais retriagem, mais curta).**
+   Na PRIMEIRA triagem do cliente, uma ou duas frases com o achado essencial, nada
+   além. Nas SEGUINTES (retriagem/complemento), registre APENAS o delta desde a última
+   (C) ("Nada novo desde DD.MM" quando for o caso), sem repetir o que o histórico logo
+   abaixo já guarda. Direto sem perder conteúdo, o conteúdo detalhado fica no histórico
+   e no fecho. SEMPRE terminar com o **fecho estruturado em uma linha**, que é o estado
+   do caso que a próxima triagem lê primeiro (e por isso barateia as triagens 2ª, 3ª e
+   4ª do mesmo cliente):
+   `PRÓXIMO: <ação objetiva> | BLOQUEIO: <o que falta, ou "nenhum"> | QUEM: <P/M/A/I/D/C>`
+   (Os dois-pontos do fecho são estruturais, formato de log, mesma exceção do prefixo
+   "DD.MM.AAAA (C): ".) NÃO iniciar com data ou prefixo (o script adiciona). Sem `**`.
+   Nunca inventar; faltando documento, dizer claramente.
    `python3 todo_conclusao.py "<list_id>" "<task_id>" "<conclusão>"`
 
 g) **Parecer .docx SÓ SOB DEMANDA (regra permanente do escritório, decisão do Paulo).**
