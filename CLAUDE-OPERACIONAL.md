@@ -495,3 +495,47 @@ convenção `(P)`; sem ele, mantém o fallback `(P)`. Se o filtro casar 0 tarefa
 houver `(P)` no dia, o script avisa que o formato do `online_id` pode divergir do
 `task id` do Graph (aí conferir a coluna certa do `tasks`).
 
+**Receita pronta (colar no `mcp__Windows-MCP__PowerShell`, na máquina do Paulo).**
+O campo essencial é o `online_id` da tabela `tasks` (é o MESMO id do Graph); título,
+lista e due_date entram só para conferência humana. O arquivo envelhece conforme as
+tarefas mudam, o ideal é regerar no fim do dia junto com a coleta.
+
+Passo 1, copiar o banco (evita travar o app):
+```powershell
+$src = Get-ChildItem "$env:LOCALAPPDATA\Packages\Microsoft.Todos_*\LocalState" -Recurse -Filter *.db | Select-Object -First 1
+New-Item -ItemType Directory -Force -Path C:\temp | Out-Null
+Copy-Item $src.FullName C:\temp\todos_copia.db -Force
+```
+
+Passo 2, gerar o JSON (ajuste o caminho de saída se a pasta do projeto for outra):
+```powershell
+$py = @'
+import sqlite3, json
+con = sqlite3.connect(r"C:\temp\todos_copia.db")
+PAULO = "14C625ADBD56ECFA"
+rows = con.execute("""
+  SELECT DISTINCT t.online_id, t.subject, t.due_date, f.name
+  FROM assignments a
+  JOIN tasks t ON t.local_id = a.task_local_id
+  LEFT JOIN task_folders f ON f.local_id = t.task_folder_local_id
+  WHERE a.assignee_id = ? AND a.deleted = 0
+    AND t.deleted = 0 AND t.status <> 'Completed'
+    AND t.online_id IS NOT NULL AND t.online_id <> ''
+""", (PAULO,)).fetchall()
+tarefas = [{"online_id": r[0], "titulo": r[1], "due_date": r[2], "lista": r[3]} for r in rows]
+out = {"assignee_id": PAULO, "assignee_nome": "Paulo Roberto Tercini Filho",
+       "fonte": "todosqlite.db local, tarefas distintas nao concluidas",
+       "total_ativas": len(tarefas), "tarefas": tarefas}
+json.dump(out, open(r"C:\Users\VAIO\Claude\Projects\Triagem\todo_assignee_paulo.json", "w", encoding="utf-8"),
+          ensure_ascii=False, indent=1)
+print("OK,", len(tarefas), "tarefas com online_id")
+'@
+Set-Content -Path C:\temp\gera_assignee.py -Value $py -Encoding UTF8
+python C:\temp\gera_assignee.py
+```
+
+Depois, entregar o `todo_assignee_paulo.json` ao assistente (upload no chat ou
+sincronização), que o coloca na raiz do repo. Sanidade, o total deve ficar perto da
+tela "Atribuído a mim" do app, e os `online_id` devem começar com `AQMk` (padrão do
+Graph); se vierem vazios ou em outro formato, conferir a coluna usada.
+
