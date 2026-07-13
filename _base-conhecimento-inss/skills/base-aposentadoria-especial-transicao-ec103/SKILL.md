@@ -3,6 +3,15 @@ name: base-aposentadoria-especial-transicao-ec103
 description: "Aposentadoria especial de transição da EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar aposentadoria especial pós-reforma, art. 21 EC 103, transição aposentadoria especial, aposentadoria especial de pontos, pontos 66 76 86 aposentadoria especial, art. 19 §1º I EC 103, idade mínima aposentadoria especial pós-reforma, 55 58 60 anos aposentadoria especial, atividade especial 15 20 25 anos pós-reforma, risco alto médio baixo, insalubre periculoso, conversão tempo especial EC 103, art. 25 §2º EC 103, RMI aposentadoria especial pós-reforma, preservação tempo especial antes 13/11/2019, direito ao melhor benefício especial, Tema 942 STJ, Tema 709 STF, STF ADI 4827, afastamento art. 57 §8º Lei 8.213, vedação retorno atividade especial, aposentadoria especial agentes cancerígenos, PPP pós-reforma, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, auditoria-ppp, base-especial-ruido, base-especial-epi, base-especial-agentes-quimicos e precedentes-previdenciarios."
 ---
 
+## ATUALIZAÇÃO CRÍTICA, ADI 6309 JULGADA (12/07/2026, conferida na notícia oficial do STF de 03/06/2026 via navegador)
+
+O STF, por maioria, julgou a ADI 6309 (CNTI) em 03/06/2026 com TRÊS definições distintas sobre a aposentadoria especial da EC 103/2019. Primeira, INCONSTITUCIONAL a exigência de idade mínima para a aposentadoria especial (voto condutor do Min. André Mendonça, a idade mínima obriga quem já cumpriu 15, 20 ou 25 anos de exposição a permanecer exposto ao agente nocivo, contrariando a finalidade protetiva do benefício). Segunda, CONSTITUCIONAL a vedação de conversão de tempo especial em comum para períodos posteriores à reforma. Terceira, CONSTITUCIONAL a nova fórmula de cálculo da especial.
+
+Consequências operacionais. (a) Segurado que completa 15, 20 ou 25 anos de atividade especial após 13/11/2019 pode requerer a aposentadoria especial SEM idade mínima. (b) A regra de transição por pontos do art. 21 da EC 103 segue existindo como alternativa, comparar sempre a RMI dos dois caminhos. (c) Indeferimentos anteriores fundados exclusivamente na falta de idade mínima são revisáveis, observadas decadência e prescrição. (d) A parte da skill que trata a vedação de conversão pós-reforma e o cálculo como pontos atacáveis por inconstitucionalidade está SUPERADA, o STF os validou.
+
+RESSALVAS OBRIGATÓRIAS antes de usar em peça. A notícia oficial não indica o dispositivo exato invalidado nem eventual modulação de efeitos. Conferir a ata de julgamento e o acórdão da ADI 6309 no portal do STF antes de pedir efeitos retroativos ou transcrever o dispositivo. Pedido prospectivo de concessão sem idade mínima está amparado pela decisão de mérito noticiada.
+
+
 # Aposentadoria Especial na Transição da EC 103/2019
 
 ## Escopo
