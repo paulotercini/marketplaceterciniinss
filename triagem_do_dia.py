@@ -49,11 +49,21 @@ def _carregar_assignee():
             dados = json.load(f)
     except (OSError, ValueError):
         return None
+    def _extrai(seq):
+        out = set()
+        for x in seq or []:
+            v = (x.get("online_id") or x.get("id")) if isinstance(x, dict) else x
+            if v and str(v).strip():
+                out.add(str(v).strip())
+        return out
+
     if isinstance(dados, dict):
-        ids = dados.get("online_ids") or dados.get("ids") or []
+        if isinstance(dados.get("tarefas"), list):
+            ids = _extrai(dados["tarefas"])  # formato rico: {tarefas:[{online_id,...}]}
+        else:
+            ids = _extrai(dados.get("online_ids") or dados.get("ids") or [])
     else:
-        ids = dados
-    ids = {str(x).strip() for x in ids if str(x).strip()}
+        ids = _extrai(dados)  # lista simples de ids ou de objetos
     return ids or None
 
 # Listas de atendimento de cliente que entram na FILA DIARIA (decisao do escritorio).
