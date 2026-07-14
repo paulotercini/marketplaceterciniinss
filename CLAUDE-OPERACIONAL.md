@@ -100,6 +100,43 @@ tem os dados (CNIS, CTPS, procuração anterior) e a subpasta `Claude` recebe o
 documento pronto. Busque o dado na fonte certa e deixe o resultado onde o próximo passo
 o encontre.
 
+## Hashtags no título das tarefas do To Do (convenção do Paulo, 14.07.2026)
+
+O título de cada tarefa de caso segue o padrão `Nome #CPF #ESPÉCIE`, decisão do
+Paulo. O `#CPF` já existia (agrupa, ao clicar, todas as tarefas do mesmo cliente
+em qualquer lista). O `#ESPÉCIE` é o código oficial de benefício do INSS (ex.:
+`#B31` auxílio-doença, `#B32` aposentadoria por invalidez, `#B41` aposentadoria
+por idade, `#B42` aposentadoria por tempo de contribuição, `#B46` aposentadoria
+especial, `#B87` BPC/LOAS deficiente, `#B88` BPC/LOAS idoso, `#B91` auxílio-
+doença acidentário, `#B92` aposentadoria por invalidez acidentária, `#B94`
+auxílio-acidente, `#B21` pensão por morte, `#B25` salário-maternidade, `#B26`
+auxílio-reclusão). Clicar na tag agrupa a fila de trabalho por espécie no To Do.
+
+**Aposentadoria da pessoa com deficiência (LC 142) NÃO tem código próprio.**
+Confirmado em fonte oficial (gov.br) e em extratos reais do Drive de vários
+clientes, a LC 142 usa a MESMA espécie da aposentadoria comum (`#B41` por
+idade, `#B42` por tempo de contribuição), só com requisitos e regra de
+conversão diferenciados. Nunca invente um código "PCD" à parte.
+
+**Fonte de verdade.** Primeiro o que o corpo da tarefa já documenta (se já diz
+"B31", "aposentadoria especial", "BPC" etc., use isso). Se o corpo citar a
+espécie real do NB do caso (ex.: "ESP/NB: 57/..."), use ESSE número exato,
+mesmo fora do vocabulário padrão (ex.: Marcia Aparecida Mussato é `#B57`,
+aposentadoria de professora, espécie real do NB dela). Nunca aproxime por
+adivinhação, se restar dúvida genuína (dois pedidos igualmente ativos, corpo
+sem nenhum indício), NÃO grave a tag, sinalize a pendência ao Paulo.
+
+**Cliente com mais de um benefício pleiteado.** Cada benefício vira uma tarefa
+própria (mesmo cliente, mesmo `#CPF`, tarefas distintas por espécie), como no
+caso do Valentim Leonardo `#15613987807`, que tem uma tarefa `#B94` e outra
+`#B87`. Não acumule duas espécies na mesma tarefa salvo confirmação do Paulo.
+
+**Script de aplicação em massa.** `graph_client.update_task_title(list_id,
+task_id, titulo)` faz o PATCH do título (só acréscimo ao final, nunca
+substitui o que já existe). Ao rodar em lote, sempre confira o título atual
+antes de gravar (trava, se mudou desde a coleta, pula e avisa) e valide o novo
+título como um prefixo-mais-acréscimo do antigo, nunca uma reescrita.
+
 ## Doutrina do assistente — o que fazer em cada situação
 
 Você frequentemente **não pode executar o ato final** (ex.: protocolar/solicitar
