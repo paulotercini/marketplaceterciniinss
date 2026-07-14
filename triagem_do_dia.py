@@ -40,16 +40,35 @@ ASSIGNEE_FILE = os.environ.get("TRIAGEM_ASSIGNEE_FILE", "todo_assignee_paulo.jso
 
 
 def _carregar_assignee():
-    """Set de online_id (task ids do Graph) atribuidos ao Paulo, do arquivo de
-    atribuicao. Retorna None quando o arquivo nao existe/esta vazio/ilegivel (a fila
-    entao usa o fallback pela convencao (P)). Aceita `["id", ...]` ou
-    `{"online_ids": [...]}`."""
+    """Atribuicao REAL das tarefas do Paulo, lida do arquivo de atribuicao. Retorna
+    `(modo, valores)` ou None quando o arquivo nao existe/esta vazio/ilegivel (a fila
+    entao usa o fallback pela convencao (P)).
+
+    Dois modos de casamento:
+      - "cpf": casa a tarefa pelo CPF do titulo. E o modo preferido, porque o CPF e
+        estavel e o Paulo consegue gerar/colar a lista a qualquer hora (nao depende do
+        online_id opaco). Formato `{"modo": "cpf", "cpfs": ["11122233344", ...]}`
+        (aceita tambem CPFs formatados e objetos `{"cpf": ...}`).
+      - "id": casa pelo online_id (o mesmo id que o Graph usa em task["id"]). Formatos
+        antigos `["id", ...]`, `{"online_ids": [...]}` ou `{"tarefas": [{"online_id"}]}`.
+    Um arquivo sem a chave `modo`/`cpfs` e tratado como "id" (retrocompatibilidade).
+    OBS: no modo "cpf", tarefa sem CPF no titulo nao casa (a grande maioria tem CPF)."""
     try:
         with open(ASSIGNEE_FILE, encoding="utf-8") as f:
             dados = json.load(f)
     except (OSError, ValueError):
         return None
-    def _extrai(seq):
+
+    def _so_cpf(seq):
+        out = set()
+        for x in seq or []:
+            v = x.get("cpf") if isinstance(x, dict) else x
+            dig = re.sub(r"\D", "", str(v or ""))
+            if len(dig) == 11:
+                out.add(dig)
+        return out
+
+    def _so_id(seq):
         out = set()
         for x in seq or []:
             v = (x.get("online_id") or x.get("id")) if isinstance(x, dict) else x
@@ -58,25 +77,32 @@ def _carregar_assignee():
         return out
 
     if isinstance(dados, dict):
-        if isinstance(dados.get("tarefas"), list):
-            ids = _extrai(dados["tarefas"])  # formato rico: {tarefas:[{online_id,...}]}
-        else:
-            ids = _extrai(dados.get("online_ids") or dados.get("ids") or [])
-    else:
-        ids = _extrai(dados)  # lista simples de ids ou de objetos
-    return ids or None
+        modo = (dados.get("modo") or "").strip().lower()
+        if modo == "cpf" or dados.get("cpfs"):
+            cpfs = _so_cpf(dados.get("cpfs") or dados.get("tarefas") or [])
+            return ("cpf", cpfs) if cpfs else None
+        seq = dados.get("online_ids") or dados.get("ids") or dados.get("tarefas") or []
+        ids = _so_id(seq)
+        return ("id", ids) if ids else None
+    ids = _so_id(dados)  # lista simples de ids ou de objetos
+    return ("id", ids) if ids else None
 
 # Listas de atendimento de cliente que entram na FILA DIARIA (decisao do escritorio).
 # Comparacao robusta: ignora o emoji inicial e compara o texto (minusculo).
+# 'aposentadorias futuras' (lista grande de monitoramento) e 'petições iniciais'
+# entram porque o Paulo tem tarefas atribuidas nelas vencendo no dia; com o filtro por
+# atribuicao real (CPF) so passa o que e do Paulo, entao incluir a lista grande nao
+# polui a fila. NAO confundir a lista de casos 'petições iniciais' (plural) com a lista
+# de prompts/modelos 'petição inicial' (singular), que fica de fora.
 NOMES_CASO = {
     "escritório", "tarefas com prazo", "judicial", "inss",
     "pagamentos", "conselho de recursos", "marcos",
+    "aposentadorias futuras", "petições iniciais",
 }
 
-# Listas varridas para o INDICE DE CLIENTES (cruzamento entre listas). Por ora,
-# as mesmas listas de caso, ja cobrem o cenario central (mesmo cliente na INSS e na
-# Judicial). 'Aposentadorias Futuras' fica de fora por desempenho (lista grande de
-# monitoramento de longo prazo); inclua aqui se quiser cruzar tambem com ela.
+# Listas varridas para o INDICE DE CLIENTES (cruzamento entre listas). As mesmas listas
+# de caso, para detectar o mesmo cliente em mais de uma frente (ex.: INSS e Judicial,
+# ou Aposentadorias Futuras e Petições Iniciais).
 NOMES_INDICE = set(NOMES_CASO)
 
 
@@ -151,7 +177,12 @@ def main():
         alvo = datetime.now(TZ_BR).date()
 
     assignee = _carregar_assignee()
-    modo_filtro = "atribuicao real (assignee)" if assignee else "convencao (P) no corpo"
+    if assignee:
+        modo_assignee, valores_assignee = assignee
+        modo_filtro = f"atribuicao real (assignee por {modo_assignee})"
+    else:
+        modo_assignee = valores_assignee = None
+        modo_filtro = "convencao (P) no corpo"
 
     # 1) Busca as tarefas das listas de indice UMA vez (reusa no cruzamento e na fila).
     cache = {}  # list_id -> (displayName, [tasks])
@@ -202,7 +233,10 @@ def main():
             if eh_paulo_conv:
                 p_conv_no_dia += 1
             if assignee is not None:
-                if t["id"] not in assignee:
+                if modo_assignee == "cpf":
+                    if _cpf_de(t.get("title", "")) not in valores_assignee:
+                        continue
+                elif t["id"] not in valores_assignee:
                     continue
             elif not eh_paulo_conv:
                 continue
@@ -237,10 +271,12 @@ def main():
     print(f"TRIAGEM {alvo.strftime('%d/%m/%Y')} [filtro: {modo_filtro}] - "
           f"{len(selecionadas)} tarefa(s) de Paulo vencendo hoje")
     if assignee is not None and len(selecionadas) == 0 and p_conv_no_dia > 0:
-        print(f"[aviso] o filtro por atribuicao (assignee) casou 0 tarefas, mas "
-              f"{p_conv_no_dia} bateriam pela convencao (P). Provavel divergencia de "
-              f"formato entre o online_id do banco local e o task id do Graph. "
-              f"Confira o arquivo {ASSIGNEE_FILE}.", file=sys.stderr)
+        pista = ("os CPFs do arquivo nao batem com os CPFs das tarefas do dia"
+                 if modo_assignee == "cpf" else
+                 "divergencia entre o online_id do banco local e o task id do Graph")
+        print(f"[aviso] o filtro por atribuicao (assignee por {modo_assignee}) casou 0 "
+              f"tarefas, mas {p_conv_no_dia} bateriam pela convencao (P). Provavel causa: "
+              f"{pista}. Confira o arquivo {ASSIGNEE_FILE}.", file=sys.stderr)
     for i, s in enumerate(selecionadas, 1):
         flags = ""
         if s["outras_tarefas"]:
