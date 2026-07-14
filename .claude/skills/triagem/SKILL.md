@@ -164,7 +164,14 @@ e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
 
 f) **Gerar a CONCLUSÃO ultracurta (regra do Paulo, quanto mais retriagem, mais curta).**
    Na PRIMEIRA triagem do cliente, uma ou duas frases com o achado essencial, nada
-   além. Nas SEGUINTES (retriagem/complemento), registre APENAS o delta desde a última
+   além. **TETO RÍGIDO (decisão do Paulo, 14.07.2026), a (C) inteira, achado MAIS
+   fecho, cabe em no máximo três ou quatro linhas, cerca de 600 caracteres. Se passou
+   disso, você escreveu demais, corte, o detalhe (valores, números de processo,
+   cronologia, fundamentação) vive no HISTÓRICO e no relatório, NUNCA na (C).** Exemplo
+   do tamanho certo (Edson), "B31 previdenciário (NB ...) concedido até 31/07/2026,
+   benefício administrativo, a lista Pagamentos só acompanha a mensalidade. A
+   documentação médica da prorrogação já está na pasta e o P1 abre em 16/07. PRÓXIMO:
+   protocolar o P1 no Meu INSS em 16/07 | BLOQUEIO: nenhum | QUEM: P". Nas SEGUINTES (retriagem/complemento), registre APENAS o delta desde a última
    (C) ("Nada novo desde DD.MM" quando for o caso), sem repetir o que o histórico logo
    abaixo já guarda. **Obrigação da retriagem (função de lembrete, decisão do Paulo,
    NUNCA remover): antes de escrever o delta, RELEIA o histórico e as pendências
