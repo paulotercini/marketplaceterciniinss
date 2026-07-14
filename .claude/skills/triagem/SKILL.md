@@ -171,7 +171,7 @@ f) **Gerar a CONCLUSÃO ultracurta (regra do Paulo, quanto mais retriagem, mais 
    do tamanho certo (Edson), "B31 previdenciário (NB ...) concedido até 31/07/2026,
    benefício administrativo, a lista Pagamentos só acompanha a mensalidade. A
    documentação médica da prorrogação já está na pasta e o P1 abre em 16/07. PRÓXIMO:
-   protocolar o P1 no Meu INSS em 16/07 | BLOQUEIO: nenhum | QUEM: P". Nas SEGUINTES (retriagem/complemento), registre APENAS o delta desde a última
+   protocolar o P1 no Meu INSS em 16/07 | BLOQUEIO: nenhum". Nas SEGUINTES (retriagem/complemento), registre APENAS o delta desde a última
    (C) ("Nada novo desde DD.MM" quando for o caso), sem repetir o que o histórico logo
    abaixo já guarda. **Obrigação da retriagem (função de lembrete, decisão do Paulo,
    NUNCA remover): antes de escrever o delta, RELEIA o histórico e as pendências
@@ -183,9 +183,10 @@ f) **Gerar a CONCLUSÃO ultracurta (regra do Paulo, quanto mais retriagem, mais 
    e no fecho. SEMPRE terminar com o **fecho estruturado em uma linha**, que é o estado
    do caso que a próxima triagem lê primeiro (e por isso barateia as triagens 2ª, 3ª e
    4ª do mesmo cliente):
-   `PRÓXIMO: <ação objetiva> | BLOQUEIO: <o que falta, ou "nenhum"> | QUEM: <P/M/A/I/D/C>`
-   (Os dois-pontos do fecho são estruturais, formato de log, mesma exceção do prefixo
-   "DD.MM.AAAA (C): ".) NÃO iniciar com data ou prefixo (o script adiciona). Sem `**`.
+   `PRÓXIMO: <ação objetiva> | BLOQUEIO: <o que falta, ou "nenhum">`
+   (sem campo QUEM, decisão do Paulo de 14.07.2026, o fecho termina no BLOQUEIO; o
+   PRÓXIMO já diz quem age. Os dois-pontos do fecho são estruturais, formato de log,
+   mesma exceção do prefixo "DD.MM.AAAA (C): ".) NÃO iniciar com data ou prefixo (o script adiciona). Sem `**`.
    Nunca inventar; faltando documento, dizer claramente.
    `python3 todo_conclusao.py "<list_id>" "<task_id>" "<conclusão>"`
 

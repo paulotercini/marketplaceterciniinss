@@ -324,10 +324,12 @@ documentos prontos para anexar**; nunca protocola/envia. Diferenças-chave:
   Primeira triagem do cliente, uma ou duas frases com o achado essencial. Retriagens
   (2ª, 3ª, 4ª...), **apenas o delta** desde a última (C) ("Nada novo desde DD.MM"
   quando for o caso), sem repetir o histórico. Toda conclusão termina com o **fecho
-  estruturado em uma linha**, `PRÓXIMO: <ação> | BLOQUEIO: <o que falta ou "nenhum"> |
-  QUEM: <P/M/A/I/D/C>` (dois-pontos estruturais, formato de log, mesma exceção do
-  prefixo). É esse fecho que a triagem seguinte lê primeiro, o que encurta e barateia
-  as releituras sem perder conteúdo. Sempre **com acentuação correta**.
+  estruturado em uma linha**, `PRÓXIMO: <ação> | BLOQUEIO: <o que falta ou "nenhum">`
+  (sem campo QUEM, decisão do Paulo de 14.07.2026, o fecho termina no BLOQUEIO; dois-
+  pontos estruturais, formato de log, mesma exceção do prefixo). É esse fecho que a
+  triagem seguinte lê primeiro, o que encurta e barateia as releituras sem perder
+  conteúdo. Sempre **com acentuação correta**. TETO, a (C) inteira em até 3 ou 4 linhas
+  (cerca de 600 caracteres); o detalhe fica no histórico, nunca na (C).
   **Posicionamento**, a conclusão (C) entra no **topo do
   HISTÓRICO**, ABAIXO do cabeçalho fixo da tarefa (`[TAREFA]`/`[SISTEMA]`/`[DER]`
   etc.) e ACIMA da entrada de data mais recente. O `todo_conclusao.py` já faz isso
