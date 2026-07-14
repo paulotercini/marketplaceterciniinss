@@ -146,6 +146,10 @@ Rel. Min. Teodoro Silva Santos, Segunda Turma, sessão virtual encerrada em 17/0
 
 CORREÇÃO DERIVADA. A skill base-b94-integracao-salario-beneficio-tema862 atribuía ao Tema 862/STJ a tese de integração do B94 ao salário-de-benefício. FALSO. O Tema 862 é o TERMO INICIAL do B94. A integração ao cálculo das aposentadorias decorre do art. 31 da Lei 8.213/91, norma legal sem repetitivo próprio. Skill corrigida em 12/07/2026.
 
+## CORREÇÃO INTEGRAL DA base-pcd-conversao-tempo-especial-pcd (12/07/2026, apontamento do escritório)
+
+Skill reescrita com extração literal dos arts. 70-A a 70-J do Decreto 3.048/99 no repositório de legislação verificada. Corrigidos, pisos por grau (grave 25 homem e 20 mulher, moderada 29 e 24, leve 33 e 28, por idade 60 e 55 com 15 anos como PCD, a versão instalada antiga trazia números trocados), tabelas literais completas do art. 70-E (conversão entre graus, com grau preponderante do §1º) e do art. 70-F, §1º (conversão do tempo especial para os parâmetros PCD quando favorável), vedações do art. 70-F (sem acumulação de reduções no mesmo período, sem conversão PCD para especial, §3º revogado pelo Decreto 10.410/2020) e RMI do art. 70-J (100% do salário de benefício na modalidade por tempo). Jurisprudência saneada, Tema 173/TNU retirado (tese trocada, é do BPC), Tema 694/STJ substituído pelo Tema 546/STJ no papel correto, ADI 5760 mantida com dados confirmados (Rel. Min. Alexandre de Moraes, Pleno, j. 13/09/2019) e ressalva de conferir o objeto no portal do STF antes de citar. Cenários recalculados com as tabelas oficiais.
+
 ## PRÓXIMA REVISÃO
 
 Repetir trimestralmente com consulta às páginas oficiais dos temas (não usar imprensa especializada como fonte final de data ou tese). Registrar sempre a data da conferência.
