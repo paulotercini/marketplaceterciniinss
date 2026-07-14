@@ -70,6 +70,14 @@ def update_task_body(list_id, task_id, content, content_type="text"):
     )
 
 
+def update_task_title(list_id, task_id, title):
+    return _req(
+        "PATCH",
+        f"/me/todo/lists/{list_id}/tasks/{task_id}",
+        {"title": title},
+    )
+
+
 def create_task(
     list_id,
     title,
