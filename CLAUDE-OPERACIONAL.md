@@ -137,6 +137,23 @@ substitui o que já existe). Ao rodar em lote, sempre confira o título atual
 antes de gravar (trava, se mudou desde a coleta, pula e avisa) e valide o novo
 título como um prefixo-mais-acréscimo do antigo, nunca uma reescrita.
 
+**`#decadência` (relógio da revisão, art. 103 da Lei 8.213/91).** Tag de alerta
+no nome para o prazo decenal de revisão não passar em branco. Só marque quando os
+quatro requisitos se somam, benefício **já concedido/implantado**, revisão
+**judicial ainda não ajuizada**, prazo dentro da janela de risco (padrão do
+escritório, alertar faltando menos de ~24 meses, e sempre menos de 12) e **data
+decadencial lida de documento** (cabeçalho `[PRAZO DECADENCIAL]`/`[RECEBIMENTO
+DO PRIMEIRO BENEFÍCIO]`, corpo, carta de concessão, HISCRE). Não marque quando o
+art. 103 não incide (concessão nova, 1º pedido de incapacidade, BPC pendente,
+aposentadoria futura) nem quando a revisão já foi ajuizada/protocolada
+(decadência interrompida). **Atenção pró-segurado,** pedido de revisão só na via
+**administrativa** não garante a suspensão do decênio para a via judicial, se o
+corpo mostra que o Paulo está de olho no prazo para ajuizar (ex.: "ajuizar até
+nov/2026", "em outubro ver o judicial em razão do prazo decadencial"), o relógio
+segue vivo e a tag cabe. Aplicação inaugural em 16.07.2026 (Damião Marques da
+Silva `#B42` 06/10/2026, Paulo Benedito Baptista `#B46` 20/10/2026, Vanilda da
+Silva `#B42` ~01/12/2026). Vale a mesma trava do acréscimo ao final.
+
 ## Doutrina do assistente — o que fazer em cada situação
 
 Você frequentemente **não pode executar o ato final** (ex.: protocolar/solicitar
