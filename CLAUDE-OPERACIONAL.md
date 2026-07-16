@@ -137,24 +137,37 @@ substitui o que já existe). Ao rodar em lote, sempre confira o título atual
 antes de gravar (trava, se mudou desde a coleta, pula e avisa) e valide o novo
 título como um prefixo-mais-acréscimo do antigo, nunca uma reescrita.
 
-**`#AcertoVínculos` (correção do CNIS pendente).** Marca a tarefa cujo trabalho
-central ou uma pendência clara é **corrigir dado do CNIS**, no padrão do caso do
-Ricardo Alexandre Martins (retificar vínculo com PEXT sem data-fim e pedir o acerto
-de tempo/vínculo no INSS). Entra quando há, ativo/pendente, retificação de vínculo,
-vínculo sem data-fim, inclusão de vínculo que não consta no CNIS, tratamento de
-indicador (PEXT, PREM, PVNC, IGN, PREM-BLOQ-EC103, PSC-MEN-SM-EC103, PREC-*,
-IREM/IREC-INDPEND etc.), acerto/complementação/agrupamento de competência abaixo do
-mínimo ou extemporânea, correção de remuneração lançada errada, ou averbação de tempo
-(rural, aluno-aprendiz, especial, CTC) por acerto administrativo que altera o CNIS.
-Vale mesmo quando o acerto é buscado por recurso/MS (como o Ricardo), não só na via
-administrativa direta. **NÃO marque** quando "competência" é só mês de pagamento,
-"vínculo" é menção genérica, a correção é de **PPP/LTCAT junto ao empregador** (documento,
-não CNIS), ou quando o acerto **já foi concluído** (benefício concedido/RAC deferida) sem
-nada pendente. Em dúvida, segure (melhor não marcar que falso positivo). Aplicação
-inaugural em 16.07.2026, 79 tarefas nas listas de clientes (INSS, Judicial, CRPS,
-Petições Iniciais, Pagamentos, Prazo, Escritório e sobretudo Aposentadorias Futuras).
-Mesma trava do acréscimo ao final; quando o mesmo cliente tem tarefas em listas
-diferentes, marque só a(s) que de fato traz(em) o acerto pendente.
+**`#AcertoVínculos` (acerto do CNIS ATIVO e EM ANÁLISE).** Marca a tarefa cujo acerto
+de dado do CNIS está **em andamento agora**, no padrão do caso do Ricardo Alexandre
+Martins (retificação do vínculo PEXT sem data-fim + aluno-aprendiz, em recurso no CRPS
+aguardando julgamento). O tipo de acerto é retificação de vínculo, vínculo sem data-fim,
+inclusão de vínculo que não consta no CNIS, tratamento de indicador (PEXT, PREM, PVNC,
+IGN, PREM-BLOQ-EC103, PSC-MEN-SM-EC103, PREC-*, IREM/IREC-INDPEND etc.),
+acerto/complementação/agrupamento de competência abaixo do mínimo ou extemporânea,
+correção de remuneração, ou averbação de tempo (rural, aluno-aprendiz, especial, CTC)
+por acerto administrativo.
+
+**Critério decisivo (regra do Paulo), só marque se estiver ATIVO e EM ANÁLISE agora**,
+ou seja, RAC/pedido de acerto/exigência/recurso/MS sobre o acerto **já protocolado e
+aguardando análise/decisão** do INSS, ou a correção **sendo executada agora** com
+movimentação recente. Vale por recurso/MS (Ricardo, Kuner, Wilson), não só na via
+administrativa direta.
+
+**NÃO marque** (mesmo havendo acerto a fazer) quando for **planejamento de aposentadoria
+futura** (só protocola depois), **aguardando o cliente** trazer documento/decidir,
+**parado/em espera**, **RAC pronta mas ainda não protocolada**, acerto **já concluído**
+(benefício concedido/RAC deferida), ou quando "competência" é só mês de pagamento,
+"vínculo" é menção genérica, e correção de **PPP/LTCAT junto ao empregador** (documento,
+não CNIS). Em dúvida, **não marque**.
+
+Aplicação inaugural em 16.07.2026, com varredura ampla (79 tarefas com acerto pendente)
+seguida do aperto para o critério ativo+em análise, restando **8 tarefas** (Ricardo
+Martins, Paulo Kuner e Wilson Oliveira no CRPS; Aparecido Donizete Claudino, Luciana
+Sirino, Maria Leonice Gomes e Neide `#CalcularComplementação` com RAC/acerto protocolado;
+Leandro Cazari com complementação mensal em execução). Mesma trava do acréscimo ao final;
+quando o mesmo cliente tem tarefas em listas diferentes, marque só a que de fato carrega
+o acerto ativo (ex.: Maria Leonice no INSS, não a do CRPS; Neide na de complementação,
+não a ação B91).
 
 **`#decadência` (relógio da revisão, art. 103 da Lei 8.213/91).** Tag de alerta
 no nome para o prazo decenal de revisão não passar em branco. Só marque quando os
