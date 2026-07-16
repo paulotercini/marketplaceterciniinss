@@ -121,7 +121,9 @@ Oftalmologista PCD. Deficiência visual (cegueira, baixa visão, Súmula 377/STJ
 
 Cardiologista PCD. Cardiopatias graves com limitação funcional permanente.
 
-Ver `references/MODELOS-POR-ESPECIALIDADE.md`.
+Ver `references/MODELOS-POR-ESPECIALIDADE.md` para os sub-modelos narrativos.
+
+Ver também `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` (Onda 68). Os roteiros de ortopedia, psiquiatria e neurologia podem ser reaproveitados na aposentadoria PCD, sempre cruzados com os 7 domínios do IF-BrA e com a comprovação da Data de Início da Deficiência (DID).
 
 ## 6. Pontos críticos pró-segurado
 
