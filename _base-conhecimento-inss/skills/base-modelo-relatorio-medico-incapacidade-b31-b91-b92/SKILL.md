@@ -101,7 +101,13 @@ Oftalmologista. Perda visual, retinopatia diabética, glaucoma, degeneração ma
 
 Cardiologista. Insuficiência cardíaca, pós-IAM, cardiopatia isquêmica grave, arritmias com dispositivos.
 
-Ver `references/MODELOS-POR-ESPECIALIDADE.md`.
+Neurologista. Doenças neurodegenerativas, sequelas de AVE, epilepsia refratária, doenças desmielinizantes.
+
+Cirurgião. Pós-operatório em recuperação funcional, com repouso, restrição e recuperação incompleta.
+
+Ver `references/MODELOS-POR-ESPECIALIDADE.md` para os sub-modelos narrativos.
+
+Ver `references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` (Onda 68) para roteiros probatórios enxutos com. elementos clínicos que devem ser demonstrados (não apenas alegados) em ortopedia, psiquiatria, cardiologia, neurologia e cirurgia/pós-operatório. Ancoragem em exame complementar típico de cada especialidade. Texto padrão para a petição, com referência a ID de documentos. Alerta contra o vício comum de cada especialidade. Mitigação de risco processual e distinguishing.
 
 ## 6. Pontos críticos pró-segurado
 

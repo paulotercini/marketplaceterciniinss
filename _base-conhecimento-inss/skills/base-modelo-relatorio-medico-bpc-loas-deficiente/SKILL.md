@@ -115,7 +115,9 @@ Oftalmologista BPC. Deficiência visual.
 
 Cardiologista BPC. Cardiopatias com limitação grave.
 
-Ver `references/MODELOS-POR-ESPECIALIDADE.md`.
+Ver `references/MODELOS-POR-ESPECIALIDADE.md` para os sub-modelos narrativos.
+
+Ver também `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` (Onda 68). Os roteiros de ortopedia, psiquiatria e neurologia podem ser reaproveitados no BPC/LOAS, sempre cruzados com os 7 domínios do IFBrM e com a demonstração de impedimento de longo prazo de no mínimo 2 anos.
 
 ## 6. Pontos críticos pró-segurado
 

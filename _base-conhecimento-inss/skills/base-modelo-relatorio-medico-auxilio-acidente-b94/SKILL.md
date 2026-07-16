@@ -106,7 +106,9 @@ Oftalmologista. Sequela visual permanente (perda parcial ou total da visão), de
 
 Cardiologista. Sequela cardíaca pós-IAM ocupacional, miocardiopatia pós-exposição a químicos.
 
-Ver `references/MODELOS-POR-ESPECIALIDADE.md`.
+Ver `references/MODELOS-POR-ESPECIALIDADE.md` para os sub-modelos narrativos.
+
+Ver também o reference cruzado `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/ROTEIROS-PROBATORIOS-POR-ESPECIALIDADE.md` (Onda 68). Os roteiros de ortopedia, cardiologia e neurologia podem ser reaproveitados no B94, adaptando o foco para SEQUELA CONSOLIDADA e redução da capacidade laborativa, e não para incapacidade em curso.
 
 ## 6. Pontos críticos pró-segurado
 
