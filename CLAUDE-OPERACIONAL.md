@@ -137,6 +137,25 @@ substitui o que já existe). Ao rodar em lote, sempre confira o título atual
 antes de gravar (trava, se mudou desde a coleta, pula e avisa) e valide o novo
 título como um prefixo-mais-acréscimo do antigo, nunca uma reescrita.
 
+**`#AcertoVínculos` (correção do CNIS pendente).** Marca a tarefa cujo trabalho
+central ou uma pendência clara é **corrigir dado do CNIS**, no padrão do caso do
+Ricardo Alexandre Martins (retificar vínculo com PEXT sem data-fim e pedir o acerto
+de tempo/vínculo no INSS). Entra quando há, ativo/pendente, retificação de vínculo,
+vínculo sem data-fim, inclusão de vínculo que não consta no CNIS, tratamento de
+indicador (PEXT, PREM, PVNC, IGN, PREM-BLOQ-EC103, PSC-MEN-SM-EC103, PREC-*,
+IREM/IREC-INDPEND etc.), acerto/complementação/agrupamento de competência abaixo do
+mínimo ou extemporânea, correção de remuneração lançada errada, ou averbação de tempo
+(rural, aluno-aprendiz, especial, CTC) por acerto administrativo que altera o CNIS.
+Vale mesmo quando o acerto é buscado por recurso/MS (como o Ricardo), não só na via
+administrativa direta. **NÃO marque** quando "competência" é só mês de pagamento,
+"vínculo" é menção genérica, a correção é de **PPP/LTCAT junto ao empregador** (documento,
+não CNIS), ou quando o acerto **já foi concluído** (benefício concedido/RAC deferida) sem
+nada pendente. Em dúvida, segure (melhor não marcar que falso positivo). Aplicação
+inaugural em 16.07.2026, 79 tarefas nas listas de clientes (INSS, Judicial, CRPS,
+Petições Iniciais, Pagamentos, Prazo, Escritório e sobretudo Aposentadorias Futuras).
+Mesma trava do acréscimo ao final; quando o mesmo cliente tem tarefas em listas
+diferentes, marque só a(s) que de fato traz(em) o acerto pendente.
+
 **`#decadência` (relógio da revisão, art. 103 da Lei 8.213/91).** Tag de alerta
 no nome para o prazo decenal de revisão não passar em branco. Só marque quando os
 quatro requisitos se somam, benefício **já concedido/implantado**, revisão
