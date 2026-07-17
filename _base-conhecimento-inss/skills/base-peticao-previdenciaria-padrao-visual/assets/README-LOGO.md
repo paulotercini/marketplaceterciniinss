@@ -54,11 +54,11 @@ Se nenhum arquivo for encontrado, a petição é gerada SEM logo. Um alerta é e
 
 ## COMO INSTALAR O LOGO PELA PRIMEIRA VEZ
 
-1. Salvar o arquivo do logo do escritório em `C:\Users\VAIO\INSS\assets\logo-tercini.png` (criar a pasta `assets` se não existir).
+1. No Windows do escritório, salvar o arquivo em `C:\Users\VAIO\INSS\assets\logo-tercini.png` (criar a pasta `assets` se não existir). No Cowork, o mesmo arquivo aparece automaticamente no sandbox como `/sessions/<sessao>/mnt/INSS/assets/logo-tercini.PNG` quando a pasta INSS está selecionada.
 
-2. Confirmar que o arquivo é PNG ou JPG.
+2. Confirmar que o arquivo é PNG ou JPG. O arquivo atual do escritório chama-se `logo-tercini.PNG` com extensão MAIÚSCULA, e a busca é case-insensitive.
 
-3. **A partir da Onda 54 (v1.44.0), qualquer dimensão é aceita.** A skill lê os pixels reais do PNG e calcula largura preservando aspect ratio (altura fixa em 75 px). Não há mais distorção. Recomenda-se ao menos 300 px de altura no arquivo fonte para preservar qualidade visual quando renderizado no docx.
+3. **Qualquer dimensão é aceita.** A skill lê os pixels reais do arquivo (PNG pelos bytes 16-23, JPEG pelos SOF markers desde a Onda 69) e calcula a largura preservando aspect ratio (altura fixa em 75 px). Não há distorção. Recomenda-se ao menos 300 px de altura no arquivo fonte para preservar qualidade visual quando renderizado no docx.
 
 4. Próxima petição gerada já trará o logo no cabeçalho.
 
@@ -67,11 +67,12 @@ Se nenhum arquivo for encontrado, a petição é gerada SEM logo. Um alerta é e
 - Formato. PNG com canal alfa (fundo transparente).
 - Design. Duas formas triangulares em cinza (claro e escuro) sobre uma curva vermelha estilizando uma balança da justiça.
 - Cores. Cinza, preto e vermelho.
-- Dimensões no documento. 83 x 75 px (a 96 DPI) ou cx=791210 cy=712470 EMU.
+- Dimensões nativas do arquivo. **538 x 421 px** (proporção 1,278).
+- Dimensões de inserção no documento. **96 x 75 px** (altura fixa 75, largura calculada pela proporção real). A especificação antiga de 83 x 75 px (cx=791210 cy=712470 EMU) DISTORCIA o logo e está superada desde a Onda 69.
 
 ## ATENÇÃO ANTI-ALUCINAÇÃO
 
-A skill geradora NÃO deve inventar conteúdo do logo nem desenhar via SVG. Se o arquivo não existir nos caminhos de busca, gerar a petição SEM logo e ALERTAR claramente o usuário.
+A skill geradora NÃO deve inventar conteúdo do logo nem desenhar via SVG. Desde a Onda 69, se o arquivo não existir nos caminhos de busca (incluindo o sandbox `/sessions/*/mnt/INSS/assets/`), a geração é INTERROMPIDA com erro BLOQUEANTE. A petição sem timbre não deve ser entregue. Localizar o logo com `find /sessions -iname 'logo-tercini*' 2>/dev/null`, confirmar o mount da pasta INSS e regenerar.
 
 ## SUPORTE A MÚLTIPLOS FORMATOS
 

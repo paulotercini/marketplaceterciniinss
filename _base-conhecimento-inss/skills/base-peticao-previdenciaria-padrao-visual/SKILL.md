@@ -73,8 +73,10 @@ A primeira página exibe cabeçalho timbrado em tabela de duas colunas, sem bord
 - Altura da linha: 993 twips
 
 **Logo (coluna 1).**
-- Imagem JPEG, alinhada à direita
-- Dimensões em EMU: **cx="791210" cy="712470"**
+- Arquivo real do escritório. `logo-tercini.PNG`, **538x421 px** (proporção 1,278), tipo **PNG**
+- Alinhada à direita
+- Dimensões de inserção. **Altura padrão 75 px, largura calculada pela proporção real do arquivo** (para o logo atual, 96x75). NUNCA usar largura fixa sem ler a proporção do arquivo
+- Nota histórica (Onda 69). A especificação anterior "Imagem JPEG, cx=791210 cy=712470" correspondia a 83x75 e DISTORCIA o logo real. Está superada. O tipo é detectado dinamicamente pelo arquivo encontrado, e as dimensões derivam do cabeçalho binário da imagem
 
 **Texto de identificação (coluna 2), centralizado.**
 - Linha em branco (Bell MT, 8pt, espaçador superior)
@@ -630,18 +632,47 @@ function parCorpo(opts) {
 
 ```javascript
 // Carrega logo com fallback em múltiplos caminhos e suporte a PNG/JPG.
-// Atualizado na Onda 54 (v1.44.0) com busca case-insensitive nas extensões
-// e cálculo dinâmico de dimensões preservando aspect ratio do arquivo real.
+// Onda 54 (v1.44.0). Busca case-insensitive nas extensões e aspect ratio dinâmico.
+// Onda 69 (v1.59.0). Resolução DINÂMICA dos caminhos do sandbox Cowork/Claude.
+//   Causa raiz do cabeçalho sem logo. As bases anteriores eram só Windows
+//   (C:\Users\VAIO\...) e relativas. No sandbox Linux do Cowork o mount é
+//   /sessions/<nome-da-sessao>/mnt/INSS/assets/ e o <nome-da-sessao> MUDA a cada
+//   sessão. Sem resolver esse caminho, o logo nunca era encontrado e a peça saía
+//   SEM timbre. A resolução agora deriva de process.cwd() e de glob em /sessions.
+function resolverBasesLogo() {
+  const bases = [];
+  // 1. Sandbox Cowork/Claude (Linux). Deriva a raiz da sessão do cwd atual.
+  //    cwd típico. /sessions/<nome>/... — raiz da sessão é /sessions/<nome>.
+  try {
+    const cwd = process.cwd();
+    const m = cwd.match(/^(\/sessions\/[^\/]+)/);
+    if (m) {
+      bases.push(path.join(m[1], 'mnt', 'INSS', 'assets', 'logo-tercini'));
+      bases.push(path.join(m[1], 'mnt', 'INSS', 'assets', 'logo'));
+    }
+  } catch (e) { /* continue */ }
+  // 2. Glob defensivo. Qualquer sessão montada em /sessions com a pasta INSS.
+  try {
+    if (fs.existsSync('/sessions')) {
+      for (const sess of fs.readdirSync('/sessions')) {
+        bases.push(path.join('/sessions', sess, 'mnt', 'INSS', 'assets', 'logo-tercini'));
+        bases.push(path.join('/sessions', sess, 'mnt', 'INSS', 'assets', 'logo'));
+      }
+    }
+  } catch (e) { /* continue */ }
+  // 3. Windows local do escritório (execução fora do sandbox).
+  bases.push('C:\\Users\\VAIO\\INSS\\assets\\logo-tercini');
+  bases.push('C:\\Users\\VAIO\\INSS\\assets\\logo');
+  // 4. Relativos ao script.
+  bases.push(path.join(__dirname, 'assets', 'logo-tercini'));
+  bases.push(path.join(__dirname, 'assets', 'logo'));
+  bases.push('./assets/logo-tercini');
+  bases.push('./assets/logo');
+  return bases;
+}
+
 function carregarLogoTercini() {
-  // Bases sem extensão. Cada base é testada com cada extensão candidata.
-  const bases = [
-    'C:\\Users\\VAIO\\INSS\\assets\\logo-tercini',
-    'C:\\Users\\VAIO\\INSS\\assets\\logo',
-    path.join(__dirname, 'assets', 'logo-tercini'),
-    path.join(__dirname, 'assets', 'logo'),
-    './assets/logo-tercini',
-    './assets/logo'
-  ];
+  const bases = resolverBasesLogo();
   // Extensões testadas em ambas as caixas (case-insensitive para robustez).
   const extensoes = ['.png', '.PNG', '.jpg', '.JPG', '.jpeg', '.JPEG'];
   for (const base of bases) {
@@ -662,25 +693,47 @@ function carregarLogoTercini() {
 
 // Calcula dimensões preservando aspect ratio do arquivo real.
 // Altura padrão de 75 px. Largura calculada a partir da proporção real da imagem.
-// Fallback para 83x75 se a leitura de dimensões falhar.
+// Onda 69. Fallback corrigido de 83x75 para 96x75 (proporção 1,278 do
+// logo-tercini.PNG real de 538x421). O fallback antigo DISTORCIA o logo.
+// Onda 69. Implementada leitura de dimensões JPEG pelos SOF markers.
 function calcularDimensoesLogo(buffer, tipo) {
   const ALTURA_PADRAO = 75;
-  const FALLBACK = { width: 83, height: 75 };
+  const FALLBACK = { width: 96, height: 75 }; // proporção do logo real 538x421
   try {
-    // Leitura direta do cabeçalho do PNG. Bytes 16-19 = width, bytes 20-23 = height.
     if (tipo === 'png') {
+      // Cabeçalho PNG. Bytes 16-19 = width, bytes 20-23 = height.
       const larguraReal = buffer.readUInt32BE(16);
       const alturaReal = buffer.readUInt32BE(20);
       if (larguraReal > 0 && alturaReal > 0) {
-        const proporcao = larguraReal / alturaReal;
         return {
-          width: Math.round(ALTURA_PADRAO * proporcao),
+          width: Math.round(ALTURA_PADRAO * (larguraReal / alturaReal)),
           height: ALTURA_PADRAO
         };
       }
     }
-    // Para JPG, leitura do SOF marker (mais complexa - fica como TODO).
-    // Por ora, para JPG usa fallback.
+    if (tipo === 'jpg') {
+      // Varre segmentos JPEG até um SOF (C0-CF, exceto C4, C8, CC).
+      let i = 2; // pula FF D8
+      while (i + 9 < buffer.length) {
+        if (buffer[i] !== 0xFF) { i++; continue; }
+        const marker = buffer[i + 1];
+        const isSOF = marker >= 0xC0 && marker <= 0xCF &&
+                      marker !== 0xC4 && marker !== 0xC8 && marker !== 0xCC;
+        if (isSOF) {
+          const alturaReal = buffer.readUInt16BE(i + 5);
+          const larguraReal = buffer.readUInt16BE(i + 7);
+          if (larguraReal > 0 && alturaReal > 0) {
+            return {
+              width: Math.round(ALTURA_PADRAO * (larguraReal / alturaReal)),
+              height: ALTURA_PADRAO
+            };
+          }
+          break;
+        }
+        const len = buffer.readUInt16BE(i + 2);
+        i += 2 + len;
+      }
+    }
   } catch (e) {
     console.warn('[ALERTA] Falha ao ler dimensões do logo. Usando fallback.', e.message);
   }
@@ -689,8 +742,11 @@ function calcularDimensoesLogo(buffer, tipo) {
 
 const logo = carregarLogoTercini();
 if (!logo) {
-  console.warn('[ALERTA] Logo do escritório NÃO localizado em nenhum dos caminhos de busca. Petição será gerada SEM logo. Salve logo-tercini.png em C:\\Users\\VAIO\\INSS\\assets\\ e regenere.');
+  // Onda 69. Logo ausente é ERRO BLOQUEANTE, não aviso. A peça NÃO deve ser
+  // entregue sem timbre. Interromper e alertar o usuário.
+  throw new Error('[BLOQUEANTE] Logo do escritório NÃO localizado em nenhum caminho de busca (sandbox /sessions/*/mnt/INSS/assets/, C:\\Users\\VAIO\\INSS\\assets\\ e relativos). A petição NÃO pode ser gerada sem o timbre. Confirme que logo-tercini.PNG está na pasta assets da pasta INSS selecionada.');
 }
+console.log('[OK] Logo carregado de ' + logo.caminho + ' (tipo ' + logo.tipo + ')');
 
 const dimensoesLogo = logo ? calcularDimensoesLogo(logo.buffer, logo.tipo) : { width: 83, height: 75 };
 
@@ -936,73 +992,91 @@ A fonte do corpo das tabelas é 10pt (size 20), menor do que os 12pt do texto co
 
 ### Validação Final
 
-Após gerar o buffer com `Packer.toBuffer(doc)`, salvar em `/mnt/user-data/outputs/`, validar com o script padrão de docx e entregar via `present_files`.
+Após gerar o buffer com `Packer.toBuffer(doc)`, salvar o arquivo, validar com o script padrão de docx (quando disponível) e SEMPRE executar a Verificação Obrigatória do Cabeçalho Pós-Geração (seção própria, Onda 69) antes de entregar via `present_files`.
 
 ```bash
-python /mnt/skills/public/docx/scripts/office/validate.py /mnt/user-data/outputs/peticao.docx
+# Validação estrutural (se o script estiver disponível no ambiente)
+python /mnt/skills/public/docx/scripts/office/validate.py peticao.docx
+
+# Verificação obrigatória do cabeçalho (Onda 69) - as 3 checagens
+unzip -l peticao.docx | grep -i "word/media"
+unzip -p peticao.docx word/header1.xml word/header2.xml word/header3.xml 2>/dev/null | grep -c "ADVOCACIA"
+unzip -p peticao.docx word/document.xml | grep -c "titlePg"
 ```
+
+Peça que falhe em qualquer checagem do cabeçalho NÃO é entregue.
 
 ---
 
 ## Logo do Escritório
 
-### Caminhos de Busca (Atualizado Onda 35 - v1.25.0)
+### Caminhos de Busca (Atualizado Onda 69 - v1.59.0)
 
-A skill geradora procura o logo na ordem abaixo e usa o primeiro encontrado.
+REGRA DE OURO. O ambiente de execução decide o caminho. A skill geradora resolve as bases DINAMICAMENTE nesta ordem e usa o primeiro arquivo encontrado.
 
-1. `C:\Users\VAIO\INSS\assets\logo-tercini.png` (RECOMENDADO - sobrevive a atualizações do plugin).
-2. `C:\Users\VAIO\INSS\assets\logo-tercini.jpg`.
-3. `C:\Users\VAIO\INSS\assets\logo.png`.
-4. `C:\Users\VAIO\INSS\assets\logo.jpg`.
-5. `<diretório da skill>/assets/logo-tercini.png` (versionado no plugin).
-6. `<diretório da skill>/assets/logo-tercini.jpg`.
-7. `<diretório da skill>/assets/logo.png`.
-8. `<diretório da skill>/assets/logo.jpg`.
-9. `./assets/logo-tercini.png` (diretório de trabalho atual).
-10. `./assets/logo-tercini.jpg`.
-11. `./assets/logo.png`.
-12. `./assets/logo.jpg`.
+**Bloco 1 - Sandbox Cowork/Claude (Linux). SEMPRE testado primeiro.**
+
+1. `<raiz da sessão derivada de process.cwd()>/mnt/INSS/assets/logo-tercini.(png|PNG|jpg|JPG|jpeg|JPEG)`. A raiz é extraída do padrão `/sessions/<nome-da-sessao>` do diretório de trabalho atual. O `<nome-da-sessao>` MUDA a cada sessão do Cowork, por isso o caminho NUNCA deve ser fixado literalmente.
+2. Glob defensivo em `/sessions/*/mnt/INSS/assets/` para qualquer sessão montada.
+
+**Bloco 2 - Windows local do escritório.**
+
+3. `C:\Users\VAIO\INSS\assets\logo-tercini.(png|jpg|jpeg)` e `logo.(png|jpg|jpeg)`.
+
+**Bloco 3 - Relativos.**
+
+4. `<diretório da skill>/assets/` e `./assets/` com os mesmos nomes.
+
+Em Python (geração via skill docx), aplicar a mesma lógica com `os.getcwd()`, `re.match(r'^(/sessions/[^/]+)', cwd)` e `glob.glob('/sessions/*/mnt/INSS/assets/logo*')`.
 
 ### Suporte a Formato
 
-A implementação detecta automaticamente o formato pela extensão. Suporta PNG (preferencial, com transparência), JPG e JPEG. O parâmetro `type` do `ImageRun` é definido dinamicamente conforme a extensão do arquivo encontrado.
+A implementação detecta automaticamente o formato pela extensão, testada em ambas as caixas (`.png`, `.PNG`, `.jpg`, `.JPG`, `.jpeg`, `.JPEG`). O arquivo real do escritório chama-se `logo-tercini.PNG` (extensão MAIÚSCULA). O parâmetro `type` do `ImageRun` é definido dinamicamente conforme o arquivo encontrado.
 
-### Configuração Inicial pelo Usuário
+### Logo Ausente é ERRO BLOQUEANTE (Onda 69)
 
-Caso a skill detecte que o logo não está disponível, o output da petição é gerado SEM logo e um alerta no console indica.
+Comportamento anterior (até v1.58.0). Logo ausente gerava apenas um `console.warn` e a petição saía SEM timbre. Esse era o principal motivo de cabeçalho incorreto, porque no sandbox do Cowork os caminhos Windows nunca existem e o alerta passava despercebido.
 
-```
-[ALERTA] Logo do escritório NÃO localizado em nenhum dos caminhos de busca. Petição será gerada SEM logo. Salve logo-tercini.png em C:\Users\VAIO\INSS\assets\ e regenere.
-```
+Comportamento atual. Logo ausente INTERROMPE a geração com `throw new Error('[BLOQUEANTE] ...')`. A peça sem timbre não é entregue. O Claude deve então localizar o logo (`find /sessions -iname 'logo-tercini*' 2>/dev/null`), confirmar o mount da pasta INSS e regenerar.
 
-Para resolver, o usuário deve.
+### Dimensões (atualizado Onda 69)
 
-1. Criar a pasta `C:\Users\VAIO\INSS\assets\` se não existir.
-2. Salvar o arquivo do logo do escritório nela como `logo-tercini.png`.
-3. Re-rodar a geração da petição.
-
-### Dimensões (atualizado Onda 54)
-
-**A partir da Onda 54 (v1.44.0), as dimensões são calculadas DINAMICAMENTE preservando o aspect ratio do arquivo real.**
+As dimensões são calculadas DINAMICAMENTE preservando o aspect ratio do arquivo real.
 
 Comportamento.
-- A função `calcularDimensoesLogo` lê os bytes 16-23 do PNG para obter width/height nativos.
+- PNG. A função `calcularDimensoesLogo` lê os bytes 16-23 do cabeçalho para obter width/height nativos.
+- JPEG. Leitura implementada na Onda 69 pelos SOF markers (C0-CF, exceto C4, C8, CC), extraindo height/width dos bytes 5-8 do segmento.
 - Fixa altura em **75 px** (padrão do layout do header).
 - Calcula largura proporcional. `Math.round(75 × larguraReal / alturaReal)`.
-- Fallback para `83×75` se a leitura falhar.
-
-**Motivação da mudança.** O logo atual do escritório tem 538×421 px (proporção 1.278), mas a versão anterior forçava 83×75 (proporção 1.107). Isso comprimia verticalmente a imagem, distorcendo o design da balança. Agora a proporção original é preservada.
+- Fallback para **96×75** (proporção 1,278 do logo real 538×421) SOMENTE se a leitura binária falhar. O fallback antigo de 83×75 DISTORCIA o logo e foi eliminado.
 
 **Exemplos práticos.**
 
 | Logo real | Proporção | Width calculado | Height final |
 |-----------|-----------|-----------------|--------------|
-| 538×421 px | 1.278 | 96 px | 75 px |
+| 538×421 px (atual) | 1.278 | 96 px | 75 px |
 | 512×512 px | 1.000 | 75 px | 75 px |
 | 400×300 px | 1.333 | 100 px | 75 px |
 | 600×450 px | 1.333 | 100 px | 75 px |
 
-Para JPG, ainda usa fallback `83×75` (leitura de dimensões via SOF marker será implementada em onda futura).
+### Verificação Obrigatória do Cabeçalho Pós-Geração (Onda 69)
+
+Antes de entregar QUALQUER petição, executar as três checagens no .docx gerado. O .docx é um ZIP.
+
+```bash
+# 1. O logo está embarcado? Deve listar ao menos um arquivo em word/media/.
+unzip -l peticao.docx | grep -i "word/media" || echo "[FALHA] SEM LOGO NO DOCX"
+
+# 2. O timbre textual está no header? Deve encontrar ADVOCACIA.
+unzip -p peticao.docx word/header1.xml word/header2.xml word/header3.xml 2>/dev/null | grep -c "ADVOCACIA" || echo "[FALHA] SEM TIMBRE TEXTUAL"
+
+# 3. A âncora do titlePage existe? Deve encontrar titlePg no sectPr.
+unzip -p peticao.docx word/document.xml | grep -c "titlePg" || echo "[FALHA] SEM titlePage - header da 1a pagina nao sera diferenciado"
+```
+
+Se qualquer checagem falhar, NÃO entregar. Diagnosticar, corrigir e regenerar. Registrar no relatório de revisão da peça (`base-revisao-peticao-aprofundada`) a linha "Cabeçalho verificado. Logo embarcado, timbre presente, titlePage ativo."
+
+Armadilha conhecida do docx-js. Sem `titlePage: true` nas properties da seção, o `headers.first` é ignorado e o Word usa o `default` (vazio) em todas as páginas. Sem `spacing` explícito zerado nos parágrafos do header, o estilo default (before/after 240, line 360) desloca o timbre. Ver seção Header da Primeira Página.
 
 ### Característica Visual do Logo
 
