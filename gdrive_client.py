@@ -2,14 +2,16 @@
 sem passar pelo contexto do modelo. Resolve o limite de ~10 MB do conector MCP
 (que devolve o conteudo em base64 pela janela de contexto e por isso trava).
 
-Credenciais OAuth (client_id + client_secret de um cliente do tipo "TVs e
-dispositivos com entrada limitada" no Google Cloud) sao lidas de:
+Credenciais OAuth (client_id + client_secret de um cliente do tipo "Aplicativo para
+computador"/Desktop app no Google Cloud) sao lidas de:
   1. variaveis de ambiente GDRIVE_CLIENT_ID / GDRIVE_CLIENT_SECRET, ou
   2. arquivo gdrive_oauth.json -> {"client_id": "...", "client_secret": "..."}.
 
-O token (access + refresh) fica em gdrive_tokens.json (gitignored). Gere uma vez:
-  python3 gdrive_devflow.py start && python3 gdrive_devflow.py poll
-Escopo: Drive somente leitura.
+O refresh_token vem do arquivo gdrive_tokens.json (gitignored) OU da variavel de
+ambiente GDRIVE_REFRESH_TOKEN (modo duravel, sem arquivo, em container efemero).
+Gere o primeiro token uma vez com:
+  python3 gdrive_authcode.py url && python3 gdrive_authcode.py exchange "<URL>"
+Escopo: Drive leitura E escrita (https://www.googleapis.com/auth/drive).
 """
 import json
 import os
@@ -62,20 +64,30 @@ def _post(url, data):
         return json.loads(r.read())
 
 
+def _refresh_token_value():
+    """Refresh token, do arquivo gdrive_tokens.json OU da variavel de ambiente
+    GDRIVE_REFRESH_TOKEN (modo duravel em container efemero, sem arquivo de token)."""
+    if TOKENS_PATH.exists():
+        rt = json.loads(TOKENS_PATH.read_text()).get("refresh_token")
+        if rt:
+            return rt
+    return os.environ.get("GDRIVE_REFRESH_TOKEN")
+
+
 def refresh():
     """Renova o access_token a partir do refresh_token salvo. Retorna o access_token."""
-    if not TOKENS_PATH.exists():
-        raise RuntimeError(
-            "gdrive_tokens.json nao existe. Autentique com "
-            "'python3 gdrive_devflow.py start' e depois 'poll'.")
     cid, csec = _creds()
-    cur = json.loads(TOKENS_PATH.read_text())
+    rt = _refresh_token_value()
+    if not rt:
+        raise RuntimeError(
+            "Sem refresh_token. Faca o login uma vez com 'python3 gdrive_authcode.py "
+            "url' e depois 'exchange', ou defina GDRIVE_REFRESH_TOKEN no ambiente.")
     tok = _post(TOKEN_URI, {
         "client_id": cid, "client_secret": csec,
-        "grant_type": "refresh_token", "refresh_token": cur["refresh_token"]})
+        "grant_type": "refresh_token", "refresh_token": rt})
+    cur = json.loads(TOKENS_PATH.read_text()) if TOKENS_PATH.exists() else {}
     cur["access_token"] = tok["access_token"]
-    if "refresh_token" in tok:
-        cur["refresh_token"] = tok["refresh_token"]
+    cur["refresh_token"] = tok.get("refresh_token", rt)
     TOKENS_PATH.write_text(json.dumps(cur))
     return cur["access_token"]
 
