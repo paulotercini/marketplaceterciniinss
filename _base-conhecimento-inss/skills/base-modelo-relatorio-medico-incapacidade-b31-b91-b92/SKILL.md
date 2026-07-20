@@ -177,6 +177,14 @@ Tipo de benefício (B31, B91 ou B92).
 
 Eu gero o relatório personalizado em formato .docx pronto para ser entregue ao médico assistente.
 
+### Requisitos obrigatórios x facultativos no Atestmed (Onda 72)
+
+O art. 2º da Portaria Conjunta MPS/INSS 13/2026, conferido no DOU de 24/03/2026, exige documento oficial com foto (caput) e documentação médica legível e sem rasuras contendo cinco incisos. Identificação do requerente, data de emissão, diagnóstico por extenso OU código CID (alternativos), assinatura do emitente e identificação do emitente com registro no Conselho de Classe legível.
+
+Prazo estimado em dias (art. 2º, §2º) e data de início do repouso (art. 2º, §1º c/c art. 4º, §1º) NÃO são requisitos obrigatórios. São, respectivamente, elemento facultativo e lacuna suprida por norma. Recomenda-se obtê-los por estratégia, para reduzir o espaço do art. 4º, §3º, mas sua ausência não é causa normativa de indeferimento.
+
+Detalhamento e uso pró-segurado da correção em `analise-documental-incapacidade`, seção Requisitos REAIS do art. 2º.
+
 ## 11. Cruzamento com outras skills
 
 `base-validacao-formal-laudo-medico-checklist-ab` para validação formal do Checklist A após preenchimento.
