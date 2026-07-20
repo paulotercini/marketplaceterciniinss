@@ -139,10 +139,44 @@ Contra indeferimento do auxílio-acidente pela análise documental prévia, cabe
 
 O art. 4º, §3º, da Portaria 13/2026 confere ao PMF autonomia para fixar data de início de repouso e duração do benefício de forma diversa do indicado na documentação médica, com base na literatura científica e nos tempos médios por CID (art. 4º, §4º). ALERTA — esse dispositivo será o principal instrumento de redução de benefícios concedidos por análise documental. O segurado deve obter atestados com data de início do repouso e prazo estimado em dias.
 
+## Requisitos REAIS do art. 2º da Portaria 13/2026 (Onda 72, conferido no DOU)
+
+Redação conferida no inteiro teor publicado no DOU de 24/03/2026, Edição 56, Seção 1, Página 93.
+
+O caput exige, cumulativamente, DOIS documentos. Primeiro, DOCUMENTO OFICIAL COM FOTO. Segundo, documentação médica ou odontológica para fins previdenciários, física ou eletrônica, LEGÍVEL E SEM RASURAS.
+
+A documentação médica deve conter, NO MÍNIMO, os cinco incisos.
+
+Inciso I. Identificação do requerente.
+
+Inciso II. Data de emissão do(s) documento(s) médico(s) ou odontológico(s).
+
+Inciso III. Diagnóstico por extenso OU código da CID. São ALTERNATIVOS. A ausência do código CID não invalida se houver diagnóstico por extenso, e o art. 2º, §3º, atribui à própria PMF o registro do CID com base na descrição apresentada.
+
+Inciso IV. Assinatura do profissional emitente, que pode ser eletrônica e passível de validação.
+
+Inciso V. Identificação do profissional emitente, com nome E registro no Conselho de Classe (CRM ou CRO), ou no Ministério da Saúde (RMS), ou carimbo, LEGÍVEIS.
+
+### CORREÇÃO DE LEITURA CIRCULANTE. O que NÃO é requisito obrigatório
+
+Material de divulgação sobre Atestmed costuma listar cinco campos obrigatórios como sendo CID, data de início, prazo em dias, CRM legível e data de emissão. Essa lista NÃO corresponde ao art. 2º e induz a erro em duas direções opostas.
+
+Apresenta como obrigatório o que é FACULTATIVO ou REMEDIÁVEL.
+
+Prazo estimado em dias. O art. 2º, §2º, diz que "PODERÃO ser apresentados outros elementos para a formação da convicção médico-pericial, inclusive em relação ao prazo estimado necessário, preferencialmente em dias". Verbo facultativo. Sua ausência NÃO é causa normativa de indeferimento.
+
+Data de início do repouso. Não figura entre os incisos. O art. 2º, §1º, remete ao art. 4º quando ausente, e o art. 4º, §1º, autoriza expressamente considerar a DATA DE EMISSÃO do documento. Ausência é lacuna suprida por norma, não vício.
+
+Omite o que é genuinamente OBRIGATÓRIO. Documento oficial com foto (caput). Identificação do requerente (inciso I). Assinatura do profissional emitente (inciso IV). Legibilidade e ausência de rasuras (caput). Cobertura odontológica com CRO, e não apenas CRM.
+
+Uso pró-segurado da correção. Indeferimento fundado exclusivamente na ausência de prazo em dias ou de data de início do repouso contraria a literalidade do art. 2º, §2º, e do art. 4º, §1º, e é atacável em recurso ao CRPS, em MS ou em juízo. Registrar o dispositivo na peça. Em sentido inverso, a falta de documento oficial com foto, de assinatura ou de identificação legível do emitente é vício real, a sanar antes do protocolo.
+
+Ressalva de método. Obter atestado COM data de início do repouso e COM prazo em dias continua sendo a orientação prática correta, porque reduz o espaço de arbítrio do art. 4º, §3º (autonomia do PMF para fixar prazo diverso). O ponto da correção é normativo, não estratégico. Esses elementos fortalecem o pedido, mas sua ausência não o inviabiliza.
+
 ## Alertas Estratégicos
 
 ### ALERTA 1 — Documentação é tudo
-No regime de análise documental, a qualidade da documentação médica apresentada no requerimento administrativo define o resultado. Relatórios genéricos serão rejeitados. Cada requisito do art. 2º das Portarias nº 13 e nº 15 deve ser individualmente atendido.
+No regime de análise documental, a qualidade da documentação médica apresentada no requerimento administrativo define o resultado. Relatórios genéricos serão rejeitados. Cada requisito do art. 2º das Portarias nº 13 e nº 15 deve ser individualmente atendido, observada a distinção entre requisito obrigatório e elemento facultativo da seção anterior.
 
 ### ALERTA 2 — Tema 1124/STJ
 A documentação apresentada no requerimento administrativo define os efeitos financeiros em eventual ação judicial. Toda documentação relevante deve ser apresentada na via administrativa. Se omitida sem justificativa, os efeitos financeiros podem retroagir apenas à citação.
