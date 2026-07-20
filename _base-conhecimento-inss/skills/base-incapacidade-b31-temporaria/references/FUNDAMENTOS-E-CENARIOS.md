@@ -56,7 +56,11 @@ Segurado com B31 indeferido por parecer de verossimilhança negativo. Cabe recur
 
 ### Cenário 8 — Limbo previdenciário-trabalhista
 
-INSS cessa B31 por alta, mas empresa recusa retorno por entender incapacidade persistente. Limbo previdenciário-trabalhista. Tema 1421 STF e jurisprudência do TST sobre responsabilidade.
+INSS cessa B31 por alta, mas empresa recusa retorno por entender incapacidade persistente. Limbo previdenciário-trabalhista.
+
+Fundamento a citar, **Tema 300 da TNU**, que mantém a qualidade de segurado até a rescisão contratual, quando só então começa a correr o período de graça do art. 15, II. O Tema 1421 do STF é a pendência que pode superá-lo, mérito não julgado em 20/07/2026, citar como risco e não como fundamento. O IRR 302 do TST está afetado e sem tese, sobre o ônus da prova da comunicação da alta.
+
+A tese exige prova do impedimento patronal, vínculo aberto no CNIS não basta. Acionar `base-limbo-previdenciario-tema300` para o roteiro probatório e a defesa antecipada, e nunca requerer RAC de baixa do vínculo em aberto.
 
 ## 3. Documentos essenciais
 

@@ -297,3 +297,23 @@ Atualização normativa até 06/2026 (Portaria 1.316/2025).
 A reference `INDICADORES-COMPLETO-2026.md` traz a transcrição literal da lista publicada, organizada por grupo temático e categoria, para consulta rápida.
 
 A reference `RAIS-AFASTAMENTOS-SEM-REMUNERACAO.md` (Onda 62) consolida a Tabela 18 do eSocial em três grupos com fluxo pró-segurado.
+
+## LIMBO PREVIDENCIÁRIO. EXCEÇÃO À ROTINA DE SANEAMENTO (Onda 70)
+
+**ALERTA CRÍTICO. Nunca requerer RAC pedindo baixa de vínculo em aberto quando houver diagnóstico de limbo previdenciário.**
+
+A rotina ordinária desta skill manda impugnar registro irregular e sanear o CNIS antes do requerimento. Existe uma exceção, e ela é absoluta.
+
+Quando o CNIS apresentar vínculo em aberto com remunerações zeradas por período longo, apurar antes se o caso é de limbo previdenciário, isto é, se o segurado recebeu alta ou indeferimento do INSS e o empregador recusou a reassunção do posto por considerá-lo inapto. Nessa hipótese o vínculo aberto é **ativo processual**, porque sustenta a manutenção da qualidade de segurado pelo Tema 300 da TNU. Encerrá-lo administrativamente destrói a tese e é irreversível na prática.
+
+Registrar o alerta na tarefa do cliente no To Do para que nenhum colaborador protocole a RAC por rotina.
+
+Diagnóstico, roteiro probatório em oito graus e defesa antecipada em `base-limbo-previdenciario-tema300`.
+
+## TABELA DA RAIS. DOIS INSTRUMENTOS DISTINTOS
+
+Não confundir as duas tabelas que esta skill utiliza.
+
+A **Tabela 18 do eSocial**, códigos 01 a 44, está em `references/RAIS-AFASTAMENTOS-SEM-REMUNERACAO.md` e serve para triar afastamentos sem remuneração que o INSS descarta da contagem de tempo. É instrumento de diagnóstico do próprio segurado.
+
+A **tabela de afastamentos da RAIS**, item D.2 do Manual de Orientação, códigos 10 a 85, está em `base-limbo-previdenciario-tema300`, `references/TABELA-RAIS-AFASTAMENTOS-D2.md`, com as regras de preenchimento D.1, D.3 e D.4 e sete teses probatórias. É instrumento de prova contra o empregador, sobretudo a regra de que a RAIS não possui código de afastamento por férias e a de que remuneração zerada é confissão de que nada foi pago.
