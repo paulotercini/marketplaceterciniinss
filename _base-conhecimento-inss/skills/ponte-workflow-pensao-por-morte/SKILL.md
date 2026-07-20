@@ -75,7 +75,9 @@ Indeferimento por questionamento de contemporaneidade. Refutar com a continuidad
 
 Concorrência com ex-cônjuge alimentando. Verificar se houve renúncia expressa aos alimentos ou prestação efetiva.
 
-Perda de qualidade do falecido por afastamento longo. Verificar prorrogações do art. 15 §§1º e 2º da Lei 8.213/91, desemprego involuntário e Tema 1421/STF (limbo previdenciário).
+Perda de qualidade do falecido por afastamento longo. Verificar prorrogações do art. 15 §§1º e 2º da Lei 8.213/91, desemprego involuntário e limbo previdenciário.
+
+Limbo do instituidor é hipótese de alto rendimento e frequentemente passa despercebida, porque o dependente desconhece a história funcional do falecido. Se o instituidor recebeu alta ou indeferimento e o empregador recusou a reassunção, a qualidade de segurado se mantém até a rescisão pelo **Tema 300 da TNU**, e não pelo Tema 1421 do STF, que é a pendência de superação com mérito não julgado. Foi assim que a 2ª Turma Recursal de São Paulo concedeu pensão no RI 5001689-93.2024.4.03.6317, com instituidor em limbo de 10/11/2016 até o óbito em 05/10/2022. Levantar CNIS, RAIS, CTPS Digital e eventual reclamatória trabalhista do falecido. Acionar `base-limbo-previdenciario-tema300`.
 
 ## 5. Postura
 

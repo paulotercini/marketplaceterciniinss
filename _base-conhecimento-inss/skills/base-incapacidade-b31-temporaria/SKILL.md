@@ -47,7 +47,7 @@ Terceiro, segurado especial rural com incapacidade. Carência cumprida pela ativ
 
 Quarto, segurado com B31 indeferido por perícia documental inconclusiva. Cabe P1 (pedido de prorrogação) ou recurso ao CRPS com fundamento em atestados e exames complementares. Acionar `analise-documental-incapacidade`.
 
-Quinto, segurado em limbo previdenciário-trabalhista. INSS cessou o B31 mas empresa não aceitou o retorno. Tema 1421 STF (em discussão) e jurisprudência consolidada no sentido da responsabilidade solidária ou subsidiária.
+Quinto, segurado em limbo previdenciário-trabalhista. INSS cessou o B31 mas a empresa não aceitou o retorno. O fundamento é o **Tema 300 da TNU**, que mantém a qualidade de segurado até a rescisão contratual, quando só então começa a correr o período de graça do art. 15, II. O Tema 1421 do STF é a pendência que pode superá-lo, mérito não julgado, citar como risco e não como fundamento. A aplicação exige prova do impedimento patronal, vínculo aberto no CNIS não basta, e não se deve requerer RAC de baixa desse vínculo. Acionar `base-limbo-previdenciario-tema300`.
 
 Sexto, MEI, contribuinte individual ou doméstica com recolhimento regular. Direito ao B31 nas mesmas condições de carência e qualidade.
 

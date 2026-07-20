@@ -328,6 +328,33 @@ Quando faltar prova documental suficiente.
 
 REQUERER NO PRÓPRIO REQUERIMENTO. Anexar declaração de testemunhas e endereço do imóvel rural.
 
+## LIMBO PREVIDENCIÁRIO. CHECKLIST DOCUMENTAL PRÓPRIO (Onda 70)
+
+Aplicável sempre que o segurado tiver recebido alta ou indeferimento do INSS e o empregador houver recusado a reassunção do posto, mantendo o vínculo sem trabalho e sem salário. O Tema 300 da TNU mantém a qualidade de segurado nessa hipótese, porém exige prova do impedimento, que é onde os casos se perdem.
+
+**Documentos de prova do contrato vivo.**
+- CNIS completo com remunerações mês a mês e indicação de vínculo em aberto.
+- CTPS Digital integral, com todos os eventos, especialmente reajustes salariais aplicados durante o período sem trabalho.
+- RAIS de todos os anos-base do período, com o código de afastamento e o campo de remuneração.
+- PPP emitido pela empregadora, atentando ao período de lotação encerrado na data de emissão e não na rescisão.
+- Comprovantes de contribuição sindical recolhida no período sem trabalho.
+
+**Documentos de prova do impedimento patronal.**
+- ASO de retorno ao trabalho concluindo pela inaptidão, quando houver.
+- Notificação extrajudicial comunicando a alta e requerendo exame de retorno e reassunção, com AR.
+- Processo trabalhista integral, quando houver, com sentença, acórdão e certidão de trânsito.
+- E-mails e mensagens com o RH, com data e identificação do interlocutor e do cargo.
+
+**Documentos de prova da cessação do benefício.**
+- Carta de concessão, comunicado de decisão de indeferimento e histórico de benefícios com a DCB.
+- Documentação médica contemporânea do período.
+
+**ALERTA.** Não requerer RAC de baixa do vínculo em aberto no CNIS. Esse vínculo é o que sustenta a tese. Ver `base-cnis-acerto-indicadores` e `base-limbo-previdenciario-tema300`.
+
+**Regra da RAIS de alto valor probatório.** A tabela de afastamentos da RAIS não possui código para férias, e a remuneração só se declara quando há pagamento pelo empregador. Tabela literal do item D.2, regras D.1, D.3 e D.4 e sete teses probatórias em `base-limbo-previdenciario-tema300`, `references/TABELA-RAIS-AFASTAMENTOS-D2.md`.
+
+Cruzar com `base-limbo-previdenciario-tema300`, `base-reclamatoria-trabalhista-prova-previdenciaria` e `base-cpc-onus-prova-art373`.
+
 ## CARTA DE DOCUMENTOS DO ESCRITÓRIO
 
 O escritório mantém site dedicado com gerador interativo de carta de documentos por benefício.

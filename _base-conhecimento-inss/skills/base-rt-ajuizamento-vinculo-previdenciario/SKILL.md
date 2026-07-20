@@ -310,6 +310,23 @@ Antes de ajuizar a RT pró-segurado, conferir.
 5. O cliente tem ciência de que a contribuição previdenciária pode ser cobrada pela União.
 6. O caso tem efetiva relevância previdenciária (vai alterar tempo, RMI ou enquadramento).
 
+## RT PARA CONSTITUIR A PROVA DO LIMBO PREVIDENCIÁRIO (Onda 70)
+
+Hipótese de uso diversa das demais desta skill. Aqui o vínculo não é negado nem oculto, ele está registrado e vivo. O que se busca na Justiça do Trabalho é o reconhecimento de que o empregador impediu ilegitimamente o retorno do empregado após a alta ou o indeferimento do INSS, e a condenação ao pagamento dos salários e ao recolhimento das contribuições do período.
+
+O retorno previdenciário é duplo. Primeiro, a sentença transitada satisfaz o requisito probatório do Tema 300 da TNU, que exige prova do impedimento patronal e não se contenta com vínculo aberto no CNIS. Segundo, executadas as contribuições pela empregadora, a alegação do INSS de tempo fictício cai por inteiro, como reconheceu a 2ª Turma Recursal de São Paulo no RI 5001689-93.2024.4.03.6317.
+
+Pedidos a acrescentar ao modelo desta skill nessa hipótese.
+
+- DECLARAÇÃO de que o contrato permaneceu vigente no período de DD/MM/AAAA a DD/MM/AAAA, com reconhecimento do limbo jurídico trabalhista previdenciário.
+- CONDENAÇÃO ao pagamento dos salários do período em que o empregador recusou a reassunção do posto.
+- DETERMINAÇÃO de recolhimento das contribuições previdenciárias do período, art. 114, VIII, da CF e Súmula 368 do TST.
+- Comunicação ao INSS para atualização do CNIS.
+
+Cuidados próprios. Atentar à prescrição bienal e quinquenal do art. 7º, XXIX, da CF quanto aos salários, que não se confunde com a imprescritibilidade do reconhecimento de vínculo do art. 11, §1º, da CLT. Instruir com a prova da comunicação da alta ao empregador, fato constitutivo pelo Enunciado 302/2026 do TRT7, e monitorar o IRR 302 do TST, afetado e sem tese.
+
+Acionar `base-limbo-previdenciario-tema300` para o roteiro probatório completo e a defesa antecipada contra o INSS.
+
 ## ALERTA OPERACIONAL FINAL
 
 Esta skill é especialmente útil para clientes que descobrem tardiamente a necessidade do tempo previdenciário para aposentadoria. O ajuizamento da RT deve sempre ser cuidadosamente avaliado contra o custo-benefício, incluindo.

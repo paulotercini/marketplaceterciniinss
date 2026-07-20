@@ -128,6 +128,8 @@ Decadência via `decadencia-revisao-previdenciaria` em qualquer revisão de bene
 Competência territorial e material via `ms-competencia-autoridade-coatora` em mandado de segurança.
 Tempestividade recursal via `admissibilidade-barreiras-crps` em qualquer recurso ao CRPS.
 Período de graça e qualidade de segurado via `periodo-graca-qualidade-segurado` em qualquer benefício.
+
+Limbo previdenciário via `base-limbo-previdenciario-tema300` sempre que a perda da qualidade de segurado for o obstáculo e o CNIS trouxer vínculo em aberto com remunerações zeradas, em qualquer benefício. É gatilho transversal, incide em B31, B91, B94 e pensão por morte, e tem alerta próprio de nunca requerer RAC de baixa do vínculo aberto.
 Reafirmação da DER via `reafirmacao-der` em qualquer concessão com dúvida sobre melhor DIB.
 
 ## 5. Saída esperada

@@ -33,6 +33,8 @@ Terceiro, prova emprestada. Documento e perícia de outro processo têm valor, a
 
 Quarto, hipossuficiência. A vulnerabilidade técnica e econômica do segurado reforça a aptidão do INSS para a prova e sustenta a dinâmica.
 
+Quinto, limbo previdenciário. O ônus da comunicação da alta ao empregador é do trabalhador, por se tratar de fato constitutivo, na linha do Enunciado 302/2026 do TRT7, persuasivo e não vinculante. O TST afetou a questão no IRR 302, RRAg-0100395-61.2022.5.01.0491, ainda sem tese firmada. Quando a notificação extrajudicial não tiver sido produzida em tempo, sustentar a aptidão do empregador para a prova, art. 373, §1º, porque o ASO de retorno, o prontuário do serviço médico do trabalho e o controle de ponto estão em poder da empresa. Acionar `base-limbo-previdenciario-tema300`.
+
 ## Estratégia pró-segurado
 
 Primeiro, requerer a distribuição dinâmica na inicial ou na réplica, com pedido expresso e fundamentação da aptidão do INSS.

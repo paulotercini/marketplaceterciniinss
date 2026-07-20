@@ -150,6 +150,28 @@ CORREÇÃO DERIVADA. A skill base-b94-integracao-salario-beneficio-tema862 atrib
 
 Skill reescrita com extração literal dos arts. 70-A a 70-J do Decreto 3.048/99 no repositório de legislação verificada. Corrigidos, pisos por grau (grave 25 homem e 20 mulher, moderada 29 e 24, leve 33 e 28, por idade 60 e 55 com 15 anos como PCD, a versão instalada antiga trazia números trocados), tabelas literais completas do art. 70-E (conversão entre graus, com grau preponderante do §1º) e do art. 70-F, §1º (conversão do tempo especial para os parâmetros PCD quando favorável), vedações do art. 70-F (sem acumulação de reduções no mesmo período, sem conversão PCD para especial, §3º revogado pelo Decreto 10.410/2020) e RMI do art. 70-J (100% do salário de benefício na modalidade por tempo). Jurisprudência saneada, Tema 173/TNU retirado (tese trocada, é do BPC), Tema 694/STJ substituído pelo Tema 546/STJ no papel correto, ADI 5760 mantida com dados confirmados (Rel. Min. Alexandre de Moraes, Pleno, j. 13/09/2019) e ressalva de conferir o objeto no portal do STF antes de citar. Cenários recalculados com as tabelas oficiais.
 
+## ONDA 70. LIMBO PREVIDENCIÁRIO E CORREÇÃO DE NUMERAÇÃO NA TNU (conferido em 20/07/2026, páginas oficiais CJF e STF)
+
+**ERRO GRAVE CORRIGIDO. Tema 300 e Tema 301 da TNU estavam invertidos no catálogo.** O CATALOGO-TEMAS-TNU.md atribuía a tese do limbo previdenciário ao Tema 301 e registrava o Tema 300 como "[Não há tese firmada]". Conferência direta nas páginas oficiais do CJF em 20/07/2026 demonstrou o inverso.
+
+- **Tema 300/TNU é o limbo previdenciário.** PEDILEF 0513030-88.2020.4.05.8400/RN, afetação em 10/02/2022, Rel. Juiz Federal Gustavo Melo Barbosa com acórdão lavrado pelo Juiz Federal Fábio Cordeiro de Lima (sucessor na vaga), julgado em 07/12/2022 por voto de desempate, publicado em 13/12/2022, trânsito em julgado em 14/06/2023 com ED e RE interposto. Amicus curiae IBDP, que sugeriu a tese acolhida. **SITUAÇÃO OFICIAL, Em Revisão, Tema 1421/STF.** A redação antes catalogada era ainda incompleta, faltava a parte final sobre o início da contagem do período de graça do art. 15, II. Tese literal integral agora no catálogo.
+
+- **Tema 301/TNU é segurado especial e atividade urbana.** PEDILEF 0501240-10.2020.4.05.8303/PE, afetação em 17/03/2022, Rel. Juiz Federal Neian Milhomem Cruz, para acórdão Juiz Federal Fábio de Souza Silva, julgado em 15/09/2022, publicado em 16/09/2022, trânsito em julgado em 24/10/2022, situação Julgado. Três itens sobre perda da qualidade nos intervalos rurícolas, descaracterização a partir do 1º dia do mês seguinte à extrapolação dos 120 dias e reinserção imediata no art. 11, VII. Tese literal agora no catálogo.
+
+- **AÇÃO CORRETIVA PENDENTE.** Peça do escritório anterior a 20/07/2026 que tenha citado "Tema 301 da TNU" para sustentar limbo está com o precedente trocado. Verificar as peças em fase recursal aberta e corrigir. O risco é de não conhecimento ou de perda de credibilidade por citação equivocada.
+
+- **Tema 1421/STF incluído no catálogo.** RE 1.460.766, Rel. Min. Gilmar Mendes, RG reconhecida em 06/09/2025, acórdão de RG publicado em 23/09/2025, mérito NÃO julgado em 20/07/2026, sem determinação de suspensão nacional na página oficial. É o recurso do INSS contra o Tema 300 da TNU. Homônimo do Tema 1421/STJ, que trata de matéria inteiramente diversa, alerta de não confusão inserido nos dois catálogos.
+
+- **Precedentes regionais do TRF3 registrados.** RI 5018508-56.2024.4.03.6301, 8ª Turma Recursal de SP, Rel. Juiz Federal Ricardo Geraldo Rezende Silveira, CONTRÁRIO, exige prova do impedimento ilegítimo. RI 5001689-93.2024.4.03.6317, 2ª Turma Recursal de SP, Rel. Juiz Federal Clecio Braschi, FAVORÁVEL, pensão por morte com limbo reconhecido em RT transitada. Ambos com redação literal em `base-limbo-previdenciario-tema300`.
+
+- **IRR 302/TST registrado como AFETADO, sem tese.** RRAg-0100395-61.2022.5.01.0491, ônus da prova da comunicação da alta. Citar como afetado, jamais como tese firmada.
+
+- **Enunciado 302/2026 do TRT7 registrado como persuasivo.** Publicação em 23/02/2026, ônus do trabalhador de demonstrar a comunicação da alta à empresa. Sinalizar a natureza regional e não vinculante ao citar.
+
+- **STJ, ausência declarada.** Não há tema repetitivo, súmula ou enunciado do STJ sobre limbo previdenciário. Declarar a ausência expressamente quando o ponto for suscitado.
+
+- **EM QUARENTENA nesta Onda.** IRR 88 do TST sobre dano moral no limbo, entrada localizada no Índice Temático de Precedentes Qualificados do TST de 04/08/2025 mas documento oficial do tema inacessível. Circulam em fontes secundárias teses de dano moral in re ipsa atribuídas ora ao Tema 88 ora a um IRR 198. NÃO CONFIRMADO, não usar. Também em quarentena os códigos 73, 74, 76 e 80 da tabela de afastamentos da RAIS.
+
 ## PRÓXIMA REVISÃO
 
 Repetir trimestralmente com consulta às páginas oficiais dos temas (não usar imprensa especializada como fonte final de data ou tese). Registrar sempre a data da conferência.

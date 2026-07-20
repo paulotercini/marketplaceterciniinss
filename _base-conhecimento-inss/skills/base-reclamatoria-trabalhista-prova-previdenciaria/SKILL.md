@@ -43,7 +43,17 @@ A defesa pró-segurado pivota em juntada da sentença trabalhista, contracheques
 
 Sentença trabalhista. Acordo homologado. CTPS com anotação. Cópia integral do processo trabalhista. Comprovantes de pagamento. CNIS.
 
-## 7. Fontes
+## 7. Limbo previdenciário. Aplicação de maior rendimento (Onda 70)
+
+A sentença trabalhista que reconhece o limbo previdenciário é a prova de primeira linha do Tema 300 da TNU. Ela produz dois efeitos simultâneos.
+
+Primeiro, resolve o requisito probatório do Tema 300, que exige demonstração do impedimento ilegítimo do empregador ao retorno. Segundo, quando há execução das contribuições pela empregadora, recompõe a cadeia contributiva e neutraliza por completo a alegação do INSS de tempo fictício com ofensa ao art. 201, §14, da CF/88.
+
+Foi exatamente o que decidiu a 2ª Turma Recursal de São Paulo no RI 5001689-93.2024.4.03.6317, concedendo pensão por morte a dependente de instituidor que permaneceu em limbo de 10/11/2016 até o óbito em 05/10/2022, com base na RT 1000037-21.2022.5.02.0434 da 4ª Vara do Trabalho de Santo André. Redação literal do acórdão em `base-limbo-previdenciario-tema300`, `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+
+Ao receber sentença trabalhista de cliente, verificar sempre se o limbo foi objeto da causa de pedir, ainda que o cliente não use esse nome. Acionar `base-limbo-previdenciario-tema300`.
+
+## 8. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
 
