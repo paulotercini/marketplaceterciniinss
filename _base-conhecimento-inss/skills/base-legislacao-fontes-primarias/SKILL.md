@@ -157,7 +157,7 @@ Arquivos avulsos a apagar na pasta, pendentes de exclusão manual pelo escritór
 
 Ainda faltam na pasta, sem fonte oficial acessível na data. Portaria DPMF/INSS 19/2026 (Teleperícia) e Portarias Conjuntas MPS/INSS 13, 14 e 15/2026 (análise documental B31, B91, B94). Observação. A Portaria Conjunta 13/2026 já foi conferida por inteiro teor no DOU na Onda 72, mas ainda não foi baixada como arquivo neste repositório. Baixar quando houver PDF oficial ou captura do DOU.
 
-Segunda prioridade, mapeada mas ainda não baixada. Lei 15.157/2025, Lei 11.301/2006, Lei 15.326/2026, Lei 13.183/2015, Lei 11.718/2008, EC 41/2003, EC 113/2021, IN 164/2024 e IN 188/2025.
+Segunda prioridade, mapeada mas ainda não baixada. Lei 15.157/2025, Lei 11.301/2006, Lei 15.326/2026, Lei 13.183/2015, Lei 11.718/2008, EC 41/2003, EC 113/2021, IN 164/2024 e IN 188/2025. Acrescida na Onda 74. Portaria MTP 1.467/2022 (consolidação dos RPPS, cujo Anexo X é a Relação das Bases de Cálculo de Contribuição usada na CTC estadual), invocada pela skill base-ctc-estadual-conferencia-e-lancamento-previus e por ora conferida apenas em fonte oficial gov.br, sem arquivo local.
 
 Registro de incidente. A Lei 8.212/91 sumiu da pasta em rodada de gravação de 06/07/2026 e foi restaurada do Planalto na mesma data, causa não confirmada. Conferir periodicamente a integridade da pasta contra este índice.
 
