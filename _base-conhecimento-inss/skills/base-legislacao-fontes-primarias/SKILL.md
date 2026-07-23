@@ -1,6 +1,6 @@
 ---
 name: base-legislacao-fontes-primarias
-description: Repositório verificado de fontes primárias da legislação previdenciária brasileira em texto literal. Use SEMPRE que precisar CITAR artigo de Constituição Federal de 1988, EC 103/2019 (Reforma da Previdência), Lei 8.213/91 (Plano de Benefícios), Lei 8.212/91 (Custeio), Lei 8.742/93 (LOAS), LC 142/2013 (Aposentadoria PCD), Lei 13.146/2015 (Estatuto da Pessoa com Deficiência), Decreto 3.048/99 (Regulamento da Previdência Social), Decreto 53.831/1964 (Quadro Anexo de agentes nocivos pré-1995), Decreto 62.755/1968, Instrução Normativa 128/2022 INSS, Portarias DIRBEN/INSS 990 a 996 de 2022, Portaria MPS 125/2026 (Regimento Interno CRPS). Use ANTES de afirmar qualquer redação de artigo, redação de parágrafo, hipótese de incidência ou regra processual. Use ANTES de redigir qualquer petição, recurso, mandado de segurança ou auditoria. A skill aponta para o repositório local verificado em C:\Users\VAIO\INSS\base-legislacao\ com 19 arquivos baixados das fontes oficiais (Planalto, Imprensa Nacional, sirc.gov.br, gov.br/previdencia) em 31/05/2026, todos com SHA-256 registrado, encoding UTF-8 e marcações de revogação/redação preservadas. SEMPRE que houver dúvida sobre redação literal de um artigo, ABRA o arquivo correspondente no workspace ANTES de citar. NUNCA invente texto de artigo. Postura pró-segurado exclusiva. Cruza com base-portarias-dpmf-inss-hub, precedentes-previdenciarios, peticao-previdenciaria, revisao-peticao, documentos-comprobatorios-in128, cnis-acerto-indicadores.
+description: Repositório verificado de fontes primárias da legislação previdenciária brasileira em texto literal. Use SEMPRE que precisar CITAR artigo de Constituição Federal de 1988, EC 103/2019 (Reforma da Previdência), EC 20/1998 (direito adquirido do professor art. 9º §2º), Lei 8.213/91 (Plano de Benefícios), Lei 8.212/91 (Custeio), Lei 8.742/93 (LOAS), LC 142/2013 (Aposentadoria PCD), Lei 13.146/2015 (Estatuto da Pessoa com Deficiência), CPC Lei 13.105/2015, Juizados Especiais Lei 9.099/1995, Juizados Especiais Federais Lei 10.259/2001, Mandado de Segurança Lei 12.016/2009, processo administrativo federal Lei 9.784/1999, Lei 13.460/2017 usuário do serviço público, Lei 7.713/1988 imposto de renda isenção doença grave RRA, Lei 8.112/1990 servidores contagem recíproca, Lei 10.666/2003, Lei 9.876/1999 fator previdenciário, Lei 9.494/1997 art. 1º-F, Lei 9.796/1999 compensação previdenciária, Lei 13.135/2015 pensão, Lei 13.846/2019, Lei 14.768/2023 deficiência auditiva, Lei 15.176/2025 fibromialgia, Lei 10.741/2003 Estatuto do Idoso, Lei 8.880/1994 IRSM, Lei 9.032/1995, Decreto 3.048/99 (Regulamento da Previdência Social), Decreto 53.831/1964 (Quadro Anexo de agentes nocivos pré-1995), Decreto 83.080/1979 quadro de agentes e categorias, Decreto 2.172/1997, Decreto 62.755/1968, Decreto 6.214/2007 Regulamento do BPC, Decreto 6.949/2009 Convenção de Nova York, Decreto 10.995/2022 estrutura regimental do INSS, Instrução Normativa 128/2022 INSS, Portaria Interministerial 1/2014 IF-BrA, Portaria Conjunta MDS/INSS 2/2015 avaliação BPC, Portarias DIRBEN/INSS 990 a 996 de 2022, Portaria DIRBEN/INSS 998/2022 compensação, Portaria INSS 914/2021 PRBI, Portaria DIRBEN/INSS 1.309/2025 supervisão técnica revisão de ofício, Portaria DIRBEN/INSS 1.318/2025, Portaria PRES/INSS 1.851/2025 estrutura Superintendências Regionais, Portaria MPS 125/2026 (Regimento Interno CRPS). Use ANTES de afirmar qualquer redação de artigo, redação de parágrafo, hipótese de incidência ou regra processual. Use ANTES de redigir qualquer petição, recurso, mandado de segurança ou auditoria. A skill aponta para o repositório local verificado em C:\Users\VAIO\INSS\base-legislacao\ com mais de 50 arquivos baixados das fontes oficiais (Planalto, Imprensa Nacional, sirc.gov.br, gov.br/previdencia), com SHA-256 registrado, encoding UTF-8 e marcações de revogação/redação preservadas, índice atualizado na Onda 73 (v1.63.0). SEMPRE que houver dúvida sobre redação literal de um artigo, ABRA o arquivo correspondente no workspace ANTES de citar. NUNCA invente texto de artigo. Postura pró-segurado exclusiva. Cruza com base-portarias-dpmf-inss-hub, precedentes-previdenciarios, peticao-previdenciaria, revisao-peticao, documentos-comprobatorios-in128, cnis-acerto-indicadores.
 ---
 
 # Repositório de Fontes Primárias da Legislação Previdenciária
@@ -27,131 +27,94 @@ Se o artigo NÃO for localizado, declarar expressamente "Não localizado no arqu
 
 ## ÍNDICE COMPLETO DO REPOSITÓRIO
 
+Índice atualizado na Onda 73 (v1.63.0), substituindo o índice congelado da Onda 31 (31/05/2026). Registra todas as normas presentes na pasta, inclusive as gravadas após maio de 2026 que antes não eram acionadas automaticamente.
+
 Caminho base no Windows. `C:\Users\VAIO\INSS\base-legislacao\`
 
-Caminho base no Linux mount. `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/`
+Caminho base no Linux mount (Cowork). `/sessions/<sessão>/mnt/INSS/base-legislacao/`. O `<sessão>` muda a cada sessão do Cowork, resolver dinamicamente (ver a lição da Onda 69). Nesta sessão é `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/`.
 
 ### 01-Constituicao
-
-**CF-1988-completa.md** (907 KB)
-- Constituição Federal de 1988 completa, 250 artigos + ADCT.
-- Fonte. https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm
-- SHA-256 (bruto). `4f0d32c8a346ad69b43c5ae7efe75ee64455997da69f730fa5bb3c397a90aea0`
-- Última alteração consolidada. EC 139/2026 e LC 230/2026.
-- Artigos críticos para o trabalho. Arts. 194-204 (Seguridade Social), 201 (Previdência), 203-204 (Assistência Social/BPC), 109 §3º (competência delegada JEF), 5º X (dano moral), 7º (direitos trabalhistas).
-
-**EC-103-2019.md** (84 KB)
-- Emenda Constitucional 103/2019 (Reforma da Previdência).
-- Fonte. https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc103.htm
-- SHA-256 (bruto). `2d172a073f5e1c326aa0a09cc1f90e6f4af156e44ba08704c1a05deb37fd6fdd`
-- 36 artigos próprios, sem alterações posteriores.
-- Artigos críticos. Art. 3º (direito adquirido), 4º (transição geral), 15-21 (regras de transição), 23-24 (acumulação), 25-26 (cálculo da RMI pós-reforma).
+- `CF-1988-completa.md` Constituição Federal de 1988. Última alteração EC 139/2026.
+- `EC-103-2019.md` Emenda Constitucional 103/2019, Reforma da Previdência.
+- `EC-20-1998.md` Emenda Constitucional 20/1998, direito adquirido do professor, art. 9º §2º.
 
 ### 02-Leis-Complementares
-
-**LC-142-2013-aposentadoria-PCD.md** (5.8 KB)
-- Lei Complementar 142/2013 (Aposentadoria da Pessoa com Deficiência).
-- Fonte. https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp142.htm
-- SHA-256 (bruto). `3905f7201448dd51d939514a5b8df2e5c247e7e1fd36ba94b0ac8b4e54975a86`
-- 11 artigos. Sem alterações textuais (apenas "Vide Decreto 3.048/99").
-- Artigos críticos. Art. 3º (idade e tempo por grau), 5º (avaliação biopsicossocial), 7º (conversão e direito ao melhor benefício).
+- `LC-142-2013-aposentadoria-PCD.md` LC 142/2013, aposentadoria da pessoa com deficiência.
 
 ### 03-Leis-Ordinarias
-
-**Lei-8213-91-beneficios.md** (326 KB)
-- Lei 8.213/91 (Plano de Benefícios da Previdência Social).
-- Fonte. https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
-- SHA-256 (bruto). `01802c53059b5b4ff821d6ed991df8a27b017b7584252fee967ea62338201900`
-- 156 artigos. Última alteração. Lei 15.415/2026.
-- Artigos críticos pró-segurado. Arts. 11-16 (segurados e dependentes), 18 (rol de benefícios), 25-27-A (carência), 29 (cálculo SB), 39-42 (aposentadoria especial e por invalidez), 48-56 (aposentadoria por idade), 59-63 (auxílio-doença), 71-73 (salário-maternidade), 74-80 (pensão por morte e auxílio-reclusão), 86 (auxílio-acidente), 89 (reabilitação), 103 (decadência), 118 (estabilidade).
-
-**Lei-8212-91-custeio.md** (312 KB)
-- Lei 8.212/91 (Custeio da Seguridade Social).
-- Fonte. https://www.planalto.gov.br/ccivil_03/leis/l8212cons.htm
-- SHA-256 (bruto). `60e47eeb1933102f1dead645b2a40b5a852d8b494b1cbff6a142ae91509594f6`
-- 105 artigos. Última alteração. Lei 15.363/2026.
-- Artigos críticos. Arts. 11-14 (filiação), 20-23 (contribuições), 28 (salário-de-contribuição), 32 (atividades concomitantes), 45-A (indenização de contribuições em atraso).
-
-**Lei-8742-93-LOAS.md** (99 KB)
-- Lei Orgânica da Assistência Social (LOAS).
-- Fonte. https://www.planalto.gov.br/ccivil_03/leis/l8742.htm
-- SHA-256 (bruto). `51b970f837e2183e0eee29d03ccf3469ce8cb8b81c9c2fae4aa868b3e16dc96b`
-- 65 artigos. Última alteração. Lei 15.157/2025.
-- Artigos críticos. Art. 20 (requisitos BPC), 21 (revisão), 21-A (reativação), 20-A (deficiência), 21-B (auxílio-inclusão).
-
-**Lei-13146-15-EPCD.md** (119 KB)
-- Lei Brasileira de Inclusão da Pessoa com Deficiência (Estatuto da PCD).
-- Fonte. https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13146.htm
-- SHA-256 (bruto). `6358329e9b45c3f1e69fc53d2c789c549f0a9747ad1d3891d8209eacaedb0a9f`
-- 129 artigos. Última alteração. Lei 15.249/2025.
-- Artigos críticos. Arts. 2º (conceito de deficiência), 9º (atendimento prioritário), 93 (Lei de Cotas reflexa).
+- `Lei-7713-1988-IR.md` Lei 7.713/1988, imposto de renda, isenção por doença grave, RRA art. 12-A.
+- `Lei-8112-1990-servidores.md` Lei 8.112/1990, regime dos servidores, RPPS, contagem recíproca. Última alteração Lei 14.509/2022.
+- `Lei-8212-91-custeio.md` Lei 8.212/91, Custeio da Seguridade Social. Última alteração Lei 15.371/2026. Restaurada em 06/07/2026.
+- `Lei-8213-91-beneficios.md` Lei 8.213/91, Plano de Benefícios. Última alteração Lei 15.415/2026.
+- `Lei-8742-93-LOAS.md` Lei 8.742/93, LOAS. Última alteração Lei 15.157/2025.
+- `Lei-8880-1994.md` Lei 8.880/1994, URV e IRSM, base da revisão de fevereiro/1994.
+- `Lei-9032-1995.md` Lei 9.032/1995, fim do enquadramento por categoria, tempo especial.
+- `Lei-9099-1995-juizados-especiais.md` Lei 9.099/1995, Juizados Especiais, subsidiária ao JEF.
+- `Lei-9494-1997.md` Lei 9.494/1997, art. 1º-F, tutela contra a Fazenda. Última alteração Lei 11.960/2009.
+- `Lei-9784-1999-processo-administrativo.md` Lei 9.784/1999, processo administrativo federal. Última alteração Lei 14.210/2021.
+- `Lei-9796-1999-compensacao-previdenciaria.md` Lei 9.796/1999, compensação entre regimes. Última alteração Lei 15.265/2025.
+- `Lei-9876-1999.md` Lei 9.876/1999, fator previdenciário, PBC, base da Revisão da Vida Toda.
+- `Lei-10259-2001-JEF.md` Lei 10.259/2001, Juizados Especiais Federais.
+- `Lei-10666-2003.md` Lei 10.666/2003, art. 3º, desvinculação da qualidade, retenção do contribuinte individual.
+- `Lei-10741-2003-estatuto-idoso.md` Lei 10.741/2003, Estatuto do Idoso. Última alteração Lei 15.163/2025.
+- `Lei-12016-2009-mandado-seguranca.md` Lei 12.016/2009, Mandado de Segurança.
+- `Lei-13105-2015-CPC.md` Lei 13.105/2015, CPC. Última alteração Lei 14.976/2024.
+- `Lei-13135-2015-pensao.md` Lei 13.135/2015, pensão por morte, alterou a Lei 8.213/91.
+- `Lei-13146-15-EPCD.md` Lei 13.146/2015, Estatuto da Pessoa com Deficiência. Última alteração Lei 15.249/2025.
+- `Lei-13460-2017-usuario-servico-publico.md` Lei 13.460/2017, usuário do serviço público. Última alteração Lei 14.534/2023.
+- `Lei-13846-2019.md` Lei 13.846/2019, MP 871 convertida, pensão, carência art. 27-A.
+- `Lei-14768-2023-deficiencia-auditiva.md` Lei 14.768/2023, deficiência auditiva.
+- `Lei-15176-2025-fibromialgia.md` Lei 15.176/2025, fibromialgia como deficiência.
 
 ### 04-Decretos
-
-**Decreto-3048-99-RPS-parte1-arts-1-100.md** (365 KB)
-**Decreto-3048-99-RPS-parte2-arts-101-200.md** (235 KB)
-**Decreto-3048-99-RPS-parte3-arts-201-300.md** (309 KB)
-**Decreto-3048-99-RPS-parte4-arts-301-fim.md** (102 KB)
-- Decreto 3.048/99 (Regulamento da Previdência Social - RPS) em 4 partes.
-- Fonte. https://www.planalto.gov.br/ccivil_03/decreto/d3048.htm
-- SHA-256 (bruto, todas as partes). `459aea1f4b3bdd31c31bfd823dfb139c6d271338d89e922e65afdaa45cc637b0`
-- 470 artigos. Última alteração identificada no HTML do Planalto. Decreto 10.410/2020.
-- ALERTA. O HTML consolidado do Planalto pode estar defasado em relação a alterações posteriores (Decreto 12.534/2025 etc). Conferir DOU se houver dúvida.
-
-**Decreto-53831-1964-quadro-agentes-nocivos.md** (23 KB) — A JOIA DO REPOSITÓRIO
-- Decreto 53.831/1964 com QUADRO ANEXO em formato tabular.
-- Status. Revogado pelo Decreto 62.755/68, restabelecido pela Lei 5.527/68; conviveu com o Decreto 83.080/79 e foi superado pelo Decreto 2.172/97 (aplicável ao enquadramento até 05/03/1997; categoria profissional até 28/04/1995), mas seu Quadro Anexo continua sendo aplicado para enquadramento por categoria profissional até 28/04/1995, por força da Súmula 198/TFR e Lei 9.032/95 (marco de 28/04/1995).
-- Fonte do HTML. https://www.planalto.gov.br/ccivil_03/decreto/D53831.htm
-- Fonte do Quadro Anexo. https://www.planalto.gov.br/ccivil_03/decreto/1950-1969/anexo/an53831-64.pdf
-- SHA-256. `da9f86fe9d7fca79b36696fb9f013473b084809e9a59903f8b74961fee42f424`
-- 30 códigos. Físicos (1.1.1 a 1.1.8), químicos (1.2.1 a 1.2.11), biológicos (1.3.1 e 1.3.2), liberais/técnicos (2.1.1 a 2.1.4), agrícolas (2.2.1 a 2.2.3), construção (2.3.1 a 2.3.3), transportes (2.4.1 a 2.4.5), artesanato (2.5.1 a 2.5.7).
-
-**ATENÇÃO CRÍTICA SOBRE CÓDIGOS DE CATEGORIA**. O código 2.4.5 é telefonista (e NÃO 2.5.7). O código 2.5.7 é Extinção de fogo, guarda (bombeiros, vigilantes). Sempre consultar o arquivo antes de citar código.
-
-**Decreto-62755-1968.md** (3.2 KB)
-- Decreto 62.755/1968 que revogou o Decreto 53.831/1964.
-- Fonte. https://www.planalto.gov.br/ccivil_03/decreto/1950-1969/d62755.htm
-- SHA-256. `752aff51f6c33549111298b1700b021ad37875803011e03179b6cbdb4fbb79ac`
-- 3 artigos. Importante para entender a cadeia normativa histórica do enquadramento por categoria.
+- `Decreto-2172-1997-RBPS.md` Decreto 2.172/1997, Regulamento anterior dos benefícios, agentes nocivos 1997 a 1999. Revogado pelo Decreto 3.048/99.
+- `Decreto-3048-99-RPS-parte1-arts-1-100.md` Decreto 3.048/99, RPS, parte 1. Última alteração Decreto 10.410/2020.
+- `Decreto-3048-99-RPS-parte2-arts-101-200.md` Decreto 3.048/99, RPS, parte 2.
+- `Decreto-3048-99-RPS-parte3-arts-201-300.md` Decreto 3.048/99, RPS, parte 3.
+- `Decreto-3048-99-RPS-parte4-arts-301-fim.md` Decreto 3.048/99, RPS, parte 4.
+- `Decreto-53831-1964-quadro-agentes-nocivos.md` Decreto 53.831/1964, Quadro Anexo, enquadramento por categoria pré-95. ATENÇÃO. O código 2.4.5 é telefonista. O 2.5.7 é extinção de fogo/guarda (bombeiros, vigilantes). Conferir o arquivo antes de citar código.
+- `Decreto-6214-2007-Regulamento-BPC.md` Decreto 6.214/2007, Regulamento do BPC, já com o Decreto 12.534/2025 incorporado.
+- `Decreto-62755-1968.md` Decreto 62.755/1968, cadeia normativa do enquadramento.
+- `Decreto-6949-2009-convencao-NY-PCD.md` Decreto 6.949/2009, Convenção de Nova York sobre a pessoa com deficiência.
+- `Decreto-83080-1979.md` Decreto 83.080/1979 completo, aprovação (arts. 1º a 4º), Anexo I (agentes nocivos 1.x.x) e Anexo II (categorias profissionais 2.x.x). Revogado pelo Decreto 3.048/99.
+- `Decreto-10995-2022.md` Decreto 10.995/2022, Estrutura Regimental do INSS, base do mapeamento institucional. Última alteração Decreto 12.764/2025. (Verificado a mais na pasta na Onda 73, não constava do índice da Onda 31.)
 
 ### 05-Instrucoes-Normativas
-
-**IN-128-2022-INSS-parte1-arts-1-170.md** (254 KB)
-**IN-128-2022-INSS-parte2-arts-171-340.md** (213 KB)
-**IN-128-2022-INSS-parte3-arts-341-510.md** (139 KB)
-**IN-128-2022-INSS-parte4-arts-511-674.md** (166 KB)
-- Instrução Normativa 128/2022 INSS em 4 partes.
-- 674 artigos. Versão CONSOLIDADA até IN 170/2024.
-- Fonte. https://www.sirc.gov.br/instrucao-normativa-pres-inss-no-128-de-28-de-marco-de-2022/
-- Anexos I-XXIX. NÃO incluídos nesta extração (são arquivos separados em gov.br/inss/anexo/). Conferir caso a caso quando necessário.
+- `IN-128-2022-INSS-parte1-arts-1-170.md` IN PRES/INSS 128/2022, parte 1. Consolidada até IN 170/2024.
+- `IN-128-2022-INSS-parte2-arts-171-340.md` IN PRES/INSS 128/2022, parte 2.
+- `IN-128-2022-INSS-parte3-arts-341-510.md` IN PRES/INSS 128/2022, parte 3.
+- `IN-128-2022-INSS-parte4-arts-511-674.md` IN PRES/INSS 128/2022, parte 4.
 
 ### 06-Portarias
 
-**TAXONOMIA CORRIGIDA DAS PORTARIAS DIRBEN/INSS DE 28/03/2022**
-
-A Portaria 992/2022 NÃO trata de cálculo de RMI conforme repetido em ondas anteriores do plugin. Trata de Manutenção de Benefícios e Serviços. A taxonomia correta é a seguinte.
+TAXONOMIA CORRIGIDA DAS PORTARIAS DIRBEN/INSS DE 28/03/2022. A Portaria 992/2022 trata de MANUTENÇÃO de benefícios, não de cálculo de RMI.
 
 | Portaria | Livro | Tema |
 |---|---|---|
-| **990/2022** | I | CNIS, RAC, indicadores |
-| **991/2022** | II | Reconhecimento de benefícios (concessão e revisão) - 567 arts |
-| **992/2022** | III | **Manutenção** de Benefícios e Serviços (folha, descontos, suspensão, cessação) - 330 arts |
-| **993/2022** | IV | Processo Administrativo Previdenciário - 131 arts |
-| **994/2022** | V | Acumulação de Benefícios pós EC 103/2019 - 14 arts |
-| **995/2022** | VI | Acordos Internacionais (totalização, Mercosul, Ibero-Americano) - 60 arts |
-| **996/2022** | VII | Recursos (ordinário, especial, contrarrazões) - 81 arts |
+| 990/2022 | I | CNIS, RAC, indicadores |
+| 991/2022 | II | Reconhecimento de benefícios (concessão e revisão) |
+| 992/2022 | III | Manutenção de benefícios e serviços |
+| 993/2022 | IV | Processo administrativo previdenciário |
+| 994/2022 | V | Acumulação de benefícios pós EC 103/2019 |
+| 995/2022 | VI | Acordos internacionais |
+| 996/2022 | VII | Recursos |
+| 998/2022 | IX | Compensação previdenciária |
 
-**Portaria-DIRBEN-INSS-991-2022-concessao-revisao.md** (431 KB, 567 arts)
-**Portaria-DIRBEN-INSS-992-2022-manutencao.md** (243 KB, 330 arts)
-**Portaria-DIRBEN-INSS-993-2022-processo-administrativo.md** (105 KB, 131 arts)
-**Portaria-DIRBEN-INSS-994-2022-acumulacao.md** (18 KB, 14 arts)
-**Portaria-DIRBEN-INSS-995-2022-acordos-internacionais.md** (45 KB, 60 arts)
-**Portaria-DIRBEN-INSS-996-2022-recursos.md** (57 KB, 81 arts)
-
-**Portaria-MPS-125-2026.md** (239 KB, 154 arts) — RICRPS
-- Regimento Interno do Conselho de Recursos da Previdência Social.
-- Fonte. PDF consolidado 20/03/2026 em gov.br/previdencia.
-- Alterações posteriores. Portaria MPS 235/2026 e Portaria MPS 462/2026 (revogou art. 153).
+- `Portaria-DIRBEN-INSS-990-2022-CNIS.md` Livro I, CNIS, RAC, indicadores. Última alteração Portaria 1.299/2025.
+- `Portaria-DIRBEN-INSS-991-2022-concessao-revisao.md` Livro II, reconhecimento, concessão e revisão.
+- `Portaria-DIRBEN-INSS-992-2022-manutencao.md` Livro III, manutenção de benefícios.
+- `Portaria-DIRBEN-INSS-993-2022-processo-administrativo.md` Livro IV, processo administrativo.
+- `Portaria-DIRBEN-INSS-994-2022-acumulacao.md` Livro V, acumulação de benefícios.
+- `Portaria-DIRBEN-INSS-995-2022-acordos-internacionais.md` Livro VI, acordos internacionais.
+- `Portaria-DIRBEN-INSS-996-2022-recursos.md` Livro VII, recursos.
+- `Portaria-DIRBEN-INSS-998-2022-compensacao-previdenciaria.md` Livro IX, compensação previdenciária.
+- `Portaria-INSS-914-2021-PRBI.md` Programa de Revisão de Benefícios por Incapacidade de Longa Duração.
+- `Portaria-MPS-125-2026.md` RICRPS, Regimento Interno do CRPS. Última alteração Portarias MPS 235 e 462/2026.
+- `Portaria-Conjunta-MDS-INSS-2-2015-BPC-avaliacao.md` Avaliação social e médica do BPC, Anexos I a V com formulários.
+- `Portaria-Interministerial-1-2014-IF-BrA.md` Instrumento IF-BrA da aposentadoria da pessoa com deficiência.
+- `Portaria-DIRBEN-INSS-1309-2025-supervisao-tecnica-revisao.md` Supervisão Técnica, Revisão de Ofício e erro administrativo, códigos 13975 e 9428. Revoga a 1.056/2022 e a 1.231/2024.
+- `Portaria-DIRBEN-INSS-1318-2025.md` Altera a Portaria 1.309/2025.
+- `Portaria-PRES-INSS-1851-2025-anexo-VI-estrutura-SR.md` Anexo VI, estrutura das Superintendências Regionais, mapeamento institucional. Consolidado com a Portaria 1.878/2025.
 
 ## REGRA DE OURO PARA O CLAUDE
 
@@ -177,7 +140,7 @@ Esta skill deve ser acionada AUTOMATICAMENTE em conjunto com.
 
 ## ATUALIZAÇÃO DO REPOSITÓRIO
 
-O repositório foi baixado em 31/05/2026. Atualizações devem ser registradas em log próprio. A regra é.
+O repositório foi baixado em 31/05/2026 (Onda 31). Índice reconciliado com a pasta na Onda 73 (v1.63.0). Atualizações devem ser registradas em log próprio. A regra é.
 
 - Para Leis e Decretos. Re-baixar do Planalto sempre que houver nova lei de alteração relevante (Lei 8.213 e Lei 8.212 mudam com frequência).
 - Para IN 128/2022. Re-baixar quando novas INs alterarem (IN 170/2024 já consolidada, conferir IN 174+).
@@ -186,13 +149,25 @@ O repositório foi baixado em 31/05/2026. Atualizações devem ser registradas e
 
 A reexecução desta atualização deve ser feita em onda corretiva específica no plugin, com bump de versão.
 
+### Notas de manutenção (Onda 73)
+
+Correção de status cruzada. A Portaria 1.309/2025 revoga a 1.056/2022 e a 1.231/2024. Tratamento já corrigido na skill `base-erro-administrativo-iea-13975` na Onda 64 (v1.54.0), com a 1.309/2025 alterada pela 1.318/2025 como norma vigente.
+
+Arquivos avulsos a apagar na pasta, pendentes de exclusão manual pelo escritório (o mount bloqueia exclusão pura pela skill). `04-Decretos/Decreto-83080-1979-quadro-agentes-nocivos.PARCIAL.md`, superado pelo `Decreto-83080-1979.md` completo. E o `.__wtest` na raiz da pasta, artefato de teste de gravação. Nenhum dos dois está no índice, por não serem fontes primárias válidas.
+
+Ainda faltam na pasta, sem fonte oficial acessível na data. Portaria DPMF/INSS 19/2026 (Teleperícia) e Portarias Conjuntas MPS/INSS 13, 14 e 15/2026 (análise documental B31, B91, B94). Observação. A Portaria Conjunta 13/2026 já foi conferida por inteiro teor no DOU na Onda 72, mas ainda não foi baixada como arquivo neste repositório. Baixar quando houver PDF oficial ou captura do DOU.
+
+Segunda prioridade, mapeada mas ainda não baixada. Lei 15.157/2025, Lei 11.301/2006, Lei 15.326/2026, Lei 13.183/2015, Lei 11.718/2008, EC 41/2003, EC 113/2021, IN 164/2024 e IN 188/2025.
+
+Registro de incidente. A Lei 8.212/91 sumiu da pasta em rodada de gravação de 06/07/2026 e foi restaurada do Planalto na mesma data, causa não confirmada. Conferir periodicamente a integridade da pasta contra este índice.
+
 ## LIMITAÇÃO CONHECIDA
 
 Esta skill APONTA para os arquivos no workspace, NÃO duplica o conteúdo nas references. Isso preserva o tamanho do plugin. O acesso ao texto literal exige o workspace do escritório Tercini disponível. Em sessões sem o workspace, a skill ainda serve como índice e protocolo, e a verificação deve ser feita via WebFetch direto da URL oficial registrada no índice acima.
 
 ## VERIFICAÇÃO DINÂMICA EM CASCATA (Onda 36 - v1.26.0)
 
-Quando o artigo solicitado NÃO estiver no repositório local (cobre 19 normas), esta skill aciona a cascata de verificação dinâmica documentada em `base-revisao-peticao-aprofundada/references/PROTOCOLO-VERIFICACAO-DINAMICA.md`.
+Quando o artigo solicitado NÃO estiver no repositório local (o índice atual cobre mais de 50 arquivos de normas), esta skill aciona a cascata de verificação dinâmica documentada em `base-revisao-peticao-aprofundada/references/PROTOCOLO-VERIFICACAO-DINAMICA.md`.
 
 **Fluxo automatizado.**
 
