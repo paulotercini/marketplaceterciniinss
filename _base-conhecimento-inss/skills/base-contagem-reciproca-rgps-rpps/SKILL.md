@@ -81,6 +81,7 @@ Para aluno-aprendiz, acionar `base-aluno-aprendiz`.
 Para serviço militar, acionar `base-servico-militar-obrigatorio`.
 Para tempo rural pré-1991, acionar `base-tempo-rural-anterior-1991`.
 Para indenização, acionar `indenizacao-contribuicoes-atraso`.
+Para conferir uma CTC estadual concreta e gerar os arquivos de importação do Prévius (tempo e salários), acionar `base-ctc-estadual-conferencia-e-lancamento-previus`.
 Ao redigir peça, acionar `peticao-previdenciaria`.
 Ao buscar precedentes, acionar `precedentes-previdenciarios`.
 
