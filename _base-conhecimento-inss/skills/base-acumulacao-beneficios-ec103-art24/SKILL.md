@@ -131,6 +131,8 @@ FAVORÁVEL ao segurado. Reforça que a vedação genérica do art. 24 não ating
 
 ### 5.7. RE 1.510.285/DF AgR
 
+Atenção (auditoria 25/07/2026, rodada 2). As fontes divergem sobre órgão julgador e data deste AgR (Segunda Turma em 09/12/2024 versus Primeira Turma em 26/05/2026, possivelmente agravos sucessivos). Conferir no portal do STF antes de citar em peça.
+
 Primeira Turma. Rel. Min. Nunes Marques. Julgamento confirmado em fev/2025.
 
 Aplicação do redutor do art. 24, § 2º, da EC 103/2019 em hipótese de acumulação de pensão por morte e aposentadoria de regimes distintos quando o óbito ocorreu APÓS 13/11/2019.

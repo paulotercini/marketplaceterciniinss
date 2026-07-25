@@ -190,7 +190,7 @@ Cessação de atividade remunerada — base 12 meses + 12 (se +120 contribuiçõ
 
 **Tema 255/TNU** (j. 16/10/2020) — direito à prorrogação por 120 contribuições se incorpora ao patrimônio jurídico. **ALERTA — Tema 1352/STJ [PENDENTE]** pode restringir ao uso único.
 
-**Tema 365/TNU** (j. 13/11/2025) — benefício por incapacidade intercalado NÃO conta para as 120 contribuições.
+**Tema 365/TNU** (j. 12/11/2025, auditoria 25/07/2026, rodada 2, data conferida na pagina oficial do CJF) — benefício por incapacidade intercalado NÃO conta para as 120 contribuições.
 
 **Tema 1360/STJ** (j. 11/03/2026, repetitivo, vinculante) — prova do desemprego por qualquer meio admitido em Direito. Mera ausência de CTPS/CNIS não basta. Prova testemunhal isolada é suficiente (Súmula 27/TNU).
 
