@@ -36,13 +36,13 @@ Compensação tributária.
 
 Efeitos.
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Duração razoável.
 
-### Tema 692 STF
+### Tema 692/STJ (devolução na tutela revogada)
 
-Devolução em boa-fé.
+Devolução obrigatória com teto de 30 por cento; pesar o risco antes de pedir liminar (auditoria 25/07/2026, corte corrigida).
 
 ## 5. Cenários pró-segurado
 

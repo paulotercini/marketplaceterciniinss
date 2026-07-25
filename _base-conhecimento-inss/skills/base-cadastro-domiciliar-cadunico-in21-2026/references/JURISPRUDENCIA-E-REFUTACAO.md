@@ -94,7 +94,7 @@ Aplicação por extensão. Restrições infralegais ao BPC, incluindo as relacio
 
 Critérios para o reconhecimento da deficiência.
 
-### 3.3. Tema 1066/STF
+### 3.3. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Duração razoável do processo administrativo.
 

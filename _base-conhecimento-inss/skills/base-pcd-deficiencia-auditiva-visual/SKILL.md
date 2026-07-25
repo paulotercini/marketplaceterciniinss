@@ -33,9 +33,9 @@ Surdez bilateral em ambos os ouvidos.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 305 TNU
+### Repercussão social e funcional na avaliação (IF-BrA)
 
-Avaliação biopsicossocial.
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ### REsp 1.529.271 STJ
 
@@ -87,7 +87,7 @@ Primeiro, INSS frequentemente exclui surdez unilateral. Lei 14.768 é norma de i
 
 Segundo, AASI e implante não excluem deficiência.
 
-Terceiro, perícia que ignora repercussão social viola Tema 305 TNU.
+Terceiro, perícia que ignora repercussão social viola a metodologia do IF-BrA (Portaria Interministerial 1/2014; auditoria 25/07/2026).
 
 Quarto, exigência exclusiva de exame por máquina específica é excesso.
 

@@ -245,7 +245,7 @@ Em caso de decisão monocrática de inadmissão por matéria processual, opor em
 
 Pedido de manifestação expressa sobre a presença de elemento de direito material na controvérsia.
 
-Súmula 98/STJ + Tema Repetitivo 698/STJ. Embargos prequestionadores não são protelatórios.
+Súmula 98/STJ, embargos prequestionadores não são protelatórios; o Tema 698/STJ autoriza multa apenas quando rediscutem matéria pacificada (auditoria 25/07/2026).
 
 Pedido subsidiário de prequestionamento ficto pelo art. 1.025 CPC.
 

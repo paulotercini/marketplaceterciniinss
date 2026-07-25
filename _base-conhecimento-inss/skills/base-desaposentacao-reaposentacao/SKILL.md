@@ -1,6 +1,6 @@
 ---
 name: base-desaposentacao-reaposentacao
-Tema 1207 STF: vedação também à reaposentação e disciplina dos efeitos e da devolução de valores (par do Tema 503).
+Reaposentação igualmente vedada pela lógica do Tema 503/STF e de seus embargos (auditoria 25/07/2026, retirado o Tema 1207/STF, que trata do art. 3º da EC 47/2005, matéria estranha).
 ---
 
 # Desaposentação e Reaposentação
@@ -29,7 +29,7 @@ RE 661.256. Desaposentação vedada, por ausência de previsão legal. Cabe ao l
 
 Fonte oficial em https://portal.stf.jus.br
 
-Tema 1207 STF: vedação também à reaposentação e disciplina dos efeitos e da devolução de valores (par do Tema 503).
+Reaposentação igualmente vedada pela lógica do Tema 503/STF e de seus embargos (auditoria 25/07/2026, retirado o Tema 1207/STF, que trata do art. 3º da EC 47/2005, matéria estranha).
 
 Devolução de valores. Desnecessidade em boa-fé.
 
@@ -39,7 +39,7 @@ Atenção: a Súmula 557 STJ trata da RMI da aposentadoria por invalidez precedi
 
 Tema análogo, vedação pacificada.
 
-Tema 1207 STF: vedação também à reaposentação e disciplina dos efeitos e da devolução de valores (par do Tema 503).
+Reaposentação igualmente vedada pela lógica do Tema 503/STF e de seus embargos (auditoria 25/07/2026, retirado o Tema 1207/STF, que trata do art. 3º da EC 47/2005, matéria estranha).
 
 Efeitos para processos antes da decisão.
 

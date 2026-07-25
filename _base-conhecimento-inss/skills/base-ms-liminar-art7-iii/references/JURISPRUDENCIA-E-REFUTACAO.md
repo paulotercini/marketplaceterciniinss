@@ -14,15 +14,15 @@ Efeitos.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Duração razoável.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Tema 692 STF
+### Tema 692/STJ (devolução na tutela revogada)
 
-Devolução em boa-fé.
+Devolução obrigatória com teto de 30 por cento (auditoria 25/07/2026, corte corrigida).
 
 ### Súmula 729 STF
 
@@ -54,7 +54,7 @@ Refutação. Documentação idônea assegura.
 
 Argumento adversário. Art. 7º §3º.
 
-Refutação. Caráter alimentar. Tema 692 STF.
+Refutação. Caráter alimentar; atenção, o Tema 692/STJ impõe devolução se a liminar cair (auditoria 25/07/2026).
 
 ### Argumento 3 — Vedação do §2º
 
@@ -134,8 +134,8 @@ Sexto, resistência a suspensão.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 1066 STF.
+Acompanhar acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
-Revalidar Tema 692 STF.
+Revalidar Tema 692/STJ.
 
 Acompanhar modulações da Súmula 729 STF.

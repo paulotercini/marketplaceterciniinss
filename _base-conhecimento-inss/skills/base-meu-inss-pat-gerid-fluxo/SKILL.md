@@ -86,7 +86,7 @@ Pelo Meu INSS o segurado anexa documentos para cumprir exigência. PDF de até 5
 
 ### Tempo de processamento
 
-Após DER, INSS tem prazo legal de 30 dias, prorrogáveis por mais 30, para decidir (Lei 9.784/1999, art. 49); 45 dias é o prazo para o PRIMEIRO PAGAMENTO (art. 41-A, §5º, Lei 8.213/91); o acordo do Tema 1066 STF (RE 1.171.152) fixa 90 dias como parâmetro. Na prática a mediana é 90 a 180 dias. Após 90 dias sem decisão (parâmetro do acordo homologado no Tema 1066 STF), MS por mora cabível. Skill `base-ms-decadencia-omissao-demora`.
+Após DER, INSS tem prazo legal de 30 dias, prorrogáveis por mais 30, para decidir (Lei 9.784/1999, art. 49); 45 dias é o prazo para o PRIMEIRO PAGAMENTO (art. 41-A, §5º, Lei 8.213/91); o acordo homologado no RE 1.171.152/STF (ex-acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021), cancelado em 22/02/2021) fixa 90 dias como parâmetro. Na prática a mediana é 90 a 180 dias. Após 90 dias sem decisão (parâmetro do acordo homologado no acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)), MS por mora cabível. Skill `base-ms-decadencia-omissao-demora`.
 
 ### Sistema fora do ar
 

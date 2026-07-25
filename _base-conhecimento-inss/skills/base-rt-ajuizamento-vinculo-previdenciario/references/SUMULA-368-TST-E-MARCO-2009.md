@@ -129,6 +129,6 @@ Para CONTRIBUIÇÕES PREVIDENCIÁRIAS. Discussão técnica. A regra é a prescri
 - Súmula Vinculante 8 STF.
 - Súmula Vinculante 53 STF.
 - Tema 1188/STJ (sentença trabalhista homologatória e documentos decorrentes como início de prova material, exigidos elementos contemporâneos; a Súmula 31/TNU foi revogada em 22/11/2023).
-- Tema 297/TNU (requisitos para uso da sentença).
-- Tema 1188/STF (participação do INSS no processo trabalhista).
+- [Retirado na auditoria 25/07/2026. O Tema 297/TNU trata de auxílio emergencial; ver o Tema 1188/STJ.]
+- [Retirado na auditoria 25/07/2026. Não se confirma tema do STF sobre participação do INSS no processo trabalhista.]
 - Súmula 149/STJ (prova testemunhal isolada).

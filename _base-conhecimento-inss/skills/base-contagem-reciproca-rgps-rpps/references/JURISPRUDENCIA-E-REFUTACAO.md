@@ -2,9 +2,9 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 176 STF
+### Art. 201, §9º, da CF (contagem recíproca)
 
-Aspectos constitucionais da contagem recíproca.
+Base constitucional direta (auditoria 25/07/2026, retirado o Tema 176/STF, que trata de ICMS).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -54,7 +54,7 @@ Fonte oficial em https://www.planalto.gov.br
 
 Argumento adversário. Prazo indefinido.
 
-Refutação. MS por mora. Tema 1066 STF. Razoável duração do processo.
+Refutação. MS por mora. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021). Razoável duração do processo.
 
 ### Argumento 2 — Recusa de averbação
 

@@ -16,7 +16,7 @@ Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativ
 
 A CF/88 no art. 226 §3º reconhece a união estável. O Código Civil nos arts. 1.723 a 1.727 disciplina a relação. A Lei 8.213/91 no art. 16 lista os dependentes, com presunção de dependência econômica para companheiro. O art. 22 do Decreto 3.048/99 detalha as provas.
 
-A Lei 13.846/2019 alterou a forma de comprovação, exigindo início de prova material contemporâneo (art. 16 §5º). O Tema 526/STF firmou a impossibilidade de pensão a concubina em concomitância com cônjuge, salvo situações excepcionais. Súmula 63/TNU (enunciado real): a comprovação de união estável para pensão por morte PRESCINDE de início de prova material — aplicável a óbitos anteriores à Lei 13.846/2019; para óbitos posteriores, vale o art. 16, §5º (prova material contemporânea).
+A Lei 13.846/2019 alterou a forma de comprovação, exigindo início de prova material contemporâneo (art. 16 §5º). O Tema 526/STF firmou a impossibilidade de pensão a concubina em concomitância com cônjuge, salvo situações excepcionais. Súmula 63/TNU (enunciado real): a comprovação de união estável para pensão por morte PRESCINDE de início de prova material — aplicável a fatos geradores até a MP 871/2019 (18/01/2019, redação da Súmula de 18/09/2025; auditoria 25/07/2026); para fatos posteriores, vale o art. 16, §5º (prova material contemporânea).
 
 A CF/88 no art. 201, V e §2º consagra a pensão por morte como benefício previdenciário não inferior ao salário-mínimo. A Portaria DPMF/INSS 991/2022 disciplina os procedimentos administrativos de concessão.
 
@@ -26,7 +26,7 @@ A presunção de dependência econômica do companheiro é juris tantum (art. 16
 
 O início de prova material pode ser composto por documentos diversos. Servem certidão de nascimento de filho comum, conta bancária conjunta, plano de saúde com dependente, recibos de aluguel, declaração de imposto de renda com cônjuge, escritura pública de união estável e fotografias datadas.
 
-Para óbitos pré-Lei 13.846/2019, a Súmula 63/TNU dispensa o início de prova material; após, exige-se prova material contemporânea (art. 16, §5º).
+Para fatos geradores até a MP 871/2019 (18/01/2019), a Súmula 63/TNU (redação de 18/09/2025) dispensa o início de prova material; após, exige-se prova material contemporânea (art. 16, §5º) (auditoria 25/07/2026).
 
 A exigência de escritura pública de união estável é abusiva quando há provas suficientes da convivência.
 
@@ -34,9 +34,9 @@ A contemporaneidade não exige prova mês a mês, mas demonstração da continui
 
 ## 4. Fragilidades adversárias mais comuns
 
-O INSS exige escritura pública. Refute com Súmula 63 TNU e art. 1.723 CC.
+O INSS exige escritura pública. Refute com o art. 1.723 do CC e, para óbito até 18/01/2019, com a Súmula 63/TNU.
 
-O INSS recusa prova testemunhal. Refute com Súmula 63 TNU.
+O INSS recusa prova testemunhal. Para óbito até 18/01/2019, refute com a Súmula 63/TNU; após, reúna prova material contemporânea (art. 16, §5º).
 
 O INSS questiona a contemporaneidade. Refute com prova continuada e início de prova material em qualquer época.
 

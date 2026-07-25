@@ -38,9 +38,9 @@ Metodologia.
 
 Enquadramento.
 
-### Súmula 555 STJ
+### Marco da Lei 9.032/95 (fim do enquadramento por categoria em 28/04/1995)
 
-Atividade especial.
+O enquadramento por categoria vale até 28/04/1995 (Decretos 53.831/64 e 83.080/79). Retirada a Súmula 555/STJ na auditoria 25/07/2026; ela trata de decadência tributária.
 
 ## 5. Cenários pró-segurado
 

@@ -63,7 +63,7 @@ Antes do Decreto 12.534/2025, Bolsa Família era excluído da renda por força d
 
 ## Flexibilização jurisprudencial
 
-Tema 27 STF abre a flexibilização em caso concreto. REsp 1.112.557 STJ autoriza prova ampla da miserabilidade por todas as circunstâncias. Tema 73 STJ integra a leitura pró-segurado. Tema 312 e Tema 640 TNU complementam.
+Tema 27 STF abre a flexibilização em caso concreto. REsp 1.112.557 STJ autoriza prova ampla da miserabilidade por todas as circunstâncias. O Tema 185/STJ (REsp 1.112.557) integra a leitura pró-segurado. O RE 580.963/STF e o Tema 640/STJ complementam (auditoria 25/07/2026).
 
 ## Deduções de despesas de saúde
 

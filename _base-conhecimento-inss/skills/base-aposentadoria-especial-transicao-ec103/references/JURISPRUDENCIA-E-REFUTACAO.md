@@ -42,17 +42,17 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado. Refuta tese de tempo mínimo.
 
-### Tema 942 STJ
+### Art. 25, §2º, da EC 103/2019 (conversão até 13/11/2019)
 
-Tese. A conversão do tempo especial em comum é direito do segurado, observados os fatores correspondentes ao período. A vedação só se aplica após a EC 103/2019.
+Retirado o Tema 942/STJ na auditoria 25/07/2026 (o tema real trata de cheque); a conversão de tempo especial de servidor está no Tema 942/STF (RE 1.014.286).
 
 Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Garante a conversão de todo tempo especial pré-reforma.
 
-### Tema 709 STJ
+### Tema 709/STF (RE 791.961)
 
-Tese. É possível o reconhecimento de tempo especial mediante prova complementar ao PPP, em caso de laudo extemporâneo ou de inadimplemento formal do empregador.
+Vedação constitucional de permanência ou retorno à atividade especial após a aposentadoria especial (auditoria 25/07/2026, corte corrigida).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -92,7 +92,7 @@ Refutação. Tema 1090 STJ e Tema 555 STF. Em hipóteses excepcionais, especialm
 
 Argumento adversário. A conversão de tempo especial em comum foi totalmente vedada após a reforma.
 
-Refutação. Art. 25, §2º, da EC 103 e Tema 942 STJ. A conversão permanece viva para períodos cumpridos até 13 de novembro de 2019. A vedação só alcança tempo pós-reforma.
+Refutação. Art. 25, §2º, da EC 103/2019 (auditoria 25/07/2026, retirado o Tema 942/STJ, que trata de cheque). A conversão permanece viva para períodos cumpridos até 13 de novembro de 2019. A vedação só alcança tempo pós-reforma.
 
 ### Argumento 4 — Aplicação de regra permanente em quem tinha direito adquirido
 
@@ -110,7 +110,7 @@ Refutação. Art. 21 da EC 103. A transição exige simultaneamente o tempo mín
 
 Argumento adversário. PPP sem preenchimento completo impede reconhecimento do tempo especial.
 
-Refutação. Tema 709 STJ. Prova alternativa é admitida. Acionar `retificacao-ppp` e `defesa-probatoria-especial`.
+Refutação. A comprovação da atividade especial admite meios alternativos de prova técnica (Súmula 198 do TFR). Acionar `retificacao-ppp` e `defesa-probatoria-especial` (auditoria 25/07/2026, retirado o Tema 709/STJ, que é de execução penal).
 
 ### Argumento 7 — Exigência de dosimetria de ruído
 

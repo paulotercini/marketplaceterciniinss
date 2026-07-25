@@ -37,9 +37,9 @@ As Súmulas da TRU consolidam o entendimento dominante para todas as Turmas Recu
 
 Algumas Súmulas têm conteúdo APARENTEMENTE neutro ou favorável ao INSS. A análise pró-segurado aqui sistematizada **distinguishing** estes casos para extrair o melhor proveito.
 
-Exemplo CRÍTICO. A Súmula 23 da TRU 3 ("BPC subsidiário e dever alimentar") deve ser confrontada com o Tema 640/STF (modulação posterior) e a Lei 13.146/2015 (EPCD) que LIMITARAM o alcance da exigência de exaurir as vias do dever alimentar.
+Exemplo CRÍTICO. A Súmula 23 da TRU 3 ("BPC subsidiário e dever alimentar") deve ser confrontada com a Lei 13.146/2015 (EPCD), que LIMITOU (auditoria 25/07/2026, retirado o Tema 640/STF, não confirmado para dever alimentar) o alcance da exigência de exaurir as vias do dever alimentar.
 
-Distinguishing pró-segurado a partir do julgamento do Tema 640/STF em 2020 (Tema com julgamento concluído sobre dever alimentar e BPC).
+Distinguishing pró-segurado a partir da Lei 13.146/2015 (auditoria 25/07/2026, retirada a menção ao Tema 640/STF, não confirmada; o Tema 640/STJ trata da exclusão do benefício mínimo do idoso da renda).
 
 ## 3 SÚMULA 1 - PRESCRIÇÃO DO PECÚLIO
 
@@ -105,7 +105,7 @@ Enunciado 01 do JEFSP. Súmula nº 05 das Turmas Recursais da Seção Judiciári
 
 **FUNDAMENTAL para BPC**. Súmula consagra a tese do critério relativo de miserabilidade, posteriormente confirmada pelo STF na Reclamação 4374 e Recurso Extraordinário 567985, ambos julgados em 2013.
 
-Aplicação atualizada. Combinar com Lei 13.846/2019 (que ampliou o critério para 1/4 SM no Decreto 6.214 mas manteve a possibilidade de flexibilização) + Súmula 79/TNU + Tema 640/STF.
+Aplicação atualizada. Combinar com Lei 13.846/2019 (que ampliou o critério para 1/4 SM no Decreto 6.214 mas manteve a possibilidade de flexibilização) + Súmula 79/TNU + Tema 640/STJ.
 
 Em petições de BPC com renda per capita superior a 1/4 SM, esta Súmula é IMPRESCINDÍVEL.
 
@@ -447,7 +447,7 @@ Esta Súmula é uma armadilha pró-INSS. Exige análise do dever alimentar antes
 
 DISTINGUISHING pró-segurado IMPRESCINDÍVEL.
 
-1. **Tema 640/STF** julgado em 2020. O STF firmou tese sobre LOAS e dever alimentar limitando a interpretação literal.
+1. **Lei 13.146/2015 (EPCD)** e jurisprudência posterior limitaram a interpretação literal (auditoria 25/07/2026, retirado o Tema 640/STF, não confirmado).
 
 2. **Lei 13.146/2015 (EPCD)** art. 40 reconhece o direito de PCD ao BPC INDEPENDENTEMENTE de exigir do parente próximo a prestação alimentar.
 
@@ -455,13 +455,13 @@ DISTINGUISHING pró-segurado IMPRESCINDÍVEL.
 
 4. **Art. 20 LOAS** não exige análise do dever alimentar como condicionante.
 
-5. **Análise crítica da Súmula 23**. Foi aprovada em 2015, ANTES dos refinamentos do Tema 640/STF e da Lei 13.146/2015. Está superada por norma posterior.
+5. **Análise crítica da Súmula 23**. Foi aprovada em 2015, ANTES da Lei 13.146/2015. Está superada por norma posterior.
 
 EM PETIÇÕES DE BPC. NÃO INVOCAR a Súmula 23. SE INVOCADA PELO INSS, fazer distinguishing com:
 
 ```
 "A Súmula 23 da TRU 3, datada de 2015, não considera a evolução normativa
-posterior. O Tema 640/STF e a Lei 13.146/2015 limitaram a exigência de
+posterior. A Lei 13.146/2015 limitou a exigência de
 prévia análise do dever alimentar como condicionante do BPC. A
 interpretação literal da Súmula 23 violaria o art. 203 V CF e o art.
 20 LOAS, que não impõem essa condicionante."

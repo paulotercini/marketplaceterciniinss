@@ -96,7 +96,7 @@ A escolha do paradigma é decisiva para a admissibilidade. Erro nesse ponto leva
 - Decisão monocrática (singular) de qualquer órgão.
 - Acórdão da própria Turma Recursal de origem.
 
-QUESTÃO DE ORDEM 48/TNU. "Não cabe pedido de uniformização que utiliza como paradigma acórdão de Tribunal Regional Federal."
+QUESTÃO DE ORDEM 48/TNU. "Precedentes do Supremo Tribunal Federal não se prestam como paradigmas válidos, para fins de admissão do pedido nacional de uniformização de interpretação de lei federal previsto no art. 14, § 2º, da Lei nº 10.259/01." (auditoria 25/07/2026, corrigido o objeto; a vedação ao paradigma de TRF decorre do próprio art. 14, §2º, da Lei 10.259/2001)
 
 ESTRATÉGIA PRÓ-SEGURADO. Quando houver acórdão favorável de TRF, NÃO usá-lo como paradigma direto. Buscar acórdão de Turma Recursal de outra região no mesmo sentido, ou Súmula do STJ correspondente.
 
@@ -377,7 +377,7 @@ A reclamação tem contornos ESTREITOS. As decisões da TNU não têm efeito vin
 
 **QO 47/TNU.** Em caso de omissão expressamente impugnada em ED na origem, admite-se anulação do acórdão por PUIL desde que apresentado paradigma válido (Sessão 15.02.2023, precedente 0001361-68.2017.4.03.6327).
 
-**QO 48/TNU.** Não cabe PUIL com paradigma de TRF.
+**QO 48/TNU.** Precedentes do STF não servem de paradigma em PUIL; o paradigma de TRF é vedado pelo art. 14, §2º, da Lei 10.259/2001 (auditoria 25/07/2026).
 
 **QO 49/TNU.** Posterior aglutinação de PUIL a outro afetado como representativo de controvérsia (Sessão 15.09.2023, precedente 5001931-18.2022.4.04.7118).
 
@@ -507,7 +507,7 @@ IX - DOS PEDIDOS
 
 Estes alertas devem ser revisados ANTES de protocolar qualquer recurso destinado à TNU. São as armadilhas estatisticamente mais comuns que levam ao não conhecimento.
 
-**ALERTA 1. Paradigma de TRF.** TRFs não compõem o microssistema dos juizados. NÃO usar como paradigma direto (QO 48/TNU).
+**ALERTA 1. Paradigma de TRF.** TRFs não compõem o microssistema dos juizados. NÃO usar como paradigma direto (art. 14, §2º, da Lei 10.259/2001; a QO 48/TNU veda o paradigma do STF).
 
 **ALERTA 2. Tese inovadora.** Tese não suscitada anteriormente é causa de inadmissão automática (QO 10/TNU).
 

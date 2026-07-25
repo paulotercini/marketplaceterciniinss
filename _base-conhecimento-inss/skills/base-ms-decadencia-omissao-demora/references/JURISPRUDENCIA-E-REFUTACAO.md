@@ -8,7 +8,7 @@ Decadência.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Duração razoável.
 
@@ -84,7 +84,7 @@ Refutação. Exige iminência.
 
 Argumento adversário. Administrativa.
 
-Refutação. Tema 1066 STF afirma duração razoável.
+Refutação. O acordo homologado no RE 1.171.152/STF (ex-Tema 1066) e o art. 5º, LXXVIII, da CF afirmam a duração razoável (auditoria 25/07/2026).
 
 ### Argumento 9 — Prorrogação PA afasta MS
 
@@ -128,7 +128,7 @@ Sexto, preservar MS.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 1066 STF.
+Acompanhar acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
 Revalidar Lei 13.460/2017.
 

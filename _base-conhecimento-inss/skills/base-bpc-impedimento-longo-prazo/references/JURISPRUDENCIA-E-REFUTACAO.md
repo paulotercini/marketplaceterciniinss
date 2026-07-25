@@ -18,9 +18,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado (renda, mas aplicável por analogia ao conceito de impedimento).
 
-### Súmula 63 TNU
+### Súmula 63/TNU (união estável; pertinência a conferir — auditoria 25/07/2026)
 
-Tese. Direito à revisão do BPC conforme art. 21-A LOAS.
+Redação de 18/09/2025 restrita a fatos geradores até a MP 871/2019; enunciado de pensão por morte, sem aplicação direta ao BPC.
 
 Fonte oficial em https://www.cjf.jus.br
 

@@ -8,9 +8,9 @@ Surdez bilateral.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 305 TNU
+### Repercussão social e funcional na avaliação (IF-BrA)
 
-Avaliação biopsicossocial.
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ### REsp 1.529.271 STJ
 
@@ -64,7 +64,7 @@ Refutação. Avaliação biopsicossocial.
 
 Argumento adversário. Isolamento físico.
 
-Refutação. Tema 305 TNU.
+Refutação. Portaria Interministerial 1/2014 (IF-BrA) e LC 142/2013.
 
 ### Argumento 6 — Domínio sensorial baixo
 
@@ -128,4 +128,4 @@ Acompanhar Lei 14.768.
 
 Revalidar Súmula 552 STJ.
 
-Monitorar Tema 305 TNU.
+Item retirado na auditoria 25/07/2026 (Tema 305/TNU trata de auxílio emergencial).

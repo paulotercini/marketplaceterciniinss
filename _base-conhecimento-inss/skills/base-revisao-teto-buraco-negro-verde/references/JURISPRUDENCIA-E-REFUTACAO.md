@@ -2,7 +2,7 @@
 
 ## 1. Precedentes vinculantes
 
-### Tema 327 STF, RE 564.354
+### Tema 76 STF, RE 564.354
 
 Tese. Cabível a readequação dos benefícios concedidos antes das ECs 20/1998 e 41/2003 aos novos tetos, para os segurados cuja RMI teria sido maior se o novo teto já estivesse em vigor.
 
@@ -128,7 +128,7 @@ Refutação. Justiça gratuita (art. 98 CPC) e análise prévia rigorosa. Calibr
 
 Wladimir Novaes Martinez, teto previdenciário e revisão.
 
-Frederico Amado, Tema 327 STF.
+Frederico Amado, Tema 76 STF.
 
 Hugo Goes, cálculo da revisão do teto.
 

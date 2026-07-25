@@ -18,7 +18,7 @@ Fonte oficial em https://www.gov.br/conselho-de-recursos-da-previdencia-social
 
 Vinculantes para o INSS e CRPS.
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Duração razoável.
 

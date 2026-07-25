@@ -204,7 +204,7 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 
 **Severidade.** CRÍTICO.
 
-**Regra.** QO 48/TNU. TRFs não compõem o microssistema dos juizados. Paradigmas válidos são Turma Recursal de outra região, TNU, Súmula STJ ou tese fixada em IRDR.
+**Regra.** Art. 14, §2º, da Lei 10.259/2001. TRFs não compõem o microssistema dos juizados; a QO 48/TNU veda também o paradigma do STF (auditoria 25/07/2026). Paradigmas válidos são Turma Recursal de outra região, TNU, Súmula STJ ou tese fixada em IRDR.
 
 **Correção.** Buscar acórdão equivalente de outra TR ou Súmula do STJ no mesmo sentido.
 

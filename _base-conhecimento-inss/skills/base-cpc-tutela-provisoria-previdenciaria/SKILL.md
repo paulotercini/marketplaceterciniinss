@@ -35,7 +35,7 @@ Quarto, tutela de evidência (art. 311), especialmente inciso II (tese firmada e
 
 ## Requisitos pró-segurado
 
-Primeiro, probabilidade do direito. Caráter alimentar reforça. Tema 313/STJ (efetividade).
+Primeiro, probabilidade do direito. O caráter alimentar e a urgência concreta reforçam (auditoria 25/07/2026, retirado o Tema 313/STJ, matéria tributária).
 
 Segundo, perigo de dano. Presunção pró-segurado em benefício alimentar.
 
@@ -49,7 +49,7 @@ Cenário B, restabelecimento de B31 cessado sem perícia. Tutela cabível.
 
 Cenário C, implantação de B91 com laudo pericial judicial favorável. Tutela cabível.
 
-Cenário D, tutela de evidência em tese firmada (Tema 1102/STF RVT, Tema 327/STF teto, Tema 1124/STJ).
+Cenário D, tutela de evidência em tese firmada (Tema 1102/STF RVT, Tema 76/STF teto, Tema 1124/STJ).
 
 ## Estabilização (art. 304)
 

@@ -12,7 +12,7 @@ Lei 8.213/91, art. 60, §11-A. Introduzido para viabilizar o regime de análise 
 
 Lei 8.213/91, art. 26, II. Isenção de carência para acidente de qualquer natureza, acidente de trabalho e doenças listadas no art. 151.
 
-Lei 8.213/91, art. 151. Rol de doenças graves que isentam da carência, com abertura interpretativa pela Súmula 63 TNU para outras moléstias de igual gravidade.
+Lei 8.213/91, art. 151. Rol de doenças graves que isentam da carência, com abertura interpretativa da jurisprudência para outras moléstias de igual gravidade (auditoria 25/07/2026, retirada a Súmula 63/TNU, que trata de união estável).
 
 Lei 8.213/91, art. 25, I. Carência de 12 contribuições mensais para B31, ressalvadas as isenções.
 
@@ -79,7 +79,7 @@ Até 15 dias antes da DCB, solicitar P1 pelo Meu INSS. Documentação médica at
 
 ## 5. Isenção de carência (art. 26, II e art. 151)
 
-Rol do art. 151 e abertura pela Súmula 63 TNU para outras moléstias de igual gravidade.
+Rol do art. 151 com abertura interpretativa da jurisprudência (auditoria 25/07/2026, retirada a Súmula 63/TNU, que trata de união estável).
 
 Primeiro, tuberculose ativa. Segundo, hanseníase. Terceiro, alienação mental. Quarto, neoplasia maligna. Quinto, cegueira. Sexto, paralisia irreversível e incapacitante. Sétimo, cardiopatia grave. Oitavo, doença de Parkinson. Nono, espondiloartrose anquilosante. Décimo, nefropatia grave. Décimo primeiro, estado avançado de doença de Paget (osteíte deformante). Décimo segundo, contaminação por radiação com base em conclusão da medicina especializada. Décimo terceiro, síndrome da imunodeficiência adquirida (AIDS). Décimo quarto, hepatopatia grave.
 

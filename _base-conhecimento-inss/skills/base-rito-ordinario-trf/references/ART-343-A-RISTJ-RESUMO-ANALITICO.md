@@ -71,9 +71,9 @@ O art. 343-A não estabelece expressamente uma sanção para o descumprimento (a
 Ao redigir REsp ou AREsp em matéria previdenciária destinado ao STJ, INCLUIR o resumo analítico em todas as peças. Em particular.
 
 1. REsp em Aposentadoria Especial (Tema 174, 210, 1090 STJ).
-2. AREsp em BPC (Tema 27 STF, Tema 640 STF, Tema 640 STJ).
+2. AREsp em BPC (Tema 27 STF, RE 580.963/STF e Tema 640 STJ; auditoria 25/07/2026).
 3. REsp em Pensão por Morte (Tema 1162, 1188 STJ).
-4. REsp em Contagem Recíproca (Tema 176 STF).
+4. REsp em Contagem Recíproca (art. 201, §9º, da CF; auditoria 25/07/2026, retirado o Tema 176/STF).
 5. REsp em Revisão (Temas de RVT, IRSM, ORTN/OTN, atividades concomitantes 1070).
 
 ## ATUALIZAÇÃO OBRIGATÓRIA EM MODELOS

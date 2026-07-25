@@ -2,7 +2,7 @@
 
 ## 1. Marco normativo aplicável
 
-CF/88, art. 5º LV. CPC, arts. 374, 442, 506. CLT, arts. 39, 40. Súmula 149/STJ. Tema 297/TNU. Tema 1188/STJ (a Súmula 31/TNU foi revogada em 22/11/2023, não citar como vigente). Lei 8.213/91, art. 55 §3º. IN 128/2022.
+CF/88, art. 5º LV. CPC, arts. 374, 442, 506. CLT, arts. 39, 40. Súmula 149/STJ. Tema 1188/STJ (a Súmula 31/TNU foi revogada em 22/11/2023, não citar como vigente). Lei 8.213/91, art. 55 §3º. IN 128/2022.
 
 ## 2. Cenário 1 — Sentença com prova documental
 

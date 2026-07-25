@@ -26,7 +26,7 @@ Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Permite prova ampla da miserabilidade.
 
-### Tema 312 TNU
+### RE 580.963/STF (corte corrigida na auditoria 25/07/2026)
 
 Tese. Concessão de BPC e cômputo de benefício excluído.
 
@@ -34,7 +34,7 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado.
 
-### Tema 640 TNU
+### Tema 640/STJ (REsp 1.355.052; corte corrigida na auditoria 25/07/2026)
 
 Tese. Flexibilização e exclusões de renda em hipóteses específicas.
 
@@ -58,9 +58,9 @@ Fonte oficial em https://www.gov.br/previdencia/pt-br/assuntos/crps
 
 Aplicação pró-segurado.
 
-### Súmula 63 TNU
+### Súmula 63/TNU (união estável; pertinência a conferir — auditoria 25/07/2026)
 
-Tese. Direito à revisão de BPC na forma do art. 21-A LOAS.
+Redação de 18/09/2025 restrita a fatos geradores até a MP 871/2019; enunciado de pensão por morte, sem aplicação direta ao BPC.
 
 Fonte oficial em https://www.cjf.jus.br
 

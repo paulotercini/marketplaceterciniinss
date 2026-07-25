@@ -268,7 +268,7 @@ Critérios principais (ver detalhamento exaustivo no catálogo):
 12. Latim desnecessário (Regra da Clareza).
 13. Teste do leigo na parte fática.
 14. **Cotejo analítico ausente em PUIL** (novo, derivado da Onda 30).
-15. **Paradigma de TRF em PUIL** (novo, derivado da Onda 30 - QO 48/TNU).
+15. **Paradigma de TRF ou de STF em PUIL** (art. 14, §2º, Lei 10.259/2001; QO 48/TNU veda o paradigma do STF — auditoria 25/07/2026).
 16. **Citação de Portaria 992/2022 como cálculo de RMI** (novo, derivado da Onda 32).
 17. **Citação de Súmula 86/TNU como vigente** (novo, foi cancelada em 26/08/2021).
 18. **Citação de tese de Revisão da Vida Toda sem mencionar a modulação** (novo).
@@ -325,7 +325,7 @@ Exemplos.
 - Ausência de verificação do Tema 1124 quando aplicável.
 - Autoridade coatora errada em MS.
 - Pedido incompatível com o rito.
-- PUIL com paradigma de TRF (QO 48/TNU).
+- PUIL com paradigma de TRF (art. 14, §2º, Lei 10.259/2001) ou do STF (QO 48/TNU).
 - PUIL com tese inovadora não suscitada (QO 10/TNU).
 - Memorial extraprocessual com mais de duas páginas (regra absoluta do escritório).
 - Reafirmação da DER sem concordância formal do segurado.
@@ -420,7 +420,7 @@ Ver detalhamento completo em `references/CHECKLIST-POR-RITO.md`. Resumo abaixo.
 
 **CRPS.** Revisão completa. Verificações específicas de admissibilidade e processo administrativo. Recuo de 4 cm.
 
-**Mandado de segurança.** Verificação obrigatória de cabimento, direito líquido e certo, autoridade coatora, competência territorial, prazo decadencial de 120 dias (art. 23 Lei 12.016/2009), pedido liminar e fundamentos no Tema 1066/STF se houver demora administrativa.
+**Mandado de segurança.** Verificação obrigatória de cabimento, direito líquido e certo, autoridade coatora, competência territorial, prazo decadencial de 120 dias (art. 23 Lei 12.016/2009), pedido liminar e fundamentos no acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021) se houver demora administrativa.
 
 **PUIL/PEDILEF (TNU).** Verificação obrigatória das 4 hipóteses de cabimento (art. 12 §1º RITNU), paradigma válido (não TRF/STF/TST/TSE - QO 48), cotejo analítico em duas etapas, prequestionamento (QO 10/35/36 + Súmulas 282/356 STF + art. 1.025 CPC), não incidência das Súmulas 42/TNU (reexame fato) e 43/TNU (matéria processual), dialeticidade. Acionar OBRIGATORIAMENTE `base-tnu-admissibilidade-manual` e `pedilef-cotejo-analitico-tnu`.
 

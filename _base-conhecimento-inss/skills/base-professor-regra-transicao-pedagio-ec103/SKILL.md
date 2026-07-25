@@ -41,9 +41,9 @@ Fonte oficial em https://www.stj.jus.br
 
 Professor e magistério.
 
-### Súmula 726 STF
+### Súmula 726/STF (restritiva) e sua mitigação
 
-Enunciado real: para a aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula. Não trata de fator previdenciário. Entendimento restritivo superado, em parte, pela Lei 11.301/2006 e pela ADI 3772 (direção, coordenação e assessoramento pedagógico contam).
+Texto real. "Para efeito de aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula." Aplicação mitigada pela Lei 11.301/2006 e pela ADI 3772, que asseguram o cômputo de direção, coordenação e assessoramento pedagógico exercidos por professor de carreira (auditoria 25/07/2026).
 
 ## Requisitos da regra de pedágio (art. 20 §1º EC 103)
 
