@@ -180,6 +180,16 @@ Dado objetivo fabricado (número de processo, relator ou data sem origem verific
 
 A peça que cite norma ou precedente NÃO VERIFICÁVEL em fonte primária deve ser SUSPENSA até verificação. Não há tolerância para "achismo" jurídico no escritório Tercini.
 
+## AGENTES DO PLUGIN NA REVISÃO (Onda 81)
+
+A revisão aprofundada despacha duas frentes aos agentes do plugin, quando disponíveis na sessão.
+
+Primeiro, a leitura adversária. Antes de fechar o relatório, despachar a peça, o inventário de provas com IDs, o CNIS e o histórico administrativo ao agente `base-conhecimento-inss:red-team-peticao`. Ele simula a contestação do INSS, a Procuradoria e o voto contrário, devolve fragilidades por severidade (FATAL, GRAVE, MEDIA, MENOR) com blindagem recomendada e veredito de protocolo. Os achados do agente entram no relatório desta skill com a severidade mapeada (FATAL vira BLOQUEANTE, GRAVE vira CRÍTICO, MEDIA vira IMPORTANTE, MENOR vira MENOR).
+
+Segundo, a verificação de citações em lote. Quando a peça tiver três ou mais citações não confirmadas no catálogo local, despachar o lote ao agente `base-conhecimento-inss:verificador-precedentes`, que confere existência, vigência e tese literal em fonte oficial e devolve classificação por item. Dúvida isolada (uma ou duas citações) segue o fluxo normal dos Níveis 1 a 5 com a Regra de Comet.
+
+Os agentes somente verificam e reportam, nunca editam a peça. Toda correção decorrente dos relatórios deles é aplicada pela sessão principal, com nota datada. Sem os agentes disponíveis na sessão, executar as duas frentes inline, com as mesmas regras.
+
 ## 5 CAMADAS DE REVISÃO
 
 A profundidade da revisão se adapta ao tipo de peça (ver seção "Checklist por Rito" abaixo). Antes de iniciar, ler o arquivo `references/CHECKLIST-POR-CAMADA.md` para o detalhamento exaustivo.
@@ -460,6 +470,8 @@ Toda revisão DEVE executar as verificações abaixo, conforme política consoli
 
 Esta skill é HUB de integração e DEVE acionar.
 
+- Agente `red-team-peticao` para a leitura adversária da peça (Onda 81).
+- Agente `verificador-precedentes` para lotes de três ou mais citações não confirmadas (Onda 81).
 - `base-legislacao-fontes-primarias` antes de validar qualquer citação de norma.
 - `base-tnu-admissibilidade-manual` em qualquer peça destinada à TNU.
 - `pedilef-cotejo-analitico-tnu` em PUIL/PEDILEF.
