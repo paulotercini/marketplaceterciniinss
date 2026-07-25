@@ -48,3 +48,15 @@ Firecrawl indisponível na rodada (erro 402, créditos). portal.stf.jus.br, proc
 Fila de 590 itens NAO_CATALOGADO ainda não verificados, ordenada por ocorrências, em `pendencias_nao_verificadas.md` (topo da próxima rodada, Tema 1050/STJ, Súmula 387/STJ, Tema 76/STF com texto literal, RE 580.963 com tese literal, Súmula 49/TNU, Tema 1054/STF, QOs da TNU remanescentes, PEDILEFs e processos CNJ citados). Os 218 itens do catálogo curado não foram reauditados (rotina própria). Modelos Ouro 2.0 fora desta rodada, token do Drive não disponível na sessão; declarado conforme a skill.
 
 Próximo passo recomendado. Rodada 2 da Etapa 3 sobre o topo da fila de pendências e promoção dos PROVAVEL a CONFIRMADO quando os portais oficiais estiverem acessíveis (Comet).
+
+## 7. Rodada 2 (Onda 77, mesma data)
+
+Os portais oficiais abriram via crawl4ai e a rodada 2 promoveu 30 itens a CONFIRMADO_FONTE_OFICIAL. O catálogo complementar fechou o dia com 38 entradas literais.
+
+Confirmados no CJF (texto literal), Súmulas 27, 42, 43, 47, 63 (redação de 18/09/2025), 73, 86 (cancelada em 26/08/2021) e 87 da TNU, QO 24 e QO 48, Temas 300 (Em Revisão pelo Tema 1421/STF), 317 (rejulgado em 18/09/2025, trânsito em 11/02/2026) e 365 da TNU. Confirmados no portal do STF, Temas 76, 27, 312 (RE 580.963), 334, 359, 368, 377, 555, 709, 810, 942 e 1271 (suspensão nacional desde 21/01/2025, parecer da PGR de 15/04/2026), Súmulas 269, 271, 359 e 726 e a ADI 3772 com dispositivo literal. Confirmados no SCON do STJ, Súmulas 85, 98, 149, 507 e 577 e Temas 640, 732 e 905.
+
+Correções novas da rodada. A data real do Tema 365/TNU é 12/11/2025 (página oficial; acórdão publicado em 18/12/2025), a "conferência de 11/07/2026" que registrava 13/11/2025 estava errada e foi corrigida em seis arquivos, inclusive no catálogo curado. A Súmula 87/TNU ganhou o marco temporal explícito (só atividade anterior a 03/12/1998) no reference de EPI. O RE 1.510.285 AgR recebeu alerta de divergência entre fontes (Segunda Turma 09/12/2024 versus Primeira Turma 26/05/2026), a conferir antes de citar.
+
+Permanecem sem fonte oficial estável, ADI 3931 (o texto da decisão convergiu, mas o link oficial apontado se mostrou de outro processo) e Súmula 198/TFR (o SCON do TFR não devolveu o enunciado). Tema 383/TNU segue oficialmente "Em Julgamento", sem tese.
+
+Ferramentas da rodada, crawl4ai abriu portal.stf.jus.br, cjf.jus.br e processo.stj.jus.br/SCON; o firecrawl do Docker permaneceu indisponível (falha de DNS do gateway).

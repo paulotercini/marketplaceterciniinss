@@ -48,7 +48,7 @@ Aplicação prática. Em todo recurso e peça judicial, deslocar o ônus probat�
 
 Tese. A EPC, quando presente, prevalece sobre o EPI. A falta de EPC eficaz é indício de nocividade ainda que o PPP declare EPI eficaz.
 
-Súmula 87 TNU (verificar vigência em https://www.cjf.jus.br). O tempo especial não se descaracteriza pela simples anotação de EPI eficaz no PPP.
+Súmula 87 TNU, vigente, conferida na página oficial do CJF em 25/07/2026 e restrita a período anterior a 03/12/1998 (MP 1.729/98). Nesse período, o tempo especial não se descaracteriza pela simples anotação de EPI eficaz no PPP.
 
 ## 7. Cenários concretos para o segurado
 
