@@ -39,13 +39,15 @@ INFORMATIVO. O item consta do catálogo, mas o registro ainda não traz a tese l
 
 ### Etapa 3. Verificação na fonte oficial
 
-Verificação em lotes por subagentes (Agent tool), cada lote com dez a vinte itens, na ordem obrigatória.
+Verificação em lotes de dez a vinte itens pelo agente do plugin `base-conhecimento-inss:verificador-precedentes` (Onda 78), invocado pela Agent tool. O agente recebe cada lote com ID normalizado, arquivo, linha e contexto da afirmação, executa a ordem obrigatória e devolve relatório no formato do catálogo complementar, pronto para colagem. Ele somente verifica e reporta, sem editar arquivo algum (a correção fica com a Etapa 4, na sessão principal). Quando o agente do plugin não estiver disponível na sessão, usar subagente genérico com as mesmas instruções.
 
-Primeiro, catálogo interno e references locais verificados.
+A ordem obrigatória, por item.
+
+Primeiro, catálogo interno e references locais verificados (incluído o próprio `CATALOGO-COMPLEMENTAR-VERIFICADO.md`).
 
 Segundo, WebSearch com o TRIBUNAL na string de busca (evita capturar homônimo de outra corte).
 
-Terceiro, WebFetch na fonte oficial. Vale a limitação de rede conhecida do sandbox. Costumam ABRIR o CJF (TNU), o Planalto e às vezes o STF. Costumam BLOQUEAR o STJ SCON, o TRF3 e o eproc da TNU. Quando o portal bloquear, registrar com honestidade que a conferência ficou em fonte secundária, sem fingir acesso. Como reforço, a Regra Comet da Onda 65 (`base-revisao-peticao-aprofundada`) permite abrir o navegador do usuário para o portal bloqueado, quando a sessão tiver o Comet disponível.
+Terceiro, WebFetch na fonte oficial. Vale a limitação de rede conhecida do sandbox (estado conferido em 25/07/2026). Costumam ABRIR o CJF (TNU), o Planalto, às vezes o STF, o processo.stj.jus.br/repetitivos (abriu na Onda 77), as páginas de notícia do STJ, o arquivocidadao.stj.jus.br, o TST e o gov.br. Costumam BLOQUEAR o STJ SCON (403), o TRF3 e o eproc da TNU. Quando o portal bloquear, registrar com honestidade que a conferência ficou em fonte secundária, sem fingir acesso. Como reforço, a Regra Comet da Onda 65 (`base-revisao-peticao-aprofundada`) permite abrir o navegador do usuário para o portal bloqueado, quando a sessão tiver o Comet disponível.
 
 Cada item sai com uma de quatro classificações.
 
@@ -99,7 +101,7 @@ JSON da varredura (`auditoria_citacoes.json`). Relatório por severidade com cad
 
 ## 7. Integração com outras skills
 
-`base-precedentes-catalogo-vinculantes` é a referência de triagem da Etapa 2 e o destino natural de promoções futuras de itens consolidados. `base-revisao-peticao-aprofundada` é a irmã desta skill no plano das peças, e sua Regra Comet (Onda 65) vale aqui como reforço da Etapa 3. `base-legislacao-fontes-primarias` cobre as citações normativas, fora do escopo desta auditoria. `ingest-tema-base-inss` deve consultar o catálogo complementar antes de registrar tema novo, para não recriar quarentena de item já verificado.
+O agente `verificador-precedentes` (pasta `agents/` do plugin) é o braço executor da Etapa 3, com as mesmas regras invioláveis desta skill e saída no formato do catálogo complementar. `base-precedentes-catalogo-vinculantes` é a referência de triagem da Etapa 2 e o destino natural de promoções futuras de itens consolidados. `base-revisao-peticao-aprofundada` é a irmã desta skill no plano das peças, e sua Regra Comet (Onda 65) vale aqui como reforço da Etapa 3. `base-legislacao-fontes-primarias` cobre as citações normativas, fora do escopo desta auditoria. `ingest-tema-base-inss` deve consultar o catálogo complementar antes de registrar tema novo, para não recriar quarentena de item já verificado.
 
 ## 8. O que NÃO está nesta skill
 
