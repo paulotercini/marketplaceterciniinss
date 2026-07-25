@@ -11,6 +11,8 @@ Esta skill é o ponto de entrada do ecossistema de skills do escritório. Recebe
 
 Funciona como um roteador inteligente. Não substitui nenhuma skill especializada, mas garante que nenhuma deixe de ser acionada quando pertinente.
 
+Quando a triagem envolver leitura de pasta de cliente no Drive ou houver mais de um caso na mesma conversa, despache a análise ao agente do plugin `base-conhecimento-inss:triagem-caso` (Onda 82), um cliente por despacho. O agente roda com contexto isolado, impede que dados de um caso vazem no contexto de outro e devolve o relatório nas mesmas oito seções desta skill. Sem o agente disponível, execute a triagem inline conforme este roteiro.
+
 ## Protocolo de Coleta de Dados
 
 ### Dados mínimos obrigatórios
