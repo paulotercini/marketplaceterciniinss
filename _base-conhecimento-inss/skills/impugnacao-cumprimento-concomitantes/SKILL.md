@@ -92,6 +92,10 @@ A RCIJEF 5001446-98.2024.4.04.7004 (3ª TR Paraná, j. 14/04/2025) estendeu a ve
 
 **Uso obrigatório.** Em toda impugnação ao cumprimento de sentença por atividades concomitantes em que o INSS ou a Cecalc computar saldo negativo em qualquer competência, invocar o Tema 1.207/STJ como fundamento principal, reforçado pelo IRDR 14/TRF4 e Tema 195/TNU. Quando houver cobrança administrativa por concomitância, invocar o RCIJEF 5001446-98.2024.4.04.7004.
 
+## Tema 1.207/STJ incorporado ao Manual CJF 2026 (Onda 76)
+
+A edição 2026 do Manual de Cálculos da Justiça Federal (Resolução CJF 990, de 03/07/2026) incorporou o Tema 1.207/STJ como Nota 6 do item 4.3.1.1, com a diretriz expressa de compensação MÊS A MÊS, no limite, para cada competência, do valor do título judicial, vedado valor mensal ou final negativo, para evitar execução invertida ou restituição indevida. Em impugnação contra a contadoria, citar a tese E a nota do Manual, que orienta o procedimento das contadorias da Justiça Federal.
+
 ## Checklist de Verificação do Cálculo
 
 Ao analisar qualquer cálculo de revisão por atividades concomitantes, seguir este checklist obrigatório.
