@@ -196,6 +196,10 @@ Apurar o valor total do crédito. Se inferior a 60 SM, solicitar expedição de 
 
 ---
 
+## Regime de juros e correção pós set/2025 (Onda 76)
+
+Antes de validar qualquer cálculo, conferir a fase de cada competência pelo regime de três fases do Manual CJF 2026 (Resolução CJF 990/2026). INPC e sistemática do 1º-F até nov/2021, SELIC de dez/2021 a ago/2025 (EC 113/2021) e, de set/2025 em diante, INPC com juros pela taxa legal com dedução do INPC (EC 136/2025 e Tema 1419 STF). Detalhamento e quadros em `base-juros-correcao-monetaria` e seu reference MANUAL-CJF-2026-QUADROS.md.
+
 ## 6. PRECEDENTES E NORMAS CONSOLIDADOS
 
 ### 6.1. Coisa julgada progressiva e execução da parte incontroversa
