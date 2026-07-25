@@ -82,3 +82,24 @@ Quinto, o ID do item segue a normalização do script (exemplos, `TEMA 995/STJ`,
 - Órgão e leading case. STF, RE 1.171.152/SC, Rel. Min. Alexandre de Moraes (ex-Tema 1066 da repercussão geral). Termo assinado em 16/11/2020.
 - Fonte oficial. https://www.gov.br/inss/pt-br/centrais-de-conteudo/publicacoes/outras/minuta-final-do-acordo.pdf
 - Conferido em. 25/07/2026
+
+### TEMA 18/STJ
+- Situação. trânsito em julgado (16/08/2010), tese SUPERADA MATERIALMENTE pelos Temas 165 e 388 do STF. Não citar a favor do segurado. O NUGEPNAC anota na própria página a vinculação aos dois temas do STF.
+- Tese literal. "A majoração do auxílio-acidente, estabelecida pela Lei 9.032/95 (lei nova mais benéfica), que alterou o § 1º, do art. 86, da Lei n.º 8.213/91, deve ser aplicada imediatamente, atingindo todos os segurados que estiverem na mesma situação, seja referente aos casos pendentes de concessão ou aos benefícios já concedidos."
+- Órgão e leading case. STJ, Terceira Seção, REsp 1.096.244/SC, Rel. Min. Maria Thereza de Assis Moura, julgado em 22/04/2009, acórdão publicado em 08/05/2009.
+- Fonte oficial. https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=18&cod_tema_final=18
+- Conferido em. 25/07/2026
+
+### TEMA 165/STF
+- Situação. trânsito em julgado em 02/09/2009, repercussão geral com reafirmação de jurisprudência (RE 415.454 e RE 416.827, Plenário).
+- Tese literal. O portal do tema não exibe tese redigida, por se tratar de reafirmação de jurisprudência. Título oficial, "Revisão da pensão por morte concedida antes do advento da Lei nº 9.032/95". A orientação reafirmada veda a revisão pela Lei 9.032/95 de pensão concedida antes de sua vigência. Transcrição de tese em peça deve usar o acórdão do RE 597.389.
+- Órgão e leading case. STF, RE 597.389, repercussão geral reconhecida em 22/04/2009.
+- Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=165
+- Conferido em. 25/07/2026
+
+### TEMA 388/STF
+- Situação. trânsito em julgado em 20/06/2011, repercussão geral com reafirmação de jurisprudência.
+- Tese literal. O portal do tema não exibe tese redigida, por se tratar de reafirmação de jurisprudência. Título oficial, "Revisão de auxílio-acidente concedido antes do advento da Lei nº 9.032/95". A orientação reafirmada veda a aplicação retroativa da majoração da Lei 9.032/95 ao auxílio-acidente concedido antes de sua vigência. Transcrição de tese em peça deve usar o acórdão do RE 613.033.
+- Órgão e leading case. STF, RE 613.033/SP, Rel. Min. Dias Toffoli, repercussão geral em 15/04/2011.
+- Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=388
+- Conferido em. 25/07/2026
