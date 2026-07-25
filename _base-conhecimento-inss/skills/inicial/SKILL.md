@@ -35,13 +35,22 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
   trocados.
 
 ## 4. Leitura adversaria (red-team)
-- Simule a contestacao do INSS/procuradoria. Cheque se a inicial antecipa cada
-  defesa tipica aplicavel: previo requerimento administrativo (Tema 350/STF) e
-  Tema 1124/STJ; decadencia; prescricao quinquenal; qualidade de segurado/carencia;
-  PPP extemporaneo ou sem NEN; EPI eficaz (Tema 555); coabitacao na pensao; etc.
+- Despache a leitura adversaria ao agente do plugin
+  `base-conhecimento-inss:red-team-peticao` (Onda 79), entregando a peca, o
+  inventario de provas com IDs, o CNIS e o historico administrativo. O agente
+  simula a contestacao do INSS e o voto contrario, devolve relatorio de
+  fragilidades por severidade (FATAL, GRAVE, MEDIA, MENOR) com blindagem
+  recomendada e veredito de protocolo. Ele so critica, nunca edita - o reforco
+  da peca e feito aqui, na sessao principal. Sem o agente disponivel, execute
+  o mesmo roteiro inline.
+- Roteiro minimo (do agente ou inline): previo requerimento administrativo
+  (Tema 350/STF) e Tema 1124/STJ; decadencia; prescricao quinquenal; qualidade
+  de segurado/carencia; PPP extemporaneo ou sem NEN; EPI eficaz (Tema 555);
+  coabitacao na pensao; etc.
 - Consulte `base-revisao-peticao-aprofundada`, `base-efeito-translativo-tema-1124-defesa`
   e as `base-especial-*`/`defesa-probatoria` pertinentes. Reforce a peca contra cada
-  fragilidade encontrada.
+  fragilidade encontrada. Citacao suspeita apontada pelo red-team segue ao agente
+  `verificador-precedentes` para conferencia em fonte oficial.
 
 ## 5. Coerencia fato x prova x valor
 - Toda alegacao de fato e o valor da causa devem estar amparados por um documento
