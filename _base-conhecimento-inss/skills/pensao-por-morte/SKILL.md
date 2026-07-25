@@ -155,7 +155,7 @@ Regra geral — 12 meses após cessação das contribuições ou do benefício p
 
 **Incorporação ao patrimônio jurídico das 120 contribuições** — Tema 255/TNU (j. 16/10/2020) e TRF4, AC 5015395-67.2021.4.04.7208/SC (9ª Turma, Rel. Des. Paulo Afonso Brum Vaz, j. 16/05/2023) firmaram que o pagamento de 120+ contribuições incorpora-se definitivamente ao patrimônio jurídico do segurado, sendo exercível em qualquer filiação posterior, a qualquer tempo, independentemente de nova perda da qualidade. **ALERTA — Tema 1352/STJ [PENDENTE]** (afetação junho/2025, processos suspensos) pode restringir a tese ao uso único.
 
-**Cômputo das 120 contribuições — restrição do Tema 365/TNU** (j. 12/11/2025) — períodos de gozo de benefício por incapacidade intercalados NÃO contam para as 120 contribuições. Somente contribuições efetivamente pagas.
+**Cômputo das 120 contribuições — restrição do Tema 365/TNU** (j. 13/11/2025) — períodos de gozo de benefício por incapacidade intercalados NÃO contam para as 120 contribuições. Somente contribuições efetivamente pagas.
 
 **Prova do desemprego involuntário — Tema 1360/STJ** (j. 11/03/2026, repetitivo, vinculante) — registro no MT pode ser suprido por outros meios de prova. Mera ausência de anotações em CTPS/CNIS não basta. Prova testemunhal isolada é suficiente (Súmula 27/TNU, PEDILEF 0015774-47.2023.4.05.8000/AL). Contribuinte individual pode invocar prorrogação (Tema 239/TNU, IN 128/2022 art. 184 §10).
 

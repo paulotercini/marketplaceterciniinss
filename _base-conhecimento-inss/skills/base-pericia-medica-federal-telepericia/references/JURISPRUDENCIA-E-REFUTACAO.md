@@ -50,7 +50,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Define o pressuposto e não o limite substantivo.
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Tese. Obrigação do INSS de análise tempestiva de requerimentos administrativos.
 

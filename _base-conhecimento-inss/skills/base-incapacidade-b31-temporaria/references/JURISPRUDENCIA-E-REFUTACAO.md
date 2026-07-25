@@ -2,9 +2,9 @@
 
 ## 1. Precedentes vinculantes
 
-### Súmula 63 TNU
+### Art. 151 da Lei 8.213/91 (rol com leitura ampliativa)
 
-Tese. A comprovação de doença grave, ainda que não prevista expressamente no rol do art. 151 da Lei 8.213/91, isenta o segurado da carência quando houver equivalência de gravidade.
+Retirada a Súmula 63/TNU na auditoria 25/07/2026; ela trata de união estável em pensão por morte, não de carência.
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -74,7 +74,7 @@ Refutação. Tema 246 TNU. A perícia administrativa não tem caráter vinculant
 
 Argumento adversário. O segurado não cumpriu as 12 contribuições mínimas.
 
-Refutação. Art. 26, II, da Lei 8.213/91 e Súmula 63 TNU. Se a doença é do rol do art. 151 ou equivalente, há isenção total de carência. Em caso de acidente, a isenção também é automática.
+Refutação. Art. 26, II, e art. 151 da Lei 8.213/91 (auditoria 25/07/2026). Se a doença é do rol do art. 151 ou equivalente, há isenção total de carência. Em caso de acidente, a isenção também é automática.
 
 ### Argumento 3 — Doença preexistente
 

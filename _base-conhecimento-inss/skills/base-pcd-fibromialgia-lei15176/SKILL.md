@@ -31,9 +31,9 @@ Fibromialgia e prova multidisciplinar.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 305 TNU
+### Repercussão social e funcional na avaliação (IF-BrA)
 
-Avaliação biopsicossocial.
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ### REsp 1.652.998 STJ
 

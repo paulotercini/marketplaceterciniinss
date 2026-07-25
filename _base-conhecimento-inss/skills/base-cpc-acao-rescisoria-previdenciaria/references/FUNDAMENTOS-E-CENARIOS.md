@@ -28,9 +28,9 @@ CPC, art. 525 §§12 a 15.
 
 ## 4. Marco jurisprudencial central
 
-### Tema 1370 STJ
+### [Corrigido na auditoria 25/07/2026] Tema 1370/STJ
 
-Precedentes qualificados.
+Tema de decadência de revisão administrativa, afetado e pendente; não é fundamento de rescisória.
 
 ### Tema 100 STF
 

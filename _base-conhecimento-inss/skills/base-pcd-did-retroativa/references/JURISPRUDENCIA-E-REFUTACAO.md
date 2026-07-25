@@ -8,9 +8,9 @@ Deficiência intelectual.
 
 Fonte oficial em https://www.cjf.jus.br
 
-### Tema 305 TNU
+### Repercussão social e funcional na avaliação (IF-BrA)
 
-Avaliação biopsicossocial.
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ### Súmula 149 STJ
 
@@ -126,7 +126,7 @@ Sexto, monitoramento.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 305 TNU.
+Item retirado na auditoria 25/07/2026 (Tema 305/TNU trata de auxílio emergencial).
 
 Revalidar Súmulas 149 e 577 STJ.
 

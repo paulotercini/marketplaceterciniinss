@@ -2,9 +2,9 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 692 STF
+### Tema 692/STJ (devolução na tutela revogada)
 
-RE 638.115. Recebidos de boa-fé em tutela revogada. Não devolução.
+Devolução obrigatória com teto de 30 por cento (auditoria 25/07/2026, corte corrigida).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -14,9 +14,9 @@ Devolução em tutela antecipada previdenciária.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 313 STJ
+### [Retirado na auditoria 25/07/2026] Tema 313/STJ
 
-Efetividade.
+Tema tributário (PIS/COFINS), sem relação com tutela previdenciária.
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -30,7 +30,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 RVT. Tese firmada.
 
-### Tema 327 STF
+### Tema 76 STF
 
 Revisão do teto.
 
@@ -72,13 +72,13 @@ Refutação. Documentos anexados e tese consolidada conferem probabilidade. Art.
 
 Argumento adversário. Art. 300 §3º CPC.
 
-Refutação. Tema 692 STF. Boa-fé afasta devolução. Caráter alimentar.
+Atenção (auditoria 25/07/2026). O Tema 692/STJ impõe a devolução na tutela revogada (teto de 30 por cento); a defesa real está nas exceções (BPC, Tema 979/STJ, Tema 1034/STJ) e no caráter alimentar para modular descontos.
 
 ### Argumento 3 — Ausência de perigo de dano
 
 Argumento adversário. Não demonstrado.
 
-Refutação. Benefício alimentar presume urgência. Tema 313 STJ.
+Refutação. Benefício alimentar presume urgência (art. 300 do CPC) (auditoria 25/07/2026).
 
 ### Argumento 4 — Julgamento antecipado resolve
 
@@ -108,7 +108,7 @@ Refutação. Cabível em tutela antecedente art. 303 se INSS não recorrer.
 
 Argumento adversário. Enriquecimento sem causa.
 
-Refutação. Tema 692 STF e Tema 1009 STJ. Boa-fé afasta.
+Atenção (auditoria 25/07/2026). Devolução devida pelo Tema 692/STJ; invocar as exceções reais (BPC, Tema 979/STJ, Tema 1034/STJ).
 
 ### Argumento 9 — Suspensão de segurança
 
@@ -158,4 +158,4 @@ Acompanhar Tema 1085 STJ sobre estabilização.
 
 Revalidar modulação da Súmula 729 STF.
 
-Acompanhar Tema 692 STF em cumprimento.
+Acompanhar o Tema 692/STJ em cumprimento.

@@ -113,7 +113,7 @@ A cessação é imediata no momento do evento. Contudo, o segurado inicia novo p
 
 ### 3.1 Cômputo de benefício por incapacidade intercalado — Tema 365/TNU
 
-**Tema 365/TNU** (PUIL 0500120-68.2021.4.05.8311/PE, j. 12/11/2025) — tese firmada por maioria. Não é possível o cômputo do período de gozo de benefício por incapacidade intercalado entre contribuições para fins de aferição das mais de 120 contribuições mensais exigidas para a prorrogação do período de graça, nos termos do art. 15, §1º, da Lei 8.213/91.
+**Tema 365/TNU** (PUIL 0500120-68.2021.4.05.8311/PE, j. 13/11/2025) — tese firmada por maioria. Não é possível o cômputo do período de gozo de benefício por incapacidade intercalado entre contribuições para fins de aferição das mais de 120 contribuições mensais exigidas para a prorrogação do período de graça, nos termos do art. 15, §1º, da Lei 8.213/91.
 
 Voto vencedor do Juiz Federal Ivanir Cesar Ireno Junior. Fundamento literal — o §1º exige "contribuições mensais" efetivamente pagas, distinguindo-se de "tempo de contribuição". A Súmula 73/TNU e o Tema 1125/STF (que admitem cômputo de auxílio-doença intercalado para carência e tempo de contribuição) são inaplicáveis porque a prorrogação do período de graça é exceção ao princípio da contributividade. Amici curiae IEPREV, IBDP e DPU.
 

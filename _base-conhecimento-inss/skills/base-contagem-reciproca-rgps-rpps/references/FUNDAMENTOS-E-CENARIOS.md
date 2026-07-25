@@ -28,9 +28,9 @@ IN 128/2022. Regras operacionais.
 
 ## 4. Marco jurisprudencial central
 
-### Tema 176 STF
+### Art. 201, §9º, da CF (contagem recíproca)
 
-Contagem recíproca e aspectos constitucionais.
+Base constitucional direta (auditoria 25/07/2026, retirado o Tema 176/STF, que trata de ICMS).
 
 ### Súmula 24 AGU
 

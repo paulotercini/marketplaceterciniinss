@@ -30,9 +30,9 @@ Lei 10.259/2001 JEF, art. 4º. Cabimento no JEF.
 
 ## 4. Marco jurisprudencial central
 
-### Tema 692 STF
+### Tema 692/STJ (devolução na tutela revogada)
 
-Devolução de valores recebidos de boa-fé em tutela revogada.
+A reforma da tutela obriga a devolução, com desconto de até 30 por cento (auditoria 25/07/2026, corte corrigida; a boa-fé não afasta essa devolução).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -42,9 +42,9 @@ Devolução de valores, revisão posterior.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 313 STJ
+### [Retirado na auditoria 25/07/2026] Tema 313/STJ
 
-Efetividade da tutela.
+Tema tributário (PIS/COFINS), sem relação com tutela previdenciária.
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -56,7 +56,7 @@ Tutela contra Fazenda Pública, modulação.
 
 RVT, tese firmada permite tutela de evidência.
 
-### Tema 327 STF
+### Tema 76 STF
 
 Revisão do teto, tese firmada.
 
@@ -94,7 +94,7 @@ Liminar art. 7º III Lei 12.016/2009. Regime próprio.
 
 ### Cenário H — Reversibilidade discutida
 
-Se INSS recorrer com sucesso, segurado pode devolver. Tema 692/STF afasta em boa-fé.
+Se o INSS recorrer com sucesso, o segurado devolve (Tema 692/STJ, desconto de até 30 por cento); a boa-fé não afasta essa devolução (auditoria 25/07/2026).
 
 ### Cenário I — Suspensão de segurança
 
@@ -122,7 +122,7 @@ Sexto, sustentar em caso de suspensão.
 
 Risco de indeferimento liminar. Interpor agravo de instrumento.
 
-Risco de revogação posterior. Tema 692/STF e Tema 1009/STJ afastam devolução em boa-fé.
+Risco de revogação posterior. O Tema 692/STJ impõe a devolução (teto de 30 por cento); as exceções reais são o BPC (art. 49 do Decreto 6.214/2007), o erro administrativo com boa-fé (Tema 979/STJ) e a interpretação errônea da lei (Tema 1034/STJ) (auditoria 25/07/2026, retirado o Tema 1009/STJ, não confirmado).
 
 Risco de suspensão de segurança. Preparar defesa.
 

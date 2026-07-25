@@ -15,7 +15,7 @@ Checklist exaustivo de verificação ANTES do protocolo de PUIL/PEDILEF e recurs
 
 - [ ] **B.1 Hipótese identificada.** Enquadramento expresso em uma das 4 hipóteses do art. 12 §1º RITNU.
 - [ ] **B.2 Paradigma indicado expressamente.** Inteiro teor disponível.
-- [ ] **B.3 Paradigma válido.** NÃO é acórdão de TRF, STF, TST, TSE ou decisão monocrática (QO 48/TNU).
+- [ ] **B.3 Paradigma válido.** NÃO é acórdão de TRF, STF, TST, TSE ou decisão monocrática (art. 14, §2º, Lei 10.259/2001; QO 48/TNU quanto ao STF).
 - [ ] **B.4 Cópia legível do paradigma juntada.** Sem isso, inadmissão pelo art. 14, V, "b", RITNU.
 - [ ] **B.5 Acórdão paradigma é DE MÉRITO.** Não monocrática, não cautelar.
 

@@ -39,7 +39,7 @@ MS é instrumento de compensação tributária.
 
 Teoria da encampação: vínculo hierárquico, defesa do mérito nas informações e ausência de modificação de competência.
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Duração razoável do processo administrativo.
 
@@ -59,7 +59,7 @@ Quarto, decadência respeitada (120 dias).
 
 ## Hipóteses de cabimento pró-segurado
 
-Primeiro, demora injustificada na análise de requerimento. Tema 1066 STF.
+Primeiro, demora injustificada na análise de requerimento. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
 Segundo, exigência documental não prevista em lei. Lei 13.460/2017.
 

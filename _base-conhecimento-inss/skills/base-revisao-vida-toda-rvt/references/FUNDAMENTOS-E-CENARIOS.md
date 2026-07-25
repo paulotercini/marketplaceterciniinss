@@ -36,13 +36,13 @@ Julgadas em 2024. Declararam constitucional o art. 3º da Lei 9.876/1999 com mod
 
 Modulação. Preservados direitos em casos específicos, conforme decisão final do STF. A leitura da modulação está sendo consolidada pelos tribunais em curso.
 
-### Tema 1117 STF
+### [Retirado na auditoria 25/07/2026] Tema 1117/STF
 
-Parâmetros sobre aplicação de tese vinculante e prospectiva.
+Trata de previdência complementar privada, sem relação com a RVT.
 
-### Tema 1157 STF
+### [Retirado na auditoria 25/07/2026] Tema 1157/STF
 
-Discussão complementar.
+Trata de reenquadramento de servidor; a modulação da RVT está nas ADIs 2110 e 2111.
 
 ## 5. Cenários residuais pró-segurado
 

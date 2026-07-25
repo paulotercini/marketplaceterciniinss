@@ -1,6 +1,6 @@
 ---
 name: base-efeito-translativo-tema-1124-defesa
-description: "Defesa pró-segurado contra aplicação de ofício do Tema 1124/STJ pelo efeito translativo, vedação à decisão surpresa e estratégia recursal. Use SEMPRE que mencionar efeito translativo Tema 1124, aplicação de ofício Tema 1124, art. 933 CPC, art. 1.013 §3º CPC, decisão surpresa, vedação decisão surpresa, art. 9º CPC, art. 10 CPC, Súmula 98 STJ, Tema Repetitivo 698 STJ, embargos de declaração prequestionadores, ratio decidendi Tema 1124, distinguishing Tema 1124, modulação Tema 1124, falta de prévio requerimento administrativo, extinção sem mérito de ofício, JEF defesa Tema 1124, PEDILEF Tema 1124, PUIL, REsp Tema 1124, RE Tema 1124, prequestionamento ficto art. 1.025 CPC, Tema 660 STF, art. 489 §1º CPC. Cruza com tema-1124-instrucao-administrativa, peticao-previdenciaria, revisao-peticao, base-cpc-fato-superveniente-art493, base-cpc-coisa-julgada-progressiva, precedentes-previdenciarios."
+description: "Defesa pró-segurado contra aplicação de ofício do Tema 1124/STJ pelo efeito translativo, vedação à decisão surpresa e estratégia recursal. Use SEMPRE que mencionar efeito translativo Tema 1124, aplicação de ofício Tema 1124, art. 933 CPC, art. 1.013 §3º CPC, decisão surpresa, vedação decisão surpresa, art. 9º CPC, art. 10 CPC, Súmula 98 STJ, Tema Repetitivo 698 STJ, embargos de declaração prequestionadores, ratio decidendi Tema 1124, distinguishing Tema 1124, modulação Tema 1124, falta de prévio requerimento administrativo, extinção sem mérito de ofício, JEF defesa Tema 1124, PEDILEF Tema 1124, PUIL, REsp Tema 1124, RE Tema 1124, prequestionamento ficto art. 1.025 CPC, art. 489 §1º CPC. Cruza com tema-1124-instrucao-administrativa, peticao-previdenciaria, revisao-peticao, base-cpc-fato-superveniente-art493, base-cpc-coisa-julgada-progressiva, precedentes-previdenciarios."
 ---
 
 # Efeito Translativo e Tema 1124/STJ. Defesa Pró-Segurado
@@ -119,7 +119,7 @@ Pedido. Anular o acórdão e abrir vista para manifestação sobre o Tema 1124.
 
 Em última instância, REsp e RE com prequestionamento exaustivo.
 
-Súmula 98/STJ + Tema Repetitivo 698/STJ. Embargos prequestionadores.
+Súmula 98/STJ. Embargos prequestionadores não são protelatórios; atenção, o Tema 698/STJ autoriza multa quando os embargos rediscutem matéria já pacificada (auditoria 25/07/2026).
 
 Cruzamento com `pedilef-cotejo-analitico-tnu`.
 
@@ -131,9 +131,7 @@ Cruzamento com `pedilef-cotejo-analitico-tnu`.
 
 ### 7.2. Tema Repetitivo 698/STJ
 
-Ratifica a Súmula 98/STJ.
-
-Não há caráter protelatório nos embargos prequestionadores.
+É o limite da Súmula 98/STJ, não a sua ratificação. Autoriza multa quando os embargos rediscutem matéria já decidida em súmula ou repetitivo (auditoria 25/07/2026). Embargos prequestionadores objetivos permanecem protegidos pela Súmula 98/STJ.
 
 ### 7.3. Aplicação
 

@@ -103,7 +103,7 @@ Skills relevantes. `mandado-seguranca-previdenciario`, `ms-competencia-autoridad
 - [ ] Pedido principal compatível com a Súmula 269/STF (não pode ser pago atrasado) e Súmula 271/STF (efeitos a partir da impetração).
 - [ ] Litisconsórcio passivo necessário (autarquia + autoridade) quando aplicável.
 
-**Verificação obrigatória.** Política de tutela de urgência. Tema 1066/STF se houver demora administrativa.
+**Verificação obrigatória.** Política de tutela de urgência. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021) se houver demora administrativa.
 
 ## RITO 5 - PUIL/PEDILEF (Turma Nacional de Uniformização)
 
@@ -121,7 +121,7 @@ Skills relevantes. `base-tnu-admissibilidade-manual` (OBRIGATÓRIA), `pedilef-co
   - Hipótese 4. TRU vs Súmula STJ ou TNU.
 - [ ] Paradigma indicado expressamente.
 - [ ] Paradigma é VÁLIDO (TR de outra região, TNU, Súmula STJ ou IRDR).
-- [ ] Paradigma NÃO é TRF, STF, TST, TSE ou decisão monocrática (QO 48/TNU).
+- [ ] Paradigma NÃO é TRF, STF, TST, TSE ou decisão monocrática (art. 14, §2º, Lei 10.259/2001; QO 48/TNU quanto ao STF).
 - [ ] Cópia legível do paradigma juntada.
 - [ ] **Cotejo analítico em duas etapas.** Quadro fático + quadro jurídico.
   - Etapa 1. Excertos do relatório e voto recorrido e paradigma.

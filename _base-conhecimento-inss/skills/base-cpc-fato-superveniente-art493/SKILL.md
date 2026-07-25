@@ -57,7 +57,7 @@ Quinto, novos vínculos ou salários-de-contribuição regularizados.
 
 Cenário A, segurado ajuíza ação com 34 anos de contribuição. Completa 35 durante o processo. Reafirmação da DER.
 
-Cenário B, segurado completa idade exigida pelo Tema 33 STF durante o processo.
+Cenário B, segurado completa a idade mínima legal durante o processo (art. 493 do CPC; auditoria 25/07/2026, retirado o Tema 33/STF, que trata de juros bancários).
 
 Cenário C, retificação do PPP durante a instrução, comprovando agente nocivo.
 

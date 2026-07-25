@@ -48,9 +48,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação analógica pró-segurada.
 
-### Tema 73 STJ
+### [Retirado na auditoria 25/07/2026] Tema 73/STJ
 
-Tese. Flexibilização de critérios em benefícios assistenciais e previdenciários pode ser aplicada em situações específicas (referência contextual).
+Número não confirmado em fonte oficial para a matéria; citação removida, sem substituto identificado.
 
 Fonte oficial em https://www.stj.jus.br
 

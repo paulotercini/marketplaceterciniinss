@@ -42,7 +42,7 @@ Tema. Miserabilidade não absoluta.
 
 Aplicação. 1/4 SM não é absoluto. Flexibilização sempre possível.
 
-Combinar com. Tema 640/STF, Súmula 79/TNU, Reclamação 4374/STF.
+Combinar com. Tema 640/STJ, Súmula 79/TNU, Reclamação 4374/STF.
 
 ### Súmula 14 - PRÓ
 
@@ -58,7 +58,7 @@ Tema. 1/2 SM como critério objetivo presunção relativa.
 
 Aplicação. Para requerimentos ANTES da Lei 13.846/2019. Para requerimentos POSTERIORES, art. 20 §11 LOAS (1/4 SM).
 
-Combinar com. Súmula 4, Tema 640/STF, art. 20 LOAS.
+Combinar com. Súmula 4, Tema 640/STJ, art. 20 LOAS.
 
 ### Súmula 22 - PRÓ
 
@@ -75,7 +75,7 @@ Tema. BPC subsidiário e dever alimentar.
 Aplicação. **NÃO INVOCAR.** Se invocada pelo INSS, fazer distinguishing.
 
 Distinguishing.
-- Tema 640/STF (julgado 2020) limitou a exigência.
+- Lei 13.146/2015 limitou a exigência (auditoria 25/07/2026, retirado o Tema 640/STF).
 - Lei 13.146/2015 (EPCD) art. 40 dispensou prévia provocação do dever alimentar.
 - art. 203 V CF não exige.
 - art. 20 LOAS não exige.
@@ -108,7 +108,7 @@ Tema. Tempus regit actum.
 
 Aplicação. Cada período de tempo especial regido pela legislação da época.
 
-Combinar com. Súmula 555/STJ, Tema 533/STJ.
+Combinar com. Tema 533/STJ (auditoria 25/07/2026, retirada a Súmula 555/STJ, decadência tributária).
 
 ## BLOCO F - REVISÕES
 

@@ -41,7 +41,7 @@ Cobrança por ação ordinária.
 
 Efeitos patrimoniais pretéritos.
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Duração razoável.
 

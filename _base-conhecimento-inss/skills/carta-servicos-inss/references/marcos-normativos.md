@@ -34,7 +34,7 @@ Ruído (Tema 174 TNU, Tema 317 TNU, Enunciado 13 CRPS revisado 12/2024). EPI (Te
 
 Conversão de tempo especial em comum até 13/11/2019 (Tema 422 STJ, Súmula 50 TNU).
 
-Categoria profissional pré-1995 (Súmula 198 TFR, Súmula 555 STJ, Decretos 53.831/64 e 83.080/79).
+Categoria profissional pré-1995 (Súmula 198 TFR, Decretos 53.831/64 e 83.080/79).
 
 Motociclista (Lei 12.997/2014, NR-16 Anexo V, Portaria MTE 2.021/2025).
 
@@ -128,7 +128,7 @@ Arts. 74 a 80 Lei 8.213/91. Art. 16 (dependentes). Art. 77 §2º (duração esca
 
 Lei 13.135/2015 (duração escalonada). Lei 13.846/2019 (dependentes e prazos de retroação). Lei 15.108/2025 (menor sob guarda equiparado a filho, art. 16 §2º da Lei 8.213/91, correção de auditoria de 12/07/2026, o rótulo anterior de complementação post mortem estava errado). Portaria DIRBEN 4/2025 (complementação post mortem, com o Tema 286/TNU).
 
-Tema 526 STF. Súmula 63 TNU. REsp 2103603 STJ. Tema 1421 STJ (sem retroação da DIB para menor de 16 anos com requerimento após 180 dias do óbito, regime da Lei 13.846/2019). IRDR 35 TRF4 (absorvido pelo Tema 1421 STJ).
+Tema 526 STF. Súmula 63 TNU (fatos geradores até a MP 871/2019, redação de 18/09/2025). REsp 2103603 STJ. Tema 1421 STJ (sem retroação da DIB para menor de 16 anos com requerimento após 180 dias do óbito, regime da Lei 13.846/2019). IRDR 35 TRF4 (absorvido pelo Tema 1421 STJ).
 
 ### Auxílio-Reclusão B25
 
@@ -160,7 +160,7 @@ Comunicado DIVBEN3. Enunciado 5 CRPS.
 
 Decadência art. 103 Lei 8.213/91 (10 anos). Tema 975 STJ. Tema 256 TNU. Tema 1370 STJ. ADI 6096 STF.
 
-Revisão da Vida Toda (Tema 1102 STF, modulação). Revisão art. 29 II (Tema 334 STF, RE 630.501). Revisão do teto (Tema 327 STF, RE 564.354, art. 144 e art. 26 Lei 8.870/94). Revisão IRSM 39,67% (Tema 415 STJ, REsp 1.168.657). Revisão por atividades concomitantes (Tema 1.070 STJ).
+Revisão da Vida Toda (Tema 1102 STF, modulação). Revisão art. 29 II (Tema 334 STF, RE 630.501). Revisão do teto (Tema 76 STF, RE 564.354, art. 144 e art. 26 Lei 8.870/94). Revisão IRSM 39,67% (Tema 415 STJ, REsp 1.168.657). Revisão por atividades concomitantes (Tema 1.070 STJ).
 
 ## Critérios de inclusão de novo marco
 

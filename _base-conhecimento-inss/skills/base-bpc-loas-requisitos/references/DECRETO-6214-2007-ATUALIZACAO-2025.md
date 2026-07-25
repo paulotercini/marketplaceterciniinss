@@ -143,7 +143,7 @@ NOVA REDAÇÃO. "O Benefício de Prestação Continuada, **concedido por via adm
 
 REVOGADO o §3º que dizia. "A revisão de que trata o caput poderá ser realizada para os benefícios concedidos ou reativados judicialmente, observados os critérios definidos na decisão judicial."
 
-**EFEITO ANTI-SEGURADO.** Antes, BPC concedido por decisão judicial era revisto OBSERVANDO os critérios da própria decisão judicial. Por exemplo, benefício concedido por critério de miserabilidade flexibilizado (Tema 640/STF) era reavaliado com o MESMO critério da sentença. Agora, com a revogação, a Administração pode reavaliar com os critérios EXCLUSIVAMENTE regulamentares - ignorando o entendimento que justificou a concessão.
+**EFEITO ANTI-SEGURADO.** Antes, BPC concedido por decisão judicial era revisto OBSERVANDO os critérios da própria decisão judicial. Por exemplo, benefício concedido por critério de miserabilidade flexibilizado (Tema 640/STJ, corte corrigida na auditoria 25/07/2026) era reavaliado com o MESMO critério da sentença. Agora, com a revogação, a Administração pode reavaliar com os critérios EXCLUSIVAMENTE regulamentares - ignorando o entendimento que justificou a concessão.
 
 **ESTRATÉGIA PRÓ-SEGURADO.**
 - Em caso de cessação por reavaliação com critério diferente do da decisão judicial, IMPETRAR MS por descumprimento de coisa julgada.

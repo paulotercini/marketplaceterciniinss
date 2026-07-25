@@ -123,7 +123,7 @@ Tabela de artigos por parte.
 - SHA-256. `da9f86fe9d7fca79b36696fb9f013473b084809e9a59903f8b74961fee42f424`
 - Conteúdo. 6 artigos + Quadro Anexo com 30 códigos.
 - Status. REVOGADO em 1979 pelo Decreto 62.755/1968.
-- Aplicação residual. Quadro Anexo continua sendo aplicado para enquadramento por categoria profissional até 28/04/1995 (Súmula 198/TFR, Súmula 555/STJ).
+- Aplicação residual. Quadro Anexo continua sendo aplicado para enquadramento por categoria profissional até 28/04/1995 (Súmula 198/TFR; auditoria 25/07/2026, retirada a Súmula 555/STJ, decadência tributária).
 
 ### Decreto-62755-1968.md
 - Caminho. `04-Decretos\Decreto-62755-1968.md`

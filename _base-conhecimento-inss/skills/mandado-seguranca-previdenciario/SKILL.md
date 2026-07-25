@@ -1,6 +1,6 @@
 ---
 name: mandado-seguranca-previdenciario
-description: "Skill de cabimento, técnica processual e estratégia do mandado de segurança previdenciário contra o INSS. Use SEMPRE que mencionar mandado de segurança previdenciário, MS previdenciário, MS contra INSS, MS contra CRPS, direito líquido e certo previdenciário, prova pré-constituída INSS, MS por omissão INSS, MS por demora INSS, MS cumprimento CRPS, MS reabertura PA, MS complementação contribuição, MS B94, MS auxílio-acidente, MS aposentadoria PCD, MS perícia biopsicossocial, art. 26 Lei 12.016, crime desobediência MS, decadência MS ato omissivo, art. 23 Lei 12.016, Súmula 376 STJ, MS contra ato JEF, liminar MS previdenciário, art. 6º Lei 12.016, PA extraviado, Tema 1066 STF, recurso intempestivo CRPS, autotutela INSS. Complementar a ms-competencia-autoridade-coatora (competência e autoridade coatora) e peticao-previdenciaria (geração da peça). NÃO use para competência e autoridade coatora isoladamente."
+description: "Skill de cabimento, técnica processual e estratégia do mandado de segurança previdenciário contra o INSS. Use SEMPRE que mencionar mandado de segurança previdenciário, MS previdenciário, MS contra INSS, MS contra CRPS, direito líquido e certo previdenciário, prova pré-constituída INSS, MS por omissão INSS, MS por demora INSS, MS cumprimento CRPS, MS reabertura PA, MS complementação contribuição, MS B94, MS auxílio-acidente, MS aposentadoria PCD, MS perícia biopsicossocial, art. 26 Lei 12.016, crime desobediência MS, decadência MS ato omissivo, art. 23 Lei 12.016, Súmula 376 STJ, MS contra ato JEF, liminar MS previdenciário, art. 6º Lei 12.016, PA extraviado, acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021), recurso intempestivo CRPS, autotutela INSS. Complementar a ms-competencia-autoridade-coatora (competência e autoridade coatora) e peticao-previdenciaria (geração da peça). NÃO use para competência e autoridade coatora isoladamente."
 ---
 
 # Mandado de Segurança Previdenciário — Cabimento, Técnica e Estratégia
@@ -37,7 +37,7 @@ No âmbito previdenciário, o MS é a via preferencial sempre que a questão for
 
 **Situação fática.** O CRPS (Junta de Recursos ou Câmara de Julgamento) proferiu acórdão favorável ao segurado, mas o INSS não implanta o benefício no prazo legal.
 
-**Por que MS.** O prazo para cumprimento é de 30 dias da ciência do setor responsável (art. 58, §5º, Regimento Interno do CRPS, Portaria 116/2017, reproduzido na Portaria MPS 125/2026). O Tema 1066/STF fixa prazo máximo de 90 dias para o INSS cumprir obrigações. A demora injustificada na implantação de benefício de natureza alimentar viola o direito líquido e certo do segurado. Art. 174 do Decreto 3.048/99 e art. 41-A, §5º, da Lei 8.213/91 fixam prazo máximo de 45 dias para pagamento do primeiro benefício.
+**Por que MS.** O prazo para cumprimento é de 30 dias da ciência do setor responsável (art. 58, §5º, Regimento Interno do CRPS, Portaria 116/2017, reproduzido na Portaria MPS 125/2026). O acordo homologado no RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021; auditoria 25/07/2026) fixa prazos máximos por espécie, de 30 a 90 dias, para o INSS cumprir obrigações. A demora injustificada na implantação de benefício de natureza alimentar viola o direito líquido e certo do segurado. Art. 174 do Decreto 3.048/99 e art. 41-A, §5º, da Lei 8.213/91 fixam prazo máximo de 45 dias para pagamento do primeiro benefício.
 
 **Manobra do recurso intempestivo.** Padrão recorrente em que o INSS, provocado pelo MS, interpõe recurso especial ou embargos de declaração fora do prazo para tentar criar fato impeditivo ao cumprimento. A jurisprudência é firme no sentido de que recurso administrativo intempestivo não produz efeito suspensivo (art. 308, caput, Decreto 3.048/99, com redação do Decreto 10.410/2020). Embargos intempestivos também não interrompem prazo de cumprimento nem de interposição de recurso especial.
 
@@ -89,7 +89,7 @@ No âmbito previdenciário, o MS é a via preferencial sempre que a questão for
 
 **Situação fática.** O INSS excede prazo razoável para analisar requerimento administrativo de benefício (qualquer espécie).
 
-**Por que MS.** Tema 1066/STF fixa prazo máximo de 90 dias. O direito líquido e certo é à análise conclusiva do pedido, não ao benefício em si. Não é necessário aguardar indeferimento formal para impetrar.
+**Por que MS.** O acordo homologado no RE 1.171.152/STF (ex-Tema 1066, cancelado; auditoria 25/07/2026) fixa prazos máximos por espécie, de 30 a 90 dias. O direito líquido e certo é à análise conclusiva do pedido, não ao benefício em si. Não é necessário aguardar indeferimento formal para impetrar.
 
 **Competência material.** Vara Cível Federal (não Previdenciária) quando o MS visar apenas compelir o INSS a concluir análise. Se discutir mérito do benefício, competência da Vara Previdenciária. CC 5014490-19.2020.4.03.0000 (TRF3, Órgão Especial).
 

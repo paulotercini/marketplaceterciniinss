@@ -10,9 +10,9 @@ Não citar como vigente. A matéria é regida pelo Tema 1188/STJ.
 
 Exige início de prova material. Fonte oficial em https://www.stj.jus.br
 
-### Tema 297/TNU
+### [Retirado na auditoria 25/07/2026] Tema 297/TNU
 
-Requisitos da prova. Fonte oficial em https://www.cjf.jus.br
+O Tema 297/TNU real trata de auxílio emergencial (Lei 13.982/2020), não de prova trabalhista. O fundamento correto é o Tema 1188/STJ.
 
 ### Tema 1188/STJ (tese literal conferida em 11/07/2026, transitado em julgado, julgado em 13/09/2023)
 
@@ -124,4 +124,4 @@ Sexto, monitoramento.
 
 ## 5. Diligência de atualização
 
-Súmula 31/TNU revogada em 22/11/2023. Revalidar Tema 297/TNU. Tema 1188/STJ julgado e transitado em julgado.
+Súmula 31/TNU revogada em 22/11/2023. Tema 1188/STJ julgado e transitado em julgado.

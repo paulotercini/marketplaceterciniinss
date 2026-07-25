@@ -6,7 +6,7 @@
 
 Concubinato impuro. Fonte oficial em https://portal.stf.jus.br
 
-### Súmula 63/TNU
+### Súmula 63/TNU (redação de 18/09/2025, fatos geradores até a MP 871/2019 — auditoria 25/07/2026)
 
 Início de prova material e testemunhal. Fonte oficial em https://www.cjf.jus.br
 
@@ -40,13 +40,13 @@ União homoafetiva. Fonte oficial em https://portal.stf.jus.br
 
 Argumento adversário. Sem escritura, sem união.
 
-Refutação. Súmula 63 TNU. CC art. 1.723.
+Refutação. CC art. 1.723; Súmula 63/TNU para fatos até 18/01/2019.
 
 ### Argumento 2 — Recusa de prova testemunhal
 
 Argumento adversário. Apenas prova material.
 
-Refutação. Súmula 63 TNU autoriza testemunhas.
+Refutação. Súmula 63/TNU autoriza testemunhas para fatos até 18/01/2019; após, art. 16, §5º, da Lei 8.213/91.
 
 ### Argumento 3 — Falta de contemporaneidade
 
@@ -124,4 +124,4 @@ Sexto, monitoramento.
 
 ## 5. Diligência de atualização
 
-Acompanhar Tema 526/STF. Revalidar Súmula 63/TNU. Monitorar STJ.
+Acompanhar Tema 526/STF. Revalidar Súmula 63/TNU (nova redação de 18/09/2025). Monitorar STJ.

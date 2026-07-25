@@ -64,7 +64,7 @@ ESTRATÉGIA PRÓ-SEGURADO. Em casos de omissão sistemática da TR sobre teses d
 
 ## QO 48/TNU
 
-"Não cabe pedido de uniformização que utiliza como paradigma acórdão de Tribunal Regional Federal." (formulação consolidada do Manual)
+"Precedentes do Supremo Tribunal Federal não se prestam como paradigmas válidos, para fins de admissão do pedido nacional de uniformização de interpretação de lei federal previsto no art. 14, § 2º, da Lei nº 10.259/01." (texto publicado em 07/08/2023; auditoria 25/07/2026, corrigida a formulação anterior, que atribuía a QO ao paradigma de TRF)
 
 APLICAÇÃO. TRFs são tribunais ordinários, não compõem o microssistema dos juizados. STF, TST e TSE também são paradigmas inválidos.
 
