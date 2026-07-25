@@ -37,9 +37,16 @@ Grava `triagem_hoje.json`, leia-o.
   `checklist`, `anexos`.
 
 ## 3. Processar CADA tarefa (gravação automática, sem aprovação prévia)
-Para não sobrecarregar o contexto, delegue cada cliente a um subagente
-general-purpose, passando o item do JSON e estas instruções. Lembre o subagente
-de ler o `CLAUDE.md` primeiro.
+Para não sobrecarregar o contexto e impedir vazamento de dados entre clientes,
+delegue cada cliente ao agente do plugin
+`base-conhecimento-inss:triagem-caso` (Onda 82), um despacho por tarefa,
+passando o item do JSON, os ponteiros da pasta no Drive e a instrução de
+gravação do parecer. O agente já carrega o roteiro completo (modo
+COMPLETO/COMPLEMENTO, leitura integral de CNIS/PPP/médicos/rurais, alertas
+obrigatórios, relatório em 8 seções) e grava o parecer na subpasta Claude
+quando instruído. Sem o agente disponível na sessão, delegue a um subagente
+general-purpose com estas instruções. Em ambos os casos, lembre o agente de
+ler o `CLAUDE.md` primeiro.
 
 a) **Verificar se já existe parecer do cliente** na subpasta `Claude` da pasta
    dele no Drive (`search_files` por `title contains 'Parecer'` dentro do
