@@ -147,7 +147,9 @@ Necessidades específicas (escolarização, terapia ocupacional, fonoaudiologia)
 
 Reconhecida como deficiência para fins de BPC.
 
-CID M79.7. Critérios ACR 2010.
+CID M79.7. Critérios ACR 2010, com modificações de 2011 e 2016.
+
+Individualização OBRIGATÓRIA pelo roteiro de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md` (Onda 87). O reconhecimento legal abre a porta, mas o BPC se decide no impedimento de longo prazo em interação com barreiras, e isso exige achado individual. Percorrer os seis eixos (dor por região e comportamento, fadiga medida em tarefa e tempo, sono não reparador com consequência diurna, cognição com exemplo de erro concreto, humor com nexo funcional, resposta terapêutica com doses e intolerâncias), somar o registro das barreiras concretas do caso (transporte, jornada incompatível, ambiente que agrava, ausência de apoio familiar) e projetar a duração mínima de dois anos. Aplicar FIQR ou FSQ, com transcrição por domínio e data, jamais apenas o escore total.
 
 ### 6.6. Autismo
 

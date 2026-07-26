@@ -95,6 +95,8 @@ Psiquiatra. Transtornos depressivos, ansiosos, somatoformes, bipolar, psicose, a
 
 Reumatologista. Fibromialgia, artrite reumatoide, lúpus, espondilite anquilosante, osteoartrose.
 
+Em FIBROMIALGIA, aplicar OBRIGATORIAMENTE o roteiro de individualização de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md` (Onda 87). A doença raramente tem o diagnóstico negado, o que se nega é a incapacidade, e o relatório genérico entrega ao perito a conclusão de doença sem repercussão funcional. Seis eixos obrigatórios, dor por região e comportamento (com alodínia e hiperalgesia à palpação localizadas), fadiga medida em tarefa e tempo, sono não reparador com consequência diurna, cognição com exemplo de erro concreto na função real, humor com nexo funcional (nunca como causa alternativa que transforme o caso em psiquiátrico transitório) e resposta terapêutica com doses, tempo e intolerâncias. Instrumento validado (FIQR ou FSQ) aplicado, datado e transcrito POR DOMÍNIO, nunca só o total. Cada eixo termina na tarefa concreta da ocupação declarada no CNIS, e a DII se ancora em marco documental.
+
 Clínico Geral. Quadros multissistêmicos, comorbidades, doenças metabólicas, hipertensão, diabetes complicada.
 
 Oftalmologista. Perda visual, retinopatia diabética, glaucoma, degeneração macular, baixa visão.

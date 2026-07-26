@@ -153,7 +153,7 @@ Indicar grau final (leve, moderada, grave).
 
 Autismo. Dupla codificação CID-11 6A02 + DSM-5-TR. Nível de suporte (1, 2, 3).
 
-Fibromialgia. Lei 15.176/2025. CID M79.7. Critérios ACR 2010.
+Fibromialgia. Lei 15.176/2025. CID M79.7. Critérios ACR 2010, com modificações de 2011 e 2016. Individualização OBRIGATÓRIA pelo roteiro de `base-pcd-fibromialgia-lei15176/references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md` (Onda 87), com os seis eixos (dor por região e comportamento, fadiga medida em tarefa, sono com consequência diurna, cognição com erro concreto, humor com nexo funcional, resposta terapêutica com doses e intolerâncias) TRADUZIDOS para os sete domínios do IF-BrA. A pontuação não vem do diagnóstico nem da lei, vem do detalhamento funcional. Aplicar FIQR ou FSQ (validados em português, sem preferência de instrumento no Guideline SBR 2026) e transcrever por domínio, com data. DID ancorada em documento pretérito conforme `base-pcd-did-retroativa`.
 
 Surdez. Lei 14.768/2023. Audiometria com dB.
 
