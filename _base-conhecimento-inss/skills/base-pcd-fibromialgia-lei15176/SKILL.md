@@ -1,6 +1,6 @@
 ---
 name: base-pcd-fibromialgia-lei15176
-description: "Fibromialgia como deficiência pela Lei 15.176/2025, repercussão na aposentadoria PCD da LC 142/2013 e no BPC/LOAS, prova diagnóstica, critérios ACR, avaliação biopsicossocial em dor crônica generalizada, fadiga, distúrbios do sono e cognição. Use SEMPRE que mencionar fibromialgia, Lei 15.176/2025, dor crônica generalizada, CID M79.7, FIQ, BPI, escala ACR 2010, fadiga crônica fibromialgia, distúrbio do sono fibromialgia, cognição fog mental, fibromialgia BPC, fibromialgia aposentadoria PCD, IF-BrA fibromialgia, perícia biopsicossocial fibromialgia, doença sem prova objetiva, prova multidisciplinar, reumatologista neurologista, prejuízo funcional. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-if-bra-metodologia, base-pcd-did-retroativa, analise-bpc-loas e formacao-documentacao-did-pcd."
+description: "Fibromialgia como deficiência pela Lei 15.176/2025, repercussão na aposentadoria PCD da LC 142/2013 e no BPC/LOAS, prova diagnóstica, critérios ACR, avaliação biopsicossocial em dor crônica generalizada, fadiga, distúrbios do sono e cognição. Use SEMPRE que mencionar fibromialgia, Lei 15.176/2025, dor crônica generalizada, CID M79.7, FIQ, FIQR, FSQ, CSI, BPI, escala ACR 2010, ACR 2016, WPI, ESS, Guideline SBR 2026, diretrizes SBR fibromialgia, diretriz fibromialgia tratamento, amitriptilina duloxetina pregabalina, TCC ACT fibromialgia, neuromodulação tDCS rTMS, acupuntura fibromialgia, fadiga crônica fibromialgia, distúrbio do sono fibromialgia, cognição fog mental, fibromialgia BPC, fibromialgia aposentadoria PCD, IF-BrA fibromialgia, perícia biopsicossocial fibromialgia, doença sem prova objetiva, prova multidisciplinar, reumatologista neurologista, prejuízo funcional. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-if-bra-metodologia, base-pcd-did-retroativa, analise-bpc-loas e formacao-documentacao-did-pcd."
 ---
 
 # Fibromialgia como Deficiência (Lei 15.176/2025)
@@ -58,6 +58,8 @@ Segundo, dor difusa por mais de 3 meses.
 Terceiro, escala WPI e SS.
 
 Quarto, sintomas associados de fadiga, sono e cognição.
+
+Quinto, Guideline SBR 2026 (Onda 85). A SBR publicou as novas Diretrizes Brasileiras para o Tratamento da Fibromialgia, confirmadas em press-release oficial de 07/05/2026. Instrumentos validados FIQR e FSQ recomendados nominalmente, fármacos com evidência restritos a amitriptilina, duloxetina e pregabalina, NÃO recomendação expressa de opioides, anti-inflamatórios, canabinoides, benzodiazepínicos e terapias intravenosas, TCC e ACT eficazes, exercício aeróbico com fortalecimento, neuromodulação e acupuntura para dor, cuidado interdisciplinar superior ao exclusivamente médico. Confronto item a item, rótulos de verificação e usos previdenciários (ataque à exigência de exame de imagem, lacuna metodológica pela ausência de FIQR/FSQ na perícia, defesa contra a tese de tratamento inadequado) em `references/GUIDELINE-SBR-2026-ATUALIZACOES-CLINICAS.md`. Item ali marcado PARCIAL ou NÃO CONFIRMADO exige leitura do guideline integral antes de figurar em peça.
 
 ## Aplicação pró-segurado
 
