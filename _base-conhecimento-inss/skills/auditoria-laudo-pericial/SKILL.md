@@ -1,6 +1,6 @@
 ---
 name: auditoria-laudo-pericial
-description: "Skill para auditoria técnica de laudos periciais previdenciários. Use SEMPRE que enviar laudo pericial para análise, revisão, impugnação ou contestação. Use quando mencionar analisar laudo, revisar perícia, impugnar laudo, contestar perícia, problemas no laudo, contradições na perícia, laudo pericial, perícia médica, perito, quesitos, laudo do INSS, perícia judicial, parecer técnico contrário, ou análise crítica de laudos médicos em contexto previdenciário. Abrange laudos de incapacidade laboral (auxílio-doença, aposentadoria por invalidez, auxílio-acidente) e laudos de avaliação de deficiência (BPC/LOAS). Funciona com laudo isolado ou com cruzamento de documentos médicos. Teleperícia, laudo videoconferência, Portaria DPMF/INSS 19/2026, auditoria laudo remoto, cerceamento Teleperícia. NÃO use para criação de petições, consultas genéricas sobre perícia ou análise de documentos que não sejam laudos periciais."
+description: "Skill para auditoria técnica de laudos periciais previdenciários. Use SEMPRE que enviar laudo pericial para análise, revisão, impugnação ou contestação. Use quando mencionar analisar laudo, revisar perícia, impugnar laudo, contestar perícia, problemas no laudo, contradições na perícia, laudo pericial, perícia médica, perito, quesitos, laudo do INSS, perícia judicial, parecer técnico contrário, ou análise crítica de laudos médicos em contexto previdenciário. Abrange laudos de incapacidade laboral (auxílio-doença, aposentadoria por invalidez, auxílio-acidente) e laudos de avaliação de deficiência (BPC/LOAS). Funciona com laudo isolado ou com cruzamento de documentos médicos. Teleperícia, laudo videoconferência, Portaria DPMF/INSS 19/2026, auditoria laudo remoto, cerceamento Teleperícia. Inclui o Modo 3 de impugnação dirigida em 9 blocos (Onda 84), acionado por impugnação em 9 blocos, roteiro de impugnação, dupla camada assistente técnico, quesitos cirúrgicos, quesitos suplementares, pedido de esclarecimentos ao perito, pedido de nova perícia, falhas metodológicas do laudo, padrão técnico exigido, estrutura da impugnação, risco da impugnação. NÃO use para criação de petições, consultas genéricas sobre perícia ou análise de documentos que não sejam laudos periciais."
 ---
 
 # Skill de Auditoria Técnica de Laudos Periciais Previdenciários
@@ -51,6 +51,9 @@ Quando o usuário fornece apenas o laudo pericial, sem documentos médicos de co
 
 ### Modo 2 – Cruzamento Completo (laudo + documentos médicos)
 Quando o usuário fornece o laudo pericial E documentos médicos particulares (atestados, laudos de especialistas, exames complementares, prontuários). A auditoria inclui tudo do Modo 1, acrescido do confronto entre as conclusões do perito e a prova documental médica.
+
+### Modo 3 – Impugnação Dirigida em 9 Blocos (Onda 84)
+Modo padrão sempre que o objetivo declarado for impugnar o laudo, pedir esclarecimentos, complementação ou nova perícia. Executa o roteiro operacional completo de `references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md`, em dupla camada (assistente técnico conforme a natureza do laudo e advogado previdenciário do segurado), na ordem fixa. Falhas metodológicas com página exata, contradições internas no formato trecho A contra trecho B, confronto documental por ID, padrão técnico com norma nomeável por número, ano e órgão (sem certeza, "não localizado, verificar em fonte primária"), vícios jurídicos traduzidos para o CPC com marcação [CONFERIDO] ou [NÃO CONFIRMADO], verificações obrigatórias de carência, qualidade de segurado e DII, cinco a oito quesitos cirúrgicos vinculados às falhas, estrutura da peça com alternativa para cada negativa do juiz, e análise de risco com a resposta esperada do INSS. A saída segue as regras do roteiro (sem travessão, sem dois-pontos introduzindo lista, sem a estrutura "não é X, é Y", parágrafos de três a quatro linhas, linha final de auditoria anti-IA). Este modo se combina com o Modo 2 quando houver documentos médicos e com os critérios de Teleperícia quando o laudo for remoto.
 
 ## Estrutura do Relatório de Auditoria
 
@@ -115,7 +118,8 @@ A presença de qualquer desses vícios fundamenta impugnação por cerceamento d
 
 ## Referências
 
-Antes de realizar a auditoria, leia obrigatoriamente os seguintes arquivos.
+Antes de realizar a auditoria, leia obrigatoriamente o seguinte arquivo.
 
-- `references/CHECKLIST.md` – Checklist completo de auditoria ponto a ponto
-- `references/FUNDAMENTOS.md` – Base normativa organizada por tipo de vício
+- `references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md` – Roteiro operacional completo do Modo 3, com os 9 blocos, as regras de saída e a linha final de auditoria anti-IA (Onda 84)
+
+Nota de manutenção (auditoria 25/07/2026). Os arquivos CHECKLIST.md e FUNDAMENTOS.md antes listados aqui nunca existiram na pasta references e a menção foi removida. A base normativa por tipo de vício vive nas skills `base-cpc-prova-pericial-arts464-480` (dispositivos do CPC), `base-validacao-formal-laudo-medico-checklist-ab` (regime CFM e checklists A e B) e `base-pericia-medica-federal-telepericia` (PMF e Teleperícia), que devem ser consultadas em conjunto.

@@ -45,7 +45,23 @@ Quinto, sendo o laudo desfavorável mas frágil, sustentar o livre convencimento
 
 ## Auditoria do laudo
 
-A crítica técnica do laudo, quesito a quesito, é feita com `auditoria-laudo-pericial`. A orientação do cliente para a perícia é feita com `orientacao-cliente-pericia`.
+A crítica técnica do laudo, quesito a quesito, é feita com `auditoria-laudo-pericial`. Quando o objetivo for impugnar, o Modo 3 daquela skill executa o roteiro de 9 blocos (`references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md`, Onda 84), e o Bloco 5 traduz cada falha técnica para os dispositivos DESTA skill. A orientação do cliente para a perícia é feita com `orientacao-cliente-pericia`.
+
+## Mapa dos vícios do laudo para o CPC (Onda 84)
+
+Tradução de referência para o Bloco 5 do roteiro de impugnação, cada vício técnico com o dispositivo de ataque.
+
+Laudo sem fundamentação, sem indicação do método ou com conclusão dissociada da análise fere o conteúdo mínimo do art. 473 (I a IV) e o §1º, que veda ao perito ultrapassar o objeto e exige linguagem simples com indicação do método. Ataque por esclarecimentos e, persistindo, por segunda perícia.
+
+Ausência de resposta a quesito deferido ou resposta evasiva autoriza o pedido de esclarecimentos do art. 477, §2º, em quinze dias da intimação, e a intimação do perito para responder em audiência (art. 477, §3º) quando a omissão persistir.
+
+Omissão de exame complementar necessário e avaliação puramente clínica de doença que exige exame de imagem caracterizam insuficiência técnica do laudo, fundamento da segunda perícia do art. 480, que se realiza sobre os MESMOS fatos e não substitui automaticamente a primeira (art. 480, §§ 2º e 3º, ambas valoradas pelo juiz).
+
+Ausência de enfrentamento da atividade habitual real e desconsideração de condições pessoais e sociais (idade, escolaridade, histórico laboral, Súmula 47 da TNU) sustentam o afastamento do laudo pelo livre convencimento motivado do art. 479, que obriga o juiz a indicar na sentença os motivos que o levaram a considerar ou deixar de considerar as conclusões do perito.
+
+Perito sem especialidade compatível com a patologia fere o art. 465 (nomeação de perito especializado no objeto) e o art. 468, II (falta de conhecimento técnico), fundamento para substituição ou para nova perícia com especialista.
+
+Indeferimento dos esclarecimentos ou da complementação necessária converte o vício em cerceamento de defesa, pela `base-cpc-nulidades-cerceamento`.
 
 ## Alertas
 
