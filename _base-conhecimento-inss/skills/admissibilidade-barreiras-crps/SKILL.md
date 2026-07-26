@@ -121,3 +121,7 @@ NÃO é causa de não conhecimento. O conselheiro deve prosseguir com a análise
 - `references/PORTARIA-462-ESTRATEGIAS-DEFESA.md` — Estratégias de prevenção e enfrentamento da Portaria 462
 
 Sempre leia os arquivos de referência pertinentes antes de analisar admissibilidade recursal perante o CRPS.
+
+## Cumprimento do acórdão favorável pelo INSS (Onda 88)
+
+Ganhar no CRPS não basta, é preciso o INSS implantar. O art. 581 da IN 128/2022 obriga o cumprimento das decisões do CRPS e o § 4º admite apenas duas exceções, deferimento de benefício mais vantajoso ou decisão judicial transitada em julgado sobre o mesmo objeto. Nem a Revisão de Acórdão (art. 308, § 1º, do Decreto 3.048/99, que não a considera recurso) nem recurso intempestivo da autarquia (art. 308, caput) suspendem o dever de cumprir. Contra a inércia, mandado de segurança, com a tese do TRF4 na RemNec 5000463-92.2026.4.04.7113/RS (5ª Turma, unânime, j. 15/07/2026) e o roteiro de `base-ms-cumprimento-inss/references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`.

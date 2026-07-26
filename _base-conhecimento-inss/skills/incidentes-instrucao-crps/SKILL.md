@@ -83,3 +83,7 @@ Duas ou mais UJs se declaram competentes ou nenhuma se declara. Conflitos entre 
 - `references/OBITO-RECURSO-PENDENTE.md` — Óbito com recurso pendente, habilitação, efeitos financeiros e protocolo
 
 Sempre leia os arquivos de referência pertinentes antes de analisar incidentes processuais no CRPS.
+
+## Revisão de Acórdão não suspende o cumprimento (Onda 88)
+
+A Revisão de Acórdão NÃO tem natureza de recurso e não suspende o prazo de cumprimento da decisão do CRPS. Base inequívoca no art. 308, § 1º, do Decreto 3.048/99 ("não se considera recurso o pedido de revisão de acórdão endereçado às Juntas de Recursos e Câmaras de Julgamento"), reforçada pelo caput do art. 308, que só atribui efeito suspensivo a recurso interposto TEMPESTIVAMENTE. Quando o INSS usa a revisão para não implantar benefício já reconhecido, cabe mandado de segurança, conforme o TRF4 na RemNec 5000463-92.2026.4.04.7113/RS (5ª Turma, Rel. Juíza Federal Graziela Soares, unânime, j. 15/07/2026). Roteiro em `base-ms-cumprimento-inss/references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`. Cautela de citação, a numeração do dispositivo regimental da Revisão de Acórdão varia entre versões do RICRPS, conferir antes de citar e ancorar no Decreto 3.048/99.
