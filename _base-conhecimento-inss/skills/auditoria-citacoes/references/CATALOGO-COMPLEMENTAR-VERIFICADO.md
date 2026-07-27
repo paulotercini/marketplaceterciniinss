@@ -352,3 +352,10 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STF, RE 613.033/SP, Rel. Min. Dias Toffoli, repercussão geral em 15/04/2011.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=388
 - Conferido em. 25/07/2026
+
+### PORTARIA CONJUNTA MDS/MPS/INSS 37/2026
+- Situação. vigente desde a publicação (art. 3º). Altera a Portaria Conjunta MDS/INSS 2/2015 (avaliação social e médica da PCD para o BPC).
+- Tese literal. Não se aplica (norma administrativa). Novo art. 8º, "A combinação de qualificadores finais resultantes da avaliação social e da avaliação médica será confrontada com a Tabela Conclusiva de Qualificadores - Anexo IV desta Portaria, para fins de reconhecimento ou não do direito ao benefício." Parágrafo único, "O benefício será indeferido quando as alterações de Funções e/ou Estruturas do Corpo puderem ser resolvidas em menos de 2 (dois) anos, consideradas as condições especificadas no inciso III do art. 7º." SEM dispositivo revogatório expresso, os antigos incisos do art. 8º caíram por substituição integral com (NR). Anexo IV NÃO alterado.
+- Órgão e leading case. MDS, MPS e INSS. Assinam José Wellington Barroso de Araújo Dias, Wolney Queiroz Maciel e Gilberto Waller Júnior. DOU Edição 63, de 02/04/2026, Seção 1, p. 46.
+- Fonte oficial. https://www.in.gov.br/web/dou/-/portaria-conjunta-mds/mps/inss-n-37-1-de-abril-de-2026-697116028
+- Conferido em. 26/07/2026

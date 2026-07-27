@@ -6,7 +6,7 @@
 
 - **Tema 26:** O inciso I do artigo 1º da Lei complementar 51/1985 foi recepcionado pela Constituição Federal de 1988.
 
-- **Tema 27:** É inconstitucional o § 3º do artigo 20 da Lei 8.742/1993, que estabelece a renda familiar mensal per capita inferior a um quarto do salário mínimo como requisito obrigatório para concessão do benefício assistencial de prestação continuada.
+- **Tema 27:** [CRITÉRIO DE RENDA DO BPC — não confundir com o Tema 313, que é decadência — nota de desambiguação 26/07/2026] Leading case RE 567.985. É inconstitucional o § 3º do artigo 20 da Lei 8.742/1993, que estabelece a renda familiar mensal per capita inferior a um quarto do salário mínimo como requisito obrigatório para concessão do benefício assistencial de prestação continuada.
 
 - **Tema 70:** Na sistemática de cálculo dos benefícios previdenciários, não é lícito ao segurado conjugar as vantagens do novo sistema com aquelas aplicáveis ao anterior, porquanto inexiste direito adquirido a determinado regime jurídico.
 
@@ -28,7 +28,7 @@
 
 - **Tema 312:** É inconstitucional, por omissão parcial, o parágrafo único do art. 34 da Lei 10.741/2003 (Estatuto do Idoso).
 
-- **Tema 313:** I- Inexiste prazo decadencial para a concessão inicial do benefício previdenciário; II – Aplica-se o prazo decadencial de dez anos para a revisão de benefícios concedidos, inclusive os anteriores ao advento da Medida Provisória 1.523/1997, hipótese em que a contagem do prazo deve iniciar-se em 1° de agosto de 1997.
+- **Tema 313:** [DECADÊNCIA — não é critério de renda do BPC, que é o Tema 27 (RE 567.985) — nota de desambiguação 26/07/2026] I- Inexiste prazo decadencial para a concessão inicial do benefício previdenciário; II – Aplica-se o prazo decadencial de dez anos para a revisão de benefícios concedidos, inclusive os anteriores ao advento da Medida Provisória 1.523/1997, hipótese em que a contagem do prazo deve iniciar-se em 1° de agosto de 1997.
 
 - **Tema 334:** Para o cálculo da renda mensal inicial, cumpre observar o quadro mais favorável ao beneficiário, pouco importando o decesso remuneratório ocorrido em data posterior ao implemento das condições legais para a aposentadoria, respeitadas a decadência do direito à revisão e a prescrição quanto às prestações vencidas.
 
