@@ -167,3 +167,17 @@ Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existi
 Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
 
 O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
+
+## Portaria Conjunta MDS/MPS/INSS 37/2026, conferida no DOU (Onda 90)
+
+CONFERIDA EM FONTE OFICIAL em 26/07/2026. DOU de 02/04/2026, Edição 63, Seção 1, página 46. Entrou em vigor na data da publicação (art. 3º). Altera a Portaria Conjunta MDS/INSS 2/2015.
+
+O que mudou. O art. 7º ganhou o inciso IV (informar se o impedimento é permanente, irreversível ou irrecuperável), o § 1º (o Perito Médico DEVE observar as alterações corporais na perspectiva interacional e multidimensional, considerando barreiras ambientais, limitações funcionais, desempenho de atividades e restrições de participação, além da disponibilidade de produtos e tecnologias para inclusão social) e o § 2º com as definições de permanente, irreversível e irrecuperável. O art. 8º foi reescrito por inteiro. Os Anexos I e II ganharam uma terceira pergunta.
+
+O ANEXO IV NÃO FOI ALTERADO. A Tabela Conclusiva de Qualificadores segue íntegra e o novo art. 8º continua remetendo a ela. A estratégia da base apoiada no Anexo IV permanece válida.
+
+CORREÇÃO DE RIGOR. A portaria NÃO tem dispositivo revogatório expresso. Os antigos incisos I e II do art. 8º desapareceram por SUBSTITUIÇÃO INTEGRAL do artigo com a marca (NR), não por revogação. Em peça, escrever que o art. 8º passou a vigorar com nova redação, jamais que os incisos foram revogados.
+
+Ganho pró-segurado. O § 1º do art. 7º incorpora a lógica da LBI à norma administrativa que rege a perícia do BPC, e a definição de irreversível do inciso II admite que a irreversibilidade decorra da limitação de acesso a tratamentos e tecnologias ou do contexto ambiental. Cautela com o parágrafo único do art. 8º, que autoriza indeferimento quando as alterações puderem ser resolvidas em menos de dois anos.
+
+Redação literal de todos os dispositivos, do quesito acrescido aos Anexos I e II e a leitura pró-segurado em cinco pontos em `references/PORTARIA-CONJUNTA-37-2026-CONFERIDA-DOU.md`.
