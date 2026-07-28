@@ -1,6 +1,6 @@
 ---
 name: estudo-pre-pericia
-description: Gera o ESTUDO PRÉ-PERÍCIA, documento INTERNO do advogado, em tópicos curtos, para conduzir a reunião com o cliente antes da perícia agendada. Não é a orientação entregue ao cliente (essa é a orientacao-cliente-pericia), é o roteiro lido na frente do cliente na reunião de preparação. Use SEMPRE que mencionar estudo pré-perícia, roteiro de reunião antes da perícia, reunião pré-perícia, preparar reunião de perícia, explicar a perícia ao cliente, ponto decisivo da perícia, documento interno de perícia. Identifica o ponto que decide a perícia do caso concreto por benefício, incapacidade na equação atividade habitual contra limitação, BPC nos domínios da Portaria Conjunta MDS/INSS 2/2015 com barreiras, aposentadoria PCD nos domínios do IF-BrA da Portaria Interministerial 1/2014 com a LBI, auxílio-acidente no nexo entre sequela e redução da capacidade. Cruza com orientacao-cliente-pericia e as skills do benefício. NÃO use para o entregável ao cliente nem para laudo já produzido.
+description: Gera o ESTUDO PRÉ-PERÍCIA, documento INTERNO do advogado, em tópicos curtos, para conduzir a reunião com o cliente antes da perícia agendada. Não é a orientação entregue ao cliente (essa é a orientacao-cliente-pericia), é o roteiro lido na frente do cliente na reunião de preparação. Use SEMPRE que mencionar estudo pré-perícia, roteiro de reunião antes da perícia, reunião pré-perícia, preparar reunião de perícia, explicar a perícia ao cliente, ponto decisivo da perícia, documento interno de perícia, cópia integral do processo no Drive, OCR Stirling, linha do tempo do processo por ID. Identifica o ponto que decide a perícia do caso concreto por benefício, incapacidade na equação atividade habitual contra limitação, BPC nos domínios da Portaria Conjunta MDS/INSS 2/2015 com barreiras, aposentadoria PCD nos domínios do IF-BrA da Portaria Interministerial 1/2014 com a LBI, auxílio-acidente no nexo entre sequela e redução da capacidade. Cruza com orientacao-cliente-pericia e as skills do benefício. NÃO use para o entregável ao cliente nem para laudo já produzido.
 ---
 
 # Estudo Pré-Perícia — Roteiro Interno da Reunião com o Cliente
@@ -17,9 +17,25 @@ Cada perícia tem UM ponto que a decide. O estudo existe para que o advogado sai
 
 Honestidade radical. A reunião NUNCA ensaia exagero ou simulação. Ensina o cliente a descrever a realidade da limitação dele em linguagem funcional. Perito desmascara teatro, e teatro desmascarado derruba caso tecnicamente forte.
 
+## Etapa zero, OBRIGATÓRIA. Puxar e ler a cópia integral do processo
+
+O estudo NUNCA se redige de memória ou de resumo. A cópia integral do processo fica na pasta do cliente no Google Drive, e a skill SEMPRE a localiza e lê antes de qualquer redação (localizar a pasta por nome ou CPF via search_files, baixar o PDF da cópia integral). Sem a cópia no Drive e sem PDF anexado na conversa, pedir o arquivo e PARAR.
+
+Protocolo de análise do processo, executar na ordem, só avançar após concluir o item anterior.
+
+1. Pedir o PDF se não estiver anexado nem no Drive. Informar o total de páginas por contagem programática.
+
+2. Rodar OCR em português pelo Stirling (localhost:8081) em tudo que estiver sem camada de texto, ANTES de qualquer leitura. Informar quantas páginas exigiram OCR e quais continuaram ilegíveis. Nas ilegíveis, tentar método alternativo e, se falhar, PARAR e avisar o usuário com o número exato das folhas.
+
+3. Montar a linha do tempo com ID de cada ato relevante, da inicial até a última decisão, indicando contestação, provas produzidas, laudo pericial, sentença e recursos já interpostos.
+
+4. Leitura INTEGRAL obrigatória de CNIS, PPP, documentos rurais, laudos e relatórios médicos, laudo pericial judicial, sentença, acórdão, demais decisões e, principalmente, da decisão atacada. Rasura ou dúvida, PARAR e perguntar.
+
+Só depois da etapa zero concluída o fluxo abaixo começa. A linha do tempo e a leitura integral alimentam diretamente as seções 1, 6 e 7 do estudo (o ponto decisivo sai do que o processo REALMENTE contém, os documentos da mão do cliente saem dos IDs reais, e a nota técnica registra o que a leitura revelou de fragilidade).
+
 ## Fluxo de trabalho
 
-Primeiro, coletar o caso. Benefício pleiteado, rito (administrativo ou judicial), data e local da perícia, ocupação real do CNIS, documentos médicos dos autos por ID, laudo administrativo anterior se houver.
+Primeiro, coletar o caso. Benefício pleiteado, rito (administrativo ou judicial), data e local da perícia, ocupação real do CNIS, documentos médicos dos autos por ID, laudo administrativo anterior se houver. Esses dados saem da etapa zero, não de perguntas ao usuário que o processo já responde.
 
 Segundo, identificar o ponto decisivo pela espécie (mapa abaixo) e pelo caso concreto. O exemplo canônico do escritório, trabalhador de indústria com dor na coluna, o ponto não é a hérnia, é que a função exige ficar em pé e fazer esforço físico, e a coluna impede exatamente isso.
 
