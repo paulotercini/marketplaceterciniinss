@@ -39,24 +39,28 @@ Passo 4. Redigir o documento .docx seguindo o padrão do escritório (Bookman Ol
 
 Passo 5. Revisar o documento quanto à aderência à realidade do caso, linguagem acessível ao cliente e completude dos pontos críticos da referência aplicável.
 
-## Estrutura padrão do documento de orientação
+## Regra de escopo (Onda 94). SOMENTE o ato pericial
 
-Toda orientação segue a estrutura abaixo. A numeração e o conteúdo de cada seção variam conforme a espécie, mas a ordem é sempre a mesma.
+O documento trata EXCLUSIVAMENTE do ato pericial. NÃO incluir logística nem etiqueta, nada de como se vestir, horário de chegada, descanso na véspera, dados de endereço e sala, duração média ou tom de voz. Essas informações o advogado passa pessoalmente ao cliente. Cada linha do documento existe para uma única finalidade, o cliente entender o que será avaliado e saber demonstrar, com a verdade, o requisito jurídico do benefício.
 
-1. **Título centralizado.** ORIENTAÇÃO PARA PERÍCIA MÉDICA JUDICIAL ou ORIENTAÇÃO PARA PERÍCIA MÉDICA ADMINISTRATIVA ou ORIENTAÇÃO PARA AVALIAÇÃO BIOPSICOSSOCIAL, conforme o caso.
+O documento é CURTO, uma página, no máximo uma e meia. Autoexplicativo, o cliente estuda sozinho e entende sem ajuda. Linguagem simples de ponta a ponta, frases curtas, palavras do cotidiano, exemplos da vida e da profissão REAL do cliente.
+
+## Estrutura padrão do documento de orientação (Onda 94)
+
+Toda orientação segue a estrutura enxuta abaixo. É o espelho do `estudo-pre-pericia` traduzido para a linguagem do cliente, as duas peças saem do mesmo levantamento.
+
+1. **Título centralizado.** ORIENTAÇÃO PARA A SUA PERÍCIA ou ORIENTAÇÃO PARA A SUA AVALIAÇÃO, conforme o caso.
 2. **Destinatário.** Nome do cliente em itálico abaixo do título.
-3. **Parágrafo introdutório.** Personalizado. Mencionar o benefício pleiteado e indicar que o documento deve ser lido alguns dias antes da perícia.
-4. **Seção 1 — Dados da perícia.** Quadro com processo, vara, data, horário, perito, local, endereço e benefício pleiteado. Em perícia administrativa, substituir processo e vara por número do requerimento e agência do INSS.
-5. **Seção 2 — O que levar.** Documento de identificação, laudos e exames originais com cópias, caixas de medicamentos, esta orientação impressa. Itens adicionais conforme a referência da espécie.
-6. **Seção 3 — Como se apresentar.** Roupa, descanso, evitar álcool e medicamentos fora do prescrito.
-7. **Seção 4 — Postura durante a perícia.** Duração média, tom, honestidade radical, colaboração, não discutir.
-8. **Seção 5 — O que relatar sobre a doença/sequela/acidente.** Roteiro personalizado conforme a espécie, com datas, CID, histórico de tratamento e cirurgias.
-9. **Seção 6 — O que relatar sobre as limitações.** Núcleo do documento. Conteúdo varia drasticamente conforme o benefício. Ver referência específica.
-10. **Seção 7 — Demonstração física durante o exame.** O que mostrar espontaneamente, como permitir o exame, como comparar partes saudáveis e afetadas. Em BPC e aposentadoria PCD, há também seção sobre avaliação social.
-11. **Seção 8 — Perguntas que o perito provavelmente vai fazer.** Lista de perguntas-padrão com respostas-modelo vinculadas ao conceito jurídico do benefício.
-12. **Seção 9 — O que nunca fazer.** Lista negativa específica conforme o benefício.
-13. **Seção 10 — Após a perícia.** Orientação para contato imediato com o advogado, relato detalhado, prazo de liberação do laudo.
-14. **Fechamento.** Local, data por extenso, assinatura do Dr. Paulo Roberto Tercini Filho, OAB/SP 331.110.
+3. **O PONTO MAIS IMPORTANTE.** Primeira seção, em destaque visual (caixa ou negrito). UM único ponto-chave, aquele em que o cliente deve bater na tecla durante toda a perícia, extraído do ponto decisivo do `estudo-pre-pericia` e escrito na linguagem do cliente. Fecha com a frase-chave memorizável. Exemplo para B94, "Consigo trabalhar, mas demoro mais, me canso mais e preciso de mais cuidado. Isso é o que o senhor precisa que o perito entenda."
+4. **O que o perito vai avaliar.** Três a cinco tópicos de uma linha, em linguagem comum, explicando o que aquele tipo de perícia mede (a capacidade para o SEU trabalho, os domínios da vida diária, a sequela e a diferença no serviço, conforme a espécie).
+5. **O que explicar ao perito.** Núcleo do documento. Tópicos curtos, cada um ligando uma limitação verdadeira do cliente a uma tarefa concreta do trabalho ou da vida diária. Personalizado com a profissão e o histórico real.
+6. **Perguntas que devem vir e como responder.** Três a cinco pares pergunta-resposta, com o núcleo verdadeiro da resposta, nunca script decorado.
+7. **Durante o exame físico** (quando houver). O que mostrar espontaneamente e como permitir o exame. Em BPC e aposentadoria PCD, tópico próprio sobre a conversa com o assistente social.
+8. **O que não fazer.** Três a cinco tópicos, lista negativa da espécie (minimizar por orgulho, exagerar, responder o que não foi perguntado, discutir com o perito).
+9. **Documentos na mão.** Somente os que instruem o ato, laudos e exames originais com cópias e caixas de medicamentos em uso.
+10. **Fechamento.** Local, data por extenso, assinatura do Dr. Paulo Roberto Tercini Filho, OAB/SP 331.110.
+
+A instrução de contato imediato após a perícia o advogado dá verbalmente na reunião. Não ocupa espaço no documento.
 
 ## Regras gerais aplicáveis a todas as orientações
 
@@ -82,7 +86,7 @@ Advertir expressamente contra simulação, exagero e minimização. Simulação 
 Em todas as orientações, incluir uma frase-chave que o cliente deve memorizar. A frase sintetiza o conceito do benefício em linguagem comum. Exemplo para B94. Consigo trabalhar, mas demoro mais, me canso mais, preciso de mais cuidado com segurança e não tenho mais a mesma destreza. Cada referência traz frases-chave específicas.
 
 ### Contato após a perícia
-Toda orientação deve instruir o cliente a entrar em contato imediatamente após a perícia, antes mesmo de sair do estacionamento do Fórum ou da agência do INSS, para relatar o que aconteceu. Esse relato será a base da eventual impugnação ao laudo.
+A instrução de contato imediato após a perícia (relatar tudo antes de sair do local, base da eventual impugnação ao laudo) é dada VERBALMENTE pelo advogado na reunião de preparação. Não entra no documento (regra de escopo da Onda 94).
 
 ### Adequação à capacidade cognitiva e cultural do cliente
 Cliente com baixa escolaridade ou dificuldade de leitura precisa de versão simplificada, com fontes maiores e frases ainda mais curtas. Quando for o caso, oferecer ao advogado leitura assistida da orientação com o cliente antes da perícia.
@@ -97,18 +101,17 @@ Gerar em .docx usando docx-js. Padrão de formatação é o seguinte.
 - Cabeçalho timbrado na primeira página (ou em todas, a critério) com "ADVOCACIA PREVIDENCIÁRIA" em Bell MT negrito 20pt, "DR. PAULO ROBERTO TERCINI FILHO" em Bookman Old Style negrito 11pt e "OAB/SP 331.110" também em negrito
 - Rodapé com "Rua Rui Barbosa, nº 663, Centro, Monte Alto – SP" e "Tel: 16-3242-2908 – Cel: 16-98140-9271"
 - Margens A4 de 3 cm
-- Quadro de dados da perícia na seção 1, com duas colunas (rótulo em azul-claro, valor)
 - Listas com marcador • via LevelFormat.BULLET (nunca caractere manual)
 - Título centralizado em maiúsculas, negrito, 15pt
 
 ## Verificação final antes de entregar
 
-1. O documento tem os dados exatos do caso (número do processo, data, horário, nome do perito, endereço)?
+1. O documento trata SOMENTE do ato pericial, sem logística, etiqueta ou dados de endereço (regra de escopo da Onda 94)?
 2. A espécie correta do benefício foi identificada e a referência correta foi usada?
-3. A orientação está personalizada à profissão e ao histórico clínico do cliente?
-4. A frase-chave memorizável está presente e corresponde ao conceito jurídico do benefício?
-5. As armadilhas específicas da espécie estão sinalizadas na seção 9?
-6. O documento tem instrução clara de contato após a perícia?
+3. A orientação está personalizada à profissão e ao histórico clínico do cliente (não sobrevive à troca do nome)?
+4. O PONTO MAIS IMPORTANTE abre o documento em destaque, é UM só e traz a frase-chave memorizável do conceito jurídico do benefício?
+5. As armadilhas específicas da espécie estão na lista do que não fazer?
+6. O documento cabe em uma página, no máximo uma e meia, e é autoexplicativo em linguagem simples?
 7. Em caso de Teleperícia, análise documental ou avaliação biopsicossocial por dois profissionais, as peculiaridades estão descritas?
 8. Não há dois pontos fora de citações literais ou identificação de campo?
 
@@ -126,6 +129,7 @@ Ler obrigatoriamente o arquivo aplicável antes de redigir a orientação.
 
 Esta skill se integra com as seguintes skills do escritório.
 
+- `estudo-pre-pericia` para o roteiro interno da reunião do advogado, gerado ANTES deste documento e do mesmo levantamento (o ponto decisivo de lá vira o PONTO MAIS IMPORTANTE daqui)
 - `peticao-previdenciaria` para redação de quesitos que serão apresentados antes da perícia judicial
 - `auditoria-laudo-pericial` para auditar o laudo após a perícia, com base no relato do cliente coletado conforme a seção 10
 - `analise-documental-incapacidade` quando a perícia administrativa ocorrer no regime das Portarias Conjuntas MPS/INSS 13, 14 e 15 de 2026
