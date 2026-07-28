@@ -132,3 +132,7 @@ Esta skill se integra com as seguintes skills do escritório.
 - `aposentadoria-deficiencia` em casos de aposentadoria PCD pela LC 142/2013
 - `analise-bpc-loas` em casos de BPC/LOAS
 - `auxilio-acidente-b94` em casos de B94
+
+## Estudo pré-perícia do advogado (Onda 92)
+
+Antes do documento entregável desta skill, o advogado conduz reunião de preparação com o cliente. O roteiro INTERNO dessa reunião é gerado pela skill `estudo-pre-pericia`, em tópicos curtos para leitura em voz alta, com o ponto decisivo da perícia do caso concreto. As duas peças convivem, o estudo guia a reunião e não é entregue ao cliente, esta orientação fica com o cliente depois dela. Os references desta skill servem de fonte de conteúdo ao estudo, sem duplicação.
