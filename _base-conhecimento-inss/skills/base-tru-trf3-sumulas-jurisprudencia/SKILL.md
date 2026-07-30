@@ -9,7 +9,7 @@ description: Skill consolidando integralmente as 23 Súmulas aprovadas pela Turm
 
 ### Conferência obrigatória (Onda 96)
 
-Súmula do TRF3 se confere em `https://www.trf3.jus.br/diretoria-geral/biblioteca/setor-de-apoio-a-jurisprudencia/sumulas-do-trf3`, repositório oficial, verificando texto e eventual cancelamento. Julgado da TRU da 3ª Região se confere na base da própria Turma Regional, aberta pelo Chrome conforme a skill `pesquisa-jurisprudencia-chrome`, porque a numeração de incidentes de uniformização regional se confunde com a de PEDILEF da TNU. Sem a fonte aberta, o item fica [NÃO CONFIRMADO].
+Súmula do TRF3 se confere em `https://www.trf3.jus.br/diretoria-geral/biblioteca/setor-de-apoio-a-jurisprudencia/sumulas-do-trf3`, repositório oficial, verificando texto e eventual cancelamento. Julgado da TRU da 3ª Região se confere pelo Chrome conforme a skill `pesquisa-jurisprudencia-chrome`, porque a numeração de incidentes de uniformização regional se confunde com a de PEDILEF da TNU. Caminho validado em 30/07/2026, a TRU não tem base própria, fica no acervo das Turmas Recursais do TRF3 em `https://web.trf3.jus.br/jurisprudencia/home/index/1`, abrindo a pesquisa avançada e selecionando "Turma Regional de Uniformização" no campo Órgão Julgador (o mesmo seletor lista as 15 Turmas Recursais de São Paulo e as 2 de Mato Grosso do Sul). Sem a fonte aberta, o item fica [NÃO CONFIRMADO].
 
 Esta skill consolida integralmente as 23 Súmulas aprovadas pela Turma Regional de Uniformização (TRU) dos Juizados Especiais Federais da 3ª Região, com redação literal verificada nos PDFs oficiais publicados no Diário Eletrônico da Justiça Federal da 3ª Região (DEJF3R).
 
