@@ -5,6 +5,12 @@ description: Catálogo verificado de precedentes vinculantes do direito previden
 
 # Catálogo Verificado de Precedentes Vinculantes em Direito Previdenciário
 
+## Alimentação e revalidação do catálogo (Onda 96)
+
+Alimentação do catálogo. Item novo só entra depois de conferido pela skill `pesquisa-jurisprudencia-chrome`, na base oficial, com redação literal copiada da fonte. Cada registro guarda tribunal, órgão julgador, classe e número, relator, data de julgamento, data de publicação, URL do inteiro teor e data da conferência. Item conferido por busca indireta não entra, vai para a quarentena.
+
+Revalidação. Antes de citar item catalogado há mais de doze meses, reabrir a fonte pelo Chrome e conferir se houve cancelamento, suspensão, superação ou modulação. A conferência atualiza a data no registro, sem apagar o histórico anterior.
+
 ## OBJETIVO E POSTURA
 
 Esta skill consolida os precedentes vinculantes e qualificados em direito previdenciário, em postura exclusivamente pró-segurado do INSS. Funciona como CATÁLOGO LITERAL VERIFICADO, ativando o Nível 1 do protocolo de verificação dinâmica (Onda 36) ANTES de qualquer citação em peça processual.

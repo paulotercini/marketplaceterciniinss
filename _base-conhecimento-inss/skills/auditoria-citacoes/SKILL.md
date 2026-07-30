@@ -39,6 +39,8 @@ INFORMATIVO. O item consta do catálogo, mas o registro ainda não traz a tese l
 
 ### Etapa 3. Verificação na fonte oficial
 
+Meio de verificação (Onda 96). A verificação na fonte roda pelo Claude in Chrome, na base oficial do tribunal de origem do item, seguindo a skill `pesquisa-jurisprudencia-chrome`. Firecrawl e SearXNG podem ser usados para localizar o documento, nunca para classificar o item. A classificação CONFIRMADO_FONTE_OFICIAL exige o inteiro teor ou a página do tema aberta na base do tribunal, com data da conferência registrada. Item verificado apenas em portal jurídico recebe, no máximo, PROVAVEL_FONTE_SECUNDARIA.
+
 Verificação em lotes de dez a vinte itens pelo agente do plugin `base-conhecimento-inss:verificador-precedentes` (Onda 78), invocado pela Agent tool. O agente recebe cada lote com ID normalizado, arquivo, linha e contexto da afirmação, executa a ordem obrigatória e devolve relatório no formato do catálogo complementar, pronto para colagem. Ele somente verifica e reporta, sem editar arquivo algum (a correção fica com a Etapa 4, na sessão principal). Quando o agente do plugin não estiver disponível na sessão, usar subagente genérico com as mesmas instruções.
 
 A ordem obrigatória, por item.
