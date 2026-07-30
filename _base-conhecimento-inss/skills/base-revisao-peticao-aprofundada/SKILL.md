@@ -408,6 +408,10 @@ Correção sugerida. Manter negrito apenas em fatos-chave e elementos de prova.
 
 **Quando não houver achados.** "Nenhum achado identificado. A petição está em conformidade com os padrões do escritório, com a legislação verificada no repositório base-legislacao-fontes-primarias, com os precedentes vigentes e com a coerência fático-probatória dos documentos disponíveis."
 
+## Porta de qualidade das citações (Onda 96)
+
+Nenhuma peça sai com precedente sem a marca [CONFERIDO] e a data da conferência. A revisão confere, item a item, se o precedente foi aberto na base oficial pelo Chrome conforme a skill `pesquisa-jurisprudencia-chrome`, se a tese citada corresponde à redação literal e se o status continua vigente. Divergência entre o que a peça afirma e o que a fonte diz é erro fatal, e a peça volta para correção antes do protocolo.
+
 ## FLUXO PÓS-REVISÃO
 
 Se houver achados BLOQUEANTES, alertar.

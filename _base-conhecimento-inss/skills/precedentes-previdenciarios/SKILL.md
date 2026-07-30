@@ -5,6 +5,10 @@ description: Skill de precedentes vinculantes previdenciários (STJ, STF, TNU). 
 
 # Precedentes Vinculantes Previdenciários
 
+## Fonte de pesquisa (Onda 96)
+
+Toda busca de precedente novo passa pela skill `pesquisa-jurisprudencia-chrome`, com o Claude in Chrome operando a base oficial do tribunal. Firecrawl e SearXNG servem para localizar candidato e para arquivar inteiro teor já identificado, nunca para fundamentar citação. Precedente que não foi aberto na fonte oficial entra como [NÃO CONFIRMADO] e fica fora do corpo da peça.
+
 Base de precedentes vinculantes e qualificados em Direito Previdenciário da Advocacia Previdenciária Dr. Paulo Roberto Tercini Filho (OAB/SP 331.110).
 
 ## Acervo

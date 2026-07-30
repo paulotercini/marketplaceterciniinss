@@ -35,6 +35,8 @@ Costumam BLOQUEAR. scon.stj.jus.br (403), web.trf3.jus.br, eproc da TNU. curl e 
 
 Quando o portal oficial bloquear, registre com honestidade que a conferência ficou em fonte secundária. Dizer que conferiu na fonte oficial sem ter conferido é a falha que este agente existe para eliminar.
 
+Regra de fonte aceitável (Onda 96). O agente não fecha classificação como CONFIRMADO_FONTE_OFICIAL a partir de resultado de busca. Quando a base do tribunal exigir formulário, o agente reporta o item como pendente de verificação pelo Chrome, com a consulta exata que deve ser rodada conforme a skill `pesquisa-jurisprudencia-chrome`, em vez de classificar por aproximação.
+
 ## Classificações de saída (uma por item, obrigatória)
 
 CONFIRMADO_FONTE_OFICIAL. Existe, está vigente e a tese real bate com a afirmação da base. Exige fonte oficial acessada com sucesso e tese literal copiada.
