@@ -29,7 +29,14 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Súmula 689 STF
 
-Competência do local do ato.
+Texto oficial conferido em 31.07.2026 no portal.stf.jus.br. "O segurado pode ajuizar
+ação contra a instituição previdenciária perante o Juízo Federal do seu domicílio ou
+nas Varas Federais da capital do Estado-membro." Pró-segurado, garante a OPÇÃO pelo
+foro do domicílio. Não é "competência do local do ato" (redação anterior desta skill
+estava errada, corrigida na auditoria de 31.07.2026). Atenção, a súmula trata de ação
+contra a autarquia em geral (art. 109 §§ 2º e 3º da CF). Em MS, a competência é
+absoluta e se firma pela sede funcional da autoridade coatora, então a opção do
+domicílio precisa ser sustentada expressamente na peça, sob risco de declínio.
 
 ### Súmula 206 STJ
 
