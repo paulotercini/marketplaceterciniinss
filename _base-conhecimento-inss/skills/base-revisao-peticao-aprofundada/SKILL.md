@@ -412,6 +412,20 @@ Correção sugerida. Manter negrito apenas em fatos-chave e elementos de prova.
 
 Nenhuma peça sai com precedente sem a marca [CONFERIDO] e a data da conferência. A revisão confere, item a item, se o precedente foi aberto na base oficial pelo Chrome conforme a skill `pesquisa-jurisprudencia-chrome`, se a tese citada corresponde à redação literal e se o status continua vigente. Divergência entre o que a peça afirma e o que a fonte diz é erro fatal, e a peça volta para correção antes do protocolo.
 
+## RECEPÇÃO DOS ACHADOS COM RIGOR TÉCNICO (Onda 99)
+
+Disciplina aplicada a TODO relatório crítico recebido, do agente `red-team-peticao`, do agente `verificador-precedentes`, desta própria revisão ou de terceiro (parecer, despacho de emenda, crítica do usuário). Importada do conceito de recepção de code review, e traduzida ao processo.
+
+Primeira regra, nem concordância performática, nem implementação cega. Cada achado é VERIFICADO tecnicamente antes de aplicado. Achado de citação se confere na fonte, achado de fato se confere no documento por ID, achado de direito se confere na norma ou no catálogo. Acatar sem conferir apenas troca o erro de lugar.
+
+Segunda regra, achado incorreto se refuta por escrito, com a evidência. O relatório de revisão registra o achado, a verificação feita e a razão da recusa. Recusa sem evidência não existe, e acatamento sem verificação também não.
+
+Terceira regra, achado correto se aplica na CAUSA RAIZ, não no sintoma. Se o red-team apontou citação divergente em um parágrafo, a correção varre a peça inteira atrás da mesma citação, e o catálogo atrás da mesma divergência. Corrigir só o ponto apontado deixa os irmãos do erro vivos.
+
+Quarta regra, conflito entre achados se resolve pela hierarquia de fontes, fonte primária vence catálogo, catálogo vence memória, e nada vence o documento dos autos quanto aos fatos do caso.
+
+Quinta regra, a decisão estratégica é do advogado. Achado que recomenda abandonar tese defensável ou alterar o mérito do pedido vai ao usuário em destaque, nunca se executa em silêncio.
+
 ## FLUXO PÓS-REVISÃO
 
 Se houver achados BLOQUEANTES, alertar.
