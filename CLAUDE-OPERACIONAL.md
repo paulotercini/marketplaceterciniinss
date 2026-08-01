@@ -574,6 +574,16 @@ encadeie** se houver pendência bloqueante, aponte o que falta e pare.
   abaixo), filtra pela atribuição do app em vez do palpite.
 - `todo_conclusao.py "<list_id>" "<task_id>" "texto"` — prepende conclusão (C).
 - `todo_anexo.py "<list_id>" "<task_id>" "trecho do nome"` — lê anexo da tarefa.
+- `processo_andamento.py <numero CNJ> [--tribunal trf3] [--limite 40]` — **lê o andamento
+  do processo pela API Pública do DataJud (CNJ)**, fonte oficial, sem depender do PJe nem
+  do eproc, que não abrem desta rede. Traz classe, órgão julgador, assuntos, data de
+  ajuizamento e a lista de movimentos do mais recente ao mais antigo. O tribunal sai do
+  próprio número CNJ (testado no **TRF3** e no **TJSP**). Use na triagem para conferir se
+  o ato que interessa já ocorreu (homologação, trânsito em julgado, expedição de RPV,
+  sentença, arquivamento). **Limite honesto**, a base tem atraso de atualização e movimento
+  genérico ("Expedida/certificada", "Ato ordinatório") não diz o que foi expedido, então
+  **ausência de movimento é indício, não prova**, e o parecer tem de dizer que a
+  confirmação definitiva depende de abrir os autos.
 - `pdf_ocr.py "<arquivo.pdf|imagem>" [destino] [--paginas 1-5] [--dpi 200]` — **torna
   legível o documento ESCANEADO** (sem camada de texto), renderizando cada página em PNG
   para você ler com a ferramenta Read. É a rota de OCR do escritório, o container não tem
