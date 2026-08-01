@@ -198,7 +198,12 @@ análise/peça:
   **Regra do escritório**, para os moradores de **Monte Alto/SP**, a Justiça Federal
   competente é a **Subseção Judiciária de Catanduva/SP** (TRF3). Use Catanduva como foro
   federal padrão dos nossos clientes de Monte Alto, salvo prova de domicílio em outra
-  subseção. **Atenção ao rito**, as ações de benefício de até 60 salários mínimos vão ao
+  subseção. **Atenção, a regra é de Monte Alto, não da carteira inteira.** Antes de
+  endereçar, **leia o domicílio do cliente no documento** (comprovante de residência,
+  CadÚnico, CNIS) e confira a subseção correspondente na fonte oficial do TRF3. Cliente
+  de **Jaboticabal/SP**, por exemplo, é do **JEF de Ribeirão Preto** (2ª Subseção), nunca
+  Catanduva (conferido em 01.08.2026, caso Ivair). Aplicar Catanduva por hábito é erro de
+  competência que atrasa o feito. **Atenção ao rito**, as ações de benefício de até 60 salários mínimos vão ao
   **JEF de Catanduva**, mas o **Mandado de Segurança é EXCLUÍDO do Juizado** (art. 3º, §1º,
   I, da Lei 10.259/2001), então o MS vai à **Vara Federal COMUM de Catanduva**, nunca ao
   JEF. No MS, a competência firma-se pela **sede da autoridade coatora** (Gerente-Executivo
