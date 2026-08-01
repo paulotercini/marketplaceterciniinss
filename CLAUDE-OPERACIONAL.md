@@ -238,6 +238,22 @@ pasta do cliente no Drive.
    INTEGRALIDADE.** Havendo **dúvida ou rasura**, peça confirmação ao Paulo.
 7. **Qualquer problema, avise.** Não deixe de executar nenhuma etapa da cadeia.
 
+**Como fazer o OCR na prática (rota testada, 31.07.2026).** O container **não tem**
+tesseract, ocrmypdf, poppler nem ImageMagick, então PDF escaneado abre vazio na
+ferramenta Read e a leitura parecia impossível. A rota que funciona usa o PyMuPDF já
+instalado, o script **`pdf_ocr.py`** renderiza cada página em PNG e **você lê o PNG com
+a ferramenta Read**, enxergando a imagem (é o modelo que faz o OCR, não um binário).
+
+    python3 pdf_ocr.py "<arquivo.pdf>" [destino_dir] [--paginas 1-5] [--dpi 200]
+
+O script avisa quando o PDF **já tem camada de texto** (aí leia direto, sem renderizar),
+gera um PNG por página em ordem e reduz sozinho a resolução do PNG que passar de ~1,6 MB.
+Página densa, carimbo apagado ou assinatura duvidosa, refaça só aquela página com
+`--dpi 300`. Documento longo, fatie com `--paginas`. Serve igualmente para **imagem
+solta** (JPG/PNG de foto de documento). **Só depois de tentar essa rota** uma folha pode
+ser declarada ilegível, e ainda assim dizendo **qual folha** e por quê. Nunca deduza o
+conteúdo pelo nome do arquivo.
+
 **Recurso administrativo (e-SISREC/CRPS) — além da regra de ouro:**
 - Mapeie os **principais atos do recurso citando as folhas ou o ID**.
 - Na conferência, identifique a **ordem cronológica dos atos** distinguindo
@@ -504,6 +520,27 @@ gravado e **complemente** apenas o que ainda falta ou o que a entrada mais nova
 pede, somando ao que existe (coerente com o modo COMPLEMENTO e com a regra de
 nunca destruir histórico).
 
+**Ajustes permanentes da `/triagem` (decisão do Paulo, 31.07.2026).** Detalhe completo
+na skill `.claude/skills/triagem/SKILL.md`, resumo do que mudou:
+
+1. **Arquivo pronto na pasta não recebe chancela.** Peça, RAC, formulário ou procuração
+   aguardando protocolo passa por **conferência aprofundada** com
+   `base-revisao-peticao-aprofundada`, dado a dado contra os documentos (dados
+   cadastrais e o objeto exato do que se quer alterar). **Achou erro, refaz** e diz na
+   (C) o que estava errado. Proibido escrever apenas "está pronto".
+2. **Tarefa que manda fazer é ordem de serviço.** "Manifestar sobre os cálculos" quer a
+   **petição feita**, não a recomendação de fazê-la. Só não produz se a peça **já existir
+   no Drive**, e aí a confere pela regra 1, ou se faltar documento indispensável.
+3. **Requerimento de incapacidade no INSS** (B31/B91/B92, B94) traz sempre os quatro,
+   **data de início dos sintomas**, **sintomas**, **atividade** e **descrição da
+   atividade**, cada um lido de documento. Faltando, vira BLOQUEIO mais mensagem pronta
+   ao cliente, nunca dado suposto.
+4. **Escaneado agora se lê**, rota `pdf_ocr.py` mais ferramenta Read (ver "Como fazer o
+   OCR na prática"). Ilegível só depois de tentar essa rota, nomeando a folha.
+5. **Último andamento sendo (C) minha, não reanalisar.** Sem entrada humana nova, o
+   cliente fecha com o `PRÓXIMO`/`BLOQUEIO` que já existe, sem gravar (C) repetida.
+   Exceções, providência minha ainda por fazer, ou prazo em 15 dias.
+
 ## Encadeamento dos fluxos (handoff triagem → inicial/inicial-inss)
 
 Os três fluxos se compõem. A `/triagem` **diagnostica**, a `/inicial` e a
@@ -537,6 +574,10 @@ encadeie** se houver pendência bloqueante, aponte o que falta e pare.
   abaixo), filtra pela atribuição do app em vez do palpite.
 - `todo_conclusao.py "<list_id>" "<task_id>" "texto"` — prepende conclusão (C).
 - `todo_anexo.py "<list_id>" "<task_id>" "trecho do nome"` — lê anexo da tarefa.
+- `pdf_ocr.py "<arquivo.pdf|imagem>" [destino] [--paginas 1-5] [--dpi 200]` — **torna
+  legível o documento ESCANEADO** (sem camada de texto), renderizando cada página em PNG
+  para você ler com a ferramenta Read. É a rota de OCR do escritório, o container não tem
+  tesseract nem poppler (ver "Leitura de documentos…", "Como fazer o OCR na prática").
 - `gdrive_download.py <file_id> [destino]` — baixa arquivo do Drive por ID DIRETO
   para o disco, **sem o limite de ~10 MB** do conector MCP (que trava arquivos
   grandes por trafegar o conteúdo pelo contexto). Use para ler PDF de processo, CNIS

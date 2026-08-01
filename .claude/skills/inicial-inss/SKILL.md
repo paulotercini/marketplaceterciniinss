@@ -37,6 +37,10 @@ administrativa de 1 folha, sem lei/decreto).
   (CNIS, PPP, laudos/relatorios medicos, exames, CTPS, documentos rurais,
   procuracoes, certidoes, identificacao). Use OCR/`download_file_content` base64
   quando `read_file_content` falhar; arquivo > ~10 MB que nao baixa: **sinalize**.
+  **Escaneado sem camada de texto** (abre vazio no Read) le-se com
+  `python3 pdf_ocr.py "<arquivo.pdf>" [--paginas 1-5] [--dpi 200]`, que gera um PNG por
+  pagina para voce ler com a ferramenta Read (ver CLAUDE-OPERACIONAL.md, "Como fazer o
+  OCR na pratica"). Folha so e declarada ilegivel depois de tentar essa rota.
 - Leia os anexos da tarefa (`todo_anexo.py`).
 - **Extraia as datas internas** que definem a ordem (ver passo 5): periodos de
   trabalho de CADA PPP; data de confeccao de cada relatorio/exame medico; data do
@@ -47,6 +51,15 @@ administrativa de 1 folha, sem lei/decreto).
   pedido (ex.: especial -> PPP/LTCAT; BPC -> CadUnico/composicao familiar/laudos;
   rural -> autodeclaracao + inicio de prova material; pensao -> certidao de obito +
   prova de uniao/dependencia; incapacidade -> documentos medicos).
+- **Incapacidade (B31/B91/B92, B94), os quatro dados obrigatorios do requerimento**
+  (decisao do Paulo, 31.07.2026). Alem dos documentos medicos, o requerimento tem de
+  apresentar, expressamente, **a data de inicio dos sintomas**, **quais sao os
+  sintomas**, **a atividade** exercida e **a descricao dessa atividade** (o que o
+  segurado faz no dia a dia, esforco, postura, peso, repeticao, exposicao), que e o que
+  liga a doenca a incapacidade para AQUELE trabalho. Cada um vem lido de documento
+  (relatorio medico, prontuario, CTPS, PPP, CNIS) ou do historico do To Do. Faltando
+  algum, **nao invente**, registre "nao consta", trate como pendencia bloqueante e
+  deixe a mensagem pronta ao cliente perguntando exatamente o que falta.
 - **Destaque o que falta** e deixe a lista pronta para o Paulo solicitar ao cliente.
 
 ## 4. Antecipar a carta de exigencia (red-team do analista)

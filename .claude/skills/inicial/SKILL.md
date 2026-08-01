@@ -34,6 +34,10 @@ ponto de partida, em vez de refazer o diagnostico.
   (CNIS, PPP, laudos, CTPS, processo/PA, procuracoes, comprovantes). Use OCR/
   `download_file_content` em base64 quando `read_file_content` falhar; se um arquivo
   exceder ~10 MB para download, **sinalize** e registre como nao lido.
+  **Escaneado sem camada de texto** (abre vazio no Read) le-se com
+  `python3 pdf_ocr.py "<arquivo.pdf>" [--paginas 1-5] [--dpi 200]`, que gera um PNG por
+  pagina para voce ler com a ferramenta Read (ver CLAUDE-OPERACIONAL.md, "Como fazer o
+  OCR na pratica"). Folha so e declarada ilegivel depois de tentar essa rota.
 - Leia tambem os anexos da tarefa (`todo_anexo.py`).
 - **No processo administrativo (auxilio-acidente ou beneficio por incapacidade),
   SEMPRE localize e leia dois documentos** (ver CLAUDE.md, "Processo administrativo de
