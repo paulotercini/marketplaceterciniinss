@@ -4,11 +4,13 @@
 
 ### Tema 298 TNU
 
-Tese. A partir da vigência da Lei 9.032/95, o enquadramento especial por exposição a hidrocarbonetos exige demonstração de exposição habitual e permanente, admitindo-se a exposição por contato direto, respiratório ou por absorção cutânea.
+Tese (literal, RESTRITIVA). A partir da vigência do Decreto 2.172/97, a indicação genérica de exposição a "hidrocarbonetos" ou a "óleos e graxas", ainda que de origem mineral, não é suficiente para caracterizar a atividade como especial, sendo indispensável a especificação do agente nocivo.
 
-Fonte oficial em https://www.cjf.jus.br
+Julgamento em 23/06/2022, PEDILEF 5001319-31.2018.4.04.7115, relator o juiz federal Fábio de Souza Silva. Fonte oficial conferida em 01.08.2026, https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/temas-representativos/tema-298 e o inteiro teor em https://www.cjf.jus.br/publico/pdfs/50013193120184047115-TEMA298.pdf [CONFERIDO].
 
-Aplicação pró-segurado. Presunção de exposição habitual em postos de combustíveis, oficinas mecânicas, transportadoras, refinarias, laboratórios, indústrias químicas.
+ATENÇÃO, correção de erro que existia nesta base. Versões anteriores deste arquivo, do SKILL.md e do FUNDAMENTOS-E-CENARIOS.md enunciavam o Tema 298 como se ele criasse presunção de exposição habitual em posto de combustível, oficina mecânica ou transportadora, ou como se tratasse de cancerígenos da LINACH. Nada disso está no Tema 298. Citá-lo assim entrega ao INSS a refutação pronta.
+
+Aplicação pró-segurado (o que de fato se extrai). O voto do relator assegurou ao segurado a oportunidade de produzir prova do tipo de hidrocarboneto e da composição dos óleos e graxas, vedando a supressão dessa oportunidade probatória e a eliminação definitiva do acesso ao benefício. Diante de PPP genérico, portanto, requer-se diligência, retificação do PPP (art. 58, §§ 1º, 3º e 4º, da Lei 8.213/91), LTCAT, FISPQ, receituário ou perícia, e não se invoca o Tema 298 como fundamento de procedência. A presunção qualitativa vem por outra porta, o Anexo 13 da NR-15 e a LINACH, quando o agente estiver nomeado.
 
 ### Tema 157 TNU
 

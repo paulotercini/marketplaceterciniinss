@@ -36,7 +36,9 @@ Aplicação pró-segurado. Em PPP que indica Anexo 13 e atividade laboral coinci
 
 ## 3. Hidrocarbonetos e frentistas
 
-Tema 298 TNU. A partir da Lei 9.032/95, o enquadramento especial por exposição a hidrocarbonetos exige demonstração de exposição habitual e permanente, com contato direto ou por via respiratória. Presumem-se exposição habitual os postos de combustíveis e as operações de abastecimento, transvazamento, limpeza de tanques e contato manual com graxas e óleos.
+Tema 298 TNU (RESTRITIVO, ler com cuidado). Tese oficial, a partir da vigência do Decreto 2.172/97, a indicação genérica de exposição a "hidrocarbonetos" ou a "óleos e graxas", ainda que de origem mineral, não é suficiente para caracterizar a atividade como especial, sendo indispensável a especificação do agente nocivo. Julgado em 23/06/2022 [CONFERIDO na fonte oficial do CJF em 01.08.2026, PEDILEF 5001319-31.2018.4.04.7115]. NÃO existe, neste Tema, presunção de exposição habitual em posto de combustível, oficina ou transportadora, e afirmar isso é erro que o INSS e o juízo derrubam.
+
+Aproveitamento pró-segurado do próprio Tema 298. O relator consignou ser necessário garantir ao segurado a oportunidade de produzir prova do tipo de hidrocarboneto e da composição dos óleos e graxas a que esteve exposto, sendo inadmissível suprimir essa oportunidade probatória e eliminar em definitivo o acesso ao benefício. É esse trecho que se invoca para pedir diligência, retificação de PPP, FISPQ, LTCAT ou perícia, quando o documento vier genérico.
 
 Tema 157 TNU. Ser frentista não basta por si só a partir da Lei 9.032/95. Exige-se exposição efetiva a hidrocarbonetos aromáticos, demonstrada no PPP.
 
