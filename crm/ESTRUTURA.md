@@ -65,8 +65,8 @@ do portal continua derivado de CPF+DN.
 
 ## Fases de implantação (sem desligar o To Do)
 
-1. **Espelho**: importar via Graph API (o repo já autentica), sistema só-leitura
-   com pesquisa e dashboard. Equipe continua no To Do.
+1. **Espelho** (✅ implementada): importar via Graph API (o repo já autentica),
+   sistema só-leitura com pesquisa e dashboard. Equipe continua no To Do.
 2. **Escrita dupla**: andamentos criados no sistema replicam no To Do (formato
    `DD.MM.AAAA (X): texto`), e o sync importa o que for escrito no To Do.
 3. **Virada**: To Do vira backup; portal do cliente passa a ler do banco;
@@ -74,6 +74,31 @@ do portal continua derivado de CPF+DN.
 
 Banco sugerido: Supabase (PostgreSQL gerenciado, tempo real, login por usuário,
 row-level security para a lista particular e para as credenciais).
+
+## Fase 1 — como usar o espelho
+
+```bash
+python3 graph_refresh.py     # renova o token da Graph API (na máquina que tem graph_tokens.json)
+python3 crm/sync_todo.py     # baixa TODAS as listas -> crm/data/crm.json (minutos)
+python3 crm/build_app.py     # gera crm/app.html
+# abrir crm/app.html no navegador — funciona offline, sem servidor
+```
+
+Sem token à mão, dá para gerar de um export/backup do To Do (mesmo formato
+JSON do Graph): `python3 crm/sync_todo.py --backup backup.json`.
+
+O que o espelho entrega hoje: pesquisa global (nome, CPF, nº de processo,
+texto de qualquer andamento), todas as listas com contadores, Planejado e
+Importante, ficha larga com abas (Dados / Casos do mesmo CPF / Andamentos com
+autor e data / Perícias & Audiências / Checklist), visão-agenda de perícias e
+dashboard com produção por colaborador, prazos e benefícios.
+
+**Privacidade**: `crm/data/` e `crm/app.html` contêm CPFs, senhas e dados
+médicos — estão no `.gitignore` e jamais podem ser commitados, publicados em
+`docs/` ou compartilhados fora do escritório. Compartilhar com a equipe =
+mandar o arquivo `app.html` por canal privado (ele abre offline).
+
+Testes do parser: `python3 -m pytest tests/test_crm_sync.py -q`.
 
 ## Fora do protótipo, decidir depois
 
