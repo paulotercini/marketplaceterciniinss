@@ -46,6 +46,17 @@ Grava `triagem_hoje.json`, leia-o.
   **litispendência/duplicidade** (pedido administrativo e ação judicial sobre o mesmo
   benefício, como manda a verificação do Tema 1124/Tema 350). O relatório do script já
   imprime a seção "CLIENTES COM MÚLTIPLAS TAREFAS", confira-a.
+- **Último andamento é triagem MINHA, não reanalisar (decisão do Paulo, 31.07.2026).**
+  Antes de qualquer coisa, olhe a **primeira entrada do corpo** (a mais recente). Se ela
+  for uma **(C)** minha, o caso já foi analisado e **nada humano entrou depois**, então
+  **NÃO refaça a análise**. Releia o fecho `PRÓXIMO:`/`BLOQUEIO:` daquela (C) e feche o
+  cliente com uma linha de status ("já triado em DD.MM, sem entrada nova, PRÓXIMO
+  mantido"), **sem gravar nova (C)** e sem gastar subagente. A fila só volta a exigir
+  análise quando um humano lançar entrada nova ((P), (D), (M), (I) ou (A)). Duas
+  exceções, e só elas, **reanalise mesmo assim** se (i) a própria (C) anterior apontou
+  uma providência que era **para você executar** e ela continua por fazer, ou (ii) há
+  **prazo** vencendo dentro de 15 dias registrado no corpo, hipótese em que a nova (C)
+  serve de lembrete do prazo.
 - **Já triado hoje (evitar conflito, sempre COMPLEMENTAR).** Se `ja_triado_hoje` for
   `true`, já existe conclusão (C) com a data de hoje no corpo, sinal de que outra
   execução/sessão do cowork já tratou o cliente. NÃO refaça do zero e NÃO duplique
@@ -109,7 +120,17 @@ d) **Localizar a pasta do cliente** no Drive via `search_files`
    **Cadeia de leitura obrigatória** (CLAUDE.md), mapear TODOS os documentos com
    leitura INTEGRAL, **refazer da última para a primeira página (conferência)** com
    **OCR em português**, e **identificar exatamente as folhas que não conseguiu ler**,
-   tentando outro método. CNIS, PPP, rurais e médicos têm leitura integral
+   tentando outro método.
+   - **PDF ou imagem ESCANEADA (sem camada de texto), rota de OCR que funciona
+     (31.07.2026).** Quando o Read devolver o PDF vazio, ilegível ou só com ruído, o
+     arquivo é imagem, não texto. **Não desista e não deduza pelo nome do arquivo.**
+     Rode **`python3 pdf_ocr.py "<arquivo.pdf>" [destino] [--paginas 1-5] [--dpi 200]`**,
+     que renderiza cada página em PNG, e **LEIA cada PNG gerado com a ferramenta Read**
+     (o modelo enxerga a imagem, esse é o OCR; não existe tesseract no container).
+     Página densa ou carimbo apagado, repita a página com `--dpi 300`. Documento longo,
+     fatie com `--paginas`. Só depois de tentar essa rota é que uma folha pode ser
+     declarada ilegível, e aí diga **qual folha** e por quê.
+   CNIS, PPP, rurais e médicos têm leitura integral
    obrigatória; dúvida ou rasura vira **alerta para o Paulo confirmar**. Na triagem
    **NÃO pause**, REPORTE no parecer quantas páginas há, o que diz cada documento e o
    resultado da conferência (e o que não foi lido).
@@ -120,6 +141,30 @@ d) **Localizar a pasta do cliente** no Drive via `search_files`
      o NB, a data e o MOTIVO exato. Não suponha, leia (ver CLAUDE.md).
 
 e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
+   - **A tarefa manda FAZER, então FAÇA (decisão do Paulo, 31.07.2026).** Entrada como
+     "23.07.2026 (P): Manifestar sobre os cálculos" é ordem de serviço, não recado.
+     Produza a peça, não se limite a recomendar que ela seja feita. Ordem, (1) procure
+     na pasta do cliente e na subpasta `Claude` se a peça **já existe**; existindo, NÃO
+     refaça, **confira-a** pela regra do parágrafo seguinte; (2) não existindo, leia os
+     documentos que fundamentam o ato (no exemplo, a conta de liquidação, a sentença e
+     o acórdão), rode `base-revisao-peticao-aprofundada` sobre a minuta, gere o **.docx**
+     com `docx_escritorio.py` no padrão do escritório e suba para a subpasta `Claude`
+     com `gdrive_upload.py`; (3) na (C), diga que a peça **está pronta na pasta**, o que
+     ela sustenta e o que falta para protocolar. Só deixe de produzir quando faltar
+     documento **indispensável** (aí a (C) vira BLOQUEIO nominando o documento) ou quando
+     o ato for de outro colaborador, hipótese de encaminhamento.
+   - **Arquivo PRONTO na pasta exige conferência aprofundada, nunca chancela
+     (decisão do Paulo, 31.07.2026).** Achando peça, RAC, formulário, procuração ou
+     recurso já pronto e aguardando protocolo, **não escreva que "está pronto"** sem
+     conferir. Rode a skill **`base-revisao-peticao-aprofundada`** sobre o arquivo
+     (5 níveis anti-alucinação mais as 5 camadas) e confira **dado a dado contra os
+     documentos da pasta**, qualificação e dados cadastrais (nome, CPF, NIT, endereço,
+     estado civil), o objeto (o que exatamente se pede alterar, o período, a empresa, o
+     agente nocivo, o NB, a DER), a competência e o rito, a fundamentação e os pedidos,
+     e a assinatura e os anexos. **Achando erro, REFAÇA o documento** com a correção,
+     suba a versão corrigida para a subpasta `Claude` e diga na (C) **o que estava errado
+     e o que foi corrigido**. Exemplo do Paulo, RAC na pasta, confira se os dados
+     cadastrais e o que se quer alterar estão corretos, e se não estiverem, refaça.
    - Conferir se a documentação do benefício está correta e completa; faltando
      algo importante (ex.: RG), destacar.
    - Analisar o **CNIS** (leitura obrigatória, costuma estar na pasta) e apontar
@@ -142,6 +187,18 @@ e) **Aplicar a doutrina do assistente** (seção correspondente do CLAUDE.md):
    - **Incapacidade** (B31/B91/B92, auxílio-acidente), verificar carência, qualidade
      de segurado e **DII dentro do período de manutenção**, com alerta se a DII cair
      fora, e checar **doença que isenta de carência**.
+   - **Requerimento de benefício por incapacidade no INSS, os quatro dados obrigatórios
+     (decisão do Paulo, 31.07.2026).** Sempre que a tarefa for pedir B31/B91/B92 ou
+     auxílio-acidente no Meu INSS, a análise e a (C) têm de trazer, expressamente,
+     (1) a **data de início dos sintomas**, (2) **quais são os sintomas**, (3) a
+     **atividade** exercida pelo segurado e (4) a **descrição dessa atividade** (o que
+     ele de fato faz no dia a dia, esforço, postura, peso, repetição, exposição), que é
+     o que liga a doença à incapacidade para **aquele** trabalho. Cada um dos quatro
+     vem **lido do documento** (relatório médico, prontuário, CTPS, PPP, CNIS) ou da
+     entrada do histórico. Faltando algum, **não invente**, escreva "não consta" e leve
+     para o BLOQUEIO da (C), com a **mensagem pronta ao cliente** perguntando exatamente
+     o que falta (a data em que os sintomas começaram, o que sente, onde trabalha e o
+     que faz na função).
    - **PCD**, identificar se aplica **IF-BrA** (LC 142) ou **IF-BrM** (BPC).
    - **Documento a produzir (tome a iniciativa, deixe pronto na subpasta `Claude`).**
      Use os modelos vivos do Drive, NUNCA do zero (ver CLAUDE.md, "Modelos e
@@ -282,8 +339,9 @@ CNIS ou prazo a confirmar, consolidando as pendências de todos os clientes.
 ## Dependencias (necessarias no ambiente, inclusive no cowork)
 Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
 - **Scripts Python (raiz do repo):** `graph_bootstrap.py`, `graph_client.py`,
-  `triagem.py`, `triagem_do_dia.py`, `todo_anexo.py`, `todo_conclusao.py` e um
-  `graph_tokens.json` valido.
+  `triagem.py`, `triagem_do_dia.py`, `todo_anexo.py`, `todo_conclusao.py`,
+  `pdf_ocr.py` (leitura de escaneado, exige PyMuPDF/`fitz`), `docx_escritorio.py`,
+  `gdrive_upload.py` e um `graph_tokens.json` valido.
 - **MCP:** Google Drive (search_files, read_file_content, download_file_content,
   create_file) e Microsoft To Do via Microsoft Graph.
 - **Skills de apoio (base/ponte):** `base-precedentes-catalogo-vinculantes`,
