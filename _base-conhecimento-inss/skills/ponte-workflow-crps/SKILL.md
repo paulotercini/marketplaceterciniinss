@@ -93,7 +93,9 @@ Decisão recorrida (cópia). Comprovante de ciência. Procuração com poderes e
 
 ## 4. Pontos críticos pró-segurado
 
-Tempestividade é a primeira barreira. Recurso intempestivo não conhecido pode ser superado por relevação fundamentada (art. 112 da Lei 8.213/91 e jurisprudência do CRPS).
+Tempestividade é a primeira barreira. Recurso intempestivo não conhecido pode ser superado por **relevação da intempestividade**, que o relator propõe ao órgão julgador no próprio voto quando o mérito demonstrar de modo inequívoco a liquidez e a certeza do direito da parte, vedada a realização de diligência de instrução só para relevar. A matéria é do **Regimento Interno do CRPS**, hoje a **Portaria MPS nº 125, de 26/01/2026** [existência e objeto CONFERIDOS na fonte oficial gov.br em 01.08.2026], e o **número exato do artigo fica [A CONFERIR]** no inteiro teor, que não abriu desta rede. Peça o PDF do RICRPS ao Paulo antes de citar dispositivo.
+
+CORREÇÃO DE ERRO DESTA BASE (01.08.2026). Versão anterior desta skill fundamentava a relevação no **art. 112 da Lei 8.213/91**, o que é falso. O art. 112 trata do pagamento de valores não recebidos em vida pelo segurado aos dependentes e sucessores, nada tem com prazo recursal. Nunca cite o art. 112 para tempestividade.
 
 Renúncia tácita por ação judicial simultânea pode ser evitada com desistência da ação ou esclarecimento da diversidade de causas de pedir.
 
