@@ -160,6 +160,43 @@ alter table casos add column if not exists exigencia_descricao text;
 -- Urgente (🔥) convive com importante (⭐): urgente ordena primeiro em toda lista
 alter table casos add column if not exists urgente boolean not null default false;
 
+-- Parceria com advogado externo (#Laís, #JoãoEduardo no título do To Do)
+alter table casos add column if not exists parceria text;
+
+-- Protocolos do INSS citados nos andamentos ("protocolo 210987654321").
+-- Extraídos automaticamente; a pesquisa encontra o cliente pelo número —
+-- útil quando o INSS avisa só "concluído o protocolo X" sem outros dados.
+alter table casos add column if not exists protocolos jsonb not null default '[]';
+
+-- ── Vínculos entre clientes (parentes/amigos — o antigo checklist do To Do)
+create table if not exists vinculos (
+  id         uuid primary key default gen_random_uuid(),
+  cliente_id uuid not null references clientes(id) on delete cascade,
+  ligado_a   uuid not null references clientes(id) on delete cascade,
+  relacao    text,                                  -- "esposa", "irmão", "amigo indicou"...
+  unique (cliente_id, ligado_a)
+);
+create index if not exists vinculos_ligado on vinculos (ligado_a);
+
+-- ── Frases prontas dos andamentos (os padrões que a equipe sempre escreve)
+create table if not exists frases_prontas (
+  id    uuid primary key default gen_random_uuid(),
+  texto text not null unique
+);
+insert into frases_prontas (texto) values
+  ('Perícia médica agendada no dia __/__/____ às __:__ no INSS de ____.'),
+  ('Perícia judicial agendada no dia __/__/____ às __:__ em ____.'),
+  ('Audiência agendada no dia __/__/____ às __:__ .'),
+  ('Avaliação social agendada no dia __/__/____ às __:__ no INSS de ____.'),
+  ('Exigência do INSS: apresentar ____ até __/__/____.'),
+  ('Requerimento protocolado. Protocolo nº ____.'),
+  ('Recurso protocolado. Protocolo nº ____.'),
+  ('Benefício concedido. 🎉'),
+  ('Benefício indeferido. Motivo: ____.'),
+  ('Cliente orientado por telefone sobre ____.'),
+  ('Documentos recebidos do cliente: ____.')
+on conflict (texto) do nothing;
+
 -- ── Modelos de mensagem (copiar e mandar ao cliente) ──────────────────────
 -- Espaços reservados preenchidos pelo app: {nome} {primeiro_nome} {data}
 -- {hora} {local} {prazo}
@@ -328,7 +365,8 @@ begin
                            'casos','andamentos','eventos','pagamentos','tarefas',
                            'atribuicoes','meu_dia','modelos_mensagem','sugestoes',
                            'mencoes','leads','documentos_beneficio','conversas',
-                           'checklist_modelo','modelos_documento'] loop
+                           'checklist_modelo','modelos_documento',
+                           'vinculos','frases_prontas'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then

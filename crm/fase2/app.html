@@ -155,6 +155,16 @@
   .form-linha{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .form-linha input,.form-linha select{padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
   .form-linha button{padding:8px 14px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
+  .id-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+  .id-card{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:10px 14px}
+  .id-card.destaque{border-color:#f0c36d;background:#fffaf0}
+  .id-card label{display:block;font-size:11px;color:var(--cinza);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+  .id-valor{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .cop{border:1px solid var(--borda);background:var(--fundo);border-radius:6px;padding:3px 9px;font-size:12px;font-weight:600;cursor:pointer;color:var(--azul)}
+  .cop:hover{background:#e8f1fb}
+  .id-secao{margin:12px 0}
+  .id-secao>label{display:block;font-size:12px;font-weight:700;color:var(--cinza);margin-bottom:5px}
+  .id-secao small{font-weight:400}
   .pgto{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--fundo);flex-wrap:wrap}
   .pgto .desc{flex:1;min-width:140px}
   .pgto .valor{font-weight:700}
@@ -224,7 +234,9 @@
       <button class="sair" onclick="sair()">sair</button></div>
     <div class="sep"></div>
     <button class="novo-cli" id="btn-novo-cli">➕ Novo Cliente</button>
-    <div class="busca"><input id="busca" placeholder="Pesquisar nome, CPF, processo…"></div>
+    <div class="busca"><input id="busca" placeholder="Pesquisar nome, CPF, processo, protocolo…" style="padding-right:26px">
+      <button id="busca-x" title="limpar pesquisa"
+        style="display:none;position:absolute;right:6px;top:6px;border:none;background:none;font-size:14px;cursor:pointer;color:var(--cinza)">✕</button></div>
     <div class="grupo" id="grupo-dinamicas"></div>
     <div class="sep"></div>
     <div class="grupo"><h3>Listas do escritório</h3><div id="grupo-fases"></div></div>
@@ -390,7 +402,7 @@ async function iniciar(){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -408,8 +420,9 @@ async function carregar(){
       todas("documentos_beneficio","select=*"),
       todas("checklist_modelo","select=*"),
       todas("modelos_documento","select=*&order=titulo"),
+      todas("frases_prontas","select=*&order=texto").catch(()=>[]),
     ]);
-  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos};
+  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases};
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -422,7 +435,7 @@ async function carregar(){
   // índice de pesquisa por cliente
   clientes.forEach(c=>{
     const ks = D.casosDoCliente.get(c.id)||[];
-    c._ix = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+(k.beneficio||"")).join(" ")].join(" "));
+    c._ix = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+(k.beneficio||"")+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
   });
 }
 
@@ -453,6 +466,7 @@ const TEMA = {
   "docmodelos":        ["#4a5568", "#f1f3f5"],
   "quadro":            ["#1e4fa3", "#f3f6fb"],
   "vendas":            ["#1e6f50", "#e9f5ef"],
+  "parcerias":         ["#6d4c41", "#f4eeeb"],
   "marketing":         ["#d64570", "#fdeef3"],
   "recebimentos":      ["#1e6f50", "#e9f5ef"],
   "agenda":            ["#5c2e91", "#f1eafa"],
@@ -517,6 +531,7 @@ function montarSidebar(){
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
+    ["parcerias","🤝 Parcerias", ativos().filter(k=>k.parceria).length||null],
     ["marketing","📣 Marketing", null],
     ["recebimentos","💰 Recebimentos", D.casos.filter(k=>k.fase==="pagamento").length],
     ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && e.data_hora>=hoje()).length],
@@ -645,6 +660,7 @@ function render(){
   if(visao==="docmodelos") return renderModelosDoc();
   if(visao==="quadro") return renderQuadro();
   if(visao==="vendas") return renderVendas();
+  if(visao==="parcerias") return renderParcerias();
   if(visao==="marketing") return renderMarketing();
 
   if(visao==="planejado") return renderPlanejado();
@@ -1130,6 +1146,22 @@ function renderAgenda(){
   document.querySelectorAll(".evento[data-cli]").forEach(el=>el.onclick=()=>{ if(el.dataset.cli) abrirFicha(el.dataset.cli); });
 }
 
+function renderParcerias(){
+  document.getElementById("titulo-lista").textContent="🤝 Parcerias";
+  document.getElementById("sub-lista").textContent=
+    "Casos em parceria com advogados externos — vêm das etiquetas #Nome no título do To Do (ex.: #Laís).";
+  const com = D.casos.filter(k=>k.parceria && k.fase!=="encerrado");
+  const porParceiro = {};
+  com.forEach(k=>k.parceria.split(",").map(p=>p.trim()).filter(Boolean)
+    .forEach(p=>{ (porParceiro[p]=porParceiro[p]||[]).push(k); }));
+  const nomes = Object.keys(porParceiro).sort((a,b)=>porParceiro[b].length-porParceiro[a].length);
+  document.getElementById("conteudo-meio").innerHTML =
+    nomes.map(n=>`<h3 class="secao">🤝 ${esc(n)} (${porParceiro[n].length})</h3>`
+      + grupoClientes(porParceiro[n]).map(([c,ks])=>cartaoCliente(c,ks)).join("")).join("")
+    || "<p class='meio-sub'>Nenhum caso com parceria. Marque com #Nome no título do To Do (ex.: #Laís) ou defina na ficha.</p>";
+  ligarCartoes();
+}
+
 function barras(pares){
   const max=Math.max(...pares.map(p=>p[1]),1);
   return pares.map(([r,q])=>`<div class="barra"><span class="rot" title="${esc(r)}">${esc(r)}</span><div class="tubo"><i style="width:${q/max*100}%"></i></div><span class="qt">${q}</span></div>`).join("");
@@ -1174,9 +1206,10 @@ async function abrirFicha(cliId){
   document.getElementById("app").classList.add("detalhe-aberto");
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
   const ids = ks.map(k=>k.id).join(",");
-  const [ands, creds] = await Promise.all([
+  const [ands, creds, vincs] = await Promise.all([
     ids?todas("andamentos",`select=*&caso_id=in.(${ids})&order=criado_em.desc`):[],
     todas("credenciais",`select=id,tipo,cliente_id&cliente_id=eq.${cliId}`),
+    todas("vinculos",`select=*&or=(cliente_id.eq.${cliId},ligado_a.eq.${cliId})`).catch(()=>[]),
   ]);
   const evs = D.eventos.filter(e=>ks.some(k=>k.id===e.caso_id)).sort((a,b)=>a.data_hora<b.data_hora?1:-1);
   const pgs = D.pagamentos.filter(p=>ks.some(k=>k.id===p.caso_id));
@@ -1200,39 +1233,87 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="painel ${abaAtiva===0?"ativo":""}" data-p="0">
-    <div class="campos">
-      <div class="campo"><label>CPF</label><div class="valor">${fmtCpf(c.cpf)}
-        ${c.cpf?`<button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:""}</div></div>
-      ${(creds.filter(cr=>cr.tipo==="meu_inss").concat(creds.filter(cr=>cr.tipo!=="meu_inss")))
-        .map(cr=>`<div class="campo"><label>Senha ${esc(cr.tipo.replace("_"," "))}</label>
-        <div class="valor"><span id="cred-${cr.id}">••••••••</span>
-        <button class="olho" onclick="copiarCred('${cr.id}')" title="copiar (fica registrado)">📋</button>
+    ${(()=>{
+      const credInss = creds.find(cr=>cr.tipo==="meu_inss");
+      const outrasCreds = creds.filter(cr=>cr.tipo!=="meu_inss");
+      const prots = [...new Set(ks.flatMap(k=>k.protocolos||[]))];
+      const parcs = [...new Set(ks.map(k=>k.parceria).filter(Boolean))];
+      return `
+    <div class="id-grid">
+      <div class="id-card">
+        <label>CPF</label>
+        <div class="id-valor">${fmtCpf(c.cpf)}
+          ${c.cpf?`<button class="cop" onclick="copiar('${c.cpf}','CPF copiado')">📋 copiar</button>`:""}</div>
+      </div>
+      <div class="id-card destaque">
+        <label>🔑 Senha Meu INSS</label>
+        ${credInss?`<div class="id-valor"><span id="cred-${credInss.id}">••••••••</span>
+          <button class="cop" onclick="copiarCred('${credInss.id}')" title="fica registrado quem copiou">📋 copiar</button>
+          <button class="olho" onclick="verCred('${credInss.id}')" title="ver (fica registrado)">👁</button></div>`
+        :`<div class="id-valor" style="color:var(--cinza);font-weight:400">não cadastrada
+          <button class="cop" onclick="document.getElementById('mais-opcoes').open=true;document.getElementById('nc-valor').focus()">＋ cadastrar</button></div>`}
+      </div>
+      <div class="id-card">
+        <label>Telefone / WhatsApp</label>
+        <div class="id-valor">${c.telefone?`${esc(c.telefone)}
+          <button class="cop" onclick="copiar('${c.telefone.replace(/\D/g,"")}','Telefone copiado')">📋 copiar</button>
+          <a class="cop" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" style="text-decoration:none">💬 WhatsApp</a>`:"—"}</div>
+      </div>
+      <div class="id-card">
+        <label>Nascimento</label>
+        <div class="id-valor">${c.dn?c.dn.slice(0,2)+"."+c.dn.slice(2,4)+"."+c.dn.slice(4):"—"}</div>
+      </div>
+      ${outrasCreds.map(cr=>`<div class="id-card"><label>Senha ${esc(cr.tipo.replace("_"," "))}</label>
+        <div class="id-valor"><span id="cred-${cr.id}">••••••••</span>
+        <button class="cop" onclick="copiarCred('${cr.id}')">📋 copiar</button>
         <button class="olho" onclick="verCred('${cr.id}')" title="ver (fica registrado)">👁</button></div></div>`).join("")}
-      <div class="campo"><label>Data de nascimento</label><div class="valor">${c.dn?c.dn.slice(0,2)+"."+c.dn.slice(2,4)+"."+c.dn.slice(4):"—"}</div></div>
-      <div class="campo"><label>Telefone / WhatsApp</label><div class="valor">${c.telefone?`<a href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank">💬 ${esc(c.telefone)}</a>`:"—"}</div></div>
-      <div class="campo"><label>Endereço</label><div class="valor" style="font-weight:400">${esc(c.endereco||"—")}</div></div>
-      <div class="campo"><label>Pasta do cliente</label><div class="valor">
-        <button class="btn-mini" onclick="abrirDrive('${c.id}')" title="abre no Google Drive (navegador)">📁 Drive</button>
-        <button class="btn-mini" onclick="abrirExplorer('${c.id}')" title="abre no Windows Explorer (requer atalho instalado)">🖥 Explorer</button>
-      </div></div>
+      <div class="id-card">
+        <label>Pasta do cliente</label>
+        <div class="id-valor">
+          <button class="cop" onclick="abrirDrive('${c.id}')" title="abre no Google Drive (navegador)">📁 Drive</button>
+          <button class="cop" onclick="abrirExplorer('${c.id}')" title="abre no Windows Explorer (requer atalho instalado)">🖥 Explorer</button></div>
+      </div>
+      ${c.endereco?`<div class="id-card" style="grid-column:1/-1"><label>Endereço</label>
+        <div class="id-valor" style="font-weight:400">${esc(c.endereco)}</div></div>`:""}
     </div>
-    <div class="form-linha">
-      <select id="nc-tipo"><option value="meu_inss">senha Meu INSS</option><option value="gov_br">senha gov.br</option><option value="outro">outra credencial</option></select>
-      <input id="nc-valor" placeholder="valor (fica cifrado no banco)">
-      <button onclick="novaCred('${c.id}')">Guardar</button>
+    ${prots.length?`<div class="id-secao"><label>📄 Protocolos INSS <small>(extraídos dos andamentos — a pesquisa 🔍 encontra o cliente por eles)</small></label>
+      ${prots.map(pr=>`<span class="chip neutro" style="cursor:pointer" title="copiar" onclick="copiar('${pr}','Protocolo copiado')">📄 ${pr}</span>`).join(" ")}</div>`:""}
+    ${parcs.length?`<div class="id-secao"><label>🤝 Parceria</label>
+      ${parcs.map(pa=>`<span class="chip ben">🤝 ${esc(pa)}</span>`).join(" ")}</div>`:""}
+    <div class="id-secao"><label>👪 Parentes & amigos <small>(clientes vinculados — clique para abrir a ficha)</small></label>
+      ${vincs.map(v=>{
+        const outroId = v.cliente_id===c.id ? v.ligado_a : v.cliente_id;
+        const o = D.cliPorId.get(outroId); if(!o) return "";
+        return `<span class="chip neutro" style="cursor:pointer" onclick="abrirFicha('${o.id}')">👤 ${esc(o.nome)}${v.relacao?" · "+esc(v.relacao):""}</span>
+          <button class="olho" title="desvincular" onclick="removerVinculo('${v.id}')">✕</button>`;
+      }).join(" ")||`<span style="font-size:13px;color:var(--cinza)">nenhum vínculo ainda</span>`}
+      <div class="form-linha" style="margin-top:6px">
+        <input id="vin-nome" list="lista-clientes" placeholder="nome do outro cliente" style="flex:1;min-width:180px">
+        <input id="vin-rel" placeholder="relação (esposa, irmão, indicou…)" style="width:170px">
+        <button onclick="novoVinculo('${c.id}')">Vincular</button>
+      </div>
+      <datalist id="lista-clientes">${D.clientes.map(x=>x.id!==c.id?`<option value="${esc(x.nome)}">`:"").join("")}</datalist>
     </div>
-    <div class="form-linha">
-      <input id="pd-url" placeholder="colar o link da pasta deste cliente no Drive (opcional — sem link, o 📁 pesquisa pelo nome)"
-        value="${esc((c.campos||{}).pasta_drive||"")}" style="flex:1;min-width:260px">
-      <button onclick="salvarPasta('${c.id}')">Vincular pasta</button>
-    </div>
-    <p style="margin-top:8px;font-size:12px;color:var(--cinza)">Toda visualização de senha é registrada (quem e quando).</p>
-    <div class="form-linha" style="align-items:center">
-      <span style="font-size:13px;color:var(--cinza)">📅 Agendar atendimento:</span>
-      <select id="ag-tipo"><option value="002">002 — cliente antigo</option><option value="001">001 — cliente novo</option></select>
-      <input type="date" id="ag-data"><input type="time" id="ag-hora" value="09:00">
-      <button onclick="agendarAtendimento('${c.id}')">Abrir no Google Agenda</button>
-    </div>
+    <details id="mais-opcoes" style="margin-top:14px"><summary style="cursor:pointer;color:var(--cinza)">⚙ Mais opções — cadastrar senha, vincular pasta, agendar atendimento</summary>
+      <div class="form-linha" style="margin-top:8px">
+        <select id="nc-tipo"><option value="meu_inss">senha Meu INSS</option><option value="gov_br">senha gov.br</option><option value="outro">outra credencial</option></select>
+        <input id="nc-valor" placeholder="valor (fica cifrado no banco)">
+        <button onclick="novaCred('${c.id}')">Guardar</button>
+      </div>
+      <div class="form-linha">
+        <input id="pd-url" placeholder="colar o link da pasta deste cliente no Drive (opcional — sem link, o 📁 pesquisa pelo nome)"
+          value="${esc((c.campos||{}).pasta_drive||"")}" style="flex:1;min-width:260px">
+        <button onclick="salvarPasta('${c.id}')">Vincular pasta</button>
+      </div>
+      <div class="form-linha" style="align-items:center">
+        <span style="font-size:13px;color:var(--cinza)">📅 Agendar atendimento:</span>
+        <select id="ag-tipo"><option value="002">002 — cliente antigo</option><option value="001">001 — cliente novo</option></select>
+        <input type="date" id="ag-data"><input type="time" id="ag-hora" value="09:00">
+        <button onclick="agendarAtendimento('${c.id}')">Abrir no Google Agenda</button>
+      </div>
+      <p style="margin-top:8px;font-size:12px;color:var(--cinza)">Toda visualização de senha é registrada (quem e quando).</p>
+    </details>`;
+    })()}
   </div>
 
   <div class="painel ${abaAtiva===1?"ativo":""}" data-p="1">
@@ -1249,6 +1330,8 @@ async function abrirFicha(cliId){
             <button class="btn-mini" onclick="salvarBeneficio('${k.id}')">definir</button>`:""}
           ${k.nb?`<span class="chip neutro">NB ${esc(k.nb)}</span>`:""}
           ${k.processo?`<span class="chip neutro">proc. ${esc(k.processo)}</span>`:""}
+          ${k.parceria?`<span class="chip ben">🤝 ${esc(k.parceria)}</span>`:""}
+          ${(k.protocolos||[]).slice(-3).map(pr=>`<span class="chip neutro" style="cursor:pointer" title="copiar protocolo" onclick="copiar('${pr}','Protocolo copiado')">📄 ${pr}</span>`).join("")}
           ${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}
         </div>
         ${trilhaCaso(k)}
@@ -1401,11 +1484,19 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="escrever">
+    <div id="frases-box" style="display:none;max-height:210px;overflow-y:auto;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-bottom:6px;padding:6px">
+      ${D.frases.map((f,fi)=>`<div class="frase-it" style="padding:5px 8px;border-radius:6px;cursor:pointer;font-size:13px" data-fi="${fi}">⚡ ${esc(f.texto)}</div>`).join("")}
+      <div class="form-linha" style="margin:6px 0 0">
+        <input id="nf-texto" placeholder="＋ salvar nova frase do jeito que vocês escrevem (use __ para completar depois)" style="flex:1">
+        <button onclick="novaFrase()">Salvar</button>
+      </div>
+    </div>
     <div class="dica">✓ Data e autor (${esc(eu.nome)}) entram sozinhos — e o texto é replicado no To Do</div>
     <div class="linha">
       <span class="avatar" style="background:${eu.cor}">${esc(eu.inicial)}</span>
+      <button class="btn-mini" title="frases prontas — os padrões que vocês sempre escrevem" onclick="toggleFrases()">⚡</button>
       ${ks.length>1?`<select id="and-caso">${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>`:""}
-      <input id="and-texto" placeholder="Escreva o andamento…">
+      <input id="and-texto" placeholder="Escreva o andamento… (⚡ = frases prontas)">
       <button onclick="novoAndamento('${ks.length===1?ks[0].id:""}')">Registrar</button>
     </div>
   </div>`;
@@ -1415,7 +1506,18 @@ async function abrirFicha(cliId){
     document.querySelectorAll(".aba").forEach(x=>x.classList.remove("ativa")); b.classList.add("ativa");
     document.querySelectorAll(".painel").forEach(p=>p.classList.toggle("ativo",p.dataset.p===b.dataset.i));
   });
-  document.getElementById("and-texto").onkeydown=e=>{ if(e.key==="Enter") document.querySelector(".escrever button").click(); };
+  document.getElementById("and-texto").onkeydown=e=>{ if(e.key==="Enter") document.querySelector(".escrever button[onclick^='novoAndamento']").click(); };
+  document.querySelectorAll(".frase-it").forEach(el=>{
+    el.onmouseenter=()=>el.style.background="var(--fundo)";
+    el.onmouseleave=()=>el.style.background="";
+    el.onclick=()=>{
+      const inp=document.getElementById("and-texto");
+      inp.value=(D.frases[+el.dataset.fi]||{}).texto||"";
+      toggleFrases(); inp.focus();
+      const i=inp.value.indexOf("__");
+      if(i>=0) inp.setSelectionRange(i, i+2);   // cursor já no primeiro espaço a completar
+    };
+  });
   document.querySelectorAll("[data-fase]").forEach(s=>s.onchange=async()=>{
     const k=D.casoPorId.get(s.dataset.fase); k.fase=s.value;
     if(s.value==="encerrado") k.encerrado_em=new Date().toISOString();
@@ -1481,6 +1583,24 @@ async function abrirFicha(cliId){
 
 // muda a aba ativa da ficha por código (ex.: atalho "ver na aba Pagamentos")
 function irAba(i){ const b=document.querySelector(`.aba[data-i="${i}"]`); if(b) b.click(); }
+
+// vínculos entre clientes (parentes/amigos — o antigo checklist do To Do)
+async function novoVinculo(cliId){
+  const nome=document.getElementById("vin-nome").value.trim();
+  if(!nome) return aviso("Digite o nome do outro cliente");
+  const achados=D.clientes.filter(x=>x.id!==cliId && x.nome.toLowerCase()===nome.toLowerCase());
+  if(!achados.length) return aviso("Cliente não encontrado — escolha um nome da lista");
+  const rel=document.getElementById("vin-rel").value.trim()||null;
+  try{
+    await api(`/rest/v1/vinculos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({cliente_id:cliId, ligado_a:achados[0].id, relacao:rel})});
+  }catch(e){ if(e.status!==409) throw e; }
+  aviso("Vinculado 👪"); abaAtiva=0; abrirFicha(cliId);
+}
+async function removerVinculo(vid){
+  await api(`/rest/v1/vinculos?id=eq.${vid}`,{method:"DELETE"});
+  aviso("Vínculo removido"); abaAtiva=0; abrirFicha(clienteAberto);
+}
 
 // identidade didática do caso: "o que é" (benefício) + "onde está" (fase)
 function tituloCaso(k){
@@ -1596,9 +1716,48 @@ async function novoAndamento(casoUnico){
   const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})});
   await criarMencoes(texto, casoId, and?and.id:null);   // @Amanda, @M... viram pendências
+  const k=D.casoPorId.get(casoId);
+  // protocolo citado entra na ficha e vira pesquisável ("protocolo 210...")
+  const prot=texto.match(/protocolo\D{0,12}(\d{6,})/i);
+  if(prot && k && !(k.protocolos||[]).includes(prot[1])){
+    k.protocolos=[...(k.protocolos||[]), prot[1]];
+    await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({protocolos:k.protocolos})});
+    const cli=D.cliPorId.get(k.cliente_id);
+    if(cli) cli._ix += " " + prot[1];
+  }
   const ev=await extrairEvento(texto, casoId);          // perícia citada vira agendamento
-  if(ev){ montarSidebar(); aviso(`🩺 ${ev.tipo} de ${fmt(ev.data)} agendada automaticamente!`); }
-  else aviso("Andamento registrado — será replicado no To Do");
+  if(ev){
+    montarSidebar();
+    // próximo passo: perícia em caso judicial pede atendimento presencial antes
+    const tituloProx="Agendar atendimento presencial antes da perícia (orientar o cliente)";
+    if(k && k.fase==="judicial" && /per[íi]cia/i.test(ev.tipo||"") &&
+       !D.tarefas.some(t=>t.caso_id===casoId && !t.concluida && t.titulo===tituloProx)){
+      const [tf]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:casoId, titulo:tituloProx})});
+      if(tf) D.tarefas.push(tf);
+      aviso(`🩺 ${ev.tipo} de ${fmt(ev.data)} agendada — 💡 criei no checklist: agendar atendimento presencial antes`);
+    } else aviso(`🩺 ${ev.tipo} de ${fmt(ev.data)} agendada automaticamente!`);
+  }
+  else aviso(prot?"Andamento registrado — protocolo 📄 guardado na ficha":"Andamento registrado — será replicado no To Do");
+  abrirFicha(clienteAberto);
+}
+
+// frases prontas do composer (⚡)
+function toggleFrases(){
+  const b=document.getElementById("frases-box");
+  b.style.display = b.style.display==="none" ? "block" : "none";
+}
+async function novaFrase(){
+  const inp=document.getElementById("nf-texto");
+  const t=inp.value.trim(); if(!t) return;
+  try{
+    const [f]=await api(`/rest/v1/frases_prontas`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({texto:t})});
+    if(f) D.frases.push(f);
+  }catch(e){ if(e.status!==409) throw e; }
+  D.frases.sort((a,b)=>a.texto<b.texto?-1:1);
+  inp.value=""; aviso("Frase salva ⚡ — aparece para toda a equipe");
   abrirFicha(clienteAberto);
 }
 async function novoEvento(){
@@ -1842,8 +2001,15 @@ async function novaCred(cliId){
 let timerBusca=null;
 document.getElementById("busca").addEventListener("input",e=>{
   clearTimeout(timerBusca);
+  document.getElementById("busca-x").style.display = e.target.value ? "block" : "none";
   timerBusca=setTimeout(()=>{ buscaTxt=dsa(e.target.value.trim()); render(); },200);
 });
+document.getElementById("busca-x").onclick=()=>{
+  const b=document.getElementById("busca");
+  b.value=""; buscaTxt="";
+  document.getElementById("busca-x").style.display="none";
+  b.focus(); render();
+};
 document.getElementById("ordem").onchange=()=>render();
 
 (async ()=>{

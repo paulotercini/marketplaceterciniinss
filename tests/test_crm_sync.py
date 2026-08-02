@@ -116,3 +116,10 @@ def test_dn_e_preambulo():
                checklist=["Aniversário 12.03.1961"])
     assert t["dn"] == "12031961"
     assert t["preambulo"] == "Senha gov: xyz"   # anotação antes do 1º bloco é preservada
+
+
+def test_parceria_do_titulo_ignora_cpf_e_especie():
+    assert sync_todo.parceria_do_titulo(
+        "Fulana #12345678900 #B31 #Laís #JoãoEduardo") == "Laís, JoãoEduardo"
+    assert sync_todo.parceria_do_titulo("Fulano #12345678900 #B94") is None
+    assert sync_todo.parceria_do_titulo("Sem etiquetas") is None
