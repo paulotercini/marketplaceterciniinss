@@ -551,7 +551,7 @@ function cartaoCliente(cli, casosMostrar){
   const evFut = D.eventos.find(e=>ks.some(k=>k.id===e.caso_id) && e.status==="agendada" && e.data_hora.slice(0,10)>=hoje());
   const imp = ks.some(k=>k.importante);
   const noMeuDia = D.meudia.some(m=>m.colaborador_id===eu.id && ks.some(k=>k.id===m.caso_id));
-  return `<div class="cartao" data-cli="${cli.id}">
+  return `<div class="cartao" data-cli="${cli.id}" ${resp.length?`style="border-left:4px solid ${resp[0].cor}"`:""}>
     <span class="check"></span>
     <div class="info">
       <div class="nome">${esc(cli.nome)}</div>
@@ -1457,6 +1457,7 @@ async function abrirFicha(cliId){
       }
     }
     aviso(tinha?"Atribuído":"Atribuição removida"); montarSidebar();
+    render();   // atualiza a coluna do meio na hora (avatar e cor do responsável)
   });
   document.querySelectorAll("[data-recebe]").forEach(b=>b.onclick=async()=>{
     const p=D.pagamentos.find(x=>x.id===b.dataset.recebe);
