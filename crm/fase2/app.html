@@ -6,9 +6,10 @@
 <title>CRM Tercini</title>
 <style>
   :root{
-    --azul:#2564cf; --azul-escuro:#1e4fa3; --fundo:#faf9f8; --lateral:#eff6fc;
-    --texto:#292827; --cinza:#605e5c; --borda:#e1dfdd; --branco:#fff;
-    --verde:#0b6a0b; --laranja:#b4530a; --vermelho:#a4262c; --roxo:#5c2e91;
+    /* proposta visual aprovada: neutros CINZA, um azul só para o "sistema" */
+    --azul:#2B5FC7; --azul-escuro:#234E9E; --fundo:#F3F4F6; --lateral:#EBEDF0;
+    --texto:#25272B; --cinza:#5B6069; --borda:#E2E4E8; --branco:#fff;
+    --verde:#1E6F50; --laranja:#B4530A; --vermelho:#B3261E; --roxo:#5C2E91;
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif}
   body{background:var(--fundo);color:var(--texto);height:100vh;overflow:hidden;font-size:14px}
@@ -43,7 +44,7 @@
   .app.mini-lateral .sidebar .novo-cli, .app.detalhe-aberto .sidebar .novo-cli{width:34px;margin:0 auto 10px;padding:7px 0}
   .app.mini-lateral .sidebar .usuario, .app.detalhe-aberto .sidebar .usuario{justify-content:center}
   /* coluna de casos dentro da ficha (3ª coluna): escolhe o caso, a 4ª mostra o andamento dele */
-  .col-casos{width:186px;flex:none;border-right:1px solid var(--borda);background:#edeae6;overflow-y:auto;padding:10px 8px}
+  .col-casos{width:186px;flex:none;border-right:1px solid var(--borda);background:#E4E6EA;overflow-y:auto;padding:10px 8px}
   .col-casos .cc-tit{font-size:11px;font-weight:700;color:var(--cinza);text-transform:uppercase;letter-spacing:.4px;padding:2px 6px 7px}
   .cc-item{border:1px solid var(--borda);border-radius:8px;padding:7px 9px;margin-bottom:6px;cursor:pointer;background:var(--branco)}
   .cc-item:hover{box-shadow:0 2px 6px rgba(0,0,0,.08)}
@@ -108,8 +109,8 @@
   .fchip.on{background:var(--azul);border-color:var(--azul);color:#fff}
   h3.secao{font-size:13px;color:var(--cinza);margin:12px 0 6px}
   /* meio-termo: cartão com respiro interno, só a distância entre eles é menor */
-  .cartao{background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 14px;margin-bottom:5px;cursor:pointer;display:flex;align-items:center;gap:11px}
-  .cartao:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  .cartao{background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 14px;margin-bottom:5px;cursor:pointer;display:flex;align-items:center;gap:11px;box-shadow:0 1px 2px rgba(30,32,36,.05)}
+  .cartao:hover{box-shadow:0 3px 10px rgba(30,32,36,.10)}
   .cartao.sel{outline:2px solid var(--azul)}
   .cartao.feita{opacity:.55}
   .cartao.feita .nome{text-decoration:line-through}
@@ -533,8 +534,10 @@ const TEMA = {
   "novocliente":       ["#1e4fa3", "#f3f6fb"],
 };
 function aplicarTema(){
-  const [cor, fundo] = TEMA[buscaTxt?"dashboard":visao] || ["#1e4fa3", "#faf9f8"];
-  document.querySelector(".meio").style.background = fundo;
+  // fundo sempre neutro (cinza); a cor da lista fica só no título — a
+  // identidade continua, sem sete fundos coloridos disputando a tela
+  const [cor] = TEMA[buscaTxt?"dashboard":visao] || ["#234E9E"];
+  document.querySelector(".meio").style.background = "var(--fundo)";
   document.getElementById("titulo-lista").style.color = cor;
 }
 
