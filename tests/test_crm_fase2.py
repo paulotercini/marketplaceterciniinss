@@ -198,3 +198,24 @@ def test_mapear_sem_secret_ignora_padrao(monkeypatch):
           checklist=[{"texto": "Padrão", "feito": False}]),
     ]))
     assert m["credenciais"] == [] and m["tarefas"] == []
+
+
+def test_documentos_solicitados_no_andamento_viram_checklist():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191",
+          andamentos=[{"data": "2026-08-01", "inicial": "P", "autor": "Paulo",
+                       "texto": "Atendimento feito. Documentos solicitados ao cliente: "
+                                "RG e CPF; Comprovante de residência; Carta de indeferimento."}]),
+    ]))
+    titulos = sorted(tf["titulo"] for tf in m["tarefas_docs"])
+    assert titulos == ["📄 Carta de indeferimento", "📄 Comprovante de residência", "📄 RG e CPF"]
+    assert all(not tf["concluida"] for tf in m["tarefas_docs"])
+
+
+def test_andamento_sem_solicitacao_nao_gera_checklist():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191",
+          andamentos=[{"data": "2026-08-01", "inicial": "P", "autor": "Paulo",
+                       "texto": "Perícia agendada dia 13.04.2027."}]),
+    ]))
+    assert m["tarefas_docs"] == []
