@@ -163,6 +163,10 @@ alter table casos add column if not exists urgente boolean not null default fals
 -- Parceria com advogado externo (#Laís, #JoãoEduardo no título do To Do)
 alter table casos add column if not exists parceria text;
 
+-- O MOTIVO do "Lembrar em" (prazo): a data diz quando agir, o motivo diz o
+-- porquê — "pedir prorrogação", "cobrar documentos", "conferir INSS"...
+alter table casos add column if not exists lembrar_motivo text;
+
 -- Mover de lista pedido no app (botão direito → "Mover para…"):
 -- escrever_todo.py recria a tarefa na lista nova do To Do (o Graph não tem
 -- "mover"), apaga a antiga, atualiza todo_task_id/origem_lista e limpa isto.

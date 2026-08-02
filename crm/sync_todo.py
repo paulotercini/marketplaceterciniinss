@@ -32,8 +32,8 @@ COLABORADORES = {
 # escritório; as demais vão para o grupo "Outras listas". 💵 Pagamentos fica
 # de fora de propósito: pagamento é etapa do caso, visto na ficha do cliente.
 LISTAS_PRINCIPAIS = [
-    "🗓 Tarefas com Prazo", "🙋 Escritório", "🌻 INSS", "👪 Judicial",
-    "🖥 Conselho de Recursos", "🙏 Aposentadorias Futuras",
+    "🗓 Tarefas com Prazo", "💡 Petições Iniciais", "🙋 Escritório", "🌻 INSS",
+    "👪 Judicial", "🖥 Conselho de Recursos", "🙏 Aposentadorias Futuras",
 ]
 
 BENEFICIOS = [

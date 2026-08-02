@@ -30,6 +30,7 @@ FASE_LISTA = {
     "conselho": "🖥 Conselho de Recursos",
     "pagamento": "💵 Pagamentos",
     "aposentadoria_futura": "🙏 Aposentadorias Futuras",
+    "peticao_inicial": "💡 Petições Iniciais",
     "outro": "🗓 Tarefas com Prazo",
 }
 

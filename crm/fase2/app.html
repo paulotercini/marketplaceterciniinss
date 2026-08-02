@@ -518,10 +518,12 @@ async function carregar(){
 const FASES = [
   ["prazo","🗓 Tarefas com Prazo"], ["escritorio","🙋 Escritório"], ["inss","🌻 INSS"],
   ["judicial","👪 Judicial"], ["conselho","🖥 Conselho de Recursos"],
+  ["peticao_inicial","💡 Petições Iniciais"],
   ["aposentadoria_futura","🙏 Aposentadorias Futuras"],
 ];
 const NOME_FASE = {escritorio:"Escritório", inss:"INSS", conselho:"Conselho", judicial:"Judicial",
-  pagamento:"Pagamento", aposentadoria_futura:"Apos. Futura", outro:"Outros", encerrado:"Encerrado"};
+  pagamento:"Pagamento", aposentadoria_futura:"Apos. Futura",
+  peticao_inicial:"Petições Iniciais", outro:"Outros", encerrado:"Encerrado"};
 
 // cores por lista, como no To Do (fundo suave + título na cor da lista)
 const TEMA = {
@@ -537,6 +539,7 @@ const TEMA = {
   "fase:judicial":     ["#1e4fa3", "#e8f1fb"],
   "fase:conselho":     ["#00668c", "#e7f4fa"],
   "fase:aposentadoria_futura": ["#7a4dd8", "#f2ecfc"],
+  "fase:peticao_inicial": ["#B08900", "#FBF6E3"],
   "claude":            ["#7a4dd8", "#f2ecfc"],
   "docmodelos":        ["#4a5568", "#f1f3f5"],
   "quadro":            ["#1e4fa3", "#f3f6fb"],
@@ -558,10 +561,10 @@ function aplicarTema(){
 
 function ativos(){ return D.casos.filter(k=>k.fase!=="encerrado"); }
 // chip de prazo estilo semáforo 🚦
-function chipPrazo(prazo){
+function chipPrazo(prazo, motivo){
   if(!prazo) return "";
   const cls = prazo<hoje() ? "venc" : prazo===hoje() ? "hoje" : "ok";
-  return `<span class="chip prazo ${cls}">🗓 ${prazo===hoje()?"Hoje":fmt(prazo)}</span>`;
+  return `<span class="chip prazo ${cls}"${motivo?` title="${esc(motivo)}"`:""}>🗓 ${prazo===hoje()?"Hoje":fmt(prazo)}</span>`;
 }
 function diasAte(iso){ return Math.ceil((new Date(iso+"T12:00:00")-new Date(hoje()+"T12:00:00"))/864e5); }
 function chipExig(k){
@@ -601,6 +604,7 @@ function casosDaFase(f){
 const LISTAS_MOVER=[
   ["🗓 Tarefas com Prazo","outro"], ["🙋 Escritório","escritorio"], ["🌻 INSS","inss"],
   ["🖥 Conselho de Recursos","conselho"], ["👪 Judicial","judicial"],
+  ["💡 Petições Iniciais","peticao_inicial"],
   ["🙏 Aposentadorias Futuras","aposentadoria_futura"], ["💵 Pagamentos","pagamento"],
 ];
 function fecharMenuMover(){ const m=document.getElementById("menu-mover"); if(m) m.remove(); }
@@ -701,7 +705,8 @@ function cartaoCliente(cli, casosMostrar){
         ${[...new Set(ks.map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
         ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
         ${ks.map(chipExig).join("")}
-        ${chipPrazo(prazoMin)}
+        ${(kp=>chipPrazo(prazoMin, kp&&kp.lembrar_motivo))(ks.find(x=>x.prazo===prazoMin))}
+        ${(kp=>kp&&kp.lembrar_motivo?`<span class="chip neutro" title="${esc(kp.lembrar_motivo)}">📌 ${esc(kp.lembrar_motivo.length>32?kp.lembrar_motivo.slice(0,32)+"…":kp.lembrar_motivo)}</span>`:"")(ks.find(x=>x.prazo===prazoMin))}
         ${evFut?`<span class="chip per">🩺 ${esc(evFut.tipo)} ${fmt(evFut.data_hora.slice(0,10))}</span>`:""}
         ${ks.length>1?`<span class="chip neutro">${ks.length} casos</span>`:""}
       </div>
@@ -1675,6 +1680,7 @@ async function abrirFicha(cliId){
       </div>
     </div>
     <div id="preenche-box" style="display:none;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-bottom:6px;padding:10px"></div>
+    <div id="lembrar-box" style="display:none;border:1px solid #E9B44C;border-radius:8px;background:#FFFBEF;margin-bottom:6px;padding:10px"></div>
     <div id="exig-box" style="display:none;border:1px solid #f0c36d;border-radius:8px;background:#fffaf0;margin-bottom:6px;padding:10px">
       <strong style="font-size:13px">⚠ Registrar exigência do INSS</strong>
       <div class="form-linha" style="margin-top:6px">
@@ -1687,8 +1693,8 @@ async function abrirFicha(cliId){
     </div>
     <div class="dica">✓ Data e autor (${esc(eu.nome)}) entram sozinhos — e o texto é replicado no To Do</div>
     ${(kA=>kA?`<div class="acao-rapida">
-      <span class="lembrar-caixa" title="a data de agir — o 'Lembrar' do To Do">🗓 Lembrar em
-        <input type="date" value="${kA.prazo||""}" data-prazo="${kA.id}"></span>
+      <button class="lembrar-caixa" style="cursor:pointer;font:inherit" onclick="toggleLembrar('${kA.id}')"
+        title="quando agir e por quê — clique para mudar (atalhos +7/+15/+30 dias)">🗓 ${kA.prazo?fmt(kA.prazo):"Lembrar em…"}${kA.lembrar_motivo?" — "+esc(kA.lembrar_motivo.length>26?kA.lembrar_motivo.slice(0,26)+"…":kA.lembrar_motivo):""}</button>
       <span class="rotulo-rap">Atribuir:</span>
       ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${(D.atrDoCaso.get(kA.id)||[]).includes(co.id)?"on":""}" data-eq="${co.id}" title="${esc(co.nome)} — atribuir/retirar">
         <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.inicial)}</span>`).join("")}
@@ -2014,17 +2020,60 @@ function toggleFrases(){
   b.style.display = b.style.display==="none" ? "block" : "none";
   document.getElementById("exig-box").style.display="none";
   document.getElementById("preenche-box").style.display="none";
+  document.getElementById("lembrar-box").style.display="none";
 }
 function toggleExig(){
   const b=document.getElementById("exig-box");
   b.style.display = b.style.display==="none" ? "block" : "none";
   document.getElementById("frases-box").style.display="none";
   document.getElementById("preenche-box").style.display="none";
+  document.getElementById("lembrar-box").style.display="none";
   if(b.style.display==="block"){
     const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+30);   // prazo legal de 30 dias
     document.getElementById("ex-prazo").value=d.toLocaleDateString("sv");
     document.getElementById("ex-desc").focus();
   }
+}
+// Lembrar em = quando agir + POR QUÊ (padrão dos bons sistemas: data com motivo)
+function toggleLembrar(casoId){
+  const b=document.getElementById("lembrar-box");
+  ["frases-box","preenche-box","exig-box"].forEach(i=>document.getElementById(i).style.display="none");
+  if(b.style.display==="block"){ b.style.display="none"; return; }
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  const em=d=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+d); return x.toLocaleDateString("sv"); };
+  const MOTIVOS=["Pedir prorrogação do benefício","Cobrar documentos do cliente",
+    "Conferir resposta do INSS","Verificar pagamento","Retornar contato com o cliente","Último dia do prazo"];
+  b.innerHTML=`<strong style="font-size:13px">🗓 Lembrar em — quando agir e por quê</strong>
+    <div class="form-linha" style="margin-top:8px;align-items:center">
+      ${[["Amanhã",1],["+7 dias",7],["+15 dias",15],["+30 dias",30]].map(([r,d])=>
+        `<button class="btn-mini" onclick="document.getElementById('lb-data').value='${em(d)}'">${r}</button>`).join("")}
+      <input type="date" id="lb-data" value="${k.prazo||""}">
+    </div>
+    <div class="form-linha" style="align-items:center">
+      ${MOTIVOS.map(m=>`<button class="btn-mini" onclick="document.getElementById('lb-motivo').value=this.textContent">${m}</button>`).join("")}
+    </div>
+    <div class="form-linha">
+      <input id="lb-motivo" placeholder="por que lembrar? (ex.: pedir prorrogação)" value="${esc(k.lembrar_motivo||"")}" style="flex:1;min-width:220px">
+      <button onclick="salvarLembrar('${k.id}')">Salvar lembrete</button>
+      ${k.prazo?`<button class="btn-mini" onclick="limparLembrar('${k.id}')">limpar</button>`:""}
+    </div>`;
+  b.style.display="block";
+}
+async function salvarLembrar(casoId){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  k.prazo=document.getElementById("lb-data").value||null;
+  k.lembrar_motivo=document.getElementById("lb-motivo").value.trim()||null;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({prazo:k.prazo, lembrar_motivo:k.lembrar_motivo})});
+  aviso(k.prazo?`Lembrete salvo: ${fmt(k.prazo)}${k.lembrar_motivo?" — "+k.lembrar_motivo:""} 🗓`:"Lembrete salvo");
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+}
+async function limparLembrar(casoId){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  k.prazo=null; k.lembrar_motivo=null;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({prazo:null, lembrar_motivo:null})});
+  aviso("Lembrete removido"); montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
 }
 async function novaExigencia(){
   const sel=document.getElementById("and-caso");
