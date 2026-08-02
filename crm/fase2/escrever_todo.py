@@ -22,6 +22,22 @@ RAIZ = pathlib.Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(RAIZ))
 
 
+# fase do caso -> lista do To Do onde a tarefa deve nascer (inverso do migrar)
+FASE_LISTA = {
+    "escritorio": "🙋 Escritório",
+    "inss": "🌻 INSS",
+    "judicial": "👪 Judicial",
+    "conselho": "🖥 Conselho de Recursos",
+    "pagamento": "💵 Pagamentos",
+    "aposentadoria_futura": "🙏 Aposentadorias Futuras",
+    "outro": "🗓 Tarefas com Prazo",
+}
+
+
+def fase_para_lista(fase):
+    return FASE_LISTA.get(fase, "🙋 Escritório")
+
+
 def formatar_bloco(data_iso, inicial, texto):
     """'2026-08-02', 'P', 'Petição protocolada.' -> '02.08.2026 (P): Petição protocolada.'"""
     d = data_iso[:10]
@@ -57,6 +73,30 @@ def main():
         sys.exit("Defina SUPABASE_URL e SUPABASE_SERVICE_KEY.")
     import graph_client
 
+    listas_map = {l.get("displayName"): l["id"] for l in graph_client.list_lists()}
+
+    # 1) clientes/casos criados no app ainda sem tarefa no To Do -> criar
+    novos = _rest("GET", "/rest/v1/casos"
+                         "?todo_task_id=is.null&fase=neq.encerrado"
+                         "&select=id,titulo,fase,prazo") or []
+    criados = 0
+    for k in novos:
+        lista_nome = fase_para_lista(k["fase"])
+        lista_id = listas_map.get(lista_nome)
+        if not lista_id:
+            continue
+        t = graph_client.create_task(
+            lista_id, k["titulo"],
+            body_content="Criado pelo CRM.",
+            due_date_iso=(k["prazo"] + "T12:00:00") if k.get("prazo") else None)
+        _rest("PATCH", f"/rest/v1/casos?id=eq.{k['id']}",
+              {"todo_task_id": t["id"], "origem_lista": lista_nome},
+              prefer="return=minimal")
+        criados += 1
+    if criados:
+        print(f"tarefas criadas no To Do para clientes novos: {criados}")
+
+    # 2) andamentos escritos no app -> topo do corpo da tarefa
     fila = _rest("GET", "/rest/v1/andamentos"
                         "?origem=eq.app&todo_sync=eq.false"
                         "&select=id,texto,criado_em,autor_id,"
@@ -66,7 +106,7 @@ def main():
         print("nada a replicar.")
         return
 
-    listas = {l.get("displayName"): l["id"] for l in graph_client.list_lists()}
+    listas = listas_map
     ok = erros = sem_task = 0
     for a in fila:
         caso = a.get("casos") or {}

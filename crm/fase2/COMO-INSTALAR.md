@@ -95,6 +95,33 @@ segunda a sábado). Para ligar, basta cadastrar dois segredos novos no GitHub:
 
 Com isso, nada precisa rodar na máquina de ninguém.
 
+## 8. Rotina diária do Claude (opcional, recomendado)
+
+Todo dia útil às 07h30, o workflow `crm-claude.yml` roda o
+`crm/fase2/claude_rotina.py`: detecta exigências do INSS em andamentos novos
+(sugerindo o prazo legal de 30 dias), prazos vencendo sem movimentação e
+perícias da semana (com a mensagem de lembrete já pronta), e — com a chave da
+Anthropic — o Claude analisa os casos sinalizados e redige próximo passo e
+mensagem ao cliente. Tudo aparece como sugestão pendente na visão 🤖 Claude
+do app; **nada é aplicado sem alguém aceitar**.
+
+Para ligar a análise completa: crie uma chave em https://console.anthropic.com
+(API Keys) e cadastre o segredo `ANTHROPIC_API_KEY` no GitHub (mesmo caminho
+do passo 6). Uma rodada diária analisa até 25 casos numa única chamada —
+custo típico de centavos de dólar por dia. Sem essa chave, a rotina roda só
+as detecções automáticas (que já valem muito).
+
+Nota de privacidade: a análise envia ao Claude (API da Anthropic) o nome do
+cliente, benefício, fase e últimos andamentos dos casos sinalizados — dados
+tratados sob a política de retenção da API (30 dias). Senhas e credenciais
+NUNCA são enviadas.
+
+## Atualizando uma instalação existente
+
+O `schema.sql` é idempotente: quando ele ganhar tabelas ou colunas novas
+(ex.: exigências, modelos de mensagem, sugestões), basta rodá-lo de novo no
+SQL Editor — nada é apagado.
+
 ## O que fica onde
 
 | Arquivo | Sensível? | Onde vive |
