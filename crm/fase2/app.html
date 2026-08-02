@@ -108,9 +108,10 @@
   .det-topo h2{font-size:18px}
   .fechar{margin-left:auto;border:none;background:none;font-size:20px;cursor:pointer;color:var(--cinza)}
   .det-topo .resumo{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
-  .abas{display:flex;gap:2px;margin-top:12px;flex-wrap:wrap}
-  .aba{padding:7px 11px;border:none;background:none;cursor:pointer;font-size:13px;color:var(--cinza);border-bottom:2px solid transparent;font-weight:600}
-  .aba.ativa{color:var(--azul);border-bottom-color:var(--azul)}
+  .abas{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+  .aba{padding:7px 13px;border:1px solid var(--borda);background:var(--fundo);cursor:pointer;font-size:13px;color:var(--texto);border-radius:16px;font-weight:600}
+  .aba:hover{background:#e3eefa}
+  .aba.ativa{background:var(--azul);border-color:var(--azul);color:#fff}
   .painel{display:none;padding:16px 22px 20px}
   .painel.ativo{display:block}
   .campos{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
@@ -123,7 +124,8 @@
   .caso .cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .caso select,.caso input[type=date]{padding:3px 6px;border:1px solid var(--borda);border-radius:6px;font-size:12px;background:var(--branco)}
   .timeline{list-style:none}
-  .timeline li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--fundo)}
+  .timeline li{display:flex;gap:12px;padding:10px 12px;border-radius:8px}
+  .timeline li:nth-child(odd){background:var(--fundo)}   /* zebrado p/ separar mensagens */
   .timeline .quando{flex:none;width:130px;font-size:12px;color:var(--cinza);display:flex;gap:8px}
   .timeline .texto{flex:1;white-space:pre-wrap}
   .escrever{border-top:1px solid var(--borda);padding:10px 22px 14px;background:var(--branco)}
@@ -395,6 +397,36 @@ const FASES = [
 const NOME_FASE = {escritorio:"Escritório", inss:"INSS", conselho:"Conselho", judicial:"Judicial",
   pagamento:"Pagamento", aposentadoria_futura:"Apos. Futura", outro:"Outros", encerrado:"Encerrado"};
 
+// cores por lista, como no To Do (fundo suave + título na cor da lista)
+const TEMA = {
+  "meudia":            ["#5c6bc0", "#eef0fa"],
+  "mencoes":           ["#b4530a", "#fdf3e7"],
+  "planejado":         ["#1e6f50", "#e9f5ef"],
+  "minhas":            ["#00668c", "#e7f4fa"],
+  "importante":        ["#d64570", "#fdeef3"],
+  "particulares":      ["#5c53c9", "#f0effa"],
+  "fase:prazo":        ["#5c53c9", "#eceafb"],
+  "fase:escritorio":   ["#b4530a", "#fdf3e7"],
+  "fase:inss":         ["#9a7b00", "#fdf9e2"],
+  "fase:judicial":     ["#1e4fa3", "#e8f1fb"],
+  "fase:conselho":     ["#00668c", "#e7f4fa"],
+  "fase:aposentadoria_futura": ["#7a4dd8", "#f2ecfc"],
+  "claude":            ["#7a4dd8", "#f2ecfc"],
+  "docmodelos":        ["#4a5568", "#f1f3f5"],
+  "quadro":            ["#1e4fa3", "#f3f6fb"],
+  "vendas":            ["#1e6f50", "#e9f5ef"],
+  "marketing":         ["#d64570", "#fdeef3"],
+  "recebimentos":      ["#1e6f50", "#e9f5ef"],
+  "agenda":            ["#5c2e91", "#f1eafa"],
+  "dashboard":         ["#1e4fa3", "#f3f6fb"],
+  "novocliente":       ["#1e4fa3", "#f3f6fb"],
+};
+function aplicarTema(){
+  const [cor, fundo] = TEMA[buscaTxt?"dashboard":visao] || ["#1e4fa3", "#faf9f8"];
+  document.querySelector(".meio").style.background = fundo;
+  document.getElementById("titulo-lista").style.color = cor;
+}
+
 function ativos(){ return D.casos.filter(k=>k.fase!=="encerrado"); }
 function diasAte(iso){ return Math.ceil((new Date(iso+"T12:00:00")-new Date(hoje()+"T12:00:00"))/864e5); }
 function chipExig(k){
@@ -422,7 +454,9 @@ function gcal(titulo, dataIso, horaIni, minutos, detalhes, local){
   return "https://calendar.google.com/calendar/render?"+p;
 }
 function casosDaFase(f){
-  if(f==="prazo") return ativos().filter(k=>k.prazo);
+  // Tarefas com Prazo é a LISTA FIXA do To Do (não "tudo que tem data") —
+  // a agenda geral por data fica na visão Planejado.
+  if(f==="prazo") return ativos().filter(k=>k.origem_lista==="🗓 Tarefas com Prazo");
   return ativos().filter(k=>k.fase===f);
 }
 
@@ -545,6 +579,7 @@ function ligarCartoes(){
 }
 
 function render(){
+  aplicarTema();
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
@@ -566,9 +601,9 @@ function render(){
   if(visao==="vendas") return renderVendas();
   if(visao==="marketing") return renderMarketing();
 
+  if(visao==="planejado") return renderPlanejado();
   let casosSel, titulo, subt="Clique no cliente para abrir a ficha completa.";
-  if(visao==="planejado"){ titulo="🗓️ Planejado"; casosSel=ativos().filter(k=>k.prazo); }
-  else if(visao==="minhas"){ titulo="👤 Atribuídas a mim"; casosSel=ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)); }
+  if(visao==="minhas"){ titulo="👤 Atribuídas a mim"; casosSel=ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)); }
   else if(visao==="importante"){ titulo="⭐ Importante"; casosSel=ativos().filter(k=>k.importante); }
   else if(visao==="recebimentos"){ titulo="💰 Recebimentos"; casosSel=D.casos.filter(k=>k.fase==="pagamento");
     subt="Casos em fase de pagamento — o financeiro vive dentro do caso, na aba Pagamentos da ficha."; }
@@ -618,6 +653,37 @@ function renderMeuDia(){
     + tDia.map(t=>cartaoTarefa(t)).join("");
   document.querySelectorAll(".fchip").forEach(b=>b.onclick=()=>{ filtroColab=b.dataset.f||null; render(); });
   ligarCartoes(); ligarTarefas();
+}
+
+// ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
+let filtroPlan="7", filtroPlanColab=null;
+function renderPlanejado(){
+  document.getElementById("titulo-lista").textContent="🗓️ Planejado";
+  document.getElementById("sub-lista").textContent=
+    "A agenda do escritório — tudo que tem data para lembrar (último dia de prazo, contato com cliente, prorrogação...).";
+  const per=[["venc","⚠ Vencidas"],["hoje","Hoje"],["3","Próx. 3 dias"],["7","Próx. 7 dias"],["todas","Todas"]];
+  const em = d=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+d); return x.toLocaleDateString("sv"); };
+  let base = ativos().filter(k=>k.prazo);
+  if(filtroPlanColab) base = base.filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(filtroPlanColab));
+  if(filtroPlan==="venc") base = base.filter(k=>k.prazo<hoje());
+  else if(filtroPlan==="hoje") base = base.filter(k=>k.prazo===hoje());
+  else if(filtroPlan==="3") base = base.filter(k=>k.prazo>=hoje() && k.prazo<=em(3));
+  else if(filtroPlan==="7") base = base.filter(k=>k.prazo>=hoje() && k.prazo<=em(7));
+  const chipsPer = per.map(([v,r])=>`<button class="fchip ${filtroPlan===v?"on":""}" data-per="${v}">${r}</button>`).join("");
+  const chipsCol = [`<button class="fchip ${filtroPlanColab===null?"on":""}" data-pcol="">Todos</button>`]
+    .concat(D.colaboradores.filter(c=>c.ativo).map(c=>
+      `<button class="fchip ${filtroPlanColab===c.id?"on":""}" data-pcol="${c.id}">`+
+      `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</button>`)).join("");
+  base = base.slice().sort((a,b)=>a.prazo<b.prazo?-1:1);
+  document.getElementById("ordem").value="prazo";   // agenda em ordem cronológica
+  document.getElementById("conteudo-meio").innerHTML =
+    `<div class="filtros">${chipsPer}</div><div class="filtros">${chipsCol}</div>`
+    + `<div class="meio-sub">${base.length} data(s) neste filtro</div>`
+    + grupoClientes(base).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+    + (base.length? "" : "<p class='meio-sub'>Nada por aqui — agenda limpa. ✨</p>");
+  document.querySelectorAll("[data-per]").forEach(b=>b.onclick=()=>{ filtroPlan=b.dataset.per; render(); });
+  document.querySelectorAll("[data-pcol]").forEach(b=>b.onclick=()=>{ filtroPlanColab=b.dataset.pcol||null; render(); });
+  ligarCartoes();
 }
 
 // ── Minhas Tarefas (particulares) ─────────────────────────────────────────
@@ -1064,7 +1130,7 @@ async function abrirFicha(cliId){
   const pgs = D.pagamentos.filter(p=>ks.some(k=>k.id===p.caso_id));
   const equipe = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))];
 
-  const abas=["Dados","Casos","Andamentos","Perícias & Aud.","Pagamentos","Mensagens","Equipe"];
+  const abas=["📇 Dados","⚖️ Casos","📝 Andamentos","🩺 Perícias & Aud.","💰 Pagamentos","💬 Mensagens","👥 Equipe"];
   document.getElementById("detalhe").innerHTML=`
   <div class="det-rolagem">
   <div class="det-topo">
@@ -1076,8 +1142,8 @@ async function abrirFicha(cliId){
       <div class="avatares">${equipe.map(id=>{const co=D.colPorId.get(id);return co?`<span class="avatar mini" style="background:${co.cor}" title="${esc(co.nome)}">${esc(co.inicial)}</span>`:"";}).join("")}</div>
     </div>
     <div class="abas">${abas.map((a,i)=>`<button class="aba ${i===abaAtiva?"ativa":""}" data-i="${i}">${a}${
-      a==="Andamentos"?` (${ands.length})`:a==="Casos"?` (${ks.length})`:
-      a==="Perícias & Aud."&&evs.length?` (${evs.length})`:a==="Pagamentos"&&pgs.length?` (${pgs.length})`:""}</button>`).join("")}</div>
+      a.includes("Andamentos")?` (${ands.length})`:a.includes("Casos")?` (${ks.length})`:
+      a.includes("Perícias")&&evs.length?` (${evs.length})`:a.includes("Pagamentos")&&pgs.length?` (${pgs.length})`:""}</button>`).join("")}</div>
   </div>
 
   <div class="painel ${abaAtiva===0?"ativo":""}" data-p="0">
@@ -1125,7 +1191,7 @@ async function abrirFicha(cliId){
       <div class="form-linha" style="margin-top:8px">
         <label style="font-size:12px;color:var(--cinza)">Fase:
         <select data-fase="${k.id}">${Object.entries(NOME_FASE).map(([f,n])=>`<option value="${f}" ${k.fase===f?"selected":""}>${n}</option>`).join("")}</select></label>
-        <label style="font-size:12px;color:var(--cinza)">Prazo:
+        <label style="font-size:12px;color:var(--cinza)" title="a data que vocês usavam como 'conclusão' no To Do — o dia de agir">Lembrar:
         <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></label>
         <label style="font-size:12px;color:var(--cinza)">Resultado:
         <select data-resultado="${k.id}">
@@ -1256,7 +1322,7 @@ async function abrirFicha(cliId){
     const k=D.casoPorId.get(i.dataset.prazo); k.prazo=i.value||null;
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({prazo:k.prazo})});
-    aviso("Prazo atualizado"); montarSidebar();
+    aviso("Data de lembrar atualizada 🗓"); montarSidebar();
   });
   document.querySelectorAll("[data-eq]").forEach(ch=>ch.onclick=async()=>{
     const colId=ch.dataset.eq, casosAtivos=ks.filter(k=>k.fase!=="encerrado");
