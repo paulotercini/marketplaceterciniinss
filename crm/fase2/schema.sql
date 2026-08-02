@@ -110,6 +110,11 @@ create table if not exists pagamentos (
 );
 create index if not exists pagamentos_caso on pagamentos (caso_id);
 
+-- Cadeia de conferência do dinheiro recebido: quem recebeu e quem conferiu,
+-- em ordem, cada um com data/hora. [{"c": colaborador_id, "em": timestamptz}]
+-- O primeiro da lista é quem recebeu; os seguintes conferiram.
+alter table pagamentos add column if not exists conferencias jsonb not null default '[]';
+
 -- ── Tarefas soltas (com prazo) e particulares ─────────────────────────────
 -- particular_de preenchido = tarefa pessoal: só o dono vê (RLS abaixo).
 create table if not exists tarefas (
@@ -351,9 +356,20 @@ create policy tarefas_delete on tarefas for delete to authenticated
 -- ── Colaboradores do escritório ───────────────────────────────────────────
 insert into colaboradores (inicial, nome, cor) values
   ('P', 'Paulo',  '#2564cf'),
-  ('A', 'Amanda', '#c74e93'),
-  ('M', 'Marcos', '#0b6a0b'),
-  ('D', 'André',  '#b4530a'),
-  ('I', 'Ingrid', '#5c2e91'),
-  ('C', 'Claude', '#8a5cf6')
+  ('A', 'Amanda', '#e6a700'),
+  ('M', 'Marcos', '#0b8043'),
+  ('D', 'André',  '#00838f'),
+  ('I', 'Ingrid', '#c2185b'),
+  ('C', 'Claude', '#d97757')
 on conflict (inicial) do nothing;
+
+-- Paleta oficial (a mesma lógica do Google Agenda do escritório):
+-- Paulo azul, Amanda amarelo, Marcos verde, André azul-petróleo,
+-- Ingrid rosa, Claude laranja (cor padrão do Claude).
+-- Os updates garantem que re-rodar o schema aplica a paleta em bancos já criados.
+update colaboradores set cor='#2564cf' where inicial='P';
+update colaboradores set cor='#e6a700' where inicial='A';
+update colaboradores set cor='#0b8043' where inicial='M';
+update colaboradores set cor='#00838f' where inicial='D';
+update colaboradores set cor='#c2185b' where inicial='I';
+update colaboradores set cor='#d97757' where inicial='C';
