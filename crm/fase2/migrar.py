@@ -21,7 +21,7 @@ Mapeamento (decisões de ago/2026):
   - Anti-eco: blocos idênticos a andamentos criados no app (mesmo caso, dia e
     texto) são pulados, para a escrita dupla não duplicar.
 """
-import argparse, datetime, hashlib, json, os, pathlib, re, sys, urllib.request, urllib.error, uuid
+import argparse, datetime, hashlib, json, os, pathlib, re, sys, unicodedata, urllib.request, urllib.error, uuid
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 ENTRADA = RAIZ / "data" / "crm.json"
@@ -42,6 +42,74 @@ DONO_PARTICULAR = "P"
 TZ = "-03:00"                        # America/Sao_Paulo (sem DST desde 2019)
 RE_PROTOCOLO = re.compile(r"protocolo\D{0,12}(\d{6,})", re.I)
 
+# A senha padrão do escritório NUNCA vai no código (o repositório é público):
+# vem do GitHub Secret SENHA_PADRAO_MEUINSS. Item de checklist "Padrão" no
+# To Do significa que o cliente usa essa senha no Meu INSS.
+SENHA_PADRAO = os.environ.get("SENHA_PADRAO_MEUINSS")
+
+RE_CPF_FMT = re.compile(r"\b(\d{3})\.?(\d{3})\.?(\d{3})-(\d{2})\b")
+# telefone anotado no checklist ("16-99711 2233", "(16) 99711-2233") —
+# o separador depois do DDD é obrigatório para não confundir com CPF/protocolo
+RE_TEL_ITEM = re.compile(r"^\(?\d{2}\)?[\s.\-]+9?\s?\d{4}[.\-\s]?\d{4}$")
+RE_RELACAO = re.compile(
+    r"^(espos[ao]|marido|mulher|companheir[ao]|irm[ãa]o?|m[ãa]e|pai|filh[ao]|"
+    r"amig[ao]|ti[ao]|sogr[ao]|cunhad[ao]|vizinh[ao]|nor[ao]|genro|net[ao]|"
+    r"indicad[ao]\s+por|indica[çc][ãa]o(?:\s+d[eo])?)\b[:\s\-]*", re.I)
+
+
+def _norm(s):
+    return "".join(ch for ch in unicodedata.normalize("NFD", (s or "").lower())
+                   if not unicodedata.combining(ch)).strip()
+
+
+def classificar_item_checklist(txt, cpf_cliente=None):
+    """O checklist do To Do é onde o escritório guarda dados soltos do cliente.
+    Classifica cada item: ('senha_padrao'|'senha'|'cpf'|'telefone'|'protocolo'|
+    'parceria'|'nome'|'dado'|'tarefa', valor). 'nome' é só candidato a vínculo —
+    o mapear confirma contra a base de clientes; se não bater, vira tarefa."""
+    t = (txt or "").strip()
+    if not t:
+        return ("vazio", None)
+    if re.search(r"anivers|nascime", t, re.I):
+        return ("dado", None)                      # data de nascimento já é tratada
+    if re.fullmatch(r"padr[ãa]o\.?", t, re.I):
+        return ("senha_padrao", None)              # senha padrão do escritório
+    m = re.match(r"senha\b.*?[:\-\s]\s*(\S+)\s*$", t, re.I)
+    if m:
+        return ("senha", m.group(1))
+    m = RE_CPF_FMT.search(t)
+    if m:
+        return ("cpf", "".join(m.groups()))
+    if RE_TEL_ITEM.fullmatch(t):
+        dig = re.sub(r"\D", "", t)
+        if 10 <= len(dig) <= 11:
+            return ("telefone", dig)
+    if re.fullmatch(r"[\d\s./\-]+", t):            # só números (com separadores)
+        dig = re.sub(r"\D", "", t)
+        if len(dig) < 6 or (cpf_cliente and dig == cpf_cliente):
+            return ("dado", None)
+        if len(dig) == 11 and not cpf_cliente:
+            return ("cpf", dig)
+        return ("protocolo", dig)                  # o INSS divulga só o protocolo
+    m = re.fullmatch(r"#\s*([A-Za-zÀ-ÿ][\wÀ-ÿ]*)", t)
+    if m:
+        return ("dado", None) if re.fullmatch(r"[Bb]\d{1,3}", m.group(1)) \
+            else ("parceria", m.group(1))
+    m = re.match(r"parceria[:\s\-]+(.+)$", t, re.I)
+    if m:
+        return ("parceria", m.group(1).strip())
+    if (re.fullmatch(r"\S{6,20}", t) and re.search(r"[A-Za-zÀ-ÿ]", t)
+            and re.search(r"\d", t)):
+        return ("senha", t)                        # token solto letra+número = senha anotada
+    mrel = RE_RELACAO.match(t)
+    resto = t[mrel.end():].strip() if mrel else t
+    palavras = resto.split()
+    if 2 <= len(palavras) <= 6 and all(
+            re.fullmatch(r"[A-Za-zÀ-ÿ'.]+", p) for p in palavras):
+        rel = mrel.group(1).strip().lower() if mrel else None
+        return ("nome", (rel, resto))              # candidato a parente/amigo
+    return ("tarefa", t)
+
 
 def uid(*partes):
     return str(uuid.uuid5(NS, "|".join(str(p) for p in partes)))
@@ -58,7 +126,8 @@ def _cliente_key(t):
 def mapear(dados):
     """crm.json -> dicionário de linhas por tabela (ids determinísticos)."""
     clientes, casos, andamentos, eventos, tarefas = {}, {}, {}, {}, {}
-    pulados = {}
+    credenciais, vinculos, pend_vinculos = {}, {}, []
+    pulados, sem_senha_padrao = {}, 0
 
     for t in dados["tarefas"]:
         lista = t["lista"]
@@ -118,13 +187,44 @@ def mapear(dados):
                 "_dia": a["data"], "_md5": md5(a["texto"]),
             }
 
-        # checklist do To Do ("0 de 4") -> subtarefas do caso (itens de dado,
-        # como CPF e aniversário, ficam de fora)
+        # checklist do To Do ("0 de 4") -> cada item é classificado: dados
+        # (senha, CPF, telefone, protocolo, parceria, parente) vão para o
+        # campo certo; só o que é tarefa de verdade vira subtarefa
         for c_it in t.get("checklist", []):
             txt = (c_it.get("texto") or "").strip()
-            so_digitos = re.sub(r"\D", "", txt)
-            if not txt or len(so_digitos) >= 8 or re.search(r"anivers|nascime", txt, re.I):
-                continue          # CPF/datas/aniversário são dados, não subtarefas
+            tipo_it, valor = classificar_item_checklist(txt, c["cpf"])
+            if tipo_it in ("vazio", "dado"):
+                continue
+            if tipo_it in ("senha_padrao", "senha"):
+                if tipo_it == "senha_padrao" and not SENHA_PADRAO:
+                    sem_senha_padrao += 1
+                    continue
+                cred_id = uid("credencial", cid, "meu_inss")
+                credenciais.setdefault(cred_id, {
+                    "id": cred_id, "cliente_id": cid, "tipo": "meu_inss",
+                    "valor": SENHA_PADRAO if tipo_it == "senha_padrao" else valor})
+                continue
+            if tipo_it == "telefone":
+                c["telefone"] = c["telefone"] or valor
+                continue
+            if tipo_it == "cpf":
+                c["cpf"] = c["cpf"] or valor
+                continue
+            if tipo_it == "protocolo":
+                if valor not in casos[kid]["protocolos"]:
+                    casos[kid]["protocolos"] = sorted(casos[kid]["protocolos"] + [valor])
+                continue
+            if tipo_it == "parceria":
+                atual = casos[kid]["parceria"]
+                if not atual:
+                    casos[kid]["parceria"] = valor
+                elif valor not in atual:
+                    casos[kid]["parceria"] = atual + ", " + valor
+                continue
+            if tipo_it == "nome":
+                pend_vinculos.append((cid, valor[0], valor[1], kid, txt,
+                                      bool(c_it.get("feito"))))
+                continue
             tid = uid("subtarefa", kid, md5(txt))
             tarefas[tid] = {
                 "id": tid, "caso_id": kid, "titulo": txt,
@@ -142,12 +242,36 @@ def mapear(dados):
                 "obs": e["trecho"],
             }
 
+    # segunda passada: item de checklist com nome de gente vira vínculo se o
+    # nome bater com OUTRO cliente da base; senão volta a ser subtarefa
+    nome_idx = {}
+    for cli in clientes.values():
+        nome_idx.setdefault(_norm(cli["nome"]), cli["id"])
+    for cid, relacao, nome_txt, kid, txt, feito in pend_vinculos:
+        outro = nome_idx.get(_norm(nome_txt))
+        if outro and outro != cid:
+            vid = uid("vinculo", cid, outro)
+            vinculos[vid] = {"id": vid, "cliente_id": cid,
+                             "ligado_a": outro, "relacao": relacao}
+        else:
+            tid = uid("subtarefa", kid, md5(txt))
+            tarefas[tid] = {
+                "id": tid, "caso_id": kid, "titulo": txt, "prazo": None,
+                "concluida": feito, "concluida_em": None, "particular_de": None,
+            }
+
+    if sem_senha_padrao:
+        print(f"AVISO: {sem_senha_padrao} item(ns) 'Padrão' ignorados — defina o "
+              "secret SENHA_PADRAO_MEUINSS para gravar a senha padrão do escritório.")
+
     return {
         "clientes": list(clientes.values()),
         "casos": list(casos.values()),
         "andamentos": list(andamentos.values()),
         "eventos": list(eventos.values()),
         "tarefas": list(tarefas.values()),
+        "credenciais": list(credenciais.values()),
+        "vinculos": list(vinculos.values()),
         "pulados": pulados,
     }
 
@@ -223,6 +347,9 @@ def gerar_sql(mapa):
         "begin;",
         _sql_insert("clientes", mapa["clientes"],
                     update_cols=("nome", "dn", "telefone")),
+        # senha nova editada no app nunca é sobrescrita: conflito = do nothing
+        _sql_insert("credenciais", mapa.get("credenciais", [])),
+        _sql_insert("vinculos", mapa.get("vinculos", []), chave="cliente_id, ligado_a"),
         _sql_insert("casos", mapa["casos"],
                     update_cols=("fase", "prazo", "importante", "beneficio",
                                  "parceria", "protocolos",
@@ -289,6 +416,8 @@ def subir_rest(mapa):
     # com id próprio — conflitar por id geraria violação do índice de dedupe)
     ordem = [
         ("clientes", "merge-duplicates", "id"),
+        ("credenciais", "ignore-duplicates", "id"),
+        ("vinculos", "ignore-duplicates", "cliente_id,ligado_a"),
         ("casos", "merge-duplicates", "id"),
         ("andamentos", "ignore-duplicates", "id"),
         ("eventos", "ignore-duplicates", "caso_id,tipo,data_hora"),
@@ -311,7 +440,8 @@ def main(argv=None):
 
     dados = json.loads(pathlib.Path(args.entrada).read_text(encoding="utf-8"))
     mapa = mapear(dados)
-    resumo = {t: len(mapa[t]) for t in ("clientes", "casos", "andamentos", "eventos", "tarefas")}
+    resumo = {t: len(mapa[t]) for t in ("clientes", "casos", "andamentos", "eventos",
+                                        "tarefas", "credenciais", "vinculos")}
     print("mapeado:", resumo)
     if mapa["pulados"]:
         print("pulado (listas fora do CRM, sem CPF):",

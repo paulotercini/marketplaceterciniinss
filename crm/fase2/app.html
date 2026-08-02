@@ -1309,7 +1309,8 @@ async function abrirFicha(cliId){
     <div class="linha1"><span class="avatar">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
       <button class="fechar" onclick="fecharFicha()">✕</button></div>
     <div class="resumo">
-      <span class="chip neutro">${fmtCpf(c.cpf)}</span>
+      <span class="chip neutro">${fmtCpf(c.cpf)}${c.cpf?` <button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:""}</span>
+      ${(cr=>cr?`<span class="chip neutro">🔑 Meu INSS <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button></span>`:"")(creds.find(x=>x.tipo==="meu_inss"))}
       ${[...new Set(ks.filter(k=>k.fase!=="encerrado").map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
       <div class="avatares">${equipe.map(id=>{const co=D.colPorId.get(id);return co?`<span class="avatar mini" style="background:${co.cor}" title="${esc(co.nome)}">${esc(co.inicial)}</span>`:"";}).join("")}</div>
     </div>
