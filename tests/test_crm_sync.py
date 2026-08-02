@@ -123,3 +123,31 @@ def test_parceria_do_titulo_ignora_cpf_e_especie():
         "Fulana #12345678900 #B31 #Laís #JoãoEduardo") == "Laís, JoãoEduardo"
     assert sync_todo.parceria_do_titulo("Fulano #12345678900 #B94") is None
     assert sync_todo.parceria_do_titulo("Sem etiquetas") is None
+
+
+def test_evento_sem_ano_deduzido_da_data_do_bloco():
+    import datetime
+    bloco = ("Benefício solicitado - em análise.\n"
+             "Perícia médica e avaliação social foram agendadas.\n"
+             "- Perícia médica em Matão em 12/08 às 07h40.\n"
+             "- Avaliação social em Jaboticabal em 21/08 às 07h00.\n"
+             "Comprovantes de agendamento no drive.")
+    evs = sync_todo.eventos_de(bloco, datetime.date(2026, 7, 31))
+    assert [(e["tipo"], e["data"], e["hora"]) for e in evs] == [
+        ("Perícia", "2026-08-12", "07:40"),
+        ("Avaliação social", "2026-08-21", "07:00"),
+    ]
+
+
+def test_evento_sem_ano_vira_ano_seguinte_quando_ja_passou():
+    import datetime
+    evs = sync_todo.eventos_de("Audiência marcada para 10/01 às 14h",
+                               datetime.date(2026, 12, 15))
+    assert evs[0]["data"] == "2027-01-10" and evs[0]["hora"] == "14:00"
+
+
+def test_evento_com_ano_completo_continua_igual():
+    import datetime
+    evs = sync_todo.eventos_de("Perícia agendada dia 13.04.2027 às 12:30 em Bebedouro",
+                               datetime.date(2026, 8, 1))
+    assert evs[0]["data"] == "2027-04-13" and evs[0]["hora"] == "12:30"
