@@ -63,10 +63,13 @@ ESPECIES = {
 RE_ESPECIE = re.compile(r"#B(\d{2})\b", re.I)
 
 RE_AUTOR = re.compile(r"^\s*\(?\s*([A-Za-z]{1,2})\s*\)\s*[:;,.–-]?\s*")
+
+# aceita "12/08/2026", "12/08" (ano deduzido da data do bloco), "às 07h40",
+# "às 7h" e "07:40" — o formato real dos andamentos da equipe
 RE_EVENTO = re.compile(
     r"(per[íi]cia|audi[êe]ncia|avalia[çc][ãa]o social)"
-    r"[^\n]{0,120}?\b(\d{2})[./](\d{2})[./](\d{4})"
-    r"(?:[^\n]{0,20}?(\d{1,2})[:hH](\d{2}))?",
+    r"[^\n]{0,120}?\b(\d{1,2})[./](\d{1,2})(?:[./](\d{4}))?"
+    r"(?:[^\n]{0,20}?\b(\d{1,2})[:hH](\d{2})?)?",
     re.I,
 )
 RE_TELEFONE = re.compile(r"\(?\b\d{2}\)?\s?9?\d{4}[- ]?\d{4}\b")
@@ -101,10 +104,18 @@ def eventos_de(texto, data_ref):
         tipo = _sem_acento(m.group(1)).lower()
         tipo = {"pericia": "Perícia", "audiencia": "Audiência"}.get(tipo, "Avaliação social")
         try:
-            data = datetime.date(int(m.group(4)), int(m.group(3)), int(m.group(2)))
+            if m.group(4):
+                data = datetime.date(int(m.group(4)), int(m.group(3)), int(m.group(2)))
+            else:
+                # "12/08" sem ano: é o 12/08 seguinte à data do bloco —
+                # anotado em 31.07.2026, entende-se 12.08.2026
+                base = data_ref or datetime.date.today()
+                data = datetime.date(base.year, int(m.group(3)), int(m.group(2)))
+                if data < base:
+                    data = data.replace(year=base.year + 1)
         except ValueError:
             continue
-        hora = f"{int(m.group(5)):02d}:{m.group(6)}" if m.group(5) else None
+        hora = f"{int(m.group(5)):02d}:{m.group(6) or '00'}" if m.group(5) else None
         trecho = re.sub(r"\s+", " ", m.group(0)).strip()
         out.append({
             "tipo": tipo,
