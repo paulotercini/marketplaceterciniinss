@@ -22,11 +22,36 @@
   .login button{padding:10px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
   .login .erro{color:var(--vermelho);font-size:13px;min-height:18px}
 
-  .app{display:none;grid-template-columns:300px 1fr;height:100vh}
+  .app{display:none;grid-template-columns:300px 1fr;height:100vh;transition:grid-template-columns .15s}
+  .app.mini-lateral{grid-template-columns:58px 1fr}
   .app.logado{display:grid}
-  .app.detalhe-aberto{grid-template-columns:300px minmax(320px,1fr) minmax(480px,54%)}
+  /* ficha aberta = modo 4 colunas: o menu recolhe sozinho para ícones */
+  .app.detalhe-aberto{grid-template-columns:58px minmax(290px,28%) minmax(540px,1fr)}
 
-  .sidebar{background:var(--lateral);border-right:1px solid var(--borda);overflow-y:auto;padding:12px 0}
+  .sidebar{background:var(--lateral);border-right:1px solid var(--borda);overflow-y:auto;overflow-x:hidden;padding:12px 0}
+  #btn-lateral{display:block;margin:0 12px 8px;border:none;background:none;font-size:17px;cursor:pointer;color:var(--cinza)}
+  /* menu recolhido (manual ou automático com a ficha aberta): só os ícones */
+  .app.mini-lateral .sidebar .txt, .app.detalhe-aberto .sidebar .txt,
+  .app.mini-lateral .sidebar .grupo h3, .app.detalhe-aberto .sidebar .grupo h3,
+  .app.mini-lateral .sidebar .cont, .app.detalhe-aberto .sidebar .cont,
+  .app.mini-lateral .sidebar .priv, .app.detalhe-aberto .sidebar .priv,
+  .app.mini-lateral .sidebar .busca, .app.detalhe-aberto .sidebar .busca,
+  .app.mini-lateral .sidebar .usuario>div, .app.detalhe-aberto .sidebar .usuario>div,
+  .app.mini-lateral .sidebar .sair, .app.detalhe-aberto .sidebar .sair,
+  .app.mini-lateral .sidebar #btn-som, .app.detalhe-aberto .sidebar #btn-som{display:none}
+  .app.mini-lateral .sidebar .lista-item, .app.detalhe-aberto .sidebar .lista-item{justify-content:center;padding:8px 0}
+  .app.mini-lateral .sidebar .novo-cli, .app.detalhe-aberto .sidebar .novo-cli{width:34px;margin:0 auto 10px;padding:7px 0}
+  .app.mini-lateral .sidebar .usuario, .app.detalhe-aberto .sidebar .usuario{justify-content:center}
+  /* coluna de casos dentro da ficha (3ª coluna): escolhe o caso, a 4ª mostra o andamento dele */
+  .col-casos{width:186px;flex:none;border-right:1px solid var(--borda);background:#fbfaf9;overflow-y:auto;padding:10px 8px}
+  .col-casos .cc-tit{font-size:11px;font-weight:700;color:var(--cinza);text-transform:uppercase;letter-spacing:.4px;padding:2px 6px 7px}
+  .cc-item{border:1px solid var(--borda);border-radius:8px;padding:7px 9px;margin-bottom:6px;cursor:pointer;background:var(--branco)}
+  .cc-item:hover{box-shadow:0 2px 6px rgba(0,0,0,.08)}
+  .cc-item.sel{outline:2px solid var(--azul)}
+  .cc-item.enc{opacity:.55}
+  .cc-item .cc-ben{font-weight:700;font-size:12.5px;line-height:1.25}
+  .cc-item .cc-fase{color:var(--cinza);font-size:11px;margin-top:2px}
+  .det-principal{flex:1;display:flex;flex-direction:column;min-width:0}
   .usuario{display:flex;align-items:center;gap:10px;padding:2px 16px 10px}
   .usuario .sair{margin-left:auto;border:none;background:none;color:var(--cinza);cursor:pointer;font-size:12px}
   .busca{margin:0 12px 14px;position:relative}
@@ -105,7 +130,7 @@
   .nova button{border:none;background:var(--azul);color:#fff;border-radius:6px;padding:6px 14px;cursor:pointer;font-weight:600}
 
   .detalhe{display:none;background:var(--branco);border-left:1px solid var(--borda);overflow-y:auto}
-  .app.detalhe-aberto .detalhe{display:flex;flex-direction:column}
+  .app.detalhe-aberto .detalhe{display:flex;flex-direction:row}
   .det-rolagem{flex:1;overflow-y:auto}
   .det-topo{position:sticky;top:0;background:var(--branco);border-bottom:1px solid var(--borda);padding:14px 22px;z-index:2}
   .det-topo .linha1{display:flex;align-items:center;gap:10px}
@@ -243,13 +268,14 @@
 
 <div class="app" id="app">
   <nav class="sidebar">
+    <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
       <div><strong id="u-nome"></strong><div style="font-size:12px;color:var(--cinza)">conectado</div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
     <div class="sep"></div>
-    <button class="novo-cli" id="btn-novo-cli">➕ Novo Cliente</button>
+    <button class="novo-cli" id="btn-novo-cli" title="Novo Cliente">➕<span class="txt"> Novo Cliente</span></button>
     <div class="busca"><input id="busca" placeholder="Pesquisar nome, CPF, processo, protocolo…" style="padding-right:26px">
       <button id="busca-x" title="limpar pesquisa"
         style="display:none;position:absolute;right:6px;top:6px;border:none;background:none;font-size:14px;cursor:pointer;color:var(--cinza)">✕</button></div>
@@ -292,7 +318,7 @@ const moeda = v => v==null ? "—" : Number(v).toLocaleString("pt-BR",{style:"cu
 let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
-let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2;
+let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
 
 // som de retorno, como no To Do (gerado na hora — sem arquivo de áudio).
 // "plim" duplo ao concluir; tique curto nos avisos. 🔔 na lateral silencia.
@@ -407,6 +433,7 @@ async function iniciar(){
   document.getElementById("tela-login").style.display = "none";
   const app = document.getElementById("app");
   app.classList.add("logado");
+  if(localStorage.getItem("crm_menu")==="mini") app.classList.add("mini-lateral");
   document.getElementById("u-nome").textContent = eu.nome;
   const uav = document.getElementById("u-avatar");
   uav.textContent = eu.inicial; uav.style.background = eu.cor;
@@ -585,11 +612,14 @@ function montarSidebar(){
     ["importante","⭐ Importante", ativos().filter(k=>k.importante).length],
     ["particulares","📋 Minhas Tarefas", "🔒"],
   ];
+  // rótulo = "☀️ Meu Dia" -> ícone + texto separados (o texto some no menu recolhido)
+  const rotu = rot => { const i=rot.indexOf(" ");
+    return `<span class="rotulo" title="${esc(rot)}">${rot.slice(0,i)}<span class="txt">${esc(rot.slice(i))}</span></span>`; };
   document.getElementById("grupo-dinamicas").innerHTML = din.map(([id,rot,n])=>
-    `<div class="lista-item" data-v="${id}"><span class="rotulo">${rot}</span>`+
+    `<div class="lista-item" data-v="${id}">${rotu(rot)}`+
     (n==="🔒"?`<span class="priv">🔒 só você</span>`:n!=null?`<span class="cont">${n}</span>`:"")+`</div>`).join("");
   document.getElementById("grupo-fases").innerHTML = FASES.map(([f,rot])=>
-    `<div class="lista-item" data-v="fase:${f}"><span class="rotulo">${rot}</span><span class="cont">${casosDaFase(f).length}</span></div>`).join("");
+    `<div class="lista-item" data-v="fase:${f}">${rotu(rot)}<span class="cont">${casosDaFase(f).length}</span></div>`).join("");
   document.getElementById("grupo-visoes").innerHTML = [
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
@@ -600,7 +630,7 @@ function montarSidebar(){
     ["recebimentos","💰 Recebimentos", D.casos.filter(k=>k.fase==="pagamento").length],
     ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && e.data_hora>=hoje()).length],
     ["dashboard","📊 Dashboard", null],
-  ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}"><span class="rotulo">${rot}</span>${n!=null?`<span class="cont">${n}</span>`:""}</div>`).join("");
+  ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}">${rotu(rot)}${n!=null?`<span class="cont">${n}</span>`:""}</div>`).join("");
   const bSom=document.getElementById("btn-som");
   bSom.textContent = somLigado()?"🔔":"🔕";
   bSom.onclick=()=>{
@@ -1295,6 +1325,7 @@ function renderDash(){
 async function abrirFicha(cliId){
   const c = D.cliPorId.get(cliId);
   if(!c) return aviso("Cliente ainda carregando — tente de novo em instantes");
+  if(clienteAberto !== cliId) casoSel = null;   // trocou de cliente: volta a "todos"
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
@@ -1309,8 +1340,20 @@ async function abrirFicha(cliId){
   const pagK = ks.filter(k=>k.fase==="pagamento");
   const equipe = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))];
 
+  if(casoSel && !ks.some(k=>k.id===casoSel)) casoSel=null;
+  const andsVis = casoSel ? ands.filter(a=>a.caso_id===casoSel) : ands;
   const abas=["📇 Dados","⚖️ Casos","📝 Andamentos","🩺 Perícias & Aud.","💰 Pagamentos","💬 Mensagens","👥 Equipe"];
   document.getElementById("detalhe").innerHTML=`
+  <div class="col-casos">
+    <div class="cc-tit">Casos</div>
+    <div class="cc-item ${!casoSel?"sel":""}" data-cc="">
+      <div class="cc-ben">📚 Todos os casos</div>
+      <div class="cc-fase">andamentos juntos</div></div>
+    ${ks.map(k=>`<div class="cc-item ${casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-cc="${k.id}">
+      <div class="cc-ben">${k.urgente?"🔥 ":""}${esc(tituloCaso(k))}</div>
+      <div class="cc-fase">${esc(NOME_FASE[k.fase]||"")}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}</div></div>`).join("")}
+  </div>
+  <div class="det-principal">
   <div class="det-rolagem">
   <div class="det-topo">
     <div class="linha1"><span class="avatar">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
@@ -1322,7 +1365,7 @@ async function abrirFicha(cliId){
       <div class="avatares">${equipe.map(id=>{const co=D.colPorId.get(id);return co?`<span class="avatar mini" style="background:${co.cor}" title="${esc(co.nome)}">${esc(co.inicial)}</span>`:"";}).join("")}</div>
     </div>
     <div class="abas">${abas.map((a,i)=>`<button class="aba ${i===abaAtiva?"ativa":""}" data-i="${i}">${a}${
-      a.includes("Andamentos")?` (${ands.length})`:a.includes("Casos")?` (${ks.length})`:
+      a.includes("Andamentos")?` (${andsVis.length})`:a.includes("Casos")?` (${ks.length})`:
       a.includes("Perícias")&&evs.length?` (${evs.length})`:a.includes("Pagamentos")&&(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>`).join("")}</div>
   </div>
 
@@ -1468,7 +1511,9 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="painel ${abaAtiva===2?"ativo":""}" data-p="2">
-    <ul class="timeline">${ands.map(a=>{const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
+    ${casoSel?`<p class="meio-sub">Andamentos de: <strong>${esc(tituloCaso(D.casoPorId.get(casoSel)||{}))}</strong> — clique em "📚 Todos os casos" na coluna ao lado para ver tudo junto.</p>`:
+      ks.length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso na coluna ao lado para ver só o dele.</p>`:""}
+    <ul class="timeline">${andsVis.map(a=>{const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
       return `<li style="border-left-color:${cor};background:color-mix(in srgb, ${cor} 7%, white)">
       <span class="quando"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmt(a.criado_em.slice(0,10))}<br>${esc(co?co.nome:"—")}</span>
       <span class="texto">${esc(a.texto)}</span></li>`;}).join("")||"<p class='meio-sub'>Sem andamentos.</p>"}</ul>
@@ -1589,12 +1634,18 @@ async function abrirFicha(cliId){
     <div class="linha">
       <span class="avatar" style="background:${eu.cor}">${esc(eu.inicial)}</span>
       <button class="btn-mini" title="frases prontas — os padrões que vocês sempre escrevem" onclick="toggleFrases()">⚡</button>
-      ${ks.length>1?`<select id="and-caso">${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>`:""}
+      ${ks.length>1?`<select id="and-caso">${ks.map(k=>`<option value="${k.id}" ${casoSel===k.id?"selected":""}>${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>`:""}
       <input id="and-texto" placeholder="Escreva o andamento… (⚡ = frases prontas)">
       <button onclick="novoAndamento('${ks.length===1?ks[0].id:""}')">Registrar</button>
     </div>
+  </div>
   </div>`;
 
+  document.querySelectorAll(".cc-item").forEach(el=>el.onclick=()=>{
+    casoSel = el.dataset.cc || null;
+    abaAtiva = 2;                       // escolher o caso mostra o andamento dele
+    abrirFicha(clienteAberto);
+  });
   document.querySelectorAll(".aba").forEach(b=>b.onclick=()=>{
     abaAtiva=+b.dataset.i;
     document.querySelectorAll(".aba").forEach(x=>x.classList.remove("ativa")); b.classList.add("ativa");
@@ -2117,6 +2168,10 @@ document.getElementById("busca-x").onclick=()=>{
   b.focus(); render();
 };
 document.getElementById("ordem").onchange=()=>render();
+document.getElementById("btn-lateral").onclick=()=>{
+  const mini=document.getElementById("app").classList.toggle("mini-lateral");
+  localStorage.setItem("crm_menu", mini?"mini":"cheio");
+};
 
 (async ()=>{
   if(CONFIG.SUPABASE_URL.startsWith("COLE_AQUI")){
