@@ -166,7 +166,9 @@
   .caso .rotulo-caso{font-size:11px;color:var(--cinza);text-transform:uppercase;letter-spacing:.05em}
   .caso .titulo-caso{font-size:15px;font-weight:700}
   .fases-trilha{display:flex;margin:10px 0 4px;font-size:11px;flex-wrap:wrap}
-  .fase-et{padding:4px 12px;background:var(--fundo);border:1px solid var(--borda);color:var(--cinza);white-space:nowrap}
+  .fase-et{padding:4px 12px;background:var(--fundo);border:1px solid var(--borda);color:var(--cinza);white-space:nowrap;font:inherit;font-size:13px;cursor:pointer}
+  .fase-et:not(.atual):hover{background:#e3eefa;color:var(--azul)}
+  .fase-et.atual{cursor:default}
   .fase-et:first-child{border-radius:6px 0 0 6px}
   .fase-et:last-child{border-radius:0 6px 6px 0}
   .fase-et.feita{background:#eef7ee;color:var(--verde)}
@@ -1369,8 +1371,11 @@ async function abrirFicha(cliId){
   document.getElementById("detalhe").innerHTML=`
   <div class="col-casos">
     <div class="cc-item ${abaAtiva===0?"sel":""}" data-vv="0">
-      <div class="cc-ben">📇 Dados</div>
+      <div class="cc-ben">📇 Cadastro</div>
       <div class="cc-fase">CPF, senha, telefone, vínculos</div></div>
+    <div class="cc-item ${abaAtiva===8?"sel":""}" data-vv="8">
+      <div class="cc-ben">🖨 Documentos</div>
+      <div class="cc-fase">imprimir e virar checklist</div></div>
     <div class="cc-tit" style="margin-top:8px">Casos</div>
     ${ks.map(k=>`<div class="cc-item ${abaAtiva===2&&casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-cc="${k.id}">
       <div class="cc-ben">${k.urgente?"🔥 ":""}${esc(tituloCaso(k))}</div>
@@ -1381,11 +1386,9 @@ async function abrirFicha(cliId){
       <div class="cc-fase">andamentos juntos</div></div>`:""}
     <div class="cc-item novo" data-vv="7"><div class="cc-ben">＋ Novo Caso</div></div>
     <div class="cc-tit" style="margin-top:8px">Mais</div>
-    <div class="cc-item ${abaAtiva===3?"sel":""}" data-vv="3"><div class="cc-ben">🩺 Perícias & Aud.${evs.length?` (${evs.length})`:""}</div></div>
+    <div class="cc-item ${abaAtiva===3?"sel":""}" data-vv="3"><div class="cc-ben">🩺 Perícias & Aud.${(n=>n?` (${n})`:"")(evs.filter(e=>e.data_hora.slice(0,10)>=hoje()&&e.status!=="cancelada").length)}</div></div>
     <div class="cc-item ${abaAtiva===4?"sel":""}" data-vv="4"><div class="cc-ben">💰 Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</div></div>
     <div class="cc-item ${abaAtiva===5?"sel":""}" data-vv="5"><div class="cc-ben">💬 Mensagens</div></div>
-    <div class="cc-item ${abaAtiva===8?"sel":""}" data-vv="8"><div class="cc-ben">🖨 Documentos</div>
-      <div class="cc-fase">imprimir e virar checklist</div></div>
   </div>
   <div class="det-principal">
   <div class="det-rolagem">
@@ -1804,8 +1807,19 @@ function trilhaCaso(k){
   if(!TRILHA.includes(k.fase))
     return `<div class="fases-trilha"><span class="fase-et atual">${esc(NOME_FASE[k.fase]||k.fase)}</span></div>`;
   const i=TRILHA.indexOf(k.fase);
+  // cada etapa é um botão: clicar move o caso para a lista correspondente
   return `<div class="fases-trilha">`+TRILHA.map((f,j)=>
-    `<span class="fase-et ${j<i?"feita":""} ${j===i?"atual":""}">${j<i?"✔ ":""}${NOME_FASE[f]}</span>`).join("")+`</div>`;
+    `<button class="fase-et ${j<i?"feita":""} ${j===i?"atual":""}" ${j===i?"disabled":
+      `onclick="moverFase('${k.id}','${f}')" title="clique para mover o caso para ${NOME_FASE[f]}"`}>${j<i?"✔ ":""}${NOME_FASE[f]}</button>`).join("")+`</div>`;
+}
+async function moverFase(casoId, fase){
+  const k=D.casoPorId.get(casoId); if(!k || k.fase===fase) return;
+  const lista=(LISTAS_MOVER.find(([,f])=>f===fase)||[])[0];
+  k.fase=fase; if(lista) k.mover_para=lista;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({fase, ...(lista?{mover_para:lista}:{})})});
+  aviso(`Movido para ${lista||NOME_FASE[fase]} — o To Do acompanha na próxima sincronização`);
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
 }
 async function salvarBeneficio(casoId){
   const v=document.getElementById("ben-"+casoId).value.trim()||null;
@@ -1820,7 +1834,7 @@ function subtarefasDe(casoId){ return D.tarefas.filter(t=>t.caso_id===casoId); }
 function checklistCaso(k){
   const st=subtarefasDe(k.id), feitas=st.filter(t=>t.concluida).length;
   return `<div style="margin-top:10px">
-    ${st.length?`<div class="meio-sub">Checklist — ${feitas} de ${st.length}</div>`:""}
+    ${st.length?`<div class="meio-sub">📄 Checklist de Documentos Solicitados — ${feitas} de ${st.length}</div>`:""}
     ${!st.length&&cklDe(k.beneficio)?`<button class="btn-mini" onclick='aplicarChecklistCaso(D.casoPorId.get("${k.id}")).then(()=>{abaAtiva=2;abrirFicha(clienteAberto);})'>📋 Aplicar checklist do benefício</button>`:""}
     ${st.filter(t=>!t.concluida).map(t=>`<div class="cl"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span></div>`).join("")}
     ${feitas?`<details><summary style="cursor:pointer;color:var(--cinza);font-size:12px;padding:2px 0">✔ Concluídas (${feitas}) — clique na caixinha para desfazer</summary>
@@ -1926,6 +1940,19 @@ async function novoAndamento(casoUnico){
     const cli=D.cliPorId.get(k.cliente_id);
     if(cli) cli._ix += " " + prot[1];
   }
+  // "solicitei os documentos: X; Y" no atendimento -> sobe para o checklist
+  let docsNovos=0;
+  const mdoc=texto.match(/(?:document\w+\s+solicitad\w+|solicitad\w+[^:\n]{0,40}document\w+|solicitei[^:\n]{0,40}document\w+)[^:\n]*:\s*([^\n]+)/i);
+  if(mdoc && k){
+    const itens=mdoc[1].split(/[;,]/).map(x=>x.trim().replace(/\.$/,"")).filter(x=>x&&x.length<=80).slice(0,15);
+    for(const it of itens){
+      if(D.tarefas.some(t=>t.caso_id===casoId && t.titulo===`📄 ${it}` && !t.concluida)) continue;
+      const [tf]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:casoId, titulo:`📄 ${it}`})});
+      if(tf){ D.tarefas.push(tf); docsNovos++; }
+    }
+  }
+  const sufixoDocs = docsNovos?` · 📄 ${docsNovos} doc(s) no checklist`:"";
   const evs=await extrairEvento(texto, casoId);         // perícias citadas viram agendamentos
   if(evs){
     montarSidebar();
@@ -1937,10 +1964,10 @@ async function novoAndamento(casoUnico){
       const [tf]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
         body:JSON.stringify({caso_id:casoId, titulo:tituloProx})});
       if(tf) D.tarefas.push(tf);
-      aviso(`🩺 Agendado: ${nomes} — 💡 criei no checklist: agendar atendimento presencial antes`);
-    } else aviso(`🩺 Agendado automaticamente: ${nomes}!`);
+      aviso(`🩺 Agendado: ${nomes} — 💡 criei no checklist: agendar atendimento presencial antes${sufixoDocs}`);
+    } else aviso(`🩺 Agendado automaticamente: ${nomes}!${sufixoDocs}`);
   }
-  else aviso(prot?"Andamento registrado — protocolo 📄 guardado na ficha":"Andamento registrado — será replicado no To Do");
+  else aviso((prot?"Andamento registrado — protocolo 📄 guardado na ficha":"Andamento registrado — será replicado no To Do")+sufixoDocs);
   abrirFicha(clienteAberto);
 }
 

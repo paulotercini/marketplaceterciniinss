@@ -47,6 +47,13 @@ RE_PROTOCOLO = re.compile(r"protocolo\D{0,12}(\d{6,})", re.I)
 # To Do significa que o cliente usa essa senha no Meu INSS.
 SENHA_PADRAO = os.environ.get("SENHA_PADRAO_MEUINSS")
 
+# "Solicitei os documentos: RG; CPF; comprovante" num andamento vira itens
+# do Checklist de Documentos Solicitados do caso (inserção única: concluir
+# no app não é desfeito pela sincronização seguinte)
+RE_DOCS_SOLICITADOS = re.compile(
+    r"(?:document\w+\s+solicitad\w+|solicitad\w+[^:\n]{0,40}document\w+|"
+    r"solicitei[^:\n]{0,40}document\w+)[^:\n]*:\s*([^\n]+)", re.I)
+
 RE_CPF_FMT = re.compile(r"\b(\d{3})\.?(\d{3})\.?(\d{3})-(\d{2})\b")
 # telefone anotado no checklist ("16-99711 2233", "(16) 99711-2233") —
 # o separador depois do DDD é obrigatório para não confundir com CPF/protocolo
@@ -127,6 +134,7 @@ def mapear(dados):
     """crm.json -> dicionário de linhas por tabela (ids determinísticos)."""
     clientes, casos, andamentos, eventos, tarefas = {}, {}, {}, {}, {}
     credenciais, vinculos, pend_vinculos = {}, {}, []
+    tarefas_docs = {}
     pulados, sem_senha_padrao = {}, 0
 
     for t in dados["tarefas"]:
@@ -177,6 +185,17 @@ def mapear(dados):
         }
 
         for a in t["andamentos"]:
+            m_docs = RE_DOCS_SOLICITADOS.search(a["texto"])
+            if m_docs:
+                for it in [x.strip().rstrip(".") for x in re.split(r"[;,]", m_docs.group(1))][:15]:
+                    if not it or len(it) > 80:
+                        continue
+                    did = uid("subtarefa", kid, md5("📄 " + it))
+                    tarefas_docs.setdefault(did, {
+                        "id": did, "caso_id": kid, "titulo": "📄 " + it,
+                        "prazo": None, "concluida": False,
+                        "concluida_em": None, "particular_de": None,
+                    })
             aid = uid("andamento", kid, a["data"], md5(a["texto"]))
             andamentos[aid] = {
                 "id": aid, "caso_id": kid,
@@ -272,6 +291,8 @@ def mapear(dados):
         "tarefas": list(tarefas.values()),
         "credenciais": list(credenciais.values()),
         "vinculos": list(vinculos.values()),
+        # inserção única (do nothing): concluídas no app não são reabertas
+        "tarefas_docs": [t for tid, t in tarefas_docs.items() if tid not in tarefas],
         "pulados": pulados,
     }
 
@@ -358,6 +379,7 @@ def gerar_sql(mapa):
         _sql_insert("eventos", mapa["eventos"], chave="caso_id,tipo,data_hora"),
         _sql_insert("tarefas", mapa["tarefas"],
                     update_cols=("prazo", "concluida", "concluida_em")),
+        _sql_insert("tarefas", mapa.get("tarefas_docs", [])),
         "commit;",
     ]))
 
@@ -415,21 +437,23 @@ def subir_rest(mapa):
     # eventos deduplicam pela trinca caso+tipo+data (o app também cria eventos,
     # com id próprio — conflitar por id geraria violação do índice de dedupe)
     ordem = [
-        ("clientes", "merge-duplicates", "id"),
-        ("credenciais", "ignore-duplicates", "id"),
-        ("vinculos", "ignore-duplicates", "cliente_id,ligado_a"),
-        ("casos", "merge-duplicates", "id"),
-        ("andamentos", "ignore-duplicates", "id"),
-        ("eventos", "ignore-duplicates", "caso_id,tipo,data_hora"),
-        ("tarefas", "merge-duplicates", "id"),
+        ("clientes", "clientes", "merge-duplicates", "id"),
+        ("credenciais", "credenciais", "ignore-duplicates", "id"),
+        ("vinculos", "vinculos", "ignore-duplicates", "cliente_id,ligado_a"),
+        ("casos", "casos", "merge-duplicates", "id"),
+        ("andamentos", "andamentos", "ignore-duplicates", "id"),
+        ("eventos", "eventos", "ignore-duplicates", "caso_id,tipo,data_hora"),
+        ("tarefas", "tarefas", "merge-duplicates", "id"),
+        # docs solicitados citados em andamentos: só insere — concluir no app fica
+        ("tarefas_docs", "tarefas", "ignore-duplicates", "id"),
     ]
-    for tabela, res, conflito in ordem:
-        linhas = resolver(mapa[tabela])
+    for chave_mapa, tabela, res, conflito in ordem:
+        linhas = resolver(mapa.get(chave_mapa, []))
         for i in range(0, len(linhas), 500):
             _rest(url, chave, "POST", f"/rest/v1/{tabela}?on_conflict={conflito}",
                   linhas[i:i + 500],
                   prefer=f"resolution={res},return=minimal")
-        print(f"  {tabela}: {len(linhas)} linhas enviadas")
+        print(f"  {chave_mapa}: {len(linhas)} linhas enviadas")
 
 
 def main(argv=None):
