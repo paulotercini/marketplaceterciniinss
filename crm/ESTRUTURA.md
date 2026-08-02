@@ -67,8 +67,14 @@ do portal continua derivado de CPF+DN.
 
 1. **Espelho** (✅ implementada): importar via Graph API (o repo já autentica),
    sistema só-leitura com pesquisa e dashboard. Equipe continua no To Do.
-2. **Escrita dupla**: andamentos criados no sistema replicam no To Do (formato
-   `DD.MM.AAAA (X): texto`), e o sync importa o que for escrito no To Do.
+2. **Escrita dupla** (✅ implementada — ver `crm/fase2/COMO-INSTALAR.md`):
+   banco Supabase com login por colaborador; andamentos criados no sistema
+   replicam no To Do (formato `DD.MM.AAAA (X): texto`) via
+   `fase2/escrever_todo.py`, e `fase2/migrar.py` importa o que for escrito no
+   To Do (idempotente, com anti-eco). Decisões de ago/2026 aplicadas:
+   💵 Pagamentos deixou de ser lista (pagamento é fase/aba do caso), Meu Dia
+   existe com filtro por colaborador, e a inicial C é o Claude (autor dos
+   lançamentos automáticos, como o monitor do DOU).
 3. **Virada**: To Do vira backup; portal do cliente passa a ler do banco;
    entram DataJud (andamentos judiciais automáticos), Drive e aviso WhatsApp.
 

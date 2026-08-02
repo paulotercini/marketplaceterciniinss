@@ -25,14 +25,15 @@ SAIDA = pathlib.Path(__file__).resolve().parent / "data" / "crm.json"
 # identificado (bloco antigo ou anotação sem inicial).
 COLABORADORES = {
     "P": "Paulo", "A": "Amanda", "M": "Marcos", "D": "André",
-    "AD": "André", "I": "Ingrid", "C": "Célia", "L": "L", "G": "G",
+    "AD": "André", "I": "Ingrid", "C": "Claude", "L": "L", "G": "G",
 }
 
 # Listas que aparecem primeiro na coluna esquerda, na ordem do fluxo do
-# escritório; as demais vão para o grupo "Outras listas".
+# escritório; as demais vão para o grupo "Outras listas". 💵 Pagamentos fica
+# de fora de propósito: pagamento é etapa do caso, visto na ficha do cliente.
 LISTAS_PRINCIPAIS = [
     "🗓 Tarefas com Prazo", "🙋 Escritório", "🌻 INSS", "👪 Judicial",
-    "🖥 Conselho de Recursos", "💵 Pagamentos", "🙏 Aposentadorias Futuras",
+    "🖥 Conselho de Recursos", "🙏 Aposentadorias Futuras",
 ]
 
 BENEFICIOS = [
