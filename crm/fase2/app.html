@@ -153,6 +153,22 @@
   .barra .tubo{flex:1;height:10px;background:var(--fundo);border-radius:5px;overflow:hidden}
   .barra .tubo i{display:block;height:100%;background:var(--azul);border-radius:5px}
   .barra .qt{width:56px;text-align:right;font-weight:600;flex:none}
+  .kanban{display:flex;gap:10px;overflow-x:auto;align-items:flex-start;padding-bottom:10px}
+  .coluna{background:var(--lateral);border:1px solid var(--borda);border-radius:10px;padding:10px;min-width:225px;flex:1}
+  .coluna h4{font-size:12px;color:var(--cinza);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;justify-content:space-between}
+  .coluna.solta{outline:2px dashed var(--azul);outline-offset:-2px}
+  .kcard{background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 10px;margin-bottom:8px;cursor:grab;font-size:13px}
+  .kcard:active{cursor:grabbing}
+  .kcard .nome{font-weight:600}
+  .kcard .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+  .kcard .acao{margin-top:6px}
+  .mencao{border:1px solid var(--borda);border-left:4px solid var(--laranja);border-radius:8px;padding:11px 14px;margin-bottom:8px;background:var(--branco)}
+  .mencao .cab{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px}
+  .mencao .texto{font-size:13px;white-space:pre-wrap}
+  .mencao .acoes{display:flex;gap:8px;margin-top:8px}
+  .mkt{border:1px solid var(--borda);border-radius:8px;padding:10px 14px;margin-bottom:8px;background:var(--branco);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .mkt strong{min-width:180px}
+  .doc-edit{width:100%;min-height:140px;margin-top:8px;padding:8px;border:1px solid var(--borda);border-radius:8px;font:13px/1.5 monospace}
   .aviso{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#323130;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
   .aviso.on{opacity:1}
   @media (max-width:980px){
@@ -327,7 +343,7 @@ async function iniciar(){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -337,11 +353,14 @@ async function carregar(){
       todas("eventos","select=*&order=data_hora"),
       todas("pagamentos","select=*"),
       todas("meu_dia",`select=*&dia=eq.${hoje()}`),
-      todas("andamentos",`select=autor_id,criado_em&criado_em=gte.${d30.toISOString()}`),
+      todas("andamentos",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),
       todas("modelos_mensagem","select=*&order=titulo"),
       todas("sugestoes","select=*&status=eq.pendente&order=criado_em.desc"),
+      todas("mencoes",`select=*&para_id=eq.${eu.id}&lida_em=is.null&order=criado_em.desc`),
+      todas("leads","select=*&order=criado_em.desc"),
+      todas("documentos_beneficio","select=*"),
     ]);
-  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes};
+  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs};
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -401,6 +420,7 @@ function casosDaFase(f){
 function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", null],
+    ["mencoes","📥 Menções", D.mencoes.length],
     ["planejado","🗓️ Planejado", ativos().filter(k=>k.prazo && k.prazo>=hoje()).length],
     ["minhas","👤 Atribuídas a mim", ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)).length],
     ["importante","⭐ Importante", ativos().filter(k=>k.importante).length],
@@ -413,6 +433,9 @@ function montarSidebar(){
     `<div class="lista-item" data-v="fase:${f}"><span class="rotulo">${rot}</span><span class="cont">${casosDaFase(f).length}</span></div>`).join("");
   document.getElementById("grupo-visoes").innerHTML = [
     ["claude","🤖 Claude", D.sugestoes.length],
+    ["quadro","📌 Quadro", null],
+    ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
+    ["marketing","📣 Marketing", null],
     ["recebimentos","💰 Recebimentos", D.casos.filter(k=>k.fase==="pagamento").length],
     ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && e.data_hora>=hoje()).length],
     ["dashboard","📊 Dashboard", null],
@@ -513,6 +536,10 @@ function render(){
   if(visao==="meudia") return renderMeuDia();
   if(visao==="novocliente") return renderNovoCliente();
   if(visao==="claude") return renderClaude();
+  if(visao==="mencoes") return renderMencoes();
+  if(visao==="quadro") return renderQuadro();
+  if(visao==="vendas") return renderVendas();
+  if(visao==="marketing") return renderMarketing();
 
   let casosSel, titulo, subt="Clique no cliente para abrir a ficha completa.";
   if(visao==="planejado"){ titulo="🗓️ Planejado"; casosSel=ativos().filter(k=>k.prazo); }
@@ -622,9 +649,11 @@ function renderNovoCliente(){
         <input id="ncl-tel" placeholder="Telefone/WhatsApp">
       </div>
       <div class="form-linha">
-        <input id="ncl-caso" placeholder="Primeiro caso (ex.: Aposentadoria por idade) *" style="flex:1;min-width:240px">
+        <input id="ncl-caso" placeholder="Benefício / primeiro caso *" list="lista-beneficios" style="flex:1;min-width:240px">
         <select id="ncl-fase">${FASES.filter(f=>f[0]!=="prazo").map(([f,r])=>`<option value="${f}">${r.replace(/^\S+ /,"")}</option>`).join("")}</select>
       </div>
+      <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
+      <p style="font-size:12px;color:var(--verde)">✓ Escolhendo um benefício da lista, a ficha já nasce com o botão 🖨 da lista de documentos para o cliente levar para casa.</p>
       <div class="form-linha">
         <label style="font-size:13px;color:var(--cinza)">Agendar atendimento:
           <select id="ncl-tipo"><option value="001">001 — cliente novo</option><option value="002">002 — cliente antigo</option></select></label>
@@ -699,6 +728,195 @@ async function decidirSugestao(id, status){
   montarSidebar(); render();
 }
 
+// ── 📥 Menções (caixa de entrada) ─────────────────────────────────────────
+function renderMencoes(){
+  document.getElementById("titulo-lista").textContent="📥 Menções";
+  document.getElementById("sub-lista").textContent=
+    "Pendências em que alguém citou você com @ num andamento. Escreva @Nome ao registrar para delegar.";
+  document.getElementById("conteudo-meio").innerHTML = D.mencoes.map(m=>{
+    const de=D.colPorId.get(m.de_id), k=m.caso_id&&D.casoPorId.get(m.caso_id),
+          c=k&&D.cliPorId.get(k.cliente_id);
+    return `<div class="mencao">
+      <div class="cab">${de?`<span class="avatar mini" style="background:${de.cor}">${esc(de.inicial)}</span><strong>${esc(de.nome)}</strong>`:""}
+        <span class="chip neutro">${fmt(m.criado_em.slice(0,10))}</span>
+        ${c?`<span class="chip fase">${esc(c.nome)}</span>`:""}</div>
+      <div class="texto">${esc(m.texto)}</div>
+      <div class="acoes">
+        ${c?`<button class="btn-mini" onclick="abrirFicha('${c.id}')">abrir ficha</button>`:""}
+        <button class="btn-mini" onclick="lerMencao('${m.id}')">✔ resolvida</button>
+      </div></div>`;
+  }).join("") || "<p class='meio-sub'>Caixa vazia — nada pendente para você. 🎉</p>";
+}
+async function lerMencao(id){
+  await api(`/rest/v1/mencoes?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({lida_em:new Date().toISOString()})});
+  D.mencoes=D.mencoes.filter(m=>m.id!==id);
+  montarSidebar(); render();
+}
+async function criarMencoes(texto, casoId, andamentoId){
+  const alvos=D.colaboradores.filter(co=>co.id!==eu.id && co.ativo &&
+    (new RegExp("@"+co.nome.split(" ")[0]+"\\b","i").test(texto) ||
+     new RegExp("@"+co.inicial+"\\b").test(texto)));
+  for(const co of alvos)
+    await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({de_id:eu.id, para_id:co.id, caso_id:casoId,
+        andamento_id:andamentoId, texto})});
+  if(alvos.length) aviso("📥 "+alvos.map(a=>a.nome).join(", ")+" será(ão) avisado(s)");
+}
+
+// ── 📌 Quadro Kanban (fases) ──────────────────────────────────────────────
+const COLUNAS_QUADRO=[["escritorio","🙋 Escritório"],["inss","🌻 INSS"],
+  ["conselho","🖥 Conselho"],["judicial","👪 Judicial"],["pagamento","💰 Pagamento"]];
+function kcardCaso(k){
+  const c=D.cliPorId.get(k.cliente_id);
+  return `<div class="kcard" draggable="true" data-caso="${k.id}" data-cli="${c?c.id:""}">
+    <div class="nome">${esc(c?c.nome:k.titulo)}</div>
+    <div class="meta">${k.beneficio?`<span class="chip ben">${esc(k.beneficio)}</span>`:""}
+      ${chipExig(k)}${k.prazo?`<span class="chip prazo ${k.prazo<hoje()?"venc":""}">⏰ ${fmt(k.prazo)}</span>`:""}</div></div>`;
+}
+function renderQuadro(){
+  document.getElementById("titulo-lista").textContent="📌 Quadro";
+  document.getElementById("sub-lista").textContent=
+    "Arraste o cartão para mudar a fase do caso — a alteração vai para o banco (e o To Do acompanha).";
+  document.getElementById("conteudo-meio").innerHTML =
+    `<div class="kanban">`+COLUNAS_QUADRO.map(([f,rot])=>{
+      const ks=D.casos.filter(k=>k.fase===f);
+      return `<div class="coluna" data-fase="${f}"><h4>${rot}<span>${ks.length}</span></h4>
+        ${ks.slice(0,60).map(kcardCaso).join("")}
+        ${ks.length>60?`<p class="meio-sub">+${ks.length-60} — use a pesquisa</p>`:""}</div>`;
+    }).join("")+`</div>`;
+  ligarQuadro();
+}
+function ligarQuadro(){
+  document.querySelectorAll(".kcard[data-caso]").forEach(el=>{
+    el.ondragstart=e=>e.dataTransfer.setData("text/caso", el.dataset.caso);
+    el.onclick=()=>{ if(el.dataset.cli) abrirFicha(el.dataset.cli); };
+  });
+  document.querySelectorAll(".coluna[data-fase]").forEach(col=>{
+    col.ondragover=e=>{ e.preventDefault(); col.classList.add("solta"); };
+    col.ondragleave=()=>col.classList.remove("solta");
+    col.ondrop=async e=>{
+      e.preventDefault(); col.classList.remove("solta");
+      const id=e.dataTransfer.getData("text/caso"); if(!id) return;
+      const k=D.casoPorId.get(id); if(!k || k.fase===col.dataset.fase) return;
+      k.fase=col.dataset.fase;
+      await api(`/rest/v1/casos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({fase:k.fase})});
+      aviso("Fase: "+NOME_FASE[k.fase]); montarSidebar(); renderQuadro();
+    };
+  });
+}
+
+// ── 💼 Vendas (funil de prospectos) ───────────────────────────────────────
+const ETAPAS=[["novo","🆕 Novo contato"],["atendimento","📅 Atendimento"],
+  ["viabilidade","🔎 Viabilidade"],["proposta","🤝 Proposta"],
+  ["fechado","✅ Fechado"],["perdido","❌ Perdido"]];
+function renderVendas(){
+  document.getElementById("titulo-lista").textContent="💼 Vendas";
+  document.getElementById("sub-lista").textContent=
+    "Do primeiro contato ao contrato. Arraste entre etapas; ao fechar, um clique transforma o prospecto em cliente.";
+  const fech=D.leads.filter(l=>l.etapa==="fechado").length,
+        perd=D.leads.filter(l=>l.etapa==="perdido").length;
+  const taxa=(fech+perd)?Math.round(100*fech/(fech+perd)):null;
+  document.getElementById("conteudo-meio").innerHTML =
+    `<div class="nova">
+      <input id="nl-nome" placeholder="＋ Nome do prospecto…" style="min-width:160px">
+      <input id="nl-tel" placeholder="telefone" style="max-width:130px">
+      <input id="nl-ben" placeholder="benefício de interesse" list="lista-beneficios" style="max-width:180px">
+      <select id="nl-origem"><option>indicação</option><option>site</option><option>redes sociais</option><option>anúncio</option><option>outro</option></select>
+      <button onclick="novoLead()">Adicionar</button>
+    </div>
+    <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
+    ${taxa!=null?`<div class="meio-sub">Conversão até hoje: <b>${taxa}%</b> (${fech} fechados, ${perd} perdidos)</div>`:""}
+    <div class="kanban">`+ETAPAS.map(([e,rot])=>{
+      const ls=D.leads.filter(l=>l.etapa===e);
+      return `<div class="coluna" data-etapa="${e}"><h4>${rot}<span>${ls.length}</span></h4>
+        ${ls.slice(0,40).map(l=>`<div class="kcard" draggable="true" data-lead="${l.id}">
+          <div class="nome">${esc(l.nome)}</div>
+          <div class="meta">${l.beneficio_interesse?`<span class="chip ben">${esc(l.beneficio_interesse)}</span>`:""}
+            ${l.origem?`<span class="chip neutro">${esc(l.origem)}</span>`:""}</div>
+          ${l.telefone?`<div class="acao"><a class="btn-mini" target="_blank" style="text-decoration:none" href="https://wa.me/55${l.telefone.replace(/\D/g,"")}">💬 chamar</a></div>`:""}
+          ${e==="fechado"&&!l.cliente_id?`<div class="acao"><button class="btn-mini" onclick="leadParaCliente('${l.id}')">→ virar cliente</button></div>`:""}
+          ${e==="fechado"&&l.cliente_id?`<div class="acao"><button class="btn-mini" onclick="abrirFicha('${l.cliente_id}')">ficha do cliente</button></div>`:""}
+        </div>`).join("")}</div>`;
+    }).join("")+`</div>`;
+  document.getElementById("nl-nome").onkeydown=e=>{ if(e.key==="Enter") novoLead(); };
+  document.querySelectorAll(".kcard[data-lead]").forEach(el=>{
+    el.ondragstart=e=>e.dataTransfer.setData("text/lead", el.dataset.lead);
+  });
+  document.querySelectorAll(".coluna[data-etapa]").forEach(col=>{
+    col.ondragover=e=>{ e.preventDefault(); col.classList.add("solta"); };
+    col.ondragleave=()=>col.classList.remove("solta");
+    col.ondrop=async e=>{
+      e.preventDefault(); col.classList.remove("solta");
+      const id=e.dataTransfer.getData("text/lead"); if(!id) return;
+      const l=D.leads.find(x=>x.id===id); if(!l || l.etapa===col.dataset.etapa) return;
+      l.etapa=col.dataset.etapa;
+      if(l.etapa==="perdido") l.motivo_perda=prompt("Motivo da perda (opcional):")||null;
+      await api(`/rest/v1/leads?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({etapa:l.etapa, motivo_perda:l.motivo_perda||null,
+          atualizado_em:new Date().toISOString()})});
+      montarSidebar(); renderVendas();
+    };
+  });
+}
+async function novoLead(){
+  const nome=document.getElementById("nl-nome").value.trim();
+  if(!nome) return;
+  const [l]=await api(`/rest/v1/leads`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({nome, telefone:document.getElementById("nl-tel").value.trim()||null,
+      beneficio_interesse:document.getElementById("nl-ben").value.trim()||null,
+      origem:document.getElementById("nl-origem").value, responsavel_id:eu.id})});
+  D.leads.unshift(l); renderVendas(); aviso("Prospecto no funil 💼");
+}
+async function leadParaCliente(leadId){
+  const l=D.leads.find(x=>x.id===leadId); if(!l) return;
+  const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({nome:l.nome, telefone:l.telefone})});
+  const [caso]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({cliente_id:cli.id, titulo:l.nome,
+      beneficio:l.beneficio_interesse, fase:"escritorio"})});
+  await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:caso.id, colaborador_id:eu.id})});
+  await api(`/rest/v1/leads?id=eq.${leadId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({cliente_id:cli.id})});
+  l.cliente_id=cli.id;
+  await carregar(); montarSidebar();
+  aviso("Cliente criado a partir da venda ✔"); abrirFicha(cli.id);
+}
+
+// ── 📣 Marketing (o que estamos trabalhando + público por benefício) ──────
+function renderMarketing(){
+  document.getElementById("titulo-lista").textContent="📣 Marketing";
+  document.getElementById("sub-lista").textContent=
+    "Onde o escritório está trabalhando mais (últimos 30 dias) — use para pautar posts e enviar material certo para o cliente certo.";
+  const atividade={};
+  D.and30.forEach(a=>{
+    const k=D.casoPorId.get(a.caso_id);
+    if(k&&k.beneficio) atividade[k.beneficio]=(atividade[k.beneficio]||0)+1;
+  });
+  const publico={};
+  ativos().forEach(k=>{
+    if(!k.beneficio) return;
+    const c=D.cliPorId.get(k.cliente_id);
+    if(!publico[k.beneficio]) publico[k.beneficio]=new Map();
+    if(c) publico[k.beneficio].set(c.id, c);
+  });
+  const ranking=Object.entries(atividade).sort((a,b)=>b[1]-a[1]);
+  const max=Math.max(...ranking.map(r=>r[1]),1);
+  document.getElementById("conteudo-meio").innerHTML =
+    ranking.map(([ben,n],i)=>{
+      const cs=[...(publico[ben]||new Map()).values()];
+      const tels=cs.filter(c=>c.telefone).map(c=>c.telefone);
+      return `<div class="mkt"><strong>${i+1}º ${esc(ben)}</strong>
+        <div class="tubo" style="flex:1;height:10px;background:var(--fundo);border-radius:5px;overflow:hidden"><i style="display:block;height:100%;width:${n/max*100}%;background:var(--azul);border-radius:5px"></i></div>
+        <span class="chip neutro">${n} andamentos/30d</span>
+        <span class="chip fase">${cs.length} clientes ativos</span>
+        ${tels.length?`<button class="btn-mini" onclick='copiar(${JSON.stringify(tels.join("\n"))},"${tels.length} telefones copiados — lista de transmissão 📣")'>📋 telefones (${tels.length})</button>`:""}
+      </div>`;
+    }).join("") || "<p class='meio-sub'>Sem atividade registrada nos últimos 30 dias.</p>";
+}
+
 // ── agenda e dashboard ────────────────────────────────────────────────────
 function renderAgenda(){
   document.getElementById("titulo-lista").textContent="🩺 Perícias & Audiências";
@@ -742,6 +960,8 @@ function renderDash(){
     <div class="card"><h4>Prazos vencidos</h4><div class="num" style="color:var(--vermelho)">${at.filter(k=>k.prazo&&k.prazo<hoje()).length}</div></div>
     <div class="card"><h4>Perícias/audiências futuras</h4><div class="num" style="color:var(--roxo)">${D.eventos.filter(e=>e.status==="agendada"&&e.data_hora.slice(0,10)>=hoje()).length}</div></div>
     <div class="card"><h4>⚠ Exigências INSS em aberto</h4><div class="num" style="color:var(--vermelho)">${at.filter(k=>k.exigencia_prazo).length}</div></div>
+    <div class="card"><h4>💼 Vendas em andamento</h4><div class="num">${D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length}</div></div>
+    <div class="card"><h4>📥 Menções pendentes (minhas)</h4><div class="num" style="color:var(--laranja)">${D.mencoes.length}</div></div>
     <div class="card"><h4>A receber (lançado)</h4><div class="num" style="color:var(--verde);font-size:22px">${moeda(recebiveis)}</div></div>
     <div class="card" style="grid-column:1/-1"><h4>Andamentos por colaborador — últimos 30 dias</h4>
       ${barras(Object.entries(porAutor).sort((a,b)=>b[1]-a[1]))}</div>
@@ -755,9 +975,10 @@ function renderDash(){
 
 // ── ficha do cliente ──────────────────────────────────────────────────────
 async function abrirFicha(cliId){
+  const c = D.cliPorId.get(cliId);
+  if(!c) return aviso("Cliente ainda carregando — tente de novo em instantes");
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
-  const c = D.cliPorId.get(cliId);
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
   const ids = ks.map(k=>k.id).join(",");
   const [ands, creds] = await Promise.all([
@@ -823,7 +1044,10 @@ async function abrirFicha(cliId){
         <label style="font-size:12px;color:var(--cinza)">Prazo:
         <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></label>
         ${!k.exigencia_prazo?`<button class="btn-mini" onclick="marcarExigencia('${k.id}')">⚠ Marcar exigência (30 dias)</button>`:""}
+        ${docDe(k.beneficio)?`<button class="btn-mini" onclick="imprimirDocs('${k.id}')">🖨 Documentos p/ cliente</button>
+          <button class="btn-mini" onclick="editarDocs('${k.id}')" title="editar a lista deste benefício">✏</button>`:""}
       </div>
+      <div id="doc-editor-${k.id}"></div>
       ${k.exigencia_prazo?`<div class="exig">
         <strong>⚠ Em exigência</strong>
         até <input type="date" value="${k.exigencia_prazo}" data-exig-data="${k.id}">
@@ -970,8 +1194,10 @@ async function novoAndamento(casoUnico){
   const casoId = casoUnico || (sel && sel.value);
   const inp=document.getElementById("and-texto");
   if(!casoId || !inp.value.trim()) return;
-  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:inp.value.trim()})});
+  const texto=inp.value.trim();
+  const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})});
+  await criarMencoes(texto, casoId, and?and.id:null);   // @Amanda, @M... viram pendências
   aviso("Andamento registrado — será replicado no To Do");
   abrirFicha(clienteAberto);
 }
@@ -1055,6 +1281,57 @@ async function novoModelo(){
   const [m]=await api(`/rest/v1/modelos_mensagem`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({titulo:t, texto:x, contexto:document.getElementById("nm-ctx").value})});
   D.modelos.push(m); aviso("Modelo salvo"); abrirFicha(clienteAberto);
+}
+// documentos por benefício -> carta imprimível para o cliente
+function docDe(beneficio){
+  if(!beneficio) return null;
+  const b=dsa(beneficio);
+  return D.docs.find(d=>dsa(d.beneficio)===b)
+      || D.docs.find(d=>b.includes(dsa(d.beneficio)) || dsa(d.beneficio).includes(b));
+}
+function imprimirDocs(casoId){
+  const k=D.casoPorId.get(casoId), c=D.cliPorId.get(k.cliente_id), doc=docDe(k.beneficio);
+  if(!doc) return aviso("Sem lista cadastrada para este benefício");
+  const hojeBr=fmt(hoje());
+  const w=window.open("","_blank");
+  w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+  <title>Documentos — ${esc(c.nome)}</title><style>
+    body{font-family:Georgia,serif;max-width:680px;margin:40px auto;color:#222;line-height:1.6}
+    header{text-align:center;border-bottom:2px solid #1e4fa3;padding-bottom:12px;margin-bottom:24px}
+    header h1{font-size:20px;color:#1e4fa3;margin:0}
+    header p{margin:2px 0;font-size:13px;color:#555}
+    h2{font-size:16px} .cli{margin:14px 0;font-size:15px}
+    ul{list-style:none;padding:0} li{margin:9px 0;font-size:15px}
+    li::before{content:"☐  "} .obs{background:#f4f1ea;padding:10px 14px;border-radius:6px;font-size:13px;margin-top:16px}
+    footer{margin-top:34px;font-size:13px;color:#555;border-top:1px solid #ccc;padding-top:10px}
+    @media print{body{margin:10mm}}
+  </style></head><body>
+  <header><h1>Paulo R. Tercini Filho — Advocacia Previdenciária</h1>
+  <p>Documentos necessários para o seu processo</p></header>
+  <div class="cli"><b>Cliente:</b> ${esc(c.nome)}<br><b>Benefício:</b> ${esc(k.beneficio)}<br><b>Data:</b> ${hojeBr}</div>
+  <h2>Providenciar e trazer ao escritório:</h2>
+  <ul>${doc.itens.split("\n").filter(x=>x.trim()).map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+  ${doc.observacoes?`<div class="obs">💡 ${esc(doc.observacoes)}</div>`:""}
+  <footer>Dúvidas? Fale conosco pelo WhatsApp. Pode enviar fotos dos documentos por lá, desde que legíveis.</footer>
+  <script>window.print()<\/script></body></html>`);
+  w.document.close();
+}
+function editarDocs(casoId){
+  const k=D.casoPorId.get(casoId), doc=docDe(k.beneficio), div=document.getElementById("doc-editor-"+casoId);
+  if(!doc||!div) return;
+  if(div.innerHTML){ div.innerHTML=""; return; }
+  div.innerHTML=`<textarea class="doc-edit" id="doc-txt-${casoId}">${esc(doc.itens)}</textarea>
+    <div class="form-linha"><input id="doc-obs-${casoId}" placeholder="observação (opcional)" value="${esc(doc.observacoes||"")}" style="flex:1">
+    <button onclick="salvarDocs('${casoId}')">Salvar lista</button></div>
+    <p style="font-size:12px;color:var(--cinza)">Um documento por linha — vale para TODOS os clientes deste benefício. Pode colar aqui o texto do site interno.</p>`;
+}
+async function salvarDocs(casoId){
+  const k=D.casoPorId.get(casoId), doc=docDe(k.beneficio);
+  doc.itens=document.getElementById("doc-txt-"+casoId).value;
+  doc.observacoes=document.getElementById("doc-obs-"+casoId).value||null;
+  await api(`/rest/v1/documentos_beneficio?id=eq.${doc.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({itens:doc.itens, observacoes:doc.observacoes})});
+  aviso("Lista de documentos atualizada 📋"); abrirFicha(clienteAberto);
 }
 async function copiar(texto, msg){
   try{ await navigator.clipboard.writeText(texto); }
