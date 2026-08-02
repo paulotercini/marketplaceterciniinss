@@ -43,7 +43,7 @@
   .app.mini-lateral .sidebar .novo-cli, .app.detalhe-aberto .sidebar .novo-cli{width:34px;margin:0 auto 10px;padding:7px 0}
   .app.mini-lateral .sidebar .usuario, .app.detalhe-aberto .sidebar .usuario{justify-content:center}
   /* coluna de casos dentro da ficha (3ª coluna): escolhe o caso, a 4ª mostra o andamento dele */
-  .col-casos{width:186px;flex:none;border-right:1px solid var(--borda);background:#fbfaf9;overflow-y:auto;padding:10px 8px}
+  .col-casos{width:186px;flex:none;border-right:1px solid var(--borda);background:#edeae6;overflow-y:auto;padding:10px 8px}
   .col-casos .cc-tit{font-size:11px;font-weight:700;color:var(--cinza);text-transform:uppercase;letter-spacing:.4px;padding:2px 6px 7px}
   .cc-item{border:1px solid var(--borda);border-radius:8px;padding:7px 9px;margin-bottom:6px;cursor:pointer;background:var(--branco)}
   .cc-item:hover{box-shadow:0 2px 6px rgba(0,0,0,.08)}
@@ -56,6 +56,14 @@
   .mini-eq{cursor:pointer;opacity:.3;filter:grayscale(.6)}
   .mini-eq.on{opacity:1;filter:none}
   .det-principal{flex:1;display:flex;flex-direction:column;min-width:0}
+  /* cabeçalho do caso destacado dos andamentos logo abaixo */
+  .caso.caso-cab{background:#eef4fb;border-color:#cfe0f5}
+  /* janela de encerramento (resultado -> honorários) */
+  #janela{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:98;display:flex;align-items:center;justify-content:center}
+  .jan-caixa{background:var(--branco);border-radius:12px;padding:20px 24px;min-width:380px;max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+  .jan-caixa h3{margin-bottom:4px}
+  .btn-res{padding:8px 14px;border:1px solid var(--borda);border-radius:8px;background:var(--fundo);cursor:pointer;font-weight:600}
+  .btn-res:hover{background:#e8f1fb}
   .usuario{display:flex;align-items:center;gap:10px;padding:2px 16px 10px}
   .usuario .sair{margin-left:auto;border:none;background:none;color:var(--cinza);cursor:pointer;font-size:12px}
   .busca{margin:0 12px 14px;position:relative}
@@ -781,20 +789,28 @@ function render(){
     titulo=FASES.find(x=>x[0]===f)[1]; casosSel=casosDaFase(f); }
   else { titulo=visao; casosSel=[]; }
   h1.textContent=titulo; sub.textContent=subt;
+  // filtro por colaborador em TODAS as listas — cada um vê só o que é seu
+  if(filtroColab) casosSel = casosSel.filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(filtroColab));
+  const chipsCol = `<div class="filtros">`+[`<button class="fchip ${filtroColab===null?"on":""}" data-fcol="">Todos</button>`]
+    .concat(D.colaboradores.filter(x=>x.ativo).map(x=>
+      `<button class="fchip ${filtroColab===x.id?"on":""}" data-fcol="${x.id}">`+
+      `<span class="avatar mini" style="background:${x.cor}">${esc(x.inicial)}</span>${esc(x.nome)}</button>`)).join("")+`</div>`;
   // na lista INSS, os casos em exigência (prazo legal de 30 dias) vêm primeiro
   const emExig = casosSel.filter(k=>k.exigencia_prazo);
   if(visao==="fase:inss" && emExig.length){
     const resto = casosSel.filter(k=>!k.exigencia_prazo);
     emExig.sort((a,b)=>a.exigencia_prazo<b.exigencia_prazo?-1:1);
-    meio.innerHTML =
-      `<h3 class="secao" style="color:var(--vermelho)">⚠ Em exigência — prazo de 30 dias (${emExig.length})</h3>`
+    meio.innerHTML = chipsCol
+      + `<h3 class="secao" style="color:var(--vermelho)">⚠ Em exigência — prazo de 30 dias (${emExig.length})</h3>`
       + grupoClientes(emExig).map(([c,ks])=>cartaoCliente(c,ks)).join("")
       + `<h3 class="secao">Demais requerimentos (${resto.length})</h3>`
       + grupoClientes(resto).map(([c,ks])=>cartaoCliente(c,ks)).join("");
   } else {
-    meio.innerHTML = grupoClientes(casosSel).map(([c,ks])=>cartaoCliente(c,ks)).join("")
-      || "<p class='meio-sub'>Nenhum cliente aqui.</p>";
+    meio.innerHTML = chipsCol
+      + (grupoClientes(casosSel).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+      || "<p class='meio-sub'>Nenhum cliente aqui.</p>");
   }
+  document.querySelectorAll("[data-fcol]").forEach(b=>b.onclick=()=>{ filtroColab=b.dataset.fcol||null; render(); });
   ligarCartoes();
 }
 
@@ -1358,7 +1374,8 @@ async function abrirFicha(cliId){
     <div class="cc-tit" style="margin-top:8px">Casos</div>
     ${ks.map(k=>`<div class="cc-item ${abaAtiva===2&&casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-cc="${k.id}">
       <div class="cc-ben">${k.urgente?"🔥 ":""}${esc(tituloCaso(k))}</div>
-      <div class="cc-fase">${esc(NOME_FASE[k.fase]||"")}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠":""}</div></div>`).join("")}
+      <div class="cc-fase">${esc(NOME_FASE[k.fase]||"")}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠":""}</div>
+      ${k.nb?`<div class="cc-fase">NB ${esc(k.nb)}</div>`:(k.protocolos||[]).length?`<div class="cc-fase">📄 ${(k.protocolos||[]).slice(-1)[0]}</div>`:""}</div>`).join("")}
     ${ks.length>1?`<div class="cc-item ${abaAtiva===2&&!casoSel?"sel":""}" data-cc="">
       <div class="cc-ben">📚 Todos os casos</div>
       <div class="cc-fase">andamentos juntos</div></div>`:""}
@@ -1367,10 +1384,8 @@ async function abrirFicha(cliId){
     <div class="cc-item ${abaAtiva===3?"sel":""}" data-vv="3"><div class="cc-ben">🩺 Perícias & Aud.${evs.length?` (${evs.length})`:""}</div></div>
     <div class="cc-item ${abaAtiva===4?"sel":""}" data-vv="4"><div class="cc-ben">💰 Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</div></div>
     <div class="cc-item ${abaAtiva===5?"sel":""}" data-vv="5"><div class="cc-ben">💬 Mensagens</div></div>
-    <div class="cc-tit" style="margin-top:8px" title="clique para atribuir/retirar — vale para os casos ativos">Equipe</div>
-    <div class="cc-equipe">${D.colaboradores.filter(x=>x.ativo).map(co=>
-      `<span class="mini-eq ${equipe.includes(co.id)?"on":""}" data-eq="${co.id}" title="${esc(co.nome)} — clique para atribuir/retirar">
-        <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span></span>`).join("")}</div>
+    <div class="cc-item ${abaAtiva===8?"sel":""}" data-vv="8"><div class="cc-ben">🖨 Documentos</div>
+      <div class="cc-fase">imprimir e virar checklist</div></div>
   </div>
   <div class="det-principal">
   <div class="det-rolagem">
@@ -1473,7 +1488,7 @@ async function abrirFicha(cliId){
       const k = casoSel && D.casoPorId.get(casoSel);
       if(!k) return ks.length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso no menu ao lado para ver só o dele.</p>`:"";
       // cabeçalho do caso, estilo To Do: os dados importantes em cima, andamentos embaixo
-      return `<div class="caso" style="margin-bottom:12px">
+      return `<div class="caso caso-cab" style="margin-bottom:12px">
         <div class="rotulo-caso">lista ${esc(listaDe(k))} do To Do</div>
         <div class="cab" style="margin-top:2px">
           <span class="titulo-caso">${esc(tituloCaso(k))}</span>
@@ -1492,16 +1507,17 @@ async function abrirFicha(cliId){
         <div class="form-linha" style="align-items:center">
           <span class="lembrar-caixa" title="a data de agir — a 'conclusão' que vocês usavam no To Do">🗓 Lembrar em
             <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></span>
-          <label style="font-size:12px;color:var(--cinza)">Fase:
-          <select data-fase="${k.id}">${Object.entries(NOME_FASE).map(([f,n])=>`<option value="${f}" ${k.fase===f?"selected":""}>${n}</option>`).join("")}</select></label>
-          <label style="font-size:12px;color:var(--cinza)">Resultado:
-          <select data-resultado="${k.id}">
-            ${["","deferido","indeferido","acordo","desistencia"].map(r=>`<option value="${r}" ${((k.resultado||"")===r)?"selected":""}>${r||"—"}</option>`).join("")}
+          <label style="font-size:12px;color:var(--cinza)">Lista:
+          <select data-fase="${k.id}">
+            ${LISTAS_MOVER.map(([l,f])=>`<option value="${f}" ${k.fase===f?"selected":""}>${l}</option>`).join("")}
+            <option value="encerrado" ${k.fase==="encerrado"?"selected":""}>✔ Encerrado</option>
           </select></label>
-          ${docDe(k.beneficio)?`<button class="btn-mini" onclick="imprimirDocs('${k.id}')">🖨 documentos</button>
-            <button class="btn-mini" onclick="editarDocs('${k.id}')" title="editar a lista deste benefício">✏</button>`:""}
         </div>
-        <div id="doc-editor-${k.id}"></div>
+        <div class="form-linha" style="align-items:center;margin-top:2px">
+          <span style="font-size:12px;color:var(--cinza)">Atribuído a:</span>
+          ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${equipe.includes(co.id)?"on":""}" data-eq="${co.id}" title="clique para atribuir/retirar — vale para os casos ativos">
+            <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`).join("")}
+        </div>
         ${checklistCaso(k)}
         </div>
         <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
@@ -1620,6 +1636,24 @@ async function abrirFicha(cliId){
     </div>
     <p class="meio-sub">O caso nasce aqui e a sincronização cria a tarefa correspondente no To Do, na lista da fase.</p>
   </div>
+
+  <div class="painel ${abaAtiva===8?"ativo":""}" data-p="8">
+    ${(()=>{
+      const k = (casoSel && D.casoPorId.get(casoSel)) || ks.find(x=>x.fase!=="encerrado");
+      if(!k) return "<p class='meio-sub'>Sem caso ativo.</p>";
+      const doc = docDe(k.beneficio);
+      return `<h3>🖨 Documentos — ${esc(tituloCaso(k))}</h3>
+      ${doc?`<ul style="margin:10px 0 12px 18px">${doc.itens.split("\n").filter(x=>x.trim()).map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+        <div class="form-linha">
+          <button onclick="solicitarDocs('${k.id}')">🖨 Imprimir e solicitar ao cliente</button>
+          <button class="btn-mini" onclick="editarDocs('${k.id}')">✏ editar a lista deste benefício</button>
+        </div>
+        <div id="doc-editor-${k.id}"></div>
+        <p class="meio-sub">Ao imprimir, cada documento vira um item de checklist do caso, com andamento datado —
+        vá concluindo conforme o cliente for entregando.</p>`
+      :`<p class='meio-sub'>Defina o benefício do caso para ter a lista de documentos dele.</p>`}`;
+    })()}
+  </div>
   </div>
 
   <div class="escrever">
@@ -1671,11 +1705,14 @@ async function abrirFicha(cliId){
     };
   });
   document.querySelectorAll("[data-fase]").forEach(s=>s.onchange=async()=>{
-    const k=D.casoPorId.get(s.dataset.fase); k.fase=s.value;
-    if(s.value==="encerrado") k.encerrado_em=new Date().toISOString();
+    const k=D.casoPorId.get(s.dataset.fase);
+    if(s.value==="encerrado") return janelaEncerrar(k.id);   // resultado -> honorários
+    // fase = lista física do To Do: mudar aqui também move a tarefa de lista
+    const lista=(LISTAS_MOVER.find(([,f])=>f===s.value)||[])[0];
+    k.fase=s.value; if(lista) k.mover_para=lista;
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({fase:k.fase, encerrado_em:k.encerrado_em||null})});
-    aviso(s.value==="pagamento"?"Caso movido para a aba 💰 Pagamentos":"Fase atualizada");
+      body:JSON.stringify({fase:k.fase, ...(lista?{mover_para:lista}:{})})});
+    aviso(lista?`Movido para ${lista} — o To Do acompanha na próxima sincronização`:"Fase atualizada");
     montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
   });
   document.querySelectorAll("[data-resultado]").forEach(s=>s.onchange=async()=>{
@@ -2050,6 +2087,86 @@ function zapLembrete(evId){
   if(l&&l.cli.telefone)
     window.open("https://wa.me/55"+l.cli.telefone.replace(/\D/g,"")+"?text="+encodeURIComponent(l.texto),"_blank");
 }
+// encerrar caso: janela de resultado -> honorários (lançados no Pagamentos)
+function fecharJanela(){ const j=document.getElementById("janela"); if(j) j.remove(); }
+function janelaEncerrar(casoId){
+  fecharJanela();
+  const k=D.casoPorId.get(casoId);
+  const div=document.createElement("div"); div.id="janela";
+  const ROT={deferido:"✅ Deferido",acordo:"🤝 Acordo",indeferido:"❌ Indeferido",desistencia:"🚪 Desistência"};
+  div.innerHTML=`<div class="jan-caixa">
+    <h3>✔ Encerrar: ${esc(tituloCaso(k))}</h3>
+    <p class="meio-sub">Qual foi o resultado?</p>
+    <div class="form-linha">${Object.entries(ROT).map(([r,n])=>`<button class="btn-res" data-res="${r}">${n}</button>`).join("")}</div>
+    <div id="jan-hon" style="display:none;margin-top:12px;border-top:1px solid var(--borda);padding-top:10px">
+      <p class="meio-sub">💰 Honorários — lança no menu Pagamentos (opcional):</p>
+      <div class="form-linha">
+        <input id="hon-valor" type="number" step="0.01" placeholder="R$ honorários" style="width:140px">
+        <input id="hon-venc" type="date" title="vencimento / previsão de recebimento">
+        <button id="hon-lancar">Lançar e encerrar</button>
+        <button class="btn-mini" id="hon-pular">encerrar sem lançar</button>
+      </div>
+    </div>
+    <button class="btn-mini" id="jan-cancela" style="margin-top:12px">cancelar</button>
+  </div>`;
+  document.body.appendChild(div);
+  let resultado=null;
+  div.querySelectorAll(".btn-res").forEach(b=>b.onclick=()=>{
+    resultado=b.dataset.res;
+    div.querySelectorAll(".btn-res").forEach(x=>x.style.outline = x===b ? "2px solid var(--azul)" : "");
+    document.getElementById("jan-hon").style.display="block";
+    document.getElementById("hon-valor").focus();
+  });
+  const encerrar=async(lancar)=>{
+    if(!resultado) return aviso("Escolha o resultado primeiro");
+    k.fase="encerrado"; k.resultado=resultado; k.encerrado_em=new Date().toISOString();
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({fase:"encerrado", resultado, encerrado_em:k.encerrado_em})});
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+        texto:`Caso encerrado — resultado: ${resultado.toUpperCase()}.${resultado==="deferido"?" 🎉":""}`})});
+    if(lancar){
+      const v=document.getElementById("hon-valor").value;
+      if(v){
+        const venc=document.getElementById("hon-venc").value||null;
+        const recebido = venc && venc<=hoje();
+        const [pg]=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+          body:JSON.stringify({caso_id:k.id, descricao:"Honorários", valor:v,
+            status:recebido?"recebido":"aberto", pago_em:recebido?venc:null,
+            vencimento:recebido?null:venc,
+            conferencias:recebido?[{c:eu.id,em:new Date().toISOString()}]:[]})});
+        if(pg) D.pagamentos.push(pg);
+      }
+    }
+    fecharJanela(); plim();
+    aviso(`Caso encerrado: ${resultado}${lancar?" — honorários no 💰 Pagamentos":""}`);
+    montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+  };
+  document.getElementById("hon-lancar").onclick=()=>encerrar(true);
+  document.getElementById("hon-pular").onclick=()=>encerrar(false);
+  document.getElementById("jan-cancela").onclick=()=>{ fecharJanela(); if(clienteAberto) abrirFicha(clienteAberto); };
+}
+
+// imprimir a lista de documentos E transformá-la em checklist do caso (datado)
+async function solicitarDocs(casoId){
+  const k=D.casoPorId.get(casoId), doc=docDe(k.beneficio);
+  if(!doc) return aviso("Sem lista cadastrada para este benefício");
+  imprimirDocs(casoId);
+  const itens=doc.itens.split("\n").map(x=>x.trim()).filter(Boolean);
+  let novos=0;
+  for(const it of itens){
+    if(D.tarefas.some(t=>t.caso_id===casoId && t.titulo===`📄 ${it}` && !t.concluida)) continue;
+    const [tf]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, titulo:`📄 ${it}`})});
+    if(tf){ D.tarefas.push(tf); novos++; }
+  }
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id,
+      texto:`📄 Documentos solicitados ao cliente (lista impressa): ${itens.join("; ")}.`})});
+  aviso(`Checklist criado: ${novos} documento(s) para ir concluindo 📄`);
+  casoSel=casoId; abaAtiva=2; abrirFicha(clienteAberto);
+}
+
 async function cumprirExigencia(casoId){
   const k=D.casoPorId.get(casoId);
   k.exigencia_prazo=null; k.exigencia_descricao=null;
