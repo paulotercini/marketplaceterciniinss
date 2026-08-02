@@ -1414,6 +1414,23 @@ function fecharFicha(rerender=true){
   if(rerender) render();
 }
 
+// "Perícia agendada para 19/08/2026 às 8:50..." no andamento -> evento na hora
+const RE_EVENTO_JS=/(per[íi]cia|audi[êe]ncia|avalia[çc][ãa]o social)[^\n]{0,120}?(\d{2})[\/.](\d{2})[\/.](\d{4})(?:[^\n]{0,20}?(\d{1,2})[:hH](\d{2}))?/i;
+async function extrairEvento(texto, casoId){
+  const m=texto.match(RE_EVENTO_JS);
+  if(!m) return null;
+  const tipo=/aud/i.test(m[1])?"Audiência":/avalia/i.test(m[1])?"Avaliação social":"Perícia";
+  const data=`${m[4]}-${m[3]}-${m[2]}`, hora=m[5]?`${m[5].padStart(2,"0")}:${m[6]}`:"09:00";
+  if(isNaN(new Date(data+"T00:00:00"))) return null;
+  if(D.eventos.some(e=>e.caso_id===casoId && e.tipo===tipo && e.data_hora.slice(0,10)===data)) return null;
+  try{
+    const [ev]=await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, tipo, data_hora:`${data}T${hora}:00-03:00`,
+        obs:texto.slice(0,160), status:data>=hoje()?"agendada":"realizada"})});
+    D.eventos.push(ev);
+    return {tipo, data};
+  }catch(e){ return null; }   // já existia (dedupe do banco) — segue o jogo
+}
 async function novoAndamento(casoUnico){
   const sel=document.getElementById("and-caso");
   const casoId = casoUnico || (sel && sel.value);
@@ -1423,7 +1440,9 @@ async function novoAndamento(casoUnico){
   const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})});
   await criarMencoes(texto, casoId, and?and.id:null);   // @Amanda, @M... viram pendências
-  aviso("Andamento registrado — será replicado no To Do");
+  const ev=await extrairEvento(texto, casoId);          // perícia citada vira agendamento
+  if(ev){ montarSidebar(); aviso(`🩺 ${ev.tipo} de ${fmt(ev.data)} agendada automaticamente!`); }
+  else aviso("Andamento registrado — será replicado no To Do");
   abrirFicha(clienteAberto);
 }
 async function novoEvento(){
