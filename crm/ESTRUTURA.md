@@ -106,6 +106,23 @@ mandar o arquivo `app.html` por canal privado (ele abre offline).
 
 Testes do parser: `python3 -m pytest tests/test_crm_sync.py -q`.
 
+## Módulos aprovados em ago/2026 (implementados)
+
+- **@Menções + caixa 📥**: escrever `@Amanda` num andamento cria pendência na
+  caixa dela (evidência: 871 menções nominais nas notas do To Do).
+- **📌 Quadro Kanban** por fase (arrastar cartão muda a fase, estilo Trello).
+- **💼 Vendas**: funil novo → atendimento → viabilidade → proposta →
+  fechado/perdido, com conversão e "virar cliente" em um clique.
+- **📣 Marketing**: ranking de benefícios por atividade (30 dias) para pautar
+  conteúdo + copiar telefones por benefício (lista de transmissão).
+- **🖨 Documentos por benefício**: carta imprimível para o cliente providenciar
+  documentos (12 listas seed, editáveis no app — colar o texto do site interno
+  advprevidenciaria.netlify.app, cujas cartas são geradas dinamicamente).
+- **Tabela `conversas`**: fundação da integração com o chatbot do site
+  (webhook grava mensagem/anexo → vincula ao cliente pelo telefone → anexo
+  médico vira sugestão de andamento na visão 🤖). Conector depende de saber
+  qual plataforma de chat o escritório usa.
+
 ## Fora do protótipo, decidir depois
 
 - Nível de integração WhatsApp (link direto grátis × API oficial paga).

@@ -194,6 +194,82 @@ create table if not exists sugestoes (
 );
 create index if not exists sugestoes_pend on sugestoes (status) where status = 'pendente';
 
+-- ── Menções (@Nome dentro de um andamento -> pendência na caixa de entrada) ─
+create table if not exists mencoes (
+  id           uuid primary key default gen_random_uuid(),
+  de_id        uuid references colaboradores(id),
+  para_id      uuid not null references colaboradores(id),
+  caso_id      uuid references casos(id) on delete cascade,
+  andamento_id uuid references andamentos(id) on delete cascade,
+  texto        text not null,
+  criado_em    timestamptz not null default now(),
+  lida_em      timestamptz
+);
+create index if not exists mencoes_caixa on mencoes (para_id) where lida_em is null;
+
+-- ── Vendas: funil de prospectos (leads) ───────────────────────────────────
+-- Etapas: novo -> atendimento -> viabilidade -> proposta -> fechado | perdido.
+-- Ao fechar, vira cliente + caso (cliente_id preenchido).
+create table if not exists leads (
+  id                 uuid primary key default gen_random_uuid(),
+  nome               text not null,
+  telefone           text,
+  beneficio_interesse text,
+  origem             text,          -- indicação | site | redes sociais | anúncio | outro
+  etapa              text not null default 'novo'
+                     check (etapa in ('novo','atendimento','viabilidade','proposta','fechado','perdido')),
+  obs                text,
+  motivo_perda       text,
+  responsavel_id     uuid references colaboradores(id),
+  cliente_id         uuid references clientes(id),
+  criado_em          timestamptz not null default now(),
+  atualizado_em      timestamptz not null default now()
+);
+create index if not exists leads_etapa on leads (etapa);
+
+-- ── Documentos por benefício (carta para o cliente providenciar) ──────────
+-- Conteúdo editável no app; espelhar/atualizar com o texto do site interno
+-- (advprevidenciaria.netlify.app). {itens} são uma linha por documento.
+create table if not exists documentos_beneficio (
+  id        uuid primary key default gen_random_uuid(),
+  beneficio text not null unique,   -- mesmo nome usado nos casos
+  itens     text not null,          -- um documento por linha
+  observacoes text
+);
+
+insert into documentos_beneficio (beneficio, itens, observacoes) values
+  ('Apos. por Idade', E'RG e CPF (ou CNH)\nComprovante de residência atualizado\nCarteiras de trabalho (todas, inclusive antigas)\nCarnês de contribuição (se houver)\nExtrato CNIS (nós emitimos, se preferir)\nSenha do Meu INSS (gov.br)', null),
+  ('Rural', E'RG e CPF (ou CNH)\nComprovante de residência\nCertidão de casamento (profissão lavrador, se constar)\nContratos de arrendamento, parceria ou comodato rural\nNotas fiscais de venda de produção rural\nDeclaração de sindicato rural (se houver)\nDocumentos da terra (ITR, CCIR, escritura)\nCertidões antigas que citem profissão de lavrador (nascimento dos filhos, alistamento militar, escola)', 'Documentos em nome dos pais também servem para o período em regime de economia familiar.'),
+  ('Apos. Tempo de Contribuição', E'RG e CPF (ou CNH)\nComprovante de residência\nCarteiras de trabalho (todas)\nCarnês de contribuição\nPPP e LTCAT de empresas com agentes nocivos (se houver)\nCertidão de tempo de serviço público (se houver)', null),
+  ('Apos. Especial', E'RG e CPF (ou CNH)\nComprovante de residência\nCarteiras de trabalho (todas)\nPPP (Perfil Profissiográfico Previdenciário) de cada empresa\nLTCAT ou laudos técnicos das empresas\nFichas de EPI (se a empresa fornecer)', 'O PPP deve ser pedido no RH da empresa; ex-empresas também são obrigadas a fornecer.'),
+  ('Aux. Incapacidade Temporária', E'RG e CPF (ou CNH)\nComprovante de residência\nCarteira de trabalho\nAtestados e relatórios médicos com CID, assinatura e carimbo\nExames recentes (laudos, imagens)\nReceitas dos remédios em uso\nDeclaração do afastamento da empresa (se empregado)', 'Relatório médico recente (menos de 90 dias) faz muita diferença na perícia.'),
+  ('Apos. por Incapacidade Permanente', E'RG e CPF (ou CNH)\nComprovante de residência\nCarteira de trabalho\nTodos os relatórios e atestados médicos, do início do problema até hoje\nExames e laudos (inclusive antigos)\nReceitas e comprovantes de tratamento', null),
+  ('BPC/LOAS', E'RG e CPF de TODOS que moram na casa\nCertidão de nascimento ou casamento\nComprovante de residência\nComprovantes de renda de todos da casa (ou declaração de que não têm renda)\nCadÚnico atualizado (CRAS)\nRelatórios médicos com CID (no caso de deficiência)\nLaudos e exames', 'O CadÚnico precisa estar atualizado há menos de 2 anos — atualiza no CRAS da cidade.'),
+  ('Pensão por Morte', E'RG e CPF do falecido e do requerente\nCertidão de óbito\nCertidão de casamento (atualizada) ou provas da união estável\nComprovante de residência do casal (contas no mesmo endereço, fotos, declarações)\nCertidão de nascimento dos filhos menores\nCarteira de trabalho do falecido', 'Para união estável: quanto mais provas do casal junto (contas, fotos, plano de saúde), melhor.'),
+  ('Salário-Maternidade', E'RG e CPF\nCertidão de nascimento do bebê\nCarteira de trabalho\nComprovante de residência\nPara rural: documentos da atividade rural (notas, contratos, sindicato)', null),
+  ('Aux. Acidente', E'RG e CPF\nCarteira de trabalho\nCAT (Comunicação de Acidente de Trabalho), se houver\nRelatórios médicos sobre a sequela\nExames de antes e depois do acidente', null),
+  ('Acerto de CNIS', E'RG e CPF\nCarteiras de trabalho (todas)\nCarnês de contribuição\nContracheques ou recibos antigos\nContratos de trabalho, rescisões, extratos do FGTS', null),
+  ('Revisão', E'Carta de concessão do benefício\nRG e CPF\nCarteiras de trabalho\nDocumentos do período que faltou ser contado (PPP, certidões, carnês)', null)
+on conflict (beneficio) do nothing;
+
+-- ── Conversas com clientes (fundação da integração do chatbot/WhatsApp) ───
+-- O conector do chatbot grava aqui via webhook; mensagens com anexo geram
+-- sugestão de andamento (ex.: "recebi relatório médico") na visão 🤖.
+create table if not exists conversas (
+  id          uuid primary key default gen_random_uuid(),
+  cliente_id  uuid references clientes(id) on delete set null,
+  telefone    text,
+  plataforma  text,                 -- tawk | jivochat | chatwoot | whatsapp | outro
+  externo_id  text unique,          -- id da mensagem na plataforma (dedupe)
+  de_cliente  boolean not null default true,
+  atendente   text,                 -- nome do colaborador na plataforma
+  texto       text,
+  anexo_nome  text,
+  anexo_url   text,
+  criado_em   timestamptz not null default now()
+);
+create index if not exists conversas_cliente on conversas (cliente_id, criado_em desc);
+
 -- ── Segurança (RLS) ───────────────────────────────────────────────────────
 -- Regra geral: só usuário logado acessa; anônimo não vê NADA.
 -- Tarefas particulares: só o dono. Credenciais: leitura logada + log no app.
@@ -202,7 +278,8 @@ declare t text;
 begin
   foreach t in array array['colaboradores','clientes','credenciais','credencial_vis',
                            'casos','andamentos','eventos','pagamentos','tarefas',
-                           'atribuicoes','meu_dia','modelos_mensagem','sugestoes'] loop
+                           'atribuicoes','meu_dia','modelos_mensagem','sugestoes',
+                           'mencoes','leads','documentos_beneficio','conversas'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
