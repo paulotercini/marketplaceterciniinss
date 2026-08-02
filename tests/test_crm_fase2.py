@@ -113,3 +113,26 @@ def test_prepend_preserva_corpo_existente():
     novo = escrever_todo.prepend_corpo(corpo, "02.08.2026 (A): Bloco novo.")
     assert novo == "02.08.2026 (A): Bloco novo.\n\n01.08.2026 (P): Bloco antigo."
     assert escrever_todo.prepend_corpo("", "02.08.2026 (A): X.") == "02.08.2026 (A): X."
+
+
+def test_protocolo_dos_andamentos_vai_para_o_caso():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191",
+          andamentos=[{"data": "2026-07-01", "inicial": "P", "autor": "Paulo",
+                       "texto": "Requerimento protocolado. Protocolo nº 210123456789."},
+                      {"data": "2026-07-10", "inicial": "A", "autor": "Amanda",
+                       "texto": "Sem protocolo aqui."}]),
+    ]))
+    (caso,) = m["casos"]
+    assert caso["protocolos"] == ["210123456789"]
+
+
+def test_parceria_passa_do_json_para_o_caso():
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", parceria="Laís"),
+    ]))
+    assert m["casos"][0]["parceria"] == "Laís"
+
+
+def test_sql_val_lista_vira_jsonb():
+    assert migrar._sql_val(["210", "211"]) == "'[\"210\", \"211\"]'::jsonb"

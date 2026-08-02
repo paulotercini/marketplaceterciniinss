@@ -40,6 +40,7 @@ LISTA_FASE = {
 LISTA_PARTICULAR = "Tarefas"        # lista pessoal do To Do -> tarefas do Paulo
 DONO_PARTICULAR = "P"
 TZ = "-03:00"                        # America/Sao_Paulo (sem DST desde 2019)
+RE_PROTOCOLO = re.compile(r"protocolo\D{0,12}(\d{6,})", re.I)
 
 
 def uid(*partes):
@@ -90,9 +91,15 @@ def mapear(dados):
         c["telefone"] = c["telefone"] or t["telefone"]
 
         kid = uid("caso", t["id"])
+        # protocolos do INSS citados em qualquer bloco — a busca do app acha
+        # o cliente pelo número quando o INSS só divulga "concluído o protocolo X"
+        protocolos = sorted({m for a in t["andamentos"]
+                             for m in RE_PROTOCOLO.findall(a["texto"])})
         casos[kid] = {
             "id": kid, "cliente_id": cid, "titulo": t["titulo"],
             "beneficio": t["beneficio"],
+            "parceria": t.get("parceria"),
+            "protocolos": protocolos,
             "fase": "encerrado" if t["concluida"] else fase,
             "nb": t["nb"], "processo": t["processo"], "prazo": t["prazo"],
             "importante": t["importante"], "origem_lista": lista,
@@ -188,6 +195,8 @@ def _sql_val(v):
         return "true" if v else "false"
     if isinstance(v, tuple):  # ("__INICIAL__", "P") -> subselect
         return f"(select id from colaboradores where inicial = '{v[1]}')"
+    if isinstance(v, (list, dict)):  # jsonb (ex.: protocolos)
+        return "'" + json.dumps(v, ensure_ascii=False).replace("'", "''") + "'::jsonb"
     return "'" + str(v).replace("'", "''") + "'"
 
 
@@ -216,6 +225,7 @@ def gerar_sql(mapa):
                     update_cols=("nome", "dn", "telefone")),
         _sql_insert("casos", mapa["casos"],
                     update_cols=("fase", "prazo", "importante", "beneficio",
+                                 "parceria", "protocolos",
                                  "nb", "processo", "origem_lista", "encerrado_em")),
         _sql_insert("andamentos", mapa["andamentos"]),
         _sql_insert("eventos", mapa["eventos"], chave="caso_id,tipo,data_hora"),

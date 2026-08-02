@@ -131,6 +131,15 @@ def beneficio_do_titulo(titulo):
     return None
 
 
+def parceria_do_titulo(titulo):
+    """'Fulana #123 #B31 #Laís #JoãoEduardo' -> 'Laís, JoãoEduardo'.
+    Tags de texto no título são advogados parceiros; #B31 (espécie) e
+    #CPF (dígitos) ficam de fora."""
+    tags = re.findall(r"#([A-Za-zÀ-ÿ][\wÀ-ÿ]*)", titulo or "")
+    parceiros = [t for t in tags if not re.fullmatch(r"[Bb]\d{1,3}", t)]
+    return ", ".join(parceiros) or None
+
+
 def normalizar_tarefa(lista_nome, t):
     corpo = ((t.get("body") or {}).get("content") or "")
     checklist = t.get("checklistItems") or []
@@ -176,6 +185,7 @@ def normalizar_tarefa(lista_nome, t):
         "nb": nb.group(1).strip() if nb else None,
         "beneficio": beneficio_do_titulo(t.get("title"))
                      or beneficio_de(t.get("title", "") + "\n" + preambulo + "\n" + corpo[:1500]),
+        "parceria": parceria_do_titulo(t.get("title")),
         "prazo": due,
         "importante": t.get("importance") == "high",
         "concluida": t.get("status") == "completed",
