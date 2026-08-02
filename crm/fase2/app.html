@@ -193,13 +193,35 @@
   .escrever .dica{font-size:12px;color:var(--verde);margin-bottom:6px}
   .escrever .linha{display:flex;gap:8px;align-items:center}
   .acao-rapida{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
-  .acao-rapida .rotulo-rap{font-size:12px;color:var(--cinza);font-weight:600}
-  .btn-rap{border:1px solid var(--borda);background:var(--branco);border-radius:999px;
-    padding:4px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--cinza);
-    filter:grayscale(1);opacity:.75}
-  .btn-rap.on{filter:none;opacity:1}
-  .btn-rap.imp.on{background:#FFF6D6;border-color:#E9B44C;color:#8A6D00}
-  .btn-rap.urg.on{background:#FBEAEA;border-color:var(--vermelho);color:var(--vermelho)}
+  .acao-rapida .rotulo-rap{font-size:11px;color:var(--cinza);font-weight:700;letter-spacing:.05em}
+  /* ⭐/🔥 bem visíveis mesmo desligados: contorno colorido; ligado = preenchido ✓ */
+  .btn-rap{border:2px solid;background:var(--branco);border-radius:999px;
+    padding:5px 14px;font-size:13px;font-weight:700;cursor:pointer}
+  .btn-rap.imp{border-color:#E9B44C;color:#8A6D00}
+  .btn-rap.imp.on{background:#FFC83D;border-color:#D9A400;color:#4A3B00}
+  .btn-rap.urg{border-color:#E39A9A;color:var(--vermelho)}
+  .btn-rap.urg.on{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
+  /* menu do caso: barra escura horizontal no topo da ficha */
+  .menu-topo{background:#313641;border-radius:10px;padding:5px;display:flex;gap:3px;
+    flex-wrap:wrap;align-items:center;margin-top:10px}
+  .mt{background:transparent;color:#C9CED8;border:none;border-radius:8px;
+    padding:7px 13px;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap}
+  .mt:hover{background:rgba(255,255,255,.1)}
+  .mt.on{background:#fff;color:var(--texto)}
+  .mt.mt-proc{max-width:320px;overflow:hidden;text-overflow:ellipsis}
+  #menu-processos{position:fixed;z-index:99;background:var(--branco);border:1px solid var(--borda);
+    border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.22);padding:6px;min-width:290px;max-height:65vh;overflow-y:auto}
+  #menu-processos .mp-it{padding:8px 10px;border-radius:8px;cursor:pointer}
+  #menu-processos .mp-it:hover{background:var(--fundo)}
+  #menu-processos .mp-it.sel{outline:2px solid var(--azul);outline-offset:-2px}
+  #menu-processos .mp-it b{font-size:13.5px}
+  #menu-processos .mp-it small{display:block;color:var(--cinza);font-size:11.5px;margin-top:1px}
+  #menu-processos .mp-novo{color:var(--azul);border:1px dashed var(--borda);text-align:center;font-weight:700}
+  /* apagar o próprio comentário */
+  .timeline li{position:relative}
+  .apaga{position:absolute;top:6px;right:8px;border:none;background:none;cursor:pointer;
+    color:var(--cinza);font-size:13px;opacity:.4}
+  .apaga:hover{opacity:1;color:var(--vermelho)}
   .escrever .equipe-chip{background:var(--branco)}
   .escrever select{max-width:220px;padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
   .escrever input{flex:1;padding:10px 12px;border:1px solid var(--borda);border-radius:8px;font-size:14px}
@@ -1392,27 +1414,6 @@ async function abrirFicha(cliId){
   }
   const andsVis = casoSel ? ands.filter(a=>a.caso_id===casoSel) : ands;
   document.getElementById("detalhe").innerHTML=`
-  <div class="col-casos">
-    <div class="cc-item ${abaAtiva===0?"sel":""}" data-vv="0">
-      <div class="cc-ben">📇 Cadastro</div>
-      <div class="cc-fase">CPF, senha, telefone, vínculos</div></div>
-    <div class="cc-item ${abaAtiva===8?"sel":""}" data-vv="8">
-      <div class="cc-ben">🖨 Documentos</div>
-      <div class="cc-fase">imprimir e virar checklist</div></div>
-    <div class="cc-tit" style="margin-top:8px">Casos</div>
-    ${ks.map(k=>`<div class="cc-item ${abaAtiva===2&&casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-cc="${k.id}">
-      <div class="cc-ben">${k.urgente?"🔥 ":""}${esc(tituloCaso(k))}</div>
-      <div class="cc-fase">${esc(NOME_FASE[k.fase]||"")}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠":""}</div>
-      ${k.nb?`<div class="cc-fase">NB ${esc(k.nb)}</div>`:(k.protocolos||[]).length?`<div class="cc-fase">📄 ${(k.protocolos||[]).slice(-1)[0]}</div>`:""}</div>`).join("")}
-    ${ks.length>1?`<div class="cc-item ${abaAtiva===2&&!casoSel?"sel":""}" data-cc="">
-      <div class="cc-ben">📚 Todos os casos</div>
-      <div class="cc-fase">andamentos juntos</div></div>`:""}
-    <div class="cc-item novo" data-vv="7"><div class="cc-ben">＋ Novo Caso</div></div>
-    <div class="cc-tit" style="margin-top:8px">Mais</div>
-    <div class="cc-item ${abaAtiva===3?"sel":""}" data-vv="3"><div class="cc-ben">🩺 Perícias & Aud.${(n=>n?` (${n})`:"")(evs.filter(e=>e.data_hora.slice(0,10)>=hoje()&&e.status!=="cancelada").length)}</div></div>
-    <div class="cc-item ${abaAtiva===4?"sel":""}" data-vv="4"><div class="cc-ben">💰 Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</div></div>
-    <div class="cc-item ${abaAtiva===5?"sel":""}" data-vv="5"><div class="cc-ben">💬 Mensagens</div></div>
-  </div>
   <div class="det-principal">
   <div class="det-rolagem">
   <div class="det-topo">
@@ -1422,6 +1423,16 @@ async function abrirFicha(cliId){
       <span class="chip neutro">${fmtCpf(c.cpf)}${c.cpf?` <button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:""}</span>
       ${(cr=>cr?`<span class="chip neutro">🔑 Meu INSS <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button></span>`:"")(creds.find(x=>x.tipo==="meu_inss"))}
       ${[...new Set(ks.filter(k=>k.fase!=="encerrado").map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
+    </div>
+    <div class="menu-topo">
+      <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">📇 Cadastro</button>
+      <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">🖨 Documentos</button>
+      <button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
+        title="escolher o processo do cliente (não erra o destino)">⚖️ ${
+          (kk=>kk?esc(tituloCaso(kk)):(ks.length>1?"Processos":"Processo"))(casoSel&&D.casoPorId.get(casoSel))} ▾</button>
+      <button class="mt ${abaAtiva===3?"on":""}" data-vv="3">🩺 Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>e.data_hora.slice(0,10)>=hoje()&&e.status!=="cancelada").length)}</button>
+      <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">💰 Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
+      <button class="mt ${abaAtiva===5?"on":""}" data-vv="5">💬 Mensagens</button>
     </div>
   </div>
 
@@ -1534,10 +1545,11 @@ async function abrirFicha(cliId){
         </div>
         <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
     })()}
-    <ul class="timeline">${andsVis.map(a=>{const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
+    <ul class="timeline">${andsVis.filter(a=>!a.excluir).map(a=>{const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
       return `<li style="border-left-color:${cor};background:color-mix(in srgb, ${cor} 7%, white)">
       <span class="quando"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmt(a.criado_em.slice(0,10))}<br>${esc(co?co.nome:"—")}</span>
-      <span class="texto">${esc(a.texto)}</span></li>`;}).join("")||"<p class='meio-sub'>Sem andamentos.</p>"}</ul>
+      <span class="texto">${esc(a.texto)}</span>
+      ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}</li>`;}).join("")||"<p class='meio-sub'>Sem andamentos.</p>"}</ul>
   </div>
 
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
@@ -1672,7 +1684,9 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="escrever">
-    <div id="frases-box" style="display:none;max-height:210px;overflow-y:auto;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-bottom:6px;padding:6px">
+    <div id="frases-box" style="display:none;max-height:230px;overflow-y:auto;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-bottom:6px;padding:8px">
+      <strong style="font-size:13px">⚡ Frases prontas — texto para o ANDAMENTO</strong>
+      <p class="meio-sub" style="margin:2px 0 6px">Clique numa frase e ela preenche o campo de escrever. Não mexe na agenda do caso.</p>
       ${D.frases.map((f,fi)=>`<div class="frase-it" style="padding:5px 8px;border-radius:6px;cursor:pointer;font-size:13px" data-fi="${fi}">⚡ ${esc(f.texto)}</div>`).join("")}
       <div class="form-linha" style="margin:6px 0 0">
         <input id="nf-texto" placeholder="＋ salvar nova frase do jeito que vocês escrevem (use __ para completar depois)" style="flex:1">
@@ -1693,6 +1707,7 @@ async function abrirFicha(cliId){
     </div>
     <div class="dica">✓ Data e autor (${esc(eu.nome)}) entram sozinhos — e o texto é replicado no To Do</div>
     ${(kA=>kA?`<div class="acao-rapida">
+      <span class="rotulo-rap">📌 O CASO:</span>
       <button class="lembrar-caixa" style="cursor:pointer;font:inherit" onclick="toggleLembrar('${kA.id}')"
         title="quando agir e por quê — clique para mudar (atalhos +7/+15/+30 dias)">🗓 ${kA.prazo?fmt(kA.prazo):"Lembrar em…"}${kA.lembrar_motivo?" — "+esc(kA.lembrar_motivo.length>26?kA.lembrar_motivo.slice(0,26)+"…":kA.lembrar_motivo):""}</button>
       <span class="rotulo-rap">Atribuir:</span>
@@ -1702,21 +1717,21 @@ async function abrirFicha(cliId){
       <button class="btn-rap urg ${kA.urgente?"on":""}" onclick="toggleUrg('${kA.id}')" title="marcar/desmarcar Urgente">🔥 Urgente</button>
     </div>`:"")((casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null))}
     <div class="linha">
+      <span class="rotulo-rap" style="font-size:11px;color:var(--cinza);font-weight:700">✏️ ANDAMENTO:</span>
       <span class="avatar" style="background:${eu.cor}">${esc(eu.inicial)}</span>
-      <button class="btn-mini" title="frases prontas — os padrões que vocês sempre escrevem" onclick="toggleFrases()">⚡</button>
-      <button class="btn-mini" title="registrar exigência do INSS (com prazo final)" onclick="toggleExig()">⚠</button>
       ${ks.length>1?`<select id="and-caso">${ks.map(k=>`<option value="${k.id}" ${casoSel===k.id?"selected":""}>${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>`:""}
-      <input id="and-texto" placeholder="Escreva o andamento… (⚡ = frases prontas)">
+      <input id="and-texto" placeholder="Escreva o andamento…">
+      <button class="btn-mini" style="white-space:nowrap" title="texto pronto para o ANDAMENTO — não mexe na agenda" onclick="toggleFrases()">⚡ Frases</button>
+      <button class="btn-mini" style="white-space:nowrap" title="registrar exigência do INSS com prazo final" onclick="toggleExig()">⚠ Exigência</button>
       <button onclick="novoAndamento('${ks.length===1?ks[0].id:""}')">Registrar</button>
     </div>
   </div>
   </div>`;
 
-  document.querySelectorAll(".cc-item").forEach(el=>el.onclick=()=>{
-    if(el.dataset.vv!==undefined){ abaAtiva=+el.dataset.vv; }   // Dados/Perícias/Pagamentos/Mensagens/Novo Caso
-    else { casoSel = el.dataset.cc || null; abaAtiva = 2; }     // caso escolhido: dados + andamentos dele
-    abrirFicha(clienteAberto);
+  document.querySelectorAll(".mt[data-vv]").forEach(el=>el.onclick=()=>{
+    abaAtiva=+el.dataset.vv; abrirFicha(clienteAberto);
   });
+  document.getElementById("btn-processos").onclick=ev=>menuProcessos(ev, ks);
   document.getElementById("and-texto").onkeydown=e=>{ if(e.key==="Enter") document.querySelector(".escrever button[onclick^='novoAndamento']").click(); };
   document.querySelectorAll(".frase-it").forEach(el=>{
     el.onmouseenter=()=>el.style.background="var(--fundo)";
@@ -1798,6 +1813,34 @@ async function abrirFicha(cliId){
 
 // muda a aba ativa da ficha por código (ex.: atalho "ver na aba Pagamentos")
 function irAba(i){ abaAtiva=i; if(clienteAberto) abrirFicha(clienteAberto); }
+
+// pop-up "⚖️ Processos": escolher o processo certo sem errar o destino
+function fecharMenuProcessos(){ const m=document.getElementById("menu-processos"); if(m) m.remove(); }
+function menuProcessos(ev, ks){
+  ev.stopPropagation(); fecharMenuProcessos();
+  const m=document.createElement("div"); m.id="menu-processos";
+  const item=k=>`<div class="mp-it ${casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-mp="${k.id}" style="${k.fase==="encerrado"?"opacity:.55":""}">
+    <b>${k.urgente?"🔥 ":""}${esc(tituloCaso(k))}</b>
+    <small>${esc(NOME_FASE[k.fase]||"")}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}${k.nb?" · NB "+esc(k.nb):((k.protocolos||[]).length?" · 📄 "+(k.protocolos||[]).slice(-1)[0]:"")}</small>
+  </div>`;
+  m.innerHTML =
+    ks.filter(k=>k.fase!=="encerrado").map(item).join("")
+    + (ks.length>1?`<div class="mp-it ${!casoSel?"sel":""}" data-mp=""><b>📚 Todos os processos</b><small>andamentos juntos</small></div>`:"")
+    + ks.filter(k=>k.fase==="encerrado").map(item).join("")
+    + `<div class="mp-it mp-novo" data-mp="__novo__">＋ Novo processo</div>`;
+  document.body.appendChild(m);
+  const r=ev.currentTarget.getBoundingClientRect(), W=m.offsetWidth||300, H=m.offsetHeight||200;
+  m.style.left=Math.min(r.left, innerWidth-W-8)+"px";
+  m.style.top=Math.min(r.bottom+4, innerHeight-H-8)+"px";
+  m.querySelectorAll("[data-mp]").forEach(it=>it.onclick=()=>{
+    const v=it.dataset.mp;
+    fecharMenuProcessos();
+    if(v==="__novo__"){ abaAtiva=7; }
+    else { casoSel=v||null; abaAtiva=2; }
+    abrirFicha(clienteAberto);
+  });
+  setTimeout(()=>document.addEventListener("click", fecharMenuProcessos, {once:true}));
+}
 
 // vínculos entre clientes (parentes/amigos — o antigo checklist do To Do)
 async function novoVinculo(cliId){
@@ -2034,6 +2077,20 @@ function toggleExig(){
     document.getElementById("ex-desc").focus();
   }
 }
+// apagar o próprio comentário: se já foi replicado, o To Do é limpo na sincronização
+async function apagarAndamento(id, jaNoTodo){
+  if(!confirm("Apagar este seu comentário?")) return;
+  if(jaNoTodo){
+    await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({excluir:true})});
+    aviso("Apagado — o texto sai do To Do na próxima sincronização");
+  }else{
+    await api(`/rest/v1/andamentos?id=eq.${id}`,{method:"DELETE"});
+    aviso("Comentário apagado");
+  }
+  abrirFicha(clienteAberto);
+}
+
 // Lembrar em = quando agir + POR QUÊ (padrão dos bons sistemas: data com motivo)
 function toggleLembrar(casoId){
   const b=document.getElementById("lembrar-box");
@@ -2043,11 +2100,13 @@ function toggleLembrar(casoId){
   const em=d=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+d); return x.toLocaleDateString("sv"); };
   const MOTIVOS=["Pedir prorrogação do benefício","Cobrar documentos do cliente",
     "Conferir resposta do INSS","Verificar pagamento","Retornar contato com o cliente","Último dia do prazo"];
-  b.innerHTML=`<strong style="font-size:13px">🗓 Lembrar em — quando agir e por quê</strong>
-    <div class="form-linha" style="margin-top:8px;align-items:center">
-      ${[["Amanhã",1],["+7 dias",7],["+15 dias",15],["+30 dias",30]].map(([r,d])=>
-        `<button class="btn-mini" onclick="document.getElementById('lb-data').value='${em(d)}'">${r}</button>`).join("")}
-      <input type="date" id="lb-data" value="${k.prazo||""}">
+  b.innerHTML=`<strong style="font-size:13px">🗓 Lembrar em — a AGENDA do caso (quando agir e por quê)</strong>
+    <p class="meio-sub" style="margin:2px 0 6px">Não escreve nada no andamento — só marca a data de agir, que aparece nas listas.</p>
+    <div class="form-linha" style="margin-top:4px;align-items:center">
+      ${[["Hoje",0],["Amanhã",1],["+7 dias",7],["+15 dias",15],["+30 dias",30]].map(([r,d])=>
+        `<button class="btn-mini" onclick="setLbData('${em(d)}')">${r}</button>`).join("")}
+      <input type="date" id="lb-data" value="${k.prazo||""}" oninput="lbPreview()">
+      <strong id="lb-preview" style="font-size:13px;color:var(--azul)"></strong>
     </div>
     <div class="form-linha" style="align-items:center">
       ${MOTIVOS.map(m=>`<button class="btn-mini" onclick="document.getElementById('lb-motivo').value=this.textContent">${m}</button>`).join("")}
@@ -2058,6 +2117,15 @@ function toggleLembrar(casoId){
       ${k.prazo?`<button class="btn-mini" onclick="limparLembrar('${k.id}')">limpar</button>`:""}
     </div>`;
   b.style.display="block";
+  lbPreview();
+}
+function diaSemana(iso){
+  return new Date(iso+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long"});
+}
+function setLbData(v){ document.getElementById("lb-data").value=v; lbPreview(); }
+function lbPreview(){
+  const v=document.getElementById("lb-data").value;
+  document.getElementById("lb-preview").textContent = v ? `→ ${diaSemana(v)}, ${fmt(v)}` : "";
 }
 async function salvarLembrar(casoId){
   const k=D.casoPorId.get(casoId); if(!k) return;
@@ -2065,7 +2133,7 @@ async function salvarLembrar(casoId){
   k.lembrar_motivo=document.getElementById("lb-motivo").value.trim()||null;
   await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({prazo:k.prazo, lembrar_motivo:k.lembrar_motivo})});
-  aviso(k.prazo?`Lembrete salvo: ${fmt(k.prazo)}${k.lembrar_motivo?" — "+k.lembrar_motivo:""} 🗓`:"Lembrete salvo");
+  aviso(k.prazo?`Lembrete salvo: ${diaSemana(k.prazo)}, ${fmt(k.prazo)}${k.lembrar_motivo?" — "+k.lembrar_motivo:""} 🗓`:"Lembrete salvo");
   montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
 }
 async function limparLembrar(casoId){

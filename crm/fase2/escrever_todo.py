@@ -143,6 +143,35 @@ def main():
     if movidos:
         print(f"tarefas movidas de lista no To Do: {movidos}")
 
+    # 1c) comentários apagados pelo autor no app -> tirar o bloco do To Do e sumir
+    try:
+        apagar = _rest("GET", "/rest/v1/andamentos?excluir=eq.true"
+                              "&select=id,texto,criado_em,"
+                              "casos(todo_task_id,origem_lista),colaboradores(inicial)") or []
+    except Exception:
+        apagar = []      # coluna ainda não criada (schema antigo): nada a fazer
+    removidos = 0
+    for a in apagar:
+        caso = a.get("casos") or {}
+        task_id = caso.get("todo_task_id")
+        lista_id = listas_map.get(caso.get("origem_lista"))
+        try:
+            if task_id and lista_id:
+                atual = graph_client.get_task(lista_id, task_id)
+                corpo = (atual.get("body") or {}).get("content") or ""
+                bloco = formatar_bloco(a["criado_em"],
+                                       (a.get("colaboradores") or {}).get("inicial"),
+                                       a["texto"])
+                novo = corpo.replace(bloco, "").replace("\n\n\n", "\n\n").strip("\n")
+                if novo != corpo:
+                    graph_client.update_task_body(lista_id, task_id, novo)
+            _rest("DELETE", f"/rest/v1/andamentos?id=eq.{a['id']}")
+            removidos += 1
+        except Exception as e:      # não travar os demais
+            print(f"  erro ao apagar comentário no To Do: {e}")
+    if removidos:
+        print(f"comentários apagados (app -> To Do): {removidos}")
+
     # 2) andamentos escritos no app -> topo do corpo da tarefa
     fila = _rest("GET", "/rest/v1/andamentos"
                         "?origem=eq.app&todo_sync=eq.false"
