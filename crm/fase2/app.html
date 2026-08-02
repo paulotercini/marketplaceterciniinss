@@ -987,6 +987,8 @@ function renderDash(){
     <div class="card"><h4>Perícias/audiências futuras</h4><div class="num" style="color:var(--roxo)">${D.eventos.filter(e=>e.status==="agendada"&&e.data_hora.slice(0,10)>=hoje()).length}</div></div>
     <div class="card"><h4>⚠ Exigências INSS em aberto</h4><div class="num" style="color:var(--vermelho)">${at.filter(k=>k.exigencia_prazo).length}</div></div>
     <div class="card"><h4>💼 Vendas em andamento</h4><div class="num">${D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length}</div></div>
+    <div class="card"><h4>✅ Concedidos</h4><div class="num" style="color:var(--verde)">${D.casos.filter(k=>k.resultado==="deferido").length}</div></div>
+    <div class="card"><h4>Taxa de êxito (com resultado)</h4><div class="num">${(()=>{const r=D.casos.filter(k=>["deferido","indeferido","acordo"].includes(k.resultado));return r.length?Math.round(100*r.filter(k=>k.resultado!=="indeferido").length/r.length)+"%":"—";})()}</div></div>
     <div class="card"><h4>📥 Menções pendentes (minhas)</h4><div class="num" style="color:var(--laranja)">${D.mencoes.length}</div></div>
     <div class="card"><h4>A receber (lançado)</h4><div class="num" style="color:var(--verde);font-size:22px">${moeda(recebiveis)}</div></div>
     <div class="card" style="grid-column:1/-1"><h4>Andamentos por colaborador — últimos 30 dias</h4>
@@ -1069,6 +1071,10 @@ async function abrirFicha(cliId){
         <select data-fase="${k.id}">${Object.entries(NOME_FASE).map(([f,n])=>`<option value="${f}" ${k.fase===f?"selected":""}>${n}</option>`).join("")}</select></label>
         <label style="font-size:12px;color:var(--cinza)">Prazo:
         <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></label>
+        <label style="font-size:12px;color:var(--cinza)">Resultado:
+        <select data-resultado="${k.id}">
+          ${["","deferido","indeferido","acordo","desistencia"].map(r=>`<option value="${r}" ${((k.resultado||"")===r)?"selected":""}>${r||"—"}</option>`).join("")}
+        </select></label>
         ${!k.exigencia_prazo?`<button class="btn-mini" onclick="marcarExigencia('${k.id}')">⚠ Marcar exigência (30 dias)</button>`:""}
         ${docDe(k.beneficio)?`<button class="btn-mini" onclick="imprimirDocs('${k.id}')">🖨 Documentos p/ cliente</button>
           <button class="btn-mini" onclick="editarDocs('${k.id}')" title="editar a lista deste benefício">✏</button>`:""}
@@ -1176,6 +1182,16 @@ async function abrirFicha(cliId){
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({fase:k.fase, encerrado_em:k.encerrado_em||null})});
     aviso("Fase atualizada"); montarSidebar();
+  });
+  document.querySelectorAll("[data-resultado]").forEach(s=>s.onchange=async()=>{
+    const k=D.casoPorId.get(s.dataset.resultado); k.resultado=s.value||null;
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({resultado:k.resultado})});
+    if(k.resultado==="deferido"){
+      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:"Benefício CONCEDIDO. 🎉"})});
+      aviso("Concedido 🎉 — considere mandar o modelo 'Benefício deferido' ao cliente");
+    } else aviso("Resultado registrado");
   });
   document.querySelectorAll("[data-prazo]").forEach(i=>i.onchange=async()=>{
     const k=D.casoPorId.get(i.dataset.prazo); k.prazo=i.value||null;
