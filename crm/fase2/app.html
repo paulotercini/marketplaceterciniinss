@@ -163,6 +163,13 @@
   .form-linha{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .form-linha input,.form-linha select{padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
   .form-linha button{padding:8px 14px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
+  /* menu "Mover para…" (botão direito no cartão, como no To Do) */
+  #menu-mover{position:fixed;z-index:99;background:var(--branco);border:1px solid var(--borda);border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.18);padding:6px;min-width:230px;max-height:70vh;overflow-y:auto}
+  #menu-mover .mm-tit{font-size:12px;font-weight:700;color:var(--cinza);padding:4px 10px}
+  #menu-mover .mm-caso{font-size:11px;color:var(--cinza);padding:6px 10px 2px;border-top:1px solid var(--fundo)}
+  #menu-mover .mm-it{padding:7px 10px;border-radius:6px;cursor:pointer;font-size:14px}
+  #menu-mover .mm-it:hover{background:var(--fundo)}
+  #menu-mover .mm-it.atual{color:var(--azul);font-weight:700}
   .id-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
   .id-card{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:10px 14px}
   .id-card.destaque{border-color:#f0c36d;background:#fffaf0}
@@ -521,11 +528,51 @@ function gcal(titulo, dataIso, horaIni, minutos, detalhes, local){
     details:detalhes||"", location:local||"", ctz:"America/Sao_Paulo"});
   return "https://calendar.google.com/calendar/render?"+p;
 }
+// lista "efetiva" do caso: um mover pedido no app vale na hora,
+// mesmo antes de o To Do acompanhar (escrever_todo faz o mover físico)
+function listaDe(k){ return k.mover_para || k.origem_lista || "—"; }
 function casosDaFase(f){
   // Tarefas com Prazo é a LISTA FIXA do To Do (não "tudo que tem data") —
   // a agenda geral por data fica na visão Planejado.
-  if(f==="prazo") return ativos().filter(k=>k.origem_lista==="🗓 Tarefas com Prazo");
+  if(f==="prazo") return ativos().filter(k=>listaDe(k)==="🗓 Tarefas com Prazo");
   return ativos().filter(k=>k.fase===f);
+}
+// mover caso de lista, como o "Mover" do botão direito no To Do
+const LISTAS_MOVER=[
+  ["🗓 Tarefas com Prazo","outro"], ["🙋 Escritório","escritorio"], ["🌻 INSS","inss"],
+  ["🖥 Conselho de Recursos","conselho"], ["👪 Judicial","judicial"],
+  ["🙏 Aposentadorias Futuras","aposentadoria_futura"], ["💵 Pagamentos","pagamento"],
+];
+function fecharMenuMover(){ const m=document.getElementById("menu-mover"); if(m) m.remove(); }
+function menuMover(ev, cliId){
+  ev.preventDefault(); fecharMenuMover();
+  const ks=(D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
+  if(!ks.length) return;
+  const m=document.createElement("div"); m.id="menu-mover";
+  m.innerHTML = `<div class="mm-tit">Mover para…</div>` + ks.map(k=>
+    (ks.length>1?`<div class="mm-caso">${esc(tituloCaso(k))}</div>`:"") +
+    LISTAS_MOVER.map(([l])=>{
+      const atual = listaDe(k)===l;
+      return `<div class="mm-it ${atual?"atual":""}" data-mv="${k.id}|${l}">${l}${atual?" ✓":""}</div>`;
+    }).join("")).join("");
+  document.body.appendChild(m);
+  const W=m.offsetWidth||240, H=m.offsetHeight||280;
+  m.style.left=Math.min(ev.clientX, innerWidth-W-8)+"px";
+  m.style.top =Math.min(ev.clientY, innerHeight-H-8)+"px";
+  m.querySelectorAll("[data-mv]").forEach(it=>it.onclick=()=>{
+    const [kid,l]=it.dataset.mv.split("|"); moverCaso(kid,l);
+  });
+  setTimeout(()=>document.addEventListener("click", fecharMenuMover, {once:true}));
+}
+async function moverCaso(casoId, lista){
+  const k=D.casoPorId.get(casoId); if(!k || listaDe(k)===lista) return fecharMenuMover();
+  const fase=(LISTAS_MOVER.find(([l])=>l===lista)||[])[1];
+  k.mover_para=lista; if(fase) k.fase=fase;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({mover_para:lista, ...(fase?{fase}:{})})});
+  fecharMenuMover();
+  aviso(`Movido para ${lista} — o To Do acompanha na próxima sincronização`);
+  montarSidebar(); render();
 }
 
 function montarSidebar(){
@@ -588,8 +635,8 @@ function cartaoCliente(cli, casosMostrar){
       <div class="nome">${esc(cli.nome)}</div>
       <div class="meta">
         ${ks.some(k=>k.urgente)?`<span class="chip urg">🔥 URGENTE</span>`:""}
-        ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
         ${[...new Set(ks.map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
+        ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
         ${ks.map(chipExig).join("")}
         ${chipPrazo(prazoMin)}
         ${evFut?`<span class="chip per">🩺 ${esc(evFut.tipo)} ${fmt(evFut.data_hora.slice(0,10))}</span>`:""}
@@ -621,9 +668,12 @@ function grupoClientes(casosSel){
 }
 
 function ligarCartoes(){
-  document.querySelectorAll(".cartao[data-cli]").forEach(el=>el.onclick=e=>{
-    if(e.target.dataset.sol!==undefined || e.target.dataset.estrela!==undefined) return;
-    abrirFicha(el.dataset.cli);
+  document.querySelectorAll(".cartao[data-cli]").forEach(el=>{
+    el.onclick=e=>{
+      if(e.target.dataset.sol!==undefined || e.target.dataset.estrela!==undefined) return;
+      abrirFicha(el.dataset.cli);
+    };
+    el.oncontextmenu=e=>menuMover(e, el.dataset.cli);   // botão direito = Mover para…
   });
   document.querySelectorAll("[data-sol]").forEach(b=>b.onclick=async e=>{
     e.stopPropagation();
@@ -1358,7 +1408,7 @@ async function abrirFicha(cliId){
         const ult=ands.filter(a=>a.caso_id===k.id)[0];
         const uco=ult&&D.colPorId.get(ult.autor_id);
         return `<div class="caso">
-        <div class="rotulo-caso">Caso ${idx+1} de ${total} · veio da lista ${esc(k.origem_lista||"—")} do To Do</div>
+        <div class="rotulo-caso">Caso ${idx+1} de ${total} · lista ${esc(listaDe(k))} do To Do</div>
         <div class="cab" style="margin-top:2px">
           <span class="titulo-caso">${esc(tituloCaso(k))}</span>
           ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?" style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
@@ -1442,7 +1492,7 @@ async function abrirFicha(cliId){
         const uco=ult&&D.colPorId.get(ult.autor_id);
         const lan=pgs.filter(p=>p.caso_id===k.id);
         return `<div class="caso" style="border-left:3px solid var(--verde)">
-        <div class="rotulo-caso">💰 Em recebimento · veio da lista ${esc(k.origem_lista||"—")} do To Do</div>
+        <div class="rotulo-caso">💰 Em recebimento · lista ${esc(listaDe(k))} do To Do</div>
         <div class="cab" style="margin-top:2px">
           <span class="titulo-caso">${esc(tituloCaso(k))}</span>
           ${k.nb?`<span class="chip neutro">NB ${esc(k.nb)}</span>`:""}
