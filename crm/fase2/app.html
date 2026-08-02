@@ -188,8 +188,14 @@
   .timeline li:nth-child(odd){background:var(--fundo)}   /* reserva, se a cor do autor não carregar */
   .timeline .quando{flex:none;width:130px;font-size:12px;color:var(--cinza);display:flex;gap:8px}
   .timeline .texto{flex:1;white-space:pre-wrap}
-  /* painel de registro: destacado e completo — nada de esquecer lembrete/estrela */
-  .escrever{border-top:2px solid var(--azul);padding:12px 22px 14px;background:#E9EFFA}
+  /* painel de registro: bem destacado — é aqui que se comenta */
+  .escrever{border-top:3px solid var(--azul);padding:12px 22px 14px;background:#D9E5F8}
+  .escrever input#and-texto{background:var(--branco)}
+  .equipe-chip.av.on{background:#E8F1FB;border-color:var(--azul);font-weight:700}
+  /* atribuição + lembrete no topo do processo, destacados */
+  .caso-acoes{background:#FFF4D6;border:1px solid #E9B44C;border-radius:10px;padding:10px 14px;margin-bottom:10px}
+  /* checklist em quadrado próprio */
+  .caso.caso-check{background:#EDF6EE;border-color:#CBE3CE}
   .escrever .dica{font-size:12px;color:var(--verde);margin-bottom:6px}
   .escrever .linha{display:flex;gap:8px;align-items:center}
   .acao-rapida{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
@@ -371,6 +377,7 @@ let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
+let avisarSel = new Set();   // quem deve ser avisado no próximo comentário (obrigatório)
 
 // som de retorno, como no To Do (gerado na hora — sem arquivo de áudio).
 // "plim" duplo ao concluir; tique curto nos avisos. 🔔 na lateral silencia.
@@ -1107,10 +1114,12 @@ async function lerMencao(id){
   D.mencoes=D.mencoes.filter(m=>m.id!==id);
   montarSidebar(); render();
 }
-async function criarMencoes(texto, casoId, andamentoId){
-  const alvos=D.colaboradores.filter(co=>co.id!==eu.id && co.ativo &&
+async function criarMencoes(texto, casoId, andamentoId, extras){
+  const ids=new Set((extras||[]).filter(id=>id!==eu.id));
+  D.colaboradores.forEach(co=>{ if(co.id!==eu.id && co.ativo &&
     (new RegExp("@"+co.nome.split(" ")[0]+"\\b","i").test(texto) ||
-     new RegExp("@"+co.inicial+"\\b").test(texto)));
+     new RegExp("@"+co.inicial+"\\b").test(texto))) ids.add(co.id); });
+  const alvos=D.colaboradores.filter(co=>ids.has(co.id));
   for(const co of alvos)
     await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({de_id:eu.id, para_id:co.id, caso_id:casoId,
@@ -1392,7 +1401,7 @@ function renderDash(){
 async function abrirFicha(cliId){
   const c = D.cliPorId.get(cliId);
   if(!c) return aviso("Cliente ainda carregando — tente de novo em instantes");
-  if(clienteAberto !== cliId){ casoSel = "__auto__"; abaAtiva = 2; }  // cliente novo: abre no 1º caso ativo
+  if(clienteAberto !== cliId){ casoSel = "__auto__"; abaAtiva = 2; avisarSel.clear(); }  // cliente novo: abre no 1º caso ativo
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
@@ -1525,7 +1534,20 @@ async function abrirFicha(cliId){
       const k = casoSel && D.casoPorId.get(casoSel);
       if(!k) return ks.length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso no menu ao lado para ver só o dele.</p>`:"";
       // cabeçalho do caso, estilo To Do: os dados importantes em cima, andamentos embaixo
-      return `<div class="caso caso-cab" style="margin-bottom:12px">
+      return `<div class="caso-acoes">
+        <div class="form-linha" style="align-items:center;margin:0">
+          <span class="rotulo-rap">👥 ATRIBUÍDO A:</span>
+          ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${equipe.includes(co.id)?"on":""}" data-eq="${co.id}" title="${esc(co.nome)} — atribuir/retirar">
+            <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`).join("")}
+        </div>
+        <div class="form-linha" style="align-items:center;margin:8px 0 0">
+          <span class="rotulo-rap">🗓 LEMBRAR:</span>
+          <button class="lembrar-caixa" style="cursor:pointer;font:inherit" onclick="toggleLembrar('${k.id}')"
+            title="quando agir e por quê — atalhos Hoje/+7/+15/+30">🗓 ${k.prazo?`${fmt(k.prazo)} (${diaSemana(k.prazo).slice(0,3)})`:"Lembrar em…"}${k.lembrar_motivo?" — "+esc(k.lembrar_motivo.length>30?k.lembrar_motivo.slice(0,30)+"…":k.lembrar_motivo):""}</button>
+        </div>
+        <div id="lembrar-box" style="display:none;border:1px solid #E9B44C;border-radius:8px;background:var(--branco);margin-top:8px;padding:10px"></div>
+      </div>
+      <div class="caso caso-cab" style="margin-bottom:10px">
         <div class="rotulo-caso">lista ${esc(listaDe(k))} do To Do</div>
         <div class="cab" style="margin-top:2px">
           <span class="titulo-caso">${esc(tituloCaso(k))}</span>
@@ -1541,8 +1563,8 @@ async function abrirFicha(cliId){
             <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
         </div>
         ${trilhaCaso(k)}
-        ${checklistCaso(k)}
         </div>
+        <div class="caso caso-check">${checklistCaso(k)}</div>
         <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
     })()}
     <ul class="timeline">${andsVis.filter(a=>!a.excluir).map(a=>{const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
@@ -1694,7 +1716,6 @@ async function abrirFicha(cliId){
       </div>
     </div>
     <div id="preenche-box" style="display:none;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-bottom:6px;padding:10px"></div>
-    <div id="lembrar-box" style="display:none;border:1px solid #E9B44C;border-radius:8px;background:#FFFBEF;margin-bottom:6px;padding:10px"></div>
     <div id="exig-box" style="display:none;border:1px solid #f0c36d;border-radius:8px;background:#fffaf0;margin-bottom:6px;padding:10px">
       <strong style="font-size:13px">⚠ Registrar exigência do INSS</strong>
       <div class="form-linha" style="margin-top:6px">
@@ -1705,26 +1726,28 @@ async function abrirFicha(cliId){
       </div>
       <p style="font-size:11px;color:var(--cinza);margin-top:4px">Vira andamento (replicado no To Do) e liga a contagem regressiva na ficha do caso.</p>
     </div>
-    <div class="dica">✓ Data e autor (${esc(eu.nome)}) entram sozinhos — e o texto é replicado no To Do</div>
-    ${(kA=>kA?`<div class="acao-rapida">
-      <span class="rotulo-rap">📌 O CASO:</span>
-      <button class="lembrar-caixa" style="cursor:pointer;font:inherit" onclick="toggleLembrar('${kA.id}')"
-        title="quando agir e por quê — clique para mudar (atalhos +7/+15/+30 dias)">🗓 ${kA.prazo?fmt(kA.prazo):"Lembrar em…"}${kA.lembrar_motivo?" — "+esc(kA.lembrar_motivo.length>26?kA.lembrar_motivo.slice(0,26)+"…":kA.lembrar_motivo):""}</button>
-      <span class="rotulo-rap">Atribuir:</span>
-      ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${(D.atrDoCaso.get(kA.id)||[]).includes(co.id)?"on":""}" data-eq="${co.id}" title="${esc(co.nome)} — atribuir/retirar">
-        <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.inicial)}</span>`).join("")}
-      <button class="btn-rap imp ${kA.importante?"on":""}" onclick="toggleImp('${kA.id}')" title="marcar/desmarcar Importante">⭐ Importante</button>
-      <button class="btn-rap urg ${kA.urgente?"on":""}" onclick="toggleUrg('${kA.id}')" title="marcar/desmarcar Urgente">🔥 Urgente</button>
-    </div>`:"")((casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null))}
-    <div class="linha">
-      <span class="rotulo-rap" style="font-size:11px;color:var(--cinza);font-weight:700">✏️ ANDAMENTO:</span>
+    ${(()=>{
+      const kA=(casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null);
+      const ativosK=ks.filter(x=>x.fase!=="encerrado");
+      if(kA && kA.fase==="encerrado")
+        return `<p class="meio-sub" style="padding:4px 0">✔ Processo encerrado — comentários desativados. Para reabrir, clique numa etapa da trilha.</p>`;
+      if(!kA && !ativosK.length)
+        return `<p class="meio-sub" style="padding:4px 0">Sem processo ativo para comentar.</p>`;
+      return `<div class="linha">
       <span class="avatar" style="background:${eu.cor}">${esc(eu.inicial)}</span>
-      ${ks.length>1?`<select id="and-caso">${ks.map(k=>`<option value="${k.id}" ${casoSel===k.id?"selected":""}>${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>`:""}
-      <input id="and-texto" placeholder="Escreva o andamento…">
-      <button class="btn-mini" style="white-space:nowrap" title="texto pronto para o ANDAMENTO — não mexe na agenda" onclick="toggleFrases()">⚡ Frases</button>
-      <button class="btn-mini" style="white-space:nowrap" title="registrar exigência do INSS com prazo final" onclick="toggleExig()">⚠ Exigência</button>
-      <button onclick="novoAndamento('${ks.length===1?ks[0].id:""}')">Registrar</button>
+      ${!kA&&ativosK.length>1?`<select id="and-caso">${ativosK.map(k=>`<option value="${k.id}">${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>`:""}
+      <input id="and-texto" placeholder="Escreva o comentário…">
+      <button onclick="novoAndamento('${kA?kA.id:""}')">Registrar</button>
     </div>
+    <div class="acao-rapida" style="margin:8px 0 0">
+      <span class="rotulo-rap" title="obrigatório — quem deve ficar sabendo deste comentário">🔔 AVISAR:</span>
+      ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip av ${avisarSel.has(co.id)?"on":""}" data-av="${co.id}" title="avisar ${esc(co.nome)} (menção)">
+        <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.inicial)}</span>`).join("")}
+      ${kA?`<button class="btn-rap imp ${kA.importante?"on":""}" onclick="toggleImp('${kA.id}')" title="marcar/desmarcar Importante">⭐ Importante</button>
+      <button class="btn-rap urg ${kA.urgente?"on":""}" onclick="toggleUrg('${kA.id}')" title="marcar/desmarcar Urgente">🔥 Urgente</button>`:""}
+      <button class="btn-mini" style="white-space:nowrap" title="texto pronto para o comentário — não mexe na agenda" onclick="toggleFrases()">⚡ Frases</button>
+      <button class="btn-mini" style="white-space:nowrap" title="registrar exigência do INSS com prazo final" onclick="toggleExig()">⚠ Exigência</button>
+    </div>`;})()}
   </div>
   </div>`;
 
@@ -1732,7 +1755,13 @@ async function abrirFicha(cliId){
     abaAtiva=+el.dataset.vv; abrirFicha(clienteAberto);
   });
   document.getElementById("btn-processos").onclick=ev=>menuProcessos(ev, ks);
-  document.getElementById("and-texto").onkeydown=e=>{ if(e.key==="Enter") document.querySelector(".escrever button[onclick^='novoAndamento']").click(); };
+  document.querySelectorAll("[data-av]").forEach(ch=>ch.onclick=()=>{
+    const id=ch.dataset.av;
+    if(avisarSel.has(id)){ avisarSel.delete(id); ch.classList.remove("on"); }
+    else { avisarSel.add(id); ch.classList.add("on"); }
+  });
+  const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
+  if(campoAnd) campoAnd.onkeydown=e=>{ if(e.key==="Enter") document.querySelector(".escrever button[onclick^='novoAndamento']").click(); };
   document.querySelectorAll(".frase-it").forEach(el=>{
     el.onmouseenter=()=>el.style.background="var(--fundo)";
     el.onmouseleave=()=>el.style.background="";
@@ -2012,10 +2041,14 @@ async function novoAndamento(casoUnico){
   const casoId = casoUnico || (sel && sel.value);
   const inp=document.getElementById("and-texto");
   if(!casoId || !inp.value.trim()) return;
+  const kAlvo=D.casoPorId.get(casoId);
+  if(kAlvo && kAlvo.fase==="encerrado") return aviso("✔ Processo encerrado — reabra pela trilha para comentar");
+  if(avisarSel.size===0) return aviso("🔔 Escolha quem AVISAR — é obrigatório para registrar");
   const texto=inp.value.trim();
   const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})});
-  await criarMencoes(texto, casoId, and?and.id:null);   // @Amanda, @M... viram pendências
+  await criarMencoes(texto, casoId, and?and.id:null, [...avisarSel]);  // 🔔 AVISAR + @menções
+  avisarSel.clear();
   const k=D.casoPorId.get(casoId);
   // protocolo citado entra na ficha e vira pesquisável ("protocolo 210...")
   const prot=texto.match(/protocolo\D{0,12}(\d{6,})/i);
@@ -2063,14 +2096,14 @@ function toggleFrases(){
   b.style.display = b.style.display==="none" ? "block" : "none";
   document.getElementById("exig-box").style.display="none";
   document.getElementById("preenche-box").style.display="none";
-  document.getElementById("lembrar-box").style.display="none";
+  const lb=document.getElementById("lembrar-box"); if(lb) lb.style.display="none";
 }
 function toggleExig(){
   const b=document.getElementById("exig-box");
   b.style.display = b.style.display==="none" ? "block" : "none";
   document.getElementById("frases-box").style.display="none";
   document.getElementById("preenche-box").style.display="none";
-  document.getElementById("lembrar-box").style.display="none";
+  const lb=document.getElementById("lembrar-box"); if(lb) lb.style.display="none";
   if(b.style.display==="block"){
     const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+30);   // prazo legal de 30 dias
     document.getElementById("ex-prazo").value=d.toLocaleDateString("sv");
@@ -2093,8 +2126,8 @@ async function apagarAndamento(id, jaNoTodo){
 
 // Lembrar em = quando agir + POR QUÊ (padrão dos bons sistemas: data com motivo)
 function toggleLembrar(casoId){
-  const b=document.getElementById("lembrar-box");
-  ["frases-box","preenche-box","exig-box"].forEach(i=>document.getElementById(i).style.display="none");
+  const b=document.getElementById("lembrar-box"); if(!b) return;
+  ["frases-box","preenche-box","exig-box"].forEach(i=>{const e=document.getElementById(i); if(e) e.style.display="none";});
   if(b.style.display==="block"){ b.style.display="none"; return; }
   const k=D.casoPorId.get(casoId); if(!k) return;
   const em=d=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+d); return x.toLocaleDateString("sv"); };
