@@ -131,6 +131,25 @@ def mapear(dados):
     }
 
 
+def remapear_casos(mapa, task_para_id_existente):
+    """Casos criados NO APP ganham tarefa no To Do depois (escrever_todo). Na
+    importação seguinte, o mesmo todo_task_id chegaria com id determinístico
+    diferente e duplicaria/violaria o unique. Aqui, remapeia o caso importado
+    para o id que já existe no banco (e corrige as referências)."""
+    troca = {}
+    for k in mapa["casos"]:
+        existente = task_para_id_existente.get(k["todo_task_id"])
+        if existente and existente != k["id"]:
+            troca[k["id"]] = existente
+            k["id"] = existente
+    if troca:
+        for a in mapa["andamentos"]:
+            a["caso_id"] = troca.get(a["caso_id"], a["caso_id"])
+        for e in mapa["eventos"]:
+            e["caso_id"] = troca.get(e["caso_id"], e["caso_id"])
+    return len(troca)
+
+
 def anti_eco(linhas, existentes_app):
     """Remove blocos importados do To Do que são eco de andamentos criados no
     app (a escrita dupla devolve o texto ao To Do; sem isto, duplicaria).
@@ -225,6 +244,13 @@ def subir_rest(mapa):
                     l[campo] = colab.get(l[campo][1])
             out.append(l)
         return out
+
+    # casos que já existem no banco (inclusive criados no app): remapear
+    exist = _rest(url, chave, "GET",
+                  "/rest/v1/casos?todo_task_id=not.is.null&select=id,todo_task_id") or []
+    n = remapear_casos(mapa, {c["todo_task_id"]: c["id"] for c in exist})
+    if n:
+        print(f"  casos remapeados para ids já existentes: {n}")
 
     # anti-eco: o que o app já criou (poucas linhas — só origem='app')
     app_rows = _rest(url, chave, "GET",

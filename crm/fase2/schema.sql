@@ -146,6 +146,54 @@ create unique index if not exists meu_dia_unico on meu_dia
   (colaborador_id, dia, coalesce(caso_id, '00000000-0000-0000-0000-000000000000'),
                         coalesce(tarefa_id, '00000000-0000-0000-0000-000000000000'));
 
+-- ── Exigências do INSS (prazo legal de 30 dias) ───────────────────────────
+-- Marcada no caso: enquanto exigencia_prazo estiver preenchido, o caso está
+-- "em exigência" e o app mostra a contagem regressiva dos 30 dias.
+alter table casos add column if not exists exigencia_prazo date;
+alter table casos add column if not exists exigencia_descricao text;
+
+-- ── Modelos de mensagem (copiar e mandar ao cliente) ──────────────────────
+-- Espaços reservados preenchidos pelo app: {nome} {primeiro_nome} {data}
+-- {hora} {local} {prazo}
+create table if not exists modelos_mensagem (
+  id        uuid primary key default gen_random_uuid(),
+  titulo    text not null unique,
+  texto     text not null,
+  contexto  text not null default 'geral'   -- pericia | audiencia | exigencia | geral
+);
+
+insert into modelos_mensagem (titulo, contexto, texto) values
+  ('Lembrete de perícia', 'pericia',
+   'Olá, {primeiro_nome}! Tudo bem? Passando para lembrar da sua perícia do INSS: dia {data}, às {hora}, em {local}. Chegue uns 30 minutos antes e leve um documento com foto e todos os exames, laudos e receitas médicas que tiver, mesmo os antigos. Qualquer dúvida é só chamar por aqui. — Escritório Paulo R. Tercini Filho'),
+  ('Lembrete de audiência', 'audiencia',
+   'Olá, {primeiro_nome}! Lembrando da sua audiência: dia {data}, às {hora}, em {local}. Chegue com antecedência e traga documento com foto. Se tiver qualquer imprevisto, nos avise o quanto antes. — Escritório Paulo R. Tercini Filho'),
+  ('Exigência do INSS', 'exigencia',
+   'Olá, {primeiro_nome}! O INSS pediu uma providência no seu processo (chama-se exigência) e temos até {prazo} para cumprir. Precisamos da sua ajuda com o seguinte: '),
+  ('Solicitação de documentos', 'geral',
+   'Olá, {primeiro_nome}! Para dar andamento ao seu processo, precisamos que nos envie: . Pode mandar foto por aqui mesmo, desde que esteja legível. Obrigado!'),
+  ('Benefício deferido', 'geral',
+   'Olá, {primeiro_nome}! Temos uma ótima notícia: seu benefício foi CONCEDIDO! 🎉 Em breve entraremos em contato para explicar os próximos passos e os valores. Parabéns pela conquista!'),
+  ('Boas-vindas (novo cliente)', 'geral',
+   'Olá, {primeiro_nome}! Seja bem-vindo(a) ao escritório Paulo R. Tercini Filho. Seu caso já está registrado em nosso sistema e vamos te manter informado(a) de cada andamento por aqui. Qualquer dúvida, é só chamar.')
+on conflict (titulo) do nothing;
+
+-- ── Sugestões do Claude (automação com aprovação humana) ──────────────────
+-- A rotina diária grava aqui; a equipe aceita/descarta na visão 🤖 do app.
+create table if not exists sugestoes (
+  id         uuid primary key default gen_random_uuid(),
+  caso_id    uuid references casos(id) on delete cascade,
+  tipo       text not null,          -- exigencia | prazo | pericia | proximo_passo | mensagem
+  titulo     text not null,
+  texto      text not null,          -- o que o Claude sugere (andamento, mensagem, alerta)
+  dados      jsonb not null default '{}'::jsonb,   -- ex.: {"exigencia_prazo": "2026-09-01"}
+  criado_em  timestamptz not null default now(),
+  status     text not null default 'pendente'      -- pendente | aceita | descartada
+             check (status in ('pendente','aceita','descartada')),
+  decidido_por uuid references colaboradores(id),
+  decidido_em  timestamptz
+);
+create index if not exists sugestoes_pend on sugestoes (status) where status = 'pendente';
+
 -- ── Segurança (RLS) ───────────────────────────────────────────────────────
 -- Regra geral: só usuário logado acessa; anônimo não vê NADA.
 -- Tarefas particulares: só o dono. Credenciais: leitura logada + log no app.
@@ -154,7 +202,7 @@ declare t text;
 begin
   foreach t in array array['colaboradores','clientes','credenciais','credencial_vis',
                            'casos','andamentos','eventos','pagamentos','tarefas',
-                           'atribuicoes','meu_dia'] loop
+                           'atribuicoes','meu_dia','modelos_mensagem','sugestoes'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then

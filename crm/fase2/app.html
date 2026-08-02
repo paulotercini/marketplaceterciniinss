@@ -31,6 +31,23 @@
   .usuario .sair{margin-left:auto;border:none;background:none;color:var(--cinza);cursor:pointer;font-size:12px}
   .busca{margin:0 12px 14px;position:relative}
   .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid var(--borda);border-radius:6px;font-size:14px;background:var(--branco)}
+  .novo-cli{display:block;margin:0 12px 10px;width:calc(100% - 24px);padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+  .novo-cli:hover{background:var(--azul-escuro)}
+  .sug{border:1px solid var(--borda);border-left:4px solid #8a5cf6;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:var(--branco)}
+  .sug .cab{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+  .sug .texto{white-space:pre-wrap;font-size:13px;margin:6px 0 10px}
+  .sug .acoes{display:flex;gap:8px}
+  .sug .acoes button{border:none;border-radius:6px;padding:6px 14px;font-weight:600;cursor:pointer}
+  .sug .aceitar{background:var(--verde);color:#fff}
+  .sug .descartar{background:var(--fundo);color:var(--cinza)}
+  .modelo{border:1px solid var(--borda);border-radius:8px;padding:10px 14px;margin-bottom:8px}
+  .modelo .cab{display:flex;gap:8px;align-items:center}
+  .modelo .cab strong{flex:1}
+  .modelo .previa{font-size:13px;color:var(--cinza);margin-top:6px;white-space:pre-wrap}
+  .btn-mini{border:1px solid var(--borda);background:var(--branco);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--azul);white-space:nowrap}
+  .exig{background:#fbeaea;border:1px solid #e8b4b8;border-radius:8px;padding:8px 12px;margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px}
+  .exig strong{color:var(--vermelho)}
+  .chip.exig-chip{background:#fbeaea;color:var(--vermelho)}
   .busca::before{content:"🔍";position:absolute;left:9px;top:7px;font-size:13px;opacity:.6}
   .grupo h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--cinza);padding:8px 16px 4px}
   .lista-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;border-left:3px solid transparent}
@@ -164,6 +181,7 @@
       <div><strong id="u-nome"></strong><div style="font-size:12px;color:var(--cinza)">conectado</div></div>
       <button class="sair" onclick="sair()">sair</button></div>
     <div class="sep"></div>
+    <button class="novo-cli" id="btn-novo-cli">➕ Novo Cliente</button>
     <div class="busca"><input id="busca" placeholder="Pesquisar nome, CPF, processo…"></div>
     <div class="grupo" id="grupo-dinamicas"></div>
     <div class="sep"></div>
@@ -309,7 +327,7 @@ async function iniciar(){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -320,8 +338,10 @@ async function carregar(){
       todas("pagamentos","select=*"),
       todas("meu_dia",`select=*&dia=eq.${hoje()}`),
       todas("andamentos",`select=autor_id,criado_em&criado_em=gte.${d30.toISOString()}`),
+      todas("modelos_mensagem","select=*&order=titulo"),
+      todas("sugestoes","select=*&status=eq.pendente&order=criado_em.desc"),
     ]);
-  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30};
+  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes};
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -348,6 +368,31 @@ const NOME_FASE = {escritorio:"Escritório", inss:"INSS", conselho:"Conselho", j
   pagamento:"Pagamento", aposentadoria_futura:"Apos. Futura", outro:"Outros", encerrado:"Encerrado"};
 
 function ativos(){ return D.casos.filter(k=>k.fase!=="encerrado"); }
+function diasAte(iso){ return Math.ceil((new Date(iso+"T12:00:00")-new Date(hoje()+"T12:00:00"))/864e5); }
+function chipExig(k){
+  if(!k.exigencia_prazo) return "";
+  const d=diasAte(k.exigencia_prazo);
+  return `<span class="chip exig-chip">⚠ exigência · ${d<0?`VENCIDA há ${-d}d`:d===0?"vence HOJE":`faltam ${d}d`}</span>`;
+}
+// preenche um modelo de mensagem com os dados do cliente/evento
+function preencher(texto, cli, ev, prazoExig){
+  const map={
+    "{nome}": cli?cli.nome:"", "{primeiro_nome}": cli?cli.nome.split(" ")[0]:"",
+    "{data}": ev?fmt(ev.data_hora.slice(0,10)):"", "{hora}": ev?ev.data_hora.slice(11,16):"",
+    "{local}": ev?(ev.local||"(local a confirmar)"):"", "{prazo}": prazoExig?fmt(prazoExig):"",
+  };
+  return Object.entries(map).reduce((t,[k,v])=>t.split(k).join(v), texto);
+}
+function modeloPor(contexto){ return D.modelos.find(m=>m.contexto===contexto); }
+// link "criar evento" do Google Agenda (sem precisar de conexão/conta Google no app)
+function gcal(titulo, dataIso, horaIni, minutos, detalhes, local){
+  const d1=new Date(dataIso+"T"+horaIni+":00");
+  const d2=new Date(d1.getTime()+(minutos||60)*60000);
+  const g=d=>d.toLocaleDateString("sv").replace(/-/g,"")+"T"+d.toTimeString().slice(0,8).replace(/:/g,"");
+  const p=new URLSearchParams({action:"TEMPLATE", text:titulo, dates:g(d1)+"/"+g(d2),
+    details:detalhes||"", location:local||"", ctz:"America/Sao_Paulo"});
+  return "https://calendar.google.com/calendar/render?"+p;
+}
 function casosDaFase(f){
   if(f==="prazo") return ativos().filter(k=>k.prazo);
   return ativos().filter(k=>k.fase===f);
@@ -367,10 +412,15 @@ function montarSidebar(){
   document.getElementById("grupo-fases").innerHTML = FASES.map(([f,rot])=>
     `<div class="lista-item" data-v="fase:${f}"><span class="rotulo">${rot}</span><span class="cont">${casosDaFase(f).length}</span></div>`).join("");
   document.getElementById("grupo-visoes").innerHTML = [
+    ["claude","🤖 Claude", D.sugestoes.length],
     ["recebimentos","💰 Recebimentos", D.casos.filter(k=>k.fase==="pagamento").length],
     ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && e.data_hora>=hoje()).length],
     ["dashboard","📊 Dashboard", null],
   ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}"><span class="rotulo">${rot}</span>${n!=null?`<span class="cont">${n}</span>`:""}</div>`).join("");
+  document.getElementById("btn-novo-cli").onclick=()=>{
+    document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
+    visao="novocliente"; fecharFicha(false); render();
+  };
   document.querySelectorAll(".lista-item").forEach(el=>el.onclick=()=>{
     document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
     el.classList.add("ativa");
@@ -395,6 +445,7 @@ function cartaoCliente(cli, casosMostrar){
       <div class="meta">
         ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
         ${[...new Set(ks.map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
+        ${ks.map(chipExig).join("")}
         ${prazoMin?`<span class="chip prazo ${prazoMin<hoje()?"venc":""}">⏰ ${fmt(prazoMin)}</span>`:""}
         ${evFut?`<span class="chip per">🩺 ${esc(evFut.tipo)} ${fmt(evFut.data_hora.slice(0,10))}</span>`:""}
         ${ks.length>1?`<span class="chip neutro">${ks.length} casos</span>`:""}
@@ -460,6 +511,8 @@ function render(){
   if(visao==="agenda") return renderAgenda();
   if(visao==="particulares") return renderParticulares();
   if(visao==="meudia") return renderMeuDia();
+  if(visao==="novocliente") return renderNovoCliente();
+  if(visao==="claude") return renderClaude();
 
   let casosSel, titulo, subt="Clique no cliente para abrir a ficha completa.";
   if(visao==="planejado"){ titulo="🗓️ Planejado"; casosSel=ativos().filter(k=>k.prazo); }
@@ -471,8 +524,20 @@ function render(){
     titulo=FASES.find(x=>x[0]===f)[1]; casosSel=casosDaFase(f); }
   else { titulo=visao; casosSel=[]; }
   h1.textContent=titulo; sub.textContent=subt;
-  meio.innerHTML = grupoClientes(casosSel).map(([c,ks])=>cartaoCliente(c,ks)).join("")
-    || "<p class='meio-sub'>Nenhum cliente aqui.</p>";
+  // na lista INSS, os casos em exigência (prazo legal de 30 dias) vêm primeiro
+  const emExig = casosSel.filter(k=>k.exigencia_prazo);
+  if(visao==="fase:inss" && emExig.length){
+    const resto = casosSel.filter(k=>!k.exigencia_prazo);
+    emExig.sort((a,b)=>a.exigencia_prazo<b.exigencia_prazo?-1:1);
+    meio.innerHTML =
+      `<h3 class="secao" style="color:var(--vermelho)">⚠ Em exigência — prazo de 30 dias (${emExig.length})</h3>`
+      + grupoClientes(emExig).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+      + `<h3 class="secao">Demais requerimentos (${resto.length})</h3>`
+      + grupoClientes(resto).map(([c,ks])=>cartaoCliente(c,ks)).join("");
+  } else {
+    meio.innerHTML = grupoClientes(casosSel).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+      || "<p class='meio-sub'>Nenhum cliente aqui.</p>";
+  }
   ligarCartoes();
 }
 
@@ -543,6 +608,97 @@ async function novaTarefa(){
   D.tarefas.push(linha); ti.value=""; pz.value=""; render();
 }
 
+// ── Novo Cliente (botão do topo) ──────────────────────────────────────────
+function renderNovoCliente(){
+  document.getElementById("titulo-lista").textContent="➕ Novo Cliente";
+  document.getElementById("sub-lista").textContent=
+    "Cadastro completo: cria o cliente, o primeiro caso e (se quiser) já agenda o atendimento no Google Agenda — 001 para cliente novo, 002 para antigo.";
+  document.getElementById("conteudo-meio").innerHTML=`
+    <div class="caso" style="max-width:640px">
+      <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo *" style="flex:1;min-width:240px"></div>
+      <div class="form-linha">
+        <input id="ncl-cpf" placeholder="CPF (só números)" maxlength="14">
+        <input id="ncl-dn" type="date" title="data de nascimento">
+        <input id="ncl-tel" placeholder="Telefone/WhatsApp">
+      </div>
+      <div class="form-linha">
+        <input id="ncl-caso" placeholder="Primeiro caso (ex.: Aposentadoria por idade) *" style="flex:1;min-width:240px">
+        <select id="ncl-fase">${FASES.filter(f=>f[0]!=="prazo").map(([f,r])=>`<option value="${f}">${r.replace(/^\S+ /,"")}</option>`).join("")}</select>
+      </div>
+      <div class="form-linha">
+        <label style="font-size:13px;color:var(--cinza)">Agendar atendimento:
+          <select id="ncl-tipo"><option value="001">001 — cliente novo</option><option value="002">002 — cliente antigo</option></select></label>
+        <input id="ncl-data" type="date"><input id="ncl-hora" type="time" value="09:00">
+      </div>
+      <div class="form-linha"><button onclick="criarCliente()">Cadastrar</button></div>
+      <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente também vira tarefa no To Do na próxima sincronização (título Nome #CPF), então quem estiver lá continua vendo.</p>
+    </div>`;
+}
+async function criarCliente(){
+  const nome=document.getElementById("ncl-nome").value.trim();
+  const casoTitulo=document.getElementById("ncl-caso").value.trim();
+  if(!nome||!casoTitulo) return aviso("Preencha nome e primeiro caso");
+  const cpf=document.getElementById("ncl-cpf").value.replace(/\D/g,"")||null;
+  const dnIso=document.getElementById("ncl-dn").value;
+  const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({nome, cpf, dn:dnIso?fmt(dnIso).replace(/\./g,""):null,
+      telefone:document.getElementById("ncl-tel").value.trim()||null})});
+  const [caso]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({cliente_id:cli.id, titulo:nome+(cpf?" #"+cpf:""),
+      beneficio:casoTitulo, fase:document.getElementById("ncl-fase").value})});
+  await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:caso.id, colaborador_id:eu.id})});
+  const dataAg=document.getElementById("ncl-data").value;
+  if(dataAg){
+    const cod=document.getElementById("ncl-tipo").value;
+    window.open(gcal(`${cod} - ${nome}`, dataAg, document.getElementById("ncl-hora").value||"09:00",
+      60, `Atendimento — ${casoTitulo}${cli.telefone?" · "+cli.telefone:""}`, "Escritório"), "_blank");
+  }
+  await carregar(); montarSidebar();
+  aviso("Cliente cadastrado ✔"); visao="fase:"+caso.fase; render(); abrirFicha(cli.id);
+}
+
+// ── visão 🤖 Claude (sugestões com aprovação humana) ─────────────────────
+function renderClaude(){
+  document.getElementById("titulo-lista").textContent="🤖 Claude";
+  document.getElementById("sub-lista").textContent=
+    "Sugestões geradas automaticamente pela rotina diária — nada vale sem a sua aprovação. Aceitar aplica na hora (exigência, andamento ou mensagem).";
+  const ICONE={exigencia:"⚠",prazo:"⏰",pericia:"🩺",mensagem:"💬",proximo_passo:"👉"};
+  document.getElementById("conteudo-meio").innerHTML = D.sugestoes.map(s=>{
+    const k=s.caso_id&&D.casoPorId.get(s.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
+    return `<div class="sug">
+      <div class="cab"><span>${ICONE[s.tipo]||"💡"}</span><strong>${esc(s.titulo)}</strong>
+        ${c?`<button class="btn-mini" onclick="abrirFicha('${c.id}')">${esc(c.nome)}</button>`:""}
+        <span class="chip neutro">${fmt(s.criado_em.slice(0,10))}</span></div>
+      <div class="texto">${esc(s.texto)}</div>
+      <div class="acoes">
+        <button class="aceitar" onclick="decidirSugestao('${s.id}','aceita')">✔ Aceitar</button>
+        <button class="descartar" onclick="decidirSugestao('${s.id}','descartada')">✕ Descartar</button>
+      </div></div>`;
+  }).join("") || `<p class="meio-sub">Nenhuma sugestão pendente — a rotina roda todo dia útil de manhã.</p>`;
+}
+async function decidirSugestao(id, status){
+  const s=D.sugestoes.find(x=>x.id===id);
+  if(status==="aceita" && s){
+    const dados=s.dados||{};
+    if(dados.exigencia_prazo && s.caso_id)
+      await api(`/rest/v1/casos?id=eq.${s.caso_id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({exigencia_prazo:dados.exigencia_prazo,
+          exigencia_descricao:dados.exigencia_descricao||s.texto.slice(0,300)})});
+    if(dados.andamento && s.caso_id){
+      const claude=D.colaboradores.find(c=>c.inicial==="C");
+      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:s.caso_id, autor_id:claude?claude.id:null, texto:dados.andamento})});
+    }
+    if(dados.mensagem) await copiar(dados.mensagem,"Mensagem copiada — cole no WhatsApp 💬");
+  }
+  await api(`/rest/v1/sugestoes?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({status, decidido_por:eu.id, decidido_em:new Date().toISOString()})});
+  D.sugestoes=D.sugestoes.filter(x=>x.id!==id);
+  aviso(status==="aceita"?"Sugestão aplicada ✔":"Descartada");
+  montarSidebar(); render();
+}
+
 // ── agenda e dashboard ────────────────────────────────────────────────────
 function renderAgenda(){
   document.getElementById("titulo-lista").textContent="🩺 Perícias & Audiências";
@@ -585,6 +741,7 @@ function renderDash(){
     <div class="card"><h4>Prazos próximos 7 dias</h4><div class="num" style="color:var(--laranja)">${at.filter(k=>k.prazo&&k.prazo>=hoje()&&k.prazo<=lim).length}</div></div>
     <div class="card"><h4>Prazos vencidos</h4><div class="num" style="color:var(--vermelho)">${at.filter(k=>k.prazo&&k.prazo<hoje()).length}</div></div>
     <div class="card"><h4>Perícias/audiências futuras</h4><div class="num" style="color:var(--roxo)">${D.eventos.filter(e=>e.status==="agendada"&&e.data_hora.slice(0,10)>=hoje()).length}</div></div>
+    <div class="card"><h4>⚠ Exigências INSS em aberto</h4><div class="num" style="color:var(--vermelho)">${at.filter(k=>k.exigencia_prazo).length}</div></div>
     <div class="card"><h4>A receber (lançado)</h4><div class="num" style="color:var(--verde);font-size:22px">${moeda(recebiveis)}</div></div>
     <div class="card" style="grid-column:1/-1"><h4>Andamentos por colaborador — últimos 30 dias</h4>
       ${barras(Object.entries(porAutor).sort((a,b)=>b[1]-a[1]))}</div>
@@ -611,7 +768,7 @@ async function abrirFicha(cliId){
   const pgs = D.pagamentos.filter(p=>ks.some(k=>k.id===p.caso_id));
   const equipe = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))];
 
-  const abas=["Dados","Casos","Andamentos","Perícias & Aud.","Pagamentos","Equipe"];
+  const abas=["Dados","Casos","Andamentos","Perícias & Aud.","Pagamentos","Mensagens","Equipe"];
   document.getElementById("detalhe").innerHTML=`
   <div class="det-rolagem">
   <div class="det-topo">
@@ -646,6 +803,12 @@ async function abrirFicha(cliId){
       <button onclick="novaCred('${c.id}')">Guardar</button>
     </div>
     <p style="margin-top:8px;font-size:12px;color:var(--cinza)">Toda visualização de senha é registrada (quem e quando).</p>
+    <div class="form-linha" style="align-items:center">
+      <span style="font-size:13px;color:var(--cinza)">📅 Agendar atendimento:</span>
+      <select id="ag-tipo"><option value="002">002 — cliente antigo</option><option value="001">001 — cliente novo</option></select>
+      <input type="date" id="ag-data"><input type="time" id="ag-hora" value="09:00">
+      <button onclick="agendarAtendimento('${c.id}')">Abrir no Google Agenda</button>
+    </div>
   </div>
 
   <div class="painel ${abaAtiva===1?"ativo":""}" data-p="1">
@@ -659,7 +822,17 @@ async function abrirFicha(cliId){
         <select data-fase="${k.id}">${Object.entries(NOME_FASE).map(([f,n])=>`<option value="${f}" ${k.fase===f?"selected":""}>${n}</option>`).join("")}</select></label>
         <label style="font-size:12px;color:var(--cinza)">Prazo:
         <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></label>
-      </div></div>`).join("")}
+        ${!k.exigencia_prazo?`<button class="btn-mini" onclick="marcarExigencia('${k.id}')">⚠ Marcar exigência (30 dias)</button>`:""}
+      </div>
+      ${k.exigencia_prazo?`<div class="exig">
+        <strong>⚠ Em exigência</strong>
+        até <input type="date" value="${k.exigencia_prazo}" data-exig-data="${k.id}">
+        (${diasAte(k.exigencia_prazo)<0?"VENCIDA":"faltam "+diasAte(k.exigencia_prazo)+" dias"})
+        ${k.exigencia_descricao?`<span>· ${esc(k.exigencia_descricao)}</span>`:""}
+        <button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 mensagem ao cliente</button>
+        <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>
+      </div>`:""}
+      </div>`).join("")}
     <p style="font-size:12px;color:var(--cinza)">Casos novos continuam nascendo no To Do durante a Fase 2 (escrita dupla) — a importação os traz para cá.</p>
   </div>
 
@@ -672,7 +845,13 @@ async function abrirFicha(cliId){
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
     ${evs.map(e=>`<div class="evento ${e.data_hora.slice(0,10)<hoje()?"passado":""}">
       <div class="data-box">${fmt(e.data_hora.slice(0,10)).slice(0,5)}<small>${e.data_hora.slice(11,16)}</small></div>
-      <div class="oque"><strong>${esc(e.tipo)}</strong><span>${esc(e.local||e.obs||"")} · ${esc(e.status)}</span></div></div>`).join("")}
+      <div class="oque"><strong>${esc(e.tipo)}</strong><span>${esc(e.local||e.obs||"")} · ${esc(e.status)}</span></div>
+      ${e.data_hora.slice(0,10)>=hoje()?`
+        <button class="btn-mini" onclick="copiarLembrete('${e.id}')">💬 copiar lembrete</button>
+        ${c.telefone?`<a class="btn-mini" target="_blank" href="#" onclick="event.preventDefault();zapLembrete('${e.id}')" style="text-decoration:none">📲 WhatsApp</a>`:""}
+        <a class="btn-mini" target="_blank" style="text-decoration:none"
+           href="${gcal(e.tipo+" — "+esc(c.nome), e.data_hora.slice(0,10), e.data_hora.slice(11,16), 90, "", e.local||"")}">📅 Google Agenda</a>`:""}
+      </div>`).join("")}
     <div class="form-linha">
       <select id="ne-tipo"><option>Perícia</option><option>Audiência</option><option>Avaliação social</option></select>
       <select id="ne-caso">${ks.map(k=>`<option value="${k.id}">${esc(k.titulo.slice(0,40))}</option>`).join("")}</select>
@@ -696,6 +875,28 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="painel ${abaAtiva===5?"ativo":""}" data-p="5">
+    <p class="meio-sub">Mensagens prontas, já preenchidas com os dados deste cliente — copie e cole no WhatsApp.</p>
+    ${D.modelos.map(m=>{
+      const ev = evs.find(e=>e.data_hora.slice(0,10)>=hoje() &&
+        (m.contexto==="geral" || e.tipo.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").startsWith(m.contexto.slice(0,6))));
+      const exigK = ks.find(k=>k.exigencia_prazo);
+      const pronto = preencher(m.texto, c, ev, exigK&&exigK.exigencia_prazo);
+      return `<div class="modelo"><div class="cab"><strong>${esc(m.titulo)}</strong>
+        <button class="btn-mini" onclick='copiar(${JSON.stringify(pronto)},"Mensagem copiada 💬")'>📋 copiar</button>
+        ${c.telefone?`<button class="btn-mini" onclick='window.open("https://wa.me/55${c.telefone.replace(/\D/g,"")}?text="+encodeURIComponent(${JSON.stringify(pronto)}),"_blank")'>📲 WhatsApp</button>`:""}</div>
+        <div class="previa">${esc(pronto)}</div></div>`;
+    }).join("")}
+    <div class="form-linha">
+      <input id="nm-titulo" placeholder="título do novo modelo">
+      <select id="nm-ctx"><option value="geral">geral</option><option value="pericia">perícia</option><option value="audiencia">audiência</option><option value="exigencia">exigência</option></select>
+    </div>
+    <div class="form-linha">
+      <input id="nm-texto" placeholder="texto — use {primeiro_nome}, {data}, {hora}, {local}, {prazo}" style="flex:1">
+      <button onclick="novoModelo()">Salvar modelo</button>
+    </div>
+  </div>
+
+  <div class="painel ${abaAtiva===6?"ativo":""}" data-p="6">
     <p class="meio-sub">Clique para atribuir/retirar — vale para todos os casos ativos do cliente.</p>
     ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${equipe.includes(co.id)?"on":""}" data-eq="${co.id}">
       <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`).join("")}
@@ -794,6 +995,66 @@ async function novoPgto(){
   const [novo]=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify(linha)});
   D.pagamentos.push(novo); aviso("Lançado 💰"); abrirFicha(clienteAberto);
+}
+function lembreteDoEvento(evId){
+  const e=D.eventos.find(x=>x.id===evId); if(!e) return null;
+  const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
+  const ctx = e.tipo.toLowerCase().includes("aud") ? "audiencia" : "pericia";
+  const m = modeloPor(ctx) || D.modelos[0];
+  return {texto: preencher(m.texto, c, e, null), cli: c};
+}
+async function copiarLembrete(evId){
+  const l=lembreteDoEvento(evId);
+  if(l) await copiar(l.texto, "Lembrete copiado — cole no WhatsApp 💬");
+}
+function zapLembrete(evId){
+  const l=lembreteDoEvento(evId);
+  if(l&&l.cli.telefone)
+    window.open("https://wa.me/55"+l.cli.telefone.replace(/\D/g,"")+"?text="+encodeURIComponent(l.texto),"_blank");
+}
+async function marcarExigencia(casoId){
+  const desc=prompt("O que o INSS exigiu? (aparece no aviso e na mensagem ao cliente)")||"";
+  const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+30);   // prazo legal
+  const prazo=d.toLocaleDateString("sv");
+  const k=D.casoPorId.get(casoId);
+  k.exigencia_prazo=prazo; k.exigencia_descricao=desc||null;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({exigencia_prazo:prazo, exigencia_descricao:k.exigencia_descricao})});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id,
+      texto:`Exigência do INSS registrada${desc?": "+desc:""}. Prazo para cumprimento: ${fmt(prazo)}.`})});
+  aviso("Exigência marcada — 30 dias no relógio ⚠"); abrirFicha(clienteAberto);
+}
+async function cumprirExigencia(casoId){
+  const k=D.casoPorId.get(casoId);
+  k.exigencia_prazo=null; k.exigencia_descricao=null;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({exigencia_prazo:null, exigencia_descricao:null})});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:"Exigência cumprida e protocolada no INSS."})});
+  aviso("Exigência cumprida ✔"); abrirFicha(clienteAberto);
+}
+async function copiarMsgExigencia(casoId){
+  const k=D.casoPorId.get(casoId), c=D.cliPorId.get(k.cliente_id);
+  const m=modeloPor("exigencia");
+  await copiar(preencher(m.texto, c, null, k.exigencia_prazo)+(k.exigencia_descricao||""),
+    "Mensagem de exigência copiada 💬");
+}
+function agendarAtendimento(cliId){
+  const c=D.cliPorId.get(cliId);
+  const data=document.getElementById("ag-data").value;
+  if(!data) return aviso("Escolha a data");
+  const cod=document.getElementById("ag-tipo").value;
+  window.open(gcal(`${cod} - ${c.nome}`, data, document.getElementById("ag-hora").value||"09:00",
+    60, `Atendimento${c.telefone?" · "+c.telefone:""}`, "Escritório"), "_blank");
+}
+async function novoModelo(){
+  const t=document.getElementById("nm-titulo").value.trim(),
+        x=document.getElementById("nm-texto").value.trim();
+  if(!t||!x) return aviso("Preencha título e texto");
+  const [m]=await api(`/rest/v1/modelos_mensagem`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({titulo:t, texto:x, contexto:document.getElementById("nm-ctx").value})});
+  D.modelos.push(m); aviso("Modelo salvo"); abrirFicha(clienteAberto);
 }
 async function copiar(texto, msg){
   try{ await navigator.clipboard.writeText(texto); }
