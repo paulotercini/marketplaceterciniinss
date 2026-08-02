@@ -44,6 +44,20 @@ def test_tarefa_concluida_vira_encerrado_preservando_origem():
     assert caso["origem_lista"] == "🌻 INSS"
 
 
+def test_checklist_vira_subtarefas_sem_dados_pessoais():
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191",
+          checklist=[{"texto": "Pedir PPP na empresa", "feito": False},
+                     {"texto": "Juntar laudo médico", "feito": True},
+                     {"texto": "Aniversário 12.03.1961", "feito": False},   # dado, não tarefa
+                     {"texto": "000.000.001-91", "feito": False}]),        # CPF, não tarefa
+    ]))
+    titulos = sorted(tf["titulo"] for tf in m["tarefas"])
+    assert titulos == ["Juntar laudo médico", "Pedir PPP na empresa"]
+    assert all(tf["caso_id"] for tf in m["tarefas"])
+    assert any(tf["concluida"] for tf in m["tarefas"])
+
+
 def test_lista_pessoal_vira_tarefa_particular():
     m = migrar.mapear(crm_json([t("Tarefas", "Renovar OAB", prazo="2026-09-01")]))
     assert m["casos"] == []

@@ -152,6 +152,9 @@ create unique index if not exists meu_dia_unico on meu_dia
 alter table casos add column if not exists exigencia_prazo date;
 alter table casos add column if not exists exigencia_descricao text;
 
+-- Urgente (🔥) convive com importante (⭐): urgente ordena primeiro em toda lista
+alter table casos add column if not exists urgente boolean not null default false;
+
 -- ── Modelos de mensagem (copiar e mandar ao cliente) ──────────────────────
 -- Espaços reservados preenchidos pelo app: {nome} {primeiro_nome} {data}
 -- {hora} {local} {prazo}
