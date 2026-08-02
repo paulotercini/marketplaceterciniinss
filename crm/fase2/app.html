@@ -120,8 +120,19 @@
   .campo .valor{font-weight:600;word-break:break-word;display:flex;gap:8px;align-items:center}
   .campo .valor a{color:var(--azul);text-decoration:none}
   .olho{border:none;background:none;cursor:pointer;font-size:13px}
-  .caso{border:1px solid var(--borda);border-radius:8px;padding:11px 14px;margin-bottom:8px}
+  .caso{border:1px solid var(--borda);border-radius:10px;padding:12px 14px;margin-bottom:10px;background:var(--branco)}
   .caso .cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .caso .rotulo-caso{font-size:11px;color:var(--cinza);text-transform:uppercase;letter-spacing:.05em}
+  .caso .titulo-caso{font-size:15px;font-weight:700}
+  .fases-trilha{display:flex;margin:10px 0 4px;font-size:11px;flex-wrap:wrap}
+  .fase-et{padding:4px 12px;background:var(--fundo);border:1px solid var(--borda);color:var(--cinza);white-space:nowrap}
+  .fase-et:first-child{border-radius:6px 0 0 6px}
+  .fase-et:last-child{border-radius:0 6px 6px 0}
+  .fase-et.feita{background:#eef7ee;color:var(--verde)}
+  .fase-et.atual{background:var(--azul);border-color:var(--azul);color:#fff;font-weight:700}
+  .lembrar-caixa{display:inline-flex;align-items:center;gap:6px;background:#fdf3e7;border:1px solid #f0d9b8;border-radius:8px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--laranja)}
+  .lembrar-caixa input{border:none;background:none;font:inherit;color:inherit}
+  .ult-and{font-size:12px;color:var(--cinza);margin-top:8px}
   .caso select,.caso input[type=date]{padding:3px 6px;border:1px solid var(--borda);border-radius:6px;font-size:12px;background:var(--branco)}
   .timeline{list-style:none}
   .timeline li{display:flex;gap:12px;padding:10px 12px;border-radius:8px;margin-bottom:4px;border-left:4px solid transparent}
@@ -1183,35 +1194,54 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="painel ${abaAtiva===1?"ativo":""}" data-p="1">
-    ${ks.map(k=>`<div class="caso">
-      <div class="cab"><strong>${esc(k.titulo)}</strong>
-        ${k.beneficio?`<span class="chip ben">${esc(k.beneficio)}</span>`:""}
-        ${k.nb?`<span class="chip neutro">NB ${esc(k.nb)}</span>`:""}
-        ${k.processo?`<span class="chip neutro">${esc(k.processo)}</span>`:""}</div>
-      <div class="form-linha" style="margin-top:8px">
-        <label style="font-size:12px;color:var(--cinza)">Fase:
-        <select data-fase="${k.id}">${Object.entries(NOME_FASE).map(([f,n])=>`<option value="${f}" ${k.fase===f?"selected":""}>${n}</option>`).join("")}</select></label>
-        <label style="font-size:12px;color:var(--cinza)" title="a data que vocês usavam como 'conclusão' no To Do — o dia de agir">Lembrar:
-        <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></label>
-        <label style="font-size:12px;color:var(--cinza)">Resultado:
-        <select data-resultado="${k.id}">
-          ${["","deferido","indeferido","acordo","desistencia"].map(r=>`<option value="${r}" ${((k.resultado||"")===r)?"selected":""}>${r||"—"}</option>`).join("")}
-        </select></label>
-        ${!k.exigencia_prazo?`<button class="btn-mini" onclick="marcarExigencia('${k.id}')">⚠ Marcar exigência (30 dias)</button>`:""}
-        ${docDe(k.beneficio)?`<button class="btn-mini" onclick="imprimirDocs('${k.id}')">🖨 Documentos p/ cliente</button>
-          <button class="btn-mini" onclick="editarDocs('${k.id}')" title="editar a lista deste benefício">✏</button>`:""}
-      </div>
-      <div id="doc-editor-${k.id}"></div>
-      ${k.exigencia_prazo?`<div class="exig">
-        <strong>⚠ Em exigência</strong>
-        até <input type="date" value="${k.exigencia_prazo}" data-exig-data="${k.id}">
-        (${diasAte(k.exigencia_prazo)<0?"VENCIDA":"faltam "+diasAte(k.exigencia_prazo)+" dias"})
-        ${k.exigencia_descricao?`<span>· ${esc(k.exigencia_descricao)}</span>`:""}
-        <button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 mensagem ao cliente</button>
-        <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>
-      </div>`:""}
-      ${checklistCaso(k)}
-      </div>`).join("")}
+    ${(()=>{
+      const ativosK=ks.filter(k=>k.fase!=="encerrado"), encerrK=ks.filter(k=>k.fase==="encerrado");
+      const bloco=(k,idx,total)=>{
+        const ult=ands.filter(a=>a.caso_id===k.id)[0];
+        const uco=ult&&D.colPorId.get(ult.autor_id);
+        return `<div class="caso">
+        <div class="rotulo-caso">Caso ${idx+1} de ${total} · veio da lista ${esc(k.origem_lista||"—")} do To Do</div>
+        <div class="cab" style="margin-top:2px">
+          <span class="titulo-caso">${esc(tituloCaso(k))}</span>
+          ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?" style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
+            <button class="btn-mini" onclick="salvarBeneficio('${k.id}')">definir</button>`:""}
+          ${k.nb?`<span class="chip neutro">NB ${esc(k.nb)}</span>`:""}
+          ${k.processo?`<span class="chip neutro">proc. ${esc(k.processo)}</span>`:""}
+          ${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}
+        </div>
+        ${trilhaCaso(k)}
+        <div class="form-linha" style="align-items:center">
+          <span class="lembrar-caixa" title="a data de agir — a 'conclusão' que vocês usavam no To Do">🗓 Lembrar em
+            <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></span>
+          <label style="font-size:12px;color:var(--cinza)">Fase:
+          <select data-fase="${k.id}">${Object.entries(NOME_FASE).map(([f,n])=>`<option value="${f}" ${k.fase===f?"selected":""}>${n}</option>`).join("")}</select></label>
+          <label style="font-size:12px;color:var(--cinza)">Resultado:
+          <select data-resultado="${k.id}">
+            ${["","deferido","indeferido","acordo","desistencia"].map(r=>`<option value="${r}" ${((k.resultado||"")===r)?"selected":""}>${r||"—"}</option>`).join("")}
+          </select></label>
+          ${!k.exigencia_prazo&&k.fase!=="encerrado"?`<button class="btn-mini" onclick="marcarExigencia('${k.id}')">⚠ exigência (30d)</button>`:""}
+          ${docDe(k.beneficio)?`<button class="btn-mini" onclick="imprimirDocs('${k.id}')">🖨 documentos</button>
+            <button class="btn-mini" onclick="editarDocs('${k.id}')" title="editar a lista deste benefício">✏</button>`:""}
+        </div>
+        <div id="doc-editor-${k.id}"></div>
+        ${k.exigencia_prazo?`<div class="exig">
+          <strong>⚠ Em exigência</strong>
+          até <input type="date" value="${k.exigencia_prazo}" data-exig-data="${k.id}">
+          (${diasAte(k.exigencia_prazo)<0?"VENCIDA":"faltam "+diasAte(k.exigencia_prazo)+" dias"})
+          ${k.exigencia_descricao?`<span>· ${esc(k.exigencia_descricao)}</span>`:""}
+          <button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 mensagem ao cliente</button>
+          <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>
+        </div>`:""}
+        ${ult?`<div class="ult-and">Último andamento: ${fmt(ult.criado_em.slice(0,10))}${uco?" ("+esc(uco.nome)+")":""} — ${esc(ult.texto.slice(0,110))}${ult.texto.length>110?"…":""}</div>`:""}
+        ${checklistCaso(k)}
+        </div>`;
+      };
+      return ativosK.map((k,i)=>bloco(k,i,ativosK.length)).join("")
+        + (ativosK.length?"":"<p class='meio-sub'>Nenhum caso em andamento.</p>")
+        + (encerrK.length?`<details style="margin-top:10px"><summary style="cursor:pointer;color:var(--cinza)">✔ Casos encerrados (${encerrK.length})</summary>
+            ${encerrK.map((k,i)=>bloco(k,i,encerrK.length)).join("")}</details>`:"");
+    })()}
+    <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
     <p style="font-size:12px;color:var(--cinza)">Casos novos continuam nascendo no To Do durante a Fase 2 (escrita dupla) — a importação os traz para cá.</p>
   </div>
 
@@ -1234,7 +1264,7 @@ async function abrirFicha(cliId){
       </div>`).join("")}
     <div class="form-linha">
       <select id="ne-tipo"><option>Perícia</option><option>Audiência</option><option>Avaliação social</option></select>
-      <select id="ne-caso">${ks.map(k=>`<option value="${k.id}">${esc(k.titulo.slice(0,40))}</option>`).join("")}</select>
+      <select id="ne-caso">${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>
       <input type="date" id="ne-data"><input type="time" id="ne-hora" value="09:00">
       <input id="ne-local" placeholder="local"><button onclick="novoEvento()">Agendar</button>
     </div>
@@ -1247,7 +1277,7 @@ async function abrirFicha(cliId){
       ${p.status==="aberto"?`<button class="olho" title="marcar recebido" data-recebe="${p.id}">✔</button>`:""}</div>`).join("")
       ||"<p class='meio-sub'>Nenhum lançamento — o financeiro do caso vive aqui (a antiga lista 💵 Pagamentos).</p>"}
     <div class="form-linha">
-      <select id="np-caso">${ks.map(k=>`<option value="${k.id}">${esc(k.titulo.slice(0,40))}</option>`).join("")}</select>
+      <select id="np-caso">${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>
       <input id="np-desc" placeholder="descrição (RPV, honorários…)">
       <input id="np-valor" type="number" step="0.01" placeholder="R$">
       <input id="np-venc" type="date"><button onclick="novoPgto()">Lançar</button>
@@ -1290,7 +1320,7 @@ async function abrirFicha(cliId){
     <div class="dica">✓ Data e autor (${esc(eu.nome)}) entram sozinhos — e o texto é replicado no To Do</div>
     <div class="linha">
       <span class="avatar" style="background:${eu.cor}">${esc(eu.inicial)}</span>
-      ${ks.length>1?`<select id="and-caso">${ks.map(k=>`<option value="${k.id}">${esc((NOME_FASE[k.fase]||"")+" · "+k.titulo.slice(0,34))}</option>`).join("")}</select>`:""}
+      ${ks.length>1?`<select id="and-caso">${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>`:""}
       <input id="and-texto" placeholder="Escreva o andamento…">
       <button onclick="novoAndamento('${ks.length===1?ks[0].id:""}')">Registrar</button>
     </div>
@@ -1351,6 +1381,28 @@ async function abrirFicha(cliId){
     abrirFicha(clienteAberto);
   });
   ligarChecklistFicha();
+}
+
+// identidade didática do caso: "o que é" (benefício) + "onde está" (fase)
+function tituloCaso(k){
+  return k.beneficio ? k.beneficio : "Benefício não definido";
+}
+const TRILHA=["escritorio","inss","conselho","judicial","pagamento"];
+function trilhaCaso(k){
+  if(k.fase==="encerrado")
+    return `<div class="fases-trilha"><span class="fase-et feita">✔ Encerrado${k.resultado?" — "+esc(k.resultado):""}</span></div>`;
+  if(!TRILHA.includes(k.fase))
+    return `<div class="fases-trilha"><span class="fase-et atual">${esc(NOME_FASE[k.fase]||k.fase)}</span></div>`;
+  const i=TRILHA.indexOf(k.fase);
+  return `<div class="fases-trilha">`+TRILHA.map((f,j)=>
+    `<span class="fase-et ${j<i?"feita":""} ${j===i?"atual":""}">${j<i?"✔ ":""}${NOME_FASE[f]}</span>`).join("")+`</div>`;
+}
+async function salvarBeneficio(casoId){
+  const v=document.getElementById("ben-"+casoId).value.trim()||null;
+  const k=D.casoPorId.get(casoId); k.beneficio=v;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({beneficio:v})});
+  aviso("Benefício do caso definido ✔"); abaAtiva=1; abrirFicha(clienteAberto);
 }
 
 // checklist do caso (o "0 de 4" do To Do)
