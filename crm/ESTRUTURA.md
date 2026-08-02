@@ -123,6 +123,23 @@ Testes do parser: `python3 -m pytest tests/test_crm_sync.py -q`.
   médico vira sugestão de andamento na visão 🤖). Conector depende de saber
   qual plataforma de chat o escritório usa.
 
+## Decisões de ago/2026 (rodada Astrea/Projuris/ADVBOX)
+
+- **Publicações/intimações automáticas (DJEN): NÃO importar.** O escritório
+  insere os andamentos manualmente ANTES da publicação; importar geraria
+  eco/conflito. Ideia anotada para o futuro, só sob pedido: modo
+  "conferência silenciosa" (avisar apenas quando houver publicação SEM
+  andamento correspondente).
+- **Checklist-modelo por benefício: implementado.** Caso novo nasce com o
+  passo a passo do benefício (8 modelos seed, editáveis); botão "aplicar"
+  nos casos existentes.
+- **Modelos de documentos: implementado.** Visão 📄 Modelos (4 seeds:
+  procuração, contrato, hipossuficiência, autodeclaração rural) com
+  {placeholders}; na ficha, saem preenchidos e prontos para imprimir.
+  Colar os textos-ouro do site interno nos modelos.
+- **Painel de produção/Taskscore: adiado** a pedido.
+- **Portal com envio de documentos: adiado** (junto do conector de chat).
+
 ## Fora do protótipo, decidir depois
 
 - Nível de integração WhatsApp (link direto grátis × API oficial paga).
