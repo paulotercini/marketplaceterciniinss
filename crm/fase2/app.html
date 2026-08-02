@@ -82,8 +82,11 @@
   .cartao .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;font-size:12px;color:var(--cinza);align-items:center}
   .chip{border-radius:10px;padding:1px 8px;font-size:11px;font-weight:600;white-space:nowrap}
   .chip.ben{background:#e8f1fb;color:var(--azul-escuro)}
+  /* semáforo de prazos: vencida vermelho, vence hoje amarelo, no prazo verde */
   .chip.prazo{background:#fdf3e7;color:var(--laranja)}
-  .chip.prazo.venc{background:#fbeaea;color:var(--vermelho)}
+  .chip.prazo.venc{background:#fbeaea;color:var(--vermelho);font-weight:700}
+  .chip.prazo.hoje{background:#fff6d6;color:#8a6d00;font-weight:700}
+  .chip.prazo.ok{background:#e9f5ef;color:#1e6f50}
   .chip.fase{background:#eef7ee;color:var(--verde)}
   .chip.per{background:#efe6f7;color:var(--roxo)}
   .chip.neutro{background:var(--fundo);color:var(--cinza);font-weight:400}
@@ -281,7 +284,7 @@ const moeda = v => v==null ? "—" : Number(v).toLocaleString("pt-BR",{style:"cu
 let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
-let visao = "meudia", filtroColab = null, buscaTxt = "", clienteAberto = null, abaAtiva = 2;
+let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2;
 
 // som de retorno, como no To Do (gerado na hora — sem arquivo de áudio).
 // "plim" duplo ao concluir; tique curto nos avisos. 🔔 na lateral silencia.
@@ -399,8 +402,10 @@ async function iniciar(){
   document.getElementById("u-nome").textContent = eu.nome;
   const uav = document.getElementById("u-avatar");
   uav.textContent = eu.inicial; uav.style.background = eu.cor;
-  filtroColab = eu.id;
   await carregar();
+  // Meu Dia abre filtrado em você só se você tiver casos atribuídos;
+  // sem atribuições ainda, abre em "Todos" — senão a aba parece vazia/quebrada
+  filtroColab = [...D.atrDoCaso.values()].some(v=>v.includes(eu.id)) ? eu.id : null;
   montarSidebar();
   render();
 }
@@ -485,6 +490,12 @@ function aplicarTema(){
 }
 
 function ativos(){ return D.casos.filter(k=>k.fase!=="encerrado"); }
+// chip de prazo estilo semáforo 🚦
+function chipPrazo(prazo){
+  if(!prazo) return "";
+  const cls = prazo<hoje() ? "venc" : prazo===hoje() ? "hoje" : "ok";
+  return `<span class="chip prazo ${cls}">⏰ ${fmt(prazo)}</span>`;
+}
 function diasAte(iso){ return Math.ceil((new Date(iso+"T12:00:00")-new Date(hoje()+"T12:00:00"))/864e5); }
 function chipExig(k){
   if(!k.exigencia_prazo) return "";
@@ -580,7 +591,7 @@ function cartaoCliente(cli, casosMostrar){
         ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
         ${[...new Set(ks.map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
         ${ks.map(chipExig).join("")}
-        ${prazoMin?`<span class="chip prazo ${prazoMin<hoje()?"venc":""}">⏰ ${fmt(prazoMin)}</span>`:""}
+        ${chipPrazo(prazoMin)}
         ${evFut?`<span class="chip per">🩺 ${esc(evFut.tipo)} ${fmt(evFut.data_hora.slice(0,10))}</span>`:""}
         ${ks.length>1?`<span class="chip neutro">${ks.length} casos</span>`:""}
       </div>
@@ -699,26 +710,33 @@ function render(){
 function renderMeuDia(){
   document.getElementById("titulo-lista").textContent="☀️ Meu Dia";
   document.getElementById("sub-lista").textContent=
-    "Itens adicionados ao dia + prazos de hoje e atrasados. Filtre por colaborador:";
+    "Itens adicionados ao dia + o que vence hoje. 🚦 vermelho vencida · amarelo vence hoje · verde no prazo.";
+  const doDia = D.meudia.filter(m=>!filtroColab || m.colaborador_id===filtroColab);
+  const casosDia = doDia.filter(m=>m.caso_id).map(m=>D.casoPorId.get(m.caso_id)).filter(Boolean);
+  const doColab = k => !filtroColab || (D.atrDoCaso.get(k.id)||[]).includes(filtroColab);
+  const hojeK = ativos().filter(k=>k.prazo===hoje()).filter(doColab).filter(k=>!casosDia.includes(k));
+  const vencK = ativos().filter(k=>k.prazo && k.prazo<hoje()).filter(doColab).filter(k=>!casosDia.includes(k));
+  const tCol = t => !filtroColab || t.particular_de===filtroColab || !t.particular_de;
+  const tHoje = D.tarefas.filter(t=>!t.concluida && t.prazo===hoje()).filter(tCol);
+  const tVenc = D.tarefas.filter(t=>!t.concluida && t.prazo && t.prazo<hoje()).filter(tCol);
+  const nVenc = vencK.length + tVenc.length;
   const chips = [`<button class="fchip ${filtroColab===null?"on":""}" data-f="">Todos</button>`]
     .concat(D.colaboradores.filter(c=>c.ativo).map(c=>
       `<button class="fchip ${filtroColab===c.id?"on":""}" data-f="${c.id}">`+
-      `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</button>`));
-  const doDia = D.meudia.filter(m=>!filtroColab || m.colaborador_id===filtroColab);
-  const casosDia = doDia.filter(m=>m.caso_id).map(m=>D.casoPorId.get(m.caso_id)).filter(Boolean);
-  const atrasoOuHoje = ativos().filter(k=>k.prazo && k.prazo<=hoje())
-    .filter(k=>!filtroColab || (D.atrDoCaso.get(k.id)||[]).includes(filtroColab))
-    .filter(k=>!casosDia.includes(k));
-  const tDia = D.tarefas.filter(t=>!t.concluida && t.prazo && t.prazo<=hoje())
-    .filter(t=>!filtroColab || t.particular_de===filtroColab || !t.particular_de);
+      `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</button>`))
+    .concat([`<button class="fchip ${filtroVencidas?"on":""}" id="chip-vencidas" style="margin-left:auto">🔴 mostrar vencidas (${nVenc})</button>`]);
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chips.join("")}</div>`
-    + `<h3 class="secao">Adicionados ao dia (${casosDia.length})</h3>`
+    + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — use o ☀️ nos cartões.</p>")
-    + `<h3 class="secao">Prazos de hoje e atrasados (${atrasoOuHoje.length+tDia.length})</h3>`
-    + grupoClientes(atrasoOuHoje).map(([c,ks])=>cartaoCliente(c,ks)).join("")
-    + tDia.map(t=>cartaoTarefa(t)).join("");
-  document.querySelectorAll(".fchip").forEach(b=>b.onclick=()=>{ filtroColab=b.dataset.f||null; render(); });
+    + `<h3 class="secao">🟡 Vencem hoje (${hojeK.length+tHoje.length})</h3>`
+    + (grupoClientes(hojeK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+       + tHoje.map(t=>cartaoTarefa(t)).join("") || "<p class='meio-sub'>Nada vence hoje. 🎉</p>")
+    + (filtroVencidas ? `<h3 class="secao">🔴 Vencidas (${nVenc})</h3>`
+       + (grupoClientes(vencK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+          + tVenc.map(t=>cartaoTarefa(t)).join("") || "<p class='meio-sub'>Nenhuma vencida. 👏</p>") : "");
+  document.querySelectorAll(".fchip[data-f]").forEach(b=>b.onclick=()=>{ filtroColab=b.dataset.f||null; render(); });
+  document.getElementById("chip-vencidas").onclick=()=>{ filtroVencidas=!filtroVencidas; render(); };
   ligarCartoes(); ligarTarefas();
 }
 
@@ -760,7 +778,7 @@ function cartaoTarefa(t){
     <div class="info"><div class="nome">${esc(t.titulo)}</div>
       <div class="meta">
         ${t.particular_de?`<span class="chip per">🔒 particular</span>`:""}
-        ${t.prazo?`<span class="chip prazo ${t.prazo<hoje()&&!t.concluida?"venc":""}">⏰ ${fmt(t.prazo)}</span>`:""}
+        ${t.prazo?(t.concluida?`<span class="chip prazo">⏰ ${fmt(t.prazo)}</span>`:chipPrazo(t.prazo)):""}
       </div></div></div>`;
 }
 function ligarTarefas(){
@@ -982,7 +1000,7 @@ function kcardCaso(k){
   return `<div class="kcard" draggable="true" data-caso="${k.id}" data-cli="${c?c.id:""}">
     <div class="nome">${esc(c?c.nome:k.titulo)}</div>
     <div class="meta">${k.urgente?`<span class="chip urg">🔥</span>`:""}${k.beneficio?`<span class="chip ben">${esc(k.beneficio)}</span>`:""}
-      ${chipExig(k)}${k.prazo?`<span class="chip prazo ${k.prazo<hoje()?"venc":""}">⏰ ${fmt(k.prazo)}</span>`:""}</div></div>`;
+      ${chipExig(k)}${chipPrazo(k.prazo)}</div></div>`;
 }
 function renderQuadro(){
   document.getElementById("titulo-lista").textContent="📌 Quadro";
