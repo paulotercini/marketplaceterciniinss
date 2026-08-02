@@ -51,6 +51,10 @@
   .cc-item.enc{opacity:.55}
   .cc-item .cc-ben{font-weight:700;font-size:12.5px;line-height:1.25}
   .cc-item .cc-fase{color:var(--cinza);font-size:11px;margin-top:2px}
+  .cc-item.novo{border-style:dashed;color:var(--azul);background:none}
+  .cc-equipe{display:flex;flex-wrap:wrap;gap:5px;padding:2px 6px}
+  .mini-eq{cursor:pointer;opacity:.3;filter:grayscale(.6)}
+  .mini-eq.on{opacity:1;filter:none}
   .det-principal{flex:1;display:flex;flex-direction:column;min-width:0}
   .usuario{display:flex;align-items:center;gap:10px;padding:2px 16px 10px}
   .usuario .sair{margin-left:auto;border:none;background:none;color:var(--cinza);cursor:pointer;font-size:12px}
@@ -739,7 +743,7 @@ function ligarCartoes(){
     aviso(k.urgente?"🔥 Marcado como URGENTE":"Urgência removida"); render();
   });
   document.querySelectorAll(".avatares[data-equipe]").forEach(a=>a.onclick=e=>{
-    e.stopPropagation(); abaAtiva=6; abrirFicha(a.dataset.equipe);   // direto na aba Equipe
+    e.stopPropagation(); abrirFicha(a.dataset.equipe);   // a equipe fica no menu vertical da ficha
   });
 }
 
@@ -1325,7 +1329,7 @@ function renderDash(){
 async function abrirFicha(cliId){
   const c = D.cliPorId.get(cliId);
   if(!c) return aviso("Cliente ainda carregando — tente de novo em instantes");
-  if(clienteAberto !== cliId) casoSel = null;   // trocou de cliente: volta a "todos"
+  if(clienteAberto !== cliId){ casoSel = "__auto__"; abaAtiva = 2; }  // cliente novo: abre no 1º caso ativo
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
@@ -1340,18 +1344,33 @@ async function abrirFicha(cliId){
   const pagK = ks.filter(k=>k.fase==="pagamento");
   const equipe = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))];
 
-  if(casoSel && !ks.some(k=>k.id===casoSel)) casoSel=null;
+  if(casoSel && casoSel!=="__auto__" && !ks.some(k=>k.id===casoSel)) casoSel=null;
+  if(casoSel==="__auto__"){                       // cliente recém-aberto: já cai no 1º caso ativo
+    const ka=ks.find(k=>k.fase!=="encerrado");
+    casoSel = ka ? ka.id : null;
+  }
   const andsVis = casoSel ? ands.filter(a=>a.caso_id===casoSel) : ands;
-  const abas=["📇 Dados","⚖️ Casos","📝 Andamentos","🩺 Perícias & Aud.","💰 Pagamentos","💬 Mensagens","👥 Equipe"];
   document.getElementById("detalhe").innerHTML=`
   <div class="col-casos">
-    <div class="cc-tit">Casos</div>
-    <div class="cc-item ${!casoSel?"sel":""}" data-cc="">
-      <div class="cc-ben">📚 Todos os casos</div>
-      <div class="cc-fase">andamentos juntos</div></div>
-    ${ks.map(k=>`<div class="cc-item ${casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-cc="${k.id}">
+    <div class="cc-item ${abaAtiva===0?"sel":""}" data-vv="0">
+      <div class="cc-ben">📇 Dados</div>
+      <div class="cc-fase">CPF, senha, telefone, vínculos</div></div>
+    <div class="cc-tit" style="margin-top:8px">Casos</div>
+    ${ks.map(k=>`<div class="cc-item ${abaAtiva===2&&casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-cc="${k.id}">
       <div class="cc-ben">${k.urgente?"🔥 ":""}${esc(tituloCaso(k))}</div>
-      <div class="cc-fase">${esc(NOME_FASE[k.fase]||"")}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}</div></div>`).join("")}
+      <div class="cc-fase">${esc(NOME_FASE[k.fase]||"")}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠":""}</div></div>`).join("")}
+    ${ks.length>1?`<div class="cc-item ${abaAtiva===2&&!casoSel?"sel":""}" data-cc="">
+      <div class="cc-ben">📚 Todos os casos</div>
+      <div class="cc-fase">andamentos juntos</div></div>`:""}
+    <div class="cc-item novo" data-vv="7"><div class="cc-ben">＋ Novo Caso</div></div>
+    <div class="cc-tit" style="margin-top:8px">Mais</div>
+    <div class="cc-item ${abaAtiva===3?"sel":""}" data-vv="3"><div class="cc-ben">🩺 Perícias & Aud.${evs.length?` (${evs.length})`:""}</div></div>
+    <div class="cc-item ${abaAtiva===4?"sel":""}" data-vv="4"><div class="cc-ben">💰 Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</div></div>
+    <div class="cc-item ${abaAtiva===5?"sel":""}" data-vv="5"><div class="cc-ben">💬 Mensagens</div></div>
+    <div class="cc-tit" style="margin-top:8px" title="clique para atribuir/retirar — vale para os casos ativos">Equipe</div>
+    <div class="cc-equipe">${D.colaboradores.filter(x=>x.ativo).map(co=>
+      `<span class="mini-eq ${equipe.includes(co.id)?"on":""}" data-eq="${co.id}" title="${esc(co.nome)} — clique para atribuir/retirar">
+        <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span></span>`).join("")}</div>
   </div>
   <div class="det-principal">
   <div class="det-rolagem">
@@ -1362,11 +1381,7 @@ async function abrirFicha(cliId){
       <span class="chip neutro">${fmtCpf(c.cpf)}${c.cpf?` <button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:""}</span>
       ${(cr=>cr?`<span class="chip neutro">🔑 Meu INSS <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button></span>`:"")(creds.find(x=>x.tipo==="meu_inss"))}
       ${[...new Set(ks.filter(k=>k.fase!=="encerrado").map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
-      <div class="avatares">${equipe.map(id=>{const co=D.colPorId.get(id);return co?`<span class="avatar mini" style="background:${co.cor}" title="${esc(co.nome)}">${esc(co.inicial)}</span>`:"";}).join("")}</div>
     </div>
-    <div class="abas">${abas.map((a,i)=>`<button class="aba ${i===abaAtiva?"ativa":""}" data-i="${i}">${a}${
-      a.includes("Andamentos")?` (${andsVis.length})`:a.includes("Casos")?` (${ks.length})`:
-      a.includes("Perícias")&&evs.length?` (${evs.length})`:a.includes("Pagamentos")&&(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>`).join("")}</div>
   </div>
 
   <div class="painel ${abaAtiva===0?"ativo":""}" data-p="0">
@@ -1453,14 +1468,13 @@ async function abrirFicha(cliId){
     })()}
   </div>
 
-  <div class="painel ${abaAtiva===1?"ativo":""}" data-p="1">
+  <div class="painel ${abaAtiva===2?"ativo":""}" data-p="2">
     ${(()=>{
-      const ativosK=ks.filter(k=>k.fase!=="encerrado"&&k.fase!=="pagamento"), encerrK=ks.filter(k=>k.fase==="encerrado");
-      const bloco=(k,idx,total)=>{
-        const ult=ands.filter(a=>a.caso_id===k.id)[0];
-        const uco=ult&&D.colPorId.get(ult.autor_id);
-        return `<div class="caso">
-        <div class="rotulo-caso">Caso ${idx+1} de ${total} · lista ${esc(listaDe(k))} do To Do</div>
+      const k = casoSel && D.casoPorId.get(casoSel);
+      if(!k) return ks.length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso no menu ao lado para ver só o dele.</p>`:"";
+      // cabeçalho do caso, estilo To Do: os dados importantes em cima, andamentos embaixo
+      return `<div class="caso" style="margin-bottom:12px">
+        <div class="rotulo-caso">lista ${esc(listaDe(k))} do To Do</div>
         <div class="cab" style="margin-top:2px">
           <span class="titulo-caso">${esc(tituloCaso(k))}</span>
           ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?" style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
@@ -1470,6 +1484,9 @@ async function abrirFicha(cliId){
           ${k.parceria?`<span class="chip ben">🤝 ${esc(k.parceria)}</span>`:""}
           ${(k.protocolos||[]).slice(-3).map(pr=>`<span class="chip neutro" style="cursor:pointer" title="copiar protocolo" onclick="copiar('${pr}','Protocolo copiado')">📄 ${pr}</span>`).join("")}
           ${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}
+          ${chipExig(k)}
+          ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 msg ao cliente</button>
+            <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
         </div>
         ${trilhaCaso(k)}
         <div class="form-linha" style="align-items:center">
@@ -1481,38 +1498,14 @@ async function abrirFicha(cliId){
           <select data-resultado="${k.id}">
             ${["","deferido","indeferido","acordo","desistencia"].map(r=>`<option value="${r}" ${((k.resultado||"")===r)?"selected":""}>${r||"—"}</option>`).join("")}
           </select></label>
-          ${!k.exigencia_prazo&&k.fase!=="encerrado"?`<button class="btn-mini" onclick="marcarExigencia('${k.id}')">⚠ exigência (30d)</button>`:""}
           ${docDe(k.beneficio)?`<button class="btn-mini" onclick="imprimirDocs('${k.id}')">🖨 documentos</button>
             <button class="btn-mini" onclick="editarDocs('${k.id}')" title="editar a lista deste benefício">✏</button>`:""}
         </div>
         <div id="doc-editor-${k.id}"></div>
-        ${k.exigencia_prazo?`<div class="exig">
-          <strong>⚠ Em exigência</strong>
-          até <input type="date" value="${k.exigencia_prazo}" data-exig-data="${k.id}">
-          (${diasAte(k.exigencia_prazo)<0?"VENCIDA":"faltam "+diasAte(k.exigencia_prazo)+" dias"})
-          ${k.exigencia_descricao?`<span>· ${esc(k.exigencia_descricao)}</span>`:""}
-          <button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 mensagem ao cliente</button>
-          <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>
-        </div>`:""}
-        ${ult?`<div class="ult-and">Último andamento: ${fmt(ult.criado_em.slice(0,10))}${uco?" ("+esc(uco.nome)+")":""} — ${esc(ult.texto.slice(0,110))}${ult.texto.length>110?"…":""}</div>`:""}
         ${checklistCaso(k)}
-        </div>`;
-      };
-      return ativosK.map((k,i)=>bloco(k,i,ativosK.length)).join("")
-        + (ativosK.length||pagK.length?"":"<p class='meio-sub'>Nenhum caso em andamento.</p>")
-        + (pagK.length?`<div class="caso" style="border-left:3px solid var(--verde);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-            <span>💰 ${pagK.length===1?"1 caso já venceu as fases e está em <strong>recebimento</strong>":pagK.length+" casos já venceram as fases e estão em <strong>recebimento</strong>"}</span>
-            <button class="btn-mini" onclick="irAba(4)">ver na aba Pagamentos →</button></div>`:"")
-        + (encerrK.length?`<details style="margin-top:10px"><summary style="cursor:pointer;color:var(--cinza)">✔ Casos encerrados (${encerrK.length})</summary>
-            ${encerrK.map((k,i)=>bloco(k,i,encerrK.length)).join("")}</details>`:"");
+        </div>
+        <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
     })()}
-    <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
-    <p style="font-size:12px;color:var(--cinza)">Casos novos continuam nascendo no To Do durante a Fase 2 (escrita dupla) — a importação os traz para cá.</p>
-  </div>
-
-  <div class="painel ${abaAtiva===2?"ativo":""}" data-p="2">
-    ${casoSel?`<p class="meio-sub">Andamentos de: <strong>${esc(tituloCaso(D.casoPorId.get(casoSel)||{}))}</strong> — clique em "📚 Todos os casos" na coluna ao lado para ver tudo junto.</p>`:
-      ks.length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso na coluna ao lado para ver só o dele.</p>`:""}
     <ul class="timeline">${andsVis.map(a=>{const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
       return `<li style="border-left-color:${cor};background:color-mix(in srgb, ${cor} 7%, white)">
       <span class="quando"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmt(a.criado_em.slice(0,10))}<br>${esc(co?co.nome:"—")}</span>
@@ -1615,10 +1608,17 @@ async function abrirFicha(cliId){
     </div>
   </div>
 
-  <div class="painel ${abaAtiva===6?"ativo":""}" data-p="6">
-    <p class="meio-sub">Clique para atribuir/retirar — vale para todos os casos ativos do cliente.</p>
-    ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${equipe.includes(co.id)?"on":""}" data-eq="${co.id}">
-      <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`).join("")}
+  <div class="painel ${abaAtiva===7?"ativo":""}" data-p="7">
+    <h3 style="margin-bottom:10px">＋ Novo caso para ${esc(c.nome)}</h3>
+    <div class="form-linha">
+      <input id="nk-ben" list="lista-beneficios-nk" placeholder="benefício/serviço pleiteado" style="flex:1;min-width:220px">
+      <datalist id="lista-beneficios-nk">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
+      <select id="nk-fase">${["escritorio","inss","conselho","judicial","aposentadoria_futura","outro"]
+        .map(f=>`<option value="${f}">${NOME_FASE[f]}</option>`).join("")}</select>
+      <input type="date" id="nk-prazo" title="Lembrar em (opcional)">
+      <button onclick="novoCaso('${c.id}')">Criar caso</button>
+    </div>
+    <p class="meio-sub">O caso nasce aqui e a sincronização cria a tarefa correspondente no To Do, na lista da fase.</p>
   </div>
   </div>
 
@@ -1630,10 +1630,22 @@ async function abrirFicha(cliId){
         <button onclick="novaFrase()">Salvar</button>
       </div>
     </div>
+    <div id="preenche-box" style="display:none;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-bottom:6px;padding:10px"></div>
+    <div id="exig-box" style="display:none;border:1px solid #f0c36d;border-radius:8px;background:#fffaf0;margin-bottom:6px;padding:10px">
+      <strong style="font-size:13px">⚠ Registrar exigência do INSS</strong>
+      <div class="form-linha" style="margin-top:6px">
+        <input id="ex-desc" placeholder="o que o INSS exigiu?" style="flex:1;min-width:200px">
+        <label style="font-size:12px;color:var(--cinza)">prazo final:
+          <input type="date" id="ex-prazo"></label>
+        <button onclick="novaExigencia()">Registrar exigência</button>
+      </div>
+      <p style="font-size:11px;color:var(--cinza);margin-top:4px">Vira andamento (replicado no To Do) e liga a contagem regressiva na ficha do caso.</p>
+    </div>
     <div class="dica">✓ Data e autor (${esc(eu.nome)}) entram sozinhos — e o texto é replicado no To Do</div>
     <div class="linha">
       <span class="avatar" style="background:${eu.cor}">${esc(eu.inicial)}</span>
       <button class="btn-mini" title="frases prontas — os padrões que vocês sempre escrevem" onclick="toggleFrases()">⚡</button>
+      <button class="btn-mini" title="registrar exigência do INSS (com prazo final)" onclick="toggleExig()">⚠</button>
       ${ks.length>1?`<select id="and-caso">${ks.map(k=>`<option value="${k.id}" ${casoSel===k.id?"selected":""}>${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>`:""}
       <input id="and-texto" placeholder="Escreva o andamento… (⚡ = frases prontas)">
       <button onclick="novoAndamento('${ks.length===1?ks[0].id:""}')">Registrar</button>
@@ -1642,25 +1654,20 @@ async function abrirFicha(cliId){
   </div>`;
 
   document.querySelectorAll(".cc-item").forEach(el=>el.onclick=()=>{
-    casoSel = el.dataset.cc || null;
-    abaAtiva = 2;                       // escolher o caso mostra o andamento dele
+    if(el.dataset.vv!==undefined){ abaAtiva=+el.dataset.vv; }   // Dados/Perícias/Pagamentos/Mensagens/Novo Caso
+    else { casoSel = el.dataset.cc || null; abaAtiva = 2; }     // caso escolhido: dados + andamentos dele
     abrirFicha(clienteAberto);
-  });
-  document.querySelectorAll(".aba").forEach(b=>b.onclick=()=>{
-    abaAtiva=+b.dataset.i;
-    document.querySelectorAll(".aba").forEach(x=>x.classList.remove("ativa")); b.classList.add("ativa");
-    document.querySelectorAll(".painel").forEach(p=>p.classList.toggle("ativo",p.dataset.p===b.dataset.i));
   });
   document.getElementById("and-texto").onkeydown=e=>{ if(e.key==="Enter") document.querySelector(".escrever button[onclick^='novoAndamento']").click(); };
   document.querySelectorAll(".frase-it").forEach(el=>{
     el.onmouseenter=()=>el.style.background="var(--fundo)";
     el.onmouseleave=()=>el.style.background="";
     el.onclick=()=>{
+      const texto=(D.frases[+el.dataset.fi]||{}).texto||"";
+      document.getElementById("frases-box").style.display="none";
+      if(/__\/__\/____|__:__|____/.test(texto)) return montarPreenchimento(texto);
       const inp=document.getElementById("and-texto");
-      inp.value=(D.frases[+el.dataset.fi]||{}).texto||"";
-      toggleFrases(); inp.focus();
-      const i=inp.value.indexOf("__");
-      if(i>=0) inp.setSelectionRange(i, i+2);   // cursor já no primeiro espaço a completar
+      inp.value=texto; inp.focus();
     };
   });
   document.querySelectorAll("[data-fase]").forEach(s=>s.onchange=async()=>{
@@ -1727,7 +1734,7 @@ async function abrirFicha(cliId){
 }
 
 // muda a aba ativa da ficha por código (ex.: atalho "ver na aba Pagamentos")
-function irAba(i){ const b=document.querySelector(`.aba[data-i="${i}"]`); if(b) b.click(); }
+function irAba(i){ abaAtiva=i; if(clienteAberto) abrirFicha(clienteAberto); }
 
 // vínculos entre clientes (parentes/amigos — o antigo checklist do To Do)
 async function novoVinculo(cliId){
@@ -1768,7 +1775,7 @@ async function salvarBeneficio(casoId){
   const k=D.casoPorId.get(casoId); k.beneficio=v;
   await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({beneficio:v})});
-  aviso("Benefício do caso definido ✔"); abaAtiva=1; abrirFicha(clienteAberto);
+  aviso("Benefício do caso definido ✔"); abaAtiva=2; abrirFicha(clienteAberto);
 }
 
 // checklist do caso (o "0 de 4" do To Do)
@@ -1777,7 +1784,7 @@ function checklistCaso(k){
   const st=subtarefasDe(k.id), feitas=st.filter(t=>t.concluida).length;
   return `<div style="margin-top:10px">
     ${st.length?`<div class="meio-sub">Checklist — ${feitas} de ${st.length}</div>`:""}
-    ${!st.length&&cklDe(k.beneficio)?`<button class="btn-mini" onclick='aplicarChecklistCaso(D.casoPorId.get("${k.id}")).then(()=>{abaAtiva=1;abrirFicha(clienteAberto);})'>📋 Aplicar checklist do benefício</button>`:""}
+    ${!st.length&&cklDe(k.beneficio)?`<button class="btn-mini" onclick='aplicarChecklistCaso(D.casoPorId.get("${k.id}")).then(()=>{abaAtiva=2;abrirFicha(clienteAberto);})'>📋 Aplicar checklist do benefício</button>`:""}
     ${st.filter(t=>!t.concluida).map(t=>`<div class="cl"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span></div>`).join("")}
     ${feitas?`<details><summary style="cursor:pointer;color:var(--cinza);font-size:12px;padding:2px 0">✔ Concluídas (${feitas}) — clique na caixinha para desfazer</summary>
       ${st.filter(t=>t.concluida).map(t=>`<div class="cl feito"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span></div>`).join("")}</details>`:""}
@@ -1791,7 +1798,7 @@ async function novaSubtarefa(casoId){
   if(!inp.value.trim()) return;
   const [t]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({caso_id:casoId, titulo:inp.value.trim()})});
-  D.tarefas.push(t); abaAtiva=1; abrirFicha(clienteAberto);
+  D.tarefas.push(t); abaAtiva=2; abrirFicha(clienteAberto);
 }
 function ligarChecklistFicha(){
   document.querySelectorAll("[data-subt]").forEach(el=>el.onclick=async()=>{
@@ -1800,7 +1807,7 @@ function ligarChecklistFicha(){
     if(t.concluida) plim(); else aviso("Conclusão desfeita ↩", false);
     await api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({concluida:t.concluida, concluida_em:t.concluida?new Date().toISOString():null})});
-    abaAtiva=1; abrirFicha(clienteAberto);
+    abaAtiva=2; abrirFicha(clienteAberto);
   });
 }
 
@@ -1904,6 +1911,87 @@ async function novoAndamento(casoUnico){
 function toggleFrases(){
   const b=document.getElementById("frases-box");
   b.style.display = b.style.display==="none" ? "block" : "none";
+  document.getElementById("exig-box").style.display="none";
+  document.getElementById("preenche-box").style.display="none";
+}
+function toggleExig(){
+  const b=document.getElementById("exig-box");
+  b.style.display = b.style.display==="none" ? "block" : "none";
+  document.getElementById("frases-box").style.display="none";
+  document.getElementById("preenche-box").style.display="none";
+  if(b.style.display==="block"){
+    const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+30);   // prazo legal de 30 dias
+    document.getElementById("ex-prazo").value=d.toLocaleDateString("sv");
+    document.getElementById("ex-desc").focus();
+  }
+}
+async function novaExigencia(){
+  const sel=document.getElementById("and-caso");
+  const casoId = casoSel || (sel && sel.value) ||
+    ((D.casosDoCliente.get(clienteAberto)||[]).filter(k=>k.fase!=="encerrado")[0]||{}).id;
+  if(!casoId) return aviso("Cliente sem caso ativo");
+  const prazo=document.getElementById("ex-prazo").value;
+  if(!prazo) return aviso("Informe o prazo final da exigência");
+  const desc=document.getElementById("ex-desc").value.trim();
+  const k=D.casoPorId.get(casoId);
+  k.exigencia_prazo=prazo; k.exigencia_descricao=desc||null;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({exigencia_prazo:prazo, exigencia_descricao:k.exigencia_descricao})});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:casoId, autor_id:eu.id,
+      texto:`⚠ Exigência do INSS${desc?": "+desc:""}. Prazo final para cumprimento: ${fmt(prazo)}.`})});
+  aviso("Exigência registrada — contagem regressiva ligada ⚠");
+  montarSidebar(); abrirFicha(clienteAberto);
+}
+// preenchimento guiado das frases: __/__/____ vira campo de data, __:__ de
+// hora e ____ de texto — nada de apagar tracinhos na mão
+function montarPreenchimento(texto){
+  const box=document.getElementById("preenche-box");
+  const partes=texto.split(/(__\/__\/____|__:__|____)/);
+  let n=0;
+  box.innerHTML = `<strong style="font-size:13px">⚡ Complete a frase:</strong>
+    <div style="margin:8px 0;line-height:2.1">` + partes.map(p=>{
+      if(p==="__/__/____") return `<input type="date" class="pr-campo" data-t="data" id="pr-${n++}" style="padding:3px 6px;border:1px solid var(--borda);border-radius:6px">`;
+      if(p==="__:__")      return `<input type="time" class="pr-campo" data-t="hora" id="pr-${n++}" style="padding:3px 6px;border:1px solid var(--borda);border-radius:6px">`;
+      if(p==="____")       return `<input type="text" class="pr-campo" data-t="txt" id="pr-${n++}" placeholder="…" style="padding:3px 6px;border:1px solid var(--borda);border-radius:6px;width:150px">`;
+      return `<span data-fixo>${esc(p)}</span>`;
+    }).join("") + `</div>
+    <button onclick="inserirPreenchida()">➡ Inserir no andamento</button>
+    <button class="btn-mini" onclick="document.getElementById('preenche-box').style.display='none'">cancelar</button>`;
+  box.dataset.partes=JSON.stringify(partes);
+  box.style.display="block";
+  const primeiro=box.querySelector(".pr-campo"); if(primeiro) primeiro.focus();
+}
+function inserirPreenchida(){
+  const box=document.getElementById("preenche-box");
+  const partes=JSON.parse(box.dataset.partes);
+  const campos=[...box.querySelectorAll(".pr-campo")];
+  let i=0;
+  const texto=partes.map(p=>{
+    if(p==="__/__/____"||p==="__:__"||p==="____"){
+      const el=campos[i++]; const v=el.value;
+      if(!v) return p;                       // não preencheu: fica o tracinho mesmo
+      if(el.dataset.t==="data") return fmt(v).replace(/\./g,"/");
+      return v;
+    }
+    return p;
+  }).join("");
+  const inp=document.getElementById("and-texto");
+  inp.value=texto; box.style.display="none"; inp.focus();
+}
+async function novoCaso(cliId){
+  const ben=document.getElementById("nk-ben").value.trim()||null;
+  const fase=document.getElementById("nk-fase").value;
+  const prazo=document.getElementById("nk-prazo").value||null;
+  const c=D.cliPorId.get(cliId);
+  const [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({cliente_id:cliId, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
+      beneficio:ben, fase, prazo, origem_lista:(LISTAS_MOVER.find(([,f])=>f===fase)||["🙋 Escritório"])[0]})});
+  D.casos.push(k); D.casoPorId.set(k.id,k);
+  if(!D.casosDoCliente.has(cliId)) D.casosDoCliente.set(cliId,[]);
+  D.casosDoCliente.get(cliId).push(k);
+  plim(); aviso("Caso criado — a sincronização cria a tarefa no To Do 📋");
+  montarSidebar(); casoSel=k.id; abaAtiva=2; abrirFicha(cliId);
 }
 async function novaFrase(){
   const inp=document.getElementById("nf-texto");
@@ -1961,19 +2049,6 @@ function zapLembrete(evId){
   const l=lembreteDoEvento(evId);
   if(l&&l.cli.telefone)
     window.open("https://wa.me/55"+l.cli.telefone.replace(/\D/g,"")+"?text="+encodeURIComponent(l.texto),"_blank");
-}
-async function marcarExigencia(casoId){
-  const desc=prompt("O que o INSS exigiu? (aparece no aviso e na mensagem ao cliente)")||"";
-  const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+30);   // prazo legal
-  const prazo=d.toLocaleDateString("sv");
-  const k=D.casoPorId.get(casoId);
-  k.exigencia_prazo=prazo; k.exigencia_descricao=desc||null;
-  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({exigencia_prazo:prazo, exigencia_descricao:k.exigencia_descricao})});
-  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({caso_id:casoId, autor_id:eu.id,
-      texto:`Exigência do INSS registrada${desc?": "+desc:""}. Prazo para cumprimento: ${fmt(prazo)}.`})});
-  aviso("Exigência marcada — 30 dias no relógio ⚠"); abrirFicha(clienteAberto);
 }
 async function cumprirExigencia(casoId){
   const k=D.casoPorId.get(casoId);
