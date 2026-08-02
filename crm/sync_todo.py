@@ -51,6 +51,17 @@ BENEFICIOS = [
     (r"sal[áa]rio[- ]maternidade", "Salário-Maternidade"),
 ]
 
+# Etiquetas #B<código da espécie INSS> usadas nos títulos (ex.: "Fulano #123... #B31")
+ESPECIES = {
+    "21": "Pensão por Morte", "25": "Auxílio-Reclusão",
+    "31": "Aux. Incapacidade Temporária", "32": "Apos. por Incapacidade Permanente",
+    "36": "Aux. Acidente", "41": "Apos. por Idade", "42": "Apos. Tempo de Contribuição",
+    "46": "Apos. Especial", "80": "Salário-Maternidade",
+    "87": "BPC/LOAS", "88": "BPC/LOAS",
+    "91": "Aux. Incapacidade Temporária", "92": "Apos. por Incapacidade Permanente",
+}
+RE_ESPECIE = re.compile(r"#B(\d{2})\b", re.I)
+
 RE_AUTOR = re.compile(r"^\s*\(?\s*([A-Za-z]{1,2})\s*\)\s*[:;,.–-]?\s*")
 RE_EVENTO = re.compile(
     r"(per[íi]cia|audi[êe]ncia|avalia[çc][ãa]o social)"
@@ -106,9 +117,18 @@ def eventos_de(texto, data_ref):
 
 
 def nome_da_tarefa(titulo):
-    """Remove o '#CPF' e sobras do título, deixando só o nome."""
-    nome = re.sub(r"#\s*[\d.\-]{11,}", "", titulo or "").strip(" -–#")
+    """Remove '#CPF' e etiquetas (#B31, #DanoMoral...) do título, deixando o nome."""
+    nome = re.sub(r"#\s*[\d.\-]{11,}", "", titulo or "")
+    nome = re.sub(r"#\w+", "", nome).strip(" -–#")
     return re.sub(r"\s{2,}", " ", nome).strip()
+
+
+def beneficio_do_titulo(titulo):
+    """'Fulano #123 #B31' -> benefício da espécie 31 (prioridade sobre o texto)."""
+    m = RE_ESPECIE.search(titulo or "")
+    if m:
+        return ESPECIES.get(m.group(1), f"Espécie {m.group(1)}")
+    return None
 
 
 def normalizar_tarefa(lista_nome, t):
@@ -154,7 +174,8 @@ def normalizar_tarefa(lista_nome, t):
         "telefone": tel.group(0) if tel else None,
         "processo": proc.group(0) if proc else None,
         "nb": nb.group(1).strip() if nb else None,
-        "beneficio": beneficio_de(t.get("title", "") + "\n" + preambulo + "\n" + corpo[:1500]),
+        "beneficio": beneficio_do_titulo(t.get("title"))
+                     or beneficio_de(t.get("title", "") + "\n" + preambulo + "\n" + corpo[:1500]),
         "prazo": due,
         "importante": t.get("importance") == "high",
         "concluida": t.get("status") == "completed",

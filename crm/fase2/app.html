@@ -92,6 +92,9 @@
   .acao-card{border:none;background:none;font-size:15px;cursor:pointer;color:#c8c6c4;flex:none}
   .acao-card.on{color:#eaa300}
   .acao-card.sol.on{color:var(--laranja)}
+  .acao-card.fogo{filter:grayscale(1);opacity:.4}
+  .acao-card.fogo.on{filter:none;opacity:1}
+  .chip.urg{background:#fbeaea;color:var(--vermelho)}
   .nova{display:flex;gap:8px;align-items:center;background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 12px;margin-bottom:12px}
   .nova input{flex:1;border:none;outline:none;font-size:14px}
   .nova input[type=date]{flex:none;color:var(--cinza)}
@@ -153,6 +156,10 @@
   .barra .tubo{flex:1;height:10px;background:var(--fundo);border-radius:5px;overflow:hidden}
   .barra .tubo i{display:block;height:100%;background:var(--azul);border-radius:5px}
   .barra .qt{width:56px;text-align:right;font-weight:600;flex:none}
+  .cl{display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--fundo)}
+  .cl .box{display:inline-block;width:15px;height:15px;border:2px solid var(--cinza);border-radius:4px;flex:none}
+  .cl.feito .box{background:var(--verde);border-color:var(--verde)}
+  .cl.feito span:last-child{text-decoration:line-through;color:var(--cinza)}
   .kanban{display:flex;gap:10px;overflow-x:auto;align-items:flex-start;padding-bottom:10px}
   .coluna{background:var(--lateral);border:1px solid var(--borda);border-radius:10px;padding:10px;min-width:225px;flex:1}
   .coluna h4{font-size:12px;color:var(--cinza);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;justify-content:space-between}
@@ -466,6 +473,7 @@ function cartaoCliente(cli, casosMostrar){
     <div class="info">
       <div class="nome">${esc(cli.nome)}</div>
       <div class="meta">
+        ${ks.some(k=>k.urgente)?`<span class="chip urg">🔥 URGENTE</span>`:""}
         ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
         ${[...new Set(ks.map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
         ${ks.map(chipExig).join("")}
@@ -474,7 +482,8 @@ function cartaoCliente(cli, casosMostrar){
         ${ks.length>1?`<span class="chip neutro">${ks.length} casos</span>`:""}
       </div>
     </div>
-    <div class="avatares">${resp.map(c=>`<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")}</div>
+    <div class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${resp.map(c=>`<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")||`<span class="avatar mini" style="background:#c8c6c4">＋</span>`}</div>
+    <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}">🔥</button>
     <button class="acao-card sol ${noMeuDia?"on":""}" title="Meu Dia" data-sol="${ks[0]?ks[0].id:""}">☀️</button>
     <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}">★</button>
   </div>`;
@@ -492,6 +501,8 @@ function grupoClientes(casosSel){
     const pb=b[1].map(k=>k.prazo).filter(Boolean).sort()[0]||"9999";
     return pa<pb?-1:1;
   });
+  // 🔥 urgentes sempre no topo, independente da ordenação escolhida
+  pares.sort((a,b)=>(b[1].some(k=>k.urgente)?1:0)-(a[1].some(k=>k.urgente)?1:0));
   return pares;
 }
 
@@ -517,6 +528,16 @@ function ligarCartoes(){
     k.importante = !k.importante;
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",body:JSON.stringify({importante:k.importante}),headers:{Prefer:"return=minimal"}});
     montarSidebar(); render();
+  });
+  document.querySelectorAll("[data-fogo]").forEach(b=>b.onclick=async e=>{
+    e.stopPropagation();
+    const k = D.casoPorId.get(b.dataset.fogo); if(!k) return;
+    k.urgente = !k.urgente;
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",body:JSON.stringify({urgente:k.urgente}),headers:{Prefer:"return=minimal"}});
+    aviso(k.urgente?"🔥 Marcado como URGENTE":"Urgência removida"); render();
+  });
+  document.querySelectorAll(".avatares[data-equipe]").forEach(a=>a.onclick=e=>{
+    e.stopPropagation(); abaAtiva=6; abrirFicha(a.dataset.equipe);   // direto na aba Equipe
   });
 }
 
@@ -621,7 +642,7 @@ function renderParticulares(){
   const minhas = D.tarefas.filter(t=>t.particular_de===eu.id)
     .sort((a,b)=>(a.concluida?1:0)-(b.concluida?1:0) || ((a.prazo||"9999")<(b.prazo||"9999")?-1:1));
   document.getElementById("conteudo-meio").innerHTML =
-    `<div class="nova"><input id="nt-titulo" placeholder="＋ Adicionar tarefa particular…">
+    `<div class="nova"><input id="nt-titulo" placeholder="＋ Adicionar tarefa… (entende 'amanhã', 'sexta', 'dia 15')">
      <input id="nt-prazo" type="date"><button onclick="novaTarefa()">Adicionar</button></div>`
     + minhas.map(cartaoTarefa).join("");
   ligarTarefas();
@@ -630,9 +651,13 @@ function renderParticulares(){
 async function novaTarefa(){
   const ti=document.getElementById("nt-titulo"), pz=document.getElementById("nt-prazo");
   if(!ti.value.trim()) return;
+  // "renovar OAB amanhã" / "ligar dia 15" -> data extraída do texto (estilo Todoist)
+  const nat=dataNatural(ti.value.trim());
   const [linha] = await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({titulo:ti.value.trim(), prazo:pz.value||null, particular_de:eu.id})});
-  D.tarefas.push(linha); ti.value=""; pz.value=""; render();
+    body:JSON.stringify({titulo:nat.titulo, prazo:pz.value||nat.prazo||null, particular_de:eu.id})});
+  D.tarefas.push(linha); ti.value=""; pz.value="";
+  if(!pz.value&&nat.prazo) aviso("Prazo entendido: "+fmt(nat.prazo)+" 🗓");
+  render();
 }
 
 // ── Novo Cliente (botão do topo) ──────────────────────────────────────────
@@ -771,7 +796,7 @@ function kcardCaso(k){
   const c=D.cliPorId.get(k.cliente_id);
   return `<div class="kcard" draggable="true" data-caso="${k.id}" data-cli="${c?c.id:""}">
     <div class="nome">${esc(c?c.nome:k.titulo)}</div>
-    <div class="meta">${k.beneficio?`<span class="chip ben">${esc(k.beneficio)}</span>`:""}
+    <div class="meta">${k.urgente?`<span class="chip urg">🔥</span>`:""}${k.beneficio?`<span class="chip ben">${esc(k.beneficio)}</span>`:""}
       ${chipExig(k)}${k.prazo?`<span class="chip prazo ${k.prazo<hoje()?"venc":""}">⏰ ${fmt(k.prazo)}</span>`:""}</div></div>`;
 }
 function renderQuadro(){
@@ -780,7 +805,8 @@ function renderQuadro(){
     "Arraste o cartão para mudar a fase do caso — a alteração vai para o banco (e o To Do acompanha).";
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="kanban">`+COLUNAS_QUADRO.map(([f,rot])=>{
-      const ks=D.casos.filter(k=>k.fase===f);
+      const ks=D.casos.filter(k=>k.fase===f)
+        .sort((a,b)=>(b.urgente?1:0)-(a.urgente?1:0));
       return `<div class="coluna" data-fase="${f}"><h4>${rot}<span>${ks.length}</span></h4>
         ${ks.slice(0,60).map(kcardCaso).join("")}
         ${ks.length>60?`<p class="meio-sub">+${ks.length-60} — use a pesquisa</p>`:""}</div>`;
@@ -1056,6 +1082,7 @@ async function abrirFicha(cliId){
         <button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 mensagem ao cliente</button>
         <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>
       </div>`:""}
+      ${checklistCaso(k)}
       </div>`).join("")}
     <p style="font-size:12px;color:var(--cinza)">Casos novos continuam nascendo no To Do durante a Fase 2 (escrita dupla) — a importação os traz para cá.</p>
   </div>
@@ -1181,6 +1208,61 @@ async function abrirFicha(cliId){
       body:JSON.stringify({status:"recebido",pago_em:p.pago_em})});
     abrirFicha(clienteAberto);
   });
+  ligarChecklistFicha();
+}
+
+// checklist do caso (o "0 de 4" do To Do)
+function subtarefasDe(casoId){ return D.tarefas.filter(t=>t.caso_id===casoId); }
+function checklistCaso(k){
+  const st=subtarefasDe(k.id), feitas=st.filter(t=>t.concluida).length;
+  return `<div style="margin-top:10px">
+    ${st.length?`<div class="meio-sub">Checklist — ${feitas} de ${st.length}</div>`:""}
+    ${st.map(t=>`<div class="cl ${t.concluida?"feito":""}"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span></div>`).join("")}
+    <div class="form-linha"><input id="nsub-${k.id}" placeholder="＋ item do checklist deste caso" style="flex:1"
+      onkeydown="if(event.key==='Enter')novaSubtarefa('${k.id}')">
+    <button onclick="novaSubtarefa('${k.id}')">Adicionar</button></div>
+  </div>`;
+}
+async function novaSubtarefa(casoId){
+  const inp=document.getElementById("nsub-"+casoId);
+  if(!inp.value.trim()) return;
+  const [t]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:casoId, titulo:inp.value.trim()})});
+  D.tarefas.push(t); abaAtiva=1; abrirFicha(clienteAberto);
+}
+function ligarChecklistFicha(){
+  document.querySelectorAll("[data-subt]").forEach(el=>el.onclick=async()=>{
+    const t=D.tarefas.find(x=>x.id===el.dataset.subt); if(!t) return;
+    t.concluida=!t.concluida;
+    await api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({concluida:t.concluida, concluida_em:t.concluida?new Date().toISOString():null})});
+    abaAtiva=1; abrirFicha(clienteAberto);
+  });
+}
+
+// datas em linguagem natural ("amanhã", "sexta", "dia 15") no adicionar tarefa
+const DIAS_SEMANA={domingo:0,segunda:1,terca:2,"terça":2,quarta:3,quinta:4,sexta:5,sabado:6,"sábado":6};
+function dataNatural(texto){
+  const t0=new Date(hoje()+"T12:00:00");
+  const tenta=[
+    [/\bhoje\b/i, ()=>0],
+    [/\bamanh[ãa](?![a-zà-ÿ])/i, ()=>1],
+    [/\b(domingo|segunda|ter[çc]a|quarta|quinta|sexta|s[áa]bado)\b/i,
+      m=>{ const alvo=DIAS_SEMANA[dsa(m[1])]; let d=(alvo-t0.getDay()+7)%7; return d||7; }],
+    [/\bdia (\d{1,2})\b/i, m=>{ const d=new Date(t0); d.setDate(+m[1]); if(d<=t0) d.setMonth(d.getMonth()+1);
+      return Math.round((d-t0)/864e5); }],
+    [/\b(\d{1,2})[\/.](\d{1,2})\b/, m=>{ const d=new Date(t0.getFullYear(),+m[2]-1,+m[1],12);
+      if(d<t0) d.setFullYear(d.getFullYear()+1); return Math.round((d-t0)/864e5); }],
+  ];
+  for(const [re,calc] of tenta){
+    const m=texto.match(re);
+    if(m){
+      const d=new Date(t0); d.setDate(d.getDate()+calc(m));
+      return {titulo:texto.replace(re,"").replace(/\s{2,}/g," ").trim(),
+              prazo:d.toLocaleDateString("sv")};
+    }
+  }
+  return {titulo:texto, prazo:null};
 }
 
 function fecharFicha(rerender=true){

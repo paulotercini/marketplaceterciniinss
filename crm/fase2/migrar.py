@@ -21,7 +21,7 @@ Mapeamento (decisões de ago/2026):
   - Anti-eco: blocos idênticos a andamentos criados no app (mesmo caso, dia e
     texto) são pulados, para a escrita dupla não duplicar.
 """
-import argparse, datetime, hashlib, json, os, pathlib, sys, urllib.request, urllib.error, uuid
+import argparse, datetime, hashlib, json, os, pathlib, re, sys, urllib.request, urllib.error, uuid
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent
 ENTRADA = RAIZ / "data" / "crm.json"
@@ -65,7 +65,7 @@ def mapear(dados):
         if lista == LISTA_PARTICULAR:
             tid = uid("tarefa", t["id"])
             tarefas[tid] = {
-                "id": tid, "titulo": t["titulo"], "prazo": t["prazo"],
+                "id": tid, "caso_id": None, "titulo": t["titulo"], "prazo": t["prazo"],
                 "concluida": t["concluida"],
                 "concluida_em": t["concluida_em"] and t["concluida_em"] + "T12:00:00" + TZ,
                 "particular_de": ("__INICIAL__", DONO_PARTICULAR),
@@ -111,6 +111,20 @@ def mapear(dados):
                 "_dia": a["data"], "_md5": md5(a["texto"]),
             }
 
+        # checklist do To Do ("0 de 4") -> subtarefas do caso (itens de dado,
+        # como CPF e aniversário, ficam de fora)
+        for c_it in t.get("checklist", []):
+            txt = (c_it.get("texto") or "").strip()
+            so_digitos = re.sub(r"\D", "", txt)
+            if not txt or len(so_digitos) >= 8 or re.search(r"anivers|nascime", txt, re.I):
+                continue          # CPF/datas/aniversário são dados, não subtarefas
+            tid = uid("subtarefa", kid, md5(txt))
+            tarefas[tid] = {
+                "id": tid, "caso_id": kid, "titulo": txt,
+                "prazo": None, "concluida": bool(c_it.get("feito")),
+                "concluida_em": None, "particular_de": None,
+            }
+
         for e in t["eventos"]:
             hora = e["hora"] or "09:00"
             eid = uid("evento", kid, e["tipo"], e["data"], hora)
@@ -147,6 +161,9 @@ def remapear_casos(mapa, task_para_id_existente):
             a["caso_id"] = troca.get(a["caso_id"], a["caso_id"])
         for e in mapa["eventos"]:
             e["caso_id"] = troca.get(e["caso_id"], e["caso_id"])
+        for tf in mapa["tarefas"]:
+            if tf.get("caso_id"):
+                tf["caso_id"] = troca.get(tf["caso_id"], tf["caso_id"])
     return len(troca)
 
 

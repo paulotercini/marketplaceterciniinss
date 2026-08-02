@@ -96,6 +96,20 @@ def test_nome_sem_cpf_no_titulo():
     assert sync_todo.nome_da_tarefa("Fulano de Tal #000.000.001-91") == "Fulano de Tal"
 
 
+def test_nome_sem_etiquetas_de_especie():
+    assert sync_todo.nome_da_tarefa("Fulana #00000000191 #B31") == "Fulana"
+    assert sync_todo.nome_da_tarefa("Beltrano #00000000272 #DanoMoral") == "Beltrano"
+
+
+def test_especie_no_titulo_define_beneficio():
+    assert sync_todo.beneficio_do_titulo("Fulana #00000000191 #B31") == "Aux. Incapacidade Temporária"
+    assert sync_todo.beneficio_do_titulo("Beltrano #B42") == "Apos. Tempo de Contribuição"
+    assert sync_todo.beneficio_do_titulo("Sicrana #B88") == "BPC/LOAS"
+    assert sync_todo.beneficio_do_titulo("Sem etiqueta") is None
+    # espécie desconhecida não quebra
+    assert sync_todo.beneficio_do_titulo("X #B57") == "Espécie 57"
+
+
 def test_dn_e_preambulo():
     t = tarefa("Fulano #00000000191",
                "Senha gov: xyz\n10.07.2026 (P): Protocolado.",
