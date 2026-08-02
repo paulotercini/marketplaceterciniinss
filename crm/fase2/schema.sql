@@ -163,6 +163,10 @@ alter table casos add column if not exists urgente boolean not null default fals
 -- Parceria com advogado externo (#Laís, #JoãoEduardo no título do To Do)
 alter table casos add column if not exists parceria text;
 
+-- Comentário apagado pelo próprio autor no app: marcado para a sincronização
+-- remover o bloco correspondente do corpo da tarefa no To Do e então sumir.
+alter table andamentos add column if not exists excluir boolean not null default false;
+
 -- O MOTIVO do "Lembrar em" (prazo): a data diz quando agir, o motivo diz o
 -- porquê — "pedir prorrogação", "cobrar documentos", "conferir INSS"...
 alter table casos add column if not exists lembrar_motivo text;
