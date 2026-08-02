@@ -158,6 +158,10 @@
   .pgto{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--fundo);flex-wrap:wrap}
   .pgto .desc{flex:1;min-width:140px}
   .pgto .valor{font-weight:700}
+  .pgto .cadeia{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+  .conf-et{display:inline-flex;align-items:center;gap:5px;background:#f0f7f2;border:1px solid #cfe7d8;border-radius:12px;padding:2px 9px 2px 3px}
+  .conf-et small{color:var(--cinza);font-size:11px;white-space:nowrap}
+  .conf-seta{color:var(--cinza);font-size:12px}
   .equipe-chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--borda);border-radius:16px;padding:5px 12px;margin:0 6px 6px 0;cursor:pointer;background:var(--branco)}
   .equipe-chip.on{background:#d6e6f7;border-color:var(--azul);font-weight:600}
   .dash{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
@@ -1077,7 +1081,7 @@ function renderAgenda(){
   const bloco=e=>{
     const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
     return `<div class="evento ${e.data_hora.slice(0,10)<hoje()?"passado":""}" data-cli="${c?c.id:""}" style="cursor:pointer">
-      <div class="data-box">${fmt(e.data_hora.slice(0,10)).slice(0,5)}<small>${e.data_hora.slice(11,16)}</small></div>
+      <div class="data-box">${fmt(e.data_hora.slice(0,10)).slice(0,5)}<small>${e.data_hora.slice(0,4)}</small><small>${e.data_hora.slice(11,16)}</small></div>
       <div class="oque"><strong>${esc(e.tipo)} — ${esc(c?c.nome:"?")}</strong>
         <span>${esc(e.local||e.obs||"")} · ${esc(e.status)}</span></div>
       ${c&&c.telefone?`<a class="chip per" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" onclick="event.stopPropagation()">💬 avisar cliente</a>`:""}
@@ -1258,7 +1262,7 @@ async function abrirFicha(cliId){
 
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
     ${evs.map(e=>`<div class="evento ${e.data_hora.slice(0,10)<hoje()?"passado":""}">
-      <div class="data-box">${fmt(e.data_hora.slice(0,10)).slice(0,5)}<small>${e.data_hora.slice(11,16)}</small></div>
+      <div class="data-box">${fmt(e.data_hora.slice(0,10)).slice(0,5)}<small>${e.data_hora.slice(0,4)}</small><small>${e.data_hora.slice(11,16)}</small></div>
       <div class="oque"><strong>${esc(e.tipo)}</strong><span>${esc(e.local||e.obs||"")} · ${esc(e.status)}</span></div>
       ${e.data_hora.slice(0,10)>=hoje()?`
         <button class="btn-mini" onclick="copiarLembrete('${e.id}')">💬 copiar lembrete</button>
@@ -1301,17 +1305,30 @@ async function abrirFicha(cliId){
         </div>`;}).join("")
         + `<p class="meio-sub" style="margin-top:12px">Lançamentos (RPV, precatório, honorários…):</p>`;
     })()}
-    ${pgs.map(p=>`<div class="pgto"><span class="desc">${esc(p.descricao)}</span>
-      <span class="chip ${p.status==="recebido"?"fase":p.status==="aberto"?"prazo":"neutro"}">${esc(p.status)}${p.vencimento?" · "+fmt(p.vencimento):""}</span>
+    ${pgs.map(p=>{
+      const cfs=p.conferencias||[];
+      const jaConferi=cfs.some(cf=>cf.c===eu.id);
+      return `<div class="pgto">
+      <span class="desc"><strong>${p.pago_em?fmt(p.pago_em):p.vencimento?"vence "+fmt(p.vencimento):"—"}</strong>${p.descricao&&p.descricao!=="Recebimento"?" · "+esc(p.descricao):""}</span>
       <span class="valor">${moeda(p.valor)}</span>
-      ${p.status==="aberto"?`<button class="olho" title="marcar recebido" data-recebe="${p.id}">✔</button>`:""}</div>`).join("")
-      ||"<p class='meio-sub'>Nenhum lançamento — o financeiro do caso vive aqui (a antiga lista 💵 Pagamentos).</p>"}
-    <div class="form-linha">
-      <select id="np-caso">${ks.map(k=>`<option value="${k.id}" ${k.fase==="pagamento"&&k.id===(pagK[0]||{}).id?"selected":""}>${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>
-      <input id="np-desc" placeholder="descrição (RPV, honorários…)">
-      <input id="np-valor" type="number" step="0.01" placeholder="R$">
-      <input id="np-venc" type="date"><button onclick="novoPgto()">Lançar</button>
+      <span class="cadeia">${cfs.map((cf,i)=>{const co=D.colPorId.get(cf.c);
+        return `<span class="conf-et" title="${co?esc(co.nome):"?"} ${i===0?"recebeu":"conferiu"} em ${fmt(cf.em.slice(0,10))}">
+          <span class="avatar mini" style="background:${co?co.cor:"#a19f9d"}">${co?esc(co.inicial):"·"}</span>
+          <small>${i===0?"recebeu":"conferiu"} ${fmt(cf.em.slice(0,10)).slice(0,5)}</small></span>`;}).join(`<span class="conf-seta">→</span>`)}</span>
+      ${p.status==="aberto"?`<button class="btn-mini" data-recebe="${p.id}">💵 recebi</button>`:
+        !jaConferi?`<button class="btn-mini" data-confere="${p.id}">✔ conferi</button>`:""}
+      </div>`;}).join("")
+      ||"<p class='meio-sub'>Nenhum recebimento registrado ainda.</p>"}
+    <input type="hidden" id="np-caso" value="${(pagK[0]||ks.find(k=>k.fase!=="encerrado")||ks[0]||{}).id||""}">
+    <div class="form-linha" style="align-items:center">
+      <input type="date" id="np-data" value="${hoje()}">
+      <input id="np-valor" type="number" step="0.01" placeholder="R$ valor" style="width:120px">
+      <input id="np-desc" placeholder="observação (opcional — RPV, honorários…)" style="flex:1;min-width:160px">
+      <button onclick="novoPgto()">💵 Registrar</button>
     </div>
+    <p style="font-size:12px;color:var(--cinza)">Data de hoje ou passada = dinheiro <strong>recebido</strong> (você entra como quem recebeu).
+      Data futura = <strong>a receber</strong> (vencimento). Quem pegar o dinheiro depois clica <strong>✔ conferi</strong> —
+      a corrente mostra quem recebeu e quem conferiu, com a data de cada um.</p>
   </div>
 
   <div class="painel ${abaAtiva===5?"ativo":""}" data-p="5">
@@ -1407,8 +1424,18 @@ async function abrirFicha(cliId){
   document.querySelectorAll("[data-recebe]").forEach(b=>b.onclick=async()=>{
     const p=D.pagamentos.find(x=>x.id===b.dataset.recebe);
     p.status="recebido"; p.pago_em=hoje();
+    p.conferencias=[...(p.conferencias||[]),{c:eu.id,em:new Date().toISOString()}];
     await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({status:"recebido",pago_em:p.pago_em})});
+      body:JSON.stringify({status:"recebido",pago_em:p.pago_em,conferencias:p.conferencias})});
+    aviso("Recebido 💵 — você consta como quem recebeu");
+    abrirFicha(clienteAberto);
+  });
+  document.querySelectorAll("[data-confere]").forEach(b=>b.onclick=async()=>{
+    const p=D.pagamentos.find(x=>x.id===b.dataset.confere);
+    p.conferencias=[...(p.conferencias||[]),{c:eu.id,em:new Date().toISOString()}];
+    await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({conferencias:p.conferencias})});
+    aviso("Conferência registrada ✔");
     abrirFicha(clienteAberto);
   });
   ligarChecklistFicha();
@@ -1545,14 +1572,22 @@ async function novoEvento(){
   D.eventos.push(nova); aviso("Agendado 🩺"); montarSidebar(); abrirFicha(clienteAberto);
 }
 async function novoPgto(){
+  const casoId=document.getElementById("np-caso").value;
+  if(!casoId) return aviso("Este cliente ainda não tem caso — crie um antes");
+  const valor=document.getElementById("np-valor").value;
+  if(!valor) return aviso("Informe o valor");
+  const data=document.getElementById("np-data").value||hoje();
   const desc=document.getElementById("np-desc").value.trim();
-  if(!desc) return;
-  const linha={caso_id:document.getElementById("np-caso").value, descricao:desc,
-    valor:document.getElementById("np-valor").value||null,
-    vencimento:document.getElementById("np-venc").value||null};
+  const recebido = data<=hoje();   // data futura = a receber (vencimento)
+  const linha={caso_id:casoId, descricao:desc||"Recebimento", valor,
+    status:recebido?"recebido":"aberto",
+    pago_em:recebido?data:null, vencimento:recebido?null:data,
+    conferencias:recebido?[{c:eu.id,em:new Date().toISOString()}]:[]};
   const [novo]=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify(linha)});
-  D.pagamentos.push(novo); aviso("Lançado 💰"); abrirFicha(clienteAberto);
+  D.pagamentos.push(novo);
+  aviso(recebido?"Recebimento registrado 💵 — você consta como quem recebeu":"Lançado a receber 💰");
+  abrirFicha(clienteAberto);
 }
 function lembreteDoEvento(evId){
   const e=D.eventos.find(x=>x.id===evId); if(!e) return null;
