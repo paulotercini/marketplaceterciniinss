@@ -350,7 +350,7 @@ async function iniciar(){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -366,8 +366,10 @@ async function carregar(){
       todas("mencoes",`select=*&para_id=eq.${eu.id}&lida_em=is.null&order=criado_em.desc`),
       todas("leads","select=*&order=criado_em.desc"),
       todas("documentos_beneficio","select=*"),
+      todas("checklist_modelo","select=*"),
+      todas("modelos_documento","select=*&order=titulo"),
     ]);
-  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs};
+  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos};
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -440,6 +442,7 @@ function montarSidebar(){
     `<div class="lista-item" data-v="fase:${f}"><span class="rotulo">${rot}</span><span class="cont">${casosDaFase(f).length}</span></div>`).join("");
   document.getElementById("grupo-visoes").innerHTML = [
     ["claude","🤖 Claude", D.sugestoes.length],
+    ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
     ["marketing","📣 Marketing", null],
@@ -558,6 +561,7 @@ function render(){
   if(visao==="novocliente") return renderNovoCliente();
   if(visao==="claude") return renderClaude();
   if(visao==="mencoes") return renderMencoes();
+  if(visao==="docmodelos") return renderModelosDoc();
   if(visao==="quadro") return renderQuadro();
   if(visao==="vendas") return renderVendas();
   if(visao==="marketing") return renderMarketing();
@@ -702,6 +706,7 @@ async function criarCliente(){
       beneficio:casoTitulo, fase:document.getElementById("ncl-fase").value})});
   await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({caso_id:caso.id, colaborador_id:eu.id})});
+  await aplicarChecklistCaso(caso, true);   // caso nasce com o passo a passo do benefício
   const dataAg=document.getElementById("ncl-data").value;
   if(dataAg){
     const cod=document.getElementById("ncl-tipo").value;
@@ -787,6 +792,47 @@ async function criarMencoes(texto, casoId, andamentoId){
       body:JSON.stringify({de_id:eu.id, para_id:co.id, caso_id:casoId,
         andamento_id:andamentoId, texto})});
   if(alvos.length) aviso("📥 "+alvos.map(a=>a.nome).join(", ")+" será(ão) avisado(s)");
+}
+
+// ── 📄 Modelos de documentos (gerenciar) ──────────────────────────────────
+function renderModelosDoc(){
+  document.getElementById("titulo-lista").textContent="📄 Modelos de documentos";
+  document.getElementById("sub-lista").textContent=
+    "Os modelos-ouro do escritório. Use {nome}, {cpf}, {endereco}, {nb}, {processo}, {beneficio}, {data} — na ficha do cliente eles saem preenchidos. Cole aqui os textos do site interno.";
+  document.getElementById("conteudo-meio").innerHTML =
+    D.docModelos.map(m=>`<div class="modelo">
+      <div class="cab"><strong>${esc(m.titulo)}</strong>
+        <span class="chip neutro">${esc(m.categoria)}</span>
+        <button class="btn-mini" onclick="editarModeloDoc('${m.id}')">✏ editar</button></div>
+      <div class="previa">${esc(m.conteudo.slice(0,220))}${m.conteudo.length>220?"…":""}</div>
+      <div id="ed-doc-${m.id}"></div>
+    </div>`).join("")
+    + `<div class="form-linha" style="margin-top:14px">
+        <input id="nd-titulo" placeholder="título do novo modelo" style="min-width:220px">
+        <input id="nd-cat" placeholder="categoria (geral ou benefício)" value="geral">
+        <button onclick="novoModeloDoc()">Criar modelo</button>
+      </div>`;
+}
+function editarModeloDoc(id){
+  const m=D.docModelos.find(x=>x.id===id), div=document.getElementById("ed-doc-"+id);
+  if(div.innerHTML){ div.innerHTML=""; return; }
+  div.innerHTML=`<textarea class="doc-edit" id="txt-doc-${id}" style="min-height:220px">${esc(m.conteudo)}</textarea>
+    <div class="form-linha"><button onclick="salvarModeloDoc('${id}')">Salvar modelo</button></div>`;
+}
+async function salvarModeloDoc(id){
+  const m=D.docModelos.find(x=>x.id===id);
+  m.conteudo=document.getElementById("txt-doc-"+id).value;
+  await api(`/rest/v1/modelos_documento?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({conteudo:m.conteudo})});
+  aviso("Modelo salvo 📄"); renderModelosDoc();
+}
+async function novoModeloDoc(){
+  const t=document.getElementById("nd-titulo").value.trim();
+  if(!t) return;
+  const [m]=await api(`/rest/v1/modelos_documento`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({titulo:t, categoria:document.getElementById("nd-cat").value.trim()||"geral",
+      conteudo:"[cole aqui o texto do modelo — use {nome}, {cpf}, {data}...]"})});
+  D.docModelos.push(m); montarSidebar(); renderModelosDoc(); aviso("Modelo criado — clique em ✏ para colar o texto");
 }
 
 // ── 📌 Quadro Kanban (fases) ──────────────────────────────────────────────
@@ -904,6 +950,7 @@ async function leadParaCliente(leadId){
       beneficio:l.beneficio_interesse, fase:"escritorio"})});
   await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({caso_id:caso.id, colaborador_id:eu.id})});
+  await aplicarChecklistCaso(caso, true);
   await api(`/rest/v1/leads?id=eq.${leadId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({cliente_id:cli.id})});
   l.cliente_id=cli.id;
@@ -1152,6 +1199,9 @@ async function abrirFicha(cliId){
         ${c.telefone?`<button class="btn-mini" onclick='window.open("https://wa.me/55${c.telefone.replace(/\D/g,"")}?text="+encodeURIComponent(${JSON.stringify(pronto)}),"_blank")'>📲 WhatsApp</button>`:""}</div>
         <div class="previa">${esc(pronto)}</div></div>`;
     }).join("")}
+    <p class="meio-sub" style="margin-top:14px">📄 Documentos para imprimir (preenchidos com os dados do cliente):</p>
+    ${D.docModelos.filter(m=>m.categoria==="geral"||dsa(m.categoria)===dsa(ks[0]&&ks[0].beneficio||"")||ks.some(k=>k.beneficio&&dsa(m.categoria)===dsa(k.beneficio)))
+      .map(m=>`<button class="btn-mini" style="margin:0 6px 6px 0" onclick="gerarDocumento('${m.id}','${c.id}')">🖨 ${esc(m.titulo)}</button>`).join("")}
     <div class="form-linha">
       <input id="nm-titulo" placeholder="título do novo modelo">
       <select id="nm-ctx"><option value="geral">geral</option><option value="pericia">perícia</option><option value="audiencia">audiência</option><option value="exigencia">exigência</option></select>
@@ -1242,6 +1292,7 @@ function checklistCaso(k){
   const st=subtarefasDe(k.id), feitas=st.filter(t=>t.concluida).length;
   return `<div style="margin-top:10px">
     ${st.length?`<div class="meio-sub">Checklist — ${feitas} de ${st.length}</div>`:""}
+    ${!st.length&&cklDe(k.beneficio)?`<button class="btn-mini" onclick='aplicarChecklistCaso(D.casoPorId.get("${k.id}")).then(()=>{abaAtiva=1;abrirFicha(clienteAberto);})'>📋 Aplicar checklist do benefício</button>`:""}
     ${st.map(t=>`<div class="cl ${t.concluida?"feito":""}"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span></div>`).join("")}
     <div class="form-linha"><input id="nsub-${k.id}" placeholder="＋ item do checklist deste caso" style="flex:1"
       onkeydown="if(event.key==='Enter')novaSubtarefa('${k.id}')">
@@ -1405,6 +1456,55 @@ async function salvarPasta(cliId){
   await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({campos:c.campos})});
   aviso(v?"Pasta vinculada 📁":"Vínculo removido — o 📁 volta a pesquisar pelo nome");
+}
+
+// checklist-modelo por benefício -> caso novo já nasce com o passo a passo
+function cklDe(beneficio){
+  if(!beneficio) return null;
+  const b=dsa(beneficio);
+  return D.ckls.find(x=>dsa(x.beneficio)===b)
+      || D.ckls.find(x=>b.includes(dsa(x.beneficio)) || dsa(x.beneficio).includes(b));
+}
+async function aplicarChecklistCaso(caso, silencioso){
+  const modelo=cklDe(caso.beneficio);
+  if(!modelo) return 0;
+  const existentes=new Set(D.tarefas.filter(t=>t.caso_id===caso.id).map(t=>dsa(t.titulo)));
+  const novos=modelo.itens.split("\n").map(x=>x.trim()).filter(x=>x && !existentes.has(dsa(x)));
+  for(const titulo of novos){
+    const [t]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:caso.id, titulo})});
+    D.tarefas.push(t);
+  }
+  if(!silencioso && novos.length) aviso(`Checklist do benefício aplicado — ${novos.length} etapas 📋`);
+  return novos.length;
+}
+
+// modelos de documentos ({nome},{cpf},{nb}... preenchidos com o cliente)
+function preencherDoc(conteudo, c, k){
+  const dataExt=new Date(hoje()+"T12:00:00").toLocaleDateString("pt-BR",{day:"numeric",month:"long",year:"numeric"});
+  const mapa={
+    "{nome}": c?c.nome:"", "{primeiro_nome}": c?c.nome.split(" ")[0]:"",
+    "{cpf}": c?fmtCpf(c.cpf):"", "{endereco}": (c&&c.endereco)||"____________________",
+    "{telefone}": (c&&c.telefone)||"", "{nb}": (k&&k.nb)||"____________",
+    "{processo}": (k&&k.processo)||"____________", "{beneficio}": (k&&k.beneficio)||"benefício previdenciário",
+    "{data}": dataExt,
+  };
+  return Object.entries(mapa).reduce((t,[ph,v])=>t.split(ph).join(v), conteudo);
+}
+function gerarDocumento(modeloId, cliId){
+  const m=D.docModelos.find(x=>x.id===modeloId), c=D.cliPorId.get(cliId);
+  if(!m||!c) return;
+  const k=(D.casosDoCliente.get(cliId)||[]).find(x=>x.fase!=="encerrado");
+  const corpo=preencherDoc(m.conteudo, c, k);
+  const w=window.open("","_blank");
+  w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+  <title>${esc(m.titulo)} — ${esc(c.nome)}</title><style>
+    body{font-family:Georgia,serif;max-width:700px;margin:40px auto;color:#111;line-height:1.8;font-size:15px}
+    pre{white-space:pre-wrap;font:inherit}
+    @media print{body{margin:15mm}}
+  </style></head><body><pre>${esc(corpo)}</pre>
+  <script>window.print()<\/script></body></html>`);
+  w.document.close();
 }
 
 // documentos por benefício -> carta imprimível para o cliente

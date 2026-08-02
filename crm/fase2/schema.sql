@@ -255,6 +255,46 @@ insert into documentos_beneficio (beneficio, itens, observacoes) values
   ('Revisão', E'Carta de concessão do benefício\nRG e CPF\nCarteiras de trabalho\nDocumentos do período que faltou ser contado (PPP, certidões, carnês)', null)
 on conflict (beneficio) do nothing;
 
+-- ── Checklist-modelo por benefício (workflow padronizado) ─────────────────
+-- Um item por linha; caso novo do benefício já nasce com estas subtarefas.
+create table if not exists checklist_modelo (
+  id        uuid primary key default gen_random_uuid(),
+  beneficio text not null unique,
+  itens     text not null
+);
+
+insert into checklist_modelo (beneficio, itens) values
+  ('Apos. por Idade', E'Procuração e contrato assinados\nSenha gov.br/Meu INSS cadastrada\nCNIS emitido e conferido\nCarteiras de trabalho digitalizadas\nRequerimento protocolado no Meu INSS\nAcompanhar análise e possíveis exigências'),
+  ('Rural', E'Procuração e contrato assinados\nDocumentos rurais reunidos e digitalizados\nCertidões que citem profissão de lavrador\nAutodeclaração rural preenchida\nCNIS conferido\nRequerimento protocolado\nPreparar cliente para entrevista rural'),
+  ('Apos. Tempo de Contribuição', E'Procuração e contrato assinados\nCNIS emitido e conferido\nCarteiras digitalizadas\nVerificar períodos faltantes no CNIS\nSimulação de tempo/valor feita\nRequerimento protocolado'),
+  ('Apos. Especial', E'Procuração e contrato assinados\nPPP solicitado a cada empresa\nLTCAT/laudos recebidos\nCNIS conferido\nRequerimento protocolado'),
+  ('Aux. Incapacidade Temporária', E'Procuração e contrato assinados\nRelatórios e exames médicos digitalizados\nRelatório médico recente (menos de 90 dias)\nRequerimento protocolado\nPerícia agendada e cliente avisado\nResultado da perícia conferido'),
+  ('BPC/LOAS', E'Procuração e contrato assinados\nCadÚnico atualizado no CRAS\nDocumentos de todos do grupo familiar\nRelatórios médicos com CID (se deficiência)\nRequerimento protocolado\nAvaliação social e perícia acompanhadas'),
+  ('Pensão por Morte', E'Procuração e contrato assinados\nCertidão de óbito digitalizada\nProvas de dependência/união estável reunidas\nRequerimento protocolado'),
+  ('Salário-Maternidade', E'Procuração e contrato assinados\nCertidão de nascimento digitalizada\nDocumentos da atividade (se rural)\nRequerimento protocolado')
+on conflict (beneficio) do nothing;
+
+-- ── Modelos de documentos (os "modelos ouro", com preenchimento) ──────────
+-- {nome} {primeiro_nome} {cpf} {endereco} {telefone} {nb} {processo}
+-- {beneficio} {data} são preenchidos com os dados do cliente/caso.
+create table if not exists modelos_documento (
+  id        uuid primary key default gen_random_uuid(),
+  titulo    text not null unique,
+  categoria text not null default 'geral',
+  conteudo  text not null
+);
+
+insert into modelos_documento (titulo, categoria, conteudo) values
+  ('Procuração ad judicia', 'geral',
+E'PROCURAÇÃO AD JUDICIA ET EXTRA\n\nOUTORGANTE: {nome}, CPF {cpf}, residente e domiciliado(a) em {endereco}.\n\nOUTORGADO: PAULO R. TERCINI FILHO, advogado, inscrito na OAB/SP, com escritório profissional em Franca/SP.\n\nPODERES: por este instrumento, o(a) outorgante nomeia e constitui o outorgado seu procurador, conferindo-lhe os poderes das cláusulas ad judicia e extra judicia, para o foro em geral, podendo promover quaisquer medidas judiciais ou administrativas, especialmente perante o INSS, relativas a {beneficio}, com poderes para receber citações e intimações, confessar, transigir, desistir, firmar compromissos, receber e dar quitação, substabelecer com ou sem reserva de poderes.\n\nFranca/SP, {data}.\n\n_____________________________________\n{nome}'),
+  ('Contrato de honorários', 'geral',
+E'CONTRATO DE PRESTAÇÃO DE SERVIÇOS ADVOCATÍCIOS\n\nCONTRATANTE: {nome}, CPF {cpf}, residente em {endereco}, telefone {telefone}.\nCONTRATADO: PAULO R. TERCINI FILHO — Advocacia Previdenciária, Franca/SP.\n\nOBJETO: atuação administrativa e/ou judicial referente a {beneficio}.\n\nHONORÁRIOS: [definir percentual/valor e condições de pagamento].\n\nFranca/SP, {data}.\n\n_____________________________________\nCONTRATANTE\n\n_____________________________________\nCONTRATADO'),
+  ('Declaração de hipossuficiência', 'geral',
+E'DECLARAÇÃO DE HIPOSSUFICIÊNCIA\n\nEu, {nome}, CPF {cpf}, residente e domiciliado(a) em {endereco}, DECLARO, sob as penas da lei, que não possuo condições de arcar com as custas processuais e honorários advocatícios sem prejuízo do meu sustento e de minha família, requerendo os benefícios da justiça gratuita, nos termos da Lei 1.060/50 e do art. 98 do CPC.\n\nFranca/SP, {data}.\n\n_____________________________________\n{nome}'),
+  ('Autodeclaração de atividade rural', 'Rural',
+E'AUTODECLARAÇÃO DE EXERCÍCIO DE ATIVIDADE RURAL\n\nEu, {nome}, CPF {cpf}, residente em {endereco}, DECLARO, para fins de comprovação junto ao INSS, que exerci atividade rural em regime de economia familiar, como segurado(a) especial, nos períodos e propriedades que descrevo a seguir:\n\n[período] — [propriedade/município] — [condição: proprietário, arrendatário, comodatário, parceiro]\n\nDeclaro estar ciente de que a falsidade destas informações está sujeita às penas da lei.\n\nFranca/SP, {data}.\n\n_____________________________________\n{nome}')
+on conflict (titulo) do nothing;
+
 -- ── Conversas com clientes (fundação da integração do chatbot/WhatsApp) ───
 -- O conector do chatbot grava aqui via webhook; mensagens com anexo geram
 -- sugestão de andamento (ex.: "recebi relatório médico") na visão 🤖.
@@ -282,7 +322,8 @@ begin
   foreach t in array array['colaboradores','clientes','credenciais','credencial_vis',
                            'casos','andamentos','eventos','pagamentos','tarefas',
                            'atribuicoes','meu_dia','modelos_mensagem','sugestoes',
-                           'mencoes','leads','documentos_beneficio','conversas'] loop
+                           'mencoes','leads','documentos_beneficio','conversas',
+                           'checklist_modelo','modelos_documento'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
