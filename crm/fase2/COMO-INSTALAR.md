@@ -15,6 +15,14 @@ To Do — ninguém precisa mudar de rotina de uma vez.
    - `service_role` key (⚠ secreta — fica só na máquina do Paulo, como o
      `graph_tokens.json`; nunca no git, nunca no app).
 
+   ⚠ **Painel novo do Supabase usa outros nomes** — o mapa é:
+   - **Publishable key** (`sb_publishable_...`) = a antiga `anon public`
+     → vai no app.html (pode ser vista pela equipe).
+   - **Secret key** (`sb_secret_...`, atrás do botão Reveal) = a antiga
+     `service_role` → vai SÓ no GitHub Secrets. **"Publicável" nunca é a
+     service_role — são opostas.** Se existir a aba "Legacy API keys",
+     as chaves antigas (`eyJ...`) funcionam do mesmo jeito.
+
 ## 2. Criar as tabelas
 
 No painel, **SQL Editor → New query**: cole o conteúdo de `schema.sql` e
