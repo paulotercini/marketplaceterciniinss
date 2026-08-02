@@ -44,15 +44,18 @@
   .app.mini-lateral .sidebar .novo-cli, .app.detalhe-aberto .sidebar .novo-cli{width:34px;margin:0 auto 10px;padding:7px 0}
   .app.mini-lateral .sidebar .usuario, .app.detalhe-aberto .sidebar .usuario{justify-content:center}
   /* coluna de casos dentro da ficha (3ª coluna): escolhe o caso, a 4ª mostra o andamento dele */
-  .col-casos{width:186px;flex:none;border-right:1px solid var(--borda);background:#DCDFE4;overflow-y:auto;padding:10px 8px}
-  .col-casos .cc-tit{font-size:11px;font-weight:700;color:var(--cinza);text-transform:uppercase;letter-spacing:.4px;padding:2px 6px 7px}
+  /* menu do caso em grafite claro — lê-se como MENU, não como fundo */
+  .col-casos{width:186px;flex:none;border-right:1px solid #262A33;background:#313641;overflow-y:auto;padding:10px 8px}
+  .col-casos .cc-tit{font-size:11px;font-weight:700;color:#A8AEBB;text-transform:uppercase;letter-spacing:.4px;padding:2px 6px 7px}
   .cc-item{border:1px solid var(--borda);border-radius:8px;padding:7px 9px;margin-bottom:6px;cursor:pointer;background:var(--branco)}
   .cc-item:hover{box-shadow:0 2px 6px rgba(0,0,0,.08)}
   .cc-item.sel{outline:2px solid var(--azul)}
   .cc-item.enc{opacity:.55}
   .cc-item .cc-ben{font-weight:700;font-size:12.5px;line-height:1.25}
   .cc-item .cc-fase{color:var(--cinza);font-size:11px;margin-top:2px}
-  .cc-item.novo{border-style:dashed;color:var(--azul);background:none}
+  .cc-item.novo{border:1px dashed rgba(255,255,255,.4);color:#9FC0F5;background:none}
+  .cc-item.novo .cc-ben{color:#9FC0F5}
+  .cc-item.sel{outline-color:#9FC0F5}
   .cc-equipe{display:flex;flex-wrap:wrap;gap:5px;padding:2px 6px}
   .mini-eq{cursor:pointer;opacity:.3;filter:grayscale(.6)}
   .mini-eq.on{opacity:1;filter:none}
@@ -185,9 +188,19 @@
   .timeline li:nth-child(odd){background:var(--fundo)}   /* reserva, se a cor do autor não carregar */
   .timeline .quando{flex:none;width:130px;font-size:12px;color:var(--cinza);display:flex;gap:8px}
   .timeline .texto{flex:1;white-space:pre-wrap}
-  .escrever{border-top:1px solid var(--borda);padding:10px 22px 14px;background:var(--branco)}
+  /* painel de registro: destacado e completo — nada de esquecer lembrete/estrela */
+  .escrever{border-top:2px solid var(--azul);padding:12px 22px 14px;background:#E9EFFA}
   .escrever .dica{font-size:12px;color:var(--verde);margin-bottom:6px}
   .escrever .linha{display:flex;gap:8px;align-items:center}
+  .acao-rapida{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+  .acao-rapida .rotulo-rap{font-size:12px;color:var(--cinza);font-weight:600}
+  .btn-rap{border:1px solid var(--borda);background:var(--branco);border-radius:999px;
+    padding:4px 12px;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--cinza);
+    filter:grayscale(1);opacity:.75}
+  .btn-rap.on{filter:none;opacity:1}
+  .btn-rap.imp.on{background:#FFF6D6;border-color:#E9B44C;color:#8A6D00}
+  .btn-rap.urg.on{background:#FBEAEA;border-color:var(--vermelho);color:var(--vermelho)}
+  .escrever .equipe-chip{background:var(--branco)}
   .escrever select{max-width:220px;padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
   .escrever input{flex:1;padding:10px 12px;border:1px solid var(--borda);border-radius:8px;font-size:14px}
   .escrever button{padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
@@ -1512,20 +1525,6 @@ async function abrirFicha(cliId){
             <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
         </div>
         ${trilhaCaso(k)}
-        <div class="form-linha" style="align-items:center">
-          <span class="lembrar-caixa" title="a data de agir — a 'conclusão' que vocês usavam no To Do">🗓 Lembrar em
-            <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></span>
-          <label style="font-size:12px;color:var(--cinza)">Lista:
-          <select data-fase="${k.id}">
-            ${LISTAS_MOVER.map(([l,f])=>`<option value="${f}" ${k.fase===f?"selected":""}>${l}</option>`).join("")}
-            <option value="encerrado" ${k.fase==="encerrado"?"selected":""}>✔ Encerrado</option>
-          </select></label>
-        </div>
-        <div class="form-linha" style="align-items:center;margin-top:2px">
-          <span style="font-size:12px;color:var(--cinza)">Atribuído a:</span>
-          ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${equipe.includes(co.id)?"on":""}" data-eq="${co.id}" title="clique para atribuir/retirar — vale para os casos ativos">
-            <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`).join("")}
-        </div>
         ${checklistCaso(k)}
         </div>
         <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
@@ -1684,6 +1683,15 @@ async function abrirFicha(cliId){
       <p style="font-size:11px;color:var(--cinza);margin-top:4px">Vira andamento (replicado no To Do) e liga a contagem regressiva na ficha do caso.</p>
     </div>
     <div class="dica">✓ Data e autor (${esc(eu.nome)}) entram sozinhos — e o texto é replicado no To Do</div>
+    ${(kA=>kA?`<div class="acao-rapida">
+      <span class="lembrar-caixa" title="a data de agir — o 'Lembrar' do To Do">🗓 Lembrar em
+        <input type="date" value="${kA.prazo||""}" data-prazo="${kA.id}"></span>
+      <span class="rotulo-rap">Atribuir:</span>
+      ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${(D.atrDoCaso.get(kA.id)||[]).includes(co.id)?"on":""}" data-eq="${co.id}" title="${esc(co.nome)} — atribuir/retirar">
+        <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.inicial)}</span>`).join("")}
+      <button class="btn-rap imp ${kA.importante?"on":""}" onclick="toggleImp('${kA.id}')" title="marcar/desmarcar Importante">⭐ Importante</button>
+      <button class="btn-rap urg ${kA.urgente?"on":""}" onclick="toggleUrg('${kA.id}')" title="marcar/desmarcar Urgente">🔥 Urgente</button>
+    </div>`:"")((casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null))}
     <div class="linha">
       <span class="avatar" style="background:${eu.cor}">${esc(eu.inicial)}</span>
       <button class="btn-mini" title="frases prontas — os padrões que vocês sempre escrevem" onclick="toggleFrases()">⚡</button>
@@ -1804,18 +1812,38 @@ function tituloCaso(k){
   return k.beneficio ? k.beneficio : "Benefício não definido";
 }
 const TRILHA=["escritorio","inss","conselho","judicial"];
+// trilha completa em botões — inclui 💰 Pagamentos e ✔ Encerrado; clicar move
 function trilhaCaso(k){
-  if(k.fase==="encerrado")
-    return `<div class="fases-trilha"><span class="fase-et feita">✔ Encerrado${k.resultado?" — "+esc(k.resultado):""}</span></div>`;
-  if(k.fase==="pagamento")
-    return `<div class="fases-trilha">${TRILHA.map(f=>`<span class="fase-et feita">✔ ${NOME_FASE[f]}</span>`).join("")}<span class="fase-et atual">💰 Recebimento</span></div>`;
-  if(!TRILHA.includes(k.fase))
-    return `<div class="fases-trilha"><span class="fase-et atual">${esc(NOME_FASE[k.fase]||k.fase)}</span></div>`;
-  const i=TRILHA.indexOf(k.fase);
-  // cada etapa é um botão: clicar move o caso para a lista correspondente
-  return `<div class="fases-trilha">`+TRILHA.map((f,j)=>
-    `<button class="fase-et ${j<i?"feita":""} ${j===i?"atual":""}" ${j===i?"disabled":
-      `onclick="moverFase('${k.id}','${f}')" title="clique para mover o caso para ${NOME_FASE[f]}"`}>${j<i?"✔ ":""}${NOME_FASE[f]}</button>`).join("")+`</div>`;
+  const passos=[...TRILHA, "pagamento", "encerrado"];
+  const i=passos.indexOf(k.fase);
+  const rot=f=> f==="pagamento" ? "💰 Pagamentos"
+    : f==="encerrado" ? (k.fase==="encerrado"&&k.resultado?`✔ ${esc(k.resultado)}`:"✔ Encerrado")
+    : NOME_FASE[f];
+  return `<div class="fases-trilha">`
+    + (i<0?`<button class="fase-et atual" disabled>${esc(NOME_FASE[k.fase]||k.fase)}</button>`:"")
+    + passos.map((f,j)=>{
+      const feita=i>=0&&j<i, atual=j===i;
+      const acao = atual ? "disabled"
+        : f==="encerrado" ? `onclick="janelaEncerrar('${k.id}')" title="encerrar: resultado + honorários"`
+        : `onclick="moverFase('${k.id}','${f}')" title="clique para mover o caso para ${rot(f)}"`;
+      return `<button class="fase-et ${feita?"feita":""} ${atual?"atual":""}" ${acao}>${feita?"✔ ":""}${rot(f)}</button>`;
+    }).join("")+`</div>`;
+}
+async function toggleImp(casoId){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  k.importante=!k.importante;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({importante:k.importante})});
+  aviso(k.importante?"⭐ Marcado como Importante":"Importante removido");
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+}
+async function toggleUrg(casoId){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  k.urgente=!k.urgente;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({urgente:k.urgente})});
+  aviso(k.urgente?"🔥 Marcado como URGENTE":"Urgência removida");
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
 }
 async function moverFase(casoId, fase){
   const k=D.casoPorId.get(casoId); if(!k || k.fase===fase) return;
