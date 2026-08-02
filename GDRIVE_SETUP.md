@@ -56,6 +56,31 @@ python3 gdrive_authcode.py exchange "<URL_colada_ou_code>"
 
 Grava o `gdrive_tokens.json` (gitignored). A partir daí o token se renova sozinho.
 
+## 3.1. O app TEM de estar "Em produção" (senão o token morre em 7 dias)
+
+Esta é a causa das quedas de acesso ao Drive, e ela derrubou a triagem de 01.08.2026.
+
+Enquanto a **tela de permissão OAuth** estiver com o status **"Testing"/"Em teste"**, o
+Google **expira o refresh token em 7 dias**, e aí todo script do Drive passa a falhar com
+`invalid_grant` e a mensagem "Token has been expired or revoked". Não é bug do código nem
+do escopo, é política do Google para app em teste.
+
+Conserto definitivo, em [console.cloud.google.com](https://console.cloud.google.com), vá a
+**APIs e serviços** → **Tela de permissão OAuth** e clique em **PUBLICAR APLICATIVO**, até
+o status virar **Em produção**. Feito em 02.08.2026.
+
+**Detalhe que quase passou.** A regra dos 7 dias vale pelo status **no momento da emissão**
+do token, não pelo status atual. Publicar o app **não** converte retroativamente um token
+já emitido em teste. Logo, depois de publicar, **refaça o login uma vez** (passo 3) para
+que o refresh token nasça sob o regime de produção. O `prompt=consent` que o
+`gdrive_authcode.py url` já inclui é o que obriga o Google a emitir token novo em vez de
+devolver o antigo. Para conferir que trocou mesmo, compare o `refresh_token` do
+`gdrive_tokens.json` antes e depois.
+
+O aviso de **"app não verificado"** continua aparecendo mesmo em produção. Isso é esperado
+e não indica falha, a verificação formal do Google só faz sentido para app distribuído ao
+público, não para uso interno do escritório. Clique em **Avançado** e prossiga.
+
 ## 4. Usar
 
 ```
