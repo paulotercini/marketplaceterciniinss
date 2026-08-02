@@ -163,6 +163,11 @@ alter table casos add column if not exists urgente boolean not null default fals
 -- Parceria com advogado externo (#Laís, #JoãoEduardo no título do To Do)
 alter table casos add column if not exists parceria text;
 
+-- Mover de lista pedido no app (botão direito → "Mover para…"):
+-- escrever_todo.py recria a tarefa na lista nova do To Do (o Graph não tem
+-- "mover"), apaga a antiga, atualiza todo_task_id/origem_lista e limpa isto.
+alter table casos add column if not exists mover_para text;
+
 -- Protocolos do INSS citados nos andamentos ("protocolo 210987654321").
 -- Extraídos automaticamente; a pesquisa encontra o cliente pelo número —
 -- útil quando o INSS avisa só "concluído o protocolo X" sem outros dados.

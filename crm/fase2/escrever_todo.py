@@ -96,6 +96,52 @@ def main():
     if criados:
         print(f"tarefas criadas no To Do para clientes novos: {criados}")
 
+    # 1b) "Mover para…" pedido no app -> mover a tarefa de lista no To Do.
+    # O Graph não tem endpoint de mover: recria a tarefa na lista nova
+    # (título, corpo, prazo, importância e checklist) e apaga a antiga.
+    movs = _rest("GET", "/rest/v1/casos"
+                        "?mover_para=not.is.null"
+                        "&select=id,titulo,mover_para,origem_lista,todo_task_id") or []
+    movidos = 0
+    for k in movs:
+        destino_id = listas_map.get(k["mover_para"])
+        if not destino_id:
+            print(f"  lista destino inexistente no To Do: {k['mover_para']}")
+            continue
+        origem_id = listas_map.get(k.get("origem_lista"))
+        task_id = k.get("todo_task_id")
+        try:
+            if task_id and origem_id:
+                antiga = graph_client.get_task(origem_id, task_id)
+                nova = graph_client.create_task(
+                    destino_id, antiga.get("title") or k["titulo"],
+                    body_content=((antiga.get("body") or {}).get("content") or ""),
+                    importance=antiga.get("importance") or "normal",
+                    due_date_iso=((antiga.get("dueDateTime") or {}).get("dateTime")))
+                itens = (graph_client._req(
+                    "GET", f"/me/todo/lists/{origem_id}/tasks/{task_id}/checklistItems")
+                    or {}).get("value", [])
+                for it in itens:
+                    graph_client._req(
+                        "POST",
+                        f"/me/todo/lists/{destino_id}/tasks/{nova['id']}/checklistItems",
+                        {"displayName": it.get("displayName", ""),
+                         "isChecked": bool(it.get("isChecked"))})
+                graph_client._req("DELETE", f"/me/todo/lists/{origem_id}/tasks/{task_id}")
+                _rest("PATCH", f"/rest/v1/casos?id=eq.{k['id']}",
+                      {"todo_task_id": nova["id"], "origem_lista": k["mover_para"],
+                       "mover_para": None}, prefer="return=minimal")
+            else:
+                # caso ainda sem tarefa no To Do: basta trocar a lista de origem
+                _rest("PATCH", f"/rest/v1/casos?id=eq.{k['id']}",
+                      {"origem_lista": k["mover_para"], "mover_para": None},
+                      prefer="return=minimal")
+            movidos += 1
+        except Exception as e:      # não travar os demais por uma tarefa com problema
+            print(f"  erro ao mover {k.get('titulo')!r}: {e}")
+    if movidos:
+        print(f"tarefas movidas de lista no To Do: {movidos}")
+
     # 2) andamentos escritos no app -> topo do corpo da tarefa
     fila = _rest("GET", "/rest/v1/andamentos"
                         "?origem=eq.app&todo_sync=eq.false"
