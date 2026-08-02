@@ -191,7 +191,7 @@ def _sql_val(v):
     return "'" + str(v).replace("'", "''") + "'"
 
 
-def _sql_insert(tabela, linhas, conflito="do nothing", update_cols=()):
+def _sql_insert(tabela, linhas, conflito="do nothing", update_cols=(), chave="id"):
     linhas = [_limpar(l) for l in linhas]
     if not linhas:
         return ""
@@ -205,7 +205,7 @@ def _sql_insert(tabela, linhas, conflito="do nothing", update_cols=()):
         acao = (f"do update set " + ", ".join(f"{c} = excluded.{c}" for c in update_cols)
                 if update_cols else conflito)
         out.append(f"insert into {tabela} ({', '.join(cols)}) values\n{vals}\n"
-                   f"on conflict (id) {acao};")
+                   f"on conflict ({chave}) {acao};")
     return "\n\n".join(out)
 
 
@@ -218,7 +218,7 @@ def gerar_sql(mapa):
                     update_cols=("fase", "prazo", "importante", "beneficio",
                                  "nb", "processo", "origem_lista", "encerrado_em")),
         _sql_insert("andamentos", mapa["andamentos"]),
-        _sql_insert("eventos", mapa["eventos"]),
+        _sql_insert("eventos", mapa["eventos"], chave="caso_id,tipo,data_hora"),
         _sql_insert("tarefas", mapa["tarefas"],
                     update_cols=("prazo", "concluida", "concluida_em")),
         "commit;",
@@ -275,17 +275,19 @@ def subir_rest(mapa):
     existentes = {(a["caso_id"], a["criado_em"][:10], md5(a["texto"])) for a in app_rows}
     mapa["andamentos"] = anti_eco(mapa["andamentos"], existentes)
 
+    # eventos deduplicam pela trinca caso+tipo+data (o app também cria eventos,
+    # com id próprio — conflitar por id geraria violação do índice de dedupe)
     ordem = [
-        ("clientes", "merge-duplicates"),
-        ("casos", "merge-duplicates"),
-        ("andamentos", "ignore-duplicates"),
-        ("eventos", "ignore-duplicates"),
-        ("tarefas", "merge-duplicates"),
+        ("clientes", "merge-duplicates", "id"),
+        ("casos", "merge-duplicates", "id"),
+        ("andamentos", "ignore-duplicates", "id"),
+        ("eventos", "ignore-duplicates", "caso_id,tipo,data_hora"),
+        ("tarefas", "merge-duplicates", "id"),
     ]
-    for tabela, res in ordem:
+    for tabela, res, conflito in ordem:
         linhas = resolver(mapa[tabela])
         for i in range(0, len(linhas), 500):
-            _rest(url, chave, "POST", f"/rest/v1/{tabela}?on_conflict=id",
+            _rest(url, chave, "POST", f"/rest/v1/{tabela}?on_conflict={conflito}",
                   linhas[i:i + 500],
                   prefer=f"resolution={res},return=minimal")
         print(f"  {tabela}: {len(linhas)} linhas enviadas")
