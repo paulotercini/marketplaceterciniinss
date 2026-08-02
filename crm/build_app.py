@@ -96,6 +96,7 @@ TEMPLATE = r"""<!doctype html>
   .campo label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--cinza);margin-bottom:2px}
   .campo .valor{font-weight:600;word-break:break-word}
   .campo .valor a{color:var(--azul);text-decoration:none}
+  .olho{border:none;background:none;cursor:pointer;font-size:13px}
   .bloco-pre{background:var(--fundo);border:1px solid var(--borda);border-radius:8px;padding:10px 12px;margin-top:12px;white-space:pre-wrap;font-size:13px}
   .caso{border:1px solid var(--borda);border-radius:8px;padding:11px 14px;margin-bottom:8px;cursor:pointer}
   .caso:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
@@ -353,7 +354,8 @@ function abrirFicha(id){
   </div>
   <div class="painel" data-p="0">
     <div class="campos">
-      <div class="campo"><label>CPF</label><div class="valor">${fmtCpf(t.cpf)}</div></div>
+      <div class="campo"><label>CPF</label><div class="valor">${fmtCpf(t.cpf)}
+        ${t.cpf?`<button class="olho" title="copiar CPF" onclick="copiar('${t.cpf}')">📋</button>`:""}</div></div>
       <div class="campo"><label>Data de nascimento</label><div class="valor">${t.dn?t.dn.slice(0,2)+"."+t.dn.slice(2,4)+"."+t.dn.slice(4):"—"}</div></div>
       <div class="campo"><label>Telefone</label><div class="valor">${t.telefone?`<a href="https://wa.me/55${t.telefone.replace(/\D/g,"")}" target="_blank">💬 ${esc(t.telefone)}</a>`:"—"}</div></div>
       <div class="campo"><label>Nº processo</label><div class="valor">${esc(t.processo||"—")}</div></div>
@@ -394,6 +396,11 @@ function abrirFicha(id){
   });
 }
 function fecharFicha(){ selecionada=null; document.getElementById("app").classList.remove("detalhe-aberto"); render(); }
+async function copiar(texto){
+  try{ await navigator.clipboard.writeText(texto); }
+  catch{ const ta=document.createElement("textarea"); ta.value=texto;
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); }
+}
 
 let timer=null;
 document.getElementById("busca").addEventListener("input",e=>{
