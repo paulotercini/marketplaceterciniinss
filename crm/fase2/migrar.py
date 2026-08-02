@@ -35,6 +35,7 @@ LISTA_FASE = {
     "🖥 Conselho de Recursos": "conselho",
     "💵 Pagamentos": "pagamento",
     "🙏 Aposentadorias Futuras": "aposentadoria_futura",
+    "💡 Petições Iniciais": "peticao_inicial",
     "🗓 Tarefas com Prazo": "outro",
 }
 LISTA_PARTICULAR = "Tarefas"        # lista pessoal do To Do -> tarefas do Paulo
