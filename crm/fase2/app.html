@@ -1045,11 +1045,20 @@ async function abrirFicha(cliId){
       <div class="campo"><label>Data de nascimento</label><div class="valor">${c.dn?c.dn.slice(0,2)+"."+c.dn.slice(2,4)+"."+c.dn.slice(4):"—"}</div></div>
       <div class="campo"><label>Telefone / WhatsApp</label><div class="valor">${c.telefone?`<a href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank">💬 ${esc(c.telefone)}</a>`:"—"}</div></div>
       <div class="campo"><label>Endereço</label><div class="valor" style="font-weight:400">${esc(c.endereco||"—")}</div></div>
+      <div class="campo"><label>Pasta do cliente</label><div class="valor">
+        <button class="btn-mini" onclick="abrirDrive('${c.id}')" title="abre no Google Drive (navegador)">📁 Drive</button>
+        <button class="btn-mini" onclick="abrirExplorer('${c.id}')" title="abre no Windows Explorer (requer atalho instalado)">🖥 Explorer</button>
+      </div></div>
     </div>
     <div class="form-linha">
       <select id="nc-tipo"><option value="meu_inss">senha Meu INSS</option><option value="gov_br">senha gov.br</option><option value="outro">outra credencial</option></select>
       <input id="nc-valor" placeholder="valor (fica cifrado no banco)">
       <button onclick="novaCred('${c.id}')">Guardar</button>
+    </div>
+    <div class="form-linha">
+      <input id="pd-url" placeholder="colar o link da pasta deste cliente no Drive (opcional — sem link, o 📁 pesquisa pelo nome)"
+        value="${esc((c.campos||{}).pasta_drive||"")}" style="flex:1;min-width:260px">
+      <button onclick="salvarPasta('${c.id}')">Vincular pasta</button>
     </div>
     <p style="margin-top:8px;font-size:12px;color:var(--cinza)">Toda visualização de senha é registrada (quem e quando).</p>
     <div class="form-linha" style="align-items:center">
@@ -1380,6 +1389,24 @@ async function novoModelo(){
     body:JSON.stringify({titulo:t, texto:x, contexto:document.getElementById("nm-ctx").value})});
   D.modelos.push(m); aviso("Modelo salvo"); abrirFicha(clienteAberto);
 }
+// pasta do cliente — Drive (navegador) e Windows Explorer (protocolo crmpasta:)
+function abrirDrive(cliId){
+  const c=D.cliPorId.get(cliId), url=(c.campos||{}).pasta_drive;
+  window.open(url || "https://drive.google.com/drive/search?q="+encodeURIComponent('"'+c.nome+'"'), "_blank");
+}
+function abrirExplorer(cliId){
+  const c=D.cliPorId.get(cliId);
+  location.href="crmpasta:"+encodeURIComponent(c.nome);
+  aviso("Abrindo no Explorer… (precisa do atalho instalado nesta máquina — ver crm/fase2/atalho-explorer)");
+}
+async function salvarPasta(cliId){
+  const c=D.cliPorId.get(cliId), v=document.getElementById("pd-url").value.trim();
+  c.campos={...(c.campos||{}), pasta_drive:v||undefined};
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})});
+  aviso(v?"Pasta vinculada 📁":"Vínculo removido — o 📁 volta a pesquisar pelo nome");
+}
+
 // documentos por benefício -> carta imprimível para o cliente
 function docDe(beneficio){
   if(!beneficio) return null;
