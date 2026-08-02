@@ -532,7 +532,7 @@ function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", null],
     ["mencoes","📥 Menções", D.mencoes.length],
-    ["planejado","🗓️ Planejado", ativos().filter(k=>k.prazo && k.prazo>=hoje()).length],
+    ["planejado","🗓️ Planejado", ativos().filter(k=>k.prazo).length],
     ["minhas","👤 Atribuídas a mim", ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)).length],
     ["importante","⭐ Importante", ativos().filter(k=>k.importante).length],
     ["particulares","📋 Minhas Tarefas", "🔒"],
@@ -741,7 +741,7 @@ function renderMeuDia(){
 }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
-let filtroPlan="7", filtroPlanColab=null;
+let filtroPlan="todas", filtroPlanColab=null;   // Planejado abre mostrando tudo, em seções
 function renderPlanejado(){
   document.getElementById("titulo-lista").textContent="🗓️ Planejado";
   document.getElementById("sub-lista").textContent=
@@ -761,10 +761,22 @@ function renderPlanejado(){
       `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</button>`)).join("");
   base = base.slice().sort((a,b)=>a.prazo<b.prazo?-1:1);
   document.getElementById("ordem").value="prazo";   // agenda em ordem cronológica
+  // seções estilo To Do: vencidas → hoje → amanhã → semana → mais tarde
+  const secoes=[
+    ["🔴 Vencidas",        k=>k.prazo<hoje()],
+    ["🟡 Vencem hoje",     k=>k.prazo===hoje()],
+    ["🟢 Amanhã",          k=>k.prazo===em(1)],
+    ["🗓 Próximos 7 dias", k=>k.prazo>em(1) && k.prazo<=em(7)],
+    ["📅 Mais tarde",      k=>k.prazo>em(7)],
+  ];
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chipsPer}</div><div class="filtros">${chipsCol}</div>`
     + `<div class="meio-sub">${base.length} data(s) neste filtro</div>`
-    + grupoClientes(base).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+    + secoes.map(([tit,f])=>{
+        const g=base.filter(f);
+        return g.length?`<h3 class="secao">${tit} (${g.length})</h3>`
+          + grupoClientes(g).map(([c,ks])=>cartaoCliente(c,ks)).join(""):"";
+      }).join("")
     + (base.length? "" : "<p class='meio-sub'>Nada por aqui — agenda limpa. ✨</p>");
   document.querySelectorAll("[data-per]").forEach(b=>b.onclick=()=>{ filtroPlan=b.dataset.per; render(); });
   document.querySelectorAll("[data-pcol]").forEach(b=>b.onclick=()=>{ filtroPlanColab=b.dataset.pcol||null; render(); });
