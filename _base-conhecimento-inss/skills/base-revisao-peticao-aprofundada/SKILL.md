@@ -188,6 +188,8 @@ Primeiro, a leitura adversária. Antes de fechar o relatório, despachar a peça
 
 Segundo, a verificação de citações em lote. Quando a peça tiver três ou mais citações não confirmadas no catálogo local, despachar o lote ao agente `base-conhecimento-inss:verificador-precedentes`, que confere existência, vigência e tese literal em fonte oficial e devolve classificação por item. Dúvida isolada (uma ou duas citações) segue o fluxo normal dos Níveis 1 a 5 com a Regra de Comet.
 
+Terceiro, a banca máxima (Onda 100). Em peça de ALTO RISCO, despachar ao agente `base-conhecimento-inss:black-team` DEPOIS da revisão desta skill e do red-team, entregando a peça, o inventário de provas, o CNIS e os DOIS relatórios anteriores como insumo. Gatilhos objetivos de alto risco, recurso a STJ, STF ou TNU, ação rescisória, tese nova ou minoritária, revisão de grande valor, caso com derrota anterior no mesmo objeto, ou pedido expresso do usuário (black team, banca completa, conferência máxima). O black-team simula sete lentes especializadas com pareceres independentes antes do cruzamento, delibera em três rodadas e devolve veredito em três faixas com divergências declaradas. Os achados dele entram no relatório final com a mesma disciplina de recepção (verificar antes de aplicar, corrigir na causa raiz).
+
 Os agentes somente verificam e reportam, nunca editam a peça. Toda correção decorrente dos relatórios deles é aplicada pela sessão principal, com nota datada. Sem os agentes disponíveis na sessão, executar as duas frentes inline, com as mesmas regras.
 
 ## 5 CAMADAS DE REVISÃO
