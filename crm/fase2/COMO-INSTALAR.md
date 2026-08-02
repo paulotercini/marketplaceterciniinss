@@ -96,6 +96,10 @@ segunda a sábado). Para ligar, basta cadastrar dois segredos novos no GitHub:
    repository secret**:
    - `SUPABASE_URL` = o Project URL
    - `SUPABASE_SERVICE_KEY` = a service_role key
+   - `SENHA_PADRAO_MEUINSS` = a senha padrão do escritório (opcional — é a
+     senha que o item "Padrão" no checklist do To Do representa; a
+     sincronização a grava como senha Meu INSS do cliente. Nunca no código:
+     o repositório é público.)
    (o `GRAPH_REFRESH_TOKEN` já existe — é o mesmo do monitor do DOU.)
 2. Pronto. Enquanto os segredos não existirem, o workflow roda e se pula sem
    erro. Para testar na hora: **Actions → CRM — sincronização To Do ↔ banco →

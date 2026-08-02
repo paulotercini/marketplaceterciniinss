@@ -62,6 +62,9 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          # senha padrão do escritório (item "Padrão" no checklist do To Do) —
+          # opcional; sem ela os itens "Padrão" são só ignorados
+          SENHA_PADRAO_MEUINSS: ${{ secrets.SENHA_PADRAO_MEUINSS }}
         run: python crm/fase2/migrar.py
       # crm/data/crm.json contém dados sensíveis: fica só no runner efêmero —
       # NUNCA subir como artefato nem commitar.

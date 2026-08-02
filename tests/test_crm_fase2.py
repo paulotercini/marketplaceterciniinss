@@ -136,3 +136,65 @@ def test_parceria_passa_do_json_para_o_caso():
 
 def test_sql_val_lista_vira_jsonb():
     assert migrar._sql_val(["210", "211"]) == "'[\"210\", \"211\"]'::jsonb"
+
+
+# ── garimpo do checklist (dados soltos -> campos estruturados) ────────────
+
+def test_classificar_checklist_padrao_e_senhas():
+    f = migrar.classificar_item_checklist
+    assert f("Padrão") == ("senha_padrao", None)
+    assert f("padrão.") == ("senha_padrao", None)
+    assert f("Senha meu inss: Abc123*") == ("senha", "Abc123*")
+    assert f("V4c3x2z1*") == ("senha", "V4c3x2z1*")          # token solto letra+número
+    assert f("Pedir PPP na empresa")[0] != "senha"
+
+
+def test_classificar_checklist_telefone_cpf_protocolo():
+    f = migrar.classificar_item_checklist
+    assert f("16-99711 2233") == ("telefone", "16997112233")
+    assert f("(16) 3722-1234") == ("telefone", "1637221234")
+    assert f("000.000.001-91") == ("cpf", "00000000191")
+    # número do próprio CPF repetido no checklist não vira protocolo
+    assert f("00000000191", cpf_cliente="00000000191") == ("dado", None)
+    assert f("210123456789") == ("protocolo", "210123456789")
+    assert f("#Laís") == ("parceria", "Laís")
+    assert f("#B31") == ("dado", None)                        # espécie, não parceria
+
+
+def test_classificar_checklist_nome_de_parente():
+    tipo, (rel, nome) = migrar.classificar_item_checklist("Esposa Fulana de Tal")
+    assert tipo == "nome" and rel == "esposa" and nome == "Fulana de Tal"
+
+
+def test_mapear_garimpa_checklist_para_campos(monkeypatch):
+    monkeypatch.setattr(migrar, "SENHA_PADRAO", "S3nh4Pdr*")
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana de Tal #00000000191", cpf="00000000191", id="a",
+          checklist=[{"texto": "Padrão", "feito": False},
+                     {"texto": "16-99711 2233", "feito": False},
+                     {"texto": "210123456789", "feito": False},
+                     {"texto": "#Laís", "feito": False},
+                     {"texto": "Marido Beltrano da Silva", "feito": False},
+                     {"texto": "Pedir PPP na empresa", "feito": False}]),
+        t("👪 Judicial", "Beltrano da Silva #00000000272", cpf="00000000272", id="b"),
+    ]))
+    (cred,) = m["credenciais"]
+    assert cred["tipo"] == "meu_inss" and cred["valor"] == "S3nh4Pdr*"
+    fulana = next(c for c in m["clientes"] if c["nome"].startswith("Fulana"))
+    assert fulana["telefone"] == "16997112233"
+    caso = next(k for k in m["casos"] if k["cliente_id"] == fulana["id"])
+    assert "210123456789" in caso["protocolos"] and caso["parceria"] == "Laís"
+    (vinc,) = m["vinculos"]
+    assert vinc["relacao"] == "marido"
+    assert {vinc["cliente_id"], vinc["ligado_a"]} == \
+        {c["id"] for c in m["clientes"]}
+    assert [tf["titulo"] for tf in m["tarefas"]] == ["Pedir PPP na empresa"]
+
+
+def test_mapear_sem_secret_ignora_padrao(monkeypatch):
+    monkeypatch.setattr(migrar, "SENHA_PADRAO", None)
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191",
+          checklist=[{"texto": "Padrão", "feito": False}]),
+    ]))
+    assert m["credenciais"] == [] and m["tarefas"] == []
