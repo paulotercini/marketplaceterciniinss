@@ -599,6 +599,14 @@ encadeie** se houver pendência bloqueante, aponte o que falta e pare.
   base64 pelo contexto** (resolve a fricção do `create_file` do MCP com .docx). Requer
   token com **escopo de escrita** (`gdrive_client.SCOPE = .../auth/drive`); trocar o
   escopo exige reautenticar uma vez com `gdrive_authcode.py` (`url` e depois `exchange`).
+- **Drive fora do ar com `invalid_grant` ("Token has been expired or revoked")?** O
+  problema é a tela de permissão OAuth em **"Testing"**, situação em que o Google expira o
+  refresh token **em 7 dias**. Publique o app (**Em produção**) e **refaça o login uma
+  vez**, porque o prazo se fixa pelo status da EMISSÃO e publicar não converte token
+  antigo. Passo a passo em `GDRIVE_SETUP.md`, seção 3.1. Resolvido em 02.08.2026, o app
+  está em produção. Sintoma prático da queda, PDF acima de ~10 MB deixa de abrir por
+  qualquer via (o conector MCP trunca e o `gdrive_download.py` retorna HTTP 400), o que
+  inviabiliza ler PA, autos e laudo, e nenhuma peça sobe para a pasta do cliente.
 
 ## Atribuição real das tarefas (assignee) via Windows-MCP
 
