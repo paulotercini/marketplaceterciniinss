@@ -95,9 +95,9 @@
   .avatares .avatar{margin-left:-6px;border:2px solid var(--branco)}
   .acao-card{border:none;background:none;font-size:15px;cursor:pointer;color:#c8c6c4;flex:none}
   .acao-card.on{color:#eaa300}
-  .acao-card.sol.on{color:var(--laranja)}
-  .acao-card.fogo{filter:grayscale(1);opacity:.4}
-  .acao-card.fogo.on{filter:none;opacity:1}
+  /* emojis não obedecem a cor do CSS — apagado = cinza via grayscale */
+  .acao-card.sol,.acao-card.fogo{filter:grayscale(1);opacity:.35}
+  .acao-card.sol.on,.acao-card.fogo.on{filter:none;opacity:1}
   .chip.urg{background:#fbeaea;color:var(--vermelho)}
   .nova{display:flex;gap:8px;align-items:center;background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 12px;margin-bottom:12px}
   .nova input{flex:1;border:none;outline:none;font-size:14px}
