@@ -219,6 +219,8 @@
   <nav class="sidebar">
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
       <div><strong id="u-nome"></strong><div style="font-size:12px;color:var(--cinza)">conectado</div></div>
+      <button id="btn-som" title="ligar/desligar o som de conclusão"
+        style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
     <div class="sep"></div>
     <button class="novo-cli" id="btn-novo-cli">➕ Novo Cliente</button>
@@ -264,10 +266,31 @@ let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 let visao = "meudia", filtroColab = null, buscaTxt = "", clienteAberto = null, abaAtiva = 2;
 
-function aviso(msg){
+// som de retorno, como no To Do (gerado na hora — sem arquivo de áudio).
+// "plim" duplo ao concluir; tique curto nos avisos. 🔔 na lateral silencia.
+function somLigado(){ return localStorage.getItem("crm_som")!=="off"; }
+function plim(tipo){
+  if(!somLigado()) return;
+  try{
+    const ctx = plim.ctx || (plim.ctx = new (window.AudioContext||window.webkitAudioContext)());
+    if(ctx.state==="suspended") ctx.resume();
+    const t0=ctx.currentTime;
+    const notas = tipo==="suave" ? [[740,0,.09,.10]] : [[587,0,.12,.16],[880,.10,.20,.18]];
+    notas.forEach(([f,dt,dur,vol])=>{
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.type="sine"; o.frequency.value=f;
+      g.gain.setValueAtTime(0.0001,t0+dt);
+      g.gain.exponentialRampToValueAtTime(vol,t0+dt+.015);
+      g.gain.exponentialRampToValueAtTime(0.0001,t0+dt+dur);
+      o.connect(g).connect(ctx.destination); o.start(t0+dt); o.stop(t0+dt+dur+.05);
+    });
+  }catch(e){}
+}
+function aviso(msg, som=true){
   const el = document.getElementById("aviso");
   el.textContent = msg; el.classList.add("on");
   setTimeout(()=>el.classList.remove("on"), 2600);
+  if(som) plim("suave");
 }
 
 // ── API (PostgREST + GoTrue por fetch, com paginação e refresh) ───────────
@@ -499,6 +522,14 @@ function montarSidebar(){
     ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && e.data_hora>=hoje()).length],
     ["dashboard","📊 Dashboard", null],
   ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}"><span class="rotulo">${rot}</span>${n!=null?`<span class="cont">${n}</span>`:""}</div>`).join("");
+  const bSom=document.getElementById("btn-som");
+  bSom.textContent = somLigado()?"🔔":"🔕";
+  bSom.onclick=()=>{
+    localStorage.setItem("crm_som", somLigado()?"off":"on");
+    bSom.textContent = somLigado()?"🔔":"🔕";
+    if(somLigado()) plim();
+    aviso(somLigado()?"Som ligado 🔔":"Som desligado 🔕", false);
+  };
   document.getElementById("btn-novo-cli").onclick=()=>{
     document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
     visao="novocliente"; fecharFicha(false); render();
@@ -716,6 +747,7 @@ function ligarTarefas(){
     e.stopPropagation();
     const t = D.tarefas.find(x=>x.id===el.dataset.conclui);
     t.concluida = !t.concluida;
+    if(t.concluida) plim(); else aviso("Conclusão desfeita ↩", false);
     await api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({concluida:t.concluida, concluida_em:t.concluida?new Date().toISOString():null})});
     render();
@@ -725,11 +757,16 @@ function renderParticulares(){
   document.getElementById("titulo-lista").textContent="📋 Minhas Tarefas";
   document.getElementById("sub-lista").textContent="🔒 Só você vê esta lista. Tarefas com prazo de hoje aparecem no seu Meu Dia.";
   const minhas = D.tarefas.filter(t=>t.particular_de===eu.id)
-    .sort((a,b)=>(a.concluida?1:0)-(b.concluida?1:0) || ((a.prazo||"9999")<(b.prazo||"9999")?-1:1));
+    .sort((a,b)=>((a.prazo||"9999")<(b.prazo||"9999")?-1:1));
+  const abertas = minhas.filter(t=>!t.concluida);
+  const feitas = minhas.filter(t=>t.concluida)
+    .sort((a,b)=>(a.concluida_em||"")<(b.concluida_em||"")?1:-1);
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="nova"><input id="nt-titulo" placeholder="＋ Adicionar tarefa… (entende 'amanhã', 'sexta', 'dia 15')">
      <input id="nt-prazo" type="date"><button onclick="novaTarefa()">Adicionar</button></div>`
-    + minhas.map(cartaoTarefa).join("");
+    + abertas.map(cartaoTarefa).join("")
+    + (feitas.length?`<details style="margin-top:12px"><summary style="cursor:pointer;color:var(--cinza);padding:6px 2px">✔ Concluídas (${feitas.length}) — concluiu por engano? Abra e clique na bolinha para desfazer</summary>
+        ${feitas.map(cartaoTarefa).join("")}</details>`:"");
   ligarTarefas();
   document.getElementById("nt-titulo").onkeydown=e=>{ if(e.key==="Enter") novaTarefa(); };
 }
@@ -1475,7 +1512,9 @@ function checklistCaso(k){
   return `<div style="margin-top:10px">
     ${st.length?`<div class="meio-sub">Checklist — ${feitas} de ${st.length}</div>`:""}
     ${!st.length&&cklDe(k.beneficio)?`<button class="btn-mini" onclick='aplicarChecklistCaso(D.casoPorId.get("${k.id}")).then(()=>{abaAtiva=1;abrirFicha(clienteAberto);})'>📋 Aplicar checklist do benefício</button>`:""}
-    ${st.map(t=>`<div class="cl ${t.concluida?"feito":""}"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span></div>`).join("")}
+    ${st.filter(t=>!t.concluida).map(t=>`<div class="cl"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span></div>`).join("")}
+    ${feitas?`<details><summary style="cursor:pointer;color:var(--cinza);font-size:12px;padding:2px 0">✔ Concluídas (${feitas}) — clique na caixinha para desfazer</summary>
+      ${st.filter(t=>t.concluida).map(t=>`<div class="cl feito"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span></div>`).join("")}</details>`:""}
     <div class="form-linha"><input id="nsub-${k.id}" placeholder="＋ item do checklist deste caso" style="flex:1"
       onkeydown="if(event.key==='Enter')novaSubtarefa('${k.id}')">
     <button onclick="novaSubtarefa('${k.id}')">Adicionar</button></div>
@@ -1492,6 +1531,7 @@ function ligarChecklistFicha(){
   document.querySelectorAll("[data-subt]").forEach(el=>el.onclick=async()=>{
     const t=D.tarefas.find(x=>x.id===el.dataset.subt); if(!t) return;
     t.concluida=!t.concluida;
+    if(t.concluida) plim(); else aviso("Conclusão desfeita ↩", false);
     await api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({concluida:t.concluida, concluida_em:t.concluida?new Date().toISOString():null})});
     abaAtiva=1; abrirFicha(clienteAberto);
