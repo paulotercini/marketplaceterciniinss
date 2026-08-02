@@ -7,8 +7,8 @@
 <style>
   :root{
     /* proposta visual aprovada: neutros CINZA, um azul só para o "sistema" */
-    --azul:#2B5FC7; --azul-escuro:#234E9E; --fundo:#F3F4F6; --lateral:#EBEDF0;
-    --texto:#25272B; --cinza:#5B6069; --borda:#E2E4E8; --branco:#fff;
+    --azul:#2B5FC7; --azul-escuro:#234E9E; --fundo:#E8EAEE; --lateral:#23262E;
+    --texto:#25272B; --cinza:#5B6069; --borda:#D9DCE1; --branco:#fff;
     --verde:#1E6F50; --laranja:#B4530A; --vermelho:#B3261E; --roxo:#5C2E91;
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif}
@@ -16,7 +16,7 @@
   button{font-family:inherit}
 
   /* login */
-  .login{height:100vh;display:flex;align-items:center;justify-content:center;background:var(--lateral)}
+  .login{height:100vh;display:flex;align-items:center;justify-content:center;background:var(--fundo)}
   .login form{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:30px;width:340px;display:flex;flex-direction:column;gap:10px}
   .login h1{font-size:18px;color:var(--azul-escuro)}
   .login input{padding:10px;border:1px solid var(--borda);border-radius:8px;font-size:14px}
@@ -29,8 +29,8 @@
   /* ficha aberta = modo 4 colunas: o menu recolhe sozinho para ícones */
   .app.detalhe-aberto{grid-template-columns:58px minmax(290px,28%) minmax(540px,1fr)}
 
-  .sidebar{background:var(--lateral);border-right:1px solid var(--borda);overflow-y:auto;overflow-x:hidden;padding:12px 0}
-  #btn-lateral{display:block;margin:0 12px 8px;border:none;background:none;font-size:17px;cursor:pointer;color:var(--cinza)}
+  .sidebar{background:var(--lateral);border-right:1px solid var(--lateral);overflow-y:auto;overflow-x:hidden;padding:12px 0;color:#E8EAED}
+  #btn-lateral{display:block;margin:0 12px 8px;border:none;background:none;font-size:17px;cursor:pointer;color:#9AA0B0}
   /* menu recolhido (manual ou automático com a ficha aberta): só os ícones */
   .app.mini-lateral .sidebar .txt, .app.detalhe-aberto .sidebar .txt,
   .app.mini-lateral .sidebar .grupo h3, .app.detalhe-aberto .sidebar .grupo h3,
@@ -44,7 +44,7 @@
   .app.mini-lateral .sidebar .novo-cli, .app.detalhe-aberto .sidebar .novo-cli{width:34px;margin:0 auto 10px;padding:7px 0}
   .app.mini-lateral .sidebar .usuario, .app.detalhe-aberto .sidebar .usuario{justify-content:center}
   /* coluna de casos dentro da ficha (3ª coluna): escolhe o caso, a 4ª mostra o andamento dele */
-  .col-casos{width:186px;flex:none;border-right:1px solid var(--borda);background:#E4E6EA;overflow-y:auto;padding:10px 8px}
+  .col-casos{width:186px;flex:none;border-right:1px solid var(--borda);background:#DCDFE4;overflow-y:auto;padding:10px 8px}
   .col-casos .cc-tit{font-size:11px;font-weight:700;color:var(--cinza);text-transform:uppercase;letter-spacing:.4px;padding:2px 6px 7px}
   .cc-item{border:1px solid var(--borda);border-radius:8px;padding:7px 9px;margin-bottom:6px;cursor:pointer;background:var(--branco)}
   .cc-item:hover{box-shadow:0 2px 6px rgba(0,0,0,.08)}
@@ -66,9 +66,11 @@
   .btn-res{padding:8px 14px;border:1px solid var(--borda);border-radius:8px;background:var(--fundo);cursor:pointer;font-weight:600}
   .btn-res:hover{background:#e8f1fb}
   .usuario{display:flex;align-items:center;gap:10px;padding:2px 16px 10px}
-  .usuario .sair{margin-left:auto;border:none;background:none;color:var(--cinza);cursor:pointer;font-size:12px}
+  .usuario .sair{margin-left:auto;border:none;background:none;color:#9AA0B0;cursor:pointer;font-size:12px}
+  .sidebar .usuario div div{color:#9AA0B0!important}
   .busca{margin:0 12px 14px;position:relative}
-  .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid var(--borda);border-radius:6px;font-size:14px;background:var(--branco)}
+  .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid rgba(255,255,255,.18);border-radius:6px;font-size:14px;background:rgba(255,255,255,.10);color:#E8EAED}
+  .busca input::placeholder{color:#9AA0B0}
   .novo-cli{display:block;margin:0 12px 10px;width:calc(100% - 24px);padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
   .novo-cli:hover{background:var(--azul-escuro)}
   .sug{border:1px solid var(--borda);border-left:4px solid #8a5cf6;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:var(--branco)}
@@ -87,14 +89,14 @@
   .exig strong{color:var(--vermelho)}
   .chip.exig-chip{background:#fbeaea;color:var(--vermelho)}
   .busca::before{content:"🔍";position:absolute;left:9px;top:7px;font-size:13px;opacity:.6}
-  .grupo h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--cinza);padding:8px 16px 4px}
-  .lista-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;border-left:3px solid transparent}
-  .lista-item:hover{background:#e3eefa}
-  .lista-item.ativa{background:#d6e6f7;border-left-color:var(--azul);font-weight:600}
+  .grupo h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#9AA0B0;padding:8px 16px 4px}
+  .lista-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;border-left:3px solid transparent;color:#E8EAED}
+  .lista-item:hover{background:rgba(255,255,255,.07)}
+  .lista-item.ativa{background:rgba(255,255,255,.13);border-left-color:#fff;font-weight:600}
   .lista-item .rotulo{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .lista-item .cont{margin-left:auto;font-size:12px;color:var(--cinza);background:var(--branco);border-radius:10px;padding:1px 8px}
-  .lista-item .priv{margin-left:auto;font-size:10px;color:var(--roxo);background:#efe6f7;border-radius:8px;padding:1px 6px}
-  .sep{border-top:1px solid var(--borda);margin:8px 12px}
+  .lista-item .cont{margin-left:auto;font-size:12px;color:#CFD3DA;background:rgba(255,255,255,.12);border-radius:10px;padding:1px 8px}
+  .lista-item .priv{margin-left:auto;font-size:10px;color:#D8C6EE;background:rgba(255,255,255,.12);border-radius:8px;padding:1px 6px}
+  .sep{border-top:1px solid rgba(255,255,255,.12);margin:8px 12px}
   .avatar{width:28px;height:28px;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none;background:var(--azul)}
   .avatar.mini{width:22px;height:22px;font-size:10px}
 
@@ -293,7 +295,7 @@
     <button class="novo-cli" id="btn-novo-cli" title="Novo Cliente">➕<span class="txt"> Novo Cliente</span></button>
     <div class="busca"><input id="busca" placeholder="Pesquisar nome, CPF, processo, protocolo…" style="padding-right:26px">
       <button id="busca-x" title="limpar pesquisa"
-        style="display:none;position:absolute;right:6px;top:6px;border:none;background:none;font-size:14px;cursor:pointer;color:var(--cinza)">✕</button></div>
+        style="display:none;position:absolute;right:6px;top:6px;border:none;background:none;font-size:14px;cursor:pointer;color:#CFD3DA">✕</button></div>
     <div class="grupo" id="grupo-dinamicas"></div>
     <div class="sep"></div>
     <div class="grupo"><h3>Listas do escritório</h3><div id="grupo-fases"></div></div>
