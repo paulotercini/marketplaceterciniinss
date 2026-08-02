@@ -134,7 +134,6 @@ def mapear(dados):
     """crm.json -> dicionário de linhas por tabela (ids determinísticos)."""
     clientes, casos, andamentos, eventos, tarefas = {}, {}, {}, {}, {}
     credenciais, vinculos, pend_vinculos = {}, {}, []
-    tarefas_docs = {}
     pulados, sem_senha_padrao = {}, 0
 
     for t in dados["tarefas"]:
@@ -185,17 +184,6 @@ def mapear(dados):
         }
 
         for a in t["andamentos"]:
-            m_docs = RE_DOCS_SOLICITADOS.search(a["texto"])
-            if m_docs:
-                for it in [x.strip().rstrip(".") for x in re.split(r"[;,]", m_docs.group(1))][:15]:
-                    if not it or len(it) > 80:
-                        continue
-                    did = uid("subtarefa", kid, md5("📄 " + it))
-                    tarefas_docs.setdefault(did, {
-                        "id": did, "caso_id": kid, "titulo": "📄 " + it,
-                        "prazo": None, "concluida": False,
-                        "concluida_em": None, "particular_de": None,
-                    })
             aid = uid("andamento", kid, a["data"], md5(a["texto"]))
             andamentos[aid] = {
                 "id": aid, "caso_id": kid,
@@ -291,8 +279,6 @@ def mapear(dados):
         "tarefas": list(tarefas.values()),
         "credenciais": list(credenciais.values()),
         "vinculos": list(vinculos.values()),
-        # inserção única (do nothing): concluídas no app não são reabertas
-        "tarefas_docs": [t for tid, t in tarefas_docs.items() if tid not in tarefas],
         "pulados": pulados,
     }
 
@@ -317,6 +303,27 @@ def remapear_casos(mapa, task_para_id_existente):
             if tf.get("caso_id"):
                 tf["caso_id"] = troca.get(tf["caso_id"], tf["caso_id"])
     return len(troca)
+
+
+def tarefas_docs_de(andamentos):
+    """Andamentos com "documentos solicitados: X; Y" viram itens 📄 do
+    Checklist de Documentos Solicitados (ids determinísticos, inserção única).
+    Chamar DEPOIS do anti-eco: o que o app já criou não é recriado."""
+    out = {}
+    for a in andamentos:
+        m = RE_DOCS_SOLICITADOS.search(a["texto"])
+        if not m:
+            continue
+        for it in [x.strip().rstrip(".") for x in re.split(r"[;,]", m.group(1))][:15]:
+            if not it or len(it) > 80:
+                continue
+            did = uid("subtarefa", a["caso_id"], md5("📄 " + it))
+            out.setdefault(did, {
+                "id": did, "caso_id": a["caso_id"], "titulo": "📄 " + it,
+                "prazo": None, "concluida": False,
+                "concluida_em": None, "particular_de": None,
+            })
+    return list(out.values())
 
 
 def anti_eco(linhas, existentes_app):
@@ -433,6 +440,7 @@ def subir_rest(mapa):
                      "/rest/v1/andamentos?origem=eq.app&select=caso_id,criado_em,texto") or []
     existentes = {(a["caso_id"], a["criado_em"][:10], md5(a["texto"])) for a in app_rows}
     mapa["andamentos"] = anti_eco(mapa["andamentos"], existentes)
+    mapa["tarefas_docs"] = tarefas_docs_de(mapa["andamentos"])
 
     # eventos deduplicam pela trinca caso+tipo+data (o app também cria eventos,
     # com id próprio — conflitar por id geraria violação do índice de dedupe)
@@ -473,6 +481,7 @@ def main(argv=None):
 
     if args.sql:
         # anti-eco não se aplica na 1ª carga (banco vazio)
+        mapa["tarefas_docs"] = tarefas_docs_de(mapa["andamentos"])
         pathlib.Path(args.sql).write_text(gerar_sql(mapa), encoding="utf-8")
         print(f"SQL gravado em {args.sql} — rode com psql ou no SQL Editor.")
     else:
