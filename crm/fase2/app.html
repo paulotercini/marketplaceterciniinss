@@ -1139,6 +1139,7 @@ async function abrirFicha(cliId){
   ]);
   const evs = D.eventos.filter(e=>ks.some(k=>k.id===e.caso_id)).sort((a,b)=>a.data_hora<b.data_hora?1:-1);
   const pgs = D.pagamentos.filter(p=>ks.some(k=>k.id===p.caso_id));
+  const pagK = ks.filter(k=>k.fase==="pagamento");
   const equipe = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))];
 
   const abas=["📇 Dados","⚖️ Casos","📝 Andamentos","🩺 Perícias & Aud.","💰 Pagamentos","💬 Mensagens","👥 Equipe"];
@@ -1154,7 +1155,7 @@ async function abrirFicha(cliId){
     </div>
     <div class="abas">${abas.map((a,i)=>`<button class="aba ${i===abaAtiva?"ativa":""}" data-i="${i}">${a}${
       a.includes("Andamentos")?` (${ands.length})`:a.includes("Casos")?` (${ks.length})`:
-      a.includes("Perícias")&&evs.length?` (${evs.length})`:a.includes("Pagamentos")&&pgs.length?` (${pgs.length})`:""}</button>`).join("")}</div>
+      a.includes("Perícias")&&evs.length?` (${evs.length})`:a.includes("Pagamentos")&&(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>`).join("")}</div>
   </div>
 
   <div class="painel ${abaAtiva===0?"ativo":""}" data-p="0">
@@ -1195,7 +1196,7 @@ async function abrirFicha(cliId){
 
   <div class="painel ${abaAtiva===1?"ativo":""}" data-p="1">
     ${(()=>{
-      const ativosK=ks.filter(k=>k.fase!=="encerrado"), encerrK=ks.filter(k=>k.fase==="encerrado");
+      const ativosK=ks.filter(k=>k.fase!=="encerrado"&&k.fase!=="pagamento"), encerrK=ks.filter(k=>k.fase==="encerrado");
       const bloco=(k,idx,total)=>{
         const ult=ands.filter(a=>a.caso_id===k.id)[0];
         const uco=ult&&D.colPorId.get(ult.autor_id);
@@ -1237,7 +1238,10 @@ async function abrirFicha(cliId){
         </div>`;
       };
       return ativosK.map((k,i)=>bloco(k,i,ativosK.length)).join("")
-        + (ativosK.length?"":"<p class='meio-sub'>Nenhum caso em andamento.</p>")
+        + (ativosK.length||pagK.length?"":"<p class='meio-sub'>Nenhum caso em andamento.</p>")
+        + (pagK.length?`<div class="caso" style="border-left:3px solid var(--verde);display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <span>💰 ${pagK.length===1?"1 caso já venceu as fases e está em <strong>recebimento</strong>":pagK.length+" casos já venceram as fases e estão em <strong>recebimento</strong>"}</span>
+            <button class="btn-mini" onclick="irAba(4)">ver na aba Pagamentos →</button></div>`:"")
         + (encerrK.length?`<details style="margin-top:10px"><summary style="cursor:pointer;color:var(--cinza)">✔ Casos encerrados (${encerrK.length})</summary>
             ${encerrK.map((k,i)=>bloco(k,i,encerrK.length)).join("")}</details>`:"");
     })()}
@@ -1271,13 +1275,39 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="painel ${abaAtiva===4?"ativo":""}" data-p="4">
+    ${(()=>{
+      if(!pagK.length) return "";
+      return `<p class="meio-sub">Casos em <strong>recebimento</strong> — já venceram as fases; falta o dinheiro entrar:</p>`
+        + pagK.map(k=>{
+        const ult=ands.filter(a=>a.caso_id===k.id)[0];
+        const uco=ult&&D.colPorId.get(ult.autor_id);
+        const lan=pgs.filter(p=>p.caso_id===k.id);
+        return `<div class="caso" style="border-left:3px solid var(--verde)">
+        <div class="rotulo-caso">💰 Em recebimento · veio da lista ${esc(k.origem_lista||"—")} do To Do</div>
+        <div class="cab" style="margin-top:2px">
+          <span class="titulo-caso">${esc(tituloCaso(k))}</span>
+          ${k.nb?`<span class="chip neutro">NB ${esc(k.nb)}</span>`:""}
+          ${k.processo?`<span class="chip neutro">proc. ${esc(k.processo)}</span>`:""}
+          ${k.resultado?`<span class="chip fase">${esc(k.resultado)}</span>`:""}
+        </div>
+        <div class="form-linha" style="align-items:center">
+          <span class="lembrar-caixa" title="quando conferir se o pagamento saiu">🗓 Lembrar em
+            <input type="date" value="${k.prazo||""}" data-prazo="${k.id}"></span>
+          <label style="font-size:12px;color:var(--cinza)">Fase:
+          <select data-fase="${k.id}">${Object.entries(NOME_FASE).map(([f,n])=>`<option value="${f}" ${k.fase===f?"selected":""}>${n}</option>`).join("")}</select></label>
+          ${lan.length?"":`<span style="font-size:12px;color:var(--cinza)">nenhum valor lançado — lance abaixo ↓</span>`}
+        </div>
+        ${ult?`<div class="ult-and">Último andamento: ${fmt(ult.criado_em.slice(0,10))}${uco?" ("+esc(uco.nome)+")":""} — ${esc(ult.texto.slice(0,110))}${ult.texto.length>110?"…":""}</div>`:""}
+        </div>`;}).join("")
+        + `<p class="meio-sub" style="margin-top:12px">Lançamentos (RPV, precatório, honorários…):</p>`;
+    })()}
     ${pgs.map(p=>`<div class="pgto"><span class="desc">${esc(p.descricao)}</span>
       <span class="chip ${p.status==="recebido"?"fase":p.status==="aberto"?"prazo":"neutro"}">${esc(p.status)}${p.vencimento?" · "+fmt(p.vencimento):""}</span>
       <span class="valor">${moeda(p.valor)}</span>
       ${p.status==="aberto"?`<button class="olho" title="marcar recebido" data-recebe="${p.id}">✔</button>`:""}</div>`).join("")
       ||"<p class='meio-sub'>Nenhum lançamento — o financeiro do caso vive aqui (a antiga lista 💵 Pagamentos).</p>"}
     <div class="form-linha">
-      <select id="np-caso">${ks.map(k=>`<option value="${k.id}">${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>
+      <select id="np-caso">${ks.map(k=>`<option value="${k.id}" ${k.fase==="pagamento"&&k.id===(pagK[0]||{}).id?"selected":""}>${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>
       <input id="np-desc" placeholder="descrição (RPV, honorários…)">
       <input id="np-valor" type="number" step="0.01" placeholder="R$">
       <input id="np-venc" type="date"><button onclick="novoPgto()">Lançar</button>
@@ -1337,7 +1367,8 @@ async function abrirFicha(cliId){
     if(s.value==="encerrado") k.encerrado_em=new Date().toISOString();
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({fase:k.fase, encerrado_em:k.encerrado_em||null})});
-    aviso("Fase atualizada"); montarSidebar();
+    aviso(s.value==="pagamento"?"Caso movido para a aba 💰 Pagamentos":"Fase atualizada");
+    montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
   });
   document.querySelectorAll("[data-resultado]").forEach(s=>s.onchange=async()=>{
     const k=D.casoPorId.get(s.dataset.resultado); k.resultado=s.value||null;
@@ -1383,14 +1414,19 @@ async function abrirFicha(cliId){
   ligarChecklistFicha();
 }
 
+// muda a aba ativa da ficha por código (ex.: atalho "ver na aba Pagamentos")
+function irAba(i){ const b=document.querySelector(`.aba[data-i="${i}"]`); if(b) b.click(); }
+
 // identidade didática do caso: "o que é" (benefício) + "onde está" (fase)
 function tituloCaso(k){
   return k.beneficio ? k.beneficio : "Benefício não definido";
 }
-const TRILHA=["escritorio","inss","conselho","judicial","pagamento"];
+const TRILHA=["escritorio","inss","conselho","judicial"];
 function trilhaCaso(k){
   if(k.fase==="encerrado")
     return `<div class="fases-trilha"><span class="fase-et feita">✔ Encerrado${k.resultado?" — "+esc(k.resultado):""}</span></div>`;
+  if(k.fase==="pagamento")
+    return `<div class="fases-trilha">${TRILHA.map(f=>`<span class="fase-et feita">✔ ${NOME_FASE[f]}</span>`).join("")}<span class="fase-et atual">💰 Recebimento</span></div>`;
   if(!TRILHA.includes(k.fase))
     return `<div class="fases-trilha"><span class="fase-et atual">${esc(NOME_FASE[k.fase]||k.fase)}</span></div>`;
   const i=TRILHA.indexOf(k.fase);
