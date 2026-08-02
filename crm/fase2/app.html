@@ -151,7 +151,12 @@
   .evento .oque{flex:1;min-width:180px}
   .evento .oque strong{display:block}
   .evento .oque span{color:var(--cinza);font-size:13px}
-  .evento.passado{border-left-color:#c8c6c4;opacity:.65}
+  /* realizada = cinza e riscada; futura = viva, na cor roxa */
+  .evento.passado{border-left-color:#c8c6c4;opacity:.6;background:#faf9f8}
+  .evento.passado .oque strong,.evento.passado .oque span{text-decoration:line-through;color:var(--cinza)}
+  .evento.passado .data-box{background:#f0efee;color:var(--cinza);text-decoration:line-through}
+  .evento.futuro .data-box{background:var(--roxo);color:#fff}
+  .evento.futuro .oque strong{color:var(--roxo)}
   .form-linha{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .form-linha input,.form-linha select{padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
   .form-linha button{padding:8px 14px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
@@ -1133,7 +1138,7 @@ function renderAgenda(){
   const pas=evs.filter(e=>e.data_hora.slice(0,10)<hoje()).reverse().slice(0,60);
   const bloco=e=>{
     const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
-    return `<div class="evento ${e.data_hora.slice(0,10)<hoje()?"passado":""}" data-cli="${c?c.id:""}" style="cursor:pointer">
+    return `<div class="evento ${e.data_hora.slice(0,10)<hoje()?"passado":"futuro"}" data-cli="${c?c.id:""}" style="cursor:pointer">
       <div class="data-box">${fmt(e.data_hora.slice(0,10)).slice(0,5)}<small>${e.data_hora.slice(0,4)}</small><small>${e.data_hora.slice(11,16)}</small></div>
       <div class="oque"><strong>${esc(e.tipo)} — ${esc(c?c.nome:"?")}</strong>
         <span>${esc(e.local||e.obs||"")} · ${esc(e.status)}</span></div>
@@ -1381,7 +1386,7 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
-    ${evs.map(e=>`<div class="evento ${e.data_hora.slice(0,10)<hoje()?"passado":""}">
+    ${evs.map(e=>`<div class="evento ${e.data_hora.slice(0,10)<hoje()?"passado":"futuro"}">
       <div class="data-box">${fmt(e.data_hora.slice(0,10)).slice(0,5)}<small>${e.data_hora.slice(0,4)}</small><small>${e.data_hora.slice(11,16)}</small></div>
       <div class="oque"><strong>${esc(e.tipo)}</strong><span>${esc(e.local||e.obs||"")} · ${esc(e.status)}</span></div>
       ${e.data_hora.slice(0,10)>=hoje()?`
