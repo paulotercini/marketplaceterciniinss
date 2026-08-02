@@ -629,13 +629,16 @@ async function abrirFicha(cliId){
 
   <div class="painel ${abaAtiva===0?"ativo":""}" data-p="0">
     <div class="campos">
-      <div class="campo"><label>CPF</label><div class="valor">${fmtCpf(c.cpf)}</div></div>
+      <div class="campo"><label>CPF</label><div class="valor">${fmtCpf(c.cpf)}
+        ${c.cpf?`<button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:""}</div></div>
+      ${(creds.filter(cr=>cr.tipo==="meu_inss").concat(creds.filter(cr=>cr.tipo!=="meu_inss")))
+        .map(cr=>`<div class="campo"><label>Senha ${esc(cr.tipo.replace("_"," "))}</label>
+        <div class="valor"><span id="cred-${cr.id}">••••••••</span>
+        <button class="olho" onclick="copiarCred('${cr.id}')" title="copiar (fica registrado)">📋</button>
+        <button class="olho" onclick="verCred('${cr.id}')" title="ver (fica registrado)">👁</button></div></div>`).join("")}
       <div class="campo"><label>Data de nascimento</label><div class="valor">${c.dn?c.dn.slice(0,2)+"."+c.dn.slice(2,4)+"."+c.dn.slice(4):"—"}</div></div>
       <div class="campo"><label>Telefone / WhatsApp</label><div class="valor">${c.telefone?`<a href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank">💬 ${esc(c.telefone)}</a>`:"—"}</div></div>
       <div class="campo"><label>Endereço</label><div class="valor" style="font-weight:400">${esc(c.endereco||"—")}</div></div>
-      ${creds.map(cr=>`<div class="campo"><label>Senha ${esc(cr.tipo.replace("_"," "))}</label>
-        <div class="valor"><span id="cred-${cr.id}">••••••••</span>
-        <button class="olho" onclick="verCred('${cr.id}')" title="cada visualização fica registrada">👁</button></div></div>`).join("")}
     </div>
     <div class="form-linha">
       <select id="nc-tipo"><option value="meu_inss">senha Meu INSS</option><option value="gov_br">senha gov.br</option><option value="outro">outra credencial</option></select>
@@ -791,6 +794,21 @@ async function novoPgto(){
   const [novo]=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify(linha)});
   D.pagamentos.push(novo); aviso("Lançado 💰"); abrirFicha(clienteAberto);
+}
+async function copiar(texto, msg){
+  try{ await navigator.clipboard.writeText(texto); }
+  catch{  // fallback (contexto sem clipboard API)
+    const ta=document.createElement("textarea");
+    ta.value=texto; document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); ta.remove();
+  }
+  aviso(msg||"Copiado 📋");
+}
+async function copiarCred(id){
+  const [cr]=await api(`/rest/v1/credenciais?id=eq.${id}&select=valor`);
+  await copiar(cr.valor,"Senha copiada 📋");
+  api(`/rest/v1/credencial_vis`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({credencial_id:id,colaborador_id:eu.id})});
 }
 async function verCred(id){
   const [cr]=await api(`/rest/v1/credenciais?id=eq.${id}&select=valor`);

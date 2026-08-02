@@ -74,10 +74,26 @@ python3 crm/sync_todo.py             # To Do -> espelho
 python3 crm/fase2/migrar.py          # espelho -> banco (idempotente, sem duplicar)
 ```
 
-Pode virar tarefa agendada (Windows) ou cron — a cada hora, por exemplo. Os
-andamentos escritos no app chegam ao To Do no formato `DD.MM.AAAA (X): ...` de
-sempre, e tarefas novas criadas no To Do aparecem no app na importação
+Os andamentos escritos no app chegam ao To Do no formato `DD.MM.AAAA (X): ...`
+de sempre, e tarefas novas criadas no To Do aparecem no app na importação
 seguinte.
+
+## 7. Sincronização automática (recomendado)
+
+O ciclo acima roda sozinho no GitHub Actions — mesmo mecanismo que o monitor
+do DOU já usa (`.github/workflows/crm-sync.yml`, de hora em hora, 07h–20h,
+segunda a sábado). Para ligar, basta cadastrar dois segredos novos no GitHub:
+
+1. No repositório: **Settings → Secrets and variables → Actions → New
+   repository secret**:
+   - `SUPABASE_URL` = o Project URL
+   - `SUPABASE_SERVICE_KEY` = a service_role key
+   (o `GRAPH_REFRESH_TOKEN` já existe — é o mesmo do monitor do DOU.)
+2. Pronto. Enquanto os segredos não existirem, o workflow roda e se pula sem
+   erro. Para testar na hora: **Actions → CRM — sincronização To Do ↔ banco →
+   Run workflow**.
+
+Com isso, nada precisa rodar na máquina de ninguém.
 
 ## O que fica onde
 
