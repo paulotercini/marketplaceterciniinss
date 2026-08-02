@@ -116,6 +116,23 @@ cliente, benefício, fase e últimos andamentos dos casos sinalizados — dados
 tratados sob a política de retenção da API (30 dias). Senhas e credenciais
 NUNCA são enviadas.
 
+## 9. Pasta do cliente no Windows Explorer (opcional, por máquina)
+
+O botão **📁 Drive** da ficha funciona sem configurar nada (abre o Drive no
+navegador — direto na pasta, se vinculada; senão, pesquisando pelo nome).
+Para o botão **🖥 Explorer** abrir a pasta local do Google Drive para
+Desktop, rode UMA vez em cada computador do escritório:
+
+1. Copie a pasta `crm/fase2/atalho-explorer/` para o computador
+   (ex.: `C:\CRM\atalho-explorer`), mantendo os dois arquivos juntos.
+2. Dê dois cliques em `instalar-atalho.bat` e informe a pasta base dos
+   clientes (ex.: `G:\Meu Drive\Clientes`).
+3. No primeiro clique em 🖥 no app, o navegador pergunta se pode abrir o
+   "crmpasta" — marque **sempre permitir**.
+
+O atalho abre a pasta do cliente e **cria a pasta se ainda não existir**
+(padronizada pelo nome do cliente).
+
 ## Atualizando uma instalação existente
 
 O `schema.sql` é idempotente: quando ele ganhar tabelas ou colunas novas
