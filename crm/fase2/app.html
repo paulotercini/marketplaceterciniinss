@@ -1645,21 +1645,24 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="painel ${abaAtiva===8?"ativo":""}" data-p="8">
-    ${(()=>{
-      const k = (casoSel && D.casoPorId.get(casoSel)) || ks.find(x=>x.fase!=="encerrado");
-      if(!k) return "<p class='meio-sub'>Sem caso ativo.</p>";
-      const doc = docDe(k.beneficio);
-      return `<h3>🖨 Documentos — ${esc(tituloCaso(k))}</h3>
-      ${doc?`<ul style="margin:10px 0 12px 18px">${doc.itens.split("\n").filter(x=>x.trim()).map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
-        <div class="form-linha">
-          <button onclick="solicitarDocs('${k.id}')">🖨 Imprimir e solicitar ao cliente</button>
-          <button class="btn-mini" onclick="editarDocs('${k.id}')">✏ editar a lista deste benefício</button>
-        </div>
-        <div id="doc-editor-${k.id}"></div>
-        <p class="meio-sub">Ao imprimir, cada documento vira um item de checklist do caso, com andamento datado —
-        vá concluindo conforme o cliente for entregando.</p>`
-      :`<p class='meio-sub'>Defina o benefício do caso para ter a lista de documentos dele.</p>`}`;
-    })()}
+    <h3>🖨 Documentos para o INSS</h3>
+    <p class="meio-sub">O catálogo completo do site interno, aqui dentro: escolha o benefício,
+      confira a lista, marque os itens da atividade do cliente e solicite — imprime a lista
+      e cada item vira checklist no caso, com andamento datado.</p>
+    <div class="form-linha" style="align-items:center">
+      <label style="font-size:12px;color:var(--cinza)">Benefício:
+        <select id="doc-ben" onchange="renderDocCatalogo()">${(()=>{
+          const benAtual=(casoSel&&(D.casoPorId.get(casoSel)||{}).beneficio)||"";
+          const selDoc=docDe(benAtual);
+          return D.docs.map(d=>`<option value="${esc(d.beneficio)}" ${selDoc&&selDoc.beneficio===d.beneficio?"selected":""}>${esc(d.beneficio)}</option>`).join("");
+        })()}</select></label>
+      <label style="font-size:12px;color:var(--cinza)">Aplicar em:
+        <select id="doc-destino">
+          ${ks.filter(x=>x.fase!=="encerrado").map(x=>`<option value="${x.id}" ${casoSel===x.id?"selected":""}>caso em andamento: ${esc(tituloCaso(x))}</option>`).join("")}
+          <option value="__novo__">➕ criar caso NOVO com este benefício</option>
+        </select></label>
+    </div>
+    <div id="doc-conteudo"></div>
   </div>
   </div>
 
@@ -1784,6 +1787,7 @@ async function abrirFicha(cliId){
     abrirFicha(clienteAberto);
   });
   ligarChecklistFicha();
+  if(abaAtiva===8) renderDocCatalogo();
 }
 
 // muda a aba ativa da ficha por código (ex.: atalho "ver na aba Pagamentos")
@@ -2207,24 +2211,68 @@ function janelaEncerrar(casoId){
   document.getElementById("jan-cancela").onclick=()=>{ fecharJanela(); if(clienteAberto) abrirFicha(clienteAberto); };
 }
 
-// imprimir a lista de documentos E transformá-la em checklist do caso (datado)
-async function solicitarDocs(casoId){
-  const k=D.casoPorId.get(casoId), doc=docDe(k.beneficio);
-  if(!doc) return aviso("Sem lista cadastrada para este benefício");
-  imprimirDocs(casoId);
-  const itens=doc.itens.split("\n").map(x=>x.trim()).filter(Boolean);
+// ── catálogo de documentos (espelho do site interno) ──────────────────────
+function docPorNome(nome){ return D.docs.find(d=>d.beneficio===nome); }
+let _docLinhas=[];   // linhas exibidas no catálogo (índice = checkbox)
+function renderDocCatalogo(){
+  const alvo=document.getElementById("doc-conteudo"); if(!alvo) return;
+  const d=docPorNome(document.getElementById("doc-ben").value);
+  if(!d){ alvo.innerHTML="<p class='meio-sub'>Escolha um benefício.</p>"; return; }
+  _docLinhas=[];
+  const linha=(txt,marcado)=>{
+    if(txt.startsWith("▸ "))
+      return `<div class="cc-tit" style="color:var(--cinza);padding:8px 0 3px">${esc(txt.slice(2))}</div>`;
+    const i=_docLinhas.push(txt)-1;
+    return `<label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:3px 0;cursor:pointer">
+      <input type="checkbox" class="doc-it" data-di="${i}" ${marcado?"checked":""} style="margin-top:3px">
+      <span>${esc(txt)}</span></label>`;
+  };
+  const base=(d.itens||"").split("\n").filter(x=>x.trim());
+  const extras=(d.extras||"").split("\n").filter(x=>x.trim());
+  alvo.innerHTML =
+    base.map(l=>linha(l,true)).join("")
+    + (extras.length?`<div class="cc-tit" style="color:var(--laranja);padding:12px 0 3px">Conforme a atividade do cliente — marque o que se aplica</div>`
+        + extras.map(l=>linha(l,false)).join(""):"")
+    + ((d.observacoes)?`<p class="meio-sub" style="white-space:pre-wrap;margin-top:10px;background:var(--fundo);border-radius:8px;padding:10px">${esc(d.observacoes)}</p>`:"")
+    + `<div class="form-linha" style="margin-top:10px">
+        <button onclick="solicitarDocsCatalogo()">🖨 Imprimir e solicitar (vira checklist)</button>
+      </div>`;
+}
+async function solicitarDocsCatalogo(){
+  const ben=document.getElementById("doc-ben").value;
+  const dest=document.getElementById("doc-destino").value;
+  const itens=[...document.querySelectorAll("#doc-conteudo .doc-it:checked")]
+    .map(x=>_docLinhas[+x.dataset.di]).filter(Boolean);
+  if(!itens.length) return aviso("Marque ao menos um documento");
+  let casoId=dest, k;
+  if(dest==="__novo__"){
+    const c=D.cliPorId.get(clienteAberto);
+    const [nk]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:clienteAberto, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
+        beneficio:ben, fase:"escritorio", origem_lista:"🙋 Escritório"})});
+    D.casos.push(nk); D.casoPorId.set(nk.id,nk);
+    if(!D.casosDoCliente.has(clienteAberto)) D.casosDoCliente.set(clienteAberto,[]);
+    D.casosDoCliente.get(clienteAberto).push(nk);
+    casoId=nk.id; k=nk;
+  } else k=D.casoPorId.get(casoId);
+  if(!k) return aviso("Escolha o caso de destino");
+  imprimirListaDocs(D.cliPorId.get(k.cliente_id), ben, itens, (docPorNome(ben)||{}).observacoes);
   let novos=0;
   for(const it of itens){
-    if(D.tarefas.some(t=>t.caso_id===casoId && t.titulo===`📄 ${it}` && !t.concluida)) continue;
+    const titulo=`📄 ${it.split(" — ")[0]}`;
+    if(D.tarefas.some(t=>t.caso_id===casoId && t.titulo===titulo && !t.concluida)) continue;
     const [tf]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
-      body:JSON.stringify({caso_id:casoId, titulo:`📄 ${it}`})});
+      body:JSON.stringify({caso_id:casoId, titulo})});
     if(tf){ D.tarefas.push(tf); novos++; }
   }
+  // sem dois-pontos de propósito: o padrão "documentos solicitados: X" é o
+  // gatilho do checklist automático — aqui os itens já foram criados acima
   await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({caso_id:casoId, autor_id:eu.id,
-      texto:`📄 Documentos solicitados ao cliente (lista impressa): ${itens.join("; ")}.`})});
-  aviso(`Checklist criado: ${novos} documento(s) para ir concluindo 📄`);
-  casoSel=casoId; abaAtiva=2; abrirFicha(clienteAberto);
+      texto:`📄 Lista de documentos de ${ben} impressa e solicitada ao cliente — ${itens.length} item(ns) no checklist do caso.`})});
+  plim();
+  aviso(dest==="__novo__"?`Caso novo criado + checklist com ${novos} documento(s) 📄`:`Checklist criado: ${novos} documento(s) 📄`);
+  montarSidebar(); casoSel=casoId; abaAtiva=2; abrirFicha(clienteAberto);
 }
 
 async function cumprirExigencia(casoId){
@@ -2333,8 +2381,12 @@ function docDe(beneficio){
       || D.docs.find(d=>b.includes(dsa(d.beneficio)) || dsa(d.beneficio).includes(b));
 }
 function imprimirDocs(casoId){
-  const k=D.casoPorId.get(casoId), c=D.cliPorId.get(k.cliente_id), doc=docDe(k.beneficio);
+  const k=D.casoPorId.get(casoId), doc=docDe(k.beneficio);
   if(!doc) return aviso("Sem lista cadastrada para este benefício");
+  imprimirListaDocs(D.cliPorId.get(k.cliente_id), k.beneficio,
+    (doc.itens||"").split("\n").filter(x=>x.trim()&&!x.startsWith("▸ ")), doc.observacoes);
+}
+function imprimirListaDocs(c, beneficio, itens, obs){
   const hojeBr=fmt(hoje());
   const w=window.open("","_blank");
   w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
@@ -2351,10 +2403,10 @@ function imprimirDocs(casoId){
   </style></head><body>
   <header><h1>Paulo R. Tercini Filho — Advocacia Previdenciária</h1>
   <p>Documentos necessários para o seu processo</p></header>
-  <div class="cli"><b>Cliente:</b> ${esc(c.nome)}<br><b>Benefício:</b> ${esc(k.beneficio)}<br><b>Data:</b> ${hojeBr}</div>
+  <div class="cli"><b>Cliente:</b> ${esc(c.nome)}<br><b>Benefício:</b> ${esc(beneficio)}<br><b>Data:</b> ${hojeBr}</div>
   <h2>Providenciar e trazer ao escritório:</h2>
-  <ul>${doc.itens.split("\n").filter(x=>x.trim()).map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
-  ${doc.observacoes?`<div class="obs">💡 ${esc(doc.observacoes)}</div>`:""}
+  <ul>${itens.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+  ${obs?`<div class="obs">💡 ${esc(obs).replace(/\n/g,"<br>")}</div>`:""}
   <footer>Dúvidas? Fale conosco pelo WhatsApp. Pode enviar fotos dos documentos por lá, desde que legíveis.</footer>
   <script>window.print()<\/script></body></html>`);
   w.document.close();

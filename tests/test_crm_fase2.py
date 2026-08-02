@@ -207,9 +207,9 @@ def test_documentos_solicitados_no_andamento_viram_checklist():
                        "texto": "Atendimento feito. Documentos solicitados ao cliente: "
                                 "RG e CPF; Comprovante de residência; Carta de indeferimento."}]),
     ]))
-    titulos = sorted(tf["titulo"] for tf in m["tarefas_docs"])
+    titulos = sorted(tf["titulo"] for tf in migrar.tarefas_docs_de(m["andamentos"]))
     assert titulos == ["📄 Carta de indeferimento", "📄 Comprovante de residência", "📄 RG e CPF"]
-    assert all(not tf["concluida"] for tf in m["tarefas_docs"])
+    assert all(not tf["concluida"] for tf in migrar.tarefas_docs_de(m["andamentos"]))
 
 
 def test_andamento_sem_solicitacao_nao_gera_checklist():
@@ -218,4 +218,4 @@ def test_andamento_sem_solicitacao_nao_gera_checklist():
           andamentos=[{"data": "2026-08-01", "inicial": "P", "autor": "Paulo",
                        "texto": "Perícia agendada dia 13.04.2027."}]),
     ]))
-    assert m["tarefas_docs"] == []
+    assert migrar.tarefas_docs_de(m["andamentos"]) == []
