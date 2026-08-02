@@ -679,11 +679,18 @@ function ligarCartoes(){
   document.querySelectorAll("[data-sol]").forEach(b=>b.onclick=async e=>{
     e.stopPropagation();
     const casoId = b.dataset.sol; if(!casoId) return;
+    // liga/desliga: segundo clique retira do Meu Dia
+    const ja = D.meudia.find(m=>m.caso_id===casoId && m.colaborador_id===eu.id);
     try{
-      await api(`/rest/v1/meu_dia`,{method:"POST",body:JSON.stringify(
-        {colaborador_id:eu.id, caso_id:casoId, dia:hoje()}),headers:{Prefer:"return=minimal"}});
-      aviso("Adicionado ao seu Meu Dia ☀️");
-    }catch(err){ if(err.status===409) aviso("Já está no seu Meu Dia"); else aviso("Erro: "+err.message); }
+      if(ja){
+        await api(`/rest/v1/meu_dia?id=eq.${ja.id}`,{method:"DELETE"});
+        aviso("Retirado do seu Meu Dia");
+      }else{
+        await api(`/rest/v1/meu_dia`,{method:"POST",body:JSON.stringify(
+          {colaborador_id:eu.id, caso_id:casoId, dia:hoje()}),headers:{Prefer:"return=minimal"}});
+        aviso("Adicionado ao seu Meu Dia ☀️");
+      }
+    }catch(err){ aviso("Erro: "+err.message); }
     D.meudia = await todas("meu_dia",`select=*&dia=eq.${hoje()}`);
     render();
   });
