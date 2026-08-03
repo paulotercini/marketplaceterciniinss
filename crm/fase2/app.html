@@ -28,6 +28,8 @@
   .app.logado{display:grid}
   /* ficha aberta = modo 4 colunas: o menu recolhe sozinho para ícones */
   .app.detalhe-aberto{grid-template-columns:58px minmax(290px,28%) minmax(540px,1fr)}
+  /* pesquisando: o menu volta ao tamanho cheio mesmo com a ficha aberta */
+  .app.detalhe-aberto.busca-aberta{grid-template-columns:300px minmax(250px,24%) minmax(500px,1fr)}
 
   .sidebar{background:var(--lateral);border-right:1px solid var(--lateral);overflow-y:auto;overflow-x:hidden;padding:12px 0;color:#E8EAED}
   #btn-lateral{display:block;margin:0 12px 8px;border:none;background:none;font-size:17px;cursor:pointer;color:#9AA0B0}
@@ -36,11 +38,21 @@
   .app.mini-lateral .sidebar .grupo h3, .app.detalhe-aberto .sidebar .grupo h3,
   .app.mini-lateral .sidebar .cont, .app.detalhe-aberto .sidebar .cont,
   .app.mini-lateral .sidebar .priv, .app.detalhe-aberto .sidebar .priv,
-  .app.mini-lateral .sidebar .busca, .app.detalhe-aberto .sidebar .busca,
   .app.mini-lateral .sidebar .usuario>div, .app.detalhe-aberto .sidebar .usuario>div,
   .app.mini-lateral .sidebar .sair, .app.detalhe-aberto .sidebar .sair,
   .app.mini-lateral .sidebar #btn-som, .app.detalhe-aberto .sidebar #btn-som{display:none}
   .app.mini-lateral .sidebar .lista-item, .app.detalhe-aberto .sidebar .lista-item{justify-content:center;padding:8px 0}
+  .app.busca-aberta .sidebar .txt, .app.busca-aberta .sidebar .grupo h3,
+  .app.busca-aberta .sidebar .cont, .app.busca-aberta .sidebar .priv,
+  .app.busca-aberta .sidebar .usuario>div, .app.busca-aberta .sidebar .sair,
+  .app.busca-aberta .sidebar #btn-som{display:revert}
+  .app.busca-aberta .sidebar .lista-item{justify-content:flex-start;padding:7px 12px}
+  .app.busca-aberta .sidebar .novo-cli{width:calc(100% - 24px);margin:0 12px 10px;padding:9px}
+  .app.busca-aberta .sidebar .usuario{justify-content:flex-start}
+  .app.busca-aberta .sidebar .busca{margin:0 12px 14px;width:auto}
+  .app.busca-aberta .sidebar .busca input{width:100%;height:auto;padding:8px 10px 8px 32px;
+    color:#E8EAED;cursor:text;text-indent:0}
+  .app.busca-aberta .sidebar #busca-x{display:block!important}
   .app.mini-lateral .sidebar .novo-cli, .app.detalhe-aberto .sidebar .novo-cli{width:34px;margin:0 auto 10px;padding:7px 0}
   .app.mini-lateral .sidebar .usuario, .app.detalhe-aberto .sidebar .usuario{justify-content:center}
   /* coluna de casos dentro da ficha (3ª coluna): escolhe o caso, a 4ª mostra o andamento dele */
@@ -72,6 +84,15 @@
   .usuario .sair{margin-left:auto;border:none;background:none;color:#9AA0B0;cursor:pointer;font-size:12px}
   .sidebar .usuario div div{color:#9AA0B0!important}
   .busca{margin:0 12px 14px;position:relative}
+  /* menu recolhido: a pesquisa continua ali, como uma lupa — clicar nela
+     estende o menu e já deixa o cursor no campo */
+  .app.mini-lateral .sidebar .busca, .app.detalhe-aberto .sidebar .busca{margin:0 auto 12px;width:34px}
+  .app.mini-lateral .sidebar .busca input, .app.detalhe-aberto .sidebar .busca input{
+    width:34px;height:32px;padding:0;cursor:pointer;color:transparent;
+    border-radius:8px;text-indent:-999px}
+  .app.mini-lateral .sidebar .busca::before, .app.detalhe-aberto .sidebar .busca::before{
+    left:10px;top:8px;font-size:15px;opacity:.85;pointer-events:none}
+  .app.mini-lateral .sidebar #busca-x, .app.detalhe-aberto .sidebar #busca-x{display:none!important}
   .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid rgba(255,255,255,.18);border-radius:6px;font-size:14px;background:rgba(255,255,255,.10);color:#E8EAED}
   .busca input::placeholder{color:#9AA0B0}
   .novo-cli{display:block;margin:0 12px 10px;width:calc(100% - 24px);padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
@@ -371,6 +392,32 @@ const fmt = iso => iso ? iso.slice(8,10)+"."+iso.slice(5,7)+"."+iso.slice(0,4) :
 const fmtCpf = c => c ? c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4") : "—";
 const esc = s => (s??"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const dsa = s => (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+
+// ── pesquisa ──────────────────────────────────────────────────────────────
+// "Paulo Santos" tem de achar "Paulo dos Santos": cada pedaço digitado é
+// procurado em qualquer lugar da ficha, em qualquer ordem. Não é preciso
+// escrever o nome inteiro nem na ordem certa.
+const LIGACOES = new Set(["de","da","do","das","dos","e","di","du","del","dr","dra"]);
+function termosBusca(txt){
+  const base = dsa(txt);
+  const digitos = base.replace(/\D/g, "");
+  // CPF, nº de processo, protocolo: vale o número inteiro, não os pedaços
+  if(digitos.length >= 6) return [digitos];
+  const termos = base.split(/[^a-z0-9]+/).filter(Boolean);
+  const fortes = termos.filter(t=>!LIGACOES.has(t));
+  return (fortes.length ? fortes : termos);
+}
+function pesquisar(txt){
+  const termos = termosBusca(txt);
+  if(!termos.length) return [];
+  const achados = D.clientes.filter(c=>termos.every(t=>c._ix.includes(t)));
+  // quem casa pelo NOME aparece primeiro; depois, nome mais curto (mais exato)
+  const noNome = c => termos.every(t=>(c._nome_ix||"").includes(t));
+  return achados.sort((a,b)=>{
+    const d = (noNome(b)?1:0) - (noNome(a)?1:0);
+    return d || (a.nome||"").length - (b.nome||"").length;
+  });
+}
 const moeda = v => v==null ? "—" : Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
 
 let sessao = null;   // {access_token, refresh_token, user}
@@ -540,7 +587,11 @@ async function carregar(){
   // índice de pesquisa por cliente
   clientes.forEach(c=>{
     const ks = D.casosDoCliente.get(c.id)||[];
-    c._ix = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+(k.beneficio||"")+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
+    const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+(k.beneficio||"")+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
+    // guarda também só os dígitos: acha o processo tanto por "0000001-14"
+    // quanto por "000000114", e o CPF com ou sem ponto
+    c._ix = texto + " " + texto.replace(/\D/g, "");
+    c._nome_ix = dsa(c.nome);
   });
 }
 
@@ -816,7 +867,7 @@ function render(){
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
     h1.textContent="🔍 Pesquisa";
-    const achados = D.clientes.filter(c=>c._ix.includes(buscaTxt)).slice(0,200);
+    const achados = pesquisar(buscaTxt).slice(0,200);
     sub.textContent=`${achados.length} cliente(s) encontrados`;
     meio.innerHTML = achados.map(c=>cartaoCliente(c)).join("") || "<p class='meio-sub'>Nada encontrado.</p>";
     return ligarCartoes();
@@ -2932,7 +2983,27 @@ let timerBusca=null;
 document.getElementById("busca").addEventListener("input",e=>{
   clearTimeout(timerBusca);
   document.getElementById("busca-x").style.display = e.target.value ? "block" : "none";
-  timerBusca=setTimeout(()=>{ buscaTxt=dsa(e.target.value.trim()); render(); },200);
+  timerBusca=setTimeout(()=>{ buscaTxt=e.target.value.trim(); render(); },200);
+});
+// com o menu recolhido a pesquisa vira uma lupa: clicar estende o menu
+document.getElementById("busca").addEventListener("mousedown",e=>{
+  const app=document.getElementById("app");
+  if(app.classList.contains("mini-lateral") || app.classList.contains("detalhe-aberto")){
+    e.preventDefault();
+    app.classList.remove("mini-lateral"); app.classList.add("busca-aberta");
+    localStorage.setItem("crm_menu","cheio");
+    setTimeout(()=>document.getElementById("busca").focus(),50);
+  }
+});
+// "/" em qualquer lugar leva o cursor para a pesquisa (menos digitando)
+document.addEventListener("keydown",e=>{
+  if(e.key!=="/" || e.ctrlKey || e.altKey || e.metaKey) return;
+  const a=document.activeElement, tag=(a&&a.tagName)||"";
+  if(tag==="INPUT" || tag==="TEXTAREA" || tag==="SELECT" || (a&&a.isContentEditable)) return;
+  e.preventDefault();
+  const app=document.getElementById("app");
+  app.classList.remove("mini-lateral"); app.classList.add("busca-aberta");
+  document.getElementById("busca").focus();
 });
 document.getElementById("busca-x").onclick=()=>{
   const b=document.getElementById("busca");
