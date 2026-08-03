@@ -184,6 +184,24 @@ alter table casos add column if not exists trf3 jsonb;
 -- Turma Recursal, 2º grau e Justiça Estadual.
 alter table casos add column if not exists datajud jsonb;
 
+-- Régua da fila do INSS para o benefício deste caso, casada pelo
+-- crm/inss_fila.py: {pendentes, dias_mediana, dias_p90, referencia,
+-- servicos[], uf}. Serve para calibrar a expectativa do cliente quando o
+-- Meu INSS só diz "em análise".
+alter table casos add column if not exists inss_fila jsonb;
+
+-- ── Fila do INSS por serviço e UF (dados abertos, retrato mensal) ─────────
+create table if not exists inss_fila (
+  servico      text not null,
+  uf           text not null,          -- UF da unidade, ou 'BR' para o país
+  pendentes    int  not null,
+  dias_mediana int,
+  dias_p90     int,
+  referencia   date not null,          -- data do retrato (não é a de hoje)
+  atualizado_em date not null default current_date,
+  primary key (servico, uf)
+);
+
 -- Mover de lista pedido no app (botão direito → "Mover para…"):
 -- escrever_todo.py recria a tarefa na lista nova do To Do (o Graph não tem
 -- "mover"), apaga a antiga, atualiza todo_task_id/origem_lista e limpa isto.
@@ -446,7 +464,8 @@ begin
                            'atribuicoes','meu_dia','modelos_mensagem','sugestoes',
                            'mencoes','leads','documentos_beneficio','conversas',
                            'checklist_modelo','modelos_documento',
-                           'vinculos','frases_prontas','lembrar_motivos'] loop
+                           'vinculos','frases_prontas','lembrar_motivos',
+                           'inss_fila'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then

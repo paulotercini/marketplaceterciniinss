@@ -1565,6 +1565,7 @@ async function abrirFicha(cliId){
         </div>
         ${trilhaCaso(k)}
         ${marcoCaso(k)}
+        ${inssFilaCaso(k)}
         ${datajudCaso(k)}
         ${trf3Caso(k)}
         </div>
@@ -1899,6 +1900,32 @@ function tituloCaso(k){
 }
 const TRILHA=["escritorio","inss","conselho","judicial"];
 // trilha completa em botões — inclui 💰 Pagamentos e ✔ Encerrado; clicar move
+// Régua da fila do INSS (casos.inss_fila, do inss_fila.py mensal): responde
+// "quanto tempo demora?" com dado oficial, sem prometer data.
+function inssFilaCaso(k){
+  const f=k.inss_fila;
+  if(!f || !f.pendentes || k.fase!=="inss") return "";
+  const uf=f.uf && f.uf!=="BR" ? `em ${esc(f.uf)}` : "no país";
+  const nomes=(f.servicos||[]).join(" e ");
+  return `<div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--branco);border:1px solid var(--borda);font-size:13px">
+    🌻 <b>Fila do INSS ${uf}:</b> ${Number(f.pendentes).toLocaleString("pt-BR")} pedidos
+    de ${esc(nomes||"benefício")} esperando análise · metade já espera há mais de
+    <b>${f.dias_mediana} dias</b>${f.dias_p90?` (9 em cada 10, até ${f.dias_p90} dias)`:""}
+    <span class="meio-sub">— retrato oficial de ${fmt(f.referencia)}; é a régua da fila, não a data deste pedido</span>
+    <div style="margin-top:4px"><button class="btn-mini" onclick="copiarInssFila('${k.id}')">💬 copiar mensagem ao cliente</button></div>
+  </div>`;
+}
+function copiarInssFila(casoId){
+  const k=D.casoPorId.get(casoId); const f=k&&k.inss_fila; if(!f||!f.pendentes) return;
+  const dbr=i=>i?`${i.slice(8,10)}/${i.slice(5,7)}/${i.slice(0,4)}`:"";
+  const uf=f.uf&&f.uf!=="BR"?`em ${f.uf}`:"no país";
+  copiar(`Segundo os dados abertos do INSS (retrato de ${dbr(f.referencia)}), havia `+
+    `${Number(f.pendentes).toLocaleString("pt-BR")} pedidos de ${(f.servicos||[]).join(" e ")} `+
+    `aguardando análise ${uf}, e metade deles já esperava há mais de ${f.dias_mediana} dias. `+
+    `É a régua da fila naquele momento, e não uma data do seu pedido.`,
+    "Mensagem da fila do INSS copiada 💬");
+}
+
 // Andamento oficial na base pública do CNJ (casos.datajud, do datajud.py diário)
 function tituloOrgao(n){          // o CNJ manda em CAIXA ALTA; aqui vira legível
   if(!n || n!==n.toUpperCase()) return n||"";
