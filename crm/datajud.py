@@ -86,6 +86,14 @@ MARCOS = {
 }
 
 
+# Quais desses movimentos são DECISÃO (o que o cliente chama de "resultado"):
+# aparecem destacados na ficha e alimentam a "última decisão". O texto de
+# cada um vem de CLARO — aqui só os códigos, para não repetir a tradução.
+DECISOES = {12200, 237, 238, 239, 219, 218, 220, 12185, 12252, 12266,
+            11373, 11022}
+MAX_MOVIMENTOS = 25          # por instância: dá o histórico sem inchar a ficha
+
+
 def marcos(movs):
     """Movimentos -> marcos financeiros com a data de CADA um (o mais recente).
 
@@ -161,6 +169,23 @@ def _complemento(mov):
                      if c.get("nome"))
 
 
+def rotulo_instancia(grau, classe):
+    """Como o colaborador chama aquela instância na conversa do dia a dia."""
+    c = (classe or "").lower()
+    if "cumprimento" in c or "execução" in c or "execucao" in c:
+        return "Cumprimento de sentença"
+    return {"G1": "1º grau", "G2": "2º grau", "JE": "Juizado Especial",
+            "TR": "Turma Recursal", "TRU": "Turma de Uniformização"}.get(grau, grau or "—")
+
+
+def _movimento(m):
+    cod = m.get("codigo")
+    return {"data": _dia(m.get("dataHora")), "nome": m.get("nome"), "codigo": cod,
+            "complemento": _complemento(m) or None,
+            "claro": CLARO.get(cod),
+            "decisao": cod in DECISOES}
+
+
 def resumir(fonte):
     """Um registro do DataJud -> dicionário enxuto (sem os 110 movimentos)."""
     movs = sorted(fonte.get("movimentos", []), key=lambda m: m.get("dataHora") or "")
@@ -174,7 +199,17 @@ def resumir(fonte):
         ultimo = {"data": _dia(u.get("dataHora")), "nome": u.get("nome"),
                   "codigo": u.get("codigo"), "complemento": _complemento(u) or None,
                   "claro": CLARO.get(u.get("codigo"))}
+    # histórico da instância, do mais novo para o mais velho, e a última
+    # decisão de mérito (o "resultado" que o cliente pergunta)
+    historico = [_movimento(m) for m in movs[-MAX_MOVIMENTOS:][::-1]]
+    decisao = next((_movimento(m) for m in movs[::-1] if m.get("codigo") in DECISOES),
+                   None)
     return {
+        "rotulo": rotulo_instancia(fonte.get("grau"),
+                                   (fonte.get("classe") or {}).get("nome")),
+        "historico": historico,
+        "decisao": decisao,
+        "total_movimentos": len(movs),
         "tribunal": fonte.get("tribunal"),
         "grau": fonte.get("grau"),
         "sistema": (fonte.get("sistema") or {}).get("nome"),
@@ -210,12 +245,21 @@ def consultar(alias, numeros):
     saida = {}
     for n, rs in por_numero.items():
         rs.sort(key=_peso, reverse=True)
-        principal, outras = rs[0], rs[1:]
+        principal, outras = dict(rs[0]), rs[1:]
         principal["outras"] = [{"grau": o.get("grau"), "orgao": o.get("orgao"),
                                 "classe": o.get("classe"),
                                 "ultimo_data": (o.get("ultimo") or {}).get("data"),
                                 "ultimo_nome": (o.get("ultimo") or {}).get("nome")}
                                for o in outras]
+        # cada instância separada, a mais movimentada primeiro: é isso que a
+        # ficha usa para montar o sub-menu 1º grau / 2º grau / cumprimento
+        principal["instancias"] = [
+            {"rotulo": r.get("rotulo"), "grau": r.get("grau"), "orgao": r.get("orgao"),
+             "classe": r.get("classe"), "ajuizado_em": r.get("ajuizado_em"),
+             "sistema": r.get("sistema"), "ultimo": r.get("ultimo"),
+             "decisao": r.get("decisao"), "historico": r.get("historico"),
+             "total_movimentos": r.get("total_movimentos")}
+            for r in rs]
         saida[n] = principal
     return saida
 

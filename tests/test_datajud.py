@@ -210,3 +210,51 @@ def test_frase_marco_requisitorio():
 
 def test_frase_marco_vazia_sem_marco():
     assert dj.frase_marco({"processo": "x", "marcos": {}}) == ""
+
+
+# ── instâncias separadas: é o que vira o sub-menu 1º grau / 2º grau / … ───
+def test_rotulo_instancia_por_grau():
+    assert dj.rotulo_instancia("G1", "Procedimento Comum Cível") == "1º grau"
+    assert dj.rotulo_instancia("G2", "Apelação Cível") == "2º grau"
+    assert dj.rotulo_instancia("JE", "Petição Cível") == "Juizado Especial"
+    assert dj.rotulo_instancia("TR", "Recurso Inominado Cível") == "Turma Recursal"
+
+
+def test_rotulo_instancia_cumprimento_vence_o_grau():
+    # a classe manda: cumprimento de sentença é fase própria, não "1º grau"
+    assert (dj.rotulo_instancia("G1", "Cumprimento de Sentença contra a Fazenda")
+            == "Cumprimento de sentença")
+    assert dj.rotulo_instancia("G1", "Execução de Título Judicial") == "Cumprimento de sentença"
+
+
+def test_resumir_marca_a_ultima_decisao():
+    movs = [
+        {"codigo": 238, "dataHora": "2024-05-14T10:00:00.000Z", "nome": "Provimento em Parte"},
+        {"codigo": 51, "dataHora": "2025-05-19T10:00:00.000Z", "nome": "Conclusão"},
+    ]
+    r = dj.resumir(dict(FONTE_REAL, movimentos=movs))
+    assert r["decisao"]["nome"] == "Provimento em Parte"
+    assert r["decisao"]["claro"] == "Recurso PARCIALMENTE PROVIDO."
+    assert r["ultimo"]["nome"] == "Conclusão"          # decisão != último
+
+
+def test_resumir_sem_decisao():
+    assert dj.resumir(FONTE_REAL)["decisao"] is None   # só movimentos de trâmite
+
+
+def test_resumir_historico_do_mais_novo_e_limitado():
+    movs = [{"codigo": 92, "dataHora": f"2026-01-{d:02d}T10:00:00.000Z",
+             "nome": "Publicação"} for d in range(1, 31)]
+    r = dj.resumir(dict(FONTE_REAL, movimentos=movs))
+    assert len(r["historico"]) == dj.MAX_MOVIMENTOS
+    assert r["historico"][0]["data"] == "2026-01-30"   # o mais novo primeiro
+    assert r["total_movimentos"] == 30                 # mas conta o total real
+
+
+def test_movimento_marca_decisao_e_traduz():
+    m = dj._movimento({"codigo": 239, "dataHora": "2026-03-01T10:00:00.000Z",
+                       "nome": "Não-Provimento"})
+    assert m["decisao"] is True and m["claro"] == "Recurso NÃO PROVIDO."
+    comum = dj._movimento({"codigo": 92, "dataHora": "2026-03-01T10:00:00.000Z",
+                           "nome": "Publicação"})
+    assert comum["decisao"] is False
