@@ -283,9 +283,19 @@ def _rest(metodo, caminho, corpo=None, prefer=None):
         headers={"apikey": chave, "Authorization": f"Bearer {chave}",
                  "Content-Type": "application/json",
                  **({"Prefer": prefer} if prefer else {})})
-    with urllib.request.urlopen(req, timeout=60, context=_ctx()) as r:
-        raw = r.read()
-        return json.loads(raw) if raw else None
+    for i in range(4):          # rede oscila; gravação não pode se perder
+        try:
+            with urllib.request.urlopen(req, timeout=60, context=_ctx()) as r:
+                raw = r.read()
+                return json.loads(raw) if raw else None
+        except urllib.error.HTTPError as e:
+            if e.code not in (429, 500, 502, 503, 504) or i == 3:
+                raise
+            time.sleep(2 ** (i + 1))
+        except Exception:
+            if i == 3:
+                raise
+            time.sleep(2 ** (i + 1))
 
 
 def main():
@@ -308,12 +318,20 @@ def main():
         return
 
     achados = encontrados = ausentes = 0
+    falhas = []
     for alias, mapa in sorted(porTribunal.items()):
         numeros = sorted(mapa)
         print(f"{alias}: {len(numeros)} processo(s)")
         res = {}
-        for i in range(0, len(numeros), 50):
-            res.update(consultar(alias, numeros[i:i + 50]))
+        try:
+            for i in range(0, len(numeros), 50):
+                res.update(consultar(alias, numeros[i:i + 50]))
+        except Exception as e:
+            # um tribunal fora do ar não pode derrubar a consulta dos outros:
+            # os processos dele ficam com o que já estava gravado
+            print(f"  {alias} indisponível agora ({type(e).__name__}); segue")
+            falhas.append(alias)
+            continue
         for n20, (fmt, ids) in mapa.items():
             t = res.get(n20)
             if t:
@@ -328,6 +346,9 @@ def main():
             achados += 1
     print(f"processos consultados: {achados} · com andamento: {encontrados} "
           f"· sem registro público: {ausentes}")
+    if falhas:
+        print(f"::notice::tribunais que não responderam desta vez: "
+              f"{', '.join(falhas)} — serão tentados na próxima consulta.")
 
 
 if __name__ == "__main__":
