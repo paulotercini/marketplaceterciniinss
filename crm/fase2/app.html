@@ -92,6 +92,9 @@
   .sub-menu.instancias{margin:0 0 10px}
   .sub-menu.instancias button{border-radius:8px;padding:6px 12px;font-size:13px}
   .sub-menu.instancias small{display:block;font-weight:400;opacity:.75;font-size:11.5px}
+  .sugestoes{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px 10px;line-height:1.5}
+  .sug-it{font-size:12px;font-style:italic;color:var(--cinza);cursor:pointer;border-bottom:1px dotted var(--borda)}
+  .sug-it:hover{color:var(--azul);border-bottom-color:var(--azul)}
   .previsao-box{border:1px solid #E9B44C;background:#FFF8E7;border-radius:10px;padding:10px 12px;margin-bottom:10px}
   .mov-lista{list-style:none;margin:6px 0 0;padding:0;max-height:420px;overflow-y:auto}
   .mov-lista li{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--borda);font-size:13px}
@@ -440,7 +443,6 @@ let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
 let subAba = localStorage.getItem("crm_subaba") || "escritorio", instSel = 0;
-let avisarSel = new Set();   // quem deve ser avisado no próximo comentário (obrigatório)
 
 // som de retorno, como no To Do (gerado na hora — sem arquivo de áudio).
 // "plim" duplo ao concluir; tique curto nos avisos. 🔔 na lateral silencia.
@@ -1469,7 +1471,7 @@ function renderDash(){
 async function abrirFicha(cliId){
   const c = D.cliPorId.get(cliId);
   if(!c) return aviso("Cliente ainda carregando — tente de novo em instantes");
-  if(clienteAberto !== cliId){ casoSel = "__auto__"; abaAtiva = 2; avisarSel.clear(); }  // cliente novo: abre no 1º caso ativo
+  if(clienteAberto !== cliId){ casoSel = "__auto__"; abaAtiva = 2; }   // cliente novo: abre no 1º caso ativo
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
@@ -1766,24 +1768,10 @@ async function abrirFicha(cliId){
     abaAtiva=+el.dataset.vv; abrirFicha(clienteAberto);
   });
   document.getElementById("btn-processos").onclick=ev=>menuProcessos(ev, ks);
-  document.querySelectorAll("[data-av]").forEach(ch=>ch.onclick=()=>{
-    const id=ch.dataset.av;
-    if(avisarSel.has(id)){ avisarSel.delete(id); ch.classList.remove("on"); }
-    else { avisarSel.add(id); ch.classList.add("on"); }
-  });
+  document.querySelectorAll(".sug-it").forEach(el=>el.onclick=()=>usarSugestao(el));
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
   if(campoAnd) campoAnd.onkeydown=e=>{ if(e.key==="Enter") document.querySelector(".escrever button[onclick^='novoAndamento']").click(); };
-  document.querySelectorAll(".frase-it").forEach(el=>{
-    el.onmouseenter=()=>el.style.background="var(--fundo)";
-    el.onmouseleave=()=>el.style.background="";
-    el.onclick=()=>{
-      const texto=(D.frases[+el.dataset.fi]||{}).texto||"";
-      document.getElementById("frases-box").style.display="none";
-      if(/__\/__\/____|__:__|____/.test(texto)) return montarPreenchimento(texto);
-      const inp=document.getElementById("and-texto");
-      inp.value=texto; inp.focus();
-    };
-  });
+
   document.querySelectorAll("[data-fase]").forEach(s=>s.onchange=async()=>{
     const k=D.casoPorId.get(s.dataset.fase);
     if(s.value==="encerrado") return janelaEncerrar(k.id);   // resultado -> honorários
@@ -1969,20 +1957,36 @@ function irSubAba(qual){
   if(clienteAberto) abrirFicha(clienteAberto);
 }
 
-let avisarPadraoDe = null;      // caso cujo AVISAR já foi pré-preenchido
+// Sugestões de texto sempre à vista, em itálico e menores: as frases prontas
+// da equipe + os motivos do Lembrar. Clicar preenche o campo — quem já sabe o
+// que escrever ignora, quem não sabe tem exemplo do jeito que o escritório
+// escreve. Substitui os botões ⚡ Frases e ⚠ Exigência.
+function sugestoes(k){
+  const itens = [];
+  const vistos = new Set();
+  const juntar = (txt, acao) => {
+    const t = (txt||"").trim();
+    if(!t || vistos.has(dsa(t))) return;
+    vistos.add(dsa(t)); itens.push({texto:t, acao});
+  };
+  juntar("Exigência do INSS — registrar com prazo", "exigencia");
+  // motivos do Lembrar que combinam com a lista deste processo
+  lbMotivos().filter(m=>!(m.listas||[]).length || (m.listas||[]).includes(k.fase))
+    .forEach(m=>juntar(m.texto));
+  D.frases.forEach(f=>juntar(f.texto));
+  return itens.map((it,i)=>`<span class="sug-it" data-sug="${i}" data-acao="${it.acao||""}"
+    title="clique para usar este texto">${it.acao==="exigencia"?"⚠ ":""}${esc(it.texto)}</span>`).join("");
+}
+function usarSugestao(el, k){
+  if(el.dataset.acao==="exigencia") return abrirExigencia();
+  const texto = el.textContent.trim();
+  if(/__\/__\/____|__:__|____|__/.test(texto)) return montarPreenchimento(texto);
+  const inp=document.getElementById("and-texto");
+  inp.value=texto; inp.focus();
+}
+
 function painelEscritorio(k, ands){
   const equipe = D.atrDoCaso.get(k.id) || [];
-  // AVISAR já vem marcado com quem cuida do caso (ou com o responsável do
-  // escritório): continua obrigatório, mas ninguém precisa clicar para
-  // registrar o de sempre — é só escrever e Registrar
-  if(avisarPadraoDe !== k.id){
-    avisarPadraoDe = k.id;
-    avisarSel.clear();
-    const padrao = equipe.length ? equipe
-      : D.colaboradores.filter(x=>x.ativo && x.papel==="admin").map(x=>x.id);
-    padrao.filter(id=>id!==eu.id).forEach(id=>avisarSel.add(id));
-    if(!avisarSel.size) padrao.forEach(id=>avisarSel.add(id));
-  }
   const encerrado = k.fase==="encerrado";
   return `<div class="caso caso-check">${checklistCaso(k)}</div>
   <div class="caso-acoes">
@@ -2002,31 +2006,16 @@ function painelEscritorio(k, ands){
       <div class="form-linha" style="align-items:center">
         <span class="avatar mini" style="background:${eu.cor||"#2564cf"}">${esc(eu.inicial||"?")}</span>
         <input id="and-texto" placeholder="escreva o andamento e clique em Registrar" style="flex:1;min-width:240px">
-        <button onclick="novoAndamento('${k.id}')">Registrar</button>
-      </div>
-      <div class="form-linha" style="align-items:center;margin-top:4px">
-        <span class="rotulo-rap">🔔 AVISAR:</span>
-        ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip av ${avisarSel.has(co.id)?"on":""}" data-av="${co.id}" title="avisar ${esc(co.nome)}">
-          <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`).join("")}
         <button class="btn-rap ${k.importante?"on":""}" style="border-color:#E9B44C" onclick="toggleImp('${k.id}')" title="importante">⭐</button>
         <button class="btn-rap ${k.urgente?"on":""}" style="border-color:#B3261E" onclick="toggleUrg('${k.id}')" title="urgente">🔥</button>
-        <button class="btn-mini" onclick="toggleFrases('${k.id}')">⚡ Frases</button>
-        <button class="btn-mini" onclick="toggleExig('${k.id}')">⚠ Exigência</button>
+        <button onclick="novoAndamento('${k.id}')">Registrar</button>
       </div>
-      <div class="form-linha" style="align-items:center;margin-top:6px;font-size:12.5px">
+      <div class="form-linha" style="align-items:center;margin-top:4px;font-size:12.5px">
         <span class="rotulo-rap">🗓 LEMBRAR EM:</span>
         <input type="date" id="and-lembrar-data" value="${k.prazo||""}" style="padding:3px 6px">
-        <span class="meio-sub">mudou a data? ao Registrar o lembrete já muda junto, e o motivo vira o texto do andamento</span>
+        <span class="meio-sub">mudou a data? ao Registrar o lembrete muda junto${equipe.length?` · avisa ${equipe.map(id=>esc((D.colPorId.get(id)||{}).nome||"")).join(", ")}`:""}</span>
       </div>
-      <div id="frases-box" style="display:none;max-height:230px;overflow-y:auto;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-top:6px;padding:8px">
-        <strong style="font-size:13px">⚡ Frases prontas — texto para o ANDAMENTO</strong>
-        <p class="meio-sub" style="margin:2px 0 6px">Clique numa frase e ela preenche o campo de escrever.</p>
-        ${D.frases.map((f,fi)=>`<div class="frase-it" style="padding:5px 8px;border-radius:6px;cursor:pointer;font-size:13px" data-fi="${fi}">⚡ ${esc(f.texto)}</div>`).join("")}
-        <div class="form-linha" style="margin:6px 0 0">
-          <input id="nf-texto" placeholder="＋ salvar nova frase do jeito que vocês escrevem (use __ para completar depois)" style="flex:1">
-          <button onclick="novaFrase()">Salvar</button>
-        </div>
-      </div>
+      <div class="sugestoes">${sugestoes(k)}</div>
       <div id="preenche-box" style="display:none;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-top:6px;padding:10px"></div>
       <div id="exig-box" style="display:none;border:1px solid #f0c36d;border-radius:8px;background:#fffaf0;margin-top:6px;padding:10px">
         <strong style="font-size:13px">⚠ Registrar exigência do INSS</strong>
@@ -2410,12 +2399,12 @@ async function novoAndamento(casoUnico){
   if(!casoId || !inp.value.trim()) return;
   const kAlvo=D.casoPorId.get(casoId);
   if(kAlvo && kAlvo.fase==="encerrado") return aviso("✔ Processo encerrado — reabra pela trilha para comentar");
-  if(avisarSel.size===0) return aviso("🔔 Escolha quem AVISAR — é obrigatório para registrar");
   const texto=inp.value.trim();
   const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})});
-  await criarMencoes(texto, casoId, and?and.id:null, [...avisarSel]);  // 🔔 AVISAR + @menções
-  avisarSel.clear();
+  // quem está ATRIBUÍDO ao caso fica sabendo (é essa a função do Atribuído a),
+  // além de quem for citado com @ no texto
+  await criarMencoes(texto, casoId, and?and.id:null, D.atrDoCaso.get(casoId)||[]);
   const k=D.casoPorId.get(casoId);
   // registrar o andamento e mudar o lembrete são UM gesto só: quem marcou a
   // data ali no campo não precisa abrir o Lembrar em depois
@@ -2467,19 +2456,11 @@ async function novoAndamento(casoUnico){
   abrirFicha(clienteAberto);
 }
 
-// frases prontas do composer (⚡)
-function toggleFrases(){
-  const b=document.getElementById("frases-box");
+// a exigência abre pela sugestão "⚠ Exigência do INSS" (não tem mais botão)
+function abrirExigencia(){
+  const b=document.getElementById("exig-box"); if(!b) return;
   b.style.display = b.style.display==="none" ? "block" : "none";
-  document.getElementById("exig-box").style.display="none";
-  document.getElementById("preenche-box").style.display="none";
-  const lb=document.getElementById("lembrar-box"); if(lb) lb.style.display="none";
-}
-function toggleExig(){
-  const b=document.getElementById("exig-box");
-  b.style.display = b.style.display==="none" ? "block" : "none";
-  document.getElementById("frases-box").style.display="none";
-  document.getElementById("preenche-box").style.display="none";
+  const pb=document.getElementById("preenche-box"); if(pb) pb.style.display="none";
   const lb=document.getElementById("lembrar-box"); if(lb) lb.style.display="none";
   if(b.style.display==="block"){
     const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+30);   // prazo legal de 30 dias
@@ -2516,7 +2497,7 @@ function lbMotivos(){
 }
 function toggleLembrar(casoId){
   const b=document.getElementById("lembrar-box"); if(!b) return;
-  ["frases-box","preenche-box","exig-box"].forEach(i=>{const e=document.getElementById(i); if(e) e.style.display="none";});
+  ["preenche-box","exig-box"].forEach(i=>{const e=document.getElementById(i); if(e) e.style.display="none";});
   if(b.style.display==="block"){ b.style.display="none"; return; }
   lbEditando=false; lbMotivoEdit=null;
   lbRender(casoId);
@@ -3101,7 +3082,16 @@ let timerBusca=null;
 document.getElementById("busca").addEventListener("input",e=>{
   clearTimeout(timerBusca);
   document.getElementById("busca-x").style.display = e.target.value ? "block" : "none";
-  timerBusca=setTimeout(()=>{ buscaTxt=e.target.value.trim(); render(); },200);
+  timerBusca=setTimeout(()=>{
+    buscaTxt=e.target.value.trim();
+    // pesquisar é procurar OUTRO cliente: a ficha aberta sai da frente para
+    // o resultado usar a tela inteira (senão parecia que a busca não achava)
+    if(buscaTxt && clienteAberto){
+      clienteAberto=null; abaAtiva=2;
+      document.getElementById("app").classList.remove("detalhe-aberto","busca-aberta");
+    }
+    render();
+  },200);
 });
 // com o menu recolhido a pesquisa vira uma lupa: clicar estende o menu
 document.getElementById("busca").addEventListener("mousedown",e=>{
