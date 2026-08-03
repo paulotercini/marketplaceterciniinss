@@ -1564,6 +1564,7 @@ async function abrirFicha(cliId){
             <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
         </div>
         ${trilhaCaso(k)}
+        ${trf3Caso(k)}
         </div>
         <div class="caso caso-check">${checklistCaso(k)}</div>
         <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
@@ -1896,6 +1897,33 @@ function tituloCaso(k){
 }
 const TRILHA=["escritorio","inss","conselho","judicial"];
 // trilha completa em botões — inclui 💰 Pagamentos e ✔ Encerrado; clicar move
+// Ordem de julgamento no TRF3 (casos.trf3, gravado pelo trf3_ordem.py diário)
+function trf3Caso(k){
+  const t=k.trf3;
+  if(!t || !t.ordem) return "";
+  const total=t.total?` de <b>${t.total}</b> processos`:"";
+  const turma=t.turma?` (${esc(t.turma)})`:"";
+  const pri=t.prioridade==="S"?` <span class="chip ben">⚡ prioridade</span>`:"";
+  const desde=t.fase_desde?` · concluso desde ${fmt(t.fase_desde)}`:"";
+  return `<div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--branco);border:1px solid var(--borda);font-size:13px">
+    ⚖️ <b>Ordem de julgamento no TRF3:</b> posição <b>${t.ordem}º</b>${total} na fila de
+    ${esc(t.orgao||"órgão julgador")}${turma}${pri}${desde}
+    · consulta de ${fmt(t.consultado_em)}
+    <button class="btn-mini" onclick="copiarTrf3('${k.id}')">💬 copiar mensagem ao cliente</button>
+  </div>`;
+}
+function copiarTrf3(casoId){
+  const k=D.casoPorId.get(casoId); const t=k&&k.trf3; if(!t||!t.ordem) return;
+  const dbr=iso=>iso?`${iso.slice(8,10)}/${iso.slice(5,7)}/${iso.slice(0,4)}`:"";
+  const msg=`O processo nº ${t.processo} aguarda julgamento no TRF3 e hoje ocupa a posição ${t.ordem}`+
+    (t.total?` de uma fila de ${t.total} processos`:"")+
+    ` na ordem de julgamento do órgão responsável — ${t.orgao||"órgão julgador"}`+
+    (t.turma?` (${t.turma})`:"")+`.`+
+    (t.fase_desde?` Está concluso para julgamento desde ${dbr(t.fase_desde)}.`:"")+
+    (t.prioridade==="S"?" O processo tramita com prioridade.":"")+
+    ` Fonte: painel público de estatísticas do TRF3 (consulta de ${dbr(t.consultado_em)}).`;
+  copiar(msg,"Mensagem da ordem de julgamento copiada 💬");
+}
 function trilhaCaso(k){
   const passos=[...TRILHA, "pagamento", "encerrado"];
   const i=passos.indexOf(k.fase);

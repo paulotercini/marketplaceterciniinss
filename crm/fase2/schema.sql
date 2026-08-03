@@ -171,6 +171,12 @@ alter table andamentos add column if not exists excluir boolean not null default
 -- porquê — "pedir prorrogação", "cobrar documentos", "conferir INSS"...
 alter table casos add column if not exists lembrar_motivo text;
 
+-- Ordem de julgamento no TRF3 (painel público Power BI), gravada pelo
+-- crm/trf3_ordem.py (workflow diário): {processo, ordem, total, orgao,
+-- turma, grau, prioridade, fase_desde, consultado_em}. ordem null =
+-- processo não consta no painel (não concluso/sigiloso) — o app não mostra.
+alter table casos add column if not exists trf3 jsonb;
+
 -- Mover de lista pedido no app (botão direito → "Mover para…"):
 -- escrever_todo.py recria a tarefa na lista nova do To Do (o Graph não tem
 -- "mover"), apaga a antiga, atualiza todo_task_id/origem_lista e limpa isto.
