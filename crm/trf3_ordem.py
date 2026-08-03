@@ -165,6 +165,69 @@ def totais_por_gabinete():
     return {org: n for org, n in decode_dsr(_consultar(q, top=5000)) if org}
 
 
+MAX_HISTORICO = 24          # ~1 ano de amostras semanais
+MIN_DIAS_PROJECAO = 14      # abaixo disso o ruído do dia a dia domina
+
+
+def novo_historico(anterior, hoje_iso, ordem):
+    """Acrescenta a amostra de hoje ao histórico de posições do processo.
+
+    Uma amostra por dia (regravar no mesmo dia substitui). Guarda as últimas
+    MAX_HISTORICO — é o que permite medir o ritmo real da fila.
+    """
+    hist = [h for h in (anterior or [])
+            if isinstance(h, dict) and h.get("data") and h.get("data") != hoje_iso
+            and isinstance(h.get("ordem"), int)]
+    hist.sort(key=lambda h: h["data"])
+    if isinstance(ordem, int):
+        hist.append({"data": hoje_iso, "ordem": ordem})
+    return hist[-MAX_HISTORICO:]
+
+
+def projecao(historico):
+    """Ritmo observado da fila -> previsão ESTIMADA de julgamento.
+
+    Compara a primeira e a última amostra: quantas posições o processo
+    andou por dia. Só projeta com base suficiente (>= 14 dias) e fila
+    andando para frente — nada de estimativa em cima de ruído.
+    """
+    hist = sorted([h for h in (historico or []) if h.get("data")],
+                  key=lambda h: h["data"])
+    if len(hist) < 2:
+        return None
+    prim, ult = hist[0], hist[-1]
+    d0 = datetime.date.fromisoformat(prim["data"])
+    d1 = datetime.date.fromisoformat(ult["data"])
+    dias = (d1 - d0).days
+    avanco = prim["ordem"] - ult["ordem"]        # posições que subiu na fila
+    if dias < MIN_DIAS_PROJECAO or avanco <= 0:
+        return None
+    ritmo_dia = avanco / dias
+    faltam = int(round(ult["ordem"] / ritmo_dia))
+    return {"ritmo_mes": int(round(ritmo_dia * 30)),
+            "dias_restantes": faltam,
+            "previsao": (d1 + datetime.timedelta(days=faltam)).isoformat(),
+            "base_dias": dias, "amostras": len(hist)}
+
+
+MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho",
+         "agosto", "setembro", "outubro", "novembro", "dezembro"]
+
+
+def frase_projecao(t):
+    """Frase da estimativa — sempre marcada como estimativa, nunca como data."""
+    p = t.get("projecao")
+    if not p:
+        return ""
+    d = datetime.date.fromisoformat(p["previsao"])
+    return (f"Nos últimos {p['base_dias']} dias o processo subiu na fila a um "
+            f"ritmo de cerca de {p['ritmo_mes']} posições por mês. Mantido esse "
+            f"ritmo, a previsão ESTIMADA de julgamento fica em torno de "
+            f"{MESES[d.month - 1]} de {d.year}. Trata-se de estimativa feita a "
+            f"partir do painel público do TRF3, e não de data designada pelo "
+            f"tribunal.")
+
+
 def frase_cliente(t):
     """Texto pronto para mandar ao cliente, com todas as letras."""
     pos = f"a posição {t['ordem']}"
@@ -205,10 +268,12 @@ def main():
     casos = _rest("GET", "/rest/v1/casos?processo=not.is.null"
                          "&fase=neq.encerrado&select=id,processo,trf3") or []
     alvo = {}                       # numero canonico -> [caso_ids]
+    antes = {}                      # caso_id -> histórico já gravado
     for k in casos:
         n = canonico(k["processo"])
         if n:
             alvo.setdefault(n, []).append(k["id"])
+            antes[k["id"]] = ((k.get("trf3") or {}).get("historico")) or []
     if not alvo:
         print("nenhum caso com processo do TRF3.")
         return
@@ -220,20 +285,28 @@ def main():
     for i in range(0, len(numeros), LOTE):
         achados.update(consultar_processos(numeros[i:i + LOTE]))
 
-    na_fila = fora = 0
+    na_fila = fora = projetados = 0
     for n, ids in alvo.items():
-        t = achados.get(n)
-        if t:
-            t = {"processo": n, **t, "total": totais.get(t.get("orgao")),
-                 "consultado_em": hoje}
+        base = achados.get(n)
+        if base:
+            base = {"processo": n, **base, "total": totais.get(base.get("orgao")),
+                    "consultado_em": hoje}
             na_fila += 1
         else:                       # não consta no painel: limpa, sem inventar
-            t = {"processo": n, "ordem": None, "consultado_em": hoje}
+            base = {"processo": n, "ordem": None, "consultado_em": hoje}
             fora += 1
         for cid in ids:
+            # o histórico é por caso (cada um guarda a série que já tinha)
+            hist = novo_historico(antes.get(cid), hoje, base.get("ordem"))
+            t = {**base, "historico": hist}
+            p = projecao(hist)
+            if p:
+                t["projecao"] = p
+                projetados += 1
             _rest("PATCH", f"/rest/v1/casos?id=eq.{cid}", {"trf3": t},
                   prefer="return=minimal")
-    print(f"na fila de julgamento: {na_fila} · fora do painel: {fora}")
+    print(f"na fila de julgamento: {na_fila} · fora do painel: {fora} "
+          f"· com previsão estimada: {projetados}")
 
 
 if __name__ == "__main__":

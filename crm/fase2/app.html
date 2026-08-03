@@ -1999,8 +1999,33 @@ function trf3Caso(k){
     ⚖️ <b>Ordem de julgamento no TRF3:</b> posição <b>${t.ordem}º</b>${total} na fila de
     ${esc(t.orgao||"órgão julgador")}${turma}${pri}${desde}
     · consulta de ${fmt(t.consultado_em)}
-    <button class="btn-mini" onclick="copiarTrf3('${k.id}')">💬 copiar mensagem ao cliente</button>
+    ${projecaoTrf3(t)}
+    <div style="margin-top:4px">
+      <button class="btn-mini" onclick="copiarTrf3('${k.id}')">💬 copiar mensagem ao cliente</button>
+      ${t.projecao?`<button class="btn-mini" onclick="copiarPrevisao('${k.id}')">📈 copiar previsão estimada</button>`:""}
+    </div>
   </div>`;
+}
+// Previsão pelo ritmo REAL da fila deste processo (histórico das consultas).
+// É estimativa nossa — a tela e a mensagem dizem isso com todas as letras.
+const MESES_PT=["janeiro","fevereiro","março","abril","maio","junho","julho",
+  "agosto","setembro","outubro","novembro","dezembro"];
+function mesAno(iso){
+  const d=new Date(iso+"T12:00:00");
+  return `${MESES_PT[d.getMonth()]} de ${d.getFullYear()}`;
+}
+function projecaoTrf3(t){
+  const p=t.projecao; if(!p) return "";
+  return `<div style="margin-top:4px">📈 <b>Previsão estimada:</b> ~${esc(mesAno(p.previsao))}
+    <span class="meio-sub">(ritmo observado de ~${p.ritmo_mes} posições/mês nos últimos ${p.base_dias} dias — estimativa nossa, não é data designada pelo tribunal)</span></div>`;
+}
+function copiarPrevisao(casoId){
+  const k=D.casoPorId.get(casoId); const t=k&&k.trf3, p=t&&t.projecao; if(!p) return;
+  copiar(`Nos últimos ${p.base_dias} dias o processo subiu na fila a um ritmo de cerca de `+
+    `${p.ritmo_mes} posições por mês. Mantido esse ritmo, a previsão ESTIMADA de julgamento `+
+    `fica em torno de ${mesAno(p.previsao)}. Trata-se de estimativa feita a partir do painel `+
+    `público do TRF3, e não de data designada pelo tribunal.`,
+    "Mensagem da previsão estimada copiada 📈");
 }
 function copiarTrf3(casoId){
   const k=D.casoPorId.get(casoId); const t=k&&k.trf3; if(!t||!t.ordem) return;
