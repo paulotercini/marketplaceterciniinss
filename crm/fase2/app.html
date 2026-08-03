@@ -92,9 +92,16 @@
   .sub-menu.instancias{margin:0 0 10px}
   .sub-menu.instancias button{border-radius:8px;padding:6px 12px;font-size:13px}
   .sub-menu.instancias small{display:block;font-weight:400;opacity:.75;font-size:11.5px}
-  .sugestoes{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px 10px;line-height:1.5}
-  .sug-it{font-size:12px;font-style:italic;color:var(--cinza);cursor:pointer;border-bottom:1px dotted var(--borda)}
-  .sug-it:hover{color:var(--azul);border-bottom-color:var(--azul)}
+  .sugestoes{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}
+  .sug-it{font-size:12.5px;color:var(--cinza);cursor:pointer;background:var(--branco);
+    border:1px solid var(--borda);border-radius:12px;padding:3px 10px}
+  .sug-it:hover{color:var(--azul);border-color:var(--azul)}
+  .sug-mais{font-size:12px;color:var(--cinza);cursor:pointer;padding:3px 6px;align-self:center}
+  .sug-mais:hover{color:var(--azul)}
+  #and-prazo-chip{margin-top:6px}
+  .chip-prazo{display:inline-flex;align-items:center;gap:6px;background:#FFF8E7;border:1px solid #E9B44C;
+    border-radius:12px;padding:3px 10px;font-size:12.5px;color:#7A5A00}
+  .chip-prazo a{cursor:pointer;font-weight:700;color:#B3261E}
   .previsao-box{border:1px solid #E9B44C;background:#FFF8E7;border-radius:10px;padding:10px 12px;margin-bottom:10px}
   .mov-lista{list-style:none;margin:6px 0 0;padding:0;max-height:420px;overflow-y:auto}
   .mov-lista li{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--borda);font-size:13px}
@@ -1768,9 +1775,16 @@ async function abrirFicha(cliId){
     abaAtiva=+el.dataset.vv; abrirFicha(clienteAberto);
   });
   document.getElementById("btn-processos").onclick=ev=>menuProcessos(ev, ks);
-  document.querySelectorAll(".sug-it").forEach(el=>el.onclick=()=>usarSugestao(el));
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
-  if(campoAnd) campoAnd.onkeydown=e=>{ if(e.key==="Enter") document.querySelector(".escrever button[onclick^='novoAndamento']").click(); };
+  if(campoAnd){
+    campoAnd.onkeydown=e=>{ if(e.key==="Enter") document.querySelector(".escrever button[onclick^='novoAndamento']").click(); };
+    const kAtual=(casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null);
+    if(kAtual){
+      prazoDetectado=null; prazoCancelado=false;
+      pintarSugestoes(kAtual); pintarPrazoDoTexto(kAtual);
+      campoAnd.oninput=()=>{ prazoCancelado=false; pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual); };
+    }
+  }
 
   document.querySelectorAll("[data-fase]").forEach(s=>s.onchange=async()=>{
     const k=D.casoPorId.get(s.dataset.fase);
@@ -1957,7 +1971,49 @@ function irSubAba(qual){
   if(clienteAberto) abrirFicha(clienteAberto);
 }
 
-// Sugestões de texto sempre à vista, em itálico e menores: as frases prontas
+// ── a data sai do próprio texto (como o Todoist faz) ─────────────────────
+// A equipe já escreve "Verificar em 12/08" — 2.900 vezes no histórico. Em vez
+// de pedir a data DE NOVO num campo separado, o sistema lê do comentário.
+// Só vale com um verbo de próximo passo antes: "perícia em 12/08" é evento,
+// não lembrete, e quem cuida disso é o extrairEvento.
+const GATILHOS_PRAZO = "verificar|aguardar|ver|conferir|cobrar|retornar|checar|"+
+  "solicitar|pedir|avisar|ligar|agendar|acompanhar|manifestar|apresentar|entrar em contato";
+const DIAS_SEM = {domingo:0,segunda:1,terca:2,quarta:3,quinta:4,sexta:5,sabado:6};
+function dataDoTexto(txt){
+  const t = dsa(txt||"");
+  const re = new RegExp("\\b(?:"+GATILHOS_PRAZO+")\\b[^.;\\n]{0,40}?\\b("+
+    "(\\d{1,2})[\\/.](\\d{1,2})(?:[\\/.](\\d{2,4}))?"+   // 12/08 · 12/08/2026 · 12.08
+    "|(\\d{1,3})\\s*dias"+                                   // em 30 dias
+    "|amanha|hoje|depois de amanha"+
+    "|segunda|terca|quarta|quinta|sexta|sabado|domingo)");
+  const m = t.match(re);
+  if(!m) return null;
+  const hj = new Date(hoje()+"T12:00:00");
+  const iso = d => d.toLocaleDateString("sv");
+  if(m[2]){                                    // data escrita
+    let [dia, mes, ano] = [+m[2], +m[3], m[4]];
+    if(!dia || !mes || dia>31 || mes>12) return null;
+    let a = ano ? (+ano < 100 ? 2000 + +ano : +ano) : hj.getFullYear();
+    let d = new Date(a, mes-1, dia, 12);
+    if(!ano && d < hj) d = new Date(a+1, mes-1, dia, 12);   // sem ano: o próximo
+    return {iso: iso(d), trecho: m[1]};
+  }
+  if(m[5]){                                    // "em N dias"
+    const d = new Date(hj); d.setDate(d.getDate() + +m[5]);
+    return {iso: iso(d), trecho: m[1]};
+  }
+  const p = m[1];
+  if(p==="hoje") return {iso: iso(hj), trecho: p};
+  if(p==="amanha"){ const d=new Date(hj); d.setDate(d.getDate()+1); return {iso:iso(d), trecho:p}; }
+  if(p==="depois de amanha"){ const d=new Date(hj); d.setDate(d.getDate()+2); return {iso:iso(d), trecho:p}; }
+  if(p in DIAS_SEM){
+    const d=new Date(hj); const falta=(DIAS_SEM[p]-d.getDay()+7)%7 || 7;
+    d.setDate(d.getDate()+falta); return {iso: iso(d), trecho: p};
+  }
+  return null;
+}
+
+// Sugestões de texto: as frases prontas
 // da equipe + os motivos do Lembrar. Clicar preenche o campo — quem já sabe o
 // que escrever ignora, quem não sabe tem exemplo do jeito que o escritório
 // escreve. Substitui os botões ⚡ Frases e ⚠ Exigência.
@@ -1969,20 +2025,45 @@ function sugestoes(k){
     if(!t || vistos.has(dsa(t))) return;
     vistos.add(dsa(t)); itens.push({texto:t, acao});
   };
-  juntar("Exigência do INSS — registrar com prazo", "exigencia");
-  // motivos do Lembrar que combinam com a lista deste processo
+  // motivos do Lembrar que combinam com a lista deste processo, e as frases
   lbMotivos().filter(m=>!(m.listas||[]).length || (m.listas||[]).includes(k.fase))
     .forEach(m=>juntar(m.texto));
   D.frases.forEach(f=>juntar(f.texto));
-  return itens.map((it,i)=>`<span class="sug-it" data-sug="${i}" data-acao="${it.acao||""}"
-    title="clique para usar este texto">${it.acao==="exigencia"?"⚠ ":""}${esc(it.texto)}</span>`).join("");
+  juntar("Exigência do INSS — registrar com prazo", "exigencia");
+  return itens;
 }
-function usarSugestao(el, k){
+// mostradas com o campo vazio (exemplos) e filtradas enquanto digita, como
+// o autocompletar dos bons sistemas — nunca uma parede de texto
+function pintarSugestoes(k){
+  const cx=document.getElementById("sug-box"); if(!cx) return;
+  const inp=document.getElementById("and-texto");
+  const q=dsa((inp&&inp.value||"").trim());
+  const todas=sugestoes(k);
+  const lista=(q ? todas.filter(s=>dsa(s.texto).includes(q)) : todas).slice(0, q?5:6);
+  cx.innerHTML = lista.map(s=>`<span class="sug-it" data-acao="${s.acao||""}">${s.acao==="exigencia"?"⚠ ":""}${esc(s.texto)}</span>`).join("")
+    + (q?"":`<span class="sug-mais" onclick="lbEditar('${k.id}')">✎ editar sugestões</span>`);
+  cx.querySelectorAll(".sug-it").forEach(el=>el.onclick=()=>usarSugestao(el, k));
+}
+// enquanto digita: mostra a data que o sistema entendeu, para confirmar
+function pintarPrazoDoTexto(k){
+  const chip=document.getElementById("and-prazo-chip"); if(!chip) return;
+  const inp=document.getElementById("and-texto");
+  if(prazoCancelado){ chip.innerHTML=""; return; }
+  const achado=dataDoTexto(inp?inp.value:"");
+  prazoDetectado = achado ? achado.iso : null;
+  chip.innerHTML = achado
+    ? `<span class="chip-prazo">🗓 lembrete: <b>${fmt(achado.iso)}</b> (${diaSemana(achado.iso).slice(0,3)})
+        <a title="não criar lembrete" onclick="prazoCancelado=true;prazoDetectado=null;pintarPrazoDoTexto()">✕</a></span>`
+    : "";
+}
+let prazoDetectado = null, prazoCancelado = false;
+function usarSugestao(el){
   if(el.dataset.acao==="exigencia") return abrirExigencia();
   const texto = el.textContent.trim();
-  if(/__\/__\/____|__:__|____|__/.test(texto)) return montarPreenchimento(texto);
   const inp=document.getElementById("and-texto");
+  if(/__/.test(texto)) return montarPreenchimento(texto);
   inp.value=texto; inp.focus();
+  prazoCancelado=false; pintarPrazoDoTexto(); pintarSugestoes(D.casoPorId.get(casoSel));
 }
 
 function painelEscritorio(k, ands){
@@ -1997,25 +2078,22 @@ function painelEscritorio(k, ands){
     </div>
     <div class="form-linha" style="align-items:center;margin:8px 0 0">
       <span class="rotulo-rap">🗓 LEMBRAR:</span>
-      <button class="lembrar-caixa" style="cursor:pointer;font:inherit" onclick="toggleLembrar('${k.id}')"
-        title="quando agir e por quê — atalhos Hoje/+7/+15/+30">🗓 ${k.prazo?`${fmt(k.prazo)} (${diaSemana(k.prazo).slice(0,3)})`:"Lembrar em…"}${k.lembrar_motivo?" — "+esc(k.lembrar_motivo.length>30?k.lembrar_motivo.slice(0,30)+"…":k.lembrar_motivo):""}</button>
+      <button class="lembrar-caixa" style="cursor:pointer;font:inherit" onclick="menuLembrar(event,'${k.id}')"
+        title="quando voltar a mexer neste processo">🗓 ${k.prazo?`${fmt(k.prazo)} (${diaSemana(k.prazo).slice(0,3)})`:"escolher data…"}</button>
+      ${k.prazo&&k.lembrar_motivo?`<span class="meio-sub">${esc(k.lembrar_motivo.length>60?k.lembrar_motivo.slice(0,60)+"…":k.lembrar_motivo)}</span>`:""}
     </div>
     <div id="lembrar-box" style="display:none;border:1px solid #E9B44C;border-radius:8px;background:var(--branco);margin-top:8px;padding:10px"></div>
     ${encerrado ? `<p class="meio-sub" style="margin:10px 0 0">✔ Processo encerrado — comentários desativados. Reabra pela trilha acima para voltar a comentar.</p>`
     : `<div class="escrever" style="margin:10px 0 0">
-      <div class="form-linha" style="align-items:center">
+      <div class="form-linha" style="align-items:center;flex-wrap:nowrap">
         <span class="avatar mini" style="background:${eu.cor||"#2564cf"}">${esc(eu.inicial||"?")}</span>
-        <input id="and-texto" placeholder="escreva o andamento e clique em Registrar" style="flex:1;min-width:240px">
         <button class="btn-rap ${k.importante?"on":""}" style="border-color:#E9B44C" onclick="toggleImp('${k.id}')" title="importante">⭐</button>
         <button class="btn-rap ${k.urgente?"on":""}" style="border-color:#B3261E" onclick="toggleUrg('${k.id}')" title="urgente">🔥</button>
+        <input id="and-texto" placeholder="Escreva o andamento…" style="flex:1;min-width:200px">
         <button onclick="novoAndamento('${k.id}')">Registrar</button>
       </div>
-      <div class="form-linha" style="align-items:center;margin-top:4px;font-size:12.5px">
-        <span class="rotulo-rap">🗓 LEMBRAR EM:</span>
-        <input type="date" id="and-lembrar-data" value="${k.prazo||""}" style="padding:3px 6px">
-        <span class="meio-sub">mudou a data? ao Registrar o lembrete muda junto${equipe.length?` · avisa ${equipe.map(id=>esc((D.colPorId.get(id)||{}).nome||"")).join(", ")}`:""}</span>
-      </div>
-      <div class="sugestoes">${sugestoes(k)}</div>
+      <div id="and-prazo-chip"></div>
+      <div id="sug-box" class="sugestoes"></div>
       <div id="preenche-box" style="display:none;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-top:6px;padding:10px"></div>
       <div id="exig-box" style="display:none;border:1px solid #f0c36d;border-radius:8px;background:#fffaf0;margin-top:6px;padding:10px">
         <strong style="font-size:13px">⚠ Registrar exigência do INSS</strong>
@@ -2024,7 +2102,6 @@ function painelEscritorio(k, ands){
           <label style="font-size:12px;color:var(--cinza)">prazo final: <input type="date" id="ex-prazo"></label>
           <button onclick="novaExigencia()">Registrar exigência</button>
         </div>
-        <p style="font-size:11px;color:var(--cinza);margin-top:4px">Vira andamento (replicado no To Do) e liga a contagem regressiva na ficha.</p>
       </div>
     </div>`}
   </div>
@@ -2408,14 +2485,15 @@ async function novoAndamento(casoUnico){
   const k=D.casoPorId.get(casoId);
   // registrar o andamento e mudar o lembrete são UM gesto só: quem marcou a
   // data ali no campo não precisa abrir o Lembrar em depois
-  const inLb=document.getElementById("and-lembrar-data");
+  // a data que o sistema leu no próprio texto vira o lembrete, sem campo extra
   let lembrou="";
-  if(inLb && inLb.value && k && inLb.value!==(k.prazo||"")){
-    k.prazo=inLb.value; k.lembrar_motivo=texto.slice(0,120);
+  if(prazoDetectado && k && !prazoCancelado){
+    k.prazo=prazoDetectado; k.lembrar_motivo=texto.slice(0,120);
     await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({prazo:k.prazo, lembrar_motivo:k.lembrar_motivo})});
     lembrou=` · 🗓 lembrete para ${fmt(k.prazo)}`;
   }
+  prazoDetectado=null; prazoCancelado=false;
   // protocolo citado entra na ficha e vira pesquisável ("protocolo 210...")
   const prot=texto.match(/protocolo\D{0,12}(\d{6,})/i);
   if(prot && k && !(k.protocolos||[]).includes(prot[1])){
@@ -2495,57 +2573,58 @@ function lbMotivos(){
   const ms=(D.lembrarMotivos&&D.lembrarMotivos.length)?D.lembrarMotivos:MOTIVOS_PADRAO;
   return ms.filter(m=>m.ativo!==false);
 }
-function toggleLembrar(casoId){
-  const b=document.getElementById("lembrar-box"); if(!b) return;
-  ["preenche-box","exig-box"].forEach(i=>{const e=document.getElementById(i); if(e) e.style.display="none";});
+// menu curto do Lembrar, no estilo do To Do: escolher a data e pronto.
+// O "porquê" não é perguntado — ele vem do texto do último andamento.
+function menuLembrar(ev, casoId){
+  ev.stopPropagation();
+  const b=document.getElementById("lembrar-box"); const k=D.casoPorId.get(casoId);
+  if(!b||!k) return;
   if(b.style.display==="block"){ b.style.display="none"; return; }
-  lbEditando=false; lbMotivoEdit=null;
-  lbRender(casoId);
+  const em=d=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+d); return x.toLocaleDateString("sv"); };
+  b.innerHTML=`<div class="form-linha" style="align-items:center;margin:0">
+      ${[["Hoje",0],["Amanhã",1],["+7 dias",7],["+15 dias",15],["+30 dias",30]].map(([r,d])=>
+        `<button class="btn-mini" onclick="salvarPrazo('${casoId}','${em(d)}')">${r}</button>`).join("")}
+      <input type="date" id="lb-data" value="${k.prazo||""}" onchange="salvarPrazo('${casoId}',this.value)">
+      ${k.prazo?`<button class="btn-mini" onclick="salvarPrazo('${casoId}','')">limpar</button>`:""}
+    </div>`;
   b.style.display="block";
 }
+async function salvarPrazo(casoId, iso){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  k.prazo = iso || null;
+  if(!iso) k.lembrar_motivo=null;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({prazo:k.prazo, ...(iso?{}:{lembrar_motivo:null})})});
+  aviso(iso?`🗓 Lembrete: ${diaSemana(iso)}, ${fmt(iso)}`:"Lembrete removido");
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+}
+
+// A caixa antiga do Lembrar virou o EDITOR DAS SUGESTÕES: os mesmos textos
+// que aparecem embaixo do campo de escrever, editáveis pela equipe.
 function lbRender(casoId){
-  const b=document.getElementById("lembrar-box"); const k=D.casoPorId.get(casoId); if(!b||!k) return;
-  const em=d=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+d); return x.toLocaleDateString("sv"); };
-  // preserva o que já estava digitado ao alternar o modo de edição
-  const elData=document.getElementById("lb-data"), elMot=document.getElementById("lb-motivo");
-  const dataAtual=elData?elData.value:(k.prazo||"");
-  const motivoAtual=elMot?elMot.value:(k.lembrar_motivo||"");
-  // só os motivos da lista (fase) deste caso — para não poluir; editando, todos
-  const vis=lbMotivos().filter(m=>lbEditando || !(m.listas||[]).length || (m.listas||[]).includes(k.fase));
+  const b=document.getElementById("lembrar-box"); const k=D.casoPorId.get(casoId);
+  if(!b||!k) return;
+  const vis=lbMotivos();
   const grupos=[], porGrupo=new Map();
   vis.forEach(m=>{ if(!porGrupo.has(m.grupo)){porGrupo.set(m.grupo,[]); grupos.push(m.grupo);} porGrupo.get(m.grupo).push(m); });
   b.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
-      <strong style="font-size:13px">🗓 Lembrar em — a AGENDA do caso (quando agir e por quê)</strong>
-      <button class="btn-mini" onclick="lbEditar('${casoId}')">${lbEditando?"✔ concluir edição":"✎ editar motivos"}</button>
+      <strong style="font-size:13px">✎ Sugestões de andamento — o que a equipe costuma escrever</strong>
+      <button class="btn-mini" onclick="lbEditar('${casoId}')">fechar</button>
     </div>
-    <p class="meio-sub" style="margin:2px 0 6px">${lbEditando
-      ?"Clique num motivo para alterá-lo, no ✕ para removê-lo, ou crie um novo abaixo. Sem lista marcada = aparece em todas."
-      :"Marca a data de agir (aparece nas listas) — e pode registrar um comentário com a data, como sempre fazemos."}</p>
-    <div class="form-linha" style="margin-top:4px;align-items:center">
-      ${[["Hoje",0],["Amanhã",1],["+7 dias",7],["+15 dias",15],["+30 dias",30]].map(([r,d])=>
-        `<button class="btn-mini" onclick="setLbData('${em(d)}')">${r}</button>`).join("")}
-      <input type="date" id="lb-data" value="${dataAtual}" oninput="lbPreview()">
-      <strong id="lb-preview" style="font-size:13px;color:var(--azul)"></strong>
-    </div>
+    <p class="meio-sub" style="margin:2px 0 6px">Clique num texto para alterá-lo, no ✕ para tirar da lista, ou crie um novo abaixo. Sem lista marcada = aparece em todas.</p>
     ${grupos.map(g=>`<div class="form-linha" style="align-items:center;gap:4px;margin:3px 0">
       <span class="meio-sub" style="min-width:86px;font-weight:600">${esc(g)}</span>
-      ${porGrupo.get(g).map(m=>lbEditando
-        ?`<span style="display:inline-flex;align-items:center;gap:2px"><button class="btn-mini" title="clique para alterar" onclick="lbCarregarForm('${m.id||""}')">${esc(m.texto)}</button><a style="cursor:pointer;color:#B3261E;font-weight:700;padding:0 3px" title="remover" onclick="lbDesativar('${casoId}','${m.id||""}')">✕</a></span>`
-        :`<button class="btn-mini" onclick="document.getElementById('lb-motivo').value=this.textContent">${esc(m.texto)}</button>`).join("")}
+      ${porGrupo.get(g).map(m=>`<span style="display:inline-flex;align-items:center;gap:2px"><button class="btn-mini" title="clique para alterar" onclick="lbCarregarForm('${m.id||""}')">${esc(m.texto)}</button><a style="cursor:pointer;color:#B3261E;font-weight:700;padding:0 3px" title="remover" onclick="lbDesativar('${casoId}','${m.id||""}')">✕</a></span>`).join("")}
     </div>`).join("")}
-    ${lbEditando?lbFormHtml(casoId):`<div class="form-linha">
-      <input id="lb-motivo" placeholder="por que lembrar? (ex.: pedir prorrogação)" style="flex:1;min-width:220px">
-      <button onclick="salvarLembrar('${k.id}')">Salvar lembrete</button>
-      ${k.prazo?`<button class="btn-mini" onclick="limparLembrar('${k.id}')">limpar</button>`:""}
-    </div>
-    <label style="font-size:12.5px;display:flex;gap:6px;align-items:center;margin-top:2px;cursor:pointer">
-      <input type="checkbox" id="lb-comentar" checked>
-      📝 Registrar comentário com a data — ex.: “Verificar HISCRE em 12/02/2026.” (vai para o To Do também)
-    </label>`}`;
-  const mi=document.getElementById("lb-motivo"); if(mi) mi.value=motivoAtual;
-  lbPreview();
+    ${lbFormHtml(casoId)}`;
+  b.style.display="block";
 }
-function lbEditar(casoId){ lbEditando=!lbEditando; lbMotivoEdit=null; lbRender(casoId); }
+
+function lbEditar(casoId){
+  const b=document.getElementById("lembrar-box"); if(!b) return;
+  if(b.style.display==="block" && lbEditando){ b.style.display="none"; lbEditando=false; return; }
+  lbEditando=true; lbMotivoEdit=null; lbRender(casoId);
+}
 function lbFormHtml(casoId){
   const grupos=[...new Set(lbMotivos().map(m=>m.grupo))];
   const FL=[["escritorio","🙋 Escritório"],["inss","🌻 INSS"],["conselho","🖥 Conselho"],["judicial","👪 Judicial"],
@@ -2611,39 +2690,6 @@ async function lbDesativar(casoId,id){
 }
 function diaSemana(iso){
   return new Date(iso+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long"});
-}
-function setLbData(v){ document.getElementById("lb-data").value=v; lbPreview(); }
-function lbPreview(){
-  const v=document.getElementById("lb-data").value;
-  document.getElementById("lb-preview").textContent = v ? `→ ${diaSemana(v)}, ${fmt(v)}` : "";
-}
-async function salvarLembrar(casoId){
-  const k=D.casoPorId.get(casoId); if(!k) return;
-  const antes={prazo:k.prazo, motivo:k.lembrar_motivo};
-  k.prazo=document.getElementById("lb-data").value||null;
-  k.lembrar_motivo=document.getElementById("lb-motivo").value.trim()||null;
-  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({prazo:k.prazo, lembrar_motivo:k.lembrar_motivo})});
-  // hábito do escritório: o comentário guarda a data escolhida — se alguém
-  // mudar o lembrete depois, a data original fica na linha do tempo e no To Do
-  const cb=document.getElementById("lb-comentar");
-  let comentou=false;
-  if(cb && cb.checked && k.prazo && k.lembrar_motivo &&
-     (k.prazo!==antes.prazo || k.lembrar_motivo!==antes.motivo)){
-    const dataBr=`${k.prazo.slice(8,10)}/${k.prazo.slice(5,7)}/${k.prazo.slice(0,4)}`;
-    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`${k.lembrar_motivo} em ${dataBr}.`})});
-    comentou=true;
-  }
-  aviso(k.prazo?`Lembrete salvo: ${diaSemana(k.prazo)}, ${fmt(k.prazo)}${k.lembrar_motivo?" — "+k.lembrar_motivo:""}${comentou?" · 📝 comentário registrado":""} 🗓`:"Lembrete salvo");
-  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
-}
-async function limparLembrar(casoId){
-  const k=D.casoPorId.get(casoId); if(!k) return;
-  k.prazo=null; k.lembrar_motivo=null;
-  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({prazo:null, lembrar_motivo:null})});
-  aviso("Lembrete removido"); montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
 }
 async function novaExigencia(){
   const sel=document.getElementById("and-caso");
