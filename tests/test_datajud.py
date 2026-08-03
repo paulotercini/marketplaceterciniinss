@@ -140,3 +140,73 @@ def test_frase_cliente_completa():
 
 def test_frase_cliente_vazia_sem_movimento():
     assert dj.frase_cliente({"processo": "x", "ultimo": None}) == ""
+
+
+# ── marcos financeiros: o que o cliente (e o escritório) mais espera ──────
+MOVS_DINHEIRO = [
+    {"codigo": 848, "dataHora": "2026-01-13T10:00:00.000Z", "nome": "Trânsito em julgado"},
+    {"codigo": 92, "dataHora": "2026-02-02T10:00:00.000Z", "nome": "Publicação"},
+    {"codigo": 12457, "dataHora": "2026-06-10T10:00:00.000Z",
+     "nome": "Expedição de precatório/rpv"},
+]
+
+
+def test_marcos_reconhece_requisitorio_e_transito():
+    m = dj.marcos(MOVS_DINHEIRO)
+    assert m["transito"]["data"] == "2026-01-13"
+    assert m["requisitorio"]["data"] == "2026-06-10"
+    assert m["requisitorio"]["nome"] == "Expedição de precatório/rpv"
+    assert "pago" not in m and "alvara" not in m
+
+
+def test_marcos_guarda_a_ocorrencia_mais_recente():
+    movs = MOVS_DINHEIRO + [{"codigo": 12457, "dataHora": "2026-07-01T10:00:00.000Z",
+                             "nome": "Expedição de precatório/rpv"}]
+    assert dj.marcos(movs)["requisitorio"]["data"] == "2026-07-01"
+
+
+def test_marcos_alvara_e_pagamento():
+    m = dj.marcos([
+        {"codigo": 12548, "dataHora": "2026-07-05T10:00:00.000Z",
+         "nome": "Expedição de alvará de levantamento"},
+        {"codigo": 1049, "dataHora": "2026-07-20T10:00:00.000Z",
+         "nome": "Pagamento integral do débito"}])
+    assert m["alvara"]["data"] == "2026-07-05" and m["pago"]["data"] == "2026-07-20"
+
+
+def test_marcos_ignora_movimento_comum():
+    assert dj.marcos([{"codigo": 92, "dataHora": "2026-02-02T10:00:00.000Z",
+                       "nome": "Publicação"}]) == {}
+
+
+def test_marcos_sem_movimentos():
+    assert dj.marcos([]) == {} and dj.marcos(None) == {}
+
+
+def test_resumir_inclui_marcos():
+    r = dj.resumir(dict(FONTE_REAL, movimentos=MOVS_DINHEIRO))
+    assert set(r["marcos"]) == {"transito", "requisitorio"}
+
+
+def test_frase_marco_prioriza_o_estagio_mais_adiantado():
+    t = {"processo": "5000322-78.2022.4.03.6325", "consultado_em": "2026-08-03",
+         "marcos": dj.marcos(MOVS_DINHEIRO + [
+             {"codigo": 1049, "dataHora": "2026-07-20T10:00:00.000Z",
+              "nome": "Pagamento integral do débito"}])}
+    frase = dj.frase_marco(t)
+    assert "o pagamento do débito foi registrado nos autos, em 20/07/2026" in frase
+    assert "precatório" not in frase          # não repete o estágio anterior
+
+
+def test_frase_marco_requisitorio():
+    t = {"processo": "5000322-78.2022.4.03.6325", "consultado_em": "2026-08-03",
+         "marcos": dj.marcos(MOVS_DINHEIRO)}
+    assert dj.frase_marco(t) == (
+        "No processo nº 5000322-78.2022.4.03.6325, foi expedido o requisitório "
+        "de pagamento (precatório/RPV), em 10/06/2026 (movimento oficial "
+        "“Expedição de precatório/rpv”). Fonte: base pública do CNJ (DataJud), "
+        "consulta de 03/08/2026.")
+
+
+def test_frase_marco_vazia_sem_marco():
+    assert dj.frase_marco({"processo": "x", "marcos": {}}) == ""

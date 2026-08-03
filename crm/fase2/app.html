@@ -1564,6 +1564,7 @@ async function abrirFicha(cliId){
             <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
         </div>
         ${trilhaCaso(k)}
+        ${marcoCaso(k)}
         ${datajudCaso(k)}
         ${trf3Caso(k)}
         </div>
@@ -1906,6 +1907,51 @@ function tituloOrgao(n){          // o CNJ manda em CAIXA ALTA; aqui vira legív
     return (miudas.has(b)&&i) ? b : b.split(".").map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join(".");
   }).join(" ");
 }
+// Marcos financeiros do processo (do mais adiantado para o menos): é o que o
+// cliente mais pergunta — e, para nós, a hora de cobrar os honorários.
+const MARCOS_ORDEM=[
+  ["pago","💵","Pagamento registrado nos autos"],
+  ["alvara","🏦","Alvará de levantamento expedido — o valor já pode ser sacado"],
+  ["requisitorio","💰","Requisitório expedido (precatório/RPV) — pagamento requisitado"],
+  ["transito","⚖️","Trânsito em julgado — não cabe mais recurso"]];
+function marcoDoCaso(k){
+  const mc=(k.datajud||{}).marcos||{};
+  for(const [chave,ico,rotulo] of MARCOS_ORDEM){
+    const m=mc[chave];
+    if(m && m.data) return {chave,ico,rotulo,data:m.data,nome:m.nome};
+  }
+  return null;
+}
+function marcoCaso(k){
+  const m=marcoDoCaso(k);
+  if(!m) return "";
+  // requisitório/alvará/pagamento em processo que ainda não está na fase de
+  // honorários: lembrete visual de que há o que cobrar
+  const cobrar = m.chave!=="transito" && k.fase!=="pagamento" && k.fase!=="encerrado";
+  return `<div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:#EDF6EE;border:1px solid #BFDCC2;font-size:13px">
+    ${m.ico} <b>${esc(m.rotulo)}</b> em <b>${fmt(m.data)}</b>
+    <span class="meio-sub">(movimento oficial “${esc(m.nome||"")}”)</span>
+    ${cobrar?`<span class="chip urg" style="background:#FFF4D6;color:#8A6100;border-color:#E9B44C">💰 honorários a cobrar</span>`:""}
+    <div style="margin-top:4px">
+      <button class="btn-mini" onclick="copiarMarco('${k.id}')">💬 copiar mensagem ao cliente</button>
+      ${cobrar?`<button class="btn-mini" onclick="moverFase('${k.id}','pagamento')">💰 mover para Pagamentos</button>`:""}
+    </div>
+  </div>`;
+}
+function copiarMarco(casoId){
+  const k=D.casoPorId.get(casoId); const m=marcoDoCaso(k); if(!m) return;
+  const t=k.datajud||{};
+  const dbr=i=>i?`${i.slice(8,10)}/${i.slice(5,7)}/${i.slice(0,4)}`:"";
+  const TXT={pago:"o pagamento do débito foi registrado nos autos",
+    alvara:"foi expedido o alvará de levantamento — o valor já pode ser sacado",
+    requisitorio:"foi expedido o requisitório de pagamento (precatório/RPV)",
+    transito:"o processo transitou em julgado, ou seja, não cabe mais recurso"};
+  const msg=`No processo nº ${t.processo}, ${TXT[m.chave]}, em ${dbr(m.data)} `+
+    `(movimento oficial “${m.nome||""}”). Fonte: base pública do CNJ (DataJud), `+
+    `consulta de ${dbr(t.consultado_em)}.`;
+  copiar(msg,"Mensagem do marco do processo copiada 💬");
+}
+
 function datajudCaso(k){
   const t=k.datajud, u=t&&t.ultimo;
   if(!u || !u.data) return "";
