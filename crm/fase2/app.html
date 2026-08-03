@@ -2131,8 +2131,34 @@ function toggleLembrar(casoId){
   if(b.style.display==="block"){ b.style.display="none"; return; }
   const k=D.casoPorId.get(casoId); if(!k) return;
   const em=d=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+d); return x.toLocaleDateString("sv"); };
-  const MOTIVOS=["Pedir prorrogação do benefício","Cobrar documentos do cliente",
-    "Conferir resposta do INSS","Verificar pagamento","Retornar contato com o cliente","Último dia do prazo"];
+  // Anotações que a equipe sempre faz — mineradas do histórico real do To Do
+  // (17 mil andamentos analisados), das mais frequentes para as menos.
+  const MOTIVOS=[
+    ["🌻 INSS",[
+      "Em análise — verificar novamente",
+      "Benefício concedido — verificar HISCRE",
+      "HISCRE ainda não disponível — conferir de novo",
+      "Pedir prorrogação do benefício",
+      "Prorrogação ainda não disponível — tentar de novo",
+      "Verificar resultado da perícia",
+      "Verificar resposta da exigência",
+      "Verificar resposta da ouvidoria",
+      "Solicitar o benefício nesta data"]],
+    ["💰 Pagamento",[
+      "Verificar previsão de pagamento (HISCRE)",
+      "Conferir se o pagamento caiu"]],
+    ["⚖️ Judicial",[
+      "Verificar movimentação do processo",
+      "Sem alteração no recurso — conferir de novo",
+      "Verificar trânsito em julgado"]],
+    ["🙋 Cliente",[
+      "Cobrar documentos do cliente",
+      "Cliente não retornou — tentar novo contato",
+      "Verificar resposta do e-mail",
+      "Agendar atendimento presencial",
+      "Avisar o cliente do resultado",
+      "Verificar senha do Meu INSS",
+      "Último dia do prazo"]]];
   b.innerHTML=`<strong style="font-size:13px">🗓 Lembrar em — a AGENDA do caso (quando agir e por quê)</strong>
     <p class="meio-sub" style="margin:2px 0 6px">Não escreve nada no andamento — só marca a data de agir, que aparece nas listas.</p>
     <div class="form-linha" style="margin-top:4px;align-items:center">
@@ -2141,9 +2167,10 @@ function toggleLembrar(casoId){
       <input type="date" id="lb-data" value="${k.prazo||""}" oninput="lbPreview()">
       <strong id="lb-preview" style="font-size:13px;color:var(--azul)"></strong>
     </div>
-    <div class="form-linha" style="align-items:center">
-      ${MOTIVOS.map(m=>`<button class="btn-mini" onclick="document.getElementById('lb-motivo').value=this.textContent">${m}</button>`).join("")}
-    </div>
+    ${MOTIVOS.map(([g,ms])=>`<div class="form-linha" style="align-items:center;gap:4px;margin:3px 0">
+      <span class="meio-sub" style="min-width:86px;font-weight:600">${g}</span>
+      ${ms.map(m=>`<button class="btn-mini" onclick="document.getElementById('lb-motivo').value=this.textContent">${m}</button>`).join("")}
+    </div>`).join("")}
     <div class="form-linha">
       <input id="lb-motivo" placeholder="por que lembrar? (ex.: pedir prorrogação)" value="${esc(k.lembrar_motivo||"")}" style="flex:1;min-width:220px">
       <button onclick="salvarLembrar('${k.id}')">Salvar lembrete</button>
