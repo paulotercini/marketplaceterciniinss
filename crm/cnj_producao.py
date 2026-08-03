@@ -18,7 +18,8 @@ sem esperar semanas medindo a fila.
 Grava na tabela orgao_producao. Roda junto com as demais consultas públicas
 (workflow consultas-publicas.yml). Exige SUPABASE_URL e SUPABASE_SERVICE_KEY.
 """
-import base64, datetime, gzip, json, os, re, ssl, sys, time, unicodedata, urllib.request
+import base64, datetime, gzip, json, os, re, ssl, sys, time, unicodedata
+import urllib.error, urllib.request
 
 # painel público "Estatísticas" (link publicar-na-web do próprio CNJ)
 PBI_BASE = "https://wabi-us-east-a-primary-api.analysis.windows.net"
@@ -259,9 +260,17 @@ def main():
         return
     for l in linhas:
         l["atualizado_em"] = hoje
-    for i in range(0, len(linhas), 500):
-        _rest("POST", "/rest/v1/orgao_producao", linhas[i:i + 500],
-              prefer="resolution=merge-duplicates,return=minimal")
+    try:
+        for i in range(0, len(linhas), 500):
+            _rest("POST", "/rest/v1/orgao_producao", linhas[i:i + 500],
+                  prefer="resolution=merge-duplicates,return=minimal")
+    except urllib.error.HTTPError as e:
+        if e.code in (404, 400):        # tabela ainda não criada no banco
+            print("::notice::A tabela orgao_producao ainda não existe no "
+                  "Supabase — rode o schema.sql mais novo no SQL Editor. "
+                  "A previsão continua saindo pelo ritmo observado da fila.")
+            return
+        raise
     print(f"gravadas {len(linhas)} linhas na tabela orgao_producao")
 
 
