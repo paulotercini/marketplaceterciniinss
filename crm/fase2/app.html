@@ -83,6 +83,21 @@
   .usuario{display:flex;align-items:center;gap:10px;padding:2px 16px 10px}
   .usuario .sair{margin-left:auto;border:none;background:none;color:#9AA0B0;cursor:pointer;font-size:12px}
   .sidebar .usuario div div{color:#9AA0B0!important}
+  /* sub-menu do processo: separa o que é nosso do que é do tribunal */
+  .sub-menu{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+  .sub-menu button{border:1px solid var(--borda);background:var(--branco);color:var(--cinza);
+    border-radius:8px 8px 0 0;padding:7px 14px;font-size:13.5px;font-weight:600;cursor:pointer}
+  .sub-menu button:hover{background:#eef4fb}
+  .sub-menu button.on{background:var(--azul);border-color:var(--azul);color:#fff}
+  .sub-menu.instancias{margin:0 0 10px}
+  .sub-menu.instancias button{border-radius:8px;padding:6px 12px;font-size:13px}
+  .sub-menu.instancias small{display:block;font-weight:400;opacity:.75;font-size:11.5px}
+  .previsao-box{border:1px solid #E9B44C;background:#FFF8E7;border-radius:10px;padding:10px 12px;margin-bottom:10px}
+  .mov-lista{list-style:none;margin:6px 0 0;padding:0;max-height:420px;overflow-y:auto}
+  .mov-lista li{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid var(--borda);font-size:13px}
+  .mov-lista li:last-child{border-bottom:none}
+  .mov-lista li.decisao{background:#EDF6EE;border-radius:6px;padding:6px 8px}
+  .mov-data{min-width:78px;color:var(--cinza);font-variant-numeric:tabular-nums}
   .busca{margin:0 12px 14px;position:relative}
   /* menu recolhido: a pesquisa continua ali, como uma lupa — clicar nela
      estende o menu e já deixa o cursor no campo */
@@ -424,6 +439,7 @@ let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
+let subAba = localStorage.getItem("crm_subaba") || "escritorio", instSel = 0;
 let avisarSel = new Set();   // quem deve ser avisado no próximo comentário (obrigatório)
 
 // som de retorno, como no To Do (gerado na hora — sem arquivo de áudio).
@@ -1585,21 +1601,9 @@ async function abrirFicha(cliId){
     ${(()=>{
       const k = casoSel && D.casoPorId.get(casoSel);
       if(!k) return ks.length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso no menu ao lado para ver só o dele.</p>`:"";
-      // cabeçalho do caso, estilo To Do: os dados importantes em cima, andamentos embaixo
-      return `<div class="caso-acoes">
-        <div class="form-linha" style="align-items:center;margin:0">
-          <span class="rotulo-rap">👥 ATRIBUÍDO A:</span>
-          ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${equipe.includes(co.id)?"on":""}" data-eq="${co.id}" title="${esc(co.nome)} — atribuir/retirar">
-            <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`).join("")}
-        </div>
-        <div class="form-linha" style="align-items:center;margin:8px 0 0">
-          <span class="rotulo-rap">🗓 LEMBRAR:</span>
-          <button class="lembrar-caixa" style="cursor:pointer;font:inherit" onclick="toggleLembrar('${k.id}')"
-            title="quando agir e por quê — atalhos Hoje/+7/+15/+30">🗓 ${k.prazo?`${fmt(k.prazo)} (${diaSemana(k.prazo).slice(0,3)})`:"Lembrar em…"}${k.lembrar_motivo?" — "+esc(k.lembrar_motivo.length>30?k.lembrar_motivo.slice(0,30)+"…":k.lembrar_motivo):""}</button>
-        </div>
-        <div id="lembrar-box" style="display:none;border:1px solid #E9B44C;border-radius:8px;background:var(--branco);margin-top:8px;padding:10px"></div>
-      </div>
-      <div class="caso caso-cab" style="margin-bottom:10px">
+      // identidade do processo, sempre visível; embaixo o sub-menu que separa
+      // o que é NOSSO (escritório) do que é OFICIAL (CNJ) — uma coisa por vez
+      return `<div class="caso caso-cab" style="margin-bottom:10px">
         <div class="rotulo-caso">lista ${esc(listaDe(k))} do To Do</div>
         <div class="cab" style="margin-top:2px">
           <span class="titulo-caso">${esc(tituloCaso(k))}</span>
@@ -1614,21 +1618,15 @@ async function abrirFicha(cliId){
           ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 msg ao cliente</button>
             <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
         </div>
-        ${trilhaCaso(k)}
-        ${marcoCaso(k)}
-        ${inssFilaCaso(k)}
-        ${datajudCaso(k)}
-        ${trf3Caso(k)}
-        ${consultaPendente(k)}
+        <div class="sub-menu">
+          <button class="${subAba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
+          <button class="${subAba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${(k.datajud&&k.datajud.ultimo)?"":" <span class=\'meio-sub\'>(sem dados)</span>"}</button>
         </div>
-        <div class="caso caso-check">${checklistCaso(k)}</div>
-        <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
+        ${trilhaCaso(k)}
+      </div>
+      ${subAba==="cnj" ? painelCNJ(k) : painelEscritorio(k, andsVis)}
+      <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
     })()}
-    <ul class="timeline">${andsVis.filter(a=>!a.excluir).map(a=>{const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
-      return `<li style="border-left-color:${cor};background:color-mix(in srgb, ${cor} 7%, white)">
-      <span class="quando"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmt(a.criado_em.slice(0,10))}<br>${esc(co?co.nome:"—")}</span>
-      <span class="texto">${esc(a.texto)}</span>
-      ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}</li>`;}).join("")||"<p class='meio-sub'>Sem andamentos.</p>"}</ul>
   </div>
 
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
@@ -1762,50 +1760,6 @@ async function abrirFicha(cliId){
   </div>
   </div>
 
-  <div class="escrever">
-    <div id="frases-box" style="display:none;max-height:230px;overflow-y:auto;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-bottom:6px;padding:8px">
-      <strong style="font-size:13px">⚡ Frases prontas — texto para o ANDAMENTO</strong>
-      <p class="meio-sub" style="margin:2px 0 6px">Clique numa frase e ela preenche o campo de escrever. Não mexe na agenda do caso.</p>
-      ${D.frases.map((f,fi)=>`<div class="frase-it" style="padding:5px 8px;border-radius:6px;cursor:pointer;font-size:13px" data-fi="${fi}">⚡ ${esc(f.texto)}</div>`).join("")}
-      <div class="form-linha" style="margin:6px 0 0">
-        <input id="nf-texto" placeholder="＋ salvar nova frase do jeito que vocês escrevem (use __ para completar depois)" style="flex:1">
-        <button onclick="novaFrase()">Salvar</button>
-      </div>
-    </div>
-    <div id="preenche-box" style="display:none;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-bottom:6px;padding:10px"></div>
-    <div id="exig-box" style="display:none;border:1px solid #f0c36d;border-radius:8px;background:#fffaf0;margin-bottom:6px;padding:10px">
-      <strong style="font-size:13px">⚠ Registrar exigência do INSS</strong>
-      <div class="form-linha" style="margin-top:6px">
-        <input id="ex-desc" placeholder="o que o INSS exigiu?" style="flex:1;min-width:200px">
-        <label style="font-size:12px;color:var(--cinza)">prazo final:
-          <input type="date" id="ex-prazo"></label>
-        <button onclick="novaExigencia()">Registrar exigência</button>
-      </div>
-      <p style="font-size:11px;color:var(--cinza);margin-top:4px">Vira andamento (replicado no To Do) e liga a contagem regressiva na ficha do caso.</p>
-    </div>
-    ${(()=>{
-      const kA=(casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null);
-      const ativosK=ks.filter(x=>x.fase!=="encerrado");
-      if(kA && kA.fase==="encerrado")
-        return `<p class="meio-sub" style="padding:4px 0">✔ Processo encerrado — comentários desativados. Para reabrir, clique numa etapa da trilha.</p>`;
-      if(!kA && !ativosK.length)
-        return `<p class="meio-sub" style="padding:4px 0">Sem processo ativo para comentar.</p>`;
-      return `<div class="linha">
-      <span class="avatar" style="background:${eu.cor}">${esc(eu.inicial)}</span>
-      ${!kA&&ativosK.length>1?`<select id="and-caso">${ativosK.map(k=>`<option value="${k.id}">${esc(tituloCaso(k)+" · "+(NOME_FASE[k.fase]||""))}</option>`).join("")}</select>`:""}
-      <input id="and-texto" placeholder="Escreva o comentário…">
-      <button onclick="novoAndamento('${kA?kA.id:""}')">Registrar</button>
-    </div>
-    <div class="acao-rapida" style="margin:8px 0 0">
-      <span class="rotulo-rap" title="obrigatório — quem deve ficar sabendo deste comentário">🔔 AVISAR:</span>
-      ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip av ${avisarSel.has(co.id)?"on":""}" data-av="${co.id}" title="avisar ${esc(co.nome)} (menção)">
-        <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.inicial)}</span>`).join("")}
-      ${kA?`<button class="btn-rap imp ${kA.importante?"on":""}" onclick="toggleImp('${kA.id}')" title="marcar/desmarcar Importante">⭐ Importante</button>
-      <button class="btn-rap urg ${kA.urgente?"on":""}" onclick="toggleUrg('${kA.id}')" title="marcar/desmarcar Urgente">🔥 Urgente</button>`:""}
-      <button class="btn-mini" style="white-space:nowrap" title="texto pronto para o comentário — não mexe na agenda" onclick="toggleFrases()">⚡ Frases</button>
-      <button class="btn-mini" style="white-space:nowrap" title="registrar exigência do INSS com prazo final" onclick="toggleExig()">⚠ Exigência</button>
-    </div>`;})()}
-  </div>
   </div>`;
 
   document.querySelectorAll(".mt[data-vv]").forEach(el=>el.onclick=()=>{
@@ -2006,6 +1960,160 @@ function tituloOrgao(n){          // o CNJ manda em CAIXA ALTA; aqui vira legív
     return (miudas.has(b)&&i) ? b : b.split(".").map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join(".");
   }).join(" ");
 }
+// ── as duas telas do processo ─────────────────────────────────────────────
+// Escritório = o que NÓS fazemos (checklist, equipe, lembrete, comentários).
+// CNJ = o que o TRIBUNAL fez (andamentos oficiais por instância).
+function irSubAba(qual){
+  subAba = qual;
+  localStorage.setItem("crm_subaba", qual);
+  if(clienteAberto) abrirFicha(clienteAberto);
+}
+
+let avisarPadraoDe = null;      // caso cujo AVISAR já foi pré-preenchido
+function painelEscritorio(k, ands){
+  const equipe = D.atrDoCaso.get(k.id) || [];
+  // AVISAR já vem marcado com quem cuida do caso (ou com o responsável do
+  // escritório): continua obrigatório, mas ninguém precisa clicar para
+  // registrar o de sempre — é só escrever e Registrar
+  if(avisarPadraoDe !== k.id){
+    avisarPadraoDe = k.id;
+    avisarSel.clear();
+    const padrao = equipe.length ? equipe
+      : D.colaboradores.filter(x=>x.ativo && x.papel==="admin").map(x=>x.id);
+    padrao.filter(id=>id!==eu.id).forEach(id=>avisarSel.add(id));
+    if(!avisarSel.size) padrao.forEach(id=>avisarSel.add(id));
+  }
+  const encerrado = k.fase==="encerrado";
+  return `<div class="caso caso-check">${checklistCaso(k)}</div>
+  <div class="caso-acoes">
+    <div class="form-linha" style="align-items:center;margin:0">
+      <span class="rotulo-rap">👥 ATRIBUÍDO A:</span>
+      ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${equipe.includes(co.id)?"on":""}" data-eq="${co.id}" title="${esc(co.nome)} — atribuir/retirar">
+        <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`).join("")}
+    </div>
+    <div class="form-linha" style="align-items:center;margin:8px 0 0">
+      <span class="rotulo-rap">🗓 LEMBRAR:</span>
+      <button class="lembrar-caixa" style="cursor:pointer;font:inherit" onclick="toggleLembrar('${k.id}')"
+        title="quando agir e por quê — atalhos Hoje/+7/+15/+30">🗓 ${k.prazo?`${fmt(k.prazo)} (${diaSemana(k.prazo).slice(0,3)})`:"Lembrar em…"}${k.lembrar_motivo?" — "+esc(k.lembrar_motivo.length>30?k.lembrar_motivo.slice(0,30)+"…":k.lembrar_motivo):""}</button>
+    </div>
+    <div id="lembrar-box" style="display:none;border:1px solid #E9B44C;border-radius:8px;background:var(--branco);margin-top:8px;padding:10px"></div>
+    ${encerrado ? `<p class="meio-sub" style="margin:10px 0 0">✔ Processo encerrado — comentários desativados. Reabra pela trilha acima para voltar a comentar.</p>`
+    : `<div class="escrever" style="margin:10px 0 0">
+      <div class="form-linha" style="align-items:center">
+        <span class="avatar mini" style="background:${eu.cor||"#2564cf"}">${esc(eu.inicial||"?")}</span>
+        <input id="and-texto" placeholder="escreva o andamento e clique em Registrar" style="flex:1;min-width:240px">
+        <button onclick="novoAndamento('${k.id}')">Registrar</button>
+      </div>
+      <div class="form-linha" style="align-items:center;margin-top:4px">
+        <span class="rotulo-rap">🔔 AVISAR:</span>
+        ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip av ${avisarSel.has(co.id)?"on":""}" data-av="${co.id}" title="avisar ${esc(co.nome)}">
+          <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`).join("")}
+        <button class="btn-rap ${k.importante?"on":""}" style="border-color:#E9B44C" onclick="toggleImp('${k.id}')" title="importante">⭐</button>
+        <button class="btn-rap ${k.urgente?"on":""}" style="border-color:#B3261E" onclick="toggleUrg('${k.id}')" title="urgente">🔥</button>
+        <button class="btn-mini" onclick="toggleFrases('${k.id}')">⚡ Frases</button>
+        <button class="btn-mini" onclick="toggleExig('${k.id}')">⚠ Exigência</button>
+      </div>
+      <div class="form-linha" style="align-items:center;margin-top:6px;font-size:12.5px">
+        <span class="rotulo-rap">🗓 LEMBRAR EM:</span>
+        <input type="date" id="and-lembrar-data" value="${k.prazo||""}" style="padding:3px 6px">
+        <span class="meio-sub">mudou a data? ao Registrar o lembrete já muda junto, e o motivo vira o texto do andamento</span>
+      </div>
+      <div id="frases-box" style="display:none;max-height:230px;overflow-y:auto;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-top:6px;padding:8px">
+        <strong style="font-size:13px">⚡ Frases prontas — texto para o ANDAMENTO</strong>
+        <p class="meio-sub" style="margin:2px 0 6px">Clique numa frase e ela preenche o campo de escrever.</p>
+        ${D.frases.map((f,fi)=>`<div class="frase-it" style="padding:5px 8px;border-radius:6px;cursor:pointer;font-size:13px" data-fi="${fi}">⚡ ${esc(f.texto)}</div>`).join("")}
+        <div class="form-linha" style="margin:6px 0 0">
+          <input id="nf-texto" placeholder="＋ salvar nova frase do jeito que vocês escrevem (use __ para completar depois)" style="flex:1">
+          <button onclick="novaFrase()">Salvar</button>
+        </div>
+      </div>
+      <div id="preenche-box" style="display:none;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-top:6px;padding:10px"></div>
+      <div id="exig-box" style="display:none;border:1px solid #f0c36d;border-radius:8px;background:#fffaf0;margin-top:6px;padding:10px">
+        <strong style="font-size:13px">⚠ Registrar exigência do INSS</strong>
+        <div class="form-linha" style="margin-top:6px">
+          <input id="ex-desc" placeholder="o que o INSS exigiu?" style="flex:1;min-width:200px">
+          <label style="font-size:12px;color:var(--cinza)">prazo final: <input type="date" id="ex-prazo"></label>
+          <button onclick="novaExigencia()">Registrar exigência</button>
+        </div>
+        <p style="font-size:11px;color:var(--cinza);margin-top:4px">Vira andamento (replicado no To Do) e liga a contagem regressiva na ficha.</p>
+      </div>
+    </div>`}
+  </div>
+  <ul class="timeline">${(ands||[]).filter(a=>!a.excluir).map(a=>{
+    const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
+    return `<li style="border-left-color:${cor};background:color-mix(in srgb, ${cor} 7%, white)">
+      <span class="quando"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmt(a.criado_em.slice(0,10))}<br>${esc(co?co.nome:"—")}</span>
+      <span class="texto">${esc(a.texto)}</span>
+      ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}</li>`;
+  }).join("") || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
+}
+
+function painelCNJ(k){
+  const t = k.datajud;
+  if(!t || !(t.ultimo || (t.instancias||[]).length))
+    return `<div class="caso">${consultaPendente(k) || `<p class="meio-sub">Sem andamento oficial para este processo na base do CNJ.</p>`}</div>`;
+  const insts = (t.instancias && t.instancias.length) ? t.instancias
+    : [{rotulo:"Processo", orgao:t.orgao, classe:t.classe, ultimo:t.ultimo,
+        historico:(t.recentes||[]).map(m=>({...m,decisao:false})), decisao:null}];
+  const i = Math.min(instSel, insts.length-1), inst = insts[i];
+  const u = inst.ultimo || {};
+  return `${previsaoBox(k)}
+  ${insts.length>1?`<div class="sub-menu instancias">
+    ${insts.map((x,n)=>`<button class="${n===i?"on":""}" onclick="instSel=${n};abrirFicha(clienteAberto)">${esc(x.rotulo||"instância")}
+      <small>${x.ultimo&&x.ultimo.data?fmt(x.ultimo.data):"—"}</small></button>`).join("")}
+  </div>`:""}
+  <div class="caso" style="margin-bottom:10px">
+    <div class="rotulo-caso">${esc(inst.rotulo||"")} · ${esc(tituloOrgao(inst.orgao)||"órgão julgador")}${inst.classe?` · ${esc(inst.classe)}`:""}</div>
+    <div style="margin-top:6px;font-size:14px">
+      <b>Último andamento:</b> ${esc(u.nome||"—")}${u.complemento?` (${esc(u.complemento)})`:""}
+      em <b>${u.data?fmt(u.data):"—"}</b>
+    </div>
+    ${u.claro?`<div class="meio-sub" style="margin-top:2px">💡 ${esc(u.claro)}</div>`:""}
+    ${inst.decisao?`<div style="margin-top:8px;padding:7px 10px;border-radius:8px;background:#EDF6EE;border:1px solid #BFDCC2;font-size:13px">
+      ⚖️ <b>Última decisão:</b> ${esc(inst.decisao.nome||"")} em <b>${fmt(inst.decisao.data)}</b>
+      ${inst.decisao.claro?`<div class="meio-sub" style="margin-top:2px">${esc(inst.decisao.claro)}</div>`:""}
+    </div>`:""}
+    <div class="form-linha" style="margin-top:8px">
+      <button class="btn-mini" onclick="copiarDatajud('${k.id}')">💬 copiar mensagem ao cliente</button>
+      <span class="meio-sub">consulta de ${fmt(t.consultado_em)}${inst.ajuizado_em?` · ajuizado em ${fmt(inst.ajuizado_em)}`:""}</span>
+    </div>
+  </div>
+  ${marcoCaso(k)}
+  ${inssFilaCaso(k)}
+  <div class="caso">
+    <div class="rotulo-caso">histórico oficial ${inst.total_movimentos?`(${(inst.historico||[]).length} de ${inst.total_movimentos} movimentos)`:""}</div>
+    <ul class="mov-lista">
+      ${(inst.historico||[]).map(m=>`<li class="${m.decisao?"decisao":""}">
+        <span class="mov-data">${m.data?fmt(m.data):"—"}</span>
+        <span class="mov-txt">${m.decisao?"⚖️ ":""}<b>${esc(m.nome||"")}</b>${m.complemento?` — ${esc(m.complemento)}`:""}
+          ${m.claro?`<div class="meio-sub">${esc(m.claro)}</div>`:""}</span>
+      </li>`).join("") || "<p class='meio-sub'>Sem movimentos.</p>"}
+    </ul>
+  </div>`;
+}
+
+// A previsão é informação NOSSA, não do tribunal: fica num quadrado à parte,
+// com fundo próprio, para ninguém confundir com andamento oficial.
+function previsaoBox(k){
+  const t=k.trf3;
+  if(!t || !t.ordem) return "";
+  const p=t.projecao;
+  const total=t.total?` de <b>${Number(t.total).toLocaleString("pt-BR")}</b>`:"";
+  return `<div class="previsao-box">
+    <div class="rotulo-caso" style="color:#7A5A00">nossa estimativa — não é dado do tribunal</div>
+    ${p?`<div style="font-size:15px;margin-top:2px">📈 <b>Previsão de julgamento: ~${esc(mesAno(p.previsao))}</b></div>`:""}
+    <div style="font-size:13px;margin-top:3px">⚖️ Posição <b>${t.ordem}º</b>${total} na fila de ${esc(t.orgao||"")}${t.turma?` (${esc(t.turma)})`:""}${t.prioridade==="S"?` <span class="chip ben">⚡ prioridade</span>`:""}</div>
+    ${p?`<div class="meio-sub" style="margin-top:2px">${p.metodo==="producao"
+        ? `o órgão julgou ${Number(p.julgados_ano||0).toLocaleString("pt-BR")} processos no último ano fechado (~${p.ritmo_mes}/mês, painel Justiça em Números do CNJ)`
+        : `ritmo observado de ~${p.ritmo_mes} posições/mês nos últimos ${p.base_dias} dias`}</div>`:""}
+    ${p&&p.dias_medios?`<div class="meio-sub">⏱️ tempo médio de julgamento neste órgão: ${p.dias_medios} dias (indicador oficial do CNJ)</div>`:""}
+    <div class="form-linha" style="margin-top:6px">
+      <button class="btn-mini" onclick="copiarTrf3('${k.id}')">💬 copiar posição na fila</button>
+      ${p?`<button class="btn-mini" onclick="copiarPrevisao('${k.id}')">📈 copiar previsão estimada</button>`:""}
+    </div>
+  </div>`;
+}
+
 // Marcos financeiros do processo (do mais adiantado para o menos): é o que o
 // cliente mais pergunta — e, para nós, a hora de cobrar os honorários.
 const MARCOS_ORDEM=[
@@ -2309,6 +2417,16 @@ async function novoAndamento(casoUnico){
   await criarMencoes(texto, casoId, and?and.id:null, [...avisarSel]);  // 🔔 AVISAR + @menções
   avisarSel.clear();
   const k=D.casoPorId.get(casoId);
+  // registrar o andamento e mudar o lembrete são UM gesto só: quem marcou a
+  // data ali no campo não precisa abrir o Lembrar em depois
+  const inLb=document.getElementById("and-lembrar-data");
+  let lembrou="";
+  if(inLb && inLb.value && k && inLb.value!==(k.prazo||"")){
+    k.prazo=inLb.value; k.lembrar_motivo=texto.slice(0,120);
+    await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({prazo:k.prazo, lembrar_motivo:k.lembrar_motivo})});
+    lembrou=` · 🗓 lembrete para ${fmt(k.prazo)}`;
+  }
   // protocolo citado entra na ficha e vira pesquisável ("protocolo 210...")
   const prot=texto.match(/protocolo\D{0,12}(\d{6,})/i);
   if(prot && k && !(k.protocolos||[]).includes(prot[1])){
@@ -2345,7 +2463,7 @@ async function novoAndamento(casoUnico){
       aviso(`🩺 Agendado: ${nomes} — 💡 criei no checklist: agendar atendimento presencial antes${sufixoDocs}`);
     } else aviso(`🩺 Agendado automaticamente: ${nomes}!${sufixoDocs}`);
   }
-  else aviso((prot?"Andamento registrado — protocolo 📄 guardado na ficha":"Andamento registrado — será replicado no To Do")+sufixoDocs);
+  else aviso((prot?"Andamento registrado — protocolo 📄 guardado na ficha":"Andamento registrado — será replicado no To Do")+sufixoDocs+lembrou);
   abrirFicha(clienteAberto);
 }
 
