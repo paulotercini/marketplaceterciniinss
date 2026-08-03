@@ -315,7 +315,7 @@
 
 <div class="login" id="tela-login">
   <form onsubmit="entrar(event)">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão cinza 02.08</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 03.08 · consultas públicas</span></h1>
     <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
     <input id="login-email" type="email" placeholder="e-mail" required>
     <input id="login-senha" type="password" placeholder="senha" required>
@@ -328,7 +328,7 @@
   <nav class="sidebar">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. cinza 02.08</span></div></div>
+      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 03.08 · consultas públicas</span></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -1568,6 +1568,7 @@ async function abrirFicha(cliId){
         ${inssFilaCaso(k)}
         ${datajudCaso(k)}
         ${trf3Caso(k)}
+        ${consultaPendente(k)}
         </div>
         <div class="caso caso-check">${checklistCaso(k)}</div>
         <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
@@ -1900,6 +1901,26 @@ function tituloCaso(k){
 }
 const TRILHA=["escritorio","inss","conselho","judicial"];
 // trilha completa em botões — inclui 💰 Pagamentos e ✔ Encerrado; clicar move
+// Quando o caso ainda não tem o resultado das consultas públicas, a ficha diz
+// isso em vez de simplesmente não mostrar nada (senão parece que sumiu).
+function consultaPendente(k){
+  const temProc=!!(k.processo||"").trim();
+  const judicial=["judicial","conselho"].includes(k.fase);
+  const faltaCNJ = temProc && !(k.datajud && k.datajud.consultado_em);
+  const faltaINSS = k.fase==="inss" && k.beneficio && !k.inss_fila;
+  if(!faltaCNJ && !faltaINSS) return "";
+  const oque = faltaCNJ
+    ? "o andamento oficial (CNJ) e a ordem de julgamento no TRF3"
+    : "a régua da fila do INSS";
+  const quando = faltaCNJ ? "todo dia útil às 7h30" : "no dia 20 de cada mês";
+  const porque = faltaCNJ && !judicial
+    ? " Este caso ainda não está numa fase judicial, então pode não haver o que consultar."
+    : "";
+  return `<div style="margin-top:8px;padding:7px 10px;border-radius:8px;background:#F4F5F7;border:1px dashed var(--borda);font-size:12.5px;color:var(--cinza)">
+    ⏳ ${oque[0].toUpperCase()+oque.slice(1)} ainda não foi consultado para este caso.
+    A consulta roda sozinha ${quando}.${porque}</div>`;
+}
+
 // Régua da fila do INSS (casos.inss_fila, do inss_fila.py mensal): responde
 // "quanto tempo demora?" com dado oficial, sem prometer data.
 function inssFilaCaso(k){
