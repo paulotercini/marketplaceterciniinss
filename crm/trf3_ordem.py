@@ -283,7 +283,24 @@ def frase_cliente(t):
             f"Fonte: painel público de estatísticas do TRF3 (consulta de {data}).")
 
 
-def _rest(metodo, caminho, corpo=None, prefer=None):
+def _todas(caminho, tamanho=1000):
+    """GET paginado: o PostgREST corta em 1000 linhas por resposta.
+
+    A tabela de produção tem milhares de órgãos; sem paginar, o TRF3 podia
+    ficar inteiro fora do primeiro lote e a previsão nunca saía.
+    """
+    saida, inicio = [], 0
+    while True:
+        lote = _rest("GET", caminho, cabecalhos={
+            "Range-Unit": "items",
+            "Range": f"{inicio}-{inicio + tamanho - 1}"}) or []
+        saida.extend(lote)
+        if len(lote) < tamanho:
+            return saida
+        inicio += tamanho
+
+
+def _rest(metodo, caminho, corpo=None, prefer=None, cabecalhos=None):
     url = os.environ["SUPABASE_URL"].rstrip("/") + caminho
     chave = os.environ["SUPABASE_SERVICE_KEY"]
     req = urllib.request.Request(
@@ -291,7 +308,8 @@ def _rest(metodo, caminho, corpo=None, prefer=None):
         method=metodo,
         headers={"apikey": chave, "Authorization": f"Bearer {chave}",
                  "Content-Type": "application/json",
-                 **({"Prefer": prefer} if prefer else {})})
+                 **({"Prefer": prefer} if prefer else {}),
+                 **(cabecalhos or {})})
     with urllib.request.urlopen(req, timeout=60, context=_ctx()) as r:
         raw = r.read()
         return json.loads(raw) if raw else None
@@ -320,7 +338,13 @@ def main():
     # produção de cada gabinete (painel Justiça em Números, via cnj_producao.py)
     try:
         import cnj_producao
-        producoes = _rest("GET", "/rest/v1/orgao_producao?select=*") or []
+        # só o TRF3 (é o tribunal deste painel) e paginado: são milhares de
+        # órgãos no país e o PostgREST devolve 1000 por vez
+        producoes = _todas("/rest/v1/orgao_producao?tribunal=eq.TRF3"
+                           "&select=orgao,grau,julgados_ano_anterior,"
+                           "julgados_ano_atual,dias_medios_julgamento"
+                           "&order=orgao")
+        print(f"produção conhecida de {len(producoes)} órgão(s) do TRF3")
     except Exception as e:
         print(f"  produção do CNJ indisponível ({e}); previsão só pelo ritmo")
         cnj_producao, producoes = None, []
