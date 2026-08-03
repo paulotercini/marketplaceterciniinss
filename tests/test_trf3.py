@@ -112,3 +112,65 @@ def test_frase_cliente_sem_extras():
     assert "prioridade" not in frase
     assert "concluso" not in frase
     assert "posição 1021" in frase
+
+
+# ── histórico das posições e previsão pelo ritmo observado ───────────────
+def test_novo_historico_acrescenta_amostra_do_dia():
+    h = trf3.novo_historico([{"data": "2026-07-01", "ordem": 120}], "2026-08-03", 60)
+    assert h == [{"data": "2026-07-01", "ordem": 120},
+                 {"data": "2026-08-03", "ordem": 60}]
+
+
+def test_novo_historico_nao_duplica_no_mesmo_dia():
+    anterior = [{"data": "2026-08-03", "ordem": 70}]
+    assert trf3.novo_historico(anterior, "2026-08-03", 60) == [
+        {"data": "2026-08-03", "ordem": 60}]
+
+
+def test_novo_historico_limita_o_tamanho():
+    anterior = [{"data": f"2026-01-{d:02d}", "ordem": 500 - d} for d in range(1, 29)]
+    h = trf3.novo_historico(anterior, "2026-08-03", 60)
+    assert len(h) == trf3.MAX_HISTORICO
+    assert h[-1] == {"data": "2026-08-03", "ordem": 60}
+
+
+def test_novo_historico_ignora_lixo_e_processo_fora_do_painel():
+    h = trf3.novo_historico([{"data": None, "ordem": 1}, {"ordem": 2},
+                             {"data": "2026-07-01", "ordem": 120}], "2026-08-03", None)
+    assert h == [{"data": "2026-07-01", "ordem": 120}]      # sem amostra de hoje
+
+
+def test_projecao_calcula_ritmo_e_previsao():
+    h = [{"data": "2026-06-04", "ordem": 120}, {"data": "2026-08-03", "ordem": 60}]
+    p = trf3.projecao(h)
+    assert p["base_dias"] == 60
+    assert p["ritmo_mes"] == 30                 # 60 posições em 60 dias
+    assert p["dias_restantes"] == 60            # faltam 60 posições no mesmo ritmo
+    assert p["previsao"] == "2026-10-02"
+
+
+def test_projecao_exige_base_minima_de_dias():
+    h = [{"data": "2026-08-01", "ordem": 70}, {"data": "2026-08-03", "ordem": 60}]
+    assert trf3.projecao(h) is None
+
+
+def test_projecao_nao_estima_com_fila_parada_ou_andando_para_tras():
+    parada = [{"data": "2026-06-04", "ordem": 60}, {"data": "2026-08-03", "ordem": 60}]
+    tras = [{"data": "2026-06-04", "ordem": 50}, {"data": "2026-08-03", "ordem": 60}]
+    assert trf3.projecao(parada) is None and trf3.projecao(tras) is None
+
+
+def test_projecao_precisa_de_duas_amostras():
+    assert trf3.projecao([{"data": "2026-08-03", "ordem": 60}]) is None
+    assert trf3.projecao([]) is None and trf3.projecao(None) is None
+
+
+def test_frase_projecao_deixa_claro_que_e_estimativa():
+    h = [{"data": "2026-06-04", "ordem": 120}, {"data": "2026-08-03", "ordem": 60}]
+    frase = trf3.frase_projecao({"projecao": trf3.projecao(h)})
+    assert "ESTIMADA" in frase and "outubro de 2026" in frase
+    assert "não de data designada pelo tribunal" in frase
+
+
+def test_frase_projecao_vazia_sem_projecao():
+    assert trf3.frase_projecao({}) == ""
