@@ -74,6 +74,35 @@ CLARO = {
 }
 
 
+# Marcos que mudam a vida do cliente (e do escritório): o dinheiro. Códigos
+# conferidos numa amostra real de execuções previdenciárias do TRF3.
+MARCOS = {
+    848: ("transito", "Trânsito em julgado — não cabe mais recurso."),
+    12457: ("requisitorio", "Requisitório expedido (precatório/RPV) — "
+                            "o pagamento foi requisitado."),
+    12548: ("alvara", "Alvará de levantamento expedido — "
+                      "o dinheiro já pode ser sacado."),
+    1049: ("pago", "Pagamento integral do débito."),
+}
+
+
+def marcos(movs):
+    """Movimentos -> marcos financeiros com a data de CADA um (o mais recente).
+
+    {"requisitorio": {"data": "2026-05-12", "nome": "Expedição de
+      precatório/rpv", "claro": "..."}, "transito": {...}}
+    """
+    achados = {}
+    for m in sorted(movs or [], key=lambda x: x.get("dataHora") or ""):
+        alvo = MARCOS.get(m.get("codigo"))
+        if not alvo:
+            continue
+        chave, claro = alvo
+        achados[chave] = {"data": _dia(m.get("dataHora")),
+                          "nome": m.get("nome"), "claro": claro}
+    return achados
+
+
 def cnj(texto):
     """Extrai um nº CNJ de um texto -> (20 dígitos, formatado, alias do tribunal).
 
@@ -154,6 +183,7 @@ def resumir(fonte):
         "ajuizado_em": _dia(fonte.get("dataAjuizamento")),
         "ultimo": ultimo,
         "recentes": recentes,
+        "marcos": marcos(movs),
     }
 
 
@@ -221,6 +251,27 @@ def frase_cliente(t):
             f"“{mov}{comp}”, em {dbr(u['data'])}.{claro}{onde} "
             f"Fonte: base pública do CNJ (DataJud), consulta de "
             f"{dbr(t.get('consultado_em'))}.")
+
+
+def frase_marco(t):
+    """Mensagem ao cliente sobre o marco financeiro mais adiantado do processo."""
+    mc = t.get("marcos") or {}
+    dbr = lambda i: f"{i[8:10]}/{i[5:7]}/{i[0:4]}" if i else ""
+    for chave, texto in (
+            ("pago", "o pagamento do débito foi registrado nos autos"),
+            ("alvara", "foi expedido o alvará de levantamento — o valor já pode "
+                       "ser sacado"),
+            ("requisitorio", "foi expedido o requisitório de pagamento "
+                             "(precatório/RPV)"),
+            ("transito", "o processo transitou em julgado, ou seja, não cabe "
+                         "mais recurso")):
+        m = mc.get(chave)
+        if m and m.get("data"):
+            return (f"No processo nº {t['processo']}, {texto}, em "
+                    f"{dbr(m['data'])} (movimento oficial “{m.get('nome')}”). "
+                    f"Fonte: base pública do CNJ (DataJud), consulta de "
+                    f"{dbr(t.get('consultado_em'))}.")
+    return ""
 
 
 def _rest(metodo, caminho, corpo=None, prefer=None):
