@@ -506,7 +506,7 @@ async function iniciar(){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -525,8 +525,9 @@ async function carregar(){
       todas("checklist_modelo","select=*"),
       todas("modelos_documento","select=*&order=titulo"),
       todas("frases_prontas","select=*&order=texto").catch(()=>[]),
+      todas("lembrar_motivos","select=*&order=ordem").catch(()=>[]),
     ]);
-  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases};
+  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos};
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -2125,59 +2126,131 @@ async function apagarAndamento(id, jaNoTodo){
 }
 
 // Lembrar em = quando agir + POR QUÊ (padrão dos bons sistemas: data com motivo)
+// Os motivos prontos vivem no banco (lembrar_motivos), minerados do histórico
+// real do To Do e editáveis no próprio app (✎): criar, renomear, remover e
+// escolher em quais listas cada um aparece (listas vazio = todas).
+const MOTIVOS_PADRAO=[    // reserva para quem ainda não rodou o schema novo
+  "Pedir prorrogação do benefício","Cobrar documentos do cliente","Conferir resposta do INSS",
+  "Verificar pagamento","Retornar contato com o cliente","Último dia do prazo"]
+  .map(t=>({grupo:"Motivos",texto:t,listas:[],ativo:true}));
+let lbEditando=false, lbMotivoEdit=null;
+function lbMotivos(){
+  const ms=(D.lembrarMotivos&&D.lembrarMotivos.length)?D.lembrarMotivos:MOTIVOS_PADRAO;
+  return ms.filter(m=>m.ativo!==false);
+}
 function toggleLembrar(casoId){
   const b=document.getElementById("lembrar-box"); if(!b) return;
   ["frases-box","preenche-box","exig-box"].forEach(i=>{const e=document.getElementById(i); if(e) e.style.display="none";});
   if(b.style.display==="block"){ b.style.display="none"; return; }
-  const k=D.casoPorId.get(casoId); if(!k) return;
+  lbEditando=false; lbMotivoEdit=null;
+  lbRender(casoId);
+  b.style.display="block";
+}
+function lbRender(casoId){
+  const b=document.getElementById("lembrar-box"); const k=D.casoPorId.get(casoId); if(!b||!k) return;
   const em=d=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+d); return x.toLocaleDateString("sv"); };
-  // Anotações que a equipe sempre faz — mineradas do histórico real do To Do
-  // (17 mil andamentos analisados), das mais frequentes para as menos.
-  const MOTIVOS=[
-    ["🌻 INSS",[
-      "Em análise — verificar novamente",
-      "Benefício concedido — verificar HISCRE",
-      "HISCRE ainda não disponível — conferir de novo",
-      "Pedir prorrogação do benefício",
-      "Prorrogação ainda não disponível — tentar de novo",
-      "Verificar resultado da perícia",
-      "Verificar resposta da exigência",
-      "Verificar resposta da ouvidoria",
-      "Solicitar o benefício nesta data"]],
-    ["💰 Pagamento",[
-      "Verificar previsão de pagamento (HISCRE)",
-      "Conferir se o pagamento caiu"]],
-    ["⚖️ Judicial",[
-      "Verificar movimentação do processo",
-      "Sem alteração no recurso — conferir de novo",
-      "Verificar trânsito em julgado"]],
-    ["🙋 Cliente",[
-      "Cobrar documentos do cliente",
-      "Cliente não retornou — tentar novo contato",
-      "Verificar resposta do e-mail",
-      "Agendar atendimento presencial",
-      "Avisar o cliente do resultado",
-      "Verificar senha do Meu INSS",
-      "Último dia do prazo"]]];
-  b.innerHTML=`<strong style="font-size:13px">🗓 Lembrar em — a AGENDA do caso (quando agir e por quê)</strong>
-    <p class="meio-sub" style="margin:2px 0 6px">Não escreve nada no andamento — só marca a data de agir, que aparece nas listas.</p>
+  // preserva o que já estava digitado ao alternar o modo de edição
+  const elData=document.getElementById("lb-data"), elMot=document.getElementById("lb-motivo");
+  const dataAtual=elData?elData.value:(k.prazo||"");
+  const motivoAtual=elMot?elMot.value:(k.lembrar_motivo||"");
+  // só os motivos da lista (fase) deste caso — para não poluir; editando, todos
+  const vis=lbMotivos().filter(m=>lbEditando || !(m.listas||[]).length || (m.listas||[]).includes(k.fase));
+  const grupos=[], porGrupo=new Map();
+  vis.forEach(m=>{ if(!porGrupo.has(m.grupo)){porGrupo.set(m.grupo,[]); grupos.push(m.grupo);} porGrupo.get(m.grupo).push(m); });
+  b.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+      <strong style="font-size:13px">🗓 Lembrar em — a AGENDA do caso (quando agir e por quê)</strong>
+      <button class="btn-mini" onclick="lbEditar('${casoId}')">${lbEditando?"✔ concluir edição":"✎ editar motivos"}</button>
+    </div>
+    <p class="meio-sub" style="margin:2px 0 6px">${lbEditando
+      ?"Clique num motivo para alterá-lo, no ✕ para removê-lo, ou crie um novo abaixo. Sem lista marcada = aparece em todas."
+      :"Marca a data de agir (aparece nas listas) — e pode registrar um comentário com a data, como sempre fazemos."}</p>
     <div class="form-linha" style="margin-top:4px;align-items:center">
       ${[["Hoje",0],["Amanhã",1],["+7 dias",7],["+15 dias",15],["+30 dias",30]].map(([r,d])=>
         `<button class="btn-mini" onclick="setLbData('${em(d)}')">${r}</button>`).join("")}
-      <input type="date" id="lb-data" value="${k.prazo||""}" oninput="lbPreview()">
+      <input type="date" id="lb-data" value="${dataAtual}" oninput="lbPreview()">
       <strong id="lb-preview" style="font-size:13px;color:var(--azul)"></strong>
     </div>
-    ${MOTIVOS.map(([g,ms])=>`<div class="form-linha" style="align-items:center;gap:4px;margin:3px 0">
-      <span class="meio-sub" style="min-width:86px;font-weight:600">${g}</span>
-      ${ms.map(m=>`<button class="btn-mini" onclick="document.getElementById('lb-motivo').value=this.textContent">${m}</button>`).join("")}
+    ${grupos.map(g=>`<div class="form-linha" style="align-items:center;gap:4px;margin:3px 0">
+      <span class="meio-sub" style="min-width:86px;font-weight:600">${esc(g)}</span>
+      ${porGrupo.get(g).map(m=>lbEditando
+        ?`<span style="display:inline-flex;align-items:center;gap:2px"><button class="btn-mini" title="clique para alterar" onclick="lbCarregarForm('${m.id||""}')">${esc(m.texto)}</button><a style="cursor:pointer;color:#B3261E;font-weight:700;padding:0 3px" title="remover" onclick="lbDesativar('${casoId}','${m.id||""}')">✕</a></span>`
+        :`<button class="btn-mini" onclick="document.getElementById('lb-motivo').value=this.textContent">${esc(m.texto)}</button>`).join("")}
     </div>`).join("")}
-    <div class="form-linha">
-      <input id="lb-motivo" placeholder="por que lembrar? (ex.: pedir prorrogação)" value="${esc(k.lembrar_motivo||"")}" style="flex:1;min-width:220px">
+    ${lbEditando?lbFormHtml(casoId):`<div class="form-linha">
+      <input id="lb-motivo" placeholder="por que lembrar? (ex.: pedir prorrogação)" style="flex:1;min-width:220px">
       <button onclick="salvarLembrar('${k.id}')">Salvar lembrete</button>
       ${k.prazo?`<button class="btn-mini" onclick="limparLembrar('${k.id}')">limpar</button>`:""}
-    </div>`;
-  b.style.display="block";
+    </div>
+    <label style="font-size:12.5px;display:flex;gap:6px;align-items:center;margin-top:2px;cursor:pointer">
+      <input type="checkbox" id="lb-comentar" checked>
+      📝 Registrar comentário com a data — ex.: “Verificar HISCRE em 12/02/2026.” (vai para o To Do também)
+    </label>`}`;
+  const mi=document.getElementById("lb-motivo"); if(mi) mi.value=motivoAtual;
   lbPreview();
+}
+function lbEditar(casoId){ lbEditando=!lbEditando; lbMotivoEdit=null; lbRender(casoId); }
+function lbFormHtml(casoId){
+  const grupos=[...new Set(lbMotivos().map(m=>m.grupo))];
+  const FL=[["escritorio","🙋 Escritório"],["inss","🌻 INSS"],["conselho","🖥 Conselho"],["judicial","👪 Judicial"],
+            ["pagamento","💰 Pagamentos"],["peticao_inicial","💡 Petições"],["aposentadoria_futura","🙏 Apos. Futuras"]];
+  return `<div style="border-top:1px dashed var(--borda);margin-top:6px;padding-top:6px">
+    <strong style="font-size:12.5px" id="lbm-titulo">＋ Novo motivo</strong>
+    <div class="form-linha" style="margin-top:4px">
+      <input id="lbm-texto" placeholder="texto do motivo — ex.: Conferir CNIS" style="flex:1;min-width:220px">
+      <select id="lbm-grupo" onchange="document.getElementById('lbm-grupo-novo').style.display=this.value==='__novo__'?'':'none'">
+        ${grupos.map(g=>`<option>${esc(g)}</option>`).join("")}<option value="__novo__">— novo grupo —</option>
+      </select>
+      <input id="lbm-grupo-novo" placeholder="nome do novo grupo" style="display:none;min-width:150px">
+    </div>
+    <div class="form-linha" style="align-items:center;font-size:12.5px;gap:8px;flex-wrap:wrap">
+      <span class="meio-sub">Aparece em:</span>
+      ${FL.map(([f,n])=>`<label style="display:flex;gap:3px;align-items:center;cursor:pointer"><input type="checkbox" class="lbm-lista" value="${f}">${n}</label>`).join("")}
+    </div>
+    <div class="form-linha">
+      <button onclick="lbSalvarMotivo('${casoId}')">Salvar motivo</button>
+      <button class="btn-mini" onclick="lbMotivoEdit=null;lbRender('${casoId}')">limpar</button>
+    </div></div>`;
+}
+function lbCarregarForm(id){
+  const m=lbMotivos().find(x=>x.id===id); if(!m) return;
+  lbMotivoEdit=id;
+  document.getElementById("lbm-titulo").textContent="✎ Alterando: "+m.texto;
+  document.getElementById("lbm-texto").value=m.texto;
+  const sel=document.getElementById("lbm-grupo");
+  if([...sel.options].some(o=>o.value===m.grupo)) sel.value=m.grupo;
+  document.getElementById("lbm-grupo-novo").style.display="none";
+  document.querySelectorAll(".lbm-lista").forEach(c=>c.checked=(m.listas||[]).includes(c.value));
+}
+async function lbSalvarMotivo(casoId){
+  const texto=document.getElementById("lbm-texto").value.trim();
+  if(!texto) return aviso("Escreva o texto do motivo");
+  let grupo=document.getElementById("lbm-grupo").value;
+  if(grupo==="__novo__") grupo=document.getElementById("lbm-grupo-novo").value.trim()||"🙋 Cliente";
+  const listas=[...document.querySelectorAll(".lbm-lista:checked")].map(c=>c.value);
+  try{
+    if(lbMotivoEdit){
+      await api(`/rest/v1/lembrar_motivos?id=eq.${lbMotivoEdit}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({texto,grupo,listas})});
+      const m=(D.lembrarMotivos||[]).find(x=>x.id===lbMotivoEdit); if(m) Object.assign(m,{texto,grupo,listas});
+      aviso("Motivo alterado ✎");
+    } else {
+      const ordem=Math.max(0,...lbMotivos().map(m=>m.ordem||0))+1;
+      const [novo]=await api(`/rest/v1/lembrar_motivos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({texto,grupo,listas,ordem})});
+      if(novo) (D.lembrarMotivos=D.lembrarMotivos||[]).push(novo);
+      aviso("Motivo criado ＋");
+    }
+  }catch(e){ return aviso("Rode o schema.sql mais novo no Supabase para editar os motivos"); }
+  lbMotivoEdit=null; lbRender(casoId);
+}
+async function lbDesativar(casoId,id){
+  if(!id) return aviso("Rode o schema.sql mais novo no Supabase para editar os motivos");
+  try{
+    await api(`/rest/v1/lembrar_motivos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({ativo:false})});
+  }catch(e){ return aviso("Rode o schema.sql mais novo no Supabase para editar os motivos"); }
+  const m=(D.lembrarMotivos||[]).find(x=>x.id===id); if(m) m.ativo=false;
+  aviso("Motivo removido"); lbRender(casoId);
 }
 function diaSemana(iso){
   return new Date(iso+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long"});
@@ -2189,11 +2262,23 @@ function lbPreview(){
 }
 async function salvarLembrar(casoId){
   const k=D.casoPorId.get(casoId); if(!k) return;
+  const antes={prazo:k.prazo, motivo:k.lembrar_motivo};
   k.prazo=document.getElementById("lb-data").value||null;
   k.lembrar_motivo=document.getElementById("lb-motivo").value.trim()||null;
   await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({prazo:k.prazo, lembrar_motivo:k.lembrar_motivo})});
-  aviso(k.prazo?`Lembrete salvo: ${diaSemana(k.prazo)}, ${fmt(k.prazo)}${k.lembrar_motivo?" — "+k.lembrar_motivo:""} 🗓`:"Lembrete salvo");
+  // hábito do escritório: o comentário guarda a data escolhida — se alguém
+  // mudar o lembrete depois, a data original fica na linha do tempo e no To Do
+  const cb=document.getElementById("lb-comentar");
+  let comentou=false;
+  if(cb && cb.checked && k.prazo && k.lembrar_motivo &&
+     (k.prazo!==antes.prazo || k.lembrar_motivo!==antes.motivo)){
+    const dataBr=`${k.prazo.slice(8,10)}/${k.prazo.slice(5,7)}/${k.prazo.slice(0,4)}`;
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`${k.lembrar_motivo} em ${dataBr}.`})});
+    comentou=true;
+  }
+  aviso(k.prazo?`Lembrete salvo: ${diaSemana(k.prazo)}, ${fmt(k.prazo)}${k.lembrar_motivo?" — "+k.lembrar_motivo:""}${comentou?" · 📝 comentário registrado":""} 🗓`:"Lembrete salvo");
   montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
 }
 async function limparLembrar(casoId){
