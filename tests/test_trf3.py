@@ -174,3 +174,49 @@ def test_frase_projecao_deixa_claro_que_e_estimativa():
 
 def test_frase_projecao_vazia_sem_projecao():
     assert trf3.frase_projecao({}) == ""
+
+
+# ── previsão pela produção do órgão (painel Justiça em Números do CNJ) ────
+PROD_GAB37 = {"julgados_mes": 201.5, "julgados_ano": 2418, "dias_medios": 198,
+              "orgao": "GABINETE 37 - DESEMBARGADOR FEDERAL NELSON PORFIRIO"}
+
+
+def test_projecao_usa_a_producao_ja_na_primeira_consulta():
+    h = [{"data": "2026-08-03", "ordem": 60}]          # uma única amostra
+    p = trf3.projecao(h, PROD_GAB37)
+    assert p["metodo"] == "producao"
+    assert p["ritmo_mes"] == 202                        # ~201,5 julgados/mês
+    assert p["dias_restantes"] == 9                     # 60 / 201,5 * 30
+    assert p["previsao"] == "2026-08-12"
+    assert p["dias_medios"] == 198
+
+
+def test_projecao_prefere_o_ritmo_observado_quando_ha_historico():
+    h = [{"data": "2026-06-04", "ordem": 120}, {"data": "2026-08-03", "ordem": 60}]
+    p = trf3.projecao(h, PROD_GAB37)
+    assert p["metodo"] == "ritmo" and p["ritmo_mes"] == 30
+
+
+def test_projecao_cai_para_a_producao_com_fila_parada():
+    parada = [{"data": "2026-06-04", "ordem": 60}, {"data": "2026-08-03", "ordem": 60}]
+    assert trf3.projecao(parada, PROD_GAB37)["metodo"] == "producao"
+    assert trf3.projecao(parada) is None               # sem produção, não estima
+
+
+def test_projecao_sem_ordem_nao_estima():
+    assert trf3.projecao([{"data": "2026-08-03", "ordem": None}], PROD_GAB37) is None
+    assert trf3.projecao([], PROD_GAB37) is None
+
+
+def test_projecao_ignora_producao_zerada():
+    assert trf3.projecao([{"data": "2026-08-03", "ordem": 60}],
+                         {"julgados_mes": 0}) is None
+
+
+def test_frase_projecao_pela_producao_cita_a_fonte_e_o_tempo_medio():
+    p = trf3.projecao([{"data": "2026-08-03", "ordem": 60}], PROD_GAB37)
+    frase = trf3.frase_projecao({"projecao": p})
+    assert "painel Justiça em Números do CNJ" in frase
+    assert "2.418 processos no último ano fechado" in frase
+    assert "tempo médio entre a distribuição e o julgamento nesse órgão é de 198 dias" in frase
+    assert "ESTIMADA" in frase and "não de data designada pelo tribunal" in frase

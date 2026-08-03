@@ -184,30 +184,54 @@ def novo_historico(anterior, hoje_iso, ordem):
     return hist[-MAX_HISTORICO:]
 
 
-def projecao(historico):
-    """Ritmo observado da fila -> previsão ESTIMADA de julgamento.
+def projecao(historico, producao=None):
+    """Posição na fila + velocidade do gabinete -> previsão ESTIMADA.
 
-    Compara a primeira e a última amostra: quantas posições o processo
-    andou por dia. Só projeta com base suficiente (>= 14 dias) e fila
-    andando para frente — nada de estimativa em cima de ruído.
+    Duas fontes de velocidade, nesta ordem:
+
+    1. RITMO OBSERVADO — quantas posições este processo subiu por dia nas
+       nossas próprias consultas. É o mais fiel, mas só existe depois de
+       (MIN_DIAS_PROJECAO) dias acompanhando.
+    2. PRODUÇÃO DO ÓRGÃO — quantos processos o gabinete julgou por mês
+       segundo o painel Justiça em Números do CNJ. Vale já na primeira
+       consulta, e é o que tira a espera de duas semanas.
+
+    Sem nenhuma das duas (fila parada, gabinete sem produção conhecida),
+    devolve None: melhor não estimar do que estimar no chute.
     """
     hist = sorted([h for h in (historico or []) if h.get("data")],
                   key=lambda h: h["data"])
-    if len(hist) < 2:
+    if not hist:
         return None
-    prim, ult = hist[0], hist[-1]
-    d0 = datetime.date.fromisoformat(prim["data"])
+    ult = hist[-1]
+    ordem = ult.get("ordem")
+    if not ordem:
+        return None
     d1 = datetime.date.fromisoformat(ult["data"])
-    dias = (d1 - d0).days
-    avanco = prim["ordem"] - ult["ordem"]        # posições que subiu na fila
-    if dias < MIN_DIAS_PROJECAO or avanco <= 0:
-        return None
-    ritmo_dia = avanco / dias
-    faltam = int(round(ult["ordem"] / ritmo_dia))
-    return {"ritmo_mes": int(round(ritmo_dia * 30)),
-            "dias_restantes": faltam,
-            "previsao": (d1 + datetime.timedelta(days=faltam)).isoformat(),
-            "base_dias": dias, "amostras": len(hist)}
+
+    if len(hist) >= 2:
+        prim = hist[0]
+        dias = (d1 - datetime.date.fromisoformat(prim["data"])).days
+        avanco = prim["ordem"] - ordem              # posições que subiu na fila
+        if dias >= MIN_DIAS_PROJECAO and avanco > 0:
+            ritmo_dia = avanco / dias
+            faltam = int(round(ordem / ritmo_dia))
+            return {"metodo": "ritmo", "ritmo_mes": int(round(ritmo_dia * 30)),
+                    "dias_restantes": faltam,
+                    "previsao": (d1 + datetime.timedelta(days=faltam)).isoformat(),
+                    "base_dias": dias, "amostras": len(hist)}
+
+    if producao:
+        por_mes = producao.get("julgados_mes")
+        if por_mes and por_mes > 0:
+            faltam = int(round(ordem / por_mes * 30))
+            return {"metodo": "producao", "ritmo_mes": int(round(por_mes)),
+                    "dias_restantes": faltam,
+                    "previsao": (d1 + datetime.timedelta(days=faltam)).isoformat(),
+                    "julgados_ano": producao.get("julgados_ano"),
+                    "dias_medios": producao.get("dias_medios"),
+                    "orgao_cnj": producao.get("orgao")}
+    return None
 
 
 MESES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho",
@@ -220,12 +244,25 @@ def frase_projecao(t):
     if not p:
         return ""
     d = datetime.date.fromisoformat(p["previsao"])
+    quando = f"{MESES[d.month - 1]} de {d.year}"
+    if p.get("metodo") == "producao":
+        base = (f"Segundo o painel Justiça em Números do CNJ, o órgão "
+                f"responsável julgou {p['julgados_ano']:,} processos no último "
+                f"ano fechado — cerca de {p['ritmo_mes']} por mês"
+                .replace(",", "."))
+        media = (f", e o tempo médio entre a distribuição e o julgamento nesse "
+                 f"órgão é de {p['dias_medios']} dias"
+                 if p.get("dias_medios") else "")
+        return (f"{base}{media}. Na posição em que o processo está hoje, e "
+                f"mantido esse ritmo, a previsão ESTIMADA de julgamento fica em "
+                f"torno de {quando}. Trata-se de estimativa feita a partir de "
+                f"dados públicos do CNJ e do TRF3, e não de data designada pelo "
+                f"tribunal.")
     return (f"Nos últimos {p['base_dias']} dias o processo subiu na fila a um "
             f"ritmo de cerca de {p['ritmo_mes']} posições por mês. Mantido esse "
             f"ritmo, a previsão ESTIMADA de julgamento fica em torno de "
-            f"{MESES[d.month - 1]} de {d.year}. Trata-se de estimativa feita a "
-            f"partir do painel público do TRF3, e não de data designada pelo "
-            f"tribunal.")
+            f"{quando}. Trata-se de estimativa feita a partir do painel público "
+            f"do TRF3, e não de data designada pelo tribunal.")
 
 
 def frase_cliente(t):
@@ -280,6 +317,13 @@ def main():
     print(f"processos do TRF3 nos casos ativos: {len(alvo)}")
 
     totais = totais_por_gabinete()
+    # produção de cada gabinete (painel Justiça em Números, via cnj_producao.py)
+    try:
+        import cnj_producao
+        producoes = _rest("GET", "/rest/v1/orgao_producao?select=*") or []
+    except Exception as e:
+        print(f"  produção do CNJ indisponível ({e}); previsão só pelo ritmo")
+        cnj_producao, producoes = None, []
     numeros = sorted(alvo)
     achados = {}
     for i in range(0, len(numeros), LOTE):
@@ -295,11 +339,19 @@ def main():
         else:                       # não consta no painel: limpa, sem inventar
             base = {"processo": n, "ordem": None, "consultado_em": hoje}
             fora += 1
+        prod = None
+        if cnj_producao and producoes and base.get("orgao"):
+            achado = cnj_producao.casar_orgao(base["orgao"], producoes)
+            por_mes = cnj_producao.julgados_por_mes(achado) if achado else None
+            if por_mes:
+                prod = {"julgados_mes": por_mes, "orgao": achado["orgao"],
+                        "julgados_ano": achado.get("julgados_ano_anterior"),
+                        "dias_medios": achado.get("dias_medios_julgamento")}
         for cid in ids:
             # o histórico é por caso (cada um guarda a série que já tinha)
             hist = novo_historico(antes.get(cid), hoje, base.get("ordem"))
             t = {**base, "historico": hist}
-            p = projecao(hist)
+            p = projecao(hist, prod)
             if p:
                 t["projecao"] = p
                 projetados += 1

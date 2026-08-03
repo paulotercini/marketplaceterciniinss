@@ -44,7 +44,14 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: python crm/datajud.py
 
-      - name: Painel do TRF3 -> casos.trf3 (posição na ordem de julgamento)
+      - name: Justiça em Números (CNJ) -> orgao_producao (velocidade do órgão)
+        if: always() && steps.seg.outputs.tem == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python crm/cnj_producao.py
+
+      - name: Painel do TRF3 -> casos.trf3 (posição + previsão de julgamento)
         if: always() && steps.seg.outputs.tem == 'true'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

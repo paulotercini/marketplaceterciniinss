@@ -190,6 +190,22 @@ alter table casos add column if not exists datajud jsonb;
 -- Meu INSS só diz "em análise".
 alter table casos add column if not exists inss_fila jsonb;
 
+-- ── Produção de cada órgão julgador (painel Justiça em Números do CNJ) ────
+-- Alimenta a previsão de julgamento: o painel do TRF3 dá a POSIÇÃO na fila
+-- e este dá a VELOCIDADE do gabinete, então a estimativa já sai na primeira
+-- consulta, sem esperar semanas medindo a fila.
+create table if not exists orgao_producao (
+  tribunal               text not null,
+  grau                   text not null,
+  orgao                  text not null,
+  julgados_ano_anterior  int,
+  julgados_ano_atual     int,
+  conclusos_julgamento   int,
+  dias_medios_julgamento int,        -- distribuição -> julgamento (oficial)
+  atualizado_em          date not null default current_date,
+  primary key (tribunal, grau, orgao)
+);
+
 -- ── Fila do INSS por serviço e UF (dados abertos, retrato mensal) ─────────
 create table if not exists inss_fila (
   servico      text not null,
@@ -465,7 +481,7 @@ begin
                            'mencoes','leads','documentos_beneficio','conversas',
                            'checklist_modelo','modelos_documento',
                            'vinculos','frases_prontas','lembrar_motivos',
-                           'inss_fila'] loop
+                           'inss_fila','orgao_producao'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then

@@ -2064,16 +2064,32 @@ function mesAno(iso){
 }
 function projecaoTrf3(t){
   const p=t.projecao; if(!p) return "";
+  const base = p.metodo==="producao"
+    ? `o gabinete julgou ${Number(p.julgados_ano||0).toLocaleString("pt-BR")} processos no último ano fechado (~${p.ritmo_mes}/mês, painel Justiça em Números do CNJ)`
+    : `ritmo observado de ~${p.ritmo_mes} posições/mês nos últimos ${p.base_dias} dias`;
+  const media = p.dias_medios
+    ? `<div style="margin-top:2px">⏱️ <b>Tempo médio de julgamento neste órgão:</b> ${p.dias_medios} dias <span class="meio-sub">(indicador oficial do CNJ)</span></div>` : "";
   return `<div style="margin-top:4px">📈 <b>Previsão estimada:</b> ~${esc(mesAno(p.previsao))}
-    <span class="meio-sub">(ritmo observado de ~${p.ritmo_mes} posições/mês nos últimos ${p.base_dias} dias — estimativa nossa, não é data designada pelo tribunal)</span></div>`;
+    <span class="meio-sub">(${esc(base)} — estimativa nossa, não é data designada pelo tribunal)</span></div>${media}`;
 }
 function copiarPrevisao(casoId){
   const k=D.casoPorId.get(casoId); const t=k&&k.trf3, p=t&&t.projecao; if(!p) return;
-  copiar(`Nos últimos ${p.base_dias} dias o processo subiu na fila a um ritmo de cerca de `+
-    `${p.ritmo_mes} posições por mês. Mantido esse ritmo, a previsão ESTIMADA de julgamento `+
-    `fica em torno de ${mesAno(p.previsao)}. Trata-se de estimativa feita a partir do painel `+
-    `público do TRF3, e não de data designada pelo tribunal.`,
-    "Mensagem da previsão estimada copiada 📈");
+  let msg;
+  if(p.metodo==="producao"){
+    msg=`Segundo o painel Justiça em Números do CNJ, o órgão responsável julgou `+
+      `${Number(p.julgados_ano||0).toLocaleString("pt-BR")} processos no último ano fechado — cerca de `+
+      `${p.ritmo_mes} por mês`+
+      (p.dias_medios?`, e o tempo médio entre a distribuição e o julgamento nesse órgão é de ${p.dias_medios} dias`:"")+
+      `. Na posição em que o processo está hoje, e mantido esse ritmo, a previsão ESTIMADA de `+
+      `julgamento fica em torno de ${mesAno(p.previsao)}. Trata-se de estimativa feita a partir `+
+      `de dados públicos do CNJ e do TRF3, e não de data designada pelo tribunal.`;
+  } else {
+    msg=`Nos últimos ${p.base_dias} dias o processo subiu na fila a um ritmo de cerca de `+
+      `${p.ritmo_mes} posições por mês. Mantido esse ritmo, a previsão ESTIMADA de julgamento `+
+      `fica em torno de ${mesAno(p.previsao)}. Trata-se de estimativa feita a partir do painel `+
+      `público do TRF3, e não de data designada pelo tribunal.`;
+  }
+  copiar(msg,"Mensagem da previsão estimada copiada 📈");
 }
 function copiarTrf3(casoId){
   const k=D.casoPorId.get(casoId); const t=k&&k.trf3; if(!t||!t.ordem) return;
