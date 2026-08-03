@@ -1,19 +1,19 @@
-name: CRM — ordem de julgamento no TRF3
+name: CRM — consultas públicas (TRF3 + CNJ)
 
 on:
   schedule:
-    # uma vez por dia útil, 07h30 BRT (10h30 UTC) — a carga do painel é diária
+    # uma vez por dia útil, 07h30 BRT (10h30 UTC) — as bases são diárias
     - cron: '30 10 * * 1-5'
   workflow_dispatch: {}
 
 concurrency:
-  group: trf3-ordem
+  group: consultas-publicas
   cancel-in-progress: false
 
 jobs:
   consultar:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repositório
@@ -32,13 +32,20 @@ jobs:
         run: |
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_KEY" ]; then
             echo "tem=false" >> "$GITHUB_OUTPUT"
-            echo "::notice::Segredos SUPABASE_URL/SUPABASE_SERVICE_KEY ausentes — consulta pulada."
+            echo "::notice::Segredos SUPABASE_URL/SUPABASE_SERVICE_KEY ausentes — consultas puladas."
           else
             echo "tem=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Painel do TRF3 -> casos.trf3 (posição na ordem de julgamento)
+      - name: CNJ/DataJud -> casos.datajud (andamento oficial de qualquer instância)
         if: steps.seg.outputs.tem == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python crm/datajud.py
+
+      - name: Painel do TRF3 -> casos.trf3 (posição na ordem de julgamento)
+        if: always() && steps.seg.outputs.tem == 'true'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}

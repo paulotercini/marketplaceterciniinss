@@ -1564,6 +1564,7 @@ async function abrirFicha(cliId){
             <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
         </div>
         ${trilhaCaso(k)}
+        ${datajudCaso(k)}
         ${trf3Caso(k)}
         </div>
         <div class="caso caso-check">${checklistCaso(k)}</div>
@@ -1897,6 +1898,49 @@ function tituloCaso(k){
 }
 const TRILHA=["escritorio","inss","conselho","judicial"];
 // trilha completa em botões — inclui 💰 Pagamentos e ✔ Encerrado; clicar move
+// Andamento oficial na base pública do CNJ (casos.datajud, do datajud.py diário)
+function tituloOrgao(n){          // o CNJ manda em CAIXA ALTA; aqui vira legível
+  if(!n || n!==n.toUpperCase()) return n||"";
+  const miudas=new Set(["de","da","do","das","dos","e","com","em"]);
+  return n.split(" ").map((p,i)=>{ const b=p.toLowerCase();
+    return (miudas.has(b)&&i) ? b : b.split(".").map(x=>x.charAt(0).toUpperCase()+x.slice(1)).join(".");
+  }).join(" ");
+}
+function datajudCaso(k){
+  const t=k.datajud, u=t&&t.ultimo;
+  if(!u || !u.data) return "";
+  const comp=u.complemento?` (${esc(u.complemento)})`:"";
+  const claro=u.claro?`<div style="margin-top:2px">💡 ${esc(u.claro)}</div>`:"";
+  const onde=t.orgao?` · ${esc(tituloOrgao(t.orgao))}`:"";
+  const grau={G1:"1º grau",G2:"2º grau",JE:"Juizado Especial",TR:"Turma Recursal"}[t.grau]||t.grau||"";
+  const recentes=(t.recentes||[]).slice(1);
+  return `<div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--branco);border:1px solid var(--borda);font-size:13px">
+    📜 <b>Andamento oficial (CNJ):</b> ${esc(u.nome||"")}${comp} em <b>${fmt(u.data)}</b>${onde}
+    ${grau?`<span class="chip neutro">${esc(grau)}</span>`:""}
+    ${claro}
+    ${recentes.length?`<div id="dj-mais-${k.id}" style="display:none;margin-top:6px;border-top:1px dashed var(--borda);padding-top:5px">
+      ${recentes.map(m=>`<div style="color:var(--cinza)">${fmt(m.data)} — ${esc(m.nome||"")}${m.complemento?` (${esc(m.complemento)})`:""}</div>`).join("")}
+      ${(t.outras||[]).map(o=>`<div style="color:var(--cinza);margin-top:3px">↪ ${esc({G1:"1º grau",G2:"2º grau",JE:"Juizado",TR:"Turma Recursal"}[o.grau]||o.grau||"outra instância")}: ${esc(o.ultimo_nome||"—")} em ${fmt(o.ultimo_data)}${o.orgao?` · ${esc(tituloOrgao(o.orgao))}`:""}</div>`).join("")}
+    </div>`:""}
+    <div style="margin-top:4px">
+      ${recentes.length?`<button class="btn-mini" onclick="const e=document.getElementById('dj-mais-${k.id}');e.style.display=e.style.display==='none'?'block':'none';this.textContent=e.style.display==='none'?'📖 ver últimos movimentos':'🔽 esconder';">📖 ver últimos movimentos</button>`:""}
+      <button class="btn-mini" onclick="copiarDatajud('${k.id}')">💬 copiar mensagem ao cliente</button>
+      <span class="meio-sub">consulta de ${fmt(t.consultado_em)}</span>
+    </div>
+  </div>`;
+}
+function copiarDatajud(casoId){
+  const k=D.casoPorId.get(casoId); const t=k&&k.datajud, u=t&&t.ultimo;
+  if(!u||!u.data) return;
+  const dbr=i=>i?`${i.slice(8,10)}/${i.slice(5,7)}/${i.slice(0,4)}`:"";
+  const msg=`O processo nº ${t.processo} teve como último andamento oficial “${u.nome||"movimentação"}`+
+    (u.complemento?` (${u.complemento})`:"")+`”, em ${dbr(u.data)}.`+
+    (u.claro?` ${u.claro}`:"")+
+    (t.orgao?` O processo está em ${tituloOrgao(t.orgao)}.`:"")+
+    ` Fonte: base pública do CNJ (DataJud), consulta de ${dbr(t.consultado_em)}.`;
+  copiar(msg,"Mensagem do andamento oficial copiada 💬");
+}
+
 // Ordem de julgamento no TRF3 (casos.trf3, gravado pelo trf3_ordem.py diário)
 function trf3Caso(k){
   const t=k.trf3;

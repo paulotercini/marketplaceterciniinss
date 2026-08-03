@@ -177,6 +177,13 @@ alter table casos add column if not exists lembrar_motivo text;
 -- processo não consta no painel (não concluso/sigiloso) — o app não mostra.
 alter table casos add column if not exists trf3 jsonb;
 
+-- Andamento oficial do processo na base pública do CNJ (DataJud), gravado
+-- pelo crm/datajud.py (workflow diário): {processo, tribunal, grau, classe,
+-- orgao, ajuizado_em, ultimo:{data,nome,complemento,claro}, recentes[],
+-- outras[], consultado_em}. Vale para qualquer instância — 1º grau, JEF,
+-- Turma Recursal, 2º grau e Justiça Estadual.
+alter table casos add column if not exists datajud jsonb;
+
 -- Mover de lista pedido no app (botão direito → "Mover para…"):
 -- escrever_todo.py recria a tarefa na lista nova do To Do (o Graph não tem
 -- "mover"), apaga a antiga, atualiza todo_task_id/origem_lista e limpa isto.
