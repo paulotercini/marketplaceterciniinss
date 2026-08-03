@@ -210,6 +210,44 @@ insert into frases_prontas (texto) values
   ('Documentos recebidos do cliente: ____.')
 on conflict (texto) do nothing;
 
+-- ── Motivos prontos do "Lembrar em" (minerados do histórico real do To Do) ─
+-- Editáveis no próprio app (✎ editar): criar, renomear, desativar e escolher
+-- em quais listas cada um aparece. `listas` = fases onde o motivo é mostrado
+-- (lista vazia = aparece em todas). `seed` marca os de fábrica: re-rodar o
+-- schema NÃO desfaz as suas edições nem ressuscita os desativados.
+create table if not exists lembrar_motivos (
+  id     uuid primary key default gen_random_uuid(),
+  grupo  text not null default '🙋 Cliente',
+  texto  text not null,
+  listas jsonb not null default '[]'::jsonb,
+  ordem  int not null default 0,
+  ativo  boolean not null default true,
+  seed   text unique
+);
+insert into lembrar_motivos (grupo, texto, listas, ordem, seed) values
+  ('🌻 INSS','Em análise — verificar novamente','["inss"]',1,'inss-analise'),
+  ('🌻 INSS','Benefício concedido — verificar HISCRE','["inss"]',2,'inss-concedido-hiscre'),
+  ('🌻 INSS','HISCRE ainda não disponível — conferir de novo','["inss"]',3,'inss-hiscre-indisponivel'),
+  ('🌻 INSS','Pedir prorrogação do benefício','["inss"]',4,'inss-prorrogacao'),
+  ('🌻 INSS','Prorrogação ainda não disponível — tentar de novo','["inss"]',5,'inss-prorrogacao-indisponivel'),
+  ('🌻 INSS','Verificar resultado da perícia','["inss","judicial"]',6,'inss-pericia'),
+  ('🌻 INSS','Verificar resposta da exigência','["inss"]',7,'inss-exigencia'),
+  ('🌻 INSS','Verificar resposta da ouvidoria','["inss","conselho"]',8,'inss-ouvidoria'),
+  ('🌻 INSS','Solicitar o benefício nesta data','["escritorio","peticao_inicial","aposentadoria_futura"]',9,'inss-solicitar'),
+  ('💰 Pagamento','Verificar previsão de pagamento (HISCRE)','["inss","pagamento"]',10,'pag-previsao'),
+  ('💰 Pagamento','Conferir se o pagamento caiu','["pagamento"]',11,'pag-caiu'),
+  ('⚖️ Judicial','Verificar movimentação do processo','["judicial"]',12,'jud-movimentacao'),
+  ('⚖️ Judicial','Sem alteração no recurso — conferir de novo','["conselho"]',13,'jud-recurso'),
+  ('⚖️ Judicial','Verificar trânsito em julgado','["judicial"]',14,'jud-transito'),
+  ('🙋 Cliente','Cobrar documentos do cliente','[]',15,'cli-documentos'),
+  ('🙋 Cliente','Cliente não retornou — tentar novo contato','[]',16,'cli-retorno'),
+  ('🙋 Cliente','Verificar resposta do e-mail','[]',17,'cli-email'),
+  ('🙋 Cliente','Agendar atendimento presencial','[]',18,'cli-atendimento'),
+  ('🙋 Cliente','Avisar o cliente do resultado','[]',19,'cli-avisar'),
+  ('🙋 Cliente','Verificar senha do Meu INSS','[]',20,'cli-senha'),
+  ('🙋 Cliente','Último dia do prazo','[]',21,'cli-prazo')
+on conflict (seed) do nothing;
+
 -- ── Modelos de mensagem (copiar e mandar ao cliente) ──────────────────────
 -- Espaços reservados preenchidos pelo app: {nome} {primeiro_nome} {data}
 -- {hora} {local} {prazo}
@@ -395,7 +433,7 @@ begin
                            'atribuicoes','meu_dia','modelos_mensagem','sugestoes',
                            'mencoes','leads','documentos_beneficio','conversas',
                            'checklist_modelo','modelos_documento',
-                           'vinculos','frases_prontas'] loop
+                           'vinculos','frases_prontas','lembrar_motivos'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
