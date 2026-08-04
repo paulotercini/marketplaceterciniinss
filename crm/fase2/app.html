@@ -105,6 +105,13 @@
   .proc-nome{display:block;font-size:15px;font-weight:700;color:var(--texto);margin:1px 0 2px}
   .proc-sub{display:block;font-size:12.5px;color:var(--cinza)}
   .proc-prazo{display:inline-block;font-size:12.5px;color:var(--azul);margin-top:4px}
+  .rotina{display:flex;align-items:center;gap:10px;background:var(--branco);border:1px solid var(--borda);
+    border-radius:10px;padding:9px 12px;margin-bottom:6px}
+  .rotina.feita{opacity:.55;background:#F4F7F4;border-color:#CFE0CF}
+  .rotina.feita .rot-tit{text-decoration:line-through}
+  .rot-ok{border:none;background:none;font-size:17px;cursor:pointer;color:var(--azul);line-height:1}
+  .rot-txt{flex:1;min-width:0}
+  .rot-tit{font-size:14px;font-weight:600;color:var(--texto)}
   .sugestoes{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}
   .sug-it{font-size:12.5px;color:var(--cinza);cursor:pointer;background:var(--branco);
     border:1px solid var(--borda);border-radius:12px;padding:3px 10px}
@@ -592,7 +599,7 @@ async function iniciar(){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -612,8 +619,10 @@ async function carregar(){
       todas("modelos_documento","select=*&order=titulo"),
       todas("frases_prontas","select=*&order=texto").catch(()=>[]),
       todas("lembrar_motivos","select=*&order=ordem").catch(()=>[]),
+      todas("rotinas","select=*&ativo=is.true&order=criada_em").catch(()=>[]),
+      todas("rotinas_feitas",`select=*&dia=eq.${hoje()}`).catch(()=>[]),
     ]);
-  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos};
+  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas};
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -767,6 +776,7 @@ function montarSidebar(){
     ["minhas","👤 Atribuídas a mim", ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)).length],
     ["importante","⭐ Importante", ativos().filter(k=>k.importante).length],
     ["particulares","📋 Minhas Tarefas", "🔒"],
+    ["rotinas","🔁 Organizacional", (D.rotinas||[]).filter(r=>r.ativo!==false).length],
   ];
   // rótulo = "☀️ Meu Dia" -> ícone + texto separados (o texto some no menu recolhido)
   const rotu = rot => { const i=rot.indexOf(" ");
@@ -924,6 +934,7 @@ function render(){
   if(visao==="parcerias") return renderParcerias();
   if(visao==="marketing") return renderMarketing();
 
+  if(visao==="rotinas") return renderRotinas();
   if(visao==="planejado") return renderPlanejado();
   let casosSel, titulo, subt="Clique no cliente para abrir a ficha completa.";
   if(visao==="minhas"){ titulo="👤 Atribuídas a mim"; casosSel=ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)); }
@@ -980,6 +991,7 @@ function renderMeuDia(){
     .concat([`<button class="fchip ${filtroVencidas?"on":""}" id="chip-vencidas" style="margin-left:auto">🔴 mostrar vencidas (${nVenc})</button>`]);
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chips.join("")}</div>`
+    + blocoRotinas()
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — use o ☀️ nos cartões.</p>")
     + `<h3 class="secao">🟡 Vencem hoje (${hojeK.length+tHoje.length})</h3>`
@@ -1488,6 +1500,138 @@ function renderDash(){
   </div>`;
 }
 
+// ── rotina do escritório ──────────────────────────────────────────────────
+// Tarefas que se repetem e não são de cliente nenhum: conferir e-mail, fechar
+// o caixa, olhar o DOU. Cada uma tem dono e volta sozinha no dia seguinte
+// programado — quem faz só marca "já fiz".
+const DIAS_NOMES = ["domingo","segunda","terça","quarta","quinta","sexta","sábado"];
+function rotinaVenceHoje(r, iso){
+  const d = new Date((iso||hoje())+"T12:00:00");
+  if(r.dia_mes){                       // mensal: no dia certo, ou no último do mês
+    const ultimo = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+    return d.getDate() === Math.min(r.dia_mes, ultimo);
+  }
+  const dias = r.dias_semana || [];
+  return dias.length ? dias.includes(d.getDay()) : true;   // sem dias = todo dia
+}
+function rotinaFeitaHoje(r){
+  return (D.rotinasFeitas||[]).some(f=>f.rotina_id===r.id && f.dia===hoje());
+}
+function quandoRotina(r){
+  if(r.dia_mes) return `todo dia ${r.dia_mes}`;
+  const dias = r.dias_semana || [];
+  if(!dias.length) return "todo dia";
+  if(dias.length===5 && [1,2,3,4,5].every(x=>dias.includes(x))) return "dias úteis";
+  return dias.slice().sort().map(x=>DIAS_NOMES[x]).join(", ");
+}
+function rotinasDoDia(){
+  return (D.rotinas||[])
+    .filter(r=>r.ativo!==false && rotinaVenceHoje(r))
+    .filter(r=>!filtroColab || r.responsavel_id===filtroColab || !r.responsavel_id);
+}
+function blocoRotinas(){
+  const rs = rotinasDoDia();
+  if(!rs.length) return "";
+  const pend = rs.filter(r=>!rotinaFeitaHoje(r));
+  return `<h3 class="secao">🔁 Rotina do escritório (${pend.length} para fazer)</h3>
+    ${rs.map(r=>{
+      const feita=rotinaFeitaHoje(r), co=D.colPorId.get(r.responsavel_id);
+      return `<div class="rotina ${feita?"feita":""}">
+        <button class="rot-ok" onclick="marcarRotina('${r.id}',${feita?1:0})"
+          title="${feita?"desmarcar":"marcar como feita"}">${feita?"✔":"○"}</button>
+        <div class="rot-txt">
+          <div class="rot-tit">${esc(r.titulo)}</div>
+          <div class="meio-sub">${esc(quandoRotina(r))}${r.detalhe?` · ${esc(r.detalhe)}`:""}</div>
+        </div>
+        ${co?`<span class="avatar mini" style="background:${co.cor}" title="${esc(co.nome)}">${esc(co.inicial)}</span>`:""}
+        ${feita?"":`<button class="btn-mini" onclick="marcarRotina('${r.id}',0)">✔ Já fiz</button>`}
+      </div>`;
+    }).join("")}`;
+}
+async function marcarRotina(id, jaFeita){
+  const dia=hoje();
+  if(jaFeita){
+    await api(`/rest/v1/rotinas_feitas?rotina_id=eq.${id}&dia=eq.${dia}`,{method:"DELETE"});
+    D.rotinasFeitas=(D.rotinasFeitas||[]).filter(f=>!(f.rotina_id===id && f.dia===dia));
+  } else {
+    await api(`/rest/v1/rotinas_feitas`,{method:"POST",headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+      body:JSON.stringify({rotina_id:id, dia, colaborador_id:eu.id})});
+    (D.rotinasFeitas=D.rotinasFeitas||[]).push({rotina_id:id, dia, colaborador_id:eu.id});
+    plim(); aviso("✔ Rotina feita — volta no próximo dia programado");
+  }
+  render();
+}
+
+function renderRotinas(){
+  document.getElementById("titulo-lista").textContent="🔁 Organizacional";
+  document.getElementById("sub-lista").textContent=
+    "Tarefas do escritório que se repetem — não são de cliente. Aparecem no ☀️ Meu Dia de quem é responsável, no dia programado.";
+  const rs=(D.rotinas||[]).filter(r=>r.ativo!==false);
+  const linhas = rs.map(r=>{
+    const co=D.colPorId.get(r.responsavel_id);
+    return `<div class="rotina">
+      <div class="rot-txt">
+        <div class="rot-tit">${esc(r.titulo)}</div>
+        <div class="meio-sub">🔁 ${esc(quandoRotina(r))}${r.detalhe?` · ${esc(r.detalhe)}`:""}
+          ${rotinaVenceHoje(r)?` · <b>é hoje</b>`:""}</div>
+      </div>
+      ${co?`<span class="equipe-chip on"><span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`
+          :`<span class="meio-sub">sem responsável</span>`}
+      <button class="btn-mini" onclick="apagarRotina('${r.id}')" title="tirar da rotina">✕</button>
+    </div>`;
+  }).join("") || "<p class='meio-sub'>Nenhuma rotina cadastrada ainda.</p>";
+  document.getElementById("conteudo-meio").innerHTML = linhas + `
+    <div class="caso" style="margin-top:12px">
+      <div class="rotulo-caso">＋ nova tarefa da rotina</div>
+      <div class="form-linha" style="margin-top:6px">
+        <input id="rt-titulo" placeholder="o que precisa ser feito? (ex.: conferir a caixa de e-mail)" style="flex:1;min-width:240px">
+        <select id="rt-resp">
+          <option value="">quem faz? (todos)</option>
+          ${D.colaboradores.filter(c=>c.ativo).map(c=>`<option value="${c.id}" ${c.id===eu.id?"selected":""}>${esc(c.nome)}</option>`).join("")}
+        </select>
+      </div>
+      <div class="form-linha" style="align-items:center">
+        <span class="rotulo-rap">🔁 QUANDO:</span>
+        <select id="rt-quando" onchange="document.getElementById('rt-diames').style.display=this.value==='mes'?'':'none'">
+          <option value="dia">todo dia</option>
+          <option value="uteis" selected>todo dia útil</option>
+          <option value="1">toda segunda-feira</option>
+          <option value="2">toda terça-feira</option>
+          <option value="3">toda quarta-feira</option>
+          <option value="4">toda quinta-feira</option>
+          <option value="5">toda sexta-feira</option>
+          <option value="mes">uma vez por mês</option>
+        </select>
+        <input type="number" id="rt-diames" min="1" max="31" value="5" style="display:none;width:70px" title="dia do mês">
+        <input id="rt-detalhe" placeholder="observação (opcional)" style="flex:1;min-width:180px">
+        <button onclick="novaRotina()">Criar</button>
+      </div>
+    </div>`;
+}
+async function novaRotina(){
+  const titulo=document.getElementById("rt-titulo").value.trim();
+  if(!titulo) return aviso("Escreva o que precisa ser feito");
+  const q=document.getElementById("rt-quando").value;
+  const corpo={titulo, detalhe:document.getElementById("rt-detalhe").value.trim()||null,
+    responsavel_id:document.getElementById("rt-resp").value||null,
+    dias_semana: q==="dia"||q==="mes" ? [] : (q==="uteis" ? [1,2,3,4,5] : [+q]),
+    dia_mes: q==="mes" ? +document.getElementById("rt-diames").value : null};
+  try{
+    const [r]=await api(`/rest/v1/rotinas`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify(corpo)});
+    if(r) (D.rotinas=D.rotinas||[]).push(r);
+  }catch(e){ return aviso("Rode o schema.sql mais novo no Supabase para usar a rotina"); }
+  aviso("🔁 Rotina criada — aparece no Meu Dia no dia programado");
+  montarSidebar(); render();
+}
+async function apagarRotina(id){
+  if(!confirm("Tirar esta tarefa da rotina?")) return;
+  await api(`/rest/v1/rotinas?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({ativo:false})});
+  D.rotinas=(D.rotinas||[]).filter(r=>r.id!==id);
+  aviso("Rotina removida"); montarSidebar(); render();
+}
+
 // ── qual processo? ────────────────────────────────────────────────────────
 // Cliente com mais de um processo em aberto: antes de abrir a ficha, uma
 // janela bloqueia o fundo e pede a escolha. É o que evita o pior erro do
@@ -1833,12 +1977,20 @@ async function abrirFicha(cliId){
   document.getElementById("btn-processos").onclick=ev=>menuProcessos(ev, ks);
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
   if(campoAnd){
-    campoAnd.onkeydown=e=>{ if(e.key==="Enter") document.querySelector(".escrever button[onclick^='novoAndamento']").click(); };
+    // Enter registra; Shift+Enter pula linha. O campo cresce até caber tudo.
+    const crescer=()=>{ campoAnd.style.height="auto";
+      campoAnd.style.height=Math.min(campoAnd.scrollHeight, 220)+"px";
+      campoAnd.style.overflowY = campoAnd.scrollHeight>220 ? "auto" : "hidden"; };
+    campoAnd.onkeydown=e=>{
+      if(e.key==="Enter" && !e.shiftKey){ e.preventDefault();
+        document.querySelector(".escrever button[onclick^='novoAndamento']").click(); }
+    };
     const kAtual=(casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null);
     if(kAtual){
       prazoDetectado=null; prazoCancelado=false;
       pintarSugestoes(kAtual); pintarPrazoDoTexto(kAtual);
-      campoAnd.oninput=()=>{ prazoCancelado=false; pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual); };
+      campoAnd.oninput=()=>{ crescer(); prazoCancelado=false; pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual); };
+      crescer();
     }
   }
 
@@ -2119,6 +2271,7 @@ function usarSugestao(el){
   const inp=document.getElementById("and-texto");
   if(/__/.test(texto)) return montarPreenchimento(texto);
   inp.value=texto; inp.focus();
+  inp.style.height="auto"; inp.style.height=Math.min(inp.scrollHeight,220)+"px";
   prazoCancelado=false; pintarPrazoDoTexto(); pintarSugestoes(D.casoPorId.get(casoSel));
 }
 
@@ -2145,7 +2298,9 @@ function painelEscritorio(k, ands){
         <span class="avatar mini" style="background:${eu.cor||"#2564cf"}">${esc(eu.inicial||"?")}</span>
         <button class="btn-rap ${k.importante?"on":""}" style="border-color:#E9B44C" onclick="toggleImp('${k.id}')" title="importante">⭐</button>
         <button class="btn-rap ${k.urgente?"on":""}" style="border-color:#B3261E" onclick="toggleUrg('${k.id}')" title="urgente">🔥</button>
-        <input id="and-texto" placeholder="Escreva o andamento…" style="flex:1;min-width:200px">
+        <textarea id="and-texto" rows="1" placeholder="Escreva o andamento…"
+          style="flex:1;min-width:200px;resize:none;overflow:hidden;font:inherit;line-height:1.45;
+                 padding:7px 10px;border:1px solid var(--borda);border-radius:8px"></textarea>
         <button onclick="novoAndamento('${k.id}')">Registrar</button>
       </div>
       <div id="and-prazo-chip"></div>
@@ -3205,15 +3360,33 @@ document.getElementById("busca").addEventListener("mousedown",e=>{
     setTimeout(()=>document.getElementById("busca").focus(),50);
   }
 });
-// "/" em qualquer lugar leva o cursor para a pesquisa (menos digitando)
-document.addEventListener("keydown",e=>{
-  if(e.key!=="/" || e.ctrlKey || e.altKey || e.metaKey) return;
-  const a=document.activeElement, tag=(a&&a.tagName)||"";
-  if(tag==="INPUT" || tag==="TEXTAREA" || tag==="SELECT" || (a&&a.isContentEditable)) return;
-  e.preventDefault();
+// ── atalhos de teclado ────────────────────────────────────────────────────
+// Ctrl+F (ou ⌘F) e "/" levam à pesquisa; Esc fecha o que estiver aberto.
+function irParaPesquisa(){
   const app=document.getElementById("app");
   app.classList.remove("mini-lateral"); app.classList.add("busca-aberta");
-  document.getElementById("busca").focus();
+  const b=document.getElementById("busca"); b.focus(); b.select();
+}
+function digitando(){
+  const a=document.activeElement, tag=(a&&a.tagName)||"";
+  return tag==="INPUT" || tag==="TEXTAREA" || tag==="SELECT" || (a&&a.isContentEditable);
+}
+document.addEventListener("keydown",e=>{
+  const busca=document.getElementById("busca");
+  if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="f" && busca){
+    e.preventDefault(); return irParaPesquisa();          // no lugar do localizar do navegador
+  }
+  if(e.key==="/" && !e.ctrlKey && !e.altKey && !e.metaKey && !digitando() && busca){
+    e.preventDefault(); return irParaPesquisa();
+  }
+  if(e.key==="Escape"){
+    const modal=document.getElementById("modal");
+    if(modal && modal.style.display==="block") return fecharEscolha();
+    if(busca && busca.value){ busca.value=""; buscaTxt="";
+      document.getElementById("busca-x").style.display="none"; return render(); }
+    if(document.activeElement===busca) return busca.blur();
+    if(clienteAberto) return fecharFicha();
+  }
 });
 document.getElementById("busca-x").onclick=()=>{
   const b=document.getElementById("busca");
