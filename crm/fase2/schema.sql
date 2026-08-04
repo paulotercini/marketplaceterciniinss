@@ -190,6 +190,39 @@ alter table casos add column if not exists datajud jsonb;
 -- Meu INSS só diz "em análise".
 alter table casos add column if not exists inss_fila jsonb;
 
+-- ── Rotina do escritório (tarefas recorrentes, não são de cliente) ────────
+-- "Conferir a caixa de e-mail toda manhã", "fechar o caixa toda sexta",
+-- "conferir o DOU todo dia útil". Cada uma tem dono e volta sozinha no
+-- próximo dia programado — o colaborador só marca "já fiz".
+--
+-- Quando ela é devida:
+--   dias_semana vazio e dia_mes nulo -> todo dia
+--   dias_semana [1,2,3,4,5]          -> dias úteis (0=domingo … 6=sábado)
+--   dias_semana [1]                  -> toda segunda-feira
+--   dia_mes 5                        -> todo dia 5 (ou no último dia do mês,
+--                                       quando o mês não tem esse dia)
+create table if not exists rotinas (
+  id             uuid primary key default gen_random_uuid(),
+  titulo         text not null,
+  detalhe        text,
+  responsavel_id uuid references colaboradores(id) on delete set null,
+  dias_semana    jsonb not null default '[]'::jsonb,
+  dia_mes        int,
+  ativo          boolean not null default true,
+  criada_em      timestamptz not null default now()
+);
+create index if not exists rotinas_resp on rotinas (responsavel_id) where ativo;
+
+-- uma linha por rotina/dia concluído: é o que faz a rotina sumir hoje e
+-- voltar amanhã, e também o histórico de quem fez o quê
+create table if not exists rotinas_feitas (
+  rotina_id      uuid not null references rotinas(id) on delete cascade,
+  dia            date not null,
+  colaborador_id uuid references colaboradores(id) on delete set null,
+  feito_em       timestamptz not null default now(),
+  primary key (rotina_id, dia)
+);
+
 -- ── Produção de cada órgão julgador (painel Justiça em Números do CNJ) ────
 -- Alimenta a previsão de julgamento: o painel do TRF3 dá a POSIÇÃO na fila
 -- e este dá a VELOCIDADE do gabinete, então a estimativa já sai na primeira
@@ -481,7 +514,8 @@ begin
                            'mencoes','leads','documentos_beneficio','conversas',
                            'checklist_modelo','modelos_documento',
                            'vinculos','frases_prontas','lembrar_motivos',
-                           'inss_fila','orgao_producao'] loop
+                           'inss_fila','orgao_producao',
+                           'rotinas','rotinas_feitas'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
