@@ -92,6 +92,19 @@
   .sub-menu.instancias{margin:0 0 10px}
   .sub-menu.instancias button{border-radius:8px;padding:6px 12px;font-size:13px}
   .sub-menu.instancias small{display:block;font-weight:400;opacity:.75;font-size:11.5px}
+  /* janela de escolha do processo: fundo bloqueado, foco numa decisão só */
+  .modal-fundo{position:fixed;inset:0;background:rgba(20,22,28,.55);z-index:60;
+    display:flex;align-items:center;justify-content:center;padding:20px}
+  .modal-cx{background:var(--branco);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.3);
+    width:min(560px,96vw);max-height:86vh;overflow-y:auto;padding:16px 18px}
+  .modal-cab{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
+  .proc-op{display:block;width:100%;text-align:left;border:1px solid var(--borda);border-radius:10px;
+    background:var(--branco);padding:11px 13px;margin-bottom:8px;cursor:pointer;font:inherit}
+  .proc-op:hover{border-color:var(--azul);background:#eef4fb}
+  .proc-lista{display:block;font-size:11px;text-transform:uppercase;color:var(--cinza);letter-spacing:.4px}
+  .proc-nome{display:block;font-size:15px;font-weight:700;color:var(--texto);margin:1px 0 2px}
+  .proc-sub{display:block;font-size:12.5px;color:var(--cinza)}
+  .proc-prazo{display:inline-block;font-size:12.5px;color:var(--azul);margin-top:4px}
   .sugestoes{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}
   .sug-it{font-size:12.5px;color:var(--cinza);cursor:pointer;background:var(--branco);
     border:1px solid var(--borda);border-radius:12px;padding:3px 10px}
@@ -403,6 +416,7 @@
   <aside class="detalhe" id="detalhe"></aside>
 </div>
 <div class="aviso" id="aviso"></div>
+<div id="modal" style="display:none"></div>
 
 <script>
 // ── CONFIGURAÇÃO (preencher na instalação — ver COMO-INSTALAR.md) ─────────
@@ -1474,6 +1488,45 @@ function renderDash(){
   </div>`;
 }
 
+// ── qual processo? ────────────────────────────────────────────────────────
+// Cliente com mais de um processo em aberto: antes de abrir a ficha, uma
+// janela bloqueia o fundo e pede a escolha. É o que evita o pior erro do
+// dia a dia — escrever o andamento no processo errado.
+function escolherProcesso(cliId, ativos){
+  const c=D.cliPorId.get(cliId)||{};
+  const ultimo = k => {
+    const a=(D.and30||[]).filter(x=>x.caso_id===k.id).sort((x,y)=>x.criado_em<y.criado_em?1:-1)[0];
+    return a ? `último andamento em ${fmt(a.criado_em.slice(0,10))}` : "sem andamento recente";
+  };
+  document.getElementById("modal").innerHTML=`
+    <div class="modal-fundo" onclick="event.stopPropagation()">
+      <div class="modal-cx">
+        <div class="modal-cab">
+          <div><strong>${esc(c.nome||"Cliente")}</strong> tem <b>${ativos.length} processos em aberto</b>
+            <div class="meio-sub">Escolha em qual você vai trabalhar — é nele que o andamento será registrado.</div></div>
+          <button class="btn-mini" onclick="fecharEscolha()" title="voltar para a lista">✕</button>
+        </div>
+        ${ativos.map(k=>`<button class="proc-op" onclick="escolhido('${cliId}','${k.id}')">
+          <span class="proc-lista">${esc(listaDe(k))}</span>
+          <span class="proc-nome">${esc(tituloCaso(k))}</span>
+          <span class="proc-sub">${k.processo?`proc. ${esc(k.processo)} · `:""}${k.nb?`NB ${esc(k.nb)} · `:""}${esc(ultimo(k))}</span>
+          ${k.prazo?`<span class="proc-prazo">🗓 ${fmt(k.prazo)}${k.lembrar_motivo?` — ${esc(k.lembrar_motivo.length>40?k.lembrar_motivo.slice(0,40)+"…":k.lembrar_motivo)}`:""}</span>`:""}
+          ${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}${chipExig(k)}
+        </button>`).join("")}
+      </div>
+    </div>`;
+  document.getElementById("modal").style.display="block";
+}
+function escolhido(cliId, casoId){
+  casoSel = casoId;
+  document.getElementById("modal").style.display="none";
+  abrirFicha(cliId);
+}
+function fecharEscolha(){
+  document.getElementById("modal").style.display="none";
+  casoSel=null; fecharFicha();
+}
+
 // ── ficha do cliente ──────────────────────────────────────────────────────
 async function abrirFicha(cliId){
   const c = D.cliPorId.get(cliId);
@@ -1494,9 +1547,12 @@ async function abrirFicha(cliId){
   const equipe = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))];
 
   if(casoSel && casoSel!=="__auto__" && !ks.some(k=>k.id===casoSel)) casoSel=null;
-  if(casoSel==="__auto__"){                       // cliente recém-aberto: já cai no 1º caso ativo
-    const ka=ks.find(k=>k.fase!=="encerrado");
-    casoSel = ka ? ka.id : null;
+  if(casoSel==="__auto__"){
+    const ativos=ks.filter(k=>k.fase!=="encerrado");
+    // com MAIS DE UM processo em aberto, ninguém adivinha em qual comentar:
+    // o sistema pergunta antes de abrir (encerrados não contam para isso)
+    if(ativos.length>1) return escolherProcesso(cliId, ativos);
+    casoSel = ativos.length ? ativos[0].id : (ks[0] ? ks[0].id : null);
   }
   const andsVis = casoSel ? ands.filter(a=>a.caso_id===casoSel) : ands;
   document.getElementById("detalhe").innerHTML=`
