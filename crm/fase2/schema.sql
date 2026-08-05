@@ -202,6 +202,47 @@ create table if not exists andamentos_lidos (
 );
 create index if not exists lidos_por_and on andamentos_lidos (andamento_id);
 
+-- ── Anexos (a foto do documento, tirada na casa do cliente) ───────────────
+-- Esta tabela guarda só o CATÁLOGO: o arquivo em si mora no Storage do
+-- Supabase, no bucket "anexos", e `caminho` é onde ele está lá dentro.
+--
+-- O bucket é PRIVADO de propósito: aqui entram laudo médico, CNIS, RG,
+-- carteira de trabalho. Nada disso pode ficar num link público que qualquer
+-- um acessa sabendo o endereço — o app baixa por URL assinada, que vence.
+create table if not exists anexos (
+  id          uuid primary key default gen_random_uuid(),
+  caso_id     uuid references casos(id) on delete cascade,
+  cliente_id  uuid references clientes(id) on delete cascade,
+  autor_id    uuid references colaboradores(id),
+  nome        text not null,              -- como mostrar para a equipe
+  caminho     text not null unique,       -- caminho dentro do bucket
+  tipo        text,                       -- image/jpeg, application/pdf…
+  tamanho     bigint,
+  criado_em   timestamptz not null default now()
+);
+create index if not exists anexos_por_caso on anexos (caso_id, criado_em desc);
+create index if not exists anexos_por_cliente on anexos (cliente_id, criado_em desc);
+
+-- o bucket, privado. Rodar de novo não duplica nem volta a ser público.
+insert into storage.buckets (id, name, public)
+  values ('anexos','anexos',false)
+  on conflict (id) do update set public = false;
+
+-- quem está logado no CRM usa o bucket; anônimo não toca em nada
+do $$
+declare a text;
+begin
+  foreach a in array array['ler','enviar','apagar'] loop
+    execute format('drop policy if exists anexos_%s on storage.objects', a);
+  end loop;
+end $$;
+create policy anexos_ler on storage.objects for select to authenticated
+  using (bucket_id = 'anexos');
+create policy anexos_enviar on storage.objects for insert to authenticated
+  with check (bucket_id = 'anexos');
+create policy anexos_apagar on storage.objects for delete to authenticated
+  using (bucket_id = 'anexos');
+
 -- ── Rotina do escritório (tarefas recorrentes, não são de cliente) ────────
 -- "Conferir a caixa de e-mail toda manhã", "fechar o caixa toda sexta",
 -- "conferir o DOU todo dia útil". Cada uma tem dono e volta sozinha no
@@ -527,7 +568,7 @@ begin
                            'checklist_modelo','modelos_documento',
                            'vinculos','frases_prontas','lembrar_motivos',
                            'inss_fila','orgao_producao',
-                           'rotinas','rotinas_feitas','andamentos_lidos'] loop
+                           'rotinas','rotinas_feitas','andamentos_lidos','anexos'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
