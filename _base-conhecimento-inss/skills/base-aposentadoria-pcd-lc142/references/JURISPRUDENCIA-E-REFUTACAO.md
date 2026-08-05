@@ -172,4 +172,4 @@ O IBDP sustenta proteção integral.
 
 ## 5. Diligência de atualização
 
-Revalidar Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015. Acompanhar temas TNU e STJ sobre DID e IF-BrA. Acionar `precedentes-previdenciarios`.
+Revalidar Portaria Interministerial nº 1, de 27/01/2014. Acompanhar temas TNU e STJ sobre DID e IF-BrA. Acionar `precedentes-previdenciarios`.

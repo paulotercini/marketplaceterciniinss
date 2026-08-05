@@ -22,7 +22,7 @@ Lei 8.742/93.
 
 Decreto 6.214/2007.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Portaria Interministerial nº 1, de 27/01/2014.
 
 ## 4. Marco jurisprudencial central
 

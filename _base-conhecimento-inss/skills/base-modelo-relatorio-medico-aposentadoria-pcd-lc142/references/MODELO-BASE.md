@@ -49,7 +49,7 @@ Tempo de impedimento. Superior a 2 anos ininterruptos (desde [DD/MM/AAAA]), conf
 
 Natureza do impedimento. [Físico / Mental / Intelectual / Sensorial visual / Sensorial auditivo / Múltipla].
 
-Grau de deficiência. Considerando a pontuação dos domínios e a interação com as barreiras enfrentadas, classifica-se como [LEVE / MODERADA / GRAVE], conforme metodologia do IF-BrA (Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015).
+Grau de deficiência. Considerando a pontuação dos domínios e a interação com as barreiras enfrentadas, classifica-se como [LEVE / MODERADA / GRAVE], conforme metodologia do IF-BrA (Portaria Interministerial nº 1, de 27/01/2014).
 
 **Barreiras enfrentadas**
 

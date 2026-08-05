@@ -4,7 +4,7 @@
 
 ### 1.1. Conclusão de aposentadoria PCD sem perícia médica nem avaliação biopsicossocial
 
-Trata-se de violação frontal aos arts. 4º e 5º da LC 142/2013, ao art. 201 §1º da CF (com redação da EC 103/2019) e à Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015 (IF-BrA). A avaliação para aposentadoria PCD é necessariamente médica e funcional (biopsicossocial), realizada por equipe multiprofissional do INSS. Conclusão automática sem perícia médica e sem avaliação social é nula de pleno direito.
+Trata-se de violação frontal aos arts. 4º e 5º da LC 142/2013, ao art. 201 §1º da CF (com redação da EC 103/2019) e à Portaria Interministerial nº 1, de 27/01/2014 (IF-BrA). A avaliação para aposentadoria PCD é necessariamente médica e funcional (biopsicossocial), realizada por equipe multiprofissional do INSS. Conclusão automática sem perícia médica e sem avaliação social é nula de pleno direito.
 
 ### 1.2. Indeferimento sem fundamentação adequada
 
@@ -117,7 +117,7 @@ Lei 13.460/2017 (Código de Defesa do Usuário do Serviço Público), arts. 5º,
 
 Lei 12.527/2011 (LAI) e Lei 13.709/2018 (LGPD). Aplicáveis à juntada de documento de terceiro ao processo do segurado, configurando quebra de sigilo cadastral e tratamento indevido de dados pessoais sensíveis. Configura "incidente de segurança" passível de comunicação à ANPD (art. 48 da LGPD) e responsabilização da autarquia.
 
-Lei Complementar nº 142/2013, arts. 4º e 5º. A avaliação para aposentadoria PCD será médica e funcional (biopsicossocial), realizada por equipe multiprofissional do INSS, mediante IF-BrA (Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015). A conclusão automática (sem perícia médica e sem avaliação social) viola frontalmente o §1º do art. 201 da CF (com redação da EC 103/2019).
+Lei Complementar nº 142/2013, arts. 4º e 5º. A avaliação para aposentadoria PCD será médica e funcional (biopsicossocial), realizada por equipe multiprofissional do INSS, mediante IF-BrA (Portaria Interministerial nº 1, de 27/01/2014). A conclusão automática (sem perícia médica e sem avaliação social) viola frontalmente o §1º do art. 201 da CF (com redação da EC 103/2019).
 
 Decreto Legislativo nº 186/2008 e Decreto nº 6.949/2009. Convenção sobre os Direitos das Pessoas com Deficiência, status de emenda constitucional. Impõe ao Brasil tratamento prioritário e modelo social/biopsicossocial.
 

@@ -22,7 +22,7 @@ Portaria DPMF/INSS 19/2026. Teleperícia. Regula videoconferência, requisitos t
 
 Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014 e sucessores. Avaliação biopsicossocial BPC.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015. IF-BrA para aposentadoria PCD.
+Portaria Interministerial nº 1, de 27/01/2014. IF-BrA para aposentadoria PCD.
 
 Resoluções CFM 2.314/2022 e 2.378/2024. Ética em telemedicina.
 

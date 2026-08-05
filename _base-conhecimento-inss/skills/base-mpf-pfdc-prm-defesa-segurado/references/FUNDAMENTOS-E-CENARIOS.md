@@ -4,7 +4,7 @@
 
 ### 1.1. Aposentadoria PCD concluída sem perícia médica e sem avaliação biopsicossocial
 
-Cenário central. Violação frontal aos arts. 4º e 5º da LC 142/2013, ao art. 201 §1º da CF (com redação da EC 103/2019) e à Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015. Conclusão automática do PA sem realização da avaliação multiprofissional. Vício de mérito que reclama anulação.
+Cenário central. Violação frontal aos arts. 4º e 5º da LC 142/2013, ao art. 201 §1º da CF (com redação da EC 103/2019) e à Portaria Interministerial nº 1, de 27/01/2014. Conclusão automática do PA sem realização da avaliação multiprofissional. Vício de mérito que reclama anulação.
 
 Provocação adequada. Notícia de Fato ao MPF/PRM com pedido de instauração de Procedimento Preparatório, ofício de requisição ao Gerente-Executivo (LC 75/93, art. 8º, II) e cópia à PFDC (GT Pessoa com Deficiência).
 

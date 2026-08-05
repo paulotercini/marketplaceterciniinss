@@ -1,6 +1,6 @@
 ---
 name: base-bpc-aposentadoria-pcd-procedimentos
-description: "Procedimentos administrativos e judiciais para BPC/LOAS e aposentadoria PCD, ótica pró-segurado. Use SEMPRE que mencionar procedimento BPC, procedimento aposentadoria PCD, pedido administrativo BPC, requerimento BPC pelo Meu INSS, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015, Teleperícia PCD, Portaria DPMF/INSS 19/2026, agendamento perícia biopsicossocial, recurso CRPS BPC, recurso CRPS aposentadoria PCD, juntada documentação perícia, TCQ administrativo e judicial, fluxograma pedido BPC, prazo resposta BPC, revisão bienal procedimento, Lei 15.157/2025 dispensa reavaliação, acompanhamento PA, silêncio administrativo BPC, MS por mora BPC, competência JEF BPC, competência Federal aposentadoria PCD, tutela urgência BPC, implantação judicial BPC, agilização perícia BPC, escala perícia BPC, reabertura PA BPC. Cruza com base-bpc-loas-requisitos, base-bpc-impedimento-longo-prazo, base-aposentadoria-pcd-lc142, mandado-seguranca-previdenciario, orientacao-cliente-pericia e peticao-previdenciaria."
+description: "Procedimentos administrativos e judiciais para BPC/LOAS e aposentadoria PCD, ótica pró-segurado. Use SEMPRE que mencionar procedimento BPC, procedimento aposentadoria PCD, pedido administrativo BPC, requerimento BPC pelo Meu INSS, Portaria Interministerial nº 1, de 27/01/2014, Teleperícia PCD, Portaria DPMF/INSS 19/2026, agendamento perícia biopsicossocial, recurso CRPS BPC, recurso CRPS aposentadoria PCD, juntada documentação perícia, TCQ administrativo e judicial, fluxograma pedido BPC, prazo resposta BPC, revisão bienal procedimento, Lei 15.157/2025 dispensa reavaliação, acompanhamento PA, silêncio administrativo BPC, MS por mora BPC, competência JEF BPC, competência Federal aposentadoria PCD, tutela urgência BPC, implantação judicial BPC, agilização perícia BPC, escala perícia BPC, reabertura PA BPC. Cruza com base-bpc-loas-requisitos, base-bpc-impedimento-longo-prazo, base-aposentadoria-pcd-lc142, mandado-seguranca-previdenciario, orientacao-cliente-pericia e peticao-previdenciaria."
 ---
 
 # Procedimentos para BPC/LOAS e Aposentadoria PCD
@@ -25,7 +25,7 @@ Lei 13.146/2015 (Estatuto da PCD).
 
 Lei 15.157/2025 (dispensa reavaliação).
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015 (IF-BrA).
+Portaria Interministerial nº 1, de 27/01/2014 (IF-BrA).
 
 Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014 (BPC biopsicossocial).
 
