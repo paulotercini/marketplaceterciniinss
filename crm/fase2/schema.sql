@@ -190,6 +190,18 @@ alter table casos add column if not exists datajud jsonb;
 -- Meu INSS só diz "em análise".
 alter table casos add column if not exists inss_fila jsonb;
 
+-- ── Quem já leu cada comentário ───────────────────────────────────────────
+-- O "visto" do comentário: cada colaborador marca que leu, e fica registrado
+-- quem e QUANDO. Quem escreveu entra automaticamente — não faz sentido pedir
+-- que confirme a leitura do próprio texto.
+create table if not exists andamentos_lidos (
+  andamento_id   uuid not null references andamentos(id) on delete cascade,
+  colaborador_id uuid not null references colaboradores(id) on delete cascade,
+  lido_em        timestamptz not null default now(),
+  primary key (andamento_id, colaborador_id)
+);
+create index if not exists lidos_por_and on andamentos_lidos (andamento_id);
+
 -- ── Rotina do escritório (tarefas recorrentes, não são de cliente) ────────
 -- "Conferir a caixa de e-mail toda manhã", "fechar o caixa toda sexta",
 -- "conferir o DOU todo dia útil". Cada uma tem dono e volta sozinha no
@@ -515,7 +527,7 @@ begin
                            'checklist_modelo','modelos_documento',
                            'vinculos','frases_prontas','lembrar_motivos',
                            'inss_fila','orgao_producao',
-                           'rotinas','rotinas_feitas'] loop
+                           'rotinas','rotinas_feitas','andamentos_lidos'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
