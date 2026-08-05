@@ -8,7 +8,7 @@ LC 142/2013.
 
 Decreto 8.145/2013.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Portaria Interministerial nº 1, de 27/01/2014.
 
 Lei 15.176/2025 (fibromialgia).
 

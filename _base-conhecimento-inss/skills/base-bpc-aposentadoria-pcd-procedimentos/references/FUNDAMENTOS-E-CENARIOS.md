@@ -16,7 +16,7 @@ Lei 13.146/2015.
 
 Lei 15.157/2025.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Portaria Interministerial nº 1, de 27/01/2014.
 
 Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014.
 

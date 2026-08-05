@@ -28,7 +28,7 @@ Deficiência feminina e protocolo de gênero.
 
 Fonte oficial em https://www.planalto.gov.br
 
-### Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015
+### Portaria Interministerial nº 1, de 27/01/2014
 
 Fonte oficial em https://www.gov.br
 
@@ -48,7 +48,7 @@ Refutação. A avaliação biopsicossocial é obrigatória (LC 142/2013, IF-BrA 
 
 Argumento adversário. Sim ou não.
 
-Refutação. Lógica fuzzy é exigência da Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Refutação. Lógica fuzzy é exigência da Portaria Interministerial nº 1, de 27/01/2014.
 
 ### Argumento 3 — Sem assistente social
 
@@ -128,7 +128,7 @@ Sexto, monitoramento do grau.
 
 ## 6. Diligência de atualização
 
-Acompanhar Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Acompanhar Portaria Interministerial nº 1, de 27/01/2014.
 
 Revalidar ADI 5760.
 

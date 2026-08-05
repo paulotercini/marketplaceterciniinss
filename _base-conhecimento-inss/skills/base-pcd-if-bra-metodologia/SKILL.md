@@ -1,6 +1,6 @@
 ---
 name: base-pcd-if-bra-metodologia
-description: "Metodologia do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado) para aposentadoria da pessoa com deficiência da LC 142/2013, sete domínios, escala genebra, lógica fuzzy, pontuação por grau e definição de leve, moderada ou grave. Use SEMPRE que mencionar IF-BrA, Índice de Funcionalidade Brasileiro Aplicado, lógica fuzzy LC 142, sete domínios deficiência, sensorial cognição mobilidade interações domésticas educação trabalho, escala genebra IF-BrA, pontuação 25 50 75 100 IF-BrA, deficiência leve moderada grave LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015, conversão tempo deficiência, perícia biopsicossocial, avaliação funcional INSS, médico assistente social INSS. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-did-retroativa, base-pcd-conversao-tempo-especial-pcd, base-pcd-fibromialgia-lei15176 e formacao-documentacao-did-pcd."
+description: "Metodologia do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado) para aposentadoria da pessoa com deficiência da LC 142/2013, sete domínios, escala genebra, lógica fuzzy, pontuação por grau e definição de leve, moderada ou grave. Use SEMPRE que mencionar IF-BrA, Índice de Funcionalidade Brasileiro Aplicado, lógica fuzzy LC 142, sete domínios deficiência, sensorial cognição mobilidade interações domésticas educação trabalho, escala genebra IF-BrA, pontuação 25 50 75 100 IF-BrA, deficiência leve moderada grave LC 142, Portaria Interministerial nº 1, de 27/01/2014, conversão tempo deficiência, perícia biopsicossocial, avaliação funcional INSS, médico assistente social INSS. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-did-retroativa, base-pcd-conversao-tempo-especial-pcd, base-pcd-fibromialgia-lei15176 e formacao-documentacao-did-pcd."
 ---
 
 # Metodologia do IF-BrA na Aposentadoria PCD
@@ -17,7 +17,18 @@ LC 142/2013.
 
 Decreto 8.145/2013.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Portaria Interministerial nº 1, de **27/01/2014**, publicada no DOU Seção 1 de
+30/01/2014, que aprova o instrumento de avaliação do segurado e a identificação dos
+graus de deficiência, e define impedimento de longo prazo para fins do Decreto
+3.048/1999. É o ato do IF-BrA.
+
+CORREÇÃO DE ERRO DESTA BASE (04.08.2026). Até esta data, 28 citações espalhadas por 21
+arquivos da base davam a portaria como **"AGU/MPS/MF/MP/PR nº 1, de 27/01/2015"**, com
+o ANO ERRADO. A data correta é 27/01/2014, conferida na Imprensa Nacional. A sigla
+composta dos ministérios signatários também foi retirada, porque não se confirmou em
+fonte oficial (o in.gov.br não abre desta rede), e citar composição de signatários sem
+leitura é o mesmo erro por outro caminho. Cite pelo número e pela data. Precisando da
+sigla completa em peça, peça o PDF do DOU ao Paulo.
 
 IN 128/2022.
 
@@ -73,7 +84,7 @@ Quarto, conversão de tempo aplicável a cada grau.
 
 ## Lógica fuzzy
 
-Primeiro, a Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015 adotou lógica fuzzy.
+Primeiro, a Portaria Interministerial nº 1, de 27/01/2014 adotou lógica fuzzy.
 
 Segundo, permite ponderação contínua entre os domínios.
 
