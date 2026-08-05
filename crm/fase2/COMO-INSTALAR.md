@@ -29,6 +29,12 @@ No painel, **SQL Editor → New query**: cole o conteúdo de `schema.sql` e
 execute (Run). Deve terminar sem erros — os colaboradores P/A/M/D/I/C já
 ficam cadastrados.
 
+O mesmo arquivo cria o bucket `anexos` (foto de documento tirada pelo
+celular). Ele nasce **privado** de propósito: ali entram laudo médico, CNIS
+e RG, e nada disso pode ficar num link público que funciona para sempre —
+o app abre cada arquivo por uma URL assinada que vence em dois minutos.
+Confira em **Storage → anexos** que a coluna "Public" está desmarcada.
+
 ## 3. Criar o login de cada colaborador
 
 Em **Authentication → Users → Add user**: crie um usuário por colaborador

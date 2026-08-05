@@ -313,6 +313,17 @@
   .escrever .btn-rap.on{filter:none;opacity:1}
   .escrever .btn-rap.imp.on{background:#FFF3CF;border-color:#D9A400}
   .escrever .btn-rap.urg.on{background:#FBE3E3;border-color:var(--vermelho)}
+  .escrever .btn-rap.anexar{filter:none;opacity:1;border-color:var(--borda);color:var(--cinza)}
+  .escrever .btn-rap.anexar:hover{border-color:var(--azul)}
+  /* arquivos do processo */
+  .caso.caso-arq{background:#F7F5FB;border-color:#DDD4EC}
+  .arq-it{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:5px 0;border-top:1px solid #E7E1F1}
+  .arq-it:first-of-type{border-top:none}
+  .arq-abrir{border:none;background:none;font:inherit;font-weight:600;color:var(--azul);
+    cursor:pointer;padding:2px 0;text-align:left;word-break:break-word}
+  .arq-abrir:hover{text-decoration:underline}
+  .apaga-arq{margin-left:auto;border:none;background:none;cursor:pointer;color:var(--cinza);font-size:13px;opacity:.5}
+  .apaga-arq:hover{opacity:1;color:var(--vermelho)}
   .evento{border:1px solid var(--borda);border-left:4px solid var(--roxo);border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
   .evento .data-box{flex:none;text-align:center;background:#efe6f7;color:var(--roxo);border-radius:8px;padding:5px 12px;font-weight:700}
   .evento .data-box small{display:block;font-weight:400;font-size:11px}
@@ -491,7 +502,7 @@
 
 <div class="login" id="tela-login">
   <form onsubmit="entrar(event)">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 05.08 · celular</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 05.08 · celular e anexos</span></h1>
     <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
     <input id="login-email" type="email" placeholder="e-mail" required>
     <input id="login-senha" type="password" placeholder="senha" required>
@@ -504,7 +515,7 @@
   <nav class="sidebar">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 05.08 · celular</span></div></div>
+      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 05.08 · celular e anexos</span></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -646,6 +657,35 @@ async function api(caminho, opcoes={}, tentativa=0){
   }
   const texto = await r.text();
   return texto ? JSON.parse(texto) : null;
+}
+
+// ── Arquivos (Storage) ────────────────────────────────────────────────────
+// A foto do documento vai para o bucket "anexos", que é privado. Não existe
+// link fixo: para abrir, o app pede uma URL assinada que vence em minutos —
+// laudo médico e CNIS não podem ficar num endereço que funciona para sempre.
+const BUCKET = "anexos";
+async function subirArquivo(caminho, arquivo){
+  const r = await fetch(`${CONFIG.SUPABASE_URL.replace(/\/$/,"")}/storage/v1/object/${BUCKET}/${caminho}`,{
+    method:"POST",
+    headers:{ apikey: CONFIG.ANON_KEY,
+              Authorization: "Bearer " + (sessao ? sessao.access_token : CONFIG.ANON_KEY),
+              "Content-Type": arquivo.type || "application/octet-stream" },
+    body: arquivo });
+  if(!r.ok) throw new Error(`${r.status}: ${(await r.text()).slice(0,200)}`);
+  return true;
+}
+async function linkArquivo(caminho, segundos=120){
+  const d = await api(`/storage/v1/object/sign/${BUCKET}/${caminho}`,
+    {method:"POST", body:JSON.stringify({expiresIn:segundos})});
+  return CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/storage/v1" + d.signedURL;
+}
+async function abrirAnexo(id){
+  const a=(D.anexos||[]).find(x=>x.id===id); if(!a) return;
+  const guia=window.open("", "_blank");            // abrir agora: o navegador
+  try{                                             // bloqueia janela tardia
+    const url=await linkArquivo(a.caminho);
+    if(guia) guia.location=url; else window.location=url;
+  }catch(e){ if(guia) guia.close(); aviso("Não consegui abrir o arquivo"); }
 }
 
 async function todas(tabela, filtro=""){  // paginação (Supabase limita a 1000)
@@ -1859,12 +1899,14 @@ async function abrirFicha(cliId){
   document.getElementById("app").classList.add("detalhe-aberto");
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
   const ids = ks.map(k=>k.id).join(",");
-  const [ands, creds, vincs] = await Promise.all([
+  const [ands, creds, vincs, anexos] = await Promise.all([
     ids?todas("andamentos",`select=*,andamentos_lidos(colaborador_id,lido_em)&caso_id=in.(${ids})&order=criado_em.desc`)
         .catch(()=>todas("andamentos",`select=*&caso_id=in.(${ids})&order=criado_em.desc`)):[],
     todas("credenciais",`select=id,tipo,cliente_id&cliente_id=eq.${cliId}`),
     todas("vinculos",`select=*&or=(cliente_id.eq.${cliId},ligado_a.eq.${cliId})`).catch(()=>[]),
+    todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
   ]);
+  D.anexos = anexos;
   const evs = D.eventos.filter(e=>ks.some(k=>k.id===e.caso_id)).sort((a,b)=>a.data_hora<b.data_hora?1:-1);
   const pgs = D.pagamentos.filter(p=>ks.some(k=>k.id===p.caso_id));
   const pagK = ks.filter(k=>k.fase==="pagamento");
@@ -2462,6 +2504,64 @@ function usarSugestao(el){
   prazoCancelado=false; pintarPrazoDoTexto(); pintarSugestoes(D.casoPorId.get(casoSel));
 }
 
+// ── anexar o documento (é para isto que o celular vai à casa do cliente) ──
+// O 📷 abre a câmera direto no aparelho; no computador vira "escolher
+// arquivo". O arquivo sobe para o bucket privado e entra na ficha como um
+// andamento — quem anexou, quando e em qual processo fica registrado.
+const MAX_ARQ = 20 * 1024 * 1024;
+function nomeSeguro(n){
+  return dsa(n).replace(/[^a-z0-9.\-_]+/g,"-").replace(/-+/g,"-").slice(-80) || "arquivo";
+}
+async function anexar(casoId, cliId){
+  const inp=document.getElementById("arq-inp"), arq=inp&&inp.files&&inp.files[0];
+  if(!arq) return;
+  inp.value="";                                   // permite mandar o mesmo de novo
+  if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
+  const stamp=new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
+  const caminho=`${cliId}/${stamp}-${nomeSeguro(arq.name)}`;
+  aviso("Enviando o arquivo…", false);
+  try{
+    await subirArquivo(caminho, arq);
+    const [an]=await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, cliente_id:cliId, autor_id:eu.id,
+        nome:arq.name, caminho, tipo:arq.type||null, tamanho:arq.size})});
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:`📎 Anexou: ${arq.name}`})});
+    if(an) (D.anexos=D.anexos||[]).unshift(an);
+    aviso("📎 Arquivo anexado");
+    if(clienteAberto) abrirFicha(clienteAberto);
+  }catch(e){
+    aviso(/40[34]|bucket/i.test(e.message)
+      ? "Rode o schema.sql mais novo no Supabase para usar os anexos"
+      : "Não consegui enviar o arquivo — tente de novo");
+  }
+}
+async function apagarAnexo(id){
+  const a=(D.anexos||[]).find(x=>x.id===id); if(!a) return;
+  if(!confirm(`Apagar "${a.nome}"? O arquivo sai do sistema.`)) return;
+  await api(`/storage/v1/object/${BUCKET}/${a.caminho}`,{method:"DELETE"}).catch(()=>{});
+  await api(`/rest/v1/anexos?id=eq.${id}`,{method:"DELETE"});
+  D.anexos=D.anexos.filter(x=>x.id!==id);
+  aviso("Arquivo apagado");
+  if(clienteAberto) abrirFicha(clienteAberto);
+}
+const tamArq = n => n==null ? "" : n>=1048576 ? (n/1048576).toFixed(1).replace(".",",")+" MB"
+                                              : Math.max(1,Math.round(n/1024))+" KB";
+function caixaArquivos(k){
+  const as=(D.anexos||[]).filter(a=>a.caso_id===k.id);
+  if(!as.length) return "";
+  return `<div class="caso caso-arq">
+    <div class="rotulo-caso">📎 Arquivos deste processo (${as.length})</div>
+    ${as.map(a=>{ const co=D.colPorId.get(a.autor_id);
+      return `<div class="arq-it">
+        <button class="arq-abrir" onclick="abrirAnexo('${a.id}')" title="abrir o arquivo">
+          ${(a.tipo||"").startsWith("image/")?"🖼":"📄"} ${esc(a.nome)}</button>
+        <span class="meio-sub">${co?esc(co.nome)+" · ":""}${fmt(a.criado_em.slice(0,10))}${a.tamanho?" · "+tamArq(a.tamanho):""}</span>
+        ${a.autor_id===eu.id?`<button class="apaga-arq" title="apagar" onclick="apagarAnexo('${a.id}')">✕</button>`:""}
+      </div>`;}).join("")}
+  </div>`;
+}
+
 function painelEscritorio(k, ands){
   const equipe = D.atrDoCaso.get(k.id) || [];
   const encerrado = k.fase==="encerrado";
@@ -2485,6 +2585,10 @@ function painelEscritorio(k, ands){
         <span class="avatar mini" style="background:${eu.cor||"#2564cf"}">${esc(eu.inicial||"?")}</span>
         <button class="btn-rap imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="importante">⭐</button>
         <button class="btn-rap urg ${k.urgente?"on":""}" onclick="toggleUrg('${k.id}')" title="urgente">🔥</button>
+        <button class="btn-rap anexar" onclick="document.getElementById('arq-inp').click()"
+          title="tirar foto do documento ou escolher um arquivo">📷</button>
+        <input type="file" id="arq-inp" accept="image/*,application/pdf" capture="environment"
+          style="display:none" onchange="anexar('${k.id}','${k.cliente_id}')">
         <textarea id="and-texto" rows="1" placeholder="Escreva o andamento…"
           style="flex:1;min-width:200px;resize:none;overflow:hidden;font:inherit;line-height:1.45;
                  padding:7px 10px;border:1px solid var(--borda);border-radius:8px"></textarea>
@@ -2503,6 +2607,7 @@ function painelEscritorio(k, ands){
       </div>
     </div>`}
   </div>
+  ${caixaArquivos(k)}
   <ul class="timeline">${(ands||[]).filter(a=>!a.excluir).map(a=>{
     const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
     return `<li style="border-left-color:${cor};background:color-mix(in srgb, ${cor} 7%, white)">
