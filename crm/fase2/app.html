@@ -105,6 +105,12 @@
   .proc-nome{display:block;font-size:15px;font-weight:700;color:var(--texto);margin:1px 0 2px}
   .proc-sub{display:block;font-size:12.5px;color:var(--cinza)}
   .proc-prazo{display:inline-block;font-size:12.5px;color:var(--azul);margin-top:4px}
+  .vistos{display:inline-flex;align-items:center;gap:3px;margin-left:8px;vertical-align:middle}
+  .visto-av{width:19px;height:19px;border-radius:50%;color:#fff;font-size:10px;font-weight:700;
+    display:inline-flex;align-items:center;justify-content:center;cursor:default}
+  .visto-bt{border:none;background:none;cursor:pointer;font-size:15px;color:#B9BDC6;line-height:1;padding:0 2px}
+  .visto-bt:hover{color:var(--cinza)}
+  .visto-bt.on{color:var(--azul)}
   .rotina{display:flex;align-items:center;gap:10px;background:var(--branco);border:1px solid var(--borda);
     border-radius:10px;padding:9px 12px;margin-bottom:6px}
   .rotina.feita{opacity:.55;background:#F4F7F4;border-color:#CFE0CF}
@@ -381,7 +387,7 @@
 
 <div class="login" id="tela-login">
   <form onsubmit="entrar(event)">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 03.08 · consultas públicas</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 05.08 · visto de leitura</span></h1>
     <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
     <input id="login-email" type="email" placeholder="e-mail" required>
     <input id="login-senha" type="password" placeholder="senha" required>
@@ -394,7 +400,7 @@
   <nav class="sidebar">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 03.08 · consultas públicas</span></div></div>
+      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 05.08 · visto de leitura</span></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -1500,6 +1506,61 @@ function renderDash(){
   </div>`;
 }
 
+// ── quem já leu o comentário ("visto" da equipe) ──────────────────────────
+// Cinza = ninguém confirmou ainda. Cada um que marca entra com o próprio
+// avatar colorido — com 6 pessoas, a inicial é mais rápida de ler do que
+// decorar qual cor é de quem. O tooltip diz o nome, o dia e a hora.
+function lidosDe(a){ return (a.andamentos_lidos)||[]; }
+function euLi(a){ return lidosDe(a).some(l=>l.colaborador_id===eu.id); }
+// hora sempre no fuso de Franca: o banco grava em UTC e três horas de
+// diferença num "leu às" atrapalham mais do que ajudam
+function horaLocal(iso){
+  if(!iso) return "";
+  const d=new Date(iso);
+  if(isNaN(d)) return "";
+  const p=new Intl.DateTimeFormat("pt-BR",{timeZone:"America/Sao_Paulo",day:"2-digit",
+    month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).formatToParts(d)
+    .reduce((o,x)=>(o[x.type]=x.value,o),{});
+  return `${p.day}/${p.month}/${p.year} às ${p.hour}:${p.minute}`;
+}
+function vistos(a){
+  const ls = lidosDe(a).slice().sort((x,y)=>(x.lido_em||"")<(y.lido_em||"")?-1:1);
+  return `<span class="vistos" id="visto-${a.id}">
+    ${ls.map(l=>{ const c=D.colPorId.get(l.colaborador_id); if(!c) return "";
+      return `<span class="visto-av" style="background:${c.cor}"
+        title="${esc(c.nome)} leu em ${horaLocal(l.lido_em)}">${esc(c.inicial)}</span>`;}).join("")}
+    <button class="visto-bt ${euLi(a)?"on":""}" onclick="marcarLido('${a.id}',${euLi(a)?1:0})"
+      title="${euLi(a)?"você marcou que leu — clique para desfazer":"marcar que você leu"}">✓</button>
+  </span>`;
+}
+async function marcarLido(andId, jaLi){
+  const a=(D._andsFicha||[]).find(x=>x.id===andId);
+  if(jaLi){
+    await api(`/rest/v1/andamentos_lidos?andamento_id=eq.${andId}&colaborador_id=eq.${eu.id}`,{method:"DELETE"});
+    if(a) a.andamentos_lidos=lidosDe(a).filter(l=>l.colaborador_id!==eu.id);
+  } else {
+    const agora=new Date().toISOString();
+    try{
+      await api(`/rest/v1/andamentos_lidos`,{method:"POST",
+        headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+        body:JSON.stringify({andamento_id:andId, colaborador_id:eu.id})});
+    }catch(e){ return aviso("Rode o schema.sql mais novo no Supabase para usar o visto"); }
+    if(a) (a.andamentos_lidos=lidosDe(a)).push({colaborador_id:eu.id, lido_em:agora});
+    // marcar que leu já baixa a menção deste comentário: um controle só
+    const m=(D.mencoes||[]).find(x=>x.andamento_id===andId && x.para_id===eu.id && !x.lida_em);
+    if(m){
+      await api(`/rest/v1/mencoes?id=eq.${m.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({lida_em:agora})});
+      D.mencoes=D.mencoes.filter(x=>x.id!==m.id);
+      montarSidebar();
+    }
+  }
+  // redesenha só o próprio visto: recarregar a ficha inteira perderia a
+  // rolagem e o texto meio escrito no campo de comentário
+  const el=document.getElementById("visto-"+andId);
+  if(el && a) el.outerHTML = vistos(a);
+}
+
 // ── rotina do escritório ──────────────────────────────────────────────────
 // Tarefas que se repetem e não são de cliente nenhum: conferir e-mail, fechar
 // o caixa, olhar o DOU. Cada uma tem dono e volta sozinha no dia seguinte
@@ -1681,7 +1742,8 @@ async function abrirFicha(cliId){
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
   const ids = ks.map(k=>k.id).join(",");
   const [ands, creds, vincs] = await Promise.all([
-    ids?todas("andamentos",`select=*&caso_id=in.(${ids})&order=criado_em.desc`):[],
+    ids?todas("andamentos",`select=*,andamentos_lidos(colaborador_id,lido_em)&caso_id=in.(${ids})&order=criado_em.desc`)
+        .catch(()=>todas("andamentos",`select=*&caso_id=in.(${ids})&order=criado_em.desc`)):[],
     todas("credenciais",`select=id,tipo,cliente_id&cliente_id=eq.${cliId}`),
     todas("vinculos",`select=*&or=(cliente_id.eq.${cliId},ligado_a.eq.${cliId})`).catch(()=>[]),
   ]);
@@ -1699,6 +1761,7 @@ async function abrirFicha(cliId){
     casoSel = ativos.length ? ativos[0].id : (ks[0] ? ks[0].id : null);
   }
   const andsVis = casoSel ? ands.filter(a=>a.caso_id===casoSel) : ands;
+  D._andsFicha = ands;
   document.getElementById("detalhe").innerHTML=`
   <div class="det-principal">
   <div class="det-rolagem">
@@ -2321,6 +2384,7 @@ function painelEscritorio(k, ands){
     return `<li style="border-left-color:${cor};background:color-mix(in srgb, ${cor} 7%, white)">
       <span class="quando"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmt(a.criado_em.slice(0,10))}<br>${esc(co?co.nome:"—")}</span>
       <span class="texto">${esc(a.texto)}</span>
+      ${vistos(a)}
       ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}</li>`;
   }).join("") || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
 }
@@ -2693,6 +2757,9 @@ async function novoAndamento(casoUnico){
   // quem está ATRIBUÍDO ao caso fica sabendo (é essa a função do Atribuído a),
   // além de quem for citado com @ no texto
   await criarMencoes(texto, casoId, and?and.id:null, D.atrDoCaso.get(casoId)||[]);
+  if(and) await api(`/rest/v1/andamentos_lidos`,{method:"POST",       // autor já leu
+    headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+    body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
   const k=D.casoPorId.get(casoId);
   // registrar o andamento e mudar o lembrete são UM gesto só: quem marcou a
   // data ali no campo não precisa abrir o Lembrar em depois
