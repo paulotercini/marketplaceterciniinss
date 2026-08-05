@@ -304,6 +304,15 @@
   .escrever select{max-width:220px;padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
   .escrever input{flex:1;padding:10px 12px;border:1px solid var(--borda);border-radius:8px;font-size:14px}
   .escrever button{padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
+  /* ⭐/🔥 vivem dentro do composer: a regra genérica acima os pintaria de azul
+     e ninguém saberia se estão ligados. Emoji também não obedece a cor do
+     CSS: em fundo amarelo a ⭐ some. Vale aqui a mesma convenção dos
+     cartões — apagado é cinza, aceso é colorido. */
+  .escrever .btn-rap{background:var(--branco);border:2px solid var(--borda);padding:5px 14px;
+    border-radius:999px;filter:grayscale(1);opacity:.5}
+  .escrever .btn-rap.on{filter:none;opacity:1}
+  .escrever .btn-rap.imp.on{background:#FFF3CF;border-color:#D9A400}
+  .escrever .btn-rap.urg.on{background:#FBE3E3;border-color:var(--vermelho)}
   .evento{border:1px solid var(--borda);border-left:4px solid var(--roxo);border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
   .evento .data-box{flex:none;text-align:center;background:#efe6f7;color:var(--roxo);border-radius:8px;padding:5px 12px;font-weight:700}
   .evento .data-box small{display:block;font-weight:400;font-size:11px}
@@ -381,13 +390,108 @@
     .app.detalhe-aberto .sidebar,.app.detalhe-aberto .meio{display:none}
     .app{grid-template-columns:250px 1fr}
   }
+
+  /* ══ CELULAR ══════════════════════════════════════════════════════════
+     O computador serve para trabalhar o processo inteiro; o celular serve
+     para cinco coisas de campo: ver o dia, marcar rotina feita, achar o
+     cliente que ligou, escrever um andamento rápido e dar o ✓ de leitura.
+     Tudo o mais continua existindo, mas atrás do "⋯ mostrar tudo" — nada
+     de espremer quatro colunas num aparelho de 6 polegadas.            */
+  /* nada disso existe no computador — só o @media abaixo acende */
+  .so-cel,.barra-cel,.cel-fundo,.busca-cel,.cel-tudo{display:none}
+  @media (max-width:760px){
+    .so-cel{display:revert}
+    .nao-cel{display:none!important}
+    body{height:100dvh}
+    .app.celular{grid-template-columns:1fr!important;height:100dvh}
+    /* menu completo vira gaveta: sai da frente e volta pelo ☰ */
+    .app.celular .sidebar{position:fixed;top:0;bottom:0;left:-86vw;width:86vw;max-width:330px;
+      z-index:80;transition:left .18s;box-shadow:6px 0 24px rgba(0,0,0,.3)}
+    .app.celular.menu-aberto .sidebar{left:0}
+    .app.celular .sidebar .busca,.app.celular #btn-lateral{display:none}
+    .cel-fundo{position:fixed;inset:0;background:rgba(15,17,22,.5);z-index:75}
+    .app.celular.menu-aberto ~ .cel-fundo{display:block}
+    /* uma tela por vez: a lista OU a ficha, nunca as duas */
+    .app.celular .meio{padding:10px 12px 78px;grid-column:1}
+    .app.celular.detalhe-aberto .meio{display:none}
+    .app.celular .detalhe{grid-column:1}
+    .app.celular.detalhe-aberto .detalhe{display:flex;flex-direction:column}
+    .app.celular .col-casos{display:none}
+    .app.celular .det-topo,.app.celular .painel{padding-left:12px;padding-right:12px}
+    .app.celular .det-rolagem{padding-bottom:6px}
+    .app.celular .meio-topo h1{font-size:18px}
+    .app.celular .ordenar{margin-left:0;width:100%}
+    .app.celular .id-grid{grid-template-columns:1fr}
+    /* barra de baixo: os quatro destinos do celular, sempre à mão */
+    .app.celular ~ .barra-cel{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;
+      background:var(--lateral);border-top:1px solid #000;
+      padding-bottom:env(safe-area-inset-bottom,0)}
+    .app.celular.detalhe-aberto ~ .barra-cel{display:none}   /* na ficha, o lugar é do comentário */
+    .barra-cel button{flex:1;border:none;background:none;color:#C9CED8;font-size:11px;
+      padding:7px 2px 9px;cursor:pointer;position:relative;line-height:1.5}
+    .barra-cel button b{display:block;font-size:19px;font-weight:400}
+    .barra-cel button.on{color:#fff}
+    .barra-cel .selo{position:absolute;top:3px;left:50%;margin-left:5px;background:var(--laranja);
+      color:#fff;border-radius:9px;font-size:10px;font-weight:700;padding:0 5px;min-width:16px}
+    /* busca no alto da lista, onde todo aplicativo de celular a coloca */
+    .app.celular .busca-cel{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+    .busca-cel input{flex:1;padding:11px 12px;border:1px solid var(--borda);border-radius:10px;
+      font-size:16px;background:var(--branco);color:var(--texto)}   /* 16px: iPhone não dá zoom */
+    .busca-cel button{border:none;background:none;font-size:17px;color:var(--cinza);cursor:pointer;padding:6px}
+    /* o ✕ nativo do type=search duplicaria o nosso */
+    .busca-cel input::-webkit-search-cancel-button{display:none}
+    /* nome inteiro em duas linhas vale mais que nome cortado numa só */
+    .app.celular .cartao .nome{white-space:normal;overflow:visible;line-height:1.25}
+    /* voltar no topo da ficha, e o resto da ficha atrás de "mostrar tudo" */
+    .cel-voltar{border:none;background:none;font-size:22px;color:var(--azul);
+      cursor:pointer;padding:0 8px 0 0;line-height:1}
+    .app.celular .det-topo h2{font-size:16px}
+    .app.celular:not(.ficha-tudo) .menu-topo,
+    .app.celular:not(.ficha-tudo) .sub-menu.instancias,
+    .app.celular:not(.ficha-tudo) .caso.caso-check,
+    .app.celular:not(.ficha-tudo) .fases-trilha{display:none}
+    .app.celular .cel-tudo{display:block;width:100%;margin:8px 0 2px;border:1px dashed var(--borda);
+      background:var(--branco);color:var(--cinza);border-radius:8px;padding:8px;font-size:13px;cursor:pointer}
+    /* escrever o andamento: preso no rodapé, é para isso que se abre a ficha.
+       O campo vai numa linha inteira e os controles embaixo — espremer tudo
+       numa linha só deixava o "Registrar" pela metade fora da tela */
+    .app.celular .escrever{position:fixed;left:0;right:0;bottom:0;z-index:65;margin:0!important;
+      padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 14px rgba(0,0,0,.14)}
+    .app.celular .escrever .form-linha{flex-wrap:wrap!important;gap:6px;margin-top:0}
+    .app.celular .escrever textarea#and-texto{flex:1 0 100%!important;order:-1;font-size:16px;
+      max-height:110px;min-width:0!important}
+    .app.celular .escrever button[onclick^="novoAndamento"]{margin-left:auto}
+    /* sugestões numa faixa que corre para o lado, como os atalhos do teclado */
+    .app.celular .escrever .sugestoes{flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px}
+    .app.celular .escrever .sug-it{white-space:nowrap;flex:none}
+    .app.celular .sub-menu button{flex:1;padding:8px 6px;font-size:12.5px}
+    .app.celular .caso-acoes{padding:8px 10px}
+    .app.celular .equipe-chip{padding:4px 9px;margin:0 4px 4px 0;font-size:12.5px}
+    .app.celular .det-rolagem{padding-bottom:190px}    /* base; o JS ajusta à altura real */
+    /* orientação e ordenação são coisa de tela grande: no celular roubam
+       um terço da altura útil sem o dedo pedir */
+    .app.celular #sub-lista,.app.celular .ordenar{display:none}
+    .app.celular ~ .aviso{bottom:78px}                    /* acima da barra de baixo */
+    .app.celular.detalhe-aberto ~ .aviso{bottom:200px}    /* e acima do composer */
+    /* dedo não é ponteiro: alvos de toque maiores */
+    .app.celular .cartao{padding:11px 13px;margin-bottom:7px}
+    .app.celular .visto-bt{font-size:19px;padding:6px 10px}
+    .app.celular .rot-ok{font-size:22px;padding:4px 8px}
+    .app.celular .timeline li{flex-direction:column;gap:2px;padding:9px 10px}
+    .app.celular .timeline .quando{width:auto;flex-direction:row;align-items:center}
+    .app.celular .btn-mini,.app.celular .cop{padding:9px 15px;font-size:13.5px;min-height:38px}
+    .app.celular .rotina{flex-wrap:wrap;padding:10px 12px}
+    .app.celular .rotina .btn-mini{margin-left:auto}
+    .app.celular .modal-cx{width:96vw;padding:14px}
+    .app.celular .proc-op{padding:13px}
+  }
 </style>
 </head>
 <body>
 
 <div class="login" id="tela-login">
   <form onsubmit="entrar(event)">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 05.08 · visto de leitura</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 05.08 · celular</span></h1>
     <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
     <input id="login-email" type="email" placeholder="e-mail" required>
     <input id="login-senha" type="password" placeholder="senha" required>
@@ -400,7 +504,7 @@
   <nav class="sidebar">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 05.08 · visto de leitura</span></div></div>
+      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 05.08 · celular</span></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -416,6 +520,11 @@
     <div class="grupo"><h3>Visões</h3><div id="grupo-visoes"></div></div>
   </nav>
   <main class="meio">
+    <div class="busca-cel">
+      <input id="busca-cel" type="search" placeholder="Nome, CPF ou processo…"
+        autocomplete="off" autocapitalize="off" enterkeyhint="search">
+      <button id="busca-cel-x" title="limpar" style="display:none">✕</button>
+    </div>
     <div class="meio-topo">
       <h1 id="titulo-lista"></h1>
       <div class="ordenar">Ordenar: <select id="ordem">
@@ -428,6 +537,14 @@
   </main>
   <aside class="detalhe" id="detalhe"></aside>
 </div>
+<!-- barra de baixo do celular: os quatro destinos de campo -->
+<div class="cel-fundo" id="cel-fundo" onclick="fecharMenuCel()"></div>
+<nav class="barra-cel" id="barra-cel">
+  <button data-cel="meudia"><b>☀️</b>Meu Dia</button>
+  <button data-cel="busca"><b>🔍</b>Buscar</button>
+  <button data-cel="mencoes"><b>📥</b>Menções<span class="selo" id="selo-menc" style="display:none"></span></button>
+  <button data-cel="menu"><b>☰</b>Listas</button>
+</nav>
 <div class="aviso" id="aviso"></div>
 <div id="modal" style="display:none"></div>
 
@@ -591,6 +708,7 @@ async function iniciar(){
   document.getElementById("tela-login").style.display = "none";
   const app = document.getElementById("app");
   app.classList.add("logado");
+  marcarCelular();
   if(localStorage.getItem("crm_menu")==="mini") app.classList.add("mini-lateral");
   document.getElementById("u-nome").textContent = eu.nome;
   const uav = document.getElementById("u-avatar");
@@ -813,12 +931,12 @@ function montarSidebar(){
   };
   document.getElementById("btn-novo-cli").onclick=()=>{
     document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
-    visao="novocliente"; fecharFicha(false); render();
+    visao="novocliente"; fecharMenuCel(); fecharFicha(false); render();
   };
   document.querySelectorAll(".lista-item").forEach(el=>el.onclick=()=>{
     document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
     el.classList.add("ativa");
-    visao = el.dataset.v; fecharFicha(false); render();
+    visao = el.dataset.v; fecharMenuCel(); fecharFicha(false); render();
   });
   const at = document.querySelector(`.lista-item[data-v="${visao}"]`);
   if(at) at.classList.add("ativa");
@@ -917,7 +1035,7 @@ function ligarCartoes(){
 }
 
 function render(){
-  aplicarTema();
+  aplicarTema(); marcarBarraCel();
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
@@ -1766,8 +1884,10 @@ async function abrirFicha(cliId){
   <div class="det-principal">
   <div class="det-rolagem">
   <div class="det-topo">
-    <div class="linha1"><span class="avatar">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
-      <button class="fechar" onclick="fecharFicha()">✕</button></div>
+    <div class="linha1">
+      <button class="cel-voltar so-cel" onclick="fecharFicha()" title="voltar para a lista">‹</button>
+      <span class="avatar">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
+      <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
     <div class="resumo">
       <span class="chip neutro">${fmtCpf(c.cpf)}${c.cpf?` <button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:""}</span>
       ${(cr=>cr?`<span class="chip neutro">🔑 Meu INSS <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button></span>`:"")(creds.find(x=>x.tipo==="meu_inss"))}
@@ -1783,6 +1903,7 @@ async function abrirFicha(cliId){
       <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">💰 Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
       <button class="mt ${abaAtiva===5?"on":""}" data-vv="5">💬 Mensagens</button>
     </div>
+    <button class="cel-tudo" onclick="fichaTudo()">⋯ mostrar tudo da ficha</button>
   </div>
 
   <div class="painel ${abaAtiva===0?"ativo":""}" data-p="0">
@@ -2043,7 +2164,8 @@ async function abrirFicha(cliId){
     // Enter registra; Shift+Enter pula linha. O campo cresce até caber tudo.
     const crescer=()=>{ campoAnd.style.height="auto";
       campoAnd.style.height=Math.min(campoAnd.scrollHeight, 220)+"px";
-      campoAnd.style.overflowY = campoAnd.scrollHeight>220 ? "auto" : "hidden"; };
+      campoAnd.style.overflowY = campoAnd.scrollHeight>220 ? "auto" : "hidden";
+      folgaComposer(); };
     campoAnd.onkeydown=e=>{
       if(e.key==="Enter" && !e.shiftKey){ e.preventDefault();
         document.querySelector(".escrever button[onclick^='novoAndamento']").click(); }
@@ -2052,10 +2174,12 @@ async function abrirFicha(cliId){
     if(kAtual){
       prazoDetectado=null; prazoCancelado=false;
       pintarSugestoes(kAtual); pintarPrazoDoTexto(kAtual);
-      campoAnd.oninput=()=>{ crescer(); prazoCancelado=false; pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual); };
+      campoAnd.oninput=()=>{ crescer(); prazoCancelado=false;
+        pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual); folgaComposer(); };
       crescer();
     }
   }
+  folgaComposer();
 
   document.querySelectorAll("[data-fase]").forEach(s=>s.onchange=async()=>{
     const k=D.casoPorId.get(s.dataset.fase);
@@ -2359,8 +2483,8 @@ function painelEscritorio(k, ands){
     : `<div class="escrever" style="margin:10px 0 0">
       <div class="form-linha" style="align-items:center;flex-wrap:nowrap">
         <span class="avatar mini" style="background:${eu.cor||"#2564cf"}">${esc(eu.inicial||"?")}</span>
-        <button class="btn-rap ${k.importante?"on":""}" style="border-color:#E9B44C" onclick="toggleImp('${k.id}')" title="importante">⭐</button>
-        <button class="btn-rap ${k.urgente?"on":""}" style="border-color:#B3261E" onclick="toggleUrg('${k.id}')" title="urgente">🔥</button>
+        <button class="btn-rap imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="importante">⭐</button>
+        <button class="btn-rap urg ${k.urgente?"on":""}" onclick="toggleUrg('${k.id}')" title="urgente">🔥</button>
         <textarea id="and-texto" rows="1" placeholder="Escreva o andamento…"
           style="flex:1;min-width:200px;resize:none;overflow:hidden;font:inherit;line-height:1.45;
                  padding:7px 10px;border:1px solid var(--borda);border-radius:8px"></textarea>
@@ -2712,8 +2836,58 @@ function dataNatural(texto){
 
 function fecharFicha(rerender=true){
   clienteAberto=null; abaAtiva=2;
-  document.getElementById("app").classList.remove("detalhe-aberto");
+  document.getElementById("app").classList.remove("detalhe-aberto","ficha-tudo");
   if(rerender) render();
+}
+
+// ── celular ───────────────────────────────────────────────────────────────
+// No aparelho a tela não comporta as quatro colunas do computador. Em vez de
+// espremer tudo, o celular mostra UMA tela por vez e leva na barra de baixo
+// as quatro coisas que se faz na rua: o dia, achar o cliente, as menções e
+// as listas. A ficha abre por cima e volta pelo "‹".
+const CEL = window.matchMedia("(max-width:760px)");
+function celular(){ return CEL.matches; }
+function marcarCelular(){
+  const app=document.getElementById("app");
+  app.classList.toggle("celular", celular());
+  if(!celular()) fecharMenuCel();
+}
+CEL.addEventListener("change", marcarCelular);
+function fecharMenuCel(){ document.getElementById("app").classList.remove("menu-aberto"); }
+// a ficha de celular abre enxuta (identidade, processo, comentários); o resto
+// — cadastro, perícias, pagamentos, trilha, checklist — vem neste botão
+function fichaTudo(){
+  const app=document.getElementById("app");
+  const tudo=app.classList.toggle("ficha-tudo");
+  const b=document.querySelector(".cel-tudo");
+  if(b) b.textContent = tudo ? "⌃ mostrar só o essencial" : "⋯ mostrar tudo da ficha";
+}
+function irCel(destino){
+  const app=document.getElementById("app");
+  if(destino==="menu"){ app.classList.toggle("menu-aberto"); return; }
+  fecharMenuCel();
+  if(destino==="busca"){
+    fecharFicha(false);
+    const b=document.getElementById("busca-cel");
+    b.focus(); b.select(); render(); return marcarBarraCel();
+  }
+  visao=destino; buscaTxt=""; document.getElementById("busca-cel").value="";
+  document.getElementById("busca").value="";
+  fecharFicha(false); montarSidebar(); render(); marcarBarraCel();
+}
+// no celular o campo de escrever fica preso no rodapé; a folga no fim da
+// rolagem acompanha a altura dele, senão o último comentário fica embaixo
+function folgaComposer(){
+  const rol=document.querySelector(".det-rolagem"), esc=document.querySelector(".escrever");
+  if(!rol) return;
+  rol.style.paddingBottom = (celular() && esc) ? (esc.offsetHeight + 18) + "px" : "";
+}
+function marcarBarraCel(){
+  const foco = buscaTxt ? "busca" : visao;
+  document.querySelectorAll("#barra-cel button").forEach(b=>
+    b.classList.toggle("on", b.dataset.cel===foco));
+  const s=document.getElementById("selo-menc"), n=(D.mencoes||[]).length;
+  if(s){ s.textContent=n; s.style.display = n ? "block" : "none"; }
 }
 
 // "Perícia agendada para 19/08/2026 às 8:50..." no andamento -> evento na hora
@@ -3455,6 +3629,26 @@ document.addEventListener("keydown",e=>{
     if(clienteAberto) return fecharFicha();
   }
 });
+// ── celular: barra de baixo e busca no alto da lista ──────────────────────
+document.querySelectorAll("#barra-cel button").forEach(b=>
+  b.onclick=()=>irCel(b.dataset.cel));
+let timerCel=null;
+document.getElementById("busca-cel").addEventListener("input",e=>{
+  clearTimeout(timerCel);
+  document.getElementById("busca-cel-x").style.display = e.target.value ? "block" : "none";
+  timerCel=setTimeout(()=>{
+    buscaTxt=e.target.value.trim();
+    document.getElementById("busca").value=e.target.value;   // um campo espelha o outro
+    if(buscaTxt && clienteAberto) fecharFicha(false);
+    render();
+  },200);
+});
+document.getElementById("busca-cel-x").onclick=()=>{
+  const b=document.getElementById("busca-cel");
+  b.value=""; buscaTxt=""; document.getElementById("busca").value="";
+  document.getElementById("busca-cel-x").style.display="none";
+  render();
+};
 document.getElementById("busca-x").onclick=()=>{
   const b=document.getElementById("busca");
   b.value=""; buscaTxt="";
