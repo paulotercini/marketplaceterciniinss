@@ -249,6 +249,21 @@ create table if not exists aposentadorias (
 create index if not exists apos_por_cliente on aposentadorias (cliente_id, data);
 create index if not exists apos_por_data on aposentadorias (data);
 
+-- Já se aposentou? Enquanto não se sabe, o sistema previa a aposentadoria por
+-- idade de quem provavelmente já a tem. Quem responde é, nesta ordem: os
+-- próprios andamentos (crm/fase2/detectar_aposentado.py lê e marca), o CNIS,
+-- ou o colaborador à mão. `aposentado_prova` guarda o trecho que decidiu —
+-- ninguém precisa acreditar no sistema sem ver de onde veio.
+alter table clientes add column if not exists aposentado boolean;
+alter table clientes add column if not exists aposentado_fonte text;   -- andamento | cnis | manual
+alter table clientes add column if not exists aposentado_em date;      -- data do indício
+alter table clientes add column if not exists aposentado_prova text;
+
+-- CadÚnico do BPC/LOAS: vence a cada dois anos e derruba o benefício se não
+-- for atualizado — precisa lembrar mesmo com o caso encerrado, porque
+-- encerrado aqui só quer dizer que o nosso trabalho acabou.
+alter table casos add column if not exists cadunico date;               -- última atualização
+
 -- ── Como cada lista aparece ──────────────────────────────────────────────
 -- Fundo e posição no menu. É preferência DO ESCRITÓRIO, não de cada um:
 -- todo mundo enxerga a mesma tela, e quem descreve "a lista amarela" por
