@@ -22,6 +22,13 @@
   .login input{padding:10px;border:1px solid var(--borda);border-radius:8px;font-size:14px}
   .login button{padding:10px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
   .login .erro{color:var(--vermelho);font-size:13px;min-height:18px}
+  .cfg-cx{border:1px solid #E9B44C;background:#FFF8E7;border-radius:10px;padding:12px;
+    display:flex;flex-direction:column;gap:8px;color:var(--texto)}
+  .cfg-cx strong{font-size:13px;color:var(--laranja)}
+  .cfg-cx p{font-size:12px;color:var(--cinza);line-height:1.5;margin:0}
+  .cfg-cx input{padding:9px;border:1px solid var(--borda);border-radius:8px;font-size:13px;background:var(--branco)}
+  .cfg-cx button{padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;
+    font-weight:600;cursor:pointer}
 
   .app{display:none;grid-template-columns:300px 1fr;height:100vh;transition:grid-template-columns .15s}
   .app.mini-lateral{grid-template-columns:58px 1fr}
@@ -175,12 +182,21 @@
   .avatar{width:28px;height:28px;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none;background:var(--azul)}
   .avatar.mini{width:22px;height:22px;font-size:10px}
 
-  .meio{overflow-y:auto;padding:18px 22px}
+  .meio{overflow-y:auto;padding:18px 22px;transition:background .2s}
   .meio-topo{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
-  .meio-topo h1{font-size:21px;color:var(--azul-escuro)}
+  /* título grande da lista, como o do To Do */
+  .meio-topo h1{font-size:26px;font-weight:600;color:var(--azul-escuro);letter-spacing:-.2px}
+  /* sobre fundo colorido, o cartão branco é que carrega o conteúdo */
+  .meio .cartao,.meio .mencao,.meio .evento,.meio .rotina,.meio .caso,
+  .meio .sug,.meio .modelo,.meio .card,.meio .mkt,.meio .cal-dia{
+    box-shadow:0 1px 3px rgba(30,32,36,.08)}
+  .meio .fchip{background:rgba(255,255,255,.75)}
+  .meio .fchip.on{background:var(--azul)}
   .ordenar{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--cinza);font-size:13px;flex-wrap:wrap}
   .ordenar select{padding:5px 8px;border:1px solid var(--borda);border-radius:6px;background:var(--branco);font-size:13px}
   .meio-sub{color:var(--cinza);font-size:13px;margin-bottom:12px}
+  #sub-lista{margin-bottom:14px}
+  .md-saud{font-size:14px;font-weight:600;color:var(--texto)}
   .filtros{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
   .fchip{border:1px solid var(--borda);background:var(--branco);border-radius:14px;padding:4px 12px;cursor:pointer;font-size:13px;display:flex;gap:6px;align-items:center}
   .fchip.on{background:var(--azul);border-color:var(--azul);color:#fff}
@@ -555,7 +571,7 @@
 
 <div class="login" id="tela-login">
   <form onsubmit="entrar(event)">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 06.08 · idade e aviso em dia útil</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 06.08 · visual e configuração</span></h1>
     <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
     <input id="login-email" type="email" placeholder="e-mail" required>
     <input id="login-senha" type="password" placeholder="senha" required>
@@ -568,7 +584,7 @@
   <nav class="sidebar">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · idade e aviso em dia útil</span></div></div>
+      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · visual e configuração</span></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -618,6 +634,29 @@ const CONFIG = {
   SUPABASE_URL: "COLE_AQUI_https://xxxx.supabase.co",
   ANON_KEY: "COLE_AQUI_a_anon_key",
 };
+// Quem baixa uma versão nova do arquivo receberia estes valores em branco e
+// perderia o acesso a cada atualização. Por isso o endereço e a chave também
+// ficam guardados no próprio navegador: preenche uma vez, e trocar o arquivo
+// não desconfigura mais nada. (A chave "anon" é pública por natureza — quem
+// protege os dados é o RLS do banco, não o segredo dela.)
+function faltaConfig(){ return CONFIG.SUPABASE_URL.startsWith("COLE_AQUI"); }
+(function(){
+  if(!faltaConfig()) return;
+  try{
+    const g=JSON.parse(localStorage.getItem("crm_cfg")||"null");
+    if(g && g.url && g.key){ CONFIG.SUPABASE_URL=g.url; CONFIG.ANON_KEY=g.key; }
+  }catch(e){}
+})();
+function guardarConfig(){
+  const url=(document.getElementById("cfg-url").value||"").trim().replace(/\/+$/,"");
+  const key=(document.getElementById("cfg-key").value||"").trim();
+  const erro=document.getElementById("login-erro");
+  if(!/^https:\/\/[\w-]+\.supabase\.co$/.test(url))
+    return erro.textContent="O endereço deve ser algo como https://xxxxx.supabase.co";
+  if(key.length<40) return erro.textContent="A chave anon parece incompleta — cole ela inteira";
+  localStorage.setItem("crm_cfg", JSON.stringify({url, key}));
+  location.reload();
+}
 // ──────────────────────────────────────────────────────────────────────────
 
 const hoje = () => new Date().toLocaleDateString("sv", {timeZone: "America/Sao_Paulo"});
@@ -900,11 +939,14 @@ const TEMA = {
   "novocliente":       ["#1e4fa3", "#f3f6fb"],
 };
 function aplicarTema(){
-  // fundo sempre neutro (cinza); a cor da lista fica só no título — a
-  // identidade continua, sem sete fundos coloridos disputando a tela
-  const [cor] = TEMA[buscaTxt?"dashboard":visao] || ["#234E9E"];
-  document.querySelector(".meio").style.background = "var(--fundo)";
+  // como no Microsoft To Do: cada lista pinta o fundo da área de trabalho
+  // com a sua cor, bem clara. Quem passa o dia no sistema sabe em que lista
+  // está pela cor, antes de ler o título — e é a familiaridade que a equipe
+  // já tem. Os cartões continuam brancos, então o texto não perde contraste.
+  const [cor, fundo] = TEMA[buscaTxt?"dashboard":visao] || ["#234E9E", "#E8EAEE"];
+  document.querySelector(".meio").style.background = fundo;
   document.getElementById("titulo-lista").style.color = cor;
+  document.documentElement.style.setProperty("--cor-lista", cor);
 }
 
 function ativos(){ return D.casos.filter(k=>k.fase!=="encerrado"); }
@@ -1199,8 +1241,14 @@ function render(){
 // ── Meu Dia (com filtro por colaborador) ──────────────────────────────────
 function renderMeuDia(){
   document.getElementById("titulo-lista").textContent="☀️ Meu Dia";
-  document.getElementById("sub-lista").textContent=
-    "Itens adicionados ao dia + o que vence hoje. 🚦 vermelho vencida · amarelo vence hoje · verde no prazo.";
+  // como no To Do: saudação e a data por extenso — dá o contexto do dia sem
+  // ninguém ter que procurar o calendário
+  const h=new Date().getHours();
+  const saud = h<12 ? "Bom dia" : h<18 ? "Boa tarde" : "Boa noite";
+  const dia = new Date(hoje()+"T12:00:00").toLocaleDateString("pt-BR",
+    {weekday:"long", day:"numeric", month:"long"});
+  document.getElementById("sub-lista").innerHTML =
+    `<span class="md-saud">${saud}, ${esc((eu.nome||"").split(" ")[0])}</span> · ${dia}`;
   const doDia = D.meudia.filter(m=>!filtroColab || m.colaborador_id===filtroColab);
   const casosDia = doDia.filter(m=>m.caso_id).map(m=>D.casoPorId.get(m.caso_id)).filter(Boolean);
   const doColab = k => !filtroColab || (D.atrDoCaso.get(k.id)||[]).includes(filtroColab);
@@ -4145,9 +4193,21 @@ document.getElementById("btn-lateral").onclick=()=>{
 };
 
 (async ()=>{
-  if(CONFIG.SUPABASE_URL.startsWith("COLE_AQUI")){
-    document.getElementById("login-config").textContent =
-      "⚠ Configure SUPABASE_URL e ANON_KEY no topo deste arquivo (COMO-INSTALAR.md).";
+  if(faltaConfig()){
+    // primeira vez neste navegador: pede o endereço e a chave e guarda
+    document.getElementById("login-config").innerHTML=`
+      <div class="cfg-cx">
+        <strong>Primeiro acesso neste navegador</strong>
+        <p>Cole o endereço e a chave <b>anon</b> do projeto — no Supabase, em
+           <i>Settings → API</i>. Fica guardado aqui: você só faz isto uma vez,
+           mesmo trocando o arquivo por uma versão nova.</p>
+        <input id="cfg-url" placeholder="https://xxxxx.supabase.co" autocomplete="off">
+        <input id="cfg-key" placeholder="chave anon (eyJ...)" autocomplete="off">
+        <button type="button" onclick="guardarConfig()">Guardar neste navegador</button>
+      </div>`;
+    document.getElementById("login-email").style.display="none";
+    document.getElementById("login-senha").style.display="none";
+    document.querySelector(".login form > button").style.display="none";
     return;
   }
   const salva=localStorage.getItem("crm_sessao");
