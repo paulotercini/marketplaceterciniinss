@@ -511,6 +511,18 @@
   .conf-et{display:inline-flex;align-items:center;gap:5px;background:#f0f7f2;border:1px solid #cfe7d8;border-radius:12px;padding:2px 9px 2px 3px}
   .conf-et small{color:var(--cinza);font-size:11px;white-space:nowrap}
   .conf-seta{color:var(--cinza);font-size:12px}
+  /* Atribuído a: só a inicial, no círculo da cor da pessoa. Apagada = não
+     atribuída; acesa = atribuída. */
+  /* precisa do .form-linha na frente: a regra .form-linha button pinta todo
+     botão de azul, e as iniciais apagadas ficariam iguais às acesas —
+     a mesma armadilha que já tinha pegado o ⭐ e o 🔥 do composer */
+  .form-linha .eq-ini{width:30px;height:30px;border-radius:50%;border:2px solid var(--borda);
+    background:var(--branco);color:var(--cinza);font:inherit;font-size:12.5px;font-weight:700;
+    cursor:pointer;margin:0 5px 0 0;padding:0;line-height:1;display:inline-flex;
+    align-items:center;justify-content:center;transition:.12s}
+  .form-linha .eq-ini:hover{border-color:var(--cor-eq);color:var(--texto)}
+  .form-linha .eq-ini.on{background:var(--cor-eq);border-color:var(--cor-eq);color:#fff}
+  .app.celular .form-linha .eq-ini{width:34px;height:34px;font-size:13.5px}
   .equipe-chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--borda);border-radius:16px;padding:5px 12px;margin:0 6px 6px 0;cursor:pointer;background:var(--branco)}
   .equipe-chip.on{background:#d6e6f7;border-color:var(--azul);font-weight:600}
   .dash{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
@@ -656,7 +668,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.08 · abre no navegador</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.08 · Brasília e iniciais</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -797,7 +809,35 @@ function guardarConfig(){
 }
 // ──────────────────────────────────────────────────────────────────────────
 
-const hoje = () => new Date().toLocaleDateString("sv", {timeZone: "America/Sao_Paulo"});
+// ── Tudo neste sistema é horário de Brasília e português do Brasil ────────
+// O banco grava em UTC. Recortar "2026-08-06T00:30:00Z" com slice(0,10) daria
+// 06/08 para um andamento escrito às 21h30 do dia 5 — a data do dia seguinte.
+// Estas funções convertem de verdade; nada de fatiar texto de timestamp.
+const FUSO = "America/Sao_Paulo", IDIOMA = "pt-BR";
+const hoje = () => new Date().toLocaleDateString("sv", {timeZone: FUSO});
+// "agora" no relógio de Brasília, mesmo com o aparelho em outro fuso
+function agoraSP(){
+  return new Date(new Date().toLocaleString("en-US", {timeZone: FUSO}));
+}
+// timestamp do banco -> data e hora de Brasília. Timestamp sem fuso (o que o
+// próprio escritório digitou, como a hora da perícia) já é de Brasília e
+// passa intocado.
+function _dt(ts){
+  if(!ts) return null;
+  const d = new Date(/[Zz]|[+-]\d\d:?\d\d$/.test(ts) ? ts : ts.replace(" ","T"));
+  return isNaN(d) ? null : d;
+}
+function _semFuso(ts){ return ts && !/[Zz]|[+-]\d\d:?\d\d$/.test(ts); }
+function dataSP(ts){
+  if(_semFuso(ts)) return (ts||"").slice(0,10);
+  const d=_dt(ts); return d ? d.toLocaleDateString("sv",{timeZone:FUSO}) : "";
+}
+function horaSP(ts){
+  if(_semFuso(ts)) return (ts||"").slice(11,16);
+  const d=_dt(ts); if(!d) return "";
+  return d.toLocaleTimeString(IDIOMA,{timeZone:FUSO,hour:"2-digit",minute:"2-digit"});
+}
+const fmtTS = ts => fmt(dataSP(ts));                 // DD.MM.AAAA de Brasília
 const fmt = iso => iso ? iso.slice(8,10)+"."+iso.slice(5,7)+"."+iso.slice(0,4) : "";
 const fmtCpf = c => c ? c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4") : "—";
 const digitosCpf = c => (c||"").replace(/\D/g,"");
@@ -829,7 +869,7 @@ function pesquisar(txt){
     return d || (a.nome||"").length - (b.nome||"").length;
   });
 }
-const moeda = v => v==null ? "—" : Number(v).toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const moeda = v => v==null ? "—" : Number(v).toLocaleString(IDIOMA,{style:"currency",currency:"BRL"});
 
 let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
@@ -1171,7 +1211,7 @@ function chipExig(k){
 function preencher(texto, cli, ev, prazoExig){
   const map={
     "{nome}": cli?cli.nome:"", "{primeiro_nome}": cli?cli.nome.split(" ")[0]:"",
-    "{data}": ev?fmt(ev.data_hora.slice(0,10)):"", "{hora}": ev?ev.data_hora.slice(11,16):"",
+    "{data}": ev?fmtTS(ev.data_hora):"", "{hora}": ev?horaSP(ev.data_hora):"",
     "{local}": ev?(ev.local||"(local a confirmar)"):"", "{prazo}": prazoExig?fmt(prazoExig):"",
   };
   return Object.entries(map).reduce((t,[k,v])=>t.split(k).join(v), texto);
@@ -1291,7 +1331,7 @@ function cartaoCliente(cli, casosMostrar){
   const ks = casosMostrar || (D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado");
   const resp = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))].map(id=>D.colPorId.get(id)).filter(Boolean);
   const prazoMin = ks.map(k=>k.prazo).filter(Boolean).sort()[0];
-  const evFut = D.eventos.find(e=>ks.some(k=>k.id===e.caso_id) && e.status==="agendada" && e.data_hora.slice(0,10)>=hoje());
+  const evFut = D.eventos.find(e=>ks.some(k=>k.id===e.caso_id) && e.status==="agendada" && dataSP(e.data_hora)>=hoje());
   const imp = ks.some(k=>k.importante);
   const noMeuDia = D.meudia.some(m=>m.colaborador_id===eu.id && ks.some(k=>k.id===m.caso_id));
   return `<div class="cartao" data-cli="${cli.id}" ${resp.length?`style="border-left:4px solid ${resp[0].cor}"`:""}>
@@ -1305,7 +1345,7 @@ function cartaoCliente(cli, casosMostrar){
         ${ks.map(chipExig).join("")}
         ${(kp=>chipPrazo(prazoMin, kp&&kp.lembrar_motivo))(ks.find(x=>x.prazo===prazoMin))}
         ${(kp=>kp&&kp.lembrar_motivo?`<span class="chip neutro" title="${esc(kp.lembrar_motivo)}">📌 ${esc(kp.lembrar_motivo.length>32?kp.lembrar_motivo.slice(0,32)+"…":kp.lembrar_motivo)}</span>`:"")(ks.find(x=>x.prazo===prazoMin))}
-        ${evFut?`<span class="chip per">🩺 ${esc(evFut.tipo)} ${fmt(evFut.data_hora.slice(0,10))}</span>`:""}
+        ${evFut?`<span class="chip per">🩺 ${esc(evFut.tipo)} ${fmtTS(evFut.data_hora)}</span>`:""}
         ${ks.length>1?`<span class="chip neutro">${ks.length} casos</span>`:""}
       </div>
     </div>
@@ -1451,9 +1491,9 @@ function renderMeuDia(){
   document.getElementById("titulo-lista").textContent="☀️ Meu Dia";
   // como no To Do: saudação e a data por extenso — dá o contexto do dia sem
   // ninguém ter que procurar o calendário
-  const h=new Date().getHours();
+  const h=agoraSP().getHours();   // saudação pelo relógio de Brasília
   const saud = h<12 ? "Bom dia" : h<18 ? "Boa tarde" : "Boa noite";
-  const dia = new Date(hoje()+"T12:00:00").toLocaleDateString("pt-BR",
+  const dia = new Date(hoje()+"T12:00:00").toLocaleDateString(IDIOMA,
     {weekday:"long", day:"numeric", month:"long"});
   document.getElementById("sub-lista").innerHTML =
     `<span class="md-saud">${saud}, ${esc((eu.nome||"").split(" ")[0])}</span> · ${dia}`;
@@ -1696,7 +1736,7 @@ function renderClaude(){
     return `<div class="sug">
       <div class="cab"><span>${ICONE[s.tipo]||"💡"}</span><strong>${esc(s.titulo)}</strong>
         ${c?`<button class="btn-mini" onclick="abrirFicha('${c.id}')">${esc(c.nome)}</button>`:""}
-        <span class="chip neutro">${fmt(s.criado_em.slice(0,10))}</span></div>
+        <span class="chip neutro">${fmtTS(s.criado_em)}</span></div>
       <div class="texto">${esc(s.texto)}</div>
       <div class="acoes">
         <button class="aceitar" onclick="decidirSugestao('${s.id}','aceita')">✔ Aceitar</button>
@@ -1736,7 +1776,7 @@ function renderMencoes(){
           c=k&&D.cliPorId.get(k.cliente_id);
     return `<div class="mencao">
       <div class="cab">${de?`<span class="avatar mini" style="background:${de.cor}">${esc(de.inicial)}</span><strong>${esc(de.nome)}</strong>`:""}
-        <span class="chip neutro">${fmt(m.criado_em.slice(0,10))}</span>
+        <span class="chip neutro">${fmtTS(m.criado_em)}</span>
         ${c?`<span class="chip fase">${esc(c.nome)}</span>`:""}</div>
       <div class="texto">${esc(m.texto)}</div>
       <div class="acoes">
@@ -1965,12 +2005,12 @@ function renderAgenda(){
   document.getElementById("titulo-lista").textContent="🩺 Perícias & Audiências";
   document.getElementById("sub-lista").textContent="Agenda estruturada — adicione novas pela ficha do cliente.";
   const evs=D.eventos.slice().sort((a,b)=>a.data_hora<b.data_hora?-1:1);
-  const fut=evs.filter(e=>e.data_hora.slice(0,10)>=hoje() && e.status!=="cancelada");
-  const pas=evs.filter(e=>e.data_hora.slice(0,10)<hoje()).reverse().slice(0,60);
+  const fut=evs.filter(e=>dataSP(e.data_hora)>=hoje() && e.status!=="cancelada");
+  const pas=evs.filter(e=>dataSP(e.data_hora)<hoje()).reverse().slice(0,60);
   const bloco=e=>{
     const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
-    return `<div class="evento ${e.data_hora.slice(0,10)<hoje()?"passado":"futuro"}" data-cli="${c?c.id:""}" style="cursor:pointer">
-      <div class="data-box">${fmt(e.data_hora.slice(0,10)).slice(0,5)}<small>${e.data_hora.slice(0,4)}</small><small>${e.data_hora.slice(11,16)}</small></div>
+    return `<div class="evento ${dataSP(e.data_hora)<hoje()?"passado":"futuro"}" data-cli="${c?c.id:""}" style="cursor:pointer">
+      <div class="data-box">${fmtTS(e.data_hora).slice(0,5)}<small>${dataSP(e.data_hora).slice(0,4)}</small><small>${horaSP(e.data_hora)}</small></div>
       <div class="oque"><strong>${esc(e.tipo)} — ${esc(c?c.nome:"?")}</strong>
         <span>${esc(e.local||e.obs||"")} · ${esc(e.status)}</span></div>
       ${c&&c.telefone?`<a class="chip per" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" onclick="event.stopPropagation()">💬 avisar cliente</a>`:""}
@@ -2006,8 +2046,8 @@ function itensDoCalendario(){
   });
   (D.eventos||[]).filter(e=>e.status!=="cancelada").forEach(e=>{
     const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
-    push(e.data_hora.slice(0,10),"evento",`${e.tipo} — ${c?c.nome:"?"}`,c?c.id:null,
-         {hora:e.data_hora.slice(11,16)});
+    push(dataSP(e.data_hora),"evento",`${e.tipo} — ${c?c.nome:"?"}`,c?c.id:null,
+         {hora:horaSP(e.data_hora)});
   });
   (D.tarefas||[]).filter(t=>!t.concluida && t.prazo).forEach(t=>
     push(t.prazo,"tarefa",t.titulo,null));
@@ -2094,7 +2134,7 @@ function renderCalendario(){
     barra=`<strong class="cal-mes">${calVisao==="hoje"?"Hoje":"De hoje a "+fmt(dias[dias.length-1])}</strong>`;
     corpo=`<div class="cal-dias">${dias.map(iso=>{
       const dd=ordena((porDia.get(iso)||[]).slice());
-      const rot=new Date(iso+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});
+      const rot=new Date(iso+"T12:00:00").toLocaleDateString(IDIOMA,{weekday:"long",day:"numeric",month:"long"});
       return `<div class="cal-bloco ${iso===hoje()?"hoje":""}">
         <div class="cal-bloco-cab">${iso===hoje()?"Hoje · ":""}${rot}</div>
         ${dd.length ? dd.map(itemCal).join("")
@@ -2373,7 +2413,7 @@ function renderDash(){
     <div class="card"><h4>Casos ativos</h4><div class="num">${at.length}</div></div>
     <div class="card"><h4>Prazos próximos 7 dias</h4><div class="num" style="color:var(--laranja)">${at.filter(k=>k.prazo&&k.prazo>=hoje()&&k.prazo<=lim).length}</div></div>
     <div class="card"><h4>Prazos vencidos</h4><div class="num" style="color:var(--vermelho)">${at.filter(k=>k.prazo&&k.prazo<hoje()).length}</div></div>
-    <div class="card"><h4>Perícias/audiências futuras</h4><div class="num" style="color:var(--roxo)">${D.eventos.filter(e=>e.status==="agendada"&&e.data_hora.slice(0,10)>=hoje()).length}</div></div>
+    <div class="card"><h4>Perícias/audiências futuras</h4><div class="num" style="color:var(--roxo)">${D.eventos.filter(e=>e.status==="agendada"&&dataSP(e.data_hora)>=hoje()).length}</div></div>
     <div class="card"><h4>⚠ Exigências INSS em aberto</h4><div class="num" style="color:var(--vermelho)">${at.filter(k=>k.exigencia_prazo).length}</div></div>
     <div class="card"><h4>💼 Vendas em andamento</h4><div class="num">${D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length}</div></div>
     <div class="card"><h4>✅ Concedidos</h4><div class="num" style="color:var(--verde)">${D.casos.filter(k=>k.resultado==="deferido").length}</div></div>
@@ -2402,7 +2442,7 @@ function horaLocal(iso){
   if(!iso) return "";
   const d=new Date(iso);
   if(isNaN(d)) return "";
-  const p=new Intl.DateTimeFormat("pt-BR",{timeZone:"America/Sao_Paulo",day:"2-digit",
+  const p=new Intl.DateTimeFormat(IDIOMA,{timeZone:FUSO,day:"2-digit",
     month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).formatToParts(d)
     .reduce((o,x)=>(o[x.type]=x.value,o),{});
   return `${p.day}/${p.month}/${p.year} às ${p.hour}:${p.minute}`;
@@ -2413,8 +2453,10 @@ function vistos(a){
     ${ls.map(l=>{ const c=D.colPorId.get(l.colaborador_id); if(!c) return "";
       return `<span class="visto-av" style="background:${c.cor}"
         title="${esc(c.nome)} leu em ${horaLocal(l.lido_em)}">${esc(c.inicial)}</span>`;}).join("")}
-    <button class="visto-bt ${euLi(a)?"on":""}" onclick="marcarLido('${a.id}',${euLi(a)?1:0})"
-      title="${euLi(a)?"você marcou que leu — clique para desfazer":"marcar que você leu"}">✓</button>
+    ${(meu=>`<button class="visto-bt ${meu?"on":""}" onclick="marcarLido('${a.id}',${meu?1:0})"
+      title="${meu ? `Você leu em ${horaLocal(meu.lido_em)} — clique para desfazer`
+                   : "marcar que você leu"}">✓</button>`
+     )(lidosDe(a).find(l=>l.colaborador_id===eu.id))}
   </span>`;
 }
 async function marcarLido(andId, jaLi){
@@ -2585,7 +2627,7 @@ function escolherProcesso(cliId, ativos){
   const c=D.cliPorId.get(cliId)||{};
   const ultimo = k => {
     const a=(D.and30||[]).filter(x=>x.caso_id===k.id).sort((x,y)=>x.criado_em<y.criado_em?1:-1)[0];
-    return a ? `último andamento em ${fmt(a.criado_em.slice(0,10))}` : "sem andamento recente";
+    return a ? `último andamento em ${fmtTS(a.criado_em)}` : "sem andamento recente";
   };
   document.getElementById("modal").innerHTML=`
     <div class="modal-fundo" onclick="event.stopPropagation()">
@@ -2667,7 +2709,7 @@ async function abrirFicha(cliId){
       <button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="escolher o processo do cliente (não erra o destino)">⚖️ ${
           (kk=>kk?esc(tituloCaso(kk)):(processosDe(ks).length>1?"Processos":"Processo"))(casoSel&&D.casoPorId.get(casoSel))} ▾</button>
-      <button class="mt ${abaAtiva===3?"on":""}" data-vv="3">🩺 Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>e.data_hora.slice(0,10)>=hoje()&&e.status!=="cancelada").length)}</button>
+      <button class="mt ${abaAtiva===3?"on":""}" data-vv="3">🩺 Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}</button>
       <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">💰 Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
       <button class="mt ${abaAtiva===5?"on":""}" data-vv="5">💬 Mensagens</button>
     </div>
@@ -2810,14 +2852,14 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
-    ${evs.map(e=>`<div class="evento ${e.data_hora.slice(0,10)<hoje()?"passado":"futuro"}">
-      <div class="data-box">${fmt(e.data_hora.slice(0,10)).slice(0,5)}<small>${e.data_hora.slice(0,4)}</small><small>${e.data_hora.slice(11,16)}</small></div>
+    ${evs.map(e=>`<div class="evento ${dataSP(e.data_hora)<hoje()?"passado":"futuro"}">
+      <div class="data-box">${fmtTS(e.data_hora).slice(0,5)}<small>${dataSP(e.data_hora).slice(0,4)}</small><small>${horaSP(e.data_hora)}</small></div>
       <div class="oque"><strong>${esc(e.tipo)}</strong><span>${esc(e.local||e.obs||"")} · ${esc(e.status)}</span></div>
-      ${e.data_hora.slice(0,10)>=hoje()?`
+      ${dataSP(e.data_hora)>=hoje()?`
         <button class="btn-mini" onclick="copiarLembrete('${e.id}')">💬 copiar lembrete</button>
         ${c.telefone?`<a class="btn-mini" target="_blank" href="#" onclick="event.preventDefault();zapLembrete('${e.id}')" style="text-decoration:none">📲 WhatsApp</a>`:""}
         <a class="btn-mini" target="_blank" style="text-decoration:none"
-           href="${gcal(e.tipo+" — "+esc(c.nome), e.data_hora.slice(0,10), e.data_hora.slice(11,16), 90, "", e.local||"")}">📅 Google Agenda</a>`:""}
+           href="${gcal(e.tipo+" — "+esc(c.nome), dataSP(e.data_hora), horaSP(e.data_hora), 90, "", e.local||"")}">📅 Google Agenda</a>`:""}
       </div>`).join("")}
     <div class="form-linha">
       <select id="ne-tipo"><option>Perícia</option><option>Audiência</option><option>Avaliação social</option></select>
@@ -2850,7 +2892,7 @@ async function abrirFicha(cliId){
           <select data-fase="${k.id}">${Object.entries(NOME_FASE).map(([f,n])=>`<option value="${f}" ${k.fase===f?"selected":""}>${n}</option>`).join("")}</select></label>
           ${lan.length?"":`<span style="font-size:12px;color:var(--cinza)">nenhum valor lançado — lance abaixo ↓</span>`}
         </div>
-        ${ult?`<div class="ult-and">Último andamento: ${fmt(ult.criado_em.slice(0,10))}${uco?" ("+esc(uco.nome)+")":""} — ${esc(ult.texto.slice(0,110))}${ult.texto.length>110?"…":""}</div>`:""}
+        ${ult?`<div class="ult-and">Último andamento: ${fmtTS(ult.criado_em)}${uco?" ("+esc(uco.nome)+")":""} — ${esc(ult.texto.slice(0,110))}${ult.texto.length>110?"…":""}</div>`:""}
         </div>`;}).join("")
         + `<p class="meio-sub" style="margin-top:12px">Lançamentos (RPV, precatório, honorários…):</p>`;
     })()}
@@ -2861,9 +2903,9 @@ async function abrirFicha(cliId){
       <span class="desc"><strong>${p.pago_em?fmt(p.pago_em):p.vencimento?"vence "+fmt(p.vencimento):"—"}</strong>${p.descricao&&p.descricao!=="Recebimento"?" · "+esc(p.descricao):""}</span>
       <span class="valor">${moeda(p.valor)}</span>
       <span class="cadeia">${cfs.map((cf,i)=>{const co=D.colPorId.get(cf.c);
-        return `<span class="conf-et" title="${co?esc(co.nome):"?"} ${i===0?"recebeu":"conferiu"} em ${fmt(cf.em.slice(0,10))}">
+        return `<span class="conf-et" title="${co?esc(co.nome):"?"} ${i===0?"recebeu":"conferiu"} em ${fmtTS(cf.em)}">
           <span class="avatar mini" style="background:${co?co.cor:"#a19f9d"}">${co?esc(co.inicial):"·"}</span>
-          <small>${i===0?"recebeu":"conferiu"} ${fmt(cf.em.slice(0,10)).slice(0,5)}</small></span>`;}).join(`<span class="conf-seta">→</span>`)}</span>
+          <small>${i===0?"recebeu":"conferiu"} ${fmtTS(cf.em).slice(0,5)}</small></span>`;}).join(`<span class="conf-seta">→</span>`)}</span>
       ${p.status==="aberto"?`<button class="btn-mini" data-recebe="${p.id}">💵 recebi</button>`:
         !jaConferi?`<button class="btn-mini" data-confere="${p.id}">✔ conferi</button>`:""}
       </div>`;}).join("")
@@ -2883,7 +2925,7 @@ async function abrirFicha(cliId){
   <div class="painel ${abaAtiva===5?"ativo":""}" data-p="5">
     <p class="meio-sub">Mensagens prontas, já preenchidas com os dados deste cliente — copie e cole no WhatsApp.</p>
     ${D.modelos.map(m=>{
-      const ev = evs.find(e=>e.data_hora.slice(0,10)>=hoje() &&
+      const ev = evs.find(e=>dataSP(e.data_hora)>=hoje() &&
         (m.contexto==="geral" || e.tipo.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").startsWith(m.contexto.slice(0,6))));
       const exigK = ks.find(k=>k.exigencia_prazo);
       const pronto = preencher(m.texto, c, ev, exigK&&exigK.exigencia_prazo);
@@ -3123,7 +3165,7 @@ function inssFilaCaso(k){
   const uf=f.uf && f.uf!=="BR" ? `em ${esc(f.uf)}` : "no país";
   const nomes=(f.servicos||[]).join(" e ");
   return `<div style="margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--branco);border:1px solid var(--borda);font-size:13px">
-    🌻 <b>Fila do INSS ${uf}:</b> ${Number(f.pendentes).toLocaleString("pt-BR")} pedidos
+    🌻 <b>Fila do INSS ${uf}:</b> ${Number(f.pendentes).toLocaleString(IDIOMA)} pedidos
     de ${esc(nomes||"benefício")} esperando análise · metade já espera há mais de
     <b>${f.dias_mediana} dias</b>${f.dias_p90?` (9 em cada 10, até ${f.dias_p90} dias)`:""}
     <span class="meio-sub">— retrato oficial de ${fmt(f.referencia)}; é a régua da fila, não a data deste pedido</span>
@@ -3135,7 +3177,7 @@ function copiarInssFila(casoId){
   const dbr=i=>i?`${i.slice(8,10)}/${i.slice(5,7)}/${i.slice(0,4)}`:"";
   const uf=f.uf&&f.uf!=="BR"?`em ${f.uf}`:"no país";
   copiar(`Segundo os dados abertos do INSS (retrato de ${dbr(f.referencia)}), havia `+
-    `${Number(f.pendentes).toLocaleString("pt-BR")} pedidos de ${(f.servicos||[]).join(" e ")} `+
+    `${Number(f.pendentes).toLocaleString(IDIOMA)} pedidos de ${(f.servicos||[]).join(" e ")} `+
     `aguardando análise ${uf}, e metade deles já esperava há mais de ${f.dias_mediana} dias. `+
     `É a régua da fila naquele momento, e não uma data do seu pedido.`,
     "Mensagem da fila do INSS copiada 💬");
@@ -3308,29 +3350,85 @@ function idadeDe(dn){
   if(h[1]<m || (h[1]===m && h[2]<d)) anos--;
   return anos>=0 && anos<130 ? anos : null;
 }
-// Palpite de sexo pelo primeiro nome, SÓ para mostrar a data automática —
-// nunca é gravado. Na dúvida devolve nulo e a caixa pergunta, em vez de
-// chutar: errar o sexo de um cliente é constrangedor e ainda erra a data.
-const NOMES_M_EM_A = new Set(["joca","juca","nicola","luca","noa"]);
-const NOMES_F_SEM_A = new Set(["beatriz","raquel","isabel","ester","esther","ines","ivete",
-  "solange","alice","adriane","cristiane","luciane","carmem","miriam","meire","nair",
-  "conceicao","doralice","eunice","berenice","clarice","marlene","marilene","irene",
-  "helen","karen","dulce","gorete","ivone","simone","cleide","neide","adelaide","judite",
-  "edite","mercedes","lourdes"]);
+// ── Homem ou mulher pelo primeiro nome ───────────────────────────────────
+// O sistema decide sozinho, e a decisão vale para calcular a aposentadoria
+// por idade. Em nome brasileiro a terminação resolve a maioria; o resto sai
+// pelas listas abaixo. Continua sendo palpite: a caixa mostra que foi
+// automático e um clique corrige — e o que o colaborador confirma passa a
+// valer sobre qualquer regra.
+const NOMES_M = new Set([
+  // masculinos terminados em A, que a regra da terminação erraria
+  "joca","juca","nicola","luca","noa","bandeira","dandara-nao",
+  "jeova","jeremias","josias","zacarias","elias","tobias","matias","isaias",
+  "cassia-nao","sena","lima","costa","silva","viana","rocha","cunha","barbosa",
+  // terminados em E/consoante que a regra deixaria passar como dúvida
+  "jose","luiz","luis","vicente","clemente","abel","daniel","gabriel","manuel",
+  "miguel","rafael","ismael","israel","joel","nael","samuel","ariel","maciel",
+  "valdir","nadir-nao","edir","alcir","altair","nivaldo","waldir","clair-nao",
+  "cesar","valter","walter","wilder","alexandre","andre","felipe","henrique",
+  "jorge","enrique","aristides","mendes","fernandes","moises","tales","jules",
+  "everton","anderson","wilson","nelson","edson","jefferson","robson","adilson",
+  "gerson","emerson","alisson","cleiton","gilson","claudio-nao",
+]);
+const NOMES_F = new Set([
+  // femininos que NÃO terminam em A
+  "beatriz","raquel","isabel","ester","esther","ines","ivete","solange","alice",
+  "adriane","cristiane","luciane","josiane","rosiane","daiane","tatiane","viviane",
+  "carmem","miriam","mirian","meire","nair","conceicao","assuncao","encarnacao",
+  "doralice","eunice","berenice","clarice","marlene","marilene","darlene","irene",
+  "helen","hellen","karen","karin","dulce","gorete","ivone","simone","edione",
+  "cleide","neide","adelaide","judite","edite","mercedes","lourdes","noemi",
+  "naomi","ruth","rute","judith","liz","ingrid","astrid","cris","bete","zilda-nao",
+  "elizabeth","elisabeth","meire","nice","jaqueline","jacqueline","evelyn","marilyn",
+  "kelly","shirley","wesley-nao","cleusa-nao","madalena-nao","nadir","clair","cassia",
+  "dandara","zulmira-nao",
+]);
+const _limpaLista = st => new Set([...st].filter(n=>!n.endsWith("-nao")));
+const M_NOMES = _limpaLista(NOMES_M), F_NOMES = _limpaLista(NOMES_F);
 function palpiteSexo(nome){
-  const p=dsa((nome||"").trim().split(/\s+/)[0]||"");
+  const partes = dsa((nome||"").trim()).split(/\s+/).filter(Boolean);
+  const p = partes[0] || "";
   if(!p) return null;
-  if(NOMES_M_EM_A.has(p)) return "M";
-  if(NOMES_F_SEM_A.has(p)) return "F";
-  if(/a$/.test(p)) return "F";       // Maria, Ana, Silvana, Rita…
-  if(/o$/.test(p)) return "M";       // João, Pedro, Marcos, Benedito…
-  return null;                       // José, Luiz, Vicente… o sistema pergunta
+  if(M_NOMES.has(p)) return "M";
+  if(F_NOMES.has(p)) return "F";
+  // nomes compostos: "Maria José" é mulher, "José Maria" é homem — quem manda
+  // é o primeiro. Mas "Ana Paulo" não existe: se o primeiro não decidir,
+  // o segundo ajuda.
+  if(/a$/.test(p)) return "F";        // Maria, Ana, Silvana, Rita, Benedita
+  if(/[oó]$/.test(p)) return "M";     // João, Pedro, Marcos, Benedito, Antônio
+  if(/(ei|ey|eu)$/.test(p)) return "M";                    // Sidnei, Wesley, Mateu
+  if(/(ete|ide|lde|ina|ine|isa|ise|elly|lyn|li|mi|ni|iany|any)$/.test(p)) return "F";  // Marli, Elaine, Ivanilde
+  if(/(son|ton|ilson|inho|aldo|ardo|erto|ilto|imo|ir|or|ur|az|iz|is|es|os|el|ez)$/.test(p)) return "M";  // Marcos, Carlos
+  // Nada de deduzir pelo segundo nome quando ele é sobrenome: Souza, Silva,
+  // Costa, Rocha e Barbosa acabam em A e fariam todo Wesley virar mulher.
+  const seg = partes[1] || "";
+  if(F_NOMES.has(seg)) return "F";
+  if(M_NOMES.has(seg)) return "M";
+  return null;                        // raríssimo: aí sim a caixa pergunta
+}
+// Quem é o sexo deste cliente: o confirmado à mão manda; senão, o palpite
+function sexoDe(cli){ return cli.sexo || palpiteSexo(cli.nome); }
+
+// Cliente que JÁ tinha a idade antes desta data provavelmente já se
+// aposentou por idade — anunciar isso como "provável" só polui a ficha. A
+// data é do dia em que a carteira antiga foi varrida; para quem completar a
+// idade daqui para frente, o aviso continua valendo.
+const APOS_IDADE_CORTE = "2026-07-31";
+function dataIdadeApos(cli){
+  const nasc=dnIso(cli.dn); if(!nasc) return null;
+  const sexo=sexoDe(cli); if(!sexo) return null;
+  return somarAnos(nasc, IDADE_APOS[sexo]);
+}
+// true quando a idade já tinha chegado antes do corte: não é previsão, é passado
+function idadeJaPassou(cli){
+  const d=dataIdadeApos(cli);
+  return !!d && d <= APOS_IDADE_CORTE;
 }
 function aposAutomatica(cli){
-  const nasc=dnIso(cli.dn); if(!nasc) return null;
-  const sexo=cli.sexo || palpiteSexo(cli.nome); if(!sexo) return null;
-  return {id:"auto", cliente_id:cli.id, data:somarAnos(nasc, IDADE_APOS[sexo]),
-          especie:"Idade", automatica:true, sexoUsado:sexo, suposto:!cli.sexo};
+  const data=dataIdadeApos(cli); if(!data) return null;
+  if(data <= APOS_IDADE_CORTE) return null;        // já passou: não é provável
+  return {id:"auto", cliente_id:cli.id, data, especie:"Idade", automatica:true,
+          sexoUsado:sexoDe(cli), suposto:!cli.sexo};
 }
 // as gravadas + a automática, salvo quando já existe uma "Idade" à mão
 function aposDoCliente(cli){
@@ -3374,7 +3472,8 @@ function caixaApos(cli){
   const lista=aposDoCliente(cli);
   const auto=lista.find(a=>a.automatica);
   const temIdadeManual=(D.apos||[]).some(a=>a.cliente_id===cli.id && dsa(a.especie)==="idade");
-  const perguntarSexo = !cli.sexo && !auto && dnIso(cli.dn) && !temIdadeManual;
+  const sexo=sexoDe(cli);
+  const jaPassou = !temIdadeManual && idadeJaPassou(cli);
   const botoesSexo = `<button class="btn-mini" onclick="definirSexo('${cli.id}','F')">mulher</button>
     <button class="btn-mini" onclick="definirSexo('${cli.id}','M')">homem</button>`;
   return `<div class="apos-cx" id="apos-cx">
@@ -3392,13 +3491,19 @@ function caixaApos(cli){
                title="gravar com ajuste">ajustar</button>`
           : `<button class="apaga-arq" onclick="apagarApos('${a.id}')" title="apagar">✕</button>`}
       </div>`).join("")
-      : `<div class="meio-sub">Sem data ainda${dnIso(cli.dn)?"":" — falta a data de nascimento"}.</div>`}
-    ${auto ? `<div class="apos-nota">Calculada pelo nascimento (${IDADE_APOS[auto.sexoUsado]} anos,
-        ${auto.sexoUsado==="F"?"mulher":"homem"}${auto.suposto?" — suposto pelo nome":""}).
+      : `<div class="meio-sub">${jaPassou ? "Sem data futura."
+          : "Sem data ainda" + (dnIso(cli.dn)?"":" — falta a data de nascimento") + "."}</div>`}
+    ${jaPassou ? `<div class="apos-nota">Completou ${IDADE_APOS[sexo]} anos em
+        ${fmt(dataIdadeApos(cli))}, antes de ${fmt(APOS_IDADE_CORTE)} — a aposentadoria por
+        idade não entra como provável porque, com o tempo de contribuição, esse cliente
+        provavelmente já se aposentou. <b>Confira no CNIS.</b> Se não se aposentou, use o ＋.</div>`
+     : auto ? `<div class="apos-nota">Calculada pelo nascimento (${IDADE_APOS[auto.sexoUsado]} anos,
+        ${auto.sexoUsado==="F"?"mulher":"homem"}${auto.suposto?" — pelo nome":""}).
         <b>É automática: confira a carência e a regra de transição.</b>
-        ${auto.suposto?`<span class="apos-sexo">Confirme: ${botoesSexo}</span>`:""}</div>`
-     : perguntarSexo ? `<div class="apos-nota">Para calcular a aposentadoria por idade,
-        diga se o cliente é <span class="apos-sexo">${botoesSexo}</span></div>` : ""}
+        ${auto.suposto?`<span class="apos-sexo">Não é? ${botoesSexo}</span>`:""}</div>`
+     : (!sexo && dnIso(cli.dn) && !temIdadeManual)
+       ? `<div class="apos-nota">Não consegui deduzir pelo nome se é
+          <span class="apos-sexo">${botoesSexo}</span></div>` : ""}
     <div id="apos-form"></div>
   </div>`;
 }
@@ -3563,7 +3668,7 @@ function caixaArquivos(k){
       return `<div class="arq-it">
         <button class="arq-abrir" onclick="abrirAnexo('${a.id}')" title="abrir o arquivo">
           ${(a.tipo||"").startsWith("image/")?"🖼":"📄"} ${esc(a.nome)}</button>
-        <span class="meio-sub">${co?esc(co.nome)+" · ":""}${fmt(a.criado_em.slice(0,10))}${a.tamanho?" · "+tamArq(a.tamanho):""}</span>
+        <span class="meio-sub">${co?esc(co.nome)+" · ":""}${fmtTS(a.criado_em)}${a.tamanho?" · "+tamArq(a.tamanho):""}</span>
         ${a.autor_id===eu.id?`<button class="apaga-arq" title="apagar" onclick="apagarAnexo('${a.id}')">✕</button>`:""}
       </div>`;}).join("")}
   </div>`;
@@ -3576,8 +3681,13 @@ function painelEscritorio(k, ands){
   <div class="caso-acoes">
     <div class="form-linha" style="align-items:center;margin:0">
       <span class="rotulo-rap">👥 ATRIBUÍDO A:</span>
-      ${D.colaboradores.filter(x=>x.ativo).map(co=>`<span class="equipe-chip ${equipe.includes(co.id)?"on":""}" data-eq="${co.id}" title="${esc(co.nome)} — atribuir/retirar">
-        <span class="avatar mini" style="background:${co.cor}">${esc(co.inicial)}</span>${esc(co.nome)}</span>`).join("")}
+      ${/* só a inicial: seis nomes por extenso ocupavam a faixa inteira, e a
+             equipe reconhece P, A, M, D, I e C de olhos fechados. O nome
+             continua no passar do mouse. */""}
+      ${D.colaboradores.filter(x=>x.ativo).map(co=>`<button class="eq-ini ${equipe.includes(co.id)?"on":""}"
+        data-eq="${co.id}" style="--cor-eq:${co.cor}"
+        title="${esc(co.nome)} — ${equipe.includes(co.id)?"clique para retirar":"clique para atribuir"}"
+        aria-label="${esc(co.nome)}">${esc(co.inicial)}</button>`).join("")}
     </div>
     <div class="form-linha" style="align-items:center;margin:8px 0 0">
       <span class="rotulo-rap">🗓 LEMBRAR:</span>
@@ -3618,7 +3728,7 @@ function painelEscritorio(k, ands){
   <ul class="timeline">${(ands||[]).filter(a=>!a.excluir).map(a=>{
     const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
     return `<li style="border-left-color:${cor};background:color-mix(in srgb, ${cor} 7%, white)">
-      <span class="quando"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmt(a.criado_em.slice(0,10))}<br>${esc(co?co.nome:"—")}</span>
+      <span class="quando"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmtTS(a.criado_em)}<br>${esc(co?co.nome:"—")}</span>
       <span class="texto">${esc(a.texto)}</span>
       ${vistos(a)}
       ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}</li>`;
@@ -3675,13 +3785,13 @@ function previsaoBox(k){
   const t=k.trf3;
   if(!t || !t.ordem) return "";
   const p=t.projecao;
-  const total=t.total?` de <b>${Number(t.total).toLocaleString("pt-BR")}</b>`:"";
+  const total=t.total?` de <b>${Number(t.total).toLocaleString(IDIOMA)}</b>`:"";
   return `<div class="previsao-box">
     <div class="rotulo-caso" style="color:#7A5A00">nossa estimativa — não é dado do tribunal</div>
     ${p?`<div style="font-size:15px;margin-top:2px">📈 <b>Previsão de julgamento: ~${esc(mesAno(p.previsao))}</b></div>`:""}
     <div style="font-size:13px;margin-top:3px">⚖️ Posição <b>${t.ordem}º</b>${total} na fila de ${esc(t.orgao||"")}${t.turma?` (${esc(t.turma)})`:""}${t.prioridade==="S"?` <span class="chip ben">⚡ prioridade</span>`:""}</div>
     ${p?`<div class="meio-sub" style="margin-top:2px">${p.metodo==="producao"
-        ? `o órgão julgou ${Number(p.julgados_ano||0).toLocaleString("pt-BR")} processos no último ano fechado (~${p.ritmo_mes}/mês, painel Justiça em Números do CNJ)`
+        ? `o órgão julgou ${Number(p.julgados_ano||0).toLocaleString(IDIOMA)} processos no último ano fechado (~${p.ritmo_mes}/mês, painel Justiça em Números do CNJ)`
         : `ritmo observado de ~${p.ritmo_mes} posições/mês nos últimos ${p.base_dias} dias`}</div>`:""}
     ${p&&p.dias_medios?`<div class="meio-sub">⏱️ tempo médio de julgamento neste órgão: ${p.dias_medios} dias (indicador oficial do CNJ)</div>`:""}
     <div class="form-linha" style="margin-top:6px">
@@ -3801,7 +3911,7 @@ function mesAno(iso){
 function projecaoTrf3(t){
   const p=t.projecao; if(!p) return "";
   const base = p.metodo==="producao"
-    ? `o gabinete julgou ${Number(p.julgados_ano||0).toLocaleString("pt-BR")} processos no último ano fechado (~${p.ritmo_mes}/mês, painel Justiça em Números do CNJ)`
+    ? `o gabinete julgou ${Number(p.julgados_ano||0).toLocaleString(IDIOMA)} processos no último ano fechado (~${p.ritmo_mes}/mês, painel Justiça em Números do CNJ)`
     : `ritmo observado de ~${p.ritmo_mes} posições/mês nos últimos ${p.base_dias} dias`;
   const media = p.dias_medios
     ? `<div style="margin-top:2px">⏱️ <b>Tempo médio de julgamento neste órgão:</b> ${p.dias_medios} dias <span class="meio-sub">(indicador oficial do CNJ)</span></div>` : "";
@@ -3813,7 +3923,7 @@ function copiarPrevisao(casoId){
   let msg;
   if(p.metodo==="producao"){
     msg=`Segundo o painel Justiça em Números do CNJ, o órgão responsável julgou `+
-      `${Number(p.julgados_ano||0).toLocaleString("pt-BR")} processos no último ano fechado — cerca de `+
+      `${Number(p.julgados_ano||0).toLocaleString(IDIOMA)} processos no último ano fechado — cerca de `+
       `${p.ritmo_mes} por mês`+
       (p.dias_medios?`, e o tempo médio entre a distribuição e o julgamento nesse órgão é de ${p.dias_medios} dias`:"")+
       `. Na posição em que o processo está hoje, e mantido esse ritmo, a previsão ESTIMADA de `+
@@ -4019,7 +4129,7 @@ async function extrairEvento(texto, casoId){
     }
     const hora=m[5]?`${m[5].padStart(2,"0")}:${m[6]||"00"}`:"09:00";
     if(isNaN(new Date(data+"T00:00:00").getTime())) continue;
-    if(D.eventos.some(e=>e.caso_id===casoId && e.tipo===tipo && e.data_hora.slice(0,10)===data)) continue;
+    if(D.eventos.some(e=>e.caso_id===casoId && e.tipo===tipo && dataSP(e.data_hora)===data)) continue;
     try{
       const [ev]=await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=representation"},
         body:JSON.stringify({caso_id:casoId, tipo, data_hora:`${data}T${hora}:00-03:00`,
@@ -4253,7 +4363,7 @@ async function lbDesativar(casoId,id){
   aviso("Motivo removido"); lbRender(casoId);
 }
 function diaSemana(iso){
-  return new Date(iso+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long"});
+  return new Date(iso+"T12:00:00").toLocaleDateString(IDIOMA,{weekday:"long"});
 }
 async function novaExigencia(){
   const sel=document.getElementById("and-caso");
@@ -4576,7 +4686,7 @@ async function aplicarChecklistCaso(caso, silencioso){
 
 // modelos de documentos ({nome},{cpf},{nb}... preenchidos com o cliente)
 function preencherDoc(conteudo, c, k){
-  const dataExt=new Date(hoje()+"T12:00:00").toLocaleDateString("pt-BR",{day:"numeric",month:"long",year:"numeric"});
+  const dataExt=new Date(hoje()+"T12:00:00").toLocaleDateString(IDIOMA,{day:"numeric",month:"long",year:"numeric"});
   const mapa={
     "{nome}": c?c.nome:"", "{primeiro_nome}": c?c.nome.split(" ")[0]:"",
     "{cpf}": c?fmtCpf(c.cpf):"", "{endereco}": (c&&c.endereco)||"____________________",
