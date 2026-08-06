@@ -182,7 +182,22 @@
   .avatar{width:28px;height:28px;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none;background:var(--azul)}
   .avatar.mini{width:22px;height:22px;font-size:10px}
 
-  .meio{overflow-y:auto;padding:18px 22px;transition:background .2s}
+  .meio{overflow-y:auto;padding:18px 22px;transition:background .2s;
+    display:flex;flex-direction:column}
+  #conteudo-meio{flex:1}
+  /* ＋ Adicionar: sempre no pé da lista, como no To Do */
+  .add-rodape{position:sticky;bottom:0;margin:12px -22px -18px;padding:12px 22px 14px;
+    display:flex;gap:8px;align-items:center;background:inherit;
+    border-top:1px solid var(--borda);box-shadow:0 -6px 14px -10px rgba(30,32,36,.35)}
+  .add-mais{font-size:19px;color:var(--azul);font-weight:700;line-height:1}
+  .add-rodape input{padding:10px 12px;border:1px solid var(--borda);border-radius:8px;
+    font-size:14px;background:var(--branco)}
+  .add-rodape #add-nome{flex:1;min-width:180px}
+  .add-rodape #add-ben{width:210px}
+  .add-rodape button{padding:10px 18px;border:none;border-radius:8px;background:var(--azul);
+    color:#fff;font-weight:600;cursor:pointer}
+  .app.celular .add-rodape{flex-wrap:wrap;margin-bottom:0;bottom:66px}
+  .app.celular .add-rodape #add-ben{width:100%;order:3}
   .meio-topo{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
   /* título grande da lista, como o do To Do */
   .meio-topo h1{font-size:26px;font-weight:600;color:var(--azul-escuro);letter-spacing:-.2px}
@@ -197,6 +212,21 @@
   .meio-sub{color:var(--cinza);font-size:13px;margin-bottom:12px}
   #sub-lista{margin-bottom:14px}
   .md-saud{font-size:14px;font-weight:600;color:var(--texto)}
+  .btn-fundo{border:1px solid var(--borda);background:rgba(255,255,255,.75);border-radius:8px;
+    padding:5px 10px;font-size:15px;cursor:pointer;line-height:1}
+  .btn-fundo:hover{background:var(--branco);border-color:var(--azul)}
+  .fundos-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:9px}
+  .fundo-op{border:1px solid var(--borda);border-radius:10px;height:66px;cursor:pointer;
+    display:flex;align-items:flex-end;padding:7px 9px;font:inherit;font-size:12px;color:var(--cinza)}
+  .fundo-op span{background:rgba(255,255,255,.85);border-radius:5px;padding:1px 6px}
+  .fundo-op:hover{border-color:var(--azul)}
+  .fundo-op.sel{outline:2px solid var(--azul);outline-offset:-2px}
+  /* arrastar: o cartão some um pouco, a lista de destino se acende */
+  .cartao[draggable="true"]{cursor:grab}
+  .cartao.arrastando{opacity:.4}
+  .lista-item.arrastando{opacity:.45}
+  .lista-item.alvo{background:rgba(120,170,255,.28);border-left-color:#8FB6F5;
+    outline:1px dashed rgba(255,255,255,.5);outline-offset:-3px}
   .filtros{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
   .fchip{border:1px solid var(--borda);background:var(--branco);border-radius:14px;padding:4px 12px;cursor:pointer;font-size:13px;display:flex;gap:6px;align-items:center}
   .fchip.on{background:var(--azul);border-color:var(--azul);color:#fff}
@@ -255,10 +285,18 @@
   .campo .valor{font-weight:600;word-break:break-word;display:flex;gap:8px;align-items:center}
   .campo .valor a{color:var(--azul);text-decoration:none}
   .olho{border:none;background:none;cursor:pointer;font-size:13px}
+  .lapis{border:none;background:none;cursor:pointer;font-size:12px;color:var(--azul);
+    padding:0 3px;opacity:.65}
+  .lapis:hover{opacity:1}
   .caso{border:1px solid var(--borda);border-radius:10px;padding:12px 14px;margin-bottom:10px;background:var(--branco)}
   .caso .cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .caso .rotulo-caso{font-size:11px;color:var(--cinza);text-transform:uppercase;letter-spacing:.05em}
   .caso .titulo-caso{font-size:15px;font-weight:700}
+  /* a trilha de fases vive no alto à direita do quadro do caso: é o "onde
+     este processo está", e fica ao lado da identidade, não abaixo dela */
+  .cab-topo{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+  .cab-esq{flex:1;min-width:min(100%,300px)}
+  .cab-topo>.fases-trilha{margin:0;flex:none;margin-left:auto}
   .fases-trilha{display:flex;margin:10px 0 4px;font-size:11px;flex-wrap:wrap}
   .fase-et{padding:4px 12px;background:var(--fundo);border:1px solid var(--borda);color:var(--cinza);white-space:nowrap;font:inherit;font-size:13px;cursor:pointer}
   .fase-et:not(.atual):hover{background:#e3eefa;color:var(--azul)}
@@ -355,6 +393,7 @@
   .apos-data{font-weight:700;font-variant-numeric:tabular-nums}
   .apos-esp{flex:1;min-width:90px}
   .apos-av{font-size:12px;color:var(--cinza);white-space:nowrap}
+  .apos-av.ja{color:var(--verde);font-weight:700}
   .apos-it.auto .apos-data,.apos-it.auto .apos-esp{color:var(--cinza)}
   .apos-nota{font-size:11.5px;color:var(--cinza);margin-top:6px;line-height:1.45}
   .apos-nota b{color:var(--laranja)}
@@ -362,9 +401,30 @@
   /* 📅 Calendário: o mês inteiro, cada tipo na sua cor */
   .cal-topo{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
   .cal-mes{font-size:16px;color:var(--azul-escuro);min-width:190px;text-align:center}
-  .cal-legenda{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:12px;color:var(--cinza)}
-  .cal-leg{display:inline-flex;align-items:center;gap:5px}
+  .cal-legenda{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;font-size:12px;color:var(--cinza)}
+  /* a legenda é o filtro: clicar numa cor mostra só aquele tipo */
+  .cal-leg{display:inline-flex;align-items:center;gap:5px;border:1px solid transparent;
+    background:rgba(255,255,255,.7);border-radius:14px;padding:3px 10px;cursor:pointer;
+    font:inherit;color:var(--cinza)}
+  .cal-leg:hover{border-color:var(--borda)}
+  .cal-leg.on{border-color:var(--azul);color:var(--azul);font-weight:600;background:var(--branco)}
+  .cal-leg.limpar{color:var(--vermelho)}
   .cal-leg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .cal-abas{display:flex;gap:6px;margin-bottom:10px}
+  .cal-aba{border:1px solid var(--borda);background:rgba(255,255,255,.75);color:var(--cinza);
+    border-radius:16px;padding:6px 15px;font-size:13.5px;font-weight:600;cursor:pointer}
+  .cal-aba:hover{background:var(--branco)}
+  .cal-aba.on{background:var(--azul);border-color:var(--azul);color:#fff}
+  .cal-topo select{padding:6px 9px;border:1px solid var(--borda);border-radius:8px;
+    background:var(--branco);font:inherit;font-size:13.5px;cursor:pointer}
+  /* Hoje / próximos 3 dias: um bloco por dia */
+  .cal-dias{display:flex;flex-direction:column;gap:10px}
+  .cal-bloco{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:12px 14px}
+  .cal-bloco.hoje{border-color:var(--azul);box-shadow:inset 0 0 0 1px var(--azul)}
+  .cal-bloco-cab{font-size:13px;font-weight:700;color:var(--cinza);margin-bottom:8px;
+    text-transform:capitalize;letter-spacing:.01em}
+  .cal-bloco.hoje .cal-bloco-cab{color:var(--azul)}
+  .cal-dias .cal-it{font-size:13.5px;padding:7px 10px;-webkit-line-clamp:unset;display:block}
   .cal-grade{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
   .cal-cab{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--cinza);
     text-align:center;padding:2px 0;font-weight:700}
@@ -571,7 +631,7 @@
 
 <div class="login" id="tela-login">
   <form onsubmit="entrar(event)">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 06.08 · visual e configuração</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 06.08 · listas, calendário e arrastar</span></h1>
     <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
     <input id="login-email" type="email" placeholder="e-mail" required>
     <input id="login-senha" type="password" placeholder="senha" required>
@@ -584,7 +644,7 @@
   <nav class="sidebar">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · visual e configuração</span></div></div>
+      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · listas, calendário e arrastar</span></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -607,6 +667,7 @@
     </div>
     <div class="meio-topo">
       <h1 id="titulo-lista"></h1>
+      <button class="btn-fundo" id="btn-fundo" title="mudar o fundo desta lista" onclick="abrirFundos()">🎨</button>
       <div class="ordenar">Ordenar: <select id="ordem">
         <option value="alfa">Alfabética</option>
         <option value="prazo">Prazo mais próximo</option>
@@ -614,6 +675,14 @@
     </div>
     <div class="meio-sub" id="sub-lista"></div>
     <div id="conteudo-meio"></div>
+    <!-- como no To Do: o campo de acrescentar fica sempre no pé da lista -->
+    <div class="add-rodape" id="add-rodape" style="display:none">
+      <span class="add-mais">＋</span>
+      <input id="add-nome" placeholder="Adicionar cliente nesta lista — nome, ou Nome #CPF"
+        autocomplete="off" enterkeyhint="done">
+      <input id="add-ben" list="lista-beneficios" placeholder="benefício (opcional)">
+      <button onclick="addNaLista()">Adicionar</button>
+    </div>
   </main>
   <aside class="detalhe" id="detalhe"></aside>
 </div>
@@ -856,7 +925,7 @@ async function iniciar(){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -879,8 +948,10 @@ async function carregar(){
       todas("rotinas","select=*&ativo=is.true&order=criada_em").catch(()=>[]),
       todas("rotinas_feitas",`select=*&dia=eq.${hoje()}`).catch(()=>[]),
       todas("aposentadorias","select=*&order=data").catch(()=>[]),
+      todas("lista_pref","select=*").catch(()=>[]),
     ]);
-  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos};
+  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
+  D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -938,13 +1009,38 @@ const TEMA = {
   "dashboard":         ["#1e4fa3", "#f3f6fb"],
   "novocliente":       ["#1e4fa3", "#f3f6fb"],
 };
+// fundos prontos: quatro papéis lisos e quatro com um degradê suave. Imagem
+// muito carregada atrapalha a leitura da lista, então os prontos são calmos.
+const FUNDOS_PRONTOS = [
+  ["Padrão da lista", ""],
+  ["Areia",   "#F5EFE3"], ["Menta",   "#E9F4EE"], ["Céu",     "#E8F0FA"],
+  ["Lavanda", "#EFECF8"], ["Papel",   "#F4F4F2"], ["Argila",  "#F7EBE6"],
+  ["Amanhecer", "linear-gradient(160deg,#FDF3E7 0%,#F6E7F2 100%)"],
+  ["Sereno",    "linear-gradient(160deg,#E8F0FA 0%,#E9F4EE 100%)"],
+];
+function fundoDaLista(v){
+  const p=(D.prefPorLista||new Map()).get(v);
+  return (p && p.fundo) || null;
+}
 function aplicarTema(){
   // como no Microsoft To Do: cada lista pinta o fundo da área de trabalho
   // com a sua cor, bem clara. Quem passa o dia no sistema sabe em que lista
   // está pela cor, antes de ler o título — e é a familiaridade que a equipe
   // já tem. Os cartões continuam brancos, então o texto não perde contraste.
-  const [cor, fundo] = TEMA[buscaTxt?"dashboard":visao] || ["#234E9E", "#E8EAEE"];
-  document.querySelector(".meio").style.background = fundo;
+  const chave = buscaTxt?"dashboard":visao;
+  const [cor, fundo] = TEMA[chave] || ["#234E9E", "#E8EAEE"];
+  const meio = document.querySelector(".meio");
+  const escolhido = fundoDaLista(chave);
+  meio.style.backgroundImage = "";
+  if(escolhido && /^(https?:|data:)/.test(escolhido)){       // imagem enviada
+    meio.style.background = fundo;
+    meio.style.backgroundImage = `url("${escolhido}")`;
+    meio.style.backgroundSize = "cover";
+    meio.style.backgroundPosition = "center";
+    meio.style.backgroundAttachment = "local";
+  } else {
+    meio.style.background = escolhido || fundo;             // cor, degradê ou o padrão
+  }
   document.getElementById("titulo-lista").style.color = cor;
   document.documentElement.style.setProperty("--cor-lista", cor);
 }
@@ -1046,7 +1142,7 @@ function montarSidebar(){
   document.getElementById("grupo-dinamicas").innerHTML = din.map(([id,rot,n])=>
     `<div class="lista-item" data-v="${id}">${rotu(rot)}`+
     (n==="🔒"?`<span class="priv">🔒 só você</span>`:n!=null?`<span class="cont">${n}</span>`:"")+`</div>`).join("");
-  document.getElementById("grupo-fases").innerHTML = FASES.map(([f,rot])=>
+  document.getElementById("grupo-fases").innerHTML = ordemDasFases().map(([f,rot])=>
     `<div class="lista-item" data-v="fase:${f}">${rotu(rot)}<span class="cont">${casosDaFase(f).length}</span></div>`).join("");
   document.getElementById("grupo-visoes").innerHTML = [
     ["claude","🤖 Claude", D.sugestoes.length],
@@ -1078,6 +1174,7 @@ function montarSidebar(){
   });
   const at = document.querySelector(`.lista-item[data-v="${visao}"]`);
   if(at) at.classList.add("ativa");
+  ligarArrasteListas();
 }
 
 // ── coluna do meio ────────────────────────────────────────────────────────
@@ -1135,6 +1232,7 @@ function ligarCartoes(){
     };
     el.oncontextmenu=e=>menuMover(e, el.dataset.cli);   // botão direito = Mover para…
   });
+  ligarArrasteCartoes();
   document.querySelectorAll("[data-sol]").forEach(b=>b.onclick=async e=>{
     e.stopPropagation();
     const casoId = b.dataset.sol; if(!casoId) return;
@@ -1179,6 +1277,7 @@ function render(){
   const LISTAS_ORDENAVEIS = ["minhas","importante","recebimentos"];
   document.querySelector(".ordenar").style.display =
     (buscaTxt || visao.startsWith("fase:") || LISTAS_ORDENAVEIS.includes(visao)) ? "" : "none";
+  mostrarAddRodape();
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
@@ -1808,51 +1907,327 @@ function itensDoCalendario(){
          {automatica:a.automatica}));
   return it;
 }
+const MESES_NOME = ["janeiro","fevereiro","março","abril","maio","junho","julho",
+  "agosto","setembro","outubro","novembro","dezembro"];
+// um dia, três dias ou o mês inteiro — "hoje" precisava ser uma visão, não um
+// botão que devolve ao mês corrente e parece não fazer nada quando já se está nele
+let calVisao = localStorage.getItem("crm_cal_visao") || "mes";
+let calFiltro = null;                           // um tipo por vez, ou tudo
+function irVisaoCal(v){
+  calVisao=v; localStorage.setItem("crm_cal_visao",v);
+  // "Hoje" é a âncora: volta o mês para o corrente, senão trocar para Mês
+  // depois devolveria a novembro de 2028 e pareceria que o botão não fez nada
+  if(v!=="mes") calMes=null;
+  render();
+}
+function filtrarCal(t){ calFiltro = (calFiltro===t) ? null : t; render(); }
+function itemCal(i){
+  const t=TIPOS_CAL[i.tipo];
+  return `<div class="cal-it" style="background:${t.fundo};border-left-color:${t.cor}"
+    ${i.cliId?`data-cli="${i.cliId}"`:""} title="${esc(t.nome)}: ${esc(i.texto)}">
+    ${t.icone} ${i.hora?`<b>${i.hora}</b> `:""}${esc(i.texto)}</div>`;
+}
 function renderCalendario(){
   document.getElementById("titulo-lista").textContent="📅 Calendário";
   document.getElementById("sub-lista").textContent=
-    "Tudo o que tem data, mês a mês. Cada cor é um tipo — o verde é aposentadoria, que avisa três meses antes.";
-  const mes=mesAtual(), [ano,mm]=mes.split("-").map(Number);
-  const itens=itensDoCalendario().filter(i=>i.dia.slice(0,7)===mes);
+    "Tudo o que tem data. Cada cor é um tipo — clique numa cor para ver só ela.";
+  let itens=itensDoCalendario();
+  if(calFiltro) itens=itens.filter(i=>i.tipo===calFiltro);
+  const ordena=a=>a.sort((x,y)=>(x.hora||"99")<(y.hora||"99")?-1:1);
   const porDia=new Map();
   itens.forEach(i=>{ if(!porDia.has(i.dia)) porDia.set(i.dia,[]); porDia.get(i.dia).push(i); });
-  const primeiro=new Date(ano, mm-1, 1, 12), ultimo=new Date(ano, mm, 0, 12);
-  const nomeMes=primeiro.toLocaleDateString("pt-BR",{month:"long",year:"numeric"});
-  const vizinho=n=>{ const d=new Date(ano, mm-1+n, 1, 12);
-    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`; };
-  const cels=[];
-  for(let i=0;i<primeiro.getDay();i++) cels.push(`<div class="cal-dia vazio"></div>`);
-  for(let d=1; d<=ultimo.getDate(); d++){
-    const iso=`${mes}-${String(d).padStart(2,"0")}`;
-    const doDia=(porDia.get(iso)||[]).sort((a,b)=>(a.hora||"99")<(b.hora||"99")?-1:1);
-    cels.push(`<div class="cal-dia ${iso===hoje()?"hoje":""}">
-      <div class="cal-num">${d}</div>
-      ${doDia.slice(0,4).map(i=>{ const t=TIPOS_CAL[i.tipo];
-        return `<div class="cal-it" style="background:${t.fundo};border-left-color:${t.cor}"
-          ${i.cliId?`data-cli="${i.cliId}"`:""} title="${esc(t.nome)}: ${esc(i.texto)}">
-          ${t.icone} ${i.hora?`<b>${i.hora}</b> `:""}${esc(i.texto)}</div>`;}).join("")}
-      ${doDia.length>4?`<div class="cal-mais">+${doDia.length-4} neste dia</div>`:""}
-    </div>`);
+
+  const legenda=Object.entries(TIPOS_CAL).map(([id,t])=>
+    `<button class="cal-leg ${calFiltro===id?"on":""}" onclick="filtrarCal('${id}')"
+      title="ver só ${esc(t.nome.toLowerCase())}"><i style="background:${t.cor}"></i>${t.icone} ${t.nome}</button>`).join("")
+    + (calFiltro?`<button class="cal-leg limpar" onclick="filtrarCal('${calFiltro}')">✕ ver tudo</button>`:"");
+  const abas=[["hoje","Hoje"],["3dias","Próximos 3 dias"],["mes","Mês"]].map(([v,r])=>
+    `<button class="cal-aba ${calVisao===v?"on":""}" onclick="irVisaoCal('${v}')">${r}</button>`).join("");
+
+  let corpo="", barra="", quantos=0;
+  if(calVisao==="mes"){
+    const mes=mesAtual(), [ano,mm]=mes.split("-").map(Number);
+    const doMes=itens.filter(i=>i.dia.slice(0,7)===mes); quantos=doMes.length;
+    const primeiro=new Date(ano, mm-1, 1, 12), ultimo=new Date(ano, mm, 0, 12);
+    const vizinho=n=>{ const d=new Date(ano, mm-1+n, 1, 12);
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`; };
+    const anoHoje=+hoje().slice(0,4);
+    const anos=[]; for(let a=anoHoje-3; a<=anoHoje+8; a++) anos.push(a);
+    if(!anos.includes(ano)) anos.unshift(ano);
+    barra=`<button class="btn-mini" onclick="irMes('${vizinho(-1)}')" title="mês anterior">‹</button>
+      <select id="cal-mes-sel" title="escolher o mês">${MESES_NOME.map((n,j)=>
+        `<option value="${j+1}" ${j+1===mm?"selected":""}>${n[0].toUpperCase()+n.slice(1)}</option>`).join("")}</select>
+      <select id="cal-ano-sel" title="escolher o ano">${anos.sort((a,b)=>a-b).map(a=>
+        `<option value="${a}" ${a===ano?"selected":""}>${a}</option>`).join("")}</select>
+      <button class="btn-mini" onclick="irMes('${vizinho(1)}')" title="próximo mês">›</button>
+      <strong class="cal-mes">${MESES_NOME[mm-1][0].toUpperCase()+MESES_NOME[mm-1].slice(1)} de ${ano}</strong>`;
+    const cels=[];
+    for(let i=0;i<primeiro.getDay();i++) cels.push(`<div class="cal-dia vazio"></div>`);
+    for(let d=1; d<=ultimo.getDate(); d++){
+      const iso=`${mes}-${String(d).padStart(2,"0")}`;
+      const dd=ordena((porDia.get(iso)||[]).slice());
+      cels.push(`<div class="cal-dia ${iso===hoje()?"hoje":""}">
+        <div class="cal-num">${d}</div>
+        ${dd.slice(0,4).map(itemCal).join("")}
+        ${dd.length>4?`<div class="cal-mais">+${dd.length-4} neste dia</div>`:""}
+      </div>`);
+    }
+    corpo=`<div class="cal-grade">
+      ${["dom","seg","ter","qua","qui","sex","sáb"].map(d=>`<div class="cal-cab">${d}</div>`).join("")}
+      ${cels.join("")}</div>`;
+  } else {
+    // Hoje e Próximos 3 dias: lista por dia, com o dia por extenso
+    const n = calVisao==="hoje" ? 1 : 3;
+    const dias=[];
+    for(let j=0;j<n;j++){ const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+j);
+      dias.push(d.toLocaleDateString("sv")); }
+    quantos=dias.reduce((s,d)=>s+(porDia.get(d)||[]).length,0);
+    barra=`<strong class="cal-mes">${calVisao==="hoje"?"Hoje":"De hoje a "+fmt(dias[dias.length-1])}</strong>`;
+    corpo=`<div class="cal-dias">${dias.map(iso=>{
+      const dd=ordena((porDia.get(iso)||[]).slice());
+      const rot=new Date(iso+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});
+      return `<div class="cal-bloco ${iso===hoje()?"hoje":""}">
+        <div class="cal-bloco-cab">${iso===hoje()?"Hoje · ":""}${rot}</div>
+        ${dd.length ? dd.map(itemCal).join("")
+          : `<p class="meio-sub" style="margin:0">Nada marcado neste dia.</p>`}
+      </div>`; }).join("")}</div>`;
   }
-  const legenda=Object.entries(TIPOS_CAL).map(([,t])=>
-    `<span class="cal-leg"><i style="background:${t.cor}"></i>${t.icone} ${t.nome}</span>`).join("");
+
   document.getElementById("conteudo-meio").innerHTML=`
-    <div class="cal-topo">
-      <button class="btn-mini" onclick="irMes('${vizinho(-1)}')">‹ mês anterior</button>
-      <strong class="cal-mes">${nomeMes[0].toUpperCase()+nomeMes.slice(1)}</strong>
-      <button class="btn-mini" onclick="irMes('${vizinho(1)}')">próximo mês ›</button>
-      <button class="btn-mini" onclick="irMes(null)">hoje</button>
-      <span class="meio-sub" style="margin-left:auto">${itens.length} compromisso(s) no mês</span>
+    <div class="cal-abas">${abas}</div>
+    <div class="cal-topo">${barra}
+      <span class="meio-sub" style="margin-left:auto">${quantos} compromisso(s)${
+        calFiltro?` · só ${esc(TIPOS_CAL[calFiltro].nome.toLowerCase())}`:""}</span>
     </div>
     <div class="cal-legenda">${legenda}</div>
-    <div class="cal-grade">
-      ${["dom","seg","ter","qua","qui","sex","sáb"].map(d=>`<div class="cal-cab">${d}</div>`).join("")}
-      ${cels.join("")}
-    </div>`;
+    ${corpo}`;
+  const ms=document.getElementById("cal-mes-sel"), as=document.getElementById("cal-ano-sel");
+  if(ms) ms.onchange=as.onchange=()=>irMes(`${as.value}-${String(ms.value).padStart(2,"0")}`);
   document.querySelectorAll(".cal-it[data-cli]").forEach(el=>
     el.onclick=()=>abrirFicha(el.dataset.cli));
 }
-function irMes(m){ calMes=m; render(); }
+function irMes(m){ calMes=m; calVisao="mes"; localStorage.setItem("crm_cal_visao","mes"); render(); }
+
+// ── escolher o fundo da lista ─────────────────────────────────────────────
+// O To Do deixa cada lista com a sua cara. Aqui a escolha é do escritório,
+// não de cada pessoa: quem diz "está na lista amarela" por telefone precisa
+// que o outro veja a mesma coisa.
+function abrirFundos(){
+  const chave = buscaTxt ? "dashboard" : visao;
+  const atual = fundoDaLista(chave) || "";
+  const nome = (document.getElementById("titulo-lista").textContent||"esta lista").trim();
+  document.getElementById("modal").innerHTML=`
+    <div class="modal-fundo">
+      <div class="modal-cx">
+        <div class="modal-cab">
+          <div><strong>🎨 Fundo de ${esc(nome)}</strong>
+            <div class="meio-sub">Vale para todo o escritório — todos veem a mesma lista da mesma cor.</div></div>
+          <button class="btn-mini" onclick="fecharEscolha()">✕</button>
+        </div>
+        <div class="fundos-grade">
+          ${FUNDOS_PRONTOS.map(([n,v])=>`<button class="fundo-op ${atual===v?"sel":""}"
+            onclick="salvarFundo('${chave}', ${JSON.stringify(v).replace(/"/g,"&quot;")})"
+            style="background:${v||"var(--fundo)"}"><span>${esc(n)}</span></button>`).join("")}
+        </div>
+        <div class="form-linha" style="margin-top:14px;align-items:center">
+          <label class="btn-mini" style="cursor:pointer">🖼 Enviar uma imagem
+            <input type="file" accept="image/*" style="display:none" onchange="subirFundo('${chave}')" id="fundo-arq"></label>
+          ${atual&&/^https?:/.test(atual)?`<span class="meio-sub">imagem em uso</span>`:""}
+          <button class="btn-mini" style="margin-left:auto" onclick="salvarFundo('${chave}','')">voltar ao padrão</button>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById("modal").style.display="block";
+}
+async function salvarFundo(chave, valor){
+  try{
+    await api(`/rest/v1/lista_pref`,{method:"POST",
+      headers:{Prefer:"resolution=merge-duplicates,return=minimal"},
+      body:JSON.stringify({chave, fundo:valor||null})});
+  }catch(e){ return aviso("Rode o schema.sql mais novo no Supabase para usar os fundos"); }
+  const p=(D.prefPorLista||new Map()).get(chave)||{chave};
+  p.fundo=valor||null; D.prefPorLista.set(chave,p);
+  fecharEscolha(); render();
+  aviso(valor?"Fundo trocado 🎨":"Fundo de volta ao padrão");
+}
+async function subirFundo(chave){
+  const inp=document.getElementById("fundo-arq"), arq=inp&&inp.files&&inp.files[0];
+  if(!arq) return;
+  if(arq.size > 5*1024*1024) return aviso("Imagem grande demais (máximo 5 MB)");
+  const caminho=`${chave.replace(/[^a-z0-9]+/gi,"-")}-${Date.now()}-${nomeSeguro(arq.name)}`;
+  aviso("Enviando a imagem…", false);
+  try{
+    const r=await fetch(`${CONFIG.SUPABASE_URL.replace(/\/$/,"")}/storage/v1/object/fundos/${caminho}`,{
+      method:"POST", headers:{apikey:CONFIG.ANON_KEY,
+        Authorization:"Bearer "+(sessao?sessao.access_token:CONFIG.ANON_KEY),
+        "Content-Type":arq.type||"application/octet-stream"}, body:arq});
+    if(!r.ok) throw new Error(await r.text());
+    await salvarFundo(chave, `${CONFIG.SUPABASE_URL.replace(/\/$/,"")}/storage/v1/object/public/fundos/${caminho}`);
+  }catch(e){ aviso("Não consegui enviar a imagem"); }
+}
+
+// ── arrastar ──────────────────────────────────────────────────────────────
+// Arrastar o cliente para uma lista do menu move o caso; arrastar as listas
+// entre si muda a ordem do menu. O botão direito continua funcionando para
+// quem já pegou o costume.
+let arrastando = null;                       // {tipo:"cliente"|"lista", id}
+function ligarArrasteCartoes(){
+  document.querySelectorAll(".cartao[data-cli]").forEach(el=>{
+    el.draggable = true;
+    el.ondragstart = e=>{
+      arrastando = {tipo:"cliente", id:el.dataset.cli};
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/plain", el.dataset.cli);
+      el.classList.add("arrastando");
+    };
+    el.ondragend = ()=>{ el.classList.remove("arrastando"); arrastando=null;
+      document.querySelectorAll(".lista-item.alvo").forEach(x=>x.classList.remove("alvo")); };
+  });
+}
+function ligarArrasteListas(){
+  document.querySelectorAll(".lista-item[data-v]").forEach(el=>{
+    const v = el.dataset.v;
+    // as listas do escritório podem ser reordenadas entre si
+    if(v.startsWith("fase:")){
+      el.draggable = true;
+      el.ondragstart = e=>{ arrastando={tipo:"lista", id:v};
+        e.dataTransfer.effectAllowed="move"; e.dataTransfer.setData("text/plain", v);
+        el.classList.add("arrastando"); };
+      el.ondragend = ()=>{ el.classList.remove("arrastando"); arrastando=null;
+        document.querySelectorAll(".lista-item.alvo").forEach(x=>x.classList.remove("alvo")); };
+    }
+    el.ondragover = e=>{
+      if(!arrastando) return;
+      if(arrastando.tipo==="cliente" && !v.startsWith("fase:")) return;   // cliente só cai em lista de fase
+      if(arrastando.tipo==="lista" && !v.startsWith("fase:")) return;
+      if(arrastando.tipo==="lista" && v===arrastando.id) return;
+      e.preventDefault(); e.dataTransfer.dropEffect="move"; el.classList.add("alvo");
+    };
+    el.ondragleave = ()=>el.classList.remove("alvo");
+    el.ondrop = async e=>{
+      e.preventDefault(); el.classList.remove("alvo");
+      const a=arrastando; arrastando=null;
+      if(!a) return;
+      if(a.tipo==="cliente") return soltarClienteNaLista(a.id, v.slice(5));
+      if(a.tipo==="lista")   return reordenarListas(a.id, v);
+    };
+  });
+}
+// solta o cliente numa lista: move os casos ativos dele para aquela fase
+async function soltarClienteNaLista(cliId, fase){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const ks=(D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado" && k.fase!==fase);
+  if(!ks.length) return aviso("Este cliente já está nessa lista");
+  const alvo = ks.length===1 ? ks[0]
+    : ks.find(k=>k.id===casoSel) || null;
+  if(!alvo){                                  // mais de um processo: perguntar em qual
+    arrastando=null;
+    return escolherProcessoParaMover(cliId, ks, fase);
+  }
+  const lista=(LISTAS_MOVER.find(([,f])=>f===fase)||[])[0];
+  alvo.fase=fase; if(lista) alvo.mover_para=lista;
+  await api(`/rest/v1/casos?id=eq.${alvo.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({fase, ...(lista?{mover_para:lista}:{})})});
+  montarSidebar(); render();
+  aviso(`${c.nome} → ${(FASES.find(x=>x[0]===fase)||[])[1]||fase}`);
+}
+function escolherProcessoParaMover(cliId, ks, fase){
+  const c=D.cliPorId.get(cliId)||{};
+  const rot=(FASES.find(x=>x[0]===fase)||[])[1]||fase;
+  document.getElementById("modal").innerHTML=`
+    <div class="modal-fundo">
+      <div class="modal-cx">
+        <div class="modal-cab">
+          <div><strong>${esc(c.nome||"Cliente")}</strong> tem mais de um processo
+            <div class="meio-sub">Qual deles vai para <strong>${esc(rot)}</strong>?</div></div>
+          <button class="btn-mini" onclick="fecharEscolha()">✕</button>
+        </div>
+        ${ks.map(k=>`<button class="proc-op" onclick="moverProcessoSolto('${k.id}','${fase}')">
+          <span class="proc-lista">${esc(listaDe(k))}</span>
+          <span class="proc-nome">${esc(tituloCaso(k))}</span>
+          <span class="proc-sub">${esc(NOME_FASE[k.fase]||k.fase)}</span></button>`).join("")}
+      </div>
+    </div>`;
+  document.getElementById("modal").style.display="block";
+}
+async function moverProcessoSolto(casoId, fase){
+  fecharEscolha();
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  const lista=(LISTAS_MOVER.find(([,f])=>f===fase)||[])[0];
+  k.fase=fase; if(lista) k.mover_para=lista;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({fase, ...(lista?{mover_para:lista}:{})})});
+  montarSidebar(); render();
+  aviso(`Movido para ${(FASES.find(x=>x[0]===fase)||[])[1]||fase}`);
+}
+// ordem das listas do escritório: guardada no banco, vale para todos
+function ordemDasFases(){
+  const pos = v => { const p=(D.prefPorLista||new Map()).get("fase:"+v);
+    return (p && p.ordem!=null) ? p.ordem : FASES.findIndex(x=>x[0]===v); };
+  return FASES.slice().sort((a,b)=>pos(a[0])-pos(b[0]));
+}
+async function reordenarListas(origem, destino){
+  const atual=ordemDasFases().map(x=>"fase:"+x[0]);
+  const de=atual.indexOf(origem), para=atual.indexOf(destino);
+  if(de<0 || para<0 || de===para) return;
+  atual.splice(para, 0, atual.splice(de,1)[0]);
+  const linhas=atual.map((chave,i)=>({chave, ordem:i,
+    fundo:((D.prefPorLista||new Map()).get(chave)||{}).fundo||null}));
+  try{
+    await api(`/rest/v1/lista_pref`,{method:"POST",
+      headers:{Prefer:"resolution=merge-duplicates,return=minimal"}, body:JSON.stringify(linhas)});
+  }catch(e){ return aviso("Rode o schema.sql mais novo no Supabase para reordenar as listas"); }
+  linhas.forEach(l=>{ const p=D.prefPorLista.get(l.chave)||{chave:l.chave};
+    p.ordem=l.ordem; D.prefPorLista.set(l.chave,p); });
+  montarSidebar();
+  aviso("Ordem das listas guardada");
+}
+
+// ── ＋ Adicionar, fixo no pé da lista ─────────────────────────────────────
+// No To Do é assim que quase toda tarefa nasce: o campo está sempre ali, você
+// digita e dá Enter. Aqui ele cria o cliente e o primeiro caso já na lista
+// aberta. Aceita o formato do To Do — "Nome #CPF" — porque a equipe já digita
+// assim há anos.
+function mostrarAddRodape(){
+  const el=document.getElementById("add-rodape");
+  if(!el) return;
+  const mostra = !buscaTxt && visao.startsWith("fase:");
+  el.style.display = mostra ? "" : "none";
+  if(mostra){
+    const f=visao.slice(5), rot=(FASES.find(x=>x[0]===f)||[])[1]||"";
+    document.getElementById("add-nome").placeholder =
+      `Adicionar em ${rot.replace(/^\S+\s/,"")} — nome, ou Nome #CPF`;
+  }
+}
+async function addNaLista(){
+  const inp=document.getElementById("add-nome"), bi=document.getElementById("add-ben");
+  const bruto=(inp.value||"").trim();
+  if(!bruto) return inp.focus();
+  const fase=visao.slice(5);
+  // "Maria dos Santos #12345678900" -> nome + CPF, como as tarefas do To Do
+  const m=bruto.match(/^(.*?)\s*#\s*([\d.\-]+)\s*$/);
+  const nome=(m?m[1]:bruto).trim(), cpf=m?digitosCpf(m[2]):null;
+  if(!nome) return aviso("Falta o nome");
+  if(cpf && cpf.length!==11) return aviso("O CPF tem 11 dígitos");
+  if(cpf){
+    let ja=D.clientes.find(x=>digitosCpf(x.cpf)===cpf);
+    if(!ja){ const achados=await api(`/rest/v1/clientes?select=*&cpf=eq.${cpf}`).catch(()=>[]);
+             if(achados&&achados.length){ ja=achados[0]; D.clientes.push(ja); D.cliPorId.set(ja.id,ja); } }
+    if(ja) return avisoCpfRepetido(ja, nome);
+  }
+  const beneficio=(bi.value||"").trim() || null;
+  const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({nome, cpf})});
+  const [caso]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({cliente_id:cli.id, titulo:nome+(cpf?" #"+cpf:""), beneficio, fase})});
+  await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:caso.id, colaborador_id:eu.id})}).catch(()=>{});
+  if(beneficio) await aplicarChecklistCaso(caso, true).catch(()=>{});
+  inp.value=""; bi.value="";
+  await carregar(); montarSidebar(); render();
+  inp.focus();                                  // pronto para o próximo, sem tirar a mão
+  aviso(`✔ ${nome} entrou na lista`);
+}
 
 function renderParcerias(){
   document.getElementById("titulo-lista").textContent="🤝 Parcerias";
@@ -2154,9 +2529,9 @@ async function abrirFicha(cliId){
   const pagK = ks.filter(k=>k.fase==="pagamento");
   const equipe = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))];
 
-  if(casoSel && casoSel!=="__auto__" && !ks.some(k=>k.id===casoSel)) casoSel=null;
+  if(casoSel && casoSel!=="__auto__" && !processosDe(ks).some(k=>k.id===casoSel)) casoSel=null;
   if(casoSel==="__auto__"){
-    const ativos=ks.filter(k=>k.fase!=="encerrado");
+    const ativos=processosDe(ks).filter(k=>k.fase!=="encerrado");
     // com MAIS DE UM processo em aberto, ninguém adivinha em qual comentar:
     // o sistema pergunta antes de abrir (encerrados não contam para isso)
     if(ativos.length>1) return escolherProcesso(cliId, ativos);
@@ -2182,7 +2557,7 @@ async function abrirFicha(cliId){
       <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">🖨 Documentos</button>
       <button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="escolher o processo do cliente (não erra o destino)">⚖️ ${
-          (kk=>kk?esc(tituloCaso(kk)):(ks.length>1?"Processos":"Processo"))(casoSel&&D.casoPorId.get(casoSel))} ▾</button>
+          (kk=>kk?esc(tituloCaso(kk)):(processosDe(ks).length>1?"Processos":"Processo"))(casoSel&&D.casoPorId.get(casoSel))} ▾</button>
       <button class="mt ${abaAtiva===3?"on":""}" data-vv="3">🩺 Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>e.data_hora.slice(0,10)>=hoje()&&e.status!=="cancelada").length)}</button>
       <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">💰 Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
       <button class="mt ${abaAtiva===5?"on":""}" data-vv="5">💬 Mensagens</button>
@@ -2200,28 +2575,33 @@ async function abrirFicha(cliId){
       return `
     <div class="id-grid">
       <div class="id-card">
-        <label>CPF</label>
-        <div class="id-valor">${fmtCpf(c.cpf)}
+        <label>CPF <button class="lapis" title="alterar" onclick="editarCampo('cpf','${c.id}')">✎</button></label>
+        <div class="id-valor" id="campo-cpf">${fmtCpf(c.cpf)}
           ${c.cpf?`<button class="cop" onclick="copiar('${c.cpf}','CPF copiado')">📋 copiar</button>`:""}</div>
       </div>
       <div class="id-card destaque">
         <label>🔑 Senha Meu INSS</label>
         ${credInss?`<div class="id-valor"><span id="cred-${credInss.id}">••••••••</span>
           <button class="cop" onclick="copiarCred('${credInss.id}')" title="fica registrado quem copiou">📋 copiar</button>
-          <button class="olho" onclick="verCred('${credInss.id}')" title="ver (fica registrado)">👁</button></div>`
+          <button class="olho" onclick="verCred('${credInss.id}')" title="ver (fica registrado)">👁</button>
+          <button class="cop" onclick="trocarSenha('${c.id}','meu_inss','${credInss.id}')">✎ trocar</button></div>`
         :`<div class="id-valor" style="color:var(--cinza);font-weight:400">não cadastrada
           <button class="cop" onclick="document.getElementById('mais-opcoes').open=true;document.getElementById('nc-valor').focus()">＋ cadastrar</button></div>`}
       </div>
       <div class="id-card">
-        <label>Telefone / WhatsApp</label>
-        <div class="id-valor">${c.telefone?`${esc(c.telefone)}
+        <label>Telefone / WhatsApp <button class="lapis" title="alterar" onclick="editarCampo('telefone','${c.id}')">✎</button></label>
+        <div class="id-valor" id="campo-telefone">${c.telefone?`${esc(c.telefone)}
           <button class="cop" onclick="copiar('${c.telefone.replace(/\D/g,"")}','Telefone copiado')">📋 copiar</button>
           <a class="cop" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" style="text-decoration:none">💬 WhatsApp</a>`:"—"}</div>
       </div>
       <div class="id-card">
-        <label>Nascimento</label>
-        <div class="id-valor">${c.dn?c.dn.slice(0,2)+"."+c.dn.slice(2,4)+"."+c.dn.slice(4):"—"}
+        <label>Nascimento <button class="lapis" title="alterar" onclick="editarCampo('dn','${c.id}')">✎</button></label>
+        <div class="id-valor" id="campo-dn">${c.dn?c.dn.slice(0,2)+"."+c.dn.slice(2,4)+"."+c.dn.slice(4):"—"}
           ${(i=>i==null?"":`<span class="chip neutro">${i} anos</span>`)(idadeDe(c.dn))}</div>
+      </div>
+      <div class="id-card">
+        <label>Nome completo <button class="lapis" title="alterar" onclick="editarCampo('nome','${c.id}')">✎</button></label>
+        <div class="id-valor" id="campo-nome" style="font-size:14px">${esc(c.nome)}</div>
       </div>
       ${outrasCreds.map(cr=>`<div class="id-card"><label>Senha ${esc(cr.tipo.replace("_"," "))}</label>
         <div class="id-valor"><span id="cred-${cr.id}">••••••••</span>
@@ -2233,8 +2613,10 @@ async function abrirFicha(cliId){
           <button class="cop" onclick="abrirDrive('${c.id}')" title="abre no Google Drive (navegador)">📁 Drive</button>
           <button class="cop" onclick="abrirExplorer('${c.id}')" title="abre no Windows Explorer (requer atalho instalado)">🖥 Explorer</button></div>
       </div>
-      ${c.endereco?`<div class="id-card" style="grid-column:1/-1"><label>Endereço</label>
-        <div class="id-valor" style="font-weight:400">${esc(c.endereco)}</div></div>`:""}
+      <div class="id-card" style="grid-column:1/-1">
+        <label>Endereço <button class="lapis" title="alterar" onclick="editarCampo('endereco','${c.id}')">✎</button></label>
+        <div class="id-valor" id="campo-endereco" style="font-weight:400;font-size:14px">${c.endereco?esc(c.endereco):"—"}</div>
+      </div>
     </div>
     ${prots.length?`<div class="id-secao"><label>📄 Protocolos INSS <small>(extraídos dos andamentos — a pesquisa 🔍 encontra o cliente por eles)</small></label>
       ${prots.map(pr=>`<span class="chip neutro" style="cursor:pointer" title="copiar" onclick="copiar('${pr}','Protocolo copiado')">📄 ${pr}</span>`).join(" ")}</div>`:""}
@@ -2279,10 +2661,18 @@ async function abrirFicha(cliId){
   <div class="painel ${abaAtiva===2?"ativo":""}" data-p="2">
     ${(()=>{
       const k = casoSel && D.casoPorId.get(casoSel);
-      if(!k) return ks.length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso no menu ao lado para ver só o dele.</p>`:"";
+      if(!k){
+        // só em recebimento: o lugar dele é a aba 💰, não esta
+        if(!processosDe(ks).length && pagK.length)
+          return `<p class="meio-sub">Este cliente não tem processo em andamento — está em
+            <strong>recebimento</strong>. Veja a aba <strong>💰 Pagamentos</strong> aqui em cima.</p>`;
+        return processosDe(ks).length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso no menu ao lado para ver só o dele.</p>`:"";
+      }
       // identidade do processo, sempre visível; embaixo o sub-menu que separa
       // o que é NOSSO (escritório) do que é OFICIAL (CNJ) — uma coisa por vez
       return `<div class="caso caso-cab" style="margin-bottom:10px">
+        <div class="cab-topo">
+        <div class="cab-esq">
         <div class="rotulo-caso">lista ${esc(listaDe(k))} do To Do</div>
         <div class="cab" style="margin-top:2px">
           <span class="titulo-caso">${esc(tituloCaso(k))}</span>
@@ -2297,11 +2687,13 @@ async function abrirFicha(cliId){
           ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 msg ao cliente</button>
             <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
         </div>
+        </div>
+        ${trilhaCaso(k)}
+        </div>
         <div class="sub-menu">
           <button class="${subAba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
           <button class="${subAba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${(k.datajud&&k.datajud.ultimo)?"":" <span class=\'meio-sub\'>(sem dados)</span>"}</button>
         </div>
-        ${trilhaCaso(k)}
       </div>
       ${subAba==="cnj" ? painelCNJ(k) : painelEscritorio(k, andsVis)}
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
@@ -2539,7 +2931,12 @@ function irAba(i){ abaAtiva=i; if(clienteAberto) abrirFicha(clienteAberto); }
 
 // pop-up "⚖️ Processos": escolher o processo certo sem errar o destino
 function fecharMenuProcessos(){ const m=document.getElementById("menu-processos"); if(m) m.remove(); }
+// Caso em fase de PAGAMENTO não é mais um processo em andamento: o trabalho
+// jurídico acabou e o que falta é dinheiro entrar. Ele sai do menu ⚖️ e passa
+// a viver na aba 💰 Pagamentos — foi para isso que ela existe.
+function processosDe(ks){ return (ks||[]).filter(k=>k.fase!=="pagamento"); }
 function menuProcessos(ev, ks){
+  ks = processosDe(ks);
   ev.stopPropagation(); fecharMenuProcessos();
   const m=document.createElement("div"); m.id="menu-processos";
   const item=k=>`<div class="mp-it ${casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-mp="${k.id}" style="${k.fase==="encerrado"?"opacity:.55":""}">
@@ -2850,7 +3247,7 @@ function lembretesApos(){
 // no Meu Dia: o aviso que já chegou a hora. Sem isto o lembrete ficaria só
 // no calendário, e calendário só ajuda quem lembra de abrir
 function blocoApos(){
-  const chegou=lembretesApos().filter(a=>a.aviso<=hoje() && a.data>=hoje())
+  const chegou=lembretesApos().filter(a=>a.aviso<=hoje())
     .sort((x,y)=>x.data<y.data?-1:1);
   if(!chegou.length) return "";
   return `<h3 class="secao">🎂 Aposentadorias a tratar (${chegou.length})</h3>` +
@@ -2858,7 +3255,7 @@ function blocoApos(){
       <span class="check" style="border-color:var(--verde)"></span>
       <div class="info"><div class="nome">${esc(a.cliente.nome)}</div>
         <div class="meta"><span class="chip fase">${esc(a.especie)}</span>
-          <span>direito em <b>${fmt(a.data)}</b></span>
+          <span>${a.data<=hoje()?"✓ <b>já tem direito</b> desde":"direito em"} <b>${fmt(a.data)}</b></span>
           ${a.automatica?`<span class="chip neutro">automática — confira</span>`:""}
           ${a.cliente.telefone?`<a class="chip per" href="https://wa.me/55${a.cliente.telefone.replace(/\D/g,"")}"
              target="_blank" onclick="event.stopPropagation()">💬 chamar</a>`:""}</div>
@@ -2879,7 +3276,8 @@ function caixaApos(cli){
     ${lista.length ? lista.map(a=>`<div class="apos-it ${a.automatica?"auto":""}">
         <span class="apos-data">${fmt(a.data)}</span>
         <span class="apos-esp">${esc(a.especie)}</span>
-        <span class="apos-av">🔔 avisa em ${fmt(avisoApos(a.data))}</span>
+        ${a.data<=hoje() ? `<span class="apos-av ja">✓ já tem direito</span>`
+                         : `<span class="apos-av">🔔 avisa em ${fmt(avisoApos(a.data))}</span>`}
         ${a.automatica
           ? `<button class="btn-mini" onclick="novaApos('${cli.id}','${a.data}','${esc(a.especie)}')"
                title="gravar com ajuste">ajustar</button>`
@@ -2928,6 +3326,80 @@ async function definirSexo(cliId, sexo){
     body:JSON.stringify({sexo})});
   c.sexo=sexo;
   abrirFicha(cliId);
+}
+
+// ── alterar o cadastro ────────────────────────────────────────────────────
+// Telefone muda, CPF entra errado, nome de casada muda. O ✎ de cada campo
+// troca o valor por um campo de digitação ali mesmo — sem tela nova, sem
+// formulário de cadastro inteiro para corrigir um dígito.
+const CAMPOS_CLI = {
+  nome:     {rot:"Nome completo", tipo:"text"},
+  cpf:      {rot:"CPF",           tipo:"text",  dica:"só números"},
+  telefone: {rot:"Telefone",      tipo:"tel",   dica:"(16) 99999-0000"},
+  dn:       {rot:"Nascimento",    tipo:"date"},
+  endereco: {rot:"Endereço",      tipo:"text"},
+};
+function editarCampo(campo, cliId){
+  const c=D.cliPorId.get(cliId), cx=document.getElementById("campo-"+campo);
+  if(!c || !cx || !CAMPOS_CLI[campo]) return;
+  const cfg=CAMPOS_CLI[campo];
+  let valor=c[campo]||"";
+  if(campo==="dn") valor = dnIso(c.dn) || "";           // input date quer AAAA-MM-DD
+  if(campo==="cpf") valor = digitosCpf(valor);
+  cx.innerHTML=`<div class="form-linha" style="margin:0;gap:6px">
+    <input id="ed-campo" type="${cfg.tipo}" value="${esc(valor)}" ${cfg.dica?`placeholder="${cfg.dica}"`:""}
+      style="flex:1;min-width:120px;font-size:14px">
+    <button class="btn-mini" onclick="salvarCampo('${campo}','${cliId}')">Guardar</button>
+    <button class="btn-mini" onclick="abrirFicha('${cliId}')">cancelar</button></div>`;
+  const inp=document.getElementById("ed-campo");
+  inp.focus(); inp.select();
+  inp.onkeydown=e=>{ if(e.key==="Enter") salvarCampo(campo, cliId);
+                     if(e.key==="Escape") abrirFicha(cliId); };
+}
+async function salvarCampo(campo, cliId){
+  const c=D.cliPorId.get(cliId), inp=document.getElementById("ed-campo");
+  if(!c || !inp) return;
+  let v=(inp.value||"").trim();
+  if(campo==="cpf"){
+    v=digitosCpf(v);
+    if(v && v.length!==11) return aviso("O CPF tem 11 dígitos");
+    // dois cadastros com o mesmo CPF é o que a janela de duplicado evita
+    const outro=D.clientes.find(x=>x.id!==cliId && digitosCpf(x.cpf)===v);
+    if(v && outro) return aviso(`Esse CPF já é de ${outro.nome}`);
+  }
+  if(campo==="dn"){
+    if(v && !/^\d{4}-\d{2}-\d{2}$/.test(v)) return aviso("Data inválida");
+    v = v ? v.slice(8,10)+v.slice(5,7)+v.slice(0,4) : null;   // volta a DDMMAAAA
+  }
+  if(campo==="nome" && !v) return aviso("O nome não pode ficar vazio");
+  const novo = v || null;
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({[campo]:novo})});
+  }catch(e){ return aviso(/duplicate|unique/i.test(e.message) ? "Esse CPF já está em outro cadastro"
+                                                             : "Não consegui guardar — tente de novo"); }
+  c[campo]=novo;
+  reindexarCliente(c);
+  aviso(`${CAMPOS_CLI[campo].rot} atualizado ✔`);
+  montarSidebar(); abrirFicha(cliId);
+}
+// o índice da pesquisa guarda nome, CPF e telefone: mudou o cadastro, refaz
+function reindexarCliente(c){
+  const ks = D.casosDoCliente.get(c.id)||[];
+  const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+
+    (k.beneficio||"")+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
+  c._ix = texto + " " + texto.replace(/\D/g, "");
+  c._nome_ix = dsa(c.nome);
+}
+// trocar a senha do Meu INSS: guarda a nova e apaga a antiga
+async function trocarSenha(cliId, tipo, credId){
+  const nova = prompt("Nova senha do Meu INSS (fica guardada com registro de quem acessa):");
+  if(nova===null) return;
+  const v=nova.trim(); if(!v) return;
+  await api(`/rest/v1/credenciais`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({cliente_id:cliId, tipo, valor:v})});
+  if(credId) await api(`/rest/v1/credenciais?id=eq.${credId}`,{method:"DELETE"}).catch(()=>{});
+  aviso("Senha trocada 🔑"); abrirFicha(cliId);
 }
 
 // ── anexar o documento (é para isto que o celular vai à casa do cliente) ──
@@ -4159,6 +4631,11 @@ document.addEventListener("keydown",e=>{
     if(document.activeElement===busca) return busca.blur();
     if(clienteAberto) return fecharFicha();
   }
+});
+// Enter no ＋ Adicionar cria sem tirar a mão do teclado
+["add-nome","add-ben"].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el) el.addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); addNaLista(); } });
 });
 // ── celular: barra de baixo e busca no alto da lista ──────────────────────
 document.querySelectorAll("#barra-cel button").forEach(b=>

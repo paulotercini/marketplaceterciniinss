@@ -249,6 +249,38 @@ create table if not exists aposentadorias (
 create index if not exists apos_por_cliente on aposentadorias (cliente_id, data);
 create index if not exists apos_por_data on aposentadorias (data);
 
+-- ── Como cada lista aparece ──────────────────────────────────────────────
+-- Fundo e posição no menu. É preferência DO ESCRITÓRIO, não de cada um:
+-- todo mundo enxerga a mesma tela, e quem descreve "a lista amarela" por
+-- telefone está falando da mesma lista que o outro vê.
+--   chave  -> a visão: 'meudia', 'fase:inss', 'calendario'…
+--   fundo  -> hex (#FDF9E2), gradiente CSS, ou a URL de uma imagem
+create table if not exists lista_pref (
+  chave      text primary key,
+  fundo      text,
+  ordem      int,
+  atualizado timestamptz not null default now()
+);
+
+-- imagens de fundo: papel de parede, não documento de cliente — pode ser
+-- bucket público, e precisa ser, para o CSS conseguir carregar a imagem
+insert into storage.buckets (id, name, public)
+  values ('fundos','fundos',true)
+  on conflict (id) do update set public = true;
+do $$
+declare a text;
+begin
+  foreach a in array array['ler','enviar','apagar'] loop
+    execute format('drop policy if exists fundos_%s on storage.objects', a);
+  end loop;
+end $$;
+create policy fundos_ler on storage.objects for select to public
+  using (bucket_id = 'fundos');
+create policy fundos_enviar on storage.objects for insert to authenticated
+  with check (bucket_id = 'fundos');
+create policy fundos_apagar on storage.objects for delete to authenticated
+  using (bucket_id = 'fundos');
+
 -- o bucket, privado. Rodar de novo não duplica nem volta a ser público.
 insert into storage.buckets (id, name, public)
   values ('anexos','anexos',false)
@@ -595,7 +627,7 @@ begin
                            'vinculos','frases_prontas','lembrar_motivos',
                            'inss_fila','orgao_producao',
                            'rotinas','rotinas_feitas','andamentos_lidos','anexos',
-                           'aposentadorias'] loop
+                           'aposentadorias','lista_pref'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
