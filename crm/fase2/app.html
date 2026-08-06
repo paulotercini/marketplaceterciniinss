@@ -555,7 +555,7 @@
 
 <div class="login" id="tela-login">
   <form onsubmit="entrar(event)">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 06.08 · aposentadorias e calendário</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 06.08 · idade e aviso em dia útil</span></h1>
     <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
     <input id="login-email" type="email" placeholder="e-mail" required>
     <input id="login-senha" type="password" placeholder="senha" required>
@@ -568,7 +568,7 @@
   <nav class="sidebar">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · aposentadorias e calendário</span></div></div>
+      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · idade e aviso em dia útil</span></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -1335,7 +1335,8 @@ function renderNovoCliente(){
       <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo *" style="flex:1;min-width:240px"></div>
       <div class="form-linha">
         <input id="ncl-cpf" placeholder="CPF (só números)" maxlength="14">
-        <input id="ncl-dn" type="date" title="data de nascimento">
+        <input id="ncl-dn" type="date" title="data de nascimento"
+          onchange="mostrarIdadeNovo()"><span id="ncl-idade" class="meio-sub"></span>
         <input id="ncl-tel" placeholder="Telefone/WhatsApp">
       </div>
       <div class="form-linha">
@@ -1384,6 +1385,13 @@ function avisoCpfRepetido(cli, nomeDigitado){
       </div>
     </div>`;
   document.getElementById("modal").style.display="block";
+}
+// a idade aparece já no cadastro: confere o ano digitado errado na hora
+function mostrarIdadeNovo(){
+  const v=document.getElementById("ncl-dn").value, el=document.getElementById("ncl-idade");
+  if(!el) return;
+  const i=v ? idadeDe(v.slice(8,10)+v.slice(5,7)+v.slice(0,4)) : null;
+  el.textContent = i==null ? "" : `${i} anos`;
 }
 async function criarCliente(){
   const nome=document.getElementById("ncl-nome").value.trim();
@@ -2164,7 +2172,8 @@ async function abrirFicha(cliId){
       </div>
       <div class="id-card">
         <label>Nascimento</label>
-        <div class="id-valor">${c.dn?c.dn.slice(0,2)+"."+c.dn.slice(2,4)+"."+c.dn.slice(4):"—"}</div>
+        <div class="id-valor">${c.dn?c.dn.slice(0,2)+"."+c.dn.slice(2,4)+"."+c.dn.slice(4):"—"}
+          ${(i=>i==null?"":`<span class="chip neutro">${i} anos</span>`)(idadeDe(c.dn))}</div>
       </div>
       ${outrasCreds.map(cr=>`<div class="id-card"><label>Senha ${esc(cr.tipo.replace("_"," "))}</label>
         <div class="id-valor"><span id="cred-${cr.id}">••••••••</span>
@@ -2725,6 +2734,26 @@ function menosMeses(iso, meses){
   if(dt.getDate()!==d) dt.setDate(0);        // 31 num mês de 30 dias
   return dt.toLocaleDateString("sv");
 }
+// lembrete em fim de semana não é lembrete: ninguém abre o sistema no
+// sábado. Puxa para a sexta anterior — antecipar mantém a antecedência,
+// adiar comeria o prazo que o aviso existe para dar.
+function diaUtilAntes(iso){
+  const dt=new Date(iso+"T12:00:00");
+  const dow=dt.getDay();
+  if(dow===6) dt.setDate(dt.getDate()-1);          // sábado -> sexta
+  else if(dow===0) dt.setDate(dt.getDate()-2);     // domingo -> sexta
+  return dt.toLocaleDateString("sv");
+}
+// a data do aviso de uma aposentadoria: três meses antes, em dia útil
+function avisoApos(data){ return diaUtilAntes(menosMeses(data, MESES_AVISO)); }
+// idade completa hoje, para mostrar junto do nascimento
+function idadeDe(dn){
+  const iso=dnIso(dn); if(!iso) return null;
+  const [a,m,d]=iso.split("-").map(Number), h=hoje().split("-").map(Number);
+  let anos=h[0]-a;
+  if(h[1]<m || (h[1]===m && h[2]<d)) anos--;
+  return anos>=0 && anos<130 ? anos : null;
+}
 // Palpite de sexo pelo primeiro nome, SÓ para mostrar a data automática —
 // nunca é gravado. Na dúvida devolve nulo e a caixa pergunta, em vez de
 // chutar: errar o sexo de um cliente é constrangedor e ainda erra a data.
@@ -2762,11 +2791,11 @@ function lembretesApos(){
   const fora=new Set((D.apos||[]).filter(a=>dsa(a.especie)==="idade").map(a=>a.cliente_id));
   const itens=[];
   (D.apos||[]).forEach(a=>{ const c=D.cliPorId.get(a.cliente_id);
-    if(c) itens.push({...a, cliente:c, aviso:menosMeses(a.data, MESES_AVISO)}); });
+    if(c) itens.push({...a, cliente:c, aviso:avisoApos(a.data)}); });
   (D.clientes||[]).forEach(c=>{
     if(fora.has(c.id)) return;
     const auto=aposAutomatica(c);
-    if(auto) itens.push({...auto, cliente:c, aviso:menosMeses(auto.data, MESES_AVISO)});
+    if(auto) itens.push({...auto, cliente:c, aviso:avisoApos(auto.data)});
   });
   return itens;
 }
@@ -2802,7 +2831,7 @@ function caixaApos(cli){
     ${lista.length ? lista.map(a=>`<div class="apos-it ${a.automatica?"auto":""}">
         <span class="apos-data">${fmt(a.data)}</span>
         <span class="apos-esp">${esc(a.especie)}</span>
-        <span class="apos-av">🔔 avisa em ${fmt(menosMeses(a.data, MESES_AVISO))}</span>
+        <span class="apos-av">🔔 avisa em ${fmt(avisoApos(a.data))}</span>
         ${a.automatica
           ? `<button class="btn-mini" onclick="novaApos('${cli.id}','${a.data}','${esc(a.especie)}')"
                title="gravar com ajuste">ajustar</button>`
@@ -2836,7 +2865,7 @@ async function salvarApos(cliId){
   const [a]=await api(`/rest/v1/aposentadorias`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({cliente_id:cliId, data, especie, autor_id:eu.id})});
   if(a) (D.apos=D.apos||[]).push(a);
-  aviso(`🎂 Guardado — avisa em ${fmt(menosMeses(data, MESES_AVISO))}`);
+  aviso(`🎂 Guardado — avisa em ${fmt(avisoApos(data))}`);
   abrirFicha(cliId);
 }
 async function apagarApos(id){
