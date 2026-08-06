@@ -21,7 +21,20 @@
   .login h1{font-size:18px;color:var(--azul-escuro)}
   .login input{padding:10px;border:1px solid var(--borda);border-radius:8px;font-size:14px}
   .login button{padding:10px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
-  .login .erro{color:var(--vermelho);font-size:13px;min-height:18px}
+  .login .erro{color:var(--vermelho);font-size:13px;min-height:18px;line-height:1.5}
+  .login .erro:not(:empty){background:#FBE9E9;border:1px solid #E9B4B4;border-radius:8px;padding:9px 11px}
+  .login .erro .btn-mini{margin-top:4px}
+  .login form>button{font-size:15px;padding:12px}
+  .login input{font-size:16px}          /* 16px: o iPhone não dá zoom no campo */
+  /* precisa de .login na frente: a regra .login button pintaria isto de azul
+     e o link discreto competiria com o botão Entrar */
+  .login .cfg-link{border:none;background:none;color:var(--cinza);font-size:12px;cursor:pointer;
+    text-decoration:underline;padding:2px;font-weight:400}
+  .login .cfg-link:hover{color:var(--azul)}
+  @media (max-width:760px){
+    .login{align-items:flex-start;padding:22px 14px}
+    .login form{width:100%;max-width:380px}
+  }
   .cfg-cx{border:1px solid #E9B44C;background:#FFF8E7;border-radius:10px;padding:12px;
     display:flex;flex-direction:column;gap:8px;color:var(--texto)}
   .cfg-cx strong{font-size:13px;color:var(--laranja)}
@@ -631,12 +644,14 @@
 
 <div class="login" id="tela-login">
   <form onsubmit="entrar(event)">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 06.08 · listas, calendário e arrastar</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 06.08 · login à prova de celular</span></h1>
     <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
     <input id="login-email" type="email" placeholder="e-mail" required>
     <input id="login-senha" type="password" placeholder="senha" required>
-    <button>Entrar</button>
+    <button id="btn-entrar">Entrar</button>
     <div class="erro" id="login-erro"></div>
+    <button type="button" class="cfg-link" onclick="pedirConfig()"
+      title="usar outro endereço de banco neste aparelho">configurar este aparelho</button>
   </form>
 </div>
 
@@ -644,7 +659,7 @@
   <nav class="sidebar">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · listas, calendário e arrastar</span></div></div>
+      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · login à prova de celular</span></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -708,11 +723,33 @@ const CONFIG = {
 // ficam guardados no próprio navegador: preenche uma vez, e trocar o arquivo
 // não desconfigura mais nada. (A chave "anon" é pública por natureza — quem
 // protege os dados é o RLS do banco, não o segredo dela.)
+// Navegador de celular em aba anônima, ou com "bloquear cookies", faz o
+// localStorage LANÇAR em vez de só devolver nulo. Sem estas duas funções
+// qualquer gravação derruba o login inteiro e a tela volta ao começo sem
+// explicar nada. Aqui o armazenamento vira opcional: se não der, guarda na
+// memória e o sistema funciona até fechar a aba.
+const memoria = {};
+function guardar(chave, valor){
+  memoria[chave]=valor;
+  try{ localStorage.setItem(chave, valor); return true; }catch(e){ return false; }
+}
+function ler(chave){
+  try{ const v=localStorage.getItem(chave); if(v!=null) return v; }catch(e){}
+  return memoria[chave] ?? null;
+}
+function esquecer(chave){
+  delete memoria[chave];
+  try{ localStorage.removeItem(chave); }catch(e){}
+}
+function guardaFunciona(){
+  try{ localStorage.setItem("__t","1"); localStorage.removeItem("__t"); return true; }
+  catch(e){ return false; }
+}
 function faltaConfig(){ return CONFIG.SUPABASE_URL.startsWith("COLE_AQUI"); }
 (function(){
   if(!faltaConfig()) return;
   try{
-    const g=JSON.parse(localStorage.getItem("crm_cfg")||"null");
+    const g=JSON.parse(ler("crm_cfg")||"null");
     if(g && g.url && g.key){ CONFIG.SUPABASE_URL=g.url; CONFIG.ANON_KEY=g.key; }
   }catch(e){}
 })();
@@ -723,7 +760,8 @@ function guardarConfig(){
   if(!/^https:\/\/[\w-]+\.supabase\.co$/.test(url))
     return erro.textContent="O endereço deve ser algo como https://xxxxx.supabase.co";
   if(key.length<40) return erro.textContent="A chave anon parece incompleta — cole ela inteira";
-  localStorage.setItem("crm_cfg", JSON.stringify({url, key}));
+  if(!guardar("crm_cfg", JSON.stringify({url, key})))
+    aviso("Este navegador não deixa guardar dados — vai funcionar só até fechar a aba", false);
   location.reload();
 }
 // ──────────────────────────────────────────────────────────────────────────
@@ -766,11 +804,11 @@ let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
-let subAba = localStorage.getItem("crm_subaba") || "escritorio", instSel = 0;
+let subAba = ler("crm_subaba") || "escritorio", instSel = 0;
 
 // som de retorno, como no To Do (gerado na hora — sem arquivo de áudio).
 // "plim" duplo ao concluir; tique curto nos avisos. 🔔 na lateral silencia.
-function somLigado(){ return localStorage.getItem("crm_som")!=="off"; }
+function somLigado(){ return ler("crm_som")!=="off"; }
 function plim(tipo){
   if(!somLigado()) return;
   try{
@@ -809,7 +847,10 @@ async function api(caminho, opcoes={}, tentativa=0){
   if(r.status === 401 && sessao && tentativa === 0){
     const ok = await renovar();
     if(ok) return api(caminho, opcoes, 1);
-    return sair();
+    // já dentro do sistema: sessão vencida, recomeça. Ainda no login:
+    // recarregar apagaria a mensagem e a tela voltaria ao início sem dizer nada
+    if(eu) return sair();
+    throw new Error("a sessão não foi aceita pelo banco");
   }
   if(!r.ok){
     const corpo = await r.text();
@@ -869,41 +910,78 @@ async function renovar(){
     });
     if(!r.ok) return false;
     sessao = await r.json();
-    localStorage.setItem("crm_sessao", JSON.stringify(sessao));
+    guardar("crm_sessao", JSON.stringify(sessao));
     return true;
   }catch{ return false; }
 }
 
 // ── login ─────────────────────────────────────────────────────────────────
+// A tela de login precisa DIZER o que houve. Voltar em silêncio para o
+// mesmo formulário — que foi o que aconteceu no celular — não dá pistas de
+// que o problema é a senha, a internet ou a configuração do aparelho.
+function erroLogin(html){
+  const el=document.getElementById("login-erro");
+  el.innerHTML = html;
+  el.scrollIntoView({block:"center", behavior:"smooth"});
+}
 async function entrar(ev){
   ev.preventDefault();
-  const erro = document.getElementById("login-erro");
-  erro.textContent = "";
+  document.getElementById("login-erro").textContent = "";
+  if(faltaConfig())
+    return erroLogin(`Este aparelho ainda não sabe o endereço do banco.
+      <button type="button" class="btn-mini" onclick="pedirConfig()">Configurar agora</button>`);
+  const email=(document.getElementById("login-email").value||"").trim();
+  const senha=document.getElementById("login-senha").value||"";
+  if(!email || !senha) return erroLogin("Preencha o e-mail e a senha.");
+  const bt=document.getElementById("btn-entrar");
+  bt.disabled=true; bt.textContent="Entrando…";
   try{
-    const r = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/auth/v1/token?grant_type=password", {
-      method:"POST", headers:{apikey:CONFIG.ANON_KEY,"Content-Type":"application/json"},
-      body: JSON.stringify({email: document.getElementById("login-email").value,
-                            password: document.getElementById("login-senha").value}),
-    });
-    const corpo = await r.json();
-    if(!r.ok) throw new Error(corpo.error_description || corpo.msg || "falha no login");
+    let r;
+    try{
+      r = await fetch(CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/auth/v1/token?grant_type=password", {
+        method:"POST", headers:{apikey:CONFIG.ANON_KEY,"Content-Type":"application/json"},
+        body: JSON.stringify({email, password: senha}),
+      });
+    }catch(rede){
+      // fetch só estoura assim quando nem chegou ao servidor
+      return erroLogin(`Não consegui falar com o servidor. Confira a internet do aparelho.
+        Se o endereço estiver errado,
+        <button type="button" class="btn-mini" onclick="pedirConfig()">reconfigurar</button>.`);
+    }
+    const corpo = await r.json().catch(()=>({}));
+    if(r.status===400 || r.status===401)
+      return erroLogin("E-mail ou senha não conferem. Atenção ao teclado do celular: ele "+
+        "costuma pôr maiúscula na primeira letra e trocar aspas.");
+    if(r.status===403 || r.status===404)
+      return erroLogin(`O endereço do banco parece errado para este aparelho.
+        <button type="button" class="btn-mini" onclick="pedirConfig()">Reconfigurar</button>`);
+    if(!r.ok) return erroLogin(esc(corpo.error_description || corpo.msg || `falha no login (${r.status})`));
     sessao = corpo;
-    localStorage.setItem("crm_sessao", JSON.stringify(sessao));
+    if(!guardar("crm_sessao", JSON.stringify(sessao)) && !guardaFunciona())
+      aviso("Este navegador não guarda dados (aba anônima?) — você entra, mas terá que "+
+            "repetir o login na próxima vez", false);
     await iniciar();
-  }catch(e){ erro.textContent = e.message; }
+  }catch(e){
+    erroLogin(esc(e.message||"não consegui entrar"));
+  }finally{ bt.disabled=false; bt.textContent="Entrar"; }
+}
+// abrir a caixa de configuração a qualquer momento, não só no primeiro acesso
+function pedirConfig(){
+  esquecer("crm_cfg");
+  location.reload();
 }
 
 function sair(){
-  localStorage.removeItem("crm_sessao");
+  esquecer("crm_sessao");
   location.reload();
 }
 
 async function iniciar(){
   const meus = await api(`/rest/v1/colaboradores?auth_id=eq.${sessao.user.id}&select=*`);
   if(!meus.length){
-    document.getElementById("login-erro").textContent =
-      "Usuário sem colaborador vinculado — veja o passo 'vincular usuários' no COMO-INSTALAR.md";
-    sessao = null; localStorage.removeItem("crm_sessao");
+    erroLogin("Este e-mail entrou, mas não está ligado a nenhum colaborador do escritório. "+
+      "Peça para vincular o usuário (passo 'vincular usuários' do COMO-INSTALAR.md).");
+    sessao = null; esquecer("crm_sessao");
     return;
   }
   eu = meus[0];
@@ -911,7 +989,7 @@ async function iniciar(){
   const app = document.getElementById("app");
   app.classList.add("logado");
   marcarCelular();
-  if(localStorage.getItem("crm_menu")==="mini") app.classList.add("mini-lateral");
+  if(ler("crm_menu")==="mini") app.classList.add("mini-lateral");
   document.getElementById("u-nome").textContent = eu.nome;
   const uav = document.getElementById("u-avatar");
   uav.textContent = eu.inicial; uav.style.background = eu.cor;
@@ -1158,7 +1236,7 @@ function montarSidebar(){
   const bSom=document.getElementById("btn-som");
   bSom.textContent = somLigado()?"🔔":"🔕";
   bSom.onclick=()=>{
-    localStorage.setItem("crm_som", somLigado()?"off":"on");
+    guardar("crm_som", somLigado()?"off":"on");
     bSom.textContent = somLigado()?"🔔":"🔕";
     if(somLigado()) plim();
     aviso(somLigado()?"Som ligado 🔔":"Som desligado 🔕", false);
@@ -1911,10 +1989,10 @@ const MESES_NOME = ["janeiro","fevereiro","março","abril","maio","junho","julho
   "agosto","setembro","outubro","novembro","dezembro"];
 // um dia, três dias ou o mês inteiro — "hoje" precisava ser uma visão, não um
 // botão que devolve ao mês corrente e parece não fazer nada quando já se está nele
-let calVisao = localStorage.getItem("crm_cal_visao") || "mes";
+let calVisao = ler("crm_cal_visao") || "mes";
 let calFiltro = null;                           // um tipo por vez, ou tudo
 function irVisaoCal(v){
-  calVisao=v; localStorage.setItem("crm_cal_visao",v);
+  calVisao=v; guardar("crm_cal_visao",v);
   // "Hoje" é a âncora: volta o mês para o corrente, senão trocar para Mês
   // depois devolveria a novembro de 2028 e pareceria que o botão não fez nada
   if(v!=="mes") calMes=null;
@@ -2006,7 +2084,7 @@ function renderCalendario(){
   document.querySelectorAll(".cal-it[data-cli]").forEach(el=>
     el.onclick=()=>abrirFicha(el.dataset.cli));
 }
-function irMes(m){ calMes=m; calVisao="mes"; localStorage.setItem("crm_cal_visao","mes"); render(); }
+function irMes(m){ calMes=m; calVisao="mes"; guardar("crm_cal_visao","mes"); render(); }
 
 // ── escolher o fundo da lista ─────────────────────────────────────────────
 // O To Do deixa cada lista com a sua cara. Aqui a escolha é do escritório,
@@ -3045,7 +3123,7 @@ function tituloOrgao(n){          // o CNJ manda em CAIXA ALTA; aqui vira legív
 // CNJ = o que o TRIBUNAL fez (andamentos oficiais por instância).
 function irSubAba(qual){
   subAba = qual;
-  localStorage.setItem("crm_subaba", qual);
+  guardar("crm_subaba", qual);
   if(clienteAberto) abrirFicha(clienteAberto);
 }
 
@@ -4600,7 +4678,7 @@ document.getElementById("busca").addEventListener("mousedown",e=>{
   if(app.classList.contains("mini-lateral") || app.classList.contains("detalhe-aberto")){
     e.preventDefault();
     app.classList.remove("mini-lateral"); app.classList.add("busca-aberta");
-    localStorage.setItem("crm_menu","cheio");
+    guardar("crm_menu","cheio");
     setTimeout(()=>document.getElementById("busca").focus(),50);
   }
 });
@@ -4666,7 +4744,7 @@ document.getElementById("busca-x").onclick=()=>{
 document.getElementById("ordem").onchange=()=>render();
 document.getElementById("btn-lateral").onclick=()=>{
   const mini=document.getElementById("app").classList.toggle("mini-lateral");
-  localStorage.setItem("crm_menu", mini?"mini":"cheio");
+  guardar("crm_menu", mini?"mini":"cheio");
 };
 
 (async ()=>{
@@ -4684,10 +4762,11 @@ document.getElementById("btn-lateral").onclick=()=>{
       </div>`;
     document.getElementById("login-email").style.display="none";
     document.getElementById("login-senha").style.display="none";
-    document.querySelector(".login form > button").style.display="none";
+    document.getElementById("btn-entrar").style.display="none";
+    document.querySelector(".cfg-link").style.display="none";
     return;
   }
-  const salva=localStorage.getItem("crm_sessao");
+  const salva=ler("crm_sessao");
   if(salva){
     sessao=JSON.parse(salva);
     try{ await iniciar(); }catch{ if(await renovar()){ try{ await iniciar(); }catch{ sair(); } } }
