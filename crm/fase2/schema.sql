@@ -846,6 +846,142 @@ create table if not exists conversas (
 );
 create index if not exists conversas_cliente on conversas (cliente_id, criado_em desc);
 
+-- ══ WhatsApp do escritório ════════════════════════════════════════════════
+-- Aqui mora a conversa de verdade: texto, áudio, foto, quem atendeu, para
+-- quem transferiu. Quem põe e tira mensagem é a ponte (crm/fase2/ponte/),
+-- um serviço que fica ligado com a sessão do WhatsApp do escritório.
+--
+-- Convive com `conversas` acima, que é o registro do SMBot: enquanto os dois
+-- caminhos rodarem em paralelo, um não apaga o outro. Quando o nosso assumir
+-- sozinho, `conversas` vira histórico e ninguém precisa migrar nada às pressas.
+--
+-- Uma conversa por número — não por caso, não por cliente. É assim que a
+-- pessoa enxerga: ela tem UMA conversa com o escritório, mesmo tendo três
+-- processos.
+create table if not exists zap_conversas (
+  id           uuid primary key default gen_random_uuid(),
+  telefone     text not null,
+  chave        text generated always as (fone_chave(telefone)) stored,
+  nome_perfil  text,                      -- como a pessoa se chama no WhatsApp
+  cliente_id   uuid references clientes(id) on delete set null,
+  lead_id      uuid references leads(id) on delete set null,
+  atendente_id uuid references colaboradores(id) on delete set null,
+  status       text not null default 'aberta'
+               check (status in ('aberta','pendente','resolvida')),
+  nao_lidas    integer not null default 0,
+  ultima_em    timestamptz,
+  ultimo_texto text,                      -- prévia para a lista, sem abrir
+  bot_ativo    boolean not null default true,
+  fixada       boolean not null default false,
+  criado_em    timestamptz not null default now()
+);
+create unique index if not exists zap_conversas_chave on zap_conversas (chave);
+create index if not exists zap_conversas_fila on zap_conversas (status, ultima_em desc);
+create index if not exists zap_conversas_cli on zap_conversas (cliente_id);
+
+create table if not exists zap_mensagens (
+  id          uuid primary key default gen_random_uuid(),
+  conversa_id uuid not null references zap_conversas(id) on delete cascade,
+  externo_id  text unique,                -- id da mensagem no WhatsApp (dedupe)
+  direcao     text not null check (direcao in ('entrada','saida')),
+  autor_id    uuid references colaboradores(id) on delete set null,  -- null: cliente ou bot
+  por_bot     boolean not null default false,
+  tipo        text not null default 'texto',   -- texto|imagem|audio|video|documento|figurinha|local|contato
+  texto       text,
+  midia_url   text, midia_nome text, midia_mime text,
+  -- 'fila' é o pedido de envio: a ponte assume e leva até 'enviada'
+  status      text not null default 'enviada'
+              check (status in ('fila','enviando','enviada','entregue','lida','erro')),
+  erro        text,
+  tentativas  integer not null default 0,
+  quando_wa   timestamptz,                -- o relógio do WhatsApp, não o nosso
+  criado_em   timestamptz not null default now(),
+  enviada_em  timestamptz
+);
+create index if not exists zap_msg_conversa on zap_mensagens (conversa_id, criado_em);
+-- índice só da fila: a ponte pergunta "tem o que enviar?" a cada 2 segundos
+create index if not exists zap_msg_fila on zap_mensagens (criado_em) where status = 'fila';
+
+create table if not exists zap_transferencias (
+  id          uuid primary key default gen_random_uuid(),
+  conversa_id uuid not null references zap_conversas(id) on delete cascade,
+  de_id       uuid references colaboradores(id) on delete set null,
+  para_id     uuid references colaboradores(id) on delete set null,
+  motivo      text,
+  em          timestamptz not null default now()
+);
+create index if not exists zap_transf_conversa on zap_transferencias (conversa_id, em desc);
+
+-- Toda mensagem mexe na conversa: a lista precisa mostrar a última linha e o
+-- não-lidas sem varrer a tabela inteira. Como gatilho, vale para quem quer que
+-- escreva — ponte, app ou bot — e não tem como alguém esquecer de atualizar.
+create or replace function zap_toque() returns trigger
+language plpgsql as $$
+begin
+  update zap_conversas set
+    ultima_em    = coalesce(new.quando_wa, new.criado_em, now()),
+    ultimo_texto = left(coalesce(nullif(trim(new.texto),''), '['||new.tipo||']'), 200),
+    nao_lidas    = case when new.direcao='entrada' then nao_lidas + 1 else nao_lidas end,
+    -- cliente que volta a escrever reabre a conversa: "resolvida" era a
+    -- opinião do escritório, e ele acabou de discordar
+    status       = case when new.direcao='entrada' and status='resolvida'
+                        then 'aberta' else status end
+  where id = new.conversa_id;
+  return new;
+end $$;
+drop trigger if exists zap_toque_ins on zap_mensagens;
+create trigger zap_toque_ins after insert on zap_mensagens
+  for each row execute function zap_toque();
+
+-- Acha (ou abre) a conversa daquele número e já a liga a quem for: cliente
+-- primeiro, prospecto depois. É o mesmo casamento por 8 dígitos do resto do
+-- sistema, para o número salvo com DDI e o digitado à mão serem a mesma pessoa.
+create or replace function zap_abrir(p_telefone text, p_nome text default null)
+returns uuid
+language plpgsql security definer set search_path = public as $$
+declare v_chave text; v_id uuid; v_cli uuid; v_lead uuid;
+begin
+  v_chave := fone_chave(p_telefone);
+  if v_chave is null or length(v_chave) < 8 then
+    raise exception 'telefone inválido: %', p_telefone;
+  end if;
+  select id into v_id from zap_conversas where chave = v_chave;
+  if v_id is not null then
+    -- o nome do perfil muda quando a pessoa troca; e quem virou cliente
+    -- depois de já ter conversado precisa ser religado à ficha
+    update zap_conversas set
+      nome_perfil = coalesce(nullif(trim(p_nome),''), nome_perfil),
+      cliente_id  = coalesce(cliente_id,
+                      (select id from clientes where fone_chave(telefone)=v_chave limit 1))
+     where id = v_id;
+    return v_id;
+  end if;
+  select id into v_cli from clientes where fone_chave(telefone) = v_chave limit 1;
+  if v_cli is null then
+    select id into v_lead from leads
+     where fone_chave(telefone) = v_chave and etapa not in ('fechado','perdido')
+     order by criado_em desc limit 1;
+  end if;
+  insert into zap_conversas (telefone, nome_perfil, cliente_id, lead_id)
+  values (p_telefone, nullif(trim(p_nome),''), v_cli, v_lead)
+  returning id into v_id;
+  return v_id;
+end $$;
+
+-- Passar a conversa adiante deixa rastro: quem entregou, para quem, e por quê.
+-- Sem isso, "eu achei que você ia responder" não tem como ser resolvido.
+create or replace function zap_transferir(p_conversa uuid, p_para uuid, p_motivo text default null)
+returns void
+language plpgsql security definer set search_path = public as $$
+declare v_de uuid;
+begin
+  select atendente_id into v_de from zap_conversas where id = p_conversa;
+  if not found then raise exception 'conversa inexistente'; end if;
+  update zap_conversas set atendente_id = p_para, status = 'aberta' where id = p_conversa;
+  insert into zap_transferencias (conversa_id, de_id, para_id, motivo)
+  values (p_conversa, v_de, p_para, nullif(trim(p_motivo),''));
+end $$;
+
 -- ── Segurança (RLS) ───────────────────────────────────────────────────────
 -- Regra geral: só usuário logado acessa; anônimo não vê NADA.
 -- Tarefas particulares: só o dono. Credenciais: leitura logada + log no app.
@@ -860,7 +996,8 @@ begin
                            'vinculos','frases_prontas','lembrar_motivos',
                            'inss_fila','orgao_producao',
                            'rotinas','rotinas_feitas','andamentos_lidos','anexos',
-                           'aposentadorias','lista_pref','config_app'] loop
+                           'aposentadorias','lista_pref','config_app',
+                           'zap_conversas','zap_mensagens','zap_transferencias'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then

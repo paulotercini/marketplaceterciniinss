@@ -5,3 +5,7 @@ __pycache__/
 audit_excel/
 crm/data/
 crm/app.html
+# a ponte do WhatsApp: sessão é credencial, .env tem a service_role
+crm/fase2/ponte/sessao/
+crm/fase2/ponte/.env
+crm/fase2/ponte/node_modules/
