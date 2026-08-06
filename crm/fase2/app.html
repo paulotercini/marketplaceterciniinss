@@ -17,14 +17,20 @@
 
   /* login */
   .login{height:100vh;display:flex;align-items:center;justify-content:center;background:var(--fundo)}
-  .login form{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:30px;width:340px;display:flex;flex-direction:column;gap:10px}
+  .login .cx-login{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:30px;width:340px;display:flex;flex-direction:column;gap:10px}
   .login h1{font-size:18px;color:var(--azul-escuro)}
   .login input{padding:10px;border:1px solid var(--borda);border-radius:8px;font-size:14px}
   .login button{padding:10px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
+  /* nasce visível: quem apaga é o próprio JavaScript, na primeira linha do
+     script. Se ele não rodar, o aviso fica na tela e explica o que fazer */
+  #sem-js{border:1px solid #E9B44C;background:#FFF8E7;border-radius:10px;padding:12px 14px;
+    font-size:13px;line-height:1.5;color:var(--texto)}
+  #sem-js strong{display:block;color:var(--laranja);margin-bottom:6px}
+  #sem-js p{margin:6px 0 0;color:var(--cinza);font-size:12.5px}
   .login .erro{color:var(--vermelho);font-size:13px;min-height:18px;line-height:1.5}
   .login .erro:not(:empty){background:#FBE9E9;border:1px solid #E9B4B4;border-radius:8px;padding:9px 11px}
   .login .erro .btn-mini{margin-top:4px}
-  .login form>button{font-size:15px;padding:12px}
+  .login .cx-login>button{font-size:15px;padding:12px}
   .login input{font-size:16px}          /* 16px: o iPhone não dá zoom no campo */
   /* precisa de .login na frente: a regra .login button pintaria isto de azul
      e o link discreto competiria com o botão Entrar */
@@ -33,7 +39,7 @@
   .login .cfg-link:hover{color:var(--azul)}
   @media (max-width:760px){
     .login{align-items:flex-start;padding:22px 14px}
-    .login form{width:100%;max-width:380px}
+    .login .cx-login{width:100%;max-width:380px}
   }
   .cfg-cx{border:1px solid #E9B44C;background:#FFF8E7;border-radius:10px;padding:12px;
     display:flex;flex-direction:column;gap:8px;color:var(--texto)}
@@ -643,16 +649,37 @@
 <body>
 
 <div class="login" id="tela-login">
-  <form onsubmit="entrar(event)">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 06.08 · login à prova de celular</span></h1>
+  <!-- Sem <form> de propósito. Com formulário, um navegador que não executa o
+       JavaScript (visualizador embutido do WhatsApp, do Gmail, do Drive)
+       manda o clique no botão virar envio nativo: a página recarrega e os
+       campos aparecem em branco, como se o sistema tivesse apagado tudo.
+       Sem formulário, o botão simplesmente não responde — e o aviso abaixo
+       explica o que fazer. -->
+  <div class="cx-login">
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.08 · abre no navegador</span></h1>
+    <div id="sem-js">
+      <strong>⚠ Este navegador não está rodando o sistema.</strong>
+      <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
+         aplicativo — WhatsApp, Gmail, Drive, Arquivos. Toque nos três pontinhos
+         e escolha <b>“Abrir no navegador”</b> (Chrome ou Safari).</p>
+      <p>Melhor ainda: peça o endereço do sistema na internet e salve na tela
+         de início. Aí não depende mais de arquivo nenhum.</p>
+    </div>
     <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
-    <input id="login-email" type="email" placeholder="e-mail" required>
-    <input id="login-senha" type="password" placeholder="senha" required>
-    <button id="btn-entrar">Entrar</button>
+    <input id="login-email" type="email" placeholder="e-mail" autocomplete="username"
+      autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="next">
+    <input id="login-senha" type="password" placeholder="senha" autocomplete="current-password"
+      autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+    <button id="btn-entrar" type="button" onclick="entrar(event)">Entrar</button>
     <div class="erro" id="login-erro"></div>
     <button type="button" class="cfg-link" onclick="pedirConfig()"
       title="usar outro endereço de banco neste aparelho">configurar este aparelho</button>
-  </form>
+  </div>
+  <noscript>
+    <div class="cx-login" style="margin-top:12px;color:var(--vermelho)">
+      Este sistema precisa de JavaScript. Abra o arquivo no Chrome ou no Safari.
+    </div>
+  </noscript>
 </div>
 
 <div class="app" id="app">
@@ -713,6 +740,10 @@
 <div id="modal" style="display:none"></div>
 
 <script>
+// PRIMEIRA linha do script: se ele rodar, o aviso de "navegador não executa"
+// desaparece. Chegando aqui, o sistema funciona neste navegador.
+(function(){ var a=document.getElementById("sem-js"); if(a) a.style.display="none"; })();
+
 // ── CONFIGURAÇÃO (preencher na instalação — ver COMO-INSTALAR.md) ─────────
 const CONFIG = {
   SUPABASE_URL: "COLE_AQUI_https://xxxx.supabase.co",
@@ -4709,6 +4740,12 @@ document.addEventListener("keydown",e=>{
     if(document.activeElement===busca) return busca.blur();
     if(clienteAberto) return fecharFicha();
   }
+});
+// sem <form>, o Enter precisa ser ligado à mão nos dois campos do login
+["login-email","login-senha"].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el) el.addEventListener("keydown", function(e){
+    if(e.key==="Enter"){ e.preventDefault(); entrar(e); } });
 });
 // Enter no ＋ Adicionar cria sem tirar a mão do teclado
 ["add-nome","add-ben"].forEach(id=>{
