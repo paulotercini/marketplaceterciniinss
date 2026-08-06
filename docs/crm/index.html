@@ -520,6 +520,27 @@
   .id-valor{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .cop{border:1px solid var(--borda);background:var(--fundo);border-radius:6px;padding:3px 9px;font-size:12px;font-weight:600;cursor:pointer;color:var(--azul)}
   .cop:hover{background:#e8f1fb}
+  .zap-tela{display:flex;gap:12px;align-items:stretch;height:calc(100vh - 150px);min-height:420px}
+  .zap-lado{flex:0 0 300px;overflow:auto;padding-right:4px}
+  .zap-dir{flex:1;display:flex;flex-direction:column;min-width:0;
+           border:1px solid var(--borda);border-radius:10px;background:var(--branco);overflow:hidden}
+  .zap-topo{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid var(--borda);
+            background:var(--fundo);font-size:12px;font-weight:700;color:var(--cinza)}
+  .zap-topo a,.zap-topo button{margin-left:0}
+  .zap-topo span{margin-right:auto}
+  .zap-frame{flex:1;width:100%;border:0;background:#fff}
+  .zap-nota{padding:6px 10px;font-size:11px;color:var(--cinza);border-top:1px solid var(--borda)}
+  .zap-vazio{margin:auto;text-align:center;max-width:340px;padding:20px}
+  .zap-vazio h4{margin:0 0 6px}
+  .zap-vazio p{font-size:13px;color:var(--cinza);margin:0 0 12px}
+  .zap-item{background:var(--branco);border:1px solid var(--borda);border-radius:8px;
+            padding:8px 10px;margin-bottom:6px}
+  .zap-item .nome{font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
+  .zap-item .meta{font-size:12px;color:var(--cinza);margin:3px 0 5px}
+  .zap-item .acao{display:flex;gap:6px;flex-wrap:wrap}
+  .app.celular .zap-tela{flex-direction:column;height:auto}
+  .app.celular .zap-lado{flex:none}
+  .app.celular .zap-dir{height:70vh}
   .zap-ping{margin-top:6px;font-size:12px;font-weight:600;color:#0a7d43;background:#eaf7ef;
             border:1px solid #bfe6cf;border-radius:6px;padding:3px 8px;display:inline-block}
   .id-secao{margin:12px 0}
@@ -690,7 +711,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.09 · contato do WhatsApp</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.10 · WhatsApp na tela</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1094,9 +1115,21 @@ async function iniciar(){
   render();
 }
 
+// Ajuste do ESCRITÓRIO, não do navegador de cada um: o endereço do painel do
+// SMBot vale para todo mundo, e quem trocar de máquina não reconfigura nada.
+// (CONFIG/faltaConfig lá em cima é outra coisa: é como este navegador acha o
+// banco, e essa não dá para guardar no banco.)
+function cfgApp(chave){ return (D.config||new Map()).get(chave); }
+async function guardarCfgApp(chave, valor){
+  await api(`/rest/v1/config_app`,{method:"POST",
+    headers:{Prefer:"resolution=merge-duplicates,return=minimal"},
+    body:JSON.stringify({chave, valor})});
+  (D.config=D.config||new Map()).set(chave, valor);
+}
+
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -1120,9 +1153,11 @@ async function carregar(){
       todas("rotinas_feitas",`select=*&dia=eq.${hoje()}`).catch(()=>[]),
       todas("aposentadorias","select=*&order=data").catch(()=>[]),
       todas("lista_pref","select=*").catch(()=>[]),
+      todas("config_app","select=*").catch(()=>[]),
     ]);
   D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
   D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
+  D.config = new Map((cfgs||[]).map(x=>[x.chave,x.valor]));
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -1320,6 +1355,7 @@ function montarSidebar(){
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
+    ["whatsapp","💬 WhatsApp", null],
     ["parcerias","🤝 Parcerias", ativos().filter(k=>k.parceria).length||null],
     ["marketing","📣 Marketing", null],
     ["recebimentos","💰 Recebimentos", D.casos.filter(k=>k.fase==="pagamento").length],
@@ -1469,6 +1505,7 @@ function render(){
   if(visao==="docmodelos") return renderModelosDoc();
   if(visao==="quadro") return renderQuadro();
   if(visao==="vendas") return renderVendas();
+  if(visao==="whatsapp") return renderWhats();
   if(visao==="parcerias") return renderParcerias();
   if(visao==="marketing") return renderMarketing();
 
@@ -1999,6 +2036,82 @@ async function leadParaCliente(leadId){
   l.cliente_id=cli.id;
   await carregar(); montarSidebar();
   aviso("Cliente criado a partir da venda ✔"); abrirFicha(cli.id);
+}
+
+// ── 💬 WhatsApp: o painel do SMBot dentro do CRM ──────────────────────────
+// O SMBot só entrega o CONTATO pelo webhook, nunca o texto (resposta deles em
+// 06.08.2026), e recusou dar acesso ao Firebase que o painel usa. Então o
+// conteúdo só existe dentro da tela deles — e o navegador proíbe qualquer
+// leitura de um iframe de outro domínio. Esta tela não tenta furar isso: à
+// esquerda, quem procurou o escritório (isso o CRM sabe); à direita, o painel
+// deles, para ler e responder sem trocar de janela.
+let zapDias = 7;
+async function renderWhats(){
+  document.getElementById("titulo-lista").textContent="💬 WhatsApp";
+  document.getElementById("sub-lista").textContent=
+    "Quem procurou o escritório, e o atendimento do SMBot na mesma tela. O conteúdo da conversa mora no painel deles.";
+  const url = (cfgApp("smbot_url")||"").trim();
+  const meio = document.getElementById("conteudo-meio");
+  meio.innerHTML = `<div class="zap-tela"><div class="zap-lado">
+      <div class="meio-sub">carregando quem falou…</div></div>
+    <div class="zap-dir">${url
+      ? `<div class="zap-topo">
+           <span>Painel do SMBot</span>
+           <a class="btn-mini" href="${esc(url)}" target="_blank" rel="noopener"
+              style="text-decoration:none">abrir em outra janela ↗</a>
+           <button class="btn-mini" onclick="pedirUrlSmbot()">✎ trocar endereço</button>
+         </div>
+         <iframe class="zap-frame" src="${esc(url)}" referrerpolicy="no-referrer"
+                 sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation-by-user-activation"></iframe>
+         <div class="zap-nota">Se a área acima ficar em branco, o SMBot não permite ser embutido —
+           use "abrir em outra janela". Não é ajuste nosso: é o servidor deles que decide.</div>`
+      : `<div class="zap-vazio"><h4>Painel do SMBot</h4>
+           <p>Cole aqui o endereço da tela de atendimento (aquela que você abre para responder).
+              Fica guardado para todo o escritório.</p>
+           <button class="btn-rap" onclick="pedirUrlSmbot()">Informar o endereço</button></div>`}
+    </div></div>`;
+  // quem falou: o webhook do SMBot registra a passagem, sem texto
+  const desde = new Date(agoraSP().getTime() - zapDias*864e5).toISOString();
+  const cs = await todas("conversas",
+    `select=criado_em,telefone,texto,cliente_id&criado_em=gte.${desde}&order=criado_em.desc`).catch(()=>null);
+  const lado = document.querySelector(".zap-lado");
+  if(!lado) return;
+  if(cs===null){
+    lado.innerHTML = `<p class="meio-sub">Ainda não dá para listar — o webhook do SMBot
+      não está ligado, ou o banco não tem a tabela de conversas.</p>`;
+    return;
+  }
+  // um por pessoa: dez mensagens de alguém não são dez linhas na lista
+  const porPessoa = new Map();
+  cs.forEach(c=>{ const k=chaveFone(c.telefone); if(k && !porPessoa.has(k)) porPessoa.set(k,c); });
+  const dias=[["1","hoje"],["7","7 dias"],["30","30 dias"]];
+  lado.innerHTML = `<div class="filtros">${dias.map(([d,r])=>
+      `<button class="fchip ${String(zapDias)===d?"on":""}" data-zd="${d}">${r}</button>`).join("")}</div>
+    <h3 class="secao">💬 Falaram no WhatsApp (${porPessoa.size})</h3>`
+    + ([...porPessoa.values()].map(c=>{
+        const cli = c.cliente_id ? D.cliPorId.get(c.cliente_id)
+                  : D.clientes.find(x=>chaveFone(x.telefone)===chaveFone(c.telefone));
+        const lead = cli?null:D.leads.find(l=>chaveFone(l.telefone)===chaveFone(c.telefone));
+        const quem = cli ? esc(cli.nome) : lead ? esc(lead.nome) : esc(c.telefone||"desconhecido");
+        return `<div class="zap-item">
+          <div class="nome">${quem} ${cli?`<span class="chip neutro">cliente</span>`
+                                      :lead?`<span class="chip per">prospecto</span>`:""}</div>
+          <div class="meta">💬 ${quandoFalou(c.criado_em)}${c.texto?` · “${esc(c.texto.slice(0,50))}”`:""}</div>
+          <div class="acao">${cli?`<button class="btn-mini" onclick="abrirFicha('${cli.id}')">abrir ficha</button>`
+            :`<button class="btn-mini" onclick="visao='vendas';render()">ver no funil</button>`}
+            ${c.telefone?`<a class="btn-mini" style="text-decoration:none" target="_blank"
+               href="https://wa.me/55${(c.telefone||"").replace(/\D/g,"")}">💬 chamar</a>`:""}</div>
+        </div>`;
+      }).join("") || `<p class="meio-sub">Ninguém falou nesse período.</p>`);
+  lado.querySelectorAll("[data-zd]").forEach(b=>b.onclick=()=>{ zapDias=+b.dataset.zd; renderWhats(); });
+}
+const chaveFone = t => (t||"").replace(/\D/g,"").slice(-8);
+async function pedirUrlSmbot(){
+  const atual = cfgApp("smbot_url")||"https://www.smsolucoesdigital.com.br/login.html";
+  const u = prompt("Endereço da tela de atendimento do SMBot:", atual);
+  if(u===null) return;
+  await guardarCfgApp("smbot_url", u.trim());
+  render();
 }
 
 // ── 📣 Marketing (o que estamos trabalhando + público por benefício) ──────

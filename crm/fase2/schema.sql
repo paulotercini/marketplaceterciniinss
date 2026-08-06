@@ -483,6 +483,18 @@ create table if not exists lista_pref (
   atualizado timestamptz not null default now()
 );
 
+-- ── Ajustes do escritório ────────────────────────────────────────────────
+-- Configuração que vale para TODO MUNDO e mora no banco, não no navegador:
+-- quem trocar de máquina não reconfigura nada. Hoje guarda 'smbot_url', o
+-- endereço do painel de atendimento do WhatsApp embutido na aba 💬.
+-- (O endereço do próprio Supabase é a exceção que não cabe aqui: sem ele o
+-- navegador não sabe nem onde é o banco. Esse continua no navegador.)
+create table if not exists config_app (
+  chave      text primary key,
+  valor      text,
+  atualizado timestamptz not null default now()
+);
+
 -- imagens de fundo: papel de parede, não documento de cliente — pode ser
 -- bucket público, e precisa ser, para o CSS conseguir carregar a imagem
 insert into storage.buckets (id, name, public)
@@ -848,7 +860,7 @@ begin
                            'vinculos','frases_prontas','lembrar_motivos',
                            'inss_fila','orgao_producao',
                            'rotinas','rotinas_feitas','andamentos_lidos','anexos',
-                           'aposentadorias','lista_pref'] loop
+                           'aposentadorias','lista_pref','config_app'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
