@@ -33,12 +33,15 @@ Supabase. Não precisa de domínio, de certificado nem de firewall liberado.
 
 ## Instalar
 
-Precisa de Node 20 ou mais novo, numa máquina que não desligue.
+**Primeira vez: siga o [PASSO-A-PASSO.md](PASSO-A-PASSO.md)**, que cobre desde
+instalar o Node até provar que a mensagem vai e volta, usando um número de
+teste. O resumo é este:
 
 ```bash
 cd crm/fase2/ponte
 cp .env.exemplo .env      # e preencha SUPABASE_URL e SUPABASE_SERVICE_KEY
 npm install
+node conferir.js          # confere banco, chave e Storage ANTES do QR
 node ponte.js             # aparece o QR code; leia no celular do escritório
 ```
 
