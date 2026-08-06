@@ -100,8 +100,14 @@ O HTTP responde 200 nos dois casos — o que vale é o campo `ok`.
    Pode reenviar a chamada com segurança se a rede falhar.
 
 Como o conteúdo não vem, o CRM mostra o aviso e o atendente abre o SMBot para
-ler. Se algum dia o webhook passar a carregar o texto, ele começa a ser
-gravado sozinho — não é preciso mexer em nada dos dois lados.
+ler — o painel de vocês fica **embutido numa aba do próprio CRM**, para não
+ter de trocar de janela. Se algum dia o webhook passar a carregar o texto, ele
+começa a ser gravado sozinho — não é preciso mexer em nada dos dois lados.
+
+> Sobre embutir: se o painel recusar (cabeçalho `X-Frame-Options` ou CSP
+> `frame-ancestors`), o CRM cai sozinho para "abrir em outra janela". Se puder
+> liberar `frame-ancestors` para o domínio do nosso CRM, melhora o dia a dia
+> da equipe e não muda nada na segurança de vocês — mas não é bloqueante.
 
 ## Segurança
 
