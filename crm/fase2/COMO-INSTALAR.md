@@ -69,15 +69,35 @@ python3 crm/fase2/migrar.py                   # crm.json -> banco
 (Alternativa mais rápida para a 1ª carga: `python3 crm/fase2/migrar.py --sql
 carga.sql` e rodar o arquivo via psql/SQL Editor.)
 
-## 5. Configurar e distribuir o app
+## 5. Distribuir o app: use o endereço na internet
 
-Abra `crm/fase2/app.html` e preencha as duas linhas do `CONFIG` no topo com o
-`Project URL` e a `anon public` key (a anon key pode ficar no app — o que
-protege os dados são o login e as políticas RLS do banco).
+**Não mande o arquivo.** Publique e passe o link:
 
-Distribuição: mandar o arquivo para cada colaborador abrir no navegador, ou
-publicar num host com senha do escritório (o Netlify que já usam serve). O
-app NÃO contém dados — busca tudo do banco após o login.
+```bash
+python3 crm/publicar.py     # copia o app para docs/crm/index.html
+git add docs/crm && git commit -m "publica o CRM" && git push
+```
+
+O push na `main` dispara o GitHub Pages e o sistema fica em
+<https://paulotercini.github.io/marketplaceterciniinss/crm/>. Cada
+colaborador abre esse endereço e salva na tela de início do celular.
+
+Por que não mandar o arquivo: no celular, o HTML recebido por WhatsApp,
+Gmail ou Drive abre **dentro** do aplicativo, num visualizador que não
+executa JavaScript. A tela de login aparece, o botão não funciona e os
+campos somem ao clicar — parece que o sistema apagou tudo. Com o endereço,
+o navegador abre de verdade e toda atualização chega sozinha.
+
+**Primeiro acesso de cada aparelho:** a tela pede o `Project URL` e a
+`anon public` key (Supabase → *Settings → API*) e guarda no navegador —
+uma vez por aparelho, e só. Nada disso é segredo: a anon key é pública por
+natureza, e quem protege os dados são o login e as políticas RLS. Por isso
+o arquivo do repositório sai **sem** endereço e sem chave, e o
+`crm/publicar.py` recusa publicar um app que esteja com eles preenchidos.
+
+Quem preferir o arquivo solto continua podendo preencher o `CONFIG` no topo
+de `crm/fase2/app.html` — mas aí é o próprio arquivo que carrega o endereço,
+e ele não pode voltar para o git assim.
 
 ## 6. Escrita dupla (rotina diária, automatizável)
 
