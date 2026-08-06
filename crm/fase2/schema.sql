@@ -343,6 +343,133 @@ end $$;
 revoke all on function smbot_entrada(text,text,text,text,text,boolean,text,text) from public;
 grant execute on function smbot_entrada(text,text,text,text,text,boolean,text,text) to anon, authenticated;
 
+-- ── O webhook do SMBot manda o contato, não a mensagem ────────────────────
+-- Resposta do suporte deles (06.08.2026): existe webhook, mas ele NÃO carrega
+-- o conteúdo da mensagem — só quem falou. Então esta integração não é
+-- histórico de conversa: é AVISO DE QUE ALGUÉM PROCUROU O ESCRITÓRIO. O texto
+-- continua no painel do SMBot, e é lá que se lê.
+--
+-- E o corpo do webhook tem formato deles, não nosso: `smbot_entrada` acima
+-- exige parâmetros com os nossos nomes, o que só serve se o SMBot deixar
+-- montar o JSON. Esta porta aqui aceita QUALQUER corpo e procura telefone e
+-- nome onde quer que estejam, inclusive dentro de objetos aninhados.
+create or replace function jsonb_achar(p jsonb, chaves text[], padrao text default null)
+returns text
+language plpgsql immutable as $$
+declare k text; v jsonb; r text;
+begin
+  if p is null then return null; end if;
+  if jsonb_typeof(p) = 'object' then
+    -- as chaves DESTE nível primeiro: em {"contato":{"nome":…},"nome":…} o
+    -- raso ganha do fundo, senão a busca desce e traz o campo errado
+    for k, v in select key, value from jsonb_each(p) loop
+      if lower(regexp_replace(k, '[^a-zA-Z]', '', 'g')) = any (chaves)
+         and jsonb_typeof(v) in ('string','number') then
+        r := v #>> '{}';
+        if r is not null and (padrao is null or r ~ padrao) then return r; end if;
+      end if;
+    end loop;
+    for k, v in select key, value from jsonb_each(p) loop
+      if jsonb_typeof(v) in ('object','array') then
+        r := jsonb_achar(v, chaves, padrao);
+        if r is not null then return r; end if;
+      end if;
+    end loop;
+  elsif jsonb_typeof(p) = 'array' then
+    for v in select value from jsonb_array_elements(p) loop
+      r := jsonb_achar(v, chaves, padrao);
+      if r is not null then return r; end if;
+    end loop;
+  end if;
+  return null;
+end $$;
+
+-- quantas vezes o prospecto já bateu na porta, e quando foi a última
+alter table leads add column if not exists ultimo_contato timestamptz;
+alter table leads add column if not exists contatos integer not null default 0;
+create index if not exists conversas_fone on conversas (telefone, criado_em desc);
+
+create or replace function smbot_contato(payload jsonb) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare
+  v_tok text; v_fone text; v_nome text; v_texto text; v_ext text; v_chave text;
+  v_cli uuid; v_lead uuid; v_conv uuid; v_novo boolean := false; v_reg boolean := false;
+  -- telefone: qualquer coisa com 8 a 15 algarismos, pontuada de qualquer jeito
+  pad_fone constant text := '^[^0-9]*([0-9][^0-9]*){8,15}$';
+  pad_letra constant text := '[A-Za-zÀ-ÿ]';   -- nome tem letra; id de contato não
+begin
+  -- o token pode vir no corpo ou no cabeçalho — se o webhook deles não deixar
+  -- mexer no JSON, quase sempre deixa acrescentar um cabeçalho
+  v_tok := coalesce(
+    jsonb_achar(payload, array['token','ptoken','secret','segredo','chave','apikey']),
+    nullif(current_setting('request.headers', true), '')::jsonb ->> 'x-smbot-token');
+  if v_tok is null or v_tok <> (select token from integracao_token where nome='smbot') then
+    return jsonb_build_object('ok', false, 'erro', 'token inválido');
+  end if;
+
+  -- duas passadas: os nomes inequívocos primeiro, os ambíguos depois
+  v_fone := coalesce(
+    jsonb_achar(payload, array['telefone','phone','celular','whatsapp','msisdn','waid','fone'], pad_fone),
+    jsonb_achar(payload, array['numero','number','from','remetente','contato','contact'], pad_fone));
+  v_nome := coalesce(
+    jsonb_achar(payload, array['nome','name','pushname','nomecontato','contactname','nomedocontato'], pad_letra),
+    jsonb_achar(payload, array['contato','contact','cliente','fullname','displayname'], pad_letra));
+  -- se um dia o SMBot passar a mandar o conteúdo, ele já entra sem mexer aqui
+  v_texto := jsonb_achar(payload, array['mensagem','message','texto','text','body','conteudo','content','msg'], '.');
+  -- 'id' puro NÃO entra: no webhook de contato ele é o id da PESSOA, e usá-lo
+  -- como chave de mensagem faria todo contato dela virar um só registro
+  v_ext := jsonb_achar(payload, array['messageid','idmensagem','externoid','protocolo','ticket','msgid','idmsg'], '.');
+
+  v_chave := fone_chave(v_fone);
+  if v_chave = '' or length(v_chave) < 8 then
+    return jsonb_build_object('ok', false, 'erro', 'telefone não encontrado no corpo enviado');
+  end if;
+
+  select id into v_cli from clientes where fone_chave(telefone) = v_chave limit 1;
+  if v_cli is null then
+    select id into v_lead from leads
+     where fone_chave(telefone) = v_chave and etapa not in ('fechado','perdido')
+     order by criado_em desc limit 1;
+    if v_lead is null then
+      insert into leads (nome, telefone, origem, etapa, obs)
+      values (coalesce(nullif(trim(v_nome),''), 'WhatsApp ' || v_fone), v_fone,
+              'whatsapp', 'novo', 'Falou no WhatsApp (SMBot). A conversa está no painel do SMBot.')
+      returning id into v_lead;
+      v_novo := true;
+    end if;
+  end if;
+
+  if v_texto is not null and trim(v_texto) <> '' then
+    insert into conversas (cliente_id, telefone, plataforma, externo_id, de_cliente, texto)
+    values (v_cli, v_fone, 'whatsapp', v_ext, true, v_texto)
+    on conflict (externo_id) do nothing
+    returning id into v_conv;
+    v_reg := v_conv is not null;
+  -- sem conteúdo, o que se registra é a PASSAGEM — e uma a cada 10 minutos,
+  -- senão uma conversa de dez mensagens vira dez linhas iguais dizendo "falou"
+  elsif not exists (select 1 from conversas
+                     where fone_chave(telefone) = v_chave
+                       and criado_em > now() - interval '10 minutes') then
+    insert into conversas (cliente_id, telefone, plataforma, externo_id, de_cliente, texto)
+    values (v_cli, v_fone, 'whatsapp', v_ext, true, null)
+    returning id into v_conv;
+    v_reg := true;
+  end if;
+
+  if v_lead is not null then
+    update leads set ultimo_contato = now(), atualizado_em = now(),
+                     contatos = contatos + (case when v_reg then 1 else 0 end)
+     where id = v_lead;
+  end if;
+
+  return jsonb_build_object('ok', true, 'cliente_id', v_cli, 'lead_id', v_lead,
+                            'lead_novo', v_novo, 'registrado', v_reg,
+                            'com_texto', v_texto is not null);
+end $$;
+
+revoke all on function smbot_contato(jsonb) from public;
+grant execute on function smbot_contato(jsonb) to anon, authenticated;
+
 -- ── Como cada lista aparece ──────────────────────────────────────────────
 -- Fundo e posição no menu. É preferência DO ESCRITÓRIO, não de cada um:
 -- todo mundo enxerga a mesma tela, e quem descreve "a lista amarela" por

@@ -520,6 +520,8 @@
   .id-valor{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .cop{border:1px solid var(--borda);background:var(--fundo);border-radius:6px;padding:3px 9px;font-size:12px;font-weight:600;cursor:pointer;color:var(--azul)}
   .cop:hover{background:#e8f1fb}
+  .zap-ping{margin-top:6px;font-size:12px;font-weight:600;color:#0a7d43;background:#eaf7ef;
+            border:1px solid #bfe6cf;border-radius:6px;padding:3px 8px;display:inline-block}
   .id-secao{margin:12px 0}
   .id-secao>label{display:block;font-size:12px;font-weight:700;color:var(--cinza);margin-bottom:5px}
   .id-secao small{font-weight:400}
@@ -688,7 +690,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.08 · LOAS idoso e CadÚnico</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.09 · contato do WhatsApp</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1914,6 +1916,15 @@ function ligarQuadro(){
 const ETAPAS=[["novo","🆕 Novo contato"],["atendimento","📅 Atendimento"],
   ["viabilidade","🔎 Viabilidade"],["proposta","🤝 Proposta"],
   ["fechado","✅ Fechado"],["perdido","❌ Perdido"]];
+// "hoje 09:12" vale mais que a data cheia num cartão de funil: o que decide
+// se alguém corre atrás é a distância até agora, não o dia do calendário
+function quandoFalou(ts){
+  const d=dataSP(ts);
+  if(d===hoje()) return "hoje "+horaSP(ts);
+  const o=new Date(hoje()+"T12:00:00"); o.setDate(o.getDate()-1);
+  if(d===o.toLocaleDateString("sv")) return "ontem";
+  return fmtTS(ts);
+}
 function renderVendas(){
   document.getElementById("titulo-lista").textContent="💼 Vendas";
   document.getElementById("sub-lista").textContent=
@@ -1937,7 +1948,8 @@ function renderVendas(){
         ${ls.slice(0,40).map(l=>`<div class="kcard" draggable="true" data-lead="${l.id}">
           <div class="nome">${esc(l.nome)}</div>
           <div class="meta">${l.beneficio_interesse?`<span class="chip ben">${esc(l.beneficio_interesse)}</span>`:""}
-            ${l.origem?`<span class="chip neutro">${esc(l.origem)}</span>`:""}</div>
+            ${l.origem?`<span class="chip neutro">${esc(l.origem)}</span>`:""}
+            ${l.ultimo_contato?`<span class="chip per" title="quem chega pelo SMBot vem sem o texto: a conversa se lê no painel deles">💬 ${quandoFalou(l.ultimo_contato)}${l.contatos>1?` · ${l.contatos}×`:""}</span>`:""}</div>
           ${l.telefone?`<div class="acao"><a class="btn-mini" target="_blank" style="text-decoration:none" href="https://wa.me/55${l.telefone.replace(/\D/g,"")}">💬 chamar</a></div>`:""}
           ${e==="fechado"&&!l.cliente_id?`<div class="acao"><button class="btn-mini" onclick="leadParaCliente('${l.id}')">→ virar cliente</button></div>`:""}
           ${e==="fechado"&&l.cliente_id?`<div class="acao"><button class="btn-mini" onclick="abrirFicha('${l.cliente_id}')">ficha do cliente</button></div>`:""}
@@ -2698,14 +2710,16 @@ async function abrirFicha(cliId){
   document.getElementById("app").classList.add("detalhe-aberto");
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
   const ids = ks.map(k=>k.id).join(",");
-  const [ands, creds, vincs, anexos] = await Promise.all([
+  const [ands, creds, vincs, anexos, convs] = await Promise.all([
     ids?todas("andamentos",`select=*,andamentos_lidos(colaborador_id,lido_em)&caso_id=in.(${ids})&order=criado_em.desc`)
         .catch(()=>todas("andamentos",`select=*&caso_id=in.(${ids})&order=criado_em.desc`)):[],
     todas("credenciais",`select=id,tipo,cliente_id&cliente_id=eq.${cliId}`),
     todas("vinculos",`select=*&or=(cliente_id.eq.${cliId},ligado_a.eq.${cliId})`).catch(()=>[]),
     todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
+    todas("conversas",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
   ]);
   D.anexos = anexos;
+  D.convFicha = convs;
   const evs = D.eventos.filter(e=>ks.some(k=>k.id===e.caso_id)).sort((a,b)=>a.data_hora<b.data_hora?1:-1);
   const pgs = D.pagamentos.filter(p=>ks.some(k=>k.id===p.caso_id));
   const pagK = ks.filter(k=>k.fase==="pagamento");
@@ -2775,6 +2789,7 @@ async function abrirFicha(cliId){
         <div class="id-valor" id="campo-telefone">${c.telefone?`${esc(c.telefone)}
           <button class="cop" onclick="copiar('${c.telefone.replace(/\D/g,"")}','Telefone copiado')">📋 copiar</button>
           <a class="cop" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" style="text-decoration:none">💬 WhatsApp</a>`:"—"}</div>
+        ${ultimoZap()}
       </div>
       <div class="id-card">
         <label>Nascimento <button class="lapis" title="alterar" onclick="editarCampo('dn','${c.id}')">✎</button></label>
@@ -3564,6 +3579,20 @@ async function salvarCadunico(casoId, valor){
 function copiarMsgCadunico(cliId, casoId){
   const cli=D.cliPorId.get(cliId), k=D.casoPorId.get(casoId);
   if(cli&&k) copiar(msgCadunico(cli,k), "Mensagem do CadÚnico copiada 💬");
+}
+
+// ── Último toque pelo WhatsApp ────────────────────────────────────────────
+// O webhook do SMBot avisa QUE a pessoa falou, não o que ela disse — o
+// conteúdo fica no painel deles. O que o CRM precisa mostrar, então, é o
+// "quando": ninguém deixa de responder porque a mensagem morreu num painel
+// que só uma pessoa abre.
+function ultimoZap(){
+  const z=(D.convFicha||[])[0];
+  if(!z) return "";
+  const quando=`${fmtTS(z.criado_em)} às ${horaSP(z.criado_em)}`;
+  return `<div class="zap-ping" title="${z.texto?"conteúdo registrado no CRM":"o conteúdo da conversa fica no painel do SMBot"}">`
+    + `💬 falou pelo WhatsApp em ${quando}`
+    + (z.texto?`: “${esc(z.texto.slice(0,70))}${z.texto.length>70?"…":""}”`:"")+`</div>`;
 }
 
 // no Meu Dia: CadÚnico vencido ou vencendo nos próximos 90 dias, de todos os
