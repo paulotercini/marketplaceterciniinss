@@ -324,6 +324,59 @@
   .arq-abrir:hover{text-decoration:underline}
   .apaga-arq{margin-left:auto;border:none;background:none;cursor:pointer;color:var(--cinza);font-size:13px;opacity:.5}
   .apaga-arq:hover{opacity:1;color:var(--vermelho)}
+  /* aposentadoria provável: no alto, à direita — é o que se olha primeiro
+     quando o cliente liga perguntando "quando eu me aposento?" */
+  .apos-faixa{display:flex;justify-content:flex-end;margin-bottom:12px}
+  .apos-cx{border:1px solid #CBE3CE;background:#F1F8F2;border-radius:10px;padding:10px 12px;
+    min-width:330px;max-width:520px}
+  .apos-cab{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .apos-cab strong{font-size:13px;color:var(--verde);flex:1}
+  .apos-mais{border:1px solid #9CC7A4;background:var(--branco);color:var(--verde);border-radius:8px;
+    width:30px;height:28px;font-size:16px;font-weight:700;cursor:pointer;line-height:1}
+  .apos-mais:hover{background:#E3F1E6}
+  .apos-it{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:5px 0;border-top:1px solid #DCEBDE}
+  .apos-it:first-of-type{border-top:none}
+  .apos-data{font-weight:700;font-variant-numeric:tabular-nums}
+  .apos-esp{flex:1;min-width:90px}
+  .apos-av{font-size:12px;color:var(--cinza);white-space:nowrap}
+  .apos-it.auto .apos-data,.apos-it.auto .apos-esp{color:var(--cinza)}
+  .apos-nota{font-size:11.5px;color:var(--cinza);margin-top:6px;line-height:1.45}
+  .apos-nota b{color:var(--laranja)}
+  .apos-sexo{display:inline-flex;gap:5px;align-items:center;margin-left:4px}
+  /* 📅 Calendário: o mês inteiro, cada tipo na sua cor */
+  .cal-topo{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .cal-mes{font-size:16px;color:var(--azul-escuro);min-width:190px;text-align:center}
+  .cal-legenda{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px;font-size:12px;color:var(--cinza)}
+  .cal-leg{display:inline-flex;align-items:center;gap:5px}
+  .cal-leg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .cal-grade{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+  .cal-cab{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--cinza);
+    text-align:center;padding:2px 0;font-weight:700}
+  .cal-dia{background:var(--branco);border:1px solid var(--borda);border-radius:8px;
+    min-height:104px;padding:5px 6px;overflow:hidden}
+  .cal-dia.vazio{background:none;border:none}
+  .cal-dia.hoje{border-color:var(--azul);box-shadow:inset 0 0 0 1px var(--azul)}
+  .cal-num{font-size:12px;font-weight:700;color:var(--cinza);margin-bottom:3px}
+  .cal-dia.hoje .cal-num{color:var(--azul)}
+  .cal-it{font-size:11px;line-height:1.3;border-left:3px solid;border-radius:4px;
+    padding:3px 5px;margin-bottom:3px;cursor:pointer;overflow:hidden;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .cal-it:hover{-webkit-line-clamp:unset}
+  .cal-mais{font-size:10.5px;color:var(--cinza);padding-left:4px}
+  @media (max-width:760px){
+    .app.celular .cal-grade{grid-template-columns:1fr;gap:4px}
+    .app.celular .cal-cab{display:none}
+    .app.celular .cal-dia{min-height:0;display:flex;gap:8px;align-items:flex-start}
+    .app.celular .cal-dia.vazio{display:none}
+    .app.celular .cal-dia:not(:has(.cal-it)){display:none}   /* dia vazio não ocupa lista */
+    .app.celular .cal-num{min-width:26px;margin:0}
+    .app.celular .cal-dia{flex-wrap:wrap}
+    .app.celular .cal-it{flex:1 0 100%;-webkit-line-clamp:unset}
+    /* o nome do mês em linha própria: espremido entre os dois botões ele
+       transbordava por cima deles */
+    .app.celular .cal-mes{min-width:0;flex:1 0 100%;order:-1;margin-bottom:2px}
+    .app.celular .cal-topo button{flex:1}
+  }
   .evento{border:1px solid var(--borda);border-left:4px solid var(--roxo);border-radius:8px;padding:10px 14px;margin-bottom:8px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
   .evento .data-box{flex:none;text-align:center;background:#efe6f7;color:var(--roxo);border-radius:8px;padding:5px 12px;font-weight:700}
   .evento .data-box small{display:block;font-weight:400;font-size:11px}
@@ -502,7 +555,7 @@
 
 <div class="login" id="tela-login">
   <form onsubmit="entrar(event)">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 05.08 · celular e anexos</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 06.08 · aposentadorias e calendário</span></h1>
     <div id="login-config" style="font-size:12px;color:var(--vermelho)"></div>
     <input id="login-email" type="email" placeholder="e-mail" required>
     <input id="login-senha" type="password" placeholder="senha" required>
@@ -515,7 +568,7 @@
   <nav class="sidebar">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 05.08 · celular e anexos</span></div></div>
+      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · aposentadorias e calendário</span></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -570,6 +623,7 @@ const CONFIG = {
 const hoje = () => new Date().toLocaleDateString("sv", {timeZone: "America/Sao_Paulo"});
 const fmt = iso => iso ? iso.slice(8,10)+"."+iso.slice(5,7)+"."+iso.slice(0,4) : "";
 const fmtCpf = c => c ? c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4") : "—";
+const digitosCpf = c => (c||"").replace(/\D/g,"");
 const esc = s => (s??"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const dsa = s => (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
 
@@ -763,7 +817,7 @@ async function iniciar(){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -785,8 +839,9 @@ async function carregar(){
       todas("lembrar_motivos","select=*&order=ordem").catch(()=>[]),
       todas("rotinas","select=*&ativo=is.true&order=criada_em").catch(()=>[]),
       todas("rotinas_feitas",`select=*&dia=eq.${hoje()}`).catch(()=>[]),
+      todas("aposentadorias","select=*&order=data").catch(()=>[]),
     ]);
-  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas};
+  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos};
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -936,6 +991,7 @@ function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", null],
     ["mencoes","📥 Menções", D.mencoes.length],
+    ["calendario","📅 Calendário", null],
     ["planejado","🗓️ Planejado", ativos().filter(k=>k.prazo).length],
     ["minhas","👤 Atribuídas a mim", ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)).length],
     ["importante","⭐ Importante", ativos().filter(k=>k.importante).length],
@@ -1076,6 +1132,11 @@ function ligarCartoes(){
 
 function render(){
   aplicarTema(); marcarBarraCel();
+  // "Ordenar" só faz sentido em lista de clientes; no calendário, no quadro
+  // ou no dashboard era um controle morto ocupando o topo
+  const LISTAS_ORDENAVEIS = ["minhas","importante","recebimentos"];
+  document.querySelector(".ordenar").style.display =
+    (buscaTxt || visao.startsWith("fase:") || LISTAS_ORDENAVEIS.includes(visao)) ? "" : "none";
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
@@ -1087,6 +1148,7 @@ function render(){
   }
   if(visao==="dashboard") return renderDash();
   if(visao==="agenda") return renderAgenda();
+  if(visao==="calendario") return renderCalendario();
   if(visao==="particulares") return renderParticulares();
   if(visao==="meudia") return renderMeuDia();
   if(visao==="novocliente") return renderNovoCliente();
@@ -1156,6 +1218,7 @@ function renderMeuDia(){
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chips.join("")}</div>`
     + blocoRotinas()
+    + blocoApos()
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — use o ☀️ nos cartões.</p>")
     + `<h3 class="secao">🟡 Vencem hoje (${hojeK.length+tHoje.length})</h3>`
@@ -1290,11 +1353,54 @@ function renderNovoCliente(){
       <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente também vira tarefa no To Do na próxima sincronização (título Nome #CPF), então quem estiver lá continua vendo.</p>
     </div>`;
 }
+// CPF que já está no sistema não vira cliente novo: cadastrar de novo
+// espalharia o mesmo cliente em duas fichas e os andamentos ficariam
+// divididos entre elas. A janela avisa e leva para a ficha que já existe.
+function avisoCpfRepetido(cli, nomeDigitado){
+  const ks=(D.casosDoCliente.get(cli.id)||[]);
+  const ativos=ks.filter(k=>k.fase!=="encerrado");
+  document.getElementById("modal").innerHTML=`
+    <div class="modal-fundo">
+      <div class="modal-cx">
+        <div class="modal-cab">
+          <div><strong>⚠ Este CPF já tem cadastro</strong>
+            <div class="meio-sub">Cadastrar de novo criaria duas fichas do mesmo cliente, com os
+              andamentos divididos entre elas. Abra a ficha que já existe e acrescente o caso novo lá.</div></div>
+          <button class="btn-mini" onclick="fecharEscolha()" title="voltar ao cadastro">✕</button>
+        </div>
+        <div class="caso" style="margin:0 0 12px">
+          <div class="rotulo-caso">Cadastro que já existe</div>
+          <div class="titulo-caso">${esc(cli.nome)}</div>
+          <div class="meio-sub">${fmtCpf(cli.cpf)}${cli.telefone?" · "+esc(cli.telefone):""} ·
+            ${ativos.length} processo(s) em aberto${ks.length>ativos.length?` (e ${ks.length-ativos.length} encerrado(s))`:""}</div>
+          ${nomeDigitado && dsa(nomeDigitado)!==dsa(cli.nome)
+            ? `<div class="meio-sub" style="color:var(--laranja);margin-top:6px">Você digitou
+                “${esc(nomeDigitado)}” — confira se é a mesma pessoa antes de seguir.</div>`:""}
+        </div>
+        <div class="form-linha" style="margin:0">
+          <button onclick="fecharEscolha();abrirFicha('${cli.id}')">Abrir a ficha deste cliente</button>
+          <button class="btn-mini" onclick="fecharEscolha()">Voltar e corrigir o CPF</button>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById("modal").style.display="block";
+}
 async function criarCliente(){
   const nome=document.getElementById("ncl-nome").value.trim();
   const casoTitulo=document.getElementById("ncl-caso").value.trim();
   if(!nome||!casoTitulo) return aviso("Preencha nome e primeiro caso");
   const cpf=document.getElementById("ncl-cpf").value.replace(/\D/g,"")||null;
+  if(cpf){
+    // procura na memória e confirma no banco: outro colaborador pode ter
+    // cadastrado o mesmo cliente enquanto esta tela estava aberta
+    let jaTem = D.clientes.find(c=>digitosCpf(c.cpf)===cpf);
+    if(!jaTem){
+      const achados = await api(`/rest/v1/clientes?select=*&cpf=eq.${cpf}`).catch(()=>[]);
+      if(achados && achados.length){ jaTem=achados[0];
+        D.clientes.push(jaTem); D.cliPorId.set(jaTem.id, jaTem); }
+    }
+    if(jaTem) return avisoCpfRepetido(jaTem, nome);
+  }
   const dnIso=document.getElementById("ncl-dn").value;
   const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({nome, cpf, dn:dnIso?fmt(dnIso).replace(/\./g,""):null,
@@ -1611,6 +1717,86 @@ function renderAgenda(){
     +`<h3 class="secao">Passadas recentes</h3>`+pas.map(bloco).join("");
   document.querySelectorAll(".evento[data-cli]").forEach(el=>el.onclick=()=>{ if(el.dataset.cli) abrirFicha(el.dataset.cli); });
 }
+
+// ── 📅 Calendário (o mês inteiro numa tela, como a agenda do Google) ──────
+// Junta tudo o que tem data: lembrete de processo, perícia/audiência, tarefa
+// com prazo e o aviso de aposentadoria — cada tipo na sua cor, para bater o
+// olho e saber o que é. O de aposentadoria é verde e é o único que não vem
+// de uma pendência: é oportunidade, não prazo.
+const TIPOS_CAL = {
+  apos:    {cor:"#1E6F50", fundo:"#E8F4EC", icone:"🎂", nome:"Aposentadoria"},
+  lembre:  {cor:"#2B5FC7", fundo:"#E7EEFB", icone:"🗓", nome:"Lembrete do processo"},
+  evento:  {cor:"#5C2E91", fundo:"#F0E9F8", icone:"🩺", nome:"Perícia / audiência"},
+  tarefa:  {cor:"#5B6069", fundo:"#ECEDEF", icone:"📋", nome:"Tarefa"},
+  exig:    {cor:"#B3261E", fundo:"#FBE9E9", icone:"⚠", nome:"Exigência do INSS"},
+};
+let calMes = null;                              // "AAAA-MM"; nulo = mês de hoje
+function mesAtual(){ return calMes || hoje().slice(0,7); }
+function itensDoCalendario(){
+  const it=[];
+  const push=(dia,tipo,texto,cliId,extra)=>{ if(dia) it.push({dia,tipo,texto,cliId,...extra}); };
+  ativos().forEach(k=>{
+    const c=D.cliPorId.get(k.cliente_id); if(!c) return;
+    if(k.prazo) push(k.prazo,"lembre",`${c.nome} — ${k.lembrar_motivo||tituloCaso(k)}`,c.id);
+    if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome} — exigência vence`,c.id);
+  });
+  (D.eventos||[]).filter(e=>e.status!=="cancelada").forEach(e=>{
+    const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
+    push(e.data_hora.slice(0,10),"evento",`${e.tipo} — ${c?c.nome:"?"}`,c?c.id:null,
+         {hora:e.data_hora.slice(11,16)});
+  });
+  (D.tarefas||[]).filter(t=>!t.concluida && t.prazo).forEach(t=>
+    push(t.prazo,"tarefa",t.titulo,null));
+  lembretesApos().forEach(a=>
+    push(a.aviso,"apos",`${a.cliente.nome} — ${a.especie} em ${fmt(a.data)}`,a.cliente.id,
+         {automatica:a.automatica}));
+  return it;
+}
+function renderCalendario(){
+  document.getElementById("titulo-lista").textContent="📅 Calendário";
+  document.getElementById("sub-lista").textContent=
+    "Tudo o que tem data, mês a mês. Cada cor é um tipo — o verde é aposentadoria, que avisa três meses antes.";
+  const mes=mesAtual(), [ano,mm]=mes.split("-").map(Number);
+  const itens=itensDoCalendario().filter(i=>i.dia.slice(0,7)===mes);
+  const porDia=new Map();
+  itens.forEach(i=>{ if(!porDia.has(i.dia)) porDia.set(i.dia,[]); porDia.get(i.dia).push(i); });
+  const primeiro=new Date(ano, mm-1, 1, 12), ultimo=new Date(ano, mm, 0, 12);
+  const nomeMes=primeiro.toLocaleDateString("pt-BR",{month:"long",year:"numeric"});
+  const vizinho=n=>{ const d=new Date(ano, mm-1+n, 1, 12);
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`; };
+  const cels=[];
+  for(let i=0;i<primeiro.getDay();i++) cels.push(`<div class="cal-dia vazio"></div>`);
+  for(let d=1; d<=ultimo.getDate(); d++){
+    const iso=`${mes}-${String(d).padStart(2,"0")}`;
+    const doDia=(porDia.get(iso)||[]).sort((a,b)=>(a.hora||"99")<(b.hora||"99")?-1:1);
+    cels.push(`<div class="cal-dia ${iso===hoje()?"hoje":""}">
+      <div class="cal-num">${d}</div>
+      ${doDia.slice(0,4).map(i=>{ const t=TIPOS_CAL[i.tipo];
+        return `<div class="cal-it" style="background:${t.fundo};border-left-color:${t.cor}"
+          ${i.cliId?`data-cli="${i.cliId}"`:""} title="${esc(t.nome)}: ${esc(i.texto)}">
+          ${t.icone} ${i.hora?`<b>${i.hora}</b> `:""}${esc(i.texto)}</div>`;}).join("")}
+      ${doDia.length>4?`<div class="cal-mais">+${doDia.length-4} neste dia</div>`:""}
+    </div>`);
+  }
+  const legenda=Object.entries(TIPOS_CAL).map(([,t])=>
+    `<span class="cal-leg"><i style="background:${t.cor}"></i>${t.icone} ${t.nome}</span>`).join("");
+  document.getElementById("conteudo-meio").innerHTML=`
+    <div class="cal-topo">
+      <button class="btn-mini" onclick="irMes('${vizinho(-1)}')">‹ mês anterior</button>
+      <strong class="cal-mes">${nomeMes[0].toUpperCase()+nomeMes.slice(1)}</strong>
+      <button class="btn-mini" onclick="irMes('${vizinho(1)}')">próximo mês ›</button>
+      <button class="btn-mini" onclick="irMes(null)">hoje</button>
+      <span class="meio-sub" style="margin-left:auto">${itens.length} compromisso(s) no mês</span>
+    </div>
+    <div class="cal-legenda">${legenda}</div>
+    <div class="cal-grade">
+      ${["dom","seg","ter","qua","qui","sex","sáb"].map(d=>`<div class="cal-cab">${d}</div>`).join("")}
+      ${cels.join("")}
+    </div>`;
+  document.querySelectorAll(".cal-it[data-cli]").forEach(el=>
+    el.onclick=()=>abrirFicha(el.dataset.cli));
+}
+function irMes(m){ calMes=m; render(); }
 
 function renderParcerias(){
   document.getElementById("titulo-lista").textContent="🤝 Parcerias";
@@ -1949,6 +2135,7 @@ async function abrirFicha(cliId){
   </div>
 
   <div class="painel ${abaAtiva===0?"ativo":""}" data-p="0">
+    <div class="apos-faixa">${caixaApos(c)}</div>
     ${(()=>{
       const credInss = creds.find(cr=>cr.tipo==="meu_inss");
       const outrasCreds = creds.filter(cr=>cr.tipo!=="meu_inss");
@@ -2502,6 +2689,168 @@ function usarSugestao(el){
   inp.value=texto; inp.focus();
   inp.style.height="auto"; inp.style.height=Math.min(inp.scrollHeight,220)+"px";
   prazoCancelado=false; pintarPrazoDoTexto(); pintarSugestoes(D.casoPorId.get(casoSel));
+}
+
+// ── Datas prováveis de aposentadoria ─────────────────────────────────────
+// O cliente que hoje pede auxílio-doença vai se aposentar um dia, e o
+// escritório que lembra disso três meses antes tem tempo de chamar, juntar
+// documento e protocolar sem correria. Cada data vira um lembrete na agenda.
+//
+// A aposentadoria por IDADE o sistema calcula sozinho da data de nascimento:
+// 62 anos para mulher, 65 para homem (EC 103/2019, com a transição da idade
+// da mulher já concluída). Vem sempre marcada como automática — carência,
+// regra de transição e direito adquirido não cabem numa conta de idade.
+const IDADE_APOS = {F:62, M:65};
+const ESPECIES_APOS = ["Idade","Tempo de Contribuição","Idade rural","Especial",
+                       "Professor","Pessoa com deficiência","Invalidez"];
+const MESES_AVISO = 3;                       // o lembrete cai 3 meses antes
+
+// dn é DDMMAAAA (formato do To Do); devolve AAAA-MM-DD
+function dnIso(dn){
+  const d=(dn||"").replace(/\D/g,"");
+  if(d.length!==8) return null;
+  const iso=`${d.slice(4)}-${d.slice(2,4)}-${d.slice(0,2)}`;
+  return isNaN(new Date(iso+"T12:00:00")) ? null : iso;
+}
+function somarAnos(iso, anos){
+  const [a,m,d]=iso.split("-").map(Number);
+  const dt=new Date(a+anos, m-1, d, 12);
+  // 29/02 em ano não bissexto cai no dia 1º de março; puxar para 28/02
+  if(dt.getMonth()!==m-1) dt.setDate(0);
+  return dt.toLocaleDateString("sv");
+}
+function menosMeses(iso, meses){
+  const [a,m,d]=iso.split("-").map(Number);
+  const dt=new Date(a, m-1-meses, d, 12);
+  if(dt.getDate()!==d) dt.setDate(0);        // 31 num mês de 30 dias
+  return dt.toLocaleDateString("sv");
+}
+// Palpite de sexo pelo primeiro nome, SÓ para mostrar a data automática —
+// nunca é gravado. Na dúvida devolve nulo e a caixa pergunta, em vez de
+// chutar: errar o sexo de um cliente é constrangedor e ainda erra a data.
+const NOMES_M_EM_A = new Set(["joca","juca","nicola","luca","noa"]);
+const NOMES_F_SEM_A = new Set(["beatriz","raquel","isabel","ester","esther","ines","ivete",
+  "solange","alice","adriane","cristiane","luciane","carmem","miriam","meire","nair",
+  "conceicao","doralice","eunice","berenice","clarice","marlene","marilene","irene",
+  "helen","karen","dulce","gorete","ivone","simone","cleide","neide","adelaide","judite",
+  "edite","mercedes","lourdes"]);
+function palpiteSexo(nome){
+  const p=dsa((nome||"").trim().split(/\s+/)[0]||"");
+  if(!p) return null;
+  if(NOMES_M_EM_A.has(p)) return "M";
+  if(NOMES_F_SEM_A.has(p)) return "F";
+  if(/a$/.test(p)) return "F";       // Maria, Ana, Silvana, Rita…
+  if(/o$/.test(p)) return "M";       // João, Pedro, Marcos, Benedito…
+  return null;                       // José, Luiz, Vicente… o sistema pergunta
+}
+function aposAutomatica(cli){
+  const nasc=dnIso(cli.dn); if(!nasc) return null;
+  const sexo=cli.sexo || palpiteSexo(cli.nome); if(!sexo) return null;
+  return {id:"auto", cliente_id:cli.id, data:somarAnos(nasc, IDADE_APOS[sexo]),
+          especie:"Idade", automatica:true, sexoUsado:sexo, suposto:!cli.sexo};
+}
+// as gravadas + a automática, salvo quando já existe uma "Idade" à mão
+function aposDoCliente(cli){
+  const manuais=(D.apos||[]).filter(a=>a.cliente_id===cli.id);
+  const auto=aposAutomatica(cli);
+  const lista=[...manuais];
+  if(auto && !manuais.some(a=>dsa(a.especie)==="idade")) lista.push(auto);
+  return lista.sort((x,y)=>x.data<y.data?-1:1);
+}
+// todos os lembretes de aposentadoria do escritório, para a agenda
+function lembretesApos(){
+  const fora=new Set((D.apos||[]).filter(a=>dsa(a.especie)==="idade").map(a=>a.cliente_id));
+  const itens=[];
+  (D.apos||[]).forEach(a=>{ const c=D.cliPorId.get(a.cliente_id);
+    if(c) itens.push({...a, cliente:c, aviso:menosMeses(a.data, MESES_AVISO)}); });
+  (D.clientes||[]).forEach(c=>{
+    if(fora.has(c.id)) return;
+    const auto=aposAutomatica(c);
+    if(auto) itens.push({...auto, cliente:c, aviso:menosMeses(auto.data, MESES_AVISO)});
+  });
+  return itens;
+}
+// no Meu Dia: o aviso que já chegou a hora. Sem isto o lembrete ficaria só
+// no calendário, e calendário só ajuda quem lembra de abrir
+function blocoApos(){
+  const chegou=lembretesApos().filter(a=>a.aviso<=hoje() && a.data>=hoje())
+    .sort((x,y)=>x.data<y.data?-1:1);
+  if(!chegou.length) return "";
+  return `<h3 class="secao">🎂 Aposentadorias a tratar (${chegou.length})</h3>` +
+    chegou.map(a=>`<div class="cartao" data-cli="${a.cliente.id}">
+      <span class="check" style="border-color:var(--verde)"></span>
+      <div class="info"><div class="nome">${esc(a.cliente.nome)}</div>
+        <div class="meta"><span class="chip fase">${esc(a.especie)}</span>
+          <span>direito em <b>${fmt(a.data)}</b></span>
+          ${a.automatica?`<span class="chip neutro">automática — confira</span>`:""}
+          ${a.cliente.telefone?`<a class="chip per" href="https://wa.me/55${a.cliente.telefone.replace(/\D/g,"")}"
+             target="_blank" onclick="event.stopPropagation()">💬 chamar</a>`:""}</div>
+      </div></div>`).join("");
+}
+function caixaApos(cli){
+  const lista=aposDoCliente(cli);
+  const auto=lista.find(a=>a.automatica);
+  const temIdadeManual=(D.apos||[]).some(a=>a.cliente_id===cli.id && dsa(a.especie)==="idade");
+  const perguntarSexo = !cli.sexo && !auto && dnIso(cli.dn) && !temIdadeManual;
+  const botoesSexo = `<button class="btn-mini" onclick="definirSexo('${cli.id}','F')">mulher</button>
+    <button class="btn-mini" onclick="definirSexo('${cli.id}','M')">homem</button>`;
+  return `<div class="apos-cx" id="apos-cx">
+    <div class="apos-cab">
+      <strong>🎂 Aposentadoria provável</strong>
+      <button class="apos-mais" onclick="novaApos('${cli.id}')" title="acrescentar outra data">＋</button>
+    </div>
+    ${lista.length ? lista.map(a=>`<div class="apos-it ${a.automatica?"auto":""}">
+        <span class="apos-data">${fmt(a.data)}</span>
+        <span class="apos-esp">${esc(a.especie)}</span>
+        <span class="apos-av">🔔 avisa em ${fmt(menosMeses(a.data, MESES_AVISO))}</span>
+        ${a.automatica
+          ? `<button class="btn-mini" onclick="novaApos('${cli.id}','${a.data}','${esc(a.especie)}')"
+               title="gravar com ajuste">ajustar</button>`
+          : `<button class="apaga-arq" onclick="apagarApos('${a.id}')" title="apagar">✕</button>`}
+      </div>`).join("")
+      : `<div class="meio-sub">Sem data ainda${dnIso(cli.dn)?"":" — falta a data de nascimento"}.</div>`}
+    ${auto ? `<div class="apos-nota">Calculada pelo nascimento (${IDADE_APOS[auto.sexoUsado]} anos,
+        ${auto.sexoUsado==="F"?"mulher":"homem"}${auto.suposto?" — suposto pelo nome":""}).
+        <b>É automática: confira a carência e a regra de transição.</b>
+        ${auto.suposto?`<span class="apos-sexo">Confirme: ${botoesSexo}</span>`:""}</div>`
+     : perguntarSexo ? `<div class="apos-nota">Para calcular a aposentadoria por idade,
+        diga se o cliente é <span class="apos-sexo">${botoesSexo}</span></div>` : ""}
+    <div id="apos-form"></div>
+  </div>`;
+}
+function novaApos(cliId, data, especie){
+  document.getElementById("apos-form").innerHTML=`
+    <div class="form-linha" style="margin-top:8px">
+      <input type="date" id="ap-data" value="${data||""}">
+      <input id="ap-esp" list="lista-especies" placeholder="espécie" value="${especie||""}" style="min-width:150px">
+      <datalist id="lista-especies">${ESPECIES_APOS.map(e=>`<option value="${e}">`).join("")}</datalist>
+      <button onclick="salvarApos('${cliId}')">Guardar</button>
+      <button class="btn-mini" onclick="document.getElementById('apos-form').innerHTML=''">cancelar</button>
+    </div>`;
+  document.getElementById("ap-data").focus();
+}
+async function salvarApos(cliId){
+  const data=document.getElementById("ap-data").value;
+  const especie=document.getElementById("ap-esp").value.trim();
+  if(!data||!especie) return aviso("Preencha a data e a espécie");
+  const [a]=await api(`/rest/v1/aposentadorias`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({cliente_id:cliId, data, especie, autor_id:eu.id})});
+  if(a) (D.apos=D.apos||[]).push(a);
+  aviso(`🎂 Guardado — avisa em ${fmt(menosMeses(data, MESES_AVISO))}`);
+  abrirFicha(cliId);
+}
+async function apagarApos(id){
+  await api(`/rest/v1/aposentadorias?id=eq.${id}`,{method:"DELETE"});
+  D.apos=(D.apos||[]).filter(a=>a.id!==id);
+  aviso("Data apagada");
+  if(clienteAberto) abrirFicha(clienteAberto);
+}
+async function definirSexo(cliId, sexo){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({sexo})});
+  c.sexo=sexo;
+  abrirFicha(cliId);
 }
 
 // ── anexar o documento (é para isto que o celular vai à casa do cliente) ──

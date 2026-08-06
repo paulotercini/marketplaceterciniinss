@@ -223,6 +223,32 @@ create table if not exists anexos (
 create index if not exists anexos_por_caso on anexos (caso_id, criado_em desc);
 create index if not exists anexos_por_cliente on anexos (cliente_id, criado_em desc);
 
+-- ── Datas prováveis de aposentadoria ─────────────────────────────────────
+-- Cada cliente pode ter várias: por idade, por tempo de contribuição,
+-- especial, professor. Cada uma vira um lembrete três meses antes na agenda
+-- — é o tempo de chamar o cliente, pedir documento e protocolar sem correria.
+--
+-- A aposentadoria por IDADE não precisa estar aqui: o app a calcula da data
+-- de nascimento (62 anos para mulher, 65 para homem) e mostra marcada como
+-- automática, para conferir. Ao editar, ela vira uma linha de verdade e
+-- passa a valer sobre a calculada.
+alter table clientes add column if not exists sexo text;
+alter table clientes drop constraint if exists clientes_sexo_valido;
+alter table clientes add constraint clientes_sexo_valido
+  check (sexo is null or sexo in ('F','M'));
+
+create table if not exists aposentadorias (
+  id          uuid primary key default gen_random_uuid(),
+  cliente_id  uuid not null references clientes(id) on delete cascade,
+  data        date not null,               -- data provável do direito
+  especie     text not null,               -- "Idade", "Tempo de Contribuição"…
+  observacao  text,
+  autor_id    uuid references colaboradores(id),
+  criado_em   timestamptz not null default now()
+);
+create index if not exists apos_por_cliente on aposentadorias (cliente_id, data);
+create index if not exists apos_por_data on aposentadorias (data);
+
 -- o bucket, privado. Rodar de novo não duplica nem volta a ser público.
 insert into storage.buckets (id, name, public)
   values ('anexos','anexos',false)
@@ -568,7 +594,8 @@ begin
                            'checklist_modelo','modelos_documento',
                            'vinculos','frases_prontas','lembrar_motivos',
                            'inss_fila','orgao_producao',
-                           'rotinas','rotinas_feitas','andamentos_lidos','anexos'] loop
+                           'rotinas','rotinas_feitas','andamentos_lidos','anexos',
+                           'aposentadorias'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
