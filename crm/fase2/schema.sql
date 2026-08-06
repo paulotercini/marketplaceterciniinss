@@ -264,6 +264,85 @@ alter table clientes add column if not exists aposentado_prova text;
 -- encerrado aqui só quer dizer que o nosso trabalho acabou.
 alter table casos add column if not exists cadunico date;               -- última atualização
 
+-- ── Porta de entrada para o SMBot (WhatsApp) ─────────────────────────────
+-- O atendimento do WhatsApp manda cada mensagem para cá. UMA função, e nada
+-- além dela: quem tem o token consegue registrar contato, e não consegue ler
+-- ficha, senha nem processo de ninguém.
+--
+-- O token não é a chave do banco. É um segredo só desta integração, que se
+-- troca sem mexer em mais nada se algum dia vazar.
+create table if not exists integracao_token (
+  nome      text primary key,          -- 'smbot'
+  token     text not null,
+  criado_em timestamptz not null default now()
+);
+alter table integracao_token enable row level security;   -- ninguém lê pela API
+
+-- telefone chega de todo jeito: +55 (16) 99999-0000, 5516999999000, 16999990000.
+-- Comparar pelos 8 últimos dígitos acha o mesmo cliente em qualquer formato.
+create or replace function fone_chave(t text) returns text
+language sql immutable as $$
+  select right(regexp_replace(coalesce(t,''), '\D', '', 'g'), 8)
+$$;
+
+create or replace function smbot_entrada(
+  p_token      text,
+  p_telefone   text,
+  p_nome       text default null,
+  p_texto      text default null,
+  p_externo_id text default null,      -- id da mensagem no SMBot (evita repetir)
+  p_de_cliente boolean default true,   -- false = mensagem que o escritório mandou
+  p_atendente  text default null,
+  p_beneficio  text default null       -- assunto/benefício, se o bot perguntar
+) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare
+  v_cli uuid; v_lead uuid; v_conv uuid; v_novo boolean := false; v_chave text;
+begin
+  if p_token is null or p_token <> (select token from integracao_token where nome='smbot') then
+    return jsonb_build_object('ok', false, 'erro', 'token inválido');
+  end if;
+  v_chave := fone_chave(p_telefone);
+  if v_chave = '' or length(v_chave) < 8 then
+    return jsonb_build_object('ok', false, 'erro', 'telefone inválido');
+  end if;
+
+  -- já é cliente do escritório?
+  select id into v_cli from clientes where fone_chave(telefone) = v_chave limit 1;
+
+  -- não sendo cliente, vira (ou reaproveita) um lead do funil de vendas
+  if v_cli is null then
+    select id into v_lead from leads
+     where fone_chave(telefone) = v_chave
+       and etapa not in ('fechado','perdido')
+     order by criado_em desc limit 1;
+    if v_lead is null then
+      insert into leads (nome, telefone, beneficio_interesse, origem, etapa, obs)
+      values (coalesce(nullif(trim(p_nome),''), 'WhatsApp ' || p_telefone),
+              p_telefone, p_beneficio, 'whatsapp', 'novo',
+              'Entrou pelo WhatsApp (SMBot).')
+      returning id into v_lead;
+      v_novo := true;
+    end if;
+  end if;
+
+  -- a mensagem entra no histórico; mandar duas vezes a mesma não duplica
+  if p_texto is not null and trim(p_texto) <> '' then
+    insert into conversas (cliente_id, telefone, plataforma, externo_id,
+                           de_cliente, atendente, texto)
+    values (v_cli, p_telefone, 'whatsapp', p_externo_id,
+            coalesce(p_de_cliente, true), p_atendente, p_texto)
+    on conflict (externo_id) do nothing
+    returning id into v_conv;
+  end if;
+
+  return jsonb_build_object('ok', true, 'cliente_id', v_cli, 'lead_id', v_lead,
+                            'conversa_id', v_conv, 'lead_novo', v_novo);
+end $$;
+
+revoke all on function smbot_entrada(text,text,text,text,text,boolean,text,text) from public;
+grant execute on function smbot_entrada(text,text,text,text,text,boolean,text,text) to anon, authenticated;
+
 -- ── Como cada lista aparece ──────────────────────────────────────────────
 -- Fundo e posição no menu. É preferência DO ESCRITÓRIO, não de cada um:
 -- todo mundo enxerga a mesma tela, e quem descreve "a lista amarela" por
