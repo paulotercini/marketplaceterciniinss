@@ -417,6 +417,25 @@
   .apos-nota{font-size:11.5px;color:var(--cinza);margin-top:6px;line-height:1.45}
   .apos-nota b{color:var(--laranja)}
   .apos-sexo{display:inline-flex;gap:5px;align-items:center;margin-left:4px}
+  .apos-ja{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13.5px;color:var(--verde)}
+  .apos-prova{flex:1 0 100%;font-size:12px;color:var(--cinza);font-style:italic;
+    border-left:2px solid #CBE3CE;padding-left:8px;margin-top:2px}
+  /* LOAS idoso: o CadÚnico tem cor só dele, para não se confundir com prazo
+     do escritório — e continua valendo com o caso encerrado */
+  .cad-cx{border:1px solid #E7BEDA;background:#FDF2F9;border-radius:10px;
+    padding:10px 14px;margin-bottom:10px}
+  .cad-cx.venc{border-color:#B3261E;background:#FBE9E9}
+  .cad-cx.perto{border-color:#E9B44C;background:#FFF8E7}
+  .cad-cab{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .cad-cab strong{color:#A5187F;font-size:14px}
+  .cad-cx.venc .cad-cab strong{color:var(--vermelho)}
+  .cad-sub{font-size:12px;color:var(--cinza)}
+  .cad-lb{font-size:12.5px;color:var(--cinza);display:inline-flex;align-items:center;gap:6px}
+  .cad-lb input{padding:6px 8px;border:1px solid var(--borda);border-radius:8px;
+    font:inherit;font-size:13px;background:var(--branco)}
+  .cad-venc{font-size:13px;font-weight:600;color:#A5187F}
+  .cad-venc.venc{color:var(--vermelho)}
+  .cad-venc.perto{color:var(--laranja)}
   /* 📅 Calendário: o mês inteiro, cada tipo na sua cor */
   .cal-topo{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
   .cal-mes{font-size:16px;color:var(--azul-escuro);min-width:190px;text-align:center}
@@ -520,7 +539,8 @@
     background:var(--branco);color:var(--cinza);font:inherit;font-size:12.5px;font-weight:700;
     cursor:pointer;margin:0 5px 0 0;padding:0;line-height:1;display:inline-flex;
     align-items:center;justify-content:center;transition:.12s}
-  .form-linha .eq-ini:hover{border-color:var(--cor-eq);color:var(--texto)}
+  .form-linha .eq-ini{color:var(--cor-eq)}     /* a letra sempre na cor da pessoa */
+  .form-linha .eq-ini:hover{border-color:var(--cor-eq);background:color-mix(in srgb, var(--cor-eq) 10%, white)}
   .form-linha .eq-ini.on{background:var(--cor-eq);border-color:var(--cor-eq);color:#fff}
   .app.celular .form-linha .eq-ini{width:34px;height:34px;font-size:13.5px}
   .equipe-chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--borda);border-radius:16px;padding:5px 12px;margin:0 6px 6px 0;cursor:pointer;background:var(--branco)}
@@ -668,7 +688,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.08 · Brasília e iniciais</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.08 · LOAS idoso e CadÚnico</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1515,6 +1535,7 @@ function renderMeuDia(){
     `<div class="filtros">${chips.join("")}</div>`
     + blocoRotinas()
     + blocoApos()
+    + blocoCadunico()
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — use o ☀️ nos cartões.</p>")
     + `<h3 class="secao">🟡 Vencem hoje (${hojeK.length+tHoje.length})</h3>`
@@ -2033,6 +2054,9 @@ const TIPOS_CAL = {
   evento:  {cor:"#5C2E91", fundo:"#F0E9F8", icone:"🩺", nome:"Perícia / audiência"},
   tarefa:  {cor:"#5B6069", fundo:"#ECEDEF", icone:"📋", nome:"Tarefa"},
   exig:    {cor:"#B3261E", fundo:"#FBE9E9", icone:"⚠", nome:"Exigência do INSS"},
+  // o CadÚnico é o único que sobrevive ao encerramento do caso, e por isso
+  // tem cor só dele — não se confunde com prazo nosso nenhum
+  cadunico:{cor:"#A5187F", fundo:"#FBE9F5", icone:"🧓", nome:"CadÚnico (LOAS idoso)"},
 };
 let calMes = null;                              // "AAAA-MM"; nulo = mês de hoje
 function mesAtual(){ return calMes || hoje().slice(0,7); }
@@ -2051,6 +2075,13 @@ function itensDoCalendario(){
   });
   (D.tarefas||[]).filter(t=>!t.concluida && t.prazo).forEach(t=>
     push(t.prazo,"tarefa",t.titulo,null));
+  // CadÚnico: percorre TODOS os casos, encerrados inclusive
+  (D.casos||[]).forEach(k=>{
+    const c=D.cliPorId.get(k.cliente_id);
+    if(!c || !ehLoasIdoso(k,c)) return;
+    const venc=renovaCadunico(k);
+    if(venc) push(venc,"cadunico",`${c.nome} — renovar CadÚnico`,c.id);
+  });
   lembretesApos().forEach(a=>
     push(a.aviso,"apos",`${a.cliente.nome} — ${a.especie} em ${fmt(a.data)}`,a.cliente.id,
          {automatica:a.automatica}));
@@ -3468,6 +3499,100 @@ function blocoApos(){
              target="_blank" onclick="event.stopPropagation()">💬 chamar</a>`:""}</div>
       </div></div>`).join("");
 }
+// ── LOAS idoso e o CadÚnico ──────────────────────────────────────────────
+// O BPC do idoso (65 anos, para homem e mulher) exige CadÚnico em dia: ele
+// vence a cada dois anos e o benefício é bloqueado sem atualização. O aviso
+// precisa sobreviver ao encerramento do caso — encerrado aqui só quer dizer
+// que o NOSSO trabalho acabou; o do cliente continua.
+const CADUNICO_ANOS = 2;
+const IDADE_LOAS_IDOSO = 65;
+function ehLoas(k){ return /loas|bpc|assistencial|amparo social/i.test(
+  (k.beneficio||"") + " " + (k.titulo||"")); }
+function ehLoasIdoso(k, cli){
+  if(!ehLoas(k)) return false;
+  const i=idadeDe(cli && cli.dn);
+  return i!=null && i>=IDADE_LOAS_IDOSO;
+}
+function renovaCadunico(k){                       // a data em que vence
+  return k && k.cadunico ? somarAnos(k.cadunico, CADUNICO_ANOS) : null;
+}
+function msgCadunico(cli, k){
+  const venc=renovaCadunico(k);
+  const nome=(cli.nome||"").split(/\s+/)[0];
+  return `Olá, ${nome}! Aqui é do escritório Paulo R. Tercini Filho.\n\n`+
+    `Seu benefício de BPC/LOAS exige o Cadastro Único (CadÚnico) atualizado a cada 2 anos. `+
+    (venc ? `O seu vence em ${fmt(venc)}.\n\n` : `\n\n`)+
+    `Procure o CRAS do seu bairro com RG, CPF, comprovante de residência e os documentos `+
+    `de quem mora com você, e peça a ATUALIZAÇÃO CADASTRAL. Sem isso o INSS pode bloquear o pagamento.\n\n`+
+    `Qualquer dúvida, fale com a gente. 🙏`;
+}
+function caixaCadunico(k, cli){
+  if(!ehLoasIdoso(k, cli)) return "";
+  const venc=renovaCadunico(k);
+  const dias=venc ? diasAte(venc) : null;
+  const estado = !venc ? "sem" : dias<0 ? "venc" : dias<=90 ? "perto" : "ok";
+  const tel=(cli.telefone||"").replace(/\D/g,"");
+  return `<div class="cad-cx ${estado}">
+    <div class="cad-cab"><strong>🧓 LOAS idoso</strong>
+      <span class="cad-sub">CadÚnico precisa ser renovado a cada ${CADUNICO_ANOS} anos</span></div>
+    <div class="form-linha" style="align-items:center;margin:8px 0 0">
+      <label class="cad-lb">Última atualização:
+        <input type="date" value="${k.cadunico||""}" onchange="salvarCadunico('${k.id}',this.value)"></label>
+      ${venc ? `<span class="cad-venc ${estado}">${
+          dias<0 ? `⚠ venceu em ${fmt(venc)} (há ${-dias} dias)`
+        : dias===0 ? `⚠ vence hoje`
+        : `🗓 renovar até ${fmt(venc)} (${dias} dias)`}</span>`
+        : `<span class="meio-sub">informe a data para o sistema lembrar</span>`}
+      ${tel ? `<a class="btn-mini" target="_blank" style="text-decoration:none"
+        href="https://wa.me/55${tel}?text=${encodeURIComponent(msgCadunico(cli,k))}"
+        title="abre o WhatsApp com a mensagem pronta">💬 avisar do CadÚnico</a>`
+        : `<button class="btn-mini" onclick="copiarMsgCadunico('${cli.id}','${k.id}')">💬 copiar mensagem</button>`}
+    </div>
+  </div>`;
+}
+async function salvarCadunico(casoId, valor){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  k.cadunico = valor || null;
+  try{
+    await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({cadunico:k.cadunico})});
+  }catch(e){ return aviso("Rode o schema.sql mais novo no Supabase para usar o CadÚnico"); }
+  const v=renovaCadunico(k);
+  aviso(v ? `CadÚnico guardado — renovar até ${fmt(v)}` : "Data do CadÚnico apagada");
+  if(clienteAberto) abrirFicha(clienteAberto);
+}
+function copiarMsgCadunico(cliId, casoId){
+  const cli=D.cliPorId.get(cliId), k=D.casoPorId.get(casoId);
+  if(cli&&k) copiar(msgCadunico(cli,k), "Mensagem do CadÚnico copiada 💬");
+}
+
+// no Meu Dia: CadÚnico vencido ou vencendo nos próximos 90 dias, de todos os
+// clientes — inclusive dos casos já encerrados
+function blocoCadunico(){
+  const itens=[];
+  (D.casos||[]).forEach(k=>{
+    const c=D.cliPorId.get(k.cliente_id);
+    if(!c || !ehLoasIdoso(k,c)) return;
+    const venc=renovaCadunico(k);
+    if(!venc) return;
+    const d=diasAte(venc);
+    if(d<=90) itens.push({c, k, venc, d});
+  });
+  if(!itens.length) return "";
+  itens.sort((a,b)=>a.venc<b.venc?-1:1);
+  return `<h3 class="secao" style="color:#A5187F">🧓 CadÚnico a renovar (${itens.length})</h3>` +
+    itens.map(({c,k,venc,d})=>`<div class="cartao" data-cli="${c.id}">
+      <span class="check" style="border-color:#A5187F"></span>
+      <div class="info"><div class="nome">${esc(c.nome)}</div>
+        <div class="meta"><span class="chip" style="background:#FBE9F5;color:#A5187F">LOAS idoso</span>
+          <span style="color:${d<0?"var(--vermelho)":"#A5187F"};font-weight:600">${
+            d<0?`venceu em ${fmt(venc)}`:d===0?"vence hoje":`renovar até ${fmt(venc)}`}</span>
+          ${k.fase==="encerrado"?`<span class="chip neutro">caso encerrado</span>`:""}
+          ${c.telefone?`<a class="chip per" target="_blank" onclick="event.stopPropagation()"
+             href="https://wa.me/55${c.telefone.replace(/\D/g,"")}?text=${encodeURIComponent(msgCadunico(c,k))}"
+             >💬 avisar</a>`:""}</div>
+      </div></div>`).join("");
+}
 function caixaApos(cli){
   const lista=aposDoCliente(cli);
   const auto=lista.find(a=>a.automatica);
@@ -3476,12 +3601,18 @@ function caixaApos(cli){
   const jaPassou = !temIdadeManual && idadeJaPassou(cli);
   const botoesSexo = `<button class="btn-mini" onclick="definirSexo('${cli.id}','F')">mulher</button>
     <button class="btn-mini" onclick="definirSexo('${cli.id}','M')">homem</button>`;
+  const fonte = {andamento:"encontrado nos andamentos", cnis:"conferido no CNIS",
+                 manual:"marcado à mão"}[cli.aposentado_fonte] || "";
   return `<div class="apos-cx" id="apos-cx">
     <div class="apos-cab">
       <strong>🎂 Aposentadoria provável</strong>
       <button class="apos-mais" onclick="novaApos('${cli.id}')" title="acrescentar outra data">＋</button>
     </div>
-    ${lista.length ? lista.map(a=>`<div class="apos-it ${a.automatica?"auto":""}">
+    ${cli.aposentado===true ? `<div class="apos-ja">✔ <b>Já aposentado</b>
+        ${fonte?`<span class="meio-sub">(${fonte}${cli.aposentado_em?" · "+fmt(cli.aposentado_em):""})</span>`:""}
+        <button class="btn-mini" onclick="marcarAposentado('${cli.id}',null)">não está</button>
+        ${cli.aposentado_prova?`<div class="apos-prova">“${esc(cli.aposentado_prova)}”</div>`:""}</div>`
+    : lista.length ? lista.map(a=>`<div class="apos-it ${a.automatica?"auto":""}">
         <span class="apos-data">${fmt(a.data)}</span>
         <span class="apos-esp">${esc(a.especie)}</span>
         ${a.data<=hoje() ? `<span class="apos-av ja">✓ já tem direito</span>`
@@ -3493,10 +3624,15 @@ function caixaApos(cli){
       </div>`).join("")
       : `<div class="meio-sub">${jaPassou ? "Sem data futura."
           : "Sem data ainda" + (dnIso(cli.dn)?"":" — falta a data de nascimento") + "."}</div>`}
-    ${jaPassou ? `<div class="apos-nota">Completou ${IDADE_APOS[sexo]} anos em
-        ${fmt(dataIdadeApos(cli))}, antes de ${fmt(APOS_IDADE_CORTE)} — a aposentadoria por
-        idade não entra como provável porque, com o tempo de contribuição, esse cliente
-        provavelmente já se aposentou. <b>Confira no CNIS.</b> Se não se aposentou, use o ＋.</div>`
+    ${cli.aposentado===true ? ""
+     : jaPassou ? `<div class="apos-nota">Completou ${IDADE_APOS[sexo]} anos em
+        ${fmt(dataIdadeApos(cli))}: com o tempo de contribuição, provavelmente já se aposentou —
+        por isso a aposentadoria por idade não entra como provável.
+        <b>Confira no CNIS</b> (📁 Drive, no cadastro) e responda:
+        <span class="apos-sexo">
+          <button class="btn-mini" onclick="marcarAposentado('${cli.id}',1)">já se aposentou</button>
+          <button class="btn-mini" onclick="marcarAposentado('${cli.id}',0)">não se aposentou</button>
+        </span></div>`
      : auto ? `<div class="apos-nota">Calculada pelo nascimento (${IDADE_APOS[auto.sexoUsado]} anos,
         ${auto.sexoUsado==="F"?"mulher":"homem"}${auto.suposto?" — pelo nome":""}).
         <b>É automática: confira a carência e a regra de transição.</b>
@@ -3506,6 +3642,22 @@ function caixaApos(cli){
           <span class="apos-sexo">${botoesSexo}</span></div>` : ""}
     <div id="apos-form"></div>
   </div>`;
+}
+// marcar à mão: 1 = já se aposentou, 0 = não, null = voltar à dúvida
+async function marcarAposentado(cliId, valor){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const v = valor===null ? null : !!Number(valor);
+  const dados = v===null
+    ? {aposentado:null, aposentado_fonte:null, aposentado_em:null, aposentado_prova:null}
+    : {aposentado:v, aposentado_fonte:"manual", aposentado_em:hoje(), aposentado_prova:null};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(dados)});
+  }catch(e){ return aviso("Rode o schema.sql mais novo no Supabase"); }
+  Object.assign(c, dados);
+  aviso(v===null ? "Voltou para conferir" : v ? "✔ Marcado como já aposentado"
+                                             : "Marcado como não aposentado");
+  abrirFicha(cliId);
 }
 function novaApos(cliId, data, especie){
   document.getElementById("apos-form").innerHTML=`
@@ -3677,7 +3829,8 @@ function caixaArquivos(k){
 function painelEscritorio(k, ands){
   const equipe = D.atrDoCaso.get(k.id) || [];
   const encerrado = k.fase==="encerrado";
-  return `<div class="caso caso-check">${checklistCaso(k)}</div>
+  return `${caixaCadunico(k, D.cliPorId.get(k.cliente_id))}
+  <div class="caso caso-check">${checklistCaso(k)}</div>
   <div class="caso-acoes">
     <div class="form-linha" style="align-items:center;margin:0">
       <span class="rotulo-rap">👥 ATRIBUÍDO A:</span>
