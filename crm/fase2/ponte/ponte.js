@@ -64,6 +64,14 @@ async function anotar(chave, valor) {
   }).catch(e => log("não consegui anotar", chave, e.message));
 }
 
+async function baixarDoBalde(caminho) {
+  const r = await fetch(`${BASE}/storage/v1/object/${BALDE}/${caminho}`, {
+    headers: { apikey: CHAVE, Authorization: `Bearer ${CHAVE}` },
+  });
+  if (!r.ok) throw new Error(`storage ${r.status} ao ler ${caminho}`);
+  return Buffer.from(await r.arrayBuffer());
+}
+
 async function subirMidia(buffer, caminho, mime) {
   const r = await fetch(`${BASE}/storage/v1/object/${BALDE}/${caminho}`, {
     method: "POST",
@@ -191,7 +199,26 @@ async function entrou(m, baixar) {
     // 23505 = mensagem repetida; reprocessar não pode virar linha dobrada
     if (!String(e.message).includes("23505")) throw e;
   });
+  guardarFoto(conversa, m.key.remoteJid);
   log("←", fone, (linha.texto || `[${tipo}]`).slice(0, 60));
+}
+
+// O tipo importa: foto tem de chegar como FOTO, não como arquivo para baixar.
+// Documento leva o nome original, senão o cliente recebe "arquivo.bin" e não
+// sabe que é a lista de documentos que ele pediu.
+async function conteudoDaMensagem(msg) {
+  if (!msg.midia_url) return { text: msg.texto || "" };
+  const buf = await baixarDoBalde(msg.midia_url);
+  const legenda = (msg.texto || "").trim() || undefined;
+  const mime = msg.midia_mime || "application/octet-stream";
+  switch (msg.tipo) {
+    case "imagem": return { image: buf, caption: legenda };
+    case "video":  return { video: buf, caption: legenda };
+    // ptt=true faz aparecer como áudio de voz, e não como arquivo de música
+    case "audio":  return { audio: buf, mimetype: mime, ptt: true };
+    default:       return { document: buf, mimetype: mime,
+                            fileName: msg.midia_nome || "arquivo", caption: legenda };
+  }
 }
 
 // ── fila de saída ─────────────────────────────────────────────────────────
@@ -204,7 +231,8 @@ async function rodarFila() {
         // ordem pelo contador, não pelo relógio: duas mensagens gravadas no
         // mesmo instante sairiam em ordem sorteada
         const fila = await sb("/rest/v1/zap_mensagens?status=eq.fila"
-          + "&select=id,conversa_id,texto,tentativas&order=seq&limit=5");
+          + "&select=id,conversa_id,texto,tipo,midia_url,midia_nome,midia_mime,tentativas"
+          + "&order=seq&limit=5");
         for (const msg of fila || []) await enviar(msg);
       }
     } catch (e) { log("fila:", e.message); }
@@ -232,7 +260,7 @@ async function enviar(msg, s = sock) {
     await s.sendPresenceUpdate("composing", achado.jid);
     // um respiro humano entre uma mensagem e outra
     await espera(Number(process.env.PAUSA_ENVIO ?? (700 + Math.floor(Math.random() * 1500))));
-    const r = await s.sendMessage(achado.jid, { text: msg.texto || "" });
+    const r = await s.sendMessage(achado.jid, await conteudoDaMensagem(msg));
     await s.sendPresenceUpdate("paused", achado.jid);
 
     await sb(`/rest/v1/zap_mensagens?id=eq.${msg.id}`, {
@@ -240,7 +268,7 @@ async function enviar(msg, s = sock) {
       body: JSON.stringify({ status: "enviada", enviada_em: agora(),
                              externo_id: (r && r.key && r.key.id) || null }),
     });
-    log("→", c.telefone, (msg.texto || "").slice(0, 60));
+    log("→", c.telefone, (msg.texto || `[${msg.tipo}] ${msg.midia_nome || ""}`).slice(0, 60));
   } catch (e) {
     const n = (msg.tentativas || 0) + 1;
     await sb(`/rest/v1/zap_mensagens?id=eq.${msg.id}`, {
@@ -252,6 +280,27 @@ async function enviar(msg, s = sock) {
     }).catch(() => {});
     log("✗ falhou:", e.message, n >= 3 ? "(desisti)" : `(tentativa ${n})`);
   }
+}
+
+// ── foto de perfil ────────────────────────────────────────────────────────
+// A URL que o WhatsApp devolve expira em horas, então a foto é copiada para o
+// nosso balde uma vez. Nem todo mundo tem foto, e quem não tem não pode virar
+// erro no meio do fluxo de mensagens.
+async function guardarFoto(conversaId, jid, s = sock) {
+  try {
+    const [c] = await sb(`/rest/v1/zap_conversas?id=eq.${conversaId}&select=foto_url`);
+    if (c && c.foto_url) return;                 // já temos
+    const url = await s.profilePictureUrl(jid, "image").catch(() => null);
+    if (!url) return;
+    const r = await fetch(url);
+    if (!r.ok) return;
+    const caminho = `zap/perfil/${conversaId}.jpg`;
+    await subirMidia(Buffer.from(await r.arrayBuffer()), caminho, "image/jpeg");
+    await sb(`/rest/v1/zap_conversas?id=eq.${conversaId}`, {
+      method: "PATCH", headers: { Prefer: "return=minimal" },
+      body: JSON.stringify({ foto_url: caminho }),
+    });
+  } catch (e) { /* foto é enfeite: não pode atrapalhar a mensagem */ }
 }
 
 // ── avisos automáticos ────────────────────────────────────────────────────
@@ -291,4 +340,4 @@ if (require.main === module) {
   process.on("SIGTERM", () => tchau("SIGTERM"));
 }
 
-module.exports = { sb, rpc, enviar, entrou };
+module.exports = { sb, rpc, enviar, entrou, conteudoDaMensagem };

@@ -875,6 +875,9 @@ create table if not exists zap_conversas (
   fixada       boolean not null default false,
   criado_em    timestamptz not null default now()
 );
+-- foto de perfil do WhatsApp, guardada no nosso balde privado: a URL que o
+-- WhatsApp entrega expira em horas, e a lista ficaria cheia de imagem quebrada
+alter table zap_conversas add column if not exists foto_url text;
 create unique index if not exists zap_conversas_chave on zap_conversas (chave);
 create index if not exists zap_conversas_fila on zap_conversas (status, ultima_em desc);
 create index if not exists zap_conversas_cli on zap_conversas (cliente_id);

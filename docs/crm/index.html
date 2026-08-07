@@ -553,6 +553,12 @@
   .cfg-reg.off{opacity:.5;background:var(--fundo)}
   .cfg-reg textarea{width:100%;border:1px solid var(--borda);border-radius:8px;padding:8px;
                     font:inherit;font-size:12.5px;resize:vertical;white-space:pre-wrap}
+  .zap-av{width:26px;height:26px;border-radius:50%;object-fit:cover;flex:0 0 auto;
+          background:#dfe3ea;display:inline-flex;align-items:center;justify-content:center;
+          font-size:12px;font-weight:700;color:var(--cinza)}
+  .zap-icone{border:1px solid var(--borda);background:var(--fundo);border-radius:8px;
+             padding:6px 9px;font-size:15px;cursor:pointer;line-height:1}
+  .zap-icone:hover{background:#e8f1fb}
   .zap-estado{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--cinza);
               font-weight:600;margin-bottom:6px}
   .zap-estado i{width:9px;height:9px;border-radius:50%;display:inline-block}
@@ -765,7 +771,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.14 · data do pagamento</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.15 · anexos no WhatsApp</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2141,6 +2147,7 @@ async function recarregarZap(silencioso){
     return;
   }
   zapConvs = cs;
+  await assinarFotosZap(cs);
   pintarListaZap();
   if(zapAberta && !silencioso) await abrirConversa(zapAberta);
   else if(zapAberta) await recarregarMsgs();
@@ -2181,6 +2188,27 @@ function pintarListaZap(){
   document.querySelectorAll("[data-zc]").forEach(el=>el.onclick=()=>abrirConversa(el.dataset.zc));
 }
 
+// A foto de perfil do WhatsApp é o que faz a lista parecer gente, e não
+// planilha. Ela vive no balde privado, então a URL é assinada em LOTE — uma
+// chamada para a lista inteira, e não uma por linha.
+let zapFotos = new Map();
+function avatarZap(c){
+  const u = zapFotos.get(c.foto_url);
+  const ini = (nomeDaConversa(c)||"?").trim()[0].toUpperCase();
+  return u ? `<img class="zap-av" src="${esc(u)}" alt="">`
+           : `<span class="zap-av vazio">${esc(ini)}</span>`;
+}
+async function assinarFotosZap(cs){
+  const faltam = [...new Set(cs.map(c=>c.foto_url).filter(u=>u && !zapFotos.has(u)))];
+  if(!faltam.length) return;
+  try{
+    const d = await api(`/storage/v1/object/sign/${BUCKET}`,{method:"POST",
+      body:JSON.stringify({expiresIn:3600, paths:faltam})});
+    (d||[]).forEach(x=>{ if(x.signedURL)
+      zapFotos.set(x.path, CONFIG.SUPABASE_URL.replace(/\/$/,"")+"/storage/v1"+x.signedURL); });
+  }catch(e){ /* sem foto a lista continua funcionando, com a inicial */ }
+}
+
 function nomeDaConversa(c){
   const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
   if(cli) return cli.nome;
@@ -2192,7 +2220,7 @@ function cartaoConversa(c){
   const at = c.atendente_id && D.colPorId.get(c.atendente_id);
   const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
   return `<div class="zap-conv ${zapAberta===c.id?"on":""} ${c.nao_lidas?"nova":""}" data-zc="${c.id}">
-    <div class="l1"><b>${esc(nomeDaConversa(c))}</b>
+    <div class="l1">${avatarZap(c)}<b>${esc(nomeDaConversa(c))}</b>
       ${c.nao_lidas?`<span class="bolha">${c.nao_lidas}</span>`:""}
       <span class="hora">${c.ultima_em?quandoFalou(c.ultima_em):""}</span></div>
     <div class="l2">${esc((c.ultimo_texto||"").slice(0,60))}</div>
@@ -2245,7 +2273,7 @@ function pintarConversa(){
   const tel = (c.telefone||"").replace(/\D/g,"");
   document.getElementById("zap-dir").innerHTML =
     `<div class="zap-topo">
-       <span><b>${esc(nomeDaConversa(c))}</b>
+       <span>${avatarZap(c)}<b>${esc(nomeDaConversa(c))}</b>
          <span style="font-weight:400"> · ${esc(c.telefone||"")}</span></span>
        ${cli?`<button class="btn-mini" onclick="abrirFicha('${cli.id}')">abrir ficha</button>`:""}
        ${at?`<span class="eq-ini on" style="--cor-eq:${at.cor}" title="${esc(at.nome)}">${esc(at.inicial)}</span>`
@@ -2257,6 +2285,10 @@ function pintarConversa(){
      <div class="zap-msgs" id="zap-msgs">${zapMsgs.map(m=>bolhaZap(m,cli)).join("")
         || `<p class="meio-sub" style="padding:12px">Sem mensagens ainda.</p>`}</div>
      <div class="zap-escrever">
+       <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
+       <button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
+         title="mandar foto, PDF ou áudio">📎</button>
+       <button class="zap-icone" onclick="frasesZap()" title="mensagens prontas">⚡</button>
        <textarea id="zap-txt" rows="1" placeholder="Escreva para ${esc(nomeDaConversa(c))}…"></textarea>
        <button class="btn-rap" id="zap-enviar" onclick="enviarZap()">Enviar</button>
        ${tel?`<a class="btn-mini" target="_blank" style="text-decoration:none"
@@ -2329,6 +2361,52 @@ async function enviarZap(){
   await abrirConversa(zapAberta);
   if(estadoPonte().txt!=="ponte ligada")
     aviso("Guardado na fila — a ponte está fora do ar e envia quando voltar", false);
+}
+
+// O tipo importa: foto tem de chegar como FOTO, não como arquivo para baixar.
+// É o que o cliente espera ver, e é o que faz ele responder na hora.
+function tipoDoArquivo(f){
+  const m = (f.type||"").toLowerCase();
+  if(m.startsWith("image/")) return "imagem";
+  if(m.startsWith("video/")) return "video";
+  if(m.startsWith("audio/")) return "audio";
+  return "documento";
+}
+async function mandarArquivoZap(){
+  const inp = document.getElementById("zap-arq");
+  const arq = inp && inp.files && inp.files[0];
+  if(!arq || !zapAberta) return;
+  inp.value = "";                               // permite mandar o mesmo de novo
+  // 60 MB é o teto do WhatsApp; barrar aqui evita o arquivo subir para nada
+  if(arq.size > 60*1024*1024) return aviso("Arquivo grande demais para o WhatsApp (máx. 60 MB)");
+  const nome = nomeSeguro(arq.name || "arquivo");
+  const caminho = `zap/${zapAberta}/enviados/${Date.now()}-${nome}`;
+  const legenda = (document.getElementById("zap-txt").value||"").trim();
+  aviso("Enviando "+nome+"…", false);
+  try{ await subirArquivo(caminho, arq); }
+  catch(e){ return aviso("Não consegui subir o arquivo: "+e.message); }
+  document.getElementById("zap-txt").value="";
+  await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
+      tipo:tipoDoArquivo(arq), texto:legenda||null, midia_url:caminho,
+      midia_nome:arq.name||nome, midia_mime:arq.type||null, status:"fila"})});
+  const c = zapConvs.find(x=>x.id===zapAberta);
+  if(c){ c.bot_ativo=false; c.atendente_id = c.atendente_id || eu.id; }
+  await abrirConversa(zapAberta);
+}
+// as mesmas frases prontas do resto do CRM, sem cadastro paralelo
+function frasesZap(){
+  const fs = D.frases||[];
+  if(!fs.length) return aviso("Nenhuma frase pronta cadastrada ainda");
+  caixa(`<h3>Mensagens prontas</h3>
+    <p class="meio-sub">Ela entra no campo de escrever — dá para completar antes de mandar.</p>
+    ${fs.map((f,i)=>`<button class="btn-rap" data-frase="${i}"
+       style="display:block;width:100%;margin:5px 0;text-align:left">${esc(f.texto)}</button>`).join("")}`);
+  document.querySelectorAll("[data-frase]").forEach(b=>b.onclick=()=>{
+    const t = document.getElementById("zap-txt");
+    t.value = (fs[+b.dataset.frase]||{}).texto||"";
+    fecharCaixa(); t.focus();
+  });
 }
 
 async function mudarConversa(campos){
