@@ -559,6 +559,9 @@
   .zap-b .txt{white-space:pre-wrap}
   .zap-b .pe{display:flex;align-items:center;gap:6px;justify-content:flex-end;
              font-size:10px;color:var(--cinza);margin-top:2px}
+  .zap-b.rascunho{background:#fff8e1;border:1px dashed #e0b955}
+  .zap-rev{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:5px;
+           font-size:11px;color:#8a6300;font-weight:600}
   .zap-b .virar{border:0;background:none;color:var(--azul);font-size:10px;font-weight:700;
                 cursor:pointer;padding:0;opacity:0}
   .zap-b:hover .virar{opacity:1}
@@ -742,7 +745,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.11 · caixa de entrada</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.12 · avisos automáticos</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2208,7 +2211,7 @@ function atualizarVistos(){
                        if(el) el.textContent = seloZap(m); });
 }
 
-const SELO = {fila:"🕓", enviando:"🕓", enviada:"✓", entregue:"✓✓", lida:"✓✓", erro:"⚠"};
+const SELO = {rascunho:"✎", fila:"🕓", enviando:"🕓", enviada:"✓", entregue:"✓✓", lida:"✓✓", erro:"⚠"};
 const seloZap = m => m.direcao==="saida" ? (SELO[m.status]||"") : "";
 
 function pintarConversa(){
@@ -2249,15 +2252,37 @@ function bolhaZap(m, cli){
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${esc(m.texto)}</div>`:"")
     : esc(m.texto||`[${m.tipo}]`);
-  return `<div class="zap-b ${m.direcao} ${m.por_bot?"bot":""} ${m.status==="erro"?"ruim":""}">
-    ${quem?`<div class="autor">${esc(quem)}</div>`:""}
+  return `<div class="zap-b ${m.direcao} ${m.por_bot?"bot":""} ${m.status==="erro"?"ruim":""}
+      ${m.status==="rascunho"?"rascunho":""}">
+    ${quem?`<div class="autor">${esc(m.aviso_chave?"aviso automático":quem)}</div>`:""}
     <div class="txt">${corpo}</div>
+    ${m.status==="rascunho"?`<div class="zap-rev">
+        <span>escrito pelo sistema — confira antes de mandar</span>
+        <button class="btn-mini" onclick="soltarRascunho('${m.id}')">enviar</button>
+        <button class="btn-mini" onclick="descartarRascunho('${m.id}')">descartar</button>
+      </div>`:""}
     <div class="pe">${horaSP(m.quando_wa||m.criado_em)}
       <span id="zs-${m.id}">${seloZap(m)}</span>
       ${m.status==="erro"?`<span title="${esc(m.erro||"")}">não enviou</span>`:""}
       ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
          title="registrar no histórico de um processo">↪ andamento</button>`:""}
     </div></div>`;
+}
+
+// Rascunho é aviso automático que a regra mandou conferir antes. Soltar é
+// virar pedido de envio; descartar apaga — e a chave única impede que o
+// gerador o refaça, então descartar quer dizer "esse cliente não recebe".
+async function soltarRascunho(id){
+  await api(`/rest/v1/zap_mensagens?id=eq.${id}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"}, body:JSON.stringify({status:"fila", autor_id:eu.id})});
+  aviso("Aviso liberado para envio ✔");
+  await abrirConversa(zapAberta);
+}
+async function descartarRascunho(id){
+  if(!confirm("Descartar este aviso? O cliente não vai recebê-lo.")) return;
+  await api(`/rest/v1/zap_mensagens?id=eq.${id}`,{method:"DELETE",
+    headers:{Prefer:"return=minimal"}});
+  await abrirConversa(zapAberta);
 }
 
 async function verMidiaZap(id){
