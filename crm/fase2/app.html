@@ -533,6 +533,16 @@
   .zap-vazio{margin:auto;text-align:center;max-width:340px;padding:20px}
   .zap-vazio h4{margin:0 0 6px}
   .zap-vazio p{font-size:13px;color:var(--cinza);margin:0 0 12px}
+  .pg-cx{background:#f3f9f4;border:1px solid #cfe6d4;border-radius:10px;padding:8px 12px;margin-top:8px}
+  .pg-cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px}
+  .pg-fx{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--cinza);
+         font-weight:600;margin-left:auto;cursor:pointer}
+  .pg-datas{display:flex;gap:8px;flex-wrap:wrap;margin:7px 0 4px}
+  .pg-d{display:flex;flex-direction:column;background:var(--branco);border:1px solid var(--borda);
+        border-radius:8px;padding:4px 10px;font-size:14px}
+  .pg-d.prox{border-color:#0a7d43;background:#eaf7ef}
+  .pg-d small{font-size:10px;color:var(--cinza);font-weight:600}
+  .pg-nota{font-size:11px;color:var(--cinza)}
   .cfg-cx{background:var(--branco);border:1px solid var(--borda);border-radius:10px;
           padding:10px 12px;margin-bottom:6px}
   .cfg-linha{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0}
@@ -755,7 +765,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.13 · configurações</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.14 · data do pagamento</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1173,7 +1183,7 @@ async function guardarCfgApp(chave, valor){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -1199,10 +1209,12 @@ async function carregar(){
       todas("lista_pref","select=*").catch(()=>[]),
       todas("config_app","select=*").catch(()=>[]),
       todas("zap_conversas","select=id,nao_lidas,atendente_id,status").catch(()=>[]),
+      todas("inss_calendario","select=*").catch(()=>[]),
     ]);
   D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
   D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
   D.config = new Map((cfgs||[]).map(x=>[x.chave,x.valor]));
+  D.inssCal = inssCal||[];
   // conta o que cobra ação: minha conversa com mensagem nova, ou conversa
   // aberta sem dono nenhum. O resto não precisa de contador piscando.
   D.zapResumo = (zaps||[]).filter(z=>z.status!=="resolvida"
@@ -2389,6 +2401,73 @@ node ponte.js</pre>
       <code>crm/fase2/ponte/PASSO-A-PASSO.md</code>.</p>`);
 }
 
+
+// ── 💰 Quando o benefício cai na conta ────────────────────────────────────
+// O final é o último algarismo do NB ANTES do traço: o dígito depois do hífen
+// é verificador e não entra na conta. Em 0104-7, o final é 4.
+//
+// Como o NB nem sempre vem com o hífen, a regra é: tira tudo que não é
+// número, joga fora o último (o verificador) e pega o último que sobrou. E o
+// sistema MOSTRA qual dígito usou — assim quem conferir vê na hora se o
+// número foi cadastrado sem o verificador.
+function finalDoNB(nb){
+  const d = String(nb||"").replace(/\D/g,"");
+  if(d.length < 2) return null;
+  return +d.slice(0,-1).slice(-1);
+}
+// próximos N pagamentos daquele final, a partir de hoje
+function pagamentosDoNB(nb, acima, quantos=3){
+  const f = finalDoNB(nb); if(f===null) return null;
+  const faixa = acima ? "acima" : "ate";
+  return (D.inssCal||[])
+    .filter(x=>x.faixa===faixa && x.final===f && x.pagamento>=hoje())
+    .sort((a,b)=>a.pagamento<b.pagamento?-1:1)
+    .slice(0,quantos);
+}
+// até onde a tabela cadastrada alcança — passou disso, ninguém chuta data.
+// São duas pontas diferentes: a última competência coberta e o último dia em
+// que ainda cai dinheiro (que já é do ano seguinte).
+const ultimaCompetencia = () => (D.inssCal||[]).reduce((m,x)=>x.competencia>m?x.competencia:m,"");
+const ultimoPagamento   = () => (D.inssCal||[]).reduce((m,x)=>x.pagamento>m?x.pagamento:m,"");
+const mesPorExtenso = iso => new Date(iso+"T12:00:00")
+  .toLocaleDateString(IDIOMA,{month:"long",year:"numeric"});
+
+function blocoPagamentoINSS(k){
+  if(!k.nb) return "";                       // sem NB não há o que calcular
+  const f = finalDoNB(k.nb);
+  if(f===null) return "";
+  if(!(D.inssCal||[]).length)
+    return `<div class="pg-cx"><b>💰 Pagamento</b>
+      <span class="meio-sub">tabela do INSS não cadastrada no banco — rode o schema.sql</span></div>`;
+  const prox = pagamentosDoNB(k.nb, k.renda_acima_minimo, 3) || [];
+  return `<div class="pg-cx">
+    <div class="pg-cab"><b>💰 Pagamento do benefício</b>
+      <span class="chip neutro" title="último algarismo antes do traço, sem o verificador">final ${f}</span>
+      <label class="pg-fx"><input type="checkbox" ${k.renda_acima_minimo?"checked":""}
+        onchange="salvarFaixaRenda('${k.id}', this.checked)"> recebe acima de 1 salário mínimo</label>
+    </div>
+    ${prox.length ? `<div class="pg-datas">${prox.map((x,i)=>`
+        <span class="pg-d ${i?"":"prox"}">
+          <b>${fmt(x.pagamento)}</b>
+          <small>competência ${mesPorExtenso(x.competencia)}</small>
+        </span>`).join("")}</div>`
+      : `<div class="meio-sub">Nada mais neste calendário.</div>`}
+    <div class="pg-nota">Calendário oficial do INSS — última competência
+      ${mesPorExtenso(ultimaCompetencia())}, paga até ${fmt(ultimoPagamento())}.
+      ${prox.length<3
+        ? `<b>Daí em diante, a tabela do ano novo precisa ser cadastrada no sistema.</b>`
+        : `Depois disso, a tabela do ano novo precisa ser cadastrada no sistema.`}</div>
+  </div>`;
+}
+async function salvarFaixaRenda(casoId, acima){
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"}, body:JSON.stringify({renda_acima_minimo:acima})});
+  const k = D.casoPorId.get(casoId); if(k) k.renda_acima_minimo = acima;
+  aviso(acima?"Passa a usar o calendário de quem recebe acima do mínimo"
+             :"Volta para o calendário de até 1 salário mínimo", false);
+  if(clienteAberto) abrirFicha(clienteAberto);
+}
+
 // ── ⚙️ Configurações: o que antes só se mudava no banco ───────────────────
 // Tudo aqui é do ESCRITÓRIO, não de cada um: quem mexe, mexe para todo mundo.
 // Está tudo numa tela só de propósito — são as coisas que se ajustam uma vez
@@ -3455,6 +3534,8 @@ async function abrirFicha(cliId){
           ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 msg ao cliente</button>
             <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
         </div>
+        </div>
+        ${blocoPagamentoINSS(k)}
         </div>
         ${trilhaCaso(k)}
         </div>
