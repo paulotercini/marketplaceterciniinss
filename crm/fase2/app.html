@@ -553,6 +553,16 @@
   .cfg-reg.off{opacity:.5;background:var(--fundo)}
   .cfg-reg textarea{width:100%;border:1px solid var(--borda);border-radius:8px;padding:8px;
                     font:inherit;font-size:12.5px;resize:vertical;white-space:pre-wrap}
+  /* nota interna e rascunho não podem se parecer: um NÃO vai ser enviado, o
+     outro VAI assim que alguém aprovar. Amarelo é do rascunho; a nota é
+     cinza-lilás, centralizada, com a tarja de "só a equipe vê". */
+  .zap-b.interna{align-self:center;max-width:88%;background:#eceef5;
+                 border:1px solid #c3c8dc;border-left:4px solid #8764b8}
+  .zap-b.interna .autor{color:#5c4b7d}
+  .zap-b.interna .txt{color:#3c3c4a}
+  .zap-icone.nota{background:#fff3cd;border-color:#e0b955}
+  .zap-escrever.modo-nota{background:#fffbea}
+  .zap-escrever.modo-nota textarea{border-color:#e0b955;background:#fffdf5}
   .zap-av{width:26px;height:26px;border-radius:50%;object-fit:cover;flex:0 0 auto;
           background:#dfe3ea;display:inline-flex;align-items:center;justify-content:center;
           font-size:12px;font-weight:700;color:var(--cinza)}
@@ -771,7 +781,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.15 · anexos no WhatsApp</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.16 · nota interna</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2117,6 +2127,8 @@ async function leadParaCliente(leadId){
 // pedido de envio — o CRM nunca fala com o WhatsApp direto. Se a ponte
 // estiver caída, a mensagem espera na fila em vez de sumir.
 let zapFiltro = "minhas", zapAberta = null, zapMsgs = [], zapTimer = null, zapConvs = [];
+// modo nota interna: o que for escrito fica só para a equipe
+let zapNota = false;
 
 function pararZapTimer(){ if(zapTimer){ clearInterval(zapTimer); zapTimer=null; } }
 
@@ -2284,13 +2296,17 @@ function pintarConversa(){
      </div>
      <div class="zap-msgs" id="zap-msgs">${zapMsgs.map(m=>bolhaZap(m,cli)).join("")
         || `<p class="meio-sub" style="padding:12px">Sem mensagens ainda.</p>`}</div>
-     <div class="zap-escrever">
+     <div class="zap-escrever ${zapNota?"modo-nota":""}">
        <input type="file" id="zap-arq" hidden onchange="mandarArquivoZap()">
        <button class="zap-icone" onclick="document.getElementById('zap-arq').click()"
          title="mandar foto, PDF ou áudio">📎</button>
        <button class="zap-icone" onclick="frasesZap()" title="mensagens prontas">⚡</button>
-       <textarea id="zap-txt" rows="1" placeholder="Escreva para ${esc(nomeDaConversa(c))}…"></textarea>
-       <button class="btn-rap" id="zap-enviar" onclick="enviarZap()">Enviar</button>
+       <button class="zap-icone ${zapNota?"nota":""}" id="zap-btn-nota" onclick="alternarNota()"
+         title="nota interna: fica na conversa, o cliente não vê">🕵</button>
+       <textarea id="zap-txt" rows="1" placeholder="${zapNota
+         ? "Anotação para a equipe — o cliente não vê"
+         : `Escreva para ${esc(nomeDaConversa(c))}…`}"></textarea>
+       <button class="btn-rap" id="zap-enviar" onclick="enviarZap()">${zapNota?"Anotar":"Enviar"}</button>
        ${tel?`<a class="btn-mini" target="_blank" style="text-decoration:none"
            href="https://wa.me/55${tel}" title="abrir no WhatsApp do seu aparelho">↗</a>`:""}
      </div>`;
@@ -2304,6 +2320,12 @@ function pintarConversa(){
 function bolhaZap(m, cli){
   const quem = m.por_bot ? "🤖 robô"
             : m.autor_id ? (D.colPorId.get(m.autor_id)||{}).nome || "escritório" : "";
+  if(m.direcao==="interna") return `<div class="zap-b interna">
+    <div class="autor">🕵 ${esc(quem)} · só a equipe vê</div>
+    <div class="txt">${esc(m.texto||"")}</div>
+    <div class="pe">${horaSP(m.criado_em)}
+      ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
+        title="registrar no histórico de um processo">↪ andamento</button>`:""}</div></div>`;
   const corpo = m.midia_url
     ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${esc(m.texto)}</div>`:"")
@@ -2341,6 +2363,14 @@ async function descartarRascunho(id){
   await abrirConversa(zapAberta);
 }
 
+function alternarNota(){
+  zapNota = !zapNota;
+  const t = document.getElementById("zap-txt"), guarda = t ? t.value : "";
+  pintarConversa();
+  const t2 = document.getElementById("zap-txt");
+  if(t2){ t2.value = guarda; t2.focus(); }
+}
+
 async function verMidiaZap(id){
   const m = zapMsgs.find(x=>x.id===id); if(!m||!m.midia_url) return;
   const guia = window.open("","_blank");
@@ -2353,13 +2383,21 @@ async function enviarZap(){
   const t = document.getElementById("zap-txt"), txt = (t.value||"").trim();
   if(!txt || !zapAberta) return;
   t.value=""; t.style.height="auto";
+  // nota interna nasce com direcao E status 'interna' — o banco recusa
+  // qualquer nota que tente entrar na fila de envio
   await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
-                         texto:txt, status:"fila"})});
-  const c = zapConvs.find(x=>x.id===zapAberta);
-  if(c){ c.bot_ativo=false; c.atendente_id = c.atendente_id || eu.id; }
+    body:JSON.stringify(zapNota
+      ? {conversa_id:zapAberta, direcao:"interna", autor_id:eu.id,
+         texto:txt, status:"interna"}
+      : {conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
+         texto:txt, status:"fila"})});
+  if(!zapNota){
+    const c = zapConvs.find(x=>x.id===zapAberta);
+    if(c){ c.bot_ativo=false; c.atendente_id = c.atendente_id || eu.id; }
+  }
   await abrirConversa(zapAberta);
-  if(estadoPonte().txt!=="ponte ligada")
+  if(zapNota) aviso("Anotado — só a equipe vê 🕵", false);
+  else if(estadoPonte().txt!=="ponte ligada")
     aviso("Guardado na fila — a ponte está fora do ar e envia quando voltar", false);
 }
 
@@ -2396,17 +2434,42 @@ async function mandarArquivoZap(){
 }
 // as mesmas frases prontas do resto do CRM, sem cadastro paralelo
 function frasesZap(){
-  const fs = D.frases||[];
-  if(!fs.length) return aviso("Nenhuma frase pronta cadastrada ainda");
+  const fs = D.frases||[], docs = D.docs||[];
+  if(!fs.length && !docs.length) return aviso("Nenhuma frase pronta cadastrada ainda");
   caixa(`<h3>Mensagens prontas</h3>
     <p class="meio-sub">Ela entra no campo de escrever — dá para completar antes de mandar.</p>
     ${fs.map((f,i)=>`<button class="btn-rap" data-frase="${i}"
-       style="display:block;width:100%;margin:5px 0;text-align:left">${esc(f.texto)}</button>`).join("")}`);
+       style="display:block;width:100%;margin:5px 0;text-align:left">${esc(f.texto)}</button>`).join("")}
+    ${docs.length?`<h3 style="margin-top:14px">📄 Lista de documentos</h3>
+      <p class="meio-sub">Monta a mensagem com os documentos daquele benefício — é o que
+         mais se manda por WhatsApp neste escritório.</p>
+      <select id="zap-doc" style="width:100%;padding:7px">
+        <option value="">escolha o benefício…</option>
+        ${docs.map((d,i)=>`<option value="${i}">${esc(d.beneficio)}</option>`).join("")}
+      </select>`:""}`);
   document.querySelectorAll("[data-frase]").forEach(b=>b.onclick=()=>{
     const t = document.getElementById("zap-txt");
     t.value = (fs[+b.dataset.frase]||{}).texto||"";
     fecharCaixa(); t.focus();
   });
+  const sel = document.getElementById("zap-doc");
+  if(sel) sel.onchange = ()=>{
+    const d = docs[+sel.value]; if(!d) return;
+    document.getElementById("zap-txt").value = msgDocumentos(d);
+    fecharCaixa(); document.getElementById("zap-txt").focus();
+  };
+}
+// A lista sai numerada e sem juridiquês: quem vai juntar os papéis é o
+// cliente, muitas vezes com o celular na mão e a filha lendo em voz alta.
+function msgDocumentos(d){
+  const itens = (d.itens||"").split("\n").map(x=>x.trim()).filter(Boolean);
+  const c = zapConvs.find(x=>x.id===zapAberta);
+  const nome = c ? (nomeDaConversa(c)||"").split(/\s+/)[0] : "";
+  return `Olá${nome?", "+nome:""}! Aqui é do escritório Paulo R. Tercini Filho.\n\n`
+    + `Para dar andamento no seu pedido de *${d.beneficio}*, precisamos destes documentos:\n\n`
+    + itens.map((x,i)=>`${i+1}. ${x}`).join("\n")
+    + (d.observacoes?`\n\n${d.observacoes}`:"")
+    + `\n\nPode mandar por aqui mesmo — foto pelo celular serve, desde que dê para ler. 🙏`;
 }
 
 async function mudarConversa(campos){

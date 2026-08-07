@@ -140,6 +140,41 @@ delete from zap_conversas where chave=fone_chave('16988881111');
 insert into r select 't22 apagar conversa apaga as mensagens dela',
   (select count(*)=0 from zap_mensagens m
     where not exists (select 1 from zap_conversas c where c.id=m.conversa_id));
+
+-- ── nota interna: mora na conversa e NUNCA sai ────────────────────────────
+do $$ declare v uuid; begin
+  v := zap_abrir('16912340000','Interna');
+  insert into zap_mensagens (conversa_id, direcao, autor_id, texto, status)
+  values (v, 'interna', '33333333-3333-3333-3333-333333333333',
+          'cliente já ligou 3x hoje, tratar com paciência', 'interna');
+end $$;
+insert into r select 't23 a nota interna fica guardada na conversa',
+  (select count(*)=1 from zap_mensagens where direcao='interna');
+insert into r select 't24 e NÃO conta como não lida',
+  (select nao_lidas=0 from zap_conversas where chave=fone_chave('16912340000'));
+insert into r select 't25 nem vira a prévia da lista (que é a conversa com o cliente)',
+  (select ultimo_texto is null from zap_conversas where chave=fone_chave('16912340000'));
+do $$ begin
+  begin
+    insert into zap_mensagens (conversa_id, direcao, texto, status)
+    select id, 'interna', 'isso não pode sair', 'fila'
+      from zap_conversas where chave=fone_chave('16912340000');
+    insert into r values ('t26 o BANCO recusa nota interna na fila de envio', false);
+  exception when check_violation then
+    insert into r values ('t26 o BANCO recusa nota interna na fila de envio', true);
+  end;
+end $$;
+do $$ begin
+  begin
+    update zap_mensagens set status='fila' where direcao='interna';
+    insert into r values ('t27 e recusa também mudar uma nota já gravada para fila', false);
+  exception when check_violation then
+    insert into r values ('t27 e recusa também mudar uma nota já gravada para fila', true);
+  end;
+end $$;
+insert into r select 't28 a nota continua intacta depois da tentativa',
+  (select count(*)=1 from zap_mensagens where direcao='interna' and status='interna');
+
 update config_app set valor='sim' where chave='zap_bot_ligado';   -- religa o robô
 \set QUIET off
 select k, case when v then 'ok' else 'FALHOU' end as resultado
