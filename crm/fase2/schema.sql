@@ -1297,6 +1297,131 @@ begin
   return v_id;
 end $$;
 
+-- ══ Avisos automáticos ════════════════════════════════════════════════════
+-- Lembrar o cliente da perícia é a mensagem que mais evita estrago: quem
+-- falta à perícia perde o benefício. Cada regra diz quantos dias antes avisar
+-- e com que texto; o gerador roda de hora em hora e enfileira o que vence.
+--
+-- Três travas, todas por causa de como isso dá errado na vida real:
+--   1. nunca duas vezes  — chave única por (regra, evento, dia);
+--   2. nunca fora do horário — ninguém quer WhatsApp do advogado às 6h;
+--   3. nunca sem conferir, quando a regra pedir — modo 'revisar' cria a
+--      mensagem como rascunho, e alguém aperta enviar.
+create table if not exists zap_avisos (
+  chave      text primary key,          -- 'pericia_3d', 'audiencia_1d'…
+  descricao  text not null,
+  sobre      text not null check (sobre in ('evento','cadunico')),
+  tipo_ev    text,                      -- 'Perícia', 'Audiência'… null = todos
+  dias_antes integer not null,
+  texto      text not null,             -- {nome} {data} {hora} {local} {tipo} {beneficio}
+  revisar    boolean not null default false,
+  ativo      boolean not null default true,
+  ordem      integer not null default 0
+);
+
+-- 'rascunho' não é enviado pela ponte: espera alguém apertar enviar
+alter table zap_mensagens drop constraint if exists zap_mensagens_status_check;
+alter table zap_mensagens add constraint zap_mensagens_status_check
+  check (status in ('rascunho','fila','enviando','enviada','entregue','lida','erro'));
+alter table zap_mensagens add column if not exists aviso_chave text;
+alter table zap_mensagens add column if not exists aviso_ref uuid;
+-- a trava de "nunca duas vezes": mesma regra, mesma perícia, uma vez só
+create unique index if not exists zap_msg_aviso_unico
+  on zap_mensagens (aviso_chave, aviso_ref) where aviso_chave is not null;
+
+insert into zap_avisos (chave, descricao, sobre, tipo_ev, dias_antes, texto, revisar, ordem) values
+('pericia_3d','Perícia — 3 dias antes','evento','Perícia',3,
+E'Olá, {nome}! Aqui é do escritório Paulo R. Tercini Filho. 🙂\n\nPassando para lembrar que sua *perícia médica* está marcada para *{data} às {hora}*{local}.\n\nLeve documento com foto, e TODOS os seus exames, laudos e receitas — inclusive os antigos. Chegue com 30 minutos de antecedência.\n\nSe não puder comparecer, avise a gente o quanto antes: faltar sem justificar faz o pedido ser negado.',
+ false, 1),
+('pericia_1d','Perícia — véspera','evento','Perícia',1,
+E'Oi, {nome}! Sua *perícia é amanhã, {data}, às {hora}*{local}. 🩺\n\nNão esqueça o documento com foto e a pasta com os exames e laudos.\n\nQualquer imprevisto, fale com a gente.',
+ false, 2),
+('audiencia_7d','Audiência — 7 dias antes','evento','Audiência',7,
+E'Olá, {nome}! Aqui é do escritório Paulo R. Tercini Filho.\n\nSua *audiência* foi marcada para *{data} às {hora}*{local}.\n\nNos próximos dias vamos combinar com você como será. Guarde a data. 🗓️',
+ false, 3),
+('audiencia_1d','Audiência — véspera','evento','Audiência',1,
+E'Oi, {nome}! Sua *audiência é amanhã, {data}, às {hora}*{local}. ⚖️\n\nLeve documento com foto e chegue com antecedência. Estamos à disposição.',
+ false, 4),
+('social_3d','Avaliação social — 3 dias antes','evento','Avaliação social',3,
+E'Olá, {nome}! Sua *avaliação social* está marcada para *{data} às {hora}*{local}.\n\nLeve documento com foto e comprovante de residência. Se alguém da família puder acompanhar, melhor.',
+ false, 5),
+('cadunico_60d','CadÚnico do LOAS — 60 dias antes de vencer','cadunico',null,60,
+E'Olá, {nome}! Aqui é do escritório Paulo R. Tercini Filho.\n\nSeu benefício de BPC/LOAS exige o *Cadastro Único (CadÚnico) atualizado a cada 2 anos*, e o seu vence em *{data}*.\n\nProcure o CRAS do seu bairro com RG, CPF, comprovante de residência e os documentos de quem mora com você, e peça a ATUALIZAÇÃO CADASTRAL. Sem isso o INSS pode bloquear o pagamento.\n\nQualquer dúvida, fale com a gente. 🙏',
+ false, 6)
+on conflict (chave) do nothing;
+
+insert into config_app (chave, valor) values ('zap_avisos_ligado','sim')
+on conflict (chave) do nothing;
+
+-- Monta o texto trocando {nome}, {data}, {hora}… O primeiro nome, e não o
+-- nome inteiro: "Olá, Maria das Dores Ferreira" não é como gente fala.
+create or replace function zap_texto_aviso(p_modelo text, p_nome text,
+  p_quando timestamptz, p_local text default null, p_tipo text default null,
+  p_beneficio text default null) returns text
+language sql immutable as $$
+  select replace(replace(replace(replace(replace(replace(p_modelo,
+    '{nome}',      coalesce(split_part(trim(p_nome), ' ', 1), '')),
+    '{data}',      coalesce(to_char(p_quando at time zone 'America/Sao_Paulo', 'DD/MM/YYYY'), '')),
+    '{hora}',      coalesce(to_char(p_quando at time zone 'America/Sao_Paulo', 'HH24:MI'), '')),
+    '{local}',     coalesce(', em ' || nullif(trim(p_local),''), '')),
+    '{tipo}',      coalesce(p_tipo, '')),
+    '{beneficio}', coalesce(p_beneficio, ''))
+$$;
+
+-- Roda de hora em hora (a ponte chama). Idempotente de propósito: chamar dez
+-- vezes no mesmo dia não manda dez mensagens.
+create or replace function zap_gerar_avisos(p_hoje date default null)
+returns integer
+language plpgsql security definer set search_path = public as $$
+declare r record; v_conv uuid; v_txt text; v_st text; n integer := 0; v_hoje date;
+begin
+  if coalesce((select valor from config_app where chave='zap_avisos_ligado'),'sim') <> 'sim'
+    then return 0; end if;
+  -- fora do expediente ninguém dispara nada: a mensagem espera o dia começar
+  if p_hoje is null and not zap_no_horario() then return 0; end if;
+  v_hoje := coalesce(p_hoje, (now() at time zone 'America/Sao_Paulo')::date);
+
+  for r in
+    -- perícias, audiências e avaliações que caem na data da regra
+    select a.chave, a.texto, a.revisar, e.id as ref, c.id as cliente_id, c.nome, c.telefone,
+           e.data_hora as quando, e.local, e.tipo, k.beneficio
+      from zap_avisos a
+      join eventos e on a.sobre='evento'
+                    and (a.tipo_ev is null or e.tipo = a.tipo_ev)
+                    and e.status = 'agendada'
+                    and (e.data_hora at time zone 'America/Sao_Paulo')::date
+                        = v_hoje + a.dias_antes
+      join casos k on k.id = e.caso_id and k.fase <> 'encerrado'
+      join clientes c on c.id = k.cliente_id
+     where a.ativo and coalesce(c.telefone,'') <> ''
+    union all
+    -- CadÚnico do LOAS idoso: vence dois anos depois da última atualização
+    select a.chave, a.texto, a.revisar, k.id as ref, c.id, c.nome, c.telefone,
+           ((k.cadunico + interval '2 years') at time zone 'America/Sao_Paulo') as quando,
+           null, null, k.beneficio
+      from zap_avisos a
+      join casos k on a.sobre='cadunico' and k.cadunico is not null
+                  and (k.cadunico + interval '2 years')::date = v_hoje + a.dias_antes
+      join clientes c on c.id = k.cliente_id
+     where a.ativo and coalesce(c.telefone,'') <> ''
+  loop
+    v_conv := zap_abrir(r.telefone, r.nome);
+    v_txt  := zap_texto_aviso(r.texto, r.nome, r.quando, r.local, r.tipo, r.beneficio);
+    v_st   := case when r.revisar then 'rascunho' else 'fila' end;
+    begin
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status,
+                                 aviso_chave, aviso_ref)
+      values (v_conv, 'saida', true, v_txt, v_st, r.chave, r.ref);
+      n := n + 1;
+    exception when unique_violation then
+      null;      -- já foi avisado: é para isso que a chave única existe
+    end;
+  end loop;
+  return n;
+end $$;
+revoke all on function zap_gerar_avisos(date) from public;
+grant execute on function zap_gerar_avisos(date) to anon, authenticated;
+
 -- ── Segurança (RLS) ───────────────────────────────────────────────────────
 -- Regra geral: só usuário logado acessa; anônimo não vê NADA.
 -- Tarefas particulares: só o dono. Credenciais: leitura logada + log no app.
@@ -1313,7 +1438,7 @@ begin
                            'rotinas','rotinas_feitas','andamentos_lidos','anexos',
                            'aposentadorias','lista_pref','config_app',
                            'zap_conversas','zap_mensagens','zap_transferencias',
-                           'zap_bot_passos'] loop
+                           'zap_bot_passos','zap_avisos'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then

@@ -254,6 +254,21 @@ async function enviar(msg, s = sock) {
   }
 }
 
+// ── avisos automáticos ────────────────────────────────────────────────────
+// Quem lembra o cliente da perícia é o banco (zap_gerar_avisos); a ponte só
+// bate na porta de hora em hora. A função é idempotente e recusa fora do
+// expediente, então chamar demais não manda mensagem demais — e é melhor
+// depender de um processo que já fica ligado do que de um agendador a mais.
+async function rodarAvisos() {
+  for (;;) {
+    try {
+      const n = await rpc("zap_gerar_avisos", {});
+      if (n) log(`${n} aviso(s) programado(s) para os clientes`);
+    } catch (e) { log("avisos:", e.message); }
+    await espera(Number(process.env.INTERVALO_AVISOS || 3600000));
+  }
+}
+
 // ── sinal de vida ─────────────────────────────────────────────────────────
 // Sem isso, ninguém no escritório sabe a diferença entre "ninguém escreveu"
 // e "a ponte morreu às 3 da manhã".
@@ -269,6 +284,7 @@ if (require.main === module) {
   log("subindo a ponte…");
   conectar().catch(e => { console.error(e); process.exit(1); });
   rodarFila();
+  rodarAvisos();
   baterPonto();
   const tchau = async s => { log("saindo por", s); await anotar("zap_status", "parada"); process.exit(0); };
   process.on("SIGINT", () => tchau("SIGINT"));
