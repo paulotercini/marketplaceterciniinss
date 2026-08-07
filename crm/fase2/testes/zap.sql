@@ -16,6 +16,10 @@ insert into colaboradores (id, nome, inicial, cor, papel)
   values ('33333333-3333-3333-3333-333333333333','Amanda teste','X','#c19c00','equipe'),
          ('44444444-4444-4444-4444-444444444444','Marcos teste','Y','#0f7b6c','equipe');
 create temp table r(k text, v boolean);
+-- esta suíte é da fundação, sem robô: com o bot ligado, a prévia da conversa
+-- passaria a ser a resposta dele. O bot tem suíte própria (zap_bot.sql).
+insert into config_app (chave, valor) values ('zap_bot_ligado','nao')
+  on conflict (chave) do update set valor='nao';
 
 -- ── abrir e casar com quem já existe ──────────────────────────────────────
 -- (zap_abrir grava; ler no MESMO comando não enxerga a própria inserção —
@@ -136,6 +140,7 @@ delete from zap_conversas where chave=fone_chave('16988881111');
 insert into r select 't22 apagar conversa apaga as mensagens dela',
   (select count(*)=0 from zap_mensagens m
     where not exists (select 1 from zap_conversas c where c.id=m.conversa_id));
+update config_app set valor='sim' where chave='zap_bot_ligado';   -- religa o robô
 \set QUIET off
 select k, case when v then 'ok' else 'FALHOU' end as resultado
   from r order by (substring(k from '^t(\d+)'))::int;

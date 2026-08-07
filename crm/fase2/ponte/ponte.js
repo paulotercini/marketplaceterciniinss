@@ -201,8 +201,10 @@ async function rodarFila() {
   for (;;) {
     try {
       if (ligado) {
+        // ordem pelo contador, não pelo relógio: duas mensagens gravadas no
+        // mesmo instante sairiam em ordem sorteada
         const fila = await sb("/rest/v1/zap_mensagens?status=eq.fila"
-          + "&select=id,conversa_id,texto,tentativas&order=criado_em&limit=5");
+          + "&select=id,conversa_id,texto,tentativas&order=seq&limit=5");
         for (const msg of fila || []) await enviar(msg);
       }
     } catch (e) { log("fila:", e.message); }

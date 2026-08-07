@@ -77,7 +77,7 @@ create table if not exists andamentos (
   texto     text not null,
   publico   boolean not null default false,      -- só true vai ao portal (Fase 3)
   origem    text not null default 'app'          -- app | todo | dou
-            check (origem in ('app','todo','dou')),
+            check (origem in ('app','todo','dou','whatsapp')),
   todo_sync boolean not null default false       -- já replicado no To Do?
 );
 create index if not exists andamentos_caso on andamentos (caso_id, criado_em desc);
@@ -881,6 +881,11 @@ create index if not exists zap_conversas_cli on zap_conversas (cliente_id);
 
 create table if not exists zap_mensagens (
   id          uuid primary key default gen_random_uuid(),
+  -- Ordem de verdade. Duas mensagens gravadas no mesmo instante — o bot
+  -- mandando o aviso de fora do horário e o menu logo em seguida — empatam
+  -- no relógio, e aí a ordem vira sorteio: o cliente podia receber o menu
+  -- antes do "estamos fechados". Quem manda na ordem é este contador.
+  seq         bigint generated always as identity,
   conversa_id uuid not null references zap_conversas(id) on delete cascade,
   externo_id  text unique,                -- id da mensagem no WhatsApp (dedupe)
   direcao     text not null check (direcao in ('entrada','saida')),
@@ -898,9 +903,11 @@ create table if not exists zap_mensagens (
   criado_em   timestamptz not null default now(),
   enviada_em  timestamptz
 );
-create index if not exists zap_msg_conversa on zap_mensagens (conversa_id, criado_em);
+-- para quem já tinha a tabela antes de o contador existir
+alter table zap_mensagens add column if not exists seq bigint generated always as identity;
+create index if not exists zap_msg_conversa on zap_mensagens (conversa_id, seq);
 -- índice só da fila: a ponte pergunta "tem o que enviar?" a cada 2 segundos
-create index if not exists zap_msg_fila on zap_mensagens (criado_em) where status = 'fila';
+create index if not exists zap_msg_fila on zap_mensagens (seq) where status = 'fila';
 
 create table if not exists zap_transferencias (
   id          uuid primary key default gen_random_uuid(),
@@ -982,6 +989,314 @@ begin
   values (p_conversa, v_de, p_para, nullif(trim(p_motivo),''));
 end $$;
 
+-- ══ Quem atende, e como a conversa chega até a pessoa ═════════════════════
+-- Atendente não é cadastro novo: é o colaborador que já existe, com um
+-- interruptor. Quem não atende WhatsApp continua usando o CRM igual.
+alter table colaboradores add column if not exists atende_zap boolean not null default false;
+alter table colaboradores add column if not exists setor text;   -- triagem|inss|judicial|financeiro
+
+alter table zap_conversas add column if not exists bot_passo text;
+alter table zap_conversas add column if not exists bot_erros integer not null default 0;
+alter table zap_conversas add column if not exists setor text;
+-- a menção é a caixa de entrada que o CRM já tem: conversa que cai para
+-- alguém aparece no mesmo lugar onde já aparece "fulano te citou"
+alter table mencoes add column if not exists conversa_id uuid references zap_conversas(id) on delete cascade;
+
+-- Escolhe quem recebe. A ordem importa mais que o algoritmo:
+--   1. quem já cuida daquele cliente — quem pergunta do processo quer falar
+--      com quem conhece o processo, não com quem estiver livre;
+--   2. quem é do setor certo;
+--   3. qualquer um que atenda.
+-- Dentro de cada faixa, ganha quem tem menos conversa aberta na mão.
+create or replace function zap_escolher_atendente(p_conversa uuid, p_setor text default null)
+returns uuid
+language plpgsql stable security definer set search_path = public as $$
+declare v_cli uuid; v_id uuid;
+begin
+  select cliente_id into v_cli from zap_conversas where id = p_conversa;
+
+  if v_cli is not null then
+    select co.id into v_id
+      from colaboradores co
+     where co.ativo and co.atende_zap
+       and exists (select 1 from atribuicoes a join casos k on k.id = a.caso_id
+                    where a.colaborador_id = co.id and k.cliente_id = v_cli
+                      and k.fase <> 'encerrado')
+     order by (select count(*) from zap_conversas z
+                where z.atendente_id = co.id and z.status <> 'resolvida'), co.nome
+     limit 1;
+    if v_id is not null then return v_id; end if;
+  end if;
+
+  if p_setor is not null then
+    select co.id into v_id from colaboradores co
+     where co.ativo and co.atende_zap and co.setor = p_setor
+     order by (select count(*) from zap_conversas z
+                where z.atendente_id = co.id and z.status <> 'resolvida'), co.nome
+     limit 1;
+    if v_id is not null then return v_id; end if;
+  end if;
+
+  select co.id into v_id from colaboradores co
+   where co.ativo and co.atende_zap
+   order by (select count(*) from zap_conversas z
+              where z.atendente_id = co.id and z.status <> 'resolvida'), co.nome
+   limit 1;
+  return v_id;      -- null = ninguém marcado para atender; fica sem dono na fila
+end $$;
+
+-- Entregar para humano é sempre a mesma coisa: desligar o bot, dar dono e
+-- avisar. Um lugar só, para nenhum caminho esquecer de fazer as três.
+create or replace function zap_entregar(p_conversa uuid, p_setor text default null,
+                                        p_motivo text default null)
+returns uuid
+language plpgsql security definer set search_path = public as $$
+declare v_quem uuid; v_nome text;
+begin
+  v_quem := zap_escolher_atendente(p_conversa, p_setor);
+  update zap_conversas
+     set atendente_id = v_quem, setor = coalesce(p_setor, setor),
+         bot_ativo = false, bot_erros = 0,
+         status = case when status = 'resolvida' then 'aberta' else status end
+   where id = p_conversa;
+  if v_quem is not null then
+    select coalesce(nullif(trim(nome_perfil),''), telefone) into v_nome
+      from zap_conversas where id = p_conversa;
+    insert into mencoes (para_id, conversa_id, texto)
+    values (v_quem, p_conversa,
+            '💬 ' || coalesce(v_nome,'Alguém') || ' está esperando no WhatsApp'
+            || coalesce(' — ' || nullif(trim(p_motivo),''), ''));
+  end if;
+  return v_quem;
+end $$;
+
+-- ══ O chatbot ═════════════════════════════════════════════════════════════
+-- Um passo por linha, editável sem programar. O bot NÃO responde pergunta
+-- jurídica: ele cumprimenta, pergunta do que se trata e entrega para gente.
+-- Escritório de advocacia não pode ter robô opinando sobre direito de
+-- ninguém — o erro sai caro para o cliente e para o escritório.
+create table if not exists zap_bot_passos (
+  chave         text primary key,
+  texto         text not null,             -- o que o bot escreve
+  opcoes        jsonb not null default '[]',
+  -- [{"tecla":"1","quando":"processo|andamento","vai":"processo"}]
+  entrega_setor text,                      -- chegou aqui: passa para humano
+  ordem         integer not null default 0,
+  ativo         boolean not null default true
+);
+
+insert into zap_bot_passos (chave, texto, opcoes, entrega_setor, ordem) values
+('inicio',
+E'Olá! 👋 Aqui é o escritório *Paulo R. Tercini Filho — Advocacia Previdenciária*.\n\nPara eu encaminhar você para a pessoa certa, responda com um número:\n\n*1* — Saber como está o meu processo\n*2* — Quero saber se tenho direito a algum benefício\n*3* — Perícia médica ou audiência\n*4* — Enviar documentos\n*5* — Financeiro (pagamentos e honorários)\n*0* — Falar com alguém do escritório\n\nSe preferir, escreva com suas palavras que eu encaminho.',
+'[{"tecla":"1","quando":"processo|andamento|meu caso|como esta|andou|novidade","vai":"processo"},
+  {"tecla":"2","quando":"direito|posso me aposentar|tenho direito|consulta|orcamento|contratar","vai":"novo"},
+  {"tecla":"3","quando":"pericia|audiencia|agendad|remarcar|medico do inss","vai":"pericia"},
+  {"tecla":"4","quando":"document|enviar|mandar|foto|laudo|cnis|carteira","vai":"documentos"},
+  {"tecla":"5","quando":"pagamento|honorario|boleto|pix|financeiro|parcela","vai":"financeiro"},
+  {"tecla":"0","quando":"atendente|pessoa|humano|falar com","vai":"humano"}]'::jsonb,
+ null, 1),
+
+('processo',
+E'Certo! Já estou chamando quem cuida do seu processo. 🙂\n\nPode adiantar sua dúvida por aqui que a pessoa lê tudo assim que assumir o atendimento.',
+ '[]'::jsonb, 'inss', 2),
+
+('novo',
+E'Que bom que procurou a gente! 🙂\n\nPara analisar seu direito precisamos de algumas informações. Já vou chamar alguém do escritório para conversar com você.\n\nSe puder, adiante: seu nome completo e o que aconteceu (ficou doente, foi negado um pedido, quer se aposentar…).',
+ '[]'::jsonb, 'triagem', 3),
+
+('pericia',
+E'Anotado — assunto de perícia ou audiência. 🩺\n\nJá estou chamando alguém. Se você tiver a data e o local em mãos, pode mandar aqui que ajuda bastante.',
+ '[]'::jsonb, 'inss', 4),
+
+('documentos',
+E'Pode mandar os documentos por aqui mesmo — foto, PDF ou áudio. 📎\n\nEles vão direto para a sua pasta no escritório, e alguém confere assim que assumir o atendimento.',
+ '[]'::jsonb, 'triagem', 5),
+
+('financeiro',
+E'Certo, assunto financeiro. 💰\n\nJá estou chamando quem cuida disso no escritório.',
+ '[]'::jsonb, 'financeiro', 6),
+
+('humano',
+E'Claro! Já estou chamando alguém do escritório. 🙂\n\nPode escrever sua dúvida aqui que a pessoa lê tudo.',
+ '[]'::jsonb, 'triagem', 7),
+
+('nao_entendi',
+E'Desculpe, não consegui entender. 😅\n\nVou chamar alguém do escritório para falar com você — é mais rápido assim.',
+ '[]'::jsonb, 'triagem', 8),
+
+('fora_horario',
+E'Recebemos sua mensagem! 🌙\n\nO escritório atende de segunda a sexta, das 8h às 18h. Fora desse horário a gente responde no próximo dia útil — mas pode deixar sua mensagem aqui que já fica registrada.',
+ '[]'::jsonb, null, 9)
+on conflict (chave) do nothing;
+
+insert into config_app (chave, valor) values
+  ('zap_hora_inicio','08:00'), ('zap_hora_fim','18:00'), ('zap_dias_uteis','1,2,3,4,5'),
+  -- segundos de silêncio do bot depois de falar: quem manda "oi", "bom dia" e
+  -- "alguém aí?" em cinco segundos recebe um menu, não três
+  ('zap_pausa_bot','15'), ('zap_bot_ligado','sim')
+on conflict (chave) do nothing;
+
+create or replace function zap_no_horario(p_quando timestamptz default now())
+returns boolean
+language sql stable security definer set search_path = public as $$
+  with h as (
+    select (select valor from config_app where chave='zap_hora_inicio') as ini,
+           (select valor from config_app where chave='zap_hora_fim')    as fim,
+           (select valor from config_app where chave='zap_dias_uteis')  as dias,
+           (p_quando at time zone 'America/Sao_Paulo') as agora
+  )
+  select coalesce(
+    extract(isodow from agora)::text = any (string_to_array(coalesce(dias,'1,2,3,4,5'), ','))
+    and agora::time >= coalesce(ini,'08:00')::time
+    and agora::time <  coalesce(fim,'18:00')::time, true)
+  from h
+$$;
+
+-- O bot em si. Roda no banco, e não na ponte, porque assim vale para qualquer
+-- caminho de entrada — a ponte de hoje, o SMBot, ou a API oficial amanhã.
+create or replace function zap_bot() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare
+  c zap_conversas; p zap_bot_passos; op jsonb; achou text; txt text; ultimo timestamptz;
+  pausa integer;
+begin
+  if new.direcao <> 'entrada' then return new; end if;
+  -- interruptor geral: dia de escritório cheio, ou robô dando problema, a
+  -- equipe desliga tudo numa linha sem precisar de programador
+  if coalesce((select valor from config_app where chave='zap_bot_ligado'),'sim') <> 'sim'
+    then return new; end if;
+  select * into c from zap_conversas where id = new.conversa_id;
+  -- humano no comando: o bot cala a boca. Nada é pior que robô falando por
+  -- cima do advogado.
+  if c.atendente_id is not null or not c.bot_ativo then return new; end if;
+
+  -- cliente que manda três mensagens seguidas não merece três menus
+  pausa := coalesce((select valor from config_app where chave='zap_pausa_bot'), '15')::int;
+  select max(criado_em) into ultimo from zap_mensagens
+   where conversa_id = new.conversa_id and por_bot;
+  if ultimo is not null and pausa > 0
+     and ultimo > now() - make_interval(secs => pausa) then return new; end if;
+
+  if c.bot_passo is null then                       -- primeiro contato
+    if not zap_no_horario() then
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+      select new.conversa_id, 'saida', true, texto, 'fila'
+        from zap_bot_passos where chave='fora_horario' and ativo;
+    end if;
+    select * into p from zap_bot_passos where chave='inicio' and ativo;
+    if not found then return new; end if;
+    insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+    values (new.conversa_id, 'saida', true, p.texto, 'fila');
+    update zap_conversas set bot_passo='inicio' where id=new.conversa_id;
+    return new;
+  end if;
+
+  select * into p from zap_bot_passos where chave=c.bot_passo and ativo;
+  if not found then return new; end if;
+
+  txt := lower(translate(coalesce(new.texto,''),
+    'áàâãäéèêëíìîïóòôõöúùûüçÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇ',
+    'aaaaaeeeeiiiiooooouuuucAAAAAEEEEIIIIOOOOOUUUUC'));
+  for op in select * from jsonb_array_elements(p.opcoes) loop
+    if trim(txt) = lower(op->>'tecla')
+       or (coalesce(op->>'quando','') <> '' and txt ~ (op->>'quando')) then
+      achou := op->>'vai'; exit;
+    end if;
+  end loop;
+
+  if achou is null then
+    -- ninguém fica preso no menu: na segunda vez sem entender, vai para gente
+    update zap_conversas set bot_erros = bot_erros + 1 where id=new.conversa_id;
+    if c.bot_erros + 1 >= 2 then achou := 'nao_entendi';
+    else
+      insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+      values (new.conversa_id, 'saida', true,
+              'Não entendi 🤔 — responda com o número da opção, por favor.' || E'\n\n' || p.texto,
+              'fila');
+      return new;
+    end if;
+  end if;
+
+  select * into p from zap_bot_passos where chave=achou and ativo;
+  if not found then return new; end if;
+  insert into zap_mensagens (conversa_id, direcao, por_bot, texto, status)
+  values (new.conversa_id, 'saida', true, p.texto, 'fila');
+  update zap_conversas set bot_passo=achou, bot_erros=0 where id=new.conversa_id;
+  if p.entrega_setor is not null then
+    perform zap_entregar(new.conversa_id, p.entrega_setor, p.chave);
+  end if;
+  return new;
+end $$;
+
+-- depois do zap_toque (t < z), para o bot ler a conversa já atualizada
+drop trigger if exists zap_zbot_ins on zap_mensagens;
+create trigger zap_zbot_ins after insert on zap_mensagens
+  for each row execute function zap_bot();
+
+-- Colaborador que responde assume a conversa e cala o bot na mesma hora.
+create or replace function zap_humano_assumiu() returns trigger
+language plpgsql as $$
+begin
+  if new.direcao='saida' and new.autor_id is not null and not new.por_bot then
+    update zap_conversas
+       set bot_ativo=false, atendente_id=coalesce(atendente_id, new.autor_id)
+     where id=new.conversa_id;
+  end if;
+  return new;
+end $$;
+drop trigger if exists zap_humano_ins on zap_mensagens;
+create trigger zap_humano_ins after insert on zap_mensagens
+  for each row execute function zap_humano_assumiu();
+
+-- ══ Da conversa para o processo ═══════════════════════════════════════════
+-- A conversa é do CLIENTE; o andamento é do PROCESSO. São coisas diferentes,
+-- e por isso a mensagem NÃO vira andamento sozinha: se virasse, o histórico
+-- do processo encheria de "bom dia" e "obrigado", e a linha do tempo que a
+-- gente leva para o cliente ver deixaria de valer alguma coisa.
+--
+-- Quem decide é o atendente: leu, achou que importa, escolhe em qual processo
+-- entra e promove. O texto vai marcado com a origem, para todo mundo saber
+-- que aquilo saiu da boca do cliente e não da conclusão do escritório.
+alter table andamentos add column if not exists zap_mensagem_id uuid
+  references zap_mensagens(id) on delete set null;
+-- o banco que já existe não aprendeu 'whatsapp' só porque o create mudou
+alter table andamentos drop constraint if exists andamentos_origem_check;
+alter table andamentos add constraint andamentos_origem_check
+  check (origem in ('app','todo','dou','whatsapp'));
+-- a mesma mensagem não vira dois andamentos no mesmo processo
+create unique index if not exists andamentos_de_zap
+  on andamentos (caso_id, zap_mensagem_id) where zap_mensagem_id is not null;
+
+create or replace function zap_virar_andamento(p_mensagem uuid, p_caso uuid,
+                                               p_autor uuid default null)
+returns uuid
+language plpgsql security definer set search_path = public as $$
+declare m zap_mensagens; v_id uuid; v_quem text; v_txt text;
+begin
+  select * into m from zap_mensagens where id = p_mensagem;
+  if not found then raise exception 'mensagem inexistente'; end if;
+  select coalesce(nullif(trim(c.nome_perfil),''), c.telefone) into v_quem
+    from zap_conversas c where c.id = m.conversa_id;
+
+  v_txt := case when m.direcao='entrada'
+                then 'Cliente pelo WhatsApp' else 'Enviado ao cliente pelo WhatsApp' end
+        || coalesce(' (' || v_quem || ')', '') || ': '
+        || coalesce(nullif(trim(m.texto),''), '[' || m.tipo || ']')
+        || coalesce(' 📎 ' || m.midia_nome, '');
+
+  insert into andamentos (caso_id, autor_id, texto, origem, zap_mensagem_id, criado_em)
+  values (p_caso, p_autor, v_txt, 'whatsapp', p_mensagem,
+          coalesce(m.quando_wa, m.criado_em))
+  on conflict (caso_id, zap_mensagem_id) where zap_mensagem_id is not null
+  do nothing
+  returning id into v_id;
+  if v_id is null then      -- já tinha sido promovida antes
+    select id into v_id from andamentos
+     where caso_id = p_caso and zap_mensagem_id = p_mensagem;
+  end if;
+  return v_id;
+end $$;
+
 -- ── Segurança (RLS) ───────────────────────────────────────────────────────
 -- Regra geral: só usuário logado acessa; anônimo não vê NADA.
 -- Tarefas particulares: só o dono. Credenciais: leitura logada + log no app.
@@ -997,7 +1312,8 @@ begin
                            'inss_fila','orgao_producao',
                            'rotinas','rotinas_feitas','andamentos_lidos','anexos',
                            'aposentadorias','lista_pref','config_app',
-                           'zap_conversas','zap_mensagens','zap_transferencias'] loop
+                           'zap_conversas','zap_mensagens','zap_transferencias',
+                           'zap_bot_passos'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
