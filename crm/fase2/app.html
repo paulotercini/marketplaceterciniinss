@@ -533,11 +533,42 @@
   .zap-vazio{margin:auto;text-align:center;max-width:340px;padding:20px}
   .zap-vazio h4{margin:0 0 6px}
   .zap-vazio p{font-size:13px;color:var(--cinza);margin:0 0 12px}
-  .zap-item{background:var(--branco);border:1px solid var(--borda);border-radius:8px;
-            padding:8px 10px;margin-bottom:6px}
-  .zap-item .nome{font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
-  .zap-item .meta{font-size:12px;color:var(--cinza);margin:3px 0 5px}
-  .zap-item .acao{display:flex;gap:6px;flex-wrap:wrap}
+  .zap-estado{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--cinza);
+              font-weight:600;margin-bottom:6px}
+  .zap-estado i{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .zap-conv{background:var(--branco);border:1px solid var(--borda);border-radius:8px;
+            padding:7px 9px;margin-bottom:5px;cursor:pointer}
+  .zap-conv:hover{background:#f2f6fd}
+  .zap-conv.on{border-color:var(--azul);background:#eaf1fc}
+  .zap-conv.nova .l1 b{color:var(--azul)}
+  .zap-conv .l1{display:flex;align-items:center;gap:6px;font-size:13px}
+  .zap-conv .l1 .hora{margin-left:auto;font-size:11px;color:var(--cinza);font-weight:600}
+  .zap-conv .bolha{background:#0a7d43;color:#fff;border-radius:9px;padding:0 6px;
+                   font-size:11px;font-weight:700}
+  .zap-conv .l2{font-size:12px;color:var(--cinza);margin:2px 0 4px;white-space:nowrap;
+                overflow:hidden;text-overflow:ellipsis}
+  .zap-conv .l3{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+  .zap-msgs{flex:1;overflow:auto;padding:12px;background:#efe7dd;display:flex;
+            flex-direction:column;gap:6px}
+  .zap-b{align-self:flex-start;max-width:74%;background:#fff;border-radius:10px;padding:6px 9px;
+         box-shadow:0 1px 1px rgba(0,0,0,.12);font-size:13px;word-break:break-word}
+  .zap-b.saida{align-self:flex-end;background:#d9fdd3}
+  .zap-b.bot{background:#eef1f6;font-style:italic}
+  .zap-b.ruim{background:#fde7e7}
+  .zap-b .autor{font-size:10px;font-weight:700;color:var(--cinza);text-transform:uppercase}
+  .zap-b .txt{white-space:pre-wrap}
+  .zap-b .pe{display:flex;align-items:center;gap:6px;justify-content:flex-end;
+             font-size:10px;color:var(--cinza);margin-top:2px}
+  .zap-b .virar{border:0;background:none;color:var(--azul);font-size:10px;font-weight:700;
+                cursor:pointer;padding:0;opacity:0}
+  .zap-b:hover .virar{opacity:1}
+  .zap-anexo{border:1px solid var(--borda);background:var(--fundo);border-radius:6px;
+             padding:4px 8px;font-size:12px;font-weight:600;color:var(--azul);cursor:pointer}
+  .zap-escrever{display:flex;gap:6px;align-items:flex-end;padding:8px;
+                border-top:1px solid var(--borda);background:var(--branco)}
+  .zap-escrever textarea{flex:1;resize:none;border:1px solid var(--borda);border-radius:8px;
+                         padding:8px 10px;font:inherit;font-size:13px;max-height:140px}
+  .app.celular .zap-b{max-width:88%}
   .app.celular .zap-tela{flex-direction:column;height:auto}
   .app.celular .zap-lado{flex:none}
   .app.celular .zap-dir{height:70vh}
@@ -711,7 +742,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.10 · WhatsApp na tela</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.11 · caixa de entrada</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1129,7 +1160,7 @@ async function guardarCfgApp(chave, valor){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -1154,10 +1185,15 @@ async function carregar(){
       todas("aposentadorias","select=*&order=data").catch(()=>[]),
       todas("lista_pref","select=*").catch(()=>[]),
       todas("config_app","select=*").catch(()=>[]),
+      todas("zap_conversas","select=id,nao_lidas,atendente_id,status").catch(()=>[]),
     ]);
   D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
   D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
   D.config = new Map((cfgs||[]).map(x=>[x.chave,x.valor]));
+  // conta o que cobra ação: minha conversa com mensagem nova, ou conversa
+  // aberta sem dono nenhum. O resto não precisa de contador piscando.
+  D.zapResumo = (zaps||[]).filter(z=>z.status!=="resolvida"
+    && ((z.atendente_id===eu.id && z.nao_lidas>0) || !z.atendente_id)).length;
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -1355,7 +1391,8 @@ function montarSidebar(){
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
-    ["whatsapp","💬 WhatsApp", null],
+    // o número que aparece é o que exige ação: não lida ou sem dono
+    ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
     ["parcerias","🤝 Parcerias", ativos().filter(k=>k.parceria).length||null],
     ["marketing","📣 Marketing", null],
     ["recebimentos","💰 Recebimentos", D.casos.filter(k=>k.fase==="pagamento").length],
@@ -2038,80 +2075,281 @@ async function leadParaCliente(leadId){
   aviso("Cliente criado a partir da venda ✔"); abrirFicha(cli.id);
 }
 
-// ── 💬 WhatsApp: o painel do SMBot dentro do CRM ──────────────────────────
-// O SMBot só entrega o CONTATO pelo webhook, nunca o texto (resposta deles em
-// 06.08.2026), e recusou dar acesso ao Firebase que o painel usa. Então o
-// conteúdo só existe dentro da tela deles — e o navegador proíbe qualquer
-// leitura de um iframe de outro domínio. Esta tela não tenta furar isso: à
-// esquerda, quem procurou o escritório (isso o CRM sabe); à direita, o painel
-// deles, para ler e responder sem trocar de janela.
-let zapDias = 7;
+// ── 💬 WhatsApp: a caixa de entrada do escritório ─────────────────────────
+// À esquerda quem está falando com a gente, à direita a conversa. Uma
+// conversa por NÚMERO, não por processo: é assim que o cliente enxerga, mesmo
+// tendo três casos.
+//
+// O que chega vem da ponte (crm/fase2/ponte/). O que sai é gravado como
+// pedido de envio — o CRM nunca fala com o WhatsApp direto. Se a ponte
+// estiver caída, a mensagem espera na fila em vez de sumir.
+let zapFiltro = "minhas", zapAberta = null, zapMsgs = [], zapTimer = null, zapConvs = [];
+
+function pararZapTimer(){ if(zapTimer){ clearInterval(zapTimer); zapTimer=null; } }
+
 async function renderWhats(){
   document.getElementById("titulo-lista").textContent="💬 WhatsApp";
   document.getElementById("sub-lista").textContent=
-    "Quem procurou o escritório, e o atendimento do SMBot na mesma tela. O conteúdo da conversa mora no painel deles.";
-  const url = (cfgApp("smbot_url")||"").trim();
-  const meio = document.getElementById("conteudo-meio");
-  meio.innerHTML = `<div class="zap-tela"><div class="zap-lado">
-      <div class="meio-sub">carregando quem falou…</div></div>
-    <div class="zap-dir">${url
-      ? `<div class="zap-topo">
-           <span>Painel do SMBot</span>
-           <a class="btn-mini" href="${esc(url)}" target="_blank" rel="noopener"
-              style="text-decoration:none">abrir em outra janela ↗</a>
-           <button class="btn-mini" onclick="pedirUrlSmbot()">✎ trocar endereço</button>
-         </div>
-         <iframe class="zap-frame" src="${esc(url)}" referrerpolicy="no-referrer"
-                 sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-top-navigation-by-user-activation"></iframe>
-         <div class="zap-nota">Se a área acima ficar em branco, o SMBot não permite ser embutido —
-           use "abrir em outra janela". Não é ajuste nosso: é o servidor deles que decide.</div>`
-      : `<div class="zap-vazio"><h4>Painel do SMBot</h4>
-           <p>Cole aqui o endereço da tela de atendimento (aquela que você abre para responder).
-              Fica guardado para todo o escritório.</p>
-           <button class="btn-rap" onclick="pedirUrlSmbot()">Informar o endereço</button></div>`}
-    </div></div>`;
-  // quem falou: o webhook do SMBot registra a passagem, sem texto
-  const desde = new Date(agoraSP().getTime() - zapDias*864e5).toISOString();
-  const cs = await todas("conversas",
-    `select=criado_em,telefone,texto,cliente_id&criado_em=gte.${desde}&order=criado_em.desc`).catch(()=>null);
-  const lado = document.querySelector(".zap-lado");
-  if(!lado) return;
+    "As conversas do escritório. Quem responde assume a conversa — e o robô se cala na hora.";
+  document.getElementById("conteudo-meio").innerHTML =
+    `<div class="zap-tela">
+       <div class="zap-lado"><div class="meio-sub">carregando…</div></div>
+       <div class="zap-dir" id="zap-dir"></div>
+     </div>`;
+  await recarregarZap();
+  pararZapTimer();
+  // sem WebSocket: uma olhada a cada 6 segundos é o suficiente para quem está
+  // atendendo e não deixa a página pesada
+  zapTimer = setInterval(()=>{ if(visao==="whatsapp") recarregarZap(true); else pararZapTimer(); }, 6000);
+}
+
+async function recarregarZap(silencioso){
+  const cs = await todas("zap_conversas","select=*&order=ultima_em.desc.nullslast")
+    .catch(()=>null);
   if(cs===null){
-    lado.innerHTML = `<p class="meio-sub">Ainda não dá para listar — o webhook do SMBot
-      não está ligado, ou o banco não tem a tabela de conversas.</p>`;
+    document.querySelector(".zap-lado").innerHTML =
+      `<p class="meio-sub">Ainda não dá para listar: o banco não tem as tabelas do
+        WhatsApp, ou a ponte nunca subiu. Rode o schema.sql e veja o
+        <code>crm/fase2/ponte/PASSO-A-PASSO.md</code>.</p>`;
     return;
   }
-  // um por pessoa: dez mensagens de alguém não são dez linhas na lista
-  const porPessoa = new Map();
-  cs.forEach(c=>{ const k=chaveFone(c.telefone); if(k && !porPessoa.has(k)) porPessoa.set(k,c); });
-  const dias=[["1","hoje"],["7","7 dias"],["30","30 dias"]];
-  lado.innerHTML = `<div class="filtros">${dias.map(([d,r])=>
-      `<button class="fchip ${String(zapDias)===d?"on":""}" data-zd="${d}">${r}</button>`).join("")}</div>
-    <h3 class="secao">💬 Falaram no WhatsApp (${porPessoa.size})</h3>`
-    + ([...porPessoa.values()].map(c=>{
-        const cli = c.cliente_id ? D.cliPorId.get(c.cliente_id)
-                  : D.clientes.find(x=>chaveFone(x.telefone)===chaveFone(c.telefone));
-        const lead = cli?null:D.leads.find(l=>chaveFone(l.telefone)===chaveFone(c.telefone));
-        const quem = cli ? esc(cli.nome) : lead ? esc(lead.nome) : esc(c.telefone||"desconhecido");
-        return `<div class="zap-item">
-          <div class="nome">${quem} ${cli?`<span class="chip neutro">cliente</span>`
-                                      :lead?`<span class="chip per">prospecto</span>`:""}</div>
-          <div class="meta">💬 ${quandoFalou(c.criado_em)}${c.texto?` · “${esc(c.texto.slice(0,50))}”`:""}</div>
-          <div class="acao">${cli?`<button class="btn-mini" onclick="abrirFicha('${cli.id}')">abrir ficha</button>`
-            :`<button class="btn-mini" onclick="visao='vendas';render()">ver no funil</button>`}
-            ${c.telefone?`<a class="btn-mini" style="text-decoration:none" target="_blank"
-               href="https://wa.me/55${(c.telefone||"").replace(/\D/g,"")}">💬 chamar</a>`:""}</div>
-        </div>`;
-      }).join("") || `<p class="meio-sub">Ninguém falou nesse período.</p>`);
-  lado.querySelectorAll("[data-zd]").forEach(b=>b.onclick=()=>{ zapDias=+b.dataset.zd; renderWhats(); });
+  zapConvs = cs;
+  pintarListaZap();
+  if(zapAberta && !silencioso) await abrirConversa(zapAberta);
+  else if(zapAberta) await recarregarMsgs();
+  else if(!silencioso) document.getElementById("zap-dir").innerHTML = telaVaziaZap();
 }
-const chaveFone = t => (t||"").replace(/\D/g,"").slice(-8);
-async function pedirUrlSmbot(){
-  const atual = cfgApp("smbot_url")||"https://www.smsolucoesdigital.com.br/login.html";
-  const u = prompt("Endereço da tela de atendimento do SMBot:", atual);
-  if(u===null) return;
-  await guardarCfgApp("smbot_url", u.trim());
-  render();
+
+function estadoPonte(){
+  const st = cfgApp("zap_status")||"", visto = cfgApp("zap_visto_em");
+  // 2 minutos sem bater ponto: a ponte morreu, e é melhor dizer isso do que
+  // deixar todo mundo achando que ninguém escreveu hoje
+  const morta = !visto || (Date.now() - new Date(visto).getTime() > 120000);
+  if(st==="ligado" && !morta) return {cor:"#0a7d43", txt:"ponte ligada"};
+  if(st.includes("QR")) return {cor:"#b06000", txt:"esperando leitura do QR"};
+  if(!st) return {cor:"var(--cinza)", txt:"ponte nunca subiu"};
+  return {cor:"#b00020", txt: morta ? "ponte sem sinal" : st};
+}
+
+function pintarListaZap(){
+  const meu = c => c.atendente_id===eu.id;
+  const filtros = [["minhas","Minhas"],["sem","Sem dono"],["todas","Todas"],["fim","Resolvidas"]];
+  const cs = zapConvs.filter(c=>
+      zapFiltro==="minhas" ? meu(c) && c.status!=="resolvida"
+    : zapFiltro==="sem"    ? !c.atendente_id && c.status!=="resolvida"
+    : zapFiltro==="fim"    ? c.status==="resolvida"
+    : c.status!=="resolvida");
+  const p = estadoPonte();
+  document.querySelector(".zap-lado").innerHTML =
+    `<div class="zap-estado"><i style="background:${p.cor}"></i>${esc(p.txt)}
+       ${cfgApp("zap_qr")?`<button class="btn-mini" onclick="ajudaQR()">como ligar</button>`:""}</div>
+     <div class="filtros">${filtros.map(([f,r])=>{
+        const n = zapConvs.filter(c=> f==="minhas" ? meu(c)&&c.status!=="resolvida"
+                                    : f==="sem" ? !c.atendente_id&&c.status!=="resolvida"
+                                    : f==="fim" ? c.status==="resolvida" : c.status!=="resolvida").length;
+        return `<button class="fchip ${zapFiltro===f?"on":""}" data-zf="${f}">${r} ${n?`(${n})`:""}</button>`;
+      }).join("")}</div>`
+    + (cs.map(c=>cartaoConversa(c)).join("") || `<p class="meio-sub">Nada aqui.</p>`);
+  document.querySelectorAll("[data-zf]").forEach(b=>b.onclick=()=>{ zapFiltro=b.dataset.zf; pintarListaZap(); });
+  document.querySelectorAll("[data-zc]").forEach(el=>el.onclick=()=>abrirConversa(el.dataset.zc));
+}
+
+function nomeDaConversa(c){
+  const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
+  if(cli) return cli.nome;
+  const lead = c.lead_id && D.leads.find(l=>l.id===c.lead_id);
+  return (lead && lead.nome) || c.nome_perfil || c.telefone || "desconhecido";
+}
+
+function cartaoConversa(c){
+  const at = c.atendente_id && D.colPorId.get(c.atendente_id);
+  const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
+  return `<div class="zap-conv ${zapAberta===c.id?"on":""} ${c.nao_lidas?"nova":""}" data-zc="${c.id}">
+    <div class="l1"><b>${esc(nomeDaConversa(c))}</b>
+      ${c.nao_lidas?`<span class="bolha">${c.nao_lidas}</span>`:""}
+      <span class="hora">${c.ultima_em?quandoFalou(c.ultima_em):""}</span></div>
+    <div class="l2">${esc((c.ultimo_texto||"").slice(0,60))}</div>
+    <div class="l3">
+      ${cli?`<span class="chip neutro">cliente</span>`:`<span class="chip per">prospecto</span>`}
+      ${c.bot_ativo?`<span class="chip ben">🤖 robô</span>`:""}
+      ${at?`<span class="eq-ini on" style="--cor-eq:${at.cor}" title="${esc(at.nome)}">${esc(at.inicial)}</span>`
+         :`<span class="chip urg">sem dono</span>`}
+    </div></div>`;
+}
+
+const telaVaziaZap = () =>
+  `<div class="zap-vazio"><h4>Escolha uma conversa</h4>
+     <p>À esquerda estão as conversas do escritório. "Sem dono" é a fila de quem
+        ainda não foi atendido — é por ali que se começa o dia.</p></div>`;
+
+async function abrirConversa(id){
+  zapAberta = id;
+  const c = zapConvs.find(x=>x.id===id); if(!c) return;
+  zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${id}&order=seq`).catch(()=>[]);
+  pintarConversa();
+  pintarListaZap();
+  if(c.nao_lidas){        // abrir é ler
+    await api(`/rest/v1/zap_conversas?id=eq.${id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
+    c.nao_lidas=0; pintarListaZap();
+  }
+}
+async function recarregarMsgs(){
+  if(!zapAberta) return;
+  const antes = zapMsgs.length;
+  zapMsgs = await todas("zap_mensagens",`select=*&conversa_id=eq.${zapAberta}&order=seq`).catch(()=>zapMsgs);
+  if(zapMsgs.length!==antes) pintarConversa();
+  else atualizarVistos();
+}
+// só os selos de entrega mudaram: repintar tudo tiraria o texto de quem está
+// escrevendo no meio da frase
+function atualizarVistos(){
+  zapMsgs.forEach(m=>{ const el=document.getElementById("zs-"+m.id);
+                       if(el) el.textContent = seloZap(m); });
+}
+
+const SELO = {fila:"🕓", enviando:"🕓", enviada:"✓", entregue:"✓✓", lida:"✓✓", erro:"⚠"};
+const seloZap = m => m.direcao==="saida" ? (SELO[m.status]||"") : "";
+
+function pintarConversa(){
+  const c = zapConvs.find(x=>x.id===zapAberta); if(!c) return;
+  const cli = c.cliente_id && D.cliPorId.get(c.cliente_id);
+  const at = c.atendente_id && D.colPorId.get(c.atendente_id);
+  const tel = (c.telefone||"").replace(/\D/g,"");
+  document.getElementById("zap-dir").innerHTML =
+    `<div class="zap-topo">
+       <span><b>${esc(nomeDaConversa(c))}</b>
+         <span style="font-weight:400"> · ${esc(c.telefone||"")}</span></span>
+       ${cli?`<button class="btn-mini" onclick="abrirFicha('${cli.id}')">abrir ficha</button>`:""}
+       ${at?`<span class="eq-ini on" style="--cor-eq:${at.cor}" title="${esc(at.nome)}">${esc(at.inicial)}</span>`
+          :`<button class="btn-mini" onclick="assumirConversa()">assumir</button>`}
+       <button class="btn-mini" onclick="transferirConversa()">transferir</button>
+       <button class="btn-mini" onclick="alternarBot()">${c.bot_ativo?"🤖 calar robô":"🤖 religar robô"}</button>
+       <button class="btn-mini" onclick="resolverConversa()">${c.status==="resolvida"?"reabrir":"✔ resolver"}</button>
+     </div>
+     <div class="zap-msgs" id="zap-msgs">${zapMsgs.map(m=>bolhaZap(m,cli)).join("")
+        || `<p class="meio-sub" style="padding:12px">Sem mensagens ainda.</p>`}</div>
+     <div class="zap-escrever">
+       <textarea id="zap-txt" rows="1" placeholder="Escreva para ${esc(nomeDaConversa(c))}…"></textarea>
+       <button class="btn-rap" id="zap-enviar" onclick="enviarZap()">Enviar</button>
+       ${tel?`<a class="btn-mini" target="_blank" style="text-decoration:none"
+           href="https://wa.me/55${tel}" title="abrir no WhatsApp do seu aparelho">↗</a>`:""}
+     </div>`;
+  const t = document.getElementById("zap-txt");
+  t.oninput = ()=>{ t.style.height="auto"; t.style.height=Math.min(t.scrollHeight,140)+"px"; };
+  // Enter manda, Shift+Enter pula linha — é o que a mão da equipe já espera
+  t.onkeydown = e=>{ if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); enviarZap(); } };
+  const cx = document.getElementById("zap-msgs"); cx.scrollTop = cx.scrollHeight;
+}
+
+function bolhaZap(m, cli){
+  const quem = m.por_bot ? "🤖 robô"
+            : m.autor_id ? (D.colPorId.get(m.autor_id)||{}).nome || "escritório" : "";
+  const corpo = m.midia_url
+    ? `<button class="zap-anexo" onclick="verMidiaZap('${m.id}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
+      + (m.texto?`<div>${esc(m.texto)}</div>`:"")
+    : esc(m.texto||`[${m.tipo}]`);
+  return `<div class="zap-b ${m.direcao} ${m.por_bot?"bot":""} ${m.status==="erro"?"ruim":""}">
+    ${quem?`<div class="autor">${esc(quem)}</div>`:""}
+    <div class="txt">${corpo}</div>
+    <div class="pe">${horaSP(m.quando_wa||m.criado_em)}
+      <span id="zs-${m.id}">${seloZap(m)}</span>
+      ${m.status==="erro"?`<span title="${esc(m.erro||"")}">não enviou</span>`:""}
+      ${cli?`<button class="virar" onclick="virarAndamento('${m.id}')"
+         title="registrar no histórico de um processo">↪ andamento</button>`:""}
+    </div></div>`;
+}
+
+async function verMidiaZap(id){
+  const m = zapMsgs.find(x=>x.id===id); if(!m||!m.midia_url) return;
+  const guia = window.open("","_blank");
+  try{ const u = await linkArquivo(m.midia_url);
+       if(guia) guia.location=u; else window.location=u; }
+  catch(e){ if(guia) guia.close(); aviso("Não consegui abrir o arquivo"); }
+}
+
+async function enviarZap(){
+  const t = document.getElementById("zap-txt"), txt = (t.value||"").trim();
+  if(!txt || !zapAberta) return;
+  t.value=""; t.style.height="auto";
+  await api(`/rest/v1/zap_mensagens`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({conversa_id:zapAberta, direcao:"saida", autor_id:eu.id,
+                         texto:txt, status:"fila"})});
+  const c = zapConvs.find(x=>x.id===zapAberta);
+  if(c){ c.bot_ativo=false; c.atendente_id = c.atendente_id || eu.id; }
+  await abrirConversa(zapAberta);
+  if(estadoPonte().txt!=="ponte ligada")
+    aviso("Guardado na fila — a ponte está fora do ar e envia quando voltar", false);
+}
+
+async function mudarConversa(campos){
+  if(!zapAberta) return;
+  await api(`/rest/v1/zap_conversas?id=eq.${zapAberta}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"}, body:JSON.stringify(campos)});
+  Object.assign(zapConvs.find(x=>x.id===zapAberta)||{}, campos);
+  pintarConversa(); pintarListaZap();
+}
+const assumirConversa = () => mudarConversa({atendente_id:eu.id, bot_ativo:false});
+const alternarBot = () => { const c=zapConvs.find(x=>x.id===zapAberta);
+                            return mudarConversa({bot_ativo:!(c&&c.bot_ativo)}); };
+const resolverConversa = () => { const c=zapConvs.find(x=>x.id===zapAberta);
+  return mudarConversa({status: c&&c.status==="resolvida" ? "aberta" : "resolvida"}); };
+
+async function transferirConversa(){
+  const eqs = D.colaboradores.filter(c=>c.ativo && c.id!==eu.id);
+  if(!eqs.length) return aviso("Não há outro colaborador ativo");
+  caixa(`<h3>Transferir a conversa</h3>
+    <p class="meio-sub">Fica registrado de quem para quem, e por quê.</p>
+    <div class="form-linha">${eqs.map(c=>
+      `<button class="eq-ini" data-zt="${c.id}" style="--cor-eq:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</button>`).join("")}</div>
+    <input id="zt-motivo" placeholder="motivo (opcional): é caso judicial…" style="width:100%;margin-top:10px">`);
+  document.querySelectorAll("[data-zt]").forEach(b=>b.onclick=async()=>{
+    const motivo=(document.getElementById("zt-motivo").value||"").trim();
+    fecharCaixa();
+    await api(`/rest/v1/rpc/zap_transferir`,{method:"POST",
+      body:JSON.stringify({p_conversa:zapAberta, p_para:b.dataset.zt, p_motivo:motivo||null})});
+    aviso("Conversa transferida ✔");
+    await recarregarZap();
+  });
+}
+
+// A mensagem NÃO vira andamento sozinha: se virasse, o histórico do processo
+// encheria de "bom dia" e "obrigado". Quem lê é quem decide o que importa —
+// e em qual processo entra, porque o cliente pode ter três.
+async function virarAndamento(msgId){
+  const c = zapConvs.find(x=>x.id===zapAberta);
+  const cli = c && c.cliente_id && D.cliPorId.get(c.cliente_id);
+  if(!cli) return aviso("Só dá para registrar no histórico de quem já é cliente");
+  const ks = processosDe(D.casosDoCliente.get(cli.id)||[]);
+  if(!ks.length) return aviso("Este cliente ainda não tem processo");
+  const gravar = async casoId => {
+    fecharCaixa();
+    await api(`/rest/v1/rpc/zap_virar_andamento`,{method:"POST",
+      body:JSON.stringify({p_mensagem:msgId, p_caso:casoId, p_autor:eu.id})});
+    aviso("Registrado no histórico do processo ✔");
+  };
+  if(ks.length===1) return gravar(ks[0].id);
+  caixa(`<h3>Em qual processo?</h3>
+    <p class="meio-sub">${esc(cli.nome)} tem mais de um — o histórico é de cada processo.</p>
+    ${ks.map(k=>`<button class="btn-rap" data-zk="${k.id}" style="display:block;width:100%;margin:6px 0;text-align:left">
+       ${esc(k.titulo||k.beneficio||"processo")} ${k.processo?`<span class="chip neutro">${esc(k.processo)}</span>`:""}
+     </button>`).join("")}`);
+  document.querySelectorAll("[data-zk]").forEach(b=>b.onclick=()=>gravar(b.dataset.zk));
+}
+
+function ajudaQR(){
+  // O código do QR é a credencial da sessão. Mandá-lo para um gerador de
+  // imagem de terceiros seria entregar o WhatsApp do escritório a um site
+  // qualquer — então ele se lê no terminal da máquina da ponte, e ponto.
+  caixa(`<h3>A ponte está esperando o QR code</h3>
+    <p>Na máquina onde a ponte roda, o QR aparece no terminal:</p>
+    <pre style="background:var(--fundo);padding:10px;border-radius:8px">cd ponte
+node ponte.js</pre>
+    <p class="meio-sub">Se ela roda como serviço:
+      <code>sudo journalctl -u ponte-zap -f</code> (Linux) ou
+      <code>pm2 logs ponte-zap</code> (Windows).</p>
+    <p class="meio-sub">O passo a passo completo está em
+      <code>crm/fase2/ponte/PASSO-A-PASSO.md</code>.</p>`);
 }
 
 // ── 📣 Marketing (o que estamos trabalhando + público por benefício) ──────
@@ -2808,6 +3046,20 @@ function escolhido(cliId, casoId){
   casoSel = casoId;
   document.getElementById("modal").style.display="none";
   abrirFicha(cliId);
+}
+// Caixa modal genérica, em cima do mesmo modal da escolha de processo: uma
+// pergunta no meio da tela, com o fundo escurecido.
+function caixa(html){
+  const m = document.getElementById("modal");
+  m.style.display = "";
+  m.innerHTML = `<div class="modal-fundo"><div class="modal-cx">
+      <div class="modal-cab"><div style="flex:1">${html}</div>
+        <button class="btn-mini" onclick="fecharCaixa()" title="fechar">✕</button></div>
+    </div></div>`;
+}
+function fecharCaixa(){
+  const m = document.getElementById("modal");
+  m.style.display="none"; m.innerHTML="";
 }
 function fecharEscolha(){
   document.getElementById("modal").style.display="none";
