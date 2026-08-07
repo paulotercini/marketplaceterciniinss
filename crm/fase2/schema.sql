@@ -891,7 +891,11 @@ create table if not exists zap_mensagens (
   seq         bigint generated always as identity,
   conversa_id uuid not null references zap_conversas(id) on delete cascade,
   externo_id  text unique,                -- id da mensagem no WhatsApp (dedupe)
-  direcao     text not null check (direcao in ('entrada','saida')),
+  -- 'interna' é a nota que só a equipe vê: mora na conversa, junto do assunto,
+  -- mas NUNCA sai. A trava está logo abaixo da tabela, e é de propósito que
+  -- seja no banco: nota interna chegando ao cliente é o pior acidente possível
+  -- neste sistema, e não pode depender de a tela estar certa.
+  direcao     text not null check (direcao in ('entrada','saida','interna')),
   autor_id    uuid references colaboradores(id) on delete set null,  -- null: cliente ou bot
   por_bot     boolean not null default false,
   tipo        text not null default 'texto',   -- texto|imagem|audio|video|documento|figurinha|local|contato
@@ -899,7 +903,7 @@ create table if not exists zap_mensagens (
   midia_url   text, midia_nome text, midia_mime text,
   -- 'fila' é o pedido de envio: a ponte assume e leva até 'enviada'
   status      text not null default 'enviada'
-              check (status in ('fila','enviando','enviada','entregue','lida','erro')),
+              check (status in ('rascunho','fila','enviando','enviada','entregue','lida','erro','interna')),
   erro        text,
   tentativas  integer not null default 0,
   quando_wa   timestamptz,                -- o relógio do WhatsApp, não o nosso
@@ -928,6 +932,9 @@ create index if not exists zap_transf_conversa on zap_transferencias (conversa_i
 create or replace function zap_toque() returns trigger
 language plpgsql as $$
 begin
+  -- nota interna não mexe na prévia nem no não-lidas: a lista mostra a
+  -- conversa com o CLIENTE, e não o bilhete que a equipe deixou
+  if new.direcao = 'interna' then return new; end if;
   update zap_conversas set
     ultima_em    = coalesce(new.quando_wa, new.criado_em, now()),
     ultimo_texto = left(coalesce(nullif(trim(new.texto),''), '['||new.tipo||']'), 200),
@@ -1281,8 +1288,10 @@ begin
   select coalesce(nullif(trim(c.nome_perfil),''), c.telefone) into v_quem
     from zap_conversas c where c.id = m.conversa_id;
 
-  v_txt := case when m.direcao='entrada'
-                then 'Cliente pelo WhatsApp' else 'Enviado ao cliente pelo WhatsApp' end
+  v_txt := case m.direcao
+                when 'entrada' then 'Cliente pelo WhatsApp'
+                when 'interna' then 'Nota interna do atendimento'
+                else 'Enviado ao cliente pelo WhatsApp' end
         || coalesce(' (' || v_quem || ')', '') || ': '
         || coalesce(nullif(trim(m.texto),''), '[' || m.tipo || ']')
         || coalesce(' 📎 ' || m.midia_nome, '');
@@ -1325,7 +1334,16 @@ create table if not exists zap_avisos (
 -- 'rascunho' não é enviado pela ponte: espera alguém apertar enviar
 alter table zap_mensagens drop constraint if exists zap_mensagens_status_check;
 alter table zap_mensagens add constraint zap_mensagens_status_check
-  check (status in ('rascunho','fila','enviando','enviada','entregue','lida','erro'));
+  check (status in ('rascunho','fila','enviando','enviada','entregue','lida','erro','interna'));
+alter table zap_mensagens drop constraint if exists zap_mensagens_direcao_check;
+alter table zap_mensagens add constraint zap_mensagens_direcao_check
+  check (direcao in ('entrada','saida','interna'));
+-- A trava: nota interna não entra na fila de envio, aconteça o que acontecer
+-- na tela. A ponte só lê status='fila', e o banco garante que nota nenhuma
+-- chegue lá.
+alter table zap_mensagens drop constraint if exists zap_interna_nao_sai;
+alter table zap_mensagens add constraint zap_interna_nao_sai
+  check (direcao <> 'interna' or status = 'interna');
 alter table zap_mensagens add column if not exists aviso_chave text;
 alter table zap_mensagens add column if not exists aviso_ref uuid;
 -- a trava de "nunca duas vezes": mesma regra, mesma perícia, uma vez só
