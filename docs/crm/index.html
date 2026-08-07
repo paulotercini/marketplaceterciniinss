@@ -533,6 +533,16 @@
   .zap-vazio{margin:auto;text-align:center;max-width:340px;padding:20px}
   .zap-vazio h4{margin:0 0 6px}
   .zap-vazio p{font-size:13px;color:var(--cinza);margin:0 0 12px}
+  .cfg-cx{background:var(--branco);border:1px solid var(--borda);border-radius:10px;
+          padding:10px 12px;margin-bottom:6px}
+  .cfg-linha{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0}
+  .cfg-ck{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--cinza)}
+  .cfg-ck input[type=checkbox]{width:15px;height:15px}
+  .cfg-reg{background:var(--branco);border:1px solid var(--borda);border-radius:10px;
+           padding:8px 12px;margin-bottom:6px}
+  .cfg-reg.off{opacity:.5;background:var(--fundo)}
+  .cfg-reg textarea{width:100%;border:1px solid var(--borda);border-radius:8px;padding:8px;
+                    font:inherit;font-size:12.5px;resize:vertical;white-space:pre-wrap}
   .zap-estado{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--cinza);
               font-weight:600;margin-bottom:6px}
   .zap-estado i{width:9px;height:9px;border-radius:50%;display:inline-block}
@@ -745,7 +755,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.12 · avisos automáticos</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.13 · configurações</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1401,6 +1411,7 @@ function montarSidebar(){
     ["recebimentos","💰 Recebimentos", D.casos.filter(k=>k.fase==="pagamento").length],
     ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && e.data_hora>=hoje()).length],
     ["dashboard","📊 Dashboard", null],
+    ["config","⚙️ Configurações", null],
   ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}">${rotu(rot)}${n!=null?`<span class="cont">${n}</span>`:""}</div>`).join("");
   const bSom=document.getElementById("btn-som");
   bSom.textContent = somLigado()?"🔔":"🔕";
@@ -1546,6 +1557,7 @@ function render(){
   if(visao==="quadro") return renderQuadro();
   if(visao==="vendas") return renderVendas();
   if(visao==="whatsapp") return renderWhats();
+  if(visao==="config") return renderConfig();
   if(visao==="parcerias") return renderParcerias();
   if(visao==="marketing") return renderMarketing();
 
@@ -2375,6 +2387,175 @@ node ponte.js</pre>
       <code>pm2 logs ponte-zap</code> (Windows).</p>
     <p class="meio-sub">O passo a passo completo está em
       <code>crm/fase2/ponte/PASSO-A-PASSO.md</code>.</p>`);
+}
+
+// ── ⚙️ Configurações: o que antes só se mudava no banco ───────────────────
+// Tudo aqui é do ESCRITÓRIO, não de cada um: quem mexe, mexe para todo mundo.
+// Está tudo numa tela só de propósito — são as coisas que se ajustam uma vez
+// e se esquece, e caçá-las espalhadas pelo sistema seria pior.
+const SETORES = ["triagem","inss","judicial","financeiro"];
+const DIAS_CFG = [["1","seg"],["2","ter"],["3","qua"],["4","qui"],["5","sex"],["6","sáb"],["7","dom"]];
+let cfgAvisos = [], cfgPassos = [];
+
+async function renderConfig(){
+  document.getElementById("titulo-lista").textContent="⚙️ Configurações";
+  document.getElementById("sub-lista").textContent=
+    "Quem atende, o que o robô diz e quando os avisos saem. Vale para o escritório inteiro.";
+  const meio = document.getElementById("conteudo-meio");
+  meio.innerHTML = `<p class="meio-sub">carregando…</p>`;
+  [cfgAvisos, cfgPassos] = await Promise.all([
+    todas("zap_avisos","select=*&order=ordem").catch(()=>[]),
+    todas("zap_bot_passos","select=*&order=ordem").catch(()=>[]),
+  ]);
+  const p = estadoPonte();
+  const dias = (cfgApp("zap_dias_uteis")||"1,2,3,4,5").split(",");
+
+  meio.innerHTML =
+    // ── quem atende ──────────────────────────────────────────────────────
+    `<h3 class="secao">👥 Quem atende o WhatsApp</h3>
+     <p class="meio-sub">Não é cadastro novo: é a mesma equipe do CRM. Quem não
+        estiver marcado nunca recebe conversa — e quem já cuida do cliente tem
+        preferência sobre o setor.</p>
+     <div class="cfg-cx">${D.colaboradores.filter(c=>c.ativo).map(c=>
+       `<div class="cfg-linha">
+          <span class="eq-ini ${c.atende_zap?"on":""}" style="--cor-eq:${c.cor}">${esc(c.inicial)}</span>
+          <b style="min-width:110px">${esc(c.nome)}</b>
+          <label class="cfg-ck"><input type="checkbox" data-atende="${c.id}"
+            ${c.atende_zap?"checked":""}> atende</label>
+          <select data-setor="${c.id}" ${c.atende_zap?"":"disabled"}>
+            <option value="">setor…</option>
+            ${SETORES.map(s=>`<option ${c.setor===s?"selected":""}>${s}</option>`).join("")}
+          </select>
+        </div>`).join("")}</div>`
+
+    // ── horário e interruptores ──────────────────────────────────────────
+    + `<h3 class="secao">🕗 Horário e interruptores</h3>
+       <div class="cfg-cx">
+         <div class="cfg-linha">
+           <b style="min-width:110px">Atendimento</b>
+           <label class="cfg-ck">das <input type="time" id="cf-ini"
+             value="${esc(cfgApp("zap_hora_inicio")||"08:00")}"></label>
+           <label class="cfg-ck">às <input type="time" id="cf-fim"
+             value="${esc(cfgApp("zap_hora_fim")||"18:00")}"></label>
+           ${DIAS_CFG.map(([n,r])=>`<label class="cfg-ck"><input type="checkbox"
+              data-dia="${n}" ${dias.includes(n)?"checked":""}>${r}</label>`).join("")}
+         </div>
+         <p class="meio-sub" style="margin:0 0 8px">Fora desse horário o robô avisa que
+            responde no próximo dia útil, e nenhum aviso automático dispara.</p>
+         <div class="cfg-linha">
+           <label class="cfg-ck"><input type="checkbox" id="cf-bot"
+             ${(cfgApp("zap_bot_ligado")||"sim")==="sim"?"checked":""}> 🤖 robô ligado</label>
+           <label class="cfg-ck"><input type="checkbox" id="cf-avisos"
+             ${(cfgApp("zap_avisos_ligado")||"sim")==="sim"?"checked":""}> 🔔 avisos automáticos ligados</label>
+           <label class="cfg-ck">silêncio do robô entre falas:
+             <input type="number" id="cf-pausa" min="0" max="300" style="width:70px"
+               value="${esc(cfgApp("zap_pausa_bot")||"15")}"> s</label>
+         </div>
+       </div>`
+
+    // ── avisos ───────────────────────────────────────────────────────────
+    + `<h3 class="secao">🔔 Avisos automáticos (${cfgAvisos.length})</h3>
+       <p class="meio-sub">Use <code>{nome}</code>, <code>{data}</code>, <code>{hora}</code>,
+          <code>{local}</code> — o sistema troca na hora de enviar. <b>Conferir antes</b>
+          faz a mensagem virar rascunho em vez de sair: bom enquanto ninguém confia no robô.</p>
+       ${cfgAvisos.map(a=>`<div class="cfg-reg ${a.ativo?"":"off"}">
+          <div class="cfg-linha">
+            <input type="checkbox" data-av-ativo="${a.chave}" ${a.ativo?"checked":""}
+              title="ligar ou desligar esta regra">
+            <input data-av-desc="${a.chave}" value="${esc(a.descricao)}"
+              style="flex:1;min-width:180px;font-weight:700" title="o nome é só para vocês">
+            <label class="cfg-ck"><input type="number" data-av-dias="${a.chave}" min="0" max="365"
+              style="width:60px" value="${a.dias_antes}"> dias antes</label>
+            <label class="cfg-ck"><input type="checkbox" data-av-rev="${a.chave}"
+              ${a.revisar?"checked":""}> conferir antes de enviar</label>
+          </div>
+          <textarea data-av-txt="${a.chave}" rows="4">${esc(a.texto)}</textarea>
+        </div>`).join("") || `<p class="meio-sub">Nenhuma regra — rode o schema.sql.</p>`}`
+
+    // ── o robô ───────────────────────────────────────────────────────────
+    + `<h3 class="secao">🤖 O que o robô diz (${cfgPassos.length})</h3>
+       <p class="meio-sub">O robô só cumprimenta, pergunta do que se trata e chama alguém.
+          Ele não responde pergunta jurídica, e isso é de propósito: robô opinando sobre
+          direito sai caro para o cliente e para o escritório.</p>
+       ${cfgPassos.map(s=>`<div class="cfg-reg ${s.ativo?"":"off"}">
+          <div class="cfg-linha">
+            <label class="cfg-ck"><input type="checkbox" data-bp-ativo="${s.chave}"
+              ${s.ativo?"checked":""}> <b>${esc(s.chave)}</b></label>
+            ${s.entrega_setor?`<span class="chip ben">entrega para ${esc(s.entrega_setor)}</span>`
+              :`<span class="chip neutro">menu</span>`}
+          </div>
+          <textarea data-bp-txt="${s.chave}" rows="${s.chave==="inicio"?9:3}">${esc(s.texto)}</textarea>
+        </div>`).join("")}`
+
+    // ── a ponte ──────────────────────────────────────────────────────────
+    + `<h3 class="secao">🔌 A ponte do WhatsApp</h3>
+       <div class="cfg-cx">
+         <div class="cfg-linha"><span class="zap-estado" style="margin:0">
+           <i style="background:${p.cor}"></i>${esc(p.txt)}</span>
+           ${cfgApp("zap_visto_em")?`<span class="meio-sub">sinal de vida em
+             ${fmtTS(cfgApp("zap_visto_em"))} às ${horaSP(cfgApp("zap_visto_em"))}</span>`:""}
+           <button class="btn-mini" onclick="ajudaQR()">como ligar / ler o QR</button>
+         </div>
+       </div>
+       <p class="meio-sub" style="margin-top:14px">As mudanças são guardadas assim que você
+          sai do campo. Não há botão de salvar — e nem desfazer.</p>`;
+
+  ligarConfig();
+}
+
+function ligarConfig(){
+  const guarda = (sel, fn) => document.querySelectorAll(sel).forEach(fn);
+  // quem atende
+  guarda("[data-atende]", el => el.onchange = async ()=>{
+    const c = D.colPorId.get(el.dataset.atende);
+    await api(`/rest/v1/colaboradores?id=eq.${el.dataset.atende}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({atende_zap:el.checked})});
+    if(c) c.atende_zap = el.checked;
+    const sel = document.querySelector(`[data-setor="${el.dataset.atende}"]`);
+    if(sel) sel.disabled = !el.checked;
+    aviso(el.checked?"Passa a receber conversas 💬":"Deixa de receber conversas", false);
+  });
+  guarda("[data-setor]", el => el.onchange = async ()=>{
+    const c = D.colPorId.get(el.dataset.setor);
+    await api(`/rest/v1/colaboradores?id=eq.${el.dataset.setor}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({setor:el.value||null})});
+    if(c) c.setor = el.value||null;
+    aviso("Setor guardado ✔", false);
+  });
+  // horário e interruptores
+  const cfgSalva = (id, chave, valor) => {
+    const el = document.getElementById(id); if(!el) return;
+    el.onchange = async ()=>{ await guardarCfgApp(chave, valor(el)); aviso("Guardado ✔", false); };
+  };
+  cfgSalva("cf-ini","zap_hora_inicio", el=>el.value||"08:00");
+  cfgSalva("cf-fim","zap_hora_fim",    el=>el.value||"18:00");
+  cfgSalva("cf-pausa","zap_pausa_bot", el=>String(Math.max(0, +el.value||0)));
+  cfgSalva("cf-bot","zap_bot_ligado",  el=>el.checked?"sim":"nao");
+  cfgSalva("cf-avisos","zap_avisos_ligado", el=>el.checked?"sim":"nao");
+  guarda("[data-dia]", el => el.onchange = async ()=>{
+    const dias = [...document.querySelectorAll("[data-dia]")].filter(x=>x.checked)
+                   .map(x=>x.dataset.dia).join(",");
+    await guardarCfgApp("zap_dias_uteis", dias);
+    aviso(dias?"Dias de atendimento guardados ✔":"Sem dia marcado: nada dispara", false);
+  });
+  // avisos e passos do robô — a chave é o id, então dá para tratar igual
+  const linha = (attr, tabela, campo, ler) => guarda(`[${attr}]`, el => {
+    const evento = el.tagName==="TEXTAREA" ? "onblur" : "onchange";
+    el[evento] = async ()=>{
+      await api(`/rest/v1/${tabela}?chave=eq.${encodeURIComponent(el.getAttribute(attr))}`,
+        {method:"PATCH", headers:{Prefer:"return=minimal"},
+         body:JSON.stringify({[campo]: ler(el)})});
+      aviso("Guardado ✔", false);
+      if(campo==="ativo") el.closest(".cfg-reg").classList.toggle("off", !el.checked);
+    };
+  });
+  linha("data-av-ativo","zap_avisos","ativo",  el=>el.checked);
+  linha("data-av-desc", "zap_avisos","descricao", el=>el.value.trim()||"aviso");
+  linha("data-av-rev",  "zap_avisos","revisar",el=>el.checked);
+  linha("data-av-dias", "zap_avisos","dias_antes", el=>Math.max(0, +el.value||0));
+  linha("data-av-txt",  "zap_avisos","texto",  el=>el.value);
+  linha("data-bp-ativo","zap_bot_passos","ativo", el=>el.checked);
+  linha("data-bp-txt",  "zap_bot_passos","texto", el=>el.value);
 }
 
 // ── 📣 Marketing (o que estamos trabalhando + público por benefício) ──────
