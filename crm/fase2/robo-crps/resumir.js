@@ -108,7 +108,10 @@ const ESQUEMA = {
 // antes de comparar em vez de dobrar a lista
 const VERBOS = /^(Reconheceu|Converteu|Determinou|Manteve|Reformou|Anulou|Concedeu|Negou|Devolveu|Acolheu|Rejeitou)\b/i;
 const comecaComVerbo = l => VERBOS.test(String(l).replace(/^N[ãa]o\s+/i, ''));
-const MEDICO = /\b(CID[- ]?\d|cid[- ]?10|diagn[óo]stic|laudo|per[íi]cia m[ée]dica atestou|doen[çc]a de|neoplas|depress|esquizo|lombalgia|hérnia|hernia|artros|diabet|hipertens|HIV|c[âa]ncer|transtorno)\b/i;
+// "laudo" sozinho barrava linha legítima: no previdenciário, laudo técnico e
+// laudo extemporâneo são prova AMBIENTAL (ruído, agente nocivo), não dado de
+// saúde. O que não pode passar é laudo médico ou pericial.
+const MEDICO = /\b(CID[- ]?\d|cid[- ]?10|diagn[óo]stic|laudo\s+(m[ée]dic\w*|pericial|do\s+perito)|per[íi]cia m[ée]dica atestou|doen[çc]a de|neoplas|depress|esquizo|lombalgia|hérnia|hernia|artros|diabet|hipertens|HIV|c[âa]ncer|transtorno)\b/i;
 function validarResumo(r) {
   if (!r || r.conseguiu !== true) return { ok: false, motivo: (r && r.motivo) || 'não consegui ler o dispositivo' };
   const linhas = (r.linhas || []).map(s => String(s).trim()).filter(Boolean);

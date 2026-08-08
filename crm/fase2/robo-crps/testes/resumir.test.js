@@ -105,3 +105,16 @@ test('as regras mandadas ao Claude proíbem dado médico e exigem o dispositivo'
   assert.equal(R.ESQUEMA.additionalProperties, false);
   assert.deepStrictEqual(R.ESQUEMA.required, ['conseguiu', 'linhas', 'motivo']);
 });
+
+// "laudo" sozinho barrava linha legítima: no previdenciário, laudo técnico e
+// laudo extemporâneo são prova de ruído e agente nocivo, não dado de saúde.
+test('laudo TÉCNICO passa; laudo MÉDICO não', () => {
+  const passa = R.validarResumo({ conseguiu: true, motivo: '', linhas:
+    ['Não reconheceu como especial o período de 14/05/1991 a 16/01/1998 — laudo extemporâneo sem as informações exigidas'] });
+  assert.equal(passa.ok, true, passa.motivo);
+  for (const l of ['Reconheceu a incapacidade conforme o laudo médico',
+                   'Determinou nova análise do laudo pericial',
+                   'Manteve a decisão com base no laudo do perito']) {
+    assert.equal(R.validarResumo({ conseguiu: true, motivo: '', linhas: [l] }).ok, false, `passou: ${l}`);
+  }
+});
