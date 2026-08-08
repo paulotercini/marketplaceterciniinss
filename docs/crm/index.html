@@ -251,7 +251,7 @@
   .fchip.on{background:var(--azul);border-color:var(--azul);color:#fff}
   h3.secao{font-size:13px;color:var(--cinza);margin:12px 0 6px}
   /* meio-termo: cartão com respiro interno, só a distância entre eles é menor */
-  .cartao{background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 14px;margin-bottom:5px;cursor:pointer;display:flex;align-items:center;gap:11px;box-shadow:0 1px 2px rgba(30,32,36,.05)}
+  .cartao{position:relative;background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 14px;margin-bottom:5px;cursor:pointer;display:flex;align-items:center;gap:11px;box-shadow:0 1px 2px rgba(30,32,36,.05)}
   .cartao:hover{box-shadow:0 3px 10px rgba(30,32,36,.10)}
   .cartao.sel{outline:2px solid var(--azul)}
   .cartao.feita{opacity:.55}
@@ -556,6 +556,24 @@
   /* nota interna e rascunho não podem se parecer: um NÃO vai ser enviado, o
      outro VAI assim que alguém aprovar. Amarelo é do rascunho; a nota é
      cinza-lilás, centralizada, com a tarja de "só a equipe vê". */
+  .cartao .faixa{position:absolute;left:-4px;top:-1px;bottom:-1px;width:4px;
+                 border-radius:8px 0 0 8px}
+  .tf-box{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px;
+          padding:7px 9px;background:var(--fundo);border:1px solid var(--borda);border-radius:8px}
+  .tf-box .tf-sep{width:1px;height:18px;background:var(--borda);margin:0 4px}
+  .tf-box .tf-data{padding:3px 6px;border:1px solid var(--borda);border-radius:6px;font:inherit;font-size:12px}
+  .tf-box .tf-op.on,.tf-box .tf-dt.on{background:#e8f1fb;border-color:var(--azul);color:var(--azul)}
+  .tf-chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;
+           color:var(--cinza);background:var(--fundo);border:1px solid var(--borda);
+           border-radius:9px;padding:1px 7px 1px 2px}
+  .tf-chip b{width:17px;height:17px;border-radius:50%;color:#fff;font-size:10px;
+             display:inline-flex;align-items:center;justify-content:center}
+  .tf-chip.feita{color:#0a7d43;border-color:#bfe6cf;background:#eaf7ef}
+  .tf-chip.atras{color:#b00020;border-color:#f3c1c8;background:#fdeef0}
+  .tf-acao{font-size:11px}
+  .sem-acao{margin:10px 0}
+  .sem-acao summary{cursor:pointer;font-size:13px;font-weight:700;color:#8a6300;
+    background:#fff8e1;border:1px solid #e0b955;border-radius:8px;padding:7px 12px}
   .zap-b.interna{align-self:center;max-width:88%;background:#eceef5;
                  border:1px solid #c3c8dc;border-left:4px solid #8764b8}
   .zap-b.interna .autor{color:#5c4b7d}
@@ -781,7 +799,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 07.16 · nota interna</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08 · tarefas por comentário</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1199,7 +1217,7 @@ async function guardarCfgApp(chave, valor){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal, tarefasAnd] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -1226,11 +1244,16 @@ async function carregar(){
       todas("config_app","select=*").catch(()=>[]),
       todas("zap_conversas","select=id,nao_lidas,atendente_id,status").catch(()=>[]),
       todas("inss_calendario","select=*").catch(()=>[]),
+      todas("andamento_tarefas","select=*&concluida_em=is.null").catch(()=>[]),
     ]);
   D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
   D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
   D.config = new Map((cfgs||[]).map(x=>[x.chave,x.valor]));
   D.inssCal = inssCal||[];
+  // tarefas por comentário, indexadas por caso: é o que pinta as listas
+  D.tarefasPorCaso = new Map();
+  (tarefasAnd||[]).forEach(t=>{ if(!D.tarefasPorCaso.has(t.caso_id)) D.tarefasPorCaso.set(t.caso_id,[]);
+                                D.tarefasPorCaso.get(t.caso_id).push(t); });
   // conta o que cobra ação: minha conversa com mensagem nova, ou conversa
   // aberta sem dono nenhum. O resto não precisa de contador piscando.
   D.zapResumo = (zaps||[]).filter(z=>z.status!=="resolvida"
@@ -1414,7 +1437,8 @@ function montarSidebar(){
     ["mencoes","📥 Menções", D.mencoes.length],
     ["calendario","📅 Calendário", null],
     ["planejado","🗓️ Planejado", ativos().filter(k=>k.prazo).length],
-    ["minhas","👤 Atribuídas a mim", ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)).length],
+    ["minhas","👤 Atribuídas a mim", ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)
+        || (D.tarefasPorCaso.get(k.id)||[]).some(t=>t.colaborador_id===eu.id)).length],
     ["importante","⭐ Importante", ativos().filter(k=>k.importante).length],
     ["particulares","📋 Minhas Tarefas", "🔒"],
     ["rotinas","🔁 Organizacional", (D.rotinas||[]).filter(r=>r.ativo!==false).length],
@@ -1468,10 +1492,27 @@ function cartaoCliente(cli, casosMostrar){
   const ks = casosMostrar || (D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado");
   const resp = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))].map(id=>D.colPorId.get(id)).filter(Boolean);
   const prazoMin = ks.map(k=>k.prazo).filter(Boolean).sort()[0];
+  // o lembrete mais próximo agora pode vir de uma TAREFA de comentário — e
+  // quem manda na cor da borda é quem tem esse lembrete na mão
+  const tAb = ks.flatMap(k=>D.tarefasPorCaso.get(k.id)||[]);
+  let dataProx = prazoMin || null, quemProx = [];
+  if(tAb.length){
+    const dmin = tAb.map(t=>t.lembrar_em).sort()[0];
+    if(!dataProx || dmin <= dataProx){
+      dataProx = dmin;
+      quemProx = [...new Set(tAb.filter(t=>t.lembrar_em===dmin).map(t=>t.colaborador_id))]
+        .map(id=>D.colPorId.get(id)).filter(Boolean);
+    }
+  }
+  const faixa = (quemProx.length?quemProx:resp).slice(0,3).map(c=>c.cor);
   const evFut = D.eventos.find(e=>ks.some(k=>k.id===e.caso_id) && e.status==="agendada" && dataSP(e.data_hora)>=hoje());
   const imp = ks.some(k=>k.importante);
   const noMeuDia = D.meudia.some(m=>m.colaborador_id===eu.id && ks.some(k=>k.id===m.caso_id));
-  return `<div class="cartao" data-cli="${cli.id}" ${resp.length?`style="border-left:4px solid ${resp[0].cor}"`:""}>
+  return `<div class="cartao" data-cli="${cli.id}" ${faixa.length===1
+      ?`style="border-left:4px solid ${faixa[0]}"`
+      :faixa.length?`style="border-left:4px solid transparent"`:""}>
+    ${faixa.length>1?`<i class="faixa" style="background:linear-gradient(to bottom, ${
+        faixa.map((c,i)=>`${c} ${Math.round(i*100/faixa.length)}% ${Math.round((i+1)*100/faixa.length)}%`).join(", ")})"></i>`:""}
     <span class="check"></span>
     <div class="info">
       <div class="nome">${esc(cli.nome)}</div>
@@ -1480,7 +1521,9 @@ function cartaoCliente(cli, casosMostrar){
         ${[...new Set(ks.map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
         ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
         ${ks.map(chipExig).join("")}
-        ${(kp=>chipPrazo(prazoMin, kp&&kp.lembrar_motivo))(ks.find(x=>x.prazo===prazoMin))}
+        ${(kp=>chipPrazo(dataProx, kp&&kp.lembrar_motivo))(ks.find(x=>x.prazo===dataProx))}
+        ${quemProx.map(c=>`<span class="avatar mini" style="background:${c.cor}"
+          title="${esc(c.nome)} — tarefa para ${fmt(dataProx)}">${esc(c.inicial)}</span>`).join("")}
         ${(kp=>kp&&kp.lembrar_motivo?`<span class="chip neutro" title="${esc(kp.lembrar_motivo)}">📌 ${esc(kp.lembrar_motivo.length>32?kp.lembrar_motivo.slice(0,32)+"…":kp.lembrar_motivo)}</span>`:"")(ks.find(x=>x.prazo===prazoMin))}
         ${evFut?`<span class="chip per">🩺 ${esc(evFut.tipo)} ${fmtTS(evFut.data_hora)}</span>`:""}
         ${ks.length>1?`<span class="chip neutro">${ks.length} casos</span>`:""}
@@ -1592,7 +1635,9 @@ function render(){
   if(visao==="rotinas") return renderRotinas();
   if(visao==="planejado") return renderPlanejado();
   let casosSel, titulo, subt="Clique no cliente para abrir a ficha completa.";
-  if(visao==="minhas"){ titulo="👤 Atribuídas a mim"; casosSel=ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)); }
+  if(visao==="minhas"){ titulo="👤 Atribuídas a mim"; casosSel=ativos().filter(k=>
+    (D.atrDoCaso.get(k.id)||[]).includes(eu.id)
+    || (D.tarefasPorCaso.get(k.id)||[]).some(t=>t.colaborador_id===eu.id)); }
   else if(visao==="importante"){ titulo="⭐ Importante"; casosSel=ativos().filter(k=>k.importante); }
   else if(visao==="recebimentos"){ titulo="💰 Recebimentos"; casosSel=D.casos.filter(k=>k.fase==="pagamento");
     subt="Casos em fase de pagamento — o financeiro vive dentro do caso, na aba Pagamentos da ficha."; }
@@ -1639,8 +1684,12 @@ function renderMeuDia(){
   const doDia = D.meudia.filter(m=>!filtroColab || m.colaborador_id===filtroColab);
   const casosDia = doDia.filter(m=>m.caso_id).map(m=>D.casoPorId.get(m.caso_id)).filter(Boolean);
   const doColab = k => !filtroColab || (D.atrDoCaso.get(k.id)||[]).includes(filtroColab);
-  const hojeK = ativos().filter(k=>k.prazo===hoje()).filter(doColab).filter(k=>!casosDia.includes(k));
-  const vencK = ativos().filter(k=>k.prazo && k.prazo<hoje()).filter(doColab).filter(k=>!casosDia.includes(k));
+  const tfDo = (k, teste) => (D.tarefasPorCaso.get(k.id)||[])
+    .some(t=>(!filtroColab || t.colaborador_id===filtroColab) && teste(t.lembrar_em));
+  const hojeK = ativos().filter(k=>(k.prazo===hoje() && doColab(k)) || tfDo(k, d=>d===hoje()))
+    .filter(k=>!casosDia.includes(k));
+  const vencK = ativos().filter(k=>(k.prazo && k.prazo<hoje() && doColab(k)) || tfDo(k, d=>d<hoje()))
+    .filter(k=>!casosDia.includes(k));
   const tCol = t => !filtroColab || t.particular_de===filtroColab || !t.particular_de;
   const tHoje = D.tarefas.filter(t=>!t.concluida && t.prazo===hoje()).filter(tCol);
   const tVenc = D.tarefas.filter(t=>!t.concluida && t.prazo && t.prazo<hoje()).filter(tCol);
@@ -1655,6 +1704,7 @@ function renderMeuDia(){
     + blocoRotinas()
     + blocoApos()
     + blocoCadunico()
+    + blocoSemAcao()
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — use o ☀️ nos cartões.</p>")
     + `<h3 class="secao">🟡 Vencem hoje (${hojeK.length+tHoje.length})</h3>`
@@ -3267,17 +3317,102 @@ function horaLocal(iso){
     .reduce((o,x)=>(o[x.type]=x.value,o),{});
   return `${p.day}/${p.month}/${p.year} às ${p.hour}:${p.minute}`;
 }
+function tarefasDe(a){ return (D.tarefasFicha||[]).filter(t=>t.andamento_id===a.id); }
 function vistos(a){
-  const ls = lidosDe(a).slice().sort((x,y)=>(x.lido_em||"")<(y.lido_em||"")?-1:1);
+  // uma marca por pessoa: quem TEM tarefa neste comentário aparece com o
+  // estado dela (pendente/concluída) no lugar do visto de leitura; quem não
+  // tem, continua com o ✓ de sempre. "Li" e "fiz" não disputam espaço.
+  const ts = tarefasDe(a);
+  const comTarefa = new Set(ts.map(t=>t.colaborador_id));
+  const ls = lidosDe(a).filter(l=>!comTarefa.has(l.colaborador_id))
+    .sort((x,y)=>(x.lido_em||"")<(y.lido_em||"")?-1:1);
+  const minha = ts.find(t=>t.colaborador_id===eu.id && !t.concluida_em);
   return `<span class="vistos" id="visto-${a.id}">
+    ${ts.map(t=>{ const c=D.colPorId.get(t.colaborador_id); if(!c) return "";
+      const atras = !t.concluida_em && t.lembrar_em < hoje();
+      return `<span class="tf-chip ${t.concluida_em?"feita":atras?"atras":""}"
+        title="${esc(c.nome)} — ${t.concluida_em?`concluída em ${horaLocal(t.concluida_em)}`
+                :`tarefa para ${fmt(t.lembrar_em)}`}">
+        <b style="background:${c.cor}">${esc(c.inicial)}</b>
+        ${t.concluida_em?"✔":`🗓 ${fmt(t.lembrar_em).slice(0,5)}`}</span>`;}).join("")}
+    ${minha?`<button class="btn-mini tf-acao" onclick="concluirTarefa('${minha.id}')">✔ concluir</button>
+      <button class="btn-mini tf-acao" onclick="adiarTarefa('${minha.id}')">⏩ adiar</button>`:""}
     ${ls.map(l=>{ const c=D.colPorId.get(l.colaborador_id); if(!c) return "";
       return `<span class="visto-av" style="background:${c.cor}"
         title="${esc(c.nome)} leu em ${horaLocal(l.lido_em)}">${esc(c.inicial)}</span>`;}).join("")}
-    ${(meu=>`<button class="visto-bt ${meu?"on":""}" onclick="marcarLido('${a.id}',${meu?1:0})"
+    ${comTarefa.has(eu.id)?"":(meu=>`<button class="visto-bt ${meu?"on":""}" onclick="marcarLido('${a.id}',${meu?1:0})"
       title="${meu ? `Você leu em ${horaLocal(meu.lido_em)} — clique para desfazer`
                    : "marcar que você leu"}">✓</button>`
      )(lidosDe(a).find(l=>l.colaborador_id===eu.id))}
   </span>`;
+}
+
+// ── concluir: a baixa é sua, e o que você fez vira comentário ─────────────
+const CONCLUIR_PRESETS = [
+  "Feito", "Solicitei o benefício", "Protocolei o recurso",
+  "Cumpri a exigência", "Juntei os documentos",
+];
+function concluirTarefa(id){
+  caixa(`<h3>✔ Concluir a sua parte</h3>
+    <p class="meio-sub">O que você fez vira um comentário no processo — o histórico continua.</p>
+    <div class="form-linha">${CONCLUIR_PRESETS.map(t=>
+      `<button class="btn-rap" onclick="document.getElementById('ct-txt').value=this.textContent">${t}</button>`).join("")}</div>
+    <textarea id="ct-txt" rows="2" placeholder="ou escreva o que foi feito…"
+      style="width:100%;margin-top:8px;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"></textarea>
+    <div class="form-linha" style="margin-top:6px;align-items:center">
+      <label class="meio-sub">nº de protocolo (se houver):
+        <input id="ct-prot" inputmode="numeric" placeholder="fica guardado na ficha"
+          style="width:220px"></label>
+      <button class="btn-rap" style="margin-left:auto" onclick="fecharTarefa('${id}')">✔ Concluir</button>
+    </div>`);
+}
+async function fecharTarefa(id){
+  const t=(D.tarefasFicha||[]).find(x=>x.id===id); if(!t) return;
+  const txt=(document.getElementById("ct-txt").value||"").trim();
+  const prot=(document.getElementById("ct-prot").value||"").replace(/\D/g,"");
+  fecharCaixa();
+  await api(`/rest/v1/andamento_tarefas?id=eq.${id}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({concluida_em:new Date().toISOString()})});
+  let corpo = "✔ " + (txt || "Tarefa concluída");
+  if(prot.length>=6) corpo += ` — Protocolo: ${prot}`;
+  const [and]=await api(`/rest/v1/andamentos`,{method:"POST",
+    headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:t.caso_id, autor_id:eu.id, texto:corpo})}).catch(()=>[]);
+  if(and) await api(`/rest/v1/andamentos_lidos`,{method:"POST",
+    headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+    body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
+  // o protocolo digitado aqui é o que ninguém pode esquecer: vai para a ficha
+  const k=D.casoPorId.get(t.caso_id);
+  if(prot.length>=6 && k && !(k.protocolos||[]).includes(prot)){
+    k.protocolos=[...(k.protocolos||[]), prot];
+    await api(`/rest/v1/casos?id=eq.${t.caso_id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({protocolos:k.protocolos})});
+  }
+  t.concluida_em=new Date().toISOString();
+  D.tarefasPorCaso.set(t.caso_id,(D.tarefasPorCaso.get(t.caso_id)||[]).filter(x=>x.id!==id));
+  plim(); aviso("Sua parte está concluída ✔", false);
+  if(clienteAberto) abrirFicha(clienteAberto);
+}
+function adiarTarefa(id){
+  caixa(`<h3>⏩ Adiar o lembrete</h3>
+    <p class="meio-sub">Adiar é honesto; concluir sem fazer, não.</p>
+    <div class="form-linha">
+      <button class="btn-rap" onclick="mudarLembrar('${id}', maisDias(1))">+1 dia útil</button>
+      <button class="btn-rap" onclick="mudarLembrar('${id}', maisDias(7))">+1 semana</button>
+      <input type="date" onchange="mudarLembrar('${id}', this.value)">
+    </div>`);
+}
+async function mudarLembrar(id, data){
+  if(!data) return;
+  fecharCaixa();
+  await api(`/rest/v1/andamento_tarefas?id=eq.${id}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"}, body:JSON.stringify({lembrar_em:data})});
+  const t=(D.tarefasFicha||[]).find(x=>x.id===id); if(t) t.lembrar_em=data;
+  const ab=t && (D.tarefasPorCaso.get(t.caso_id)||[]).find(x=>x.id===id);
+  if(ab) ab.lembrar_em=data;
+  aviso(`Lembrete adiado para ${fmt(data)} 🗓`, false);
+  if(clienteAberto) abrirFicha(clienteAberto);
 }
 async function marcarLido(andId, jaLi){
   const a=(D._andsFicha||[]).find(x=>x.id===andId);
@@ -3501,16 +3636,19 @@ async function abrirFicha(cliId){
   document.getElementById("app").classList.add("detalhe-aberto");
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
   const ids = ks.map(k=>k.id).join(",");
-  const [ands, creds, vincs, anexos, convs] = await Promise.all([
+  const [ands, creds, vincs, anexos, convs, tarefasF] = await Promise.all([
     ids?todas("andamentos",`select=*,andamentos_lidos(colaborador_id,lido_em)&caso_id=in.(${ids})&order=criado_em.desc`)
         .catch(()=>todas("andamentos",`select=*&caso_id=in.(${ids})&order=criado_em.desc`)):[],
     todas("credenciais",`select=id,tipo,cliente_id&cliente_id=eq.${cliId}`),
     todas("vinculos",`select=*&or=(cliente_id.eq.${cliId},ligado_a.eq.${cliId})`).catch(()=>[]),
     todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
     todas("conversas",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
+    ids?todas("andamento_tarefas",`select=*&caso_id=in.(${ids})`).catch(()=>[]):[],
   ]);
   D.anexos = anexos;
   D.convFicha = convs;
+  D.tarefasFicha = tarefasF;
+  tfQuem = null; tfData = undefined;   // cada ficha recomeça a escolha
   const evs = D.eventos.filter(e=>ks.some(k=>k.id===e.caso_id)).sort((a,b)=>a.data_hora<b.data_hora?1:-1);
   const pgs = D.pagamentos.filter(p=>ks.some(k=>k.id===p.caso_id));
   const pagK = ks.filter(k=>k.fase==="pagamento");
@@ -4388,6 +4526,21 @@ function ultimoZap(){
     + (z.texto?`: “${esc(z.texto.slice(0,70))}${z.texto.length>70?"…":""}”`:"")+`</div>`;
 }
 
+// A rede por baixo da rede: a obrigatoriedade garante que cada COMENTÁRIO
+// fez uma escolha; esta lista garante que cada PROCESSO tenha um próximo
+// passo. Ativo, sem tarefa aberta e sem lembrete = à deriva.
+function blocoSemAcao(){
+  const ks = ativos().filter(k=>!k.prazo && !k.exigencia_prazo
+    && !(D.tarefasPorCaso.get(k.id)||[]).length);
+  if(!ks.length) return "";
+  const grupos = grupoClientes(ks);
+  return `<details class="sem-acao"><summary>🧭 Sem próxima ação (${grupos.length} cliente${grupos.length>1?"s":""})
+      — processos sem tarefa aberta e sem lembrete</summary>
+    ${grupos.slice(0,10).map(([c,kk])=>cartaoCliente(c,kk)).join("")}
+    ${grupos.length>10?`<p class="meio-sub">…e mais ${grupos.length-10}. Abra cada um e registre um comentário com tarefa.</p>`:""}
+  </details>`;
+}
+
 // no Meu Dia: CadÚnico vencido ou vencendo nos próximos 90 dias, de todos os
 // clientes — inclusive dos casos já encerrados
 function blocoCadunico(){
@@ -4655,7 +4808,7 @@ function painelEscritorio(k, ands){
   <div class="caso caso-check">${checklistCaso(k)}</div>
   <div class="caso-acoes">
     <div class="form-linha" style="align-items:center;margin:0">
-      <span class="rotulo-rap">👥 ATRIBUÍDO A:</span>
+      <span class="rotulo-rap">👥 RESPONSÁVEL:</span>
       ${/* só a inicial: seis nomes por extenso ocupavam a faixa inteira, e a
              equipe reconhece P, A, M, D, I e C de olhos fechados. O nome
              continua no passar do mouse. */""}
@@ -4685,6 +4838,20 @@ function painelEscritorio(k, ands){
           style="flex:1;min-width:200px;resize:none;overflow:hidden;font:inherit;line-height:1.45;
                  padding:7px 10px;border:1px solid var(--borda);border-radius:8px"></textarea>
         <button onclick="novoAndamento('${k.id}')">Registrar</button>
+      </div>
+      <div class="tf-box" id="tf-box">
+        <span class="rotulo-rap">📌 TAREFA PARA:</span>
+        <button class="btn-rap tf-op" id="tf-ninguem" onclick="tfNinguem(this)">ninguém</button>
+        ${D.colaboradores.filter(x=>x.ativo).map(co=>`<button class="eq-ini tf-eq"
+          data-tfp="${co.id}" style="--cor-eq:${co.cor}" title="${esc(co.nome)}"
+          onclick="tfPessoa('${co.id}',this)">${esc(co.inicial)}</button>`).join("")}
+        <span class="tf-sep"></span>
+        <span class="rotulo-rap">🗓 LEMBRAR EM:</span>
+        <button class="btn-rap tf-dt" data-tfd="hoje" onclick="tfDia('hoje',this)">Hoje</button>
+        <button class="btn-rap tf-dt" data-tfd="amanha" onclick="tfDia('amanha',this)">Amanhã</button>
+        <button class="btn-rap tf-dt" data-tfd="7" onclick="tfDia('7',this)">+7 dias</button>
+        <input type="date" class="tf-data" onchange="tfDia(this.value,this)">
+        <button class="btn-rap tf-dt" data-tfd="sem" onclick="tfDia('sem',this)">sem lembrete</button>
       </div>
       <div id="and-prazo-chip"></div>
       <div id="sug-box" class="sugestoes"></div>
@@ -5115,6 +5282,44 @@ async function extrairEvento(texto, casoId){
   }
   return criados.length?criados:null;
 }
+// ── a escolha obrigatória do comentário ───────────────────────────────────
+// tfQuem: null = ainda não escolheu · [] = "ninguém" · [ids] = pessoas
+// tfData: undefined = ainda não escolheu · null = "sem lembrete" · data
+let tfQuem = null, tfData;
+function proxDiaUtil(iso){
+  const d=new Date(iso+"T12:00:00");
+  while(d.getDay()===0||d.getDay()===6) d.setDate(d.getDate()+1);
+  return d.toLocaleDateString("sv");
+}
+function maisDias(n){
+  const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+n);
+  return proxDiaUtil(d.toLocaleDateString("sv"));
+}
+function tfPessoa(id, btn){
+  if(!Array.isArray(tfQuem)) tfQuem=[];
+  tfQuem = tfQuem.includes(id) ? tfQuem.filter(x=>x!==id) : [...tfQuem, id];
+  btn.classList.toggle("on");
+  const nix=document.getElementById("tf-ninguem");
+  if(nix) nix.classList.remove("on");
+}
+function tfNinguem(btn){
+  tfQuem = [];
+  document.querySelectorAll("#tf-box .tf-eq.on").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on");
+}
+function tfDia(qual, el){
+  if(qual==="sem" && tfQuem && tfQuem.length)
+    // tarefa para alguém precisa de data: o "sem lembrete" só vale sem gente
+    return aviso("Tarefa para alguém precisa de data — escolha quando lembrar");
+  document.querySelectorAll("#tf-box .tf-dt.on").forEach(b=>b.classList.remove("on"));
+  tfData = qual==="sem" ? null
+         : qual==="hoje" ? hoje()
+         : qual==="amanha" ? maisDias(1)
+         : qual==="7" ? maisDias(7)
+         : qual;                                   // veio do input de data
+  if(el && el.classList && el.classList.contains("tf-dt")) el.classList.add("on");
+}
+
 async function novoAndamento(casoUnico){
   const sel=document.getElementById("and-caso");
   const casoId = casoUnico || (sel && sel.value);
@@ -5123,8 +5328,27 @@ async function novoAndamento(casoUnico){
   const kAlvo=D.casoPorId.get(casoId);
   if(kAlvo && kAlvo.fase==="encerrado") return aviso("✔ Processo encerrado — reabra pela trilha para comentar");
   const texto=inp.value.trim();
+  // a escolha é OBRIGATÓRIA — mas só onde a caixa de escolha existe
+  if(document.getElementById("tf-box")){
+    if(tfQuem===null)
+      return aviso("Diga para quem é a tarefa — ou marque \"ninguém\"");
+    if(tfData===undefined)
+      return aviso("Diga quando lembrar — ou marque \"sem lembrete\"");
+    if(tfQuem.length && !tfData)
+      return aviso("Tarefa para alguém precisa de data — escolha quando lembrar");
+  }
   const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})});
+  // data sem pessoa: quem escreveu "cobrar em 30 dias" quer ELE MESMO lembrar
+  if(and && document.getElementById("tf-box")){
+    const pessoas = (tfQuem&&tfQuem.length) ? tfQuem : (tfData ? [eu.id] : []);
+    for(const pid of pessoas){
+      await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:pid,
+                             atribuido_por:eu.id, lembrar_em:tfData})}).catch(()=>{});
+    }
+    tfQuem=null; tfData=undefined;
+  }
   // quem está ATRIBUÍDO ao caso fica sabendo (é essa a função do Atribuído a),
   // além de quem for citado com @ no texto
   await criarMencoes(texto, casoId, and?and.id:null, D.atrDoCaso.get(casoId)||[]);

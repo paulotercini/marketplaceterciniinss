@@ -1029,9 +1029,14 @@ begin
     select co.id into v_id
       from colaboradores co
      where co.ativo and co.atende_zap
-       and exists (select 1 from atribuicoes a join casos k on k.id = a.caso_id
-                    where a.colaborador_id = co.id and k.cliente_id = v_cli
-                      and k.fase <> 'encerrado')
+       and (exists (select 1 from atribuicoes a join casos k on k.id = a.caso_id
+                     where a.colaborador_id = co.id and k.cliente_id = v_cli
+                       and k.fase <> 'encerrado')
+            -- tarefa aberta no caso também é "cuidar do cliente": a atribuição
+            -- migrou para os comentários, e o WhatsApp acompanha
+            or exists (select 1 from andamento_tarefas t join casos k2 on k2.id = t.caso_id
+                        where t.colaborador_id = co.id and k2.cliente_id = v_cli
+                          and t.concluida_em is null and k2.fase <> 'encerrado'))
      order by (select count(*) from zap_conversas z
                 where z.atendente_id = co.id and z.status <> 'resolvida'), co.nome
      limit 1;
@@ -1733,6 +1738,53 @@ on conflict (competencia, faixa, final) do nothing;
 -- mais é a exceção, e por isso é marcado à mão no processo
 alter table casos add column if not exists renda_acima_minimo boolean not null default false;
 
+-- ══ Tarefas por comentário ════════════════════════════════════════════════
+-- A tarefa nasce no comentário, não no benefício: "Amanda, pedir CNIS até
+-- sexta" sempre foi assim no To Do — isto dá estrutura ao hábito. Cada
+-- comentário registrado escolhe, OBRIGATORIAMENTE, para quem é (uma ou mais
+-- pessoas, ou ninguém) e quando lembrar. Escolheu gente, a data é exigida:
+-- tarefa sem prazo é promessa sem cobrança. Escolheu data sem gente, o
+-- atribuído é o próprio autor. Ninguém e sem data = registro puro.
+--
+-- Concluir é POR PESSOA: com dois atribuídos, cada um dá baixa na sua parte.
+-- lembrar_em é NOT NULL de propósito — não existe tarefa sem data.
+create table if not exists andamento_tarefas (
+  id             uuid primary key default gen_random_uuid(),
+  andamento_id   uuid not null references andamentos(id) on delete cascade,
+  caso_id        uuid not null references casos(id) on delete cascade,
+  colaborador_id uuid not null references colaboradores(id),
+  atribuido_por  uuid references colaboradores(id),   -- "P → A" resolve o
+                                                      -- "achei que você ia fazer"
+  lembrar_em     date not null,
+  concluida_em   timestamptz,
+  criado_em      timestamptz not null default now(),
+  unique (andamento_id, colaborador_id)
+);
+create index if not exists atarefas_minhas on andamento_tarefas (colaborador_id, lembrar_em)
+  where concluida_em is null;
+create index if not exists atarefas_caso on andamento_tarefas (caso_id, lembrar_em)
+  where concluida_em is null;
+
+-- Tarefa para alguém cai na caixa de menções DELE — a caixa que já existe,
+-- não uma segunda. Para si mesmo não avisa: ninguém precisa ser notificado
+-- do que acabou de escrever.
+create or replace function atarefa_avisar() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare v_txt text;
+begin
+  if new.atribuido_por is null or new.colaborador_id = new.atribuido_por then
+    return new;
+  end if;
+  select left(texto, 140) into v_txt from andamentos where id = new.andamento_id;
+  insert into mencoes (de_id, para_id, caso_id, andamento_id, texto)
+  values (new.atribuido_por, new.colaborador_id, new.caso_id, new.andamento_id,
+          '📌 Tarefa para ' || to_char(new.lembrar_em, 'DD/MM') || ': ' || coalesce(v_txt,''));
+  return new;
+end $$;
+drop trigger if exists atarefa_avisar_ins on andamento_tarefas;
+create trigger atarefa_avisar_ins after insert on andamento_tarefas
+  for each row execute function atarefa_avisar();
+
 -- ── Segurança (RLS) ───────────────────────────────────────────────────────
 -- Regra geral: só usuário logado acessa; anônimo não vê NADA.
 -- Tarefas particulares: só o dono. Credenciais: leitura logada + log no app.
@@ -1749,7 +1801,8 @@ begin
                            'rotinas','rotinas_feitas','andamentos_lidos','anexos',
                            'aposentadorias','lista_pref','config_app',
                            'zap_conversas','zap_mensagens','zap_transferencias',
-                           'zap_bot_passos','zap_avisos','inss_calendario'] loop
+                           'zap_bot_passos','zap_avisos','inss_calendario',
+                           'andamento_tarefas'] loop
     execute format('alter table %I enable row level security', t);
     execute format('drop policy if exists autenticados on %I', t);
     if t <> 'tarefas' then
