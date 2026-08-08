@@ -264,6 +264,14 @@ alter table clientes add column if not exists aposentado_prova text;
 -- encerrado aqui só quer dizer que o nosso trabalho acabou.
 alter table casos add column if not exists cadunico date;               -- última atualização
 
+-- DCB: a data em que o benefício por incapacidade CESSA SOZINHO. O prazo
+-- mais traiçoeiro do previdenciário — a prorrogação tem de ser pedida nos
+-- 15 dias finais, e perder a data significa cliente sem renda. O alarme
+-- desliga quando a prorrogação é marcada como pedida (e religa se vier
+-- DCB nova: quem grava DCB nova deve desmarcar o pedido).
+alter table casos add column if not exists dcb date;
+alter table casos add column if not exists dcb_prorrogacao_pedida boolean not null default false;
+
 -- ── Porta de entrada para o SMBot (WhatsApp) ─────────────────────────────
 -- O atendimento do WhatsApp manda cada mensagem para cá. UMA função, e nada
 -- além dela: quem tem o token consegue registrar contato, e não consegue ler
@@ -1336,7 +1344,7 @@ end $$;
 create table if not exists zap_avisos (
   chave      text primary key,          -- 'pericia_3d', 'audiencia_1d'…
   descricao  text not null,
-  sobre      text not null check (sobre in ('evento','cadunico')),
+  sobre      text not null check (sobre in ('evento','cadunico','dcb')),
   tipo_ev    text,                      -- 'Perícia', 'Audiência'… null = todos
   dias_antes integer not null,
   texto      text not null,             -- {nome} {data} {hora} {local} {tipo} {beneficio}
@@ -1383,6 +1391,16 @@ E'Olá, {nome}! Sua *avaliação social* está marcada para *{data} às {hora}*{
 ('cadunico_60d','CadÚnico do LOAS — 60 dias antes de vencer','cadunico',null,60,
 E'Olá, {nome}! Aqui é do escritório Paulo R. Tercini Filho.\n\nSeu benefício de BPC/LOAS exige o *Cadastro Único (CadÚnico) atualizado a cada 2 anos*, e o seu vence em *{data}*.\n\nProcure o CRAS do seu bairro com RG, CPF, comprovante de residência e os documentos de quem mora com você, e peça a ATUALIZAÇÃO CADASTRAL. Sem isso o INSS pode bloquear o pagamento.\n\nQualquer dúvida, fale com a gente. 🙏',
  false, 6)
+on conflict (chave) do nothing;
+
+-- bancos que nasceram antes do 'dcb' precisam do check novo
+alter table zap_avisos drop constraint if exists zap_avisos_sobre_check;
+alter table zap_avisos add constraint zap_avisos_sobre_check
+  check (sobre in ('evento','cadunico','dcb'));
+insert into zap_avisos (chave, descricao, sobre, tipo_ev, dias_antes, texto, revisar, ordem) values
+('dcb_15d','DCB — 15 dias antes da cessação','dcb',null,15,
+E'Olá, {nome}! Aqui é do escritório Paulo R. Tercini Filho.\n\nSeu benefício tem *cessação programada para {data}* (a DCB). Se você ainda não tem condições de voltar ao trabalho, é hora de *pedir a prorrogação* — o escritório cuida do pedido, mas precisamos de um *atestado ou laudo médico atualizado*.\n\nPode mandar a foto do documento por aqui mesmo. 🙏',
+ false, 7)
 on conflict (chave) do nothing;
 
 insert into config_app (chave, valor) values ('zap_avisos_ligado','sim')
@@ -1437,6 +1455,17 @@ begin
       from zap_avisos a
       join casos k on a.sobre='cadunico' and k.cadunico is not null
                   and (k.cadunico + interval '2 years')::date = v_hoje + a.dias_antes
+      join clientes c on c.id = k.cliente_id
+     where a.ativo and coalesce(c.telefone,'') <> ''
+    union all
+    -- DCB: só enquanto a prorrogação NÃO foi pedida — pedida, o alarme cala
+    select a.chave, a.texto, a.revisar, k.id as ref, c.id, c.nome, c.telefone,
+           (k.dcb::timestamp at time zone 'America/Sao_Paulo') as quando,
+           null, null, k.beneficio
+      from zap_avisos a
+      join casos k on a.sobre='dcb' and k.dcb is not null
+                  and not k.dcb_prorrogacao_pedida and k.fase <> 'encerrado'
+                  and k.dcb = v_hoje + a.dias_antes
       join clientes c on c.id = k.cliente_id
      where a.ativo and coalesce(c.telefone,'') <> ''
   loop
