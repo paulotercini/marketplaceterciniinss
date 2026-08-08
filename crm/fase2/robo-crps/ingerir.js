@@ -61,7 +61,12 @@ function restaurarGuardados(bloco, jaTinha) {
   for (const e of (bloco.eventos || []))
     for (const a of (e.arquivos || [])) {
       const g = jaTinha.get(a.id || a.nome);
-      if (!a.storage && g && g.storage && g.bytes) { a.storage = g.storage; a.bytes = g.bytes; }
+      if (!g) continue;
+      if (!a.storage && g.storage && g.bytes) { a.storage = g.storage; a.bytes = g.bytes; }
+      // o resumo também: a ingestão reescreve o bloco do zero, e sem isto uma
+      // nova coleta apagaria tanto o resumo lido do PDF quanto o que alguém
+      // corrigiu à mão na ficha.
+      if (!a.resumo && g.resumo) a.resumo = g.resumo;
     }
   return bloco;
 }

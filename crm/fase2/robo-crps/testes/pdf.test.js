@@ -75,3 +75,21 @@ test('a cópia vazia da coleta antiga NÃO volta — o botão some até vir a bo
   I.restaurarGuardados(bloco, jaTinha);
   assert.equal(bloco.eventos[0].arquivos[0].storage, undefined);
 });
+
+// CASO-OURO: aplicar os resumos e depois rodar a ingestão apagaria tudo — a
+// ingestão reescreve o bloco do processo do zero a cada leitura.
+test('a ingestão não apaga o resumo do acórdão', () => {
+  const bloco = { eventos: [{ arquivos: [{ id: '73189593', nome: 'ACÓRDÃO.pdf' }] }] };
+  const jaTinha = new Map([['73189593', { storage: 'crps/1/73189593_ACORDAO.pdf', bytes: 78643,
+    resumo: { linhas: ['Acolheu os embargos de declaração'], origem: 'auto' } }]]);
+  I.restaurarGuardados(bloco, jaTinha);
+  assert.deepStrictEqual(bloco.eventos[0].arquivos[0].resumo.linhas, ['Acolheu os embargos de declaração']);
+});
+
+test('e não apaga nem o que alguém corrigiu à mão na ficha', () => {
+  const bloco = { eventos: [{ arquivos: [{ id: '1', nome: 'A.pdf' }] }] };
+  const jaTinha = new Map([['1', { storage: 's1', bytes: 100,
+    resumo: { linhas: ['Reconheceu o tempo especial'], origem: 'curado' } }]]);
+  I.restaurarGuardados(bloco, jaTinha);
+  assert.equal(bloco.eventos[0].arquivos[0].resumo.origem, 'curado');
+});
