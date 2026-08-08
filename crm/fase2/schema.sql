@@ -625,9 +625,11 @@ create index if not exists vinculos_ligado on vinculos (ligado_a);
 
 -- ── Frases prontas dos andamentos (os padrões que a equipe sempre escreve)
 create table if not exists frases_prontas (
-  id    uuid primary key default gen_random_uuid(),
-  texto text not null unique
+  id        uuid primary key default gen_random_uuid(),
+  texto     text not null unique,
+  categoria text
 );
+alter table frases_prontas add column if not exists categoria text;
 insert into frases_prontas (texto) values
   ('Perícia médica agendada no dia __/__/____ às __:__ no INSS de ____.'),
   ('Perícia judicial agendada no dia __/__/____ às __:__ em ____.'),
@@ -641,6 +643,40 @@ insert into frases_prontas (texto) values
   ('Cliente orientado por telefone sobre ____.'),
   ('Documentos recebidos do cliente: ____.')
 on conflict (texto) do nothing;
+-- as frases são a taquigrafia INTERNA do composer; a categoria organiza a lista
+update frases_prontas set categoria='Agendamentos' where categoria is null
+   and (texto like 'Perícia%' or texto like 'Audiência%' or texto like 'Avaliação%');
+update frases_prontas set categoria='Protocolos' where categoria is null
+   and (texto like 'Requerimento%' or texto like 'Recurso%' or texto like 'Exigência%');
+update frases_prontas set categoria='Resultados' where categoria is null and texto like 'Benefício%';
+update frases_prontas set categoria='Contato' where categoria is null;
+
+-- mensagens PARA O CLIENTE (WhatsApp): tom do escritório, já com {primeiro_nome}
+-- e {beneficio} preenchidos na hora. O que é interno fica nas frases; o que
+-- vai para o cliente mora aqui — misturar os dois foi o erro da primeira versão.
+insert into modelos_mensagem (titulo, texto, contexto) values
+('Sem novidade — processo em análise',
+E'Olá, {primeiro_nome}! Passando para avisar que seu processo continua em análise — sem novidade por enquanto. Assim que houver movimentação, a gente te avisa por aqui. 🙏',
+ 'geral'),
+('Pedido protocolado no INSS',
+E'Olá, {primeiro_nome}! Seu pedido de {beneficio} foi protocolado junto ao INSS. ✅\n\nAgora é aguardar a análise — o escritório acompanha de perto e te avisa de cada movimentação.',
+ 'protocolo'),
+('Recurso protocolado',
+E'Olá, {primeiro_nome}! O recurso foi protocolado. ✅\n\nO prazo de julgamento varia, mas estamos de olho e te avisamos assim que sair a decisão.',
+ 'protocolo'),
+('Benefício concedido 🎉',
+E'Ótima notícia, {primeiro_nome}! 🎉 Seu benefício foi CONCEDIDO.\n\nVamos te chamar para explicar os próximos passos e conferir os valores. Parabéns pela conquista!',
+ 'resultado'),
+('Pedido indeferido — vamos recorrer',
+E'Olá, {primeiro_nome}. Infelizmente o INSS indeferiu o pedido. 😔\n\nCalma: isso é mais comum do que parece, e já estamos analisando o recurso. Em breve te explicamos o próximo passo.',
+ 'resultado'),
+('Pedir documentos',
+E'Olá, {primeiro_nome}! Para dar andamento no seu caso, precisamos de alguns documentos.\n\nPode mandar foto por aqui mesmo — desde que dê para ler, serve. 📎',
+ 'documentos'),
+('Documentos recebidos',
+E'{primeiro_nome}, recebemos seus documentos — obrigado! ✅\n\nSe faltar alguma coisa, a gente te avisa por aqui.',
+ 'documentos')
+on conflict (titulo) do nothing;
 
 -- ── Motivos prontos do "Lembrar em" (minerados do histórico real do To Do) ─
 -- Editáveis no próprio app (✎ editar): criar, renomear, desativar e escolher
@@ -1344,7 +1380,7 @@ end $$;
 create table if not exists zap_avisos (
   chave      text primary key,          -- 'pericia_3d', 'audiencia_1d'…
   descricao  text not null,
-  sobre      text not null check (sobre in ('evento','cadunico','dcb')),
+  sobre      text not null check (sobre in ('evento','cadunico','dcb','aniversario')),
   tipo_ev    text,                      -- 'Perícia', 'Audiência'… null = todos
   dias_antes integer not null,
   texto      text not null,             -- {nome} {data} {hora} {local} {tipo} {beneficio}
@@ -1396,11 +1432,17 @@ on conflict (chave) do nothing;
 -- bancos que nasceram antes do 'dcb' precisam do check novo
 alter table zap_avisos drop constraint if exists zap_avisos_sobre_check;
 alter table zap_avisos add constraint zap_avisos_sobre_check
-  check (sobre in ('evento','cadunico','dcb'));
+  check (sobre in ('evento','cadunico','dcb','aniversario'));
 insert into zap_avisos (chave, descricao, sobre, tipo_ev, dias_antes, texto, revisar, ordem) values
 ('dcb_15d','DCB — 15 dias antes da cessação','dcb',null,15,
 E'Olá, {nome}! Aqui é do escritório Paulo R. Tercini Filho.\n\nSeu benefício tem *cessação programada para {data}* (a DCB). Se você ainda não tem condições de voltar ao trabalho, é hora de *pedir a prorrogação* — o escritório cuida do pedido, mas precisamos de um *atestado ou laudo médico atualizado*.\n\nPode mandar a foto do documento por aqui mesmo. 🙏',
  false, 7)
+on conflict (chave) do nothing;
+
+insert into zap_avisos (chave, descricao, sobre, tipo_ev, dias_antes, texto, revisar, ordem) values
+('aniversario','Aniversário do cliente 🎂','aniversario',null,0,
+E'Feliz aniversário, {nome}! 🎂\n\nO escritório Paulo R. Tercini Filho deseja um dia muito feliz, com saúde e ao lado de quem você gosta.\n\nConte sempre com a gente. 🤝',
+ false, 8)
 on conflict (chave) do nothing;
 
 insert into config_app (chave, valor) values ('zap_avisos_ligado','sim')
@@ -1467,6 +1509,18 @@ begin
                   and not k.dcb_prorrogacao_pedida and k.fase <> 'encerrado'
                   and k.dcb = v_hoje + a.dias_antes
       join clientes c on c.id = k.cliente_id
+     where a.ativo and coalesce(c.telefone,'') <> ''
+    union all
+    -- aniversário: dia e mês do nascimento (DDMMAAAA). A chave leva o ANO,
+    -- para o parabéns repetir ano que vem sem repetir hoje.
+    select a.chave || ':' || to_char(v_hoje,'YYYY') as chave, a.texto, a.revisar,
+           c.id as ref, c.id, c.nome, c.telefone,
+           (v_hoje::timestamp at time zone 'America/Sao_Paulo') as quando,
+           null, null, null
+      from zap_avisos a
+      join clientes c on a.sobre='aniversario'
+                     and length(regexp_replace(coalesce(c.dn,''),'\D','','g')) = 8
+                     and substr(regexp_replace(c.dn,'\D','','g'),1,4) = to_char(v_hoje,'DDMM')
      where a.ativo and coalesce(c.telefone,'') <> ''
   loop
     v_conv := zap_abrir(r.telefone, r.nome);
@@ -1822,6 +1876,35 @@ end $$;
 drop trigger if exists atarefa_avisar_ins on andamento_tarefas;
 create trigger atarefa_avisar_ins after insert on andamento_tarefas
   for each row execute function atarefa_avisar();
+
+-- ══ Esteira de revisão do acervo ══════════════════════════════════════════
+-- A mineração das fichas mostrou a mediana de 114 dias sem registro novo, e
+-- 82 processos passando de 6 meses. A regra: todo processo revisado a cada
+-- N dias (config), servido em doses no Meu Dia, os mais antigos primeiro.
+-- "Revisado" = qualquer comentário registrado — o gatilho abaixo carimba.
+alter table casos add column if not exists revisado_em date;
+
+create or replace function caso_tocado() returns trigger
+language plpgsql as $$
+begin
+  update casos set revisado_em = greatest(coalesce(revisado_em, date '1900-01-01'),
+                                          (new.criado_em at time zone 'America/Sao_Paulo')::date)
+   where id = new.caso_id;
+  return new;
+end $$;
+drop trigger if exists caso_tocado_ins on andamentos;
+create trigger caso_tocado_ins after insert on andamentos
+  for each row execute function caso_tocado();
+
+-- ponto de partida: o último comentário que cada caso já tem
+update casos k set revisado_em = s.d
+  from (select caso_id, (max(criado_em) at time zone 'America/Sao_Paulo')::date as d
+          from andamentos group by caso_id) s
+ where s.caso_id = k.id and k.revisado_em is null;
+
+insert into config_app (chave, valor) values
+  ('revisao_dias','90'), ('revisao_dose','5')
+on conflict (chave) do nothing;
 
 -- ── Segurança (RLS) ───────────────────────────────────────────────────────
 -- Regra geral: só usuário logado acessa; anônimo não vê NADA.

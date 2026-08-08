@@ -86,6 +86,19 @@ end $$;
 delete from andamentos where id='bbbbbbbb-0000-0000-0000-000000000001';
 insert into r select 't10 apagar o comentário apaga as tarefas dele',
   (select count(*)=0 from andamento_tarefas);
+
+-- ── esteira: comentar carimba a revisão do caso ───────────────────────────
+\set QUIET on
+insert into casos (id, cliente_id, titulo, fase, revisado_em)
+  values ('aaaaaaaa-0000-0000-0000-000000000002','11111111-1111-1111-1111-111111111111',
+          'Velho','inss', date '2025-01-10');
+insert into andamentos (caso_id, autor_id, texto) values
+  ('aaaaaaaa-0000-0000-0000-000000000002','33333333-3333-3333-3333-333333333333',
+   '🔄 Revisão do acervo — sem novidade.');
+\set QUIET off
+insert into r select 't11 registrar comentário carimba o revisado_em de hoje',
+  (select revisado_em = (now() at time zone 'America/Sao_Paulo')::date
+     from casos where id='aaaaaaaa-0000-0000-0000-000000000002');
 \set QUIET on
 update config_app set valor='sim' where chave='zap_bot_ligado';
 \set QUIET off
