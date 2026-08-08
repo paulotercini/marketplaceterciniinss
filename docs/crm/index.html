@@ -573,6 +573,12 @@
   .tf-acao{font-size:11px}
   .tf-mais{font-size:13px}
   .tf-mais:hover{color:var(--azul)}
+  .rev-par{margin-bottom:8px}
+  .rev-par .cartao{margin-bottom:0;border-radius:8px 8px 0 0}
+  .rev-acao{display:flex;align-items:center;gap:10px;justify-content:space-between;
+            background:#f2f6fd;border:1px solid var(--borda);border-top:0;
+            border-radius:0 0 8px 8px;padding:4px 12px}
+  .zap-gr{margin:12px 0 4px;font-size:12.5px;color:var(--cinza)}
   .sem-acao{margin:10px 0}
   .sem-acao summary{cursor:pointer;font-size:13px;font-weight:700;color:#8a6300;
     background:#fff8e1;border:1px solid #e0b955;border-radius:8px;padding:7px 12px}
@@ -801,7 +807,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08c · DCB e repetir</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08d · esteira e aniversários</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1708,6 +1714,7 @@ function renderMeuDia(){
     + blocoApos()
     + blocoCadunico()
     + blocoSemAcao()
+    + blocoRevisao()
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — use o ☀️ nos cartões.</p>")
     + `<h3 class="secao">🟡 Vencem hoje (${hojeK.length+tHoje.length})</h3>`
@@ -1718,6 +1725,8 @@ function renderMeuDia(){
           + tVenc.map(t=>cartaoTarefa(t)).join("") || "<p class='meio-sub'>Nenhuma vencida. 👏</p>") : "");
   document.querySelectorAll(".fchip[data-f]").forEach(b=>b.onclick=()=>{ filtroColab=b.dataset.f||null; render(); });
   document.getElementById("chip-vencidas").onclick=()=>{ filtroVencidas=!filtroVencidas; render(); };
+  document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation(); marcarRevisado(b.dataset.revks.split(",")); });
   ligarCartoes(); ligarTarefas();
 }
 
@@ -2495,25 +2504,50 @@ async function mandarArquivoZap(){
   if(c){ c.bot_ativo=false; c.atendente_id = c.atendente_id || eu.id; }
   await abrirConversa(zapAberta);
 }
-// as mesmas frases prontas do resto do CRM, sem cadastro paralelo
+// Preenche um modelo com quem está DO OUTRO LADO da conversa. O que não der
+// para preencher (dois processos, benefício sem cadastro) fica visível como
+// {placeholder} — melhor um buraco à vista do que um chute enviado.
+function preencheZap(txt){
+  const c0 = zapConvs.find(x=>x.id===zapAberta);
+  const cli = c0 && c0.cliente_id && D.cliPorId.get(c0.cliente_id);
+  const ks = cli ? processosDe(D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado") : [];
+  const k = ks.length===1 ? ks[0] : null;
+  const nome = (cli && cli.nome) || (c0 && c0.nome_perfil) || "";
+  const map = {
+    "{nome}": nome, "{primeiro_nome}": (nome||"").trim().split(/\s+/)[0]||"",
+    "{data}": fmt(hoje()),
+    "{beneficio}": (k&&k.beneficio)||"", "{processo}": (k&&k.processo)||"", "{nb}": (k&&k.nb)||"",
+  };
+  return Object.entries(map).reduce((t,[a,v])=>v?t.split(a).join(v):t, txt);
+}
+// O ⚡ mostra as mensagens PARA O CLIENTE (modelos), não a taquigrafia
+// interna do composer — "Cliente orientado por telefone sobre __" enviada ao
+// cliente seria um vexame. Cada título entra no campo já preenchido.
+const CTX_ROTULO = {geral:"💬 Gerais", protocolo:"📄 Protocolos", resultado:"📢 Resultados",
+                    documentos:"📎 Documentos", pericia:"🩺 Perícia", audiencia:"⚖️ Audiência",
+                    exigencia:"⚠ Exigência"};
 function frasesZap(){
-  const fs = D.frases||[], docs = D.docs||[];
-  if(!fs.length && !docs.length) return aviso("Nenhuma frase pronta cadastrada ainda");
-  caixa(`<h3>Mensagens prontas</h3>
-    <p class="meio-sub">Ela entra no campo de escrever — dá para completar antes de mandar.</p>
-    ${fs.map((f,i)=>`<button class="btn-rap" data-frase="${i}"
-       style="display:block;width:100%;margin:5px 0;text-align:left">${esc(f.texto)}</button>`).join("")}
-    ${docs.length?`<h3 style="margin-top:14px">📄 Lista de documentos</h3>
-      <p class="meio-sub">Monta a mensagem com os documentos daquele benefício — é o que
-         mais se manda por WhatsApp neste escritório.</p>
+  const ms = D.modelos||[], docs = D.docs||[];
+  if(!ms.length && !docs.length) return aviso("Nenhum modelo cadastrado ainda");
+  const grupos = new Map();
+  ms.forEach(m=>{ const g=m.contexto||"geral";
+                  if(!grupos.has(g)) grupos.set(g,[]); grupos.get(g).push(m); });
+  caixa(`<h3>📨 Mensagens para o cliente</h3>
+    <p class="meio-sub">Já saem com o nome (e o benefício, quando é um só) preenchidos.
+       Entram no campo para você conferir antes de mandar.</p>
+    ${[...grupos].map(([g,list])=>`<h4 class="zap-gr">${CTX_ROTULO[g]||g}</h4>
+      <div class="form-linha">${list.map(m=>`<button class="btn-rap" data-mz="${m.id}"
+        title="${esc(preencheZap(m.texto).slice(0,220))}">${esc(m.titulo)}</button>`).join("")}</div>`).join("")}
+    ${docs.length?`<h4 class="zap-gr">📄 Lista de documentos do benefício</h4>
       <select id="zap-doc" style="width:100%;padding:7px">
         <option value="">escolha o benefício…</option>
         ${docs.map((d,i)=>`<option value="${i}">${esc(d.beneficio)}</option>`).join("")}
       </select>`:""}`);
-  document.querySelectorAll("[data-frase]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("[data-mz]").forEach(b=>b.onclick=()=>{
+    const m = ms.find(x=>x.id===b.dataset.mz); if(!m) return;
     const t = document.getElementById("zap-txt");
-    t.value = (fs[+b.dataset.frase]||{}).texto||"";
-    fecharCaixa(); t.focus();
+    t.value = preencheZap(m.texto);
+    fecharCaixa(); t.focus(); t.dispatchEvent(new Event("input"));
   });
   const sel = document.getElementById("zap-doc");
   if(sel) sel.onchange = ()=>{
@@ -2735,6 +2769,12 @@ async function renderConfig(){
              ${(cfgApp("zap_bot_ligado")||"sim")==="sim"?"checked":""}> 🤖 robô ligado</label>
            <label class="cfg-ck"><input type="checkbox" id="cf-avisos"
              ${(cfgApp("zap_avisos_ligado")||"sim")==="sim"?"checked":""}> 🔔 avisos automáticos ligados</label>
+           <label class="cfg-ck">🔄 revisar o acervo a cada
+             <input type="number" id="cf-rev-dias" min="15" max="365" style="width:64px"
+               value="${esc(cfgApp("revisao_dias")||"90")}"> dias,</label>
+           <label class="cfg-ck">em doses de
+             <input type="number" id="cf-rev-dose" min="1" max="30" style="width:56px"
+               value="${esc(cfgApp("revisao_dose")||"5")}"> por dia</label>
            <label class="cfg-ck">silêncio do robô entre falas:
              <input type="number" id="cf-pausa" min="0" max="300" style="width:70px"
                value="${esc(cfgApp("zap_pausa_bot")||"15")}"> s</label>
@@ -2827,6 +2867,8 @@ function ligarConfig(){
   cfgSalva("cf-pausa","zap_pausa_bot", el=>String(Math.max(0, +el.value||0)));
   cfgSalva("cf-bot","zap_bot_ligado",  el=>el.checked?"sim":"nao");
   cfgSalva("cf-avisos","zap_avisos_ligado", el=>el.checked?"sim":"nao");
+  cfgSalva("cf-rev-dias","revisao_dias", el=>String(Math.max(15, +el.value||90)));
+  cfgSalva("cf-rev-dose","revisao_dose", el=>String(Math.max(1, +el.value||5)));
   guarda("[data-dia]", el => el.onchange = async ()=>{
     const dias = [...document.querySelectorAll("[data-dia]")].filter(x=>x.checked)
                    .map(x=>x.dataset.dia).join(",");
@@ -4628,6 +4670,43 @@ function ultimoZap(){
   return `<div class="zap-ping" title="${z.texto?"conteúdo registrado no CRM":"o conteúdo da conversa fica no painel do SMBot"}">`
     + `💬 falou pelo WhatsApp em ${quando}`
     + (z.texto?`: “${esc(z.texto.slice(0,70))}${z.texto.length>70?"…":""}”`:"")+`</div>`;
+}
+
+// ── Esteira de revisão: nenhum processo fica 90 dias sem um olhar ─────────
+// A mineração das fichas mostrou mediana de 114 dias sem registro. A regra é
+// simples: passou de N dias, entra na fila; a fila é servida em DOSES — cinco
+// por dia comem qualquer acervo em poucas semanas, sem afogar ninguém.
+function blocoRevisao(){
+  const dias = +(cfgApp("revisao_dias")||90), dose = +(cfgApp("revisao_dose")||5);
+  const lim = (()=>{ const d=new Date(hoje()+"T12:00:00");
+                     d.setDate(d.getDate()-dias); return d.toLocaleDateString("sv"); })();
+  const fila = ativos().filter(k=>!k.revisado_em || k.revisado_em<=lim)
+    .sort((a,b)=>(a.revisado_em||"0")<(b.revisado_em||"0")?-1:1);
+  if(!fila.length) return "";
+  const grupos = grupoClientes(fila);
+  const doseG = grupos.slice(0, dose);
+  return `<h3 class="secao">🔄 Revisão do acervo — a dose de hoje (${doseG.length} de ${grupos.length} na fila)</h3>
+    <p class="meio-sub">Processos sem registro há ${dias}+ dias, os mais parados primeiro.
+       Abrir e comentar conta como revisão — ou marque que nada mudou.</p>
+    ${doseG.map(([c,kk])=>`<div class="rev-par">${cartaoCliente(c,kk)}
+      <div class="rev-acao"><span class="meio-sub">último registro:
+        ${kk[0].revisado_em?fmt(kk[0].revisado_em):"nunca"}</span>
+        <button class="btn-mini" data-revks="${kk.map(k=>k.id).join(",")}">✔ revisado — nada mudou</button>
+      </div></div>`).join("")}`;
+}
+async function marcarRevisado(ids){
+  for(const id of ids){
+    const [and]=await api(`/rest/v1/andamentos`,{method:"POST",
+      headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:id, autor_id:eu.id,
+        texto:"🔄 Revisão do acervo — sem novidade."})}).catch(()=>[]);
+    if(and) await api(`/rest/v1/andamentos_lidos`,{method:"POST",
+      headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+      body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
+    const k=D.casoPorId.get(id); if(k) k.revisado_em=hoje();
+  }
+  plim(); aviso("Revisado ✔ — o próximo da fila assume amanhã", false);
+  render();
 }
 
 // A rede por baixo da rede: a obrigatoriedade garante que cada COMENTÁRIO

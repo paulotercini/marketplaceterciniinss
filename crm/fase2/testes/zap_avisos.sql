@@ -136,6 +136,28 @@ insert into r select 't30 para o cliente do caso certo, com a data da cessação
 insert into r select 't31 pedir a prorrogação depois cala o alarme de vez',
   (select count(*)=1 from zap_mensagens where aviso_chave='dcb_15d');
 
+
+-- ── aniversário 🎂 ────────────────────────────────────────────────────────
+\set QUIET on
+update clientes set dn='06081960' where id='11111111-1111-1111-1111-111111111111';
+update clientes set dn='06081955' where id='33333333-3333-3333-3333-333333333333';  -- sem telefone
+\set QUIET off
+insert into r select 't32 no dia, o parabéns sai (e só para quem tem telefone)',
+  zap_gerar_avisos(:'HOJE') = 1;
+insert into r select 't33 com o texto do bolo, chamando pelo primeiro nome',
+  (select texto like 'Feliz aniversário, Maria!%' from zap_mensagens
+    where aviso_chave like 'aniversario:%');
+insert into r select 't34 rodar de novo hoje não repete o parabéns',
+  zap_gerar_avisos(:'HOJE') = 0;
+-- (gerar e conferir em comandos separados: o snapshot de um SELECT não
+--  enxerga o que a própria função inseriu)
+do $$ begin
+  insert into r values ('t35 mas ano que vem repete — a chave leva o ano',
+    zap_gerar_avisos('2027-08-06') = 1);
+end $$;
+insert into r select 't36 com a mensagem do ano novo gravada',
+  (select count(*)=1 from zap_mensagens where aviso_chave='aniversario:2027');
+
 -- ── travas gerais ─────────────────────────────────────────────────────────
 update config_app set valor='nao' where chave='zap_avisos_ligado';
 insert into r select 't26 interruptor geral desliga tudo', zap_gerar_avisos('2026-08-10') = 0;
