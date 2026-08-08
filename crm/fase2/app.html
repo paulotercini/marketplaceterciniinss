@@ -452,6 +452,14 @@
   .crps-res.ok .crps-res-bt:hover{background:#2E7D52;border-color:#2E7D52;color:#fff}
   .crps-res textarea{width:100%;margin-top:6px;font:inherit;font-size:13px;color:var(--texto);
     border:1px solid var(--borda);border-radius:6px;padding:7px;min-height:74px;resize:vertical}
+  /* quem julgou. Junta = 1ª instância do CRPS, ainda cabe recurso especial;
+     Câmara = 2ª instância, acabou a via administrativa. As duas cores dizem
+     isso de longe: azul "ainda dá", roxo "é o fim da linha lá dentro". */
+  .crps-org{display:inline-flex;align-items:center;gap:5px;border-radius:999px;
+    padding:1px 9px;font-size:11px;font-weight:600;white-space:nowrap;margin-left:6px;
+    background:#E7EEFB;border:1px solid #C3D6F5;color:var(--azul-escuro)}
+  .crps-org.inst2{background:#F1EAFB;border-color:#DACBF2;color:#5B3A9B}
+  .crps-org small{font-weight:500;opacity:.8;font-size:10.5px}
   .crps-ruido>summary{cursor:pointer;color:var(--cinza);font-size:12px;padding:9px 15px;list-style:none}
   .crps-ruido>summary:hover{color:var(--azul)}
   .crps-ruido[open]>summary{color:var(--azul)}
@@ -952,7 +960,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.11 · resumo do que a decisão decidiu</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.12 · quem julgou: Junta ou Câmara</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5522,6 +5530,32 @@ function caixaResumo(casoId, nup, a){
   </div>`;
 }
 
+// QUEM julgou. A Junta de Recursos é a 1ª instância do CRPS: perdeu ali,
+// ainda cabe Recurso Especial às Câmaras em 30 dias. A Câmara de Julgamento é
+// a 2ª: perdeu ali, a via administrativa acabou e o assunto vira ação
+// judicial. Quem lê a ficha precisa saber disso sem abrir o acórdão.
+//
+// O marcar_orgao.js lê o PDF e grava a.orgao — é a fonte boa. Enquanto ele
+// não roda, a sigla do próprio status do e-Recursos ("25ª JR/3080/2025")
+// serve: mesma leitura do orgaoJulgador() do robô, na versão mínima.
+function orgaoDaDecisao(e, a){
+  if(a && a.orgao && a.orgao.instancia) return a.orgao;
+  const t = String((e&&e.bruto)||"");
+  const caj = t.match(/(\d{1,2})\s*ª?\s*(?:CAJ\b|C[âa]mara)/i);
+  if(caj) return {nome:`${+caj[1]}ª Câmara de Julgamento`, instancia:2};
+  const jr = t.match(/(\d{1,2})\s*ª?\s*(?:JR\b|Junta de Recursos)/i);
+  if(jr) return {nome:`${+jr[1]}ª Junta de Recursos`, instancia:1};
+  return null;
+}
+function seloOrgao(e, a){
+  const o = orgaoDaDecisao(e, a);
+  if(!o) return "";
+  const inst = o.instancia===2 ? "2ª instância — fim da via administrativa"
+                               : "1ª instância — cabe recurso especial";
+  return `<span class="crps-org${o.instancia===2?" inst2":""}" title="${esc(inst)}">⚖️ ${esc(o.nome)}
+    <small>${o.instancia}ª inst.</small></span>`;
+}
+
 // acha o arquivo dentro do bloco do recurso — os dois lados (ficha e
 // resumidor) casam pelo mesmo par (nup, id do arquivo)
 function acharArquivoCrps(k, nup, marca){
@@ -5578,15 +5612,23 @@ async function salvarResumo(casoId, nup, marca){
 function blocoRecurso(t, casoId){
   const evs = t.eventos||[], ruido = evs.filter(e=>e.tipo==="ruido");
   const cheios = evs.filter(e=>e.tipo!=="ruido");
+  // a decisão mais recente manda na Situação: é a instância em que o caso
+  // está agora, e é dela que sai (ou não) o prazo do recurso especial
+  const ultima = cheios.find(decideOCaso);
   const linha = e=>{
     const forte = decideOCaso(e);
-    const txt = esc(e.resumo||e.bruto||"");
     // acórdão guardado no CRM: abre sem depender do gov.br. Os demais anexos
     // continuam contando só como número — não vale copiar o acervo inteiro.
     const guardados = (e.arquivos||[]).filter(a=>a.storage);
+    const selo = forte ? seloOrgao(e, guardados[0]) : "";
+    // o tradutor já põe "(25ª Junta)" no fim do texto; com o selo ao lado
+    // isso vira eco. Sai o parêntese, fica a etiqueta, que diz mais.
+    const txt = esc(String(e.resumo||e.bruto||"")
+      .replace(/\s*\((?:\d{1,2}ª\s*)?(?:Junta|Câmara|CRPS)[^)]*\)\s*$/,""));
     return `<li>
       <span class="quando" title="e-Recursos (INSS)">${esc(e.icone||"•")}<br>${esc((e.data||"").slice(0,10)||"—")}</span>
       <span class="texto">${forte?`<b>${txt}</b>`:txt}
+        ${selo}
         ${guardados.map(a=>`<button class="crps-pdf" title="${esc(a.nome)}"
           onclick="abrirDecisao('${esc(a.storage)}')">📄 abrir ${/monocr/i.test(a.nome)?"decisão":"acórdão"}</button>`).join("")}
         ${e.docs?`<span class="meio-sub">📎 ${e.docs} documento${e.docs>1?"s":""}</span>`:""}
@@ -5599,6 +5641,7 @@ function blocoRecurso(t, casoId){
     </div>
     <div class="fx-sit">
       <span class="fx-rot">Situação</span> <b>${esc(t.status||"—")}</b>
+      ${ultima?seloOrgao(ultima, (ultima.arquivos||[]).find(a=>a.storage)):""}
       ${t.orgao_atual?`<div class="meio-sub" style="margin-top:3px">📍 onde está agora: ${esc(tituloOrgao(t.orgao_atual))}</div>`:""}
     </div>
     <ul class="timeline crps-tl">${cheios.map(linha).join("") || "<li><span class='meio-sub'>Sem andamentos.</span></li>"}</ul>

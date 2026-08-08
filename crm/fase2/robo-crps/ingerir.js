@@ -67,6 +67,9 @@ function restaurarGuardados(bloco, jaTinha) {
       // nova coleta apagaria tanto o resumo lido do PDF quanto o que alguém
       // corrigiu à mão na ficha.
       if (!a.resumo && g.resumo) a.resumo = g.resumo;
+      // e o órgão julgador, pelo mesmo motivo: ler os PDFs de novo custa
+      // tempo à toa, e o que foi corrigido à mão não pode se perder
+      if (!a.orgao && g.orgao) a.orgao = g.orgao;
     }
   return bloco;
 }
