@@ -1968,3 +1968,55 @@ update colaboradores set cor='#0b8043' where inicial='M';
 update colaboradores set cor='#00838f' where inicial='D';
 update colaboradores set cor='#c2185b' where inicial='I';
 update colaboradores set cor='#d97757' where inicial='C';
+
+-- ══════════════════════════════════════════════════════════════════════════
+-- Recurso administrativo (CRPS / e-Recursos)
+--
+-- O robô (crm/fase2/robo-crps) consulta o e-Recursos do INSS pelo número do
+-- processo e grava aqui o histórico traduzido, igual ao que o DataJud faz com
+-- o CNJ. O login do gov.br NÃO pode ser automatizado (captcha), então o robô
+-- roda com um "crachá" (token) que o Paulo cola no CRM quando a sessão cai.
+-- ══════════════════════════════════════════════════════════════════════════
+
+-- número do processo de recurso a consultar (o NUP da URL do e-Recursos);
+-- entra pela importação dos favoritos ou digitado na ficha
+alter table casos add column if not exists crps_nup text;
+-- resultado da última consulta: {nup, num_proc, orgao_atual, status, recorrentes,
+--   consultado_em, eventos:[{data, tipo, icone, resumo, bruto, docs}]}
+alter table casos add column if not exists crps jsonb;
+
+-- O crachá do gov.br é sensível: dá acesso a tudo do procurador. Fica numa
+-- tabela que a API NÃO devolve (RLS sem policy de select) — só o robô, com a
+-- service_role, lê. Assim o token de um não vaza para a tela de outro.
+create table if not exists crps_segredo (
+  id           int primary key default 1,
+  cracha       text not null,
+  atualizado_em timestamptz not null default now(),
+  constraint crps_segredo_unico check (id = 1)
+);
+alter table crps_segredo enable row level security;   -- ninguém lê pela API
+
+-- o app cola o crachá por aqui, sem nunca poder LER de volta
+create or replace function crps_guardar_cracha(p_cracha text) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if coalesce(btrim(p_cracha),'') = '' then
+    raise exception 'crachá vazio';
+  end if;
+  insert into crps_segredo (id, cracha, atualizado_em)
+    values (1, p_cracha, now())
+    on conflict (id) do update set cracha = excluded.cracha, atualizado_em = now();
+  insert into config_app (chave, valor) values ('crps_estado','ok')
+    on conflict (chave) do update set valor = 'ok';
+  insert into config_app (chave, valor) values ('crps_cracha_em', now()::text)
+    on conflict (chave) do update set valor = now()::text;
+end $$;
+grant execute on function crps_guardar_cracha(text) to authenticated;
+
+-- estado que o app LÊ (nunca o token): sem_cracha | ok | vencido
+insert into config_app (chave, valor) values
+  ('crps_estado','sem_cracha'),
+  ('crps_cracha_em',''),
+  ('crps_visto_em',''),          -- último "sinal de vida" do robô
+  ('crps_sync_em','')            -- última varredura completa
+on conflict (chave) do nothing;

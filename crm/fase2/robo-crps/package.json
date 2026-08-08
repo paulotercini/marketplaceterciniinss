@@ -5,6 +5,7 @@
   "description": "Sonda e (futuro) robô dos recursos administrativos do CRPS no CRM Tercini",
   "scripts": {
     "sonda": "node sonda.js",
+    "robo": "node robo.js",
     "test": "node --test testes/*.test.js"
   },
   "dependencies": {
