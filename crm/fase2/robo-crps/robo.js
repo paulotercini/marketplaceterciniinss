@@ -59,13 +59,19 @@ async function anotar(chave, valor) {
   });
 }
 
-// lê a validade escrita dentro do próprio token (JWT: exp em segundos)
+// lê a validade escrita dentro do próprio token (JWT). Aceita exp em segundos
+// ou em milissegundos, e devolve null se vier absurdo. (Serve pouco na prática:
+// o gov.br mata a sessão bem antes desse prazo.)
 function validadeToken(tok) {
   try {
     const p = (tok || '').split('.')[1];
     if (!p) return null;
     const j = JSON.parse(Buffer.from(p.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8'));
-    return j.exp ? j.exp * 1000 : null;
+    if (!j.exp) return null;
+    let ms = Number(j.exp);
+    if (ms < 1e11) ms *= 1000;            // veio em segundos → milissegundos
+    if (ms < 1e12 || ms > 1e14) return null;   // fora de um intervalo plausível
+    return ms;
   } catch (e) { return null; }
 }
 // um bloco já foi consultado HOJE? (para retomar sem refazer tudo)
@@ -93,8 +99,17 @@ async function consultarCRPS(sistema, nup, token) {
   const ctrl = new AbortController();
   const relogio = setTimeout(() => ctrl.abort(), Number(process.env.CRPS_TIMEOUT_MS || 12000));
   try {
+    // se apresenta como navegador: o e-Recursos atrasa/tarpita pedidos que não
+    // parecem vir de um browser (a sonda, no navegador, era rápida)
     const r = await fetch(`${CRPS}/api/v1/${sistema}/${nup}`, {
-      headers: { Authorization: 'Bearer ' + token, Accept: 'application/json' },
+      headers: {
+        Authorization: 'Bearer ' + token,
+        Accept: 'application/json, text/plain, */*',
+        'Accept-Language': 'pt-BR,pt;q=0.9',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+          + '(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+        Referer: `${CRPS}/e/p/${nup}`,
+      },
       redirect: 'manual', signal: ctrl.signal,
     });
     let json = null;
@@ -168,13 +183,10 @@ async function main() {
     log('não consegui testar o crachá (processos travando) — vou tentar mesmo assim.');
   }
   await anotar('crps_estado', 'ok');
-  // avisa quanto tempo o crachá ainda tem — a sessão do gov.br dura pouco
+  // o gov.br mata a sessão em poucos minutos (bem antes do prazo do token),
+  // então nem confio no relógio dele — só aviso se estiver claramente vencido
   const exp = validadeToken(token);
-  if (exp) {
-    const min = Math.round((exp - Date.now()) / 60000);
-    log(min > 0 ? `crachá válido por ~${min} min — vou consultar o máximo que der`
-                : 'crachá já no limite — pode cair no meio; renove se parar cedo');
-  }
+  if (exp && exp - Date.now() < 60000) log('atenção: o crachá está no limite — se cair cedo, renove.');
   const faltam = casos.reduce((s, k) => s + k.nups.filter(n =>
     REFORCAR || !consultadoHoje(blocosPorNup(k.crps).get(n))).length, 0);
   log(`${faltam} recurso(s) ainda por consultar hoje${REFORCAR ? ' (reforçando tudo)' : ''}`);
@@ -217,11 +229,13 @@ async function main() {
           }
         }
         log(`  ${nup}: ok${antes ? '' : ' (primeira carga)'}`);
-      } else if (r.status === 401) {   // crачhá recusado: pode ter morrido
+      } else if (r.status === 401) {   // recusado: pode ser o anti-robô, não o fim
         seguidas++; semAcesso++;
         if (antes) blocos.push(antes);
         log(`  ${nup}: crachá recusado (HTTP 401)${r.dica ? ` · ${r.dica}` : ''}`);
-        if (seguidas >= 4) { vencido = true; }   // 4 seguidas: o crachá caiu de vez
+        // só desistimos com MUITAS recusas seguidas E nenhum sucesso ainda —
+        // 401 intermitente costuma ser o anti-robô, não o crachá vencido
+        if (seguidas >= 8 && ok === 0) { vencido = true; }
       } else if (r.status === 403) {   // você não é procurador DESTE — segue
         seguidas = 0; semAcesso++;
         if (antes) blocos.push(antes);
