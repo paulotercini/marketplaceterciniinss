@@ -42,7 +42,28 @@ async function subirPDF(caminho, bytes) {
       'Content-Type': 'application/pdf', 'x-upsert': 'true' },
     body: bytes,
   });
-  return r.ok;
+  return r.ok ? { ok: true } : { ok: false, erro: `${r.status} ${await r.text()}` };
+}
+// última barreira: só sobe o que é PDF de verdade. Uma vez o coletor pediu o
+// documento na URL errada e o site devolveu 200 com a própria página — os
+// arquivos entraram no CRM vazios. Aqui isso vira aviso, não anexo quebrado.
+function conferirPDF(buf) {
+  if (!buf || buf.length < 1000) return `veio com ${buf ? buf.length : 0} bytes`;
+  if (!(buf[0] === 0x25 && buf[1] === 0x50 && buf[2] === 0x44 && buf[3] === 0x46)) return 'não é PDF';
+  return null;
+}
+// O bloco do processo é reescrito do zero a cada leitura, então o caminho do
+// acórdão já guardado precisa ser recolocado — senão uma coleta em que o
+// download falhou apagaria o botão de abrir um PDF que está aqui e é bom.
+// Só volta o que tem tamanho conhecido: as cópias vazias da coleta antiga não
+// têm, e é justamente delas que o botão deve sumir até vir a boa.
+function restaurarGuardados(bloco, jaTinha) {
+  for (const e of (bloco.eventos || []))
+    for (const a of (e.arquivos || [])) {
+      const g = jaTinha.get(a.id || a.nome);
+      if (!a.storage && g && g.storage && g.bytes) { a.storage = g.storage; a.bytes = g.bytes; }
+    }
+  return bloco;
 }
 // nome de arquivo que o Storage aceita: sem acento, sem barra, sem espaço
 function nomeSeguro(s) {
@@ -125,21 +146,29 @@ async function main() {
       // sobe os acórdãos/monocráticas e marca onde cada um ficou guardado
       const jaTinha = new Map();
       for (const e of ((antes && antes.eventos) || []))
-        for (const a of (e.arquivos || [])) if (a.storage) jaTinha.set(a.id || a.nome, a.storage);
+        for (const a of (e.arquivos || [])) if (a.storage) jaTinha.set(a.id || a.nome, a);
       for (const arq of (pdfsPorNup.get(nup) || [])) {
         const marca = arq.id || arq.nome;
-        let destino = jaTinha.get(marca);
-        if (!destino) {
+        const bin = Buffer.from(arq.b64 || '', 'base64');
+        const guardado = jaTinha.get(marca);
+        // regrava também quando o tamanho não bate: é assim que as cópias
+        // vazias da coleta antiga são trocadas pelo acórdão de verdade.
+        const precisaSubir = !guardado || guardado.bytes !== bin.length;
+        let destino = guardado && guardado.storage;
+        if (precisaSubir) {
+          const ruim = conferirPDF(bin);
+          if (ruim) { log(`  ⚠ ${arq.nome}: ${ruim} — não guardei (colete de novo)`); continue; }
           destino = `crps/${nup}/${marca}_${nomeSeguro(arq.nome)}`;
-          const ok = await subirPDF(destino, Buffer.from(arq.b64, 'base64'));
-          if (!ok) { log(`  ⚠ não consegui guardar ${arq.nome}`); continue; }
+          const r = await subirPDF(destino, bin);
+          if (!r.ok) { log(`  ⚠ não consegui guardar ${arq.nome}: ${r.erro}`); continue; }
           guardados++;
         }
         // prende o caminho ao arquivo dentro do evento a que ele pertence
         for (const e of bloco.eventos)
           for (const a of (e.arquivos || []))
-            if ((a.id || a.nome) === marca) a.storage = destino;
+            if ((a.id || a.nome) === marca) { a.storage = destino; a.bytes = bin.length; }
       }
+      restaurarGuardados(bloco, jaTinha);
       finais.set(nup, bloco);
       if (antes && autorIA) {   // já conhecíamos: comenta só a novidade
         const vistos = new Set((antes.eventos || []).map(T.chaveEvento));
@@ -167,5 +196,5 @@ async function main() {
   log('Abra o CRM (recarregue a página) e veja a aba 🖥 Recurso (CRPS) das fichas.');
 }
 
-module.exports = { processosColetados, numerosDe, blocosPorNup };
+module.exports = { processosColetados, numerosDe, blocosPorNup, conferirPDF, nomeSeguro, restaurarGuardados };
 if (require.main === module) main().catch(e => { console.error('ingestão falhou:', e.message); process.exit(1); });
