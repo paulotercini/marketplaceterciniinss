@@ -74,15 +74,24 @@ function candidatosDeToken(bruto) {
   return c;
 }
 
-// consulta um processo na API do e-Recursos; devolve {status, json}
+// consulta um processo na API do e-Recursos; devolve {status, json, dica}
+// (dica = um pedaço da resposta, para entender por que falhou)
 async function consultarCRPS(sistema, nup, token) {
-  const r = await fetch(`${CRPS}/api/v1/${sistema}/${nup}`, {
-    headers: { Authorization: 'Bearer ' + token, Accept: 'application/json' },
-  });
-  let json = null;
-  const txt = await r.text();
-  if (r.status === 200) { try { json = JSON.parse(txt); } catch (e) { /* corpo estranho */ } }
-  return { status: r.status, json };
+  const ctrl = new AbortController();
+  const relogio = setTimeout(() => ctrl.abort(), 25000);   // não pendura eterno
+  try {
+    const r = await fetch(`${CRPS}/api/v1/${sistema}/${nup}`, {
+      headers: { Authorization: 'Bearer ' + token, Accept: 'application/json' },
+      redirect: 'manual', signal: ctrl.signal,
+    });
+    let json = null;
+    const txt = await r.text().catch(() => '');
+    if (r.status === 200) { try { json = JSON.parse(txt); } catch (e) { /* corpo estranho */ } }
+    const dica = (txt || '').replace(/\s+/g, ' ').slice(0, 160);
+    return { status: r.status, json, dica };
+  } catch (e) {
+    return { status: -1, json: null, dica: e.name === 'AbortError' ? 'demorou demais (timeout)' : e.message };
+  } finally { clearTimeout(relogio); }
 }
 
 // registra na ficha o comentário de um andamento novo do CRPS
@@ -120,15 +129,16 @@ async function main() {
   const autorIA = cols && cols[0] ? cols[0].id : (casos[0] && casos[0].autor_fallback) || null;
 
   // descobre qual token funciona, com o primeiro recurso
-  let token = null;
+  let token = null, ultimo = null;
   for (const cand of tokens) {
-    const r = await consultarCRPS('esisrec', casos[0].nups[0], cand);
+    const r = await consultarCRPS('esisrec', casos[0].nups[0], cand); ultimo = r;
     if (r.status === 200) { token = cand; break; }
-    if (r.status === 401) { break; }   // crачhá morto: não adianta outro
-    await espera(1500);
+    await espera(1000);
   }
   if (!token) {
-    log('crachá vencido ou inválido — pedindo um novo no CRM.');
+    log(`crachá não funcionou — o INSS respondeu HTTP ${ultimo ? ultimo.status : '?'}`
+      + `${ultimo && ultimo.dica ? ` · ${ultimo.dica}` : ''}`);
+    log('→ renove o crachá no CRM (⚙️ → Recurso CRPS) e rode de novo LOGO em seguida.');
     await anotar('crps_estado', 'vencido');
     await anotar('crps_visto_em', agora());
     return;
