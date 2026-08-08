@@ -57,7 +57,14 @@ function conferirPDF(buf) {
 // download falhou apagaria o botão de abrir um PDF que está aqui e é bom.
 // Só volta o que tem tamanho conhecido: as cópias vazias da coleta antiga não
 // têm, e é justamente delas que o botão deve sumir até vir a boa.
-function restaurarGuardados(bloco, jaTinha) {
+function restaurarGuardados(bloco, jaTinha, antes) {
+  // a estrela que alguém acendeu numa movimentação é do escritório, não do
+  // e-Recursos — e o bloco é reescrito do zero a cada leitura. Sem isto, a
+  // próxima coleta apagaria os destaques todos.
+  if (antes) {
+    const acesas = new Set((antes.eventos || []).filter(e => e.importante).map(T.chaveEvento));
+    for (const e of (bloco.eventos || [])) if (acesas.has(T.chaveEvento(e))) e.importante = true;
+  }
   for (const e of (bloco.eventos || []))
     for (const a of (e.arquivos || [])) {
       const g = jaTinha.get(a.id || a.nome);
@@ -73,6 +80,36 @@ function restaurarGuardados(bloco, jaTinha) {
     }
   return bloco;
 }
+// O que não pode passar batido. O e-Recursos mexe no processo o tempo todo —
+// distribuição, encaminhamento, contrarrazões — e marcar tudo como importante
+// é o mesmo que não marcar nada. Só a DECISÃO (acórdão, monocrática,
+// embargos) e a PAUTA acendem o ⭐ sozinhas: uma abre prazo, a outra tem data
+// marcada. O resto chega como comentário e espera a sua leitura; se algum
+// merecer destaque, a estrela de cada movimentação está lá na aba do recurso.
+const PEDE_CIENCIA = new Set(['decisao', 'pauta']);
+
+// o comentário que o robô escreve nos Andamentos do Escritório. A decisão
+// ganha duas linhas: a segunda diz o que fazer a seguir, que é a informação
+// que some quando alguém lê "Recurso negado" e não sabe de que instância veio.
+function comentarioDoEvento(e) {
+  const data = T.dataParaISO(e.data).slice(0, 10).split('-').reverse().join('/');
+  const orgao = T.orgaoJulgador(e.bruto || '');
+  const onde = orgao && orgao.instancia ? ` · ${orgao.nome}` : '';
+  const cabeca = `🖥 CRPS${data ? ` · ${data}` : ''} — ${e.icone} ${semSufixo(e.resumo)}${onde}`;
+  if (e.tipo !== 'decisao') return cabeca;
+  const passo = !orgao || !orgao.instancia
+    ? 'Confira o acórdão na aba 🖥 Recurso (CRPS).'
+    : orgao.instancia === 1
+      ? 'Da Junta cabe Recurso Especial em 30 dias da ciência. Confira o acórdão na aba 🖥 Recurso (CRPS).'
+      : 'Decisão de Câmara: fim da via administrativa. Avaliar ação judicial.';
+  return `${cabeca}\n⚠ ${passo}`;
+}
+// o tradutor já põe "(25ª Junta)" no fim do rótulo; aqui o órgão vem inteiro
+// logo depois, então o parêntese seria eco
+function semSufixo(s) {
+  return String(s || '').replace(/\s*\((?:\d{1,2}ª\s*)?(?:Junta|Câmara|CRPS)[^)]*\)\s*$/, '');
+}
+
 // nome de arquivo que o Storage aceita: sem acento, sem barra, sem espaço
 function nomeSeguro(s) {
   return (s || 'documento.pdf').normalize('NFD').replace(/[̀-ͯ]/g, '')
@@ -144,6 +181,7 @@ async function main() {
   let guardados = 0;
 
   for (const { caso, novos: novosDoCaso } of porCaso.values()) {
+    let acender = false;
     const antesPorNup = blocosPorNup(caso.crps);
     const finais = new Map(antesPorNup);   // parte do que já havia, sobrescreve o novo
     for (const [nup, json] of novosDoCaso) {
@@ -176,23 +214,24 @@ async function main() {
           for (const a of (e.arquivos || []))
             if ((a.id || a.nome) === marca) { a.storage = destino; a.bytes = bin.length; }
       }
-      restaurarGuardados(bloco, jaTinha);
+      restaurarGuardados(bloco, jaTinha, antes);
       finais.set(nup, bloco);
       if (antes && autorIA) {   // já conhecíamos: comenta só a novidade
         const vistos = new Set((antes.eventos || []).map(T.chaveEvento));
         const frescos = bloco.eventos
           .filter(e => !T.TIPOS_SILENCIOSOS.has(e.tipo) && !vistos.has(T.chaveEvento(e))).reverse();
         for (const e of frescos) {
-          const data = T.dataParaISO(e.data).slice(0, 10).split('-').reverse().join('/');
+          if (PEDE_CIENCIA.has(e.tipo)) { e.importante = true; acender = true; }
           await sb('/rest/v1/andamentos', { method: 'POST', headers: { Prefer: 'return=minimal' },
-            body: JSON.stringify({ caso_id: caso.id, autor_id: autorIA,
-              texto: `🖥 CRPS — ${e.icone} ${e.resumo}${data ? ` (${data})` : ''}` }) });
+            body: JSON.stringify({ caso_id: caso.id, autor_id: autorIA, texto: comentarioDoEvento(e) }) });
           novos++;
         }
       }
     }
+    // acender o ⭐ do processo é o que põe o caso na frente de quem trabalha:
+    // decisão e pauta não podem esperar alguém lembrar de abrir a aba
     await sb(`/rest/v1/casos?id=eq.${caso.id}`, { method: 'PATCH', headers: { Prefer: 'return=minimal' },
-      body: JSON.stringify({ crps: [...finais.values()] }) });
+      body: JSON.stringify({ crps: [...finais.values()], ...(acender ? { importante: true } : {}) }) });
     ok++;
   }
   // marca a última sincronização, para o CRM mostrar
@@ -204,5 +243,6 @@ async function main() {
   log('Abra o CRM (recarregue a página) e veja a aba 🖥 Recurso (CRPS) das fichas.');
 }
 
-module.exports = { processosColetados, numerosDe, blocosPorNup, conferirPDF, nomeSeguro, restaurarGuardados };
+module.exports = { processosColetados, numerosDe, blocosPorNup, conferirPDF, nomeSeguro,
+  restaurarGuardados, comentarioDoEvento, PEDE_CIENCIA };
 if (require.main === module) main().catch(e => { console.error('ingestão falhou:', e.message); process.exitCode = 1; });

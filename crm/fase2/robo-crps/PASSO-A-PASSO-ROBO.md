@@ -143,6 +143,31 @@ node marcar_orgao.js --refazer   # refaz também os automáticos
 
 Custo zero: lê os PDFs nesta máquina, sem IA e sem coletar nada de novo.
 
+### O que chega nos Andamentos do Escritório
+
+Cada movimentação nova do recurso vira um comentário na ficha, escrito pelo
+**C** (o Claude da equipe). A decisão vem com duas linhas — a segunda diz o
+próximo passo, que é o que some quando alguém lê "Recurso negado" e não sabe
+de que instância veio:
+
+```
+🖥 CRPS · 12/11/2025 — ⛔ Recurso negado · 25ª Junta de Recursos
+⚠ Da Junta cabe Recurso Especial em 30 dias da ciência. Confira o acórdão na aba 🖥 Recurso (CRPS).
+```
+
+**⭐ só onde importa.** O e-Recursos mexe no processo o tempo todo, e marcar
+tudo como importante é o mesmo que não marcar nada. Acendem o ⭐ do processo
+sozinhas apenas a **decisão** (acórdão, monocrática, embargos) e a **pauta**:
+uma abre prazo, a outra tem data marcada. O resto chega como comentário e
+espera a sua leitura.
+
+Se alguma outra movimentação merecer destaque, cada linha da aba 🖥 Recurso
+tem uma **estrela própria**. Acender ali destaca a movimentação *e* acende o
+⭐ do processo — é ele que faz o caso pular para a frente nas listas. Apagar a
+estrela da movimentação não apaga a do processo: quem decide que o assunto
+morreu é você, no botão do composer. Os destaques sobrevivem às coletas
+seguintes.
+
 ### Corrigi uma regra — preciso coletar tudo de novo?
 
 Não. Cada andamento guarda o texto cru do e-Recursos, então o rótulo pode ser

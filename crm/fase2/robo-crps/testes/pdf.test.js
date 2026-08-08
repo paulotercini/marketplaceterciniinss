@@ -93,3 +93,60 @@ test('e não apaga nem o que alguém corrigiu à mão na ficha', () => {
   I.restaurarGuardados(bloco, jaTinha);
   assert.equal(bloco.eventos[0].arquivos[0].resumo.origem, 'curado');
 });
+
+// O órgão custa uma leitura de PDF por decisão; e o que alguém corrigiu à mão
+// não pode voltar errado só porque houve uma coleta nova.
+test('a ingestão não apaga o órgão julgador', () => {
+  const bloco = { eventos: [{ arquivos: [{ id: '1', nome: 'A.pdf' }] }] };
+  const jaTinha = new Map([['1', { storage: 's1', bytes: 100,
+    orgao: { nome: '10ª Junta de Recursos', instancia: 1, origem: 'auto' } }]]);
+  I.restaurarGuardados(bloco, jaTinha);
+  assert.equal(bloco.eventos[0].arquivos[0].orgao.nome, '10ª Junta de Recursos');
+});
+
+// A estrela é do escritório, não do e-Recursos: ela diz "isto aqui eu preciso
+// ver". O bloco é reescrito do zero a cada coleta — sem restaurar, o robô
+// apagaria todos os destaques na varredura seguinte.
+test('a estrela da movimentação sobrevive à coleta seguinte', () => {
+  const chave = { data: '12/11/2025 10:00:00', bruto: 'Conhecer do Recurso e negar-lhe provimento' };
+  const antes = { eventos: [{ ...chave, importante: true }, { data: '01/10/2025 09:00:00', bruto: 'Contrarrazoes' }] };
+  const bloco = { eventos: [{ ...chave }, { data: '01/10/2025 09:00:00', bruto: 'Contrarrazoes' }] };
+  I.restaurarGuardados(bloco, new Map(), antes);
+  assert.equal(bloco.eventos[0].importante, true, 'apagou o destaque na coleta nova');
+  assert.equal(bloco.eventos[1].importante, undefined, 'acendeu estrela em quem não tinha');
+});
+
+// ── o comentário que o robô escreve no Escritório ──────────────────────────
+test('decisão de Junta avisa o prazo do recurso especial', () => {
+  const txt = I.comentarioDoEvento({ tipo: 'decisao', icone: '⛔', data: '12/11/2025 10:00:00',
+    resumo: 'Recurso negado (25ª Junta)',
+    bruto: 'Conhecer do Recurso e negar-lhe provimento - Acórdão: 25ª JR/3080/2025' });
+  assert.match(txt, /25ª Junta de Recursos/);
+  assert.match(txt, /30 dias/);
+  // o rótulo já trazia "(25ª Junta)"; com o órgão inteiro ao lado, viraria eco
+  assert.ok(!/\(25ª Junta\)/.test(txt), 'repetiu o órgão duas vezes na mesma linha');
+});
+
+test('decisão de Câmara não promete recurso que não existe', () => {
+  const txt = I.comentarioDoEvento({ tipo: 'decisao', icone: '✅', data: '16/07/2026 10:00:00',
+    resumo: 'Recurso PROVIDO (4ª Câmara)',
+    bruto: 'Conhecer do Recurso e dar-lhe provimento - Acórdão: 4ª CAJ/1200/2026' });
+  assert.match(txt, /4ª Câmara de Julgamento/);
+  assert.ok(!/30 dias/.test(txt), 'ofereceu recurso especial contra decisão de Câmara');
+  assert.match(txt, /fim da via administrativa/i);
+});
+
+test('movimentação comum vira comentário de uma linha, sem alarde', () => {
+  const txt = I.comentarioDoEvento({ tipo: 'andamento', icone: '📄', data: '02/02/2026 09:00:00',
+    resumo: 'Contrarrazões do INSS juntadas', bruto: 'Contrarrazoes' });
+  assert.equal(txt, '🖥 CRPS · 02/02/2026 — 📄 Contrarrazões do INSS juntadas');
+  assert.ok(!txt.includes('\n'));
+});
+
+// marcar tudo como importante é o mesmo que não marcar nada
+test('só decisão e pauta acendem o ⭐ sozinhas', () => {
+  assert.ok(I.PEDE_CIENCIA.has('decisao'));
+  assert.ok(I.PEDE_CIENCIA.has('pauta'));
+  for (const t of ['andamento', 'recurso', 'pericia', 'ruido'])
+    assert.ok(!I.PEDE_CIENCIA.has(t), `${t} não deveria acender o ⭐`);
+});
