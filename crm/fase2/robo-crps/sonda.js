@@ -75,8 +75,27 @@ async function main() {
   console.log(`Vou sondar ${nups.length} processo(s), com ${ESPERA_ENTRE_MS / 1000}s de pausa entre cada um.`);
   fs.mkdirSync(PASTA_SAIDA, { recursive: true });
 
-  const ctx = await chromium.launchPersistentContext(PASTA_PERFIL, {
+  // O gov.br recusa o captcha quando percebe a "marca" de navegador
+  // automatizado. Então usamos o Chrome de verdade instalado (channel:'chrome')
+  // e removemos os sinais de automação. Se não houver Chrome, cai no Chromium
+  // que veio com o Playwright — pode ser que o captcha implique aí.
+  const opcoesBase = {
     headless: false, viewport: { width: 1200, height: 850 },
+    ignoreDefaultArgs: ['--enable-automation'],
+    args: ['--disable-blink-features=AutomationControlled'],
+  };
+  let ctx;
+  try {
+    ctx = await chromium.launchPersistentContext(PASTA_PERFIL, { ...opcoesBase, channel: 'chrome' });
+    console.log('Usando o seu Chrome instalado.');
+  } catch (e) {
+    console.log('Não achei o Chrome instalado — usando o navegador do Playwright.');
+    console.log('(Se o captcha reclamar, instale o Google Chrome e rode de novo.)');
+    ctx = await chromium.launchPersistentContext(PASTA_PERFIL, opcoesBase);
+  }
+  // apaga o navigator.webdriver, o sinal mais óbvio de automação
+  await ctx.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
   });
   const page = ctx.pages()[0] || (await ctx.newPage());
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded' });
