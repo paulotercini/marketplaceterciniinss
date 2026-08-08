@@ -16,10 +16,18 @@
 //   node resumir.js --aplicar    → escreve nas fichas
 //   node resumir.js --refazer    → refaz até os que já têm resumo automático
 //                                  (resumo corrigido à mão nunca é tocado)
+//   node resumir.js --regras     → força o motor de regras (sem IA, sem custo)
+//
+// Dois motores para o mesmo trabalho:
+//   REGRAS  — lê o dispositivo do PDF aqui na máquina. Custo zero, nada sai
+//             daqui, cobertura menor: onde o texto foge do padrão, ele cala.
+//             É o motor quando não há ANTHROPIC_API_KEY no .env.
+//   CLAUDE  — lê o PDF inteiro. Pega os acórdãos fora do padrão, mas consome
+//             crédito da API (uns centavos por decisão).
 
 const fs = require('fs');
 const path = require('path');
-const Anthropic = require('@anthropic-ai/sdk');
+const { resumirPorRegras } = require('./regras_acordao.js');
 
 for (const linha of (fs.existsSync(path.join(__dirname, '.env'))
     ? fs.readFileSync(path.join(__dirname, '.env'), 'utf8').split('\n') : [])) {
@@ -110,6 +118,17 @@ function validarResumo(r) {
   return { ok: true, linhas };
 }
 
+// caminho sem IA e sem custo: extrai o texto do PDF aqui mesmo e lê o
+// dispositivo por regra. Nada sai da máquina.
+async function textoDoPDF(bytes) {
+  const { PDFParse } = require('pdf-parse');
+  const p = new PDFParse({ data: bytes });
+  try { return (await p.getText()).text || ''; } finally { await p.destroy(); }
+}
+async function resumirPorPDFeRegras(bytes) {
+  return resumirPorRegras(await textoDoPDF(bytes));
+}
+
 async function resumirPDF(cliente, bytes) {
   const r = await cliente.messages.create({
     model: MODELO,
@@ -142,11 +161,19 @@ async function main() {
   const aplicar = process.argv.includes('--aplicar');
   const refazer = process.argv.includes('--refazer');
   if (!BASE || !CHAVE) { console.error('faltam SUPABASE_URL e SUPABASE_SERVICE_KEY no .env'); process.exit(1); }
-  if (!process.env.ANTHROPIC_API_KEY) {
-    console.error('falta ANTHROPIC_API_KEY no .env (a mesma chave do Claude que a rotina diária usa)');
-    process.exit(1);
+  // dois motores para o mesmo trabalho. Sem chave da API (ou com --regras),
+  // o resumo sai por regra: custo zero, cobertura menor, nada sai da máquina.
+  const soRegras = process.argv.includes('--regras') || !process.env.ANTHROPIC_API_KEY;
+  let regrasAgora = soRegras;   // vira true também se a API ficar sem saldo
+  let cliente = null;
+  if (soRegras) {
+    log(process.env.ANTHROPIC_API_KEY
+      ? 'Motor: REGRAS (--regras) — sem custo, sem IA.'
+      : 'Sem ANTHROPIC_API_KEY: usando o motor de REGRAS — sem custo, sem IA.\n'
+        + 'Ele lê o dispositivo do PDF e cala onde o texto foge do padrão.\n');
+  } else {
+    cliente = new (require('@anthropic-ai/sdk'))();
   }
-  const cliente = new Anthropic();
 
   const casos = await sb('/rest/v1/casos?select=id,cliente_id,crps&crps=not.is.null');
   const clientes = await sb('/rest/v1/clientes?select=id,nome').catch(() => []);
@@ -166,13 +193,32 @@ async function main() {
     const nome = nomePorId.get(k && k.cliente_id) || '(sem nome)';
     process.stdout.write(`${i + 1}/${fila.length}  ${nome} — ${alvo.nome.slice(0, 40)} ... `);
     let bruto;
-    try { bruto = await resumirPDF(cliente, await baixarPDF(alvo.storage)); }
+    try {
+      const bytes = await baixarPDF(alvo.storage);
+      if (regrasAgora) bruto = await resumirPorPDFeRegras(bytes);
+      else {
+        try { bruto = await resumirPDF(cliente, bytes); }
+        catch (e) {
+          // conta sem saldo não é motivo para parar o trabalho: o motor de
+          // regras faz a mesma coisa de graça, com cobertura menor.
+          if (!/credit balance|insufficient|quota/i.test(e.message)) throw e;
+          log('sem saldo na API');
+          log('\n⚠ A conta da API está sem crédito. Sigo pelo motor de REGRAS,'
+            + '\n  que roda aqui na máquina e não custa nada.\n');
+          regrasAgora = true;
+          bruto = await resumirPorPDFeRegras(bytes);
+          process.stdout.write(`${i + 1}/${fila.length}  ${nome} — ${alvo.nome.slice(0, 40)} ... `);
+        }
+      }
+    }
     catch (e) { log(`falhou (${e.message})`); pulados++; continue; }
     const v = validarResumo(bruto);
     if (!v.ok) { log(`sem resumo — ${v.motivo}`); pulados++;
       relato.push(`\n### ${nome} — ${alvo.data.slice(0, 10)}\n(sem resumo: ${v.motivo})`); continue; }
     log('ok');
-    const resumo = { linhas: v.linhas, origem: 'auto', modelo: MODELO, gerado_em: new Date().toISOString() };
+    const resumo = { linhas: v.linhas, origem: 'auto',
+      motor: regrasAgora ? 'regras' : 'claude',
+      modelo: regrasAgora ? null : MODELO, gerado_em: new Date().toISOString() };
     relato.push(`\n### ${nome} — ${alvo.data.slice(0, 10)} — ${alvo.resultado}\n`
       + v.linhas.map(l => `  • ${l}`).join('\n'));
     ok++;
@@ -198,5 +244,5 @@ async function main() {
   }
 }
 
-module.exports = { alvos, validarResumo, aplicarResumo, ESQUEMA, REGRAS };
+module.exports = { alvos, validarResumo, aplicarResumo, textoDoPDF, ESQUEMA, REGRAS };
 if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exit(1); });

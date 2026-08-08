@@ -58,13 +58,37 @@ logo abaixo do arquivo:
     • Não reconheceu o direito à aposentadoria por tempo de contribuição
 ```
 
-Uma vez, para ligar: acrescente `ANTHROPIC_API_KEY=` no `.env` (a mesma chave
-do Claude que a rotina diária usa) e rode `npm install`.
-
 ```
 node resumir.js             # SECO: escreve resumos_para_conferir.txt, não grava
 node resumir.js --aplicar   # publica nas fichas
+node resumir.js --regras    # força o motor de regras (sem IA, sem custo)
 ```
+
+**Dois motores fazem o mesmo trabalho.** Você não precisa escolher: o
+programa escolhe sozinho.
+
+| | REGRAS | CLAUDE |
+|---|---|---|
+| Custo | zero | uns centavos por decisão |
+| Onde roda | nesta máquina | na API |
+| O acórdão sai daqui? | não | vai para a API |
+| Cobertura | o dispositivo no padrão do CRPS | também os fora do padrão |
+| Digitalizado (sem texto) | não lê | lê |
+
+O motor de **regras** lê o dispositivo como o extrator do To Do lê os blocos
+das tarefas: "ACORDAM ... em conhecer do recurso e dar-lhe provimento parcial,
+para reconhecer como especial o período de X a Y, determinando a averbação"
+é formulário, e formulário se lê com regra. Onde o texto foge do padrão, ele
+**cala** — some com o resumo, não inventa um.
+
+Ele é o motor quando não há `ANTHROPIC_API_KEY` no `.env`, quando você passa
+`--regras`, e também **quando a API fica sem crédito no meio da rodada**: o
+programa avisa e segue pelas regras em vez de parar.
+
+Para usar o Claude (mais cobertura), acrescente `ANTHROPIC_API_KEY=` no `.env`
+e tenha crédito em console.anthropic.com → Plans & Billing. Dá para fazer os
+dois: rodar tudo pelas regras primeiro e, depois, `--refazer` só o que ficou
+sem resumo — aí o custo é só dos difíceis.
 
 **Leia o arquivo antes de aplicar.** É conteúdo jurídico com o seu nome: o
 modo seco existe para você conferir os resumos de uma vez, em vez de descobrir
