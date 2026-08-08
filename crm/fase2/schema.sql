@@ -1003,6 +1003,15 @@ end $$;
 -- Atendente não é cadastro novo: é o colaborador que já existe, com um
 -- interruptor. Quem não atende WhatsApp continua usando o CRM igual.
 alter table colaboradores add column if not exists atende_zap boolean not null default false;
+alter table colaboradores add column if not exists cargo text;
+alter table colaboradores drop constraint if exists colaboradores_cargo_check;
+alter table colaboradores add constraint colaboradores_cargo_check
+  check (cargo is null or cargo in ('advogado','estagiario','assistente'));
+-- o quadro dito pelo escritório em 08.08.2026; só preenche quem está vazio,
+-- então mudar depois pela tela de configurações não é desfeito por engano
+update colaboradores set cargo='advogado'   where inicial in ('P','A','M') and cargo is null;
+update colaboradores set cargo='estagiario' where inicial in ('I','D') and cargo is null;
+update colaboradores set cargo='assistente' where inicial='C' and cargo is null;
 alter table colaboradores add column if not exists setor text;   -- triagem|inss|judicial|financeiro
 
 alter table zap_conversas add column if not exists bot_passo text;
