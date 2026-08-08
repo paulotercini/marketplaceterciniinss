@@ -1,0 +1,11 @@
+# Para usar o Comet (ou Edge, Brave, etc.) em vez do Google Chrome:
+# cole nesta primeira linha o caminho completo do programa (.exe) e salve
+# este arquivo com o nome  navegador.txt  na mesma pasta.
+#
+# Como descobrir o caminho do Comet no Windows:
+#   1. Ache o atalho do Comet (na área de trabalho ou no menu Iniciar).
+#   2. Clique com o botão direito → Propriedades.
+#   3. Copie o que está em "Destino" (só o caminho até o .exe, sem aspas).
+#
+# Exemplo (o seu pode ser um pouco diferente):
+C:\Users\VAIO\AppData\Local\Perplexity\Comet\Application\comet.exe

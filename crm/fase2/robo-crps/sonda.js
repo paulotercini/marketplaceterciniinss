@@ -76,22 +76,34 @@ async function main() {
   fs.mkdirSync(PASTA_SAIDA, { recursive: true });
 
   // O gov.br recusa o captcha quando percebe a "marca" de navegador
-  // automatizado. Então usamos o Chrome de verdade instalado (channel:'chrome')
-  // e removemos os sinais de automação. Se não houver Chrome, cai no Chromium
-  // que veio com o Playwright — pode ser que o captcha implique aí.
+  // automatizado. Então usamos um navegador de VERDADE (Chrome, Comet, Edge…)
+  // e removemos os sinais de automação. Ordem de escolha:
+  //   1. o caminho colado em navegador.txt (ex.: o Comet)
+  //   2. o Google Chrome instalado
+  //   3. o Chromium que veio com o Playwright (último recurso)
   const opcoesBase = {
     headless: false, viewport: { width: 1200, height: 850 },
     ignoreDefaultArgs: ['--enable-automation'],
     args: ['--disable-blink-features=AutomationControlled'],
   };
+  const arqNav = path.join(__dirname, 'navegador.txt');
+  const caminhoNav = fs.existsSync(arqNav)
+    ? fs.readFileSync(arqNav, 'utf8').split(/\r?\n/).map(s => s.trim())
+        .find(s => s && !s.startsWith('#')) : null;
   let ctx;
-  try {
-    ctx = await chromium.launchPersistentContext(PASTA_PERFIL, { ...opcoesBase, channel: 'chrome' });
-    console.log('Usando o seu Chrome instalado.');
-  } catch (e) {
-    console.log('Não achei o Chrome instalado — usando o navegador do Playwright.');
-    console.log('(Se o captcha reclamar, instale o Google Chrome e rode de novo.)');
-    ctx = await chromium.launchPersistentContext(PASTA_PERFIL, opcoesBase);
+  if (caminhoNav && fs.existsSync(caminhoNav)) {
+    console.log('Usando o navegador que você indicou em navegador.txt.');
+    ctx = await chromium.launchPersistentContext(PASTA_PERFIL, { ...opcoesBase, executablePath: caminhoNav });
+  } else {
+    if (caminhoNav) console.log('⚠ O caminho em navegador.txt não existe — vou tentar o Chrome.');
+    try {
+      ctx = await chromium.launchPersistentContext(PASTA_PERFIL, { ...opcoesBase, channel: 'chrome' });
+      console.log('Usando o seu Chrome instalado.');
+    } catch (e) {
+      console.log('Não achei o Chrome — usando o navegador do Playwright.');
+      console.log('(Se o captcha reclamar, cole o caminho do Comet em navegador.txt e rode de novo.)');
+      ctx = await chromium.launchPersistentContext(PASTA_PERFIL, opcoesBase);
+    }
   }
   // apaga o navigator.webdriver, o sinal mais óbvio de automação
   await ctx.addInitScript(() => {

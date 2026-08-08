@@ -27,6 +27,14 @@ variados: um recurso recente, um antigo e, se tiver, um já julgado.
 
 O `nups.txt` fica só na sua máquina — o git ignora ele de propósito.
 
+## 2b. (Só se você NÃO tem o Google Chrome) apontar o seu navegador
+
+A sonda precisa de um navegador de verdade para o captcha do gov.br passar.
+Ela procura o Google Chrome sozinha. Se você usa **Comet** (ou Edge, Brave),
+diga onde ele está: copie `navegador.exemplo.txt` como `navegador.txt` e cole
+nele o caminho do programa. O jeito de achar o caminho está dentro do próprio
+arquivo de exemplo. Se você tem o Chrome instalado, pule este passo.
+
 ## 3. Rodar
 
 ```
