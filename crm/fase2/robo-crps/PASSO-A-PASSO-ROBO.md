@@ -1,4 +1,37 @@
-# Robô dos recursos (CRPS) — instalação na máquina-servidor
+# Recursos (CRPS) — como puxar os andamentos
+
+Há dois caminhos. Comece pelo **Plano B**, que é o confiável.
+
+## ⭐ Plano B (recomendado): coletar no seu navegador
+
+O e-Recursos bloqueia acesso automatizado de fora (trava a conexão, recusa o
+token) — nenhum truque engana isso; só um navegador de verdade passa. Então a
+coleta roda no SEU navegador logado, e só o resultado vem para o CRM.
+
+Três passos, na pasta `robo-crps` (com o `.env` já preenchido):
+
+1. **`node preparar.js`** — lê no banco os recursos a consultar e escreve o
+   arquivo `coletar.txt`.
+2. **Colете no navegador**: abra `consultaprocessos.inss.gov.br` e faça login.
+   Aperte **F12 → Console** (se pedir, digite `allow pasting` e Enter). Abra
+   `coletar.txt`, copie **tudo**, cole no Console e rode. Ele consulta cada
+   recurso (devagar, sem travar, porque é o navegador de verdade) e ao final
+   **baixa `crps_coletado.json`**. Mova esse arquivo para a pasta `robo-crps`.
+3. **`node ingerir.js crps_coletado.json`** — grava tudo no CRM, traduzido,
+   comentando nas fichas só o que é novo.
+
+Recarregue o CRM e veja a aba **🖥 Recurso (CRPS)** das fichas. Para atualizar
+depois, repita os três passos (é rápido: só muda o que mudou).
+
+---
+
+# Plano A: robô de fora (fica de reserva)
+
+O robô consulta de fora, na máquina-servidor. **Hoje o e-Recursos bloqueia
+esse acesso** (por isso o Plano B), mas o robô continua no projeto caso o
+bloqueio mude, e serve de molde para o "Andamentos INSS" e o PAT no futuro.
+
+## Robô dos recursos (CRPS) — instalação na máquina-servidor
 
 O robô consulta os recursos no e-Recursos do INSS e escreve os andamentos nas
 fichas, do jeito que o DataJud faz com o CNJ. Ele mora na **mesma máquina da

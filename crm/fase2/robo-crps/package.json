@@ -6,6 +6,7 @@
   "scripts": {
     "sonda": "node sonda.js",
     "robo": "node robo.js",
+    "preparar": "node preparar.js",
     "test": "node --test testes/*.test.js"
   },
   "dependencies": {
