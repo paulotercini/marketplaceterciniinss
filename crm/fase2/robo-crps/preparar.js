@@ -36,6 +36,22 @@ function numerosDe(k) {
   return nups;
 }
 
+// ── ajudantes que viajam para dentro do coletor ────────────────────────────
+// Ficam aqui fora (e não escritos à mão no texto do coletor) para poderem ser
+// testados: é o código-fonte deles que é injetado no lugar de {{AJUDANTES}}.
+
+// O caminho que o processo devolve (/esisrec/<nup>/<id>?arquivo=X.pdf) é
+// relativo à API, que mora em /api/v1. Sem esse prefixo o servidor responde
+// 200 com a própria página do site — foi o que encheu o CRM de arquivos
+// vazios. O ?arquivo= é só o nome sugerido para salvar; o próprio site o
+// corta antes de pedir o documento.
+const urlDoc = p => '/api/v1' + String(p).split('?')[0];
+// todo PDF começa com os bytes %PDF. Sem essa conferência, página de erro e
+// tela de login entram como se fossem acórdão.
+const ehPDF = b => !!b && b.length > 4 && b[0] === 0x25 && b[1] === 0x50 && b[2] === 0x44 && b[3] === 0x46;
+const tamanho = n => n < 1024 ? n + ' bytes' : (n / 1024).toFixed(1) + ' KB';
+const AJUDANTES = ['urlDoc', 'ehPDF', 'tamanho'];
+
 // o script que vai rodar no navegador (o {{NUPS}} e {{PAUSA}} são trocados)
 const MOLDE = `// ── COLE ISTO NO CONSOLE (F12) da página consultaprocessos.inss.gov.br logada ──
 // Se pedir, digite  allow pasting  e Enter antes de colar.
@@ -62,18 +78,26 @@ const MOLDE = `// ── COLE ISTO NO CONSOLE (F12) da página consultaprocessos
   // só o que DECIDE vale a cópia: acórdão e decisão monocrática. Baixar o
   // acervo inteiro traria CNIS, laudos e petições — muitos megas, pouco uso.
   const decide = nome => /ac[oó]rd[aã]o|monocr[aá]tic/i.test(nome || '');
+{{AJUDANTES}}
   const baixar = async (path, tok) => {
-    try {
-      const r = await fetch(path, { credentials: 'include',
-        headers: tok ? { Authorization: 'Bearer ' + tok } : {} });
-      if (!r.ok) return null;
-      const buf = new Uint8Array(await r.arrayBuffer());
-      if (!buf.length) return null;
-      let s = ''; const passo = 8192;
-      for (let i = 0; i < buf.length; i += passo)
-        s += String.fromCharCode.apply(null, buf.subarray(i, i + passo));
-      return { b64: btoa(s), bytes: buf.length };
-    } catch (e) { return null; }
+    const cru = localStorage.getItem('ifs_auth');   // o site manda esse valor cru como Bearer
+    const chaves = [...new Set([tok, cru, null].filter((v, i, a) => a.indexOf(v) === i))];
+    let ultimo = 'não tentado';
+    for (const k of chaves) {
+      try {
+        const r = await fetch(urlDoc(path), { credentials: 'include',
+          headers: Object.assign({ Accept: 'application/pdf' },
+            k ? { Authorization: 'Bearer ' + k } : {}) });
+        if (!r.ok) { ultimo = 'HTTP ' + r.status; continue; }
+        const buf = new Uint8Array(await r.arrayBuffer());
+        if (!ehPDF(buf)) { ultimo = 'veio ' + buf.length + ' bytes, mas não é PDF'; continue; }
+        let s = ''; const passo = 8192;
+        for (let i = 0; i < buf.length; i += passo)
+          s += String.fromCharCode.apply(null, buf.subarray(i, i + passo));
+        return { b64: btoa(s), bytes: buf.length };
+      } catch (e) { ultimo = String(e); }
+    }
+    return { erro: ultimo };
   };
   let n = 0, ok = 0, pdfs = 0;
   for (const nup of NUPS) {
@@ -93,9 +117,9 @@ const MOLDE = `// ── COLE ISTO NO CONSOLE (F12) da página consultaprocessos
           if (out.arquivos[chave]) continue;
           await pausa(700);
           const bin = await baixar(doc.path, modo);
-          if (bin) { out.arquivos[chave] = { nup, nome: doc.nome, id: String(doc.id||''), ...bin };
-            pdfs++; console.log('      📄 ' + doc.nome + ' (' + Math.round(bin.bytes/1024) + ' KB)'); }
-          else console.log('      ⚠ não consegui baixar ' + doc.nome);
+          if (bin && bin.b64) { out.arquivos[chave] = { nup, nome: doc.nome, id: String(doc.id||''), ...bin };
+            pdfs++; console.log('      📄 ' + doc.nome + ' (' + tamanho(bin.bytes) + ')'); }
+          else console.log('      ⚠ não consegui baixar ' + doc.nome + ' — ' + (bin && bin.erro || 'sem motivo'));
         }
     }
     await pausa(PAUSA);
@@ -108,14 +132,22 @@ const MOLDE = `// ── COLE ISTO NO CONSOLE (F12) da página consultaprocessos
 })();
 `;
 
+// os mesmos ajudantes testados aqui viram código dentro do coletor
+function montarColetor(nups, pausaMs) {
+  const fontes = { urlDoc, ehPDF, tamanho };
+  const corpo = AJUDANTES.map(n => `  const ${n} = ${fontes[n].toString()};`).join('\n');
+  return MOLDE
+    .replace('{{AJUDANTES}}', corpo)
+    .replace('{{NUPS}}', JSON.stringify(nups))
+    .replace('{{PAUSA}}', String(pausaMs));
+}
+
 async function main() {
   if (!BASE || !CHAVE) { console.error('faltam SUPABASE_URL e SUPABASE_SERVICE_KEY no .env'); process.exit(1); }
   const casos = await sb('/rest/v1/casos?select=id,crps_nup,crps_nups,crps&fase=neq.encerrado');
   const nups = [...new Set(casos.flatMap(numerosDe))];
   if (!nups.length) { console.log('Nenhum recurso vinculado ainda (rode o importar_favoritos primeiro).'); return; }
-  const script = MOLDE
-    .replace('{{NUPS}}', JSON.stringify(nups))
-    .replace('{{PAUSA}}', String(PAUSA));
+  const script = montarColetor(nups, PAUSA);
   const saida = path.join(__dirname, 'coletar.txt');
   fs.writeFileSync(saida, script);
   console.log(`Pronto: ${nups.length} recurso(s) para coletar.`);
@@ -127,5 +159,5 @@ async function main() {
   console.log('  4. Ele baixa crps_coletado.json. Então rode:  node ingerir.js crps_coletado.json');
 }
 
-module.exports = { numerosDe };
+module.exports = { numerosDe, urlDoc, ehPDF, tamanho, montarColetor };
 if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exit(1); });

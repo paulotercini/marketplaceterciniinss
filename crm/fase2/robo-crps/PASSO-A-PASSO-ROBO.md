@@ -30,6 +30,11 @@ esses: baixar o acervo inteiro traria CNIS, laudos e petições, muitos megas e
 pouco proveito). O `ingerir.js` guarda cada um no Storage do Supabase, no
 mesmo balde fechado dos outros anexos, e prende ao andamento.
 
+Cada PDF aparece no Console com o tamanho: um acórdão de verdade tem dezenas
+de KB. Se aparecer um aviso em vez do tamanho, aquele documento não desceu —
+o andamento entra igual, só sem a cópia, e o próximo coletar tenta de novo.
+Arquivo vazio não é guardado: o `ingerir.js` confere os bytes antes de subir.
+
 Na ficha, o andamento da decisão ganha o botão **📄 abrir acórdão** — que
 funciona **sem precisar estar logado no gov.br**, por qualquer pessoa da
 equipe, e continua funcionando mesmo que o processo saia do ar.
