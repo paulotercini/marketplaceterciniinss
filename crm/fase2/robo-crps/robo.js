@@ -145,20 +145,27 @@ async function main() {
   const cols = await sb('/rest/v1/colaboradores?select=id,inicial&inicial=eq.C').catch(() => []);
   const autorIA = cols && cols[0] ? cols[0].id : (casos[0] && casos[0].autor_fallback) || null;
 
-  // descobre qual token funciona, com o primeiro recurso
-  let token = null, ultimo = null;
-  for (const cand of tokens) {
-    const r = await consultarCRPS('esisrec', casos[0].nups[0], cand); ultimo = r;
-    if (r.status === 200) { token = cand; break; }
-    await espera(1000);
+  // acha um crachá que funcione, tolerando processos que travam: testa em
+  // ALGUNS processos, não só no primeiro (senão um que trava derruba tudo)
+  let token = null, morto = 0;
+  const amostra = [...new Set(casos.flatMap(k => k.nups))].slice(0, 6);
+  provar: for (const nup of amostra) {
+    for (const cand of tokens) {
+      const r = await consultarCRPS('esisrec', nup, cand);
+      if (r.status === 200) { token = cand; break provar; }
+      if (r.status === 401) morto++;
+    }
+    if (morto >= 3) break;   // três recusas: o crachá morreu de vez
+    await espera(600);
   }
-  if (!token) {
-    log(`crachá não funcionou — o INSS respondeu HTTP ${ultimo ? ultimo.status : '?'}`
-      + `${ultimo && ultimo.dica ? ` · ${ultimo.dica}` : ''}`);
-    log('→ renove o crachá no CRM (⚙️ → Recurso CRPS) e rode de novo LOGO em seguida.');
-    await anotar('crps_estado', 'vencido');
-    await anotar('crps_visto_em', agora());
+  if (!token && morto >= 3) {
+    log('crachá recusado (HTTP 401) — renove no CRM (⚙️ → Recurso CRPS) e rode de novo.');
+    await anotar('crps_estado', 'vencido'); await anotar('crps_visto_em', agora());
     return;
+  }
+  if (!token) {   // não deu para provar (só travou/negou) — o crachá pode estar bom
+    token = tokens[0];
+    log('não consegui testar o crachá (processos travando) — vou tentar mesmo assim.');
   }
   await anotar('crps_estado', 'ok');
   // avisa quanto tempo o crachá ainda tem — a sessão do gov.br dura pouco
