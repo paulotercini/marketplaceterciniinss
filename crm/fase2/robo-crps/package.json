@@ -7,9 +7,12 @@
     "sonda": "node sonda.js",
     "robo": "node robo.js",
     "preparar": "node preparar.js",
-    "test": "node --test testes/*.test.js"
+    "test": "node --test testes/*.test.js",
+    "ingerir": "node ingerir.js",
+    "resumir": "node resumir.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.1",
     "playwright": "^1.45.0"
   }
 }

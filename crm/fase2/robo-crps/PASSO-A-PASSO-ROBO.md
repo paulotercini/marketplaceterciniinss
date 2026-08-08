@@ -45,6 +45,47 @@ Tamanho: os acórdãos têm 70–90 KB. Nos 47 recursos isso dá algo entre 4 e
 ⚠ São documentos sigilosos. Ficam no balde `anexos`, que só quem tem login
 enxerga — o mesmo grau dos anexos que a equipe já troca pelo WhatsApp.
 
+### O resumo do que a decisão decidiu
+
+Guardar o PDF é uma coisa; saber o que ele decidiu, sem abrir, é outra. O
+`resumir.js` lê cada acórdão guardado e escreve duas ou três linhas na ficha,
+logo abaixo do arquivo:
+
+```
+📄 abrir acórdão
+  ↳ resumo automático · confira no acórdão
+    • Reconheceu como especiais os períodos de 01/01/2000 a 10/03/2002
+    • Não reconheceu o direito à aposentadoria por tempo de contribuição
+```
+
+Uma vez, para ligar: acrescente `ANTHROPIC_API_KEY=` no `.env` (a mesma chave
+do Claude que a rotina diária usa) e rode `npm install`.
+
+```
+node resumir.js             # SECO: escreve resumos_para_conferir.txt, não grava
+node resumir.js --aplicar   # publica nas fichas
+```
+
+**Leia o arquivo antes de aplicar.** É conteúdo jurídico com o seu nome: o
+modo seco existe para você conferir os resumos de uma vez, em vez de descobrir
+um erro dentro da ficha de um cliente.
+
+Como é feito, e por que assim:
+
+- Só o **dispositivo** — a parte que decide. Fundamentação não entra.
+- Verbos fechados (Reconheceu / Não reconheceu / Determinou / Converteu…) e
+  datas em DD/MM/AAAA. No máximo 4 linhas.
+- **Nada de dado médico**: doença, CID e laudo não viram texto na ficha. Há uma
+  conferência do lado de cá que barra a linha mesmo se o texto vier com isso —
+  a mesma barreira do `is_internal()` no extrator do To Do.
+- **Na dúvida, cala.** Dispositivo confuso vira "sem resumo", não vira chute.
+  Buraco é melhor que erro: alguém do escritório age em cima disso.
+
+Na ficha, o resumo nasce **âmbar** ("resumo automático · confira no acórdão").
+Quem confere clica em **conferido** e ele fica **verde** com a inicial de quem
+conferiu. **Corrigir** abre o texto para editar: corrigido à mão vira `curado`
+e o resumidor nunca mais toca nele (mesma proveniência dos processos).
+
 ---
 
 # Plano A: robô de fora (fica de reserva)
