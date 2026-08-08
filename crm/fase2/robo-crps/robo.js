@@ -91,7 +91,7 @@ function candidatosDeToken(bruto) {
 // (dica = um pedaço da resposta, para entender por que falhou)
 async function consultarCRPS(sistema, nup, token) {
   const ctrl = new AbortController();
-  const relogio = setTimeout(() => ctrl.abort(), 25000);   // não pendura eterno
+  const relogio = setTimeout(() => ctrl.abort(), Number(process.env.CRPS_TIMEOUT_MS || 12000));
   try {
     const r = await fetch(`${CRPS}/api/v1/${sistema}/${nup}`, {
       headers: { Authorization: 'Bearer ' + token, Accept: 'application/json' },
@@ -187,7 +187,10 @@ async function main() {
       if (!REFORCAR && consultadoHoje(antes)) { blocos.push(antes); pulados++; continue; }
 
       let r = await consultarCRPS('esisrec', nup, token);
-      if (r.status !== 200) { await espera(1200); const rb = await consultarCRPS('recben', nup, token);
+      // só tento o sistema antigo (recben) quando o novo diz "não encontrado"
+      // (404, rápido). Se travou (-1) ou negou acesso (403), não insisto —
+      // seria outro travamento à toa.
+      if (r.status === 404) { await espera(800); const rb = await consultarCRPS('recben', nup, token);
         if (rb.status === 200) r = rb; }
 
       if (r.status === 200 && r.json) {
