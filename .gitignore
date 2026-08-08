@@ -9,3 +9,8 @@ crm/app.html
 crm/fase2/ponte/sessao/
 crm/fase2/ponte/.env
 crm/fase2/ponte/node_modules/
+# robô do CRPS: perfil é a sessão gov.br, nups/resultado têm dados de cliente
+crm/fase2/robo-crps/perfil/
+crm/fase2/robo-crps/nups.txt
+crm/fase2/robo-crps/sonda_resultado/
+crm/fase2/robo-crps/node_modules/
