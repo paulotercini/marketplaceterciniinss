@@ -801,7 +801,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08b · tarefas na agenda</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08c · DCB e repetir</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1523,6 +1523,7 @@ function cartaoCliente(cli, casosMostrar){
         ${[...new Set(ks.map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
         ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
         ${ks.map(chipExig).join("")}
+        ${ks.map(chipDcb).join("")}
         ${(kp=>chipPrazo(dataProx, kp&&kp.lembrar_motivo))(ks.find(x=>x.prazo===dataProx))}
         ${quemProx.map(c=>`<span class="avatar mini" style="background:${c.cor}"
           title="${esc(c.nome)} — tarefa para ${fmt(dataProx)}">${esc(c.inicial)}</span>`).join("")}
@@ -1734,9 +1735,10 @@ function renderPlanejado(){
     const ts=(D.tarefasPorCaso.get(k.id)||[])
       .filter(t=>!filtroPlanColab || t.colaborador_id===filtroPlanColab);
     const dmin = ts.map(t=>t.lembrar_em).sort()[0];
-    const pz = (!filtroPlanColab || (D.atrDoCaso.get(k.id)||[]).includes(filtroPlanColab))
-      ? k.prazo : null;
-    return [dmin, pz].filter(Boolean).sort()[0] || null;
+    const doCaso = !filtroPlanColab || (D.atrDoCaso.get(k.id)||[]).includes(filtroPlanColab);
+    const pz = doCaso ? k.prazo : null;
+    const db = (doCaso && k.dcb && !k.dcb_prorrogacao_pedida) ? k.dcb : null;
+    return [dmin, pz, db].filter(Boolean).sort()[0] || null;
   };
   let base = ativos().map(k=>{ k._dplan = dataDe(k); return k; }).filter(k=>k._dplan);
   if(filtroPlan==="venc") base = base.filter(k=>k._dplan<hoje());
@@ -2919,6 +2921,7 @@ const TIPOS_CAL = {
   // o CadÚnico é o único que sobrevive ao encerramento do caso, e por isso
   // tem cor só dele — não se confunde com prazo nosso nenhum
   cadunico:{cor:"#A5187F", fundo:"#FBE9F5", icone:"🧓", nome:"CadÚnico (LOAS idoso)"},
+  dcb:     {cor:"#C2410C", fundo:"#FDEBDD", icone:"⏳", nome:"DCB — cessação do benefício"},
 };
 let calMes = null;                              // "AAAA-MM"; nulo = mês de hoje
 function mesAtual(){ return calMes || hoje().slice(0,7); }
@@ -2929,6 +2932,8 @@ function itensDoCalendario(){
     const c=D.cliPorId.get(k.cliente_id); if(!c) return;
     if(k.prazo) push(k.prazo,"lembre",`${c.nome} — ${k.lembrar_motivo||tituloCaso(k)}`,c.id);
     if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome} — exigência vence`,c.id);
+    if(k.dcb && !k.dcb_prorrogacao_pedida)
+      push(k.dcb,"dcb",`${c.nome} — benefício cessa (pedir prorrogação)`,c.id);
   });
   (D.eventos||[]).filter(e=>e.status!=="cancelada").forEach(e=>{
     const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
@@ -3422,7 +3427,16 @@ async function ntSalvar(andId, casoId){
 const CONCLUIR_PRESETS = [
   "Feito", "Solicitei o benefício", "Protocolei o recurso",
   "Cumpri a exigência", "Juntei os documentos",
+  "Verifiquei — ainda não disponível",
 ];
+// o padrão nº 1 do escritório é o ciclo de vigilância: tentei, não estava
+// pronto, tentar de novo. ctRep guarda a data da PRÓXIMA rodada.
+let ctRep = null;
+function ctRepetir(d, el){
+  ctRep = d || null;
+  document.querySelectorAll(".modal-cx .ct-rep.on").forEach(b=>b.classList.remove("on"));
+  if(el && el.tagName==="BUTTON") el.classList.add("on");
+}
 function concluirTarefa(id){
   caixa(`<h3>✔ Concluir a sua parte</h3>
     <p class="meio-sub">O que você fez vira um comentário no processo — o histórico continua.</p>
@@ -3434,8 +3448,17 @@ function concluirTarefa(id){
       <label class="meio-sub">nº de protocolo (se houver):
         <input id="ct-prot" inputmode="numeric" placeholder="fica guardado na ficha"
           style="width:220px"></label>
+    </div>
+    <div class="form-linha" style="margin-top:6px;align-items:center">
+      <span class="rotulo-rap">🔁 REPETIR EM:</span>
+      <button class="btn-rap ct-rep on" onclick="ctRepetir(null,this)">não repetir</button>
+      <button class="btn-rap ct-rep" onclick="ctRepetir(maisDias(15),this)">+15 dias</button>
+      <button class="btn-rap ct-rep" onclick="ctRepetir(maisDias(30),this)">+30 dias</button>
+      <button class="btn-rap ct-rep" onclick="ctRepetir(maisDias(45),this)">+45 dias</button>
+      <input type="date" onchange="ctRepetir(this.value,this)">
       <button class="btn-rap" style="margin-left:auto" onclick="fecharTarefa('${id}')">✔ Concluir</button>
     </div>`);
+  ctRep = null;
 }
 async function fecharTarefa(id){
   const t=(D.tarefasFicha||[]).find(x=>x.id===id); if(!t) return;
@@ -3460,9 +3483,19 @@ async function fecharTarefa(id){
     await api(`/rest/v1/casos?id=eq.${t.caso_id}`,{method:"PATCH",
       headers:{Prefer:"return=minimal"}, body:JSON.stringify({protocolos:k.protocolos})});
   }
+  // repetir: a próxima rodada nasce pendurada no comentário da conclusão —
+  // o ciclo fica visível na linha do tempo
+  if(ctRep && and){
+    await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({andamento_id:and.id, caso_id:t.caso_id, colaborador_id:eu.id,
+                           atribuido_por:eu.id, lembrar_em:ctRep})}).catch(()=>{});
+  }
   t.concluida_em=new Date().toISOString();
   D.tarefasPorCaso.set(t.caso_id,(D.tarefasPorCaso.get(t.caso_id)||[]).filter(x=>x.id!==id));
-  plim(); aviso("Sua parte está concluída ✔", false);
+  plim();
+  aviso(ctRep?`Concluída ✔ — nova rodada marcada para ${fmt(ctRep)} 🔁`
+             :"Sua parte está concluída ✔", false);
+  ctRep = null;
   if(clienteAberto) abrirFicha(clienteAberto);
 }
 function adiarTarefa(id){
@@ -4894,6 +4927,14 @@ function painelEscritorio(k, ands){
         title="quando voltar a mexer neste processo">🗓 ${k.prazo?`${fmt(k.prazo)} (${diaSemana(k.prazo).slice(0,3)})`:"escolher data…"}</button>
       ${k.prazo&&k.lembrar_motivo?`<span class="meio-sub">${esc(k.lembrar_motivo.length>60?k.lembrar_motivo.slice(0,60)+"…":k.lembrar_motivo)}</span>`:""}
     </div>
+    ${ehIncapacidade(k)||k.dcb?`<div class="form-linha" style="align-items:center;margin:6px 0 0">
+      <span class="rotulo-rap" title="Data de Cessação do Benefício — o benefício cessa sozinho nesta data">🩸 DCB:</span>
+      <input type="date" value="${k.dcb||""}" onchange="salvarDCB('${k.id}',this.value)">
+      ${k.dcb?`<label class="cfg-ck"><input type="checkbox" ${k.dcb_prorrogacao_pedida?"checked":""}
+          onchange="salvarProrrog('${k.id}',this.checked)"> prorrogação pedida</label>
+        ${chipDcb(k)||`<span class="chip prazo ok">✔ alarme desligado</span>`}`
+      :`<span class="meio-sub">o sistema avisa 15 dias antes da cessação</span>`}
+    </div>`:""}
     <div id="lembrar-box" style="display:none;border:1px solid #E9B44C;border-radius:8px;background:var(--branco);margin-top:8px;padding:10px"></div>
     ${encerrado ? `<p class="meio-sub" style="margin:10px 0 0">✔ Processo encerrado — comentários desativados. Reabra pela trilha acima para voltar a comentar.</p>`
     : `<div class="escrever" style="margin:10px 0 0">
@@ -5353,6 +5394,36 @@ async function extrairEvento(texto, casoId){
   }
   return criados.length?criados:null;
 }
+// ── DCB: a data em que o benefício cessa sozinho ──────────────────────────
+const ehIncapacidade = k => /incapacidade|auxílio|auxilio|doença|doenca|acidente/i
+  .test(k.beneficio||"");
+function chipDcb(k){
+  if(!k.dcb || k.dcb_prorrogacao_pedida || k.fase==="encerrado") return "";
+  const d = diasAte(k.dcb);
+  return `<span class="chip prazo ${d<=15?"venc":"ok"}"
+    title="cessação programada do benefício${d<0?" — JÁ CESSOU e a prorrogação não foi pedida":
+           d<=15?" — hora de pedir a prorrogação":""}">⏳ DCB ${fmt(k.dcb).slice(0,5)}${
+           d<0?" ⚠":""}</span>`;
+}
+async function salvarDCB(casoId, data){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  k.dcb = data||null;
+  // DCB nova rearma o alarme: a prorrogação pedida era da DCB antiga
+  k.dcb_prorrogacao_pedida = false;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({dcb:k.dcb, dcb_prorrogacao_pedida:false})});
+  aviso(data?`DCB anotada — alarme 15 dias antes de ${fmt(data)} 🩸`:"DCB apagada", false);
+  if(clienteAberto) abrirFicha(clienteAberto);
+}
+async function salvarProrrog(casoId, pedida){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  k.dcb_prorrogacao_pedida = pedida;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({dcb_prorrogacao_pedida:pedida})});
+  aviso(pedida?"Prorrogação pedida — alarme desligado ✔":"Alarme da DCB religado", false);
+  if(clienteAberto) abrirFicha(clienteAberto);
+}
+
 // ── a escolha obrigatória do comentário ───────────────────────────────────
 // tfQuem: null = ainda não escolheu · [] = "ninguém" · [ids] = pessoas
 // tfData: undefined = ainda não escolheu · null = "sem lembrete" · data
@@ -5438,6 +5509,21 @@ async function novoAndamento(casoUnico){
     lembrou=` · 🗓 lembrete para ${fmt(k.prazo)}`;
   }
   prazoDetectado=null; prazoCancelado=false;
+  // "DCB 16/09" escrita no comentário vira a data do caso — é assim que a
+  // equipe sempre anotou no To Do, e ninguém precisa procurar o campo
+  const mdcb = texto.match(/\bDCB\b\D{0,15}?(\d{1,2})[\/\.](\d{1,2})(?:[\/\.](\d{2,4}))?/i);
+  if(mdcb && k){
+    const dia=mdcb[1].padStart(2,"0"), mes=mdcb[2].padStart(2,"0");
+    let ano = mdcb[3] ? (mdcb[3].length===2 ? "20"+mdcb[3] : mdcb[3]) : hoje().slice(0,4);
+    let dataDcb = `${ano}-${mes}-${dia}`;
+    if(!mdcb[3] && dataDcb < hoje()) dataDcb = `${+ano+1}-${mes}-${dia}`;
+    if(!isNaN(new Date(dataDcb+"T12:00:00").getTime()) && k.dcb!==dataDcb){
+      k.dcb=dataDcb; k.dcb_prorrogacao_pedida=false;
+      await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({dcb:dataDcb, dcb_prorrogacao_pedida:false})});
+      aviso(`🩸 DCB anotada para ${fmt(dataDcb)} — alarme 15 dias antes`, false);
+    }
+  }
   // protocolo citado entra na ficha e vira pesquisável ("protocolo 210...")
   const prot=texto.match(/protocolo\D{0,12}(\d{6,})/i);
   if(prot && k && !(k.protocolos||[]).includes(prot[1])){

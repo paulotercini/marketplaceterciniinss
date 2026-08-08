@@ -115,6 +115,27 @@ insert into r select 't25 vale mesmo com o caso encerrado',
   (select k.fase='encerrado' from zap_mensagens m
      join casos k on k.id=m.aviso_ref where m.aviso_chave='cadunico_60d');
 
+
+-- ── DCB: o alarme que não pode falhar ─────────────────────────────────────
+\set QUIET on
+update casos set dcb = date '2026-09-16'
+ where id='aaaaaaaa-0000-0000-0000-000000000001';
+-- prorrogação já pedida: o alarme tem de calar
+update casos set dcb = date '2026-09-16', dcb_prorrogacao_pedida = true
+ where id='aaaaaaaa-0000-0000-0000-000000000002';
+-- caso encerrado com DCB: não incomoda
+update casos set dcb = date '2026-09-16'
+ where id='aaaaaaaa-0000-0000-0000-000000000004';
+\set QUIET off
+insert into r select 't29 15 dias antes da DCB, UM aviso sai (pedida e encerrado calam)',
+  zap_gerar_avisos('2026-09-01') = 1;
+insert into r select 't30 para o cliente do caso certo, com a data da cessação',
+  (select texto like '%cessação programada para 16/09/2026%'
+      and texto like '%atestado ou laudo%'
+     from zap_mensagens where aviso_chave='dcb_15d');
+insert into r select 't31 pedir a prorrogação depois cala o alarme de vez',
+  (select count(*)=1 from zap_mensagens where aviso_chave='dcb_15d');
+
 -- ── travas gerais ─────────────────────────────────────────────────────────
 update config_app set valor='nao' where chave='zap_avisos_ligado';
 insert into r select 't26 interruptor geral desliga tudo', zap_gerar_avisos('2026-08-10') = 0;
