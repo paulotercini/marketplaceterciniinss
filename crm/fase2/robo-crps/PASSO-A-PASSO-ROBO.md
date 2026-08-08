@@ -56,4 +56,28 @@ próxima rodada. Quanto tempo o crachá dura, a gente descobre no uso.
 
 Cada caso guarda o número em `crps_nup`. Você pode digitá-lo na ficha
 (aba 🖥 Recurso → "número do recurso"), ou importar os favoritos de uma vez
-(próxima etapa do projeto).
+(abaixo).
+
+## Importar os favoritos de uma vez
+
+O `importar_favoritos.js` lê o HTML dos favoritos exportado do navegador, casa
+cada nome com o cliente do CRM e preenche o número do recurso.
+
+1. Exporte os favoritos do navegador para um arquivo `.html` (no Comet/Chrome:
+   Favoritos → Gerenciar → Exportar).
+2. **Primeiro em modo seco** (não grava nada, só mostra o relatório):
+   ```
+   node importar_favoritos.js caminho\para\favoritos.html
+   ```
+   O relatório separa: os que vou vincular, os que já estavam, os "senha do
+   cliente" (ficam com o André, fora do robô), e os que precisam da sua mão
+   (cliente com vários casos, sem caso ativo, ou que não achei no cadastro).
+3. Confira o relatório. Se estiver bom, rode **para valer**:
+   ```
+   node importar_favoritos.js caminho\para\favoritos.html --aplicar
+   ```
+4. Rode o robô: `npm run robo`.
+
+Nada é adivinhado: quando um cliente tem mais de um caso, o número não é
+gravado automaticamente — o relatório avisa para você escolher na ficha qual
+caso recebe o recurso.
