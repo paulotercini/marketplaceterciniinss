@@ -78,4 +78,4 @@ async function main() {
   console.log('⚠ Tem trecho de acórdão com nome de segurado — confira antes de mandar, e apague depois.');
 }
 
-if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exit(1); });
+if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exitCode = 1; });

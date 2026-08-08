@@ -35,7 +35,8 @@ async function main() {
   const aplicar = process.argv.includes('--aplicar');
   if (!BASE || !CHAVE) { console.error('faltam SUPABASE_URL e SUPABASE_SERVICE_KEY no .env'); process.exit(1); }
 
-  const casos = await sb('/rest/v1/casos?select=id,nome,crps&crps=not.is.null');
+  // a coluna do caso é `titulo` — não existe `nome` em casos (esse é o cliente)
+  const casos = await sb('/rest/v1/casos?select=id,titulo,crps&crps=not.is.null');
   const mudados = [];
 
   for (const k of casos) {
@@ -47,7 +48,8 @@ async function main() {
       n += q;
       (bloco.eventos || []).forEach((e, i) => {
         const agora = `${e.icone} ${e.resumo}`;
-        if (antes[i] !== agora) console.log(`  ${bloco.nup}\n    era:  ${antes[i]}\n    fica: ${agora}`);
+        if (antes[i] !== agora)
+          console.log(`  ${k.titulo || k.id} — ${bloco.nup}\n    era:  ${antes[i]}\n    fica: ${agora}`);
       });
     }
     if (n) mudados.push(k);
@@ -63,4 +65,4 @@ async function main() {
   console.log(`✔ gravado em ${mudados.length} caso(s). Recarregue o CRM.`);
 }
 
-if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exit(1); });
+if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exitCode = 1; });

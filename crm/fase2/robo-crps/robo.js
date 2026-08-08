@@ -282,4 +282,4 @@ function blocosPorNup(crps) {
 }
 
 module.exports = { candidatosDeToken, numerosDe, blocosPorNup, validadeToken, consultadoHoje };
-if (require.main === module) main().catch(e => { console.error('robô CRPS falhou:', e.message); process.exit(1); });
+if (require.main === module) main().catch(e => { console.error('robô CRPS falhou:', e.message); process.exitCode = 1; });

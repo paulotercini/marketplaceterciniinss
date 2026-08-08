@@ -73,4 +73,4 @@ async function main() {
   console.log(`✔ gravados em ${porCaso.size} caso(s). Recarregue o CRM.`);
 }
 
-if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exit(1); });
+if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exitCode = 1; });
