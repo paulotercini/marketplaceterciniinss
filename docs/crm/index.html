@@ -571,6 +571,8 @@
   .tf-chip.feita{color:#0a7d43;border-color:#bfe6cf;background:#eaf7ef}
   .tf-chip.atras{color:#b00020;border-color:#f3c1c8;background:#fdeef0}
   .tf-acao{font-size:11px}
+  .tf-mais{font-size:13px}
+  .tf-mais:hover{color:var(--azul)}
   .sem-acao{margin:10px 0}
   .sem-acao summary{cursor:pointer;font-size:13px;font-weight:700;color:#8a6300;
     background:#fff8e1;border:1px solid #e0b955;border-radius:8px;padding:7px 12px}
@@ -799,7 +801,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08 · tarefas por comentário</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08b · tarefas na agenda</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1726,26 +1728,35 @@ function renderPlanejado(){
     "A agenda do escritório — tudo que tem data para lembrar (último dia de prazo, contato com cliente, prorrogação...).";
   const per=[["venc","⚠ Vencidas"],["hoje","Hoje"],["3","Próx. 3 dias"],["7","Próx. 7 dias"],["todas","Todas"]];
   const em = d=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+d); return x.toLocaleDateString("sv"); };
-  let base = ativos().filter(k=>k.prazo);
-  if(filtroPlanColab) base = base.filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(filtroPlanColab));
-  if(filtroPlan==="venc") base = base.filter(k=>k.prazo<hoje());
-  else if(filtroPlan==="hoje") base = base.filter(k=>k.prazo===hoje());
-  else if(filtroPlan==="3") base = base.filter(k=>k.prazo>=hoje() && k.prazo<=em(3));
-  else if(filtroPlan==="7") base = base.filter(k=>k.prazo>=hoje() && k.prazo<=em(7));
+  // a "data" de um caso no Planejado é a mais próxima entre o prazo do caso
+  // e as tarefas de comentário — e o filtro por pessoa olha a tarefa DELA
+  const dataDe = k => {
+    const ts=(D.tarefasPorCaso.get(k.id)||[])
+      .filter(t=>!filtroPlanColab || t.colaborador_id===filtroPlanColab);
+    const dmin = ts.map(t=>t.lembrar_em).sort()[0];
+    const pz = (!filtroPlanColab || (D.atrDoCaso.get(k.id)||[]).includes(filtroPlanColab))
+      ? k.prazo : null;
+    return [dmin, pz].filter(Boolean).sort()[0] || null;
+  };
+  let base = ativos().map(k=>{ k._dplan = dataDe(k); return k; }).filter(k=>k._dplan);
+  if(filtroPlan==="venc") base = base.filter(k=>k._dplan<hoje());
+  else if(filtroPlan==="hoje") base = base.filter(k=>k._dplan===hoje());
+  else if(filtroPlan==="3") base = base.filter(k=>k._dplan>=hoje() && k._dplan<=em(3));
+  else if(filtroPlan==="7") base = base.filter(k=>k._dplan>=hoje() && k._dplan<=em(7));
   const chipsPer = per.map(([v,r])=>`<button class="fchip ${filtroPlan===v?"on":""}" data-per="${v}">${r}</button>`).join("");
   const chipsCol = [`<button class="fchip ${filtroPlanColab===null?"on":""}" data-pcol="">Todos</button>`]
     .concat(D.colaboradores.filter(c=>c.ativo).map(c=>
       `<button class="fchip ${filtroPlanColab===c.id?"on":""}" data-pcol="${c.id}">`+
       `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</button>`)).join("");
-  base = base.slice().sort((a,b)=>a.prazo<b.prazo?-1:1);
+  base = base.slice().sort((a,b)=>a._dplan<b._dplan?-1:1);
   document.getElementById("ordem").value="prazo";   // agenda em ordem cronológica
   // seções estilo To Do: vencidas → hoje → amanhã → semana → mais tarde
   const secoes=[
-    ["🔴 Vencidas",        k=>k.prazo<hoje()],
-    ["🟡 Vencem hoje",     k=>k.prazo===hoje()],
-    ["🟢 Amanhã",          k=>k.prazo===em(1)],
-    ["🗓 Próximos 7 dias", k=>k.prazo>em(1) && k.prazo<=em(7)],
-    ["📅 Mais tarde",      k=>k.prazo>em(7)],
+    ["🔴 Vencidas",        k=>k._dplan<hoje()],
+    ["🟡 Vencem hoje",     k=>k._dplan===hoje()],
+    ["🟢 Amanhã",          k=>k._dplan===em(1)],
+    ["🗓 Próximos 7 dias", k=>k._dplan>em(1) && k._dplan<=em(7)],
+    ["📅 Mais tarde",      k=>k._dplan>em(7)],
   ];
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chipsPer}</div><div class="filtros">${chipsCol}</div>`
@@ -2696,6 +2707,11 @@ async function renderConfig(){
             <option value="">setor…</option>
             ${SETORES.map(s=>`<option ${c.setor===s?"selected":""}>${s}</option>`).join("")}
           </select>
+          <select data-cargo="${c.id}">
+            <option value="">cargo…</option>
+            ${[["advogado","advogado(a)"],["estagiario","estagiário(a)"],["assistente","assistente (IA)"]]
+              .map(([v,r])=>`<option value="${v}" ${c.cargo===v?"selected":""}>${r}</option>`).join("")}
+          </select>
         </div>`).join("")}</div>`
 
     // ── horário e interruptores ──────────────────────────────────────────
@@ -2784,6 +2800,13 @@ function ligarConfig(){
     const sel = document.querySelector(`[data-setor="${el.dataset.atende}"]`);
     if(sel) sel.disabled = !el.checked;
     aviso(el.checked?"Passa a receber conversas 💬":"Deixa de receber conversas", false);
+  });
+  guarda("[data-cargo]", el => el.onchange = async ()=>{
+    const c = D.colPorId.get(el.dataset.cargo);
+    await api(`/rest/v1/colaboradores?id=eq.${el.dataset.cargo}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({cargo:el.value||null})});
+    if(c) c.cargo = el.value||null;
+    aviso("Cargo guardado ✔", false);
   });
   guarda("[data-setor]", el => el.onchange = async ()=>{
     const c = D.colPorId.get(el.dataset.setor);
@@ -2914,6 +2937,13 @@ function itensDoCalendario(){
   });
   (D.tarefas||[]).filter(t=>!t.concluida && t.prazo).forEach(t=>
     push(t.prazo,"tarefa",t.titulo,null));
+  // tarefas dos comentários: o lembrete de cada pessoa, com a inicial dela —
+  // duas pessoas no mesmo comentário com datas diferentes são DOIS itens
+  [...(D.tarefasPorCaso||new Map()).values()].flat().forEach(t=>{
+    const k=D.casoPorId.get(t.caso_id); if(!k||k.fase==="encerrado") return;
+    const c=D.cliPorId.get(k.cliente_id), co=D.colPorId.get(t.colaborador_id);
+    push(t.lembrar_em,"lembre",`${co?co.inicial+" — ":""}${c?c.nome:"?"} (tarefa)`,c?c.id:null);
+  });
   // CadÚnico: percorre TODOS os casos, encerrados inclusive
   (D.casos||[]).forEach(k=>{
     const c=D.cliPorId.get(k.cliente_id);
@@ -3344,7 +3374,48 @@ function vistos(a){
       title="${meu ? `Você leu em ${horaLocal(meu.lido_em)} — clique para desfazer`
                    : "marcar que você leu"}">✓</button>`
      )(lidosDe(a).find(l=>l.colaborador_id===eu.id))}
+    <button class="visto-bt tf-mais" onclick="novaTarefaComentario('${a.id}','${a.caso_id}')"
+      title="mais uma tarefa neste comentário — outra pessoa, outra data">＋</button>
   </span>`;
+}
+
+// ── o ＋ do comentário: o mesmo assunto pode ter dois prazos ───────────────
+let ntSel = [], ntData = null;
+function novaTarefaComentario(andId, casoId){
+  ntSel=[]; ntData=null;
+  caixa(`<h3>➕ Mais uma tarefa neste comentário</h3>
+    <p class="meio-sub">Outra pessoa, outra data — sem escrever o assunto de novo.</p>
+    <div class="form-linha">${D.colaboradores.filter(c=>c.ativo).map(c=>
+      `<button class="eq-ini" data-nt="${c.id}" style="--cor-eq:${c.cor}" title="${esc(c.nome)}"
+        onclick="this.classList.toggle('on');ntToggle('${c.id}')">${esc(c.inicial)}</button>`).join("")}</div>
+    <div class="form-linha" style="margin-top:8px;align-items:center">
+      <button class="btn-rap tf-dt" onclick="ntDia(hoje(),this)">Hoje</button>
+      <button class="btn-rap tf-dt" onclick="ntDia(maisDias(1),this)">Amanhã</button>
+      <button class="btn-rap tf-dt" onclick="ntDia(maisDias(7),this)">+7 dias</button>
+      <input type="date" onchange="ntDia(this.value,this)">
+      <button class="btn-rap" style="margin-left:auto" id="nt-salvar"
+        onclick="ntSalvar('${andId}','${casoId}')">📌 Criar tarefa</button>
+    </div>`);
+}
+function ntToggle(id){ ntSel = ntSel.includes(id) ? ntSel.filter(x=>x!==id) : [...ntSel, id]; }
+function ntDia(d, el){
+  ntData = d || null;
+  document.querySelectorAll(".modal-cx .tf-dt.on").forEach(b=>b.classList.remove("on"));
+  if(el && el.tagName==="BUTTON") el.classList.add("on");
+}
+async function ntSalvar(andId, casoId){
+  if(!ntSel.length) return aviso("Escolha para quem é a tarefa");
+  if(!ntData) return aviso("Escolha a data — tarefa sem data não existe");
+  fecharCaixa();
+  for(const pid of ntSel){
+    await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({andamento_id:andId, caso_id:casoId, colaborador_id:pid,
+                           atribuido_por:eu.id, lembrar_em:ntData})})
+      // a pessoa já tem tarefa neste comentário: o banco recusa, e tudo bem
+      .catch(()=>aviso("Essa pessoa já tem tarefa neste comentário"));
+  }
+  aviso("Tarefa criada 📌", false);
+  if(clienteAberto) abrirFicha(clienteAberto);
 }
 
 // ── concluir: a baixa é sua, e o que você fez vira comentário ─────────────
