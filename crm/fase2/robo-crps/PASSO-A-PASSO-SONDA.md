@@ -57,6 +57,12 @@ conte o que aconteceu, seja qual for o resultado.
 
 ## Se algo der errado
 
+- **Captcha do gov.br dá "inválido" mesmo acertando**: é o gov.br percebendo
+  que o navegador estava sendo automatizado e recusando por baixo dos panos.
+  A sonda já usa o **seu Chrome instalado** e remove os sinais de automação
+  justamente para evitar isso. Se ainda acontecer: feche tudo, apague a pasta
+  `perfil` que aparece ali dentro e rode `npm run sonda` de novo. Persistindo,
+  confirme que o **Google Chrome** está instalado na máquina (não o Edge).
 - **Tudo deu HTTP 401/403**: a autenticação é diferente do que mapeei. Me
   mande o `resumo.txt` mesmo assim, que eu ajusto a sonda.
 - **A janela não abre / erro do Playwright**: rode de novo o
