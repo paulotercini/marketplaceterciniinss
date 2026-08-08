@@ -25,6 +25,36 @@ test('embargo acolhido NÃO é recurso provido', () => {
   assert.equal(r.icone !== '✅', true, 'embargo não pode sair com o visto verde de vitória');
 });
 
+// O OUTRO LADO do mesmo caso-ouro: no acórdão 44234.156897/2020-17 o embargo
+// veio com efeito MODIFICATIVO — "manter o tempo especial já reconhecido,
+// fazer os cálculos, conceder a aposentadoria". O status do e-Recursos é
+// idêntico ao do embargo meramente integrativo, então o rótulo não pode
+// afirmar nem vitória nem "só esclarece": tem que mandar ler o acórdão.
+test('embargo acolhido não afirma o efeito — manda conferir o acórdão', () => {
+  const r = T.traduzirEvento({ status: 'Conhecer do Embargo do Segurado e dar provimento por unanimidade - Acórdão: 25ª JR/3325/2026', data: '' });
+  assert.match(r.resumo, /Embargos acolhidos — confira o acórdão/);
+  assert.ok(!/esclarece/.test(r.resumo), 'voltou a afirmar efeito integrativo que o status não prova');
+});
+
+// Corrigir a regra não basta: o rótulo errado já está gravado na ficha. O
+// rerotular refaz o texto a partir do `bruto` guardado — e não pode encostar
+// no acórdão nem no resumo que alguém leu e conferiu.
+test('rerotular conserta o rótulo antigo sem tocar em arquivo nem resumo', () => {
+  const resumo = { linhas: ['Reconheceu o direito à aposentadoria'], origem: 'curado' };
+  const bloco = { nup: '44234156897202017', status: '✅ Recurso PROVIDO', ultimo_em: '18/03/26 08:44:54',
+    eventos: [{ data: '18/03/26 08:44:54', tipo: 'decisao', icone: '✅', resumo: 'Recurso PROVIDO',
+      bruto: 'Conhecer do Embargo do Segurado e dar provimento por unanimidade - Acórdão: 25ª JR/3325/2026',
+      docs: 1, arquivos: [{ id: '9', nome: 'ACÓRDÃO.pdf', storage: 'crps/x/9', decide: true, resumo }] }] };
+
+  assert.equal(T.rerotular(bloco), 1);
+  assert.match(bloco.eventos[0].resumo, /Embargos acolhidos — confira o acórdão/);
+  assert.equal(bloco.eventos[0].icone, '📝');
+  assert.match(bloco.status, /Embargos acolhidos/, 'o status do bloco ficou desatualizado');
+  assert.deepStrictEqual(bloco.eventos[0].arquivos[0].resumo, resumo, 'mexeu no resumo do acórdão');
+  assert.equal(bloco.eventos[0].arquivos[0].storage, 'crps/x/9', 'perdeu o arquivo guardado');
+  assert.equal(T.rerotular(bloco), 0, 'rodar de novo deveria ser inócuo');
+});
+
 test('embargo rejeitado sai como rejeitado, não como recurso negado', () => {
   const r = T.traduzirEvento({ status: 'Conhecer do Embargo do Segurado e negar-lhe provimento, por unanimidade - Acórdão: 10ª JR/10166/2026', data: '' });
   assert.match(r.resumo, /Embargos rejeitados/);
