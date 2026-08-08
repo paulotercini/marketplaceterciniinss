@@ -5,6 +5,28 @@ A sonda é o primeiro passo do robô dos recursos administrativos: ela consulta
 respostas num arquivo. Com essa amostra eu desenho o robô definitivo (fichas
 com histórico completo, atualização diária, aviso quando a sessão cair).
 
+## ⚡ Caminho recomendado: coletar no seu próprio navegador
+
+O gov.br barra o captcha de qualquer navegador **automatizado** — é a defesa
+deles, e não dá para contornar por fora. Mas a API de consulta, depois de
+logado, não tem captcha. Então o jeito certo é você logar na mão, no seu
+navegador de sempre, e coletar de dentro da página já logada:
+
+1. No Comet (ou Chrome), entre em `https://consultaprocessos.inss.gov.br` e
+   faça login no gov.br **normalmente**.
+2. Aperte **F12** → aba **Console** (se pedir, digite `allow pasting` e Enter).
+3. Abra o arquivo **`coletar-no-navegador.js`** desta pasta, troque os números
+   de exemplo pelos seus processos, copie tudo e cole no Console. Enter.
+4. Ele baixa **`sonda_resultado.json`** — mande esse arquivo no chat.
+
+Pronto — sem instalar nada. O resto deste arquivo (a sonda por linha de
+comando) é uma alternativa que só vale a pena quando o robô já for morar no
+servidor; para a amostra de agora, o caminho acima é o melhor.
+
+---
+
+## Alternativa: sonda por linha de comando (na máquina-servidor)
+
 Use a **mesma máquina da ponte do WhatsApp** — é nela que o robô vai morar.
 
 ## 1. Instalar (uma vez só)
