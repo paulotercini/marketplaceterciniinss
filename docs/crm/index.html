@@ -418,6 +418,15 @@
   .fx-docs b{background:#E7EEFB;color:var(--azul-escuro);border-radius:6px;padding:1px 7px;font-size:11px}
   .fx-docs-lista{display:none;border-top:1px solid var(--borda);padding:4px 15px 12px;background:#FAFBFC}
   .fx-docs-lista.aberto{display:block}
+  /* recurso: mesma linguagem dos andamentos do escritório */
+  .fx-sit{padding:10px 15px;border-top:1px solid var(--borda);font-size:14px}
+  .fx-sit .fx-rot{margin-right:6px}
+  .timeline.crps-tl{border:none;border-radius:0;border-top:1px solid var(--borda)}
+  .timeline.crps-tl .quando{width:64px;font-size:10px}
+  .crps-ruido{border-top:1px solid var(--borda)}
+  .crps-ruido>summary{cursor:pointer;color:var(--cinza);font-size:12px;padding:9px 15px;list-style:none}
+  .crps-ruido>summary:hover{color:var(--azul)}
+  .crps-ruido[open]>summary{color:var(--azul)}
 
   /* ── compositor: escrever primeiro, Registrar por último ───────────── */
   .escrever{background:var(--branco);border:1px solid var(--borda);border-radius:12px;
@@ -915,7 +924,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.09b · barra limpa e anotações</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.09c · 22 anotações e recurso zebrado</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4552,6 +4561,11 @@ function sugestoes(k){
 //   distribuída 115 · exigência cumprida 77 · verificar de novo 66 ·
 //   petição protocolada 61 · réplica protocolada 55 · sem benefício
 //   ativo 49 · recurso protocolado 48
+// A segunda leva veio de agrupar por SIGNIFICADO (o mesmo fato escrito de
+// vários jeitos): CNIS/HISCRE 720 · concedido 656 · perícia agendada 509 ·
+// cálculo 460 · contato com o cliente 363 · documentos recebidos 355 ·
+// indeferido 339 · procuração/contrato 236 · carta de concessão 183 ·
+// requerimento protocolado 181 · embargos 152 · cliente não atende 106
 const ANOTACOES = [
   "Em análise no INSS.",
   "Sem alteração — conferir de novo em __/__.",
@@ -4563,6 +4577,18 @@ const ANOTACOES = [
   "Réplica protocolada.",
   "Sem benefício ativo no CNIS.",
   "Recurso protocolado.",
+  "CNIS/HISCRE atualizado e conferido.",
+  "Benefício concedido. 🎉",
+  "Perícia médica agendada para __/__ às __:__.",
+  "Cálculo conferido — valores e atrasados.",
+  "Cliente orientado por telefone sobre __.",
+  "Documentos recebidos e juntados.",
+  "Benefício indeferido — analisar recurso.",
+  "Procuração e contrato assinados.",
+  "Carta de concessão emitida.",
+  "Requerimento protocolado no INSS — protocolo __.",
+  "Embargos de declaração protocolados.",
+  "Cliente não retornou — tentar novo contato.",
 ];
 function alternarSugestoes(casoId){
   const cx=document.getElementById("sug-box"), bt=document.getElementById("sug-abrir");
@@ -4581,7 +4607,7 @@ function pintarSugestoes(k, forcar){
   if(!q && !forcar && cx.style.display==="none") return;
   const proprias = ANOTACOES.map(t=>({texto:t}));
   const todas = q ? [...proprias, ...sugestoes(k)] : proprias;
-  const lista=(q ? todas.filter(s=>dsa(s.texto).includes(q)) : todas).slice(0, q?5:10);
+  const lista=(q ? todas.filter(s=>dsa(s.texto).includes(q)) : todas).slice(0, q?6:ANOTACOES.length);
   if(q) cx.style.display = lista.length ? "flex" : "none";
   cx.innerHTML = lista.map(s=>`<span class="sug-it" data-acao="${s.acao||""}">${s.acao==="exigencia"?"⚠ ":""}${esc(s.texto)}</span>`).join("")
     + (q?"":`<span class="sug-mais" onclick="lbEditar('${k.id}')">✎ editar sugestões</span>`);
@@ -5436,24 +5462,42 @@ function crpsTotalEventos(k){
   return crpsBlocos(k).reduce((s,b)=>s+((b.eventos||[]).length),0);
 }
 
-// o quadro de UM recurso: situação, órgão atual e histórico legível
+// o que merece negrito no recurso: só o que DECIDE — acórdão e decisão
+// monocrática. O resto é tramitação, e negrito em tudo é o mesmo que negrito
+// em nada.
+// o tradutor já marca tipo:"decisao" no que sai de acórdão ou monocrática
+// (provimento, negativa, não conhecer); o texto cru serve de reforço
+const decideOCaso = e => e.tipo==="decisao"
+  || /ac[óo]rd[ãa]o|monocr[áa]tic/i.test(`${e.resumo||""} ${e.bruto||""}`);
+
+// o quadro de UM recurso: apresentado como os andamentos do escritório —
+// mesma zebra, mesma coluna de data à esquerda
 function blocoRecurso(t){
   const evs = t.eventos||[], ruido = evs.filter(e=>e.tipo==="ruido");
   const cheios = evs.filter(e=>e.tipo!=="ruido");
-  const linha = e=>`<li class="${(e.tipo==="decisao"||e.tipo==="pauta")?"decisao":""}">
-      <span class="mov-data">${esc((e.data||"").slice(0,10)||"—")}</span>
-      <span class="mov-txt">${esc(e.icone||"•")} <b>${esc(e.resumo||e.bruto||"")}</b>
-        ${e.docs?`<span class="meio-sub">📎 ${e.docs} documento${e.docs>1?"s":""}</span>`:""}</span>
+  const linha = e=>{
+    const forte = decideOCaso(e);
+    const txt = esc(e.resumo||e.bruto||"");
+    return `<li>
+      <span class="quando" title="e-Recursos (INSS)">${esc(e.icone||"•")}<br>${esc((e.data||"").slice(0,10)||"—")}</span>
+      <span class="texto">${forte?`<b>${txt}</b>`:txt}${
+        e.docs?` <span class="meio-sub">📎 ${e.docs} documento${e.docs>1?"s":""}</span>`:""}</span>
     </li>`;
-  return `<div class="caso" style="margin-bottom:10px">
-    <div class="rotulo-caso">e-Recursos · ${esc(t.num_proc||t.nup||"")}</div>
-    <div style="margin-top:6px;font-size:14px"><b>Situação:</b> ${esc(t.status||"—")}</div>
-    ${t.orgao_atual?`<div class="meio-sub" style="margin-top:2px">📍 onde está agora: ${esc(tituloOrgao(t.orgao_atual))}</div>`:""}
-    <ul class="mov-lista" style="margin-top:8px">${cheios.map(linha).join("") || "<p class='meio-sub'>Sem andamentos.</p>"}</ul>
-    ${ruido.length?`<details style="margin-top:6px"><summary style="cursor:pointer;color:var(--cinza);font-size:12px">
-      + ${ruido.length} movimentação interna (encaminhamentos automáticos, cadastro)</summary>
-      <ul class="mov-lista">${ruido.map(linha).join("")}</ul></details>`:""}
-    <div class="meio-sub" style="margin-top:6px">consulta de ${t.consultado_em?fmt(dataSP(t.consultado_em)):"—"}</div>
+  };
+  return `<div class="fatos" style="margin-bottom:12px">
+    <div class="fatos-topo">
+      <h3 style="font-size:14px">e-Recursos · ${esc(t.num_proc||t.nup||"")}</h3>
+    </div>
+    <div class="fx-sit">
+      <span class="fx-rot">Situação</span> <b>${esc(t.status||"—")}</b>
+      ${t.orgao_atual?`<div class="meio-sub" style="margin-top:3px">📍 onde está agora: ${esc(tituloOrgao(t.orgao_atual))}</div>`:""}
+    </div>
+    <ul class="timeline crps-tl">${cheios.map(linha).join("") || "<li><span class='meio-sub'>Sem andamentos.</span></li>"}</ul>
+    ${ruido.length?`<details class="crps-ruido"><summary>+ ${ruido.length} movimentação interna (encaminhamentos automáticos, cadastro)</summary>
+      <ul class="timeline crps-tl">${ruido.map(linha).join("")}</ul></details>`:""}
+    <div class="fatos-pe" style="justify-content:flex-end">
+      <span class="meio-sub">consulta de ${t.consultado_em?fmt(dataSP(t.consultado_em)):"—"}</span>
+    </div>
   </div>`;
 }
 
