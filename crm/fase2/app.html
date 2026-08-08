@@ -807,7 +807,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08f · vários recursos por caso</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08g · CNJ só em judicial</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4019,13 +4019,19 @@ async function abrirFicha(cliId){
         </div>
         ${trilhaCaso(k)}
         </div>
-        <div class="sub-menu">
-          <button class="${subAba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
-          <button class="${subAba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${(k.datajud&&k.datajud.ultimo)?"":" <span class=\'meio-sub\'>(sem dados)</span>"}</button>
-          <button class="${subAba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${crpsTotalEventos(k)?"":" <span class=\'meio-sub\'>(sem dados)</span>"}</button>
+        ${(()=>{
+          // CNJ só interessa em processo judicial; num caso de Conselho/INSS
+          // a aba seria só ruído. Mostra se há nº de processo ou dados do CNJ.
+          const temCNJ = !!(k.processo || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length)));
+          const aba = (subAba==="cnj" && !temCNJ) ? "escritorio" : subAba;
+          return `<div class="sub-menu">
+          <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
+          ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${(k.datajud&&k.datajud.ultimo)?"":" <span class='meio-sub'>(sem dados)</span>"}</button>`:""}
+          <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${crpsTotalEventos(k)?"":" <span class='meio-sub'>(sem dados)</span>"}</button>
         </div>
       </div>
-      ${subAba==="cnj" ? painelCNJ(k) : subAba==="crps" ? painelCRPS(k) : painelEscritorio(k, andsVis)}
+      ${aba==="cnj" ? painelCNJ(k) : aba==="crps" ? painelCRPS(k) : painelEscritorio(k, andsVis)}`;
+        })()}
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
     })()}
   </div>
