@@ -106,20 +106,23 @@ async function main() {
     return;
   }
 
-  // 2. quem tem número de recurso para consultar
-  const casos = await sb('/rest/v1/casos?select=id,crps_nup,crps&crps_nup=not.is.null&fase=neq.encerrado')
+  // 2. quem tem número de recurso para consultar. Um caso pode ter VÁRIOS
+  // (crps_nups); crps_nup continua valendo como o número único antigo.
+  const brutos = await sb('/rest/v1/casos?select=id,crps_nup,crps_nups,crps&fase=neq.encerrado')
     .catch(() => []);
-  if (!casos || !casos.length) { log('nenhum caso com número de recurso ainda.'); await anotar('crps_visto_em', agora()); return; }
-  log(`${casos.length} caso(s) com recurso a consultar`);
+  const casos = (brutos || []).map(k => ({ ...k, nups: numerosDe(k) })).filter(k => k.nups.length);
+  if (!casos.length) { log('nenhum caso com número de recurso ainda.'); await anotar('crps_visto_em', agora()); return; }
+  const totalNups = casos.reduce((s, k) => s + k.nups.length, 0);
+  log(`${casos.length} caso(s), ${totalNups} recurso(s) a consultar`);
 
   // autor dos comentários = o Claude (a IA do escritório)
   const cols = await sb('/rest/v1/colaboradores?select=id,inicial&inicial=eq.C').catch(() => []);
   const autorIA = cols && cols[0] ? cols[0].id : (casos[0] && casos[0].autor_fallback) || null;
 
-  // descobre qual token funciona, com o primeiro processo
+  // descobre qual token funciona, com o primeiro recurso
   let token = null;
   for (const cand of tokens) {
-    const r = await consultarCRPS('esisrec', casos[0].crps_nup.replace(/\D/g, ''), cand);
+    const r = await consultarCRPS('esisrec', casos[0].nups[0], cand);
     if (r.status === 200) { token = cand; break; }
     if (r.status === 401) { break; }   // crачhá morto: não adianta outro
     await espera(1500);
@@ -132,53 +135,65 @@ async function main() {
   }
   await anotar('crps_estado', 'ok');
 
-  // 3+4+5. varre cada caso
-  let ok = 0, novos = 0, erros = 0;
+  // 3+4+5. varre cada caso, cada um com um ou mais recursos
+  let ok = 0, novos = 0, erros = 0, vencido = false;
   for (const k of casos) {
-    const nup = (k.crps_nup || '').replace(/\D/g, '');
-    if (!nup) continue;
-    let r = await consultarCRPS('esisrec', nup, token);
-    if (r.status !== 200) { await espera(1500); r = await consultarCRPS('recben', nup, token); }
-    if (r.status === 401) {   // crачhá caiu no meio da rodada
-      log('crachá caiu durante a varredura — parando e pedindo um novo.');
-      await anotar('crps_estado', 'vencido');
-      break;
-    }
-    if (r.status !== 200 || !r.json) {
-      log(`  ${nup}: sem dados (HTTP ${r.status})`); erros++;
-      await espera(PAUSA); continue;
-    }
+    const antesPorNup = blocosPorNup(k.crps);   // o que já sabíamos, por número
+    const blocos = [];
+    for (const nup of k.nups) {
+      let r = await consultarCRPS('esisrec', nup, token);
+      if (r.status !== 200) { await espera(1500); r = await consultarCRPS('recben', nup, token); }
+      if (r.status === 401) { vencido = true; break; }
+      if (r.status !== 200 || !r.json) { log(`  ${nup}: sem dados (HTTP ${r.status})`); erros++; await espera(PAUSA); continue; }
 
-    const novo = T.traduzirProcesso(r.json, { procurador: PROCURADOR });
-    const antes = k.crps && Array.isArray(k.crps.eventos) ? k.crps.eventos : null;
-    const primeira = !antes;   // primeira carga: só preenche, sem inundar de comentários
-
-    await sb(`/rest/v1/casos?id=eq.${k.id}`, {
-      method: 'PATCH', headers: { Prefer: 'return=minimal' },
-      body: JSON.stringify({ crps: { ...novo, consultado_em: agora() } }),
-    });
-    ok++;
-
-    if (!primeira && autorIA) {
-      const vistos = new Set(antes.map(T.chaveEvento));
-      // novidades reais (fora o ruído), do mais antigo ao mais novo
-      const frescos = novo.eventos
-        .filter(e => !T.TIPOS_SILENCIOSOS.has(e.tipo) && !vistos.has(T.chaveEvento(e)))
-        .reverse();
-      for (const e of frescos) {
-        const data = T.dataParaISO(e.data).slice(0, 10).split('-').reverse().join('/');
-        await comentar(k.id, autorIA, `🖥 CRPS — ${e.icone} ${e.resumo}${data ? ` (${data})` : ''}`);
-        novos++;
+      const novo = T.traduzirProcesso(r.json, { procurador: PROCURADOR });
+      novo.consultado_em = agora();
+      blocos.push(novo);
+      const antes = antesPorNup.get(nup);
+      if (antes && autorIA) {   // já conhecíamos: comenta só o que é NOVO
+        const vistos = new Set((antes.eventos || []).map(T.chaveEvento));
+        const frescos = novo.eventos
+          .filter(e => !T.TIPOS_SILENCIOSOS.has(e.tipo) && !vistos.has(T.chaveEvento(e)))
+          .reverse();
+        for (const e of frescos) {
+          const data = T.dataParaISO(e.data).slice(0, 10).split('-').reverse().join('/');
+          await comentar(k.id, autorIA, `🖥 CRPS — ${e.icone} ${e.resumo}${data ? ` (${data})` : ''}`);
+          novos++;
+        }
       }
+      log(`  ${nup}: ok${antes ? '' : ' (primeira carga)'}`);
+      await espera(PAUSA);
     }
-    log(`  ${nup}: ok${primeira ? ' (primeira carga)' : ''}`);
-    await espera(PAUSA);
+    if (blocos.length) {
+      await sb(`/rest/v1/casos?id=eq.${k.id}`, {
+        method: 'PATCH', headers: { Prefer: 'return=minimal' },
+        body: JSON.stringify({ crps: blocos }) });
+      ok++;
+    }
+    if (vencido) { log('crachá caiu durante a varredura — parando e pedindo um novo.'); await anotar('crps_estado', 'vencido'); break; }
   }
 
   await anotar('crps_visto_em', agora());
-  await anotar('crps_sync_em', agora());
-  log(`fim — ${ok} consultados, ${novos} andamento(s) novo(s), ${erros} sem dados`);
+  if (!vencido) await anotar('crps_sync_em', agora());
+  log(`fim — ${ok} caso(s) atualizados, ${novos} andamento(s) novo(s), ${erros} sem dados`);
 }
 
-module.exports = { candidatosDeToken };
+// os números de um caso: a lista crps_nups, ou o número único antigo
+function numerosDe(k) {
+  const arr = Array.isArray(k.crps_nups) ? k.crps_nups : [];
+  const nups = arr.map(n => String(n).replace(/\D/g, '')).filter(Boolean);
+  const unico = (k.crps_nup || '').replace(/\D/g, '');
+  if (unico && !nups.includes(unico)) nups.push(unico);
+  return [...new Set(nups)];
+}
+// o que já tínhamos, indexado por número (crps é lista de blocos; aceita o
+// formato antigo de um objeto só)
+function blocosPorNup(crps) {
+  const m = new Map();
+  const lista = Array.isArray(crps) ? crps : (crps ? [crps] : []);
+  for (const b of lista) if (b && b.nup) m.set(String(b.nup).replace(/\D/g, ''), b);
+  return m;
+}
+
+module.exports = { candidatosDeToken, numerosDe, blocosPorNup };
 if (require.main === module) main().catch(e => { console.error('robô CRPS falhou:', e.message); process.exit(1); });

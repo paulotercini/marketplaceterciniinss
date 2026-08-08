@@ -2020,3 +2020,13 @@ insert into config_app (chave, valor) values
   ('crps_visto_em',''),          -- último "sinal de vida" do robô
   ('crps_sync_em','')            -- última varredura completa
 on conflict (chave) do nothing;
+
+-- Um caso pode ter MAIS DE UM recurso (embargos, recurso especial geram novos
+-- números). Guardamos a lista de números a consultar e a lista de resultados.
+alter table casos add column if not exists crps_nups jsonb not null default '[]';
+-- migra o número único antigo (crps_nup) para dentro da lista
+update casos set crps_nups = jsonb_build_array(crps_nup)
+  where crps_nup is not null and btrim(crps_nup) <> '' and crps_nups = '[]'::jsonb;
+-- migra o resultado único (objeto) para uma lista de resultados
+update casos set crps = jsonb_build_array(crps)
+  where crps is not null and jsonb_typeof(crps) = 'object';

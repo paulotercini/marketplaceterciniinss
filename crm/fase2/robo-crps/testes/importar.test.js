@@ -86,3 +86,23 @@ test('sem caso ativo, nome repetido e cliente inexistente são reportados, não 
   assert.equal(p.semCliente.length, 1);
   assert.equal(p.semCliente[0].nome, 'FULANO INEXISTENTE');
 });
+
+// vários recursos no mesmo caso (JAITO ×3): entram TODOS, não se sobrescrevem
+test('mais de um recurso do mesmo cliente com um caso só entra inteiro', () => {
+  const cli = [{ id: 'j', nome: 'Jaito Martins Ferreira' }];
+  const cas = [{ id: 'kj', cliente_id: 'j', fase: 'inss', beneficio: 'Apos', crps_nup: null, crps_nups: [] }];
+  const favs = [
+    { nup: '11111111111111111', nome: 'JAITO MARTINS FERREIRA', senhaCliente: false },
+    { nup: '22222222222222222', nome: 'JAITO MARTINS FERREIRA', senhaCliente: false },
+    { nup: '33333333333333333', nome: 'JAITO MARTINS FERREIRA', senhaCliente: false },
+  ];
+  const p = I.planejar(favs, cli, cas);
+  assert.equal(p.aplicar.length, 3);                       // os 3 recursos
+  assert.ok(p.aplicar.every(x => x.caso.id === 'kj'));     // no mesmo caso
+});
+
+test('nupsDoCaso junta a lista nova e o número único antigo', () => {
+  assert.deepEqual(I.nupsDoCaso({ crps_nups: ['111', '222'], crps_nup: '333' }), ['111', '222', '333']);
+  assert.deepEqual(I.nupsDoCaso({ crps_nups: ['111'], crps_nup: '111' }), ['111']);   // sem repetir
+  assert.deepEqual(I.nupsDoCaso({ crps_nup: '44234.156897/2020-17' }), ['44234156897202017']);
+});

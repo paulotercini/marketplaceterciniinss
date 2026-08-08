@@ -807,7 +807,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08e · recurso CRPS</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08f · vários recursos por caso</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4022,7 +4022,7 @@ async function abrirFicha(cliId){
         <div class="sub-menu">
           <button class="${subAba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
           <button class="${subAba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${(k.datajud&&k.datajud.ultimo)?"":" <span class=\'meio-sub\'>(sem dados)</span>"}</button>
-          <button class="${subAba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${(k.crps&&(k.crps.eventos||[]).length)?"":" <span class=\'meio-sub\'>(sem dados)</span>"}</button>
+          <button class="${subAba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${crpsTotalEventos(k)?"":" <span class=\'meio-sub\'>(sem dados)</span>"}</button>
         </div>
       </div>
       ${subAba==="cnj" ? painelCNJ(k) : subAba==="crps" ? painelCRPS(k) : painelEscritorio(k, andsVis)}
@@ -5135,23 +5135,25 @@ function painelEscritorio(k, ands){
 // 🖥 Recurso administrativo no CRPS (e-Recursos). O robô (robo-crps) preenche
 // casos.crps; aqui a gente só mostra, no mesmo espírito do painel do CNJ:
 // o oficial em quadro próprio, sem misturar com os andamentos do escritório.
-function painelCRPS(k){
-  const campoNup = `<div class="form-linha" style="margin-top:8px">
-      <input id="crps-nup-${k.id}" value="${esc(k.crps_nup||"")}"
-        placeholder="número do recurso (ex.: 44233.139765/2025-37)" style="flex:1">
-      <button class="btn-mini" onclick="salvarCrpsNup('${k.id}')">salvar número</button>
-    </div>`;
-  const t = k.crps;
-  if(!t || !(t.eventos||[]).length){
-    return `<div class="caso">
-      <p class="meio-sub">${k.crps_nup
-        ? "Número guardado. O robô do CRPS vai consultar na próxima rodada e o histórico aparece aqui."
-        : "Sem recurso vinculado. Cole o número do processo de recurso (o da URL do e-Recursos) para o robô acompanhar."}</p>
-      ${campoNup}
-      ${estadoCRPS().cor==="#c62828"?`<p class="meio-sub" style="color:#c62828;margin-top:6px">⚠ O crachá do gov.br venceu — renove em ⚙️ Configurações para o robô voltar a consultar.</p>`:""}
-    </div>`;
-  }
-  const evs = t.eventos, ruido = evs.filter(e=>e.tipo==="ruido");
+// um caso pode ter VÁRIOS recursos (embargos, recurso especial). Estes dois
+// ajudantes lêem tanto o formato novo (listas) quanto o antigo (um só).
+function crpsNups(k){
+  const arr = Array.isArray(k.crps_nups) ? k.crps_nups : [];
+  const nups = arr.map(n=>String(n).replace(/\D/g,"")).filter(Boolean);
+  const unico = (k.crps_nup||"").replace(/\D/g,"");
+  if(unico && !nups.includes(unico)) nups.push(unico);
+  return [...new Set(nups)];
+}
+function crpsBlocos(k){
+  return Array.isArray(k.crps) ? k.crps : (k.crps ? [k.crps] : []);
+}
+function crpsTotalEventos(k){
+  return crpsBlocos(k).reduce((s,b)=>s+((b.eventos||[]).length),0);
+}
+
+// o quadro de UM recurso: situação, órgão atual e histórico legível
+function blocoRecurso(t){
+  const evs = t.eventos||[], ruido = evs.filter(e=>e.tipo==="ruido");
   const cheios = evs.filter(e=>e.tipo!=="ruido");
   const linha = e=>`<li class="${(e.tipo==="decisao"||e.tipo==="pauta")?"decisao":""}">
       <span class="mov-data">${esc((e.data||"").slice(0,10)||"—")}</span>
@@ -5162,41 +5164,78 @@ function painelCRPS(k){
     <div class="rotulo-caso">e-Recursos · ${esc(t.num_proc||t.nup||"")}</div>
     <div style="margin-top:6px;font-size:14px"><b>Situação:</b> ${esc(t.status||"—")}</div>
     ${t.orgao_atual?`<div class="meio-sub" style="margin-top:2px">📍 onde está agora: ${esc(tituloOrgao(t.orgao_atual))}</div>`:""}
-    <div class="form-linha" style="margin-top:8px">
-      <button class="btn-mini" onclick="copiarCrps('${k.id}')">💬 copiar mensagem ao cliente</button>
-      <span class="meio-sub">consulta de ${t.consultado_em?fmt(dataSP(t.consultado_em)):"—"}</span>
-    </div>
-  </div>
-  <div class="caso">
-    <div class="rotulo-caso">histórico do recurso (${cheios.length} andamento${cheios.length>1?"s":""})</div>
-    <ul class="mov-lista">${cheios.map(linha).join("") || "<p class='meio-sub'>Sem andamentos.</p>"}</ul>
+    <ul class="mov-lista" style="margin-top:8px">${cheios.map(linha).join("") || "<p class='meio-sub'>Sem andamentos.</p>"}</ul>
     ${ruido.length?`<details style="margin-top:6px"><summary style="cursor:pointer;color:var(--cinza);font-size:12px">
       + ${ruido.length} movimentação interna (encaminhamentos automáticos, cadastro)</summary>
       <ul class="mov-lista">${ruido.map(linha).join("")}</ul></details>`:""}
-    <div class="rotulo-caso" style="margin-top:10px">número do recurso</div>
-    ${campoNup}
+    <div class="meio-sub" style="margin-top:6px">consulta de ${t.consultado_em?fmt(dataSP(t.consultado_em)):"—"}</div>
   </div>`;
 }
 
-// monta uma mensagem curta e clara para o cliente com a situação do recurso
+function painelCRPS(k){
+  const nups = crpsNups(k), blocos = crpsBlocos(k);
+  // gerência dos números: lista com remover + campo para acrescentar
+  const gerNups = `<div class="caso">
+    <div class="rotulo-caso">números de recurso deste caso (${nups.length})</div>
+    ${nups.map(n=>`<div class="form-linha" style="margin-top:4px">
+      <span class="chip neutro" style="font-family:monospace">${esc(n)}</span>
+      <button class="btn-mini" onclick="removerCrpsNup('${k.id}','${n}')" title="tirar este número">✕</button>
+    </div>`).join("")}
+    <div class="form-linha" style="margin-top:8px">
+      <input id="crps-nup-${k.id}" placeholder="＋ número do recurso (ex.: 44233.139765/2025-37)" style="flex:1"
+        onkeydown="if(event.key==='Enter')salvarCrpsNup('${k.id}')">
+      <button class="btn-mini" onclick="salvarCrpsNup('${k.id}')">adicionar</button>
+    </div></div>`;
+  if(!blocos.length){
+    return `<div class="caso">
+      <p class="meio-sub">${nups.length
+        ? "Número guardado. O robô do CRPS vai consultar na próxima rodada e o histórico aparece aqui."
+        : "Sem recurso vinculado. Cole o número do processo de recurso (o da URL do e-Recursos) para o robô acompanhar. Um caso pode ter mais de um."}</p>
+      ${estadoCRPS().cor==="#c62828"?`<p class="meio-sub" style="color:#c62828;margin-top:6px">⚠ O crachá do gov.br venceu — renove em ⚙️ Configurações para o robô voltar a consultar.</p>`:""}
+    </div>${gerNups}`;
+  }
+  return `${blocos.length>1?`<p class="meio-sub" style="margin:0 0 6px">${blocos.length} recursos neste caso:</p>`:""}
+    <div class="form-linha" style="margin-bottom:8px">
+      <button class="btn-mini" onclick="copiarCrps('${k.id}')">💬 copiar mensagem ao cliente</button></div>
+    ${blocos.map(blocoRecurso).join("")}
+    ${gerNups}`;
+}
+
+// monta uma mensagem curta e clara para o cliente com a situação do(s) recurso(s)
 function copiarCrps(casoId){
-  const k = D.casoPorId.get(casoId), t = k && k.crps; if(!t) return;
+  const k = D.casoPorId.get(casoId), blocos = crpsBlocos(k); if(!blocos.length) return;
   const c = D.cliPorId.get(k.cliente_id);
   const nome = c ? (c.nome||"").split(/\s+/)[0] : "";
-  const txt = `Olá${nome?", "+nome:""}! Sobre o seu recurso no INSS:\n\n`
-    + `${(t.status||"em andamento").replace(/^[^ ]+ /,"")}.\n`
-    + (t.orgao_atual?`Situação atual: ${tituloOrgao(t.orgao_atual)}.\n`:"")
+  const corpo = blocos.map(t=>`• ${(t.status||"em andamento").replace(/^[^ ]+ /,"")}`
+    + (t.orgao_atual?` (${tituloOrgao(t.orgao_atual)})`:"")).join("\n");
+  const txt = `Olá${nome?", "+nome:""}! Sobre o seu recurso no INSS:\n\n${corpo}.\n`
     + `\nQualquer novidade a gente avisa. 🤝`;
   copiar(txt, "Mensagem do recurso copiada");
 }
 
+// acrescenta um número à lista (sem sobrescrever os que já existem)
 async function salvarCrpsNup(casoId){
   const el = document.getElementById("crps-nup-"+casoId);
-  const v = (el.value||"").trim()||null;
-  const k = D.casoPorId.get(casoId); k.crps_nup = v;
+  const v = (el.value||"").replace(/\D/g,"");
+  if(!v) return aviso("Digite o número do recurso");
+  const k = D.casoPorId.get(casoId);
+  const nova = [...new Set([...crpsNups(k), v])];
+  k.crps_nups = nova; k.crps_nup = null;
   await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({crps_nup:v})});
-  aviso(v?"Número do recurso guardado ✔ — o robô consulta na próxima rodada":"Número removido", false);
+    body:JSON.stringify({crps_nups:nova, crps_nup:null})});
+  aviso("Recurso adicionado ✔ — o robô consulta na próxima rodada", false);
+  abrirFicha(clienteAberto);
+}
+
+// tira um número da lista (e o resultado dele, se já tinha sido consultado)
+async function removerCrpsNup(casoId, nup){
+  const k = D.casoPorId.get(casoId);
+  const nova = crpsNups(k).filter(n=>n!==nup);
+  const blocos = crpsBlocos(k).filter(b=>String(b.nup).replace(/\D/g,"")!==nup);
+  k.crps_nups = nova; k.crps_nup = null; k.crps = blocos;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({crps_nups:nova, crps_nup:null, crps:blocos})});
+  aviso("Recurso removido", false);
   abrirFicha(clienteAberto);
 }
 
