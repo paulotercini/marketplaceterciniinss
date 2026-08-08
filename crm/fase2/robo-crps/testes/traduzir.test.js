@@ -13,10 +13,21 @@ test('decisão: provimento parcial vira linguagem clara com a junta', () => {
   assert.match(r, /25ª Junta/);
 });
 
-test('decisão: embargo com provimento', () => {
+// CASO-OURO tirado do PDF real (01ª JR/1228/2026): o e-Recursos dizia
+// "dar provimento" ao embargo, e o CRM mostrava "✅ Recurso PROVIDO" — mas o
+// acórdão dizia "acolher os Embargos com efeito integrativo ... mantendo-se a
+// decisão proferida no Acórdão objurgado". O cliente continuava perdido.
+test('embargo acolhido NÃO é recurso provido', () => {
   const r = T.traduzirEvento({ status: 'Conhecer do Embargo do Segurado e dar provimento por unanimidade - Acórdão: 01ª JR/1228/2026', data: '' });
   assert.equal(r.tipo, 'decisao');
-  assert.match(r.resumo, /PROVIDO/);
+  assert.match(r.resumo, /Embargos acolhidos/);
+  assert.ok(!/PROVIDO/.test(r.resumo), 'voltou a chamar embargo de recurso provido');
+  assert.equal(r.icone !== '✅', true, 'embargo não pode sair com o visto verde de vitória');
+});
+
+test('embargo rejeitado sai como rejeitado, não como recurso negado', () => {
+  const r = T.traduzirEvento({ status: 'Conhecer do Embargo do Segurado e negar-lhe provimento, por unanimidade - Acórdão: 10ª JR/10166/2026', data: '' });
+  assert.match(r.resumo, /Embargos rejeitados/);
 });
 
 test('decisão: não conhecer = recurso negado', () => {
@@ -86,7 +97,7 @@ test('processo: separa o cliente do procurador', () => {
 
 test('processo: o status atual pula o ruído e pega a decisão real', () => {
   const p = T.traduzirProcesso(AMOSTRA);
-  assert.match(p.status, /PROVIDO/);          // não "Encaminhamento automático"
+  assert.match(p.status, /Embargos acolhidos/);   // não "Encaminhamento automático"
   assert.equal(p.num_proc, '44234.156897/2020-17');
   assert.equal(p.eventos.length, 3);
 });

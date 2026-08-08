@@ -37,11 +37,21 @@ function dataSessao(bruto) {
 
 const REGRAS = [
   // ── decisões (o que mais importa) ────────────────────────────────────────
+  // EMBARGOS ANTES DE RECURSO. Embargos de declaração acolhidos quase nunca
+  // são vitória: servem para esclarecer o acórdão, e o texto costuma dizer
+  // "mantendo-se a decisão proferida no Acórdão objurgado". Chamar isso de
+  // "✅ Recurso PROVIDO" faz alguém ligar para o cliente dando parabéns por
+  // um recurso que continua perdido.
+  { m: ['conhecer do embargo', 'conhecer dos embargos', 'embargo do segurado', 'embargos de declaracao'],
+    tipo: 'decisao', icone: '📝',
+    f: b => /negar|improv|rejeit/.test(semAcento(b))
+      ? `Embargos rejeitados${sufOrgao(b)}`
+      : `Embargos acolhidos — esclarece o acórdão${sufOrgao(b)}` },
   { m: ['dar-lhe provimento parcial', 'dar provimento parcial', 'provimento em parte'],
     tipo: 'decisao', icone: '✅', f: b => `Recurso provido EM PARTE${sufOrgao(b)}` },
-  { m: ['negar provimento', 'nao conhecer do recurso', 'nao conhecer do embargo', 'improceden'],
+  { m: ['negar provimento', 'nao conhecer do recurso', 'improceden'],
     tipo: 'decisao', icone: '⛔', f: b => `Recurso negado${sufOrgao(b)}` },
-  { m: ['dar provimento', 'dar-lhe provimento', 'conhecer do embargo do segurado e dar provimento'],
+  { m: ['dar provimento', 'dar-lhe provimento'],
     tipo: 'decisao', icone: '✅', f: b => `Recurso PROVIDO${sufOrgao(b)}` },
   { m: ['decisao monocratica'],
     tipo: 'decisao', icone: '⚖️', f: b => `Decisão monocrática${sufOrgao(b)}` },
