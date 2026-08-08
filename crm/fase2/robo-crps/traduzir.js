@@ -18,14 +18,66 @@ function limpar(s) {
   return (s || '').replace(/\s+/g, ' ').trim();
 }
 
-// pega o número da junta/câmara quando aparece ("25ª JR/3080/2025" → "25ª Junta")
+// QUEM julgou — e, portanto, em que instância o recurso está.
+//
+// O CRPS tem dois andares. As Juntas de Recursos julgam o recurso ordinário
+// (1ª instância); das Câmaras de Julgamento vem a decisão do recurso especial
+// (2ª instância). Saber qual delas decidiu é o que diz se ainda cabe recurso
+// especial ou se o caminho administrativo acabou — por isso não basta um
+// número solto: guardamos o nome inteiro e a instância.
+//
+// Lê tanto a sigla do e-Recursos ("25ª JR/3080/2025", "2ª CAJ/1474/2026")
+// quanto o cabeçalho do próprio acórdão ("ACORDAM os membros da 2ª Composição
+// Adjunta da 10ª Junta de Recursos"). A composição adjunta é uma turma da
+// mesma Junta: a instância não muda, então ela não entra no nome.
+function orgaoJulgador(texto) {
+  const t = String(texto || '');
+  const caj = t.match(/(\d{1,2})\s*ª?\s*(?:CAJ\b|C[âa]mara\s+de\s+Julgamento)/i)
+           || t.match(/(\d{1,2})\s*ª?\s*C[âa]mara\b/i);
+  if (caj) return { nome: `${Number(caj[1])}ª Câmara de Julgamento`,
+                    sigla: `${Number(caj[1])}ª CaJ`, instancia: 2 };
+  // "1ª Composição Adjunta da 2ª Junta" — quem vale é a Junta, a última do par
+  const jr = [...t.matchAll(/(\d{1,2})\s*ª?\s*(?:JR\b|Junta\s+de\s+Recursos)/ig)].pop();
+  if (jr) return { nome: `${Number(jr[1])}ª Junta de Recursos`,
+                   sigla: `${Number(jr[1])}ª JR`, instancia: 1 };
+  if (/C[âa]maras?\s+de\s+Julgamento/i.test(t))
+    return { nome: 'Câmaras de Julgamento', sigla: 'CaJ', instancia: 2 };
+  if (/Junta\s+de\s+Recursos/i.test(t))
+    return { nome: 'Junta de Recursos', sigla: 'JR', instancia: 1 };
+  if (/\bCRPS\b/i.test(t) || /conselho de recursos/i.test(t))
+    return { nome: 'CRPS', sigla: 'CRPS', instancia: 0 };
+  return null;
+}
+
+// O MESMO dado, lido do PDF do acórdão. Aqui não dá para varrer o texto
+// inteiro: um acórdão de Junta avisa que "cabe Recurso Especial às Câmaras de
+// Julgamento", cita a Câmara que uniformizou a jurisprudência, e tem
+// conselheiro chamado CUNHA CAMARA. Procurar "câmara" solto acharia todos
+// esses. Então lemos só onde o órgão se identifica:
+//   1. "ACORDAM os membros da <órgão>, em CONHECER..."   (o colegiado)
+//   2. "O(a) Presidente do(a) <órgão>, HOMOLOGA..."      (monocrática)
+//   3. o cabeçalho de cada página, entre o CRPS e o MINISTÉRIO
+// Nessa ordem: a 1 e a 2 são a assinatura da decisão; a 3 é o timbre.
+const ANCORAS = [
+  /ACORDAM\s+os\s+membros\s+d[ao]s?\s+([\s\S]{0,110}?)\s*,?\s+em\s+(?:CONHECER|N[ÃA]O\s+CONHECER)/i,
+  /Presidente\s+do\(a\)\s+([\s\S]{0,110}?)\s*,\s*HOMOLOGA/i,
+  /CRPS\s+([\s\S]{0,90}?)\s*Data\/Hora:/i,
+  /Data\/Hora:\s*\d{2}\/\d{2}\/\d{4}[\s\d:]*([\s\S]{0,90}?)\s*MINIST[ÉE]RIO/i,
+];
+function orgaoDoAcordao(texto) {
+  for (const ancora of ANCORAS) {
+    const m = String(texto || '').match(ancora);
+    const o = m && orgaoJulgador(m[1]);
+    if (o && o.instancia) return o;
+  }
+  return null;
+}
+
+// a versão curta, para caber no fim da linha do andamento ("(25ª Junta)")
 function orgaoCurto(bruto) {
-  const jr = bruto.match(/(\d{1,2})ª?\s*JR\b/i);
-  if (jr) return `${jr[1]}ª Junta`;
-  const cj = bruto.match(/(\d{1,2})ª?\s*C[aâ]mara/i);
-  if (cj) return `${cj[1]}ª Câmara`;
-  if (/\bCRPS\b/i.test(bruto) || /conselho de recursos/i.test(bruto)) return 'CRPS';
-  return '';
+  const o = orgaoJulgador(bruto);
+  if (!o) return '';
+  return o.nome.replace(' de Recursos', '').replace(' de Julgamento', '');
 }
 
 // data da sessão embutida no texto ("... - 18/03/26 08:00" → "18/03/2026 08:00")
@@ -211,5 +263,6 @@ function rerotular(bloco) {
 
 module.exports = {
   traduzirEvento, traduzirProcesso, dataParaISO, chaveEvento, rerotular,
+  orgaoJulgador, orgaoDoAcordao,
   semAcento, orgaoCurto, dataSessao, TIPOS_SILENCIOSOS, ehArquivoDeDecisao,
 };

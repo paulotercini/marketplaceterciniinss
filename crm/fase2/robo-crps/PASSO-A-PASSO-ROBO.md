@@ -110,6 +110,51 @@ Quem confere clica em **conferido** e ele fica **verde** com a inicial de quem
 conferiu. **Corrigir** abre o texto para editar: corrigido à mão vira `curado`
 e o resumidor nunca mais toca nele (mesma proveniência dos processos).
 
+### Quem julgou: Junta ou Câmara
+
+O CRPS tem dois andares, e a diferença é prazo:
+
+| | Junta de Recursos | Câmara de Julgamento |
+|---|---|---|
+| Instância | 1ª | 2ª |
+| Julga | recurso ordinário | recurso especial |
+| Perdeu ali | cabe **Recurso Especial em 30 dias** | acabou a via administrativa — o caminho é o Judiciário |
+
+Na ficha, cada decisão leva a etiqueta do órgão ao lado — **azul** para a
+Junta, **roxa** para a Câmara — e a mesma etiqueta aparece na linha
+"Situação", tirada da decisão mais recente.
+
+```
+⛔ Recurso negado   ⚖️ 25ª Junta de Recursos 1ª inst.   📄 abrir acórdão
+✅ Recurso PROVIDO  ⚖️ 4ª Câmara de Julgamento 2ª inst.  📄 abrir acórdão
+```
+
+O nome sai do próprio acórdão, da linha em que o colegiado se identifica
+("ACORDAM os membros da 2ª Composição Adjunta da 10ª Junta de Recursos" — a
+composição adjunta é uma turma da mesma Junta, a instância não muda). Sem PDF
+guardado, vale a sigla do e-Recursos (`25ª JR/3080/2025`, `2ª CAJ/1474/2026`).
+Não achou nos dois, fica sem etiqueta — não chuta.
+
+```
+node marcar_orgao.js             # SECO: mostra o que gravaria
+node marcar_orgao.js --aplicar   # grava
+node marcar_orgao.js --refazer   # refaz também os automáticos
+```
+
+Custo zero: lê os PDFs nesta máquina, sem IA e sem coletar nada de novo.
+
+### Corrigi uma regra — preciso coletar tudo de novo?
+
+Não. Cada andamento guarda o texto cru do e-Recursos, então o rótulo pode ser
+recalculado sem sair da máquina:
+
+```
+node recolar_rotulos.js             # SECO: mostra "era / fica" de cada um
+node recolar_rotulos.js --aplicar   # grava
+```
+
+Ele mexe só no rótulo. Arquivos, PDFs guardados e resumos ficam como estão.
+
 ---
 
 # Plano A: robô de fora (fica de reserva)
