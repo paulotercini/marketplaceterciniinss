@@ -23,6 +23,23 @@ Três passos, na pasta `robo-crps` (com o `.env` já preenchido):
 Recarregue o CRM e veja a aba **🖥 Recurso (CRPS)** das fichas. Para atualizar
 depois, repita os três passos (é rápido: só muda o que mudou).
 
+### Os acórdãos ficam guardados no CRM
+
+O coletor também baixa o **PDF de cada acórdão e decisão monocrática** (só
+esses: baixar o acervo inteiro traria CNIS, laudos e petições, muitos megas e
+pouco proveito). O `ingerir.js` guarda cada um no Storage do Supabase, no
+mesmo balde fechado dos outros anexos, e prende ao andamento.
+
+Na ficha, o andamento da decisão ganha o botão **📄 abrir acórdão** — que
+funciona **sem precisar estar logado no gov.br**, por qualquer pessoa da
+equipe, e continua funcionando mesmo que o processo saia do ar.
+
+Tamanho: os acórdãos têm 70–90 KB. Nos 47 recursos isso dá algo entre 4 e
+10 MB no total — cabe folgado no plano gratuito do Supabase (1 GB).
+
+⚠ São documentos sigilosos. Ficam no balde `anexos`, que só quem tem login
+enxerga — o mesmo grau dos anexos que a equipe já troca pelo WhatsApp.
+
 ---
 
 # Plano A: robô de fora (fica de reserva)

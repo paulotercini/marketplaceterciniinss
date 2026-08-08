@@ -58,8 +58,24 @@ const MOLDE = `// ── COLE ISTO NO CONSOLE (F12) da página consultaprocessos
     const r = await consultar('esisrec', NUPS[0], cands[i]);
     if (r.status === 200) { modo = cands[i]; break; } await pausa(800); }
   console.log('Autenticação:', modo === null ? 'nenhuma deu 200 (você está logado?)' : 'ok');
-  const out = { quando: new Date().toString(), itens: {} };
-  let n = 0, ok = 0;
+  const out = { quando: new Date().toString(), itens: {}, arquivos: {} };
+  // só o que DECIDE vale a cópia: acórdão e decisão monocrática. Baixar o
+  // acervo inteiro traria CNIS, laudos e petições — muitos megas, pouco uso.
+  const decide = nome => /ac[oó]rd[aã]o|monocr[aá]tic/i.test(nome || '');
+  const baixar = async (path, tok) => {
+    try {
+      const r = await fetch(path, { credentials: 'include',
+        headers: tok ? { Authorization: 'Bearer ' + tok } : {} });
+      if (!r.ok) return null;
+      const buf = new Uint8Array(await r.arrayBuffer());
+      if (!buf.length) return null;
+      let s = ''; const passo = 8192;
+      for (let i = 0; i < buf.length; i += passo)
+        s += String.fromCharCode.apply(null, buf.subarray(i, i + passo));
+      return { b64: btoa(s), bytes: buf.length };
+    } catch (e) { return null; }
+  };
+  let n = 0, ok = 0, pdfs = 0;
   for (const nup of NUPS) {
     let r = await consultar('esisrec', nup, modo);
     if (r.status !== 200) { await pausa(500); const rb = await consultar('recben', nup, modo);
@@ -67,12 +83,27 @@ const MOLDE = `// ── COLE ISTO NO CONSOLE (F12) da página consultaprocessos
     out.itens[nup] = { status: r.status, body: r.body };
     if (r.status === 200) ok++;
     console.log((++n) + '/' + NUPS.length + '  ' + nup + '  HTTP ' + r.status);
+    // desce os acórdãos/monocráticas deste processo
+    if (r.status === 200) {
+      let j = null; try { j = JSON.parse(r.body); } catch (e) {}
+      for (const ev of ((j && j.eventos) || []))
+        for (const doc of (ev.documentos || [])) {
+          if (!decide(doc.nome) || !doc.path) continue;
+          const chave = nup + '/' + (doc.id || doc.nome);
+          if (out.arquivos[chave]) continue;
+          await pausa(700);
+          const bin = await baixar(doc.path, modo);
+          if (bin) { out.arquivos[chave] = { nup, nome: doc.nome, id: String(doc.id||''), ...bin };
+            pdfs++; console.log('      📄 ' + doc.nome + ' (' + Math.round(bin.bytes/1024) + ' KB)'); }
+          else console.log('      ⚠ não consegui baixar ' + doc.nome);
+        }
+    }
     await pausa(PAUSA);
   }
   const blob = new Blob([JSON.stringify(out)], { type: 'application/json' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
   a.download = 'crps_coletado.json'; a.click();
-  console.log('PRONTO! ' + ok + '/' + NUPS.length + ' com dados. Baixou crps_coletado.json.');
+  console.log('PRONTO! ' + ok + '/' + NUPS.length + ' com dados, ' + pdfs + ' decisão(ões) baixada(s).');
   console.log('Agora rode no computador:  node ingerir.js crps_coletado.json');
 })();
 `;

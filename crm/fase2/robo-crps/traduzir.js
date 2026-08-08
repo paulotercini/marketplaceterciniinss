@@ -111,6 +111,10 @@ function sufDestino(b) {
   return par ? ` (${limpar(par[1])})` : '';
 }
 
+// o nome do arquivo diz se ele é o que DECIDE — é por ele que o coletor sabe
+// o que vale a pena baixar (acórdão e decisão monocrática, não o acervo todo)
+const ehArquivoDeDecisao = nome => /ac[oó]rd[aã]o|monocr[aá]tic/i.test(nome || '');
+
 // traduz UM evento cru {status, data, documentos} → objeto de andamento
 function traduzirEvento(ev) {
   const bruto = limpar(ev.status || '');
@@ -118,13 +122,22 @@ function traduzirEvento(ev) {
   let regra = REGRAS.find(r => r.m.some(t => chave.includes(t)));
   const base = regra ? { tipo: regra.tipo, icone: regra.icone, resumo: regra.f(bruto) }
                      : { tipo: 'andamento', icone: '•', resumo: bruto };
+  // guardamos a lista dos documentos (nome + caminho no e-Recursos). Antes só
+  // ficava a contagem, e o acórdão se perdia: sem o caminho não há como buscá-lo.
+  const arquivos = (ev.documentos || []).map(d => ({
+    id: String(d.id || ''),
+    nome: limpar(d.nome || ''),
+    path: d.path || '',
+    decide: ehArquivoDeDecisao(d.nome),
+  })).filter(a => a.id || a.path);
   return {
     data: ev.data || '',
     tipo: base.tipo,
     icone: base.icone,
     resumo: base.resumo,
     bruto,
-    docs: (ev.documentos || []).length,
+    docs: arquivos.length,
+    arquivos,
   };
 }
 
@@ -166,5 +179,5 @@ function chaveEvento(e) { return `${dataParaISO(e.data)}|${e.bruto}`; }
 
 module.exports = {
   traduzirEvento, traduzirProcesso, dataParaISO, chaveEvento,
-  semAcento, orgaoCurto, dataSessao, TIPOS_SILENCIOSOS,
+  semAcento, orgaoCurto, dataSessao, TIPOS_SILENCIOSOS, ehArquivoDeDecisao,
 };
