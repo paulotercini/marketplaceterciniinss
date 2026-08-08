@@ -2053,3 +2053,20 @@ alter table casos add column if not exists dcb_prorrogar_em date;
 -- quem já tem DCB e não tem a data de prorrogação ganha o padrão de 15 dias
 update casos set dcb_prorrogar_em = dcb - 15
  where dcb is not null and dcb_prorrogar_em is null;
+
+-- ══════════════════════════════════════════════════════════════════════════
+-- A conclusão da tarefa vira RESPOSTA do comentário que a pediu.
+--
+-- Antes, "✔ Cumpri a exigência" nascia como comentário solto no topo da
+-- ficha. Num processo com três tarefas abertas, ninguém sabia de qual delas
+-- era aquele "feito" — a conclusão perdia o assunto pelo caminho. Com
+-- responde_a, ela fica pendurada embaixo do comentário original, e a linha
+-- do tempo mostra "o que foi pedido → o que foi feito" no mesmo lugar.
+-- ══════════════════════════════════════════════════════════════════════════
+-- set null, não cascade: apagar o comentário que PEDIU não pode apagar o
+-- "feito" de quem cumpriu. Sem o pai, a resposta volta a ser comentário de
+-- primeiro nível — a tela já sabe mostrar assim.
+alter table andamentos add column if not exists responde_a uuid
+  references andamentos(id) on delete set null;
+create index if not exists andamentos_resposta on andamentos (responde_a)
+  where responde_a is not null;

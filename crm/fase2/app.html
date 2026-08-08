@@ -452,6 +452,18 @@
   .crps-res.ok .crps-res-bt:hover{background:#2E7D52;border-color:#2E7D52;color:#fff}
   .crps-res textarea{width:100%;margin-top:6px;font:inherit;font-size:13px;color:var(--texto);
     border:1px solid var(--borda);border-radius:6px;padding:7px;min-height:74px;resize:vertical}
+  /* a resposta (conclusão da tarefa) embaixo do comentário que a pediu.
+     Mora DENTRO do .texto, que é pre-wrap e flex — daí os resets, os mesmos
+     que a caixa do resumo do acórdão precisou. */
+  .resp{display:block;margin:7px 0 1px;white-space:normal}
+  .resp-item{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;
+    border-left:3px solid #BFE0CB;background:#F4FAF6;border-radius:0 8px 8px 0;
+    padding:6px 10px;margin-top:4px;font-size:13px;line-height:1.5}
+  .resp-item .quando{display:flex;align-items:center;gap:5px;flex:none;
+    font-size:11px;color:var(--cinza);white-space:nowrap;text-align:left}
+  .resp-item .texto{flex:1;min-width:140px;white-space:pre-wrap;color:var(--texto)}
+  .resp-item .vistos{margin-left:auto}
+  .resp-item .apaga{flex:none}
   /* quem julgou. Junta = 1ª instância do CRPS, ainda cabe recurso especial;
      Câmara = 2ª instância, acabou a via administrativa. As duas cores dizem
      isso de longe: azul "ainda dá", roxo "é o fim da linha lá dentro". */
@@ -460,6 +472,12 @@
     background:#E7EEFB;border:1px solid #C3D6F5;color:var(--azul-escuro)}
   .crps-org.inst2{background:#F1EAFB;border-color:#DACBF2;color:#5B3A9B}
   .crps-org small{font-weight:500;opacity:.8;font-size:10.5px}
+  /* a estrela de cada movimentação: apagada até alguém (ou o robô) acender */
+  .crps-est{flex:none;background:none;border:none;cursor:pointer;font-size:13px;
+    padding:0 4px;filter:grayscale(1);opacity:.25;align-self:flex-start}
+  .crps-est:hover{opacity:.7}
+  .crps-est.on{filter:none;opacity:1}
+  .timeline .crps-imp{background:#FFFBF2!important;box-shadow:inset 3px 0 0 #E0A32E}
   .crps-ruido>summary{cursor:pointer;color:var(--cinza);font-size:12px;padding:9px 15px;list-style:none}
   .crps-ruido>summary:hover{color:var(--azul)}
   .crps-ruido[open]>summary{color:var(--azul)}
@@ -960,7 +978,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.12 · quem julgou: Junta ou Câmara</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.13 · a conclusão embaixo do pedido</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3728,9 +3746,12 @@ async function fecharTarefa(id){
     body:JSON.stringify({concluida_em:new Date().toISOString()})});
   let corpo = "✔ " + (txt || "Tarefa concluída");
   if(prot.length>=6) corpo += ` — Protocolo: ${prot}`;
+  // a conclusão responde o comentário que pediu a tarefa: é o que diz DE QUAL
+  // tarefa é este "feito" quando o processo tem três abertas ao mesmo tempo
   const [and]=await api(`/rest/v1/andamentos`,{method:"POST",
     headers:{Prefer:"return=representation"},
-    body:JSON.stringify({caso_id:t.caso_id, autor_id:eu.id, texto:corpo})}).catch(()=>[]);
+    body:JSON.stringify({caso_id:t.caso_id, autor_id:eu.id, texto:corpo,
+                         responde_a:t.andamento_id})}).catch(()=>[]);
   if(and) await api(`/rest/v1/andamentos_lidos`,{method:"POST",
     headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
     body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
@@ -5469,14 +5490,41 @@ function painelEscritorio(k, ands){
     </div>`}
   </div>
   ${caixaArquivos(k)}
-  <ul class="timeline">${(ands||[]).filter(a=>!a.excluir).map(a=>{
-    const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
-    return `<li>
-      <span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmtTS(a.criado_em)}</span>
-      <span class="texto">${esc(a.texto)}</span>
-      ${vistos(a)}
-      ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}</li>`;
-  }).join("") || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
+  ${linhaDoTempo(ands)}`;
+}
+
+// ── a linha do tempo do escritório ────────────────────────────────────────
+// A conclusão de uma tarefa nasce como RESPOSTA do comentário que a pediu
+// (andamentos.responde_a), não como comentário solto. Num processo com três
+// tarefas abertas, um "✔ Cumpri a exigência" perdido no topo não dizia de
+// qual delas era. Aqui a resposta fica embaixo do pedido, recuada: lê-se
+// "o que foi pedido → o que foi feito" de uma vez só.
+function comentario(a, resposta){
+  const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
+  return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmtTS(a.criado_em)}</span>
+    <span class="texto">${esc(a.texto)}${resposta||""}</span>
+    ${vistos(a)}
+    ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}`;
+}
+function linhaDoTempo(ands){
+  const vivos = (ands||[]).filter(a=>!a.excluir);
+  const porPai = new Map();
+  for(const a of vivos) if(a.responde_a){
+    if(!porPai.has(a.responde_a)) porPai.set(a.responde_a, []);
+    porPai.get(a.responde_a).push(a);
+  }
+  // resposta órfã (o pai foi apagado) volta a ser comentário de primeiro
+  // nível: sumir com o "feito" de alguém seria pior que mostrá-lo solto
+  const temPai = new Set(vivos.map(a=>a.id));
+  const raiz = vivos.filter(a=>!a.responde_a || !temPai.has(a.responde_a));
+  const li = a => {
+    const filhas = (porPai.get(a.id)||[]).sort((x,y)=>(x.criado_em||"")<(y.criado_em||"")?-1:1);
+    const sub = filhas.length ? `<span class="resp">${filhas.map(f=>
+      `<span class="resp-item">${comentario(f)}</span>`).join("")}</span>` : "";
+    return `<li>${comentario(a, sub)}</li>`;
+  };
+  return `<ul class="timeline">${raiz.map(li).join("")
+    || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
 }
 
 // 🖥 Recurso administrativo no CRPS (e-Recursos). O robô (robo-crps) preenche
@@ -5569,6 +5617,25 @@ function acharArquivoCrps(k, nup, marca){
   return null;
 }
 
+// destacar a movimentação acende também o ⭐ do processo — é ele que faz o
+// caso pular para a frente nas listas. Tirar o destaque não apaga o ⭐ do
+// processo: quem decide que o assunto morreu é você, no botão do composer.
+async function toggleImpCrps(casoId, nup, i){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const so = x => String(x||"").replace(/\D/g,"");
+  const b = crpsBlocos(k).find(x=>so(x.nup)===so(nup)); if(!b) return;
+  const e = (b.eventos||[])[i]; if(!e) return;
+  e.importante = !e.importante;
+  await gravarCrps(k);
+  if(e.importante && !k.importante){
+    k.importante = true;
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({importante:true})}).catch(()=>{});
+  }
+  aviso(e.importante?"Movimentação destacada ⭐":"Destaque retirado", false);
+  abrirFicha(clienteAberto);
+}
+
 async function gravarCrps(k){
   await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"}, body:JSON.stringify({crps:k.crps})});
@@ -5625,7 +5692,12 @@ function blocoRecurso(t, casoId){
     // isso vira eco. Sai o parêntese, fica a etiqueta, que diz mais.
     const txt = esc(String(e.resumo||e.bruto||"")
       .replace(/\s*\((?:\d{1,2}ª\s*)?(?:Junta|Câmara|CRPS)[^)]*\)\s*$/,""));
-    return `<li>
+    // ⭐ por movimentação: o que o robô traz é muito, e nem tudo pede ação.
+    // O que você marcar aqui acende o ⭐ do processo, que é o que faz o caso
+    // aparecer na sua frente nas listas — a ciência não depende de lembrar
+    // de abrir a aba do recurso.
+    const i = evs.indexOf(e);
+    return `<li class="${e.importante?"crps-imp":""}">
       <span class="quando" title="e-Recursos (INSS)">${esc(e.icone||"•")}<br>${esc((e.data||"").slice(0,10)||"—")}</span>
       <span class="texto">${forte?`<b>${txt}</b>`:txt}
         ${selo}
@@ -5633,6 +5705,9 @@ function blocoRecurso(t, casoId){
           onclick="abrirDecisao('${esc(a.storage)}')">📄 abrir ${/monocr/i.test(a.nome)?"decisão":"acórdão"}</button>`).join("")}
         ${e.docs?`<span class="meio-sub">📎 ${e.docs} documento${e.docs>1?"s":""}</span>`:""}
         ${guardados.map(a=>caixaResumo(casoId, t.nup, a)).join("")}</span>
+      <button class="crps-est ${e.importante?"on":""}" onclick="toggleImpCrps('${casoId}','${esc(t.nup||"")}',${i})"
+        title="${e.importante?"tirar o destaque desta movimentação"
+                             :"destacar esta movimentação — acende o ⭐ do processo"}">⭐</button>
     </li>`;
   };
   return `<div class="fatos" style="margin-bottom:12px">
