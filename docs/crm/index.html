@@ -148,6 +148,20 @@
   .rot-ok{border:none;background:none;font-size:17px;cursor:pointer;color:var(--azul);line-height:1}
   .rot-txt{flex:1;min-width:0}
   .rot-tit{font-size:14px;font-weight:600;color:var(--texto)}
+  /* "ninguém" é um 🚫 apagado; escolhido, fica vermelho e sem dúvida */
+  .esc-barra .fx-av{margin-left:3px}
+  .esc-barra .tf-ninguem{font-size:13px;filter:grayscale(1);opacity:.5}
+  /* precisa vencer .fx-av.on, que vem depois e usa a cor da pessoa (aqui
+     não há pessoa, e a cor caía para o padrão) */
+  .esc-barra .tf-ninguem.on{filter:none;opacity:1;border-color:var(--vermelho);
+    background:#FBE9E7;color:var(--vermelho);box-shadow:0 0 0 1px var(--vermelho) inset}
+  .esc-barra .tf-eq.on{background:var(--cor-eq);border-color:var(--cor-eq);color:#fff}
+  .esc-barra .tf-dt.on{background:#E7EEFB;border-color:var(--azul);color:var(--azul-escuro);font-weight:650}
+  /* sugestões atrás de um convite: a barra fica limpa até alguém pedir */
+  .sug-abrir{margin:0 12px 10px;background:none;border:1px dashed var(--borda);color:var(--cinza);
+    border-radius:999px;padding:5px 13px;font:inherit;font-size:12.5px;cursor:pointer}
+  .sug-abrir:hover{border-color:var(--azul);color:var(--azul)}
+  .sug-abrir.on{border-style:solid;border-color:var(--azul);color:var(--azul);background:#F3F7FE}
   .sugestoes{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 12px}
   .sug-it{font-size:12px;font-weight:500;color:var(--cinza);cursor:pointer;background:none;
     border:1px solid var(--borda);border-radius:999px;padding:4px 11px}
@@ -344,9 +358,12 @@
      hairline separando. A cor do autor fica só no avatar — nada de barra
      colorida e fundo tingido a cada linha (era o que mais poluía) */
   .timeline{list-style:none;background:var(--branco);border:1px solid var(--borda);
-    border-radius:12px;padding:2px 14px}
-  .timeline li{display:flex;gap:13px;padding:13px 2px;margin:0;
-    border-top:1px solid var(--borda);border-left:none!important;background:none!important;border-radius:0}
+    border-radius:12px;overflow:hidden}
+  .timeline li{display:flex;gap:13px;padding:13px 12px;margin:0;
+    border-top:1px solid var(--borda);border-left:none!important;border-radius:0}
+  /* zebrado: um andamento acaba onde o próximo começa, sem precisar de régua */
+  .timeline li:nth-child(odd){background:var(--branco)!important}
+  .timeline li:nth-child(even){background:#F5F6F8!important}
   .timeline li:first-child{border-top:none}
   .timeline .quando{flex:none;width:74px;font-size:10.5px;color:var(--cinza);
     display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
@@ -465,7 +482,7 @@
   /* o azul cheio é só dos botões SEM classe própria (ex.: "Registrar
      exigência"). Sem o :not, ele pintava também os chips claros da barra —
      texto branco em fundo branco, botão invisível. */
-  .escrever button:not(.btn-rap):not(.eq-ini):not(.esc-ic):not(.esc-reg){
+  .escrever button:not(.btn-rap):not(.eq-ini):not(.esc-ic):not(.esc-reg):not(.fx-av):not(.sug-abrir){
     padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
   /* ⭐/🔥 vivem dentro do composer: a regra genérica acima os pintaria de azul
      e ninguém saberia se estão ligados. Emoji também não obedece a cor do
@@ -898,7 +915,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.09a · ficha na proposta v2</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.09b · barra limpa e anotações</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4529,17 +4546,54 @@ function sugestoes(k){
   juntar("Exigência do INSS — registrar com prazo", "exigencia");
   return itens;
 }
-// mostradas com o campo vazio (exemplos) e filtradas enquanto digita, como
-// o autocompletar dos bons sistemas — nunca uma parede de texto
-function pintarSugestoes(k){
+// As 10 anotações que o escritório mais escreve, contadas nas 16.901 linhas
+// datadas do To Do. Não é palpite: é o vocabulário real da casa.
+//   em análise 515 · sem alteração 342 · aguardar até 178 · inicial
+//   distribuída 115 · exigência cumprida 77 · verificar de novo 66 ·
+//   petição protocolada 61 · réplica protocolada 55 · sem benefício
+//   ativo 49 · recurso protocolado 48
+const ANOTACOES = [
+  "Em análise no INSS.",
+  "Sem alteração — conferir de novo em __/__.",
+  "Aguardar até __/__.",
+  "Inicial distribuída.",
+  "Exigência cumprida.",
+  "Opção ainda não disponível — verificar novamente em __/__.",
+  "Petição protocolada.",
+  "Réplica protocolada.",
+  "Sem benefício ativo no CNIS.",
+  "Recurso protocolado.",
+];
+function alternarSugestoes(casoId){
+  const cx=document.getElementById("sug-box"), bt=document.getElementById("sug-abrir");
+  if(!cx||!bt) return;
+  const abrindo = cx.style.display==="none";
+  cx.style.display = abrindo ? "flex" : "none";
+  bt.classList.toggle("on", abrindo);
+  if(abrindo) pintarSugestoes(D.casoPorId.get(casoId), true);
+}
+// filtradas enquanto digita (aí aparecem sozinhas, como autocompletar);
+// com o campo vazio, só quando a pessoa pede pelo botão
+function pintarSugestoes(k, forcar){
   const cx=document.getElementById("sug-box"); if(!cx) return;
   const inp=document.getElementById("and-texto");
   const q=dsa((inp&&inp.value||"").trim());
-  const todas=sugestoes(k);
-  const lista=(q ? todas.filter(s=>dsa(s.texto).includes(q)) : todas).slice(0, q?5:6);
+  if(!q && !forcar && cx.style.display==="none") return;
+  const proprias = ANOTACOES.map(t=>({texto:t}));
+  const todas = q ? [...proprias, ...sugestoes(k)] : proprias;
+  const lista=(q ? todas.filter(s=>dsa(s.texto).includes(q)) : todas).slice(0, q?5:10);
+  if(q) cx.style.display = lista.length ? "flex" : "none";
   cx.innerHTML = lista.map(s=>`<span class="sug-it" data-acao="${s.acao||""}">${s.acao==="exigencia"?"⚠ ":""}${esc(s.texto)}</span>`).join("")
     + (q?"":`<span class="sug-mais" onclick="lbEditar('${k.id}')">✎ editar sugestões</span>`);
   cx.querySelectorAll(".sug-it").forEach(el=>el.onclick=()=>usarSugestao(el, k));
+}
+// o campo de data só aparece quando é pedido — a barra fica limpa até lá
+function tfEscolherData(bt){
+  const inp=document.getElementById("tf-data"); if(!inp) return;
+  inp.style.display="inline-block";
+  bt.classList.add("on");
+  if(inp.showPicker) try{ inp.showPicker(); }catch(e){ inp.focus(); }
+  else inp.focus();
 }
 // enquanto digita: mostra a data que o sistema entendeu, para confirmar
 function pintarPrazoDoTexto(k){
@@ -5243,8 +5297,7 @@ function blocoFatos(k){
         📎 Documentos solicitados <b>${feitas} / ${st.length}</b></button>
     </div>
     <div class="fx-docs-lista" id="docs-${k.id}">${checklistCaso(k)}</div>
-  </section>
-  ${trilhaCaso(k)}`;
+  </section>`;
 }
 
 // edição no lugar: o lápis vira campo, salva ao sair e volta a ser texto
@@ -5310,18 +5363,21 @@ function painelEscritorio(k, ands){
            que precisa exigir responsável e data. Renomear sem manter o id já
            derrubou a obrigatoriedade uma vez. */""}
       <div class="esc-barra" id="tf-box">
-        <span class="esc-quem"><span class="avatar mini" style="background:${eu.cor||"#2564cf"}">${esc(eu.inicial||"?")}</span></span>
         <span class="rotulo-rap">TAREFA PARA</span>
-        <button class="btn-rap tf-op" id="tf-ninguem" onclick="tfNinguem(this)">ninguém</button>
-        ${D.colaboradores.filter(x=>x.ativo).map(co=>`<button class="eq-ini tf-eq"
+        ${/* mesma bolinha do Responsável; "ninguém" é o 🚫, cinza até ser
+             escolhido — aí fica vermelho, para não passar despercebido */""}
+        <button class="fx-av tf-ninguem" id="tf-ninguem" onclick="tfNinguem(this)"
+          title="não atribuir a ninguém">🚫</button>
+        ${D.colaboradores.filter(x=>x.ativo).map(co=>`<button class="fx-av tf-eq"
           data-tfp="${co.id}" style="--cor-eq:${co.cor}" title="${esc(co.nome)}"
           onclick="tfPessoa('${co.id}',this)">${esc(co.inicial)}</button>`).join("")}
         <span class="tf-sep"></span>
         <span class="rotulo-rap">LEMBRAR EM</span>
         <button class="btn-rap tf-dt" data-tfd="hoje" onclick="tfDia('hoje',this)">Hoje</button>
         <button class="btn-rap tf-dt" data-tfd="amanha" onclick="tfDia('amanha',this)">Amanhã</button>
-        <button class="btn-rap tf-dt" data-tfd="7" onclick="tfDia('7',this)">+7 dias</button>
-        <input type="date" class="tf-data" onchange="tfDia(this.value,this)">
+        ${/* a data some até ser pedida: só o botão fica, e ele abre o campo */""}
+        <button class="btn-rap tf-dt" id="tf-escolher" onclick="tfEscolherData(this)">Escolher a data</button>
+        <input type="date" class="tf-data" id="tf-data" style="display:none" onchange="tfDia(this.value,this)">
         <button class="btn-rap tf-dt" data-tfd="sem" onclick="tfDia('sem',this)">sem lembrete</button>
         <span class="esc-ferr">
           <input type="file" id="arq-inp" accept="image/*,application/pdf" capture="environment"
@@ -5334,7 +5390,11 @@ function painelEscritorio(k, ands){
         </span>
       </div>
       <div id="and-prazo-chip"></div>
-      <div id="sug-box" class="sugestoes"></div>
+      ${/* as sugestões viviam abertas e enchiam a tela; agora ficam atrás de
+           um convite, e só aparecem para quem foi buscá-las */""}
+      <button class="sug-abrir" id="sug-abrir" onclick="alternarSugestoes('${k.id}')">
+        💡 Sugestões de anotações</button>
+      <div id="sug-box" class="sugestoes" style="display:none"></div>
       <div id="preenche-box" style="display:none;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-top:6px;padding:10px"></div>
       <div id="exig-box" style="display:none;border:1px solid #f0c36d;border-radius:8px;background:#fffaf0;margin-top:6px;padding:10px">
         <strong style="font-size:13px">⚠ Registrar exigência do INSS</strong>
@@ -5943,6 +6003,11 @@ function tfDia(qual, el){
          : qual==="7" ? maisDias(7)
          : qual;                                   // veio do input de data
   if(el && el.classList && el.classList.contains("tf-dt")) el.classList.add("on");
+  // veio do calendário: quem fica aceso é o botão "Escolher a data"
+  const inp=document.getElementById("tf-data"), bt=document.getElementById("tf-escolher");
+  if(el===inp && bt){ bt.classList.add("on"); bt.textContent = fmt(qual); }
+  else if(inp && el!==inp){ inp.style.display="none"; inp.value="";
+    if(bt) bt.textContent="Escolher a data"; }
 }
 
 async function novoAndamento(casoUnico){
