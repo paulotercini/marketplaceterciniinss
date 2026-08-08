@@ -120,9 +120,25 @@ Para forçar uma releitura completa (ignorando o "já fiz hoje"), rode com
 
 ## De onde vêm os números dos recursos
 
-Cada caso guarda o número em `crps_nup`. Você pode digitá-lo na ficha
-(aba 🖥 Recurso → "número do recurso"), ou importar os favoritos de uma vez
-(abaixo).
+**A leitura não é automática.** O sistema só consulta os recursos cujo número
+está cadastrado no caso. Um recurso novo não aparece sozinho — alguém precisa
+colar o número **uma vez**. Depois disso ele entra em todas as coletas
+seguintes, sem mais nenhum trabalho.
+
+Como cadastrar (leva 20 segundos):
+
+1. No e-Recursos, abra o processo do cliente e copie o número da barra de
+   endereço — é a parte final da URL:
+   `consultaprocessos.inss.gov.br/e/p/`**`44233139765202537`**
+2. No CRM, abra a ficha do cliente e escolha o processo certo no menu de cima.
+3. Vá na aba **🖥 Recurso (CRPS)**.
+4. Cole o número no campo "+ número do recurso" e clique em adicionar.
+
+Um caso pode ter **mais de um recurso** — embargos e recurso especial recebem
+números novos. É só ir acrescentando: o campo aceita vários, cada um aparece
+com o seu próprio histórico, e adicionar um não apaga os anteriores.
+
+Para cadastrar muitos de uma vez, importe os favoritos (abaixo).
 
 ## Importar os favoritos de uma vez
 
