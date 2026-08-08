@@ -110,11 +110,15 @@
   .usuario .sair{margin-left:auto;border:none;background:none;color:#9AA0B0;cursor:pointer;font-size:12px}
   .sidebar .usuario div div{color:#9AA0B0!important}
   /* sub-menu do processo: separa o que é nosso do que é do tribunal */
-  .sub-menu{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
-  .sub-menu button{border:1px solid var(--borda);background:var(--branco);color:var(--cinza);
-    border-radius:8px 8px 0 0;padding:7px 14px;font-size:13.5px;font-weight:600;cursor:pointer}
-  .sub-menu button:hover{background:#eef4fb}
-  .sub-menu button.on{background:var(--azul);border-color:var(--azul);color:#fff}
+  /* segmentado claro: a aba ativa é um cartão branco com a letra em azul —
+     nada de faixa escura ou botão azul cheio disputando com o conteúdo */
+  .sub-menu{display:inline-flex;gap:3px;margin:0 0 12px;flex-wrap:wrap;
+    background:var(--fundo);border:1px solid var(--borda);border-radius:10px;padding:3px}
+  .sub-menu button{border:none;background:none;color:var(--cinza);
+    border-radius:8px;padding:6px 13px;font-size:12.5px;font-weight:500;cursor:pointer}
+  .sub-menu button:hover{color:var(--texto)}
+  .sub-menu button.on{background:var(--branco);color:var(--azul);font-weight:650;
+    box-shadow:0 1px 2px rgba(20,24,33,.09)}
   .sub-menu.instancias{margin:0 0 10px}
   .sub-menu.instancias button{border-radius:8px;padding:6px 12px;font-size:13px}
   .sub-menu.instancias small{display:block;font-weight:400;opacity:.75;font-size:11.5px}
@@ -144,9 +148,9 @@
   .rot-ok{border:none;background:none;font-size:17px;cursor:pointer;color:var(--azul);line-height:1}
   .rot-txt{flex:1;min-width:0}
   .rot-tit{font-size:14px;font-weight:600;color:var(--texto)}
-  .sugestoes{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}
-  .sug-it{font-size:12.5px;color:var(--cinza);cursor:pointer;background:var(--branco);
-    border:1px solid var(--borda);border-radius:12px;padding:3px 10px}
+  .sugestoes{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 12px}
+  .sug-it{font-size:12px;font-weight:500;color:var(--cinza);cursor:pointer;background:none;
+    border:1px solid var(--borda);border-radius:999px;padding:4px 11px}
   .sug-it:hover{color:var(--azul);border-color:var(--azul)}
   .sug-mais{font-size:12px;color:var(--cinza);cursor:pointer;padding:3px 6px;align-self:center}
   .sug-mais:hover{color:var(--azul)}
@@ -321,23 +325,33 @@
   .cab-topo{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
   .cab-esq{flex:1;min-width:min(100%,300px)}
   .cab-topo>.fases-trilha{margin:0;flex:none;margin-left:auto}
-  .fases-trilha{display:flex;margin:10px 0 4px;font-size:11px;flex-wrap:wrap}
-  .fase-et{padding:4px 12px;background:var(--fundo);border:1px solid var(--borda);color:var(--cinza);white-space:nowrap;font:inherit;font-size:13px;cursor:pointer}
-  .fase-et:not(.atual):hover{background:#e3eefa;color:var(--azul)}
+  /* trilha discreta: a fase atual é um cartão branco com a letra em azul,
+     as vencidas em verde suave — no mesmo tom do sub-menu, sem bloco cheio */
+  .fases-trilha{display:inline-flex;margin:0 0 12px;font-size:11px;flex-wrap:wrap;
+    background:var(--fundo);border:1px solid var(--borda);border-radius:10px;padding:3px;gap:2px}
+  .fase-et{padding:5px 11px;background:none;border:none;color:var(--cinza);white-space:nowrap;
+    font:inherit;font-size:12.5px;font-weight:500;cursor:pointer;border-radius:8px}
+  .fase-et:not(.atual):hover{background:var(--branco);color:var(--azul)}
   .fase-et.atual{cursor:default}
-  .fase-et:first-child{border-radius:6px 0 0 6px}
-  .fase-et:last-child{border-radius:0 6px 6px 0}
-  .fase-et.feita{background:#eef7ee;color:var(--verde)}
-  .fase-et.atual{background:var(--azul);border-color:var(--azul);color:#fff;font-weight:700}
+  .fase-et.feita{color:var(--verde)}
+  .fase-et.atual{background:var(--branco);color:var(--azul);font-weight:650;
+    box-shadow:0 1px 2px rgba(20,24,33,.09)}
   .lembrar-caixa{display:inline-flex;align-items:center;gap:6px;background:#fdf3e7;border:1px solid #f0d9b8;border-radius:8px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--laranja)}
   .lembrar-caixa input{border:none;background:none;font:inherit;color:inherit}
   .ult-and{font-size:12px;color:var(--cinza);margin-top:8px}
   .caso select,.caso input[type=date]{padding:3px 6px;border:1px solid var(--borda);border-radius:6px;font-size:12px;background:var(--branco)}
-  .timeline{list-style:none}
-  .timeline li{display:flex;gap:12px;padding:10px 12px;border-radius:8px;margin-bottom:4px;border-left:4px solid transparent}
-  .timeline li:nth-child(odd){background:var(--fundo)}   /* reserva, se a cor do autor não carregar */
-  .timeline .quando{flex:none;width:130px;font-size:12px;color:var(--cinza);display:flex;gap:8px}
-  .timeline .texto{flex:1;white-space:pre-wrap}
+  /* linha do tempo limpa: quem escreveu à esquerda, texto respirando, e uma
+     hairline separando. A cor do autor fica só no avatar — nada de barra
+     colorida e fundo tingido a cada linha (era o que mais poluía) */
+  .timeline{list-style:none;background:var(--branco);border:1px solid var(--borda);
+    border-radius:12px;padding:2px 14px}
+  .timeline li{display:flex;gap:13px;padding:13px 2px;margin:0;
+    border-top:1px solid var(--borda);border-left:none!important;background:none!important;border-radius:0}
+  .timeline li:first-child{border-top:none}
+  .timeline .quando{flex:none;width:74px;font-size:10.5px;color:var(--cinza);
+    display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
+    font-variant-numeric:tabular-nums;line-height:1.3}
+  .timeline .texto{flex:1;white-space:pre-wrap;font-size:13.5px;line-height:1.55;min-width:0}
   /* ── Fatos do benefício ───────────────────────────────────────────────
      Hierarquia por linha e espaço, não por bloco colorido: cor entra na
      letra (rótulo e nome do benefício em azul) e no estado (prazo). */
@@ -373,6 +387,15 @@
   .fatos-pe{display:flex;align-items:center;gap:7px;padding:10px 15px;border-top:1px solid var(--borda);flex-wrap:wrap}
   .fx-rot{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
     color:color-mix(in srgb, var(--azul) 72%, var(--cinza))}
+  /* responsável: quem está no caso aparece cheio; os outros, discretos */
+  .fx-eq{display:flex;align-items:center}
+  .fx-av{width:26px;height:26px;border-radius:50%;border:1px solid var(--borda);background:var(--branco);
+    color:#9AA0A8;font:inherit;font-size:11px;font-weight:700;cursor:pointer;padding:0;
+    display:inline-grid;place-items:center;margin-left:3px;transition:.12s}
+  .fx-av:hover{border-color:var(--cor-eq);color:var(--cor-eq)}
+  .fx-av.on{background:var(--cor-eq);border-color:var(--cor-eq);color:#fff;
+    box-shadow:0 0 0 2px var(--branco);margin-left:-5px}
+  .fx-av.on:first-child{margin-left:0}
   .fx-docs{margin-left:auto;background:none;border:none;font:inherit;font-size:12.5px;
     color:var(--azul-escuro);cursor:pointer;display:flex;align-items:center;gap:7px}
   .fx-docs b{background:#E7EEFB;color:var(--azul-escuro);border-radius:6px;padding:1px 7px;font-size:11px}
@@ -875,7 +898,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.09 · ficha reformulada</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.09a · ficha na proposta v2</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5208,16 +5231,19 @@ function blocoFatos(k){
     </div>`:""}
     <div class="fatos-pe">
       <span class="fx-rot">Responsável</span>
-      ${D.colaboradores.filter(x=>x.ativo).map(co=>`<button class="eq-ini ${equipe.includes(co.id)?"on":""}"
-        data-eq="${co.id}" style="--cor-eq:${co.cor}"
-        title="${esc(co.nome)} — ${equipe.includes(co.id)?"clique para retirar":"clique para atribuir"}"
-        aria-label="${esc(co.nome)}">${esc(co.inicial)}</button>`).join("")}
+      ${/* quem responde vem primeiro, cheio e colorido; os demais ficam
+           discretos, esperando um clique — em vez de seis quadrados iguais */""}
+      <span class="fx-eq">${D.colaboradores.filter(x=>x.ativo)
+        .sort((a,b)=>(equipe.includes(b.id)?1:0)-(equipe.includes(a.id)?1:0))
+        .map(co=>`<button class="fx-av ${equipe.includes(co.id)?"on":""}"
+          data-eq="${co.id}" style="--cor-eq:${co.cor}"
+          title="${esc(co.nome)} — ${equipe.includes(co.id)?"clique para retirar":"clique para atribuir"}"
+          aria-label="${esc(co.nome)}">${esc(co.inicial)}</button>`).join("")}</span>
       <button class="fx-docs" onclick="var d=document.getElementById('docs-${k.id}');d.classList.toggle('aberto')">
         📎 Documentos solicitados <b>${feitas} / ${st.length}</b></button>
     </div>
     <div class="fx-docs-lista" id="docs-${k.id}">${checklistCaso(k)}</div>
   </section>
-  ${blocoPagamentoINSS(k)}
   ${trilhaCaso(k)}`;
 }
 
@@ -5323,8 +5349,8 @@ function painelEscritorio(k, ands){
   ${caixaArquivos(k)}
   <ul class="timeline">${(ands||[]).filter(a=>!a.excluir).map(a=>{
     const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
-    return `<li style="border-left-color:${cor};background:color-mix(in srgb, ${cor} 7%, white)">
-      <span class="quando"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmtTS(a.criado_em)}<br>${esc(co?co.nome:"—")}</span>
+    return `<li>
+      <span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmtTS(a.criado_em)}</span>
       <span class="texto">${esc(a.texto)}</span>
       ${vistos(a)}
       ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}</li>`;
