@@ -22,6 +22,7 @@ const PROCURADOR = process.env.CRPS_PROCURADOR || 'PAULO ROBERTO TERCINI';
 const agora = () => new Date().toISOString();
 const log = (...a) => console.log(...a);
 
+const BALDE = process.env.BUCKET || 'anexos';
 async function sb(caminho, opts = {}) {
   const r = await fetch(BASE + caminho, {
     ...opts,
@@ -30,6 +31,23 @@ async function sb(caminho, opts = {}) {
   });
   if (!r.ok) throw new Error(`${opts.method || 'GET'} ${caminho} -> ${r.status} ${await r.text()}`);
   const t = await r.text(); return t ? JSON.parse(t) : null;
+}
+// o PDF vai para o mesmo balde dos outros anexos do cliente (fechado: só
+// quem tem login enxerga). Guardar a cópia é o ponto: o processo pode sair
+// do ar, o site pode mudar, e o acórdão continua aqui.
+async function subirPDF(caminho, bytes) {
+  const r = await fetch(`${BASE}/storage/v1/object/${BALDE}/${caminho}`, {
+    method: 'POST',
+    headers: { apikey: CHAVE, Authorization: `Bearer ${CHAVE}`,
+      'Content-Type': 'application/pdf', 'x-upsert': 'true' },
+    body: bytes,
+  });
+  return r.ok;
+}
+// nome de arquivo que o Storage aceita: sem acento, sem barra, sem espaço
+function nomeSeguro(s) {
+  return (s || 'documento.pdf').normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^\w.\-]+/g, '_').replace(/_+/g, '_').slice(-80);
 }
 function numerosDe(k) {
   const arr = Array.isArray(k.crps_nups) ? k.crps_nups : [];
@@ -87,6 +105,15 @@ async function main() {
     porCaso.get(k.id).novos.set(nup, json);
   }
 
+  // os PDFs coletados, por processo → { id/nome: {nome, b64} }
+  const pdfsPorNup = new Map();
+  for (const [chave, arq] of Object.entries(dados.arquivos || {})) {
+    const nup = (arq.nup || chave.split('/')[0] || '').replace(/\D/g, '');
+    if (!pdfsPorNup.has(nup)) pdfsPorNup.set(nup, []);
+    pdfsPorNup.get(nup).push(arq);
+  }
+  let guardados = 0;
+
   for (const { caso, novos: novosDoCaso } of porCaso.values()) {
     const antesPorNup = blocosPorNup(caso.crps);
     const finais = new Map(antesPorNup);   // parte do que já havia, sobrescreve o novo
@@ -94,6 +121,25 @@ async function main() {
       const bloco = T.traduzirProcesso(json, { procurador: PROCURADOR });
       bloco.consultado_em = agora();
       const antes = antesPorNup.get(nup);
+
+      // sobe os acórdãos/monocráticas e marca onde cada um ficou guardado
+      const jaTinha = new Map();
+      for (const e of ((antes && antes.eventos) || []))
+        for (const a of (e.arquivos || [])) if (a.storage) jaTinha.set(a.id || a.nome, a.storage);
+      for (const arq of (pdfsPorNup.get(nup) || [])) {
+        const marca = arq.id || arq.nome;
+        let destino = jaTinha.get(marca);
+        if (!destino) {
+          destino = `crps/${nup}/${marca}_${nomeSeguro(arq.nome)}`;
+          const ok = await subirPDF(destino, Buffer.from(arq.b64, 'base64'));
+          if (!ok) { log(`  ⚠ não consegui guardar ${arq.nome}`); continue; }
+          guardados++;
+        }
+        // prende o caminho ao arquivo dentro do evento a que ele pertence
+        for (const e of bloco.eventos)
+          for (const a of (e.arquivos || []))
+            if ((a.id || a.nome) === marca) a.storage = destino;
+      }
       finais.set(nup, bloco);
       if (antes && autorIA) {   // já conhecíamos: comenta só a novidade
         const vistos = new Set((antes.eventos || []).map(T.chaveEvento));
@@ -116,7 +162,8 @@ async function main() {
   await sb('/rest/v1/config_app', { method: 'POST',
     headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
     body: JSON.stringify({ chave: 'crps_sync_em', valor: agora() }) });
-  log(`\n✔ ${ok} caso(s) atualizados, ${novos} andamento(s) novo(s), ${semCaso} sem caso no CRM.`);
+  log(`\n✔ ${ok} caso(s) atualizados, ${novos} andamento(s) novo(s), `
+    + `${guardados} decisão(ões) guardada(s) no CRM, ${semCaso} sem caso no CRM.`);
   log('Abra o CRM (recarregue a página) e veja a aba 🖥 Recurso (CRPS) das fichas.');
 }
 

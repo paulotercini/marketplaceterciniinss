@@ -101,3 +101,36 @@ test('chaveEvento distingue eventos por data + texto', () => {
   const b = T.traduzirEvento({ status: 'Protocolo Recebido no INSS', data: '08/10/2020 12:56:46' });
   assert.notEqual(T.chaveEvento(a), T.chaveEvento(b));
 });
+
+// ── documentos das decisões (nível 2: guardar o acórdão no CRM) ─────────────
+test('o evento guarda a lista de documentos, não só a contagem', () => {
+  const e = T.traduzirEvento({ status: 'Conhecer do Recurso e dar-lhe provimento parcial - Acórdão: 25ª JR/3080/2025',
+    data: '25/03/2025 08:16:09',
+    documentos: [{ id: '64874126', nome: 'ACÓRDÃO_3080/2025_2025-03-25-08-16-09.pdf',
+                   path: '/esisrec/44234156897202017/64874126?arquivo=ACORDAO_30802025.pdf' }] });
+  assert.equal(e.docs, 1);
+  assert.equal(e.arquivos.length, 1);
+  assert.equal(e.arquivos[0].id, '64874126');
+  assert.match(e.arquivos[0].path, /esisrec/);
+});
+
+test('marca como "decide" só acórdão e decisão monocrática', () => {
+  assert.equal(T.ehArquivoDeDecisao('ACÓRDÃO_3325/2026_2026-03-18.pdf'), true);
+  assert.equal(T.ehArquivoDeDecisao('DECISÃO MONOCRÁTICA_23ª JR/0729/2026.pdf'), true);
+  assert.equal(T.ehArquivoDeDecisao('Remuneracoes_14432411805.pdf'), false);
+  assert.equal(T.ehArquivoDeDecisao('Recibo de Protocolo.pdf'), false);
+  assert.equal(T.ehArquivoDeDecisao(''), false);
+});
+
+test('o acórdão do processo real vem marcado para cópia', () => {
+  const p = T.traduzirProcesso({ proc:'1', numProc:'1', recorrentes:[], eventos:[
+    { status:'Conhecer do Embargo do Segurado e dar provimento por unanimidade - Acórdão: 25ª JR/3325/2026',
+      data:'18/03/2026 08:44:54',
+      documentos:[{id:'73189593',nome:'ACÓRDÃO_3325/2026_2026-03-18-08-44-54.pdf',path:'/esisrec/x/73189593'}] },
+    { status:'Juntada de informações previdenciárias - FULANO', data:'10/03/2026 14:52:20',
+      documentos:[{id:'72965226',nome:'Remuneracoes_14432411805.pdf',path:'/esisrec/x/72965226'}] },
+  ]});
+  const decide = p.eventos.flatMap(e=>e.arquivos).filter(a=>a.decide);
+  assert.equal(decide.length, 1);
+  assert.match(decide[0].nome, /ACÓRDÃO/);
+});
