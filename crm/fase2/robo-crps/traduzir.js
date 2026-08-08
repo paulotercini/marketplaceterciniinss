@@ -37,16 +37,18 @@ function dataSessao(bruto) {
 
 const REGRAS = [
   // ── decisões (o que mais importa) ────────────────────────────────────────
-  // EMBARGOS ANTES DE RECURSO. Embargos de declaração acolhidos quase nunca
-  // são vitória: servem para esclarecer o acórdão, e o texto costuma dizer
-  // "mantendo-se a decisão proferida no Acórdão objurgado". Chamar isso de
-  // "✅ Recurso PROVIDO" faz alguém ligar para o cliente dando parabéns por
-  // um recurso que continua perdido.
+  // EMBARGOS ANTES DE RECURSO. "Dar provimento" ao embargo NÃO é recurso
+  // provido: às vezes o efeito é só integrativo ("mantendo-se a decisão
+  // proferida no Acórdão objurgado"), às vezes é modificativo e concede o
+  // benefício. O status do e-Recursos não distingue os dois — quem sabe é o
+  // acórdão. Então o rótulo aponta para o acórdão em vez de arriscar um
+  // "✅ Recurso PROVIDO" (parabéns por um recurso ainda perdido) ou um
+  // "esclarece o acórdão" (que esconde uma aposentadoria concedida).
   { m: ['conhecer do embargo', 'conhecer dos embargos', 'embargo do segurado', 'embargos de declaracao'],
     tipo: 'decisao', icone: '📝',
     f: b => /negar|improv|rejeit/.test(semAcento(b))
       ? `Embargos rejeitados${sufOrgao(b)}`
-      : `Embargos acolhidos — esclarece o acórdão${sufOrgao(b)}` },
+      : `Embargos acolhidos — confira o acórdão${sufOrgao(b)}` },
   { m: ['dar-lhe provimento parcial', 'dar provimento parcial', 'provimento em parte'],
     tipo: 'decisao', icone: '✅', f: b => `Recurso provido EM PARTE${sufOrgao(b)}` },
   { m: ['negar provimento', 'nao conhecer do recurso', 'improceden'],
@@ -187,7 +189,27 @@ function traduzirProcesso(json, opts = {}) {
 // entre uma varredura e outra (data + status cru bastam)
 function chaveEvento(e) { return `${dataParaISO(e.data)}|${e.bruto}`; }
 
+// Corrigimos uma REGRA e o rótulo errado já está gravado na ficha. Como cada
+// evento guarda o `bruto` (o status cru do e-Recursos), dá para reetiquetar
+// sem coletar tudo de novo. Mexe SÓ em tipo/ícone/resumo: os arquivos, o
+// storage e os resumos dos acórdãos ficam exatamente como estavam.
+function rerotular(bloco) {
+  let mudou = 0;
+  for (const e of (bloco.eventos || [])) {
+    if (!e.bruto) continue;
+    const novo = traduzirEvento({ status: e.bruto });
+    if (e.tipo === novo.tipo && e.icone === novo.icone && e.resumo === novo.resumo) continue;
+    e.tipo = novo.tipo; e.icone = novo.icone; e.resumo = novo.resumo;
+    mudou++;
+  }
+  if (mudou) {
+    const rel = (bloco.eventos || []).find(x => !TIPOS_SILENCIOSOS.has(x.tipo)) || bloco.eventos?.[0] || null;
+    if (rel) { bloco.status = `${rel.icone} ${rel.resumo}`; bloco.ultimo_em = rel.data; }
+  }
+  return mudou;
+}
+
 module.exports = {
-  traduzirEvento, traduzirProcesso, dataParaISO, chaveEvento,
+  traduzirEvento, traduzirProcesso, dataParaISO, chaveEvento, rerotular,
   semAcento, orgaoCurto, dataSessao, TIPOS_SILENCIOSOS, ehArquivoDeDecisao,
 };
