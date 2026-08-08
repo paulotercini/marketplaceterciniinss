@@ -2030,3 +2030,26 @@ update casos set crps_nups = jsonb_build_array(crps_nup)
 -- migra o resultado único (objeto) para uma lista de resultados
 update casos set crps = jsonb_build_array(crps)
   where crps is not null and jsonb_typeof(crps) = 'object';
+
+-- ══════════════════════════════════════════════════════════════════════════
+-- Fatos do benefício: as siglas que a equipe realmente usa.
+--
+-- A escolha veio de contar o que o escritório escreve (8.228 blocos do To Do):
+-- DER 418, RMI 96, DIB 66, DCB 49, DII 44. Ficaram de FORA de propósito:
+-- PPP/CTPS/CNIS/LTCAT/CAT (são documentos → checklist), JR/CRPS/JEF/TRF/PA
+-- (são onde o processo está → fase), NIT (é do cliente → cadastro) e
+-- RMI/DIP/RMA (interessam ao honorário → aba Pagamentos).
+-- ══════════════════════════════════════════════════════════════════════════
+alter table casos add column if not exists especie text;      -- B31, B41, B87…
+alter table casos add column if not exists der date;          -- entrada do requerimento
+alter table casos add column if not exists dib date;          -- início do benefício
+alter table casos add column if not exists dii date;          -- início da incapacidade
+alter table casos add column if not exists dat date;          -- acidente de trabalho
+-- data em que a decisão foi proferida. O escritório adota SEMPRE essa data
+-- como a da ciência, então o prazo de recurso (30 dias) conta a partir dela.
+alter table casos add column if not exists decisao_em date;
+-- a partir de quando pedir a prorrogação (padrão: 15 dias antes da DCB)
+alter table casos add column if not exists dcb_prorrogar_em date;
+-- quem já tem DCB e não tem a data de prorrogação ganha o padrão de 15 dias
+update casos set dcb_prorrogar_em = dcb - 15
+ where dcb is not null and dcb_prorrogar_em is null;

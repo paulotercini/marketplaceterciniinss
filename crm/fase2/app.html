@@ -291,7 +291,12 @@
   .det-topo .linha1{display:flex;align-items:center;gap:10px}
   .det-topo h2{font-size:18px}
   .fechar{margin-left:auto;border:none;background:none;font-size:20px;cursor:pointer;color:var(--cinza)}
-  .det-topo .resumo{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+  .det-topo .resumo{display:flex;flex-wrap:wrap;gap:18px;margin-top:7px;align-items:center}
+  /* identidade mínima: rótulo pequeno em azul, valor legível, sem virar chip */
+  .id-min{display:inline-flex;align-items:baseline;gap:7px;font-size:13px;
+    font-variant-numeric:tabular-nums;color:var(--texto)}
+  .id-min b{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;
+    color:color-mix(in srgb, var(--azul) 75%, var(--cinza))}
   .abas{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
   .aba{padding:7px 13px;border:1px solid var(--borda);background:var(--fundo);cursor:pointer;font-size:13px;color:var(--texto);border-radius:16px;font-weight:600}
   .aba:hover{background:#e3eefa}
@@ -333,14 +338,72 @@
   .timeline li:nth-child(odd){background:var(--fundo)}   /* reserva, se a cor do autor não carregar */
   .timeline .quando{flex:none;width:130px;font-size:12px;color:var(--cinza);display:flex;gap:8px}
   .timeline .texto{flex:1;white-space:pre-wrap}
-  /* painel de registro: bem destacado — é aqui que se comenta */
-  .escrever{border-top:3px solid var(--azul);padding:12px 22px 14px;background:#D9E5F8}
-  .escrever input#and-texto{background:var(--branco)}
+  /* ── Fatos do benefício ───────────────────────────────────────────────
+     Hierarquia por linha e espaço, não por bloco colorido: cor entra na
+     letra (rótulo e nome do benefício em azul) e no estado (prazo). */
+  .fatos{background:var(--branco);border:1px solid var(--borda);border-radius:12px;
+    overflow:hidden;margin-bottom:12px}
+  .fatos-topo{display:flex;align-items:center;gap:9px;padding:12px 15px;flex-wrap:wrap}
+  .fatos-topo h3{font-size:15.5px;font-weight:650;letter-spacing:-.015em;color:var(--azul-escuro)}
+  .fx-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));border-top:1px solid var(--borda)}
+  .fx{padding:9px 15px;border-top:1px solid var(--borda);border-left:1px solid var(--borda);margin:-1px 0 0 -1px}
+  .fx dt{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
+    color:color-mix(in srgb, var(--azul) 72%, var(--cinza));cursor:help}
+  .fx dd{font-size:14px;font-weight:650;margin-top:3px;font-variant-numeric:tabular-nums;
+    display:flex;align-items:center;gap:5px;flex-wrap:wrap;letter-spacing:-.01em}
+  .fx dd small{font-weight:400;color:var(--cinza);font-size:11.5px;letter-spacing:0}
+  .fx-vazio{color:#9AA0A8;font-weight:400}
+  .fx .lapis{opacity:0;transition:.12s}
+  .fx:hover .lapis, .fx:focus-within .lapis{opacity:1}
+  .fx-inp{font:inherit;font-size:13.5px;padding:3px 7px;border:1px solid var(--azul);
+    border-radius:6px;width:100%;max-width:170px;background:var(--branco)}
+  .fx-prot{cursor:pointer;border-bottom:1px dotted var(--borda)}
+  .fx-prot:hover{color:var(--azul)}
+  .fx-prazo dd{color:var(--verde)}
+  .fx-prazo.perto dd{color:var(--laranja)}
+  .fx-prazo.passou dd{color:var(--vermelho)}
+  /* incapacidade: cor na letra, sem encher o bloco */
+  .fx-incap{border-top:1px solid var(--borda)}
+  .fx-incap-rot{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;
+    color:var(--laranja);padding:9px 15px 0;display:flex;align-items:center;gap:8px}
+  .fx-incap-rot::after{content:"";flex:1;height:1px;background:color-mix(in srgb, var(--laranja) 25%, transparent)}
+  .fx-incap .fx-grade{border-top:none}
+  .fx-incap .fx dt{color:color-mix(in srgb, var(--laranja) 80%, var(--cinza))}
+  .fx-prorrog{display:flex;align-items:center;gap:12px;padding:8px 15px 11px;flex-wrap:wrap}
+  .fatos-pe{display:flex;align-items:center;gap:7px;padding:10px 15px;border-top:1px solid var(--borda);flex-wrap:wrap}
+  .fx-rot{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
+    color:color-mix(in srgb, var(--azul) 72%, var(--cinza))}
+  .fx-docs{margin-left:auto;background:none;border:none;font:inherit;font-size:12.5px;
+    color:var(--azul-escuro);cursor:pointer;display:flex;align-items:center;gap:7px}
+  .fx-docs b{background:#E7EEFB;color:var(--azul-escuro);border-radius:6px;padding:1px 7px;font-size:11px}
+  .fx-docs-lista{display:none;border-top:1px solid var(--borda);padding:4px 15px 12px;background:#FAFBFC}
+  .fx-docs-lista.aberto{display:block}
+
+  /* ── compositor: escrever primeiro, Registrar por último ───────────── */
+  .escrever{background:var(--branco);border:1px solid var(--borda);border-radius:12px;
+    margin-bottom:10px;transition:border-color .15s,box-shadow .15s}
+  .escrever:focus-within{border-color:var(--azul);box-shadow:0 0 0 3px color-mix(in srgb, var(--azul) 16%, transparent)}
+  .escrever #and-texto{width:100%;border:none;background:none;resize:none;overflow:hidden;
+    font:inherit;font-size:14px;line-height:1.5;padding:13px 15px 6px;outline:none;color:var(--texto)}
+  .esc-barra{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:6px 12px 11px}
+  .esc-barra .btn-rap{padding:5px 11px;font-size:12.5px;font-weight:600;border-width:1px}
+  .esc-barra .tf-data{width:140px;padding:5px 8px;font-size:12.5px;
+    border:1px solid var(--borda);border-radius:999px;background:var(--branco)}
+  .esc-barra .rotulo-rap{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
+    color:color-mix(in srgb, var(--azul) 72%, var(--cinza))}
+  .esc-barra .tf-sep{width:1px;height:20px;background:var(--borda);margin:0 3px}
+  .esc-quem{display:flex;align-items:center}
+  .esc-ferr{margin-left:auto;display:flex;align-items:center;gap:6px}
+  .esc-ic{width:34px;height:34px;border-radius:8px;border:1px solid var(--borda);background:var(--branco);
+    color:var(--cinza);font-size:15px;cursor:pointer;display:grid;place-items:center}
+  .esc-ic:hover{border-color:var(--azul);color:var(--texto)}
+  .esc-ic.imp.on{border-color:#D9A400;background:#FFF4D6;color:#8A6D00}
+  .esc-ic.urg.on{border-color:var(--vermelho);background:#FBE9E7;color:var(--vermelho)}
+  .esc-reg{background:var(--azul);color:#fff;border:none;border-radius:8px;height:34px;padding:0 18px;
+    font:inherit;font-size:13.5px;font-weight:650;cursor:pointer}
+  .esc-reg:hover{background:var(--azul-escuro)}
   .equipe-chip.av.on{background:#E8F1FB;border-color:var(--azul);font-weight:700}
-  /* atribuição + lembrete no topo do processo, destacados */
-  .caso-acoes{background:#FFF4D6;border:1px solid #E9B44C;border-radius:10px;padding:10px 14px;margin-bottom:10px}
-  /* checklist em quadrado próprio */
-  .caso.caso-check{background:#EDF6EE;border-color:#CBE3CE}
+  .caso-acoes{margin-bottom:2px}
   .escrever .dica{font-size:12px;color:var(--verde);margin-bottom:6px}
   .escrever .linha{display:flex;gap:8px;align-items:center}
   .acao-rapida{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
@@ -376,7 +439,11 @@
   .escrever .equipe-chip{background:var(--branco)}
   .escrever select{max-width:220px;padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
   .escrever input{flex:1;padding:10px 12px;border:1px solid var(--borda);border-radius:8px;font-size:14px}
-  .escrever button{padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
+  /* o azul cheio é só dos botões SEM classe própria (ex.: "Registrar
+     exigência"). Sem o :not, ele pintava também os chips claros da barra —
+     texto branco em fundo branco, botão invisível. */
+  .escrever button:not(.btn-rap):not(.eq-ini):not(.esc-ic):not(.esc-reg){
+    padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
   /* ⭐/🔥 vivem dentro do composer: a regra genérica acima os pintaria de azul
      e ninguém saberia se estão ligados. Emoji também não obedece a cor do
      CSS: em fundo amarelo a ⭐ some. Vale aqui a mesma convenção dos
@@ -562,7 +629,8 @@
           padding:7px 9px;background:var(--fundo);border:1px solid var(--borda);border-radius:8px}
   .tf-box .tf-sep{width:1px;height:18px;background:var(--borda);margin:0 4px}
   .tf-box .tf-data{padding:3px 6px;border:1px solid var(--borda);border-radius:6px;font:inherit;font-size:12px}
-  .tf-box .tf-op.on,.tf-box .tf-dt.on{background:#e8f1fb;border-color:var(--azul);color:var(--azul)}
+  .tf-box .tf-op.on,.tf-box .tf-dt.on,
+  .esc-barra .tf-op.on,.esc-barra .tf-dt.on{background:#e8f1fb;border-color:var(--azul);color:var(--azul)}
   .tf-chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;
            color:var(--cinza);background:var(--fundo);border:1px solid var(--borda);
            border-radius:9px;padding:1px 7px 1px 2px}
@@ -807,7 +875,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08g · CNJ só em judicial</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.09 · ficha reformulada</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3019,6 +3087,9 @@ const TIPOS_CAL = {
   // tem cor só dele — não se confunde com prazo nosso nenhum
   cadunico:{cor:"#A5187F", fundo:"#FBE9F5", icone:"🧓", nome:"CadÚnico (LOAS idoso)"},
   dcb:     {cor:"#C2410C", fundo:"#FDEBDD", icone:"⏳", nome:"DCB — cessação do benefício"},
+  prorrog: {cor:"#B4530A", fundo:"#FBEEE1", icone:"🔁", nome:"Pedir prorrogação"},
+  // prazo de recurso: 30 dias da decisão. É o prazo que não se pode perder.
+  recurso: {cor:"#8E1B16", fundo:"#FBE4E2", icone:"⚖️", nome:"Prazo para recorrer"},
 };
 let calMes = null;                              // "AAAA-MM"; nulo = mês de hoje
 function mesAtual(){ return calMes || hoje().slice(0,7); }
@@ -3029,8 +3100,13 @@ function itensDoCalendario(){
     const c=D.cliPorId.get(k.cliente_id); if(!c) return;
     if(k.prazo) push(k.prazo,"lembre",`${c.nome} — ${k.lembrar_motivo||tituloCaso(k)}`,c.id);
     if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome} — exigência vence`,c.id);
-    if(k.dcb && !k.dcb_prorrogacao_pedida)
+    if(k.dcb && !k.dcb_prorrogacao_pedida){
       push(k.dcb,"dcb",`${c.nome} — benefício cessa (pedir prorrogação)`,c.id);
+      // a data de PEDIR vem antes da data de cessar: é ela que salva o cliente
+      if(k.dcb_prorrogar_em)
+        push(k.dcb_prorrogar_em,"prorrog",`${c.nome} — já dá para pedir a prorrogação`,c.id);
+    }
+    (d=>{ if(d) push(d,"recurso",`${c.nome} — último dia para recorrer`,c.id); })(recorrerAte(k));
   });
   (D.eventos||[]).filter(e=>e.status!=="cancelada").forEach(e=>{
     const k=D.casoPorId.get(e.caso_id), c=k&&D.cliPorId.get(k.cliente_id);
@@ -3873,10 +3949,15 @@ async function abrirFicha(cliId){
       <button class="cel-voltar so-cel" onclick="fecharFicha()" title="voltar para a lista">‹</button>
       <span class="avatar">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
       <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
+    ${/* abaixo do nome só o que a equipe usa o tempo todo: CPF e a senha do
+         Meu INSS. O resto do cadastro fica na aba 📇, sem poluir aqui. */""}
     <div class="resumo">
-      <span class="chip neutro">${fmtCpf(c.cpf)}${c.cpf?` <button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:""}</span>
-      ${(cr=>cr?`<span class="chip neutro">🔑 Meu INSS <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button></span>`:"")(creds.find(x=>x.tipo==="meu_inss"))}
-      ${[...new Set(ks.filter(k=>k.fase!=="encerrado").map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
+      <span class="id-min"><b>CPF</b> ${fmtCpf(c.cpf)}${c.cpf?`
+        <button class="olho" title="copiar CPF" onclick="copiar('${c.cpf}','CPF copiado')">📋</button>`:""}</span>
+      ${(cr=>cr?`<span class="id-min"><b>Meu INSS</b> ••••••
+        <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button>
+        <button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button></span>`
+        :`<span class="id-min"><b>Meu INSS</b> <span class="meio-sub">sem senha</span></span>`)(creds.find(x=>x.tipo==="meu_inss"))}
     </div>
     <div class="menu-topo">
       <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">📇 Cadastro</button>
@@ -3995,31 +4076,9 @@ async function abrirFicha(cliId){
             <strong>recebimento</strong>. Veja a aba <strong>💰 Pagamentos</strong> aqui em cima.</p>`;
         return processosDe(ks).length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso no menu ao lado para ver só o dele.</p>`:"";
       }
-      // identidade do processo, sempre visível; embaixo o sub-menu que separa
-      // o que é NOSSO (escritório) do que é OFICIAL (CNJ) — uma coisa por vez
-      return `<div class="caso caso-cab" style="margin-bottom:10px">
-        <div class="cab-topo">
-        <div class="cab-esq">
-        <div class="rotulo-caso">lista ${esc(listaDe(k))} do To Do</div>
-        <div class="cab" style="margin-top:2px">
-          <span class="titulo-caso">${esc(tituloCaso(k))}</span>
-          ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?" style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
-            <button class="btn-mini" onclick="salvarBeneficio('${k.id}')">definir</button>`:""}
-          ${k.nb?`<span class="chip neutro">NB ${esc(k.nb)}</span>`:""}
-          ${k.processo?`<span class="chip neutro">proc. ${esc(k.processo)}</span>`:""}
-          ${k.parceria?`<span class="chip ben">🤝 ${esc(k.parceria)}</span>`:""}
-          ${(k.protocolos||[]).slice(-3).map(pr=>`<span class="chip neutro" style="cursor:pointer" title="copiar protocolo" onclick="copiar('${pr}','Protocolo copiado')">📄 ${pr}</span>`).join("")}
-          ${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}
-          ${chipExig(k)}
-          ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 msg ao cliente</button>
-            <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
-        </div>
-        </div>
-        ${blocoPagamentoINSS(k)}
-        </div>
-        ${trilhaCaso(k)}
-        </div>
-        ${(()=>{
+      // Ordem da tela: o sub-menu decide O QUE olhar; o cartão de fatos diz
+      // DE QUE processo se trata; e só então vem o trabalho (escrever/ler).
+      return `${(()=>{
           // CNJ só interessa em processo judicial; num caso de Conselho/INSS
           // a aba seria só ruído. Mostra se há nº de processo ou dados do CNJ.
           const temCNJ = !!(k.processo || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length)));
@@ -4029,10 +4088,11 @@ async function abrirFicha(cliId){
           ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${(k.datajud&&k.datajud.ultimo)?"":" <span class='meio-sub'>(sem dados)</span>"}</button>`:""}
           <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${crpsTotalEventos(k)?"":" <span class='meio-sub'>(sem dados)</span>"}</button>
         </div>
-      </div>
+      ${blocoFatos(k)}
       ${aba==="cnj" ? painelCNJ(k) : aba==="crps" ? painelCRPS(k) : painelEscritorio(k, andsVis)}`;
         })()}
-      <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
+      <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
+      <datalist id="lista-especies">${ESPECIES.map(([c,n])=>`<option value="${c}">${esc(n)}</option>`).join("")}</datalist>`;
     })()}
   </div>
 
@@ -5054,65 +5114,198 @@ function caixaArquivos(k){
   </div>`;
 }
 
-function painelEscritorio(k, ands){
+// ── Fatos do benefício ────────────────────────────────────────────────────
+// As siglas que a equipe realmente escreve (medidas no To Do): DER 418,
+// DIB 66, DCB 49, DII 44. Documento (PPP, CNIS, CTPS) não vira campo: vai no
+// checklist. Onde o processo está (JR, CRPS, JEF) não vira campo: é a fase.
+// RMI/DIP/RMA moram na aba 💰, que é onde o honorário se decide.
+const ESPECIES = [
+  ["B31","Auxílio por incapacidade temporária"],["B32","Aposentadoria por incapacidade permanente"],
+  ["B91","Auxílio por incapacidade acidentário"],["B92","Aposentadoria por incapacidade acidentária"],
+  ["B94","Auxílio-acidente"],["B36","Auxílio-acidente previdenciário"],
+  ["B41","Aposentadoria por idade"],["B42","Aposentadoria por tempo de contribuição"],
+  ["B46","Aposentadoria especial"],["B57","Aposentadoria de professor"],
+  ["B21","Pensão por morte"],["B93","Pensão por morte acidentária"],["B25","Auxílio-reclusão"],
+  ["B80","Salário-maternidade"],["B87","BPC/LOAS — deficiência"],["B88","BPC/LOAS — idoso"],
+];
+// o que cada sigla quer dizer, para quem está aprendendo (fica no title)
+const FATOS = {
+  especie:    {rot:"Espécie",     tipo:"especie", dica:"código da espécie no INSS (B31, B41…)"},
+  nb:         {rot:"NB",          tipo:"texto",   dica:"número do benefício"},
+  der:        {rot:"DER",         tipo:"data",    dica:"Data de Entrada do Requerimento"},
+  dib:        {rot:"DIB",         tipo:"data",    dica:"Data de Início do Benefício"},
+  decisao_em: {rot:"Decisão em",  tipo:"data",    dica:"data em que a decisão foi proferida — conta o prazo de recurso"},
+  dii:        {rot:"DII",         tipo:"data",    dica:"Data de Início da Incapacidade"},
+  dat:        {rot:"DAT",         tipo:"data",    dica:"Data do Acidente de Trabalho"},
+  dcb:        {rot:"DCB",         tipo:"data",    dica:"Data de Cessação do Benefício"},
+  dcb_prorrogar_em:{rot:"Prorrogar a partir de", tipo:"data", dica:"o sistema lembra nesta data (padrão: 15 dias antes da DCB)"},
+};
+const ehAcidentario = k => /^B9[123]$|^B94$/.test(k.especie||"") || /acident/i.test(k.beneficio||"");
+// prazo de recurso: 30 dias da decisão (o escritório adota a data em que ela
+// foi proferida como a da ciência). Cai em fim de semana? vai para o dia útil.
+function recorrerAte(k){
+  const d = somaDias(k.decisao_em, 30);
+  return d ? proxDiaUtil(d) : null;
+}
+
+function campoFato(k, campo){
+  const f = FATOS[campo], v = k[campo];
+  const mostra = !v ? `<span class="fx-vazio">—</span>`
+    : f.tipo==="data" ? fmt(v)
+    : f.tipo==="especie" ? `${esc(v)}${(e=>e?` <small>${esc(e[1])}</small>`:"")(ESPECIES.find(e=>e[0]===String(v).toUpperCase()))}`
+    : esc(v);
+  return `<div class="fx" data-fato="${campo}">
+    <dt title="${esc(f.dica)}">${esc(f.rot)}</dt>
+    <dd id="fx-${campo}-${k.id}">${mostra}
+      <button class="lapis" title="alterar ${esc(f.rot)}" onclick="editarFato('${k.id}','${campo}')">✎</button></dd>
+  </div>`;
+}
+
+function blocoFatos(k){
+  const incap = ehIncapacidade(k) || /^B(31|32|91|92|94|36)$/.test(k.especie||"") || k.dcb || k.dii;
+  const rec = recorrerAte(k), dRec = rec ? diasAte(rec) : null;
+  const prots = (k.protocolos||[]);
   const equipe = D.atrDoCaso.get(k.id) || [];
-  const encerrado = k.fase==="encerrado";
-  return `${caixaCadunico(k, D.cliPorId.get(k.cliente_id))}
-  <div class="caso caso-check">${checklistCaso(k)}</div>
-  <div class="caso-acoes">
-    <div class="form-linha" style="align-items:center;margin:0">
-      <span class="rotulo-rap">👥 RESPONSÁVEL:</span>
-      ${/* só a inicial: seis nomes por extenso ocupavam a faixa inteira, e a
-             equipe reconhece P, A, M, D, I e C de olhos fechados. O nome
-             continua no passar do mouse. */""}
+  const st = subtarefasDe(k.id), feitas = st.filter(t=>t.concluida).length;
+  return `<section class="fatos">
+    <div class="fatos-topo">
+      <h3>${esc(tituloCaso(k))}</h3>
+      ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?"
+        style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
+        <button class="btn-mini" onclick="salvarBeneficio('${k.id}')">definir</button>`:""}
+      ${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}
+      ${chipExig(k)}
+      ${k.parceria?`<span class="chip ben">🤝 ${esc(k.parceria)}</span>`:""}
+      ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 msg ao cliente</button>
+        <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
+    </div>
+    <dl class="fx-grade">
+      ${campoFato(k,"especie")}
+      <div class="fx"><dt title="protocolo do requerimento no INSS">Protocolo</dt>
+        <dd>${prots.length?prots.map(p=>`<span class="fx-prot" title="copiar" onclick="copiar('${p}','Protocolo copiado')">${esc(p)}</span>`).join(" "):`<span class="fx-vazio">—</span>`}
+        <button class="lapis" title="acrescentar protocolo" onclick="novoProtocolo('${k.id}')">✎</button></dd></div>
+      ${campoFato(k,"nb")}
+      ${campoFato(k,"der")}
+      ${campoFato(k,"dib")}
+      ${campoFato(k,"decisao_em")}
+      ${rec?`<div class="fx fx-prazo ${dRec<0?"passou":dRec<=10?"perto":""}">
+        <dt title="30 dias contados da decisão">Recorrer até</dt>
+        <dd>${fmt(rec)} <small>${dRec<0?`venceu há ${-dRec} d`:dRec===0?"é hoje":`faltam ${dRec} d`}</small></dd></div>`:""}
+    </dl>
+    ${incap?`<div class="fx-incap">
+      <div class="fx-incap-rot">Benefício por incapacidade</div>
+      <dl class="fx-grade">
+        ${campoFato(k,"dii")}
+        ${ehAcidentario(k)?campoFato(k,"dat"):""}
+        ${campoFato(k,"dcb")}
+        ${k.dcb?campoFato(k,"dcb_prorrogar_em"):""}
+      </dl>
+      ${k.dcb?`<div class="fx-prorrog">
+        <label class="cfg-ck"><input type="checkbox" ${k.dcb_prorrogacao_pedida?"checked":""}
+          onchange="salvarProrrog('${k.id}',this.checked)"> prorrogação já pedida</label>
+        ${chipDcb(k)||`<span class="chip prazo ok">✔ alarme desligado</span>`}
+      </div>`:""}
+    </div>`:""}
+    <div class="fatos-pe">
+      <span class="fx-rot">Responsável</span>
       ${D.colaboradores.filter(x=>x.ativo).map(co=>`<button class="eq-ini ${equipe.includes(co.id)?"on":""}"
         data-eq="${co.id}" style="--cor-eq:${co.cor}"
         title="${esc(co.nome)} — ${equipe.includes(co.id)?"clique para retirar":"clique para atribuir"}"
         aria-label="${esc(co.nome)}">${esc(co.inicial)}</button>`).join("")}
+      <button class="fx-docs" onclick="var d=document.getElementById('docs-${k.id}');d.classList.toggle('aberto')">
+        📎 Documentos solicitados <b>${feitas} / ${st.length}</b></button>
     </div>
-    <div class="form-linha" style="align-items:center;margin:8px 0 0">
-      <span class="rotulo-rap">🗓 LEMBRAR:</span>
-      <button class="lembrar-caixa" style="cursor:pointer;font:inherit" onclick="menuLembrar(event,'${k.id}')"
-        title="quando voltar a mexer neste processo">🗓 ${k.prazo?`${fmt(k.prazo)} (${diaSemana(k.prazo).slice(0,3)})`:"escolher data…"}</button>
-      ${k.prazo&&k.lembrar_motivo?`<span class="meio-sub">${esc(k.lembrar_motivo.length>60?k.lembrar_motivo.slice(0,60)+"…":k.lembrar_motivo)}</span>`:""}
-    </div>
-    ${ehIncapacidade(k)||k.dcb?`<div class="form-linha" style="align-items:center;margin:6px 0 0">
-      <span class="rotulo-rap" title="Data de Cessação do Benefício — o benefício cessa sozinho nesta data">🩸 DCB:</span>
-      <input type="date" value="${k.dcb||""}" onchange="salvarDCB('${k.id}',this.value)">
-      ${k.dcb?`<label class="cfg-ck"><input type="checkbox" ${k.dcb_prorrogacao_pedida?"checked":""}
-          onchange="salvarProrrog('${k.id}',this.checked)"> prorrogação pedida</label>
-        ${chipDcb(k)||`<span class="chip prazo ok">✔ alarme desligado</span>`}`
-      :`<span class="meio-sub">o sistema avisa 15 dias antes da cessação</span>`}
-    </div>`:""}
+    <div class="fx-docs-lista" id="docs-${k.id}">${checklistCaso(k)}</div>
+  </section>
+  ${blocoPagamentoINSS(k)}
+  ${trilhaCaso(k)}`;
+}
+
+// edição no lugar: o lápis vira campo, salva ao sair e volta a ser texto
+function editarFato(casoId, campo){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const f = FATOS[campo], cx = document.getElementById(`fx-${campo}-${casoId}`);
+  if(!cx) return;
+  const v = k[campo] || "";
+  cx.innerHTML = f.tipo==="data"
+    ? `<input type="date" value="${esc(v)}" class="fx-inp">`
+    : f.tipo==="especie"
+      ? `<input class="fx-inp" list="lista-especies" value="${esc(v)}" placeholder="B31">`
+      : `<input class="fx-inp" value="${esc(v)}" placeholder="${esc(f.rot)}">`;
+  const inp = cx.querySelector("input");
+  inp.focus(); if(inp.select) inp.select();
+  let salvo = false;
+  const guardar = async ()=>{
+    if(salvo) return; salvo = true;
+    let novo = (inp.value||"").trim() || null;
+    if(f.tipo==="especie" && novo) novo = novo.toUpperCase().replace(/^(\d)/,"B$1");
+    if(novo === (k[campo]||null)) return abrirFicha(clienteAberto);
+    const corpo = {[campo]: novo};
+    k[campo] = novo;
+    // DCB nova rearma o alarme e sugere a data de prorrogação (15 dias antes)
+    if(campo==="dcb"){
+      k.dcb_prorrogacao_pedida = false; corpo.dcb_prorrogacao_pedida = false;
+      k.dcb_prorrogar_em = somaDias(novo, -15);
+      corpo.dcb_prorrogar_em = k.dcb_prorrogar_em;
+    }
+    await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(corpo)});
+    aviso(novo?`${FATOS[campo].rot} guardado ✔`:`${FATOS[campo].rot} apagado`, false);
+    abrirFicha(clienteAberto);
+  };
+  inp.onblur = guardar;
+  inp.onkeydown = e=>{ if(e.key==="Enter"){e.preventDefault();guardar();}
+                       if(e.key==="Escape"){salvo=true;abrirFicha(clienteAberto);} };
+}
+
+async function novoProtocolo(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const v = (prompt("Número do protocolo (só os dígitos):")||"").replace(/\D/g,"");
+  if(!v) return;
+  const lista = [...new Set([...(k.protocolos||[]), v])];
+  k.protocolos = lista;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({protocolos:lista})});
+  aviso("Protocolo guardado ✔", false); abrirFicha(clienteAberto);
+}
+
+function painelEscritorio(k, ands){
+  const equipe = D.atrDoCaso.get(k.id) || [];
+  const encerrado = k.fase==="encerrado";
+  return `${caixaCadunico(k, D.cliPorId.get(k.cliente_id))}
+  <div class="caso-acoes">
     <div id="lembrar-box" style="display:none;border:1px solid #E9B44C;border-radius:8px;background:var(--branco);margin-top:8px;padding:10px"></div>
-    ${encerrado ? `<p class="meio-sub" style="margin:10px 0 0">✔ Processo encerrado — comentários desativados. Reabra pela trilha acima para voltar a comentar.</p>`
-    : `<div class="escrever" style="margin:10px 0 0">
-      <div class="form-linha" style="align-items:center;flex-wrap:nowrap">
-        <span class="avatar mini" style="background:${eu.cor||"#2564cf"}">${esc(eu.inicial||"?")}</span>
-        <button class="btn-rap imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="importante">⭐</button>
-        <button class="btn-rap urg ${k.urgente?"on":""}" onclick="toggleUrg('${k.id}')" title="urgente">🔥</button>
-        <button class="btn-rap anexar" onclick="document.getElementById('arq-inp').click()"
-          title="tirar foto do documento ou escolher um arquivo">📷</button>
-        <input type="file" id="arq-inp" accept="image/*,application/pdf" capture="environment"
-          style="display:none" onchange="anexar('${k.id}','${k.cliente_id}')">
-        <textarea id="and-texto" rows="1" placeholder="Escreva o andamento…"
-          style="flex:1;min-width:200px;resize:none;overflow:hidden;font:inherit;line-height:1.45;
-                 padding:7px 10px;border:1px solid var(--borda);border-radius:8px"></textarea>
-        <button onclick="novoAndamento('${k.id}')">Registrar</button>
-      </div>
-      <div class="tf-box" id="tf-box">
-        <span class="rotulo-rap">📌 TAREFA PARA:</span>
+    ${encerrado ? `<p class="meio-sub" style="margin:2px 0 0">✔ Processo encerrado — comentários desativados. Reabra pela trilha acima para voltar a comentar.</p>`
+    : `<div class="escrever">
+      ${/* o texto primeiro, sozinho, para escrever ser a coisa principal; as
+           ferramentas embaixo, e o Registrar por último, no fim da leitura */""}
+      <textarea id="and-texto" rows="1" placeholder="Escreva o andamento…  a data pode vir no texto: “verificar em 24/08”"></textarea>
+      ${/* o id tf-box é a chave da TRAVA: é por ele que novoAndamento sabe
+           que precisa exigir responsável e data. Renomear sem manter o id já
+           derrubou a obrigatoriedade uma vez. */""}
+      <div class="esc-barra" id="tf-box">
+        <span class="esc-quem"><span class="avatar mini" style="background:${eu.cor||"#2564cf"}">${esc(eu.inicial||"?")}</span></span>
+        <span class="rotulo-rap">TAREFA PARA</span>
         <button class="btn-rap tf-op" id="tf-ninguem" onclick="tfNinguem(this)">ninguém</button>
         ${D.colaboradores.filter(x=>x.ativo).map(co=>`<button class="eq-ini tf-eq"
           data-tfp="${co.id}" style="--cor-eq:${co.cor}" title="${esc(co.nome)}"
           onclick="tfPessoa('${co.id}',this)">${esc(co.inicial)}</button>`).join("")}
         <span class="tf-sep"></span>
-        <span class="rotulo-rap">🗓 LEMBRAR EM:</span>
+        <span class="rotulo-rap">LEMBRAR EM</span>
         <button class="btn-rap tf-dt" data-tfd="hoje" onclick="tfDia('hoje',this)">Hoje</button>
         <button class="btn-rap tf-dt" data-tfd="amanha" onclick="tfDia('amanha',this)">Amanhã</button>
         <button class="btn-rap tf-dt" data-tfd="7" onclick="tfDia('7',this)">+7 dias</button>
         <input type="date" class="tf-data" onchange="tfDia(this.value,this)">
         <button class="btn-rap tf-dt" data-tfd="sem" onclick="tfDia('sem',this)">sem lembrete</button>
+        <span class="esc-ferr">
+          <input type="file" id="arq-inp" accept="image/*,application/pdf" capture="environment"
+            style="display:none" onchange="anexar('${k.id}','${k.cliente_id}')">
+          <button class="esc-ic" onclick="document.getElementById('arq-inp').click()"
+            title="anexar: foto do documento ou arquivo">📎</button>
+          <button class="esc-ic imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="marcar o processo como importante">⭐</button>
+          <button class="esc-ic urg ${k.urgente?"on":""}" onclick="toggleUrg('${k.id}')" title="marcar o processo como urgente">🔥</button>
+          <button class="esc-reg" onclick="novoAndamento('${k.id}')">Registrar</button>
+        </span>
       </div>
       <div id="and-prazo-chip"></div>
       <div id="sug-box" class="sugestoes"></div>
@@ -5692,6 +5885,14 @@ function proxDiaUtil(iso){
 function maisDias(n){
   const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+n);
   return proxDiaUtil(d.toLocaleDateString("sv"));
+}
+// soma dias a UMA DATA qualquer (maisDias conta sempre a partir de hoje).
+// Aceita negativo: somaDias(dcb,-15) é "quinze dias antes da cessação".
+function somaDias(iso, n){
+  if(!iso) return null;
+  const d=new Date(iso+"T12:00:00"); if(isNaN(d)) return null;
+  d.setDate(d.getDate()+n);
+  return d.toLocaleDateString("sv");
 }
 function tfPessoa(id, btn){
   if(!Array.isArray(tfQuem)) tfQuem=[];
