@@ -97,4 +97,4 @@ async function main() {
   console.log('⚠ Eles têm o inteiro teor dos acórdãos (nome, CPF, dado de saúde). Apague depois.');
 }
 
-if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exit(1); });
+if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exitCode = 1; });

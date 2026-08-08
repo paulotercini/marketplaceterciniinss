@@ -160,4 +160,4 @@ async function main() {
 }
 
 module.exports = { numerosDe, urlDoc, ehPDF, tamanho, montarColetor };
-if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exit(1); });
+if (require.main === module) main().catch(e => { console.error('falhou:', e.message); process.exitCode = 1; });

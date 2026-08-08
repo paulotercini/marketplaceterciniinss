@@ -172,4 +172,4 @@ async function main() {
 }
 
 module.exports = { parseFavoritos, normalizarNome, planejar, nupsDoCaso };
-if (require.main === module) main().catch(e => { console.error('importação falhou:', e.message); process.exit(1); });
+if (require.main === module) main().catch(e => { console.error('importação falhou:', e.message); process.exitCode = 1; });

@@ -174,4 +174,4 @@ async function main() {
 }
 
 module.exports = { lerNups, candidatosDeToken };
-if (require.main === module) main().catch(e => { console.error('Deu errado:', e.message); process.exit(1); });
+if (require.main === module) main().catch(e => { console.error('Deu errado:', e.message); process.exitCode = 1; });
