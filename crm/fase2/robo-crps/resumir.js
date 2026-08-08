@@ -27,7 +27,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { resumirPorRegras } = require('./regras_acordao.js');
+const { resumirPorRegras, divergeDoERecursos } = require('./regras_acordao.js');
 
 for (const linha of (fs.existsSync(path.join(__dirname, '.env'))
     ? fs.readFileSync(path.join(__dirname, '.env'), 'utf8').split('\n') : [])) {
@@ -104,7 +104,10 @@ const ESQUEMA = {
 
 // barreira final do lado de cá: mesmo com as regras no prompt, nada passa sem
 // conferência. Vale para privacidade (dado médico) e para forma (verbo, tamanho).
-const VERBOS = /^(Reconheceu|Não reconheceu|Nao reconheceu|Converteu|Determinou|Manteve|Reformou|Anulou|Concedeu|Negou|Devolveu)\b/;
+// a negativa muda a caixa do verbo ("Não concedeu"), então tiramos o "Não"
+// antes de comparar em vez de dobrar a lista
+const VERBOS = /^(Reconheceu|Converteu|Determinou|Manteve|Reformou|Anulou|Concedeu|Negou|Devolveu|Acolheu|Rejeitou)\b/i;
+const comecaComVerbo = l => VERBOS.test(String(l).replace(/^N[ãa]o\s+/i, ''));
 const MEDICO = /\b(CID[- ]?\d|cid[- ]?10|diagn[óo]stic|laudo|per[íi]cia m[ée]dica atestou|doen[çc]a de|neoplas|depress|esquizo|lombalgia|hérnia|hernia|artros|diabet|hipertens|HIV|c[âa]ncer|transtorno)\b/i;
 function validarResumo(r) {
   if (!r || r.conseguiu !== true) return { ok: false, motivo: (r && r.motivo) || 'não consegui ler o dispositivo' };
@@ -112,7 +115,7 @@ function validarResumo(r) {
   if (!linhas.length) return { ok: false, motivo: 'voltou sem linhas' };
   if (linhas.length > 4) return { ok: false, motivo: `voltou com ${linhas.length} linhas (o teto é 4)` };
   for (const l of linhas) {
-    if (!VERBOS.test(l)) return { ok: false, motivo: `linha fora do formato: "${l.slice(0, 60)}"` };
+    if (!comecaComVerbo(l)) return { ok: false, motivo: `linha fora do formato: "${l.slice(0, 60)}"` };
     if (MEDICO.test(l)) return { ok: false, motivo: 'a linha carregava dado de saúde' };
   }
   return { ok: true, linhas };
@@ -185,7 +188,7 @@ async function main() {
   if (!fila.length) { log('Nada a fazer. Rode com --refazer para refazer os automáticos.'); return; }
 
   const relato = [];
-  let ok = 0, pulados = 0;
+  let ok = 0, pulados = 0, divergentes = 0;
   const porCaso = new Map();
 
   for (const [i, alvo] of fila.entries()) {
@@ -219,8 +222,13 @@ async function main() {
     const resumo = { linhas: v.linhas, origem: 'auto',
       motor: regrasAgora ? 'regras' : 'claude',
       modelo: regrasAgora ? null : MODELO, gerado_em: new Date().toISOString() };
-    relato.push(`\n### ${nome} — ${alvo.data.slice(0, 10)} — ${alvo.resultado}\n`
-      + v.linhas.map(l => `  • ${l}`).join('\n'));
+    // divergência entre o que o e-Recursos anuncia e o que o acórdão diz é
+    // o achado mais valioso da leitura, não um defeito para esconder
+    const diverge = divergeDoERecursos(alvo.resultado, v.linhas);
+    if (diverge) divergentes++;
+    relato.push(`\n### ${nome} — ${alvo.data.slice(0, 10)} — ${alvo.resultado}`
+      + (diverge ? '\n  ⚠ ATENÇÃO: o acórdão não diz o mesmo que o e-Recursos anuncia' : '')
+      + '\n' + v.linhas.map(l => `  • ${l}`).join('\n'));
     ok++;
     if (aplicar) {
       if (!porCaso.has(alvo.casoId)) porCaso.set(alvo.casoId, k.crps);
@@ -237,8 +245,13 @@ async function main() {
   } else {
     const saida = path.join(__dirname, 'resumos_para_conferir.txt');
     fs.writeFileSync(saida, `RESUMOS DAS DECISÕES — PARA CONFERIR ANTES DE PUBLICAR\n`
-      + `${ok} resumidos, ${pulados} sem resumo.\n${relato.join('\n')}\n`);
+      + `${ok} resumidos, ${pulados} sem resumo, ${divergentes} divergindo do e-Recursos.\n`
+      + `\nOs marcados com ATENÇÃO são os que mais importam: o e-Recursos anuncia\n`
+      + `uma coisa e o acórdão diz outra (embargo acolhido que mantém a derrota,\n`
+      + `por exemplo). Confira esses primeiro.\n${relato.join('\n')}\n`);
     log(`\n${ok} resumo(s) prontos, ${pulados} sem resumo.`);
+    if (divergentes) log(`⚠ ${divergentes} caso(s) em que o acórdão NÃO diz o mesmo que o e-Recursos`
+      + ` — procure "ATENÇÃO" no arquivo, é o que mais importa ler.`);
     log(`Escrevi em  resumos_para_conferir.txt  — leia antes de publicar.`);
     log(`Se estiver bom:  node resumir.js --aplicar`);
   }
