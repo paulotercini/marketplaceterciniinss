@@ -62,6 +62,33 @@ insert into r select 't10 os campos de estado do CRPS existem no config',
   (select count(*)=4 from config_app
     where chave in ('crps_estado','crps_cracha_em','crps_visto_em','crps_sync_em'));
 
+-- ── um caso guarda VÁRIOS recursos (crps_nups) ────────────────────────────
+update casos set crps_nups = '["44234156897202017","44236480569202434"]'::jsonb
+ where id='aaaaaaaa-0000-0000-0000-000000000001';
+insert into r select 't11 o caso guarda uma lista de números de recurso',
+  (select jsonb_array_length(crps_nups)=2 from casos limit 1);
+
+-- ── o resultado vira lista de blocos, um por recurso ──────────────────────
+update casos set crps = '[{"nup":"44234156897202017","status":"✅ Provido",
+  "eventos":[{"tipo":"decisao","resumo":"Provido"}]},
+  {"nup":"44236480569202434","status":"⛔ Negado","eventos":[]}]'::jsonb
+ where id='aaaaaaaa-0000-0000-0000-000000000001';
+insert into r select 't12 o resultado guarda um bloco por recurso',
+  (select jsonb_array_length(crps)=2 from casos limit 1);
+insert into r select 't13 cada bloco tem o seu número e a sua situação',
+  (select (crps->1->>'nup')='44236480569202434' and (crps->1->>'status')='⛔ Negado'
+     from casos limit 1);
+
+-- ── a migração do formato antigo (número único → lista) ───────────────────
+insert into casos (id, cliente_id, titulo, fase, crps_nup)
+  values ('aaaaaaaa-0000-0000-0000-000000000009','11111111-1111-1111-1111-111111111111',
+          'Velho formato','inss','44233474809202068');
+update casos set crps_nups = jsonb_build_array(crps_nup)
+  where crps_nup is not null and btrim(crps_nup) <> '' and crps_nups = '[]'::jsonb;
+insert into r select 't14 o número único antigo migra para a lista',
+  (select crps_nups = '["44233474809202068"]'::jsonb
+     from casos where id='aaaaaaaa-0000-0000-0000-000000000009');
+
 select k, case when v then 'ok' else 'FALHOU' end as resultado
   from r order by (substring(k from '^t(\d+)'))::int;
 select count(*) filter (where not v or v is null) as falhas from r;

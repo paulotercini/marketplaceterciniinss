@@ -48,6 +48,15 @@ function parseFavoritos(html) {
   return out.filter(x => (vistos.has(x.nup) ? false : vistos.add(x.nup)));
 }
 
+// os números que um caso já tem: a lista crps_nups + o número único antigo
+function nupsDoCaso(k) {
+  const arr = Array.isArray(k.crps_nups) ? k.crps_nups : [];
+  const nups = arr.map(n => String(n).replace(/\D/g, '')).filter(Boolean);
+  const unico = (k.crps_nup || '').replace(/\D/g, '');
+  if (unico && !nups.includes(unico)) nups.push(unico);
+  return [...new Set(nups)];
+}
+
 // casa os favoritos com os clientes e casos do CRM; decide o destino de cada um
 function planejar(favoritos, clientes, casos) {
   const porNome = new Map();
@@ -72,7 +81,7 @@ function planejar(favoritos, clientes, casos) {
     const ativos = (casosDe.get(cli.id) || []).filter(k => k.fase !== 'encerrado');
     if (ativos.length === 0) { plano.semCaso.push({ ...fav, cliente: cli }); continue; }
     // já preenchido com este mesmo número em algum caso do cliente?
-    if (ativos.some(k => (k.crps_nup || '').replace(/\D/g, '') === fav.nup)) {
+    if (ativos.some(k => nupsDoCaso(k).includes(fav.nup))) {
       plano.jaTem.push({ ...fav, cliente: cli }); continue;
     }
     if (ativos.length > 1) { plano.multiplosCasos.push({ ...fav, cliente: cli, casos: ativos }); continue; }
@@ -119,7 +128,7 @@ async function main() {
   const favoritos = parseFavoritos(fs.readFileSync(arq, 'utf8'));
   console.log(`Li ${favoritos.length} recurso(s) nos favoritos.\n`);
   const clientes = await todas('clientes', 'id,nome');
-  const casos = await todas('casos', 'id,cliente_id,fase,titulo,beneficio,crps_nup');
+  const casos = await todas('casos', 'id,cliente_id,fase,titulo,beneficio,crps_nup,crps_nups');
   const p = planejar(favoritos, clientes, casos);
 
   const lista = (t, arr, f) => { if (arr.length) {
@@ -143,15 +152,24 @@ async function main() {
     console.log('\n— modo SECO: nada foi gravado. Confira acima e rode de novo com --aplicar.');
     return;
   }
-  let feitos = 0;
+  // agrupa por caso: um caso pode receber VÁRIOS recursos de uma vez
+  const porCaso = new Map();
   for (const x of p.aplicar) {
-    await sb(`/rest/v1/casos?id=eq.${x.caso.id}`, {
-      method: 'PATCH', headers: { Prefer: 'return=minimal' },
-      body: JSON.stringify({ crps_nup: x.nup }) });
-    feitos++;
+    if (!porCaso.has(x.caso.id)) porCaso.set(x.caso.id, { caso: x.caso, nups: [] });
+    porCaso.get(x.caso.id).nups.push(x.nup);
   }
-  console.log(`\n✔ ${feitos} caso(s) vinculados. O robô consulta na próxima rodada (npm run robo).`);
+  let casosFeitos = 0, nupsFeitos = 0;
+  for (const { caso, nups } of porCaso.values()) {
+    const atuais = nupsDoCaso(caso);
+    const uniao = [...new Set([...atuais, ...nups])];
+    await sb(`/rest/v1/casos?id=eq.${caso.id}`, {
+      method: 'PATCH', headers: { Prefer: 'return=minimal' },
+      body: JSON.stringify({ crps_nups: uniao }) });
+    casosFeitos++; nupsFeitos += nups.length;
+  }
+  console.log(`\n✔ ${nupsFeitos} recurso(s) vinculados em ${casosFeitos} caso(s). `
+    + `O robô consulta na próxima rodada (npm run robo).`);
 }
 
-module.exports = { parseFavoritos, normalizarNome, planejar };
+module.exports = { parseFavoritos, normalizarNome, planejar, nupsDoCaso };
 if (require.main === module) main().catch(e => { console.error('importação falhou:', e.message); process.exit(1); });
