@@ -46,11 +46,27 @@ o histórico, sem encher a ficha de comentários.
 
 **Linux/Mac (cron):** `0 7 * * 1-5  cd /caminho/robo-crps && npm run robo`
 
-## Quando o crachá vencer
+## A sessão do gov.br dura pouco — como rodar
 
-O robô não quebra: marca "crachá vencido" e para. O CRM mostra o aviso no
-Meu Dia e em ⚙️ Configurações. É só refazer o passo 2 e o robô volta na
-próxima rodada. Quanto tempo o crachá dura, a gente descobre no uso.
+O crachá copiado vale só alguns minutos (o navegador renova sozinho; a cópia
+não). Duas regras que resolvem isso:
+
+1. **Renove o crachá LOGO antes de rodar** (passo 2, e já rode o passo 3).
+   O robô mostra no começo quantos minutos o crachá ainda tem.
+2. **Se ele cair no meio** ("crachá recusado"), não tem problema: ele salvou
+   tudo o que já consultou. Renove o crachá e rode `npm run robo` de novo —
+   ele **retoma de onde parou**, pulando o que já fez hoje. Repita até o robô
+   dizer que não há mais nada por consultar. Na primeira vez, com o acervo
+   todo, podem ser 2 ou 3 rodadas; depois é rápido.
+
+O que aparece no meio é normal:
+- **HTTP 403 / "sem acesso a este recurso"**: você não é procurador daquele —
+  o robô pula e segue.
+- **HTTP -1 / "sem dados"**: a consulta demorou demais e foi cortada; entra
+  na próxima rodada.
+
+Para forçar uma releitura completa (ignorando o "já fiz hoje"), rode com
+`CRPS_REFORCAR=1` no `.env`.
 
 ## De onde vêm os números dos recursos
 

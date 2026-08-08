@@ -29,12 +29,10 @@ for (const linha of (fs.existsSync(path.join(__dirname, '.env'))
 const BASE = (process.env.SUPABASE_URL || '').replace(/\/$/, '');
 const CHAVE = process.env.SUPABASE_SERVICE_KEY || '';
 const CRPS = (process.env.CRPS_URL || 'https://consultaprocessos.inss.gov.br').replace(/\/$/, '');
-const PAUSA = Number(process.env.CRPS_PAUSA_MS || 6000);   // entre consultas
+const PAUSA = Number(process.env.CRPS_PAUSA_MS || 2500);   // entre consultas
 const PROCURADOR = process.env.CRPS_PROCURADOR || 'PAULO ROBERTO TERCINI';
-if (!BASE || !CHAVE) {
-  console.error('faltam SUPABASE_URL e SUPABASE_SERVICE_KEY (veja .env.exemplo)');
-  process.exit(1);
-}
+const REFORCAR = /^(1|sim|true)$/i.test(process.env.CRPS_REFORCAR || '');   // reconsultar o que já foi hoje
+const HOJE_SP = new Date().toLocaleDateString('sv', { timeZone: 'America/Sao_Paulo' });
 
 const log = (...a) => console.log(new Date().toLocaleString('pt-BR',
   { timeZone: 'America/Sao_Paulo' }), '·', ...a);
@@ -59,6 +57,21 @@ async function anotar(chave, valor) {
     method: 'POST', headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
     body: JSON.stringify({ chave, valor }),
   });
+}
+
+// lê a validade escrita dentro do próprio token (JWT: exp em segundos)
+function validadeToken(tok) {
+  try {
+    const p = (tok || '').split('.')[1];
+    if (!p) return null;
+    const j = JSON.parse(Buffer.from(p.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8'));
+    return j.exp ? j.exp * 1000 : null;
+  } catch (e) { return null; }
+}
+// um bloco já foi consultado HOJE? (para retomar sem refazer tudo)
+function consultadoHoje(bloco) {
+  return !!(bloco && bloco.consultado_em
+    && new Date(bloco.consultado_em).toLocaleDateString('sv', { timeZone: 'America/Sao_Paulo' }) === HOJE_SP);
 }
 
 // candidatos de token: o crachá cru, ou um campo dentro dele se for JSON
@@ -103,6 +116,10 @@ async function comentar(casoId, autorId, texto) {
 }
 
 async function main() {
+  if (!BASE || !CHAVE) {
+    console.error('faltam SUPABASE_URL e SUPABASE_SERVICE_KEY (veja .env.exemplo)');
+    process.exit(1);
+  }
   log('robô CRPS acordou');
 
   // 1. o crачhá — só a service_role lê esta tabela
@@ -144,48 +161,83 @@ async function main() {
     return;
   }
   await anotar('crps_estado', 'ok');
+  // avisa quanto tempo o crachá ainda tem — a sessão do gov.br dura pouco
+  const exp = validadeToken(token);
+  if (exp) {
+    const min = Math.round((exp - Date.now()) / 60000);
+    log(min > 0 ? `crachá válido por ~${min} min — vou consultar o máximo que der`
+                : 'crachá já no limite — pode cair no meio; renove se parar cedo');
+  }
+  const faltam = casos.reduce((s, k) => s + k.nups.filter(n =>
+    REFORCAR || !consultadoHoje(blocosPorNup(k.crps).get(n))).length, 0);
+  log(`${faltam} recurso(s) ainda por consultar hoje${REFORCAR ? ' (reforçando tudo)' : ''}`);
 
-  // 3+4+5. varre cada caso, cada um com um ou mais recursos
-  let ok = 0, novos = 0, erros = 0, vencido = false;
+  // 3+4+5. varre cada caso, cada um com um ou mais recursos.
+  // Um 401/403 num processo isolado = você não é procurador DAQUELE (segue a
+  // vida). Só desistimos do crachá se vierem VÁRIAS negativas seguidas — aí é
+  // o crachá que morreu, não o processo.
+  let ok = 0, novos = 0, erros = 0, semAcesso = 0, pulados = 0, seguidas = 0, vencido = false;
   for (const k of casos) {
     const antesPorNup = blocosPorNup(k.crps);   // o que já sabíamos, por número
     const blocos = [];
+    let mexeu = false;
     for (const nup of k.nups) {
-      let r = await consultarCRPS('esisrec', nup, token);
-      if (r.status !== 200) { await espera(1500); r = await consultarCRPS('recben', nup, token); }
-      if (r.status === 401) { vencido = true; break; }
-      if (r.status !== 200 || !r.json) { log(`  ${nup}: sem dados (HTTP ${r.status})`); erros++; await espera(PAUSA); continue; }
-
-      const novo = T.traduzirProcesso(r.json, { procurador: PROCURADOR });
-      novo.consultado_em = agora();
-      blocos.push(novo);
       const antes = antesPorNup.get(nup);
-      if (antes && autorIA) {   // já conhecíamos: comenta só o que é NOVO
-        const vistos = new Set((antes.eventos || []).map(T.chaveEvento));
-        const frescos = novo.eventos
-          .filter(e => !T.TIPOS_SILENCIOSOS.has(e.tipo) && !vistos.has(T.chaveEvento(e)))
-          .reverse();
-        for (const e of frescos) {
-          const data = T.dataParaISO(e.data).slice(0, 10).split('-').reverse().join('/');
-          await comentar(k.id, autorIA, `🖥 CRPS — ${e.icone} ${e.resumo}${data ? ` (${data})` : ''}`);
-          novos++;
+      // retomada: o que já consultamos hoje fica como está (o crачhá dura pouco)
+      if (!REFORCAR && consultadoHoje(antes)) { blocos.push(antes); pulados++; continue; }
+
+      let r = await consultarCRPS('esisrec', nup, token);
+      if (r.status !== 200) { await espera(1200); const rb = await consultarCRPS('recben', nup, token);
+        if (rb.status === 200) r = rb; }
+
+      if (r.status === 200 && r.json) {
+        mexeu = true; seguidas = 0;
+        const novo = T.traduzirProcesso(r.json, { procurador: PROCURADOR });
+        novo.consultado_em = agora();
+        blocos.push(novo);
+        if (antes && autorIA) {   // já conhecíamos: comenta só o que é NOVO
+          const vistos = new Set((antes.eventos || []).map(T.chaveEvento));
+          const frescos = novo.eventos
+            .filter(e => !T.TIPOS_SILENCIOSOS.has(e.tipo) && !vistos.has(T.chaveEvento(e)))
+            .reverse();
+          for (const e of frescos) {
+            const data = T.dataParaISO(e.data).slice(0, 10).split('-').reverse().join('/');
+            await comentar(k.id, autorIA, `🖥 CRPS — ${e.icone} ${e.resumo}${data ? ` (${data})` : ''}`);
+            novos++;
+          }
         }
+        log(`  ${nup}: ok${antes ? '' : ' (primeira carga)'}`);
+      } else if (r.status === 401) {   // crачhá recusado: pode ter morrido
+        seguidas++; semAcesso++;
+        if (antes) blocos.push(antes);
+        log(`  ${nup}: crachá recusado (HTTP 401)${r.dica ? ` · ${r.dica}` : ''}`);
+        if (seguidas >= 4) { vencido = true; }   // 4 seguidas: o crachá caiu de vez
+      } else if (r.status === 403) {   // você não é procurador DESTE — segue
+        seguidas = 0; semAcesso++;
+        if (antes) blocos.push(antes);
+        log(`  ${nup}: sem acesso a este recurso (HTTP 403)`);
+      } else {                         // timeout, 5xx, corpo estranho — segue
+        seguidas = 0; erros++;
+        if (antes) blocos.push(antes);
+        log(`  ${nup}: sem dados (HTTP ${r.status})${r.dica ? ` · ${r.dica}` : ''}`);
       }
-      log(`  ${nup}: ok${antes ? '' : ' (primeira carga)'}`);
       await espera(PAUSA);
+      if (vencido) break;
     }
-    if (blocos.length) {
+    if (mexeu && blocos.length) {
       await sb(`/rest/v1/casos?id=eq.${k.id}`, {
         method: 'PATCH', headers: { Prefer: 'return=minimal' },
         body: JSON.stringify({ crps: blocos }) });
       ok++;
     }
-    if (vencido) { log('crachá caiu durante a varredura — parando e pedindo um novo.'); await anotar('crps_estado', 'vencido'); break; }
+    if (vencido) { log('4 crachás recusados seguidos — a sessão caiu. Renove no CRM e rode de novo (ele retoma de onde parou).'); await anotar('crps_estado', 'vencido'); break; }
   }
 
   await anotar('crps_visto_em', agora());
   if (!vencido) await anotar('crps_sync_em', agora());
-  log(`fim — ${ok} caso(s) atualizados, ${novos} andamento(s) novo(s), ${erros} sem dados`);
+  log(`fim — ${ok} caso(s) atualizados, ${novos} andamento(s) novo(s), `
+    + `${pulados} já feitos hoje, ${semAcesso} sem acesso, ${erros} sem dados`);
+  if (vencido) log('↻ rode de novo depois de renovar o crachá — ele continua de onde parou.');
 }
 
 // os números de um caso: a lista crps_nups, ou o número único antigo
@@ -205,5 +257,5 @@ function blocosPorNup(crps) {
   return m;
 }
 
-module.exports = { candidatosDeToken, numerosDe, blocosPorNup };
+module.exports = { candidatosDeToken, numerosDe, blocosPorNup, validadeToken, consultadoHoje };
 if (require.main === module) main().catch(e => { console.error('robô CRPS falhou:', e.message); process.exit(1); });
