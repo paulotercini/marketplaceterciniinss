@@ -807,7 +807,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08d · esteira e aniversários</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.08e · recurso CRPS</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1710,6 +1710,7 @@ function renderMeuDia(){
     .concat([`<button class="fchip ${filtroVencidas?"on":""}" id="chip-vencidas" style="margin-left:auto">🔴 mostrar vencidas (${nVenc})</button>`]);
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chips.join("")}</div>`
+    + avisoCRPS()
     + blocoRotinas()
     + blocoApos()
     + blocoCadunico()
@@ -2824,12 +2825,53 @@ async function renderConfig(){
              ${fmtTS(cfgApp("zap_visto_em"))} às ${horaSP(cfgApp("zap_visto_em"))}</span>`:""}
            <button class="btn-mini" onclick="ajudaQR()">como ligar / ler o QR</button>
          </div>
-       </div>
-       <p class="meio-sub" style="margin-top:14px">As mudanças são guardadas assim que você
+       </div>`
+
+    // ── o robô dos recursos (CRPS) ───────────────────────────────────────
+    + (()=>{ const e = estadoCRPS();
+      return `<h3 class="secao">🖥 Recurso administrativo (CRPS)</h3>
+       <div class="cfg-cx">
+         <div class="cfg-linha"><span class="zap-estado" style="margin:0">
+           <i style="background:${e.cor}"></i>${esc(e.txt)}</span>
+           ${cfgApp("crps_sync_em")?`<span class="meio-sub">última varredura em
+             ${fmtTS(cfgApp("crps_sync_em"))} às ${horaSP(cfgApp("crps_sync_em"))}</span>`:""}
+         </div>
+         <p class="meio-sub" style="margin:8px 0">O robô consulta os recursos no e-Recursos do
+            INSS e escreve os andamentos nas fichas. O login do gov.br não pode ser automatizado,
+            então ele usa um <b>crachá</b> que você renova quando cai:</p>
+         <ol class="meio-sub" style="margin:0 0 8px 18px;line-height:1.7">
+           <li>Entre no <b>gov.br</b> (consultaprocessos.inss.gov.br) e faça login.</li>
+           <li>Clique no atalho <b>Copiar crachá do CRPS</b> — arraste este botão para a barra de
+               favoritos uma vez: <a class="btn-mini" href="${BOOKMARKLET_CRPS}"
+               onclick="return false" style="cursor:grab">🔖 Copiar crachá do CRPS</a></li>
+           <li>Volte aqui, cole no campo abaixo e salve.</li>
+         </ol>
+         <textarea id="cf-crps-cracha" rows="3" placeholder="cole aqui o crachá copiado"
+           style="width:100%;font-family:monospace;font-size:11px"></textarea>
+         <div class="form-linha" style="margin-top:6px">
+           <button class="btn" id="cf-crps-salvar">Salvar crachá</button>
+           <span class="meio-sub">o crachá fica guardado num cofre que só o robô abre — não aparece nas telas.</span>
+         </div>
+       </div>`; })()
+
+    + `<p class="meio-sub" style="margin-top:14px">As mudanças são guardadas assim que você
           sai do campo. Não há botão de salvar — e nem desfazer.</p>`;
 
   ligarConfig();
 }
+
+// estado do robô do CRPS, lido do config (nunca o crачhá em si)
+function estadoCRPS(){
+  const e = cfgApp("crps_estado")||"sem_cracha";
+  if(e==="ok")     return {cor:"#2e7d32", txt:"crachá ativo — o robô está consultando"};
+  if(e==="vencido")return {cor:"#c62828", txt:"crachá vencido — cole um novo para religar"};
+  return {cor:"#9e9e9e", txt:"sem crachá ainda — cole um para começar"};
+}
+// o atalho que copia o crачhá do gov.br: lê o login e joga na área de transferência
+const BOOKMARKLET_CRPS = "javascript:(function(){var t=localStorage.getItem('ifs_auth');"
+  + "if(!t){alert('Faça login no gov.br (consultaprocessos.inss.gov.br) primeiro.');return;}"
+  + "navigator.clipboard.writeText(t).then(function(){alert('Crachá copiado! Cole no CRM em "
+  + "Configurações → Recurso CRPS.');},function(){prompt('Copie o crachá:',t);});})()";
 
 function ligarConfig(){
   const guarda = (sel, fn) => document.querySelectorAll(sel).forEach(fn);
@@ -2861,6 +2903,19 @@ function ligarConfig(){
   const cfgSalva = (id, chave, valor) => {
     const el = document.getElementById(id); if(!el) return;
     el.onchange = async ()=>{ await guardarCfgApp(chave, valor(el)); aviso("Guardado ✔", false); };
+  };
+  // salvar o crachá do CRPS: vai para o cofre (RPC), nunca para uma coluna lida
+  const btCrps = document.getElementById("cf-crps-salvar");
+  if(btCrps) btCrps.onclick = async ()=>{
+    const t = (document.getElementById("cf-crps-cracha").value||"").trim();
+    if(!t) return aviso("Cole o crachá antes de salvar");
+    try{
+      await api("/rest/v1/rpc/crps_guardar_cracha",{method:"POST",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify({p_cracha:t})});
+      (D.config=D.config||new Map()).set("crps_estado","ok");
+      aviso("Crachá guardado ✔ — o robô volta a consultar na próxima rodada", false);
+      renderConfig();
+    }catch(e){ aviso("Não consegui guardar o crachá"); }
   };
   cfgSalva("cf-ini","zap_hora_inicio", el=>el.value||"08:00");
   cfgSalva("cf-fim","zap_hora_fim",    el=>el.value||"18:00");
@@ -3967,9 +4022,10 @@ async function abrirFicha(cliId){
         <div class="sub-menu">
           <button class="${subAba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
           <button class="${subAba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${(k.datajud&&k.datajud.ultimo)?"":" <span class=\'meio-sub\'>(sem dados)</span>"}</button>
+          <button class="${subAba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${(k.crps&&(k.crps.eventos||[]).length)?"":" <span class=\'meio-sub\'>(sem dados)</span>"}</button>
         </div>
       </div>
-      ${subAba==="cnj" ? painelCNJ(k) : painelEscritorio(k, andsVis)}
+      ${subAba==="cnj" ? painelCNJ(k) : subAba==="crps" ? painelCRPS(k) : painelEscritorio(k, andsVis)}
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>`;
     })()}
   </div>
@@ -4712,6 +4768,14 @@ async function marcarRevisado(ids){
 // A rede por baixo da rede: a obrigatoriedade garante que cada COMENTÁRIO
 // fez uma escolha; esta lista garante que cada PROCESSO tenha um próximo
 // passo. Ativo, sem tarefa aberta e sem lembrete = à deriva.
+// quando o crachá do gov.br vence, o robô do CRPS para — um lembrete discreto
+// no Meu Dia evita que os recursos fiquem dias sem atualizar sem ninguém notar.
+function avisoCRPS(){
+  if((cfgApp("crps_estado")||"")!=="vencido") return "";
+  return `<div class="sem-acao" style="background:#FDECEA;border-color:#F5C6C0">
+    <b>🖥 Recurso (CRPS): crachá vencido.</b> O robô parou de atualizar os recursos.
+    <button class="btn-mini" onclick="visao='config';render()">renovar o crachá</button></div>`;
+}
 function blocoSemAcao(){
   const ks = ativos().filter(k=>!k.prazo && !k.exigencia_prazo
     && !(D.tarefasPorCaso.get(k.id)||[]).length);
@@ -5066,6 +5130,74 @@ function painelEscritorio(k, ands){
       ${vistos(a)}
       ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}</li>`;
   }).join("") || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
+}
+
+// 🖥 Recurso administrativo no CRPS (e-Recursos). O robô (robo-crps) preenche
+// casos.crps; aqui a gente só mostra, no mesmo espírito do painel do CNJ:
+// o oficial em quadro próprio, sem misturar com os andamentos do escritório.
+function painelCRPS(k){
+  const campoNup = `<div class="form-linha" style="margin-top:8px">
+      <input id="crps-nup-${k.id}" value="${esc(k.crps_nup||"")}"
+        placeholder="número do recurso (ex.: 44233.139765/2025-37)" style="flex:1">
+      <button class="btn-mini" onclick="salvarCrpsNup('${k.id}')">salvar número</button>
+    </div>`;
+  const t = k.crps;
+  if(!t || !(t.eventos||[]).length){
+    return `<div class="caso">
+      <p class="meio-sub">${k.crps_nup
+        ? "Número guardado. O robô do CRPS vai consultar na próxima rodada e o histórico aparece aqui."
+        : "Sem recurso vinculado. Cole o número do processo de recurso (o da URL do e-Recursos) para o robô acompanhar."}</p>
+      ${campoNup}
+      ${estadoCRPS().cor==="#c62828"?`<p class="meio-sub" style="color:#c62828;margin-top:6px">⚠ O crachá do gov.br venceu — renove em ⚙️ Configurações para o robô voltar a consultar.</p>`:""}
+    </div>`;
+  }
+  const evs = t.eventos, ruido = evs.filter(e=>e.tipo==="ruido");
+  const cheios = evs.filter(e=>e.tipo!=="ruido");
+  const linha = e=>`<li class="${(e.tipo==="decisao"||e.tipo==="pauta")?"decisao":""}">
+      <span class="mov-data">${esc((e.data||"").slice(0,10)||"—")}</span>
+      <span class="mov-txt">${esc(e.icone||"•")} <b>${esc(e.resumo||e.bruto||"")}</b>
+        ${e.docs?`<span class="meio-sub">📎 ${e.docs} documento${e.docs>1?"s":""}</span>`:""}</span>
+    </li>`;
+  return `<div class="caso" style="margin-bottom:10px">
+    <div class="rotulo-caso">e-Recursos · ${esc(t.num_proc||t.nup||"")}</div>
+    <div style="margin-top:6px;font-size:14px"><b>Situação:</b> ${esc(t.status||"—")}</div>
+    ${t.orgao_atual?`<div class="meio-sub" style="margin-top:2px">📍 onde está agora: ${esc(tituloOrgao(t.orgao_atual))}</div>`:""}
+    <div class="form-linha" style="margin-top:8px">
+      <button class="btn-mini" onclick="copiarCrps('${k.id}')">💬 copiar mensagem ao cliente</button>
+      <span class="meio-sub">consulta de ${t.consultado_em?fmt(dataSP(t.consultado_em)):"—"}</span>
+    </div>
+  </div>
+  <div class="caso">
+    <div class="rotulo-caso">histórico do recurso (${cheios.length} andamento${cheios.length>1?"s":""})</div>
+    <ul class="mov-lista">${cheios.map(linha).join("") || "<p class='meio-sub'>Sem andamentos.</p>"}</ul>
+    ${ruido.length?`<details style="margin-top:6px"><summary style="cursor:pointer;color:var(--cinza);font-size:12px">
+      + ${ruido.length} movimentação interna (encaminhamentos automáticos, cadastro)</summary>
+      <ul class="mov-lista">${ruido.map(linha).join("")}</ul></details>`:""}
+    <div class="rotulo-caso" style="margin-top:10px">número do recurso</div>
+    ${campoNup}
+  </div>`;
+}
+
+// monta uma mensagem curta e clara para o cliente com a situação do recurso
+function copiarCrps(casoId){
+  const k = D.casoPorId.get(casoId), t = k && k.crps; if(!t) return;
+  const c = D.cliPorId.get(k.cliente_id);
+  const nome = c ? (c.nome||"").split(/\s+/)[0] : "";
+  const txt = `Olá${nome?", "+nome:""}! Sobre o seu recurso no INSS:\n\n`
+    + `${(t.status||"em andamento").replace(/^[^ ]+ /,"")}.\n`
+    + (t.orgao_atual?`Situação atual: ${tituloOrgao(t.orgao_atual)}.\n`:"")
+    + `\nQualquer novidade a gente avisa. 🤝`;
+  copiar(txt, "Mensagem do recurso copiada");
+}
+
+async function salvarCrpsNup(casoId){
+  const el = document.getElementById("crps-nup-"+casoId);
+  const v = (el.value||"").trim()||null;
+  const k = D.casoPorId.get(casoId); k.crps_nup = v;
+  await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({crps_nup:v})});
+  aviso(v?"Número do recurso guardado ✔ — o robô consulta na próxima rodada":"Número removido", false);
+  abrirFicha(clienteAberto);
 }
 
 function painelCNJ(k){
