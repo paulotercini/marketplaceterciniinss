@@ -43,6 +43,30 @@ document.getElementById('b-teste').onclick = () => {
   });
 };
 
+// A prova de vida do outro lado: a extensão está mesmo rodando NA PÁGINA que
+// está aberta? Sem esta resposta, "não roda ali" e "roda, mas não viu a
+// busca" ficam iguais — e o console do navegador nem sempre mostra o que a
+// extensão escreve, então não dá para depender dele.
+document.getElementById('b-pagina').onclick = () => {
+  res.style.color = '#5B6069';
+  res.textContent = 'perguntando à página…';
+  chrome.tabs.query({ active: true, currentWindow: true }, ([aba]) => {
+    if (!aba) { res.textContent = 'nenhuma aba ativa'; return; }
+    chrome.tabs.sendMessage(aba.id, { tipo: 'vivo' }, r => {
+      if (chrome.runtime.lastError || !r) {
+        res.style.color = '#B3261E';
+        res.textContent = 'a extensão NÃO está rodando nesta página — '
+          + 'clique no botão do portal, que ela se instala na hora';
+        return;
+      }
+      res.style.color = r.coletor ? '#1E6F50' : '#B4530A';
+      res.textContent = r.coletor
+        ? 'extensão na página ✔ · coletor dentro da página ✔'
+        : 'extensão na página ✔ · o coletor ainda não subiu';
+    });
+  });
+};
+
 document.getElementById('b-pat').onclick  = () => rodar('pat');
 document.getElementById('b-crps').onclick = () => rodar('crps');
 document.getElementById('cfg').onclick = e => {

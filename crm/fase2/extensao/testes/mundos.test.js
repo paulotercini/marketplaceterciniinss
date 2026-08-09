@@ -49,10 +49,30 @@ test('dentro da página não há chrome.* nem ponte para o CRM', () => {
   assert.match(src, /postMessage\(/, 'sem postMessage, o coletado não chega à extensão');
 });
 
-test('a ponte se anuncia, e cobra o coletor se ele não subir', () => {
+test('a ponte se anuncia, e espera o coletor antes de mandar rodar', () => {
   const src = semComentario('ponte-pat.js');
   assert.match(src, /\[CRM\]/, 'sem a linha no console, "não carregou" vira mais um silêncio');
-  assert.match(src, /coletorNoAr/, 'ninguém confere se o coletor chegou a subir');
+  assert.match(src, /__crmColetorNoAr/, 'ninguém confere se o coletor chegou a subir');
+});
+
+// O console do navegador nem sempre mostra o que a extensão escreve: num deles
+// não apareceu uma linha sequer, com a extensão instalada e ativa. A prova de
+// vida tem de vir por um caminho que não dependa disso.
+test('a página responde ao "você está aí?" do popup', () => {
+  assert.match(semComentario('comum.js'), /tipo !== 'vivo'/,
+    'sem a prova de vida, "não roda ali" e "roda mas não viu" ficam iguais');
+  assert.match(semComentario('popup.js'), /sendMessage\(aba\.id, \{ tipo: 'vivo' \}/,
+    'o popup deixou de perguntar à página');
+});
+
+// Se o carregamento automático do script não acontecer — e num navegador não
+// aconteceu, sem erro nenhum —, o botão ainda tem de funcionar.
+test('o botão reinjeta os arquivos antes de chamar a página', () => {
+  const src = semComentario('fundo.js');
+  assert.match(src, /files: arquivos/, 'o botão voltou a depender do carregamento automático');
+  for (const arq of ['tela.js', 'comum.js', 'ponte-pat.js'])
+    assert.match(codigo(arq), /window\.__crm|window\.CRM =|window\.faixa =/,
+      `${arq} não tem guarda de reinjeção — declarado duas vezes, o arquivo inteiro cai`);
 });
 
 test('todo arquivo prometido no manifesto existe', () => {

@@ -17,6 +17,17 @@ chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
     // quem tem acesso ao chrome.storage é este worker: a data da última coleta
     // vai como argumento, já pronta
     const { ultima_pat } = await chrome.storage.local.get(['ultima_pat']);
+    // REINJETA antes de chamar. O carregamento automático do script na página
+    // depende do navegador — e num deles simplesmente não aconteceu, sem erro
+    // nenhum. Injetar aqui usa a permissão de domínio da extensão e não
+    // depende disso. Os arquivos têm guarda de "já rodei": repetir é inócuo.
+    const arquivos = msg.fonte === 'pat'
+      ? ['tela.js', 'comum.js', 'ponte-pat.js']
+      : ['tela.js', 'comum.js', 'crps.js'];
+    try {
+      await chrome.scripting.executeScript(
+        { target: { tabId: usar.id, allFrames: true }, files: arquivos });
+    } catch (e) { console.warn('[CRM] reinjeção falhou:', e.message); }
     try {
       // allFrames porque o portal virou micro-frontend: a tela de tarefas pode
       // estar num quadro interno, e chamar só o de cima acharia a página vazia

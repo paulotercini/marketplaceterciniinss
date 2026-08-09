@@ -15,6 +15,11 @@
 // desenha é a ponte. Daqui só saem recados por postMessage.
 
 (() => {
+  // a ponte é reinjetada a cada clique no botão, e reinjeta este arquivo
+  // junto; instalar o gancho duas vezes duplicaria cada resposta da lista
+  if (window.__crmColetor) return;
+  window.__crmColetor = true;
+
   const ALVO_LISTA = /\/requerimento\/ec\/tarefa\/consulta/;
   let cracha = null, coletando = false, esperando = false;
   const OUT = { versao: 3, quando: null, total: null, lista: [], detalhes: [], falhas: [] };
