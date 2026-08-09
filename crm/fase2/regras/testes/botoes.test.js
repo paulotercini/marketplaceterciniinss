@@ -204,12 +204,13 @@ test('a linha mostra o nome e as datas — e nada de benefício ou marcador', pu
   await pag.evaluate(() => { visao = 'fase:inss'; render(); });
   const l = await pag.$eval('.cartao[data-cli="c0"]', el => ({
     temNome: !!el.querySelector('.nome'),
-    temMeta: !!el.querySelector('.meta'),
+    // como no To Do: a data mora numa segunda linha, embaixo do nome
+    dataAbaixoDoNome: !!el.querySelector('.info .nome + .meta .dt'),
     temMarcador: !!el.querySelector('.marc-chip'),
     temBeneficio: /Aposentadoria|B41/.test(el.textContent),
   }));
   assert.ok(l.temNome);
-  assert.equal(l.temMeta, false, 'voltou a segunda linha de texto');
+  assert.ok(l.dataAbaixoDoNome, 'a data precisa ficar embaixo do nome, como no To Do');
   assert.equal(l.temMarcador, false, 'marcador é assunto de ficha, não de lista');
   assert.equal(l.temBeneficio, false, 'o benefício voltou para a lista');
 });
@@ -221,27 +222,44 @@ test('a linha mostra o nome e as datas — e nada de benefício ou marcador', pu
 test('a data é a do caso DESTA lista, não a mais próxima do cliente', pular, async () => {
   const dias = n => pag.evaluate(n => DIA(n), n);
   const inss = await dias(20), judicial = await dias(2);
-  const ddmm = iso => iso.slice(8, 10) + '.' + iso.slice(5, 7);
+  const ddmm = iso => iso.slice(8, 10) + '.' + iso.slice(5, 7);   // como a etiqueta escreve
 
   await pag.evaluate(() => { visao = 'fase:inss'; render(); });
-  const naInss = await pag.$eval('.cartao[data-cli="c0"] .calha', e => e.textContent.trim());
-  assert.ok(naInss.startsWith(ddmm(inss)),
+  const naInss = await pag.$eval('.cartao[data-cli="c0"] .meta .dt', e => e.textContent.trim());
+  assert.ok(naInss.includes(ddmm(inss)),
     `na lista do INSS devia aparecer ${ddmm(inss)} (o prazo do caso do INSS), veio "${naInss}"`);
-  assert.ok(!naInss.startsWith(ddmm(judicial)),
+  assert.ok(!naInss.includes(ddmm(judicial)),
     'vazou para a lista do INSS o prazo do caso judicial');
 
   await pag.evaluate(() => { visao = 'fase:judicial'; render(); });
-  const naJudicial = await pag.$eval('.cartao[data-cli="c0"] .calha', e => e.textContent.trim());
-  assert.ok(naJudicial.startsWith(ddmm(judicial)),
+  const naJudicial = await pag.$eval('.cartao[data-cli="c0"] .meta .dt', e => e.textContent.trim());
+  assert.ok(naJudicial.includes(ddmm(judicial)),
     `na lista Judicial devia aparecer ${ddmm(judicial)}, veio "${naJudicial}"`);
   await pag.evaluate(() => { visao = 'fase:inss'; render(); });
 });
 
 test('perícia e audiência aparecem com data e hora', pular, async () => {
   await pag.evaluate(() => { visao = 'fase:inss'; render(); });
-  const per = await pag.$eval('.cartao[data-cli="c1"] .chip.per', e => ({
+  const per = await pag.$eval('.cartao[data-cli="c1"] .dt.ev', e => ({
     txt: e.textContent.trim(), dica: e.getAttribute('title') }));
   assert.match(per.txt, /\d{2}\.\d{2}\s+\d{2}:\d{2}/, `veio "${per.txt}"`);
   assert.match(per.dica, /Perícia médica/);
   assert.match(per.dica, /APS Franca/, 'o local só na dica, para não ocupar a linha');
+});
+
+// o To Do escreve "Hoje" e "Amanhã" por extenso, e o resto com o dia da
+// semana na frente. maisDias() do app pula para o próximo dia ÚTIL — usá-la
+// aqui faria a sexta-feira dizer que amanhã é segunda.
+test('a data é escrita como no To Do', pular, async () => {
+  const r = await pag.evaluate(() => {
+    const d = n => { const x = new Date(hoje() + 'T12:00:00'); x.setDate(x.getDate() + n);
+                     return x.toLocaleDateString('sv'); };
+    return { hoje: dataRelativa(hoje()), amanha: dataRelativa(d(1)),
+             ontem: dataRelativa(d(-1)), longe: dataRelativa('2026-08-07'), vazio: dataRelativa(null) };
+  });
+  assert.equal(r.hoje, 'Hoje');
+  assert.equal(r.amanha, 'Amanhã');
+  assert.equal(r.ontem, 'Ontem');
+  assert.equal(r.longe, 'sex, 07.08');
+  assert.equal(r.vazio, '');
 });
