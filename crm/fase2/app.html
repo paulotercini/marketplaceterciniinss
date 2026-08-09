@@ -839,6 +839,8 @@
     border:1px solid var(--borda);resize:vertical;background:var(--branco)}
   .enc-sug{display:flex;gap:5px;flex-wrap:wrap;margin:7px 0}
   .enc-sug .btn-rap{font-size:12px;padding:4px 10px}
+  .enc-sug .btn-rap.on{background:#E7EEFB;border-color:var(--azul);color:var(--azul-escuro);font-weight:650}
+  .enc-dica{font-size:11.5px;color:var(--cinza);align-self:center}
   /* 📣 Novidades: a caixa de entrada do que os portais trouxeram */
   .nov{display:flex;align-items:flex-start;gap:10px;background:var(--branco);
     border:1px solid var(--borda);border-radius:10px;padding:10px 12px;margin-bottom:5px}
@@ -1153,7 +1155,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.37 · encaminhar da caixa de entrada</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.38 · mais de um pedido no mesmo encaminhamento</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3268,7 +3270,8 @@ function caixaEncaminhar(a){
     </div>
     <textarea class="enc-txt" rows="2" placeholder="o que a pessoa precisa fazer…"></textarea>
     ${sugestoes.length?`<div class="enc-sug">${sugestoes.map(s=>
-      `<button class="btn-rap" data-sug="${esc(s)}">${esc(s)}</button>`).join("")}</div>`:""}
+      `<button class="btn-rap" data-sug="${esc(s)}">${esc(s)}</button>`).join("")}
+      <span class="enc-dica">pode marcar mais de uma</span></div>`:""}
     <div class="enc-linha">
       <button class="esc-reg" data-enviar="${a.id}">Encaminhar</button>
       <button class="btn-mini" data-cancelar="1">cancelar</button>
@@ -3294,6 +3297,16 @@ function sugestoesDoTexto(t){
   return ["Entrar em contato com o cliente", "Conferir no portal e voltar a comentar"];
 }
 
+// pedir duas coisas de uma vez é o caso comum — "pede o PPP" E "avisa o
+// cliente". As sugestões marcam e desmarcam, e viram itens em linhas: na
+// ficha o colaborador lê dois pedidos, não uma frase emendada na outra.
+// O que foi digitado à mão é uma linha como as outras e nunca se perde.
+function semMarcador(l){ return String(l||"").replace(/^[•\-]\s*/,"").trim(); }
+function montarPedido(linhas){
+  const l = linhas.filter(Boolean);
+  return l.length>1 ? l.map(x=>"• "+x).join("\n") : (l[0]||"");
+}
+
 function ligarEncaminhar(){
   document.querySelectorAll("[data-encaminhar]").forEach(b=>b.onclick=e=>{
     e.stopPropagation();
@@ -3312,7 +3325,13 @@ function ligarEncaminhar(){
   });
   cx.querySelectorAll("[data-sug]").forEach(b=>b.onclick=()=>{
     const t = cx.querySelector(".enc-txt");
-    t.value = t.value ? `${t.value} ${b.dataset.sug}` : b.dataset.sug;
+    const frase = b.dataset.sug;
+    const linhas = t.value.split("\n").map(semMarcador).filter(Boolean);
+    const i = linhas.indexOf(frase);
+    if(i>=0) linhas.splice(i,1); else linhas.push(frase);
+    b.classList.toggle("on", i<0);
+    t.value = montarPedido(linhas);
+    t.rows = Math.max(2, t.value.split("\n").length);
     t.focus();
   });
   cx.querySelector("[data-cancelar]").onclick = () => { encaminhando=null; render(); };
