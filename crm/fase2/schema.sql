@@ -2091,3 +2091,23 @@ create index if not exists andamentos_resposta on andamentos (responde_a)
 -- ══════════════════════════════════════════════════════════════════════════
 alter table casos add column if not exists ronda jsonb not null default '{}'::jsonb;
 alter table casos add column if not exists processo_link text;
+
+-- ══════════════════════════════════════════════════════════════════════════
+-- O que estamos pedindo, de fato.
+--
+-- "B42 — aposentadoria por tempo de contribuição" é o que o INSS registra, e
+-- não diz nada para quem trabalha com isso o dia inteiro. Debaixo do mesmo
+-- B42 o escritório pede reconhecimento de tempo rural, de tempo especial, de
+-- magistério, redução por deficiência — e com frequência mais de um ao mesmo
+-- tempo.
+--
+-- Por que uma LISTA de marcadores e não uma sub-espécie: porque eles se
+-- somam. Rural + especial existe; rural + especial + deficiência existe. Uma
+-- lista fechada precisaria de um item para cada combinação (quinze só com
+-- quatro marcadores) e ainda erraria na décima sexta.
+--
+-- Não substitui a espécie: o B42 continua B42. Muda o que a ficha diz de
+-- relance, e o que o checklist pede de documento.
+-- ══════════════════════════════════════════════════════════════════════════
+alter table casos add column if not exists marcadores jsonb not null default '[]'::jsonb;
+create index if not exists casos_marcadores on casos using gin (marcadores);

@@ -472,6 +472,15 @@
     background:#E7EEFB;border:1px solid #C3D6F5;color:var(--azul-escuro)}
   .crps-org.inst2{background:#F1EAFB;border-color:#DACBF2;color:#5B3A9B}
   .crps-org small{font-weight:500;opacity:.8;font-size:10.5px}
+  /* o que está sendo pedido: marcadores que se somam (rural + especial…) */
+  .marc-linha{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:2px 0 8px}
+  .marc-rot{font-size:10px;letter-spacing:.08em;font-weight:700;color:var(--cinza)}
+  .marc{border:1px solid var(--borda);background:var(--branco);color:var(--cinza);
+    border-radius:999px;padding:2px 11px;font:inherit;font-size:12px;font-weight:600;
+    cursor:pointer;white-space:nowrap;opacity:.65}
+  .marc:hover{opacity:1;border-color:var(--marc);color:var(--marc)}
+  .marc.on{opacity:1;background:var(--marc);border-color:var(--marc);color:#fff}
+  .chip.marc-chip{background:var(--branco);border:1px solid var(--marc);color:var(--marc)}
   /* dois recursos numa ficha só: o aviso e a lista da separação */
   .juntos{border-left:3px solid #C6541A;background:#FFF7F2;margin-bottom:12px}
   .sep-lista{margin-top:9px;border:1px solid var(--borda);border-radius:8px;overflow:hidden}
@@ -999,7 +1008,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.17 · um caso para cada recurso</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.18 · o que estamos pedindo</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1470,7 +1479,7 @@ async function carregar(){
   // índice de pesquisa por cliente
   clientes.forEach(c=>{
     const ks = D.casosDoCliente.get(c.id)||[];
-    const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+(k.beneficio||"")+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
+    const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+(k.beneficio||"")+" "+rotuloDoPedido(k)+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
     // guarda também só os dígitos: acha o processo tanto por "0000001-14"
     // quanto por "000000114", e o CPF com ou sem ponto
     c._ix = texto + " " + texto.replace(/\D/g, "");
@@ -1720,6 +1729,10 @@ function cartaoCliente(cli, casosMostrar){
         ${ks.some(k=>k.urgente)?`<span class="chip urg">🔥 URGENTE</span>`:""}
         ${[...new Set(ks.map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
         ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
+        ${/* o que está sendo pedido: 🌾 rural, ⚗️ especial… — é o que faz o
+             B42 de um cliente parecer diferente do B42 do outro na lista */""}
+        ${[...new Set(ks.flatMap(marcadoresDe))].map(s=>{ const m=POR_SLUG.get(s);
+          return `<span class="chip marc-chip" style="--marc:${m.cor}" title="${esc(m.dica)}">${m.icone} ${esc(m.rot)}</span>`;}).join("")}
         ${ks.map(chipExig).join("")}
         ${ks.map(chipDcb).join("")}
         ${(kp=>chipPrazo(dataProx, kp&&kp.lembrar_motivo))(ks.find(x=>x.prazo===dataProx))}
@@ -3630,6 +3643,16 @@ function renderDash(){
     <div class="card" style="grid-column:1/-1"><h4>Casos ativos por benefício</h4>
       ${barras(Object.entries(at.reduce((m,k)=>{ if(k.beneficio) m[k.beneficio]=(m[k.beneficio]||0)+1; return m; },{}))
         .sort((a,b)=>b[1]-a[1]).slice(0,10))}</div>
+    ${/* o que o escritório de fato pede — a conta que o "benefício" sozinho
+         não dá, porque quase tudo cai em B42. Um caso conta em cada marcador
+         que tem: rural + especial aparece nas duas barras, de propósito. */""}
+    <div class="card" style="grid-column:1/-1"><h4>O que estamos pedindo (marcadores)</h4>
+      ${barras(MARCADORES.map(m=>[`${m.icone} ${m.rot}`,
+        at.filter(k=>marcadoresDe(k).includes(m.slug)).length]).filter(p=>p[1])
+        .sort((a,b)=>b[1]-a[1]))
+        || "<p class='meio-sub'>Nenhum caso marcado ainda — marque na ficha, na linha PEDIDO.</p>"}
+      ${(()=>{ const combi = at.filter(k=>marcadoresDe(k).length>1).length;
+        return combi?`<p class="meio-sub" style="margin-top:6px">${combi} caso(s) somam mais de um pedido.</p>`:""; })()}</div>
   </div>`;
 }
 
@@ -5264,7 +5287,7 @@ async function salvarCampo(campo, cliId){
 function reindexarCliente(c){
   const ks = D.casosDoCliente.get(c.id)||[];
   const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+
-    (k.beneficio||"")+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
+    (k.beneficio||"")+" "+rotuloDoPedido(k)+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
   c._ix = texto + " " + texto.replace(/\D/g, "");
   c._nome_ix = dsa(c.nome);
 }
@@ -5384,6 +5407,125 @@ function campoFato(k, campo){
   </div>`;
 }
 
+
+// ── cópia fiel de regras/marcadores.js ────────────────────────────────────
+// O app.html é arquivo único e não faz require; o teste marcadores.test.js
+// compara o código-fonte das duas cópias e o catálogo inteiro.
+const MARCADORES = [
+  { slug: 'rural', rot: 'Rural', icone: '🌾', cor: '#7A8B2E',
+    dica: 'reconhecimento de tempo de atividade rural',
+    docs: [
+      'Autodeclaração rural (formulário do INSS)',
+      'Prova material do período rural (notas de produtor, ITR, contrato de parceria, escritura)',
+      'Documentos de escola/igreja/sindicato com a qualificação de lavrador',
+      'Indicar testemunhas do período rural (nome, telefone, período que conviveu)',
+    ] },
+  { slug: 'especial', rot: 'Especial', icone: '⚗️', cor: '#1F6FB2',
+    dica: 'reconhecimento de tempo especial (exposição a agente nocivo)',
+    docs: [
+      'PPP — Perfil Profissiográfico Previdenciário de cada empresa',
+      'LTCAT ou laudo técnico das condições ambientais',
+      'CTPS e ficha de registro dos períodos alegados como especiais',
+      'Conferir no PPP: agente nocivo, técnico responsável e período sem lacuna',
+    ] },
+  { slug: 'pcd', rot: 'Deficiência', icone: '♿', cor: '#7A5AA8',
+    dica: 'aposentadoria da pessoa com deficiência (LC 142/2013)',
+    docs: [
+      'Laudos, exames e relatórios que comprovem a deficiência e desde quando',
+      'Requerer a avaliação biopsicossocial (perícia médica + serviço social)',
+      'Levantar os períodos trabalhados COM a deficiência (é o que define o grau)',
+    ] },
+  { slug: 'professor', rot: 'Professor', icone: '🍎', cor: '#C6541A',
+    dica: 'tempo de magistério na educação básica',
+    docs: [
+      'Certidão de tempo de magistério da escola/secretaria (com as funções exercidas)',
+      'CTPS e contracheques do período de magistério',
+      'Conferir se todo o período é de educação básica — coordenação e direção contam, ensino superior não',
+    ] },
+];
+
+const POR_SLUG = new Map(MARCADORES.map(m => [m.slug, m]));
+
+function marcadoresDe(k) {
+  const bruto = k && k.marcadores;
+  const lista = Array.isArray(bruto) ? bruto : (bruto ? [bruto] : []);
+  const vistos = new Set();
+  // a ordem é a do catálogo, não a de clique: assim "Rural + Especial" é
+  // sempre escrito do mesmo jeito, e duas fichas iguais parecem iguais
+  return MARCADORES.filter(m => {
+    const tem = lista.some(x => String(x).trim().toLowerCase() === m.slug);
+    if (tem && !vistos.has(m.slug)) { vistos.add(m.slug); return true; }
+    return false;
+  }).map(m => m.slug);
+}
+
+function alternar(k, slug) {
+  if (!POR_SLUG.has(slug)) return marcadoresDe(k);
+  const atuais = marcadoresDe(k);
+  const fora = atuais.includes(slug) ? atuais.filter(x => x !== slug) : [...atuais, slug];
+  return marcadoresDe({ marcadores: fora });
+}
+
+function rotuloDoPedido(k) {
+  const base = String((k && k.beneficio) || '').trim();
+  const marcas = marcadoresDe(k).map(s => POR_SLUG.get(s).rot);
+  if (!marcas.length) return base;
+  return base ? `${base} · ${marcas.join(' + ')}` : marcas.join(' + ');
+}
+
+function docsDosMarcadores(k, jaTem = []) {
+  const tidos = new Set(jaTem.map(x => String(x).trim().toLowerCase()));
+  const fora = [];
+  for (const slug of marcadoresDe(k))
+    for (const d of POR_SLUG.get(slug).docs) {
+      const chave = d.trim().toLowerCase();
+      if (tidos.has(chave)) continue;
+      tidos.add(chave);
+      fora.push(d);
+    }
+  return fora;
+}
+// ── fim da cópia ──────────────────────────────────────────────────────────
+
+// A linha que responde "o que estou pedindo aqui?" sem abrir nada. Clicar
+// liga e desliga — e ligar acrescenta ao checklist os documentos daquele
+// pedido, que é onde a marcação deixa de ser enfeite e vira trabalho feito.
+function linhaMarcadores(k){
+  const ativos = marcadoresDe(k);
+  return `<div class="marc-linha">
+    <span class="marc-rot" title="o que está sendo pedido neste caso — pode ser mais de um">PEDIDO</span>
+    ${MARCADORES.map(m=>{
+      const on = ativos.includes(m.slug);
+      return `<button class="marc ${on?"on":""}" style="--marc:${m.cor}"
+        title="${esc(m.dica)}${on?" — clique para tirar":" — clique para marcar"}"
+        onclick="alternarMarcador('${k.id}','${m.slug}')">${m.icone} ${esc(m.rot)}</button>`;
+    }).join("")}
+  </div>`;
+}
+async function alternarMarcador(casoId, slug){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const antes = marcadoresDe(k);
+  const nova = alternar(k, slug);
+  k.marcadores = nova;
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({marcadores:nova})});
+  // ligou um marcador novo: os documentos dele entram no checklist. Desligar
+  // NÃO apaga item nenhum — pode já ter sido conferido, e apagar trabalho
+  // conferido por causa de um clique errado seria pior que sobrar item.
+  let novos = 0;
+  if(nova.length > antes.length){
+    const jaTem = subtarefasDe(k.id).map(t=>t.titulo);
+    for(const titulo of docsDosMarcadores({marcadores:[slug]}, jaTem)){
+      const [t] = await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:k.id, titulo})}).catch(()=>[]);
+      if(t){ D.tarefas.push(t); novos++; }
+    }
+  }
+  aviso(novos?`Marcado ✔ — ${novos} item(ns) no checklist 📋`
+             :(nova.includes(slug)?"Marcado ✔":"Desmarcado"), false);
+  abrirFicha(clienteAberto);
+}
+
 function blocoFatos(k){
   const incap = ehIncapacidade(k) || /^B(31|32|91|92|94|36)$/.test(k.especie||"") || k.dcb || k.dii;
   const rec = recorrerAte(k), dRec = rec ? diasAte(rec) : null;
@@ -5402,6 +5544,7 @@ function blocoFatos(k){
       ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 msg ao cliente</button>
         <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
     </div>
+    ${linhaMarcadores(k)}
     <dl class="fx-grade">
       ${campoFato(k,"especie")}
       <div class="fx"><dt title="protocolo do requerimento no INSS">Protocolo</dt>
