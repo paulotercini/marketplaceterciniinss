@@ -253,3 +253,59 @@ test('um erro no meio não impede o resto de gravar', pular, async () => {
     `o aviso devia apontar o schema, veio: "${aviso}"`);
   falhar = null;
 });
+
+// ── a coleta que a extensão entrega ───────────────────────────────────────
+// A extensão NÃO decide nada: ela manda o que o portal respondeu, cru. Quem
+// traduz e quem monta o plano é a tela — a mesma que já estava testada.
+test('a coleta crua da extensão é traduzida e vira o mesmo plano', pular, async () => {
+  pedidos = [];
+  await abrir();
+  const r = await pag.evaluate(() => {
+    // exatamente a forma que o portal devolve, sem passar por tradução
+    const cru = {
+      versao: 3, total: 2,
+      lista: [{ protocolo: '1111111111', status: 'Pendente', cpfRequerente: 11111111111,
+                nomeServico: 'BPC', siglaServico: 'TBSBAPD', nomeUnidade: 'APS X',
+                dataCriacao: '2026-07-01T10:00:00', dataUltimaAtualizacao: '2026-08-01T10:00:00' },
+              { protocolo: '3333333333', status: 'Pendente', cpfRequerente: 33333333333,
+                nomeServico: 'Recurso', siglaServico: 'TREC', nomeUnidade: 'SCARD',
+                dataCriacao: '2026-06-01T10:00:00', dataUltimaAtualizacao: '2026-08-01T10:00:00' }],
+      detalhes: [
+        { protocolo: '1111111111', status: 'CUMPRIMENTO_DE_EXIGENCIA', siglaServico: 'TBSBAPD',
+          especieBeneficio: 'AMP_SOCIAL_PORT_DEFICIENCIA', nomeServico: 'BPC',
+          dataEntradaRequerimento: '2026-07-01T10:00:00', nomeUnidade: 'APS X',
+          tipoCanalAtendimento: 'INTERNET', anexos: [], comentarios: [],
+          agendamentosPericia: [{ situacaoAgendamento: 'AGENDADO', data: '01/12/2026',
+                                  horario: '09:00', nomeUnidade: 'APS X' }] },
+        { protocolo: '3333333333', status: 'PENDENTE', siglaServico: 'TREC',
+          nomeServico: 'Recurso ordinário', dataEntradaRequerimento: '2026-06-01T10:00:00',
+          nomeUnidade: 'SCARD', tipoCanalAtendimento: 'ENTIDADE_CONVENIADA',
+          anexos: [], comentarios: [] },
+      ],
+    };
+    arquivoPat = normalizarColeta(cru);
+    planoPat = planoDeImportacao(arquivoPat, D, '2026-08-09');
+    planoPat.erro = conferirPlanoPat(arquivoPat, planoPat);
+    return { erro: planoPat.erro, ...planoPat.resumo,
+             situacao: (planoPat.atualizar[0] || {}).situacao,
+             especie: (planoPat.atualizar[0] || {}).especie,
+             listaNovo: (planoPat.novos[0] || {}).lista };
+  });
+  assert.equal(r.erro, null, `a conferência barrou a coleta crua: ${r.erro}`);
+  assert.equal(r.lidos, 2);
+  assert.equal(r.situacao, 'Em exigência', 'o código cru do portal não foi traduzido');
+  assert.equal(r.especie, 'B87', 'a espécie não saiu do código do INSS');
+  assert.equal(r.listaNovo, 'conselho', 'o recurso não foi para a lista dele');
+  assert.equal(r.eventos, 1, 'a perícia em data brasileira não virou compromisso');
+});
+
+// Uma coleta já traduzida (o arquivo do coletor antigo) não pode ser
+// traduzida de novo — passar duas vezes pela tradução apagaria o que ela já
+// tinha resolvido.
+test('coleta já traduzida atravessa sem ser mexida', pular, async () => {
+  const igual = await pag.evaluate(pat => {
+    const a = JSON.stringify(normalizarColeta(pat));
+    return a === JSON.stringify(pat);
+  }, PAT);
+  assert.equal(igual, true, 'a tradução mexeu num arquivo que já estava pronto');
+});

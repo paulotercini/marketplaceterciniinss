@@ -1131,7 +1131,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.32 · Meu Dia só do dia</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.33 · a extensão entrega sozinha</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1892,6 +1892,188 @@ function etiquetaMenu(el){
 function seguirEtiqueta(){ if(balaoAlvo) etiquetaMenu(balaoAlvo); }
 function esconderEtiqueta(){ balaoAlvo=null; if(balaoMenu) balaoMenu.style.display="none"; }
 
+// ── o que o PAT chama de serviço, e o que o CRM chama de benefício ────────
+// Cópia de robo-pat/traduzir.js, que tem teste próprio. Só entra código de
+// espécie que apareceu numa resposta real do portal: adivinhar pelo nome do
+// serviço acerta nove e escreve B87 numa pensão no décimo, e espécie errada
+// muda prazo de recurso, checklist e marcador.
+
+const SERVICOS = {
+  // ── pedido de benefício ────────────────────────────────────────────────
+  TAIU:    { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade' },
+  TAR:     { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade rural',
+             marcadores: ['idade_rural'] },
+  TAPDI:   { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade da pessoa com deficiência',
+             marcadores: ['pcd'] },
+  TATCMI:  { tipo: 'beneficio', especie: 'B42', nome: 'Aposentadoria por tempo de contribuição' },
+  TAPDTC:  { tipo: 'beneficio', especie: 'B42', nome: 'Aposentadoria por tempo de contribuição da pessoa com deficiência',
+             marcadores: ['pcd'] },
+  TBSBAPD: { tipo: 'beneficio', especie: 'B87', nome: 'BPC/LOAS — deficiência' },
+  TBAI:    { tipo: 'beneficio', especie: 'B88', nome: 'BPC/LOAS — idoso' },
+  TPU:     { tipo: 'beneficio', especie: 'B21', nome: 'Pensão por morte' },
+  // O auxílio-acidente tem duas espécies e o nome do serviço NÃO diz qual:
+  // B36 é o previdenciário, B94 o acidentário. Escolher por conta própria
+  // seria chutar num campo que muda a competência do processo — então a
+  // espécie fica em aberto e o CRM pergunta.
+  TAA:     { tipo: 'beneficio', especie: null, nome: 'Auxílio-acidente',
+             aConfirmar: 'B36 (previdenciário) ou B94 (acidentário)' },
+
+  // ── recurso: lista Conselho de Recursos, não INSS ───────────────────────
+  // É o mesmo processo que o robô do CRPS já acompanha. Somados, são 83 dos
+  // 184 — quase metade da carteira.
+  TREC:    { tipo: 'recurso', nome: 'Recurso ordinário (inicial)' },
+  RECESP:  { tipo: 'recurso', nome: 'Recurso especial ou incidente' },
+
+  // ── revisão de benefício já concedido ──────────────────────────────────
+  TREVISAO:  { tipo: 'revisao', nome: 'Revisão — entidade conveniada' },
+  TAREFAREV: { tipo: 'revisao', nome: 'Revisão' },
+  REVOFICIO: { tipo: 'revisao', nome: 'Revisão de ofício' },
+
+  // ── dinheiro ───────────────────────────────────────────────────────────
+  SEMNPG:  { tipo: 'pagamento', nome: 'Emissão de pagamento não recebido' },
+  TSCC:    { tipo: 'pagamento', nome: 'Calcular complementação' },
+
+  // ── serviço administrativo: não abre caso, acontece DENTRO de um ───────
+  ATUVCPG: { tipo: 'servico', nome: 'Atualizar vínculos e remunerações (CNIS)' },
+  TVALFBR: { tipo: 'servico', nome: 'Validar contribuição de facultativo baixa renda' },
+  ATUACAD: { tipo: 'servico', nome: 'Atualizar cadastro e/ou benefício' },
+
+  // ── APURAÇÃO DE IRREGULARIDADE ─────────────────────────────────────────
+  // O INSS revendo um benefício que já paga. Pode terminar em suspensão,
+  // cancelamento e cobrança do que foi recebido. São dois requerimentos na
+  // carteira e são os dois mais urgentes dela — por isso `urgente`.
+  MOBDGT:  { tipo: 'apuracao', nome: 'Apuração de irregularidade (MOB Digital)', urgente: true },
+  CPCARCJ: { tipo: 'apuracao', nome: 'Encaminhamentos do processo de apuração (MOB)', urgente: true },
+};
+
+const ESPECIE_POR_CODIGO = {
+  AMP_SOCIAL_PORT_DEFICIENCIA: 'B87',
+  AMP_SOCIAL_IDOSO:            'B88',
+  APOSENTADORIA_POR_IDADE:     'B41',
+  APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO: 'B42',
+  // apareceu na coleta completa e resolve o TAA quando o código vem: o
+  // sufixo _PREVIDENCIARIO é a resposta que o nome do serviço não dava. O
+  // acidentário (B94) ainda não apareceu — quando aparecer, entra aqui.
+  AUXILIO_ACIDENTE_PREVIDENCIARIO: 'B36',
+};
+
+const CANAIS = {
+  ENTIDADE_CONVENIADA: 'Protocolado pelo escritório (convênio OAB)',
+  INTERNET:            'O cliente protocolou sozinho pelo Meu INSS',
+  CENTRAL_135:         'Protocolado pela Central 135',
+};
+
+const SITUACOES = {
+  PENDENTE: 'Em análise',
+  EM_ANALISE: 'Em análise',
+  CONCLUIDA: 'Concluído',
+  CONCLUIDO: 'Concluído',
+  CANCELADA: 'Cancelado',
+  CANCELADO: 'Cancelado',
+  EXIGENCIA: 'Em exigência',
+  CUMPRIMENTO_DE_EXIGENCIA: 'Em exigência',
+};
+
+const limpo = s => String(s || '').trim().toUpperCase();
+
+const semAcento = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+const situacaoDe = s => SITUACOES[semAcento(limpo(s)).replace(/\s+/g, '_')]
+  || String(s || '').trim() || null;
+
+function especieDe(tarefa) {
+  const t = tarefa || {};
+  const s = SERVICOS[limpo(t.siglaServico)];
+  // a sigla diz o TIPO e os marcadores; o código do INSS, quando vem, tem a
+  // última palavra sobre a espécie
+  const porCodigo = ESPECIE_POR_CODIGO[limpo(t.especieBeneficio)] || null;
+  if (!s) {
+    if (porCodigo)
+      return { tipo: 'beneficio', especie: porCodigo, beneficio: null,
+               marcadores: [], urgente: false, fonte: 'especieBeneficio' };
+    // desconhecido não é erro: é trabalho para a próxima rodada. O nome do
+    // serviço vai junto porque é ele que me diz o que a sigla quer dizer.
+    return { tipo: null, especie: null, beneficio: null, marcadores: [], urgente: false,
+             fonte: null,
+             desconhecido: { especieBeneficio: t.especieBeneficio || null,
+                             siglaServico: t.siglaServico || null,
+                             nomeServico: t.nomeServico || null } };
+  }
+  return {
+    tipo: s.tipo,
+    especie: porCodigo || s.especie || null,
+    beneficio: s.nome,
+    marcadores: s.marcadores || [],
+    urgente: !!s.urgente,
+    a_confirmar: s.aConfirmar || null,
+    fonte: porCodigo ? 'especieBeneficio' : 'siglaServico',
+  };
+}
+
+function dataIso(br) {
+  const m = String(br || '').trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (m) return `${m[3]}-${m[2]}-${m[1]}`;
+  const iso = String(br || '').trim().match(/^(\d{4}-\d{2}-\d{2})/);
+  return iso ? iso[1] : null;
+}
+
+function eventosDe(det) {
+  const d = det || {};
+  const juntar = (lista, tipo) => (Array.isArray(lista) ? lista : []).map(a => ({
+    tipo,
+    data: dataIso(a.data),
+    hora: (String(a.horario || '').match(/^\d{2}:\d{2}/) || [null])[0],
+    local: a.nomeUnidade || null,
+    situacao: limpo(a.situacaoAgendamento) || null,
+    ativo: limpo(a.situacaoAgendamento) === 'AGENDADO',
+  })).filter(e => e.data);
+  return [...juntar(d.agendamentosPericia, 'Perícia médica'),
+          ...juntar(d.agendamentosAvaliacaoSocial, 'Avaliação social')];
+}
+
+function resumoDaLista(t) {
+  return {
+    protocolo: String((t || {}).protocolo || '').trim(),
+    situacao: situacaoDe((t || {}).status),
+    cpf: String((t || {}).cpfRequerente || '').replace(/\D/g, '').padStart(11, '0'),
+    servico: (t || {}).nomeServico || null,
+    sigla: (t || {}).siglaServico || null,
+    unidade: (t || {}).nomeUnidade || null,
+    criado_em: (t || {}).dataCriacao || null,
+    atualizado_em: (t || {}).dataUltimaAtualizacao || null,
+    link: (t || {}).protocolo ? `https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/${t.protocolo}` : null,
+  };
+}
+
+function resumoDoDetalhe(d) {
+  const det = d || {};
+  const esp = especieDe(det);
+  return {
+    protocolo: String(det.protocolo || '').trim(),
+    situacao: situacaoDe(det.status),
+    tipo: esp.tipo,
+    especie: esp.especie,
+    beneficio: esp.beneficio,
+    marcadores: esp.marcadores,
+    urgente: esp.urgente,
+    especie_a_confirmar: esp.a_confirmar || null,
+    servico: det.nomeServico || null,
+    sigla: det.siglaServico || null,
+    especie_codigo: det.especieBeneficio || null,
+    der: (String(det.dataEntradaRequerimento || '').match(/^\d{4}-\d{2}-\d{2}/) || [null])[0],
+    unidade: det.nomeUnidade || null,
+    canal: det.tipoCanalAtendimento || null,
+    quem_protocolou: CANAIS[limpo(det.tipoCanalAtendimento)] || null,
+    // contagens, não conteúdo: dizem que há o que olhar, sem trazer o que é
+    anexos: Array.isArray(det.anexos) ? det.anexos.length : 0,
+    comentarios: Array.isArray(det.comentarios) ? det.comentarios.length : 0,
+    em_exigencia: !!det.podeCumprirExigencia || situacaoDe(det.status) === 'Em exigência',
+    eventos: eventosDe(det),
+    link: det.protocolo ? `https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/${det.protocolo}` : null,
+    desconhecido: esp.desconhecido || null,
+  };
+}
+
 // ── importar do PAT/GERID (INSS) ──────────────────────────────────────────
 // Cópia de robo-pat/importar.js, que tem teste próprio. Este bloco NÃO grava
 // nada: compara o arquivo do coletor com o que o CRM já sabe e devolve um
@@ -2051,12 +2233,51 @@ function conferirPlanoPat(pat, plano) {
 
 // o plano na tela, antes de qualquer gravação
 let planoPat = null, arquivoPat = null;
+// A COLETA DA EXTENSÃO CHEGA CRUA. O arquivo do coletor antigo já vinha
+// traduzido; a extensão entrega o que o portal respondeu, sem interpretar —
+// é ela que não decide nada. A tradução acontece aqui, com o mesmo
+// traduzir.js que o coletor usava.
+function normalizarColeta(bruto){
+  const b = bruto || {};
+  if (Array.isArray(b.detalhes) && b.detalhes.some(d => 'tipo' in d)) return b;  // já traduzido
+  return {
+    ...b,
+    lista: (b.lista || []).map(t => ('situacao' in t) ? t : resumoDaLista(t)),
+    detalhes: (b.detalhes || []).map(d => ('tipo' in d) ? d : resumoDoDetalhe(d)),
+  };
+}
+
+let coletasPendentes = [];
+async function buscarColetas(){
+  try{
+    coletasPendentes = await api(
+      `/rest/v1/coletas?select=id,fonte,criado_em&aplicada_em=is.null&order=criado_em.desc`) || [];
+  }catch(e){ coletasPendentes = []; }   // sem a tabela, a tela do arquivo continua
+}
+async function usarColeta(id){
+  try{
+    const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${id}`) || [];
+    if(!c) return aviso("Não achei essa coleta");
+    arquivoPat = normalizarColeta(c.dados);
+    planoPat = planoDeImportacao(arquivoPat, D, hoje());
+    planoPat.erro = conferirPlanoPat(arquivoPat, planoPat);
+    planoPat.coleta_id = id;
+    render();
+  }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+}
+
 function renderImportarPat(){
   document.getElementById("titulo-lista").textContent = "📥 Importar do INSS";
   document.getElementById("sub-lista").textContent =
     "O que o PAT/GERID tem, comparado com o que o CRM já sabe. Nada é gravado sem você mandar.";
   document.getElementById("conteudo-meio").innerHTML = telaImportarPat();
   ligarImportarPat();
+  if(!coletasPendentes.length) buscarColetas().then(()=>{
+    if(coletasPendentes.length && visao==="patinss"){
+      document.getElementById("conteudo-meio").innerHTML = telaImportarPat();
+      ligarImportarPat();
+    }
+  });
 }
 function telaImportarPat(){
   const r = planoPat && planoPat.resumo;
@@ -2066,6 +2287,14 @@ function telaImportarPat(){
     <h3>📥 Importar do PAT/GERID</h3>
     <p class="meio-sub">Solte aqui o arquivo <code>pat_AAAA-MM-DD.json</code> que o coletor baixou.
       Nada é gravado até você conferir e mandar aplicar.</p>
+    ${coletasPendentes.length ? `<div class="id-grid" style="grid-template-columns:1fr;gap:6px;margin:10px 0">
+      ${coletasPendentes.map(c=>`<div class="id-card destaque" style="display:flex;align-items:center;gap:10px">
+        <strong>${c.fonte==="pat"?"🌻 INSS":"🖥 Recursos"}</strong>
+        <span class="u-papel" style="text-transform:none">chegou ${esc(dataRelativa(String(c.criado_em).slice(0,10)))}</span>
+        <button class="btn-mini" style="margin-left:auto" onclick="usarColeta('${c.id}')">conferir</button>
+      </div>`).join("")}
+    </div>` : `<p class="meio-sub">Nenhuma coleta esperando. Use a extensão do navegador,
+      ou solte um arquivo aqui embaixo.</p>`}
     <input type="file" id="pat-arq" accept="application/json" style="margin:10px 0">
     ${!r ? "" : `
       <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
@@ -2112,7 +2341,7 @@ function ligarImportarPat(){
   inp.onchange = async () => {
     const f = inp.files && inp.files[0]; if(!f) return;
     try{
-      arquivoPat = JSON.parse(await f.text());
+      arquivoPat = normalizarColeta(JSON.parse(await f.text()));
       planoPat = planoDeImportacao(arquivoPat, D, hoje());
       planoPat.erro = conferirPlanoPat(arquivoPat, planoPat);
       render();
@@ -2157,7 +2386,13 @@ async function aplicarPat(){
         body:JSON.stringify({caso_id:bloco.caso_id, tipo:ev.tipo, status:"agendada",
           data_hora:`${ev.data}T${ev.hora||"09:00"}:00`, local:ev.local})}));
 
+  // a coleta usada sai da fila: a mesma não pode ser oferecida duas vezes
+  if(planoPat.coleta_id)
+    await api(`/rest/v1/coletas?id=eq.${planoPat.coleta_id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
   planoPat = null;
+  await buscarColetas();
   await carregar(); montarSidebar(); render();
   if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)`);
   // a mensagem do banco importa mais que a contagem: PGRST204 quer dizer

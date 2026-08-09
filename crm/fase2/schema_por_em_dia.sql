@@ -8,9 +8,9 @@
 -- conteúdo. O que já existe é ignorado em silêncio; o que falta é criado.
 -- Rodar duas vezes dá no mesmo que rodar uma.
 --
--- Mexe em duas tabelas apenas — casos e andamentos —, que o CRM já usa em
--- toda tela. Por isso não há risco de o script parar no meio por causa de
--- alguma tabela ausente.
+-- Mexe em casos e andamentos, que o CRM já usa em toda tela, e cria a tabela
+-- `coletas` se ela ainda não existir. Por isso não há risco de o script
+-- parar no meio por causa de alguma tabela ausente.
 --
 -- É ISTO que faltava para os marcadores do pedido (Rural, Especial,
 -- Deficiência…) gravarem: enquanto casos.marcadores não existir aqui, o
@@ -71,12 +71,32 @@ alter table casos add column if not exists processo_link text;
 -- ficha de cem clientes — o mesmo ruído que o sistema nasceu para acabar.
 alter table casos add column if not exists situacao_inss text;
 
+
+-- ── 5. A fila das coletas (extensão do navegador) ─────────────────────────
+-- A extensão coleta e ENTREGA; quem decide continua sendo a tela do CRM.
+-- Cada rodada vira uma linha aqui, e a tela 📥 Importar lê a fila em vez de
+-- você baixar e soltar arquivo.
+create table if not exists coletas (
+  id          uuid primary key default gen_random_uuid(),
+  fonte       text not null,
+  dados       jsonb not null,
+  criado_em   timestamptz not null default now(),
+  aplicada_em timestamptz
+);
+create index if not exists coletas_pendentes on coletas (fonte, criado_em desc)
+  where aplicada_em is null;
+alter table coletas enable row level security;
+drop policy if exists coletas_tudo on coletas;
+create policy coletas_tudo on coletas for all using (true) with check (true);
+
 -- ── conferência ───────────────────────────────────────────────────────────
--- Devem aparecer CINCO linhas. Se aparecerem, recarregue o CRM: os
--- marcadores passam a gravar e a importação do INSS tem onde guardar a
--- situação.
+-- Devem aparecer SEIS linhas: as cinco colunas e a tabela `coletas`, que é
+-- a fila onde a extensão do navegador entrega o que coletou.
 select table_name as tabela, column_name as coluna, data_type as tipo
   from information_schema.columns
  where (table_name = 'casos'      and column_name in ('marcadores','ronda','processo_link','situacao_inss'))
     or (table_name = 'andamentos' and column_name = 'responde_a')
- order by table_name, column_name;
+union all
+select 'coletas', 'tabela criada', ''
+  from information_schema.tables where table_name = 'coletas'
+ order by 1, 2;
