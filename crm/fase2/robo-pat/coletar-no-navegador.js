@@ -28,17 +28,33 @@
 //      baixa "pat_AAAA-MM-DD.json". Esse arquivo entra no CRM.
 // ─────────────────────────────────────────────────────────────────────────
 (() => {
-  const OUT = { versao: 1, quando: new Date().toISOString(), lista: [], detalhes: [],
-                desconhecidos: [], falhas: [] };
+  const OUT = { versao: 2, quando: new Date().toISOString(), total: null,
+                lista: [], detalhes: [], desconhecidos: [], falhas: [] };
 
   // ── tradução: cópia de traduzir.js, que tem teste próprio ────────────────
   const ESPECIE_POR_CODIGO = {
-    // visto em 09/08/2026, na primeira coleta com detalhe
     AMP_SOCIAL_PORT_DEFICIENCIA: ['B87', 'BPC/LOAS — deficiência'],
+    AMP_SOCIAL_IDOSO:            ['B88', 'BPC/LOAS — idoso'],
+    APOSENTADORIA_POR_IDADE:     ['B41', 'Aposentadoria por idade'],
+    APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO: ['B42', 'Aposentadoria por tempo de contribuição'],
   };
 
   const ESPECIE_POR_SIGLA = {
     TBSBAPD: ['B87', 'BPC/LOAS — deficiência'],
+    TBAI:    ['B88', 'BPC/LOAS — idoso'],
+    TAIU:    ['B41', 'Aposentadoria por idade'],
+    TATCMI:  ['B42', 'Aposentadoria por tempo de contribuição'],
+  };
+
+  const SERVICO_NAO_BENEFICIO = {
+    RECESP:  ['recurso', 'Recurso especial ou incidente (CRPS)'],
+    ATUVCPG: ['servico', 'Atualizar vínculos e remunerações (CNIS)'],
+  };
+
+  const CANAIS = {
+    ENTIDADE_CONVENIADA: 'Protocolado pelo escritório (convênio OAB)',
+    INTERNET:            'O cliente protocolou sozinho pelo Meu INSS',
+    CENTRAL_135:         'Protocolado pela Central 135',
   };
 
   const SITUACOES = {
@@ -54,13 +70,18 @@
 
   function especieDe(tarefa) {
     const t = tarefa || {};
+    const naoBeneficio = SERVICO_NAO_BENEFICIO[limpo(t.siglaServico)];
+    if (naoBeneficio)
+      return { tipo: naoBeneficio[0], especie: null, beneficio: naoBeneficio[1], fonte: 'siglaServico' };
     const porCodigo = ESPECIE_POR_CODIGO[limpo(t.especieBeneficio)];
-    if (porCodigo) return { especie: porCodigo[0], beneficio: porCodigo[1], fonte: 'especieBeneficio' };
+    if (porCodigo)
+      return { tipo: 'beneficio', especie: porCodigo[0], beneficio: porCodigo[1], fonte: 'especieBeneficio' };
     const porSigla = ESPECIE_POR_SIGLA[limpo(t.siglaServico)];
-    if (porSigla) return { especie: porSigla[0], beneficio: porSigla[1], fonte: 'siglaServico' };
+    if (porSigla)
+      return { tipo: 'beneficio', especie: porSigla[0], beneficio: porSigla[1], fonte: 'siglaServico' };
     // desconhecido não é erro: é trabalho para a próxima rodada. O nome do
     // serviço vai junto porque é ele que me diz o que o código quer dizer.
-    return { especie: null, beneficio: null, fonte: null,
+    return { tipo: null, especie: null, beneficio: null, fonte: null,
              desconhecido: { especieBeneficio: t.especieBeneficio || null,
                              siglaServico: t.siglaServico || null,
                              nomeServico: t.nomeServico || null } };
@@ -81,7 +102,7 @@
       hora: (String(a.horario || '').match(/^\d{2}:\d{2}/) || [null])[0],
       local: a.nomeUnidade || null,
       situacao: limpo(a.situacaoAgendamento) || null,
-      remarcado: limpo(a.situacaoAgendamento) === 'REMARCADO',
+      ativo: limpo(a.situacaoAgendamento) === 'AGENDADO',
     })).filter(e => e.data);
     return [...juntar(d.agendamentosPericia, 'Perícia médica'),
             ...juntar(d.agendamentosAvaliacaoSocial, 'Avaliação social')];
@@ -107,6 +128,7 @@
     return {
       protocolo: String(det.protocolo || '').trim(),
       situacao: situacaoDe(det.status),
+      tipo: esp.tipo,
       especie: esp.especie,
       beneficio: esp.beneficio,
       servico: det.nomeServico || null,
@@ -115,6 +137,7 @@
       der: (String(det.dataEntradaRequerimento || '').match(/^\d{4}-\d{2}-\d{2}/) || [null])[0],
       unidade: det.nomeUnidade || null,
       canal: det.tipoCanalAtendimento || null,
+      quem_protocolou: CANAIS[limpo(det.tipoCanalAtendimento)] || null,
       // contagens, não conteúdo: dizem que há o que olhar, sem trazer o que é
       anexos: Array.isArray(det.anexos) ? det.anexos.length : 0,
       comentarios: Array.isArray(det.comentarios) ? det.comentarios.length : 0,
@@ -174,7 +197,8 @@
       if (!r.protocolo || vistos.has(r.protocolo)) continue;
       vistos.add(r.protocolo); OUT.lista.push(r); novos++;
     }
-    console.log(`📋 +${novos} requerimento(s) — ${OUT.lista.length} de ${(j && j.quantidadeTotalTarefa) || '?'}`);
+    if (j && j.quantidadeTotalTarefa) OUT.total = j.quantidadeTotalTarefa;
+    console.log(`📋 +${novos} requerimento(s) — ${OUT.lista.length} de ${OUT.total || '?'} na janela pedida`);
     if (!rodando) { rodando = true; setTimeout(detalhar, 1500); }
   }
 
@@ -199,7 +223,11 @@
       if (i % 20 === 19) console.log(`   … ${i + 1}/${fila.length}`);
       await pausa(700);
     }
-    resumir(); baixar();
+    rodando = false;
+    resumir();
+    if (OUT.total && OUT.lista.length < OUT.total)
+      console.log('%cainda falta gente: puxe a janela anterior antes de baixar.', 'color:#B4530A;font-weight:700');
+    else baixar();
   }
 
   // ── o resumo que aparece na tela ────────────────────────────────────────
@@ -222,6 +250,28 @@
       console.log('👉 mande NO CHAT só esta tabela (é código de serviço, não tem dado de cliente).');
     }
     if (OUT.falhas.length) console.warn(`${OUT.falhas.length} não abriram — estão em "falhas" no arquivo`);
+    janela();
+  }
+
+  // ── a janela de 6 meses ─────────────────────────────────────────────────
+  // O portal recusa intervalo maior: "O intervalo entre as datas não pode
+  // ultrapassar 6 meses." Na rotina diária isso não atrapalha (a janela é de
+  // um dia). Atrapalha UMA vez, na primeira carga, que precisa vir em fatias
+  // de seis meses — e cada fatia é um "Buscar" novo, porque POST novo é
+  // captcha novo.
+  //
+  // O coletor acumula entre as fatias: pode clicar quantas vezes precisar
+  // antes de baixar. O protocolo repetido não duplica.
+  function janela() {
+    const antigo = OUT.lista.map(t => t.criado_em).filter(Boolean).sort()[0];
+    if (!antigo) return;
+    const d = new Date(antigo);
+    const fim = new Date(d.getTime() - 86400000);
+    const ini = new Date(fim); ini.setMonth(ini.getMonth() - 6);
+    const br = x => x.toLocaleDateString('pt-BR');
+    console.log(`%cpara puxar mais para trás: ${br(ini)} a ${br(fim)}`, 'font-weight:700');
+    console.log('   (o portal limita a janela a 6 meses — troque as datas, clique em "Buscar" de novo,');
+    console.log('    e só depois rode  patColeta.baixar()  . O que já veio fica guardado.)');
   }
 
   function baixar() {

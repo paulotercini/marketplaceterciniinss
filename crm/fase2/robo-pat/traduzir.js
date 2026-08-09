@@ -14,28 +14,63 @@
 // requerimentos, é que vai preencher esta tabela — do mesmo jeito que as
 // REGRAS da extração do To Do foram preenchidas: olhando o que aparece.
 
-// código do INSS -> [espécie, nome que o CRM usa]
+// código do INSS -> [espécie, nome que o CRM usa]. Todos vistos na coleta
+// de 09/08/2026; nenhum inventado.
 const ESPECIE_POR_CODIGO = {
-  // visto em 09/08/2026, na primeira coleta com detalhe
   AMP_SOCIAL_PORT_DEFICIENCIA: ['B87', 'BPC/LOAS — deficiência'],
+  AMP_SOCIAL_IDOSO:            ['B88', 'BPC/LOAS — idoso'],
+  APOSENTADORIA_POR_IDADE:     ['B41', 'Aposentadoria por idade'],
+  APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO: ['B42', 'Aposentadoria por tempo de contribuição'],
 };
 
 // sigla do serviço -> a mesma coisa, para quando `especieBeneficio` vier vazio
 const ESPECIE_POR_SIGLA = {
   TBSBAPD: ['B87', 'BPC/LOAS — deficiência'],
+  TBAI:    ['B88', 'BPC/LOAS — idoso'],
+  TAIU:    ['B41', 'Aposentadoria por idade'],
+  TATCMI:  ['B42', 'Aposentadoria por tempo de contribuição'],
+};
+
+// NEM TODA TAREFA DO PAT É UM PEDIDO DE BENEFÍCIO — e isso a amostra real
+// mostrou. Duas das seis siglas coletadas não são requerimento nenhum:
+//
+//   RECESP  é RECURSO. Pertence à lista Conselho de Recursos, não à do INSS,
+//           e é o mesmo processo que o robô do CRPS já acompanha.
+//   ATUVCPG é acerto de CNIS. Não abre caso: é um serviço dentro de um caso
+//           que já existe.
+//
+// Tratá-los como benefício criaria caso duplicado com espécie em branco na
+// lista errada — exatamente o tipo de sujeira que ninguém limpa depois.
+const SERVICO_NAO_BENEFICIO = {
+  RECESP:  ['recurso', 'Recurso especial ou incidente (CRPS)'],
+  ATUVCPG: ['servico', 'Atualizar vínculos e remunerações (CNIS)'],
+};
+
+// Quem protocolou. `INTERNET` quer dizer que o CLIENTE fez sozinho pelo Meu
+// INSS — e é a explicação para requerimentos que existem no PAT sem caso no
+// CRM. Saber disso vale mais do que parece.
+const CANAIS = {
+  ENTIDADE_CONVENIADA: 'Protocolado pelo escritório (convênio OAB)',
+  INTERNET:            'O cliente protocolou sozinho pelo Meu INSS',
+  CENTRAL_135:         'Protocolado pela Central 135',
 };
 
 const limpo = s => String(s || '').trim().toUpperCase();
 
 function especieDe(tarefa) {
   const t = tarefa || {};
+  const naoBeneficio = SERVICO_NAO_BENEFICIO[limpo(t.siglaServico)];
+  if (naoBeneficio)
+    return { tipo: naoBeneficio[0], especie: null, beneficio: naoBeneficio[1], fonte: 'siglaServico' };
   const porCodigo = ESPECIE_POR_CODIGO[limpo(t.especieBeneficio)];
-  if (porCodigo) return { especie: porCodigo[0], beneficio: porCodigo[1], fonte: 'especieBeneficio' };
+  if (porCodigo)
+    return { tipo: 'beneficio', especie: porCodigo[0], beneficio: porCodigo[1], fonte: 'especieBeneficio' };
   const porSigla = ESPECIE_POR_SIGLA[limpo(t.siglaServico)];
-  if (porSigla) return { especie: porSigla[0], beneficio: porSigla[1], fonte: 'siglaServico' };
+  if (porSigla)
+    return { tipo: 'beneficio', especie: porSigla[0], beneficio: porSigla[1], fonte: 'siglaServico' };
   // desconhecido não é erro: é trabalho para a próxima rodada. O nome do
   // serviço vai junto porque é ele que me diz o que o código quer dizer.
-  return { especie: null, beneficio: null, fonte: null,
+  return { tipo: null, especie: null, beneficio: null, fonte: null,
            desconhecido: { especieBeneficio: t.especieBeneficio || null,
                            siglaServico: t.siglaServico || null,
                            nomeServico: t.nomeServico || null } };
@@ -63,8 +98,16 @@ function dataIso(br) {
 }
 
 // Os agendamentos são o que o CRM mais tem a ganhar: perícia e avaliação
-// social com data, hora e agência. REMARCADO é o caso que ninguém pode
-// perder — a data mudou e o cliente costuma saber antes do escritório.
+// social com data, hora e agência.
+//
+// EU TINHA ENTENDIDO REMARCADO AO CONTRÁRIO. Um requerimento real veio com
+// perícia 13/08 AGENDADO e 12/08 REMARCADO: a linha REMARCADO é o horário
+// ABANDONADO, não o novo. Pôr as duas na agenda faria o cliente ser chamado
+// num dia que não existe mais.
+//
+// Então só AGENDADO vira compromisso (`ativo`). REMARCADO e CUMPRIDO ficam
+// no histórico — o que dispara o aviso não é a existência de um REMARCADO, é
+// a data do AGENDADO ter mudado desde a última coleta.
 function eventosDe(det) {
   const d = det || {};
   const juntar = (lista, tipo) => (Array.isArray(lista) ? lista : []).map(a => ({
@@ -73,7 +116,7 @@ function eventosDe(det) {
     hora: (String(a.horario || '').match(/^\d{2}:\d{2}/) || [null])[0],
     local: a.nomeUnidade || null,
     situacao: limpo(a.situacaoAgendamento) || null,
-    remarcado: limpo(a.situacaoAgendamento) === 'REMARCADO',
+    ativo: limpo(a.situacaoAgendamento) === 'AGENDADO',
   })).filter(e => e.data);
   return [...juntar(d.agendamentosPericia, 'Perícia médica'),
           ...juntar(d.agendamentosAvaliacaoSocial, 'Avaliação social')];
@@ -104,6 +147,7 @@ function resumoDoDetalhe(d) {
   return {
     protocolo: String(det.protocolo || '').trim(),
     situacao: situacaoDe(det.status),
+    tipo: esp.tipo,
     especie: esp.especie,
     beneficio: esp.beneficio,
     servico: det.nomeServico || null,
@@ -112,6 +156,7 @@ function resumoDoDetalhe(d) {
     der: (String(det.dataEntradaRequerimento || '').match(/^\d{4}-\d{2}-\d{2}/) || [null])[0],
     unidade: det.nomeUnidade || null,
     canal: det.tipoCanalAtendimento || null,
+    quem_protocolou: CANAIS[limpo(det.tipoCanalAtendimento)] || null,
     // contagens, não conteúdo: dizem que há o que olhar, sem trazer o que é
     anexos: Array.isArray(det.anexos) ? det.anexos.length : 0,
     comentarios: Array.isArray(det.comentarios) ? det.comentarios.length : 0,
@@ -122,5 +167,5 @@ function resumoDoDetalhe(d) {
   };
 }
 
-module.exports = { ESPECIE_POR_CODIGO, ESPECIE_POR_SIGLA, SITUACOES,
+module.exports = { ESPECIE_POR_CODIGO, ESPECIE_POR_SIGLA, SERVICO_NAO_BENEFICIO, CANAIS, SITUACOES,
   especieDe, situacaoDe, dataIso, eventosDe, resumoDaLista, resumoDoDetalhe };

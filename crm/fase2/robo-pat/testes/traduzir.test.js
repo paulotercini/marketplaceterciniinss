@@ -24,6 +24,8 @@ const DETALHE = {
       nomeUnidade: 'AGÊNCIA DA PREVIDÊNCIA SOCIAL MATÃO' },
   ],
   agendamentosAvaliacaoSocial: [
+    { situacaoAgendamento: 'CUMPRIDO', data: '31/07/2026', horario: '10:00',
+      nomeUnidade: 'AGÊNCIA DA PREVIDÊNCIA SOCIAL JABOTICABAL' },
     { situacaoAgendamento: 'AGENDADO', data: '21/08/2026', horario: '10:00',
       nomeUnidade: 'AGÊNCIA DA PREVIDÊNCIA SOCIAL JABOTICABAL' },
   ],
@@ -31,9 +33,36 @@ const DETALHE = {
 
 test('a espécie vem do código do INSS, não de leitura de nome', () => {
   const e = T.especieDe(DETALHE);
+  assert.equal(e.tipo, 'beneficio');
   assert.equal(e.especie, 'B87');
   assert.equal(e.beneficio, 'BPC/LOAS — deficiência');
   assert.equal(e.fonte, 'especieBeneficio');
+});
+
+test('os quatro códigos vistos na coleta real traduzem certo', () => {
+  const casos = [
+    ['AMP_SOCIAL_PORT_DEFICIENCIA', 'B87'], ['AMP_SOCIAL_IDOSO', 'B88'],
+    ['APOSENTADORIA_POR_IDADE', 'B41'], ['APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO', 'B42'],
+  ];
+  for (const [cod, esp] of casos) assert.equal(T.especieDe({ especieBeneficio: cod }).especie, esp);
+  for (const [sig, esp] of [['TBSBAPD', 'B87'], ['TBAI', 'B88'], ['TAIU', 'B41'], ['TATCMI', 'B42']])
+    assert.equal(T.especieDe({ siglaServico: sig }).especie, esp, sig);
+});
+
+// NEM TODA TAREFA DO PAT É PEDIDO DE BENEFÍCIO — duas das seis siglas da
+// coleta real não são requerimento nenhum. Tratá-las como benefício criaria
+// caso duplicado, com espécie em branco, na lista errada.
+test('RECESP é recurso e ATUVCPG é serviço — nenhum dos dois vira benefício', () => {
+  const rec = T.especieDe({ siglaServico: 'RECESP',
+    nomeServico: 'Recurso Especial ou Incidente (Alteração de Acórdão)' });
+  assert.equal(rec.tipo, 'recurso');
+  assert.equal(rec.especie, null, 'recurso não tem espécie de benefício');
+  assert.ok(!rec.desconhecido, 'recurso conhecido não pode entrar como desconhecido');
+
+  const cnis = T.especieDe({ siglaServico: 'ATUVCPG',
+    nomeServico: 'Atualizar Vínculos e Remunerações e Código de Pagamento' });
+  assert.equal(cnis.tipo, 'servico');
+  assert.equal(cnis.especie, null);
 });
 
 // Adivinhar espécie pelo nome do serviço acerta nove e escreve B87 numa
@@ -42,6 +71,7 @@ test('a espécie vem do código do INSS, não de leitura de nome', () => {
 test('serviço que eu nunca vi NÃO vira espécie chutada', () => {
   const e = T.especieDe({ especieBeneficio: 'PENSAO_MORTE_URBANA',
                           siglaServico: 'TBSPMU', nomeServico: 'Pensão por Morte Urbana' });
+  assert.equal(e.tipo, null);
   assert.equal(e.especie, null);
   assert.equal(e.beneficio, null);
   assert.deepStrictEqual(e.desconhecido, { especieBeneficio: 'PENSAO_MORTE_URBANA',
@@ -74,14 +104,31 @@ test('agendamento vem em data brasileira e o CRM guarda em ISO', () => {
   assert.equal(T.dataIso(null), null);
 });
 
-test('perícia e avaliação social viram evento, com o REMARCADO marcado', () => {
+// EU TINHA ENTENDIDO REMARCADO AO CONTRÁRIO. Um requerimento real veio com
+// perícia 13/08 AGENDADO e 12/08 REMARCADO: a linha REMARCADO é o horário
+// ABANDONADO. Pôr as duas na agenda faria o cliente ser chamado num dia que
+// não existe mais.
+test('só AGENDADO vira compromisso; REMARCADO e CUMPRIDO ficam no histórico', () => {
   const ev = T.eventosDe(DETALHE);
-  assert.equal(ev.length, 3);
+  assert.equal(ev.length, 4);
   assert.deepStrictEqual(ev[0], { tipo: 'Perícia médica', data: '2026-08-13', hora: '09:30',
-    local: 'AGÊNCIA DA PREVIDÊNCIA SOCIAL MATÃO', situacao: 'AGENDADO', remarcado: false });
-  assert.equal(ev[1].remarcado, true, 'o REMARCADO é o que ninguém pode perder');
-  assert.equal(ev[2].tipo, 'Avaliação social');
-  assert.equal(ev[2].data, '2026-08-21');
+    local: 'AGÊNCIA DA PREVIDÊNCIA SOCIAL MATÃO', situacao: 'AGENDADO', ativo: true });
+  assert.equal(ev[1].situacao, 'REMARCADO');
+  assert.equal(ev[1].ativo, false, 'o horário abandonado NÃO pode ir para a agenda');
+  assert.equal(ev[2].situacao, 'CUMPRIDO');
+  assert.equal(ev[2].ativo, false);
+  assert.equal(ev[3].tipo, 'Avaliação social');
+  assert.equal(ev[3].ativo, true);
+  assert.equal(ev.filter(e => e.ativo).length, 2, 'sobram dois compromissos de verdade');
+});
+
+// INTERNET quer dizer que o CLIENTE protocolou sozinho — é a explicação para
+// requerimento que existe no PAT e não tem caso no CRM.
+test('o canal diz quem protocolou', () => {
+  assert.match(T.resumoDoDetalhe({ tipoCanalAtendimento: 'INTERNET' }).quem_protocolou, /cliente/);
+  assert.match(T.resumoDoDetalhe({ tipoCanalAtendimento: 'ENTIDADE_CONVENIADA' }).quem_protocolou, /escrit/);
+  assert.match(T.resumoDoDetalhe({ tipoCanalAtendimento: 'CENTRAL_135' }).quem_protocolou, /135/);
+  assert.equal(T.resumoDoDetalhe({ tipoCanalAtendimento: 'CANAL_NOVO' }).quem_protocolou, null);
 });
 
 test('agendamento sem data não entra — evento sem data não é evento', () => {
@@ -98,7 +145,8 @@ test('o detalhe entrega DER, espécie, unidade e link', () => {
   assert.equal(r.situacao, 'Em análise');
   assert.equal(r.unidade, 'SETOR TÉCNICO-ADMINISTRATIVO');
   assert.equal(r.link, 'https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/1462069078');
-  assert.equal(r.eventos.length, 3);
+  assert.equal(r.tipo, 'beneficio');
+  assert.equal(r.eventos.length, 4);
 });
 
 // O CRM guarda o LINK, não a cópia. Laudo médico e relato de doença ficam no
@@ -140,7 +188,8 @@ test('a cópia dentro do coletor é idêntica à testada aqui', () => {
     do { if (col[j] === '{') n++; else if (col[j] === '}') n--; j++; } while (n > 0 && j < col.length);
     assert.equal(nu(col.slice(i, j)), nu(T[fn].toString()), `${fn} divergiu de traduzir.js`);
   }
-  for (const nome of ['ESPECIE_POR_CODIGO', 'ESPECIE_POR_SIGLA', 'SITUACOES']) {
+  for (const nome of ['ESPECIE_POR_CODIGO', 'ESPECIE_POR_SIGLA', 'SERVICO_NAO_BENEFICIO',
+                      'CANAIS', 'SITUACOES']) {
     const i = col.indexOf(`const ${nome}`);
     assert.notEqual(i, -1, `${nome} sumiu do coletor`);
     const bruto = col.slice(col.indexOf('{', i), col.indexOf('};', i) + 1);
