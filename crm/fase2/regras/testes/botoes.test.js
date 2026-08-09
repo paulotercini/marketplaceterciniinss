@@ -492,3 +492,65 @@ test('a linha do pedido não tem mais o rótulo PEDIDO', pular, async () => {
   await pag.evaluate(() => fecharFicha(false));
   await limpar();
 });
+
+// ── Meu Dia só do dia, e o acervo com casa própria ────────────────────────
+// "Esse meu dia é destinado somente às tarefas que estão vencendo hoje."
+// Revisão do acervo e "sem próxima ação" são FILA, não agenda: nunca acabam,
+// e empurravam para baixo justamente o que vence.
+test('Meu Dia não mostra mais a fila do acervo', pular, async () => {
+  await limpar();
+  await pag.evaluate(() => {
+    // um caso parado há muito e sem nenhuma próxima ação: entraria nos dois
+    D.casos.push({ id: 'kv', cliente_id: 'c1', titulo: 'Velho', fase: 'inss',
+                   protocolos: [], revisado_em: '2020-01-01' });
+    D.casoPorId.set('kv', D.casos[D.casos.length - 1]);
+    D.casosDoCliente.get('c1').push(D.casos[D.casos.length - 1]);
+    visao = 'meudia'; montarSidebar(); render();
+  });
+  const txt = await pag.$eval('#conteudo-meio', e => e.textContent);
+  assert.ok(!/Revisão do acervo/i.test(txt), 'a revisão do acervo voltou para o Meu Dia');
+  assert.ok(!/Sem próxima ação/i.test(txt), '"sem próxima ação" voltou para o Meu Dia');
+  assert.match(txt, /Adicionados ao dia/, 'o Meu Dia perdeu o que é dele');
+});
+
+test('a fila do acervo tem lista própria, com o número na lateral', pular, async () => {
+  const item = await pag.$('.lista-item[data-v="acervo"]');
+  assert.ok(item, 'não há item 🧹 Cuidar do acervo na barra lateral');
+  await pag.evaluate(() => { visao = 'acervo'; render(); });
+  await pag.waitForTimeout(120);
+  const txt = await pag.$eval('#conteudo-meio', e => e.textContent);
+  assert.ok(/Revisão do acervo|Sem próxima ação|Acervo em dia/i.test(txt),
+    `a lista do acervo veio vazia: "${txt.slice(0, 120)}"`);
+  assert.match(await pag.$eval('#sub-lista', e => e.textContent), /Nada aqui vence hoje/);
+  await limpar();
+});
+
+// ── o filtro de exigência ─────────────────────────────────────────────────
+// Duas fontes: a exigência anotada à mão (com prazo) e a que o PAT devolve
+// em situacao_inss. Olhar só a primeira deixava de fora justamente as
+// recém-descobertas pela importação — as que ninguém viu ainda.
+test('a lista INSS filtra por exigência, das duas fontes', pular, async () => {
+  await limpar();
+  await pag.evaluate(() => {
+    D.casos[0].exigencia_prazo = '2026-09-30';              // anotada à mão
+    D.casos[1].situacao_inss = 'Em exigência';              // veio do PAT
+    visao = 'fase:inss'; render();
+  });
+  await pag.waitForTimeout(120);
+  const chip = await pag.$('#chip-exig');
+  assert.ok(chip, 'não há filtro de exigência na lista do INSS');
+  assert.match(await pag.$eval('#chip-exig', e => e.textContent), /\(2\)/,
+    'o filtro tem de contar as duas fontes de exigência');
+  const antes = await pag.$$eval('.cartao[data-cli]', e => e.length);
+  await pag.click('#chip-exig');
+  await pag.waitForTimeout(150);
+  const depois = await pag.$$eval('.cartao[data-cli]', e => e.length);
+  assert.ok(depois < antes, `o filtro não escondeu ninguém (${antes} → ${depois})`);
+  assert.ok(!/Demais requerimentos/.test(await pag.$eval('#conteudo-meio', e => e.textContent)),
+    'ligado o filtro, o resto da lista tem de sumir');
+  await pag.click('#chip-exig');
+  await pag.waitForTimeout(150);
+  assert.equal(await pag.$$eval('.cartao[data-cli]', e => e.length), antes, 'o filtro não desligou');
+  await pag.evaluate(() => { delete D.casos[0].exigencia_prazo; delete D.casos[1].situacao_inss; });
+  await limpar();
+});
