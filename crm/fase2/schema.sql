@@ -2111,3 +2111,18 @@ alter table casos add column if not exists processo_link text;
 -- ══════════════════════════════════════════════════════════════════════════
 alter table casos add column if not exists marcadores jsonb not null default '[]'::jsonb;
 create index if not exists casos_marcadores on casos using gin (marcadores);
+
+-- ══════════════════════════════════════════════════════════════════════════
+-- A situação do requerimento no INSS, como o PAT/GERID a devolve.
+--
+-- É a MEMÓRIA da última importação, e existe por um motivo só: saber o que
+-- MUDOU. Sem ela, a importação diária ou não escreve nada (e o escritório
+-- não fica sabendo), ou escreve "Em análise" todo dia na ficha de cem
+-- clientes — que é exatamente o ruído que o André produzia à mão e que este
+-- sistema nasceu para acabar.
+--
+-- Guarda o rótulo já traduzido ("Em análise", "Em exigência", "Concluído"),
+-- não o código cru: o PAT devolve o mesmo estado em duas caixas diferentes,
+-- e normalizar na entrada evita duas verdades para a mesma coisa.
+-- ══════════════════════════════════════════════════════════════════════════
+alter table casos add column if not exists situacao_inss text;

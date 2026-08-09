@@ -16,8 +16,8 @@
 -- Deficiência…) gravarem: enquanto casos.marcadores não existir aqui, o
 -- botão não tem onde guardar a marcação, o banco recusa e o CRM avisa.
 --
--- Depois de executar, role até o fim: a última consulta lista as quatro
--- colunas. Se as quatro aparecerem, está pronto — é só recarregar o CRM.
+-- Depois de executar, role até o fim: a última consulta lista as cinco
+-- colunas. Se as cinco aparecerem, está pronto — é só recarregar o CRM.
 -- ══════════════════════════════════════════════════════════════════════════
 
 
@@ -64,11 +64,19 @@ alter table casos add column if not exists ronda jsonb not null default '{}'::js
 alter table casos add column if not exists processo_link text;
 
 
+
+-- ── 4. A situação do requerimento no INSS (importação do PAT/GERID) ───────
+-- É a MEMÓRIA da última importação, e serve para saber o que MUDOU. Sem ela,
+-- a importação diária ou não avisa nada, ou escreve "Em análise" todo dia na
+-- ficha de cem clientes — o mesmo ruído que o sistema nasceu para acabar.
+alter table casos add column if not exists situacao_inss text;
+
 -- ── conferência ───────────────────────────────────────────────────────────
--- Devem aparecer QUATRO linhas. Se aparecerem, recarregue o CRM e os
--- marcadores passam a gravar.
+-- Devem aparecer CINCO linhas. Se aparecerem, recarregue o CRM: os
+-- marcadores passam a gravar e a importação do INSS tem onde guardar a
+-- situação.
 select table_name as tabela, column_name as coluna, data_type as tipo
   from information_schema.columns
- where (table_name = 'casos'      and column_name in ('marcadores','ronda','processo_link'))
+ where (table_name = 'casos'      and column_name in ('marcadores','ronda','processo_link','situacao_inss'))
     or (table_name = 'andamentos' and column_name = 'responde_a')
  order by table_name, column_name;

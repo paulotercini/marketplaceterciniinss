@@ -826,6 +826,16 @@
   /* o Meu Dia abre o menu, separado do "Mover para…" por um fio */
   #menu-mover .mm-it.destaque{font-weight:650;border-bottom:1px solid var(--borda);
     border-radius:6px 6px 0 0;margin-bottom:4px;padding-bottom:9px}
+  /* ── importar do PAT/GERID ─────────────────────────────────────────── */
+  .pat-cx{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:16px 18px}
+  .pat-cx h3{font-size:15px;color:var(--azul-escuro);margin-bottom:4px}
+  .pat-cx code{background:var(--placa);padding:1px 5px;border-radius:4px;font-size:12.5px}
+  .tab{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;
+    background:var(--branco);border:1px solid var(--borda);border-radius:10px;overflow:hidden}
+  .tab th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--cinza);padding:7px 10px;background:var(--placa)}
+  .tab td{padding:7px 10px;border-top:1px solid var(--borda)}
+  .tab a{color:var(--azul)}
   .id-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
   .id-card{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:10px 14px}
   .id-card.destaque{border-color:#f0c36d;background:#fffaf0}
@@ -1121,7 +1131,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.29 · marcadores pela espécie</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.30 · importar do INSS</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1827,6 +1837,7 @@ function montarSidebar(){
     ["recebimentos","💰 Recebimentos", D.casos.filter(k=>k.fase==="pagamento").length],
     ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && e.data_hora>=hoje()).length],
     ["dashboard","📊 Dashboard", null],
+    ["patinss","📥 Importar do INSS", null],
     ["config","⚙️ Configurações", null],
   ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`).join("");
   const bSom=document.getElementById("btn-som");
@@ -1879,6 +1890,238 @@ function etiquetaMenu(el){
 // volta. Ela acompanha o ícone.
 function seguirEtiqueta(){ if(balaoAlvo) etiquetaMenu(balaoAlvo); }
 function esconderEtiqueta(){ balaoAlvo=null; if(balaoMenu) balaoMenu.style.display="none"; }
+
+// ── importar do PAT/GERID (INSS) ──────────────────────────────────────────
+// Cópia de robo-pat/importar.js, que tem teste próprio. Este bloco NÃO grava
+// nada: compara o arquivo do coletor com o que o CRM já sabe e devolve um
+// plano, que a tela mostra antes de tocar no banco. Importação de cem
+// requerimentos que escreve primeiro e explica depois é como se descobre,
+// três dias depois, que noventa casos duplicados nasceram na lista errada.
+
+const LISTA_POR_TIPO = {
+  beneficio: 'inss',
+  revisao:   'inss',
+  apuracao:  'inss',
+  recurso:   'conselho',
+};
+
+const NAO_ABRE_CASO = new Set(['servico', 'pagamento']);
+
+const digitos = s => String(s || '').replace(/\D/g, '');
+
+function protocolosDe(k) {
+  const p = (k || {}).protocolos;
+  const lista = Array.isArray(p) ? p : (p ? [p] : []);
+  return lista.map(x => digitos(x)).filter(Boolean);
+}
+
+function indexar(D) {
+  const porProtocolo = new Map();
+  for (const k of (D.casos || []))
+    for (const p of protocolosDe(k)) if (!porProtocolo.has(p)) porProtocolo.set(p, k);
+  const porCpf = new Map();
+  for (const c of (D.clientes || [])) {
+    const cpf = digitos(c.cpf);
+    if (cpf && !porCpf.has(cpf)) porCpf.set(cpf, c);
+  }
+  return { porProtocolo, porCpf };
+}
+
+function mudancasDoCaso(k, det) {
+  const m = {};
+  if (det.der && !k.der) m.der = det.der;
+  if (det.especie && !k.especie) m.especie = det.especie;
+  if (det.beneficio && !k.beneficio) m.beneficio = det.beneficio;
+  if (det.link && k.processo_link !== det.link) m.processo_link = det.link;
+  if (det.urgente && !k.urgente) m.urgente = true;
+  // marcadores SOMAM, nunca trocam: quem marcou à mão não perde a marcação
+  const tinha = Array.isArray(k.marcadores) ? k.marcadores : [];
+  const faltam = (det.marcadores || []).filter(x => !tinha.includes(x));
+  if (faltam.length) m.marcadores = [...tinha, ...faltam];
+  return m;
+}
+
+function eventosNovos(det, jaTem, hoje) {
+  const existe = new Set((jaTem || []).map(e =>
+    `${e.tipo}|${String(e.data_hora || '').slice(0, 10)}`));
+  return (det.eventos || [])
+    .filter(e => e.ativo && e.data && e.data >= hoje)
+    .filter(e => !existe.has(`${e.tipo}|${e.data}`))
+    .map(e => ({ tipo: e.tipo, data: e.data, hora: e.hora || null, local: e.local || null }));
+}
+
+function andamentoDaMudanca(k, det) {
+  const antes = k.situacao_inss || null;
+  if (!det.situacao || det.situacao === antes) return null;
+  if (!antes) return null;                 // primeira vez não é mudança
+  return `INSS: ${antes} → ${det.situacao}`;
+}
+
+function planoDeImportacao(pat, D, hoje) {
+  const hj = hoje || new Date().toISOString().slice(0, 10);
+  const { porProtocolo, porCpf } = indexar(D);
+  const porProtocoloPat = new Map((pat.lista || []).map(t => [digitos(t.protocolo), t]));
+  const evDoCaso = new Map();
+  for (const e of (D.eventos || [])) {
+    if (!evDoCaso.has(e.caso_id)) evDoCaso.set(e.caso_id, []);
+    evDoCaso.get(e.caso_id).push(e);
+  }
+
+  const plano = { atualizar: [], novos: [], semCliente: [], soAndamento: [],
+                  ignorados: [], eventos: [], resumo: {} };
+
+  for (const det of (pat.detalhes || [])) {
+    const proto = digitos(det.protocolo);
+    const daLista = porProtocoloPat.get(proto) || {};
+    const cpf = digitos(daLista.cpf);
+    const k = porProtocolo.get(proto);
+    const item = { protocolo: proto, cpf, tipo: det.tipo, situacao: det.situacao,
+                   beneficio: det.beneficio, especie: det.especie, der: det.der,
+                   link: det.link, marcadores: det.marcadores || [],
+                   urgente: !!det.urgente, a_confirmar: det.especie_a_confirmar || null,
+                   quem_protocolou: det.quem_protocolou || null };
+
+    if (k) {
+      const mud = mudancasDoCaso(k, det);
+      const and = andamentoDaMudanca(k, det);
+      const evs = eventosNovos(det, evDoCaso.get(k.id), hj);
+      if (evs.length) plano.eventos.push({ caso_id: k.id, protocolo: proto, eventos: evs });
+      if (Object.keys(mud).length || and)
+        plano.atualizar.push({ ...item, caso_id: k.id, mudancas: mud, andamento: and });
+      continue;
+    }
+
+    // sem caso: serviço e pagamento não abrem um novo
+    if (NAO_ABRE_CASO.has(det.tipo)) { plano.ignorados.push(item); continue; }
+
+    const cli = porCpf.get(cpf);
+    if (cli) plano.novos.push({ ...item, cliente_id: cli.id, nome: cli.nome,
+                                lista: LISTA_POR_TIPO[det.tipo] || 'inss' });
+    else plano.semCliente.push({ ...item, lista: LISTA_POR_TIPO[det.tipo] || 'inss' });
+  }
+
+  const porTipo = l => l.reduce((m, x) => (m[x.tipo] = (m[x.tipo] || 0) + 1, m), {});
+  plano.resumo = {
+    lidos: (pat.detalhes || []).length,
+    atualizar: plano.atualizar.length,
+    novos: plano.novos.length,
+    sem_cliente: plano.semCliente.length,
+    ignorados: plano.ignorados.length,
+    eventos: plano.eventos.reduce((n, e) => n + e.eventos.length, 0),
+    exigencias: (pat.detalhes || []).filter(d => d.situacao === 'Em exigência').length,
+    apuracoes: (pat.detalhes || []).filter(d => d.urgente).length,
+    a_confirmar: (pat.detalhes || []).filter(d => d.especie_a_confirmar).length,
+    novos_por_tipo: porTipo(plano.novos),
+  };
+  return plano;
+}
+
+function conferirPlanoPat(pat, plano) {
+  const lidos = (pat.detalhes || []).length;
+  const soma = plano.atualizar.length + plano.novos.length
+             + plano.semCliente.length + plano.ignorados.length;
+  if (soma > lidos) return `o plano fala de ${soma} requerimentos e só ${lidos} foram lidos`;
+  for (const n of plano.novos.concat(plano.semCliente)) {
+    const esperada = LISTA_POR_TIPO[n.tipo];
+    if (esperada && n.lista !== esperada)
+      return `${n.protocolo} (${n.tipo}) iria para "${n.lista}" em vez de "${esperada}"`;
+    if (NAO_ABRE_CASO.has(n.tipo)) return `${n.protocolo} é ${n.tipo} e não pode abrir caso`;
+  }
+  for (const a of plano.atualizar)
+    if (a.mudancas.especie && a.mudancas.especie !== a.especie)
+      return `${a.protocolo} gravaria espécie diferente da lida`;
+  return null;
+}
+
+// o plano na tela, antes de qualquer gravação
+let planoPat = null, arquivoPat = null;
+function renderImportarPat(){
+  document.getElementById("titulo-lista").textContent = "📥 Importar do INSS";
+  document.getElementById("sub-lista").textContent =
+    "O que o PAT/GERID tem, comparado com o que o CRM já sabe. Nada é gravado sem você mandar.";
+  document.getElementById("conteudo-meio").innerHTML = telaImportarPat();
+  ligarImportarPat();
+}
+function telaImportarPat(){
+  const r = planoPat && planoPat.resumo;
+  const cx = n => `<div class="id-card"><strong style="font-size:20px">${n[1]}</strong>
+    <div class="u-papel" style="text-transform:none">${n[0]}</div></div>`;
+  return `<div class="pat-cx">
+    <h3>📥 Importar do PAT/GERID</h3>
+    <p class="meio-sub">Solte aqui o arquivo <code>pat_AAAA-MM-DD.json</code> que o coletor baixou.
+      Nada é gravado até você conferir e mandar aplicar.</p>
+    <input type="file" id="pat-arq" accept="application/json" style="margin:10px 0">
+    ${!r ? "" : `
+      <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+        ${[["requerimentos lidos", r.lidos], ["casos a atualizar", r.atualizar],
+           ["casos novos", r.novos], ["sem cliente no CRM", r.sem_cliente],
+           ["perícias a agendar", r.eventos], ["em exigência", r.exigencias],
+           ["apuração (urgente)", r.apuracoes], ["espécie a confirmar", r.a_confirmar]].map(cx).join("")}
+      </div>
+      ${r.sem_cliente ? `<div class="exig"><strong>${r.sem_cliente} requerimento(s) sem cliente no CRM.</strong>
+        São protocolos que existem no INSS e não têm ficha aqui — quase sempre quem
+        protocolou sozinho pelo Meu INSS. Eles NÃO entram: cadastre o cliente antes.</div>` : ""}
+      ${r.apuracoes ? `<div class="exig"><strong>⚠ ${r.apuracoes} apuração de irregularidade.</strong>
+        É o INSS revendo benefício que já paga — pode suspender, cancelar e cobrar o recebido.
+        Entram marcados como urgentes.</div>` : ""}
+      ${planoPat.erro ? `<div class="exig"><strong>Não vou gravar:</strong> ${esc(planoPat.erro)}</div>`
+        : `<button class="novo-cli" style="width:auto;margin:12px 0 0;padding:10px 20px"
+             onclick="aplicarPat()">Aplicar ${r.atualizar + r.novos} mudança(s)</button>`}
+      ${planoPat.novos.length ? `<h3 class="secao">Casos novos (${planoPat.novos.length})</h3>
+        <table class="tab"><tr><th>cliente</th><th>o quê</th><th>lista</th><th>DER</th><th></th></tr>
+        ${planoPat.novos.slice(0,60).map(n=>`<tr><td>${esc(n.nome)}</td>
+          <td>${esc(n.beneficio||"—")} ${n.especie?`<span class="chip">${n.especie}</span>`:""}</td>
+          <td>${esc(NOME_FASE[n.lista]||n.lista)}</td><td>${n.der?fmt(n.der):"—"}</td>
+          <td><a href="${n.link}" target="_blank" rel="noopener">abrir no PAT ↗</a></td></tr>`).join("")}
+        </table>` : ""}`}
+  </div>`;
+}
+function ligarImportarPat(){
+  const inp = document.getElementById("pat-arq"); if(!inp) return;
+  inp.onchange = async () => {
+    const f = inp.files && inp.files[0]; if(!f) return;
+    try{
+      arquivoPat = JSON.parse(await f.text());
+      planoPat = planoDeImportacao(arquivoPat, D, hoje());
+      planoPat.erro = conferirPlanoPat(arquivoPat, planoPat);
+      render();
+    }catch(e){ aviso("Não consegui ler o arquivo: "+e.message); }
+  };
+}
+async function aplicarPat(){
+  if(!planoPat || planoPat.erro) return;
+  let n = 0;
+  try{
+    for(const a of planoPat.atualizar){
+      const k = D.casoPorId.get(a.caso_id); if(!k) continue;
+      const campos = { ...a.mudancas, situacao_inss: a.situacao };
+      if(!(k.protocolos||[]).includes(a.protocolo))
+        campos.protocolos = [...(k.protocolos||[]), a.protocolo];
+      await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify(campos)});
+      Object.assign(k, campos); n++;
+      if(a.andamento)
+        await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify({caso_id:k.id, colaborador_id:eu.id, texto:a.andamento})});
+    }
+    for(const novo of planoPat.novos){
+      const [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({cliente_id:novo.cliente_id, titulo:novo.nome, fase:novo.lista,
+          beneficio:novo.beneficio, especie:novo.especie, der:novo.der,
+          protocolos:[novo.protocolo], marcadores:novo.marcadores,
+          urgente:novo.urgente, processo_link:novo.link, situacao_inss:novo.situacao})}) || [];
+      if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); n++; }
+    }
+    for(const bloco of planoPat.eventos)
+      for(const ev of bloco.eventos)
+        await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify({caso_id:bloco.caso_id, tipo:ev.tipo, status:"agendada",
+            data_hora:`${ev.data}T${ev.hora||"09:00"}:00`, local:ev.local})});
+    aviso(`✔ ${n} caso(s) atualizados ou criados`);
+    planoPat = null;
+    await carregar(); montarSidebar(); render();
+  }catch(e){ aviso("Parou no meio: "+e.message); }
+}
 
 // ── coluna do meio ────────────────────────────────────────────────────────
 // A LINHA MOSTRA O NOME E AS DATAS. Só isso.
@@ -2050,6 +2293,7 @@ function render(){
   if(visao==="quadro") return renderQuadro();
   if(visao==="vendas") return renderVendas();
   if(visao==="whatsapp") return renderWhats();
+  if(visao==="patinss") return renderImportarPat();
   if(visao==="config") return renderConfig();
   if(visao==="parcerias") return renderParcerias();
   if(visao==="marketing") return renderMarketing();
