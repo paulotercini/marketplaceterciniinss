@@ -279,7 +279,7 @@
   /* as linhas são irmãs soltas no HTML; estas regras costuram cada SEQUÊNCIA
      delas num bloco só — fio fino entre as linhas, moldura e cantos apenas
      nas pontas. Sem isso voltaria a ser uma pilha de caixinhas. */
-  .cartao{position:relative;background:var(--branco);padding:7px 14px 7px 0;cursor:pointer;
+  .cartao{position:relative;background:var(--branco);padding:8px 14px 8px 0;cursor:pointer;
     display:flex;align-items:center;gap:10px;
     border-left:1px solid var(--borda);border-right:1px solid var(--borda)}
   .cartao + .cartao{border-top:1px solid #EDEFF3}
@@ -309,16 +309,13 @@
   /* o nome NUNCA pode ser espremido a zero: numa coluna estreita, com o chip
      de exigência ao lado, a linha chegou a mostrar só o chip e nenhum nome */
   .cartao .info{flex:1 1 auto;min-width:130px}
-  .cartao .nome{font-weight:650;font-size:14px;letter-spacing:-.005em;line-height:1.25;
+  .cartao .nome{font-weight:650;font-size:14.5px;letter-spacing:-.005em;line-height:1.3;
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .cartao .fogo-sel{margin-left:6px;font-size:11px}
-  /* uma linha só, cinza, sem fundo: o que é secundário parece secundário */
-  .cartao .meta{display:flex;gap:5px;margin-top:1px;font-size:12px;color:#767C86;
-    align-items:center;white-space:nowrap;overflow:hidden}
-  .cartao .meta .pt{color:#C3C7CE;flex:none}
-  .cartao .meta .ben{overflow:hidden;text-overflow:ellipsis;flex:0 1 auto}
-  .cartao .meta .motivo{max-width:210px;overflow:hidden;text-overflow:ellipsis;flex:0 1 auto}
-  .cartao .meta .marc-chip{flex:none;margin-left:1px}
+  /* a linha tem uma linha só: o nome. A data mora na calha, e a perícia e a
+     exigência entram como etiqueta à direita — nada mais atravessa. */
+  .cartao .quem-prazo{flex:none;margin-left:-2px}
+  .cartao .chip.per{flex:none;font-variant-numeric:tabular-nums}
   /* as ações só aparecem no hover ou pelo teclado; ligadas, ficam sempre */
   .cartao .acoes{display:flex;gap:2px;flex:none}
   .cartao .acao-card{opacity:0}
@@ -1066,7 +1063,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.21 · a lista mais limpa</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.22 · nome e datas, da lista aberta</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1762,12 +1759,25 @@ function montarSidebar(){
 }
 
 // ── coluna do meio ────────────────────────────────────────────────────────
+// A LINHA MOSTRA O NOME E AS DATAS. Só isso.
+//
+// Benefício, espécie, marcadores e fase saíram: são o assunto do caso, e o
+// lugar deles é a ficha. Aqui a pergunta é outra — "de quem eu preciso cuidar,
+// e quando?". Tudo que não responde a isso é atravessador entre o olho e o
+// nome.
+//
+// A REGRA DA DATA: ela sai SEMPRE dos casos que estão nesta lista, nunca do
+// acervo inteiro do cliente. Quem tem um caso no INSS e outro no Judicial, ao
+// ser visto na lista do INSS, mostra o lembrete DO INSS — o do Judicial não
+// diz nada sobre o trabalho de agora, e ainda faria a lista parecer atrasada
+// sem estar. Quem garante isso é o `ks`: o grupoClientes entrega só os casos
+// da lista aberta, e nada aqui dentro olha para fora dele.
 function cartaoCliente(cli, casosMostrar){
   const ks = casosMostrar || (D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado");
   const resp = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))].map(id=>D.colPorId.get(id)).filter(Boolean);
   const prazoMin = ks.map(k=>k.prazo).filter(Boolean).sort()[0];
-  // o lembrete mais próximo agora pode vir de uma TAREFA de comentário — e
-  // quem manda na cor da borda é quem tem esse lembrete na mão
+  // o lembrete mais próximo pode vir do prazo do caso ou de uma TAREFA de
+  // comentário — e quem tem esse lembrete na mão aparece ao lado da data
   const tAb = ks.flatMap(k=>D.tarefasPorCaso.get(k.id)||[]);
   let dataProx = prazoMin || null, quemProx = [];
   if(tAb.length){
@@ -1778,52 +1788,34 @@ function cartaoCliente(cli, casosMostrar){
         .map(id=>D.colPorId.get(id)).filter(Boolean);
     }
   }
-  const faixa = (quemProx.length?quemProx:resp).slice(0,3).map(c=>c.cor);
-  const evFut = D.eventos.find(e=>ks.some(k=>k.id===e.caso_id) && e.status==="agendada" && dataSP(e.data_hora)>=hoje());
+  // perícia e audiência são data marcada com hora e lugar: não se descobre
+  // no dia, então vive na lista ao lado do lembrete
+  const evFut = D.eventos
+    .filter(e=>ks.some(k=>k.id===e.caso_id) && e.status==="agendada" && dataSP(e.data_hora)>=hoje())
+    .sort((a,b)=>a.data_hora<b.data_hora?-1:1)[0];
   const imp = ks.some(k=>k.importante);
   const noMeuDia = D.meudia.some(m=>m.colaborador_id===eu.id && ks.some(k=>k.id===m.caso_id));
-  // ── a linha da pauta ───────────────────────────────────────────────────
-  // Nesta mesa tudo é fila com data: DER, prazo de recurso, perícia. Por isso
-  // a data ganhou coluna fixa à esquerda — as linhas sem data mantêm a
-  // calha vazia, e os nomes continuam alinhados numa régua só.
-  //
-  // A linha é CINZA de propósito. Antes cada cartão tinha faixa colorida da
-  // pessoa (que o avatar à direita já dizia), chip azul do benefício, chip
-  // verde da fase (que é o nome da própria lista) e três ícones apagados —
-  // treze linhas viravam um arco-íris onde nada saltava. Agora só duas coisas
-  // têm cor: o PRAZO, quando é real, e os MARCADORES, que são a impressão
-  // digital do pedido. O resto se cala para eles serem vistos.
-  const marcas = [...new Set(ks.flatMap(marcadoresDe))];
+  const motivo = (ks.find(x=>x.prazo===dataProx)||{}).lembrar_motivo;
   const exig = ks.map(chipExig).filter(Boolean).join("");
   const dcb = ks.map(chipDcb).filter(Boolean).join("");
-  const motivo = (ks.find(x=>x.prazo===prazoMin)||{}).lembrar_motivo;
-  const bens = [...new Set(ks.map(k=>k.beneficio).filter(Boolean))];
-  // a fase só entra quando NÃO é a da lista aberta: repetir "INSS" em treze
-  // linhas dentro da lista INSS é ruído puro
-  const faseAqui = (visao||"").startsWith("fase:") ? visao.slice(5) : null;
-  const fases = [...new Set(ks.map(k=>k.fase))].filter(f=>f!==faseAqui);
+  // o porquê da data continua a um passe de mouse — sem ocupar a linha
+  const dica = [dataProx?`lembrete em ${fmt(dataProx)}`:"", motivo,
+                quemProx.length?`com ${quemProx.map(c=>c.nome).join(", ")}`:""]
+               .filter(Boolean).join(" · ");
   return `<div class="cartao" data-cli="${cli.id}">
     <span class="calha ${dataProx? (dataProx<hoje()?"venc":dataProx===hoje()?"hoje":"") : "vazia"}"
-      ${dataProx&&motivo?`title="${esc(motivo)}"`:""}>
+      ${dica?`title="${esc(dica)}"`:""}>
       ${dataProx?`<b>${fmt(dataProx).slice(0,5)}</b><small>${diaDaSemana(dataProx)}</small>`:""}
     </span>
     <span class="check"></span>
     <div class="info">
       <div class="nome">${esc(cli.nome)}${ks.some(k=>k.urgente)?`<span class="fogo-sel" title="urgente">🔥</span>`:""}</div>
-      <div class="meta">
-        ${bens.map(b=>`<span class="ben">${esc(b)}</span>`).join('<span class="pt">·</span>')}
-        ${fases.map(f=>`<span class="pt">·</span><span class="fase-txt">${esc(NOME_FASE[f]||f)}</span>`).join("")}
-        ${ks.length>1?`<span class="pt">·</span><span class="fase-txt">${ks.length} casos</span>`:""}
-        ${motivo?`<span class="pt">·</span><span class="motivo" title="${esc(motivo)}">${esc(motivo)}</span>`:""}
-        ${/* os marcadores vêm logo depois do benefício, na mesma linha de
-             leitura: "tempo de contribuição · Rural · Especial" é uma frase.
-             Encostados na margem direita eles ficavam órfãos do nome. */""}
-        ${marcas.map(sl=>{ const m=POR_SLUG.get(sl);
-          return `<span class="marc-chip" style="--marc:${m.cor}" title="${esc(m.dica)}">${m.icone} ${esc(m.rot)}</span>`;}).join("")}
-      </div>
     </div>
+    ${quemProx.map(c=>`<span class="avatar mini quem-prazo" style="background:${c.cor}"
+      title="${esc(c.nome)} — tarefa para ${fmt(dataProx)}">${esc(c.inicial)}</span>`).join("")}
+    ${evFut?`<span class="chip per" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">🩺 ${
+      fmtTS(evFut.data_hora).slice(0,5)} ${horaSP(evFut.data_hora)}</span>`:""}
     ${exig}${dcb}
-    ${evFut?`<span class="chip per">🩺 ${fmtTS(evFut.data_hora).slice(0,5)}</span>`:""}
     <div class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${resp.map(c=>`<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")||`<span class="avatar mini vazio">＋</span>`}</div>
     ${/* os três só aparecem no hover ou pelo teclado — quando estão LIGADOS
          ficam sempre visíveis, porque aí carregam informação */""}
