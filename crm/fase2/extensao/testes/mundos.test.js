@@ -1,14 +1,17 @@
-// O DEFEITO MAIS SILENCIOSO DE TODOS: mundo errado.
+// OS DEFEITOS MAIS SILENCIOSOS DE TODOS: os que impedem o código de rodar.
 //
-// Um script de conteúdo roda, por padrão, num `window` só dele. Compartilha o
-// DOM com a página, mas não os objetos. O gancho do coletor do PAT estava no
-// `window.fetch` do mundo isolado — existia, não dava erro nenhum, e nunca
-// disparava: clicava-se em "Buscar", o portal buscava, e a extensão ficava
-// parada. Nenhum console acusa isso; só o silêncio.
+// Dois já aconteceram, um em seguida do outro:
 //
-// Daí estes testes, que são de ESTRUTURA e não de comportamento: o coletor do
-// PAT tem de estar declarado no mundo da página, e lá dentro não pode haver
-// nada que dependa da extensão.
+// 1. Mundo errado. Um script de extensão roda num `window` só dele. O gancho
+//    no fetch do portal estava lá — existia, não dava erro, e nunca disparava.
+// 2. Manifesto recusado. A correção do primeiro pedia `"world": "MAIN"`, chave
+//    que um Chrome mais antigo não conhece — e um manifesto com chave inválida
+//    é recusado INTEIRO. A extensão deixou de carregar, sem uma linha no
+//    console dizendo por quê.
+//
+// Nenhum dos dois aparece em teste de comportamento, então estes são de
+// estrutura: o coletor é injetado na página pela ponte, e o manifesto usa só
+// chaves antigas.
 const { test } = require('node:test');
 const assert = require('node:assert');
 const fs = require('fs');
@@ -20,49 +23,57 @@ const manifesto = JSON.parse(ler('manifest.json'));
 const entradas = manifesto.content_scripts;
 const daquele = arq => entradas.find(e => e.js.includes(arq));
 
-// tira comentários e textos antes de procurar chamadas: nem a explicação do
-// problema nem a frase que o usuário lê ("entregues ao CRM") são o problema
 const semComentario = f => ler(f).replace(/^\s*\/\/.*$/gm, '');
 const codigo = f => semComentario(f).replace(/`[^`]*`|'[^'\n]*'|"[^"\n]*"/g, "''");
 
-test('o coletor do PAT roda no mundo da página', () => {
-  const e = daquele('pat.js');
-  assert.ok(e, 'pat.js saiu do manifesto');
-  assert.equal(e.world, 'MAIN',
-    'o gancho no fetch do portal não enxerga nada fora do mundo da página');
+test('o manifesto não usa chave que um Chrome antigo recuse', () => {
+  const bruto = ler('manifest.json');
+  assert.ok(!/"world"/.test(bruto),
+    'voltou o "world" no manifesto — Chrome sem essa chave recusa o arquivo inteiro '
+    + 'e a extensão nem carrega');
 });
 
-test('no mundo da página não há chrome.* nem ponte para o CRM', () => {
-  const src = codigo('pat.js');
-  assert.ok(!/\bchrome\./.test(src), 'pat.js usa chrome.* — não existe no mundo da página');
-  assert.ok(!/\bCRM\./.test(src), 'pat.js chama CRM.* — o objeto vive no outro mundo');
+test('o coletor do PAT não é declarado: é injetado na página', () => {
+  assert.equal(daquele('pat-pagina.js'), undefined,
+    'o coletor tem de ficar fora do manifesto — dentro dele, roda no mundo errado');
+  assert.match(codigo('ponte-pat.js'), /getURL\(/, 'a ponte deixou de injetar o coletor');
+  const livres = (manifesto.web_accessible_resources || []).flatMap(r => r.resources);
+  assert.ok(livres.includes('pat-pagina.js'),
+    'sem web_accessible_resources, a página não tem permissão de carregar o coletor');
+});
+
+test('dentro da página não há chrome.* nem ponte para o CRM', () => {
+  const src = codigo('pat-pagina.js');
+  assert.ok(!/\bchrome\./.test(src), 'pat-pagina.js usa chrome.* — não existe dentro da página');
+  assert.ok(!/\bCRM\./.test(src), 'pat-pagina.js chama CRM.* — o objeto vive no outro lado');
   assert.match(src, /postMessage\(/, 'sem postMessage, o coletado não chega à extensão');
 });
 
-test('a ponte e o coletor do e-Recursos ficam no mundo da extensão', () => {
-  for (const arq of ['ponte-pat.js', 'crps.js']) {
-    const e = daquele(arq);
-    assert.ok(e, `${arq} saiu do manifesto`);
-    assert.notEqual(e.world, 'MAIN', `${arq} precisa de chrome.* e do CRM`);
-    assert.ok(e.js.includes('comum.js'), `${arq} ficou sem a ponte do CRM`);
-  }
-});
-
-test('o service worker chama cada coletor no mundo em que ele mora', () => {
-  const src = semComentario('fundo.js');
-  assert.match(src, /world:\s*mundo/, 'executeScript sem escolher o mundo');
-  assert.match(src, /'pat'\s*\?\s*'MAIN'\s*:\s*'ISOLATED'/,
-    'a escolha do mundo por fonte sumiu — chamar no mundo errado parece "página não abriu"');
+test('a ponte se anuncia, e cobra o coletor se ele não subir', () => {
+  const src = semComentario('ponte-pat.js');
+  assert.match(src, /\[CRM\]/, 'sem a linha no console, "não carregou" vira mais um silêncio');
+  assert.match(src, /coletorNoAr/, 'ninguém confere se o coletor chegou a subir');
 });
 
 test('todo arquivo prometido no manifesto existe', () => {
   const prometidos = [manifesto.background.service_worker, manifesto.options_page,
-                      manifesto.action.default_popup, ...entradas.flatMap(e => e.js)];
+                      manifesto.action.default_popup, ...entradas.flatMap(e => e.js),
+                      ...(manifesto.web_accessible_resources || []).flatMap(r => r.resources)];
   for (const f of prometidos)
     assert.ok(fs.existsSync(path.join(RAIZ, f)), `o manifesto promete ${f}, que não existe`);
 });
 
-test('a faixa está nos dois mundos — cada um tem o seu window', () => {
-  for (const e of entradas)
+test('a faixa e a ponte do CRM estão em toda entrada', () => {
+  for (const e of entradas) {
     assert.ok(e.js.includes('tela.js'), `entrada sem tela.js: ${e.js.join(', ')}`);
+    assert.ok(e.js.includes('comum.js'), `entrada sem comum.js: ${e.js.join(', ')}`);
+    assert.equal(e.all_frames, true,
+      'o portal virou micro-frontend: sem all_frames, um quadro interno fica de fora');
+  }
+});
+
+test('o service worker chama a página em todos os quadros', () => {
+  const src = semComentario('fundo.js');
+  assert.match(src, /allFrames:\s*true/, 'só o quadro de cima seria consultado');
+  assert.ok(!/world:/.test(src), 'executeScript voltou a pedir mundo — não é mais preciso');
 });

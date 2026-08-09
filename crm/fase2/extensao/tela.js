@@ -13,7 +13,8 @@ function faixa(texto, cor = '#2B5FC7') {
     f.style.cssText = 'position:fixed;z-index:2147483647;left:50%;transform:translateX(-50%);' +
       'top:14px;padding:10px 18px;border-radius:10px;color:#fff;font:600 14px system-ui;' +
       'box-shadow:0 6px 24px rgba(0,0,0,.3);max-width:80vw;text-align:center';
-    document.body.appendChild(f);
+    // no document_start o body ainda pode não existir
+    (document.body || document.documentElement).appendChild(f);
   }
   f.style.background = cor;
   f.textContent = texto;

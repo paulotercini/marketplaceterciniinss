@@ -14,22 +14,20 @@ chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
     const usar = aba || await chrome.tabs.create({ url: alvo, active: true });
     if (aba) await chrome.tabs.update(aba.id, { active: true });
     else await new Promise(r => setTimeout(r, 3500));   // deixa a página carregar
-    // O coletor do PAT vive no mundo da página (é o único jeito de escutar o
-    // fetch do portal); o do e-Recursos, no mundo isolado. Chamar no mundo
-    // errado não acha a função e parece que a página não abriu.
-    const mundo = msg.fonte === 'pat' ? 'MAIN' : 'ISOLATED';
     // quem tem acesso ao chrome.storage é este worker: a data da última coleta
     // vai como argumento, já pronta
     const { ultima_pat } = await chrome.storage.local.get(['ultima_pat']);
     try {
-      const [res] = await chrome.scripting.executeScript({
-        target: { tabId: usar.id },
-        world: mundo,
+      // allFrames porque o portal virou micro-frontend: a tela de tarefas pode
+      // estar num quadro interno, e chamar só o de cima acharia a página vazia
+      const res = await chrome.scripting.executeScript({
+        target: { tabId: usar.id, allFrames: true },
         func: desde => window.crmRodar ? window.crmRodar(desde)
                                        : { erro: 'a página ainda não terminou de abrir — dê F5 e tente de novo' },
         args: [ultima_pat || null],
       });
-      responder(res.result || { erro: 'sem resposta da página' });
+      const bons = res.map(r => r && r.result).filter(r => r && !r.erro);
+      responder(bons[0] || (res[0] && res[0].result) || { erro: 'sem resposta da página' });
     } catch (e) { responder({ erro: String(e.message || e) }); }
   })();
   return true;                       // resposta assíncrona
