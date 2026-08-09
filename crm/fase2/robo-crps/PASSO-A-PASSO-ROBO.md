@@ -168,6 +168,48 @@ estrela da movimentação não apaga a do processo: quem decide que o assunto
 morreu é você, no botão do composer. Os destaques sobrevivem às coletas
 seguintes.
 
+### O recurso que o robô não enxerga
+
+O e-Recursos só devolve os processos ligados ao **CPF do procurador**. Quando
+o recurso não está vinculado — protocolo feito por outro advogado, cadastro
+que o INSS não corrigiu — a consulta automática não vê nada, e a única saída é
+alguém abrir o site e olhar.
+
+Na aba 🖥 Recurso, ao lado do número, tem o botão **🔎 consulta manual**. Ele
+marca o recurso como "gente confere" e pergunta **quem** e **de quanto em
+quanto tempo** (7, 15 ou 30 dias).
+
+A partir daí:
+
+- O número **sai do coletor**. Antes ele era pedido toda rodada, dava erro e
+  ainda gastava a pausa de 3 segundos entre as chamadas.
+- O recurso aparece no **Meu Dia de quem confere**, no dia certo, na lista
+  "🔎 Consultar no e-Recursos". É isto que substitui a tarefa do To Do.
+- Cada olhada tem dois desfechos, e a diferença entre eles é o ponto:
+
+| botão | o que faz |
+|---|---|
+| **✓ conferido, sem novidade** | carimba quem olhou e quando, adia para a próxima data. **Não escreve comentário.** |
+| **✎ teve andamento…** | vira comentário na ficha (`🔎 CRPS (consulta manual) — …`) e acende o ⭐ do processo |
+
+**Conferir não é andamento.** No To Do, cada olhada que não achava nada virava
+mais um "não houve andamento" — ao fim de um semestre a ficha tinha vinte
+linhas dizendo que nada aconteceu, e mesmo assim ninguém sabia se a consulta
+*desta* semana tinha sido feita. Aqui as vinte linhas viram uma:
+
+```
+🔎 consulta manual · 44233139765202537
+   ⏰ conferir agora    conferido 6× · última em 05/08/2026 (D)
+```
+
+A próxima data conta **do dia em que se conferiu**, não da data que estava
+marcada — quem olhou com três dias de atraso não é cobrado de novo amanhã.
+
+Quando o INSS vincular o processo, o botão **🤖 voltar ao automático** devolve
+o número ao robô. O histórico das conferências fica: é o registro do trabalho
+que foi feito à mão. E se a coleta trouxer sozinha um número que estava na
+lista manual, a ingestão percebe, tira a marca e avisa.
+
 ### Corrigi uma regra — preciso coletar tudo de novo?
 
 Não. Cada andamento guarda o texto cru do e-Recursos, então o rótulo pode ser

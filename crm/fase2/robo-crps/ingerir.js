@@ -215,6 +215,13 @@ async function main() {
             if ((a.id || a.nome) === marca) { a.storage = destino; a.bytes = bin.length; }
       }
       restaurarGuardados(bloco, jaTinha, antes);
+      // era consulta manual e agora veio pelo e-Recursos: o INSS vinculou o
+      // processo. Sai da lista manual (o robô assume), mas o histórico de
+      // quem conferiu à mão fica — é o registro do trabalho feito.
+      if (antes && antes.manual) {
+        bloco.consulta = antes.consulta;
+        log(`  ✔ ${nup}: voltou a ser automático (saiu da consulta manual)`);
+      }
       finais.set(nup, bloco);
       if (antes && autorIA) {   // já conhecíamos: comenta só a novidade
         const vistos = new Set((antes.eventos || []).map(T.chaveEvento));

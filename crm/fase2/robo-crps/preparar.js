@@ -13,6 +13,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { nupsManuais } = require('./manual.js');
 
 for (const linha of (fs.existsSync(path.join(__dirname, '.env'))
     ? fs.readFileSync(path.join(__dirname, '.env'), 'utf8').split('\n') : [])) {
@@ -145,7 +146,12 @@ function montarColetor(nups, pausaMs) {
 async function main() {
   if (!BASE || !CHAVE) { console.error('faltam SUPABASE_URL e SUPABASE_SERVICE_KEY no .env'); process.exit(1); }
   const casos = await sb('/rest/v1/casos?select=id,crps_nup,crps_nups,crps&fase=neq.encerrado');
-  const nups = [...new Set(casos.flatMap(numerosDe))];
+  // o recurso marcado como consulta manual não está vinculado ao CPF do
+  // procurador: pedir ao e-Recursos dá erro toda rodada e ainda gasta a pausa
+  // entre as chamadas. Quem cuida dele é gente, pelo Meu Dia do CRM.
+  const manuais = nupsManuais(casos);
+  const nups = [...new Set(casos.flatMap(numerosDe))].filter(n => !manuais.has(n));
+  if (manuais.size) console.log(`${manuais.size} recurso(s) de consulta manual ficaram de fora.`);
   if (!nups.length) { console.log('Nenhum recurso vinculado ainda (rode o importar_favoritos primeiro).'); return; }
   const script = montarColetor(nups, PAUSA);
   const saida = path.join(__dirname, 'coletar.txt');
