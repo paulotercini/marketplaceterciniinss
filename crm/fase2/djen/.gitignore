@@ -1,0 +1,4 @@
+# a amostra tem nome de cliente e teor de decisão
+djen_amostra.json
+*.json
+!package.json
