@@ -208,13 +208,38 @@ test('o detalhe entrega DER, espécie, unidade e link', () => {
 // O CRM guarda o LINK, não a cópia. Laudo médico e relato de doença ficam no
 // portal, onde quem precisa ler abre com o login dele — é a mesma regra da
 // ficha pública do cliente, e aqui vale mais ainda.
-test('anexo e comentário viram CONTAGEM, nunca conteúdo', () => {
+// O ANEXO continua sendo só contagem: é laudo médico, e o CRM guarda o link
+// do portal, não a cópia. O COMENTÁRIO, não — ele é a mensagem do INSS sobre
+// o processo, e é exatamente o que responde "o que mudou?".
+test('anexo é contagem; comentário vem inteiro, e nada de cliente atravessa', () => {
   const r = T.resumoDoDetalhe(DETALHE);
-  assert.equal(r.anexos, 1);
-  assert.equal(r.comentarios, 3);
+  assert.equal(r.anexos, 1, 'o anexo não pode virar conteúdo');
+  assert.equal(r.comentarios.length, 3);
+  assert.match(r.comentarios[0].texto, /lombar/, 'o comentário do INSS tem de chegar inteiro');
   const s = JSON.stringify(r);
-  for (const vaza of ['laudo_oncologia', 'lombar', 'ALMIR', 'TRONFINI', '08575979817', '1958'])
+  for (const vaza of ['laudo_oncologia', 'ALMIR', 'TRONFINI', '08575979817', '1958'])
     assert.ok(!s.includes(vaza), `o resumo levou "${vaza}" junto`);
+});
+
+// O `id` do comentário é o que impede o mesmo texto de virar andamento de
+// novo a cada importação diária.
+test('cada comentário traz id, data e quem escreveu', () => {
+  const cs = T.comentariosDe({ comentarios: [
+    { id: 9, conteudo: 'junte o PPP', dataCriacao: '2026-08-05T10:00:00', incluidoPorServidor: true },
+    { id: 8, conteudo: 'juntado', dataCriacao: '2026-08-01T09:00:00' },
+    { id: 7, conteudo: '   ' },                    // vazio não é comentário
+    { conteudo: 'sem id do portal', dataCriacao: '2026-07-30T08:00:00' },
+  ]});
+  assert.equal(cs.length, 3);
+  assert.deepStrictEqual(cs[0], { id: '9', texto: 'junte o PPP', quando: '2026-08-05',
+                                  do_inss: true, visivel: true });
+  assert.equal(cs[1].do_inss, false);
+  assert.ok(cs[0].quando > cs[1].quando, 'o mais novo vem primeiro');
+  // sem id do portal a chave é data+texto: descartar seria perder em silêncio
+  // a mensagem do INSS, e um duplicado eventual se resolve olhando
+  assert.equal(cs[2].texto, 'sem id do portal');
+  assert.equal(cs[2].id, '2026-07-30|sem id do portal');
+  assert.deepStrictEqual(T.comentariosDe({}), []);
 });
 
 test('a lista vira linha comparável, com o link pronto', () => {
@@ -237,7 +262,8 @@ test('a lista vira linha comparável, com o link pronto', () => {
 test('a cópia dentro do coletor é idêntica à testada aqui', () => {
   const col = fs.readFileSync(path.join(__dirname, '..', 'coletar-no-navegador.js'), 'utf8');
   const nu = s => s.replace(/\s+/g, ' ').trim();
-  for (const fn of ['especieDe', 'dataIso', 'eventosDe', 'resumoDaLista', 'resumoDoDetalhe']) {
+  for (const fn of ['especieDe', 'dataIso', 'eventosDe', 'comentariosDe',
+                    'resumoDaLista', 'resumoDoDetalhe']) {
     const i = col.indexOf(`function ${fn}(`);
     assert.notEqual(i, -1, `${fn} sumiu do coletor`);
     let n = 0, j = col.indexOf('{', i);

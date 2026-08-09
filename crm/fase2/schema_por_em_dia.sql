@@ -89,13 +89,30 @@ alter table coletas enable row level security;
 drop policy if exists coletas_tudo on coletas;
 create policy coletas_tudo on coletas for all using (true) with check (true);
 
+
+-- ── 6. De onde veio o andamento, e qual é ele lá na origem ────────────────
+-- `origem` ganha 'pat' e 'crps' — é por ele que a lista 📣 Novidades separa
+-- o que os portais trouxeram do que a equipe digitou.
+--
+-- `origem_id` é a chave do item na origem (o id do comentário no PAT). A
+-- importação roda TODO DIA e o portal devolve sempre a lista inteira: sem
+-- esta coluna, os mesmos comentários virariam andamento novo a cada manhã, e
+-- em uma semana a ficha teria sete cópias de cada um. O índice único é o que
+-- garante isso mesmo se algo for aplicado duas vezes.
+alter table andamentos drop constraint if exists andamentos_origem_check;
+alter table andamentos add constraint andamentos_origem_check
+  check (origem in ('app','todo','dou','whatsapp','pat','crps'));
+alter table andamentos add column if not exists origem_id text;
+create unique index if not exists andamentos_origem_unica
+  on andamentos (caso_id, origem, origem_id) where origem_id is not null;
+
 -- ── conferência ───────────────────────────────────────────────────────────
--- Devem aparecer SEIS linhas: as cinco colunas e a tabela `coletas`, que é
--- a fila onde a extensão do navegador entrega o que coletou.
+-- Devem aparecer SETE linhas: as cinco colunas de `casos`/`andamentos`, a
+-- coluna `andamentos.origem_id` e a tabela `coletas`.
 select table_name as tabela, column_name as coluna, data_type as tipo
   from information_schema.columns
  where (table_name = 'casos'      and column_name in ('marcadores','ronda','processo_link','situacao_inss'))
-    or (table_name = 'andamentos' and column_name = 'responde_a')
+    or (table_name = 'andamentos' and column_name in ('responde_a','origem_id'))
 union all
 select 'coletas', 'tabela criada', ''
   from information_schema.tables where table_name = 'coletas'

@@ -45,7 +45,7 @@ const SEMENTE = `
   D.tarefas=[];D.tarefasPorCaso=new Map();D.pagamentos=[];D.meudia=[];
   D.eventos=[{id:'e1',caso_id:'k1',tipo:'Perícia médica',status:'agendada',
               data_hora:dia(9)+'T09:30:00',local:'APS Franca'}];
-  D.and30=[];D.modelos=[];D.sugestoes=[];D.mencoes=[];D.leads=[];D.docs=[];D.ckls=[];
+  D.and30=[];D.novid=[];D.modelos=[];D.sugestoes=[];D.mencoes=[];D.leads=[];D.docs=[];D.ckls=[];
   D.docModelos=[];D.frases=[];D.lembrarMotivos=[];D.rotinas=[];D.rotinasFeitas=[];
   D.apos=[];D.listaPref=[];D.config=new Map();D.zapResumo=0;D.andamentos=[];
   D.tarefasFicha=[];D.anexos=[];D.convFicha=[];
@@ -552,5 +552,44 @@ test('a lista INSS filtra por exigência, das duas fontes', pular, async () => {
   await pag.waitForTimeout(150);
   assert.equal(await pag.$$eval('.cartao[data-cli]', e => e.length), antes, 'o filtro não desligou');
   await pag.evaluate(() => { delete D.casos[0].exigencia_prazo; delete D.casos[1].situacao_inss; });
+  await limpar();
+});
+
+// ── 📣 Novidades: a caixa de entrada do que os portais trouxeram ──────────
+// "Quero ter conhecimento de todos os andamentos diários." Antes disso era
+// caçar ficha por ficha o que tinha mudado.
+test('Novidades mostra o que veio dos portais, agrupado por dia', pular, async () => {
+  await limpar();
+  await pag.evaluate(() => {
+    D.novid = [
+      { id: 'n1', caso_id: 'k1', origem: 'pat', criado_em: '2026-08-09T10:00:00',
+        texto: 'INSS · Apresentar PPP da empresa X', andamentos_lidos: [] },
+      { id: 'n2', caso_id: 'k1', origem: 'crps', criado_em: '2026-08-08T10:00:00',
+        texto: 'Recurso distribuído à 12ª Junta', andamentos_lidos: [] },
+      { id: 'n3', caso_id: 'k2', origem: 'pat', criado_em: '2026-08-08T09:00:00',
+        texto: 'INSS · Exigência cumprida', andamentos_lidos: [{ colaborador_id: 'p' }] },
+    ];
+    visao = 'novidades'; montarSidebar(); render();
+  });
+  await pag.waitForTimeout(120);
+  const txt = await pag.$eval('#conteudo-meio', e => e.textContent);
+  assert.match(txt, /Apresentar PPP/, 'o comentário do INSS não apareceu');
+  assert.match(txt, /12ª Junta/, 'a movimentação do recurso não apareceu');
+  assert.ok(!/Exigência cumprida/.test(txt), 'o que eu já li continua aparecendo');
+  assert.equal(await pag.$$eval('.nov', e => e.length), 2);
+  assert.equal(await pag.$$eval('.secao', e => e.length), 2, 'devia agrupar por dia');
+  // o contador da barra lateral conta o mesmo
+  assert.match(await pag.$eval('.lista-item[data-v="novidades"] .cont', e => e.textContent), /^2$/);
+});
+
+// Marcar como lido tira da caixa de entrada, NÃO da ficha do cliente.
+test('marcar como lido esvazia a caixa sem apagar nada', pular, async () => {
+  await pag.evaluate(() => { marcarLidas(['n1', 'n2']); });
+  await pag.waitForTimeout(200);
+  assert.equal(await pag.$$eval('.nov', e => e.length), 0);
+  assert.match(await pag.$eval('#conteudo-meio', e => e.textContent), /Caixa vazia/);
+  // os andamentos continuam onde estavam — só ganharam a marca de lido
+  assert.equal(await pag.evaluate(() => D.novid.length), 3, 'apagou andamento do CRM');
+  await pag.evaluate(() => { D.novid = []; visao = 'fase:inss'; });
   await limpar();
 });

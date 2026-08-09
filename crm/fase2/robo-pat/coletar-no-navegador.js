@@ -165,6 +165,23 @@
             ...juntar(d.agendamentosAvaliacaoSocial, 'Avaliação social')];
   }
 
+  function comentariosDe(det) {
+    return (Array.isArray((det || {}).comentarios) ? det.comentarios : [])
+      .map(c => ({
+        // sem `id` do portal, a chave é data+texto. Descartar o comentário
+        // seria perder em silêncio justamente a mensagem do INSS — e um
+        // duplicado eventual se resolve olhando; um sumiço, não.
+        id: String(c.id || `${String(c.dataCriacao || '').slice(0, 10)}|`
+                         + String(c.conteudo || '').trim().slice(0, 40)),
+        texto: String(c.conteudo || '').trim(),
+        quando: (String(c.dataCriacao || '').match(/^\d{4}-\d{2}-\d{2}/) || [null])[0],
+        do_inss: !!c.incluidoPorServidor,
+        visivel: c.visivel !== false,
+      }))
+      .filter(c => c.id && c.texto)
+      .sort((a, b) => (b.quando || '').localeCompare(a.quando || ''));
+  }
+
   function resumoDaLista(t) {
     return {
       protocolo: String((t || {}).protocolo || '').trim(),
@@ -198,9 +215,16 @@
       unidade: det.nomeUnidade || null,
       canal: det.tipoCanalAtendimento || null,
       quem_protocolou: CANAIS[limpo(det.tipoCanalAtendimento)] || null,
-      // contagens, não conteúdo: dizem que há o que olhar, sem trazer o que é
+      // O ANEXO CONTINUA SENDO SÓ CONTAGEM: é laudo médico, e o CRM guarda o
+      // link do portal, não a cópia. O COMENTÁRIO, NÃO — ele é a mensagem do
+      // INSS sobre o processo ("apresentar PPP", "exigência cumprida"), e é
+      // exatamente o que responde "o que mudou?". Sem ele, a importação avisa
+      // que algo aconteceu e não diz o quê.
+      //
+      // Eles nascem internos: `publico` fica false, então nada disso atravessa
+      // para a ficha do cliente no portal. A barreira continua onde deve estar.
       anexos: Array.isArray(det.anexos) ? det.anexos.length : 0,
-      comentarios: Array.isArray(det.comentarios) ? det.comentarios.length : 0,
+      comentarios: comentariosDe(det),
       em_exigencia: !!det.podeCumprirExigencia || situacaoDe(det.status) === 'Em exigência',
       eventos: eventosDe(det),
       link: det.protocolo ? `https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/${det.protocolo}` : null,

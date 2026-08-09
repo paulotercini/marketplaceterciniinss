@@ -2152,3 +2152,23 @@ create index if not exists coletas_pendentes on coletas (fonte, criado_em desc)
 alter table coletas enable row level security;
 drop policy if exists coletas_tudo on coletas;
 create policy coletas_tudo on coletas for all using (true) with check (true);
+
+-- ══════════════════════════════════════════════════════════════════════════
+-- De onde veio o andamento, e qual é ele lá na origem.
+--
+-- `origem` já existia com quatro valores. Entram 'pat' (INSS) e 'crps'
+-- (recursos), que é o que os robôs escrevem — e é por esse campo que a lista
+-- 📣 Novidades separa "o que os portais trouxeram" do que a equipe digitou.
+--
+-- `origem_id` é a chave do item no sistema de origem: o id do comentário no
+-- PAT, o do movimento no e-Recursos. A importação roda TODO DIA e o portal
+-- devolve sempre a lista inteira — sem esta coluna, os mesmos comentários
+-- virariam andamento novo a cada manhã, e em uma semana a ficha teria sete
+-- cópias de cada um.
+-- ══════════════════════════════════════════════════════════════════════════
+alter table andamentos drop constraint if exists andamentos_origem_check;
+alter table andamentos add constraint andamentos_origem_check
+  check (origem in ('app','todo','dou','whatsapp','pat','crps'));
+alter table andamentos add column if not exists origem_id text;
+create unique index if not exists andamentos_origem_unica
+  on andamentos (caso_id, origem, origem_id) where origem_id is not null;

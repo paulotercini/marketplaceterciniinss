@@ -826,6 +826,15 @@
   /* o Meu Dia abre o menu, separado do "Mover para…" por um fio */
   #menu-mover .mm-it.destaque{font-weight:650;border-bottom:1px solid var(--borda);
     border-radius:6px 6px 0 0;margin-bottom:4px;padding-bottom:9px}
+  /* 📣 Novidades: a caixa de entrada do que os portais trouxeram */
+  .nov{display:flex;align-items:flex-start;gap:10px;background:var(--branco);
+    border:1px solid var(--borda);border-radius:10px;padding:10px 12px;margin-bottom:5px}
+  .nov-fonte{flex:none;font-size:11px;font-weight:700;color:var(--cinza);
+    background:var(--placa);border-radius:6px;padding:3px 7px;white-space:nowrap}
+  .nov-corpo{flex:1;min-width:0}
+  .nov-cli{font-weight:650;font-size:13.5px;cursor:pointer}
+  .nov-cli:hover{color:var(--azul)}
+  .nov-txt{font-size:13px;color:var(--texto);margin-top:2px;line-height:1.45}
   /* ── importar do PAT/GERID ─────────────────────────────────────────── */
   .pat-cx{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:16px 18px}
   .pat-cx h3{font-size:15px;color:var(--azul-escuro);margin-bottom:4px}
@@ -1131,7 +1140,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.33 · a extensão entrega sozinha</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.34 · Novidades: o que mudou hoje</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1552,7 +1561,7 @@ async function guardarCfgApp(chave, valor){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal, tarefasAnd] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal, tarefasAnd] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -1563,6 +1572,13 @@ async function carregar(){
       todas("pagamentos","select=*"),
       todas("meu_dia",`select=*&dia=eq.${hoje()}`),
       todas("andamentos",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),
+      // 📣 Novidades: só o que veio dos portais, com quem já leu. É uma
+      // consulta pequena de propósito — puxar o texto de TODOS os andamentos
+      // de 30 dias para mostrar os do robô seria carregar a ficha inteira do
+      // escritório em toda abertura do CRM.
+      todas("andamentos",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`
+        +`&origem=in.(pat,crps,dou)&criado_em=gte.${d30.toISOString()}&order=criado_em.desc`)
+        .catch(()=>[]),
       todas("modelos_mensagem","select=*&order=titulo"),
       todas("sugestoes","select=*&status=eq.pendente&order=criado_em.desc"),
       todas("mencoes",`select=*&para_id=eq.${eu.id}&lida_em=is.null&order=criado_em.desc`),
@@ -1581,7 +1597,7 @@ async function carregar(){
       todas("inss_calendario","select=*").catch(()=>[]),
       todas("andamento_tarefas","select=*&concluida_em=is.null").catch(()=>[]),
     ]);
-  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
+  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
   D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
   D.config = new Map((cfgs||[]).map(x=>[x.chave,x.valor]));
   D.inssCal = inssCal||[];
@@ -1796,6 +1812,7 @@ async function moverCaso(casoId, lista){
 function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", null],
+    ["novidades","📣 Novidades", novidades().length],
     ["mencoes","📥 Menções", D.mencoes.length],
     ["calendario","📅 Calendário", null],
     ["planejado","🗓️ Planejado", ativos().filter(k=>k.prazo).length],
@@ -2031,6 +2048,23 @@ function eventosDe(det) {
           ...juntar(d.agendamentosAvaliacaoSocial, 'Avaliação social')];
 }
 
+function comentariosDe(det) {
+  return (Array.isArray((det || {}).comentarios) ? det.comentarios : [])
+    .map(c => ({
+      // sem `id` do portal, a chave é data+texto. Descartar o comentário
+      // seria perder em silêncio justamente a mensagem do INSS — e um
+      // duplicado eventual se resolve olhando; um sumiço, não.
+      id: String(c.id || `${String(c.dataCriacao || '').slice(0, 10)}|`
+                       + String(c.conteudo || '').trim().slice(0, 40)),
+      texto: String(c.conteudo || '').trim(),
+      quando: (String(c.dataCriacao || '').match(/^\d{4}-\d{2}-\d{2}/) || [null])[0],
+      do_inss: !!c.incluidoPorServidor,
+      visivel: c.visivel !== false,
+    }))
+    .filter(c => c.id && c.texto)
+    .sort((a, b) => (b.quando || '').localeCompare(a.quando || ''));
+}
+
 function resumoDaLista(t) {
   return {
     protocolo: String((t || {}).protocolo || '').trim(),
@@ -2064,9 +2098,16 @@ function resumoDoDetalhe(d) {
     unidade: det.nomeUnidade || null,
     canal: det.tipoCanalAtendimento || null,
     quem_protocolou: CANAIS[limpo(det.tipoCanalAtendimento)] || null,
-    // contagens, não conteúdo: dizem que há o que olhar, sem trazer o que é
+    // O ANEXO CONTINUA SENDO SÓ CONTAGEM: é laudo médico, e o CRM guarda o
+    // link do portal, não a cópia. O COMENTÁRIO, NÃO — ele é a mensagem do
+    // INSS sobre o processo ("apresentar PPP", "exigência cumprida"), e é
+    // exatamente o que responde "o que mudou?". Sem ele, a importação avisa
+    // que algo aconteceu e não diz o quê.
+    //
+    // Eles nascem internos: `publico` fica false, então nada disso atravessa
+    // para a ficha do cliente no portal. A barreira continua onde deve estar.
     anexos: Array.isArray(det.anexos) ? det.anexos.length : 0,
-    comentarios: Array.isArray(det.comentarios) ? det.comentarios.length : 0,
+    comentarios: comentariosDe(det),
     em_exigencia: !!det.podeCumprirExigencia || situacaoDe(det.status) === 'Em exigência',
     eventos: eventosDe(det),
     link: det.protocolo ? `https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/${det.protocolo}` : null,
@@ -2147,6 +2188,19 @@ function andamentoDaMudanca(k, det) {
   return `INSS: ${antes} → ${det.situacao}`;
 }
 
+function comentariosNovos(det, jaTem) {
+  const vistos = new Set((jaTem || []).map(a => String(a.origem_id || '')));
+  return (det.comentarios || [])
+    .filter(c => c.id && !vistos.has(String(c.id)))
+    .map(c => ({
+      origem_id: String(c.id),
+      quando: c.quando,
+      // quem escreveu vem na frente: é a diferença entre o INSS pedindo algo
+      // e o escritório respondendo, e ela muda o que se faz a seguir
+      texto: `${c.do_inss ? 'INSS' : 'Escritório'} · ${c.texto}`,
+    }));
+}
+
 function planoDeImportacao(pat, D, hoje) {
   const hj = hoje || new Date().toISOString().slice(0, 10);
   const { porProtocolo, porCpf } = indexar(D);
@@ -2157,8 +2211,15 @@ function planoDeImportacao(pat, D, hoje) {
     evDoCaso.get(e.caso_id).push(e);
   }
 
+  const andDoCaso = new Map();
+  for (const a of (D.andamentos || [])) {
+    if (!a.origem_id) continue;
+    if (!andDoCaso.has(a.caso_id)) andDoCaso.set(a.caso_id, []);
+    andDoCaso.get(a.caso_id).push(a);
+  }
+
   const plano = { atualizar: [], novos: [], possiveisDuplicados: [], semCliente: [],
-                  ignorados: [], eventos: [], resumo: {} };
+                  ignorados: [], eventos: [], comentarios: [], resumo: {} };
 
   for (const det of (pat.detalhes || [])) {
     const proto = digitos(det.protocolo);
@@ -2176,8 +2237,11 @@ function planoDeImportacao(pat, D, hoje) {
       const and = andamentoDaMudanca(k, det);
       const evs = eventosNovos(det, evDoCaso.get(k.id), hj);
       if (evs.length) plano.eventos.push({ caso_id: k.id, protocolo: proto, eventos: evs });
-      if (Object.keys(mud).length || and)
-        plano.atualizar.push({ ...item, caso_id: k.id, mudancas: mud, andamento: and });
+      const coms = comentariosNovos(det, andDoCaso.get(k.id));
+      if (coms.length) plano.comentarios.push({ caso_id: k.id, protocolo: proto, comentarios: coms });
+      if (Object.keys(mud).length || and || coms.length)
+        plano.atualizar.push({ ...item, caso_id: k.id, mudancas: mud, andamento: and,
+                               novos_comentarios: coms.length });
       continue;
     }
 
@@ -2206,6 +2270,7 @@ function planoDeImportacao(pat, D, hoje) {
     sem_cliente: plano.semCliente.length,
     ignorados: plano.ignorados.length,
     eventos: plano.eventos.reduce((n, e) => n + e.eventos.length, 0),
+    comentarios: plano.comentarios.reduce((n, c) => n + c.comentarios.length, 0),
     exigencias: (pat.detalhes || []).filter(d => d.situacao === 'Em exigência').length,
     apuracoes: (pat.detalhes || []).filter(d => d.urgente).length,
     a_confirmar: (pat.detalhes || []).filter(d => d.especie_a_confirmar).length,
@@ -2301,7 +2366,8 @@ function telaImportarPat(){
         ${[["requerimentos lidos", r.lidos], ["casos a atualizar", r.atualizar],
            ["casos novos", r.novos], ["confira antes", r.possiveis_duplicados],
            ["sem cliente no CRM", r.sem_cliente],
-           ["perícias a agendar", r.eventos], ["em exigência", r.exigencias],
+           ["perícias a agendar", r.eventos], ["comentários do INSS", r.comentarios],
+           ["em exigência", r.exigencias],
            ["apuração (urgente)", r.apuracoes], ["espécie a confirmar", r.a_confirmar]].map(cx).join("")}
       </div>
       ${r.possiveis_duplicados ? `<div class="exig">
@@ -2368,7 +2434,8 @@ async function aplicarPat(){
     Object.assign(k, campos);
     if(a.andamento)
       await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-        body:JSON.stringify({caso_id:k.id, colaborador_id:eu.id, texto:a.andamento})});
+        body:JSON.stringify({caso_id:k.id, colaborador_id:eu.id, texto:a.andamento,
+          origem:"pat", origem_id:`situacao:${a.protocolo}:${a.situacao}`})});
   });
 
   for(const novo of planoPat.novos) await tentar(novo.protocolo, async () => {
@@ -2379,6 +2446,16 @@ async function aplicarPat(){
         urgente:novo.urgente, processo_link:novo.link, situacao_inss:novo.situacao})}) || [];
     if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); }
   });
+
+  // OS COMENTÁRIOS DO INSS. É o que responde "o que mudou?" — sem eles a
+  // importação avisa que algo aconteceu e não diz o quê. Nascem internos
+  // (`publico:false`): nada disso atravessa para a ficha do cliente.
+  for(const bl of planoPat.comentarios||[])
+    for(const c of bl.comentarios) await tentar(`comentário ${bl.protocolo}`, () =>
+      api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:bl.caso_id, colaborador_id:eu.id, texto:c.texto,
+          origem:"pat", origem_id:c.origem_id, publico:false,
+          ...(c.quando?{criado_em:c.quando+"T12:00:00"}:{})})}));
 
   for(const bloco of planoPat.eventos)
     for(const ev of bloco.eventos) await tentar(`perícia ${bloco.protocolo}`, () =>
@@ -2614,6 +2691,7 @@ function render(){
   if(visao==="quadro") return renderQuadro();
   if(visao==="vendas") return renderVendas();
   if(visao==="whatsapp") return renderWhats();
+  if(visao==="novidades") return renderNovidades();
   if(visao==="acervo") return renderAcervo();
   if(visao==="patinss") return renderImportarPat();
   if(visao==="config") return renderConfig();
@@ -2721,6 +2799,82 @@ function renderMeuDia(){
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
     e.stopPropagation(); marcarRevisado(b.dataset.revks.split(",")); });
   ligarCartoes(); ligarTarefas();
+}
+
+// ── 📣 Novidades ──────────────────────────────────────────────────────────
+// TUDO O QUE OS PORTAIS TROUXERAM, num lugar só, do mais novo para o mais
+// velho. É a resposta para "quero ter conhecimento de todos os andamentos
+// diários": em vez de caçar ficha por ficha o que mudou, a mudança vem até
+// aqui e sai quando é lida.
+//
+// Só entra o que veio de fora (origem 'pat', 'crps' ou 'dou'). O que a
+// equipe digitou já foi visto por quem digitou — misturar os dois faria a
+// lista encher de coisa que ninguém precisa conferir.
+//
+// "Lido" é por pessoa, na tabela andamentos_lidos que já existia para os
+// comentários da ficha. Marcar não apaga nada: o andamento continua na
+// ficha do cliente para sempre, só sai desta caixa de entrada.
+const ORIGENS_ROBO = ["pat","crps","dou"];
+const ROTULO_ORIGEM = {pat:"🌻 INSS", crps:"🖥 Recursos", dou:"📰 DOU"};
+
+function novidades(){
+  const euLi = a => (a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
+  return (D.novid||[]).filter(a=>!euLi(a));
+}
+
+function renderNovidades(){
+  document.getElementById("titulo-lista").textContent = "📣 Novidades";
+  const ns = novidades();
+  document.getElementById("sub-lista").textContent = ns.length
+    ? "O que os portais trouxeram e você ainda não leu. Marcar como lido tira daqui, não da ficha."
+    : "Nada novo. Tudo o que os portais trouxeram já foi lido.";
+  if(!ns.length){
+    document.getElementById("conteudo-meio").innerHTML =
+      "<p class='meio-sub'>Caixa vazia. 👏 Rode a extensão para buscar o que mudou hoje.</p>";
+    return;
+  }
+  // por dia, porque é assim que a pergunta é feita: "o que aconteceu hoje?"
+  const porDia = new Map();
+  for(const a of ns){
+    const d = String(a.criado_em).slice(0,10);
+    if(!porDia.has(d)) porDia.set(d,[]);
+    porDia.get(d).push(a);
+  }
+  document.getElementById("conteudo-meio").innerHTML =
+    `<div class="filtros"><button class="fchip" id="ler-tudo">✔ marcar todas como lidas (${ns.length})</button></div>`
+    + [...porDia].map(([d,as])=>`<h3 class="secao">${esc(dataRelativa(d))} (${as.length})</h3>`
+      + as.map(a=>{
+          const k = D.casoPorId.get(a.caso_id) || {};
+          const c = D.cliPorId.get(k.cliente_id) || {};
+          return `<div class="nov" data-and="${a.id}">
+            <span class="nov-fonte">${ROTULO_ORIGEM[a.origem]||a.origem}</span>
+            <div class="nov-corpo">
+              <div class="nov-cli" data-cli="${c.id||""}">${esc(c.nome||"cliente sem ficha")}
+                ${k.beneficio?`<span class="u-papel" style="text-transform:none">· ${esc(k.beneficio)}</span>`:""}</div>
+              <div class="nov-txt">${esc(a.texto)}</div>
+            </div>
+            ${k.processo_link?`<a class="btn-mini" href="${k.processo_link}" target="_blank" rel="noopener">abrir ↗</a>`:""}
+            <button class="btn-mini" data-ler="${a.id}">✔ li</button>
+          </div>`;
+        }).join("")).join("");
+  document.querySelectorAll("[data-ler]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation(); marcarLidas([b.dataset.ler]); });
+  document.getElementById("ler-tudo").onclick=()=>marcarLidas(ns.map(a=>a.id));
+  document.querySelectorAll(".nov-cli[data-cli]").forEach(el=>el.onclick=()=>{
+    if(el.dataset.cli) abrirFicha(el.dataset.cli); });
+}
+
+async function marcarLidas(ids){
+  if(!ids.length) return;
+  try{
+    await api(`/rest/v1/andamentos_lidos`,{method:"POST",
+      headers:{Prefer:"return=minimal,resolution=ignore-duplicates"},
+      body:JSON.stringify(ids.map(id=>({andamento_id:id, colaborador_id:eu.id})))});
+    const marcados = new Set(ids);
+    (D.novid||[]).forEach(a=>{ if(marcados.has(a.id))
+      a.andamentos_lidos = [...(a.andamentos_lidos||[]), {colaborador_id:eu.id}]; });
+    montarSidebar(); render();
+  }catch(e){ aviso("Não consegui marcar como lido: "+e.message); }
 }
 
 // ── 🧹 Cuidar do acervo ───────────────────────────────────────────────────

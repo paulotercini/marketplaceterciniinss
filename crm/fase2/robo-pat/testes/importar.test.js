@@ -25,7 +25,8 @@ const CRM = () => ({
 const det = (o) => ({ protocolo: o.protocolo, situacao: o.situacao || 'Em análise',
   tipo: o.tipo || 'beneficio', especie: o.especie || null, beneficio: o.beneficio || 'X',
   der: o.der || '2026-07-01', link: `https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/${o.protocolo}`,
-  marcadores: o.marcadores || [], urgente: !!o.urgente, eventos: o.eventos || [] });
+  marcadores: o.marcadores || [], urgente: !!o.urgente, eventos: o.eventos || [],
+  comentarios: o.comentarios || [] });
 
 test('protocolo que já existe atualiza o caso, não cria outro', () => {
   const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
@@ -199,8 +200,8 @@ test('o plano de um arquivo real passa na conferência', () => {
   assert.equal(I.conferirPlanoPat(pat, p), null);
   assert.deepStrictEqual(p.resumo,
     { lidos: 4, atualizar: 1, novos: 1, possiveis_duplicados: 0, sem_cliente: 1,
-      ignorados: 1, eventos: 0, exigencias: 0, apuracoes: 0, a_confirmar: 0,
-      novos_por_tipo: { recurso: 1 } });
+      ignorados: 1, eventos: 0, comentarios: 0, exigencias: 0, apuracoes: 0,
+      a_confirmar: 0, novos_por_tipo: { recurso: 1 } });
 });
 
 test('a conferência barra plano que manda recurso para a lista errada', () => {
@@ -246,4 +247,60 @@ test('a cópia dentro do app.html é idêntica à testada aqui', () => {
   assert.deepStrictEqual(eval(`({${m[1]}})`), I.LISTA_POR_TIPO);
   assert.ok(/const NAO_ABRE_CASO = new Set\(\['servico', 'pagamento'\]\)/.test(app),
     'NAO_ABRE_CASO divergiu do app.html');
+});
+
+// ── os comentários do INSS ────────────────────────────────────────────────
+// São a resposta para "o que mudou?". Sem eles a importação avisa que algo
+// aconteceu e não diz o quê.
+test('comentário novo vira andamento; o já visto não volta', () => {
+  const D = CRM();
+  D.andamentos = [{ caso_id: 'k1', origem_id: '8' }];   // esse já está na ficha
+  const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
+    detalhes: [det({ protocolo: '1462069078', comentarios: [
+      { id: '9', texto: 'Apresentar PPP da empresa X', quando: '2026-08-05', do_inss: true },
+      { id: '8', texto: 'Exigência cumprida', quando: '2026-08-01', do_inss: false },
+    ] })] };
+  const p = I.planoDeImportacao(pat, D, HOJE);
+  assert.equal(p.comentarios.length, 1);
+  assert.deepStrictEqual(p.comentarios[0].comentarios, [
+    { origem_id: '9', quando: '2026-08-05', texto: 'INSS · Apresentar PPP da empresa X' }]);
+  assert.equal(p.resumo.comentarios, 1);
+});
+
+// A importação roda TODO DIA e o portal devolve sempre a lista inteira.
+test('rodar de novo no mesmo dia não repete comentário nenhum', () => {
+  const D = CRM();
+  D.andamentos = [{ caso_id: 'k1', origem_id: '9' }, { caso_id: 'k1', origem_id: '8' }];
+  const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
+    detalhes: [det({ protocolo: '1462069078', comentarios: [
+      { id: '9', texto: 'a', quando: '2026-08-05' }, { id: '8', texto: 'b', quando: '2026-08-01' }] })] };
+  assert.equal(I.planoDeImportacao(pat, D, HOJE).resumo.comentarios, 0);
+});
+
+// Quem escreveu vem na frente: é a diferença entre o INSS PEDINDO algo e o
+// escritório respondendo, e ela muda o que se faz a seguir.
+test('o texto diz quem escreveu', () => {
+  const D = CRM(); D.andamentos = [];
+  const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
+    detalhes: [det({ protocolo: '1462069078', comentarios: [
+      { id: '1', texto: 'junte o PPP', quando: '2026-08-05', do_inss: true },
+      { id: '2', texto: 'juntado', quando: '2026-08-06', do_inss: false }] })] };
+  const cs = I.planoDeImportacao(pat, D, HOJE).comentarios[0].comentarios;
+  assert.match(cs.find(c => c.origem_id === '1').texto, /^INSS · /);
+  assert.match(cs.find(c => c.origem_id === '2').texto, /^Escritório · /);
+});
+
+// O caso que só tem comentário novo (nada mais mudou) precisa entrar no
+// plano — senão o comentário nunca seria gravado.
+test('caso sem outra mudança entra no plano só pelo comentário', () => {
+  const D = CRM(); D.andamentos = [];
+  D.casos[0].der = '2026-01-01'; D.casos[0].especie = 'B87';
+  D.casos[0].beneficio = 'X'; D.casos[0].processo_link =
+    'https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/1462069078';
+  const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
+    detalhes: [det({ protocolo: '1462069078', especie: 'B87', beneficio: 'X',
+      comentarios: [{ id: '7', texto: 'novidade', quando: '2026-08-07' }] })] };
+  const p = I.planoDeImportacao(pat, D, HOJE);
+  assert.equal(p.atualizar.length, 1, 'o comentário sozinho não colocou o caso no plano');
+  assert.equal(p.atualizar[0].novos_comentarios, 1);
 });
