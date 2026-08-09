@@ -78,7 +78,7 @@ test('não repete o que o checklist do benefício já pedia', () => {
 });
 
 test('nem repete entre dois marcadores que pedem a mesma coisa', () => {
-  const todos = M.docsDosMarcadores(caso(['rural', 'idaderural', 'especial', 'pcd']));
+  const todos = M.docsDosMarcadores(caso(['rural', 'idade_rural', 'especial', 'pcd']));
   assert.equal(new Set(todos.map(d => d.toLowerCase())).size, todos.length);
 });
 
@@ -88,7 +88,7 @@ test('sem marcador, nada é acrescentado', () => {
 
 test('todo marcador do catálogo tem rótulo, ícone, cor e documentos', () => {
   for (const m of M.MARCADORES) {
-    assert.ok(m.slug && /^[a-z]+$/.test(m.slug), `slug ruim: ${m.slug}`);
+    assert.ok(m.slug && /^[a-z_]+$/.test(m.slug), `slug ruim: ${m.slug}`);
     assert.ok(m.rot && m.icone && m.dica, `falta rótulo/ícone/dica em ${m.slug}`);
     assert.match(m.cor, /^#[0-9A-Fa-f]{6}$/, `cor ruim em ${m.slug}`);
     assert.ok(m.docs.length >= 2, `${m.slug} precisa de documentos no checklist`);
@@ -102,7 +102,7 @@ test('a cópia dentro do app.html é idêntica à testada aqui', () => {
   const app = fs.readFileSync(path.join(__dirname, '..', '..', 'app.html'), 'utf8');
   const nu = s => s.replace(/\s+/g, ' ').trim();
   for (const fn of ['marcadoresDe', 'alternar', 'rotuloDoPedido', 'docsDosMarcadores',
-                    'doCatalogo', 'pedidosIguais']) {
+                    'doCatalogo', 'dicaDoMarcador', 'pedidosIguais']) {
     const i = app.indexOf(`function ${fn}(`);
     assert.notEqual(i, -1, `${fn} sumiu do app.html`);
     let n = 0, j = app.indexOf('{', i);
@@ -115,7 +115,7 @@ test('a cópia dentro do app.html é idêntica à testada aqui', () => {
   // mostrar um pedido e o checklist pedir outro
   const m = app.match(/const MARCADORES = \[([\s\S]*?)\n\];/);
   assert.ok(m, 'MARCADORES sumiu do app.html');
-  assert.deepStrictEqual((m[1].match(/slug: '([a-z]+)'/g) || []).map(x => x.slice(7, -1)),
+  assert.deepStrictEqual((m[1].match(/slug: '([a-z_]+)'/g) || []).map(x => x.slice(7, -1)),
                          M.MARCADORES.map(x => x.slug));
 });
 
@@ -143,9 +143,9 @@ test('B42 oferece rural, especial e deficiência — não idade rural', () => {
 // somar tempo rural a um pedido urbano ≠ ser o benefício do segurado especial
 test('B41 separa "tempo rural somado" de "idade rural do segurado especial"', () => {
   const slugs = M.doCatalogo('B41').map(m => m.slug);
-  assert.deepStrictEqual(slugs, ['rural', 'idaderural', 'especial', 'pcd']);
-  assert.notEqual(M.POR_SLUG.get('rural').dica, M.POR_SLUG.get('idaderural').dica);
-  assert.match(M.POR_SLUG.get('idaderural').dica, /55|60/);
+  assert.deepStrictEqual(slugs, ['rural', 'idade_rural', 'especial', 'pcd']);
+  assert.notEqual(M.POR_SLUG.get('rural').dica, M.POR_SLUG.get('idade_rural').dica);
+  assert.match(M.POR_SLUG.get('idade_rural').dica, /55|60/);
 });
 
 test('sem espécie definida, mostra todos — melhor oferecer demais que esconder', () => {
@@ -172,4 +172,69 @@ test('espécies diferentes nunca são o mesmo pedido', () => {
 });
 test('sem espécie não acusa duplicidade — seria chute', () => {
   assert.equal(M.pedidosIguais({ marcadores: ['rural'] }, { marcadores: ['rural'] }), false);
+});
+
+// ── o mesmo marcador pede coisas diferentes conforme a espécie ────────────
+// A deficiência reduz o TEMPO de contribuição exigido no B42 e reduz a IDADE
+// no B41. Um checklist só, igual nos dois, mandaria a equipe levantar a coisa
+// errada — e a idade reduzida da aposentadoria por idade passaria batida.
+test('deficiência no B41 fala de idade; no B42, de tempo', () => {
+  assert.match(M.dicaDoMarcador('pcd', 'B41'), /idade reduzida/i);
+  assert.match(M.dicaDoMarcador('pcd', 'B42'), /tempo de contribuição/i);
+  const b41 = M.docsDosMarcadores({ especie: 'B41', marcadores: ['pcd'] });
+  const b42 = M.docsDosMarcadores({ especie: 'B42', marcadores: ['pcd'] });
+  assert.ok(b41.some(d => /55|60/.test(d)), 'B41 tem de lembrar a idade reduzida');
+  assert.ok(!b42.some(d => /55|60/.test(d)), 'B42 não tem idade reduzida');
+  assert.ok(b42.some(d => /grau/i.test(d)), 'B42 tem de levantar o grau');
+  // o que é comum aos dois continua vindo nos dois
+  for (const lista of [b41, b42]) assert.ok(lista.some(d => /biopsicossocial/i.test(d)));
+});
+
+test('sem espécie, o marcador cai na dica geral e nos documentos comuns', () => {
+  assert.equal(M.dicaDoMarcador('pcd', ''), M.POR_SLUG.get('pcd').dica);
+  const sem = M.docsDosMarcadores({ marcadores: ['pcd'] });
+  assert.ok(!sem.some(d => /55|60|grau/i.test(d)), 'sem espécie não dá para saber qual regra vale');
+});
+
+// ── incapacidade não recebe marcador ──────────────────────────────────────
+// Perguntado a quem trabalha com isso: tempo especial ou rural para aumentar
+// valor não vale a marcação nesses casos.
+test('B31 e B32 não oferecem marcador nenhum', () => {
+  assert.deepStrictEqual(M.doCatalogo('B31'), []);
+  assert.deepStrictEqual(M.doCatalogo('B32'), []);
+});
+
+// ── pensão por morte ──────────────────────────────────────────────────────
+test('B21 distingue dependente inválido e união estável', () => {
+  assert.deepStrictEqual(M.doCatalogo('B21').map(m => m.slug),
+    ['dependente_invalido', 'uniao_estavel']);
+});
+
+// o óbito acidentário é espécie (B93), não marcador — mas a pensão
+// acidentária também pode ter dependente inválido e união estável a provar
+test('B93 recebe os mesmos dois marcadores da pensão comum', () => {
+  assert.deepStrictEqual(M.doCatalogo('B93').map(m => m.slug),
+    ['dependente_invalido', 'uniao_estavel']);
+  assert.ok(!M.MARCADORES.some(m => /acident/i.test(m.rot)), 'acidentário é espécie, não marcador');
+});
+
+test('os documentos da pensão apontam o que decide o caso', () => {
+  const inv = M.docsDosMarcadores({ especie: 'B21', marcadores: ['dependente_invalido'] });
+  assert.ok(inv.some(d => /ANTERIOR ao óbito/i.test(d)), 'a preexistência é o que garante a vitaliciedade');
+  const un = M.docsDosMarcadores({ especie: 'B21', marcadores: ['uniao_estavel'] });
+  assert.ok(un.some(d => /NA DATA do óbito/i.test(d)));
+  assert.ok(un.some(d => /testemunhas/i.test(d)));
+});
+
+test('os dois marcadores da pensão se somam', () => {
+  const k = { especie: 'B21', beneficio: 'Pensão por morte',
+              marcadores: ['uniao_estavel', 'dependente_invalido'] };
+  assert.equal(M.rotuloDoPedido(k), 'Pensão por morte · Dependente inválido/PcD + União estável');
+  assert.equal(new Set(M.docsDosMarcadores(k)).size, M.docsDosMarcadores(k).length);
+});
+
+// renomear um marcador não pode apagar a marcação que alguém já fez
+test('o slug antigo continua valendo depois do rename', () => {
+  assert.deepStrictEqual(M.marcadoresDe({ marcadores: ['idaderural'] }), ['idade_rural']);
+  assert.deepStrictEqual(M.marcadoresDe({ marcadores: ['idaderural', 'idade_rural'] }), ['idade_rural']);
 });

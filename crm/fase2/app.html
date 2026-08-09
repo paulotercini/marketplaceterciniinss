@@ -1010,7 +1010,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.19 · pedido por espécie</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.20 · pensão, idade PcD e incapacidade</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5423,7 +5423,7 @@ const MARCADORES = [
       'Documentos de escola/igreja/sindicato com a qualificação de lavrador',
       'Indicar testemunhas do período rural (nome, telefone, período que conviveu)',
     ] },
-  { slug: 'idaderural', rot: 'Idade rural', icone: '🚜', cor: '#4E7A3A',
+  { slug: 'idade_rural', antigo: ['idaderural'], rot: 'Idade rural', icone: '🚜', cor: '#4E7A3A',
     especies: ['B41'],
     dica: 'aposentadoria por idade do segurado especial — 55 anos (mulher) / 60 (homem), sem contribuição',
     docs: [
@@ -5443,11 +5443,41 @@ const MARCADORES = [
     ] },
   { slug: 'pcd', rot: 'Deficiência', icone: '♿', cor: '#7A5AA8',
     especies: ['B42', 'B41'],
-    dica: 'aposentadoria da pessoa com deficiência (LC 142/2013) — por tempo de contribuição ou por idade',
+    dica: 'aposentadoria da pessoa com deficiência (LC 142/2013)',
     docs: [
       'Laudos, exames e relatórios que comprovem a deficiência e desde quando',
       'Requerer a avaliação biopsicossocial (perícia médica + serviço social)',
-      'Levantar os períodos trabalhados COM a deficiência (é o que define o grau)',
+    ],
+    // a deficiência reduz o TEMPO por tempo de contribuição e a IDADE na
+    // aposentadoria por idade: o que se levanta em cada uma não é o mesmo
+    porEspecie: {
+      B42: { dica: 'LC 142/2013 — o grau da deficiência reduz o tempo de contribuição exigido',
+             docs: ['Levantar os períodos trabalhados COM a deficiência (é o que define o grau)'] },
+      B41: { dica: 'LC 142/2013 — idade reduzida (55 mulher / 60 homem), com 15 anos de contribuição na condição de deficiente',
+             docs: ['Conferir se a idade reduzida já foi alcançada (55 mulher / 60 homem)',
+                    'Somar os anos de contribuição na condição de deficiente (mínimo 15)'] },
+    } },
+
+  // ── pensão por morte ────────────────────────────────────────────────────
+  // O óbito acidentário não entra aqui: tem espécie própria (B93), e pela
+  // regra 1 quem diz isso é o código do INSS. Os dois marcadores abaixo valem
+  // para as duas espécies, porque um dependente inválido e uma união estável
+  // a comprovar existem tanto na pensão comum quanto na acidentária.
+  { slug: 'dependente_invalido', rot: 'Dependente inválido/PcD', icone: '🧑‍🦽', cor: '#8A5A2B',
+    especies: ['B21', 'B93'],
+    dica: 'dependente inválido ou com deficiência — a pensão não se sujeita ao prazo por idade',
+    docs: [
+      'Laudos e exames que comprovem a invalidez ou a deficiência do dependente',
+      'Comprovar que a invalidez/deficiência é ANTERIOR ao óbito — é o que garante a vitaliciedade',
+      'Requerer a perícia médica do INSS no dependente',
+    ] },
+  { slug: 'uniao_estavel', rot: 'União estável', icone: '💍', cor: '#B03A6E',
+    especies: ['B21', 'B93'],
+    dica: 'união estável a comprovar — não há certidão de casamento',
+    docs: [
+      'Início de prova material da união (conta conjunta, mesmo endereço, plano de saúde, IR, filhos em comum)',
+      'Comprovar que a união existia NA DATA do óbito',
+      'Indicar testemunhas da convivência (nome, telefone, desde quando conhecem o casal)',
     ] },
 ];
 
@@ -5466,7 +5496,10 @@ function marcadoresDe(k) {
   // a ordem é a do catálogo, não a de clique: assim "Rural + Especial" é
   // sempre escrito do mesmo jeito, e duas fichas iguais parecem iguais
   return MARCADORES.filter(m => {
-    const tem = lista.some(x => String(x).trim().toLowerCase() === m.slug);
+    // `antigo` guarda o slug de uma versão anterior: renomear um marcador não
+    // pode apagar a marcação que alguém já fez
+    const nomes = [m.slug, ...(m.antigo || [])];
+    const tem = lista.some(x => nomes.includes(String(x).trim().toLowerCase()));
     if (tem && !vistos.has(m.slug)) { vistos.add(m.slug); return true; }
     return false;
   }).map(m => m.slug);
@@ -5488,15 +5521,26 @@ function rotuloDoPedido(k) {
 
 function docsDosMarcadores(k, jaTem = []) {
   const tidos = new Set(jaTem.map(x => String(x).trim().toLowerCase()));
+  const e = String((k && k.especie) || '').trim().toUpperCase();
   const fora = [];
-  for (const slug of marcadoresDe(k))
-    for (const d of POR_SLUG.get(slug).docs) {
+  for (const slug of marcadoresDe(k)) {
+    const m = POR_SLUG.get(slug);
+    const extras = (m.porEspecie && m.porEspecie[e] && m.porEspecie[e].docs) || [];
+    for (const d of [...m.docs, ...extras]) {
       const chave = d.trim().toLowerCase();
       if (tidos.has(chave)) continue;
       tidos.add(chave);
       fora.push(d);
     }
+  }
   return fora;
+}
+
+function dicaDoMarcador(slug, especie) {
+  const m = POR_SLUG.get(slug);
+  if (!m) return '';
+  const e = String(especie || '').trim().toUpperCase();
+  return (m.porEspecie && m.porEspecie[e] && m.porEspecie[e].dica) || m.dica;
 }
 
 function pedidosIguais(a, b) {
@@ -5523,19 +5567,21 @@ function linhaMarcadores(k){
     ${mostrar.map(m=>{
       const on = ativos.includes(m.slug);
       return `<button class="marc ${on?"on":""}" style="--marc:${m.cor}"
-        title="${esc(m.dica)}${on?" — clique para tirar":" — clique para marcar"}"
+        title="${esc(dicaDoMarcador(m.slug, k.especie))}${on?" — clique para tirar":" — clique para marcar"}"
         onclick="alternarMarcador('${k.id}','${m.slug}')">${m.icone} ${esc(m.rot)}</button>`;
     }).join("")}
   </div>${avisoPedidoIgual(k)}`;
 }
-// B57 (professor) e B46 (aposentadoria especial) já são a resposta: pedir que
-// se marque de novo seria dizer duas vezes a mesma coisa, e abrir espaço para
-// as duas discordarem
+// Nem toda espécie tem o que marcar. Em B57 (professor) e B46 (aposentadoria
+// especial) o marcador seria dizer duas vezes a mesma coisa — e abrir espaço
+// para as duas discordarem. Nos benefícios por incapacidade a distinção
+// simplesmente não paga o clique. Em todos, o silêncio é a resposta certa, e
+// dizer isso é melhor que deixar a linha vazia parecendo defeito.
 function especieJaDiz(k){
   const nome = (ESPECIES.find(([c])=>c===String(k.especie||"").toUpperCase())||[])[1];
   if(!nome) return "";
   return `<div class="marc-linha"><span class="marc-rot">PEDIDO</span>
-    <span class="meio-sub">${esc(k.especie)} — ${esc(nome)}. A espécie já diz o que é pedido; não há marcador a acrescentar.</span>
+    <span class="meio-sub">${esc(k.especie)} — ${esc(nome)}. Nesta espécie o próprio código já diz o que é o pedido: não há marcador a acrescentar.</span>
   </div>`;
 }
 // O mesmo cliente PODE ter dois pedidos da mesma espécie: um B42 por
