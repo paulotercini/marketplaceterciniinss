@@ -1,46 +1,51 @@
 // ─────────────────────────────────────────────────────────────────────────
-// SONDA DO PAT/GERID — roda no SEU navegador, na SUA sessão
+// SONDA DO PAT/GERID — v2. Roda no SEU navegador, na SUA sessão.
+//
+// O QUE MUDOU DA v1: a v1 provou que a lista funciona e trouxe o formato
+// dela. E, ao tentar o detalhe por conta própria, levou 401
+// INSUFFICIENT_PERMISSIONS — que NÃO é erro de captcha, é erro de crachá.
+// O portal manda um cabeçalho de autorização em cada chamada, e a minha
+// tentativa foi só com o cookie. Ou seja: eu errei o teste, não o portal
+// fechou a porta.
+//
+// Esta versão não adivinha. Ela olha COMO a própria página pede — que
+// cabeçalhos usa — e depois ESCUTA o detalhe que a página busca quando você
+// abre uma tarefa. Fim da adivinhação.
 //
 // O QUE ELA NÃO FAZ: não gera, não guarda e não reaproveita token de
-// reCAPTCHA; não faz login sozinha; não roda em servidor. O reCAPTCHA é uma
-// defesa contra robô e a gente não passa por cima dela — a consulta é feita
-// por VOCÊ, clicando em "Buscar" como sempre. A sonda só ESCUTA a resposta
-// que a página já recebeu.
+// reCAPTCHA; não faz login sozinha; não roda em servidor. Quem consulta é
+// você, clicando como sempre.
 //
-// PARA QUE SERVE: responder duas perguntas que decidem o projeto inteiro.
-//
-//   1. Qual é o formato exato da lista de requerimentos?
-//   2. O DETALHE de um requerimento abre sem um novo reCAPTCHA?
-//
-// A segunda é a que importa. Se o detalhe abrir só com a sessão, um clique
-// seu por dia traz a carteira inteira com exigências e perícias. Se exigir
-// captcha novo, a lista ainda diz QUAIS mudaram — e você abre só esses, que
-// é o que já faz hoje, mas sem procurar.
-//
-// O QUE ELA MANDA PARA MIM: só o FORMATO. Nome, CPF, data de nascimento,
-// endereço, nome de arquivo e texto de comentário saem trocados por
-// "‹oculto›". Códigos (PENDENTE, AGENDADO), datas e números de contagem
-// ficam, porque é deles que preciso. Confira o arquivo antes de mandar.
+// O QUE ELA MANDA PARA MIM: só o formato. Do cabeçalho de autorização vai o
+// NOME e o tipo ("Bearer"), nunca o valor. Do endereço, os números longos
+// saem mascarados — na v1 a URL do teste levou o número do protocolo junto,
+// e peneirar o corpo mandando o identificador no endereço é peneirar pela
+// metade.
 //
 // COMO USAR
 //   1. Entre no PAT/GERID e faça login no gov.br normalmente.
-//   2. Vá para a tela de tarefas. Aperte F12 → aba "Console".
+//   2. Tela de tarefas → F12 → aba "Console".
 //      (Se pedir, digite  allow pasting  e Enter.)
-//   3. Cole ISTO no Console e aperte Enter. Vai aparecer "sonda ligada".
-//   4. AGORA clique em "Buscar" na tela, como sempre. Se der para escolher
-//      500 por página, escolha.
-//   5. A sonda avisa no Console quando terminar e baixa "sonda_pat.json".
-//      Mande esse arquivo no chat.
+//   3. Cole ISTO, Enter. Aparece "sonda v2 ligada".
+//   4. Clique em "Buscar". Se der para escolher 500 por página, escolha.
+//   5. AGORA CLIQUE NUMA TAREFA para abrir o detalhe dela. É este passo que
+//      responde a pergunta que sobrou.
+//   6. Volte ao Console e digite:  sondaPat.baixar()
+//      Ele baixa "sonda_pat2.json". Confira e mande no chat.
 // ─────────────────────────────────────────────────────────────────────────
 (() => {
-  const OUT = { quando: new Date().toString(), url: location.href, capturas: [], testes: [] };
+  const OUT = { versao: 2, quando: new Date().toString(), capturas: [], testes: [] };
 
   // ── a peneira ───────────────────────────────────────────────────────────
-  // Some com o conteúdo e guarda o formato. A regra é por NOME do campo
-  // (qualquer coisa que cheire a pessoa) e por FORMATO do valor (o que não
-  // for código, data ou número curto é tratado como texto livre e sai).
+  // Cópia de peneira.js, que tem teste próprio. Se divergirem, o teste acusa.
+  const INSTITUCIONAL = new Set([
+    'nomeservico', 'siglaservico', 'descricaoservico', 'tiposervico', 'idservico',
+    'nomeunidade', 'siglaunidade', 'unidaderesponsavel', 'unidadeprotocolo',
+    'nomesituacao', 'descricaosituacao', 'situacao', 'situacaotarefa',
+    'status', 'fase', 'canal', 'orgao', 'setor', 'tipotarefa',
+  ]);
   const PESSOAL = /cpf|cnpj|nome|nasc|email|mail|telefone|celular|fone|endere|logra|bairro|munic|cep|rg\b|documento|arquivo|anexo|titulo|descri|coment|observ|justific|motivo|senha|token|assinat/i;
-  const CODIGO = /^(?=.*[A-ZÇÃÕÁÉÍÓÚÂÊÔ])[A-ZÇÃÕÁÉÍÓÚÂÊÔ0-9_\- ]{2,40}$/;          // PENDENTE, CUMPRIMENTO_DE_EXIGENCIA
+  const CODIGO = /^(?=.*[A-ZÇÃÕÁÉÍÓÚÂÊÔ])[A-ZÇÃÕÁÉÍÓÚÂÊÔ0-9_\- ]{2,40}$/;
   const DATA = /^\d{4}-\d{2}-\d{2}|^\d{2}\/\d{2}\/\d{4}/;
 
   function peneirar(v, chave = '', prof = 0) {
@@ -56,6 +61,8 @@
     if (typeof v === 'boolean') return v;
     if (typeof v === 'number') return String(v).length <= 6 ? v : `‹num ${String(v).length} díg›`;
     const s = String(v);
+    if (INSTITUCIONAL.has(String(chave).toLowerCase()))
+      return s.length <= 60 ? s : `‹texto ${s.length}›`;
     if (PESSOAL.test(chave)) return `‹oculto ${s.length}›`;
     if (DATA.test(s))   return s;
     if (CODIGO.test(s)) return s;
@@ -63,104 +70,121 @@
     return `‹texto ${s.length}›`;
   }
 
-  const guardar = (rotulo, url, status, corpo) => {
+  function mascararUrl(url) {
+    return String(url || '').replace(/\d{6,}/g, d => `‹num ${d.length} díg›`);
+  }
+
+  // ── o crachá ────────────────────────────────────────────────────────────
+  // O que interessa é COMO a página se identifica, não com o quê. Do
+  // Authorization vai o tipo e o tamanho; o valor fica onde está.
+  const cabecalhos = h => {
+    const fora = {};
+    const por = (k, v) => {
+      const nome = String(k).toLowerCase();
+      fora[nome] = /authorization|cookie|token|captcha/i.test(nome)
+        ? `‹${String(v).split(' ')[0] || '?'} · ${String(v).length} car›`
+        : String(v).slice(0, 60);
+    };
+    if (!h) return fora;
+    if (typeof h.forEach === 'function' && !Array.isArray(h)) h.forEach((v, k) => por(k, v));
+    else Object.entries(h).forEach(([k, v]) => por(k, v));
+    return fora;
+  };
+
+  // do CORPO da consulta interessa só quais campos existem — e se o
+  // tokenReCAPTCHA está lá (ele responde por que a lista precisa do clique)
+  const corpoEnviado = body => {
+    if (!body || typeof body !== 'string') return null;
+    try {
+      const j = JSON.parse(body);
+      return { campos: Object.keys(j), temTokenReCAPTCHA: 'tokenReCAPTCHA' in j,
+               formato: peneirar(j) };
+    } catch (e) { return { bruto: `‹${body.length} car›` }; }
+  };
+
+  const guardar = (rotulo, url, metodo, req, status, corpo) => {
     let json = null;
     try { json = JSON.parse(corpo); } catch (e) {}
-    const reg = { rotulo, url: url.split('?')[0], query: (url.split('?')[1] || ''),
-                  status, bytes: (corpo || '').length,
-                  formato: json ? peneirar(json) : '‹não era JSON›' };
-    OUT.capturas.push(reg);
-    console.log(`📥 ${rotulo} — HTTP ${status}, ${reg.bytes} bytes`);
+    if (rotulo === 'detalhe' && status === 200) urlDetalhe = String(url);
+    OUT.capturas.push({ rotulo, metodo, url: mascararUrl(String(url).split('?')[0]),
+      query: mascararUrl(String(url).split('?')[1] || ''),
+      pedido: req, status, bytes: (corpo || '').length,
+      formato: json ? peneirar(json) : '‹não era JSON›' });
+    console.log(`📥 ${rotulo} — ${metodo} HTTP ${status}, ${(corpo || '').length} bytes`);
     return json;
   };
 
-  // ── escuta o que a página pede ──────────────────────────────────────────
-  // Sem mexer no que ela manda: só olha a resposta de passagem.
+  // ── escuta ──────────────────────────────────────────────────────────────
   const ALVO = /\/apis\/(requerimentosPortalApi|tarefasApi)\//;
-  let primeiraConsulta = null;
+  const rotular = u => /\/consulta/.test(u) ? 'lista'
+                     : /analise-documental/.test(u) ? 'analise-documental'
+                     : /\/tarefa\/\d+/.test(u) ? 'detalhe' : 'outro';
+  // Ficam FORA do OUT de propósito: são o crachá e o endereço cru do detalhe
+  // (que termina no número do protocolo). Servem à prova aqui dentro e não
+  // entram no arquivo que sai daqui.
+  let cracha = null, urlDetalhe = null;
 
   const fetchOriginal = window.fetch;
   window.fetch = async function (...args) {
+    const [ent, cfg = {}] = args;
+    const url = (typeof ent === 'string' ? ent : ent && ent.url) || '';
     const r = await fetchOriginal.apply(this, args);
-    const url = (typeof args[0] === 'string' ? args[0] : args[0] && args[0].url) || '';
     if (ALVO.test(url)) {
-      const corpo = await r.clone().text();
-      const j = guardar(url.includes('/consulta') ? 'lista' : 'outro', url, r.status, corpo);
-      if (!primeiraConsulta && url.includes('/consulta')) { primeiraConsulta = j; verificar(j); }
+      if (cfg.headers) cracha = cfg.headers;
+      const req = { cabecalhos: cabecalhos(cfg.headers), corpo: corpoEnviado(cfg.body) };
+      guardar(rotular(url), url, cfg.method || 'GET', req, r.status, await r.clone().text());
     }
     return r;
   };
 
   const abrirOriginal = XMLHttpRequest.prototype.open;
+  const porOriginal = XMLHttpRequest.prototype.setRequestHeader;
+  const enviarOriginal = XMLHttpRequest.prototype.send;
   XMLHttpRequest.prototype.open = function (m, url, ...resto) {
-    this.addEventListener('load', () => {
-      if (ALVO.test(url || '')) {
-        const j = guardar(String(url).includes('/consulta') ? 'lista' : 'outro',
-                          String(url), this.status, this.responseText);
-        if (!primeiraConsulta && String(url).includes('/consulta')) { primeiraConsulta = j; verificar(j); }
-      }
-    });
+    this._pat = { metodo: m, url: String(url), hdr: {} };
     return abrirOriginal.call(this, m, url, ...resto);
   };
-
-  // ── A PERGUNTA QUE DECIDE TUDO ──────────────────────────────────────────
-  // O detalhe abre só com a sessão, ou pede reCAPTCHA novo? Um GET, num
-  // protocolo só, o mesmo que a tela faria se você clicasse na linha.
-  async function verificar(lista) {
-    const proto = acharProtocolo(lista);
-    if (!proto) { console.warn('⚠ não achei um protocolo na resposta — o teste do detalhe não rodou'); baixar(); return; }
-    console.log('🔎 testando o detalhe de UM protocolo…');
-    const rotas = [
-      ['detalhe',            `/apis/requerimentosPortalApi/requerimento/ec/tarefa/${proto}`],
-      ['analise-documental', `/apis/tarefasApi/tarefas/${proto}/analise-documental`],
-    ];
-    for (const [rotulo, caminho] of rotas) {
-      try {
-        const r = await fetchOriginal(caminho, { credentials: 'include' });
-        const corpo = await r.text();
-        guardar(rotulo, caminho, r.status, corpo);
-        OUT.testes.push({ rotulo, status: r.status,
-          semCaptcha: r.status === 200,
-          pista: /captcha/i.test(corpo) ? 'a resposta fala em captcha' : '' });
-        console.log(r.status === 200
-          ? `✅ ${rotulo}: abriu SEM captcha novo`
-          : `❌ ${rotulo}: HTTP ${r.status} — provavelmente exige captcha`);
-      } catch (e) {
-        OUT.testes.push({ rotulo, erro: String(e.message || e) });
-        console.log(`❌ ${rotulo}: ${e.message}`);
-      }
-      await new Promise(r => setTimeout(r, 3000));   // devagar, um de cada vez
+  XMLHttpRequest.prototype.setRequestHeader = function (k, v) {
+    if (this._pat) this._pat.hdr[k] = v;
+    return porOriginal.call(this, k, v);
+  };
+  XMLHttpRequest.prototype.send = function (body) {
+    if (this._pat && ALVO.test(this._pat.url)) {
+      if (Object.keys(this._pat.hdr).length) cracha = this._pat.hdr;
+      this.addEventListener('load', () => guardar(rotular(this._pat.url), this._pat.url,
+        this._pat.metodo, { cabecalhos: cabecalhos(this._pat.hdr), corpo: corpoEnviado(body) },
+        this.status, this.responseText));
     }
-    baixar();
-  }
+    return enviarOriginal.call(this, body);
+  };
 
-  // protocolo: uma sequência longa de dígitos em qualquer canto da resposta
-  function acharProtocolo(j) {
-    const visto = [];
-    (function anda(v) {
-      if (!v || visto.length) return;
-      if (typeof v === 'string' && /^\d{10,25}$/.test(v)) { visto.push(v); return; }
-      if (typeof v === 'number' && String(v).length >= 10) { visto.push(String(v)); return; }
-      if (Array.isArray(v)) v.forEach(anda);
-      else if (typeof v === 'object') Object.entries(v).forEach(([k, x]) => {
-        if (/protocolo|nup/i.test(k) && (typeof x === 'string' || typeof x === 'number')) visto.push(String(x));
-        else anda(x);
-      });
-    })(j);
-    return visto[0];
-  }
+  // ── a prova ─────────────────────────────────────────────────────────────
+  // Depois que a PÁGINA buscou o detalhe, refazemos a mesma chamada com o
+  // mesmo crachá. Se der 200, um script na sua aba consegue buscar sozinho os
+  // que mudaram — e o dia todo cabe num clique.
+  window.sondaPat = {
+    OUT,
+    async provar() {
+      if (!urlDetalhe || !cracha) {
+        console.warn('⚠ abra UMA tarefa antes: é o detalhe dela que eu preciso ver'); return;
+      }
+      const r = await fetchOriginal(urlDetalhe, { credentials: 'include', headers: cracha });
+      OUT.testes.push({ rotulo: 'detalhe repetido pelo script', status: r.status, deu: r.status === 200 });
+      console.log(r.status === 200
+        ? '✅ o script REFEZ o detalhe sozinho — dá para buscar os que mudaram'
+        : `❌ o script levou HTTP ${r.status} — o detalhe fica no clique`);
+      this.baixar();
+    },
+    baixar() {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([JSON.stringify(OUT, null, 2)], { type: 'application/json' }));
+      a.download = 'sonda_pat2.json';
+      a.click();
+      console.log('%c✔ sonda_pat2.json baixado — confira e mande no chat.',
+                  'color:#1E6F50;font-weight:700');
+    },
+  };
 
-  function baixar() {
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([JSON.stringify(OUT, null, 2)], { type: 'application/json' }));
-    a.download = 'sonda_pat.json';
-    a.click();
-    console.log('%c✔ sonda_pat.json baixado — confira e mande no chat.',
-                'color:#1E6F50;font-weight:700');
-    console.log('Resumo dos testes:', OUT.testes);
-  }
-
-  window.sondaPat = { OUT, baixar };
-  console.log('%csonda ligada. Agora clique em "Buscar" na tela (500 por página, se der).',
-              'color:#2B5FC7;font-weight:700');
+  console.log('%csonda v2 ligada.', 'color:#2B5FC7;font-weight:700');
+  console.log('1) clique em "Buscar"   2) abra UMA tarefa   3) digite  sondaPat.provar()');
 })();
