@@ -10,6 +10,12 @@
     --azul:#2B5FC7; --azul-escuro:#234E9E; --fundo:#E8EAEE; --lateral:#23262E;
     --texto:#25272B; --cinza:#5B6069; --borda:#D9DCE1; --branco:#fff;
     --verde:#1E6F50; --laranja:#B4530A; --vermelho:#B3261E; --roxo:#5C2E91;
+    /* a placa: cinza de leitura. É o fundo dos quadros que se CONSULTAM
+       (os fatos do benefício), separando-os do branco dos quadros em que se
+       ESCREVE. Fica um degrau ABAIXO da faixa zebrada da linha do tempo
+       (#F5F6F8): dois cinzas quase iguais leem-se como engano, não como
+       hierarquia. */
+    --placa:#EBEEF3;
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif}
   body{background:var(--fundo);color:var(--texto);height:100vh;overflow:hidden;font-size:14px}
@@ -466,7 +472,10 @@
   /* ── Fatos do benefício ───────────────────────────────────────────────
      Hierarquia por linha e espaço, não por bloco colorido: cor entra na
      letra (rótulo e nome do benefício em azul) e no estado (prazo). */
-  .fatos{background:var(--branco);border:1px solid var(--borda);border-radius:12px;
+  /* A PLACA DO PROCESSO É CINZA. Espécie, protocolo, NB, DER, DIB são dados
+     que se leem, não coisas que se fazem — o cinza diz isso sem uma palavra,
+     e de quebra separa o quadro de cima do branco em que se escreve. */
+  .fatos{background:var(--placa);border:1px solid var(--borda);border-radius:12px;
     overflow:hidden;margin-bottom:12px}
   .fatos-topo{display:flex;align-items:center;gap:9px;padding:12px 15px;flex-wrap:wrap}
   .fatos-topo h3{font-size:15.5px;font-weight:650;letter-spacing:-.015em;color:var(--azul-escuro)}
@@ -609,8 +618,13 @@
   .crps-ruido[open]>summary{color:var(--azul)}
 
   /* ── compositor: escrever primeiro, Registrar por último ───────────── */
+  /* O COMPOSITOR CONTINUA BRANCO. Escrever é sobre papel branco em todo
+     lugar de onde a equipe vem — Word, To Do, WhatsApp — e campo cinza se lê
+     como campo desligado. Para destacar, ele SOBE: sombra leve, folha por
+     cima da mesa, em vez de mais uma cor. */
   .escrever{background:var(--branco);border:1px solid var(--borda);border-radius:12px;
-    margin-bottom:10px;transition:border-color .15s,box-shadow .15s}
+    margin-bottom:10px;box-shadow:0 1px 3px rgba(30,32,36,.07);
+    transition:border-color .15s,box-shadow .15s}
   .escrever:focus-within{border-color:var(--azul);box-shadow:0 0 0 3px color-mix(in srgb, var(--azul) 16%, transparent)}
   .escrever #and-texto{width:100%;border:none;background:none;resize:none;overflow:hidden;
     font:inherit;font-size:14px;line-height:1.5;padding:13px 15px 6px;outline:none;color:var(--texto)}
@@ -1107,7 +1121,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.27 · trilho de ícones legível</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.28 · placa cinza dos fatos</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro

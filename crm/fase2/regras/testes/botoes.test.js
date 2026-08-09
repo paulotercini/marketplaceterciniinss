@@ -400,3 +400,27 @@ test('aberto, todos os rótulos começam na mesma coluna', pular, async () => {
   assert.equal([...new Set(xs)].length, 1, `rótulos desalinhados: ${[...new Set(xs)].join(', ')}px`);
   await limpar();
 });
+
+// ── os três níveis da ficha ───────────────────────────────────────────────
+// A placa dos fatos (espécie, NB, DER…) é para LER; o compositor é para
+// ESCREVER. O cinza separa os dois — mas cinza nenhum pode encostar no da
+// faixa zebrada da linha do tempo: dois cinzas quase iguais leem-se como
+// engano, não como hierarquia.
+test('a placa é cinza, o compositor é branco e nenhum imita a linha do tempo', pular, async () => {
+  await limpar();
+  await pag.evaluate(() => abrirFicha('c2'));
+  await pag.waitForTimeout(200);
+  const lum = c => { const [r, g, b] = c.match(/\d+/g).map(Number); return 0.299*r + 0.587*g + 0.114*b; };
+  const cores = await pag.evaluate(() => ({
+    placa: getComputedStyle(document.querySelector('.fatos')).backgroundColor,
+    escrever: getComputedStyle(document.querySelector('.escrever')).backgroundColor,
+    zebra: '#F5F6F8',
+  }));
+  assert.ok(lum(cores.escrever) > 250, `o compositor deixou de ser branco: ${cores.escrever}`);
+  assert.ok(lum(cores.placa) < lum(cores.escrever) - 5,
+    `a placa não está mais escura que o compositor: ${cores.placa} vs ${cores.escrever}`);
+  assert.ok(Math.abs(lum(cores.placa) - lum('rgb(245,246,248)')) > 4,
+    `a placa (${cores.placa}) ficou colada no cinza da linha do tempo`);
+  await pag.evaluate(() => fecharFicha(false));
+  await limpar();
+});
