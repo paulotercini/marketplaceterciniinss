@@ -263,3 +263,24 @@ test('a data é escrita como no To Do', pular, async () => {
   assert.equal(r.longe, 'sex, 07.08');
   assert.equal(r.vazio, '');
 });
+
+// O COMPASSO DA LISTA. Qual densidade se escolhe é gosto; que todas as linhas
+// tenham a MESMA altura não é. Quando a linha crescia com data e encolhia sem
+// ela, a distância entre um nome e o seguinte mudava a cada linha e o olho
+// perdia o passo — era o defeito que mais cansava em uso de dia inteiro.
+test('todas as linhas têm a mesma altura, com ou sem data', pular, async () => {
+  await limpar();
+  const alturas = await pag.$$eval('.cartao', els =>
+    els.map(e => Math.round(e.getBoundingClientRect().height)));
+  assert.ok(alturas.length >= 3, `só vieram ${alturas.length} linhas`);
+  const unicas = [...new Set(alturas)];
+  assert.equal(unicas.length, 1, `linhas com alturas diferentes: ${unicas.join(', ')}px`);
+  // e o alvo do clique tem de caber um dedo, não só um ponteiro
+  assert.ok(unicas[0] >= 44, `linha de ${unicas[0]}px é baixa demais para clicar`);
+});
+
+test('o nome de todos os clientes começa na mesma coluna', pular, async () => {
+  const xs = await pag.$$eval('.cartao .nome', els =>
+    els.map(e => Math.round(e.getBoundingClientRect().left)));
+  assert.equal([...new Set(xs)].length, 1, `nomes desalinhados: ${[...new Set(xs)].join(', ')}px`);
+});
