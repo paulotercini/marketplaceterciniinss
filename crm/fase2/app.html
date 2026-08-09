@@ -472,21 +472,12 @@
     background:#E7EEFB;border:1px solid #C3D6F5;color:var(--azul-escuro)}
   .crps-org.inst2{background:#F1EAFB;border-color:#DACBF2;color:#5B3A9B}
   .crps-org small{font-weight:500;opacity:.8;font-size:10.5px}
-  /* ronda judicial: o carimbo de leitura por painel e a colagem */
-  .ronda-cx{border-left:3px solid #2E7D52;margin-bottom:12px}
-  .ronda-sis{display:flex;flex-wrap:wrap;gap:8px}
-  .ronda-sis-lin{display:flex;align-items:center;gap:8px;flex:1 1 260px;
-    border:1px solid var(--borda);border-radius:8px;padding:6px 10px;background:var(--branco)}
-  .ronda-sis-lin b{font-size:13px}
-  .ronda-sis-lin .btn-mini{margin-left:auto}
-  .ronda-achados{margin-top:9px;border:1px solid var(--borda);border-radius:8px;overflow:hidden}
-  .ronda-ach{display:flex;align-items:flex-start;gap:9px;padding:7px 10px;
-    border-top:1px solid var(--borda);background:var(--branco)}
-  .ronda-ach:first-child{border-top:none}
-  .ronda-ach.orfa{background:#FFF7F2;color:var(--cinza)}
-  .ronda-ach-txt{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:13px}
-  .ronda-ach-txt>div{flex:1 1 100%}
-  .ronda-furo{border-left:3px solid #C6541A;background:#FFF7F2;margin-bottom:12px}
+  /* dois recursos numa ficha só: o aviso e a lista da separação */
+  .juntos{border-left:3px solid #C6541A;background:#FFF7F2;margin-bottom:12px}
+  .sep-lista{margin-top:9px;border:1px solid var(--borda);border-radius:8px;overflow:hidden}
+  .sep-lin{display:flex;align-items:center;gap:9px;padding:6px 10px;font-size:13px;
+    background:var(--branco);border-top:1px solid var(--borda)}
+  .sep-lin:first-child{border-top:none}
   /* consulta manual: o recurso que depende de gente abrir o site */
   .man-cx{border-left:3px solid #7A5AA8}
   .man-cx.vence{border-left-color:#C6541A;background:#FFF7F2}
@@ -1008,7 +999,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.16 · colar o painel do tribunal</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.17 · um caso para cada recurso</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1664,9 +1655,6 @@ function montarSidebar(){
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
-    // o contador é o furo, não o volume: caso judicial sem número, que a
-    // colagem nunca acha e o CNJ também não
-    ["ronda","🔁 Ronda judicial", judiciais().filter(k=>!(k.processo||"").trim()).length||null],
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
     // o número que aparece é o que exige ação: não lida ou sem dono
     ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
@@ -1846,7 +1834,6 @@ function render(){
   if(visao==="marketing") return renderMarketing();
 
   if(visao==="rotinas") return renderRotinas();
-  if(visao==="ronda") return renderRonda();
   if(visao==="planejado") return renderPlanejado();
   let casosSel, titulo, subt="Clique no cliente para abrir a ficha completa.";
   if(visao==="minhas"){ titulo="👤 Atribuídas a mim"; casosSel=ativos().filter(k=>
@@ -3592,208 +3579,6 @@ async function addNaLista(){
   await carregar(); montarSidebar(); render();
   inp.focus();                                  // pronto para o próximo, sem tirar a mão
   aviso(`✔ ${nome} entrou na lista`);
-}
-
-// ── 🔁 Ronda dos processos judiciais ──────────────────────────────────────
-// COMO A CONFERÊNCIA REALMENTE ACONTECE: no PJe e no e-SAJ o painel lista as
-// movimentações em ordem de data. Quem entrou às 9h e leu tudo, ao voltar às
-// 13h vê só o intervalo — cinco linhas, dez. Os processos que não se mexeram
-// ninguém abre. É por isso que o método é rápido, e é por isso que ele ganha
-// da publicação, que chega dias ou meses depois.
-//
-// Logo, a unidade aqui NÃO é o processo: é a LEITURA. Pedir um clique por
-// processo seria cobrar trabalho onde não há trabalho — e foi o erro da
-// primeira versão desta tela. Um carimbo por leitura cobre todo o acervo de
-// uma vez, e o que o CRM realmente quer registrar (o que se mexeu) vem de
-// uma colagem só, a mesma que já está na tela do tribunal.
-const SISTEMAS = ["PJe", "e-SAJ", "Projudi", "PJe TRF3"];
-
-// ── as três funções abaixo são cópia fiel de ronda/colar.js ───────────────
-// O app.html é um arquivo só e não faz require. O teste colar.test.js compara
-// o código-fonte das duas cópias e quebra se elas divergirem.
-const RE_CNJ = /(\d{7})-?(\d{2})\.?(\d{4})\.?(\d)\.?(\d{2})\.?(\d{4})/g;
-const RE_DATA = /(\d{2})\/(\d{2})\/(\d{4})/;
-const soDigitos = s => String(s || '').replace(/\D/g, '');
-function formatarCNJ(d) {
-  const n = soDigitos(d);
-  if (n.length !== 20) return String(d || '');
-  return `${n.slice(0, 7)}-${n.slice(7, 9)}.${n.slice(9, 13)}.${n.slice(13, 14)}.${n.slice(14, 16)}.${n.slice(16)}`;
-}
-function limparTexto(s) {
-  return String(s || '')
-    .replace(/\s+/g, ' ')
-    .replace(/^[\s•·\-–—|>*\d.)\]]+/, '')
-    .replace(/^(n[ºo°]\.?|processo|autos|movimenta[çc][ãa]o|[úu]ltimo andamento)\s*[:\-–]?\s*/i, '')
-    .replace(/[\s|;,.-]+$/, '')
-    .trim();
-}
-function analisarColagem(bruto) {
-  const txt = String(bruto || '');
-  const achados = [];
-  let m;
-  RE_CNJ.lastIndex = 0;
-  while ((m = RE_CNJ.exec(txt)) !== null) achados.push({ i: m.index, fim: m.index + m[0].length, num: soDigitos(m[0]) });
-  if (!achados.length) return [];
-
-  const fora = [];
-  for (let n = 0; n < achados.length; n++) {
-    const a = achados[n];
-    const ate = n + 1 < achados.length ? achados[n + 1].i : txt.length;
-    // até o próximo número — mas parando na primeira linha em branco depois
-    // de já ter texto. O último processo da colagem, sem número adiante para
-    // limitá-lo, engoliria o rodapé da tela ("CPF 123...", "1 de 40").
-    const corpo = (txt.slice(a.fim, ate).split(/\n\s*\n/).map(x => x.trim()).filter(Boolean)[0]) || '';
-    const d = corpo.match(RE_DATA);
-    // a data sai do texto para não sujar o comentário: ela vira campo
-    const texto = limparTexto(d ? corpo.replace(d[0], ' ') : corpo);
-    const item = { numero: formatarCNJ(a.num), digitos: a.num, texto };
-    if (d) item.data = `${d[3]}-${d[2]}-${d[1]}`;
-    // o mesmo processo repetido na colagem (duas movimentações) entra duas
-    // vezes: são dois fatos. Repetição idêntica, não — é o painel duplicando.
-    if (!fora.some(x => x.digitos === item.digitos && x.texto === item.texto && x.data === item.data))
-      fora.push(item);
-  }
-  return fora;
-}
-// ── fim da cópia ──────────────────────────────────────────────────────────
-
-function judiciais(){
-  return ativos().filter(k=>["judicial","conselho"].includes(k.fase) || (k.processo||"").trim());
-}
-function leituras(){
-  try{ return JSON.parse(cfgApp("ronda_leituras")||"{}"); }catch(e){ return {}; }
-}
-function desdeQuando(iso){
-  if(!iso) return "nunca";
-  const h = Math.floor((Date.now()-new Date(iso))/3600000);
-  if(h < 1) return "agora há pouco";
-  if(h < 24) return `há ${h}h`;
-  const d = Math.floor(h/24);
-  return `há ${d} dia${d>1?"s":""}`;
-}
-let rondaAchados = [];
-
-function renderRonda(){
-  document.getElementById("titulo-lista").textContent="🔁 Ronda judicial";
-  document.getElementById("sub-lista").textContent=
-    "Você lê o painel do tribunal — isto não muda. Cole aqui o que apareceu e cada linha vira comentário na ficha certa.";
-  const L = leituras();
-  const semNumero = judiciais().filter(k=>!(k.processo||"").trim());
-  document.getElementById("conteudo-meio").innerHTML = `
-    <div class="caso ronda-cx">
-      <div class="rotulo-caso">🕘 Última leitura de cada painel</div>
-      <p class="meio-sub" style="margin:4px 0 8px">Um carimbo por leitura vale para o acervo inteiro:
-        quem leu o painel até aqui viu tudo o que se mexeu até aqui. Serve para saber
-        de que hora em diante ainda não olhou — e para a equipe saber sem perguntar.</p>
-      <div class="ronda-sis">${SISTEMAS.map(s=>{
-        const x = L[s]||{}, co = x.por && D.colPorId.get(x.por);
-        return `<div class="ronda-sis-lin">
-          <b>${esc(s)}</b>
-          <span class="meio-sub">${x.em?`${desdeQuando(x.em)} · ${fmtTS(x.em)}${co?` (${esc(co.inicial)})`:""}`:"nunca registrado"}</span>
-          <button class="btn-mini" onclick="marcarLeitura('${esc(s)}')">✅ li até agora</button>
-        </div>`;}).join("")}</div>
-    </div>
-
-    <div class="caso ronda-cx">
-      <div class="rotulo-caso">📋 Colar o que apareceu no painel</div>
-      <p class="meio-sub" style="margin:4px 0 8px">Selecione as linhas na tela do tribunal, copie e cole aqui.
-        Não precisa arrumar nada — o número do processo é a âncora, o resto vira o texto.</p>
-      <textarea id="rd-colagem" rows="6" placeholder="0000001-14.2015.4.03.6120  Juntada de Petição  09/08/2026&#10;1000123-45.2024.8.26.0196  Conclusos para despacho  09/08/2026"
-        style="width:100%;font:inherit;font-size:13px;padding:9px;border:1px solid var(--borda);border-radius:8px"></textarea>
-      <div class="form-linha" style="margin-top:7px">
-        <button class="btn-rap" onclick="lerColagem()">Ler a colagem</button>
-        <span class="meio-sub" id="rd-aviso"></span>
-      </div>
-      <div id="rd-lista"></div>
-    </div>
-
-    ${semNumero.length?`<div class="caso ronda-furo">
-      <div class="rotulo-caso">⚠ Fora da ronda (${semNumero.length}) — caso judicial sem número de processo</div>
-      <p class="meio-sub" style="margin:4px 0 8px">Sem o número, a colagem nunca acha este caso e o CNJ também não.
-        Abra a ficha e preencha em Dados do processo.</p>
-      ${semNumero.map(k=>{ const c=D.cliPorId.get(k.cliente_id);
-        return `<div class="man-item"><button class="man-nome" onclick="abrirFicha('${k.cliente_id}')">${esc(c?c.nome:"cliente")}</button>
-          <span class="meio-sub">${esc(tituloCaso(k))}</span></div>`;}).join("")}
-    </div>`:""}`;
-}
-
-async function marcarLeitura(sistema){
-  const L = leituras();
-  L[sistema] = {em:new Date().toISOString(), por:eu.id};
-  await guardarCfgApp("ronda_leituras", JSON.stringify(L));
-  plim();
-  render();
-}
-
-// casa cada achado com o caso do CRM pelo número do processo
-function casarAchados(achados){
-  const porNumero = new Map();
-  for(const k of (D.casos||[])){
-    const n = soDigitos(k.processo);
-    if(n.length===20) porNumero.set(n, k);
-  }
-  return achados.map(a=>({...a, caso: porNumero.get(a.digitos)||null}));
-}
-function lerColagem(){
-  const t = document.getElementById("rd-colagem");
-  rondaAchados = casarAchados(analisarColagem(t?t.value:""));
-  const av = document.getElementById("rd-aviso");
-  if(!rondaAchados.length){
-    document.getElementById("rd-lista").innerHTML="";
-    av.textContent = "Não achei número de processo nessa colagem.";
-    return;
-  }
-  const semCaso = rondaAchados.filter(a=>!a.caso).length;
-  av.textContent = `${rondaAchados.length} movimentação(ões)`
-    + (semCaso?` · ${semCaso} sem caso no CRM`:"");
-  document.getElementById("rd-lista").innerHTML = `
-    <div class="ronda-achados">${rondaAchados.map((a,i)=>{
-      const c = a.caso && D.cliPorId.get(a.caso.cliente_id);
-      return `<div class="ronda-ach ${a.caso?"":"orfa"}">
-        <input type="checkbox" id="rd-ok-${i}" ${a.caso?"checked":""} ${a.caso?"":"disabled"}>
-        <div class="ronda-ach-txt">
-          <b>${a.caso?esc(c?c.nome:"cliente"):"— sem caso no CRM —"}</b>
-          <span class="meio-sub" style="font-family:monospace">${esc(a.numero)}</span>
-          ${a.data?`<span class="meio-sub">${fmt(a.data)}</span>`:""}
-          <div><input id="rd-txt-${i}" value="${esc(a.texto)}" ${a.caso?"":"disabled"}
-            style="width:100%;font:inherit;font-size:13px;margin-top:3px"></div>
-        </div>
-      </div>`;}).join("")}</div>
-    <div class="form-linha" style="margin-top:8px;align-items:center">
-      <label class="meio-sub"><input type="checkbox" id="rd-imp"> marcar os processos como importantes ⭐</label>
-      <button class="btn-rap" style="margin-left:auto" onclick="gravarColagem()">Registrar nas fichas</button>
-    </div>
-    ${semCaso?`<p class="meio-sub" style="margin-top:6px">Os "sem caso no CRM" são processos com a sua OAB
-      que ninguém cadastrou aqui — vale conferir se falta caso ou se o número está errado na ficha.</p>`:""}`;
-}
-async function gravarColagem(){
-  const imp = !!(document.getElementById("rd-imp")||{}).checked;
-  const escolhidos = rondaAchados
-    .map((a,i)=>({a, i}))
-    .filter(({a,i})=>a.caso && (document.getElementById(`rd-ok-${i}`)||{}).checked);
-  if(!escolhidos.length) return aviso("Nada marcado para registrar");
-  let n = 0;
-  for(const {a,i} of escolhidos){
-    const campo = document.getElementById(`rd-txt-${i}`);
-    const txt = ((campo&&campo.value)||a.texto||"").trim();
-    if(!txt) continue;
-    // a data do painel entra no texto: o comentário nasce hoje, mas o fato é
-    // do dia em que o tribunal moveu, e é essa data que vale para o prazo
-    const corpo = `⚖️ Processo — ${txt}${a.data?` (${fmt(a.data)})`:""}`;
-    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({caso_id:a.caso.id, autor_id:eu.id, texto:corpo})}).catch(()=>{});
-    if(imp && !a.caso.importante){
-      a.caso.importante = true;
-      await api(`/rest/v1/casos?id=eq.${a.caso.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-        body:JSON.stringify({importante:true})}).catch(()=>{});
-    }
-    n++;
-  }
-  rondaAchados = [];
-  await carregar();
-  plim();
-  aviso(`${n} movimentação(ões) registrada(s) ✔`, false);
-  render();
 }
 
 function renderParcerias(){
@@ -6029,19 +5814,162 @@ function painelCRPS(k){
   const comEventos = blocos.filter(b=>(b.eventos||[]).length);
   const manuais = blocos.filter(b=>b.manual);
   if(!comEventos.length && !manuais.length){
-    return `<div class="caso">
+    return `${avisoJuntos(k)}<div class="caso">
       <p class="meio-sub">${nups.length
         ? "Número guardado. O robô do CRPS vai consultar na próxima rodada e o histórico aparece aqui."
-        : "Sem recurso vinculado. Cole o número do processo de recurso (o da URL do e-Recursos) para o robô acompanhar. Um caso pode ter mais de um."}</p>
+        : "Sem recurso vinculado. Cole o número do processo de recurso (o da URL do e-Recursos) para o robô acompanhar."}</p>
       ${estadoCRPS().cor==="#c62828"?`<p class="meio-sub" style="color:#c62828;margin-top:6px">⚠ O crachá do gov.br venceu — renove em ⚙️ Configurações para o robô voltar a consultar.</p>`:""}
     </div>${gerNups}`;
   }
-  return `${comEventos.length>1?`<p class="meio-sub" style="margin:0 0 6px">${comEventos.length} recursos neste caso:</p>`:""}
+  return `${avisoJuntos(k)}
     ${comEventos.length?`<div class="form-linha" style="margin-bottom:8px">
       <button class="btn-mini" onclick="copiarCrps('${k.id}')">💬 copiar mensagem ao cliente</button></div>`:""}
     ${manuais.map(b=>quadroManual(b, k)).join("")}
     ${comEventos.map(t=>blocoRecurso(t, k.id)).join("")}
     ${gerNups}`;
+}
+
+
+// ── cópia fiel de robo-crps/separar.js ────────────────────────────────────
+// O app.html é arquivo único e não faz require; o teste separar.test.js
+// compara o código-fonte das duas cópias e quebra se elas divergirem.
+const so = x => String(x || '').replace(/\D/g, '');
+const CAMPOS_HERDADOS = [
+  'cliente_id', 'beneficio', 'fase', 'especie', 'nb', 'parceria',
+  'der', 'dib', 'dii', 'dat', 'urgente', 'origem_lista',
+];
+
+function nupsDoCaso(k) {
+  const arr = Array.isArray(k.crps_nups) ? k.crps_nups : [];
+  const lista = arr.map(so).filter(Boolean);
+  const unico = so(k.crps_nup);
+  if (unico && !lista.includes(unico)) lista.push(unico);
+  return [...new Set(lista)];
+}
+function blocosDoCaso(k) {
+  return Array.isArray(k.crps) ? k.crps : (k.crps ? [k.crps] : []);
+}
+function formatarNup(d) {
+  const n = so(d);
+  if (n.length !== 17) return String(d || '');
+  return `${n.slice(0, 5)}.${n.slice(5, 11)}/${n.slice(11, 15)}-${n.slice(15)}`;
+}
+function tituloDoRecurso(k, nup, i) {
+  const base = String(k.titulo || '').replace(/\s*—\s*recurso\s.*$/i, '').trim();
+  return `${base} — recurso ${i}/${formatarNup(nup)}`;
+}
+function planoDeSeparacao(k) {
+  const nups = nupsDoCaso(k);
+  if (nups.length < 2) return { precisa: false, fica: null, novos: [] };
+  const blocos = blocosDoCaso(k);
+  const blocoDe = n => blocos.find(b => so(b.nup) === n) || null;
+
+  const [primeiro, ...resto] = nups;
+  const fica = {
+    id: k.id,
+    titulo: tituloDoRecurso(k, primeiro, 1),
+    crps_nups: [primeiro],
+    crps_nup: null,
+    crps: blocoDe(primeiro) ? [blocoDe(primeiro)] : [],
+  };
+  const novos = resto.map((n, i) => {
+    const novo = { nup: n, titulo: tituloDoRecurso(k, n, i + 2),
+                   crps_nups: [n], crps_nup: null,
+                   crps: blocoDe(n) ? [blocoDe(n)] : [] };
+    for (const c of CAMPOS_HERDADOS) if (k[c] !== undefined && k[c] !== null) novo[c] = k[c];
+    return novo;
+  });
+  return { precisa: true, fica, novos };
+}
+function conferirPlano(k, plano) {
+  const antes = nupsDoCaso(k);
+  const depois = [...(plano.fica ? plano.fica.crps_nups : []),
+                  ...plano.novos.map(n => n.nup)];
+  if (antes.length !== depois.length) return `sobrou/faltou recurso: ${antes.length} → ${depois.length}`;
+  for (const n of antes) if (!depois.includes(n)) return `o recurso ${formatarNup(n)} ficaria sem caso`;
+  const blocosAntes = blocosDoCaso(k).length;
+  const blocosDepois = (plano.fica ? plano.fica.crps.length : 0)
+    + plano.novos.reduce((s, x) => s + x.crps.length, 0);
+  if (blocosAntes !== blocosDepois) return `o histórico de um recurso ficaria para trás (${blocosAntes} → ${blocosDepois})`;
+  return null;
+}
+// ── fim da cópia ──────────────────────────────────────────────────────────
+
+// ── um caso para cada recurso ─────────────────────────────────────────────
+// Cada recurso administrativo tem protocolo próprio, prazo próprio e decisão
+// própria. Empilhados numa ficha só, o CRM mente de três jeitos: a Situação
+// do caso vira a de um recurso escolhido por acaso; o comentário do robô cai
+// numa linha do tempo compartilhada e ninguém sabe de qual recurso é aquele
+// "Recurso negado"; e encerrar o caso quando um acaba enterra os outros.
+function avisoJuntos(k){
+  const n = crpsNups(k).length;
+  if(n < 2) return "";
+  return `<div class="caso juntos">
+    <div class="rotulo-caso">⚠ ${n} recursos neste mesmo caso</div>
+    <p class="meio-sub" style="margin:4px 0 8px">Cada recurso tem protocolo, prazo e decisão próprios —
+      juntos, a Situação da ficha passa a ser a de um deles por acaso, os comentários do robô se misturam
+      e encerrar o caso enterra os outros. O certo é um caso para cada um.</p>
+    <button class="btn-rap" onclick="separarRecursos('${k.id}')">✂️ Separar em ${n} casos</button>
+  </div>`;
+}
+function separarRecursos(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const p = planoDeSeparacao(k);
+  if(!p.precisa) return aviso("Este caso já tem um recurso só");
+  const erro = conferirPlano(k, p);
+  if(erro) return aviso("Não vou separar: " + erro);   // barreira antes de gravar
+  const c = D.cliPorId.get(k.cliente_id);
+  caixa(`<h3>✂️ Separar em ${p.novos.length+1} casos</h3>
+    <p class="meio-sub">Cada recurso passa a ter ficha própria, com o histórico dele.
+      Os comentários do escritório <b>ficam no caso atual</b> — um comentário pertence ao dia em que
+      foi escrito, e adivinhar de qual recurso ele falava seria inventar.</p>
+    <div class="sep-lista">
+      <div class="sep-lin"><b>fica aqui</b> <span style="font-family:monospace">${esc(formatarNup(p.fica.crps_nups[0]))}</span>
+        <span class="meio-sub">${p.fica.crps.length?"com histórico":"ainda sem histórico"}</span></div>
+      ${p.novos.map(n=>`<div class="sep-lin"><b>caso novo</b> <span style="font-family:monospace">${esc(formatarNup(n.nup))}</span>
+        <span class="meio-sub">${n.crps.length?"leva o histórico dele":"ainda sem histórico"}</span></div>`).join("")}
+    </div>
+    <p class="meio-sub" style="margin-top:8px">Cliente: <b>${esc(c?c.nome:"")}</b> ·
+      os casos novos nascem na mesma fase (${esc(NOME_FASE[k.fase]||k.fase)}) e com o mesmo benefício.</p>
+    <div class="form-linha" style="margin-top:8px">
+      <button class="btn-rap" style="margin-left:auto" onclick="confirmarSeparacao('${casoId}')">✂️ Separar agora</button>
+    </div>`);
+}
+async function confirmarSeparacao(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const p = planoDeSeparacao(k);
+  const erro = conferirPlano(k, p);
+  if(erro) return aviso("Não vou separar: " + erro);
+  fecharCaixa();
+  const nascidos = [];
+  for(const n of p.novos){
+    const {nup, ...corpo} = n;
+    const [novo] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify(corpo)}).catch(()=>[]);
+    if(!novo){ aviso("Não consegui criar um dos casos — nada foi mexido"); return; }
+    nascidos.push({novo, nup});
+    // quem cuidava do caso continua cuidando do irmão
+    for(const cid of (D.atrDoCaso.get(k.id)||[]))
+      await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:novo.id, colaborador_id:cid})}).catch(()=>{});
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:novo.id, autor_id:eu.id,
+        texto:`✂️ Caso aberto ao separar os recursos do cliente. Recurso ${formatarNup(nup)}. `
+             +`O histórico anterior do escritório ficou no caso de origem.`})}).catch(()=>{});
+  }
+  // só depois de todos os novos existirem o original é encolhido: se algo
+  // falhar no meio, nenhum recurso fica sem caso
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({titulo:p.fica.titulo, crps_nups:p.fica.crps_nups,
+                         crps_nup:null, crps:p.fica.crps})});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+      texto:`✂️ Recursos separados: ${nascidos.map(x=>formatarNup(x.nup)).join(", ")} `
+           +`${nascidos.length>1?"passaram":"passou"} para caso próprio. Aqui fica ${formatarNup(p.fica.crps_nups[0])}.`})}).catch(()=>{});
+  await carregar(); montarSidebar();
+  plim();
+  aviso(`Separado ✔ — ${nascidos.length} caso(s) novo(s)`, false);
+  abrirFicha(clienteAberto);
 }
 
 // ── recurso de consulta manual ────────────────────────────────────────────
@@ -6221,17 +6149,64 @@ function copiarCrps(casoId){
   copiar(txt, "Mensagem do recurso copiada");
 }
 
-// acrescenta um número à lista (sem sobrescrever os que já existem)
+// Um recurso por caso. Quando o caso já tem um número, o segundo NÃO entra
+// junto: nasce caso próprio. É o mesmo motivo do ✂️ — protocolo, prazo e
+// decisão são de cada recurso, e empilhá-los faz a ficha mentir. Sem esta
+// trava, a separação viraria faxina eterna.
 async function salvarCrpsNup(casoId){
   const el = document.getElementById("crps-nup-"+casoId);
   const v = (el.value||"").replace(/\D/g,"");
   if(!v) return aviso("Digite o número do recurso");
   const k = D.casoPorId.get(casoId);
-  const nova = [...new Set([...crpsNups(k), v])];
-  k.crps_nups = nova; k.crps_nup = null;
+  const jaTem = crpsNups(k);
+  if(jaTem.includes(v)) return aviso("Este recurso já está neste caso");
+  if(jaTem.length){
+    const {ok} = await perguntarNovoCaso(k, v);
+    if(!ok) return;
+    return criarCasoDoRecurso(k, v);
+  }
+  k.crps_nups = [v]; k.crps_nup = null;
   await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({crps_nups:nova, crps_nup:null})});
-  aviso("Recurso adicionado ✔ — o robô consulta na próxima rodada", false);
+    body:JSON.stringify({crps_nups:[v], crps_nup:null})});
+  aviso("Recurso vinculado ✔ — o robô consulta na próxima rodada", false);
+  abrirFicha(clienteAberto);
+}
+function perguntarNovoCaso(k, nup){
+  return new Promise(resolve=>{
+    caixa(`<h3>➕ Novo recurso — caso próprio</h3>
+      <p class="meio-sub">Este caso já acompanha o recurso
+        <b style="font-family:monospace">${esc(formatarNup(crpsNups(k)[0]))}</b>.
+        Como cada recurso tem protocolo, prazo e decisão próprios, o
+        <b style="font-family:monospace">${esc(formatarNup(nup))}</b> vai nascer em caso separado,
+        do mesmo cliente e na mesma fase.</p>
+      <div class="form-linha" style="margin-top:10px">
+        <button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
+        <button class="btn-rap" style="margin-left:auto" id="pnc-ok">Criar o caso</button>
+      </div>`);
+    const b = document.getElementById("pnc-ok");
+    b.onclick = ()=>{ fecharCaixa(); resolve({ok:true}); };
+    // fechar de qualquer outro jeito conta como desistir
+    setTimeout(()=>{ const obs = setInterval(()=>{
+      if(!document.getElementById("pnc-ok")){ clearInterval(obs); resolve({ok:false}); }
+    }, 250); }, 300);
+  });
+}
+async function criarCasoDoRecurso(k, nup){
+  const corpo = {titulo: tituloDoRecurso(k, nup, crpsNups(k).length+1),
+                 crps_nups:[nup], crps_nup:null, crps:[]};
+  for(const c of CAMPOS_HERDADOS) if(k[c]!==undefined && k[c]!==null) corpo[c]=k[c];
+  const [novo] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify(corpo)}).catch(()=>[]);
+  if(!novo) return aviso("Não consegui criar o caso");
+  for(const cid of (D.atrDoCaso.get(k.id)||[]))
+    await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:novo.id, colaborador_id:cid})}).catch(()=>{});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:novo.id, autor_id:eu.id,
+      texto:`✂️ Caso aberto para o recurso ${formatarNup(nup)}.`})}).catch(()=>{});
+  await carregar(); montarSidebar();
+  plim();
+  aviso("Caso criado para o novo recurso ✔", false);
   abrirFicha(clienteAberto);
 }
 
