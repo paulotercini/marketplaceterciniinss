@@ -27,7 +27,11 @@
     try {
       faixa('lendo os recursos do CRM…');
       const nups = await CRM.nupsDoCrm();
-      if (!nups.length) { faixaErr('o CRM não tem recurso nenhum com número'); return { erro: 'sem nups' }; }
+      if (!nups.length) {
+        faixaErr('nenhuma ficha aberta do CRM tem número de recurso — na ficha, ' +
+                 'em "números de recurso deste caso", use o ＋ para informar o NUP');
+        return { erro: 'sem nups' };
+      }
 
       // descobre como esta sessão se identifica, usando o primeiro processo
       let modo = null, achou = false;

@@ -27,16 +27,26 @@ const CRM = {
     });
     if (!r.ok) throw new Error(`o CRM recusou (${r.status}): ${(await r.text()).slice(0, 120)}`);
   },
-  // os processos que o CRM quer que sejam consultados no e-Recursos
+  // os processos que o CRM quer que sejam consultados no e-Recursos.
+  //
+  // A LISTA A CONSULTAR é `crps_nups` (o número que a ficha guarda); `crps` é
+  // o RESULTADO da última consulta. Ler o resultado — como esta função fazia —
+  // devolvia vazio justamente na primeira vez, que é quando a extensão mais
+  // serve: nunca tendo consultado, não havia resultado, e ela anunciava que
+  // "o CRM não tem recurso nenhum com número" com as fichas todas preenchidas.
   async nupsDoCrm() {
     const { url, chave } = await CRM.config();
-    const r = await fetch(`${url}/rest/v1/casos?select=crps&crps=not.is.null`,
+    const r = await fetch(
+      `${url}/rest/v1/casos?select=crps_nups,crps_nup&encerrado_em=is.null&limit=5000`,
       { headers: { apikey: chave, Authorization: 'Bearer ' + chave } });
     if (!r.ok) throw new Error(`não consegui ler os recursos do CRM (${r.status})`);
     const linhas = await r.json();
     const nups = new Set();
     for (const l of linhas)
-      for (const n of JSON.stringify(l.crps || '').match(/\d{15,25}/g) || []) nups.add(n);
+      for (const n of [...(Array.isArray(l.crps_nups) ? l.crps_nups : []), l.crps_nup]) {
+        const d = String(n == null ? '' : n).replace(/\D/g, '');
+        if (d.length >= 15 && d.length <= 25) nups.add(d);
+      }
     return [...nups];
   },
 };
