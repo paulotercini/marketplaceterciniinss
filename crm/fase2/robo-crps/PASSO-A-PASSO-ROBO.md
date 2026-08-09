@@ -168,6 +168,30 @@ estrela da movimentação não apaga a do processo: quem decide que o assunto
 morreu é você, no botão do composer. Os destaques sobrevivem às coletas
 seguintes.
 
+### Um caso para cada recurso
+
+Cada recurso administrativo tem **número de protocolo próprio**, prazo
+próprio e decisão própria. Empilhar dois numa ficha só faz o CRM mentir de
+três jeitos: a Situação do caso vira a de um recurso escolhido por acaso; o
+comentário do robô cai numa linha do tempo compartilhada e ninguém sabe de
+qual recurso é aquele "Recurso negado"; e encerrar o caso quando um recurso
+acaba enterra os outros junto.
+
+Na aba 🖥 Recurso, o caso com mais de um número mostra o aviso e o botão
+**✂️ Separar em N casos**. Antes de gravar qualquer coisa ele confere que
+nenhum recurso e nenhum histórico ficaria para trás — e recusa a separação se
+a conta não fechar.
+
+O que cada caso novo leva: o cliente, o benefício, a fase, a espécie, as
+datas (DER/DIB/DII/DAT), a parceria e a equipe atribuída — e o histórico do
+**seu** recurso. O que **não** leva: os comentários do escritório. Um
+comentário pertence ao dia em que foi escrito, e adivinhar de qual recurso
+ele falava seria inventar; eles ficam no caso de origem, e os dois lados
+ganham uma nota dizendo o que aconteceu.
+
+Daí em diante a situação não se repete: ao colar um segundo número num caso
+que já tem recurso, o CRM abre **caso novo** em vez de empilhar.
+
 ### O recurso que o robô não enxerga
 
 O e-Recursos só devolve os processos ligados ao **CPF do procurador**. Quando
