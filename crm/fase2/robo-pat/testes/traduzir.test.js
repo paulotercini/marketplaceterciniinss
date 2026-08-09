@@ -262,3 +262,24 @@ test('o auxílio-acidente se resolve quando o código do INSS vem junto', () => 
   // sem o código, continua em aberto — não se escolhe entre B36 e B94 no chute
   assert.equal(T.especieDe({ siglaServico: 'TAA' }).especie, null);
 });
+
+// A tela do CRM traduz a coleta crua que a extensão entrega — então a mesma
+// tradução vive lá dentro copiada. Divergência ali significa a extensão
+// entregando uma coisa e a tela lendo outra, com cem fichas no meio.
+test('a cópia dentro do app.html é idêntica à testada aqui', () => {
+  const app = fs.readFileSync(path.join(__dirname, '..', '..', 'app.html'), 'utf8');
+  const nu = s => s.replace(/\s+/g, ' ').trim();
+  for (const fn of ['especieDe', 'dataIso', 'eventosDe', 'resumoDaLista', 'resumoDoDetalhe']) {
+    const i = app.indexOf(`function ${fn}(`);
+    assert.notEqual(i, -1, `${fn} sumiu do app.html`);
+    let n = 0, j = app.indexOf('{', i);
+    do { if (app[j] === '{') n++; else if (app[j] === '}') n--; j++; } while (n > 0 && j < app.length);
+    assert.equal(nu(app.slice(i, j)), nu(T[fn].toString()), `${fn} divergiu no app.html`);
+  }
+  for (const nome of ['SERVICOS', 'ESPECIE_POR_CODIGO', 'CANAIS', 'SITUACOES']) {
+    const i = app.indexOf(`const ${nome}`);
+    assert.notEqual(i, -1, `${nome} sumiu do app.html`);
+    assert.deepStrictEqual(eval(`(${app.slice(app.indexOf('{', i), app.indexOf('};', i) + 1)})`),
+      T[nome], `${nome} divergiu no app.html`);
+  }
+});

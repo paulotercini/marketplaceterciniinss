@@ -2126,3 +2126,29 @@ create index if not exists casos_marcadores on casos using gin (marcadores);
 -- e normalizar na entrada evita duas verdades para a mesma coisa.
 -- ══════════════════════════════════════════════════════════════════════════
 alter table casos add column if not exists situacao_inss text;
+
+-- ══════════════════════════════════════════════════════════════════════════
+-- A FILA DAS COLETAS.
+--
+-- A extensão do navegador coleta e ENTREGA. Ela não decide nada: o que vira
+-- caso, o que atualiza e o que é possível duplicado continua sendo decidido
+-- na tela do CRM, onde está testado. Cada rodada da extensão vira uma linha
+-- aqui; a tela 📥 Importar lê a fila, monta o plano e só grava com o seu
+-- aval — o mesmo caminho do arquivo solto, sem o arquivo.
+--
+-- `aplicada_em` marca a que já foi usada, para a mesma coleta não aparecer
+-- duas vezes. As antigas ficam: são o histórico do que cada portal devolveu
+-- no dia, e ocupam pouco.
+-- ══════════════════════════════════════════════════════════════════════════
+create table if not exists coletas (
+  id          uuid primary key default gen_random_uuid(),
+  fonte       text not null,                  -- 'pat' | 'crps'
+  dados       jsonb not null,
+  criado_em   timestamptz not null default now(),
+  aplicada_em timestamptz
+);
+create index if not exists coletas_pendentes on coletas (fonte, criado_em desc)
+  where aplicada_em is null;
+alter table coletas enable row level security;
+drop policy if exists coletas_tudo on coletas;
+create policy coletas_tudo on coletas for all using (true) with check (true);
