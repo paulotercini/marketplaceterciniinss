@@ -176,18 +176,23 @@ test('cada item do menu troca a lista mostrada', pular, async () => {
   assert.deepStrictEqual(mortos, [], 'itens do menu que não trocaram a lista');
 });
 
-test('os três botões da linha do cliente respondem ao clique', pular, async () => {
+test('os botões da linha do cliente respondem ao clique', pular, async () => {
   await pag.evaluate(() => { visao = 'fase:inss'; render(); });
-  for (const attr of ['data-fogo', 'data-sol', 'data-estrela']) {
+  for (const attr of ['data-fogo', 'data-estrela']) {
     const n = await pag.$$eval(`.cartao [${attr}]`, e => e.length);
     assert.ok(n > 0, `nenhum botão ${attr} na lista`);
   }
-  // o ★ é o único que muda estado sem falar com o banco
-  const antes = await pag.$eval('.cartao [data-estrela]', e => e.className);
-  await pag.$eval('.cartao [data-estrela]', e => e.click());
-  await pag.waitForTimeout(60);
-  assert.ok(await pag.$eval('.cartao [data-estrela]', e => e.className) !== undefined,
-    'o botão ★ sumiu depois do clique');
+  // clicar tem de ACENDER a estrela. Conferir só que o botão continua lá
+  // deixou passar, uma vez, a remoção do próprio ouvinte de clique.
+  const aceso = () => pag.$eval('.cartao[data-cli="c1"] [data-estrela]',
+    e => e.classList.contains('on'));
+  const antes = await aceso();
+  await pag.click('.cartao[data-cli="c1"] [data-estrela]');
+  await pag.waitForTimeout(120);
+  assert.equal(await aceso(), !antes, 'o clique no ★ não mudou o estado do botão');
+  await pag.click('.cartao[data-cli="c1"] [data-estrela]');   // devolve como estava
+  await pag.waitForTimeout(120);
+  assert.equal(await aceso(), antes, 'o segundo clique no ★ não desligou');
 });
 
 test('nenhum contador do menu mostra zero', pular, async () => {
@@ -283,4 +288,27 @@ test('o nome de todos os clientes começa na mesma coluna', pular, async () => {
   const xs = await pag.$$eval('.cartao .nome', els =>
     els.map(e => Math.round(e.getBoundingClientRect().left)));
   assert.equal([...new Set(xs)].length, 1, `nomes desalinhados: ${[...new Set(xs)].join(', ')}px`);
+});
+
+// Botão que só aparece no hover não existe para quem não sabe que ele está
+// lá — e some de vez para quem usa teclado ou toque. O ⭐ e o 🔥 são de uso
+// diário: ficam sempre na tela, apagados quando desligados.
+test('⭐ e 🔥 ficam visíveis sem precisar do mouse em cima', pular, async () => {
+  await limpar();
+  const vis = await pag.$$eval('.cartao[data-cli="c0"] .acao-card', els =>
+    els.map(e => ({ cls: e.className, op: Number(getComputedStyle(e).opacity) })));
+  assert.ok(vis.length, 'a linha ficou sem botão de ação');
+  for (const b of vis) assert.ok(b.op > 0.15, `${b.cls} está invisível (opacidade ${b.op})`);
+});
+
+// O ☀️ saiu da linha, mas o Meu Dia não pode ter sumido junto: a ação mudou
+// de lugar, para o menu do botão direito.
+test('o ☀️ saiu da linha e vive no menu do botão direito', pular, async () => {
+  assert.equal(await pag.$$eval('.cartao [data-sol]', e => e.length), 0,
+    'o botão ☀️ continua na linha');
+  await pag.click('.cartao[data-cli="c0"]', { button: 'right' });
+  const item = await pag.$eval('#menu-mover [data-dia]', e => e.textContent.trim());
+  assert.match(item, /Meu Dia/);
+  await pag.keyboard.press('Escape');
+  await pag.evaluate(() => fecharMenuMover());
 });

@@ -309,12 +309,13 @@
   .cartao .meta .exig-chip{flex:none}
   .cartao .quem-prazo{flex:none;margin-left:-2px}
   /* as ações só aparecem no hover ou pelo teclado; ligadas, ficam sempre */
-  /* a ⭐ fica SEMPRE visível, como no To Do: é ação de um clique e some da
-     cabeça se some da tela. ☀️ e 🔥 aparecem no hover — são de uso mais raro. */
+  /* ⭐ e 🔥 ficam SEMPRE visíveis. Botão que só aparece no hover não existe
+     para quem não sabe que ele está lá — e some para quem usa teclado ou
+     toque. Apagados quando desligados, acesos quando ligados. */
   .cartao .acoes{display:flex;gap:1px;flex:none;margin-left:2px}
-  .cartao .acao-card.sol,.cartao .acao-card.fogo{filter:grayscale(1);opacity:0}
-  .cartao:hover .acao-card.sol,.cartao:hover .acao-card.fogo{opacity:.45}
-  .cartao .acao-card.sol.on,.cartao .acao-card.fogo.on{filter:none;opacity:1}
+  .cartao .acao-card.fogo{filter:grayscale(1);opacity:.3}
+  .cartao:hover .acao-card.fogo{opacity:.55}
+  .cartao .acao-card.fogo.on{filter:none;opacity:1}
   /* quem navega por teclado precisa ver onde está, mesmo nos botões que só
      aparecem no hover */
   .cartao .acao-card:focus-visible{opacity:1;filter:none;outline:2px solid var(--azul);
@@ -764,6 +765,9 @@
   #menu-mover .mm-it{padding:7px 10px;border-radius:6px;cursor:pointer;font-size:14px}
   #menu-mover .mm-it:hover{background:var(--fundo)}
   #menu-mover .mm-it.atual{color:var(--azul);font-weight:700}
+  /* o Meu Dia abre o menu, separado do "Mover para…" por um fio */
+  #menu-mover .mm-it.destaque{font-weight:650;border-bottom:1px solid var(--borda);
+    border-radius:6px 6px 0 0;margin-bottom:4px;padding-bottom:9px}
   .id-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
   .id-card{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:10px 14px}
   .id-card.destaque{border-color:#f0c36d;background:#fffaf0}
@@ -1059,7 +1063,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.25 · lista em cartões</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.26 · botões sempre à vista</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1668,7 +1672,12 @@ function menuMover(ev, cliId){
   const ks=(D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
   if(!ks.length) return;
   const m=document.createElement("div"); m.id="menu-mover";
-  m.innerHTML = `<div class="mm-tit">Mover para…</div>` + ks.map(k=>
+  // o ☀️ saiu da linha (era mais um ícone competindo com o nome), mas o Meu
+  // Dia continua: a ação mora aqui, no menu que o botão direito já abria
+  const noDia = D.meudia.some(x=>x.colaborador_id===eu.id && ks.some(k=>k.id===x.caso_id));
+  m.innerHTML = `<div class="mm-it destaque" data-dia="${ks[0].id}">${
+      noDia?"☀️ Tirar do Meu Dia":"☀️ Adicionar ao Meu Dia"}</div>`
+    + `<div class="mm-tit">Mover para…</div>` + ks.map(k=>
     (ks.length>1?`<div class="mm-caso">${esc(tituloCaso(k))}</div>`:"") +
     LISTAS_MOVER.map(([l])=>{
       const atual = listaDe(k)===l;
@@ -1681,8 +1690,30 @@ function menuMover(ev, cliId){
   m.querySelectorAll("[data-mv]").forEach(it=>it.onclick=()=>{
     const [kid,l]=it.dataset.mv.split("|"); moverCaso(kid,l);
   });
+  const bd = m.querySelector("[data-dia]");
+  if(bd) bd.onclick=()=>{ fecharMenuMover(); alternarMeuDia(bd.dataset.dia); };
   setTimeout(()=>document.addEventListener("click", fecharMenuMover, {once:true}));
 }
+// Meu Dia: liga e desliga. Saiu da linha da lista (era mais um ícone
+// competindo com o nome) e vive no menu do botão direito, onde já mora o
+// "Mover para…". A lista ☀️ Meu Dia continua a mesma.
+async function alternarMeuDia(casoId){
+  if(!casoId) return;
+  const ja = D.meudia.find(m=>m.caso_id===casoId && m.colaborador_id===eu.id);
+  try{
+    if(ja){
+      await api(`/rest/v1/meu_dia?id=eq.${ja.id}`,{method:"DELETE"});
+      aviso("Retirado do seu Meu Dia");
+    }else{
+      await api(`/rest/v1/meu_dia`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({colaborador_id:eu.id, caso_id:casoId, dia:hoje()})});
+      aviso("Adicionado ao seu Meu Dia ☀️");
+    }
+    D.meudia = await todas("meu_dia",`select=*&dia=eq.${hoje()}`);
+    montarSidebar(); render();
+  }catch(e){ aviso("Não consegui mexer no Meu Dia"); }
+}
+
 async function moverCaso(casoId, lista){
   const k=D.casoPorId.get(casoId); if(!k || listaDe(k)===lista) return fecharMenuMover();
   const fase=(LISTAS_MOVER.find(([l])=>l===lista)||[])[1];
@@ -1790,7 +1821,6 @@ function cartaoCliente(cli, casosMostrar){
     .filter(e=>ks.some(k=>k.id===e.caso_id) && e.status==="agendada" && dataSP(e.data_hora)>=hoje())
     .sort((a,b)=>a.data_hora<b.data_hora?-1:1)[0];
   const imp = ks.some(k=>k.importante);
-  const noMeuDia = D.meudia.some(m=>m.colaborador_id===eu.id && ks.some(k=>k.id===m.caso_id));
   const motivo = (ks.find(x=>x.prazo===dataProx)||{}).lembrar_motivo;
   const exig = ks.map(chipExig).filter(Boolean).join("");
   const dcb = ks.map(chipDcb).filter(Boolean).join("");
@@ -1826,7 +1856,6 @@ function cartaoCliente(cli, casosMostrar){
          ficam sempre visíveis, porque aí carregam informação */""}
     <span class="acoes">
       <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}">🔥</button>
-      <button class="acao-card sol ${noMeuDia?"on":""}" title="Meu Dia" data-sol="${ks[0]?ks[0].id:""}">☀️</button>
       <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}">★</button>
     </span>
   </div>`;
@@ -1872,30 +1901,12 @@ function grupoClientes(casosSel){
 function ligarCartoes(){
   document.querySelectorAll(".cartao[data-cli]").forEach(el=>{
     el.onclick=e=>{
-      if(e.target.dataset.sol!==undefined || e.target.dataset.estrela!==undefined) return;
+      if(e.target.dataset.estrela!==undefined) return;
       abrirFicha(el.dataset.cli);
     };
     el.oncontextmenu=e=>menuMover(e, el.dataset.cli);   // botão direito = Mover para…
   });
   ligarArrasteCartoes();
-  document.querySelectorAll("[data-sol]").forEach(b=>b.onclick=async e=>{
-    e.stopPropagation();
-    const casoId = b.dataset.sol; if(!casoId) return;
-    // liga/desliga: segundo clique retira do Meu Dia
-    const ja = D.meudia.find(m=>m.caso_id===casoId && m.colaborador_id===eu.id);
-    try{
-      if(ja){
-        await api(`/rest/v1/meu_dia?id=eq.${ja.id}`,{method:"DELETE"});
-        aviso("Retirado do seu Meu Dia");
-      }else{
-        await api(`/rest/v1/meu_dia`,{method:"POST",body:JSON.stringify(
-          {colaborador_id:eu.id, caso_id:casoId, dia:hoje()}),headers:{Prefer:"return=minimal"}});
-        aviso("Adicionado ao seu Meu Dia ☀️");
-      }
-    }catch(err){ aviso("Erro: "+err.message); }
-    D.meudia = await todas("meu_dia",`select=*&dia=eq.${hoje()}`);
-    render();
-  });
   document.querySelectorAll("[data-estrela]").forEach(b=>b.onclick=async e=>{
     e.stopPropagation();
     const k = D.casoPorId.get(b.dataset.estrela); if(!k) return;
@@ -2025,7 +2036,7 @@ function renderMeuDia(){
     + blocoSemAcao()
     + blocoRevisao()
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
-    + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — use o ☀️ nos cartões.</p>")
+    + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — clique com o botão direito num cliente e escolha ☀️ Adicionar ao Meu Dia.</p>")
     + `<h3 class="secao">🟡 Vencem hoje (${hojeK.length+tHoje.length})</h3>`
     + (grupoClientes(hojeK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
        + tHoje.map(t=>cartaoTarefa(t)).join("") || "<p class='meio-sub'>Nada vence hoje. 🎉</p>")
