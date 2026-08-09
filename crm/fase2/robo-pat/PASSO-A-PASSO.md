@@ -92,6 +92,48 @@ node --test "testes/*.test.js"
 7. **Abra o arquivo e confira** antes de mandar. Se encontrar qualquer nome
    ou CPF, não mande — me avise que eu conserto a peneira.
 
+## A resposta veio: verde
+
+`"detalhe repetido pelo script": status 200`. O detalhe abre com o mesmo
+crachá da sessão. A lista continua exigindo o seu clique (o reCAPTCHA está
+no corpo dela, 2361 caracteres), mas depois dela o script busca sozinho o
+detalhe de todos.
+
+**Um clique por dia cobre a carteira.**
+
+O detalhe traz, por requerimento: `dataEntradaRequerimento` (a DER),
+`especieBeneficio` (o código do INSS, que vira a espécie sem adivinhação),
+`status`, `nomeUnidade`, `nomeServico`, e — o mais valioso —
+`agendamentosPericia` e `agendamentosAvaliacaoSocial` com data, hora,
+agência e `situacaoAgendamento` (AGENDADO / REMARCADO).
+
+## O coletor de todo dia
+
+`coletar-no-navegador.js`. Mesmo caminho da sonda, propósito diferente:
+
+**ATENÇÃO — este arquivo é o contrário da sonda.** Aqui vai dado real do
+escritório, para o CRM. Fica na sua máquina. Não me mande.
+
+1. PAT/GERID logado → Tarefas → F12 → Console.
+2. Cole o coletor, Enter.
+3. Na tela: data da última sincronização em "Data de atualização inicial",
+   **500 por página**, e "Buscar".
+4. Ele busca o detalhe do que veio (700ms entre um e outro), mostra o resumo
+   no Console e baixa `pat_AAAA-MM-DD.json`.
+
+Paginar é POST novo, e POST novo é captcha novo — por isso quem pagina é
+você, pondo 500 por página. O coletor junta todas as páginas que você pedir.
+
+**O que ele não leva:** anexo, comentário, campo adicional e dado dos
+interessados. São laudo médico e relato de doença. O CRM guarda o LINK para
+o portal; quem precisa ler abre lá, com o login dele. Anexos e comentários
+viram CONTAGEM — dizem que há o que olhar, sem trazer o que é.
+
+**O que ele vai me pedir:** no fim, o Console mostra uma tabela de serviços
+que eu ainda não sei traduzir em espécie. `traduzir.js` só conhece os códigos
+que eu VI numa resposta real — hoje, um. Mande essa tabela (é código de
+serviço, não tem dado de cliente) e eu completo o mapa.
+
 ## Depois da sonda
 
 Com o formato em mãos, a ordem é esta:
