@@ -14,41 +14,77 @@
 // requerimentos, é que vai preencher esta tabela — do mesmo jeito que as
 // REGRAS da extração do To Do foram preenchidas: olhando o que aparece.
 
-// código do INSS -> [espécie, nome que o CRM usa]. Todos vistos na coleta
-// de 09/08/2026; nenhum inventado.
+// ── OS 21 SERVIÇOS DA CARTEIRA ───────────────────────────────────────────
+// Tirados da coleta de 09/08/2026: 184 requerimentos, 21 siglas distintas.
+// Nenhuma inventada — cada linha abaixo apareceu na carteira de verdade.
+//
+// A descoberta que muda o desenho: só NOVE das 21 são pedido de benefício.
+// As outras são recurso, revisão, serviço administrativo ou apuração de
+// irregularidade. Tratar tudo como benefício encheria a lista do INSS de
+// caso sem espécie, e esconderia as duas coisas que mais pedem atenção.
+//
+// `marcadores` liga direto no que foi feito hoje de manhã: TAPDTC é B42 com
+// deficiência, TAR é B41 rural. A sigla já diz o que o marcador diria.
+const SERVICOS = {
+  // ── pedido de benefício ────────────────────────────────────────────────
+  TAIU:    { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade' },
+  TAR:     { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade rural',
+             marcadores: ['idade_rural'] },
+  TAPDI:   { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade da pessoa com deficiência',
+             marcadores: ['pcd'] },
+  TATCMI:  { tipo: 'beneficio', especie: 'B42', nome: 'Aposentadoria por tempo de contribuição' },
+  TAPDTC:  { tipo: 'beneficio', especie: 'B42', nome: 'Aposentadoria por tempo de contribuição da pessoa com deficiência',
+             marcadores: ['pcd'] },
+  TBSBAPD: { tipo: 'beneficio', especie: 'B87', nome: 'BPC/LOAS — deficiência' },
+  TBAI:    { tipo: 'beneficio', especie: 'B88', nome: 'BPC/LOAS — idoso' },
+  TPU:     { tipo: 'beneficio', especie: 'B21', nome: 'Pensão por morte' },
+  // O auxílio-acidente tem duas espécies e o nome do serviço NÃO diz qual:
+  // B36 é o previdenciário, B94 o acidentário. Escolher por conta própria
+  // seria chutar num campo que muda a competência do processo — então a
+  // espécie fica em aberto e o CRM pergunta.
+  TAA:     { tipo: 'beneficio', especie: null, nome: 'Auxílio-acidente',
+             aConfirmar: 'B36 (previdenciário) ou B94 (acidentário)' },
+
+  // ── recurso: lista Conselho de Recursos, não INSS ───────────────────────
+  // É o mesmo processo que o robô do CRPS já acompanha. Somados, são 83 dos
+  // 184 — quase metade da carteira.
+  TREC:    { tipo: 'recurso', nome: 'Recurso ordinário (inicial)' },
+  RECESP:  { tipo: 'recurso', nome: 'Recurso especial ou incidente' },
+
+  // ── revisão de benefício já concedido ──────────────────────────────────
+  TREVISAO:  { tipo: 'revisao', nome: 'Revisão — entidade conveniada' },
+  TAREFAREV: { tipo: 'revisao', nome: 'Revisão' },
+  REVOFICIO: { tipo: 'revisao', nome: 'Revisão de ofício' },
+
+  // ── dinheiro ───────────────────────────────────────────────────────────
+  SEMNPG:  { tipo: 'pagamento', nome: 'Emissão de pagamento não recebido' },
+  TSCC:    { tipo: 'pagamento', nome: 'Calcular complementação' },
+
+  // ── serviço administrativo: não abre caso, acontece DENTRO de um ───────
+  ATUVCPG: { tipo: 'servico', nome: 'Atualizar vínculos e remunerações (CNIS)' },
+  TVALFBR: { tipo: 'servico', nome: 'Validar contribuição de facultativo baixa renda' },
+  ATUACAD: { tipo: 'servico', nome: 'Atualizar cadastro e/ou benefício' },
+
+  // ── APURAÇÃO DE IRREGULARIDADE ─────────────────────────────────────────
+  // O INSS revendo um benefício que já paga. Pode terminar em suspensão,
+  // cancelamento e cobrança do que foi recebido. São dois requerimentos na
+  // carteira e são os dois mais urgentes dela — por isso `urgente`.
+  MOBDGT:  { tipo: 'apuracao', nome: 'Apuração de irregularidade (MOB Digital)', urgente: true },
+  CPCARCJ: { tipo: 'apuracao', nome: 'Encaminhamentos do processo de apuração (MOB)', urgente: true },
+};
+
+// O código de espécie do próprio INSS, quando vem preenchido, manda na
+// espécie — é mais confiável que a sigla do serviço.
 const ESPECIE_POR_CODIGO = {
-  AMP_SOCIAL_PORT_DEFICIENCIA: ['B87', 'BPC/LOAS — deficiência'],
-  AMP_SOCIAL_IDOSO:            ['B88', 'BPC/LOAS — idoso'],
-  APOSENTADORIA_POR_IDADE:     ['B41', 'Aposentadoria por idade'],
-  APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO: ['B42', 'Aposentadoria por tempo de contribuição'],
-};
-
-// sigla do serviço -> a mesma coisa, para quando `especieBeneficio` vier vazio
-const ESPECIE_POR_SIGLA = {
-  TBSBAPD: ['B87', 'BPC/LOAS — deficiência'],
-  TBAI:    ['B88', 'BPC/LOAS — idoso'],
-  TAIU:    ['B41', 'Aposentadoria por idade'],
-  TATCMI:  ['B42', 'Aposentadoria por tempo de contribuição'],
-};
-
-// NEM TODA TAREFA DO PAT É UM PEDIDO DE BENEFÍCIO — e isso a amostra real
-// mostrou. Duas das seis siglas coletadas não são requerimento nenhum:
-//
-//   RECESP  é RECURSO. Pertence à lista Conselho de Recursos, não à do INSS,
-//           e é o mesmo processo que o robô do CRPS já acompanha.
-//   ATUVCPG é acerto de CNIS. Não abre caso: é um serviço dentro de um caso
-//           que já existe.
-//
-// Tratá-los como benefício criaria caso duplicado com espécie em branco na
-// lista errada — exatamente o tipo de sujeira que ninguém limpa depois.
-const SERVICO_NAO_BENEFICIO = {
-  RECESP:  ['recurso', 'Recurso especial ou incidente (CRPS)'],
-  ATUVCPG: ['servico', 'Atualizar vínculos e remunerações (CNIS)'],
+  AMP_SOCIAL_PORT_DEFICIENCIA: 'B87',
+  AMP_SOCIAL_IDOSO:            'B88',
+  APOSENTADORIA_POR_IDADE:     'B41',
+  APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO: 'B42',
 };
 
 // Quem protocolou. `INTERNET` quer dizer que o CLIENTE fez sozinho pelo Meu
 // INSS — e é a explicação para requerimentos que existem no PAT sem caso no
-// CRM. Saber disso vale mais do que parece.
+// CRM. Na carteira real: 5 pelo escritório, 3 pelo cliente, 2 pela 135.
 const CANAIS = {
   ENTIDADE_CONVENIADA: 'Protocolado pelo escritório (convênio OAB)',
   INTERNET:            'O cliente protocolou sozinho pelo Meu INSS',
@@ -59,33 +95,53 @@ const limpo = s => String(s || '').trim().toUpperCase();
 
 function especieDe(tarefa) {
   const t = tarefa || {};
-  const naoBeneficio = SERVICO_NAO_BENEFICIO[limpo(t.siglaServico)];
-  if (naoBeneficio)
-    return { tipo: naoBeneficio[0], especie: null, beneficio: naoBeneficio[1], fonte: 'siglaServico' };
-  const porCodigo = ESPECIE_POR_CODIGO[limpo(t.especieBeneficio)];
-  if (porCodigo)
-    return { tipo: 'beneficio', especie: porCodigo[0], beneficio: porCodigo[1], fonte: 'especieBeneficio' };
-  const porSigla = ESPECIE_POR_SIGLA[limpo(t.siglaServico)];
-  if (porSigla)
-    return { tipo: 'beneficio', especie: porSigla[0], beneficio: porSigla[1], fonte: 'siglaServico' };
-  // desconhecido não é erro: é trabalho para a próxima rodada. O nome do
-  // serviço vai junto porque é ele que me diz o que o código quer dizer.
-  return { tipo: null, especie: null, beneficio: null, fonte: null,
-           desconhecido: { especieBeneficio: t.especieBeneficio || null,
-                           siglaServico: t.siglaServico || null,
-                           nomeServico: t.nomeServico || null } };
+  const s = SERVICOS[limpo(t.siglaServico)];
+  // a sigla diz o TIPO e os marcadores; o código do INSS, quando vem, tem a
+  // última palavra sobre a espécie
+  const porCodigo = ESPECIE_POR_CODIGO[limpo(t.especieBeneficio)] || null;
+  if (!s) {
+    if (porCodigo)
+      return { tipo: 'beneficio', especie: porCodigo, beneficio: null,
+               marcadores: [], urgente: false, fonte: 'especieBeneficio' };
+    // desconhecido não é erro: é trabalho para a próxima rodada. O nome do
+    // serviço vai junto porque é ele que me diz o que a sigla quer dizer.
+    return { tipo: null, especie: null, beneficio: null, marcadores: [], urgente: false,
+             fonte: null,
+             desconhecido: { especieBeneficio: t.especieBeneficio || null,
+                             siglaServico: t.siglaServico || null,
+                             nomeServico: t.nomeServico || null } };
+  }
+  return {
+    tipo: s.tipo,
+    especie: porCodigo || s.especie || null,
+    beneficio: s.nome,
+    marcadores: s.marcadores || [],
+    urgente: !!s.urgente,
+    a_confirmar: s.aConfirmar || null,
+    fonte: porCodigo ? 'especieBeneficio' : 'siglaServico',
+  };
 }
 
 // A situação do requerimento, do jeito que o CRM entende. O PAT devolve o
 // status em duas caixas diferentes — "Pendente" na lista, "PENDENTE" no
 // detalhe —, então normalizar aqui evita duas verdades para a mesma coisa.
+// A LISTA devolve rótulo humano e acentuado — "Concluída", "Exigência",
+// "Em análise" —, o DETALHE devolve o código em caixa alta. Sem tirar acento
+// e sem as duas formas, "Concluída" (84 dos 184!) passava direto e o CRM
+// ficava com duas palavras para o mesmo estado.
 const SITUACOES = {
   PENDENTE: 'Em análise',
+  EM_ANALISE: 'Em análise',
   CONCLUIDA: 'Concluído',
+  CONCLUIDO: 'Concluído',
   CANCELADA: 'Cancelado',
+  CANCELADO: 'Cancelado',
+  EXIGENCIA: 'Em exigência',
   CUMPRIMENTO_DE_EXIGENCIA: 'Em exigência',
 };
-const situacaoDe = s => SITUACOES[limpo(s).replace(/\s+/g, '_')] || String(s || '').trim() || null;
+const semAcento = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+const situacaoDe = s => SITUACOES[semAcento(limpo(s)).replace(/\s+/g, '_')]
+  || String(s || '').trim() || null;
 
 // "13/08/2026" -> "2026-08-13". Os agendamentos vêm em data brasileira, e o
 // CRM guarda tudo em ISO — misturar os dois formatos já custou caro noutro
@@ -150,6 +206,9 @@ function resumoDoDetalhe(d) {
     tipo: esp.tipo,
     especie: esp.especie,
     beneficio: esp.beneficio,
+    marcadores: esp.marcadores,
+    urgente: esp.urgente,
+    especie_a_confirmar: esp.a_confirmar || null,
     servico: det.nomeServico || null,
     sigla: det.siglaServico || null,
     especie_codigo: det.especieBeneficio || null,
@@ -167,5 +226,5 @@ function resumoDoDetalhe(d) {
   };
 }
 
-module.exports = { ESPECIE_POR_CODIGO, ESPECIE_POR_SIGLA, SERVICO_NAO_BENEFICIO, CANAIS, SITUACOES,
+module.exports = { SERVICOS, ESPECIE_POR_CODIGO, CANAIS, SITUACOES, semAcento,
   especieDe, situacaoDe, dataIso, eventosDe, resumoDaLista, resumoDoDetalhe };

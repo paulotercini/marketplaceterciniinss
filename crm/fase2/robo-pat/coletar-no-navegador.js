@@ -32,23 +32,59 @@
                 lista: [], detalhes: [], desconhecidos: [], falhas: [] };
 
   // ── tradução: cópia de traduzir.js, que tem teste próprio ────────────────
+  const SERVICOS = {
+    // ── pedido de benefício ────────────────────────────────────────────────
+    TAIU:    { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade' },
+    TAR:     { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade rural',
+               marcadores: ['idade_rural'] },
+    TAPDI:   { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade da pessoa com deficiência',
+               marcadores: ['pcd'] },
+    TATCMI:  { tipo: 'beneficio', especie: 'B42', nome: 'Aposentadoria por tempo de contribuição' },
+    TAPDTC:  { tipo: 'beneficio', especie: 'B42', nome: 'Aposentadoria por tempo de contribuição da pessoa com deficiência',
+               marcadores: ['pcd'] },
+    TBSBAPD: { tipo: 'beneficio', especie: 'B87', nome: 'BPC/LOAS — deficiência' },
+    TBAI:    { tipo: 'beneficio', especie: 'B88', nome: 'BPC/LOAS — idoso' },
+    TPU:     { tipo: 'beneficio', especie: 'B21', nome: 'Pensão por morte' },
+    // O auxílio-acidente tem duas espécies e o nome do serviço NÃO diz qual:
+    // B36 é o previdenciário, B94 o acidentário. Escolher por conta própria
+    // seria chutar num campo que muda a competência do processo — então a
+    // espécie fica em aberto e o CRM pergunta.
+    TAA:     { tipo: 'beneficio', especie: null, nome: 'Auxílio-acidente',
+               aConfirmar: 'B36 (previdenciário) ou B94 (acidentário)' },
+
+    // ── recurso: lista Conselho de Recursos, não INSS ───────────────────────
+    // É o mesmo processo que o robô do CRPS já acompanha. Somados, são 83 dos
+    // 184 — quase metade da carteira.
+    TREC:    { tipo: 'recurso', nome: 'Recurso ordinário (inicial)' },
+    RECESP:  { tipo: 'recurso', nome: 'Recurso especial ou incidente' },
+
+    // ── revisão de benefício já concedido ──────────────────────────────────
+    TREVISAO:  { tipo: 'revisao', nome: 'Revisão — entidade conveniada' },
+    TAREFAREV: { tipo: 'revisao', nome: 'Revisão' },
+    REVOFICIO: { tipo: 'revisao', nome: 'Revisão de ofício' },
+
+    // ── dinheiro ───────────────────────────────────────────────────────────
+    SEMNPG:  { tipo: 'pagamento', nome: 'Emissão de pagamento não recebido' },
+    TSCC:    { tipo: 'pagamento', nome: 'Calcular complementação' },
+
+    // ── serviço administrativo: não abre caso, acontece DENTRO de um ───────
+    ATUVCPG: { tipo: 'servico', nome: 'Atualizar vínculos e remunerações (CNIS)' },
+    TVALFBR: { tipo: 'servico', nome: 'Validar contribuição de facultativo baixa renda' },
+    ATUACAD: { tipo: 'servico', nome: 'Atualizar cadastro e/ou benefício' },
+
+    // ── APURAÇÃO DE IRREGULARIDADE ─────────────────────────────────────────
+    // O INSS revendo um benefício que já paga. Pode terminar em suspensão,
+    // cancelamento e cobrança do que foi recebido. São dois requerimentos na
+    // carteira e são os dois mais urgentes dela — por isso `urgente`.
+    MOBDGT:  { tipo: 'apuracao', nome: 'Apuração de irregularidade (MOB Digital)', urgente: true },
+    CPCARCJ: { tipo: 'apuracao', nome: 'Encaminhamentos do processo de apuração (MOB)', urgente: true },
+  };
+
   const ESPECIE_POR_CODIGO = {
-    AMP_SOCIAL_PORT_DEFICIENCIA: ['B87', 'BPC/LOAS — deficiência'],
-    AMP_SOCIAL_IDOSO:            ['B88', 'BPC/LOAS — idoso'],
-    APOSENTADORIA_POR_IDADE:     ['B41', 'Aposentadoria por idade'],
-    APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO: ['B42', 'Aposentadoria por tempo de contribuição'],
-  };
-
-  const ESPECIE_POR_SIGLA = {
-    TBSBAPD: ['B87', 'BPC/LOAS — deficiência'],
-    TBAI:    ['B88', 'BPC/LOAS — idoso'],
-    TAIU:    ['B41', 'Aposentadoria por idade'],
-    TATCMI:  ['B42', 'Aposentadoria por tempo de contribuição'],
-  };
-
-  const SERVICO_NAO_BENEFICIO = {
-    RECESP:  ['recurso', 'Recurso especial ou incidente (CRPS)'],
-    ATUVCPG: ['servico', 'Atualizar vínculos e remunerações (CNIS)'],
+    AMP_SOCIAL_PORT_DEFICIENCIA: 'B87',
+    AMP_SOCIAL_IDOSO:            'B88',
+    APOSENTADORIA_POR_IDADE:     'B41',
+    APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO: 'B42',
   };
 
   const CANAIS = {
@@ -59,32 +95,49 @@
 
   const SITUACOES = {
     PENDENTE: 'Em análise',
+    EM_ANALISE: 'Em análise',
     CONCLUIDA: 'Concluído',
+    CONCLUIDO: 'Concluído',
     CANCELADA: 'Cancelado',
+    CANCELADO: 'Cancelado',
+    EXIGENCIA: 'Em exigência',
     CUMPRIMENTO_DE_EXIGENCIA: 'Em exigência',
   };
 
   const limpo = s => String(s || '').trim().toUpperCase();
 
-  const situacaoDe = s => SITUACOES[limpo(s).replace(/\s+/g, '_')] || String(s || '').trim() || null;
+  const semAcento = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  const situacaoDe = s => SITUACOES[semAcento(limpo(s)).replace(/\s+/g, '_')]
+    || String(s || '').trim() || null;
 
   function especieDe(tarefa) {
     const t = tarefa || {};
-    const naoBeneficio = SERVICO_NAO_BENEFICIO[limpo(t.siglaServico)];
-    if (naoBeneficio)
-      return { tipo: naoBeneficio[0], especie: null, beneficio: naoBeneficio[1], fonte: 'siglaServico' };
-    const porCodigo = ESPECIE_POR_CODIGO[limpo(t.especieBeneficio)];
-    if (porCodigo)
-      return { tipo: 'beneficio', especie: porCodigo[0], beneficio: porCodigo[1], fonte: 'especieBeneficio' };
-    const porSigla = ESPECIE_POR_SIGLA[limpo(t.siglaServico)];
-    if (porSigla)
-      return { tipo: 'beneficio', especie: porSigla[0], beneficio: porSigla[1], fonte: 'siglaServico' };
-    // desconhecido não é erro: é trabalho para a próxima rodada. O nome do
-    // serviço vai junto porque é ele que me diz o que o código quer dizer.
-    return { tipo: null, especie: null, beneficio: null, fonte: null,
-             desconhecido: { especieBeneficio: t.especieBeneficio || null,
-                             siglaServico: t.siglaServico || null,
-                             nomeServico: t.nomeServico || null } };
+    const s = SERVICOS[limpo(t.siglaServico)];
+    // a sigla diz o TIPO e os marcadores; o código do INSS, quando vem, tem a
+    // última palavra sobre a espécie
+    const porCodigo = ESPECIE_POR_CODIGO[limpo(t.especieBeneficio)] || null;
+    if (!s) {
+      if (porCodigo)
+        return { tipo: 'beneficio', especie: porCodigo, beneficio: null,
+                 marcadores: [], urgente: false, fonte: 'especieBeneficio' };
+      // desconhecido não é erro: é trabalho para a próxima rodada. O nome do
+      // serviço vai junto porque é ele que me diz o que a sigla quer dizer.
+      return { tipo: null, especie: null, beneficio: null, marcadores: [], urgente: false,
+               fonte: null,
+               desconhecido: { especieBeneficio: t.especieBeneficio || null,
+                               siglaServico: t.siglaServico || null,
+                               nomeServico: t.nomeServico || null } };
+    }
+    return {
+      tipo: s.tipo,
+      especie: porCodigo || s.especie || null,
+      beneficio: s.nome,
+      marcadores: s.marcadores || [],
+      urgente: !!s.urgente,
+      a_confirmar: s.aConfirmar || null,
+      fonte: porCodigo ? 'especieBeneficio' : 'siglaServico',
+    };
   }
 
   function dataIso(br) {
@@ -131,6 +184,9 @@
       tipo: esp.tipo,
       especie: esp.especie,
       beneficio: esp.beneficio,
+      marcadores: esp.marcadores,
+      urgente: esp.urgente,
+      especie_a_confirmar: esp.a_confirmar || null,
       servico: det.nomeServico || null,
       sigla: det.siglaServico || null,
       especie_codigo: det.especieBeneficio || null,
@@ -207,7 +263,14 @@
   // ver, mas em rajada seria falta de educação com o portal — e chama atenção
   // à toa.
   async function detalhar() {
-    const fila = OUT.lista.slice();
+    // O DEFEITO DA PRIMEIRA COLETA: 184 na lista, 10 detalhes. A fila era um
+    // retrato do momento em que ela começava — as páginas que chegavam
+    // depois, ou enquanto ela rodava, nunca eram pegas. Agora a fila é o que
+    // FALTA, e ao terminar ela confere se entrou gente nova no caminho.
+    const feitos = new Set([...OUT.detalhes.map(d => d.protocolo),
+                            ...OUT.falhas.map(f => f.protocolo)]);
+    const fila = OUT.lista.filter(t => !feitos.has(t.protocolo));
+    if (!fila.length) { rodando = false; return; }
     console.log(`🔎 buscando o detalhe de ${fila.length} requerimento(s)… (~${Math.ceil(fila.length * 0.7 / 60)} min)`);
     for (let i = 0; i < fila.length; i++) {
       const p = fila[i].protocolo;
@@ -223,6 +286,9 @@
       if (i % 20 === 19) console.log(`   … ${i + 1}/${fila.length}`);
       await pausa(700);
     }
+    // chegou página nova enquanto eu buscava? então ainda há o que buscar
+    const pendentes = OUT.lista.length - OUT.detalhes.length - OUT.falhas.length;
+    if (pendentes > 0) return detalhar();
     rodando = false;
     resumir();
     if (OUT.total && OUT.lista.length < OUT.total)

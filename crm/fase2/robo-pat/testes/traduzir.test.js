@@ -39,32 +39,77 @@ test('a espécie vem do código do INSS, não de leitura de nome', () => {
   assert.equal(e.fonte, 'especieBeneficio');
 });
 
-test('os quatro códigos vistos na coleta real traduzem certo', () => {
-  const casos = [
-    ['AMP_SOCIAL_PORT_DEFICIENCIA', 'B87'], ['AMP_SOCIAL_IDOSO', 'B88'],
-    ['APOSENTADORIA_POR_IDADE', 'B41'], ['APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO', 'B42'],
-  ];
-  for (const [cod, esp] of casos) assert.equal(T.especieDe({ especieBeneficio: cod }).especie, esp);
-  for (const [sig, esp] of [['TBSBAPD', 'B87'], ['TBAI', 'B88'], ['TAIU', 'B41'], ['TATCMI', 'B42']])
-    assert.equal(T.especieDe({ siglaServico: sig }).especie, esp, sig);
+test('os códigos de espécie do INSS traduzem certo', () => {
+  for (const [cod, esp] of [['AMP_SOCIAL_PORT_DEFICIENCIA', 'B87'], ['AMP_SOCIAL_IDOSO', 'B88'],
+                            ['APOSENTADORIA_POR_IDADE', 'B41'],
+                            ['APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO', 'B42']])
+    assert.equal(T.especieDe({ especieBeneficio: cod }).especie, esp, cod);
+});
+
+// As 21 siglas da carteira real (184 requerimentos, 09/08/2026). Só NOVE são
+// pedido de benefício — o resto é recurso, revisão, serviço ou apuração.
+test('as 21 siglas da carteira estão todas classificadas', () => {
+  const TODAS = ['RECESP', 'TREC', 'TAA', 'TBSBAPD', 'TAIU', 'TAPDTC', 'TATCMI', 'SEMNPG',
+    'ATUVCPG', 'TBAI', 'TREVISAO', 'TPU', 'REVOFICIO', 'TAR', 'TVALFBR', 'TAPDI',
+    'TSCC', 'ATUACAD', 'CPCARCJ', 'TAREFAREV', 'MOBDGT'];
+  assert.equal(TODAS.length, 21);
+  for (const sig of TODAS) {
+    const e = T.especieDe({ siglaServico: sig });
+    assert.ok(e.tipo, `${sig} ficou sem tipo`);
+    assert.ok(e.beneficio, `${sig} ficou sem nome`);
+    assert.ok(!e.desconhecido, `${sig} caiu em desconhecido`);
+  }
+  const benef = TODAS.filter(s => T.especieDe({ siglaServico: s }).tipo === 'beneficio');
+  assert.equal(benef.length, 9, `mudou o número de siglas de benefício: ${benef.join(', ')}`);
+});
+
+// A sigla carrega o que o marcador diria — e é o mesmo vocabulário da linha
+// do PEDIDO na ficha. TAPDTC é B42 com deficiência; TAR é B41 rural.
+test('a sigla já traz o marcador do pedido', () => {
+  assert.deepStrictEqual(T.especieDe({ siglaServico: 'TAPDTC' }),
+    { tipo: 'beneficio', especie: 'B42',
+      beneficio: 'Aposentadoria por tempo de contribuição da pessoa com deficiência',
+      marcadores: ['pcd'], urgente: false, a_confirmar: null, fonte: 'siglaServico' });
+  assert.deepStrictEqual(T.especieDe({ siglaServico: 'TAR' }).marcadores, ['idade_rural']);
+  assert.deepStrictEqual(T.especieDe({ siglaServico: 'TAPDI' }).marcadores, ['pcd']);
+  assert.deepStrictEqual(T.especieDe({ siglaServico: 'TAIU' }).marcadores, []);
+});
+
+// O auxílio-acidente tem duas espécies e o nome do serviço não diz qual.
+// Escolher por conta própria mudaria a competência do processo.
+test('auxílio-acidente fica com a espécie EM ABERTO, não chutada', () => {
+  const e = T.especieDe({ siglaServico: 'TAA' });
+  assert.equal(e.tipo, 'beneficio');
+  assert.equal(e.especie, null);
+  assert.match(e.a_confirmar, /B36.*B94/);
+});
+
+// O INSS revendo um benefício que já paga pode suspender, cancelar e cobrar
+// o recebido. São dois na carteira e são os dois mais urgentes dela.
+test('apuração de irregularidade nasce urgente', () => {
+  for (const sig of ['MOBDGT', 'CPCARCJ']) {
+    const e = T.especieDe({ siglaServico: sig });
+    assert.equal(e.tipo, 'apuracao', sig);
+    assert.equal(e.urgente, true, sig);
+  }
+  assert.equal(T.especieDe({ siglaServico: 'TAIU' }).urgente, false);
+});
+
+test('recurso, revisão, pagamento e serviço não viram pedido de benefício', () => {
+  const tipo = s => T.especieDe({ siglaServico: s }).tipo;
+  assert.equal(tipo('TREC'), 'recurso');
+  assert.equal(tipo('RECESP'), 'recurso');
+  assert.equal(tipo('TREVISAO'), 'revisao');
+  assert.equal(tipo('REVOFICIO'), 'revisao');
+  assert.equal(tipo('SEMNPG'), 'pagamento');
+  assert.equal(tipo('ATUVCPG'), 'servico');
+  for (const s of ['TREC', 'RECESP', 'TREVISAO', 'SEMNPG', 'ATUVCPG'])
+    assert.equal(T.especieDe({ siglaServico: s }).especie, null, `${s} não pode ter espécie`);
 });
 
 // NEM TODA TAREFA DO PAT É PEDIDO DE BENEFÍCIO — duas das seis siglas da
 // coleta real não são requerimento nenhum. Tratá-las como benefício criaria
 // caso duplicado, com espécie em branco, na lista errada.
-test('RECESP é recurso e ATUVCPG é serviço — nenhum dos dois vira benefício', () => {
-  const rec = T.especieDe({ siglaServico: 'RECESP',
-    nomeServico: 'Recurso Especial ou Incidente (Alteração de Acórdão)' });
-  assert.equal(rec.tipo, 'recurso');
-  assert.equal(rec.especie, null, 'recurso não tem espécie de benefício');
-  assert.ok(!rec.desconhecido, 'recurso conhecido não pode entrar como desconhecido');
-
-  const cnis = T.especieDe({ siglaServico: 'ATUVCPG',
-    nomeServico: 'Atualizar Vínculos e Remunerações e Código de Pagamento' });
-  assert.equal(cnis.tipo, 'servico');
-  assert.equal(cnis.especie, null);
-});
-
 // Adivinhar espécie pelo nome do serviço acerta nove e escreve B87 numa
 // pensão no décimo. Espécie errada muda prazo de recurso, checklist e
 // marcador — é dano, não aproximação.
@@ -95,6 +140,17 @@ test('a situação é a mesma venha da lista ou do detalhe', () => {
   // situação que eu não conheço passa inteira: sumir com ela seria pior
   assert.equal(T.situacaoDe('EM_DILIGENCIA'), 'EM_DILIGENCIA');
   assert.equal(T.situacaoDe(''), null);
+});
+
+// A LISTA devolve rótulo humano e ACENTUADO. Sem tirar o acento, "Concluída"
+// — 84 dos 184 requerimentos — passava direto e o CRM ficava com duas
+// palavras para o mesmo estado.
+test('o rótulo acentuado da lista casa com o código do detalhe', () => {
+  assert.equal(T.situacaoDe('Concluída'), 'Concluído');
+  assert.equal(T.situacaoDe('Exigência'), 'Em exigência');
+  assert.equal(T.situacaoDe('Em análise'), 'Em análise');
+  assert.equal(T.situacaoDe('Concluída'), T.situacaoDe('CONCLUIDA'));
+  assert.equal(T.situacaoDe('Exigência'), T.situacaoDe('CUMPRIMENTO_DE_EXIGENCIA'));
 });
 
 test('agendamento vem em data brasileira e o CRM guarda em ISO', () => {
@@ -188,8 +244,7 @@ test('a cópia dentro do coletor é idêntica à testada aqui', () => {
     do { if (col[j] === '{') n++; else if (col[j] === '}') n--; j++; } while (n > 0 && j < col.length);
     assert.equal(nu(col.slice(i, j)), nu(T[fn].toString()), `${fn} divergiu de traduzir.js`);
   }
-  for (const nome of ['ESPECIE_POR_CODIGO', 'ESPECIE_POR_SIGLA', 'SERVICO_NAO_BENEFICIO',
-                      'CANAIS', 'SITUACOES']) {
+  for (const nome of ['SERVICOS', 'ESPECIE_POR_CODIGO', 'CANAIS', 'SITUACOES']) {
     const i = col.indexOf(`const ${nome}`);
     assert.notEqual(i, -1, `${nome} sumiu do coletor`);
     const bruto = col.slice(col.indexOf('{', i), col.indexOf('};', i) + 1);
