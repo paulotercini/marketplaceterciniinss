@@ -60,6 +60,29 @@ O popup avisa em vermelho enquanto esse login não existir.
 O popup mostra há quantos dias cada portal foi atualizado. Quem não abre há
 uma semana vê "faz 7 dias" antes de clicar.
 
+## Quando não acontecer nada
+
+Duas ferramentas, e as duas respondem em um clique.
+
+**Para o CRM**, no popup: **🔎 Testar a ligação com o CRM**. Ele responde as
+três perguntas de uma vez — quem está logado, quantas fichas o banco devolve e
+quantas têm número de recurso. `0 ficha(s) visíveis` significa que o login não
+está valendo; muitas fichas e `0 com número de recurso` significa que os
+números realmente não estão cadastrados.
+
+**Para o PAT**, no console da página (F12 → Console), procure as linhas com a
+etiqueta azul **[CRM]**. Elas contam a história inteira:
+
+- `coletor do PAT no ar` — o script subiu. Se esta linha não existir, o
+  problema é a instalação, não a coleta.
+- `xhr: …/tarefa/consulta ← é a lista` — o gancho viu a busca.
+- `resposta da lista: 184 tarefa(s)` — a lista chegou.
+- `guardei 184 — clique em 🌻 INSS` — chegou antes do seu clique, e está
+  guardada esperando.
+
+A ordem dos cliques não importa mais: se você buscar primeiro e clicar na
+extensão depois, ela continua de onde a busca parou.
+
 ## O que ela não faz, e não vai fazer
 
 - Não gera, guarda ou reaproveita token de reCAPTCHA.

@@ -84,7 +84,10 @@ test('junta os números das duas colunas, sem pontuação e sem repetir', async 
       { crps_nups: ['12345678901'], crps_nup: '1234' },            // CPF e protocolo: não são NUP
     ] }],
   });
-  assert.deepEqual(await api.nups(), ['12345678901234567', '123456789012345']);
+  const { nups, fichas } = await api.nups();
+  assert.deepEqual(nups, ['12345678901234567', '123456789012345']);
+  assert.equal(fichas, 5, 'sem o total de fichas lidas, "nada cadastrado" e '
+    + '"nada visível" viram a mesma frase');
 });
 
 test('o refresh_token novo substitui o usado; a senha nunca é guardada', async () => {

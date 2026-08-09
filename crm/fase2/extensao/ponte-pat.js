@@ -10,6 +10,9 @@
 // Daí esta ponte: ela vive no mundo isolado, ouve o que o coletor anuncia por
 // postMessage e faz a parte que exige a extensão.
 
+console.log('%c[CRM]', 'color:#2B5FC7;font-weight:700',
+            'ponte do PAT no ar, no mundo da extensão.');
+
 window.addEventListener('message', async ev => {
   const m = ev.data;
   if (ev.source !== window || !m || m.de !== 'crm-pat') return;

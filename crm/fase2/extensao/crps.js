@@ -26,11 +26,15 @@
   window.crmRodar = async () => {
     try {
       faixa('lendo os recursos do CRM…');
-      const nups = await CRM.nupsDoCrm();
+      const { nups, fichas } = await CRM.nupsDoCrm();
       if (!nups.length) {
-        faixaErr('nenhuma ficha aberta do CRM tem número de recurso — na ficha, ' +
-                 'em "números de recurso deste caso", use o ＋ para informar o NUP');
-        return { erro: 'sem nups' };
+        // as duas causas possíveis dizem coisas opostas, e o número de fichas
+        // lidas separa uma da outra sem precisar de console
+        faixaErr(fichas
+          ? `li ${fichas} fichas do CRM e nenhuma tem número de recurso — na ficha, `
+            + 'em "números de recurso deste caso", use o ＋ para informar o NUP'
+          : 'o CRM não devolveu ficha nenhuma — abra ⚙ e entre com e-mail e senha');
+        return { erro: 'sem nups', fichas };
       }
 
       // descobre como esta sessão se identifica, usando o primeiro processo

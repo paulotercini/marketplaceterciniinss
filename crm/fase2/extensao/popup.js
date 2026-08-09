@@ -26,6 +26,23 @@ const rodar = fonte => {
       : 'rodando… acompanhe a faixa na página';
   });
 };
+// Responde de uma vez as três perguntas que a faixa de erro deixava no ar:
+// estou logado? o banco devolve alguma ficha? alguma tem número de recurso?
+document.getElementById('b-teste').onclick = () => {
+  res.style.color = '#5B6069';
+  res.textContent = 'perguntando ao CRM…';
+  chrome.runtime.sendMessage({ tipo: 'crm', acao: 'diagnostico' }, r => {
+    if (!r || r.erro) {
+      res.style.color = '#B3261E';
+      res.textContent = (r && r.erro) || 'sem resposta';
+      return;
+    }
+    res.style.color = r.fichas && r.recursos ? '#1E6F50' : '#B4530A';
+    res.textContent = `${r.quem || 'sem login'} · ${r.fichas} ficha(s) visíveis · `
+      + `${r.recursos} com número de recurso`;
+  });
+};
+
 document.getElementById('b-pat').onclick  = () => rodar('pat');
 document.getElementById('b-crps').onclick = () => rodar('crps');
 document.getElementById('cfg').onclick = e => {
