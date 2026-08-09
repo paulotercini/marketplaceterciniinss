@@ -826,6 +826,19 @@
   /* o Meu Dia abre o menu, separado do "Mover para…" por um fio */
   #menu-mover .mm-it.destaque{font-weight:650;border-bottom:1px solid var(--borda);
     border-radius:6px 6px 0 0;margin-bottom:4px;padding-bottom:9px}
+  /* encaminhar: a triagem dentro da própria caixa de entrada */
+  .enc{background:var(--placa);border:1px solid var(--borda);border-top:none;
+    border-radius:0 0 10px 10px;padding:10px 12px;margin:-6px 0 6px}
+  .enc-linha{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:7px}
+  .enc .fx-av{margin-left:2px}
+  .enc-quem.on{background:var(--cor-eq);border-color:var(--cor-eq);color:#fff}
+  .enc-dia.on{background:#E7EEFB;border-color:var(--azul);color:var(--azul-escuro);font-weight:650}
+  .enc-data{padding:5px 8px;font:inherit;font-size:12.5px;border:1px solid var(--borda);
+    border-radius:999px;background:var(--branco)}
+  .enc-txt{width:100%;font:inherit;font-size:13.5px;padding:8px 10px;border-radius:8px;
+    border:1px solid var(--borda);resize:vertical;background:var(--branco)}
+  .enc-sug{display:flex;gap:5px;flex-wrap:wrap;margin:7px 0}
+  .enc-sug .btn-rap{font-size:12px;padding:4px 10px}
   /* 📣 Novidades: a caixa de entrada do que os portais trouxeram */
   .nov{display:flex;align-items:flex-start;gap:10px;background:var(--branco);
     border:1px solid var(--borda);border-radius:10px;padding:10px 12px;margin-bottom:5px}
@@ -1140,7 +1153,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.36 · conferir antes, nos dois</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.37 · encaminhar da caixa de entrada</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3023,7 +3036,8 @@ function render(){
   if(visao==="minhas"){ titulo="👤 Atribuídas a mim"; casosSel=ativos().filter(k=>
     (D.atrDoCaso.get(k.id)||[]).includes(eu.id)
     || (D.tarefasPorCaso.get(k.id)||[]).some(t=>t.colaborador_id===eu.id)); }
-  else if(visao==="importante"){ titulo="⭐ Importante"; casosSel=ativos().filter(k=>k.importante); }
+  else if(visao==="importante"){ titulo="⭐ Importante"; casosSel=ativos().filter(k=>k.importante);
+    subt="O que você marcou — e, no topo, o que os portais trouxeram e ninguém leu ainda."; }
   else if(visao==="recebimentos"){ titulo="💰 Recebimentos"; casosSel=D.casos.filter(k=>k.fase==="pagamento");
     subt="Casos em fase de pagamento — o financeiro vive dentro do caso, na aba Pagamentos da ficha."; }
   else if(visao.startsWith("fase:")){ const f=visao.slice(5);
@@ -3057,9 +3071,20 @@ function render(){
     const ce = document.getElementById("chip-exig");
     if(ce) ce.onclick = () => { soExigencia = !soExigencia; render(); };
   } else {
-    meio.innerHTML = chipsCol
+    // ⭐ IMPORTANTE ABRE COM AS NOVIDADES. É a lista onde ele passa o dia; pôr
+    // ali o que os portais trouxeram encurta o caminho entre a mudança
+    // acontecer e alguém saber dela. Só as primeiras, com o resto a um clique
+    // — a lista continua sendo a do que ELE marcou, não uma segunda caixa.
+    meio.innerHTML = chipsCol + (visao==="importante" ? blocoNovidadesTopo() : "")
       + (grupoClientes(casosSel).map(([c,ks])=>cartaoCliente(c,ks)).join("")
       || "<p class='meio-sub'>Nenhum cliente aqui.</p>");
+    if(visao==="importante"){
+      const v = document.getElementById("ver-novidades");
+      if(v) v.onclick = () => { visao="novidades"; render(); };
+      ligarEncaminhar();
+      document.querySelectorAll("[data-ler]").forEach(b=>b.onclick=e=>{
+        e.stopPropagation(); marcarLidas([b.dataset.ler]); });
+    }
   }
   document.querySelectorAll("[data-fcol]").forEach(b=>b.onclick=()=>{ filtroColab=b.dataset.fcol||null; render(); });
   ligarCartoes();
@@ -3216,6 +3241,112 @@ async function aplicarCrps(coletaId){
   if(falhas.length) console.warn("falhas do CRPS:", falhas);
 }
 
+// ENCAMINHAR — a triagem que a caixa de entrada pede. Ler a novidade é
+// metade; a outra metade é dizer a alguém o que fazer com ela, e isso
+// costumava significar abrir a ficha, achar o comentário e escrever de novo.
+//
+// A orientação entra como RESPOSTA do andamento que a motivou (`responde_a`):
+// na linha do tempo do cliente, o pedido do INSS e a instrução à equipe
+// ficam grudados, e ninguém precisa adivinhar de qual movimento era aquele
+// "Amanda, providenciar".
+let encaminhando = null;      // id da novidade com a caixa aberta
+
+function caixaEncaminhar(a){
+  const k = D.casoPorId.get(a.caso_id) || {};
+  const sugestoes = sugestoesDoTexto(a.texto);
+  return `<div class="enc" data-enc="${a.id}">
+    <div class="enc-linha">
+      <span class="rotulo-rap">PARA</span>
+      ${D.colaboradores.filter(c=>c.ativo).map(c=>
+        `<button class="fx-av enc-quem" data-quem="${c.id}" style="--cor-eq:${c.cor}"
+          title="${esc(c.nome)}">${esc(c.inicial)}</button>`).join("")}
+      <span class="tf-sep"></span>
+      <span class="rotulo-rap">ATÉ</span>
+      <button class="btn-rap enc-dia" data-dia="hoje">Hoje</button>
+      <button class="btn-rap enc-dia on" data-dia="amanha">Amanhã</button>
+      <input type="date" class="enc-data" value="${maisDias(1)}">
+    </div>
+    <textarea class="enc-txt" rows="2" placeholder="o que a pessoa precisa fazer…"></textarea>
+    ${sugestoes.length?`<div class="enc-sug">${sugestoes.map(s=>
+      `<button class="btn-rap" data-sug="${esc(s)}">${esc(s)}</button>`).join("")}</div>`:""}
+    <div class="enc-linha">
+      <button class="esc-reg" data-enviar="${a.id}">Encaminhar</button>
+      <button class="btn-mini" data-cancelar="1">cancelar</button>
+      <span class="meio-sub" style="margin-left:auto">entra na ficha embaixo deste andamento</span>
+    </div>
+  </div>`;
+}
+
+// as frases que quase sempre servem, pelo que o andamento diz. Não adivinham
+// a decisão: só poupam a digitação do caso óbvio.
+function sugestoesDoTexto(t){
+  const s = (t||"").toLowerCase();
+  if(/exig|apresentar|juntar|ppp|documento/.test(s))
+    return ["Entrar em contato e pedir o documento", "Conferir se já temos nos anexos",
+            "Cumprir a exigência no Meu INSS"];
+  if(/negad|improv|indefer/.test(s))
+    return ["Avisar o cliente e explicar o próximo passo", "Preparar recurso",
+            "Avaliar ação judicial"];
+  if(/conced|deferid|provimento|acolhid/.test(s))
+    return ["Avisar o cliente", "Conferir a implantação e o valor", "Iniciar cobrança dos honorários"];
+  if(/per[ií]cia|avalia/.test(s))
+    return ["Avisar o cliente da data e do local", "Orientar sobre o que levar"];
+  return ["Entrar em contato com o cliente", "Conferir no portal e voltar a comentar"];
+}
+
+function ligarEncaminhar(){
+  document.querySelectorAll("[data-encaminhar]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    encaminhando = encaminhando===b.dataset.encaminhar ? null : b.dataset.encaminhar;
+    render();
+  });
+  const cx = document.querySelector(".enc"); if(!cx) return;
+  cx.querySelectorAll(".enc-quem").forEach(b=>b.onclick=()=>{
+    cx.querySelectorAll(".enc-quem").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+  });
+  cx.querySelectorAll(".enc-dia").forEach(b=>b.onclick=()=>{
+    cx.querySelectorAll(".enc-dia").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    cx.querySelector(".enc-data").value = b.dataset.dia==="hoje" ? hoje() : maisDias(1);
+  });
+  cx.querySelectorAll("[data-sug]").forEach(b=>b.onclick=()=>{
+    const t = cx.querySelector(".enc-txt");
+    t.value = t.value ? `${t.value} ${b.dataset.sug}` : b.dataset.sug;
+    t.focus();
+  });
+  cx.querySelector("[data-cancelar]").onclick = () => { encaminhando=null; render(); };
+  cx.querySelector("[data-enviar]").onclick = () => enviarEncaminhamento(cx.dataset.enc);
+}
+
+async function enviarEncaminhamento(andId){
+  const cx = document.querySelector(`.enc[data-enc="${andId}"]`); if(!cx) return;
+  const quem = (cx.querySelector(".enc-quem.on")||{}).dataset;
+  const texto = cx.querySelector(".enc-txt").value.trim();
+  const dia = cx.querySelector(".enc-data").value;
+  // as duas exigências do composer valem aqui também: sem dono e sem data, a
+  // orientação vira recado no vazio — foi assim que o To Do encheu de tarefa
+  // que ninguém era responsável por fazer
+  if(!quem) return aviso("Escolha para quem vai");
+  if(!texto) return aviso("Escreva o que precisa ser feito");
+  if(!dia) return aviso("Escolha até quando");
+  const a = (D.novid||[]).find(x=>x.id===andId); if(!a) return;
+  try{
+    const [novo] = await api(`/rest/v1/andamentos`,{method:"POST",
+      headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:a.caso_id, colaborador_id:eu.id, texto,
+        responde_a:andId, origem:"app", publico:false})}) || [];
+    if(novo) await api(`/rest/v1/andamento_tarefas`,{method:"POST",
+      headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({andamento_id:novo.id, caso_id:a.caso_id,
+        colaborador_id:quem.quem, atribuido_por:eu.id, lembrar_em:dia})});
+    // encaminhou é porque leu: sai da caixa sem precisar do segundo clique
+    encaminhando = null;
+    await marcarLidas([andId]);
+    aviso(`✔ Encaminhado para ${esc((D.colPorId.get(quem.quem)||{}).nome||"")}`);
+  }catch(e){ aviso("Não consegui encaminhar: "+e.message); }
+}
+
 // ── 📣 Novidades ──────────────────────────────────────────────────────────
 // TUDO O QUE OS PORTAIS TROUXERAM, num lugar só, do mais novo para o mais
 // velho. É a resposta para "quero ter conhecimento de todos os andamentos
@@ -3235,6 +3366,35 @@ const ROTULO_ORIGEM = {pat:"🌻 INSS", crps:"🖥 Recursos", dou:"📰 DOU"};
 function novidades(){
   const euLi = a => (a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
   return (D.novid||[]).filter(a=>!euLi(a));
+}
+
+// as primeiras novidades, para caber no topo de outra lista sem tomar conta
+function blocoNovidadesTopo(){
+  const ns = novidades();
+  if(!ns.length) return "";
+  const mostra = ns.slice(0,5);
+  return `<h3 class="secao">📣 Novidades dos portais (${ns.length})</h3>`
+    + mostra.map(a=>linhaNovidade(a)).join("")
+    + (ns.length>mostra.length
+        ? `<p class="meio-sub"><a href="#" id="ver-novidades">ver as ${ns.length} novidades ↗</a></p>`
+        : "");
+}
+
+// uma linha da caixa de entrada, usada na lista 📣 e no topo do ⭐
+function linhaNovidade(a){
+  const k = D.casoPorId.get(a.caso_id) || {};
+  const c = D.cliPorId.get(k.cliente_id) || {};
+  return `<div class="nov" data-and="${a.id}">
+    <span class="nov-fonte">${ROTULO_ORIGEM[a.origem]||a.origem}</span>
+    <div class="nov-corpo">
+      <div class="nov-cli" data-cli="${c.id||""}">${esc(c.nome||"cliente sem ficha")}
+        ${k.beneficio?`<span class="u-papel" style="text-transform:none">· ${esc(k.beneficio)}</span>`:""}</div>
+      <div class="nov-txt">${esc(a.texto)}</div>
+    </div>
+    ${k.processo_link?`<a class="btn-mini" href="${k.processo_link}" target="_blank" rel="noopener">abrir ↗</a>`:""}
+    <button class="btn-mini" data-encaminhar="${a.id}">→ encaminhar</button>
+    <button class="btn-mini" data-ler="${a.id}">✔ li</button>
+  </div>${encaminhando===a.id?caixaEncaminhar(a):""}`;
 }
 
 function renderNovidades(){
@@ -3258,25 +3418,13 @@ function renderNovidades(){
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros"><button class="fchip" id="ler-tudo">✔ marcar todas como lidas (${ns.length})</button></div>`
     + [...porDia].map(([d,as])=>`<h3 class="secao">${esc(dataRelativa(d))} (${as.length})</h3>`
-      + as.map(a=>{
-          const k = D.casoPorId.get(a.caso_id) || {};
-          const c = D.cliPorId.get(k.cliente_id) || {};
-          return `<div class="nov" data-and="${a.id}">
-            <span class="nov-fonte">${ROTULO_ORIGEM[a.origem]||a.origem}</span>
-            <div class="nov-corpo">
-              <div class="nov-cli" data-cli="${c.id||""}">${esc(c.nome||"cliente sem ficha")}
-                ${k.beneficio?`<span class="u-papel" style="text-transform:none">· ${esc(k.beneficio)}</span>`:""}</div>
-              <div class="nov-txt">${esc(a.texto)}</div>
-            </div>
-            ${k.processo_link?`<a class="btn-mini" href="${k.processo_link}" target="_blank" rel="noopener">abrir ↗</a>`:""}
-            <button class="btn-mini" data-ler="${a.id}">✔ li</button>
-          </div>`;
-        }).join("")).join("");
+      + as.map(linhaNovidade).join("")).join("");
   document.querySelectorAll("[data-ler]").forEach(b=>b.onclick=e=>{
     e.stopPropagation(); marcarLidas([b.dataset.ler]); });
   document.getElementById("ler-tudo").onclick=()=>marcarLidas(ns.map(a=>a.id));
   document.querySelectorAll(".nov-cli[data-cli]").forEach(el=>el.onclick=()=>{
     if(el.dataset.cli) abrirFicha(el.dataset.cli); });
+  ligarEncaminhar();
 }
 
 async function marcarLidas(ids){
