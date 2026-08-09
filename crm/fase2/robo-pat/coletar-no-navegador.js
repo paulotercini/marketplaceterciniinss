@@ -85,6 +85,10 @@
     AMP_SOCIAL_IDOSO:            'B88',
     APOSENTADORIA_POR_IDADE:     'B41',
     APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO: 'B42',
+    // apareceu na coleta completa e resolve o TAA quando o código vem: o
+    // sufixo _PREVIDENCIARIO é a resposta que o nome do serviço não dava. O
+    // acidentário (B94) ainda não apareceu — quando aparecer, entra aqui.
+    AUXILIO_ACIDENTE_PREVIDENCIARIO: 'B36',
   };
 
   const CANAIS = {
@@ -259,32 +263,56 @@
   }
 
   // ── o detalhe de cada um, devagar ───────────────────────────────────────
-  // 700ms entre chamadas: é a sua sessão pedindo o que você tem direito de
-  // ver, mas em rajada seria falta de educação com o portal — e chama atenção
-  // à toa.
-  async function detalhar() {
+  // 700ms NÃO ERA DEVAGAR O BASTANTE. Na coleta de 184, os 19 primeiros
+  // passaram e do 20º em diante veio HTTP 406 em todos — o portal tem limite
+  // de velocidade, e o coletor bateu 163 vezes numa porta já fechada. Isso é
+  // falta de educação com o serviço e chama atenção à toa.
+  //
+  // Duas correções: 3 segundos entre chamadas, e PARAR no primeiro sinal de
+  // barreira em vez de insistir. Quem para na primeira recusa pode voltar
+  // depois; quem insiste 163 vezes vira caso no log de alguém.
+  let TUDO = false;
+  async function detalhar(tudo) {
+    TUDO = !!tudo;
     // O DEFEITO DA PRIMEIRA COLETA: 184 na lista, 10 detalhes. A fila era um
     // retrato do momento em que ela começava — as páginas que chegavam
     // depois, ou enquanto ela rodava, nunca eram pegas. Agora a fila é o que
     // FALTA, e ao terminar ela confere se entrou gente nova no caminho.
     const feitos = new Set([...OUT.detalhes.map(d => d.protocolo),
                             ...OUT.falhas.map(f => f.protocolo)]);
-    const fila = OUT.lista.filter(t => !feitos.has(t.protocolo));
-    if (!fila.length) { rodando = false; return; }
-    console.log(`🔎 buscando o detalhe de ${fila.length} requerimento(s)… (~${Math.ceil(fila.length * 0.7 / 60)} min)`);
+    // CONCLUÍDO NÃO PRECISA DE DETALHE. São 84 dos 184, e o detalhe deles não
+    // muda nada do trabalho de hoje — buscar todos era gastar o limite do
+    // portal com o que já acabou. Em exigência vem primeiro, depois em
+    // análise; o resto só se você pedir  patColeta.detalhar(true).
+    const vale = t => TUDO || !/conclu|cancel/i.test(t.situacao || '');
+    const peso = t => /exig/i.test(t.situacao || '') ? 0 : 1;
+    const fila = OUT.lista.filter(t => !feitos.has(t.protocolo) && vale(t))
+                          .sort((a, b) => peso(a) - peso(b));
+    if (!fila.length) { rodando = false; resumir(); return baixar(); }
+    let seguidas = 0;
+    console.log(`🔎 buscando o detalhe de ${fila.length} requerimento(s)… (~${Math.ceil(fila.length * 3 / 60)} min)`);
+    if (!TUDO) console.log('   (concluídos ficam de fora; para incluir, use  patColeta.detalhar(true) )');
     for (let i = 0; i < fila.length; i++) {
       const p = fila[i].protocolo;
       try {
         const r = await fetchOriginal(
           `/apis/requerimentosPortalApi/requerimento/ec/tarefa/${p}`,
           { credentials: 'include', headers: cracha || {} });
-        if (!r.ok) { OUT.falhas.push({ protocolo: p, status: r.status }); continue; }
+        if (!r.ok) {
+          OUT.falhas.push({ protocolo: p, status: r.status });
+          if (++seguidas >= 3) return barreira(r.status, fila.length - i - 1);
+          continue;
+        }
+        seguidas = 0;
         const d = resumoDoDetalhe(await r.json());
         if (d.desconhecido) { OUT.desconhecidos.push(d.desconhecido); delete d.desconhecido; }
         OUT.detalhes.push(d);
-      } catch (e) { OUT.falhas.push({ protocolo: p, erro: String(e.message || e) }); }
+      } catch (e) {
+        OUT.falhas.push({ protocolo: p, erro: String(e.message || e) });
+        if (++seguidas >= 3) return barreira('sem resposta', fila.length - i - 1);
+      }
       if (i % 20 === 19) console.log(`   … ${i + 1}/${fila.length}`);
-      await pausa(700);
+      await pausa(3000);
     }
     // chegou página nova enquanto eu buscava? então ainda há o que buscar
     const pendentes = OUT.lista.length - OUT.detalhes.length - OUT.falhas.length;
@@ -294,6 +322,17 @@
     if (OUT.total && OUT.lista.length < OUT.total)
       console.log('%cainda falta gente: puxe a janela anterior antes de baixar.', 'color:#B4530A;font-weight:700');
     else baixar();
+  }
+
+  // Bater na mesma porta fechada 163 vezes não abre nenhuma. Para, conta o
+  // que já veio, guarda o arquivo e diz como continuar depois.
+  function barreira(status, faltam) {
+    rodando = false;
+    console.warn(`%c⛔ o portal parou de responder (${status}) — faltam ${faltam}.`,
+                 'color:#B3261E;font-weight:700');
+    console.log('Não insista agora. O que já veio está guardado.');
+    console.log('Daqui a alguns minutos, digite  patColeta.detalhar()  — ele continua de onde parou.');
+    resumir(); baixar();
   }
 
   // ── o resumo que aparece na tela ────────────────────────────────────────
