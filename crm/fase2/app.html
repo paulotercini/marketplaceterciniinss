@@ -270,7 +270,11 @@
   .filtros{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
   .fchip{border:1px solid var(--borda);background:var(--branco);border-radius:14px;padding:4px 12px;cursor:pointer;font-size:13px;display:flex;gap:6px;align-items:center}
   .fchip.on{background:var(--azul);border-color:var(--azul);color:#fff}
-  h3.secao{font-size:13px;color:var(--cinza);margin:12px 0 6px}
+  /* em lista longa, quem rola perde a divisão ("isto ainda é 'em exigência'?").
+     O cabeçalho gruda no topo e responde sem exigir voltar. */
+  h3.secao{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    color:#7A808B;margin:16px 0 7px;position:sticky;top:0;z-index:2;
+    background:inherit;padding:5px 0 5px 2px}
   /* ── a pauta ──────────────────────────────────────────────────────────
      Uma lista, não uma pilha de caixas: fundo branco contínuo, linhas
      separadas por fio, e uma CALHA de data fixa à esquerda que dá o eixo
@@ -279,8 +283,12 @@
   /* as linhas são irmãs soltas no HTML; estas regras costuram cada SEQUÊNCIA
      delas num bloco só — fio fino entre as linhas, moldura e cantos apenas
      nas pontas. Sem isso voltaria a ser uma pilha de caixinhas. */
-  .cartao{position:relative;background:var(--branco);padding:8px 14px;cursor:pointer;
-    display:flex;align-items:center;gap:10px;
+  /* ALTURA FIXA. Antes a linha crescia quando havia data e encolhia quando
+     não havia: quem passa o dia varrendo a lista perdia o compasso, porque a
+     distância entre um nome e o seguinte mudava a cada linha. Agora o passo é
+     sempre o mesmo, com ou sem segunda linha. */
+  .cartao{position:relative;background:var(--branco);padding:0 12px 0 16px;cursor:pointer;
+    min-height:54px;display:flex;align-items:center;gap:10px;
     border-left:1px solid var(--borda);border-right:1px solid var(--borda)}
   .cartao + .cartao{border-top:1px solid #EDEFF3}
   :not(.cartao) + .cartao, .cartao:first-child{
@@ -299,11 +307,10 @@
   /* o nome NUNCA pode ser espremido a zero: numa coluna estreita, com o chip
      de exigência ao lado, a linha chegou a mostrar só o chip e nenhum nome */
   .cartao .info{flex:1 1 auto;min-width:130px}
-  .cartao .nome{font-weight:650;font-size:14.5px;letter-spacing:-.005em;line-height:1.3;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .cartao .fogo-sel{margin-left:6px;font-size:11px}
+  .cartao .nome{font-weight:600;font-size:15px;letter-spacing:-.006em;line-height:1.3;
+    color:#1D1F24;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   /* a segunda linha: miúda, cinza, só datas — do jeito do To Do */
-  .cartao .meta{display:flex;gap:6px;margin-top:2px;font-size:12px;color:#767C86;
+  .cartao .meta{display:flex;gap:6px;margin-top:3px;font-size:12.5px;color:#6E747E;
     align-items:center;white-space:nowrap;overflow:hidden}
   .cartao .meta .pt{color:#C7CBD2;flex:none}
   .cartao .dt{flex:none;font-variant-numeric:tabular-nums}
@@ -313,12 +320,11 @@
   .cartao .meta .exig-chip{flex:none}
   .cartao .quem-prazo{flex:none;margin-left:-2px}
   /* as ações só aparecem no hover ou pelo teclado; ligadas, ficam sempre */
-  .cartao .acoes{display:flex;gap:2px;flex:none}
-  .cartao .acao-card{opacity:0}
-  .cartao:hover .acao-card, .cartao .acao-card.on,
-  .cartao .acao-card:focus-visible{opacity:1}
+  /* a ⭐ fica SEMPRE visível, como no To Do: é ação de um clique e some da
+     cabeça se some da tela. ☀️ e 🔥 aparecem no hover — são de uso mais raro. */
+  .cartao .acoes{display:flex;gap:1px;flex:none;margin-left:2px}
   .cartao .acao-card.sol,.cartao .acao-card.fogo{filter:grayscale(1);opacity:0}
-  .cartao:hover .acao-card.sol,.cartao:hover .acao-card.fogo{opacity:.4}
+  .cartao:hover .acao-card.sol,.cartao:hover .acao-card.fogo{opacity:.45}
   .cartao .acao-card.sol.on,.cartao .acao-card.fogo.on{filter:none;opacity:1}
   /* quem navega por teclado precisa ver onde está, mesmo nos botões que só
      aparecem no hover */
@@ -340,7 +346,12 @@
   /* a coluna da direita tem largura fixa: sem isso os avatares dançam de uma
      linha para a outra conforme o tamanho dos marcadores */
   .cartao .avatares{min-width:52px;justify-content:flex-end;margin-left:auto}
-  .acao-card{border:none;background:none;font-size:15px;cursor:pointer;color:#c8c6c4;flex:none}
+  /* ⭐ e 🔥 são clique de todo dia: alvo de 30px e glifo grande o bastante
+     para acertar sem mirar */
+  .acao-card{border:none;background:none;font-size:19px;line-height:1;cursor:pointer;
+    color:#c8c6c4;flex:none;width:30px;height:30px;border-radius:8px;
+    display:inline-flex;align-items:center;justify-content:center}
+  .acao-card:hover{background:#EFF2F7}
   .acao-card.on{color:#eaa300}
   /* emojis não obedecem a cor do CSS — apagado = cinza via grayscale */
   .acao-card.sol,.acao-card.fogo{filter:grayscale(1);opacity:.35}
@@ -1059,7 +1070,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.23 · data embaixo do nome</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.24 · o compasso da lista</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1808,10 +1819,15 @@ function cartaoCliente(cli, casosMostrar){
       esc(evFut.tipo.split(" ")[0])} ${fmtTS(evFut.data_hora).slice(0,5)} ${horaSP(evFut.data_hora)}</span>`:"",
     exig, dcb,
   ].filter(Boolean);
+  // O círculo de "concluir" saiu. No To Do ele conclui a tarefa; aqui não
+  // concluía nada — clicar nele só abria a ficha, como em qualquer ponto da
+  // linha. Era um convite falso, e ocupava a primeira coisa que o olho
+  // encontra. Sem ele, todos os nomes começam na mesma coluna.
   return `<div class="cartao" data-cli="${cli.id}">
-    <span class="check"></span>
     <div class="info">
-      <div class="nome">${esc(cli.nome)}${ks.some(k=>k.urgente)?`<span class="fogo-sel" title="urgente">🔥</span>`:""}</div>
+      ${/* o 🔥 aparecia duas vezes na mesma linha: ao lado do nome e no botão
+             de ação, que já fica aceso quando o caso é urgente */""}
+      <div class="nome">${esc(cli.nome)}</div>
       ${meta.length?`<div class="meta">${meta.join('<span class="pt">·</span>')}</div>`:""}
     </div>
     ${quemProx.map(c=>`<span class="avatar mini quem-prazo" style="background:${c.cor}"
