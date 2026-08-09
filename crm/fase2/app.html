@@ -205,6 +205,7 @@
   .sug-it{font-size:12px;font-weight:500;color:var(--cinza);cursor:pointer;background:none;
     border:1px solid var(--borda);border-radius:999px;padding:4px 11px}
   .sug-it:hover{color:var(--azul);border-color:var(--azul)}
+  .sug-it.on{background:#E7EEFB;border-color:var(--azul);color:var(--azul-escuro);font-weight:650}
   .sug-mais{font-size:12px;color:var(--cinza);cursor:pointer;padding:3px 6px;align-self:center}
   .sug-mais:hover{color:var(--azul)}
   #and-prazo-chip{margin-top:6px}
@@ -1155,7 +1156,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.38 · mais de um pedido no mesmo encaminhamento</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.39 · marcar várias frases na mesma anotação</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3297,14 +3298,36 @@ function sugestoesDoTexto(t){
   return ["Entrar em contato com o cliente", "Conferir no portal e voltar a comentar"];
 }
 
-// pedir duas coisas de uma vez é o caso comum — "pede o PPP" E "avisa o
-// cliente". As sugestões marcam e desmarcam, e viram itens em linhas: na
-// ficha o colaborador lê dois pedidos, não uma frase emendada na outra.
-// O que foi digitado à mão é uma linha como as outras e nunca se perde.
+// ── marcar frases numa anotação ───────────────────────────────────────────
+// Pedir duas coisas de uma vez é o caso comum — "pede o PPP" E "avisa o
+// cliente". Vale para o encaminhamento e para o compositor da ficha (que é
+// onde nascem as tarefas), então a regra é uma só, escrita uma vez:
+//
+//   · a frase já está no campo  → sai (desmarcar)
+//   · a última linha é texto solto sendo digitado → a frase o completa
+//   · nos demais casos → entra como mais um item
+//
+// Com mais de um item o texto vira lista com "•", para o colaborador ler dois
+// pedidos e não uma frase emendada na outra. O que foi escrito à mão é uma
+// linha como as outras e nunca se perde.
 function semMarcador(l){ return String(l||"").replace(/^[•\-]\s*/,"").trim(); }
-function montarPedido(linhas){
+function emItens(linhas){
   const l = linhas.filter(Boolean);
   return l.length>1 ? l.map(x=>"• "+x).join("\n") : (l[0]||"");
+}
+function alternarFrase(inp, frase, conhecidas){
+  const linhas = (inp.value||"").split("\n").map(semMarcador);
+  const cheias = linhas.filter(Boolean);
+  const i = cheias.findIndex(l=>dsa(l)===dsa(frase));
+  if(i>=0) cheias.splice(i,1);
+  else{
+    const ultima = linhas.length ? linhas[linhas.length-1] : "";
+    const digitando = ultima && !(conhecidas||[]).some(c=>dsa(c)===dsa(ultima));
+    if(digitando) cheias[cheias.length-1] = frase;   // completa a linha em curso
+    else cheias.push(frase);
+  }
+  inp.value = emItens(cheias);
+  return i<0;                                       // true = entrou
 }
 
 function ligarEncaminhar(){
@@ -3323,14 +3346,10 @@ function ligarEncaminhar(){
     b.classList.add("on");
     cx.querySelector(".enc-data").value = b.dataset.dia==="hoje" ? hoje() : maisDias(1);
   });
+  const frases = [...cx.querySelectorAll("[data-sug]")].map(x=>x.dataset.sug);
   cx.querySelectorAll("[data-sug]").forEach(b=>b.onclick=()=>{
     const t = cx.querySelector(".enc-txt");
-    const frase = b.dataset.sug;
-    const linhas = t.value.split("\n").map(semMarcador).filter(Boolean);
-    const i = linhas.indexOf(frase);
-    if(i>=0) linhas.splice(i,1); else linhas.push(frase);
-    b.classList.toggle("on", i<0);
-    t.value = montarPedido(linhas);
+    b.classList.toggle("on", alternarFrase(t, b.dataset.sug, frases));
     t.rows = Math.max(2, t.value.split("\n").length);
     t.focus();
   });
@@ -6258,13 +6277,21 @@ function alternarSugestoes(casoId){
 function pintarSugestoes(k, forcar){
   const cx=document.getElementById("sug-box"); if(!cx) return;
   const inp=document.getElementById("and-texto");
-  const q=dsa((inp&&inp.value||"").trim());
-  if(!q && !forcar && cx.style.display==="none") return;
   const proprias = ANOTACOES.map(t=>({texto:t}));
-  const todas = q ? [...proprias, ...sugestoes(k)] : proprias;
+  const catalogo = [...proprias, ...sugestoes(k)];
+  // o filtro olha só a ÚLTIMA linha, e só quando ela é texto solto: linha que
+  // veio de uma sugestão é conteúdo já escolhido, não busca. Sem isso, marcar
+  // a primeira frase escondia todas as outras e acabava a escolha múltipla.
+  const escritas = (inp&&inp.value||"").split("\n").map(l=>semMarcador(l));
+  const marcadas = new Set(escritas.filter(Boolean).map(dsa));
+  const ultima = escritas.length ? escritas[escritas.length-1] : "";
+  const q = catalogo.some(s=>dsa(s.texto)===dsa(ultima)) ? "" : dsa(ultima.trim());
+  if(!q && !forcar && cx.style.display==="none") return;
+  const todas = q ? catalogo : proprias;
   const lista=(q ? todas.filter(s=>dsa(s.texto).includes(q)) : todas).slice(0, q?6:ANOTACOES.length);
   if(q) cx.style.display = lista.length ? "flex" : "none";
-  cx.innerHTML = lista.map(s=>`<span class="sug-it" data-acao="${s.acao||""}">${s.acao==="exigencia"?"⚠ ":""}${esc(s.texto)}</span>`).join("")
+  cx.innerHTML = lista.map(s=>
+      `<span class="sug-it${marcadas.has(dsa(s.texto))?" on":""}" data-acao="${s.acao||""}">${s.acao==="exigencia"?"⚠ ":""}${esc(s.texto)}</span>`).join("")
     + (q?"":`<span class="sug-mais" onclick="lbEditar('${k.id}')">✎ editar sugestões</span>`);
   cx.querySelectorAll(".sug-it").forEach(el=>el.onclick=()=>usarSugestao(el, k));
 }
@@ -6289,14 +6316,18 @@ function pintarPrazoDoTexto(k){
     : "";
 }
 let prazoDetectado = null, prazoCancelado = false;
-function usarSugestao(el){
+function usarSugestao(el, k){
   if(el.dataset.acao==="exigencia") return abrirExigencia();
   const texto = el.textContent.trim();
   const inp=document.getElementById("and-texto");
   if(/__/.test(texto)) return montarPreenchimento(texto);
-  inp.value=texto; inp.focus();
+  const kk = k || D.casoPorId.get(casoSel) || {};
+  // marca e desmarca, como no encaminhamento: um andamento pede duas coisas
+  // de uma vez com frequência, e a segunda não pode apagar a primeira
+  alternarFrase(inp, texto, [...ANOTACOES, ...sugestoes(kk).map(s=>s.texto)]);
+  inp.focus();
   inp.style.height="auto"; inp.style.height=Math.min(inp.scrollHeight,220)+"px";
-  prazoCancelado=false; pintarPrazoDoTexto(); pintarSugestoes(D.casoPorId.get(casoSel));
+  prazoCancelado=false; pintarPrazoDoTexto(); pintarSugestoes(kk);
 }
 
 // ── Datas prováveis de aposentadoria ─────────────────────────────────────
@@ -8827,7 +8858,11 @@ function inserirPreenchida(){
     return p;
   }).join("");
   const inp=document.getElementById("and-texto");
-  inp.value=texto; box.style.display="none"; inp.focus();
+  // a frase completada entra como mais um item; se a última linha era o que
+  // estava sendo digitado, ela toma o lugar dela
+  alternarFrase(inp, texto, []);
+  box.style.display="none"; inp.focus();
+  inp.style.height="auto"; inp.style.height=Math.min(inp.scrollHeight,220)+"px";
 }
 async function novoCaso(cliId){
   const ben=document.getElementById("nk-ben").value.trim()||null;

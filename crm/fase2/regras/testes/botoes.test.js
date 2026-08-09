@@ -425,6 +425,54 @@ test('a placa é cinza, o compositor é branco e nenhum imita a linha do tempo',
   await limpar();
 });
 
+// ── as sugestões do compositor: marcar várias ─────────────────────────────
+// A mesma regra do encaminhamento vale aqui, que é onde nascem as tarefas:
+// "documentos recebidos" E "aguardar até" é um andamento só, com dois itens.
+// Antes a segunda frase apagava a primeira.
+test('no compositor dá para marcar mais de uma frase', pular, async () => {
+  await limpar();
+  await pag.evaluate(() => abrirFicha('c2'));
+  await pag.waitForTimeout(220);
+  await pag.click('#sug-abrir');
+  await pag.waitForTimeout(150);
+  const sem = await pag.$$eval('.sug-it',
+    e => e.map((x, i) => [i, x.textContent]).filter(([, t]) => !t.includes('__')).map(([i]) => i));
+  const chip = i => `.sug-it:nth-of-type(${i + 1})`;
+  await pag.click(chip(sem[0]));
+  await pag.waitForTimeout(120);
+  await pag.click(chip(sem[1]));
+  await pag.waitForTimeout(120);
+  const duas = await pag.$eval('#and-texto', e => e.value);
+  assert.equal(duas.split('\n').length, 2, `a segunda frase apagou a primeira: ${JSON.stringify(duas)}`);
+  assert.ok(duas.split('\n').every(l => l.startsWith('• ')), `sem marcador: ${duas}`);
+  assert.equal(await pag.$$eval('.sug-it.on', e => e.length), 2,
+    'as frases escolhidas não ficaram acesas');
+  // e a lista não pode encolher depois do primeiro clique — era o que
+  // acontecia quando o texto do campo virava busca
+  assert.ok(await pag.$$eval('.sug-it', e => e.length) > 5, 'a lista de frases sumiu');
+  await pag.click(chip(sem[0]));
+  await pag.waitForTimeout(120);
+  const uma = await pag.$eval('#and-texto', e => e.value);
+  assert.equal(uma.split('\n').length, 1, `desmarcar não tirou a linha: ${uma}`);
+  assert.ok(!uma.startsWith('• '), 'sobrou marcador com um item só');
+});
+
+// digitar e escolher continua sendo COMPLETAR aquela linha, não somar outra:
+// senão sobrava o pedaço digitado junto da frase inteira
+test('escolher enquanto digita completa a linha em vez de somar', pular, async () => {
+  await pag.evaluate(() => { document.getElementById('and-texto').value = ''; });
+  await pag.click('#sug-abrir');                       // fecha o painel
+  await pag.fill('#and-texto', 'protocol');
+  await pag.waitForTimeout(180);
+  await pag.click('.sug-it');
+  await pag.waitForTimeout(150);
+  const t = await pag.$eval('#and-texto', e => e.value);
+  assert.equal(t.split('\n').length, 1, `virou duas linhas: ${JSON.stringify(t)}`);
+  assert.ok(/protocolad/i.test(t) && t !== 'protocol', `não completou a frase: ${t}`);
+  await pag.evaluate(() => { document.getElementById('and-texto').value = ''; fecharFicha(false); });
+  await limpar();
+});
+
 // ── os marcadores do pedido (Rural, Especial, Deficiência…) ────────────────
 // Este bloco existe por um botão que não fazia nada: o `await` do PATCH não
 // tinha rede, e quando o banco recusava a função morria ali — sem aviso, sem
