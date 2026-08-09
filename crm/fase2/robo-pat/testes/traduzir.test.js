@@ -251,3 +251,14 @@ test('a cópia dentro do coletor é idêntica à testada aqui', () => {
     assert.deepStrictEqual(eval(`(${bruto})`), T[nome], `${nome} divergiu de traduzir.js`);
   }
 });
+
+// A coleta completa trouxe o código que faltava: o sufixo _PREVIDENCIARIO é
+// a resposta que o nome do serviço não dava. O acidentário (B94) ainda não
+// apareceu na carteira — e por isso não está no mapa.
+test('o auxílio-acidente se resolve quando o código do INSS vem junto', () => {
+  const e = T.especieDe({ siglaServico: 'TAA', especieBeneficio: 'AUXILIO_ACIDENTE_PREVIDENCIARIO' });
+  assert.equal(e.especie, 'B36');
+  assert.equal(e.tipo, 'beneficio');
+  // sem o código, continua em aberto — não se escolhe entre B36 e B94 no chute
+  assert.equal(T.especieDe({ siglaServico: 'TAA' }).especie, null);
+});

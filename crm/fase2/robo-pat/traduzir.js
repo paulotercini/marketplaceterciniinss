@@ -80,6 +80,10 @@ const ESPECIE_POR_CODIGO = {
   AMP_SOCIAL_IDOSO:            'B88',
   APOSENTADORIA_POR_IDADE:     'B41',
   APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO: 'B42',
+  // apareceu na coleta completa e resolve o TAA quando o código vem: o
+  // sufixo _PREVIDENCIARIO é a resposta que o nome do serviço não dava. O
+  // acidentário (B94) ainda não apareceu — quando aparecer, entra aqui.
+  AUXILIO_ACIDENTE_PREVIDENCIARIO: 'B36',
 };
 
 // Quem protocolou. `INTERNET` quer dizer que o CLIENTE fez sozinho pelo Meu
