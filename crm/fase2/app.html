@@ -1121,7 +1121,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.28 · placa cinza dos fatos</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.29 · marcadores pela espécie</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5692,7 +5692,7 @@ const POR_SLUG = new Map(MARCADORES.map(m => [m.slug, m]));
 
 function doCatalogo(especie) {
   const e = String(especie || '').trim().toUpperCase();
-  if (!e) return MARCADORES;
+  if (!e) return [];
   return MARCADORES.filter(m => m.especies.includes(e));
 }
 
@@ -5768,9 +5768,13 @@ function linhaMarcadores(k){
   // marcador que não cabe nesta espécie mas está gravado (a espécie mudou
   // depois): continua aparecendo, senão sumiria sem ninguém ver
   const mostrar = [...cabem, ...MARCADORES.filter(m=>ativos.includes(m.slug) && !cabem.includes(m))];
+  // sem espécie não há o que marcar: quem manda nos marcadores é ela. Em vez
+  // de seis botões que não dizem por que estão ali, o convite de preenchê-la.
+  if(!String(k.especie||"").trim())
+    return `<div class="marc-linha"><span class="meio-sub">Preencha a
+      <b>espécie</b> abaixo (B41, B42…) para marcar o que está sendo pedido.</span></div>`;
   if(!mostrar.length) return especieJaDiz(k);
   return `<div class="marc-linha">
-    <span class="marc-rot" title="o que está sendo pedido neste caso — pode ser mais de um">PEDIDO</span>
     ${mostrar.map(m=>{
       const on = ativos.includes(m.slug);
       return `<button class="marc ${on?"on":""}" style="--marc:${m.cor}"
@@ -5787,7 +5791,7 @@ function linhaMarcadores(k){
 function especieJaDiz(k){
   const nome = (ESPECIES.find(([c])=>c===String(k.especie||"").toUpperCase())||[])[1];
   if(!nome) return "";
-  return `<div class="marc-linha"><span class="marc-rot">PEDIDO</span>
+  return `<div class="marc-linha">
     <span class="meio-sub">${esc(k.especie)} — ${esc(nome)}. Nesta espécie o próprio código já diz o que é o pedido: não há marcador a acrescentar.</span>
   </div>`;
 }
@@ -5808,8 +5812,23 @@ async function alternarMarcador(casoId, slug){
   const antes = marcadoresDe(k);
   const nova = alternar(k, slug);
   k.marcadores = nova;
-  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({marcadores:nova})});
+  // O BOTÃO MORTO. Este `await` não tinha rede de proteção: quando o banco
+  // recusava — e recusava sempre, enquanto a coluna `marcadores` não existir
+  // lá — a função abortava aqui. Sem aviso, sem redesenho, sem nada. Clicar
+  // não mudava um pixel, e a única leitura possível era "está quebrado".
+  try{
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({marcadores:nova})});
+  }catch(e){
+    k.marcadores = antes;                       // não fica marcado o que não gravou
+    abrirFicha(clienteAberto);
+    // 42703 é o "column does not exist" do PostgreSQL: dizer isso com todas as
+    // letras poupa a caçada, porque a correção não está no app, está no banco
+    aviso(/42703|marcadores/.test(e.message)
+      ? "O banco ainda não tem a coluna dos marcadores — rode o schema.sql no Supabase."
+      : "Não consegui gravar o marcador. Tente de novo.");
+    return;
+  }
   // ligou um marcador novo: os documentos dele entram no checklist. Desligar
   // NÃO apaga item nenhum — pode já ter sido conferido, e apagar trabalho
   // conferido por causa de um clique errado seria pior que sobrar item.

@@ -148,10 +148,23 @@ test('B41 separa "tempo rural somado" de "idade rural do segurado especial"', ()
   assert.match(M.POR_SLUG.get('idade_rural').dica, /55|60/);
 });
 
-test('sem espécie definida, mostra todos — melhor oferecer demais que esconder', () => {
-  assert.equal(M.doCatalogo('').length, M.MARCADORES.length);
-  assert.equal(M.doCatalogo(null).length, M.MARCADORES.length);
+// Quem manda nos marcadores é a espécie. Sem ela, oferecíamos os seis "para
+// escolher" — e "União estável" aparecia na ficha de uma aposentadoria, sem
+// nada ali explicando por quê.
+test('sem espécie definida, não oferece marcador nenhum', () => {
+  assert.deepStrictEqual(M.doCatalogo(''), []);
+  assert.deepStrictEqual(M.doCatalogo(null), []);
+  assert.deepStrictEqual(M.doCatalogo('   '), []);
   assert.equal(M.doCatalogo('b42').length, 3, 'a espécie em minúscula tem de valer igual');
+});
+
+// Marcar e desmarcar não pode depender de a espécie ainda caber: quem marcou
+// "rural" num B42 e depois trocou a espécie continua com a marcação gravada.
+test('o que já está marcado sobrevive à espécie que não o comporta', () => {
+  const k = { especie: 'B21', marcadores: ['rural'] };
+  assert.deepStrictEqual(M.doCatalogo(k.especie).map(m => m.slug),
+    ['dependente_invalido', 'uniao_estavel']);
+  assert.deepStrictEqual(M.marcadoresDe(k), ['rural']);
 });
 
 // ── o mesmo cliente com dois pedidos ──────────────────────────────────────

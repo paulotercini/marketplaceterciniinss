@@ -96,11 +96,14 @@ const MARCADORES = [
 
 const POR_SLUG = new Map(MARCADORES.map(m => [m.slug, m]));
 
-// os marcadores que fazem sentido para a espécie do caso. Sem espécie
-// definida mostramos todos: é melhor oferecer demais do que esconder o certo.
+// os marcadores que fazem sentido para a espécie do caso. SEM ESPÉCIE
+// DEFINIDA NÃO OFERECEMOS NENHUM: marcador é uma qualificação do pedido, e o
+// que qualifica o pedido é a espécie. Mostrar os seis "para escolher" — que
+// era o que fazíamos — punha "União estável" e "Dependente inválido" na frente
+// de quem cuida de uma aposentadoria, e nada ali dizia por quê.
 function doCatalogo(especie) {
   const e = String(especie || '').trim().toUpperCase();
-  if (!e) return MARCADORES;
+  if (!e) return [];
   return MARCADORES.filter(m => m.especies.includes(e));
 }
 
