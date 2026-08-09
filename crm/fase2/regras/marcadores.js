@@ -1,31 +1,48 @@
-// O que estamos pedindo, de fato, naquele caso.
+// O que estamos pedindo, de fato.
 //
-// "Aposentadoria por tempo de contribuição" é a espécie B42 e não diz nada
-// para quem trabalha com isso o dia inteiro. O escritório pede coisas muito
-// diferentes debaixo do mesmo B42: reconhecimento de tempo rural, de tempo
-// especial, de tempo de magistério, redução por deficiência — e, com
-// frequência, mais de uma ao mesmo tempo.
+// A espécie do INSS não diz o que o escritório faz. Debaixo do mesmo B42 há
+// reconhecimento de tempo rural, de tempo especial, redução por deficiência —
+// e com frequência mais de um no mesmo pedido.
 //
-// Por que MARCADORES e não uma lista de sub-espécies: porque eles se somam.
-// Rural + especial existe. Rural + especial + deficiência existe. Uma lista
-// de opções fechadas obrigaria a inventar um item para cada combinação (são
-// 15 só com quatro marcadores) e ainda assim erraria na décima sexta. Com
-// marcadores independentes, a combinação nasce sozinha.
+// Por que MARCADORES e não sub-espécies: porque eles se somam. Rural +
+// especial existe; rural + especial + deficiência existe. Uma lista fechada
+// precisaria de um item por combinação e ainda erraria na seguinte.
 //
-// Eles não trocam a espécie: o B42 continua B42 no INSS. O que muda é o que
-// a ficha diz para quem olha, e o que o checklist pede de documento.
+// DUAS REGRAS que este arquivo respeita:
+//
+// 1. Marcador não repete o que a espécie já diz. Professor tem espécie
+//    própria (B57) e aposentadoria especial também (B46) — nesses casos o
+//    código do INSS já é a resposta, e marcar de novo seria ruído. Por isso
+//    cada marcador declara em QUE espécies ele faz sentido.
+//
+// 2. Reconhecer tempo rural não é o mesmo que o benefício ser rural. Na
+//    aposentadoria por idade, o tempo rural pode entrar para somar carência e
+//    valor num pedido urbano — ou o pedido pode ser o do segurado especial,
+//    com idade reduzida (55/60) e sem contribuição. São coisas diferentes e
+//    ficam em marcadores diferentes.
 
 const MARCADORES = [
   { slug: 'rural', rot: 'Rural', icone: '🌾', cor: '#7A8B2E',
-    dica: 'reconhecimento de tempo de atividade rural',
+    especies: ['B42', 'B41', 'B46'],
+    dica: 'reconhecimento de tempo de atividade rural, para somar tempo/carência ou aumentar o valor',
     docs: [
       'Autodeclaração rural (formulário do INSS)',
       'Prova material do período rural (notas de produtor, ITR, contrato de parceria, escritura)',
       'Documentos de escola/igreja/sindicato com a qualificação de lavrador',
       'Indicar testemunhas do período rural (nome, telefone, período que conviveu)',
     ] },
+  { slug: 'idaderural', rot: 'Idade rural', icone: '🚜', cor: '#4E7A3A',
+    especies: ['B41'],
+    dica: 'aposentadoria por idade do segurado especial — 55 anos (mulher) / 60 (homem), sem contribuição',
+    docs: [
+      'Comprovar a atividade rural no período imediatamente anterior ao requerimento',
+      'Autodeclaração rural homologada (sindicato, INCRA ou órgão indicado)',
+      'Conferir se a idade reduzida já foi alcançada (55 mulher / 60 homem)',
+    ] },
   { slug: 'especial', rot: 'Especial', icone: '⚗️', cor: '#1F6FB2',
-    dica: 'reconhecimento de tempo especial (exposição a agente nocivo)',
+    especies: ['B42', 'B41'],
+    dica: 'reconhecimento de tempo especial para converter em comum ou aumentar o valor '
+        + '(quando o pedido É a aposentadoria especial, a espécie B46 já diz isso)',
     docs: [
       'PPP — Perfil Profissiográfico Previdenciário de cada empresa',
       'LTCAT ou laudo técnico das condições ambientais',
@@ -33,22 +50,24 @@ const MARCADORES = [
       'Conferir no PPP: agente nocivo, técnico responsável e período sem lacuna',
     ] },
   { slug: 'pcd', rot: 'Deficiência', icone: '♿', cor: '#7A5AA8',
-    dica: 'aposentadoria da pessoa com deficiência (LC 142/2013)',
+    especies: ['B42', 'B41'],
+    dica: 'aposentadoria da pessoa com deficiência (LC 142/2013) — por tempo de contribuição ou por idade',
     docs: [
       'Laudos, exames e relatórios que comprovem a deficiência e desde quando',
       'Requerer a avaliação biopsicossocial (perícia médica + serviço social)',
       'Levantar os períodos trabalhados COM a deficiência (é o que define o grau)',
     ] },
-  { slug: 'professor', rot: 'Professor', icone: '🍎', cor: '#C6541A',
-    dica: 'tempo de magistério na educação básica',
-    docs: [
-      'Certidão de tempo de magistério da escola/secretaria (com as funções exercidas)',
-      'CTPS e contracheques do período de magistério',
-      'Conferir se todo o período é de educação básica — coordenação e direção contam, ensino superior não',
-    ] },
 ];
 
 const POR_SLUG = new Map(MARCADORES.map(m => [m.slug, m]));
+
+// os marcadores que fazem sentido para a espécie do caso. Sem espécie
+// definida mostramos todos: é melhor oferecer demais do que esconder o certo.
+function doCatalogo(especie) {
+  const e = String(especie || '').trim().toUpperCase();
+  if (!e) return MARCADORES;
+  return MARCADORES.filter(m => m.especies.includes(e));
+}
 
 // aceita a lista do caso em qualquer estado (nula, string solta, com lixo)
 function marcadoresDe(k) {
@@ -95,4 +114,17 @@ function docsDosMarcadores(k, jaTem = []) {
   return fora;
 }
 
-module.exports = { MARCADORES, POR_SLUG, marcadoresDe, alternar, rotuloDoPedido, docsDosMarcadores };
+// A mesma pessoa PODE ter dois pedidos da mesma espécie — um B42 por
+// deficiência e outro B42 por tempo especial são pedidos diferentes, com
+// protocolo e decisão próprios. O que não faz sentido é o mesmo pedido
+// cadastrado duas vezes: mesma espécie E mesmos marcadores.
+function pedidosIguais(a, b) {
+  const eA = String((a && a.especie) || '').trim().toUpperCase();
+  const eB = String((b && b.especie) || '').trim().toUpperCase();
+  if (!eA || eA !== eB) return false;
+  const mA = marcadoresDe(a), mB = marcadoresDe(b);
+  return mA.length === mB.length && mA.every((x, i) => x === mB[i]);
+}
+
+module.exports = { MARCADORES, POR_SLUG, doCatalogo, marcadoresDe, alternar,
+  rotuloDoPedido, docsDosMarcadores, pedidosIguais };

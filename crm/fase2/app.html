@@ -481,6 +481,8 @@
   .marc:hover{opacity:1;border-color:var(--marc);color:var(--marc)}
   .marc.on{opacity:1;background:var(--marc);border-color:var(--marc);color:#fff}
   .chip.marc-chip{background:var(--branco);border:1px solid var(--marc);color:var(--marc)}
+  .marc-igual{margin:0 0 8px;padding:6px 10px;border-radius:8px;font-size:12.5px;
+    background:#FFF7F2;border:1px solid #F2C7AE;color:#9C3F0F}
   /* dois recursos numa ficha só: o aviso e a lista da separação */
   .juntos{border-left:3px solid #C6541A;background:#FFF7F2;margin-bottom:12px}
   .sep-lista{margin-top:9px;border:1px solid var(--borda);border-radius:8px;overflow:hidden}
@@ -1008,7 +1010,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.18 · o que estamos pedindo</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.19 · pedido por espécie</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5368,7 +5370,7 @@ function caixaArquivos(k){
 const ESPECIES = [
   ["B31","Auxílio por incapacidade temporária"],["B32","Aposentadoria por incapacidade permanente"],
   ["B91","Auxílio por incapacidade acidentário"],["B92","Aposentadoria por incapacidade acidentária"],
-  ["B94","Auxílio-acidente"],["B36","Auxílio-acidente previdenciário"],
+  ["B36","Auxílio-acidente previdenciário"],["B94","Auxílio-acidente acidentário (acidente de trabalho)"],
   ["B41","Aposentadoria por idade"],["B42","Aposentadoria por tempo de contribuição"],
   ["B46","Aposentadoria especial"],["B57","Aposentadoria de professor"],
   ["B21","Pensão por morte"],["B93","Pensão por morte acidentária"],["B25","Auxílio-reclusão"],
@@ -5413,15 +5415,26 @@ function campoFato(k, campo){
 // compara o código-fonte das duas cópias e o catálogo inteiro.
 const MARCADORES = [
   { slug: 'rural', rot: 'Rural', icone: '🌾', cor: '#7A8B2E',
-    dica: 'reconhecimento de tempo de atividade rural',
+    especies: ['B42', 'B41', 'B46'],
+    dica: 'reconhecimento de tempo de atividade rural, para somar tempo/carência ou aumentar o valor',
     docs: [
       'Autodeclaração rural (formulário do INSS)',
       'Prova material do período rural (notas de produtor, ITR, contrato de parceria, escritura)',
       'Documentos de escola/igreja/sindicato com a qualificação de lavrador',
       'Indicar testemunhas do período rural (nome, telefone, período que conviveu)',
     ] },
+  { slug: 'idaderural', rot: 'Idade rural', icone: '🚜', cor: '#4E7A3A',
+    especies: ['B41'],
+    dica: 'aposentadoria por idade do segurado especial — 55 anos (mulher) / 60 (homem), sem contribuição',
+    docs: [
+      'Comprovar a atividade rural no período imediatamente anterior ao requerimento',
+      'Autodeclaração rural homologada (sindicato, INCRA ou órgão indicado)',
+      'Conferir se a idade reduzida já foi alcançada (55 mulher / 60 homem)',
+    ] },
   { slug: 'especial', rot: 'Especial', icone: '⚗️', cor: '#1F6FB2',
-    dica: 'reconhecimento de tempo especial (exposição a agente nocivo)',
+    especies: ['B42', 'B41'],
+    dica: 'reconhecimento de tempo especial para converter em comum ou aumentar o valor '
+        + '(quando o pedido É a aposentadoria especial, a espécie B46 já diz isso)',
     docs: [
       'PPP — Perfil Profissiográfico Previdenciário de cada empresa',
       'LTCAT ou laudo técnico das condições ambientais',
@@ -5429,22 +5442,22 @@ const MARCADORES = [
       'Conferir no PPP: agente nocivo, técnico responsável e período sem lacuna',
     ] },
   { slug: 'pcd', rot: 'Deficiência', icone: '♿', cor: '#7A5AA8',
-    dica: 'aposentadoria da pessoa com deficiência (LC 142/2013)',
+    especies: ['B42', 'B41'],
+    dica: 'aposentadoria da pessoa com deficiência (LC 142/2013) — por tempo de contribuição ou por idade',
     docs: [
       'Laudos, exames e relatórios que comprovem a deficiência e desde quando',
       'Requerer a avaliação biopsicossocial (perícia médica + serviço social)',
       'Levantar os períodos trabalhados COM a deficiência (é o que define o grau)',
     ] },
-  { slug: 'professor', rot: 'Professor', icone: '🍎', cor: '#C6541A',
-    dica: 'tempo de magistério na educação básica',
-    docs: [
-      'Certidão de tempo de magistério da escola/secretaria (com as funções exercidas)',
-      'CTPS e contracheques do período de magistério',
-      'Conferir se todo o período é de educação básica — coordenação e direção contam, ensino superior não',
-    ] },
 ];
 
 const POR_SLUG = new Map(MARCADORES.map(m => [m.slug, m]));
+
+function doCatalogo(especie) {
+  const e = String(especie || '').trim().toUpperCase();
+  if (!e) return MARCADORES;
+  return MARCADORES.filter(m => m.especies.includes(e));
+}
 
 function marcadoresDe(k) {
   const bruto = k && k.marcadores;
@@ -5485,6 +5498,14 @@ function docsDosMarcadores(k, jaTem = []) {
     }
   return fora;
 }
+
+function pedidosIguais(a, b) {
+  const eA = String((a && a.especie) || '').trim().toUpperCase();
+  const eB = String((b && b.especie) || '').trim().toUpperCase();
+  if (!eA || eA !== eB) return false;
+  const mA = marcadoresDe(a), mB = marcadoresDe(b);
+  return mA.length === mB.length && mA.every((x, i) => x === mB[i]);
+}
 // ── fim da cópia ──────────────────────────────────────────────────────────
 
 // A linha que responde "o que estou pedindo aqui?" sem abrir nada. Clicar
@@ -5492,15 +5513,42 @@ function docsDosMarcadores(k, jaTem = []) {
 // pedido, que é onde a marcação deixa de ser enfeite e vira trabalho feito.
 function linhaMarcadores(k){
   const ativos = marcadoresDe(k);
+  const cabem = doCatalogo(k.especie);
+  // marcador que não cabe nesta espécie mas está gravado (a espécie mudou
+  // depois): continua aparecendo, senão sumiria sem ninguém ver
+  const mostrar = [...cabem, ...MARCADORES.filter(m=>ativos.includes(m.slug) && !cabem.includes(m))];
+  if(!mostrar.length) return especieJaDiz(k);
   return `<div class="marc-linha">
     <span class="marc-rot" title="o que está sendo pedido neste caso — pode ser mais de um">PEDIDO</span>
-    ${MARCADORES.map(m=>{
+    ${mostrar.map(m=>{
       const on = ativos.includes(m.slug);
       return `<button class="marc ${on?"on":""}" style="--marc:${m.cor}"
         title="${esc(m.dica)}${on?" — clique para tirar":" — clique para marcar"}"
         onclick="alternarMarcador('${k.id}','${m.slug}')">${m.icone} ${esc(m.rot)}</button>`;
     }).join("")}
+  </div>${avisoPedidoIgual(k)}`;
+}
+// B57 (professor) e B46 (aposentadoria especial) já são a resposta: pedir que
+// se marque de novo seria dizer duas vezes a mesma coisa, e abrir espaço para
+// as duas discordarem
+function especieJaDiz(k){
+  const nome = (ESPECIES.find(([c])=>c===String(k.especie||"").toUpperCase())||[])[1];
+  if(!nome) return "";
+  return `<div class="marc-linha"><span class="marc-rot">PEDIDO</span>
+    <span class="meio-sub">${esc(k.especie)} — ${esc(nome)}. A espécie já diz o que é pedido; não há marcador a acrescentar.</span>
   </div>`;
+}
+// O mesmo cliente PODE ter dois pedidos da mesma espécie: um B42 por
+// deficiência e outro B42 por tempo especial são pedidos diferentes, com
+// protocolo e decisão próprios. O que não faz sentido é o MESMO pedido
+// cadastrado duas vezes — e é só disso que este aviso fala.
+function avisoPedidoIgual(k){
+  const irmaos = (D.casosDoCliente.get(k.cliente_id)||[])
+    .filter(x=>x.id!==k.id && x.fase!=="encerrado" && pedidosIguais(k,x));
+  if(!irmaos.length) return "";
+  return `<div class="marc-igual">⚠ Este cliente tem outro caso ativo com o
+    <b>mesmo pedido</b> (${esc(k.especie)}${marcadoresDe(k).length?" · "+marcadoresDe(k).map(s=>POR_SLUG.get(s).rot).join(" + "):""}).
+    Se forem pedidos diferentes, marque o que muda entre eles; se for o mesmo, encerre um.</div>`;
 }
 async function alternarMarcador(casoId, slug){
   const k = D.casoPorId.get(casoId); if(!k) return;
