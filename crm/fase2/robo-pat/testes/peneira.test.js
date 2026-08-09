@@ -98,6 +98,43 @@ test('número comprido some, mesmo sem nome de campo suspeito', () => {
   assert.match(String(fora.q), /‹texto 17›/);
 });
 
+// ── o que a primeira sonda de verdade ensinou ─────────────────────────────
+// Ela voltou com nomeServico e nomeUnidade apagados. São o nome do serviço do
+// INSS e o da agência: não identificam ninguém, e são o que eu mais preciso
+// para traduzir a sigla em benefício.
+test('nome de SERVIÇO e de UNIDADE não são nome de gente', () => {
+  const fora = P.peneirar({
+    nomeServico: 'Aposentadoria por Tempo de Contribuição da Pessoa com Deficiência',
+    siglaServico: 'TBSBAPD',
+    nomeUnidade: 'AGENCIA DA PREVIDENCIA SOCIAL FRANCA',
+    nomeRequerente: 'Almir Tronfini',
+  });
+  assert.equal(fora.siglaServico, 'TBSBAPD');
+  assert.match(fora.nomeUnidade, /FRANCA/);
+  assert.match(fora.nomeServico, /‹texto 6[0-9]›/, 'nome de serviço muito longo devia ir pelo comprimento');
+  assert.match(fora.nomeRequerente, /‹oculto/, 'o nome do cliente NÃO pode passar por essa porta');
+});
+
+test('a lista institucional é fechada — chave parecida não entra sozinha', () => {
+  const fora = P.peneirar({ nomeServidor: 'João da Silva', nomeMedico: 'Dra. Ana' });
+  assert.match(fora.nomeServidor, /‹oculto/);
+  assert.match(fora.nomeMedico, /‹oculto/);
+});
+
+// Peneirar o corpo e mandar o identificador no endereço é peneirar pela
+// metade: a URL do detalhe TERMINA no número do protocolo, e na primeira
+// sonda ela foi guardada crua.
+test('a URL não leva o número do protocolo junto', () => {
+  const u = P.mascararUrl('/apis/requerimentosPortalApi/requerimento/ec/tarefa/1462069078');
+  assert.ok(!u.includes('1462069078'), `vazou o protocolo na URL: ${u}`);
+  assert.match(u, /‹num 10 díg›/);
+  assert.equal(P.mascararUrl('/apis/tarefasApi/tarefas/1462069078/analise-documental'),
+               '/apis/tarefasApi/tarefas/‹num 10 díg›/analise-documental');
+  // número curto é versão de API, não identificador: fica
+  assert.equal(P.mascararUrl('/apis/v1/tarefa/consulta?first=0&pageSize=500'),
+               '/apis/v1/tarefa/consulta?first=0&pageSize=500');
+});
+
 // ── a sonda roda colada no Console e não faz require: a peneira vive lá
 // dentro copiada. Se as duas divergirem, os testes garantem uma coisa e o
 // navegador manda outra — e o vazamento aparece depois de mandado.

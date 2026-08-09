@@ -1,19 +1,30 @@
 # PAT/GERID — sonda, antes de qualquer robô
 
-## O que a sonda responde
+## O que a v1 já respondeu
 
-Duas perguntas. A segunda decide o projeto.
+A lista funciona: `POST .../ec/tarefa/consulta` devolveu 200, com
+`quantidadeTotalTarefa: 184` e uma linha por requerimento contendo
+`protocolo`, `status`, `cpfRequerente`, `nomeServico`, `siglaServico`,
+`nomeRequerente`, `nomeUnidade`, `dataCriacao` e `dataUltimaAtualizacao`.
 
-1. **Qual é o formato exato das respostas do portal?** Preciso dele para
-   escrever o robô sem adivinhar nome de campo.
+É o bastante para detectar mudança: `protocolo` é a chave e
+`dataUltimaAtualizacao` é o gatilho.
 
-2. **O DETALHE de um requerimento abre só com a sessão, ou pede reCAPTCHA
-   novo?** É aqui que o projeto se define:
+## O que a v2 vai responder
 
-   - **Abre sem captcha** → um clique seu por dia traz a carteira inteira:
-     situação, exigências, perícias agendadas e remarcadas.
-   - **Pede captcha** → a lista ainda diz QUAIS mudaram desde ontem, e você
-     abre só esses. É o que já faz hoje, mas sem procurar quais.
+Ao tentar o detalhe por conta própria, a v1 levou **401
+INSUFFICIENT_PERMISSIONS**. Isso NÃO é erro de captcha — é erro de crachá.
+O portal manda um cabeçalho de autorização em cada chamada e a tentativa foi
+só com o cookie. O teste estava errado, não a porta fechada.
+
+A v2 não adivinha: ela olha COMO a própria página se identifica e ESCUTA o
+detalhe que a página busca quando você abre uma tarefa. Depois refaz a mesma
+chamada com o mesmo crachá.
+
+- **Se refizer** → um clique seu por dia traz a carteira inteira: situação,
+  exigências, perícias agendadas e remarcadas.
+- **Se não refizer** → a lista ainda diz QUAIS mudaram desde ontem, e você
+  abre só esses. É o que já faz hoje, sem a parte de procurar quais.
 
 Nos dois casos há sistema para construir. Muda o tamanho, não a existência.
 
@@ -45,9 +56,20 @@ o portal é grande e vai ter chave que eu não previ.
 O comprimento do que saiu fica no lugar (`‹texto 34›`), porque saber se um
 campo tem 3 ou 3000 caracteres me diz se é rótulo ou parecer médico.
 
-`testes/peneira.test.js` cobre isso com formas reais de dado do portal. Um
-dos testes já pegou um vazamento: o número de protocolo, por ser só dígitos
-em caixa alta, atravessava a regra de "código".
+Do cabeçalho de autorização sai só o tipo e o tamanho (`‹Bearer · 812 car›`),
+nunca o valor. Do endereço, os números longos saem mascarados.
+
+`testes/peneira.test.js` e `testes/sonda.test.js` cobrem isso com as formas
+reais que o portal devolveu — o segundo roda a sonda inteira num navegador de
+verdade, contra um portal de mentira, e confere o arquivo que teria saído.
+
+Três vazamentos já foram pegos por esses testes, todos meus:
+
+- o número de protocolo, por ser só dígitos, atravessava a regra de "código";
+- a URL guardada crua levava o protocolo no fim do endereço — peneirar o
+  corpo e mandar o identificador no cabeçalho é peneirar pela metade;
+- `nomeServico` e `nomeUnidade` iam apagados por terem "nome" na chave, sendo
+  que são o serviço do INSS e a agência, que não identificam ninguém.
 
 ```
 cd crm/fase2/robo-pat
@@ -60,11 +82,14 @@ node --test "testes/*.test.js"
 2. Vá para a tela de tarefas. Aperte **F12** → aba **Console**.
    (Se pedir, digite `allow pasting` e Enter.)
 3. Abra **`sonda-no-navegador.js`**, copie tudo, cole no Console, Enter.
-   Aparece **"sonda ligada"**.
-4. **Agora clique em "Buscar"** na tela. Se der para escolher 500 por
-   página, escolha.
-5. Ela avisa no Console e baixa **`sonda_pat.json`**.
-6. **Abra o arquivo e confira** antes de mandar. Se encontrar qualquer nome
+   Aparece **"sonda v2 ligada"**.
+4. **Clique em "Buscar"** na tela. Se der para escolher 500 por página,
+   escolha.
+5. **Abra UMA tarefa** (clique numa linha). É este passo que responde a
+   pergunta que sobrou.
+6. Volte ao Console e digite `sondaPat.provar()`. Ele baixa
+   **`sonda_pat2.json`**.
+7. **Abra o arquivo e confira** antes de mandar. Se encontrar qualquer nome
    ou CPF, não mande — me avise que eu conserto a peneira.
 
 ## Depois da sonda
