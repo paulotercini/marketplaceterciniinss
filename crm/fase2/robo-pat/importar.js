@@ -99,6 +99,23 @@ function andamentoDaMudanca(k, det) {
   return `INSS: ${antes} → ${det.situacao}`;
 }
 
+// OS COMENTÁRIOS QUE AINDA NÃO ESTÃO NA FICHA. A importação roda todo dia e
+// o portal devolve sempre a lista inteira — sem esta peneira, os mesmos
+// comentários virariam andamento de novo a cada manhã. O `id` do comentário
+// é a chave; ele vive em `andamentos.origem_id`.
+function comentariosNovos(det, jaTem) {
+  const vistos = new Set((jaTem || []).map(a => String(a.origem_id || '')));
+  return (det.comentarios || [])
+    .filter(c => c.id && !vistos.has(String(c.id)))
+    .map(c => ({
+      origem_id: String(c.id),
+      quando: c.quando,
+      // quem escreveu vem na frente: é a diferença entre o INSS pedindo algo
+      // e o escritório respondendo, e ela muda o que se faz a seguir
+      texto: `${c.do_inss ? 'INSS' : 'Escritório'} · ${c.texto}`,
+    }));
+}
+
 function planoDeImportacao(pat, D, hoje) {
   const hj = hoje || new Date().toISOString().slice(0, 10);
   const { porProtocolo, porCpf } = indexar(D);
@@ -109,8 +126,15 @@ function planoDeImportacao(pat, D, hoje) {
     evDoCaso.get(e.caso_id).push(e);
   }
 
+  const andDoCaso = new Map();
+  for (const a of (D.andamentos || [])) {
+    if (!a.origem_id) continue;
+    if (!andDoCaso.has(a.caso_id)) andDoCaso.set(a.caso_id, []);
+    andDoCaso.get(a.caso_id).push(a);
+  }
+
   const plano = { atualizar: [], novos: [], possiveisDuplicados: [], semCliente: [],
-                  ignorados: [], eventos: [], resumo: {} };
+                  ignorados: [], eventos: [], comentarios: [], resumo: {} };
 
   for (const det of (pat.detalhes || [])) {
     const proto = digitos(det.protocolo);
@@ -128,8 +152,11 @@ function planoDeImportacao(pat, D, hoje) {
       const and = andamentoDaMudanca(k, det);
       const evs = eventosNovos(det, evDoCaso.get(k.id), hj);
       if (evs.length) plano.eventos.push({ caso_id: k.id, protocolo: proto, eventos: evs });
-      if (Object.keys(mud).length || and)
-        plano.atualizar.push({ ...item, caso_id: k.id, mudancas: mud, andamento: and });
+      const coms = comentariosNovos(det, andDoCaso.get(k.id));
+      if (coms.length) plano.comentarios.push({ caso_id: k.id, protocolo: proto, comentarios: coms });
+      if (Object.keys(mud).length || and || coms.length)
+        plano.atualizar.push({ ...item, caso_id: k.id, mudancas: mud, andamento: and,
+                               novos_comentarios: coms.length });
       continue;
     }
 
@@ -158,6 +185,7 @@ function planoDeImportacao(pat, D, hoje) {
     sem_cliente: plano.semCliente.length,
     ignorados: plano.ignorados.length,
     eventos: plano.eventos.reduce((n, e) => n + e.eventos.length, 0),
+    comentarios: plano.comentarios.reduce((n, c) => n + c.comentarios.length, 0),
     exigencias: (pat.detalhes || []).filter(d => d.situacao === 'Em exigência').length,
     apuracoes: (pat.detalhes || []).filter(d => d.urgente).length,
     a_confirmar: (pat.detalhes || []).filter(d => d.especie_a_confirmar).length,
@@ -187,4 +215,4 @@ function conferirPlanoPat(pat, plano) {
 }
 
 module.exports = { LISTA_POR_TIPO, NAO_ABRE_CASO, digitos, protocolosDe, indexar, casoParecido,
-  mudancasDoCaso, eventosNovos, andamentoDaMudanca, planoDeImportacao, conferirPlanoPat };
+  mudancasDoCaso, eventosNovos, comentariosNovos, andamentoDaMudanca, planoDeImportacao, conferirPlanoPat };
