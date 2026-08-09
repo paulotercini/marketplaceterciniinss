@@ -1131,7 +1131,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.31 · importar sem duplicar</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.32 · Meu Dia só do dia</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1804,6 +1804,7 @@ function montarSidebar(){
     ["importante","⭐ Importante", ativos().filter(k=>k.importante).length],
     ["particulares","📋 Minhas Tarefas", "🔒"],
     ["rotinas","🔁 Organizacional", (D.rotinas||[]).filter(r=>r.ativo!==false).length],
+    ["acervo","🧹 Cuidar do acervo", quantosNoAcervo()],
   ];
   // rótulo = "☀️ Meu Dia" -> ícone + texto separados (o texto some no menu recolhido)
   // ícone e texto em CÉLULAS SEPARADAS. Recolhido, só o ícone fica — e ele
@@ -2296,6 +2297,14 @@ function dataRelativa(iso){
   return `${diaDaSemana(iso)}, ${fmt(iso).slice(0,5)}`;
 }
 
+// EM EXIGÊNCIA POR DOIS CAMINHOS. `exigencia_prazo` é o que o escritório
+// anota à mão, com a data-limite. `situacao_inss` é o que o PAT devolve —
+// e chega antes, porque vem do sistema deles. Olhar só o primeiro deixava
+// de fora justamente as exigências recém-descobertas pela importação, que
+// são as que ainda ninguém viu.
+const emExigencia = k => !!(k && (k.exigencia_prazo || k.situacao_inss === "Em exigência"));
+let soExigencia = false;                 // o filtro da lista INSS
+
 function grupoClientes(casosSel){
   const porCli = new Map();
   casosSel.forEach(k=>{ if(!porCli.has(k.cliente_id)) porCli.set(k.cliente_id,[]);
@@ -2370,6 +2379,7 @@ function render(){
   if(visao==="quadro") return renderQuadro();
   if(visao==="vendas") return renderVendas();
   if(visao==="whatsapp") return renderWhats();
+  if(visao==="acervo") return renderAcervo();
   if(visao==="patinss") return renderImportarPat();
   if(visao==="config") return renderConfig();
   if(visao==="parcerias") return renderParcerias();
@@ -2395,15 +2405,25 @@ function render(){
       `<button class="fchip ${filtroColab===x.id?"on":""}" data-fcol="${x.id}">`+
       `<span class="avatar mini" style="background:${x.cor}">${esc(x.inicial)}</span>${esc(x.nome)}</button>`)).join("")+`</div>`;
   // na lista INSS, os casos em exigência (prazo legal de 30 dias) vêm primeiro
-  const emExig = casosSel.filter(k=>k.exigencia_prazo);
-  if(visao==="fase:inss" && emExig.length){
-    const resto = casosSel.filter(k=>!k.exigencia_prazo);
-    emExig.sort((a,b)=>a.exigencia_prazo<b.exigencia_prazo?-1:1);
-    meio.innerHTML = chipsCol
+  const emExig = casosSel.filter(emExigencia);
+  if(visao==="fase:inss" && (emExig.length || soExigencia)){
+    const resto = casosSel.filter(k=>!emExigencia(k));
+    // quem tem prazo anotado vem primeiro, do mais apertado; depois os que o
+    // INSS marcou e ainda não tiveram o prazo registrado aqui
+    emExig.sort((a,b)=>(a.exigencia_prazo||"9999")<(b.exigencia_prazo||"9999")?-1:1);
+    const chipExigencia = `<div class="filtros" style="margin-top:-4px">
+      <button class="fchip ${soExigencia?"on":""}" id="chip-exig">⚠ Só exigências (${emExig.length})</button>
+      ${emExig.some(k=>!k.exigencia_prazo)?`<span class="meio-sub" style="align-self:center">
+        ${emExig.filter(k=>!k.exigencia_prazo).length} vieram do INSS sem prazo anotado — abra e registre a exigência</span>`:""}
+    </div>`;
+    meio.innerHTML = chipsCol + chipExigencia
       + `<h3 class="secao" style="color:var(--vermelho)">⚠ Em exigência — prazo de 30 dias (${emExig.length})</h3>`
-      + grupoClientes(emExig).map(([c,ks])=>cartaoCliente(c,ks)).join("")
-      + `<h3 class="secao">Demais requerimentos (${resto.length})</h3>`
-      + grupoClientes(resto).map(([c,ks])=>cartaoCliente(c,ks)).join("");
+      + (grupoClientes(emExig).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+         || "<p class='meio-sub'>Nenhuma exigência aberta. 👏</p>")
+      + (soExigencia ? "" : `<h3 class="secao">Demais requerimentos (${resto.length})</h3>`
+        + grupoClientes(resto).map(([c,ks])=>cartaoCliente(c,ks)).join(""));
+    const ce = document.getElementById("chip-exig");
+    if(ce) ce.onclick = () => { soExigencia = !soExigencia; render(); };
   } else {
     meio.innerHTML = chipsCol
       + (grupoClientes(casosSel).map(([c,ks])=>cartaoCliente(c,ks)).join("")
@@ -2449,8 +2469,10 @@ function renderMeuDia(){
     + blocoCrpsManual()
     + blocoApos()
     + blocoCadunico()
-    + blocoSemAcao()
-    + blocoRevisao()
+    // A REVISÃO DO ACERVO E O "SEM PRÓXIMA AÇÃO" SAÍRAM DAQUI. Meu Dia é o
+    // que vence hoje e o que eu escolhi para hoje — coisas com data. Os dois
+    // blocos que saíram são FILA, não agenda: nunca acabam, e empurravam para
+    // baixo justamente o que vence. Agora moram em 🧹 Cuidar do acervo.
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — clique com o botão direito num cliente e escolha ☀️ Adicionar ao Meu Dia.</p>")
     + `<h3 class="secao">🟡 Vencem hoje (${hojeK.length+tHoje.length})</h3>`
@@ -2464,6 +2486,36 @@ function renderMeuDia(){
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
     e.stopPropagation(); marcarRevisado(b.dataset.revks.split(",")); });
   ligarCartoes(); ligarTarefas();
+}
+
+// ── 🧹 Cuidar do acervo ───────────────────────────────────────────────────
+// O que saiu do Meu Dia. São duas FILAS, não uma agenda: processos sem
+// próxima ação e processos parados há muito tempo. Nenhuma das duas tem
+// data, nenhuma das duas acaba — e é por isso que não podiam morar na tela
+// que responde "o que vence hoje?".
+//
+// Aqui elas ficam à mão para quando sobrar tempo, com o número na barra
+// lateral dizendo o tamanho da fila sem cobrar nada.
+function renderAcervo(){
+  document.getElementById("titulo-lista").textContent = "🧹 Cuidar do acervo";
+  document.getElementById("sub-lista").textContent =
+    "Sem data e sem cobrança: o que fica para quando sobrar tempo. Nada aqui vence hoje.";
+  const corpo = blocoRevisao() + blocoSemAcao();
+  document.getElementById("conteudo-meio").innerHTML = corpo
+    || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
+  document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation(); marcarRevisado(b.dataset.revks.split(",")); });
+  ligarCartoes();
+}
+// quantos esperam ali — o mesmo critério dos dois blocos, sem montar a tela
+function quantosNoAcervo(){
+  const dias = +(cfgApp("revisao_dias")||90);
+  const lim = (()=>{ const d=new Date(hoje()+"T12:00:00");
+                     d.setDate(d.getDate()-dias); return d.toLocaleDateString("sv"); })();
+  const parados = ativos().filter(k=>!k.revisado_em || k.revisado_em<=lim).length;
+  const semAcao = ativos().filter(k=>!k.prazo && !k.exigencia_prazo
+    && !(D.tarefasPorCaso.get(k.id)||[]).length).length;
+  return parados + semAcao;
 }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
