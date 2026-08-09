@@ -1,11 +1,12 @@
 // O aviso na própria página do portal, e a pausa entre chamadas.
 //
-// Este arquivo é injetado nos DOIS mundos (o da extensão e o da página),
-// porque o coletor do PAT precisa morar no mundo da página. Cada mundo tem o
-// seu `window`, então cada um tem a sua cópia destas funções — o que eles
-// compartilham é o DOM, que é justamente o que a faixa usa.
+// Tudo aqui é pendurado no `window` com guarda de "já existe". Este arquivo
+// pode ser injetado DUAS vezes na mesma página — uma pelo carregamento
+// automático, outra pelo botão, que reinjeta por garantia — e um `const`
+// declarado de novo derruba o arquivo inteiro com "Identifier has already
+// been declared". A guarda é o que torna a reinjeção inofensiva.
 
-function faixa(texto, cor = '#2B5FC7') {
+window.faixa = window.faixa || function (texto, cor = '#2B5FC7') {
   let f = document.getElementById('crm-faixa');
   if (!f) {
     f = document.createElement('div');
@@ -19,11 +20,10 @@ function faixa(texto, cor = '#2B5FC7') {
   f.style.background = cor;
   f.textContent = texto;
   return f;
-}
-const faixaOk  = t => faixa(t, '#1E6F50');
-const faixaErr = t => faixa(t, '#B3261E');
-const someFaixa = (ms = 12000) => setTimeout(() => {
+};
+window.faixaOk  = window.faixaOk  || (t => faixa(t, '#1E6F50'));
+window.faixaErr = window.faixaErr || (t => faixa(t, '#B3261E'));
+window.someFaixa = window.someFaixa || ((ms = 12000) => setTimeout(() => {
   const f = document.getElementById('crm-faixa'); if (f) f.remove();
-}, ms);
-
-const pausa = ms => new Promise(r => setTimeout(r, ms));
+}, ms));
+window.pausa = window.pausa || (ms => new Promise(r => setTimeout(r, ms)));
