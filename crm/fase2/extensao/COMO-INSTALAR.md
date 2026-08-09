@@ -34,9 +34,19 @@ o que a sonda provou.
 2. Chrome → `chrome://extensions` → ligue o **Modo do desenvolvedor** (canto
    superior direito).
 3. **Carregar sem compactação** → escolha esta pasta (`extensao`).
-4. Clique no ícone da extensão → **configurar o endereço do CRM** → cole o
+4. Clique no ícone da extensão → **configurar e entrar no CRM** → cole o
    endereço do Supabase e a chave anônima. São os dois mesmos valores que
    estão no seu `app.html`.
+5. Na mesma tela, mais abaixo, **entre com o seu e-mail e senha do CRM**.
+
+O passo 5 não é opcional. O banco só devolve dados para quem entrou: com a
+chave anônima sozinha, toda consulta responde "ok" com **lista vazia** — e a
+extensão anuncia, convicta, que não há nenhum recurso cadastrado. A senha não
+fica guardada: ela é usada uma vez, ali, para obter um crachá renovável, e
+depois só o crachá vive na máquina. Dá para revogá-lo no Supabase e para sair
+pelo botão **Sair** da mesma tela.
+
+O popup avisa em vermelho enquanto esse login não existir.
 
 ## O dia a dia
 

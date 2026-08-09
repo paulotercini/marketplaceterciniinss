@@ -11,6 +11,16 @@
 //
 // Depois da lista não há captcha nenhum: o detalhe abre com a mesma sessão.
 // Foi o que a sonda provou, com HTTP 200.
+//
+// ESTE ARQUIVO RODA NO MUNDO DA PÁGINA (manifest: "world": "MAIN"), e é a
+// única parte da extensão que roda lá. Precisa: o gancho no `fetch` e no
+// `XMLHttpRequest` só enxerga as chamadas do portal se estiver no MESMO
+// `window` que ele. Instalado no mundo isolado da extensão — que é o padrão —
+// o gancho existia, mas nunca disparava: clicava-se em "Buscar", a página
+// buscava, e a extensão não reagia a nada.
+//
+// Em troca, aqui não existe `chrome.storage` nem conversa com o CRM. O que
+// depende da extensão sai por postMessage e quem atende é ponte-pat.js.
 
 (() => {
   const ALVO_LISTA = /\/requerimento\/ec\/tarefa\/consulta/;
@@ -104,22 +114,28 @@
     entregar();
   }
 
-  async function entregar() {
+  // a entrega é da ponte: daqui sai um recado, e a resposta volta por outro
+  function entregar() {
     esperando = false;
     OUT.quando = new Date().toISOString();
-    try {
-      await CRM.enviar('pat', OUT);
-      await chrome.storage.local.set({ ultima_pat: OUT.quando });
-      faixaOk(`✔ ${OUT.detalhes.length} requerimento(s) entregues ao CRM. ` +
-              `Abra 📥 Importar do INSS para conferir o plano.`);
-    } catch (e) { faixaErr('coletei, mas não consegui entregar: ' + e.message); }
-    setTimeout(() => { const f = document.getElementById('crm-faixa'); if (f) f.remove(); }, 12000);
+    faixa(`entregando ${OUT.detalhes.length} requerimento(s) ao CRM…`);
+    window.postMessage({ de: 'crm-pat', tipo: 'entregar', dados: OUT,
+                         quando: OUT.quando, quantos: OUT.detalhes.length }, '*');
   }
+  window.addEventListener('message', ev => {
+    const m = ev.data;
+    if (ev.source !== window || !m || m.de !== 'crm-ponte') return;
+    if (m.tipo === 'entregue')
+      faixaOk(`✔ ${m.quantos} requerimento(s) entregues ao CRM. ` +
+              `Abra 📥 Importar do INSS para conferir o plano.`);
+    if (m.tipo === 'falhou') faixaErr('coletei, mas não consegui entregar: ' + m.erro);
+    someFaixa();
+  });
 
-  // prepara a tela e ESPERA o seu clique
-  window.crmRodar = async () => {
-    const { ultima_pat } = await chrome.storage.local.get(['ultima_pat']);
-    const desde = ultima_pat ? new Date(ultima_pat) : new Date(Date.now() - 180 * 86400000);
+  // prepara a tela e ESPERA o seu clique. A data da última coleta vem de fora
+  // (quem tem acesso ao chrome.storage é o service worker, não este mundo).
+  window.crmRodar = async (desdeIso) => {
+    const desde = desdeIso ? new Date(desdeIso) : new Date(Date.now() - 180 * 86400000);
     preencher(desde);
     esperando = true;
     faixa('Pronto: agora clique em "Buscar". O resto é comigo.', '#B4530A');
