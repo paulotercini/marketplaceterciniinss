@@ -28,12 +28,20 @@
   const OUT = { versao: 3, quando: null, total: null, lista: [], detalhes: [], falhas: [] };
   const vistos = new Set();
 
+  // Um rastro no console, com etiqueta própria. Quando nada acontece, a única
+  // pergunta que importa é ONDE parou: o script subiu? o gancho viu a busca?
+  // a resposta tinha tarefas? Sem isso, "não fez nada" é indistinguível de
+  // "não chegou a rodar", e foi assim que se perderam duas rodadas.
+  const diga = (...o) => console.log('%c[CRM]', 'color:#2B5FC7;font-weight:700', ...o);
+  diga('coletor do PAT no ar, no mundo da página.');
+
   // escuta o que a PÁGINA pede — sem mexer no que ela manda
   const fetchOriginal = window.fetch;
   window.fetch = async function (...args) {
     const [ent, cfg = {}] = args;
     const url = (typeof ent === 'string' ? ent : ent && ent.url) || '';
     const r = await fetchOriginal.apply(this, args);
+    if (/tarefa/i.test(url)) diga('fetch:', url, ALVO_LISTA.test(url) ? '← é a lista' : '');
     if (ALVO_LISTA.test(url)) {
       if (cfg.headers) cracha = cfg.headers;
       receber(await r.clone().json().catch(() => null));
@@ -49,25 +57,38 @@
     if (this._h) this._h[k] = v; return por.call(this, k, v);
   };
   XMLHttpRequest.prototype.send = function (b) {
+    if (this._u && /tarefa/i.test(this._u))
+      diga('xhr:', this._u, ALVO_LISTA.test(this._u) ? '← é a lista' : '');
     if (this._u && ALVO_LISTA.test(this._u)) {
       if (Object.keys(this._h || {}).length) cracha = this._h;
       this.addEventListener('load', () => {
-        try { receber(JSON.parse(this.responseText)); } catch (e) {}
+        try { receber(JSON.parse(this.responseText)); }
+        catch (e) { diga('a resposta da lista não era JSON:', String(e.message || e)); }
       });
     }
     return enviar.call(this, b);
   };
 
+  // A lista é guardada MESMO SEM O BOTÃO ter sido clicado antes. Exigir a
+  // ordem certa (extensão primeiro, "Buscar" depois) era uma armadilha calada:
+  // invertida, o portal respondia, a coleta era descartada em silêncio e
+  // parecia que a extensão não funcionava. Guardar não é coletar — o detalhe,
+  // que é o que gera tráfego no portal, continua só acontecendo com o clique.
   function receber(j) {
-    if (!esperando) return;                    // sem clique no botão, sem coleta
     const tarefas = (j && j.tarefas) || [];
+    diga(`resposta da lista: ${tarefas.length} tarefa(s)`,
+         `de ${(j && j.quantidadeTotalTarefa) || '?'} no total`);
     if (!tarefas.length) return;
     if (j.quantidadeTotalTarefa) OUT.total = j.quantidadeTotalTarefa;
-    let novos = 0;
     for (const t of tarefas) {
       const p = String(t.protocolo || '').replace(/\D/g, '');
       if (!p || vistos.has(p)) continue;
-      vistos.add(p); OUT.lista.push(t); novos++;
+      vistos.add(p); OUT.lista.push(t);
+    }
+    if (!esperando) {
+      diga(`guardei ${OUT.lista.length} — clique em 🌻 INSS na extensão para buscar os detalhes.`);
+      faixa(`${OUT.lista.length} requerimento(s) na tela — clique em 🌻 INSS na extensão`, '#B4530A');
+      return;
     }
     faixa(`recebi ${OUT.lista.length} de ${OUT.total || '?'} — buscando o detalhe…`);
     if (!coletando) { coletando = true; setTimeout(detalhar, 1200); }
@@ -135,9 +156,17 @@
   // prepara a tela e ESPERA o seu clique. A data da última coleta vem de fora
   // (quem tem acesso ao chrome.storage é o service worker, não este mundo).
   window.crmRodar = async (desdeIso) => {
+    esperando = true;
+    diga('botão clicado; já tenho', OUT.lista.length, 'requerimento(s) da lista.');
+    // se a busca já foi feita antes do clique, é só continuar dali
+    if (OUT.lista.length && !coletando) {
+      coletando = true;
+      faixa(`recebi ${OUT.lista.length} de ${OUT.total || '?'} — buscando o detalhe…`);
+      setTimeout(detalhar, 600);
+      return { esperando: false, jaTinha: OUT.lista.length };
+    }
     const desde = desdeIso ? new Date(desdeIso) : new Date(Date.now() - 180 * 86400000);
     preencher(desde);
-    esperando = true;
     faixa('Pronto: agora clique em "Buscar". O resto é comigo.', '#B4530A');
     return { esperando: true, desde: desde.toISOString().slice(0, 10) };
   };

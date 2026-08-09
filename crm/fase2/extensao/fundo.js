@@ -41,7 +41,8 @@ chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
   if (msg.tipo !== 'crm') return;
   (async () => {
     try {
-      if (msg.acao === 'nups')   return responder({ nups: await API.nups() });
+      if (msg.acao === 'nups')   return responder(await API.nups());
+      if (msg.acao === 'diagnostico') return responder(await API.diagnostico());
       if (msg.acao === 'enviar') { await API.enviar(msg.fonte, msg.dados); return responder({ ok: true }); }
       if (msg.acao === 'entrar') return responder({ quem: await API.entrar(msg.email, msg.senha) });
       if (msg.acao === 'sair')   { await API.sair(); return responder({ ok: true }); }

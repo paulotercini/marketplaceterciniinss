@@ -21,5 +21,7 @@ const CRM = {
     return r;
   },
   enviar: (fonte, dados) => CRM.pedir({ tipo: 'crm', acao: 'enviar', fonte, dados }).then(() => true),
-  nupsDoCrm: () => CRM.pedir({ tipo: 'crm', acao: 'nups' }).then(r => r.nups),
+  // devolve { nups, fichas }: o número de fichas lidas é o que distingue
+  // "não há recurso cadastrado" de "não estou enxergando o banco"
+  nupsDoCrm: () => CRM.pedir({ tipo: 'crm', acao: 'nups' }),
 };

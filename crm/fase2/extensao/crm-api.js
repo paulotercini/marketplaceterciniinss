@@ -96,6 +96,10 @@ export async function enviar(fonte, dados) {
 // A LISTA A CONSULTAR é `crps_nups` (o número que a ficha guarda); `crps` é o
 // RESULTADO da última consulta. Pedir o resultado — como esta função fazia —
 // devolvia vazio justamente na primeira vez, que é quando a extensão serve.
+// Devolve TAMBÉM quantas fichas foram lidas. Sem esse número, "nenhum recurso
+// cadastrado" e "não estou enxergando nada" viram a mesma frase — e foi
+// exatamente aí que a extensão passou duas rodadas dizendo a coisa errada com
+// toda a convicção.
 export async function nups() {
   const { url } = await config();
   const r = await fetch(
@@ -109,5 +113,13 @@ export async function nups() {
       const d = String(n == null ? '' : n).replace(/\D/g, '');
       if (d.length >= 15 && d.length <= 25) fora.add(d);
     }
-  return [...fora];
+  return { nups: [...fora], fichas: linhas.length };
+}
+
+// o que o popup mostra no "testar conexão": responde de uma vez quem está
+// logado, quanto o banco devolve e quanto disso tem número de recurso
+export async function diagnostico() {
+  const { quem } = await chrome.storage.local.get(['quem']);
+  const { nups: lista, fichas } = await nups();
+  return { quem: quem || null, fichas, recursos: lista.length };
 }
