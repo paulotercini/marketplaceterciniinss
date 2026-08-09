@@ -424,3 +424,71 @@ test('a placa é cinza, o compositor é branco e nenhum imita a linha do tempo',
   await pag.evaluate(() => fecharFicha(false));
   await limpar();
 });
+
+// ── os marcadores do pedido (Rural, Especial, Deficiência…) ────────────────
+// Este bloco existe por um botão que não fazia nada: o `await` do PATCH não
+// tinha rede, e quando o banco recusava a função morria ali — sem aviso, sem
+// redesenho. Clicar não mudava um pixel.
+const abrirCaso = async (cli = 'c2') => {
+  await limpar();
+  await pag.evaluate(c => abrirFicha(c), cli);
+  await pag.waitForTimeout(220);
+};
+
+test('clicar num marcador acende o botão', pular, async () => {
+  await abrirCaso();
+  const marc = `.marc[onclick*="'especial')"]`;   // 'especial', não 'pcd' nem 'rural'
+  assert.equal(await pag.$$eval(marc, e => e.length), 1, 'o marcador Especial não está na ficha');
+  assert.equal(await pag.$eval(marc, e => e.classList.contains('on')), false);
+  await pag.click(marc);
+  await pag.waitForTimeout(260);
+  assert.equal(await pag.$eval(marc, e => e.classList.contains('on')), true,
+    'o clique no marcador não acendeu o botão');
+  await pag.click(marc);
+  await pag.waitForTimeout(260);
+  assert.equal(await pag.$eval(marc, e => e.classList.contains('on')), false,
+    'o segundo clique não desmarcou');
+});
+
+// O caso real: enquanto a coluna `marcadores` não existir no Supabase, o
+// PATCH volta 400. O botão não pode ficar aceso mentindo, e o motivo tem de
+// aparecer na tela.
+test('marcador que o banco recusa não fica aceso — e diz o porquê', pular, async () => {
+  await abrirCaso();
+  await pag.route('**/rest/v1/casos?id=eq.*', r => r.request().method() === 'PATCH'
+    ? r.fulfill({ status: 400, contentType: 'application/json',
+        headers: { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*',
+                   'access-control-allow-methods': '*' },
+        body: '{"code":"42703","message":"column casos.marcadores does not exist"}' })
+    : r.fallback());
+  const marc = `.marc[onclick*="'rural')"]`;      // exato: 'idade_rural' também contém "rural"
+  await pag.click(marc);
+  await pag.waitForTimeout(320);
+  assert.equal(await pag.$eval(marc, e => e.classList.contains('on')), false,
+    'o marcador ficou aceso mesmo o banco tendo recusado');
+  const msg = await pag.$eval('#aviso', e => e.textContent);
+  assert.match(msg, /schema\.sql|coluna/i, `o erro não foi explicado: "${msg}"`);
+  await pag.unroute('**/rest/v1/casos?id=eq.*');
+});
+
+// Quem manda nos marcadores é a espécie. Sem ela, apareciam os seis — e
+// "União estável" numa ficha de aposentadoria não explica nada a ninguém.
+test('sem espécie, não há botão de marcador — há o convite de preenchê-la', pular, async () => {
+  await limpar();
+  await pag.evaluate(() => { D.casoPorId.get('k2').especie = ''; abrirFicha('c2'); });
+  await pag.waitForTimeout(220);
+  assert.equal(await pag.$$eval('.marc', e => e.length), 0,
+    'sem espécie ainda aparecem marcadores');
+  const linha = await pag.$eval('.marc-linha', e => e.textContent);
+  assert.match(linha, /esp[ée]cie/i, 'a linha não diz o que fazer');
+  await pag.evaluate(() => { D.casoPorId.get('k2').especie = 'B41'; fecharFicha(false); });
+  await limpar();
+});
+
+// O rótulo PEDIDO saiu: os próprios botões dizem o que são.
+test('a linha do pedido não tem mais o rótulo PEDIDO', pular, async () => {
+  await abrirCaso();
+  assert.equal(await pag.$$eval('.marc-rot', e => e.length), 0, 'o rótulo PEDIDO voltou');
+  await pag.evaluate(() => fecharFicha(false));
+  await limpar();
+});
