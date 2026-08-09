@@ -2070,3 +2070,24 @@ alter table andamentos add column if not exists responde_a uuid
   references andamentos(id) on delete set null;
 create index if not exists andamentos_resposta on andamentos (responde_a)
   where responde_a is not null;
+
+-- ══════════════════════════════════════════════════════════════════════════
+-- Ronda dos processos judiciais.
+--
+-- No PJe e no e-SAJ o advogado vê a movimentação praticamente no momento em
+-- que ela acontece — dias ou meses antes da publicação. Por isso a conferência
+-- manual continua sendo o método: ela é a mais rápida que existe, e trocá-la
+-- por robô seria trocar velocidade por comodidade.
+--
+-- O que se perde hoje não é a informação: é o REGISTRO. Quem confere sabe de
+-- cor quando olhou cada processo pela última vez, e nada disso fica no CRM —
+-- só entram os atos que o próprio advogado anota. Então guardamos a ronda,
+-- não o andamento: quem olhou, quando, e quantas vezes. Mesma regra da
+-- consulta manual do CRPS — conferir não é andamento.
+--
+-- processo_link guarda o endereço direto do processo no sistema do tribunal
+-- (o e-SAJ gera um por processo, como o e-Recursos). Colado uma vez, vira um
+-- clique na ronda em vez de uma busca por número.
+-- ══════════════════════════════════════════════════════════════════════════
+alter table casos add column if not exists ronda jsonb not null default '{}'::jsonb;
+alter table casos add column if not exists processo_link text;

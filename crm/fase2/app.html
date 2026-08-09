@@ -472,6 +472,12 @@
     background:#E7EEFB;border:1px solid #C3D6F5;color:var(--azul-escuro)}
   .crps-org.inst2{background:#F1EAFB;border-color:#DACBF2;color:#5B3A9B}
   .crps-org small{font-weight:500;opacity:.8;font-size:10.5px}
+  /* ronda judicial: uma linha por processo, na ordem de quem está há mais
+     tempo sem ser visto. Atrasado ganha a borda quente. */
+  .ronda-lin{margin-bottom:6px;border-left:3px solid #BFE0CB}
+  .ronda-lin.atras{border-left-color:#C6541A;background:#FFF7F2}
+  .ronda-topo{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .ronda-furo{border-left:3px solid #C6541A;background:#FFF7F2;margin-bottom:12px}
   /* consulta manual: o recurso que depende de gente abrir o site */
   .man-cx{border-left:3px solid #7A5AA8}
   .man-cx.vence{border-left-color:#C6541A;background:#FFF7F2}
@@ -993,7 +999,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.14 · recurso de consulta manual</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.15 · ronda dos processos judiciais</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1649,6 +1655,9 @@ function montarSidebar(){
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
+    // o contador é o que está atrasado: processo nunca conferido ou parado há muito
+    ["ronda","🔁 Ronda judicial", judiciais().filter(k=>(k.processo||"").trim()
+      && (diasSemRonda(k)===null || diasSemRonda(k)>=RONDA_ALERTA)).length||null],
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
     // o número que aparece é o que exige ação: não lida ou sem dono
     ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
@@ -1828,6 +1837,7 @@ function render(){
   if(visao==="marketing") return renderMarketing();
 
   if(visao==="rotinas") return renderRotinas();
+  if(visao==="ronda") return renderRonda();
   if(visao==="planejado") return renderPlanejado();
   let casosSel, titulo, subt="Clique no cliente para abrir a ficha completa.";
   if(visao==="minhas"){ titulo="👤 Atribuídas a mim"; casosSel=ativos().filter(k=>
@@ -3573,6 +3583,156 @@ async function addNaLista(){
   await carregar(); montarSidebar(); render();
   inp.focus();                                  // pronto para o próximo, sem tirar a mão
   aviso(`✔ ${nome} entrou na lista`);
+}
+
+// ── 🔁 Ronda dos processos judiciais ──────────────────────────────────────
+// No PJe e no e-SAJ a movimentação aparece praticamente na hora — dias ou
+// meses antes da publicação. A conferência manual é o método mais rápido que
+// existe, e esta tela NÃO tenta substituí-la. Ela resolve o que se perde:
+// hoje só entra no CRM o que o advogado anota, e ele anota os atos que faz
+// (protocolei o recurso), não os que lê. Quando olhou cada processo pela
+// última vez fica na cabeça de uma pessoa só.
+//
+// Então a tela guarda a RONDA, não o andamento. A lista vem na ordem de quem
+// está há mais tempo sem ser visto, que é a ordem em que o furo aparece.
+const RONDA_ALERTA = 15;    // dias sem conferir que a lista destaca
+
+function judiciais(){
+  return ativos().filter(k=>["judicial","conselho"].includes(k.fase) || (k.processo||"").trim());
+}
+function rondaDe(k){ return (k.ronda && typeof k.ronda==="object") ? k.ronda : {}; }
+function diasSemRonda(k){
+  const r = rondaDe(k);
+  if(!r.ultima_em) return null;                    // nunca conferido
+  return Math.floor((Date.now() - new Date(r.ultima_em)) / 86400000);
+}
+function renderRonda(){
+  document.getElementById("titulo-lista").textContent="🔁 Ronda judicial";
+  document.getElementById("sub-lista").textContent=
+    "Você confere no PJe e no e-SAJ — isto não muda. A tela só guarda o resultado, na ordem de quem está há mais tempo sem ser visto.";
+  const ks = judiciais();
+  const semNumero = ks.filter(k=>!(k.processo||"").trim());
+  const comNumero = ks.filter(k=>(k.processo||"").trim())
+    .sort((a,b)=>{
+      const da=rondaDe(a).ultima_em||"", db=rondaDe(b).ultima_em||"";
+      return da<db ? -1 : da>db ? 1 : 0;             // nunca conferido primeiro
+    });
+  document.getElementById("conteudo-meio").innerHTML =
+    // o furo mais caro não é o processo antigo: é o que nunca entrou na ronda
+    (semNumero.length?`<div class="caso ronda-furo">
+      <div class="rotulo-caso">⚠ Fora da ronda (${semNumero.length})
+        — caso judicial sem número de processo</div>
+      <p class="meio-sub" style="margin:4px 0 8px">Sem o número, ninguém confere no PJe e o CNJ também não acha.
+        Abra a ficha e preencha em Dados do processo.</p>
+      ${semNumero.map(k=>{ const c=D.cliPorId.get(k.cliente_id);
+        return `<div class="man-item"><button class="man-nome" onclick="abrirFicha('${k.cliente_id}')">${esc(c?c.nome:"cliente")}</button>
+          <span class="meio-sub">${esc(tituloCaso(k))}</span></div>`;}).join("")}
+    </div>`:"")
+    + `<h3 class="secao">🔁 Processos na ronda (${comNumero.length})</h3>`
+    + (comNumero.map(linhaRonda).join("")
+       || "<p class='meio-sub'>Nenhum processo judicial com número cadastrado.</p>");
+}
+function linhaRonda(k){
+  const c = D.cliPorId.get(k.cliente_id), r = rondaDe(k);
+  const d = diasSemRonda(k);
+  const quem = r.por && D.colPorId.get(r.por);
+  const atras = d === null || d >= RONDA_ALERTA;
+  // o último movimento oficial que o CNJ já tem: serve de conferência, não
+  // de fonte — o DataJud chega depois do PJe, que é justamente o ponto
+  const u = k.datajud && k.datajud.ultimo;
+  return `<div class="caso ronda-lin ${atras?"atras":""}">
+    <div class="ronda-topo">
+      <button class="man-nome" onclick="abrirFicha('${k.cliente_id}')">${esc(c?c.nome:"cliente")}</button>
+      <span class="meio-sub" style="font-family:monospace">${esc(k.processo||"")}</span>
+      <span class="man-selo ${atras?"vence":""}">${
+        d===null ? "nunca conferido"
+        : d===0 ? "conferido hoje"
+        : `há ${d} dia${d>1?"s":""}${quem?` (${esc(quem.inicial)})`:""}`}</span>
+      ${r.total?`<span class="meio-sub">${r.total}× na ronda</span>`:""}
+      <span style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap">
+        ${k.processo_link
+          ? `<a class="btn-mini" target="_blank" style="text-decoration:none" href="${esc(k.processo_link)}">🌐 abrir no tribunal</a>`
+          : `<button class="btn-mini" onclick="rondaLink('${k.id}')" title="cole aqui o endereço do processo — depois é um clique">🔗 guardar o link</button>`}
+        <button class="btn-mini" onclick="copiar('${esc(k.processo||"")}')">⧉ copiar nº</button>
+        <button class="btn-mini" onclick="rondaSemNovidade('${k.id}')">✓ conferido, sem novidade</button>
+        <button class="btn-mini forte" onclick="rondaComNovidade('${k.id}')">✎ teve movimentação…</button>
+      </span>
+    </div>
+    ${u?`<div class="meio-sub" style="margin-top:4px">CNJ (chega depois): ${esc(u.nome||"")} em ${u.data?fmt(u.data):"—"}</div>`:""}
+  </div>`;
+}
+async function gravarRonda(k, extra){
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify(Object.assign({ronda:k.ronda}, extra||{}))});
+}
+// olhar e não achar nada é trabalho feito, não andamento: vira carimbo, não
+// comentário. É o que faz a lista se reordenar e o furo aparecer.
+async function rondaSemNovidade(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const r = rondaDe(k);
+  k.ronda = {ultima_em:new Date().toISOString(), por:eu.id, total:(r.total||0)+1};
+  await gravarRonda(k);
+  plim();
+  render();
+}
+function rondaComNovidade(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  // os movimentos oficiais que o CNJ já tem viram botão: na maioria das vezes
+  // o texto que você ia digitar já está aqui, escrito pelo próprio tribunal
+  const recentes = ((k.datajud||{}).recentes||[]).slice(0,6);
+  caixa(`<h3>✎ Teve movimentação no processo</h3>
+    <p class="meio-sub">Vira comentário na ficha, com a data de hoje. Se for do CNJ, clique e ele se escreve.</p>
+    ${recentes.length?`<div class="form-linha" style="margin-top:8px">${recentes.map(m=>
+      `<button class="btn-rap" onclick="document.getElementById('rd-txt').value=${JSON.stringify(`${m.nome||""}${m.complemento?` (${m.complemento})`:""}`).replace(/"/g,"&quot;")}"
+        title="${esc(m.data?fmt(m.data):"")}">${esc((m.nome||"").slice(0,34))}</button>`).join("")}</div>`:""}
+    <textarea id="rd-txt" rows="3" placeholder="o que apareceu no PJe / e-SAJ?"
+      style="width:100%;margin-top:8px;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"></textarea>
+    <div class="form-linha" style="margin-top:8px;align-items:center">
+      <label class="meio-sub"><input type="checkbox" id="rd-imp" checked> marcar o processo como importante ⭐</label>
+      <button class="btn-rap" style="margin-left:auto" onclick="salvarRondaNovidade('${casoId}')">Registrar</button>
+    </div>`);
+  setTimeout(()=>{const t=document.getElementById("rd-txt"); if(t) t.focus();},40);
+}
+async function salvarRondaNovidade(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const t = document.getElementById("rd-txt");
+  const txt = ((t&&t.value)||"").trim();
+  if(!txt) return aviso("Escreva o que apareceu");
+  const imp = !!(document.getElementById("rd-imp")||{}).checked;
+  fecharCaixa();
+  const r = rondaDe(k);
+  k.ronda = {ultima_em:new Date().toISOString(), por:eu.id, total:(r.total||0)+1, ultima_novidade:hoje()};
+  if(imp) k.importante = true;
+  await gravarRonda(k, imp?{importante:true}:null);
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:`⚖️ Processo — ${txt}`})}).catch(()=>{});
+  plim();
+  aviso("Movimentação registrada ✔", false);
+  render();
+}
+function rondaLink(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  caixa(`<h3>🔗 Link direto do processo</h3>
+    <p class="meio-sub">Abra o processo no PJe ou no e-SAJ, copie o endereço da barra e cole aqui.
+      Depois vira um clique — sem procurar pelo número toda vez.</p>
+    <input id="rd-link" placeholder="https://..." style="width:100%;margin-top:8px"
+      value="${esc(k.processo_link||"")}">
+    <div class="form-linha" style="margin-top:8px">
+      <button class="btn-rap" style="margin-left:auto" onclick="salvarRondaLink('${casoId}')">Guardar</button>
+    </div>`);
+  setTimeout(()=>{const i=document.getElementById("rd-link"); if(i) i.focus();},40);
+}
+async function salvarRondaLink(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const i = document.getElementById("rd-link");
+  const v = ((i&&i.value)||"").trim();
+  if(v && !/^https?:\/\//i.test(v)) return aviso("O link precisa começar com http:// ou https://");
+  fecharCaixa();
+  k.processo_link = v || null;
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({processo_link:k.processo_link})});
+  aviso(v?"Link guardado ✔":"Link removido", false);
+  render();
 }
 
 function renderParcerias(){
