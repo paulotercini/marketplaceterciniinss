@@ -73,8 +73,13 @@ números realmente não estão cadastrados.
 **Para o PAT**, no console da página (F12 → Console), procure as linhas com a
 etiqueta azul **[CRM]**. Elas contam a história inteira:
 
-- `coletor do PAT no ar` — o script subiu. Se esta linha não existir, o
-  problema é a instalação, não a coleta.
+- `extensão no ar nesta página` — a extensão está instalada e vale para esta
+  página. **Se esta linha não existir, nada mais importa**: o problema é a
+  instalação. Abra `chrome://extensions`, confira a versão e veja se há um
+  erro em vermelho no cartão da extensão.
+- `coletor confirmado dentro da página` — o coletor subiu. Se em vez dela vier
+  uma faixa vermelha dizendo que o portal bloqueou o coletor, o problema é a
+  política de segurança do site.
 - `xhr: …/tarefa/consulta ← é a lista` — o gancho viu a busca.
 - `resposta da lista: 184 tarefa(s)` — a lista chegou.
 - `guardei 184 — clique em 🌻 INSS` — chegou antes do seu clique, e está

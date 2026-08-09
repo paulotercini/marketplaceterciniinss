@@ -1,26 +1,18 @@
-// PAT/GERID — o INSS.
+// O COLETOR DO PAT — roda DENTRO DA PÁGINA, e é o único pedaço que roda lá.
 //
-// AQUI FICA A ÚNICA COISA QUE A EXTENSÃO NÃO FAZ POR VOCÊ: clicar em
-// "Buscar". A lista do PAT exige um token de reCAPTCHA, que a página gera
-// quando UMA PESSOA aciona a busca. Mandar o script clicar seria justamente
-// o robô que o captcha existe para barrar — e o convênio está no seu nome.
+// Precisa: o gancho no `fetch`/`XMLHttpRequest` só enxerga as chamadas do
+// portal se estiver no MESMO `window` que ele. Um script de extensão comum
+// mora num `window` só dele — o gancho existia, não dava erro nenhum, e nunca
+// disparava. Clicava-se em "Buscar", o portal buscava, e nada acontecia.
 //
-// Então a divisão é esta: a extensão prepara a tela (põe a data da última
-// atualização e 500 por página), você dá UM clique em Buscar, e ela faz todo
-// o resto — o detalhe de cada requerimento e a entrega ao CRM.
+// Ele NÃO é declarado no manifesto: é a ponte que o injeta com uma tag
+// <script>. Declará-lo pedindo "world": "MAIN" exige um Chrome recente e, se
+// o navegador não conhece essa chave, ele recusa o manifesto INTEIRO — a
+// extensão simplesmente não carrega, sem uma linha no console. Foi o que
+// aconteceu, e por isso a injeção é feita do jeito antigo, que sempre serviu.
 //
-// Depois da lista não há captcha nenhum: o detalhe abre com a mesma sessão.
-// Foi o que a sonda provou, com HTTP 200.
-//
-// ESTE ARQUIVO RODA NO MUNDO DA PÁGINA (manifest: "world": "MAIN"), e é a
-// única parte da extensão que roda lá. Precisa: o gancho no `fetch` e no
-// `XMLHttpRequest` só enxerga as chamadas do portal se estiver no MESMO
-// `window` que ele. Instalado no mundo isolado da extensão — que é o padrão —
-// o gancho existia, mas nunca disparava: clicava-se em "Buscar", a página
-// buscava, e a extensão não reagia a nada.
-//
-// Em troca, aqui não existe `chrome.storage` nem conversa com o CRM. O que
-// depende da extensão sai por postMessage e quem atende é ponte-pat.js.
+// Aqui não existe `chrome.*` nem conversa com o CRM. Nem faixa na tela: quem
+// desenha é a ponte. Daqui só saem recados por postMessage.
 
 (() => {
   const ALVO_LISTA = /\/requerimento\/ec\/tarefa\/consulta/;
@@ -28,12 +20,13 @@
   const OUT = { versao: 3, quando: null, total: null, lista: [], detalhes: [], falhas: [] };
   const vistos = new Set();
 
-  // Um rastro no console, com etiqueta própria. Quando nada acontece, a única
-  // pergunta que importa é ONDE parou: o script subiu? o gancho viu a busca?
-  // a resposta tinha tarefas? Sem isso, "não fez nada" é indistinguível de
-  // "não chegou a rodar", e foi assim que se perderam duas rodadas.
   const diga = (...o) => console.log('%c[CRM]', 'color:#2B5FC7;font-weight:700', ...o);
-  diga('coletor do PAT no ar, no mundo da página.');
+  const dizer = (tipo, extra) => window.postMessage({ de: 'crm-pat', tipo, ...extra }, '*');
+  const mostrar = (texto, cor) => dizer('faixa', { texto, cor });
+  const pausa = ms => new Promise(r => setTimeout(r, ms));
+
+  diga('coletor do PAT no ar, dentro da página.');
+  dizer('oi');                         // a ponte espera este sinal para saber que subiu
 
   // escuta o que a PÁGINA pede — sem mexer no que ela manda
   const fetchOriginal = window.fetch;
@@ -71,9 +64,8 @@
 
   // A lista é guardada MESMO SEM O BOTÃO ter sido clicado antes. Exigir a
   // ordem certa (extensão primeiro, "Buscar" depois) era uma armadilha calada:
-  // invertida, o portal respondia, a coleta era descartada em silêncio e
-  // parecia que a extensão não funcionava. Guardar não é coletar — o detalhe,
-  // que é o que gera tráfego no portal, continua só acontecendo com o clique.
+  // invertida, a coleta era descartada em silêncio. Guardar não é coletar — o
+  // detalhe, que é o que gera tráfego no portal, continua só saindo no clique.
   function receber(j) {
     const tarefas = (j && j.tarefas) || [];
     diga(`resposta da lista: ${tarefas.length} tarefa(s)`,
@@ -86,11 +78,11 @@
       vistos.add(p); OUT.lista.push(t);
     }
     if (!esperando) {
-      diga(`guardei ${OUT.lista.length} — clique em 🌻 INSS na extensão para buscar os detalhes.`);
-      faixa(`${OUT.lista.length} requerimento(s) na tela — clique em 🌻 INSS na extensão`, '#B4530A');
+      diga(`guardei ${OUT.lista.length} — clique em 🌻 INSS na extensão.`);
+      mostrar(`${OUT.lista.length} requerimento(s) na tela — clique em 🌻 INSS na extensão`, '#B4530A');
       return;
     }
-    faixa(`recebi ${OUT.lista.length} de ${OUT.total || '?'} — buscando o detalhe…`);
+    mostrar(`recebi ${OUT.lista.length} de ${OUT.total || '?'} — buscando o detalhe…`);
     if (!coletando) { coletando = true; setTimeout(detalhar, 1200); }
   }
 
@@ -107,7 +99,7 @@
     let seguidas = 0;
     for (let i = 0; i < fila.length; i++) {
       const p = fila[i].protocolo;
-      faixa(`detalhe ${i + 1} de ${fila.length}…`);
+      mostrar(`detalhe ${i + 1} de ${fila.length}…`);
       try {
         const r = await fetchOriginal(
           `/apis/requerimentosPortalApi/requerimento/ec/tarefa/${p}`,
@@ -130,46 +122,46 @@
   }
 
   function barreira(status) {
-    faixaErr(`o portal parou de responder (${status}). Entreguei o que já veio; ` +
-             `daqui a alguns minutos clique de novo.`);
+    diga('o portal parou de responder:', status);
+    mostrar(`o portal parou de responder (${status}). Entreguei o que já veio; ` +
+            `daqui a alguns minutos clique de novo.`, '#B3261E');
     entregar();
   }
 
-  // a entrega é da ponte: daqui sai um recado, e a resposta volta por outro
+  // a entrega é da ponte: daqui sai o pacote, e o resultado volta por outro recado
   function entregar() {
     esperando = false;
     OUT.quando = new Date().toISOString();
-    faixa(`entregando ${OUT.detalhes.length} requerimento(s) ao CRM…`);
-    window.postMessage({ de: 'crm-pat', tipo: 'entregar', dados: OUT,
-                         quando: OUT.quando, quantos: OUT.detalhes.length }, '*');
+    diga('entregando', OUT.detalhes.length, 'detalhe(s) à extensão.');
+    dizer('entregar', { dados: OUT, quando: OUT.quando, quantos: OUT.detalhes.length });
   }
+
+  // ── recados que vêm da ponte ────────────────────────────────────────────
   window.addEventListener('message', ev => {
     const m = ev.data;
     if (ev.source !== window || !m || m.de !== 'crm-ponte') return;
-    if (m.tipo === 'entregue')
-      faixaOk(`✔ ${m.quantos} requerimento(s) entregues ao CRM. ` +
-              `Abra 📥 Importar do INSS para conferir o plano.`);
-    if (m.tipo === 'falhou') faixaErr('coletei, mas não consegui entregar: ' + m.erro);
-    someFaixa();
-  });
 
-  // prepara a tela e ESPERA o seu clique. A data da última coleta vem de fora
-  // (quem tem acesso ao chrome.storage é o service worker, não este mundo).
-  window.crmRodar = async (desdeIso) => {
-    esperando = true;
-    diga('botão clicado; já tenho', OUT.lista.length, 'requerimento(s) da lista.');
-    // se a busca já foi feita antes do clique, é só continuar dali
-    if (OUT.lista.length && !coletando) {
-      coletando = true;
-      faixa(`recebi ${OUT.lista.length} de ${OUT.total || '?'} — buscando o detalhe…`);
-      setTimeout(detalhar, 600);
-      return { esperando: false, jaTinha: OUT.lista.length };
+    if (m.tipo === 'rodar') {
+      esperando = true;
+      diga('botão clicado; já tenho', OUT.lista.length, 'requerimento(s) da lista.');
+      // se a busca já foi feita antes do clique, é só continuar dali
+      if (OUT.lista.length && !coletando) {
+        coletando = true;
+        mostrar(`recebi ${OUT.lista.length} de ${OUT.total || '?'} — buscando o detalhe…`);
+        setTimeout(detalhar, 600);
+        dizer('pronto', { jaTinha: OUT.lista.length, esperando: false });
+        return;
+      }
+      preencher(m.desde ? new Date(m.desde) : new Date(Date.now() - 180 * 86400000));
+      mostrar('Pronto: agora clique em "Buscar". O resto é comigo.', '#B4530A');
+      dizer('pronto', { jaTinha: 0, esperando: true });
     }
-    const desde = desdeIso ? new Date(desdeIso) : new Date(Date.now() - 180 * 86400000);
-    preencher(desde);
-    faixa('Pronto: agora clique em "Buscar". O resto é comigo.', '#B4530A');
-    return { esperando: true, desde: desde.toISOString().slice(0, 10) };
-  };
+    if (m.tipo === 'entregue')
+      mostrar(`✔ ${m.quantos} requerimento(s) entregues ao CRM. ` +
+              `Abra 📥 Importar do INSS para conferir o plano.`, '#1E6F50');
+    if (m.tipo === 'falhou')
+      mostrar('coletei, mas não consegui entregar: ' + m.erro, '#B3261E');
+  });
 
   // põe a data e o tamanho da página nos campos que a tela já tem. Preencher
   // campo é preparar; acionar a busca é que seria passar por cima do captcha.
@@ -185,7 +177,7 @@
       if (op) { sel.value = op.value; sel.dispatchEvent(new Event('change', { bubbles: true })); }
     }
   }
-  // o portal é Angular: mexer no .value não basta, ele precisa do evento
+  // o portal é React: mexer no .value não basta, ele precisa do evento
   function escrever(inp, texto) {
     const set = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
     set.call(inp, texto);
