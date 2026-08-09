@@ -120,6 +120,7 @@ const abrir = async () => {
     document.getElementById('tela-login').style.display = 'none';
     document.getElementById('app').classList.add('logado');
     carregar = async () => {};                    // o recarregar não faz parte deste teste
+    window.__api = api;                           // os testes do CRPS trocam o api
     montarSidebar(); render();
   });
 };
@@ -308,4 +309,82 @@ test('coleta já traduzida atravessa sem ser mexida', pular, async () => {
     return a === JSON.stringify(pat);
   }, PAT);
   assert.equal(igual, true, 'a tradução mexeu num arquivo que já estava pronto');
+});
+
+// ── o e-Recursos ──────────────────────────────────────────────────────────
+// A extensão entrega o que o portal respondeu, cru. A tradução — a mesma que
+// tem 125 casos-ouro no robô de linha de comando — roda aqui dentro.
+const CRPS_COLETA = {
+  versao: 1, quando: '2026-08-09T12:00:00Z',
+  itens: {
+    '44234156897202017_esisrec': {
+      proc: '44234156897202017', numProc: '123/2026', orgaoAtual: '25ª Junta de Recursos',
+      recorrentes: [{ nome: 'MARIA APARECIDA' }],
+      eventos: [
+        { status: 'ACORDAM os membros da 25ª Junta de Recursos, em CONHECER do recurso e NEGAR-LHE provimento',
+          data: '05/08/2026' },
+        { status: 'RECURSO DISTRIBUIDO', data: '01/07/2026' },
+      ],
+    },
+    '99999999999999999_esisrec': {          // nup que o CRM não conhece
+      proc: '99999999999999999', eventos: [{ status: 'RECURSO DISTRIBUIDO', data: '01/07/2026' }],
+    },
+  },
+  falhas: [],
+};
+
+test('a coleta do CRPS vira bloco do recurso e movimento novo', pular, async () => {
+  pedidos = [];
+  await abrir();
+  const r = await pag.evaluate(col => {
+    D.casos[0].crps_nups = ['44234156897202017'];
+    const p = planoCrps(col, D);
+    return { ...p.resumo, primeiro: (p.andamentos[0] || {}).texto,
+             id: (p.andamentos[0] || {}).origem_id,
+             casoDoBloco: (p.blocos[0] || {}).caso_id };
+  }, CRPS_COLETA);
+  assert.equal(r.lidos, 2);
+  assert.equal(r.casos, 1, 'o bloco devia casar pelo NUP');
+  assert.equal(r.sem_caso, 1, 'o NUP desconhecido não pode virar caso');
+  assert.equal(r.casoDoBloco, 'k1');
+  assert.ok(r.movimentos >= 1, 'nenhum movimento virou andamento');
+  assert.match(r.primeiro, /🖥 CRPS/, 'o comentário não saiu no formato do CRPS');
+  assert.match(r.id, /^44234156897202017\|/, 'a impressão digital do evento tem de levar o NUP');
+});
+
+// O portal devolve a lista INTEIRA a cada consulta: sem a impressão digital,
+// os mesmos movimentos virariam comentário de novo a cada rodada.
+test('movimento já visto não vira andamento de novo', pular, async () => {
+  const n = await pag.evaluate(col => {
+    D.casos[0].crps_nups = ['44234156897202017'];
+    const p1 = planoCrps(col, D);
+    // finge que a rodada anterior já gravou tudo
+    D.novid = p1.andamentos.map(a => ({ id: a.origem_id, origem: 'crps',
+                                        origem_id: a.origem_id, andamentos_lidos: [] }));
+    return planoCrps(col, D).resumo.movimentos;
+  }, CRPS_COLETA);
+  assert.equal(n, 0, 'repetiu os movimentos que já estavam na ficha');
+});
+
+test('aplicar o CRPS grava o bloco no caso e o movimento como andamento', pular, async () => {
+  pedidos = [];
+  await abrir();
+  await pag.evaluate(async col => {
+    D.casos[0].crps_nups = ['44234156897202017'];
+    D.novid = [];
+    api = (async (caminho, op) => {                    // o banco de mentira já responde
+      if (/\/coletas\?select/.test(caminho)) return [{ id: 'x1', fonte: 'crps', dados: col }];
+      return window.__api(caminho, op);
+    });
+    await aplicarCrps('x1');
+  }, CRPS_COLETA).catch(() => {});
+  await pag.waitForTimeout(400);
+  const patch = pedidos.find(x => x.m === 'PATCH' && x.url.includes('id=eq.k1') && x.corpo.crps);
+  assert.ok(patch, `não gravou o bloco do recurso: ${pedidos.map(x => x.m + x.url).join('|')}`);
+  assert.equal(patch.corpo.crps[0].nup, '44234156897202017');
+  const ands = pedidos.filter(x => x.m === 'POST' && x.url.includes('/andamentos'));
+  assert.ok(ands.length >= 1, 'nenhum movimento virou andamento');
+  assert.equal(ands[0].corpo.origem, 'crps');
+  assert.match(ands[0].corpo.origem_id, /^44234156897202017\|/);
+  assert.equal(ands[0].corpo.publico, false, 'movimento do CRPS não pode ir ao portal do cliente');
 });
