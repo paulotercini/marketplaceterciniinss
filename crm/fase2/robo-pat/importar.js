@@ -47,6 +47,18 @@ function indexar(D) {
   return { porProtocolo, porCpf };
 }
 
+// UM CASO QUE PODE SER O MESMO. O protocolo é a chave certa, mas o campo
+// quase nunca foi preenchido à mão — então "não casou pelo protocolo" quer
+// dizer, quase sempre, "o caso existe e ninguém anotou o número". Antes de
+// criar, procura no mesmo cliente um caso ativo na mesma lista e, quando as
+// duas têm espécie, com a mesma espécie.
+function casoParecido(D, clienteId, lista, especie) {
+  return (D.casos || []).find(k =>
+    k.cliente_id === clienteId && k.fase !== 'encerrado' && k.fase === lista &&
+    (!especie || !k.especie || String(k.especie).toUpperCase() === String(especie).toUpperCase()));
+}
+const tituloDoCaso = k => (k || {}).beneficio || (k || {}).titulo || 'caso sem nome';
+
 // O que muda num caso que JÁ existe. Só campo vazio é preenchido: o que o
 // escritório escreveu à mão vale mais que o que o portal devolve, e
 // sobrescrever DER conferida por DER do sistema é perder trabalho humano.
@@ -97,7 +109,7 @@ function planoDeImportacao(pat, D, hoje) {
     evDoCaso.get(e.caso_id).push(e);
   }
 
-  const plano = { atualizar: [], novos: [], semCliente: [], soAndamento: [],
+  const plano = { atualizar: [], novos: [], possiveisDuplicados: [], semCliente: [],
                   ignorados: [], eventos: [], resumo: {} };
 
   for (const det of (pat.detalhes || [])) {
@@ -125,9 +137,16 @@ function planoDeImportacao(pat, D, hoje) {
     if (NAO_ABRE_CASO.has(det.tipo)) { plano.ignorados.push(item); continue; }
 
     const cli = porCpf.get(cpf);
-    if (cli) plano.novos.push({ ...item, cliente_id: cli.id, nome: cli.nome,
-                                lista: LISTA_POR_TIPO[det.tipo] || 'inss' });
-    else plano.semCliente.push({ ...item, lista: LISTA_POR_TIPO[det.tipo] || 'inss' });
+    const lista = LISTA_POR_TIPO[det.tipo] || 'inss';
+    if (!cli) { plano.semCliente.push({ ...item, lista }); continue; }
+    // O PROTOCOLO CASOU EM POUCOS PORQUE O CAMPO QUASE NUNCA FOI PREENCHIDO,
+    // não porque o caso não existe. Criar sem olhar duplicaria a ficha de
+    // quem já está no CRM — e ninguém desfaz setenta duplicatas na mão.
+    const parecido = casoParecido(D, cli.id, lista, det.especie);
+    if (parecido)
+      plano.possiveisDuplicados.push({ ...item, cliente_id: cli.id, nome: cli.nome, lista,
+        caso_id: parecido.id, titulo_existente: tituloDoCaso(parecido) });
+    else plano.novos.push({ ...item, cliente_id: cli.id, nome: cli.nome, lista });
   }
 
   const porTipo = l => l.reduce((m, x) => (m[x.tipo] = (m[x.tipo] || 0) + 1, m), {});
@@ -135,6 +154,7 @@ function planoDeImportacao(pat, D, hoje) {
     lidos: (pat.detalhes || []).length,
     atualizar: plano.atualizar.length,
     novos: plano.novos.length,
+    possiveis_duplicados: plano.possiveisDuplicados.length,
     sem_cliente: plano.semCliente.length,
     ignorados: plano.ignorados.length,
     eventos: plano.eventos.reduce((n, e) => n + e.eventos.length, 0),
@@ -151,7 +171,7 @@ function planoDeImportacao(pat, D, hoje) {
 // alguma coisa está errada e é melhor não gravar nada.
 function conferirPlanoPat(pat, plano) {
   const lidos = (pat.detalhes || []).length;
-  const soma = plano.atualizar.length + plano.novos.length
+  const soma = plano.atualizar.length + plano.novos.length + plano.possiveisDuplicados.length
              + plano.semCliente.length + plano.ignorados.length;
   if (soma > lidos) return `o plano fala de ${soma} requerimentos e só ${lidos} foram lidos`;
   for (const n of plano.novos.concat(plano.semCliente)) {
@@ -166,5 +186,5 @@ function conferirPlanoPat(pat, plano) {
   return null;
 }
 
-module.exports = { LISTA_POR_TIPO, NAO_ABRE_CASO, digitos, protocolosDe, indexar,
+module.exports = { LISTA_POR_TIPO, NAO_ABRE_CASO, digitos, protocolosDe, indexar, casoParecido,
   mudancasDoCaso, eventosNovos, andamentoDaMudanca, planoDeImportacao, conferirPlanoPat };

@@ -1131,7 +1131,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.30 · importar do INSS</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.31 · importar sem duplicar</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1927,6 +1927,13 @@ function indexar(D) {
   return { porProtocolo, porCpf };
 }
 
+function casoParecido(D, clienteId, lista, especie) {
+  return (D.casos || []).find(k =>
+    k.cliente_id === clienteId && k.fase !== 'encerrado' && k.fase === lista &&
+    (!especie || !k.especie || String(k.especie).toUpperCase() === String(especie).toUpperCase()));
+}
+const tituloDoCaso = k => (k || {}).beneficio || (k || {}).titulo || 'caso sem nome';
+
 function mudancasDoCaso(k, det) {
   const m = {};
   if (det.der && !k.der) m.der = det.der;
@@ -1967,7 +1974,7 @@ function planoDeImportacao(pat, D, hoje) {
     evDoCaso.get(e.caso_id).push(e);
   }
 
-  const plano = { atualizar: [], novos: [], semCliente: [], soAndamento: [],
+  const plano = { atualizar: [], novos: [], possiveisDuplicados: [], semCliente: [],
                   ignorados: [], eventos: [], resumo: {} };
 
   for (const det of (pat.detalhes || [])) {
@@ -1995,9 +2002,16 @@ function planoDeImportacao(pat, D, hoje) {
     if (NAO_ABRE_CASO.has(det.tipo)) { plano.ignorados.push(item); continue; }
 
     const cli = porCpf.get(cpf);
-    if (cli) plano.novos.push({ ...item, cliente_id: cli.id, nome: cli.nome,
-                                lista: LISTA_POR_TIPO[det.tipo] || 'inss' });
-    else plano.semCliente.push({ ...item, lista: LISTA_POR_TIPO[det.tipo] || 'inss' });
+    const lista = LISTA_POR_TIPO[det.tipo] || 'inss';
+    if (!cli) { plano.semCliente.push({ ...item, lista }); continue; }
+    // O PROTOCOLO CASOU EM POUCOS PORQUE O CAMPO QUASE NUNCA FOI PREENCHIDO,
+    // não porque o caso não existe. Criar sem olhar duplicaria a ficha de
+    // quem já está no CRM — e ninguém desfaz setenta duplicatas na mão.
+    const parecido = casoParecido(D, cli.id, lista, det.especie);
+    if (parecido)
+      plano.possiveisDuplicados.push({ ...item, cliente_id: cli.id, nome: cli.nome, lista,
+        caso_id: parecido.id, titulo_existente: tituloDoCaso(parecido) });
+    else plano.novos.push({ ...item, cliente_id: cli.id, nome: cli.nome, lista });
   }
 
   const porTipo = l => l.reduce((m, x) => (m[x.tipo] = (m[x.tipo] || 0) + 1, m), {});
@@ -2005,6 +2019,7 @@ function planoDeImportacao(pat, D, hoje) {
     lidos: (pat.detalhes || []).length,
     atualizar: plano.atualizar.length,
     novos: plano.novos.length,
+    possiveis_duplicados: plano.possiveisDuplicados.length,
     sem_cliente: plano.semCliente.length,
     ignorados: plano.ignorados.length,
     eventos: plano.eventos.reduce((n, e) => n + e.eventos.length, 0),
@@ -2018,7 +2033,7 @@ function planoDeImportacao(pat, D, hoje) {
 
 function conferirPlanoPat(pat, plano) {
   const lidos = (pat.detalhes || []).length;
-  const soma = plano.atualizar.length + plano.novos.length
+  const soma = plano.atualizar.length + plano.novos.length + plano.possiveisDuplicados.length
              + plano.semCliente.length + plano.ignorados.length;
   if (soma > lidos) return `o plano fala de ${soma} requerimentos e só ${lidos} foram lidos`;
   for (const n of plano.novos.concat(plano.semCliente)) {
@@ -2054,10 +2069,16 @@ function telaImportarPat(){
     ${!r ? "" : `
       <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
         ${[["requerimentos lidos", r.lidos], ["casos a atualizar", r.atualizar],
-           ["casos novos", r.novos], ["sem cliente no CRM", r.sem_cliente],
+           ["casos novos", r.novos], ["confira antes", r.possiveis_duplicados],
+           ["sem cliente no CRM", r.sem_cliente],
            ["perícias a agendar", r.eventos], ["em exigência", r.exigencias],
            ["apuração (urgente)", r.apuracoes], ["espécie a confirmar", r.a_confirmar]].map(cx).join("")}
       </div>
+      ${r.possiveis_duplicados ? `<div class="exig">
+        <strong>${r.possiveis_duplicados} requerimento(s) podem já estar no CRM.</strong>
+        O protocolo casou em poucos porque o campo quase nunca foi preenchido à mão — não
+        porque o caso não existe. Estes NÃO entram no botão acima: confira um por um na
+        tabela abaixo e escolha juntar ou criar.</div>` : ""}
       ${r.sem_cliente ? `<div class="exig"><strong>${r.sem_cliente} requerimento(s) sem cliente no CRM.</strong>
         São protocolos que existem no INSS e não têm ficha aqui — quase sempre quem
         protocolou sozinho pelo Meu INSS. Eles NÃO entram: cadastre o cliente antes.</div>` : ""}
@@ -2067,6 +2088,15 @@ function telaImportarPat(){
       ${planoPat.erro ? `<div class="exig"><strong>Não vou gravar:</strong> ${esc(planoPat.erro)}</div>`
         : `<button class="novo-cli" style="width:auto;margin:12px 0 0;padding:10px 20px"
              onclick="aplicarPat()">Aplicar ${r.atualizar + r.novos} mudança(s)</button>`}
+      ${planoPat.possiveisDuplicados.length ? `<h3 class="secao">Confira antes de criar (${planoPat.possiveisDuplicados.length})</h3>
+        <table class="tab"><tr><th>cliente</th><th>o que veio do INSS</th><th>o que já existe aqui</th><th></th></tr>
+        ${planoPat.possiveisDuplicados.map(n=>`<tr><td>${esc(n.nome)}</td>
+          <td>${esc(n.beneficio||"—")} ${n.especie?`<span class="chip">${n.especie}</span>`:""}
+            <a href="${n.link}" target="_blank" rel="noopener">↗</a></td>
+          <td>${esc(n.titulo_existente)}</td>
+          <td><button class="btn-mini" onclick="juntarAoCaso('${n.protocolo}')">é o mesmo — juntar</button>
+            <button class="btn-mini" onclick="criarMesmoAssim('${n.protocolo}')">é outro — criar</button></td></tr>`).join("")}
+        </table>` : ""}
       ${planoPat.novos.length ? `<h3 class="secao">Casos novos (${planoPat.novos.length})</h3>
         <table class="tab"><tr><th>cliente</th><th>o quê</th><th>lista</th><th>DER</th><th></th></tr>
         ${planoPat.novos.slice(0,60).map(n=>`<tr><td>${esc(n.nome)}</td>
@@ -2090,38 +2120,85 @@ function ligarImportarPat(){
 }
 async function aplicarPat(){
   if(!planoPat || planoPat.erro) return;
-  let n = 0;
-  try{
-    for(const a of planoPat.atualizar){
-      const k = D.casoPorId.get(a.caso_id); if(!k) continue;
-      const campos = { ...a.mudancas, situacao_inss: a.situacao };
-      if(!(k.protocolos||[]).includes(a.protocolo))
-        campos.protocolos = [...(k.protocolos||[]), a.protocolo];
-      await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-        body:JSON.stringify(campos)});
-      Object.assign(k, campos); n++;
-      if(a.andamento)
-        await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-          body:JSON.stringify({caso_id:k.id, colaborador_id:eu.id, texto:a.andamento})});
-    }
-    for(const novo of planoPat.novos){
-      const [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-        body:JSON.stringify({cliente_id:novo.cliente_id, titulo:novo.nome, fase:novo.lista,
-          beneficio:novo.beneficio, especie:novo.especie, der:novo.der,
-          protocolos:[novo.protocolo], marcadores:novo.marcadores,
-          urgente:novo.urgente, processo_link:novo.link, situacao_inss:novo.situacao})}) || [];
-      if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); n++; }
-    }
-    for(const bloco of planoPat.eventos)
-      for(const ev of bloco.eventos)
-        await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=minimal"},
-          body:JSON.stringify({caso_id:bloco.caso_id, tipo:ev.tipo, status:"agendada",
-            data_hora:`${ev.data}T${ev.hora||"09:00"}:00`, local:ev.local})});
-    aviso(`✔ ${n} caso(s) atualizados ou criados`);
-    planoPat = null;
-    await carregar(); montarSidebar(); render();
-  }catch(e){ aviso("Parou no meio: "+e.message); }
+  // UM ERRO NÃO PODE PARAR O LOTE. A primeira versão abortava no primeiro
+  // problema — num lote de cem, isso deixa metade gravada e ninguém sabe
+  // qual metade. Agora cada item responde por si, e o que falhou aparece no
+  // fim, com o motivo.
+  const falhas = []; let feitos = 0;
+  const tentar = async (rotulo, f) => { try{ await f(); feitos++; }
+    catch(e){ falhas.push(`${rotulo}: ${String(e.message||e).slice(0,120)}`); } };
+
+  for(const a of planoPat.atualizar) await tentar(a.protocolo, async () => {
+    const k = D.casoPorId.get(a.caso_id); if(!k) return;
+    const campos = { ...a.mudancas, situacao_inss: a.situacao };
+    if(!(k.protocolos||[]).includes(a.protocolo))
+      campos.protocolos = [...(k.protocolos||[]), a.protocolo];
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(campos)});
+    Object.assign(k, campos);
+    if(a.andamento)
+      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:k.id, colaborador_id:eu.id, texto:a.andamento})});
+  });
+
+  for(const novo of planoPat.novos) await tentar(novo.protocolo, async () => {
+    const [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:novo.cliente_id, titulo:novo.nome, fase:novo.lista,
+        beneficio:novo.beneficio, especie:novo.especie, der:novo.der,
+        protocolos:[novo.protocolo], marcadores:novo.marcadores,
+        urgente:novo.urgente, processo_link:novo.link, situacao_inss:novo.situacao})}) || [];
+    if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); }
+  });
+
+  for(const bloco of planoPat.eventos)
+    for(const ev of bloco.eventos) await tentar(`perícia ${bloco.protocolo}`, () =>
+      api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:bloco.caso_id, tipo:ev.tipo, status:"agendada",
+          data_hora:`${ev.data}T${ev.hora||"09:00"}:00`, local:ev.local})}));
+
+  planoPat = null;
+  await carregar(); montarSidebar(); render();
+  if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)`);
+  // a mensagem do banco importa mais que a contagem: PGRST204 quer dizer
+  // coluna que não existe, e a correção está no schema.sql, não no app
+  const faltaColuna = falhas.some(f=>/PGRST204|Could not find the/.test(f));
+  aviso(faltaColuna
+    ? "O banco está desatualizado — rode o schema_por_em_dia.sql no Supabase e tente de novo."
+    : `${feitos} gravadas, ${falhas.length} falharam`);
+  console.warn("falhas da importação:", falhas);
 }
+
+// os possíveis duplicados só entram quando você manda, um por um
+async function criarMesmoAssim(protocolo){
+  const n = (planoPat.possiveisDuplicados||[]).find(x=>x.protocolo===protocolo); if(!n) return;
+  try{
+    const [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:n.cliente_id, titulo:n.nome, fase:n.lista,
+        beneficio:n.beneficio, especie:n.especie, der:n.der, protocolos:[n.protocolo],
+        marcadores:n.marcadores, urgente:n.urgente, processo_link:n.link,
+        situacao_inss:n.situacao})}) || [];
+    if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); }
+    planoPat.possiveisDuplicados = planoPat.possiveisDuplicados.filter(x=>x.protocolo!==protocolo);
+    aviso("Caso criado"); render();
+  }catch(e){ aviso("Não deu: "+e.message); }
+}
+
+// juntar o protocolo do PAT a um caso que já existe — o caminho certo quando
+// o caso é o mesmo e só faltava o número anotado
+async function juntarAoCaso(protocolo){
+  const n = (planoPat.possiveisDuplicados||[]).find(x=>x.protocolo===protocolo); if(!n) return;
+  const k = D.casoPorId.get(n.caso_id); if(!k) return;
+  try{
+    const campos = { protocolos:[...(k.protocolos||[]), n.protocolo], situacao_inss:n.situacao,
+      processo_link:n.link, ...(k.der?{}:{der:n.der}), ...(k.especie?{}:{especie:n.especie}) };
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(campos)});
+    Object.assign(k, campos);
+    planoPat.possiveisDuplicados = planoPat.possiveisDuplicados.filter(x=>x.protocolo!==protocolo);
+    aviso("Protocolo juntado ao caso que já existia"); render();
+  }catch(e){ aviso("Não deu: "+e.message); }
+}
+
 
 // ── coluna do meio ────────────────────────────────────────────────────────
 // A LINHA MOSTRA O NOME E AS DATAS. Só isso.

@@ -64,6 +64,7 @@ test('cliente existe e caso não: entra como caso novo, na lista do tipo', () =>
                 detalhes: [det({ protocolo: '999', tipo: 'recurso' })] };
   const p = I.planoDeImportacao(pat, CRM(), HOJE);
   assert.equal(p.novos.length, 1);
+  assert.equal(p.possiveisDuplicados.length, 0);
   assert.equal(p.novos[0].cliente_id, 'c2');
   assert.equal(p.novos[0].lista, 'conselho', 'recurso tem lista própria');
   assert.equal(p.semCliente.length, 0);
@@ -104,10 +105,48 @@ test('CPF que não está no CRM fica separado, não vira cliente às cegas', () 
 });
 
 test('o CPF casa com ou sem pontuação no cadastro', () => {
+  // c1 está cadastrado com "111.111.111-11"; o recurso vai para outra lista,
+  // então não esbarra no caso do INSS que ele já tem
   const pat = { lista: [{ protocolo: '5', cpf: '11111111111' }],
-                detalhes: [det({ protocolo: '5' })] };
-  // c1 está cadastrado com "111.111.111-11"
+                detalhes: [det({ protocolo: '5', tipo: 'recurso' })] };
   assert.equal(I.planoDeImportacao(pat, CRM(), HOJE).novos[0].cliente_id, 'c1');
+});
+
+// O PROTOCOLO CASOU EM POUCOS porque o campo quase nunca foi preenchido à
+// mão — não porque o caso não existe. Criar sem olhar duplicaria a ficha de
+// quem já está no CRM, e ninguém desfaz setenta duplicatas na mão.
+test('caso parecido do mesmo cliente NÃO vira caso novo às cegas', () => {
+  const D = CRM();
+  D.casos[0].especie = 'B87';
+  D.casos[0].beneficio = 'BPC/LOAS — deficiência';
+  const pat = { lista: [{ protocolo: '888', cpf: '11111111111' }],   // protocolo novo
+                detalhes: [det({ protocolo: '888', especie: 'B87' })] };
+  const p = I.planoDeImportacao(pat, D, HOJE);
+  assert.equal(p.novos.length, 0, 'ia criar uma segunda ficha do mesmo pedido');
+  assert.equal(p.possiveisDuplicados.length, 1);
+  assert.equal(p.possiveisDuplicados[0].caso_id, 'k1');
+  assert.match(p.possiveisDuplicados[0].titulo_existente, /BPC/);
+});
+
+// Espécie diferente é pedido diferente: o mesmo cliente pode ter um B42 e um
+// B87 abertos ao mesmo tempo, e o segundo não é duplicata do primeiro.
+test('espécie diferente no mesmo cliente é caso novo mesmo', () => {
+  const D = CRM();
+  D.casos[0].especie = 'B87';
+  const pat = { lista: [{ protocolo: '888', cpf: '11111111111' }],
+                detalhes: [det({ protocolo: '888', especie: 'B42' })] };
+  const p = I.planoDeImportacao(pat, D, HOJE);
+  assert.equal(p.novos.length, 1);
+  assert.equal(p.possiveisDuplicados.length, 0);
+});
+
+test('lista diferente não é duplicata — recurso não duplica caso do INSS', () => {
+  const D = CRM();
+  const pat = { lista: [{ protocolo: '888', cpf: '11111111111' }],
+                detalhes: [det({ protocolo: '888', tipo: 'recurso' })] };
+  const p = I.planoDeImportacao(pat, D, HOJE);
+  assert.equal(p.novos.length, 1, 'o caso do INSS não pode barrar um recurso');
+  assert.equal(p.novos[0].lista, 'conselho');
 });
 
 // ── agenda ────────────────────────────────────────────────────────────────
@@ -159,8 +198,9 @@ test('o plano de um arquivo real passa na conferência', () => {
   const p = I.planoDeImportacao(pat, CRM(), HOJE);
   assert.equal(I.conferirPlanoPat(pat, p), null);
   assert.deepStrictEqual(p.resumo,
-    { lidos: 4, atualizar: 1, novos: 1, sem_cliente: 1, ignorados: 1, eventos: 0,
-      exigencias: 0, apuracoes: 0, a_confirmar: 0, novos_por_tipo: { recurso: 1 } });
+    { lidos: 4, atualizar: 1, novos: 1, possiveis_duplicados: 0, sem_cliente: 1,
+      ignorados: 1, eventos: 0, exigencias: 0, apuracoes: 0, a_confirmar: 0,
+      novos_por_tipo: { recurso: 1 } });
 });
 
 test('a conferência barra plano que manda recurso para a lista errada', () => {
@@ -193,7 +233,7 @@ const path = require('path');
 test('a cópia dentro do app.html é idêntica à testada aqui', () => {
   const app = fs.readFileSync(path.join(__dirname, '..', '..', 'app.html'), 'utf8');
   const nu = s => s.replace(/\s+/g, ' ').trim();
-  for (const fn of ['protocolosDe', 'indexar', 'mudancasDoCaso', 'eventosNovos',
+  for (const fn of ['protocolosDe', 'indexar', 'casoParecido', 'mudancasDoCaso', 'eventosNovos',
                     'andamentoDaMudanca', 'planoDeImportacao', 'conferirPlanoPat']) {
     const i = app.indexOf(`function ${fn}(`);
     assert.notEqual(i, -1, `${fn} sumiu do app.html`);
