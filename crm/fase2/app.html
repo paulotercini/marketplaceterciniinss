@@ -280,30 +280,19 @@
      separadas por fio, e uma CALHA de data fixa à esquerda que dá o eixo
      vertical. Nesta mesa tudo é fila com data, então a data é a espinha.
      A linha inteira é cinza; só o prazo real e os marcadores têm cor. */
-  /* as linhas são irmãs soltas no HTML; estas regras costuram cada SEQUÊNCIA
-     delas num bloco só — fio fino entre as linhas, moldura e cantos apenas
-     nas pontas. Sem isso voltaria a ser uma pilha de caixinhas. */
-  /* ALTURA FIXA. Antes a linha crescia quando havia data e encolhia quando
-     não havia: quem passa o dia varrendo a lista perdia o compasso, porque a
-     distância entre um nome e o seguinte mudava a cada linha. Agora o passo é
-     sempre o mesmo, com ou sem segunda linha. */
+  /* CARTÕES, como o To Do desenha: cada cliente numa peça própria, com uma
+     folga curta entre elas. A moldura fina segura o cartão mesmo quando a
+     lista tem fundo colorido — só a sombra sumiria ali.
+     A altura continua FIXA: era a altura variável, e não o tamanho, que fazia
+     o olho perder o compasso de uma linha para a outra. */
   .cartao{position:relative;background:var(--branco);padding:0 12px 0 16px;cursor:pointer;
-    min-height:54px;display:flex;align-items:center;gap:10px;
-    border-left:1px solid var(--borda);border-right:1px solid var(--borda)}
-  .cartao + .cartao{border-top:1px solid #EDEFF3}
-  :not(.cartao) + .cartao, .cartao:first-child{
-    border-top:1px solid var(--borda);border-radius:10px 10px 0 0}
-  .cartao:last-child, .cartao:has(+ :not(.cartao)){
-    border-bottom:1px solid var(--borda);border-radius:0 0 10px 10px;margin-bottom:14px}
-  .cartao:only-child, :not(.cartao) + .cartao:has(+ :not(.cartao)),
-  :not(.cartao) + .cartao:last-child{border-radius:10px}
-  .cartao:hover{background:#F7F9FC}
-  .cartao.sel{background:#EDF3FD;box-shadow:inset 3px 0 0 var(--azul)}
+    min-height:68px;display:flex;align-items:center;gap:10px;margin-bottom:3px;
+    border:1px solid var(--borda);border-radius:8px;
+    box-shadow:0 1px 2px rgba(30,32,36,.05)}
+  .cartao:hover{background:#F9FBFD;box-shadow:0 3px 9px rgba(30,32,36,.10)}
+  .cartao.sel{background:#EDF3FD;border-color:#BCD3F5;box-shadow:inset 3px 0 0 var(--azul)}
   .cartao.feita{opacity:.5}
   .cartao.feita .nome{text-decoration:line-through}
-  .cartao .check{width:15px;height:15px;border:1.5px solid #C7CBD3;border-radius:50%;flex:none;cursor:pointer}
-  .cartao:hover .check{border-color:var(--cinza)}
-  .cartao.feita .check{background:var(--verde);border-color:var(--verde)}
   /* o nome NUNCA pode ser espremido a zero: numa coluna estreita, com o chip
      de exigência ao lado, a linha chegou a mostrar só o chip e nenhum nome */
   .cartao .info{flex:1 1 auto;min-width:130px}
@@ -1070,7 +1059,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.24 · o compasso da lista</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.25 · lista em cartões</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
