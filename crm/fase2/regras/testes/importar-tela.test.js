@@ -388,3 +388,26 @@ test('aplicar o CRPS grava o bloco no caso e o movimento como andamento', pular,
   assert.match(ands[0].corpo.origem_id, /^44234156897202017\|/);
   assert.equal(ands[0].corpo.publico, false, 'movimento do CRPS não pode ir ao portal do cliente');
 });
+
+// As duas coletas passam pela MESMA porta: mostrar antes de gravar.
+test('a coleta do CRPS mostra o plano antes de escrever', pular, async () => {
+  pedidos = [];
+  await abrir();
+  await pag.evaluate(async col => {
+    D.casos[0].crps_nups = ['44234156897202017'];
+    D.novid = [];
+    api = (async (caminho, op) => {
+      if (/\/coletas\?select/.test(caminho)) return [{ id: 'x1', fonte: 'crps', dados: col }];
+      return window.__api(caminho, op);
+    });
+    visao = 'patinss';
+    await conferirCrps('x1');
+  }, CRPS_COLETA).catch(() => {});
+  await pag.waitForTimeout(300);
+  const txt = await pag.$eval('#conteudo-meio', e => e.textContent);
+  assert.match(txt, /o que esta coleta vai escrever/, 'o plano do CRPS não apareceu');
+  assert.match(txt, /CRPS ·/, 'o texto do movimento devia estar na prévia');
+  // e NADA foi gravado só por conferir
+  assert.equal(pedidos.filter(x => x.m !== 'GET').length, 0,
+    `conferir gravou coisa: ${pedidos.map(x => x.m + x.url).join('|')}`);
+});
