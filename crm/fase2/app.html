@@ -50,37 +50,30 @@
     font-weight:600;cursor:pointer}
 
   .app{display:none;grid-template-columns:300px 1fr;height:100vh;transition:grid-template-columns .15s}
+  @media (prefers-reduced-motion: reduce){ .app{transition:none} }
   .app.mini-lateral{grid-template-columns:58px 1fr}
   .app.logado{display:grid}
-  /* ficha aberta = modo 4 colunas: o menu recolhe sozinho para ícones */
-  .app.detalhe-aberto{grid-template-columns:58px minmax(290px,28%) minmax(540px,1fr)}
-  /* pesquisando: o menu volta ao tamanho cheio mesmo com a ficha aberta */
-  .app.detalhe-aberto.busca-aberta{grid-template-columns:300px minmax(250px,24%) minmax(500px,1fr)}
+  /* QUEM MANDA NO MENU É UMA CLASSE SÓ: mini-lateral. Antes, `detalhe-aberto`
+     recolhia o menu por conta própria, e o botão ☰ ficava sem efeito com a
+     ficha aberta — parecia quebrado. Agora a ficha só muda o PADRÃO; o botão
+     continua sendo a palavra final. */
+  .app.detalhe-aberto{grid-template-columns:300px minmax(300px,25%) minmax(520px,1fr)}
+  .app.detalhe-aberto.mini-lateral{grid-template-columns:58px minmax(330px,30%) minmax(540px,1fr)}
 
   .sidebar{background:var(--lateral);border-right:1px solid var(--lateral);overflow-y:auto;overflow-x:hidden;padding:12px 0;color:#E8EAED}
   #btn-lateral{display:block;margin:0 12px 8px;border:none;background:none;font-size:17px;cursor:pointer;color:#9AA0B0}
-  /* menu recolhido (manual ou automático com a ficha aberta): só os ícones */
-  .app.mini-lateral .sidebar .txt, .app.detalhe-aberto .sidebar .txt,
-  .app.mini-lateral .sidebar .grupo h3, .app.detalhe-aberto .sidebar .grupo h3,
-  .app.mini-lateral .sidebar .cont, .app.detalhe-aberto .sidebar .cont,
-  .app.mini-lateral .sidebar .priv, .app.detalhe-aberto .sidebar .priv,
-  .app.mini-lateral .sidebar .usuario>div, .app.detalhe-aberto .sidebar .usuario>div,
-  .app.mini-lateral .sidebar .sair, .app.detalhe-aberto .sidebar .sair,
-  .app.mini-lateral .sidebar #btn-som, .app.detalhe-aberto .sidebar #btn-som{display:none}
-  .app.mini-lateral .sidebar .lista-item, .app.detalhe-aberto .sidebar .lista-item{justify-content:center;padding:8px 0}
-  .app.busca-aberta .sidebar .txt, .app.busca-aberta .sidebar .grupo h3,
-  .app.busca-aberta .sidebar .cont, .app.busca-aberta .sidebar .priv,
-  .app.busca-aberta .sidebar .usuario>div, .app.busca-aberta .sidebar .sair,
-  .app.busca-aberta .sidebar #btn-som{display:revert}
-  .app.busca-aberta .sidebar .lista-item{justify-content:flex-start;padding:7px 12px}
-  .app.busca-aberta .sidebar .novo-cli{width:calc(100% - 24px);margin:0 12px 10px;padding:9px}
-  .app.busca-aberta .sidebar .usuario{justify-content:flex-start}
-  .app.busca-aberta .sidebar .busca{margin:0 12px 14px;width:auto}
-  .app.busca-aberta .sidebar .busca input{width:100%;height:auto;padding:8px 10px 8px 32px;
-    color:#E8EAED;cursor:text;text-indent:0}
-  .app.busca-aberta .sidebar #busca-x{display:block!important}
-  .app.mini-lateral .sidebar .novo-cli, .app.detalhe-aberto .sidebar .novo-cli{width:34px;margin:0 auto 10px;padding:7px 0}
-  .app.mini-lateral .sidebar .usuario, .app.detalhe-aberto .sidebar .usuario{justify-content:center}
+  /* menu recolhido: só os ícones */
+  .app.mini-lateral .sidebar .txt,
+  .app.mini-lateral .sidebar .grupo h3,
+  .app.mini-lateral .sidebar .cont,
+  .app.mini-lateral .sidebar .priv,
+  .app.mini-lateral .sidebar .usuario>div,
+  .app.mini-lateral .sidebar .sair,
+  .app.mini-lateral .sidebar #btn-som{display:none}
+  .app.mini-lateral .sidebar .lista-item{justify-content:center;padding:8px 0}
+  .app.mini-lateral .sidebar .novo-cli{width:34px;margin:0 auto 10px;padding:7px 0}
+  .app.mini-lateral .sidebar .usuario{justify-content:center}
+  .app.mini-lateral .sidebar #busca-x{display:none}
   /* coluna de casos dentro da ficha (3ª coluna): escolhe o caso, a 4ª mostra o andamento dele */
   /* menu do caso em grafite claro — lê-se como MENU, não como fundo */
   .col-casos{width:186px;flex:none;border-right:1px solid #262A33;background:#313641;overflow-y:auto;padding:10px 8px}
@@ -181,13 +174,13 @@
   .busca{margin:0 12px 14px;position:relative}
   /* menu recolhido: a pesquisa continua ali, como uma lupa — clicar nela
      estende o menu e já deixa o cursor no campo */
-  .app.mini-lateral .sidebar .busca, .app.detalhe-aberto .sidebar .busca{margin:0 auto 12px;width:34px}
-  .app.mini-lateral .sidebar .busca input, .app.detalhe-aberto .sidebar .busca input{
+  .app.mini-lateral .sidebar .busca{margin:0 auto 12px;width:34px}
+  .app.mini-lateral .sidebar .busca input{
     width:34px;height:32px;padding:0;cursor:pointer;color:transparent;
     border-radius:8px;text-indent:-999px}
-  .app.mini-lateral .sidebar .busca::before, .app.detalhe-aberto .sidebar .busca::before{
+  .app.mini-lateral .sidebar .busca::before{
     left:10px;top:8px;font-size:15px;opacity:.85;pointer-events:none}
-  .app.mini-lateral .sidebar #busca-x, .app.detalhe-aberto .sidebar #busca-x{display:none!important}
+  .app.mini-lateral .sidebar #busca-x{display:none!important}
   .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid rgba(255,255,255,.18);border-radius:6px;font-size:14px;background:rgba(255,255,255,.10);color:#E8EAED}
   .busca input::placeholder{color:#9AA0B0}
   .novo-cli{display:block;margin:0 12px 10px;width:calc(100% - 24px);padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
@@ -211,9 +204,15 @@
   .grupo h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#9AA0B0;padding:8px 16px 4px}
   .lista-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;border-left:3px solid transparent;color:#E8EAED}
   .lista-item:hover{background:rgba(255,255,255,.07)}
-  .lista-item.ativa{background:rgba(255,255,255,.13);border-left-color:#fff;font-weight:600}
+  .lista-item.ativa{background:rgba(255,255,255,.10);border-left-color:#7FA6F0;
+    font-weight:650;color:#fff}
   .lista-item .rotulo{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .lista-item .cont{margin-left:auto;font-size:12px;color:#CFD3DA;background:rgba(255,255,255,.12);border-radius:10px;padding:1px 8px}
+  /* o contador é informação de canto: número claro, sem cápsula, e em
+     algarismos de largura fixa para a coluna da direita não tremer */
+  .lista-item .cont{margin-left:auto;font-size:11.5px;color:#8D94A3;
+    font-variant-numeric:tabular-nums;padding-left:8px}
+  .lista-item.ativa .cont{color:#DDE2EC}
+  .u-papel{font-size:11px;color:#8D94A3;text-transform:lowercase}
   .lista-item .priv{margin-left:auto;font-size:10px;color:#D8C6EE;background:rgba(255,255,255,.12);border-radius:8px;padding:1px 6px}
   .sep{border-top:1px solid rgba(255,255,255,.12);margin:8px 12px}
   .avatar{width:28px;height:28px;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none;background:var(--azul)}
@@ -229,8 +228,12 @@
   .add-mais{font-size:19px;color:var(--azul);font-weight:700;line-height:1}
   .add-rodape input{padding:10px 12px;border:1px solid var(--borda);border-radius:8px;
     font-size:14px;background:var(--branco)}
-  .add-rodape #add-nome{flex:1;min-width:180px}
-  .add-rodape #add-ben{width:210px}
+  /* na coluna estreita (ficha aberta) os campos encolhem em vez de empurrar o
+     botão para fora da tela — antes o "Adicionar" ficava cortado pela ficha */
+  .add-rodape #add-nome{flex:1 1 120px;min-width:0}
+  .add-rodape #add-ben{flex:0 1 210px;min-width:0}
+  .add-rodape button{flex:none}
+  .app.detalhe-aberto .add-rodape #add-ben{display:none}
   .add-rodape button{padding:10px 18px;border:none;border-radius:8px;background:var(--azul);
     color:#fff;font-weight:600;cursor:pointer}
   .app.celular .add-rodape{flex-wrap:wrap;margin-bottom:0;bottom:66px}
@@ -268,17 +271,67 @@
   .fchip{border:1px solid var(--borda);background:var(--branco);border-radius:14px;padding:4px 12px;cursor:pointer;font-size:13px;display:flex;gap:6px;align-items:center}
   .fchip.on{background:var(--azul);border-color:var(--azul);color:#fff}
   h3.secao{font-size:13px;color:var(--cinza);margin:12px 0 6px}
-  /* meio-termo: cartão com respiro interno, só a distância entre eles é menor */
-  .cartao{position:relative;background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 14px;margin-bottom:5px;cursor:pointer;display:flex;align-items:center;gap:11px;box-shadow:0 1px 2px rgba(30,32,36,.05)}
-  .cartao:hover{box-shadow:0 3px 10px rgba(30,32,36,.10)}
-  .cartao.sel{outline:2px solid var(--azul)}
-  .cartao.feita{opacity:.55}
+  /* ── a pauta ──────────────────────────────────────────────────────────
+     Uma lista, não uma pilha de caixas: fundo branco contínuo, linhas
+     separadas por fio, e uma CALHA de data fixa à esquerda que dá o eixo
+     vertical. Nesta mesa tudo é fila com data, então a data é a espinha.
+     A linha inteira é cinza; só o prazo real e os marcadores têm cor. */
+  /* as linhas são irmãs soltas no HTML; estas regras costuram cada SEQUÊNCIA
+     delas num bloco só — fio fino entre as linhas, moldura e cantos apenas
+     nas pontas. Sem isso voltaria a ser uma pilha de caixinhas. */
+  .cartao{position:relative;background:var(--branco);padding:7px 14px 7px 0;cursor:pointer;
+    display:flex;align-items:center;gap:10px;
+    border-left:1px solid var(--borda);border-right:1px solid var(--borda)}
+  .cartao + .cartao{border-top:1px solid #EDEFF3}
+  :not(.cartao) + .cartao, .cartao:first-child{
+    border-top:1px solid var(--borda);border-radius:10px 10px 0 0}
+  .cartao:last-child, .cartao:has(+ :not(.cartao)){
+    border-bottom:1px solid var(--borda);border-radius:0 0 10px 10px;margin-bottom:14px}
+  .cartao:only-child, :not(.cartao) + .cartao:has(+ :not(.cartao)),
+  :not(.cartao) + .cartao:last-child{border-radius:10px}
+  .cartao:hover{background:#F7F9FC}
+  .cartao.sel{background:#EDF3FD;box-shadow:inset 3px 0 0 var(--azul)}
+  .cartao.feita{opacity:.5}
   .cartao.feita .nome{text-decoration:line-through}
-  .cartao .check{width:16px;height:16px;border:2px solid var(--cinza);border-radius:50%;flex:none;cursor:pointer}
+  /* a calha: dia.mês sobre o dia da semana, em algarismos de largura fixa,
+     para as datas alinharem como numa pauta de audiência */
+  .cartao .calha{flex:none;width:58px;text-align:right;padding-right:12px;line-height:1.15;
+    font-variant-numeric:tabular-nums;font-feature-settings:"tnum";color:#3B3E45}
+  .cartao .calha b{display:block;font-size:12.5px;font-weight:700;letter-spacing:.01em}
+  .cartao .calha small{display:block;font-size:10px;color:#9AA0AC;text-transform:lowercase}
+  .cartao .calha.venc{color:var(--vermelho)}
+  .cartao .calha.venc small{color:var(--vermelho);opacity:.7}
+  .cartao .calha.hoje{color:var(--azul)}
+  .cartao .calha.hoje small{color:var(--azul);opacity:.7}
+  .cartao .check{width:15px;height:15px;border:1.5px solid #C7CBD3;border-radius:50%;flex:none;cursor:pointer}
+  .cartao:hover .check{border-color:var(--cinza)}
   .cartao.feita .check{background:var(--verde);border-color:var(--verde)}
-  .cartao .info{min-width:0;flex:1}
-  .cartao .nome{font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .cartao .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:3px;font-size:12px;color:var(--cinza);align-items:center}
+  /* o nome NUNCA pode ser espremido a zero: numa coluna estreita, com o chip
+     de exigência ao lado, a linha chegou a mostrar só o chip e nenhum nome */
+  .cartao .info{flex:1 1 auto;min-width:130px}
+  .cartao .nome{font-weight:650;font-size:14px;letter-spacing:-.005em;line-height:1.25;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cartao .fogo-sel{margin-left:6px;font-size:11px}
+  /* uma linha só, cinza, sem fundo: o que é secundário parece secundário */
+  .cartao .meta{display:flex;gap:5px;margin-top:1px;font-size:12px;color:#767C86;
+    align-items:center;white-space:nowrap;overflow:hidden}
+  .cartao .meta .pt{color:#C3C7CE;flex:none}
+  .cartao .meta .ben{overflow:hidden;text-overflow:ellipsis;flex:0 1 auto}
+  .cartao .meta .motivo{max-width:210px;overflow:hidden;text-overflow:ellipsis;flex:0 1 auto}
+  .cartao .meta .marc-chip{flex:none;margin-left:1px}
+  /* as ações só aparecem no hover ou pelo teclado; ligadas, ficam sempre */
+  .cartao .acoes{display:flex;gap:2px;flex:none}
+  .cartao .acao-card{opacity:0}
+  .cartao:hover .acao-card, .cartao .acao-card.on,
+  .cartao .acao-card:focus-visible{opacity:1}
+  .cartao .acao-card.sol,.cartao .acao-card.fogo{filter:grayscale(1);opacity:0}
+  .cartao:hover .acao-card.sol,.cartao:hover .acao-card.fogo{opacity:.4}
+  .cartao .acao-card.sol.on,.cartao .acao-card.fogo.on{filter:none;opacity:1}
+  /* quem navega por teclado precisa ver onde está, mesmo nos botões que só
+     aparecem no hover */
+  .cartao .acao-card:focus-visible{opacity:1;filter:none;outline:2px solid var(--azul);
+    outline-offset:1px;border-radius:4px}
+  .avatar.mini.vazio{background:#DCDFE5;color:#8A9099}
   .chip{border-radius:10px;padding:1px 8px;font-size:11px;font-weight:600;white-space:nowrap}
   .chip.ben{background:#e8f1fb;color:var(--azul-escuro)}
   /* datas como no To Do: vencida vermelha, hoje azul, futura preta — sem fundo */
@@ -291,6 +344,9 @@
   .chip.neutro{background:var(--fundo);color:var(--cinza);font-weight:400}
   .avatares{display:flex;flex:none}
   .avatares .avatar{margin-left:-6px;border:2px solid var(--branco)}
+  /* a coluna da direita tem largura fixa: sem isso os avatares dançam de uma
+     linha para a outra conforme o tamanho dos marcadores */
+  .cartao .avatares{min-width:52px;justify-content:flex-end;margin-left:auto}
   .acao-card{border:none;background:none;font-size:15px;cursor:pointer;color:#c8c6c4;flex:none}
   .acao-card.on{color:#eaa300}
   /* emojis não obedecem a cor do CSS — apagado = cinza via grayscale */
@@ -1010,7 +1066,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.20 · pensão, idade PcD e incapacidade</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.21 · a lista mais limpa</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1040,7 +1096,7 @@
   <nav class="sidebar">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · login à prova de celular</span></div></div>
+      <div><strong id="u-nome"></strong><div class="u-papel txt" id="u-papel"></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -1402,8 +1458,11 @@ async function iniciar(){
   const app = document.getElementById("app");
   app.classList.add("logado");
   marcarCelular();
-  if(ler("crm_menu")==="mini") app.classList.add("mini-lateral");
+  aplicarMenu();
   document.getElementById("u-nome").textContent = eu.nome;
+  // no lugar do texto de versão que ficava aqui: quem você é para o sistema
+  document.getElementById("u-papel").textContent =
+    (eu.papel === "admin" ? "administrador" : eu.setor || "equipe");
   const uav = document.getElementById("u-avatar");
   uav.textContent = eu.inicial; uav.style.background = eu.cor;
   await carregar();
@@ -1657,11 +1716,15 @@ function montarSidebar(){
   // rótulo = "☀️ Meu Dia" -> ícone + texto separados (o texto some no menu recolhido)
   const rotu = rot => { const i=rot.indexOf(" ");
     return `<span class="rotulo" title="${esc(rot)}">${rot.slice(0,i)}<span class="txt">${esc(rot.slice(i))}</span></span>`; };
+  // contador só quando há o que contar: uma coluna de zeros não informa nada,
+  // e faz o número que importa (Menções 3) se perder no meio deles
   document.getElementById("grupo-dinamicas").innerHTML = din.map(([id,rot,n])=>
     `<div class="lista-item" data-v="${id}">${rotu(rot)}`+
-    (n==="🔒"?`<span class="priv">🔒 só você</span>`:n!=null?`<span class="cont">${n}</span>`:"")+`</div>`).join("");
-  document.getElementById("grupo-fases").innerHTML = ordemDasFases().map(([f,rot])=>
-    `<div class="lista-item" data-v="fase:${f}">${rotu(rot)}<span class="cont">${casosDaFase(f).length}</span></div>`).join("");
+    (n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:"")+`</div>`).join("");
+  document.getElementById("grupo-fases").innerHTML = ordemDasFases().map(([f,rot])=>{
+    const n = casosDaFase(f).length;
+    return `<div class="lista-item" data-v="fase:${f}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`;
+  }).join("");
   document.getElementById("grupo-visoes").innerHTML = [
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
@@ -1675,7 +1738,7 @@ function montarSidebar(){
     ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && e.data_hora>=hoje()).length],
     ["dashboard","📊 Dashboard", null],
     ["config","⚙️ Configurações", null],
-  ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}">${rotu(rot)}${n!=null?`<span class="cont">${n}</span>`:""}</div>`).join("");
+  ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`).join("");
   const bSom=document.getElementById("btn-som");
   bSom.textContent = somLigado()?"🔔":"🔕";
   bSom.onclick=()=>{
@@ -1719,37 +1782,64 @@ function cartaoCliente(cli, casosMostrar){
   const evFut = D.eventos.find(e=>ks.some(k=>k.id===e.caso_id) && e.status==="agendada" && dataSP(e.data_hora)>=hoje());
   const imp = ks.some(k=>k.importante);
   const noMeuDia = D.meudia.some(m=>m.colaborador_id===eu.id && ks.some(k=>k.id===m.caso_id));
-  return `<div class="cartao" data-cli="${cli.id}" ${faixa.length===1
-      ?`style="border-left:4px solid ${faixa[0]}"`
-      :faixa.length?`style="border-left:4px solid transparent"`:""}>
-    ${faixa.length>1?`<i class="faixa" style="background:linear-gradient(to bottom, ${
-        faixa.map((c,i)=>`${c} ${Math.round(i*100/faixa.length)}% ${Math.round((i+1)*100/faixa.length)}%`).join(", ")})"></i>`:""}
+  // ── a linha da pauta ───────────────────────────────────────────────────
+  // Nesta mesa tudo é fila com data: DER, prazo de recurso, perícia. Por isso
+  // a data ganhou coluna fixa à esquerda — as linhas sem data mantêm a
+  // calha vazia, e os nomes continuam alinhados numa régua só.
+  //
+  // A linha é CINZA de propósito. Antes cada cartão tinha faixa colorida da
+  // pessoa (que o avatar à direita já dizia), chip azul do benefício, chip
+  // verde da fase (que é o nome da própria lista) e três ícones apagados —
+  // treze linhas viravam um arco-íris onde nada saltava. Agora só duas coisas
+  // têm cor: o PRAZO, quando é real, e os MARCADORES, que são a impressão
+  // digital do pedido. O resto se cala para eles serem vistos.
+  const marcas = [...new Set(ks.flatMap(marcadoresDe))];
+  const exig = ks.map(chipExig).filter(Boolean).join("");
+  const dcb = ks.map(chipDcb).filter(Boolean).join("");
+  const motivo = (ks.find(x=>x.prazo===prazoMin)||{}).lembrar_motivo;
+  const bens = [...new Set(ks.map(k=>k.beneficio).filter(Boolean))];
+  // a fase só entra quando NÃO é a da lista aberta: repetir "INSS" em treze
+  // linhas dentro da lista INSS é ruído puro
+  const faseAqui = (visao||"").startsWith("fase:") ? visao.slice(5) : null;
+  const fases = [...new Set(ks.map(k=>k.fase))].filter(f=>f!==faseAqui);
+  return `<div class="cartao" data-cli="${cli.id}">
+    <span class="calha ${dataProx? (dataProx<hoje()?"venc":dataProx===hoje()?"hoje":"") : "vazia"}"
+      ${dataProx&&motivo?`title="${esc(motivo)}"`:""}>
+      ${dataProx?`<b>${fmt(dataProx).slice(0,5)}</b><small>${diaDaSemana(dataProx)}</small>`:""}
+    </span>
     <span class="check"></span>
     <div class="info">
-      <div class="nome">${esc(cli.nome)}</div>
+      <div class="nome">${esc(cli.nome)}${ks.some(k=>k.urgente)?`<span class="fogo-sel" title="urgente">🔥</span>`:""}</div>
       <div class="meta">
-        ${ks.some(k=>k.urgente)?`<span class="chip urg">🔥 URGENTE</span>`:""}
-        ${[...new Set(ks.map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
-        ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
-        ${/* o que está sendo pedido: 🌾 rural, ⚗️ especial… — é o que faz o
-             B42 de um cliente parecer diferente do B42 do outro na lista */""}
-        ${[...new Set(ks.flatMap(marcadoresDe))].map(s=>{ const m=POR_SLUG.get(s);
-          return `<span class="chip marc-chip" style="--marc:${m.cor}" title="${esc(m.dica)}">${m.icone} ${esc(m.rot)}</span>`;}).join("")}
-        ${ks.map(chipExig).join("")}
-        ${ks.map(chipDcb).join("")}
-        ${(kp=>chipPrazo(dataProx, kp&&kp.lembrar_motivo))(ks.find(x=>x.prazo===dataProx))}
-        ${quemProx.map(c=>`<span class="avatar mini" style="background:${c.cor}"
-          title="${esc(c.nome)} — tarefa para ${fmt(dataProx)}">${esc(c.inicial)}</span>`).join("")}
-        ${(kp=>kp&&kp.lembrar_motivo?`<span class="chip neutro" title="${esc(kp.lembrar_motivo)}">📌 ${esc(kp.lembrar_motivo.length>32?kp.lembrar_motivo.slice(0,32)+"…":kp.lembrar_motivo)}</span>`:"")(ks.find(x=>x.prazo===prazoMin))}
-        ${evFut?`<span class="chip per">🩺 ${esc(evFut.tipo)} ${fmtTS(evFut.data_hora)}</span>`:""}
-        ${ks.length>1?`<span class="chip neutro">${ks.length} casos</span>`:""}
+        ${bens.map(b=>`<span class="ben">${esc(b)}</span>`).join('<span class="pt">·</span>')}
+        ${fases.map(f=>`<span class="pt">·</span><span class="fase-txt">${esc(NOME_FASE[f]||f)}</span>`).join("")}
+        ${ks.length>1?`<span class="pt">·</span><span class="fase-txt">${ks.length} casos</span>`:""}
+        ${motivo?`<span class="pt">·</span><span class="motivo" title="${esc(motivo)}">${esc(motivo)}</span>`:""}
+        ${/* os marcadores vêm logo depois do benefício, na mesma linha de
+             leitura: "tempo de contribuição · Rural · Especial" é uma frase.
+             Encostados na margem direita eles ficavam órfãos do nome. */""}
+        ${marcas.map(sl=>{ const m=POR_SLUG.get(sl);
+          return `<span class="marc-chip" style="--marc:${m.cor}" title="${esc(m.dica)}">${m.icone} ${esc(m.rot)}</span>`;}).join("")}
       </div>
     </div>
-    <div class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${resp.map(c=>`<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")||`<span class="avatar mini" style="background:#c8c6c4">＋</span>`}</div>
-    <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}">🔥</button>
-    <button class="acao-card sol ${noMeuDia?"on":""}" title="Meu Dia" data-sol="${ks[0]?ks[0].id:""}">☀️</button>
-    <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}">★</button>
+    ${exig}${dcb}
+    ${evFut?`<span class="chip per">🩺 ${fmtTS(evFut.data_hora).slice(0,5)}</span>`:""}
+    <div class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${resp.map(c=>`<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")||`<span class="avatar mini vazio">＋</span>`}</div>
+    ${/* os três só aparecem no hover ou pelo teclado — quando estão LIGADOS
+         ficam sempre visíveis, porque aí carregam informação */""}
+    <span class="acoes">
+      <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}">🔥</button>
+      <button class="acao-card sol ${noMeuDia?"on":""}" title="Meu Dia" data-sol="${ks[0]?ks[0].id:""}">☀️</button>
+      <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}">★</button>
+    </span>
   </div>`;
+}
+
+// "seg", "ter"… — a segunda linha da calha, que dá ritmo à coluna de datas
+const SIGLA_DIA = ["dom","seg","ter","qua","qui","sex","sáb"];
+function diaDaSemana(iso){
+  const d = new Date(iso + "T12:00:00");
+  return isNaN(d) ? "" : SIGLA_DIA[d.getDay()];
 }
 
 function grupoClientes(casosSel){
@@ -4064,6 +4154,7 @@ async function abrirFicha(cliId){
   if(clienteAberto !== cliId){ casoSel = "__auto__"; abaAtiva = 2; }   // cliente novo: abre no 1º caso ativo
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
+  aplicarMenu();
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
   const ids = ks.map(k=>k.id).join(",");
   const [ands, creds, vincs, anexos, convs, tarefasF] = await Promise.all([
@@ -6783,6 +6874,7 @@ function dataNatural(texto){
 function fecharFicha(rerender=true){
   clienteAberto=null; abaAtiva=2;
   document.getElementById("app").classList.remove("detalhe-aberto","ficha-tudo");
+  aplicarMenu();
   if(rerender) render();
 }
 
@@ -7648,6 +7740,7 @@ document.getElementById("busca").addEventListener("input",e=>{
     if(buscaTxt && clienteAberto){
       clienteAberto=null; abaAtiva=2;
       document.getElementById("app").classList.remove("detalhe-aberto","busca-aberta");
+      aplicarMenu();
     }
     render();
   },200);
@@ -7657,16 +7750,29 @@ document.getElementById("busca").addEventListener("mousedown",e=>{
   const app=document.getElementById("app");
   if(app.classList.contains("mini-lateral") || app.classList.contains("detalhe-aberto")){
     e.preventDefault();
-    app.classList.remove("mini-lateral"); app.classList.add("busca-aberta");
-    guardar("crm_menu","cheio");
+    app.classList.add("busca-aberta"); aplicarMenu();
     setTimeout(()=>document.getElementById("busca").focus(),50);
   }
 });
+// Estado do menu lateral em UM lugar só. A ficha aberta apenas muda o PADRÃO
+// (com quatro colunas na tela, o menu em ícones é o que faz sentido); quem
+// clicou no ☰ tem a última palavra, e a pesquisa sempre precisa do menu
+// aberto para caber o campo.
+function aplicarMenu(){
+  const app=document.getElementById("app");
+  if(!app) return;
+  const pref=ler("crm_menu");                     // "mini" | "cheio" | vazio
+  const mini = app.classList.contains("busca-aberta") ? false
+             : pref ? pref==="mini"
+             : app.classList.contains("detalhe-aberto");
+  app.classList.toggle("mini-lateral", mini);
+}
+
 // ── atalhos de teclado ────────────────────────────────────────────────────
 // Ctrl+F (ou ⌘F) e "/" levam à pesquisa; Esc fecha o que estiver aberto.
 function irParaPesquisa(){
   const app=document.getElementById("app");
-  app.classList.remove("mini-lateral"); app.classList.add("busca-aberta");
+  app.classList.add("busca-aberta"); aplicarMenu();
   const b=document.getElementById("busca"); b.focus(); b.select();
 }
 function digitando(){
@@ -7728,9 +7834,13 @@ document.getElementById("busca-x").onclick=()=>{
   b.focus(); render();
 };
 document.getElementById("ordem").onchange=()=>render();
+// O ☰ é a palavra final sobre o menu. Antes ele só mexia numa classe que a
+// ficha aberta sobrescrevia — com tudo aberto, clicar não fazia nada e o
+// botão parecia quebrado. Agora ele grava a preferência e manda aplicar.
 document.getElementById("btn-lateral").onclick=()=>{
-  const mini=document.getElementById("app").classList.toggle("mini-lateral");
-  guardar("crm_menu", mini?"mini":"cheio");
+  const app=document.getElementById("app");
+  guardar("crm_menu", app.classList.contains("mini-lateral") ? "cheio" : "mini");
+  aplicarMenu();
 };
 
 (async ()=>{
