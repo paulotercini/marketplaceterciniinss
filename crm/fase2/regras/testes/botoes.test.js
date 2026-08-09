@@ -620,6 +620,28 @@ test('cada novidade pode ser encaminhada com anotação, dono e prazo', pular, a
   assert.match(await pag.$eval('#aviso', e => e.textContent), /o que precisa/i);
 });
 
+// um andamento costuma pedir duas coisas de uma vez: buscar o documento E
+// avisar o cliente. Marcar a segunda não pode apagar a primeira nem emendar
+// as duas numa frase só.
+test('dá para marcar mais de uma sugestão, e desmarcar', pular, async () => {
+  const sugs = await pag.$$('.enc-sug .btn-rap');
+  await sugs[0].click();
+  await sugs[1].click();
+  await pag.waitForTimeout(80);
+  const duas = await pag.$eval('.enc .enc-txt', e => e.value);
+  assert.equal(duas.split('\n').length, 2, `não virou lista: ${JSON.stringify(duas)}`);
+  assert.ok(duas.split('\n').every(l => l.startsWith('• ')), `sem marcador: ${duas}`);
+  assert.equal(await pag.$$eval('.enc-sug .btn-rap.on', e => e.length), 2,
+    'os botões marcados não ficaram acesos');
+  // clicar de novo tira aquela linha e deixa a outra intacta
+  await sugs[0].click();
+  await pag.waitForTimeout(80);
+  const uma = await pag.$eval('.enc .enc-txt', e => e.value);
+  assert.equal(uma.split('\n').length, 1, `desmarcar não tirou a linha: ${uma}`);
+  assert.ok(!uma.startsWith('• '), 'sobrou marcador num pedido só');
+  assert.equal(await pag.$$eval('.enc-sug .btn-rap.on', e => e.length), 1);
+});
+
 test('a caixa fecha e a novidade sai da lista ao encaminhar', pular, async () => {
   await pag.evaluate(() => {
     document.querySelector('.enc .enc-txt').value = 'Amanda, pedir o PPP ao cliente';
