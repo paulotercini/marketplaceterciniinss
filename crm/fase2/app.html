@@ -472,6 +472,21 @@
     background:#E7EEFB;border:1px solid #C3D6F5;color:var(--azul-escuro)}
   .crps-org.inst2{background:#F1EAFB;border-color:#DACBF2;color:#5B3A9B}
   .crps-org small{font-weight:500;opacity:.8;font-size:10.5px}
+  /* consulta manual: o recurso que depende de gente abrir o site */
+  .man-cx{border-left:3px solid #7A5AA8}
+  .man-cx.vence{border-left-color:#C6541A;background:#FFF7F2}
+  .man-linha{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:7px}
+  .man-selo{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:1px 10px;
+    font-size:11.5px;font-weight:600;background:#F1EAFB;border:1px solid #DACBF2;color:#5B3A9B}
+  .man-selo.vence{background:#FDEEE6;border-color:#F2C7AE;color:#9C3F0F}
+  .man-dia{border-left:3px solid #7A5AA8}
+  .man-item{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 0;
+    border-top:1px solid var(--borda);font-size:13px}
+  .man-item:first-of-type{border-top:none}
+  .man-nome{background:none;border:none;padding:0;font:inherit;font-weight:600;
+    color:var(--azul-escuro);cursor:pointer;text-align:left}
+  .man-nome:hover{text-decoration:underline}
+  .btn-mini.forte{background:var(--azul);border-color:var(--azul);color:#fff}
   /* a estrela de cada movimentação: apagada até alguém (ou o robô) acender */
   .crps-est{flex:none;background:none;border:none;cursor:pointer;font-size:13px;
     padding:0 4px;filter:grayscale(1);opacity:.25;align-self:flex-start}
@@ -978,7 +993,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.13 · a conclusão embaixo do pedido</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.14 · recurso de consulta manual</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1883,6 +1898,7 @@ function renderMeuDia(){
     `<div class="filtros">${chips.join("")}</div>`
     + avisoCRPS()
     + blocoRotinas()
+    + blocoCrpsManual()
     + blocoApos()
     + blocoCadunico()
     + blocoSemAcao()
@@ -5014,6 +5030,47 @@ function blocoSemAcao(){
   </details>`;
 }
 
+// no Meu Dia: os recursos que o robô não enxerga e alguém tem de abrir no
+// site. É o que hoje mora no To Do como "André, verificar semanalmente" — a
+// diferença é que aqui a lista se refaz sozinha e some quando é conferida,
+// em vez de acumular uma anotação "sem andamento" por semana.
+function blocoCrpsManual(){
+  const itens = [];
+  (D.casos||[]).forEach(k=>{
+    if(k.fase==="encerrado") return;
+    for(const b of crpsBlocos(k)){
+      if(!b.manual) continue;
+      const c = b.consulta||{};
+      if(filtroColab && c.responsavel_id !== filtroColab) continue;
+      if(c.proxima && c.proxima > hoje()) continue;
+      itens.push({k, b, c, cli:D.cliPorId.get(k.cliente_id)});
+    }
+  });
+  if(!itens.length) return "";
+  itens.sort((x,y)=>((x.c.proxima||"")<(y.c.proxima||"")?-1:1));
+  return `<div class="caso man-dia">
+    <div class="rotulo-caso">🔎 Consultar no e-Recursos (${itens.length})
+      — recursos que o robô não enxerga</div>
+    ${itens.map(({k,b,c,cli})=>{
+      const co = c.responsavel_id && D.colPorId.get(c.responsavel_id);
+      const atras = c.proxima && c.proxima < hoje();
+      return `<div class="man-item">
+        ${co?`<span class="avatar mini" style="background:${co.cor}" title="${esc(co.nome)}">${esc(co.inicial)}</span>`
+            :`<span class="avatar mini" style="background:#a19f9d" title="sem responsável">?</span>`}
+        <button class="man-nome" onclick="abrirFicha('${k.cliente_id}')">${esc(cli?cli.nome:"cliente")}</button>
+        <span class="meio-sub" style="font-family:monospace">${esc(b.nup||"")}</span>
+        ${atras?`<span class="man-selo vence">⏰ desde ${fmt(c.proxima)}</span>`:""}
+        ${c.total?`<span class="meio-sub">${c.total}× conferido</span>`:""}
+        <span style="margin-left:auto;display:flex;gap:6px">
+          <a class="btn-mini" target="_blank" style="text-decoration:none"
+             href="https://consultaprocessos.inss.gov.br/">🌐 abrir</a>
+          <button class="btn-mini" onclick="manualSemNovidade('${k.id}','${esc(b.nup||"")}')">✓ sem novidade</button>
+          <button class="btn-mini forte" onclick="manualComNovidade('${k.id}','${esc(b.nup||"")}')">✎ teve andamento</button>
+        </span>
+      </div>`;}).join("")}
+  </div>`;
+}
+
 // no Meu Dia: CadÚnico vencido ou vencendo nos próximos 90 dias, de todos os
 // clientes — inclusive dos casos já encerrados
 function blocoCadunico(){
@@ -5730,11 +5787,17 @@ function blocoRecurso(t, casoId){
 
 function painelCRPS(k){
   const nups = crpsNups(k), blocos = crpsBlocos(k);
+  const manual = n => crpsBlocos(k).find(b=>soDig(b.nup)===soDig(n) && b.manual);
   // gerência dos números: lista com remover + campo para acrescentar
   const gerNups = `<div class="caso">
     <div class="rotulo-caso">números de recurso deste caso (${nups.length})</div>
     ${nups.map(n=>`<div class="form-linha" style="margin-top:4px">
       <span class="chip neutro" style="font-family:monospace">${esc(n)}</span>
+      ${manual(n)
+        ? `<button class="btn-mini" onclick="crpsAutomatico('${k.id}','${n}')"
+             title="o INSS vinculou o processo — devolver ao robô">🤖 voltar ao automático</button>`
+        : `<button class="btn-mini" onclick="crpsManual('${k.id}','${n}')"
+             title="o robô não enxerga este recurso — alguém consulta no site">🔎 consulta manual</button>`}
       <button class="btn-mini" onclick="removerCrpsNup('${k.id}','${n}')" title="tirar este número">✕</button>
     </div>`).join("")}
     <div class="form-linha" style="margin-top:8px">
@@ -5742,7 +5805,9 @@ function painelCRPS(k){
         onkeydown="if(event.key==='Enter')salvarCrpsNup('${k.id}')">
       <button class="btn-mini" onclick="salvarCrpsNup('${k.id}')">adicionar</button>
     </div></div>`;
-  if(!blocos.length){
+  const comEventos = blocos.filter(b=>(b.eventos||[]).length);
+  const manuais = blocos.filter(b=>b.manual);
+  if(!comEventos.length && !manuais.length){
     return `<div class="caso">
       <p class="meio-sub">${nups.length
         ? "Número guardado. O robô do CRPS vai consultar na próxima rodada e o histórico aparece aqui."
@@ -5750,11 +5815,168 @@ function painelCRPS(k){
       ${estadoCRPS().cor==="#c62828"?`<p class="meio-sub" style="color:#c62828;margin-top:6px">⚠ O crachá do gov.br venceu — renove em ⚙️ Configurações para o robô voltar a consultar.</p>`:""}
     </div>${gerNups}`;
   }
-  return `${blocos.length>1?`<p class="meio-sub" style="margin:0 0 6px">${blocos.length} recursos neste caso:</p>`:""}
-    <div class="form-linha" style="margin-bottom:8px">
-      <button class="btn-mini" onclick="copiarCrps('${k.id}')">💬 copiar mensagem ao cliente</button></div>
-    ${blocos.map(t=>blocoRecurso(t, k.id)).join("")}
+  return `${comEventos.length>1?`<p class="meio-sub" style="margin:0 0 6px">${comEventos.length} recursos neste caso:</p>`:""}
+    ${comEventos.length?`<div class="form-linha" style="margin-bottom:8px">
+      <button class="btn-mini" onclick="copiarCrps('${k.id}')">💬 copiar mensagem ao cliente</button></div>`:""}
+    ${manuais.map(b=>quadroManual(b, k)).join("")}
+    ${comEventos.map(t=>blocoRecurso(t, k.id)).join("")}
     ${gerNups}`;
+}
+
+// ── recurso de consulta manual ────────────────────────────────────────────
+// O e-Recursos só devolve o que está ligado ao CPF do procurador. Quando o
+// recurso não está vinculado, o robô não vê nada e alguém precisa abrir o
+// site e olhar. Isso hoje vira, no To Do, uma anotação "não houve andamento"
+// por semana — vinte linhas dizendo que nada aconteceu, e ainda assim
+// ninguém sabe se a consulta DESTA semana foi feita.
+//
+// Aqui a conferência não é andamento: a olhada que não achou nada vira
+// carimbo (quem, quando) e se acumula numa linha só. Só o que ACONTECEU vira
+// comentário na ficha.
+const soDig = x => String(x||"").replace(/\D/g,"");
+function quadroManual(b, k){
+  const c = b.consulta||{}, resp = c.responsavel_id && D.colPorId.get(c.responsavel_id);
+  const atrasada = !c.proxima || c.proxima <= hoje();
+  const ult = (c.checagens||[])[0];
+  const ultCol = ult && D.colPorId.get(ult.por);
+  return `<div class="caso man-cx ${atrasada?"vence":""}">
+    <div class="rotulo-caso">🔎 consulta manual · <span style="font-family:monospace">${esc(b.nup||"")}</span></div>
+    <p class="meio-sub" style="margin:4px 0 0">Este recurso não está vinculado ao CPF do procurador, então o
+      robô não enxerga: quem confere no e-Recursos é ${resp?esc(resp.nome):"<b>ninguém ainda</b>"}.</p>
+    <div class="man-linha">
+      <span class="man-selo ${atrasada?"vence":""}">${atrasada?"⏰ conferir agora":`🗓 próxima em ${fmt(c.proxima)}`}</span>
+      ${c.total?`<span class="meio-sub">conferido ${c.total}× · última em ${ult?fmtTS(ult.em):"—"}${ultCol?` (${esc(ultCol.inicial)})`:""}</span>`
+               :`<span class="meio-sub">ainda não foi conferido nenhuma vez</span>`}
+    </div>
+    <div class="form-linha" style="margin-top:8px">
+      <a class="btn-mini" target="_blank" style="text-decoration:none"
+         href="https://consultaprocessos.inss.gov.br/">🌐 abrir o e-Recursos</a>
+      <button class="btn-mini" onclick="manualSemNovidade('${k.id}','${esc(b.nup||"")}')"
+        title="registra que você olhou e nada mudou — não gera comentário">✓ conferido, sem novidade</button>
+      <button class="btn-mini forte" onclick="manualComNovidade('${k.id}','${esc(b.nup||"")}')"
+        title="houve movimentação — vira comentário na ficha">✎ teve andamento…</button>
+      <button class="btn-mini" onclick="manualAjustar('${k.id}','${esc(b.nup||"")}')"
+        title="quem confere e de quanto em quanto tempo">⚙️ quem e quando</button>
+    </div>
+  </div>`;
+}
+
+// as mesmas regras do robo-crps/manual.js — os dois lados escrevem no mesmo
+// pedaço de casos.crps, então precisam concordar sobre o formato
+const CADENCIA_PADRAO = 7, HISTORICO_MAX = 12;
+function maisDiasISO(iso, dias){
+  const [a,m,d] = String(iso).slice(0,10).split("-").map(Number);
+  return new Date(Date.UTC(a, m-1, d + Number(dias||0))).toISOString().slice(0,10);
+}
+function blocoDoNup(k, nup){
+  return crpsBlocos(k).find(b=>soDig(b.nup)===soDig(nup)) || null;
+}
+async function crpsManual(casoId, nup){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  if(!Array.isArray(k.crps)) k.crps = crpsBlocos(k);
+  let b = blocoDoNup(k, nup);
+  if(!b){ b = {nup:String(nup), eventos:[]}; k.crps.push(b); }
+  b.manual = true;
+  b.consulta = Object.assign({responsavel_id:null, cada_dias:CADENCIA_PADRAO,
+    proxima:hoje(), total:0, checagens:[]}, b.consulta||{});
+  await gravarCrps(k);
+  aviso("Marcado como consulta manual 🔎 — diga quem confere e de quanto em quanto tempo", false);
+  abrirFicha(clienteAberto);
+  manualAjustar(casoId, nup);
+}
+async function crpsAutomatico(casoId, nup){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const b = blocoDoNup(k, nup); if(!b) return;
+  delete b.manual;                       // a consulta fica: é o registro do
+  await gravarCrps(k);                   // trabalho que já foi feito à mão
+  aviso("Voltou para o robô 🤖 — entra na próxima coleta", false);
+  abrirFicha(clienteAberto);
+}
+
+// O botão que troca vinte anotações "não houve andamento" por uma linha só.
+// Não gera comentário de propósito: conferir não é andamento.
+async function manualSemNovidade(casoId, nup){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const b = blocoDoNup(k, nup); if(!b || !b.manual) return;
+  const c = b.consulta || (b.consulta = {cada_dias:CADENCIA_PADRAO, total:0, checagens:[]});
+  c.checagens = [{em:new Date().toISOString(), por:eu.id, novidade:false}, ...(c.checagens||[])].slice(0, HISTORICO_MAX);
+  c.total = (c.total||0) + 1;
+  // a próxima conta de HOJE, não da data que estava marcada: quem conferiu
+  // com três dias de atraso não deve ser cobrado de novo amanhã
+  c.proxima = maisDiasISO(hoje(), c.cada_dias||CADENCIA_PADRAO);
+  await gravarCrps(k);
+  plim();
+  aviso(`Conferido ✔ — próxima em ${fmt(c.proxima)}`, false);
+  abrirFicha(clienteAberto);
+}
+
+function manualComNovidade(casoId, nup){
+  caixa(`<h3>✎ Teve andamento no recurso</h3>
+    <p class="meio-sub">Isto vira comentário na ficha e acende o ⭐ do processo —
+      é o que faz o caso aparecer na frente de todo mundo.</p>
+    <textarea id="mn-txt" rows="3" placeholder="o que apareceu no e-Recursos?"
+      style="width:100%;margin-top:8px;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"></textarea>
+    <div class="form-linha" style="margin-top:8px">
+      <button class="btn-rap" style="margin-left:auto"
+        onclick="salvarManualNovidade('${casoId}','${esc(nup)}')">Registrar andamento</button>
+    </div>`);
+  setTimeout(()=>{const t=document.getElementById("mn-txt"); if(t) t.focus();}, 40);
+}
+async function salvarManualNovidade(casoId, nup){
+  const t = document.getElementById("mn-txt");
+  const txt = ((t&&t.value)||"").trim();
+  if(!txt) return aviso("Escreva o que apareceu");
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const b = blocoDoNup(k, nup); if(!b) return;
+  fecharCaixa();
+  const c = b.consulta || (b.consulta = {cada_dias:CADENCIA_PADRAO, total:0, checagens:[]});
+  c.checagens = [{em:new Date().toISOString(), por:eu.id, novidade:true}, ...(c.checagens||[])].slice(0, HISTORICO_MAX);
+  c.total = (c.total||0) + 1;
+  c.proxima = maisDiasISO(hoje(), c.cada_dias||CADENCIA_PADRAO);
+  k.importante = true;
+  await gravarCrps(k);
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({importante:true})}).catch(()=>{});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+      texto:`🔎 CRPS (consulta manual) — ${txt}`})}).catch(()=>{});
+  plim();
+  aviso("Andamento registrado ⭐", false);
+  abrirFicha(clienteAberto);
+}
+
+function manualAjustar(casoId, nup){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const b = blocoDoNup(k, nup); if(!b) return;
+  const c = b.consulta||{};
+  caixa(`<h3>⚙️ Quem confere este recurso, e quando</h3>
+    <p class="meio-sub">Vencendo, ele aparece no Meu Dia de quem for escolhido.</p>
+    <div class="form-linha" style="margin-top:8px">${D.colaboradores.filter(x=>x.ativo).map(co=>
+      `<button class="eq-ini ${c.responsavel_id===co.id?"on":""}" data-mnq="${co.id}"
+        style="--cor-eq:${co.cor}" title="${esc(co.nome)}"
+        onclick="document.querySelectorAll('[data-mnq]').forEach(b=>b.classList.remove('on'));this.classList.add('on')"
+        >${esc(co.inicial)}</button>`).join("")}</div>
+    <div class="form-linha" style="margin-top:10px;align-items:center">
+      <span class="rotulo-rap">CONFERIR A CADA</span>
+      ${[7,15,30].map(n=>`<button class="btn-rap mn-cad ${(c.cada_dias||7)===n?"on":""}" data-mnc="${n}"
+        onclick="document.querySelectorAll('[data-mnc]').forEach(b=>b.classList.remove('on'));this.classList.add('on')"
+        >${n} dias</button>`).join("")}
+      <button class="btn-rap" style="margin-left:auto"
+        onclick="salvarManualAjuste('${casoId}','${esc(nup)}')">Salvar</button>
+    </div>`);
+}
+async function salvarManualAjuste(casoId, nup){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const b = blocoDoNup(k, nup); if(!b) return;
+  const q = document.querySelector("[data-mnq].on"), cad = document.querySelector("[data-mnc].on");
+  fecharCaixa();
+  const c = b.consulta || (b.consulta = {total:0, checagens:[]});
+  c.responsavel_id = q ? q.dataset.mnq : null;
+  c.cada_dias = cad ? Number(cad.dataset.mnc) : CADENCIA_PADRAO;
+  if(!c.proxima) c.proxima = hoje();
+  await gravarCrps(k);
+  aviso("Combinado ✔", false);
+  abrirFicha(clienteAberto);
 }
 
 // abre a cópia do acórdão que mora no CRM (link assinado, curto)
