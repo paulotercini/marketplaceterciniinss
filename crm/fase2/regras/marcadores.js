@@ -20,6 +20,11 @@
 //    valor num pedido urbano — ou o pedido pode ser o do segurado especial,
 //    com idade reduzida (55/60) e sem contribuição. São coisas diferentes e
 //    ficam em marcadores diferentes.
+//
+// 3. O mesmo marcador pode pedir coisas diferentes conforme a espécie. A
+//    deficiência reduz o TEMPO exigido na aposentadoria por tempo de
+//    contribuição e reduz a IDADE na aposentadoria por idade — o checklist
+//    tem de perguntar a coisa certa em cada uma. Por isso `porEspecie`.
 
 const MARCADORES = [
   { slug: 'rural', rot: 'Rural', icone: '🌾', cor: '#7A8B2E',
@@ -31,7 +36,7 @@ const MARCADORES = [
       'Documentos de escola/igreja/sindicato com a qualificação de lavrador',
       'Indicar testemunhas do período rural (nome, telefone, período que conviveu)',
     ] },
-  { slug: 'idaderural', rot: 'Idade rural', icone: '🚜', cor: '#4E7A3A',
+  { slug: 'idade_rural', antigo: ['idaderural'], rot: 'Idade rural', icone: '🚜', cor: '#4E7A3A',
     especies: ['B41'],
     dica: 'aposentadoria por idade do segurado especial — 55 anos (mulher) / 60 (homem), sem contribuição',
     docs: [
@@ -51,11 +56,41 @@ const MARCADORES = [
     ] },
   { slug: 'pcd', rot: 'Deficiência', icone: '♿', cor: '#7A5AA8',
     especies: ['B42', 'B41'],
-    dica: 'aposentadoria da pessoa com deficiência (LC 142/2013) — por tempo de contribuição ou por idade',
+    dica: 'aposentadoria da pessoa com deficiência (LC 142/2013)',
     docs: [
       'Laudos, exames e relatórios que comprovem a deficiência e desde quando',
       'Requerer a avaliação biopsicossocial (perícia médica + serviço social)',
-      'Levantar os períodos trabalhados COM a deficiência (é o que define o grau)',
+    ],
+    // a deficiência reduz o TEMPO por tempo de contribuição e a IDADE na
+    // aposentadoria por idade: o que se levanta em cada uma não é o mesmo
+    porEspecie: {
+      B42: { dica: 'LC 142/2013 — o grau da deficiência reduz o tempo de contribuição exigido',
+             docs: ['Levantar os períodos trabalhados COM a deficiência (é o que define o grau)'] },
+      B41: { dica: 'LC 142/2013 — idade reduzida (55 mulher / 60 homem), com 15 anos de contribuição na condição de deficiente',
+             docs: ['Conferir se a idade reduzida já foi alcançada (55 mulher / 60 homem)',
+                    'Somar os anos de contribuição na condição de deficiente (mínimo 15)'] },
+    } },
+
+  // ── pensão por morte ────────────────────────────────────────────────────
+  // O óbito acidentário não entra aqui: tem espécie própria (B93), e pela
+  // regra 1 quem diz isso é o código do INSS. Os dois marcadores abaixo valem
+  // para as duas espécies, porque um dependente inválido e uma união estável
+  // a comprovar existem tanto na pensão comum quanto na acidentária.
+  { slug: 'dependente_invalido', rot: 'Dependente inválido/PcD', icone: '🧑‍🦽', cor: '#8A5A2B',
+    especies: ['B21', 'B93'],
+    dica: 'dependente inválido ou com deficiência — a pensão não se sujeita ao prazo por idade',
+    docs: [
+      'Laudos e exames que comprovem a invalidez ou a deficiência do dependente',
+      'Comprovar que a invalidez/deficiência é ANTERIOR ao óbito — é o que garante a vitaliciedade',
+      'Requerer a perícia médica do INSS no dependente',
+    ] },
+  { slug: 'uniao_estavel', rot: 'União estável', icone: '💍', cor: '#B03A6E',
+    especies: ['B21', 'B93'],
+    dica: 'união estável a comprovar — não há certidão de casamento',
+    docs: [
+      'Início de prova material da união (conta conjunta, mesmo endereço, plano de saúde, IR, filhos em comum)',
+      'Comprovar que a união existia NA DATA do óbito',
+      'Indicar testemunhas da convivência (nome, telefone, desde quando conhecem o casal)',
     ] },
 ];
 
@@ -77,7 +112,10 @@ function marcadoresDe(k) {
   // a ordem é a do catálogo, não a de clique: assim "Rural + Especial" é
   // sempre escrito do mesmo jeito, e duas fichas iguais parecem iguais
   return MARCADORES.filter(m => {
-    const tem = lista.some(x => String(x).trim().toLowerCase() === m.slug);
+    // `antigo` guarda o slug de uma versão anterior: renomear um marcador não
+    // pode apagar a marcação que alguém já fez
+    const nomes = [m.slug, ...(m.antigo || [])];
+    const tem = lista.some(x => nomes.includes(String(x).trim().toLowerCase()));
     if (tem && !vistos.has(m.slug)) { vistos.add(m.slug); return true; }
     return false;
   }).map(m => m.slug);
@@ -103,15 +141,27 @@ function rotuloDoPedido(k) {
 // dos do benefício e sem repetir o que já está lá: o marcador soma, não troca.
 function docsDosMarcadores(k, jaTem = []) {
   const tidos = new Set(jaTem.map(x => String(x).trim().toLowerCase()));
+  const e = String((k && k.especie) || '').trim().toUpperCase();
   const fora = [];
-  for (const slug of marcadoresDe(k))
-    for (const d of POR_SLUG.get(slug).docs) {
+  for (const slug of marcadoresDe(k)) {
+    const m = POR_SLUG.get(slug);
+    const extras = (m.porEspecie && m.porEspecie[e] && m.porEspecie[e].docs) || [];
+    for (const d of [...m.docs, ...extras]) {
       const chave = d.trim().toLowerCase();
       if (tidos.has(chave)) continue;
       tidos.add(chave);
       fora.push(d);
     }
+  }
   return fora;
+}
+
+// a dica que aparece no botão: a da espécie quando houver, senão a geral
+function dicaDoMarcador(slug, especie) {
+  const m = POR_SLUG.get(slug);
+  if (!m) return '';
+  const e = String(especie || '').trim().toUpperCase();
+  return (m.porEspecie && m.porEspecie[e] && m.porEspecie[e].dica) || m.dica;
 }
 
 // A mesma pessoa PODE ter dois pedidos da mesma espécie — um B42 por
@@ -127,4 +177,4 @@ function pedidosIguais(a, b) {
 }
 
 module.exports = { MARCADORES, POR_SLUG, doCatalogo, marcadoresDe, alternar,
-  rotuloDoPedido, docsDosMarcadores, pedidosIguais };
+  rotuloDoPedido, docsDosMarcadores, dicaDoMarcador, pedidosIguais };
