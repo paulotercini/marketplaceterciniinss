@@ -312,3 +312,91 @@ test('o ☀️ saiu da linha e vive no menu do botão direito', pular, async () 
   await pag.keyboard.press('Escape');
   await pag.evaluate(() => fecharMenuMover());
 });
+
+// ── o trilho de ícones (menu recolhido) ───────────────────────────────────
+// Recolhido, o ícone é a única palavra que sobra. A 14px sobre fundo escuro
+// ele vira borrão: dá para ver que há algo ali, não O QUE é.
+const recolher = () => pag.evaluate(() => {
+  fecharCaixa(); fecharFicha(false);
+  guardar('crm_menu', 'mini'); aplicarMenu(); montarSidebar(); render();
+});
+const estender = () => pag.evaluate(() => {
+  guardar('crm_menu', 'cheio'); aplicarMenu(); montarSidebar(); render();
+});
+
+test('recolhido, o ícone do menu é bem maior que aberto', pular, async () => {
+  await estender();
+  const aberto = await pag.$eval('.lista-item .ic', e => parseFloat(getComputedStyle(e).fontSize));
+  await recolher();
+  const mini = await pag.$eval('.lista-item .ic', e => parseFloat(getComputedStyle(e).fontSize));
+  assert.ok(mini >= 20, `o ícone do menu recolhido está pequeno demais: ${mini}px`);
+  assert.ok(mini > aberto + 4, `recolhido (${mini}px) mal cresceu perto de aberto (${aberto}px)`);
+});
+
+// Esconder o contador transformava o trilho em enfeite: saber que o INSS tem
+// 12 é metade do motivo de olhar o menu.
+test('recolhido, o contador continua na tela', pular, async () => {
+  await recolher();
+  const conts = await pag.$$eval('.lista-item .cont', els => els
+    .filter(e => getComputedStyle(e).display !== 'none')
+    .map(e => e.textContent.trim()));
+  assert.ok(conts.length >= 2, `sumiram os contadores do menu recolhido: ${conts.length} visíveis`);
+  assert.ok(conts.every(t => /^\d+$/.test(t)), `contador com conteúdo estranho: ${conts.join('|')}`);
+});
+
+// O nome tem de aparecer NA ALTURA do ícone — inclusive com a barra rolada,
+// que é onde a versão só-CSS errava por centenas de pixels.
+test('recolhido, o nome aparece ao lado do ícone — mesmo com a barra rolada', pular, async () => {
+  await recolher();
+  const medir = async sel => {
+    await pag.hover(sel);
+    await pag.waitForTimeout(80);
+    return pag.evaluate(s => {
+      const it = document.querySelector(s), b = document.getElementById('balao-menu');
+      if (!b || getComputedStyle(b).display === 'none') return null;
+      const a = it.getBoundingClientRect(), c = b.getBoundingClientRect();
+      return { desvio: Math.abs((a.top + a.height / 2) - (c.top + c.height / 2)),
+               daDireita: c.left > a.right, texto: b.textContent };
+    }, sel);
+  };
+  const topo = await medir('.lista-item[data-v="importante"]');
+  assert.ok(topo, 'nenhuma etiqueta apareceu ao passar o mouse');
+  assert.ok(topo.desvio <= 2, `etiqueta fora da altura do ícone: ${topo.desvio}px`);
+  assert.ok(topo.daDireita, 'a etiqueta saiu por cima do trilho');
+  assert.match(topo.texto, /Importante/);
+  await pag.evaluate(() => document.querySelector('.sidebar').scrollTop = 9999);
+  const fim = await medir('.lista-item[data-v="config"]');
+  assert.ok(fim, 'com a barra rolada a etiqueta não apareceu');
+  assert.ok(fim.desvio <= 2, `com a barra rolada a etiqueta errou a altura em ${fim.desvio}px`);
+  assert.match(fim.texto, /Configura/);
+});
+
+// São 26 destinos: o trilho não cabe na tela e rola. Abrir uma lista do fim
+// não pode deixar o menu mostrando um trecho onde nada está aceso.
+test('recolhido, a lista aberta fica à vista no trilho', pular, async () => {
+  await recolher();
+  await pag.evaluate(() => { visao = 'config'; montarSidebar(); render(); });
+  await pag.waitForTimeout(80);
+  const v = await pag.evaluate(() => {
+    const it = document.querySelector('.lista-item.ativa');
+    if (!it) return null;
+    const a = it.getBoundingClientRect(), s = document.querySelector('.sidebar').getBoundingClientRect();
+    return { dentro: a.top >= s.top - 1 && a.bottom <= s.bottom + 1, v: it.dataset.v };
+  });
+  assert.ok(v, 'nenhum item ficou marcado como ativo');
+  assert.equal(v.v, 'config');
+  assert.ok(v.dentro, 'a lista aberta ficou fora da parte visível do trilho');
+  await estender();
+  await limpar();
+});
+
+// Emoji não têm a mesma largura. Sem uma célula de largura fixa para o ícone,
+// cada rótulo do menu aberto começava numa coluna diferente.
+test('aberto, todos os rótulos começam na mesma coluna', pular, async () => {
+  await estender();
+  const xs = await pag.$$eval('.lista-item .txt', els =>
+    els.map(e => Math.round(e.getBoundingClientRect().left)));
+  assert.ok(xs.length > 5, 'o menu veio quase vazio');
+  assert.equal([...new Set(xs)].length, 1, `rótulos desalinhados: ${[...new Set(xs)].join(', ')}px`);
+  await limpar();
+});
