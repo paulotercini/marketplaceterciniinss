@@ -2074,20 +2074,20 @@ create index if not exists andamentos_resposta on andamentos (responde_a)
 -- ══════════════════════════════════════════════════════════════════════════
 -- Ronda dos processos judiciais.
 --
--- No PJe e no e-SAJ o advogado vê a movimentação praticamente no momento em
--- que ela acontece — dias ou meses antes da publicação. Por isso a conferência
--- manual continua sendo o método: ela é a mais rápida que existe, e trocá-la
--- por robô seria trocar velocidade por comodidade.
+-- No PJe e no e-SAJ o painel lista as movimentações em ordem de data. Quem
+-- leu às 9h, ao voltar às 13h vê só o intervalo — e os processos que não se
+-- mexeram ninguém abre. É por isso que o método é rápido e ganha da
+-- publicação, que chega dias ou meses depois.
 --
--- O que se perde hoje não é a informação: é o REGISTRO. Quem confere sabe de
--- cor quando olhou cada processo pela última vez, e nada disso fica no CRM —
--- só entram os atos que o próprio advogado anota. Então guardamos a ronda,
--- não o andamento: quem olhou, quando, e quantas vezes. Mesma regra da
--- consulta manual do CRPS — conferir não é andamento.
+-- Então a unidade registrada NÃO é o processo: é a LEITURA. Um carimbo por
+-- painel (config_app.ronda_leituras) vale para o acervo inteiro, e o que
+-- aconteceu entra por uma colagem só, virando comentário nas fichas certas.
+-- Pedir um clique por processo seria cobrar trabalho onde não há trabalho.
 --
--- processo_link guarda o endereço direto do processo no sistema do tribunal
--- (o e-SAJ gera um por processo, como o e-Recursos). Colado uma vez, vira um
--- clique na ronda em vez de uma busca por número.
+-- processo_link guarda o endereço direto do processo no sistema do tribunal,
+-- para quem quiser abrir um caso específico sem procurar pelo número.
+-- casos.ronda fica reservado para marcação por processo, que hoje a tela não
+-- usa — a leitura por painel resolve sem ela.
 -- ══════════════════════════════════════════════════════════════════════════
 alter table casos add column if not exists ronda jsonb not null default '{}'::jsonb;
 alter table casos add column if not exists processo_link text;
