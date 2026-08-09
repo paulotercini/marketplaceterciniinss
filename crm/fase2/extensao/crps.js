@@ -65,7 +65,7 @@
       await CRM.enviar('crps', OUT);
       await chrome.storage.local.set({ ultima_crps: OUT.quando });
       faixaOk(`✔ ${Object.keys(OUT.itens).length} consulta(s) entregues ao CRM.`);
-      setTimeout(() => { const f = document.getElementById('crm-faixa'); if (f) f.remove(); }, 12000);
+      someFaixa();
       return { ok: Object.keys(OUT.itens).length, falhas: OUT.falhas.length };
     } catch (e) { faixaErr(e.message); return { erro: e.message }; }
   };

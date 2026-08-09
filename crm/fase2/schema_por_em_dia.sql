@@ -86,8 +86,18 @@ create table if not exists coletas (
 create index if not exists coletas_pendentes on coletas (fonte, criado_em desc)
   where aplicada_em is null;
 alter table coletas enable row level security;
+-- Uma coleta do PAT carrega nome, protocolo e comentário de dezenas de
+-- clientes. A política antiga (`for all using (true)`, sem papel) valia também
+-- para a chave anônima, que é justamente a que fica visível no app.html — ou
+-- seja, quem tivesse a chave lia a fila inteira. Agora é só para quem entrou.
+--
+-- ISTO EXIGE A EXTENSÃO 1.1.0 OU MAIS NOVA: da 1.0.x, que entregava com a
+-- chave anônima, a gravação passa a ser recusada com 401. Aplique os dois
+-- juntos.
 drop policy if exists coletas_tudo on coletas;
-create policy coletas_tudo on coletas for all using (true) with check (true);
+drop policy if exists coletas_autenticados on coletas;
+create policy coletas_autenticados on coletas for all to authenticated
+  using (true) with check (true);
 
 
 -- ── 6. De onde veio o andamento, e qual é ele lá na origem ────────────────

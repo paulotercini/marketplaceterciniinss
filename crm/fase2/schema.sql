@@ -2150,8 +2150,13 @@ create table if not exists coletas (
 create index if not exists coletas_pendentes on coletas (fonte, criado_em desc)
   where aplicada_em is null;
 alter table coletas enable row level security;
+-- só para quem entrou: uma coleta do PAT carrega nome, protocolo e comentário
+-- de dezenas de clientes, e a política sem papel valia também para a chave
+-- anônima — a que fica visível no app.html
 drop policy if exists coletas_tudo on coletas;
-create policy coletas_tudo on coletas for all using (true) with check (true);
+drop policy if exists coletas_autenticados on coletas;
+create policy coletas_autenticados on coletas for all to authenticated
+  using (true) with check (true);
 
 -- ══════════════════════════════════════════════════════════════════════════
 -- De onde veio o andamento, e qual é ele lá na origem.

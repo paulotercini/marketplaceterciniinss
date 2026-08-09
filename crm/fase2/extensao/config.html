@@ -1,13 +1,18 @@
 <meta charset="utf-8">
+<title>CRM Tercini — configurar</title>
 <style>
   body{max-width:560px;margin:40px auto;padding:0 20px;font:15px system-ui;color:#25272B}
-  h1{font-size:19px} p{color:#5B6069;line-height:1.55;font-size:14px}
+  h1{font-size:19px} h2{font-size:15px;margin:34px 0 0}
+  p{color:#5B6069;line-height:1.55;font-size:14px}
   label{display:block;margin:16px 0 5px;font-weight:600;font-size:13px}
   input{width:100%;padding:10px;border:1px solid #D9DCE1;border-radius:8px;font:14px system-ui}
   button{margin-top:18px;padding:11px 22px;border:none;border-radius:9px;background:#2B5FC7;
     color:#fff;font:600 14px system-ui;cursor:pointer}
-  #ok{margin-left:12px;color:#1E6F50;font-size:13px}
+  button.fraco{background:none;border:1px solid #D9DCE1;color:#5B6069}
+  .ok{margin-left:12px;color:#1E6F50;font-size:13px}
+  .erro{margin-left:12px;color:#B3261E;font-size:13px}
   code{background:#EBEEF3;padding:1px 5px;border-radius:4px;font-size:13px}
+  hr{border:none;border-top:1px solid #E6E8EC;margin:30px 0 0}
 </style>
 <h1>Onde fica o seu CRM</h1>
 <p>São os mesmos dois valores que você já colou no <code>app.html</code>. A extensão
@@ -16,5 +21,21 @@
 <input id="url" placeholder="https://xxxx.supabase.co">
 <label>Chave anônima (anon key)</label>
 <input id="chave" placeholder="eyJ...">
-<button id="salvar">Salvar</button><span id="ok"></span>
+<button id="salvar">Salvar</button><span id="ok" class="ok"></span>
+
+<hr>
+<h2>Entrar no CRM</h2>
+<p>A chave anônima sozinha não lê nada: o banco só devolve dados de quem entrou.
+   Sem este login, a extensão consulta e recebe lista vazia — foi o que aconteceu
+   quando ela disse que nenhuma ficha tinha número de recurso.</p>
+<p><strong>A senha não fica guardada.</strong> Ela é usada uma vez, aqui, para obter um
+   crachá renovável; depois disso só o crachá vive nesta máquina, e você pode
+   revogá-lo pelo Supabase quando quiser.</p>
+<label>E-mail (o mesmo do CRM)</label>
+<input id="email" type="email" autocomplete="username" placeholder="voce@exemplo.com">
+<label>Senha</label>
+<input id="senha" type="password" autocomplete="current-password" placeholder="••••••••">
+<button id="entrar">Entrar</button>
+<button id="sair" class="fraco" style="margin-left:8px">Sair</button>
+<span id="quem" class="ok"></span>
 <script src="config.js"></script>

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CRM Tercini — atualizar",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Traz para o CRM o que mudou no INSS (PAT/GERID) e nos recursos (e-Recursos), pela sua própria sessão logada.",
   "permissions": ["storage", "tabs", "scripting"],
   "host_permissions": [
@@ -15,12 +15,18 @@
   "content_scripts": [
     {
       "matches": ["https://atendimento.inss.gov.br/*"],
-      "js": ["comum.js", "pat.js"],
+      "js": ["tela.js", "comum.js", "ponte-pat.js"],
       "run_at": "document_idle"
     },
     {
+      "matches": ["https://atendimento.inss.gov.br/*"],
+      "js": ["tela.js", "pat.js"],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    },
+    {
       "matches": ["https://consultaprocessos.inss.gov.br/*"],
-      "js": ["comum.js", "crps.js"],
+      "js": ["tela.js", "comum.js", "crps.js"],
       "run_at": "document_idle"
     }
   ]
