@@ -593,3 +593,62 @@ test('marcar como lido esvazia a caixa sem apagar nada', pular, async () => {
   await pag.evaluate(() => { D.novid = []; visao = 'fase:inss'; });
   await limpar();
 });
+
+// ── encaminhar da caixa de entrada ────────────────────────────────────────
+// Ler a novidade é metade; a outra metade é dizer a alguém o que fazer com
+// ela — e isso significava abrir a ficha e escrever tudo de novo.
+test('cada novidade pode ser encaminhada com anotação, dono e prazo', pular, async () => {
+  await limpar();
+  await pag.evaluate(() => {
+    D.novid = [{ id: 'n9', caso_id: 'k1', origem: 'pat', criado_em: '2026-08-09T10:00:00',
+                 texto: 'INSS · Apresentar PPP da empresa X', andamentos_lidos: [] }];
+    visao = 'novidades'; montarSidebar(); render();
+  });
+  await pag.click('[data-encaminhar="n9"]');
+  await pag.waitForTimeout(120);
+  assert.ok(await pag.$('.enc[data-enc="n9"]'), 'a caixa de encaminhar não abriu');
+  // as sugestões seguem o texto: exigência pede documento
+  const sug = await pag.$$eval('.enc-sug .btn-rap', e => e.map(x => x.textContent));
+  assert.ok(sug.some(s => /documento/i.test(s)), `sugestões fora de contexto: ${sug.join(' | ')}`);
+  // sem dono e sem texto não vai — as mesmas travas do compositor
+  await pag.click('[data-enviar="n9"]');
+  await pag.waitForTimeout(120);
+  assert.match(await pag.$eval('#aviso', e => e.textContent), /para quem/i);
+  await pag.click('.enc .enc-quem');
+  await pag.click('[data-enviar="n9"]');
+  await pag.waitForTimeout(120);
+  assert.match(await pag.$eval('#aviso', e => e.textContent), /o que precisa/i);
+});
+
+test('a caixa fecha e a novidade sai da lista ao encaminhar', pular, async () => {
+  await pag.evaluate(() => {
+    document.querySelector('.enc .enc-txt').value = 'Amanda, pedir o PPP ao cliente';
+    document.querySelector('.enc .enc-txt').dispatchEvent(new Event('input'));
+  });
+  await pag.click('[data-enviar="n9"]');
+  await pag.waitForTimeout(300);
+  assert.equal(await pag.$$eval('.enc', e => e.length), 0,
+    'a caixa continuou aberta');
+  assert.equal(await pag.$$eval('.nov', e => e.length), 0,
+    'encaminhou é porque leu: devia ter saído da caixa de entrada');
+  await pag.evaluate(() => { D.novid = []; });
+  await limpar();
+});
+
+// ⭐ Importante é onde ele passa o dia: pôr ali o que os portais trouxeram
+// encurta o caminho entre a mudança acontecer e alguém saber dela.
+test('as novidades aparecem no topo do ⭐ Importante', pular, async () => {
+  await pag.evaluate(() => {
+    D.novid = [{ id: 'n1', caso_id: 'k1', origem: 'pat', criado_em: '2026-08-09T10:00:00',
+                 texto: 'INSS · Exigência aberta', andamentos_lidos: [] }];
+    D.casos[0].importante = true;
+    visao = 'importante'; montarSidebar(); render();
+  });
+  await pag.waitForTimeout(120);
+  const txt = await pag.$eval('#conteudo-meio', e => e.textContent);
+  assert.match(txt, /Novidades dos portais \(1\)/, 'o bloco não apareceu no Importante');
+  assert.match(txt, /Exigência aberta/);
+  assert.ok(await pag.$('[data-encaminhar="n1"]'), 'sem encaminhar no topo do Importante');
+  await pag.evaluate(() => { D.novid = []; D.casos[0].importante = false; });
+  await limpar();
+});
