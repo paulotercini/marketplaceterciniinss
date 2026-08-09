@@ -1140,7 +1140,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.35 · recursos também em Novidades</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.36 · conferir antes, nos dois</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2652,12 +2652,34 @@ function telaImportarPat(){
         <strong>${c.fonte==="pat"?"🌻 INSS":"🖥 Recursos"}</strong>
         <span class="u-papel" style="text-transform:none">chegou ${esc(dataRelativa(String(c.criado_em).slice(0,10)))}</span>
         <button class="btn-mini" style="margin-left:auto" onclick="${
-          c.fonte==="crps"?`aplicarCrps('${c.id}')`:`usarColeta('${c.id}')`}">${
-          c.fonte==="crps"?"aplicar":"conferir"}</button>
+          c.fonte==="crps"?`conferirCrps('${c.id}')`:`usarColeta('${c.id}')`}">conferir</button>
       </div>`).join("")}
     </div>` : `<p class="meio-sub">Nenhuma coleta esperando. Use a extensão do navegador,
       ou solte um arquivo aqui embaixo.</p>`}
     <input type="file" id="pat-arq" accept="application/json" style="margin:10px 0">
+    ${!planoCrpsAtual ? "" : (()=>{ const q = planoCrpsAtual.resumo; return `
+      <h3 class="secao">🖥 Recursos — o que esta coleta vai escrever</h3>
+      <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+        ${[["processos lidos", q.lidos], ["recursos atualizados", q.casos],
+           ["movimentos novos", q.movimentos], ["com DECISÃO", q.decisoes],
+           ["número sem caso no CRM", q.sem_caso]].map(n=>
+          `<div class="id-card"><strong style="font-size:20px">${n[1]}</strong>
+            <div class="u-papel" style="text-transform:none">${n[0]}</div></div>`).join("")}
+      </div>
+      ${q.decisoes?`<div class="exig"><strong>⚠ ${q.decisoes} decisão(ões).</strong>
+        Cada uma abre prazo: da Junta, 30 dias para o Recurso Especial; de Câmara,
+        acaba a via administrativa. O texto do andamento já diz qual é o caso.</div>`:""}
+      ${q.sem_caso?`<div class="exig">${q.sem_caso} número de recurso não tem caso no CRM —
+        esses não entram.</div>`:""}
+      ${planoCrpsAtual.andamentos.length?`<table class="tab">
+        <tr><th>cliente</th><th>o que mudou</th></tr>
+        ${planoCrpsAtual.andamentos.slice(0,40).map(a=>{
+          const k = D.casoPorId.get(a.caso_id)||{}; const cl = D.cliPorId.get(k.cliente_id)||{};
+          return `<tr><td>${esc(cl.nome||"—")}</td>
+            <td style="white-space:pre-wrap">${esc(a.texto)}</td></tr>`;}).join("")}
+      </table>`:"<p class='meio-sub'>Nenhum movimento novo — nada a escrever.</p>"}
+      <button class="novo-cli" style="width:auto;margin:12px 0 0;padding:10px 20px"
+        onclick="aplicarCrps('${planoCrpsAtual.coleta_id}')">Aplicar ${q.movimentos} movimento(s)</button>`; })()}
     ${!r ? "" : `
       <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
         ${[["requerimentos lidos", r.lidos], ["casos a atualizar", r.atualizar],
@@ -3142,6 +3164,21 @@ function planoCrps(coleta, D){
   return plano;
 }
 
+// CONFERIR ANTES, TAMBÉM AQUI. A coleta do INSS já mostrava o plano e a do
+// CRPS gravava direto — duas portas com regras diferentes para a mesma
+// pergunta ("o que isto vai escrever nas fichas?"). Agora as duas param e
+// mostram primeiro.
+let planoCrpsAtual = null;
+async function conferirCrps(coletaId){
+  try{
+    const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
+    if(!c) return aviso("Não achei essa coleta");
+    planoCrpsAtual = planoCrps(c.dados, D);
+    planoCrpsAtual.coleta_id = coletaId;
+    render();
+  }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+}
+
 async function aplicarCrps(coletaId){
   const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
   if(!c) return aviso("Não achei essa coleta");
@@ -3170,6 +3207,7 @@ async function aplicarCrps(coletaId){
   await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"},
     body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
+  planoCrpsAtual = null;
   await buscarColetas(); await carregar(); montarSidebar(); render();
   const d = p.resumo.decisoes;
   aviso(falhas.length
