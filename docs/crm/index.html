@@ -10,6 +10,12 @@
     --azul:#2B5FC7; --azul-escuro:#234E9E; --fundo:#E8EAEE; --lateral:#23262E;
     --texto:#25272B; --cinza:#5B6069; --borda:#D9DCE1; --branco:#fff;
     --verde:#1E6F50; --laranja:#B4530A; --vermelho:#B3261E; --roxo:#5C2E91;
+    /* a placa: cinza de leitura. É o fundo dos quadros que se CONSULTAM
+       (os fatos do benefício), separando-os do branco dos quadros em que se
+       ESCREVE. Fica um degrau ABAIXO da faixa zebrada da linha do tempo
+       (#F5F6F8): dois cinzas quase iguais leem-se como engano, não como
+       hierarquia. */
+    --placa:#EBEEF3;
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif}
   body{background:var(--fundo);color:var(--texto);height:100vh;overflow:hidden;font-size:14px}
@@ -50,37 +56,70 @@
     font-weight:600;cursor:pointer}
 
   .app{display:none;grid-template-columns:300px 1fr;height:100vh;transition:grid-template-columns .15s}
-  .app.mini-lateral{grid-template-columns:58px 1fr}
+  @media (prefers-reduced-motion: reduce){ .app{transition:none} }
+  .app.mini-lateral{grid-template-columns:64px 1fr}
   .app.logado{display:grid}
-  /* ficha aberta = modo 4 colunas: o menu recolhe sozinho para ícones */
-  .app.detalhe-aberto{grid-template-columns:58px minmax(290px,28%) minmax(540px,1fr)}
-  /* pesquisando: o menu volta ao tamanho cheio mesmo com a ficha aberta */
-  .app.detalhe-aberto.busca-aberta{grid-template-columns:300px minmax(250px,24%) minmax(500px,1fr)}
+  /* QUEM MANDA NO MENU É UMA CLASSE SÓ: mini-lateral. Antes, `detalhe-aberto`
+     recolhia o menu por conta própria, e o botão ☰ ficava sem efeito com a
+     ficha aberta — parecia quebrado. Agora a ficha só muda o PADRÃO; o botão
+     continua sendo a palavra final. */
+  .app.detalhe-aberto{grid-template-columns:300px minmax(300px,25%) minmax(520px,1fr)}
+  .app.detalhe-aberto.mini-lateral{grid-template-columns:64px minmax(330px,30%) minmax(540px,1fr)}
 
   .sidebar{background:var(--lateral);border-right:1px solid var(--lateral);overflow-y:auto;overflow-x:hidden;padding:12px 0;color:#E8EAED}
   #btn-lateral{display:block;margin:0 12px 8px;border:none;background:none;font-size:17px;cursor:pointer;color:#9AA0B0}
-  /* menu recolhido (manual ou automático com a ficha aberta): só os ícones */
-  .app.mini-lateral .sidebar .txt, .app.detalhe-aberto .sidebar .txt,
-  .app.mini-lateral .sidebar .grupo h3, .app.detalhe-aberto .sidebar .grupo h3,
-  .app.mini-lateral .sidebar .cont, .app.detalhe-aberto .sidebar .cont,
-  .app.mini-lateral .sidebar .priv, .app.detalhe-aberto .sidebar .priv,
-  .app.mini-lateral .sidebar .usuario>div, .app.detalhe-aberto .sidebar .usuario>div,
-  .app.mini-lateral .sidebar .sair, .app.detalhe-aberto .sidebar .sair,
-  .app.mini-lateral .sidebar #btn-som, .app.detalhe-aberto .sidebar #btn-som{display:none}
-  .app.mini-lateral .sidebar .lista-item, .app.detalhe-aberto .sidebar .lista-item{justify-content:center;padding:8px 0}
-  .app.busca-aberta .sidebar .txt, .app.busca-aberta .sidebar .grupo h3,
-  .app.busca-aberta .sidebar .cont, .app.busca-aberta .sidebar .priv,
-  .app.busca-aberta .sidebar .usuario>div, .app.busca-aberta .sidebar .sair,
-  .app.busca-aberta .sidebar #btn-som{display:revert}
-  .app.busca-aberta .sidebar .lista-item{justify-content:flex-start;padding:7px 12px}
-  .app.busca-aberta .sidebar .novo-cli{width:calc(100% - 24px);margin:0 12px 10px;padding:9px}
-  .app.busca-aberta .sidebar .usuario{justify-content:flex-start}
-  .app.busca-aberta .sidebar .busca{margin:0 12px 14px;width:auto}
-  .app.busca-aberta .sidebar .busca input{width:100%;height:auto;padding:8px 10px 8px 32px;
-    color:#E8EAED;cursor:text;text-indent:0}
-  .app.busca-aberta .sidebar #busca-x{display:block!important}
-  .app.mini-lateral .sidebar .novo-cli, .app.detalhe-aberto .sidebar .novo-cli{width:34px;margin:0 auto 10px;padding:7px 0}
-  .app.mini-lateral .sidebar .usuario, .app.detalhe-aberto .sidebar .usuario{justify-content:center}
+
+  /* ── MENU RECOLHIDO ─────────────────────────────────────────────────────
+     Aqui o ícone é a única palavra que sobra. A 14px, sobre fundo escuro, um
+     emoji vira borrão: dá para ver que há algo, não O QUE é. Então cada item
+     vira um quadrado de 40px com o ícone a 21px, e o trilho passa a 64px de
+     largura — 6px a mais de tela cedidos, e o menu deixa de ser um enigma. */
+  .app.mini-lateral .sidebar .grupo h3,
+  .app.mini-lateral .sidebar .priv,
+  .app.mini-lateral .sidebar .usuario>div,
+  .app.mini-lateral .sidebar .sair,
+  .app.mini-lateral .sidebar #btn-som{display:none}
+  .app.mini-lateral .sidebar .txt{display:none}
+  /* a barra fica alta: são 27 destinos. Barra de rolagem fina e visível, para
+     quem chega no ⚙️ Configurações saber que ela existe. */
+  .app.mini-lateral .sidebar{padding:10px 0;scrollbar-width:thin;
+    scrollbar-color:rgba(255,255,255,.20) transparent}
+  .app.mini-lateral .sidebar .lista-item{position:relative;width:40px;height:40px;
+    margin:1px auto;padding:0;gap:0;justify-content:center;
+    border-left:none;border-radius:10px}
+  .app.mini-lateral .sidebar .lista-item .rotulo{flex:none}
+  .app.mini-lateral .sidebar .lista-item .ic{width:auto;font-size:21px}
+  .app.mini-lateral .sidebar .lista-item.ativa{background:rgba(255,255,255,.15)}
+  /* a marca da lista aberta é uma pastilha colada na borda do trilho, não um
+     fio de ponta a ponta: a 64px o fio se confunde com a moldura da coluna */
+  .app.mini-lateral .sidebar .lista-item.ativa::before{content:"";position:absolute;
+    left:-12px;top:8px;width:4px;height:24px;border-radius:0 4px 4px 0;background:#7FA6F0}
+  /* o número volta. Saber que o INSS tem 12 é metade do motivo de olhar o
+     menu — escondê-lo transformava o trilho em enfeite. */
+  .app.mini-lateral .sidebar .cont{display:block;position:absolute;top:-1px;right:-5px;
+    margin:0;padding:0 4px;min-width:17px;height:17px;line-height:17px;text-align:center;
+    border-radius:9px;font-size:10px;font-weight:700;background:#4A5162;color:#E8EAED;
+    box-shadow:0 0 0 2px var(--lateral)}
+  .app.mini-lateral .sidebar .lista-item.ativa .cont{background:#7FA6F0;color:#1C2029}
+  /* o nome aparece ao passar o mouse, na hora — sem o segundo de espera do
+     balão do navegador. Ele mora fora da barra: dentro seria cortado, e o
+     truque de `position:fixed` sem `top` erra a altura assim que a barra
+     rola (o navegador usa a posição de antes da rolagem). */
+  #balao-menu{position:fixed;z-index:200;display:none;transform:translateY(-50%);
+    background:#1C2029;color:#fff;font-size:13px;font-weight:600;white-space:nowrap;
+    padding:6px 10px;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.45);
+    pointer-events:none}
+  /* os fios entre os grupos encurtam: viram uma marca de compasso, e devolvem
+     altura para a lista que já não cabe na tela */
+  .app.mini-lateral .sidebar .sep{width:22px;margin:7px auto}
+  /* ☰, ➕ e 🔍 no mesmo eixo dos ícones. O ☰ estava encostado à esquerda,
+     desalinhado de tudo o que vinha abaixo. */
+  .app.mini-lateral #btn-lateral{width:40px;height:34px;margin:0 auto 4px;
+    font-size:19px;border-radius:8px}
+  .app.mini-lateral .sidebar .novo-cli{width:40px;height:40px;margin:0 auto 6px;
+    padding:0;font-size:20px;line-height:40px;border-radius:10px}
+  .app.mini-lateral .sidebar .usuario{justify-content:center;padding:2px 0 8px}
+  .app.mini-lateral .sidebar #busca-x{display:none}
   /* coluna de casos dentro da ficha (3ª coluna): escolhe o caso, a 4ª mostra o andamento dele */
   /* menu do caso em grafite claro — lê-se como MENU, não como fundo */
   .col-casos{width:186px;flex:none;border-right:1px solid #262A33;background:#313641;overflow-y:auto;padding:10px 8px}
@@ -166,6 +205,7 @@
   .sug-it{font-size:12px;font-weight:500;color:var(--cinza);cursor:pointer;background:none;
     border:1px solid var(--borda);border-radius:999px;padding:4px 11px}
   .sug-it:hover{color:var(--azul);border-color:var(--azul)}
+  .sug-it.on{background:#E7EEFB;border-color:var(--azul);color:var(--azul-escuro);font-weight:650}
   .sug-mais{font-size:12px;color:var(--cinza);cursor:pointer;padding:3px 6px;align-self:center}
   .sug-mais:hover{color:var(--azul)}
   #and-prazo-chip{margin-top:6px}
@@ -181,13 +221,13 @@
   .busca{margin:0 12px 14px;position:relative}
   /* menu recolhido: a pesquisa continua ali, como uma lupa — clicar nela
      estende o menu e já deixa o cursor no campo */
-  .app.mini-lateral .sidebar .busca, .app.detalhe-aberto .sidebar .busca{margin:0 auto 12px;width:34px}
-  .app.mini-lateral .sidebar .busca input, .app.detalhe-aberto .sidebar .busca input{
-    width:34px;height:32px;padding:0;cursor:pointer;color:transparent;
-    border-radius:8px;text-indent:-999px}
-  .app.mini-lateral .sidebar .busca::before, .app.detalhe-aberto .sidebar .busca::before{
-    left:10px;top:8px;font-size:15px;opacity:.85;pointer-events:none}
-  .app.mini-lateral .sidebar #busca-x, .app.detalhe-aberto .sidebar #busca-x{display:none!important}
+  .app.mini-lateral .sidebar .busca{margin:0 auto 8px;width:40px}
+  .app.mini-lateral .sidebar .busca input{
+    width:40px;height:40px;padding:0;cursor:pointer;color:transparent;
+    border-radius:10px;text-indent:-999px}
+  .app.mini-lateral .sidebar .busca::before{
+    left:11px;top:10px;font-size:19px;opacity:.9;pointer-events:none}
+  .app.mini-lateral .sidebar #busca-x{display:none!important}
   .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid rgba(255,255,255,.18);border-radius:6px;font-size:14px;background:rgba(255,255,255,.10);color:#E8EAED}
   .busca input::placeholder{color:#9AA0B0}
   .novo-cli{display:block;margin:0 12px 10px;width:calc(100% - 24px);padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
@@ -211,9 +251,19 @@
   .grupo h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#9AA0B0;padding:8px 16px 4px}
   .lista-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;border-left:3px solid transparent;color:#E8EAED}
   .lista-item:hover{background:rgba(255,255,255,.07)}
-  .lista-item.ativa{background:rgba(255,255,255,.13);border-left-color:#fff;font-weight:600}
-  .lista-item .rotulo{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .lista-item .cont{margin-left:auto;font-size:12px;color:#CFD3DA;background:rgba(255,255,255,.12);border-radius:10px;padding:1px 8px}
+  .lista-item.ativa{background:rgba(255,255,255,.10);border-left-color:#7FA6F0;
+    font-weight:650;color:#fff}
+  .lista-item .rotulo{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
+  /* célula de largura fixa: emoji têm larguras diferentes e, sem ela, cada
+     rótulo começava numa coluna — a lista parecia desalinhada sem motivo */
+  .lista-item .ic{flex:none;width:20px;text-align:center;font-size:15px;line-height:1}
+  .lista-item .txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  /* o contador é informação de canto: número claro, sem cápsula, e em
+     algarismos de largura fixa para a coluna da direita não tremer */
+  .lista-item .cont{margin-left:auto;font-size:11.5px;color:#8D94A3;
+    font-variant-numeric:tabular-nums;padding-left:8px}
+  .lista-item.ativa .cont{color:#DDE2EC}
+  .u-papel{font-size:11px;color:#8D94A3;text-transform:lowercase}
   .lista-item .priv{margin-left:auto;font-size:10px;color:#D8C6EE;background:rgba(255,255,255,.12);border-radius:8px;padding:1px 6px}
   .sep{border-top:1px solid rgba(255,255,255,.12);margin:8px 12px}
   .avatar{width:28px;height:28px;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none;background:var(--azul)}
@@ -229,8 +279,12 @@
   .add-mais{font-size:19px;color:var(--azul);font-weight:700;line-height:1}
   .add-rodape input{padding:10px 12px;border:1px solid var(--borda);border-radius:8px;
     font-size:14px;background:var(--branco)}
-  .add-rodape #add-nome{flex:1;min-width:180px}
-  .add-rodape #add-ben{width:210px}
+  /* na coluna estreita (ficha aberta) os campos encolhem em vez de empurrar o
+     botão para fora da tela — antes o "Adicionar" ficava cortado pela ficha */
+  .add-rodape #add-nome{flex:1 1 120px;min-width:0}
+  .add-rodape #add-ben{flex:0 1 210px;min-width:0}
+  .add-rodape button{flex:none}
+  .app.detalhe-aberto .add-rodape #add-ben{display:none}
   .add-rodape button{padding:10px 18px;border:none;border-radius:8px;background:var(--azul);
     color:#fff;font-weight:600;cursor:pointer}
   .app.celular .add-rodape{flex-wrap:wrap;margin-bottom:0;bottom:66px}
@@ -267,18 +321,57 @@
   .filtros{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
   .fchip{border:1px solid var(--borda);background:var(--branco);border-radius:14px;padding:4px 12px;cursor:pointer;font-size:13px;display:flex;gap:6px;align-items:center}
   .fchip.on{background:var(--azul);border-color:var(--azul);color:#fff}
-  h3.secao{font-size:13px;color:var(--cinza);margin:12px 0 6px}
-  /* meio-termo: cartão com respiro interno, só a distância entre eles é menor */
-  .cartao{position:relative;background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 14px;margin-bottom:5px;cursor:pointer;display:flex;align-items:center;gap:11px;box-shadow:0 1px 2px rgba(30,32,36,.05)}
-  .cartao:hover{box-shadow:0 3px 10px rgba(30,32,36,.10)}
-  .cartao.sel{outline:2px solid var(--azul)}
-  .cartao.feita{opacity:.55}
+  /* em lista longa, quem rola perde a divisão ("isto ainda é 'em exigência'?").
+     O cabeçalho gruda no topo e responde sem exigir voltar. */
+  h3.secao{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    color:#7A808B;margin:16px 0 7px;position:sticky;top:0;z-index:2;
+    background:inherit;padding:5px 0 5px 2px}
+  /* ── a pauta ──────────────────────────────────────────────────────────
+     Uma lista, não uma pilha de caixas: fundo branco contínuo, linhas
+     separadas por fio, e uma CALHA de data fixa à esquerda que dá o eixo
+     vertical. Nesta mesa tudo é fila com data, então a data é a espinha.
+     A linha inteira é cinza; só o prazo real e os marcadores têm cor. */
+  /* CARTÕES, como o To Do desenha: cada cliente numa peça própria, com uma
+     folga curta entre elas. A moldura fina segura o cartão mesmo quando a
+     lista tem fundo colorido — só a sombra sumiria ali.
+     A altura continua FIXA: era a altura variável, e não o tamanho, que fazia
+     o olho perder o compasso de uma linha para a outra. */
+  .cartao{position:relative;background:var(--branco);padding:0 12px 0 16px;cursor:pointer;
+    min-height:68px;display:flex;align-items:center;gap:10px;margin-bottom:3px;
+    border:1px solid var(--borda);border-radius:8px;
+    box-shadow:0 1px 2px rgba(30,32,36,.05)}
+  .cartao:hover{background:#F9FBFD;box-shadow:0 3px 9px rgba(30,32,36,.10)}
+  .cartao.sel{background:#EDF3FD;border-color:#BCD3F5;box-shadow:inset 3px 0 0 var(--azul)}
+  .cartao.feita{opacity:.5}
   .cartao.feita .nome{text-decoration:line-through}
-  .cartao .check{width:16px;height:16px;border:2px solid var(--cinza);border-radius:50%;flex:none;cursor:pointer}
-  .cartao.feita .check{background:var(--verde);border-color:var(--verde)}
-  .cartao .info{min-width:0;flex:1}
-  .cartao .nome{font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .cartao .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:3px;font-size:12px;color:var(--cinza);align-items:center}
+  /* o nome NUNCA pode ser espremido a zero: numa coluna estreita, com o chip
+     de exigência ao lado, a linha chegou a mostrar só o chip e nenhum nome */
+  .cartao .info{flex:1 1 auto;min-width:130px}
+  .cartao .nome{font-weight:600;font-size:15px;letter-spacing:-.006em;line-height:1.3;
+    color:#1D1F24;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* a segunda linha: miúda, cinza, só datas — do jeito do To Do */
+  .cartao .meta{display:flex;gap:6px;margin-top:3px;font-size:12.5px;color:#6E747E;
+    align-items:center;white-space:nowrap;overflow:hidden}
+  .cartao .meta .pt{color:#C7CBD2;flex:none}
+  .cartao .dt{flex:none;font-variant-numeric:tabular-nums}
+  .cartao .dt.venc{color:var(--vermelho);font-weight:600}
+  .cartao .dt.hoje{color:var(--azul);font-weight:600}
+  .cartao .dt.ev{color:var(--roxo)}
+  .cartao .meta .exig-chip{flex:none}
+  .cartao .quem-prazo{flex:none;margin-left:-2px}
+  /* as ações só aparecem no hover ou pelo teclado; ligadas, ficam sempre */
+  /* ⭐ e 🔥 ficam SEMPRE visíveis. Botão que só aparece no hover não existe
+     para quem não sabe que ele está lá — e some para quem usa teclado ou
+     toque. Apagados quando desligados, acesos quando ligados. */
+  .cartao .acoes{display:flex;gap:1px;flex:none;margin-left:2px}
+  .cartao .acao-card.fogo{filter:grayscale(1);opacity:.3}
+  .cartao:hover .acao-card.fogo{opacity:.55}
+  .cartao .acao-card.fogo.on{filter:none;opacity:1}
+  /* quem navega por teclado precisa ver onde está, mesmo nos botões que só
+     aparecem no hover */
+  .cartao .acao-card:focus-visible{opacity:1;filter:none;outline:2px solid var(--azul);
+    outline-offset:1px;border-radius:4px}
+  .avatar.mini.vazio{background:#DCDFE5;color:#8A9099}
   .chip{border-radius:10px;padding:1px 8px;font-size:11px;font-weight:600;white-space:nowrap}
   .chip.ben{background:#e8f1fb;color:var(--azul-escuro)}
   /* datas como no To Do: vencida vermelha, hoje azul, futura preta — sem fundo */
@@ -291,7 +384,15 @@
   .chip.neutro{background:var(--fundo);color:var(--cinza);font-weight:400}
   .avatares{display:flex;flex:none}
   .avatares .avatar{margin-left:-6px;border:2px solid var(--branco)}
-  .acao-card{border:none;background:none;font-size:15px;cursor:pointer;color:#c8c6c4;flex:none}
+  /* a coluna da direita tem largura fixa: sem isso os avatares dançam de uma
+     linha para a outra conforme o tamanho dos marcadores */
+  .cartao .avatares{min-width:52px;justify-content:flex-end;margin-left:auto}
+  /* ⭐ e 🔥 são clique de todo dia: alvo de 30px e glifo grande o bastante
+     para acertar sem mirar */
+  .acao-card{border:none;background:none;font-size:19px;line-height:1;cursor:pointer;
+    color:#c8c6c4;flex:none;width:30px;height:30px;border-radius:8px;
+    display:inline-flex;align-items:center;justify-content:center}
+  .acao-card:hover{background:#EFF2F7}
   .acao-card.on{color:#eaa300}
   /* emojis não obedecem a cor do CSS — apagado = cinza via grayscale */
   .acao-card.sol,.acao-card.fogo{filter:grayscale(1);opacity:.35}
@@ -372,7 +473,10 @@
   /* ── Fatos do benefício ───────────────────────────────────────────────
      Hierarquia por linha e espaço, não por bloco colorido: cor entra na
      letra (rótulo e nome do benefício em azul) e no estado (prazo). */
-  .fatos{background:var(--branco);border:1px solid var(--borda);border-radius:12px;
+  /* A PLACA DO PROCESSO É CINZA. Espécie, protocolo, NB, DER, DIB são dados
+     que se leem, não coisas que se fazem — o cinza diz isso sem uma palavra,
+     e de quebra separa o quadro de cima do branco em que se escreve. */
+  .fatos{background:var(--placa);border:1px solid var(--borda);border-radius:12px;
     overflow:hidden;margin-bottom:12px}
   .fatos-topo{display:flex;align-items:center;gap:9px;padding:12px 15px;flex-wrap:wrap}
   .fatos-topo h3{font-size:15.5px;font-weight:650;letter-spacing:-.015em;color:var(--azul-escuro)}
@@ -452,13 +556,76 @@
   .crps-res.ok .crps-res-bt:hover{background:#2E7D52;border-color:#2E7D52;color:#fff}
   .crps-res textarea{width:100%;margin-top:6px;font:inherit;font-size:13px;color:var(--texto);
     border:1px solid var(--borda);border-radius:6px;padding:7px;min-height:74px;resize:vertical}
+  /* a resposta (conclusão da tarefa) embaixo do comentário que a pediu.
+     Mora DENTRO do .texto, que é pre-wrap e flex — daí os resets, os mesmos
+     que a caixa do resumo do acórdão precisou. */
+  .resp{display:block;margin:7px 0 1px;white-space:normal}
+  .resp-item{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;
+    border-left:3px solid #BFE0CB;background:#F4FAF6;border-radius:0 8px 8px 0;
+    padding:6px 10px;margin-top:4px;font-size:13px;line-height:1.5}
+  .resp-item .quando{display:flex;align-items:center;gap:5px;flex:none;
+    font-size:11px;color:var(--cinza);white-space:nowrap;text-align:left}
+  .resp-item .texto{flex:1;min-width:140px;white-space:pre-wrap;color:var(--texto)}
+  .resp-item .vistos{margin-left:auto}
+  .resp-item .apaga{flex:none}
+  /* quem julgou. Junta = 1ª instância do CRPS, ainda cabe recurso especial;
+     Câmara = 2ª instância, acabou a via administrativa. As duas cores dizem
+     isso de longe: azul "ainda dá", roxo "é o fim da linha lá dentro". */
+  .crps-org{display:inline-flex;align-items:center;gap:5px;border-radius:999px;
+    padding:1px 9px;font-size:11px;font-weight:600;white-space:nowrap;margin-left:6px;
+    background:#E7EEFB;border:1px solid #C3D6F5;color:var(--azul-escuro)}
+  .crps-org.inst2{background:#F1EAFB;border-color:#DACBF2;color:#5B3A9B}
+  .crps-org small{font-weight:500;opacity:.8;font-size:10.5px}
+  /* o que está sendo pedido: marcadores que se somam (rural + especial…) */
+  .marc-linha{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:2px 0 8px}
+  .marc-rot{font-size:10px;letter-spacing:.08em;font-weight:700;color:var(--cinza)}
+  .marc{border:1px solid var(--borda);background:var(--branco);color:var(--cinza);
+    border-radius:999px;padding:2px 11px;font:inherit;font-size:12px;font-weight:600;
+    cursor:pointer;white-space:nowrap;opacity:.65}
+  .marc:hover{opacity:1;border-color:var(--marc);color:var(--marc)}
+  .marc.on{opacity:1;background:var(--marc);border-color:var(--marc);color:#fff}
+  .chip.marc-chip{background:var(--branco);border:1px solid var(--marc);color:var(--marc)}
+  .marc-igual{margin:0 0 8px;padding:6px 10px;border-radius:8px;font-size:12.5px;
+    background:#FFF7F2;border:1px solid #F2C7AE;color:#9C3F0F}
+  /* dois recursos numa ficha só: o aviso e a lista da separação */
+  .juntos{border-left:3px solid #C6541A;background:#FFF7F2;margin-bottom:12px}
+  .sep-lista{margin-top:9px;border:1px solid var(--borda);border-radius:8px;overflow:hidden}
+  .sep-lin{display:flex;align-items:center;gap:9px;padding:6px 10px;font-size:13px;
+    background:var(--branco);border-top:1px solid var(--borda)}
+  .sep-lin:first-child{border-top:none}
+  /* consulta manual: o recurso que depende de gente abrir o site */
+  .man-cx{border-left:3px solid #7A5AA8}
+  .man-cx.vence{border-left-color:#C6541A;background:#FFF7F2}
+  .man-linha{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:7px}
+  .man-selo{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:1px 10px;
+    font-size:11.5px;font-weight:600;background:#F1EAFB;border:1px solid #DACBF2;color:#5B3A9B}
+  .man-selo.vence{background:#FDEEE6;border-color:#F2C7AE;color:#9C3F0F}
+  .man-dia{border-left:3px solid #7A5AA8}
+  .man-item{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 0;
+    border-top:1px solid var(--borda);font-size:13px}
+  .man-item:first-of-type{border-top:none}
+  .man-nome{background:none;border:none;padding:0;font:inherit;font-weight:600;
+    color:var(--azul-escuro);cursor:pointer;text-align:left}
+  .man-nome:hover{text-decoration:underline}
+  .btn-mini.forte{background:var(--azul);border-color:var(--azul);color:#fff}
+  /* a estrela de cada movimentação: apagada até alguém (ou o robô) acender */
+  .crps-est{flex:none;background:none;border:none;cursor:pointer;font-size:13px;
+    padding:0 4px;filter:grayscale(1);opacity:.25;align-self:flex-start}
+  .crps-est:hover{opacity:.7}
+  .crps-est.on{filter:none;opacity:1}
+  .timeline .crps-imp{background:#FFFBF2!important;box-shadow:inset 3px 0 0 #E0A32E}
   .crps-ruido>summary{cursor:pointer;color:var(--cinza);font-size:12px;padding:9px 15px;list-style:none}
   .crps-ruido>summary:hover{color:var(--azul)}
   .crps-ruido[open]>summary{color:var(--azul)}
 
   /* ── compositor: escrever primeiro, Registrar por último ───────────── */
+  /* O COMPOSITOR CONTINUA BRANCO. Escrever é sobre papel branco em todo
+     lugar de onde a equipe vem — Word, To Do, WhatsApp — e campo cinza se lê
+     como campo desligado. Para destacar, ele SOBE: sombra leve, folha por
+     cima da mesa, em vez de mais uma cor. */
   .escrever{background:var(--branco);border:1px solid var(--borda);border-radius:12px;
-    margin-bottom:10px;transition:border-color .15s,box-shadow .15s}
+    margin-bottom:10px;box-shadow:0 1px 3px rgba(30,32,36,.07);
+    transition:border-color .15s,box-shadow .15s}
   .escrever:focus-within{border-color:var(--azul);box-shadow:0 0 0 3px color-mix(in srgb, var(--azul) 16%, transparent)}
   .escrever #and-texto{width:100%;border:none;background:none;resize:none;overflow:hidden;
     font:inherit;font-size:14px;line-height:1.5;padding:13px 15px 6px;outline:none;color:var(--texto)}
@@ -657,6 +824,43 @@
   #menu-mover .mm-it{padding:7px 10px;border-radius:6px;cursor:pointer;font-size:14px}
   #menu-mover .mm-it:hover{background:var(--fundo)}
   #menu-mover .mm-it.atual{color:var(--azul);font-weight:700}
+  /* o Meu Dia abre o menu, separado do "Mover para…" por um fio */
+  #menu-mover .mm-it.destaque{font-weight:650;border-bottom:1px solid var(--borda);
+    border-radius:6px 6px 0 0;margin-bottom:4px;padding-bottom:9px}
+  /* encaminhar: a triagem dentro da própria caixa de entrada */
+  .enc{background:var(--placa);border:1px solid var(--borda);border-top:none;
+    border-radius:0 0 10px 10px;padding:10px 12px;margin:-6px 0 6px}
+  .enc-linha{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:7px}
+  .enc .fx-av{margin-left:2px}
+  .enc-quem.on{background:var(--cor-eq);border-color:var(--cor-eq);color:#fff}
+  .enc-dia.on{background:#E7EEFB;border-color:var(--azul);color:var(--azul-escuro);font-weight:650}
+  .enc-data{padding:5px 8px;font:inherit;font-size:12.5px;border:1px solid var(--borda);
+    border-radius:999px;background:var(--branco)}
+  .enc-txt{width:100%;font:inherit;font-size:13.5px;padding:8px 10px;border-radius:8px;
+    border:1px solid var(--borda);resize:vertical;background:var(--branco)}
+  .enc-sug{display:flex;gap:5px;flex-wrap:wrap;margin:7px 0}
+  .enc-sug .btn-rap{font-size:12px;padding:4px 10px}
+  .enc-sug .btn-rap.on{background:#E7EEFB;border-color:var(--azul);color:var(--azul-escuro);font-weight:650}
+  .enc-dica{font-size:11.5px;color:var(--cinza);align-self:center}
+  /* 📣 Novidades: a caixa de entrada do que os portais trouxeram */
+  .nov{display:flex;align-items:flex-start;gap:10px;background:var(--branco);
+    border:1px solid var(--borda);border-radius:10px;padding:10px 12px;margin-bottom:5px}
+  .nov-fonte{flex:none;font-size:11px;font-weight:700;color:var(--cinza);
+    background:var(--placa);border-radius:6px;padding:3px 7px;white-space:nowrap}
+  .nov-corpo{flex:1;min-width:0}
+  .nov-cli{font-weight:650;font-size:13.5px;cursor:pointer}
+  .nov-cli:hover{color:var(--azul)}
+  .nov-txt{font-size:13px;color:var(--texto);margin-top:2px;line-height:1.45}
+  /* ── importar do PAT/GERID ─────────────────────────────────────────── */
+  .pat-cx{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:16px 18px}
+  .pat-cx h3{font-size:15px;color:var(--azul-escuro);margin-bottom:4px}
+  .pat-cx code{background:var(--placa);padding:1px 5px;border-radius:4px;font-size:12.5px}
+  .tab{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;
+    background:var(--branco);border:1px solid var(--borda);border-radius:10px;overflow:hidden}
+  .tab th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;
+    color:var(--cinza);padding:7px 10px;background:var(--placa)}
+  .tab td{padding:7px 10px;border-top:1px solid var(--borda)}
+  .tab a{color:var(--azul)}
   .id-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
   .id-card{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:10px 14px}
   .id-card.destaque{border-color:#f0c36d;background:#fffaf0}
@@ -952,7 +1156,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.11 · resumo do que a decisão decidiu</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.44 · os comentários do INSS em aba própria</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -979,10 +1183,10 @@
 </div>
 
 <div class="app" id="app">
-  <nav class="sidebar">
+  <nav class="sidebar" onmouseleave="esconderEtiqueta()" onscroll="seguirEtiqueta()">
     <button id="btn-lateral" title="recolher/estender o menu">☰</button>
     <div class="usuario"><span class="avatar" id="u-avatar"></span>
-      <div><strong id="u-nome"></strong><div style="font-size:11px;color:var(--cinza)">conectado · <span class="txt">v. 06.08 · login à prova de celular</span></div></div>
+      <div><strong id="u-nome"></strong><div class="u-papel txt" id="u-papel"></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -1344,8 +1548,11 @@ async function iniciar(){
   const app = document.getElementById("app");
   app.classList.add("logado");
   marcarCelular();
-  if(ler("crm_menu")==="mini") app.classList.add("mini-lateral");
+  aplicarMenu();
   document.getElementById("u-nome").textContent = eu.nome;
+  // no lugar do texto de versão que ficava aqui: quem você é para o sistema
+  document.getElementById("u-papel").textContent =
+    (eu.papel === "admin" ? "administrador" : eu.setor || "equipe");
   const uav = document.getElementById("u-avatar");
   uav.textContent = eu.inicial; uav.style.background = eu.cor;
   await carregar();
@@ -1370,7 +1577,7 @@ async function guardarCfgApp(chave, valor){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal, tarefasAnd] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal, tarefasAnd] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -1381,6 +1588,13 @@ async function carregar(){
       todas("pagamentos","select=*"),
       todas("meu_dia",`select=*&dia=eq.${hoje()}`),
       todas("andamentos",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),
+      // 📣 Novidades: só o que veio dos portais, com quem já leu. É uma
+      // consulta pequena de propósito — puxar o texto de TODOS os andamentos
+      // de 30 dias para mostrar os do robô seria carregar a ficha inteira do
+      // escritório em toda abertura do CRM.
+      todas("andamentos",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`
+        +`&origem=in.(pat,crps,dou)&criado_em=gte.${d30.toISOString()}&order=criado_em.desc`)
+        .catch(()=>[]),
       todas("modelos_mensagem","select=*&order=titulo"),
       todas("sugestoes","select=*&status=eq.pendente&order=criado_em.desc"),
       todas("mencoes",`select=*&para_id=eq.${eu.id}&lida_em=is.null&order=criado_em.desc`),
@@ -1399,7 +1613,7 @@ async function carregar(){
       todas("inss_calendario","select=*").catch(()=>[]),
       todas("andamento_tarefas","select=*&concluida_em=is.null").catch(()=>[]),
     ]);
-  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
+  D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
   D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
   D.config = new Map((cfgs||[]).map(x=>[x.chave,x.valor]));
   D.inssCal = inssCal||[];
@@ -1423,7 +1637,7 @@ async function carregar(){
   // índice de pesquisa por cliente
   clientes.forEach(c=>{
     const ks = D.casosDoCliente.get(c.id)||[];
-    const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+(k.beneficio||"")+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
+    const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+(k.beneficio||"")+" "+rotuloDoPedido(k)+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
     // guarda também só os dígitos: acha o processo tanto por "0000001-14"
     // quanto por "000000114", e o CPF com ou sem ponto
     c._ix = texto + " " + texto.replace(/\D/g, "");
@@ -1558,7 +1772,12 @@ function menuMover(ev, cliId){
   const ks=(D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
   if(!ks.length) return;
   const m=document.createElement("div"); m.id="menu-mover";
-  m.innerHTML = `<div class="mm-tit">Mover para…</div>` + ks.map(k=>
+  // o ☀️ saiu da linha (era mais um ícone competindo com o nome), mas o Meu
+  // Dia continua: a ação mora aqui, no menu que o botão direito já abria
+  const noDia = D.meudia.some(x=>x.colaborador_id===eu.id && ks.some(k=>k.id===x.caso_id));
+  m.innerHTML = `<div class="mm-it destaque" data-dia="${ks[0].id}">${
+      noDia?"☀️ Tirar do Meu Dia":"☀️ Adicionar ao Meu Dia"}</div>`
+    + `<div class="mm-tit">Mover para…</div>` + ks.map(k=>
     (ks.length>1?`<div class="mm-caso">${esc(tituloCaso(k))}</div>`:"") +
     LISTAS_MOVER.map(([l])=>{
       const atual = listaDe(k)===l;
@@ -1571,8 +1790,30 @@ function menuMover(ev, cliId){
   m.querySelectorAll("[data-mv]").forEach(it=>it.onclick=()=>{
     const [kid,l]=it.dataset.mv.split("|"); moverCaso(kid,l);
   });
+  const bd = m.querySelector("[data-dia]");
+  if(bd) bd.onclick=()=>{ fecharMenuMover(); alternarMeuDia(bd.dataset.dia); };
   setTimeout(()=>document.addEventListener("click", fecharMenuMover, {once:true}));
 }
+// Meu Dia: liga e desliga. Saiu da linha da lista (era mais um ícone
+// competindo com o nome) e vive no menu do botão direito, onde já mora o
+// "Mover para…". A lista ☀️ Meu Dia continua a mesma.
+async function alternarMeuDia(casoId){
+  if(!casoId) return;
+  const ja = D.meudia.find(m=>m.caso_id===casoId && m.colaborador_id===eu.id);
+  try{
+    if(ja){
+      await api(`/rest/v1/meu_dia?id=eq.${ja.id}`,{method:"DELETE"});
+      aviso("Retirado do seu Meu Dia");
+    }else{
+      await api(`/rest/v1/meu_dia`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({colaborador_id:eu.id, caso_id:casoId, dia:hoje()})});
+      aviso("Adicionado ao seu Meu Dia ☀️");
+    }
+    D.meudia = await todas("meu_dia",`select=*&dia=eq.${hoje()}`);
+    montarSidebar(); render();
+  }catch(e){ aviso("Não consegui mexer no Meu Dia"); }
+}
+
 async function moverCaso(casoId, lista){
   const k=D.casoPorId.get(casoId); if(!k || listaDe(k)===lista) return fecharMenuMover();
   const fase=(LISTAS_MOVER.find(([l])=>l===lista)||[])[1];
@@ -1587,6 +1828,7 @@ async function moverCaso(casoId, lista){
 function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", null],
+    ["novidades","📣 Novidades", novidades().length],
     ["mencoes","📥 Menções", D.mencoes.length],
     ["calendario","📅 Calendário", null],
     ["planejado","🗓️ Planejado", ativos().filter(k=>k.prazo).length],
@@ -1595,15 +1837,28 @@ function montarSidebar(){
     ["importante","⭐ Importante", ativos().filter(k=>k.importante).length],
     ["particulares","📋 Minhas Tarefas", "🔒"],
     ["rotinas","🔁 Organizacional", (D.rotinas||[]).filter(r=>r.ativo!==false).length],
+    ["acervo","🧹 Cuidar do acervo", quantosNoAcervo()],
   ];
   // rótulo = "☀️ Meu Dia" -> ícone + texto separados (o texto some no menu recolhido)
+  // ícone e texto em CÉLULAS SEPARADAS. Recolhido, só o ícone fica — e ele
+  // precisa poder crescer sozinho. Aberto, a célula de largura fixa alinha
+  // todos os rótulos na mesma coluna: emoji não têm a mesma largura, e sem
+  // isso "Menções" e "Calendário" começavam em pontos diferentes.
   const rotu = rot => { const i=rot.indexOf(" ");
-    return `<span class="rotulo" title="${esc(rot)}">${rot.slice(0,i)}<span class="txt">${esc(rot.slice(i))}</span></span>`; };
+    return `<span class="rotulo"><span class="ic" aria-hidden="true">${rot.slice(0,i)}</span>`
+         + `<span class="txt">${esc(rot.slice(i+1))}</span></span>`; };
+  // o nome sem o emoji: é ele que o leitor de tela anuncia e que a etiqueta
+  // do menu recolhido mostra
+  const soTexto = rot => esc(rot.slice(rot.indexOf(" ")+1));
+  // contador só quando há o que contar: uma coluna de zeros não informa nada,
+  // e faz o número que importa (Menções 3) se perder no meio deles
   document.getElementById("grupo-dinamicas").innerHTML = din.map(([id,rot,n])=>
-    `<div class="lista-item" data-v="${id}">${rotu(rot)}`+
-    (n==="🔒"?`<span class="priv">🔒 só você</span>`:n!=null?`<span class="cont">${n}</span>`:"")+`</div>`).join("");
-  document.getElementById("grupo-fases").innerHTML = ordemDasFases().map(([f,rot])=>
-    `<div class="lista-item" data-v="fase:${f}">${rotu(rot)}<span class="cont">${casosDaFase(f).length}</span></div>`).join("");
+    `<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}`+
+    (n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:"")+`</div>`).join("");
+  document.getElementById("grupo-fases").innerHTML = ordemDasFases().map(([f,rot])=>{
+    const n = casosDaFase(f).length;
+    return `<div class="lista-item" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`;
+  }).join("");
   document.getElementById("grupo-visoes").innerHTML = [
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
@@ -1616,8 +1871,9 @@ function montarSidebar(){
     ["recebimentos","💰 Recebimentos", D.casos.filter(k=>k.fase==="pagamento").length],
     ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && e.data_hora>=hoje()).length],
     ["dashboard","📊 Dashboard", null],
+    ["patinss","📥 Importar do INSS", null],
     ["config","⚙️ Configurações", null],
-  ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}">${rotu(rot)}${n!=null?`<span class="cont">${n}</span>`:""}</div>`).join("");
+  ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`).join("");
   const bSom=document.getElementById("btn-som");
   bSom.textContent = somLigado()?"🔔":"🔕";
   bSom.onclick=()=>{
@@ -1630,23 +1886,1118 @@ function montarSidebar(){
     document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
     visao="novocliente"; fecharMenuCel(); fecharFicha(false); render();
   };
-  document.querySelectorAll(".lista-item").forEach(el=>el.onclick=()=>{
-    document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
-    el.classList.add("ativa");
-    visao = el.dataset.v; fecharMenuCel(); fecharFicha(false); render();
+  document.querySelectorAll(".lista-item").forEach(el=>{
+    el.onclick=()=>{
+      document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
+      el.classList.add("ativa");
+      visao = el.dataset.v; esconderEtiqueta();
+      fecharMenuCel(); fecharFicha(false); render();
+    };
+    el.onmouseenter=()=>etiquetaMenu(el);
+    el.onmouseleave=esconderEtiqueta;
   });
   const at = document.querySelector(`.lista-item[data-v="${visao}"]`);
-  if(at) at.classList.add("ativa");
+  // são 26 destinos: recolhido, o trilho não cabe na tela e rola. Sem isto,
+  // abrir uma lista do fim deixava o menu mostrando um trecho onde nada está
+  // aceso — parecia que nenhuma lista estava selecionada.
+  if(at){ at.classList.add("ativa"); at.scrollIntoView({block:"nearest"}); }
   ligarArrasteListas();
 }
 
+// A etiqueta do menu recolhido: o nome da lista ao lado do ícone, na hora.
+// Fora do trilho, porque dentro dele seria cortado pela rolagem.
+let balaoMenu, balaoAlvo;
+function etiquetaMenu(el){
+  if(!el || !document.getElementById("app").classList.contains("mini-lateral")) return;
+  const t = el.getAttribute("aria-label"); if(!t) return;
+  if(!balaoMenu){ balaoMenu=document.createElement("div"); balaoMenu.id="balao-menu";
+    document.body.appendChild(balaoMenu); }
+  const r = el.getBoundingClientRect();
+  balaoAlvo = el;
+  balaoMenu.textContent = t;
+  balaoMenu.style.left = (r.right+8)+"px";
+  balaoMenu.style.top  = (r.top + r.height/2)+"px";
+  balaoMenu.style.display = "block";
+}
+// rolar o trilho com o mouse parado não pode apagar a etiqueta: o ponteiro
+// continua sobre um item, e nenhum novo `mouseenter` viria para trazê-la de
+// volta. Ela acompanha o ícone.
+function seguirEtiqueta(){ if(balaoAlvo) etiquetaMenu(balaoAlvo); }
+function esconderEtiqueta(){ balaoAlvo=null; if(balaoMenu) balaoMenu.style.display="none"; }
+
+// ── o e-Recursos (CRPS), traduzido ────────────────────────────────────────
+// Cópia de robo-crps/traduzir.js + comentarioDoEvento de ingerir.js, os dois
+// com teste próprio e 125 casos-ouro atrás — inclusive os erros reais já
+// corrigidos (o falso "Ação judicial" por substring, o embargo rotulado ao
+// contrário, o órgão lido do lugar errado).
+//
+// Vive dentro de um escopo fechado porque o `semAcento` daqui abaixa a caixa
+// e o do PAT não: dois com o mesmo nome no mesmo arquivo, e o último a ser
+// declarado ganha — em silêncio.
+const CRPS = (() => {
+// Tradutor dos eventos do e-Recursos (CRPS) para linguagem de escritório.
+//
+// A API do INSS devolve o histórico em "servidorês": "Conhecer do Recurso e
+// dar-lhe provimento parcial, por unanimidade - Acórdão: 25ª JR/3080/2025".
+// Aqui isso vira "✅ Recurso provido em parte (25ª Junta)", que qualquer
+// colaborador entende de relance. As regras vêm dos eventos reais das fichas.
+//
+// Cada regra casa por trecho do status (minúsculo, sem acento) e devolve
+// {tipo, icone, resumo}. A ordem importa: da mais específica para a mais geral.
+
+function semAcento(s) {
+  return (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+}
+
+// alguns nomes de arquivo/eventos vêm com UTF-8 estragado (mojibake).
+// não tentamos consertar tudo — só limpamos o que atrapalha a leitura.
+function limpar(s) {
+  return (s || '').replace(/\s+/g, ' ').trim();
+}
+
+// QUEM julgou — e, portanto, em que instância o recurso está.
+//
+// O CRPS tem dois andares. As Juntas de Recursos julgam o recurso ordinário
+// (1ª instância); das Câmaras de Julgamento vem a decisão do recurso especial
+// (2ª instância). Saber qual delas decidiu é o que diz se ainda cabe recurso
+// especial ou se o caminho administrativo acabou — por isso não basta um
+// número solto: guardamos o nome inteiro e a instância.
+//
+// Lê tanto a sigla do e-Recursos ("25ª JR/3080/2025", "2ª CAJ/1474/2026")
+// quanto o cabeçalho do próprio acórdão ("ACORDAM os membros da 2ª Composição
+// Adjunta da 10ª Junta de Recursos"). A composição adjunta é uma turma da
+// mesma Junta: a instância não muda, então ela não entra no nome.
+function orgaoJulgador(texto) {
+  const t = String(texto || '');
+  const caj = t.match(/(\d{1,2})\s*ª?\s*(?:CAJ\b|C[âa]mara\s+de\s+Julgamento)/i)
+           || t.match(/(\d{1,2})\s*ª?\s*C[âa]mara\b/i);
+  if (caj) return { nome: `${Number(caj[1])}ª Câmara de Julgamento`,
+                    sigla: `${Number(caj[1])}ª CaJ`, instancia: 2 };
+  // "1ª Composição Adjunta da 2ª Junta" — quem vale é a Junta, a última do par
+  const jr = [...t.matchAll(/(\d{1,2})\s*ª?\s*(?:JR\b|Junta\s+de\s+Recursos)/ig)].pop();
+  if (jr) return { nome: `${Number(jr[1])}ª Junta de Recursos`,
+                   sigla: `${Number(jr[1])}ª JR`, instancia: 1 };
+  if (/C[âa]maras?\s+de\s+Julgamento/i.test(t))
+    return { nome: 'Câmaras de Julgamento', sigla: 'CaJ', instancia: 2 };
+  if (/Junta\s+de\s+Recursos/i.test(t))
+    return { nome: 'Junta de Recursos', sigla: 'JR', instancia: 1 };
+  if (/\bCRPS\b/i.test(t) || /conselho de recursos/i.test(t))
+    return { nome: 'CRPS', sigla: 'CRPS', instancia: 0 };
+  return null;
+}
+
+// O MESMO dado, lido do PDF do acórdão. Aqui não dá para varrer o texto
+// inteiro: um acórdão de Junta avisa que "cabe Recurso Especial às Câmaras de
+// Julgamento", cita a Câmara que uniformizou a jurisprudência, e tem
+// conselheiro chamado CUNHA CAMARA. Procurar "câmara" solto acharia todos
+// esses. Então lemos só onde o órgão se identifica:
+//   1. "ACORDAM os membros da <órgão>, em CONHECER..."   (o colegiado)
+//   2. "O(a) Presidente do(a) <órgão>, HOMOLOGA..."      (monocrática)
+//   3. o cabeçalho de cada página, entre o CRPS e o MINISTÉRIO
+// Nessa ordem: a 1 e a 2 são a assinatura da decisão; a 3 é o timbre.
+const ANCORAS = [
+  /ACORDAM\s+os\s+membros\s+d[ao]s?\s+([\s\S]{0,110}?)\s*,?\s+em\s+(?:CONHECER|N[ÃA]O\s+CONHECER)/i,
+  /Presidente\s+do\(a\)\s+([\s\S]{0,110}?)\s*,\s*HOMOLOGA/i,
+  /CRPS\s+([\s\S]{0,90}?)\s*Data\/Hora:/i,
+  /Data\/Hora:\s*\d{2}\/\d{2}\/\d{4}[\s\d:]*([\s\S]{0,90}?)\s*MINIST[ÉE]RIO/i,
+];
+function orgaoDoAcordao(texto) {
+  for (const ancora of ANCORAS) {
+    const m = String(texto || '').match(ancora);
+    const o = m && orgaoJulgador(m[1]);
+    if (o && o.instancia) return o;
+  }
+  return null;
+}
+
+// a versão curta, para caber no fim da linha do andamento ("(25ª Junta)")
+function orgaoCurto(bruto) {
+  const o = orgaoJulgador(bruto);
+  if (!o) return '';
+  return o.nome.replace(' de Recursos', '').replace(' de Julgamento', '');
+}
+
+// data da sessão embutida no texto ("... - 18/03/26 08:00" → "18/03/2026 08:00")
+function dataSessao(bruto) {
+  const m = bruto.match(/(\d{2})\/(\d{2})\/(\d{2})\s+(\d{2}:\d{2})/);
+  if (!m) return '';
+  return `${m[1]}/${m[2]}/20${m[3]} ${m[4]}`;
+}
+
+const REGRAS = [
+  // ── decisões (o que mais importa) ────────────────────────────────────────
+  // EMBARGOS ANTES DE RECURSO. "Dar provimento" ao embargo NÃO é recurso
+  // provido: às vezes o efeito é só integrativo ("mantendo-se a decisão
+  // proferida no Acórdão objurgado"), às vezes é modificativo e concede o
+  // benefício. O status do e-Recursos não distingue os dois — quem sabe é o
+  // acórdão. Então o rótulo aponta para o acórdão em vez de arriscar um
+  // "✅ Recurso PROVIDO" (parabéns por um recurso ainda perdido) ou um
+  // "esclarece o acórdão" (que esconde uma aposentadoria concedida).
+  { m: ['conhecer do embargo', 'conhecer dos embargos', 'embargo do segurado', 'embargos de declaracao'],
+    tipo: 'decisao', icone: '📝',
+    f: b => /negar|improv|rejeit/.test(semAcento(b))
+      ? `Embargos rejeitados${sufOrgao(b)}`
+      : `Embargos acolhidos — confira o acórdão${sufOrgao(b)}` },
+  { m: ['dar-lhe provimento parcial', 'dar provimento parcial', 'provimento em parte'],
+    tipo: 'decisao', icone: '✅', f: b => `Recurso provido EM PARTE${sufOrgao(b)}` },
+  { m: ['negar provimento', 'nao conhecer do recurso', 'improceden'],
+    tipo: 'decisao', icone: '⛔', f: b => `Recurso negado${sufOrgao(b)}` },
+  { m: ['dar provimento', 'dar-lhe provimento'],
+    tipo: 'decisao', icone: '✅', f: b => `Recurso PROVIDO${sufOrgao(b)}` },
+  { m: ['decisao monocratica'],
+    tipo: 'decisao', icone: '⚖️', f: b => `Decisão monocrática${sufOrgao(b)}` },
+  { m: ['acordao'],
+    tipo: 'decisao', icone: '⚖️', f: b => `Acórdão publicado${sufOrgao(b)}` },
+
+  // ── julgamento / pauta ───────────────────────────────────────────────────
+  { m: ['sessao de julgamento'],
+    tipo: 'pauta', icone: '⚖️', f: b => {
+      const d = dataSessao(b);
+      return d ? `Pautado para julgamento em ${d}` : 'Incluído em pauta de julgamento';
+    } },
+  { m: ['retirado de pauta'],
+    tipo: 'andamento', icone: '↩️', f: () => 'Retirado de pauta pelo relator' },
+  { m: ['distribuido ao conselheiro'],
+    tipo: 'andamento', icone: '👤', f: () => 'Distribuído ao conselheiro relator' },
+  { m: ['redistribuido ao conselheiro'],
+    tipo: 'andamento', icone: '👤', f: () => 'Redistribuído a outro relator' },
+
+  // ── movimentos das partes ────────────────────────────────────────────────
+  { m: ['interposicao de recurso especial'],
+    tipo: 'recurso', icone: '📄', f: () => 'Recurso especial protocolado' },
+  { m: ['interposicao de incidente', 'embargos'],
+    tipo: 'recurso', icone: '📄', f: () => 'Embargos protocolados' },
+  { m: ['contrarrazoes'],
+    tipo: 'andamento', icone: '📄', f: () => 'Contrarrazões do INSS juntadas' },
+  { m: ['recurso ordinario'],
+    tipo: 'recurso', icone: '📄', f: () => 'Recurso ordinário protocolado' },
+
+  // ── perícia médica ───────────────────────────────────────────────────────
+  { m: ['aguardando parecer do perito', 'solicitacao de parecer do perito'],
+    tipo: 'pericia', icone: '🩺', f: () => 'Aguardando parecer do perito médico' },
+  { m: ['informacoes obtidas pmf', 'tarefa cancelada pmf'],
+    tipo: 'pericia', icone: '🩺', f: () => 'Parecer médico concluído' },
+
+  // ── tramitação interna ───────────────────────────────────────────────────
+  { m: ['requerimento protocolado'],
+    tipo: 'andamento', icone: '📥', f: () => 'Requerimento protocolado' },
+  { m: ['protocolo recebido no inss', 'protocolo recebido'],
+    tipo: 'andamento', icone: '📥', f: () => 'Protocolo recebido no INSS' },
+  { m: ['juntada de informacoes previdenciarias'],
+    tipo: 'andamento', icone: '📎', f: () => 'Juntada de informações previdenciárias (CNIS/benefícios)' },
+  { m: ['juntada de documento', 'documento juntado', 'documento juntado'],
+    tipo: 'andamento', icone: '📎', f: () => 'Documento juntado' },
+  { m: ['documentacao do processo de origem', 'documentacao do sistema unico'],
+    tipo: 'andamento', icone: '📎', f: () => 'Documentação do processo de origem juntada' },
+  { m: ['motivo de indeferimento alterado'],
+    tipo: 'andamento', icone: 'ℹ️', f: () => 'Motivo de indeferimento registrado' },
+  { m: ['inclusao de parte'],
+    tipo: 'andamento', icone: '👥', f: () => 'Inclusão de parte no processo' },
+  { m: ['alteracao do endereco', 'alteracao da aps', 'alterar localizador',
+        'alteracao de correspondencia'],
+    tipo: 'ruido', icone: '·', f: () => 'Movimentação interna (cadastro/localizador)' },
+  { m: ['encaminhamento automatico', 'criacao de subtarefa'],
+    tipo: 'ruido', icone: '·', f: () => 'Encaminhamento automático interno' },
+  { m: ['encaminhamento'],
+    tipo: 'andamento', icone: '➡️', f: b => `Encaminhado${sufDestino(b)}` },
+];
+
+// "... - Acórdão: 25ª JR/3080/2025" → " (25ª Junta)"
+function sufOrgao(b) { const o = orgaoCurto(b); return o ? ` (${o})` : ''; }
+// "Encaminhamento - (21150521 para 25ª JR)" → " à 25ª Junta"
+function sufDestino(b) {
+  const o = orgaoCurto(b);
+  if (o) return ` à ${o}`;
+  const par = b.match(/para\s+([A-Za-zÀ-ú0-9ª\s]+?)\)?$/);
+  return par ? ` (${limpar(par[1])})` : '';
+}
+
+// o nome do arquivo diz se ele é o que DECIDE — é por ele que o coletor sabe
+// o que vale a pena baixar (acórdão e decisão monocrática, não o acervo todo)
+const ehArquivoDeDecisao = nome => /ac[oó]rd[aã]o|monocr[aá]tic/i.test(nome || '');
+
+// traduz UM evento cru {status, data, documentos} → objeto de andamento
+function traduzirEvento(ev) {
+  const bruto = limpar(ev.status || '');
+  const chave = semAcento(bruto);
+  let regra = REGRAS.find(r => r.m.some(t => chave.includes(t)));
+  const base = regra ? { tipo: regra.tipo, icone: regra.icone, resumo: regra.f(bruto) }
+                     : { tipo: 'andamento', icone: '•', resumo: bruto };
+  // guardamos a lista dos documentos (nome + caminho no e-Recursos). Antes só
+  // ficava a contagem, e o acórdão se perdia: sem o caminho não há como buscá-lo.
+  const arquivos = (ev.documentos || []).map(d => ({
+    id: String(d.id || ''),
+    nome: limpar(d.nome || ''),
+    path: d.path || '',
+    decide: ehArquivoDeDecisao(d.nome),
+  })).filter(a => a.id || a.path);
+  return {
+    data: ev.data || '',
+    tipo: base.tipo,
+    icone: base.icone,
+    resumo: base.resumo,
+    bruto,
+    docs: arquivos.length,
+    arquivos,
+  };
+}
+
+// converte "DD/MM/AAAA HH:MM:SS" → ISO, para ordenar/comparar
+function dataParaISO(br) {
+  const m = (br || '').match(/(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}):(\d{2}):?(\d{2})?)?/);
+  if (!m) return '';
+  const [, d, mo, y, h = '00', mi = '00', s = '00'] = m;
+  return `${y}-${mo}-${d}T${h}:${mi}:${s}`;
+}
+
+// os eventos "ruído" existem no histórico, mas não valem uma notificação:
+// encaminhamentos automáticos e troca de localizador não são novidade real.
+const TIPOS_SILENCIOSOS = new Set(['ruido']);
+
+// traduz o processo INTEIRO (o JSON que a API devolve) para o bloco casos.crps
+function traduzirProcesso(json, opts = {}) {
+  const meuNome = semAcento(opts.procurador || 'paulo roberto tercini');
+  const recorrentes = (json.recorrentes || []).map(r => limpar(r.nome))
+    .filter(n => !semAcento(n).includes(meuNome));
+  const eventos = (json.eventos || []).map(traduzirEvento);
+  // o mais novo primeiro (a API já manda assim, mas garantimos)
+  eventos.sort((a, b) => (dataParaISO(b.data) < dataParaISO(a.data) ? -1 : 1));
+  const relevante = eventos.find(e => !TIPOS_SILENCIOSOS.has(e.tipo)) || eventos[0] || null;
+  return {
+    nup: limpar(json.proc || ''),
+    num_proc: limpar(json.numProc || ''),
+    orgao_atual: limpar(json.orgaoAtual || ''),
+    recorrentes,
+    status: relevante ? `${relevante.icone} ${relevante.resumo}` : '',
+    ultimo_em: relevante ? relevante.data : '',
+    eventos,
+  };
+}
+
+// dá a "impressão digital" de um evento, para o robô saber o que é NOVO
+// entre uma varredura e outra (data + status cru bastam)
+function chaveEvento(e) { return `${dataParaISO(e.data)}|${e.bruto}`; }
+
+// Corrigimos uma REGRA e o rótulo errado já está gravado na ficha. Como cada
+// evento guarda o `bruto` (o status cru do e-Recursos), dá para reetiquetar
+// sem coletar tudo de novo. Mexe SÓ em tipo/ícone/resumo: os arquivos, o
+// storage e os resumos dos acórdãos ficam exatamente como estavam.
+function rerotular(bloco) {
+  let mudou = 0;
+  for (const e of (bloco.eventos || [])) {
+    if (!e.bruto) continue;
+    const novo = traduzirEvento({ status: e.bruto });
+    if (e.tipo === novo.tipo && e.icone === novo.icone && e.resumo === novo.resumo) continue;
+    e.tipo = novo.tipo; e.icone = novo.icone; e.resumo = novo.resumo;
+    mudou++;
+  }
+  if (mudou) {
+    const rel = (bloco.eventos || []).find(x => !TIPOS_SILENCIOSOS.has(x.tipo)) || bloco.eventos?.[0] || null;
+    if (rel) { bloco.status = `${rel.icone} ${rel.resumo}`; bloco.ultimo_em = rel.data; }
+  }
+  return mudou;
+}
+
+function comentarioDoEvento(e) {
+  const data = dataParaISO(e.data).slice(0, 10).split('-').reverse().join('/');
+  const orgao = orgaoJulgador(e.bruto || '');
+  const onde = orgao && orgao.instancia ? ` · ${orgao.nome}` : '';
+  const cabeca = `🖥 CRPS${data ? ` · ${data}` : ''} — ${e.icone} ${semSufixo(e.resumo)}${onde}`;
+  if (e.tipo !== 'decisao') return cabeca;
+  const passo = !orgao || !orgao.instancia
+    ? 'Confira o acórdão na aba 🖥 Recurso (CRPS).'
+    : orgao.instancia === 1
+      ? 'Da Junta cabe Recurso Especial em 30 dias da ciência. Confira o acórdão na aba 🖥 Recurso (CRPS).'
+      : 'Decisão de Câmara: fim da via administrativa. Avaliar ação judicial.';
+  return `${cabeca}\n⚠ ${passo}`;
+}
+
+function semSufixo(s) {
+  return String(s || '').replace(/\s*\((?:\d{1,2}ª\s*)?(?:Junta|Câmara|CRPS)[^)]*\)\s*$/, '');
+}
+
+  return { traduzirEvento, traduzirProcesso, dataParaISO, chaveEvento,
+           orgaoJulgador, comentarioDoEvento, TIPOS_SILENCIOSOS };
+})();
+
+// ── o que o PAT chama de serviço, e o que o CRM chama de benefício ────────
+// Cópia de robo-pat/traduzir.js, que tem teste próprio. Só entra código de
+// espécie que apareceu numa resposta real do portal: adivinhar pelo nome do
+// serviço acerta nove e escreve B87 numa pensão no décimo, e espécie errada
+// muda prazo de recurso, checklist e marcador.
+
+const SERVICOS = {
+  // ── pedido de benefício ────────────────────────────────────────────────
+  TAIU:    { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade' },
+  TAR:     { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade rural',
+             marcadores: ['idade_rural'] },
+  TAPDI:   { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade da pessoa com deficiência',
+             marcadores: ['pcd'] },
+  TATCMI:  { tipo: 'beneficio', especie: 'B42', nome: 'Aposentadoria por tempo de contribuição' },
+  TAPDTC:  { tipo: 'beneficio', especie: 'B42', nome: 'Aposentadoria por tempo de contribuição da pessoa com deficiência',
+             marcadores: ['pcd'] },
+  TBSBAPD: { tipo: 'beneficio', especie: 'B87', nome: 'BPC/LOAS — deficiência' },
+  TBAI:    { tipo: 'beneficio', especie: 'B88', nome: 'BPC/LOAS — idoso' },
+  TPU:     { tipo: 'beneficio', especie: 'B21', nome: 'Pensão por morte' },
+  // O auxílio-acidente tem duas espécies e o nome do serviço NÃO diz qual:
+  // B36 é o previdenciário, B94 o acidentário. Escolher por conta própria
+  // seria chutar num campo que muda a competência do processo — então a
+  // espécie fica em aberto e o CRM pergunta.
+  TAA:     { tipo: 'beneficio', especie: null, nome: 'Auxílio-acidente',
+             aConfirmar: 'B36 (previdenciário) ou B94 (acidentário)' },
+
+  // ── recurso: lista Conselho de Recursos, não INSS ───────────────────────
+  // É o mesmo processo que o robô do CRPS já acompanha. Somados, são 83 dos
+  // 184 — quase metade da carteira.
+  TREC:    { tipo: 'recurso', nome: 'Recurso ordinário (inicial)' },
+  RECESP:  { tipo: 'recurso', nome: 'Recurso especial ou incidente' },
+
+  // ── revisão de benefício já concedido ──────────────────────────────────
+  TREVISAO:  { tipo: 'revisao', nome: 'Revisão — entidade conveniada' },
+  TAREFAREV: { tipo: 'revisao', nome: 'Revisão' },
+  REVOFICIO: { tipo: 'revisao', nome: 'Revisão de ofício' },
+
+  // ── dinheiro ───────────────────────────────────────────────────────────
+  SEMNPG:  { tipo: 'pagamento', nome: 'Emissão de pagamento não recebido' },
+  TSCC:    { tipo: 'pagamento', nome: 'Calcular complementação' },
+
+  // ── serviço administrativo: não abre caso, acontece DENTRO de um ───────
+  ATUVCPG: { tipo: 'servico', nome: 'Atualizar vínculos e remunerações (CNIS)' },
+  TVALFBR: { tipo: 'servico', nome: 'Validar contribuição de facultativo baixa renda' },
+  ATUACAD: { tipo: 'servico', nome: 'Atualizar cadastro e/ou benefício' },
+
+  // ── APURAÇÃO DE IRREGULARIDADE ─────────────────────────────────────────
+  // O INSS revendo um benefício que já paga. Pode terminar em suspensão,
+  // cancelamento e cobrança do que foi recebido. São dois requerimentos na
+  // carteira e são os dois mais urgentes dela — por isso `urgente`.
+  MOBDGT:  { tipo: 'apuracao', nome: 'Apuração de irregularidade (MOB Digital)', urgente: true },
+  CPCARCJ: { tipo: 'apuracao', nome: 'Encaminhamentos do processo de apuração (MOB)', urgente: true },
+};
+
+const ESPECIE_POR_CODIGO = {
+  AMP_SOCIAL_PORT_DEFICIENCIA: 'B87',
+  AMP_SOCIAL_IDOSO:            'B88',
+  APOSENTADORIA_POR_IDADE:     'B41',
+  APOSENTADORIA_POR_TEMPO_DE_CONTRIBUICAO: 'B42',
+  // apareceu na coleta completa e resolve o TAA quando o código vem: o
+  // sufixo _PREVIDENCIARIO é a resposta que o nome do serviço não dava. O
+  // acidentário (B94) ainda não apareceu — quando aparecer, entra aqui.
+  AUXILIO_ACIDENTE_PREVIDENCIARIO: 'B36',
+};
+
+const CANAIS = {
+  ENTIDADE_CONVENIADA: 'Protocolado pelo escritório (convênio OAB)',
+  INTERNET:            'O cliente protocolou sozinho pelo Meu INSS',
+  CENTRAL_135:         'Protocolado pela Central 135',
+};
+
+const SITUACOES = {
+  PENDENTE: 'Em análise',
+  EM_ANALISE: 'Em análise',
+  CONCLUIDA: 'Concluído',
+  CONCLUIDO: 'Concluído',
+  CANCELADA: 'Cancelado',
+  CANCELADO: 'Cancelado',
+  EXIGENCIA: 'Em exigência',
+  CUMPRIMENTO_DE_EXIGENCIA: 'Em exigência',
+};
+
+const limpo = s => String(s || '').trim().toUpperCase();
+
+const semAcento = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+const situacaoDe = s => SITUACOES[semAcento(limpo(s)).replace(/\s+/g, '_')]
+  || String(s || '').trim() || null;
+
+function especieDe(tarefa) {
+  const t = tarefa || {};
+  const s = SERVICOS[limpo(t.siglaServico)];
+  // a sigla diz o TIPO e os marcadores; o código do INSS, quando vem, tem a
+  // última palavra sobre a espécie
+  const porCodigo = ESPECIE_POR_CODIGO[limpo(t.especieBeneficio)] || null;
+  if (!s) {
+    if (porCodigo)
+      return { tipo: 'beneficio', especie: porCodigo, beneficio: null,
+               marcadores: [], urgente: false, fonte: 'especieBeneficio' };
+    // desconhecido não é erro: é trabalho para a próxima rodada. O nome do
+    // serviço vai junto porque é ele que me diz o que a sigla quer dizer.
+    return { tipo: null, especie: null, beneficio: null, marcadores: [], urgente: false,
+             fonte: null,
+             desconhecido: { especieBeneficio: t.especieBeneficio || null,
+                             siglaServico: t.siglaServico || null,
+                             nomeServico: t.nomeServico || null } };
+  }
+  return {
+    tipo: s.tipo,
+    especie: porCodigo || s.especie || null,
+    beneficio: s.nome,
+    marcadores: s.marcadores || [],
+    urgente: !!s.urgente,
+    a_confirmar: s.aConfirmar || null,
+    fonte: porCodigo ? 'especieBeneficio' : 'siglaServico',
+  };
+}
+
+function dataIso(br) {
+  const m = String(br || '').trim().match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (m) return `${m[3]}-${m[2]}-${m[1]}`;
+  const iso = String(br || '').trim().match(/^(\d{4}-\d{2}-\d{2})/);
+  return iso ? iso[1] : null;
+}
+
+function eventosDe(det) {
+  const d = det || {};
+  const juntar = (lista, tipo) => (Array.isArray(lista) ? lista : []).map(a => ({
+    tipo,
+    data: dataIso(a.data),
+    hora: (String(a.horario || '').match(/^\d{2}:\d{2}/) || [null])[0],
+    local: a.nomeUnidade || null,
+    situacao: limpo(a.situacaoAgendamento) || null,
+    ativo: limpo(a.situacaoAgendamento) === 'AGENDADO',
+  })).filter(e => e.data);
+  return [...juntar(d.agendamentosPericia, 'Perícia médica'),
+          ...juntar(d.agendamentosAvaliacaoSocial, 'Avaliação social')];
+}
+
+function comentariosDe(det) {
+  return (Array.isArray((det || {}).comentarios) ? det.comentarios : [])
+    .map(c => ({
+      // sem `id` do portal, a chave é data+texto. Descartar o comentário
+      // seria perder em silêncio justamente a mensagem do INSS — e um
+      // duplicado eventual se resolve olhando; um sumiço, não.
+      id: String(c.id || `${String(c.dataCriacao || '').slice(0, 10)}|`
+                       + String(c.conteudo || '').trim().slice(0, 40)),
+      texto: String(c.conteudo || '').trim(),
+      quando: (String(c.dataCriacao || '').match(/^\d{4}-\d{2}-\d{2}/) || [null])[0],
+      do_inss: !!c.incluidoPorServidor,
+      visivel: c.visivel !== false,
+    }))
+    .filter(c => c.id && c.texto)
+    .sort((a, b) => (b.quando || '').localeCompare(a.quando || ''));
+}
+
+function resumoDaLista(t) {
+  return {
+    protocolo: String((t || {}).protocolo || '').trim(),
+    situacao: situacaoDe((t || {}).status),
+    cpf: String((t || {}).cpfRequerente || '').replace(/\D/g, '').padStart(11, '0'),
+    servico: (t || {}).nomeServico || null,
+    sigla: (t || {}).siglaServico || null,
+    unidade: (t || {}).nomeUnidade || null,
+    criado_em: (t || {}).dataCriacao || null,
+    atualizado_em: (t || {}).dataUltimaAtualizacao || null,
+    link: (t || {}).protocolo ? `https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/${t.protocolo}` : null,
+  };
+}
+
+function resumoDoDetalhe(d) {
+  const det = d || {};
+  const esp = especieDe(det);
+  return {
+    protocolo: String(det.protocolo || '').trim(),
+    situacao: situacaoDe(det.status),
+    tipo: esp.tipo,
+    especie: esp.especie,
+    beneficio: esp.beneficio,
+    marcadores: esp.marcadores,
+    urgente: esp.urgente,
+    especie_a_confirmar: esp.a_confirmar || null,
+    servico: det.nomeServico || null,
+    sigla: det.siglaServico || null,
+    especie_codigo: det.especieBeneficio || null,
+    der: (String(det.dataEntradaRequerimento || '').match(/^\d{4}-\d{2}-\d{2}/) || [null])[0],
+    unidade: det.nomeUnidade || null,
+    canal: det.tipoCanalAtendimento || null,
+    quem_protocolou: CANAIS[limpo(det.tipoCanalAtendimento)] || null,
+    // O ANEXO CONTINUA SENDO SÓ CONTAGEM: é laudo médico, e o CRM guarda o
+    // link do portal, não a cópia. O COMENTÁRIO, NÃO — ele é a mensagem do
+    // INSS sobre o processo ("apresentar PPP", "exigência cumprida"), e é
+    // exatamente o que responde "o que mudou?". Sem ele, a importação avisa
+    // que algo aconteceu e não diz o quê.
+    //
+    // Eles nascem internos: `publico` fica false, então nada disso atravessa
+    // para a ficha do cliente no portal. A barreira continua onde deve estar.
+    anexos: Array.isArray(det.anexos) ? det.anexos.length : 0,
+    comentarios: comentariosDe(det),
+    em_exigencia: !!det.podeCumprirExigencia || situacaoDe(det.status) === 'Em exigência',
+    eventos: eventosDe(det),
+    link: det.protocolo ? `https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/${det.protocolo}` : null,
+    desconhecido: esp.desconhecido || null,
+  };
+}
+
+// ── importar do PAT/GERID (INSS) ──────────────────────────────────────────
+// Cópia de robo-pat/importar.js, que tem teste próprio. Este bloco NÃO grava
+// nada: compara o arquivo do coletor com o que o CRM já sabe e devolve um
+// plano, que a tela mostra antes de tocar no banco. Importação de cem
+// requerimentos que escreve primeiro e explica depois é como se descobre,
+// três dias depois, que noventa casos duplicados nasceram na lista errada.
+
+const LISTA_POR_TIPO = {
+  beneficio: 'inss',
+  revisao:   'inss',
+  apuracao:  'inss',
+  recurso:   'conselho',
+};
+
+const NAO_ABRE_CASO = new Set(['servico', 'pagamento']);
+
+const digitos = s => String(s || '').replace(/\D/g, '');
+
+function protocolosDe(k) {
+  const p = (k || {}).protocolos;
+  const lista = Array.isArray(p) ? p : (p ? [p] : []);
+  return lista.map(x => digitos(x)).filter(Boolean);
+}
+
+function indexar(D) {
+  const porProtocolo = new Map();
+  for (const k of (D.casos || []))
+    for (const p of protocolosDe(k)) if (!porProtocolo.has(p)) porProtocolo.set(p, k);
+  const porCpf = new Map();
+  for (const c of (D.clientes || [])) {
+    const cpf = digitos(c.cpf);
+    if (cpf && !porCpf.has(cpf)) porCpf.set(cpf, c);
+  }
+  return { porProtocolo, porCpf };
+}
+
+function casosParecidos(D, clienteId, lista, especie) {
+  return (D.casos || []).filter(k =>
+    k.cliente_id === clienteId && k.fase !== 'encerrado' && k.fase === lista &&
+    (!especie || !k.especie || String(k.especie).toUpperCase() === String(especie).toUpperCase()));
+}
+const casoParecido = (D, clienteId, lista, especie) =>
+  casosParecidos(D, clienteId, lista, especie)[0];
+const tituloDoCaso = k => (k || {}).beneficio || (k || {}).titulo || 'caso sem nome';
+
+// SEPARAR O ÓBVIO DO DUVIDOSO. Sessenta e cinco decisões na mão é trabalho
+// que ninguém faz duas vezes — e a maioria delas é "Aposentadoria por tempo
+// de contribuição" contra "Apos. Tempo de Contribuição", ou seja, a mesma
+// coisa escrita de dois jeitos. O que muda é só a certeza, e ela pode ser
+// dita: o item ganha `provavel` e o MOTIVO, para a decisão continuar sendo
+// sua com o argumento na frente.
+const ABREV = { apos: 'aposentadoria', aposent: 'aposentadoria', aux: 'auxilio',
+                ben: 'beneficio', pens: 'pensao', def: 'deficiencia',
+                incap: 'incapacidade', contrib: 'contribuicao' };
+const VAZIAS = new Set(['por', 'com', 'para', 'sem', 'pessoa', 'requerimento', 'concessao']);
+
+function palavrasDoBeneficio(t) {
+  return String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ').trim().split(' ')
+    .map(p => ABREV[p] || p)
+    .filter(p => p.length > 2 && !VAZIAS.has(p));
+}
+// duas palavras significativas em comum, ou tudo o que o nome mais curto tem
+function mesmoBeneficio(a, b) {
+  const A = new Set(palavrasDoBeneficio(a)), B = new Set(palavrasDoBeneficio(b));
+  if (!A.size || !B.size) return false;
+  const comuns = [...A].filter(p => B.has(p)).length;
+  return comuns >= 2 || comuns === Math.min(A.size, B.size);
+}
+
+function porQueParecido(item, k, quantos) {
+  // Recurso e revisão NÃO têm benefício próprio: o nome que veio do portal é
+  // o tipo do pedido ("Recurso ordinário"), não o que se pede. Comparar texto
+  // aqui casaria "Recurso ESPECIAL" com "Aposentadoria ESPECIAL", que é
+  // parecença de palavra e não de caso. O que vale é a contagem.
+  if (item.tipo === 'recurso' || item.tipo === 'revisao')
+    return quantos === 1
+      ? { provavel: true,  motivo: 'é o único caso do cliente nesta lista' }
+      : { provavel: false, motivo: `o cliente tem ${quantos} casos nesta lista` };
+  if (item.especie && k.especie &&
+      String(item.especie).toUpperCase() === String(k.especie).toUpperCase())
+    return { provavel: true, motivo: `mesma espécie (${item.especie})` };
+  if (mesmoBeneficio(item.beneficio, k.beneficio || k.titulo))
+    return { provavel: true, motivo: 'mesmo benefício, escrito de outro jeito' };
+  return { provavel: false, motivo: 'o benefício não bate com o que já existe' };
+}
+
+// O que muda num caso que JÁ existe. Só campo vazio é preenchido: o que o
+// escritório escreveu à mão vale mais que o que o portal devolve, e
+// sobrescrever DER conferida por DER do sistema é perder trabalho humano.
+// A exceção é a situação, que é justamente o que se quer atualizado.
+function mudancasDoCaso(k, det) {
+  const m = {};
+  if (det.der && !k.der) m.der = det.der;
+  if (det.especie && !k.especie) m.especie = det.especie;
+  if (det.beneficio && !k.beneficio) m.beneficio = det.beneficio;
+  if (det.link && k.processo_link !== det.link) m.processo_link = det.link;
+  if (det.urgente && !k.urgente) m.urgente = true;
+  // marcadores SOMAM, nunca trocam: quem marcou à mão não perde a marcação
+  const tinha = Array.isArray(k.marcadores) ? k.marcadores : [];
+  const faltam = (det.marcadores || []).filter(x => !tinha.includes(x));
+  if (faltam.length) m.marcadores = [...tinha, ...faltam];
+  return m;
+}
+
+function eventosNovos(det, jaTem, hoje) {
+  const existe = new Set((jaTem || []).map(e =>
+    `${e.tipo}|${String(e.data_hora || '').slice(0, 10)}`));
+  return (det.eventos || [])
+    .filter(e => e.ativo && e.data && e.data >= hoje)
+    .filter(e => !existe.has(`${e.tipo}|${e.data}`))
+    .map(e => ({ tipo: e.tipo, data: e.data, hora: e.hora || null, local: e.local || null }));
+}
+
+function andamentoDaMudanca(k, det) {
+  const antes = k.situacao_inss || null;
+  if (!det.situacao || det.situacao === antes) return null;
+  if (!antes) return null;                 // primeira vez não é mudança
+  return `INSS: ${antes} → ${det.situacao}`;
+}
+
+function comentariosNovos(det, jaTem) {
+  const vistos = new Set((jaTem || []).map(a => String(a.origem_id || '')));
+  return (det.comentarios || [])
+    .filter(c => c.id && !vistos.has(String(c.id)))
+    .map(c => ({
+      origem_id: String(c.id),
+      quando: c.quando,
+      // quem escreveu vem na frente: é a diferença entre o INSS pedindo algo
+      // e o escritório respondendo, e ela muda o que se faz a seguir
+      texto: `${c.do_inss ? 'INSS' : 'Escritório'} · ${c.texto}`,
+    }));
+}
+
+function planoDeImportacao(pat, D, hoje) {
+  const hj = hoje || new Date().toISOString().slice(0, 10);
+  const { porProtocolo, porCpf } = indexar(D);
+  const porProtocoloPat = new Map((pat.lista || []).map(t => [digitos(t.protocolo), t]));
+  const evDoCaso = new Map();
+  for (const e of (D.eventos || [])) {
+    if (!evDoCaso.has(e.caso_id)) evDoCaso.set(e.caso_id, []);
+    evDoCaso.get(e.caso_id).push(e);
+  }
+
+  const andDoCaso = new Map();
+  for (const a of (D.andamentos || [])) {
+    if (!a.origem_id) continue;
+    if (!andDoCaso.has(a.caso_id)) andDoCaso.set(a.caso_id, []);
+    andDoCaso.get(a.caso_id).push(a);
+  }
+
+  const plano = { atualizar: [], novos: [], possiveisDuplicados: [], semCliente: [],
+                  ignorados: [], eventos: [], comentarios: [], resumo: {} };
+
+  for (const det of (pat.detalhes || [])) {
+    const proto = digitos(det.protocolo);
+    const daLista = porProtocoloPat.get(proto) || {};
+    const cpf = digitos(daLista.cpf);
+    const k = porProtocolo.get(proto);
+    const item = { protocolo: proto, cpf, tipo: det.tipo, situacao: det.situacao,
+                   beneficio: det.beneficio, especie: det.especie, der: det.der,
+                   link: det.link, marcadores: det.marcadores || [],
+                   urgente: !!det.urgente, a_confirmar: det.especie_a_confirmar || null,
+                   quem_protocolou: det.quem_protocolou || null };
+
+    if (k) {
+      const mud = mudancasDoCaso(k, det);
+      const and = andamentoDaMudanca(k, det);
+      const evs = eventosNovos(det, evDoCaso.get(k.id), hj);
+      if (evs.length) plano.eventos.push({ caso_id: k.id, protocolo: proto, eventos: evs });
+      const coms = comentariosNovos(det, andDoCaso.get(k.id));
+      if (coms.length) plano.comentarios.push({ caso_id: k.id, protocolo: proto, comentarios: coms });
+      if (Object.keys(mud).length || and || coms.length)
+        plano.atualizar.push({ ...item, caso_id: k.id, mudancas: mud, andamento: and,
+                               novos_comentarios: coms.length });
+      continue;
+    }
+
+    // sem caso: serviço e pagamento não abrem um novo
+    if (NAO_ABRE_CASO.has(det.tipo)) { plano.ignorados.push(item); continue; }
+
+    const cli = porCpf.get(cpf);
+    const lista = LISTA_POR_TIPO[det.tipo] || 'inss';
+    if (!cli) { plano.semCliente.push({ ...item, lista }); continue; }
+    // O PROTOCOLO CASOU EM POUCOS PORQUE O CAMPO QUASE NUNCA FOI PREENCHIDO,
+    // não porque o caso não existe. Criar sem olhar duplicaria a ficha de
+    // quem já está no CRM — e ninguém desfaz setenta duplicatas na mão.
+    const candidatos = casosParecidos(D, cli.id, lista, det.especie);
+    const parecido = candidatos[0];
+    if (parecido) {
+      const j = porQueParecido(item, parecido, candidatos.length);
+      plano.possiveisDuplicados.push({ ...item, cliente_id: cli.id, nome: cli.nome, lista,
+        caso_id: parecido.id, titulo_existente: tituloDoCaso(parecido),
+        provavel: j.provavel, motivo: j.motivo });
+    }
+    else plano.novos.push({ ...item, cliente_id: cli.id, nome: cli.nome, lista });
+  }
+
+  // os prováveis primeiro: é a ordem em que se decide, e o botão de juntar
+  // em lote age exatamente sobre esse bloco de cima
+  plano.possiveisDuplicados.sort((a, b) => (b.provavel ? 1 : 0) - (a.provavel ? 1 : 0));
+
+  const porTipo = l => l.reduce((m, x) => (m[x.tipo] = (m[x.tipo] || 0) + 1, m), {});
+  plano.resumo = {
+    lidos: (pat.detalhes || []).length,
+    atualizar: plano.atualizar.length,
+    novos: plano.novos.length,
+    possiveis_duplicados: plano.possiveisDuplicados.length,
+    provaveis: plano.possiveisDuplicados.filter(x => x.provavel).length,
+    sem_cliente: plano.semCliente.length,
+    ignorados: plano.ignorados.length,
+    eventos: plano.eventos.reduce((n, e) => n + e.eventos.length, 0),
+    comentarios: plano.comentarios.reduce((n, c) => n + c.comentarios.length, 0),
+    exigencias: (pat.detalhes || []).filter(d => d.situacao === 'Em exigência').length,
+    apuracoes: (pat.detalhes || []).filter(d => d.urgente).length,
+    a_confirmar: (pat.detalhes || []).filter(d => d.especie_a_confirmar).length,
+    novos_por_tipo: porTipo(plano.novos),
+  };
+  return plano;
+}
+
+function conferirPlanoPat(pat, plano) {
+  const lidos = (pat.detalhes || []).length;
+  const soma = plano.atualizar.length + plano.novos.length + plano.possiveisDuplicados.length
+             + plano.semCliente.length + plano.ignorados.length;
+  if (soma > lidos) return `o plano fala de ${soma} requerimentos e só ${lidos} foram lidos`;
+  for (const n of plano.novos.concat(plano.semCliente)) {
+    const esperada = LISTA_POR_TIPO[n.tipo];
+    if (esperada && n.lista !== esperada)
+      return `${n.protocolo} (${n.tipo}) iria para "${n.lista}" em vez de "${esperada}"`;
+    if (NAO_ABRE_CASO.has(n.tipo)) return `${n.protocolo} é ${n.tipo} e não pode abrir caso`;
+  }
+  for (const a of plano.atualizar)
+    if (a.mudancas.especie && a.mudancas.especie !== a.especie)
+      return `${a.protocolo} gravaria espécie diferente da lida`;
+  return null;
+}
+
+// o plano na tela, antes de qualquer gravação
+let planoPat = null, arquivoPat = null;
+// A COLETA DA EXTENSÃO CHEGA CRUA. O arquivo do coletor antigo já vinha
+// traduzido; a extensão entrega o que o portal respondeu, sem interpretar —
+// é ela que não decide nada. A tradução acontece aqui, com o mesmo
+// traduzir.js que o coletor usava.
+function normalizarColeta(bruto){
+  const b = bruto || {};
+  if (Array.isArray(b.detalhes) && b.detalhes.some(d => 'tipo' in d)) return b;  // já traduzido
+  return {
+    ...b,
+    lista: (b.lista || []).map(t => ('situacao' in t) ? t : resumoDaLista(t)),
+    detalhes: (b.detalhes || []).map(d => ('tipo' in d) ? d : resumoDoDetalhe(d)),
+  };
+}
+
+let coletasPendentes = [];
+async function buscarColetas(){
+  try{
+    coletasPendentes = await api(
+      `/rest/v1/coletas?select=id,fonte,criado_em&aplicada_em=is.null&order=criado_em.desc`) || [];
+  }catch(e){ coletasPendentes = []; }   // sem a tabela, a tela do arquivo continua
+}
+// SÓ A MAIS NOVA DE CADA PORTAL INTERESSA. Cada clique no botão da extensão
+// entrega uma coleta, e uma tarde de testes deixou onze na fila — todas do
+// INSS, todas com quase o mesmo conteúdo. A mais nova é a que vale (o portal
+// devolve sempre a lista inteira); as outras só atrapalham a leitura.
+function coletasPorFonte(){
+  const nova = {}, velhas = [];       // a busca já vem em ordem decrescente
+  for(const c of coletasPendentes){
+    if(!nova[c.fonte]) nova[c.fonte] = c; else velhas.push(c);
+  }
+  return { novas: Object.values(nova), velhas };
+}
+async function descartarColetasVelhas(){
+  const { velhas } = coletasPorFonte(); if(!velhas.length) return;
+  // sai da fila sem sumir do banco: fica com data de aplicação, como as usadas
+  await api(`/rest/v1/coletas?id=in.(${velhas.map(c=>c.id).join(",")})`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
+  await buscarColetas(); render();
+  aviso(`${velhas.length} coleta(s) antiga(s) fora da fila`);
+}
+async function usarColeta(id){
+  try{
+    const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${id}`) || [];
+    if(!c) return aviso("Não achei essa coleta");
+    arquivoPat = normalizarColeta(c.dados);
+    planoPat = planoDeImportacao(arquivoPat, D, hoje());
+    planoPat.erro = conferirPlanoPat(arquivoPat, planoPat);
+    planoPat.coleta_id = id;
+    render();
+  }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+}
+
+function renderImportarPat(){
+  document.getElementById("titulo-lista").textContent = "📥 Importar do INSS";
+  document.getElementById("sub-lista").textContent =
+    "O que o PAT/GERID tem, comparado com o que o CRM já sabe. Nada é gravado sem você mandar.";
+  // Se a montagem da tela estourar, o padrão do navegador é deixar o quadro
+  // em branco e escrever no console — e quem está usando vê "não aconteceu
+  // nada". A coleta continua guardada na fila; o que falta é dizer o que
+  // houve, com a mensagem do erro, aqui na tela.
+  try{
+    document.getElementById("conteudo-meio").innerHTML = telaImportarPat();
+  }catch(e){
+    console.error("tela de importação:", e);
+    document.getElementById("conteudo-meio").innerHTML =
+      `<div class="exig"><strong>A tela de importação quebrou:</strong> ${esc(e.message||String(e))}.
+       Nada foi gravado, e a coleta continua na fila.</div>`;
+  }
+  ligarImportarPat();
+  if(!coletasPendentes.length) buscarColetas().then(()=>{
+    if(coletasPendentes.length && visao==="patinss"){
+      document.getElementById("conteudo-meio").innerHTML = telaImportarPat();
+      ligarImportarPat();
+    }
+  });
+}
+function telaImportarPat(){
+  const r = planoPat && planoPat.resumo;
+  const cx = n => `<div class="id-card"><strong style="font-size:20px">${n[1]}</strong>
+    <div class="u-papel" style="text-transform:none">${n[0]}</div></div>`;
+  return `<div class="pat-cx">
+    <h3>📥 Importar do PAT/GERID</h3>
+    <p class="meio-sub">Solte aqui o arquivo <code>pat_AAAA-MM-DD.json</code> que o coletor baixou.
+      Nada é gravado até você conferir e mandar aplicar.</p>
+    ${(()=>{ const {novas, velhas} = coletasPorFonte();
+      if(!novas.length) return `<p class="meio-sub">Nenhuma coleta esperando. Use a extensão do navegador,
+        ou solte um arquivo aqui embaixo.</p>`;
+      return `<div class="id-grid" style="grid-template-columns:1fr;gap:6px;margin:10px 0">
+      ${novas.map(c=>`<div class="id-card destaque" style="display:flex;align-items:center;gap:10px">
+        <strong>${c.fonte==="pat"?"🌻 INSS":"🖥 Recursos"}</strong>
+        <span class="u-papel" style="text-transform:none">chegou ${esc(dataRelativa(dataSP(c.criado_em)))} às ${esc(horaSP(c.criado_em))}</span>
+        <button class="btn-mini" style="margin-left:auto" onclick="${
+          c.fonte==="crps"?`conferirCrps('${c.id}')`:`usarColeta('${c.id}')`}">conferir</button>
+      </div>`).join("")}
+      ${velhas.length?`<div class="meio-sub" style="display:flex;align-items:center;gap:8px">
+        ${velhas.length} coleta(s) anterior(es) da mesma origem — a mais nova já contém o que elas tinham.
+        <button class="btn-mini" onclick="descartarColetasVelhas()">descartar</button></div>`:""}
+    </div>`; })()}
+    <input type="file" id="pat-arq" accept="application/json" style="margin:10px 0">
+    ${!planoCrpsAtual ? "" : (()=>{ const q = planoCrpsAtual.resumo; return `
+      <h3 class="secao">🖥 Recursos — o que esta coleta vai escrever</h3>
+      <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+        ${[["processos lidos", q.lidos], ["recursos atualizados", q.casos],
+           ["movimentos novos", q.movimentos], ["com DECISÃO", q.decisoes],
+           ["número sem caso no CRM", q.sem_caso]].map(n=>
+          `<div class="id-card"><strong style="font-size:20px">${n[1]}</strong>
+            <div class="u-papel" style="text-transform:none">${n[0]}</div></div>`).join("")}
+      </div>
+      ${q.decisoes?`<div class="exig"><strong>⚠ ${q.decisoes} decisão(ões).</strong>
+        Cada uma abre prazo: da Junta, 30 dias para o Recurso Especial; de Câmara,
+        acaba a via administrativa. O texto do andamento já diz qual é o caso.</div>`:""}
+      ${q.sem_caso?`<div class="exig">${q.sem_caso} número de recurso não tem caso no CRM —
+        esses não entram.</div>`:""}
+      ${planoCrpsAtual.andamentos.length?`<table class="tab">
+        <tr><th>cliente</th><th>o que mudou</th></tr>
+        ${planoCrpsAtual.andamentos.slice(0,40).map(a=>{
+          const k = D.casoPorId.get(a.caso_id)||{}; const cl = D.cliPorId.get(k.cliente_id)||{};
+          return `<tr><td>${esc(cl.nome||"—")}</td>
+            <td style="white-space:pre-wrap">${esc(a.texto)}</td></tr>`;}).join("")}
+      </table>`:"<p class='meio-sub'>Nenhum movimento novo — nada a escrever.</p>"}
+      <button class="novo-cli" style="width:auto;margin:12px 0 0;padding:10px 20px"
+        onclick="aplicarCrps('${planoCrpsAtual.coleta_id}')">Aplicar ${q.movimentos} movimento(s)</button>`; })()}
+    ${!r ? "" : `
+      <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+        ${[["requerimentos lidos", r.lidos], ["casos a atualizar", r.atualizar],
+           ["casos novos", r.novos], ["confira antes", r.possiveis_duplicados],
+           ["sem cliente no CRM", r.sem_cliente],
+           ["perícias a agendar", r.eventos], ["comentários do INSS", r.comentarios],
+           ["em exigência", r.exigencias],
+           ["apuração (urgente)", r.apuracoes], ["espécie a confirmar", r.a_confirmar]].map(cx).join("")}
+      </div>
+      ${r.possiveis_duplicados ? `<div class="exig">
+        <strong>${r.possiveis_duplicados} requerimento(s) podem já estar no CRM.</strong>
+        O protocolo casou em poucos porque o campo quase nunca foi preenchido à mão — não
+        porque o caso não existe. Estes NÃO entram no botão acima: confira na tabela
+        abaixo e escolha juntar ou criar.
+        ${r.provaveis ? `<div style="margin-top:8px">${r.provaveis} deles têm o mesmo
+          benefício ou a mesma espécie do caso que já existe — cada linha diz por quê.
+          <button class="btn-mini" onclick="juntarProvaveis()">juntar os ${r.provaveis} prováveis</button>
+          <span class="meio-sub">juntar só acrescenta o protocolo ao caso; não apaga nada</span>
+        </div>` : ""}</div>` : ""}
+      ${r.sem_cliente ? `<div class="exig"><strong>${r.sem_cliente} requerimento(s) sem cliente no CRM.</strong>
+        São protocolos que existem no INSS e não têm ficha aqui — quase sempre quem
+        protocolou sozinho pelo Meu INSS. Eles NÃO entram: cadastre o cliente antes.</div>` : ""}
+      ${r.apuracoes ? `<div class="exig"><strong>⚠ ${r.apuracoes} apuração de irregularidade.</strong>
+        É o INSS revendo benefício que já paga — pode suspender, cancelar e cobrar o recebido.
+        Entram marcados como urgentes.</div>` : ""}
+      ${planoPat.erro ? `<div class="exig"><strong>Não vou gravar:</strong> ${esc(planoPat.erro)}</div>`
+        : `<button class="novo-cli" style="width:auto;margin:12px 0 0;padding:10px 20px"
+             onclick="aplicarPat()">Aplicar ${r.atualizar + r.novos} mudança(s)</button>`}
+      ${planoPat.possiveisDuplicados.length ? `<h3 class="secao">Confira antes de criar (${planoPat.possiveisDuplicados.length})</h3>
+        <table class="tab"><tr><th>cliente</th><th>o que veio do INSS</th><th>o que já existe aqui</th><th>por quê</th><th></th></tr>
+        ${planoPat.possiveisDuplicados.map(n=>`<tr><td>${esc(n.nome)}</td>
+          <td>${esc(n.beneficio||"—")} ${n.especie?`<span class="chip">${n.especie}</span>`:""}
+            <a href="${n.link}" target="_blank" rel="noopener">↗</a></td>
+          <td>${esc(n.titulo_existente)}</td>
+          <td>${n.provavel?`<span class="chip">provável</span> `:""}<span class="meio-sub">${esc(n.motivo||"")}</span></td>
+          <td><button class="btn-mini" onclick="juntarAoCaso('${n.protocolo}')">é o mesmo — juntar</button>
+            <button class="btn-mini" onclick="criarMesmoAssim('${n.protocolo}')">é outro — criar</button></td></tr>`).join("")}
+        </table>` : ""}
+      ${planoPat.novos.length ? `<h3 class="secao">Casos novos (${planoPat.novos.length})</h3>
+        <table class="tab"><tr><th>cliente</th><th>o quê</th><th>lista</th><th>DER</th><th></th></tr>
+        ${planoPat.novos.slice(0,60).map(n=>`<tr><td>${esc(n.nome)}</td>
+          <td>${esc(n.beneficio||"—")} ${n.especie?`<span class="chip">${n.especie}</span>`:""}</td>
+          <td>${esc(NOME_FASE[n.lista]||n.lista)}</td><td>${n.der?fmt(n.der):"—"}</td>
+          <td><a href="${n.link}" target="_blank" rel="noopener">abrir no PAT ↗</a></td></tr>`).join("")}
+        </table>` : ""}`}
+  </div>`;
+}
+function ligarImportarPat(){
+  const inp = document.getElementById("pat-arq"); if(!inp) return;
+  inp.onchange = async () => {
+    const f = inp.files && inp.files[0]; if(!f) return;
+    try{
+      arquivoPat = normalizarColeta(JSON.parse(await f.text()));
+      planoPat = planoDeImportacao(arquivoPat, D, hoje());
+      planoPat.erro = conferirPlanoPat(arquivoPat, planoPat);
+      render();
+    }catch(e){ aviso("Não consegui ler o arquivo: "+e.message); }
+  };
+}
+async function aplicarPat(){
+  if(!planoPat || planoPat.erro) return;
+  // erro FORA do laço (dado com forma inesperada, por exemplo) não pode sumir
+  // no console: o laço já se protege item a item, e o que sobra é isto
+  try{ await aplicarPatDeVerdade(); }
+  catch(e){ console.error("aplicar do PAT:", e);
+            aviso("A importação parou: " + (e.message||String(e))); }
+}
+async function aplicarPatDeVerdade(){
+  // UM ERRO NÃO PODE PARAR O LOTE. A primeira versão abortava no primeiro
+  // problema — num lote de cem, isso deixa metade gravada e ninguém sabe
+  // qual metade. Agora cada item responde por si, e o que falhou aparece no
+  // fim, com o motivo.
+  const falhas = []; let feitos = 0;
+  const tentar = async (rotulo, f) => { try{ await f(); feitos++; }
+    catch(e){ falhas.push(`${rotulo}: ${String(e.message||e).slice(0,120)}`); } };
+
+  for(const a of planoPat.atualizar) await tentar(a.protocolo, async () => {
+    const k = D.casoPorId.get(a.caso_id); if(!k) return;
+    const campos = { ...a.mudancas, situacao_inss: a.situacao };
+    if(!(k.protocolos||[]).includes(a.protocolo))
+      campos.protocolos = [...(k.protocolos||[]), a.protocolo];
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(campos)});
+    Object.assign(k, campos);
+    if(a.andamento)
+      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:a.andamento,
+          origem:"pat", origem_id:`situacao:${a.protocolo}:${a.situacao}`})});
+  });
+
+  for(const novo of planoPat.novos) await tentar(novo.protocolo, async () => {
+    const [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:novo.cliente_id, titulo:novo.nome, fase:novo.lista,
+        beneficio:novo.beneficio, especie:novo.especie, der:novo.der,
+        protocolos:[novo.protocolo], marcadores:novo.marcadores,
+        urgente:novo.urgente, processo_link:novo.link, situacao_inss:novo.situacao})}) || [];
+    if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); }
+  });
+
+  // OS COMENTÁRIOS DO INSS. É o que responde "o que mudou?" — sem eles a
+  // importação avisa que algo aconteceu e não diz o quê. Nascem internos
+  // (`publico:false`): nada disso atravessa para a ficha do cliente.
+  for(const bl of planoPat.comentarios||[])
+    for(const c of bl.comentarios) await tentar(`comentário ${bl.protocolo}`, () =>
+      api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:bl.caso_id, autor_id:eu.id, texto:c.texto,
+          origem:"pat", origem_id:c.origem_id, publico:false,
+          ...(c.quando?{criado_em:c.quando+"T12:00:00"}:{})})}));
+
+  for(const bloco of planoPat.eventos)
+    for(const ev of bloco.eventos) await tentar(`perícia ${bloco.protocolo}`, () =>
+      api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:bloco.caso_id, tipo:ev.tipo, status:"agendada",
+          data_hora:`${ev.data}T${ev.hora||"09:00"}:00`, local:ev.local})}));
+
+  // a coleta usada sai da fila: a mesma não pode ser oferecida duas vezes
+  if(planoPat.coleta_id)
+    await api(`/rest/v1/coletas?id=eq.${planoPat.coleta_id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
+  planoPat = null;
+  await buscarColetas();
+  await carregar(); montarSidebar(); render();
+  if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)`);
+  aviso(recadoDeFalhas(feitos, falhas));
+  console.warn("falhas da importação:", falhas);
+}
+
+// os possíveis duplicados só entram quando você manda, um por um
+async function criarMesmoAssim(protocolo){
+  const n = (planoPat.possiveisDuplicados||[]).find(x=>x.protocolo===protocolo); if(!n) return;
+  try{
+    const [k] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:n.cliente_id, titulo:n.nome, fase:n.lista,
+        beneficio:n.beneficio, especie:n.especie, der:n.der, protocolos:[n.protocolo],
+        marcadores:n.marcadores, urgente:n.urgente, processo_link:n.link,
+        situacao_inss:n.situacao})}) || [];
+    if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); }
+    planoPat.possiveisDuplicados = planoPat.possiveisDuplicados.filter(x=>x.protocolo!==protocolo);
+    aviso("Caso criado"); render();
+  }catch(e){ aviso("Não deu: "+e.message); }
+}
+
+// juntar o protocolo do PAT a um caso que já existe — o caminho certo quando
+// o caso é o mesmo e só faltava o número anotado
+// JUNTAR EM LOTE, SÓ OS PROVÁVEIS. Sessenta e cinco decisões na mão é
+// trabalho que ninguém faz duas vezes, e a maioria é a mesma coisa escrita de
+// dois jeitos. O lote age exatamente sobre o que a tabela marcou como
+// provável, com o motivo à vista — os duvidosos continuam um a um.
+//
+// Juntar é acrescentar: o protocolo entra no caso que já existe, e campo
+// preenchido à mão não é sobrescrito. Não apaga caso, não move de lista.
+async function juntarProvaveis(){
+  const alvos = (planoPat && planoPat.possiveisDuplicados || []).filter(x=>x.provavel);
+  if(!alvos.length) return;
+  let feitos = 0; const falhas = [];
+  for(const n of alvos){
+    try{ await juntarUm(n); feitos++; }
+    catch(e){ falhas.push(`${n.protocolo}: ${String(e.message||e).slice(0,80)}`); }
+  }
+  render();
+  aviso(falhas.length ? recadoDeFalhas(feitos, falhas) : `✔ ${feitos} protocolo(s) juntados`);
+  if(falhas.length) console.warn("falhas ao juntar:", falhas);
+}
+
+// o miolo de juntar, sem aviso nem redesenho: serve ao clique e ao lote
+async function juntarUm(n){
+  const k = D.casoPorId.get(n.caso_id); if(!k) return;
+  const campos = { protocolos:[...(k.protocolos||[]), n.protocolo], situacao_inss:n.situacao,
+    processo_link:n.link, ...(k.der?{}:{der:n.der}), ...(k.especie?{}:{especie:n.especie}) };
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify(campos)});
+  Object.assign(k, campos);
+  planoPat.possiveisDuplicados = planoPat.possiveisDuplicados.filter(x=>x.protocolo!==n.protocolo);
+  if(planoPat.resumo){
+    planoPat.resumo.possiveis_duplicados = planoPat.possiveisDuplicados.length;
+    planoPat.resumo.provaveis = planoPat.possiveisDuplicados.filter(x=>x.provavel).length;
+  }
+}
+
+async function juntarAoCaso(protocolo){
+  const n = (planoPat.possiveisDuplicados||[]).find(x=>x.protocolo===protocolo); if(!n) return;
+  try{
+    await juntarUm(n);
+    aviso("Protocolo juntado ao caso que já existia"); render();
+  }catch(e){ aviso("Não deu: "+e.message); }
+}
+
+
 // ── coluna do meio ────────────────────────────────────────────────────────
+// A LINHA MOSTRA O NOME E AS DATAS. Só isso.
+//
+// Benefício, espécie, marcadores e fase saíram: são o assunto do caso, e o
+// lugar deles é a ficha. Aqui a pergunta é outra — "de quem eu preciso cuidar,
+// e quando?". Tudo que não responde a isso é atravessador entre o olho e o
+// nome.
+//
+// A REGRA DA DATA: ela sai SEMPRE dos casos que estão nesta lista, nunca do
+// acervo inteiro do cliente. Quem tem um caso no INSS e outro no Judicial, ao
+// ser visto na lista do INSS, mostra o lembrete DO INSS — o do Judicial não
+// diz nada sobre o trabalho de agora, e ainda faria a lista parecer atrasada
+// sem estar. Quem garante isso é o `ks`: o grupoClientes entrega só os casos
+// da lista aberta, e nada aqui dentro olha para fora dele.
 function cartaoCliente(cli, casosMostrar){
   const ks = casosMostrar || (D.casosDoCliente.get(cli.id)||[]).filter(k=>k.fase!=="encerrado");
   const resp = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))].map(id=>D.colPorId.get(id)).filter(Boolean);
   const prazoMin = ks.map(k=>k.prazo).filter(Boolean).sort()[0];
-  // o lembrete mais próximo agora pode vir de uma TAREFA de comentário — e
-  // quem manda na cor da borda é quem tem esse lembrete na mão
+  // o lembrete mais próximo pode vir do prazo do caso ou de uma TAREFA de
+  // comentário — e quem tem esse lembrete na mão aparece ao lado da data
   const tAb = ks.flatMap(k=>D.tarefasPorCaso.get(k.id)||[]);
   let dataProx = prazoMin || null, quemProx = [];
   if(tAb.length){
@@ -1657,38 +3008,79 @@ function cartaoCliente(cli, casosMostrar){
         .map(id=>D.colPorId.get(id)).filter(Boolean);
     }
   }
-  const faixa = (quemProx.length?quemProx:resp).slice(0,3).map(c=>c.cor);
-  const evFut = D.eventos.find(e=>ks.some(k=>k.id===e.caso_id) && e.status==="agendada" && dataSP(e.data_hora)>=hoje());
+  // perícia e audiência são data marcada com hora e lugar: não se descobre
+  // no dia, então vive na lista ao lado do lembrete
+  const evFut = D.eventos
+    .filter(e=>ks.some(k=>k.id===e.caso_id) && e.status==="agendada" && dataSP(e.data_hora)>=hoje())
+    .sort((a,b)=>a.data_hora<b.data_hora?-1:1)[0];
   const imp = ks.some(k=>k.importante);
-  const noMeuDia = D.meudia.some(m=>m.colaborador_id===eu.id && ks.some(k=>k.id===m.caso_id));
-  return `<div class="cartao" data-cli="${cli.id}" ${faixa.length===1
-      ?`style="border-left:4px solid ${faixa[0]}"`
-      :faixa.length?`style="border-left:4px solid transparent"`:""}>
-    ${faixa.length>1?`<i class="faixa" style="background:linear-gradient(to bottom, ${
-        faixa.map((c,i)=>`${c} ${Math.round(i*100/faixa.length)}% ${Math.round((i+1)*100/faixa.length)}%`).join(", ")})"></i>`:""}
-    <span class="check"></span>
+  const motivo = (ks.find(x=>x.prazo===dataProx)||{}).lembrar_motivo;
+  const exig = ks.map(chipExig).filter(Boolean).join("");
+  const dcb = ks.map(chipDcb).filter(Boolean).join("");
+  // o porquê da data continua a um passe de mouse — sem ocupar a linha
+  const dica = [dataProx?`lembrete em ${fmt(dataProx)}`:"", motivo,
+                quemProx.length?`com ${quemProx.map(c=>c.nome).join(", ")}`:""]
+               .filter(Boolean).join(" · ");
+  // como no To Do: o nome em cima, e embaixo — miúdo e cinza — a data. Nada
+  // de coluna de datas à esquerda: a lista que o escritório já usa todo dia
+  // põe o prazo debaixo do título, e mudar isso custaria releitura sem ganho.
+  const meta = [
+    dataProx?`<span class="dt ${dataProx<hoje()?"venc":dataProx===hoje()?"hoje":""}"
+        ${dica?`title="${esc(dica)}"`:""}>🗓 ${esc(dataRelativa(dataProx))}</span>`:"",
+    evFut?`<span class="dt ev" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">🩺 ${
+      esc(evFut.tipo.split(" ")[0])} ${fmtTS(evFut.data_hora).slice(0,5)} ${horaSP(evFut.data_hora)}</span>`:"",
+    exig, dcb,
+  ].filter(Boolean);
+  // O círculo de "concluir" saiu. No To Do ele conclui a tarefa; aqui não
+  // concluía nada — clicar nele só abria a ficha, como em qualquer ponto da
+  // linha. Era um convite falso, e ocupava a primeira coisa que o olho
+  // encontra. Sem ele, todos os nomes começam na mesma coluna.
+  return `<div class="cartao" data-cli="${cli.id}">
     <div class="info">
+      ${/* o 🔥 aparecia duas vezes na mesma linha: ao lado do nome e no botão
+             de ação, que já fica aceso quando o caso é urgente */""}
       <div class="nome">${esc(cli.nome)}</div>
-      <div class="meta">
-        ${ks.some(k=>k.urgente)?`<span class="chip urg">🔥 URGENTE</span>`:""}
-        ${[...new Set(ks.map(k=>NOME_FASE[k.fase]))].map(f=>`<span class="chip fase">${esc(f)}</span>`).join("")}
-        ${[...new Set(ks.map(k=>k.beneficio).filter(Boolean))].slice(0,2).map(b=>`<span class="chip ben">${esc(b)}</span>`).join("")}
-        ${ks.map(chipExig).join("")}
-        ${ks.map(chipDcb).join("")}
-        ${(kp=>chipPrazo(dataProx, kp&&kp.lembrar_motivo))(ks.find(x=>x.prazo===dataProx))}
-        ${quemProx.map(c=>`<span class="avatar mini" style="background:${c.cor}"
-          title="${esc(c.nome)} — tarefa para ${fmt(dataProx)}">${esc(c.inicial)}</span>`).join("")}
-        ${(kp=>kp&&kp.lembrar_motivo?`<span class="chip neutro" title="${esc(kp.lembrar_motivo)}">📌 ${esc(kp.lembrar_motivo.length>32?kp.lembrar_motivo.slice(0,32)+"…":kp.lembrar_motivo)}</span>`:"")(ks.find(x=>x.prazo===prazoMin))}
-        ${evFut?`<span class="chip per">🩺 ${esc(evFut.tipo)} ${fmtTS(evFut.data_hora)}</span>`:""}
-        ${ks.length>1?`<span class="chip neutro">${ks.length} casos</span>`:""}
-      </div>
+      ${meta.length?`<div class="meta">${meta.join('<span class="pt">·</span>')}</div>`:""}
     </div>
-    <div class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${resp.map(c=>`<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")||`<span class="avatar mini" style="background:#c8c6c4">＋</span>`}</div>
-    <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}">🔥</button>
-    <button class="acao-card sol ${noMeuDia?"on":""}" title="Meu Dia" data-sol="${ks[0]?ks[0].id:""}">☀️</button>
-    <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}">★</button>
+    ${quemProx.map(c=>`<span class="avatar mini quem-prazo" style="background:${c.cor}"
+      title="${esc(c.nome)} — tarefa para ${fmt(dataProx)}">${esc(c.inicial)}</span>`).join("")}
+    <div class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${resp.map(c=>`<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")||`<span class="avatar mini vazio">＋</span>`}</div>
+    ${/* os três só aparecem no hover ou pelo teclado — quando estão LIGADOS
+         ficam sempre visíveis, porque aí carregam informação */""}
+    <span class="acoes">
+      <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}">🔥</button>
+      <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}">★</button>
+    </span>
   </div>`;
 }
+
+// A data como o To Do escreve: "Hoje", "Amanhã", e o resto com o dia da
+// semana na frente ("sex, 07.08"). Dizer o dia da semana poupa a conta de
+// cabeça que todo mundo faz para saber se dá tempo.
+const SIGLA_DIA = ["dom","seg","ter","qua","qui","sex","sáb"];
+function diaDaSemana(iso){
+  const d = new Date(iso + "T12:00:00");
+  return isNaN(d) ? "" : SIGLA_DIA[d.getDay()];
+}
+function dataRelativa(iso){
+  if(!iso) return "";
+  // maisDias() pula para o próximo dia ÚTIL — na sexta, "amanhã" viraria
+  // segunda e a etiqueta mentiria. Aqui a conta é de calendário mesmo.
+  const dia = n => { const d = new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+n);
+                     return d.toLocaleDateString("sv"); };
+  if(iso === hoje()) return "Hoje";
+  if(iso === dia(1)) return "Amanhã";
+  if(iso === dia(-1)) return "Ontem";
+  return `${diaDaSemana(iso)}, ${fmt(iso).slice(0,5)}`;
+}
+
+// EM EXIGÊNCIA POR DOIS CAMINHOS. `exigencia_prazo` é o que o escritório
+// anota à mão, com a data-limite. `situacao_inss` é o que o PAT devolve —
+// e chega antes, porque vem do sistema deles. Olhar só o primeiro deixava
+// de fora justamente as exigências recém-descobertas pela importação, que
+// são as que ainda ninguém viu.
+const emExigencia = k => !!(k && (k.exigencia_prazo || k.situacao_inss === "Em exigência"));
+let soExigencia = false;                 // o filtro da lista INSS
 
 function grupoClientes(casosSel){
   const porCli = new Map();
@@ -1710,30 +3102,12 @@ function grupoClientes(casosSel){
 function ligarCartoes(){
   document.querySelectorAll(".cartao[data-cli]").forEach(el=>{
     el.onclick=e=>{
-      if(e.target.dataset.sol!==undefined || e.target.dataset.estrela!==undefined) return;
+      if(e.target.dataset.estrela!==undefined) return;
       abrirFicha(el.dataset.cli);
     };
     el.oncontextmenu=e=>menuMover(e, el.dataset.cli);   // botão direito = Mover para…
   });
   ligarArrasteCartoes();
-  document.querySelectorAll("[data-sol]").forEach(b=>b.onclick=async e=>{
-    e.stopPropagation();
-    const casoId = b.dataset.sol; if(!casoId) return;
-    // liga/desliga: segundo clique retira do Meu Dia
-    const ja = D.meudia.find(m=>m.caso_id===casoId && m.colaborador_id===eu.id);
-    try{
-      if(ja){
-        await api(`/rest/v1/meu_dia?id=eq.${ja.id}`,{method:"DELETE"});
-        aviso("Retirado do seu Meu Dia");
-      }else{
-        await api(`/rest/v1/meu_dia`,{method:"POST",body:JSON.stringify(
-          {colaborador_id:eu.id, caso_id:casoId, dia:hoje()}),headers:{Prefer:"return=minimal"}});
-        aviso("Adicionado ao seu Meu Dia ☀️");
-      }
-    }catch(err){ aviso("Erro: "+err.message); }
-    D.meudia = await todas("meu_dia",`select=*&dia=eq.${hoje()}`);
-    render();
-  });
   document.querySelectorAll("[data-estrela]").forEach(b=>b.onclick=async e=>{
     e.stopPropagation();
     const k = D.casoPorId.get(b.dataset.estrela); if(!k) return;
@@ -1782,6 +3156,9 @@ function render(){
   if(visao==="quadro") return renderQuadro();
   if(visao==="vendas") return renderVendas();
   if(visao==="whatsapp") return renderWhats();
+  if(visao==="novidades") return renderNovidades();
+  if(visao==="acervo") return renderAcervo();
+  if(visao==="patinss") return renderImportarPat();
   if(visao==="config") return renderConfig();
   if(visao==="parcerias") return renderParcerias();
   if(visao==="marketing") return renderMarketing();
@@ -1792,7 +3169,8 @@ function render(){
   if(visao==="minhas"){ titulo="👤 Atribuídas a mim"; casosSel=ativos().filter(k=>
     (D.atrDoCaso.get(k.id)||[]).includes(eu.id)
     || (D.tarefasPorCaso.get(k.id)||[]).some(t=>t.colaborador_id===eu.id)); }
-  else if(visao==="importante"){ titulo="⭐ Importante"; casosSel=ativos().filter(k=>k.importante); }
+  else if(visao==="importante"){ titulo="⭐ Importante"; casosSel=ativos().filter(k=>k.importante);
+    subt="O que você marcou — e, no topo, o que os portais trouxeram e ninguém leu ainda."; }
   else if(visao==="recebimentos"){ titulo="💰 Recebimentos"; casosSel=D.casos.filter(k=>k.fase==="pagamento");
     subt="Casos em fase de pagamento — o financeiro vive dentro do caso, na aba Pagamentos da ficha."; }
   else if(visao.startsWith("fase:")){ const f=visao.slice(5);
@@ -1806,19 +3184,40 @@ function render(){
       `<button class="fchip ${filtroColab===x.id?"on":""}" data-fcol="${x.id}">`+
       `<span class="avatar mini" style="background:${x.cor}">${esc(x.inicial)}</span>${esc(x.nome)}</button>`)).join("")+`</div>`;
   // na lista INSS, os casos em exigência (prazo legal de 30 dias) vêm primeiro
-  const emExig = casosSel.filter(k=>k.exigencia_prazo);
-  if(visao==="fase:inss" && emExig.length){
-    const resto = casosSel.filter(k=>!k.exigencia_prazo);
-    emExig.sort((a,b)=>a.exigencia_prazo<b.exigencia_prazo?-1:1);
-    meio.innerHTML = chipsCol
+  const emExig = casosSel.filter(emExigencia);
+  if(visao==="fase:inss" && (emExig.length || soExigencia)){
+    const resto = casosSel.filter(k=>!emExigencia(k));
+    // quem tem prazo anotado vem primeiro, do mais apertado; depois os que o
+    // INSS marcou e ainda não tiveram o prazo registrado aqui
+    emExig.sort((a,b)=>(a.exigencia_prazo||"9999")<(b.exigencia_prazo||"9999")?-1:1);
+    const chipExigencia = `<div class="filtros" style="margin-top:-4px">
+      <button class="fchip ${soExigencia?"on":""}" id="chip-exig">⚠ Só exigências (${emExig.length})</button>
+      ${emExig.some(k=>!k.exigencia_prazo)?`<span class="meio-sub" style="align-self:center">
+        ${emExig.filter(k=>!k.exigencia_prazo).length} vieram do INSS sem prazo anotado — abra e registre a exigência</span>`:""}
+    </div>`;
+    meio.innerHTML = chipsCol + chipExigencia
       + `<h3 class="secao" style="color:var(--vermelho)">⚠ Em exigência — prazo de 30 dias (${emExig.length})</h3>`
-      + grupoClientes(emExig).map(([c,ks])=>cartaoCliente(c,ks)).join("")
-      + `<h3 class="secao">Demais requerimentos (${resto.length})</h3>`
-      + grupoClientes(resto).map(([c,ks])=>cartaoCliente(c,ks)).join("");
+      + (grupoClientes(emExig).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+         || "<p class='meio-sub'>Nenhuma exigência aberta. 👏</p>")
+      + (soExigencia ? "" : `<h3 class="secao">Demais requerimentos (${resto.length})</h3>`
+        + grupoClientes(resto).map(([c,ks])=>cartaoCliente(c,ks)).join(""));
+    const ce = document.getElementById("chip-exig");
+    if(ce) ce.onclick = () => { soExigencia = !soExigencia; render(); };
   } else {
-    meio.innerHTML = chipsCol
+    // ⭐ IMPORTANTE ABRE COM AS NOVIDADES. É a lista onde ele passa o dia; pôr
+    // ali o que os portais trouxeram encurta o caminho entre a mudança
+    // acontecer e alguém saber dela. Só as primeiras, com o resto a um clique
+    // — a lista continua sendo a do que ELE marcou, não uma segunda caixa.
+    meio.innerHTML = chipsCol + (visao==="importante" ? blocoNovidadesTopo() : "")
       + (grupoClientes(casosSel).map(([c,ks])=>cartaoCliente(c,ks)).join("")
       || "<p class='meio-sub'>Nenhum cliente aqui.</p>");
+    if(visao==="importante"){
+      const v = document.getElementById("ver-novidades");
+      if(v) v.onclick = () => { visao="novidades"; render(); };
+      ligarEncaminhar();
+      document.querySelectorAll("[data-ler]").forEach(b=>b.onclick=e=>{
+        e.stopPropagation(); marcarLidas([b.dataset.ler]); });
+    }
   }
   document.querySelectorAll("[data-fcol]").forEach(b=>b.onclick=()=>{ filtroColab=b.dataset.fcol||null; render(); });
   ligarCartoes();
@@ -1857,12 +3256,15 @@ function renderMeuDia(){
     `<div class="filtros">${chips.join("")}</div>`
     + avisoCRPS()
     + blocoRotinas()
+    + blocoCrpsManual()
     + blocoApos()
     + blocoCadunico()
-    + blocoSemAcao()
-    + blocoRevisao()
+    // A REVISÃO DO ACERVO E O "SEM PRÓXIMA AÇÃO" SAÍRAM DAQUI. Meu Dia é o
+    // que vence hoje e o que eu escolhi para hoje — coisas com data. Os dois
+    // blocos que saíram são FILA, não agenda: nunca acabam, e empurravam para
+    // baixo justamente o que vence. Agora moram em 🧹 Cuidar do acervo.
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
-    + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — use o ☀️ nos cartões.</p>")
+    + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — clique com o botão direito num cliente e escolha ☀️ Adicionar ao Meu Dia.</p>")
     + `<h3 class="secao">🟡 Vencem hoje (${hojeK.length+tHoje.length})</h3>`
     + (grupoClientes(hojeK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
        + tHoje.map(t=>cartaoTarefa(t)).join("") || "<p class='meio-sub'>Nada vence hoje. 🎉</p>")
@@ -1874,6 +3276,422 @@ function renderMeuDia(){
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
     e.stopPropagation(); marcarRevisado(b.dataset.revks.split(",")); });
   ligarCartoes(); ligarTarefas();
+}
+
+// ── aplicar a coleta do e-Recursos ────────────────────────────────────────
+// A extensão entrega o que o portal respondeu, cru. Aqui isso vira: o bloco
+// `casos.crps` atualizado (que é o que a aba 🖥 Recurso mostra) e, para cada
+// movimento NOVO, um andamento em 📣 Novidades.
+//
+// A chave é a "impressão digital" do evento — data + status cru —, a mesma
+// que o robô de linha de comando usa. Sem ela, os mesmos movimentos virariam
+// comentário de novo a cada rodada, porque o portal devolve sempre a lista
+// inteira.
+function planoCrps(coleta, D){
+  const itens = (coleta && coleta.itens) || {};
+  const porNup = new Map();
+  for (const k of (D.casos||[]))
+    for (const n of nupsDoCaso(k)) porNup.set(n, k);
+
+  const plano = { blocos: [], andamentos: [], semCaso: [], resumo: {} };
+  const jaVisto = new Map();
+  for (const a of (D.novid||[]))
+    if (a.origem === "crps" && a.origem_id) jaVisto.set(a.origem_id, true);
+
+  for (const [chave, json] of Object.entries(itens)){
+    if (!json || typeof json !== "object") continue;
+    const nup = (chave.split("_")[0]||"").replace(/\D/g,"");
+    const k = porNup.get(nup);
+    const bloco = CRPS.traduzirProcesso(json);
+    if (!k) { plano.semCaso.push({ nup, status: bloco.status }); continue; }
+    plano.blocos.push({ caso_id: k.id, nup, bloco });
+    for (const e of bloco.eventos){
+      if (CRPS.TIPOS_SILENCIOSOS.has(e.tipo)) continue;
+      const id = `${nup}|${CRPS.chaveEvento(e)}`;
+      if (jaVisto.has(id)) continue;
+      jaVisto.set(id, true);
+      plano.andamentos.push({ caso_id: k.id, nup, origem_id: id,
+        quando: (CRPS.dataParaISO(e.data)||"").slice(0,10) || null,
+        texto: CRPS.comentarioDoEvento(e), decisao: e.tipo === "decisao" });
+    }
+  }
+  plano.resumo = { lidos: Object.keys(itens).length, casos: plano.blocos.length,
+                   movimentos: plano.andamentos.length,
+                   decisoes: plano.andamentos.filter(a=>a.decisao).length,
+                   sem_caso: plano.semCaso.length };
+  return plano;
+}
+
+// CONFERIR ANTES, TAMBÉM AQUI. A coleta do INSS já mostrava o plano e a do
+// CRPS gravava direto — duas portas com regras diferentes para a mesma
+// pergunta ("o que isto vai escrever nas fichas?"). Agora as duas param e
+// mostram primeiro.
+let planoCrpsAtual = null;
+async function conferirCrps(coletaId){
+  try{
+    const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
+    if(!c) return aviso("Não achei essa coleta");
+    planoCrpsAtual = planoCrps(c.dados, D);
+    planoCrpsAtual.coleta_id = coletaId;
+    render();
+  }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+}
+
+// RECOLHER NÃO PODE APAGAR O QUE FOI ACRESCENTADO.
+//
+// O portal devolve a lista de movimentos e mais nada. O ACÓRDÃO guardado no
+// CRM e o RESUMO da decisão não vêm de lá: o primeiro é o PDF que o robô
+// baixou e gravou, o segundo é o que ele leu do PDF — e o que a equipe
+// corrigiu à mão por cima. Trocar o bloco inteiro pelo que a consulta trouxe
+// apagou os dois de uma vez, e a ficha do recurso ficou só com a linha do
+// tempo. Foi o que aconteceu.
+//
+// Agora o bloco é FUNDIDO: o portal manda no que é dele (situação, órgão
+// atual, movimentos novos) e o que foi acrescentado por fora permanece.
+// Evento que sumiu da resposta também fica — perder histórico é pior que
+// carregar uma linha a mais.
+function fundirBlocoCrps(antigo, novo){
+  if(!antigo) return novo;
+  const marca = a => String(a.id || a.nome || "");
+  const antes = new Map((antigo.eventos||[]).map(e => [CRPS.chaveEvento(e), e]));
+
+  const eventos = (novo.eventos||[]).map(e => {
+    const velho = antes.get(CRPS.chaveEvento(e));
+    if(!velho) return e;
+    const guardados = new Map((velho.arquivos||[]).map(a => [marca(a), a]));
+    const arquivos = (e.arquivos||[]).map(a => {
+      const v = guardados.get(marca(a));
+      if(!v) return a;
+      guardados.delete(marca(a));
+      return { ...a, ...(v.storage?{storage:v.storage}:{}), ...(v.resumo?{resumo:v.resumo}:{}) };
+    });
+    // arquivo que o portal parou de listar, mas que já está guardado aqui
+    for(const v of guardados.values()) arquivos.push(v);
+    return { ...e, arquivos, ...(velho.resumo && !e.resumo ? {resumo:velho.resumo} : {}) };
+  });
+  const vistas = new Set(eventos.map(e => CRPS.chaveEvento(e)));
+  for(const [ch, e] of antes) if(!vistas.has(ch)) eventos.push(e);
+
+  return { ...antigo, ...novo, eventos };
+}
+
+async function aplicarCrps(coletaId){
+  const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
+  if(!c) return aviso("Não achei essa coleta");
+  const p = planoCrps(c.dados, D);
+  if(!p.resumo.lidos) return aviso("A coleta veio vazia");
+  const falhas = []; let feitos = 0;
+  const tentar = async (rot, f) => { try{ await f(); feitos++; }
+    catch(e){ falhas.push(`${rot}: ${String(e.message||e).slice(0,120)}`); } };
+
+  // o bloco do recurso: é ele que a aba 🖥 Recurso lê
+  for(const b of p.blocos) await tentar(b.nup, async () => {
+    const k = D.casoPorId.get(b.caso_id); if(!k) return;
+    const so = x => String(x||"").replace(/\D/g,"");
+    const antigo = blocosDoCaso(k).find(x => so(x.nup) === b.nup);
+    const outros = blocosDoCaso(k).filter(x => so(x.nup) !== b.nup);
+    const crps = [...outros, fundirBlocoCrps(antigo, b.bloco)];
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({crps})});
+    k.crps = crps;
+  });
+  // e cada movimento novo, que é o que aparece em 📣 Novidades
+  for(const a of p.andamentos) await tentar(`mov ${a.nup}`, () =>
+    api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, texto:a.texto,
+        origem:"crps", origem_id:a.origem_id, publico:false,
+        ...(a.quando?{criado_em:a.quando+"T12:00:00"}:{})})}));
+
+  await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
+  planoCrpsAtual = null;
+  await buscarColetas(); await carregar(); montarSidebar(); render();
+  const d = p.resumo.decisoes;
+  aviso(falhas.length
+    ? `${feitos} gravadas, ${falhas.length} falharam`
+    : `✔ ${p.resumo.movimentos} movimento(s)${d?`, ${d} com decisão`:""} — veja em 📣 Novidades`);
+  if(falhas.length) console.warn("falhas do CRPS:", falhas);
+}
+
+// O QUE DIZER QUANDO A GRAVAÇÃO FALHA.
+//
+// A mensagem do banco importa mais que a contagem. PGRST204 quer dizer coluna
+// que não existe, e a correção está no SQL, não no app — mas "o banco está
+// desatualizado" sozinho manda procurar agulha no palheiro: o schema tem
+// dezenas de colunas e não dá para saber qual. O PostgREST diz o nome no
+// próprio erro ("Could not find the 'der' column of 'casos'"); é só repassar.
+function recadoDeFalhas(feitos, falhas){
+  const falta = falhas.find(f=>/PGRST204|Could not find the/.test(f));
+  if(!falta) return `${feitos} gravadas, ${falhas.length} falharam`;
+  const q = falta.match(/'([^']+)' column of '([^']+)'/);
+  return "O banco está desatualizado"
+    + (q ? ` — falta a coluna ${q[2]}.${q[1]}` : "")
+    + ". Rode o schema_por_em_dia.sql no Supabase e tente de novo.";
+}
+
+// ENCAMINHAR — a triagem que a caixa de entrada pede. Ler a novidade é
+// metade; a outra metade é dizer a alguém o que fazer com ela, e isso
+// costumava significar abrir a ficha, achar o comentário e escrever de novo.
+//
+// A orientação entra como RESPOSTA do andamento que a motivou (`responde_a`):
+// na linha do tempo do cliente, o pedido do INSS e a instrução à equipe
+// ficam grudados, e ninguém precisa adivinhar de qual movimento era aquele
+// "Amanda, providenciar".
+let encaminhando = null;      // id da novidade com a caixa aberta
+
+function caixaEncaminhar(a){
+  const k = D.casoPorId.get(a.caso_id) || {};
+  const sugestoes = sugestoesDoTexto(a.texto);
+  return `<div class="enc" data-enc="${a.id}">
+    <div class="enc-linha">
+      <span class="rotulo-rap">PARA</span>
+      ${D.colaboradores.filter(c=>c.ativo).map(c=>
+        `<button class="fx-av enc-quem" data-quem="${c.id}" style="--cor-eq:${c.cor}"
+          title="${esc(c.nome)}">${esc(c.inicial)}</button>`).join("")}
+      <span class="tf-sep"></span>
+      <span class="rotulo-rap">ATÉ</span>
+      <button class="btn-rap enc-dia" data-dia="hoje">Hoje</button>
+      <button class="btn-rap enc-dia on" data-dia="amanha">Amanhã</button>
+      <input type="date" class="enc-data" value="${maisDias(1)}">
+    </div>
+    <textarea class="enc-txt" rows="2" placeholder="o que a pessoa precisa fazer…"></textarea>
+    ${sugestoes.length?`<div class="enc-sug">${sugestoes.map(s=>
+      `<button class="btn-rap" data-sug="${esc(s)}">${esc(s)}</button>`).join("")}
+      <span class="enc-dica">pode marcar mais de uma</span></div>`:""}
+    <div class="enc-linha">
+      <button class="esc-reg" data-enviar="${a.id}">Encaminhar</button>
+      <button class="btn-mini" data-cancelar="1">cancelar</button>
+      <span class="meio-sub" style="margin-left:auto">entra na ficha embaixo deste andamento</span>
+    </div>
+  </div>`;
+}
+
+// as frases que quase sempre servem, pelo que o andamento diz. Não adivinham
+// a decisão: só poupam a digitação do caso óbvio.
+function sugestoesDoTexto(t){
+  const s = (t||"").toLowerCase();
+  if(/exig|apresentar|juntar|ppp|documento/.test(s))
+    return ["Entrar em contato e pedir o documento", "Conferir se já temos nos anexos",
+            "Cumprir a exigência no Meu INSS"];
+  if(/negad|improv|indefer/.test(s))
+    return ["Avisar o cliente e explicar o próximo passo", "Preparar recurso",
+            "Avaliar ação judicial"];
+  if(/conced|deferid|provimento|acolhid/.test(s))
+    return ["Avisar o cliente", "Conferir a implantação e o valor", "Iniciar cobrança dos honorários"];
+  if(/per[ií]cia|avalia/.test(s))
+    return ["Avisar o cliente da data e do local", "Orientar sobre o que levar"];
+  return ["Entrar em contato com o cliente", "Conferir no portal e voltar a comentar"];
+}
+
+// ── marcar frases numa anotação ───────────────────────────────────────────
+// Pedir duas coisas de uma vez é o caso comum — "pede o PPP" E "avisa o
+// cliente". Vale para o encaminhamento e para o compositor da ficha (que é
+// onde nascem as tarefas), então a regra é uma só, escrita uma vez:
+//
+//   · a frase já está no campo  → sai (desmarcar)
+//   · a última linha é texto solto sendo digitado → a frase o completa
+//   · nos demais casos → entra como mais um item
+//
+// Com mais de um item o texto vira lista com "•", para o colaborador ler dois
+// pedidos e não uma frase emendada na outra. O que foi escrito à mão é uma
+// linha como as outras e nunca se perde.
+function semMarcador(l){ return String(l||"").replace(/^[•\-]\s*/,"").trim(); }
+function emItens(linhas){
+  const l = linhas.filter(Boolean);
+  return l.length>1 ? l.map(x=>"• "+x).join("\n") : (l[0]||"");
+}
+function alternarFrase(inp, frase, conhecidas){
+  const linhas = (inp.value||"").split("\n").map(semMarcador);
+  const cheias = linhas.filter(Boolean);
+  const i = cheias.findIndex(l=>dsa(l)===dsa(frase));
+  if(i>=0) cheias.splice(i,1);
+  else{
+    const ultima = linhas.length ? linhas[linhas.length-1] : "";
+    const digitando = ultima && !(conhecidas||[]).some(c=>dsa(c)===dsa(ultima));
+    if(digitando) cheias[cheias.length-1] = frase;   // completa a linha em curso
+    else cheias.push(frase);
+  }
+  inp.value = emItens(cheias);
+  return i<0;                                       // true = entrou
+}
+
+function ligarEncaminhar(){
+  document.querySelectorAll("[data-encaminhar]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    encaminhando = encaminhando===b.dataset.encaminhar ? null : b.dataset.encaminhar;
+    render();
+  });
+  const cx = document.querySelector(".enc"); if(!cx) return;
+  cx.querySelectorAll(".enc-quem").forEach(b=>b.onclick=()=>{
+    cx.querySelectorAll(".enc-quem").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+  });
+  cx.querySelectorAll(".enc-dia").forEach(b=>b.onclick=()=>{
+    cx.querySelectorAll(".enc-dia").forEach(x=>x.classList.remove("on"));
+    b.classList.add("on");
+    cx.querySelector(".enc-data").value = b.dataset.dia==="hoje" ? hoje() : maisDias(1);
+  });
+  const frases = [...cx.querySelectorAll("[data-sug]")].map(x=>x.dataset.sug);
+  cx.querySelectorAll("[data-sug]").forEach(b=>b.onclick=()=>{
+    const t = cx.querySelector(".enc-txt");
+    b.classList.toggle("on", alternarFrase(t, b.dataset.sug, frases));
+    t.rows = Math.max(2, t.value.split("\n").length);
+    t.focus();
+  });
+  cx.querySelector("[data-cancelar]").onclick = () => { encaminhando=null; render(); };
+  cx.querySelector("[data-enviar]").onclick = () => enviarEncaminhamento(cx.dataset.enc);
+}
+
+async function enviarEncaminhamento(andId){
+  const cx = document.querySelector(`.enc[data-enc="${andId}"]`); if(!cx) return;
+  const quem = (cx.querySelector(".enc-quem.on")||{}).dataset;
+  const texto = cx.querySelector(".enc-txt").value.trim();
+  const dia = cx.querySelector(".enc-data").value;
+  // as duas exigências do composer valem aqui também: sem dono e sem data, a
+  // orientação vira recado no vazio — foi assim que o To Do encheu de tarefa
+  // que ninguém era responsável por fazer
+  if(!quem) return aviso("Escolha para quem vai");
+  if(!texto) return aviso("Escreva o que precisa ser feito");
+  if(!dia) return aviso("Escolha até quando");
+  const a = (D.novid||[]).find(x=>x.id===andId); if(!a) return;
+  try{
+    const [novo] = await api(`/rest/v1/andamentos`,{method:"POST",
+      headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, texto,
+        responde_a:andId, origem:"app", publico:false})}) || [];
+    if(novo) await api(`/rest/v1/andamento_tarefas`,{method:"POST",
+      headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({andamento_id:novo.id, caso_id:a.caso_id,
+        colaborador_id:quem.quem, atribuido_por:eu.id, lembrar_em:dia})});
+    // encaminhou é porque leu: sai da caixa sem precisar do segundo clique
+    encaminhando = null;
+    await marcarLidas([andId]);
+    aviso(`✔ Encaminhado para ${esc((D.colPorId.get(quem.quem)||{}).nome||"")}`);
+  }catch(e){ aviso("Não consegui encaminhar: "+e.message); }
+}
+
+// ── 📣 Novidades ──────────────────────────────────────────────────────────
+// TUDO O QUE OS PORTAIS TROUXERAM, num lugar só, do mais novo para o mais
+// velho. É a resposta para "quero ter conhecimento de todos os andamentos
+// diários": em vez de caçar ficha por ficha o que mudou, a mudança vem até
+// aqui e sai quando é lida.
+//
+// Só entra o que veio de fora (origem 'pat', 'crps' ou 'dou'). O que a
+// equipe digitou já foi visto por quem digitou — misturar os dois faria a
+// lista encher de coisa que ninguém precisa conferir.
+//
+// "Lido" é por pessoa, na tabela andamentos_lidos que já existia para os
+// comentários da ficha. Marcar não apaga nada: o andamento continua na
+// ficha do cliente para sempre, só sai desta caixa de entrada.
+const ORIGENS_ROBO = ["pat","crps","dou"];
+const ROTULO_ORIGEM = {pat:"🌻 INSS", crps:"🖥 Recursos", dou:"📰 DOU"};
+
+function novidades(){
+  const euLi = a => (a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
+  return (D.novid||[]).filter(a=>!euLi(a));
+}
+
+// as primeiras novidades, para caber no topo de outra lista sem tomar conta
+function blocoNovidadesTopo(){
+  const ns = novidades();
+  if(!ns.length) return "";
+  const mostra = ns.slice(0,5);
+  return `<h3 class="secao">📣 Novidades dos portais (${ns.length})</h3>`
+    + mostra.map(a=>linhaNovidade(a)).join("")
+    + (ns.length>mostra.length
+        ? `<p class="meio-sub"><a href="#" id="ver-novidades">ver as ${ns.length} novidades ↗</a></p>`
+        : "");
+}
+
+// uma linha da caixa de entrada, usada na lista 📣 e no topo do ⭐
+function linhaNovidade(a){
+  const k = D.casoPorId.get(a.caso_id) || {};
+  const c = D.cliPorId.get(k.cliente_id) || {};
+  return `<div class="nov" data-and="${a.id}">
+    <span class="nov-fonte">${ROTULO_ORIGEM[a.origem]||a.origem}</span>
+    <div class="nov-corpo">
+      <div class="nov-cli" data-cli="${c.id||""}">${esc(c.nome||"cliente sem ficha")}
+        ${k.beneficio?`<span class="u-papel" style="text-transform:none">· ${esc(k.beneficio)}</span>`:""}</div>
+      <div class="nov-txt">${esc(a.texto)}</div>
+    </div>
+    ${k.processo_link?`<a class="btn-mini" href="${k.processo_link}" target="_blank" rel="noopener">abrir ↗</a>`:""}
+    <button class="btn-mini" data-encaminhar="${a.id}">→ encaminhar</button>
+    <button class="btn-mini" data-ler="${a.id}">✔ li</button>
+  </div>${encaminhando===a.id?caixaEncaminhar(a):""}`;
+}
+
+function renderNovidades(){
+  document.getElementById("titulo-lista").textContent = "📣 Novidades";
+  const ns = novidades();
+  document.getElementById("sub-lista").textContent = ns.length
+    ? "O que os portais trouxeram e você ainda não leu. Marcar como lido tira daqui, não da ficha."
+    : "Nada novo. Tudo o que os portais trouxeram já foi lido.";
+  if(!ns.length){
+    document.getElementById("conteudo-meio").innerHTML =
+      "<p class='meio-sub'>Caixa vazia. 👏 Rode a extensão para buscar o que mudou hoje.</p>";
+    return;
+  }
+  // por dia, porque é assim que a pergunta é feita: "o que aconteceu hoje?"
+  const porDia = new Map();
+  for(const a of ns){
+    const d = String(a.criado_em).slice(0,10);
+    if(!porDia.has(d)) porDia.set(d,[]);
+    porDia.get(d).push(a);
+  }
+  document.getElementById("conteudo-meio").innerHTML =
+    `<div class="filtros"><button class="fchip" id="ler-tudo">✔ marcar todas como lidas (${ns.length})</button></div>`
+    + [...porDia].map(([d,as])=>`<h3 class="secao">${esc(dataRelativa(d))} (${as.length})</h3>`
+      + as.map(linhaNovidade).join("")).join("");
+  document.querySelectorAll("[data-ler]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation(); marcarLidas([b.dataset.ler]); });
+  document.getElementById("ler-tudo").onclick=()=>marcarLidas(ns.map(a=>a.id));
+  document.querySelectorAll(".nov-cli[data-cli]").forEach(el=>el.onclick=()=>{
+    if(el.dataset.cli) abrirFicha(el.dataset.cli); });
+  ligarEncaminhar();
+}
+
+async function marcarLidas(ids){
+  if(!ids.length) return;
+  try{
+    await api(`/rest/v1/andamentos_lidos`,{method:"POST",
+      headers:{Prefer:"return=minimal,resolution=ignore-duplicates"},
+      body:JSON.stringify(ids.map(id=>({andamento_id:id, colaborador_id:eu.id})))});
+    const marcados = new Set(ids);
+    (D.novid||[]).forEach(a=>{ if(marcados.has(a.id))
+      a.andamentos_lidos = [...(a.andamentos_lidos||[]), {colaborador_id:eu.id}]; });
+    montarSidebar(); render();
+  }catch(e){ aviso("Não consegui marcar como lido: "+e.message); }
+}
+
+// ── 🧹 Cuidar do acervo ───────────────────────────────────────────────────
+// O que saiu do Meu Dia. São duas FILAS, não uma agenda: processos sem
+// próxima ação e processos parados há muito tempo. Nenhuma das duas tem
+// data, nenhuma das duas acaba — e é por isso que não podiam morar na tela
+// que responde "o que vence hoje?".
+//
+// Aqui elas ficam à mão para quando sobrar tempo, com o número na barra
+// lateral dizendo o tamanho da fila sem cobrar nada.
+function renderAcervo(){
+  document.getElementById("titulo-lista").textContent = "🧹 Cuidar do acervo";
+  document.getElementById("sub-lista").textContent =
+    "Sem data e sem cobrança: o que fica para quando sobrar tempo. Nada aqui vence hoje.";
+  const corpo = blocoRevisao() + blocoSemAcao();
+  document.getElementById("conteudo-meio").innerHTML = corpo
+    || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
+  document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
+    e.stopPropagation(); marcarRevisado(b.dataset.revks.split(",")); });
+  ligarCartoes();
+}
+// quantos esperam ali — o mesmo critério dos dois blocos, sem montar a tela
+function quantosNoAcervo(){
+  const dias = +(cfgApp("revisao_dias")||90);
+  const lim = (()=>{ const d=new Date(hoje()+"T12:00:00");
+                     d.setDate(d.getDate()-dias); return d.toLocaleDateString("sv"); })();
+  const parados = ativos().filter(k=>!k.revisado_em || k.revisado_em<=lim).length;
+  const semAcao = ativos().filter(k=>!k.prazo && !k.exigencia_prazo
+    && !(D.tarefasPorCaso.get(k.id)||[]).length).length;
+  return parados + semAcao;
 }
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
@@ -3582,6 +5400,16 @@ function renderDash(){
     <div class="card" style="grid-column:1/-1"><h4>Casos ativos por benefício</h4>
       ${barras(Object.entries(at.reduce((m,k)=>{ if(k.beneficio) m[k.beneficio]=(m[k.beneficio]||0)+1; return m; },{}))
         .sort((a,b)=>b[1]-a[1]).slice(0,10))}</div>
+    ${/* o que o escritório de fato pede — a conta que o "benefício" sozinho
+         não dá, porque quase tudo cai em B42. Um caso conta em cada marcador
+         que tem: rural + especial aparece nas duas barras, de propósito. */""}
+    <div class="card" style="grid-column:1/-1"><h4>O que estamos pedindo (marcadores)</h4>
+      ${barras(MARCADORES.map(m=>[`${m.icone} ${m.rot}`,
+        at.filter(k=>marcadoresDe(k).includes(m.slug)).length]).filter(p=>p[1])
+        .sort((a,b)=>b[1]-a[1]))
+        || "<p class='meio-sub'>Nenhum caso marcado ainda — marque na ficha, na linha PEDIDO.</p>"}
+      ${(()=>{ const combi = at.filter(k=>marcadoresDe(k).length>1).length;
+        return combi?`<p class="meio-sub" style="margin-top:6px">${combi} caso(s) somam mais de um pedido.</p>`:""; })()}</div>
   </div>`;
 }
 
@@ -3720,9 +5548,12 @@ async function fecharTarefa(id){
     body:JSON.stringify({concluida_em:new Date().toISOString()})});
   let corpo = "✔ " + (txt || "Tarefa concluída");
   if(prot.length>=6) corpo += ` — Protocolo: ${prot}`;
+  // a conclusão responde o comentário que pediu a tarefa: é o que diz DE QUAL
+  // tarefa é este "feito" quando o processo tem três abertas ao mesmo tempo
   const [and]=await api(`/rest/v1/andamentos`,{method:"POST",
     headers:{Prefer:"return=representation"},
-    body:JSON.stringify({caso_id:t.caso_id, autor_id:eu.id, texto:corpo})}).catch(()=>[]);
+    body:JSON.stringify({caso_id:t.caso_id, autor_id:eu.id, texto:corpo,
+                         responde_a:t.andamento_id})}).catch(()=>[]);
   if(and) await api(`/rest/v1/andamentos_lidos`,{method:"POST",
     headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
     body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
@@ -3988,6 +5819,7 @@ async function abrirFicha(cliId){
   if(clienteAberto !== cliId){ casoSel = "__auto__"; abaAtiva = 2; }   // cliente novo: abre no 1º caso ativo
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
+  aplicarMenu();
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
   const ids = ks.map(k=>k.id).join(",");
   const [ands, creds, vincs, anexos, convs, tarefasF] = await Promise.all([
@@ -4163,10 +5995,12 @@ async function abrirFicha(cliId){
           return `<div class="sub-menu">
           <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
           ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${(k.datajud&&k.datajud.ultimo)?"":" <span class='meio-sub'>(sem dados)</span>"}</button>`:""}
+          <button class="${aba==="inss"?"on":""}" onclick="irSubAba('inss')">🌻 Andamentos INSS${comentariosPat(andsVis).length?"":" <span class='meio-sub'>(sem dados)</span>"}</button>
           <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${crpsTotalEventos(k)?"":" <span class='meio-sub'>(sem dados)</span>"}</button>
         </div>
       ${blocoFatos(k)}
-      ${aba==="cnj" ? painelCNJ(k) : aba==="crps" ? painelCRPS(k) : painelEscritorio(k, andsVis)}`;
+      ${aba==="cnj" ? painelCNJ(k) : aba==="crps" ? painelCRPS(k)
+        : aba==="inss" ? painelINSS(k, andsVis) : painelEscritorio(k, andsVis)}`;
         })()}
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
       <datalist id="lista-especies">${ESPECIES.map(([c,n])=>`<option value="${c}">${esc(n)}</option>`).join("")}</datalist>`;
@@ -4631,13 +6465,21 @@ function alternarSugestoes(casoId){
 function pintarSugestoes(k, forcar){
   const cx=document.getElementById("sug-box"); if(!cx) return;
   const inp=document.getElementById("and-texto");
-  const q=dsa((inp&&inp.value||"").trim());
-  if(!q && !forcar && cx.style.display==="none") return;
   const proprias = ANOTACOES.map(t=>({texto:t}));
-  const todas = q ? [...proprias, ...sugestoes(k)] : proprias;
+  const catalogo = [...proprias, ...sugestoes(k)];
+  // o filtro olha só a ÚLTIMA linha, e só quando ela é texto solto: linha que
+  // veio de uma sugestão é conteúdo já escolhido, não busca. Sem isso, marcar
+  // a primeira frase escondia todas as outras e acabava a escolha múltipla.
+  const escritas = (inp&&inp.value||"").split("\n").map(l=>semMarcador(l));
+  const marcadas = new Set(escritas.filter(Boolean).map(dsa));
+  const ultima = escritas.length ? escritas[escritas.length-1] : "";
+  const q = catalogo.some(s=>dsa(s.texto)===dsa(ultima)) ? "" : dsa(ultima.trim());
+  if(!q && !forcar && cx.style.display==="none") return;
+  const todas = q ? catalogo : proprias;
   const lista=(q ? todas.filter(s=>dsa(s.texto).includes(q)) : todas).slice(0, q?6:ANOTACOES.length);
   if(q) cx.style.display = lista.length ? "flex" : "none";
-  cx.innerHTML = lista.map(s=>`<span class="sug-it" data-acao="${s.acao||""}">${s.acao==="exigencia"?"⚠ ":""}${esc(s.texto)}</span>`).join("")
+  cx.innerHTML = lista.map(s=>
+      `<span class="sug-it${marcadas.has(dsa(s.texto))?" on":""}" data-acao="${s.acao||""}">${s.acao==="exigencia"?"⚠ ":""}${esc(s.texto)}</span>`).join("")
     + (q?"":`<span class="sug-mais" onclick="lbEditar('${k.id}')">✎ editar sugestões</span>`);
   cx.querySelectorAll(".sug-it").forEach(el=>el.onclick=()=>usarSugestao(el, k));
 }
@@ -4662,14 +6504,18 @@ function pintarPrazoDoTexto(k){
     : "";
 }
 let prazoDetectado = null, prazoCancelado = false;
-function usarSugestao(el){
+function usarSugestao(el, k){
   if(el.dataset.acao==="exigencia") return abrirExigencia();
   const texto = el.textContent.trim();
   const inp=document.getElementById("and-texto");
   if(/__/.test(texto)) return montarPreenchimento(texto);
-  inp.value=texto; inp.focus();
+  const kk = k || D.casoPorId.get(casoSel) || {};
+  // marca e desmarca, como no encaminhamento: um andamento pede duas coisas
+  // de uma vez com frequência, e a segunda não pode apagar a primeira
+  alternarFrase(inp, texto, [...ANOTACOES, ...sugestoes(kk).map(s=>s.texto)]);
+  inp.focus();
   inp.style.height="auto"; inp.style.height=Math.min(inp.scrollHeight,220)+"px";
-  prazoCancelado=false; pintarPrazoDoTexto(); pintarSugestoes(D.casoPorId.get(casoSel));
+  prazoCancelado=false; pintarPrazoDoTexto(); pintarSugestoes(kk);
 }
 
 // ── Datas prováveis de aposentadoria ─────────────────────────────────────
@@ -4985,6 +6831,47 @@ function blocoSemAcao(){
   </details>`;
 }
 
+// no Meu Dia: os recursos que o robô não enxerga e alguém tem de abrir no
+// site. É o que hoje mora no To Do como "André, verificar semanalmente" — a
+// diferença é que aqui a lista se refaz sozinha e some quando é conferida,
+// em vez de acumular uma anotação "sem andamento" por semana.
+function blocoCrpsManual(){
+  const itens = [];
+  (D.casos||[]).forEach(k=>{
+    if(k.fase==="encerrado") return;
+    for(const b of crpsBlocos(k)){
+      if(!b.manual) continue;
+      const c = b.consulta||{};
+      if(filtroColab && c.responsavel_id !== filtroColab) continue;
+      if(c.proxima && c.proxima > hoje()) continue;
+      itens.push({k, b, c, cli:D.cliPorId.get(k.cliente_id)});
+    }
+  });
+  if(!itens.length) return "";
+  itens.sort((x,y)=>((x.c.proxima||"")<(y.c.proxima||"")?-1:1));
+  return `<div class="caso man-dia">
+    <div class="rotulo-caso">🔎 Consultar no e-Recursos (${itens.length})
+      — recursos que o robô não enxerga</div>
+    ${itens.map(({k,b,c,cli})=>{
+      const co = c.responsavel_id && D.colPorId.get(c.responsavel_id);
+      const atras = c.proxima && c.proxima < hoje();
+      return `<div class="man-item">
+        ${co?`<span class="avatar mini" style="background:${co.cor}" title="${esc(co.nome)}">${esc(co.inicial)}</span>`
+            :`<span class="avatar mini" style="background:#a19f9d" title="sem responsável">?</span>`}
+        <button class="man-nome" onclick="abrirFicha('${k.cliente_id}')">${esc(cli?cli.nome:"cliente")}</button>
+        <span class="meio-sub" style="font-family:monospace">${esc(b.nup||"")}</span>
+        ${atras?`<span class="man-selo vence">⏰ desde ${fmt(c.proxima)}</span>`:""}
+        ${c.total?`<span class="meio-sub">${c.total}× conferido</span>`:""}
+        <span style="margin-left:auto;display:flex;gap:6px">
+          <a class="btn-mini" target="_blank" style="text-decoration:none"
+             href="https://consultaprocessos.inss.gov.br/">🌐 abrir</a>
+          <button class="btn-mini" onclick="manualSemNovidade('${k.id}','${esc(b.nup||"")}')">✓ sem novidade</button>
+          <button class="btn-mini forte" onclick="manualComNovidade('${k.id}','${esc(b.nup||"")}')">✎ teve andamento</button>
+        </span>
+      </div>`;}).join("")}
+  </div>`;
+}
+
 // no Meu Dia: CadÚnico vencido ou vencendo nos próximos 90 dias, de todos os
 // clientes — inclusive dos casos já encerrados
 function blocoCadunico(){
@@ -5172,7 +7059,7 @@ async function salvarCampo(campo, cliId){
 function reindexarCliente(c){
   const ks = D.casosDoCliente.get(c.id)||[];
   const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+" "+(k.processo||"")+" "+(k.nb||"")+" "+
-    (k.beneficio||"")+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
+    (k.beneficio||"")+" "+rotuloDoPedido(k)+" "+(k.parceria||"")+" "+((k.protocolos||[]).join(" "))).join(" ")].join(" "));
   c._ix = texto + " " + texto.replace(/\D/g, "");
   c._nome_ix = dsa(c.nome);
 }
@@ -5253,7 +7140,7 @@ function caixaArquivos(k){
 const ESPECIES = [
   ["B31","Auxílio por incapacidade temporária"],["B32","Aposentadoria por incapacidade permanente"],
   ["B91","Auxílio por incapacidade acidentário"],["B92","Aposentadoria por incapacidade acidentária"],
-  ["B94","Auxílio-acidente"],["B36","Auxílio-acidente previdenciário"],
+  ["B36","Auxílio-acidente previdenciário"],["B94","Auxílio-acidente acidentário (acidente de trabalho)"],
   ["B41","Aposentadoria por idade"],["B42","Aposentadoria por tempo de contribuição"],
   ["B46","Aposentadoria especial"],["B57","Aposentadoria de professor"],
   ["B21","Pensão por morte"],["B93","Pensão por morte acidentária"],["B25","Auxílio-reclusão"],
@@ -5292,6 +7179,236 @@ function campoFato(k, campo){
   </div>`;
 }
 
+
+// ── cópia fiel de regras/marcadores.js ────────────────────────────────────
+// O app.html é arquivo único e não faz require; o teste marcadores.test.js
+// compara o código-fonte das duas cópias e o catálogo inteiro.
+const MARCADORES = [
+  { slug: 'rural', rot: 'Rural', icone: '🌾', cor: '#7A8B2E',
+    especies: ['B42', 'B41', 'B46'],
+    dica: 'reconhecimento de tempo de atividade rural, para somar tempo/carência ou aumentar o valor',
+    docs: [
+      'Autodeclaração rural (formulário do INSS)',
+      'Prova material do período rural (notas de produtor, ITR, contrato de parceria, escritura)',
+      'Documentos de escola/igreja/sindicato com a qualificação de lavrador',
+      'Indicar testemunhas do período rural (nome, telefone, período que conviveu)',
+    ] },
+  { slug: 'idade_rural', antigo: ['idaderural'], rot: 'Idade rural', icone: '🚜', cor: '#4E7A3A',
+    especies: ['B41'],
+    dica: 'aposentadoria por idade do segurado especial — 55 anos (mulher) / 60 (homem), sem contribuição',
+    docs: [
+      'Comprovar a atividade rural no período imediatamente anterior ao requerimento',
+      'Autodeclaração rural homologada (sindicato, INCRA ou órgão indicado)',
+      'Conferir se a idade reduzida já foi alcançada (55 mulher / 60 homem)',
+    ] },
+  { slug: 'especial', rot: 'Especial', icone: '⚗️', cor: '#1F6FB2',
+    especies: ['B42', 'B41'],
+    dica: 'reconhecimento de tempo especial para converter em comum ou aumentar o valor '
+        + '(quando o pedido É a aposentadoria especial, a espécie B46 já diz isso)',
+    docs: [
+      'PPP — Perfil Profissiográfico Previdenciário de cada empresa',
+      'LTCAT ou laudo técnico das condições ambientais',
+      'CTPS e ficha de registro dos períodos alegados como especiais',
+      'Conferir no PPP: agente nocivo, técnico responsável e período sem lacuna',
+    ] },
+  { slug: 'pcd', rot: 'Deficiência', icone: '♿', cor: '#7A5AA8',
+    especies: ['B42', 'B41'],
+    dica: 'aposentadoria da pessoa com deficiência (LC 142/2013)',
+    docs: [
+      'Laudos, exames e relatórios que comprovem a deficiência e desde quando',
+      'Requerer a avaliação biopsicossocial (perícia médica + serviço social)',
+    ],
+    // a deficiência reduz o TEMPO por tempo de contribuição e a IDADE na
+    // aposentadoria por idade: o que se levanta em cada uma não é o mesmo
+    porEspecie: {
+      B42: { dica: 'LC 142/2013 — o grau da deficiência reduz o tempo de contribuição exigido',
+             docs: ['Levantar os períodos trabalhados COM a deficiência (é o que define o grau)'] },
+      B41: { dica: 'LC 142/2013 — idade reduzida (55 mulher / 60 homem), com 15 anos de contribuição na condição de deficiente',
+             docs: ['Conferir se a idade reduzida já foi alcançada (55 mulher / 60 homem)',
+                    'Somar os anos de contribuição na condição de deficiente (mínimo 15)'] },
+    } },
+
+  // ── pensão por morte ────────────────────────────────────────────────────
+  // O óbito acidentário não entra aqui: tem espécie própria (B93), e pela
+  // regra 1 quem diz isso é o código do INSS. Os dois marcadores abaixo valem
+  // para as duas espécies, porque um dependente inválido e uma união estável
+  // a comprovar existem tanto na pensão comum quanto na acidentária.
+  { slug: 'dependente_invalido', rot: 'Dependente inválido/PcD', icone: '🧑‍🦽', cor: '#8A5A2B',
+    especies: ['B21', 'B93'],
+    dica: 'dependente inválido ou com deficiência — a pensão não se sujeita ao prazo por idade',
+    docs: [
+      'Laudos e exames que comprovem a invalidez ou a deficiência do dependente',
+      'Comprovar que a invalidez/deficiência é ANTERIOR ao óbito — é o que garante a vitaliciedade',
+      'Requerer a perícia médica do INSS no dependente',
+    ] },
+  { slug: 'uniao_estavel', rot: 'União estável', icone: '💍', cor: '#B03A6E',
+    especies: ['B21', 'B93'],
+    dica: 'união estável a comprovar — não há certidão de casamento',
+    docs: [
+      'Início de prova material da união (conta conjunta, mesmo endereço, plano de saúde, IR, filhos em comum)',
+      'Comprovar que a união existia NA DATA do óbito',
+      'Indicar testemunhas da convivência (nome, telefone, desde quando conhecem o casal)',
+    ] },
+];
+
+const POR_SLUG = new Map(MARCADORES.map(m => [m.slug, m]));
+
+function doCatalogo(especie) {
+  const e = String(especie || '').trim().toUpperCase();
+  if (!e) return [];
+  return MARCADORES.filter(m => m.especies.includes(e));
+}
+
+function marcadoresDe(k) {
+  const bruto = k && k.marcadores;
+  const lista = Array.isArray(bruto) ? bruto : (bruto ? [bruto] : []);
+  const vistos = new Set();
+  // a ordem é a do catálogo, não a de clique: assim "Rural + Especial" é
+  // sempre escrito do mesmo jeito, e duas fichas iguais parecem iguais
+  return MARCADORES.filter(m => {
+    // `antigo` guarda o slug de uma versão anterior: renomear um marcador não
+    // pode apagar a marcação que alguém já fez
+    const nomes = [m.slug, ...(m.antigo || [])];
+    const tem = lista.some(x => nomes.includes(String(x).trim().toLowerCase()));
+    if (tem && !vistos.has(m.slug)) { vistos.add(m.slug); return true; }
+    return false;
+  }).map(m => m.slug);
+}
+
+function alternar(k, slug) {
+  if (!POR_SLUG.has(slug)) return marcadoresDe(k);
+  const atuais = marcadoresDe(k);
+  const fora = atuais.includes(slug) ? atuais.filter(x => x !== slug) : [...atuais, slug];
+  return marcadoresDe({ marcadores: fora });
+}
+
+function rotuloDoPedido(k) {
+  const base = String((k && k.beneficio) || '').trim();
+  const marcas = marcadoresDe(k).map(s => POR_SLUG.get(s).rot);
+  if (!marcas.length) return base;
+  return base ? `${base} · ${marcas.join(' + ')}` : marcas.join(' + ');
+}
+
+function docsDosMarcadores(k, jaTem = []) {
+  const tidos = new Set(jaTem.map(x => String(x).trim().toLowerCase()));
+  const e = String((k && k.especie) || '').trim().toUpperCase();
+  const fora = [];
+  for (const slug of marcadoresDe(k)) {
+    const m = POR_SLUG.get(slug);
+    const extras = (m.porEspecie && m.porEspecie[e] && m.porEspecie[e].docs) || [];
+    for (const d of [...m.docs, ...extras]) {
+      const chave = d.trim().toLowerCase();
+      if (tidos.has(chave)) continue;
+      tidos.add(chave);
+      fora.push(d);
+    }
+  }
+  return fora;
+}
+
+function dicaDoMarcador(slug, especie) {
+  const m = POR_SLUG.get(slug);
+  if (!m) return '';
+  const e = String(especie || '').trim().toUpperCase();
+  return (m.porEspecie && m.porEspecie[e] && m.porEspecie[e].dica) || m.dica;
+}
+
+function pedidosIguais(a, b) {
+  const eA = String((a && a.especie) || '').trim().toUpperCase();
+  const eB = String((b && b.especie) || '').trim().toUpperCase();
+  if (!eA || eA !== eB) return false;
+  const mA = marcadoresDe(a), mB = marcadoresDe(b);
+  return mA.length === mB.length && mA.every((x, i) => x === mB[i]);
+}
+// ── fim da cópia ──────────────────────────────────────────────────────────
+
+// A linha que responde "o que estou pedindo aqui?" sem abrir nada. Clicar
+// liga e desliga — e ligar acrescenta ao checklist os documentos daquele
+// pedido, que é onde a marcação deixa de ser enfeite e vira trabalho feito.
+function linhaMarcadores(k){
+  const ativos = marcadoresDe(k);
+  const cabem = doCatalogo(k.especie);
+  // marcador que não cabe nesta espécie mas está gravado (a espécie mudou
+  // depois): continua aparecendo, senão sumiria sem ninguém ver
+  const mostrar = [...cabem, ...MARCADORES.filter(m=>ativos.includes(m.slug) && !cabem.includes(m))];
+  // sem espécie não há o que marcar: quem manda nos marcadores é ela. Em vez
+  // de seis botões que não dizem por que estão ali, o convite de preenchê-la.
+  if(!String(k.especie||"").trim())
+    return `<div class="marc-linha"><span class="meio-sub">Preencha a
+      <b>espécie</b> abaixo (B41, B42…) para marcar o que está sendo pedido.</span></div>`;
+  if(!mostrar.length) return especieJaDiz(k);
+  return `<div class="marc-linha">
+    ${mostrar.map(m=>{
+      const on = ativos.includes(m.slug);
+      return `<button class="marc ${on?"on":""}" style="--marc:${m.cor}"
+        title="${esc(dicaDoMarcador(m.slug, k.especie))}${on?" — clique para tirar":" — clique para marcar"}"
+        onclick="alternarMarcador('${k.id}','${m.slug}')">${m.icone} ${esc(m.rot)}</button>`;
+    }).join("")}
+  </div>${avisoPedidoIgual(k)}`;
+}
+// Nem toda espécie tem o que marcar. Em B57 (professor) e B46 (aposentadoria
+// especial) o marcador seria dizer duas vezes a mesma coisa — e abrir espaço
+// para as duas discordarem. Nos benefícios por incapacidade a distinção
+// simplesmente não paga o clique. Em todos, o silêncio é a resposta certa, e
+// dizer isso é melhor que deixar a linha vazia parecendo defeito.
+function especieJaDiz(k){
+  const nome = (ESPECIES.find(([c])=>c===String(k.especie||"").toUpperCase())||[])[1];
+  if(!nome) return "";
+  return `<div class="marc-linha">
+    <span class="meio-sub">${esc(k.especie)} — ${esc(nome)}. Nesta espécie o próprio código já diz o que é o pedido: não há marcador a acrescentar.</span>
+  </div>`;
+}
+// O mesmo cliente PODE ter dois pedidos da mesma espécie: um B42 por
+// deficiência e outro B42 por tempo especial são pedidos diferentes, com
+// protocolo e decisão próprios. O que não faz sentido é o MESMO pedido
+// cadastrado duas vezes — e é só disso que este aviso fala.
+function avisoPedidoIgual(k){
+  const irmaos = (D.casosDoCliente.get(k.cliente_id)||[])
+    .filter(x=>x.id!==k.id && x.fase!=="encerrado" && pedidosIguais(k,x));
+  if(!irmaos.length) return "";
+  return `<div class="marc-igual">⚠ Este cliente tem outro caso ativo com o
+    <b>mesmo pedido</b> (${esc(k.especie)}${marcadoresDe(k).length?" · "+marcadoresDe(k).map(s=>POR_SLUG.get(s).rot).join(" + "):""}).
+    Se forem pedidos diferentes, marque o que muda entre eles; se for o mesmo, encerre um.</div>`;
+}
+async function alternarMarcador(casoId, slug){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const antes = marcadoresDe(k);
+  const nova = alternar(k, slug);
+  k.marcadores = nova;
+  // O BOTÃO MORTO. Este `await` não tinha rede de proteção: quando o banco
+  // recusava — e recusava sempre, enquanto a coluna `marcadores` não existir
+  // lá — a função abortava aqui. Sem aviso, sem redesenho, sem nada. Clicar
+  // não mudava um pixel, e a única leitura possível era "está quebrado".
+  try{
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({marcadores:nova})});
+  }catch(e){
+    k.marcadores = antes;                       // não fica marcado o que não gravou
+    abrirFicha(clienteAberto);
+    // 42703 é o "column does not exist" do PostgreSQL: dizer isso com todas as
+    // letras poupa a caçada, porque a correção não está no app, está no banco
+    aviso(/42703|marcadores/.test(e.message)
+      ? "O banco ainda não tem a coluna dos marcadores — rode o schema.sql no Supabase."
+      : "Não consegui gravar o marcador. Tente de novo.");
+    return;
+  }
+  // ligou um marcador novo: os documentos dele entram no checklist. Desligar
+  // NÃO apaga item nenhum — pode já ter sido conferido, e apagar trabalho
+  // conferido por causa de um clique errado seria pior que sobrar item.
+  let novos = 0;
+  if(nova.length > antes.length){
+    const jaTem = subtarefasDe(k.id).map(t=>t.titulo);
+    for(const titulo of docsDosMarcadores({marcadores:[slug]}, jaTem)){
+      const [t] = await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:k.id, titulo})}).catch(()=>[]);
+      if(t){ D.tarefas.push(t); novos++; }
+    }
+  }
+  aviso(novos?`Marcado ✔ — ${novos} item(ns) no checklist 📋`
+             :(nova.includes(slug)?"Marcado ✔":"Desmarcado"), false);
+  abrirFicha(clienteAberto);
+}
+
 function blocoFatos(k){
   const incap = ehIncapacidade(k) || /^B(31|32|91|92|94|36)$/.test(k.especie||"") || k.dcb || k.dii;
   const rec = recorrerAte(k), dRec = rec ? diasAte(rec) : null;
@@ -5310,6 +7427,7 @@ function blocoFatos(k){
       ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 msg ao cliente</button>
         <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
     </div>
+    ${linhaMarcadores(k)}
     <dl class="fx-grade">
       ${campoFato(k,"especie")}
       <div class="fx"><dt title="protocolo do requerimento no INSS">Protocolo</dt>
@@ -5461,14 +7579,87 @@ function painelEscritorio(k, ands){
     </div>`}
   </div>
   ${caixaArquivos(k)}
-  <ul class="timeline">${(ands||[]).filter(a=>!a.excluir).map(a=>{
-    const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
+  ${/* os comentários do INSS têm aba própria (🌻); aqui fica só a conversa
+       do escritório — misturados, ninguém achava nem uma coisa nem outra */""}
+  ${linhaDoTempo(ands.filter(a=>!ehComentarioPat(a)))}`;
+}
+
+// ── a linha do tempo do escritório ────────────────────────────────────────
+// A conclusão de uma tarefa nasce como RESPOSTA do comentário que a pediu
+// (andamentos.responde_a), não como comentário solto. Num processo com três
+// tarefas abertas, um "✔ Cumpri a exigência" perdido no topo não dizia de
+// qual delas era. Aqui a resposta fica embaixo do pedido, recuada: lê-se
+// "o que foi pedido → o que foi feito" de uma vez só.
+function comentario(a, resposta){
+  const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
+  return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmtTS(a.criado_em)}</span>
+    <span class="texto">${esc(a.texto)}${resposta||""}</span>
+    ${vistos(a)}
+    ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}`;
+}
+function linhaDoTempo(ands){
+  const vivos = (ands||[]).filter(a=>!a.excluir);
+  const porPai = new Map();
+  for(const a of vivos) if(a.responde_a){
+    if(!porPai.has(a.responde_a)) porPai.set(a.responde_a, []);
+    porPai.get(a.responde_a).push(a);
+  }
+  // resposta órfã (o pai foi apagado) volta a ser comentário de primeiro
+  // nível: sumir com o "feito" de alguém seria pior que mostrá-lo solto
+  const temPai = new Set(vivos.map(a=>a.id));
+  const raiz = vivos.filter(a=>!a.responde_a || !temPai.has(a.responde_a));
+  const li = a => {
+    const filhas = (porPai.get(a.id)||[]).sort((x,y)=>(x.criado_em||"")<(y.criado_em||"")?-1:1);
+    const sub = filhas.length ? `<span class="resp">${filhas.map(f=>
+      `<span class="resp-item">${comentario(f)}</span>`).join("")}</span>` : "";
+    return `<li>${comentario(a, sub)}</li>`;
+  };
+  return `<ul class="timeline">${raiz.map(li).join("")
+    || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
+}
+
+// ── 🌻 Andamentos INSS (PAT/Meu INSS) ────────────────────────────────────
+// Os comentários que aparecem no processo dentro do site do INSS, coletados
+// pela extensão e gravados na importação do PAT como andamentos com
+// origem='pat' e o id do comentário no portal em origem_id. As mudanças de
+// situação ("INSS: A → B") também têm origem 'pat', mas origem_id
+// "situacao:...": essas ficam na linha do tempo do escritório, porque marcam
+// fase, não conversa.
+function ehComentarioPat(a){
+  return a.origem==="pat" && a.origem_id && !String(a.origem_id).startsWith("situacao:");
+}
+function comentariosPat(ands){
+  return (ands||[]).filter(a=>!a.excluir).filter(ehComentarioPat);
+}
+
+// o quadro, nos moldes da aba 🖥 Recurso (CRPS): o oficial em zebra própria,
+// com a data à esquerda, sem misturar com o que o escritório escreve. O texto
+// já vem gravado com quem falou na frente ("INSS · " ou "Escritório · ") —
+// aqui isso vira etiqueta, porque é o que muda o que se faz a seguir.
+function painelINSS(k, ands){
+  const coms = comentariosPat(ands);
+  if(!coms.length)
+    return `<div class="caso"><p class="meio-sub">Sem comentários do INSS neste
+      processo ainda. Eles chegam pela importação do PAT (coleta da extensão) —
+      quando o INSS escrever algo no processo, aparece aqui, igual ao site.</p></div>`;
+  const linha = a=>{
+    const m = /^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
+    const doInss = !m || m[1]==="INSS";     // sem etiqueta gravada, é do INSS
+    const txt = esc(m ? a.texto.slice(m[0].length) : a.texto);
     return `<li>
-      <span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmtTS(a.criado_em)}</span>
-      <span class="texto">${esc(a.texto)}</span>
-      ${vistos(a)}
-      ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}</li>`;
-  }).join("") || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
+      <span class="quando" title="comentário no portal do INSS">${doInss?"🌻":"🏢"}<br>${fmtTS(a.criado_em)}</span>
+      <span class="texto"><span class="chip ${doInss?"fase":"neutro"}" style="margin-right:6px">${doInss?"INSS":"Escritório"}</span>${txt}</span>
+    </li>`;
+  };
+  return `<div class="fatos" style="margin-bottom:12px">
+    <div class="fatos-topo">
+      <h3 style="font-size:14px">Comentários do processo no INSS</h3>
+    </div>
+    <ul class="timeline crps-tl">${coms.map(linha).join("")}</ul>
+    <div class="fatos-pe" style="justify-content:flex-end">
+      <span class="meio-sub">coletado do PAT — o mesmo que aparece no site do INSS</span>
+    </div>
+  </div>`;
 }
 
 // 🖥 Recurso administrativo no CRPS (e-Recursos). O robô (robo-crps) preenche
@@ -5522,6 +7713,32 @@ function caixaResumo(casoId, nup, a){
   </div>`;
 }
 
+// QUEM julgou. A Junta de Recursos é a 1ª instância do CRPS: perdeu ali,
+// ainda cabe Recurso Especial às Câmaras em 30 dias. A Câmara de Julgamento é
+// a 2ª: perdeu ali, a via administrativa acabou e o assunto vira ação
+// judicial. Quem lê a ficha precisa saber disso sem abrir o acórdão.
+//
+// O marcar_orgao.js lê o PDF e grava a.orgao — é a fonte boa. Enquanto ele
+// não roda, a sigla do próprio status do e-Recursos ("25ª JR/3080/2025")
+// serve: mesma leitura do orgaoJulgador() do robô, na versão mínima.
+function orgaoDaDecisao(e, a){
+  if(a && a.orgao && a.orgao.instancia) return a.orgao;
+  const t = String((e&&e.bruto)||"");
+  const caj = t.match(/(\d{1,2})\s*ª?\s*(?:CAJ\b|C[âa]mara)/i);
+  if(caj) return {nome:`${+caj[1]}ª Câmara de Julgamento`, instancia:2};
+  const jr = t.match(/(\d{1,2})\s*ª?\s*(?:JR\b|Junta de Recursos)/i);
+  if(jr) return {nome:`${+jr[1]}ª Junta de Recursos`, instancia:1};
+  return null;
+}
+function seloOrgao(e, a){
+  const o = orgaoDaDecisao(e, a);
+  if(!o) return "";
+  const inst = o.instancia===2 ? "2ª instância — fim da via administrativa"
+                               : "1ª instância — cabe recurso especial";
+  return `<span class="crps-org${o.instancia===2?" inst2":""}" title="${esc(inst)}">⚖️ ${esc(o.nome)}
+    <small>${o.instancia}ª inst.</small></span>`;
+}
+
 // acha o arquivo dentro do bloco do recurso — os dois lados (ficha e
 // resumidor) casam pelo mesmo par (nup, id do arquivo)
 function acharArquivoCrps(k, nup, marca){
@@ -5533,6 +7750,25 @@ function acharArquivoCrps(k, nup, marca){
         if(String(a.id||a.nome) === String(marca)) return a;
   }
   return null;
+}
+
+// destacar a movimentação acende também o ⭐ do processo — é ele que faz o
+// caso pular para a frente nas listas. Tirar o destaque não apaga o ⭐ do
+// processo: quem decide que o assunto morreu é você, no botão do composer.
+async function toggleImpCrps(casoId, nup, i){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const so = x => String(x||"").replace(/\D/g,"");
+  const b = crpsBlocos(k).find(x=>so(x.nup)===so(nup)); if(!b) return;
+  const e = (b.eventos||[])[i]; if(!e) return;
+  e.importante = !e.importante;
+  await gravarCrps(k);
+  if(e.importante && !k.importante){
+    k.importante = true;
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({importante:true})}).catch(()=>{});
+  }
+  aviso(e.importante?"Movimentação destacada ⭐":"Destaque retirado", false);
+  abrirFicha(clienteAberto);
 }
 
 async function gravarCrps(k){
@@ -5578,19 +7814,35 @@ async function salvarResumo(casoId, nup, marca){
 function blocoRecurso(t, casoId){
   const evs = t.eventos||[], ruido = evs.filter(e=>e.tipo==="ruido");
   const cheios = evs.filter(e=>e.tipo!=="ruido");
+  // a decisão mais recente manda na Situação: é a instância em que o caso
+  // está agora, e é dela que sai (ou não) o prazo do recurso especial
+  const ultima = cheios.find(decideOCaso);
   const linha = e=>{
     const forte = decideOCaso(e);
-    const txt = esc(e.resumo||e.bruto||"");
     // acórdão guardado no CRM: abre sem depender do gov.br. Os demais anexos
     // continuam contando só como número — não vale copiar o acervo inteiro.
     const guardados = (e.arquivos||[]).filter(a=>a.storage);
-    return `<li>
+    const selo = forte ? seloOrgao(e, guardados[0]) : "";
+    // o tradutor já põe "(25ª Junta)" no fim do texto; com o selo ao lado
+    // isso vira eco. Sai o parêntese, fica a etiqueta, que diz mais.
+    const txt = esc(String(e.resumo||e.bruto||"")
+      .replace(/\s*\((?:\d{1,2}ª\s*)?(?:Junta|Câmara|CRPS)[^)]*\)\s*$/,""));
+    // ⭐ por movimentação: o que o robô traz é muito, e nem tudo pede ação.
+    // O que você marcar aqui acende o ⭐ do processo, que é o que faz o caso
+    // aparecer na sua frente nas listas — a ciência não depende de lembrar
+    // de abrir a aba do recurso.
+    const i = evs.indexOf(e);
+    return `<li class="${e.importante?"crps-imp":""}">
       <span class="quando" title="e-Recursos (INSS)">${esc(e.icone||"•")}<br>${esc((e.data||"").slice(0,10)||"—")}</span>
       <span class="texto">${forte?`<b>${txt}</b>`:txt}
+        ${selo}
         ${guardados.map(a=>`<button class="crps-pdf" title="${esc(a.nome)}"
           onclick="abrirDecisao('${esc(a.storage)}')">📄 abrir ${/monocr/i.test(a.nome)?"decisão":"acórdão"}</button>`).join("")}
         ${e.docs?`<span class="meio-sub">📎 ${e.docs} documento${e.docs>1?"s":""}</span>`:""}
         ${guardados.map(a=>caixaResumo(casoId, t.nup, a)).join("")}</span>
+      <button class="crps-est ${e.importante?"on":""}" onclick="toggleImpCrps('${casoId}','${esc(t.nup||"")}',${i})"
+        title="${e.importante?"tirar o destaque desta movimentação"
+                             :"destacar esta movimentação — acende o ⭐ do processo"}">⭐</button>
     </li>`;
   };
   return `<div class="fatos" style="margin-bottom:12px">
@@ -5599,6 +7851,7 @@ function blocoRecurso(t, casoId){
     </div>
     <div class="fx-sit">
       <span class="fx-rot">Situação</span> <b>${esc(t.status||"—")}</b>
+      ${ultima?seloOrgao(ultima, (ultima.arquivos||[]).find(a=>a.storage)):""}
       ${t.orgao_atual?`<div class="meio-sub" style="margin-top:3px">📍 onde está agora: ${esc(tituloOrgao(t.orgao_atual))}</div>`:""}
     </div>
     <ul class="timeline crps-tl">${cheios.map(linha).join("") || "<li><span class='meio-sub'>Sem andamentos.</span></li>"}</ul>
@@ -5612,11 +7865,17 @@ function blocoRecurso(t, casoId){
 
 function painelCRPS(k){
   const nups = crpsNups(k), blocos = crpsBlocos(k);
+  const manual = n => crpsBlocos(k).find(b=>soDig(b.nup)===soDig(n) && b.manual);
   // gerência dos números: lista com remover + campo para acrescentar
   const gerNups = `<div class="caso">
     <div class="rotulo-caso">números de recurso deste caso (${nups.length})</div>
     ${nups.map(n=>`<div class="form-linha" style="margin-top:4px">
       <span class="chip neutro" style="font-family:monospace">${esc(n)}</span>
+      ${manual(n)
+        ? `<button class="btn-mini" onclick="crpsAutomatico('${k.id}','${n}')"
+             title="o INSS vinculou o processo — devolver ao robô">🤖 voltar ao automático</button>`
+        : `<button class="btn-mini" onclick="crpsManual('${k.id}','${n}')"
+             title="o robô não enxerga este recurso — alguém consulta no site">🔎 consulta manual</button>`}
       <button class="btn-mini" onclick="removerCrpsNup('${k.id}','${n}')" title="tirar este número">✕</button>
     </div>`).join("")}
     <div class="form-linha" style="margin-top:8px">
@@ -5624,19 +7883,321 @@ function painelCRPS(k){
         onkeydown="if(event.key==='Enter')salvarCrpsNup('${k.id}')">
       <button class="btn-mini" onclick="salvarCrpsNup('${k.id}')">adicionar</button>
     </div></div>`;
-  if(!blocos.length){
-    return `<div class="caso">
+  const comEventos = blocos.filter(b=>(b.eventos||[]).length);
+  const manuais = blocos.filter(b=>b.manual);
+  if(!comEventos.length && !manuais.length){
+    return `${avisoJuntos(k)}<div class="caso">
       <p class="meio-sub">${nups.length
         ? "Número guardado. O robô do CRPS vai consultar na próxima rodada e o histórico aparece aqui."
-        : "Sem recurso vinculado. Cole o número do processo de recurso (o da URL do e-Recursos) para o robô acompanhar. Um caso pode ter mais de um."}</p>
+        : "Sem recurso vinculado. Cole o número do processo de recurso (o da URL do e-Recursos) para o robô acompanhar."}</p>
       ${estadoCRPS().cor==="#c62828"?`<p class="meio-sub" style="color:#c62828;margin-top:6px">⚠ O crachá do gov.br venceu — renove em ⚙️ Configurações para o robô voltar a consultar.</p>`:""}
     </div>${gerNups}`;
   }
-  return `${blocos.length>1?`<p class="meio-sub" style="margin:0 0 6px">${blocos.length} recursos neste caso:</p>`:""}
-    <div class="form-linha" style="margin-bottom:8px">
-      <button class="btn-mini" onclick="copiarCrps('${k.id}')">💬 copiar mensagem ao cliente</button></div>
-    ${blocos.map(t=>blocoRecurso(t, k.id)).join("")}
+  return `${avisoJuntos(k)}
+    ${comEventos.length?`<div class="form-linha" style="margin-bottom:8px">
+      <button class="btn-mini" onclick="copiarCrps('${k.id}')">💬 copiar mensagem ao cliente</button></div>`:""}
+    ${manuais.map(b=>quadroManual(b, k)).join("")}
+    ${comEventos.map(t=>blocoRecurso(t, k.id)).join("")}
     ${gerNups}`;
+}
+
+
+// ── cópia fiel de robo-crps/separar.js ────────────────────────────────────
+// O app.html é arquivo único e não faz require; o teste separar.test.js
+// compara o código-fonte das duas cópias e quebra se elas divergirem.
+const so = x => String(x || '').replace(/\D/g, '');
+const CAMPOS_HERDADOS = [
+  'cliente_id', 'beneficio', 'fase', 'especie', 'nb', 'parceria',
+  'der', 'dib', 'dii', 'dat', 'urgente', 'origem_lista',
+];
+
+function nupsDoCaso(k) {
+  const arr = Array.isArray(k.crps_nups) ? k.crps_nups : [];
+  const lista = arr.map(so).filter(Boolean);
+  const unico = so(k.crps_nup);
+  if (unico && !lista.includes(unico)) lista.push(unico);
+  return [...new Set(lista)];
+}
+function blocosDoCaso(k) {
+  return Array.isArray(k.crps) ? k.crps : (k.crps ? [k.crps] : []);
+}
+function formatarNup(d) {
+  const n = so(d);
+  if (n.length !== 17) return String(d || '');
+  return `${n.slice(0, 5)}.${n.slice(5, 11)}/${n.slice(11, 15)}-${n.slice(15)}`;
+}
+function tituloDoRecurso(k, nup, i) {
+  const base = String(k.titulo || '').replace(/\s*—\s*recurso\s.*$/i, '').trim();
+  return `${base} — recurso ${i}/${formatarNup(nup)}`;
+}
+function planoDeSeparacao(k) {
+  const nups = nupsDoCaso(k);
+  if (nups.length < 2) return { precisa: false, fica: null, novos: [] };
+  const blocos = blocosDoCaso(k);
+  const blocoDe = n => blocos.find(b => so(b.nup) === n) || null;
+
+  const [primeiro, ...resto] = nups;
+  const fica = {
+    id: k.id,
+    titulo: tituloDoRecurso(k, primeiro, 1),
+    crps_nups: [primeiro],
+    crps_nup: null,
+    crps: blocoDe(primeiro) ? [blocoDe(primeiro)] : [],
+  };
+  const novos = resto.map((n, i) => {
+    const novo = { nup: n, titulo: tituloDoRecurso(k, n, i + 2),
+                   crps_nups: [n], crps_nup: null,
+                   crps: blocoDe(n) ? [blocoDe(n)] : [] };
+    for (const c of CAMPOS_HERDADOS) if (k[c] !== undefined && k[c] !== null) novo[c] = k[c];
+    return novo;
+  });
+  return { precisa: true, fica, novos };
+}
+function conferirPlano(k, plano) {
+  const antes = nupsDoCaso(k);
+  const depois = [...(plano.fica ? plano.fica.crps_nups : []),
+                  ...plano.novos.map(n => n.nup)];
+  if (antes.length !== depois.length) return `sobrou/faltou recurso: ${antes.length} → ${depois.length}`;
+  for (const n of antes) if (!depois.includes(n)) return `o recurso ${formatarNup(n)} ficaria sem caso`;
+  const blocosAntes = blocosDoCaso(k).length;
+  const blocosDepois = (plano.fica ? plano.fica.crps.length : 0)
+    + plano.novos.reduce((s, x) => s + x.crps.length, 0);
+  if (blocosAntes !== blocosDepois) return `o histórico de um recurso ficaria para trás (${blocosAntes} → ${blocosDepois})`;
+  return null;
+}
+// ── fim da cópia ──────────────────────────────────────────────────────────
+
+// ── um caso para cada recurso ─────────────────────────────────────────────
+// Cada recurso administrativo tem protocolo próprio, prazo próprio e decisão
+// própria. Empilhados numa ficha só, o CRM mente de três jeitos: a Situação
+// do caso vira a de um recurso escolhido por acaso; o comentário do robô cai
+// numa linha do tempo compartilhada e ninguém sabe de qual recurso é aquele
+// "Recurso negado"; e encerrar o caso quando um acaba enterra os outros.
+function avisoJuntos(k){
+  const n = crpsNups(k).length;
+  if(n < 2) return "";
+  return `<div class="caso juntos">
+    <div class="rotulo-caso">⚠ ${n} recursos neste mesmo caso</div>
+    <p class="meio-sub" style="margin:4px 0 8px">Cada recurso tem protocolo, prazo e decisão próprios —
+      juntos, a Situação da ficha passa a ser a de um deles por acaso, os comentários do robô se misturam
+      e encerrar o caso enterra os outros. O certo é um caso para cada um.</p>
+    <button class="btn-rap" onclick="separarRecursos('${k.id}')">✂️ Separar em ${n} casos</button>
+  </div>`;
+}
+function separarRecursos(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const p = planoDeSeparacao(k);
+  if(!p.precisa) return aviso("Este caso já tem um recurso só");
+  const erro = conferirPlano(k, p);
+  if(erro) return aviso("Não vou separar: " + erro);   // barreira antes de gravar
+  const c = D.cliPorId.get(k.cliente_id);
+  caixa(`<h3>✂️ Separar em ${p.novos.length+1} casos</h3>
+    <p class="meio-sub">Cada recurso passa a ter ficha própria, com o histórico dele.
+      Os comentários do escritório <b>ficam no caso atual</b> — um comentário pertence ao dia em que
+      foi escrito, e adivinhar de qual recurso ele falava seria inventar.</p>
+    <div class="sep-lista">
+      <div class="sep-lin"><b>fica aqui</b> <span style="font-family:monospace">${esc(formatarNup(p.fica.crps_nups[0]))}</span>
+        <span class="meio-sub">${p.fica.crps.length?"com histórico":"ainda sem histórico"}</span></div>
+      ${p.novos.map(n=>`<div class="sep-lin"><b>caso novo</b> <span style="font-family:monospace">${esc(formatarNup(n.nup))}</span>
+        <span class="meio-sub">${n.crps.length?"leva o histórico dele":"ainda sem histórico"}</span></div>`).join("")}
+    </div>
+    <p class="meio-sub" style="margin-top:8px">Cliente: <b>${esc(c?c.nome:"")}</b> ·
+      os casos novos nascem na mesma fase (${esc(NOME_FASE[k.fase]||k.fase)}) e com o mesmo benefício.</p>
+    <div class="form-linha" style="margin-top:8px">
+      <button class="btn-rap" style="margin-left:auto" onclick="confirmarSeparacao('${casoId}')">✂️ Separar agora</button>
+    </div>`);
+}
+async function confirmarSeparacao(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const p = planoDeSeparacao(k);
+  const erro = conferirPlano(k, p);
+  if(erro) return aviso("Não vou separar: " + erro);
+  fecharCaixa();
+  const nascidos = [];
+  for(const n of p.novos){
+    const {nup, ...corpo} = n;
+    const [novo] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify(corpo)}).catch(()=>[]);
+    if(!novo){ aviso("Não consegui criar um dos casos — nada foi mexido"); return; }
+    nascidos.push({novo, nup});
+    // quem cuidava do caso continua cuidando do irmão
+    for(const cid of (D.atrDoCaso.get(k.id)||[]))
+      await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:novo.id, colaborador_id:cid})}).catch(()=>{});
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:novo.id, autor_id:eu.id,
+        texto:`✂️ Caso aberto ao separar os recursos do cliente. Recurso ${formatarNup(nup)}. `
+             +`O histórico anterior do escritório ficou no caso de origem.`})}).catch(()=>{});
+  }
+  // só depois de todos os novos existirem o original é encolhido: se algo
+  // falhar no meio, nenhum recurso fica sem caso
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({titulo:p.fica.titulo, crps_nups:p.fica.crps_nups,
+                         crps_nup:null, crps:p.fica.crps})});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+      texto:`✂️ Recursos separados: ${nascidos.map(x=>formatarNup(x.nup)).join(", ")} `
+           +`${nascidos.length>1?"passaram":"passou"} para caso próprio. Aqui fica ${formatarNup(p.fica.crps_nups[0])}.`})}).catch(()=>{});
+  await carregar(); montarSidebar();
+  plim();
+  aviso(`Separado ✔ — ${nascidos.length} caso(s) novo(s)`, false);
+  abrirFicha(clienteAberto);
+}
+
+// ── recurso de consulta manual ────────────────────────────────────────────
+// O e-Recursos só devolve o que está ligado ao CPF do procurador. Quando o
+// recurso não está vinculado, o robô não vê nada e alguém precisa abrir o
+// site e olhar. Isso hoje vira, no To Do, uma anotação "não houve andamento"
+// por semana — vinte linhas dizendo que nada aconteceu, e ainda assim
+// ninguém sabe se a consulta DESTA semana foi feita.
+//
+// Aqui a conferência não é andamento: a olhada que não achou nada vira
+// carimbo (quem, quando) e se acumula numa linha só. Só o que ACONTECEU vira
+// comentário na ficha.
+const soDig = x => String(x||"").replace(/\D/g,"");
+function quadroManual(b, k){
+  const c = b.consulta||{}, resp = c.responsavel_id && D.colPorId.get(c.responsavel_id);
+  const atrasada = !c.proxima || c.proxima <= hoje();
+  const ult = (c.checagens||[])[0];
+  const ultCol = ult && D.colPorId.get(ult.por);
+  return `<div class="caso man-cx ${atrasada?"vence":""}">
+    <div class="rotulo-caso">🔎 consulta manual · <span style="font-family:monospace">${esc(b.nup||"")}</span></div>
+    <p class="meio-sub" style="margin:4px 0 0">Este recurso não está vinculado ao CPF do procurador, então o
+      robô não enxerga: quem confere no e-Recursos é ${resp?esc(resp.nome):"<b>ninguém ainda</b>"}.</p>
+    <div class="man-linha">
+      <span class="man-selo ${atrasada?"vence":""}">${atrasada?"⏰ conferir agora":`🗓 próxima em ${fmt(c.proxima)}`}</span>
+      ${c.total?`<span class="meio-sub">conferido ${c.total}× · última em ${ult?fmtTS(ult.em):"—"}${ultCol?` (${esc(ultCol.inicial)})`:""}</span>`
+               :`<span class="meio-sub">ainda não foi conferido nenhuma vez</span>`}
+    </div>
+    <div class="form-linha" style="margin-top:8px">
+      <a class="btn-mini" target="_blank" style="text-decoration:none"
+         href="https://consultaprocessos.inss.gov.br/">🌐 abrir o e-Recursos</a>
+      <button class="btn-mini" onclick="manualSemNovidade('${k.id}','${esc(b.nup||"")}')"
+        title="registra que você olhou e nada mudou — não gera comentário">✓ conferido, sem novidade</button>
+      <button class="btn-mini forte" onclick="manualComNovidade('${k.id}','${esc(b.nup||"")}')"
+        title="houve movimentação — vira comentário na ficha">✎ teve andamento…</button>
+      <button class="btn-mini" onclick="manualAjustar('${k.id}','${esc(b.nup||"")}')"
+        title="quem confere e de quanto em quanto tempo">⚙️ quem e quando</button>
+    </div>
+  </div>`;
+}
+
+// as mesmas regras do robo-crps/manual.js — os dois lados escrevem no mesmo
+// pedaço de casos.crps, então precisam concordar sobre o formato
+const CADENCIA_PADRAO = 7, HISTORICO_MAX = 12;
+function maisDiasISO(iso, dias){
+  const [a,m,d] = String(iso).slice(0,10).split("-").map(Number);
+  return new Date(Date.UTC(a, m-1, d + Number(dias||0))).toISOString().slice(0,10);
+}
+function blocoDoNup(k, nup){
+  return crpsBlocos(k).find(b=>soDig(b.nup)===soDig(nup)) || null;
+}
+async function crpsManual(casoId, nup){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  if(!Array.isArray(k.crps)) k.crps = crpsBlocos(k);
+  let b = blocoDoNup(k, nup);
+  if(!b){ b = {nup:String(nup), eventos:[]}; k.crps.push(b); }
+  b.manual = true;
+  b.consulta = Object.assign({responsavel_id:null, cada_dias:CADENCIA_PADRAO,
+    proxima:hoje(), total:0, checagens:[]}, b.consulta||{});
+  await gravarCrps(k);
+  aviso("Marcado como consulta manual 🔎 — diga quem confere e de quanto em quanto tempo", false);
+  abrirFicha(clienteAberto);
+  manualAjustar(casoId, nup);
+}
+async function crpsAutomatico(casoId, nup){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const b = blocoDoNup(k, nup); if(!b) return;
+  delete b.manual;                       // a consulta fica: é o registro do
+  await gravarCrps(k);                   // trabalho que já foi feito à mão
+  aviso("Voltou para o robô 🤖 — entra na próxima coleta", false);
+  abrirFicha(clienteAberto);
+}
+
+// O botão que troca vinte anotações "não houve andamento" por uma linha só.
+// Não gera comentário de propósito: conferir não é andamento.
+async function manualSemNovidade(casoId, nup){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const b = blocoDoNup(k, nup); if(!b || !b.manual) return;
+  const c = b.consulta || (b.consulta = {cada_dias:CADENCIA_PADRAO, total:0, checagens:[]});
+  c.checagens = [{em:new Date().toISOString(), por:eu.id, novidade:false}, ...(c.checagens||[])].slice(0, HISTORICO_MAX);
+  c.total = (c.total||0) + 1;
+  // a próxima conta de HOJE, não da data que estava marcada: quem conferiu
+  // com três dias de atraso não deve ser cobrado de novo amanhã
+  c.proxima = maisDiasISO(hoje(), c.cada_dias||CADENCIA_PADRAO);
+  await gravarCrps(k);
+  plim();
+  aviso(`Conferido ✔ — próxima em ${fmt(c.proxima)}`, false);
+  abrirFicha(clienteAberto);
+}
+
+function manualComNovidade(casoId, nup){
+  caixa(`<h3>✎ Teve andamento no recurso</h3>
+    <p class="meio-sub">Isto vira comentário na ficha e acende o ⭐ do processo —
+      é o que faz o caso aparecer na frente de todo mundo.</p>
+    <textarea id="mn-txt" rows="3" placeholder="o que apareceu no e-Recursos?"
+      style="width:100%;margin-top:8px;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"></textarea>
+    <div class="form-linha" style="margin-top:8px">
+      <button class="btn-rap" style="margin-left:auto"
+        onclick="salvarManualNovidade('${casoId}','${esc(nup)}')">Registrar andamento</button>
+    </div>`);
+  setTimeout(()=>{const t=document.getElementById("mn-txt"); if(t) t.focus();}, 40);
+}
+async function salvarManualNovidade(casoId, nup){
+  const t = document.getElementById("mn-txt");
+  const txt = ((t&&t.value)||"").trim();
+  if(!txt) return aviso("Escreva o que apareceu");
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const b = blocoDoNup(k, nup); if(!b) return;
+  fecharCaixa();
+  const c = b.consulta || (b.consulta = {cada_dias:CADENCIA_PADRAO, total:0, checagens:[]});
+  c.checagens = [{em:new Date().toISOString(), por:eu.id, novidade:true}, ...(c.checagens||[])].slice(0, HISTORICO_MAX);
+  c.total = (c.total||0) + 1;
+  c.proxima = maisDiasISO(hoje(), c.cada_dias||CADENCIA_PADRAO);
+  k.importante = true;
+  await gravarCrps(k);
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({importante:true})}).catch(()=>{});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+      texto:`🔎 CRPS (consulta manual) — ${txt}`})}).catch(()=>{});
+  plim();
+  aviso("Andamento registrado ⭐", false);
+  abrirFicha(clienteAberto);
+}
+
+function manualAjustar(casoId, nup){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const b = blocoDoNup(k, nup); if(!b) return;
+  const c = b.consulta||{};
+  caixa(`<h3>⚙️ Quem confere este recurso, e quando</h3>
+    <p class="meio-sub">Vencendo, ele aparece no Meu Dia de quem for escolhido.</p>
+    <div class="form-linha" style="margin-top:8px">${D.colaboradores.filter(x=>x.ativo).map(co=>
+      `<button class="eq-ini ${c.responsavel_id===co.id?"on":""}" data-mnq="${co.id}"
+        style="--cor-eq:${co.cor}" title="${esc(co.nome)}"
+        onclick="document.querySelectorAll('[data-mnq]').forEach(b=>b.classList.remove('on'));this.classList.add('on')"
+        >${esc(co.inicial)}</button>`).join("")}</div>
+    <div class="form-linha" style="margin-top:10px;align-items:center">
+      <span class="rotulo-rap">CONFERIR A CADA</span>
+      ${[7,15,30].map(n=>`<button class="btn-rap mn-cad ${(c.cada_dias||7)===n?"on":""}" data-mnc="${n}"
+        onclick="document.querySelectorAll('[data-mnc]').forEach(b=>b.classList.remove('on'));this.classList.add('on')"
+        >${n} dias</button>`).join("")}
+      <button class="btn-rap" style="margin-left:auto"
+        onclick="salvarManualAjuste('${casoId}','${esc(nup)}')">Salvar</button>
+    </div>`);
+}
+async function salvarManualAjuste(casoId, nup){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const b = blocoDoNup(k, nup); if(!b) return;
+  const q = document.querySelector("[data-mnq].on"), cad = document.querySelector("[data-mnc].on");
+  fecharCaixa();
+  const c = b.consulta || (b.consulta = {total:0, checagens:[]});
+  c.responsavel_id = q ? q.dataset.mnq : null;
+  c.cada_dias = cad ? Number(cad.dataset.mnc) : CADENCIA_PADRAO;
+  if(!c.proxima) c.proxima = hoje();
+  await gravarCrps(k);
+  aviso("Combinado ✔", false);
+  abrirFicha(clienteAberto);
 }
 
 // abre a cópia do acórdão que mora no CRM (link assinado, curto)
@@ -5660,17 +8221,64 @@ function copiarCrps(casoId){
   copiar(txt, "Mensagem do recurso copiada");
 }
 
-// acrescenta um número à lista (sem sobrescrever os que já existem)
+// Um recurso por caso. Quando o caso já tem um número, o segundo NÃO entra
+// junto: nasce caso próprio. É o mesmo motivo do ✂️ — protocolo, prazo e
+// decisão são de cada recurso, e empilhá-los faz a ficha mentir. Sem esta
+// trava, a separação viraria faxina eterna.
 async function salvarCrpsNup(casoId){
   const el = document.getElementById("crps-nup-"+casoId);
   const v = (el.value||"").replace(/\D/g,"");
   if(!v) return aviso("Digite o número do recurso");
   const k = D.casoPorId.get(casoId);
-  const nova = [...new Set([...crpsNups(k), v])];
-  k.crps_nups = nova; k.crps_nup = null;
+  const jaTem = crpsNups(k);
+  if(jaTem.includes(v)) return aviso("Este recurso já está neste caso");
+  if(jaTem.length){
+    const {ok} = await perguntarNovoCaso(k, v);
+    if(!ok) return;
+    return criarCasoDoRecurso(k, v);
+  }
+  k.crps_nups = [v]; k.crps_nup = null;
   await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({crps_nups:nova, crps_nup:null})});
-  aviso("Recurso adicionado ✔ — o robô consulta na próxima rodada", false);
+    body:JSON.stringify({crps_nups:[v], crps_nup:null})});
+  aviso("Recurso vinculado ✔ — o robô consulta na próxima rodada", false);
+  abrirFicha(clienteAberto);
+}
+function perguntarNovoCaso(k, nup){
+  return new Promise(resolve=>{
+    caixa(`<h3>➕ Novo recurso — caso próprio</h3>
+      <p class="meio-sub">Este caso já acompanha o recurso
+        <b style="font-family:monospace">${esc(formatarNup(crpsNups(k)[0]))}</b>.
+        Como cada recurso tem protocolo, prazo e decisão próprios, o
+        <b style="font-family:monospace">${esc(formatarNup(nup))}</b> vai nascer em caso separado,
+        do mesmo cliente e na mesma fase.</p>
+      <div class="form-linha" style="margin-top:10px">
+        <button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
+        <button class="btn-rap" style="margin-left:auto" id="pnc-ok">Criar o caso</button>
+      </div>`);
+    const b = document.getElementById("pnc-ok");
+    b.onclick = ()=>{ fecharCaixa(); resolve({ok:true}); };
+    // fechar de qualquer outro jeito conta como desistir
+    setTimeout(()=>{ const obs = setInterval(()=>{
+      if(!document.getElementById("pnc-ok")){ clearInterval(obs); resolve({ok:false}); }
+    }, 250); }, 300);
+  });
+}
+async function criarCasoDoRecurso(k, nup){
+  const corpo = {titulo: tituloDoRecurso(k, nup, crpsNups(k).length+1),
+                 crps_nups:[nup], crps_nup:null, crps:[]};
+  for(const c of CAMPOS_HERDADOS) if(k[c]!==undefined && k[c]!==null) corpo[c]=k[c];
+  const [novo] = await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify(corpo)}).catch(()=>[]);
+  if(!novo) return aviso("Não consegui criar o caso");
+  for(const cid of (D.atrDoCaso.get(k.id)||[]))
+    await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:novo.id, colaborador_id:cid})}).catch(()=>{});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:novo.id, autor_id:eu.id,
+      texto:`✂️ Caso aberto para o recurso ${formatarNup(nup)}.`})}).catch(()=>{});
+  await carregar(); montarSidebar();
+  plim();
+  aviso("Caso criado para o novo recurso ✔", false);
   abrirFicha(clienteAberto);
 }
 
@@ -6010,6 +8618,7 @@ function dataNatural(texto){
 function fecharFicha(rerender=true){
   clienteAberto=null; abaAtiva=2;
   document.getElementById("app").classList.remove("detalhe-aberto","ficha-tudo");
+  aplicarMenu();
   if(rerender) render();
 }
 
@@ -6483,7 +9092,11 @@ function inserirPreenchida(){
     return p;
   }).join("");
   const inp=document.getElementById("and-texto");
-  inp.value=texto; box.style.display="none"; inp.focus();
+  // a frase completada entra como mais um item; se a última linha era o que
+  // estava sendo digitado, ela toma o lugar dela
+  alternarFrase(inp, texto, []);
+  box.style.display="none"; inp.focus();
+  inp.style.height="auto"; inp.style.height=Math.min(inp.scrollHeight,220)+"px";
 }
 async function novoCaso(cliId){
   const ben=document.getElementById("nk-ben").value.trim()||null;
@@ -6875,6 +9488,7 @@ document.getElementById("busca").addEventListener("input",e=>{
     if(buscaTxt && clienteAberto){
       clienteAberto=null; abaAtiva=2;
       document.getElementById("app").classList.remove("detalhe-aberto","busca-aberta");
+      aplicarMenu();
     }
     render();
   },200);
@@ -6884,16 +9498,30 @@ document.getElementById("busca").addEventListener("mousedown",e=>{
   const app=document.getElementById("app");
   if(app.classList.contains("mini-lateral") || app.classList.contains("detalhe-aberto")){
     e.preventDefault();
-    app.classList.remove("mini-lateral"); app.classList.add("busca-aberta");
-    guardar("crm_menu","cheio");
+    app.classList.add("busca-aberta"); aplicarMenu();
     setTimeout(()=>document.getElementById("busca").focus(),50);
   }
 });
+// Estado do menu lateral em UM lugar só. A ficha aberta apenas muda o PADRÃO
+// (com quatro colunas na tela, o menu em ícones é o que faz sentido); quem
+// clicou no ☰ tem a última palavra, e a pesquisa sempre precisa do menu
+// aberto para caber o campo.
+function aplicarMenu(){
+  const app=document.getElementById("app");
+  if(!app) return;
+  const pref=ler("crm_menu");                     // "mini" | "cheio" | vazio
+  const mini = app.classList.contains("busca-aberta") ? false
+             : pref ? pref==="mini"
+             : app.classList.contains("detalhe-aberto");
+  app.classList.toggle("mini-lateral", mini);
+  if(!mini) esconderEtiqueta();   // menu aberto já mostra o nome; o balão sobra
+}
+
 // ── atalhos de teclado ────────────────────────────────────────────────────
 // Ctrl+F (ou ⌘F) e "/" levam à pesquisa; Esc fecha o que estiver aberto.
 function irParaPesquisa(){
   const app=document.getElementById("app");
-  app.classList.remove("mini-lateral"); app.classList.add("busca-aberta");
+  app.classList.add("busca-aberta"); aplicarMenu();
   const b=document.getElementById("busca"); b.focus(); b.select();
 }
 function digitando(){
@@ -6955,9 +9583,13 @@ document.getElementById("busca-x").onclick=()=>{
   b.focus(); render();
 };
 document.getElementById("ordem").onchange=()=>render();
+// O ☰ é a palavra final sobre o menu. Antes ele só mexia numa classe que a
+// ficha aberta sobrescrevia — com tudo aberto, clicar não fazia nada e o
+// botão parecia quebrado. Agora ele grava a preferência e manda aplicar.
 document.getElementById("btn-lateral").onclick=()=>{
-  const mini=document.getElementById("app").classList.toggle("mini-lateral");
-  guardar("crm_menu", mini?"mini":"cheio");
+  const app=document.getElementById("app");
+  guardar("crm_menu", app.classList.contains("mini-lateral") ? "cheio" : "mini");
+  aplicarMenu();
 };
 
 (async ()=>{
