@@ -1183,7 +1183,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.57 · a aba 🔔 Lembretes: o "avisar de tempos em tempos" vira coisa do cliente</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.58 · a importação do PAT lembra do que já viu — só o novo aparece</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2778,11 +2778,56 @@ async function usarColeta(id){
     const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${id}`) || [];
     if(!c) return aviso("Não achei essa coleta");
     arquivoPat = normalizarColeta(c.dados);
-    planoPat = planoDeImportacao(arquivoPat, D, hoje());
-    planoPat.erro = conferirPlanoPat(arquivoPat, planoPat);
+    planoPat = await montarPlanoPat(arquivoPat);
     planoPat.coleta_id = id;
     render();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+}
+
+// O "JÁ ESTÁ NA FICHA" TEM DE VIR DO BANCO NA HORA DE CONFERIR. O D global
+// não carrega os andamentos do PAT (seria puxar a ficha inteira do
+// escritório em toda abertura do CRM) — e o plano recebia D.andamentos
+// VAZIO: a peneira dos comentários não peneirava nada, toda importação
+// dizia "20 comentários novos" e listava os mesmos casos de novo, todo dia.
+// Uma consulta leve (só caso_id + origem_id, paginada) devolve a memória.
+async function montarPlanoPat(arquivo){
+  const pats = await todas("andamentos",
+    "select=caso_id,origem_id&origem=eq.pat&origem_id=not.is.null").catch(()=>[]);
+  const plano = planoDeImportacao(arquivo, {...D, andamentos:pats}, hoje());
+  // e os "confira antes" que a equipe mandou ignorar de vez param de
+  // perguntar — a decisão mora em config_app, compartilhada por todos
+  const fora = new Set(patIgnorados());
+  const antes = plano.possiveisDuplicados.length;
+  plano.possiveisDuplicados = plano.possiveisDuplicados.filter(x=>!fora.has(x.protocolo));
+  plano.ignorados_de_vez = antes - plano.possiveisDuplicados.length;
+  plano.resumo.possiveis_duplicados = plano.possiveisDuplicados.length;
+  plano.resumo.provaveis = plano.possiveisDuplicados.filter(x=>x.provavel).length;
+  plano.erro = conferirPlanoPat(arquivo, plano);
+  return plano;
+}
+function patIgnorados(){
+  const v = cfgApp("pat_ignorar");
+  if(Array.isArray(v)) return v;
+  try{ return JSON.parse(v||"[]"); }catch(e){ return []; }
+}
+async function ignorarProtocolo(protocolo){
+  const lista=[...new Set([...patIgnorados(), protocolo])];
+  await guardarCfgApp("pat_ignorar", JSON.stringify(lista));
+  if(planoPat){
+    planoPat.possiveisDuplicados = planoPat.possiveisDuplicados.filter(x=>x.protocolo!==protocolo);
+    planoPat.ignorados_de_vez = (planoPat.ignorados_de_vez||0)+1;
+    if(planoPat.resumo){
+      planoPat.resumo.possiveis_duplicados = planoPat.possiveisDuplicados.length;
+      planoPat.resumo.provaveis = planoPat.possiveisDuplicados.filter(x=>x.provavel).length;
+    }
+  }
+  aviso("🚫 Este protocolo não pergunta mais — desfaz-se no “limpar ignorados”", false);
+  render();
+}
+async function limparIgnoradosPat(){
+  await guardarCfgApp("pat_ignorar","[]");
+  aviso("Lista de ignorados limpa — voltam a aparecer na próxima conferência", false);
+  render();
 }
 
 function renderImportarPat(){
@@ -2891,8 +2936,13 @@ function telaImportarPat(){
           <td>${esc(n.titulo_existente)}</td>
           <td>${n.provavel?`<span class="chip">provável</span> `:""}<span class="meio-sub">${esc(n.motivo||"")}</span></td>
           <td><button class="btn-mini" onclick="juntarAoCaso('${n.protocolo}')">é o mesmo — juntar</button>
-            <button class="btn-mini" onclick="criarMesmoAssim('${n.protocolo}')">é outro — criar</button></td></tr>`).join("")}
+            <button class="btn-mini" onclick="criarMesmoAssim('${n.protocolo}')">é outro — criar</button>
+            <button class="btn-mini" onclick="ignorarProtocolo('${n.protocolo}')"
+              title="nem juntar, nem criar — parar de perguntar por este protocolo em toda importação">🚫 ignorar</button></td></tr>`).join("")}
         </table>` : ""}
+      ${patIgnorados().length ? `<p class="meio-sub" style="margin-top:6px">🚫 ${patIgnorados().length} protocolo(s)
+        ignorados de vez${planoPat.ignorados_de_vez?` (${planoPat.ignorados_de_vez} escondidos nesta conferência)`:""} —
+        <a href="#" onclick="event.preventDefault();limparIgnoradosPat()">limpar e voltar a perguntar</a></p>` : ""}
       ${planoPat.novos.length ? `<h3 class="secao">Casos novos (${planoPat.novos.length})</h3>
         <table class="tab"><tr><th>cliente</th><th>o quê</th><th>lista</th><th>DER</th><th></th></tr>
         ${planoPat.novos.slice(0,60).map(n=>`<tr><td>${esc(n.nome)}</td>
@@ -2908,8 +2958,7 @@ function ligarImportarPat(){
     const f = inp.files && inp.files[0]; if(!f) return;
     try{
       arquivoPat = normalizarColeta(JSON.parse(await f.text()));
-      planoPat = planoDeImportacao(arquivoPat, D, hoje());
-      planoPat.erro = conferirPlanoPat(arquivoPat, planoPat);
+      planoPat = await montarPlanoPat(arquivoPat);
       render();
     }catch(e){ aviso("Não consegui ler o arquivo: "+e.message); }
   };
