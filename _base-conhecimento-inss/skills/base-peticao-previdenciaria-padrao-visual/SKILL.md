@@ -1,6 +1,6 @@
 ---
 name: base-peticao-previdenciaria-padrao-visual
-description: "Espelho versionado do padrão visual das petições do escritório Paulo Tercini. Replica peticao-previdenciaria com formatação A4, Bookman Old Style 12pt, espaçamento 1,5, cabeçalho timbrado, títulos de seção em tabelas pretas, recuo 2cm/4cm, proibição de dois-pontos, 5 componentes Visual Law, seção obrigatória de Efeitos Financeiros pelo Tema 1124/STJ e implementação em docx-js. Use SEMPRE que mencionar padrão visual petição, formatação petição Tercini, timbre escritório, título preto seção, tabela preta título, Visual Law petição, layout petição, docx-js Tercini, padrão A4, Bookman Old Style 12pt, dois-pontos vedado, recuo 2 cm 4 cm CRPS, linha do tempo, quadro resumo, fatos incontroversos, tabela comparativa, efeitos financeiros Tema 1124. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, tema-1124-instrucao-administrativa, mandado-seguranca-previdenciario, especificacao-provas, printscreen-impacto."
+description: "Espelho versionado do padrão visual das petições do escritório Paulo Tercini. Replica peticao-previdenciaria com formatação A4, Bookman Old Style 12pt, espaçamento 1,5, cabeçalho timbrado, títulos de seção em tabelas pretas, recuo 2cm/4cm, proibição de dois-pontos, 5 componentes Visual Law, seção obrigatória de Efeitos Financeiros pelo Tema 1124/STJ e implementação em docx-js. Use SEMPRE que mencionar padrão visual petição, formatação petição Tercini, timbre escritório, título preto seção, tabela preta título, Visual Law petição, layout petição, docx-js Tercini, padrão A4, Bookman Old Style 12pt, dois-pontos vedado, recuo 2 cm 4 cm CRPS, linha do tempo, quadro resumo, síntese do caso duas linhas, ponto controvertido e o que se pede, regras anti-poluição Visual Law, teste do relance, fatos incontroversos, tabela comparativa, efeitos financeiros Tema 1124. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, tema-1124-instrucao-administrativa, mandado-seguranca-previdenciario, especificacao-provas, printscreen-impacto."
 ---
 
 # Skill de Petições Previdenciárias – Escritório Paulo Tercini
@@ -335,6 +335,22 @@ Toda tabela Visual Law segue a paleta visual do escritório.
 
 Sempre que a petição se enquadre nos critérios abaixo, o componente Visual Law correspondente é incluído automaticamente, sem necessidade de solicitação expressa. O usuário pode pedir a exclusão de qualquer componente, caso a caso.
 
+### Regras Transversais Anti-Poluição (Onda 104)
+
+Valem para TODOS os componentes Visual Law, acima de qualquer regra específica. A tabela existe para o leitor ENXERGAR o direito em segundos, não para armazenar informação.
+
+Primeira, uma ideia por linha e frase curta por célula. Célula com mais de 30 palavras se reescreve ou se divide. Célula que precisa de rolagem mental não é Visual Law, é parágrafo disfarçado.
+
+Segunda, a tabela nunca repete o que o texto ao redor já disse com as mesmas palavras. Ou a tabela CONDENSA (e o texto detalha), ou a tabela CONFRONTA (e o texto conclui). Repetição é o principal enchimento identificado nas peças.
+
+Terceira, hierarquia visual dentro da paleta preto/branco. O dado que decide (a data-chave, o marco, a providência) vai em NEGRITO dentro da célula, e apenas ele. Negrito em tudo é negrito em nada.
+
+Quarta, informação cadastral não entra em componente Visual Law. Nome, NB, processo, endereço e qualificação vivem nos lugares próprios da peça.
+
+Quinta, o teste do relance fecha todo componente. Olhar a tabela por dez segundos, sem ler o corpo da peça, e perguntar o que ela comunica. Se a resposta não for imediata e única, a tabela volta para enxugamento antes da peça sair.
+
+Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na linha do tempo, 8 linhas no pedido x fundamento) são TETO. O alvo é sempre o menor número de linhas que preserve o sentido.
+
 ### Componente 1 — Linha do Tempo (timelineTable)
 
 **Quando usar.** Obrigatória em toda petição inicial de concessão, restabelecimento e revisão de benefício. Obrigatória em mandados de segurança. Opcional em recursos e embargos, a critério do caso.
@@ -358,26 +374,32 @@ Sempre que a petição se enquadre nos critérios abaixo, o componente Visual La
 
 **Limite de eventos.** Entre 4 e 8 eventos para manter legibilidade. Se o caso tiver mais marcos relevantes, selecionar os mais estratégicos.
 
-### Componente 2 — Quadro-Resumo (caseSummaryBox)
+### Componente 2 — Quadro-Resumo (caseSummaryBox) [REFORMADO NA ONDA 104]
 
-**Quando usar.** Obrigatório em toda petição inicial de concessão e restabelecimento. Opcional em revisões e mandados de segurança, recomendado quando o caso tiver múltiplas variáveis.
+**Finalidade única.** Dizer ao julgador, em segundos, DUAS coisas. Qual é o ponto controvertido e o que se pede. Nada além disso.
+
+**Quando usar.** Obrigatório em toda petição inicial de concessão e restabelecimento e em todo recurso. Opcional nas demais peças.
 
 **Posição na petição.** Imediatamente após a qualificação das partes e a indicação "pelos fatos e fundamentos a seguir expostos", antes do primeiro título preto numerado.
 
-**Estrutura.** Tabela de duas colunas, sem cabeçalho dedicado, ou com cabeçalho preto único ocupando as duas colunas com o texto "SÍNTESE DO CASO".
+**Estrutura.** Tabela de duas colunas com cabeçalho preto único "SÍNTESE DO CASO", e SOMENTE DUAS LINHAS.
 
-- Coluna 1: **Item** (largura 3000 twips, ≈ 5,3 cm), Bookman Old Style 10pt negrito, alinhado à esquerda, sombreamento cinza claro `F2F2F2`
-- Coluna 2: **Valor/Descrição** (largura 6213 twips, ≈ 11 cm), Bookman Old Style 10pt, alinhado à esquerda
+- Linha 1, rótulo **Ponto controvertido**. UMA frase, máximo de 25 palavras, que nomeia a única questão que o julgador precisa decidir. Sem histórico, sem citação de norma, sem data que não seja essencial à controvérsia.
+- Linha 2, rótulo **O que se pede**. UMA frase, máximo de 25 palavras, com a providência pretendida em linguagem direta. Em recurso, a reforma pretendida.
 
-**Campos obrigatórios conforme o tipo de benefício.**
+- Coluna 1: **Rótulo** (largura 3000 twips), Bookman Old Style 10pt negrito, sombreamento cinza claro `F2F2F2`
+- Coluna 2: **Conteúdo** (largura 6213 twips), Bookman Old Style 10pt, com o NÚCLEO da frase em negrito (a data, o marco ou a providência que decide o caso)
 
-- **B31/B32/B91/B92 (incapacidade)**: Segurado, NB, DER, DIB pretendida, Motivo do indeferimento, CID principal, Carência cumprida, Qualidade de segurado na DER
-- **B42/B46 (aposentadoria)**: Segurado, NB, DER, Regra aplicável, Tempo de contribuição na DER, Carência cumprida, Idade na DER, DIB pretendida
-- **B21/B93 (pensão por morte)**: Segurado falecido, Dependente(s), NB, Data do óbito, Qualidade de segurado no óbito, Relação de dependência, DIB pretendida
-- **B87 (BPC/LOAS)**: Requerente, NB, DER, Tipo de impedimento, Renda per capita familiar, Composição grupo familiar, Motivo do indeferimento
-- **Mandado de segurança**: Impetrante, Autoridade coatora, Ato impugnado, Data do ato, Direito líquido e certo, NB
+**PROIBIÇÕES EXPRESSAS (Onda 104).** O quadro NÃO contém nome do segurado, NB, número de processo, DER, idade, CID, carência, qualidade de segurado, composição familiar nem qualquer campo cadastral. Tudo isso já está na qualificação, no endereçamento e no corpo da peça, e repetir no quadro só dilui o que importa. O quadro também NÃO contém fundamento jurídico (norma, tema, súmula), que pertence à seção DO DIREITO e ao Componente 5.
 
-**Adaptação.** Campos adicionais conforme a complexidade do caso. A lista acima é o mínimo, não o máximo.
+**Teste de aprovação do quadro.** Ler somente o quadro, sem o resto da peça. Se o leitor souber exatamente qual é a disputa e o que se pede, o quadro está pronto. Se sobrar qualquer informação que não contribua para essas duas respostas, cortar.
+
+**Exemplo no padrão (caso de aposentadoria PCD com DID controvertida).**
+
+- Ponto controvertido. "A decisão fixou a **DID em 31/12/2015** sem fundamentação, reduzindo o tempo como PCD do requerente."
+- O que se pede. "Fixação da **DID em 08/11/1995** e concessão da aposentadoria **desde a DER**."
+
+**Contraexemplo (proibido).** Quadro com oito linhas listando segurado, NB, DER, CID, carência e regra aplicável. Isso é ficha cadastral, não síntese, e cansa o leitor exatamente onde a peça precisava ganhá-lo.
 
 ### Componente 3 — Fatos Incontroversos (undisputedFactsTable)
 
@@ -455,7 +477,7 @@ Em mandados de segurança, usar no mínimo o quadro-resumo, a linha do tempo e o
 
 Em réplicas, usar no mínimo a tabela de fatos incontroversos/controvertidos (Componente 3 adaptado, com colunas "Fato alegado", "Impugnação pelo INSS" e "Situação processual").
 
-Em memoriais, usar no mínimo o quadro-resumo condensado (máximo 4 campos) e, quando pertinente, um printscreen de jurisprudência (Componente 5 da skill `printscreen-impacto`).
+Em memoriais, usar no mínimo o quadro-resumo no formato reformado de duas linhas (Onda 104) e, quando pertinente, um printscreen de jurisprudência (Componente 5 da skill `printscreen-impacto`).
 
 Em recursos, avaliar caso a caso. A tabela comparativa é o componente mais útil em sede recursal, confrontando a sentença com as provas não valoradas.
 
