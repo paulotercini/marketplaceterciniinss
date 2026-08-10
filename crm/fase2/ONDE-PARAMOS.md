@@ -15,7 +15,12 @@ repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
   os possíveis duplicados marcados como prováveis.
 - Acórdãos e resumos dos recursos, recuperados depois de uma perda (ver
   abaixo) e protegidos por `fundirBlocoCrps` em `app.html`.
-- `app.html` na versão **08.43**.
+- Aba **🌻 Andamentos INSS** na ficha (pedido do Paulo): os comentários do
+  portal (`origem='pat'` com `origem_id` do PAT) em quadro próprio, nos moldes
+  da aba 🖥 Recurso (CRPS), e fora da linha do tempo do escritório. As
+  mudanças de situação (`origem_id` "situacao:...") continuam na linha do
+  tempo, porque marcam fase, não conversa.
+- `app.html` na versão **08.44**.
 
 **A escrita CRM → To Do está DESLIGADA de propósito.** Trava dupla: variável
 de repositório `ESCREVER_TODO=1` no workflow e a mesma variável no ambiente
@@ -24,28 +29,21 @@ convivem. Não religue sem ele pedir.
 
 ## O que ficou pendente
 
-1. **Aba "Andamentos INSS" na ficha** — pedido do Paulo. Nos moldes da aba
-   🖥 Recurso (CRPS): mostrar os comentários do INSS separados dos andamentos
-   do escritório, iguais ao que aparece no site. Os dados já estão gravados —
-   cada comentário é um `andamento` com `origem='pat'` e `origem_id` com o id
-   dele no portal. Não precisa recoletar nada; falta só a tela.
-
-2. **Um caso duplicado na sincronização.** `todo_task_id` que já existe no
-   banco com outro id de caso; a remontagem gera id novo e o banco recusa
-   (23505). Três andamentos caem junto por dependerem dele. O `migrar.py` já
-   remapeia alguns casos ("casos remapeados para ids já existentes"); este
-   escapa. Uma ficha só.
-
-3. **Perícia com hora impossível:** `2024-08-29T45:00:00`. O leitor de data do
-   `migrar.py` aceita 45 como hora. Deve descartar ou cair no horário padrão.
-
-4. **9 resumos de acórdão faltando** — 8 são PDFs digitalizados (sem texto,
+1. **9 resumos de acórdão faltando** — 8 são PDFs digitalizados (sem texto,
    precisariam de OCR) e 1 tem dispositivo fora do padrão que as regras leem.
    Decisão do Paulo pendente: fazer OCR ou deixar como está.
 
-5. **A conta da API de resumo está sem crédito.** O `resumir.js` cai sozinho
+2. **A conta da API de resumo está sem crédito.** O `resumir.js` cai sozinho
    no motor de regras local, que funciona mas é mais simples. Com crédito,
    `node resumir.js --refazer --aplicar` reescreve todos.
+
+Resolvidos nesta rodada (conferir na próxima sincronização real): o caso que
+duplicava toda rodada (23505) era o **corte silencioso de 1000 linhas do
+Supabase** — o remapeamento de `todo_task_id` lia uma página só e, com 2.952
+casos, quem estava da linha 1001 em diante escapava; agora `_rest_todas()`
+pagina até o fim. E a perícia com hora impossível (`45:00`) parou nos dois
+lados: o `sync_todo.py` não captura mais hora > 23, e o `migrar.py` derruba
+hora inválida para o padrão 09:00. Testes-ouro nos dois.
 
 ## Erros que já custaram caro (não repetir)
 
@@ -67,7 +65,7 @@ convivem. Não religue sem ele pedir.
 ## Como conferir se está tudo de pé
 
 ```bash
-python3 -m pytest tests/ -q                                   # 173
+python3 -m pytest tests/ -q                                   # 177
 cd crm/fase2/regras     && node --test 'testes/*.test.js'     # 89
 cd crm/fase2/robo-pat   && node --test 'testes/*.test.js'     # 69
 cd crm/fase2/robo-crps  && node --test 'testes/*.test.js'     # 127
