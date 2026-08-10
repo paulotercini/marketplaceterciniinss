@@ -405,9 +405,22 @@ def _rest(url, chave, metodo, caminho, corpo=None, prefer=None):
             **({"Prefer": prefer} if prefer else {}),
         },
     )
-    with urllib.request.urlopen(req, timeout=120) as r:
-        raw = r.read()
-        return json.loads(raw) if raw else None
+    try:
+        with urllib.request.urlopen(req, timeout=120) as r:
+            raw = r.read()
+            return json.loads(raw) if raw else None
+    except urllib.error.HTTPError as e:
+        # O CORPO DA RESPOSTA É O DIAGNÓSTICO. O PostgREST diz qual coluna não
+        # existe, qual restrição foi violada e em que linha — e `HTTP Error
+        # 400: Bad Request` sozinho, que é o que o traceback mostrava, não diz
+        # nada. Dezessete minutos de crawl para depois não saber o que houve.
+        detalhe = e.read().decode("utf-8", "replace")[:500]
+        tabela = caminho.split("?")[0].rsplit("/", 1)[-1]
+        recado = f"o banco recusou {metodo} em '{tabela}' ({e.code}): {detalhe}"
+        if "PGRST204" in detalhe or "does not exist" in detalhe or "schema cache" in detalhe:
+            recado += ("\nFalta coluna no banco: rode crm/fase2/schema_por_em_dia.sql "
+                       "no Supabase e tente de novo.")
+        raise SystemExit(recado)
 
 
 def subir_rest(mapa):
