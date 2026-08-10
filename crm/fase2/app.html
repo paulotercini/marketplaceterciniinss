@@ -1156,7 +1156,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.40 · o erro diz qual coluna falta</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.40 · uma coleta por portal, e o erro diz a coluna</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2630,6 +2630,26 @@ async function buscarColetas(){
       `/rest/v1/coletas?select=id,fonte,criado_em&aplicada_em=is.null&order=criado_em.desc`) || [];
   }catch(e){ coletasPendentes = []; }   // sem a tabela, a tela do arquivo continua
 }
+// SÓ A MAIS NOVA DE CADA PORTAL INTERESSA. Cada clique no botão da extensão
+// entrega uma coleta, e uma tarde de testes deixou onze na fila — todas do
+// INSS, todas com quase o mesmo conteúdo. A mais nova é a que vale (o portal
+// devolve sempre a lista inteira); as outras só atrapalham a leitura.
+function coletasPorFonte(){
+  const nova = {}, velhas = [];       // a busca já vem em ordem decrescente
+  for(const c of coletasPendentes){
+    if(!nova[c.fonte]) nova[c.fonte] = c; else velhas.push(c);
+  }
+  return { novas: Object.values(nova), velhas };
+}
+async function descartarColetasVelhas(){
+  const { velhas } = coletasPorFonte(); if(!velhas.length) return;
+  // sai da fila sem sumir do banco: fica com data de aplicação, como as usadas
+  await api(`/rest/v1/coletas?id=in.(${velhas.map(c=>c.id).join(",")})`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
+  await buscarColetas(); render();
+  aviso(`${velhas.length} coleta(s) antiga(s) fora da fila`);
+}
 async function usarColeta(id){
   try{
     const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${id}`) || [];
@@ -2674,15 +2694,20 @@ function telaImportarPat(){
     <h3>📥 Importar do PAT/GERID</h3>
     <p class="meio-sub">Solte aqui o arquivo <code>pat_AAAA-MM-DD.json</code> que o coletor baixou.
       Nada é gravado até você conferir e mandar aplicar.</p>
-    ${coletasPendentes.length ? `<div class="id-grid" style="grid-template-columns:1fr;gap:6px;margin:10px 0">
-      ${coletasPendentes.map(c=>`<div class="id-card destaque" style="display:flex;align-items:center;gap:10px">
+    ${(()=>{ const {novas, velhas} = coletasPorFonte();
+      if(!novas.length) return `<p class="meio-sub">Nenhuma coleta esperando. Use a extensão do navegador,
+        ou solte um arquivo aqui embaixo.</p>`;
+      return `<div class="id-grid" style="grid-template-columns:1fr;gap:6px;margin:10px 0">
+      ${novas.map(c=>`<div class="id-card destaque" style="display:flex;align-items:center;gap:10px">
         <strong>${c.fonte==="pat"?"🌻 INSS":"🖥 Recursos"}</strong>
-        <span class="u-papel" style="text-transform:none">chegou ${esc(dataRelativa(String(c.criado_em).slice(0,10)))}</span>
+        <span class="u-papel" style="text-transform:none">chegou ${esc(dataRelativa(dataSP(c.criado_em)))} às ${esc(horaSP(c.criado_em))}</span>
         <button class="btn-mini" style="margin-left:auto" onclick="${
           c.fonte==="crps"?`conferirCrps('${c.id}')`:`usarColeta('${c.id}')`}">conferir</button>
       </div>`).join("")}
-    </div>` : `<p class="meio-sub">Nenhuma coleta esperando. Use a extensão do navegador,
-      ou solte um arquivo aqui embaixo.</p>`}
+      ${velhas.length?`<div class="meio-sub" style="display:flex;align-items:center;gap:8px">
+        ${velhas.length} coleta(s) anterior(es) da mesma origem — a mais nova já contém o que elas tinham.
+        <button class="btn-mini" onclick="descartarColetasVelhas()">descartar</button></div>`:""}
+    </div>`; })()}
     <input type="file" id="pat-arq" accept="application/json" style="margin:10px 0">
     ${!planoCrpsAtual ? "" : (()=>{ const q = planoCrpsAtual.resumo; return `
       <h3 class="secao">🖥 Recursos — o que esta coleta vai escrever</h3>

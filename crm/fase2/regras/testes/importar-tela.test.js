@@ -411,3 +411,44 @@ test('a coleta do CRPS mostra o plano antes de escrever', pular, async () => {
   assert.equal(pedidos.filter(x => x.m !== 'GET').length, 0,
     `conferir gravou coisa: ${pedidos.map(x => x.m + x.url).join('|')}`);
 });
+
+// A FILA ENCHE SOZINHA: cada clique no botão da extensão entrega uma coleta,
+// e uma tarde de testes deixou ONZE na tela, todas do INSS, todas iguais. A
+// mais nova é a que vale — o portal devolve sempre a lista inteira.
+test('só a coleta mais nova de cada portal fica na fila', pular, async () => {
+  await abrir();
+  await pag.evaluate(() => {
+    coletasPendentes = [                       // já chegam em ordem decrescente
+      { id: 'p3', fonte: 'pat',  criado_em: '2026-08-10T12:00:00+00:00' },
+      { id: 'p2', fonte: 'pat',  criado_em: '2026-08-10T11:00:00+00:00' },
+      { id: 'p1', fonte: 'pat',  criado_em: '2026-08-09T11:00:00+00:00' },
+      { id: 'c2', fonte: 'crps', criado_em: '2026-08-10T10:00:00+00:00' },
+      { id: 'c1', fonte: 'crps', criado_em: '2026-08-09T10:00:00+00:00' },
+    ];
+    visao = 'patinss'; render();
+  });
+  await pag.waitForTimeout(150);
+  const cartoes = await pag.$$eval('.id-card.destaque', e => e.length);
+  assert.equal(cartoes, 2, `a fila mostrou ${cartoes} coletas em vez de uma por portal`);
+  const txt = await pag.$eval('#conteudo-meio', e => e.textContent);
+  assert.match(txt, /3 coleta\(s\) anterior/, 'não ofereceu descartar as antigas');
+  // e o botão "conferir" aponta para a MAIS NOVA de cada uma
+  const alvos = await pag.$$eval('.id-card.destaque button', e => e.map(b => b.getAttribute('onclick')));
+  assert.ok(alvos.some(a => a.includes("usarColeta('p3')")), `pegou a coleta errada do PAT: ${alvos}`);
+  assert.ok(alvos.some(a => a.includes("conferirCrps('c2')")), `pegou a coleta errada do CRPS: ${alvos}`);
+});
+
+// "chegou Amanhã" numa coleta que acabou de chegar: o carimbo do banco é UTC,
+// e cortar os dez primeiros caracteres joga o fim da tarde para o dia
+// seguinte. A data tem de ser lida no fuso de Brasília.
+test('a hora de chegada é a de Brasília, não a do banco', pular, async () => {
+  await pag.evaluate(() => {
+    const agora = new Date();
+    coletasPendentes = [{ id: 'z1', fonte: 'pat', criado_em: agora.toISOString() }];
+    visao = 'patinss'; render();
+  });
+  await pag.waitForTimeout(150);
+  const txt = await pag.$eval('#conteudo-meio', e => e.textContent);
+  assert.ok(!/chegou Amanhã/.test(txt), `coleta recém-chegada marcada como futura: ${txt.slice(0, 300)}`);
+  await pag.evaluate(() => { coletasPendentes = []; visao = 'fase:inss'; render(); });
+});
