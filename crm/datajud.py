@@ -136,21 +136,28 @@ def _ctx():
 
 
 def _buscar(alias, corpo):
+    # timeout CURTO de propósito. Com 120s e quatro tentativas, uma manhã em
+    # que a API do DataJud pendura (aceita a conexão e não responde) custava
+    # ~8 minutos POR LOTE — o job inteiro morria no teto de 30 minutos como
+    # "cancelled", sem consultar nada, e o CNJ ficava dias sem atualizar
+    # (04, 06 e 10.08). Quando a API está de pé ela responde em segundos;
+    # quando pendura, esperar mais não ajuda — melhor falhar logo, pular o
+    # tribunal e tentar de novo na rodada da tarde.
     req = urllib.request.Request(
         API.format(alias=alias), data=json.dumps(corpo).encode(),
         headers={"Authorization": f"APIKey {CHAVE}", "Content-Type": "application/json"})
-    for i in range(4):
+    for i in range(3):
         try:
-            with urllib.request.urlopen(req, timeout=120, context=_ctx()) as r:
+            with urllib.request.urlopen(req, timeout=25, context=_ctx()) as r:
                 return json.loads(r.read())
         except urllib.error.HTTPError as e:
             if e.code == 404:          # tribunal sem índice público
                 return {"hits": {"hits": []}}
-            if e.code not in (429, 500, 502, 503, 504) or i == 3:
+            if e.code not in (429, 500, 502, 503, 504) or i == 2:
                 raise
             time.sleep(2 ** (i + 1))
         except Exception:
-            if i == 3:
+            if i == 2:
                 raise
             time.sleep(2 ** (i + 1))
 
@@ -363,7 +370,19 @@ def main():
 
     achados = encontrados = ausentes = 0
     falhas = []
-    for alias, mapa in sorted(porTribunal.items()):
+    # teto próprio, abaixo do teto do job (30 min): estourar o do job vira
+    # "cancelled" sem diagnóstico; parar aqui grava o que já foi consultado
+    # (o PATCH é por tribunal) e ainda avisa quem ficou para a próxima.
+    inicio = time.monotonic()
+    TETO_SEGUNDOS = 20 * 60
+    ordenados = sorted(porTribunal.items())
+    for pos, (alias, mapa) in enumerate(ordenados):
+        if time.monotonic() - inicio > TETO_SEGUNDOS:
+            restantes = [a for a, _ in ordenados[pos:]]
+            print(f"::notice::tempo esgotado — ficaram para a próxima rodada: "
+                  f"{', '.join(restantes)}")
+            falhas.extend(restantes)
+            break
         numeros = sorted(mapa)
         print(f"{alias}: {len(numeros)} processo(s)")
         res = {}

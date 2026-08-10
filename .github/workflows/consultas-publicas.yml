@@ -2,8 +2,12 @@ name: CRM — consultas públicas (TRF3 + CNJ)
 
 on:
   schedule:
-    # uma vez por dia útil, 07h30 BRT (10h30 UTC) — as bases são diárias
+    # duas vezes por dia útil: 07h30 e 14h30 BRT (10h30/17h30 UTC). A base é
+    # diária, mas a API do DataJud tem manhãs em que pendura e a rodada morre
+    # (04, 06 e 10.08 terminaram "cancelled") — a rodada da tarde é a segunda
+    # chance do MESMO dia, para o CNJ não passar 48h sem atualizar.
     - cron: '30 10 * * 1-5'
+    - cron: '30 17 * * 1-5'
   workflow_dispatch: {}
 
 concurrency:
@@ -39,6 +43,11 @@ jobs:
 
       - name: CNJ/DataJud -> casos.datajud (andamento oficial de qualquer instância)
         if: steps.seg.outputs.tem == 'true'
+        # teto do PASSO abaixo do teto do job: se o DataJud pendurar além do
+        # que o próprio script tolera, o passo cai como FALHA visível e os
+        # passos seguintes (Justiça em Números, TRF3) ainda rodam — antes o
+        # job inteiro morria "cancelled", que ninguém percebe.
+        timeout-minutes: 24
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}

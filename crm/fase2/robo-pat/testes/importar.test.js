@@ -278,6 +278,26 @@ test('rodar de novo no mesmo dia não repete comentário nenhum', () => {
   assert.equal(I.planoDeImportacao(pat, D, HOJE).resumo.comentarios, 0);
 });
 
+// O PAT devolve o comentário em HTML — na ficha aparecia
+// "<p>Tarefa transferida para an&aacute;lise na fila regional</p>", tag e
+// entidade cruas (bug real, print do Paulo de 10.08.2026).
+test('comentário em HTML vira texto simples', () => {
+  const D = CRM(); D.andamentos = [];
+  const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
+    detalhes: [det({ protocolo: '1462069078', comentarios: [
+      { id: '3', texto: '<p>Tarefa transferida para an&aacute;lise na fila regional</p>',
+        quando: '2026-08-10', do_inss: false }] })] };
+  const cs = I.planoDeImportacao(pat, D, HOJE).comentarios[0].comentarios;
+  assert.equal(cs[0].texto, 'Escritório · Tarefa transferida para análise na fila regional');
+});
+
+test('limparHtmlPat: tags, entidades numéricas e nomeadas, espaços', () => {
+  assert.equal(I.limparHtmlPat('<p>Exig&ecirc;ncia: juntar  PPP<br>at&eacute; 20/08</p>'),
+    'Exigência: juntar PPP até 20/08');
+  assert.equal(I.limparHtmlPat('an&#225;lise conclu&#xED;da'), 'análise concluída');
+  assert.equal(I.limparHtmlPat('sem html nenhum'), 'sem html nenhum');
+});
+
 // Quem escreveu vem na frente: é a diferença entre o INSS PEDINDO algo e o
 // escritório respondendo, e ela muda o que se faz a seguir.
 test('o texto diz quem escreveu', () => {

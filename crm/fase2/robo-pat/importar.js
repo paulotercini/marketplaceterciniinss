@@ -143,6 +143,25 @@ function andamentoDaMudanca(k, det) {
   return `INSS: ${antes} → ${det.situacao}`;
 }
 
+// O PAT devolve o comentário em HTML ("<p>an&aacute;lise</p>"): na ficha isso
+// virava tag e entidade cruas. Vira texto simples AQUI, na entrada — e a tela
+// aplica de novo na saída, para o que já foi gravado sujo. Sem DOM de
+// propósito: a mesma função roda no navegador e nos testes do node.
+const ENTIDADES_PAT = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'",
+  nbsp: ' ', aacute: 'á', agrave: 'à', atilde: 'ã', acirc: 'â', eacute: 'é',
+  ecirc: 'ê', iacute: 'í', oacute: 'ó', otilde: 'õ', ocirc: 'ô', uacute: 'ú',
+  uuml: 'ü', ccedil: 'ç', Aacute: 'Á', Agrave: 'À', Atilde: 'Ã', Acirc: 'Â',
+  Eacute: 'É', Ecirc: 'Ê', Iacute: 'Í', Oacute: 'Ó', Otilde: 'Õ', Ocirc: 'Ô',
+  Uacute: 'Ú', Ccedil: 'Ç', ordm: 'º', ordf: 'ª', sect: '§', deg: '°' };
+function limparHtmlPat(t) {
+  return String(t || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)))
+    .replace(/&([a-zA-Z]+);/g, (m, n) => ENTIDADES_PAT[n] || m)
+    .replace(/\s+/g, ' ').trim();
+}
+
 // OS COMENTÁRIOS QUE AINDA NÃO ESTÃO NA FICHA. A importação roda todo dia e
 // o portal devolve sempre a lista inteira — sem esta peneira, os mesmos
 // comentários virariam andamento de novo a cada manhã. O `id` do comentário
@@ -156,7 +175,7 @@ function comentariosNovos(det, jaTem) {
       quando: c.quando,
       // quem escreveu vem na frente: é a diferença entre o INSS pedindo algo
       // e o escritório respondendo, e ela muda o que se faz a seguir
-      texto: `${c.do_inss ? 'INSS' : 'Escritório'} · ${c.texto}`,
+      texto: `${c.do_inss ? 'INSS' : 'Escritório'} · ${limparHtmlPat(c.texto)}`,
     }));
 }
 
@@ -268,5 +287,5 @@ function conferirPlanoPat(pat, plano) {
 }
 
 module.exports = { LISTA_POR_TIPO, NAO_ABRE_CASO, digitos, protocolosDe, indexar, casoParecido,
-  casosParecidos, palavrasDoBeneficio, mesmoBeneficio, porQueParecido,
+  casosParecidos, palavrasDoBeneficio, mesmoBeneficio, porQueParecido, limparHtmlPat,
   mudancasDoCaso, eventosNovos, comentariosNovos, andamentoDaMudanca, planoDeImportacao, conferirPlanoPat };
