@@ -17,8 +17,8 @@
 -- botão não tem onde guardar a marcação, o banco recusa e o CRM avisa.
 --
 -- Depois de executar, role até o fim: a última consulta lista as colunas que
--- a importação usa. Se as treze linhas aparecerem, está pronto — é só
--- recarregar o CRM.
+-- o CRM usa. Se todas as linhas aparecerem (dezessete, num banco que tem a
+-- tabela aposentadorias), está pronto — é só recarregar o CRM.
 -- ══════════════════════════════════════════════════════════════════════════
 
 
@@ -144,15 +144,37 @@ alter table casos add constraint casos_fase_check
   check (fase in ('escritorio','inss','conselho','judicial','pagamento',
                   'peticao_inicial','aposentadoria_futura','outro','encerrado'));
 
+-- ── 9. Encerrar com autoria, arquivar por processo, adiar aposentadoria ───
+-- encerrado_por: o botão "✔ Encerrar caso" do quadro de fatos registra QUEM
+-- encerrou (encerrado_em já guardava o quando). Sem a coluna, o app grava o
+-- encerramento sem a autoria — funciona, mas não responde "quem foi".
+alter table casos add column if not exists encerrado_por uuid
+  references colaboradores(id);
+
+-- arquivados: arquivamento POR PROCESSO nas abas da ficha. Um caso pode ter
+-- o recurso nº 1 morto e o nº 2 vivo, ou o 1º grau baixado e o TRF3 andando —
+-- por isso é um mapa chave -> {por, em}: "pat" (requerimento no INSS),
+-- "crps:<nup>" (cada recurso), "cnj:<instância>" (cada grau). A aba só se
+-- diz arquivada quando todas as chaves dela estão no mapa.
+alter table casos add column if not exists arquivados jsonb not null default '{}'::jsonb;
+
+-- lembrar_em: adiar o aviso de "🎂 Aposentadorias a tratar". Escolhida a
+-- data, o item sai do Meu Dia e só volta no dia combinado. `if exists`
+-- porque a tabela aposentadorias nasceu em onda mais nova do schema.sql.
+alter table if exists aposentadorias add column if not exists lembrar_em date;
+
+
 -- ── conferência ───────────────────────────────────────────────────────────
--- Devem aparecer TREZE linhas: as colunas de `casos` e `andamentos` que a
--- importação usa, e a tabela `coletas`. Faltando alguma, o SQL não rodou
--- inteiro — e é justamente a que falta que derruba a importação.
+-- Lista as colunas que o CRM e a importação usam, mais a tabela `coletas` e
+-- a restrição de fase. Faltando alguma linha, o SQL não rodou inteiro — e é
+-- justamente a que falta que derruba a tela ou a importação.
 select table_name as tabela, column_name as coluna, data_type as tipo
   from information_schema.columns
  where (table_name = 'casos' and column_name in ('marcadores','ronda','processo_link',
-          'situacao_inss','especie','der','urgente','protocolos','crps_nups','crps'))
+          'situacao_inss','especie','der','urgente','protocolos','crps_nups','crps',
+          'encerrado_por','arquivados'))
     or (table_name = 'andamentos' and column_name in ('responde_a','origem_id'))
+    or (table_name = 'aposentadorias' and column_name = 'lembrar_em')
 union all
 select 'coletas', 'tabela criada', ''
   from information_schema.tables where table_name = 'coletas'
