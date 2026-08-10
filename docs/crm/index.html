@@ -422,6 +422,7 @@
     white-space:nowrap;margin-left:auto;flex:none}
   .cli-st.inativo{background:#FBE9E7;color:#B71C1C;border:1px solid #E8B4AC}
   .cli-st.ativo{background:#EDF6EE;color:#1E7B34;border:1px solid #BFDCC2}
+  .cli-st.lemb{background:#FFF4D6;color:#8A6100;border:1px solid #E9B44C}
   .cli-st.semcaso{background:var(--fundo);color:var(--cinza);border:1px solid var(--borda)}
   @media (max-width:700px){ .cli-st{font-size:10px;padding:2px 7px} }
   .fechar{margin-left:auto;border:none;background:none;font-size:20px;cursor:pointer;color:var(--cinza)}
@@ -1182,7 +1183,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.56 · "Espécie 94" também cede o título ao nome completo da espécie</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.57 · a aba 🔔 Lembretes: o "avisar de tempos em tempos" vira coisa do cliente</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1603,7 +1604,7 @@ async function guardarCfgApp(chave, valor){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal, tarefasAnd] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal, tarefasAnd, lembs] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -1638,8 +1639,13 @@ async function carregar(){
       todas("zap_conversas","select=id,nao_lidas,atendente_id,status").catch(()=>[]),
       todas("inss_calendario","select=*").catch(()=>[]),
       todas("andamento_tarefas","select=*&concluida_em=is.null").catch(()=>[]),
+      // 🔔 lembretes do cliente, com o histórico de avisos embutido — a
+      // tabela pode nem existir num banco atrasado, daí o catch
+      todas("lembretes","select=*,lembrete_avisos(colaborador_id,em,canal)&ativo=is.true&order=proximo_em")
+        .catch(()=>todas("lembretes","select=*&ativo=is.true&order=proximo_em").catch(()=>[])),
     ]);
   D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
+  D.lembretes = lembs||[];
   D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
   D.config = new Map((cfgs||[]).map(x=>[x.chave,x.valor]));
   D.inssCal = inssCal||[];
@@ -1861,7 +1867,8 @@ function quantosNoMeuDia(){
   const tfHoje = k => (D.tarefasPorCaso.get(k.id)||[]).some(t=>t.lembrar_em===hoje());
   const hojeK = ativos().filter(k=>(k.prazo===hoje() || tfHoje(k)) && !casosDia.includes(k));
   const tHoje = (D.tarefas||[]).filter(t=>!t.concluida && t.prazo===hoje());
-  return casosDia.length + hojeK.length + tHoje.length;
+  const lembHoje = (D.lembretes||[]).filter(l=>l.ativo!==false && l.proximo_em && l.proximo_em<=hoje()).length;
+  return casosDia.length + hojeK.length + tHoje.length + lembHoje;
 }
 
 function montarSidebar(){
@@ -3126,9 +3133,6 @@ function cartaoCliente(cli, casosMostrar){
       <div class="nome">${esc(cli.nome)}</div>
       ${meta.length?`<div class="meta">${meta.join('<span class="pt">·</span>')}</div>`:""}
     </div>
-    ${(kr=>kr?`<button class="btn-mini" style="flex:none" title="registra o aviso periódico e rearma para daqui a ${kr.lembrete_meses} mês(es)"
-      onclick="event.stopPropagation();avisoPeriodicoFeito('${kr.id}')">✔ avisado · ${kr.lembrete_meses}m</button>`:"")(
-      ks.find(x=>x.lembrete_meses && x.prazo && x.prazo<=hoje()))}
     ${quemProx.map(c=>`<span class="avatar mini quem-prazo" style="background:${c.cor}"
       title="${esc(c.nome)} — tarefa para ${fmt(dataProx)}">${esc(c.inicial)}</span>`).join("")}
     <div class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${resp.map(c=>`<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")||`<span class="avatar mini vazio">＋</span>`}</div>
@@ -3345,6 +3349,7 @@ function renderMeuDia(){
     + blocoRotinas()
     + blocoCrpsManual()
     + blocoApos()
+    + blocoLembretes()
     + blocoCadunico()
     // A REVISÃO DO ACERVO E O "SEM PRÓXIMA AÇÃO" SAÍRAM DAQUI. Meu Dia é o
     // que vence hoje e o que eu escolhi para hoje — coisas com data. Os dois
@@ -5943,11 +5948,17 @@ async function abrirFicha(cliId){
   // é o cliente cadastrado que nunca teve caso.
   const ativosCli = ks.filter(k=>k.fase!=="encerrado");
   const encDesde = ks.map(k=>k.encerrado_em).filter(Boolean).sort().slice(-1)[0];
-  const stCli = !ks.length
-    ? `<span class="cli-st semcaso" title="cliente cadastrado sem nenhum caso">sem casos</span>`
-    : ativosCli.length
-      ? `<span class="cli-st ativo" title="${ativosCli.length} de ${ks.length} caso(s) em andamento">🟢 Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""} em andamento</span>`
-      : `<span class="cli-st inativo" title="nenhum trabalho em andamento para este cliente">🔴 Cliente inativo — ${ks.length>1?`os ${ks.length} casos`:"o único caso"} encerrado${ks.length>1?"s":""}${encDesde?` (último em ${fmt(dataSP(encDesde))})`:""}</span>`;
+  const lembCli = lembretesDo(cliId);
+  // três estados a pedido do Paulo: verde = processo andando; amarelo = sem
+  // processo, mas o escritório avisa (🔔 lembretes ativos — trabalho, só que
+  // de outro tipo); vermelho = nada, nem aviso. Cinza é quem nunca teve caso.
+  const stCli = ativosCli.length
+    ? `<span class="cli-st ativo" title="${ativosCli.length} de ${ks.length} caso(s) em andamento${lembCli.length?` · e ${lembCli.length} lembrete(s) na aba 🔔`:""}">🟢 Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""} em andamento</span>`
+    : lembCli.length
+      ? `<span class="cli-st lemb" title="nenhum processo em andamento, mas o escritório avisa de tempos em tempos — veja a aba 🔔 Lembretes">🟡 Sem processo — ${lembCli.length} lembrete${lembCli.length>1?"s":""} ativo${lembCli.length>1?"s":""}</span>`
+      : ks.length
+        ? `<span class="cli-st inativo" title="nenhum trabalho em andamento para este cliente">🔴 Cliente inativo — ${ks.length>1?`os ${ks.length} casos`:"o único caso"} encerrado${ks.length>1?"s":""}${encDesde?` (último em ${fmt(dataSP(encDesde))})`:""}</span>`
+        : `<span class="cli-st semcaso" title="cliente cadastrado sem nenhum caso">sem casos</span>`;
   document.getElementById("detalhe").innerHTML=`
   <div class="det-principal">
   <div class="det-rolagem">
@@ -5970,6 +5981,7 @@ async function abrirFicha(cliId){
     <div class="menu-topo">
       <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">📇 Cadastro</button>
       <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">🖨 Documentos</button>
+      <button class="mt ${abaAtiva===9?"on":""}" data-vv="9">🔔 Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>
       <button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="escolher o processo do cliente (não erra o destino)">⚖️ ${
           (kk=>kk?esc(tituloCaso(kk)):(processosDe(ks).length>1?"Processos":"Processo"))(casoSel&&D.casoPorId.get(casoSel))} ▾</button>
@@ -6224,6 +6236,14 @@ async function abrirFicha(cliId){
       <button onclick="novoCaso('${c.id}')">Criar caso</button>
     </div>
     <p class="meio-sub">O caso nasce aqui e a sincronização cria a tarefa correspondente no To Do, na lista da fase.</p>
+  </div>
+
+  <div class="painel ${abaAtiva===9?"ativo":""}" data-p="9">
+    <h3 style="margin-bottom:8px">🔔 Lembretes de ${esc(c.nome.split(" ")[0])}</h3>
+    <p class="meio-sub" style="margin-bottom:10px">O "avisar de tempos em tempos" — contribuição do INSS,
+      cadastro para renovar, retomar contato. Vive no cliente, não num processo: vale mesmo sem
+      nenhum caso em andamento, e cada aviso fica registrado (quem, quando, por onde).</p>
+    ${painelLembretes(c)}
   </div>
 
   <div class="painel ${abaAtiva===8?"ativo":""}" data-p="8">
@@ -7070,6 +7090,215 @@ function blocoCadunico(){
              >💬 avisar</a>`:""}</div>
       </div></div>`).join("");
 }
+// ── 🔔 Lembretes do cliente ──────────────────────────────────────────────
+// A obrigação que não pertence a processo nenhum: pagar contribuição do
+// INSS, renovar cadastro, retomar contato daqui a tantos meses. Vive no
+// CLIENTE (aba própria, ao lado de Cadastro) porque pendurar num caso
+// confundia: com dois casos, ninguém sabia em qual morava o aviso — e
+// encerrar o caso "errado" matava o lembrete junto. Cada "✔ avisado" grava
+// quem avisou, quando e por qual canal, e rearma sozinho.
+const LEMBRETE_TIPOS=[
+  ["contribuicao","💰 Contribuição do INSS"],
+  ["cadunico","📄 CadÚnico"],
+  ["aposentadoria","🎂 Aposentadoria a caminho"],
+  ["revisao","🔍 Revisão periódica"],
+  ["geral","🔔 Lembrete"],
+];
+// os códigos de pagamento da GPS que o escritório usa — é o que faz a
+// mensagem de WhatsApp sair completa, com código, valor e vencimento
+const GPS_CATEGORIAS=[
+  ["1007","Contribuinte individual — 20%"],
+  ["1163","Contribuinte individual — plano simplificado 11%"],
+  ["1406","Facultativo — 20%"],
+  ["1473","Facultativo — plano simplificado 11%"],
+  ["1929","Facultativo baixa renda — 5%"],
+];
+function lembretesDo(cliId){
+  return (D.lembretes||[]).filter(l=>l.cliente_id===cliId && l.ativo!==false);
+}
+function rotuloTipoLembrete(t){
+  return (LEMBRETE_TIPOS.find(([x])=>x===t)||[]) [1] || "🔔 Lembrete";
+}
+function msgLembrete(l, c){
+  const nome=(c.nome||"").split(" ")[0];
+  if(l.tipo==="contribuicao"){
+    const d=l.detalhes||{};
+    const cat=(GPS_CATEGORIAS.find(([cod])=>cod===d.codigo)||[])[1]||"";
+    return `Olá, ${nome}! Passando para lembrar da sua contribuição do INSS`
+      +(d.codigo?` (código de pagamento ${d.codigo}${cat?" — "+cat.toLowerCase():""})`:"")
+      +(d.valor?`, no valor de R$ ${d.valor}`:"")
+      +`, com vencimento até o dia ${d.dia||15}. O pagamento pode ser feito pelo `
+      +`Meu INSS (meu.inss.gov.br) ou gerando a guia no SAL (sal.receita.economia.gov.br). `
+      +`Qualquer dúvida, é só chamar!`;
+  }
+  return `Olá, ${nome}! Lembrete do escritório: ${l.titulo}. Qualquer dúvida, é só chamar!`;
+}
+function painelLembretes(c){
+  const ls = lembretesDo(c.id).sort((a,b)=>(a.proximo_em||"9999")<(b.proximo_em||"9999")?-1:1);
+  const apos = aposDoCliente(c);
+  const linha = l=>{
+    const resp = D.colPorId.get(l.responsavel_id);
+    const venc = l.proximo_em && l.proximo_em<=hoje();
+    const avisos=(l.lembrete_avisos||[]).slice().sort((a,b)=>a.em<b.em?1:-1);
+    const ult=avisos[0], uco=ult&&D.colPorId.get(ult.colaborador_id);
+    const d=l.detalhes||{};
+    return `<div class="caso" style="${venc?"border-left:3px solid #E9B44C":""}">
+      <div class="cab">
+        <span class="titulo-caso">${rotuloTipoLembrete(l.tipo).slice(0,2)} ${esc(l.titulo)}</span>
+        <span class="chip neutro">${l.intervalo_meses?`🔁 ${l.intervalo_meses===1?"todo mês":`a cada ${l.intervalo_meses} meses`}`:"aviso único"}</span>
+        <span class="chip ${venc?"urg":"neutro"}">${l.proximo_em?(venc?"⏰ venceu em ":"próximo: ")+fmt(l.proximo_em):"sem data"}</span>
+        ${resp?`<span class="avatar mini" style="background:${resp.cor}" title="responsável: ${esc(resp.nome)}">${esc(resp.inicial)}</span>`:""}
+      </div>
+      ${l.tipo==="contribuicao"&&(d.codigo||d.valor)?`<div class="meio-sub" style="margin-top:3px">GPS ${d.codigo?`código ${esc(d.codigo)}`:""}${d.valor?` · R$ ${esc(String(d.valor))}`:""} · vence dia ${esc(String(d.dia||15))}</div>`:""}
+      <div class="form-linha" style="margin-top:6px;align-items:center">
+        <button class="btn-mini" onclick="lembreteAvisado('${l.id}','manual')"
+          title="${l.intervalo_meses?`registra o aviso e rearma para daqui a ${l.intervalo_meses} mês(es)`:"registra e desliga (aviso único)"}">✔ avisado hoje</button>
+        ${c.telefone?`<button class="btn-mini" onclick="zapAvisoLembrete('${l.id}')" title="abre o WhatsApp com a mensagem pronta e registra o aviso">📲 WhatsApp</button>`:""}
+        <button class="btn-mini" onclick='copiar(${JSON.stringify(msgLembrete(l,c))},"Mensagem copiada 💬")'>📋 copiar msg</button>
+        <span class="lembrar-caixa">🗓 adiar para <input type="date" min="${hoje()}" onchange="adiarLembrete('${l.id}',this.value)"></span>
+        <button class="btn-mini" style="margin-left:auto" onclick="desligarLembrete('${l.id}')"
+          title="desliga sem apagar — o histórico de avisos fica guardado">✕ desligar</button>
+      </div>
+      ${avisos.length?`<div class="meio-sub" style="margin-top:4px">último aviso: ${fmtTS(ult.em)}${uco?` por ${esc(uco.nome.split(" ")[0])}`:""}${ult.canal==="zap"?" (WhatsApp)":""} · ${avisos.length} aviso(s) registrados</div>`:""}
+    </div>`;
+  };
+  return `${apos.length&&c.aposentado!==true?`<p class="meio-sub" style="margin-bottom:8px">🎂 Aposentadoria provável: ${
+      apos.map(a=>`${esc(a.especie)} em ${fmt(a.data)}`).join(" · ")} — cuidada na aba Cadastro e no Meu Dia.</p>`:""}
+    ${ls.map(linha).join("") || `<p class="meio-sub">Nenhum lembrete ativo. Crie abaixo — é o lugar do
+      "avisar de tempos em tempos": contribuição do INSS, cadastro para renovar, retomar contato.</p>`}
+    <div class="caso" style="margin-top:10px">
+      <div class="rotulo-caso">＋ novo lembrete</div>
+      <div class="form-linha" style="margin-top:6px">
+        <select id="lb-tipo" onchange="document.getElementById('lb-gps').style.display=this.value==='contribuicao'?'flex':'none';
+          var t=document.getElementById('lb-titulo'); if(!t.value||t.dataset.auto){t.value=this.options[this.selectedIndex].text.replace(/^\\S+\\s/,'');t.dataset.auto=1;}">
+          ${LEMBRETE_TIPOS.map(([v,r])=>`<option value="${v}">${r}</option>`).join("")}
+        </select>
+        <input id="lb-titulo" placeholder="título — ex.: Contribuição trimestral" style="flex:1;min-width:180px"
+          value="${esc(LEMBRETE_TIPOS[0][1].replace(/^\S+\s/,""))}" data-auto="1">
+        <select id="lb-int" title="repetição">
+          <option value="">aviso único</option><option value="1">todo mês</option>
+          <option value="2">a cada 2 meses</option><option value="3" selected>a cada 3 meses</option>
+          <option value="6">a cada 6 meses</option><option value="12">uma vez por ano</option>
+        </select>
+        <input type="date" id="lb-prox" value="${hoje()}" title="primeiro aviso em">
+        <select id="lb-resp"><option value="">responsável…</option>
+          ${D.colaboradores.filter(x=>x.ativo).map(x=>`<option value="${x.id}">${esc(x.nome)}</option>`).join("")}</select>
+      </div>
+      <div class="form-linha" id="lb-gps" style="display:flex">
+        <select id="lb-cod"><option value="">categoria da GPS…</option>
+          ${GPS_CATEGORIAS.map(([v,r])=>`<option value="${v}">${v} — ${r}</option>`).join("")}</select>
+        <input id="lb-valor" type="number" step="0.01" placeholder="R$ valor" style="width:110px">
+        <input id="lb-dia" type="number" min="1" max="28" value="15" title="dia do vencimento" style="width:80px">
+        <span class="meio-sub">entram na mensagem pronta de WhatsApp</span>
+      </div>
+      <div class="form-linha"><button onclick="criarLembrete('${c.id}')">🔔 Criar lembrete</button></div>
+    </div>`;
+}
+async function criarLembrete(cliId){
+  const v=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};
+  const tipo=v("lb-tipo")||"geral", titulo=v("lb-titulo");
+  if(!titulo) return aviso("Dê um título ao lembrete");
+  const detalhes = tipo==="contribuicao"
+    ? {codigo:v("lb-cod")||null, valor:v("lb-valor")||null, dia:v("lb-dia")||null} : {};
+  try{
+    const [l]=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:cliId, tipo, titulo, detalhes,
+        intervalo_meses:v("lb-int")?+v("lb-int"):null, proximo_em:v("lb-prox")||hoje(),
+        responsavel_id:v("lb-resp")||null, criado_por:eu.id})});
+    if(l) (D.lembretes=D.lembretes||[]).push(l);
+  }catch(e){ return aviso("Rode o crm/fase2/schema_por_em_dia.sql no Supabase — falta a tabela 'lembretes'"); }
+  aviso("🔔 Lembrete criado", false);
+  montarSidebar(); abrirFicha(cliId);
+}
+async function lembreteAvisado(id, canal){
+  const l=(D.lembretes||[]).find(x=>x.id===id); if(!l) return;
+  try{
+    await api(`/rest/v1/lembrete_avisos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({lembrete_id:id, colaborador_id:eu.id, canal:canal||"manual"})});
+    const corpo = l.intervalo_meses ? {proximo_em:somaMeses(hoje(), l.intervalo_meses)} : {ativo:false};
+    await api(`/rest/v1/lembretes?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(corpo)});
+    Object.assign(l, corpo);
+    (l.lembrete_avisos=l.lembrete_avisos||[]).push({colaborador_id:eu.id, em:new Date().toISOString(), canal:canal||"manual"});
+  }catch(e){ return aviso("Rode o crm/fase2/schema_por_em_dia.sql no Supabase — falta a tabela 'lembretes'"); }
+  aviso(l.ativo===false?"✔ Registrado — era aviso único, desligado"
+                       :`✔ Registrado — volta em ${fmt(l.proximo_em)}`, false);
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); else render();
+}
+function zapAvisoLembrete(id){
+  const l=(D.lembretes||[]).find(x=>x.id===id); if(!l) return;
+  const c=D.cliPorId.get(l.cliente_id); if(!c||!c.telefone) return;
+  window.open(`https://wa.me/55${c.telefone.replace(/\D/g,"")}?text=${encodeURIComponent(msgLembrete(l,c))}`,"_blank");
+  lembreteAvisado(id,"zap");
+}
+async function adiarLembrete(id, data){
+  if(!data) return;
+  const l=(D.lembretes||[]).find(x=>x.id===id); if(!l) return;
+  await api(`/rest/v1/lembretes?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({proximo_em:data})});
+  l.proximo_em=data;
+  aviso(`🗓 Adiado para ${fmt(data)}`, false);
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); else render();
+}
+async function desligarLembrete(id){
+  const l=(D.lembretes||[]).find(x=>x.id===id); if(!l) return;
+  if(!confirm(`Desligar o lembrete "${l.titulo}"? O histórico de avisos fica guardado.`)) return;
+  await api(`/rest/v1/lembretes?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({ativo:false})});
+  l.ativo=false;
+  aviso("Lembrete desligado", false);
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); else render();
+}
+// no Meu Dia: os lembretes que venceram, prontos para despachar dali mesmo
+function blocoLembretes(){
+  const venc=(D.lembretes||[]).filter(l=>l.ativo!==false && l.proximo_em && l.proximo_em<=hoje())
+    .sort((a,b)=>a.proximo_em<b.proximo_em?-1:1);
+  if(!venc.length) return "";
+  return `<h3 class="secao">🔔 Lembretes a fazer (${venc.length})</h3>`+venc.map(l=>{
+    const c=D.cliPorId.get(l.cliente_id)||{};
+    return `<div class="cartao" data-cli="${c.id||""}">
+      <div class="info"><div class="nome">${esc(c.nome||"cliente sem ficha")}</div>
+        <div class="meta"><span class="chip fase">${rotuloTipoLembrete(l.tipo)}</span>
+          <span>${esc(l.titulo)}</span></div></div>
+      <button class="btn-mini" style="flex:none" onclick="event.stopPropagation();lembreteAvisado('${l.id}','manual')"
+        title="${l.intervalo_meses?`registra e rearma para daqui a ${l.intervalo_meses} mês(es)`:"registra e desliga (aviso único)"}">✔ avisado${l.intervalo_meses?` · ${l.intervalo_meses}m`:""}</button>
+      ${c.telefone?`<button class="btn-mini" style="flex:none" title="WhatsApp com a mensagem pronta"
+        onclick="event.stopPropagation();zapAvisoLembrete('${l.id}')">📲</button>`:""}
+      <span class="lembrar-caixa" onclick="event.stopPropagation()" title="adiar">🗓
+        <input type="date" min="${hoje()}" onchange="adiarLembrete('${l.id}',this.value)"></span>
+    </div>`;}).join("");
+}
+// migração combinada com o Paulo: os casos de 🙏 Aposentadorias Futuras que
+// eram "avisar de tempos em tempos" viram lembrete — um clique por caso,
+// nada automático. Cria o lembrete, encerra o caso de origem e registra.
+async function casoViraLembrete(casoId){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  const c=D.cliPorId.get(k.cliente_id)||{};
+  if(!confirm(`Transformar "${tituloCaso(k)}" em 🔔 lembrete de ${c.nome||"cliente"}?\n\nO lembrete nasce na aba 🔔 Lembretes (a cada 6 meses — dá para ajustar lá) e este caso é encerrado.`)) return;
+  try{
+    const [l]=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:k.cliente_id, tipo:"geral", titulo:tituloCaso(k),
+        intervalo_meses:6, proximo_em:k.prazo||somaMeses(hoje(),6),
+        origem_caso:k.id, criado_por:eu.id})});
+    if(l) (D.lembretes=D.lembretes||[]).push(l);
+  }catch(e){ return aviso("Rode o crm/fase2/schema_por_em_dia.sql no Supabase — falta a tabela 'lembretes'"); }
+  k.fase="encerrado"; k.encerrado_em=new Date().toISOString(); k.encerrado_por=eu.id;
+  const corpo={fase:"encerrado", encerrado_em:k.encerrado_em, encerrado_por:eu.id};
+  try{
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(corpo)});
+  }catch(e){
+    delete corpo.encerrado_por; k.encerrado_por=null;
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(corpo)});
+  }
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+      texto:"Caso transformado em 🔔 lembrete do cliente — o acompanhamento periódico segue na aba Lembretes."})}).catch(()=>{});
+  aviso("🔔 Virou lembrete — o caso foi encerrado");
+  abaAtiva=9; montarSidebar(); abrirFicha(k.cliente_id);
+}
+
 function caixaApos(cli){
   const lista=aposDoCliente(cli);
   const auto=lista.find(a=>a.automatica);
@@ -7648,7 +7877,15 @@ function blocoFatos(k){
         ${chipDcb(k)||`<span class="chip prazo ok">✔ alarme desligado</span>`}
       </div>`:""}
     </div>`:""}
-    ${linhaRecorrencia(k)}
+    ${/* o caso de 🙏 Aposentadorias Futuras que era "avisar de tempos em
+         tempos" migra para a aba 🔔 Lembretes num clique — combinado com o
+         Paulo: nada automático, um caso por vez, com confirmação */""}
+    ${k.fase==="aposentadoria_futura"?`<div class="fx-rec">
+      <span class="fx-rot">🔔</span>
+      <button class="btn-mini" onclick="casoViraLembrete('${k.id}')">transformar em lembrete do cliente</button>
+      <span class="meio-sub">este caso é um "avisar de tempos em tempos"? O lugar disso agora é a
+        aba 🔔 Lembretes — o botão cria o lembrete e encerra o caso.</span>
+    </div>`:""}
     <div class="fatos-pe">
       <span class="fx-rot">Responsável</span>
       ${/* quem responde vem primeiro, cheio e colorido; os demais ficam
@@ -7666,57 +7903,12 @@ function blocoFatos(k){
   </section>`;
 }
 
-// ── 🔁 o aviso periódico do caso ─────────────────────────────────────────
-// "Pagar contribuição do INSS", "conferir se está tudo em ordem" — a
-// obrigação que não acaba com um pedido. É para isso que a lista 🙏
-// Aposentadorias Futuras sempre serviu no To Do: gente sem pedido ativo que
-// o escritório avisa de tempos em tempos. Ligado o 🔁, o caso vence, o
-// cartão do Meu Dia oferece "✔ avisado", e o lembrete rearma sozinho — em
-// vez de alguém recalcular a data na mão a cada rodada.
+// (o 🔁 por caso da 08.55 durou um dia: cliente com dois casos não dizia em
+// qual morava o aviso. O aviso periódico agora é do CLIENTE, na aba 🔔
+// Lembretes — sobra daquela versão só o somaMeses, que o módulo novo usa.)
 function somaMeses(iso, m){
   const d=new Date(iso+"T12:00:00"); d.setMonth(d.getMonth()+m);
   return d.toISOString().slice(0,10);
-}
-function linhaRecorrencia(k){
-  if(k.fase==="encerrado") return "";
-  const ops=[["","sem repetição"],[1,"todo mês"],[2,"a cada 2 meses"],[3,"a cada 3 meses"],
-             [6,"a cada 6 meses"],[12,"uma vez por ano"]];
-  return `<div class="fx-rec">
-    <span class="fx-rot">🔁 Aviso periódico</span>
-    <select onchange="salvarRecorrencia('${k.id}',this.value)">
-      ${ops.map(([v,r])=>`<option value="${v}" ${String(k.lembrete_meses||"")===String(v)?"selected":""}>${r}</option>`).join("")}
-    </select>
-    <span class="meio-sub">${k.lembrete_meses
-      ?`vence em ${k.prazo?fmt(k.prazo):"—"}; o "✔ avisado" do Meu Dia registra e rearma sozinho`
-      :`para quem se avisa de tempos em tempos — ex.: pagar contribuição do INSS`}</span>
-  </div>`;
-}
-async function salvarRecorrencia(casoId, v){
-  const k=D.casoPorId.get(casoId); if(!k) return;
-  const n = v ? +v : null;
-  const corpo={lembrete_meses:n};
-  // ligou num caso sem data marcada? o primeiro vencimento arma na hora
-  if(n && !k.prazo) corpo.prazo=somaMeses(hoje(), n);
-  try{
-    await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify(corpo)});
-  }catch(e){ return aviso("Rode o crm/fase2/schema_por_em_dia.sql no Supabase — falta a coluna 'lembrete_meses'"); }
-  Object.assign(k, corpo);
-  aviso(n?`🔁 Combinado — repete ${n===1?"todo mês":`a cada ${n} meses`}${corpo.prazo?`, primeiro aviso em ${fmt(corpo.prazo)}`:""}`
-         :"Repetição desligada", false);
-  montarSidebar(); abrirFicha(clienteAberto);
-}
-async function avisoPeriodicoFeito(casoId){
-  const k=D.casoPorId.get(casoId); if(!k || !k.lembrete_meses) return;
-  const prox=somaMeses(hoje(), k.lembrete_meses);
-  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({prazo:prox})});
-  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
-      texto:`🔁 Aviso periódico feito — o próximo lembrete fica para ${fmt(prox)}.`})});
-  k.prazo=prox;
-  aviso(`✔ Registrado — volta em ${fmt(prox)}`, false);
-  montarSidebar(); render();
 }
 
 // edição no lugar: o lápis vira campo, salva ao sair e volta a ser texto
