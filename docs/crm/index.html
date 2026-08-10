@@ -745,6 +745,11 @@
   /* 📖 Caso completo: o marco salta da linha — faixa âmbar à esquerda e
      fundo levemente aquecido, o mesmo tom do "importante" da casa */
   .crps-tl li.tudo-marco{background:#FFF9EC;box-shadow:inset 3px 0 0 #E9B44C}
+  /* 🔁 aviso periódico: uma linha discreta entre os fatos e o responsável */
+  .fx-rec{display:flex;align-items:center;gap:8px;padding:7px 15px;flex-wrap:wrap;
+    border-top:1px solid var(--borda);font-size:13px}
+  .fx-rec select{padding:3px 6px;border:1px solid var(--borda);border-radius:6px;
+    font-size:12px;background:var(--branco)}
   .apos-it.auto .apos-data,.apos-it.auto .apos-esp{color:var(--cinza)}
   .apos-nota{font-size:11.5px;color:var(--cinza);margin-top:6px;line-height:1.45}
   .apos-nota b{color:var(--laranja)}
@@ -1177,7 +1182,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.54 · a espécie dá nome ao caso quando o benefício é genérico</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.55 · 🔁 aviso periódico: contribuição do INSS e afins rearmam sozinhos</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3121,6 +3126,9 @@ function cartaoCliente(cli, casosMostrar){
       <div class="nome">${esc(cli.nome)}</div>
       ${meta.length?`<div class="meta">${meta.join('<span class="pt">·</span>')}</div>`:""}
     </div>
+    ${(kr=>kr?`<button class="btn-mini" style="flex:none" title="registra o aviso periódico e rearma para daqui a ${kr.lembrete_meses} mês(es)"
+      onclick="event.stopPropagation();avisoPeriodicoFeito('${kr.id}')">✔ avisado · ${kr.lembrete_meses}m</button>`:"")(
+      ks.find(x=>x.lembrete_meses && x.prazo && x.prazo<=hoje()))}
     ${quemProx.map(c=>`<span class="avatar mini quem-prazo" style="background:${c.cor}"
       title="${esc(c.nome)} — tarefa para ${fmt(dataProx)}">${esc(c.inicial)}</span>`).join("")}
     <div class="avatares" data-equipe="${cli.id}" title="atribuições — clique para editar">${resp.map(c=>`<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")||`<span class="avatar mini vazio">＋</span>`}</div>
@@ -7633,6 +7641,7 @@ function blocoFatos(k){
         ${chipDcb(k)||`<span class="chip prazo ok">✔ alarme desligado</span>`}
       </div>`:""}
     </div>`:""}
+    ${linhaRecorrencia(k)}
     <div class="fatos-pe">
       <span class="fx-rot">Responsável</span>
       ${/* quem responde vem primeiro, cheio e colorido; os demais ficam
@@ -7648,6 +7657,59 @@ function blocoFatos(k){
     </div>
     <div class="fx-docs-lista" id="docs-${k.id}">${checklistCaso(k)}</div>
   </section>`;
+}
+
+// ── 🔁 o aviso periódico do caso ─────────────────────────────────────────
+// "Pagar contribuição do INSS", "conferir se está tudo em ordem" — a
+// obrigação que não acaba com um pedido. É para isso que a lista 🙏
+// Aposentadorias Futuras sempre serviu no To Do: gente sem pedido ativo que
+// o escritório avisa de tempos em tempos. Ligado o 🔁, o caso vence, o
+// cartão do Meu Dia oferece "✔ avisado", e o lembrete rearma sozinho — em
+// vez de alguém recalcular a data na mão a cada rodada.
+function somaMeses(iso, m){
+  const d=new Date(iso+"T12:00:00"); d.setMonth(d.getMonth()+m);
+  return d.toISOString().slice(0,10);
+}
+function linhaRecorrencia(k){
+  if(k.fase==="encerrado") return "";
+  const ops=[["","sem repetição"],[1,"todo mês"],[2,"a cada 2 meses"],[3,"a cada 3 meses"],
+             [6,"a cada 6 meses"],[12,"uma vez por ano"]];
+  return `<div class="fx-rec">
+    <span class="fx-rot">🔁 Aviso periódico</span>
+    <select onchange="salvarRecorrencia('${k.id}',this.value)">
+      ${ops.map(([v,r])=>`<option value="${v}" ${String(k.lembrete_meses||"")===String(v)?"selected":""}>${r}</option>`).join("")}
+    </select>
+    <span class="meio-sub">${k.lembrete_meses
+      ?`vence em ${k.prazo?fmt(k.prazo):"—"}; o "✔ avisado" do Meu Dia registra e rearma sozinho`
+      :`para quem se avisa de tempos em tempos — ex.: pagar contribuição do INSS`}</span>
+  </div>`;
+}
+async function salvarRecorrencia(casoId, v){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  const n = v ? +v : null;
+  const corpo={lembrete_meses:n};
+  // ligou num caso sem data marcada? o primeiro vencimento arma na hora
+  if(n && !k.prazo) corpo.prazo=somaMeses(hoje(), n);
+  try{
+    await api(`/rest/v1/casos?id=eq.${casoId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(corpo)});
+  }catch(e){ return aviso("Rode o crm/fase2/schema_por_em_dia.sql no Supabase — falta a coluna 'lembrete_meses'"); }
+  Object.assign(k, corpo);
+  aviso(n?`🔁 Combinado — repete ${n===1?"todo mês":`a cada ${n} meses`}${corpo.prazo?`, primeiro aviso em ${fmt(corpo.prazo)}`:""}`
+         :"Repetição desligada", false);
+  montarSidebar(); abrirFicha(clienteAberto);
+}
+async function avisoPeriodicoFeito(casoId){
+  const k=D.casoPorId.get(casoId); if(!k || !k.lembrete_meses) return;
+  const prox=somaMeses(hoje(), k.lembrete_meses);
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({prazo:prox})});
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+      texto:`🔁 Aviso periódico feito — o próximo lembrete fica para ${fmt(prox)}.`})});
+  k.prazo=prox;
+  aviso(`✔ Registrado — volta em ${fmt(prox)}`, false);
+  montarSidebar(); render();
 }
 
 // edição no lugar: o lápis vira campo, salva ao sair e volta a ser texto
