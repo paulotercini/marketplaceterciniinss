@@ -731,6 +731,9 @@
   .apos-esp{flex:1;min-width:90px}
   .apos-av{font-size:12px;color:var(--cinza);white-space:nowrap}
   .apos-av.ja{color:var(--verde);font-weight:700}
+  /* adiar o aviso da aposentadoria: campo miúdo, discreto até ser usado */
+  .apos-lem{border:1px solid var(--borda);border-radius:6px;font-size:11px;
+    padding:1px 4px;color:var(--cinza);background:var(--branco)}
   .apos-it.auto .apos-data,.apos-it.auto .apos-esp{color:var(--cinza)}
   .apos-nota{font-size:11.5px;color:var(--cinza);margin-top:6px;line-height:1.45}
   .apos-nota b{color:var(--laranja)}
@@ -1163,7 +1166,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.46 · a lista mais um furo apertada, os sinais mais um ponto</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.47 · encerrar com autoria, arquivar por processo, o caso completo</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5999,15 +6002,24 @@ async function abrirFicha(cliId){
           // a aba seria só ruído. Mostra se há nº de processo ou dados do CNJ.
           const temCNJ = !!(k.processo || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length)));
           const aba = (subAba==="cnj" && !temCNJ) ? "escritorio" : subAba;
-          return `<div class="sub-menu">
+          // a etiqueta da aba diz o estado sem abrir: 🗄 quando TODOS os
+          // processos daquela fonte estão arquivados (um só arquivado não
+          // marca a aba — o outro segue vivo); "(sem dados)" quando vazia.
+          // Ordem fixa combinada com o Paulo: Escritório, INSS, Recurso, CNJ.
+          const rot=(tem,arq)=> arq?" <span class='meio-sub'>🗄 arquivado</span>"
+                              : tem?"":" <span class='meio-sub'>(sem dados)</span>";
+          return `<div class="sub-menu" style="width:100%">
           <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
-          ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${(k.datajud&&k.datajud.ultimo)?"":" <span class='meio-sub'>(sem dados)</span>"}</button>`:""}
-          <button class="${aba==="inss"?"on":""}" onclick="irSubAba('inss')">🌻 Andamentos INSS${comentariosPat(andsVis).length?"":" <span class='meio-sub'>(sem dados)</span>"}</button>
-          <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${crpsTotalEventos(k)?"":" <span class='meio-sub'>(sem dados)</span>"}</button>
+          <button class="${aba==="inss"?"on":""}" onclick="irSubAba('inss')">🌻 Andamentos INSS${rot(comentariosPat(andsVis).length, abaPatArquivada(k))}</button>
+          <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k))}</button>
+          ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${rot(k.datajud&&k.datajud.ultimo, abaCnjArquivada(k))}</button>`:""}
+          <button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
+            title="todas as fontes juntas, em ordem cronológica">📖 Caso completo</button>
         </div>
       ${blocoFatos(k)}
       ${aba==="cnj" ? painelCNJ(k) : aba==="crps" ? painelCRPS(k)
-        : aba==="inss" ? painelINSS(k, andsVis) : painelEscritorio(k, andsVis)}`;
+        : aba==="inss" ? painelINSS(k, andsVis)
+        : aba==="tudo" ? painelTudo(k, andsVis) : painelEscritorio(k, andsVis)}`;
         })()}
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
       <datalist id="lista-especies">${ESPECIES.map(([c,n])=>`<option value="${c}">${esc(n)}</option>`).join("")}</datalist>`;
@@ -6667,18 +6679,44 @@ function aposDoCliente(cli){
   if(auto && !manuais.some(a=>dsa(a.especie)==="idade")) lista.push(auto);
   return lista.sort((x,y)=>x.data<y.data?-1:1);
 }
-// todos os lembretes de aposentadoria do escritório, para a agenda
+// todos os lembretes de aposentadoria do escritório, para a agenda.
+// `lembrar_em` escolhido à mão MANDA no aviso: adiou, o item some do Meu Dia
+// e só volta na data combinada — sem isso, "Aposentadorias a tratar" virava
+// lista permanente de quem já foi tratado.
 function lembretesApos(){
   const fora=new Set((D.apos||[]).filter(a=>dsa(a.especie)==="idade").map(a=>a.cliente_id));
   const itens=[];
   (D.apos||[]).forEach(a=>{ const c=D.cliPorId.get(a.cliente_id);
-    if(c) itens.push({...a, cliente:c, aviso:avisoApos(a.data)}); });
+    if(c) itens.push({...a, cliente:c, aviso:a.lembrar_em||avisoApos(a.data)}); });
   (D.clientes||[]).forEach(c=>{
     if(fora.has(c.id)) return;
     const auto=aposAutomatica(c);
     if(auto) itens.push({...auto, cliente:c, aviso:avisoApos(auto.data)});
   });
   return itens;
+}
+// adiar o aviso. Na automática ainda não há linha no banco: grava uma
+// (mesma data e espécie — o que o "ajustar" faria), já com o lembrete; a
+// manual só recebe o lembrar_em. Materializada, a automática se cala sozinha
+// (aposDoCliente descarta a auto quando existe "Idade" à mão).
+async function lembrarApos(cliId, aposId, data, especie, quando){
+  if(!quando) return;
+  try{
+    if(aposId && aposId!=="auto"){
+      await api(`/rest/v1/aposentadorias?id=eq.${aposId}`,{method:"PATCH",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify({lembrar_em:quando})});
+      const a=(D.apos||[]).find(x=>x.id===aposId); if(a) a.lembrar_em=quando;
+    }else{
+      const [a]=await api(`/rest/v1/aposentadorias`,{method:"POST",
+        headers:{Prefer:"return=representation"},
+        body:JSON.stringify({cliente_id:cliId, data, especie, autor_id:eu.id,
+                             lembrar_em:quando})});
+      if(a) (D.apos=D.apos||[]).push(a);
+    }
+  }catch(e){ return aviso("Rode o crm/fase2/schema_por_em_dia.sql no Supabase — falta a coluna 'lembrar_em'"); }
+  aviso(`🗓 Combinado — volta a lembrar em ${fmt(quando)}`, false);
+  montarSidebar(); render();
+  if(clienteAberto) abrirFicha(clienteAberto);
 }
 // no Meu Dia: o aviso que já chegou a hora. Sem isto o lembrete ficaria só
 // no calendário, e calendário só ajuda quem lembra de abrir
@@ -6695,7 +6733,14 @@ function blocoApos(){
           ${a.automatica?`<span class="chip neutro">automática — confira</span>`:""}
           ${a.cliente.telefone?`<a class="chip per" href="https://wa.me/55${a.cliente.telefone.replace(/\D/g,"")}"
              target="_blank" onclick="event.stopPropagation()">💬 chamar</a>`:""}</div>
-      </div></div>`).join("");
+      </div>
+      ${/* adiar direto daqui: escolhida a data, o item sai desta lista e só
+           volta no dia — é o mesmo "lembrar em" dos casos em recebimento */""}
+      <span class="lembrar-caixa" onclick="event.stopPropagation()"
+        title="adiar: some daqui e volta na data escolhida">🗓 Lembrar em
+        <input type="date" min="${hoje()}" value="${a.lembrar_em||""}"
+          onchange="lembrarApos('${a.cliente.id}','${a.id}','${a.data}','${esc(a.especie)}',this.value)"></span>
+      </div>`).join("");
 }
 // ── LOAS idoso e o CadÚnico ──────────────────────────────────────────────
 // O BPC do idoso (65 anos, para homem e mulher) exige CadÚnico em dia: ele
@@ -6928,8 +6973,13 @@ function caixaApos(cli){
     : lista.length ? lista.map(a=>`<div class="apos-it ${a.automatica?"auto":""}">
         <span class="apos-data">${fmt(a.data)}</span>
         <span class="apos-esp">${esc(a.especie)}</span>
-        ${a.data<=hoje() ? `<span class="apos-av ja">✓ já tem direito</span>`
-                         : `<span class="apos-av">🔔 avisa em ${fmt(avisoApos(a.data))}</span>`}
+        ${a.lembrar_em && a.lembrar_em>hoje()
+          ? `<span class="apos-av">🗓 adiado — lembra em ${fmt(a.lembrar_em)}</span>`
+          : a.data<=hoje() ? `<span class="apos-av ja">✓ já tem direito</span>`
+                           : `<span class="apos-av">🔔 avisa em ${fmt(avisoApos(a.data))}</span>`}
+        <input type="date" class="apos-lem" min="${hoje()}" value="${a.lembrar_em||""}"
+          title="adiar o aviso: sai do Meu Dia e volta na data escolhida"
+          onchange="lembrarApos('${cli.id}','${a.id}','${a.data}','${esc(a.especie)}',this.value)">
         ${a.automatica
           ? `<button class="btn-mini" onclick="novaApos('${cli.id}','${a.data}','${esc(a.especie)}')"
                title="gravar com ajuste">ajustar</button>`
@@ -7433,6 +7483,15 @@ function blocoFatos(k){
       ${k.parceria?`<span class="chip ben">🤝 ${esc(k.parceria)}</span>`:""}
       ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 msg ao cliente</button>
         <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
+      ${/* encerrar mora no canto direito do quadro dos fatos (pedido do
+           Paulo): é onde se olha o benefício, e é dali que se decide que
+           acabou. Encerrado, o mesmo canto diz quem encerrou e quando. */""}
+      <span style="margin-left:auto">${k.fase==="encerrado"
+        ? (co=>`<span class="chip fase" title="quem encerrou e quando">✔ encerrado${
+            co?` por ${esc(co.nome.split(" ")[0])}`:""}${
+            k.encerrado_em?` · ${fmtTS(k.encerrado_em)} ${horaSP(k.encerrado_em)}`:""}</span>`)(D.colPorId.get(k.encerrado_por))
+        : `<button class="btn-mini" onclick="janelaEncerrar('${k.id}')"
+             title="encerrar: resultado + honorários — fica registrado quem encerrou e quando">✔ Encerrar caso</button>`}</span>
     </div>
     ${linhaMarcadores(k)}
     <dl class="fx-grade">
@@ -7639,6 +7698,58 @@ function comentariosPat(ands){
   return (ands||[]).filter(a=>!a.excluir).filter(ehComentarioPat);
 }
 
+// ── 🗄 arquivar POR PROCESSO ─────────────────────────────────────────────
+// Arquivado não é do caso, é de cada processo: um caso pode ter o recurso
+// nº 1 morto e o nº 2 vivo, ou o 1º grau baixado e o TRF3 andando. Por isso
+// casos.arquivados é um mapa chave -> {por, em}, com uma chave por processo:
+// "pat" (o requerimento no INSS), "crps:<nup>" (cada recurso),
+// "cnj:<instância>" (cada grau). A aba só se diz arquivada quando TODAS as
+// chaves dela estão no mapa — um processo vivo mantém a aba viva.
+function arqInfo(k, chave){ return ((k&&k.arquivados)||{})[chave] || null; }
+function chaveCnj(inst, n){
+  return "cnj:" + (inst&&inst.rotulo ? dsa(inst.rotulo).replace(/\s+/g,"_") : String(n));
+}
+// as instâncias do CNJ como o painel mostra — helper único para o painel e
+// para a etiqueta da aba não divergirem
+function cnjInstancias(k){
+  const t=k.datajud||{};
+  return (t.instancias&&t.instancias.length) ? t.instancias
+    : [{rotulo:"Processo", orgao:t.orgao, classe:t.classe, ultimo:t.ultimo,
+        historico:(t.recentes||[]).map(m=>({...m,decisao:false})), decisao:null}];
+}
+function abaPatArquivada(k){ return !!arqInfo(k,"pat"); }
+function abaCrpsArquivada(k){
+  const bl=crpsBlocos(k).filter(b=>(b.eventos||[]).length);
+  return !!bl.length && bl.every(b=>arqInfo(k, "crps:"+soDig(b.nup)));
+}
+function abaCnjArquivada(k){
+  if(!(k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length))) return false;
+  return cnjInstancias(k).every((x,n)=>arqInfo(k, chaveCnj(x,n)));
+}
+async function alternarArquivo(casoId, chave){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  const m={...(k.arquivados||{})};
+  if(m[chave]) delete m[chave];
+  else m[chave]={por:eu.id, em:new Date().toISOString()};
+  try{
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({arquivados:m})});
+  }catch(e){ return aviso("Rode o crm/fase2/schema_por_em_dia.sql no Supabase — falta a coluna 'arquivados'"); }
+  k.arquivados=m;
+  aviso(m[chave]?"🗄 Processo arquivado":"Processo reativado", false);
+  abrirFicha(clienteAberto);
+}
+// o selo + o botão, no canto direito do quadro do processo
+function seloArquivo(k, chave){
+  const a=arqInfo(k, chave), co=a&&D.colPorId.get(a.por);
+  return a
+    ? `<span style="margin-left:auto;display:inline-flex;align-items:center;gap:6px">
+        <span class="chip neutro" title="arquivado${co?" por "+esc(co.nome):""} em ${fmtTS(a.em)} ${horaSP(a.em)}">🗄 arquivado${co?` por ${esc(co.inicial)}`:""} · ${fmtTS(a.em)}</span>
+        <button class="btn-mini" onclick="alternarArquivo('${k.id}','${chave}')">reativar</button></span>`
+    : `<button class="btn-mini" style="margin-left:auto" onclick="alternarArquivo('${k.id}','${chave}')"
+        title="marcar ESTE processo como arquivado — fica registrado quem e quando">🗄 arquivar</button>`;
+}
+
 // o quadro, nos moldes da aba 🖥 Recurso (CRPS): o oficial em zebra própria,
 // com a data à esquerda, sem misturar com o que o escritório escreve. O texto
 // já vem gravado com quem falou na frente ("INSS · " ou "Escritório · ") —
@@ -7646,9 +7757,13 @@ function comentariosPat(ands){
 function painelINSS(k, ands){
   const coms = comentariosPat(ands);
   if(!coms.length)
-    return `<div class="caso"><p class="meio-sub">Sem comentários do INSS neste
-      processo ainda. Eles chegam pela importação do PAT (coleta da extensão) —
-      quando o INSS escrever algo no processo, aparece aqui, igual ao site.</p></div>`;
+    return `<div class="caso">
+      <div style="display:flex;align-items:center;gap:8px">
+        <p class="meio-sub" style="flex:1">Sem comentários do INSS neste
+        processo ainda. Eles chegam pela importação do PAT (coleta da extensão) —
+        quando o INSS escrever algo no processo, aparece aqui, igual ao site.</p>
+        ${seloArquivo(k, "pat")}
+      </div></div>`;
   const linha = a=>{
     const m = /^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
     const doInss = !m || m[1]==="INSS";     // sem etiqueta gravada, é do INSS
@@ -7661,12 +7776,87 @@ function painelINSS(k, ands){
   return `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo">
       <h3 style="font-size:14px">Comentários do processo no INSS</h3>
+      ${seloArquivo(k, "pat")}
     </div>
     <ul class="timeline crps-tl">${coms.map(linha).join("")}</ul>
     <div class="fatos-pe" style="justify-content:flex-end">
       <span class="meio-sub">coletado do PAT — o mesmo que aparece no site do INSS</span>
     </div>
   </div>`;
+}
+
+// ── 📖 Caso completo: todas as fontes numa linha do tempo só ─────────────
+// O caso inteiro em ordem cronológica: o que o escritório escreveu, o que o
+// INSS comentou, o que o recurso andou e o que o tribunal publicou — cada
+// linha com a etiqueta de onde veio. É a resposta para "me conta esse caso":
+// uma leitura de cima a baixo, sem pular de aba em aba.
+function fatosDoCasoTodo(k, ands){
+  const itens=[];
+  for(const a of (ands||[]).filter(x=>!x.excluir)){
+    if(ehComentarioPat(a)){
+      const m=/^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
+      itens.push({q:a.criado_em||"", chip:"🌻 INSS", cor:"per",
+        texto:(m?a.texto.slice(m[0].length):a.texto)
+          + (m&&m[1]==="Escritório"?" (comentário nosso no portal)":"")});
+    }else{
+      const co=D.colPorId.get(a.autor_id);
+      itens.push({q:a.criado_em||"", chip:"🏢 Escritório", cor:"ben",
+        texto:(co?co.inicial+": ":"")+(a.texto||"")});
+    }
+  }
+  for(const b of crpsBlocos(k))
+    for(const e of (b.eventos||[])){
+      if(e.tipo==="ruido") continue;
+      itens.push({q:(e.data||"").slice(0,10), chip:"🖥 Recurso", cor:"fase",
+        forte:decideOCaso(e), texto:String(e.resumo||e.bruto||"")});
+    }
+  if(k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length))
+    for(const inst of cnjInstancias(k))
+      for(const m of (inst.historico||[]))
+        itens.push({q:(m.data||"").slice(0,10), chip:"⚖️ CNJ", cor:"neutro",
+          forte:!!m.decisao,
+          texto:(m.nome||"")+(m.complemento?` — ${m.complemento}`:"")
+            +(inst.rotulo&&cnjInstancias(k).length>1?` (${inst.rotulo})`:"")});
+  for(const e of D.eventos.filter(e=>e.caso_id===k.id))
+    itens.push({q:e.data_hora||"", chip:"🩺 "+(e.tipo||"Perícia").split(" ")[0], cor:"per",
+      texto:`${e.tipo||"Perícia"} ${e.status==="agendada"?"marcada":e.status||""}${e.local?` — ${e.local}`:""}`});
+  // do mais novo para o mais velho, como toda linha do tempo da casa
+  return itens.filter(x=>x.q).sort((a,b)=>a.q<b.q?1:-1);
+}
+function painelTudo(k, ands){
+  const itens=fatosDoCasoTodo(k, ands);
+  if(!itens.length)
+    return `<div class="caso"><p class="meio-sub">Ainda não há nada registrado
+      neste caso — em nenhuma das fontes.</p></div>`;
+  const linha=x=>`<li>
+    <span class="quando">${esc((x.q||"").slice(0,10)?fmt((x.q||"").slice(0,10)):"—")}</span>
+    <span class="texto"><span class="chip ${x.cor}" style="margin-right:6px">${x.chip}</span>${
+      x.forte?`<b>${esc(x.texto)}</b>`:esc(x.texto)}</span>
+  </li>`;
+  return `<div class="fatos" style="margin-bottom:12px">
+    <div class="fatos-topo">
+      <h3 style="font-size:14px">📖 Caso completo — ${itens.length} registros, todas as fontes</h3>
+      <button class="btn-mini" style="margin-left:auto" onclick="copiarCasoCompleto('${k.id}')"
+        title="a linha do tempo inteira em texto — para colar numa petição, num e-mail ou numa IA">📋 copiar em texto</button>
+    </div>
+    <ul class="timeline crps-tl">${itens.map(linha).join("")}</ul>
+    <div class="fatos-pe" style="justify-content:flex-end">
+      <span class="meio-sub">leitura, não edição — cada registro se corrige na aba de origem</span>
+    </div>
+  </div>`;
+}
+function copiarCasoCompleto(casoId){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  const c=D.cliPorId.get(k.cliente_id)||{};
+  const itens=fatosDoCasoTodo(k, (D._andsFicha||[]).filter(a=>a.caso_id===k.id));
+  const cab=[`CASO: ${tituloCaso(k)} — ${c.nome||""}`,
+    k.especie?`Espécie: ${k.especie}`:"", k.nb?`NB: ${k.nb}`:"",
+    k.processo?`Processo: ${k.processo}`:"",
+    (k.protocolos||[]).length?`Protocolo(s): ${(k.protocolos||[]).join(", ")}`:"",
+    k.der?`DER: ${fmt(k.der)}`:"", `Fase: ${NOME_FASE[k.fase]||k.fase}`,
+  ].filter(Boolean).join("\n");
+  const corpo=itens.map(x=>`${fmt((x.q||"").slice(0,10))} [${x.chip.replace(/^\S+\s/,"")}] ${x.texto}`).join("\n");
+  copiar(`${cab}\n\n${corpo}`, "Caso completo copiado 📖 — cole onde precisar");
 }
 
 // 🖥 Recurso administrativo no CRPS (e-Recursos). O robô (robo-crps) preenche
@@ -7855,6 +8045,9 @@ function blocoRecurso(t, casoId){
   return `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo">
       <h3 style="font-size:14px">e-Recursos · ${esc(t.num_proc||t.nup||"")}</h3>
+      ${/* arquivar é DESTE recurso: com dois nups no caso, cada quadro tem o
+           seu selo, e a aba só se diz arquivada quando todos estiverem */""}
+      ${seloArquivo(D.casoPorId.get(casoId)||{id:casoId}, "crps:"+soDig(t.nup))}
     </div>
     <div class="fx-sit">
       <span class="fx-rot">Situação</span> <b>${esc(t.status||"—")}</b>
@@ -8305,18 +8498,21 @@ function painelCNJ(k){
   const t = k.datajud;
   if(!t || !(t.ultimo || (t.instancias||[]).length))
     return `<div class="caso">${consultaPendente(k) || `<p class="meio-sub">Sem andamento oficial para este processo na base do CNJ.</p>`}</div>`;
-  const insts = (t.instancias && t.instancias.length) ? t.instancias
-    : [{rotulo:"Processo", orgao:t.orgao, classe:t.classe, ultimo:t.ultimo,
-        historico:(t.recentes||[]).map(m=>({...m,decisao:false})), decisao:null}];
+  const insts = cnjInstancias(k);
   const i = Math.min(instSel, insts.length-1), inst = insts[i];
   const u = inst.ultimo || {};
   return `${previsaoBox(k)}
   ${insts.length>1?`<div class="sub-menu instancias">
-    ${insts.map((x,n)=>`<button class="${n===i?"on":""}" onclick="instSel=${n};abrirFicha(clienteAberto)">${esc(x.rotulo||"instância")}
+    ${insts.map((x,n)=>`<button class="${n===i?"on":""}" onclick="instSel=${n};abrirFicha(clienteAberto)">${esc(x.rotulo||"instância")}${arqInfo(k,chaveCnj(x,n))?" 🗄":""}
       <small>${x.ultimo&&x.ultimo.data?fmt(x.ultimo.data):"—"}</small></button>`).join("")}
   </div>`:""}
   <div class="caso" style="margin-bottom:10px">
-    <div class="rotulo-caso">${esc(inst.rotulo||"")} · ${esc(tituloOrgao(inst.orgao)||"órgão julgador")}${inst.classe?` · ${esc(inst.classe)}`:""}</div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="rotulo-caso" style="flex:1">${esc(inst.rotulo||"")} · ${esc(tituloOrgao(inst.orgao)||"órgão julgador")}${inst.classe?` · ${esc(inst.classe)}`:""}</div>
+      ${/* arquivar é DESTA instância: 1º grau baixado não arquiva o TRF3 —
+           a aba só se marca quando todas as instâncias estiverem */""}
+      ${seloArquivo(k, chaveCnj(inst, i))}
+    </div>
     <div style="margin-top:6px;font-size:14px">
       <b>Último andamento:</b> ${esc(u.nome||"—")}${u.complemento?` (${esc(u.complemento)})`:""}
       em <b>${u.data?fmt(u.data):"—"}</b>
@@ -9209,8 +9405,18 @@ function janelaEncerrar(casoId){
   const encerrar=async(lancar)=>{
     if(!resultado) return aviso("Escolha o resultado primeiro");
     k.fase="encerrado"; k.resultado=resultado; k.encerrado_em=new Date().toISOString();
-    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({fase:"encerrado", resultado, encerrado_em:k.encerrado_em})});
+    k.encerrado_por=eu.id;
+    // quem encerrou fica no caso; num banco sem a coluna (schema atrasado),
+    // grava sem ela em vez de deixar o caso aberto
+    const corpo={fase:"encerrado", resultado, encerrado_em:k.encerrado_em, encerrado_por:eu.id};
+    try{
+      await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify(corpo)});
+    }catch(e){
+      delete corpo.encerrado_por; k.encerrado_por=null;
+      await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify(corpo)});
+    }
     await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
         texto:`Caso encerrado — resultado: ${resultado.toUpperCase()}.${resultado==="deferido"?" 🎉":""}`})});

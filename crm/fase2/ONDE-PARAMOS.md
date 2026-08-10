@@ -20,7 +20,15 @@ repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
   da aba 🖥 Recurso (CRPS), e fora da linha do tempo do escritório. As
   mudanças de situação (`origem_id` "situacao:...") continuam na linha do
   tempo, porque marcam fase, não conversa.
-- `app.html` na versão **08.44**.
+- `app.html` na versão **08.47**. Da 08.45 em diante: lista de clientes no
+  compasso do To Do (cartão de 52px, sinais maiores); botão ✔ Encerrar caso no
+  quadro de fatos, com autoria (`casos.encerrado_por`); 🗄 arquivar POR
+  PROCESSO nas abas INSS/Recurso/CNJ (`casos.arquivados`, mapa chave→{por,em}
+  — a aba só se marca quando TODOS os processos dela estão arquivados);
+  "🗓 Lembrar em" nas Aposentadorias a tratar (`aposentadorias.lembrar_em`);
+  e a aba 📖 Caso completo (todas as fontes numa linha do tempo, com "copiar
+  em texto"). **As três colunas novas exigem rodar `schema_por_em_dia.sql`**
+  — sem elas o app avisa e degrada sem quebrar.
 
 **A escrita CRM → To Do está DESLIGADA de propósito.** Trava dupla: variável
 de repositório `ESCREVER_TODO=1` no workflow e a mesma variável no ambiente
