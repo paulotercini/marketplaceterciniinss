@@ -1156,7 +1156,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.42 · recolher o recurso não apaga o acórdão</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.43 · o autor do andamento na coluna certa</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2875,7 +2875,7 @@ async function aplicarPatDeVerdade(){
     Object.assign(k, campos);
     if(a.andamento)
       await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-        body:JSON.stringify({caso_id:k.id, colaborador_id:eu.id, texto:a.andamento,
+        body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:a.andamento,
           origem:"pat", origem_id:`situacao:${a.protocolo}:${a.situacao}`})});
   });
 
@@ -2894,7 +2894,7 @@ async function aplicarPatDeVerdade(){
   for(const bl of planoPat.comentarios||[])
     for(const c of bl.comentarios) await tentar(`comentário ${bl.protocolo}`, () =>
       api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-        body:JSON.stringify({caso_id:bl.caso_id, colaborador_id:eu.id, texto:c.texto,
+        body:JSON.stringify({caso_id:bl.caso_id, autor_id:eu.id, texto:c.texto,
           origem:"pat", origem_id:c.origem_id, publico:false,
           ...(c.quando?{criado_em:c.quando+"T12:00:00"}:{})})}));
 
@@ -3398,7 +3398,7 @@ async function aplicarCrps(coletaId){
   // e cada movimento novo, que é o que aparece em 📣 Novidades
   for(const a of p.andamentos) await tentar(`mov ${a.nup}`, () =>
     api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({caso_id:a.caso_id, colaborador_id:eu.id, texto:a.texto,
+      body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, texto:a.texto,
         origem:"crps", origem_id:a.origem_id, publico:false,
         ...(a.quando?{criado_em:a.quando+"T12:00:00"}:{})})}));
 
@@ -3558,7 +3558,7 @@ async function enviarEncaminhamento(andId){
   try{
     const [novo] = await api(`/rest/v1/andamentos`,{method:"POST",
       headers:{Prefer:"return=representation"},
-      body:JSON.stringify({caso_id:a.caso_id, colaborador_id:eu.id, texto,
+      body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, texto,
         responde_a:andId, origem:"app", publico:false})}) || [];
     if(novo) await api(`/rest/v1/andamento_tarefas`,{method:"POST",
       headers:{Prefer:"return=minimal"},
