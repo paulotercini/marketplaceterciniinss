@@ -1156,7 +1156,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.43 · o autor do andamento na coluna certa</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.44 · os comentários do INSS em aba própria</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5995,10 +5995,12 @@ async function abrirFicha(cliId){
           return `<div class="sub-menu">
           <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
           ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${(k.datajud&&k.datajud.ultimo)?"":" <span class='meio-sub'>(sem dados)</span>"}</button>`:""}
+          <button class="${aba==="inss"?"on":""}" onclick="irSubAba('inss')">🌻 Andamentos INSS${comentariosPat(andsVis).length?"":" <span class='meio-sub'>(sem dados)</span>"}</button>
           <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${crpsTotalEventos(k)?"":" <span class='meio-sub'>(sem dados)</span>"}</button>
         </div>
       ${blocoFatos(k)}
-      ${aba==="cnj" ? painelCNJ(k) : aba==="crps" ? painelCRPS(k) : painelEscritorio(k, andsVis)}`;
+      ${aba==="cnj" ? painelCNJ(k) : aba==="crps" ? painelCRPS(k)
+        : aba==="inss" ? painelINSS(k, andsVis) : painelEscritorio(k, andsVis)}`;
         })()}
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
       <datalist id="lista-especies">${ESPECIES.map(([c,n])=>`<option value="${c}">${esc(n)}</option>`).join("")}</datalist>`;
@@ -7577,7 +7579,9 @@ function painelEscritorio(k, ands){
     </div>`}
   </div>
   ${caixaArquivos(k)}
-  ${linhaDoTempo(ands)}`;
+  ${/* os comentários do INSS têm aba própria (🌻); aqui fica só a conversa
+       do escritório — misturados, ninguém achava nem uma coisa nem outra */""}
+  ${linhaDoTempo(ands.filter(a=>!ehComentarioPat(a)))}`;
 }
 
 // ── a linha do tempo do escritório ────────────────────────────────────────
@@ -7612,6 +7616,50 @@ function linhaDoTempo(ands){
   };
   return `<ul class="timeline">${raiz.map(li).join("")
     || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
+}
+
+// ── 🌻 Andamentos INSS (PAT/Meu INSS) ────────────────────────────────────
+// Os comentários que aparecem no processo dentro do site do INSS, coletados
+// pela extensão e gravados na importação do PAT como andamentos com
+// origem='pat' e o id do comentário no portal em origem_id. As mudanças de
+// situação ("INSS: A → B") também têm origem 'pat', mas origem_id
+// "situacao:...": essas ficam na linha do tempo do escritório, porque marcam
+// fase, não conversa.
+function ehComentarioPat(a){
+  return a.origem==="pat" && a.origem_id && !String(a.origem_id).startsWith("situacao:");
+}
+function comentariosPat(ands){
+  return (ands||[]).filter(a=>!a.excluir).filter(ehComentarioPat);
+}
+
+// o quadro, nos moldes da aba 🖥 Recurso (CRPS): o oficial em zebra própria,
+// com a data à esquerda, sem misturar com o que o escritório escreve. O texto
+// já vem gravado com quem falou na frente ("INSS · " ou "Escritório · ") —
+// aqui isso vira etiqueta, porque é o que muda o que se faz a seguir.
+function painelINSS(k, ands){
+  const coms = comentariosPat(ands);
+  if(!coms.length)
+    return `<div class="caso"><p class="meio-sub">Sem comentários do INSS neste
+      processo ainda. Eles chegam pela importação do PAT (coleta da extensão) —
+      quando o INSS escrever algo no processo, aparece aqui, igual ao site.</p></div>`;
+  const linha = a=>{
+    const m = /^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
+    const doInss = !m || m[1]==="INSS";     // sem etiqueta gravada, é do INSS
+    const txt = esc(m ? a.texto.slice(m[0].length) : a.texto);
+    return `<li>
+      <span class="quando" title="comentário no portal do INSS">${doInss?"🌻":"🏢"}<br>${fmtTS(a.criado_em)}</span>
+      <span class="texto"><span class="chip ${doInss?"fase":"neutro"}" style="margin-right:6px">${doInss?"INSS":"Escritório"}</span>${txt}</span>
+    </li>`;
+  };
+  return `<div class="fatos" style="margin-bottom:12px">
+    <div class="fatos-topo">
+      <h3 style="font-size:14px">Comentários do processo no INSS</h3>
+    </div>
+    <ul class="timeline crps-tl">${coms.map(linha).join("")}</ul>
+    <div class="fatos-pe" style="justify-content:flex-end">
+      <span class="meio-sub">coletado do PAT — o mesmo que aparece no site do INSS</span>
+    </div>
+  </div>`;
 }
 
 // 🖥 Recurso administrativo no CRPS (e-Recursos). O robô (robo-crps) preenche
