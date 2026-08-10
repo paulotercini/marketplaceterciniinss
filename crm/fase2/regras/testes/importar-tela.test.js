@@ -532,3 +532,17 @@ test('recolher o recurso não apaga o acórdão nem o resumo', pular, async () =
     'evento que sumiu da resposta foi apagado da ficha');
   assert.equal(fundido.manual, true, 'perdeu a marcação de consulta manual');
 });
+
+// A COLUNA DO AUTOR EM `andamentos` É `autor_id`. O código que eu escrevi
+// para as importações e para o encaminhar gravava `colaborador_id` — que
+// existe em `andamentos_lidos` e em `meu_dia`, não aqui. O banco recusava a
+// gravação inteira e a importação do INSS terminava com "O banco está
+// desatualizado", mandando procurar uma coluna que não devia existir.
+test('andamento importado grava o autor na coluna certa', pular, async () => {
+  const src = await pag.evaluate(() => document.documentElement.outerHTML);
+  const inserts = [...src.matchAll(/rest\/v1\/andamentos`[\s\S]{0,240}?\)\}\)/g)].map(m => m[0]);
+  assert.ok(inserts.length >= 3, `achei só ${inserts.length} inserts de andamento`);
+  for (const t of inserts)
+    assert.ok(!/colaborador_id\s*:/.test(t),
+      `insert de andamento com colaborador_id — a coluna é autor_id:\n${t.slice(0, 200)}`);
+});
