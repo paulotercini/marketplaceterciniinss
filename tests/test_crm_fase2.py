@@ -265,10 +265,41 @@ def test_erro_do_banco_traz_a_mensagem_e_a_tabela(monkeypatch):
                                      io.BytesIO(corpo.encode()))
     monkeypatch.setattr(urllib.request, "urlopen", recusa)
 
-    with pytest.raises(SystemExit) as caiu:
+    with pytest.raises(migrar.BancoRecusou) as caiu:
         migrar._rest("https://x.supabase.co", "chave", "POST",
                      "/rest/v1/casos?on_conflict=id", [{"id": 1}])
     msg = str(caiu.value)
     assert "casos" in msg, "não disse em que tabela foi"
     assert "situacao_inss" in msg, "engoliu a mensagem do banco"
     assert "schema_por_em_dia" in msg, "não disse o que fazer a respeito"
+
+
+# O PostgREST recusa o LOTE quando UMA linha viola uma restrição. Com lotes de
+# 500, um caso numa fase que o banco não conhecia barrou os 2.953 casos — e,
+# com eles, os andamentos, os eventos e as tarefas. Semanas de To Do deixaram
+# de chegar ao CRM por causa de um cliente.
+def test_uma_linha_ruim_nao_derruba_o_lote(monkeypatch):
+    enviados, tentativas = [], []
+
+    def falso_rest(url, chave, metodo, caminho, corpo=None, prefer=None):
+        if metodo == "GET":
+            return []
+        tentativas.append(len(corpo))
+        if any(l["id"] == "ruim" for l in corpo):
+            raise migrar.BancoRecusou("o banco recusou POST em 'casos' (400): 23514")
+        enviados.extend(l["id"] for l in corpo)
+    monkeypatch.setattr(migrar, "_rest", falso_rest)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+
+    caso = lambda i: {"id": i, "todo_task_id": None, "cliente_id": None}
+    mapa = {"andamentos": [],
+            "casos": [caso("a"), caso("ruim"), caso("b"), caso("c")]}
+    with pytest.raises(migrar.BancoRecusou) as caiu:
+        migrar.subir_rest(mapa)
+
+    assert set(enviados) == {"a", "b", "c"}, f"o resto não entrou: {enviados}"
+    assert "ruim" in str(caiu.value), "não disse qual linha foi recusada"
+    assert len(tentativas) > 1, "não chegou a partir o lote para achar a culpada"

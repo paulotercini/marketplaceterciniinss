@@ -394,6 +394,10 @@ def gerar_sql(mapa):
 
 # ── modo REST (Supabase) ──────────────────────────────────────────────────
 
+class BancoRecusou(Exception):
+    """O banco disse não, e disse por quê. Erro esperado, não acidente."""
+
+
 def _rest(url, chave, metodo, caminho, corpo=None, prefer=None):
     req = urllib.request.Request(
         url.rstrip("/") + caminho,
@@ -420,7 +424,7 @@ def _rest(url, chave, metodo, caminho, corpo=None, prefer=None):
         if "PGRST204" in detalhe or "does not exist" in detalhe or "schema cache" in detalhe:
             recado += ("\nFalta coluna no banco: rode crm/fase2/schema_por_em_dia.sql "
                        "no Supabase e tente de novo.")
-        raise SystemExit(recado)
+        raise BancoRecusou(recado)
 
 
 def subir_rest(mapa):
@@ -469,13 +473,45 @@ def subir_rest(mapa):
         # docs solicitados citados em andamentos: só insere — concluir no app fica
         ("tarefas_docs", "tarefas", "ignore-duplicates", "id"),
     ]
+    # UMA LINHA NÃO PODE DERRUBAR A SINCRONIZAÇÃO INTEIRA.
+    #
+    # O PostgREST recusa o LOTE quando uma linha viola uma restrição. Com
+    # lotes de 500, um único caso numa fase que o banco não conhecia barrou os
+    # 2.953 casos — e, com eles, os andamentos, os eventos e as tarefas.
+    # Semanas de To Do deixaram de chegar ao CRM por causa de um cliente.
+    #
+    # Agora o lote recusado é partido ao meio, e ao meio de novo, até sobrar a
+    # linha culpada. O resto entra. No fim, as culpadas aparecem nomeadas — e
+    # o processo ainda termina com erro, para ninguém achar que passou limpo.
+    recusadas = []
+
+    def enviar(tabela, conflito, res, linhas):
+        if not linhas:
+            return
+        try:
+            _rest(url, chave, "POST", f"/rest/v1/{tabela}?on_conflict={conflito}",
+                  linhas, prefer=f"resolution={res},return=minimal")
+        except BancoRecusou as e:
+            if len(linhas) == 1:
+                recusadas.append((tabela, linhas[0].get("id"), str(e)[:300]))
+                return
+            meio = len(linhas) // 2
+            enviar(tabela, conflito, res, linhas[:meio])
+            enviar(tabela, conflito, res, linhas[meio:])
+
     for chave_mapa, tabela, res, conflito in ordem:
         linhas = resolver(mapa.get(chave_mapa, []))
+        antes = len(recusadas)
         for i in range(0, len(linhas), 500):
-            _rest(url, chave, "POST", f"/rest/v1/{tabela}?on_conflict={conflito}",
-                  linhas[i:i + 500],
-                  prefer=f"resolution={res},return=minimal")
-        print(f"  {chave_mapa}: {len(linhas)} linhas enviadas")
+            enviar(tabela, conflito, res, linhas[i:i + 500])
+        caiu = len(recusadas) - antes
+        print(f"  {chave_mapa}: {len(linhas) - caiu} linhas enviadas"
+              + (f", {caiu} recusada(s)" if caiu else ""))
+
+    if recusadas:
+        det = "\n".join(f"  {t} id={i}: {m}" for t, i, m in recusadas[:10])
+        raise BancoRecusou(
+            f"{len(recusadas)} linha(s) o banco recusou (o resto entrou):\n{det}")
 
 
 def main(argv=None):
@@ -499,7 +535,10 @@ def main(argv=None):
         pathlib.Path(args.sql).write_text(gerar_sql(mapa), encoding="utf-8")
         print(f"SQL gravado em {args.sql} — rode com psql ou no SQL Editor.")
     else:
-        subir_rest(mapa)
+        try:
+            subir_rest(mapa)
+        except BancoRecusou as e:
+            sys.exit(str(e))
         print("importação concluída.")
 
 

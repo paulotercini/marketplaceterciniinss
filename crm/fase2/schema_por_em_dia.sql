@@ -129,6 +129,21 @@ alter table casos add column if not exists protocolos jsonb not null default '[]
 alter table casos add column if not exists crps_nups jsonb not null default '[]';
 alter table casos add column if not exists crps jsonb;
 
+-- ── 8. A fase "💡 Petições Iniciais" ──────────────────────────────────────
+-- A lista existe no To Do, e o app, o migrar.py e o escrever_todo.py todos
+-- conhecem a fase `peticao_inicial`. O banco não conhecia: a restrição de
+-- `casos.fase` listava sete fases e essa ficou de fora.
+--
+-- O efeito era desproporcional ao tamanho do descuido. O PostgREST grava em
+-- lotes de 500 e recusa o LOTE INTEIRO quando uma linha viola a restrição —
+-- então UM cliente na lista de petições iniciais derrubava a gravação de
+-- 2.953 casos, e com ela a sincronização diária inteira. Duas semanas de
+-- andamentos do To Do pararam de chegar ao CRM por causa disto.
+alter table casos drop constraint if exists casos_fase_check;
+alter table casos add constraint casos_fase_check
+  check (fase in ('escritorio','inss','conselho','judicial','pagamento',
+                  'peticao_inicial','aposentadoria_futura','outro','encerrado'));
+
 -- ── conferência ───────────────────────────────────────────────────────────
 -- Devem aparecer TREZE linhas: as colunas de `casos` e `andamentos` que a
 -- importação usa, e a tabela `coletas`. Faltando alguma, o SQL não rodou
@@ -141,4 +156,9 @@ select table_name as tabela, column_name as coluna, data_type as tipo
 union all
 select 'coletas', 'tabela criada', ''
   from information_schema.tables where table_name = 'coletas'
+union all
+select 'casos', 'fase aceita peticao_inicial', ''
+  from pg_constraint
+ where conname = 'casos_fase_check'
+   and pg_get_constraintdef(oid) like '%peticao_inicial%'
  order by 1, 2;
