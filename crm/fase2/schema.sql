@@ -53,7 +53,8 @@ create table if not exists casos (
   beneficio    text,
   fase         text not null default 'escritorio'
                check (fase in ('escritorio','inss','conselho','judicial',
-                               'pagamento','aposentadoria_futura','outro','encerrado')),
+                               'pagamento','peticao_inicial','aposentadoria_futura',
+                               'outro','encerrado')),
   nb           text,
   processo     text,
   prazo        date,
