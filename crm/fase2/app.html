@@ -1156,7 +1156,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.41 · juntar os prováveis de uma vez</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.42 · recolher o recurso não apaga o acórdão</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3337,6 +3337,44 @@ async function conferirCrps(coletaId){
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
 }
 
+// RECOLHER NÃO PODE APAGAR O QUE FOI ACRESCENTADO.
+//
+// O portal devolve a lista de movimentos e mais nada. O ACÓRDÃO guardado no
+// CRM e o RESUMO da decisão não vêm de lá: o primeiro é o PDF que o robô
+// baixou e gravou, o segundo é o que ele leu do PDF — e o que a equipe
+// corrigiu à mão por cima. Trocar o bloco inteiro pelo que a consulta trouxe
+// apagou os dois de uma vez, e a ficha do recurso ficou só com a linha do
+// tempo. Foi o que aconteceu.
+//
+// Agora o bloco é FUNDIDO: o portal manda no que é dele (situação, órgão
+// atual, movimentos novos) e o que foi acrescentado por fora permanece.
+// Evento que sumiu da resposta também fica — perder histórico é pior que
+// carregar uma linha a mais.
+function fundirBlocoCrps(antigo, novo){
+  if(!antigo) return novo;
+  const marca = a => String(a.id || a.nome || "");
+  const antes = new Map((antigo.eventos||[]).map(e => [CRPS.chaveEvento(e), e]));
+
+  const eventos = (novo.eventos||[]).map(e => {
+    const velho = antes.get(CRPS.chaveEvento(e));
+    if(!velho) return e;
+    const guardados = new Map((velho.arquivos||[]).map(a => [marca(a), a]));
+    const arquivos = (e.arquivos||[]).map(a => {
+      const v = guardados.get(marca(a));
+      if(!v) return a;
+      guardados.delete(marca(a));
+      return { ...a, ...(v.storage?{storage:v.storage}:{}), ...(v.resumo?{resumo:v.resumo}:{}) };
+    });
+    // arquivo que o portal parou de listar, mas que já está guardado aqui
+    for(const v of guardados.values()) arquivos.push(v);
+    return { ...e, arquivos, ...(velho.resumo && !e.resumo ? {resumo:velho.resumo} : {}) };
+  });
+  const vistas = new Set(eventos.map(e => CRPS.chaveEvento(e)));
+  for(const [ch, e] of antes) if(!vistas.has(ch)) eventos.push(e);
+
+  return { ...antigo, ...novo, eventos };
+}
+
 async function aplicarCrps(coletaId){
   const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
   if(!c) return aviso("Não achei essa coleta");
@@ -3349,8 +3387,10 @@ async function aplicarCrps(coletaId){
   // o bloco do recurso: é ele que a aba 🖥 Recurso lê
   for(const b of p.blocos) await tentar(b.nup, async () => {
     const k = D.casoPorId.get(b.caso_id); if(!k) return;
-    const outros = blocosDoCaso(k).filter(x => (x.nup||"").replace(/\D/g,"") !== b.nup);
-    const crps = [...outros, b.bloco];
+    const so = x => String(x||"").replace(/\D/g,"");
+    const antigo = blocosDoCaso(k).find(x => so(x.nup) === b.nup);
+    const outros = blocosDoCaso(k).filter(x => so(x.nup) !== b.nup);
+    const crps = [...outros, fundirBlocoCrps(antigo, b.bloco)];
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({crps})});
     k.crps = crps;

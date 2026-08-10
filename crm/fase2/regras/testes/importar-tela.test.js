@@ -495,3 +495,40 @@ test('o botão em lote junta os prováveis e não toca nos duvidosos', pular, as
   const depois = await pag.$eval('#conteudo-meio', e => e.textContent);
   assert.ok(!/juntar os \d+ prováveis/.test(depois), 'o botão continuou oferecendo juntar');
 });
+
+// O ACÓRDÃO E O RESUMO NÃO VÊM DO PORTAL. O PDF guardado no CRM é trabalho do
+// robô; o resumo é o que ele leu do PDF, e o que a equipe corrigiu por cima.
+// Trocar o bloco inteiro pelo que a consulta trouxe apagava os dois, e a
+// ficha do recurso ficava só com a linha do tempo. Aconteceu de verdade.
+test('recolher o recurso não apaga o acórdão nem o resumo', pular, async () => {
+  await abrir();
+  const fundido = await pag.evaluate(() => {
+    const antigo = { nup: '44234156897202017', status: 'Julgado', manual: true, eventos: [
+      { data: '01/07/2026', tipo: 'decisao', resumo: 'Acórdão publicado',
+        arquivos: [{ id: 'a1', nome: 'acordao.pdf', storage: 'crps/a1.pdf',
+                     resumo: { linhas: ['Negado provimento'], conferido_por: 'p' } }] },
+      { data: '01/06/2026', tipo: 'andamento', resumo: 'Distribuído' },
+    ] };
+    // o que a consulta devolve: os mesmos eventos, sem PDF e sem resumo
+    const novo = { nup: '44234156897202017', status: 'Julgado', orgao_atual: '25ª Junta',
+      eventos: [
+        { data: '01/07/2026', tipo: 'decisao', resumo: 'Acórdão publicado',
+          arquivos: [{ id: 'a1', nome: 'acordao.pdf' }] },
+        { data: '15/07/2026', tipo: 'andamento', resumo: 'Movimento novo' },
+      ] };
+    return fundirBlocoCrps(antigo, novo);
+  });
+
+  const decisao = fundido.eventos.find(e => e.tipo === 'decisao');
+  assert.equal(decisao.arquivos[0].storage, 'crps/a1.pdf', 'o acórdão guardado se perdeu');
+  assert.deepEqual(decisao.arquivos[0].resumo.linhas, ['Negado provimento'],
+    'o resumo da decisão se perdeu');
+  assert.equal(decisao.arquivos[0].resumo.conferido_por, 'p', 'perdeu quem conferiu');
+  // o que é do portal, o portal manda
+  assert.equal(fundido.orgao_atual, '25ª Junta', 'não pegou o órgão atual da consulta');
+  assert.ok(fundido.eventos.some(e => e.resumo === 'Movimento novo'), 'não trouxe o movimento novo');
+  // e nada do histórico se perde
+  assert.ok(fundido.eventos.some(e => e.resumo === 'Distribuído'),
+    'evento que sumiu da resposta foi apagado da ficha');
+  assert.equal(fundido.manual, true, 'perdeu a marcação de consulta manual');
+});
