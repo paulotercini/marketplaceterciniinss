@@ -70,6 +70,17 @@ def _rest(metodo, caminho, corpo=None, prefer=None):
 
 
 def main():
+    # TRAVA DELIBERADA: este é o ÚNICO script que escreve do CRM para o To Do,
+    # e ele não roda sem ser mandado. Enquanto os dois sistemas convivem, o
+    # sentido único (To Do -> CRM) é o seguro: um andamento replicado para lá
+    # por engano vira texto no corpo de uma tarefa, e desfazer isso é edição
+    # manual, tarefa por tarefa.
+    #
+    # Para ligar de novo, exporte ESCREVER_TODO=1 (ou crie a variável de
+    # repositório de mesmo nome, que o workflow lê).
+    if os.environ.get("ESCREVER_TODO") != "1":
+        print("escrita CRM -> To Do desligada (defina ESCREVER_TODO=1 para ligar). Nada foi enviado.")
+        return
     if not os.environ.get("SUPABASE_URL") or not os.environ.get("SUPABASE_SERVICE_KEY"):
         sys.exit("Defina SUPABASE_URL e SUPABASE_SERVICE_KEY.")
     import graph_client
