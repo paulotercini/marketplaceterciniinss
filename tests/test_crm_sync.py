@@ -78,6 +78,26 @@ def test_pericia_sem_data_nao_vira_evento():
     assert t["eventos"] == []
 
 
+import datetime
+
+
+def test_pericia_de_data_ja_passada_nao_pula_para_o_ano_seguinte():
+    # bug real: "perícia 20/04" (sem ano) anotada em maio virava perícia
+    # AGENDADA para 20.04 do ano seguinte — e ficava no Meu Dia como se
+    # fosse futura ("Perícia 20.04", sem o ano à vista)
+    evs = sync_todo.eventos_de("Perícia realizada dia 20/04, aguardando laudo.",
+                               datetime.date(2026, 5, 5))
+    (ev,) = evs
+    assert ev["data"] == "2026-04-20"          # ficou no passado, não em 2027
+
+
+def test_pericia_proxima_sem_ano_continua_indo_para_o_ano_seguinte():
+    evs = sync_todo.eventos_de("Audiência marcada para 10/01 às 14h",
+                               datetime.date(2026, 12, 20))
+    (ev,) = evs
+    assert ev["data"] == "2027-01-10"          # 21 dias à frente: salto certo
+
+
 def test_numero_perto_da_data_nao_vira_hora_impossivel():
     # bug real: "sala 45" depois da data virou hora "45:00" e o evento chegou
     # ao banco como 2024-08-29T45:00:00 — o INSS não atende a essa hora
