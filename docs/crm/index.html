@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.59 · o nome do cliente abre o mapa dos casos, lista por lista</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.60 · ⇄ fundir casos: pedido, recurso e judicial numa história só</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7909,13 +7909,35 @@ function blocoFatos(k){
       ${/* encerrar mora no canto direito do quadro dos fatos (pedido do
            Paulo): é onde se olha o benefício, e é dali que se decide que
            acabou. Encerrado, o mesmo canto diz quem encerrou e quando. */""}
-      <span style="margin-left:auto">${k.fase==="encerrado"
+      <span style="margin-left:auto;display:inline-flex;gap:6px;align-items:center">
+        ${((D.casosDoCliente.get(k.cliente_id)||[]).length>1 && k.fase!=="encerrado")
+          ?`<button class="btn-mini" onclick="janelaFundir('${k.id}')"
+              title="pedido → recurso → judicial é uma sequência só: incorpora outro caso a este, com todo o histórico">⇄ fundir</button>`:""}
+        ${k.fase==="encerrado"
         ? (co=>`<span class="chip fase" title="quem encerrou e quando">✔ encerrado${
             co?` por ${esc(co.nome.split(" ")[0])}`:""}${
             k.encerrado_em?` · ${fmtTS(k.encerrado_em)} ${horaSP(k.encerrado_em)}`:""}</span>`)(D.colPorId.get(k.encerrado_por))
         : `<button class="btn-mini" onclick="janelaEncerrar('${k.id}')"
              title="encerrar: resultado + honorários — fica registrado quem encerrou e quando">✔ Encerrar caso</button>`}</span>
     </div>
+    ${/* CONTINUIDADE (semiautomática, como o Paulo pediu): caso de recurso
+         ou judicial com o pedido anterior morando em OUTRO caso do mesmo
+         cliente. Um candidato só = sugestão com um clique; mais de um, o
+         botão ⇄ acima resolve com a escolha na mão. */""}
+    ${(()=>{
+      if(k.fase!=="conselho" && k.fase!=="judicial") return "";
+      const pos=TRILHA.indexOf(k.fase);
+      const cands=(D.casosDoCliente.get(k.cliente_id)||[]).filter(x=>x.id!==k.id &&
+        (x.fase==="encerrado" || (TRILHA.indexOf(x.fase)>=0 && TRILHA.indexOf(x.fase)<pos)));
+      if(cands.length!==1) return "";
+      const o=cands[0];
+      return `<div class="fx-rec"><span class="fx-rot">⇄</span>
+        <span class="meio-sub">Este ${k.fase==="conselho"?"recurso":"processo judicial"} parece a
+          continuação de <b>${esc(tituloCaso(o))}</b>
+          (${esc(listaDe(o)!=="—"?listaDe(o):(NOME_FASE[o.fase]||""))}${o.fase==="encerrado"?" · ✔ encerrado":""}) —
+          o mesmo pedido, em fases diferentes.</span>
+        <button class="btn-mini" onclick="fundirCasos('${o.id}','${k.id}')">⇄ fundir os dois neste</button>
+      </div>`;})()}
     ${linhaMarcadores(k)}
     <dl class="fx-grade">
       ${campoFato(k,"especie")}
@@ -9982,6 +10004,130 @@ function janelaEncerrar(casoId){
   document.getElementById("hon-nao").onclick=encerrarDeVez;
   document.getElementById("hon-enviar").onclick=enviarPagamentos;
   document.getElementById("jan-cancela").onclick=()=>{ fecharJanela(); if(clienteAberto) abrirFicha(clienteAberto); };
+}
+
+// ── ⇄ fundir dois casos ──────────────────────────────────────────────────
+// Pedido negado que virou recurso, recurso que virou ação judicial: é o
+// MESMO caso em fases diferentes (o do Adalto: aposentadoria negada +
+// recurso administrativo eram dois). A fusão move todo o histórico do caso
+// incorporado para o destino — andamentos, perícias, tarefas, pagamentos,
+// atribuições — e junta protocolos, nups, blocos do recurso e marcadores.
+// Campo do destino preenchido à mão NUNCA é sobrescrito (só o vazio herda).
+//
+// O incorporado: se nasceu no CRM/PAT (sem tarefa no To Do), é removido; se
+// veio do To Do, vira casca encerrada — apagar faria a sincronização
+// recriá-lo do zero — e a tarefa dele PRECISA ser concluída no To Do,
+// senão a próxima sincronização reabre a casca.
+function janelaFundir(destinoId){
+  fecharJanela();
+  const d=D.casoPorId.get(destinoId); if(!d) return;
+  const outros=(D.casosDoCliente.get(d.cliente_id)||[]).filter(x=>x.id!==destinoId);
+  if(!outros.length) return aviso("Este cliente só tem um caso — não há o que fundir");
+  const div=document.createElement("div"); div.id="janela";
+  div.innerHTML=`<div class="jan-caixa">
+    <h3>⇄ Fundir para dentro de: ${esc(tituloCaso(d))}</h3>
+    <p class="meio-sub" style="margin-top:6px">Pedido → recurso → judicial é uma sequência só.
+      Escolha o caso a incorporar: TODO o histórico dele passa para este — nada se apaga.</p>
+    ${outros.map(o=>`<label style="display:block;margin:7px 0;cursor:pointer">
+      <input type="radio" name="fd" value="${o.id}">
+      <b>${esc(tituloCaso(o))}</b>
+      <span class="meio-sub">${esc(listaDe(o)!=="—"?listaDe(o):(NOME_FASE[o.fase]||""))}${o.fase==="encerrado"?" · ✔ encerrado":""}</span>
+    </label>`).join("")}
+    <div class="form-linha" style="margin-top:10px">
+      <button id="fd-ok">⇄ Fundir</button>
+      <button class="btn-mini" id="fd-nao">cancelar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(div);
+  document.getElementById("fd-ok").onclick=()=>{
+    const sel=div.querySelector("input[name=fd]:checked");
+    if(!sel) return aviso("Escolha o caso a incorporar");
+    fecharJanela(); fundirCasos(sel.value, destinoId);
+  };
+  document.getElementById("fd-nao").onclick=fecharJanela;
+}
+async function fundirCasos(absorvidoId, destinoId){
+  const a=D.casoPorId.get(absorvidoId), d=D.casoPorId.get(destinoId);
+  if(!a || !d || a.id===d.id) return;
+  if(!confirm(`Fundir "${tituloCaso(a)}" para dentro de "${tituloCaso(d)}"?\n\n`
+    +`Todo o histórico passa para o destino. `
+    +(a.todo_task_id
+      ?"O caso incorporado fica como casca encerrada — CONCLUA a tarefa dele no To Do, senão a sincronização o reabre."
+      :"O caso incorporado (criado no CRM) será removido."))) return;
+  const falhas=[];
+  const t=async(rotulo,f)=>{ try{ await f(); }catch(e){ falhas.push(rotulo); } };
+
+  // filhos em lote (id preservado — a sincronização não duplica depois)
+  for(const tab of ["andamentos","tarefas","pagamentos","andamento_tarefas","meu_dia"])
+    await t(tab, ()=>api(`/rest/v1/${tab}?caso_id=eq.${absorvidoId}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:destinoId})}));
+  // eventos um a um: a trinca caso+tipo+data é única — o repetido no destino
+  // é o MESMO agendamento, então a cópia do incorporado se apaga
+  const evs=await api(`/rest/v1/eventos?caso_id=eq.${absorvidoId}&select=id`).catch(()=>[])||[];
+  for(const e of evs)
+    await t("evento", async()=>{
+      try{ await api(`/rest/v1/eventos?id=eq.${e.id}`,{method:"PATCH",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify({caso_id:destinoId})}); }
+      catch(err){ await api(`/rest/v1/eventos?id=eq.${e.id}`,{method:"DELETE"}); }
+    });
+  // atribuições: quem já está no destino não entra duas vezes
+  const atrA=await api(`/rest/v1/atribuicoes?caso_id=eq.${absorvidoId}&select=colaborador_id`).catch(()=>[])||[];
+  const atrD=new Set(D.atrDoCaso.get(destinoId)||[]);
+  for(const r of atrA)
+    await t("atribuição", ()=>api(`/rest/v1/atribuicoes?caso_id=eq.${absorvidoId}&colaborador_id=eq.${r.colaborador_id}`,
+      atrD.has(r.colaborador_id)?{method:"DELETE"}
+        :{method:"PATCH",headers:{Prefer:"return=minimal"},body:JSON.stringify({caso_id:destinoId})}));
+
+  // campos: o destino manda; só o vazio herda. Listas se somam.
+  const corpo={};
+  for(const f of ["nb","processo","especie","beneficio","der","dib","dii","dat","dcb",
+                  "parceria","processo_link","situacao_inss","cadunico","resultado"])
+    if(!d[f] && a[f]) corpo[f]=a[f];
+  corpo.protocolos=[...new Set([...(d.protocolos||[]),...(a.protocolos||[])])];
+  const nups=[...new Set([...nupsDoCaso(d),...nupsDoCaso(a)])];
+  if(nups.length){ corpo.crps_nups=nups; corpo.crps_nup=null; }
+  const blocos=[...blocosDoCaso(d)];
+  for(const b of blocosDoCaso(a))
+    if(!blocos.some(x=>soDig(x.nup)===soDig(b.nup))) blocos.push(b);
+  if(blocos.length) corpo.crps=blocos;
+  const marc=[...new Set([...(d.marcadores||[]),...(a.marcadores||[])])];
+  if(marc.length) corpo.marcadores=marc;
+  if(a.urgente && !d.urgente) corpo.urgente=true;
+  if(a.importante && !d.importante) corpo.importante=true;
+  if(!d.datajud && a.datajud) corpo.datajud=a.datajud;
+  if(!d.trf3 && a.trf3) corpo.trf3=a.trf3;
+  corpo.arquivados={...(a.arquivados||{}),...(d.arquivados||{})};
+  try{
+    await api(`/rest/v1/casos?id=eq.${destinoId}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)});
+  }catch(e){
+    delete corpo.arquivados;   // banco sem a coluna (schema atrasado)
+    await t("campos", ()=>api(`/rest/v1/casos?id=eq.${destinoId}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify(corpo)}));
+  }
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:destinoId, autor_id:eu.id,
+      texto:`⇄ Fundido: "${tituloCaso(a)}" (${listaDe(a)!=="—"?listaDe(a):NOME_FASE[a.fase]||""}) foi incorporado a este caso — é a continuação do mesmo pedido.`})}).catch(()=>{});
+
+  // o incorporado: apagar (nasceu no CRM) ou virar casca encerrada (To Do)
+  if(a.todo_task_id){
+    const cs={fase:"encerrado", encerrado_em:new Date().toISOString(), encerrado_por:eu.id};
+    try{ await api(`/rest/v1/casos?id=eq.${a.id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify(cs)}); }
+    catch(e){ delete cs.encerrado_por;
+      await t("casca", ()=>api(`/rest/v1/casos?id=eq.${a.id}`,{method:"PATCH",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify(cs)})); }
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:a.id, autor_id:eu.id,
+        texto:`⇄ Caso fundido com "${tituloCaso(d)}" — o histórico foi movido para lá. CONCLUA a tarefa correspondente no To Do; sem isso a sincronização reabre esta casca.`})}).catch(()=>{});
+  }else{
+    await t("remover", ()=>api(`/rest/v1/casos?id=eq.${a.id}`,{method:"DELETE"}));
+  }
+
+  aviso(`⇄ Fundido em "${tituloCaso(d)}"${a.todo_task_id?" — conclua a tarefa antiga no To Do":""}${falhas.length?` (atenção: falhou em ${falhas.join(", ")})`:""}`);
+  await carregar();
+  montarSidebar(); casoSel=destinoId; abaAtiva=2;
+  abrirFicha(d.cliente_id);
 }
 
 // ── catálogo de documentos (espelho do site interno) ──────────────────────
