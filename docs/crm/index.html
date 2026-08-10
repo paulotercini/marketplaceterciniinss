@@ -1169,7 +1169,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.48 · encerrar pergunta por Pagamentos e caso novo; marcos no Caso completo</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.49 · comentários do PAT limpos; todo caso importado consta nas Novidades</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2560,6 +2560,26 @@ function andamentoDaMudanca(k, det) {
   return `INSS: ${antes} → ${det.situacao}`;
 }
 
+// O PAT devolve o comentário em HTML ("<p>an&aacute;lise</p>"): na ficha isso
+// virava tag e entidade cruas. Vira texto simples AQUI, na entrada — e a tela
+// aplica de novo na saída, para o que já foi gravado sujo. Sem DOM de
+// propósito: a mesma função roda no navegador e nos testes do node.
+// (cópia fiel de robo-pat/importar.js, como as demais funções desta seção)
+const ENTIDADES_PAT = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'",
+  nbsp: ' ', aacute: 'á', agrave: 'à', atilde: 'ã', acirc: 'â', eacute: 'é',
+  ecirc: 'ê', iacute: 'í', oacute: 'ó', otilde: 'õ', ocirc: 'ô', uacute: 'ú',
+  uuml: 'ü', ccedil: 'ç', Aacute: 'Á', Agrave: 'À', Atilde: 'Ã', Acirc: 'Â',
+  Eacute: 'É', Ecirc: 'Ê', Iacute: 'Í', Oacute: 'Ó', Otilde: 'Õ', Ocirc: 'Ô',
+  Uacute: 'Ú', Ccedil: 'Ç', ordm: 'º', ordf: 'ª', sect: '§', deg: '°' };
+function limparHtmlPat(t) {
+  return String(t || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(+n))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)))
+    .replace(/&([a-zA-Z]+);/g, (m, n) => ENTIDADES_PAT[n] || m)
+    .replace(/\s+/g, ' ').trim();
+}
+
 function comentariosNovos(det, jaTem) {
   const vistos = new Set((jaTem || []).map(a => String(a.origem_id || '')));
   return (det.comentarios || [])
@@ -2569,7 +2589,7 @@ function comentariosNovos(det, jaTem) {
       quando: c.quando,
       // quem escreveu vem na frente: é a diferença entre o INSS pedindo algo
       // e o escritório respondendo, e ela muda o que se faz a seguir
-      texto: `${c.do_inss ? 'INSS' : 'Escritório'} · ${c.texto}`,
+      texto: `${c.do_inss ? 'INSS' : 'Escritório'} · ${limparHtmlPat(c.texto)}`,
     }));
 }
 
@@ -2899,6 +2919,13 @@ async function aplicarPatDeVerdade(){
         protocolos:[novo.protocolo], marcadores:novo.marcadores,
         urgente:novo.urgente, processo_link:novo.link, situacao_inss:novo.situacao})}) || [];
     if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); }
+    // TODO CASO IMPORTADO CONSTA EM 📣 NOVIDADES — inclusive para dizer que
+    // não há comentários novos: silêncio e "ninguém olhou" eram iguais.
+    // origem_id fixo por protocolo: importar de novo não duplica (índice único).
+    if(k) await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"pat",
+        origem_id:`importado:${novo.protocolo}`, publico:false,
+        texto:`INSS · Caso importado do PAT — situação: ${novo.situacao||"—"}. Sem comentários novos por enquanto.`})}).catch(()=>{});
   });
 
   // OS COMENTÁRIOS DO INSS. É o que responde "o que mudou?" — sem eles a
@@ -2975,6 +3002,12 @@ async function juntarUm(n){
   await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify(campos)});
   Object.assign(k, campos);
+  // o caso juntado também consta em 📣 Novidades — mesmo sem comentário novo,
+  // "conferido e nada mudou" é informação. origem_id por protocolo: não duplica.
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"pat",
+      origem_id:`importado:${n.protocolo}`, publico:false,
+      texto:`INSS · Protocolo ${n.protocolo} juntado a este caso pela importação do PAT — situação: ${n.situacao||"—"}. Comentários do portal, se houver, entram na próxima importação.`})}).catch(()=>{});
   planoPat.possiveisDuplicados = planoPat.possiveisDuplicados.filter(x=>x.protocolo!==n.protocolo);
   if(planoPat.resumo){
     planoPat.resumo.possiveis_duplicados = planoPat.possiveisDuplicados.length;
@@ -3626,7 +3659,7 @@ function linhaNovidade(a){
     <div class="nov-corpo">
       <div class="nov-cli" data-cli="${c.id||""}">${esc(c.nome||"cliente sem ficha")}
         ${k.beneficio?`<span class="u-papel" style="text-transform:none">· ${esc(k.beneficio)}</span>`:""}</div>
-      <div class="nov-txt">${esc(a.texto)}</div>
+      <div class="nov-txt">${esc(a.origem==="pat"?limparHtmlPat(a.texto):a.texto)}</div>
     </div>
     ${k.processo_link?`<a class="btn-mini" href="${k.processo_link}" target="_blank" rel="noopener">abrir ↗</a>`:""}
     <button class="btn-mini" data-encaminhar="${a.id}">→ encaminhar</button>
@@ -7770,7 +7803,9 @@ function painelINSS(k, ands){
   const linha = a=>{
     const m = /^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
     const doInss = !m || m[1]==="INSS";     // sem etiqueta gravada, é do INSS
-    const txt = esc(m ? a.texto.slice(m[0].length) : a.texto);
+    // limpar de novo na saída: comentário gravado antes da limpeza de entrada
+    // ainda carrega "<p>" e "&aacute;" no banco
+    const txt = esc(limparHtmlPat(m ? a.texto.slice(m[0].length) : a.texto));
     return `<li>
       <span class="quando" title="comentário no portal do INSS">${doInss?"🌻":"🏢"}<br>${fmtTS(a.criado_em)}</span>
       <span class="texto"><span class="chip ${doInss?"fase":"neutro"}" style="margin-right:6px">${doInss?"INSS":"Escritório"}</span>${txt}</span>
@@ -7811,7 +7846,7 @@ function fatosDoCasoTodo(k, ands){
     if(ehComentarioPat(a)){
       const m=/^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
       itens.push({q:a.criado_em||"", chip:"🌻 INSS", cor:"per",
-        texto:(m?a.texto.slice(m[0].length):a.texto)
+        texto:limparHtmlPat(m?a.texto.slice(m[0].length):a.texto)
           + (m&&m[1]==="Escritório"?" (comentário nosso no portal)":"")});
     }else{
       const co=D.colPorId.get(a.autor_id);

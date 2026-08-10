@@ -45,6 +45,14 @@ convivem. Não religue sem ele pedir.
    no motor de regras local, que funciona mas é mais simples. Com crédito,
    `node resumir.js --refazer --aplicar` reescreve todos.
 
+**O CNJ ficava dias sem atualizar** e a causa era silenciosa: a API do DataJud
+tem manhãs em que pendura, cada lote esperava até 8 minutos e o job
+`consultas-publicas` morria no teto de 30 min como "cancelled" (04, 06 e
+10.08). Agora o `datajud.py` usa timeout de 25s com teto próprio de 20 min
+(grava o que consultou e nomeia o que ficou), o passo tem teto de 24 min no
+workflow, e há uma segunda rodada às 14h30 BRT — se a manhã falhar, a tarde
+cobre o mesmo dia.
+
 Resolvidos nesta rodada (conferir na próxima sincronização real): o caso que
 duplicava toda rodada (23505) era o **corte silencioso de 1000 linhas do
 Supabase** — o remapeamento de `todo_task_id` lia uma página só e, com 2.952
