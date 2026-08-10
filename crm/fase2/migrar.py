@@ -119,6 +119,11 @@ def classificar_item_checklist(txt, cpf_cliente=None):
     return ("tarefa", t)
 
 
+def hora_valida(h):
+    m = re.fullmatch(r"(\d{1,2}):(\d{2})", h or "")
+    return bool(m) and int(m.group(1)) <= 23 and int(m.group(2)) <= 59
+
+
 def uid(*partes):
     return str(uuid.uuid5(NS, "|".join(str(p) for p in partes)))
 
@@ -241,7 +246,10 @@ def mapear(dados):
             }
 
         for e in t["eventos"]:
-            hora = e["hora"] or "09:00"
+            # "45:00" já chegou como hora (o leitor pegava qualquer número
+            # perto da data). Hora impossível cai no padrão em vez de virar
+            # um data_hora que o banco recusa.
+            hora = e["hora"] if hora_valida(e["hora"]) else "09:00"
             eid = uid("evento", kid, e["tipo"], e["data"], hora)
             eventos[eid] = {
                 "id": eid, "caso_id": kid, "tipo": e["tipo"],

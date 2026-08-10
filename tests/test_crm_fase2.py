@@ -338,3 +338,25 @@ def test_remapeamento_enxerga_alem_da_primeira_pagina(monkeypatch):
 
     ids = [l["id"] for l in postados if l.get("todo_task_id") == "task-1400"]
     assert ids == ["velho-1400"], f"o caso além da página 1 não foi remapeado: {ids}"
+
+
+# Perícia anotada com "45:00" de hora chegou ao banco como
+# 2024-08-29T45:00:00 — data que não existe. Hora impossível cai no padrão.
+def test_evento_com_hora_impossivel_cai_no_horario_padrao():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Sicrana #00000000353", cpf="00000000353",
+          eventos=[{"tipo": "Perícia", "data": "2024-08-29", "hora": "45:00",
+                    "trecho": "perícia 29/08 45:00"}]),
+    ]))
+    (ev,) = m["eventos"]
+    assert ev["data_hora"].startswith("2024-08-29T09:00")
+
+
+def test_evento_com_hora_de_verdade_continua_igual():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Sicrana #00000000353", cpf="00000000353",
+          eventos=[{"tipo": "Perícia", "data": "2027-04-13", "hora": "12:30",
+                    "trecho": "perícia 13.04 às 12:30"}]),
+    ]))
+    (ev,) = m["eventos"]
+    assert ev["data_hora"].startswith("2027-04-13T12:30")

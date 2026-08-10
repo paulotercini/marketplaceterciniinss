@@ -78,6 +78,15 @@ def test_pericia_sem_data_nao_vira_evento():
     assert t["eventos"] == []
 
 
+def test_numero_perto_da_data_nao_vira_hora_impossivel():
+    # bug real: "sala 45" depois da data virou hora "45:00" e o evento chegou
+    # ao banco como 2024-08-29T45:00:00 — o INSS não atende a essa hora
+    t = tarefa("Fulano #00000000191",
+               "20.08.2024 (P): Perícia dia 29/08/2024 na agência, sala 45:00.")
+    (ev,) = t["eventos"]
+    assert (ev["data"], ev["hora"]) == ("2024-08-29", None)
+
+
 # ── cliente → casos por CPF ───────────────────────────────────────────────
 
 def test_cliente_agrupado_por_cpf_em_listas_diferentes():
