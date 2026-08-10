@@ -163,11 +163,58 @@ alter table casos add column if not exists arquivados jsonb not null default '{}
 -- porque a tabela aposentadorias nasceu em onda mais nova do schema.sql.
 alter table if exists aposentadorias add column if not exists lembrar_em date;
 
--- lembrete_meses: o 🔁 aviso periódico do caso — "pagar contribuição do
--- INSS", "ver se está tudo certo" — obrigação que não acaba num pedido.
--- Vencido o prazo, o cartão do Meu Dia oferece "✔ avisado": registra o
--- andamento e rearma sozinho para daqui a N meses.
+-- lembrete_meses: primeira versão do aviso periódico, POR CASO (08.55).
+-- Durou um dia: cliente com dois casos não dizia em qual morava o aviso.
+-- A coluna fica (barata, e algum banco pode tê-la), mas a tela não usa
+-- mais — o lugar disso é a aba 🔔 Lembretes, por CLIENTE, logo abaixo.
 alter table casos add column if not exists lembrete_meses int;
+
+
+-- ── 10. 🔔 Lembretes do cliente ───────────────────────────────────────────
+-- A obrigação que não pertence a processo nenhum: pagar contribuição do
+-- INSS, renovar CadÚnico, retomar contato daqui a tantos meses. Era o
+-- segundo uso da lista 🙏 Aposentadorias Futuras no To Do — pessoas sem
+-- pedido ativo que o escritório avisa de tempos em tempos.
+--
+-- `detalhes` (jsonb) guarda o que cada tipo pede — na contribuição, o
+-- código GPS da categoria, o valor e o dia do vencimento, que é o que
+-- monta a mensagem pronta de WhatsApp. `intervalo_meses` nulo = avisa uma
+-- vez e desliga. O histórico fica em lembrete_avisos: QUEM avisou, QUANDO
+-- e por qual canal — a resposta para "já avisamos a Marcela este mês?".
+create table if not exists lembretes (
+  id             uuid primary key default gen_random_uuid(),
+  cliente_id     uuid not null references clientes(id) on delete cascade,
+  tipo           text not null default 'geral',
+  titulo         text not null,
+  detalhes       jsonb not null default '{}'::jsonb,
+  intervalo_meses int,
+  proximo_em     date,
+  responsavel_id uuid references colaboradores(id),
+  ativo          boolean not null default true,
+  origem_caso    uuid,               -- caso de Aposentadorias Futuras que virou lembrete
+  criado_por     uuid references colaboradores(id),
+  criado_em      timestamptz not null default now()
+);
+create index if not exists lembretes_do_cliente on lembretes (cliente_id) where ativo;
+create index if not exists lembretes_vencendo on lembretes (proximo_em) where ativo;
+alter table lembretes enable row level security;
+drop policy if exists lembretes_autenticados on lembretes;
+create policy lembretes_autenticados on lembretes for all to authenticated
+  using (true) with check (true);
+
+create table if not exists lembrete_avisos (
+  id             uuid primary key default gen_random_uuid(),
+  lembrete_id    uuid not null references lembretes(id) on delete cascade,
+  colaborador_id uuid references colaboradores(id),
+  em             timestamptz not null default now(),
+  canal          text,
+  obs            text
+);
+create index if not exists avisos_do_lembrete on lembrete_avisos (lembrete_id, em desc);
+alter table lembrete_avisos enable row level security;
+drop policy if exists lembrete_avisos_autenticados on lembrete_avisos;
+create policy lembrete_avisos_autenticados on lembrete_avisos for all to authenticated
+  using (true) with check (true);
 
 
 -- ── conferência ───────────────────────────────────────────────────────────
@@ -184,6 +231,12 @@ select table_name as tabela, column_name as coluna, data_type as tipo
 union all
 select 'coletas', 'tabela criada', ''
   from information_schema.tables where table_name = 'coletas'
+union all
+select 'lembretes', 'tabela criada', ''
+  from information_schema.tables where table_name = 'lembretes'
+union all
+select 'lembrete_avisos', 'tabela criada', ''
+  from information_schema.tables where table_name = 'lembrete_avisos'
 union all
 select 'casos', 'fase aceita peticao_inicial', ''
   from pg_constraint
