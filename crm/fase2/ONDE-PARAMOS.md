@@ -27,8 +27,15 @@ repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
   — a aba só se marca quando TODOS os processos dela estão arquivados);
   "🗓 Lembrar em" nas Aposentadorias a tratar (`aposentadorias.lembrar_em`);
   e a aba 📖 Caso completo (todas as fontes numa linha do tempo, com "copiar
-  em texto"). **As três colunas novas exigem rodar `schema_por_em_dia.sql`**
-  — sem elas o app avisa e degrada sem quebrar.
+  em texto"). Na 08.57, a aba **🔔 Lembretes** (tabelas `lembretes` +
+  `lembrete_avisos`): o "avisar de tempos em tempos" — contribuição do INSS
+  com código GPS/valor/mensagem de WhatsApp pronta — vive no CLIENTE, com
+  histórico de quem avisou; os casos de 🙏 Aposentadorias Futuras migram por
+  um botão na ficha (cria o lembrete e encerra o caso); o selo do cliente
+  ganhou o estado 🟡 "sem processo, com lembretes". O 🔁 por caso da 08.55
+  foi removido no dia seguinte (coluna `lembrete_meses` ficou órfã, sem uso).
+  **As colunas e tabelas novas exigem rodar `schema_por_em_dia.sql`** — sem
+  elas o app avisa e degrada sem quebrar.
 
 **A escrita CRM → To Do está DESLIGADA de propósito.** Trava dupla: variável
 de repositório `ESCREVER_TODO=1` no workflow e a mesma variável no ambiente
