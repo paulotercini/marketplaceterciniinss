@@ -427,6 +427,21 @@ def _rest(url, chave, metodo, caminho, corpo=None, prefer=None):
         raise BancoRecusou(recado)
 
 
+def _rest_todas(url, chave, caminho, pagina=1000):
+    """GET completo: o Supabase corta qualquer resposta em 1000 linhas, sem
+    avisar. Foi assim que um caso escapou do remapeamento — o todo_task_id
+    dele existia no banco, só que da linha 1001 em diante, e o insert com id
+    novo caía no unique (23505) toda rodada."""
+    tudo, salto = [], 0
+    while True:
+        lote = _rest(url, chave, "GET",
+                     f"{caminho}&limit={pagina}&offset={salto}") or []
+        tudo.extend(lote)
+        if len(lote) < pagina:
+            return tudo
+        salto += pagina
+
+
 def subir_rest(mapa):
     url = os.environ.get("SUPABASE_URL")
     chave = os.environ.get("SUPABASE_SERVICE_KEY")
@@ -447,15 +462,16 @@ def subir_rest(mapa):
         return out
 
     # casos que já existem no banco (inclusive criados no app): remapear
-    exist = _rest(url, chave, "GET",
-                  "/rest/v1/casos?todo_task_id=not.is.null&select=id,todo_task_id") or []
+    exist = _rest_todas(url, chave,
+                        "/rest/v1/casos?todo_task_id=not.is.null&select=id,todo_task_id")
     n = remapear_casos(mapa, {c["todo_task_id"]: c["id"] for c in exist})
     if n:
         print(f"  casos remapeados para ids já existentes: {n}")
 
-    # anti-eco: o que o app já criou (poucas linhas — só origem='app')
-    app_rows = _rest(url, chave, "GET",
-                     "/rest/v1/andamentos?origem=eq.app&select=caso_id,criado_em,texto") or []
+    # anti-eco: o que o app já criou (poucas linhas — só origem='app', mas o
+    # dia em que passarem de 1000 o corte silencioso duplicaria os blocos)
+    app_rows = _rest_todas(url, chave,
+                           "/rest/v1/andamentos?origem=eq.app&select=caso_id,criado_em,texto")
     existentes = {(a["caso_id"], a["criado_em"][:10], md5(a["texto"])) for a in app_rows}
     mapa["andamentos"] = anti_eco(mapa["andamentos"], existentes)
     mapa["tarefas_docs"] = tarefas_docs_de(mapa["andamentos"])
