@@ -1177,7 +1177,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.53 · a perícia fantasma: ano à vista, cancelar à mão e leitor corrigido</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.54 · a espécie dá nome ao caso quando o benefício é genérico</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6390,8 +6390,20 @@ async function removerVinculo(vid){
 }
 
 // identidade didática do caso: "o que é" (benefício) + "onde está" (fase)
+function nomeDaEspecie(cod){
+  const e = ESPECIES.find(([c])=>c===cod);
+  return e ? e[1] : null;
+}
 function tituloCaso(k){
-  return k.beneficio ? k.beneficio : "Benefício não definido";
+  const esp = nomeDaEspecie(k.especie);
+  if(!k.beneficio) return esp || "Benefício não definido";
+  // benefício genérico + espécie definida: o nome da espécie manda. O PAT
+  // entrega "Auxílio-acidente" sem dizer se é B36 ou B94; quando alguém
+  // define a espécie, o caso passa a se chamar pelo nome completo dela
+  // ("Auxílio-acidente acidentário...") — era o caso da Marcela, que dizia
+  // B94 no campo e o genérico no título.
+  if(esp && dsa(esp).startsWith(dsa(k.beneficio))) return esp;
+  return k.beneficio;
 }
 const TRILHA=["escritorio","inss","conselho","judicial"];
 // trilha completa em botões — inclui 💰 Pagamentos e ✔ Encerrado; clicar move
@@ -7659,6 +7671,15 @@ function editarFato(casoId, campo){
     if(novo === (k[campo]||null)) return abrirFicha(clienteAberto);
     const corpo = {[campo]: novo};
     k[campo] = novo;
+    // espécie definida arrasta o benefício junto quando ele está vazio ou é
+    // o genérico da mesma família — o nome do caso conta a mesma história
+    // que o campo (gravado, vale também para a busca e para o To Do)
+    if(campo==="especie" && novo){
+      const esp = nomeDaEspecie(novo);
+      if(esp && (!k.beneficio || dsa(esp).startsWith(dsa(k.beneficio)))){
+        corpo.beneficio = esp; k.beneficio = esp;
+      }
+    }
     // DCB nova rearma o alarme e sugere a data de prorrogação (15 dias antes)
     if(campo==="dcb"){
       k.dcb_prorrogacao_pedida = false; corpo.dcb_prorrogacao_pedida = false;
