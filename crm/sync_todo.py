@@ -115,7 +115,10 @@ def eventos_de(texto, data_ref):
                     data = data.replace(year=base.year + 1)
         except ValueError:
             continue
-        hora = f"{int(m.group(5)):02d}:{m.group(6) or '00'}" if m.group(5) else None
+        # "45" perto da data não é hora (protocolo, NB, sala…): evento sem
+        # hora crível segue sem hora, e o migrar aplica o horário padrão
+        h, mn = m.group(5), m.group(6) or "00"
+        hora = f"{int(h):02d}:{mn}" if h and int(h) <= 23 and int(mn) <= 59 else None
         trecho = re.sub(r"\s+", " ", m.group(0)).strip()
         out.append({
             "tipo": tipo,
