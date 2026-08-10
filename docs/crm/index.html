@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.60 · ⇄ fundir casos: pedido, recurso e judicial numa história só</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.61 · a aba do processo diz em que lista o caso está</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7898,6 +7898,10 @@ function blocoFatos(k){
   return `<section class="fatos">
     <div class="fatos-topo">
       <h3>${esc(tituloCaso(k))}</h3>
+      ${/* EM QUE LISTA este caso está — a aba do processo responde na hora,
+           sem voltar ao menu (pedido do Paulo) */""}
+      <span class="chip ben" title="a lista deste caso (a mesma do To Do)">${
+        esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}</span>
       ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?"
         style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
         <button class="btn-mini" onclick="salvarBeneficio('${k.id}')">definir</button>`:""}
