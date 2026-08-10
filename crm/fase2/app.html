@@ -1177,7 +1177,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.51 · cliente ativo ou inativo, dito ao lado do nome</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.52 · quem já se aposentou sai das Aposentadorias a tratar</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6747,6 +6747,9 @@ function idadeJaPassou(cli){
   return !!d && d <= APOS_IDADE_CORTE;
 }
 function aposAutomatica(cli){
+  // quem JÁ é aposentado não tem aposentadoria "provável": a Marcia (tempo
+  // de contribuição) ficava no Meu Dia como se fosse aposentar por idade
+  if(cli.aposentado===true) return null;
   const data=dataIdadeApos(cli); if(!data) return null;
   if(data <= APOS_IDADE_CORTE) return null;        // já passou: não é provável
   return {id:"auto", cliente_id:cli.id, data, especie:"Idade", automatica:true,
@@ -6767,8 +6770,11 @@ function aposDoCliente(cli){
 function lembretesApos(){
   const fora=new Set((D.apos||[]).filter(a=>dsa(a.especie)==="idade").map(a=>a.cliente_id));
   const itens=[];
+  // marcado como já aposentado = fim do assunto: nem a data gravada à mão
+  // lembra mais (o botão "não está" na ficha desfaz, se foi engano)
   (D.apos||[]).forEach(a=>{ const c=D.cliPorId.get(a.cliente_id);
-    if(c) itens.push({...a, cliente:c, aviso:a.lembrar_em||avisoApos(a.data)}); });
+    if(c && c.aposentado!==true)
+      itens.push({...a, cliente:c, aviso:a.lembrar_em||avisoApos(a.data)}); });
   (D.clientes||[]).forEach(c=>{
     if(fora.has(c.id)) return;
     const auto=aposAutomatica(c);
@@ -6815,8 +6821,11 @@ function blocoApos(){
           ${a.cliente.telefone?`<a class="chip per" href="https://wa.me/55${a.cliente.telefone.replace(/\D/g,"")}"
              target="_blank" onclick="event.stopPropagation()">💬 chamar</a>`:""}</div>
       </div>
-      ${/* adiar direto daqui: escolhida a data, o item sai desta lista e só
-           volta no dia — é o mesmo "lembrar em" dos casos em recebimento */""}
+      ${/* as duas saídas desta lista, ali mesmo: adiar (volta na data) ou
+           dizer que a pessoa JÁ se aposentou (sai de vez — caso da Marcia,
+           aposentada por tempo de contribuição antes da data projetada) */""}
+      <button class="btn-mini" style="flex:none" title="já se aposentou (ex.: por tempo de contribuição) — sai desta lista de vez; desfaz-se na ficha"
+        onclick="event.stopPropagation();marcarAposentado('${a.cliente.id}',1)">✔ já aposentado</button>
       <span class="lembrar-caixa" onclick="event.stopPropagation()"
         title="adiar: some daqui e volta na data escolhida">🗓 Lembrar em
         <input type="date" min="${hoje()}" value="${a.lembrar_em||""}"
@@ -7045,6 +7054,12 @@ function caixaApos(cli){
   return `<div class="apos-cx" id="apos-cx">
     <div class="apos-cab">
       <strong>🎂 Aposentadoria provável</strong>
+      ${/* dizer "já se aposentou" não pode esperar a idade passar: quem se
+           aposenta por tempo de contribuição se aposenta ANTES da data que
+           o sistema projeta pela idade */""}
+      ${(cli.aposentado===true||jaPassou)?"":`<button class="btn-mini"
+        onclick="marcarAposentado('${cli.id}',1)"
+        title="marca como já aposentado e desliga o aviso — desfaz-se aqui mesmo">✔ já se aposentou</button>`}
       <button class="apos-mais" onclick="novaApos('${cli.id}')" title="acrescentar outra data">＋</button>
     </div>
     ${cli.aposentado===true ? `<div class="apos-ja">✔ <b>Já aposentado</b>
@@ -7101,7 +7116,9 @@ async function marcarAposentado(cliId, valor){
   Object.assign(c, dados);
   aviso(v===null ? "Voltou para conferir" : v ? "✔ Marcado como já aposentado"
                                              : "Marcado como não aposentado");
-  abrirFicha(cliId);
+  // chamado do Meu Dia, fica no Meu Dia; da ficha, redesenha a ficha
+  if(clienteAberto) abrirFicha(clienteAberto);
+  else { montarSidebar(); render(); }
 }
 function novaApos(cliId, data, especie){
   document.getElementById("apos-form").innerHTML=`
