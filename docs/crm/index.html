@@ -1177,7 +1177,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.52 · quem já se aposentou sai das Aposentadorias a tratar</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.53 · a perícia fantasma: ano à vista, cancelar à mão e leitor corrigido</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3107,7 +3107,7 @@ function cartaoCliente(cli, casosMostrar){
     dataProx?`<span class="dt ${dataProx<hoje()?"venc":dataProx===hoje()?"hoje":""}"
         ${dica?`title="${esc(dica)}"`:""}>🗓 ${esc(dataRelativa(dataProx))}</span>`:"",
     evFut?`<span class="dt ev" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">🩺 ${
-      esc(evFut.tipo.split(" ")[0])} ${fmtTS(evFut.data_hora).slice(0,5)} ${horaSP(evFut.data_hora)}</span>`:"",
+      esc(evFut.tipo.split(" ")[0])} ${(d=>d.slice(0,4)===hoje().slice(0,4)?fmt(d).slice(0,5):fmt(d))(dataSP(evFut.data_hora))} ${horaSP(evFut.data_hora)}</span>`:"",
     exig, dcb,
   ].filter(Boolean);
   // O círculo de "concluir" saiu. No To Do ele conclui a tarefa; aqui não
@@ -6115,7 +6115,9 @@ async function abrirFicha(cliId){
         <button class="btn-mini" onclick="copiarLembrete('${e.id}')">💬 copiar lembrete</button>
         ${c.telefone?`<a class="btn-mini" target="_blank" href="#" onclick="event.preventDefault();zapLembrete('${e.id}')" style="text-decoration:none">📲 WhatsApp</a>`:""}
         <a class="btn-mini" target="_blank" style="text-decoration:none"
-           href="${gcal(e.tipo+" — "+esc(c.nome), dataSP(e.data_hora), horaSP(e.data_hora), 90, "", e.local||"")}">📅 Google Agenda</a>`:""}
+           href="${gcal(e.tipo+" — "+esc(c.nome), dataSP(e.data_hora), horaSP(e.data_hora), 90, "", e.local||"")}">📅 Google Agenda</a>
+        ${e.status==="agendada"?`<button class="btn-mini" onclick="cancelarEvento('${e.id}')"
+           title="desmarcada, remarcada ou lançada errada (ex.: ano trocado) — some das listas; a ficha guarda como cancelada">✕ cancelar</button>`:""}`:""}
       </div>`).join("")}
     <div class="form-linha">
       <select id="ne-tipo"><option>Perícia</option><option>Audiência</option><option>Avaliação social</option></select>
@@ -9457,6 +9459,19 @@ async function novoEvento(){
   const [nova]=await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify(linha)});
   D.eventos.push(nova); aviso("Agendado 🩺"); montarSidebar(); abrirFicha(clienteAberto);
+}
+// cancelar não apaga: a linha fica na ficha como "cancelada" (histórico),
+// mas sai das listas, dos contadores e do cartão do Meu Dia. É a saída para
+// perícia desmarcada — e para a fantasma com o ano trocado (a "20.04" da
+// Marcela era 20.04.2027, nascida de nota sem ano lida pelo leitor antigo).
+async function cancelarEvento(id){
+  const e=D.eventos.find(x=>x.id===id); if(!e) return;
+  if(!confirm(`Cancelar ${e.tipo} de ${fmt(dataSP(e.data_hora))}?`)) return;
+  await api(`/rest/v1/eventos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({status:"cancelada"})});
+  e.status="cancelada";
+  aviso(`${e.tipo} cancelada — saiu das listas`);
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
 }
 async function novoPgto(){
   const casoId=document.getElementById("np-caso").value;
