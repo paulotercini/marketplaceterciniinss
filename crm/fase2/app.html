@@ -1156,7 +1156,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.39 · marcar várias frases na mesma anotação</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.40 · o erro diz qual coluna falta</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2646,7 +2646,18 @@ function renderImportarPat(){
   document.getElementById("titulo-lista").textContent = "📥 Importar do INSS";
   document.getElementById("sub-lista").textContent =
     "O que o PAT/GERID tem, comparado com o que o CRM já sabe. Nada é gravado sem você mandar.";
-  document.getElementById("conteudo-meio").innerHTML = telaImportarPat();
+  // Se a montagem da tela estourar, o padrão do navegador é deixar o quadro
+  // em branco e escrever no console — e quem está usando vê "não aconteceu
+  // nada". A coleta continua guardada na fila; o que falta é dizer o que
+  // houve, com a mensagem do erro, aqui na tela.
+  try{
+    document.getElementById("conteudo-meio").innerHTML = telaImportarPat();
+  }catch(e){
+    console.error("tela de importação:", e);
+    document.getElementById("conteudo-meio").innerHTML =
+      `<div class="exig"><strong>A tela de importação quebrou:</strong> ${esc(e.message||String(e))}.
+       Nada foi gravado, e a coleta continua na fila.</div>`;
+  }
   ligarImportarPat();
   if(!coletasPendentes.length) buscarColetas().then(()=>{
     if(coletasPendentes.length && visao==="patinss"){
@@ -2751,6 +2762,13 @@ function ligarImportarPat(){
 }
 async function aplicarPat(){
   if(!planoPat || planoPat.erro) return;
+  // erro FORA do laço (dado com forma inesperada, por exemplo) não pode sumir
+  // no console: o laço já se protege item a item, e o que sobra é isto
+  try{ await aplicarPatDeVerdade(); }
+  catch(e){ console.error("aplicar do PAT:", e);
+            aviso("A importação parou: " + (e.message||String(e))); }
+}
+async function aplicarPatDeVerdade(){
   // UM ERRO NÃO PODE PARAR O LOTE. A primeira versão abortava no primeiro
   // problema — num lote de cem, isso deixa metade gravada e ninguém sabe
   // qual metade. Agora cada item responde por si, e o que falhou aparece no
@@ -2807,12 +2825,7 @@ async function aplicarPat(){
   await buscarColetas();
   await carregar(); montarSidebar(); render();
   if(!falhas.length) return aviso(`✔ ${feitos} gravação(ões)`);
-  // a mensagem do banco importa mais que a contagem: PGRST204 quer dizer
-  // coluna que não existe, e a correção está no schema.sql, não no app
-  const faltaColuna = falhas.some(f=>/PGRST204|Could not find the/.test(f));
-  aviso(faltaColuna
-    ? "O banco está desatualizado — rode o schema_por_em_dia.sql no Supabase e tente de novo."
-    : `${feitos} gravadas, ${falhas.length} falharam`);
+  aviso(recadoDeFalhas(feitos, falhas));
   console.warn("falhas da importação:", falhas);
 }
 
@@ -3242,6 +3255,22 @@ async function aplicarCrps(coletaId){
     ? `${feitos} gravadas, ${falhas.length} falharam`
     : `✔ ${p.resumo.movimentos} movimento(s)${d?`, ${d} com decisão`:""} — veja em 📣 Novidades`);
   if(falhas.length) console.warn("falhas do CRPS:", falhas);
+}
+
+// O QUE DIZER QUANDO A GRAVAÇÃO FALHA.
+//
+// A mensagem do banco importa mais que a contagem. PGRST204 quer dizer coluna
+// que não existe, e a correção está no SQL, não no app — mas "o banco está
+// desatualizado" sozinho manda procurar agulha no palheiro: o schema tem
+// dezenas de colunas e não dá para saber qual. O PostgREST diz o nome no
+// próprio erro ("Could not find the 'der' column of 'casos'"); é só repassar.
+function recadoDeFalhas(feitos, falhas){
+  const falta = falhas.find(f=>/PGRST204|Could not find the/.test(f));
+  if(!falta) return `${feitos} gravadas, ${falhas.length} falharam`;
+  const q = falta.match(/'([^']+)' column of '([^']+)'/);
+  return "O banco está desatualizado"
+    + (q ? ` — falta a coluna ${q[2]}.${q[1]}` : "")
+    + ". Rode o schema_por_em_dia.sql no Supabase e tente de novo.";
 }
 
 // ENCAMINHAR — a triagem que a caixa de entrada pede. Ler a novidade é
