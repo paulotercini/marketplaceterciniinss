@@ -163,6 +163,12 @@ alter table casos add column if not exists arquivados jsonb not null default '{}
 -- porque a tabela aposentadorias nasceu em onda mais nova do schema.sql.
 alter table if exists aposentadorias add column if not exists lembrar_em date;
 
+-- lembrete_meses: o 🔁 aviso periódico do caso — "pagar contribuição do
+-- INSS", "ver se está tudo certo" — obrigação que não acaba num pedido.
+-- Vencido o prazo, o cartão do Meu Dia oferece "✔ avisado": registra o
+-- andamento e rearma sozinho para daqui a N meses.
+alter table casos add column if not exists lembrete_meses int;
+
 
 -- ── conferência ───────────────────────────────────────────────────────────
 -- Lista as colunas que o CRM e a importação usam, mais a tabela `coletas` e
@@ -172,7 +178,7 @@ select table_name as tabela, column_name as coluna, data_type as tipo
   from information_schema.columns
  where (table_name = 'casos' and column_name in ('marcadores','ronda','processo_link',
           'situacao_inss','especie','der','urgente','protocolos','crps_nups','crps',
-          'encerrado_por','arquivados'))
+          'encerrado_por','arquivados','lembrete_meses'))
     or (table_name = 'andamentos' and column_name in ('responde_a','origem_id'))
     or (table_name = 'aposentadorias' and column_name = 'lembrar_em')
 union all
