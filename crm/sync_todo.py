@@ -112,7 +112,16 @@ def eventos_de(texto, data_ref):
                 base = data_ref or datetime.date.today()
                 data = datetime.date(base.year, int(m.group(3)), int(m.group(2)))
                 if data < base:
-                    data = data.replace(year=base.year + 1)
+                    # ...mas perícia não se marca com quase um ano de
+                    # antecedência: "perícia 20/04" anotada em maio é a que
+                    # JÁ HOUVE em abril, não a de abril do ano seguinte. O
+                    # salto de ano só vale até 6 meses à frente; além disso,
+                    # fica a data passada (vira evento 'realizada', que a
+                    # tela não anuncia) — era assim que nascia a perícia
+                    # fantasma de 2027 no cartão do Meu Dia.
+                    prox = data.replace(year=base.year + 1)
+                    if (prox - base).days <= 180:
+                        data = prox
         except ValueError:
             continue
         # "45" perto da data não é hora (protocolo, NB, sala…): evento sem
