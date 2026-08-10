@@ -247,3 +247,28 @@ def test_escrever_todo_liga_com_a_variavel(monkeypatch):
     # é o bastante para provar que a variável é o que destranca
     with pytest.raises(SystemExit):
         escrever_todo.main()
+
+
+# ── o erro do banco tem de dizer o que o banco disse ──────────────────────
+# Dezessete minutos de leitura do To Do e, no fim, "HTTP Error 400: Bad
+# Request" — que não diz nada. O PostgREST manda no corpo da resposta qual
+# coluna não existe; jogar isso fora foi o que fez a sincronização ficar dois
+# dias parada sem ninguém saber por quê.
+def test_erro_do_banco_traz_a_mensagem_e_a_tabela(monkeypatch):
+    import io, urllib.error, urllib.request
+
+    corpo = ('{"code":"PGRST204","message":"Could not find the '
+             "'situacao_inss' column of 'casos' in the schema cache\"}")
+
+    def recusa(req, timeout=None):
+        raise urllib.error.HTTPError(req.full_url, 400, "Bad Request", {},
+                                     io.BytesIO(corpo.encode()))
+    monkeypatch.setattr(urllib.request, "urlopen", recusa)
+
+    with pytest.raises(SystemExit) as caiu:
+        migrar._rest("https://x.supabase.co", "chave", "POST",
+                     "/rest/v1/casos?on_conflict=id", [{"id": 1}])
+    msg = str(caiu.value)
+    assert "casos" in msg, "não disse em que tabela foi"
+    assert "situacao_inss" in msg, "engoliu a mensagem do banco"
+    assert "schema_por_em_dia" in msg, "não disse o que fazer a respeito"
