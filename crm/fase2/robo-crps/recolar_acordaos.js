@@ -71,7 +71,8 @@ async function main() {
   }
 
   const casos = await sb('/rest/v1/casos?select=id,titulo,crps&crps=not.is.null');
-  let religados = 0, semArquivo = 0, jaTinham = 0;
+  let religados = 0, jaTinham = 0, semCopiaDecide = 0, semCopiaComum = 0;
+  const faltamDecide = [];
   const mudados = [];
 
   for (const k of casos) {
@@ -92,7 +93,15 @@ async function main() {
         for (const a of (e.arquivos || [])) {
           if (a.storage) { jaTinham++; continue; }
           const g = guardados.get(String(a.id || a.nome));
-          if (!g) { semArquivo++; continue; }
+          if (!g) {
+            // SEPARAR O QUE IMPORTA. A maioria dos anexos de um recurso é
+            // petição, procuração, laudo — o CRM nunca guardou cópia deles,
+            // de propósito. Só o DECISÓRIO é baixado. Contar tudo junto dá um
+            // número grande e assustador que não quer dizer perda nenhuma.
+            if (a.decide) { semCopiaDecide++; faltamDecide.push(`${nup} · ${a.nome || a.id}`); }
+            else semCopiaComum++;
+            continue;
+          }
           a.storage = g.caminho;
           if (g.bytes) a.bytes = g.bytes;
           religados++; n++;
@@ -105,7 +114,16 @@ async function main() {
     console.log(`  ${k.titulo || k.id}: ${n} acórdão(s) religado(s)`);
 
   console.log(`\n${religados} arquivo(s) para religar em ${mudados.length} caso(s)`
-    + ` · ${jaTinham} já tinham caminho · ${semArquivo} sem cópia no balde`);
+    + ` · ${jaTinham} já tinham caminho`);
+  console.log(`${semCopiaComum} anexo(s) comuns sem cópia — normal: o CRM só guarda o decisório.`);
+  if (semCopiaDecide) {
+    console.log(`\n⚠ ${semCopiaDecide} DECISÓRIO(S) sem cópia no balde — estes precisam de`
+      + ` nova coleta no e-Recursos:`);
+    for (const f of faltamDecide.slice(0, 20)) console.log(`   ${f}`);
+    if (faltamDecide.length > 20) console.log(`   … e mais ${faltamDecide.length - 20}`);
+  } else {
+    console.log('Nenhum decisório ficou sem cópia.');
+  }
 
   if (!aplicar) {
     console.log('\nSECO — nada foi gravado. Para valer:  node recolar_acordaos.js --aplicar');
