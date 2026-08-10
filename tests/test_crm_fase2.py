@@ -303,3 +303,38 @@ def test_uma_linha_ruim_nao_derruba_o_lote(monkeypatch):
     assert set(enviados) == {"a", "b", "c"}, f"o resto não entrou: {enviados}"
     assert "ruim" in str(caiu.value), "não disse qual linha foi recusada"
     assert len(tentativas) > 1, "não chegou a partir o lote para achar a culpada"
+
+
+# O Supabase corta qualquer GET em 1000 linhas, sem avisar. O remapeamento lia
+# uma página só: caso criado no app cujo todo_task_id estava da linha 1001 em
+# diante escapava, a remontagem gerava id novo e o banco recusava (23505) —
+# uma ficha perdida em toda rodada, sempre a mesma.
+def test_remapeamento_enxerga_alem_da_primeira_pagina(monkeypatch):
+    import urllib.parse
+    existentes = [{"id": f"velho-{i}", "todo_task_id": f"task-{i}"}
+                  for i in range(1500)]
+    postados = []
+
+    def falso_rest(url, chave, metodo, caminho, corpo=None, prefer=None):
+        if metodo != "GET":
+            postados.extend(corpo)
+            return
+        if "/casos" not in caminho:
+            return []
+        q = urllib.parse.parse_qs(urllib.parse.urlparse(caminho).query)
+        salto = int(q.get("offset", ["0"])[0])
+        pagina = min(int(q.get("limit", ["1000"])[0]), 1000)  # o teto do Supabase
+        return existentes[salto:salto + pagina]
+    monkeypatch.setattr(migrar, "_rest", falso_rest)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+
+    mapa = {"andamentos": [], "eventos": [], "tarefas": [],
+            "casos": [{"id": "novo-id-determinístico", "todo_task_id": "task-1400",
+                       "cliente_id": None}]}
+    migrar.subir_rest(mapa)
+
+    ids = [l["id"] for l in postados if l.get("todo_task_id") == "task-1400"]
+    assert ids == ["velho-1400"], f"o caso além da página 1 não foi remapeado: {ids}"
