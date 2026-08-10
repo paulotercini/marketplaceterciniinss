@@ -423,6 +423,11 @@
   .cli-st.inativo{background:#FBE9E7;color:#B71C1C;border:1px solid #E8B4AC}
   .cli-st.ativo{background:#EDF6EE;color:#1E7B34;border:1px solid #BFDCC2}
   .cli-st.lemb{background:#FFF4D6;color:#8A6100;border:1px solid #E9B44C}
+  /* o nome do cliente é clicável: abre o mapa dos casos por lista */
+  .cli-casos{display:inline-flex;align-items:center;gap:10px;cursor:pointer;
+    border-radius:10px;padding:2px 8px;margin:-2px -8px}
+  .cli-casos:hover{background:var(--fundo)}
+  .cli-casos-seta{color:var(--cinza);font-size:12px}
   .cli-st.semcaso{background:var(--fundo);color:var(--cinza);border:1px solid var(--borda)}
   @media (max-width:700px){ .cli-st{font-size:10px;padding:2px 7px} }
   .fechar{margin-left:auto;border:none;background:none;font-size:20px;cursor:pointer;color:var(--cinza)}
@@ -1183,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.58 · a importação do PAT lembra do que já viu — só o novo aparece</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.59 · o nome do cliente abre o mapa dos casos, lista por lista</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6014,7 +6019,13 @@ async function abrirFicha(cliId){
   <div class="det-topo">
     <div class="linha1">
       <button class="cel-voltar so-cel" onclick="fecharFicha()" title="voltar para a lista">‹</button>
-      <span class="avatar">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
+      ${/* o nome e a bolinha abrem o mapa dos casos (pedido do Paulo): em
+           que lista está cada um, e um clique leva direto ao processo */""}
+      <span class="cli-casos" onclick="menuCasosDoCliente(event,'${cliId}')"
+        title="ver os casos deste cliente e em que lista está cada um">
+        <span class="avatar">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
+        <span class="cli-casos-seta">▾</span>
+      </span>
       ${stCli}
       <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
     ${/* abaixo do nome só o que a equipe usa o tempo todo: CPF e a senha do
@@ -6417,6 +6428,10 @@ function irAba(i){ abaAtiva=i; if(clienteAberto) abrirFicha(clienteAberto); }
 
 // pop-up "⚖️ Processos": escolher o processo certo sem errar o destino
 function fecharMenuProcessos(){ const m=document.getElementById("menu-processos"); if(m) m.remove(); }
+// o mesmo menu, aberto pelo nome/avatar do cliente no topo da ficha
+function menuCasosDoCliente(ev, cliId){
+  menuProcessos(ev, D.casosDoCliente.get(cliId)||[]);
+}
 // Caso em fase de PAGAMENTO não é mais um processo em andamento: o trabalho
 // jurídico acabou e o que falta é dinheiro entrar. Ele sai do menu ⚖️ e passa
 // a viver na aba 💰 Pagamentos — foi para isso que ela existe.
@@ -6425,9 +6440,12 @@ function menuProcessos(ev, ks){
   ks = processosDe(ks);
   ev.stopPropagation(); fecharMenuProcessos();
   const m=document.createElement("div"); m.id="menu-processos";
+  // a linha diz EM QUE LISTA o caso está (com o emoji do To Do — "👪
+  // Judicial", "🙏 Aposentadorias Futuras"): é o mapa que o Paulo pediu ao
+  // clicar no nome. Caso sem lista de origem cai no nome da fase.
   const item=k=>`<div class="mp-it ${casoSel===k.id?"sel":""} ${k.fase==="encerrado"?"enc":""}" data-mp="${k.id}" style="${k.fase==="encerrado"?"opacity:.55":""}">
     <b>${k.urgente?"🔥 ":""}${esc(tituloCaso(k))}</b>
-    <small>${esc(NOME_FASE[k.fase]||"")}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}${k.nb?" · NB "+esc(k.nb):((k.protocolos||[]).length?" · 📄 "+(k.protocolos||[]).slice(-1)[0]:"")}</small>
+    <small>${k.fase==="encerrado"?"✔ Encerrado":esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}${k.prazo?" · 🗓 "+fmt(k.prazo).slice(0,5):""}${k.exigencia_prazo?" · ⚠ exigência":""}${k.nb?" · NB "+esc(k.nb):((k.protocolos||[]).length?" · 📄 "+(k.protocolos||[]).slice(-1)[0]:"")}</small>
   </div>`;
   m.innerHTML =
     ks.filter(k=>k.fase!=="encerrado").map(item).join("")
