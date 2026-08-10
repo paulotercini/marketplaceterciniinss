@@ -52,12 +52,56 @@ function indexar(D) {
 // dizer, quase sempre, "o caso existe e ninguém anotou o número". Antes de
 // criar, procura no mesmo cliente um caso ativo na mesma lista e, quando as
 // duas têm espécie, com a mesma espécie.
-function casoParecido(D, clienteId, lista, especie) {
-  return (D.casos || []).find(k =>
+function casosParecidos(D, clienteId, lista, especie) {
+  return (D.casos || []).filter(k =>
     k.cliente_id === clienteId && k.fase !== 'encerrado' && k.fase === lista &&
     (!especie || !k.especie || String(k.especie).toUpperCase() === String(especie).toUpperCase()));
 }
+const casoParecido = (D, clienteId, lista, especie) =>
+  casosParecidos(D, clienteId, lista, especie)[0];
 const tituloDoCaso = k => (k || {}).beneficio || (k || {}).titulo || 'caso sem nome';
+
+// SEPARAR O ÓBVIO DO DUVIDOSO. Sessenta e cinco decisões na mão é trabalho
+// que ninguém faz duas vezes — e a maioria delas é "Aposentadoria por tempo
+// de contribuição" contra "Apos. Tempo de Contribuição", ou seja, a mesma
+// coisa escrita de dois jeitos. O que muda é só a certeza, e ela pode ser
+// dita: o item ganha `provavel` e o MOTIVO, para a decisão continuar sendo
+// sua com o argumento na frente.
+const ABREV = { apos: 'aposentadoria', aposent: 'aposentadoria', aux: 'auxilio',
+                ben: 'beneficio', pens: 'pensao', def: 'deficiencia',
+                incap: 'incapacidade', contrib: 'contribuicao' };
+const VAZIAS = new Set(['por', 'com', 'para', 'sem', 'pessoa', 'requerimento', 'concessao']);
+
+function palavrasDoBeneficio(t) {
+  return String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ').trim().split(' ')
+    .map(p => ABREV[p] || p)
+    .filter(p => p.length > 2 && !VAZIAS.has(p));
+}
+// duas palavras significativas em comum, ou tudo o que o nome mais curto tem
+function mesmoBeneficio(a, b) {
+  const A = new Set(palavrasDoBeneficio(a)), B = new Set(palavrasDoBeneficio(b));
+  if (!A.size || !B.size) return false;
+  const comuns = [...A].filter(p => B.has(p)).length;
+  return comuns >= 2 || comuns === Math.min(A.size, B.size);
+}
+
+function porQueParecido(item, k, quantos) {
+  // Recurso e revisão NÃO têm benefício próprio: o nome que veio do portal é
+  // o tipo do pedido ("Recurso ordinário"), não o que se pede. Comparar texto
+  // aqui casaria "Recurso ESPECIAL" com "Aposentadoria ESPECIAL", que é
+  // parecença de palavra e não de caso. O que vale é a contagem.
+  if (item.tipo === 'recurso' || item.tipo === 'revisao')
+    return quantos === 1
+      ? { provavel: true,  motivo: 'é o único caso do cliente nesta lista' }
+      : { provavel: false, motivo: `o cliente tem ${quantos} casos nesta lista` };
+  if (item.especie && k.especie &&
+      String(item.especie).toUpperCase() === String(k.especie).toUpperCase())
+    return { provavel: true, motivo: `mesma espécie (${item.especie})` };
+  if (mesmoBeneficio(item.beneficio, k.beneficio || k.titulo))
+    return { provavel: true, motivo: 'mesmo benefício, escrito de outro jeito' };
+  return { provavel: false, motivo: 'o benefício não bate com o que já existe' };
+}
 
 // O que muda num caso que JÁ existe. Só campo vazio é preenchido: o que o
 // escritório escreveu à mão vale mais que o que o portal devolve, e
@@ -169,12 +213,20 @@ function planoDeImportacao(pat, D, hoje) {
     // O PROTOCOLO CASOU EM POUCOS PORQUE O CAMPO QUASE NUNCA FOI PREENCHIDO,
     // não porque o caso não existe. Criar sem olhar duplicaria a ficha de
     // quem já está no CRM — e ninguém desfaz setenta duplicatas na mão.
-    const parecido = casoParecido(D, cli.id, lista, det.especie);
-    if (parecido)
+    const candidatos = casosParecidos(D, cli.id, lista, det.especie);
+    const parecido = candidatos[0];
+    if (parecido) {
+      const j = porQueParecido(item, parecido, candidatos.length);
       plano.possiveisDuplicados.push({ ...item, cliente_id: cli.id, nome: cli.nome, lista,
-        caso_id: parecido.id, titulo_existente: tituloDoCaso(parecido) });
+        caso_id: parecido.id, titulo_existente: tituloDoCaso(parecido),
+        provavel: j.provavel, motivo: j.motivo });
+    }
     else plano.novos.push({ ...item, cliente_id: cli.id, nome: cli.nome, lista });
   }
+
+  // os prováveis primeiro: é a ordem em que se decide, e o botão de juntar
+  // em lote age exatamente sobre esse bloco de cima
+  plano.possiveisDuplicados.sort((a, b) => (b.provavel ? 1 : 0) - (a.provavel ? 1 : 0));
 
   const porTipo = l => l.reduce((m, x) => (m[x.tipo] = (m[x.tipo] || 0) + 1, m), {});
   plano.resumo = {
@@ -182,6 +234,7 @@ function planoDeImportacao(pat, D, hoje) {
     atualizar: plano.atualizar.length,
     novos: plano.novos.length,
     possiveis_duplicados: plano.possiveisDuplicados.length,
+    provaveis: plano.possiveisDuplicados.filter(x => x.provavel).length,
     sem_cliente: plano.semCliente.length,
     ignorados: plano.ignorados.length,
     eventos: plano.eventos.reduce((n, e) => n + e.eventos.length, 0),
@@ -215,4 +268,5 @@ function conferirPlanoPat(pat, plano) {
 }
 
 module.exports = { LISTA_POR_TIPO, NAO_ABRE_CASO, digitos, protocolosDe, indexar, casoParecido,
+  casosParecidos, palavrasDoBeneficio, mesmoBeneficio, porQueParecido,
   mudancasDoCaso, eventosNovos, comentariosNovos, andamentoDaMudanca, planoDeImportacao, conferirPlanoPat };

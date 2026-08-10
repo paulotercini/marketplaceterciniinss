@@ -199,7 +199,7 @@ test('o plano de um arquivo real passa na conferência', () => {
   const p = I.planoDeImportacao(pat, CRM(), HOJE);
   assert.equal(I.conferirPlanoPat(pat, p), null);
   assert.deepStrictEqual(p.resumo,
-    { lidos: 4, atualizar: 1, novos: 1, possiveis_duplicados: 0, sem_cliente: 1,
+    { lidos: 4, atualizar: 1, novos: 1, possiveis_duplicados: 0, provaveis: 0, sem_cliente: 1,
       ignorados: 1, eventos: 0, comentarios: 0, exigencias: 0, apuracoes: 0,
       a_confirmar: 0, novos_por_tipo: { recurso: 1 } });
 });
@@ -234,7 +234,8 @@ const path = require('path');
 test('a cópia dentro do app.html é idêntica à testada aqui', () => {
   const app = fs.readFileSync(path.join(__dirname, '..', '..', 'app.html'), 'utf8');
   const nu = s => s.replace(/\s+/g, ' ').trim();
-  for (const fn of ['protocolosDe', 'indexar', 'casoParecido', 'mudancasDoCaso', 'eventosNovos',
+  for (const fn of ['protocolosDe', 'indexar', 'casosParecidos', 'palavrasDoBeneficio',
+                    'mesmoBeneficio', 'porQueParecido', 'mudancasDoCaso', 'eventosNovos',
                     'andamentoDaMudanca', 'planoDeImportacao', 'conferirPlanoPat']) {
     const i = app.indexOf(`function ${fn}(`);
     assert.notEqual(i, -1, `${fn} sumiu do app.html`);
@@ -303,4 +304,67 @@ test('caso sem outra mudança entra no plano só pelo comentário', () => {
   const p = I.planoDeImportacao(pat, D, HOJE);
   assert.equal(p.atualizar.length, 1, 'o comentário sozinho não colocou o caso no plano');
   assert.equal(p.atualizar[0].novos_comentarios, 1);
+});
+
+// ── provável x duvidoso ───────────────────────────────────────────────────
+// Sessenta e cinco decisões na mão, na primeira importação de verdade. A
+// maioria era "Aposentadoria por tempo de contribuição" contra "Apos. Tempo
+// de Contribuição" — a mesma coisa escrita de dois jeitos. O que separa o
+// óbvio do duvidoso pode ser dito, e é isto que estes testes prendem.
+test('o mesmo benefício escrito de outro jeito é provável', () => {
+  assert.ok(I.mesmoBeneficio('Aposentadoria por tempo de contribuição', 'Apos. Tempo de Contribuição'));
+  assert.ok(I.mesmoBeneficio('Auxílio-doença', 'Aux. Doença'));
+  assert.ok(I.mesmoBeneficio('Aposentadoria por idade', 'Apos. por Idade'));
+});
+
+// "Recurso ESPECIAL" e "Aposentadoria ESPECIAL" compartilham a palavra e não
+// o assunto: é parecença de texto, não de caso.
+test('palavra em comum sem assunto em comum não conta', () => {
+  assert.ok(!I.mesmoBeneficio('Aposentadoria por idade', 'Aposentadoria especial'));
+  assert.ok(!I.mesmoBeneficio('Auxílio-acidente', 'Espécie 94'));
+  assert.ok(!I.mesmoBeneficio('', 'Apos. por Idade'));
+});
+
+test('mesma espécie basta para ser provável', () => {
+  const j = I.porQueParecido({ tipo: 'beneficio', especie: 'B42', beneficio: 'Sei lá o quê' },
+                             { especie: 'b42', beneficio: 'Outro nome qualquer' }, 1);
+  assert.equal(j.provavel, true);
+  assert.match(j.motivo, /mesma espécie/);
+});
+
+// O nome que o portal manda num recurso é o TIPO do recurso, não o benefício.
+// Comparar texto ali casaria coisas erradas; o que vale é quantos casos o
+// cliente tem naquela lista.
+test('recurso é provável quando o cliente só tem um caso na lista', () => {
+  const item = { tipo: 'recurso', beneficio: 'Recurso ordinário (inicial)' };
+  assert.equal(I.porQueParecido(item, { beneficio: 'Aux. Incapacidade Temporária' }, 1).provavel, true);
+  const dois = I.porQueParecido(item, { beneficio: 'Aux. Incapacidade Temporária' }, 3);
+  assert.equal(dois.provavel, false);
+  assert.match(dois.motivo, /3 casos/);
+});
+
+test('benefício que não bate fica para decidir na mão', () => {
+  const j = I.porQueParecido({ tipo: 'beneficio', especie: 'B36', beneficio: 'Auxílio-acidente' },
+                             { especie: 'B94', beneficio: 'Espécie 94' }, 1);
+  assert.equal(j.provavel, false);
+  assert.match(j.motivo, /não bate/);
+});
+
+test('o plano marca o provável, conta e põe na frente', () => {
+  const D = { clientes: [{ id: 'c1', cpf: '11111111111', nome: 'Maria' }],
+              casos: [
+                { id: 'k1', cliente_id: 'c1', fase: 'inss', beneficio: 'Apos. Tempo de Contribuição' },
+                { id: 'k2', cliente_id: 'c1', fase: 'inss', beneficio: 'Pensão por morte' }],
+              eventos: [], andamentos: [] };
+  const pat = { lista: [{ protocolo: '11', cpf: '11111111111' },
+                        { protocolo: '22', cpf: '11111111111' }],
+    detalhes: [det({ protocolo: '11', beneficio: 'Auxílio-acidente', especie: null }),
+               det({ protocolo: '22', beneficio: 'Aposentadoria por tempo de contribuição', especie: null })] };
+  const p = I.planoDeImportacao(pat, D, HOJE);
+  assert.equal(p.resumo.possiveis_duplicados, 2);
+  assert.equal(p.resumo.provaveis, 1, 'devia haver exatamente um provável');
+  assert.equal(p.possiveisDuplicados[0].protocolo, '22', 'o provável tem de vir primeiro');
+  assert.equal(p.possiveisDuplicados[0].provavel, true);
+  assert.equal(p.possiveisDuplicados[1].provavel, false);
+  assert.ok(p.possiveisDuplicados[1].motivo, 'o duvidoso também precisa dizer por quê');
 });

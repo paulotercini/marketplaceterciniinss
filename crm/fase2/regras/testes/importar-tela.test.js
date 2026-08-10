@@ -452,3 +452,46 @@ test('a hora de chegada é a de Brasília, não a do banco', pular, async () => 
   assert.ok(!/chegou Amanhã/.test(txt), `coleta recém-chegada marcada como futura: ${txt.slice(0, 300)}`);
   await pag.evaluate(() => { coletasPendentes = []; visao = 'fase:inss'; render(); });
 });
+
+// JUNTAR EM LOTE. Na primeira importação de verdade foram 65 "confira antes"
+// — decisão na mão que ninguém toma duas vezes. O lote age só sobre o que a
+// regra marcou como provável; o duvidoso continua esperando por você.
+test('o botão em lote junta os prováveis e não toca nos duvidosos', pular, async () => {
+  pedidos = [];
+  await abrir();
+  await pag.evaluate(() => {
+    planoPat = {
+      atualizar: [], novos: [], eventos: [], comentarios: [], semCliente: [], ignorados: [],
+      possiveisDuplicados: [
+        { protocolo: 'A1', caso_id: 'k1', nome: 'Maria', provavel: true,
+          motivo: 'mesma espécie (B42)', situacao: 'Em análise', link: 'x', der: null, especie: 'B42',
+          titulo_existente: 'Apos. Tempo de Contribuição' },
+        { protocolo: 'A2', caso_id: 'k2', nome: 'João', provavel: true,
+          motivo: 'mesmo benefício, escrito de outro jeito', situacao: 'Em análise', link: 'x',
+          der: null, especie: 'B42', titulo_existente: 'Apos. Tempo de Contribuição' },
+        { protocolo: 'B1', caso_id: 'k2', nome: 'João', provavel: false,
+          motivo: 'o benefício não bate com o que já existe', situacao: 'Em análise', link: 'x',
+          der: null, especie: 'B36', titulo_existente: 'Apos. Tempo de Contribuição' },
+      ],
+      resumo: { lidos: 3, atualizar: 0, novos: 0, possiveis_duplicados: 3, provaveis: 2,
+                sem_cliente: 0, ignorados: 0, eventos: 0, comentarios: 0, exigencias: 0,
+                apuracoes: 0, a_confirmar: 0, novos_por_tipo: {} },
+    };
+    visao = 'patinss'; render();
+  });
+  await pag.waitForTimeout(200);
+  const txt = await pag.$eval('#conteudo-meio', e => e.textContent);
+  assert.match(txt, /juntar os 2 prováveis/, 'o botão em lote não apareceu');
+  assert.match(txt, /mesma espécie \(B42\)/, 'o motivo tem de aparecer em cada linha');
+
+  await pag.click('button[onclick="juntarProvaveis()"]');
+  await pag.waitForTimeout(400);
+  const patches = pedidos.filter(x => x.m === 'PATCH' && x.url.includes('/casos?id=eq.'));
+  assert.equal(patches.length, 2, `juntou ${patches.length} em vez dos 2 prováveis`);
+  assert.ok(patches.every(p => Array.isArray(p.corpo.protocolos)), 'o protocolo não entrou no caso');
+  // o duvidoso ficou, e o botão em lote sumiu junto com os prováveis
+  const sobrou = await pag.evaluate(() => planoPat.possiveisDuplicados.map(x => x.protocolo));
+  assert.deepEqual(sobrou, ['B1'], `sobrou ${sobrou.join(',')} — o duvidoso devia ter ficado sozinho`);
+  const depois = await pag.$eval('#conteudo-meio', e => e.textContent);
+  assert.ok(!/juntar os \d+ prováveis/.test(depois), 'o botão continuou oferecendo juntar');
+});
