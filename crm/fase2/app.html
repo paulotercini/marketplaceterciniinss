@@ -336,11 +336,12 @@
      lista tem fundo colorido — só a sombra sumiria ali.
      A altura continua FIXA: era a altura variável, e não o tamanho, que fazia
      o olho perder o compasso de uma linha para a outra.
-     58px + 2px de folga ≈ a régua do To Do: na mesma tela em que ele mostra
-     16 clientes, aqui cabiam 15 — o Paulo compara as duas listas todo dia,
-     e a diferença fazia o CRM parecer mais "cheio" com menos gente. */
+     52px + 2px de folga: a régua do To Do, apertada mais um furo a pedido
+     do Paulo — ele compara as duas listas todo dia, e o CRM mostrando menos
+     clientes na mesma tela parecia mais "cheio" com menos gente. As duas
+     linhas de texto (~39px) continuam com ar; abaixo disso começa a colar. */
   .cartao{position:relative;background:var(--branco);padding:0 12px 0 16px;cursor:pointer;
-    min-height:58px;display:flex;align-items:center;gap:10px;margin-bottom:2px;
+    min-height:52px;display:flex;align-items:center;gap:10px;margin-bottom:2px;
     border:1px solid var(--borda);border-radius:8px;
     box-shadow:0 1px 2px rgba(30,32,36,.05)}
   .cartao:hover{background:#F9FBFD;box-shadow:0 3px 9px rgba(30,32,36,.10)}
@@ -392,11 +393,11 @@
   .cartao .avatares{min-width:56px;justify-content:flex-end;margin-left:auto}
   /* com o cartão mais baixo, os sinais crescem: quem está atribuído, o 🔥 e
      a ★ são o que o olho varre na lista — o Paulo pediu que saltassem mais */
-  .cartao .avatar.mini{width:26px;height:26px;font-size:11.5px}
-  /* ⭐ e 🔥 são clique de todo dia: alvo de 32px e glifo grande o bastante
+  .cartao .avatar.mini{width:28px;height:28px;font-size:12.5px}
+  /* ⭐ e 🔥 são clique de todo dia: alvo de 34px e glifo grande o bastante
      para acertar sem mirar */
-  .acao-card{border:none;background:none;font-size:22px;line-height:1;cursor:pointer;
-    color:#c8c6c4;flex:none;width:32px;height:32px;border-radius:8px;
+  .acao-card{border:none;background:none;font-size:24px;line-height:1;cursor:pointer;
+    color:#c8c6c4;flex:none;width:34px;height:34px;border-radius:8px;
     display:inline-flex;align-items:center;justify-content:center}
   .acao-card:hover{background:#EFF2F7}
   .acao-card.on{color:#eaa300}
@@ -1162,7 +1163,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.45 · a lista no compasso do To Do, com os sinais maiores</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.46 · a lista mais um furo apertada, os sinais mais um ponto</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
