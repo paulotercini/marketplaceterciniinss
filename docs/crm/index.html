@@ -1169,7 +1169,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.49 · comentários do PAT limpos; todo caso importado consta nas Novidades</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.50 · a lista de origem debaixo do nome e o contador do ☀️ Meu Dia</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1838,9 +1838,22 @@ async function moverCaso(casoId, lista){
   montarSidebar(); render();
 }
 
+// o número do ☀️ na barra, como o To Do mostra: o que está marcado para HOJE
+// — os adicionados ao dia, os casos que vencem hoje e as tarefas de hoje.
+// Vencidas não entram: têm contador próprio dentro da tela, e somá-las aqui
+// faria o número nunca zerar (zerar é justamente a recompensa do dia).
+function quantosNoMeuDia(){
+  const casosDia = (D.meudia||[]).filter(m=>m.caso_id)
+    .map(m=>D.casoPorId.get(m.caso_id)).filter(Boolean);
+  const tfHoje = k => (D.tarefasPorCaso.get(k.id)||[]).some(t=>t.lembrar_em===hoje());
+  const hojeK = ativos().filter(k=>(k.prazo===hoje() || tfHoje(k)) && !casosDia.includes(k));
+  const tHoje = (D.tarefas||[]).filter(t=>!t.concluida && t.prazo===hoje());
+  return casosDia.length + hojeK.length + tHoje.length;
+}
+
 function montarSidebar(){
   const din = [
-    ["meudia","☀️ Meu Dia", null],
+    ["meudia","☀️ Meu Dia", quantosNoMeuDia()],
     ["novidades","📣 Novidades", novidades().length],
     ["mencoes","📥 Menções", D.mencoes.length],
     ["calendario","📅 Calendário", null],
@@ -3067,10 +3080,22 @@ function cartaoCliente(cli, casosMostrar){
   const dica = [dataProx?`lembrete em ${fmt(dataProx)}`:"", motivo,
                 quemProx.length?`com ${quemProx.map(c=>c.nome).join(", ")}`:""]
                .filter(Boolean).join(" · ");
+  // DE QUE LISTA o cliente vem — como o To Do escreve debaixo do nome. Só
+  // nas visões que misturam listas (Meu Dia, Planejado, Importante, busca):
+  // dentro de uma fase, repetir o nome dela em cada cartão seria eco. Quando
+  // o cliente tem casos em mais de uma lista, mostra a do caso que deu a
+  // data, e as demais ficam no title.
+  const kData = ks.find(x=>x.prazo===dataProx) || ks[0];
+  const listas = [...new Set(ks.map(k=>listaDe(k)).filter(x=>x&&x!=="—"))];
+  const orig = (!String(visao).startsWith("fase:") && listas.length)
+    ? `<span class="dt" style="color:#8A9099" title="${esc(listas.join(" · "))}">${
+        esc((kData&&listaDe(kData)!=="—"?listaDe(kData):listas[0]))}${listas.length>1?` +${listas.length-1}`:""}</span>`
+    : "";
   // como no To Do: o nome em cima, e embaixo — miúdo e cinza — a data. Nada
   // de coluna de datas à esquerda: a lista que o escritório já usa todo dia
   // põe o prazo debaixo do título, e mudar isso custaria releitura sem ganho.
   const meta = [
+    orig,
     dataProx?`<span class="dt ${dataProx<hoje()?"venc":dataProx===hoje()?"hoje":""}"
         ${dica?`title="${esc(dica)}"`:""}>🗓 ${esc(dataRelativa(dataProx))}</span>`:"",
     evFut?`<span class="dt ev" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">🩺 ${
