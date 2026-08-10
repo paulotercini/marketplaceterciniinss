@@ -99,18 +99,26 @@ Quem preferir o arquivo solto continua podendo preencher o `CONFIG` no topo
 de `crm/fase2/app.html` — mas aí é o próprio arquivo que carrega o endereço,
 e ele não pode voltar para o git assim.
 
-## 6. Escrita dupla (rotina diária, automatizável)
+## 6. A sincronização (rotina diária, automatizável)
 
 ```bash
 python3 graph_refresh.py
-python3 crm/fase2/escrever_todo.py   # o que foi escrito no app -> To Do
 python3 crm/sync_todo.py             # To Do -> espelho
 python3 crm/fase2/migrar.py          # espelho -> banco (idempotente, sem duplicar)
 ```
 
-Os andamentos escritos no app chegam ao To Do no formato `DD.MM.AAAA (X): ...`
-de sempre, e tarefas novas criadas no To Do aparecem no app na importação
-seguinte.
+**Mão única, de propósito.** Enquanto os dois sistemas convivem, só o To Do
+alimenta o CRM. Tarefas e blocos escritos no To Do aparecem no app na
+importação seguinte; o que se escreve no app **não** volta para o To Do.
+
+A escrita de volta existe (`crm/fase2/escrever_todo.py`) e está **desligada**
+nos dois lugares: o script só roda com `ESCREVER_TODO=1` no ambiente, e o
+passo do workflow só roda se existir a variável de repositório `ESCREVER_TODO`
+valendo `1`. A razão é simples: um andamento replicado por engano vira texto
+no corpo de uma tarefa do To Do, e desfazer isso é edição manual, uma a uma.
+
+Para religar um dia: *Settings > Secrets and variables > Actions > Variables*,
+criar `ESCREVER_TODO = 1`.
 
 ## 7. Sincronização automática (recomendado)
 

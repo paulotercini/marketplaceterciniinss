@@ -1,4 +1,4 @@
-name: CRM — sincronização To Do ↔ banco
+name: CRM — sincronização To Do → banco
 
 on:
   schedule:
@@ -39,16 +39,35 @@ jobs:
 
       - name: Cria graph_tokens.json a partir do secret
         if: steps.seg.outputs.tem == 'true'
+        env:
+          GRAPH_REFRESH_TOKEN: ${{ secrets.GRAPH_REFRESH_TOKEN }}
         run: |
-          echo '{"refresh_token": "${{ secrets.GRAPH_REFRESH_TOKEN }}"}' > graph_tokens.json
+          if [ -z "$GRAPH_REFRESH_TOKEN" ]; then
+            echo "::error::O segredo GRAPH_REFRESH_TOKEN está vazio — sem ele não há como ler o To Do."
+            exit 1
+          fi
+          python - <<'PY'
+          import json, os, pathlib
+          pathlib.Path("graph_tokens.json").write_text(
+              json.dumps({"refresh_token": os.environ["GRAPH_REFRESH_TOKEN"]}))
+          PY
 
       - name: Renova token Microsoft Graph
         if: steps.seg.outputs.tem == 'true'
         run: python graph_refresh.py
 
-      - name: Banco -> To Do (andamentos escritos no app)
-        if: steps.seg.outputs.tem == 'true'
+      # ESCRITA DESLIGADA. Enquanto o To Do e o CRM convivem, o caminho seguro
+      # é de mão única: To Do -> CRM. Um andamento replicado por engano vira
+      # texto no corpo de uma tarefa, e desfazer isso é edição manual, uma a
+      # uma. O script tem a mesma trava por dentro (ESCREVER_TODO=1), então
+      # nem rodando à mão ele escreve sem ser mandado.
+      #
+      # Para religar: Settings > Secrets and variables > Actions > Variables,
+      # criar ESCREVER_TODO com o valor 1.
+      - name: Banco -> To Do (DESLIGADO por padrão)
+        if: steps.seg.outputs.tem == 'true' && vars.ESCREVER_TODO == '1'
         env:
+          ESCREVER_TODO: '1'
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: python crm/fase2/escrever_todo.py

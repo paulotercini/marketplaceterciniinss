@@ -1,6 +1,7 @@
 """Regressão da Fase 2 — migrar.py (mapeamento To Do -> banco) e
 escrever_todo.py (formato da escrita de volta). Dados 100% fictícios."""
 import pathlib, sys
+import pytest
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "crm" / "fase2"))
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "crm"))
@@ -219,3 +220,30 @@ def test_andamento_sem_solicitacao_nao_gera_checklist():
                        "texto": "Perícia agendada dia 13.04.2027."}]),
     ]))
     assert migrar.tarefas_docs_de(m["andamentos"]) == []
+
+
+# ── a trava da escrita CRM -> To Do ───────────────────────────────────────
+# Enquanto os dois sistemas convivem, o caminho seguro é de mão única. Um
+# andamento replicado por engano vira texto no corpo de uma tarefa do To Do,
+# e desfazer isso é edição manual, uma a uma. A trava mora no próprio script,
+# não só no workflow: assim nem uma execução à mão escreve sem ser mandada.
+def test_escrever_todo_nao_roda_sem_ser_mandado(monkeypatch, capsys):
+    monkeypatch.delenv("ESCREVER_TODO", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+
+    def nao_chame(*a, **k):                     # qualquer rede aqui é defeito
+        raise AssertionError("a escrita para o To Do saiu com a trava ligada")
+    monkeypatch.setattr(escrever_todo, "_rest", nao_chame)
+
+    escrever_todo.main()
+    assert "desligada" in capsys.readouterr().out
+
+
+def test_escrever_todo_liga_com_a_variavel(monkeypatch):
+    monkeypatch.setenv("ESCREVER_TODO", "1")
+    monkeypatch.delenv("SUPABASE_URL", raising=False)
+    # com a trava liberada ele segue adiante e para na exigência seguinte —
+    # é o bastante para provar que a variável é o que destranca
+    with pytest.raises(SystemExit):
+        escrever_todo.main()
