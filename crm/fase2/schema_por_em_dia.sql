@@ -16,8 +16,9 @@
 -- Deficiência…) gravarem: enquanto casos.marcadores não existir aqui, o
 -- botão não tem onde guardar a marcação, o banco recusa e o CRM avisa.
 --
--- Depois de executar, role até o fim: a última consulta lista as cinco
--- colunas. Se as cinco aparecerem, está pronto — é só recarregar o CRM.
+-- Depois de executar, role até o fim: a última consulta lista as colunas que
+-- a importação usa. Se as treze linhas aparecerem, está pronto — é só
+-- recarregar o CRM.
 -- ══════════════════════════════════════════════════════════════════════════
 
 
@@ -116,12 +117,26 @@ alter table andamentos add column if not exists origem_id text;
 create unique index if not exists andamentos_origem_unica
   on andamentos (caso_id, origem, origem_id) where origem_id is not null;
 
+-- ── 7. Os campos que a importação do PAT escreve ──────────────────────────
+-- Estes vieram do schema.sql em outras ondas, e um banco que ficou para trás
+-- em qualquer uma delas faz a importação parar com "O banco está
+-- desatualizado" — o PostgREST recusa a gravação inteira quando UMA coluna
+-- não existe. Aqui eles vão junto, para o patch bastar sozinho.
+alter table casos add column if not exists especie text;        -- B31, B41, B87…
+alter table casos add column if not exists der date;            -- entrada do requerimento
+alter table casos add column if not exists urgente boolean not null default false;
+alter table casos add column if not exists protocolos jsonb not null default '[]';
+alter table casos add column if not exists crps_nups jsonb not null default '[]';
+alter table casos add column if not exists crps jsonb;
+
 -- ── conferência ───────────────────────────────────────────────────────────
--- Devem aparecer SETE linhas: as cinco colunas de `casos`/`andamentos`, a
--- coluna `andamentos.origem_id` e a tabela `coletas`.
+-- Devem aparecer TREZE linhas: as colunas de `casos` e `andamentos` que a
+-- importação usa, e a tabela `coletas`. Faltando alguma, o SQL não rodou
+-- inteiro — e é justamente a que falta que derruba a importação.
 select table_name as tabela, column_name as coluna, data_type as tipo
   from information_schema.columns
- where (table_name = 'casos'      and column_name in ('marcadores','ronda','processo_link','situacao_inss'))
+ where (table_name = 'casos' and column_name in ('marcadores','ronda','processo_link',
+          'situacao_inss','especie','der','urgente','protocolos','crps_nups','crps'))
     or (table_name = 'andamentos' and column_name in ('responde_a','origem_id'))
 union all
 select 'coletas', 'tabela criada', ''
