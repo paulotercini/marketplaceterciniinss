@@ -734,6 +734,9 @@
   /* adiar o aviso da aposentadoria: campo miúdo, discreto até ser usado */
   .apos-lem{border:1px solid var(--borda);border-radius:6px;font-size:11px;
     padding:1px 4px;color:var(--cinza);background:var(--branco)}
+  /* 📖 Caso completo: o marco salta da linha — faixa âmbar à esquerda e
+     fundo levemente aquecido, o mesmo tom do "importante" da casa */
+  .crps-tl li.tudo-marco{background:#FFF9EC;box-shadow:inset 3px 0 0 #E9B44C}
   .apos-it.auto .apos-data,.apos-it.auto .apos-esp{color:var(--cinza)}
   .apos-nota{font-size:11.5px;color:var(--cinza);margin-top:6px;line-height:1.45}
   .apos-nota b{color:var(--laranja)}
@@ -1166,7 +1169,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.47 · encerrar com autoria, arquivar por processo, o caso completo</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.48 · encerrar pergunta por Pagamentos e caso novo; marcos no Caso completo</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7790,6 +7793,18 @@ function painelINSS(k, ands){
 // INSS comentou, o que o recurso andou e o que o tribunal publicou — cada
 // linha com a etiqueta de onde veio. É a resposta para "me conta esse caso":
 // uma leitura de cima a baixo, sem pular de aba em aba.
+//
+// MARCO é o que muda o rumo: sentença, acórdão, trânsito em julgado, perícia
+// marcada, alvará/RPV, concessão/indeferimento, exigência. Esses saltam da
+// linha (faixa âmbar + ⭐) e têm filtro próprio — num caso com trezentos
+// registros, os marcos são a história curta.
+const RE_MARCO_TUDO = new RegExp("\\b(senten[çc]a|ac[óo]rd[ãa]o|monocr[áa]tic\\w*|"
+  +"tr[âa]nsito em julgado|transitou em julgado|julgad[oa]|julgamento|"
+  +"per[íi]cia|avalia[çc][ãa]o social|audi[êe]ncia|"
+  +"alvar[áa]|precat[óo]rio|rpv|requisit[óo]ri\\w*|"
+  +"deferid\\w*|indeferid\\w*|concedid\\w*|concess[ãa]o|implantad\\w*|"
+  +"cessad\\w*|cessa[çc][ãa]o|exig[êe]ncia|recurso (?:provido|improvido|desprovido))\\b","i");
+let tudoSoMarcos=false;
 function fatosDoCasoTodo(k, ands){
   const itens=[];
   for(const a of (ands||[]).filter(x=>!x.excluir)){
@@ -7820,6 +7835,8 @@ function fatosDoCasoTodo(k, ands){
   for(const e of D.eventos.filter(e=>e.caso_id===k.id))
     itens.push({q:e.data_hora||"", chip:"🩺 "+(e.tipo||"Perícia").split(" ")[0], cor:"per",
       texto:`${e.tipo||"Perícia"} ${e.status==="agendada"?"marcada":e.status||""}${e.local?` — ${e.local}`:""}`});
+  for(const x of itens)
+    x.marco = !!x.forte || x.chip.startsWith("🩺") || RE_MARCO_TUDO.test(x.texto);
   // do mais novo para o mais velho, como toda linha do tempo da casa
   return itens.filter(x=>x.q).sort((a,b)=>a.q<b.q?1:-1);
 }
@@ -7828,20 +7845,26 @@ function painelTudo(k, ands){
   if(!itens.length)
     return `<div class="caso"><p class="meio-sub">Ainda não há nada registrado
       neste caso — em nenhuma das fontes.</p></div>`;
-  const linha=x=>`<li>
-    <span class="quando">${esc((x.q||"").slice(0,10)?fmt((x.q||"").slice(0,10)):"—")}</span>
+  const marcos=itens.filter(x=>x.marco);
+  const mostra=(tudoSoMarcos && marcos.length) ? marcos : itens;
+  const linha=x=>`<li${x.marco?` class="tudo-marco"`:""}>
+    <span class="quando">${x.marco?"⭐<br>":""}${esc((x.q||"").slice(0,10)?fmt((x.q||"").slice(0,10)):"—")}</span>
     <span class="texto"><span class="chip ${x.cor}" style="margin-right:6px">${x.chip}</span>${
-      x.forte?`<b>${esc(x.texto)}</b>`:esc(x.texto)}</span>
+      x.marco?`<b>${esc(x.texto)}</b>`:esc(x.texto)}</span>
   </li>`;
   return `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo">
-      <h3 style="font-size:14px">📖 Caso completo — ${itens.length} registros, todas as fontes</h3>
-      <button class="btn-mini" style="margin-left:auto" onclick="copiarCasoCompleto('${k.id}')"
-        title="a linha do tempo inteira em texto — para colar numa petição, num e-mail ou numa IA">📋 copiar em texto</button>
+      <h3 style="font-size:14px">📖 Caso completo — ${mostra.length}${tudoSoMarcos&&marcos.length?` de ${itens.length}`:""} registros, todas as fontes</h3>
+      <span style="margin-left:auto;display:inline-flex;gap:6px">
+        ${marcos.length?`<button class="btn-mini" onclick="tudoSoMarcos=!tudoSoMarcos;abrirFicha(clienteAberto)"
+          title="sentença, acórdão, trânsito, perícia, alvará…">${tudoSoMarcos?"ver tudo":`⭐ só os marcos (${marcos.length})`}</button>`:""}
+        <button class="btn-mini" onclick="copiarCasoCompleto('${k.id}')"
+          title="a linha do tempo inteira em texto — para colar numa petição, num e-mail ou numa IA">📋 copiar em texto</button>
+      </span>
     </div>
-    <ul class="timeline crps-tl">${itens.map(linha).join("")}</ul>
+    <ul class="timeline crps-tl">${mostra.map(linha).join("")}</ul>
     <div class="fatos-pe" style="justify-content:flex-end">
-      <span class="meio-sub">leitura, não edição — cada registro se corrige na aba de origem</span>
+      <span class="meio-sub">⭐ = marco do caso · leitura, não edição — cada registro se corrige na aba de origem</span>
     </div>
   </div>`;
 }
@@ -7855,7 +7878,7 @@ function copiarCasoCompleto(casoId){
     (k.protocolos||[]).length?`Protocolo(s): ${(k.protocolos||[]).join(", ")}`:"",
     k.der?`DER: ${fmt(k.der)}`:"", `Fase: ${NOME_FASE[k.fase]||k.fase}`,
   ].filter(Boolean).join("\n");
-  const corpo=itens.map(x=>`${fmt((x.q||"").slice(0,10))} [${x.chip.replace(/^\S+\s/,"")}] ${x.texto}`).join("\n");
+  const corpo=itens.map(x=>`${x.marco?"⭐ ":"   "}${fmt((x.q||"").slice(0,10))} [${x.chip.replace(/^\S+\s/,"")}] ${x.texto}`).join("\n");
   copiar(`${cab}\n\n${corpo}`, "Caso completo copiado 📖 — cole onde precisar");
 }
 
@@ -9372,7 +9395,14 @@ function zapLembrete(evId){
   if(l&&l.cli.telefone)
     window.open("https://wa.me/55"+l.cli.telefone.replace(/\D/g,"")+"?text="+encodeURIComponent(l.texto),"_blank");
 }
-// encerrar caso: janela de resultado -> honorários (lançados no Pagamentos)
+// encerrar caso: resultado -> honorários? -> Pagamentos ou fim -> caso novo?
+// A janela caminha em três perguntas, na ordem em que o escritório pensa:
+//   1. Qual foi o resultado?
+//   2. Gerou honorários? SIM manda o caso para a fase 💰 Pagamentos (ele
+//      fica vivo lá até o dinheiro entrar); NÃO encerra de vez, com autoria.
+//   3. Abre um caso novo? Em benefício por incapacidade é o ciclo normal:
+//      encerra um requerimento e o próximo já entra — a pergunta poupa o
+//      caminho até a aba ＋, que é onde a resposta "sim" desemboca.
 function fecharJanela(){ const j=document.getElementById("janela"); if(j) j.remove(); }
 function janelaEncerrar(casoId){
   fecharJanela();
@@ -9384,25 +9414,60 @@ function janelaEncerrar(casoId){
     <p class="meio-sub">Qual foi o resultado?</p>
     <div class="form-linha">${Object.entries(ROT).map(([r,n])=>`<button class="btn-res" data-res="${r}">${n}</button>`).join("")}</div>
     <div id="jan-hon" style="display:none;margin-top:12px;border-top:1px solid var(--borda);padding-top:10px">
-      <p class="meio-sub">💰 Honorários — lança no menu Pagamentos (opcional):</p>
+      <p class="meio-sub">O caso gerou honorários?</p>
       <div class="form-linha">
-        <input id="hon-valor" type="number" step="0.01" placeholder="R$ honorários" style="width:140px">
-        <input id="hon-venc" type="date" title="vencimento / previsão de recebimento">
-        <button id="hon-lancar">Lançar e encerrar</button>
-        <button class="btn-mini" id="hon-pular">encerrar sem lançar</button>
+        <button class="btn-res" id="hon-sim">💰 Gerou — enviar para Pagamentos</button>
+        <button class="btn-res" id="hon-nao">Não gerou — encerrar de vez</button>
+      </div>
+      <div id="jan-hon-campos" style="display:none;margin-top:10px">
+        <p class="meio-sub">O caso vai para a aba <b>💰 Pagamentos</b> e fica lá,
+          vivo, até o dinheiro entrar — aí sim se encerra:</p>
+        <div class="form-linha">
+          <input id="hon-valor" type="number" step="0.01" placeholder="R$ honorários" style="width:140px">
+          <input id="hon-venc" type="date" title="vencimento / previsão de recebimento">
+          <button id="hon-enviar">💰 Enviar para Pagamentos</button>
+          <span class="meio-sub">sem valor ainda? envie assim mesmo e lance depois</span>
+        </div>
       </div>
     </div>
     <button class="btn-mini" id="jan-cancela" style="margin-top:12px">cancelar</button>
   </div>`;
   document.body.appendChild(div);
   let resultado=null;
-  div.querySelectorAll(".btn-res").forEach(b=>b.onclick=()=>{
+  div.querySelectorAll("[data-res]").forEach(b=>b.onclick=()=>{
     resultado=b.dataset.res;
-    div.querySelectorAll(".btn-res").forEach(x=>x.style.outline = x===b ? "2px solid var(--azul)" : "");
+    div.querySelectorAll("[data-res]").forEach(x=>x.style.outline = x===b ? "2px solid var(--azul)" : "");
     document.getElementById("jan-hon").style.display="block";
-    document.getElementById("hon-valor").focus();
   });
-  const encerrar=async(lancar)=>{
+
+  // pergunta 3, no lugar da janela: abrir o próximo caso deste cliente?
+  const perguntaCasoNovo=(feito)=>{
+    const c=D.cliPorId.get(k.cliente_id)||{};
+    div.innerHTML=`<div class="jan-caixa">
+      <h3>${feito}</h3>
+      <p class="meio-sub" style="margin-top:6px">Abrir um <b>caso novo</b> para
+        ${esc(c.nome||"este cliente")}? Em benefício por incapacidade é comum:
+        encerra um requerimento e o próximo já começa.</p>
+      <div class="form-linha" style="margin-top:10px">
+        <button id="jan-novo">＋ Abrir caso novo</button>
+        <button class="btn-mini" id="jan-nao">agora não</button>
+      </div>
+    </div>`;
+    document.getElementById("jan-novo").onclick=async()=>{
+      fecharJanela(); plim(); montarSidebar();
+      abaAtiva=7;                       // a aba ＋ Novo caso, já pronta
+      await abrirFicha(k.cliente_id);
+      const ben=document.getElementById("nk-ben");
+      if(ben){ ben.value=k.beneficio||""; ben.focus(); }
+    };
+    document.getElementById("jan-nao").onclick=()=>{
+      fecharJanela(); plim(); montarSidebar();
+      if(clienteAberto) abrirFicha(clienteAberto);
+    };
+  };
+
+  // NÃO gerou honorários: encerra de vez, com autoria e hora
+  const encerrarDeVez=async()=>{
     if(!resultado) return aviso("Escolha o resultado primeiro");
     k.fase="encerrado"; k.resultado=resultado; k.encerrado_em=new Date().toISOString();
     k.encerrado_por=eu.id;
@@ -9419,26 +9484,42 @@ function janelaEncerrar(casoId){
     }
     await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
-        texto:`Caso encerrado — resultado: ${resultado.toUpperCase()}.${resultado==="deferido"?" 🎉":""}`})});
-    if(lancar){
-      const v=document.getElementById("hon-valor").value;
-      if(v){
-        const venc=document.getElementById("hon-venc").value||null;
-        const recebido = venc && venc<=hoje();
-        const [pg]=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
-          body:JSON.stringify({caso_id:k.id, descricao:"Honorários", valor:v,
-            status:recebido?"recebido":"aberto", pago_em:recebido?venc:null,
-            vencimento:recebido?null:venc,
-            conferencias:recebido?[{c:eu.id,em:new Date().toISOString()}]:[]})});
-        if(pg) D.pagamentos.push(pg);
-      }
-    }
-    fecharJanela(); plim();
-    aviso(`Caso encerrado: ${resultado}${lancar?" — honorários no 💰 Pagamentos":""}`);
-    montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+        texto:`Caso encerrado — resultado: ${resultado.toUpperCase()}. Sem honorários.${resultado==="deferido"?" 🎉":""}`})});
+    aviso(`Caso encerrado: ${resultado}`);
+    perguntaCasoNovo("✔ Caso encerrado");
   };
-  document.getElementById("hon-lancar").onclick=()=>encerrar(true);
-  document.getElementById("hon-pular").onclick=()=>encerrar(false);
+
+  // GEROU honorários: o caso não morre — muda para a fase 💰 Pagamentos
+  const enviarPagamentos=async()=>{
+    if(!resultado) return aviso("Escolha o resultado primeiro");
+    k.fase="pagamento"; k.resultado=resultado;
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({fase:"pagamento", resultado})});
+    const v=document.getElementById("hon-valor").value;
+    if(v){
+      const venc=document.getElementById("hon-venc").value||null;
+      const recebido = venc && venc<=hoje();
+      const [pg]=await api(`/rest/v1/pagamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:k.id, descricao:"Honorários", valor:v,
+          status:recebido?"recebido":"aberto", pago_em:recebido?venc:null,
+          vencimento:recebido?null:venc,
+          conferencias:recebido?[{c:eu.id,em:new Date().toISOString()}]:[]})});
+      if(pg) D.pagamentos.push(pg);
+    }
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+        texto:`Resultado: ${resultado.toUpperCase()} — caso enviado para 💰 Pagamentos${v?` (honorários de R$ ${v} lançados)`:""}.${resultado==="deferido"?" 🎉":""}`})});
+    aviso(`💰 Enviado para Pagamentos${v?" — honorários lançados":""}`);
+    perguntaCasoNovo("💰 Enviado para Pagamentos");
+  };
+
+  document.getElementById("hon-sim").onclick=()=>{
+    if(!resultado) return aviso("Escolha o resultado primeiro");
+    document.getElementById("jan-hon-campos").style.display="block";
+    document.getElementById("hon-valor").focus();
+  };
+  document.getElementById("hon-nao").onclick=encerrarDeVez;
+  document.getElementById("hon-enviar").onclick=enviarPagamentos;
   document.getElementById("jan-cancela").onclick=()=>{ fecharJanela(); if(clienteAberto) abrirFicha(clienteAberto); };
 }
 
