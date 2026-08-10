@@ -416,6 +416,14 @@
   .det-topo{position:sticky;top:0;background:var(--branco);border-bottom:1px solid var(--borda);padding:14px 22px;z-index:2}
   .det-topo .linha1{display:flex;align-items:center;gap:10px}
   .det-topo h2{font-size:18px}
+  /* ativo/inativo ao lado do nome: responde "ainda trabalhamos para ela?"
+     sem abrir caso por caso. Vermelho = todos os casos encerrados. */
+  .cli-st{font-size:12px;font-weight:700;border-radius:14px;padding:3px 10px;
+    white-space:nowrap;margin-left:auto;flex:none}
+  .cli-st.inativo{background:#FBE9E7;color:#B71C1C;border:1px solid #E8B4AC}
+  .cli-st.ativo{background:#EDF6EE;color:#1E7B34;border:1px solid #BFDCC2}
+  .cli-st.semcaso{background:var(--fundo);color:var(--cinza);border:1px solid var(--borda)}
+  @media (max-width:700px){ .cli-st{font-size:10px;padding:2px 7px} }
   .fechar{margin-left:auto;border:none;background:none;font-size:20px;cursor:pointer;color:var(--cinza)}
   .det-topo .resumo{display:flex;flex-wrap:wrap;gap:18px;margin-top:7px;align-items:center}
   /* identidade mínima: rótulo pequeno em azul, valor legível, sem virar chip */
@@ -1169,7 +1177,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.50 · a lista de origem debaixo do nome e o contador do ☀️ Meu Dia</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.51 · cliente ativo ou inativo, dito ao lado do nome</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5921,6 +5929,17 @@ async function abrirFicha(cliId){
   }
   const andsVis = casoSel ? ands.filter(a=>a.caso_id===casoSel) : ands;
   D._andsFicha = ands;
+  // ATIVO ou INATIVO, ao lado do nome (pedido do Paulo): quem abre a ficha
+  // precisa saber de cara se AINDA trabalhamos para esta pessoa. Vermelho =
+  // todos os casos encerrados; verde diz quantos seguem em andamento; cinza
+  // é o cliente cadastrado que nunca teve caso.
+  const ativosCli = ks.filter(k=>k.fase!=="encerrado");
+  const encDesde = ks.map(k=>k.encerrado_em).filter(Boolean).sort().slice(-1)[0];
+  const stCli = !ks.length
+    ? `<span class="cli-st semcaso" title="cliente cadastrado sem nenhum caso">sem casos</span>`
+    : ativosCli.length
+      ? `<span class="cli-st ativo" title="${ativosCli.length} de ${ks.length} caso(s) em andamento">🟢 Cliente ativo · ${ativosCli.length} caso${ativosCli.length>1?"s":""} em andamento</span>`
+      : `<span class="cli-st inativo" title="nenhum trabalho em andamento para este cliente">🔴 Cliente inativo — ${ks.length>1?`os ${ks.length} casos`:"o único caso"} encerrado${ks.length>1?"s":""}${encDesde?` (último em ${fmt(dataSP(encDesde))})`:""}</span>`;
   document.getElementById("detalhe").innerHTML=`
   <div class="det-principal">
   <div class="det-rolagem">
@@ -5928,6 +5947,7 @@ async function abrirFicha(cliId){
     <div class="linha1">
       <button class="cel-voltar so-cel" onclick="fecharFicha()" title="voltar para a lista">‹</button>
       <span class="avatar">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
+      ${stCli}
       <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
     ${/* abaixo do nome só o que a equipe usa o tempo todo: CPF e a senha do
          Meu INSS. O resto do cadastro fica na aba 📇, sem poluir aqui. */""}
