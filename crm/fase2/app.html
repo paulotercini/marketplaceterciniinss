@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.65 · caso judicial sempre tem a aba do CNJ — e o nº do processo é editável</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.66 · nome tolerante e "➕ criar caso" para o segundo processo do cliente</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2920,7 +2920,9 @@ function telaImportarPat(){
           <button class="btn-mini" onclick="vincularTodosPje()">vincular os ${q.vinculaveis}</button>
           <span class="meio-sub">preenche o campo "processo" do caso; nada além disso</span></div>`:""}
         ${planoPjeAtual.semCaso.slice(0,14).map(p=>`<div class="meio-sub" style="margin-top:2px">${esc(p.numero)} — ${esc((p.partes||"").slice(0,60))}
-          ${p.sugestao?`<button class="btn-mini" onclick="vincularProcessoPje('${p.numero}')">vincular ao caso de ${esc(p.sugestao.cliente_nome.split(" ")[0])}</button>`:""}</div>`).join("")}
+          ${p.sugestao?`<button class="btn-mini" onclick="vincularProcessoPje('${p.numero}')">vincular ao caso de ${esc(p.sugestao.cliente_nome.split(" ")[0])}</button>`
+            :p.sugestao_novo?`<button class="btn-mini" onclick="criarCasoPje('${p.numero}')"
+              title="o cliente existe, mas os casos dele já têm número — este é um segundo processo">➕ criar caso p/ ${esc(p.sugestao_novo.cliente_nome.split(" ")[0])}</button>`:""}</div>`).join("")}
         ${q.sem_caso>14?`<div class="meio-sub">…e mais ${q.sem_caso-14}. Vincule estes e confira de novo — a lista encolhe.</div>`:""}</div>`:""}
       ${planoPjeAtual.andamentos.length?`<table class="tab">
         <tr><th>cliente</th><th>o que mudou</th></tr>
@@ -3531,14 +3533,22 @@ async function conferirPje(coletaId){
         // nome da parte (o lado que não é o INSS) casa com a base — quando
         // bate com UM cliente que tem UM caso ativo sem número, o vínculo
         // sai daqui mesmo, num clique, e o processo passa a casar sozinho.
+        // Nome que só bate de um jeito tolerante ("JOAO APARECIDO AGUILERA
+        // AMBROSIO" vs "João Aparecido Ambrosio") também vale — desde que
+        // bata com UM cliente só. E cliente certo SEM caso vago (o segundo
+        // processo da mesma pessoa) ganha o "➕ criar caso" com o número.
         const nome = clienteDasPartes(p.partes);
-        const cli = nome && D.clientes.find(x=>x._nome_ix===dsa(nome));
+        const cands = nome ? D.clientes.filter(x=>nomesBatemPje(x.nome, nome)) : [];
+        const cli = cands.length===1 ? cands[0] : null;
         const alvos = cli ? (D.casosDoCliente.get(cli.id)||[])
           .filter(x=>x.fase!=="encerrado" && !soDig(x.processo)) : [];
-        plano.semCaso.push({...p, sugestao: alvos.length===1
-          ? {caso_id:alvos[0].id, cliente_nome:cli.nome, caso_titulo:tituloCaso(alvos[0])} : null});
+        plano.semCaso.push({...p,
+          sugestao: (cli && alvos.length===1)
+            ? {caso_id:alvos[0].id, cliente_nome:cli.nome, caso_titulo:tituloCaso(alvos[0])} : null,
+          sugestao_novo: (cli && !alvos.length)
+            ? {cliente_id:cli.id, cliente_nome:cli.nome} : null});
         plano.resumo.sem_caso++;
-        if(alvos.length===1) plano.resumo.vinculaveis++;
+        if(cli && alvos.length===1) plano.resumo.vinculaveis++;
         continue;
       }
       if(!p.movimento){ plano.resumo.sem_mudanca++; continue; }
@@ -3555,6 +3565,19 @@ async function conferirPje(coletaId){
     planoPjeAtual = plano;
     render();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+}
+// casamento TOLERANTE de nome: um contido no outro, na ordem, ignorando
+// caixa, acento e preposições. "joao aparecido ambrosio" está dentro de
+// "joao aparecido aguilera ambrosio" — mesmo cliente, grafias diferentes.
+// Exige ao menos 2 nomes em comum, e só vale quando UM cliente da base bate.
+function nomesBatemPje(a, b){
+  const T = s => dsa(s).split(/\s+/).filter(t=>t && !["da","de","do","das","dos","e"].includes(t));
+  const x=T(a), y=T(b);
+  if(!x.length || !y.length) return false;
+  const [curto, longo] = x.length<=y.length ? [x,y] : [y,x];
+  let i=0;
+  for(const t of longo) if(i<curto.length && t===curto[i]) i++;
+  return curto.length>=2 && i===curto.length;
 }
 // o lado da parte que não é órgão público = o cliente
 function clienteDasPartes(partes){
@@ -3574,6 +3597,25 @@ async function vincularProcessoPje(numero){
   k.processo=p.numero;
   aviso(`⚖️ ${p.numero} vinculado ao caso de ${p.sugestao.cliente_nome.split(" ")[0]}`, false);
   conferirPje(planoPjeAtual.coleta_id);          // replaneja: agora ele casa
+}
+// o SEGUNDO processo do mesmo cliente: o caso vago já foi usado, então
+// nasce um caso Judicial novo, já com o número — nada de pendurar dois
+// processos numa ficha só
+async function criarCasoPje(numero){
+  const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
+  if(!p || !p.sugestao_novo) return;
+  const c=D.cliPorId.get(p.sugestao_novo.cliente_id); if(!c) return;
+  if(!confirm(`Criar um caso Judicial novo para ${c.nome} com o processo ${p.numero}?`)) return;
+  const [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({cliente_id:c.id, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
+      fase:"judicial", processo:p.numero, origem_lista:"👪 Judicial"})}) || [];
+  if(k){
+    D.casos.push(k); D.casoPorId.set(k.id,k);
+    if(!D.casosDoCliente.has(c.id)) D.casosDoCliente.set(c.id,[]);
+    D.casosDoCliente.get(c.id).push(k);
+  }
+  aviso(`➕ Caso criado para ${c.nome.split(" ")[0]} com o processo ${p.numero}`, false);
+  conferirPje(planoPjeAtual.coleta_id);
 }
 async function vincularTodosPje(){
   const alvos=((planoPjeAtual||{}).semCaso||[]).filter(x=>x.sugestao);
