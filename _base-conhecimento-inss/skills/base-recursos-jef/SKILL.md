@@ -128,3 +128,7 @@ A lição é. Argumentos puramente processuais (cerceamento de defesa, ônus da 
 ## O que NÃO está nesta skill
 
 Rito ordinário e apelação estão em `base-rito-ordinario-trf`. CRPS está em `base-crps-panorama-geral`. Execução está em `base-cumprimento-sentenca-rpv-precatorio`. Filtro crítico de admissibilidade de PUIL/PEDILEF está em `base-puil-pedilef-vedacao-materia-processual`.
+
+## Boletins da TNU como fonte de tese (Onda 105)
+
+A tese que a Turma Recursal aplica nasce no boletim oficial da TNU. O acervo do escritório está indexado na skill `base-boletins-tnu`, com 241 temas e 104 boletins (sessões de 18/02/2016 a 24/06/2026), permitindo localizar o boletim de cada tema e ler o inteiro teor antes de citar. Regra dura, tema que aparece em mais de um boletim teve tese alterada, revista ou sobrestada, e a leitura é sempre do boletim MAIS RECENTE.

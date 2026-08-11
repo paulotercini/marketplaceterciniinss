@@ -90,3 +90,7 @@ Esta skill articula-se obrigatoriamente com `peticao-previdenciaria` na geraçã
 ## Princípio Defensivo Central
 
 A TNU não é corte de cúpula constitucional. Opera no microssistema dos JEFs, regido pelos princípios da simplicidade, informalidade e economia processual (art. 2º, Lei 9.099/95, c/c art. 1º, Lei 10.259/2001). Toda aplicação formalista da QO 59 ou das QOs sobre admissibilidade pode ser impugnada com fundamento na instrumentalidade das formas (art. 188 CPC), na igualdade substancial (art. 8º, Lei 9.099/95) e na natureza alimentar dos benefícios previdenciários (reconhecida pelo STF em reiteradas decisões). Essa argumentação não é retórica principiológica abstrata, mas fundamento normativo ancorado na disciplina legal do microssistema.
+
+## Boletins da TNU como fonte do paradigma (Onda 105)
+
+O cotejo analítico exige transcrição literal do paradigma. O boletim oficial da TNU é a fonte natural dessa transcrição, com tese, processo e data de sessão. Índice de 241 temas em `base-boletins-tnu`. Antes do cotejo, conferir se o tema teve tese alterada em boletim posterior, porque paradigma com redação superada derruba o PUIL.
