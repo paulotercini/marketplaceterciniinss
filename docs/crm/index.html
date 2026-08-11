@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.70 · 🔍 escolher à mão o caso de um processo do PJe que o nome não casou sozinho</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.71 · ✔ "compareceu" fecha a perícia que já passou (na ficha e na agenda)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5585,7 +5585,10 @@ function renderAgenda(){
     return `<div class="evento ${dataSP(e.data_hora)<hoje()?"passado":"futuro"}" data-cli="${c?c.id:""}" style="cursor:pointer">
       <div class="data-box">${fmtTS(e.data_hora).slice(0,5)}<small>${dataSP(e.data_hora).slice(0,4)}</small><small>${horaSP(e.data_hora)}</small></div>
       <div class="oque"><strong>${esc(e.tipo)} — ${esc(c?c.nome:"?")}</strong>
-        <span>${esc(e.local||e.obs||"")} · ${esc(e.status)}</span></div>
+        <span>${esc(e.local||e.obs||"")} · ${esc(nomeStatusEvento(e.status))}</span></div>
+      ${dataSP(e.data_hora)<hoje() && e.status==="agendada"?`<button class="btn-mini"
+        onclick="event.stopPropagation();compareceuEvento('${e.id}')"
+        title="a perícia/audiência aconteceu — fecha a pendência">✔ compareceu</button>`:""}
       ${c&&c.telefone?`<a class="chip per" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" onclick="event.stopPropagation()">💬 avisar cliente</a>`:""}
     </div>`;
   };
@@ -6675,14 +6678,19 @@ async function abrirFicha(cliId){
   <div class="painel ${abaAtiva===3?"ativo":""}" data-p="3">
     ${evs.map(e=>`<div class="evento ${dataSP(e.data_hora)<hoje()?"passado":"futuro"}">
       <div class="data-box">${fmtTS(e.data_hora).slice(0,5)}<small>${dataSP(e.data_hora).slice(0,4)}</small><small>${horaSP(e.data_hora)}</small></div>
-      <div class="oque"><strong>${esc(e.tipo)}</strong><span>${esc(e.local||e.obs||"")} · ${esc(e.status)}</span></div>
+      <div class="oque"><strong>${esc(e.tipo)}</strong><span>${esc(e.local||e.obs||"")} · ${esc(nomeStatusEvento(e.status))}</span></div>
       ${dataSP(e.data_hora)>=hoje()?`
         <button class="btn-mini" onclick="copiarLembrete('${e.id}')">💬 copiar lembrete</button>
         ${c.telefone?`<a class="btn-mini" target="_blank" href="#" onclick="event.preventDefault();zapLembrete('${e.id}')" style="text-decoration:none">📲 WhatsApp</a>`:""}
         <a class="btn-mini" target="_blank" style="text-decoration:none"
            href="${gcal(e.tipo+" — "+esc(c.nome), dataSP(e.data_hora), horaSP(e.data_hora), 90, "", e.local||"")}">📅 Google Agenda</a>
         ${e.status==="agendada"?`<button class="btn-mini" onclick="cancelarEvento('${e.id}')"
-           title="desmarcada, remarcada ou lançada errada (ex.: ano trocado) — some das listas; a ficha guarda como cancelada">✕ cancelar</button>`:""}`:""}
+           title="desmarcada, remarcada ou lançada errada (ex.: ano trocado) — some das listas; a ficha guarda como cancelada">✕ cancelar</button>`:""}`
+      :e.status==="agendada"?`
+        <button class="btn-mini" onclick="compareceuEvento('${e.id}')"
+           title="a perícia/audiência aconteceu — fecha a pendência; a ficha guarda como comparecida">✔ compareceu</button>
+        <button class="btn-mini" onclick="cancelarEvento('${e.id}')"
+           title="não aconteceu ou foi lançada errada">✕</button>`:""}
       </div>`).join("")}
     <div class="form-linha">
       <select id="ne-tipo"><option>Perícia</option><option>Audiência</option><option>Avaliação social</option></select>
@@ -8838,7 +8846,7 @@ function fatosDoCasoTodo(k, ands){
             +(inst.rotulo&&cnjInstancias(k).length>1?` (${inst.rotulo})`:"")});
   for(const e of D.eventos.filter(e=>e.caso_id===k.id))
     itens.push({q:e.data_hora||"", chip:"🩺 "+(e.tipo||"Perícia").split(" ")[0], cor:"per",
-      texto:`${e.tipo||"Perícia"} ${e.status==="agendada"?"marcada":e.status||""}${e.local?` — ${e.local}`:""}`});
+      texto:`${e.tipo||"Perícia"} ${e.status==="agendada"?"marcada":e.status==="realizada"?"— compareceu ✔":e.status||""}${e.local?` — ${e.local}`:""}`});
   for(const x of itens)
     x.marco = !!x.forte || x.chip.startsWith("🩺") || RE_MARCO_TUDO.test(x.texto);
   // do mais novo para o mais velho, como toda linha do tempo da casa
@@ -10385,6 +10393,18 @@ async function cancelarEvento(id){
   aviso(`${e.tipo} cancelada — saiu das listas`);
   montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
 }
+// perícia que passou e ACONTECEU: um clique fecha o assunto — vira
+// "✔ compareceu" na ficha e para de acenar como pendência
+async function compareceuEvento(id){
+  const e=D.eventos.find(x=>x.id===id); if(!e) return;
+  await api(`/rest/v1/eventos?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({status:"realizada"})});
+  e.status="realizada";
+  aviso(`✔ ${e.tipo} de ${fmt(dataSP(e.data_hora))} marcada como comparecida`, false);
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); else render();
+}
+// como o status aparece nas listas — 'realizada' vira a palavra do Paulo
+const nomeStatusEvento = s => s==="realizada" ? "✔ compareceu" : s;
 async function novoPgto(){
   const casoId=document.getElementById("np-caso").value;
   if(!casoId) return aviso("Este cliente ainda não tem caso — crie um antes");
