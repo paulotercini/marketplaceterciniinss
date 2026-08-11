@@ -67,6 +67,7 @@
   .app.detalhe-aberto.mini-lateral{grid-template-columns:64px minmax(330px,30%) minmax(540px,1fr)}
 
   .sidebar{background:var(--lateral);border-right:1px solid var(--lateral);overflow-y:auto;overflow-x:hidden;padding:12px 0;color:#E8EAED}
+  .sync-todo{padding:2px 16px 8px;font-size:11.5px;color:#9AA0B0;white-space:nowrap}
   #btn-lateral{display:block;margin:0 12px 8px;border:none;background:none;font-size:17px;cursor:pointer;color:#9AA0B0}
 
   /* ── MENU RECOLHIDO ─────────────────────────────────────────────────────
@@ -1188,7 +1189,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.72 · o campo de escrever andamento agora é azul-clarinho (não some mais no branco)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.73 · 🔄 o rodapé do menu diz quando o To Do sincronizou pela última vez</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1232,6 +1233,8 @@
     <div class="grupo"><h3>Listas do escritório</h3><div id="grupo-fases"></div></div>
     <div class="sep"></div>
     <div class="grupo"><h3>Visões</h3><div id="grupo-visoes"></div></div>
+    <div class="sep"></div>
+    <div class="sync-todo txt" id="sync-todo"></div>
   </nav>
   <main class="meio">
     <div class="busca-cel">
@@ -1947,6 +1950,22 @@ function montarSidebar(){
     el.onmouseenter=()=>etiquetaMenu(el);
     el.onmouseleave=esconderEtiqueta;
   });
+  // quando o To Do falou com o banco pela última vez (carimbo do migrar.py
+  // no fim de cada sincronização completa da GitHub Action, de hora em hora
+  // 07h–20h seg–sáb). Mais de 2h30 dentro desse horário = âmbar: ou a Action
+  // falhou, ou o token do Graph venceu.
+  const st = document.getElementById("sync-todo");
+  if(st){
+    const t = cfgApp("todo_sync_em");
+    if(!t) st.innerHTML = "";
+    else{
+      const min = Math.max(0, Math.round((Date.now()-new Date(t))/60000));
+      const rel = min<1 ? "agora" : min<60 ? `há ${min} min`
+        : min<1440 ? `há ${Math.round(min/60)} h` : `em ${fmt(dataSP(t))}`;
+      st.innerHTML = `<span title="última sincronização completa To Do → CRM: ${esc(fmtTS(t))} às ${esc(horaSP(t))}">🔄 To Do ${rel}</span>`;
+      st.style.color = min>150 ? "#E8A13D" : "";
+    }
+  }
   const at = document.querySelector(`.lista-item[data-v="${visao}"]`);
   // são 26 destinos: recolhido, o trilho não cabe na tela e rola. Sem isto,
   // abrir uma lista do fim deixava o menu mostrando um trecho onde nada está
