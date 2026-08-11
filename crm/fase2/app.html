@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.63 · PJe nas Novidades, vínculo por nome e a memória completa do CRPS</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.64 · o aplicar do CRPS usa a mesma memória que o conferir</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3616,18 +3616,24 @@ async function aplicarPje(coletaId){
 }
 
 let planoCrpsAtual = null;
+// O PLANO COM A MEMÓRIA COMPLETA — usado pelo conferir E pelo aplicar.
+// A lição do PAT (08.58), duas vezes: o plano lia só D.novid (30 dias) e
+// todo movimento mais velho parecia novo de novo. Corrigido no conferir, o
+// APLICAR ainda replanejava por conta própria com o D cru — a tela dizia
+// "0 movimentos novos" e o clique respondia "877 falharam" (a trava de
+// duplicação segurando a regravação da história inteira). Uma memória, um
+// helper, dois usuários.
+async function planoCrpsComMemoria(dados){
+  const vistos = await todas("andamentos",
+    "select=origem_id&origem=eq.crps&origem_id=not.is.null").catch(()=>[]);
+  return planoCrps(dados,
+    {...D, novid:[...(D.novid||[]), ...vistos.map(v=>({origem:"crps", origem_id:v.origem_id}))]});
+}
 async function conferirCrps(coletaId){
   try{
     const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
     if(!c) return aviso("Não achei essa coleta");
-    // A MEMÓRIA COMPLETA, do banco, na hora de conferir — a mesma lição do
-    // PAT (08.58): o plano lia só D.novid (30 dias) e todo movimento mais
-    // velho parecia novo de novo; o aplicar tentava regravar a história
-    // inteira e o banco recusava um por um ("47 gravadas, 866 falharam").
-    const vistos = await todas("andamentos",
-      "select=origem_id&origem=eq.crps&origem_id=not.is.null").catch(()=>[]);
-    planoCrpsAtual = planoCrps(c.dados,
-      {...D, novid:[...(D.novid||[]), ...vistos.map(v=>({origem:"crps", origem_id:v.origem_id}))]});
+    planoCrpsAtual = await planoCrpsComMemoria(c.dados);
     planoCrpsAtual.coleta_id = coletaId;
     render();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
@@ -3674,7 +3680,7 @@ function fundirBlocoCrps(antigo, novo){
 async function aplicarCrps(coletaId){
   const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
   if(!c) return aviso("Não achei essa coleta");
-  const p = planoCrps(c.dados, D);
+  const p = await planoCrpsComMemoria(c.dados);
   if(!p.resumo.lidos) return aviso("A coleta veio vazia");
   const falhas = []; let feitos = 0;
   const tentar = async (rot, f) => { try{ await f(); feitos++; }
@@ -3704,9 +3710,11 @@ async function aplicarCrps(coletaId){
   planoCrpsAtual = null;
   await buscarColetas(); await carregar(); montarSidebar(); render();
   const d = p.resumo.decisoes;
+  // o número que importa é o de MOVIMENTOS: os blocos dos recursos são
+  // atualizados sempre (merge não-destrutivo) e não são notícia
   aviso(falhas.length
-    ? `${feitos} gravadas, ${falhas.length} falharam`
-    : `✔ ${p.resumo.movimentos} movimento(s)${d?`, ${d} com decisão`:""} — veja em 📣 Novidades`);
+    ? recadoDeFalhas(feitos, falhas)
+    : `✔ ${p.resumo.movimentos} movimento(s) novo(s)${d?`, ${d} com decisão`:""}; ${p.blocos.length} recurso(s) com o quadro atualizado`);
   if(falhas.length) console.warn("falhas do CRPS:", falhas);
 }
 
