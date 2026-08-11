@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.66 · nome tolerante e "➕ criar caso" para o segundo processo do cliente</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.67 · MS/JEF/ajuizamento à vista, 🚫 ignorar processo no PJe e a espécie B26</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2909,7 +2909,8 @@ function telaImportarPat(){
       <h3 class="secao">⚖️ PJe TRF3${planoPjeAtual.grau?` · ${esc(planoPjeAtual.grau)}`:""} — o que esta coleta vai escrever</h3>
       <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
         ${[["processos lidos", q.lidos], ["movimentos novos", q.movimentos],
-           ["sem mudança", q.sem_mudanca], ["sem caso no CRM", q.sem_caso]].map(n=>
+           ["sem mudança", q.sem_mudanca], ["sem caso no CRM", q.sem_caso],
+           ["fichas a completar (classe/ajuizamento)", q.fichas||0]].map(n=>
           `<div class="id-card"><strong style="font-size:20px">${n[1]}</strong>
             <div class="u-papel" style="text-transform:none">${n[0]}</div></div>`).join("")}
       </div>
@@ -2922,8 +2923,13 @@ function telaImportarPat(){
         ${planoPjeAtual.semCaso.slice(0,14).map(p=>`<div class="meio-sub" style="margin-top:2px">${esc(p.numero)} — ${esc((p.partes||"").slice(0,60))}
           ${p.sugestao?`<button class="btn-mini" onclick="vincularProcessoPje('${p.numero}')">vincular ao caso de ${esc(p.sugestao.cliente_nome.split(" ")[0])}</button>`
             :p.sugestao_novo?`<button class="btn-mini" onclick="criarCasoPje('${p.numero}')"
-              title="o cliente existe, mas os casos dele já têm número — este é um segundo processo">➕ criar caso p/ ${esc(p.sugestao_novo.cliente_nome.split(" ")[0])}</button>`:""}</div>`).join("")}
+              title="o cliente existe, mas os casos dele já têm número — este é um segundo processo">➕ criar caso p/ ${esc(p.sugestao_novo.cliente_nome.split(" ")[0])}</button>`:""}
+          <button class="btn-mini" onclick="ignorarProcessoPje('${p.numero}')"
+            title="não é caso nosso (instrumental, de terceiro — ex.: só para uma certidão) — para de aparecer em toda coleta">🚫</button></div>`).join("")}
         ${q.sem_caso>14?`<div class="meio-sub">…e mais ${q.sem_caso-14}. Vincule estes e confira de novo — a lista encolhe.</div>`:""}</div>`:""}
+      ${(q.ignorados||pjeIgnorados().length)?`<p class="meio-sub" style="margin-top:6px">🚫 ${pjeIgnorados().length} processo(s)
+        ignorados de vez${q.ignorados?` (${q.ignorados} escondidos nesta conferência)`:""} —
+        <a href="#" onclick="event.preventDefault();limparIgnoradosPje()">limpar e voltar a perguntar</a></p>`:""}
       ${planoPjeAtual.andamentos.length?`<table class="tab">
         <tr><th>cliente</th><th>o que mudou</th></tr>
         ${planoPjeAtual.andamentos.slice(0,40).map(a=>{
@@ -3523,9 +3529,14 @@ async function conferirPje(coletaId){
       if(dig) porProcesso.set(dig, k);
     }
     const plano = { coleta_id: coletaId, grau: dados.grau||"", andamentos: [], semCaso: [],
+                    fichas: [],
                     resumo: { lidos:(dados.processos||[]).length, movimentos:0,
-                              sem_caso:0, sem_mudanca:0, vinculaveis:0 } };
+                              sem_caso:0, sem_mudanca:0, vinculaveis:0, fichas:0, ignorados:0 } };
+    // processos marcados como "não é caso nosso" (instrumental, de terceiro
+    // — o do pai da Alicia, usado só para a certidão de cárcere) ficam fora
+    const fora = new Set(pjeIgnorados());
     for(const p of (dados.processos||[])){
+      if(fora.has(soDig(p.numero))){ plano.resumo.ignorados++; continue; }
       const k = porProcesso.get(soDig(p.numero));
       if(!k){
         // SEM NÚMERO NA FICHA ≠ SEM CLIENTE NO CRM: 142 dos processos do
@@ -3551,6 +3562,12 @@ async function conferirPje(coletaId){
         if(cli && alvos.length===1) plano.resumo.vinculaveis++;
         continue;
       }
+      // a coleta completa a ficha de graça: classe (MS? JEF? rito comum?) e
+      // data do ajuizamento — só onde estiver vazio, nunca por cima
+      const campos={};
+      if(p.classe && !k.classe_judicial) campos.classe_judicial=p.classe;
+      if(p.distribuido && !k.ajuizado_em) campos.ajuizado_em=p.distribuido;
+      if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); plano.resumo.fichas++; }
       if(!p.movimento){ plano.resumo.sem_mudanca++; continue; }
       const oid = `mov:${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`;
       if(vistos.has(oid)){ plano.resumo.sem_mudanca++; continue; }
@@ -3592,9 +3609,20 @@ async function vincularProcessoPje(numero){
   if(!p || !p.sugestao) return;
   const k=D.casoPorId.get(p.sugestao.caso_id);
   if(!k || soDig(k.processo)) return aviso("Esse caso já ganhou outro número — confira na ficha");
-  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({processo:p.numero})});
-  k.processo=p.numero;
+  // o vínculo leva classe e ajuizamento junto; num banco sem as colunas
+  // novas, grava só o número em vez de falhar inteiro
+  const corpo={processo:p.numero,
+    ...(p.classe && !k.classe_judicial?{classe_judicial:p.classe}:{}),
+    ...(p.distribuido && !k.ajuizado_em?{ajuizado_em:p.distribuido}:{})};
+  try{
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(corpo)});
+  }catch(e){
+    await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({processo:p.numero})});
+    delete corpo.classe_judicial; delete corpo.ajuizado_em;
+  }
+  Object.assign(k, corpo);
   aviso(`⚖️ ${p.numero} vinculado ao caso de ${p.sugestao.cliente_nome.split(" ")[0]}`, false);
   conferirPje(planoPjeAtual.coleta_id);          // replaneja: agora ele casa
 }
@@ -3606,9 +3634,18 @@ async function criarCasoPje(numero){
   if(!p || !p.sugestao_novo) return;
   const c=D.cliPorId.get(p.sugestao_novo.cliente_id); if(!c) return;
   if(!confirm(`Criar um caso Judicial novo para ${c.nome} com o processo ${p.numero}?`)) return;
-  const [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({cliente_id:c.id, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
-      fase:"judicial", processo:p.numero, origem_lista:"👪 Judicial"})}) || [];
+  const base={cliente_id:c.id, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
+    fase:"judicial", processo:p.numero, origem_lista:"👪 Judicial"};
+  const extra={...(p.classe?{classe_judicial:p.classe}:{}),
+               ...(p.distribuido?{ajuizado_em:p.distribuido}:{})};
+  let k;
+  try{
+    [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({...base, ...extra})}) || [];
+  }catch(e){   // banco sem as colunas novas: nasce sem classe/ajuizamento
+    [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify(base)}) || [];
+  }
   if(k){
     D.casos.push(k); D.casoPorId.set(k.id,k);
     if(!D.casosDoCliente.has(c.id)) D.casosDoCliente.set(c.id,[]);
@@ -3634,9 +3671,35 @@ async function vincularTodosPje(){
   aviso(`⚖️ ${n} processo(s) vinculados — replanejando`);
   conferirPje(planoPjeAtual.coleta_id);
 }
+function pjeIgnorados(){
+  const v = cfgApp("pje_ignorar");
+  if(Array.isArray(v)) return v;
+  try{ return JSON.parse(v||"[]"); }catch(e){ return []; }
+}
+async function ignorarProcessoPje(numero){
+  const lista=[...new Set([...pjeIgnorados(), soDig(numero)])];
+  await guardarCfgApp("pje_ignorar", JSON.stringify(lista));
+  aviso("🚫 Não pergunto mais por este processo — desfaz-se no “limpar ignorados”", false);
+  if(planoPjeAtual) conferirPje(planoPjeAtual.coleta_id); else render();
+}
+async function limparIgnoradosPje(){
+  await guardarCfgApp("pje_ignorar","[]");
+  aviso("Ignorados do PJe limpos — voltam a aparecer na próxima conferência", false);
+  if(planoPjeAtual) conferirPje(planoPjeAtual.coleta_id); else render();
+}
 async function aplicarPje(coletaId){
   if(!planoPjeAtual || planoPjeAtual.coleta_id!==coletaId) return;
   const falhas=[]; let feitos=0;
+  // completa as fichas (classe/ajuizamento) antes dos movimentos; banco sem
+  // as colunas novas só pula esta parte, sem derrubar o resto
+  let fichas=0;
+  for(const f of (planoPjeAtual.fichas||[])){
+    try{
+      await api(`/rest/v1/casos?id=eq.${f.caso_id}`,{method:"PATCH",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify(f.campos)});
+      Object.assign(D.casoPorId.get(f.caso_id)||{}, f.campos); fichas++;
+    }catch(e){}
+  }
   for(const a of planoPjeAtual.andamentos){
     try{
       await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
@@ -3654,7 +3717,9 @@ async function aplicarPje(coletaId){
   if(falhas.length){
     console.warn("falhas do PJe:", falhas);
     aviso(`${feitos} gravados; ${falhas.length} falharam — se o banco recusou a origem 'pje', rode o schema_por_em_dia.sql`);
-  }else aviso(feitos?`✔ ${feitos} movimento(s) do PJe — veja em 📣 Novidades`:"Nada novo a gravar");
+  }else aviso(feitos||fichas
+    ?`✔ ${feitos} movimento(s) do PJe${fichas?`; ${fichas} ficha(s) completadas (classe/ajuizamento)`:""} — veja em 📣 Novidades`
+    :"Nada novo a gravar");
 }
 
 let planoCrpsAtual = null;
@@ -7826,7 +7891,8 @@ const ESPECIES = [
   ["B36","Auxílio-acidente previdenciário"],["B94","Auxílio-acidente acidentário (acidente de trabalho)"],
   ["B41","Aposentadoria por idade"],["B42","Aposentadoria por tempo de contribuição"],
   ["B46","Aposentadoria especial"],["B57","Aposentadoria de professor"],
-  ["B21","Pensão por morte"],["B93","Pensão por morte acidentária"],["B25","Auxílio-reclusão"],
+  ["B21","Pensão por morte"],["B93","Pensão por morte acidentária"],
+  ["B25","Auxílio-reclusão"],["B26","Auxílio-reclusão (espécie 26)"],
   ["B80","Salário-maternidade"],["B87","BPC/LOAS — deficiência"],["B88","BPC/LOAS — idoso"],
 ];
 // o que cada sigla quer dizer, para quem está aprendendo (fica no title)
@@ -7835,6 +7901,10 @@ const FATOS = {
   nb:         {rot:"NB",          tipo:"texto",   dica:"número do benefício"},
   processo:   {rot:"Processo (CNJ)", tipo:"texto",
                dica:"número único do processo judicial — é ele que liga o caso ao DataJud (consulta diária) e ao coletor do PJe"},
+  ajuizado_em:{rot:"Ajuizado em", tipo:"data",
+               dica:"data do ajuizamento — a coleta do PJe preenche sozinha pelo 'Distribuído em'"},
+  classe_judicial:{rot:"Classe", tipo:"texto",
+               dica:"classe do processo (MSCiv, PJEC, ProceComCiv…) — é ela que diz se é Mandado de Segurança e se corre no JEF ou no rito comum"},
   der:        {rot:"DER",         tipo:"data",    dica:"Data de Entrada do Requerimento"},
   dib:        {rot:"DIB",         tipo:"data",    dica:"Data de Início do Benefício"},
   decisao_em: {rot:"Decisão em",  tipo:"data",    dica:"data em que a decisão foi proferida — conta o prazo de recurso"},
@@ -7844,6 +7914,24 @@ const FATOS = {
   dcb_prorrogar_em:{rot:"Prorrogar a partir de", tipo:"data", dica:"o sistema lembra nesta data (padrão: 15 dias antes da DCB)"},
 };
 const ehAcidentario = k => /^B9[123]$|^B94$/.test(k.especie||"") || /acident/i.test(k.beneficio||"");
+
+// o retrato do processo judicial: é Mandado de Segurança? corre no JEF ou
+// no rito comum? desde quando? A classe responde (MSCiv, PJEC, RecInoCiv,
+// ProceComCiv, ApCiv…) — primeiro a gravada no caso (coleta do PJe ou mão),
+// senão a que o DataJud consultou. A data idem: ajuizado_em ou o DataJud.
+function dadosJudiciais(k){
+  if(k.fase!=="judicial" && !k.processo && !k.classe_judicial) return null;
+  const insts=(k.datajud && (k.datajud.instancias||[])) || [];
+  const classe=k.classe_judicial || insts.map(i=>i.classe).find(Boolean)
+    || (k.datajud||{}).classe || null;
+  const ajuizado=k.ajuizado_em || insts.map(i=>i.ajuizado_em).find(Boolean) || null;
+  if(!classe && !ajuizado) return null;
+  const b=dsa(classe||"");
+  const ms=/mandado de seguranca|msciv/.test(b);
+  const jef=/juizado|pjec|recinociv/.test(b);
+  const comum=/procedimento comum|procecomciv|ordinari|apciv/.test(b);
+  return {classe, ajuizado, ms, rito: jef?"JEF":(comum?"Rito comum":null)};
+}
 // prazo de recurso: 30 dias da decisão (o escritório adota a data em que ela
 // foi proferida como a da ciência). Cai em fim de semana? vai para o dia útil.
 function recorrerAte(k){
@@ -8107,6 +8195,11 @@ function blocoFatos(k){
            sem voltar ao menu (pedido do Paulo) */""}
       <span class="chip ben" title="a lista deste caso (a mesma do To Do)">${
         esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}</span>
+      ${/* o retrato judicial que o Paulo pediu: MS salta aos olhos; JEF ou
+           rito comum e a data do ajuizamento ficam ao lado */""}
+      ${(j=>!j?"":`${j.ms?`<span class="chip per" title="classe: ${esc(j.classe||"")}">⚡ Mandado de Segurança</span>`:""}${
+        j.rito?`<span class="chip neutro" title="classe: ${esc(j.classe||"")}">${j.rito==="JEF"?"🏛 JEF":"📜 Rito comum"}</span>`:""}${
+        j.ajuizado?`<span class="chip neutro" title="data do ajuizamento (Distribuído em)">⚖️ ajuizado ${fmt(j.ajuizado)}</span>`:""}`)(dadosJudiciais(k))}
       ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?"
         style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
         <button class="btn-mini" onclick="salvarBeneficio('${k.id}')">definir</button>`:""}
@@ -8157,6 +8250,8 @@ function blocoFatos(k){
       ${/* o nº CNJ entra à mão aqui (não tinha onde!): judicial sempre
            mostra o campo; nas outras fases, só quando já está preenchido */""}
       ${(k.fase==="judicial"||k.processo)?campoFato(k,"processo"):""}
+      ${(k.fase==="judicial"||k.ajuizado_em)?campoFato(k,"ajuizado_em"):""}
+      ${(k.fase==="judicial"||k.classe_judicial)?campoFato(k,"classe_judicial"):""}
       ${campoFato(k,"der")}
       ${campoFato(k,"dib")}
       ${campoFato(k,"decisao_em")}
