@@ -96,7 +96,8 @@
     if (!itens.length) { faixaErr('a cronologia estava vazia na tela'); return { erro: 'vazio' }; }
     const OUT = { versao: 1, fonte: 'pje-processo', grau, host: location.host,
                   quando: new Date().toISOString(), numero: cab.numero,
-                  classe: cab.classe || null, orgao: cab.orgao || null, itens };
+                  classe: cab.classe || null, orgao: cab.orgao || null,
+                  link: location.href.split('#')[0], itens };
     await CRM.enviar('pje-processo', OUT);
     faixaOk(`✔ ${itens.length} itens do processo ${cab.numero} entregues ao CRM — confira em 📥 Importar.`);
     someFaixa();

@@ -230,6 +230,9 @@ alter table casos add column if not exists ajuizado_em date;
 -- e ONDE o processo está (vara/turma/gabinete) — a linha do acervo do PJe
 -- também traz isso de graça
 alter table casos add column if not exists orgao_judicial text;
+-- o link "abrir no PJe" (autos digitais, id+ca do acervo) — como o
+-- processo_link do PAT: cada coleta o renova
+alter table casos add column if not exists pje_link text;
 
 
 -- ── conferência ───────────────────────────────────────────────────────────
@@ -241,7 +244,7 @@ select table_name as tabela, column_name as coluna, data_type as tipo
  where (table_name = 'casos' and column_name in ('marcadores','ronda','processo_link',
           'situacao_inss','especie','der','urgente','protocolos','crps_nups','crps',
           'encerrado_por','arquivados','lembrete_meses','classe_judicial','ajuizado_em',
-          'orgao_judicial'))
+          'orgao_judicial','pje_link'))
     or (table_name = 'andamentos' and column_name in ('responde_a','origem_id'))
     or (table_name = 'aposentadorias' and column_name = 'lembrar_em')
 union all
