@@ -537,6 +537,17 @@ def subir_rest(mapa):
         raise BancoRecusou(
             f"{len(recusadas)} linha(s) o banco recusou (o resto entrou):\n{det}")
 
+    # o carimbo que o CRM mostra no rodapé do menu ("🔄 To Do há X min").
+    # Só depois de TUDO entrar — sincronização pela metade não conta.
+    try:
+        _rest(url, chave, "POST", "/rest/v1/config_app",
+              [{"chave": "todo_sync_em",
+                "valor": datetime.datetime.now(datetime.timezone.utc)
+                    .isoformat(timespec="seconds")}],
+              prefer="resolution=merge-duplicates,return=minimal")
+    except Exception as e:                      # noqa: BLE001 — carimbo é cortesia
+        print(f"  aviso: não gravei o carimbo da sincronização: {e}")
+
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
