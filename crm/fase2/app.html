@@ -640,11 +640,11 @@
   .crps-ruido[open]>summary{color:var(--azul)}
 
   /* ── compositor: escrever primeiro, Registrar por último ───────────── */
-  /* O COMPOSITOR CONTINUA BRANCO. Escrever é sobre papel branco em todo
-     lugar de onde a equipe vem — Word, To Do, WhatsApp — e campo cinza se lê
-     como campo desligado. Para destacar, ele SOBE: sombra leve, folha por
-     cima da mesa, em vez de mais uma cor. */
-  .escrever{background:var(--branco);border:1px solid var(--borda);border-radius:12px;
+  /* O COMPOSITOR É AZUL-CLARINHO. Branco ele sumia contra os andamentos
+     (também brancos) — na prática o Paulo não achava onde escrever. O tom é
+     de "papel de rascunho": claro o bastante para o texto preto, azulado o
+     bastante para dizer "aqui se escreve, ali se lê". */
+  .escrever{background:#EDF4FB;border:1px solid #C7DCEF;border-radius:12px;
     margin-bottom:10px;box-shadow:0 1px 3px rgba(30,32,36,.07);
     transition:border-color .15s,box-shadow .15s}
   .escrever:focus-within{border-color:var(--azul);box-shadow:0 0 0 3px color-mix(in srgb, var(--azul) 16%, transparent)}
@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.71 · ✔ "compareceu" fecha a perícia que já passou (na ficha e na agenda)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.72 · o campo de escrever andamento agora é azul-clarinho (não some mais no branco)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
