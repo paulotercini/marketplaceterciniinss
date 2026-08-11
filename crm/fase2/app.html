@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.64 · o aplicar do CRPS usa a mesma memória que o conferir</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.65 · caso judicial sempre tem a aba do CNJ — e o nº do processo é editável</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6318,8 +6318,11 @@ async function abrirFicha(cliId){
       // DE QUE processo se trata; e só então vem o trabalho (escrever/ler).
       return `${(()=>{
           // CNJ só interessa em processo judicial; num caso de Conselho/INSS
-          // a aba seria só ruído. Mostra se há nº de processo ou dados do CNJ.
-          const temCNJ = !!(k.processo || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length)));
+          // a aba seria só ruído. Mostra se há nº de processo, dados do CNJ —
+          // ou se o caso ESTÁ na fase judicial: sem a aba, quem abria um
+          // judicial sem número nem descobria onde preenchê-lo.
+          const temCNJ = !!(k.processo || k.fase==="judicial"
+            || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length)));
           const aba = (subAba==="cnj" && !temCNJ) ? "escritorio" : subAba;
           // a etiqueta da aba diz o estado sem abrir: 🗄 quando TODOS os
           // processos daquela fonte estão arquivados (um só arquivado não
@@ -7788,6 +7791,8 @@ const ESPECIES = [
 const FATOS = {
   especie:    {rot:"Espécie",     tipo:"especie", dica:"código da espécie no INSS (B31, B41…)"},
   nb:         {rot:"NB",          tipo:"texto",   dica:"número do benefício"},
+  processo:   {rot:"Processo (CNJ)", tipo:"texto",
+               dica:"número único do processo judicial — é ele que liga o caso ao DataJud (consulta diária) e ao coletor do PJe"},
   der:        {rot:"DER",         tipo:"data",    dica:"Data de Entrada do Requerimento"},
   dib:        {rot:"DIB",         tipo:"data",    dica:"Data de Início do Benefício"},
   decisao_em: {rot:"Decisão em",  tipo:"data",    dica:"data em que a decisão foi proferida — conta o prazo de recurso"},
@@ -8107,6 +8112,9 @@ function blocoFatos(k){
         <dd>${prots.length?prots.map(p=>`<span class="fx-prot" title="copiar" onclick="copiar('${p}','Protocolo copiado')">${esc(p)}</span>`).join(" "):`<span class="fx-vazio">—</span>`}
         <button class="lapis" title="acrescentar protocolo" onclick="novoProtocolo('${k.id}')">✎</button></dd></div>
       ${campoFato(k,"nb")}
+      ${/* o nº CNJ entra à mão aqui (não tinha onde!): judicial sempre
+           mostra o campo; nas outras fases, só quando já está preenchido */""}
+      ${(k.fase==="judicial"||k.processo)?campoFato(k,"processo"):""}
       ${campoFato(k,"der")}
       ${campoFato(k,"dib")}
       ${campoFato(k,"decisao_em")}
@@ -9153,6 +9161,11 @@ async function removerCrpsNup(casoId, nup){
 
 function painelCNJ(k){
   const t = k.datajud;
+  // judicial sem número: a aba existe justamente para dizer o que falta
+  if(!soDig(k.processo) && !(t && (t.ultimo || (t.instancias||[]).length)))
+    return `<div class="caso"><p class="meio-sub">Este caso ainda não tem o número do processo.
+      Preencha <b>Processo (CNJ)</b> no quadro acima (lápis ✎) — com ele, o DataJud consulta
+      todo dia útil e o coletor do PJe passa a casar o processo sozinho.</p></div>`;
   if(!t || !(t.ultimo || (t.instancias||[]).length))
     return `<div class="caso">${consultaPendente(k) || `<p class="meio-sub">Sem andamento oficial para este processo na base do CNJ.</p>`}</div>`;
   const insts = cnjInstancias(k);
