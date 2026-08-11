@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.61 · a aba do processo diz em que lista o caso está</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.62 · o acervo do PJe entra pela extensão: todo movimento vira Novidade</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1625,7 +1625,7 @@ async function carregar(){
       // de 30 dias para mostrar os do robô seria carregar a ficha inteira do
       // escritório em toda abertura do CRM.
       todas("andamentos",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`
-        +`&origem=in.(pat,crps,dou)&criado_em=gte.${d30.toISOString()}&order=criado_em.desc`)
+        +`&origem=in.(pat,crps,dou,pje)&criado_em=gte.${d30.toISOString()}&order=criado_em.desc`)
         .catch(()=>[]),
       todas("modelos_mensagem","select=*&order=titulo"),
       todas("sugestoes","select=*&status=eq.pendente&order=criado_em.desc"),
@@ -2872,10 +2872,10 @@ function telaImportarPat(){
         ou solte um arquivo aqui embaixo.</p>`;
       return `<div class="id-grid" style="grid-template-columns:1fr;gap:6px;margin:10px 0">
       ${novas.map(c=>`<div class="id-card destaque" style="display:flex;align-items:center;gap:10px">
-        <strong>${c.fonte==="pat"?"🌻 INSS":"🖥 Recursos"}</strong>
+        <strong>${c.fonte==="pat"?"🌻 INSS":c.fonte==="pje"?"⚖️ PJe TRF3":"🖥 Recursos"}</strong>
         <span class="u-papel" style="text-transform:none">chegou ${esc(dataRelativa(dataSP(c.criado_em)))} às ${esc(horaSP(c.criado_em))}</span>
         <button class="btn-mini" style="margin-left:auto" onclick="${
-          c.fonte==="crps"?`conferirCrps('${c.id}')`:`usarColeta('${c.id}')`}">conferir</button>
+          c.fonte==="crps"?`conferirCrps('${c.id}')`:c.fonte==="pje"?`conferirPje('${c.id}')`:`usarColeta('${c.id}')`}">conferir</button>
       </div>`).join("")}
       ${velhas.length?`<div class="meio-sub" style="display:flex;align-items:center;gap:8px">
         ${velhas.length} coleta(s) anterior(es) da mesma origem — a mais nova já contém o que elas tinham.
@@ -2905,6 +2905,26 @@ function telaImportarPat(){
       </table>`:"<p class='meio-sub'>Nenhum movimento novo — nada a escrever.</p>"}
       <button class="novo-cli" style="width:auto;margin:12px 0 0;padding:10px 20px"
         onclick="aplicarCrps('${planoCrpsAtual.coleta_id}')">Aplicar ${q.movimentos} movimento(s)</button>`; })()}
+    ${!planoPjeAtual ? "" : (()=>{ const q = planoPjeAtual.resumo; return `
+      <h3 class="secao">⚖️ PJe TRF3${planoPjeAtual.grau?` · ${esc(planoPjeAtual.grau)}`:""} — o que esta coleta vai escrever</h3>
+      <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+        ${[["processos lidos", q.lidos], ["movimentos novos", q.movimentos],
+           ["sem mudança", q.sem_mudanca], ["sem caso no CRM", q.sem_caso]].map(n=>
+          `<div class="id-card"><strong style="font-size:20px">${n[1]}</strong>
+            <div class="u-papel" style="text-transform:none">${n[0]}</div></div>`).join("")}
+      </div>
+      ${q.sem_caso?`<div class="exig">${q.sem_caso} processo(s) do acervo não têm caso com esse
+        número aqui — preencha o campo "processo" na ficha para eles casarem na próxima coleta.
+        ${planoPjeAtual.semCaso.slice(0,8).map(p=>`<div class="meio-sub">${esc(p.numero)} — ${esc((p.partes||"").slice(0,60))}</div>`).join("")}</div>`:""}
+      ${planoPjeAtual.andamentos.length?`<table class="tab">
+        <tr><th>cliente</th><th>o que mudou</th></tr>
+        ${planoPjeAtual.andamentos.slice(0,40).map(a=>{
+          const k = D.casoPorId.get(a.caso_id)||{}; const cl = D.cliPorId.get(k.cliente_id)||{};
+          return `<tr><td>${esc(cl.nome||"—")}</td>
+            <td style="white-space:pre-wrap">${esc(a.texto)}</td></tr>`;}).join("")}
+      </table>`:"<p class='meio-sub'>Nenhum movimento novo — tudo o que o acervo mostra a ficha já sabia.</p>"}
+      <button class="novo-cli" style="width:auto;margin:12px 0 0;padding:10px 20px"
+        onclick="aplicarPje('${planoPjeAtual.coleta_id}')">Aplicar ${q.movimentos} movimento(s)</button>`; })()}
     ${!r ? "" : `
       <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
         ${[["requerimentos lidos", r.lidos], ["casos a atualizar", r.atualizar],
@@ -3472,6 +3492,69 @@ function planoCrps(coleta, D){
 // CRPS gravava direto — duas portas com regras diferentes para a mesma
 // pergunta ("o que isto vai escrever nas fichas?"). Agora as duas param e
 // mostram primeiro.
+// ── ⚖️ a coleta do PJe (acervo do TRF3) ──────────────────────────────────
+// A extensão lê a aba Acervo do painel do advogado: TODOS os processos, cada
+// um com o último movimento — a ciência completa que o Paulo pediu, sem
+// depender de expediente. Aqui a coleta vira plano: movimento que a ficha
+// ainda não tem vira andamento origem='pje' (e 📣 Novidade); o resto é
+// silêncio contado. Dedupe pela chave numero+data+hora em origem_id — cinco
+// coletas por dia não duplicam nada.
+let planoPjeAtual = null;
+async function conferirPje(coletaId){
+  try{
+    const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
+    if(!c) return aviso("Não achei essa coleta");
+    const dados = c.dados || {};
+    // a memória vem do banco na hora, como no PAT — lição da 08.58
+    const vistos = new Set((await todas("andamentos",
+      "select=origem_id&origem=eq.pje&origem_id=not.is.null").catch(()=>[]))
+      .map(a=>a.origem_id));
+    const porProcesso = new Map();
+    for(const k of D.casos){
+      const dig = soDig(k.processo);
+      if(dig) porProcesso.set(dig, k);
+    }
+    const plano = { coleta_id: coletaId, grau: dados.grau||"", andamentos: [], semCaso: [],
+                    resumo: { lidos:(dados.processos||[]).length, movimentos:0,
+                              sem_caso:0, sem_mudanca:0 } };
+    for(const p of (dados.processos||[])){
+      const k = porProcesso.get(soDig(p.numero));
+      if(!k){ plano.semCaso.push(p); plano.resumo.sem_caso++; continue; }
+      if(!p.movimento){ plano.resumo.sem_mudanca++; continue; }
+      const oid = `mov:${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`;
+      if(vistos.has(oid)){ plano.resumo.sem_mudanca++; continue; }
+      plano.andamentos.push({ caso_id:k.id, numero:p.numero, origem_id:oid,
+        criado_em:`${p.movimento.data}T${p.movimento.hora}:00-03:00`,
+        texto:`PJe${dados.grau?` (${dados.grau})`:""}: ${p.movimento.texto} — ${p.classe||"processo"} ${p.numero}` });
+      plano.resumo.movimentos++;
+    }
+    planoPjeAtual = plano;
+    render();
+  }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+}
+async function aplicarPje(coletaId){
+  if(!planoPjeAtual || planoPjeAtual.coleta_id!==coletaId) return;
+  const falhas=[]; let feitos=0;
+  for(const a of planoPjeAtual.andamentos){
+    try{
+      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, origem:"pje",
+          origem_id:a.origem_id, publico:false, criado_em:a.criado_em, texto:a.texto})});
+      feitos++;
+    }catch(e){ falhas.push(`${a.numero}: ${String(e.message||e).slice(0,90)}`); }
+  }
+  await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
+  planoPjeAtual = null;
+  await buscarColetas();
+  await carregar(); montarSidebar(); render();
+  if(falhas.length){
+    console.warn("falhas do PJe:", falhas);
+    aviso(`${feitos} gravados; ${falhas.length} falharam — se o banco recusou a origem 'pje', rode o schema_por_em_dia.sql`);
+  }else aviso(feitos?`✔ ${feitos} movimento(s) do PJe — veja em 📣 Novidades`:"Nada novo a gravar");
+}
+
 let planoCrpsAtual = null;
 async function conferirCrps(coletaId){
   try{
@@ -3730,8 +3813,8 @@ async function enviarEncaminhamento(andId){
 // "Lido" é por pessoa, na tabela andamentos_lidos que já existia para os
 // comentários da ficha. Marcar não apaga nada: o andamento continua na
 // ficha do cliente para sempre, só sai desta caixa de entrada.
-const ORIGENS_ROBO = ["pat","crps","dou"];
-const ROTULO_ORIGEM = {pat:"🌻 INSS", crps:"🖥 Recursos", dou:"📰 DOU"};
+const ORIGENS_ROBO = ["pat","crps","dou","pje"];
+const ROTULO_ORIGEM = {pat:"🌻 INSS", crps:"🖥 Recursos", dou:"📰 DOU", pje:"⚖️ PJe"};
 
 function novidades(){
   const euLi = a => (a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
@@ -8287,6 +8370,8 @@ function fatosDoCasoTodo(k, ands){
       itens.push({q:a.criado_em||"", chip:"🌻 INSS", cor:"per",
         texto:limparHtmlPat(m?a.texto.slice(m[0].length):a.texto)
           + (m&&m[1]==="Escritório"?" (comentário nosso no portal)":"")});
+    }else if(a.origem==="pje"){
+      itens.push({q:a.criado_em||"", chip:"⚖️ PJe", cor:"neutro", texto:(a.texto||"")});
     }else{
       const co=D.colPorId.get(a.autor_id);
       itens.push({q:a.criado_em||"", chip:"🏢 Escritório", cor:"ben",
