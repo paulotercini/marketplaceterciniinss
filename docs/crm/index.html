@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.69 · 🔗 "abrir no PJe" nas Novidades, na ficha e na aba CNJ (como o link do PAT)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.70 · 🔍 escolher à mão o caso de um processo do PJe que o nome não casou sozinho</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2925,13 +2925,15 @@ function telaImportarPat(){
           com UM cliente do CRM que tem UM caso ativo sem número —
           <button class="btn-mini" onclick="vincularTodosPje()">vincular os ${q.vinculaveis}</button>
           <span class="meio-sub">preenche o campo "processo" do caso; nada além disso</span></div>`:""}
-        ${planoPjeAtual.semCaso.slice(0,14).map(p=>`<div class="meio-sub" style="margin-top:2px">${esc(p.numero)} — ${esc((p.partes||"").slice(0,60))}
+        ${planoPjeAtual.semCaso.slice(0,60).map(p=>`<div class="meio-sub" style="margin-top:2px">${esc(p.numero)} — ${esc((p.partes||"").slice(0,60))}
           ${p.sugestao?`<button class="btn-mini" onclick="vincularProcessoPje('${p.numero}')">vincular ao caso de ${esc(p.sugestao.cliente_nome.split(" ")[0])}</button>`
             :p.sugestao_novo?`<button class="btn-mini" onclick="criarCasoPje('${p.numero}')"
               title="o cliente existe, mas os casos dele já têm número — este é um segundo processo">➕ criar caso p/ ${esc(p.sugestao_novo.cliente_nome.split(" ")[0])}</button>`:""}
+          <button class="btn-mini" onclick="escolherCasoPje('${p.numero}')"
+            title="é caso nosso, mas o nome não casou sozinho — busque o cliente e vincule ao caso certo (ou crie um novo)">🔍 escolher</button>
           <button class="btn-mini" onclick="ignorarProcessoPje('${p.numero}')"
             title="não é caso nosso (instrumental, de terceiro — ex.: só para uma certidão) — para de aparecer em toda coleta">🚫</button></div>`).join("")}
-        ${q.sem_caso>14?`<div class="meio-sub">…e mais ${q.sem_caso-14}. Vincule estes e confira de novo — a lista encolhe.</div>`:""}</div>`:""}
+        ${q.sem_caso>60?`<div class="meio-sub">…e mais ${q.sem_caso-60}. Vincule estes e confira de novo — a lista encolhe.</div>`:""}</div>`:""}
       ${(q.ignorados||pjeIgnorados().length)?`<p class="meio-sub" style="margin-top:6px">🚫 ${pjeIgnorados().length} processo(s)
         ignorados de vez${q.ignorados?` (${q.ignorados} escondidos nesta conferência)`:""} —
         <a href="#" onclick="event.preventDefault();limparIgnoradosPje()">limpar e voltar a perguntar</a></p>`:""}
@@ -3650,13 +3652,10 @@ function clienteDasPartes(partes){
     .replace(/\s*e outros?\s*\(\d+\)\s*/i," ").trim();
   return nome || null;
 }
-async function vincularProcessoPje(numero){
-  const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
-  if(!p || !p.sugestao) return;
-  const k=D.casoPorId.get(p.sugestao.caso_id);
-  if(!k || soDig(k.processo)) return aviso("Esse caso já ganhou outro número — confira na ficha");
-  // o vínculo leva classe e ajuizamento junto; num banco sem as colunas
-  // novas, grava só o número em vez de falhar inteiro
+// o vínculo em si, usado pela sugestão automática E pela escolha à mão:
+// leva classe/ajuizamento/órgão/link junto; num banco sem as colunas novas,
+// grava só o número em vez de falhar inteiro
+async function vincularPjeNoCaso(p, k, nomeCli){
   const corpo={processo:p.numero,
     ...(p.classe && !k.classe_judicial?{classe_judicial:p.classe}:{}),
     ...(p.distribuido && !k.ajuizado_em?{ajuizado_em:p.distribuido}:{}),
@@ -3672,16 +3671,20 @@ async function vincularProcessoPje(numero){
     delete corpo.pje_link;
   }
   Object.assign(k, corpo);
-  aviso(`⚖️ ${p.numero} vinculado ao caso de ${p.sugestao.cliente_nome.split(" ")[0]}`, false);
+  aviso(`⚖️ ${p.numero} vinculado ao caso de ${String(nomeCli||"").split(" ")[0]||"cliente"}`, false);
   conferirPje(planoPjeAtual.coleta_id);          // replaneja: agora ele casa
 }
-// o SEGUNDO processo do mesmo cliente: o caso vago já foi usado, então
-// nasce um caso Judicial novo, já com o número — nada de pendurar dois
-// processos numa ficha só
-async function criarCasoPje(numero){
+async function vincularProcessoPje(numero){
   const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
-  if(!p || !p.sugestao_novo) return;
-  const c=D.cliPorId.get(p.sugestao_novo.cliente_id); if(!c) return;
+  if(!p || !p.sugestao) return;
+  const k=D.casoPorId.get(p.sugestao.caso_id);
+  if(!k || soDig(k.processo)) return aviso("Esse caso já ganhou outro número — confira na ficha");
+  await vincularPjeNoCaso(p, k, p.sugestao.cliente_nome);
+}
+// caso Judicial novo já com o número — o caminho do SEGUNDO processo do
+// mesmo cliente (nada de pendurar dois processos numa ficha só) e o da
+// escolha à mão quando o cliente não tem caso vago
+async function criarCasoPjeParaCliente(p, c){
   if(!confirm(`Criar um caso Judicial novo para ${c.nome} com o processo ${p.numero}?`)) return;
   const base={cliente_id:c.id, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
     fase:"judicial", processo:p.numero, origem_lista:"👪 Judicial"};
@@ -3704,6 +3707,68 @@ async function criarCasoPje(numero){
   }
   aviso(`➕ Caso criado para ${c.nome.split(" ")[0]} com o processo ${p.numero}`, false);
   conferirPje(planoPjeAtual.coleta_id);
+}
+async function criarCasoPje(numero){
+  const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
+  if(!p || !p.sugestao_novo) return;
+  const c=D.cliPorId.get(p.sugestao_novo.cliente_id); if(!c) return;
+  await criarCasoPjeParaCliente(p, c);
+}
+// ── a ESCOLHA À MÃO ──────────────────────────────────────────────────────
+// O casamento automático por nome só age quando bate com UM cliente — e o
+// print do Paulo mostrou 50 processos de casos nossos parados por grafia
+// diferente, homônimos ou cliente com mais de um caso vago. O 🔍 abre a
+// busca: acha o cliente pelo nome do CRM, vincula ao caso certo (só os SEM
+// número entram) ou cria um caso Judicial novo ali mesmo.
+function escolherCasoPje(numero){
+  const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
+  if(!p) return;
+  caixa(`<h3 style="margin:0 0 2px">⚖️ ${esc(p.numero)}</h3>
+    <p class="meio-sub" style="margin:0 0 8px">${esc((p.partes||"").slice(0,90))}</p>
+    <input id="esc-pje-busca" placeholder="nome do cliente no CRM…" autocomplete="off"
+      style="width:100%;padding:7px 10px;border:1px solid var(--borda);border-radius:8px;font-size:14px"
+      oninput="filtrarEscolhaPje('${p.numero}')">
+    <div id="esc-pje-lista" style="max-height:52vh;overflow:auto;margin-top:8px"></div>`);
+  const inp=document.getElementById("esc-pje-busca");
+  // já entra filtrando pelos dois primeiros nomes da parte
+  inp.value=(clienteDasPartes(p.partes)||"").split(/\s+/).slice(0,2).join(" ");
+  filtrarEscolhaPje(p.numero);
+  inp.focus(); inp.select();
+}
+function filtrarEscolhaPje(numero){
+  const el=document.getElementById("esc-pje-lista"); if(!el) return;
+  const q=dsa((document.getElementById("esc-pje-busca")||{}).value||"").trim();
+  const cands=q.length<2?[]:D.clientes.filter(c=>dsa(c.nome).includes(q)).slice(0,12);
+  el.innerHTML = !cands.length
+    ? `<p class="meio-sub">${q.length<2?"digite ao menos 2 letras do nome":"nenhum cliente do CRM com esse nome — confira a grafia no cadastro"}</p>`
+    : cands.map(c=>{
+      const casos=(D.casosDoCliente.get(c.id)||[]).filter(x=>x.fase!=="encerrado");
+      return `<div style="padding:7px 0;border-bottom:1px solid var(--borda)">
+        <b>${esc(c.nome)}</b>
+        ${casos.map(x=>{ const tem=soDig(x.processo);
+          return `<div class="meio-sub" style="display:flex;gap:6px;align-items:center;margin-top:3px;flex-wrap:wrap">
+            ${esc(tituloCaso(x))}${tem?` <small>· já tem o ${esc(x.processo)}</small>`
+              :` <button class="btn-mini" onclick="vincularEscolhidoPje('${numero}','${x.id}')">vincular aqui</button>`}
+          </div>`;}).join("") || `<div class="meio-sub" style="margin-top:3px">sem caso ativo</div>`}
+        <button class="btn-mini" style="margin-top:5px"
+          onclick="criarCasoEscolhidoPje('${numero}','${c.id}')">➕ caso Judicial novo p/ ${esc(c.nome.split(" ")[0])}</button>
+      </div>`;}).join("");
+}
+async function vincularEscolhidoPje(numero, casoId){
+  const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
+  const k=D.casoPorId.get(casoId);
+  if(!p || !k) return;
+  if(soDig(k.processo)) return aviso("Esse caso já tem número — escolha outro ou crie um caso novo");
+  fecharCaixa();
+  const cli=D.cliPorId.get(k.cliente_id)||{};
+  await vincularPjeNoCaso(p, k, cli.nome);
+}
+async function criarCasoEscolhidoPje(numero, cliId){
+  const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
+  const c=D.cliPorId.get(cliId);
+  if(!p || !c) return;
+  fecharCaixa();
+  await criarCasoPjeParaCliente(p, c);
 }
 async function vincularTodosPje(){
   const alvos=((planoPjeAtual||{}).semCaso||[]).filter(x=>x.sugestao);
