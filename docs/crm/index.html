@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.67 · MS/JEF/ajuizamento à vista, 🚫 ignorar processo no PJe e a espécie B26</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.68 · 📍 órgão julgador na ficha e o histórico completo do processo aberto no PJe</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2755,7 +2755,7 @@ let coletasPendentes = [];
 async function buscarColetas(){
   try{
     coletasPendentes = await api(
-      `/rest/v1/coletas?select=id,fonte,criado_em&aplicada_em=is.null&order=criado_em.desc`) || [];
+      `/rest/v1/coletas?select=id,fonte,criado_em,numero:dados->>numero&aplicada_em=is.null&order=criado_em.desc`) || [];
   }catch(e){ coletasPendentes = []; }   // sem a tabela, a tela do arquivo continua
 }
 // SÓ A MAIS NOVA DE CADA PORTAL INTERESSA. Cada clique no botão da extensão
@@ -2765,7 +2765,10 @@ async function buscarColetas(){
 function coletasPorFonte(){
   const nova = {}, velhas = [];       // a busca já vem em ordem decrescente
   for(const c of coletasPendentes){
-    if(!nova[c.fonte]) nova[c.fonte] = c; else velhas.push(c);
+    // processo completo: cada PROCESSO é uma fila própria — a coleta de um
+    // não engole a de outro (só a repetição do mesmo número é "velha")
+    const chave = c.fonte==="pje-processo" ? `${c.fonte}:${c.numero||c.id}` : c.fonte;
+    if(!nova[chave]) nova[chave] = c; else velhas.push(c);
   }
   return { novas: Object.values(nova), velhas };
 }
@@ -2872,10 +2875,12 @@ function telaImportarPat(){
         ou solte um arquivo aqui embaixo.</p>`;
       return `<div class="id-grid" style="grid-template-columns:1fr;gap:6px;margin:10px 0">
       ${novas.map(c=>`<div class="id-card destaque" style="display:flex;align-items:center;gap:10px">
-        <strong>${c.fonte==="pat"?"🌻 INSS":c.fonte==="pje"?"⚖️ PJe TRF3":"🖥 Recursos"}</strong>
+        <strong>${c.fonte==="pat"?"🌻 INSS":c.fonte==="pje"?"⚖️ PJe TRF3"
+          :c.fonte==="pje-processo"?`⚖️ Processo completo${c.numero?` ${esc(c.numero)}`:""}`:"🖥 Recursos"}</strong>
         <span class="u-papel" style="text-transform:none">chegou ${esc(dataRelativa(dataSP(c.criado_em)))} às ${esc(horaSP(c.criado_em))}</span>
         <button class="btn-mini" style="margin-left:auto" onclick="${
-          c.fonte==="crps"?`conferirCrps('${c.id}')`:c.fonte==="pje"?`conferirPje('${c.id}')`:`usarColeta('${c.id}')`}">conferir</button>
+          c.fonte==="crps"?`conferirCrps('${c.id}')`:c.fonte==="pje"?`conferirPje('${c.id}')`
+          :c.fonte==="pje-processo"?`conferirPjeProc('${c.id}')`:`usarColeta('${c.id}')`}">conferir</button>
       </div>`).join("")}
       ${velhas.length?`<div class="meio-sub" style="display:flex;align-items:center;gap:8px">
         ${velhas.length} coleta(s) anterior(es) da mesma origem — a mais nova já contém o que elas tinham.
@@ -2910,7 +2915,7 @@ function telaImportarPat(){
       <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
         ${[["processos lidos", q.lidos], ["movimentos novos", q.movimentos],
            ["sem mudança", q.sem_mudanca], ["sem caso no CRM", q.sem_caso],
-           ["fichas a completar (classe/ajuizamento)", q.fichas||0]].map(n=>
+           ["fichas a completar (classe/ajuizamento/órgão)", q.fichas||0]].map(n=>
           `<div class="id-card"><strong style="font-size:20px">${n[1]}</strong>
             <div class="u-papel" style="text-transform:none">${n[0]}</div></div>`).join("")}
       </div>
@@ -2939,6 +2944,28 @@ function telaImportarPat(){
       </table>`:"<p class='meio-sub'>Nenhum movimento novo — tudo o que o acervo mostra a ficha já sabia.</p>"}
       <button class="novo-cli" style="width:auto;margin:12px 0 0;padding:10px 20px"
         onclick="aplicarPje('${planoPjeAtual.coleta_id}')">Aplicar ${q.movimentos} movimento(s)</button>`; })()}
+    ${!planoPjeProcAtual ? "" : (()=>{ const q = planoPjeProcAtual.resumo, p = planoPjeProcAtual; return `
+      <h3 class="secao">⚖️ Processo completo ${esc(p.numero)}${p.grau?` · ${esc(p.grau)}`:""} — a cronologia inteira</h3>
+      ${!p.caso_id?`<div class="exig"><strong>Esse número não tem caso no CRM.</strong>
+        Preencha o campo "Processo (CNJ)" na ficha do cliente (lápis ✎) — ou vincule pela
+        coleta do acervo — e clique em conferir de novo.</div>`:`
+      <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+        ${[["itens na cronologia", q.itens], ["movimentos novos", q.movimentos],
+           ["a ficha já tinha", q.conhecidos], ["documentos citados", q.docs]].map(n=>
+          `<div class="id-card"><strong style="font-size:20px">${n[1]}</strong>
+            <div class="u-papel" style="text-transform:none">${n[0]}</div></div>`).join("")}
+      </div>
+      <p class="meio-sub">Cada movimento entra com a DATA em que aconteceu — o que é antigo
+        vai direto para a história do caso, sem passar pelas 📣 Novidades.</p>
+      ${p.andamentos.length?`<table class="tab">
+        <tr><th>quando</th><th>o que aconteceu</th></tr>
+        ${p.andamentos.slice(0,60).map(a=>`<tr><td style="white-space:nowrap">${
+          a.quando?esc(fmt(a.quando.slice(0,10))):"—"}</td>
+          <td style="white-space:pre-wrap">${esc(a.texto)}</td></tr>`).join("")}
+        ${p.andamentos.length>60?`<tr><td colspan="2" class="meio-sub">…e mais ${p.andamentos.length-60}</td></tr>`:""}
+      </table>`:"<p class='meio-sub'>Nenhum movimento novo — a ficha já tinha essa história toda.</p>"}
+      <button class="novo-cli" style="width:auto;margin:12px 0 0;padding:10px 20px"
+        onclick="aplicarPjeProc('${p.coleta_id}')">Gravar ${q.movimentos} movimento(s) na história do caso</button>`}`; })()}
     ${!r ? "" : `
       <div class="id-grid" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
         ${[["requerimentos lidos", r.lidos], ["casos a atualizar", r.atualizar],
@@ -3519,10 +3546,15 @@ async function conferirPje(coletaId){
     const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
     if(!c) return aviso("Não achei essa coleta");
     const dados = c.dados || {};
-    // a memória vem do banco na hora, como no PAT — lição da 08.58
-    const vistos = new Set((await todas("andamentos",
+    // a memória vem do banco na hora, como no PAT — lição da 08.58. Além da
+    // chave exata, o MOMENTO (processo+data+hora) de tudo que já está gravado
+    // — inclusive pelo histórico completo (hist:) — para o acervo não regravar
+    // como novo um movimento que o histórico do processo já trouxe.
+    const bancoPje = (await todas("andamentos",
       "select=origem_id&origem=eq.pje&origem_id=not.is.null").catch(()=>[]))
-      .map(a=>a.origem_id));
+      .map(a=>a.origem_id);
+    const vistos = new Set(bancoPje);
+    const momentos = momentosPje(bancoPje);
     const porProcesso = new Map();
     for(const k of D.casos){
       const dig = soDig(k.processo);
@@ -3567,10 +3599,12 @@ async function conferirPje(coletaId){
       const campos={};
       if(p.classe && !k.classe_judicial) campos.classe_judicial=p.classe;
       if(p.distribuido && !k.ajuizado_em) campos.ajuizado_em=p.distribuido;
+      if(p.orgao && !k.orgao_judicial) campos.orgao_judicial=p.orgao;
       if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); plano.resumo.fichas++; }
       if(!p.movimento){ plano.resumo.sem_mudanca++; continue; }
       const oid = `mov:${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`;
-      if(vistos.has(oid)){ plano.resumo.sem_mudanca++; continue; }
+      if(vistos.has(oid) || momentos.has(`${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`)){
+        plano.resumo.sem_mudanca++; continue; }
       // criado_em fica em branco de propósito: o banco carimba AGORA e o
       // andamento entra na janela de 30 dias das 📣 Novidades — gravado com
       // a data do movimento, o que era mais velho nascia invisível. A data
@@ -3613,14 +3647,15 @@ async function vincularProcessoPje(numero){
   // novas, grava só o número em vez de falhar inteiro
   const corpo={processo:p.numero,
     ...(p.classe && !k.classe_judicial?{classe_judicial:p.classe}:{}),
-    ...(p.distribuido && !k.ajuizado_em?{ajuizado_em:p.distribuido}:{})};
+    ...(p.distribuido && !k.ajuizado_em?{ajuizado_em:p.distribuido}:{}),
+    ...(p.orgao && !k.orgao_judicial?{orgao_judicial:p.orgao}:{})};
   try{
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify(corpo)});
   }catch(e){
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({processo:p.numero})});
-    delete corpo.classe_judicial; delete corpo.ajuizado_em;
+    delete corpo.classe_judicial; delete corpo.ajuizado_em; delete corpo.orgao_judicial;
   }
   Object.assign(k, corpo);
   aviso(`⚖️ ${p.numero} vinculado ao caso de ${p.sugestao.cliente_nome.split(" ")[0]}`, false);
@@ -3637,7 +3672,8 @@ async function criarCasoPje(numero){
   const base={cliente_id:c.id, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
     fase:"judicial", processo:p.numero, origem_lista:"👪 Judicial"};
   const extra={...(p.classe?{classe_judicial:p.classe}:{}),
-               ...(p.distribuido?{ajuizado_em:p.distribuido}:{})};
+               ...(p.distribuido?{ajuizado_em:p.distribuido}:{}),
+               ...(p.orgao?{orgao_judicial:p.orgao}:{})};
   let k;
   try{
     [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
@@ -3687,6 +3723,104 @@ async function limparIgnoradosPje(){
   aviso("Ignorados do PJe limpos — voltam a aparecer na próxima conferência", false);
   if(planoPjeAtual) conferirPje(planoPjeAtual.coleta_id); else render();
 }
+// o MOMENTO de cada andamento do PJe já gravado (processo:dataThora), venha
+// ele do acervo (mov:) ou do histórico completo (hist:) — é o que impede as
+// duas fontes de gravarem o mesmo movimento duas vezes
+function momentosPje(origemIds){
+  const s=new Set();
+  for(const oid of origemIds||[]){
+    const m=/^(?:mov|hist):(\d+:\d{4}-\d{2}-\d{2}T\d{2}:\d{2})/.exec(oid||"");
+    if(m) s.add(m[1]);
+  }
+  return s;
+}
+function hashDjb(s){ let h=5381; for(let i=0;i<s.length;i++) h=((h*33)^s.charCodeAt(i))>>>0; return h.toString(36); }
+
+// ── ⚖️ o PROCESSO COMPLETO (coleta 'pje-processo') ───────────────────────
+// A janela do processo no PJe tem a cronologia INTEIRA — e a extensão agora
+// entrega ela toda, para preencher o passado de um caso que acabou de chegar.
+// História não é novidade: cada movimento é gravado com criado_em = a DATA DO
+// PRÓPRIO MOVIMENTO, então o que é antigo nasce fora da janela de 30 dias das
+// 📣 Novidades em vez de inundá-la — só o que de fato aconteceu neste mês
+// aparece lá. A dedupe conversa com a do acervo pelos MOMENTOS (ver acima).
+let planoPjeProcAtual = null;
+async function conferirPjeProc(coletaId){
+  try{
+    const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
+    if(!c) return aviso("Não achei essa coleta");
+    const dados = c.dados || {};
+    const dig = soDig(dados.numero);
+    const k = D.casos.find(x=>soDig(x.processo)===dig) || null;
+    const plano = { coleta_id: coletaId, numero: dados.numero||"?", grau: dados.grau||"",
+                    caso_id: k?k.id:null, fichas: [], andamentos: [],
+                    resumo: { itens:(dados.itens||[]).length, movimentos:0, conhecidos:0, docs:0 } };
+    if(!k){ planoPjeProcAtual = plano; render(); return; }
+    const bancoPje = (await todas("andamentos",
+      "select=origem_id&origem=eq.pje&origem_id=not.is.null").catch(()=>[]))
+      .map(a=>a.origem_id);
+    const vistos = new Set(bancoPje);
+    const momentos = momentosPje(bancoPje);
+    const campos={};
+    if(dados.classe && !k.classe_judicial) campos.classe_judicial=dados.classe;
+    if(dados.orgao && !k.orgao_judicial) campos.orgao_judicial=dados.orgao;
+    if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); }
+    for(const it of (dados.itens||[])){
+      const texto=[...(it.textos||[]), ...(it.docs||[]).map(d=>`📎 ${d.nome}`)].join(" · ");
+      if(!texto) continue;
+      plano.resumo.docs += (it.docs||[]).length;
+      const oid=`hist:${dig}:${it.data||"s-d"}T${it.hora||"00:00"}:${hashDjb(texto)}`;
+      const momento=it.data&&it.hora?`${dig}:${it.data}T${it.hora}`:null;
+      if(vistos.has(oid) || (momento&&momentos.has(momento))){ plano.resumo.conhecidos++; continue; }
+      vistos.add(oid); if(momento) momentos.add(momento);   // dentro da própria coleta também
+      plano.andamentos.push({ caso_id:k.id, origem_id:oid,
+        quando: it.data?`${it.data}T${it.hora||"12:00"}:00-03:00`:null,
+        texto:`PJe${dados.grau?` (${dados.grau})`:""}: ${texto}${
+          it.data?` — em ${fmt(it.data)}${it.hora?" "+it.hora:""}`:""} — ${dados.classe||"processo"} ${dados.numero}` });
+      plano.resumo.movimentos++;
+    }
+    planoPjeProcAtual = plano;
+    render();
+  }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+}
+async function aplicarPjeProc(coletaId){
+  if(!planoPjeProcAtual || planoPjeProcAtual.coleta_id!==coletaId) return;
+  const falhas=[]; let feitos=0, fichas=0;
+  for(const f of (planoPjeProcAtual.fichas||[])){
+    try{
+      await api(`/rest/v1/casos?id=eq.${f.caso_id}`,{method:"PATCH",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify(f.campos)});
+      Object.assign(D.casoPorId.get(f.caso_id)||{}, f.campos); fichas++;
+    }catch(e){}
+  }
+  for(const a of planoPjeProcAtual.andamentos){
+    const corpo={caso_id:a.caso_id, autor_id:eu.id, origem:"pje",
+      origem_id:a.origem_id, publico:false, texto:a.texto};
+    try{
+      // com a data do movimento; se o banco recusar o criado_em, sem ela
+      try{
+        await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify(a.quando?{...corpo, criado_em:a.quando}:corpo)});
+      }catch(e1){
+        if(!a.quando) throw e1;
+        await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify(corpo)});
+      }
+      feitos++;
+    }catch(e){ falhas.push(String(e.message||e).slice(0,90)); }
+  }
+  await api(`/rest/v1/coletas?id=eq.${coletaId}`,{method:"PATCH",
+    headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({aplicada_em:new Date().toISOString()})}).catch(()=>{});
+  planoPjeProcAtual = null;
+  await buscarColetas();
+  await carregar(); montarSidebar(); render();
+  if(falhas.length){
+    console.warn("falhas do histórico PJe:", falhas);
+    aviso(`${feitos} gravados; ${falhas.length} falharam — se o banco recusou a origem 'pje', rode o schema_por_em_dia.sql`);
+  }else aviso(feitos||fichas
+    ?`✔ histórico do processo na ficha: ${feitos} movimento(s)${fichas?`, ficha completada (classe/órgão)`:""} — o que é antigo NÃO passa pelas Novidades`
+    :"Nada novo a gravar — a ficha já tinha essa história");
+}
 async function aplicarPje(coletaId){
   if(!planoPjeAtual || planoPjeAtual.coleta_id!==coletaId) return;
   const falhas=[]; let feitos=0;
@@ -3718,7 +3852,7 @@ async function aplicarPje(coletaId){
     console.warn("falhas do PJe:", falhas);
     aviso(`${feitos} gravados; ${falhas.length} falharam — se o banco recusou a origem 'pje', rode o schema_por_em_dia.sql`);
   }else aviso(feitos||fichas
-    ?`✔ ${feitos} movimento(s) do PJe${fichas?`; ${fichas} ficha(s) completadas (classe/ajuizamento)`:""} — veja em 📣 Novidades`
+    ?`✔ ${feitos} movimento(s) do PJe${fichas?`; ${fichas} ficha(s) completadas (classe/ajuizamento/órgão)`:""} — veja em 📣 Novidades`
     :"Nada novo a gravar");
 }
 
@@ -7905,6 +8039,8 @@ const FATOS = {
                dica:"data do ajuizamento — a coleta do PJe preenche sozinha pelo 'Distribuído em'"},
   classe_judicial:{rot:"Classe", tipo:"texto",
                dica:"classe do processo (MSCiv, PJEC, ProceComCiv…) — é ela que diz se é Mandado de Segurança e se corre no JEF ou no rito comum"},
+  orgao_judicial:{rot:"Órgão", tipo:"texto",
+               dica:"vara, turma ou gabinete onde o processo está — a coleta do PJe preenche sozinha pelo acervo"},
   der:        {rot:"DER",         tipo:"data",    dica:"Data de Entrada do Requerimento"},
   dib:        {rot:"DIB",         tipo:"data",    dica:"Data de Início do Benefício"},
   decisao_em: {rot:"Decisão em",  tipo:"data",    dica:"data em que a decisão foi proferida — conta o prazo de recurso"},
@@ -7925,12 +8061,14 @@ function dadosJudiciais(k){
   const classe=k.classe_judicial || insts.map(i=>i.classe).find(Boolean)
     || (k.datajud||{}).classe || null;
   const ajuizado=k.ajuizado_em || insts.map(i=>i.ajuizado_em).find(Boolean) || null;
-  if(!classe && !ajuizado) return null;
+  const orgao=k.orgao_judicial || insts.map(i=>i.orgao).find(Boolean)
+    || (k.datajud||{}).orgao_atual || null;
+  if(!classe && !ajuizado && !orgao) return null;
   const b=dsa(classe||"");
   const ms=/mandado de seguranca|msciv/.test(b);
   const jef=/juizado|pjec|recinociv/.test(b);
   const comum=/procedimento comum|procecomciv|ordinari|apciv/.test(b);
-  return {classe, ajuizado, ms, rito: jef?"JEF":(comum?"Rito comum":null)};
+  return {classe, ajuizado, orgao, ms, rito: jef?"JEF":(comum?"Rito comum":null)};
 }
 // prazo de recurso: 30 dias da decisão (o escritório adota a data em que ela
 // foi proferida como a da ciência). Cai em fim de semana? vai para o dia útil.
@@ -8199,7 +8337,8 @@ function blocoFatos(k){
            rito comum e a data do ajuizamento ficam ao lado */""}
       ${(j=>!j?"":`${j.ms?`<span class="chip per" title="classe: ${esc(j.classe||"")}">⚡ Mandado de Segurança</span>`:""}${
         j.rito?`<span class="chip neutro" title="classe: ${esc(j.classe||"")}">${j.rito==="JEF"?"🏛 JEF":"📜 Rito comum"}</span>`:""}${
-        j.ajuizado?`<span class="chip neutro" title="data do ajuizamento (Distribuído em)">⚖️ ajuizado ${fmt(j.ajuizado)}</span>`:""}`)(dadosJudiciais(k))}
+        j.ajuizado?`<span class="chip neutro" title="data do ajuizamento (Distribuído em)">⚖️ ajuizado ${fmt(j.ajuizado)}</span>`:""}${
+        j.orgao?`<span class="chip neutro" title="órgão julgador: ${esc(tituloOrgao(j.orgao)||j.orgao)}">📍 ${esc((tituloOrgao(j.orgao)||j.orgao).split(" - ")[0])}</span>`:""}`)(dadosJudiciais(k))}
       ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?"
         style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
         <button class="btn-mini" onclick="salvarBeneficio('${k.id}')">definir</button>`:""}
@@ -8252,6 +8391,7 @@ function blocoFatos(k){
       ${(k.fase==="judicial"||k.processo)?campoFato(k,"processo"):""}
       ${(k.fase==="judicial"||k.ajuizado_em)?campoFato(k,"ajuizado_em"):""}
       ${(k.fase==="judicial"||k.classe_judicial)?campoFato(k,"classe_judicial"):""}
+      ${(k.fase==="judicial"||k.orgao_judicial)?campoFato(k,"orgao_judicial"):""}
       ${campoFato(k,"der")}
       ${campoFato(k,"dib")}
       ${campoFato(k,"decisao_em")}

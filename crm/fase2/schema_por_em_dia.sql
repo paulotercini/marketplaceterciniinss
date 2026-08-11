@@ -227,6 +227,9 @@ create policy lembrete_avisos_autenticados on lembrete_avisos for all to authent
 -- que a equipe corrigir à mão pelo lápis da ficha.
 alter table casos add column if not exists classe_judicial text;
 alter table casos add column if not exists ajuizado_em date;
+-- e ONDE o processo está (vara/turma/gabinete) — a linha do acervo do PJe
+-- também traz isso de graça
+alter table casos add column if not exists orgao_judicial text;
 
 
 -- ── conferência ───────────────────────────────────────────────────────────
@@ -237,7 +240,8 @@ select table_name as tabela, column_name as coluna, data_type as tipo
   from information_schema.columns
  where (table_name = 'casos' and column_name in ('marcadores','ronda','processo_link',
           'situacao_inss','especie','der','urgente','protocolos','crps_nups','crps',
-          'encerrado_por','arquivados','lembrete_meses','classe_judicial','ajuizado_em'))
+          'encerrado_por','arquivados','lembrete_meses','classe_judicial','ajuizado_em',
+          'orgao_judicial'))
     or (table_name = 'andamentos' and column_name in ('responde_a','origem_id'))
     or (table_name = 'aposentadorias' and column_name = 'lembrar_em')
 union all
