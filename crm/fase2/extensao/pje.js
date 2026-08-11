@@ -68,11 +68,49 @@
     [...document.querySelectorAll('a[id^="formAbaAcervo:trAc:"]')]
       .filter(a => /:jNd$/.test(a.id));
 
+  // ── o PROCESSO ABERTO: a cronologia inteira, não só o último movimento ──
+  // A página de "Autos Digitais" carrega a lista aos poucos (rolagem infinita);
+  // aqui rolamos até ela parar de crescer e lemos tudo com as regras puras.
+  // Entrega como fonte 'pje-processo' — a tela de importação casa pelo número
+  // e grava o histórico com a DATA DE CADA MOVIMENTO, sem inundar as Novidades.
+  async function coletarProcessoAberto() {
+    const cab = REG.lerCabecalhoProcesso(document.documentElement.outerHTML);
+    if (!cab) { faixaErr('não achei o número do processo no topo — a página terminou de abrir?'); return { erro: 'sem número' }; }
+    let tl = document.getElementById('divTimeLine');
+    if (!tl) {
+      const lk = document.querySelector('a[href="#divTimeLine"]');
+      if (lk) { lk.click(); await pausa(1200); tl = document.getElementById('divTimeLine'); }
+    }
+    if (!tl) { faixaErr('não achei a Cronologia — abra essa aba na página e clique de novo'); return { erro: 'sem cronologia' }; }
+    let antes = -1, quietos = 0;
+    for (let i = 0; i < 80 && quietos < 3; i++) {
+      const n = tl.querySelectorAll('.media').length;
+      if (n === antes) quietos++;
+      else { quietos = 0; antes = n; faixa(`processo ${cab.numero}: ${n} itens da cronologia…`); }
+      tl.scrollTop = tl.scrollHeight;
+      const fim = tl.querySelector('.media:last-child');
+      if (fim) fim.scrollIntoView({ block: 'end' });
+      await pausa(900);
+    }
+    const itens = REG.lerTimelineHtml(tl.outerHTML);
+    if (!itens.length) { faixaErr('a cronologia estava vazia na tela'); return { erro: 'vazio' }; }
+    const OUT = { versao: 1, fonte: 'pje-processo', grau, host: location.host,
+                  quando: new Date().toISOString(), numero: cab.numero,
+                  classe: cab.classe || null, orgao: cab.orgao || null, itens };
+    await CRM.enviar('pje-processo', OUT);
+    faixaOk(`✔ ${itens.length} itens do processo ${cab.numero} entregues ao CRM — confira em 📥 Importar.`);
+    someFaixa();
+    return { ok: itens.length };
+  }
+
   window.crmRodar = async () => {
     try {
       if (!REG) { faixaErr('pje-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
+      // na janela de um processo aberto, o botão coleta o histórico COMPLETO dele
+      if (/\/pje\/Processo\/ConsultaProcesso\/Detalhe\/listProcessoCompletoAdvogado\.seam/.test(location.pathname))
+        return await coletarProcessoAberto();
       if (!/\/pje\/Painel\/painel_usuario\/advogado\.seam/.test(location.pathname)) {
-        faixaErr('abra o Painel do Advogado do PJe e clique de novo');
+        faixaErr('abra o Painel do Advogado do PJe (ou um processo) e clique de novo');
         return { erro: 'fora do painel' };
       }
       // garante a aba Acervo aberta

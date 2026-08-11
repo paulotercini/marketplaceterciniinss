@@ -16,8 +16,13 @@ chrome.runtime.onMessage.addListener((msg, _remetente, responder) => {
       ? ['https://pje1g.trf3.jus.br/*', 'https://pje2g.trf3.jus.br/*']
       : [new URL(alvo).origin + '/*'];
     // reaproveita a aba do portal se ela já estiver aberta: abrir uma
-    // segunda faria o portal recomeçar a sessão do zero
-    const [aba] = await chrome.tabs.query({ url: dominios });
+    // segunda faria o portal recomeçar a sessão do zero. No PJe, a aba ATIVA
+    // vem primeiro: com um processo aberto na frente, o clique coleta o
+    // histórico completo DELE (e não o acervo de outra janela).
+    const [ativa] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const ativaServe = ativa && dominios.some(d =>
+      (ativa.url || '').startsWith(d.replace(/\*$/, '')));
+    const [aba] = ativaServe ? [ativa] : await chrome.tabs.query({ url: dominios });
     const usar = aba || await chrome.tabs.create({ url: alvo, active: true });
     if (aba) await chrome.tabs.update(aba.id, { active: true });
     else await new Promise(r => setTimeout(r, 3500));   // deixa a página carregar
