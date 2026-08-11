@@ -9,3 +9,6 @@ inicial_tmp/
 gdrive_tokens.json
 gdrive_oauth.json
 gdrive_device.json
+
+# Backups do Microsoft To Do (dados de clientes, nunca versionar)
+backups_todo/
