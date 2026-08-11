@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.62 · o acervo do PJe entra pela extensão: todo movimento vira Novidade</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.63 · PJe nas Novidades, vínculo por nome e a memória completa do CRPS</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2913,9 +2913,15 @@ function telaImportarPat(){
           `<div class="id-card"><strong style="font-size:20px">${n[1]}</strong>
             <div class="u-papel" style="text-transform:none">${n[0]}</div></div>`).join("")}
       </div>
-      ${q.sem_caso?`<div class="exig">${q.sem_caso} processo(s) do acervo não têm caso com esse
-        número aqui — preencha o campo "processo" na ficha para eles casarem na próxima coleta.
-        ${planoPjeAtual.semCaso.slice(0,8).map(p=>`<div class="meio-sub">${esc(p.numero)} — ${esc((p.partes||"").slice(0,60))}</div>`).join("")}</div>`:""}
+      ${q.sem_caso?`<div class="exig"><strong>${q.sem_caso} processo(s)</strong> do acervo ainda não
+        têm caso com esse número aqui.
+        ${q.vinculaveis?`<div style="margin:6px 0">${q.vinculaveis} deles têm o nome da parte batendo
+          com UM cliente do CRM que tem UM caso ativo sem número —
+          <button class="btn-mini" onclick="vincularTodosPje()">vincular os ${q.vinculaveis}</button>
+          <span class="meio-sub">preenche o campo "processo" do caso; nada além disso</span></div>`:""}
+        ${planoPjeAtual.semCaso.slice(0,14).map(p=>`<div class="meio-sub" style="margin-top:2px">${esc(p.numero)} — ${esc((p.partes||"").slice(0,60))}
+          ${p.sugestao?`<button class="btn-mini" onclick="vincularProcessoPje('${p.numero}')">vincular ao caso de ${esc(p.sugestao.cliente_nome.split(" ")[0])}</button>`:""}</div>`).join("")}
+        ${q.sem_caso>14?`<div class="meio-sub">…e mais ${q.sem_caso-14}. Vincule estes e confira de novo — a lista encolhe.</div>`:""}</div>`:""}
       ${planoPjeAtual.andamentos.length?`<table class="tab">
         <tr><th>cliente</th><th>o que mudou</th></tr>
         ${planoPjeAtual.andamentos.slice(0,40).map(a=>{
@@ -3516,21 +3522,75 @@ async function conferirPje(coletaId){
     }
     const plano = { coleta_id: coletaId, grau: dados.grau||"", andamentos: [], semCaso: [],
                     resumo: { lidos:(dados.processos||[]).length, movimentos:0,
-                              sem_caso:0, sem_mudanca:0 } };
+                              sem_caso:0, sem_mudanca:0, vinculaveis:0 } };
     for(const p of (dados.processos||[])){
       const k = porProcesso.get(soDig(p.numero));
-      if(!k){ plano.semCaso.push(p); plano.resumo.sem_caso++; continue; }
+      if(!k){
+        // SEM NÚMERO NA FICHA ≠ SEM CLIENTE NO CRM: 142 dos processos do
+        // acervo eram de clientes da casa com o campo "processo" vazio. O
+        // nome da parte (o lado que não é o INSS) casa com a base — quando
+        // bate com UM cliente que tem UM caso ativo sem número, o vínculo
+        // sai daqui mesmo, num clique, e o processo passa a casar sozinho.
+        const nome = clienteDasPartes(p.partes);
+        const cli = nome && D.clientes.find(x=>x._nome_ix===dsa(nome));
+        const alvos = cli ? (D.casosDoCliente.get(cli.id)||[])
+          .filter(x=>x.fase!=="encerrado" && !soDig(x.processo)) : [];
+        plano.semCaso.push({...p, sugestao: alvos.length===1
+          ? {caso_id:alvos[0].id, cliente_nome:cli.nome, caso_titulo:tituloCaso(alvos[0])} : null});
+        plano.resumo.sem_caso++;
+        if(alvos.length===1) plano.resumo.vinculaveis++;
+        continue;
+      }
       if(!p.movimento){ plano.resumo.sem_mudanca++; continue; }
       const oid = `mov:${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`;
       if(vistos.has(oid)){ plano.resumo.sem_mudanca++; continue; }
+      // criado_em fica em branco de propósito: o banco carimba AGORA e o
+      // andamento entra na janela de 30 dias das 📣 Novidades — gravado com
+      // a data do movimento, o que era mais velho nascia invisível. A data
+      // verdadeira do movimento vai no texto.
       plano.andamentos.push({ caso_id:k.id, numero:p.numero, origem_id:oid,
-        criado_em:`${p.movimento.data}T${p.movimento.hora}:00-03:00`,
-        texto:`PJe${dados.grau?` (${dados.grau})`:""}: ${p.movimento.texto} — ${p.classe||"processo"} ${p.numero}` });
+        texto:`PJe${dados.grau?` (${dados.grau})`:""}: ${p.movimento.texto} — em ${fmt(p.movimento.data)} ${p.movimento.hora} — ${p.classe||"processo"} ${p.numero}` });
       plano.resumo.movimentos++;
     }
     planoPjeAtual = plano;
     render();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
+}
+// o lado da parte que não é órgão público = o cliente
+function clienteDasPartes(partes){
+  const lados = String(partes||"").split(/\s+[Xx]\s+/);
+  const ehOrgao = s=>/INSS|INSTITUTO NACIONAL|UNI[AÃ]O|FAZENDA|CHEFE D|CAIXA ECON|GERENTE/i.test(s);
+  const nome = (lados.find(l=>l.trim() && !ehOrgao(l))||"")
+    .replace(/\s*e outros?\s*\(\d+\)\s*/i," ").trim();
+  return nome || null;
+}
+async function vincularProcessoPje(numero){
+  const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
+  if(!p || !p.sugestao) return;
+  const k=D.casoPorId.get(p.sugestao.caso_id);
+  if(!k || soDig(k.processo)) return aviso("Esse caso já ganhou outro número — confira na ficha");
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({processo:p.numero})});
+  k.processo=p.numero;
+  aviso(`⚖️ ${p.numero} vinculado ao caso de ${p.sugestao.cliente_nome.split(" ")[0]}`, false);
+  conferirPje(planoPjeAtual.coleta_id);          // replaneja: agora ele casa
+}
+async function vincularTodosPje(){
+  const alvos=((planoPjeAtual||{}).semCaso||[]).filter(x=>x.sugestao);
+  if(!alvos.length) return;
+  if(!confirm(`Vincular ${alvos.length} processo(s) aos casos dos clientes de mesmo nome?\n\nSó entra onde o nome bate com UM cliente e ele tem UM caso ativo sem número.`)) return;
+  let n=0;
+  for(const p of alvos){
+    const k=D.casoPorId.get(p.sugestao.caso_id);
+    if(!k || soDig(k.processo)) continue;        // já levou o número de outro grau
+    try{
+      await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({processo:p.numero})});
+      k.processo=p.numero; n++;
+    }catch(e){}
+  }
+  aviso(`⚖️ ${n} processo(s) vinculados — replanejando`);
+  conferirPje(planoPjeAtual.coleta_id);
 }
 async function aplicarPje(coletaId){
   if(!planoPjeAtual || planoPjeAtual.coleta_id!==coletaId) return;
@@ -3539,7 +3599,7 @@ async function aplicarPje(coletaId){
     try{
       await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, origem:"pje",
-          origem_id:a.origem_id, publico:false, criado_em:a.criado_em, texto:a.texto})});
+          origem_id:a.origem_id, publico:false, texto:a.texto})});
       feitos++;
     }catch(e){ falhas.push(`${a.numero}: ${String(e.message||e).slice(0,90)}`); }
   }
@@ -3560,7 +3620,14 @@ async function conferirCrps(coletaId){
   try{
     const [c] = await api(`/rest/v1/coletas?select=*&id=eq.${coletaId}`) || [];
     if(!c) return aviso("Não achei essa coleta");
-    planoCrpsAtual = planoCrps(c.dados, D);
+    // A MEMÓRIA COMPLETA, do banco, na hora de conferir — a mesma lição do
+    // PAT (08.58): o plano lia só D.novid (30 dias) e todo movimento mais
+    // velho parecia novo de novo; o aplicar tentava regravar a história
+    // inteira e o banco recusava um por um ("47 gravadas, 866 falharam").
+    const vistos = await todas("andamentos",
+      "select=origem_id&origem=eq.crps&origem_id=not.is.null").catch(()=>[]);
+    planoCrpsAtual = planoCrps(c.dados,
+      {...D, novid:[...(D.novid||[]), ...vistos.map(v=>({origem:"crps", origem_id:v.origem_id}))]});
     planoCrpsAtual.coleta_id = coletaId;
     render();
   }catch(e){ aviso("Não consegui ler a coleta: "+e.message); }
