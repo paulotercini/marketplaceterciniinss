@@ -7,9 +7,10 @@ const fmt = iso => {
        : d === 1 ? `atualizado ontem (${q})`
        : `faz ${d} dias (${q})`;
 };
-chrome.storage.local.get(['ultima_pat', 'ultima_crps', 'quem']).then(c => {
+chrome.storage.local.get(['ultima_pat', 'ultima_crps', 'ultima_pje', 'quem']).then(c => {
   document.getElementById('q-pat').textContent = fmt(c.ultima_pat);
   document.getElementById('q-crps').textContent = fmt(c.ultima_crps);
+  document.getElementById('q-pje').textContent = fmt(c.ultima_pje);
   // sem login não se lê nada do CRM, e o erro só apareceria lá na frente
   document.getElementById('quem').textContent = c.quem
     ? `CRM: ${c.quem}` : '⚠ ainda não entrou no CRM — clique abaixo';
@@ -69,6 +70,7 @@ document.getElementById('b-pagina').onclick = () => {
 
 document.getElementById('b-pat').onclick  = () => rodar('pat');
 document.getElementById('b-crps').onclick = () => rodar('crps');
+document.getElementById('b-pje').onclick  = () => rodar('pje');
 document.getElementById('cfg').onclick = e => {
   e.preventDefault(); chrome.runtime.openOptionsPage();
 };

@@ -110,9 +110,10 @@ create policy coletas_autenticados on coletas for all to authenticated
 -- esta coluna, os mesmos comentários virariam andamento novo a cada manhã, e
 -- em uma semana a ficha teria sete cópias de cada um. O índice único é o que
 -- garante isso mesmo se algo for aplicado duas vezes.
+-- 'pje' entrou na onda do coletor do acervo do TRF3 (extensão 1.4.0)
 alter table andamentos drop constraint if exists andamentos_origem_check;
 alter table andamentos add constraint andamentos_origem_check
-  check (origem in ('app','todo','dou','whatsapp','pat','crps'));
+  check (origem in ('app','todo','dou','whatsapp','pat','crps','pje'));
 alter table andamentos add column if not exists origem_id text;
 create unique index if not exists andamentos_origem_unica
   on andamentos (caso_id, origem, origem_id) where origem_id is not null;

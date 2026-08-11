@@ -9,8 +9,16 @@ repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
 
 - Sincronização To Do → CRM. Voltou depois de duas semanas parada. Última
   rodada: 2.952 casos, 17.614 andamentos, 5.941 tarefas gravados.
-- Extensão do navegador 1.3.0 (`crm/fase2/extensao`), coletando nos dois
-  portais: PAT/GERID e e-Recursos.
+- Extensão do navegador 1.4.0 (`crm/fase2/extensao`), coletando em TRÊS
+  portais: PAT/GERID, e-Recursos e — novo — o PJe do TRF3 (aba Acervo do
+  painel do advogado, 1º e 2º graus: todos os processos com o último
+  movimento de cada um, lidos do DOM porque o PJe é JSF com estado; as
+  regras puras estão em `pje-regras.js`, com teste). A coleta entra na fila
+  📥, vira andamento origem='pje' (dedupe por numero+data+hora no
+  `origem_id`) e aparece em 📣 Novidades. Formato mapeado de HAR real de
+  11.08.2026. **Ainda não testado ao vivo pelo Paulo** — o coletor opera a
+  árvore de jurisdições e o datascroller; se o portal divergir do HAR, é aí
+  que vai quebrar primeiro.
 - Importação do PAT com plano antes de gravar, e o botão que junta de uma vez
   os possíveis duplicados marcados como prováveis.
 - Acórdãos e resumos dos recursos, recuperados depois de uma perda (ver
