@@ -218,6 +218,17 @@ create policy lembrete_avisos_autenticados on lembrete_avisos for all to authent
   using (true) with check (true);
 
 
+-- ── 11. O retrato do processo judicial ────────────────────────────────────
+-- As duas perguntas que o Paulo faz de todo processo: é Mandado de
+-- Segurança? corre no JEF ou no rito comum? E desde quando (ajuizamento)?
+-- A classe responde as duas primeiras (MSCiv, PJEC, ProceComCiv…) e vem de
+-- graça na coleta do PJe e no DataJud; a data vem do "Distribuído em".
+-- As colunas guardam o que a coleta preencher (só onde estiver vazio) e o
+-- que a equipe corrigir à mão pelo lápis da ficha.
+alter table casos add column if not exists classe_judicial text;
+alter table casos add column if not exists ajuizado_em date;
+
+
 -- ── conferência ───────────────────────────────────────────────────────────
 -- Lista as colunas que o CRM e a importação usam, mais a tabela `coletas` e
 -- a restrição de fase. Faltando alguma linha, o SQL não rodou inteiro — e é
@@ -226,7 +237,7 @@ select table_name as tabela, column_name as coluna, data_type as tipo
   from information_schema.columns
  where (table_name = 'casos' and column_name in ('marcadores','ronda','processo_link',
           'situacao_inss','especie','der','urgente','protocolos','crps_nups','crps',
-          'encerrado_por','arquivados','lembrete_meses'))
+          'encerrado_por','arquivados','lembrete_meses','classe_judicial','ajuizado_em'))
     or (table_name = 'andamentos' and column_name in ('responde_a','origem_id'))
     or (table_name = 'aposentadorias' and column_name = 'lembrar_em')
 union all
