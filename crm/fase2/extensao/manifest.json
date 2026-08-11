@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CRM Tercini — atualizar",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Traz para o CRM o que mudou no INSS (PAT/GERID), nos recursos (e-Recursos) e no PJe do TRF3, pela sua própria sessão logada.",
   "permissions": ["storage", "tabs", "scripting"],
   "host_permissions": [
@@ -28,7 +28,8 @@
       "all_frames": true
     },
     {
-      "matches": ["https://pje1g.trf3.jus.br/pje/Painel/*", "https://pje2g.trf3.jus.br/pje/Painel/*"],
+      "matches": ["https://pje1g.trf3.jus.br/pje/Painel/*", "https://pje2g.trf3.jus.br/pje/Painel/*",
+                  "https://pje1g.trf3.jus.br/pje/Processo/*", "https://pje2g.trf3.jus.br/pje/Processo/*"],
       "js": ["tela.js", "comum.js", "pje-regras.js", "pje.js"],
       "run_at": "document_idle",
       "all_frames": true
