@@ -1188,7 +1188,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.68 · 📍 órgão julgador na ficha e o histórico completo do processo aberto no PJe</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.69 · 🔗 "abrir no PJe" nas Novidades, na ficha e na aba CNJ (como o link do PAT)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3560,7 +3560,8 @@ async function conferirPje(coletaId){
       const dig = soDig(k.processo);
       if(dig) porProcesso.set(dig, k);
     }
-    const plano = { coleta_id: coletaId, grau: dados.grau||"", andamentos: [], semCaso: [],
+    const plano = { coleta_id: coletaId, grau: dados.grau||"", host: dados.host||"",
+                    andamentos: [], semCaso: [],
                     fichas: [],
                     resumo: { lidos:(dados.processos||[]).length, movimentos:0,
                               sem_caso:0, sem_mudanca:0, vinculaveis:0, fichas:0, ignorados:0 } };
@@ -3600,6 +3601,10 @@ async function conferirPje(coletaId){
       if(p.classe && !k.classe_judicial) campos.classe_judicial=p.classe;
       if(p.distribuido && !k.ajuizado_em) campos.ajuizado_em=p.distribuido;
       if(p.orgao && !k.orgao_judicial) campos.orgao_judicial=p.orgao;
+      // o link se RENOVA a cada coleta (como o processo_link do PAT): a chave
+      // ca pode mudar, e o link mais novo é o que abre
+      const lk=linkPje(dados.host, p);
+      if(lk && k.pje_link!==lk) campos.pje_link=lk;
       if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); plano.resumo.fichas++; }
       if(!p.movimento){ plano.resumo.sem_mudanca++; continue; }
       const oid = `mov:${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`;
@@ -3630,6 +3635,13 @@ function nomesBatemPje(a, b){
   for(const t of longo) if(i<curto.length && t===curto[i]) i++;
   return curto.length>=2 && i===curto.length;
 }
+// o endereço dos autos digitais que o próprio acervo carrega (id + chave ca)
+// — é o "abrir no PJe" das Novidades e da ficha, aberto na sessão logada
+function linkPje(host, p){
+  return (host && p && p.id && p.ca)
+    ? `https://${host}/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=${p.id}&ca=${p.ca}`
+    : null;
+}
 // o lado da parte que não é órgão público = o cliente
 function clienteDasPartes(partes){
   const lados = String(partes||"").split(/\s+[Xx]\s+/);
@@ -3648,7 +3660,8 @@ async function vincularProcessoPje(numero){
   const corpo={processo:p.numero,
     ...(p.classe && !k.classe_judicial?{classe_judicial:p.classe}:{}),
     ...(p.distribuido && !k.ajuizado_em?{ajuizado_em:p.distribuido}:{}),
-    ...(p.orgao && !k.orgao_judicial?{orgao_judicial:p.orgao}:{})};
+    ...(p.orgao && !k.orgao_judicial?{orgao_judicial:p.orgao}:{}),
+    ...(l=>l?{pje_link:l}:{})(linkPje((planoPjeAtual||{}).host, p))};
   try{
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify(corpo)});
@@ -3656,6 +3669,7 @@ async function vincularProcessoPje(numero){
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({processo:p.numero})});
     delete corpo.classe_judicial; delete corpo.ajuizado_em; delete corpo.orgao_judicial;
+    delete corpo.pje_link;
   }
   Object.assign(k, corpo);
   aviso(`⚖️ ${p.numero} vinculado ao caso de ${p.sugestao.cliente_nome.split(" ")[0]}`, false);
@@ -3673,7 +3687,8 @@ async function criarCasoPje(numero){
     fase:"judicial", processo:p.numero, origem_lista:"👪 Judicial"};
   const extra={...(p.classe?{classe_judicial:p.classe}:{}),
                ...(p.distribuido?{ajuizado_em:p.distribuido}:{}),
-               ...(p.orgao?{orgao_judicial:p.orgao}:{})};
+               ...(p.orgao?{orgao_judicial:p.orgao}:{}),
+               ...(l=>l?{pje_link:l}:{})(linkPje((planoPjeAtual||{}).host, p))};
   let k;
   try{
     [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
@@ -3763,6 +3778,7 @@ async function conferirPjeProc(coletaId){
     const campos={};
     if(dados.classe && !k.classe_judicial) campos.classe_judicial=dados.classe;
     if(dados.orgao && !k.orgao_judicial) campos.orgao_judicial=dados.orgao;
+    if(dados.link && k.pje_link!==dados.link) campos.pje_link=dados.link;
     if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); }
     for(const it of (dados.itens||[])){
       const texto=[...(it.textos||[]), ...(it.docs||[]).map(d=>`📎 ${d.nome}`)].join(" · ");
@@ -4160,7 +4176,9 @@ function linhaNovidade(a){
         ${k.beneficio?`<span class="u-papel" style="text-transform:none">· ${esc(k.beneficio)}</span>`:""}</div>
       <div class="nov-txt">${esc(a.origem==="pat"?limparHtmlPat(a.texto):a.texto)}</div>
     </div>
-    ${k.processo_link?`<a class="btn-mini" href="${k.processo_link}" target="_blank" rel="noopener">abrir ↗</a>`:""}
+    ${a.origem==="pje" && k.pje_link
+      ?`<a class="btn-mini" href="${k.pje_link}" target="_blank" rel="noopener" title="abrir os autos digitais na sua sessão do PJe">abrir no PJe ↗</a>`
+      :k.processo_link?`<a class="btn-mini" href="${k.processo_link}" target="_blank" rel="noopener">abrir ↗</a>`:""}
     <button class="btn-mini" data-encaminhar="${a.id}">→ encaminhar</button>
     <button class="btn-mini" data-ler="${a.id}">✔ li</button>
   </div>${encaminhando===a.id?caixaEncaminhar(a):""}`;
@@ -8339,6 +8357,8 @@ function blocoFatos(k){
         j.rito?`<span class="chip neutro" title="classe: ${esc(j.classe||"")}">${j.rito==="JEF"?"🏛 JEF":"📜 Rito comum"}</span>`:""}${
         j.ajuizado?`<span class="chip neutro" title="data do ajuizamento (Distribuído em)">⚖️ ajuizado ${fmt(j.ajuizado)}</span>`:""}${
         j.orgao?`<span class="chip neutro" title="órgão julgador: ${esc(tituloOrgao(j.orgao)||j.orgao)}">📍 ${esc((tituloOrgao(j.orgao)||j.orgao).split(" - ")[0])}</span>`:""}`)(dadosJudiciais(k))}
+      ${k.pje_link?`<a class="chip neutro" href="${k.pje_link}" target="_blank" rel="noopener"
+        title="abrir os autos digitais na sua sessão do PJe" style="text-decoration:none">🔗 abrir no PJe</a>`:""}
       ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?"
         style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
         <button class="btn-mini" onclick="salvarBeneficio('${k.id}')">definir</button>`:""}
@@ -9471,6 +9491,8 @@ function painelCNJ(k){
     </div>`:""}
     <div class="form-linha" style="margin-top:8px">
       <button class="btn-mini" onclick="copiarDatajud('${k.id}')">💬 copiar mensagem ao cliente</button>
+      ${k.pje_link?`<a class="btn-mini" href="${k.pje_link}" target="_blank" rel="noopener"
+        title="abrir os autos digitais na sua sessão do PJe">abrir no PJe ↗</a>`:""}
       <span class="meio-sub">consulta de ${fmt(t.consultado_em)}${inst.ajuizado_em?` · ajuizado em ${fmt(inst.ajuizado_em)}`:""}</span>
     </div>
   </div>
