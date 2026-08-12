@@ -56,7 +56,16 @@
     font-weight:600;cursor:pointer}
 
   .app{display:none;grid-template-columns:300px 1fr;height:100vh;transition:grid-template-columns .15s}
-  @media (prefers-reduced-motion: reduce){ .app{transition:none} }
+  /* TRANSIÇÕES DE PÁGINA: trocar de lista, abrir a ficha e abrir um modal
+     surgem num fade curtinho (120–160ms) em vez do corte seco do innerHTML.
+     Uma animação só, reusada — e desligada para quem pediu menos movimento. */
+  @keyframes surgir{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .anim-vista{animation:surgir .14s ease-out}
+  .app.detalhe-aberto .detalhe{animation:surgir .16s ease-out}
+  .modal-fundo{animation:surgir .12s ease-out}
+  .modal-cx,.jan-caixa{animation:surgir .14s ease-out}
+  @media (prefers-reduced-motion: reduce){ .app{transition:none}
+    .anim-vista,.app.detalhe-aberto .detalhe,.modal-fundo,.modal-cx,.jan-caixa{animation:none} }
   .app.mini-lateral{grid-template-columns:64px 1fr}
   .app.logado{display:grid}
   /* QUEM MANDA NO MENU É UMA CLASSE SÓ: mini-lateral. Antes, `detalhe-aberto`
@@ -142,7 +151,7 @@
   .caso.caso-cab{background:#eef4fb;border-color:#cfe0f5}
   /* janela de encerramento (resultado -> honorários) */
   #janela{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:98;display:flex;align-items:center;justify-content:center}
-  .jan-caixa{background:var(--branco);border-radius:12px;padding:20px 24px;min-width:380px;max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+  .jan-caixa{background:var(--branco);border-radius:12px;padding:20px 24px;min-width:min(380px,92vw);max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
   .jan-caixa h3{margin-bottom:4px}
   .btn-res{padding:8px 14px;border:1px solid var(--borda);border-radius:8px;background:var(--fundo);cursor:pointer;font-weight:600}
   .btn-res:hover{background:#e8f1fb}
@@ -178,7 +187,7 @@
   .vistos{display:inline-flex;align-items:center;gap:3px;margin-left:8px;vertical-align:middle}
   .visto-av{width:19px;height:19px;border-radius:50%;color:#fff;font-size:10px;font-weight:700;
     display:inline-flex;align-items:center;justify-content:center;cursor:default}
-  .visto-bt{border:none;background:none;cursor:pointer;font-size:15px;color:#B9BDC6;line-height:1;padding:0 2px}
+  .visto-bt{border:none;background:none;cursor:pointer;font-size:15px;color:var(--cinza);line-height:1;padding:0 2px}
   .visto-bt:hover{color:var(--cinza)}
   .visto-bt.on{color:var(--azul)}
   .rotina{display:flex;align-items:center;gap:10px;background:var(--branco);border:1px solid var(--borda);
@@ -509,7 +518,7 @@
   .fx dd{font-size:14px;font-weight:650;margin-top:3px;font-variant-numeric:tabular-nums;
     display:flex;align-items:center;gap:5px;flex-wrap:wrap;letter-spacing:-.01em}
   .fx dd small{font-weight:400;color:var(--cinza);font-size:11.5px;letter-spacing:0}
-  .fx-vazio{color:#9AA0A8;font-weight:400}
+  .fx-vazio{color:var(--cinza);font-weight:400}
   .fx .lapis{opacity:0;transition:.12s}
   .fx:hover .lapis, .fx:focus-within .lapis{opacity:1}
   .fx-inp{font:inherit;font-size:13.5px;padding:3px 7px;border:1px solid var(--azul);
@@ -632,7 +641,7 @@
   .btn-mini.forte{background:var(--azul);border-color:var(--azul);color:#fff}
   /* a estrela de cada movimentação: apagada até alguém (ou o robô) acender */
   .crps-est{flex:none;background:none;border:none;cursor:pointer;font-size:13px;
-    padding:0 4px;filter:grayscale(1);opacity:.25;align-self:flex-start}
+    padding:0 4px;filter:grayscale(1);opacity:.5;align-self:flex-start}
   .crps-est:hover{opacity:.7}
   .crps-est.on{filter:none;opacity:1}
   .timeline .crps-imp{background:#FFFBF2!important;box-shadow:inset 3px 0 0 #E0A32E}
@@ -700,7 +709,7 @@
   /* apagar o próprio comentário */
   .timeline li{position:relative}
   .apaga{position:absolute;top:6px;right:8px;border:none;background:none;cursor:pointer;
-    color:var(--cinza);font-size:13px;opacity:.4}
+    color:var(--cinza);font-size:13px;opacity:.55}
   .apaga:hover{opacity:1;color:var(--vermelho)}
   .escrever .equipe-chip{background:var(--branco)}
   .escrever select{max-width:220px;padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
@@ -734,7 +743,7 @@
      quando o cliente liga perguntando "quando eu me aposento?" */
   .apos-faixa{display:flex;justify-content:flex-end;margin-bottom:12px}
   .apos-cx{border:1px solid #CBE3CE;background:#F1F8F2;border-radius:10px;padding:10px 12px;
-    min-width:330px;max-width:520px}
+    min-width:min(330px,100%);max-width:520px}
   .apos-cab{display:flex;align-items:center;gap:10px;margin-bottom:6px}
   .apos-cab strong{font-size:13px;color:var(--verde);flex:1}
   .apos-mais{border:1px solid #9CC7A4;background:var(--branco);color:var(--verde);border-radius:8px;
@@ -1101,8 +1110,18 @@
       z-index:80;transition:left .18s;box-shadow:6px 0 24px rgba(0,0,0,.3)}
     .app.celular.menu-aberto .sidebar{left:0}
     .app.celular .sidebar .busca,.app.celular #btn-lateral{display:none}
-    .cel-fundo{position:fixed;inset:0;background:rgba(15,17,22,.5);z-index:75}
-    .app.celular.menu-aberto ~ .cel-fundo{display:block}
+    /* o fundo escuro do menu agora ESMAECE junto com a gaveta em vez de piscar */
+    .cel-fundo{display:block;position:fixed;inset:0;background:rgba(15,17,22,.5);z-index:75;
+      opacity:0;pointer-events:none;transition:opacity .18s}
+    .app.celular.menu-aberto ~ .cel-fundo{opacity:1;pointer-events:auto}
+    /* no celular a ficha entra deslizando da direita — leitura de "empilhou uma tela" */
+    .app.celular.detalhe-aberto .detalhe{animation:entrarCel .18s ease-out}
+    @keyframes entrarCel{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+    /* tabelas da importação rolam DENTRO de si — a página não ganha rolagem lateral */
+    .tab{display:block;overflow-x:auto;white-space:nowrap}
+    /* alvos de toque que o bloco de engorda esqueceu */
+    .app.celular .lapis,.app.celular .olho,.app.celular .apaga,.app.celular .crps-est{
+      min-width:38px;min-height:38px}
     /* uma tela por vez: a lista OU a ficha, nunca as duas */
     .app.celular .meio{padding:10px 12px 78px;grid-column:1}
     .app.celular.detalhe-aberto .meio{display:none}
@@ -1189,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.73 · 🔄 o rodapé do menu diz quando o To Do sincronizou pela última vez</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.74 · revisão geral: 10 bugs corrigidos, blindagem de segurança e transições de página</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1364,7 +1383,15 @@ const fmtTS = ts => fmt(dataSP(ts));                 // DD.MM.AAAA de Brasília
 const fmt = iso => iso ? iso.slice(8,10)+"."+iso.slice(5,7)+"."+iso.slice(0,4) : "";
 const fmtCpf = c => c ? c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4") : "—";
 const digitosCpf = c => (c||"").replace(/\D/g,"");
-const esc = s => (s??"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+// escapa TAMBÉM aspas e apóstrofos: sem isso, esc() protegia o miolo do
+// elemento mas um " em title="..." (nome, texto de coleta) quebrava o
+// atributo e virava injeção. Dentro de onclick="fn('...')" entidade não
+// basta (o HTML devolve o apóstrofo antes de virar JS) — lá é escJs.
+const esc = s => (s??"").toString().replace(/&/g,"&amp;").replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+const escJs = s => esc((s??"").toString().replace(/\\/g,"\\\\").replace(/'/g,"\\'"));
+// href só de verdade: link de coleta (PAT/PJe) sem https na frente não entra
+const urlOk = u => /^https?:\/\//i.test(u||"") ? esc(u) : "#";
 const dsa = s => (s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
 
 // ── pesquisa ──────────────────────────────────────────────────────────────
@@ -1602,6 +1629,14 @@ async function iniciar(){
 // SMBot vale para todo mundo, e quem trocar de máquina não reconfigura nada.
 // (CONFIG/faltaConfig lá em cima é outra coisa: é como este navegador acha o
 // banco, e essa não dá para guardar no banco.)
+// TODA tarefa criada em tela entra na memória NA HORA — gravar no banco e só
+// aparecer no Meu Dia depois do F5 fazia a tarefa recém-criada "sumir" das
+// listas (criação pelo andamento, pela nota, pelo encaminhar e pelo repetir)
+function tarefaNaMemoria(t){
+  if(!t || !t.caso_id || !D.tarefasPorCaso) return;
+  if(!D.tarefasPorCaso.has(t.caso_id)) D.tarefasPorCaso.set(t.caso_id,[]);
+  D.tarefasPorCaso.get(t.caso_id).push(t);
+}
 function cfgApp(chave){ return (D.config||new Map()).get(chave); }
 async function guardarCfgApp(chave, valor){
   await api(`/rest/v1/config_app`,{method:"POST",
@@ -1656,6 +1691,10 @@ async function carregar(){
   D.lembretes = lembs||[];
   D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
   D.config = new Map((cfgs||[]).map(x=>[x.chave,x.valor]));
+  // a cor do colaborador entra crua em dezenas de style="background:..." —
+  // sanear UMA vez aqui protege todos os pontos de render de uma vez
+  for(const co of D.colaboradores||[])
+    if(!/^#[0-9a-fA-F]{3,8}$/.test(co.cor||"")) co.cor="#8A9099";
   D.inssCal = inssCal||[];
   // tarefas por comentário, indexadas por caso: é o que pinta as listas
   D.tarefasPorCaso = new Map();
@@ -1747,7 +1786,7 @@ function aplicarTema(){
   meio.style.backgroundImage = "";
   if(escolhido && /^(https?:|data:)/.test(escolhido)){       // imagem enviada
     meio.style.background = fundo;
-    meio.style.backgroundImage = `url("${escolhido}")`;
+    meio.style.backgroundImage = `url("${escolhido.replace(/["\\]/g,"")}")`;
     meio.style.backgroundSize = "cover";
     meio.style.backgroundPosition = "center";
     meio.style.backgroundAttachment = "local";
@@ -1923,7 +1962,7 @@ function montarSidebar(){
     ["parcerias","🤝 Parcerias", ativos().filter(k=>k.parceria).length||null],
     ["marketing","📣 Marketing", null],
     ["recebimentos","💰 Recebimentos", D.casos.filter(k=>k.fase==="pagamento").length],
-    ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && e.data_hora>=hoje()).length],
+    ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length],
     ["dashboard","📊 Dashboard", null],
     ["patinss","📥 Importar do INSS", null],
     ["config","⚙️ Configurações", null],
@@ -3018,8 +3057,8 @@ function telaImportarPat(){
       ${planoPat.possiveisDuplicados.length ? `<h3 class="secao">Confira antes de criar (${planoPat.possiveisDuplicados.length})</h3>
         <table class="tab"><tr><th>cliente</th><th>o que veio do INSS</th><th>o que já existe aqui</th><th>por quê</th><th></th></tr>
         ${planoPat.possiveisDuplicados.map(n=>`<tr><td>${esc(n.nome)}</td>
-          <td>${esc(n.beneficio||"—")} ${n.especie?`<span class="chip">${n.especie}</span>`:""}
-            <a href="${n.link}" target="_blank" rel="noopener">↗</a></td>
+          <td>${esc(n.beneficio||"—")} ${n.especie?`<span class="chip">${esc(n.especie)}</span>`:""}
+            <a href="${urlOk(n.link)}" target="_blank" rel="noopener">↗</a></td>
           <td>${esc(n.titulo_existente)}</td>
           <td>${n.provavel?`<span class="chip">provável</span> `:""}<span class="meio-sub">${esc(n.motivo||"")}</span></td>
           <td><button class="btn-mini" onclick="juntarAoCaso('${n.protocolo}')">é o mesmo — juntar</button>
@@ -3033,9 +3072,9 @@ function telaImportarPat(){
       ${planoPat.novos.length ? `<h3 class="secao">Casos novos (${planoPat.novos.length})</h3>
         <table class="tab"><tr><th>cliente</th><th>o quê</th><th>lista</th><th>DER</th><th></th></tr>
         ${planoPat.novos.slice(0,60).map(n=>`<tr><td>${esc(n.nome)}</td>
-          <td>${esc(n.beneficio||"—")} ${n.especie?`<span class="chip">${n.especie}</span>`:""}</td>
+          <td>${esc(n.beneficio||"—")} ${n.especie?`<span class="chip">${esc(n.especie)}</span>`:""}</td>
           <td>${esc(NOME_FASE[n.lista]||n.lista)}</td><td>${n.der?fmt(n.der):"—"}</td>
-          <td><a href="${n.link}" target="_blank" rel="noopener">abrir no PAT ↗</a></td></tr>`).join("")}
+          <td><a href="${urlOk(n.link)}" target="_blank" rel="noopener">abrir no PAT ↗</a></td></tr>`).join("")}
         </table>` : ""}`}
   </div>`;
 }
@@ -3111,7 +3150,7 @@ async function aplicarPatDeVerdade(){
     for(const ev of bloco.eventos) await tentar(`perícia ${bloco.protocolo}`, () =>
       api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({caso_id:bloco.caso_id, tipo:ev.tipo, status:"agendada",
-          data_hora:`${ev.data}T${ev.hora||"09:00"}:00`, local:ev.local})}));
+          data_hora:`${ev.data}T${ev.hora||"09:00"}:00-03:00`, local:ev.local})}));
 
   // a coleta usada sai da fila: a mesma não pode ser oferecida duas vezes
   if(planoPat.coleta_id)
@@ -3335,27 +3374,42 @@ function ligarCartoes(){
     el.oncontextmenu=e=>menuMover(e, el.dataset.cli);   // botão direito = Mover para…
   });
   ligarArrasteCartoes();
+  // ⭐/🔥 acendem NO LUGAR: o render() inteiro aqui jogava a lista de volta
+  // ao topo — marcar o 60º cliente devolvia a tela ao 1º. Só a visão
+  // ⭐ Importante re-renderiza (lá o cartão precisa entrar/sair da lista).
   document.querySelectorAll("[data-estrela]").forEach(b=>b.onclick=async e=>{
     e.stopPropagation();
     const k = D.casoPorId.get(b.dataset.estrela); if(!k) return;
     k.importante = !k.importante;
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",body:JSON.stringify({importante:k.importante}),headers:{Prefer:"return=minimal"}});
-    montarSidebar(); render();
+    b.classList.toggle("on", k.importante);
+    montarSidebar();
+    if(visao==="importante") render();
   });
   document.querySelectorAll("[data-fogo]").forEach(b=>b.onclick=async e=>{
     e.stopPropagation();
     const k = D.casoPorId.get(b.dataset.fogo); if(!k) return;
     k.urgente = !k.urgente;
     await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"PATCH",body:JSON.stringify({urgente:k.urgente}),headers:{Prefer:"return=minimal"}});
-    aviso(k.urgente?"🔥 Marcado como URGENTE":"Urgência removida"); render();
+    b.classList.toggle("on", k.urgente);
+    aviso(k.urgente?"🔥 Marcado como URGENTE":"Urgência removida");
   });
   document.querySelectorAll(".avatares[data-equipe]").forEach(a=>a.onclick=e=>{
     e.stopPropagation(); abrirFicha(a.dataset.equipe);   // a equipe fica no menu vertical da ficha
   });
 }
 
+let vistaAnimada="";
 function render(){
   aplicarTema(); marcarBarraCel();
+  // o fade só quando a VISTA muda (trocar de lista, pesquisar) — render()
+  // também roda em clique de chip/estrela e piscaria a cada toque
+  const chaveVista=visao+"|"+(buscaTxt||"");
+  if(chaveVista!==vistaAnimada){
+    vistaAnimada=chaveVista;
+    const mAn=document.getElementById("conteudo-meio");
+    if(mAn){ mAn.classList.remove("anim-vista"); void mAn.offsetWidth; mAn.classList.add("anim-vista"); }
+  }
   // "Ordenar" só faz sentido em lista de clientes; no calendário, no quadro
   // ou no dashboard era um controle morto ocupando o topo
   const LISTAS_ORDENAVEIS = ["minhas","importante","recebimentos"];
@@ -4205,10 +4259,13 @@ async function enviarEncaminhamento(andId){
       headers:{Prefer:"return=representation"},
       body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, texto,
         responde_a:andId, origem:"app", publico:false})}) || [];
-    if(novo) await api(`/rest/v1/andamento_tarefas`,{method:"POST",
-      headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({andamento_id:novo.id, caso_id:a.caso_id,
-        colaborador_id:quem.quem, atribuido_por:eu.id, lembrar_em:dia})});
+    if(novo){
+      const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",
+        headers:{Prefer:"return=representation"},
+        body:JSON.stringify({andamento_id:novo.id, caso_id:a.caso_id,
+          colaborador_id:quem.quem, atribuido_por:eu.id, lembrar_em:dia})});
+      tarefaNaMemoria(tf);
+    }
     // encaminhou é porque leu: sai da caixa sem precisar do segundo clique
     encaminhando = null;
     await marcarLidas([andId]);
@@ -4261,8 +4318,8 @@ function linhaNovidade(a){
       <div class="nov-txt">${esc(a.origem==="pat"?limparHtmlPat(a.texto):a.texto)}</div>
     </div>
     ${a.origem==="pje" && k.pje_link
-      ?`<a class="btn-mini" href="${k.pje_link}" target="_blank" rel="noopener" title="abrir os autos digitais na sua sessão do PJe">abrir no PJe ↗</a>`
-      :k.processo_link?`<a class="btn-mini" href="${k.processo_link}" target="_blank" rel="noopener">abrir ↗</a>`:""}
+      ?`<a class="btn-mini" href="${urlOk(k.pje_link)}" target="_blank" rel="noopener" title="abrir os autos digitais na sua sessão do PJe">abrir no PJe ↗</a>`
+      :k.processo_link?`<a class="btn-mini" href="${urlOk(k.processo_link)}" target="_blank" rel="noopener">abrir ↗</a>`:""}
     <button class="btn-mini" data-encaminhar="${a.id}">→ encaminhar</button>
     <button class="btn-mini" data-ler="${a.id}">✔ li</button>
   </div>${encaminhando===a.id?caixaEncaminhar(a):""}`;
@@ -4280,9 +4337,11 @@ function renderNovidades(){
     return;
   }
   // por dia, porque é assim que a pergunta é feita: "o que aconteceu hoje?"
+  // — e o dia é o de BRASÍLIA: cortar o ISO cru pegava a data UTC e o que
+  // entrou às 22h30 aparecia sob o cabeçalho "amanhã"
   const porDia = new Map();
   for(const a of ns){
-    const d = String(a.criado_em).slice(0,10);
+    const d = dataSP(a.criado_em);
     if(!porDia.has(d)) porDia.set(d,[]);
     porDia.get(d).push(a);
   }
@@ -4437,10 +4496,11 @@ async function novaTarefa(){
   if(!ti.value.trim()) return;
   // "renovar OAB amanhã" / "ligar dia 15" -> data extraída do texto (estilo Todoist)
   const nat=dataNatural(ti.value.trim());
+  const escolheuData=!!pz.value;         // antes de limpar — o campo vence o texto
   const [linha] = await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({titulo:nat.titulo, prazo:pz.value||nat.prazo||null, particular_de:eu.id})});
   D.tarefas.push(linha); ti.value=""; pz.value="";
-  if(!pz.value&&nat.prazo) aviso("Prazo entendido: "+fmt(nat.prazo)+" 🗓");
+  if(!escolheuData&&nat.prazo) aviso("Prazo entendido: "+fmt(nat.prazo)+" 🗓");
   render();
 }
 
@@ -4750,7 +4810,7 @@ function renderVendas(){
           <div class="meta">${l.beneficio_interesse?`<span class="chip ben">${esc(l.beneficio_interesse)}</span>`:""}
             ${l.origem?`<span class="chip neutro">${esc(l.origem)}</span>`:""}
             ${l.ultimo_contato?`<span class="chip per" title="quem chega pelo SMBot vem sem o texto: a conversa se lê no painel deles">💬 ${quandoFalou(l.ultimo_contato)}${l.contatos>1?` · ${l.contatos}×`:""}</span>`:""}</div>
-          ${l.telefone?`<div class="acao"><a class="btn-mini" target="_blank" style="text-decoration:none" href="https://wa.me/55${l.telefone.replace(/\D/g,"")}">💬 chamar</a></div>`:""}
+          ${l.telefone?`<div class="acao"><a class="btn-mini" target="_blank" rel="noopener" style="text-decoration:none" href="https://wa.me/55${l.telefone.replace(/\D/g,"")}">💬 chamar</a></div>`:""}
           ${e==="fechado"&&!l.cliente_id?`<div class="acao"><button class="btn-mini" onclick="leadParaCliente('${l.id}')">→ virar cliente</button></div>`:""}
           ${e==="fechado"&&l.cliente_id?`<div class="acao"><button class="btn-mini" onclick="abrirFicha('${l.cliente_id}')">ficha do cliente</button></div>`:""}
         </div>`).join("")}</div>`;
@@ -4990,7 +5050,7 @@ function pintarConversa(){
          ? "Anotação para a equipe — o cliente não vê"
          : `Escreva para ${esc(nomeDaConversa(c))}…`}"></textarea>
        <button class="btn-rap" id="zap-enviar" onclick="enviarZap()">${zapNota?"Anotar":"Enviar"}</button>
-       ${tel?`<a class="btn-mini" target="_blank" style="text-decoration:none"
+       ${tel?`<a class="btn-mini" target="_blank" rel="noopener" style="text-decoration:none"
            href="https://wa.me/55${tel}" title="abrir no WhatsApp do seu aparelho">↗</a>`:""}
      </div>`;
   const t = document.getElementById("zap-txt");
@@ -5608,7 +5668,7 @@ function renderAgenda(){
       ${dataSP(e.data_hora)<hoje() && e.status==="agendada"?`<button class="btn-mini"
         onclick="event.stopPropagation();compareceuEvento('${e.id}')"
         title="a perícia/audiência aconteceu — fecha a pendência">✔ compareceu</button>`:""}
-      ${c&&c.telefone?`<a class="chip per" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" onclick="event.stopPropagation()">💬 avisar cliente</a>`:""}
+      ${c&&c.telefone?`<a class="chip per" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" rel="noopener" onclick="event.stopPropagation()">💬 avisar cliente</a>`:""}
     </div>`;
   };
   document.getElementById("conteudo-meio").innerHTML =
@@ -5794,7 +5854,7 @@ function abrirFundos(){
         <div class="modal-cab">
           <div><strong>🎨 Fundo de ${esc(nome)}</strong>
             <div class="meio-sub">Vale para todo o escritório — todos veem a mesma lista da mesma cor.</div></div>
-          <button class="btn-mini" onclick="fecharEscolha()">✕</button>
+          <button class="btn-mini" onclick="fecharCaixa()">✕</button>
         </div>
         <div class="fundos-grade">
           ${FUNDOS_PRONTOS.map(([n,v])=>`<button class="fundo-op ${atual===v?"sel":""}"
@@ -5819,7 +5879,9 @@ async function salvarFundo(chave, valor){
   }catch(e){ return aviso("Rode o schema.sql mais novo no Supabase para usar os fundos"); }
   const p=(D.prefPorLista||new Map()).get(chave)||{chave};
   p.fundo=valor||null; D.prefPorLista.set(chave,p);
-  fecharEscolha(); render();
+  // fecharCaixa, não fecharEscolha: trocar papel de parede não pode derrubar
+  // a ficha do cliente que estava aberta ao lado
+  fecharCaixa(); render();
   aviso(valor?"Fundo trocado 🎨":"Fundo de volta ao padrão");
 }
 async function subirFundo(chave){
@@ -6141,11 +6203,13 @@ async function ntSalvar(andId, casoId){
   if(!ntData) return aviso("Escolha a data — tarefa sem data não existe");
   fecharCaixa();
   for(const pid of ntSel){
-    await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({andamento_id:andId, caso_id:casoId, colaborador_id:pid,
-                           atribuido_por:eu.id, lembrar_em:ntData})})
-      // a pessoa já tem tarefa neste comentário: o banco recusa, e tudo bem
-      .catch(()=>aviso("Essa pessoa já tem tarefa neste comentário"));
+    try{
+      const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({andamento_id:andId, caso_id:casoId, colaborador_id:pid,
+                             atribuido_por:eu.id, lembrar_em:ntData})});
+      tarefaNaMemoria(tf);
+    // a pessoa já tem tarefa neste comentário: o banco recusa, e tudo bem
+    }catch(e){ aviso("Essa pessoa já tem tarefa neste comentário"); }
   }
   aviso("Tarefa criada 📌", false);
   if(clienteAberto) abrirFicha(clienteAberto);
@@ -6217,9 +6281,12 @@ async function fecharTarefa(id){
   // repetir: a próxima rodada nasce pendurada no comentário da conclusão —
   // o ciclo fica visível na linha do tempo
   if(ctRep && and){
-    await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({andamento_id:and.id, caso_id:t.caso_id, colaborador_id:eu.id,
-                           atribuido_por:eu.id, lembrar_em:ctRep})}).catch(()=>{});
+    try{
+      const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({andamento_id:and.id, caso_id:t.caso_id, colaborador_id:eu.id,
+                             atribuido_por:eu.id, lembrar_em:ctRep})});
+      tarefaNaMemoria(tf);
+    }catch(e){ aviso("⚠ a nova rodada não gravou: "+String(e.message||e).slice(0,80)); }
   }
   t.concluida_em=new Date().toISOString();
   D.tarefasPorCaso.set(t.caso_id,(D.tarefasPorCaso.get(t.caso_id)||[]).filter(x=>x.id!==id));
@@ -6336,7 +6403,11 @@ async function marcarRotina(id, jaFeita){
     (D.rotinasFeitas=D.rotinasFeitas||[]).push({rotina_id:id, dia, colaborador_id:eu.id});
     plim(); aviso("✔ Rotina feita — volta no próximo dia programado");
   }
+  // re-render mantendo a rolagem: dar baixa na 12ª rotina não pode devolver
+  // a tela ao topo do Meu Dia
+  const m=document.querySelector(".meio"), sc=m?m.scrollTop:0;
   render();
+  if(m) m.scrollTop=sc;
 }
 
 function renderRotinas(){
@@ -6466,9 +6537,18 @@ function fecharEscolha(){
 async function abrirFicha(cliId){
   const c = D.cliPorId.get(cliId);
   if(!c) return aviso("Cliente ainda carregando — tente de novo em instantes");
-  if(clienteAberto !== cliId){ casoSel = "__auto__"; abaAtiva = 2; }   // cliente novo: abre no 1º caso ativo
+  const trocouCliente = clienteAberto !== cliId;
+  if(trocouCliente){
+    casoSel = "__auto__"; abaAtiva = 2;   // cliente novo: abre no 1º caso ativo
+    instSel = 0; tudoSoMarcos = false;    // escolhas do cliente ANTERIOR não vazam
+  }
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
+  // em rede lenta a coluna abria branca até as 6 consultas voltarem
+  if(trocouCliente){
+    const det=document.getElementById("detalhe");
+    if(det) det.innerHTML=`<p class="meio-sub" style="padding:20px">abrindo a ficha…</p>`;
+  }
   aplicarMenu();
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
   const ids = ks.map(k=>k.id).join(",");
@@ -6583,7 +6663,7 @@ async function abrirFicha(cliId){
         <label>Telefone / WhatsApp <button class="lapis" title="alterar" onclick="editarCampo('telefone','${c.id}')">✎</button></label>
         <div class="id-valor" id="campo-telefone">${c.telefone?`${esc(c.telefone)}
           <button class="cop" onclick="copiar('${c.telefone.replace(/\D/g,"")}','Telefone copiado')">📋 copiar</button>
-          <a class="cop" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" style="text-decoration:none">💬 WhatsApp</a>`:"—"}</div>
+          <a class="cop" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" rel="noopener" style="text-decoration:none">💬 WhatsApp</a>`:"—"}</div>
         ${ultimoZap()}
       </div>
       <div class="id-card">
@@ -6700,8 +6780,8 @@ async function abrirFicha(cliId){
       <div class="oque"><strong>${esc(e.tipo)}</strong><span>${esc(e.local||e.obs||"")} · ${esc(nomeStatusEvento(e.status))}</span></div>
       ${dataSP(e.data_hora)>=hoje()?`
         <button class="btn-mini" onclick="copiarLembrete('${e.id}')">💬 copiar lembrete</button>
-        ${c.telefone?`<a class="btn-mini" target="_blank" href="#" onclick="event.preventDefault();zapLembrete('${e.id}')" style="text-decoration:none">📲 WhatsApp</a>`:""}
-        <a class="btn-mini" target="_blank" style="text-decoration:none"
+        ${c.telefone?`<a class="btn-mini" target="_blank" rel="noopener" href="#" onclick="event.preventDefault();zapLembrete('${e.id}')" style="text-decoration:none">📲 WhatsApp</a>`:""}
+        <a class="btn-mini" target="_blank" rel="noopener" style="text-decoration:none"
            href="${gcal(e.tipo+" — "+esc(c.nome), dataSP(e.data_hora), horaSP(e.data_hora), 90, "", e.local||"")}">📅 Google Agenda</a>
         ${e.status==="agendada"?`<button class="btn-mini" onclick="cancelarEvento('${e.id}')"
            title="desmarcada, remarcada ou lançada errada (ex.: ano trocado) — some das listas; a ficha guarda como cancelada">✕ cancelar</button>`:""}`
@@ -7447,7 +7527,7 @@ function blocoApos(){
           <span>${a.data<=hoje()?"✓ <b>já tem direito</b> desde":"direito em"} <b>${fmt(a.data)}</b></span>
           ${a.automatica?`<span class="chip neutro">automática — confira</span>`:""}
           ${a.cliente.telefone?`<a class="chip per" href="https://wa.me/55${a.cliente.telefone.replace(/\D/g,"")}"
-             target="_blank" onclick="event.stopPropagation()">💬 chamar</a>`:""}</div>
+             target="_blank" rel="noopener" onclick="event.stopPropagation()">💬 chamar</a>`:""}</div>
       </div>
       ${/* as duas saídas desta lista, ali mesmo: adiar (volta na data) ou
            dizer que a pessoa JÁ se aposentou (sai de vez — caso da Marcia,
@@ -7504,7 +7584,7 @@ function caixaCadunico(k, cli){
         : dias===0 ? `⚠ vence hoje`
         : `🗓 renovar até ${fmt(venc)} (${dias} dias)`}</span>`
         : `<span class="meio-sub">informe a data para o sistema lembrar</span>`}
-      ${tel ? `<a class="btn-mini" target="_blank" style="text-decoration:none"
+      ${tel ? `<a class="btn-mini" target="_blank" rel="noopener" style="text-decoration:none"
         href="https://wa.me/55${tel}?text=${encodeURIComponent(msgCadunico(cli,k))}"
         title="abre o WhatsApp com a mensagem pronta">💬 avisar do CadÚnico</a>`
         : `<button class="btn-mini" onclick="copiarMsgCadunico('${cli.id}','${k.id}')">💬 copiar mensagem</button>`}
@@ -7633,7 +7713,7 @@ function blocoCrpsManual(){
         ${atras?`<span class="man-selo vence">⏰ desde ${fmt(c.proxima)}</span>`:""}
         ${c.total?`<span class="meio-sub">${c.total}× conferido</span>`:""}
         <span style="margin-left:auto;display:flex;gap:6px">
-          <a class="btn-mini" target="_blank" style="text-decoration:none"
+          <a class="btn-mini" target="_blank" rel="noopener" style="text-decoration:none"
              href="https://consultaprocessos.inss.gov.br/">🌐 abrir</a>
           <button class="btn-mini" onclick="manualSemNovidade('${k.id}','${esc(b.nup||"")}')">✓ sem novidade</button>
           <button class="btn-mini forte" onclick="manualComNovidade('${k.id}','${esc(b.nup||"")}')">✎ teve andamento</button>
@@ -7664,7 +7744,7 @@ function blocoCadunico(){
           <span style="color:${d<0?"var(--vermelho)":"#A5187F"};font-weight:600">${
             d<0?`venceu em ${fmt(venc)}`:d===0?"vence hoje":`renovar até ${fmt(venc)}`}</span>
           ${k.fase==="encerrado"?`<span class="chip neutro">caso encerrado</span>`:""}
-          ${c.telefone?`<a class="chip per" target="_blank" onclick="event.stopPropagation()"
+          ${c.telefone?`<a class="chip per" target="_blank" rel="noopener" onclick="event.stopPropagation()"
              href="https://wa.me/55${c.telefone.replace(/\D/g,"")}?text=${encodeURIComponent(msgCadunico(c,k))}"
              >💬 avisar</a>`:""}</div>
       </div></div>`).join("");
@@ -7912,9 +7992,9 @@ function caixaApos(cli){
                            : `<span class="apos-av">🔔 avisa em ${fmt(avisoApos(a.data))}</span>`}
         <input type="date" class="apos-lem" min="${hoje()}" value="${a.lembrar_em||""}"
           title="adiar o aviso: sai do Meu Dia e volta na data escolhida"
-          onchange="lembrarApos('${cli.id}','${a.id}','${a.data}','${esc(a.especie)}',this.value)">
+          onchange="lembrarApos('${cli.id}','${a.id}','${a.data}','${escJs(a.especie)}',this.value)">
         ${a.automatica
-          ? `<button class="btn-mini" onclick="novaApos('${cli.id}','${a.data}','${esc(a.especie)}')"
+          ? `<button class="btn-mini" onclick="novaApos('${cli.id}','${a.data}','${escJs(a.especie)}')"
                title="gravar com ajuste">ajustar</button>`
           : `<button class="apaga-arq" onclick="apagarApos('${a.id}')" title="apagar">✕</button>`}
       </div>`).join("")
@@ -8449,7 +8529,7 @@ function blocoFatos(k){
         j.rito?`<span class="chip neutro" title="classe: ${esc(j.classe||"")}">${j.rito==="JEF"?"🏛 JEF":"📜 Rito comum"}</span>`:""}${
         j.ajuizado?`<span class="chip neutro" title="data do ajuizamento (Distribuído em)">⚖️ ajuizado ${fmt(j.ajuizado)}</span>`:""}${
         j.orgao?`<span class="chip neutro" title="órgão julgador: ${esc(tituloOrgao(j.orgao)||j.orgao)}">📍 ${esc((tituloOrgao(j.orgao)||j.orgao).split(" - ")[0])}</span>`:""}`)(dadosJudiciais(k))}
-      ${k.pje_link?`<a class="chip neutro" href="${k.pje_link}" target="_blank" rel="noopener"
+      ${k.pje_link?`<a class="chip neutro" href="${urlOk(k.pje_link)}" target="_blank" rel="noopener"
         title="abrir os autos digitais na sua sessão do PJe" style="text-decoration:none">🔗 abrir no PJe</a>`:""}
       ${!k.beneficio?`<input id="ben-${k.id}" list="lista-beneficios" placeholder="qual é o benefício?"
         style="padding:4px 8px;border:1px solid var(--borda);border-radius:6px;font-size:13px">
@@ -8834,19 +8914,23 @@ const RE_MARCO_TUDO = new RegExp("\\b(senten[çc]a|ac[óo]rd[ãa]o|monocr[áa]ti
   +"deferid\\w*|indeferid\\w*|concedid\\w*|concess[ãa]o|implantad\\w*|"
   +"cessad\\w*|cessa[çc][ãa]o|exig[êe]ncia|recurso (?:provido|improvido|desprovido))\\b","i");
 let tudoSoMarcos=false;
+// timestamp -> "AAAA-MM-DDTHH:MM" DE BRASÍLIA: o corte do ISO cru pegava a
+// data UTC e todo registro feito depois das 21h aparecia (e era copiado para
+// petição) com a data do dia seguinte; e a ordenação misturava formatos
+const qSP = ts => ts ? dataSP(ts)+"T"+horaSP(ts) : "";
 function fatosDoCasoTodo(k, ands){
   const itens=[];
   for(const a of (ands||[]).filter(x=>!x.excluir)){
     if(ehComentarioPat(a)){
       const m=/^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
-      itens.push({q:a.criado_em||"", chip:"🌻 INSS", cor:"per",
+      itens.push({q:qSP(a.criado_em), chip:"🌻 INSS", cor:"per",
         texto:limparHtmlPat(m?a.texto.slice(m[0].length):a.texto)
           + (m&&m[1]==="Escritório"?" (comentário nosso no portal)":"")});
     }else if(a.origem==="pje"){
-      itens.push({q:a.criado_em||"", chip:"⚖️ PJe", cor:"neutro", texto:(a.texto||"")});
+      itens.push({q:qSP(a.criado_em), chip:"⚖️ PJe", cor:"neutro", texto:(a.texto||"")});
     }else{
       const co=D.colPorId.get(a.autor_id);
-      itens.push({q:a.criado_em||"", chip:"🏢 Escritório", cor:"ben",
+      itens.push({q:qSP(a.criado_em), chip:"🏢 Escritório", cor:"ben",
         texto:(co?co.inicial+": ":"")+(a.texto||"")});
     }
   }
@@ -8864,7 +8948,7 @@ function fatosDoCasoTodo(k, ands){
           texto:(m.nome||"")+(m.complemento?` — ${m.complemento}`:"")
             +(inst.rotulo&&cnjInstancias(k).length>1?` (${inst.rotulo})`:"")});
   for(const e of D.eventos.filter(e=>e.caso_id===k.id))
-    itens.push({q:e.data_hora||"", chip:"🩺 "+(e.tipo||"Perícia").split(" ")[0], cor:"per",
+    itens.push({q:qSP(e.data_hora), chip:"🩺 "+(e.tipo||"Perícia").split(" ")[0], cor:"per",
       texto:`${e.tipo||"Perícia"} ${e.status==="agendada"?"marcada":e.status==="realizada"?"— compareceu ✔":e.status||""}${e.local?` — ${e.local}`:""}`});
   for(const x of itens)
     x.marco = !!x.forte || x.chip.startsWith("🩺") || RE_MARCO_TUDO.test(x.texto);
@@ -9324,7 +9408,7 @@ function quadroManual(b, k){
                :`<span class="meio-sub">ainda não foi conferido nenhuma vez</span>`}
     </div>
     <div class="form-linha" style="margin-top:8px">
-      <a class="btn-mini" target="_blank" style="text-decoration:none"
+      <a class="btn-mini" target="_blank" rel="noopener" style="text-decoration:none"
          href="https://consultaprocessos.inss.gov.br/">🌐 abrir o e-Recursos</a>
       <button class="btn-mini" onclick="manualSemNovidade('${k.id}','${esc(b.nup||"")}')"
         title="registra que você olhou e nada mudou — não gera comentário">✓ conferido, sem novidade</button>
@@ -9583,7 +9667,7 @@ function painelCNJ(k){
     </div>`:""}
     <div class="form-linha" style="margin-top:8px">
       <button class="btn-mini" onclick="copiarDatajud('${k.id}')">💬 copiar mensagem ao cliente</button>
-      ${k.pje_link?`<a class="btn-mini" href="${k.pje_link}" target="_blank" rel="noopener"
+      ${k.pje_link?`<a class="btn-mini" href="${urlOk(k.pje_link)}" target="_blank" rel="noopener"
         title="abrir os autos digitais na sua sessão do PJe">abrir no PJe ↗</a>`:""}
       <span class="meio-sub">consulta de ${fmt(t.consultado_em)}${inst.ajuizado_em?` · ajuizado em ${fmt(inst.ajuizado_em)}`:""}</span>
     </div>
@@ -9850,7 +9934,11 @@ function ligarChecklistFicha(){
     if(t.concluida) plim(); else aviso("Conclusão desfeita ↩", false);
     await api(`/rest/v1/tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({concluida:t.concluida, concluida_em:t.concluida?new Date().toISOString():null})});
-    abaAtiva=2; abrirFicha(clienteAberto);
+    // SÓ o risco no item, em vez de reabrir a ficha inteira: o abrirFicha
+    // daqui refazia 6 consultas e APAGAVA o andamento meio digitado no campo
+    // (e a rolagem voltava ao topo). O item muda de seção no próximo render
+    // natural; o que importa agora é o ✓ visível e o texto do colega intacto.
+    el.parentElement.classList.toggle("feito", t.concluida);
   });
 }
 
@@ -10062,15 +10150,23 @@ async function novoAndamento(casoUnico){
     if(tfQuem.length && !tfData)
       return aviso("Tarefa para alguém precisa de data — escolha quando lembrar");
   }
-  const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})});
+  // a ação mais usada do sistema não pode falhar em silêncio: rede caída ou
+  // banco recusando têm que virar um aviso, não um clique que "não fez nada"
+  let and;
+  try{
+    [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})});
+  }catch(e){ return aviso("Não consegui registrar o andamento: "+String(e.message||e).slice(0,120)); }
   // data sem pessoa: quem escreveu "cobrar em 30 dias" quer ELE MESMO lembrar
   if(and && document.getElementById("tf-box")){
     const pessoas = (tfQuem&&tfQuem.length) ? tfQuem : (tfData ? [eu.id] : []);
     for(const pid of pessoas){
-      await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=minimal"},
-        body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:pid,
-                             atribuido_por:eu.id, lembrar_em:tfData})}).catch(()=>{});
+      try{
+        const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+          body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:pid,
+                               atribuido_por:eu.id, lembrar_em:tfData})});
+        tarefaNaMemoria(tf);
+      }catch(e){ aviso("⚠ a tarefa do lembrete não gravou: "+String(e.message||e).slice(0,80)); }
     }
     tfQuem=null; tfData=undefined;
   }
@@ -11018,8 +11114,11 @@ document.addEventListener("keydown",e=>{
     e.preventDefault(); return irParaPesquisa();
   }
   if(e.key==="Escape"){
+    // "aberto" é ter conteúdo e não estar escondido — caixa() abre com
+    // display:"" e o teste antigo ("block") deixava o Esc passar reto e
+    // fechar a FICHA por trás do modal, com o modal ainda na tela
     const modal=document.getElementById("modal");
-    if(modal && modal.style.display==="block") return fecharEscolha();
+    if(modal && modal.innerHTML && modal.style.display!=="none") return fecharCaixa();
     if(busca && busca.value){ busca.value=""; buscaTxt="";
       document.getElementById("busca-x").style.display="none"; return render(); }
     if(document.activeElement===busca) return busca.blur();
