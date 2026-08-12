@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.74 · revisão geral: 10 bugs corrigidos, blindagem de segurança e transições de página</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.75 · trocar de aba na ficha ficou instantâneo (repinta da memória, sem voltar à rede)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6512,7 +6512,7 @@ function escolherProcesso(cliId, ativos){
 function escolhido(cliId, casoId){
   casoSel = casoId;
   document.getElementById("modal").style.display="none";
-  abrirFicha(cliId);
+  if(cliId===clienteAberto) repintarFicha(); else abrirFicha(cliId);
 }
 // Caixa modal genérica, em cima do mesmo modal da escolha de processo: uma
 // pergunta no meio da tela, com o fundo escurecido.
@@ -6564,7 +6564,25 @@ async function abrirFicha(cliId){
   D.anexos = anexos;
   D.convFicha = convs;
   D.tarefasFicha = tarefasF;
-  tfQuem = null; tfData = undefined;   // cada ficha recomeça a escolha
+  D._andsFicha = ands;
+  D._ficha = { cliId, creds, vincs };   // o que a pintura usa além do D global
+  pintarFicha();
+}
+// REPINTAR SEM REBUSCAR. Trocar de aba, sub-aba ou instância não é motivo
+// para voltar à rede: as 6 consultas já foram feitas quando a ficha abriu, e
+// no 4G cada clique de aba custava segundos. A navegação chama isto; quem
+// GRAVA alguma coisa continua chamando abrirFicha() (que rebusca).
+function repintarFicha(){
+  if(D._ficha && D._ficha.cliId===clienteAberto && clienteAberto) pintarFicha();
+  else if(clienteAberto) abrirFicha(clienteAberto);
+}
+function pintarFicha(){
+  const cliId = clienteAberto;
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
+  const ands = D._andsFicha||[];
+  const creds = (D._ficha||{}).creds||[], vincs = (D._ficha||{}).vincs||[];
+  tfQuem = null; tfData = undefined;   // cada pintura recomeça a escolha
   const evs = D.eventos.filter(e=>ks.some(k=>k.id===e.caso_id)).sort((a,b)=>a.data_hora<b.data_hora?1:-1);
   const pgs = D.pagamentos.filter(p=>ks.some(k=>k.id===p.caso_id));
   const pagK = ks.filter(k=>k.fase==="pagamento");
@@ -6579,7 +6597,6 @@ async function abrirFicha(cliId){
     casoSel = ativos.length ? ativos[0].id : (ks[0] ? ks[0].id : null);
   }
   const andsVis = casoSel ? ands.filter(a=>a.caso_id===casoSel) : ands;
-  D._andsFicha = ands;
   // ATIVO ou INATIVO, ao lado do nome (pedido do Paulo): quem abre a ficha
   // precisa saber de cara se AINDA trabalhamos para esta pessoa. Vermelho =
   // todos os casos encerrados; verde diz quantos seguem em andamento; cinza
@@ -6923,7 +6940,7 @@ async function abrirFicha(cliId){
   </div>`;
 
   document.querySelectorAll(".mt[data-vv]").forEach(el=>el.onclick=()=>{
-    abaAtiva=+el.dataset.vv; abrirFicha(clienteAberto);
+    abaAtiva=+el.dataset.vv; repintarFicha();
   });
   document.getElementById("btn-processos").onclick=ev=>menuProcessos(ev, ks);
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
@@ -7016,7 +7033,7 @@ async function abrirFicha(cliId){
 }
 
 // muda a aba ativa da ficha por código (ex.: atalho "ver na aba Pagamentos")
-function irAba(i){ abaAtiva=i; if(clienteAberto) abrirFicha(clienteAberto); }
+function irAba(i){ abaAtiva=i; repintarFicha(); }
 
 // pop-up "⚖️ Processos": escolher o processo certo sem errar o destino
 function fecharMenuProcessos(){ const m=document.getElementById("menu-processos"); if(m) m.remove(); }
@@ -7053,7 +7070,7 @@ function menuProcessos(ev, ks){
     fecharMenuProcessos();
     if(v==="__novo__"){ abaAtiva=7; }
     else { casoSel=v||null; abaAtiva=2; }
-    abrirFicha(clienteAberto);
+    repintarFicha();
   });
   setTimeout(()=>document.addEventListener("click", fecharMenuProcessos, {once:true}));
 }
@@ -7161,7 +7178,7 @@ function tituloOrgao(n){          // o CNJ manda em CAIXA ALTA; aqui vira legív
 function irSubAba(qual){
   subAba = qual;
   guardar("crm_subaba", qual);
-  if(clienteAberto) abrirFicha(clienteAberto);
+  repintarFicha();
 }
 
 // ── a data sai do próprio texto (como o Todoist faz) ─────────────────────
@@ -8971,7 +8988,7 @@ function painelTudo(k, ands){
     <div class="fatos-topo">
       <h3 style="font-size:14px">📖 Caso completo — ${mostra.length}${tudoSoMarcos&&marcos.length?` de ${itens.length}`:""} registros, todas as fontes</h3>
       <span style="margin-left:auto;display:inline-flex;gap:6px">
-        ${marcos.length?`<button class="btn-mini" onclick="tudoSoMarcos=!tudoSoMarcos;abrirFicha(clienteAberto)"
+        ${marcos.length?`<button class="btn-mini" onclick="tudoSoMarcos=!tudoSoMarcos;repintarFicha()"
           title="sentença, acórdão, trânsito, perícia, alvará…">${tudoSoMarcos?"ver tudo":`⭐ só os marcos (${marcos.length})`}</button>`:""}
         <button class="btn-mini" onclick="copiarCasoCompleto('${k.id}')"
           title="a linha do tempo inteira em texto — para colar numa petição, num e-mail ou numa IA">📋 copiar em texto</button>
@@ -9646,7 +9663,7 @@ function painelCNJ(k){
   const u = inst.ultimo || {};
   return `${previsaoBox(k)}
   ${insts.length>1?`<div class="sub-menu instancias">
-    ${insts.map((x,n)=>`<button class="${n===i?"on":""}" onclick="instSel=${n};abrirFicha(clienteAberto)">${esc(x.rotulo||"instância")}${arqInfo(k,chaveCnj(x,n))?" 🗄":""}
+    ${insts.map((x,n)=>`<button class="${n===i?"on":""}" onclick="instSel=${n};repintarFicha()">${esc(x.rotulo||"instância")}${arqInfo(k,chaveCnj(x,n))?" 🗄":""}
       <small>${x.ultimo&&x.ultimo.data?fmt(x.ultimo.data):"—"}</small></button>`).join("")}
   </div>`:""}
   <div class="caso" style="margin-bottom:10px">
