@@ -62,8 +62,12 @@
     });
   }
 
-  // espera a tabela do acervo TROCAR de conteúdo (ou existir) após um clique
-  async function assentar(antes, tentativas = 24) {
+  // espera a tabela do acervo TROCAR de conteúdo (ou existir) após um clique.
+  // SÓ devolve false quando o ERRO DO PJe está visível na tela: jurisdição
+  // de caixa VAZIA ("Não há itens aqui") não monta tabela nenhuma, a espera
+  // estoura o tempo — e isso NÃO é conversa caída, é seguir para a próxima.
+  // Confundir as duas coisas queimava as 3 retomadas na primeira jurisdição.
+  async function assentar(antes, tentativas = 14) {
     for (let i = 0; i < tentativas; i++) {
       await pausa(700);
       if (paginaMorreu()) return false;
@@ -73,7 +77,8 @@
         return true;
       }
     }
-    return !!tabela();
+    await esperarQuieto(700);
+    return !paginaMorreu();            // sem tabela ≠ morto; morto é erro NA TELA
   }
 
   function lerPaginaAtual(mapa) {
@@ -106,6 +111,9 @@
     const chaveMov = p => p.movimento ? p.movimento.data + ' ' + p.movimento.hora : '';
     let ordenado = true, minAnterior = null;
     lerPaginaAtual(mapa);
+    // caixa vazia não monta tabela — nada a paginar aqui, e clicar num
+    // paginador que sobrou de outro nó só arrumaria confusão
+    if (!tabela()) { faixa(`acervo ${grau}: caixa sem processos — seguindo…`); return true; }
     for (let pag = 0; pag < 60; pag++) {          // teto duro alto: o 1º grau tem muita página
       if (paginaMorreu()) return false;
       if (corte && ordenado && tabela()) {
