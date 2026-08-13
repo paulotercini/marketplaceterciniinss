@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.77 · ↗ "abrir todos os links" nas 📣 Novidades (uma aba por processo, PJe ou PAT)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.78 · 📌 dar seguimento em qualquer andamento — e perícia detectada agenda com aviso 3 dias úteis antes</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4313,6 +4313,180 @@ function abrirTodasNovidades(){
   else aviso(`↗ ${links.length} aba(s) abertas`, false);
 }
 
+// ── 📌 DAR SEGUIMENTO ─────────────────────────────────────────────────────
+// O andamento que chega de fora (INSS, Recurso, CNJ, PJe) pede um de três
+// destinos: só ler; virar compromisso (perícia/audiência → aba 🩺 + aviso
+// 3 dias ÚTEIS antes para mandar mensagem ao cliente); ou virar tarefa de
+// alguém (anotação + quem + quando). Um modal só resolve os três — e quando
+// o texto traz perícia com data, ele abre já armado, pronto para confirmar.
+function eventoNoTexto(texto){
+  const t = dsa(texto||"");
+  if(!/pericia|audienc|avaliacao social|comparecer/.test(t)) return null;
+  // o texto do PAT traz DUAS datas ("solicitação: 12/08... agendada: 20/08
+  // 12:00") — vale a que vem depois de agendada/comparecer/marcada; sem
+  // esse contexto, a primeira data futura serve
+  const rx = /(\d{2})\/(\d{2})\/(\d{4})(?:\D{0,12}?(\d{1,2})[:h](\d{2}))?/g;
+  const tx = String(texto||"");
+  let melhor = null, m;
+  while((m = rx.exec(tx))){
+    const data = `${m[3]}-${m[2]}-${m[1]}`;
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(data) || data < hoje()) continue;
+    const antes = dsa(tx.slice(Math.max(0, m.index-42), m.index));
+    const marcada = /agendad|comparec|marcad|designad|remarcad/.test(antes);
+    const cand = { data, hora: m[4] ? `${m[4].padStart(2,"0")}:${m[5]}` : "09:00", marcada };
+    if(!melhor || (cand.marcada && !melhor.marcada)) melhor = cand;
+  }
+  if(!melhor) return null;
+  return { data: melhor.data, hora: melhor.hora,
+           tipo: /audienc/.test(t) ? "Audiência" : /avaliacao social/.test(t) ? "Avaliação social" : "Perícia" };
+}
+function diasUteisAntes(iso, n){
+  const d = new Date(iso+"T12:00:00"); let c = 0;
+  while(c < n){ d.setDate(d.getDate()-1); const w = d.getDay(); if(w!==0 && w!==6) c++; }
+  const s = d.toLocaleDateString("sv");
+  return s < hoje() ? hoje() : s;          // perícia depois de amanhã: avisa hoje
+}
+const evJaAgendado = (casoId, data) =>
+  (D.eventos||[]).some(e=>e.caso_id===casoId && dataSP(e.data_hora)===data && e.status!=="cancelada");
+
+// os itens registrados nos renders (o texto pode ter aspas e acento —
+// índice em vez de interpolação no onclick). A lista só CRESCE: ficha e
+// Novidades convivem lado a lado, e zerar num render invalidaria os
+// botões 📌 ainda visíveis do outro painel.
+let segItens = [];
+function segRegistrar(casoId, texto, andId, deNovidade){
+  segItens.push({casoId, texto:String(texto||""), andId:andId||null, deNovidade:!!deNovidade});
+  return segItens.length-1;
+}
+const segBtnHtml = i => `<button class="btn-mini" onclick="abrirSeguimento(${i})"
+  title="dar seguimento: anotar, atribuir a alguém com data — e, se houver perícia com data no texto, agendar com aviso 3 dias úteis antes">📌</button>`;
+
+let segAberto = null;
+function abrirSeguimento(i){
+  const s = segItens[i]; if(!s) return;
+  const k = D.casoPorId.get(s.casoId)||{}, c = D.cliPorId.get(k.cliente_id)||{};
+  const ev = eventoNoTexto(s.texto);
+  const jaAg = ev && evJaAgendado(s.casoId, ev.data);
+  segAberto = {...s, ev, quem:new Set()};
+  const nome1 = (c.nome||"o cliente").split(" ")[0];
+  caixa(`<h3 style="margin:0 0 2px">📌 Dar seguimento — ${esc(c.nome||"")}</h3>
+    <p class="meio-sub" style="margin:0 0 8px;max-height:64px;overflow:hidden">“${esc(s.texto.slice(0,180))}${s.texto.length>180?"…":""}”</p>
+    ${ev?`<label style="display:flex;gap:6px;align-items:center;font-size:13px;margin-bottom:8px;${jaAg?"color:var(--cinza)":""}">
+      <input type="checkbox" id="seg-evt" ${jaAg?"disabled":"checked"}>
+      🩺 agendar ${esc(ev.tipo)} de ${fmt(ev.data)} às ${ev.hora} na aba Perícias${jaAg?" — <b>já está agendada</b>":""}
+    </label>`:""}
+    <textarea id="seg-txt" rows="2" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"
+      placeholder="anotação / o que precisa ser feito">${ev?`Avisar ${esc(nome1)} da ${esc(ev.tipo.toLowerCase())} de ${fmt(ev.data)} às ${ev.hora} (mensagem pronta na aba 🩺).`:""}</textarea>
+    <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--cinza);font-weight:700">PARA</span>
+      ${D.colaboradores.filter(x=>x.ativo!==false).map(co=>`<button class="btn-rap seg-quem" data-col="${co.id}"
+        style="padding:4px 10px" title="${esc(co.nome)}">${esc(co.inicial)}</button>`).join("")}
+    </div>
+    <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--cinza);font-weight:700">LEMBRAR</span>
+      <input type="date" id="seg-data" value="${ev?diasUteisAntes(ev.data,3):""}">
+      ${ev?`<button class="btn-mini" onclick="document.getElementById('seg-data').value='${diasUteisAntes(ev.data,3)}'">3 dias úteis antes</button>`:""}
+      <button class="btn-mini" onclick="document.getElementById('seg-data').value='${hoje()}'">hoje</button>
+      <button class="btn-mini" onclick="document.getElementById('seg-data').value='${maisDias(1)}'">+1 dia útil</button>
+      <button class="btn-mini" onclick="document.getElementById('seg-data').value='${maisDias(7)}'">+1 semana</button>
+    </div>
+    <div class="form-linha" style="margin-top:12px">
+      <button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
+      <button style="margin-left:auto;padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer"
+        onclick="salvarSeguimento()">Registrar</button>
+    </div>`);
+  document.querySelectorAll(".seg-quem").forEach(b=>b.onclick=()=>{
+    const id=b.dataset.col;
+    if(segAberto.quem.has(id)){ segAberto.quem.delete(id); b.classList.remove("on"); b.style.background=""; }
+    else{ segAberto.quem.add(id); b.classList.add("on"); b.style.background="#E8F1FB"; }
+  });
+  const ta=document.getElementById("seg-txt"); ta.focus();
+}
+async function salvarSeguimento(){
+  const s = segAberto; if(!s) return;
+  const nota = (document.getElementById("seg-txt")||{}).value?.trim()||"";
+  const dia = (document.getElementById("seg-data")||{}).value||"";
+  const agendar = s.ev && (document.getElementById("seg-evt")||{}).checked;
+  const pessoas = [...s.quem];
+  if(!nota && !agendar) return aviso("Escreva a anotação — ou marque o agendamento");
+  if(pessoas.length && !dia) return aviso("Tarefa para alguém precisa de data — escolha quando lembrar");
+  if(pessoas.length && !nota) return aviso("Tarefa para alguém precisa da anotação do que fazer");
+  const feito=[];
+  try{
+    let novo=null;
+    if(nota){
+      [novo]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:s.casoId, autor_id:eu.id, texto:nota, origem:"app",
+          publico:false, ...(s.andId?{responde_a:s.andId}:{})})})||[];
+      feito.push("anotado");
+    }
+    // sem pessoa mas com data: o lembrete é de quem registrou (regra da casa)
+    const alvos = pessoas.length ? pessoas : (dia && nota ? [eu.id] : []);
+    for(const pid of alvos){
+      const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({andamento_id:novo.id, caso_id:s.casoId, colaborador_id:pid,
+                             atribuido_por:eu.id, lembrar_em:dia})});
+      tarefaNaMemoria(tf);
+    }
+    if(alvos.length) feito.push(`tarefa ${fmt(dia)} (${alvos.map(id=>(D.colPorId.get(id)||{}).inicial||"?").join(",")})`);
+    if(agendar && !evJaAgendado(s.casoId, s.ev.data)){
+      const [evn]=await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:s.casoId, tipo:s.ev.tipo, status:"agendada",
+          data_hora:`${s.ev.data}T${s.ev.hora}:00-03:00`, local:null})})||[];
+      if(evn) D.eventos.push(evn);
+      feito.push(`🩺 ${fmt(s.ev.data)}`);
+    }
+    if(s.deNovidade && s.andId) await marcarLidas([s.andId]);
+    fecharCaixa(); segAberto=null;
+    plim(); aviso(`✔ Seguimento: ${feito.join(" · ")}`, false);
+    montarSidebar();
+    if(clienteAberto) abrirFicha(clienteAberto); else render();
+  }catch(e){ aviso("Não consegui registrar o seguimento: "+String(e.message||e).slice(0,120)); }
+}
+// a aplicação em UM clique (e em lote, nas Novidades): agenda a perícia
+// detectada e cria o aviso 3 dias úteis antes, para mim, sem abrir modal
+async function aplicarPericia(s){
+  const ev = eventoNoTexto(s.texto); if(!ev) return null;
+  const k = D.casoPorId.get(s.casoId)||{}, c = D.cliPorId.get(k.cliente_id)||{};
+  if(evJaAgendado(s.casoId, ev.data)) return "já agendada";
+  const [evn]=await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:s.casoId, tipo:ev.tipo, status:"agendada",
+      data_hora:`${ev.data}T${ev.hora}:00-03:00`, local:null})})||[];
+  if(evn) D.eventos.push(evn);
+  const quando = diasUteisAntes(ev.data, 3);
+  const [novo]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify({caso_id:s.casoId, autor_id:eu.id, origem:"app", publico:false,
+      texto:`📅 ${ev.tipo} de ${(c.nome||"").split(" ")[0]||"cliente"} em ${fmt(ev.data)} às ${ev.hora} — avisar o cliente (mensagem pronta na aba 🩺).`,
+      ...(s.andId?{responde_a:s.andId}:{})})})||[];
+  if(novo){
+    const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({andamento_id:novo.id, caso_id:s.casoId, colaborador_id:eu.id,
+                           atribuido_por:eu.id, lembrar_em:quando})});
+    tarefaNaMemoria(tf);
+  }
+  return `agendada + aviso ${fmt(quando)}`;
+}
+async function periciaRapida(i){
+  const s = segItens[i]; if(!s) return;
+  const r = await aplicarPericia(s).catch(e=>{ aviso("Não consegui agendar: "+e.message); return null; });
+  if(r==="já agendada") aviso("🩺 Essa perícia já está na aba Perícias", false);
+  else if(r){ plim(); aviso(`🩺 ${r} — no Meu Dia na data do aviso`, false); }
+  montarSidebar(); render();
+}
+async function periciasEmLote(){
+  const alvos = novidades().map(a=>({casoId:a.caso_id, texto:a.texto, andId:a.id}))
+    .filter(s=>eventoNoTexto(s.texto));
+  if(!alvos.length) return;
+  let feitas=0, ja=0;
+  for(const s of alvos){
+    const r = await aplicarPericia(s).catch(()=>null);
+    if(r==="já agendada") ja++; else if(r) feitas++;
+  }
+  plim();
+  aviso(`🩺 ${feitas} perícia(s) agendadas com aviso 3 dias úteis antes${ja?`; ${ja} já estavam na agenda`:""}`, false);
+  montarSidebar(); render();
+}
+
 // as primeiras novidades, para caber no topo de outra lista sem tomar conta
 function blocoNovidadesTopo(){
   const ns = novidades();
@@ -4339,9 +4513,11 @@ function linhaNovidade(a){
     ${a.origem==="pje" && k.pje_link
       ?`<a class="btn-mini" href="${urlOk(k.pje_link)}" target="_blank" rel="noopener" title="abrir os autos digitais na sua sessão do PJe">abrir no PJe ↗</a>`
       :k.processo_link?`<a class="btn-mini" href="${urlOk(k.processo_link)}" target="_blank" rel="noopener">abrir ↗</a>`:""}
-    <button class="btn-mini" data-encaminhar="${a.id}">→ encaminhar</button>
+    ${(i=>`${eventoNoTexto(a.texto)?`<button class="btn-mini" onclick="periciaRapida(${i})"
+      title="agenda na aba 🩺 e cria o aviso 3 dias úteis antes — um clique">🩺 agendar+aviso</button>`:""}${segBtnHtml(i)}`)(
+      segRegistrar(a.caso_id, a.texto, a.id, true))}
     <button class="btn-mini" data-ler="${a.id}">✔ li</button>
-  </div>${encaminhando===a.id?caixaEncaminhar(a):""}`;
+  </div>`;
 }
 
 function renderNovidades(){
@@ -4365,13 +4541,19 @@ function renderNovidades(){
     porDia.get(d).push(a);
   }
   const nLinks = linksDasNovidades().length;
+  const corpo = [...porDia].map(([d,as])=>`<h3 class="secao">${esc(dataRelativa(d))} (${as.length})</h3>`
+      + as.map(linhaNovidade).join("")).join("");
+  const nPer = ns.filter(a=>{ const ev=eventoNoTexto(a.texto);
+    return ev && !evJaAgendado(a.caso_id, ev.data); }).length;
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros"><button class="fchip" id="ler-tudo">✔ marcar todas como lidas (${ns.length})</button>${
-      nLinks?`<button class="fchip" id="abrir-tudo" title="abre o processo de cada novidade numa aba — PJe ou PAT, conforme a origem">↗ abrir todos os links (${nLinks})</button>`:""}</div>`
-    + [...porDia].map(([d,as])=>`<h3 class="secao">${esc(dataRelativa(d))} (${as.length})</h3>`
-      + as.map(linhaNovidade).join("")).join("");
+      nLinks?`<button class="fchip" id="abrir-tudo" title="abre o processo de cada novidade numa aba — PJe ou PAT, conforme a origem">↗ abrir todos os links (${nLinks})</button>`:""}${
+      nPer?`<button class="fchip" id="agendar-tudo" title="para cada perícia/audiência detectada: agenda na aba 🩺 e cria o aviso 3 dias úteis antes (seg–sex)">🩺 agendar ${nPer} perícia(s) + avisos</button>`:""}</div>`
+    + corpo;
   const bAbrir=document.getElementById("abrir-tudo");
   if(bAbrir) bAbrir.onclick=abrirTodasNovidades;
+  const bAg=document.getElementById("agendar-tudo");
+  if(bAg) bAg.onclick=periciasEmLote;
   document.querySelectorAll("[data-ler]").forEach(b=>b.onclick=e=>{
     e.stopPropagation(); marcarLidas([b.dataset.ler]); });
   document.getElementById("ler-tudo").onclick=()=>marcarLidas(ns.map(a=>a.id));
@@ -4380,6 +4562,12 @@ function renderNovidades(){
   ligarEncaminhar();
 }
 
+async function liNaFicha(id){
+  await marcarLidas([id]);
+  const a=(D._andsFicha||[]).find(x=>x.id===id);
+  if(a) a.andamentos_lidos=[...(a.andamentos_lidos||[]),{colaborador_id:eu.id}];
+  repintarFicha();
+}
 async function marcarLidas(ids){
   if(!ids.length) return;
   try{
@@ -8928,9 +9116,13 @@ function painelINSS(k, ands){
     // limpar de novo na saída: comentário gravado antes da limpeza de entrada
     // ainda carrega "<p>" e "&aacute;" no banco
     const txt = esc(limparHtmlPat(m ? a.texto.slice(m[0].length) : a.texto));
+    const jaLi=(a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
     return `<li>
       <span class="quando" title="comentário no portal do INSS">${doInss?"🌻":"🏢"}<br>${fmtTS(a.criado_em)}</span>
-      <span class="texto"><span class="chip ${doInss?"fase":"neutro"}" style="margin-right:6px">${doInss?"INSS":"Escritório"}</span>${txt}</span>
+      <span class="texto"><span class="chip ${doInss?"fase":"neutro"}" style="margin-right:6px">${doInss?"INSS":"Escritório"}</span>${txt}
+        <span style="display:inline-flex;gap:4px;margin-left:6px;vertical-align:middle">
+          ${jaLi?"":`<button class="btn-mini" onclick="liNaFicha('${a.id}')" title="marcar como lido (sai das 📣 Novidades)">✔ li</button>`}
+          ${segBtnHtml(segRegistrar(k.id, a.texto, a.id))}</span></span>
     </li>`;
   };
   return `<div class="fatos" style="margin-bottom:12px">
@@ -8971,11 +9163,11 @@ function fatosDoCasoTodo(k, ands){
   for(const a of (ands||[]).filter(x=>!x.excluir)){
     if(ehComentarioPat(a)){
       const m=/^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
-      itens.push({q:qSP(a.criado_em), chip:"🌻 INSS", cor:"per",
+      itens.push({q:qSP(a.criado_em), chip:"🌻 INSS", cor:"per", id:a.id,
         texto:limparHtmlPat(m?a.texto.slice(m[0].length):a.texto)
           + (m&&m[1]==="Escritório"?" (comentário nosso no portal)":"")});
     }else if(a.origem==="pje"){
-      itens.push({q:qSP(a.criado_em), chip:"⚖️ PJe", cor:"neutro", texto:(a.texto||"")});
+      itens.push({q:qSP(a.criado_em), chip:"⚖️ PJe", cor:"neutro", id:a.id, texto:(a.texto||"")});
     }else{
       const co=D.colPorId.get(a.autor_id);
       itens.push({q:qSP(a.criado_em), chip:"🏢 Escritório", cor:"ben",
@@ -9013,7 +9205,8 @@ function painelTudo(k, ands){
   const linha=x=>`<li${x.marco?` class="tudo-marco"`:""}>
     <span class="quando">${x.marco?"⭐<br>":""}${esc((x.q||"").slice(0,10)?fmt((x.q||"").slice(0,10)):"—")}</span>
     <span class="texto"><span class="chip ${x.cor}" style="margin-right:6px">${x.chip}</span>${
-      x.marco?`<b>${esc(x.texto)}</b>`:esc(x.texto)}</span>
+      x.marco?`<b>${esc(x.texto)}</b>`:esc(x.texto)}
+      <span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span></span>
   </li>`;
   return `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo">
@@ -9224,6 +9417,7 @@ function blocoRecurso(t, casoId){
       <button class="crps-est ${e.importante?"on":""}" onclick="toggleImpCrps('${casoId}','${esc(t.nup||"")}',${i})"
         title="${e.importante?"tirar o destaque desta movimentação"
                              :"destacar esta movimentação — acende o ⭐ do processo"}">⭐</button>
+      ${segBtnHtml(segRegistrar(casoId, String(e.resumo||e.bruto||""), null))}
     </li>`;
   };
   return `<div class="fatos" style="margin-bottom:12px">
@@ -9723,6 +9917,7 @@ function painelCNJ(k){
         <span class="mov-data">${m.data?fmt(m.data):"—"}</span>
         <span class="mov-txt">${m.decisao?"⚖️ ":""}<b>${esc(m.nome||"")}</b>${m.complemento?` — ${esc(m.complemento)}`:""}
           ${m.claro?`<div class="meio-sub">${esc(m.claro)}</div>`:""}</span>
+        ${segBtnHtml(segRegistrar(k.id, (m.nome||"")+(m.complemento?" — "+m.complemento:""), null))}
       </li>`).join("") || "<p class='meio-sub'>Sem movimentos.</p>"}
     </ul>
   </div>`;
