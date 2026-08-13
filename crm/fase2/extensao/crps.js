@@ -26,7 +26,7 @@
   window.crmRodar = async () => {
     try {
       faixa('lendo os recursos do CRM…');
-      const { nups, fichas } = await CRM.nupsDoCrm();
+      const { nups, arquivados = [], fichas } = await CRM.nupsDoCrm();
       if (!nups.length) {
         // as duas causas possíveis dizem coisas opostas, e o número de fichas
         // lidas separa uma da outra sem precisar de console
@@ -49,26 +49,41 @@
       }
       if (!achou) { faixaErr('a sessão do e-Recursos não respondeu — refaça o login'); return { erro: '401' }; }
 
+      // MODO RÁPIDO: recurso que o escritório marcou 🗄 no CRM não movimenta
+      // mais — no dia a dia ele fica de fora da fila (cada consulta custa
+      // ~5s), e uma rodada COMPLETA semanal confere todos mesmo assim.
+      const st = await chrome.storage.local.get(['ultima_crps_full']);
+      const fullEm = st.ultima_crps_full ? new Date(st.ultima_crps_full).getTime() : 0;
+      const rapido = !!fullEm && (Date.now() - fullEm) < 7 * 86400000;
+      const arqSet = new Set(arquivados);
+      const fila = rapido ? nups.filter(n => !arqSet.has(n)) : nups;
+      if (rapido && fila.length < nups.length)
+        faixa(`modo rápido: ${nups.length - fila.length} recurso(s) arquivados 🗄 ficam para a rodada completa semanal`);
+
       const OUT = { versao: 1, quando: null, itens: {}, falhas: [] };
-      let seguidas = 0;
-      for (let i = 0; i < nups.length; i++) {
-        faixa(`recurso ${i + 1} de ${nups.length}…`);
+      let seguidas = 0, abortou = false;
+      for (let i = 0; i < fila.length; i++) {
+        faixa(`recurso ${i + 1} de ${fila.length}…`);
         for (const sis of SISTEMAS) {
           try {
-            const r = await consultar(sis, nups[i], modo);
-            if (r.ok) { OUT.itens[`${nups[i]}_${sis}`] = await r.json(); seguidas = 0; }
+            const r = await consultar(sis, fila[i], modo);
+            if (r.ok) { OUT.itens[`${fila[i]}_${sis}`] = await r.json(); seguidas = 0; }
             else if (r.status !== 404) {
-              OUT.falhas.push({ nup: nups[i], sis, status: r.status });
-              if (++seguidas >= 6) { faixaErr(`o portal parou (${r.status}) — clique de novo mais tarde`); i = nups.length; break; }
+              OUT.falhas.push({ nup: fila[i], sis, status: r.status });
+              if (++seguidas >= 6) { faixaErr(`o portal parou (${r.status}) — clique de novo mais tarde`); abortou = true; i = fila.length; break; }
             }
-          } catch (e) { OUT.falhas.push({ nup: nups[i], sis, erro: String(e.message || e) }); }
+          } catch (e) { OUT.falhas.push({ nup: fila[i], sis, erro: String(e.message || e) }); }
           await pausa(2500);
         }
       }
       OUT.quando = new Date().toISOString();
       await CRM.enviar('crps', OUT);
       await chrome.storage.local.set({ ultima_crps: OUT.quando });
-      faixaOk(`✔ ${Object.keys(OUT.itens).length} consulta(s) entregues ao CRM.`);
+      // a rodada que consultou TODOS (inclusive arquivados) e chegou ao fim
+      // é a que renova o ciclo semanal — abortada ou rápida não renova
+      if (!rapido && !abortou)
+        await chrome.storage.local.set({ ultima_crps_full: OUT.quando });
+      faixaOk(`✔ ${Object.keys(OUT.itens).length} consulta(s) entregues ao CRM${rapido ? ' (modo rápido)' : ''}.`);
       someFaixa();
       return { ok: Object.keys(OUT.itens).length, falhas: OUT.falhas.length };
     } catch (e) { faixaErr(e.message); return { erro: e.message }; }
