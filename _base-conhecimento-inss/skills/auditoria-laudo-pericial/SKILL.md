@@ -123,3 +123,9 @@ Antes de realizar a auditoria, leia obrigatoriamente o seguinte arquivo.
 - `references/ROTEIRO-IMPUGNACAO-9-BLOCOS.md` – Roteiro operacional completo do Modo 3, com os 9 blocos, as regras de saída e a linha final de auditoria anti-IA (Onda 84)
 
 Nota de manutenção (auditoria 25/07/2026). Os arquivos CHECKLIST.md e FUNDAMENTOS.md antes listados aqui nunca existiram na pasta references e a menção foi removida. A base normativa por tipo de vício vive nas skills `base-cpc-prova-pericial-arts464-480` (dispositivos do CPC), `base-validacao-formal-laudo-medico-checklist-ab` (regime CFM e checklists A e B) e `base-pericia-medica-federal-telepericia` (PMF e Teleperícia), que devem ser consultadas em conjunto.
+
+## Método Fuzzy, verificação obrigatória (Onda 106)
+
+Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
+
+A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
