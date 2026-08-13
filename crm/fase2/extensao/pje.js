@@ -196,27 +196,26 @@
         faixaErr('o PJe derrubou a conversa 3 vezes seguidas — espere um minuto, dê F5 e clique de novo');
         return { erro: 'conversa caiu' };
       }
-      // O PAINEL NOVO DO TRF3 (12.08.2026): busca "Pesquise por número de
-      // processo", árvore de jurisdições à esquerda, "Selecione uma
-      // jurisdição ou caixa" — outra tecnologia, outros elementos. O coletor
-      // fala a língua do painel ANTIGO; aqui ele avisa com honestidade em
-      // vez de clicar às cegas (o clique às cegas jogava para Expedientes).
-      const painelNovo = !tabela() && !nosDaArvore().length
-        && (document.querySelector('input[placeholder*="Pesquise por número de processo"]')
-            || /Selecione uma jurisdi[çc][ãa]o ou caixa/i.test((document.body || {}).innerText || ''));
-      if (painelNovo) {
-        faixaErr('o TRF3 ligou um painel NOVO que este coletor ainda não fala — '
-          + 'preciso de um HAR desta tela do Acervo para adaptar (avise o Claude)');
-        return { erro: 'painel novo' };
-      }
-      // garante a aba Acervo aberta (painel antigo)
-      if (!tabela()) {
-        const aba = [...document.querySelectorAll('td[id*="Acervo"],a[id*="Acervo"],[id$="tabAcervo_lbl"]')]
-          .find(el => /acervo/i.test(el.textContent || ''));
-        if (aba) { aba.click(); await assentar(''); }
+      // GARANTE A ABA ACERVO ABERTA. Na casca nova do painel (12.08.2026) a
+      // árvore só nasce DEPOIS do clique na aba — e o clique tem de ir no
+      // elemento que carrega o onclick (tabAcervo_shifted, conferido no HAR
+      // do Paulo), não no td de fora, que não dispara nada. O fragmento que
+      // chega por AJAX traz a MESMA árvore e a MESMA tabela de sempre.
+      if (!tabela() && !nosDaArvore().length) {
+        faixa('abrindo a aba Acervo…');
+        const aba = document.getElementById('tabAcervo_shifted')
+          || document.querySelector('#tabAcervo_cell table[onclick], td[id*="Acervo"] table[onclick]')
+          || [...document.querySelectorAll('td[id*="Acervo"],a[id*="Acervo"],[id$="tabAcervo_lbl"]')]
+              .find(el => /acervo/i.test(el.textContent || ''));
+        if (aba) {
+          aba.click();
+          for (let i = 0; i < 30 && !tabela() && !nosDaArvore().length && !paginaMorreu(); i++)
+            await pausa(700);
+        }
       }
       if (!tabela() && !nosDaArvore().length) {
-        faixaErr('não achei a aba Acervo — abra-a e clique de novo');
+        faixaErr('não consegui abrir a aba Acervo — se o painel mudou de novo, '
+          + 'capture um HAR desta tela e avise o Claude');
         return { erro: 'sem acervo' };
       }
 
