@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.78 · 📌 dar seguimento em qualquer andamento — e perícia detectada agenda com aviso 3 dias úteis antes</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.79 · 📞 o ciclo do aviso: avisar logo, registrar quem avisou e o atendimento de preparação</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4376,7 +4376,7 @@ function abrirSeguimento(i){
       🩺 agendar ${esc(ev.tipo)} de ${fmt(ev.data)} às ${ev.hora} na aba Perícias${jaAg?" — <b>já está agendada</b>":""}
     </label>`:""}
     <textarea id="seg-txt" rows="2" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"
-      placeholder="anotação / o que precisa ser feito">${ev?`Avisar ${esc(nome1)} da ${esc(ev.tipo.toLowerCase())} de ${fmt(ev.data)} às ${ev.hora} (mensagem pronta na aba 🩺).`:""}</textarea>
+      placeholder="anotação / o que precisa ser feito">${ev?`📞 Avisar ${esc(nome1)} que a ${esc(ev.tipo.toLowerCase())} foi agendada para ${fmt(ev.data)} às ${ev.hora} — oferecer atendimento de preparação antes.`:""}</textarea>
     <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
       <span style="font-size:12px;color:var(--cinza);font-weight:700">PARA</span>
       ${D.colaboradores.filter(x=>x.ativo!==false).map(co=>`<button class="btn-rap seg-quem" data-col="${co.id}"
@@ -4384,12 +4384,14 @@ function abrirSeguimento(i){
     </div>
     <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
       <span style="font-size:12px;color:var(--cinza);font-weight:700">LEMBRAR</span>
-      <input type="date" id="seg-data" value="${ev?diasUteisAntes(ev.data,3):""}">
+      <input type="date" id="seg-data" value="${ev?hoje():""}">
       ${ev?`<button class="btn-mini" onclick="document.getElementById('seg-data').value='${diasUteisAntes(ev.data,3)}'">3 dias úteis antes</button>`:""}
       <button class="btn-mini" onclick="document.getElementById('seg-data').value='${hoje()}'">hoje</button>
       <button class="btn-mini" onclick="document.getElementById('seg-data').value='${maisDias(1)}'">+1 dia útil</button>
       <button class="btn-mini" onclick="document.getElementById('seg-data').value='${maisDias(7)}'">+1 semana</button>
     </div>
+    ${ev&&!jaAg?`<p class="meio-sub" style="margin:8px 0 0">🗓 junto com o agendamento nasce a VÉSPERA:
+      lembrete ${fmt(diasUteisAntes(ev.data,3))} (3 dias úteis antes) para mandar a mensagem ao cliente.</p>`:""}
     <div class="form-linha" style="margin-top:12px">
       <button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
       <button style="margin-left:auto;padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer"
@@ -4435,6 +4437,17 @@ async function salvarSeguimento(){
           data_hora:`${s.ev.data}T${s.ev.hora}:00-03:00`, local:null})})||[];
       if(evn) D.eventos.push(evn);
       feito.push(`🩺 ${fmt(s.ev.data)}`);
+      const vesp = diasUteisAntes(s.ev.data, 3);
+      const [av]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:s.casoId, autor_id:eu.id, origem:"app", publico:false,
+          texto:`🗓 Véspera da ${s.ev.tipo.toLowerCase()} de ${fmt(s.ev.data)}: mandar a mensagem de lembrete ao cliente (aba 🩺).`})})||[];
+      if(av){
+        const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+          body:JSON.stringify({andamento_id:av.id, caso_id:s.casoId, colaborador_id:eu.id,
+                               atribuido_por:eu.id, lembrar_em:vesp})});
+        tarefaNaMemoria(tf);
+        feito.push(`véspera ${fmt(vesp)}`);
+      }
     }
     if(s.deNovidade && s.andId) await marcarLidas([s.andId]);
     fecharCaixa(); segAberto=null;
@@ -4449,22 +4462,29 @@ async function aplicarPericia(s){
   const ev = eventoNoTexto(s.texto); if(!ev) return null;
   const k = D.casoPorId.get(s.casoId)||{}, c = D.cliPorId.get(k.cliente_id)||{};
   if(evJaAgendado(s.casoId, ev.data)) return "já agendada";
+  const nome1 = (c.nome||"").split(" ")[0]||"cliente";
   const [evn]=await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({caso_id:s.casoId, tipo:ev.tipo, status:"agendada",
       data_hora:`${ev.data}T${ev.hora}:00-03:00`, local:null})})||[];
   if(evn) D.eventos.push(evn);
-  const quando = diasUteisAntes(ev.data, 3);
-  const [novo]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({caso_id:s.casoId, autor_id:eu.id, origem:"app", publico:false,
-      texto:`📅 ${ev.tipo} de ${(c.nome||"").split(" ")[0]||"cliente"} em ${fmt(ev.data)} às ${ev.hora} — avisar o cliente (mensagem pronta na aba 🩺).`,
-      ...(s.andId?{responde_a:s.andId}:{})})})||[];
-  if(novo){
-    const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
-      body:JSON.stringify({andamento_id:novo.id, caso_id:s.casoId, colaborador_id:eu.id,
-                           atribuido_por:eu.id, lembrar_em:quando})});
-    tarefaNaMemoria(tf);
-  }
-  return `agendada + aviso ${fmt(quando)}`;
+  // DOIS lembretes por perícia (pedido do Paulo): avisar o cliente LOGO que
+  // agendou (tarefa para hoje — o registro do aviso é o 📞 na aba 🩺) e a
+  // VÉSPERA, 3 dias úteis antes, para a mensagem de lembrete
+  const criar = async (texto, dia) => {
+    const [novo]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:s.casoId, autor_id:eu.id, origem:"app", publico:false,
+        texto, ...(s.andId?{responde_a:s.andId}:{})})})||[];
+    if(novo){
+      const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({andamento_id:novo.id, caso_id:s.casoId, colaborador_id:eu.id,
+                             atribuido_por:eu.id, lembrar_em:dia})});
+      tarefaNaMemoria(tf);
+    }
+  };
+  await criar(`📞 Avisar ${nome1} que a ${ev.tipo.toLowerCase()} foi agendada para ${fmt(ev.data)} às ${ev.hora} — oferecer atendimento de preparação antes. (Registre pelo 📞 na aba 🩺.)`, hoje());
+  const vesp = diasUteisAntes(ev.data, 3);
+  await criar(`🗓 Véspera da ${ev.tipo.toLowerCase()} de ${fmt(ev.data)}: mandar a mensagem de lembrete ao cliente (aba 🩺).`, vesp);
+  return `agendada + avisar hoje + véspera ${fmt(vesp)}`;
 }
 async function periciaRapida(i){
   const s = segItens[i]; if(!s) return;
@@ -5872,7 +5892,7 @@ function renderAgenda(){
     return `<div class="evento ${dataSP(e.data_hora)<hoje()?"passado":"futuro"}" data-cli="${c?c.id:""}" style="cursor:pointer">
       <div class="data-box">${fmtTS(e.data_hora).slice(0,5)}<small>${dataSP(e.data_hora).slice(0,4)}</small><small>${horaSP(e.data_hora)}</small></div>
       <div class="oque"><strong>${esc(e.tipo)} — ${esc(c?c.nome:"?")}</strong>
-        <span>${esc(e.local||e.obs||"")} · ${esc(nomeStatusEvento(e.status))}</span></div>
+        <span>${esc([e.local,e.obs].filter(Boolean).join(" · "))} · ${esc(nomeStatusEvento(e.status))}</span></div>
       ${dataSP(e.data_hora)<hoje() && e.status==="agendada"?`<button class="btn-mini"
         onclick="event.stopPropagation();compareceuEvento('${e.id}')"
         title="a perícia/audiência aconteceu — fecha a pendência">✔ compareceu</button>`:""}
@@ -7154,8 +7174,11 @@ function painelPericiasFicha(c, ks, evs){
   return `
     ${evs.map(e=>`<div class="evento ${dataSP(e.data_hora)<hoje()?"passado":"futuro"}">
       <div class="data-box">${fmtTS(e.data_hora).slice(0,5)}<small>${dataSP(e.data_hora).slice(0,4)}</small><small>${horaSP(e.data_hora)}</small></div>
-      <div class="oque"><strong>${esc(e.tipo)}</strong><span>${esc(e.local||e.obs||"")} · ${esc(nomeStatusEvento(e.status))}</span></div>
+      <div class="oque"><strong>${esc(e.tipo)}</strong><span>${esc([e.local,e.obs].filter(Boolean).join(" · "))} · ${esc(nomeStatusEvento(e.status))}</span></div>
       ${dataSP(e.data_hora)>=hoje()?`
+        ${/📞 avisado/.test(e.obs||"")?`<span class="chip neutro" title="o cliente já foi avisado deste agendamento">📞 avisado ✓</span>`
+          :e.status==="agendada"?`<button class="btn-mini" onclick="janelaAvisado('${e.id}')"
+            title="registrar que o cliente foi avisado — e se agendou o atendimento presencial de preparação">📞 avisado</button>`:""}
         <button class="btn-mini" onclick="copiarLembrete('${e.id}')">💬 copiar lembrete</button>
         ${c.telefone?`<a class="btn-mini" target="_blank" rel="noopener" href="#" onclick="event.preventDefault();zapLembrete('${e.id}')" style="text-decoration:none">📲 WhatsApp</a>`:""}
         <a class="btn-mini" target="_blank" rel="noopener" style="text-decoration:none"
@@ -10746,6 +10769,64 @@ async function compareceuEvento(id){
 }
 // como o status aparece nas listas — 'realizada' vira a palavra do Paulo
 const nomeStatusEvento = s => s==="realizada" ? "✔ compareceu" : s;
+
+// ── 📞 O REGISTRO DO AVISO ────────────────────────────────────────────────
+// Perícia agendada → o cliente é avisado LOGO. Quem avisou registra aqui em
+// dois cliques: avisou, e agendou (ou não) o atendimento presencial de
+// preparação — a reunião em que o Paulo instrui sobre o ato pericial, que
+// nem todo caso tem. Com atendimento, ele entra na agenda 🩺; a tarefa de
+// "avisar" aberta no caso ganha baixa sozinha.
+function janelaAvisado(evId){
+  const e=D.eventos.find(x=>x.id===evId); if(!e) return;
+  const k=D.casoPorId.get(e.caso_id)||{}, c=D.cliPorId.get(k.cliente_id)||{};
+  caixa(`<h3 style="margin:0 0 4px">📞 ${esc((c.nome||"cliente").split(" ")[0])} avisado(a) da ${esc(e.tipo.toLowerCase())} de ${fmt(dataSP(e.data_hora))} às ${horaSP(e.data_hora)}</h3>
+    <p class="meio-sub" style="margin:0 0 8px">Agendou atendimento presencial de preparação (instruir sobre o ato pericial)?</p>
+    <div class="form-linha" style="align-items:center">
+      <input type="date" id="av-data" min="${hoje()}" max="${dataSP(e.data_hora)}">
+      <input type="time" id="av-hora" value="09:00">
+    </div>
+    <div class="form-linha" style="margin-top:12px">
+      <button class="btn-rap" onclick="salvarAvisado('${evId}', false)">avisado, SEM atendimento</button>
+      <button style="margin-left:auto;padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer"
+        onclick="salvarAvisado('${evId}', true)">avisado, COM atendimento</button>
+    </div>`);
+}
+async function salvarAvisado(evId, comAtendimento){
+  const e=D.eventos.find(x=>x.id===evId); if(!e) return;
+  const data=(document.getElementById("av-data")||{}).value||"";
+  const hora=(document.getElementById("av-hora")||{}).value||"09:00";
+  if(comAtendimento && !data) return aviso("Escolha a data do atendimento de preparação");
+  let texto=`📞 Cliente avisado da ${e.tipo.toLowerCase()} de ${fmt(dataSP(e.data_hora))} às ${horaSP(e.data_hora)}`;
+  try{
+    if(comAtendimento){
+      texto+=` — atendimento de preparação agendado para ${fmt(data)} às ${hora}.`;
+      const [prep]=await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:e.caso_id, tipo:"Atendimento pré-perícia", status:"agendada",
+          data_hora:`${data}T${hora}:00-03:00`, local:null})})||[];
+      if(prep) D.eventos.push(prep);
+    }else texto+=" — sem atendimento de preparação.";
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:e.caso_id, autor_id:eu.id, origem:"app", publico:false, texto})});
+    const obs=(e.obs?e.obs+" · ":"")+"📞 avisado";
+    await api(`/rest/v1/eventos?id=eq.${evId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({obs})}).catch(()=>{});
+    e.obs=obs;
+    // a tarefa aberta de "avisar" deste caso ganha baixa sozinha
+    for(const t of (D.tarefasPorCaso.get(e.caso_id)||[]).filter(t=>!t.concluida_em)){
+      const and=(D._andsFicha||[]).find(x=>x.id===t.andamento_id);
+      if(and && /📞 avisar/i.test(and.texto||"")){
+        await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify({concluida_em:new Date().toISOString()})}).catch(()=>{});
+        t.concluida_em=new Date().toISOString();
+        D.tarefasPorCaso.set(e.caso_id,(D.tarefasPorCaso.get(e.caso_id)||[]).filter(x=>x.id!==t.id));
+      }
+    }
+    fecharCaixa(); plim();
+    aviso(comAtendimento?`✔ Avisado — atendimento de preparação em ${fmt(data)} às ${hora} 🩺`
+                        :"✔ Avisado — sem atendimento de preparação", false);
+    montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+  }catch(err){ aviso("Não consegui registrar o aviso: "+String(err.message||err).slice(0,120)); }
+}
 async function novoPgto(){
   const casoId=document.getElementById("np-caso").value;
   if(!casoId) return aviso("Este cliente ainda não tem caso — crie um antes");
