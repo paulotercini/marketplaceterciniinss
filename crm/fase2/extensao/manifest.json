@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CRM Tercini — atualizar",
-  "version": "1.5.9",
+  "version": "1.6.0",
   "description": "Traz para o CRM o que mudou no INSS (PAT/GERID), nos recursos (e-Recursos) e no PJe do TRF3, pela sua própria sessão logada.",
   "permissions": ["storage", "tabs", "scripting"],
   "host_permissions": [
