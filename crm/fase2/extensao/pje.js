@@ -72,10 +72,30 @@
     return null;
   }
 
-  async function coletarNoAtual(mapa) {
+  // MODO RÁPIDO (corte): se a última coleta completa deste grau foi há pouco,
+  // não há por que reler o acervo inteiro — a página cujos movimentos são
+  // TODOS anteriores ao corte encerra o nó. Três seguros: margem de 48h no
+  // corte; coleta completa forçada a cada 7 dias; e a parada só vale enquanto
+  // a tabela SE MOSTRAR ordenada do mais novo para o mais velho (cada página
+  // conferida contra a anterior) — se a ordem quebrar, lê tudo como antes.
+  async function coletarNoAtual(mapa, corte) {
+    const chaveMov = p => p.movimento ? p.movimento.data + ' ' + p.movimento.hora : '';
+    let ordenado = true, minAnterior = null;
     lerPaginaAtual(mapa);
     for (let pag = 0; pag < 60; pag++) {          // teto duro alto: o 1º grau tem muita página
       if (paginaMorreu()) return false;
+      if (corte && ordenado && tabela()) {
+        const ks = REG.lerAcervoHtml(tabela().outerHTML).map(chaveMov).filter(Boolean).sort();
+        const maxAtual = ks[ks.length - 1] || '';
+        if (minAnterior !== null && maxAtual && maxAtual > minAnterior) ordenado = false;
+        else if (ks.length) {
+          minAnterior = ks[0];
+          if (maxAtual < corte) {                 // página inteira já vista na rodada anterior
+            faixa(`acervo ${grau}: ${mapa.size} lidos — o resto deste nó é anterior à última coleta`);
+            return true;
+          }
+        }
+      }
       const prox = botaoProxima();
       if (!prox) break;
       await esperarLivre();                       // nunca clicar com requisição em voo
@@ -187,6 +207,20 @@
         return { erro: 'sem acervo' };
       }
 
+      // dois carimbos por grau: o da última rodada INTEIRA (qualquer modo —
+      // é a base do corte, e cada rodada inteira cobre tudo desde a anterior
+      // com 48h de sobra) e o da última rodada COMPLETA de verdade (sem
+      // corte — é ela que vence em 7 dias e força a releitura total).
+      const sufixo = /1º/.test(grau) ? '1g' : '2g';
+      const chaveGrau = 'ultima_pje_' + sufixo, chaveFull = 'ultima_pje_full_' + sufixo;
+      const st = await chrome.storage.local.get([chaveGrau, chaveFull]);
+      const fullEm = st[chaveFull] ? new Date(st[chaveFull]).getTime() : 0;
+      const baseEm = st[chaveGrau] ? new Date(st[chaveGrau]).getTime() : fullEm;
+      const corte = (fullEm && Date.now() - fullEm < 7 * 86400000 && baseEm)
+        ? new Date(baseEm - 48 * 3600000).toISOString().slice(0, 16).replace('T', ' ')
+        : null;
+      if (corte) faixa(`modo rápido: só o que movimentou desde ${corte.slice(8, 10)}/${corte.slice(5, 7)} — a cada 7 dias sai uma rodada completa`);
+
       const mapa = new Map();
       let inteira = true;                          // a conversa aguentou até o fim?
       const nos = nosDaArvore();
@@ -198,11 +232,11 @@
           const antes = (tabela() || {}).innerHTML || '';
           nos[i].click();
           if (!await assentar(antes)) { inteira = false; break; }
-          if (!await coletarNoAtual(mapa)) { inteira = false; break; }
+          if (!await coletarNoAtual(mapa, corte)) { inteira = false; break; }
           await pausa(500);                        // fôlego entre jurisdições
         }
       } else {
-        inteira = await coletarNoAtual(mapa);      // sem árvore: lê o que está posto
+        inteira = await coletarNoAtual(mapa, corte);   // sem árvore: lê o que está posto
       }
 
       if (!mapa.size) {
@@ -221,7 +255,11 @@
       await chrome.storage.local.set({ ultima_pje: OUT.quando });
       if (inteira) {
         sessionStorage.removeItem(RETOMAR);        // rodada completa zera o contador
-        faixaOk(`✔ ${mapa.size} processos do ${grau} entregues ao CRM — confira em 📥 Importar.`);
+        // os carimbos só avançam quando ESTA rodada chegou ao fim — parcial
+        // não pode fazer o modo rápido pular o que ficou sem ler
+        await chrome.storage.local.set({ [chaveGrau]: OUT.quando,
+          ...(corte ? {} : { [chaveFull]: OUT.quando }) });
+        faixaOk(`✔ ${mapa.size} processos do ${grau} entregues ao CRM${corte ? ' (modo rápido)' : ''} — confira em 📥 Importar.`);
         someFaixa();
       } else if (agendarRetomada()) {
         recarregarERetomar(`entreguei os ${mapa.size} processos já lidos; o PJe caiu no meio`);
