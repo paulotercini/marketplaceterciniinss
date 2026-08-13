@@ -82,3 +82,11 @@ Para cerceamento por indeferimento de perícia, acionar `base-cpc-nulidades-cerc
 ## O que NÃO está nesta skill
 
 Prova documental está em `base-cpc-prova-documental-juntada`. Poderes instrutórios do juiz estão em `base-cpc-instrucao-poderes-do-juiz`. A crítica técnica do laudo está em `auditoria-laudo-pericial`.
+
+## Quesitos indeferidos e esclarecimentos negados (Onda 107)
+
+Cenário recorrente na Justiça Federal. O juízo indefere os quesitos prévios afirmando que os quesitos do Juízo suprem a extensão da perícia, o laudo vem enxuto, e os esclarecimentos são indeferidos com julgamento na sequência.
+
+Resposta normativa. O art. 465, § 1º, III, assegura à parte o direito de apresentar quesitos, e o art. 477, § 2º, o de pedir esclarecimentos sobre pontos não abordados. A condução da instrução é do juiz pelo art. 370, jamais do auxiliar, de modo que o perito não define a extensão do contraditório. E o art. 479 impõe ao juiz indicar na sentença os motivos de considerar ou não as conclusões do laudo, o que só faz sentido porque o laudo NÃO vincula nem goza de presunção absoluta.
+
+Regra prática. Indeferido o quesito prévio, PROTESTAR desde logo e reservar a manifestação para depois do laudo. Indeferidos os esclarecimentos, consignar o PREJUÍZO concreto (qual ponto controvertido ficou sem resposta e por que decide o mérito), porque é o prejuízo que converte irregularidade em nulidade. Arsenal completo em `auditoria-laudo-pericial/references/QUESITOS-NEGADOS-E-LAUDO-INSUFICIENTE.md`.
