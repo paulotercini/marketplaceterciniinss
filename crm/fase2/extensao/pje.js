@@ -88,10 +88,34 @@
     return true;
   }
 
-  // os nós da árvore de jurisdições (TRF3, JEF...) — cada um recarrega a tabela
+  // os nós da árvore de jurisdições (TRF3, JEF...) — cada um recarrega a
+  // tabela. Nó com contador 0 na linha (ex.: Caixa de entrada vazia) é
+  // pulado: cada clique poupado é um postback a menos para a conversa cair.
   const nosDaArvore = () =>
     [...document.querySelectorAll('a[id^="formAbaAcervo:trAc:"]')]
-      .filter(a => /:jNd$/.test(a.id));
+      .filter(a => /:jNd$/.test(a.id))
+      .filter(a => {
+        const linha = a.closest('tr,li,div');
+        const m = linha && /(\d+)\s*$/.exec((linha.textContent || '').trim());
+        return !(m && +m[1] === 0);
+      });
+
+  // RETOMADA AUTOMÁTICA. Conversa caída não se conserta sem recarregar a
+  // página — e pedir "dê F5 e clique de novo" ao Paulo era empurrar o
+  // trabalho de volta. Agora o coletor recarrega sozinho e recomeça (o
+  // sinal vive no sessionStorage e sobrevive ao reload), com teto de 3
+  // tentativas para não entrar em roda-viva num dia ruim do PJe.
+  const RETOMAR = 'crm_pje_retomar';
+  function agendarRetomada() {
+    const n = +(sessionStorage.getItem(RETOMAR) || 0);
+    if (n >= 3) return false;
+    sessionStorage.setItem(RETOMAR, String(n + 1));
+    return true;
+  }
+  function recarregarERetomar(msg) {
+    faixa(msg + ' — recarrego a página e recomeço sozinho…');
+    setTimeout(() => location.reload(), 900);
+  }
 
   // ── o PROCESSO ABERTO: a cronologia inteira, não só o último movimento ──
   // A página de "Autos Digitais" carrega a lista aos poucos (rolagem infinita);
@@ -142,6 +166,14 @@
         faixaErr('abra o Painel do Advogado do PJe (ou um processo) e clique de novo');
         return { erro: 'fora do painel' };
       }
+      // conversa já caída ANTES de começar (sobrou de uma tentativa anterior):
+      // recarregar é o único conserto — e agora é automático
+      if (paginaMorreu()) {
+        if (agendarRetomada()) { recarregarERetomar('a conversa do PJe está caída'); return { erro: 'retomando' }; }
+        sessionStorage.removeItem(RETOMAR);
+        faixaErr('o PJe derrubou a conversa 3 vezes seguidas — espere um minuto, dê F5 e clique de novo');
+        return { erro: 'conversa caiu' };
+      }
       // garante a aba Acervo aberta
       if (!tabela()) {
         const aba = [...document.querySelectorAll('td[id*="Acervo"],a[id*="Acervo"],[id$="tabAcervo_lbl"]')]
@@ -172,25 +204,40 @@
       }
 
       if (!mapa.size) {
+        if (!inteira && agendarRetomada()) { recarregarERetomar('o PJe derrubou a conversa antes de ler qualquer processo'); return { erro: 'retomando' }; }
+        if(!inteira) sessionStorage.removeItem(RETOMAR);
         faixaErr(inteira ? 'nenhum processo lido — o acervo estava vazio na tela?'
-          : 'o PJe derrubou a conversa antes de ler qualquer processo — dê F5 e clique de novo');
+          : 'o PJe derrubou a conversa 3 vezes seguidas — espere um minuto, dê F5 e clique de novo');
         return { erro: inteira ? 'vazio' : 'conversa caiu' };
       }
       // MESMO PELA METADE, O LIDO É ENTREGUE: a dedupe do CRM ignora o
-      // repetido, então F5 + novo clique completa o que faltou sem duplicar.
+      // repetido, então a retomada completa o que faltou sem duplicar.
       const OUT = { versao: 1, fonte: 'pje-acervo', grau, host: location.host,
                     quando: new Date().toISOString(), parcial: !inteira,
                     processos: [...mapa.values()] };
       await CRM.enviar('pje', OUT);
       await chrome.storage.local.set({ ultima_pje: OUT.quando });
       if (inteira) {
+        sessionStorage.removeItem(RETOMAR);        // rodada completa zera o contador
         faixaOk(`✔ ${mapa.size} processos do ${grau} entregues ao CRM — confira em 📥 Importar.`);
         someFaixa();
+      } else if (agendarRetomada()) {
+        recarregarERetomar(`entreguei os ${mapa.size} processos já lidos; o PJe caiu no meio`);
       } else {
-        faixaErr(`⚠ o PJe derrubou a conversa no meio — entreguei os ${mapa.size} processos já lidos. `
-          + 'Dê F5 e clique de novo: a segunda passada completa o resto sem duplicar nada.');
+        sessionStorage.removeItem(RETOMAR);
+        faixaErr(`⚠ entreguei os ${mapa.size} processos lidos, mas o PJe caiu 3 vezes seguidas — `
+          + 'espere um minuto, dê F5 e clique de novo para completar (nada duplica).');
       }
       return { ok: mapa.size, parcial: !inteira };
     } catch (e) { faixaErr(e.message); return { erro: String(e.message || e) }; }
   };
+
+  // a outra ponta da retomada: a página recarregou por nossa conta — quando
+  // ela assentar, a coleta recomeça sem ninguém clicar. Só no painel: se o
+  // reload cair noutra tela, o sinal fica guardado para o próximo clique.
+  if (sessionStorage.getItem(RETOMAR)
+      && /\/pje\/Painel\/painel_usuario\/advogado\.seam/.test(location.pathname)) {
+    faixa(`retomando a coleta do PJe (tentativa ${sessionStorage.getItem(RETOMAR)} de 3) — aguarde a página abrir…`);
+    setTimeout(() => { if (window.crmRodar) window.crmRodar(); }, 3500);
+  }
 })();
