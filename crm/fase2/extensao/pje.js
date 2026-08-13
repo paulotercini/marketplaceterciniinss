@@ -26,7 +26,17 @@
   // nenhum clique sai enquanto houver requisição ativa, e a página de erro
   // é detectada para ENTREGAR o que já foi lido em vez de perder a coleta.
   const RE_ERRO_JSF = /conversa[çc][ãa]o foi finalizada|tempo limite excedido|outra requisi[çc][ãa]o/i;
-  const paginaMorreu = () => RE_ERRO_JSF.test((document.body || {}).innerText || '');
+  // só conta se o aviso estiver DE FATO na tela — casca futura pode trazer a
+  // mensagem pronta e escondida no DOM, e texto escondido não é erro
+  function paginaMorreu() {
+    if (!RE_ERRO_JSF.test((document.body || {}).textContent || '')) return false;
+    for (const el of document.querySelectorAll('body *')) {
+      if (el.children.length || !RE_ERRO_JSF.test(el.textContent || '')) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width > 2 && r.height > 2 && getComputedStyle(el).visibility !== 'hidden') return true;
+    }
+    return false;
+  }
   function emRequisicao() {
     for (const el of document.querySelectorAll(
       '[id$=":status.start"], [id$="_SP"], .rich-mpnl-mask-div'))
@@ -37,6 +47,20 @@
   async function esperarLivre(teto = 40) {
     for (let i = 0; i < teto && emRequisicao(); i++) await pausa(300);
   }
+  // A PROVA NEUTRA DE "TERMINOU": o DOM ficar `quieto` ms sem NENHUMA
+  // mutação. A casca nova do painel quase não tem os indicadores _SP/status
+  // do RichFaces antigo — esperar por eles era esperar por nada, o clique
+  // seguinte colidia com a requisição em voo e a conversa caía já na
+  // primeira página. Mutação de DOM não depende da casca.
+  function esperarQuieto(quieto = 900, teto = 12000) {
+    return new Promise(res => {
+      let t = setTimeout(fim, quieto);
+      const obs = new MutationObserver(() => { clearTimeout(t); t = setTimeout(fim, quieto); });
+      const teimosia = setTimeout(fim, teto);
+      function fim() { obs.disconnect(); clearTimeout(t); clearTimeout(teimosia); res(); }
+      obs.observe(document.body, { childList: true, subtree: true, attributes: true });
+    });
+  }
 
   // espera a tabela do acervo TROCAR de conteúdo (ou existir) após um clique
   async function assentar(antes, tentativas = 24) {
@@ -45,7 +69,7 @@
       if (paginaMorreu()) return false;
       const t = tabela();
       if (t && t.innerHTML !== antes && !emRequisicao()) {
-        await pausa(400);              // o RichFaces respira antes do próximo passo
+        await esperarQuieto(700);      // a página sossega antes do próximo passo
         return true;
       }
     }
@@ -99,6 +123,7 @@
       const prox = botaoProxima();
       if (!prox) break;
       await esperarLivre();                       // nunca clicar com requisição em voo
+      await esperarQuieto(600);
       const antes = (tabela() || {}).innerHTML;
       prox.click();
       if (!await assentar(antes)) return false;   // conversa caiu no meio
@@ -211,6 +236,7 @@
           aba.click();
           for (let i = 0; i < 30 && !tabela() && !nosDaArvore().length && !paginaMorreu(); i++)
             await pausa(700);
+          await esperarQuieto(900);
         }
       }
       if (!tabela() && !nosDaArvore().length) {
@@ -241,6 +267,7 @@
           if (paginaMorreu()) { inteira = false; break; }
           faixa(`acervo ${grau}: jurisdição ${i + 1} de ${nos.length}…`);
           await esperarLivre();
+          await esperarQuieto(600);
           const antes = (tabela() || {}).innerHTML || '';
           nos[i].click();
           if (!await assentar(antes)) { inteira = false; break; }
@@ -289,7 +316,20 @@
   // reload cair noutra tela, o sinal fica guardado para o próximo clique.
   if (sessionStorage.getItem(RETOMAR)
       && /\/pje\/Painel\/painel_usuario\/advogado\.seam/.test(location.pathname)) {
-    faixa(`retomando a coleta do PJe (tentativa ${sessionStorage.getItem(RETOMAR)} de 3) — aguarde a página abrir…`);
-    setTimeout(() => { if (window.crmRodar) window.crmRodar(); }, 3500);
+    const tent = +(sessionStorage.getItem(RETOMAR) || 1);
+    faixa(`retomando a coleta do PJe (tentativa ${tent} de 3) — esperando a página ficar pronta…`);
+    (async () => {
+      // pronta = carregada, com a aba/árvore no DOM e o DOM sossegado —
+      // recomeçar aos 3,5s numa casca ainda montando era o que queimava
+      // as três tentativas sem sair da primeira página
+      for (let i = 0; i < 60; i++) {
+        if (document.readyState === 'complete'
+            && (tabela() || nosDaArvore().length || document.getElementById('tabAcervo_shifted'))) break;
+        await pausa(700);
+      }
+      await pausa(1500 + 2500 * tent);            // recuo progressivo entre tentativas
+      await esperarQuieto(1000);
+      if (window.crmRodar) window.crmRodar();
+    })();
   }
 })();
