@@ -19,13 +19,35 @@
 
   const tabela = () => document.getElementById('formAcervo:tbProcessos');
 
+  // A CONVERSA DO PJe CAI QUANDO UM CLIQUE ATROPELA OUTRO. "A conversação
+  // foi finalizada, tempo limite excedido ou outra requisição estava sendo
+  // processada" é o JSF dizendo que recebeu um postback com outro em voo —
+  // no 1º grau, com muitas páginas, era questão de tempo. Daqui em diante:
+  // nenhum clique sai enquanto houver requisição ativa, e a página de erro
+  // é detectada para ENTREGAR o que já foi lido em vez de perder a coleta.
+  const RE_ERRO_JSF = /conversa[çc][ãa]o foi finalizada|tempo limite excedido|outra requisi[çc][ãa]o/i;
+  const paginaMorreu = () => RE_ERRO_JSF.test((document.body || {}).innerText || '');
+  function emRequisicao() {
+    for (const el of document.querySelectorAll(
+      '[id$=":status.start"], [id$="_SP"], .rich-mpnl-mask-div'))
+      if (el.offsetParent !== null && getComputedStyle(el).display !== 'none') return true;
+    return false;
+  }
+  // espera de verdade: requisição nenhuma em voo, e só então libera o clique
+  async function esperarLivre(teto = 40) {
+    for (let i = 0; i < teto && emRequisicao(); i++) await pausa(300);
+  }
+
   // espera a tabela do acervo TROCAR de conteúdo (ou existir) após um clique
   async function assentar(antes, tentativas = 24) {
     for (let i = 0; i < tentativas; i++) {
       await pausa(700);
+      if (paginaMorreu()) return false;
       const t = tabela();
-      if (t && t.innerHTML !== antes && !document.querySelector('.rich-mpnl-mask-div,[id$="_SP"]:not([style*="display: none"])'))
+      if (t && t.innerHTML !== antes && !emRequisicao()) {
+        await pausa(400);              // o RichFaces respira antes do próximo passo
         return true;
+      }
     }
     return !!tabela();
   }
@@ -52,15 +74,18 @@
 
   async function coletarNoAtual(mapa) {
     lerPaginaAtual(mapa);
-    for (let pag = 0; pag < 40; pag++) {          // teto duro: acervo não tem 40 páginas
+    for (let pag = 0; pag < 60; pag++) {          // teto duro alto: o 1º grau tem muita página
+      if (paginaMorreu()) return false;
       const prox = botaoProxima();
       if (!prox) break;
+      await esperarLivre();                       // nunca clicar com requisição em voo
       const antes = (tabela() || {}).innerHTML;
       prox.click();
-      await assentar(antes);
+      if (!await assentar(antes)) return false;   // conversa caiu no meio
       if (!lerPaginaAtual(mapa)) break;           // página repetida = fim de verdade
       faixa(`acervo ${grau}: ${mapa.size} processos lidos…`);
     }
+    return true;
   }
 
   // os nós da árvore de jurisdições (TRF3, JEF...) — cada um recarrega a tabela
@@ -82,16 +107,19 @@
       if (lk) { lk.click(); await pausa(1200); tl = document.getElementById('divTimeLine'); }
     }
     if (!tl) { faixaErr('não achei a Cronologia — abra essa aba na página e clique de novo'); return { erro: 'sem cronologia' }; }
-    let antes = -1, quietos = 0;
+    let antes = -1, quietos = 0, morreuNoMeio = false;
     for (let i = 0; i < 80 && quietos < 3; i++) {
+      if (paginaMorreu()) { morreuNoMeio = true; break; }   // entrega o que carregou
       const n = tl.querySelectorAll('.media').length;
       if (n === antes) quietos++;
       else { quietos = 0; antes = n; faixa(`processo ${cab.numero}: ${n} itens da cronologia…`); }
+      await esperarLivre();
       tl.scrollTop = tl.scrollHeight;
       const fim = tl.querySelector('.media:last-child');
       if (fim) fim.scrollIntoView({ block: 'end' });
       await pausa(900);
     }
+    if (morreuNoMeio) faixa('⚠ o PJe derrubou a conversa durante a rolagem — entrego o que já carregou');
     const itens = REG.lerTimelineHtml(tl.outerHTML);
     if (!itens.length) { faixaErr('a cronologia estava vazia na tela'); return { erro: 'vazio' }; }
     const OUT = { versao: 1, fonte: 'pje-processo', grau, host: location.host,
@@ -126,27 +154,43 @@
       }
 
       const mapa = new Map();
+      let inteira = true;                          // a conversa aguentou até o fim?
       const nos = nosDaArvore();
       if (nos.length) {
         for (let i = 0; i < nos.length; i++) {
+          if (paginaMorreu()) { inteira = false; break; }
           faixa(`acervo ${grau}: jurisdição ${i + 1} de ${nos.length}…`);
+          await esperarLivre();
           const antes = (tabela() || {}).innerHTML || '';
           nos[i].click();
-          await assentar(antes);
-          await coletarNoAtual(mapa);
+          if (!await assentar(antes)) { inteira = false; break; }
+          if (!await coletarNoAtual(mapa)) { inteira = false; break; }
+          await pausa(500);                        // fôlego entre jurisdições
         }
       } else {
-        await coletarNoAtual(mapa);                // sem árvore: lê o que está posto
+        inteira = await coletarNoAtual(mapa);      // sem árvore: lê o que está posto
       }
 
-      if (!mapa.size) { faixaErr('nenhum processo lido — o acervo estava vazio na tela?'); return { erro: 'vazio' }; }
+      if (!mapa.size) {
+        faixaErr(inteira ? 'nenhum processo lido — o acervo estava vazio na tela?'
+          : 'o PJe derrubou a conversa antes de ler qualquer processo — dê F5 e clique de novo');
+        return { erro: inteira ? 'vazio' : 'conversa caiu' };
+      }
+      // MESMO PELA METADE, O LIDO É ENTREGUE: a dedupe do CRM ignora o
+      // repetido, então F5 + novo clique completa o que faltou sem duplicar.
       const OUT = { versao: 1, fonte: 'pje-acervo', grau, host: location.host,
-                    quando: new Date().toISOString(), processos: [...mapa.values()] };
+                    quando: new Date().toISOString(), parcial: !inteira,
+                    processos: [...mapa.values()] };
       await CRM.enviar('pje', OUT);
       await chrome.storage.local.set({ ultima_pje: OUT.quando });
-      faixaOk(`✔ ${mapa.size} processos do ${grau} entregues ao CRM — confira em 📥 Importar.`);
-      someFaixa();
-      return { ok: mapa.size };
+      if (inteira) {
+        faixaOk(`✔ ${mapa.size} processos do ${grau} entregues ao CRM — confira em 📥 Importar.`);
+        someFaixa();
+      } else {
+        faixaErr(`⚠ o PJe derrubou a conversa no meio — entreguei os ${mapa.size} processos já lidos. `
+          + 'Dê F5 e clique de novo: a segunda passada completa o resto sem duplicar nada.');
+      }
+      return { ok: mapa.size, parcial: !inteira };
     } catch (e) { faixaErr(e.message); return { erro: String(e.message || e) }; }
   };
 })();
