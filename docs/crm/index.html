@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.80 · trocar a espécie renomeia o caso mesmo com "Espécie NN" antigo no benefício</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.81 · a espécie define o título (sempre) e o catálogo ganhou os serviços do INSS (CNIS, REV, CTC…)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7364,8 +7364,11 @@ function beneficioGenerico(k, esp){
 }
 function tituloCaso(k){
   const esp = nomeDaEspecie(k.especie);
-  if(esp && beneficioGenerico(k, esp)) return esp;
-  return k.beneficio || esp || "Benefício não definido";
+  // decisão do Paulo (13.08): a ESPÉCIE define o título, sempre — nome
+  // padronizado do catálogo, sem "Acerto de CNIS" e "B41" disputando o
+  // cabeçalho. Sem espécie, vale o benefício escrito.
+  if(esp) return esp;
+  return k.beneficio || "Benefício não definido";
 }
 const TRILHA=["escritorio","inss","conselho","judicial"];
 // trilha completa em botões — inclui 💰 Pagamentos e ✔ Encerrado; clicar move
@@ -8483,10 +8486,20 @@ const ESPECIES = [
   ["B21","Pensão por morte"],["B93","Pensão por morte acidentária"],
   ["B25","Auxílio-reclusão"],["B26","Auxílio-reclusão (espécie 26)"],
   ["B80","Salário-maternidade"],["B87","BPC/LOAS — deficiência"],["B88","BPC/LOAS — idoso"],
+  // serviços do INSS (não são benefício, mas são caso — pedido do Paulo):
+  ["CNIS","Acerto de CNIS"],
+  ["CTC","Certidão de Tempo de Contribuição"],
+  ["REV","Revisão de benefício"],
+  ["REST","Restabelecimento de benefício"],
+  ["COPIA","Cópia de processo administrativo"],
+  ["JA","Justificação Administrativa"],
+  ["IIR","Isenção de Imposto de Renda"],
+  ["GPS","Regularização de contribuições (GPS)"],
+  ["SD","Seguro-defeso (pescador artesanal)"],
 ];
 // o que cada sigla quer dizer, para quem está aprendendo (fica no title)
 const FATOS = {
-  especie:    {rot:"Espécie",     tipo:"especie", dica:"código da espécie no INSS (B31, B41…)"},
+  especie:    {rot:"Espécie",     tipo:"especie", dica:"o que define o TÍTULO do caso: espécie de benefício (B31, B41…) ou serviço do INSS (CNIS, REV, CTC…)"},
   nb:         {rot:"NB",          tipo:"texto",   dica:"número do benefício"},
   processo:   {rot:"Processo (CNJ)", tipo:"texto",
                dica:"número único do processo judicial — é ele que liga o caso ao DataJud (consulta diária) e ao coletor do PJe"},
