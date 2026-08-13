@@ -349,3 +349,9 @@ Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existi
 Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
 
 O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
+
+## Método Fuzzy, verificação obrigatória (Onda 106)
+
+Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
+
+A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
