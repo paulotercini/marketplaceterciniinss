@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.76 · arrumação interna: painéis da ficha em funções, patchCaso e escala de fontes limpa</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.77 · ↗ "abrir todos os links" nas 📣 Novidades (uma aba por processo, PJe ou PAT)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4290,6 +4290,28 @@ function novidades(){
   const euLi = a => (a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
   return (D.novid||[]).filter(a=>!euLi(a));
 }
+// os links das novidades não lidas, um por destino (o mesmo cliente com três
+// avisos abre UMA aba): PJe quando o aviso veio de lá, senão o link do PAT
+function linksDasNovidades(){
+  return [...new Set(novidades().map(a=>{
+    const k = D.casoPorId.get(a.caso_id)||{};
+    const l = (a.origem==="pje" && k.pje_link) ? k.pje_link : k.processo_link;
+    return (l && /^https?:\/\//i.test(l)) ? l : null;
+  }).filter(Boolean))];
+}
+// o costume do Paulo: viu a atualização, abre o processo. Este botão abre
+// TODOS de uma vez — e quando o navegador barrar as abas extras (pop-up),
+// diz exatamente onde clicar para liberar de vez.
+function abrirTodasNovidades(){
+  const links = linksDasNovidades();
+  if(!links.length) return aviso("Nenhuma novidade tem link para abrir");
+  if(links.length>12 && !confirm(`Abrir ${links.length} abas de uma vez?`)) return;
+  let abertas = 0;
+  for(const l of links){ const w = window.open(l, "_blank", "noopener"); if(w) abertas++; }
+  if(abertas < links.length)
+    aviso(`Abri ${abertas} de ${links.length} — o navegador bloqueou o resto. Clique no aviso de pop-up na barra de endereço, permita para o CRM e clique de novo.`);
+  else aviso(`↗ ${links.length} aba(s) abertas`, false);
+}
 
 // as primeiras novidades, para caber no topo de outra lista sem tomar conta
 function blocoNovidadesTopo(){
@@ -4342,10 +4364,14 @@ function renderNovidades(){
     if(!porDia.has(d)) porDia.set(d,[]);
     porDia.get(d).push(a);
   }
+  const nLinks = linksDasNovidades().length;
   document.getElementById("conteudo-meio").innerHTML =
-    `<div class="filtros"><button class="fchip" id="ler-tudo">✔ marcar todas como lidas (${ns.length})</button></div>`
+    `<div class="filtros"><button class="fchip" id="ler-tudo">✔ marcar todas como lidas (${ns.length})</button>${
+      nLinks?`<button class="fchip" id="abrir-tudo" title="abre o processo de cada novidade numa aba — PJe ou PAT, conforme a origem">↗ abrir todos os links (${nLinks})</button>`:""}</div>`
     + [...porDia].map(([d,as])=>`<h3 class="secao">${esc(dataRelativa(d))} (${as.length})</h3>`
       + as.map(linhaNovidade).join("")).join("");
+  const bAbrir=document.getElementById("abrir-tudo");
+  if(bAbrir) bAbrir.onclick=abrirTodasNovidades;
   document.querySelectorAll("[data-ler]").forEach(b=>b.onclick=e=>{
     e.stopPropagation(); marcarLidas([b.dataset.ler]); });
   document.getElementById("ler-tudo").onclick=()=>marcarLidas(ns.map(a=>a.id));
