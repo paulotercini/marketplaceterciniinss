@@ -79,10 +79,24 @@ async function cabecalhos() {
            'Content-Type': 'application/json' };
 }
 
+// "JWT issued at future" (PGRST303): o relógio do autenticador do Supabase
+// corre segundos À FRENTE do relógio do banco, e o crachá recém-renovado
+// nasce "no futuro". Passa sozinho — esperar alguns segundos resolve. Sem
+// esta paciência, uma coleta inteira do PJe era jogada fora por causa disso.
+async function fetchTeimoso(url, opts) {
+  for (let tent = 0; ; tent++) {
+    const r = await fetch(url, opts);
+    if (r.status !== 401 || tent >= 2) return r;
+    const texto = await r.clone().text();
+    if (!/PGRST303|issued at future/i.test(texto)) return r;
+    await new Promise(res => setTimeout(res, 4000 * (tent + 1)));
+  }
+}
+
 // uma coleta = uma linha na fila. O CRM decide o que fazer com ela.
 export async function enviar(fonte, dados) {
   const { url } = await config();
-  const r = await fetch(`${url}/rest/v1/coletas`, {
+  const r = await fetchTeimoso(`${url}/rest/v1/coletas`, {
     method: 'POST',
     headers: { ...await cabecalhos(), Prefer: 'return=minimal' },
     body: JSON.stringify({ fonte, dados }),
@@ -106,10 +120,10 @@ export async function nups() {
   // `arquivados` diz quais recursos o escritório marcou 🗄 no CRM — é o que
   // permite ao coletor pular os que não movimentam mais. Banco antigo sem a
   // coluna não derruba a coleta: repete a consulta sem ela.
-  let r = await fetch(
+  let r = await fetchTeimoso(
     `${url}/rest/v1/casos?select=crps_nups,crps_nup,arquivados&encerrado_em=is.null&limit=5000`,
     { headers: cab });
-  if (!r.ok) r = await fetch(
+  if (!r.ok) r = await fetchTeimoso(
     `${url}/rest/v1/casos?select=crps_nups,crps_nup&encerrado_em=is.null&limit=5000`,
     { headers: cab });
   if (!r.ok) throw new Error(`não consegui ler os recursos do CRM (${r.status})`);
