@@ -89,11 +89,13 @@
   }
 
   // os nós da árvore de jurisdições (TRF3, JEF...) — cada um recarrega a
-  // tabela. Nó com contador 0 na linha (ex.: Caixa de entrada vazia) é
-  // pulado: cada clique poupado é um postback a menos para a conversa cair.
+  // tabela. Ficam de fora: nó com contador 0 na linha (Caixa de entrada
+  // vazia) e o nó "Arquivo" (processo arquivado não movimenta — pedido do
+  // Paulo). Cada clique poupado é um postback a menos para a conversa cair.
   const nosDaArvore = () =>
     [...document.querySelectorAll('a[id^="formAbaAcervo:trAc:"]')]
       .filter(a => /:jNd$/.test(a.id))
+      .filter(a => !/arquivo/i.test(a.textContent || ''))
       .filter(a => {
         const linha = a.closest('tr,li,div');
         const m = linha && /(\d+)\s*$/.exec((linha.textContent || '').trim());
