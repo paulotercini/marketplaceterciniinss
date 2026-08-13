@@ -196,7 +196,20 @@
         faixaErr('o PJe derrubou a conversa 3 vezes seguidas — espere um minuto, dê F5 e clique de novo');
         return { erro: 'conversa caiu' };
       }
-      // garante a aba Acervo aberta
+      // O PAINEL NOVO DO TRF3 (12.08.2026): busca "Pesquise por número de
+      // processo", árvore de jurisdições à esquerda, "Selecione uma
+      // jurisdição ou caixa" — outra tecnologia, outros elementos. O coletor
+      // fala a língua do painel ANTIGO; aqui ele avisa com honestidade em
+      // vez de clicar às cegas (o clique às cegas jogava para Expedientes).
+      const painelNovo = !tabela() && !nosDaArvore().length
+        && (document.querySelector('input[placeholder*="Pesquise por número de processo"]')
+            || /Selecione uma jurisdi[çc][ãa]o ou caixa/i.test((document.body || {}).innerText || ''));
+      if (painelNovo) {
+        faixaErr('o TRF3 ligou um painel NOVO que este coletor ainda não fala — '
+          + 'preciso de um HAR desta tela do Acervo para adaptar (avise o Claude)');
+        return { erro: 'painel novo' };
+      }
+      // garante a aba Acervo aberta (painel antigo)
       if (!tabela()) {
         const aba = [...document.querySelectorAll('td[id*="Acervo"],a[id*="Acervo"],[id$="tabAcervo_lbl"]')]
           .find(el => /acervo/i.test(el.textContent || ''));
