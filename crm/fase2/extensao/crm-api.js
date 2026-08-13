@@ -102,18 +102,28 @@ export async function enviar(fonte, dados) {
 // toda a convicção.
 export async function nups() {
   const { url } = await config();
-  const r = await fetch(
+  const cab = await cabecalhos();
+  // `arquivados` diz quais recursos o escritório marcou 🗄 no CRM — é o que
+  // permite ao coletor pular os que não movimentam mais. Banco antigo sem a
+  // coluna não derruba a coleta: repete a consulta sem ela.
+  let r = await fetch(
+    `${url}/rest/v1/casos?select=crps_nups,crps_nup,arquivados&encerrado_em=is.null&limit=5000`,
+    { headers: cab });
+  if (!r.ok) r = await fetch(
     `${url}/rest/v1/casos?select=crps_nups,crps_nup&encerrado_em=is.null&limit=5000`,
-    { headers: await cabecalhos() });
+    { headers: cab });
   if (!r.ok) throw new Error(`não consegui ler os recursos do CRM (${r.status})`);
   const linhas = await r.json();
-  const fora = new Set();
+  const fora = new Set(), arq = new Set();
   for (const l of linhas)
     for (const n of [...(Array.isArray(l.crps_nups) ? l.crps_nups : []), l.crps_nup]) {
       const d = String(n == null ? '' : n).replace(/\D/g, '');
-      if (d.length >= 15 && d.length <= 25) fora.add(d);
+      if (d.length >= 15 && d.length <= 25) {
+        fora.add(d);
+        if ((l.arquivados || {})['crps:' + d]) arq.add(d);
+      }
     }
-  return { nups: [...fora], fichas: linhas.length };
+  return { nups: [...fora], arquivados: [...arq], fichas: linhas.length };
 }
 
 // o que o popup mostra no "testar conexão": responde de uma vez quem está
