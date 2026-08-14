@@ -1,6 +1,6 @@
 ---
 name: base-revisao-peticao-aprofundada
-description: Skill aprimorada de revisão automática de petições previdenciárias do escritório Paulo Roberto Tercini Filho. Versionada no plugin como evolução da skill revisao-peticao do escritório, integra protocolo anti-alucinação de 5 níveis (existência, vigência, redação literal, modulação, número de processo) cruzado com a skill base-legislacao-fontes-primarias, diretrizes vinculantes do Manual de Admissibilidade Recursal da TNU 10ª edição via base-tnu-admissibilidade-manual, taxonomia corrigida das Portarias DIRBEN/INSS 990-996/2022, verificações automáticas obrigatórias (competência territorial e material, política de tutela de urgência, Tema 1124/STJ, prazo decadencial do art. 103 Lei 8.213, documentação IN 128/2022, BPC menor 16 anos IFBrM, tempestividade recursal, dialeticidade), 5 camadas de auditoria (formal, normativa, fática, argumentativa, integridade probatória), catálogo expandido de 22 anti-patterns com exemplos pró e contra, checklist por rito (JEF, ordinário federal, CRPS, MS, TNU, réplica, memorial, recurso administrativo, cumprimento de sentença) e severidade quádrupla (BLOQUEANTE, CRÍTICO, IMPORTANTE, MENOR). Use SEMPRE imediatamente após qualquer petição, recurso, contestação, embargos, agravo, MS, contrarrazões, memorial, réplica, manifestação ou peça processual gerada. Use SEMPRE que mencionar revisar petição, auditar petição, conferir peça, checar petição, segunda leitura, verificação de petição, validação de peça, revisão antialucinação, revisão profunda, auditoria de peça, revisão Tercini, revisão escritório. Aciona automaticamente todas as skills relevantes do plugin como hub de integração. Postura pró-segurado exclusiva. Honestidade radical sobre achados. Cruza com peticao-previdenciaria, base-peticao-previdenciaria-padrao-visual, base-legislacao-fontes-primarias, base-tnu-admissibilidade-manual, pedilef-cotejo-analitico-tnu, precedentes-previdenciarios, tema-1124-instrucao-administrativa, decadencia-revisao-previdenciaria, ms-competencia-autoridade-coatora, documentos-comprobatorios-in128, base-portarias-dpmf-inss-hub, base-efeito-translativo-tema-1124-defesa, reafirmacao-der, analise-documental-incapacidade, especificacao-provas, base-puil-pedilef-vedacao-materia-processual. NÃO use para auditoria de PPP (use auditoria-ppp) nem laudo pericial (use auditoria-laudo-pericial) nem sentença/acórdão (use auditoria-sentenca-acordao).
+description: Skill aprimorada de revisão automática de petições previdenciárias do escritório Paulo Roberto Tercini Filho. Versionada no plugin como evolução da skill revisao-peticao do escritório, integra protocolo anti-alucinação de 5 níveis (existência, vigência, redação literal, modulação, número de processo) cruzado com a skill base-legislacao-fontes-primarias, diretrizes vinculantes do Manual de Admissibilidade Recursal da TNU 10ª edição via base-tnu-admissibilidade-manual, taxonomia corrigida das Portarias DIRBEN/INSS 990-996/2022, verificações automáticas obrigatórias (competência territorial e material, política de tutela de urgência, Tema 1124/STJ, prazo decadencial do art. 103 Lei 8.213, documentação IN 128/2022, BPC menor 16 anos IFBrM, tempestividade recursal, dialeticidade), 5 camadas de auditoria (formal, normativa, fática, argumentativa, integridade probatória), catálogo expandido de 22 anti-patterns com exemplos pró e contra, checklist por rito (JEF, ordinário federal, CRPS, MS, TNU, réplica, memorial, recurso administrativo, cumprimento de sentença) e severidade quádrupla (BLOQUEANTE, CRÍTICO, IMPORTANTE, MENOR). Use SEMPRE imediatamente após qualquer petição, recurso, contestação, embargos, agravo, MS, contrarrazões, memorial, réplica, manifestação ou peça processual gerada. Use SEMPRE que mencionar revisar petição, auditar petição, conferir peça, checar petição, segunda leitura, verificação de petição, validação de peça, revisão antialucinação, revisão profunda, auditoria de peça, revisão Tercini, revisão escritório. Dispara os JURISTAS CONFERENTES (Onda 110), dez agentes de conferência doutrinária por bloco temático, de um a três por revisão conforme os temas da peça, acionados por jurista conferente, conferência doutrinária, corrente majoritária, corrente ampliativa, doutrina do tema, parecer doutrinário. Eles discutem correntes e nunca atribuem posição a autor nominado. Aciona automaticamente todas as skills relevantes do plugin como hub de integração. Postura pró-segurado exclusiva. Honestidade radical sobre achados. Cruza com peticao-previdenciaria, base-peticao-previdenciaria-padrao-visual, base-legislacao-fontes-primarias, base-tnu-admissibilidade-manual, pedilef-cotejo-analitico-tnu, precedentes-previdenciarios, tema-1124-instrucao-administrativa, decadencia-revisao-previdenciaria, ms-competencia-autoridade-coatora, documentos-comprobatorios-in128, base-portarias-dpmf-inss-hub, base-efeito-translativo-tema-1124-defesa, reafirmacao-der, analise-documental-incapacidade, especificacao-provas, base-puil-pedilef-vedacao-materia-processual. NÃO use para auditoria de PPP (use auditoria-ppp) nem laudo pericial (use auditoria-laudo-pericial) nem sentença/acórdão (use auditoria-sentenca-acordao).
 ---
 
 # Skill Aprimorada de Revisão de Petições Previdenciárias
@@ -527,3 +527,40 @@ Histórico de evolução.
 Esta skill depende da disponibilidade do workspace `INSS\base-legislacao\` para a verificação literal de artigos. Em sessões sem o workspace, a skill ainda funciona mas marca a verificação literal como NÃO REALIZADA, recomendando WebFetch direto das URLs oficiais do Planalto registradas no índice da skill `base-legislacao-fontes-primarias`.
 
 Em casos de divergência entre a interpretação desta skill e a skill `revisao-peticao` do escritório, esta versão APROFUNDADA prevalece, pois incorpora as Ondas 30, 31 e 32 do plugin.
+
+## Juristas Conferentes, camada doutrinária obrigatória (Onda 110)
+
+Dez agentes de conferência doutrinária, um por bloco temático. Toda revisão de peça DISPARA o jurista do tema, que confere se a corrente adotada é a mais favorável ao segurado, aponta a corrente melhor sustentada que ficou de fora e antecipa a leitura restritiva que o INSS oporá.
+
+### Regra de identidade dos Juristas Conferentes
+
+Eles discutem CORRENTES, nunca pessoas. É PROIBIDO a qualquer jurista atribuir posição, frase ou entendimento a autor, professor ou magistrado NOMINADO. A saída correta é "a corrente ampliativa sustenta", "a leitura restritiva do INSS afirma", "a doutrina majoritária entende". Doutrina nominada só entra na peça pela sessão principal, com referência bibliográfica verificável, ou não entra.
+
+Razão da regra. Atribuir a autor vivo uma tese que ele não escreveu é o mesmo vício que o protocolo anti-alucinação combate na jurisprudência, e o red-team adversário derruba essa citação com facilidade.
+
+### Mapa de disparo por tema
+
+| Tema da peça | Agente |
+|---|---|
+| Agente nocivo, PPP, LTCAT, EPI, conversão, aposentadoria especial | `jurista-tempo-especial` |
+| Segurado especial, rural, híbrida, prova material, pescador | `jurista-rural` |
+| B31, B91, B92, B94, perícia, nexo, reabilitação, limbo | `jurista-incapacidade` |
+| BPC, LOAS, miserabilidade, LC 142, IF-BrA, IFBrM, Fuzzy, DID | `jurista-bpc-pcd` |
+| Pensão por morte, auxílio-reclusão, união estável, maternidade, salário-família | `jurista-dependentes` |
+| RMI, EC 103, transição, revisões, teto, concomitantes, acumulação, reafirmação | `jurista-calculo-revisoes` |
+| JEF, rito ordinário, tutela, prova, nulidades, recursos, TNU, rescisória | `jurista-processo-judicial` |
+| CRPS, requerimento, exigência, IN 128, Portarias, erro administrativo, MS por mora | `jurista-processo-administrativo` |
+| CNIS, contribuinte individual, indenização, carência, contagem recíproca, RT | `jurista-custeio-filiacao` |
+| Cumprimento, RPV, precatório, juros, honorários, tributação, devolução | `jurista-execucao` |
+
+### Regras de disparo
+
+Primeiro, disparar de UM a TRÊS juristas por revisão, escolhidos pelos temas efetivamente presentes na peça. Peça previdenciária quase sempre tem um tema de mérito e um de processo, e frequentemente um de custeio. Disparar os dez dilui e gasta contexto sem retorno.
+
+Segundo, quando houver mais de um, disparar EM PARALELO na mesma mensagem, porque as conferências são independentes.
+
+Terceiro, o parecer de cada jurista entra na revisão como camada DOUTRINÁRIA, ao lado das camadas formal, normativa, fática, argumentativa e de integridade probatória. Achado de jurista com severidade equivalente a CRÍTICO ou BLOQUEANTE sobe para o relatório principal.
+
+Quarto, citação suspeita levantada por qualquer jurista NÃO se confirma nele. Despachar ao `verificador-precedentes`, que é quem confere em fonte oficial.
+
+Quinto, em peça de ALTO RISCO os Juristas Conferentes NÃO substituem o `black-team`. Rodam antes, e o parecer deles alimenta a banca.
