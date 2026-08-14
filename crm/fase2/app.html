@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.84 · 💰 corrente de conferência dos pagamentos e as parcelas do To Do importadas</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.85 · agendou atendimento → a lista de documentos do benefício abre sozinha (📋 para trazer)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4850,7 +4850,14 @@ async function criarCliente(){
       60, `Atendimento — ${casoTitulo}${cli.telefone?" · "+cli.telefone:""}`, "Escritório"), "_blank");
   }
   await carregar(); montarSidebar();
-  aviso("Cliente cadastrado ✔"); visao="fase:"+caso.fase; render(); abrirFicha(cli.id);
+  aviso("Cliente cadastrado ✔"); visao="fase:"+caso.fase; render();
+  await abrirFicha(cli.id);
+  if(dataAg){
+    // atendimento marcado no cadastro: a ficha abre direto na lista de
+    // documentos do benefício — marcar, imprimir, virar checklist
+    casoSel=caso.id; abaAtiva=8; repintarFicha();
+    aviso("📋 Marque os documentos que o cliente deve trazer no atendimento — imprima a lista; cada item vira checklist do caso", false);
+  }
 }
 
 // ── visão 🤖 Claude (sugestões com aprovação humana) ─────────────────────
@@ -7182,6 +7189,8 @@ function painelCadastroFicha(c, ks, creds, vincs){
         <select id="ag-tipo"><option value="002">002 — cliente antigo</option><option value="001">001 — cliente novo</option></select>
         <input type="date" id="ag-data"><input type="time" id="ag-hora" value="09:00">
         <button onclick="agendarAtendimento('${c.id}')">Abrir no Google Agenda</button>
+        <button class="btn-mini" onclick="abaAtiva=8;repintarFicha()"
+          title="a lista do benefício, sugerida pelo sistema — marcar, imprimir e cada item vira checklist do caso">📋 documentos para trazer</button>
       </div>
       <p style="margin-top:8px;font-size:12px;color:var(--cinza)">Toda visualização de senha é registrada (quem e quando).</p>
     </details>`;
@@ -11274,6 +11283,11 @@ function agendarAtendimento(cliId){
   const cod=document.getElementById("ag-tipo").value;
   window.open(gcal(`${cod} - ${c.nome}`, data, document.getElementById("ag-hora").value||"09:00",
     60, `Atendimento${c.telefone?" · "+c.telefone:""}`, "Escritório"), "_blank");
+  // agendou -> a lista do que o cliente deve TRAZER vem junto (pedido do
+  // Paulo): a aba 🖨 abre no benefício do caso, com a sugestão do sistema
+  // pronta para marcar, imprimir e virar checklist
+  abaAtiva=8; repintarFicha();
+  aviso("📋 Marque os documentos que o cliente deve trazer — imprima a lista; cada item vira checklist do caso", false);
 }
 async function novoModelo(){
   const t=document.getElementById("nm-titulo").value.trim(),
