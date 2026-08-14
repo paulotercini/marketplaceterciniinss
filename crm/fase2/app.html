@@ -7,7 +7,7 @@
 <style>
   :root{
     /* proposta visual aprovada: neutros CINZA, um azul só para o "sistema" */
-    --azul:#2B5FC7; --azul-escuro:#234E9E; --fundo:#E8EAEE; --lateral:#23262E;
+    --azul:#2B5FC7; --azul-escuro:#234E9E; --fundo:#EDEFF2; --lateral:#23262E;
     --texto:#25272B; --cinza:#5B6069; --borda:#D9DCE1; --branco:#fff;
     --verde:#1E6F50; --laranja:#B4530A; --vermelho:#B3261E; --roxo:#5C2E91;
     /* a placa: cinza de leitura. É o fundo dos quadros que se CONSULTAM
@@ -16,6 +16,13 @@
        (#F5F6F8): dois cinzas quase iguais leem-se como engano, não como
        hierarquia. */
     --placa:#EBEEF3;
+    /* reforma visual padrão To Do (espec. aprovada): tokens novos */
+    --azul-claro:#7FA6F0; --azul-fundo:#F3F7FE;
+    --cinza-claro:#8A8F98; --borda-suave:#E7E9EE;
+    --verde-f:#E4F1EA; --laranja-f:#FCEEDF; --vermelho-f:#FBE9E8;
+    --lateral-hover:rgba(255,255,255,.07); --lateral-ativo:rgba(255,255,255,.13);
+    --sombra:0 1px 2px rgba(20,24,33,.06); --sombra-hover:0 2px 8px rgba(20,24,33,.12);
+    --raio:6px;
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif}
   body{background:var(--fundo);color:var(--texto);height:100vh;overflow:hidden;font-size:14px}
@@ -55,7 +62,7 @@
   .cfg-cx button{padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;
     font-weight:600;cursor:pointer}
 
-  .app{display:none;grid-template-columns:300px 1fr;height:100vh;transition:grid-template-columns .15s}
+  .app{display:none;grid-template-columns:300px 1fr;height:100vh;transition:grid-template-columns .18s ease}
   /* TRANSIÇÕES DE PÁGINA: trocar de lista, abrir a ficha e abrir um modal
      surgem num fade curtinho (120–160ms) em vez do corte seco do innerHTML.
      Uma animação só, reusada — e desligada para quem pediu menos movimento. */
@@ -72,8 +79,11 @@
      recolhia o menu por conta própria, e o botão ☰ ficava sem efeito com a
      ficha aberta — parecia quebrado. Agora a ficha só muda o PADRÃO; o botão
      continua sendo a palavra final. */
-  .app.detalhe-aberto{grid-template-columns:300px minmax(300px,25%) minmax(520px,1fr)}
-  .app.detalhe-aberto.mini-lateral{grid-template-columns:64px minmax(330px,30%) minmax(540px,1fr)}
+  /* A FICHA é a área de trabalho e recebe 1fr; a LISTA congela em 380px e
+     nunca mais é esmagada (era minmax(300px,25%), que espremia o texto
+     palavra por palavra com a ficha aberta). */
+  .app.detalhe-aberto{grid-template-columns:300px 380px minmax(560px,1fr)}
+  .app.detalhe-aberto.mini-lateral{grid-template-columns:64px 380px minmax(560px,1fr)}
 
   .sidebar{background:var(--lateral);border-right:1px solid var(--lateral);overflow-y:auto;overflow-x:hidden;padding:12px 0;color:#E8EAED}
   .sync-todo{padding:2px 16px 8px;font-size:12px;color:#9AA0B0;white-space:nowrap}
@@ -1086,10 +1096,14 @@
   .doc-edit{width:100%;min-height:140px;margin-top:8px;padding:8px;border:1px solid var(--borda);border-radius:8px;font:13px/1.5 monospace}
   .aviso{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#323130;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
   .aviso.on{opacity:1}
-  @media (max-width:980px){
-    .app.detalhe-aberto{grid-template-columns:0 0 1fr}
-    .app.detalhe-aberto .sidebar,.app.detalhe-aberto .meio{display:none}
-    .app{grid-template-columns:250px 1fr}
+  /* Tela estreita com a ficha aberta: a lista sai de cena e a ficha ocupa
+     o resto — o menu fica (retrátil pelo ☰). Substitui o antigo corte em
+     980px que sumia com o menu inteiro. Entra ANTES do bloco do celular
+     (760px) no cascade e não mexe no comportamento dele. */
+  @media (max-width:1180px){
+    .app.detalhe-aberto .meio{display:none}
+    .app.detalhe-aberto{grid-template-columns:300px 1fr}
+    .app.detalhe-aberto.mini-lateral{grid-template-columns:64px 1fr}
   }
 
   /* ══ CELULAR ══════════════════════════════════════════════════════════
