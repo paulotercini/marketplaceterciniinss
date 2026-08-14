@@ -217,7 +217,13 @@ def normalizar_tarefa(lista_nome, t):
         "atualizada_em": (t.get("lastModifiedDateTime") or "")[:10] or None,
         "preambulo": preambulo,
         "checklist": [
-            {"texto": c.get("displayName", ""), "feito": bool(c.get("isChecked"))}
+            {"id": c.get("id"),
+             "texto": c.get("displayName", ""), "feito": bool(c.get("isChecked")),
+             # quando o item foi marcado (o Graph manda DateTimeOffset) — é o
+             # pago_em das parcelas da lista 💵 Pagamentos
+             "feito_em": ((c.get("checkedDateTime") or {}).get("dateTime")
+                          if isinstance(c.get("checkedDateTime"), dict)
+                          else c.get("checkedDateTime") or "")[:10] or None}
             for c in checklist
         ],
         "andamentos": andamentos,

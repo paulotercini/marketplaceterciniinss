@@ -235,6 +235,15 @@ alter table casos add column if not exists orgao_judicial text;
 alter table casos add column if not exists pje_link text;
 
 
+-- ── 12. 💵 Pagamentos vindos do To Do (checklist = parcelas) ─────────────
+-- Cada item do checklist da lista 💵 Pagamentos vira uma linha em
+-- `pagamentos`; o id do item no Graph é a trava de dedupe (o upsert
+-- atualiza a MESMA linha quando o item é concluído no To Do).
+alter table pagamentos add column if not exists todo_item_id text;
+create unique index if not exists pagamentos_todo_item
+  on pagamentos (todo_item_id) where todo_item_id is not null;
+
+
 -- ── conferência ───────────────────────────────────────────────────────────
 -- Lista as colunas que o CRM e a importação usam, mais a tabela `coletas` e
 -- a restrição de fase. Faltando alguma linha, o SQL não rodou inteiro — e é
@@ -246,6 +255,7 @@ select table_name as tabela, column_name as coluna, data_type as tipo
           'encerrado_por','arquivados','lembrete_meses','classe_judicial','ajuizado_em',
           'orgao_judicial','pje_link'))
     or (table_name = 'andamentos' and column_name in ('responde_a','origem_id'))
+    or (table_name = 'pagamentos' and column_name = 'todo_item_id')
     or (table_name = 'aposentadorias' and column_name = 'lembrar_em')
 union all
 select 'coletas', 'tabela criada', ''

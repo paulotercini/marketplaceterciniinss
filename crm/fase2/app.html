@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.83 · 💬 SMBot ao lado do nome: abre o painel com o telefone já copiado para a busca</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.84 · 💰 corrente de conferência dos pagamentos e as parcelas do To Do importadas</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7076,6 +7076,7 @@ function pintarFicha(){
     await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({status:"recebido",pago_em:p.pago_em,conferencias:p.conferencias})});
     aviso("Recebido 💵 — você consta como quem recebeu");
+    await correnteConferencia(p.caso_id, `Pagamento de ${moeda(p.valor)} recebido`);
     abrirFicha(clienteAberto);
   });
   document.querySelectorAll("[data-confere]").forEach(b=>b.onclick=async()=>{
@@ -7084,6 +7085,7 @@ function pintarFicha(){
     await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({conferencias:p.conferencias})});
     aviso("Conferência registrada ✔");
+    await elosDepoisDeConferir(p.caso_id, `Pagamento de ${moeda(p.valor)} conferido`);
     abrirFicha(clienteAberto);
   });
   ligarChecklistFicha();
@@ -10859,6 +10861,53 @@ async function salvarAvisado(evId, comAtendimento){
     montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
   }catch(err){ aviso("Não consegui registrar o aviso: "+String(err.message||err).slice(0,120)); }
 }
+// ── 💰 A CORRENTE DE CONFERÊNCIA (regra do Paulo, 13.08) ─────────────────
+// André/Ingrid sinalizam um pagamento -> nasce a tarefa de HOJE para Marcos
+// E Amanda conferirem (o primeiro que conferir dá baixa nas duas); Marcos ou
+// Amanda conferem -> nasce a tarefa de conferência final para o Paulo; o
+// Paulo confere e a corrente fecha. Papéis por NOME (não por inicial).
+const colPorNome = rx => (D.colaboradores||[]).filter(c=>c.ativo!==false).find(c=>rx.test(dsa(c.nome)));
+function proximoElo(quemId){
+  const nome = dsa((D.colPorId.get(quemId)||{}).nome||"");
+  if(/andre|ingrid/.test(nome))
+    return {alvos:[colPorNome(/marcos/), colPorNome(/amanda/)].filter(Boolean).filter(c=>c.id!==quemId),
+            rotulo:"conferir o pagamento"};
+  if(/marcos|amanda/.test(nome))
+    return {alvos:[colPorNome(/paulo/)].filter(Boolean).filter(c=>c.id!==quemId),
+            rotulo:"conferência final do pagamento"};
+  return {alvos:[], rotulo:null};              // o Paulo fecha a corrente
+}
+async function correnteConferencia(casoId, resumo){
+  const {alvos, rotulo} = proximoElo(eu.id);
+  if(!alvos.length) return;
+  try{
+    const [novo]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, origem:"app", publico:false,
+        texto:`💰 ${resumo} — ${rotulo} (lançado por ${((D.colPorId.get(eu.id)||{}).nome||"?").split(" ")[0]}).`})})||[];
+    if(!novo) return;
+    for(const alvo of alvos){
+      const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({andamento_id:novo.id, caso_id:casoId, colaborador_id:alvo.id,
+                             atribuido_por:eu.id, lembrar_em:hoje()})});
+      tarefaNaMemoria(tf);
+    }
+    aviso(`💰 Corrente: ${alvos.map(a=>a.nome.split(" ")[0]).join(" e ")} já ${alvos.length>1?"têm":"tem"} a tarefa de ${rotulo}`, false);
+  }catch(e){ console.warn("corrente de conferência:", e.message); }
+}
+// o "✔ conferi": baixa TODAS as tarefas 💰 abertas do caso (a dupla de
+// conferentes conta como uma etapa só) e chama o próximo elo
+async function elosDepoisDeConferir(casoId, resumo){
+  for(const t of [...(D.tarefasPorCaso.get(casoId)||[])].filter(t=>!t.concluida_em)){
+    const and=(D._andsFicha||[]).find(x=>x.id===t.andamento_id);
+    if(and && /^💰 /.test(and.texto||"")){
+      await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({concluida_em:new Date().toISOString()})}).catch(()=>{});
+      t.concluida_em=new Date().toISOString();
+      D.tarefasPorCaso.set(casoId,(D.tarefasPorCaso.get(casoId)||[]).filter(x=>x.id!==t.id));
+    }
+  }
+  await correnteConferencia(casoId, resumo);
+}
 async function novoPgto(){
   const casoId=document.getElementById("np-caso").value;
   if(!casoId) return aviso("Este cliente ainda não tem caso — crie um antes");
@@ -10875,6 +10924,8 @@ async function novoPgto(){
     body:JSON.stringify(linha)});
   D.pagamentos.push(novo);
   aviso(recebido?"Recebimento registrado 💵 — você consta como quem recebeu":"Lançado a receber 💰");
+  if(recebido) await correnteConferencia(casoId,
+    `Pagamento de ${moeda(+valor)}${desc?` (${desc})`:""} em ${fmt(data)}`);
   abrirFicha(clienteAberto);
 }
 function lembreteDoEvento(evId){
