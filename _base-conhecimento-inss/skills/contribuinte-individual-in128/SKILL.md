@@ -243,3 +243,9 @@ Ao analisar caso envolvendo contribuinte individual, verificar obrigatoriamente
 9. **Barreira do óbito** — Se o segurado faleceu, verificar art. 106 e exceções do §2º
 10. **Conformidade Tema 1124/STJ** — Documentos comprobatórios apresentados na via administrativa?
 11. **Aposentadoria especial do CI** — Se exposição a agentes nocivos, verificar Tema 1291/STJ (direito estendido ao CI não cooperado)
+
+## Aposentadoria especial do contribuinte individual (Onda 108)
+
+Tema 1291/STJ. O contribuinte individual não cooperado tem direito ao reconhecimento de tempo especial exercido após a Lei 9.032/95, desde que comprove a exposição, e a exigência de formulário emitido por EMPRESA não se aplica a ele. RE pendente, não afirmar trânsito.
+
+Reforços conferidos no TRF3. Ilegalidade do art. 64 do Decreto 3.048/99 (ApCiv 5004234-43.2017.4.03.6104, 7ª Turma, j. 27/02/2026). Irrelevância do custeio (ApCiv 5001197-62.2018.4.03.6107, 7ª Turma, j. 05/12/2025, com apoio no ARE 664.335), que também registra ser indevido o sobrestamento pelo Tema 1291 em segunda instância. Validade do PPP e do laudo emitidos no próprio consultório. Fichas em `base-especial-agentes-biologicos/references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`.

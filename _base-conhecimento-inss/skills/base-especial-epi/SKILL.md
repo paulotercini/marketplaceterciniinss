@@ -76,3 +76,11 @@ Ao confrontar EPI com agente específico, acione a skill desse agente, como `bas
 ## O que NÃO está nesta skill
 
 Não há enquadramento direto de ruído, calor, vibração, químicos ou biológicos. Cada um tem skill temática própria. Não há orientação sobre perícia por similaridade. Esse tópico está em `defesa-probatoria-especial`.
+
+## Correção sobre o alcance do Tema 1090/STJ (Onda 108)
+
+A tese literal do Tema 1090 NÃO enumera hipóteses excepcionais. Ela diz que a informação de EPI eficaz no PPP descaracteriza o tempo especial EM PRINCÍPIO, atribui ao autor o ônus de comprovar a ineficácia e determina que a DÚVIDA sobre a real eficácia se resolva em favor do autor.
+
+Quem enumera as hipóteses é o IRDR 15 do TRF4, acórdão de origem. Em peça, não atribuir ao Tema 1090 rol que ele não tem, porque a contestação do INSS localiza a imprecisão e a usa para desqualificar o conjunto.
+
+Via segura para sustentar a ineficácia. Primeiro, o item de DÚVIDA do próprio Tema 1090, que é o mais forte porque a eficácia real em campo quase nunca se demonstra. Segundo, o IRDR 15 do TRF4 pelas hipóteses. Terceiro, o Tema 383 da TNU com os Pareceres 2/2025 e 3/2025 da Fundacentro para a limitação técnica dos equipamentos. Quarto, o Tema 213 da TNU para o ônus. Quinto, o Tema 555 do STF como base constitucional da exceção.

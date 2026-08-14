@@ -64,7 +64,7 @@ O Tema 211 TNU firmou que a habitualidade não exige continuidade ininterrupta. 
 
 ## 5. EPI em biológicos
 
-O Tema 1090 STJ incluiu agentes biológicos entre as hipóteses excepcionais em que o EPI não neutraliza. Os fundamentos são a variabilidade de microrganismos, a falibilidade concreta dos equipamentos, a contaminação por vias múltiplas, incluindo cutânea, conjuntival e respiratória por aerossol, e o fracasso recorrente de fiscalização. A declaração de eficácia no campo 15.7 do PPP é juridicamente irrelevante em agentes biológicos.
+CORREÇÃO DE AUDITORIA (Onda 108). O Tema 1090/STJ NÃO lista agentes biológicos na tese literal (a tese trata de ônus do autor e de dúvida resolvida pró-autor). A âncora direta da ineficácia do EPI em biológicos é o IRDR 15 do TRF4, o Tema 383 da TNU com os Pareceres 2/2025 e 3/2025 da Fundacentro, e o Tema 213 da TNU, somados aos itens de ônus e dúvida do próprio Tema 1090. Feita a ressalva, o IRDR 15 do TRF4 reconheceu os agentes biológicos entre as hipóteses em que o EPI não neutraliza. Os fundamentos são a variabilidade de microrganismos, a falibilidade concreta dos equipamentos, a contaminação por vias múltiplas, incluindo cutânea, conjuntival e respiratória por aerossol, e o fracasso recorrente de fiscalização. A declaração de eficácia no campo 15.7 do PPP é juridicamente irrelevante em agentes biológicos.
 
 ## 6. Roteiro operacional
 
