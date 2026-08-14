@@ -142,3 +142,7 @@ Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
   `base-revisao-peticao-aprofundada`, `base-portarias-dpmf-inss-hub`,
   `base-precedentes-catalogo-vinculantes`, `base-cnis-acerto-indicadores` e a `base-*`/
   `ponte-*` do beneficio, alem do `CLAUDE.md` do escritorio.
+
+## Decisor simulado antes do protocolo (Onda 114)
+
+Concluída a curadoria dos documentos e a petição administrativa, submeter ao agente `servidor-chefe-inss` antes de anexar no Meu INSS. Ele antecipa a EXIGÊNCIA que o INSS emitiria e a pendência de CNIS que travaria a conclusão, o que permite corrigir antes e evitar o ciclo de exigência com perda de semanas.
