@@ -530,7 +530,7 @@ Em casos de divergência entre a interpretação desta skill e a skill `revisao-
 
 ## Juristas Conferentes, camada doutrinária obrigatória (Onda 110)
 
-Dezesseis agentes de conferência doutrinária, quinze temáticos e um transversal. Toda revisão de peça DISPARA o jurista do tema, que confere se a corrente adotada é a mais favorável ao segurado, aponta a corrente melhor sustentada que ficou de fora e antecipa a leitura restritiva que o INSS oporá.
+Dezoito agentes de conferência doutrinária, dezessete temáticos e um transversal. Toda revisão de peça DISPARA o jurista do tema, que confere se a corrente adotada é a mais favorável ao segurado, aponta a corrente melhor sustentada que ficou de fora e antecipa a leitura restritiva que o INSS oporá.
 
 ### Regra de identidade dos Juristas Conferentes
 
@@ -544,8 +544,10 @@ Razão da regra. Atribuir a autor vivo uma tese que ele não escreveu é o mesmo
 |---|---|
 | Agente nocivo, PPP, LTCAT, EPI, conversão, aposentadoria especial | `jurista-tempo-especial` |
 | Segurado especial, rural, híbrida, prova material, pescador | `jurista-rural` |
-| B31, B91, B92, B94, perícia, nexo, reabilitação, limbo | `jurista-incapacidade` |
-| BPC, LOAS, miserabilidade, LC 142, IF-BrA, IFBrM, Fuzzy, DID | `jurista-bpc-pcd` |
+| B31, B91, B92, perícia, nexo, reabilitação, limbo (sem B94) | `jurista-incapacidade` |
+| B94, sequela, consolidação, redução da capacidade, Anexo III, integração ao SB | `jurista-auxilio-acidente` |
+| LC 142, IF-BrA, Fuzzy, grau, DID retroativa, conversão por grau | `jurista-aposentadoria-pcd` |
+| BPC, LOAS, miserabilidade, grupo familiar, IFBrM, CadÚnico, irrepetibilidade | `jurista-bpc-loas` |
 | Pensão por morte, auxílio-reclusão, união estável, maternidade, salário-família | `jurista-dependentes` |
 | RMI, EC 103, transição, revisões, teto, concomitantes, acumulação, reafirmação | `jurista-calculo-revisoes` |
 | JEF, rito ordinário, tutela, prova, nulidades, recursos, TNU, rescisória | `jurista-processo-judicial` |
@@ -560,6 +562,10 @@ Razão da regra. Atribuir a autor vivo uma tese que ele não escreveu é o mesmo
 | TRANSVERSAL. Gênero, hipossuficiência, barreiras, vulnerabilidade | `jurista-vulnerabilidade-genero` |
 
 ### Regras de disparo
+
+Fronteiras que NÃO se cruzam, sob pena de conferência errada. B31, B91 e B92 são do `jurista-incapacidade`, que avalia INCAPACIDADE. O B94 é do `jurista-auxilio-acidente`, que avalia REDUÇÃO da capacidade e benefício de natureza indenizatória. A LC 142 é do `jurista-aposentadoria-pcd`, benefício CONTRIBUTIVO que avalia FUNCIONALIDADE pelo IF-BrA. O BPC é do `jurista-bpc-loas`, benefício ASSISTENCIAL avaliado pelo IFBrM e por vulnerabilidade econômica. Quatro regimes de reconhecimento distintos, quatro agentes.
+
+Caso comum de disparo duplo. Ação de B31 ou B91 cujo laudo aponta sequela consolidada sem incapacidade pede TAMBÉM o `jurista-auxilio-acidente`, para conferir o pedido sucessivo de B94.
 
 Zero. O `jurista-vulnerabilidade-genero` é TRANSVERSAL e não compete com os demais. Dispare-o SEMPRE que houver segurada mulher em contexto rural, informal ou doméstico, pessoa com deficiência, idoso, analfabeto ou qualquer hipossuficiência probatória, EM ACRÉSCIMO ao jurista do tema.
 

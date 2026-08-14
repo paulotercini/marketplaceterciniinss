@@ -83,7 +83,7 @@ Sexta, português correto do padrão do escritório, sem dois-pontos introduzind
 
 ## Juristas Conferentes como camada prévia (Onda 110)
 
-Os dezesseis Juristas Conferentes (`jurista-tempo-especial`, `jurista-rural`, `jurista-incapacidade`, `jurista-bpc-pcd`, `jurista-dependentes`, `jurista-calculo-revisoes`, `jurista-processo-judicial`, `jurista-processo-administrativo`, `jurista-custeio-filiacao`, `jurista-execucao`, `jurista-professor`, `jurista-planejamento-aposentadoria`, `jurista-rpps-reciproca`, `jurista-responsabilidade-danos`, `jurista-acidentario-competencia` e o transversal `jurista-vulnerabilidade-genero`) NÃO substituem a banca. Eles rodam ANTES, pela `base-revisao-peticao-aprofundada`, e o parecer de cada um entra aqui como insumo da lente correspondente.
+Os dezoito Juristas Conferentes (`jurista-tempo-especial`, `jurista-rural`, `jurista-incapacidade`, `jurista-auxilio-acidente`, `jurista-aposentadoria-pcd`, `jurista-bpc-loas`, `jurista-dependentes`, `jurista-calculo-revisoes`, `jurista-processo-judicial`, `jurista-processo-administrativo`, `jurista-custeio-filiacao`, `jurista-execucao`, `jurista-professor`, `jurista-planejamento-aposentadoria`, `jurista-rpps-reciproca`, `jurista-responsabilidade-danos`, `jurista-acidentario-competencia` e o transversal `jurista-vulnerabilidade-genero`) NÃO substituem a banca. Eles rodam ANTES, pela `base-revisao-peticao-aprofundada`, e o parecer de cada um entra aqui como insumo da lente correspondente.
 
 Recebendo pareceres de jurista, trate cada achado como hipótese a ser confrontada, não como conclusão. A lente do advogado do INSS deve tentar derrubar a corrente que o jurista indicou como favorável, e a lente do julgador deve dizer qual das duas convence.
 
