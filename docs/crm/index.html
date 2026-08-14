@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.88 · movimentos do PJe agora na aba ⚖️ Andamentos do CNJ (saíram do Escritório)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.89 · a ficha diz as duas rodadas do CNJ (7h30 e 14h30) e que processo novo entra na próxima</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7431,7 +7431,7 @@ function consultaPendente(k){
   const oque = faltaCNJ
     ? "o andamento oficial (CNJ) e a ordem de julgamento no TRF3"
     : "a régua da fila do INSS";
-  const quando = faltaCNJ ? "todo dia útil às 7h30" : "no dia 20 de cada mês";
+  const quando = faltaCNJ ? "todo dia útil às 7h30 e às 14h30 — um processo vinculado agora entra na próxima rodada" : "no dia 20 de cada mês";
   const porque = faltaCNJ && !judicial
     ? " Este caso ainda não está numa fase judicial, então pode não haver o que consultar."
     : "";
