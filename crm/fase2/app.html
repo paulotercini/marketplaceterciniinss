@@ -457,22 +457,28 @@
   .det-rolagem{flex:1;overflow-y:auto}
   .det-topo{position:sticky;top:0;background:var(--branco);border-bottom:1px solid var(--borda);padding:14px 22px;z-index:2}
   .det-topo .linha1{display:flex;align-items:center;gap:10px}
-  .det-topo h2{font-size:18px}
+  .det-topo h2{font-size:17px;font-weight:600;line-height:1.25;min-width:0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* avatar do cabeçalho no padrão aprovado: 40px, azul-escuro */
+  .det-topo .cli-casos .avatar{width:40px;height:40px;font-size:17px;background:var(--azul-escuro)}
   /* ativo/inativo ao lado do nome: responde "ainda trabalhamos para ela?"
-     sem abrir caso por caso. Vermelho = todos os casos encerrados. */
-  .cli-st{font-size:12px;font-weight:700;border-radius:14px;padding:3px 10px;
-    white-space:nowrap;margin-left:auto;flex:none}
-  .cli-st.inativo{background:#FBE9E7;color:#B71C1C;border:1px solid #E8B4AC}
-  .cli-st.ativo{background:#EDF6EE;color:#1E7B34;border:1px solid #BFDCC2}
-  .cli-st.lemb{background:#FFF4D6;color:#8A6100;border:1px solid #E9B44C}
+     sem abrir caso por caso. Pill com o pontinho, no padrão aprovado. */
+  .cli-st{font-size:11.5px;font-weight:600;border-radius:10px;padding:2px 9px;
+    white-space:nowrap;margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:5px}
+  .cli-st::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.85}
+  .cli-st.inativo{background:var(--vermelho-f);color:var(--vermelho)}
+  .cli-st.ativo{background:var(--verde-f);color:var(--verde)}
+  .cli-st.lemb{background:#FFF4D6;color:#8A6100}
   /* o nome do cliente é clicável: abre o mapa dos casos por lista */
   .cli-casos{display:inline-flex;align-items:center;gap:10px;cursor:pointer;
     border-radius:10px;padding:2px 8px;margin:-2px -8px}
   .cli-casos:hover{background:var(--fundo)}
   .cli-casos-seta{color:var(--cinza);font-size:12px}
-  .cli-st.semcaso{background:var(--fundo);color:var(--cinza);border:1px solid var(--borda)}
+  .cli-st.semcaso{background:var(--borda-suave);color:var(--cinza)}
   @media (max-width:700px){ .cli-st{font-size:10px;padding:2px 7px} }
-  .fechar{margin-left:auto;border:none;background:none;font-size:20px;cursor:pointer;color:var(--cinza)}
+  .fechar{margin-left:auto;border:none;background:none;font-size:18px;cursor:pointer;
+    color:var(--cinza);border-radius:4px;padding:2px 7px}
+  .fechar:hover{background:var(--borda-suave)}
   .det-topo .resumo{display:flex;flex-wrap:wrap;gap:18px;margin-top:7px;align-items:center}
   /* identidade mínima: rótulo pequeno em azul, valor legível, sem virar chip */
   .id-min{display:inline-flex;align-items:baseline;gap:7px;font-size:13px;
@@ -722,13 +728,14 @@
   .btn-rap.imp.on{background:#FFC83D;border-color:#D9A400;color:#4A3B00}
   .btn-rap.urg{border-color:#E39A9A;color:var(--vermelho)}
   .btn-rap.urg.on{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
-  /* menu do caso: barra escura horizontal no topo da ficha */
-  .menu-topo{background:#313641;border-radius:10px;padding:5px;display:flex;gap:3px;
-    flex-wrap:wrap;align-items:center;margin-top:10px}
-  .mt{background:transparent;color:#C9CED8;border:none;border-radius:8px;
-    padding:7px 13px;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap}
-  .mt:hover{background:rgba(255,255,255,.1)}
-  .mt.on{background:#fff;color:var(--texto)}
+  /* abas da ficha em pivot CLARO (espec. 7.2): a faixa escura saiu — a aba
+     ativa é texto azul-escuro com o fio azul embaixo, como no To Do */
+  .menu-topo{display:flex;gap:2px;flex-wrap:wrap;align-items:center;margin-top:12px;
+    border-bottom:1px solid var(--borda-suave)}
+  .mt{background:none;color:var(--cinza);border:none;border-bottom:2px solid transparent;
+    padding:9px 13px;font-weight:500;font-size:13px;cursor:pointer;white-space:nowrap}
+  .mt:hover{color:var(--texto);background:#FAFBFC}
+  .mt.on{background:none;color:var(--azul-escuro);font-weight:600;border-bottom-color:var(--azul)}
   .mt.mt-proc{max-width:320px;overflow:hidden;text-overflow:ellipsis}
   #menu-processos{position:fixed;z-index:99;background:var(--branco);border:1px solid var(--borda);
     border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.22);padding:6px;min-width:290px;max-height:65vh;overflow-y:auto}
@@ -6996,7 +7003,7 @@ function pintarFicha(){
         <span class="cli-casos-seta">▾</span>
       </span>
       ${c.telefone?`<button class="btn-mini" onclick="abrirSmbot('${c.id}')"
-        style="background:#E7F6EC;border-color:#25D366;color:#128C4B;font-weight:700"
+        style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:600"
         title="abre o SMBot numa aba e copia o telefone do cliente — é só colar na busca do atendimento">💬 SMBot</button>`:""}
       ${stCli}
       <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
