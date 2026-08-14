@@ -98,3 +98,13 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 ## O que NÃO está nesta skill
 
 Não há cálculo de RMI. Não há orientação sobre outros agentes. Não há roteiro de perícia judicial genérica. Para cada um desses tópicos, outra skill é responsável.
+
+## Enunciado 12 da I Jornada do TRF4, dosimetria e presunções (Onda 109)
+
+Texto literal, conferido no Caderno oficial da EMAGIS/TRF4 em 14/08/2026, página 16. "Para a comprovação da especialidade por exposição ao agente ruído em períodos de tempo de serviço/contribuição posteriores a 18/11/2003. (1) a referência à utilização da técnica da dosimetria no PPP ou no LTCAT enseja presunção relativa de cumprimento da metodologia de cálculo da NR-15 ou da NHO-01 da Fundacentro; (2) havendo aferição por ambos os métodos, NR-15 e NHO-01 da Fundacentro, no mesmo período, deve-se adotar a mais favorável ao trabalhador; e (3) a confirmação da habitualidade e permanência no laudo técnico elaborado pela empresa empregadora gera presunção relativa de cumprimento desses requisitos e dispensa a perícia técnica judicial referida na tese do Tema 1.083 do STJ."
+
+Valor pró-segurado. Os três itens resolvem, por presunção, exatamente o que o INSS costuma exigir como prova impossível. O item 2 é o mais útil, porque converte a duplicidade metodológica em escolha do trabalhador. O item 3 afasta a perícia judicial quando o laudo da empresa já confirma habitualidade e permanência.
+
+Identificação. Enunciado 12 da I Jornada Regional Intrainstitucional de Direito Previdenciário da Justiça Federal da 4ª Região, EMAGIS/TRF4, 1º e 2 de setembro de 2025.
+
+RESSALVA OBRIGATÓRIA. Por declaração do próprio TRF4, os enunciados têm caráter meramente doutrinário e força persuasiva técnico-jurídica, não se confundindo com a posição do tribunal. Citar como doutrina qualificada, jamais como precedente, e sinalizar a Região de origem em peça na 3ª Região.
