@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.87 · novidade do CRPS abre o e-Recursos (com o NUP copiado), não mais o link do PAT</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.88 · movimentos do PJe agora na aba ⚖️ Andamentos do CNJ (saíram do Escritório)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6943,7 +6943,8 @@ function pintarFicha(){
           // ou se o caso ESTÁ na fase judicial: sem a aba, quem abria um
           // judicial sem número nem descobria onde preenchê-lo.
           const temCNJ = !!(k.processo || k.fase==="judicial"
-            || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length)));
+            || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length))
+            || andamentosPje(andsVis).length);
           const aba = (subAba==="cnj" && !temCNJ) ? "escritorio" : subAba;
           // a etiqueta da aba diz o estado sem abrir: 🗄 quando TODOS os
           // processos daquela fonte estão arquivados (um só arquivado não
@@ -6955,12 +6956,12 @@ function pintarFicha(){
           <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
           <button class="${aba==="inss"?"on":""}" onclick="irSubAba('inss')">🌻 Andamentos INSS${rot(comentariosPat(andsVis).length, abaPatArquivada(k))}</button>
           <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k))}</button>
-          ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${rot(k.datajud&&k.datajud.ultimo, abaCnjArquivada(k))}</button>`:""}
+          ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k))}</button>`:""}
           <button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
             title="todas as fontes juntas, em ordem cronológica">📖 Caso completo</button>
         </div>
       ${blocoFatos(k)}
-      ${aba==="cnj" ? painelCNJ(k) : aba==="crps" ? painelCRPS(k)
+      ${aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
         : aba==="inss" ? painelINSS(k, andsVis)
         : aba==="tudo" ? painelTudo(k, andsVis) : painelEscritorio(k, andsVis)}`;
         })()}
@@ -9079,9 +9080,10 @@ function painelEscritorio(k, ands){
     </div>`}
   </div>
   ${caixaArquivos(k)}
-  ${/* os comentários do INSS têm aba própria (🌻); aqui fica só a conversa
-       do escritório — misturados, ninguém achava nem uma coisa nem outra */""}
-  ${linhaDoTempo(ands.filter(a=>!ehComentarioPat(a)))}`;
+  ${/* os comentários do INSS têm aba própria (🌻) e os movimentos do PJe
+       têm a aba ⚖️ CNJ; aqui fica só a conversa do escritório — misturados,
+       ninguém achava nem uma coisa nem outra */""}
+  ${linhaDoTempo(ands.filter(a=>!ehComentarioPat(a) && a.origem!=="pje"))}`;
 }
 
 // ── a linha do tempo do escritório ────────────────────────────────────────
@@ -9130,6 +9132,13 @@ function ehComentarioPat(a){
 }
 function comentariosPat(ands){
   return (ands||[]).filter(a=>!a.excluir).filter(ehComentarioPat);
+}
+// Os movimentos coletados do PJe pela extensão (origem='pje') são andamento
+// OFICIAL do processo judicial: o lugar deles é a aba ⚖️ CNJ, junto do
+// DataJud — na linha do tempo do escritório eles soterravam a conversa.
+function andamentosPje(ands){
+  return (ands||[]).filter(a=>!a.excluir && a.origem==="pje")
+    .sort((a,b)=>(a.criado_em||"")<(b.criado_em||"")?1:-1);
 }
 
 // ── 🗄 arquivar POR PROCESSO ─────────────────────────────────────────────
@@ -9955,15 +9964,32 @@ async function removerCrpsNup(casoId, nup){
   abrirFicha(clienteAberto);
 }
 
-function painelCNJ(k){
+// o quadro dos movimentos que a extensão colheu no painel do PJe — andamento
+// oficial tanto quanto o DataJud, só que mais fresco (chega na hora da coleta)
+function caixaPje(k, ands){
+  const movs = andamentosPje(ands);
+  if(!movs.length) return "";
+  return `<div class="caso" style="margin-bottom:10px">
+    <div class="rotulo-caso">⚡ coletas do PJe (${movs.length})</div>
+    <ul class="mov-lista">
+      ${movs.map(a=>`<li>
+        <span class="mov-data">${a.criado_em?fmt(dataSP(a.criado_em)):"—"}</span>
+        <span class="mov-txt">${esc(a.texto||"")}</span>
+        ${segBtnHtml(segRegistrar(k.id, a.texto||"", a.id))}
+      </li>`).join("")}
+    </ul></div>`;
+}
+
+function painelCNJ(k, ands){
   const t = k.datajud;
+  const pjeBox = caixaPje(k, ands);
   // judicial sem número: a aba existe justamente para dizer o que falta
   if(!soDig(k.processo) && !(t && (t.ultimo || (t.instancias||[]).length)))
-    return `<div class="caso"><p class="meio-sub">Este caso ainda não tem o número do processo.
+    return `${pjeBox}<div class="caso"><p class="meio-sub">Este caso ainda não tem o número do processo.
       Preencha <b>Processo (CNJ)</b> no quadro acima (lápis ✎) — com ele, o DataJud consulta
       todo dia útil e o coletor do PJe passa a casar o processo sozinho.</p></div>`;
   if(!t || !(t.ultimo || (t.instancias||[]).length))
-    return `<div class="caso">${consultaPendente(k) || `<p class="meio-sub">Sem andamento oficial para este processo na base do CNJ.</p>`}</div>`;
+    return `${pjeBox}<div class="caso">${consultaPendente(k) || `<p class="meio-sub">Sem andamento oficial para este processo na base do CNJ.</p>`}</div>`;
   const insts = cnjInstancias(k);
   const i = Math.min(instSel, insts.length-1), inst = insts[i];
   const u = inst.ultimo || {};
@@ -9997,6 +10023,7 @@ function painelCNJ(k){
   </div>
   ${marcoCaso(k)}
   ${inssFilaCaso(k)}
+  ${pjeBox}
   <div class="caso">
     <div class="rotulo-caso">histórico oficial ${inst.total_movimentos?`(${(inst.historico||[]).length} de ${inst.total_movimentos} movimentos)`:""}</div>
     <ul class="mov-lista">
