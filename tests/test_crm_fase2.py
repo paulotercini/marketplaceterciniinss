@@ -457,3 +457,64 @@ def test_aposentadoria_futura_lembrete_id_deterministico():
                         cpf="00000000353", id="ap1")])
     a, b = migrar.mapear(dados), migrar.mapear(dados)
     assert a["lembretes"][0]["id"] == b["lembretes"][0]["id"]
+
+
+# ── falta de índice/coluna NÃO derruba a sincronização (08.93) ────────────
+# O índice único de pagamentos.todo_item_id (seção 12 do schema) não tinha
+# sido rodado no banco: as 2.621 parcelas do To Do voltaram com 42P10, a
+# busca binária partiu o lote até a última linha (milhares de requisições,
+# 28 minutos de passo) e no fim o processo saiu com erro — o CRM passou o dia
+# dizendo "sem sincronizar", embora clientes, casos, andamentos e tarefas
+# tivessem entrado. Erro de ESQUEMA pula a tabela e a rodada termina bem.
+
+def _sobe(monkeypatch, falha_em, codigo, mapa):
+    """Roda subir_rest com um banco falso que recusa uma tabela."""
+    tentativas, enviados = [], []
+
+    def falso_rest(url, chave, metodo, caminho, corpo=None, prefer=None):
+        if metodo == "GET":
+            return []
+        tabela = caminho.split("?")[0].rsplit("/", 1)[-1]
+        if metodo == "POST" and tabela == falha_em:
+            tentativas.append(len(corpo))
+            raise migrar.BancoRecusou(
+                f"o banco recusou POST em '{tabela}' (400): {{\"code\":\"{codigo}\"}}")
+        if metodo == "POST" and isinstance(corpo, list):
+            enviados.extend(corpo)
+        return None
+    monkeypatch.setattr(migrar, "_rest", falso_rest)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    return tentativas, enviados, falso_rest
+
+
+def test_erro_de_esquema_nao_derruba_a_rodada_nem_bissecta(monkeypatch):
+    pg = [{"todo_item_id": f"i{n}", "caso_id": "k1"} for n in range(300)]
+    mapa = {"andamentos": [], "casos": [{"id": "k1", "todo_task_id": None, "cliente_id": None}],
+            "pagamentos": pg}
+    tentativas, enviados, _ = _sobe(monkeypatch, "pagamentos", "42P10", mapa)
+
+    migrar.subir_rest(mapa)                      # NÃO levanta BancoRecusou
+
+    assert tentativas == [300], f"bissectou o lote à toa: {tentativas}"
+    assert any(l.get("id") == "k1" for l in enviados), "o resto da rodada não entrou"
+
+
+def test_carimbo_da_sincronizacao_e_gravado_mesmo_faltando_schema(monkeypatch):
+    mapa = {"andamentos": [], "casos": [], "pagamentos": [{"todo_item_id": "i1"}]}
+    _, enviados, _ = _sobe(monkeypatch, "pagamentos", "42P10", mapa)
+    migrar.subir_rest(mapa)
+    assert any(l.get("chave") == "todo_sync_em" for l in enviados), \
+        "sem o carimbo, o CRM mostra 'sem sincronizar' o dia todo"
+
+
+def test_linha_ruim_de_verdade_continua_derrubando_com_erro(monkeypatch):
+    # regressão da regressão: 23505/23514 (linha culpada) tem que continuar
+    # bissectando e terminando com erro visível
+    mapa = {"andamentos": [], "casos": [], "pagamentos": [{"todo_item_id": f"i{n}"} for n in range(4)]}
+    tentativas, _, _ = _sobe(monkeypatch, "pagamentos", "23505", mapa)
+    with pytest.raises(migrar.BancoRecusou):
+        migrar.subir_rest(mapa)
+    assert len(tentativas) > 1, "deixou de procurar a linha culpada"
