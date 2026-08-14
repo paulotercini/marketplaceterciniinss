@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.86 · 📄 solicitar documentos no meio da anotação, sem perder o que já foi digitado</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.87 · novidade do CRPS abre o e-Recursos (com o NUP copiado), não mais o link do PAT</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4298,7 +4298,11 @@ function novidades(){
 function linksDasNovidades(){
   return [...new Set(novidades().map(a=>{
     const k = D.casoPorId.get(a.caso_id)||{};
-    const l = (a.origem==="pje" && k.pje_link) ? k.pje_link : k.processo_link;
+    // cada origem abre no SEU portal: CRPS não herda o link do PAT — vai
+    // para a consulta do e-Recursos (uma aba só, o Set deduplica)
+    const l = (a.origem==="pje" && k.pje_link) ? k.pje_link
+      : a.origem==="crps" ? "https://consultaprocessos.inss.gov.br/"
+      : k.processo_link;
     return (l && /^https?:\/\//i.test(l)) ? l : null;
   }).filter(Boolean))];
 }
@@ -4307,6 +4311,18 @@ function linksDasNovidades(){
 // chat do cliente. O botão faz o melhor possível em UM clique: abre o
 // painel e deixa o TELEFONE copiado — na busca do atendimento é só colar.
 // O endereço pode ser trocado em config_app (chave smbot_url).
+// novidade do CRPS abre o portal CERTO: o e-Recursos não tem link por
+// processo (o painel é consulta por NUP), então vale o padrão do SMBot —
+// abre a consulta com o NUP já copiado. O NUP vem do próprio texto da
+// novidade quando estiver lá; senão, do primeiro recurso do caso.
+function abrirERecursos(casoId, andId){
+  const k=D.casoPorId.get(casoId)||{};
+  const a=(D.novid||[]).find(x=>x.id===andId);
+  const doTexto=String((a&&a.texto)||"").match(/\d{15,25}/);
+  const nup=(doTexto&&doTexto[0]) || crpsNups(k)[0] || "";
+  if(nup) copiar(formatarNup(nup), "NUP copiado — cole na consulta do e-Recursos 🖥");
+  window.open("https://consultaprocessos.inss.gov.br/", "_blank", "noopener");
+}
 function abrirSmbot(cliId){
   const c=D.cliPorId.get(cliId)||{};
   const tel=(c.telefone||"").replace(/\D/g,"");
@@ -4546,6 +4562,9 @@ function linhaNovidade(a){
     </div>
     ${a.origem==="pje" && k.pje_link
       ?`<a class="btn-mini" href="${urlOk(k.pje_link)}" target="_blank" rel="noopener" title="abrir os autos digitais na sua sessão do PJe">abrir no PJe ↗</a>`
+      :a.origem==="crps"
+      ?`<button class="btn-mini" onclick="abrirERecursos('${a.caso_id}','${a.id}')"
+          title="abre a consulta do e-Recursos e copia o NUP — é só colar">e-Recursos ↗</button>`
       :k.processo_link?`<a class="btn-mini" href="${urlOk(k.processo_link)}" target="_blank" rel="noopener">abrir ↗</a>`:""}
     ${(i=>`${eventoNoTexto(a.texto)?`<button class="btn-mini" onclick="periciaRapida(${i})"
       title="agenda na aba 🩺 e cria o aviso 3 dias úteis antes — um clique">🩺 agendar+aviso</button>`:""}${segBtnHtml(i)}`)(
