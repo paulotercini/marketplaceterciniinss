@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.85 · agendou atendimento → a lista de documentos do benefício abre sozinha (📋 para trazer)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.86 · 📄 solicitar documentos no meio da anotação, sem perder o que já foi digitado</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -9035,6 +9035,8 @@ function painelEscritorio(k, ands){
             style="display:none" onchange="anexar('${k.id}','${k.cliente_id}')">
           <button class="esc-ic" onclick="document.getElementById('arq-inp').click()"
             title="anexar: foto do documento ou arquivo">📎</button>
+          <button class="esc-ic" onclick="janelaDocsAnotacao()"
+            title="solicitar documentos no meio do atendimento: marca na lista do benefício, entra na anotação e vira checklist — sem apagar o que você já digitou">📄</button>
           <button class="esc-ic imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="marcar o processo como importante">⭐</button>
           <button class="esc-ic urg ${k.urgente?"on":""}" onclick="toggleUrg('${k.id}')" title="marcar o processo como urgente">🔥</button>
           <button class="esc-reg" onclick="novoAndamento('${k.id}')">Registrar</button>
@@ -11370,6 +11372,70 @@ function docDe(beneficio){
   const b=dsa(beneficio);
   return D.docs.find(d=>dsa(d.beneficio)===b)
       || D.docs.find(d=>b.includes(dsa(d.beneficio)) || dsa(d.beneficio).includes(b));
+}
+// ── 📄 SOLICITAR DOCUMENTOS NO MEIO DA ANOTAÇÃO (pedido do Paulo) ────────
+// Atendendo um cliente ANTIGO, a solicitação de documentos nasce onde a
+// anotação está sendo escrita: a janelinha lista o catálogo do benefício,
+// o que for marcado entra na anotação ("Solicitei os documentos: ...") e
+// vira checklist do caso NA HORA — e o texto já digitado fica intacto
+// (nada de repintar a ficha no meio do atendimento).
+function janelaDocsAnotacao(){
+  const k = casoSel && casoSel!=="__auto__" && D.casoPorId.get(casoSel);
+  if(!k) return aviso("Escolha um processo no menu ⚖️ primeiro");
+  const cat = docDe(k.beneficio);
+  const itens = ((cat&&cat.itens)||"").split("\n").map(x=>x.trim())
+    .filter(x=>x && !x.startsWith("▸ "));
+  const ja = new Set(D.tarefas.filter(t=>t.caso_id===k.id).map(t=>dsa(t.titulo)));
+  caixa(`<h3 style="margin:0 0 4px">📄 Solicitar documentos — ${esc(tituloCaso(k))}</h3>
+    <p class="meio-sub" style="margin:0 0 8px">O que marcar entra na anotação e no checklist do caso.
+      ${itens.length?"Sugestão do catálogo do benefício:":"Sem catálogo para este benefício — acrescente à mão."}</p>
+    <div id="jd-lista" style="max-height:44vh;overflow:auto">
+      ${itens.map(it=>`<label style="display:flex;gap:8px;padding:3px 0;font-size:13px;align-items:baseline">
+        <input type="checkbox" class="jd-doc" value="${esc(it)}">${esc(it)}${
+        ja.has(dsa(it))?` <small style="color:var(--cinza)">(já no checklist)</small>`:""}</label>`).join("")}
+    </div>
+    <div class="form-linha" style="margin-top:8px">
+      <input id="jd-extra" placeholder="＋ outro documento — Enter acrescenta" style="flex:1"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();docExtraAnotacao();}">
+    </div>
+    <div class="form-linha" style="margin-top:12px">
+      <button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
+      <button style="margin-left:auto;padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer"
+        onclick="solicitarDocsAnotacao('${k.id}')">Solicitar (anotação + checklist)</button>
+    </div>`);
+}
+function docExtraAnotacao(){
+  const inp=document.getElementById("jd-extra");
+  const v=(inp.value||"").trim(); if(!v) return;
+  document.getElementById("jd-lista").insertAdjacentHTML("beforeend",
+    `<label style="display:flex;gap:8px;padding:3px 0;font-size:13px;align-items:baseline">
+      <input type="checkbox" class="jd-doc" checked value="${esc(v)}">${esc(v)}</label>`);
+  inp.value=""; inp.focus();
+}
+async function solicitarDocsAnotacao(casoId){
+  const sel=[...document.querySelectorAll(".jd-doc:checked")].map(x=>x.value);
+  if(!sel.length) return aviso("Marque ao menos um documento");
+  const ja=new Set(D.tarefas.filter(t=>t.caso_id===casoId).map(t=>dsa(t.titulo)));
+  let novos=0;
+  try{
+    for(const titulo of sel){
+      if(ja.has(dsa(titulo))) continue;            // repetir não duplica
+      const [t]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:casoId, titulo})});
+      if(t){ D.tarefas.push(t); novos++; }
+    }
+  }catch(e){ return aviso("Não consegui criar o checklist: "+String(e.message||e).slice(0,100)); }
+  // entra na ANOTAÇÃO em curso, preservando o que já estava digitado — o
+  // migrar reconhece a frase e não recria os itens na sincronização
+  const ta=document.getElementById("and-texto");
+  if(ta){
+    const frase=`Solicitei os documentos: ${sel.join("; ")}.`;
+    ta.value=(ta.value.trim()?ta.value.trim()+"\n":"")+frase;
+    ta.dispatchEvent(new Event("input"));
+    ta.focus();
+  }
+  fecharCaixa(); plim();
+  aviso(`📄 ${sel.length} documento(s) na anotação${novos?` · ${novos} novo(s) no checklist`:""} — termine e clique Registrar`, false);
 }
 function imprimirDocs(casoId){
   const k=D.casoPorId.get(casoId), doc=docDe(k.beneficio);
