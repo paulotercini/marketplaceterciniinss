@@ -319,7 +319,9 @@ def test_remapeamento_enxerga_alem_da_primeira_pagina(monkeypatch):
         if metodo != "GET":
             postados.extend(corpo)
             return
-        if "/casos" not in caminho:
+        # só o GET do remapeamento devolve as páginas; as demais buscas do
+        # subir_rest (lembretes, casos da fase aposentadoria_futura) são vazias
+        if "/casos" not in caminho or "aposentadoria_futura" in caminho:
             return []
         q = urllib.parse.parse_qs(urllib.parse.urlparse(caminho).query)
         salto = int(q.get("offset", ["0"])[0])
@@ -407,3 +409,51 @@ def test_checklist_fora_da_lista_pagamentos_nao_vira_lancamento():
           checklist=[{"id": "z1", "texto": "R$ 100", "feito": True, "feito_em": None}]),
     ]))
     assert m["pagamentos"] == []
+
+
+# ── 🙏 Aposentadorias Futuras -> 🔔 lembrete, nunca caso (08.90) ──────────
+
+def test_aposentadoria_futura_vira_lembrete_e_nao_caso():
+    m = migrar.mapear(crm_json([
+        t("🙏 Aposentadorias Futuras", "Ciclana #00000000353", cpf="00000000353",
+          prazo="2027-03-01", beneficio="B41",
+          andamentos=[{"data": "2026-06-10", "inicial": "P", "autor": "Paulo",
+                       "texto": "Faltam 8 meses de contribuição."}]),
+    ]))
+    assert m["casos"] == [] and m["andamentos"] == []
+    (l,) = m["lembretes"]
+    assert l["cliente_id"] == m["clientes"][0]["id"]
+    assert l["tipo"] == "aposentadoria_futura"
+    assert l["proximo_em"] == "2027-03-01"       # a conclusão da tarefa
+    assert l["ativo"] is True
+    (a,) = l["detalhes"]["anotacoes"]
+    assert a == {"data": "2026-06-10", "inicial": "P",
+                 "texto": "Faltam 8 meses de contribuição."}
+
+
+def test_aposentadoria_futura_concluida_desliga_o_lembrete():
+    m = migrar.mapear(crm_json([
+        t("🙏 Aposentadorias Futuras", "Ciclana #00000000353", cpf="00000000353",
+          concluida=True, concluida_em="2026-05-01"),
+    ]))
+    assert m["casos"] == []
+    (l,) = m["lembretes"]
+    assert l["ativo"] is False
+
+
+def test_aposentadoria_futura_checklist_soh_dados_de_cliente():
+    m = migrar.mapear(crm_json([
+        t("🙏 Aposentadorias Futuras", "Ciclana #00000000353", cpf="00000000353",
+          checklist=[{"texto": "(16) 99999-0000", "feito": False},
+                     {"texto": "Pagar GPS trimestral", "feito": False}]),
+    ]))
+    assert m["clientes"][0]["telefone"]           # dado entrou no cliente
+    assert m["tarefas"] == []                     # tarefa NÃO nasce sem caso
+    assert m["casos"] == []
+
+
+def test_aposentadoria_futura_lembrete_id_deterministico():
+    dados = crm_json([t("🙏 Aposentadorias Futuras", "Ciclana #00000000353",
+                        cpf="00000000353", id="ap1")])
+    a, b = migrar.mapear(dados), migrar.mapear(dados)
+    assert a["lembretes"][0]["id"] == b["lembretes"][0]["id"]
