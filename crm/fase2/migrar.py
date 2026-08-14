@@ -471,10 +471,29 @@ def subir_rest(mapa):
 
     # casos que já existem no banco (inclusive criados no app): remapear
     exist = _rest_todas(url, chave,
-                        "/rest/v1/casos?todo_task_id=not.is.null&select=id,todo_task_id")
+                        "/rest/v1/casos?todo_task_id=not.is.null"
+                        "&select=id,todo_task_id,processo,nb")
     n = remapear_casos(mapa, {c["todo_task_id"]: c["id"] for c in exist})
     if n:
         print(f"  casos remapeados para ids já existentes: {n}")
+
+    # MERGE NÃO-DESTRUTIVO do processo/NB: o upsert manda a linha INTEIRA, e
+    # tarefa sem número no To Do mandava processo=null — apagando, toda hora,
+    # o CNJ que o Paulo tinha acabado de vincular pela coleta do PJe (e a
+    # importação voltava a perguntar pelos mesmos processos). To Do com valor
+    # continua mandando; To Do vazio deixa o que o app gravou.
+    guardado = {c["id"]: c for c in exist}
+    resgatados = 0
+    for k in mapa["casos"]:
+        b = guardado.get(k["id"])
+        if not b:
+            continue
+        for campo in ("processo", "nb"):
+            if not k.get(campo) and b.get(campo):
+                k[campo] = b[campo]
+                resgatados += 1
+    if resgatados:
+        print(f"  processo/NB preservados do banco (To Do vazio): {resgatados}")
 
     # anti-eco: o que o app já criou (poucas linhas — só origem='app', mas o
     # dia em que passarem de 1000 o corte silencioso duplicaria os blocos)
