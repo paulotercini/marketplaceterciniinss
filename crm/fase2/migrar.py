@@ -139,6 +139,7 @@ def _cliente_key(t):
 def mapear(dados):
     """crm.json -> dicionário de linhas por tabela (ids determinísticos)."""
     clientes, casos, andamentos, eventos, tarefas = {}, {}, {}, {}, {}
+    pagamentos = {}
     credenciais, vinculos, pend_vinculos = {}, {}, []
     pulados, sem_senha_padrao = {}, 0
 
@@ -188,6 +189,12 @@ def mapear(dados):
             "todo_task_id": t["id"],
             "encerrado_em": t["concluida_em"] and t["concluida_em"] + "T12:00:00" + TZ,
         }
+
+        if lista == "💵 Pagamentos":
+            for item in t.get("checklist") or []:
+                pg = pagamento_do_item(kid, item)
+                if pg:
+                    pagamentos[pg["todo_item_id"]] = pg
 
         for a in t["andamentos"]:
             aid = uid("andamento", kid, a["data"], md5(a["texto"]))
@@ -288,6 +295,7 @@ def mapear(dados):
         "tarefas": list(tarefas.values()),
         "credenciais": list(credenciais.values()),
         "vinculos": list(vinculos.values()),
+        "pagamentos": list(pagamentos.values()),
         "pulados": pulados,
     }
 
@@ -311,6 +319,8 @@ def remapear_casos(mapa, task_para_id_existente):
         for tf in mapa["tarefas"]:
             if tf.get("caso_id"):
                 tf["caso_id"] = troca.get(tf["caso_id"], tf["caso_id"])
+        for pg in mapa.get("pagamentos", []):
+            pg["caso_id"] = troca.get(pg["caso_id"], pg["caso_id"])
     return len(troca)
 
 
@@ -345,6 +355,61 @@ def anti_eco(linhas, existentes_app):
 
 def _limpar(a):
     return {k: v for k, v in a.items() if not k.startswith("_")}
+
+
+# ── 💵 Pagamentos: cada item do checklist do To Do é uma parcela ─────────
+RE_DATA_BR = re.compile(r"\b(\d{2})[./](\d{2})[./](\d{4})\b")
+RE_DATA_PARCIAL = re.compile(r"\b\d{1,2}[./]\d{1,2}(?:[./]\d{2,4})?\b")
+RE_VALOR_RS = re.compile(r"R\$\s*([\d.]+(?:,\d{2})?)")
+RE_VALOR_DEC = re.compile(r"\b(\d{1,3}(?:\.\d{3})*,\d{2})\b")
+RE_VALOR_NUM = re.compile(r"\b(\d{2,7})\b")
+
+
+def _num_br(s):
+    try:
+        v = float(s.replace(".", "").replace(",", "."))
+    except ValueError:
+        return None
+    return v if v > 0 else None
+
+
+def valor_do_item(texto):
+    """O valor da parcela: R$ explícito > número com centavos > o MAIOR
+    número solto (o 500 de "2ª parcela 500", nunca o 2 nem o 10/09)."""
+    t = RE_DATA_BR.sub(" ", texto or "")
+    m = RE_VALOR_RS.search(t)
+    if m:
+        return _num_br(m.group(1))
+    m = RE_VALOR_DEC.search(t)
+    if m:
+        return _num_br(m.group(1))
+    t = RE_DATA_PARCIAL.sub(" ", t)
+    ns = [_num_br(x) for x in RE_VALOR_NUM.findall(t)]
+    ns = [n for n in ns if n]
+    return max(ns) if ns else None
+
+
+def data_do_item(texto):
+    m = RE_DATA_BR.search(texto or "")
+    return f"{m.group(3)}-{m.group(2)}-{m.group(1)}" if m else None
+
+
+def pagamento_do_item(kid, item):
+    """Item do checklist -> linha de `pagamentos`. Concluído no To Do =
+    recebido (pago_em = quando marcou, senão a data escrita no item);
+    aberto = a receber (a data escrita vira vencimento)."""
+    if not (item.get("id") and (item.get("texto") or "").strip()):
+        return None
+    texto = item["texto"].strip()
+    feito = bool(item.get("feito"))
+    data = data_do_item(texto)
+    return {
+        "todo_item_id": item["id"], "caso_id": kid,
+        "descricao": texto, "valor": valor_do_item(texto),
+        "status": "recebido" if feito else "aberto",
+        "pago_em": (item.get("feito_em") or data) if feito else None,
+        "vencimento": None if feito else data,
+    }
 
 
 # ── saída SQL (primeira carga via psql) ───────────────────────────────────
@@ -395,6 +460,8 @@ def gerar_sql(mapa):
         _sql_insert("eventos", mapa["eventos"], chave="caso_id,tipo,data_hora"),
         _sql_insert("tarefas", mapa["tarefas"],
                     update_cols=("prazo", "concluida", "concluida_em")),
+        _sql_insert("pagamentos", mapa.get("pagamentos", []), chave="todo_item_id",
+                    update_cols=("descricao", "valor", "status", "pago_em", "vencimento")),
         _sql_insert("tarefas", mapa.get("tarefas_docs", [])),
         "commit;",
     ]))
@@ -513,6 +580,10 @@ def subir_rest(mapa):
         ("andamentos", "andamentos", "ignore-duplicates", "id"),
         ("eventos", "eventos", "ignore-duplicates", "caso_id,tipo,data_hora"),
         ("tarefas", "tarefas", "merge-duplicates", "id"),
+        # parcelas do To Do: o item concluído atualiza a MESMA linha (o
+        # unique parcial em todo_item_id é a trava); conferências do app
+        # ficam intactas — o upsert só toca as colunas enviadas
+        ("pagamentos", "pagamentos", "merge-duplicates", "todo_item_id"),
         # docs solicitados citados em andamentos: só insere — concluir no app fica
         ("tarefas_docs", "tarefas", "ignore-duplicates", "id"),
     ]
@@ -576,7 +647,7 @@ def main(argv=None):
 
     dados = json.loads(pathlib.Path(args.entrada).read_text(encoding="utf-8"))
     mapa = mapear(dados)
-    resumo = {t: len(mapa[t]) for t in ("clientes", "casos", "andamentos", "eventos",
+    resumo = {t: len(mapa[t]) for t in ("clientes", "casos", "andamentos", "eventos", "pagamentos",
                                         "tarefas", "credenciais", "vinculos")}
     print("mapeado:", resumo)
     if mapa["pulados"]:
