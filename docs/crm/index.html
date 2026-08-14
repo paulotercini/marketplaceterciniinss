@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.81 · a espécie define o título (sempre) e o catálogo ganhou os serviços do INSS (CNIS, REV, CTC…)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.82 · o sync do To Do não apaga mais o processo vinculado; ficha que não grava agora avisa</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3979,13 +3979,16 @@ async function aplicarPje(coletaId){
   const falhas=[]; let feitos=0;
   // completa as fichas (classe/ajuizamento) antes dos movimentos; banco sem
   // as colunas novas só pula esta parte, sem derrubar o resto
-  let fichas=0;
+  let fichas=0, fichasFalha=0;
   for(const f of (planoPjeAtual.fichas||[])){
     try{
       await patchCaso(f.caso_id, f.campos);
       Object.assign(D.casoPorId.get(f.caso_id)||{}, f.campos); fichas++;
-    }catch(e){}
+    }catch(e){ fichasFalha++; }
   }
+  // falha silenciosa aqui era o "117 fichas a completar" voltando toda vez:
+  // o banco sem as colunas novas recusava o PATCH e ninguém ficava sabendo
+  if(fichasFalha) aviso(`⚠ ${fichasFalha} ficha(s) não gravaram (classe/ajuizamento/órgão/link) — rode o schema_por_em_dia.sql no Supabase`);
   for(const a of planoPjeAtual.andamentos){
     try{
       await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
