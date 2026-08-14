@@ -211,3 +211,9 @@ A peça enxuta NÃO é peça superficial. É peça densa em fundamentação norm
 Toda redação CRPS gerada por skill geradora (`peticao-previdenciaria` ou `base-peticao-previdenciaria-padrao-visual`) DEVE passar pela skill `base-revisao-peticao-aprofundada` (Onda 33) ANTES do protocolo, com atenção especial à Camada 4 - Qualidade Argumentativa, e aos anti-patterns 5 (argumentação genérica), 6 (excesso de jurisprudência) e 11 (excesso de destaques).
 
 Recurso CRPS rejeitado por argumentação difusa é falha estratégica do escritório, não do conselheiro.
+
+## Decisores simulados antes do protocolo (Onda 114)
+
+Recurso ordinário vai ao agente `conselheiro-junta-de-recursos`. Recurso especial, pedido de uniformização e reclamação vão ao `conselheiro-camara-de-julgamento`. Ambos fazem primeiro o juízo de ADMISSIBILIDADE, que é onde a maioria dos recursos morre, e devolvem o acórdão simulado com a lista do que mudaria o resultado.
+
+O que eles confirmam sobre o padrão desta skill. A fundamentação no CRPS é NORMATIVA. Recurso construído sobre Tema do STJ com pouca ancoragem em lei, decreto, instrução normativa, portaria, enunciado ou parecer vinculante perde força no colegiado administrativo, ainda que estivesse ótimo para o Judiciário.
