@@ -110,3 +110,7 @@ Pró-segurado integral. CRPS é a última via administrativa antes do Judiciári
 ## Hub de portarias administrativas
 
 Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
+## Decisores simulados no fluxo (Onda 114)
+
+Último passo do workflow, antes do protocolo. Recurso ordinário ao `conselheiro-junta-de-recursos`, recurso especial e incidentes ao `conselheiro-camara-de-julgamento`. Se o decisor simulado devolver NÃO CONHECIDO, o fluxo NÃO segue para o protocolo, volta para a correção da admissibilidade.

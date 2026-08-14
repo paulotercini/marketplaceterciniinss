@@ -90,3 +90,7 @@ Recebendo pareceres de jurista, trate cada achado como hipótese a ser confronta
 Vale para eles a mesma regra de identidade. Correntes, nunca autores nominados.
 
 Além deles, os doze Processualistas Conferentes (`processualista-postulatoria`, `processualista-tutela-provisoria`, `processualista-prova`, `processualista-nulidades-e-sentenca`, `processualista-recursos-ordinarios`, `processualista-cortes-superiores`, `processualista-precedentes`, `processualista-coisa-julgada-rescisoria`, `processualista-cumprimento-de-sentenca`, `processualista-honorarios-e-gratuidade`, `processualista-jef` e `processualista-mandado-de-seguranca`) alimentam a lente do processualista da banca com a conferência técnica por fase. Achado deles com severidade PRECLUSÃO IMINENTE é tratado como prioridade absoluta na deliberação, porque é o único vício que a instância seguinte não conserta.
+
+## Decisores Administrativos Simulados (Onda 114)
+
+Quando a peça de alto risco for administrativa, a lente do conselheiro da via administrativa desta banca deve ser confrontada com o resultado dos agentes `servidor-chefe-inss`, `conselheiro-junta-de-recursos` e `conselheiro-camara-de-julgamento`, conforme a instância de destino. Eles não são pró-segurado, simulam o decisor real, e divergência entre a lente da banca e o decisor simulado é sinal de que a banca está otimista demais.
