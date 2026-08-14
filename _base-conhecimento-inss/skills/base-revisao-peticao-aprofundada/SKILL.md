@@ -530,7 +530,7 @@ Em casos de divergência entre a interpretação desta skill e a skill `revisao-
 
 ## Juristas Conferentes, camada doutrinária obrigatória (Onda 110)
 
-Dez agentes de conferência doutrinária, um por bloco temático. Toda revisão de peça DISPARA o jurista do tema, que confere se a corrente adotada é a mais favorável ao segurado, aponta a corrente melhor sustentada que ficou de fora e antecipa a leitura restritiva que o INSS oporá.
+Dezesseis agentes de conferência doutrinária, quinze temáticos e um transversal. Toda revisão de peça DISPARA o jurista do tema, que confere se a corrente adotada é a mais favorável ao segurado, aponta a corrente melhor sustentada que ficou de fora e antecipa a leitura restritiva que o INSS oporá.
 
 ### Regra de identidade dos Juristas Conferentes
 
@@ -552,10 +552,18 @@ Razão da regra. Atribuir a autor vivo uma tese que ele não escreveu é o mesmo
 | CRPS, requerimento, exigência, IN 128, Portarias, erro administrativo, MS por mora | `jurista-processo-administrativo` |
 | CNIS, contribuinte individual, indenização, carência, contagem recíproca, RT | `jurista-custeio-filiacao` |
 | Cumprimento, RPV, precatório, juros, honorários, tributação, devolução | `jurista-execucao` |
+| Magistério, funções de professor, EC 20, educação infantil | `jurista-professor` |
+| Melhor DER, simulação, cenários, carteira futura, contribuição estratégica | `jurista-planejamento-aposentadoria` |
+| RPPS, CTC, averbação, compensação, aluno-aprendiz, serviço militar | `jurista-rpps-reciproca` |
+| Dano moral, mora, responsabilidade do empregador, Lei 14.128, MPF e canais | `jurista-responsabilidade-danos` |
+| Acidentário, NTEP, CAT, concausa, competência estadual, TJSP | `jurista-acidentario-competencia` |
+| TRANSVERSAL. Gênero, hipossuficiência, barreiras, vulnerabilidade | `jurista-vulnerabilidade-genero` |
 
 ### Regras de disparo
 
-Primeiro, disparar de UM a TRÊS juristas por revisão, escolhidos pelos temas efetivamente presentes na peça. Peça previdenciária quase sempre tem um tema de mérito e um de processo, e frequentemente um de custeio. Disparar os dez dilui e gasta contexto sem retorno.
+Zero. O `jurista-vulnerabilidade-genero` é TRANSVERSAL e não compete com os demais. Dispare-o SEMPRE que houver segurada mulher em contexto rural, informal ou doméstico, pessoa com deficiência, idoso, analfabeto ou qualquer hipossuficiência probatória, EM ACRÉSCIMO ao jurista do tema.
+
+Primeiro, disparar de UM a TRÊS juristas temáticos por revisão, escolhidos pelos temas efetivamente presentes na peça. Peça previdenciária quase sempre tem um tema de mérito e um de processo, e frequentemente um de custeio. Disparar os dez dilui e gasta contexto sem retorno.
 
 Segundo, quando houver mais de um, disparar EM PARALELO na mesma mensagem, porque as conferências são independentes.
 
