@@ -7,7 +7,7 @@
 <style>
   :root{
     /* proposta visual aprovada: neutros CINZA, um azul só para o "sistema" */
-    --azul:#2B5FC7; --azul-escuro:#234E9E; --fundo:#E8EAEE; --lateral:#23262E;
+    --azul:#2B5FC7; --azul-escuro:#234E9E; --fundo:#EDEFF2; --lateral:#23262E;
     --texto:#25272B; --cinza:#5B6069; --borda:#D9DCE1; --branco:#fff;
     --verde:#1E6F50; --laranja:#B4530A; --vermelho:#B3261E; --roxo:#5C2E91;
     /* a placa: cinza de leitura. É o fundo dos quadros que se CONSULTAM
@@ -16,6 +16,13 @@
        (#F5F6F8): dois cinzas quase iguais leem-se como engano, não como
        hierarquia. */
     --placa:#EBEEF3;
+    /* reforma visual padrão To Do (espec. aprovada): tokens novos */
+    --azul-claro:#7FA6F0; --azul-fundo:#F3F7FE;
+    --cinza-claro:#8A8F98; --borda-suave:#E7E9EE;
+    --verde-f:#E4F1EA; --laranja-f:#FCEEDF; --vermelho-f:#FBE9E8;
+    --lateral-hover:rgba(255,255,255,.07); --lateral-ativo:rgba(255,255,255,.13);
+    --sombra:0 1px 2px rgba(20,24,33,.06); --sombra-hover:0 2px 8px rgba(20,24,33,.12);
+    --raio:6px;
   }
   *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif}
   body{background:var(--fundo);color:var(--texto);height:100vh;overflow:hidden;font-size:14px}
@@ -55,7 +62,7 @@
   .cfg-cx button{padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;
     font-weight:600;cursor:pointer}
 
-  .app{display:none;grid-template-columns:300px 1fr;height:100vh;transition:grid-template-columns .15s}
+  .app{display:none;grid-template-columns:300px 1fr;height:100vh;transition:grid-template-columns .18s ease}
   /* TRANSIÇÕES DE PÁGINA: trocar de lista, abrir a ficha e abrir um modal
      surgem num fade curtinho (120–160ms) em vez do corte seco do innerHTML.
      Uma animação só, reusada — e desligada para quem pediu menos movimento. */
@@ -72,8 +79,11 @@
      recolhia o menu por conta própria, e o botão ☰ ficava sem efeito com a
      ficha aberta — parecia quebrado. Agora a ficha só muda o PADRÃO; o botão
      continua sendo a palavra final. */
-  .app.detalhe-aberto{grid-template-columns:300px minmax(300px,25%) minmax(520px,1fr)}
-  .app.detalhe-aberto.mini-lateral{grid-template-columns:64px minmax(330px,30%) minmax(540px,1fr)}
+  /* A FICHA é a área de trabalho e recebe 1fr; a LISTA congela em 380px e
+     nunca mais é esmagada (era minmax(300px,25%), que espremia o texto
+     palavra por palavra com a ficha aberta). */
+  .app.detalhe-aberto{grid-template-columns:300px 380px minmax(560px,1fr)}
+  .app.detalhe-aberto.mini-lateral{grid-template-columns:64px 380px minmax(560px,1fr)}
 
   .sidebar{background:var(--lateral);border-right:1px solid var(--lateral);overflow-y:auto;overflow-x:hidden;padding:12px 0;color:#E8EAED}
   .sync-todo{padding:2px 16px 8px;font-size:12px;color:#9AA0B0;white-space:nowrap}
@@ -99,7 +109,7 @@
     border-left:none;border-radius:10px}
   .app.mini-lateral .sidebar .lista-item .rotulo{flex:none}
   .app.mini-lateral .sidebar .lista-item .ic{width:auto;font-size:21px}
-  .app.mini-lateral .sidebar .lista-item.ativa{background:rgba(255,255,255,.15)}
+  .app.mini-lateral .sidebar .lista-item.ativa{background:var(--lateral-ativo)}
   /* a marca da lista aberta é uma pastilha colada na borda do trilho, não um
      fio de ponta a ponta: a 64px o fio se confunde com a moldura da coluna */
   .app.mini-lateral .sidebar .lista-item.ativa::before{content:"";position:absolute;
@@ -132,17 +142,18 @@
   .app.mini-lateral .sidebar #busca-x{display:none}
   /* coluna de casos dentro da ficha (3ª coluna): escolhe o caso, a 4ª mostra o andamento dele */
   /* menu do caso em grafite claro — lê-se como MENU, não como fundo */
-  .col-casos{width:186px;flex:none;border-right:1px solid #262A33;background:#313641;overflow-y:auto;padding:10px 8px}
-  .col-casos .cc-tit{font-size:11px;font-weight:700;color:#A8AEBB;text-transform:uppercase;letter-spacing:.4px;padding:2px 6px 7px}
-  .cc-item{border:1px solid var(--borda);border-radius:8px;padding:7px 9px;margin-bottom:6px;cursor:pointer;background:var(--branco)}
-  .cc-item:hover{box-shadow:0 2px 6px rgba(0,0,0,.08)}
-  .cc-item.sel{outline:2px solid var(--azul)}
+  /* coluna de casos CLARA (espec. 7.3): a faixa grafite saiu da ficha — o
+     cartão "Casos do cliente" vive em fundo claro, item selecionado azul */
+  .col-casos{width:196px;flex:none;border-right:1px solid var(--borda-suave);background:#F7F8FA;overflow-y:auto;padding:12px 10px}
+  .col-casos .cc-tit{font-size:11px;font-weight:700;color:var(--cinza);text-transform:uppercase;letter-spacing:.5px;padding:2px 6px 7px}
+  .cc-item{border:1px solid var(--borda-suave);border-radius:var(--raio);padding:8px 10px;margin-bottom:6px;cursor:pointer;background:var(--branco)}
+  .cc-item:hover{box-shadow:var(--sombra)}
+  .cc-item.sel{outline:none;border-color:var(--azul);background:var(--azul-fundo)}
   .cc-item.enc{opacity:.55}
-  .cc-item .cc-ben{font-weight:700;font-size:13px;line-height:1.25}
+  .cc-item .cc-ben{font-weight:700;font-size:12.5px;line-height:1.25}
   .cc-item .cc-fase{color:var(--cinza);font-size:11px;margin-top:2px}
-  .cc-item.novo{border:1px dashed rgba(255,255,255,.4);color:#9FC0F5;background:none}
-  .cc-item.novo .cc-ben{color:#9FC0F5}
-  .cc-item.sel{outline-color:#9FC0F5}
+  .cc-item.novo{border:1px dashed var(--borda);color:var(--azul-escuro);background:none}
+  .cc-item.novo .cc-ben{color:var(--azul-escuro)}
   .cc-equipe{display:flex;flex-wrap:wrap;gap:5px;padding:2px 6px}
   .mini-eq{cursor:pointer;opacity:.3;filter:grayscale(.6)}
   .mini-eq.on{opacity:1;filter:none}
@@ -151,7 +162,7 @@
   .caso.caso-cab{background:#eef4fb;border-color:#cfe0f5}
   /* janela de encerramento (resultado -> honorários) */
   #janela{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:98;display:flex;align-items:center;justify-content:center}
-  .jan-caixa{background:var(--branco);border-radius:12px;padding:20px 24px;min-width:min(380px,92vw);max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+  .jan-caixa{background:var(--branco);border-radius:var(--raio);padding:20px 24px;min-width:min(380px,92vw);max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
   .jan-caixa h3{margin-bottom:4px}
   .btn-res{padding:8px 14px;border:1px solid var(--borda);border-radius:8px;background:var(--fundo);cursor:pointer;font-weight:600}
   .btn-res:hover{background:#e8f1fb}
@@ -161,20 +172,21 @@
   /* sub-menu do processo: separa o que é nosso do que é do tribunal */
   /* segmentado claro: a aba ativa é um cartão branco com a letra em azul —
      nada de faixa escura ou botão azul cheio disputando com o conteúdo */
-  .sub-menu{display:inline-flex;gap:3px;margin:0 0 12px;flex-wrap:wrap;
-    background:var(--fundo);border:1px solid var(--borda);border-radius:10px;padding:3px}
-  .sub-menu button{border:none;background:none;color:var(--cinza);
-    border-radius:8px;padding:6px 13px;font-size:13px;font-weight:500;cursor:pointer}
-  .sub-menu button:hover{color:var(--texto)}
-  .sub-menu button.on{background:var(--branco);color:var(--azul);font-weight:650;
-    box-shadow:0 1px 2px rgba(20,24,33,.09)}
+  /* filtros dos andamentos como CHIPS claros (espec. 7.5) */
+  .sub-menu{display:inline-flex;gap:6px;margin:0 0 12px;flex-wrap:wrap;
+    background:none;border:none;border-radius:0;padding:0}
+  .sub-menu button{border:1px solid var(--borda);background:var(--branco);color:var(--cinza);
+    border-radius:20px;padding:5px 13px;font-size:12.5px;font-weight:500;cursor:pointer}
+  .sub-menu button:hover{border-color:var(--cinza-claro);color:var(--texto)}
+  .sub-menu button.on{background:var(--azul-fundo);border-color:var(--azul);
+    color:var(--azul-escuro);font-weight:650}
   .sub-menu.instancias{margin:0 0 10px}
   .sub-menu.instancias button{border-radius:8px;padding:6px 12px;font-size:13px}
   .sub-menu.instancias small{display:block;font-weight:400;opacity:.75;font-size:12px}
   /* janela de escolha do processo: fundo bloqueado, foco numa decisão só */
   .modal-fundo{position:fixed;inset:0;background:rgba(20,22,28,.55);z-index:60;
     display:flex;align-items:center;justify-content:center;padding:20px}
-  .modal-cx{background:var(--branco);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.3);
+  .modal-cx{background:var(--branco);border-radius:var(--raio);box-shadow:0 12px 40px rgba(0,0,0,.3);
     width:min(560px,96vw);max-height:86vh;overflow-y:auto;padding:16px 18px}
   .modal-cab{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
   .proc-op{display:block;width:100%;text-align:left;border:1px solid var(--borda);border-radius:10px;
@@ -236,11 +248,12 @@
     width:40px;height:40px;padding:0;cursor:pointer;color:transparent;
     border-radius:10px;text-indent:-999px}
   .app.mini-lateral .sidebar .busca::before{
-    left:11px;top:10px;font-size:19px;opacity:.9;pointer-events:none}
+    left:10px;top:10px;width:19px;height:19px;opacity:.9;pointer-events:none}
   .app.mini-lateral .sidebar #busca-x{display:none!important}
-  .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid rgba(255,255,255,.18);border-radius:6px;font-size:14px;background:rgba(255,255,255,.10);color:#E8EAED}
-  .busca input::placeholder{color:#9AA0B0}
-  .novo-cli{display:block;margin:0 12px 10px;width:calc(100% - 24px);padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+  .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid transparent;border-radius:var(--raio);font-size:13px;background:rgba(255,255,255,.09);color:#E8EAED;outline:none}
+  .busca input::placeholder{color:#8A90A0}
+  .busca input:focus{background:rgba(255,255,255,.14);border-color:var(--azul-claro)}
+  .novo-cli{display:flex;align-items:center;justify-content:center;gap:7px;margin:0 12px 10px;width:calc(100% - 24px);padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
   .novo-cli:hover{background:var(--azul-escuro)}
   .sug{border:1px solid var(--borda);border-left:4px solid #8a5cf6;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:var(--branco)}
   .sug .cab{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
@@ -257,22 +270,31 @@
   .exig{background:#fbeaea;border:1px solid #e8b4b8;border-radius:8px;padding:8px 12px;margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px}
   .exig strong{color:var(--vermelho)}
   .chip.exig-chip{background:#fbeaea;color:var(--vermelho)}
-  .busca::before{content:"🔍";position:absolute;left:9px;top:7px;font-size:13px;opacity:.6}
-  .grupo h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#9AA0B0;padding:8px 16px 4px}
-  .lista-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;border-left:3px solid transparent;color:#E8EAED}
-  .lista-item:hover{background:rgba(255,255,255,.07)}
-  .lista-item.ativa{background:rgba(255,255,255,.10);border-left-color:#7FA6F0;
-    font-weight:650;color:#fff}
+  /* a lupa é SVG (padrão aprovado): emoji rendia diferente em cada máquina */
+  .busca::before{content:"";position:absolute;left:10px;top:9px;width:15px;height:15px;opacity:.85;
+    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A90A0' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.5-3.5'/></svg>") center/contain no-repeat}
+  /* padrão To Do aprovado: itens com respiro lateral (8px de calha), canto
+     arredondado e a pastilha do ativo como pseudo-elemento colado na calha */
+  .grupo{padding:0 8px}
+  .grupo h3{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#7E8494;padding:12px 10px 5px}
+  .lista-item{display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer;
+    border-radius:var(--raio);color:#D6D9E0;font-size:13.5px;position:relative;user-select:none}
+  .lista-item:hover{background:var(--lateral-hover)}
+  .lista-item.ativa{background:var(--lateral-ativo);font-weight:600;color:#fff}
+  .lista-item.ativa::before{content:"";position:absolute;left:-8px;top:7px;bottom:7px;
+    width:3px;border-radius:0 3px 3px 0;background:var(--cor-lista,var(--azul-claro))}
   .lista-item .rotulo{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
-  /* célula de largura fixa: emoji têm larguras diferentes e, sem ela, cada
-     rótulo começava numa coluna — a lista parecia desalinhada sem motivo */
-  .lista-item .ic{flex:none;width:20px;text-align:center;font-size:15px;line-height:1}
+  /* célula de largura fixa: sem ela, cada rótulo começava numa coluna —
+     a lista parecia desalinhada sem motivo */
+  .lista-item .ic{flex:none;width:20px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:15px;line-height:1;color:#9AA0B0}
   .lista-item .txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
   /* o contador é informação de canto: número claro, sem cápsula, e em
      algarismos de largura fixa para a coluna da direita não tremer */
-  .lista-item .cont{margin-left:auto;font-size:12px;color:#8D94A3;
+  .lista-item .cont{margin-left:auto;font-size:12px;color:#9AA0B0;
     font-variant-numeric:tabular-nums;padding-left:8px}
-  .lista-item.ativa .cont{color:#DDE2EC}
+  .lista-item .cont:empty{display:none}
+  .lista-item.ativa .ic,.lista-item.ativa .cont{color:var(--azul-claro)}
   .u-papel{font-size:11px;color:#8D94A3;text-transform:lowercase}
   .lista-item .priv{margin-left:auto;font-size:10px;color:#D8C6EE;background:rgba(255,255,255,.12);border-radius:8px;padding:1px 6px}
   .sep{border-top:1px solid rgba(255,255,255,.12);margin:8px 12px}
@@ -286,9 +308,10 @@
   .add-rodape{position:sticky;bottom:0;margin:12px -22px -18px;padding:12px 22px 14px;
     display:flex;gap:8px;align-items:center;background:inherit;
     border-top:1px solid var(--borda);box-shadow:0 -6px 14px -10px rgba(30,32,36,.35)}
-  .add-mais{font-size:19px;color:var(--azul);font-weight:700;line-height:1}
-  .add-rodape input{padding:10px 12px;border:1px solid var(--borda);border-radius:8px;
-    font-size:14px;background:var(--branco)}
+  .add-mais{color:var(--azul);display:inline-flex;line-height:1}
+  .add-rodape input{padding:10px 12px;border:1px solid var(--borda);border-radius:var(--raio);
+    font-size:13px;background:var(--branco);outline:none;box-shadow:var(--sombra)}
+  .add-rodape input:focus{border-color:var(--azul)}
   /* na coluna estreita (ficha aberta) os campos encolhem em vez de empurrar o
      botão para fora da tela — antes o "Adicionar" ficava cortado pela ficha */
   .add-rodape #add-nome{flex:1 1 120px;min-width:0}
@@ -300,8 +323,11 @@
   .app.celular .add-rodape{flex-wrap:wrap;margin-bottom:0;bottom:66px}
   .app.celular .add-rodape #add-ben{width:100%;order:3}
   .meio-topo{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
-  /* título grande da lista, como o do To Do */
-  .meio-topo h1{font-size:26px;font-weight:600;color:var(--azul-escuro);letter-spacing:-.2px}
+  /* título da lista (espec. 6.1): 19px, azul-escuro FIXO, ícone SVG ao lado */
+  .meio-topo h1{font-size:19px;font-weight:600;color:var(--azul-escuro);letter-spacing:-.2px;
+    display:flex;align-items:center;gap:8px;min-width:0}
+  .meio-topo h1 .ic{color:var(--azul);display:inline-flex;flex:none}
+  .meio-topo h1 .h1-txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   /* sobre fundo colorido, o cartão branco é que carrega o conteúdo */
   .meio .cartao,.meio .mencao,.meio .evento,.meio .rotina,.meio .caso,
   .meio .sug,.meio .modelo,.meio .card,.meio .mkt,.meio .cal-dia{
@@ -326,11 +352,12 @@
   .cartao[draggable="true"]{cursor:grab}
   .cartao.arrastando{opacity:.4}
   .lista-item.arrastando{opacity:.45}
-  .lista-item.alvo{background:rgba(120,170,255,.28);border-left-color:#8FB6F5;
+  .lista-item.alvo{background:rgba(120,170,255,.28);box-shadow:inset 3px 0 0 #8FB6F5;
     outline:1px dashed rgba(255,255,255,.5);outline-offset:-3px}
   .filtros{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
-  .fchip{border:1px solid var(--borda);background:var(--branco);border-radius:14px;padding:4px 12px;cursor:pointer;font-size:13px;display:flex;gap:6px;align-items:center}
-  .fchip.on{background:var(--azul);border-color:var(--azul);color:#fff}
+  .fchip{border:1px solid var(--borda);background:var(--branco);border-radius:20px;padding:4px 12px;cursor:pointer;font-size:12px;color:var(--cinza);display:flex;gap:6px;align-items:center}
+  .fchip:hover{border-color:var(--cinza-claro);color:var(--texto)}
+  .fchip.on{background:var(--azul-fundo);border-color:var(--azul);color:var(--azul-escuro);font-weight:600}
   /* em lista longa, quem rola perde a divisão ("isto ainda é 'em exigência'?").
      O cabeçalho gruda no topo e responde sem exigir voltar. */
   h3.secao{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
@@ -350,23 +377,26 @@
      do Paulo — ele compara as duas listas todo dia, e o CRM mostrando menos
      clientes na mesma tela parecia mais "cheio" com menos gente. As duas
      linhas de texto (~39px) continuam com ar; abaixo disso começa a colar. */
-  .cartao{position:relative;background:var(--branco);padding:0 12px 0 16px;cursor:pointer;
-    min-height:52px;display:flex;align-items:center;gap:10px;margin-bottom:2px;
-    border:1px solid var(--borda);border-radius:8px;
-    box-shadow:0 1px 2px rgba(30,32,36,.05)}
-  .cartao:hover{background:#F9FBFD;box-shadow:0 3px 9px rgba(30,32,36,.10)}
-  .cartao.sel{background:#EDF3FD;border-color:#BCD3F5;box-shadow:inset 3px 0 0 var(--azul)}
+  /* anatomia To Do aprovada: cartão branco raso, sombra leve, título em
+     linha única com ellipsis e a segunda linha miúda em cinza */
+  .cartao{position:relative;background:var(--branco);padding:9px 12px;cursor:pointer;
+    min-height:50px;display:flex;align-items:center;gap:10px;margin-bottom:3px;
+    border:1px solid transparent;border-radius:var(--raio);
+    box-shadow:var(--sombra)}
+  .cartao:hover{box-shadow:var(--sombra-hover)}
+  .cartao.sel{background:var(--azul-fundo);border-color:var(--azul);box-shadow:var(--sombra)}
   .cartao.feita{opacity:.5}
-  .cartao.feita .nome{text-decoration:line-through}
+  .cartao.feita .nome{text-decoration:line-through;color:var(--cinza-claro)}
   /* o nome NUNCA pode ser espremido a zero: numa coluna estreita, com o chip
      de exigência ao lado, a linha chegou a mostrar só o chip e nenhum nome */
   .cartao .info{flex:1 1 auto;min-width:130px}
-  .cartao .nome{font-weight:600;font-size:15px;letter-spacing:-.006em;line-height:1.3;
-    color:#1D1F24;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cartao .nome{font-size:13.5px;line-height:1.35;
+    color:var(--texto);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cartao .nome .cpf{color:var(--cinza-claro);font-size:12px}
   /* a segunda linha: miúda, cinza, só datas — do jeito do To Do */
-  .cartao .meta{display:flex;gap:6px;margin-top:2px;font-size:13px;color:#6E747E;
+  .cartao .meta{display:flex;gap:6px;margin-top:2px;font-size:11.5px;color:var(--cinza);
     align-items:center;white-space:nowrap;overflow:hidden}
-  .cartao .meta .pt{color:#C7CBD2;flex:none}
+  .cartao .meta .pt{color:#B9BDC6;flex:none}
   .cartao .dt{flex:none;font-variant-numeric:tabular-nums}
   .cartao .dt.venc{color:var(--vermelho);font-weight:600}
   .cartao .dt.hoje{color:var(--azul);font-weight:600}
@@ -388,6 +418,10 @@
   .avatar.mini.vazio{background:#DCDFE5;color:#8A9099}
   .chip{border-radius:10px;padding:1px 8px;font-size:11px;font-weight:600;white-space:nowrap}
   .chip.ben{background:#e8f1fb;color:var(--azul-escuro)}
+  /* semáforo de prazo (espec. 6.3): vencido/hoje, até 15 dias, com folga */
+  .chip.vermelho{background:var(--vermelho-f);color:var(--vermelho)}
+  .chip.laranja{background:var(--laranja-f);color:var(--laranja)}
+  .chip.verde{background:var(--verde-f);color:var(--verde)}
   /* datas como no To Do: vencida vermelha, hoje azul, futura preta — sem fundo */
   .chip.prazo{background:none;padding:0;border-radius:0;color:#3b3a39}
   .chip.prazo.venc{color:var(--vermelho);font-weight:700}
@@ -410,10 +444,11 @@
     color:#c8c6c4;flex:none;width:34px;height:34px;border-radius:8px;
     display:inline-flex;align-items:center;justify-content:center}
   .acao-card:hover{background:#EFF2F7}
-  .acao-card.on{color:#eaa300}
-  /* emojis não obedecem a cor do CSS — apagado = cinza via grayscale */
+  .acao-card.on{color:var(--azul)}
+  /* ícones agora são SVG (currentColor); o grayscale fica para os que ainda
+     são emoji (☀️ do Meu Dia) até a varredura final */
   .acao-card.sol,.acao-card.fogo{filter:grayscale(1);opacity:.35}
-  .acao-card.sol.on,.acao-card.fogo.on{filter:none;opacity:1}
+  .acao-card.sol.on,.acao-card.fogo.on{filter:none;opacity:1;color:var(--laranja)}
   .chip.urg{background:#fbeaea;color:var(--vermelho)}
   .nova{display:flex;gap:8px;align-items:center;background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 12px;margin-bottom:12px}
   .nova input{flex:1;border:none;outline:none;font-size:14px}
@@ -425,22 +460,28 @@
   .det-rolagem{flex:1;overflow-y:auto}
   .det-topo{position:sticky;top:0;background:var(--branco);border-bottom:1px solid var(--borda);padding:14px 22px;z-index:2}
   .det-topo .linha1{display:flex;align-items:center;gap:10px}
-  .det-topo h2{font-size:18px}
+  .det-topo h2{font-size:17px;font-weight:600;line-height:1.25;min-width:0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* avatar do cabeçalho no padrão aprovado: 40px, azul-escuro */
+  .det-topo .cli-casos .avatar{width:40px;height:40px;font-size:17px;background:var(--azul-escuro)}
   /* ativo/inativo ao lado do nome: responde "ainda trabalhamos para ela?"
-     sem abrir caso por caso. Vermelho = todos os casos encerrados. */
-  .cli-st{font-size:12px;font-weight:700;border-radius:14px;padding:3px 10px;
-    white-space:nowrap;margin-left:auto;flex:none}
-  .cli-st.inativo{background:#FBE9E7;color:#B71C1C;border:1px solid #E8B4AC}
-  .cli-st.ativo{background:#EDF6EE;color:#1E7B34;border:1px solid #BFDCC2}
-  .cli-st.lemb{background:#FFF4D6;color:#8A6100;border:1px solid #E9B44C}
+     sem abrir caso por caso. Pill com o pontinho, no padrão aprovado. */
+  .cli-st{font-size:11.5px;font-weight:600;border-radius:10px;padding:2px 9px;
+    white-space:nowrap;margin-left:auto;flex:none;display:inline-flex;align-items:center;gap:5px}
+  .cli-st::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.85}
+  .cli-st.inativo{background:var(--vermelho-f);color:var(--vermelho)}
+  .cli-st.ativo{background:var(--verde-f);color:var(--verde)}
+  .cli-st.lemb{background:#FFF4D6;color:#8A6100}
   /* o nome do cliente é clicável: abre o mapa dos casos por lista */
   .cli-casos{display:inline-flex;align-items:center;gap:10px;cursor:pointer;
     border-radius:10px;padding:2px 8px;margin:-2px -8px}
   .cli-casos:hover{background:var(--fundo)}
   .cli-casos-seta{color:var(--cinza);font-size:12px}
-  .cli-st.semcaso{background:var(--fundo);color:var(--cinza);border:1px solid var(--borda)}
+  .cli-st.semcaso{background:var(--borda-suave);color:var(--cinza)}
   @media (max-width:700px){ .cli-st{font-size:10px;padding:2px 7px} }
-  .fechar{margin-left:auto;border:none;background:none;font-size:20px;cursor:pointer;color:var(--cinza)}
+  .fechar{margin-left:auto;border:none;background:none;font-size:18px;cursor:pointer;
+    color:var(--cinza);border-radius:4px;padding:2px 7px}
+  .fechar:hover{background:var(--borda-suave)}
   .det-topo .resumo{display:flex;flex-wrap:wrap;gap:18px;margin-top:7px;align-items:center}
   /* identidade mínima: rótulo pequeno em azul, valor legível, sem virar chip */
   .id-min{display:inline-flex;align-items:baseline;gap:7px;font-size:13px;
@@ -489,34 +530,38 @@
   /* linha do tempo limpa: quem escreveu à esquerda, texto respirando, e uma
      hairline separando. A cor do autor fica só no avatar — nada de barra
      colorida e fundo tingido a cada linha (era o que mais poluía) */
-  .timeline{list-style:none;background:var(--branco);border:1px solid var(--borda);
-    border-radius:12px;overflow:hidden}
-  .timeline li{display:flex;gap:13px;padding:13px 12px;margin:0;
-    border-top:1px solid var(--borda);border-left:none!important;border-radius:0}
-  /* zebrado: um andamento acaba onde o próximo começa, sem precisar de régua */
-  .timeline li:nth-child(odd){background:var(--branco)!important}
-  .timeline li:nth-child(even){background:#F5F6F8!important}
-  .timeline li:first-child{border-top:none}
-  .timeline .quando{flex:none;width:74px;font-size:11px;color:var(--cinza);
+  /* LINHA DO TEMPO COM FIO (espec. 7.5): o zebrado saiu — cada entrada é uma
+     bolinha no fio vertical, data e autor à esquerda, texto corrido ao lado */
+  .timeline{list-style:none;background:var(--branco);border:1px solid var(--borda-suave);
+    border-radius:var(--raio);overflow:hidden;position:relative}
+  .timeline::before{content:"";position:absolute;left:96px;top:14px;bottom:14px;width:2px;
+    background:var(--borda-suave);border-radius:2px}
+  .timeline li{display:flex;gap:20px;padding:11px 12px;margin:0;
+    border-left:none!important;border-radius:0;position:relative;background:none!important}
+  .timeline li::after{content:"";position:absolute;left:92.5px;top:18px;width:9px;height:9px;
+    border-radius:50%;background:var(--branco);border:2px solid var(--cinza-claro);z-index:1}
+  .timeline .quando{flex:none;width:74px;font-size:11px;color:var(--cinza);font-weight:700;
     display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
     font-variant-numeric:tabular-nums;line-height:1.3}
-  .timeline .texto{flex:1;white-space:pre-wrap;font-size:14px;line-height:1.55;min-width:0}
+  .timeline .texto{flex:1;white-space:pre-wrap;font-size:13px;line-height:1.5;min-width:0;max-width:72ch}
   /* ── Fatos do benefício ───────────────────────────────────────────────
      Hierarquia por linha e espaço, não por bloco colorido: cor entra na
      letra (rótulo e nome do benefício em azul) e no estado (prazo). */
   /* A PLACA DO PROCESSO É CINZA. Espécie, protocolo, NB, DER, DIB são dados
      que se leem, não coisas que se fazem — o cinza diz isso sem uma palavra,
      e de quebra separa o quadro de cima do branco em que se escreve. */
-  .fatos{background:var(--placa);border:1px solid var(--borda);border-radius:12px;
-    overflow:hidden;margin-bottom:12px}
+  .fatos{background:var(--branco);border:1px solid var(--borda-suave);border-radius:var(--raio);
+    overflow:hidden;margin-bottom:12px;box-shadow:var(--sombra)}
   .fatos-topo{display:flex;align-items:center;gap:9px;padding:12px 15px;flex-wrap:wrap}
   .fatos-topo h3{font-size:16px;font-weight:650;letter-spacing:-.015em;color:var(--azul-escuro)}
-  .fx-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));border-top:1px solid var(--borda)}
-  .fx{padding:9px 15px;border-top:1px solid var(--borda);border-left:1px solid var(--borda);margin:-1px 0 0 -1px}
+  /* grade de células brancas com divisórias de 1px (espec. 7.4) */
+  .fx-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:1px;
+    background:var(--borda-suave);border-top:1px solid var(--borda-suave)}
+  .fx{padding:9px 15px;background:var(--branco)}
   .fx dt{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
     color:color-mix(in srgb, var(--azul) 72%, var(--cinza));cursor:help}
-  .fx dd{font-size:14px;font-weight:650;margin-top:3px;font-variant-numeric:tabular-nums;
-    display:flex;align-items:center;gap:5px;flex-wrap:wrap;letter-spacing:-.01em}
+  .fx dd{font-size:13px;font-weight:650;margin-top:3px;font-variant-numeric:tabular-nums;
+    display:flex;align-items:center;gap:5px;flex-wrap:wrap;letter-spacing:-.01em;overflow-wrap:anywhere}
   .fx dd small{font-weight:400;color:var(--cinza);font-size:12px;letter-spacing:0}
   .fx-vazio{color:var(--cinza);font-weight:400}
   .fx .lapis{opacity:0;transition:.12s}
@@ -690,13 +735,14 @@
   .btn-rap.imp.on{background:#FFC83D;border-color:#D9A400;color:#4A3B00}
   .btn-rap.urg{border-color:#E39A9A;color:var(--vermelho)}
   .btn-rap.urg.on{background:var(--vermelho);border-color:var(--vermelho);color:#fff}
-  /* menu do caso: barra escura horizontal no topo da ficha */
-  .menu-topo{background:#313641;border-radius:10px;padding:5px;display:flex;gap:3px;
-    flex-wrap:wrap;align-items:center;margin-top:10px}
-  .mt{background:transparent;color:#C9CED8;border:none;border-radius:8px;
-    padding:7px 13px;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap}
-  .mt:hover{background:rgba(255,255,255,.1)}
-  .mt.on{background:#fff;color:var(--texto)}
+  /* abas da ficha em pivot CLARO (espec. 7.2): a faixa escura saiu — a aba
+     ativa é texto azul-escuro com o fio azul embaixo, como no To Do */
+  .menu-topo{display:flex;gap:2px;flex-wrap:wrap;align-items:center;margin-top:12px;
+    border-bottom:1px solid var(--borda-suave)}
+  .mt{background:none;color:var(--cinza);border:none;border-bottom:2px solid transparent;
+    padding:9px 13px;font-weight:500;font-size:13px;cursor:pointer;white-space:nowrap}
+  .mt:hover{color:var(--texto);background:#FAFBFC}
+  .mt.on{background:none;color:var(--azul-escuro);font-weight:600;border-bottom-color:var(--azul)}
   .mt.mt-proc{max-width:320px;overflow:hidden;text-overflow:ellipsis}
   #menu-processos{position:fixed;z-index:99;background:var(--branco);border:1px solid var(--borda);
     border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.22);padding:6px;min-width:290px;max-height:65vh;overflow-y:auto}
@@ -885,14 +931,20 @@
   .enc-sug .btn-rap.on{background:#E7EEFB;border-color:var(--azul);color:var(--azul-escuro);font-weight:650}
   .enc-dica{font-size:12px;color:var(--cinza);align-self:center}
   /* 📣 Novidades: a caixa de entrada do que os portais trouxeram */
+  /* card em flex (espec. 6.4): fonte + corpo flexível + ações à direita —
+     nome e texto com ellipsis/clamp, nenhum botão sobre o texto */
   .nov{display:flex;align-items:flex-start;gap:10px;background:var(--branco);
-    border:1px solid var(--borda);border-radius:10px;padding:10px 12px;margin-bottom:5px}
+    border:1px solid var(--borda-suave);border-radius:var(--raio);padding:10px 12px;
+    margin-bottom:5px;box-shadow:var(--sombra)}
   .nov-fonte{flex:none;font-size:11px;font-weight:700;color:var(--cinza);
     background:var(--placa);border-radius:6px;padding:3px 7px;white-space:nowrap}
   .nov-corpo{flex:1;min-width:0}
-  .nov-cli{font-weight:650;font-size:14px;cursor:pointer}
+  .nov-cli{font-weight:650;font-size:14px;cursor:pointer;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .nov-cli:hover{color:var(--azul)}
-  .nov-txt{font-size:13px;color:var(--texto);margin-top:2px;line-height:1.45}
+  .nov-txt{font-size:13px;color:var(--texto);margin-top:2px;line-height:1.45;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .nov .btn-mini{flex:none}
   /* ── importar do PAT/GERID ─────────────────────────────────────────── */
   .pat-cx{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:16px 18px}
   .pat-cx h3{font-size:15px;color:var(--azul-escuro);margin-bottom:4px}
@@ -1084,12 +1136,20 @@
   .mkt{border:1px solid var(--borda);border-radius:8px;padding:10px 14px;margin-bottom:8px;background:var(--branco);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   .mkt strong{min-width:180px}
   .doc-edit{width:100%;min-height:140px;margin-top:8px;padding:8px;border:1px solid var(--borda);border-radius:8px;font:13px/1.5 monospace}
-  .aviso{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#323130;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
-  .aviso.on{opacity:1}
-  @media (max-width:980px){
-    .app.detalhe-aberto{grid-template-columns:0 0 1fr}
-    .app.detalhe-aberto .sidebar,.app.detalhe-aberto .meio{display:none}
-    .app{grid-template-columns:250px 1fr}
+  /* toast único (espec. 7.6): pill grafite centrado embaixo */
+  .aviso{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(8px);
+    background:#1C2029;color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;
+    box-shadow:0 4px 16px rgba(0,0,0,.35);opacity:0;transition:opacity .15s,transform .15s;
+    pointer-events:none;z-index:99}
+  .aviso.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  /* Tela estreita com a ficha aberta: a lista sai de cena e a ficha ocupa
+     o resto — o menu fica (retrátil pelo ☰). Substitui o antigo corte em
+     980px que sumia com o menu inteiro. Entra ANTES do bloco do celular
+     (760px) no cascade e não mexe no comportamento dele. */
+  @media (max-width:1180px){
+    .app.detalhe-aberto .meio{display:none}
+    .app.detalhe-aberto{grid-template-columns:300px 1fr}
+    .app.detalhe-aberto.mini-lateral{grid-template-columns:64px 1fr}
   }
 
   /* ══ CELULAR ══════════════════════════════════════════════════════════
@@ -1190,6 +1250,8 @@
     .app.celular .rot-ok{font-size:22px;padding:4px 8px}
     .app.celular .timeline li{flex-direction:column;gap:2px;padding:9px 10px}
     .app.celular .timeline .quando{width:auto;flex-direction:row;align-items:center}
+    /* no celular a linha vira coluna — o fio ficaria no lugar errado */
+    .app.celular .timeline::before,.app.celular .timeline li::after{display:none}
     .app.celular .btn-mini,.app.celular .cop{padding:9px 15px;font-size:14px;min-height:38px}
     .app.celular .rotina{flex-wrap:wrap;padding:10px 12px}
     .app.celular .rotina .btn-mini{margin-left:auto}
@@ -1208,7 +1270,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.90 · 🙏 Aposentadorias Futuras não vira caso: vira 🔔 lembrete com as anotações do To Do, transferíveis a mão para os andamentos</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.91 · reforma visual no padrão To Do (F1–F7): lista fixa em 380px, ícones SVG, abas claras, linha do tempo com fio</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1243,7 +1305,7 @@
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
     <div class="sep"></div>
-    <button class="novo-cli" id="btn-novo-cli" title="Novo Cliente">➕<span class="txt"> Novo Cliente</span></button>
+    <button class="novo-cli" id="btn-novo-cli" title="Novo Cliente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="txt">Novo Cliente</span></button>
     <div class="busca"><input id="busca" placeholder="Pesquisar nome, CPF, processo, protocolo…" style="padding-right:26px">
       <button id="busca-x" title="limpar pesquisa"
         style="display:none;position:absolute;right:6px;top:6px;border:none;background:none;font-size:14px;cursor:pointer;color:#CFD3DA">✕</button></div>
@@ -1273,8 +1335,8 @@
     <div id="conteudo-meio"></div>
     <!-- como no To Do: o campo de acrescentar fica sempre no pé da lista -->
     <div class="add-rodape" id="add-rodape" style="display:none">
-      <span class="add-mais">＋</span>
-      <input id="add-nome" placeholder="Adicionar cliente nesta lista — nome, ou Nome #CPF"
+      <span class="add-mais"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      <input id="add-nome" placeholder="Adicionar cliente nesta lista (nome, ou Nome #CPF)"
         autocomplete="off" enterkeyhint="done">
       <input id="add-ben" list="lista-beneficios" placeholder="benefício (opcional)">
       <button onclick="addNaLista()">Adicionar</button>
@@ -1290,7 +1352,7 @@
   <button data-cel="mencoes"><b>📥</b>Menções<span class="selo" id="selo-menc" style="display:none"></span></button>
   <button data-cel="menu"><b>☰</b>Listas</button>
 </nav>
-<div class="aviso" id="aviso"></div>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 <div id="modal" style="display:none"></div>
 
 <script>
@@ -1797,9 +1859,13 @@ function aplicarTema(){
     meio.style.backgroundPosition = "center";
     meio.style.backgroundAttachment = "local";
   } else {
-    meio.style.background = escolhido || fundo;             // cor, degradê ou o padrão
+    // padrão neutro (--fundo) para toda lista; só um fundo ESCOLHIDO pinta.
+    // A cor por lista saiu do miolo — ela vive na pastilha do menu.
+    meio.style.background = escolhido || "";
   }
-  document.getElementById("titulo-lista").style.color = cor;
+  // título sempre azul-escuro (espec. 6.1); a cor da lista fica RESTRITA à
+  // pastilha do item ativo do menu, via --cor-lista
+  document.getElementById("titulo-lista").style.color = "";
   document.documentElement.style.setProperty("--cor-lista", cor);
 }
 
@@ -1923,6 +1989,57 @@ function quantosNoMeuDia(){
   return casosDia.length + hojeK.length + tHoje.length + lembHoje;
 }
 
+// ── biblioteca de ícones SVG do menu (espec. 5.3) ─────────────────────────
+// Emoji como ícone desalinhava e rendia diferente em cada máquina. Cada
+// entrada é o MIOLO do svg (stroke 1.8, viewBox 24, currentColor); a chave é
+// o emoji EXATO que os rótulos usam — assim os rótulos ("☀️ Meu Dia")
+// continuam a fonte única de verdade e o rotu() troca só a apresentação.
+const SVG_MENU = {
+  "☀️":'<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M18.7 5.3 17 7M7 17l-1.7 1.7"/>',
+  "📣":'<path d="M3 10v4l11 5V5L3 10Z"/><path d="M14 8.5c2.6.6 4.2 1.8 4.2 3.5s-1.6 2.9-4.2 3.5M7 15.5V19a1.5 1.5 0 0 0 3 0v-2.2"/>',
+  "📥":'<path d="M3.5 13.5h5l1.5 2.5h4l1.5-2.5h5"/><path d="M5.5 5.5h13l2 8v5a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-5l2-8Z"/>',
+  "📅":'<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 2.8V6M16 2.8V6"/>',
+  "🗓️":'<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 2.8V6M16 2.8V6"/>',
+  "🗓":'<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/>',
+  "👤":'<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/>',
+  "⭐":'<path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/>',
+  "📋":'<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3h6v1.5M9 10h6M9 13.5h6M9 17h4"/>',
+  "🔁":'<path d="M17.5 6.5H8a4 4 0 0 0-4 4v.5M6.5 17.5H16a4 4 0 0 0 4-4V13"/><path d="m14.5 3.5 3 3-3 3M9.5 20.5l-3-3 3-3"/>',
+  "🧹":'<rect x="3.5" y="4" width="17" height="4.5" rx="1"/><path d="M5.5 8.5V18a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8.5M10 12.5h4"/>',
+  "🙋":'<rect x="3.5" y="8" width="17" height="12" rx="2"/><path d="M9 8V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V8M3.5 13h17"/>',
+  "🌻":'<path d="M4 9.5 12 4l8 5.5M5.5 9.5V19M18.5 9.5V19M9 12v7M15 12v7M3.5 19.5h17"/>',
+  "🖥":'<path d="M9 6.5h11M9 12h11M9 17.5h11M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"/>',
+  "👪":'<path d="M12 3.5v17M8 20.5h8M12 6H6.5L3 12.5h7L6.5 6M12 6h5.5L21 12.5h-7L17.5 6M3 12.5a3.5 3.5 0 0 0 7 0M14 12.5a3.5 3.5 0 0 0 7 0"/>',
+  "💡":'<path d="M13.5 3.5H7A1.8 1.8 0 0 0 5.2 5.3v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8l-5.3-5.3Z"/><path d="M13.5 3.5V9h5.3M9 13.5h6M9 17h4"/>',
+  "🙏":'<path d="M6.5 3.5h11M6.5 20.5h11M8 3.5v3.2a4 4 0 0 0 1.6 3.2L12 12l-2.4 2.1A4 4 0 0 0 8 17.3v3.2M16 3.5v3.2a4 4 0 0 1-1.6 3.2L12 12l2.4 2.1a4 4 0 0 1 1.6 3.2v3.2"/>',
+  "🤖":'<path d="M12 3.5c.4 4.6 3.4 7.6 8 8-4.6.4-7.6 3.4-8 8-.4-4.6-3.4-7.6-8-8 4.6-.4 7.6-3.4 8-8Z"/>',
+  "📄":'<path d="M13.5 3.5H7A1.8 1.8 0 0 0 5.2 5.3v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8l-5.3-5.3Z"/><path d="M13.5 3.5V9h5.3M9 13.5h6M9 17h4"/>',
+  "📌":'<path d="M9 3.5h6l-.8 6.2 2.8 3.3H7l2.8-3.3L9 3.5ZM12 13v7.5"/>',
+  "💼":'<rect x="3.5" y="8" width="17" height="12" rx="2"/><path d="M9 8V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V8M3.5 13h17"/>',
+  "💬":'<path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.8L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5Z"/>',
+  "🤝":'<circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5c.7-3 3-4.6 6-4.6s5.3 1.6 6 4.6"/><path d="M15.5 5.6a3.2 3.2 0 0 1 0 5.8M17.5 15.3c1.8.7 3 2.1 3.5 4.2"/>',
+  "💰":'<circle cx="12" cy="12" r="8.5"/><path d="M12 6.5v11M14.8 8.7c-.6-.9-1.6-1.3-2.8-1.3-1.7 0-2.9.9-2.9 2.2 0 3.1 5.8 1.5 5.8 4.6 0 1.3-1.2 2.2-2.9 2.2-1.3 0-2.4-.5-3-1.5"/>',
+  "🩺":'<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M12 7.5v9M7.5 12h9"/>',
+  "📊":'<rect x="3.5" y="3.5" width="7.2" height="7.2" rx="1.5"/><rect x="13.3" y="3.5" width="7.2" height="7.2" rx="1.5"/><rect x="3.5" y="13.3" width="7.2" height="7.2" rx="1.5"/><rect x="13.3" y="13.3" width="7.2" height="7.2" rx="1.5"/>',
+  "⚙️":'<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.7M12 18.5v2.7M2.8 12h2.7M18.5 12h2.7M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9"/>',
+  "➕":'<path d="M12 5v14M5 12h14"/>',
+  "🔍":'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+};
+const svgIc = (emoji, t=17) => SVG_MENU[emoji]
+  ? `<svg width="${t}" height="${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${SVG_MENU[emoji]}</svg>`
+  : null;
+
+// título da lista (espec. 6.1): sempre azul-escuro, com o ícone SVG da lista
+// à esquerda — a cor por lista fica só na pastilha do menu. O rótulo com
+// emoji continua a fonte de verdade; aqui muda só a apresentação.
+function tituloLista(rot){
+  const h = document.getElementById("titulo-lista");
+  const i = rot.indexOf(" ");
+  const ic = i>0 ? svgIc(rot.slice(0,i), 19) : null;
+  if(ic) h.innerHTML = `<span class="ic" aria-hidden="true">${ic}</span><span class="h1-txt">${esc(rot.slice(i+1))}</span>`;
+  else h.textContent = rot;
+}
+
 function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", quantosNoMeuDia()],
@@ -1943,7 +2060,8 @@ function montarSidebar(){
   // todos os rótulos na mesma coluna: emoji não têm a mesma largura, e sem
   // isso "Menções" e "Calendário" começavam em pontos diferentes.
   const rotu = rot => { const i=rot.indexOf(" ");
-    return `<span class="rotulo"><span class="ic" aria-hidden="true">${rot.slice(0,i)}</span>`
+    const em=rot.slice(0,i);
+    return `<span class="rotulo"><span class="ic" aria-hidden="true">${svgIc(em)||em}</span>`
          + `<span class="txt">${esc(rot.slice(i+1))}</span></span>`; };
   // o nome sem o emoji: é ele que o leitor de tela anuncia e que a etiqueta
   // do menu recolhido mostra
@@ -1973,12 +2091,13 @@ function montarSidebar(){
     ["config","⚙️ Configurações", null],
   ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`).join("");
   const bSom=document.getElementById("btn-som");
-  bSom.textContent = somLigado()?"🔔":"🔕";
+  const sinoSvg = on => `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10ZM10 19a2 2 0 0 0 4 0"/>${on?"":'<path d="M4.5 4.5 19.5 19.5"/>'}</svg>`;
+  bSom.innerHTML = sinoSvg(somLigado());
   bSom.onclick=()=>{
     guardar("crm_som", somLigado()?"off":"on");
-    bSom.textContent = somLigado()?"🔔":"🔕";
+    bSom.innerHTML = sinoSvg(somLigado());
     if(somLigado()) plim();
-    aviso(somLigado()?"Som ligado 🔔":"Som desligado 🔕", false);
+    aviso(somLigado()?"Som ligado":"Som desligado", false);
   };
   document.getElementById("btn-novo-cli").onclick=()=>{
     document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
@@ -2006,7 +2125,7 @@ function montarSidebar(){
       const min = Math.max(0, Math.round((Date.now()-new Date(t))/60000));
       const rel = min<1 ? "agora" : min<60 ? `há ${min} min`
         : min<1440 ? `há ${Math.round(min/60)} h` : `em ${fmt(dataSP(t))}`;
-      st.innerHTML = `<span title="última sincronização completa To Do → CRM: ${esc(fmtTS(t))} às ${esc(horaSP(t))}">🔄 To Do ${rel}</span>`;
+      st.innerHTML = `<span title="última sincronização completa To Do → CRM: ${esc(fmtTS(t))} às ${esc(horaSP(t))}" style="display:inline-flex;align-items:center;gap:6px">${svgIc("🔁",13)} To Do ${rel}</span>`;
       st.style.color = min>150 ? "#E8A13D" : "";
     }
   }
@@ -2902,7 +3021,7 @@ async function limparIgnoradosPat(){
 }
 
 function renderImportarPat(){
-  document.getElementById("titulo-lista").textContent = "📥 Importar do INSS";
+  tituloLista("📥 Importar do INSS");
   document.getElementById("sub-lista").textContent =
     "O que o PAT/GERID tem, comparado com o que o CRM já sabe. Nada é gravado sem você mandar.";
   // Se a montagem da tela estourar, o padrão do navegador é deixar o quadro
@@ -3292,11 +3411,16 @@ function cartaoCliente(cli, casosMostrar){
   // como no To Do: o nome em cima, e embaixo — miúdo e cinza — a data. Nada
   // de coluna de datas à esquerda: a lista que o escritório já usa todo dia
   // põe o prazo debaixo do título, e mudar isso custaria releitura sem ganho.
+  // semáforo do prazo (espec. 6.3): vencido/hoje em vermelho, até 15 dias
+  // em laranja, com folga em verde — o chip fraco no lugar da data solta
+  const em15 = (()=>{ const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+15);
+                      return d.toLocaleDateString("sv"); })();
+  const corPrazo = dataProx ? (dataProx<=hoje()?"vermelho":dataProx<=em15?"laranja":"verde") : "";
   const meta = [
     orig,
-    dataProx?`<span class="dt ${dataProx<hoje()?"venc":dataProx===hoje()?"hoje":""}"
-        ${dica?`title="${esc(dica)}"`:""}>🗓 ${esc(dataRelativa(dataProx))}</span>`:"",
-    evFut?`<span class="dt ev" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">🩺 ${
+    dataProx?`<span class="chip ${corPrazo}"
+        ${dica?`title="${esc(dica)}"`:""}>${esc(dataRelativa(dataProx))}</span>`:"",
+    evFut?`<span class="dt ev" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">${
       esc(evFut.tipo.split(" ")[0])} ${(d=>d.slice(0,4)===hoje().slice(0,4)?fmt(d).slice(0,5):fmt(d))(dataSP(evFut.data_hora))} ${horaSP(evFut.data_hora)}</span>`:"",
     exig, dcb,
   ].filter(Boolean);
@@ -3308,7 +3432,7 @@ function cartaoCliente(cli, casosMostrar){
     <div class="info">
       ${/* o 🔥 aparecia duas vezes na mesma linha: ao lado do nome e no botão
              de ação, que já fica aceso quando o caso é urgente */""}
-      <div class="nome">${esc(cli.nome)}</div>
+      <div class="nome">${esc(cli.nome)}${cli.cpf?` <span class="cpf">#${fmtCpf(cli.cpf)}</span>`:""}</div>
       ${meta.length?`<div class="meta">${meta.join('<span class="pt">·</span>')}</div>`:""}
     </div>
     ${quemProx.map(c=>`<span class="avatar mini quem-prazo" style="background:${c.cor}"
@@ -3317,8 +3441,8 @@ function cartaoCliente(cli, casosMostrar){
     ${/* os três só aparecem no hover ou pelo teclado — quando estão LIGADOS
          ficam sempre visíveis, porque aí carregam informação */""}
     <span class="acoes">
-      <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}">🔥</button>
-      <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}">★</button>
+      <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c.4 2.6-1 4.1-2.3 5.6C8.4 10.6 7.5 12.1 7.5 14a4.5 4.5 0 0 0 9 0c0-1.6-.7-3-1.7-4.2-.2 1.1-.8 2-1.8 2.5.6-2.6-.1-5.6-1-8.8Z"/></svg></button>
+      <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}"><svg width="16" height="16" viewBox="0 0 24 24" fill="${imp?"currentColor":"none"}" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/></svg></button>
     </span>
   </div>`;
 }
@@ -3422,7 +3546,7 @@ function render(){
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
-    h1.textContent="🔍 Pesquisa";
+    tituloLista("🔍 Pesquisa");
     const achados = pesquisar(buscaTxt).slice(0,200);
     sub.textContent=`${achados.length} cliente(s) encontrados`;
     meio.innerHTML = achados.map(c=>cartaoCliente(c)).join("") || "<p class='meio-sub'>Nada encontrado.</p>";
@@ -3460,7 +3584,7 @@ function render(){
   else if(visao.startsWith("fase:")){ const f=visao.slice(5);
     titulo=FASES.find(x=>x[0]===f)[1]; casosSel=casosDaFase(f); }
   else { titulo=visao; casosSel=[]; }
-  h1.textContent=titulo; sub.textContent=subt;
+  tituloLista(titulo); sub.textContent=subt;
   // filtro por colaborador em TODAS as listas — cada um vê só o que é seu
   if(filtroColab) casosSel = casosSel.filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(filtroColab));
   const chipsCol = `<div class="filtros">`+[`<button class="fchip ${filtroColab===null?"on":""}" data-fcol="">Todos</button>`]
@@ -3509,7 +3633,7 @@ function render(){
 
 // ── Meu Dia (com filtro por colaborador) ──────────────────────────────────
 function renderMeuDia(){
-  document.getElementById("titulo-lista").textContent="☀️ Meu Dia";
+  tituloLista("☀️ Meu Dia");
   // como no To Do: saudação e a data por extenso — dá o contexto do dia sem
   // ninguém ter que procurar o calendário
   const h=agoraSP().getHours();   // saudação pelo relógio de Brasília
@@ -4574,7 +4698,7 @@ function linhaNovidade(a){
 }
 
 function renderNovidades(){
-  document.getElementById("titulo-lista").textContent = "📣 Novidades";
+  tituloLista("📣 Novidades");
   const ns = novidades();
   document.getElementById("sub-lista").textContent = ns.length
     ? "O que os portais trouxeram e você ainda não leu. Marcar como lido tira daqui, não da ficha."
@@ -4643,7 +4767,7 @@ async function marcarLidas(ids){
 // Aqui elas ficam à mão para quando sobrar tempo, com o número na barra
 // lateral dizendo o tamanho da fila sem cobrar nada.
 function renderAcervo(){
-  document.getElementById("titulo-lista").textContent = "🧹 Cuidar do acervo";
+  tituloLista("🧹 Cuidar do acervo");
   document.getElementById("sub-lista").textContent =
     "Sem data e sem cobrança: o que fica para quando sobrar tempo. Nada aqui vence hoje.";
   const corpo = blocoRevisao() + blocoSemAcao();
@@ -4667,7 +4791,7 @@ function quantosNoAcervo(){
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
 let filtroPlan="todas", filtroPlanColab=null;   // Planejado abre mostrando tudo, em seções
 function renderPlanejado(){
-  document.getElementById("titulo-lista").textContent="🗓️ Planejado";
+  tituloLista("🗓️ Planejado");
   document.getElementById("sub-lista").textContent=
     "A agenda do escritório — tudo que tem data para lembrar (último dia de prazo, contato com cliente, prorrogação...).";
   const per=[["venc","⚠ Vencidas"],["hoje","Hoje"],["3","Próx. 3 dias"],["7","Próx. 7 dias"],["todas","Todas"]];
@@ -4739,7 +4863,7 @@ function ligarTarefas(){
   });
 }
 function renderParticulares(){
-  document.getElementById("titulo-lista").textContent="📋 Minhas Tarefas";
+  tituloLista("📋 Minhas Tarefas");
   document.getElementById("sub-lista").textContent="🔒 Só você vê esta lista. Tarefas com prazo de hoje aparecem no seu Meu Dia.";
   const minhas = D.tarefas.filter(t=>t.particular_de===eu.id)
     .sort((a,b)=>((a.prazo||"9999")<(b.prazo||"9999")?-1:1));
@@ -4770,7 +4894,7 @@ async function novaTarefa(){
 
 // ── Novo Cliente (botão do topo) ──────────────────────────────────────────
 function renderNovoCliente(){
-  document.getElementById("titulo-lista").textContent="➕ Novo Cliente";
+  tituloLista("➕ Novo Cliente");
   document.getElementById("sub-lista").textContent=
     "Cadastro completo: cria o cliente, o primeiro caso e (se quiser) já agenda o atendimento no Google Agenda — 001 para cliente novo, 002 para antigo.";
   document.getElementById("conteudo-meio").innerHTML=`
@@ -4881,7 +5005,7 @@ async function criarCliente(){
 
 // ── visão 🤖 Claude (sugestões com aprovação humana) ─────────────────────
 function renderClaude(){
-  document.getElementById("titulo-lista").textContent="🤖 Claude";
+  tituloLista("🤖 Claude");
   document.getElementById("sub-lista").textContent=
     "Sugestões geradas automaticamente pela rotina diária — nada vale sem a sua aprovação. Aceitar aplica na hora (exigência, andamento ou mensagem).";
   const ICONE={exigencia:"⚠",prazo:"⏰",pericia:"🩺",mensagem:"💬",proximo_passo:"👉"};
@@ -4921,7 +5045,7 @@ async function decidirSugestao(id, status){
 
 // ── 📥 Menções (caixa de entrada) ─────────────────────────────────────────
 function renderMencoes(){
-  document.getElementById("titulo-lista").textContent="📥 Menções";
+  tituloLista("📥 Menções");
   document.getElementById("sub-lista").textContent=
     "Pendências em que alguém citou você com @ num andamento. Escreva @Nome ao registrar para delegar.";
   document.getElementById("conteudo-meio").innerHTML = D.mencoes.map(m=>{
@@ -4959,7 +5083,7 @@ async function criarMencoes(texto, casoId, andamentoId, extras){
 
 // ── 📄 Modelos de documentos (gerenciar) ──────────────────────────────────
 function renderModelosDoc(){
-  document.getElementById("titulo-lista").textContent="📄 Modelos de documentos";
+  tituloLista("📄 Modelos de documentos");
   document.getElementById("sub-lista").textContent=
     "Os modelos-ouro do escritório. Use {nome}, {cpf}, {endereco}, {nb}, {processo}, {beneficio}, {data} — na ficha do cliente eles saem preenchidos. Cole aqui os textos do site interno.";
   document.getElementById("conteudo-meio").innerHTML =
@@ -5009,7 +5133,7 @@ function kcardCaso(k){
       ${chipExig(k)}${chipPrazo(k.prazo)}</div></div>`;
 }
 function renderQuadro(){
-  document.getElementById("titulo-lista").textContent="📌 Quadro";
+  tituloLista("📌 Quadro");
   document.getElementById("sub-lista").textContent=
     "Arraste o cartão para mudar a fase do caso — a alteração vai para o banco (e o To Do acompanha).";
   document.getElementById("conteudo-meio").innerHTML =
@@ -5055,7 +5179,7 @@ function quandoFalou(ts){
   return fmtTS(ts);
 }
 function renderVendas(){
-  document.getElementById("titulo-lista").textContent="💼 Vendas";
+  tituloLista("💼 Vendas");
   document.getElementById("sub-lista").textContent=
     "Do primeiro contato ao contrato. Arraste entre etapas; ao fechar, um clique transforma o prospecto em cliente.";
   const fech=D.leads.filter(l=>l.etapa==="fechado").length,
@@ -5145,7 +5269,7 @@ let zapNota = false;
 function pararZapTimer(){ if(zapTimer){ clearInterval(zapTimer); zapTimer=null; } }
 
 async function renderWhats(){
-  document.getElementById("titulo-lista").textContent="💬 WhatsApp";
+  tituloLista("💬 WhatsApp");
   document.getElementById("sub-lista").textContent=
     "As conversas do escritório. Quem responde assume a conversa — e o robô se cala na hora.";
   document.getElementById("conteudo-meio").innerHTML =
@@ -5654,7 +5778,7 @@ const DIAS_CFG = [["1","seg"],["2","ter"],["3","qua"],["4","qui"],["5","sex"],["
 let cfgAvisos = [], cfgPassos = [];
 
 async function renderConfig(){
-  document.getElementById("titulo-lista").textContent="⚙️ Configurações";
+  tituloLista("⚙️ Configurações");
   document.getElementById("sub-lista").textContent=
     "Quem atende, o que o robô diz e quando os avisos saem. Vale para o escritório inteiro.";
   const meio = document.getElementById("conteudo-meio");
@@ -5890,7 +6014,7 @@ function ligarConfig(){
 
 // ── 📣 Marketing (o que estamos trabalhando + público por benefício) ──────
 function renderMarketing(){
-  document.getElementById("titulo-lista").textContent="📣 Marketing";
+  tituloLista("📣 Marketing");
   document.getElementById("sub-lista").textContent=
     "Onde o escritório está trabalhando mais (últimos 30 dias) — use para pautar posts e enviar material certo para o cliente certo.";
   const atividade={};
@@ -5922,7 +6046,7 @@ function renderMarketing(){
 
 // ── agenda e dashboard ────────────────────────────────────────────────────
 function renderAgenda(){
-  document.getElementById("titulo-lista").textContent="🩺 Perícias & Audiências";
+  tituloLista("🩺 Perícias & Audiências");
   document.getElementById("sub-lista").textContent="Agenda estruturada — adicione novas pela ficha do cliente.";
   const evs=D.eventos.slice().sort((a,b)=>a.data_hora<b.data_hora?-1:1);
   const fut=evs.filter(e=>dataSP(e.data_hora)>=hoje() && e.status!=="cancelada");
@@ -6028,7 +6152,7 @@ function itemCal(i){
     ${t.icone} ${i.hora?`<b>${i.hora}</b> `:""}${esc(i.texto)}</div>`;
 }
 function renderCalendario(){
-  document.getElementById("titulo-lista").textContent="📅 Calendário";
+  tituloLista("📅 Calendário");
   document.getElementById("sub-lista").textContent=
     "Tudo o que tem data. Cada cor é um tipo — clique numa cor para ver só ela.";
   let itens=itensDoCalendario();
@@ -6296,7 +6420,7 @@ function mostrarAddRodape(){
   if(mostra){
     const f=visao.slice(5), rot=(FASES.find(x=>x[0]===f)||[])[1]||"";
     document.getElementById("add-nome").placeholder =
-      `Adicionar em ${rot.replace(/^\S+\s/,"")} — nome, ou Nome #CPF`;
+      `Adicionar em ${rot.replace(/^\S+\s/,"")} (nome, ou Nome #CPF)`;
   }
 }
 async function addNaLista(){
@@ -6330,7 +6454,7 @@ async function addNaLista(){
 }
 
 function renderParcerias(){
-  document.getElementById("titulo-lista").textContent="🤝 Parcerias";
+  tituloLista("🤝 Parcerias");
   document.getElementById("sub-lista").textContent=
     "Casos em parceria com advogados externos — vêm das etiquetas #Nome no título do To Do (ex.: #Laís).";
   const com = D.casos.filter(k=>k.parceria && k.fase!=="encerrado");
@@ -6350,7 +6474,7 @@ function barras(pares){
   return pares.map(([r,q])=>`<div class="barra"><span class="rot" title="${esc(r)}">${esc(r)}</span><div class="tubo"><i style="width:${q/max*100}%"></i></div><span class="qt">${q}</span></div>`).join("");
 }
 function renderDash(){
-  document.getElementById("titulo-lista").textContent="📊 Dashboard";
+  tituloLista("📊 Dashboard");
   document.getElementById("sub-lista").textContent="Ao vivo, direto do banco.";
   const at=ativos();
   const em7=new Date(); em7.setDate(em7.getDate()+7);
@@ -6676,7 +6800,7 @@ async function marcarRotina(id, jaFeita){
 }
 
 function renderRotinas(){
-  document.getElementById("titulo-lista").textContent="🔁 Organizacional";
+  tituloLista("🔁 Organizacional");
   document.getElementById("sub-lista").textContent=
     "Tarefas do escritório que se repetem — não são de cliente. Aparecem no ☀️ Meu Dia de quem é responsável, no dia programado.";
   const rs=(D.rotinas||[]).filter(r=>r.ativo!==false);
@@ -6893,7 +7017,7 @@ function pintarFicha(){
         <span class="cli-casos-seta">▾</span>
       </span>
       ${c.telefone?`<button class="btn-mini" onclick="abrirSmbot('${c.id}')"
-        style="background:#E7F6EC;border-color:#25D366;color:#128C4B;font-weight:700"
+        style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:600"
         title="abre o SMBot numa aba e copia o telefone do cliente — é só colar na busca do atendimento">💬 SMBot</button>`:""}
       ${stCli}
       <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
@@ -6908,15 +7032,16 @@ function pintarFicha(){
         :`<span class="id-min"><b>Meu INSS</b> <span class="meio-sub">sem senha</span></span>`)(creds.find(x=>x.tipo==="meu_inss"))}
     </div>
     <div class="menu-topo">
-      <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">📇 Cadastro</button>
-      <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">🖨 Documentos</button>
-      <button class="mt ${abaAtiva===9?"on":""}" data-vv="9">🔔 Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>
+      ${/* abas em pivot claro (espec. 7.2): texto limpo, sem emoji de ícone */""}
+      <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">Cadastro</button>
+      <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">Documentos</button>
+      <button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>
       <button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
-        title="escolher o processo do cliente (não erra o destino)">⚖️ ${
+        title="escolher o processo do cliente (não erra o destino)">${
           (kk=>kk?esc(tituloCaso(kk)):(processosDe(ks).length>1?"Processos":"Processo"))(casoSel&&D.casoPorId.get(casoSel))} ▾</button>
-      <button class="mt ${abaAtiva===3?"on":""}" data-vv="3">🩺 Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}</button>
-      <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">💰 Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
-      <button class="mt ${abaAtiva===5?"on":""}" data-vv="5">💬 Mensagens</button>
+      <button class="mt ${abaAtiva===3?"on":""}" data-vv="3">Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}</button>
+      <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
+      <button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Mensagens</button>
     </div>
     <button class="cel-tudo" onclick="fichaTudo()">⋯ mostrar tudo da ficha</button>
   </div>
@@ -6953,12 +7078,12 @@ function pintarFicha(){
           const rot=(tem,arq)=> arq?" <span class='meio-sub'>🗄 arquivado</span>"
                               : tem?"":" <span class='meio-sub'>(sem dados)</span>";
           return `<div class="sub-menu" style="width:100%">
-          <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
-          <button class="${aba==="inss"?"on":""}" onclick="irSubAba('inss')">🌻 Andamentos INSS${rot(comentariosPat(andsVis).length, abaPatArquivada(k))}</button>
-          <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k))}</button>
-          ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k))}</button>`:""}
+          <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">Andamentos do Escritório</button>
+          <button class="${aba==="inss"?"on":""}" onclick="irSubAba('inss')">Andamentos INSS${rot(comentariosPat(andsVis).length, abaPatArquivada(k))}</button>
+          <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k))}</button>
+          ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">Andamentos do CNJ${rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k))}</button>`:""}
           <button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
-            title="todas as fontes juntas, em ordem cronológica">📖 Caso completo</button>
+            title="todas as fontes juntas, em ordem cronológica">Caso completo</button>
         </div>
       ${blocoFatos(k)}
       ${aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
