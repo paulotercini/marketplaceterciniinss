@@ -162,7 +162,7 @@
   .caso.caso-cab{background:#eef4fb;border-color:#cfe0f5}
   /* janela de encerramento (resultado -> honorários) */
   #janela{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:98;display:flex;align-items:center;justify-content:center}
-  .jan-caixa{background:var(--branco);border-radius:12px;padding:20px 24px;min-width:min(380px,92vw);max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+  .jan-caixa{background:var(--branco);border-radius:var(--raio);padding:20px 24px;min-width:min(380px,92vw);max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
   .jan-caixa h3{margin-bottom:4px}
   .btn-res{padding:8px 14px;border:1px solid var(--borda);border-radius:8px;background:var(--fundo);cursor:pointer;font-weight:600}
   .btn-res:hover{background:#e8f1fb}
@@ -186,7 +186,7 @@
   /* janela de escolha do processo: fundo bloqueado, foco numa decisão só */
   .modal-fundo{position:fixed;inset:0;background:rgba(20,22,28,.55);z-index:60;
     display:flex;align-items:center;justify-content:center;padding:20px}
-  .modal-cx{background:var(--branco);border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.3);
+  .modal-cx{background:var(--branco);border-radius:var(--raio);box-shadow:0 12px 40px rgba(0,0,0,.3);
     width:min(560px,96vw);max-height:86vh;overflow-y:auto;padding:16px 18px}
   .modal-cab{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px}
   .proc-op{display:block;width:100%;text-align:left;border:1px solid var(--borda);border-radius:10px;
@@ -1270,7 +1270,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.90 · 🙏 Aposentadorias Futuras não vira caso: vira 🔔 lembrete com as anotações do To Do, transferíveis a mão para os andamentos</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.91 · reforma visual no padrão To Do (F1–F7): lista fixa em 380px, ícones SVG, abas claras, linha do tempo com fio</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2091,12 +2091,13 @@ function montarSidebar(){
     ["config","⚙️ Configurações", null],
   ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`).join("");
   const bSom=document.getElementById("btn-som");
-  bSom.textContent = somLigado()?"🔔":"🔕";
+  const sinoSvg = on => `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10ZM10 19a2 2 0 0 0 4 0"/>${on?"":'<path d="M4.5 4.5 19.5 19.5"/>'}</svg>`;
+  bSom.innerHTML = sinoSvg(somLigado());
   bSom.onclick=()=>{
     guardar("crm_som", somLigado()?"off":"on");
-    bSom.textContent = somLigado()?"🔔":"🔕";
+    bSom.innerHTML = sinoSvg(somLigado());
     if(somLigado()) plim();
-    aviso(somLigado()?"Som ligado 🔔":"Som desligado 🔕", false);
+    aviso(somLigado()?"Som ligado":"Som desligado", false);
   };
   document.getElementById("btn-novo-cli").onclick=()=>{
     document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
@@ -2124,7 +2125,7 @@ function montarSidebar(){
       const min = Math.max(0, Math.round((Date.now()-new Date(t))/60000));
       const rel = min<1 ? "agora" : min<60 ? `há ${min} min`
         : min<1440 ? `há ${Math.round(min/60)} h` : `em ${fmt(dataSP(t))}`;
-      st.innerHTML = `<span title="última sincronização completa To Do → CRM: ${esc(fmtTS(t))} às ${esc(horaSP(t))}">🔄 To Do ${rel}</span>`;
+      st.innerHTML = `<span title="última sincronização completa To Do → CRM: ${esc(fmtTS(t))} às ${esc(horaSP(t))}" style="display:inline-flex;align-items:center;gap:6px">${svgIc("🔁",13)} To Do ${rel}</span>`;
       st.style.color = min>150 ? "#E8A13D" : "";
     }
   }
@@ -7031,15 +7032,16 @@ function pintarFicha(){
         :`<span class="id-min"><b>Meu INSS</b> <span class="meio-sub">sem senha</span></span>`)(creds.find(x=>x.tipo==="meu_inss"))}
     </div>
     <div class="menu-topo">
-      <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">📇 Cadastro</button>
-      <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">🖨 Documentos</button>
-      <button class="mt ${abaAtiva===9?"on":""}" data-vv="9">🔔 Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>
+      ${/* abas em pivot claro (espec. 7.2): texto limpo, sem emoji de ícone */""}
+      <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">Cadastro</button>
+      <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">Documentos</button>
+      <button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>
       <button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
-        title="escolher o processo do cliente (não erra o destino)">⚖️ ${
+        title="escolher o processo do cliente (não erra o destino)">${
           (kk=>kk?esc(tituloCaso(kk)):(processosDe(ks).length>1?"Processos":"Processo"))(casoSel&&D.casoPorId.get(casoSel))} ▾</button>
-      <button class="mt ${abaAtiva===3?"on":""}" data-vv="3">🩺 Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}</button>
-      <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">💰 Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
-      <button class="mt ${abaAtiva===5?"on":""}" data-vv="5">💬 Mensagens</button>
+      <button class="mt ${abaAtiva===3?"on":""}" data-vv="3">Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}</button>
+      <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
+      <button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Mensagens</button>
     </div>
     <button class="cel-tudo" onclick="fichaTudo()">⋯ mostrar tudo da ficha</button>
   </div>
@@ -7076,12 +7078,12 @@ function pintarFicha(){
           const rot=(tem,arq)=> arq?" <span class='meio-sub'>🗄 arquivado</span>"
                               : tem?"":" <span class='meio-sub'>(sem dados)</span>";
           return `<div class="sub-menu" style="width:100%">
-          <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">🏢 Andamentos do Escritório</button>
-          <button class="${aba==="inss"?"on":""}" onclick="irSubAba('inss')">🌻 Andamentos INSS${rot(comentariosPat(andsVis).length, abaPatArquivada(k))}</button>
-          <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">🖥 Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k))}</button>
-          ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">⚖️ Andamentos do CNJ${rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k))}</button>`:""}
+          <button class="${aba==="escritorio"?"on":""}" onclick="irSubAba('escritorio')">Andamentos do Escritório</button>
+          <button class="${aba==="inss"?"on":""}" onclick="irSubAba('inss')">Andamentos INSS${rot(comentariosPat(andsVis).length, abaPatArquivada(k))}</button>
+          <button class="${aba==="crps"?"on":""}" onclick="irSubAba('crps')">Recurso (CRPS)${rot(crpsTotalEventos(k), abaCrpsArquivada(k))}</button>
+          ${temCNJ?`<button class="${aba==="cnj"?"on":""}" onclick="irSubAba('cnj')">Andamentos do CNJ${rot((k.datajud&&k.datajud.ultimo)||andamentosPje(andsVis).length, abaCnjArquivada(k))}</button>`:""}
           <button class="${aba==="tudo"?"on":""}" style="margin-left:auto" onclick="irSubAba('tudo')"
-            title="todas as fontes juntas, em ordem cronológica">📖 Caso completo</button>
+            title="todas as fontes juntas, em ordem cronológica">Caso completo</button>
         </div>
       ${blocoFatos(k)}
       ${aba==="cnj" ? painelCNJ(k, andsVis) : aba==="crps" ? painelCRPS(k)
