@@ -20,11 +20,13 @@ Aplicação pró-segurado. Fundamenta o enquadramento em profissionais que inter
 
 ### Tema 1090 STJ
 
-Tese. O uso de EPI eficaz não descaracteriza o tempo especial em hipóteses excepcionais, que incluem agentes cancerígenos da LINACH e agentes biológicos.
+Tese LITERAL (conferida). "A informação no PPP sobre a existência de EPI eficaz descaracteriza, em princípio, o tempo especial. Incumbe ao autor o ônus de comprovar a ineficácia do EPI. Se a valoração da prova concluir pela presença de dúvida sobre a real eficácia do EPI, a conclusão deverá ser favorável ao autor."
+
+CORREÇÃO DE AUDITORIA (Onda 108). A redação anterior desta ficha atribuía ao Tema 1090 uma lista de hipóteses excepcionais com cancerígenos da LINACH e biológicos, que a tese NÃO contém. O Tema 1090/STJ NÃO lista agentes biológicos na tese literal (a tese trata de ônus do autor e de dúvida resolvida pró-autor). A âncora direta da ineficácia do EPI em biológicos é o IRDR 15 do TRF4, o Tema 383 da TNU com os Pareceres 2/2025 e 3/2025 da Fundacentro, e o Tema 213 da TNU, somados aos itens de ônus e dúvida do próprio Tema 1090.
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Irrelevância da declaração de EPI eficaz em PPP quando a exposição é a agente biológico. Combinado com `base-especial-epi`.
+Aplicação pró-segurado. O item de DÚVIDA é o que mais serve, porque em biológicos a eficácia real nunca se demonstra em campo. Somar IRDR 15 do TRF4, Tema 383 da TNU e Tema 213 da TNU, e usar `base-especial-epi`.
 
 ### Tema 555 STF (ARE 664.335)
 
@@ -60,7 +62,7 @@ Refutação. O Tema 205 TNU dispensa contato direto permanente. A presença em a
 
 Argumento adversário. O campo 15.7 do PPP declara EPI eficaz.
 
-Refutação. O Tema 1090 STJ inclui agentes biológicos nas hipóteses em que o EPI não neutraliza. A declaração unilateral da empresa é irrelevante em biológicos. Combinar com `base-especial-epi` e Tema 213 TNU para inversão do ônus probatório.
+Refutação. A declaração é unilateral e o campo 15.7 registra ENTREGA, não eficácia real em campo. O IRDR 15 do TRF4 reconhece a ineficácia em biológicos, o Tema 383 da TNU e os Pareceres 2/2025 e 3/2025 da Fundacentro sustentam a limitação técnica dos equipamentos, e o Tema 1090 do STJ resolve a dúvida em favor do autor. Combinar com `base-especial-epi` e Tema 213 TNU para inversão do ônus probatório.
 
 ### Argumento 4 — Rol taxativo do Anexo IV
 
