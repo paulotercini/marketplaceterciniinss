@@ -1093,6 +1093,11 @@
   .pgto .desc{flex:1;min-width:140px}
   .pgto .valor{font-weight:700}
   .pgto .cadeia{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+  /* de qual benefício é o dinheiro: discreto quando já escolhido, âmbar
+     enquanto ninguém disse — parcela sem caso é honorário sem dono */
+  .pg-caso{max-width:190px;border:1px solid var(--borda);border-radius:var(--raio);
+    background:var(--branco);font:inherit;font-size:12px;color:var(--cinza);padding:3px 6px}
+  .pg-caso.falta{border-color:#E9B44C;background:#FFF8E7;color:#8A6100;font-weight:600}
   .conf-et{display:inline-flex;align-items:center;gap:5px;background:#f0f7f2;border:1px solid #cfe7d8;border-radius:12px;padding:2px 9px 2px 3px}
   .conf-et small{color:var(--cinza);font-size:11px;white-space:nowrap}
   .conf-seta{color:var(--cinza);font-size:12px}
@@ -1325,7 +1330,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.93 · a lista 💵 Pagamentos do To Do é a aba Pagamentos do cliente (não vira mais um caso), como 🙏 Aposentadorias Futuras é a aba Lembretes</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.94 · a lista 💵 Pagamentos do To Do é a aba Pagamentos do cliente (não vira mais um caso) e cada parcela diz de qual benefício/serviço é</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7456,6 +7461,43 @@ function painelPericiasFicha(c, ks, evs){
 }
 
 // aba 4 da ficha — extraída da pintarFicha (era um literal de 50 linhas)
+// DE QUE BENEFÍCIO É ESTE DINHEIRO. Com um caso só não há dúvida — o vínculo
+// aparece como etiqueta. Com dois ou mais, a escolha é do escritório: a
+// importação do To Do deixa a parcela sem caso de propósito (chutar o
+// "principal" contabilizaria honorário no benefício errado) e aqui vem o
+// seletor, destacado enquanto ninguém escolheu.
+function vinculoDaParcela(p, ks){
+  const casos=(ks||[]).filter(k=>k.fase!=="pagamento");
+  if(!casos.length) return "";
+  if(casos.length===1){
+    const k=casos[0];
+    return p.caso_id===k.id
+      ? `<span class="chip neutro" title="benefício/serviço deste pagamento">${esc(tituloCaso(k))}</span>`
+      : `<button class="btn-mini" title="vincular este pagamento ao caso do cliente"
+           onclick="vincularPgto('${p.id}','${k.id}')">vincular a ${esc(tituloCaso(k))}</button>`;
+  }
+  const semCaso=!p.caso_id;
+  return `<select class="pg-caso ${semCaso?"falta":""}" title="benefício/serviço a que este pagamento se refere"
+      onchange="vincularPgto('${p.id}', this.value)">
+    <option value="" ${semCaso?"selected":""}>— de qual benefício? —</option>
+    ${casos.map(k=>`<option value="${k.id}" ${p.caso_id===k.id?"selected":""}>${esc(tituloCaso(k))}</option>`).join("")}
+  </select>`;
+}
+async function vincularPgto(pgId, casoId){
+  const p=D.pagamentos.find(x=>x.id===pgId); if(!p) return;
+  const antes=p.caso_id;
+  p.caso_id=casoId||null;
+  try{
+    await api(`/rest/v1/pagamentos?id=eq.${pgId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:p.caso_id})});
+  }catch(e){
+    p.caso_id=antes;
+    return aviso("Não consegui vincular — rode o crm/fase2/schema_por_em_dia.sql no Supabase");
+  }
+  const k=casoId&&D.casoPorId.get(casoId);
+  aviso(k?`Pagamento vinculado a ${tituloCaso(k)}`:"Vínculo removido", false);
+  repintarFicha();
+}
 function painelPagamentosFicha(ks, ands, pgs, pagK){
   return `
     ${(()=>{
@@ -7489,6 +7531,7 @@ function painelPagamentosFicha(ks, ands, pgs, pagK){
       const jaConferi=cfs.some(cf=>cf.c===eu.id);
       return `<div class="pgto">
       <span class="desc"><strong>${p.pago_em?fmt(p.pago_em):p.vencimento?"vence "+fmt(p.vencimento):"—"}</strong>${p.descricao&&p.descricao!=="Recebimento"?" · "+esc(p.descricao):""}</span>
+      ${vinculoDaParcela(p, ks)}
       <span class="valor">${moeda(p.valor)}</span>
       <span class="cadeia">${cfs.map((cf,i)=>{const co=D.colPorId.get(cf.c);
         return `<span class="conf-et" title="${co?esc(co.nome):"?"} ${i===0?"recebeu":"conferiu"} em ${fmtTS(cf.em)}">
@@ -7498,8 +7541,17 @@ function painelPagamentosFicha(ks, ands, pgs, pagK){
         !jaConferi?`<button class="btn-mini" data-confere="${p.id}">✔ conferi</button>`:""}
       </div>`;}).join("")
       ||"<p class='meio-sub'>Nenhum recebimento registrado ainda.</p>"}
-    <input type="hidden" id="np-caso" value="${(pagK[0]||ks.find(k=>k.fase!=="encerrado")||ks[0]||{}).id||""}">
     <div class="form-linha" style="align-items:center">
+      ${(()=>{
+        // com mais de um caso o lançamento pergunta de qual benefício é —
+        // sem isso, o dinheiro entrava sempre no primeiro da lista
+        const casos=ks.filter(k=>k.fase!=="pagamento");
+        if(casos.length>1)
+          return `<select id="np-caso" class="pg-caso" style="max-width:230px" title="benefício/serviço deste pagamento">
+            <option value="">— de qual benefício? (opcional) —</option>
+            ${casos.map(k=>`<option value="${k.id}">${esc(tituloCaso(k))}</option>`).join("")}</select>`;
+        return `<input type="hidden" id="np-caso" value="${(pagK[0]||casos.find(k=>k.fase!=="encerrado")||casos[0]||{}).id||""}">`;
+      })()}
       <input type="date" id="np-data" value="${hoje()}">
       <input id="np-valor" type="number" step="0.01" placeholder="R$ valor" style="width:120px">
       <input id="np-desc" placeholder="observação (opcional — RPV, honorários…)" style="flex:1;min-width:160px">
