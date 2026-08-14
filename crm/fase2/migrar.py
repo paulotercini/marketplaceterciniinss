@@ -634,9 +634,19 @@ def subir_rest(mapa):
                 principal[k["cliente_id"]] = k
         destino = {k["id"]: (principal.get(k["cliente_id"]) or {}).get("id")
                    for k in mapa["casos"] if k["id"] in novos_pgto}
+        # QUANTOS casos o cliente tem importa para o dinheiro: com um só, a
+        # parcela se encosta nele sem dúvida; com dois ou mais, encostá-la no
+        # "principal" seria um chute — e chute silencioso vira honorário
+        # contabilizado no benefício errado. Nesse caso a parcela fica sem
+        # caso e a aba Pagamentos pede para escolher o benefício/serviço.
+        quantos = {}
+        for k in mapa["casos"]:
+            if k["id"] not in novos_pgto:
+                quantos[k["cliente_id"]] = quantos.get(k["cliente_id"], 0) + 1
         for pg in mapa.get("pagamentos", []):
             if pg.get("caso_id") in destino:
-                pg["caso_id"] = destino[pg["caso_id"]]
+                unico = quantos.get(pg.get("cliente_id"), 0) == 1
+                pg["caso_id"] = destino[pg["caso_id"]] if unico else None
         soltos = 0
         for chave in ("andamentos", "eventos", "tarefas"):
             mantidos = []
