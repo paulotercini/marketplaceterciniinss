@@ -1,6 +1,6 @@
 ---
 name: base-especial-epi
-description: "Base de teses de defesa do segurado sobre EPI em aposentadoria especial. Use SEMPRE que mencionar EPI, equipamento de proteção individual, eficácia de EPI, neutralização de nocividade, Tema 555 STF, ARE 664.335, Tema 1090 STJ, Tema 213 TNU, Tema 218 TNU, Tema 383 TNU, IRDR 15 TRF4, Parecer Fundacentro 2/2025 e 3/2025, eficácia versus efetividade, hipóteses excepcionais EPI, standard probatório atenuado, ônus da prova EPI, campo 15.7 PPP, certificado CA, EPI ineficaz para ruído cancerígenos biológicos, art. 284 IN 128, Súmula 87 TNU, EPC versus EPI, primazia EPC, ficha de entrega, troca periódica, higienização, treinamento NR-6, limitação protetor auricular, eficácia real em campo, irrelevância do carimbo eficaz, Frederico Amado, Hugo Goes. Traz hipóteses excepcionais firmadas, inversão do ônus probatório e roteiro pró-segurado. NÃO use para outros agentes isoladamente. Cruza com base-tema383-tnu-fundacentro-epi-biologicos, auditoria-ppp, peticao-previdenciaria e defesa-probatoria-especial."
+description: "Base de teses de defesa do segurado sobre EPI em aposentadoria especial. Use SEMPRE que mencionar EPI, equipamento de proteção individual, eficácia de EPI, neutralização de nocividade, Tema 555 STF, ARE 664.335, Tema 1090 STJ, Tema 213 TNU, Tema 218 TNU, Tema 383 TNU, IRDR 15 TRF4, Parecer Fundacentro 2/2025 e 3/2025, eficácia versus efetividade, hipóteses excepcionais EPI, standard probatório atenuado, ônus da prova EPI, campo 15.7 PPP, certificado CA, EPI ineficaz para ruído cancerígenos biológicos, art. 284 IN 128, Súmula 87 TNU, EPC versus EPI, primazia EPC, ficha de entrega, troca periódica, higienização, treinamento NR-6, limitação protetor auricular, eficácia real em campo, irrelevância do carimbo eficaz, Frederico Amado, Hugo Goes. Tese LITERAL do Tema 1090 conferida no SCON em 14/08/2026 com os cinco caminhos do ônus, EDcl REsp 2.116.343 cancerígenos, EDcl REsp 2.080.584 lista aberta, modulação afastada, vedação de pedir inversão do art. 373 §1º, Enunciado 18 I Jornada TRF4 contribuinte individual (Onda 109). Traz hipóteses excepcionais firmadas e roteiro pró-segurado. NÃO use para outros agentes isoladamente. Cruza com base-tema383-tnu-fundacentro-epi-biologicos, auditoria-ppp, peticao-previdenciaria e defesa-probatoria-especial."
 ---
 
 # Base Temática. EPI em Aposentadoria Especial
@@ -77,10 +77,29 @@ Ao confrontar EPI com agente específico, acione a skill desse agente, como `bas
 
 Não há enquadramento direto de ruído, calor, vibração, químicos ou biológicos. Cada um tem skill temática própria. Não há orientação sobre perícia por similaridade. Esse tópico está em `defesa-probatoria-especial`.
 
-## Correção sobre o alcance do Tema 1090/STJ (Onda 108)
+## Tema 1090/STJ, tese literal e roteiro de prova (Onda 109)
 
-A tese literal do Tema 1090 NÃO enumera hipóteses excepcionais. Ela diz que a informação de EPI eficaz no PPP descaracteriza o tempo especial EM PRINCÍPIO, atribui ao autor o ônus de comprovar a ineficácia e determina que a DÚVIDA sobre a real eficácia se resolva em favor do autor.
+Conferido no SCON do STJ em 14/08/2026. REsp 2.080.584/PR, 2.082.072/RS e 2.116.343/RJ, Rel. Min. Maria Thereza de Assis Moura, Primeira Seção, j. 09/04/2025, DJEN 22/04/2025, TRÂNSITO EM JULGADO. Tese literal integral, embargos, roteiro dos cinco caminhos do ônus e alertas de peça em `references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md`. Leitura obrigatória antes de redigir qualquer tópico de EPI.
 
-Quem enumera as hipóteses é o IRDR 15 do TRF4, acórdão de origem. Em peça, não atribuir ao Tema 1090 rol que ele não tem, porque a contestação do INSS localiza a imprecisão e a usa para desqualificar o conjunto.
+Cinco pontos que decidem o uso.
 
-Via segura para sustentar a ineficácia. Primeiro, o item de DÚVIDA do próprio Tema 1090, que é o mais forte porque a eficácia real em campo quase nunca se demonstra. Segundo, o IRDR 15 do TRF4 pelas hipóteses. Terceiro, o Tema 383 da TNU com os Pareceres 2/2025 e 3/2025 da Fundacentro para a limitação técnica dos equipamentos. Quarto, o Tema 213 da TNU para o ônus. Quinto, o Tema 555 do STF como base constitucional da exceção.
+Primeiro, a tese tem TRÊS itens, e a redação usada na base até a Onda 108 omitia os cinco incisos do item II e a palavra DIVERGÊNCIA no item III. Os cinco incisos são o roteiro de prova do segurado, e a divergência é uma segunda porta além da dúvida.
+
+Segundo, a tese NÃO enumera as hipóteses excepcionais do item I. Quem enumera os CANCERÍGENOS é o próprio STJ, nos EDcl no REsp 2.116.343/RJ (j. 10/09/2025, DJEN 18/09/2025, parcialmente acolhidos com efeitos infringentes), cuja razão de decidir afirma que "uma dessas hipóteses excepcionais é relativa à exposição a agentes cancerígenos".
+
+Terceiro, a lista é ABERTA por decisão deliberada. Os EDcl no REsp 2.080.584/PR, rejeitados na mesma sessão, registram que "propositadamente, o acórdão embargado não discorreu mais a fundo sobre essas hipóteses excepcionais". Sustentar biológicos, ruído ou periculosidade como hipótese excepcional NÃO contraria o repetitivo.
+
+Quarto, a modulação de efeitos foi AFASTADA, e os impactos em cada caso concreto devem ser avaliados individualmente.
+
+Quinto, NÃO pedir inversão do ônus pelo art. 373, § 1º, do CPC. A razão de decidir n. 8 do acórdão a rejeitou expressamente por ausência de assimetria informacional, e o pedido entrega ao INSS argumento de contrariedade a repetitivo. O caminho é assumir o ônus, cumprir dois ou três dos cinco incisos com documento por ID, e fechar pelo item III.
+
+## Enunciado 18 da I Jornada do TRF4, contribuinte individual e EPI ineficaz (Onda 109)
+
+Texto literal, conferido no Caderno oficial da EMAGIS/TRF4 em 14/08/2026, página 22. "Nos casos em que o equipamento de proteção individual (EPI) é reconhecidamente ineficaz, seu uso por contribuintes individuais não impede o reconhecimento da especialidade."
+
+Justificativa oficial, que NOMINA as hipóteses. "As hipóteses de exposição a ruído, a agentes biológicos, a agentes cancerígenos, à periculosidade e outras em que o uso de equipamento de proteção individual (EPI) seja incapaz de eliminar ou de neutralizar os fatores de risco mostram-se fora do âmbito de exigência de responsabilidade dos próprios contribuintes individuais pelo adequado controle de seu ambiente laboral."
+
+Identificação completa. Enunciado 18 da I Jornada Regional Intrainstitucional de Direito Previdenciário da Justiça Federal da 4ª Região, EMAGIS/TRF4, Porto Alegre, 1º e 2 de setembro de 2025, coordenação científica da Des. Fed. Taís Schilling Ferraz, trinta enunciados aprovados por no mínimo dois terços dos votantes.
+
+RESSALVA OBRIGATÓRIA DE USO. O próprio TRF4 declara que os enunciados têm "caráter meramente doutrinário e força persuasiva técnico-jurídica, não se confundindo com a posição do Tribunal Regional Federal da 4ª Região e de seus membros". Citar como DOUTRINA QUALIFICADA, jamais como precedente do tribunal. Em peça na 3ª Região, sinalizar a origem.
+
