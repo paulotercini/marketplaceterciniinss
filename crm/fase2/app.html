@@ -280,7 +280,7 @@
   .lista-item:hover{background:var(--lateral-hover)}
   .lista-item.ativa{background:var(--lateral-ativo);font-weight:600;color:#fff}
   .lista-item.ativa::before{content:"";position:absolute;left:-8px;top:7px;bottom:7px;
-    width:3px;border-radius:0 3px 3px 0;background:var(--azul-claro)}
+    width:3px;border-radius:0 3px 3px 0;background:var(--cor-lista,var(--azul-claro))}
   .lista-item .rotulo{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
   /* célula de largura fixa: sem ela, cada rótulo começava numa coluna —
      a lista parecia desalinhada sem motivo */
@@ -321,8 +321,11 @@
   .app.celular .add-rodape{flex-wrap:wrap;margin-bottom:0;bottom:66px}
   .app.celular .add-rodape #add-ben{width:100%;order:3}
   .meio-topo{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
-  /* título grande da lista, como o do To Do */
-  .meio-topo h1{font-size:26px;font-weight:600;color:var(--azul-escuro);letter-spacing:-.2px}
+  /* título da lista (espec. 6.1): 19px, azul-escuro FIXO, ícone SVG ao lado */
+  .meio-topo h1{font-size:19px;font-weight:600;color:var(--azul-escuro);letter-spacing:-.2px;
+    display:flex;align-items:center;gap:8px;min-width:0}
+  .meio-topo h1 .ic{color:var(--azul);display:inline-flex;flex:none}
+  .meio-topo h1 .h1-txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   /* sobre fundo colorido, o cartão branco é que carrega o conteúdo */
   .meio .cartao,.meio .mencao,.meio .evento,.meio .rotina,.meio .caso,
   .meio .sug,.meio .modelo,.meio .card,.meio .mkt,.meio .cal-dia{
@@ -914,14 +917,20 @@
   .enc-sug .btn-rap.on{background:#E7EEFB;border-color:var(--azul);color:var(--azul-escuro);font-weight:650}
   .enc-dica{font-size:12px;color:var(--cinza);align-self:center}
   /* 📣 Novidades: a caixa de entrada do que os portais trouxeram */
+  /* card em flex (espec. 6.4): fonte + corpo flexível + ações à direita —
+     nome e texto com ellipsis/clamp, nenhum botão sobre o texto */
   .nov{display:flex;align-items:flex-start;gap:10px;background:var(--branco);
-    border:1px solid var(--borda);border-radius:10px;padding:10px 12px;margin-bottom:5px}
+    border:1px solid var(--borda-suave);border-radius:var(--raio);padding:10px 12px;
+    margin-bottom:5px;box-shadow:var(--sombra)}
   .nov-fonte{flex:none;font-size:11px;font-weight:700;color:var(--cinza);
     background:var(--placa);border-radius:6px;padding:3px 7px;white-space:nowrap}
   .nov-corpo{flex:1;min-width:0}
-  .nov-cli{font-weight:650;font-size:14px;cursor:pointer}
+  .nov-cli{font-weight:650;font-size:14px;cursor:pointer;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .nov-cli:hover{color:var(--azul)}
-  .nov-txt{font-size:13px;color:var(--texto);margin-top:2px;line-height:1.45}
+  .nov-txt{font-size:13px;color:var(--texto);margin-top:2px;line-height:1.45;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .nov .btn-mini{flex:none}
   /* ── importar do PAT/GERID ─────────────────────────────────────────── */
   .pat-cx{background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:16px 18px}
   .pat-cx h3{font-size:15px;color:var(--azul-escuro);margin-bottom:4px}
@@ -1830,9 +1839,13 @@ function aplicarTema(){
     meio.style.backgroundPosition = "center";
     meio.style.backgroundAttachment = "local";
   } else {
-    meio.style.background = escolhido || fundo;             // cor, degradê ou o padrão
+    // padrão neutro (--fundo) para toda lista; só um fundo ESCOLHIDO pinta.
+    // A cor por lista saiu do miolo — ela vive na pastilha do menu.
+    meio.style.background = escolhido || "";
   }
-  document.getElementById("titulo-lista").style.color = cor;
+  // título sempre azul-escuro (espec. 6.1); a cor da lista fica RESTRITA à
+  // pastilha do item ativo do menu, via --cor-lista
+  document.getElementById("titulo-lista").style.color = "";
   document.documentElement.style.setProperty("--cor-lista", cor);
 }
 
@@ -1989,10 +2002,23 @@ const SVG_MENU = {
   "🩺":'<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M12 7.5v9M7.5 12h9"/>',
   "📊":'<rect x="3.5" y="3.5" width="7.2" height="7.2" rx="1.5"/><rect x="13.3" y="3.5" width="7.2" height="7.2" rx="1.5"/><rect x="3.5" y="13.3" width="7.2" height="7.2" rx="1.5"/><rect x="13.3" y="13.3" width="7.2" height="7.2" rx="1.5"/>',
   "⚙️":'<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.7M12 18.5v2.7M2.8 12h2.7M18.5 12h2.7M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9"/>',
+  "➕":'<path d="M12 5v14M5 12h14"/>',
+  "🔍":'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
 };
 const svgIc = (emoji, t=17) => SVG_MENU[emoji]
   ? `<svg width="${t}" height="${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${SVG_MENU[emoji]}</svg>`
   : null;
+
+// título da lista (espec. 6.1): sempre azul-escuro, com o ícone SVG da lista
+// à esquerda — a cor por lista fica só na pastilha do menu. O rótulo com
+// emoji continua a fonte de verdade; aqui muda só a apresentação.
+function tituloLista(rot){
+  const h = document.getElementById("titulo-lista");
+  const i = rot.indexOf(" ");
+  const ic = i>0 ? svgIc(rot.slice(0,i), 19) : null;
+  if(ic) h.innerHTML = `<span class="ic" aria-hidden="true">${ic}</span><span class="h1-txt">${esc(rot.slice(i+1))}</span>`;
+  else h.textContent = rot;
+}
 
 function montarSidebar(){
   const din = [
@@ -2974,7 +3000,7 @@ async function limparIgnoradosPat(){
 }
 
 function renderImportarPat(){
-  document.getElementById("titulo-lista").textContent = "📥 Importar do INSS";
+  tituloLista("📥 Importar do INSS");
   document.getElementById("sub-lista").textContent =
     "O que o PAT/GERID tem, comparado com o que o CRM já sabe. Nada é gravado sem você mandar.";
   // Se a montagem da tela estourar, o padrão do navegador é deixar o quadro
@@ -3499,7 +3525,7 @@ function render(){
   const h1=document.getElementById("titulo-lista"), sub=document.getElementById("sub-lista"),
         meio=document.getElementById("conteudo-meio");
   if(buscaTxt){
-    h1.textContent="🔍 Pesquisa";
+    tituloLista("🔍 Pesquisa");
     const achados = pesquisar(buscaTxt).slice(0,200);
     sub.textContent=`${achados.length} cliente(s) encontrados`;
     meio.innerHTML = achados.map(c=>cartaoCliente(c)).join("") || "<p class='meio-sub'>Nada encontrado.</p>";
@@ -3537,7 +3563,7 @@ function render(){
   else if(visao.startsWith("fase:")){ const f=visao.slice(5);
     titulo=FASES.find(x=>x[0]===f)[1]; casosSel=casosDaFase(f); }
   else { titulo=visao; casosSel=[]; }
-  h1.textContent=titulo; sub.textContent=subt;
+  tituloLista(titulo); sub.textContent=subt;
   // filtro por colaborador em TODAS as listas — cada um vê só o que é seu
   if(filtroColab) casosSel = casosSel.filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(filtroColab));
   const chipsCol = `<div class="filtros">`+[`<button class="fchip ${filtroColab===null?"on":""}" data-fcol="">Todos</button>`]
@@ -3586,7 +3612,7 @@ function render(){
 
 // ── Meu Dia (com filtro por colaborador) ──────────────────────────────────
 function renderMeuDia(){
-  document.getElementById("titulo-lista").textContent="☀️ Meu Dia";
+  tituloLista("☀️ Meu Dia");
   // como no To Do: saudação e a data por extenso — dá o contexto do dia sem
   // ninguém ter que procurar o calendário
   const h=agoraSP().getHours();   // saudação pelo relógio de Brasília
@@ -4651,7 +4677,7 @@ function linhaNovidade(a){
 }
 
 function renderNovidades(){
-  document.getElementById("titulo-lista").textContent = "📣 Novidades";
+  tituloLista("📣 Novidades");
   const ns = novidades();
   document.getElementById("sub-lista").textContent = ns.length
     ? "O que os portais trouxeram e você ainda não leu. Marcar como lido tira daqui, não da ficha."
@@ -4720,7 +4746,7 @@ async function marcarLidas(ids){
 // Aqui elas ficam à mão para quando sobrar tempo, com o número na barra
 // lateral dizendo o tamanho da fila sem cobrar nada.
 function renderAcervo(){
-  document.getElementById("titulo-lista").textContent = "🧹 Cuidar do acervo";
+  tituloLista("🧹 Cuidar do acervo");
   document.getElementById("sub-lista").textContent =
     "Sem data e sem cobrança: o que fica para quando sobrar tempo. Nada aqui vence hoje.";
   const corpo = blocoRevisao() + blocoSemAcao();
@@ -4744,7 +4770,7 @@ function quantosNoAcervo(){
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
 let filtroPlan="todas", filtroPlanColab=null;   // Planejado abre mostrando tudo, em seções
 function renderPlanejado(){
-  document.getElementById("titulo-lista").textContent="🗓️ Planejado";
+  tituloLista("🗓️ Planejado");
   document.getElementById("sub-lista").textContent=
     "A agenda do escritório — tudo que tem data para lembrar (último dia de prazo, contato com cliente, prorrogação...).";
   const per=[["venc","⚠ Vencidas"],["hoje","Hoje"],["3","Próx. 3 dias"],["7","Próx. 7 dias"],["todas","Todas"]];
@@ -4816,7 +4842,7 @@ function ligarTarefas(){
   });
 }
 function renderParticulares(){
-  document.getElementById("titulo-lista").textContent="📋 Minhas Tarefas";
+  tituloLista("📋 Minhas Tarefas");
   document.getElementById("sub-lista").textContent="🔒 Só você vê esta lista. Tarefas com prazo de hoje aparecem no seu Meu Dia.";
   const minhas = D.tarefas.filter(t=>t.particular_de===eu.id)
     .sort((a,b)=>((a.prazo||"9999")<(b.prazo||"9999")?-1:1));
@@ -4847,7 +4873,7 @@ async function novaTarefa(){
 
 // ── Novo Cliente (botão do topo) ──────────────────────────────────────────
 function renderNovoCliente(){
-  document.getElementById("titulo-lista").textContent="➕ Novo Cliente";
+  tituloLista("➕ Novo Cliente");
   document.getElementById("sub-lista").textContent=
     "Cadastro completo: cria o cliente, o primeiro caso e (se quiser) já agenda o atendimento no Google Agenda — 001 para cliente novo, 002 para antigo.";
   document.getElementById("conteudo-meio").innerHTML=`
@@ -4958,7 +4984,7 @@ async function criarCliente(){
 
 // ── visão 🤖 Claude (sugestões com aprovação humana) ─────────────────────
 function renderClaude(){
-  document.getElementById("titulo-lista").textContent="🤖 Claude";
+  tituloLista("🤖 Claude");
   document.getElementById("sub-lista").textContent=
     "Sugestões geradas automaticamente pela rotina diária — nada vale sem a sua aprovação. Aceitar aplica na hora (exigência, andamento ou mensagem).";
   const ICONE={exigencia:"⚠",prazo:"⏰",pericia:"🩺",mensagem:"💬",proximo_passo:"👉"};
@@ -4998,7 +5024,7 @@ async function decidirSugestao(id, status){
 
 // ── 📥 Menções (caixa de entrada) ─────────────────────────────────────────
 function renderMencoes(){
-  document.getElementById("titulo-lista").textContent="📥 Menções";
+  tituloLista("📥 Menções");
   document.getElementById("sub-lista").textContent=
     "Pendências em que alguém citou você com @ num andamento. Escreva @Nome ao registrar para delegar.";
   document.getElementById("conteudo-meio").innerHTML = D.mencoes.map(m=>{
@@ -5036,7 +5062,7 @@ async function criarMencoes(texto, casoId, andamentoId, extras){
 
 // ── 📄 Modelos de documentos (gerenciar) ──────────────────────────────────
 function renderModelosDoc(){
-  document.getElementById("titulo-lista").textContent="📄 Modelos de documentos";
+  tituloLista("📄 Modelos de documentos");
   document.getElementById("sub-lista").textContent=
     "Os modelos-ouro do escritório. Use {nome}, {cpf}, {endereco}, {nb}, {processo}, {beneficio}, {data} — na ficha do cliente eles saem preenchidos. Cole aqui os textos do site interno.";
   document.getElementById("conteudo-meio").innerHTML =
@@ -5086,7 +5112,7 @@ function kcardCaso(k){
       ${chipExig(k)}${chipPrazo(k.prazo)}</div></div>`;
 }
 function renderQuadro(){
-  document.getElementById("titulo-lista").textContent="📌 Quadro";
+  tituloLista("📌 Quadro");
   document.getElementById("sub-lista").textContent=
     "Arraste o cartão para mudar a fase do caso — a alteração vai para o banco (e o To Do acompanha).";
   document.getElementById("conteudo-meio").innerHTML =
@@ -5132,7 +5158,7 @@ function quandoFalou(ts){
   return fmtTS(ts);
 }
 function renderVendas(){
-  document.getElementById("titulo-lista").textContent="💼 Vendas";
+  tituloLista("💼 Vendas");
   document.getElementById("sub-lista").textContent=
     "Do primeiro contato ao contrato. Arraste entre etapas; ao fechar, um clique transforma o prospecto em cliente.";
   const fech=D.leads.filter(l=>l.etapa==="fechado").length,
@@ -5222,7 +5248,7 @@ let zapNota = false;
 function pararZapTimer(){ if(zapTimer){ clearInterval(zapTimer); zapTimer=null; } }
 
 async function renderWhats(){
-  document.getElementById("titulo-lista").textContent="💬 WhatsApp";
+  tituloLista("💬 WhatsApp");
   document.getElementById("sub-lista").textContent=
     "As conversas do escritório. Quem responde assume a conversa — e o robô se cala na hora.";
   document.getElementById("conteudo-meio").innerHTML =
@@ -5731,7 +5757,7 @@ const DIAS_CFG = [["1","seg"],["2","ter"],["3","qua"],["4","qui"],["5","sex"],["
 let cfgAvisos = [], cfgPassos = [];
 
 async function renderConfig(){
-  document.getElementById("titulo-lista").textContent="⚙️ Configurações";
+  tituloLista("⚙️ Configurações");
   document.getElementById("sub-lista").textContent=
     "Quem atende, o que o robô diz e quando os avisos saem. Vale para o escritório inteiro.";
   const meio = document.getElementById("conteudo-meio");
@@ -5967,7 +5993,7 @@ function ligarConfig(){
 
 // ── 📣 Marketing (o que estamos trabalhando + público por benefício) ──────
 function renderMarketing(){
-  document.getElementById("titulo-lista").textContent="📣 Marketing";
+  tituloLista("📣 Marketing");
   document.getElementById("sub-lista").textContent=
     "Onde o escritório está trabalhando mais (últimos 30 dias) — use para pautar posts e enviar material certo para o cliente certo.";
   const atividade={};
@@ -5999,7 +6025,7 @@ function renderMarketing(){
 
 // ── agenda e dashboard ────────────────────────────────────────────────────
 function renderAgenda(){
-  document.getElementById("titulo-lista").textContent="🩺 Perícias & Audiências";
+  tituloLista("🩺 Perícias & Audiências");
   document.getElementById("sub-lista").textContent="Agenda estruturada — adicione novas pela ficha do cliente.";
   const evs=D.eventos.slice().sort((a,b)=>a.data_hora<b.data_hora?-1:1);
   const fut=evs.filter(e=>dataSP(e.data_hora)>=hoje() && e.status!=="cancelada");
@@ -6105,7 +6131,7 @@ function itemCal(i){
     ${t.icone} ${i.hora?`<b>${i.hora}</b> `:""}${esc(i.texto)}</div>`;
 }
 function renderCalendario(){
-  document.getElementById("titulo-lista").textContent="📅 Calendário";
+  tituloLista("📅 Calendário");
   document.getElementById("sub-lista").textContent=
     "Tudo o que tem data. Cada cor é um tipo — clique numa cor para ver só ela.";
   let itens=itensDoCalendario();
@@ -6407,7 +6433,7 @@ async function addNaLista(){
 }
 
 function renderParcerias(){
-  document.getElementById("titulo-lista").textContent="🤝 Parcerias";
+  tituloLista("🤝 Parcerias");
   document.getElementById("sub-lista").textContent=
     "Casos em parceria com advogados externos — vêm das etiquetas #Nome no título do To Do (ex.: #Laís).";
   const com = D.casos.filter(k=>k.parceria && k.fase!=="encerrado");
@@ -6427,7 +6453,7 @@ function barras(pares){
   return pares.map(([r,q])=>`<div class="barra"><span class="rot" title="${esc(r)}">${esc(r)}</span><div class="tubo"><i style="width:${q/max*100}%"></i></div><span class="qt">${q}</span></div>`).join("");
 }
 function renderDash(){
-  document.getElementById("titulo-lista").textContent="📊 Dashboard";
+  tituloLista("📊 Dashboard");
   document.getElementById("sub-lista").textContent="Ao vivo, direto do banco.";
   const at=ativos();
   const em7=new Date(); em7.setDate(em7.getDate()+7);
@@ -6753,7 +6779,7 @@ async function marcarRotina(id, jaFeita){
 }
 
 function renderRotinas(){
-  document.getElementById("titulo-lista").textContent="🔁 Organizacional";
+  tituloLista("🔁 Organizacional");
   document.getElementById("sub-lista").textContent=
     "Tarefas do escritório que se repetem — não são de cliente. Aparecem no ☀️ Meu Dia de quem é responsável, no dia programado.";
   const rs=(D.rotinas||[]).filter(r=>r.ativo!==false);
