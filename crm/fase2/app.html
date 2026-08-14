@@ -109,7 +109,7 @@
     border-left:none;border-radius:10px}
   .app.mini-lateral .sidebar .lista-item .rotulo{flex:none}
   .app.mini-lateral .sidebar .lista-item .ic{width:auto;font-size:21px}
-  .app.mini-lateral .sidebar .lista-item.ativa{background:rgba(255,255,255,.15)}
+  .app.mini-lateral .sidebar .lista-item.ativa{background:var(--lateral-ativo)}
   /* a marca da lista aberta é uma pastilha colada na borda do trilho, não um
      fio de ponta a ponta: a 64px o fio se confunde com a moldura da coluna */
   .app.mini-lateral .sidebar .lista-item.ativa::before{content:"";position:absolute;
@@ -246,11 +246,12 @@
     width:40px;height:40px;padding:0;cursor:pointer;color:transparent;
     border-radius:10px;text-indent:-999px}
   .app.mini-lateral .sidebar .busca::before{
-    left:11px;top:10px;font-size:19px;opacity:.9;pointer-events:none}
+    left:10px;top:10px;width:19px;height:19px;opacity:.9;pointer-events:none}
   .app.mini-lateral .sidebar #busca-x{display:none!important}
-  .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid rgba(255,255,255,.18);border-radius:6px;font-size:14px;background:rgba(255,255,255,.10);color:#E8EAED}
-  .busca input::placeholder{color:#9AA0B0}
-  .novo-cli{display:block;margin:0 12px 10px;width:calc(100% - 24px);padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
+  .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid transparent;border-radius:var(--raio);font-size:13px;background:rgba(255,255,255,.09);color:#E8EAED;outline:none}
+  .busca input::placeholder{color:#8A90A0}
+  .busca input:focus{background:rgba(255,255,255,.14);border-color:var(--azul-claro)}
+  .novo-cli{display:flex;align-items:center;justify-content:center;gap:7px;margin:0 12px 10px;width:calc(100% - 24px);padding:9px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
   .novo-cli:hover{background:var(--azul-escuro)}
   .sug{border:1px solid var(--borda);border-left:4px solid #8a5cf6;border-radius:8px;padding:12px 14px;margin-bottom:10px;background:var(--branco)}
   .sug .cab{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
@@ -267,22 +268,31 @@
   .exig{background:#fbeaea;border:1px solid #e8b4b8;border-radius:8px;padding:8px 12px;margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px}
   .exig strong{color:var(--vermelho)}
   .chip.exig-chip{background:#fbeaea;color:var(--vermelho)}
-  .busca::before{content:"🔍";position:absolute;left:9px;top:7px;font-size:13px;opacity:.6}
-  .grupo h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#9AA0B0;padding:8px 16px 4px}
-  .lista-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;border-left:3px solid transparent;color:#E8EAED}
-  .lista-item:hover{background:rgba(255,255,255,.07)}
-  .lista-item.ativa{background:rgba(255,255,255,.10);border-left-color:#7FA6F0;
-    font-weight:650;color:#fff}
+  /* a lupa é SVG (padrão aprovado): emoji rendia diferente em cada máquina */
+  .busca::before{content:"";position:absolute;left:10px;top:9px;width:15px;height:15px;opacity:.85;
+    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A90A0' stroke-width='2' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='m20 20-3.5-3.5'/></svg>") center/contain no-repeat}
+  /* padrão To Do aprovado: itens com respiro lateral (8px de calha), canto
+     arredondado e a pastilha do ativo como pseudo-elemento colado na calha */
+  .grupo{padding:0 8px}
+  .grupo h3{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#7E8494;padding:12px 10px 5px}
+  .lista-item{display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer;
+    border-radius:var(--raio);color:#D6D9E0;font-size:13.5px;position:relative;user-select:none}
+  .lista-item:hover{background:var(--lateral-hover)}
+  .lista-item.ativa{background:var(--lateral-ativo);font-weight:600;color:#fff}
+  .lista-item.ativa::before{content:"";position:absolute;left:-8px;top:7px;bottom:7px;
+    width:3px;border-radius:0 3px 3px 0;background:var(--azul-claro)}
   .lista-item .rotulo{display:flex;align-items:center;gap:9px;min-width:0;flex:1}
-  /* célula de largura fixa: emoji têm larguras diferentes e, sem ela, cada
-     rótulo começava numa coluna — a lista parecia desalinhada sem motivo */
-  .lista-item .ic{flex:none;width:20px;text-align:center;font-size:15px;line-height:1}
+  /* célula de largura fixa: sem ela, cada rótulo começava numa coluna —
+     a lista parecia desalinhada sem motivo */
+  .lista-item .ic{flex:none;width:20px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:15px;line-height:1;color:#9AA0B0}
   .lista-item .txt{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
   /* o contador é informação de canto: número claro, sem cápsula, e em
      algarismos de largura fixa para a coluna da direita não tremer */
-  .lista-item .cont{margin-left:auto;font-size:12px;color:#8D94A3;
+  .lista-item .cont{margin-left:auto;font-size:12px;color:#9AA0B0;
     font-variant-numeric:tabular-nums;padding-left:8px}
-  .lista-item.ativa .cont{color:#DDE2EC}
+  .lista-item .cont:empty{display:none}
+  .lista-item.ativa .ic,.lista-item.ativa .cont{color:var(--azul-claro)}
   .u-papel{font-size:11px;color:#8D94A3;text-transform:lowercase}
   .lista-item .priv{margin-left:auto;font-size:10px;color:#D8C6EE;background:rgba(255,255,255,.12);border-radius:8px;padding:1px 6px}
   .sep{border-top:1px solid rgba(255,255,255,.12);margin:8px 12px}
@@ -336,7 +346,7 @@
   .cartao[draggable="true"]{cursor:grab}
   .cartao.arrastando{opacity:.4}
   .lista-item.arrastando{opacity:.45}
-  .lista-item.alvo{background:rgba(120,170,255,.28);border-left-color:#8FB6F5;
+  .lista-item.alvo{background:rgba(120,170,255,.28);box-shadow:inset 3px 0 0 #8FB6F5;
     outline:1px dashed rgba(255,255,255,.5);outline-offset:-3px}
   .filtros{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
   .fchip{border:1px solid var(--borda);background:var(--branco);border-radius:14px;padding:4px 12px;cursor:pointer;font-size:13px;display:flex;gap:6px;align-items:center}
@@ -1257,7 +1267,7 @@
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
       <button class="sair" onclick="sair()">sair</button></div>
     <div class="sep"></div>
-    <button class="novo-cli" id="btn-novo-cli" title="Novo Cliente">➕<span class="txt"> Novo Cliente</span></button>
+    <button class="novo-cli" id="btn-novo-cli" title="Novo Cliente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="txt">Novo Cliente</span></button>
     <div class="busca"><input id="busca" placeholder="Pesquisar nome, CPF, processo, protocolo…" style="padding-right:26px">
       <button id="busca-x" title="limpar pesquisa"
         style="display:none;position:absolute;right:6px;top:6px;border:none;background:none;font-size:14px;cursor:pointer;color:#CFD3DA">✕</button></div>
@@ -1937,6 +1947,44 @@ function quantosNoMeuDia(){
   return casosDia.length + hojeK.length + tHoje.length + lembHoje;
 }
 
+// ── biblioteca de ícones SVG do menu (espec. 5.3) ─────────────────────────
+// Emoji como ícone desalinhava e rendia diferente em cada máquina. Cada
+// entrada é o MIOLO do svg (stroke 1.8, viewBox 24, currentColor); a chave é
+// o emoji EXATO que os rótulos usam — assim os rótulos ("☀️ Meu Dia")
+// continuam a fonte única de verdade e o rotu() troca só a apresentação.
+const SVG_MENU = {
+  "☀️":'<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M18.7 5.3 17 7M7 17l-1.7 1.7"/>',
+  "📣":'<path d="M3 10v4l11 5V5L3 10Z"/><path d="M14 8.5c2.6.6 4.2 1.8 4.2 3.5s-1.6 2.9-4.2 3.5M7 15.5V19a1.5 1.5 0 0 0 3 0v-2.2"/>',
+  "📥":'<path d="M3.5 13.5h5l1.5 2.5h4l1.5-2.5h5"/><path d="M5.5 5.5h13l2 8v5a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-5l2-8Z"/>',
+  "📅":'<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 2.8V6M16 2.8V6"/>',
+  "🗓️":'<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 2.8V6M16 2.8V6"/>',
+  "🗓":'<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/>',
+  "👤":'<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/>',
+  "⭐":'<path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/>',
+  "📋":'<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3h6v1.5M9 10h6M9 13.5h6M9 17h4"/>',
+  "🔁":'<path d="M17.5 6.5H8a4 4 0 0 0-4 4v.5M6.5 17.5H16a4 4 0 0 0 4-4V13"/><path d="m14.5 3.5 3 3-3 3M9.5 20.5l-3-3 3-3"/>',
+  "🧹":'<rect x="3.5" y="4" width="17" height="4.5" rx="1"/><path d="M5.5 8.5V18a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8.5M10 12.5h4"/>',
+  "🙋":'<rect x="3.5" y="8" width="17" height="12" rx="2"/><path d="M9 8V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V8M3.5 13h17"/>',
+  "🌻":'<path d="M4 9.5 12 4l8 5.5M5.5 9.5V19M18.5 9.5V19M9 12v7M15 12v7M3.5 19.5h17"/>',
+  "🖥":'<path d="M9 6.5h11M9 12h11M9 17.5h11M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"/>',
+  "👪":'<path d="M12 3.5v17M8 20.5h8M12 6H6.5L3 12.5h7L6.5 6M12 6h5.5L21 12.5h-7L17.5 6M3 12.5a3.5 3.5 0 0 0 7 0M14 12.5a3.5 3.5 0 0 0 7 0"/>',
+  "💡":'<path d="M13.5 3.5H7A1.8 1.8 0 0 0 5.2 5.3v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8l-5.3-5.3Z"/><path d="M13.5 3.5V9h5.3M9 13.5h6M9 17h4"/>',
+  "🙏":'<path d="M6.5 3.5h11M6.5 20.5h11M8 3.5v3.2a4 4 0 0 0 1.6 3.2L12 12l-2.4 2.1A4 4 0 0 0 8 17.3v3.2M16 3.5v3.2a4 4 0 0 1-1.6 3.2L12 12l2.4 2.1a4 4 0 0 1 1.6 3.2v3.2"/>',
+  "🤖":'<path d="M12 3.5c.4 4.6 3.4 7.6 8 8-4.6.4-7.6 3.4-8 8-.4-4.6-3.4-7.6-8-8 4.6-.4 7.6-3.4 8-8Z"/>',
+  "📄":'<path d="M13.5 3.5H7A1.8 1.8 0 0 0 5.2 5.3v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8l-5.3-5.3Z"/><path d="M13.5 3.5V9h5.3M9 13.5h6M9 17h4"/>',
+  "📌":'<path d="M9 3.5h6l-.8 6.2 2.8 3.3H7l2.8-3.3L9 3.5ZM12 13v7.5"/>',
+  "💼":'<rect x="3.5" y="8" width="17" height="12" rx="2"/><path d="M9 8V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V8M3.5 13h17"/>',
+  "💬":'<path d="M12 3.5a8.5 8.5 0 0 0-7.3 12.8L3.5 20.5l4.4-1.1A8.5 8.5 0 1 0 12 3.5Z"/>',
+  "🤝":'<circle cx="9" cy="8.5" r="3.2"/><path d="M3 19.5c.7-3 3-4.6 6-4.6s5.3 1.6 6 4.6"/><path d="M15.5 5.6a3.2 3.2 0 0 1 0 5.8M17.5 15.3c1.8.7 3 2.1 3.5 4.2"/>',
+  "💰":'<circle cx="12" cy="12" r="8.5"/><path d="M12 6.5v11M14.8 8.7c-.6-.9-1.6-1.3-2.8-1.3-1.7 0-2.9.9-2.9 2.2 0 3.1 5.8 1.5 5.8 4.6 0 1.3-1.2 2.2-2.9 2.2-1.3 0-2.4-.5-3-1.5"/>',
+  "🩺":'<rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M12 7.5v9M7.5 12h9"/>',
+  "📊":'<rect x="3.5" y="3.5" width="7.2" height="7.2" rx="1.5"/><rect x="13.3" y="3.5" width="7.2" height="7.2" rx="1.5"/><rect x="3.5" y="13.3" width="7.2" height="7.2" rx="1.5"/><rect x="13.3" y="13.3" width="7.2" height="7.2" rx="1.5"/>',
+  "⚙️":'<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.7M12 18.5v2.7M2.8 12h2.7M18.5 12h2.7M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M18.5 5.5l-1.9 1.9M7.4 16.6l-1.9 1.9"/>',
+};
+const svgIc = (emoji, t=17) => SVG_MENU[emoji]
+  ? `<svg width="${t}" height="${t}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${SVG_MENU[emoji]}</svg>`
+  : null;
+
 function montarSidebar(){
   const din = [
     ["meudia","☀️ Meu Dia", quantosNoMeuDia()],
@@ -1957,7 +2005,8 @@ function montarSidebar(){
   // todos os rótulos na mesma coluna: emoji não têm a mesma largura, e sem
   // isso "Menções" e "Calendário" começavam em pontos diferentes.
   const rotu = rot => { const i=rot.indexOf(" ");
-    return `<span class="rotulo"><span class="ic" aria-hidden="true">${rot.slice(0,i)}</span>`
+    const em=rot.slice(0,i);
+    return `<span class="rotulo"><span class="ic" aria-hidden="true">${svgIc(em)||em}</span>`
          + `<span class="txt">${esc(rot.slice(i+1))}</span></span>`; };
   // o nome sem o emoji: é ele que o leitor de tela anuncia e que a etiqueta
   // do menu recolhido mostra
