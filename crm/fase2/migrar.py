@@ -233,7 +233,7 @@ def mapear(dados):
 
         if lista == "💵 Pagamentos":
             for item in t.get("checklist") or []:
-                pg = pagamento_do_item(kid, item)
+                pg = pagamento_do_item(kid, item, cid)
                 if pg:
                     pagamentos[pg["todo_item_id"]] = pg
 
@@ -436,17 +436,21 @@ def data_do_item(texto):
     return f"{m.group(3)}-{m.group(2)}-{m.group(1)}" if m else None
 
 
-def pagamento_do_item(kid, item):
+def pagamento_do_item(kid, item, cid=None):
     """Item do checklist -> linha de `pagamentos`. Concluído no To Do =
     recebido (pago_em = quando marcou, senão a data escrita no item);
-    aberto = a receber (a data escrita vira vencimento)."""
+    aberto = a receber (a data escrita vira vencimento).
+
+    O dinheiro é do CLIENTE: `cliente_id` é o vínculo que a aba Pagamentos da
+    ficha usa. `caso_id` é uma cortesia — existe quando a parcela nasceu de um
+    caso, e fica vazia quando o cliente só tem o acerto de honorários."""
     if not (item.get("id") and (item.get("texto") or "").strip()):
         return None
     texto = item["texto"].strip()
     feito = bool(item.get("feito"))
     data = data_do_item(texto)
     return {
-        "todo_item_id": item["id"], "caso_id": kid,
+        "todo_item_id": item["id"], "caso_id": kid, "cliente_id": cid,
         "descricao": texto, "valor": valor_do_item(texto),
         "status": "recebido" if feito else "aberto",
         "pago_em": (item.get("feito_em") or data) if feito else None,
@@ -605,6 +609,50 @@ def subir_rest(mapa):
                 resgatados += 1
     if resgatados:
         print(f"  processo/NB preservados do banco (To Do vazio): {resgatados}")
+
+    # A LISTA 💵 PAGAMENTOS É A ABA PAGAMENTOS DO CLIENTE, NÃO UM CASO.
+    # Mesmo princípio de 🙏 Aposentadorias Futuras -> aba 🔔 Lembretes: lista do
+    # To Do não vira processo. Uma tarefa criada direto na lista de pagamentos
+    # nascia como um segundo "caso" do cliente, disputando a ficha com o
+    # processo de verdade. Agora ela não vira caso: as parcelas chegam à aba
+    # pelo cliente_id, e o que estava escrito no corpo entra na linha do tempo
+    # do caso principal do cliente, quando ele tem um.
+    #
+    # Casos de pagamento que JÁ EXISTEM no banco ficam como estão — carregam
+    # andamentos de meses, e reescrever isso seria perder história. Quem quiser
+    # limpá-los usa o "Encerrar caso" da ficha, um a um, com registro.
+    novos_pgto = {k["id"] for k in mapa["casos"]
+                  if k.get("origem_lista") == "💵 Pagamentos" and k["id"] not in guardado}
+    if novos_pgto:
+        principal = {}
+        for k in mapa["casos"]:
+            if k["id"] in novos_pgto:
+                continue
+            atual = principal.get(k["cliente_id"])
+            if not atual or (atual.get("fase") == "encerrado"
+                             and k.get("fase") != "encerrado"):
+                principal[k["cliente_id"]] = k
+        destino = {k["id"]: (principal.get(k["cliente_id"]) or {}).get("id")
+                   for k in mapa["casos"] if k["id"] in novos_pgto}
+        for pg in mapa.get("pagamentos", []):
+            if pg.get("caso_id") in destino:
+                pg["caso_id"] = destino[pg["caso_id"]]
+        soltos = 0
+        for chave in ("andamentos", "eventos", "tarefas"):
+            mantidos = []
+            for linha in mapa.get(chave, []):
+                if linha.get("caso_id") in destino:
+                    alvo = destino[linha["caso_id"]]
+                    if not alvo:            # cliente sem nenhum outro caso
+                        soltos += 1
+                        continue
+                    linha["caso_id"] = alvo
+                mantidos.append(linha)
+            mapa[chave] = mantidos
+        mapa["casos"] = [k for k in mapa["casos"] if k["id"] not in novos_pgto]
+        print(f"  💵 Pagamentos: {len(novos_pgto)} tarefa(s) sem caso próprio — "
+              "as parcelas vão para a aba do cliente"
+              + (f"; {soltos} anotação(ões) sem caso onde entrar" if soltos else ""))
 
     # 🔔 lembretes de Aposentadorias Futuras — três cuidados:
     # 1. MERGE NÃO-DESTRUTIVO: adiar, mudar intervalo, trocar título ou

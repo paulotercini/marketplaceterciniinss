@@ -1325,7 +1325,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.92 · F8: ficha do caso em duas colunas (fatos à esquerda, conversa à direita, conforme a largura da ficha) e composer que abre ao escrever</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.93 · a lista 💵 Pagamentos do To Do é a aba Pagamentos do cliente (não vira mais um caso), como 🙏 Aposentadorias Futuras é a aba Lembretes</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3634,8 +3634,26 @@ function render(){
     || (D.tarefasPorCaso.get(k.id)||[]).some(t=>t.colaborador_id===eu.id)); }
   else if(visao==="importante"){ titulo="⭐ Importante"; casosSel=ativos().filter(k=>k.importante);
     subt="O que você marcou — e, no topo, o que os portais trouxeram e ninguém leu ainda."; }
-  else if(visao==="recebimentos"){ titulo="💰 Recebimentos"; casosSel=D.casos.filter(k=>k.fase==="pagamento");
-    subt="Casos em fase de pagamento — o financeiro vive dentro do caso, na aba Pagamentos da ficha."; }
+  else if(visao==="recebimentos"){ titulo="💰 Recebimentos";
+    // dois caminhos chegam aqui: o caso que venceu e está recebendo (fase
+    // pagamento) e o cliente que tem parcela em aberto vinda da lista 💵
+    // Pagamentos do To Do — esse não tem caso próprio, então entra pelo
+    // processo principal dele (ou por qualquer caso, se for só honorários)
+    casosSel=(()=>{
+      const porFase=D.casos.filter(k=>k.fase==="pagamento");
+      const jaTem=new Set(porFase.map(k=>k.cliente_id));
+      const devendo=new Set(D.pagamentos.filter(p=>p.status==="aberto")
+        .map(p=>p.cliente_id || (D.casoPorId.get(p.caso_id)||{}).cliente_id).filter(Boolean));
+      const extras=[];
+      for(const cid of devendo){
+        if(jaTem.has(cid)) continue;
+        const ks=(D.casosDoCliente.get(cid)||[]);
+        const k=ks.find(x=>x.fase!=="encerrado")||ks[0];
+        if(k) extras.push(k);
+      }
+      return porFase.concat(extras);
+    })();
+    subt="Casos em recebimento e clientes com parcela em aberto — o dinheiro fica na aba Pagamentos da ficha."; }
   else if(visao.startsWith("fase:")){ const f=visao.slice(5);
     titulo=FASES.find(x=>x[0]===f)[1]; casosSel=casosDaFase(f); }
   else { titulo=visao; casosSel=[]; }
@@ -7028,7 +7046,10 @@ function pintarFicha(){
   const creds = (D._ficha||{}).creds||[], vincs = (D._ficha||{}).vincs||[];
   tfQuem = null; tfData = undefined;   // cada pintura recomeça a escolha
   const evs = D.eventos.filter(e=>ks.some(k=>k.id===e.caso_id)).sort((a,b)=>a.data_hora<b.data_hora?1:-1);
-  const pgs = D.pagamentos.filter(p=>ks.some(k=>k.id===p.caso_id));
+  // o dinheiro é do CLIENTE: a lista 💵 Pagamentos do To Do é ESTA aba, não um
+  // caso. Por isso a parcela entra tanto pelo caso (as antigas) quanto pelo
+  // cliente (as que chegam sem processo — acerto de honorários, por exemplo).
+  const pgs = D.pagamentos.filter(p=>p.cliente_id===cliId || ks.some(k=>k.id===p.caso_id));
   const pagK = ks.filter(k=>k.fase==="pagamento");
   const equipe = [...new Set(ks.flatMap(k=>D.atrDoCaso.get(k.id)||[]))];
 
@@ -7109,9 +7130,11 @@ function pintarFicha(){
     ${(()=>{
       const k = casoSel && D.casoPorId.get(casoSel);
       if(!k){
-        // só em recebimento: o lugar dele é a aba 💰, não esta
-        if(!processosDe(ks).length && pagK.length)
-          return `<p class="meio-sub">Este cliente não tem processo em andamento — está em
+        // só em recebimento: o lugar dele é a aba 💰, não esta. Vale também
+        // para quem nunca teve processo e só tem o acerto de honorários — a
+        // lista 💵 Pagamentos do To Do agora chega direto na aba, sem caso.
+        if(!processosDe(ks).length && (pagK.length || pgs.length))
+          return `<p class="meio-sub">Este cliente não tem processo em andamento — o que existe é
             <strong>recebimento</strong>. Veja a aba <strong>💰 Pagamentos</strong> aqui em cima.</p>`;
         return processosDe(ks).length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso no menu ao lado para ver só o dele.</p>`:"";
       }
@@ -7288,7 +7311,7 @@ function pintarFicha(){
     await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({status:"recebido",pago_em:p.pago_em,conferencias:p.conferencias})});
     aviso("Recebido 💵 — você consta como quem recebeu");
-    await correnteConferencia(p.caso_id, `Pagamento de ${moeda(p.valor)} recebido`);
+    await correnteConferencia(casoDaParcela(p), `Pagamento de ${moeda(p.valor)} recebido`);
     abrirFicha(clienteAberto);
   });
   document.querySelectorAll("[data-confere]").forEach(b=>b.onclick=async()=>{
@@ -7297,7 +7320,7 @@ function pintarFicha(){
     await api(`/rest/v1/pagamentos?id=eq.${p.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({conferencias:p.conferencias})});
     aviso("Conferência registrada ✔");
-    await elosDepoisDeConferir(p.caso_id, `Pagamento de ${moeda(p.valor)} conferido`);
+    await elosDepoisDeConferir(casoDaParcela(p), `Pagamento de ${moeda(p.valor)} conferido`);
     abrirFicha(clienteAberto);
   });
   ligarChecklistFicha();
@@ -11170,7 +11193,19 @@ function proximoElo(quemId){
             rotulo:"conferência final do pagamento"};
   return {alvos:[], rotulo:null};              // o Paulo fecha a corrente
 }
+// O caso onde a corrente de conferência vai escrever. A parcela que veio da
+// lista 💵 Pagamentos do To Do pertence ao CLIENTE e pode não ter caso — aí a
+// corrente escreve no processo principal dele. Cliente sem processo nenhum
+// (só acerto de honorários) fica sem andamento: a conferência ainda é
+// registrada na própria parcela, que é o que importa para o dinheiro.
+function casoDaParcela(p){
+  if(!p) return null;
+  if(p.caso_id) return p.caso_id;
+  const ks=(D.casosDoCliente.get(p.cliente_id||clienteAberto)||[]);
+  return (ks.find(k=>k.fase!=="encerrado") || ks[0] || {}).id || null;
+}
 async function correnteConferencia(casoId, resumo){
+  if(!casoId) return;                 // parcela solta: nada onde escrever
   const {alvos, rotulo} = proximoElo(eu.id);
   if(!alvos.length) return;
   try{
@@ -11190,6 +11225,7 @@ async function correnteConferencia(casoId, resumo){
 // o "✔ conferi": baixa TODAS as tarefas 💰 abertas do caso (a dupla de
 // conferentes conta como uma etapa só) e chama o próximo elo
 async function elosDepoisDeConferir(casoId, resumo){
+  if(!casoId) return;
   for(const t of [...(D.tarefasPorCaso.get(casoId)||[])].filter(t=>!t.concluida_em)){
     const and=(D._andsFicha||[]).find(x=>x.id===t.andamento_id);
     if(and && /^💰 /.test(and.texto||"")){
@@ -11209,7 +11245,10 @@ async function novoPgto(){
   const data=document.getElementById("np-data").value||hoje();
   const desc=document.getElementById("np-desc").value.trim();
   const recebido = data<=hoje();   // data futura = a receber (vencimento)
-  const linha={caso_id:casoId, descricao:desc||"Recebimento", valor,
+  // o dinheiro é do cliente: o caso é opcional (cliente sem processo lança
+  // honorários do mesmo jeito), mas o cliente sempre acompanha a linha
+  const linha={caso_id:casoId||null, cliente_id:clienteAberto||null,
+    descricao:desc||"Recebimento", valor,
     status:recebido?"recebido":"aberto",
     pago_em:recebido?data:null, vencimento:recebido?null:data,
     conferencias:recebido?[{c:eu.id,em:new Date().toISOString()}]:[]};
