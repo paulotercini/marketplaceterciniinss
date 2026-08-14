@@ -360,3 +360,50 @@ def test_evento_com_hora_de_verdade_continua_igual():
     ]))
     (ev,) = m["eventos"]
     assert ev["data_hora"].startswith("2027-04-13T12:30")
+
+
+# ── 💵 Pagamentos: o checklist do To Do vira parcelas ─────────────────────
+
+def test_checklist_de_pagamentos_vira_lancamentos():
+    m = migrar.mapear(crm_json([
+        t("💵 Pagamentos", "Fulana #00000000191", cpf="00000000191", id="pg1",
+          checklist=[
+              {"id": "i1", "texto": "Entrada R$ 1.500,00 10/08/2026",
+               "feito": True, "feito_em": "2026-08-10"},
+              {"id": "i2", "texto": "2ª parcela 500 10/09/2026",
+               "feito": False, "feito_em": None},
+              {"id": "i3", "texto": "", "feito": False, "feito_em": None},
+          ]),
+    ]))
+    pgs = {p["todo_item_id"]: p for p in m["pagamentos"]}
+    assert set(pgs) == {"i1", "i2"}          # item vazio não vira lançamento
+    assert pgs["i1"]["status"] == "recebido"
+    assert pgs["i1"]["valor"] == 1500.0
+    assert pgs["i1"]["pago_em"] == "2026-08-10"
+    assert pgs["i2"]["status"] == "aberto"
+    assert pgs["i2"]["valor"] == 500.0
+    assert pgs["i2"]["vencimento"] == "2026-09-10"
+    (caso,) = m["casos"]
+    assert pgs["i1"]["caso_id"] == caso["id"]
+
+
+def test_valor_do_item_nao_confunde_ordinal_nem_data():
+    assert migrar.valor_do_item("2ª parcela 500") == 500
+    assert migrar.valor_do_item("parcela de 10/08") is None
+    assert migrar.valor_do_item("R$ 1.234,56 em 01/02/2026") == 1234.56
+    assert migrar.valor_do_item("honorários 1.500,00") == 1500.0
+    assert migrar.valor_do_item("pagou tudo") is None
+
+
+def test_item_concluido_sem_checkedDateTime_usa_a_data_do_texto():
+    pg = migrar.pagamento_do_item("k1", {"id": "i9", "texto": "Entrada 300 05/08/2026",
+                                         "feito": True, "feito_em": None})
+    assert pg["status"] == "recebido" and pg["pago_em"] == "2026-08-05"
+
+
+def test_checklist_fora_da_lista_pagamentos_nao_vira_lancamento():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Beltrano #00000000272", cpf="00000000272", id="x",
+          checklist=[{"id": "z1", "texto": "R$ 100", "feito": True, "feito_em": None}]),
+    ]))
+    assert m["pagamentos"] == []
