@@ -142,17 +142,18 @@
   .app.mini-lateral .sidebar #busca-x{display:none}
   /* coluna de casos dentro da ficha (3ª coluna): escolhe o caso, a 4ª mostra o andamento dele */
   /* menu do caso em grafite claro — lê-se como MENU, não como fundo */
-  .col-casos{width:186px;flex:none;border-right:1px solid #262A33;background:#313641;overflow-y:auto;padding:10px 8px}
-  .col-casos .cc-tit{font-size:11px;font-weight:700;color:#A8AEBB;text-transform:uppercase;letter-spacing:.4px;padding:2px 6px 7px}
-  .cc-item{border:1px solid var(--borda);border-radius:8px;padding:7px 9px;margin-bottom:6px;cursor:pointer;background:var(--branco)}
-  .cc-item:hover{box-shadow:0 2px 6px rgba(0,0,0,.08)}
-  .cc-item.sel{outline:2px solid var(--azul)}
+  /* coluna de casos CLARA (espec. 7.3): a faixa grafite saiu da ficha — o
+     cartão "Casos do cliente" vive em fundo claro, item selecionado azul */
+  .col-casos{width:196px;flex:none;border-right:1px solid var(--borda-suave);background:#F7F8FA;overflow-y:auto;padding:12px 10px}
+  .col-casos .cc-tit{font-size:11px;font-weight:700;color:var(--cinza);text-transform:uppercase;letter-spacing:.5px;padding:2px 6px 7px}
+  .cc-item{border:1px solid var(--borda-suave);border-radius:var(--raio);padding:8px 10px;margin-bottom:6px;cursor:pointer;background:var(--branco)}
+  .cc-item:hover{box-shadow:var(--sombra)}
+  .cc-item.sel{outline:none;border-color:var(--azul);background:var(--azul-fundo)}
   .cc-item.enc{opacity:.55}
-  .cc-item .cc-ben{font-weight:700;font-size:13px;line-height:1.25}
+  .cc-item .cc-ben{font-weight:700;font-size:12.5px;line-height:1.25}
   .cc-item .cc-fase{color:var(--cinza);font-size:11px;margin-top:2px}
-  .cc-item.novo{border:1px dashed rgba(255,255,255,.4);color:#9FC0F5;background:none}
-  .cc-item.novo .cc-ben{color:#9FC0F5}
-  .cc-item.sel{outline-color:#9FC0F5}
+  .cc-item.novo{border:1px dashed var(--borda);color:var(--azul-escuro);background:none}
+  .cc-item.novo .cc-ben{color:var(--azul-escuro)}
   .cc-equipe{display:flex;flex-wrap:wrap;gap:5px;padding:2px 6px}
   .mini-eq{cursor:pointer;opacity:.3;filter:grayscale(.6)}
   .mini-eq.on{opacity:1;filter:none}
@@ -171,13 +172,14 @@
   /* sub-menu do processo: separa o que é nosso do que é do tribunal */
   /* segmentado claro: a aba ativa é um cartão branco com a letra em azul —
      nada de faixa escura ou botão azul cheio disputando com o conteúdo */
-  .sub-menu{display:inline-flex;gap:3px;margin:0 0 12px;flex-wrap:wrap;
-    background:var(--fundo);border:1px solid var(--borda);border-radius:10px;padding:3px}
-  .sub-menu button{border:none;background:none;color:var(--cinza);
-    border-radius:8px;padding:6px 13px;font-size:13px;font-weight:500;cursor:pointer}
-  .sub-menu button:hover{color:var(--texto)}
-  .sub-menu button.on{background:var(--branco);color:var(--azul);font-weight:650;
-    box-shadow:0 1px 2px rgba(20,24,33,.09)}
+  /* filtros dos andamentos como CHIPS claros (espec. 7.5) */
+  .sub-menu{display:inline-flex;gap:6px;margin:0 0 12px;flex-wrap:wrap;
+    background:none;border:none;border-radius:0;padding:0}
+  .sub-menu button{border:1px solid var(--borda);background:var(--branco);color:var(--cinza);
+    border-radius:20px;padding:5px 13px;font-size:12.5px;font-weight:500;cursor:pointer}
+  .sub-menu button:hover{border-color:var(--cinza-claro);color:var(--texto)}
+  .sub-menu button.on{background:var(--azul-fundo);border-color:var(--azul);
+    color:var(--azul-escuro);font-weight:650}
   .sub-menu.instancias{margin:0 0 10px}
   .sub-menu.instancias button{border-radius:8px;padding:6px 12px;font-size:13px}
   .sub-menu.instancias small{display:block;font-weight:400;opacity:.75;font-size:12px}
@@ -353,8 +355,9 @@
   .lista-item.alvo{background:rgba(120,170,255,.28);box-shadow:inset 3px 0 0 #8FB6F5;
     outline:1px dashed rgba(255,255,255,.5);outline-offset:-3px}
   .filtros{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
-  .fchip{border:1px solid var(--borda);background:var(--branco);border-radius:14px;padding:4px 12px;cursor:pointer;font-size:13px;display:flex;gap:6px;align-items:center}
-  .fchip.on{background:var(--azul);border-color:var(--azul);color:#fff}
+  .fchip{border:1px solid var(--borda);background:var(--branco);border-radius:20px;padding:4px 12px;cursor:pointer;font-size:12px;color:var(--cinza);display:flex;gap:6px;align-items:center}
+  .fchip:hover{border-color:var(--cinza-claro);color:var(--texto)}
+  .fchip.on{background:var(--azul-fundo);border-color:var(--azul);color:var(--azul-escuro);font-weight:600}
   /* em lista longa, quem rola perde a divisão ("isto ainda é 'em exigência'?").
      O cabeçalho gruda no topo e responde sem exigir voltar. */
   h3.secao{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
@@ -527,34 +530,38 @@
   /* linha do tempo limpa: quem escreveu à esquerda, texto respirando, e uma
      hairline separando. A cor do autor fica só no avatar — nada de barra
      colorida e fundo tingido a cada linha (era o que mais poluía) */
-  .timeline{list-style:none;background:var(--branco);border:1px solid var(--borda);
-    border-radius:12px;overflow:hidden}
-  .timeline li{display:flex;gap:13px;padding:13px 12px;margin:0;
-    border-top:1px solid var(--borda);border-left:none!important;border-radius:0}
-  /* zebrado: um andamento acaba onde o próximo começa, sem precisar de régua */
-  .timeline li:nth-child(odd){background:var(--branco)!important}
-  .timeline li:nth-child(even){background:#F5F6F8!important}
-  .timeline li:first-child{border-top:none}
-  .timeline .quando{flex:none;width:74px;font-size:11px;color:var(--cinza);
+  /* LINHA DO TEMPO COM FIO (espec. 7.5): o zebrado saiu — cada entrada é uma
+     bolinha no fio vertical, data e autor à esquerda, texto corrido ao lado */
+  .timeline{list-style:none;background:var(--branco);border:1px solid var(--borda-suave);
+    border-radius:var(--raio);overflow:hidden;position:relative}
+  .timeline::before{content:"";position:absolute;left:96px;top:14px;bottom:14px;width:2px;
+    background:var(--borda-suave);border-radius:2px}
+  .timeline li{display:flex;gap:20px;padding:11px 12px;margin:0;
+    border-left:none!important;border-radius:0;position:relative;background:none!important}
+  .timeline li::after{content:"";position:absolute;left:92.5px;top:18px;width:9px;height:9px;
+    border-radius:50%;background:var(--branco);border:2px solid var(--cinza-claro);z-index:1}
+  .timeline .quando{flex:none;width:74px;font-size:11px;color:var(--cinza);font-weight:700;
     display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
     font-variant-numeric:tabular-nums;line-height:1.3}
-  .timeline .texto{flex:1;white-space:pre-wrap;font-size:14px;line-height:1.55;min-width:0}
+  .timeline .texto{flex:1;white-space:pre-wrap;font-size:13px;line-height:1.5;min-width:0;max-width:72ch}
   /* ── Fatos do benefício ───────────────────────────────────────────────
      Hierarquia por linha e espaço, não por bloco colorido: cor entra na
      letra (rótulo e nome do benefício em azul) e no estado (prazo). */
   /* A PLACA DO PROCESSO É CINZA. Espécie, protocolo, NB, DER, DIB são dados
      que se leem, não coisas que se fazem — o cinza diz isso sem uma palavra,
      e de quebra separa o quadro de cima do branco em que se escreve. */
-  .fatos{background:var(--placa);border:1px solid var(--borda);border-radius:12px;
-    overflow:hidden;margin-bottom:12px}
+  .fatos{background:var(--branco);border:1px solid var(--borda-suave);border-radius:var(--raio);
+    overflow:hidden;margin-bottom:12px;box-shadow:var(--sombra)}
   .fatos-topo{display:flex;align-items:center;gap:9px;padding:12px 15px;flex-wrap:wrap}
   .fatos-topo h3{font-size:16px;font-weight:650;letter-spacing:-.015em;color:var(--azul-escuro)}
-  .fx-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));border-top:1px solid var(--borda)}
-  .fx{padding:9px 15px;border-top:1px solid var(--borda);border-left:1px solid var(--borda);margin:-1px 0 0 -1px}
+  /* grade de células brancas com divisórias de 1px (espec. 7.4) */
+  .fx-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:1px;
+    background:var(--borda-suave);border-top:1px solid var(--borda-suave)}
+  .fx{padding:9px 15px;background:var(--branco)}
   .fx dt{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
     color:color-mix(in srgb, var(--azul) 72%, var(--cinza));cursor:help}
-  .fx dd{font-size:14px;font-weight:650;margin-top:3px;font-variant-numeric:tabular-nums;
-    display:flex;align-items:center;gap:5px;flex-wrap:wrap;letter-spacing:-.01em}
+  .fx dd{font-size:13px;font-weight:650;margin-top:3px;font-variant-numeric:tabular-nums;
+    display:flex;align-items:center;gap:5px;flex-wrap:wrap;letter-spacing:-.01em;overflow-wrap:anywhere}
   .fx dd small{font-weight:400;color:var(--cinza);font-size:12px;letter-spacing:0}
   .fx-vazio{color:var(--cinza);font-weight:400}
   .fx .lapis{opacity:0;transition:.12s}
@@ -1129,8 +1136,12 @@
   .mkt{border:1px solid var(--borda);border-radius:8px;padding:10px 14px;margin-bottom:8px;background:var(--branco);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   .mkt strong{min-width:180px}
   .doc-edit{width:100%;min-height:140px;margin-top:8px;padding:8px;border:1px solid var(--borda);border-radius:8px;font:13px/1.5 monospace}
-  .aviso{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:#323130;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;opacity:0;transition:.3s;pointer-events:none;z-index:99}
-  .aviso.on{opacity:1}
+  /* toast único (espec. 7.6): pill grafite centrado embaixo */
+  .aviso{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(8px);
+    background:#1C2029;color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;
+    box-shadow:0 4px 16px rgba(0,0,0,.35);opacity:0;transition:opacity .15s,transform .15s;
+    pointer-events:none;z-index:99}
+  .aviso.on{opacity:1;transform:translateX(-50%) translateY(0)}
   /* Tela estreita com a ficha aberta: a lista sai de cena e a ficha ocupa
      o resto — o menu fica (retrátil pelo ☰). Substitui o antigo corte em
      980px que sumia com o menu inteiro. Entra ANTES do bloco do celular
@@ -1239,6 +1250,8 @@
     .app.celular .rot-ok{font-size:22px;padding:4px 8px}
     .app.celular .timeline li{flex-direction:column;gap:2px;padding:9px 10px}
     .app.celular .timeline .quando{width:auto;flex-direction:row;align-items:center}
+    /* no celular a linha vira coluna — o fio ficaria no lugar errado */
+    .app.celular .timeline::before,.app.celular .timeline li::after{display:none}
     .app.celular .btn-mini,.app.celular .cop{padding:9px 15px;font-size:14px;min-height:38px}
     .app.celular .rotina{flex-wrap:wrap;padding:10px 12px}
     .app.celular .rotina .btn-mini{margin-left:auto}
@@ -1339,7 +1352,7 @@
   <button data-cel="mencoes"><b>📥</b>Menções<span class="selo" id="selo-menc" style="display:none"></span></button>
   <button data-cel="menu"><b>☰</b>Listas</button>
 </nav>
-<div class="aviso" id="aviso"></div>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 <div id="modal" style="display:none"></div>
 
 <script>
