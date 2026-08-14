@@ -139,7 +139,7 @@ def _cliente_key(t):
 def mapear(dados):
     """crm.json -> dicionário de linhas por tabela (ids determinísticos)."""
     clientes, casos, andamentos, eventos, tarefas = {}, {}, {}, {}, {}
-    pagamentos = {}
+    pagamentos, lembretes = {}, {}
     credenciais, vinculos, pend_vinculos = {}, {}, []
     pulados, sem_senha_padrao = {}, 0
 
@@ -172,6 +172,47 @@ def mapear(dados):
             c["nome"] = t["nome"]
         c["dn"] = c["dn"] or t["dn"]
         c["telefone"] = c["telefone"] or t["telefone"]
+
+        # 🙏 Aposentadorias Futuras NÃO vira caso (combinado com o Paulo,
+        # 08.90): é gente sem pedido ativo, e caso aberto para cada uma
+        # poluía o CRM. Vira 🔔 LEMBRETE do cliente: a data de conclusão da
+        # tarefa é o proximo_em, e as anotações do corpo vão em
+        # detalhes.anotacoes — visíveis na aba Lembretes, onde a análise
+        # manual pode transferir uma a uma para os andamentos de um caso.
+        # Dados de cliente do checklist (senha, telefone, CPF) continuam
+        # entrando; o resto do checklist fica no To Do.
+        if fase == "aposentadoria_futura":
+            for c_it in t.get("checklist", []):
+                txt = (c_it.get("texto") or "").strip()
+                tipo_it, valor = classificar_item_checklist(txt, c["cpf"])
+                if tipo_it in ("senha_padrao", "senha"):
+                    if tipo_it == "senha_padrao" and not SENHA_PADRAO:
+                        sem_senha_padrao += 1
+                        continue
+                    cred_id = uid("credencial", cid, "meu_inss")
+                    credenciais.setdefault(cred_id, {
+                        "id": cred_id, "cliente_id": cid, "tipo": "meu_inss",
+                        "valor": SENHA_PADRAO if tipo_it == "senha_padrao" else valor})
+                elif tipo_it == "telefone":
+                    c["telefone"] = c["telefone"] or valor
+                elif tipo_it == "cpf":
+                    c["cpf"] = c["cpf"] or valor
+            lid = uid("lembrete", t["id"])
+            lembretes[lid] = {
+                "id": lid, "cliente_id": cid, "tipo": "aposentadoria_futura",
+                "titulo": t["beneficio"] or "Aposentadoria futura",
+                "detalhes": {
+                    "todo_task_id": t["id"],
+                    "beneficio": t["beneficio"],
+                    "anotacoes": [{"data": a["data"], "inicial": a["inicial"],
+                                   "texto": a["texto"]}
+                                  for a in t["andamentos"]],
+                },
+                "intervalo_meses": None,
+                "proximo_em": t["prazo"],
+                "ativo": not t["concluida"],
+            }
+            continue
 
         kid = uid("caso", t["id"])
         # protocolos do INSS citados em qualquer bloco — a busca do app acha
@@ -296,6 +337,7 @@ def mapear(dados):
         "credenciais": list(credenciais.values()),
         "vinculos": list(vinculos.values()),
         "pagamentos": list(pagamentos.values()),
+        "lembretes": list(lembretes.values()),
         "pulados": pulados,
     }
 
@@ -462,6 +504,8 @@ def gerar_sql(mapa):
                     update_cols=("prazo", "concluida", "concluida_em")),
         _sql_insert("pagamentos", mapa.get("pagamentos", []), chave="todo_item_id",
                     update_cols=("descricao", "valor", "status", "pago_em", "vencimento")),
+        _sql_insert("lembretes", mapa.get("lembretes", []),
+                    update_cols=("detalhes", "proximo_em", "ativo")),
         _sql_insert("tarefas", mapa.get("tarefas_docs", [])),
         "commit;",
     ]))
@@ -562,6 +606,47 @@ def subir_rest(mapa):
     if resgatados:
         print(f"  processo/NB preservados do banco (To Do vazio): {resgatados}")
 
+    # 🔔 lembretes de Aposentadorias Futuras — três cuidados:
+    # 1. MERGE NÃO-DESTRUTIVO: adiar, mudar intervalo, trocar título ou
+    #    responsável são edições do APP e o banco vence; a importação só
+    #    renova as anotações (detalhes). Exceção: tarefa CONCLUÍDA no To Do
+    #    desliga o lembrete (ativo=false vence o banco).
+    # 2. Caso já transformado À MÃO (casoViraLembrete gravou origem_caso):
+    #    não nasce um segundo lembrete para a mesma tarefa.
+    # 3. Casos antigos dessa lista que ainda estão abertos no banco são
+    #    ENCERRADOS (não apagados — andamentos e histórico ficam), porque o
+    #    lugar deles agora é a aba 🔔 Lembretes.
+    try:
+        lemb_exist = {l["id"]: l for l in _rest_todas(
+            url, chave, "/rest/v1/lembretes?select=id,titulo,proximo_em,"
+                        "intervalo_meses,ativo,responsavel_id,origem_caso")}
+    except BancoRecusou:
+        lemb_exist = None                    # banco sem a tabela: só avisa adiante
+    if lemb_exist is not None and mapa.get("lembretes"):
+        exist_por_task = {c["todo_task_id"]: c["id"] for c in exist}
+        convertidos = {l["origem_caso"] for l in lemb_exist.values()
+                       if l.get("origem_caso")}
+        mantidos = []
+        for l in mapa["lembretes"]:
+            task_id = (l.get("detalhes") or {}).get("todo_task_id")
+            if exist_por_task.get(task_id) in convertidos:
+                continue                     # já virou lembrete à mão
+            b = lemb_exist.get(l["id"])
+            if b:
+                # responsavel_id não é enviado — o banco já preserva sozinho
+                for campo in ("titulo", "proximo_em", "intervalo_meses"):
+                    if b.get(campo) is not None:
+                        l[campo] = b[campo]
+                if l["ativo"]:               # só a conclusão no To Do desliga
+                    l["ativo"] = b.get("ativo", True)
+            mantidos.append(l)
+        mapa["lembretes"] = mantidos
+    elif lemb_exist is None and mapa.get("lembretes"):
+        print(f"  aviso: banco sem a tabela 'lembretes' — "
+              f"{len(mapa['lembretes'])} lembrete(s) de Aposentadorias Futuras "
+              "esperando o schema_por_em_dia.sql")
+        mapa["lembretes"] = []
+
     # anti-eco: o que o app já criou (poucas linhas — só origem='app', mas o
     # dia em que passarem de 1000 o corte silencioso duplicaria os blocos)
     app_rows = _rest_todas(url, chave,
@@ -586,6 +671,10 @@ def subir_rest(mapa):
         ("pagamentos", "pagamentos", "merge-duplicates", "todo_item_id"),
         # docs solicitados citados em andamentos: só insere — concluir no app fica
         ("tarefas_docs", "tarefas", "ignore-duplicates", "id"),
+        # 🙏 Aposentadorias Futuras: id determinístico por tarefa; o merge
+        # acima já devolveu as colunas que o app edita, então o upsert só
+        # renova as anotações de fato
+        ("lembretes", "lembretes", "merge-duplicates", "id"),
     ]
     # UMA LINHA NÃO PODE DERRUBAR A SINCRONIZAÇÃO INTEIRA.
     #
@@ -622,6 +711,27 @@ def subir_rest(mapa):
         print(f"  {chave_mapa}: {len(linhas) - caiu} linhas enviadas"
               + (f", {caiu} recusada(s)" if caiu else ""))
 
+    # 3. os casos abertos que sobraram na fase aposentadoria_futura vindos do
+    # To Do: encerra (o lembrete acima é quem carrega a obrigação agora).
+    # Casos criados NO APP nessa fase (sem todo_task_id) ficam como estão.
+    if lemb_exist is not None:
+        abertos = _rest_todas(
+            url, chave, "/rest/v1/casos?fase=eq.aposentadoria_futura"
+                        "&todo_task_id=not.is.null&select=id,todo_task_id")
+        agora = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+        encerrados = 0
+        for k in abertos:
+            try:
+                _rest(url, chave, "PATCH", f"/rest/v1/casos?id=eq.{k['id']}",
+                      {"fase": "encerrado", "encerrado_em": agora},
+                      prefer="return=minimal")
+                encerrados += 1
+            except BancoRecusou as e:
+                recusadas.append(("casos", k["id"], str(e)[:300]))
+        if encerrados:
+            print(f"  casos de 🙏 Aposentadorias Futuras encerrados "
+                  f"(viraram lembrete): {encerrados}")
+
     if recusadas:
         det = "\n".join(f"  {t} id={i}: {m}" for t, i, m in recusadas[:10])
         raise BancoRecusou(
@@ -648,7 +758,7 @@ def main(argv=None):
     dados = json.loads(pathlib.Path(args.entrada).read_text(encoding="utf-8"))
     mapa = mapear(dados)
     resumo = {t: len(mapa[t]) for t in ("clientes", "casos", "andamentos", "eventos", "pagamentos",
-                                        "tarefas", "credenciais", "vinculos")}
+                                        "lembretes", "tarefas", "credenciais", "vinculos")}
     print("mapeado:", resumo)
     if mapa["pulados"]:
         print("pulado (listas fora do CRM, sem CPF):",
