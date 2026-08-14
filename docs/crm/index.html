@@ -340,8 +340,9 @@
   #sub-lista{margin-bottom:14px}
   .md-saud{font-size:14px;font-weight:600;color:var(--texto)}
   .btn-fundo{border:1px solid var(--borda);background:rgba(255,255,255,.75);border-radius:8px;
-    padding:5px 10px;font-size:15px;cursor:pointer;line-height:1}
-  .btn-fundo:hover{background:var(--branco);border-color:var(--azul)}
+    padding:5px 10px;font-size:15px;cursor:pointer;line-height:1;
+    color:var(--cinza);display:inline-flex;align-items:center}
+  .btn-fundo:hover{background:var(--branco);border-color:var(--azul);color:var(--azul)}
   .fundos-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:9px}
   .fundo-op{border:1px solid var(--borda);border-radius:10px;height:66px;cursor:pointer;
     display:flex;align-items:flex-end;padding:7px 9px;font:inherit;font-size:12px;color:var(--cinza)}
@@ -719,6 +720,9 @@
   .esc-ic:hover{border-color:var(--azul);color:var(--texto)}
   .esc-ic.imp.on{border-color:#D9A400;background:#FFF4D6;color:#8A6D00}
   .esc-ic.urg.on{border-color:var(--vermelho);background:#FBE9E7;color:var(--vermelho)}
+  /* a estrela ligada é CHEIA: em contorno, ligada e desligada se pareciam
+     demais para o olho que só passa por cima */
+  .esc-ic.imp.on svg{fill:currentColor}
   .esc-reg{background:var(--azul);color:#fff;border:none;border-radius:8px;height:34px;padding:0 18px;
     font:inherit;font-size:14px;font-weight:650;cursor:pointer}
   .esc-reg:hover{background:var(--azul-escuro)}
@@ -1258,6 +1262,57 @@
     .app.celular .modal-cx{width:96vw;padding:14px}
     .app.celular .proc-op{padding:13px}
   }
+
+  /* ── F8 · FICHA EM DUAS COLUNAS (protótipo aprovado) ────────────────────
+     A ficha é a área de trabalho. À esquerda o CONTEXTO que se consulta
+     (fatos do caso, 300px fixos); à direita o TRABALHO que se faz (escrever
+     e ler andamentos), com todo o resto da largura. Antes, a faixa de fatos
+     atravessava a tela inteira e empurrava a conversa para baixo da dobra.
+
+     DUAS TRAVAS, ambas medidas no navegador antes de entrar:
+
+     1. SÓ O PAINEL DO CASO vira grade. Com `.painel.ativo` solto, as outras
+        seis abas da ficha (Cadastro, Perícias, Pagamentos, Mensagens,
+        Documentos, Lembretes) viravam duas colunas também — e lá cada bloco
+        caía alternado numa coluna de 300px, com o texto espremido.
+
+     2. QUEM MANDA É A LARGURA DO PAINEL, não a da janela. Com o menu e a
+        lista abertos, numa janela de 1280px a ficha fica com 600px: um
+        @media de janela ainda enxergava "tela grande" e a conversa ficava
+        com 241px de largura. Por isso a decisão é um @container medindo a
+        própria área de rolagem da ficha. */
+  @media (min-width:761px){
+    /* o containment fica FORA do celular de propósito: lá o composer é
+       position:fixed dentro da ficha, e um container o prenderia à ficha em
+       vez do rodapé da tela */
+    .det-rolagem{container-type:inline-size;container-name:ficha}
+  }
+  @container ficha (min-width:900px){
+    .painel[data-p="2"].ativo{display:grid;grid-template-columns:300px minmax(0,1fr);
+      gap:14px;align-items:start}
+    /* TUDO o que não é o quadro de fatos vai para a coluna do trabalho —
+       inclusive o que cada sub-aba traz (INSS, Recurso, CNJ, Caso completo).
+       Sem esta regra, o terceiro bloco de uma sub-aba caía sozinho na coluna
+       de 300px, porque o auto-placement procura a primeira célula livre. */
+    .painel[data-p="2"].ativo>*{grid-column:2;margin-bottom:0}
+    .painel[data-p="2"].ativo>.sub-menu{grid-column:1/-1}
+    /* o span alto deixa o quadro de fatos atravessar quantas linhas a coluna
+       da direita criar: sem ele, uma faixa de fatos alta empurrava a linha do
+       tempo para baixo e abria um buraco no meio da conversa */
+    .painel[data-p="2"].ativo>.fatos{grid-column:1;grid-row:2/span 99;margin:0;align-self:start}
+    .painel[data-p="2"].ativo>datalist{display:none}
+    /* dentro dos 300px os fatos viram duas colunas, como o quadro do protótipo */
+    .painel[data-p="2"].ativo>.fatos .fx-grade{grid-template-columns:1fr 1fr}
+  }
+  /* ── F8 · COMPOSER ENXUTO ───────────────────────────────────────────────
+     Como o "Adicionar etapa" do To Do: uma linha só. As ferramentas (TAREFA
+     PARA, LEMBRAR EM, anexos, sugestões) aparecem quando se começa a
+     escrever. Ocupavam 142px de altura permanente para um campo que fica
+     vazio a maior parte do tempo. */
+  .escrever .esc-barra,.escrever .sug-abrir{display:none}
+  .escrever:focus-within .esc-barra{display:flex}
+  .escrever:focus-within .sug-abrir{display:inline-block}
+  .escrever #and-texto{padding:11px 14px}
 </style>
 </head>
 <body>
@@ -1270,7 +1325,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.91 · reforma visual no padrão To Do (F1–F7): lista fixa em 380px, ícones SVG, abas claras, linha do tempo com fio</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.92 · F8: ficha do caso em duas colunas (fatos à esquerda, conversa à direita, conforme a largura da ficha) e composer que abre ao escrever</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1325,7 +1380,7 @@
     </div>
     <div class="meio-topo">
       <h1 id="titulo-lista"></h1>
-      <button class="btn-fundo" id="btn-fundo" title="mudar o fundo desta lista" onclick="abrirFundos()">🎨</button>
+      <button class="btn-fundo" id="btn-fundo" title="mudar o fundo desta lista" onclick="abrirFundos()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5a8.5 8.5 0 0 0 0 17c1.2 0 1.8-.7 1.8-1.5 0-1.4-1.3-1.7-1.3-2.9 0-.9.8-1.6 1.9-1.6h1.8a4.3 4.3 0 0 0 4.3-4.3c0-3.9-3.9-6.7-8.5-6.7Z"/><path d="M7.5 10.5h.01M10.5 7h.01M14.5 7h.01M17 10h.01"/></svg></button>
       <div class="ordenar">Ordenar: <select id="ordem">
         <option value="alfa">Alfabética</option>
         <option value="prazo">Prazo mais próximo</option>
@@ -7167,6 +7222,11 @@ function pintarFicha(){
       if(e.key==="Enter" && !e.shiftKey){ e.preventDefault();
         document.querySelector(".escrever button[onclick^='novoAndamento']").click(); }
     };
+    // o composer encolhe quando perde o foco (F8) e cresce quando o recebe.
+    // No celular ele é preso ao rodapé, e a folga do fim da rolagem é medida
+    // pela altura dele — sem isto, o último andamento ficava atrás do campo.
+    campoAnd.addEventListener("focus", ()=>setTimeout(folgaComposer,0));
+    campoAnd.addEventListener("blur",  ()=>setTimeout(folgaComposer,0));
     const kAtual=(casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null);
     if(kAtual){
       prazoDetectado=null; prazoCancelado=false;
@@ -9214,7 +9274,7 @@ function painelEscritorio(k, ands){
         ${/* mesma bolinha do Responsável; "ninguém" é o 🚫, cinza até ser
              escolhido — aí fica vermelho, para não passar despercebido */""}
         <button class="fx-av tf-ninguem" id="tf-ninguem" onclick="tfNinguem(this)"
-          title="não atribuir a ninguém">🚫</button>
+          title="não atribuir a ninguém"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m6 18 12-12"/></svg></button>
         ${D.colaboradores.filter(x=>x.ativo).map(co=>`<button class="fx-av tf-eq"
           data-tfp="${co.id}" style="--cor-eq:${co.cor}" title="${esc(co.nome)}"
           onclick="tfPessoa('${co.id}',this)">${esc(co.inicial)}</button>`).join("")}
@@ -9230,11 +9290,11 @@ function painelEscritorio(k, ands){
           <input type="file" id="arq-inp" accept="image/*,application/pdf" capture="environment"
             style="display:none" onchange="anexar('${k.id}','${k.cliente_id}')">
           <button class="esc-ic" onclick="document.getElementById('arq-inp').click()"
-            title="anexar: foto do documento ou arquivo">📎</button>
+            title="anexar: foto do documento ou arquivo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5 12.2 19.3a4.6 4.6 0 0 1-6.5-6.5l8.3-8.3a3 3 0 0 1 4.3 4.3l-8.2 8.2a1.5 1.5 0 0 1-2.1-2.1l7.5-7.5"/></svg></button>
           <button class="esc-ic" onclick="janelaDocsAnotacao()"
-            title="solicitar documentos no meio do atendimento: marca na lista do benefício, entra na anotação e vira checklist — sem apagar o que você já digitou">📄</button>
-          <button class="esc-ic imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="marcar o processo como importante">⭐</button>
-          <button class="esc-ic urg ${k.urgente?"on":""}" onclick="toggleUrg('${k.id}')" title="marcar o processo como urgente">🔥</button>
+            title="solicitar documentos no meio do atendimento: marca na lista do benefício, entra na anotação e vira checklist — sem apagar o que você já digitou"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3.5H7A1.8 1.8 0 0 0 5.2 5.3v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8l-5.3-5.3Z"/><path d="M13.5 3.5V9h5.3M9 13.5h6M9 17h4"/></svg></button>
+          <button class="esc-ic imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="marcar o processo como importante"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/></svg></button>
+          <button class="esc-ic urg ${k.urgente?"on":""}" onclick="toggleUrg('${k.id}')" title="marcar o processo como urgente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c.4 2.6-1 4.1-2.3 5.6C8.4 10.6 7.5 12.1 7.5 14a4.5 4.5 0 0 0 9 0c0-1.6-.7-3-1.7-4.2-.2 1.1-.8 2-1.8 2.5.6-2.6-.1-5.6-1-8.8Z"/></svg></button>
           <button class="esc-reg" onclick="novoAndamento('${k.id}')">Registrar</button>
         </span>
       </div>
@@ -9242,7 +9302,7 @@ function painelEscritorio(k, ands){
       ${/* as sugestões viviam abertas e enchiam a tela; agora ficam atrás de
            um convite, e só aparecem para quem foi buscá-las */""}
       <button class="sug-abrir" id="sug-abrir" onclick="alternarSugestoes('${k.id}')">
-        💡 Sugestões de anotações</button>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.3 17.5h5.4M10 20.5h4M12 3.5a5.5 5.5 0 0 0-3.2 10c.5.4.8 1 .8 1.6h4.8c0-.6.3-1.2.8-1.6A5.5 5.5 0 0 0 12 3.5Z"/></svg> Sugestões de anotações</button>
       <div id="sug-box" class="sugestoes" style="display:none"></div>
       <div id="preenche-box" style="display:none;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-top:6px;padding:10px"></div>
       <div id="exig-box" style="display:none;border:1px solid #f0c36d;border-radius:8px;background:#fffaf0;margin-top:6px;padding:10px">
