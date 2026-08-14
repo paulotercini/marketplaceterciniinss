@@ -306,9 +306,10 @@
   .add-rodape{position:sticky;bottom:0;margin:12px -22px -18px;padding:12px 22px 14px;
     display:flex;gap:8px;align-items:center;background:inherit;
     border-top:1px solid var(--borda);box-shadow:0 -6px 14px -10px rgba(30,32,36,.35)}
-  .add-mais{font-size:19px;color:var(--azul);font-weight:700;line-height:1}
-  .add-rodape input{padding:10px 12px;border:1px solid var(--borda);border-radius:8px;
-    font-size:14px;background:var(--branco)}
+  .add-mais{color:var(--azul);display:inline-flex;line-height:1}
+  .add-rodape input{padding:10px 12px;border:1px solid var(--borda);border-radius:var(--raio);
+    font-size:13px;background:var(--branco);outline:none;box-shadow:var(--sombra)}
+  .add-rodape input:focus{border-color:var(--azul)}
   /* na coluna estreita (ficha aberta) os campos encolhem em vez de empurrar o
      botão para fora da tela — antes o "Adicionar" ficava cortado pela ficha */
   .add-rodape #add-nome{flex:1 1 120px;min-width:0}
@@ -370,23 +371,26 @@
      do Paulo — ele compara as duas listas todo dia, e o CRM mostrando menos
      clientes na mesma tela parecia mais "cheio" com menos gente. As duas
      linhas de texto (~39px) continuam com ar; abaixo disso começa a colar. */
-  .cartao{position:relative;background:var(--branco);padding:0 12px 0 16px;cursor:pointer;
-    min-height:52px;display:flex;align-items:center;gap:10px;margin-bottom:2px;
-    border:1px solid var(--borda);border-radius:8px;
-    box-shadow:0 1px 2px rgba(30,32,36,.05)}
-  .cartao:hover{background:#F9FBFD;box-shadow:0 3px 9px rgba(30,32,36,.10)}
-  .cartao.sel{background:#EDF3FD;border-color:#BCD3F5;box-shadow:inset 3px 0 0 var(--azul)}
+  /* anatomia To Do aprovada: cartão branco raso, sombra leve, título em
+     linha única com ellipsis e a segunda linha miúda em cinza */
+  .cartao{position:relative;background:var(--branco);padding:9px 12px;cursor:pointer;
+    min-height:50px;display:flex;align-items:center;gap:10px;margin-bottom:3px;
+    border:1px solid transparent;border-radius:var(--raio);
+    box-shadow:var(--sombra)}
+  .cartao:hover{box-shadow:var(--sombra-hover)}
+  .cartao.sel{background:var(--azul-fundo);border-color:var(--azul);box-shadow:var(--sombra)}
   .cartao.feita{opacity:.5}
-  .cartao.feita .nome{text-decoration:line-through}
+  .cartao.feita .nome{text-decoration:line-through;color:var(--cinza-claro)}
   /* o nome NUNCA pode ser espremido a zero: numa coluna estreita, com o chip
      de exigência ao lado, a linha chegou a mostrar só o chip e nenhum nome */
   .cartao .info{flex:1 1 auto;min-width:130px}
-  .cartao .nome{font-weight:600;font-size:15px;letter-spacing:-.006em;line-height:1.3;
-    color:#1D1F24;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cartao .nome{font-size:13.5px;line-height:1.35;
+    color:var(--texto);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cartao .nome .cpf{color:var(--cinza-claro);font-size:12px}
   /* a segunda linha: miúda, cinza, só datas — do jeito do To Do */
-  .cartao .meta{display:flex;gap:6px;margin-top:2px;font-size:13px;color:#6E747E;
+  .cartao .meta{display:flex;gap:6px;margin-top:2px;font-size:11.5px;color:var(--cinza);
     align-items:center;white-space:nowrap;overflow:hidden}
-  .cartao .meta .pt{color:#C7CBD2;flex:none}
+  .cartao .meta .pt{color:#B9BDC6;flex:none}
   .cartao .dt{flex:none;font-variant-numeric:tabular-nums}
   .cartao .dt.venc{color:var(--vermelho);font-weight:600}
   .cartao .dt.hoje{color:var(--azul);font-weight:600}
@@ -408,6 +412,10 @@
   .avatar.mini.vazio{background:#DCDFE5;color:#8A9099}
   .chip{border-radius:10px;padding:1px 8px;font-size:11px;font-weight:600;white-space:nowrap}
   .chip.ben{background:#e8f1fb;color:var(--azul-escuro)}
+  /* semáforo de prazo (espec. 6.3): vencido/hoje, até 15 dias, com folga */
+  .chip.vermelho{background:var(--vermelho-f);color:var(--vermelho)}
+  .chip.laranja{background:var(--laranja-f);color:var(--laranja)}
+  .chip.verde{background:var(--verde-f);color:var(--verde)}
   /* datas como no To Do: vencida vermelha, hoje azul, futura preta — sem fundo */
   .chip.prazo{background:none;padding:0;border-radius:0;color:#3b3a39}
   .chip.prazo.venc{color:var(--vermelho);font-weight:700}
@@ -430,10 +438,11 @@
     color:#c8c6c4;flex:none;width:34px;height:34px;border-radius:8px;
     display:inline-flex;align-items:center;justify-content:center}
   .acao-card:hover{background:#EFF2F7}
-  .acao-card.on{color:#eaa300}
-  /* emojis não obedecem a cor do CSS — apagado = cinza via grayscale */
+  .acao-card.on{color:var(--azul)}
+  /* ícones agora são SVG (currentColor); o grayscale fica para os que ainda
+     são emoji (☀️ do Meu Dia) até a varredura final */
   .acao-card.sol,.acao-card.fogo{filter:grayscale(1);opacity:.35}
-  .acao-card.sol.on,.acao-card.fogo.on{filter:none;opacity:1}
+  .acao-card.sol.on,.acao-card.fogo.on{filter:none;opacity:1;color:var(--laranja)}
   .chip.urg{background:#fbeaea;color:var(--vermelho)}
   .nova{display:flex;gap:8px;align-items:center;background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 12px;margin-bottom:12px}
   .nova input{flex:1;border:none;outline:none;font-size:14px}
@@ -1297,8 +1306,8 @@
     <div id="conteudo-meio"></div>
     <!-- como no To Do: o campo de acrescentar fica sempre no pé da lista -->
     <div class="add-rodape" id="add-rodape" style="display:none">
-      <span class="add-mais">＋</span>
-      <input id="add-nome" placeholder="Adicionar cliente nesta lista — nome, ou Nome #CPF"
+      <span class="add-mais"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      <input id="add-nome" placeholder="Adicionar cliente nesta lista (nome, ou Nome #CPF)"
         autocomplete="off" enterkeyhint="done">
       <input id="add-ben" list="lista-beneficios" placeholder="benefício (opcional)">
       <button onclick="addNaLista()">Adicionar</button>
@@ -3355,11 +3364,16 @@ function cartaoCliente(cli, casosMostrar){
   // como no To Do: o nome em cima, e embaixo — miúdo e cinza — a data. Nada
   // de coluna de datas à esquerda: a lista que o escritório já usa todo dia
   // põe o prazo debaixo do título, e mudar isso custaria releitura sem ganho.
+  // semáforo do prazo (espec. 6.3): vencido/hoje em vermelho, até 15 dias
+  // em laranja, com folga em verde — o chip fraco no lugar da data solta
+  const em15 = (()=>{ const d=new Date(hoje()+"T12:00:00"); d.setDate(d.getDate()+15);
+                      return d.toLocaleDateString("sv"); })();
+  const corPrazo = dataProx ? (dataProx<=hoje()?"vermelho":dataProx<=em15?"laranja":"verde") : "";
   const meta = [
     orig,
-    dataProx?`<span class="dt ${dataProx<hoje()?"venc":dataProx===hoje()?"hoje":""}"
-        ${dica?`title="${esc(dica)}"`:""}>🗓 ${esc(dataRelativa(dataProx))}</span>`:"",
-    evFut?`<span class="dt ev" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">🩺 ${
+    dataProx?`<span class="chip ${corPrazo}"
+        ${dica?`title="${esc(dica)}"`:""}>${esc(dataRelativa(dataProx))}</span>`:"",
+    evFut?`<span class="dt ev" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">${
       esc(evFut.tipo.split(" ")[0])} ${(d=>d.slice(0,4)===hoje().slice(0,4)?fmt(d).slice(0,5):fmt(d))(dataSP(evFut.data_hora))} ${horaSP(evFut.data_hora)}</span>`:"",
     exig, dcb,
   ].filter(Boolean);
@@ -3371,7 +3385,7 @@ function cartaoCliente(cli, casosMostrar){
     <div class="info">
       ${/* o 🔥 aparecia duas vezes na mesma linha: ao lado do nome e no botão
              de ação, que já fica aceso quando o caso é urgente */""}
-      <div class="nome">${esc(cli.nome)}</div>
+      <div class="nome">${esc(cli.nome)}${cli.cpf?` <span class="cpf">#${fmtCpf(cli.cpf)}</span>`:""}</div>
       ${meta.length?`<div class="meta">${meta.join('<span class="pt">·</span>')}</div>`:""}
     </div>
     ${quemProx.map(c=>`<span class="avatar mini quem-prazo" style="background:${c.cor}"
@@ -3380,8 +3394,8 @@ function cartaoCliente(cli, casosMostrar){
     ${/* os três só aparecem no hover ou pelo teclado — quando estão LIGADOS
          ficam sempre visíveis, porque aí carregam informação */""}
     <span class="acoes">
-      <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}">🔥</button>
-      <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}">★</button>
+      <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c.4 2.6-1 4.1-2.3 5.6C8.4 10.6 7.5 12.1 7.5 14a4.5 4.5 0 0 0 9 0c0-1.6-.7-3-1.7-4.2-.2 1.1-.8 2-1.8 2.5.6-2.6-.1-5.6-1-8.8Z"/></svg></button>
+      <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}"><svg width="16" height="16" viewBox="0 0 24 24" fill="${imp?"currentColor":"none"}" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/></svg></button>
     </span>
   </div>`;
 }
@@ -6359,7 +6373,7 @@ function mostrarAddRodape(){
   if(mostra){
     const f=visao.slice(5), rot=(FASES.find(x=>x[0]===f)||[])[1]||"";
     document.getElementById("add-nome").placeholder =
-      `Adicionar em ${rot.replace(/^\S+\s/,"")} — nome, ou Nome #CPF`;
+      `Adicionar em ${rot.replace(/^\S+\s/,"")} (nome, ou Nome #CPF)`;
   }
 }
 async function addNaLista(){
