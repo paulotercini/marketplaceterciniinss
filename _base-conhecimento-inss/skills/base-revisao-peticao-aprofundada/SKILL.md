@@ -1,6 +1,6 @@
 ---
 name: base-revisao-peticao-aprofundada
-description: Skill aprimorada de revisão automática de petições previdenciárias do escritório Paulo Roberto Tercini Filho. Versionada no plugin como evolução da skill revisao-peticao do escritório, integra protocolo anti-alucinação de 5 níveis (existência, vigência, redação literal, modulação, número de processo) cruzado com a skill base-legislacao-fontes-primarias, diretrizes vinculantes do Manual de Admissibilidade Recursal da TNU 10ª edição via base-tnu-admissibilidade-manual, taxonomia corrigida das Portarias DIRBEN/INSS 990-996/2022, verificações automáticas obrigatórias (competência territorial e material, política de tutela de urgência, Tema 1124/STJ, prazo decadencial do art. 103 Lei 8.213, documentação IN 128/2022, BPC menor 16 anos IFBrM, tempestividade recursal, dialeticidade), 5 camadas de auditoria (formal, normativa, fática, argumentativa, integridade probatória), catálogo expandido de 22 anti-patterns com exemplos pró e contra, checklist por rito (JEF, ordinário federal, CRPS, MS, TNU, réplica, memorial, recurso administrativo, cumprimento de sentença) e severidade quádrupla (BLOQUEANTE, CRÍTICO, IMPORTANTE, MENOR). Use SEMPRE imediatamente após qualquer petição, recurso, contestação, embargos, agravo, MS, contrarrazões, memorial, réplica, manifestação ou peça processual gerada. Use SEMPRE que mencionar revisar petição, auditar petição, conferir peça, checar petição, segunda leitura, verificação de petição, validação de peça, revisão antialucinação, revisão profunda, auditoria de peça, revisão Tercini, revisão escritório. Dispara os JURISTAS CONFERENTES (Onda 110), dez agentes de conferência doutrinária por bloco temático, de um a três por revisão conforme os temas da peça, acionados por jurista conferente, conferência doutrinária, corrente majoritária, corrente ampliativa, doutrina do tema, parecer doutrinário. Eles discutem correntes e nunca atribuem posição a autor nominado. Aciona automaticamente todas as skills relevantes do plugin como hub de integração. Postura pró-segurado exclusiva. Honestidade radical sobre achados. Cruza com peticao-previdenciaria, base-peticao-previdenciaria-padrao-visual, base-legislacao-fontes-primarias, base-tnu-admissibilidade-manual, pedilef-cotejo-analitico-tnu, precedentes-previdenciarios, tema-1124-instrucao-administrativa, decadencia-revisao-previdenciaria, ms-competencia-autoridade-coatora, documentos-comprobatorios-in128, base-portarias-dpmf-inss-hub, base-efeito-translativo-tema-1124-defesa, reafirmacao-der, analise-documental-incapacidade, especificacao-provas, base-puil-pedilef-vedacao-materia-processual. NÃO use para auditoria de PPP (use auditoria-ppp) nem laudo pericial (use auditoria-laudo-pericial) nem sentença/acórdão (use auditoria-sentenca-acordao).
+description: Skill aprimorada de revisão automática de petições previdenciárias do escritório Paulo Roberto Tercini Filho. Versionada no plugin como evolução da skill revisao-peticao do escritório, integra protocolo anti-alucinação de 5 níveis (existência, vigência, redação literal, modulação, número de processo) cruzado com a skill base-legislacao-fontes-primarias, diretrizes vinculantes do Manual de Admissibilidade Recursal da TNU 10ª edição via base-tnu-admissibilidade-manual, taxonomia corrigida das Portarias DIRBEN/INSS 990-996/2022, verificações automáticas obrigatórias (competência territorial e material, política de tutela de urgência, Tema 1124/STJ, prazo decadencial do art. 103 Lei 8.213, documentação IN 128/2022, BPC menor 16 anos IFBrM, tempestividade recursal, dialeticidade), 5 camadas de auditoria (formal, normativa, fática, argumentativa, integridade probatória), catálogo expandido de 22 anti-patterns com exemplos pró e contra, checklist por rito (JEF, ordinário federal, CRPS, MS, TNU, réplica, memorial, recurso administrativo, cumprimento de sentença) e severidade quádrupla (BLOQUEANTE, CRÍTICO, IMPORTANTE, MENOR). Use SEMPRE imediatamente após qualquer petição, recurso, contestação, embargos, agravo, MS, contrarrazões, memorial, réplica, manifestação ou peça processual gerada. Use SEMPRE que mencionar revisar petição, auditar petição, conferir peça, checar petição, segunda leitura, verificação de petição, validação de peça, revisão antialucinação, revisão profunda, auditoria de peça, revisão Tercini, revisão escritório. Dispara também os PROCESSUALISTAS CONFERENTES (Onda 113), doze agentes de conferência técnica por FASE processual, acionados por postulatória, competência, valor da causa, tutela provisória, especificação de provas, ônus da prova, cerceamento, art. 489, apelação, agravo, embargos, dialeticidade, PUIL, PEDILEF, REsp, relevância, prequestionamento, distinguishing, modulação, coisa julgada, rescisória, cumprimento de sentença, RPV, precatório, honorários, gratuidade, rito do JEF, renúncia ao teto e mandado de segurança. Achado com severidade PRECLUSÃO IMINENTE sobe sempre ao relatório principal. Dispara os JURISTAS CONFERENTES (Onda 110), dez agentes de conferência doutrinária por bloco temático, de um a três por revisão conforme os temas da peça, acionados por jurista conferente, conferência doutrinária, corrente majoritária, corrente ampliativa, doutrina do tema, parecer doutrinário. Eles discutem correntes e nunca atribuem posição a autor nominado. Aciona automaticamente todas as skills relevantes do plugin como hub de integração. Postura pró-segurado exclusiva. Honestidade radical sobre achados. Cruza com peticao-previdenciaria, base-peticao-previdenciaria-padrao-visual, base-legislacao-fontes-primarias, base-tnu-admissibilidade-manual, pedilef-cotejo-analitico-tnu, precedentes-previdenciarios, tema-1124-instrucao-administrativa, decadencia-revisao-previdenciaria, ms-competencia-autoridade-coatora, documentos-comprobatorios-in128, base-portarias-dpmf-inss-hub, base-efeito-translativo-tema-1124-defesa, reafirmacao-der, analise-documental-incapacidade, especificacao-provas, base-puil-pedilef-vedacao-materia-processual. NÃO use para auditoria de PPP (use auditoria-ppp) nem laudo pericial (use auditoria-laudo-pericial) nem sentença/acórdão (use auditoria-sentenca-acordao).
 ---
 
 # Skill Aprimorada de Revisão de Petições Previdenciárias
@@ -530,7 +530,7 @@ Em casos de divergência entre a interpretação desta skill e a skill `revisao-
 
 ## Juristas Conferentes, camada doutrinária obrigatória (Onda 110)
 
-Dezoito agentes de conferência doutrinária, dezessete temáticos e um transversal. Toda revisão de peça DISPARA o jurista do tema, que confere se a corrente adotada é a mais favorável ao segurado, aponta a corrente melhor sustentada que ficou de fora e antecipa a leitura restritiva que o INSS oporá.
+Duas famílias de conferência. DEZESSETE Juristas Conferentes, dezesseis temáticos e um transversal, que conferem o MÉRITO. E DOZE Processualistas Conferentes, que conferem a TÉCNICA. Toda revisão de peça DISPARA o jurista do tema, que confere se a corrente adotada é a mais favorável ao segurado, aponta a corrente melhor sustentada que ficou de fora e antecipa a leitura restritiva que o INSS oporá.
 
 ### Regra de identidade dos Juristas Conferentes
 
@@ -550,7 +550,6 @@ Razão da regra. Atribuir a autor vivo uma tese que ele não escreveu é o mesmo
 | BPC, LOAS, miserabilidade, grupo familiar, IFBrM, CadÚnico, irrepetibilidade | `jurista-bpc-loas` |
 | Pensão por morte, auxílio-reclusão, união estável, maternidade, salário-família | `jurista-dependentes` |
 | RMI, EC 103, transição, revisões, teto, concomitantes, acumulação, reafirmação | `jurista-calculo-revisoes` |
-| JEF, rito ordinário, tutela, prova, nulidades, recursos, TNU, rescisória | `jurista-processo-judicial` |
 | CRPS, requerimento, exigência, IN 128, Portarias, erro administrativo, MS por mora | `jurista-processo-administrativo` |
 | CNIS, contribuinte individual, indenização, carência, contagem recíproca, RT | `jurista-custeio-filiacao` |
 | Cumprimento, RPV, precatório, juros, honorários, tributação, devolução | `jurista-execucao` |
@@ -578,3 +577,44 @@ Terceiro, o parecer de cada jurista entra na revisão como camada DOUTRINÁRIA, 
 Quarto, citação suspeita levantada por qualquer jurista NÃO se confirma nele. Despachar ao `verificador-precedentes`, que é quem confere em fonte oficial.
 
 Quinto, em peça de ALTO RISCO os Juristas Conferentes NÃO substituem o `black-team`. Rodam antes, e o parecer deles alimenta a banca.
+
+## Processualistas Conferentes, camada técnica (Onda 113)
+
+Doze agentes de conferência PROCESSUAL, organizados por FASE e FUNÇÃO, não por artigo. Enquanto o jurista pergunta se a tese é a melhor, o processualista pergunta se a peça sobrevive ao rito. Substituem o antigo `jurista-processo-judicial`, que era genérico demais para conferir CPC.
+
+Valem para eles as mesmas regras dos juristas. Discutem construções e nunca atribuem posição a autor nominado, somente conferem e reportam, e citação suspeita se despacha ao `verificador-precedentes`.
+
+### Mapa de disparo por FASE da peça
+
+| Fase ou objeto | Agente |
+|---|---|
+| Petição inicial, emenda, competência, valor da causa, pedidos, gratuidade | `processualista-postulatoria` |
+| Tutela de urgência, evidência, liminar, implantação, descumprimento | `processualista-tutela-provisoria` |
+| Especificação de provas, ônus, documental, pericial, testemunhal, saneamento | `processualista-prova` |
+| Ataque a sentença ou decisão, cerceamento, art. 489, congruência, capítulos | `processualista-nulidades-e-sentenca` |
+| Apelação, inominado, agravo, embargos, contrarrazões, dialeticidade | `processualista-recursos-ordinarios` |
+| PUIL, PEDILEF, TNU, REsp, RE, prequestionamento, cotejo, relevância | `processualista-cortes-superiores` |
+| Uso de tema, súmula, IRDR, IAC, ratio, distinguishing, modulação | `processualista-precedentes` |
+| Ação anterior, repropositura, coisa julgada, rescisória, fato superveniente | `processualista-coisa-julgada-rescisoria` |
+| Liquidação, cumprimento, RPV, precatório, impugnação, implantação | `processualista-cumprimento-de-sentenca` |
+| Honorários, base de cálculo, destaque, gratuidade, custas, perícia | `processualista-honorarios-e-gratuidade` |
+| Ação no Juizado Especial Federal, teto, renúncia, rito sumaríssimo | `processualista-jef` |
+| Mandado de segurança, autoridade coatora, prazo de 120 dias, liminar | `processualista-mandado-de-seguranca` |
+
+### Regras de disparo dos processualistas
+
+Primeiro, disparar de UM a TRÊS processualistas, escolhidos pela FASE em que a peça está, e não pelo tema do benefício.
+
+Segundo, dois deles são DE RITO e acompanham qualquer outro quando aplicáveis. O `processualista-jef` sempre que a ação estiver no juizado. O `processualista-mandado-de-seguranca` sempre que a peça for writ, caso em que ele substitui o `processualista-postulatoria`.
+
+Terceiro, o `processualista-precedentes` dispara sempre que a peça citar tema, súmula ou enunciado, o que na prática é quase sempre. Ele NÃO confere a existência da citação, que é do `verificador-precedentes`, ele confere o USO.
+
+Quarto, combinações típicas registradas. Petição inicial pede postulatória, tutela e prova. Recurso contra sentença pede nulidades-e-sentença, recursos-ordinários e precedentes. Fase executiva pede cumprimento-de-sentença e honorários. PUIL ou REsp pede cortes-superiores e precedentes.
+
+Quinto, o achado de processualista com severidade PRECLUSÃO IMINENTE sobe SEMPRE ao relatório principal, porque é o único tipo de vício que não se conserta depois.
+
+### Divisão de trabalho com os Juristas Conferentes
+
+O jurista confere o MÉRITO, qual corrente sustentar e qual ficou de fora. O processualista confere a TÉCNICA, se o instrumento é o certo, se o ônus foi cumprido e se algo vai precluir. Em uma revisão completa, rodam de um a três de cada família, mais o transversal quando cabível.
+
+Fronteira com o `jurista-execucao`. Ele cuida de CÁLCULO e TRIBUTAÇÃO, índices, juros, correção, imposto de renda e devolução de valores. O `processualista-cumprimento-de-sentenca` cuida do RITO da fase, prazos, impugnação, requisição e execução parcial. Em cumprimento de sentença os dois rodam juntos.
