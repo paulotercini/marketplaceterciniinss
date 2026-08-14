@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.89 · a ficha diz as duas rodadas do CNJ (7h30 e 14h30) e que processo novo entra na próxima</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.90 · 🙏 Aposentadorias Futuras não vira caso: vira 🔔 lembrete com as anotações do To Do, transferíveis a mão para os andamentos</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8078,6 +8078,7 @@ const LEMBRETE_TIPOS=[
   ["contribuicao","💰 Contribuição do INSS"],
   ["cadunico","📄 CadÚnico"],
   ["aposentadoria","🎂 Aposentadoria a caminho"],
+  ["aposentadoria_futura","🙏 Aposentadoria futura"],
   ["revisao","🔍 Revisão periódica"],
   ["geral","🔔 Lembrete"],
 ];
@@ -8137,6 +8138,20 @@ function painelLembretes(c){
           title="desliga sem apagar — o histórico de avisos fica guardado">✕ desligar</button>
       </div>
       ${avisos.length?`<div class="meio-sub" style="margin-top:4px">último aviso: ${fmtTS(ult.em)}${uco?` por ${esc(uco.nome.split(" ")[0])}`:""}${ult.canal==="zap"?" (WhatsApp)":""} · ${avisos.length} aviso(s) registrados</div>`:""}
+      ${/* anotações trazidas do To Do (🙏 Aposentadorias Futuras não vira
+           caso — 08.90): ficam aqui para leitura, e a análise manual decide
+           o que é andamento de verdade e transfere para um caso */""}
+      ${(d.anotacoes||[]).length?`<div style="margin-top:6px;border-top:1px dashed var(--borda);padding-top:6px">
+        <div class="meio-sub" style="margin-bottom:3px">🗒 anotações do To Do — o que for andamento de verdade, transfira para um caso:</div>
+        <ul class="mov-lista">
+          ${(d.anotacoes||[]).map((a,i)=>`<li>
+            <span class="mov-data">${a.data?fmt(a.data):"—"}</span>
+            <span class="mov-txt">${a.inicial&&a.inicial!=="?"?`<b>${esc(a.inicial)}:</b> `:""}${esc(a.texto||"")}</span>
+            ${a.caso_id?`<span class="chip neutro" title="esta anotação já foi copiada para os andamentos">✔ no caso</span>`
+              :`<button class="btn-mini" onclick="anotacaoViraAndamento('${l.id}',${i})"
+                  title="copia esta anotação para a linha do tempo de um caso do cliente (com a data original)">→ andamento</button>`}
+          </li>`).join("")}
+        </ul></div>`:""}
     </div>`;
   };
   return `${apos.length&&c.aposentado!==true?`<p class="meio-sub" style="margin-bottom:8px">🎂 Aposentadoria provável: ${
@@ -8225,6 +8240,42 @@ async function desligarLembrete(id){
   l.ativo=false;
   aviso("Lembrete desligado", false);
   montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); else render();
+}
+// ── anotação do To Do (🙏 Aposentadorias Futuras) -> andamento de um caso ──
+// A análise é MANUAL de propósito: a anotação fica no lembrete até alguém
+// decidir que é andamento de verdade. A cópia vai com a DATA ORIGINAL
+// (criado_em = o dia da anotação), então entra no lugar certo da linha do
+// tempo e não passa pelas Novidades. A anotação fica marcada (✔ no caso)
+// para ninguém transferir duas vezes.
+function anotacaoViraAndamento(lembId, i){
+  const l=(D.lembretes||[]).find(x=>x.id===lembId); if(!l) return;
+  const a=((l.detalhes||{}).anotacoes||[])[i]; if(!a||a.caso_id) return;
+  const ks=(D.casosDoCliente.get(l.cliente_id)||[]).filter(k=>k.fase!=="encerrado");
+  if(!ks.length) return aviso("Este cliente não tem caso aberto — crie o caso primeiro (aba ＋ da ficha) e transfira depois.");
+  if(ks.length===1) return salvarAnotacaoNoCaso(lembId, i, ks[0].id);
+  caixa(`<h3 style="margin:0 0 4px">→ Transferir para qual caso?</h3>
+    <p class="meio-sub" style="margin:0 0 8px">“${esc(String(a.texto||"").slice(0,120))}${String(a.texto||"").length>120?"…":""}”</p>
+    ${ks.map(k=>`<button class="btn-rap" style="display:block;width:100%;text-align:left;margin-top:6px"
+      onclick="salvarAnotacaoNoCaso('${lembId}',${i},'${k.id}')">⚖️ ${esc(tituloCaso(k))} <small class="meio-sub">· ${esc(NOME_FASE[k.fase]||k.fase)}</small></button>`).join("")}`);
+}
+async function salvarAnotacaoNoCaso(lembId, i, casoId){
+  fecharCaixa();
+  const l=(D.lembretes||[]).find(x=>x.id===lembId); if(!l) return;
+  const det={...(l.detalhes||{})}, anots=(det.anotacoes||[]).slice();
+  const a=anots[i]; if(!a||a.caso_id) return;
+  const texto=(a.inicial&&a.inicial!=="?"?a.inicial+": ":"")+(a.texto||"");
+  try{
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, origem:"app", publico:false,
+        criado_em:(a.data||hoje())+"T12:00:00-03:00", texto})});
+    anots[i]={...a, caso_id:casoId};
+    det.anotacoes=anots;
+    await api(`/rest/v1/lembretes?id=eq.${lembId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({detalhes:det})});
+    l.detalhes=det;
+  }catch(e){ return aviso("Não consegui transferir — tente de novo."); }
+  aviso("✔ Anotação copiada para os andamentos do caso", false);
+  if(clienteAberto) abrirFicha(clienteAberto);
 }
 // no Meu Dia: os lembretes que venceram, prontos para despachar dali mesmo
 function blocoLembretes(){
