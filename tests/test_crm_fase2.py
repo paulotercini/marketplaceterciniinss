@@ -624,3 +624,24 @@ def test_caso_de_pagamento_que_ja_existe_no_banco_continua_sendo_atualizado(monk
         "caso antigo de pagamento sumiu — perderia os andamentos dele"
     (pg,) = enviados["pagamentos"]
     assert pg["caso_id"] == kid_pg and pg["cliente_id"]
+
+
+def test_com_dois_casos_a_parcela_fica_sem_caso_para_o_escritorio_escolher(monkeypatch):
+    # chutar o "principal" contabilizaria honorário no benefício errado
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", id="jud"),
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191", id="inss"),
+        t("💵 Pagamentos", "Fulana #00000000191", cpf="00000000191", id="pg",
+          checklist=[{"id": "i1", "texto": "1ª parcela 500", "feito": False}]),
+    ]))
+    falso, enviados = _rest_falso()
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    migrar.subir_rest(m)
+
+    (pg,) = enviados["pagamentos"]
+    assert pg["caso_id"] is None, "vinculou no chute tendo dois casos"
+    assert pg["cliente_id"], "perdeu o cliente — a parcela sumiria da aba"
