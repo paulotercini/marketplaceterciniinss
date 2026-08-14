@@ -1208,7 +1208,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.82 · o sync do To Do não apaga mais o processo vinculado; ficha que não grava agora avisa</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.83 · 💬 SMBot ao lado do nome: abre o painel com o telefone já copiado para a busca</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4302,6 +4302,17 @@ function linksDasNovidades(){
     return (l && /^https?:\/\//i.test(l)) ? l : null;
   }).filter(Boolean))];
 }
+// 💬 SMBOT AO LADO DO NOME (pedido do Paulo): o painel do SMBot é um app
+// Angular sem endereço por conversa — não existe link que caia direto no
+// chat do cliente. O botão faz o melhor possível em UM clique: abre o
+// painel e deixa o TELEFONE copiado — na busca do atendimento é só colar.
+// O endereço pode ser trocado em config_app (chave smbot_url).
+function abrirSmbot(cliId){
+  const c=D.cliPorId.get(cliId)||{};
+  const tel=(c.telefone||"").replace(/\D/g,"");
+  if(tel) copiar(tel, "Telefone copiado — cole na busca do SMBot 💬");
+  window.open(cfgApp("smbot_url")||"https://www.smsolucoesdigital.com.br/", "_blank", "noopener");
+}
 // o costume do Paulo: viu a atualização, abre o processo. Este botão abre
 // TODOS de uma vez — e quando o navegador barrar as abas extras (pop-up),
 // diz exatamente onde clicar para liberar de vez.
@@ -6855,6 +6866,9 @@ function pintarFicha(){
         <span class="avatar">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
         <span class="cli-casos-seta">▾</span>
       </span>
+      ${c.telefone?`<button class="btn-mini" onclick="abrirSmbot('${c.id}')"
+        style="background:#E7F6EC;border-color:#25D366;color:#128C4B;font-weight:700"
+        title="abre o SMBot numa aba e copia o telefone do cliente — é só colar na busca do atendimento">💬 SMBot</button>`:""}
       ${stCli}
       <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
     ${/* abaixo do nome só o que a equipe usa o tempo todo: CPF e a senha do
