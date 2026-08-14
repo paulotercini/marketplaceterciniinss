@@ -244,6 +244,23 @@ create unique index if not exists pagamentos_todo_item
   on pagamentos (todo_item_id) where todo_item_id is not null;
 
 
+-- ── 13. O dinheiro é do CLIENTE, não de um caso ──────────────────────────
+-- Combinado com o Paulo: a lista 💵 Pagamentos do To Do é, no CRM, a ABA
+-- Pagamentos da ficha do cliente — e não um caso ao lado do processo dele
+-- (do mesmo jeito que 🙏 Aposentadorias Futuras é a aba 🔔 Lembretes).
+-- Por isso a parcela passa a apontar para o cliente, e o caso vira opcional:
+-- quem paga honorários nem sempre tem processo, e quem tem processo não
+-- deve ganhar um "caso de pagamento" concorrendo com ele na ficha.
+alter table pagamentos add column if not exists cliente_id uuid
+  references clientes(id) on delete cascade;
+alter table pagamentos alter column caso_id drop not null;
+create index if not exists pagamentos_cliente on pagamentos (cliente_id);
+-- as parcelas antigas nasceram presas ao caso: herdam dele o cliente, para a
+-- aba passar a enxergar tudo pelo mesmo caminho
+update pagamentos p set cliente_id = k.cliente_id
+  from casos k where p.caso_id = k.id and p.cliente_id is null;
+
+
 -- ── conferência ───────────────────────────────────────────────────────────
 -- Lista as colunas que o CRM e a importação usam, mais a tabela `coletas` e
 -- a restrição de fase. Faltando alguma linha, o SQL não rodou inteiro — e é

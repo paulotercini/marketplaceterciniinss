@@ -518,3 +518,109 @@ def test_linha_ruim_de_verdade_continua_derrubando_com_erro(monkeypatch):
     with pytest.raises(migrar.BancoRecusou):
         migrar.subir_rest(mapa)
     assert len(tentativas) > 1, "deixou de procurar a linha culpada"
+
+
+# ── 💵 Pagamentos: lista do To Do = ABA do cliente, não caso (08.93) ──────
+# Combinado com o Paulo: lista do To Do não vira processo. A tarefa criada
+# direto em 💵 Pagamentos nascia como um segundo "caso" do cliente, disputando
+# a ficha com o processo de verdade.
+
+def test_parcela_carrega_o_cliente_alem_do_caso():
+    m = migrar.mapear(crm_json([
+        t("💵 Pagamentos", "Fulana #00000000191", cpf="00000000191", id="pg",
+          checklist=[{"id": "i1", "texto": "1ª parcela 500 10/08/2026",
+                      "feito": True, "feito_em": "2026-08-10"}]),
+    ]))
+    (pg,) = m["pagamentos"]
+    assert pg["cliente_id"] == m["clientes"][0]["id"]
+    assert pg["valor"] == 500 and pg["status"] == "recebido"
+
+
+def _rest_falso(existentes=()):
+    """Banco falso: GET devolve `existentes` para /casos, POST guarda tudo."""
+    enviados = {}
+    exist = list(existentes)
+
+    def falso(url, chave, metodo, caminho, corpo=None, prefer=None):
+        tabela = caminho.split("?")[0].rsplit("/", 1)[-1]
+        if metodo == "GET":
+            return exist if tabela == "casos" else []
+        if isinstance(corpo, list):
+            enviados.setdefault(tabela, []).extend(corpo)
+        return None
+    return falso, enviados
+
+
+def test_tarefa_nova_de_pagamentos_nao_vira_caso_e_o_dinheiro_vai_pro_cliente(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", id="jud",
+          andamentos=[{"data": "2026-06-01", "inicial": "P", "autor": "Paulo",
+                       "texto": "Inicial distribuída."}]),
+        t("💵 Pagamentos", "Fulana #00000000191", cpf="00000000191", id="pg",
+          andamentos=[{"data": "2026-08-10", "inicial": "M", "autor": "Marcos",
+                       "texto": "Cliente pagou a 1ª parcela."}],
+          checklist=[{"id": "i1", "texto": "1ª parcela 500", "feito": True, "feito_em": None}]),
+    ]))
+    falso, enviados = _rest_falso()
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+
+    kid_jud = next(k["id"] for k in m["casos"] if k["origem_lista"] == "👪 Judicial")
+    kid_pg = next(k["id"] for k in m["casos"] if k["origem_lista"] == "💵 Pagamentos")
+    migrar.subir_rest(m)
+
+    casos = enviados.get("casos", [])
+    assert kid_pg not in [k["id"] for k in casos], "a lista de pagamentos criou caso"
+    assert kid_jud in [k["id"] for k in casos], "o caso judicial sumiu junto"
+    # a parcela vai para a aba do cliente e se encosta no processo principal
+    (pg,) = enviados["pagamentos"]
+    assert pg["caso_id"] == kid_jud and pg["cliente_id"]
+    # a anotação do corpo entra na linha do tempo do processo, não some
+    textos = {a["texto"]: a["caso_id"] for a in enviados["andamentos"]}
+    assert textos["Cliente pagou a 1ª parcela."] == kid_jud
+
+
+def test_cliente_so_de_honorarios_fica_com_parcela_sem_caso(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("💵 Pagamentos", "Beltrano #00000000272", cpf="00000000272", id="pg",
+          andamentos=[{"data": "2026-08-10", "inicial": "M", "autor": "Marcos",
+                       "texto": "Acertou em 3x."}],
+          checklist=[{"id": "i9", "texto": "entrada 300", "feito": False}]),
+    ]))
+    falso, enviados = _rest_falso()
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    migrar.subir_rest(m)
+
+    assert enviados.get("casos", []) == [], "criou caso para quem só paga honorários"
+    (pg,) = enviados["pagamentos"]
+    assert pg["caso_id"] is None and pg["cliente_id"]
+    # sem caso onde escrever, a anotação não entra (e não quebra a rodada)
+    assert enviados.get("andamentos", []) == []
+
+
+def test_caso_de_pagamento_que_ja_existe_no_banco_continua_sendo_atualizado(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("💵 Pagamentos", "Ciclana #00000000353", cpf="00000000353", id="pg",
+          checklist=[{"id": "i2", "texto": "2ª parcela 400", "feito": False}]),
+    ]))
+    kid_pg = m["casos"][0]["id"]
+    falso, enviados = _rest_falso([{"id": kid_pg, "todo_task_id": "pg",
+                                    "processo": None, "nb": None}])
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    migrar.subir_rest(m)
+
+    assert kid_pg in [k["id"] for k in enviados["casos"]], \
+        "caso antigo de pagamento sumiu — perderia os andamentos dele"
+    (pg,) = enviados["pagamentos"]
+    assert pg["caso_id"] == kid_pg and pg["cliente_id"]
