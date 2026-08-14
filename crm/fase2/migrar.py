@@ -686,17 +686,36 @@ def subir_rest(mapa):
     # Agora o lote recusado é partido ao meio, e ao meio de novo, até sobrar a
     # linha culpada. O resto entra. No fim, as culpadas aparecem nomeadas — e
     # o processo ainda termina com erro, para ninguém achar que passou limpo.
+    #
+    # MAS NEM TODO "NÃO" É DE UMA LINHA. Quando falta uma coluna ou um índice,
+    # o banco recusa QUALQUER linha daquela tabela — e a busca binária vira um
+    # desperdício que ainda derruba a sincronização inteira:
+    # 2.621 parcelas do To Do sem o índice único de `todo_item_id` (seção 12 do
+    # schema_por_em_dia.sql, ainda não rodado) geraram milhares de requisições,
+    # 28 minutos de passo e, no fim, exit 1 — e o CRM passou o dia dizendo que
+    # não sincronizava, embora clientes, casos, andamentos e tarefas tivessem
+    # entrado normalmente. Erro de ESQUEMA agora pula a tabela inteira de uma
+    # vez, avisa em alto e bom som e deixa o resto da rodada terminar.
+    ERROS_DE_ESQUEMA = ("42P10", "42703", "PGRST204", "PGRST205",
+                        "does not exist", "schema cache")
     recusadas = []
+    sem_schema = {}
+    pulando = set()
 
     def enviar(tabela, conflito, res, linhas):
-        if not linhas:
+        if not linhas or tabela in pulando:
             return
         try:
             _rest(url, chave, "POST", f"/rest/v1/{tabela}?on_conflict={conflito}",
                   linhas, prefer=f"resolution={res},return=minimal")
         except BancoRecusou as e:
+            msg = str(e)
+            if any(x in msg for x in ERROS_DE_ESQUEMA):
+                pulando.add(tabela)
+                sem_schema[tabela] = msg[:300]
+                return
             if len(linhas) == 1:
-                recusadas.append((tabela, linhas[0].get("id"), str(e)[:300]))
+                recusadas.append((tabela, linhas[0].get("id"), msg[:300]))
                 return
             meio = len(linhas) // 2
             enviar(tabela, conflito, res, linhas[:meio])
@@ -708,8 +727,11 @@ def subir_rest(mapa):
         for i in range(0, len(linhas), 500):
             enviar(tabela, conflito, res, linhas[i:i + 500])
         caiu = len(recusadas) - antes
-        print(f"  {chave_mapa}: {len(linhas) - caiu} linhas enviadas"
-              + (f", {caiu} recusada(s)" if caiu else ""))
+        if tabela in pulando:
+            print(f"  {chave_mapa}: 0 enviadas — {len(linhas)} esperando o schema")
+        else:
+            print(f"  {chave_mapa}: {len(linhas) - caiu} linhas enviadas"
+                  + (f", {caiu} recusada(s)" if caiu else ""))
 
     # 3. os casos abertos que sobraram na fase aposentadoria_futura vindos do
     # To Do: encerra (o lembrete acima é quem carrega a obrigação agora).
@@ -731,6 +753,15 @@ def subir_rest(mapa):
         if encerrados:
             print(f"  casos de 🙏 Aposentadorias Futuras encerrados "
                   f"(viraram lembrete): {encerrados}")
+
+    # tabela inteira parada por falta de coluna/índice: é AVISO, não falha. A
+    # rodada segue, o carimbo é gravado e o CRM continua em dia com o resto —
+    # o que falta é uma migração no banco, e derrubar a sincronização por causa
+    # dela só escondia que todo o restante tinha entrado.
+    if sem_schema:
+        for tabela, msg in sem_schema.items():
+            print(f"::warning::A tabela '{tabela}' não recebeu nada: falta rodar "
+                  f"crm/fase2/schema_por_em_dia.sql no Supabase. Resposta do banco: {msg}")
 
     if recusadas:
         det = "\n".join(f"  {t} id={i}: {m}" for t, i, m in recusadas[:10])
