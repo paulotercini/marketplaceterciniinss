@@ -17,3 +17,16 @@ Duas armadilhas a mais, ambas custaram uma rodada:
    com `getComputedStyle` em cada um percorre dezenas de milhares de nós nas
    listas grandes; a aba congela. A assinatura `TAG.classe>PAI.classe` mede
    uma vez por combinação e cai de minutos para 7 ms.
+
+## desempenho.js (F16) — e a sexta vez que o vermelho era o teste
+
+Mede o tempo de pintura com massa do tamanho do acervo real (7.000 tarefas).
+Duas armadilhas, as duas do arquivo de teste:
+
+1. **`D` é `let` no escopo do script — `window.D` não existe.** Um
+   `waitForFunction(() => window.D && ...)` espera para sempre por dado que já
+   chegou. Dentro de `page.evaluate` escreve-se `D` direto, ou
+   `typeof D !== "undefined"`.
+2. **O `page.route` das fixturas precisa respeitar o cabeçalho `Range`.**
+   `todas()` pagina de mil em mil e só para quando a página vem incompleta;
+   devolver as 7.000 linhas em toda página deixa o app carregando para sempre.
