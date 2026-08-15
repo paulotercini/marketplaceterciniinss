@@ -14,7 +14,7 @@ repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
 
 ## Em que pé estão as coisas
 
-**App na versão 09.02**, publicada em
+**App na versão 09.04**, publicada em
 https://paulotercini.github.io/marketplaceterciniinss/crm/ (Ctrl+Shift+R para
 ver a versão nova).
 
@@ -34,6 +34,21 @@ estado civil, profissão, nome da mãe, PIS/NIT e telefones em lista) e a
 - protocolos, parceria e parentes viraram o cartão **Ligações do cliente**;
 - **zero emoji nas cinco divisões** do Cadastro (25 pictogramas saíram).
   Onde o desenho carregava informação, entrou o SVG do `CAD_IC`.
+
+**A F9.3 também está no ar**, em dois commits:
+
+- o **endereço em sete campos** dentro do próprio campo da grade, com o CEP
+  consultando o ViaCEP **por botão**, nunca a cada tecla. Grava numa PATCH só,
+  nas sete colunas mais o espelho `clientes.endereco`;
+- a **fila de quem está sem endereço** em Cuidar do acervo, com o botão que
+  abre a ficha já no editor, e a **importação de planilha colada** (TAB ou
+  ponto e vírgula), que confere linha a linha antes de gravar qualquer coisa.
+
+Dois defeitos que a captura expôs no gerador de documentos e já foram
+corrigidos: `<ESTADO>` imprimiria "Estado de SP" (agora há o mapa das 27 UFs
+por extenso) e a qualificação diria "na Av./Rua Rua Rui Barbosa" (o modelo
+passou a "domiciliado(a) na `<ENDERECO>`", por decisão do Paulo, nas três
+ocorrências).
 
 **Três listas do To Do deixaram de virar caso**, por decisão do Paulo:
 
@@ -87,10 +102,16 @@ pedir.
 
 ## O que vem a seguir (detalhe e esforço em `cowork/04`)
 
-F9.3 (endereço e RG **capturados** pela primeira vez — não há legado para
-migrar, **M**) · F10 (Triagem da Amanda, **G**) · F11 (terminar a geração de
-documentos, que já existe pela metade, **M**) · F12 (raiz e ramos
-processuais, **G**) · F13 (Consulta sem iframe, **M**).
+F10 (Triagem da Amanda, **G**) · F11 (terminar a geração de documentos, que
+já existe pela metade, **M**) · F12 (raiz e ramos processuais, **G**) · F13
+(Consulta sem iframe, **M**).
+
+**Ponto de atenção da F9.3.** A qualificação diz "domiciliado(a) na
+`<ENDERECO>`", que acerta em Rua, Avenida, Travessa e Estrada e **erra a
+concordância em logradouro masculino** (Sítio, Largo, Loteamento), comum em
+caso rural. A escolha foi do Paulo, com o risco declarado. Corrigir é um
+`na`/`no` decidido pelo tipo do logradouro, meia dúzia de linhas, se ele
+pedir.
 
 A ordem acima é a de `cowork/00-PROJETO-CRM-COWORK.md`, escrita depois do
 retrato do banco. A ordem antiga era de reforma visual e ficou para trás.
@@ -143,6 +164,13 @@ retrato do banco. A ordem antiga era de reforma visual e ficou para trás.
 - **`pytest` não está instalado na máquina do escritório.** As 199 do
   `tests/` rodam no GitHub Actions; localmente sobra o teste de sintaxe do
   `<script>` e os arneses de fumaça.
+- **Coluna nova acende defeito velho em quem lê a coluna.** `<ESTADO>` da
+  procuração imprimia o valor cru e vinha caindo no padrão "São Paulo"
+  porque a UF era sempre vazia. Bastou a F9.3 gravar "SP" para a peça sair
+  "Estado de SP". Antes de preencher uma coluna zerada, ver quem já a lê.
+- **Quando o teste discorda do código, o teste pode ser o errado.** A fila
+  do endereço acusou 2 clientes onde eu esperava 3; a conta certa era 2.
+  Conferir a expectativa antes de mexer no código.
 
 ## Como conferir se está tudo de pé
 
