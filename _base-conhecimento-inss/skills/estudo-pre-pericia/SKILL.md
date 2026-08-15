@@ -147,3 +147,9 @@ A portaria do IF-BrA aparece na base ora como "Portaria Interministerial AGU/MPS
 ## Integração com outras skills
 
 `orientacao-cliente-pericia` gera o entregável do cliente na sequência. `triagem-caso` fornece o dossiê quando o caso veio da fila. `auditoria-laudo-pericial` entra DEPOIS da perícia, sobre o laudo produzido, e a nota técnica do estudo (seção 7) alimenta os quesitos dela. `relatorio-medico-assistente` quando a reunião revelar que falta relatório do médico assistente.
+
+## Método Fuzzy, verificação obrigatória (Onda 106)
+
+Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
+
+A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.

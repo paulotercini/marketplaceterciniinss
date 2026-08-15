@@ -138,3 +138,9 @@ Antes de realizar a auditoria, leia obrigatoriamente os seguintes arquivos.
 - `references/FUNDAMENTOS-METODOLOGIA.md` — Fundamentos normativos sobre metodologia de medição, evolução dos limites de tolerância, enquadramento por categoria profissional e agentes nocivos
 - `references/AGENTES-QUIMICOS.md` — Análise especializada de agentes químicos (hidrocarbonetos, benzeno, óleos minerais, OLUC, HPA, Anexo 13, LINACH, frentista, mecânico)
 - `references/AGENTES-BIOLOGICOS-FISICOS.md` — Análise especializada de agentes biológicos, calor, frio, vibração e periculosidade
+
+## PPP e laudo do profissional autônomo (Onda 108)
+
+Recorrente em dentista, médico e demais contribuintes individuais com consultório próprio. O INSS recusa o PPP alegando que foi emitido pelo próprio interessado.
+
+Resposta conferida no TRF3. O PPP e o laudo elaborados no próprio consultório são prova VÁLIDA (ApCiv 5000935-20.2020.4.03.6115, 7ª Turma, j. 27/02/2026). Somar a presunção de veracidade do PPP (STJ, Pet 10.262/RS), a validade do laudo extemporâneo (Súmula 68 da TNU), a irrelevância da ausência de código GFIP e a irrelevância do custeio (ARE 664.335), todos aplicados na ApelRemNec 5002311-80.2020.4.03.6102 (7ª Turma, j. 11/05/2026). A autodeclaração da Portaria 450/2020 é exigência administrativa e não se transporta para o juízo. Fichas em `base-especial-agentes-biologicos/references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`.

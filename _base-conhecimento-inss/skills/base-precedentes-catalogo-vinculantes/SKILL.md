@@ -265,3 +265,7 @@ Em TODA peça que citar precedente, o Claude DEVE.
 NUNCA inventar tese. NUNCA presumir vigência. NUNCA confundir números (cf. caso prático da Onda 33 com Súmula 86/TNU que foi cancelada em 26/08/2021).
 
 Honestidade radical não admite exceções.
+
+## Boletins da TNU (Onda 105)
+
+As teses de TNU deste catálogo têm fonte primária nos boletins oficiais, indexados na skill `base-boletins-tnu` (241 temas, 104 boletins, sessões de 18/02/2016 a 24/06/2026). Tema novo relevante se promove ao catálogo a partir da leitura do boletim, com redação literal, na forma da disciplina de alimentação acima.

@@ -80,3 +80,17 @@ Quarta, achado que recomende abandonar tese defensável ou alterar o mérito vai
 Quinta, dados de cliente ficam no parecer da sessão, nunca em skill ou memória permanente.
 
 Sexta, português correto do padrão do escritório, sem dois-pontos introduzindo lista na prosa, e o parecer final segue a disciplina de recepção de achados da base-revisao-peticao-aprofundada quando voltar à sessão principal.
+
+## Juristas Conferentes como camada prévia (Onda 110)
+
+Os dezessete Juristas Conferentes (`jurista-tempo-especial`, `jurista-rural`, `jurista-incapacidade`, `jurista-auxilio-acidente`, `jurista-aposentadoria-pcd`, `jurista-bpc-loas`, `jurista-dependentes`, `jurista-calculo-revisoes`, `jurista-processo-administrativo`, `jurista-custeio-filiacao`, `jurista-execucao`, `jurista-professor`, `jurista-planejamento-aposentadoria`, `jurista-rpps-reciproca`, `jurista-responsabilidade-danos`, `jurista-acidentario-competencia` e o transversal `jurista-vulnerabilidade-genero`) NÃO substituem a banca. Eles rodam ANTES, pela `base-revisao-peticao-aprofundada`, e o parecer de cada um entra aqui como insumo da lente correspondente.
+
+Recebendo pareceres de jurista, trate cada achado como hipótese a ser confrontada, não como conclusão. A lente do advogado do INSS deve tentar derrubar a corrente que o jurista indicou como favorável, e a lente do julgador deve dizer qual das duas convence.
+
+Vale para eles a mesma regra de identidade. Correntes, nunca autores nominados.
+
+Além deles, os doze Processualistas Conferentes (`processualista-postulatoria`, `processualista-tutela-provisoria`, `processualista-prova`, `processualista-nulidades-e-sentenca`, `processualista-recursos-ordinarios`, `processualista-cortes-superiores`, `processualista-precedentes`, `processualista-coisa-julgada-rescisoria`, `processualista-cumprimento-de-sentenca`, `processualista-honorarios-e-gratuidade`, `processualista-jef` e `processualista-mandado-de-seguranca`) alimentam a lente do processualista da banca com a conferência técnica por fase. Achado deles com severidade PRECLUSÃO IMINENTE é tratado como prioridade absoluta na deliberação, porque é o único vício que a instância seguinte não conserta.
+
+## Decisores Administrativos Simulados (Onda 114)
+
+Quando a peça de alto risco for administrativa, a lente do conselheiro da via administrativa desta banca deve ser confrontada com o resultado dos agentes `servidor-chefe-inss`, `conselheiro-junta-de-recursos` e `conselheiro-camara-de-julgamento`, conforme a instância de destino. Eles não são pró-segurado, simulam o decisor real, e divergência entre a lente da banca e o decisor simulado é sinal de que a banca está otimista demais.

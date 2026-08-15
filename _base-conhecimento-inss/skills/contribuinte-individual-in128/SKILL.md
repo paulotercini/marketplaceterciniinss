@@ -243,3 +243,15 @@ Ao analisar caso envolvendo contribuinte individual, verificar obrigatoriamente
 9. **Barreira do óbito** — Se o segurado faleceu, verificar art. 106 e exceções do §2º
 10. **Conformidade Tema 1124/STJ** — Documentos comprobatórios apresentados na via administrativa?
 11. **Aposentadoria especial do CI** — Se exposição a agentes nocivos, verificar Tema 1291/STJ (direito estendido ao CI não cooperado)
+
+## Aposentadoria especial do contribuinte individual (Onda 108)
+
+Tema 1291/STJ. O contribuinte individual não cooperado tem direito ao reconhecimento de tempo especial exercido após a Lei 9.032/95, desde que comprove a exposição, e a exigência de formulário emitido por EMPRESA não se aplica a ele. RE pendente, não afirmar trânsito.
+
+Reforços conferidos no TRF3. Ilegalidade do art. 64 do Decreto 3.048/99 (ApCiv 5004234-43.2017.4.03.6104, 7ª Turma, j. 27/02/2026). Irrelevância do custeio (ApCiv 5001197-62.2018.4.03.6107, 7ª Turma, j. 05/12/2025, com apoio no ARE 664.335), que também registra ser indevido o sobrestamento pelo Tema 1291 em segunda instância. Validade do PPP e do laudo emitidos no próprio consultório. Fichas em `base-especial-agentes-biologicos/references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`.
+
+## EPI ineficaz e contribuinte individual (Onda 109)
+
+Enunciado 18 da I Jornada Regional Intrainstitucional de Direito Previdenciário da Justiça Federal da 4ª Região (EMAGIS/TRF4, 01 e 02/09/2025), texto literal conferido em 14/08/2026. "Nos casos em que o equipamento de proteção individual (EPI) é reconhecidamente ineficaz, seu uso por contribuintes individuais não impede o reconhecimento da especialidade." A justificativa oficial NOMINA as hipóteses, ruído, agentes biológicos, agentes cancerígenos e periculosidade, e afirma que o controle do ambiente laboral está "fora do âmbito de exigência de responsabilidade dos próprios contribuintes individuais". RESSALVA. Os enunciados têm, por declaração do próprio TRF4, caráter meramente doutrinário e força persuasiva, não se confundindo com a posição do tribunal. Citar como doutrina qualificada, nunca como precedente.
+
+Uso combinado. Somar ao Tema 1291/STJ (o formulário de empresa não se exige do contribuinte individual) e ao roteiro dos cinco caminhos do Tema 1090 em `base-especial-epi/references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md`. Para o dentista autônomo, ver `base-especial-agentes-biologicos/references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`.
