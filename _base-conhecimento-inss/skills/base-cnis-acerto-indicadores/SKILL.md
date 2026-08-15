@@ -317,3 +317,11 @@ Não confundir as duas tabelas que esta skill utiliza.
 A **Tabela 18 do eSocial**, códigos 01 a 44, está em `references/RAIS-AFASTAMENTOS-SEM-REMUNERACAO.md` e serve para triar afastamentos sem remuneração que o INSS descarta da contagem de tempo. É instrumento de diagnóstico do próprio segurado.
 
 A **tabela de afastamentos da RAIS**, item D.2 do Manual de Orientação, códigos 10 a 85, está em `base-limbo-previdenciario-tema300`, `references/TABELA-RAIS-AFASTAMENTOS-D2.md`, com as regras de preenchimento D.1, D.3 e D.4 e sete teses probatórias. É instrumento de prova contra o empregador, sobretudo a regra de que a RAIS não possui código de afastamento por férias e a de que remuneração zerada é confissão de que nada foi pago.
+
+## Competência com vínculo e sem remuneração, IN 212/2026 (Onda 115)
+
+O art. 223, § 2º, I, da IN 128/2022, na redação da IN PRES/INSS 212, de 06/08/2026, manda considerar o valor do SALÁRIO MÍNIMO nas competências do PBC em que existir VÍNCULO e não existir REMUNERAÇÃO, para o empregado, o doméstico e o avulso, nos termos do art. 19-E do RPS. A renda DEVE ser recalculada quando apresentada prova dos salários de contribuição, observado o prazo decadencial.
+
+É a resposta administrativa ao problema das competências zeradas que esta skill mapeia. Mês zerado deixa de puxar a média para baixo, passando a valer ao menos um salário mínimo, e o recálculo com prova posterior fica expresso.
+
+EXCEÇÃO do § 3º. Não se aplica a vínculo com jornada PARCIAL ou INTERMITENTE, casos em que a inclusão depende do contrato de trabalho com a remuneração contratada, ou da demonstração das remunerações auferidas. Nesses vínculos, levantar o contrato ANTES do requerimento, porque o ônus é do segurado. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.

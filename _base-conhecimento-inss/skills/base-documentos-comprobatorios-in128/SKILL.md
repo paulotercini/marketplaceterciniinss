@@ -390,3 +390,9 @@ Documento ENVIADO ao INSS no requerimento administrativo é IMPRESCINDÍVEL para
 Documento NÃO ENVIADO administrativamente pode causar EXTINÇÃO SEM MÉRITO na via judicial por falta de prévio requerimento adequado.
 
 Verificar checklist do escritório ANTES do requerimento administrativo e ANTES da petição judicial.
+
+## Representação por servidor público ou militar advogado (Onda 115)
+
+O art. 532, § 4º, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026, dispõe que a exceção do inciso II do caput não se aplica aos servidores públicos e aos militares quando estiverem exercendo a ADVOCACIA.
+
+O inciso II limita servidor público civil e militar EM ATIVIDADE a representar apenas cônjuge, companheiro e parentes até o segundo grau. Com o novo § 4º, essa limitação deixa de alcançar quem atua como advogado, o que resolve a recusa de procuração nessas hipóteses.

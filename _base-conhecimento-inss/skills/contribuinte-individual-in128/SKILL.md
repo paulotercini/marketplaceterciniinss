@@ -255,3 +255,11 @@ Reforços conferidos no TRF3. Ilegalidade do art. 64 do Decreto 3.048/99 (ApCiv 
 Enunciado 18 da I Jornada Regional Intrainstitucional de Direito Previdenciário da Justiça Federal da 4ª Região (EMAGIS/TRF4, 01 e 02/09/2025), texto literal conferido em 14/08/2026. "Nos casos em que o equipamento de proteção individual (EPI) é reconhecidamente ineficaz, seu uso por contribuintes individuais não impede o reconhecimento da especialidade." A justificativa oficial NOMINA as hipóteses, ruído, agentes biológicos, agentes cancerígenos e periculosidade, e afirma que o controle do ambiente laboral está "fora do âmbito de exigência de responsabilidade dos próprios contribuintes individuais". RESSALVA. Os enunciados têm, por declaração do próprio TRF4, caráter meramente doutrinário e força persuasiva, não se confundindo com a posição do tribunal. Citar como doutrina qualificada, nunca como precedente.
 
 Uso combinado. Somar ao Tema 1291/STJ (o formulário de empresa não se exige do contribuinte individual) e ao roteiro dos cinco caminhos do Tema 1090 em `base-especial-epi/references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md`. Para o dentista autônomo, ver `base-especial-agentes-biologicos/references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`.
+
+## Alíquotas reduzidas após a IN 212/2026 (Onda 115)
+
+O art. 216, V, da IN 128/2022, na redação da IN PRES/INSS 212, de 06/08/2026, passou a excluir do tempo de contribuição, PARA APOSENTADORIA POR TEMPO DE CONTRIBUIÇÃO E CONTAGEM RECÍPROCA, o período contribuído com alíquota reduzida de 5%, 11% ou 12%, e também o período de salário-maternidade concedido com base nessas alíquotas, salvo complementação para 20%. A redação anterior mencionava apenas os 5%.
+
+O § 1º é o ponto PRÓ-SEGURADO e precisa ser invocado sempre. O período com alíquota reduzida É CONSIDERADO para a aposentadoria PROGRAMADA e para a aposentadoria POR IDADE. A restrição alcança apenas tempo de contribuição e contagem recíproca.
+
+Três cuidados. Primeiro, não aceitar recusa de cômputo em aposentadoria programada ou por idade. Segundo, quantificar o custo da complementação antes de recomendá-la, comparando com o cenário sem ela. Terceiro, discutir a aplicação a período anterior a 11/08/2026, porque norma interna não retroage para restringir. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.

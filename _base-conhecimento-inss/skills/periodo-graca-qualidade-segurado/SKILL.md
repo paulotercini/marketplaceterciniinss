@@ -220,3 +220,13 @@ Ao analisar caso que envolva qualidade de segurado, verificar sequencialmente.
 **7.6** Se houve perda da qualidade e reingresso, verificar tabela de contribuições mínimas conforme norma vigente no fato gerador (seção 4.1).
 
 **7.7** Se a IN 188/2025 cessou antecipadamente a prorrogação por desemprego, verificar se o segurado iniciou novo período de graça pelo art. 15, II, e se completou carência suficiente.
+
+## IN 212/2026, prorrogações para TODAS as categorias (Onda 115)
+
+O art. 184, § 10, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026 (DOU de 11/08/2026), dispõe que "o disposto nos §§ 4º e 5º aplica-se para todas as categorias de segurados obrigatórios".
+
+Os §§ 4º e 5º são exatamente as duas prorrogações, mais doze meses por 120 contribuições sem perda da qualidade, e mais doze meses por desemprego comprovado. Com isso, o INSS reconhece em norma própria que a prorrogação por DESEMPREGO alcança o contribuinte individual e o segurado especial, e não apenas o empregado. Período de graça que era de doze meses pode chegar a trinta e seis.
+
+Uso em indeferimento anterior a 11/08/2026 fundado na recusa. Sustentar o § 10 como interpretação AUTÊNTICA da Administração, e não como norma nova, porque o art. 15 da Lei 8.213/91 nunca distinguiu categorias.
+
+CONFRONTO OBRIGATÓRIO. O § 5º da IN continua exigindo registro no SINE ou seguro-desemprego, exigência MAIS RESTRITIVA do que o Tema 1360 do STJ, cuja tese admite outros meios de prova "tanto na via administrativa quanto na judicial". Invocar o Tema 1360 justamente por essa expressão, que vincula o INSS. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
