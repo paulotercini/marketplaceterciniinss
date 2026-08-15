@@ -14,7 +14,7 @@ repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
 
 ## Em que pé estão as coisas
 
-**App na versão 09.04**, publicada em
+**App na versão 09.06**, publicada em
 https://paulotercini.github.io/marketplaceterciniinss/crm/ (Ctrl+Shift+R para
 ver a versão nova).
 
@@ -43,6 +43,18 @@ estado civil, profissão, nome da mãe, PIS/NIT e telefones em lista) e a
 - a **fila de quem está sem endereço** em Cuidar do acervo, com o botão que
   abre a ficha já no editor, e a **importação de planilha colada** (TAB ou
   ponto e vírgula), que confere linha a linha antes de gravar qualquer coisa.
+
+**A F10 começou**, com a peça grande da fase: a **sub-aba Triagem**, oito
+passos, cinco deles respondidos pelo próprio CRM (processo judicial anterior,
+recurso no CRPS, CadÚnico, benefício ativo e protocolos). CNIS lê os anexos
+procurando arquivo com CNIS no nome; Indicadores fica honesto, dizendo que o
+CRM não lê o extrato. Cada marcação grava estado, autor e data, e a conclusão
+traz o próximo passo nas três opções da regra do escritório. Mora em
+`clientes.triagem`, com `campos.triagem` de reserva, sem precisar de migração.
+
+Falta da F10 a outra metade: **o CadÚnico virando lembrete de verdade** (hoje
+é um bloco calculado, não uma linha em `lembretes`) e **o caso novo notificando
+Paulo, Amanda e Marcos**.
 
 Dois defeitos que a captura expôs no gerador de documentos e já foram
 corrigidos: `<ESTADO>` imprimiria "Estado de SP" (agora há o mapa das 27 UFs
@@ -106,12 +118,14 @@ F10 (Triagem da Amanda, **G**) · F11 (terminar a geração de documentos, que
 já existe pela metade, **M**) · F12 (raiz e ramos processuais, **G**) · F13
 (Consulta sem iframe, **M**).
 
-**Ponto de atenção da F9.3.** A qualificação diz "domiciliado(a) na
-`<ENDERECO>`", que acerta em Rua, Avenida, Travessa e Estrada e **erra a
-concordância em logradouro masculino** (Sítio, Largo, Loteamento), comum em
-caso rural. A escolha foi do Paulo, com o risco declarado. Corrigir é um
-`na`/`no` decidido pelo tipo do logradouro, meia dúzia de linhas, se ele
-pedir.
+**A concordância da qualificação foi resolvida.** A preposição saiu do modelo
+e é calculada pelo tipo do logradouro, com "em" para o que não é reconhecido.
+O dado no banco continua limpo, porque preposição é apresentação.
+
+**Os arneses estão versionados** em `crm/fase2/testes/cadastro`, sete arquivos
+com LEIAME, 69 asserções somadas, saindo com código 1 quando falham. Falta
+decidir se entram no workflow do GitHub Actions, que hoje só roda o `tests/`
+Python.
 
 A ordem acima é a de `cowork/00-PROJETO-CRM-COWORK.md`, escrita depois do
 retrato do banco. A ordem antiga era de reforma visual e ficou para trás.
@@ -171,6 +185,13 @@ retrato do banco. A ordem antiga era de reforma visual e ficou para trás.
 - **Quando o teste discorda do código, o teste pode ser o errado.** A fila
   do endereço acusou 2 clientes onde eu esperava 3; a conta certa era 2.
   Conferir a expectativa antes de mexer no código.
+- **`:first-of-type` conta entre irmãos do mesmo ELEMENTO**, não da mesma
+  classe. Dentro do cartão, `.tri-passo:first-of-type` casava com o título,
+  e a regra de CSS e o seletor do teste falhavam juntos, em silêncio. Os
+  passos passaram a viver num contêiner próprio.
+- **Cliente com mais de um caso ativo segura a pintura no teste.** O modal
+  "escolher processo" abre e `pintarFicha` nem roda. Já estava anotado em
+  `cowork/04`, e mordeu de novo. O contorno está no `triagem.js`.
 
 ## Como conferir se está tudo de pé
 
