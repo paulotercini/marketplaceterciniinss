@@ -76,3 +76,7 @@ Para requerimento de provas, acionar `especificacao-provas`.
 ## O que NÃO está nesta skill
 
 Fundamentação da decisão está em `base-cpc-fundamentacao-art489`. Ônus da prova está em `base-cpc-onus-prova-art373`. Embargos de declaração estão em `base-cpc-embargos-declaracao`.
+
+## Cerceamento na prova pericial previdenciária (Onda 107)
+
+Hipótese específica e frequente. Quesitos indeferidos antes da perícia, laudo insuficiente, esclarecimentos indeferidos e julgamento imediato. A nulidade aqui depende de dois registros feitos NO MOMENTO CERTO, o protesto ao primeiro indeferimento e a demonstração do prejuízo concreto ao segundo. Sem eles, o tribunal responde com preclusão ou ausência de prejuízo. Escada processual de cinco degraus e seis argumentos ancorados no CPC em `auditoria-laudo-pericial/references/QUESITOS-NEGADOS-E-LAUDO-INSUFICIENTE.md`.

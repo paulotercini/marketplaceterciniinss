@@ -118,3 +118,13 @@ IBDP, defesa da contagem recíproca.
 ## O que NÃO está nesta skill
 
 Aluno-aprendiz está em `base-aluno-aprendiz`. Tempo militar está em `base-servico-militar-obrigatorio`. Tempo rural pré-1991 está em `base-tempo-rural-anterior-1991`. Conversão de tempo especial está em `base-tempo-especial-conversao`. Indenização de contribuições está em `indenizacao-contribuicoes-atraso`.
+
+## Enunciado 17 da I Jornada do TRF4, ALERTA (Onda 109)
+
+Texto literal, conferido no Caderno oficial da EMAGIS/TRF4 em 14/08/2026, página 22. "Não é possível a averbação no RGPS de período contributivo de RPPS relativo a vínculo ainda ativo."
+
+ALERTA DE SINAL CONTRÁRIO. Este enunciado é DESFAVORÁVEL ao segurado e o INSS pode invocá-lo. Registrado aqui para defesa antecipada, não para uso ofensivo.
+
+Fundamento invocado na justificativa. Art. 12 da Portaria MPS 154/2008 e art. 96, IV, da Lei 8.213/91, na redação da MP 871/2019 convertida na Lei 13.846/2019.
+
+Defesa possível. Primeiro, o enunciado tem caráter meramente doutrinário por declaração do próprio TRF4 e não vincula. Segundo, ele pressupõe vínculo ATIVO, de modo que a exoneração ou o encerramento do vínculo antes da DER afasta a hipótese, e a data do encerramento passa a ser o fato decisivo a provar. Terceiro, o marco da Lei 13.846/2019 abre discussão de direito adquirido para quem reuniu os requisitos antes dela.

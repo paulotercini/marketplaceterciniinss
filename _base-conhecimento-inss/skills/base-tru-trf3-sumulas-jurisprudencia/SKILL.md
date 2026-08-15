@@ -556,3 +556,7 @@ Súmulas com DISTINGUISHING NECESSÁRIO (potencial desfavorável). 18 (reajuste)
 Súmulas TÉCNICO-PROCEDIMENTAIS. 1, 2, 5, 6, 9, 10, 12, 17, 20.
 
 Postura pró-segurado sempre. Antes de invocar uma Súmula, conferir se ela favorece a tese do cliente. Se não, fazer distinguishing.
+
+## Boletins da TNU (Onda 105)
+
+Para a tese nacional que a TRU e as Turmas Recursais aplicam, consultar a skill `base-boletins-tnu`, com o índice dos 241 temas nos 104 boletins oficiais do acervo. Súmula regional do TRF3 e tese da TNU são fontes distintas e complementares, e a segunda prevalece no microssistema dos Juizados quando houver conflito.

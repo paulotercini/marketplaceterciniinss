@@ -140,3 +140,7 @@ O teste final é comparar o documento com uma petição judicial. Se parecer uma
 ## Referências
 
 Consultar `references/FORMATTING.md` da skill peticao-previdenciaria para os parâmetros técnicos de formatação do .docx, adaptando apenas o endereçamento e o recuo.
+
+## Decisor simulado antes do protocolo (Onda 114)
+
+Antes de protocolar, submeter a minuta e a relação de documentos ao agente `servidor-chefe-inss`, que decide por checklist e por trava de sistema, como o cargo real decide. Ele devolve DEFERIDO, EXIGÊNCIA, INDEFERIDO ou NÃO CONCLUÍDO POR PENDÊNCIA, com a motivação normativa e a lista fechada do que faria virar deferimento. Regra de ouro que ele revela, requerimento sustentado apenas em tese judicial é indeferido na origem, porque o servidor não aplica precedente do STJ nem relativiza critério legal.

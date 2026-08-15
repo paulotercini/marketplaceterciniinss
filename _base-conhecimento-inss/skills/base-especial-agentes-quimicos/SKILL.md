@@ -62,3 +62,9 @@ Para tolueno, acionar `base-tolueno-tema-382-tnu-via-cutanea`. ATENÇÃO (audito
 ## O que NÃO está nesta skill
 
 Não há regras sobre ruído, vibração, eletricidade, periculosidade, calor ou agentes biológicos. Cada um tem skill específica. Tolueno e o Tema 382/TNU (tese contrária ao qualitativo pela via cutânea, julgado 15/04/2026) em `base-tolueno-tema-382-tnu-via-cutanea`.
+
+## Químicos da clínica odontológica (Onda 108)
+
+Agentes nominados em acórdão do TRF3 para dentista, mercúrio vivo, óxido de zinco, eugenol, resinas, ÁCIDO FOSFÓRICO e anestésicos tópicos (Ap 0030294-30.2016.4.03.9999, 10ª Turma, j. 25/07/2017). Somar orto-cresol e hidróxido de cálcio, este resolvido pela via dos ÁLCALIS CÁUSTICOS, cujo manuseio rotineiro basta, sem exigir fabricação (TRF4, AC 5012692-29.2022.4.04.7112/RS).
+
+Contra-linha a antecipar. Há julgados que afastam a especialidade de químicos "ordinariamente empregados no mister", pensando em produto de limpeza. O distinguishing da odontologia é que esses agentes são insumos do ATO-FIM, de manuseio direto e diário pelo profissional, com classificação técnica no Anexo 13 da NR-15 demonstrável por laudo. Fichas em `base-especial-agentes-biologicos/references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`.
