@@ -409,9 +409,11 @@
      para quem não sabe que ele está lá — e some para quem usa teclado ou
      toque. Apagados quando desligados, acesos quando ligados. */
   .cartao .acoes{display:flex;gap:1px;flex:none;margin-left:2px}
-  .cartao .acao-card.fogo{filter:grayscale(1);opacity:.3}
-  .cartao:hover .acao-card.fogo{opacity:.55}
-  .cartao .acao-card.fogo.on{filter:none;opacity:1}
+  /* o apagado era opacity .3 sobre um emoji colorido; com o traço SVG cinza
+     isso virava 1.17:1 de contraste — o botão simplesmente sumia da linha */
+  .cartao .acao-card.fogo{filter:none;opacity:1;color:#9AA0A8}
+  .cartao:hover .acao-card.fogo{color:#7A8089}
+  .cartao .acao-card.fogo.on{filter:none;opacity:1;color:var(--laranja)}
   /* quem navega por teclado precisa ver onde está, mesmo nos botões que só
      aparecem no hover */
   .cartao .acao-card:focus-visible{opacity:1;filter:none;outline:2px solid var(--azul);
@@ -446,10 +448,16 @@
     display:inline-flex;align-items:center;justify-content:center}
   .acao-card:hover{background:#EFF2F7}
   .acao-card.on{color:var(--azul)}
-  /* ícones agora são SVG (currentColor); o grayscale fica para os que ainda
-     são emoji (☀️ do Meu Dia) até a varredura final */
-  .acao-card.sol,.acao-card.fogo{filter:grayscale(1);opacity:.35}
+  /* ligada = estrela CHEIA: o preenchimento vem daqui para acompanhar o
+     clique (no atributo do SVG ele ficava congelado na primeira pintura) */
+  .acao-card.on svg{fill:currentColor}
+  /* apagado é CINZA LEGÍVEL, não fantasma: opacity .3 sobre um traço já
+     cinza dava 1.17:1 — de longe o botão sumia da linha. O grayscale era
+     para emoji e virou letra morta em SVG monocromático. */
+  .acao-card.sol,.acao-card.fogo{filter:none;opacity:1;color:#9AA0A8}
+  .acao-card{color:#8A8F98}
   .acao-card.sol.on,.acao-card.fogo.on{filter:none;opacity:1;color:var(--laranja)}
+  .acao-card.fogo.on svg{fill:currentColor}
   .chip.urg{background:#fbeaea;color:var(--vermelho)}
   .nova{display:flex;gap:8px;align-items:center;background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 12px;margin-bottom:12px}
   .nova input{flex:1;border:none;outline:none;font-size:14px}
@@ -1293,30 +1301,43 @@
     .det-rolagem{container-type:inline-size;container-name:ficha}
   }
   @container ficha (min-width:900px){
+    /* row-gap ZERO de propósito: o quadro de fatos atravessa as linhas com um
+       span alto, e cada linha vazia que sobra cobraria mais uma goteira — eram
+       ~1.386px de vão morto no fim de toda ficha. O espaço entre os blocos da
+       direita vem da margem deles, não do gap. */
     .painel[data-p="2"].ativo{display:grid;grid-template-columns:300px minmax(0,1fr);
-      gap:14px;align-items:start}
-    /* TUDO o que não é o quadro de fatos vai para a coluna do trabalho —
-       inclusive o que cada sub-aba traz (INSS, Recurso, CNJ, Caso completo).
-       Sem esta regra, o terceiro bloco de uma sub-aba caía sozinho na coluna
-       de 300px, porque o auto-placement procura a primeira célula livre. */
-    .painel[data-p="2"].ativo>*{grid-column:2;margin-bottom:0}
-    .painel[data-p="2"].ativo>.sub-menu{grid-column:1/-1}
-    /* o span alto deixa o quadro de fatos atravessar quantas linhas a coluna
-       da direita criar: sem ele, uma faixa de fatos alta empurrava a linha do
-       tempo para baixo e abria um buraco no meio da conversa */
-    .painel[data-p="2"].ativo>.fatos{grid-column:1;grid-row:2/span 99;margin:0;align-self:start}
+      gap:0 14px;align-items:start}
+    /* TUDO o que não é o quadro do processo vai para a coluna do trabalho —
+       inclusive o que cada sub-aba traz (INSS, Recurso, CNJ, Caso completo) e
+       o sub-menu de instâncias do CNJ. Sem esta regra, o terceiro bloco de uma
+       sub-aba caía sozinho na coluna de 300px, por auto-placement. */
+    .painel[data-p="2"].ativo>*{grid-column:2;margin-bottom:12px}
+    .painel[data-p="2"].ativo>.sub-menu:not(.instancias){grid-column:1/-1}
+    /* o span alto deixa o quadro do processo atravessar quantas linhas a
+       coluna da direita criar: sem ele, uma faixa de fatos alta empurrava a
+       linha do tempo para baixo e abria um buraco no meio da conversa.
+       A classe é a ESPECÍFICA: `.fatos` sozinho pegava também os cartões de
+       topo das sub-abas, que eram desenhados em cima deste quadro. */
+    .painel[data-p="2"].ativo>.fatos-processo{grid-column:1;grid-row:2/span 99;
+      margin:0;align-self:start}
     .painel[data-p="2"].ativo>datalist{display:none}
     /* dentro dos 300px os fatos viram duas colunas, como o quadro do protótipo */
-    .painel[data-p="2"].ativo>.fatos .fx-grade{grid-template-columns:1fr 1fr}
+    .painel[data-p="2"].ativo>.fatos-processo .fx-grade{grid-template-columns:1fr 1fr}
   }
   /* ── F8 · COMPOSER ENXUTO ───────────────────────────────────────────────
      Como o "Adicionar etapa" do To Do: uma linha só. As ferramentas (TAREFA
      PARA, LEMBRAR EM, anexos, sugestões) aparecem quando se começa a
      escrever. Ocupavam 142px de altura permanente para um campo que fica
      vazio a maior parte do tempo. */
+  /* quem abre e fecha é a classe .esc-aberto, posta pelo JavaScript — NÃO o
+     :focus-within. Com :focus-within, clicar numa sugestão (que é um <span>,
+     e span não recebe foco) recolhia a barra já no mousedown: a tira saltava
+     para cima e o mouseup caía noutro elemento, engolindo o clique. No Safari
+     e no Firefox, onde botão não ganha foco ao ser clicado, isso valia para
+     QUALQUER botão da barra — inclusive o Registrar. */
   .escrever .esc-barra,.escrever .sug-abrir{display:none}
-  .escrever:focus-within .esc-barra{display:flex}
-  .escrever:focus-within .sug-abrir{display:inline-block}
+  .escrever.esc-aberto .esc-barra{display:flex}
+  .escrever.esc-aberto .sug-abrir{display:inline-block}
   .escrever #and-texto{padding:11px 14px}
 </style>
 </head>
@@ -1330,7 +1351,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.94 · a lista 💵 Pagamentos do To Do é a aba Pagamentos do cliente (não vira mais um caso) e cada parcela diz de qual benefício/serviço é</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.95 · correções da auditoria: sub-abas não se sobrepõem mais aos fatos, o primeiro clique no composer vale, e ⭐/🔥 voltam a se ver</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3502,7 +3523,10 @@ function cartaoCliente(cli, casosMostrar){
          ficam sempre visíveis, porque aí carregam informação */""}
     <span class="acoes">
       <button class="acao-card fogo ${ks.some(k=>k.urgente)?"on":""}" title="Urgente" data-fogo="${ks[0]?ks[0].id:""}"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c.4 2.6-1 4.1-2.3 5.6C8.4 10.6 7.5 12.1 7.5 14a4.5 4.5 0 0 0 9 0c0-1.6-.7-3-1.7-4.2-.2 1.1-.8 2-1.8 2.5.6-2.6-.1-5.6-1-8.8Z"/></svg></button>
-      <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}"><svg width="16" height="16" viewBox="0 0 24 24" fill="${imp?"currentColor":"none"}" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/></svg></button>
+      ${/* o fill vem do CSS (.acao-card.on svg), não de um atributo: gravado
+             no HTML ele congelava na primeira pintura, e clicar na estrela
+             trocava a cor sem nunca preencher o desenho */""}
+      <button class="acao-card ${imp?"on":""}" title="Importante" data-estrela="${ks[0]?ks[0].id:""}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/></svg></button>
     </span>
   </div>`;
 }
@@ -7250,11 +7274,25 @@ function pintarFicha(){
       if(e.key==="Enter" && !e.shiftKey){ e.preventDefault();
         document.querySelector(".escrever button[onclick^='novoAndamento']").click(); }
     };
-    // o composer encolhe quando perde o foco (F8) e cresce quando o recebe.
-    // No celular ele é preso ao rodapé, e a folga do fim da rolagem é medida
-    // pela altura dele — sem isto, o último andamento ficava atrás do campo.
-    campoAnd.addEventListener("focus", ()=>setTimeout(folgaComposer,0));
-    campoAnd.addEventListener("blur",  ()=>setTimeout(folgaComposer,0));
+    // ABRIR E FECHAR O COMPOSER (F8) — pelo mousedown/toque, nunca pelo foco.
+    // O clique numa sugestão, no ✕ do lembrete ou no 📎 tirava o foco do campo
+    // ANTES do mouseup: a barra sumia, o conteúdo saltava e o clique se perdia.
+    // Aqui a barra abre no primeiro contato e só recolhe quando o campo está
+    // vazio e o foco saiu de vez — rascunho escrito mantém as ferramentas.
+    const cxEsc = campoAnd.closest(".escrever");
+    if(cxEsc){
+      const abrirEsc = ()=>{ if(!cxEsc.classList.contains("esc-aberto")){
+        cxEsc.classList.add("esc-aberto"); setTimeout(folgaComposer,0); } };
+      const fecharEsc = ()=>{
+        if(campoAnd.value.trim() || cxEsc.contains(document.activeElement)) return;
+        cxEsc.classList.remove("esc-aberto"); setTimeout(folgaComposer,0);
+      };
+      cxEsc.addEventListener("mousedown", abrirEsc);
+      cxEsc.addEventListener("touchstart", abrirEsc, {passive:true});
+      campoAnd.addEventListener("focus", abrirEsc);
+      // 150ms: tempo de o clique terminar (mouseup + click) antes de decidir
+      cxEsc.addEventListener("focusout", ()=>setTimeout(fecharEsc, 150));
+    }
     const kAtual=(casoSel&&D.casoPorId.get(casoSel)) || (ks.length===1?ks[0]:null);
     if(kAtual){
       prazoDetectado=null; prazoCancelado=false;
@@ -9152,7 +9190,11 @@ function blocoFatos(k){
   const prots = (k.protocolos||[]);
   const equipe = D.atrDoCaso.get(k.id) || [];
   const st = subtarefasDe(k.id), feitas = st.filter(t=>t.concluida).length;
-  return `<section class="fatos">
+  // `fatos-processo` é o que a grade da ficha (F8) mira para pôr ESTE quadro
+  // na coluna estreita. As sub-abas (INSS, Recurso, Caso completo) também
+  // devolvem cartões `.fatos`, e mirar a classe genérica empilhava os dois na
+  // mesma célula, um desenhado por cima do outro.
+  return `<section class="fatos fatos-processo">
     <div class="fatos-topo">
       <h3>${esc(tituloCaso(k))}</h3>
       ${/* EM QUE LISTA este caso está — a aba do processo responde na hora,
