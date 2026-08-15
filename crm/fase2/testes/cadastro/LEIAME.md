@@ -30,3 +30,22 @@ Duas armadilhas, as duas do arquivo de teste:
 2. **O `page.route` das fixturas precisa respeitar o cabeçalho `Range`.**
    `todas()` pagina de mil em mil e só para quando a página vem incompleta;
    devolver as 7.000 linhas em toda página deixa o app carregando para sempre.
+
+## atendimento.js (F17) — a espécie dentro da triagem
+
+Prova a tabela `PONTOS_ESPECIE` família por família, com um cliente fictício
+para cada uma. Duas armadilhas encontradas por ele, as duas no programa:
+
+1. **"Recurso especial ou incidente" caía na aposentadoria especial.** O teste
+   era `/especial|insalubr|agente nocivo/` e a palavra "especial" aparece nos
+   dois. Um recurso ao CRPS mostrava PPP, EPI e LTCAT. Corrigido de duas
+   formas ao mesmo tempo: a família do CRPS passou a ser avaliada ANTES, e o
+   teste da especial passou a exigir a palavra colada em "apos".
+2. **`casoSel` sobrevive à troca de ficha.** `fecharAtendimento` usava
+   `casoSel` sem conferir de quem ele era: o atendimento do cliente B ia para
+   o processo do cliente A, que ainda estava selecionado. Agora só vale se o
+   caso estiver na lista DESTE cliente.
+
+Terceira armadilha, no teste: um retrato de `.cad-cartao` corta justamente os
+passos novos, porque eles ficam no fim de um cartão que rola. A captura clona
+os passos da espécie num contêiner próprio antes de fotografar.
