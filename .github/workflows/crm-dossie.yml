@@ -28,8 +28,10 @@ jobs:
           if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_KEY" ]; then
             echo "::error::Segredos do Supabase ausentes."; exit 1
           fi
-          python crm/fase2/dossie_banco.py > dossie.json
+          python crm/fase2/dossie_banco.py --json > dossie.json
           echo "linhas do JSON: $(wc -l < dossie.json)"
+          echo "── RETRATO (estrutura e números, sem conteúdo) ──"
+          python crm/fase2/dossie_banco.py
 
       - name: Publica o retrato como artefato
         uses: actions/upload-artifact@v4

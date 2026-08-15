@@ -130,7 +130,21 @@ def main():
             saida["tabelas"][t] = d
             print(f"  {t}: {d['linhas']} linha(s)", file=sys.stderr)
 
-    json.dump(saida, sys.stdout, ensure_ascii=False, indent=1, sort_keys=True)
+    if "--json" in sys.argv:
+        json.dump(saida, sys.stdout, ensure_ascii=False, indent=1, sort_keys=True)
+        return
+    # relatório em texto: é ele que vai para o log do Actions, porque o
+    # artefato exige token para baixar. Continua sendo só estrutura e número.
+    for t in sorted(saida["tabelas"]):
+        d = saida["tabelas"][t]
+        print(f"## {t} | linhas={d['linhas']}")
+        for c in sorted(d["colunas"]):
+            k = d["colunas"][c]
+            fk = (k.get("fk") or "").replace("<fk table=", "").replace("/>", "").strip()
+            print(f"- {c} | tipo={k['tipo']} | nulo={k['nulo']} | padrao={k['padrao']}"
+                  f" | pk={k['pk']} | fk={fk or '-'} | preench={k['preenchidas']} | pct={k['pct']}")
+    if saida["erros"]:
+        print("## tabelas que a API recusou: " + ", ".join(sorted(saida["erros"])))
 
 
 if __name__ == "__main__":
