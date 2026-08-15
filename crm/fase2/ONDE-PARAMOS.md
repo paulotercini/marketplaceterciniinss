@@ -14,7 +14,7 @@ repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
 
 ## Em que pé estão as coisas
 
-**App na versão 09.06**, publicada em
+**App na versão 09.07**, publicada em
 https://paulotercini.github.io/marketplaceterciniinss/crm/ (Ctrl+Shift+R para
 ver a versão nova).
 
@@ -44,7 +44,7 @@ estado civil, profissão, nome da mãe, PIS/NIT e telefones em lista) e a
   abre a ficha já no editor, e a **importação de planilha colada** (TAB ou
   ponto e vírgula), que confere linha a linha antes de gravar qualquer coisa.
 
-**A F10 começou**, com a peça grande da fase: a **sub-aba Triagem**, oito
+**A F10 está inteira no ar.** A peça grande foi a **sub-aba Triagem**, oito
 passos, cinco deles respondidos pelo próprio CRM (processo judicial anterior,
 recurso no CRPS, CadÚnico, benefício ativo e protocolos). CNIS lê os anexos
 procurando arquivo com CNIS no nome; Indicadores fica honesto, dizendo que o
@@ -52,9 +52,17 @@ CRM não lê o extrato. Cada marcação grava estado, autor e data, e a conclus�
 traz o próximo passo nas três opções da regra do escritório. Mora em
 `clientes.triagem`, com `campos.triagem` de reserva, sem precisar de migração.
 
-Falta da F10 a outra metade: **o CadÚnico virando lembrete de verdade** (hoje
-é um bloco calculado, não uma linha em `lembretes`) e **o caso novo notificando
-Paulo, Amanda e Marcos**.
+A outra metade também saiu. O **CadÚnico virou lembrete de verdade**: gravar
+a data cria uma linha em `lembretes`, tipo `cadunico`, a cada 24 meses, presa
+ao caso. Mudar a data move o vencimento em vez de criar um segundo; apagar
+desliga. O bloco calculado do Meu Dia pula quem já tem lembrete, senão o mesmo
+CadÚnico aparecia duas vezes.
+
+E o **caso novo avisa quem decide**, nos cinco caminhos em que uma pessoa cria
+caso na tela. Os automáticos (PAT, PJe, separação de recursos) ficam de fora de
+propósito, senão uma importação de sessenta protocolos vira sessenta avisos.
+Quem recebe sai de ⚙️ Configurações, um visto por pessoa; sem escolha gravada,
+o padrão são os advogados ativos.
 
 Dois defeitos que a captura expôs no gerador de documentos e já foram
 corrigidos: `<ESTADO>` imprimiria "Estado de SP" (agora há o mapa das 27 UFs
@@ -114,7 +122,7 @@ pedir.
 
 ## O que vem a seguir (detalhe e esforço em `cowork/04`)
 
-F10 (Triagem da Amanda, **G**) · F11 (terminar a geração de documentos, que
+F11 (terminar a geração de documentos, que
 já existe pela metade, **M**) · F12 (raiz e ramos processuais, **G**) · F13
 (Consulta sem iframe, **M**).
 
@@ -192,6 +200,10 @@ retrato do banco. A ordem antiga era de reforma visual e ficou para trás.
 - **Cliente com mais de um caso ativo segura a pintura no teste.** O modal
   "escolher processo" abre e `pintarFicha` nem roda. Já estava anotado em
   `cowork/04`, e mordeu de novo. O contorno está no `triagem.js`.
+- **Duas falhas em três eram expectativa minha, não código.** A fila acusou 2
+  clientes onde eu esperava 3, e o padrão de quem recebe caso novo trouxe dois
+  advogados onde eu tinha escrito um. Nas duas o código estava certo. Conferir
+  a conta antes de mexer no que passou.
 
 ## Como conferir se está tudo de pé
 
