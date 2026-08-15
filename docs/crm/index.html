@@ -978,6 +978,56 @@
     color:var(--cinza);padding:7px 10px;background:var(--placa)}
   .tab td{padding:7px 10px;border-top:1px solid var(--borda)}
   .tab a{color:var(--azul)}
+
+  /* ── F9 · CADASTRO: grade de 12 colunas ────────────────────────────────
+     Classe própria (.cad-*) porque .id-grid/.id-card são usados em outros
+     pontos do arquivo (Novidades, painel de números) e não podem mudar.
+     Nomes de uma ou duas letras são proibidos aqui: no protótipo, um `.n`
+     genérico capturou o `.n` do telefone e cortou o número na tela. */
+  .cad-cartao{background:var(--branco);border:1px solid var(--borda-suave);border-radius:var(--raio,10px);
+    box-shadow:0 1px 2px rgba(20,24,33,.06);padding:14px 16px;margin-bottom:12px}
+  .cad-tit{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+    color:var(--cinza);margin-bottom:11px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .cad-tit .cad-ic{color:var(--azul);display:inline-flex}
+  .cad-tit-sub{font-weight:400;letter-spacing:0;text-transform:none;color:var(--cinza-claro,#8A8F98)}
+  .cad-cont{margin-left:auto;font-weight:600;font-size:11px;color:var(--laranja);
+    background:var(--laranja-f);padding:1px 8px;border-radius:9px;letter-spacing:0;text-transform:none}
+  .cad-cont.cad-ok{color:var(--verde);background:var(--verde-f)}
+  .cad-grade{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
+  .cad-c3{grid-column:span 3}.cad-c4{grid-column:span 4}
+  .cad-c6{grid-column:span 6}.cad-c8{grid-column:span 8}.cad-c12{grid-column:span 12}
+  @media (max-width:1000px){.cad-c3,.cad-c4{grid-column:span 6}.cad-c8{grid-column:span 12}}
+  .cad-campo{border:1px solid var(--borda);border-radius:var(--raio,8px);padding:7px 11px;
+    background:var(--branco);min-height:58px;display:flex;flex-direction:column;justify-content:center}
+  .cad-campo:hover{border-color:var(--cinza-claro,#8A8F98)}
+  .cad-campo label{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;
+    letter-spacing:.4px;text-transform:uppercase;color:var(--cinza);margin-bottom:3px}
+  .cad-v{font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .cad-v.grande{font-size:16px}
+  .cad-campo.vazio{border-style:dashed;background:#FCFCFD}
+  .cad-campo.vazio .cad-v{color:var(--cinza-claro,#8A8F98);font-weight:400;font-size:13.5px}
+  .cad-apoio{font-size:12px;font-weight:400;color:var(--cinza)}
+  .cad-lap{border:none;background:none;color:var(--cinza-claro,#8A8F98);padding:1px;
+    display:inline-flex;border-radius:3px;cursor:pointer}
+  .cad-lap:hover{color:var(--azul);background:#e8f1fb}
+  .cad-mini{border:1px solid var(--borda);background:var(--branco);border-radius:5px;
+    padding:2px 8px;font-size:11.5px;font-weight:600;color:var(--azul);cursor:pointer;
+    display:inline-flex;align-items:center;gap:4px}
+  .cad-mini:hover{background:#e8f1fb}
+  .cad-tag{display:inline-flex;align-items:center;gap:4px;padding:1px 8px;border-radius:9px;
+    font-size:11px;font-weight:600;background:var(--verde-f);color:var(--verde)}
+  .cad-tel{display:flex;align-items:center;gap:8px;padding:5px 0;width:100%;
+    border-bottom:1px solid var(--borda-suave)}
+  .cad-tel:last-of-type{border:none}
+  .cad-tel-n{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;flex:none}
+  .cad-tel-obs{font-size:12px;color:var(--cinza);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cad-linha{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-top:7px}
+  .cad-linha input,.cad-campo select,.cad-campo input{border:1px solid var(--borda);
+    border-radius:6px;padding:5px 8px;font-size:13px;font-family:inherit;background:var(--branco);color:var(--texto)}
+  .cad-nota{font-size:12px;color:var(--cinza);line-height:1.5;margin-top:10px;max-width:78ch}
+  .app.celular .cad-grade{grid-template-columns:1fr}
+  .app.celular .cad-c3,.app.celular .cad-c4,.app.celular .cad-c6,
+  .app.celular .cad-c8,.app.celular .cad-c12{grid-column:span 1}
   .id-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
   .id-card{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:10px 14px}
   .id-card.destaque{border-color:#f0c36d;background:#fffaf0}
@@ -1368,7 +1418,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.99 · a lista 🙋 Escritório deixa de ser lista de casos: quem está lá é cliente em atendimento, com as anotações e os documentos pedidos no cadastro — e a ficha de quem ainda não tem caso abre no Cadastro</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.00 · F9.1 — a Identificação do Cadastro em grade de 12 colunas: o nome abre a tela, campos novos (RG e órgão emissor, sexo, estado civil, profissão, nome da mãe, PIS/NIT), telefones em lista e campo em branco convidando a preencher, sem travessão e sem emoji</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7470,7 +7520,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // atendimento, dados do cliente, documentos e consulta. Sub-menu para não
   // virar rolagem infinita (pedido do Paulo) — sem caso, abre nas anotações.
   const semCaso = !(ks||[]).length;
-  const cd = SUB_CAD.some(([v])=>v===subCad) ? subCad : (semCaso ? "anotacoes" : "dados");
+  const cd = SUB_CAD.some(([v])=>v===subCad) ? subCad : (semCaso ? "anotacoes" : "identificacao");
   return `
     <div class="sub-menu" style="width:100%">
       ${SUB_CAD.map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
@@ -7480,10 +7530,10 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) : ""}
     ${cd==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}
     ${cd==="consulta" ? painelConsulta() : ""}
-    ${cd!=="dados" ? "" : `
+    ${cd!=="identificacao" ? "" : `
     ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
          data que chega, não dado de cadastro (pedido do Paulo) */""}
-    ${fichaCivil(c)}
+    ${fichaIdentificacao(c)}
     ${(()=>{
       const credInss = creds.find(cr=>cr.tipo==="meu_inss");
       const outrasCreds = creds.filter(cr=>cr.tipo!=="meu_inss");
@@ -7491,60 +7541,35 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
       const parcs = [...new Set(ks.map(k=>k.parceria).filter(Boolean))];
       return `
     <div class="id-grid">
-      <div class="id-card">
-        <label>CPF <button class="lapis" title="alterar" onclick="editarCampo('cpf','${c.id}')">✎</button></label>
-        <div class="id-valor" id="campo-cpf">${fmtCpf(c.cpf)}
-          ${c.cpf?`<button class="cop" onclick="copiar('${c.cpf}','CPF copiado')">📋 copiar</button>`:""}</div>
-      </div>
       <div class="id-card destaque">
-        <label>🔑 Senha Meu INSS</label>
+        <label><span class="cad-ic">${CAD_IC.cadeado}</span> Senha Meu INSS</label>
         ${credInss?`<div class="id-valor"><span id="cred-${credInss.id}">••••••••</span>
-          <button class="cop" onclick="copiarCred('${credInss.id}')" title="fica registrado quem copiou">📋 copiar</button>
-          <button class="olho" onclick="verCred('${credInss.id}')" title="ver (fica registrado)">👁</button>
-          <button class="cop" onclick="trocarSenha('${c.id}','meu_inss','${credInss.id}')">✎ trocar</button></div>`
+          <button class="cop" onclick="copiarCred('${credInss.id}')" title="fica registrado quem copiou">${CAD_IC.copiar} copiar</button>
+          <button class="olho" onclick="verCred('${credInss.id}')" title="ver (fica registrado)">${CAD_IC.olho}</button>
+          <button class="cop" onclick="trocarSenha('${c.id}','meu_inss','${credInss.id}')">${CAD_IC.lapis} trocar</button></div>`
         :`<div class="id-valor" style="color:var(--cinza);font-weight:400">não cadastrada
-          <button class="cop" onclick="document.getElementById('mais-opcoes').open=true;document.getElementById('nc-valor').focus()">＋ cadastrar</button></div>`}
-      </div>
-      <div class="id-card">
-        <label>Telefone / WhatsApp <button class="lapis" title="alterar" onclick="editarCampo('telefone','${c.id}')">✎</button></label>
-        <div class="id-valor" id="campo-telefone">${c.telefone?`${esc(c.telefone)}
-          <button class="cop" onclick="copiar('${c.telefone.replace(/\D/g,"")}','Telefone copiado')">📋 copiar</button>
-          <a class="cop" href="https://wa.me/55${c.telefone.replace(/\D/g,"")}" target="_blank" rel="noopener" style="text-decoration:none">💬 WhatsApp</a>`:"—"}</div>
-        ${ultimoZap()}
-      </div>
-      <div class="id-card">
-        <label>Nascimento <button class="lapis" title="alterar" onclick="editarCampo('dn','${c.id}')">✎</button></label>
-        <div class="id-valor" id="campo-dn">${c.dn?c.dn.slice(0,2)+"."+c.dn.slice(2,4)+"."+c.dn.slice(4):"—"}
-          ${(i=>i==null?"":`<span class="chip neutro">${i} anos</span>`)(idadeDe(c.dn))}</div>
-      </div>
-      <div class="id-card">
-        <label>Nome completo <button class="lapis" title="alterar" onclick="editarCampo('nome','${c.id}')">✎</button></label>
-        <div class="id-valor" id="campo-nome" style="font-size:14px">${esc(c.nome)}</div>
+          <button class="cop" onclick="document.getElementById('mais-opcoes').open=true;document.getElementById('nc-valor').focus()">${CAD_IC.mais} cadastrar</button></div>`}
       </div>
       ${outrasCreds.map(cr=>`<div class="id-card"><label>Senha ${esc(cr.tipo.replace("_"," "))}</label>
         <div class="id-valor"><span id="cred-${cr.id}">••••••••</span>
-        <button class="cop" onclick="copiarCred('${cr.id}')">📋 copiar</button>
-        <button class="olho" onclick="verCred('${cr.id}')" title="ver (fica registrado)">👁</button></div></div>`).join("")}
+        <button class="cop" onclick="copiarCred('${cr.id}')">${CAD_IC.copiar} copiar</button>
+        <button class="olho" onclick="verCred('${cr.id}')" title="ver (fica registrado)">${CAD_IC.olho}</button></div></div>`).join("")}
       <div class="id-card">
         <label>Pasta do cliente</label>
         <div class="id-valor">
-          <button class="cop" onclick="abrirDrive('${c.id}')" title="abre no Google Drive (navegador)">📁 Drive</button>
-          <button class="cop" onclick="abrirExplorer('${c.id}')" title="abre no Windows Explorer (requer atalho instalado)">🖥 Explorer</button></div>
-      </div>
-      <div class="id-card" style="grid-column:1/-1">
-        <label>Endereço <button class="lapis" title="alterar" onclick="editarCampo('endereco','${c.id}')">✎</button></label>
-        <div class="id-valor" id="campo-endereco" style="font-weight:400;font-size:14px">${c.endereco?esc(c.endereco):"—"}</div>
+          <button class="cop" onclick="abrirDrive('${c.id}')" title="abre no Google Drive (navegador)">${CAD_IC.pasta} Drive</button>
+          <button class="cop" onclick="abrirExplorer('${c.id}')" title="abre no Windows Explorer (requer atalho instalado)">${CAD_IC.tela} Explorer</button></div>
       </div>
     </div>
-    ${prots.length?`<div class="id-secao"><label>📄 Protocolos INSS <small>(extraídos dos andamentos — a pesquisa 🔍 encontra o cliente por eles)</small></label>
-      ${prots.map(pr=>`<span class="chip neutro" style="cursor:pointer" title="copiar" onclick="copiar('${pr}','Protocolo copiado')">📄 ${pr}</span>`).join(" ")}</div>`:""}
-    ${parcs.length?`<div class="id-secao"><label>🤝 Parceria</label>
-      ${parcs.map(pa=>`<span class="chip ben">🤝 ${esc(pa)}</span>`).join(" ")}</div>`:""}
-    <div class="id-secao"><label>👪 Parentes & amigos <small>(clientes vinculados — clique para abrir a ficha)</small></label>
+    ${prots.length?`<div class="id-secao"><label><span class="cad-ic">${CAD_IC.doc}</span> Protocolos INSS <small>(extraídos dos andamentos — a pesquisa encontra o cliente por eles)</small></label>
+      ${prots.map(pr=>`<span class="chip neutro" style="cursor:pointer" title="copiar" onclick="copiar('${pr}','Protocolo copiado')">${CAD_IC.doc} ${pr}</span>`).join(" ")}</div>`:""}
+    ${parcs.length?`<div class="id-secao"><label><span class="cad-ic">${CAD_IC.duplas}</span> Parceria</label>
+      ${parcs.map(pa=>`<span class="chip ben">${CAD_IC.duplas} ${esc(pa)}</span>`).join(" ")}</div>`:""}
+    <div class="id-secao"><label><span class="cad-ic">${CAD_IC.duplas}</span> Parentes & amigos <small>(clientes vinculados — clique para abrir a ficha)</small></label>
       ${vincs.map(v=>{
         const outroId = v.cliente_id===c.id ? v.ligado_a : v.cliente_id;
         const o = D.cliPorId.get(outroId); if(!o) return "";
-        return `<span class="chip neutro" style="cursor:pointer" onclick="abrirFicha('${o.id}')">👤 ${esc(o.nome)}${v.relacao?" · "+esc(v.relacao):""}</span>
+        return `<span class="chip neutro" style="cursor:pointer" onclick="abrirFicha('${o.id}')">${CAD_IC.pessoa} ${esc(o.nome)}${v.relacao?" · "+esc(v.relacao):""}</span>
           <button class="olho" title="desvincular" onclick="removerVinculo('${v.id}')">✕</button>`;
       }).join(" ")||`<span style="font-size:13px;color:var(--cinza)">nenhum vínculo ainda</span>`}
       <div class="form-linha" style="margin-top:6px">
@@ -7554,32 +7579,34 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
       </div>
       <datalist id="lista-clientes">${D.clientes.map(x=>x.id!==c.id?`<option value="${esc(x.nome)}">`:"").join("")}</datalist>
     </div>
-    <details id="mais-opcoes" style="margin-top:14px"><summary style="cursor:pointer;color:var(--cinza)">⚙ Mais opções — cadastrar senha, vincular pasta, agendar atendimento</summary>
+    <details id="mais-opcoes" style="margin-top:14px"><summary style="cursor:pointer;color:var(--cinza)"><span class="cad-ic">${CAD_IC.engren}</span> Mais opções — cadastrar senha, vincular pasta, agendar atendimento</summary>
       <div class="form-linha" style="margin-top:8px">
         <select id="nc-tipo"><option value="meu_inss">senha Meu INSS</option><option value="gov_br">senha gov.br</option><option value="outro">outra credencial</option></select>
         <input id="nc-valor" placeholder="valor (fica cifrado no banco)">
         <button onclick="novaCred('${c.id}')">Guardar</button>
       </div>
       <div class="form-linha">
-        <input id="pd-url" placeholder="colar o link da pasta deste cliente no Drive (opcional — sem link, o 📁 pesquisa pelo nome)"
+        <input id="pd-url" placeholder="colar o link da pasta deste cliente no Drive (opcional — sem link, a busca é pelo nome)"
           value="${esc((c.campos||{}).pasta_drive||"")}" style="flex:1;min-width:260px">
         <button onclick="salvarPasta('${c.id}')">Vincular pasta</button>
       </div>
       <div class="form-linha" style="align-items:center">
-        <span style="font-size:13px;color:var(--cinza)">📅 Agendar atendimento:</span>
+        <span style="font-size:13px;color:var(--cinza)">${CAD_IC.agenda} Agendar atendimento:</span>
         <select id="ag-tipo"><option value="002">002 — cliente antigo</option><option value="001">001 — cliente novo</option></select>
         <input type="date" id="ag-data"><input type="time" id="ag-hora" value="09:00">
         <button onclick="agendarAtendimento('${c.id}')">Abrir no Google Agenda</button>
         <button class="btn-mini" onclick="irSubCad('documentos')"
-          title="a lista do benefício, sugerida pelo sistema — marcar, imprimir e cada item vira checklist do caso">📋 documentos para trazer</button>
+          title="a lista do benefício, sugerida pelo sistema — marcar, imprimir e cada item vira checklist do caso">${CAD_IC.doc} documentos para trazer</button>
       </div>
       <p style="margin-top:8px;font-size:12px;color:var(--cinza)">Toda visualização de senha é registrada (quem e quando).</p>
     </details>`;
     })()}`}`;
 }
 // as divisões do Cadastro, na ordem em que o atendimento acontece
-const SUB_CAD = [["anotacoes","Anotações"],["dados","Dados do cliente"],
-                 ["documentos","Documentos"],["mensagens","Mensagens"],["consulta","Consulta"]];
+// ordem da especificação F9 §2 — a do atendimento real. Mensagens fica no
+// fim: saiu do menu de cima na 08.99 e não é passo do atendimento.
+const SUB_CAD = [["identificacao","Identificação"],["anotacoes","Anotações"],
+                 ["documentos","Documentos"],["consulta","Consulta"],["mensagens","Mensagens"]];
 function irSubCad(qual){ subCad = qual; guardar("crm_subcad", qual); repintarFicha(); }
 
 // o catálogo de documentos do benefício (era a aba 8) agora vive na divisão
@@ -12110,60 +12137,299 @@ async function aplicarChecklistCaso(caso, silencioso){
 // nome/CPF/nascimento/telefone/endereço, e procuração e contrato precisam de
 // RG, estado civil, profissão e o endereço quebrado em bairro/cidade/UF/CEP
 const ESPECIE_PAGAMENTOS = "Indicação de pagamentos ao INSS";   // não vira caso: vira lembrete
-const CAMPOS_CIVIS = [
-  ["rg",          "RG",           "text"],
-  ["estado_civil","Estado civil", "select", ["solteiro(a)","casado(a)","divorciado(a)","viúvo(a)","união estável","separado(a)"]],
-  ["profissao",   "Profissão",    "text"],
-  ["sexo",        "Sexo",         "select", ["feminino","masculino"]],
-  ["bairro",      "Bairro",       "text"],
-  ["cidade",      "Cidade",       "text"],
-  ["uf",          "Estado (UF)",  "text"],
-  ["cep",         "CEP",          "text"],
-];
-const civilDe = c => ((c && c.campos) || {}).civil || {};
-// o que ainda falta para os documentos saírem sem lacuna
+// os dados civis moram nas colunas de `clientes` (schema_f9_cadastro.sql),
+// com `campos.civil` de reserva enquanto a migração não roda — quem monta a
+// tela é fichaIdentificacao(); quem lê para os documentos é civilDe()
+
+// ══════════════════════════════════════════════════════════════════════════
+// F9.1 · IDENTIFICAÇÃO — a grade de 12 colunas do Cadastro
+// ══════════════════════════════════════════════════════════════════════════
+// O nome do cliente é a identidade e vinha em quinto lugar, atrás da senha do
+// Meu INSS numa caixa amarela — amarelo que, no sistema de tokens, quer dizer
+// prazo. Agora o nome abre a grade, ocupando 8 das 12 colunas.
+//
+// ONDE MORA O DADO: cada campo tenta a COLUNA de `clientes` (criada pelo
+// crm/fase2/schema_f9_cadastro.sql) e, se o banco ainda não tiver a coluna,
+// cai em `campos.civil` — o mesmo lugar onde a 08.98 guardou. Assim a tela
+// funciona antes e depois da migração, e o que foi escrito antes continua
+// aparecendo. Ler é `valCli`; gravar é `salvarCliCampo`, que troca de destino
+// sozinho quando o banco recusa a coluna.
+const CAD_CAMPOS = {
+  sexo:         {rot:"Sexo",              col:6, tipo:"opcao", ops:[["F","Feminino"],["M","Masculino"]]},
+  estado_civil: {rot:"Estado civil",      col:6, tipo:"opcao",
+                 ops:[["solteiro","Solteiro(a)"],["casado","Casado(a)"],["uniao","União estável"],
+                      ["viuvo","Viúvo(a)"],["divorciado","Divorciado(a)"]]},
+  profissao:    {rot:"Profissão",         col:6, tipo:"texto"},
+  rg:           {rot:"RG",                col:6, tipo:"texto"},
+  rg_orgao:     {rot:"Órgão emissor",     col:6, tipo:"texto", dica:"SSP/SP"},
+  nome_mae:     {rot:"Nome da mãe",       col:6, tipo:"texto", opcional:true},
+  pis_nit:      {rot:"PIS / NIT",         col:6, tipo:"texto", opcional:true},
+};
+// o que a procuração, o contrato e as declarações exigem para sair prontos
+const CAD_PRECISA = ["nome","cpf","dn","rg","estado_civil","profissao","endereco"];
+const ROT_CAMPO = {nome:"nome completo", cpf:"CPF", dn:"nascimento", endereco:"endereço", rg:"RG"};
+
+function valCli(c, campo){
+  if(!c) return "";
+  const v = c[campo];
+  if(v !== undefined && v !== null && v !== "") return v;
+  return ((c.campos||{}).civil||{})[campo] || "";
+}
+function rotuloValor(campo, v){
+  const cfg = CAD_CAMPOS[campo];
+  if(!cfg || cfg.tipo!=="opcao") return v;
+  return (cfg.ops.find(([k])=>k===v)||[null,v])[1];
+}
+// quais campos das peças estão em branco — o contador do título e o title
+function cadFaltando(c){
+  return CAD_PRECISA.filter(k=>!valCli(c,k))
+    .map(k=>ROT_CAMPO[k] || ((CAD_CAMPOS[k]||{}).rot||k).toLowerCase());
+}
+// grava na coluna; banco sem a coluna (PGRST204/42703) cai em campos.civil
+async function salvarCliCampo(cliId, campo, valor){
+  const c = D.cliPorId.get(cliId); if(!c) return false;
+  const v = valor === "" ? null : valor;
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({[campo]: v})});
+    c[campo] = v;
+    return true;
+  }catch(e){
+    const msg = String((e && e.message) || e);
+    if(!/PGRST204|42703|does not exist|schema cache/i.test(msg)){
+      aviso("Não consegui guardar — tente de novo"); return false;
+    }
+    const civil = {...(((c.campos||{}).civil)||{})};
+    if(v === null) delete civil[campo]; else civil[campo] = v;
+    c.campos = {...(c.campos||{}), civil};
+    try{
+      await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({campos: c.campos})});
+    }catch(e2){ aviso("Não consegui guardar — tente de novo"); return false; }
+    return true;
+  }
+}
+// editor no lugar: o campo vira input/select sem sair da grade
+function editarCad(campo, cliId){
+  const c = D.cliPorId.get(cliId), cx = document.getElementById("cad-"+campo);
+  if(!c || !cx) return;
+  const cfg = CAD_CAMPOS[campo] || {rot:campo, tipo:"texto"};
+  const v = valCli(c, campo);
+  cx.innerHTML = cfg.tipo==="opcao"
+    ? `<select id="cad-ed" style="flex:1;min-width:110px;font-size:13.5px"><option value="">—</option>
+        ${cfg.ops.map(([k,r])=>`<option value="${k}" ${v===k?"selected":""}>${esc(r)}</option>`).join("")}</select>
+       <button class="cad-mini" onclick="guardarCad('${campo}','${cliId}')">Guardar</button>`
+    : `<input id="cad-ed" value="${esc(v)}" ${cfg.dica?`placeholder="${esc(cfg.dica)}"`:""}
+        style="flex:1;min-width:90px;font-size:13.5px">
+       <button class="cad-mini" onclick="guardarCad('${campo}','${cliId}')">Guardar</button>`;
+  const inp = document.getElementById("cad-ed");
+  inp.focus(); if(inp.select) inp.select();
+  inp.onkeydown = e => { if(e.key==="Enter") guardarCad(campo, cliId);
+                         if(e.key==="Escape") abrirFicha(cliId); };
+  if(cfg.tipo==="opcao") inp.onchange = () => guardarCad(campo, cliId);
+}
+async function guardarCad(campo, cliId){
+  const inp = document.getElementById("cad-ed"); if(!inp) return;
+  const ok = await salvarCliCampo(cliId, campo, (inp.value||"").trim());
+  if(!ok) return;
+  aviso(`${(CAD_CAMPOS[campo]||{}).rot||campo} guardado`, false);
+  abrirFicha(cliId);
+}
+// ── telefones em lista ────────────────────────────────────────────────────
+// `telefone` continua sendo o principal (é dele que o WhatsApp sai); a lista
+// guarda os outros: o do filho, o do trabalho, o de recado.
+function telefonesDe(c){
+  const lista = Array.isArray(c.telefones) ? c.telefones
+              : Array.isArray((c.campos||{}).telefones) ? c.campos.telefones : [];
+  if(lista.length) return lista;
+  return c.telefone ? [{numero:c.telefone, obs:"principal", zap:true}] : [];
+}
+async function salvarTelefones(cliId, lista){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({telefones:lista})});
+    c.telefones = lista;
+  }catch(e){
+    const msg = String((e && e.message) || e);
+    if(!/PGRST204|42703|does not exist|schema cache/i.test(msg))
+      return aviso("Não consegui guardar o telefone — tente de novo");
+    c.campos = {...(c.campos||{}), telefones:lista};
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})}).catch(()=>aviso("Não consegui guardar o telefone"));
+  }
+  // o principal é o primeiro marcado como WhatsApp — é dele que sai a conversa
+  const p = lista.find(t=>t.zap) || lista[0];
+  if(p && p.numero !== c.telefone) await salvarCliCampo(cliId, "telefone", p.numero);
+  reindexarCliente(c);
+  abrirFicha(cliId);
+}
+function novoTelefone(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const num = (document.getElementById("cad-tel-novo")||{}).value||"";
+  const obs = (document.getElementById("cad-tel-obs")||{}).value||"";
+  if(!num.trim()) return aviso("Escreva o número");
+  const lista = telefonesDe(c).concat([{numero:num.trim(), obs:obs.trim(), zap:!telefonesDe(c).length}]);
+  salvarTelefones(cliId, lista);
+}
+function removerTelefone(cliId, i){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const lista = telefonesDe(c).filter((_,n)=>n!==i);
+  salvarTelefones(cliId, lista);
+}
+function marcarZap(cliId, i){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const lista = telefonesDe(c).map((t,n)=>({...t, zap:n===i}));
+  salvarTelefones(cliId, lista);
+}
+
+// ── a grade ───────────────────────────────────────────────────────────────
+const CAD_IC = {
+  fechar: `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>`,
+  cadeado:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.2a4 4 0 0 1 8 0v3.3M12 14.5v2.5"/></svg>`,
+  olho:   `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/></svg>`,
+  pasta:  `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3.5 7.5a2 2 0 0 1 2-2h3.4l2 2.4h7.6a2 2 0 0 1 2 2v8.1a2 2 0 0 1-2 2H5.5a2 2 0 0 1-2-2Z"/></svg>`,
+  tela:   `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="11" rx="2"/><path d="M9 20h6M12 15.5V20"/></svg>`,
+  doc:    `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6.5 3.5h7l4.5 4.5v12a1 1 0 0 1-1 1h-10.5a1 1 0 0 1-1-1v-15a1 1 0 0 1 1-1Z"/><path d="M13.5 3.5V8h4.5"/></svg>`,
+  duplas: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19c.6-2.8 2.9-4.4 5.5-4.4s5 1.6 5.5 4.4"/><path d="M16 6.2a3 3 0 0 1 0 5.6M17.5 19c-.2-1.4-.7-2.6-1.5-3.5"/></svg>`,
+  engren: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6.2 6.2l1.4 1.4M16.4 16.4l1.4 1.4M17.8 6.2l-1.4 1.4M7.6 16.4l-1.4 1.4"/></svg>`,
+  agenda: `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.8" y="5.2" width="16.4" height="15" rx="2"/><path d="M8 3.5v3.4M16 3.5v3.4M3.8 10h16.4"/></svg>`,
+  pessoa: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/></svg>`,
+  lapis:  `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 20h4L19 9a2.1 2.1 0 0 0-3-3L5 17v3Z"/></svg>`,
+  copiar: `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="8.5" y="8.5" width="12" height="12" rx="2"/><path d="M15.5 8.5V5.3a1.8 1.8 0 0 0-1.8-1.8H5.3a1.8 1.8 0 0 0-1.8 1.8v8.4a1.8 1.8 0 0 0 1.8 1.8h3.2"/></svg>`,
+  mais:   `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`,
+  zap:    `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 12a8 8 0 0 1-11.9 7L4 20l1.1-4A8 8 0 1 1 20 12Z"/></svg>`,
+};
+// um campo da grade: cheio mostra o valor; vazio mostra borda tracejada e o
+// convite "clique para preencher" — travessão não diz o que fazer
+function cadCampo(c, campo, colunas, conteudo, opcoes){
+  const o = opcoes || {};
+  const v = conteudo !== undefined ? conteudo : esc(rotuloValor(campo, valCli(c, campo)));
+  const vazio = !v;
+  const rot = o.rot || (CAD_CAMPOS[campo]||{}).rot || campo;
+  return `<div class="cad-campo cad-c${colunas}${vazio?" vazio":""}"
+      ${o.editavel===false?"":`onclick="if(!this.querySelector('#cad-ed'))editarCad('${campo}','${c.id}')" style="cursor:pointer"`}>
+    <label>${esc(rot)}${o.editavel===false?"":`<button class="cad-lap" title="alterar">${CAD_IC.lapis}</button>`}</label>
+    <div class="cad-v${o.grande?" grande":""}" id="cad-${campo}">${vazio?"clique para preencher":v}</div>
+  </div>`;
+}
+// RG e órgão emissor: um campo na tela, duas colunas no banco
+function cadCampoRG(c){
+  const rg = valCli(c,"rg"), org = valCli(c,"rg_orgao");
+  return `<div class="cad-campo cad-c4${rg?"":" vazio"}"
+      onclick="if(!this.querySelector('#cad-ed'))editarRG('${c.id}')" style="cursor:pointer">
+    <label>RG e órgão emissor <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
+    <div class="cad-v" id="cad-rg">${rg?esc(rg)+(org?` <span class="cad-apoio">${esc(org)}</span>`:""):"clique para preencher"}</div>
+  </div>`;
+}
+function editarRG(cliId){
+  const c=D.cliPorId.get(cliId), cx=document.getElementById("cad-rg");
+  if(!c||!cx) return;
+  cx.innerHTML=`<input id="cad-ed" value="${esc(valCli(c,"rg"))}" placeholder="12.345.678-9" style="width:120px">
+    <input id="cad-ed2" value="${esc(valCli(c,"rg_orgao"))}" placeholder="SSP/SP" style="width:80px">
+    <button class="cad-mini" onclick="guardarRG('${cliId}')">Guardar</button>`;
+  const inp=document.getElementById("cad-ed"); inp.focus(); inp.select();
+  const teclas=e=>{ if(e.key==="Enter") guardarRG(cliId); if(e.key==="Escape") abrirFicha(cliId); };
+  inp.onkeydown=teclas; document.getElementById("cad-ed2").onkeydown=teclas;
+}
+async function guardarRG(cliId){
+  const rg=(document.getElementById("cad-ed")||{}).value||"";
+  const org=(document.getElementById("cad-ed2")||{}).value||"";
+  if(!await salvarCliCampo(cliId,"rg",rg.trim())) return;
+  await salvarCliCampo(cliId,"rg_orgao",org.trim());
+  aviso("RG guardado", false); abrirFicha(cliId);
+}
+function fichaIdentificacao(c){
+  const falta = cadFaltando(c);
+  const tels = telefonesDe(c);
+  const idade = idadeDe(c.dn);
+  return `<div class="cad-cartao">
+    <div class="cad-tit"><span class="cad-ic">${CAD_IC.pessoa}</span>Dados civis
+      <span class="cad-tit-sub">usados na procuração, no contrato e nas declarações</span>
+      ${falta.length?`<span class="cad-cont" title="faltam: ${esc(falta.join(", "))}">${
+        falta.length} campo${falta.length>1?"s":""} em branco</span>`
+      :`<span class="cad-cont cad-ok">completo</span>`}</div>
+    <div class="cad-grade">
+      <div class="cad-campo cad-c8" onclick="if(!this.querySelector('#ed-campo'))editarCampo('nome','${c.id}')" style="cursor:pointer">
+        <label>Nome completo <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
+        <div class="cad-v grande" id="campo-nome">${esc(c.nome)}</div>
+      </div>
+      <div class="cad-campo cad-c4${c.cpf?"":" vazio"}">
+        <label>CPF <button class="cad-lap" title="alterar" onclick="editarCampo('cpf','${c.id}')">${CAD_IC.lapis}</button></label>
+        <div class="cad-v" id="campo-cpf">${c.cpf?fmtCpf(c.cpf):"clique no lápis para preencher"}
+          ${c.cpf?`<button class="cad-mini" onclick="event.stopPropagation();copiar('${c.cpf}','CPF copiado')">${CAD_IC.copiar}copiar</button>`:""}</div>
+      </div>
+
+      <div class="cad-campo cad-c3${c.dn?"":" vazio"}">
+        <label>Nascimento <button class="cad-lap" title="alterar" onclick="editarCampo('dn','${c.id}')">${CAD_IC.lapis}</button></label>
+        <div class="cad-v" id="campo-dn">${c.dn?`${c.dn.slice(0,2)}.${c.dn.slice(2,4)}.${c.dn.slice(4)}
+          ${idade==null?"":`<span class="cad-apoio">${idade} anos</span>`}`:"clique no lápis para preencher"}</div>
+      </div>
+      ${cadCampo(c, "sexo", 3)}
+      ${cadCampo(c, "estado_civil", 3)}
+      ${cadCampo(c, "profissao", 3)}
+
+      <div class="cad-campo cad-c6${tels.length?"":" vazio"}">
+        <label>Telefones</label>
+        ${tels.map((t,i)=>`<div class="cad-tel">
+          <span class="cad-tel-n">${esc(t.numero||"")}</span>
+          ${t.zap?`<span class="cad-tag">WhatsApp</span>`
+            :`<button class="cad-mini" title="marcar como o WhatsApp do cliente" onclick="marcarZap('${c.id}',${i})">${CAD_IC.zap}é o WhatsApp</button>`}
+          ${t.obs?`<span class="cad-tel-obs">${esc(t.obs)}</span>`:""}
+          <a class="cad-mini" style="margin-left:auto;text-decoration:none" target="_blank" rel="noopener"
+            href="https://wa.me/55${String(t.numero||"").replace(/\D/g,"")}">abrir conversa</a>
+          <button class="cad-lap" title="remover" onclick="removerTelefone('${c.id}',${i})">${CAD_IC.fechar}</button>
+        </div>`).join("") || `<div class="cad-v">nenhum telefone anotado</div>`}
+        <div class="cad-linha">
+          <input id="cad-tel-novo" placeholder="(16) 99999-0000" style="width:130px"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();novoTelefone('${c.id}');}">
+          <input id="cad-tel-obs" placeholder="de quem é (recado, filha…)" style="flex:1;min-width:110px"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();novoTelefone('${c.id}');}">
+          <button class="cad-mini" onclick="novoTelefone('${c.id}')">${CAD_IC.mais}acrescentar</button>
+        </div>
+        ${ultimoZap()}
+      </div>
+
+      <div class="cad-campo cad-c6${c.endereco?"":" vazio"}"
+        onclick="if(!this.querySelector('#ed-campo'))editarCampo('endereco','${c.id}')" style="cursor:pointer">
+        <label>Endereço <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
+        <div class="cad-v" id="campo-endereco" style="font-weight:500;font-size:14px">${
+          c.endereco?esc(c.endereco):"clique para preencher"}</div>
+      </div>
+
+      ${cadCampoRG(c)}
+      ${cadCampo(c, "nome_mae", 4)}
+      ${cadCampo(c, "pis_nit", 4)}
+    </div>
+    <p class="cad-nota">Os campos em branco entram nas peças como espaço vazio. A procuração e o contrato
+      só ficam prontos para assinatura com nome, CPF, RG, nascimento, estado civil, profissão e endereço preenchidos.</p>
+  </div>`;
+}
+
+// os documentos leem daqui: a COLUNA de `clientes` quando o banco já tem
+// (crm/fase2/schema_f9_cadastro.sql) e o `campos.civil` como reserva — a
+// ficha grava num caminho ou no outro conforme o banco aceitar, e a peça não
+// pode saber a diferença
+function civilDe(c){
+  if(!c) return {};
+  const guardado = {...(((c.campos||{}).civil)||{})};
+  for(const ch of ["rg","rg_orgao","sexo","estado_civil","profissao","nome_mae","pis_nit",
+                   "logradouro","numero","complemento","bairro","cidade","uf","cep"])
+    if(c[ch]) guardado[ch] = c[ch];
+  return guardado;
+}
+// o que ainda falta para os documentos saírem sem lacuna. Sexo não entra:
+// não é marcador de modelo nenhum — serve à flexão do texto, assunto da F12.
 function faltaParaDocs(c){
   const v=civilDe(c), falta=[];
   if(!c.nome) falta.push("nome");
   if(!c.cpf) falta.push("CPF");
   if(!c.dn) falta.push("nascimento");
   if(!c.endereco) falta.push("endereço");
-  for(const [ch,rot] of CAMPOS_CIVIS) if(!v[ch] && ch!=="sexo") falta.push(rot.toLowerCase());
+  for(const [ch,rot] of [["rg","RG"],["estado_civil","estado civil"],["profissao","profissão"],
+                         ["bairro","bairro"],["cidade","cidade"],["uf","UF"],["cep","CEP"]])
+    if(!v[ch]) falta.push(rot);
   return falta;
-}
-function fichaCivil(c){
-  const v=civilDe(c), falta=faltaParaDocs(c);
-  return `<details class="cartao-civil" ${falta.length?"":""} style="margin-bottom:12px">
-    <summary style="cursor:pointer;font-weight:600">📇 Dados civis — usados na procuração, no contrato e nas declarações
-      ${falta.length?`<span class="chip urg" title="sem isto os documentos saem com lacuna">faltam ${falta.length}</span>`
-                    :`<span class="chip verde">completo ✔</span>`}</summary>
-    <div class="form-linha" style="flex-wrap:wrap;margin-top:8px">
-      ${CAMPOS_CIVIS.map(([ch,rot,tipo,ops])=>tipo==="select"
-        ? `<label style="font-size:12px;color:var(--cinza)">${rot}
-            <select id="cv-${ch}" style="display:block"><option value="">—</option>
-              ${ops.map(o=>`<option ${v[ch]===o?"selected":""}>${o}</option>`).join("")}</select></label>`
-        : `<label style="font-size:12px;color:var(--cinza)">${rot}
-            <input id="cv-${ch}" value="${esc(v[ch]||"")}" style="display:block;width:150px"></label>`).join("")}
-      <button style="align-self:flex-end" onclick="salvarCivil('${c.id}')">Guardar</button>
-    </div>
-    ${falta.length?`<p class="meio-sub" style="margin-top:6px">Ainda falta: ${esc(falta.join(", "))} — os documentos saem com
-      <b>____</b> no lugar e é só preencher à caneta.</p>`:""}
-  </details>`;
-}
-async function salvarCivil(cliId){
-  const c=D.cliPorId.get(cliId); if(!c) return;
-  const novo={};
-  for(const [ch] of CAMPOS_CIVIS){
-    const e=document.getElementById("cv-"+ch);
-    const val=e?(e.value||"").trim():"";
-    if(val) novo[ch]= ch==="uf" ? val.toUpperCase().slice(0,2) : val;
-  }
-  c.campos={...(c.campos||{}), civil:novo};
-  try{
-    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({campos:c.campos})});
-  }catch(e){ return aviso("Não consegui guardar os dados civis — tente de novo"); }
-  aviso("Dados civis guardados ✔"); abrirFicha(cliId);
 }
 
 // ── OS DOCUMENTOS DO ESCRITÓRIO ───────────────────────────────────────────
