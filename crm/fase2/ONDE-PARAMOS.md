@@ -14,13 +14,26 @@ repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
 
 ## Em que pé estão as coisas
 
-**App na versão 09.00**, publicada em
+**App na versão 09.02**, publicada em
 https://paulotercini.github.io/marketplaceterciniinss/crm/ (Ctrl+Shift+R para
 ver a versão nova).
 
-**A reforma visual F1 a F8 está inteira no ar**, mais duas auditorias e a
+**A reforma visual F1 a F8 está inteira no ar**, mais duas auditorias, a
 **F9.1** (a Identificação do Cadastro em grade de 12 colunas, com RG, sexo,
-estado civil, profissão, nome da mãe, PIS/NIT e telefones em lista).
+estado civil, profissão, nome da mãe, PIS/NIT e telefones em lista) e a
+**F9.2**, em dois passos:
+
+- a senha do Meu INSS saiu da caixa amarela (amarelo quer dizer prazo) e
+  virou campo da grade, ao lado da pasta do cliente; sem senha, o campo fica
+  tracejado e convida a cadastrar. Morreram o `.id-card.destaque` e o bloco
+  `.id-grid` da aba;
+- CPF e nascimento passaram a aceitar clique no cartão inteiro, como os
+  demais campos — antes só o lápis de 4px abria o editor;
+- `.cad-grade` ganhou `align-items:start`: o cartão alto de Telefones
+  esticava o Endereço vazio para 200px com três palavras no meio;
+- protocolos, parceria e parentes viraram o cartão **Ligações do cliente**;
+- **zero emoji nas cinco divisões** do Cadastro (25 pictogramas saíram).
+  Onde o desenho carregava informação, entrou o SVG do `CAD_IC`.
 
 **Três listas do To Do deixaram de virar caso**, por decisão do Paulo:
 
@@ -74,10 +87,13 @@ pedir.
 
 ## O que vem a seguir (detalhe e esforço em `cowork/04`)
 
-F9.2 (endereço estruturado, **P**) · F9.3 (credenciais fora do amarelo, **P**)
-· F9.4 (Triagem da Amanda, **G**) · F9.5 (CadÚnico e notificações, **M**) ·
-tela da recepção (**M**) · leitura do CNIS anexado (**G**) · trilha de
-ramificações do caso (**M**) · Consulta sem iframe (**G**).
+F9.3 (endereço e RG **capturados** pela primeira vez — não há legado para
+migrar, **M**) · F10 (Triagem da Amanda, **G**) · F11 (terminar a geração de
+documentos, que já existe pela metade, **M**) · F12 (raiz e ramos
+processuais, **G**) · F13 (Consulta sem iframe, **M**).
+
+A ordem acima é a de `cowork/00-PROJETO-CRM-COWORK.md`, escrita depois do
+retrato do banco. A ordem antiga era de reforma visual e ficou para trás.
 
 ## Erros que já custaram caro (não repetir)
 
@@ -113,6 +129,20 @@ ramificações do caso (**M**) · Consulta sem iframe (**G**).
   CSS.
 - **Captura de tela pega o que teste de texto não pega.** Seis `undefined` na
   tela da F9.1 passaram por todos os testes e apareceram na primeira imagem.
+- **E o contrário também.** A imagem da F9.2 não dizia se o cartão novo
+  REAGIA ao clique: só a asserção de interação pegou o CPF que continuava
+  abrindo o editor apenas pelo lápis. Imagem e asserção são duas provas
+  diferentes, e cada entrega precisa das duas.
+- **Grade CSS estica o item baixo até a altura do vizinho alto.** Sem
+  `align-items:start`, o Endereço vazio virava um retângulo de 200px.
+- **Git no diretório conectado não apaga o próprio `index.lock`.** Pelo
+  `device_bash`, todo comando que escreve o índice deixa um lock que o mount
+  se recusa a remover, e o commit seguinte falha com "File exists". O
+  caminho que funciona é o PowerShell na máquina (Windows-MCP), que apaga o
+  lock e roda o git normalmente.
+- **`pytest` não está instalado na máquina do escritório.** As 199 do
+  `tests/` rodam no GitHub Actions; localmente sobra o teste de sintaxe do
+  `<script>` e os arneses de fumaça.
 
 ## Como conferir se está tudo de pé
 
