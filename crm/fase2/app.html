@@ -1114,6 +1114,17 @@
     background:#fff8e1;border:1px solid #e0b955;border-radius:8px;padding:7px 12px}
   /* a fila do endereço não é prazo, e amarelo aqui quer dizer prazo */
   .sem-acao.neutro summary{color:var(--cinza);background:var(--branco);border-color:var(--borda)}
+  /* importação de endereços: as colunas esperadas como lista numerada (a
+     ordem é a informação) e a linha que não será gravada, recuada */
+  .imp-colunas{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:8px 0;padding:0;counter-reset:col}
+  .imp-colunas li{counter-increment:col;font-size:12px;color:var(--cinza);background:var(--fundo);
+    border-radius:6px;padding:3px 9px 3px 6px}
+  .imp-colunas li::before{content:counter(col);display:inline-block;min-width:15px;margin-right:5px;
+    text-align:center;font-size:10px;font-weight:700;color:var(--azul);background:var(--branco);
+    border-radius:4px;padding:1px 0}
+  .imp-linha{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .imp-linha .chip{margin-left:auto}
+  .imp-linha.fora{opacity:.55;background:var(--fundo)}
   .zap-b.interna{align-self:center;max-width:88%;background:#eceef5;
                  border:1px solid #c3c8dc;border-left:4px solid #8764b8}
   .zap-b.interna .autor{color:#5c4b7d}
@@ -1438,7 +1449,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.04 · F9.3 — o endereço capturado pela primeira vez: sete campos no lugar do texto livre, o CEP preenche rua, bairro, cidade e UF por botão, a fila de quem está sem endereço em Cuidar do acervo, e a importação de uma planilha colada</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.05 · F9.3 — o endereço capturado pela primeira vez: sete campos no lugar do texto livre, o CEP preenche rua, bairro, cidade e UF por botão, a fila de quem está sem endereço em Cuidar do acervo, a importação de uma planilha colada, e a qualificação da procuração com a preposição que o logradouro pede</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12418,6 +12429,25 @@ function enderecoMontado(v){
   const rua = [v.logradouro, v.numero?`nº ${v.numero}`:""].filter(Boolean).join(", ");
   return [rua, v.complemento].filter(Boolean).join(", ");
 }
+// "na Rua Rui Barbosa" mas "no Sítio Boa Esperança". A qualificação trazia a
+// preposição fixa em "na", o que erra em todo logradouro masculino — e o
+// rural do escritório é cheio deles. Quem não é nem um nem outro (o cliente
+// que escreve só "Boa Esperança") sai com "em", que serve para os dois.
+const LOGRADOURO_M = ["sitio","largo","loteamento","jardim","parque","conjunto","beco",
+  "bairro","nucleo","assentamento","condominio","distrito","povoado","recanto",
+  "residencial","morro","campo","bosque","vale","ramal","trevo","setor","km","lote",
+  "patio","porto","engenho","caminho","corredor","acesso","anel","balneario","cais",
+  "trecho","viaduto","aeroporto","bloco"];
+const LOGRADOURO_F = ["rua","avenida","av","travessa","estrada","alameda","praca","praça",
+  "rodovia","vila","colonia","ladeira","passagem","servidao","area","quadra","granja",
+  "fazenda","comunidade","regiao","subida","esplanada","marginal","viela","ilha","lagoa",
+  "gleba","linha","descida","circular","transversal","paralela","chacara","sesmaria"];
+function prepEndereco(texto){
+  const primeira = dsa(String(texto||"").trim()).split(/[\s,.]+/)[0] || "";
+  if(LOGRADOURO_F.includes(primeira)) return "na";
+  if(LOGRADOURO_M.includes(primeira)) return "no";
+  return "em";
+}
 // a linha que aparece no campo da grade, com o resto do endereço junto
 function enderecoLinha(c){
   const v = civilDe(c);
@@ -12558,9 +12588,10 @@ function janelaImportarEnderecos(){
   caixa(`<h3>Importar endereços de uma planilha</h3>
     <p class="meio-sub">Uma linha por cliente, colunas nesta ordem, separadas por TAB (Ctrl+C do Excel
       já vem assim) ou por ponto e vírgula. Só o CPF e o logradouro são obrigatórios.</p>
-    <p class="meio-sub" style="font-family:monospace;background:var(--fundo);border-radius:6px;padding:8px">
-      CPF · CEP · logradouro · número · complemento · bairro · cidade · UF</p>
-    <textarea id="imp-txt" rows="8" style="width:100%;resize:vertical;font-family:monospace;font-size:12px"
+    <ol class="imp-colunas">${IMP_COLUNAS.map(x=>`<li>${x==="cpf"?"CPF":x==="cep"?"CEP":x==="uf"?"UF":esc(x)}</li>`).join("")}</ol>
+    ${/* white-space:pre — a planilha colada tem linhas longas, e com quebra
+         automática as colunas viravam sopa e ninguém conferia nada */""}
+    <textarea id="imp-txt" rows="8" style="width:100%;resize:vertical;font-family:monospace;font-size:12px;white-space:pre;overflow-x:auto"
       placeholder="123.456.789-09&#9;15910-000&#9;Rua Rui Barbosa&#9;663&#9;sala 2&#9;Centro&#9;Monte Alto&#9;SP"></textarea>
     <div class="form-linha" style="margin-top:8px">
       <button onclick="conferirImportacao()">Conferir</button>
@@ -12599,12 +12630,14 @@ function conferirImportacao(){
        Confira se as colunas estão separadas por TAB.</p>`
     : `<p class="meio-sub" style="margin-top:10px">${_impEnd.length} linha(s) lidas ·
         <b>${bons}</b> pronta(s) para gravar${jaTem?` · ${jaTem} com endereço já preenchido`:""}.</p>
+      ${/* linha que não vai ser gravada fica recuada: o que a tela precisa
+           responder num relance é "o que vai acontecer quando eu clicar" */""}
       <div style="max-height:34vh;overflow:auto;margin-top:6px">
-        ${_impEnd.map(l=>`<div class="caso" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        ${_impEnd.map(l=>`<div class="caso imp-linha${l.estado==="ok"?"":" fora"}">
           <span class="titulo-caso">${l.cliente?esc(l.cliente.nome):fmtCpf(l.cpf)}</span>
-          <span class="meio-sub">${esc(enderecoMontado(l.dados)||"—")}${
+          <span class="meio-sub">${esc(enderecoMontado(l.dados)||"sem logradouro")}${
             l.dados.cidade?` · ${esc(l.dados.cidade)}${l.dados.uf?"/"+esc(l.dados.uf):""}`:""}</span>
-          <span class="chip ${l.estado==="ok"?"verde":"neutro"}" style="margin-left:auto">${ROTULO[l.estado]}</span>
+          <span class="chip ${l.estado==="ok"?"verde":"neutro"}">${ROTULO[l.estado]}</span>
         </div>`).join("")}
       </div>
       ${jaTem?`<label class="cfg-ck" style="margin-top:8px">
@@ -12760,7 +12793,7 @@ function faltaParaDocs(c){
 // ── OS DOCUMENTOS DO ESCRITÓRIO ───────────────────────────────────────────
 // Texto fiel aos modelos .docx do escritório. Só o contrato e o termo de
 // representação mudam conforme a espécie — o resto é sempre igual.
-const QUALIF = "<NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>";
+const QUALIF = "<NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>";
 const ESCRITORIO_RODAPE = "Rua Rui Barbosa, nº 663, Centro, Monte Alto/SP, CEP 15.910-000, fone (16) 3242-2908 – Cel (16) 98140-9271";
 
 const CONTRATO_PARTES = `CONTRATANTE: ${QUALIF};
@@ -12958,7 +12991,7 @@ Art. 299. Omitir, em documento público ou particular, declaração que devia co
   // do procedimento administrativo (pedido do Paulo — sai fora do "gerar
   // todos", é a folha que o cliente do auxílio por incapacidade assina)
   b31_proc: {rot:"Procuração Adm. — Incapacidade Temporária (B31)", titulo:"PROCURAÇÃO ADMINISTRATIVA", texto:
-`Pelo presente instrumento particular de procuração, <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>, nomeia e constitui seus bastantes procuradores os Drs. PAULO ROBERTO TERCINI FILHO, brasileiro, solteiro, advogado, RG nº 44.086.138-X, CPF nº 224.627.048-09, OAB/SP nº 331.110, NIT nº 11966884529; MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado, RG nº 60.366.107-5, CPF nº 105.950.296-80, OAB/SP nº 464.306, NIT nº 20061810473; e AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, RG nº 44.211.638-X, CPF nº 381.533.048-36, OAB/SP nº 511.528, NIT nº 2725914270-2, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, conferindo-lhes poderes especiais para representá-lo(a) perante o INSS — Instituto Nacional do Seguro Social, em qualquer agência ou unidade administrativa, podendo requerer benefícios por incapacidade, em especial AUXÍLIO POR INCAPACIDADE TEMPORÁRIA (B31), protocolar pedidos, cumprir exigências, peticionar, juntar e retirar documentos, prestar informações, acompanhar requerimentos, ter vistas e tomar ciência de decisões, interpor recursos administrativos, requerer prorrogação, reconsideração e revisão, receber laudos médicos e sociais, nos termos do inciso II, §1º do art. 31 da Lei nº 12.527/2011, requerer e utilizar a senha do GOV.BR e do MEU INSS, podendo praticar todos os demais atos necessários ao perfeito desempenho deste mandato, com cláusula ad judicia et extra e poderes para transigir, desistir, renunciar, dar quitação, fazer acordos e substabelecer, com ou sem reserva de iguais poderes.
+`Pelo presente instrumento particular de procuração, <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>, nomeia e constitui seus bastantes procuradores os Drs. PAULO ROBERTO TERCINI FILHO, brasileiro, solteiro, advogado, RG nº 44.086.138-X, CPF nº 224.627.048-09, OAB/SP nº 331.110, NIT nº 11966884529; MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado, RG nº 60.366.107-5, CPF nº 105.950.296-80, OAB/SP nº 464.306, NIT nº 20061810473; e AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, RG nº 44.211.638-X, CPF nº 381.533.048-36, OAB/SP nº 511.528, NIT nº 2725914270-2, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, conferindo-lhes poderes especiais para representá-lo(a) perante o INSS — Instituto Nacional do Seguro Social, em qualquer agência ou unidade administrativa, podendo requerer benefícios por incapacidade, em especial AUXÍLIO POR INCAPACIDADE TEMPORÁRIA (B31), protocolar pedidos, cumprir exigências, peticionar, juntar e retirar documentos, prestar informações, acompanhar requerimentos, ter vistas e tomar ciência de decisões, interpor recursos administrativos, requerer prorrogação, reconsideração e revisão, receber laudos médicos e sociais, nos termos do inciso II, §1º do art. 31 da Lei nº 12.527/2011, requerer e utilizar a senha do GOV.BR e do MEU INSS, podendo praticar todos os demais atos necessários ao perfeito desempenho deste mandato, com cláusula ad judicia et extra e poderes para transigir, desistir, renunciar, dar quitação, fazer acordos e substabelecer, com ou sem reserva de iguais poderes.
 
 Ademais, DECLARO, sob as penas dos arts. 171 e 299 do Código Penal, que NÃO recebo aposentadoria, pensão por morte ou qualquer outro benefício de caráter previdenciário em regime próprio de previdência social, federal, estadual, municipal, civil ou militar, e que esta declaração é a expressão da verdade.
 
@@ -12982,7 +13015,7 @@ Advogados Contratados`},
   b31_contrato: {rot:"Contrato — Incapacidade Temporária (B31)", titulo:"CONTRATO DE HONORÁRIOS ADVOCATÍCIOS", texto:
 `(Procedimento administrativo de benefício por incapacidade — B31)
 
-CONTRATANTE: <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>.
+CONTRATANTE: <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>.
 
 CONTRATADOS: PAULO ROBERTO TERCINI FILHO, OAB/SP nº 331.110, CPF nº 224.627.048-09; MARCOS HENRIQUE DE PÁDUA AMORIM, OAB/SP nº 464.306, CPF nº 105.950.296-80; e AMANDA CRISTIANE CARNEIRO GARCEZ, OAB/SP nº 511.528, CPF nº 381.533.048-36, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, celular (16) 98140-9271.
 
@@ -13029,7 +13062,10 @@ function preencherModeloDoc(txt, c, especie){
   const mapa={
     "<NOMESEGURADO>": c.nome||lac, "<CPF>": c.cpf?fmtCpf(c.cpf):lac, "<RG>": v.rg||lac,
     "<DATANASCIMENTO>": dn, "<ESTADOCIVIL>": v.estado_civil||lac, "<PROFISSAO>": v.profissao||lac,
-    "<ENDERECO>": c.endereco||lac, "<BAIRRO>": v.bairro||lac, "<CIDADE>": v.cidade||lac,
+    // o marcador traz a preposição junto porque ela depende do logradouro:
+    // "na Rua", "no Sítio", "em Boa Esperança"
+    "<ENDERECO>": c.endereco ? `${prepEndereco(c.endereco)} ${c.endereco}` : `em ${lac}`,
+    "<BAIRRO>": v.bairro||lac, "<CIDADE>": v.cidade||lac,
     // a qualificação escreve "Estado de ___" por extenso. Enquanto a UF era
     // sempre vazia isto nunca apareceu; com a captura da F9.3 gravando "SP",
     // a peça sairia "Estado de SP"
