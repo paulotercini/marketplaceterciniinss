@@ -14,7 +14,7 @@ repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
 
 ## Em que pé estão as coisas
 
-**App na versão 09.07**, publicada em
+**App na versão 09.12**, publicada em
 https://paulotercini.github.io/marketplaceterciniinss/crm/ (Ctrl+Shift+R para
 ver a versão nova).
 
@@ -119,6 +119,24 @@ pedir.
   escrever o CPF no título da tarefa.
 - **De 20.639 andamentos, 22 foram escritos dentro do CRM.** O resto veio do
   To Do (19.068) e dos robôs.
+
+## As fases acabaram
+
+**F11, F12, F13 e F14 estão no ar.** A F11 pôs a peça no padrão do escritório
+(Bookman Old Style 12, espaçamento 1,5, timbre e rodapé) e passou a conferir o
+cadastro antes de gerar, listando o que sairia em branco. A F12 desenhou a raiz
+e os ramos do caso numa árvore só. A F13 acabou com o iframe da Consulta. E a
+F14 nasceu de um pedido do Paulo que não estava na lista, "que o CRM seja tão
+usável quanto o To Do": conclusão em um clique no círculo, desfazer por oito
+segundos e a lista andando no teclado.
+
+**A F13 não reconstruiu o site interno, e isso é decisão.** As calculadoras de
+ruído, IR, contribuição, aposentadoria e RPPS-SP continuam lá, porque copiar
+essas contas obrigaria a corrigir cada mudança de regra duas vezes. Para dentro
+do CRM vieram só as coisas que precisam do cliente aberto: as consultas com o
+CPF da ficha e os quinze anexos da IN 128.
+
+**A suíte tem treze arquivos e 209 asserções**, em `crm/fase2/testes/cadastro`.
 
 ## O que vem a seguir (detalhe e esforço em `cowork/04`)
 
