@@ -1,0 +1,468 @@
+{
+ "indices": {
+  "clientes": [
+   {
+    "nome": "clientes_nome",
+    "unico": false,
+    "colunas": "nome",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "casos": [
+   {
+    "nome": "casos_cliente",
+    "unico": false,
+    "colunas": "cliente_id",
+    "parcial": null,
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "casos_fase",
+    "unico": false,
+    "colunas": "fase",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "andamentos": [
+   {
+    "nome": "andamentos_caso",
+    "unico": false,
+    "colunas": "caso_id, criado_em desc",
+    "parcial": null,
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "andamentos_fila",
+    "unico": false,
+    "colunas": "todo_sync",
+    "parcial": "where origem = 'app'",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "andamentos_de_zap",
+    "unico": true,
+    "colunas": "caso_id, zap_mensagem_id",
+    "parcial": "where zap_mensagem_id is not null",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "andamentos_resposta",
+    "unico": false,
+    "colunas": "responde_a",
+    "parcial": "where responde_a is not null",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "andamentos_origem_unica",
+    "unico": true,
+    "colunas": "caso_id, origem, origem_id",
+    "parcial": "where origem_id is not null",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "andamentos_resposta",
+    "unico": false,
+    "colunas": "responde_a",
+    "parcial": "where responde_a is not null",
+    "arq": "schema_por_em_dia.sql"
+   },
+   {
+    "nome": "andamentos_origem_unica",
+    "unico": true,
+    "colunas": "caso_id, origem, origem_id",
+    "parcial": "where origem_id is not null",
+    "arq": "schema_por_em_dia.sql"
+   }
+  ],
+  "eventos": [
+   {
+    "nome": "eventos_data",
+    "unico": false,
+    "colunas": "data_hora",
+    "parcial": null,
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "eventos_dedupe",
+    "unico": true,
+    "colunas": "caso_id, tipo, data_hora",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "pagamentos": [
+   {
+    "nome": "pagamentos_caso",
+    "unico": false,
+    "colunas": "caso_id",
+    "parcial": null,
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "pagamentos_todo_item",
+    "unico": true,
+    "colunas": "todo_item_id",
+    "parcial": null,
+    "arq": "schema_por_em_dia.sql"
+   },
+   {
+    "nome": "pagamentos_cliente",
+    "unico": false,
+    "colunas": "cliente_id",
+    "parcial": null,
+    "arq": "schema_por_em_dia.sql"
+   }
+  ],
+  "tarefas": [
+   {
+    "nome": "tarefas_prazo",
+    "unico": false,
+    "colunas": "prazo",
+    "parcial": "where not concluida",
+    "arq": "schema.sql"
+   }
+  ],
+  "meu_dia": [
+   {
+    "nome": "meu_dia_unico",
+    "unico": true,
+    "colunas": "colaborador_id, dia, coalesce(caso_id, '00000000-0000-0000-0000-000000000000'",
+    "parcial": ", coalesce(tarefa_id, '00000000-0000-0000-0000-000000000000'))",
+    "arq": "schema.sql"
+   }
+  ],
+  "andamentos_lidos": [
+   {
+    "nome": "lidos_por_and",
+    "unico": false,
+    "colunas": "andamento_id",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "anexos": [
+   {
+    "nome": "anexos_por_caso",
+    "unico": false,
+    "colunas": "caso_id, criado_em desc",
+    "parcial": null,
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "anexos_por_cliente",
+    "unico": false,
+    "colunas": "cliente_id, criado_em desc",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "aposentadorias": [
+   {
+    "nome": "apos_por_cliente",
+    "unico": false,
+    "colunas": "cliente_id, data",
+    "parcial": null,
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "apos_por_data",
+    "unico": false,
+    "colunas": "data",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "conversas": [
+   {
+    "nome": "conversas_fone",
+    "unico": false,
+    "colunas": "telefone, criado_em desc",
+    "parcial": null,
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "conversas_cliente",
+    "unico": false,
+    "colunas": "cliente_id, criado_em desc",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "rotinas": [
+   {
+    "nome": "rotinas_resp",
+    "unico": false,
+    "colunas": "responsavel_id",
+    "parcial": "where ativo",
+    "arq": "schema.sql"
+   }
+  ],
+  "vinculos": [
+   {
+    "nome": "vinculos_ligado",
+    "unico": false,
+    "colunas": "ligado_a",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "sugestoes": [
+   {
+    "nome": "sugestoes_pend",
+    "unico": false,
+    "colunas": "status",
+    "parcial": "where status = 'pendente'",
+    "arq": "schema.sql"
+   }
+  ],
+  "mencoes": [
+   {
+    "nome": "mencoes_caixa",
+    "unico": false,
+    "colunas": "para_id",
+    "parcial": "where lida_em is null",
+    "arq": "schema.sql"
+   }
+  ],
+  "leads": [
+   {
+    "nome": "leads_etapa",
+    "unico": false,
+    "colunas": "etapa",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "zap_conversas": [
+   {
+    "nome": "zap_conversas_chave",
+    "unico": true,
+    "colunas": "chave",
+    "parcial": null,
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "zap_conversas_fila",
+    "unico": false,
+    "colunas": "status, ultima_em desc",
+    "parcial": null,
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "zap_conversas_cli",
+    "unico": false,
+    "colunas": "cliente_id",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "zap_mensagens": [
+   {
+    "nome": "zap_msg_conversa",
+    "unico": false,
+    "colunas": "conversa_id, seq",
+    "parcial": null,
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "zap_msg_fila",
+    "unico": false,
+    "colunas": "seq",
+    "parcial": "where status = 'fila'",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "zap_msg_aviso_unico",
+    "unico": true,
+    "colunas": "aviso_chave, aviso_ref",
+    "parcial": "where aviso_chave is not null",
+    "arq": "schema.sql"
+   }
+  ],
+  "zap_transferencias": [
+   {
+    "nome": "zap_transf_conversa",
+    "unico": false,
+    "colunas": "conversa_id, em desc",
+    "parcial": null,
+    "arq": "schema.sql"
+   }
+  ],
+  "andamento_tarefas": [
+   {
+    "nome": "atarefas_minhas",
+    "unico": false,
+    "colunas": "colaborador_id, lembrar_em",
+    "parcial": "where concluida_em is null",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "atarefas_caso",
+    "unico": false,
+    "colunas": "caso_id, lembrar_em",
+    "parcial": "where concluida_em is null",
+    "arq": "schema.sql"
+   }
+  ],
+  "coletas": [
+   {
+    "nome": "coletas_pendentes",
+    "unico": false,
+    "colunas": "fonte, criado_em desc",
+    "parcial": "where aplicada_em is null",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "coletas_pendentes",
+    "unico": false,
+    "colunas": "fonte, criado_em desc",
+    "parcial": "where aplicada_em is null",
+    "arq": "schema_por_em_dia.sql"
+   }
+  ],
+  "lembretes": [
+   {
+    "nome": "lembretes_do_cliente",
+    "unico": false,
+    "colunas": "cliente_id",
+    "parcial": "where ativo",
+    "arq": "schema_por_em_dia.sql"
+   },
+   {
+    "nome": "lembretes_vencendo",
+    "unico": false,
+    "colunas": "proximo_em",
+    "parcial": "where ativo",
+    "arq": "schema_por_em_dia.sql"
+   }
+  ],
+  "lembrete_avisos": [
+   {
+    "nome": "avisos_do_lembrete",
+    "unico": false,
+    "colunas": "lembrete_id, em desc",
+    "parcial": null,
+    "arq": "schema_por_em_dia.sql"
+   }
+  ]
+ },
+ "politicas": {
+  "storage.objects": [
+   {
+    "nome": "fundos_ler",
+    "acao": "select",
+    "papel": "public",
+    "regra": "using (bucket_id = 'fundos')",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "fundos_enviar",
+    "acao": "insert",
+    "papel": "authenticated",
+    "regra": "with check (bucket_id = 'fundos')",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "fundos_apagar",
+    "acao": "delete",
+    "papel": "authenticated",
+    "regra": "using (bucket_id = 'fundos')",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "anexos_ler",
+    "acao": "select",
+    "papel": "authenticated",
+    "regra": "using (bucket_id = 'anexos')",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "anexos_enviar",
+    "acao": "insert",
+    "papel": "authenticated",
+    "regra": "with check (bucket_id = 'anexos')",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "anexos_apagar",
+    "acao": "delete",
+    "papel": "authenticated",
+    "regra": "using (bucket_id = 'anexos')",
+    "arq": "schema.sql"
+   }
+  ],
+  "tarefas": [
+   {
+    "nome": "tarefas_visiveis",
+    "acao": "select",
+    "papel": "authenticated",
+    "regra": "using (particular_de is null or particular_de = (select id from colaboradores where auth_id = auth.uid()))",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "tarefas_escrita",
+    "acao": "insert",
+    "papel": "authenticated",
+    "regra": "with check (true)",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "tarefas_update",
+    "acao": "update",
+    "papel": "authenticated",
+    "regra": "using (particular_de is null or particular_de = (select id from colaboradores where auth_id = auth.uid()))",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "tarefas_delete",
+    "acao": "delete",
+    "papel": "authenticated",
+    "regra": "using (particular_de is null or particular_de = (select id from colaboradores where auth_id = auth.uid()))",
+    "arq": "schema.sql"
+   }
+  ],
+  "coletas": [
+   {
+    "nome": "coletas_autenticados",
+    "acao": "all",
+    "papel": "authenticated",
+    "regra": "using (true) with check (true)",
+    "arq": "schema.sql"
+   },
+   {
+    "nome": "coletas_autenticados",
+    "acao": "all",
+    "papel": "authenticated",
+    "regra": "using (true) with check (true)",
+    "arq": "schema_por_em_dia.sql"
+   }
+  ],
+  "lembretes": [
+   {
+    "nome": "lembretes_autenticados",
+    "acao": "all",
+    "papel": "authenticated",
+    "regra": "using (true) with check (true)",
+    "arq": "schema_por_em_dia.sql"
+   }
+  ],
+  "lembrete_avisos": [
+   {
+    "nome": "lembrete_avisos_autenticados",
+    "acao": "all",
+    "papel": "authenticated",
+    "regra": "using (true) with check (true)",
+    "arq": "schema_por_em_dia.sql"
+   }
+  ]
+ },
+ "rls": [
+  "coletas",
+  "crps_segredo",
+  "integracao_token",
+  "lembrete_avisos",
+  "lembretes"
+ ]
+}
