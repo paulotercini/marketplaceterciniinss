@@ -1322,6 +1322,15 @@
   .aviso-bt{border:1px solid #5A6170;background:none;color:#8FB6F5;font:inherit;
     font-size:12.5px;font-weight:700;border-radius:6px;padding:3px 11px;cursor:pointer}
   .aviso-bt:hover{background:#2A2F3A;color:#B7D0FA}
+  /* o cursor do teclado: contorno, não fundo — o cartão já usa fundo para
+     dizer outras coisas (arrastando, exigência, importante) */
+  .cartao.no-cursor{outline:2px solid var(--azul);outline-offset:1px}
+  .atalhos{display:grid;grid-template-columns:auto 1fr;gap:7px 12px;margin-top:10px;align-items:center}
+  .atalhos>div{display:contents}
+  .atalhos kbd{font:inherit;font-size:12px;font-weight:700;color:var(--texto);
+    background:var(--fundo);border:1px solid var(--borda);border-bottom-width:2px;
+    border-radius:5px;padding:2px 8px;white-space:nowrap;text-align:center}
+  .atalhos span{font-size:13px;color:var(--cinza)}
   /* Tela estreita com a ficha aberta: a lista sai de cena e a ficha ocupa
      o resto — o menu fica (retrátil pelo ☰). Substitui o antigo corte em
      980px que sumia com o menu inteiro. Entra ANTES do bloco do celular
@@ -1520,7 +1529,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.10 · F14 — o ritmo do To Do: concluir a tarefa em um clique no círculo, com a faixa de desfazer por oito segundos, e a janela de escrever o que foi feito ao lado, para quem quiser</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.11 · F14 — o ritmo do To Do: concluir em um clique no círculo com desfazer por oito segundos, e a lista andando no teclado (setas, Enter abre, Espaço conclui, N acrescenta, ? mostra os atalhos)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3822,6 +3831,7 @@ function grupoClientes(casosSel){
 }
 
 function ligarCartoes(){
+  pintarCursor();                     // o cursor do teclado sobrevive ao render
   document.querySelectorAll(".cartao[data-cli]").forEach(el=>{
     el.onclick=e=>{
       if(e.target.dataset.estrela!==undefined) return;
@@ -14174,6 +14184,10 @@ document.addEventListener("keydown",e=>{
   if(e.key==="/" && !e.ctrlKey && !e.altKey && !e.metaKey && !digitando() && busca){
     e.preventDefault(); return irParaPesquisa();
   }
+  // F14 · a lista anda com o teclado, mas só com a ficha fechada: dentro dela
+  // as setas pertencem ao texto que se está escrevendo
+  if(!digitando() && !clienteAberto && atalhoDeLista(e)) return;
+  if(e.key==="?" && !digitando()){ e.preventDefault(); return janelaAtalhos(); }
   if(e.key==="Escape"){
     // "aberto" é ter conteúdo e não estar escondido — caixa() abre com
     // display:"" e o teste antigo ("block") deixava o Esc passar reto e
@@ -14186,6 +14200,73 @@ document.addEventListener("keydown",e=>{
     if(clienteAberto) return fecharFicha();
   }
 });
+// ══════════════════════════════════════════════════════════════════════════
+// F14 · O TECLADO, COMO NO TO DO
+// ══════════════════════════════════════════════════════════════════════════
+// Trabalhar a fila do dia exigia mouse para tudo. Agora a lista do meio anda
+// com as setas, Enter abre a ficha, Espaço conclui a tarefa daquele caso e N
+// põe o cursor na linha de acrescentar. Só vale com a ficha FECHADA: dentro
+// dela as setas pertencem ao texto que se está escrevendo.
+let cursorLista = -1;
+function cartoesDaLista(){
+  return [...document.querySelectorAll("#conteudo-meio .cartao[data-cli]")];
+}
+function pintarCursor(){
+  const cs = cartoesDaLista();
+  cs.forEach((el,i)=>el.classList.toggle("no-cursor", i===cursorLista));
+  const alvo = cs[cursorLista];
+  if(alvo) alvo.scrollIntoView({block:"nearest"});
+}
+function moverCursor(passo){
+  const cs = cartoesDaLista();
+  if(!cs.length) return false;
+  cursorLista = cursorLista < 0 ? (passo > 0 ? 0 : cs.length-1)
+                                : Math.max(0, Math.min(cs.length-1, cursorLista + passo));
+  pintarCursor();
+  return true;
+}
+// a tarefa daquele caso que é MINHA e está aberta. Uma só: com duas, o Espaço
+// estaria escolhendo por mim qual das duas dar por feita.
+function minhaTarefaDoCartao(cliId){
+  const ks = D.casosDoCliente.get(cliId) || [];
+  const minhas = ks.flatMap(k=>(D.tarefasPorCaso.get(k.id)||[])
+    .filter(t=>!t.concluida_em && t.colaborador_id===eu.id));
+  return minhas.length===1 ? minhas[0] : null;
+}
+function atalhoDeLista(e){
+  if(e.ctrlKey || e.metaKey || e.altKey) return false;
+  if(e.key==="ArrowDown"){ e.preventDefault(); return moverCursor(1); }
+  if(e.key==="ArrowUp"){ e.preventDefault(); return moverCursor(-1); }
+  if(e.key==="n" || e.key==="N"){
+    const inp = document.getElementById("add-nome");
+    if(!inp) return false;
+    e.preventDefault(); inp.focus(); inp.select(); return true;
+  }
+  const cs = cartoesDaLista();
+  if(!cs.length || cursorLista < 0 || !cs[cursorLista]) return false;
+  const cliId = cs[cursorLista].dataset.cli;
+  if(e.key==="Enter"){ e.preventDefault(); abrirFicha(cliId); return true; }
+  if(e.key===" "){
+    e.preventDefault();
+    const t = minhaTarefaDoCartao(cliId);
+    if(!t){ aviso("Sem tarefa sua em aberto neste caso, ou há mais de uma — abra a ficha", false); return true; }
+    concluirDeVez(t.id);
+    return true;
+  }
+  return false;
+}
+function janelaAtalhos(){
+  const linhas=[["↑ ↓","andar pelos cartões da lista"],["Enter","abrir a ficha do cartão"],
+    ["Espaço","concluir a sua tarefa daquele caso"],["N","escrever na linha de acrescentar"],
+    ["/ ou Ctrl+F","ir para a pesquisa"],["Esc","fechar o que estiver aberto"],
+    ["?","esta lista"]];
+  caixa(`<h3>Atalhos de teclado</h3>
+    <p class="meio-sub">Valem na lista, com a ficha fechada. Dentro de um campo de texto
+      o teclado é do texto.</p>
+    <div class="atalhos">${linhas.map(([k,r])=>
+      `<div><kbd>${esc(k)}</kbd><span>${esc(r)}</span></div>`).join("")}</div>`);
+}
+
 // sem <form>, o Enter precisa ser ligado à mão nos dois campos do login
 ["login-email","login-senha"].forEach(function(id){
   var el=document.getElementById(id);

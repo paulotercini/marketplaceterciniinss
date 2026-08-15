@@ -1,6 +1,6 @@
 # Arneses de fumaça do Cadastro e das fases F10 a F14
 
-Onze arquivos que sobem o `app.html` num servidor local, interceptam o Supabase
+Doze arquivos que sobem o `app.html` num servidor local, interceptam o Supabase
 e o ViaCEP, e trabalham com quatro clientes **inventados**. Nenhum dado real de
 cliente passa por aqui, e nenhuma chamada sai para a internet.
 
@@ -9,7 +9,8 @@ cd crm/fase2/testes/cadastro
 npm i playwright          # só na primeira vez
 cp ../../app.html .       # o arnês lê o app ao lado dele
 node triagem.js && node avisos.js && node documentos.js
-node trilha.js && node concluir.js && node endereco.js
+node trilha.js && node concluir.js && node teclado.js
+node endereco.js
 node fila.js && node importar.js
 node interacao.js && node emoji.js && node fumaca.js
 ```
@@ -27,6 +28,7 @@ node interacao.js && node emoji.js && node fumaca.js
 | `documentos.js` | nenhum marcador sai literal, a folha no padrão do escritório, e a conferência antes de gerar com lacuna | 25 |
 | `trilha.js` | a raiz e os ramos do caso numa árvore só, e o marcador acompanhado gravando | 11 |
 | `concluir.js` | conclusão em um clique sem janela, o histórico continuando, e o desfazer que reabre | 15 |
+| `teclado.js` | setas, Enter, Espaço, N e ?, e o teclado devolvido ao texto quando se está escrevendo | 17 |
 
 Cada um sai com código 1 quando alguma asserção falha, então servem em CI.
 
@@ -68,5 +70,9 @@ mexa nele, não em cada arnês.
 - **`innerText` devolve MAIÚSCULA onde o CSS tem `text-transform`.** Comparar
   com `/Recurso/` acusa defeito que não existe. Use `/recurso/i`.
 
-Três das quatro últimas falhas de asserção foram do arnês, não do app. Antes
+- **`filtroColab` nasce ligado** em quem tem caso atribuído, e esconde da
+  lista os clientes sem atribuição. É o app funcionando; no arnês, zere o
+  filtro antes de contar cartões.
+
+Quatro das cinco últimas falhas de asserção foram do arnês, não do app. Antes
 de mexer no código por causa de um teste vermelho, confira a expectativa.
