@@ -7,8 +7,14 @@
 -- POR QUE ISTO EXISTE: o SQL Editor roda o arquivo inteiro como UMA transação.
 -- Se qualquer linha der erro, TUDO volta atrás — e a tela mostra só o erro
 -- daquela linha, dando a impressão de que "rodou quase todo". Foi o que
--- aconteceu com o schema_por_em_dia.sql: a sincronização seguiu recusando as
--- 2.621 parcelas com 42P10 (falta o índice único de pagamentos.todo_item_id).
+-- pode acontecer com o schema_por_em_dia.sql.
+--
+-- E há um segundo caso, que foi o que travou as 2.621 parcelas de verdade: o
+-- índice pode EXISTIR e ainda assim não servir. Criado como parcial (com
+-- `where todo_item_id is not null`), o Postgres não o infere no
+-- `ON CONFLICT (todo_item_id)` que o PostgREST monta — e a importação segue
+-- recusada com 42P10 sem nenhum erro aparecer no SQL Editor. Por isso a
+-- conferência abaixo checa as duas coisas: se existe e se NÃO é parcial.
 --
 -- Como usar o resultado: o que aparecer ❌ é o que ainda precisa rodar. O
 -- bloco mínimo que destrava as parcelas está no fim deste arquivo, comentado.
@@ -19,9 +25,16 @@ with esperado(secao, item, existe) as (
          exists(select 1 from information_schema.columns
                  where table_name='pagamentos' and column_name='todo_item_id')
   union all
-  select '12 · Pagamentos do To Do', 'índice único pagamentos_todo_item  ← é ele que falta hoje',
+  select '12 · Pagamentos do To Do', 'índice pagamentos_todo_item existe',
          exists(select 1 from pg_indexes
                  where tablename='pagamentos' and indexname='pagamentos_todo_item')
+  union all
+  -- não basta existir: PARCIAL (com WHERE) o PostgREST não consegue usar no
+  -- ON CONFLICT, e a importação segue recusada com 42P10
+  select '12 · Pagamentos do To Do', 'índice pagamentos_todo_item NÃO é parcial  ← foi isto que travou',
+         exists(select 1 from pg_indexes
+                 where tablename='pagamentos' and indexname='pagamentos_todo_item'
+                   and indexdef not ilike '%where%')
   -- ── 13. o dinheiro é do cliente ─────────────────────────────────────────
   union all
   select '13 · Parcela do cliente', 'pagamentos.cliente_id',
@@ -81,5 +94,6 @@ select case when existe then '✅ ok' else '❌ FALTA' end as situacao,
 -- não faz mal.
 --
 -- alter table pagamentos add column if not exists todo_item_id text;
+-- drop index if exists pagamentos_todo_item;
 -- create unique index if not exists pagamentos_todo_item
---   on pagamentos (todo_item_id) where todo_item_id is not null;
+--   on pagamentos (todo_item_id);

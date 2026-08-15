@@ -240,8 +240,17 @@ alter table casos add column if not exists pje_link text;
 -- `pagamentos`; o id do item no Graph é a trava de dedupe (o upsert
 -- atualiza a MESMA linha quando o item é concluído no To Do).
 alter table pagamentos add column if not exists todo_item_id text;
+-- O ÍNDICE NÃO PODE SER PARCIAL. Nasceu com `where todo_item_id is not null`
+-- e o banco recusou as 2.621 parcelas por dias a fio com 42P10 ("no unique or
+-- exclusion constraint matching the ON CONFLICT specification") — mesmo com o
+-- índice criado sem erro nenhum. O motivo: o PostgREST monta
+-- `ON CONFLICT (todo_item_id) DO UPDATE`, sem repetir o WHERE, e o Postgres
+-- só infere um índice PARCIAL quando o comando traz o mesmo predicado. Índice
+-- comum resolve: NULL não conflita com NULL no Postgres, então as parcelas
+-- lançadas à mão no app (sem todo_item_id) continuam convivendo.
+drop index if exists pagamentos_todo_item;
 create unique index if not exists pagamentos_todo_item
-  on pagamentos (todo_item_id) where todo_item_id is not null;
+  on pagamentos (todo_item_id);
 
 
 -- ── 13. O dinheiro é do CLIENTE, não de um caso ──────────────────────────
