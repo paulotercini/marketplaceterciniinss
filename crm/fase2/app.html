@@ -1125,6 +1125,43 @@
   .imp-linha{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   .imp-linha .chip{margin-left:auto}
   .imp-linha.fora{opacity:.55;background:var(--fundo)}
+  /* ── F10 · TRIAGEM ──────────────────────────────────────────────────────
+     Oito passos numerados. O número não é enfeite: a ordem é a da conferência,
+     e a conclusão só faz sentido depois dos sete. */
+  .tri-passo{border-top:1px solid var(--borda-suave);padding:13px 0}
+  .tri-lista>.tri-passo:first-child{border-top:0;padding-top:4px}
+  .tri-cab{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+  .tri-n{flex:none;width:22px;height:22px;border-radius:50%;background:var(--fundo);
+    color:var(--cinza);font-size:11px;font-weight:700;display:inline-flex;
+    align-items:center;justify-content:center;margin-top:1px}
+  .tri-passo.feito .tri-n{background:var(--azul);color:#fff}
+  .tri-tit{flex:1;min-width:180px;display:flex;flex-direction:column;gap:1px}
+  .tri-tit b{font-size:14.5px}
+  .tri-dica{font-size:12px;color:var(--cinza)}
+  .tri-bt{display:flex;gap:5px;flex-wrap:wrap}
+  .tri-e{font:inherit;font-size:11.5px;font-weight:600;cursor:pointer;color:var(--cinza);
+    background:var(--branco);border:1px solid var(--borda);border-radius:14px;padding:3px 11px}
+  .tri-e:hover{border-color:var(--cinza-claro)}
+  .tri-e.ok.on{background:var(--verde-f);border-color:#BFE0CD;color:var(--verde)}
+  .tri-e.atencao.on{background:var(--laranja-f);border-color:#EBC79E;color:var(--laranja)}
+  .tri-e.pendente.on{background:var(--fundo);border-color:var(--cinza-claro);color:var(--texto)}
+  .tri-leitura{font-size:12.5px;color:var(--cinza);margin:7px 0 0 32px;padding-left:9px;
+    border-left:2px solid var(--borda)}
+  .tri-leitura.ok{border-color:#BFE0CD}
+  .tri-leitura.alerta{border-color:#EBC79E;color:var(--laranja)}
+  .tri-det{display:block;color:var(--cinza);font-size:12px;margin-top:2px}
+  .tri-nota{width:100%;margin:7px 0 0 32px;max-width:calc(100% - 32px);resize:vertical;
+    border:1px solid var(--borda);border-radius:8px;padding:6px 9px;font:inherit;font-size:13px;
+    background:var(--branco);color:var(--texto)}
+  .tri-nota:focus{border-color:var(--azul);outline:none}
+  .tri-assin{font-size:11px;color:var(--cinza-claro);margin:3px 0 0 32px}
+  .tri-prox{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0 32px}
+  .tri-p{font:inherit;font-size:12px;font-weight:600;cursor:pointer;color:var(--cinza);
+    background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:5px 11px}
+  .tri-p:hover{border-color:var(--azul);color:var(--azul)}
+  .tri-p.on{background:var(--azul);border-color:var(--azul);color:#fff}
+  .app.celular .tri-leitura,.app.celular .tri-nota,
+  .app.celular .tri-assin,.app.celular .tri-prox{margin-left:0;max-width:100%}
   .zap-b.interna{align-self:center;max-width:88%;background:#eceef5;
                  border:1px solid #c3c8dc;border-left:4px solid #8764b8}
   .zap-b.interna .autor{color:#5c4b7d}
@@ -1449,7 +1486,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.05 · F9.3 — o endereço capturado pela primeira vez: sete campos no lugar do texto livre, o CEP preenche rua, bairro, cidade e UF por botão, a fila de quem está sem endereço em Cuidar do acervo, a importação de uma planilha colada, e a qualificação da procuração com a preposição que o logradouro pede</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.06 · F10 — a Triagem do cliente: os oito passos da conferência, cinco deles respondidos pelo próprio CRM (processo judicial anterior, recurso no CRPS, CadÚnico, benefício ativo e protocolos), cada marcação com autoria e data, e a conclusão com o próximo passo recomendado</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7557,6 +7594,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
       ${SUB_CAD.map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
         v==="anotacoes"&&semCaso?` <span class="meio-sub">•</span>`:""}</button>`).join("")}
     </div>
+    ${cd==="triagem" ? painelTriagemFicha(c, ks) : ""}
     ${cd==="anotacoes" ? caixaAtendimento(c, ks) : ""}
     ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) : ""}
     ${cd==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}
@@ -7621,9 +7659,188 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
 // as divisões do Cadastro, na ordem em que o atendimento acontece
 // ordem da especificação F9 §2 — a do atendimento real. Mensagens fica no
 // fim: saiu do menu de cima na 08.99 e não é passo do atendimento.
-const SUB_CAD = [["identificacao","Identificação"],["anotacoes","Anotações"],
+const SUB_CAD = [["identificacao","Identificação"],["triagem","Triagem"],["anotacoes","Anotações"],
                  ["documentos","Documentos"],["consulta","Consulta"],["mensagens","Mensagens"]];
 function irSubCad(qual){ subCad = qual; guardar("crm_subcad", qual); repintarFicha(); }
+
+// ══════════════════════════════════════════════════════════════════════════
+// F10 · TRIAGEM — os oito passos, com o que o CRM já sabe responder sozinho
+// ══════════════════════════════════════════════════════════════════════════
+// A diferença entre checklist e triagem é quem responde. Cinco dos oito
+// passos o sistema lê do que já tem no banco: processo judicial, recurso no
+// CRPS, CadÚnico, benefício ativo e protocolos. Quem atende confirma ou
+// contraria, e o que ele escreve fica com autoria e data.
+//
+// ONDE MORA: `clientes.triagem` quando o banco tem a coluna, `campos.triagem`
+// quando não tem — o mesmo caminho da F9.1, para a tela funcionar antes e
+// depois da migração.
+const TRIAGEM_PASSOS = [
+  ["cnis",       "CNIS",                  "conferido, sem vínculo faltando nem competência abaixo do mínimo"],
+  ["indicadores","Indicadores e pendências","os indicadores do extrato tratados, ou RAC aberta pelo Anexo certo"],
+  ["judicial",   "Ação judicial anterior", "litispendência, coisa julgada e averbação pendente — é o que destrava benefício"],
+  ["crps",       "Recurso no CRPS",       "recurso administrativo em curso ou já decidido"],
+  ["cadunico",   "CadÚnico",              "obrigatório no BPC, renovação a cada 2 anos"],
+  ["beneficio",  "Benefício ativo",       "o que o cliente já recebe, e se acumula (art. 24 da EC 103)"],
+  ["requerimento","Requerimentos anteriores","prévio requerimento (Tema 350) e a conformidade com o Tema 1124"],
+  ["conclusao",  "Conclusão",             "o que o escritório decidiu, e o próximo passo"],
+];
+const TRIAGEM_ESTADOS = [["ok","sem pendência"],["atencao","atenção"],["pendente","não conferido"]];
+const TRIAGEM_PROXIMO = [["inicial","Pronto para a inicial judicial"],
+                         ["inss","Pronto para o protocolo no INSS"],
+                         ["aguardando","Aguardando (falta o que está anotado acima)"]];
+function triagemDe(c){
+  return (c && (c.triagem || ((c.campos||{}).triagem))) || {};
+}
+// a leitura automática de cada passo: o que o CRM já sabe, sem perguntar
+function triagemLeitura(passo, c, ks){
+  const vivos = (ks||[]).filter(k=>k.fase!=="encerrado");
+  if(passo==="judicial"){
+    const jud = (ks||[]).filter(k=>k.processo || (k.processos||[]).length || k.fase==="judicial"
+      || (k.datajud && (k.datajud.ultimo || (k.datajud.instancias||[]).length)));
+    return jud.length
+      ? {cor:"alerta", txt:`${jud.length} caso(s) com processo judicial — confira litispendência e coisa julgada`,
+         det: jud.map(k=>tituloCaso(k)+(k.processo?` · ${fmtProc(k.processo)}`:"")).join(" · ")}
+      : {cor:"neutro", txt:"nenhum processo judicial no CRM — pergunte ao cliente se já processou o INSS antes"};
+  }
+  if(passo==="crps"){
+    const nups = (ks||[]).flatMap(k=>crpsNups(k));
+    return nups.length
+      ? {cor:"alerta", txt:`${nups.length} recurso(s) no Conselho`, det: nups.map(formatarNup).join(" · ")}
+      : {cor:"neutro", txt:"nenhum recurso administrativo registrado"};
+  }
+  if(passo==="cadunico"){
+    const loas = (ks||[]).filter(k=>ehLoas(k));
+    if(!loas.length) return {cor:"neutro", txt:"nenhum caso de BPC/LOAS — o CadÚnico não é exigido aqui"};
+    const comData = loas.filter(k=>k.cadunico);
+    if(!comData.length) return {cor:"alerta", txt:"caso de BPC sem a data do CadÚnico anotada"};
+    const venc = comData.map(k=>renovaCadunico(k)).filter(Boolean).sort()[0];
+    const d = venc ? diasAte(venc) : null;
+    return d==null ? {cor:"neutro", txt:"CadÚnico anotado"}
+      : d<0 ? {cor:"alerta", txt:`CadÚnico venceu em ${fmt(venc)}, há ${-d} dias`}
+      : d<=90 ? {cor:"alerta", txt:`CadÚnico vence em ${fmt(venc)}, faltam ${d} dias`}
+      : {cor:"ok", txt:`CadÚnico em dia até ${fmt(venc)}`};
+  }
+  if(passo==="beneficio"){
+    const pagando = (ks||[]).filter(k=>k.fase==="pagamento" || k.nb);
+    const apos = c.aposentado===1 || c.aposentado===true;
+    if(!pagando.length && !apos)
+      return {cor:"neutro", txt:"nenhum benefício ativo registrado no CRM"};
+    return {cor:"alerta",
+      txt:`${apos?"cliente marcado como aposentado":""}${apos&&pagando.length?" · ":""}${
+        pagando.length?`${pagando.length} caso(s) com NB ou em pagamento`:""} — confira a acumulação do art. 24 da EC 103`,
+      det: pagando.map(k=>tituloCaso(k)+(k.nb?` · NB ${esc(k.nb)}`:"")).join(" · ")};
+  }
+  if(passo==="requerimento"){
+    const prots = [...new Set((ks||[]).flatMap(k=>k.protocolos||[]))];
+    return prots.length
+      ? {cor:"ok", txt:`${prots.length} protocolo(s) no INSS — há prévio requerimento (Tema 350)`,
+         det: prots.join(" · ")}
+      : {cor:"alerta", txt:"nenhum protocolo do INSS no CRM — sem prévio requerimento a ação é extinta (Tema 350)"};
+  }
+  if(passo==="cnis"){
+    const arqs = (D.anexos||[]).filter(a=>/cnis|extrato/i.test(a.nome||""));
+    return arqs.length
+      ? {cor:"ok", txt:`${arqs.length} arquivo(s) de CNIS anexados`, det: arqs.map(a=>a.nome).join(" · ")}
+      : {cor:"neutro", txt:"nenhum arquivo com CNIS no nome, entre os anexos deste cliente"};
+  }
+  if(passo==="indicadores")
+    return {cor:"neutro", txt:"leitura do extrato, ainda à mão — o CRM não lê o CNIS"};
+  if(passo==="conclusao"){
+    const t = triagemDe(c);
+    const feitos = TRIAGEM_PASSOS.slice(0,7).filter(([k])=>(t[k]||{}).estado && t[k].estado!=="pendente").length;
+    return feitos===7 ? {cor:"ok", txt:"os sete passos anteriores estão conferidos"}
+      : {cor:"neutro", txt:`${feitos} de 7 passos conferidos antes desta conclusão`};
+  }
+  return {cor:"neutro", txt:""};
+}
+function painelTriagemFicha(c, ks){
+  const t = triagemDe(c);
+  const feitos = TRIAGEM_PASSOS.filter(([k])=>(t[k]||{}).estado && t[k].estado!=="pendente").length;
+  const prox = (t.conclusao||{}).proximo || "";
+  return `<div class="cad-cartao">
+    <div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Triagem do cliente
+      <span class="cad-tit-sub">o que precisa estar conferido antes de protocolar ou distribuir</span>
+      <span class="cad-cont${feitos===TRIAGEM_PASSOS.length?" cad-ok":""}">${feitos} de ${TRIAGEM_PASSOS.length} conferidos</span></div>
+    ${/* contêiner próprio: com os passos soltos dentro do cartão, o
+         :first-of-type do CSS cairia no título, não no passo 1 */""}
+    <div class="tri-lista">
+    ${TRIAGEM_PASSOS.map(([chave,rot,dica],i)=>{
+      const p = t[chave] || {};
+      const l = triagemLeitura(chave, c, ks);
+      const quem = p.quem && D.colPorId.get(p.quem);
+      return `<div class="tri-passo${p.estado&&p.estado!=="pendente"?" feito":""}">
+        <div class="tri-cab">
+          <span class="tri-n">${i+1}</span>
+          <div class="tri-tit"><b>${esc(rot)}</b><span class="tri-dica">${esc(dica)}</span></div>
+          <div class="tri-bt">${TRIAGEM_ESTADOS.map(([e,r])=>
+            `<button class="tri-e ${e}${p.estado===e?" on":""}"
+              onclick="marcarTriagem('${c.id}','${chave}','${e}')">${r}</button>`).join("")}</div>
+        </div>
+        <div class="tri-leitura ${l.cor}">${esc(l.txt)}${
+          l.det?`<span class="tri-det">${esc(l.det)}</span>`:""}</div>
+        ${chave==="conclusao"?`
+        <div class="tri-prox">
+          ${TRIAGEM_PROXIMO.map(([v,r])=>`<button class="tri-p${prox===v?" on":""}"
+            onclick="marcarProximo('${c.id}','${v}')">${r}</button>`).join("")}
+        </div>`:""}
+        <textarea class="tri-nota" id="tri-${chave}" rows="2"
+          placeholder="${chave==="conclusao"?"o que foi decidido e por quê":"o que você encontrou, e o que falta"}"
+          onblur="salvarNotaTriagem('${c.id}','${chave}')">${esc(p.nota||"")}</textarea>
+        ${p.em?`<div class="tri-assin">${quem?esc(quem.nome):"alguém"} · ${fmt(p.em)}</div>`:""}
+      </div>`;
+    }).join("")}
+    </div>
+    <p class="cad-nota">A leitura em cinza é o que o CRM já sabe do próprio banco. Ela não substitui a
+      conferência: o que vale é o que você marcar e escrever, que fica com o seu nome e a data.</p>
+  </div>`;
+}
+async function salvarTriagem(cliId, triagem){
+  const c = D.cliPorId.get(cliId); if(!c) return false;
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({triagem})});
+    c.triagem = triagem;
+    return true;
+  }catch(e){
+    const msg = String((e && e.message) || e);
+    if(!/PGRST204|42703|does not exist|schema cache/i.test(msg)) return false;
+    c.campos = {...(c.campos||{}), triagem};
+    try{
+      await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({campos:c.campos})});
+      return true;
+    }catch(e2){ return false; }
+  }
+}
+// marcar de novo o mesmo estado desmarca: dá para voltar atrás sem apagar a nota
+async function marcarTriagem(cliId, passo, estado){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const t = {...triagemDe(c)};
+  const atual = t[passo] || {};
+  t[passo] = {...atual, estado: atual.estado===estado ? "" : estado,
+              em: hoje(), quem: eu.id};
+  if(!await salvarTriagem(cliId, t)) return aviso("Não consegui guardar a triagem — tente de novo");
+  repintarFicha();
+}
+async function salvarNotaTriagem(cliId, passo){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const el = document.getElementById("tri-"+passo); if(!el) return;
+  const nota = (el.value||"").trim();
+  const t = {...triagemDe(c)};
+  const atual = t[passo] || {};
+  if((atual.nota||"") === nota) return;              // sair do campo sem mexer não grava
+  t[passo] = {...atual, nota, em: hoje(), quem: eu.id};
+  if(!await salvarTriagem(cliId, t)) return aviso("Não consegui guardar a anotação — tente de novo");
+  aviso("Triagem guardada", false);
+}
+async function marcarProximo(cliId, valor){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const t = {...triagemDe(c)};
+  const atual = t.conclusao || {};
+  t.conclusao = {...atual, proximo: atual.proximo===valor ? "" : valor, em: hoje(), quem: eu.id};
+  if(!await salvarTriagem(cliId, t)) return aviso("Não consegui guardar — tente de novo");
+  repintarFicha();
+}
 
 // o catálogo de documentos do benefício (era a aba 8) agora vive na divisão
 // 🖨 Documentos do Cadastro — o atendimento não pula de aba para pedir papel

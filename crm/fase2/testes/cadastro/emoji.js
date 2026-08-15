@@ -1,4 +1,4 @@
-// Varre as CINCO divisões do Cadastro e conta pictograma na tela.
+// Varre TODAS as divisões do Cadastro e conta pictograma na tela.
 // O que conta como emoji aqui: os blocos de pictograma do Unicode, os
 // dingbats (✔ ✕ ➕), setas decorativas, o sinal de aviso e o mais de largura
 // cheia (＋). Ficam de fora: • do menu, •••• da senha mascarada, · e — que
@@ -9,7 +9,7 @@ const fs = require("fs");
 const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CLI_VAZIO } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
-const DIVISOES = ["identificacao", "anotacoes", "documentos", "consulta", "mensagens"];
+const DIVISOES = ["identificacao", "triagem", "anotacoes", "documentos", "consulta", "mensagens"];
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -63,7 +63,7 @@ const DIVISOES = ["identificacao", "anotacoes", "documentos", "consulta", "mensa
     }
   }
   console.log("erros de console:", erros.length ? erros : "nenhum");
-  console.log(total ? `${total} pictograma(s) ainda na aba Cadastro` : "zero pictograma nas cinco divisões");
+  console.log(total ? `${total} pictograma(s) ainda na aba Cadastro` : `zero pictograma nas ${DIVISOES.length} divisões`);
   await nav.close(); s.close();
   process.exit(total || erros.length ? 1 : 0);
 })().catch(e => { console.error("FALHOU:", e.message); process.exit(1); });
