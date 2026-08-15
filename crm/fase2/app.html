@@ -1016,6 +1016,11 @@
   /* ícone em SVG dentro de botão de texto: sem esta folga o desenho encosta
      na primeira letra (o emoji que ele substituiu já vinha com espaço) */
   .ic-bt{display:inline-flex;margin-right:5px;vertical-align:-2px}
+  /* o editor do endereço mora DENTRO do campo da grade: sete campos em
+     quatro linhas, sem abrir janela e sem empurrar o cartão de lado */
+  .cad-end{width:100%;font-weight:400}
+  .cad-end .cad-linha{margin-top:6px}
+  .cad-end .cad-linha:first-child{margin-top:2px}
   .cad-lap{border:none;background:none;color:var(--cinza-claro,#8A8F98);padding:1px;
     display:inline-flex;border-radius:3px;cursor:pointer}
   .cad-lap:hover{color:var(--azul);background:#e8f1fb}
@@ -1431,7 +1436,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.02 · F9.2 — o Cadastro em dois cartões: a senha do Meu INSS saiu da caixa amarela e virou campo da grade, CPF e nascimento aceitam clique no cartão inteiro, o endereço vazio parou de esticar, protocolos, parceria e parentes viraram o cartão Ligações do cliente, e as cinco divisões da aba estão sem nenhum emoji</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.03 · F9.3 — o endereço capturado pela primeira vez: sete campos no lugar do texto livre, o CEP preenche rua, bairro, cidade e UF por botão, e a gravação alimenta também o campo que a procuração lê</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12339,6 +12344,152 @@ async function guardarRG(cliId){
   await salvarCliCampo(cliId,"rg_orgao",org.trim());
   aviso("RG guardado", false); abrirFicha(cliId);
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F9.3 · ENDEREÇO — capturado pela primeira vez, não migrado
+// ══════════════════════════════════════════════════════════════════════════
+// As sete colunas (logradouro, numero, complemento, bairro, cidade, uf, cep)
+// já existiam no banco, TODAS zeradas, e o campo antigo de texto livre
+// `clientes.endereco` também: zero de 1.890 clientes. Não há legado para
+// migrar, o trabalho é capturar.
+//
+// O espelho existe por um motivo concreto: <ENDERECO> da procuração e do
+// contrato lê `clientes.endereco` (preencherModeloDoc), enquanto <BAIRRO>,
+// <CIDADE>, <ESTADO> e <CEP> leem as colunas novas. Gravar só as colunas
+// deixaria a linha da rua em branco em nove dos dez modelos. Por isso toda
+// gravação monta a linha e escreve nos dois lugares.
+const UF_NOME = {AC:"Acre",AL:"Alagoas",AM:"Amazonas",AP:"Amapá",BA:"Bahia",CE:"Ceará",
+  DF:"Distrito Federal",ES:"Espírito Santo",GO:"Goiás",MA:"Maranhão",MG:"Minas Gerais",
+  MS:"Mato Grosso do Sul",MT:"Mato Grosso",PA:"Pará",PB:"Paraíba",PE:"Pernambuco",
+  PI:"Piauí",PR:"Paraná",RJ:"Rio de Janeiro",RN:"Rio Grande do Norte",RO:"Rondônia",
+  RR:"Roraima",RS:"Rio Grande do Sul",SC:"Santa Catarina",SE:"Sergipe",
+  SP:"São Paulo",TO:"Tocantins"};
+const UFS = Object.keys(UF_NOME).sort();
+const soDigitos = s => String(s||"").replace(/\D/g,"");
+const fmtCep = s => { const d=soDigitos(s); return d.length===8 ? d.slice(0,5)+"-"+d.slice(5) : (s||""); };
+// o que vai para <ENDERECO>: rua, número e complemento, na ordem da qualificação
+function enderecoMontado(v){
+  const rua = [v.logradouro, v.numero?`nº ${v.numero}`:""].filter(Boolean).join(", ");
+  return [rua, v.complemento].filter(Boolean).join(", ");
+}
+// a linha que aparece no campo da grade, com o resto do endereço junto
+function enderecoLinha(c){
+  const v = civilDe(c);
+  const partes = [enderecoMontado(v), v.bairro,
+                  [v.cidade, v.uf].filter(Boolean).join("/"), v.cep?`CEP ${fmtCep(v.cep)}`:""];
+  return partes.filter(Boolean).join(" · ") || (c.endereco||"");
+}
+function cadCampoEndereco(c){
+  const linha = enderecoLinha(c);
+  return `<div class="cad-campo cad-c6${linha?"":" vazio"}"
+      onclick="if(!this.querySelector('#end-cep'))editarEndereco('${c.id}')" style="cursor:pointer">
+    <label>Endereço <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
+    <div class="cad-v" id="campo-endereco" style="font-weight:500;font-size:14px">${
+      linha?esc(linha):"clique para preencher"}</div>
+  </div>`;
+}
+// sete campos no lugar, sem sair da grade — o mesmo caminho que o RG já usa
+function editarEndereco(cliId){
+  const c = D.cliPorId.get(cliId), cx = document.getElementById("campo-endereco");
+  if(!c || !cx) return;
+  const v = civilDe(c);
+  const cp = (id, val, dica, larg) =>
+    `<input id="${id}" value="${esc(val||"")}" placeholder="${esc(dica)}" style="width:${larg}">`;
+  cx.innerHTML = `<div class="cad-end" onclick="event.stopPropagation()">
+    <div class="cad-linha" style="margin-top:0">
+      ${cp("end-cep", fmtCep(v.cep), "00000-000", "104px")}
+      <button class="cad-mini" onclick="buscarCep('${cliId}')" title="preenche rua, bairro, cidade e UF pelo CEP">buscar</button>
+      <span id="end-recado" class="cad-apoio"></span>
+    </div>
+    <div class="cad-linha">
+      ${cp("end-logradouro","", "rua, avenida, estrada…", "100%")}
+    </div>
+    <div class="cad-linha">
+      ${cp("end-numero", v.numero, "nº", "72px")}
+      ${cp("end-complemento", v.complemento, "apto, fundos, quadra…", "170px")}
+    </div>
+    <div class="cad-linha">
+      ${cp("end-bairro", v.bairro, "bairro", "160px")}
+      ${cp("end-cidade", v.cidade, "cidade", "160px")}
+      <select id="end-uf" style="width:74px"><option value="">UF</option>
+        ${UFS.map(u=>`<option value="${u}" ${v.uf===u?"selected":""}>${u}</option>`).join("")}</select>
+    </div>
+    <div class="cad-linha">
+      <button class="cad-mini" onclick="guardarEndereco('${cliId}')">Guardar</button>
+      <button class="cad-mini" onclick="abrirFicha('${cliId}')">cancelar</button>
+    </div>
+  </div>`;
+  const log = document.getElementById("end-logradouro");
+  log.value = v.logradouro || "";
+  const cep = document.getElementById("end-cep");
+  cep.focus(); cep.select();
+  // Enter no CEP busca; Enter em qualquer outro campo guarda
+  cep.onkeydown = e => { if(e.key==="Enter"){ e.preventDefault(); buscarCep(cliId); }
+                         if(e.key==="Escape") abrirFicha(cliId); };
+  ["end-logradouro","end-numero","end-complemento","end-bairro","end-cidade"].forEach(id=>{
+    const el = document.getElementById(id);
+    el.onkeydown = e => { if(e.key==="Enter"){ e.preventDefault(); guardarEndereco(cliId); }
+                          if(e.key==="Escape") abrirFicha(cliId); };
+  });
+}
+// A consulta é por BOTÃO, não a cada tecla (decisão do Paulo): sai o CEP e
+// nada mais — nome, CPF e telefone do cliente não saem daqui.
+async function buscarCep(cliId){
+  const el = document.getElementById("end-cep"), recado = document.getElementById("end-recado");
+  if(!el) return;
+  const d = soDigitos(el.value);
+  if(d.length !== 8){ recado.textContent = "o CEP tem 8 dígitos"; return; }
+  recado.textContent = "buscando…";
+  try{
+    const r = await fetch(`https://viacep.com.br/ws/${d}/json/`);
+    if(!r.ok) throw new Error(String(r.status));
+    const j = await r.json();
+    if(j.erro){ recado.textContent = "CEP não encontrado — preencha à mão"; return; }
+    const por = (id, val) => { const e2=document.getElementById(id); if(e2 && val) e2.value = val; };
+    por("end-logradouro", j.logradouro);
+    por("end-bairro", j.bairro);
+    por("end-cidade", j.localidade);
+    const uf = document.getElementById("end-uf"); if(uf && j.uf) uf.value = j.uf;
+    el.value = fmtCep(d);
+    recado.textContent = j.logradouro ? "" : "CEP de cidade inteira — digite a rua";
+    const n = document.getElementById("end-numero"); if(n) n.focus();
+  }catch(e){
+    recado.textContent = "não consegui consultar o CEP — preencha à mão";
+  }
+}
+// uma gravação só, com os oito campos. Banco sem as colunas novas
+// (PGRST204/42703) cai em campos.civil, como salvarCliCampo já fazia —
+// `endereco` é coluna antiga e existe nos dois casos.
+async function guardarEndereco(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const val = id => ((document.getElementById(id)||{}).value||"").trim();
+  const dados = {logradouro:val("end-logradouro"), numero:val("end-numero"),
+                 complemento:val("end-complemento"), bairro:val("end-bairro"),
+                 cidade:val("end-cidade"), uf:val("end-uf"), cep:soDigitos(val("end-cep"))};
+  if(dados.cep && dados.cep.length!==8) return aviso("O CEP tem 8 dígitos");
+  const endereco = enderecoMontado(dados);
+  const corpo = {}; for(const k in dados) corpo[k] = dados[k] || null;
+  corpo.endereco = endereco || null;
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify(corpo)});
+    Object.assign(c, corpo);
+  }catch(e){
+    const msg = String((e && e.message) || e);
+    if(!/PGRST204|42703|does not exist|schema cache/i.test(msg))
+      return aviso("Não consegui guardar o endereço — tente de novo");
+    const civil = {...(((c.campos||{}).civil)||{})};
+    for(const k in dados){ if(dados[k]) civil[k]=dados[k]; else delete civil[k]; }
+    c.campos = {...(c.campos||{}), civil};
+    try{
+      await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({campos:c.campos, endereco: endereco || null})});
+      c.endereco = endereco || null;
+    }catch(e2){ return aviso("Não consegui guardar o endereço — tente de novo"); }
+  }
+  aviso(endereco ? "Endereço guardado" : "Endereço apagado", false);
+  abrirFicha(cliId);
+}
+
 // A senha do Meu INSS morava numa caixa amarela ao lado do cartão — e amarelo,
 // no sistema de tokens, quer dizer PRAZO. Senha não tem prazo. Agora ela é o
 // penúltimo campo da própria grade, com a mesma moldura dos outros: sem senha,
@@ -12421,12 +12572,7 @@ function fichaIdentificacao(c, creds){
         ${ultimoZap()}
       </div>
 
-      <div class="cad-campo cad-c6${c.endereco?"":" vazio"}"
-        onclick="if(!this.querySelector('#ed-campo'))editarCampo('endereco','${c.id}')" style="cursor:pointer">
-        <label>Endereço <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
-        <div class="cad-v" id="campo-endereco" style="font-weight:500;font-size:14px">${
-          c.endereco?esc(c.endereco):"clique para preencher"}</div>
-      </div>
+      ${cadCampoEndereco(c)}
 
       ${cadCampoRG(c)}
       ${cadCampo(c, "nome_mae", 4)}
@@ -12471,7 +12617,7 @@ function faltaParaDocs(c){
 // ── OS DOCUMENTOS DO ESCRITÓRIO ───────────────────────────────────────────
 // Texto fiel aos modelos .docx do escritório. Só o contrato e o termo de
 // representação mudam conforme a espécie — o resto é sempre igual.
-const QUALIF = "<NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na Av./Rua <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>";
+const QUALIF = "<NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>";
 const ESCRITORIO_RODAPE = "Rua Rui Barbosa, nº 663, Centro, Monte Alto/SP, CEP 15.910-000, fone (16) 3242-2908 – Cel (16) 98140-9271";
 
 const CONTRATO_PARTES = `CONTRATANTE: ${QUALIF};
@@ -12669,7 +12815,7 @@ Art. 299. Omitir, em documento público ou particular, declaração que devia co
   // do procedimento administrativo (pedido do Paulo — sai fora do "gerar
   // todos", é a folha que o cliente do auxílio por incapacidade assina)
   b31_proc: {rot:"Procuração Adm. — Incapacidade Temporária (B31)", titulo:"PROCURAÇÃO ADMINISTRATIVA", texto:
-`Pelo presente instrumento particular de procuração, <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na Av./Rua <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>, nomeia e constitui seus bastantes procuradores os Drs. PAULO ROBERTO TERCINI FILHO, brasileiro, solteiro, advogado, RG nº 44.086.138-X, CPF nº 224.627.048-09, OAB/SP nº 331.110, NIT nº 11966884529; MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado, RG nº 60.366.107-5, CPF nº 105.950.296-80, OAB/SP nº 464.306, NIT nº 20061810473; e AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, RG nº 44.211.638-X, CPF nº 381.533.048-36, OAB/SP nº 511.528, NIT nº 2725914270-2, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, conferindo-lhes poderes especiais para representá-lo(a) perante o INSS — Instituto Nacional do Seguro Social, em qualquer agência ou unidade administrativa, podendo requerer benefícios por incapacidade, em especial AUXÍLIO POR INCAPACIDADE TEMPORÁRIA (B31), protocolar pedidos, cumprir exigências, peticionar, juntar e retirar documentos, prestar informações, acompanhar requerimentos, ter vistas e tomar ciência de decisões, interpor recursos administrativos, requerer prorrogação, reconsideração e revisão, receber laudos médicos e sociais, nos termos do inciso II, §1º do art. 31 da Lei nº 12.527/2011, requerer e utilizar a senha do GOV.BR e do MEU INSS, podendo praticar todos os demais atos necessários ao perfeito desempenho deste mandato, com cláusula ad judicia et extra e poderes para transigir, desistir, renunciar, dar quitação, fazer acordos e substabelecer, com ou sem reserva de iguais poderes.
+`Pelo presente instrumento particular de procuração, <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>, nomeia e constitui seus bastantes procuradores os Drs. PAULO ROBERTO TERCINI FILHO, brasileiro, solteiro, advogado, RG nº 44.086.138-X, CPF nº 224.627.048-09, OAB/SP nº 331.110, NIT nº 11966884529; MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado, RG nº 60.366.107-5, CPF nº 105.950.296-80, OAB/SP nº 464.306, NIT nº 20061810473; e AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, RG nº 44.211.638-X, CPF nº 381.533.048-36, OAB/SP nº 511.528, NIT nº 2725914270-2, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, conferindo-lhes poderes especiais para representá-lo(a) perante o INSS — Instituto Nacional do Seguro Social, em qualquer agência ou unidade administrativa, podendo requerer benefícios por incapacidade, em especial AUXÍLIO POR INCAPACIDADE TEMPORÁRIA (B31), protocolar pedidos, cumprir exigências, peticionar, juntar e retirar documentos, prestar informações, acompanhar requerimentos, ter vistas e tomar ciência de decisões, interpor recursos administrativos, requerer prorrogação, reconsideração e revisão, receber laudos médicos e sociais, nos termos do inciso II, §1º do art. 31 da Lei nº 12.527/2011, requerer e utilizar a senha do GOV.BR e do MEU INSS, podendo praticar todos os demais atos necessários ao perfeito desempenho deste mandato, com cláusula ad judicia et extra e poderes para transigir, desistir, renunciar, dar quitação, fazer acordos e substabelecer, com ou sem reserva de iguais poderes.
 
 Ademais, DECLARO, sob as penas dos arts. 171 e 299 do Código Penal, que NÃO recebo aposentadoria, pensão por morte ou qualquer outro benefício de caráter previdenciário em regime próprio de previdência social, federal, estadual, municipal, civil ou militar, e que esta declaração é a expressão da verdade.
 
@@ -12693,7 +12839,7 @@ Advogados Contratados`},
   b31_contrato: {rot:"Contrato — Incapacidade Temporária (B31)", titulo:"CONTRATO DE HONORÁRIOS ADVOCATÍCIOS", texto:
 `(Procedimento administrativo de benefício por incapacidade — B31)
 
-CONTRATANTE: <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na Av./Rua <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>.
+CONTRATANTE: <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>.
 
 CONTRATADOS: PAULO ROBERTO TERCINI FILHO, OAB/SP nº 331.110, CPF nº 224.627.048-09; MARCOS HENRIQUE DE PÁDUA AMORIM, OAB/SP nº 464.306, CPF nº 105.950.296-80; e AMANDA CRISTIANE CARNEIRO GARCEZ, OAB/SP nº 511.528, CPF nº 381.533.048-36, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, celular (16) 98140-9271.
 
@@ -12741,7 +12887,10 @@ function preencherModeloDoc(txt, c, especie){
     "<NOMESEGURADO>": c.nome||lac, "<CPF>": c.cpf?fmtCpf(c.cpf):lac, "<RG>": v.rg||lac,
     "<DATANASCIMENTO>": dn, "<ESTADOCIVIL>": v.estado_civil||lac, "<PROFISSAO>": v.profissao||lac,
     "<ENDERECO>": c.endereco||lac, "<BAIRRO>": v.bairro||lac, "<CIDADE>": v.cidade||lac,
-    "<ESTADO>": v.uf||"São Paulo", "<CEP>": v.cep||lac,
+    // a qualificação escreve "Estado de ___" por extenso. Enquanto a UF era
+    // sempre vazia isto nunca apareceu; com a captura da F9.3 gravando "SP",
+    // a peça sairia "Estado de SP"
+    "<ESTADO>": UF_NOME[v.uf] || v.uf || "São Paulo", "<CEP>": v.cep?fmtCep(v.cep):lac,
     "<ESPECIE>": especie||"Benefício/serviço a definir",
     "<DATAEXTENSO>": `Monte Alto - SP, ${dataExt}.`,
   };
