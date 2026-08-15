@@ -112,7 +112,38 @@ def preenchimento(tabela, col, tipo):
     return n
 
 
+LISTAS_MAPEADAS = ["🗓 Tarefas com Prazo","🙋 Escritório","🌻 INSS","👪 Judicial",
+                   "🖥 Conselho de Recursos","💵 Pagamentos","🙏 Aposentadorias Futuras",
+                   "💡 Petições Iniciais"]
+
+
+def extra():
+    """Perguntas agregadas do dossiê da sincronização. Só contagem, como o resto."""
+    print("## casos por fase")
+    for f in ["escritorio","inss","judicial","conselho","pagamento","peticao_inicial",
+              "aposentadoria_futura","outro","encerrado"]:
+        print(f"- fase={f} | {total_de(f'/rest/v1/casos?fase=eq.{f}')}")
+    print("## casos por origem_lista (as listas do To Do)")
+    aspas = ",".join('"%s"' % urllib.parse.quote(l) for l in LISTAS_MAPEADAS)
+    fora = total_de(f"/rest/v1/casos?origem_lista=not.in.({aspas})")
+    print(f"- fora das listas mapeadas | {fora}")
+    print(f"- sem origem_lista | {total_de('/rest/v1/casos?origem_lista=is.null')}")
+    for l in LISTAS_MAPEADAS:
+        print(f"- {l} | {total_de('/rest/v1/casos?origem_lista=eq.' + urllib.parse.quote(l))}")
+    print("## clientes")
+    print(f"- sem CPF | {total_de('/rest/v1/clientes?cpf=is.null')}")
+    print("## andamentos por origem")
+    for o in ["todo","app","pat","crps","dou","pje"]:
+        print(f"- origem={o} | {total_de(f'/rest/v1/andamentos?origem=eq.{o}')}")
+    print("## lembretes por tipo")
+    for t in ["aposentadoria_futura","contribuicao","cadunico","aposentadoria","revisao","geral"]:
+        print(f"- tipo={t} | {total_de(f'/rest/v1/lembretes?tipo=eq.{t}')}")
+
+
 def main():
+    if "--extra" in sys.argv:
+        extra()
+        return
     esq = estrutura()
     tabelas = sorted(esq)
     saida = {"tabelas": {}, "erros": []}

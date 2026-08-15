@@ -32,6 +32,8 @@ jobs:
           echo "linhas do JSON: $(wc -l < dossie.json)"
           echo "── RETRATO (estrutura e números, sem conteúdo) ──"
           python crm/fase2/dossie_banco.py
+          echo "── AGREGADOS DA SINCRONIZAÇÃO ──"
+          python crm/fase2/dossie_banco.py --extra
 
       - name: Publica o retrato como artefato
         uses: actions/upload-artifact@v4
