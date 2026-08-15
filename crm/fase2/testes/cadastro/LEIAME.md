@@ -1,6 +1,6 @@
-# Arneses de fumaça do Cadastro, da F10 e da F11
+# Arneses de fumaça do Cadastro e das fases F10 a F12
 
-Nove arquivos que sobem o `app.html` num servidor local, interceptam o Supabase
+Dez arquivos que sobem o `app.html` num servidor local, interceptam o Supabase
 e o ViaCEP, e trabalham com quatro clientes **inventados**. Nenhum dado real de
 cliente passa por aqui, e nenhuma chamada sai para a internet.
 
@@ -9,7 +9,7 @@ cd crm/fase2/testes/cadastro
 npm i playwright          # só na primeira vez
 cp ../../app.html .       # o arnês lê o app ao lado dele
 node triagem.js && node avisos.js && node documentos.js
-node endereco.js
+node trilha.js && node endereco.js
 node fila.js && node importar.js
 node interacao.js && node emoji.js && node fumaca.js
 ```
@@ -25,6 +25,7 @@ node interacao.js && node emoji.js && node fumaca.js
 | `triagem.js` | a leitura automática dos cinco passos que o CRM responde sozinho, e a marcação com autoria | 18 |
 | `avisos.js` | o CadÚnico virando lembrete de 2 anos (criar, mover, desligar) e o caso novo gerando menção | 17 |
 | `documentos.js` | nenhum marcador sai literal, a folha no padrão do escritório, e a conferência antes de gerar com lacuna | 25 |
+| `trilha.js` | a raiz e os ramos do caso numa árvore só, e o marcador acompanhado gravando | 11 |
 
 Cada um sai com código 1 quando alguma asserção falha, então servem em CI.
 
@@ -63,3 +64,8 @@ mexa nele, não em cada arnês.
   `faltaParaDocs()` devolvendo lista vazia.
 - **Cliente de teste sem caso não gera andamento.** `registrarDocGerado` sai
   cedo quando não há caso, e a asserção do registro falha sem culpa do código.
+- **`innerText` devolve MAIÚSCULA onde o CSS tem `text-transform`.** Comparar
+  com `/Recurso/` acusa defeito que não existe. Use `/recurso/i`.
+
+Três das quatro últimas falhas de asserção foram do arnês, não do app. Antes
+de mexer no código por causa de um teste vermelho, confira a expectativa.
