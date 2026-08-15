@@ -1564,7 +1564,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.13 · F15 — auditoria de contraste e de alvo de toque no sistema em uso: doze cores de texto que reprovavam nos 4,5:1 da WCAG e cinco botões menores que 24×24 px, medidos tela a tela com composição alfa</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.14 · F16 — a travada de ☀️ Meu Dia: hoje() refazia a conta de fuso a cada chamada e era chamada 5.790 vezes num filtro só. 1.601 ms viraram 5 ms, e a lateral, 1.206 ms, virou 4 ms</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1712,7 +1712,21 @@ function guardarConfig(){
 // 06/08 para um andamento escrito às 21h30 do dia 5 — a data do dia seguinte.
 // Estas funções convertem de verdade; nada de fatiar texto de timestamp.
 const FUSO = "America/Sao_Paulo", IDIOMA = "pt-BR";
-const hoje = () => new Date().toLocaleDateString("sv", {timeZone: FUSO});
+// A data de hoje é a mesma para todo o programa, mas `toLocaleDateString`
+// com fuso monta um formatador novo a cada chamada: 0,157 ms cada. Parece
+// nada, e era 909 ms num filtro só — `D.tarefas` tem 7.657 linhas e a
+// condição chamava hoje() em cada uma. Com 116 chamadas espalhadas pelo
+// arquivo, quase todas dentro de laço, esta linha respondia por ~1,1 s de
+// tela travada em ☀️ Meu Dia e na montagem da lateral.
+//
+// Guardar por meio minuto resolve sem risco: a data só muda à meia-noite, e
+// meio minuto de atraso numa virada de dia não altera decisão nenhuma.
+let _hojeMem = {em:0, v:""};
+const hoje = () => {
+  const t = Date.now();
+  if(t - _hojeMem.em > 30000) _hojeMem = {em:t, v:new Date().toLocaleDateString("sv", {timeZone: FUSO})};
+  return _hojeMem.v;
+};
 // "agora" no relógio de Brasília, mesmo com o aparelho em outro fuso
 function agoraSP(){
   return new Date(new Date().toLocaleString("en-US", {timeZone: FUSO}));
@@ -3974,7 +3988,7 @@ function render(){
     })();
     subt="Casos em recebimento e clientes com parcela em aberto — o dinheiro fica na aba Honorários da ficha."; }
   else if(visao.startsWith("fase:")){ const f=visao.slice(5);
-    titulo=FASES.find(x=>x[0]===f)[1]; casosSel=casosDaFase(f); }
+    titulo=(FASES.find(x=>x[0]===f)||[])[1] || NOME_FASE[f] || f; casosSel=casosDaFase(f); }
   else { titulo=visao; casosSel=[]; }
   tituloLista(titulo); sub.textContent=subt;
   // filtro por colaborador em TODAS as listas — cada um vê só o que é seu
