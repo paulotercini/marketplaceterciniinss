@@ -97,6 +97,35 @@ FIX.tarefas = Array.from({ length: N_TAR }, (_, i) => ({
   conf(`quantosNoMeuDia responde em menos de 100 ms (${qmd.ms} ms — era 1.138)`, qmd.ms < 100);
   conf(`e continua contando (${qmd.n})`, typeof qmd.n === "number" && qmd.n >= 0);
 
+  // ── 2b. os formatadores de fuso, montados uma vez ───────────────────────
+  const fmts = await p.evaluate(() => {
+    const m = f => { const a = performance.now(); for (let i = 0; i < 5000; i++) f(); 
+      return +((performance.now() - a) / 5000).toFixed(4); };
+    return { dataSP: m(() => dataSP("2026-08-15T10:00:00Z")),
+             horaSP: m(() => horaSP("2026-08-15T10:00:00Z")),
+             agoraSP: m(() => agoraSP()) };
+  });
+  conf(`dataSP custa menos de 0,02 ms (${fmts.dataSP} ms — era 0,131)`, fmts.dataSP < 0.02);
+  conf(`horaSP custa menos de 0,02 ms (${fmts.horaSP} ms — era 0,199)`, fmts.horaSP < 0.02);
+  conf(`agoraSP custa menos de 0,02 ms (${fmts.agoraSP} ms — era 0,182)`, fmts.agoraSP < 0.02);
+  // reaproveitar o formatador não pode mudar o que ele devolve
+  const iguais = await p.evaluate(() => {
+    const ts = ["2026-08-15T10:00:00Z", "2026-01-01T02:30:00Z", "2026-12-31T23:59:00Z",
+                "2026-06-10T00:00:00Z", "2026-03-01T15:45:00-03:00"];
+    return ts.map(t => ({ t,
+      data: dataSP(t) === new Date(t).toLocaleDateString("sv", { timeZone: FUSO }),
+      hora: horaSP(t) === new Date(t).toLocaleTimeString(IDIOMA,
+        { timeZone: FUSO, hour: "2-digit", minute: "2-digit" }) }));
+  });
+  conf(`dataSP e horaSP dão o mesmo resultado de antes em ${iguais.length} horários`
+    + (iguais.every(x => x.data && x.hora) ? "" : "\n          " + JSON.stringify(iguais.filter(x => !x.data || !x.hora))),
+    iguais.every(x => x.data && x.hora));
+  const ag = await p.evaluate(() => {
+    const a = agoraSP(), b = new Date(new Date().toLocaleString("en-US", { timeZone: FUSO }));
+    return { dif: Math.abs(a - b), a: a.toISOString(), b: b.toISOString() };
+  });
+  conf(`agoraSP marca o mesmo instante de antes (diferença ${ag.dif} ms)`, ag.dif < 1500);
+
   // ── 3. a fase fora da lista não derruba mais a tela ─────────────────────
   const pag = await p.evaluate(() => {
     try { visao = "fase:pagamento"; render();

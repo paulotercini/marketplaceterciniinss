@@ -1564,7 +1564,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.14 · F16 — a travada de ☀️ Meu Dia: hoje() refazia a conta de fuso a cada chamada e era chamada 5.790 vezes num filtro só. 1.601 ms viraram 5 ms, e a lateral, 1.206 ms, virou 4 ms</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.15 · F16 — a travada das listas era conta de fuso refeita a cada chamada: ☀️ Meu Dia caiu de 1.601 ms para 25 ms, a lateral de 1.206 ms para 34 ms, e a Agenda e o Calendário passaram a reaproveitar o formatador em vez de montar um por evento</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1724,12 +1724,22 @@ const FUSO = "America/Sao_Paulo", IDIOMA = "pt-BR";
 let _hojeMem = {em:0, v:""};
 const hoje = () => {
   const t = Date.now();
-  if(t - _hojeMem.em > 30000) _hojeMem = {em:t, v:new Date().toLocaleDateString("sv", {timeZone: FUSO})};
+  if(t - _hojeMem.em > 30000) _hojeMem = {em:t, v:_FMT_DATA.format(new Date())};
   return _hojeMem.v;
 };
+// Formatadores de fuso montados UMA vez. `toLocaleDateString(loc, {timeZone})`
+// constrói um Intl.DateTimeFormat novo a cada chamada — 0,13 ms cada, e a
+// Agenda formata 1.248 eventos. Reaproveitar o formatador é a mesma conta sem
+// o custo de montá-lo.
+const _FMT_DATA = new Intl.DateTimeFormat("sv", {timeZone: FUSO});
+const _FMT_HORA = new Intl.DateTimeFormat(IDIOMA, {timeZone: FUSO, hour:"2-digit", minute:"2-digit"});
+const _FMT_AGORA = new Intl.DateTimeFormat("en-US", {timeZone: FUSO, year:"numeric", month:"2-digit",
+  day:"2-digit", hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:false});
 // "agora" no relógio de Brasília, mesmo com o aparelho em outro fuso
 function agoraSP(){
-  return new Date(new Date().toLocaleString("en-US", {timeZone: FUSO}));
+  const p = {}; for(const x of _FMT_AGORA.formatToParts(new Date())) p[x.type] = x.value;
+  // hourCycle h23 devolve 24 à meia-noite em alguns motores
+  return new Date(+p.year, +p.month-1, +p.day, +p.hour%24, +p.minute, +p.second);
 }
 // timestamp do banco -> data e hora de Brasília. Timestamp sem fuso (o que o
 // próprio escritório digitou, como a hora da perícia) já é de Brasília e
@@ -1742,12 +1752,12 @@ function _dt(ts){
 function _semFuso(ts){ return ts && !/[Zz]|[+-]\d\d:?\d\d$/.test(ts); }
 function dataSP(ts){
   if(_semFuso(ts)) return (ts||"").slice(0,10);
-  const d=_dt(ts); return d ? d.toLocaleDateString("sv",{timeZone:FUSO}) : "";
+  const d=_dt(ts); return d ? _FMT_DATA.format(d) : "";
 }
 function horaSP(ts){
   if(_semFuso(ts)) return (ts||"").slice(11,16);
   const d=_dt(ts); if(!d) return "";
-  return d.toLocaleTimeString(IDIOMA,{timeZone:FUSO,hour:"2-digit",minute:"2-digit"});
+  return _FMT_HORA.format(d);
 }
 const fmtTS = ts => fmt(dataSP(ts));                 // DD.MM.AAAA de Brasília
 const fmt = iso => iso ? iso.slice(8,10)+"."+iso.slice(5,7)+"."+iso.slice(0,4) : "";
