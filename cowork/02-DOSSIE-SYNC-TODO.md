@@ -240,10 +240,29 @@ vira `vencimento`). Valor e data são lidos do próprio texto do item.
 | **Item de checklist vazio** | ignorado |
 | **Eco do próprio CRM** | ver seção 7 |
 
-Na última execução, **28 listas** foram puladas por não estarem mapeadas e não
-terem CPF — são listas de trabalho interno (jurisprudência, vídeos, acessos,
-leilões, operacional, listas pessoais de colaboradores). Somaram algumas
-centenas de tarefas que **nunca chegaram ao CRM** e nem deveriam.
+Na última execução, **28 listas** tiveram tarefas puladas por não estarem
+mapeadas e não terem CPF — somando **640 tarefas** que nunca chegaram ao CRM.
+São listas de trabalho interno: jurisprudência, modelos de escrita, vídeos
+explicativos, acessos, leilões, operacional e listas pessoais de colaboradores.
+
+### A armadilha do nome quase igual
+
+O mapa `LISTA_FASE` casa a lista pelo **nome exato, com emoji**. Existem na
+conta listas com nome parecido e sem emoji — `Escritório`, `Petição Inicial`,
+`Recurso Administrativo`, `Impugnações`, `Audiências` — e elas **não casam**.
+
+O que acontece com uma tarefa dessas depende de ter CPF:
+
+- **sem CPF**: é descartada e contada, como acima;
+- **com CPF**: entra, e o caso nasce com `fase = "outro"` e `origem_lista` =
+  o nome da lista de origem. Como a lista 🗓 Tarefas com Prazo do CRM filtra
+  por `origem_lista === "🗓 Tarefas com Prazo"`, **esse caso não aparece em
+  lista nenhuma da barra lateral**. Ele existe, é encontrável pela busca e pela
+  ficha do cliente, mas some do fluxo de trabalho.
+
+Medido no banco: **264 casos com `origem_lista` fora das oito listas mapeadas**,
+mais **6 sem `origem_lista` nenhuma** — 270 casos nessa situação, dos quais 194
+estão ativos (fase `outro`).
 
 ---
 
@@ -342,7 +361,7 @@ que clientes, casos e andamentos tinham entrado normalmente.
 **O que o reimporte NÃO desfaz** (o banco vence o To Do):
 
 - `processo` e `NB` que a coleta do PJe ou a equipe preencheu — se o To Do vier
-  vazio, o valor do banco é preservado (79 preservados na última rodada);
+  vazio, o valor do banco é preservado (77 preservados na última rodada);
 - título, data, intervalo e responsável dos lembretes;
 - conferências de pagamento feitas no app;
 - itens de checklist concluídos no CRM.
@@ -367,7 +386,32 @@ um texto no To Do não corrige o que já entrou.
 - **Categorias e lembretes nativos do To Do** (o "lembrar-me" do aplicativo):
   não são lidos.
 - **Tudo que a equipe escreveu no CRM** — enquanto `escrever_todo.py` estiver
-  desligado, o To Do não recebe nada de volta.
+  desligado, o To Do não recebe nada de volta. São **22 andamentos** até hoje.
+
+E há o caso do meio do caminho, que não está só no To Do nem visível no CRM:
+**270 casos entraram no banco e não aparecem em lista nenhuma** (264 com lista
+de origem fora do mapa, 6 sem lista de origem). Vieram de tarefas com CPF em
+listas como `Escritório`, `Petição Inicial`, `Recurso Administrativo`,
+`Impugnações` e `Audiências` — nomes quase iguais aos mapeados, sem o emoji.
+194 deles estão ativos.
+
+---
+
+## 10. O que eu arrumaria primeiro
+
+1. **As três linhas do índice de `pagamentos`.** Enquanto não rodarem, 2.621
+   parcelas continuam sendo recusadas a cada hora, e nenhum honorário do To Do
+   existe no CRM.
+2. **Os nomes de lista quase iguais.** Ou renomear as listas no To Do para
+   bater com o mapa (com emoji), ou acrescentar os apelidos ao `LISTA_FASE`.
+   Hoje 194 casos ativos estão fora de todas as listas do CRM.
+3. **Os 243 clientes sem CPF.** Cada um vira um cliente duplicado no dia em que
+   alguém puser o CPF no título da tarefa: a chave do `uuid5` muda de nome para
+   CPF e nasce outro cadastro. Preencher o CPF pelo CRM não resolve — a chave
+   olha o To Do.
+4. **Decidir sobre a mão de volta.** Com 22 andamentos escritos no CRM, ligar o
+   `ESCREVER_TODO` hoje seria barato e faria o To Do voltar a espelhar o
+   escritório inteiro. Quanto mais o CRM for usado, mais caro fica adiar.
 
 ---
 
@@ -381,10 +425,56 @@ sucesso em 1 minuto e 30 segundos.
 | | |
 |---|---|
 | Listas varridas | **39** |
-| Tarefas lidas | **4.304** |
+| Tarefas lidas | **4.305** |
 | Clientes distintos (por CPF) | **1.656** |
-| Blocos datados lidos como andamento | **18.273** |
+| Blocos datados lidos como andamento | **18.275** |
 | Perícias/audiências achadas no texto | **1.184** |
+
+### Onde os casos estão, medido no banco
+
+| Fase | Casos |
+|---|---:|
+| encerrado | 2.342 |
+| outro | 194 |
+| judicial | 170 |
+| inss | 104 |
+| escritorio | 103 |
+| conselho | 75 |
+| pagamento | 61 |
+| peticao_inicial | 20 |
+| aposentadoria_futura | **0** |
+
+`aposentadoria_futura` em zero é o efeito da 08.90 funcionando: os casos antigos
+dessa lista foram **encerrados** (não apagados — o histórico ficou) e o que
+chega hoje vira lembrete.
+
+| Lista de origem | Casos |
+|---|---:|
+| 🙋 Escritório | 657 |
+| 👪 Judicial | 461 |
+| 🙏 Aposentadorias Futuras | 421 |
+| 🖥 Conselho de Recursos | 407 |
+| 💵 Pagamentos | 374 |
+| 🗓 Tarefas com Prazo | 272 |
+| 🌻 INSS | 182 |
+| 💡 Petições Iniciais | 25 |
+| **fora das listas mapeadas** | **264** |
+| **sem lista de origem** | **6** |
+
+### De onde vem cada andamento
+
+| Origem | Andamentos |
+|---|---:|
+| `todo` — importado do To Do | 19.068 |
+| `crps` — robô do Conselho | 870 |
+| `pat` — robô do INSS | 467 |
+| `pje` — coletor do PJe | 212 |
+| **`app` — escrito no CRM** | **22** |
+| `dou` — monitor do Diário Oficial | 0 |
+
+Vinte e dois. De 20.639 andamentos, **22 foram escritos dentro do CRM** — o
+resto veio do To Do e dos robôs. É o retrato mais honesto de onde o trabalho
+ainda acontece, e a razão pela qual a mão única (To Do → CRM) ainda não dói.
 
 ### Depois do mapeamento (`migrar.py`)
 
@@ -392,7 +482,7 @@ sucesso em 1 minuto e 30 segundos.
 |---|---:|---:|
 | clientes | 1.885 | 1.885 |
 | casos | 2.545 | 2.545 |
-| andamentos | 15.674 | 15.673 |
+| andamentos | 15.676 | 15.673 |
 | eventos | 973 | 973 |
 | tarefas | 5.073 | 5.073 |
 | credenciais | 1.239 | 1.239 |
@@ -403,11 +493,11 @@ sucesso em 1 minuto e 30 segundos.
 
 Três diferenças merecem explicação:
 
-- **18.273 blocos lidos → 15.674 andamentos mapeados.** A diferença são os
+- **18.275 blocos lidos → 15.676 andamentos mapeados.** A diferença são os
   blocos das tarefas que não viram caso (Aposentadorias Futuras, cujas anotações
   vão para o lembrete) e os das listas descartadas.
-- **15.674 mapeados → 15.673 enviados.** Um bloco foi barrado pelo anti-eco: era
-  eco de um andamento escrito no app.
+- **15.676 mapeados → 15.673 enviados.** Três blocos foram barrados pelo
+  anti-eco: eram eco de andamentos escritos no app e devolvidos ao To Do.
 - **2.621 parcelas mapeadas → 0 enviadas.** É o defeito aberto: o banco recusa a
   tabela inteira com 42P10 porque o índice único de `todo_item_id` foi criado
   como **parcial**, e o PostgREST monta `ON CONFLICT (todo_item_id)` sem o
@@ -418,10 +508,11 @@ Três diferenças merecem explicação:
 
 **1.656 clientes na leitura, 1.885 no mapeamento.** Não é erro: o
 `sync_todo.py` conta **só quem tem CPF**; o `migrar.py` também cria cliente para
-tarefa **sem CPF**, usando o nome como chave. Os 229 a mais são clientes
-identificados só pelo nome — e são exatamente os candidatos a virar duplicata no
-dia em que o CPF aparecer numa tarefa nova.
+tarefa **sem CPF**, usando o nome como chave. Medido no banco: **243 clientes
+sem CPF** (12,9% dos 1.890). São eles os candidatos a virar duplicata no dia em
+que o CPF aparecer numa tarefa nova — a chave muda de `nome` para `cpf`, o
+`uuid5` muda junto, e nasce um segundo cliente.
 
-**4.304 tarefas lidas, 2.545 casos.** A diferença são as tarefas das listas
+**4.305 tarefas lidas, 2.545 casos.** A diferença são as tarefas das listas
 descartadas, as das Aposentadorias Futuras (que viraram lembrete), as de
 Pagamentos e as tarefas particulares.
