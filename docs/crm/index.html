@@ -1486,7 +1486,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.07 · F10 completa — a Triagem em oito passos, o CadÚnico virando lembrete de verdade a cada 2 anos, e o caso novo avisando quem decide</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.08 · F11 — a peça sai pronta ou o sistema diz o que falta: Bookman Old Style 12 com espaçamento 1,5, timbre e rodapé do escritório, conferência antes de gerar com lacuna, e o andamento registrando o que saiu em branco</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13095,7 +13095,10 @@ function faltaParaDocs(c){
 // ── OS DOCUMENTOS DO ESCRITÓRIO ───────────────────────────────────────────
 // Texto fiel aos modelos .docx do escritório. Só o contrato e o termo de
 // representação mudam conforme a espécie — o resto é sempre igual.
-const QUALIF = "<NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>";
+// A profissão era pedida no cadastro, entrava em CAD_PRECISA e no contador de
+// campos em branco, e não aparecia em peça nenhuma além da procuração do B31.
+// Ou ela está na qualificação, ou não se cobra o campo. (F11)
+const QUALIF = "<NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>";
 const ESCRITORIO_RODAPE = "Rua Rui Barbosa, nº 663, Centro, Monte Alto/SP, CEP 15.910-000, fone (16) 3242-2908 – Cel (16) 98140-9271";
 
 const CONTRATO_PARTES = `CONTRATANTE: ${QUALIF};
@@ -13388,56 +13391,109 @@ function corpoDoDoc(chave, c, especie){
   const texto = chave==="contrato" ? textoContrato(variantePorEspecie(especie)) : m.texto;
   return {titulo:m.titulo, rot:m.rot, corpo:preencherModeloDoc(texto, c, especie)};
 }
+// timbre em cima e rodapé embaixo, em toda folha: o documento sai com a cara
+// do escritório e com o endereço para onde a intimação volta
+const DOC_TIMBRE = `<div class="timbre"><b>Paulo Roberto Tercini Filho</b>
+  <span>Advocacia Previdenciária · OAB/SP 331.110</span></div>`;
 function folhaDoc(d, c){
-  return `<section><h1>${esc(d.titulo)}</h1>
+  return `<section>${DOC_TIMBRE}<h1>${esc(d.titulo)}</h1>
     ${d.corpo.split("\n").map(l=>{
       const t=l.trim();
       if(!t) return "<p class='vazio'></p>";
       if(/^_{4,}/.test(t)) return `<p class="assin">${esc(t)}</p>`;
       return `<p>${esc(t)}</p>`;
-    }).join("")}</section>`;
+    }).join("")}
+    <div class="rodape">${esc(ESCRITORIO_RODAPE)}</div></section>`;
 }
 function janelaImpressao(titulo, folhas){
   const w=window.open("","_blank");
   if(!w) return aviso("O navegador bloqueou a janela — libere os pop-ups deste site");
   w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
   <title>${esc(titulo)}</title><style>
-    body{font-family:Georgia,serif;max-width:720px;margin:32px auto;color:#111;font-size:13.5px;line-height:1.65}
-    section{page-break-after:always}
+    /* F11 — o padrão do escritório, e não o do navegador: Bookman Old Style
+       12, espaçamento 1,5. Georgia fica de reserva para quem abrir num
+       aparelho sem a fonte instalada. */
+    body{font-family:"Bookman Old Style", Bookman, Georgia, serif;color:#111;
+      font-size:12pt;line-height:1.5;max-width:170mm;margin:0 auto;padding:14mm 0}
+    section{page-break-after:always;position:relative}
     section:last-child{page-break-after:auto}
-    h1{font-size:15px;text-align:center;text-transform:uppercase;letter-spacing:.5px;margin:0 0 18px}
-    p{margin:0 0 9px;text-align:justify}
-    p.vazio{margin:0 0 9px;height:2px}
-    p.assin{text-align:center;margin-top:22px}
-    @media print{body{margin:18mm 16mm}}
+    .timbre{text-align:center;border-bottom:1.2pt solid #111;padding-bottom:6pt;margin-bottom:16pt}
+    .timbre b{display:block;font-size:13pt;letter-spacing:.6pt;text-transform:uppercase}
+    .timbre span{font-size:9pt;letter-spacing:.2pt}
+    h1{font-size:12pt;font-weight:bold;text-align:center;text-transform:uppercase;
+      letter-spacing:.5pt;margin:0 0 16pt}
+    p{margin:0 0 7pt;text-align:justify;text-indent:0}
+    p.vazio{margin:0 0 7pt;height:2pt}
+    p.assin{text-align:center;margin-top:20pt}
+    .rodape{margin-top:20pt;padding-top:5pt;border-top:.6pt solid #999;
+      font-size:8.5pt;text-align:center;color:#333;line-height:1.3}
+    @media print{ body{padding:0;max-width:none} @page{margin:20mm 18mm} }
   </style></head><body>${folhas}
   <script>window.print()<\/script></body></html>`);
   w.document.close();
 }
-function gerarDocEscritorio(chave, cliId){
+// F11 · NADA SAI COM LACUNA SEM ALGUÉM SABER
+// Antes, faltando RG e endereço, a procuração imprimia com a linha em branco
+// e ninguém era avisado: o defeito só aparecia na hora da assinatura, com o
+// cliente na frente. Agora o sistema mostra o que vai sair vazio e pergunta.
+// Quem escolher gerar assim mesmo, gera — mas a escolha fica registrada.
+let _docPendente = null;
+function gerarDocEscritorio(chave, cliId){ conferirAntesDeGerar(cliId, [chave]); }
+function gerarTodosDocs(cliId, chaves){ conferirAntesDeGerar(cliId, chaves||DOCS_PADRAO); }
+function conferirAntesDeGerar(cliId, chaves){
   const c=D.cliPorId.get(cliId); if(!c) return;
-  const ks=D.casosDoCliente.get(cliId)||[];
-  const d=corpoDoDoc(chave, c, especieDoCliente(c, ks)); if(!d) return;
-  janelaImpressao(`${d.rot} — ${c.nome}`, folhaDoc(d, c));
-  registrarDocGerado(cliId, [d.rot]);
+  const falta=faltaParaDocs(c);
+  if(!falta.length) return imprimirDocsEscritorio(cliId, chaves, []);
+  _docPendente={cliId, chaves, falta};
+  caixa(`<h3>Faltam ${falta.length} campo${falta.length>1?"s":""} no cadastro</h3>
+    <p class="meio-sub">Estes saem como linha em branco, para preencher à caneta.
+      Se o documento é para assinar hoje, preencha antes.</p>
+    <div class="form-linha" style="flex-wrap:wrap;margin:10px 0">
+      ${falta.map(f=>`<span class="chip neutro">${esc(f)}</span>`).join(" ")}
+    </div>
+    <div class="form-linha">
+      <button onclick="fecharCaixa();irPreencherCadastro('${cliId}')">Preencher agora</button>
+      <button class="btn-mini" onclick="seguirComLacunas()">Gerar assim mesmo, com as lacunas</button>
+      <button class="btn-mini" onclick="fecharCaixa()">cancelar</button>
+    </div>`);
 }
-function gerarTodosDocs(cliId, chaves){
+function seguirComLacunas(){
+  const d=_docPendente; fecharCaixa(); _docPendente=null;
+  if(d) imprimirDocsEscritorio(d.cliId, d.chaves, d.falta);
+}
+// a aba tem de ser escolhida DEPOIS de abrirFicha: quando o cliente ainda não
+// estava aberto, ela mesma decide a aba (Casos, se houver caso) e engolia a
+// escolha feita antes. O botão prometia o Cadastro e entregava os andamentos.
+async function irPreencherCadastro(cliId){
+  _docPendente=null;
+  await abrirFicha(cliId);
+  abaAtiva=0; subCad="identificacao"; guardar("crm_subcad","identificacao");
+  repintarFicha();
+}
+function imprimirDocsEscritorio(cliId, chaves, falta){
   const c=D.cliPorId.get(cliId); if(!c) return;
   const ks=D.casosDoCliente.get(cliId)||[];
   const esp=especieDoCliente(c, ks);
-  const docs=(chaves||DOCS_PADRAO).map(ch=>corpoDoDoc(ch, c, esp)).filter(Boolean);
-  janelaImpressao(`Documentos — ${c.nome}`, docs.map(d=>folhaDoc(d, c)).join(""));
-  registrarDocGerado(cliId, docs.map(d=>d.rot));
+  const docs=(chaves||[]).map(ch=>corpoDoDoc(ch, c, esp)).filter(Boolean);
+  if(!docs.length) return;
+  janelaImpressao(docs.length===1 ? `${docs[0].rot} — ${c.nome}` : `Documentos — ${c.nome}`,
+                  docs.map(d=>folhaDoc(d, c)).join(""));
+  registrarDocGerado(cliId, docs.map(d=>d.rot), falta);
 }
 // fica registrado no CRM o que foi impresso para o cliente assinar
-async function registrarDocGerado(cliId, rots){
+// o andamento passa a dizer TAMBÉM o que estava em branco na hora de gerar.
+// Sem isso, meses depois ninguém sabe se a lacuna da procuração assinada foi
+// descuido ou escolha consciente daquele dia.
+async function registrarDocGerado(cliId, rots, falta){
   const ks=(D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
   const k=(casoSel&&D.casoPorId.get(casoSel))||ks[0];
   if(!k) return;                       // sem caso ainda: o registro vem depois
+  const lacunas=(falta||[]).length
+    ? ` Saiu com lacuna para preencher à caneta: ${falta.join(", ")}.` : "";
   try{
     await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
-        texto:`📄 Documento(s) gerado(s) para assinatura: ${rots.join("; ")}.`})});
+        texto:`Documento(s) gerado(s) para assinatura: ${rots.join("; ")}.${lacunas}`})});
   }catch(e){ /* impressão não pode falhar por causa do registro */ }
 }
 function caixaDocumentos(c, ks){
