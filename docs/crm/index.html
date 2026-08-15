@@ -493,6 +493,7 @@
   .cli-casos:hover{background:var(--fundo)}
   .cli-casos-seta{color:var(--cinza);font-size:12px}
   .cli-st.semcaso{background:var(--borda-suave);color:var(--cinza)}
+  .cli-st.atend{background:#FFF4D6;color:#8A6100}
   @media (max-width:700px){ .cli-st{font-size:10px;padding:2px 7px} }
   .fechar{margin-left:auto;border:none;background:none;font-size:18px;cursor:pointer;
     color:var(--cinza);border-radius:4px;padding:2px 7px}
@@ -1367,7 +1368,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.97 · um caso, vários processos: sub-menu para escolher, botões separados para a coleta oficial e a do PJe, e marcação de processo que não é nosso</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.98 · o Cadastro virou o ponto de partida do atendimento: anotações com espécie (ou "ainda não definido"), documentos do escritório prontos para assinar, catálogo do benefício e o site interno — tudo em divisões, e o menu enxuto (Cadastro, Lembretes, Casos, Perícias, Honorários)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1585,6 +1586,7 @@ let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
 let subAba = ler("crm_subaba") || "escritorio", instSel = 0;
+let subCad = ler("crm_subcad") || "";   // divisão aberta do Cadastro
 // qual PROCESSO do caso está sendo olhado (número, "" = o principal) e de que
 // FONTE: a consulta oficial do CNJ ou a coleta do PJe. Duas listas de
 // movimentos uma embaixo da outra não se lia — agora é escolha, não pilha.
@@ -3722,7 +3724,7 @@ function render(){
       }
       return porFase.concat(extras);
     })();
-    subt="Casos em recebimento e clientes com parcela em aberto — o dinheiro fica na aba Pagamentos da ficha."; }
+    subt="Casos em recebimento e clientes com parcela em aberto — o dinheiro fica na aba Honorários da ficha."; }
   else if(visao.startsWith("fase:")){ const f=visao.slice(5);
     titulo=FASES.find(x=>x[0]===f)[1]; casosSel=casosDaFase(f); }
   else { titulo=visao; casosSel=[]; }
@@ -5140,7 +5142,7 @@ async function criarCliente(){
   if(dataAg){
     // atendimento marcado no cadastro: a ficha abre direto na lista de
     // documentos do benefício — marcar, imprimir, virar checklist
-    casoSel=caso.id; abaAtiva=8; repintarFicha();
+    casoSel=caso.id; abaAtiva=0; subCad="documentos"; repintarFicha();
     aviso("📋 Marque os documentos que o cliente deve trazer no atendimento — imprima a lista; cada item vira checklist do caso", false);
   }
 }
@@ -7148,7 +7150,7 @@ function pintarFicha(){
       ? `<span class="cli-st lemb" title="nenhum processo em andamento, mas o escritório avisa de tempos em tempos — veja a aba 🔔 Lembretes">🟡 Sem processo — ${lembCli.length} lembrete${lembCli.length>1?"s":""} ativo${lembCli.length>1?"s":""}</span>`
       : ks.length
         ? `<span class="cli-st inativo" title="nenhum trabalho em andamento para este cliente">🔴 Cliente inativo — ${ks.length>1?`os ${ks.length} casos`:"o único caso"} encerrado${ks.length>1?"s":""}${encDesde?` (último em ${fmt(dataSP(encDesde))})`:""}</span>`
-        : `<span class="cli-st semcaso" title="cliente cadastrado sem nenhum caso">sem casos</span>`;
+        : `<span class="cli-st atend" title="cliente em atendimento — ainda não virou caso; as anotações e os documentos pedidos ficam na aba Cadastro">🟡 Em atendimento — buscando documentos</span>`;
   document.getElementById("detalhe").innerHTML=`
   <div class="det-principal">
   <div class="det-rolagem">
@@ -7179,21 +7181,24 @@ function pintarFicha(){
     </div>
     <div class="menu-topo">
       ${/* abas em pivot claro (espec. 7.2): texto limpo, sem emoji de ícone */""}
+      ${/* Documentos saiu do menu (08.98): ele é passo do atendimento, e o
+           atendimento começa no Cadastro — o botão está lá dentro */""}
       <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">Cadastro</button>
-      <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">Documentos</button>
       <button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>
+      ${/* o menu tem só as cinco divisões do cliente (pedido do Paulo):
+           Cadastro, Lembretes, Casos, Perícias e Honorários. O caso escolhido
+           aparece no cartão de fatos, não no rótulo da aba. */""}
       <button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
-        title="escolher o processo do cliente (não erra o destino)">${
-          (kk=>kk?esc(tituloCaso(kk)):(processosDe(ks).length>1?"Processos":"Processo"))(casoSel&&D.casoPorId.get(casoSel))} ▾</button>
+        title="${(kk=>kk?"caso aberto: "+esc(tituloCaso(kk)):"escolher o caso do cliente")(casoSel&&D.casoPorId.get(casoSel))}">Casos${
+          (n=>n>1?` (${n})`:"")(processosDe(ks).length)} ▾</button>
       <button class="mt ${abaAtiva===3?"on":""}" data-vv="3">Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}</button>
-      <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Pagamentos${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
-      <button class="mt ${abaAtiva===5?"on":""}" data-vv="5">Mensagens</button>
+      <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
     </div>
     <button class="cel-tudo" onclick="fichaTudo()">⋯ mostrar tudo da ficha</button>
   </div>
 
   <div class="painel ${abaAtiva===0?"ativo":""}" data-p="0">
-    ${painelCadastroFicha(c, ks, creds, vincs)}
+    ${painelCadastroFicha(c, ks, creds, vincs, evs)}
   </div>
 
   <div class="painel ${abaAtiva===2?"ativo":""}" data-p="2">
@@ -7205,7 +7210,7 @@ function pintarFicha(){
         // lista 💵 Pagamentos do To Do agora chega direto na aba, sem caso.
         if(!processosDe(ks).length && (pagK.length || pgs.length))
           return `<p class="meio-sub">Este cliente não tem processo em andamento — o que existe é
-            <strong>recebimento</strong>. Veja a aba <strong>💰 Pagamentos</strong> aqui em cima.</p>`;
+            <strong>recebimento</strong>. Veja a aba <strong>💰 Honorários</strong> aqui em cima.</p>`;
         return processosDe(ks).length>1?`<p class="meio-sub">Andamentos de todos os casos juntos — escolha um caso no menu ao lado para ver só o dele.</p>`:"";
       }
       // Ordem da tela: o sub-menu decide O QUE olhar; o cartão de fatos diz
@@ -7251,9 +7256,6 @@ function pintarFicha(){
     ${painelPagamentosFicha(ks, ands, pgs, pagK)}
   </div>
 
-  <div class="painel ${abaAtiva===5?"ativo":""}" data-p="5">
-    ${painelMensagensFicha(c, ks, evs)}
-  </div>
 
   <div class="painel ${abaAtiva===7?"ativo":""}" data-p="7">
     <h3 style="margin-bottom:10px">＋ Novo caso para ${esc(c.nome)}</h3>
@@ -7276,26 +7278,6 @@ function pintarFicha(){
     ${painelLembretes(c)}
   </div>
 
-  <div class="painel ${abaAtiva===8?"ativo":""}" data-p="8">
-    <h3>🖨 Documentos para o INSS</h3>
-    <p class="meio-sub">O catálogo completo do site interno, aqui dentro: escolha o benefício,
-      confira a lista, marque os itens da atividade do cliente e solicite — imprime a lista
-      e cada item vira checklist no caso, com andamento datado.</p>
-    <div class="form-linha" style="align-items:center">
-      <label style="font-size:12px;color:var(--cinza)">Benefício:
-        <select id="doc-ben" onchange="renderDocCatalogo()">${(()=>{
-          const benAtual=(casoSel&&(D.casoPorId.get(casoSel)||{}).beneficio)||"";
-          const selDoc=docDe(benAtual);
-          return D.docs.map(d=>`<option value="${esc(d.beneficio)}" ${selDoc&&selDoc.beneficio===d.beneficio?"selected":""}>${esc(d.beneficio)}</option>`).join("");
-        })()}</select></label>
-      <label style="font-size:12px;color:var(--cinza)">Aplicar em:
-        <select id="doc-destino">
-          ${ks.filter(x=>x.fase!=="encerrado").map(x=>`<option value="${x.id}" ${casoSel===x.id?"selected":""}>caso em andamento: ${esc(tituloCaso(x))}</option>`).join("")}
-          <option value="__novo__">➕ criar caso NOVO com este benefício</option>
-        </select></label>
-    </div>
-    <div id="doc-conteudo"></div>
-  </div>
   </div>
 
   </div>`;
@@ -7443,13 +7425,29 @@ function pintarFicha(){
     abrirFicha(clienteAberto);
   });
   ligarChecklistFicha();
-  if(abaAtiva===8) renderDocCatalogo();
+  if(abaAtiva===0 && subCad==="documentos") renderDocCatalogo();
 }
 
 // aba 0 da ficha — extraída da pintarFicha (era um literal de 91 linhas)
-function painelCadastroFicha(c, ks, creds, vincs){
+function painelCadastroFicha(c, ks, creds, vincs, evs){
+  // o Cadastro é o ponto de partida do advogado e cresceu: anotações do
+  // atendimento, dados do cliente, documentos e consulta. Sub-menu para não
+  // virar rolagem infinita (pedido do Paulo) — sem caso, abre nas anotações.
+  const semCaso = !(ks||[]).length;
+  const cd = SUB_CAD.some(([v])=>v===subCad) ? subCad : (semCaso ? "anotacoes" : "dados");
   return `
-    <div class="apos-faixa">${caixaApos(c)}</div>
+    <div class="sub-menu" style="width:100%">
+      ${SUB_CAD.map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
+        v==="anotacoes"&&semCaso?` <span class="meio-sub">•</span>`:""}</button>`).join("")}
+    </div>
+    ${cd==="anotacoes" ? caixaAtendimento(c, ks) : ""}
+    ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) : ""}
+    ${cd==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}
+    ${cd==="consulta" ? painelConsulta() : ""}
+    ${cd!=="dados" ? "" : `
+    ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
+         data que chega, não dado de cadastro (pedido do Paulo) */""}
+    ${fichaCivil(c)}
     ${(()=>{
       const credInss = creds.find(cr=>cr.tipo==="meu_inss");
       const outrasCreds = creds.filter(cr=>cr.tipo!=="meu_inss");
@@ -7536,12 +7534,53 @@ function painelCadastroFicha(c, ks, creds, vincs){
         <select id="ag-tipo"><option value="002">002 — cliente antigo</option><option value="001">001 — cliente novo</option></select>
         <input type="date" id="ag-data"><input type="time" id="ag-hora" value="09:00">
         <button onclick="agendarAtendimento('${c.id}')">Abrir no Google Agenda</button>
-        <button class="btn-mini" onclick="abaAtiva=8;repintarFicha()"
+        <button class="btn-mini" onclick="irSubCad('documentos')"
           title="a lista do benefício, sugerida pelo sistema — marcar, imprimir e cada item vira checklist do caso">📋 documentos para trazer</button>
       </div>
       <p style="margin-top:8px;font-size:12px;color:var(--cinza)">Toda visualização de senha é registrada (quem e quando).</p>
     </details>`;
-    })()}`;
+    })()}`}`;
+}
+// as divisões do Cadastro, na ordem em que o atendimento acontece
+const SUB_CAD = [["anotacoes","Anotações"],["dados","Dados do cliente"],
+                 ["documentos","Documentos"],["mensagens","Mensagens"],["consulta","Consulta"]];
+function irSubCad(qual){ subCad = qual; guardar("crm_subcad", qual); repintarFicha(); }
+
+// o catálogo de documentos do benefício (era a aba 8) agora vive na divisão
+// 🖨 Documentos do Cadastro — o atendimento não pula de aba para pedir papel
+function catalogoNoCadastro(c, ks){
+  return `
+    <h3>🖨 Documentos para o INSS</h3>
+    <p class="meio-sub">O catálogo completo do site interno, aqui dentro: escolha o benefício,
+      confira a lista, marque os itens da atividade do cliente e solicite — imprime a lista
+      e cada item vira checklist no caso, com andamento datado.</p>
+    <div class="form-linha" style="align-items:center">
+      <label style="font-size:12px;color:var(--cinza)">Benefício:
+        <select id="doc-ben" onchange="renderDocCatalogo()">${(()=>{
+          const benAtual=(casoSel&&(D.casoPorId.get(casoSel)||{}).beneficio)||"";
+          const selDoc=docDe(benAtual);
+          return D.docs.map(d=>`<option value="${esc(d.beneficio)}" ${selDoc&&selDoc.beneficio===d.beneficio?"selected":""}>${esc(d.beneficio)}</option>`).join("");
+        })()}</select></label>
+      <label style="font-size:12px;color:var(--cinza)">Aplicar em:
+        <select id="doc-destino">
+          ${ks.filter(x=>x.fase!=="encerrado").map(x=>`<option value="${x.id}" ${casoSel===x.id?"selected":""}>caso em andamento: ${esc(tituloCaso(x))}</option>`).join("")}
+          <option value="__novo__">➕ criar caso NOVO com este benefício</option>
+        </select></label>
+    </div>
+    <div id="doc-conteudo"></div>
+`;
+}
+// o site interno do escritório dentro do CRM (pedido do Paulo): contribuições,
+// qualidade de segurado, espécies e indicadores do CNIS, na tela do advogado
+const SITE_INTERNO = "https://advprevidenciaria.netlify.app/";
+function painelConsulta(){
+  return `<div class="form-linha" style="align-items:center">
+      <span class="meio-sub" style="flex:1">Site interno do escritório — documentos por benefício, códigos GPS,
+        qualidade de segurado, espécies e indicadores do CNIS. As divisões ficam nas abas do próprio site.</span>
+      <a class="btn-mini" href="${SITE_INTERNO}" target="_blank" rel="noopener" style="text-decoration:none">↗ abrir em outra aba</a>
+    </div>
+    <iframe src="${SITE_INTERNO}" title="Site interno do escritório" loading="lazy"
+      style="width:100%;height:72vh;border:1px solid var(--borda);border-radius:10px;background:#fff"></iframe>`;
 }
 
 // aba 3 da ficha — extraída da pintarFicha (era um literal de 22 linhas)
@@ -7703,7 +7742,7 @@ function painelMensagensFicha(c, ks, evs){
     </div>`;
 }
 
-// muda a aba ativa da ficha por código (ex.: atalho "ver na aba Pagamentos")
+// muda a aba ativa da ficha por código (ex.: atalho "ver na aba Honorários")
 function irAba(i){ abaAtiva=i; repintarFicha(); }
 
 // pop-up "⚖️ Processos": escolher o processo certo sem errar o destino
@@ -7714,7 +7753,7 @@ function menuCasosDoCliente(ev, cliId){
 }
 // Caso em fase de PAGAMENTO não é mais um processo em andamento: o trabalho
 // jurídico acabou e o que falta é dinheiro entrar. Ele sai do menu ⚖️ e passa
-// a viver na aba 💰 Pagamentos — foi para isso que ela existe.
+// a viver na aba 💰 Honorários — foi para isso que ela existe.
 function processosDe(ks){ return (ks||[]).filter(k=>k.fase!=="pagamento"); }
 function menuProcessos(ev, ks){
   ks = processosDe(ks);
@@ -8534,8 +8573,9 @@ function painelLembretes(c){
         </ul></div>`:""}
     </div>`;
   };
-  return `${apos.length&&c.aposentado!==true?`<p class="meio-sub" style="margin-bottom:8px">🎂 Aposentadoria provável: ${
-      apos.map(a=>`${esc(a.especie)} em ${fmt(a.data)}`).join(" · ")} — cuidada na aba Cadastro e no Meu Dia.</p>`:""}
+  // o quadro da aposentadoria provável vive AQUI (08.98): é aviso de data que
+  // chega, e o lugar de aviso é esta aba — não o cadastro
+  return `<div class="apos-faixa" style="justify-content:flex-start">${caixaApos(c)}</div>
     ${ls.map(linha).join("") || `<p class="meio-sub">Nenhum lembrete ativo. Crie abaixo — é o lugar do
       "avisar de tempos em tempos": contribuição do INSS, cadastro para renovar, retomar contato.</p>`}
     <div class="caso" style="margin-top:10px">
@@ -11971,7 +12011,7 @@ function agendarAtendimento(cliId){
   // agendou -> a lista do que o cliente deve TRAZER vem junto (pedido do
   // Paulo): a aba 🖨 abre no benefício do caso, com a sugestão do sistema
   // pronta para marcar, imprimir e virar checklist
-  abaAtiva=8; repintarFicha();
+  abaAtiva=0; subCad="documentos"; repintarFicha();
   aviso("📋 Marque os documentos que o cliente deve trazer — imprima a lista; cada item vira checklist do caso", false);
 }
 async function novoModelo(){
@@ -12019,6 +12059,696 @@ async function aplicarChecklistCaso(caso, silencioso){
   }
   if(!silencioso && novos.length) aviso(`Checklist do benefício aplicado — ${novos.length} etapas 📋`);
   return novos.length;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// 📇 ATENDIMENTO — o cadastro é a PRIMEIRA tela do cliente (08.98)
+// ══════════════════════════════════════════════════════════════════════════
+// O caso nasce aqui, não numa aba separada: quem atende anota o que o cliente
+// contou, define a espécie do benefício/serviço (ou deixa "ainda não
+// definido"), pede os documentos — que saem impressos para o cliente e ficam
+// registrados no CRM — e só então vira caso. Indicação de pagamento ao INSS
+// não é caso: vira lembrete com o cronograma inteiro (pedido do Paulo).
+
+// os dados civis moram em clientes.campos.civil: o cadastro do banco tem só
+// nome/CPF/nascimento/telefone/endereço, e procuração e contrato precisam de
+// RG, estado civil, profissão e o endereço quebrado em bairro/cidade/UF/CEP
+const ESPECIE_PAGAMENTOS = "Indicação de pagamentos ao INSS";   // não vira caso: vira lembrete
+const CAMPOS_CIVIS = [
+  ["rg",          "RG",           "text"],
+  ["estado_civil","Estado civil", "select", ["solteiro(a)","casado(a)","divorciado(a)","viúvo(a)","união estável","separado(a)"]],
+  ["profissao",   "Profissão",    "text"],
+  ["sexo",        "Sexo",         "select", ["feminino","masculino"]],
+  ["bairro",      "Bairro",       "text"],
+  ["cidade",      "Cidade",       "text"],
+  ["uf",          "Estado (UF)",  "text"],
+  ["cep",         "CEP",          "text"],
+];
+const civilDe = c => ((c && c.campos) || {}).civil || {};
+// o que ainda falta para os documentos saírem sem lacuna
+function faltaParaDocs(c){
+  const v=civilDe(c), falta=[];
+  if(!c.nome) falta.push("nome");
+  if(!c.cpf) falta.push("CPF");
+  if(!c.dn) falta.push("nascimento");
+  if(!c.endereco) falta.push("endereço");
+  for(const [ch,rot] of CAMPOS_CIVIS) if(!v[ch] && ch!=="sexo") falta.push(rot.toLowerCase());
+  return falta;
+}
+function fichaCivil(c){
+  const v=civilDe(c), falta=faltaParaDocs(c);
+  return `<details class="cartao-civil" ${falta.length?"":""} style="margin-bottom:12px">
+    <summary style="cursor:pointer;font-weight:600">📇 Dados civis — usados na procuração, no contrato e nas declarações
+      ${falta.length?`<span class="chip urg" title="sem isto os documentos saem com lacuna">faltam ${falta.length}</span>`
+                    :`<span class="chip verde">completo ✔</span>`}</summary>
+    <div class="form-linha" style="flex-wrap:wrap;margin-top:8px">
+      ${CAMPOS_CIVIS.map(([ch,rot,tipo,ops])=>tipo==="select"
+        ? `<label style="font-size:12px;color:var(--cinza)">${rot}
+            <select id="cv-${ch}" style="display:block"><option value="">—</option>
+              ${ops.map(o=>`<option ${v[ch]===o?"selected":""}>${o}</option>`).join("")}</select></label>`
+        : `<label style="font-size:12px;color:var(--cinza)">${rot}
+            <input id="cv-${ch}" value="${esc(v[ch]||"")}" style="display:block;width:150px"></label>`).join("")}
+      <button style="align-self:flex-end" onclick="salvarCivil('${c.id}')">Guardar</button>
+    </div>
+    ${falta.length?`<p class="meio-sub" style="margin-top:6px">Ainda falta: ${esc(falta.join(", "))} — os documentos saem com
+      <b>____</b> no lugar e é só preencher à caneta.</p>`:""}
+  </details>`;
+}
+async function salvarCivil(cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const novo={};
+  for(const [ch] of CAMPOS_CIVIS){
+    const e=document.getElementById("cv-"+ch);
+    const val=e?(e.value||"").trim():"";
+    if(val) novo[ch]= ch==="uf" ? val.toUpperCase().slice(0,2) : val;
+  }
+  c.campos={...(c.campos||{}), civil:novo};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})});
+  }catch(e){ return aviso("Não consegui guardar os dados civis — tente de novo"); }
+  aviso("Dados civis guardados ✔"); abrirFicha(cliId);
+}
+
+// ── OS DOCUMENTOS DO ESCRITÓRIO ───────────────────────────────────────────
+// Texto fiel aos modelos .docx do escritório. Só o contrato e o termo de
+// representação mudam conforme a espécie — o resto é sempre igual.
+const QUALIF = "<NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na Av./Rua <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>";
+const ESCRITORIO_RODAPE = "Rua Rui Barbosa, nº 663, Centro, Monte Alto/SP, CEP 15.910-000, fone (16) 3242-2908 – Cel (16) 98140-9271";
+
+const CONTRATO_PARTES = `CONTRATANTE: ${QUALIF};
+
+CONTRATADOS: PAULO ROBERTO TERCINI FILHO, brasileiro, solteiro, advogado inscrito na OAB/SP sob o nº 331.110 e no CPF/MF nº 224.627.048-09, MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado inscrito na OAB/SP sob o nº 464.306 e no CPF/MF nº 105.950.296-80; AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, portadora RG nº. 44.211.638-X, inscrita no CPF nº. 381.533.048-36, inscrita na OAB/SP sob o nº. 511.528, todos com escritório profissional na ${ESCRITORIO_RODAPE}, onde recebem notificações e intimações em geral.
+
+CLÁUSULA PRIMEIRA: O Contratante, neste ato, contrata os serviços profissionais dos Advogados Contratados, acima nominados, para defesa de seus interesses, em PEDIDO ADMINISTRATIVO DE CONCESSÃO OU REVISÃO DE BENEFÍCIO PREVIDENCIÁRIO e para ingressar judicialmente com AÇÃO PREVIDENCIÁRIA DE CONCESSÃO OU REVISÃO DE BENEFÍCIO PREVIDENCIÁRIO, tendo como requerido o INSS – Instituto Nacional do Seguro Social;
+
+CLÁUSULA SEGUNDA: O Contratado se obriga a patrocinar os interesses do Contratante nos processos supra, em todos os seus termos até final conclusão, velando da melhor forma possível pelos interesses do Contratante;
+
+CLÁUSULA TERCEIRA: Pela contraprestação dos serviços prestados pelo Contratado, fica justo e acertado que o Contratante pagará os honorários advocatícios da seguinte forma:`;
+
+const CONTRATO_ATRASADOS = "30% (trinta por cento) sobre o valor bruto dos atrasados que serão recebidos por meio de Requisição de Pequeno Valor (RPV) ou Precatório, com vencimento na data do recebimento da RPV ou do Precatório.";
+const PAR_BRUTO = "PARÁGRAFO PRIMEIRO: Entende-se como valor bruto, descrito no item 2, ‘b’, aquele recebido por meio de Requisição de Pequeno Valor e/ou Precatório na forma integral, sem desconto de imposto de renda.";
+const PAR_NOVO_BEN = "PARÁGRAFO SEGUNDO: Se, durante o trâmite do processo administrativo ou judicial, for solicitado e concedido novo benefício ao CONTRATANTE, será devida a quantia de 30% sobre cada parcela recebida deste novo benefício até o momento que ocorrer o trânsito em julgado do pedido anterior, com vencimento na data de recebimento de cada benefício, bem como 30% (trinta por cento) sobre o valor bruto dos atrasados do benefício anterior que serão recebidos por meio de Requisição de Pequeno Valor (RPV) ou Precatório, com vencimento na data do recebimento da RPV ou do Precatório.";
+
+const CONTRATO_FIM = `CLÁUSULA QUARTA: O contratante autoriza a separação dos honorários contratados do valor principal, por ocasião da expedição do respectivo requisitório de pagamento ou precatório, nos termos do art. 22, §4º do Estatuto da Advocacia e da OAB (Lei nº 8.906/94).
+
+CLÁUSULA QUINTA: As despesas efetuadas pelo Contratado, decorrentes direta ou indiretamente do processo administrativo e/ou judicial, serão reembolsadas pelo Contratante no momento em que forem realizadas, mediante apresentação de demonstrativo consolidado de custas e despesas acompanhado dos respectivos comprovantes de pagamento.
+§1º: As despesas incluem custas judiciais, viagens, fotocópias, autenticações de documentos, expedição de certidões, assistentes técnicos, deslocamentos, interurbanos e quaisquer outras que decorrerem dos serviços prestados, objeto deste contrato.
+§2º: A não apresentação do demonstrativo consolidado de despesas ou dos comprovantes de pagamento desobriga o Contratante a reembolsar respectivas custas e despesas.
+
+CLÁUSULA SEXTA: O não pagamento dos honorários nas datas aprazadas importará em multa contratual de 10% (dez por cento) sobre os valores devidos, atualização monetária pelo INPC e juros moratórios de 1% ao mês.
+
+CLÁUSULA SÉTIMA: Em caso de desistência da ação, expressa ou tácita, ou substituição do Advogado Contratado por parte do Contratante, os Honorários Advocatícios pactuados serão devidos integralmente, sendo que será apurado mediante cálculo aritmético simples, projetado sobre o montante que poderá ser auferido com a demanda em questão, independentemente do estado em que se encontrar o processo em epígrafe;
+PARÁGRAFO ÚNICO: A ausência injustificada do Contratante em audiências será considerada desistência do processo.
+
+CLÁUSULA OITAVA: Na hipótese de acordo judicial ou extrajudicial, decorrentes de ato de vontade do contratante, não inviabiliza a exigência dos honorários contratados com base no valor acordado ou na liquidação dos pedidos, nos termos do art. 22, §4º da Lei 8.906/94.
+
+CLÁUSULA NONA: Em caso de inadimplemento do pagamento dos honorários contratados, o Contratado poderá realizar notificação extrajudicial ao Contratante, concedendo prazo para quitação da dívida. A notificação extrajudicial será documento hábil para a execução do presente contrato.
+
+CLÁUSULA DÉCIMA: O não pagamento dos honorários nas datas aprazadas importará em multa contratual de 10% (dez por cento) sobre os valores devidos, atualização monetária pelo INPC e juros moratórios de 1% ao mês.
+
+CLÁUSULA DÉCIMA PRIMEIRA: A possibilidade de propositura de outras ações próprias e seus valores correspondentes será objeto de novo contrato de honorários advocatícios ou aditivo a este, mediante prévia e expressa concordância das partes.
+
+CLÁUSULA DÉCIMA SEGUNDA: O Contratante permite que os Contratados utilizem a senha GOV.BR para acessar o sistema do MEUINSS.
+
+CLÁUSULA DÉCIMA TERCEIRA: Os canais oficiais de comunicação do escritório são o telefone fixo (16) 3242-2908, o celular (16) 98140-9271 e o endereço Rua Rui Barbosa, 663, Centro, na cidade de Monte Alto - SP. O Contratante se compromete a não aceitar ligações ou comunicações de outros números ou advogados que não sejam os expressamente previstos neste contrato.
+
+CLÁUSULA DÉCIMA QUARTA: Estipulam o Foro da comarca de Monte Alto - SP, para dirimir litígios decorrentes do presente contrato.
+
+E, por estarem assim contratados assinam o presente contrato em duas vias de igual teor.
+
+<DATAEXTENSO>
+
+_____________________________________
+<NOMESEGURADO>
+Contratante
+
+_____________________________________
+PAULO ROBERTO TERCINI FILHO
+MARCOS HENRIQUE DE PÁDUA AMORIM
+AMANDA CRISTIANE CARNEIRO GARCEZ
+Advogados Contratados`;
+
+// as 4 variantes do contrato: muda a CLÁUSULA TERCEIRA (os honorários) e,
+// na revisão, cai o parágrafo do "novo benefício"
+const CONTRATO_VARIANTES = {
+  padrao: {rot:"Aposentadoria · Pensão por morte · Auxílio-reclusão",
+    honor:`Se a concessão do benefício ocorrer quando do pedido junto ao INSS será devido, após a implantação do benefício, o valor correspondente a 3 (três) primeiros benefícios, na forma integral e com valor atualizado, com vencimento na data do recebimento de cada benefício;
+
+Se a concessão do benefício ocorrer no âmbito de Recurso Administrativo ou na esfera Judicial será devido:
+Os 3 (três) primeiros benefícios, na forma integral e com valor atualizado, após a implantação do benefício, com vencimento na data do recebimento de cada benefício; e,
+
+${CONTRATO_ATRASADOS}`, novoBen:true},
+  acidente: {rot:"Auxílio-acidente",
+    honor:`Os 3 (três) primeiros benefícios, na forma integral e com valor atualizado, após a implantação do benefício, com vencimento na data do recebimento de cada benefício; e,
+
+${CONTRATO_ATRASADOS}`, novoBen:true},
+  incapacidade: {rot:"Benefícios por incapacidade",
+    honor:`Se a concessão do benefício ocorrer quando do pedido junto ao INSS será devido, após a implantação do benefício, o valor correspondente a 20% (vinte por cento) sobre 06 (seis) primeiros benefícios, na forma integral e com valor atualizado, com vencimento na data do recebimento de cada benefício;
+
+Se a concessão do benefício ocorrer no âmbito de Recurso Administrativo ou na esfera Judicial será devido:
+30% (trinta por cento) sobre 06 (seis) primeiros benefícios atualizados, com vencimento na data do recebimento de cada benefício. Se o benefício for pago por período menor do que 06 (seis) meses após a sua implantação, os honorários serão correspondentes a 30% sobre o número de meses que for pago o benefício; e,
+
+${CONTRATO_ATRASADOS}`, novoBen:true},
+  revisao: {rot:"Revisões",
+    honor:`As 3 (três) primeiras diferenças obtidas com a revisão da aposentadoria, iniciadas após a implantação do novo benefício, com vencimento na data do recebimento de cada benefício; e,
+
+${CONTRATO_ATRASADOS}`, novoBen:false},
+};
+// qual contrato a espécie pede — a escolha do Paulo, por palavra da espécie
+function variantePorEspecie(especie){
+  const b=dsa(especie||"");
+  if(!b) return "padrao";
+  if(/revis|recalcul/.test(b)) return "revisao";
+  if(/acidente/.test(b) && !/auxilio doenca|incapacidade/.test(b)) return "acidente";
+  if(/incapacidade|auxilio doenca|invalidez|lo?as|bpc|deficien/.test(b)) return "incapacidade";
+  return "padrao";
+}
+function textoContrato(chave){
+  const v=CONTRATO_VARIANTES[chave]||CONTRATO_VARIANTES.padrao;
+  const pars=[PAR_BRUTO];
+  if(v.novoBen) pars.push(PAR_NOVO_BEN);
+  pars.push(`PARÁGRAFO ${v.novoBen?"TERCEIRO":"SEGUNDO"}: Os valores de honorários mencionados nesta cláusula referem-se ao valor bruto do benefício ou dos atrasados, salvo disposição expressa em contrário.`);
+  return `${CONTRATO_PARTES}
+${v.honor}
+
+${pars.join("\n\n")}
+
+${CONTRATO_FIM}`;
+}
+
+const DOCS_ESCRITORIO = {
+  proc_judicial: {rot:"Procuração Judicial", titulo:"PROCURAÇÃO “AD JUDICIA ET EXTRA”", texto:
+`OUTORGANTE: ${QUALIF};
+
+OUTORGADOS: PAULO ROBERTO TERCINI FILHO, inscrito na OAB/SP sob nº 331.110; MARCOS HENRIQUE DE PÁDUA AMORIM, inscrito na OAB/SP sob nº 464.306; AMANDA CRISTIANE CARNEIRO GARCEZ, inscrita na OAB/SP sob o nº. 511.528, todos com escritório profissional na Rua Rui Barbosa, nº 663, Centro, na cidade de Monte Alto, Estado de São Paulo;
+
+PODERES: Para o foro em geral, com cláusula “ad judicia et extra”, podendo representar a outorgante em qualquer Juízo, Instância ou Tribunal, podendo propor contra quem de direito as ações competentes e defendê-la nas contrárias, usando os recursos legais e praticando os atos judiciais necessários, e, especialmente, para propor AÇÃO PREVIDENCIÁRIA, com poderes para transigir, transferir, renunciar, dar e receber quitação, assinar termos, firmar compromissos, substabelecer, enfim, praticar em conjunto ou isoladamente todos os demais atos que lhe convier e entender necessários para o cabal e fiel cumprimento do presente mandato.
+
+<DATAEXTENSO>
+
+______________________________________
+<NOMESEGURADO>`},
+
+  proc_adm: {rot:"Procuração Administrativa", titulo:"PROCURAÇÃO", texto:
+`Pelo presente instrumento particular de procuração, ${QUALIF}, nomeia e constitui seu bastante procurador o Dr. Paulo Roberto Tercini Filho, brasileiro, solteiro, advogado, portador do RG nº. 44086138-X, inscrito no CPF nº. 224.627.048-09, inscrito na OAB/SP sob o nº. 331.110 e portador do NIT nº. 11966884529; Dr. Marcos Henrique de Pádua Amorim, brasileiro, solteiro, advogado, portador do RG nº. 60.366.107-5, inscrito no CPF nº. 105.950.296-80, inscrito na OAB/SP sob o nº. 464.306 e portador do NIT nº. 20061810473; e Dra. Amanda Cristiane Carneiro Garcez, brasileira, solteira, advogada, portadora RG nº. 44.211.638-X, inscrita no CPF nº. 381.533.048-36, inscrita na OAB/SP sob o nº. 511.528 e portador do NIT nº. 2725914270-2, todos com escritório profissional na cidade de Monte Alto, Estado de São Paulo, na Rua Rui Barbosa, n. 663, Centro, fone: (16) 3242-2908, CEP 15.910-000, com poderes em qualquer Foro, Juízo, Tribunal ou ente da administração pública, onde com esta se apresentar, defender os interesses do outorgante, podendo peticionar, acompanhar e requerer benefícios/serviços, revisão e interpor recursos perante o INSS – Instituto Nacional do Seguro Social, usando os recursos legais e acompanhando-os, conferindo-lhe ainda, os poderes especiais para renunciar, receber, dar quitação, fazer acordos, desistir, transigir, solicitar e receber documentos, inclusive laudos médicos e laudos sociais, nos termos do inc. II, §1º do art. 31, da Lei nº 12.527/2011, além de possibilitar o requerimento de senha do GOV.BR/MEUINSS, bem como praticar os demais atos para o perfeito desempenho deste mandato, o que dará por bom, firme e valioso, podendo os outorgados substabelecer no todo ou em parte, com ou sem reserva de iguais poderes.
+
+<DATAEXTENSO>
+
+________________________________
+<NOMESEGURADO>`},
+
+  pobreza: {rot:"Declaração de Pobreza", titulo:"DECLARAÇÃO DE POBREZA", texto:
+`Eu, ${QUALIF}, DECLARO que sou pobre, e que não posso arcar com as custas processuais e despesas judiciais, sem que haja prejuízo para o meu próprio sustento.
+
+Assim sendo, requeiro os benefícios da Justiça Gratuita, de acordo com os dispositivos contidos na Lei Federal nº 1060/50.
+
+<DATAEXTENSO>
+
+______________________________________
+<NOMESEGURADO>`},
+
+  beneficiario: {rot:"Declaração de Beneficiário", titulo:"DECLARAÇÃO DE RECEBIMENTO DE PENSÃO OU APOSENTADORIA EM OUTRO REGIME DE PREVIDÊNCIA", texto:
+`ANEXO XXIV — INSTRUÇÃO NORMATIVA PRES/INSS Nº 128, DE 28 DE MARÇO DE 2022
+
+Eu, <NOMESEGURADO>, portador(a) do CPF nº <CPF> e RG nº <RG>, declaro, sob as penas do art. 299 do Código Penal, que:
+
+( X ) não recebo aposentadoria/pensão de outro regime e previdência.
+(   ) recebo aposentadoria/pensão de outro regime de previdência.
+
+Caso receba aposentadoria ou pensão de outro regime de previdência, deverá declarar:
+Tipo do benefício: (   ) Pensão*   (   ) Aposentadoria
+*Caso opção seja Pensão, informar se a relação com o instituidor era como cônjuge ou companheiro(a) - S/N (   )
+- Ente de origem: (   ) Estadual   (   ) Municipal   (   ) Federal
+- Tipo de servidor: (   ) Civil   (   ) Militar
+Data de início do benefício no outro regime: _______/_______/_______
+Nome do órgão da pensão/aposentadoria: ______________________________________
+Última remuneração bruta*: R$___________________   Mês/ano: ______/_______
+*última remuneração bruta sem considerar valores de 13º salário (abono anual).
+
+Na Emenda Constitucional nº 103, de 12 de novembro de 2019, art. 24, § 1º, a acumulação de pensão por morte com outro benefício, sujeita à redução do valor daquele menos vantajoso, é admitida nas seguintes situações:
+I - pensão por morte deixada por cônjuge ou companheiro (a) do RGPS com pensão por morte concedida por outro regime de previdência social, inclusive as decorrentes das atividades militares, exceto regime de previdência complementar; e
+II - pensão por morte deixada por cônjuge ou companheiro (a) de qualquer regime de previdência social, inclusive as decorrentes das atividades militares, com aposentadoria concedida por qualquer regime de previdência social ou com proventos de inatividade decorrentes das atividades militares, exceto regime de previdência complementar.
+
+A declaração falsa ou diversa de fato ou situação real ocorrida, além de obrigar à devolução de eventuais importâncias recebidas indevidamente, quando for o caso, sujeitar-me-á às penalidades previstas nos arts. 171 e 299 do Código Penal.
+
+<DATAEXTENSO>
+
+_____________________________________________________
+Assinatura e identificação do (a) requerente ou representante legal`},
+
+  termo: {rot:"Termo de Representação", titulo:"TERMO DE REPRESENTAÇÃO E AUTORIZAÇÃO DE ACESSO A INFORMAÇÕES PREVIDENCIÁRIAS", texto:
+`Eu, <NOMESEGURADO>, inscrito (a) no CPF nº <CPF>, RG nº <RG>, residente e domiciliado (a) na <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>, representado pelos advogados DR. PAULO ROBERTO TERCINI FILHO, CPF nº 224.627.048-09, inscrito na OAB/SP Nº 331.110, NIT nº 11966884529 e DR. MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado, portador do RG nº. 60.366.107-5, inscrito no CPF nº. 105.950.296-80, inscrito na OAB/SP sob o nº. 464.306 e portador do NIT nº. 20061810473; DRA. AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, portadora RG nº. 44.211.638-X, inscrita no CPF nº. 381.533.048-36, inscrita na OAB/SP sob o nº. 511.528 e portador do NIT nº. 2725914270-2, CONFIRO PODERES ESPECÍFICOS para me representar perante o INSS na solicitação do serviço ou benefício abaixo indicado e AUTORIZO o (a) referido (a) profissional a ter acesso apenas às informações pessoais necessárias a subsidiar o requerimento eletrônico do serviço ou benefício abaixo elencado:
+
+( X ) Atualização Cadastral
+( X ) Atualização de Vínculos e Remunerações
+( X ) <ESPECIE>
+
+Podendo, para tanto, praticar os atos necessários ao cumprimento deste mandato, em especial, prestar informações, acompanhar requerimentos, cumprir exigências, ter vistas e tomar ciência de decisões sobre processos de requerimento de benefícios operacionalizados pelo Instituto.
+
+<DATAEXTENSO>
+
+________________________
+Assinatura do (a) Representado (a)
+
+TERMO DE RESPONSABILIDADE
+
+Por este Termo de Responsabilidade, comprometo-me a comunicar ao INSS qualquer evento que possa anular esta Procuração, no prazo de trinta dias, a contar da data que o mesmo ocorra, principalmente o óbito do segurado / pensionista, mediante apresentação da respectiva certidão.
+Estou ciente de que o descumprimento do compromisso ora assumido, além de obrigar a devolução de importâncias recebidas indevidamente, quando for o caso, sujeitar-me-á às penalidades previstas nos arts. 171 e 299, ambos do Código Penal.
+
+<DATAEXTENSO>
+
+__________________________
+Assinatura do (a) Procurador (a)
+
+CÓDIGO PENAL
+Art. 171. Obter, para si ou para outrem, vantagem ilícita, em prejuízo alheio, induzindo ou manter alguém em erro, mediante artifício, ardil ou qualquer outro meio fraudulento.
+Art. 299. Omitir, em documento público ou particular, declaração que devia constar, ou nele inserir ou fazer inserir declaração falsa ou diversa da que devia ser escrita, com o fim de prejudicar direito, criar, obrigação ou alterar a verdade sobre fato juridicamente relevante.`},
+
+  contrato: {rot:"Contrato de Honorários", titulo:"CONTRATO PARTICULAR DE HONORÁRIOS ADVOCATÍCIOS", porEspecie:true, texto:""},
+
+  // o par separado do B31: procuração administrativa própria + contrato só
+  // do procedimento administrativo (pedido do Paulo — sai fora do "gerar
+  // todos", é a folha que o cliente do auxílio por incapacidade assina)
+  b31_proc: {rot:"Procuração Adm. — Incapacidade Temporária (B31)", titulo:"PROCURAÇÃO ADMINISTRATIVA", texto:
+`Pelo presente instrumento particular de procuração, <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na Av./Rua <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>, nomeia e constitui seus bastantes procuradores os Drs. PAULO ROBERTO TERCINI FILHO, brasileiro, solteiro, advogado, RG nº 44.086.138-X, CPF nº 224.627.048-09, OAB/SP nº 331.110, NIT nº 11966884529; MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado, RG nº 60.366.107-5, CPF nº 105.950.296-80, OAB/SP nº 464.306, NIT nº 20061810473; e AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, RG nº 44.211.638-X, CPF nº 381.533.048-36, OAB/SP nº 511.528, NIT nº 2725914270-2, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, conferindo-lhes poderes especiais para representá-lo(a) perante o INSS — Instituto Nacional do Seguro Social, em qualquer agência ou unidade administrativa, podendo requerer benefícios por incapacidade, em especial AUXÍLIO POR INCAPACIDADE TEMPORÁRIA (B31), protocolar pedidos, cumprir exigências, peticionar, juntar e retirar documentos, prestar informações, acompanhar requerimentos, ter vistas e tomar ciência de decisões, interpor recursos administrativos, requerer prorrogação, reconsideração e revisão, receber laudos médicos e sociais, nos termos do inciso II, §1º do art. 31 da Lei nº 12.527/2011, requerer e utilizar a senha do GOV.BR e do MEU INSS, podendo praticar todos os demais atos necessários ao perfeito desempenho deste mandato, com cláusula ad judicia et extra e poderes para transigir, desistir, renunciar, dar quitação, fazer acordos e substabelecer, com ou sem reserva de iguais poderes.
+
+Ademais, DECLARO, sob as penas dos arts. 171 e 299 do Código Penal, que NÃO recebo aposentadoria, pensão por morte ou qualquer outro benefício de caráter previdenciário em regime próprio de previdência social, federal, estadual, municipal, civil ou militar, e que esta declaração é a expressão da verdade.
+
+<DATAEXTENSO>
+
+_____________________________________________
+<NOMESEGURADO>
+
+TERMO DE RESPONSABILIDADE
+
+Pelo presente Termo, comprometo-me a comunicar ao INSS qualquer evento que possa anular a presente procuração, no prazo de 30 (trinta) dias a contar da ocorrência, em especial o óbito do(a) outorgante, mediante apresentação da respectiva certidão. Estou ciente de que o descumprimento, além de obrigar à devolução de importâncias recebidas indevidamente, sujeitará o(a) procurador(a) às penalidades dos arts. 171 e 299 do Código Penal.
+
+<DATAEXTENSO>
+
+_____________________________________________
+PAULO ROBERTO TERCINI FILHO
+MARCOS HENRIQUE DE PÁDUA AMORIM
+AMANDA CRISTIANE CARNEIRO GARCEZ
+Advogados Contratados`},
+
+  b31_contrato: {rot:"Contrato — Incapacidade Temporária (B31)", titulo:"CONTRATO DE HONORÁRIOS ADVOCATÍCIOS", texto:
+`(Procedimento administrativo de benefício por incapacidade — B31)
+
+CONTRATANTE: <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) na Av./Rua <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>.
+
+CONTRATADOS: PAULO ROBERTO TERCINI FILHO, OAB/SP nº 331.110, CPF nº 224.627.048-09; MARCOS HENRIQUE DE PÁDUA AMORIM, OAB/SP nº 464.306, CPF nº 105.950.296-80; e AMANDA CRISTIANE CARNEIRO GARCEZ, OAB/SP nº 511.528, CPF nº 381.533.048-36, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, celular (16) 98140-9271.
+
+CLÁUSULA PRIMEIRA — OBJETO. Os Contratados são contratados pelo Contratante para patrocinar, exclusivamente na esfera administrativa, perante o INSS, o requerimento de AUXÍLIO POR INCAPACIDADE TEMPORÁRIA (B31), incluindo protocolo do pedido, juntada de documentos e laudos, perícia médica, cumprimento de exigências e pedido de prorrogação.
+PARÁGRAFO PRIMEIRO. A presente contratação não abrange recurso administrativo nem ação judicial, hipóteses em que será celebrado novo contrato de honorários.
+PARÁGRAFO SEGUNDO. A contratação tem por objeto um único requerimento de AUXÍLIO POR INCAPACIDADE TEMPORÁRIA (B31). Qualquer novo requerimento administrativo do mesmo ou de outro benefício, inclusive em razão de cessação, indeferimento, novo afastamento, agravamento, novo CID, prorrogação após cessação ou pedido de restabelecimento que demande novo protocolo, caracteriza serviço autônomo e exigirá a celebração de novo contrato de honorários.
+
+CLÁUSULA SEGUNDA — HONORÁRIOS. Pela prestação dos serviços, o Contratante pagará aos Contratados, após a implantação do benefício, o equivalente a:
+a) 20% (vinte por cento) sobre o valor bruto dos atrasados pagos pelo INSS em razão da concessão do benefício, com vencimento na data do efetivo recebimento; e,
+b) 20% (vinte por cento) sobre cada uma das 6 (seis) primeiras mensalidades do benefício, com vencimento na data do recebimento de cada uma. Caso o benefício seja pago por período inferior a 6 (seis) meses, os honorários incidirão sobre cada mensalidade efetivamente recebida pelo Contratante, na mesma proporção de 20% (vinte por cento).
+PARÁGRAFO ÚNICO. Por valor bruto entende-se aquele apurado antes de qualquer desconto de imposto de renda ou contribuição previdenciária.
+
+CLÁUSULA TERCEIRA — DESPESAS. Despesas necessárias ao andamento do procedimento (cópias, autenticações, deslocamentos, certidões, assistente técnico) serão reembolsadas pelo Contratante mediante apresentação de demonstrativo consolidado e respectivos comprovantes.
+
+CLÁUSULA QUARTA — INADIMPLEMENTO. O atraso no pagamento implica multa de 10% (dez por cento), atualização pelo INPC e juros de mora de 1% (um por cento) ao mês, sem prejuízo de notificação extrajudicial e execução do presente contrato como título executivo.
+
+CLÁUSULA QUINTA — ACESSO AO MEU INSS. O Contratante autoriza os Contratados a utilizarem sua senha GOV.BR para acesso ao MEU INSS, exclusivamente para o cumprimento deste mandato.
+
+CLÁUSULA SEXTA — CANAIS OFICIAIS. São canais oficiais de comunicação do escritório o telefone (16) 3242-2908, o celular (16) 98140-9271 e o endereço Rua Rui Barbosa, 663, Centro, Monte Alto/SP. O Contratante compromete-se a não atender ligações ou mensagens de outros números atribuídos aos Contratados.
+
+CLÁUSULA SÉTIMA — FORO. Fica eleito o Foro da Comarca de Monte Alto/SP para dirimir quaisquer questões oriundas deste contrato. E, por estarem assim contratados, assinam o presente em 2 (duas) vias de igual teor.
+
+<DATAEXTENSO>
+
+______________________________
+<NOMESEGURADO>
+Contratante
+
+______________________________
+PAULO ROBERTO TERCINI FILHO
+MARCOS HENRIQUE DE PÁDUA AMORIM
+AMANDA CRISTIANE CARNEIRO GARCEZ
+Advogados Contratados`},
+};
+// a ordem dos botões e o que entra no "gerar todos"
+const DOCS_PADRAO = ["proc_judicial","proc_adm","pobreza","contrato","termo","beneficiario"];
+
+// troca os <MARCADORES> pelos dados do cliente — o que falta vira linha para
+// preencher à caneta, nunca "undefined" nem espaço mudo
+function preencherModeloDoc(txt, c, especie){
+  const v=civilDe(c), lac="____________________";
+  const dn = c.dn ? `${c.dn.slice(0,2)}/${c.dn.slice(2,4)}/${c.dn.slice(4)}` : "___/___/______";
+  const dataExt = new Date(hoje()+"T12:00:00").toLocaleDateString(IDIOMA,{day:"numeric",month:"long",year:"numeric"});
+  const mapa={
+    "<NOMESEGURADO>": c.nome||lac, "<CPF>": c.cpf?fmtCpf(c.cpf):lac, "<RG>": v.rg||lac,
+    "<DATANASCIMENTO>": dn, "<ESTADOCIVIL>": v.estado_civil||lac, "<PROFISSAO>": v.profissao||lac,
+    "<ENDERECO>": c.endereco||lac, "<BAIRRO>": v.bairro||lac, "<CIDADE>": v.cidade||lac,
+    "<ESTADO>": v.uf||"São Paulo", "<CEP>": v.cep||lac,
+    "<ESPECIE>": especie||"Benefício/serviço a definir",
+    "<DATAEXTENSO>": `Monte Alto - SP, ${dataExt}.`,
+  };
+  return Object.entries(mapa).reduce((t,[ph,val])=>t.split(ph).join(val), txt);
+}
+// a espécie que manda no contrato e no termo: a do caso escolhido; sem caso,
+// a que o atendimento anotou no cadastro
+function especieDoCliente(c, ks){
+  const k = (casoSel && D.casoPorId.get(casoSel)) || (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
+  return (k && k.beneficio) || ((c.campos||{}).especie||"");
+}
+function corpoDoDoc(chave, c, especie){
+  const m=DOCS_ESCRITORIO[chave]; if(!m) return null;
+  const texto = chave==="contrato" ? textoContrato(variantePorEspecie(especie)) : m.texto;
+  return {titulo:m.titulo, rot:m.rot, corpo:preencherModeloDoc(texto, c, especie)};
+}
+function folhaDoc(d, c){
+  return `<section><h1>${esc(d.titulo)}</h1>
+    ${d.corpo.split("\n").map(l=>{
+      const t=l.trim();
+      if(!t) return "<p class='vazio'></p>";
+      if(/^_{4,}/.test(t)) return `<p class="assin">${esc(t)}</p>`;
+      return `<p>${esc(t)}</p>`;
+    }).join("")}</section>`;
+}
+function janelaImpressao(titulo, folhas){
+  const w=window.open("","_blank");
+  if(!w) return aviso("O navegador bloqueou a janela — libere os pop-ups deste site");
+  w.document.write(`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+  <title>${esc(titulo)}</title><style>
+    body{font-family:Georgia,serif;max-width:720px;margin:32px auto;color:#111;font-size:13.5px;line-height:1.65}
+    section{page-break-after:always}
+    section:last-child{page-break-after:auto}
+    h1{font-size:15px;text-align:center;text-transform:uppercase;letter-spacing:.5px;margin:0 0 18px}
+    p{margin:0 0 9px;text-align:justify}
+    p.vazio{margin:0 0 9px;height:2px}
+    p.assin{text-align:center;margin-top:22px}
+    @media print{body{margin:18mm 16mm}}
+  </style></head><body>${folhas}
+  <script>window.print()<\/script></body></html>`);
+  w.document.close();
+}
+function gerarDocEscritorio(chave, cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const ks=D.casosDoCliente.get(cliId)||[];
+  const d=corpoDoDoc(chave, c, especieDoCliente(c, ks)); if(!d) return;
+  janelaImpressao(`${d.rot} — ${c.nome}`, folhaDoc(d, c));
+  registrarDocGerado(cliId, [d.rot]);
+}
+function gerarTodosDocs(cliId, chaves){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const ks=D.casosDoCliente.get(cliId)||[];
+  const esp=especieDoCliente(c, ks);
+  const docs=(chaves||DOCS_PADRAO).map(ch=>corpoDoDoc(ch, c, esp)).filter(Boolean);
+  janelaImpressao(`Documentos — ${c.nome}`, docs.map(d=>folhaDoc(d, c)).join(""));
+  registrarDocGerado(cliId, docs.map(d=>d.rot));
+}
+// fica registrado no CRM o que foi impresso para o cliente assinar
+async function registrarDocGerado(cliId, rots){
+  const ks=(D.casosDoCliente.get(cliId)||[]).filter(k=>k.fase!=="encerrado");
+  const k=(casoSel&&D.casoPorId.get(casoSel))||ks[0];
+  if(!k) return;                       // sem caso ainda: o registro vem depois
+  try{
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+        texto:`📄 Documento(s) gerado(s) para assinatura: ${rots.join("; ")}.`})});
+  }catch(e){ /* impressão não pode falhar por causa do registro */ }
+}
+function caixaDocumentos(c, ks){
+  const esp=especieDoCliente(c, ks);
+  const vr=CONTRATO_VARIANTES[variantePorEspecie(esp)];
+  const falta=faltaParaDocs(c);
+  const bt=(ch)=>`<button class="btn-mini" onclick="gerarDocEscritorio('${ch}','${c.id}')">📄 ${DOCS_ESCRITORIO[ch].rot}</button>`;
+  return `<div class="caixa-docs" style="margin-bottom:12px">
+    <div class="rotulo-caso">🖨 Documentos para o cliente assinar</div>
+    <p class="meio-sub" style="margin:2px 0 8px">Saem preenchidos com o cadastro.
+      Contrato e termo de representação seguem a espécie${esp?`: <b>${esc(esp)}</b> → contrato de <b>${esc(vr.rot)}</b>`
+      :` — <b>ainda não definida</b>, o contrato sai no modelo padrão`}.</p>
+    <div class="form-linha" style="flex-wrap:wrap">
+      ${DOCS_PADRAO.map(bt).join("")}
+      <button onclick="gerarTodosDocs('${c.id}')" title="uma janela só, uma folha por documento">🖨 Gerar todos</button>
+    </div>
+    <div class="form-linha" style="flex-wrap:wrap;margin-top:6px;border-top:1px dashed var(--borda);padding-top:6px">
+      <span class="meio-sub">Benefício por incapacidade temporária (B31) — par próprio, fora do "gerar todos":</span>
+      ${bt("b31_proc")}${bt("b31_contrato")}
+      <button class="btn-mini" onclick="gerarTodosDocs('${c.id}',['b31_proc','b31_contrato'])">🖨 os dois</button>
+    </div>
+    ${falta.length?`<p class="meio-sub" style="margin-top:6px">⚠ Faltam no cadastro: ${esc(falta.join(", "))} —
+      sai <b>____</b> no lugar.</p>`:""}
+  </div>`;
+}
+
+// ── O QUADRO DO ATENDIMENTO ───────────────────────────────────────────────
+// Cliente sem caso anotado: é aqui que o atendimento vive até virar caso.
+// Anotação do que o cliente contou + a espécie do benefício/serviço (que pode
+// ficar "ainda não definido") + a lista de documentos que o cliente vai
+// trazer — impressa para ele e registrada no CRM.
+function caixaAtendimento(c, ks){
+  const semCaso = !(ks||[]).length;
+  const campos=c.campos||{};
+  const esp=campos.especie||"", notas=campos.atendimento||[];
+  const pedidos=campos.docs_pedidos||[];
+  const cat=docDe(esp);
+  const itens=((cat&&cat.itens)||"").split("\n").map(x=>x.trim()).filter(x=>x&&!x.startsWith("▸ "));
+  const extras=((cat&&cat.extras)||"").split("\n").map(x=>x.trim()).filter(x=>x&&!x.startsWith("▸ "));
+  const ehPgto = esp===ESPECIE_PAGAMENTOS;
+  return `<div class="caso caixa-atend" style="margin-bottom:12px;border-left:3px solid var(--azul)">
+    <div class="rotulo-caso">🗒 Anotações${semCaso?` — ${esc(c.nome.split(" ")[0])} ainda não tem caso`:""}</div>
+    <p class="meio-sub" style="margin:2px 0 8px">${semCaso
+      ? `Anote o que o cliente contou e defina a espécie do benefício/serviço — pode ficar
+         <b>ainda não definido</b>. Isto <b>não é um caso</b>: fica guardado no cadastro enquanto o cliente
+         busca os documentos.`
+      : `O que não é andamento de processo mora aqui: o que o cliente contou, o que ficou combinado.`}</p>
+
+    ${semCaso?`
+    <div class="form-linha" style="align-items:center;flex-wrap:wrap">
+      <label style="font-size:12px;color:var(--cinza)">Benefício / serviço:
+        <select id="at-especie" style="display:block;min-width:260px" onchange="salvarEspecieAtendimento('${c.id}')">
+          <option value="" ${!esp?"selected":""}>⏳ ainda não definido</option>
+          <option value="${ESPECIE_PAGAMENTOS}" ${ehPgto?"selected":""}>💰 ${ESPECIE_PAGAMENTOS}</option>
+          ${D.docs.map(d=>`<option value="${esc(d.beneficio)}" ${esp===d.beneficio?"selected":""}>${esc(d.beneficio)}</option>`).join("")}
+        </select></label>
+      ${esp?`<span class="chip ben" style="align-self:flex-end">${ehPgto?"💰":"🎯"} ${esc(esp)}</span>`
+           :`<span class="chip neutro" style="align-self:flex-end" title="pode ficar assim — o atendimento não trava">⏳ ainda não definido</span>`}
+    </div>`:""}
+
+    <div style="margin-top:8px">
+      <textarea id="at-nota" rows="3" placeholder="o que o cliente contou — fica no cadastro e vai junto para o primeiro andamento do caso"
+        style="width:100%;resize:vertical"></textarea>
+      <div class="form-linha" style="margin-top:4px">
+        <button class="btn-mini" onclick="salvarNotaAtendimento('${c.id}')">Guardar anotação</button>
+      </div>
+    </div>
+    ${notas.length?`<ul class="mov-lista" style="margin-top:6px">
+      ${notas.slice().reverse().map(n=>`<li><span class="mov-data">${n.em?fmt(n.em.slice(0,10)):"—"}</span>
+        <span class="mov-txt">${n.quem?`<b>${esc(n.quem)}:</b> `:""}${esc(n.texto||"")}</span></li>`).join("")}
+    </ul>`:""}
+
+    ${!semCaso?"":ehPgto?`
+    ${/* indicação de pagamento ao INSS não vira caso: vira lembrete com o
+         cronograma inteiro, competência por competência (pedido do Paulo) */""}
+    <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+      <div class="rotulo-caso">💰 Cronograma de pagamentos ao INSS</div>
+      <p class="meio-sub" style="margin:2px 0 6px">Isto <b>não gera caso</b>: gera um lembrete com todas as
+        competências, para avisar o cliente a cada vencimento.</p>
+      <div class="form-linha" style="flex-wrap:wrap;align-items:center">
+        <select id="at-gps"><option value="">categoria da GPS…</option>
+          ${GPS_CATEGORIAS.map(([v,r])=>`<option value="${v}">${v} — ${r}</option>`).join("")}</select>
+        <input id="at-valor" type="number" step="0.01" placeholder="R$ por parcela" style="width:130px">
+        <input id="at-dia" type="number" min="1" max="28" value="15" title="dia do vencimento" style="width:70px">
+        <label style="font-size:12px;color:var(--cinza)">1ª competência
+          <input type="month" id="at-comp" value="${hoje().slice(0,7)}" style="display:block"></label>
+        <label style="font-size:12px;color:var(--cinza)">parcelas
+          <input type="number" id="at-qtd" min="1" max="60" value="12" style="display:block;width:80px"></label>
+        <select id="at-passo" title="de quanto em quanto tempo">
+          <option value="1" selected>mensal</option><option value="3">trimestral</option>
+          <option value="6">semestral</option><option value="12">anual</option></select>
+        <button onclick="criarCronogramaINSS('${c.id}')">🔔 Criar o lembrete com o cronograma</button>
+      </div>
+    </div>`:`
+    <div class="form-linha" style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+      <select id="at-fase">${["escritorio","inss","conselho","judicial","outro"]
+        .map(f=>`<option value="${f}">${NOME_FASE[f]}</option>`).join("")}</select>
+      <button onclick="criarCasoDoAtendimento('${c.id}')" ${esp?"":"disabled title='defina a espécie primeiro'"}>
+        ⚖️ Criar o caso deste atendimento</button>
+      <span class="meio-sub">as anotações acima entram como primeiro andamento</span>
+    </div>`}
+
+    ${(semCaso&&!ehPgto)?`
+    <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+      <div class="rotulo-caso">📋 Documentos que o cliente vai trazer</div>
+      ${esp&&(itens.length||extras.length)?`
+        <p class="meio-sub" style="margin:2px 0 6px">Marque, imprima para o cliente levar — e fica registrado no CRM o que pedimos.</p>
+        <div id="at-docs" style="max-height:34vh;overflow:auto">
+          ${itens.map((it,i)=>`<label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:2px 0;cursor:pointer">
+            <input type="checkbox" class="at-doc" checked value="${esc(it)}" style="margin-top:3px"><span>${esc(it)}</span></label>`).join("")}
+          ${extras.length?`<div class="cc-tit" style="color:var(--laranja);padding:8px 0 3px">Conforme a atividade do cliente — marque o que se aplica</div>
+            ${extras.map(it=>`<label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:2px 0;cursor:pointer">
+              <input type="checkbox" class="at-doc" value="${esc(it)}" style="margin-top:3px"><span>${esc(it)}</span></label>`).join("")}`:""}
+        </div>
+        <div class="form-linha" style="margin-top:6px">
+          <input id="at-doc-extra" placeholder="＋ outro documento — Enter acrescenta" style="flex:1;min-width:200px"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();docExtraAtendimento();}">
+          <button onclick="pedirDocsAtendimento('${c.id}')">🖨 Imprimir e registrar o pedido</button>
+        </div>`
+      :`<p class="meio-sub">${esp?"Não há catálogo cadastrado para esta espécie — acrescente à mão o que o cliente precisa trazer."
+        :"Defina a espécie acima para o sistema sugerir a lista do benefício."}</p>
+        <div class="form-linha" style="margin-top:4px">
+          <div id="at-docs"></div>
+          <input id="at-doc-extra" placeholder="＋ documento — Enter acrescenta" style="flex:1;min-width:200px"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();docExtraAtendimento();}">
+          <button onclick="pedirDocsAtendimento('${c.id}')">🖨 Imprimir e registrar o pedido</button>
+        </div>`}
+      ${pedidos.length?`<div style="margin-top:8px">
+        <div class="meio-sub" style="margin-bottom:3px">📌 Já pedimos a ${esc(c.nome.split(" ")[0])}:</div>
+        <ul class="mov-lista">
+          ${pedidos.map((p,pi)=>(p.itens||[]).map((it,ii)=>`<li>
+            <span class="mov-data">${p.em?fmt(p.em.slice(0,10)):"—"}</span>
+            <span class="mov-txt" style="${it.entregue?"text-decoration:line-through;color:var(--cinza)":""}">${esc(it.nome||it)}</span>
+            ${it.entregue?`<span class="chip verde">✔ entregue ${fmt(it.entregue)}</span>`
+              :`<button class="btn-mini" onclick="docEntregue('${c.id}',${pi},${ii})">✔ entregue</button>`}
+          </li>`).join("")).join("")}
+        </ul></div>`:""}
+    </div>`:""}
+  </div>`;
+}
+async function salvarEspecieAtendimento(cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const sel=document.getElementById("at-especie");
+  const v=sel?sel.value:"";
+  c.campos={...(c.campos||{}), especie:v||undefined};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})});
+  }catch(e){ return aviso("Não consegui guardar a espécie — tente de novo"); }
+  aviso(v?`Espécie definida: ${v} 🎯`:"Espécie: ainda não definido ⏳", false);
+  abrirFicha(cliId);
+}
+async function salvarNotaAtendimento(cliId){
+  const c=D.cliPorId.get(cliId), ta=document.getElementById("at-nota");
+  if(!c||!ta) return;
+  const t=(ta.value||"").trim(); if(!t) return aviso("Escreva a anotação");
+  const notas=[...((c.campos||{}).atendimento||[]), {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:t}];
+  c.campos={...(c.campos||{}), atendimento:notas};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})});
+  }catch(e){ return aviso("Não consegui guardar a anotação — tente de novo"); }
+  ta.value=""; aviso("Anotação guardada no cadastro 📝", false);
+  abrirFicha(cliId);
+}
+// o caso nasce do atendimento: leva a espécie, as anotações e o que já foi
+// pedido ao cliente (cada documento vira item do checklist do caso)
+async function criarCasoDoAtendimento(cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const campos=c.campos||{}, esp=campos.especie||"";
+  if(!esp) return aviso("Defina a espécie do benefício/serviço primeiro");
+  if(esp===ESPECIE_PAGAMENTOS) return aviso("Indicação de pagamentos não vira caso — crie o lembrete do cronograma");
+  const fase=(document.getElementById("at-fase")||{}).value||"escritorio";
+  let k;
+  try{
+    [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:cliId, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`, beneficio:esp, fase,
+        origem_lista:(LISTAS_MOVER.find(([,f])=>f===fase)||["🙋 Escritório"])[0]})});
+  }catch(e){ return aviso("Não consegui criar o caso — tente de novo"); }
+  D.casos.push(k); D.casoPorId.set(k.id,k);
+  if(!D.casosDoCliente.has(cliId)) D.casosDoCliente.set(cliId,[]);
+  D.casosDoCliente.get(cliId).push(k);
+  // as anotações do atendimento viram o primeiro andamento, com a data em que
+  // foram escritas — e saem do cadastro para não virar histórico duplicado
+  for(const n of (campos.atendimento||[])){
+    try{
+      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:n.texto, criado_em:n.em})});
+    }catch(e){ /* anotação perdida não pode derrubar a criação do caso */ }
+  }
+  // o que já foi pedido ao cliente vira checklist do caso
+  let docs=0;
+  for(const p of (campos.docs_pedidos||[])) for(const it of (p.itens||[])){
+    if(it.entregue) continue;
+    const titulo=`📄 ${String(it.nome||it).split(" — ")[0]}`;
+    try{
+      const [tf]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:k.id, titulo})});
+      if(tf){ D.tarefas.push(tf); docs++; }
+    }catch(e){ /* idem */ }
+  }
+  c.campos={...campos, atendimento:undefined, docs_pedidos:undefined, especie:undefined};
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  reindexarCliente(c); plim();
+  aviso(`⚖️ Caso criado a partir do atendimento${docs?` · ${docs} documento(s) no checklist`:""} — a sincronização cria a tarefa no To Do`, false);
+  montarSidebar(); casoSel=k.id; abaAtiva=2; abrirFicha(cliId);
+}
+// indicação de pagamento ao INSS: lembrete com o cronograma inteiro
+async function criarCronogramaINSS(cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const v=id=>{const e=document.getElementById(id); return e?(e.value||"").trim():"";};
+  const comp=v("at-comp"); if(!comp) return aviso("Escolha a primeira competência");
+  const qtd=Math.min(60, Math.max(1, +v("at-qtd")||12)), passo=+v("at-passo")||1;
+  const dia=Math.min(28, Math.max(1, +v("at-dia")||15));
+  const valor=v("at-valor")||null, cod=v("at-gps")||null;
+  const cron=[];
+  for(let i=0;i<qtd;i++){
+    const base=new Date(comp+"-01T12:00:00");
+    base.setMonth(base.getMonth()+i*passo);
+    const mm=String(base.getMonth()+1).padStart(2,"0"), aa=base.getFullYear();
+    // a GPS da competência vence no mês seguinte
+    const venc=new Date(base); venc.setMonth(venc.getMonth()+1);
+    cron.push({comp:`${mm}/${aa}`, valor, codigo:cod,
+      vence:`${venc.getFullYear()}-${String(venc.getMonth()+1).padStart(2,"0")}-${String(dia).padStart(2,"0")}`});
+  }
+  try{
+    const [l]=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:cliId, tipo:"contribuicao",
+        titulo:`Pagamento ao INSS — ${qtd} parcela(s) a partir de ${cron[0].comp}`,
+        detalhes:{codigo:cod, valor, dia, cronograma:cron},
+        intervalo_meses:passo, proximo_em:cron[0].vence, criado_por:eu.id})});
+    if(l) (D.lembretes=D.lembretes||[]).push(l);
+  }catch(e){ return aviso("Rode o crm/fase2/schema_por_em_dia.sql no Supabase — falta a tabela 'lembretes'"); }
+  c.campos={...(c.campos||{}), especie:undefined};
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  plim();
+  aviso(`🔔 Cronograma criado: ${qtd} pagamento(s) — sem caso, como combinado`, false);
+  montarSidebar(); abaAtiva=9; abrirFicha(cliId);
+}
+function docExtraAtendimento(){
+  const inp=document.getElementById("at-doc-extra");
+  const v=(inp.value||"").trim(); if(!v) return;
+  const lista=document.getElementById("at-docs"); if(!lista) return;
+  lista.insertAdjacentHTML("beforeend",
+    `<label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:2px 0;cursor:pointer">
+      <input type="checkbox" class="at-doc" checked value="${esc(v)}" style="margin-top:3px"><span>${esc(v)}</span></label>`);
+  inp.value=""; inp.focus();
+}
+// imprime a lista para o cliente levar E registra no CRM o que pedimos
+async function pedirDocsAtendimento(cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const itens=[...document.querySelectorAll("#at-docs .at-doc:checked")].map(x=>x.value).filter(Boolean);
+  if(!itens.length) return aviso("Marque ao menos um documento");
+  const esp=(c.campos||{}).especie||"benefício a definir";
+  imprimirListaDocs(c, esp, itens, (docPorNome(esp)||{}).observacoes);
+  const pedidos=[...((c.campos||{}).docs_pedidos||[]),
+    {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], especie:esp,
+     itens:itens.map(nome=>({nome, entregue:null}))}];
+  c.campos={...(c.campos||{}), docs_pedidos:pedidos};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})});
+  }catch(e){ return aviso("Imprimiu, mas não consegui registrar o pedido — tente de novo"); }
+  aviso(`📋 ${itens.length} documento(s) impressos e registrados como pedidos ao cliente`, false);
+  abrirFicha(cliId);
+}
+async function docEntregue(cliId, pi, ii){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const pedidos=JSON.parse(JSON.stringify((c.campos||{}).docs_pedidos||[]));
+  if(!pedidos[pi] || !pedidos[pi].itens[ii]) return;
+  pedidos[pi].itens[ii].entregue=hoje();
+  c.campos={...(c.campos||{}), docs_pedidos:pedidos};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})});
+  }catch(e){ return aviso("Não consegui marcar como entregue — tente de novo"); }
+  abrirFicha(cliId);
 }
 
 // modelos de documentos ({nome},{cpf},{nb}... preenchidos com o cliente)
