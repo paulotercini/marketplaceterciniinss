@@ -1013,6 +1013,9 @@
   /* a senha mascarada: mesma altura das outras linhas, sem o amarelo que o
      sistema de tokens reserva para prazo */
   .cad-segredo{font-variant-numeric:tabular-nums;letter-spacing:2px}
+  /* ícone em SVG dentro de botão de texto: sem esta folga o desenho encosta
+     na primeira letra (o emoji que ele substituiu já vinha com espaço) */
+  .ic-bt{display:inline-flex;margin-right:5px;vertical-align:-2px}
   .cad-lap{border:none;background:none;color:var(--cinza-claro,#8A8F98);padding:1px;
     display:inline-flex;border-radius:3px;cursor:pointer}
   .cad-lap:hover{color:var(--azul);background:#e8f1fb}
@@ -1428,7 +1431,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.01 · F9.2 — o Cadastro em dois cartões: a senha do Meu INSS saiu da caixa amarela e virou campo da grade, CPF e nascimento aceitam clique no cartão inteiro, o endereço vazio parou de esticar e protocolos, parceria e parentes viraram o cartão Ligações do cliente</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.02 · F9.2 — o Cadastro em dois cartões: a senha do Meu INSS saiu da caixa amarela e virou campo da grade, CPF e nascimento aceitam clique no cartão inteiro, o endereço vazio parou de esticar, protocolos, parceria e parentes viraram o cartão Ligações do cliente, e as cinco divisões da aba estão sem nenhum emoji</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7608,7 +7611,7 @@ function irSubCad(qual){ subCad = qual; guardar("crm_subcad", qual); repintarFic
 // 🖨 Documentos do Cadastro — o atendimento não pula de aba para pedir papel
 function catalogoNoCadastro(c, ks){
   return `
-    <h3>🖨 Documentos para o INSS</h3>
+    <h3>Documentos para o INSS</h3>
     <p class="meio-sub">O catálogo completo do site interno, aqui dentro: escolha o benefício,
       confira a lista, marque os itens da atividade do cliente e solicite — imprime a lista
       e cada item vira checklist no caso, com andamento datado.</p>
@@ -7622,7 +7625,7 @@ function catalogoNoCadastro(c, ks){
       <label style="font-size:12px;color:var(--cinza)">Aplicar em:
         <select id="doc-destino">
           ${ks.filter(x=>x.fase!=="encerrado").map(x=>`<option value="${x.id}" ${casoSel===x.id?"selected":""}>caso em andamento: ${esc(tituloCaso(x))}</option>`).join("")}
-          <option value="__novo__">➕ criar caso NOVO com este benefício</option>
+          <option value="__novo__">criar caso NOVO com este benefício</option>
         </select></label>
     </div>
     <div id="doc-conteudo"></div>
@@ -7635,7 +7638,7 @@ function painelConsulta(){
   return `<div class="form-linha" style="align-items:center">
       <span class="meio-sub" style="flex:1">Site interno do escritório — documentos por benefício, códigos GPS,
         qualidade de segurado, espécies e indicadores do CNIS. As divisões ficam nas abas do próprio site.</span>
-      <a class="btn-mini" href="${SITE_INTERNO}" target="_blank" rel="noopener" style="text-decoration:none">↗ abrir em outra aba</a>
+      <a class="btn-mini" href="${SITE_INTERNO}" target="_blank" rel="noopener" style="text-decoration:none">abrir em outra aba</a>
     </div>
     <iframe src="${SITE_INTERNO}" title="Site interno do escritório" loading="lazy"
       style="width:100%;height:72vh;border:1px solid var(--borda);border-radius:10px;background:#fff"></iframe>`;
@@ -7783,13 +7786,13 @@ function painelMensagensFicha(c, ks, evs){
       const exigK = ks.find(k=>k.exigencia_prazo);
       const pronto = preencher(m.texto, c, ev, exigK&&exigK.exigencia_prazo);
       return `<div class="modelo"><div class="cab"><strong>${esc(m.titulo)}</strong>
-        <button class="btn-mini" onclick='copiar(${JSON.stringify(pronto)},"Mensagem copiada 💬")'>📋 copiar</button>
-        ${c.telefone?`<button class="btn-mini" onclick='window.open("https://wa.me/55${c.telefone.replace(/\D/g,"")}?text="+encodeURIComponent(${JSON.stringify(pronto)}),"_blank")'>📲 WhatsApp</button>`:""}</div>
+        <button class="btn-mini" onclick='copiar(${JSON.stringify(pronto)},"Mensagem copiada")'><span class="ic-bt">${CAD_IC.copiar}</span>copiar</button>
+        ${c.telefone?`<button class="btn-mini" onclick='window.open("https://wa.me/55${c.telefone.replace(/\D/g,"")}?text="+encodeURIComponent(${JSON.stringify(pronto)}),"_blank")'><span class="ic-bt">${CAD_IC.zap}</span>WhatsApp</button>`:""}</div>
         <div class="previa">${esc(pronto)}</div></div>`;
     }).join("")}
-    <p class="meio-sub" style="margin-top:14px">📄 Documentos para imprimir (preenchidos com os dados do cliente):</p>
+    <p class="meio-sub" style="margin-top:14px">Documentos para imprimir (preenchidos com os dados do cliente):</p>
     ${D.docModelos.filter(m=>m.categoria==="geral"||dsa(m.categoria)===dsa(ks[0]&&ks[0].beneficio||"")||ks.some(k=>k.beneficio&&dsa(m.categoria)===dsa(k.beneficio)))
-      .map(m=>`<button class="btn-mini" style="margin:0 6px 6px 0" onclick="gerarDocumento('${m.id}','${c.id}')">🖨 ${esc(m.titulo)}</button>`).join("")}
+      .map(m=>`<button class="btn-mini" style="margin:0 6px 6px 0" onclick="gerarDocumento('${m.id}','${c.id}')"><span class="ic-bt">${CAD_IC.doc}</span>${esc(m.titulo)}</button>`).join("")}
     <div class="form-linha">
       <input id="nm-titulo" placeholder="título do novo modelo">
       <select id="nm-ctx"><option value="geral">geral</option><option value="pericia">perícia</option><option value="audiencia">audiência</option><option value="exigencia">exigência</option></select>
@@ -12007,7 +12010,7 @@ function renderDocCatalogo(){
         + extras.map(l=>linha(l,false)).join(""):"")
     + ((d.observacoes)?`<p class="meio-sub" style="white-space:pre-wrap;margin-top:10px;background:var(--fundo);border-radius:8px;padding:10px">${esc(d.observacoes)}</p>`:"")
     + `<div class="form-linha" style="margin-top:10px">
-        <button onclick="solicitarDocsCatalogo()">🖨 Imprimir e solicitar (vira checklist)</button>
+        <button onclick="solicitarDocsCatalogo()">Imprimir e solicitar (vira checklist)</button>
       </div>`;
 }
 async function solicitarDocsCatalogo(){
@@ -12811,22 +12814,22 @@ function caixaDocumentos(c, ks){
   const esp=especieDoCliente(c, ks);
   const vr=CONTRATO_VARIANTES[variantePorEspecie(esp)];
   const falta=faltaParaDocs(c);
-  const bt=(ch)=>`<button class="btn-mini" onclick="gerarDocEscritorio('${ch}','${c.id}')">📄 ${DOCS_ESCRITORIO[ch].rot}</button>`;
+  const bt=(ch)=>`<button class="btn-mini" onclick="gerarDocEscritorio('${ch}','${c.id}')"><span class="ic-bt">${CAD_IC.doc}</span>${DOCS_ESCRITORIO[ch].rot}</button>`;
   return `<div class="caixa-docs" style="margin-bottom:12px">
-    <div class="rotulo-caso">🖨 Documentos para o cliente assinar</div>
+    <div class="rotulo-caso">Documentos para o cliente assinar</div>
     <p class="meio-sub" style="margin:2px 0 8px">Saem preenchidos com o cadastro.
-      Contrato e termo de representação seguem a espécie${esp?`: <b>${esc(esp)}</b> → contrato de <b>${esc(vr.rot)}</b>`
+      Contrato e termo de representação seguem a espécie${esp?`: <b>${esc(esp)}</b>, contrato de <b>${esc(vr.rot)}</b>`
       :` — <b>ainda não definida</b>, o contrato sai no modelo padrão`}.</p>
     <div class="form-linha" style="flex-wrap:wrap">
       ${DOCS_PADRAO.map(bt).join("")}
-      <button onclick="gerarTodosDocs('${c.id}')" title="uma janela só, uma folha por documento">🖨 Gerar todos</button>
+      <button onclick="gerarTodosDocs('${c.id}')" title="uma janela só, uma folha por documento">Gerar todos</button>
     </div>
     <div class="form-linha" style="flex-wrap:wrap;margin-top:6px;border-top:1px dashed var(--borda);padding-top:6px">
       <span class="meio-sub">Benefício por incapacidade temporária (B31) — par próprio, fora do "gerar todos":</span>
       ${bt("b31_proc")}${bt("b31_contrato")}
-      <button class="btn-mini" onclick="gerarTodosDocs('${c.id}',['b31_proc','b31_contrato'])">🖨 os dois</button>
+      <button class="btn-mini" onclick="gerarTodosDocs('${c.id}',['b31_proc','b31_contrato'])">os dois</button>
     </div>
-    ${falta.length?`<p class="meio-sub" style="margin-top:6px">⚠ Faltam no cadastro: ${esc(falta.join(", "))} —
+    ${falta.length?`<p class="meio-sub" style="margin-top:6px"><b>Faltam no cadastro:</b> ${esc(falta.join(", "))} —
       sai <b>____</b> no lugar.</p>`:""}
   </div>`;
 }
@@ -12846,7 +12849,7 @@ function caixaAtendimento(c, ks){
   const extras=((cat&&cat.extras)||"").split("\n").map(x=>x.trim()).filter(x=>x&&!x.startsWith("▸ "));
   const ehPgto = esp===ESPECIE_PAGAMENTOS;
   return `<div class="caso caixa-atend" style="margin-bottom:12px;border-left:3px solid var(--azul)">
-    <div class="rotulo-caso">🗒 Anotações${semCaso?` — ${esc(c.nome.split(" ")[0])} ainda não tem caso`:""}</div>
+    <div class="rotulo-caso">Anotações${semCaso?` — ${esc(c.nome.split(" ")[0])} ainda não tem caso`:""}</div>
     <p class="meio-sub" style="margin:2px 0 8px">${semCaso
       ? `Anote o que o cliente contou e defina a espécie do benefício/serviço — pode ficar
          <b>ainda não definido</b>. Isto <b>não é um caso</b>: fica guardado no cadastro enquanto o cliente
@@ -12857,12 +12860,12 @@ function caixaAtendimento(c, ks){
     <div class="form-linha" style="align-items:center;flex-wrap:wrap">
       <label style="font-size:12px;color:var(--cinza)">Benefício / serviço:
         <select id="at-especie" style="display:block;min-width:260px" onchange="salvarEspecieAtendimento('${c.id}')">
-          <option value="" ${!esp?"selected":""}>⏳ ainda não definido</option>
-          <option value="${ESPECIE_PAGAMENTOS}" ${ehPgto?"selected":""}>💰 ${ESPECIE_PAGAMENTOS}</option>
+          <option value="" ${!esp?"selected":""}>ainda não definido</option>
+          <option value="${ESPECIE_PAGAMENTOS}" ${ehPgto?"selected":""}>${ESPECIE_PAGAMENTOS}</option>
           ${D.docs.map(d=>`<option value="${esc(d.beneficio)}" ${esp===d.beneficio?"selected":""}>${esc(d.beneficio)}</option>`).join("")}
         </select></label>
-      ${esp?`<span class="chip ben" style="align-self:flex-end">${ehPgto?"💰":"🎯"} ${esc(esp)}</span>`
-           :`<span class="chip neutro" style="align-self:flex-end" title="pode ficar assim — o atendimento não trava">⏳ ainda não definido</span>`}
+      ${esp?`<span class="chip ben" style="align-self:flex-end">${esc(esp)}</span>`
+           :`<span class="chip neutro" style="align-self:flex-end" title="pode ficar assim — o atendimento não trava">ainda não definido</span>`}
     </div>`:""}
 
     <div style="margin-top:8px">
@@ -12881,7 +12884,7 @@ function caixaAtendimento(c, ks){
     ${/* indicação de pagamento ao INSS não vira caso: vira lembrete com o
          cronograma inteiro, competência por competência (pedido do Paulo) */""}
     <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
-      <div class="rotulo-caso">💰 Cronograma de pagamentos ao INSS</div>
+      <div class="rotulo-caso">Cronograma de pagamentos ao INSS</div>
       <p class="meio-sub" style="margin:2px 0 6px">Isto <b>não gera caso</b>: gera um lembrete com todas as
         competências, para avisar o cliente a cada vencimento.</p>
       <div class="form-linha" style="flex-wrap:wrap;align-items:center">
@@ -12896,7 +12899,7 @@ function caixaAtendimento(c, ks){
         <select id="at-passo" title="de quanto em quanto tempo">
           <option value="1" selected>mensal</option><option value="3">trimestral</option>
           <option value="6">semestral</option><option value="12">anual</option></select>
-        <button onclick="criarCronogramaINSS('${c.id}')">🔔 Criar o lembrete com o cronograma</button>
+        <button onclick="criarCronogramaINSS('${c.id}')">Criar o lembrete com o cronograma</button>
       </div>
     </div>`:`
     <div class="form-linha" style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
@@ -12905,13 +12908,13 @@ function caixaAtendimento(c, ks){
       <select id="at-fase">${["inss","conselho","judicial","peticao_inicial","outro"]
         .map(f=>`<option value="${f}">${NOME_FASE[f]}</option>`).join("")}</select>
       <button onclick="criarCasoDoAtendimento('${c.id}')" ${esp?"":"disabled title='defina a espécie primeiro'"}>
-        ⚖️ Criar o caso deste atendimento</button>
+        Criar o caso deste atendimento</button>
       <span class="meio-sub">as anotações acima entram como primeiro andamento</span>
     </div>`}
 
     ${(semCaso&&!ehPgto)?`
     <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
-      <div class="rotulo-caso">📋 Documentos que o cliente vai trazer</div>
+      <div class="rotulo-caso">Documentos que o cliente vai trazer</div>
       ${esp&&(itens.length||extras.length)?`
         <p class="meio-sub" style="margin:2px 0 6px">Marque, imprima para o cliente levar — e fica registrado no CRM o que pedimos.</p>
         <div id="at-docs" style="max-height:34vh;overflow:auto">
@@ -12922,26 +12925,26 @@ function caixaAtendimento(c, ks){
               <input type="checkbox" class="at-doc" value="${esc(it)}" style="margin-top:3px"><span>${esc(it)}</span></label>`).join("")}`:""}
         </div>
         <div class="form-linha" style="margin-top:6px">
-          <input id="at-doc-extra" placeholder="＋ outro documento — Enter acrescenta" style="flex:1;min-width:200px"
+          <input id="at-doc-extra" placeholder="outro documento — Enter acrescenta" style="flex:1;min-width:200px"
             onkeydown="if(event.key==='Enter'){event.preventDefault();docExtraAtendimento();}">
-          <button onclick="pedirDocsAtendimento('${c.id}')">🖨 Imprimir e registrar o pedido</button>
+          <button onclick="pedirDocsAtendimento('${c.id}')">Imprimir e registrar o pedido</button>
         </div>`
       :`<p class="meio-sub">${esp?"Não há catálogo cadastrado para esta espécie — acrescente à mão o que o cliente precisa trazer."
         :"Defina a espécie acima para o sistema sugerir a lista do benefício."}</p>
         <div class="form-linha" style="margin-top:4px">
           <div id="at-docs"></div>
-          <input id="at-doc-extra" placeholder="＋ documento — Enter acrescenta" style="flex:1;min-width:200px"
+          <input id="at-doc-extra" placeholder="documento — Enter acrescenta" style="flex:1;min-width:200px"
             onkeydown="if(event.key==='Enter'){event.preventDefault();docExtraAtendimento();}">
-          <button onclick="pedirDocsAtendimento('${c.id}')">🖨 Imprimir e registrar o pedido</button>
+          <button onclick="pedirDocsAtendimento('${c.id}')">Imprimir e registrar o pedido</button>
         </div>`}
       ${pedidos.length?`<div style="margin-top:8px">
-        <div class="meio-sub" style="margin-bottom:3px">📌 Já pedimos a ${esc(c.nome.split(" ")[0])}:</div>
+        <div class="meio-sub" style="margin-bottom:3px">Já pedimos a ${esc(c.nome.split(" ")[0])}:</div>
         <ul class="mov-lista">
           ${pedidos.map((p,pi)=>(p.itens||[]).map((it,ii)=>`<li>
             <span class="mov-data">${p.em?fmt(p.em.slice(0,10)):"—"}</span>
             <span class="mov-txt" style="${it.entregue?"text-decoration:line-through;color:var(--cinza)":""}">${esc(it.nome||it)}</span>
-            ${it.entregue?`<span class="chip verde">✔ entregue ${fmt(it.entregue)}</span>`
-              :`<button class="btn-mini" onclick="docEntregue('${c.id}',${pi},${ii})">✔ entregue</button>`}
+            ${it.entregue?`<span class="chip verde">entregue ${fmt(it.entregue)}</span>`
+              :`<button class="btn-mini" onclick="docEntregue('${c.id}',${pi},${ii})">entregue</button>`}
           </li>`).join("")).join("")}
         </ul></div>`:""}
     </div>`:""}
@@ -13045,7 +13048,7 @@ async function criarCronogramaINSS(cliId){
   await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({campos:c.campos})}).catch(()=>{});
   plim();
-  aviso(`🔔 Cronograma criado: ${qtd} pagamento(s) — sem caso, como combinado`, false);
+  aviso(`Cronograma criado: ${qtd} pagamento(s) — sem caso, como combinado`, false);
   montarSidebar(); abaAtiva=9; abrirFicha(cliId);
 }
 function docExtraAtendimento(){
@@ -13072,7 +13075,7 @@ async function pedirDocsAtendimento(cliId){
     await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({campos:c.campos})});
   }catch(e){ return aviso("Imprimiu, mas não consegui registrar o pedido — tente de novo"); }
-  aviso(`📋 ${itens.length} documento(s) impressos e registrados como pedidos ao cliente`, false);
+  aviso(`${itens.length} documento(s) impressos e registrados como pedidos ao cliente`, false);
   abrirFicha(cliId);
 }
 async function docEntregue(cliId, pi, ii){
