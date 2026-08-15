@@ -92,13 +92,23 @@ def estrutura():
 
 
 def preenchimento(tabela, col, tipo):
-    """Quantas linhas têm ESTA coluna preenchida. Só o número volta."""
-    q = f"/rest/v1/{tabela}?{urllib.parse.quote(col)}=not.is.null"
+    """Quantas linhas têm ESTA coluna preenchida. Só o número volta.
+
+    "Preenchida" não é o mesmo que "não nula": texto vazio não é dado, e um
+    jsonb que ficou no padrão ('[]' ou '{}') também não. Sem esse cuidado,
+    `clientes.telefones` apareceria com 100% de preenchimento quando ninguém
+    escreveu um telefone lá — o padrão da coluna é a lista vazia.
+    """
+    c = urllib.parse.quote(col)
+    base = f"/rest/v1/{tabela}?{c}=not.is.null"
+    q = base
     if (tipo or "") in TEXTUAIS:
-        q += f"&{urllib.parse.quote(col)}=neq."
+        q += f"&{c}=neq."
+    elif (tipo or "") == "jsonb":
+        q += f"&{c}=neq.[]&{c}=neq." + urllib.parse.quote("{}")
     n = total_de(q)
     if n is None:                      # tipo que não aceita o filtro: só não-nulo
-        n = total_de(f"/rest/v1/{tabela}?{urllib.parse.quote(col)}=not.is.null")
+        n = total_de(base)
     return n
 
 
