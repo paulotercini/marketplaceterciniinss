@@ -1,7 +1,10 @@
 ---
 name: base-incapacidade-b91-permanente
-description: "Aposentadoria por incapacidade permanente B91 pós EC 103/2019, ótica pró-segurado. Use SEMPRE que mencionar B91, aposentadoria por invalidez, arts. 42 a 48 Lei 8.213, acréscimo 25% grande invalidez, art. 42 §2º doença preexistente, conversão B31 em B91, prognóstico desfavorável, laudo B91, RMI B91 60% mais 2% excedente, RMI B91 acidentária 100%, art. 26 §3º II EC 103, Tema 1083 STJ agravamento, Tema 982 STJ, assistência permanente, insuscetibilidade reabilitação, reavaliação periódica, MP 739/2016, Programa Revisão, Portaria Conjunta 14/2026, análise documental B91, Portaria 991/2022, Portaria 992/2022. Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, base-incapacidade-b31-temporaria, base-incapacidade-acidentaria-b92, ntep-nexo-acidentario, base-calculo-rmi-ec103 e orientacao-cliente-pericia."
+description: "Aposentadoria por incapacidade permanente B91 pós EC 103/2019, ótica pró-segurado. Use SEMPRE que mencionar B91, aposentadoria por invalidez, arts. 42 a 48 Lei 8.213, acréscimo 25% grande invalidez, art. 42 §2º doença preexistente, conversão B31 em B91, prognóstico desfavorável, laudo B91, RMI B91 60% mais 2% excedente, RMI B91 acidentária 100%, art. 26 §3º II EC 103, Tema 982 STJ, assistência permanente, insuscetibilidade reabilitação, reavaliação periódica, MP 739/2016, Programa Revisão, Portaria Conjunta 14/2026, análise documental B91, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, base-incapacidade-b31-temporaria, base-incapacidade-acidentaria-b92, ntep-nexo-acidentario, base-calculo-rmi-ec103 e orientacao-cliente-pericia."
 ---
+
+Nota de convenção de espécies INSS: B31 = auxílio-doença previdenciário; B91 = auxílio-doença acidentário; B32 = aposentadoria por incapacidade permanente previdenciária; B92 = acidentária; B94 = auxílio-acidente.
+
 
 # Aposentadoria por Incapacidade Permanente (B91) Pós EC 103/2019
 
@@ -21,17 +24,17 @@ Lei 8.213/91, art. 44. A RMI integral, após a reforma, é calculada conforme ar
 
 Lei 8.213/91, art. 45. Acréscimo de 25% ao valor do benefício para quem necessite de assistência permanente de outra pessoa (grande invalidez).
 
-Lei 8.213/91, arts. 46 a 48. Regulam a recuperação parcial, o retorno ao trabalho e a cessação do B91.
+Lei 8.213/91, arts. 46 e 47. Regulam o retorno voluntário à atividade e as mensalidades de recuperação (cessação gradual do B91).
 
-EC 103/2019, art. 26, §3º, II. RMI do B91 não acidentário é de 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher).
+EC 103/2019, art. 26, §2º. RMI do B91 não acidentário é de 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher).
 
-EC 103/2019, art. 26, §3º, III, combinado com §2º, II. RMI do B91 acidentário é de 100% da média.
+EC 103/2019, art. 26, §3º, II. RMI da aposentadoria por incapacidade permanente acidentária (B92) é de 100% da média.
 
 Portaria Conjunta MPS/INSS 14/2026. Regulamenta a análise documental do B91. Acionar `analise-documental-incapacidade`.
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Requisitos cumulativos
 
@@ -67,7 +70,7 @@ Em reavaliação periódica (Programa Revisão de Benefícios por Incapacidade, 
 
 Sempre verificar caráter acidentário. Se presente, converter para B91 acidentário (B92) com RMI integral. Acionar `ntep-nexo-acidentario` e `base-incapacidade-acidentaria-b92`.
 
-Sempre verificar direito ao acréscimo de 25% (grande invalidez), com avaliação da necessidade de assistência permanente. Art. 45 da Lei 8.213/91 e Tema 982 STJ sobre extensão a outros benefícios.
+Sempre verificar direito ao acréscimo de 25% (grande invalidez), com avaliação da necessidade de assistência permanente. Art. 45 da Lei 8.213/91. Atenção: o STF (Tema 1095, RE 1.221.446, j. 2021) restringiu o acréscimo de 25% à aposentadoria por incapacidade permanente, superando a extensão a outros benefícios que se discutia no Tema 982 STJ.
 
 ## Integração com outras skills
 

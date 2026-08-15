@@ -1,7 +1,12 @@
 ---
 name: base-salario-maternidade-pos-reforma
-description: "Salário-maternidade B80/B81 pós EC 103/2019, ótica pró-segurada. Use SEMPRE que mencionar salário-maternidade, B80, B81, B82, B83, licença-maternidade, art. 71 Lei 8.213, art. 72, art. 73, 120 dias maternidade, parto, adoção, guarda judicial para adoção, aborto não criminoso, natimorto, segurada especial rural maternidade, MEI maternidade, desempregada salário-maternidade, LC 146/2014 prorrogação morte mãe, Lei 12.873/2013 pai adotante, Lei 14.457/2022, prorrogação 180 dias Empresa Cidadã, art. 26 VI isenção carência maternidade, carência 10 contribuições CI/facultativa, carência desempregada 10 contribuições, Tema 149 TNU, Súmula 37 TNU, Tema 245 TNU, aborto espontâneo, óbito mãe pai, natimorto B81, qualidade segurada DIB, Portaria 991/2022, Portaria 992/2022. Cruza com peticao-previdenciaria, documentos-comprobatorios-in128, periodo-graca-qualidade-segurado, segurado-especial-rural, perspectiva-genero-previdenciario e precedentes-previdenciarios."
+description: "Salário-maternidade B80/B81 pós EC 103/2019, ótica pró-segurada. Use SEMPRE que mencionar salário-maternidade, B80, B81, B82, B83, licença-maternidade, art. 71 Lei 8.213, art. 72, art. 73, 120 dias maternidade, parto, adoção, guarda judicial para adoção, aborto não criminoso, natimorto, segurada especial rural maternidade, MEI maternidade, desempregada salário-maternidade, LC 146/2014 prorrogação morte mãe, Lei 12.873/2013 pai adotante, Lei 14.457/2022, prorrogação 180 dias Empresa Cidadã, art. 26 VI isenção carência maternidade, carência 10 contribuições CI/facultativa, carência desempregada 10 contribuições, Tema 149 TNU, Súmula 37 TNU, Tema 245 TNU, aborto espontâneo, óbito mãe pai, natimorto B81, qualidade segurada DIB, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, documentos-comprobatorios-in128, periodo-graca-qualidade-segurado, segurado-especial-rural, perspectiva-genero-previdenciario e precedentes-previdenciarios."
 ---
+
+## ATUALIZAÇÃO LEGISLATIVA (Etapa 5 da auditoria, 12/07/2026)
+
+Lei 15.415/2026 (conferida em fontes convergentes, selo no Planalto pendente). Inseriu o art. 73-A na Lei 8.213/91 e fixou prazo máximo de 30 dias para o INSS conceder o salário-maternidade, com regime de concessão diante da mora administrativa. Usar em MS por demora e em pedido administrativo de salário-maternidade parado além do prazo. Conferir o texto do art. 73-A no Planalto antes de transcrever em peça.
+
 
 # Salário-Maternidade (B80/B81) Pós EC 103/2019
 
@@ -17,9 +22,9 @@ Lei 8.213/91, art. 71. Salário-maternidade à segurada gestante (ou mãe adotiv
 
 Lei 8.213/91, art. 71-A. Salário-maternidade em caso de adoção ou guarda para fins de adoção.
 
-Lei 8.213/91, art. 71-B. Transferência do salário-maternidade para o pai em caso de óbito da mãe (LC 146/2014).
+Lei 8.213/91, art. 71-B (incluído pela Lei 12.873/2013). Transferência do salário-maternidade ao cônjuge/companheiro sobrevivente em caso de óbito da mãe.
 
-Lei 8.213/91, art. 72. Duração de 120 dias. Pode ser estendida pela Lei 11.770/2008 (Empresa Cidadã) para 180 dias.
+Lei 8.213/91, art. 71. Duração de 120 dias (o art. 72 trata do valor: remuneração integral da empregada).
 
 Lei 8.213/91, art. 73. Pagamento pelo empregador no caso de empregada, com compensação. Pagamento direto pelo INSS em outros casos.
 
@@ -31,13 +36,13 @@ Lei 8.213/91, art. 39, par. único. Segurada especial rural com 10 meses de ativ
 
 Lei 12.873/2013. Pai adotante/guardião com direito ao salário-maternidade.
 
-LC 146/2014. Transferência ao cônjuge em caso de óbito da mãe/gestante.
+LC 146/2014. Estende a estabilidade provisória da gestante (ADCT, art. 10, II, b) a quem detiver a guarda em caso de falecimento da genitora.
 
 EC 103/2019. Não alterou estruturalmente o salário-maternidade.
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Espécies de salário-maternidade
 
@@ -45,7 +50,7 @@ Primeira, B80. Parto.
 
 Segunda, B81. Aborto não criminoso, natimorto.
 
-Terceira, B82. Adoção por adotante com 8 a 12 anos (conforme idade da criança).
+Terceira, B82. Adoção ou guarda para fins de adoção: 120 dias, independentemente da idade da criança ou adolescente (art. 71-A, redação da Lei 12.873/2013 — escalas etárias abolidas).
 
 Quarta, B83. Guarda judicial para adoção.
 
@@ -109,7 +114,7 @@ Segundo, em desempregada, prazo do período de graça é decisivo. Requerer temp
 
 Terceiro, segurada especial com atividade rural intermitente precisa provar os 10 meses no período de 12 meses imediatamente anteriores.
 
-Quarto, em MS por mora, competência Federal Cível ou JEF conforme valor.
+Em MS por mora, competência sempre da Vara Federal comum (MS não tramita no JEF — art. 3º, §1º, I, da Lei 10.259/2001).
 
 ## Fungibilidade aplicável
 

@@ -1,6 +1,6 @@
 ---
 name: base-ms-cumprimento-inss
-description: "Cumprimento da ordem em mandado de segurança previdenciário, implantação de benefício, restabelecimento, obrigação de fazer, multa diária art. 497 CPC, crime de desobediência art. 26 Lei 12.016/2009, ofício requisitório e efeitos patrimoniais limitados pelas Súmulas 269 e 271 STF. Use SEMPRE que mencionar cumprimento de MS previdenciário, implantação por MS, ordem judicial INSS, multa diária em MS, astreintes em MS, art. 26 Lei 12.016, crime de desobediência INSS, ofício requisitório MS, Súmula 269 STF, Súmula 271 STF, Tema 394 STJ, efeitos patrimoniais MS, cumprimento de decisão MS, limbo pós-sentença, demora de cumprimento INSS. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e execucao-cumprimento-previdenciario."
+description: "Cumprimento da ordem em mandado de segurança previdenciário, implantação de benefício, restabelecimento, obrigação de fazer, multa diária art. 497 CPC, crime de desobediência art. 26 Lei 12.016/2009, ofício requisitório e efeitos patrimoniais limitados pelas Súmulas 269 e 271 STF. Use SEMPRE que mencionar cumprimento de MS previdenciário, implantação por MS, ordem judicial INSS, multa diária em MS, astreintes em MS, art. 26 Lei 12.016, crime de desobediência INSS, ofício requisitório MS, Súmula 269 STF, Súmula 271 STF, Tema 394 STJ, efeitos patrimoniais MS, MS para cumprimento de acórdão do CRPS, INSS não implanta decisão do CRPS, demora no cumprimento de acórdão administrativo, revisão de acórdão sem efeito suspensivo, recurso intempestivo do INSS, art. 308 Decreto 3.048/99, art. 581 IN 128/2022, art. 581 §4º exceções, TRF4 RemNec 5000463-92.2026.4.04.7113, cumprimento de decisão MS, limbo pós-sentença, demora de cumprimento INSS. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e execucao-cumprimento-previdenciario."
 ---
 
 # Cumprimento da Ordem em MS Previdenciário
@@ -41,7 +41,7 @@ Cobrança por ação ordinária.
 
 Efeitos patrimoniais pretéritos.
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Duração razoável.
 
@@ -92,6 +92,18 @@ Cenário C, INSS cumpre parcialmente. Novo ofício.
 Cenário D, crime de desobediência em omissão dolosa.
 
 Cenário E, cobrança de parcelas pretéritas por ação ordinária autônoma.
+
+## MS para cumprimento de acórdão do CRPS pelo INSS (Onda 88)
+
+Situação distinta e recorrente. Aqui o MS não é para cumprir ordem judicial, é para FORÇAR o INSS a cumprir decisão administrativa do CRPS favorável ao segurado, quando a autarquia não implanta e alega incidente próprio ou silencia.
+
+Tese literal do TRF4 (5ª Turma, RemNec 5000463-92.2026.4.04.7113/RS, Rel. Juíza Federal Graziela Soares, unânime, j. 15/07/2026). "A demora injustificada do INSS em cumprir decisão administrativa do Conselho de Recursos da Previdência Social (CRPS), que reconheceu o direito a benefício previdenciário, viola direito líquido e certo do segurado, quando o recurso interposto pela autarquia é intempestivo e não possui efeito suspensivo."
+
+Chave normativa. O art. 308, § 1º, do Decreto 3.048/99 diz que pedido de revisão de acórdão NÃO é recurso, e o caput só atribui efeito suspensivo a recurso interposto TEMPESTIVAMENTE. O art. 581 da IN 128/2022 obriga o INSS a cumprir as decisões do CRPS, e o § 4º admite apenas duas exceções, benefício mais vantajoso deferido ou decisão judicial transitada em julgado sobre o mesmo objeto. Fora disso não há amparo para o não cumprimento.
+
+Ponto de rigor. A numeração do dispositivo da Revisão de Acórdão VARIA entre versões do RICRPS (o acórdão cita art. 116, precedente de janeiro de 2026 cita art. 76, e a base registra o art. 116 como agravo ao Pleno). Conferir na versão vigente antes de citar, e enquanto isso ancorar no art. 308, § 1º, do Decreto 3.048/99, que é norma superior e inequívoca.
+
+Roteiro completo, arsenal normativo, o que o INSS responde, alerta de honorários (não cabem em MS) e advertência ao cliente sobre eventual cessação com devolução em `references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`.
 
 ## Alertas
 

@@ -129,7 +129,7 @@ Art. 14 do RITNU. Vedação institucional.
 
 Súmula 43/TNU. "Não cabe incidente de uniformização que verse sobre matéria processual".
 
-Súmula 42/TNU. Cotejo analítico (cruzamento com `pedilef-cotejo-analitico-tnu`).
+Súmula 42/TNU. Vedação ao reexame de matéria de fato (cruzamento com `pedilef-cotejo-analitico-tnu`).
 
 Questões de Ordem da TNU sobre admissibilidade.
 
@@ -245,7 +245,7 @@ Em caso de decisão monocrática de inadmissão por matéria processual, opor em
 
 Pedido de manifestação expressa sobre a presença de elemento de direito material na controvérsia.
 
-Súmula 98/STJ + Tema Repetitivo 698/STJ. Embargos prequestionadores não são protelatórios.
+Súmula 98/STJ, embargos prequestionadores não são protelatórios; o Tema 698/STJ autoriza multa apenas quando rediscutem matéria pacificada (auditoria 25/07/2026).
 
 Pedido subsidiário de prequestionamento ficto pelo art. 1.025 CPC.
 
@@ -320,7 +320,7 @@ Crítica à interpretação restritiva que esvazia o instrumento de uniformizaç
 | Inversão indevida do ônus na DID | Art. 2º LC 142, art. 70-D Decreto 3.048 | base-pcd-did-retroativa |
 | Rejeição de prova testemunhal rural | Art. 55 §3º Lei 8.213, Súmula 149/STJ | base-tempo-rural-anterior-1991 |
 | Indeferimento de reafirmação DER | Art. 18 Lei 8.213, Tema 995/STJ | reafirmacao-der |
-| Aplicação de Tema 1124 de ofício | Art. 17 Lei 10.259, Tema 350/STF | base-efeito-translativo-tema-1124-defesa |
+| Aplicação de Tema 1124 de ofício | Art. 18 da Lei 8.213/91, Tema 350/STF | base-efeito-translativo-tema-1124-defesa |
 | Não realização de perícia documental | Art. 60 §11-A Lei 8.213, Portarias 13/14/15/2026 | analise-documental-incapacidade |
 | Não enfrentamento de NTEP | Art. 21-A Lei 8.213, Lista B Anexo II Decreto 3.048 | ntep-nexo-acidentario |
 | Falta de avaliação biopsicossocial | Art. 20 §10 LOAS, Portaria Conjunta 2/2014 | analise-bpc-loas |

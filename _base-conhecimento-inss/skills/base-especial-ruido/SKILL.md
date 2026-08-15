@@ -1,6 +1,6 @@
 ---
 name: base-especial-ruido
-description: "Base de teses de defesa do segurado em aposentadoria especial por ruído. Use SEMPRE que mencionar ruído, dB(A), NEN, NHO-01, NR-15, dosimetria, dosímetro, Tema 174 TNU, Tema 317 TNU, Enunciado 13 CRPS revisado 12/2024, PEDILEF 0001717, PEDILEF 0005459, Comunicado CRPS 99/2025, limite de tolerância ruído, 80 85 90 dB, evolução normativa ruído, Decreto 53.831/64, Decreto 83.080/79, Decreto 2.172/97, Decreto 3.048/99 Anexo IV, Decreto 4.882/2003, normalização de jornada efetiva, horas extras habituais ruído, fórmula NEN, campo 15.5 PPP, campo 15.4 PPP, presunção relativa NR-15, cerceamento de defesa ruído, impugnação PPP ruído, EPI para ruído Tema 555 STF, Súmula Vinculante 9, conversão ruído tempo especial, direito adquirido ruído, CTC ruído, método ponderado rotativo. Traz cenários de enquadramento, refutações ao INSS e roteiro argumentativo pró-segurado. NÃO use para outros agentes nocivos. Cruza com auditoria-ppp e peticao-previdenciaria."
+description: "Base de teses de defesa do segurado em aposentadoria especial por ruído. Use SEMPRE que mencionar ruído, dB(A), NEN, NHO-01, NR-15, dosimetria, dosímetro, Tema 174 TNU, Tema 317 TNU, Enunciado 13 CRPS revisado 12/2024, PEDILEF 0001717, PEDILEF 0005459, Comunicado CRPS 99/2025, Nota 792/2025 CONJUR-MPS AGU, Despacho 301/2025, quatro critérios registro ruído PPP, presunção NEN pela NHO-01, limite de tolerância ruído, 80 85 90 dB, evolução normativa ruído, Decreto 53.831/64, Decreto 83.080/79, Decreto 2.172/97, Decreto 3.048/99 Anexo IV, Decreto 4.882/2003, normalização de jornada efetiva, horas extras habituais ruído, fórmula NEN, campo 15.5 PPP, campo 15.4 PPP, presunção relativa NR-15, cerceamento de defesa ruído, impugnação PPP ruído, EPI para ruído Tema 555 STF, Súmula 9 TNU, conversão ruído tempo especial, direito adquirido ruído, CTC ruído, método ponderado rotativo. Traz cenários de enquadramento, refutações ao INSS e roteiro argumentativo pró-segurado. NÃO use para outros agentes nocivos. Cruza com auditoria-ppp e peticao-previdenciaria."
 ---
 
 # Base Temática. Ruído em Aposentadoria Especial
@@ -62,6 +62,16 @@ O passo a passo aplicado está em `references/CENARIOS-ENQUADRAMENTO.md` cenári
 
 O STF firmou no Tema 555 (ARE 664.335) que, em regra, o uso eficaz de EPI neutraliza a nocividade. Para ruído, porém, o próprio STF reconheceu exceção expressa, firmando que, mesmo com uso de EPI devidamente certificado, não se afasta a especialidade por exposição a ruído acima do limite, dadas as limitações da proteção auricular em condições reais. A tese se aplica integralmente, independentemente da anotação do campo 15.7 do PPP. A fundamentação integral está em `references/TESES-REFUTACAO-INSS.md` seção 1.
 
+### Tese 6. Nota nº 00792/2025/CONJUR-MPS/CGU/AGU, os quatro critérios de registro do ruído no PPP (Onda 98)
+
+A Nota nº 00792/2025/CONJUR-MPS/CGU/AGU, aprovada pelo Despacho nº 00301/2025/CONJUR-MPS/CGU/AGU, fixou o entendimento da consultoria jurídica do MPS sobre COMO a exposição ao ruído pode ser registrada no PPP, em quatro hipóteses válidas. Primeira, somente a norma NHO-01, hipótese em que se PRESUME a utilização do NEN ainda que não haja menção expressa no PPP. Segunda, somente o NEN, pois ele é inerente à metodologia da NHO-01. Terceira, a metodologia NEN acompanhada da indicação da norma NHO-01. Quarta, a NR-15 DESDE QUE acompanhada da menção expressa ao NEN, uma vez que essa norma não possui metodologia própria de cálculo do nível de normalização e opera apenas com limites de tolerância fixos.
+
+Uso pró-segurado. As três primeiras hipóteses blindam o PPP que traz NHO-01 ou NEN em qualquer combinação, e derrubam a exigência administrativa de menção literal ao NEN quando a NHO-01 está indicada (a presunção é da própria consultoria jurídica do ministério). Em recurso ao CRPS e em réplica, a Nota soma com o Tema 174/TNU e com a revisão do Enunciado 13 (Tese 3 acima), formando bloco fechado contra o indeferimento por formalismo de registro. O ponto de cautela é a quarta hipótese, PPP baseado só em NR-15 sem NEN expresso segue vulnerável, e nesse caso a saída é a Tese 1 (presunção relativa do PEDILEF 0001717, com ônus do INSS de demonstrar medição pontual) ou a retificação do PPP pela `retificacao-ppp`.
+
+A Nota registra ainda, conforme as fontes consultadas, que expressões genéricas como dosimetria ou audiodosimetria, isoladas, não permitem concluir pela aplicação do NEN (convergente com o Tema 317, Tese 2 acima), e que a medição deve refletir a totalidade da jornada, o que reforça a Tese 4 da normalização por jornada efetiva.
+
+Rigor de fonte (conferência de 30/07/2026). A EXISTÊNCIA e o TEOR da Nota estão confirmados por fontes secundárias especializadas convergentes, entre elas a análise publicada por Adriane Bramante, referência nacional em aposentadoria especial. A ÍNTEGRA do documento não foi localizada em repositório público da AGU nesta rodada. Em peça, citar a Nota pelo número completo com a aprovação pelo Despacho 00301/2025, e requerer, quando útil, que o INSS junte a íntegra aos autos (o documento vincula a administração e está em poder dela). Pendência de manutenção, obter a íntegra quando disponível e promover esta tese a fonte primária conferida.
+
 ## Regras rígidas de redação
 
 Primeiro, ausência absoluta de dois-pontos como separador lógico.
@@ -88,3 +98,13 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 ## O que NÃO está nesta skill
 
 Não há cálculo de RMI. Não há orientação sobre outros agentes. Não há roteiro de perícia judicial genérica. Para cada um desses tópicos, outra skill é responsável.
+
+## Enunciado 12 da I Jornada do TRF4, dosimetria e presunções (Onda 109)
+
+Texto literal, conferido no Caderno oficial da EMAGIS/TRF4 em 14/08/2026, página 16. "Para a comprovação da especialidade por exposição ao agente ruído em períodos de tempo de serviço/contribuição posteriores a 18/11/2003. (1) a referência à utilização da técnica da dosimetria no PPP ou no LTCAT enseja presunção relativa de cumprimento da metodologia de cálculo da NR-15 ou da NHO-01 da Fundacentro; (2) havendo aferição por ambos os métodos, NR-15 e NHO-01 da Fundacentro, no mesmo período, deve-se adotar a mais favorável ao trabalhador; e (3) a confirmação da habitualidade e permanência no laudo técnico elaborado pela empresa empregadora gera presunção relativa de cumprimento desses requisitos e dispensa a perícia técnica judicial referida na tese do Tema 1.083 do STJ."
+
+Valor pró-segurado. Os três itens resolvem, por presunção, exatamente o que o INSS costuma exigir como prova impossível. O item 2 é o mais útil, porque converte a duplicidade metodológica em escolha do trabalhador. O item 3 afasta a perícia judicial quando o laudo da empresa já confirma habitualidade e permanência.
+
+Identificação. Enunciado 12 da I Jornada Regional Intrainstitucional de Direito Previdenciário da Justiça Federal da 4ª Região, EMAGIS/TRF4, 1º e 2 de setembro de 2025.
+
+RESSALVA OBRIGATÓRIA. Por declaração do próprio TRF4, os enunciados têm caráter meramente doutrinário e força persuasiva técnico-jurídica, não se confundindo com a posição do tribunal. Citar como doutrina qualificada, jamais como precedente, e sinalizar a Região de origem em peça na 3ª Região.

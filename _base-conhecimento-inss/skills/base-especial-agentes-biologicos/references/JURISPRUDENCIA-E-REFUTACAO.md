@@ -20,11 +20,13 @@ Aplicação pró-segurado. Fundamenta o enquadramento em profissionais que inter
 
 ### Tema 1090 STJ
 
-Tese. O uso de EPI eficaz não descaracteriza o tempo especial em hipóteses excepcionais, que incluem agentes cancerígenos da LINACH e agentes biológicos.
+Tese LITERAL INTEGRAL (conferida no SCON/STJ em 14/08/2026). "I - A informação no Perfil Profissiográfico Previdenciário (PPP) sobre a existência de equipamento de proteção individual (EPI) descaracteriza, em princípio, o tempo especial, ressalvadas as hipóteses excepcionais nas quais, mesmo diante da comprovada proteção, o direito à contagem especial é reconhecido; II - Incumbe ao autor da ação previdenciária o ônus de comprovar: (i) a ausência de adequação ao risco da atividade; (ii) a inexistência ou irregularidade do certificado de conformidade; (iii) o descumprimento das normas de manutenção, substituição e higienização; (iv) a ausência ou insuficiência de orientação e treinamento sobre o uso adequado, guarda e conservação; ou (v) qualquer outro motivo capaz de conduzir à conclusão da ineficácia do EPI; III - Se a valoração da prova concluir pela presença de divergência ou de dúvida sobre a real eficácia do EPI, a conclusão deverá ser favorável ao autor." REsp 2.080.584/PR, 2.082.072/RS e 2.116.343/RJ, Rel. Min. Maria Thereza de Assis Moura, Primeira Seção, j. 09/04/2025, DJEN 22/04/2025, trânsito em julgado.
+
+CORREÇÃO DE AUDITORIA (Onda 108). A redação anterior desta ficha atribuía ao Tema 1090 uma lista de hipóteses excepcionais com cancerígenos da LINACH e biológicos, que a tese NÃO contém. ATUALIZADO na Onda 109 com a conferência em fonte oficial. O Tema 1090 do STJ NÃO enumera as hipóteses excepcionais na tese. Quem enumera os CANCERÍGENOS é o próprio STJ nos EDcl no REsp 2.116.343/RJ (10/09/2025), e os EDcl no REsp 2.080.584/PR registram que a Primeira Seção PROPOSITADAMENTE deixou a lista aberta, de modo que sustentar BIOLÓGICOS como hipótese excepcional não contraria o repetitivo. A âncora dos biológicos é o IRDR 15 do TRF4, citado como jurisprudência relevante nos próprios acórdãos do Tema 1090, somado ao Tema 383 da TNU com os Pareceres 2/2025 e 3/2025 da Fundacentro e ao Tema 213 da TNU. Tese literal e roteiro dos cinco caminhos do ônus em `base-especial-epi/references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md`.
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Irrelevância da declaração de EPI eficaz em PPP quando a exposição é a agente biológico. Combinado com `base-especial-epi`.
+Aplicação pró-segurado. O item de DÚVIDA é o que mais serve, porque em biológicos a eficácia real nunca se demonstra em campo. Somar IRDR 15 do TRF4, Tema 383 da TNU e Tema 213 da TNU, e usar `base-especial-epi`.
 
 ### Tema 555 STF (ARE 664.335)
 
@@ -60,7 +62,7 @@ Refutação. O Tema 205 TNU dispensa contato direto permanente. A presença em a
 
 Argumento adversário. O campo 15.7 do PPP declara EPI eficaz.
 
-Refutação. O Tema 1090 STJ inclui agentes biológicos nas hipóteses em que o EPI não neutraliza. A declaração unilateral da empresa é irrelevante em biológicos. Combinar com `base-especial-epi` e Tema 213 TNU para inversão do ônus probatório.
+Refutação. A declaração é unilateral e o campo 15.7 registra ENTREGA, não eficácia real em campo. O IRDR 15 do TRF4 reconhece a ineficácia em biológicos, o Tema 383 da TNU e os Pareceres 2/2025 e 3/2025 da Fundacentro sustentam a limitação técnica dos equipamentos, e o Tema 1090 do STJ resolve a dúvida em favor do autor. Combinar com `base-especial-epi` e Tema 213 TNU para inversão do ônus probatório.
 
 ### Argumento 4 — Rol taxativo do Anexo IV
 

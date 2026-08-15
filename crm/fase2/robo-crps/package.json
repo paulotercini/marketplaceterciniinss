@@ -1,0 +1,19 @@
+{
+  "name": "robo-crps",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sonda e (futuro) robô dos recursos administrativos do CRPS no CRM Tercini",
+  "scripts": {
+    "sonda": "node sonda.js",
+    "robo": "node robo.js",
+    "preparar": "node preparar.js",
+    "test": "node --test testes/*.test.js",
+    "ingerir": "node ingerir.js",
+    "resumir": "node resumir.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.1",
+    "pdf-parse": "^2.4.5",
+    "playwright": "^1.45.0"
+  }
+}

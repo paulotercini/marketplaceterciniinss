@@ -3,6 +3,17 @@ name: base-b94-anexo-iii-quadros
 description: "Anexo III do Decreto 3.048/99 e quadros exemplificativos do auxílio-acidente B94, caráter exemplificativo, sequelas além do rol, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, perda parcial e função residual, redução da capacidade laborativa para o trabalho habitual. Use SEMPRE que mencionar Anexo III Decreto 3.048, quadros do auxílio-acidente, sequela enquadrável B94, rol exemplificativo, sequela fora do anexo, redução parcial da capacidade laborativa, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, função residual, perda anatômica, perda funcional B94, capacidade habitual reduzida, ofensa estética B94, ofensa funcional, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-tema862, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-tema201 e base-b94-nexo-acidentario-ntep."
 ---
 
+## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
+
+Conferencia em fonte oficial (CJF e STJ) sobre citacoes usadas nesta skill.
+
+1. Sumulas 88 e 89 da TNU EXISTEM e estao VIGENTES (aprovadas na Sessao Ordinaria de 17/04/2024, DJeN 24/04/2024). Texto literal da Sumula 88/TNU. "A existencia de limitacao, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessao do beneficio de auxilio-acidente, em observancia a tese fixada sob o Tema 416 do Superior Tribunal de Justica." Texto literal da Sumula 89/TNU. "Nao ha direito a concessao de beneficio de auxilio-acidente quando, apos consolidacao das lesoes decorrentes de acidente de qualquer natureza, resultarem sequelas que nao reduzem a capacidade laborativa habitual nem sequer demandam dispendio de maior esforco na execucao da atividade habitual." Usar sempre estes textos, nao parafrasear.
+2. Tema 201/TNU tem tese CONTRARIA ao contribuinte individual. "O contribuinte individual nao faz jus ao auxilio-acidente, diante de expressa exclusao legal." Nao usar como fundamento de sequela minima nem em favor da concessao. A tese de sequela minima e a Sumula 88/TNU c/c Tema 416/STJ.
+3. Nao confundir com a Sumula 89/STJ ("A acao acidentaria prescinde do exaurimento da via administrativa"), valida no contexto acidentario estadual.
+
+Quadro completo e errata em base-precedentes-catalogo-vinculantes/references/ATUALIZACAO-STATUS-2026-06.md.
+
+
 # Anexo III e Quadros do B94
 
 ## Escopo

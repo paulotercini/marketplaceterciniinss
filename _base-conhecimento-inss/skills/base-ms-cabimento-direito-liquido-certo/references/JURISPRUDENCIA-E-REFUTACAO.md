@@ -24,7 +24,7 @@ Fonte oficial em https://www.stj.jus.br
 
 Arquivamento.
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Duração razoável.
 
@@ -142,7 +142,7 @@ Sexto, sentença.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 1066 STF.
+Acompanhar acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
 Revalidar Súmula 628 STJ.
 

@@ -1,31 +1,29 @@
 ---
 name: base-tolueno-tema-382-tnu-via-cutanea
-description: "Tolueno via cutânea, Tema 382/TNU PUIL 5012678, distinção do benzeno e enquadramento qualitativo do agente químico. Use SEMPRE que mencionar tolueno, Tema 382 TNU, PUIL 5012678, tolueno via cutânea, tolueno absorção dérmica, tolueno Anexo 13 NR-15, tolueno 78 ppm, ACGIH 20 ppm tolueno, distinção tolueno benzeno, LINACH, hidrocarboneto aromático tolueno, NR-15 Anexo 11 12 13, exposição cutânea tolueno, sapateiro tolueno, gráfica tolueno, oficina mecânica tolueno, indústria tintas tolueno, frentista tolueno, EPI tolueno, Tema 555 STF, Tema 1090 STJ, Súmula 9 STF, NHO-08, neurotoxicidade tolueno, fetotoxicidade tolueno, art. 57 §3º Lei 8.213, art. 58 PPP tolueno, IRDR 15 TRF4, PEDILEF 0136882, PEDILEF 5001032, Decreto 53831 codigo 1.2.10. Cruza com auditoria-ppp, base-especial-agentes-quimicos, base-especial-epi, defesa-probatoria-especial, peticao-previdenciaria, precedentes-previdenciarios."
+description: "Tolueno via cutânea e Tema 382/TNU (PEDILEF 5012678-57.2022.4.04.7108/RS, julgado em 15/04/2026, tese CONTRA o enquadramento qualitativo pela via cutânea), com estratégia residual pró-segurado pela via quantitativa do Anexo 11 da NR-15, co-exposição a benzeno e EPI. Use SEMPRE que mencionar tolueno, Tema 382 TNU, PUIL 5012678, tolueno via cutânea, tolueno absorção dérmica, tolueno Anexo 13 NR-15, tolueno 78 ppm, ACGIH 20 ppm tolueno, distinção tolueno benzeno, LINACH, hidrocarboneto aromático tolueno, NR-15 Anexo 11 12 13, exposição cutânea tolueno, sapateiro tolueno, gráfica tolueno, oficina mecânica tolueno, indústria tintas tolueno, frentista tolueno, EPI tolueno, Tema 555 STF, Tema 1090 STJ, Súmula 9 TNU, NHO-08, neurotoxicidade tolueno, fetotoxicidade tolueno, art. 57 §3º Lei 8.213, art. 58 PPP tolueno, IRDR 15 TRF4, PEDILEF 0136882, PEDILEF 5001032, Decreto 53831 codigo 1.2.10. Cruza com auditoria-ppp, base-especial-agentes-quimicos, base-especial-epi, defesa-probatoria-especial, peticao-previdenciaria, precedentes-previdenciarios."
 ---
 
-# Tolueno via Cutânea. Tema 382/TNU PUIL 5012678 e Enquadramento Qualitativo
+# Tolueno via Cutânea. Tema 382/TNU e Estratégia Residual Pós-Julgamento
+
+## CORREÇÃO DE AUDITORIA (11/07/2026), LEIA ANTES DE QUALQUER USO
+
+A versão anterior desta skill continha erro grave. Atribuía ao Tema 382/TNU uma tese sobre BENZENO, com relator (Bianor Arruda Bezerra Neto) e número de processo (PUIL 5012678-29.2017.4.04.7000/PR) FALSOS, e sustentava como "tese central pró-segurado" o enquadramento qualitativo do tolueno pelo Anexo 13 da NR-15. A TNU julgou o Tema 382 em 15/04/2026 e REJEITOU exatamente essa tese. Dados oficiais conferidos na página do tema no CJF em 11/07/2026.
+
+As seções de "estratégia", "cenários" e "refutação" desta skill e de suas references que partem da premissa de que o Tema 382 trata de benzeno ou de que sua ratio se estende ao tolueno estão SUPERADAS e não podem ser usadas em peça. Prevalece o que está nesta seção e na seção 4.
 
 ## 1. Quando acionar esta skill
 
-Acione SEMPRE que houver exposição a tolueno como agente nocivo em pleito de aposentadoria especial ou tempo especial.
+Acione SEMPRE que houver exposição a tolueno como agente nocivo em pleito de aposentadoria especial ou tempo especial. Hipóteses típicas. Sapateiro, gráfica, oficina mecânica, indústria de tintas, indústria química, frentista, polidor, soldador, ajudante de produção química, operador de máquina com solvente.
 
-Hipóteses típicas. Sapateiro, gráfica, oficina mecânica, indústria de tintas, indústria química, frentista, polidor, soldador, ajudante de produção química, operador de máquina com solvente.
+## 2. O Tema 382/TNU (dados oficiais)
 
-A skill é fonte primária pró-segurado para distinguir o tolueno do benzeno e afastar a aplicação restritiva do Tema 382/TNU como obstáculo ao enquadramento qualitativo.
+PEDILEF 5012678-57.2022.4.04.7108/RS. Relatora. Juíza Federal Lilian Oliveira da Costa Tourinho. Julgado em 15/04/2026.
 
-## 2. O Tema 382/TNU PUIL 5012678
+Questão submetida. Saber se a exposição cutânea ao tolueno é suficiente para o reconhecimento da atividade como especial, com base na análise qualitativa prevista no Anexo 13 da NR-15, ou se é exigida análise quantitativa nos termos do Anexo 11 da NR-15, ainda que haja potencial de absorção dérmica.
 
-PUIL 5012678-29.2017.4.04.7000/PR.
+Tese fixada (literal). "A exposição ao tolueno por via cutânea, inclusive na sua forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15)."
 
-Relator. Juiz Federal Bianor Arruda Bezerra Neto.
-
-Julgamento. Tema 382/TNU.
-
-Tese fixada. "É possível o reconhecimento da especialidade da atividade laboral pela exposição ao agente nocivo benzeno em concentração superior aos limites de tolerância previstos na NR-15 do MTE, mesmo após 13/10/1995, em atenção ao princípio do tempus regit actum, sendo desnecessária a aferição quantitativa para o reconhecimento da nocividade do agente, dada sua classificação como cancerígeno (LINACH/grupo 1)".
-
-ATENÇÃO. O Tema 382/TNU trata do BENZENO, não do tolueno.
-
-A confusão é frequente porque ambos são hidrocarbonetos aromáticos monocíclicos e usados em conjunto em muitos ambientes industriais. O INSS frequentemente aplica o Tema 382 ao benzeno e nega o enquadramento qualitativo do tolueno por suposta ausência de previsão equivalente.
+Consequência. Para o tolueno, o enquadramento exige análise QUANTITATIVA pelo Anexo 11 da NR-15 (limite de 78 ppm para jornada de 48 horas semanais). A simples presença do agente ou o potencial de absorção dérmica não bastam.
 
 ## 3. Distinção técnica entre tolueno e benzeno
 
@@ -57,11 +55,19 @@ NHO-08 da Fundacentro. Procedimento de avaliação da exposição a vapores org�
 
 Tolueno tem efeitos. Neurotoxicidade. Hepatotoxicidade. Fetotoxicidade (categoria 2 GHS). Irritação dérmica e ocular.
 
-## 4. Tese central pró-segurado
+## 4. Estratégia residual pró-segurado (pós-Tema 382/TNU)
 
-O tolueno é agente químico do Anexo 13 da NR-15 (substâncias com absorção pela via cutânea). A simples presença, sem nem mesmo aferição quantitativa, autoriza o enquadramento qualitativo.
+A tese do enquadramento qualitativo pela via cutânea foi rejeitada pela TNU. Os caminhos que permanecem são os seguintes.
 
-Isso porque o Anexo 13 da NR-15 é taxativo na enumeração das substâncias com risco grave por absorção cutânea, e a exposição a essas substâncias não admite gradação por concentração no ar (a via cutânea independe do ar).
+Primeiro. Via quantitativa do Anexo 11 da NR-15. Exigir do PPP e do LTCAT a medição da concentração de tolueno. Acima de 78 ppm (jornada de 48 horas), o enquadramento é devido. Medição ausente ou omissa no PPP autoriza impugnação da prova e requisição do LTCAT (lógica do Tema 174/TNU aplicada por analogia argumentativa à necessidade de indicar técnica de medição, sem citar o 174 fora do ruído como vinculante).
+
+Segundo. Co-exposição a benzeno ou outro agente cancerígeno LINACH Grupo 1. O benzeno tem regime próprio qualitativo. Onde há tolueno industrial frequentemente há benzeno. Exigir a discriminação dos agentes no PPP e no LTCAT e fundar o pedido no agente cancerígeno, não no tolueno.
+
+Terceiro. EPI. Permanecem aplicáveis o Tema 555/STF e o Tema 1090/STJ quanto à discussão de eficácia do EPI para o agente químico quantitativamente enquadrado.
+
+Quarto. Períodos regidos por enquadramento por categoria profissional até 28/04/1995 (Decretos 53.831/64 e 83.080/79) independem da discussão do Tema 382.
+
+Quinto. Casos com trânsito em julgado favorável anteriores ao Tema 382 não são alcançados. Em processos pendentes, avaliar distinguishing genuíno apenas quando a prova técnica registrar medição quantitativa acima do limite, hipótese fora do alcance da tese.
 
 ## 5. Enquadramento normativo do tolueno
 
@@ -125,7 +131,7 @@ Tese. O Tema 382/TNU fixou a desnecessidade da aferição quantitativa para agen
 
 Distinguishing. O Tema 382 é aplicado ao benzeno, mas a sua ratio (desnecessidade de quantificação para agentes com absorção sistêmica grave) é aplicável ao tolueno do Anexo 13.
 
-### 6.5. Argumento 5. Súmula 9/STF e Tema 555/STF (EPI)
+### 6.5. Argumento 5. Súmula 9/TNU e Tema 555/STF (EPI)
 
 Tese. EPI ineficaz para neutralizar agentes cutâneos do Anexo 13.
 
@@ -221,7 +227,7 @@ ACGIH 20 ppm (subsidiário).
 
 Co-exposição com benzeno (quando aplicável).
 
-EPI ineficaz (Súmula 9/STF, Tema 555/STF).
+EPI ineficaz (Súmula 9/TNU — específica de ruído, aplicável por analogia —, Tema 555/STF e Tema 1090/STJ).
 
 ### 9.2. JEF
 

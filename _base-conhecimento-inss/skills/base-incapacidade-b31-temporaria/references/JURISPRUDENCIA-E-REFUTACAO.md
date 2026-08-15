@@ -2,9 +2,9 @@
 
 ## 1. Precedentes vinculantes
 
-### Súmula 63 TNU
+### Art. 151 da Lei 8.213/91 (rol com leitura ampliativa)
 
-Tese. A comprovação de doença grave, ainda que não prevista expressamente no rol do art. 151 da Lei 8.213/91, isenta o segurado da carência quando houver equivalência de gravidade.
+Retirada a Súmula 63/TNU na auditoria 25/07/2026; ela trata de união estável em pensão por morte, não de carência.
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -18,13 +18,17 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado. Fundamento para ação judicial com perícia judicial contraditando perícia administrativa.
 
-### Tema 1421 STF (Limbo previdenciário-trabalhista)
+### Limbo previdenciário. Tema 300 da TNU e Tema 1421 do STF (corrigido na Onda 70, 20/07/2026)
 
-Tese. O STF aborda a responsabilidade em situações de cessação do B31 sem possibilidade de retorno ao trabalho. Repercussão geral reconhecida.
+CORREÇÃO. A redação anterior citava apenas o Tema 1421 do STF, que está pendente de julgamento de mérito, e omitia o Tema 300 da TNU, que é o precedente que efetivamente decide a matéria. Também afirmava "jurisprudência consolidada no sentido da responsabilidade solidária ou subsidiária" sem indicação de fonte. Ambos os pontos foram sanados.
 
-Fonte oficial em https://portal.stf.jus.br
+**Tema 300 da TNU, este é o fundamento a citar.** PEDILEF 0513030-88.2020.4.05.8400/RN, julgado em 07/12/2022. Tese literal. "Quando o empregador não autorizar o retorno do segurado, por considerá-lo incapacitado, mesmo após a cessação de benefício por incapacidade pelo INSS, a sua qualidade de segurado se mantém até o encerramento do vínculo de trabalho, que ocorrerá com a rescisão contratual, quando dará início a contagem do período de graça do art. 15, II, da Lei n. 8.213/1991." Situação oficial, Em Revisão, Tema 1421/STF.
 
-Aplicação pró-segurado. Em situações de limbo, sustentar a obrigação do INSS de manter o benefício ou da empresa de aceitar o retorno com adaptação.
+**Tema 1421 do STF.** RE 1.460.766, Rel. Min. Gilmar Mendes, repercussão geral reconhecida em 06/09/2025, acórdão de RG publicado em 23/09/2025, **mérito NÃO julgado** em 20/07/2026, sem determinação de suspensão nacional. Citar como pendência e risco de superação, jamais como fundamento de mérito.
+
+Aplicação pró-segurado. O ganho do Tema 300 é a manutenção da qualidade de segurado durante todo o limbo, o que sustenta B31 e B91 com DII que o INSS considerava fora da manutenção. A aplicação exige prova do impedimento patronal, a 8ª Turma Recursal de São Paulo afastou a tese por falta dessa prova no RI 5018508-56.2024.4.03.6301.
+
+Roteiro probatório em oito graus, defesa antecipada e teses literais em `base-limbo-previdenciario-tema300`.
 
 ### Súmula 47 TNU
 
@@ -70,7 +74,7 @@ Refutação. Tema 246 TNU. A perícia administrativa não tem caráter vinculant
 
 Argumento adversário. O segurado não cumpriu as 12 contribuições mínimas.
 
-Refutação. Art. 26, II, da Lei 8.213/91 e Súmula 63 TNU. Se a doença é do rol do art. 151 ou equivalente, há isenção total de carência. Em caso de acidente, a isenção também é automática.
+Refutação. Art. 26, II, e art. 151 da Lei 8.213/91 (auditoria 25/07/2026). Se a doença é do rol do art. 151 ou equivalente, há isenção total de carência. Em caso de acidente, a isenção também é automática.
 
 ### Argumento 3 — Doença preexistente
 

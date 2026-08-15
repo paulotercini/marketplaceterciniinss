@@ -1,6 +1,6 @@
 ---
 name: base-especial-categoria-profissional-pre1995
-description: "Enquadramento por categoria profissional até 28/04/1995 pelos Decretos 53.831/64 e 83.080/79, presunção de exposição, Súmula 198 TFR, Súmula 555 STJ, fim da categoria pela Lei 9.032/95 e estratégias para períodos antigos sem PPP. Use SEMPRE que mencionar categoria profissional pré-1995, enquadramento por categoria, Decreto 53.831/64, Decreto 83.080/79, Súmula 198 TFR, Súmula 555 STJ, Lei 9.032/95, atividade até 28/04/1995, presunção exposição até 1995, fim da categoria profissional, transição enquadramento, motorista categoria, frentista categoria, telefonista categoria, metalúrgico categoria, atividade sem PPP pré-1995, código 1.1.6 53.831, código 2.5.7 83.080, anotação CTPS especial, declaração empresa atividade. Cruza com auditoria-ppp, peticao-previdenciaria, base-especial-calor-nho06, base-especial-frio-camara-frigorifica, base-especial-radiacao-ionizante, base-especial-penosidade-enfermagem-petroleiro e defesa-probatoria-especial."
+description: "Enquadramento por categoria profissional até 28/04/1995 pelos Decretos 53.831/64 e 83.080/79, presunção de exposição, Súmula 198 TFR, fim da categoria pela Lei 9.032/95 e estratégias para períodos antigos sem PPP. Use SEMPRE que mencionar categoria profissional pré-1995, enquadramento por categoria, Decreto 53.831/64, Decreto 83.080/79, Súmula 198 TFR, Súmula 555 STJ, Lei 9.032/95, atividade até 28/04/1995, presunção exposição até 1995, fim da categoria profissional, transição enquadramento, motorista categoria, frentista categoria, telefonista categoria, metalúrgico categoria, atividade sem PPP pré-1995, código 1.1.6 53.831, código 2.5.7 83.080, anotação CTPS especial, declaração empresa atividade. Cruza com auditoria-ppp, peticao-previdenciaria, base-especial-calor-nho06, base-especial-frio-camara-frigorifica, base-especial-radiacao-ionizante, base-especial-penosidade-enfermagem-petroleiro e defesa-probatoria-especial."
 ---
 
 # Categoria Profissional pré-1995
@@ -33,9 +33,9 @@ Categoria profissional.
 
 Fonte oficial em https://www.cjf.jus.br
 
-### Súmula 555 STJ
+### Marco da Lei 9.032/95 (fim do enquadramento por categoria em 28/04/1995)
 
-Atividade especial.
+O enquadramento por categoria vale até 28/04/1995 (Decretos 53.831/64 e 83.080/79). Retirada a Súmula 555/STJ na auditoria 25/07/2026; ela trata de decadência tributária.
 
 Fonte oficial em https://www.stj.jus.br
 

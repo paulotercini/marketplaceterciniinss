@@ -106,7 +106,7 @@ Tema 1124/STJ na perspectiva do efeito translativo.
 
 ## 5. Tema Repetitivo 698/STJ
 
-### 5.1. Conteúdo
+Limite da Súmula 98/STJ. Multa autorizada quando os embargos rediscutem matéria pacificada (auditoria 25/07/2026).
 
 Ratifica a Súmula 98/STJ.
 
@@ -160,7 +160,7 @@ Demonstrar a demora superior a 45 dias (art. 49 da Lei 9.784/1999).
 
 Aplicação do Tema 350/STF (hipótese excepcional).
 
-Reforço com a Lei 13.460/2017 e Tema 1066/STF.
+Reforço com a Lei 13.460/2017 e acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
 ### 6.4. Cenário D. Cliente com revisão
 
@@ -252,9 +252,9 @@ Tema 1124/STJ.
 
 Tema 350/STF (RE 631.240).
 
-Tema 1066/STF.
+acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
-Tema 660/STF (prequestionamento ficto).
+Art. 1.025 do CPC (prequestionamento ficto; auditoria 25/07/2026, retirado o Tema 660/STF, que trata de ofensa reflexa).
 
 ## 8. Modelos de embargos de declaração
 
@@ -274,7 +274,7 @@ Razões.
 
 4. O caso concreto se enquadra na exceção do Tema 350/STF (notório indeferimento administrativo / pretensão de revisão / demora administrativa).
 
-5. Súmula 98/STJ. Tema Repetitivo 698/STJ. Embargos prequestionadores não são protelatórios.
+5. Súmula 98/STJ. Embargos prequestionadores não são protelatórios; o Tema 698/STJ pune apenas a rediscussão de matéria pacificada (auditoria 25/07/2026).
 
 6. Pedido. Anulação do acórdão para abertura de vista para manifestação sobre o Tema 1124. Subsidiariamente, prequestionamento dos arts. 9º, 10 e 489, § 1º, CPC para fins de REsp/PUIL.
 
@@ -333,7 +333,7 @@ Tema 1124/STJ.
 
 Tema 350/STF.
 
-Tema 660/STF.
+Art. 1.025 do CPC.
 
 ## 11. Estratégia recursal por instância
 
@@ -433,7 +433,7 @@ Cruzamento com `pedilef-cotejo-analitico-tnu`.
 | --- | --- | --- | --- |
 | Tribunal aplica de ofício sem oitiva | Art. 10 CPC | Embargos de declaração | REsp + PUIL |
 | Levanta na pauta sem vista | Art. 933 CPC | Petição prévia + sustentação oral | Embargos |
-| Sem PA por demora | Tema 350/STF | Demonstrar demora >45d | Reforço Tema 1066/STF |
+| Sem PA por demora | Tema 350/STF | Demonstrar demora >45d | Reforço acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021) |
 | Pretensão de revisão | Tema 350/STF | Aplicação da exceção | Sem necessidade de novo PA |
 | Ação pré-modulação | Modulação | Argumentar aplicação prospectiva | Distinguishing |
 | PA extraviado | Boa-fé do segurado | Hipótese excepcional | Documentação alternativa |

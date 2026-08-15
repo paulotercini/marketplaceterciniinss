@@ -38,7 +38,7 @@ Ações de tutela coletiva.
 
 Em qualquer destas hipóteses, dispensa-se o prévio requerimento administrativo.
 
-## 3. Tema 1066/STF
+## 3. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 ### 3.1. Tese fixada
 
@@ -70,7 +70,7 @@ Tema 1124/STJ na perspectiva do efeito translativo.
 
 ## 5. Tema Repetitivo 698/STJ
 
-### 5.1. Conteúdo
+Limite da Súmula 98/STJ. Multa autorizada quando os embargos rediscutem matéria pacificada (auditoria 25/07/2026).
 
 Ratifica a Súmula 98/STJ. Não há caráter protelatório nos embargos prequestionadores.
 
@@ -78,9 +78,9 @@ Ratifica a Súmula 98/STJ. Não há caráter protelatório nos embargos prequest
 
 Reforça a estratégia de embargos exaustivos para prequestionamento.
 
-## 6. Tema 660/STF
+## 6. [Corrigido na auditoria 25/07/2026] Prequestionamento ficto
 
-### 6.1. Tese
+O fundamento é o art. 1.025 do CPC. O Tema 660/STF trata de ofensa reflexa (ausência de repercussão geral) e foi retirado.
 
 Possibilidade de prequestionamento ficto pelo art. 1.025 CPC.
 
@@ -118,7 +118,7 @@ A ratio do art. 10 CPC é a observância do contraditório como pressuposto do d
 
 ### 8.2. Tese 2 do INSS. "Embargos de declaração são protelatórios"
 
-Refutação. Súmula 98/STJ + Tema Repetitivo 698/STJ. Embargos prequestionadores não são protelatórios.
+Refutação. Súmula 98/STJ, embargos prequestionadores não são protelatórios; o Tema 698/STJ só autoriza multa na rediscussão de matéria pacificada (auditoria 25/07/2026).
 
 A multa do art. 1.026, § 2º, CPC é inaplicável.
 
@@ -132,7 +132,7 @@ A aplicação retroativa viola o ato jurídico perfeito (art. 5º, XXXVI, CF).
 
 ### 8.4. Tese 4 do INSS. "Demora administrativa não justifica ação"
 
-Refutação. Tema 1066/STF. Tema 350/STF. Demora superior aos prazos legais caracteriza indeferimento implícito.
+Refutação. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021). Tema 350/STF. Demora superior aos prazos legais caracteriza indeferimento implícito.
 
 Lei 9.784/1999, art. 49 (45 dias). Lei 13.460/2017.
 
@@ -312,10 +312,10 @@ STJ para MS contra ato de TRF.
 | --- | --- | --- | --- |
 | Tema 1124/STJ aplicação restrita | Modulação | STJ | Prospectiva 30/03/2022 |
 | Tema 350/STF hipóteses excepcionais | Const | STF | Revisão / notório / MS preventivo |
-| Tema 1066/STF demora administrativa | Art. 5º LXXVIII CF | STF | >45 dias |
+| acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021) demora administrativa | Art. 5º LXXVIII CF | STF | >45 dias |
 | Súmula 98/STJ embargos prequestionadores | Procedimental | STJ | Embargos sem multa |
 | Tema 698/STJ | Vinculante | STJ | Aplicação obrigatória |
-| Tema 660/STF prequestionamento ficto | Art. 1.025 CPC | STF | Embargos improvidos |
+| Prequestionamento ficto | Art. 1.025 CPC | norma expressa | Embargos improvidos |
 | Art. 10 CPC vedação decisão surpresa | CPC/2015 | Aplicável | Em todas as instâncias |
 
 ## 18. Cruzamento com outras skills

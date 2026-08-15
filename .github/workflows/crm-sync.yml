@@ -1,0 +1,89 @@
+name: CRM — sincronização To Do → banco
+
+on:
+  schedule:
+    # de hora em hora, 07h–20h BRT (10h–23h UTC), segunda a sábado
+    - cron: '0 10-23 * * 1-6'
+  workflow_dispatch: {}
+
+concurrency:
+  group: crm-sync
+  cancel-in-progress: false
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v4
+
+      - name: Configura Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verifica segredos do Supabase
+        id: seg
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_KEY" ]; then
+            echo "tem=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Segredos SUPABASE_URL/SUPABASE_SERVICE_KEY ausentes — sincronização pulada (ver crm/fase2/COMO-INSTALAR.md, passo 7)."
+          else
+            echo "tem=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Cria graph_tokens.json a partir do secret
+        if: steps.seg.outputs.tem == 'true'
+        env:
+          GRAPH_REFRESH_TOKEN: ${{ secrets.GRAPH_REFRESH_TOKEN }}
+        run: |
+          if [ -z "$GRAPH_REFRESH_TOKEN" ]; then
+            echo "::error::O segredo GRAPH_REFRESH_TOKEN está vazio — sem ele não há como ler o To Do."
+            exit 1
+          fi
+          python - <<'PY'
+          import json, os, pathlib
+          pathlib.Path("graph_tokens.json").write_text(
+              json.dumps({"refresh_token": os.environ["GRAPH_REFRESH_TOKEN"]}))
+          PY
+
+      - name: Renova token Microsoft Graph
+        if: steps.seg.outputs.tem == 'true'
+        run: python graph_refresh.py
+
+      # ESCRITA DESLIGADA. Enquanto o To Do e o CRM convivem, o caminho seguro
+      # é de mão única: To Do -> CRM. Um andamento replicado por engano vira
+      # texto no corpo de uma tarefa, e desfazer isso é edição manual, uma a
+      # uma. O script tem a mesma trava por dentro (ESCREVER_TODO=1), então
+      # nem rodando à mão ele escreve sem ser mandado.
+      #
+      # Para religar: Settings > Secrets and variables > Actions > Variables,
+      # criar ESCREVER_TODO com o valor 1.
+      - name: Banco -> To Do (DESLIGADO por padrão)
+        if: steps.seg.outputs.tem == 'true' && vars.ESCREVER_TODO == '1'
+        env:
+          ESCREVER_TODO: '1'
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python crm/fase2/escrever_todo.py
+
+      - name: To Do -> espelho (crawl completo das listas)
+        if: steps.seg.outputs.tem == 'true'
+        run: python crm/sync_todo.py
+
+      - name: Espelho -> banco (idempotente)
+        if: steps.seg.outputs.tem == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          # senha padrão do escritório (item "Padrão" no checklist do To Do) —
+          # opcional; sem ela os itens "Padrão" são só ignorados
+          SENHA_PADRAO_MEUINSS: ${{ secrets.SENHA_PADRAO_MEUINSS }}
+        run: python crm/fase2/migrar.py
+      # crm/data/crm.json contém dados sensíveis: fica só no runner efêmero —
+      # NUNCA subir como artefato nem commitar.

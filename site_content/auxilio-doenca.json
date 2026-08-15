@@ -1,0 +1,148 @@
+{
+  "slug": "auxilio-doenca",
+  "category": "Incapacidade",
+  "title": "Auxílio-Doença (Benefício por Incapacidade Temporária)",
+  "nav_label": "Auxílio-Doença",
+  "order": 1,
+  "facts": [
+    [
+      "Natureza",
+      "Temporária (B31)"
+    ],
+    [
+      "Carência",
+      "12 contribuições (há isenções)"
+    ],
+    [
+      "Avaliação",
+      "Perícia médica"
+    ]
+  ],
+  "meta_description": "Auxílio-doença (benefício por incapacidade temporária - B31): requisitos, carência, prorrogação e restabelecimento. Orientação em Monte Alto/SP.",
+  "hero_subtitle": "Benefício pago ao segurado do INSS que fica temporariamente incapaz para o trabalho habitual por motivo de doença ou acidente.",
+  "intro": [
+    "O auxílio-doença, hoje chamado de benefício por incapacidade temporária (espécie B31), está previsto no art. 59 da Lei 8.213/91. É devido ao segurado que, por doença ou acidente, fica incapacitado para o seu trabalho habitual por mais de 15 dias consecutivos.",
+    "Trata-se de um benefício de caráter temporário: ele é pago enquanto durar a incapacidade e enquanto não houver recuperação ou conversão em outro benefício. Por isso, exige acompanhamento atento da documentação médica ao longo de todo o período."
+  ],
+  "sections": [
+    {
+      "heading": "O que é",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "O benefício por incapacidade temporária (B31) é pago ao segurado que fica impossibilitado de exercer seu trabalho habitual por mais de 15 dias consecutivos, em razão de doença ou acidente. Com a Emenda Constitucional 103/2019, sua renda mensal inicial passou a ser de 91% da média dos salários de contribuição, conforme o novo cálculo da reforma."
+        },
+        {
+          "type": "callout",
+          "text": "Por ser temporário, o B31 pode ser convertido em aposentadoria por incapacidade permanente (B91) quando a incapacidade se protrai ou se agrava, com prognóstico desfavorável."
+        }
+      ]
+    },
+    {
+      "heading": "Quem tem direito",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Segurado empregado afastado por mais de 15 dias por doença ou acidente, a partir do 16º dia;",
+            "Segurado especial rural com incapacidade, com carência cumprida pela atividade rural (benefício no valor de um salário mínimo, art. 39, I, da Lei 8.213/91);",
+            "Microempreendedor individual (MEI), contribuinte individual e empregado doméstico com recolhimentos regulares, nas mesmas condições de carência e qualidade de segurado;",
+            "Segurado portador de doença grave prevista no art. 151 da Lei 8.213/91, que tem isenção de carência."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Requisitos",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A concessão depende do preenchimento cumulativo de quatro requisitos:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Qualidade de segurado na data do início da incapacidade (DII);",
+            "Carência de 12 contribuições mensais, salvo isenção do art. 26, II, da Lei 8.213/91 (acidente de qualquer natureza, acidente de trabalho e doenças da lista do Ministério da Saúde);",
+            "Incapacidade temporária comprovada por documentação médica ou por perícia;",
+            "Incapacidade por mais de 15 dias consecutivos para o trabalho habitual.",
+            "Quem perdeu a qualidade de segurado e voltou a contribuir precisa, em regra, de metade da carência (6 contribuições) para ter direito novamente (art. 27-A da Lei 8.213/91)."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Prorrogação e restabelecimento",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "O art. 60, §11-A, da Lei 8.213/91 instituiu um regime de análise documental para a concessão e a prorrogação do B31, com limites por pedido e travas administrativas. Por isso, é importante pedir a prorrogação (P1) antes da data de cessação do benefício (DCB), reunindo atestados, receitas e exames complementares."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "A cessação antecipada (alta programada) pode ser questionada por meio de pedido de prorrogação ou na via judicial, sempre com prova médica atualizada;",
+            "A chamada trava dos três indeferimentos pode impedir novo requerimento por 180 dias; em caso de agravamento, há instrumentos para enfrentar essa barreira;",
+            "Em situações de limbo previdenciário-trabalhista (o INSS cessa o benefício, mas a empresa não aceita o retorno), discute-se a responsabilidade da empresa, tema em debate no Tema 1421 do STF."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Pontos de atenção",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "A data de início do benefício (DIB) pode retroagir à DII se o segurado empregado requerer dentro de 30 dias após a DII (art. 60, §1º); fora desse prazo, a DIB fica na data do requerimento (DER);",
+            "Indeferimentos por perícia documental inconclusiva podem ser enfrentados com novos documentos médicos, recurso ao Conselho de Recursos da Previdência Social (CRPS) ou ação judicial com perícia médica;",
+            "Em caso de doença ocupacional ou acidente de trabalho, deve-se verificar o caráter acidentário, que altera o enquadramento do benefício;",
+            "Quando há prognóstico de incapacidade duradoura, avalia-se a conversão em aposentadoria por incapacidade permanente."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Como o escritório pode ajudar",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Podemos analisar a qualidade de segurado e a carência, organizar a documentação médica que sustenta a incapacidade, orientar você quanto ao pedido de prorrogação e atuar contra indeferimentos e cessações que não observem a Lei 8.213/91, na via administrativa ou judicial. Cada caso é avaliado individualmente."
+        }
+      ]
+    }
+  ],
+  "documentos": [
+    "Documento de identidade e CPF",
+    "Carteira de trabalho e comprovantes de vínculo ou de recolhimento ao INSS",
+    "Atestados médicos com data, diagnóstico (CID) e período de afastamento",
+    "Exames complementares, laudos e relatórios de especialistas",
+    "Receituários e relatórios de tratamento em curso",
+    "Comprovante de requerimento e carta de indeferimento do INSS (se houver)",
+    "Comunicação de Acidente de Trabalho (CAT), quando se tratar de acidente ou doença ocupacional",
+    "Comprovante de atividade rural (no caso do segurado especial)"
+  ],
+  "faq": [
+    {
+      "q": "Quantos dias de afastamento são necessários para ter direito ao benefício?",
+      "a": "O benefício por incapacidade temporária é devido quando a incapacidade para o trabalho habitual ultrapassa 15 dias consecutivos. Para o segurado empregado, os primeiros 15 dias são pagos pela empresa, e o INSS passa a pagar a partir do 16º dia."
+    },
+    {
+      "q": "Sempre preciso cumprir a carência de 12 meses?",
+      "a": "Em regra, sim. Porém, o art. 26, II, da Lei 8.213/91 prevê isenção de carência nos casos de acidente de qualquer natureza, acidente de trabalho e nas doenças graves listadas pelo Ministério da Saúde e no art. 151 da Lei 8.213/91."
+    },
+    {
+      "q": "O INSS marcou a alta, mas ainda estou incapacitado. O que fazer?",
+      "a": "É possível solicitar a prorrogação do benefício (pedido de prorrogação) antes da data de cessação, reunindo atestados e exames atualizados. Mantida a negativa, cabe recurso ao CRPS ou ação judicial com perícia médica. Recomenda-se buscar orientação para avaliar o caso concreto."
+    },
+    {
+      "q": "O auxílio-doença pode virar aposentadoria?",
+      "a": "Sim. Quando a incapacidade se prolonga ou se agrava, com prognóstico desfavorável, é possível pleitear a conversão em aposentadoria por incapacidade permanente (B91), inclusive na modalidade acidentária, quando houver nexo com o trabalho."
+    }
+  ],
+  "related": [
+    "aposentadoria-incapacidade",
+    "auxilio-acidente",
+    "reabilitacao-profissional"
+  ]
+}

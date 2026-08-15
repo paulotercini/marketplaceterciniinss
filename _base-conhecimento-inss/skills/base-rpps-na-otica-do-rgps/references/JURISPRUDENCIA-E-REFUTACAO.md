@@ -6,9 +6,9 @@
 
 Tempo no RPPS e direito adquirido. Fonte oficial em https://portal.stf.jus.br
 
-### Tema 942 STJ
+### Tema 942/STF (RE 1.014.286)
 
-Contagem recíproca. Fonte oficial em https://www.stj.jus.br
+Conversão de tempo especial de servidor. Até a EC 103/2019 aplicam-se as regras do RGPS; depois, depende de lei complementar do ente (auditoria 25/07/2026, corte corrigida).
 
 ### CF/88, art. 201 §9º
 

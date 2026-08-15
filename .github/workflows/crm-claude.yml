@@ -1,0 +1,46 @@
+name: CRM — rotina diária do Claude
+
+on:
+  schedule:
+    # dias úteis às 07h30 BRT (10h30 UTC) — antes do expediente
+    - cron: '30 10 * * 1-5'
+  workflow_dispatch: {}
+
+jobs:
+  sugerir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v4
+
+      - name: Configura Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verifica segredos do Supabase
+        id: seg
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_KEY" ]; then
+            echo "tem=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Segredos SUPABASE ausentes — rotina pulada (crm/fase2/COMO-INSTALAR.md)."
+          else
+            echo "tem=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Instala SDK da Anthropic
+        if: steps.seg.outputs.tem == 'true'
+        run: pip install --quiet anthropic
+
+      - name: Gera as sugestões do dia
+        if: steps.seg.outputs.tem == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python crm/fase2/claude_rotina.py

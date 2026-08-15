@@ -1,6 +1,6 @@
 ---
 name: base-aposentadoria-transicao-ec103
-description: "Regras de transição da EC 103/2019 para aposentadoria por tempo de contribuição, sob a ótica exclusiva do segurado. Use SEMPRE que mencionar regra de transição EC 103, art. 15 EC 103, art. 16 EC 103, art. 17 EC 103, art. 20 EC 103, pontos progressivos, fórmula 86/96 progressiva, pedágio 50%, pedágio 100%, idade mínima progressiva, professor transição, art. 20 §1º EC 103, escolha da regra mais vantajosa, comparativo entre regras, melhor regra de transição, mitigar impacto reforma, art. 4º EC 103, tempo de contribuição mínimo 35 30, carência 180, Tema 334 STF melhor benefício na transição, aplicação simultânea Lei 13.183/2015 na transição, direito de escolha, fator previdenciário nas transições, divisor mínimo nas transições. Portaria 991/2022, Portaria 992/2022. Aciona peticao-previdenciaria. Cruza com peticao-previdenciaria, base-aposentadoria-direito-adquirido, base-aposentadoria-regra-permanente-ec103, base-calculo-rmi-ec103, reafirmacao-der, precedentes-previdenciarios e revisao-peticao."
+description: "Regras de transição da EC 103/2019 para aposentadoria por tempo de contribuição, sob a ótica exclusiva do segurado. Use SEMPRE que mencionar regra de transição EC 103, art. 15 EC 103, art. 16 EC 103, art. 17 EC 103, art. 20 EC 103, pontos progressivos, fórmula 86/96 progressiva, pedágio 50%, pedágio 100%, idade mínima progressiva, professor transição, art. 20 §1º EC 103, escolha da regra mais vantajosa, comparativo entre regras, melhor regra de transição, mitigar impacto reforma, art. 4º EC 103, tempo de contribuição mínimo 35 30, carência 180, Tema 334 STF melhor benefício na transição, aplicação simultânea Lei 13.183/2015 na transição, direito de escolha, fator previdenciário nas transições, divisor mínimo nas transições. Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona peticao-previdenciaria. Cruza com peticao-previdenciaria, base-aposentadoria-direito-adquirido, base-aposentadoria-regra-permanente-ec103, base-calculo-rmi-ec103, reafirmacao-der, precedentes-previdenciarios e revisao-peticao."
 ---
 
 # Regras de Transição da EC 103/2019 (Aposentadoria por Tempo)
@@ -25,7 +25,7 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Regra geral e as quatro portas de transição
 
@@ -35,15 +35,15 @@ Cada regra tem trade-off próprio. Pontos exige maior tempo de contribuição ma
 
 ## Cenários operacionais pró-segurado
 
-Primeiro, segurado que em 2026 completa 100 pontos e tem 35 anos de contribuição. Regra dos pontos (art. 15). RMI com possível acréscimo além dos 60% base, conforme tempo excedente.
+Primeiro, segurado (homem) que em 2026 soma 103 pontos e tem 35 anos de contribuição. Regra dos pontos (art. 15) — em 2026 exigem-se 103 pontos do homem e 93 da mulher.
 
-Segundo, segurada que em 2026 completa 58 anos e 30 anos de contribuição. Regra da idade progressiva (art. 16).
+Segundo, segurada que em 2026 completa 59 anos e 6 meses de idade e 30 anos de contribuição. Regra da idade progressiva (art. 16) — a idade exigida da mulher em 2026 é 59a6m (homem: 64a6m).
 
 Terceiro, segurado que em 13 de novembro de 2019 faltavam apenas 1 ano e 8 meses para completar 35 anos de contribuição. Pedágio de 50% (art. 17). Acesso mais rápido ao benefício.
 
-Quarto, segurado que em 2026 completa 60 anos de idade e tem 35 anos de contribuição. Pode optar pelo pedágio de 100% (art. 20) com RMI integral (100% da média), o que pode ser mais vantajoso em certos perfis remuneratórios.
+Quarto, segurado que em 13/11/2019 estava próximo do tempo mínimo: no pedágio de 100% (art. 20), exige-se idade de 60 (homem) ou 57 (mulher), o tempo mínimo de 35/30 anos E o cumprimento do dobro do tempo que faltava na promulgação — a conta do pedágio é indispensável.
 
-Quinto, professor com 25 ou 30 anos de magistério e enquadramento em transição específica (art. 15 §2º, art. 16 §2º, art. 20 §2º), com redução de 5 anos em relação aos demais segurados.
+Quinto, professor com 25 ou 30 anos de magistério e enquadramento em transição específica (art. 15 §3º, art. 16 §2º, art. 20 §1º), com redução de 5 anos em relação aos demais segurados.
 
 Sexto, segurado com tempo especial convertido até 13 de novembro de 2019. Aproveitamento do tempo especial convertido para compor o tempo de contribuição da transição, conforme `base-aposentadoria-especial-transicao-ec103` e `auditoria-ppp`.
 
@@ -68,7 +68,7 @@ Ao buscar jurisprudência, acione `precedentes-previdenciarios`.
 
 Primeiro, a escolha da regra é do segurado. O INSS frequentemente aplica a regra que gera RMI menor sem apresentar o comparativo. Exigir planilha comparativa em recurso administrativo ou ação judicial.
 
-Segundo, a RMI nas transições adota percentual de 60% da média das contribuições mais 2% por ano excedente a 20 anos (homem) ou 15 anos (mulher), nos termos do art. 26 da EC 103. A única exceção é o pedágio de 100%, que mantém 100% da média.
+As exceções são duas: o pedágio de 100% (art. 20), que mantém 100% da média, e o pedágio de 50% (art. 17), cujo cálculo é a média multiplicada pelo fator previdenciário (art. 17, parágrafo único).
 
 Terceiro, cuidado com a retroatividade do requerimento. A DER escolhida deve coincidir com o preenchimento dos requisitos da transição eleita. Em caso de requerimento prematuro, cabe reafirmação da DER (Tema 995 STJ).
 

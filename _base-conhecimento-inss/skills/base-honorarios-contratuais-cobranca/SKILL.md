@@ -21,7 +21,7 @@ A boa gestão do contratual garante o caixa do escritório e elimina o conflito 
 **EAOAB art. 22 §4º.** Destaque do honorário no pagamento (RPV ou precatório), inclusive em ação previdenciária.
 **EAOAB art. 24.** Execução do contrato de honorários como título executivo extrajudicial.
 **Código de Ética OAB.** Veda cobrança vexatória, mas autoriza cobrança regular e protesto via órgão de classe se necessário.
-**Lei 8.906/1994 art. 35.** Diferenças entre honorários contratual, fixado e arbitrado.
+**Lei 8.906/1994, art. 22, caput.** Espécies de honorários: convencionados (contratuais), arbitrados judicialmente e de sucumbência.
 
 ## Modalidades de fixação no escritório
 
@@ -138,4 +138,4 @@ Templates oficiais sugeridos (a serem construídos como artefatos do escritório
 
 Lista no Microsoft To Do, `💵 Pagamentos`. Acessível pelo conector Microsoft Graph.
 
-EAOAB (Lei 8.906/1994), arts. 22 a 35, fundamento dos honorários.
+EAOAB (Lei 8.906/1994), arts. 22 a 26, fundamento dos honorários.

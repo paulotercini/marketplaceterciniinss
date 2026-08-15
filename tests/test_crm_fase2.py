@@ -1,0 +1,734 @@
+"""Regressão da Fase 2 — migrar.py (mapeamento To Do -> banco) e
+escrever_todo.py (formato da escrita de volta). Dados 100% fictícios."""
+import pathlib, sys
+import pytest
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "crm" / "fase2"))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "crm"))
+import migrar, escrever_todo
+
+
+def crm_json(tarefas):
+    return {"gerado_em": "2026-08-01T12:00:00", "tarefas": tarefas}
+
+
+def t(lista, titulo, **kw):
+    base = {"id": kw.pop("id", titulo), "lista": lista, "titulo": titulo,
+            "nome": kw.pop("nome", titulo.split("#")[0].strip()),
+            "cpf": kw.pop("cpf", None), "dn": None, "telefone": None,
+            "processo": None, "nb": None, "beneficio": None, "prazo": None,
+            "importante": False, "concluida": False, "concluida_em": None,
+            "andamentos": [], "eventos": []}
+    base.update(kw)
+    return base
+
+
+# ── mapeamento de listas ──────────────────────────────────────────────────
+
+def test_pagamentos_vira_fase_do_caso_dentro_do_cliente():
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", id="a"),
+        t("💵 Pagamentos", "Fulana #00000000191", cpf="00000000191", id="b"),
+    ]))
+    assert len(m["clientes"]) == 1            # mesmo cliente
+    fases = sorted(k["fase"] for k in m["casos"])
+    assert fases == ["judicial", "pagamento"]  # pagamento é caso, não lista
+
+
+def test_tarefa_concluida_vira_encerrado_preservando_origem():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Beltrano #00000000272", cpf="00000000272",
+          concluida=True, concluida_em="2026-05-01"),
+    ]))
+    (caso,) = m["casos"]
+    assert caso["fase"] == "encerrado"
+    assert caso["origem_lista"] == "🌻 INSS"
+
+
+def test_checklist_vira_subtarefas_sem_dados_pessoais():
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191",
+          checklist=[{"texto": "Pedir PPP na empresa", "feito": False},
+                     {"texto": "Juntar laudo médico", "feito": True},
+                     {"texto": "Aniversário 12.03.1961", "feito": False},   # dado, não tarefa
+                     {"texto": "000.000.001-91", "feito": False}]),        # CPF, não tarefa
+    ]))
+    titulos = sorted(tf["titulo"] for tf in m["tarefas"])
+    assert titulos == ["Juntar laudo médico", "Pedir PPP na empresa"]
+    assert all(tf["caso_id"] for tf in m["tarefas"])
+    assert any(tf["concluida"] for tf in m["tarefas"])
+
+
+def test_lista_pessoal_vira_tarefa_particular():
+    m = migrar.mapear(crm_json([t("Tarefas", "Renovar OAB", prazo="2026-09-01")]))
+    assert m["casos"] == []
+    (tf,) = m["tarefas"]
+    assert tf["particular_de"] == ("__INICIAL__", "P")
+
+
+def test_lista_fora_do_crm_sem_cpf_e_pulada():
+    m = migrar.mapear(crm_json([t("🔎 Leilões", "Sítio em Franca")]))
+    assert m["casos"] == [] and m["clientes"] == []
+    assert m["pulados"] == {"🔎 Leilões": 1}
+
+
+def test_idempotencia_ids_deterministicos():
+    dados = crm_json([t("👪 Judicial", "Fulana #00000000191", cpf="00000000191",
+                        andamentos=[{"data": "2026-07-01", "inicial": "P",
+                                     "autor": "Paulo", "texto": "Protocolado."}])])
+    a, b = migrar.mapear(dados), migrar.mapear(dados)
+    assert a["casos"][0]["id"] == b["casos"][0]["id"]
+    assert a["andamentos"][0]["id"] == b["andamentos"][0]["id"]
+
+
+def test_anti_eco_remove_bloco_que_veio_do_app():
+    dados = crm_json([t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", id="x",
+                        andamentos=[{"data": "2026-08-01", "inicial": "P",
+                                     "autor": "Paulo", "texto": "Audiência confirmada."}])])
+    m = migrar.mapear(dados)
+    caso_id = m["casos"][0]["id"]
+    ecoados = {(caso_id, "2026-08-01", migrar.md5("Audiência confirmada."))}
+    assert migrar.anti_eco(m["andamentos"], ecoados) == []
+    assert len(migrar.anti_eco(m["andamentos"], set())) == 1
+
+
+def test_sql_escapa_aspas():
+    sql = migrar._sql_val("d'Ávila")
+    assert sql == "'d''Ávila'"
+
+
+# ── escrita de volta no To Do ─────────────────────────────────────────────
+
+def test_formato_do_bloco_igual_ao_manual():
+    assert escrever_todo.formatar_bloco("2026-08-02T10:30:00-03:00", "A",
+                                        "Cliente confirmou presença.") \
+        == "02.08.2026 (A): Cliente confirmou presença."
+
+
+def test_bloco_sem_autor():
+    assert escrever_todo.formatar_bloco("2026-08-02", None, "Nota.") == "02.08.2026: Nota."
+
+
+def test_prepend_preserva_corpo_existente():
+    corpo = "01.08.2026 (P): Bloco antigo."
+    novo = escrever_todo.prepend_corpo(corpo, "02.08.2026 (A): Bloco novo.")
+    assert novo == "02.08.2026 (A): Bloco novo.\n\n01.08.2026 (P): Bloco antigo."
+    assert escrever_todo.prepend_corpo("", "02.08.2026 (A): X.") == "02.08.2026 (A): X."
+
+
+def test_protocolo_dos_andamentos_vai_para_o_caso():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191",
+          andamentos=[{"data": "2026-07-01", "inicial": "P", "autor": "Paulo",
+                       "texto": "Requerimento protocolado. Protocolo nº 210123456789."},
+                      {"data": "2026-07-10", "inicial": "A", "autor": "Amanda",
+                       "texto": "Sem protocolo aqui."}]),
+    ]))
+    (caso,) = m["casos"]
+    assert caso["protocolos"] == ["210123456789"]
+
+
+def test_parceria_passa_do_json_para_o_caso():
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", parceria="Laís"),
+    ]))
+    assert m["casos"][0]["parceria"] == "Laís"
+
+
+def test_sql_val_lista_vira_jsonb():
+    assert migrar._sql_val(["210", "211"]) == "'[\"210\", \"211\"]'::jsonb"
+
+
+# ── garimpo do checklist (dados soltos -> campos estruturados) ────────────
+
+def test_classificar_checklist_padrao_e_senhas():
+    f = migrar.classificar_item_checklist
+    assert f("Padrão") == ("senha_padrao", None)
+    assert f("padrão.") == ("senha_padrao", None)
+    assert f("Senha meu inss: Abc123*") == ("senha", "Abc123*")
+    assert f("V4c3x2z1*") == ("senha", "V4c3x2z1*")          # token solto letra+número
+    assert f("Pedir PPP na empresa")[0] != "senha"
+
+
+def test_classificar_checklist_telefone_cpf_protocolo():
+    f = migrar.classificar_item_checklist
+    assert f("16-99711 2233") == ("telefone", "16997112233")
+    assert f("(16) 3722-1234") == ("telefone", "1637221234")
+    assert f("000.000.001-91") == ("cpf", "00000000191")
+    # número do próprio CPF repetido no checklist não vira protocolo
+    assert f("00000000191", cpf_cliente="00000000191") == ("dado", None)
+    assert f("210123456789") == ("protocolo", "210123456789")
+    assert f("#Laís") == ("parceria", "Laís")
+    assert f("#B31") == ("dado", None)                        # espécie, não parceria
+
+
+def test_classificar_checklist_nome_de_parente():
+    tipo, (rel, nome) = migrar.classificar_item_checklist("Esposa Fulana de Tal")
+    assert tipo == "nome" and rel == "esposa" and nome == "Fulana de Tal"
+
+
+def test_mapear_garimpa_checklist_para_campos(monkeypatch):
+    monkeypatch.setattr(migrar, "SENHA_PADRAO", "S3nh4Pdr*")
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana de Tal #00000000191", cpf="00000000191", id="a",
+          checklist=[{"texto": "Padrão", "feito": False},
+                     {"texto": "16-99711 2233", "feito": False},
+                     {"texto": "210123456789", "feito": False},
+                     {"texto": "#Laís", "feito": False},
+                     {"texto": "Marido Beltrano da Silva", "feito": False},
+                     {"texto": "Pedir PPP na empresa", "feito": False}]),
+        t("👪 Judicial", "Beltrano da Silva #00000000272", cpf="00000000272", id="b"),
+    ]))
+    (cred,) = m["credenciais"]
+    assert cred["tipo"] == "meu_inss" and cred["valor"] == "S3nh4Pdr*"
+    fulana = next(c for c in m["clientes"] if c["nome"].startswith("Fulana"))
+    assert fulana["telefone"] == "16997112233"
+    caso = next(k for k in m["casos"] if k["cliente_id"] == fulana["id"])
+    assert "210123456789" in caso["protocolos"] and caso["parceria"] == "Laís"
+    (vinc,) = m["vinculos"]
+    assert vinc["relacao"] == "marido"
+    assert {vinc["cliente_id"], vinc["ligado_a"]} == \
+        {c["id"] for c in m["clientes"]}
+    assert [tf["titulo"] for tf in m["tarefas"]] == ["Pedir PPP na empresa"]
+
+
+def test_mapear_sem_secret_ignora_padrao(monkeypatch):
+    monkeypatch.setattr(migrar, "SENHA_PADRAO", None)
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191",
+          checklist=[{"texto": "Padrão", "feito": False}]),
+    ]))
+    assert m["credenciais"] == [] and m["tarefas"] == []
+
+
+def test_documentos_solicitados_no_andamento_viram_checklist():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191",
+          andamentos=[{"data": "2026-08-01", "inicial": "P", "autor": "Paulo",
+                       "texto": "Atendimento feito. Documentos solicitados ao cliente: "
+                                "RG e CPF; Comprovante de residência; Carta de indeferimento."}]),
+    ]))
+    titulos = sorted(tf["titulo"] for tf in migrar.tarefas_docs_de(m["andamentos"]))
+    assert titulos == ["📄 Carta de indeferimento", "📄 Comprovante de residência", "📄 RG e CPF"]
+    assert all(not tf["concluida"] for tf in migrar.tarefas_docs_de(m["andamentos"]))
+
+
+def test_andamento_sem_solicitacao_nao_gera_checklist():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191",
+          andamentos=[{"data": "2026-08-01", "inicial": "P", "autor": "Paulo",
+                       "texto": "Perícia agendada dia 13.04.2027."}]),
+    ]))
+    assert migrar.tarefas_docs_de(m["andamentos"]) == []
+
+
+# ── a trava da escrita CRM -> To Do ───────────────────────────────────────
+# Enquanto os dois sistemas convivem, o caminho seguro é de mão única. Um
+# andamento replicado por engano vira texto no corpo de uma tarefa do To Do,
+# e desfazer isso é edição manual, uma a uma. A trava mora no próprio script,
+# não só no workflow: assim nem uma execução à mão escreve sem ser mandada.
+def test_escrever_todo_nao_roda_sem_ser_mandado(monkeypatch, capsys):
+    monkeypatch.delenv("ESCREVER_TODO", raising=False)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+
+    def nao_chame(*a, **k):                     # qualquer rede aqui é defeito
+        raise AssertionError("a escrita para o To Do saiu com a trava ligada")
+    monkeypatch.setattr(escrever_todo, "_rest", nao_chame)
+
+    escrever_todo.main()
+    assert "desligada" in capsys.readouterr().out
+
+
+def test_escrever_todo_liga_com_a_variavel(monkeypatch):
+    monkeypatch.setenv("ESCREVER_TODO", "1")
+    monkeypatch.delenv("SUPABASE_URL", raising=False)
+    # com a trava liberada ele segue adiante e para na exigência seguinte —
+    # é o bastante para provar que a variável é o que destranca
+    with pytest.raises(SystemExit):
+        escrever_todo.main()
+
+
+# ── o erro do banco tem de dizer o que o banco disse ──────────────────────
+# Dezessete minutos de leitura do To Do e, no fim, "HTTP Error 400: Bad
+# Request" — que não diz nada. O PostgREST manda no corpo da resposta qual
+# coluna não existe; jogar isso fora foi o que fez a sincronização ficar dois
+# dias parada sem ninguém saber por quê.
+def test_erro_do_banco_traz_a_mensagem_e_a_tabela(monkeypatch):
+    import io, urllib.error, urllib.request
+
+    corpo = ('{"code":"PGRST204","message":"Could not find the '
+             "'situacao_inss' column of 'casos' in the schema cache\"}")
+
+    def recusa(req, timeout=None):
+        raise urllib.error.HTTPError(req.full_url, 400, "Bad Request", {},
+                                     io.BytesIO(corpo.encode()))
+    monkeypatch.setattr(urllib.request, "urlopen", recusa)
+
+    with pytest.raises(migrar.BancoRecusou) as caiu:
+        migrar._rest("https://x.supabase.co", "chave", "POST",
+                     "/rest/v1/casos?on_conflict=id", [{"id": 1}])
+    msg = str(caiu.value)
+    assert "casos" in msg, "não disse em que tabela foi"
+    assert "situacao_inss" in msg, "engoliu a mensagem do banco"
+    assert "schema_por_em_dia" in msg, "não disse o que fazer a respeito"
+
+
+# O PostgREST recusa o LOTE quando UMA linha viola uma restrição. Com lotes de
+# 500, um caso numa fase que o banco não conhecia barrou os 2.953 casos — e,
+# com eles, os andamentos, os eventos e as tarefas. Semanas de To Do deixaram
+# de chegar ao CRM por causa de um cliente.
+def test_uma_linha_ruim_nao_derruba_o_lote(monkeypatch):
+    enviados, tentativas = [], []
+
+    def falso_rest(url, chave, metodo, caminho, corpo=None, prefer=None):
+        if metodo == "GET":
+            return []
+        tentativas.append(len(corpo))
+        if any(l["id"] == "ruim" for l in corpo):
+            raise migrar.BancoRecusou("o banco recusou POST em 'casos' (400): 23514")
+        enviados.extend(l["id"] for l in corpo)
+    monkeypatch.setattr(migrar, "_rest", falso_rest)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+
+    caso = lambda i: {"id": i, "todo_task_id": None, "cliente_id": None}
+    mapa = {"andamentos": [],
+            "casos": [caso("a"), caso("ruim"), caso("b"), caso("c")]}
+    with pytest.raises(migrar.BancoRecusou) as caiu:
+        migrar.subir_rest(mapa)
+
+    assert set(enviados) == {"a", "b", "c"}, f"o resto não entrou: {enviados}"
+    assert "ruim" in str(caiu.value), "não disse qual linha foi recusada"
+    assert len(tentativas) > 1, "não chegou a partir o lote para achar a culpada"
+
+
+# O Supabase corta qualquer GET em 1000 linhas, sem avisar. O remapeamento lia
+# uma página só: caso criado no app cujo todo_task_id estava da linha 1001 em
+# diante escapava, a remontagem gerava id novo e o banco recusava (23505) —
+# uma ficha perdida em toda rodada, sempre a mesma.
+def test_remapeamento_enxerga_alem_da_primeira_pagina(monkeypatch):
+    import urllib.parse
+    existentes = [{"id": f"velho-{i}", "todo_task_id": f"task-{i}"}
+                  for i in range(1500)]
+    postados = []
+
+    def falso_rest(url, chave, metodo, caminho, corpo=None, prefer=None):
+        if metodo != "GET":
+            postados.extend(corpo)
+            return
+        # só o GET do remapeamento devolve as páginas; as demais buscas do
+        # subir_rest (lembretes, casos da fase aposentadoria_futura) são vazias
+        if "/casos" not in caminho or "aposentadoria_futura" in caminho:
+            return []
+        q = urllib.parse.parse_qs(urllib.parse.urlparse(caminho).query)
+        salto = int(q.get("offset", ["0"])[0])
+        pagina = min(int(q.get("limit", ["1000"])[0]), 1000)  # o teto do Supabase
+        return existentes[salto:salto + pagina]
+    monkeypatch.setattr(migrar, "_rest", falso_rest)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+
+    mapa = {"andamentos": [], "eventos": [], "tarefas": [],
+            "casos": [{"id": "novo-id-determinístico", "todo_task_id": "task-1400",
+                       "cliente_id": None}]}
+    migrar.subir_rest(mapa)
+
+    ids = [l["id"] for l in postados if l.get("todo_task_id") == "task-1400"]
+    assert ids == ["velho-1400"], f"o caso além da página 1 não foi remapeado: {ids}"
+
+
+# Perícia anotada com "45:00" de hora chegou ao banco como
+# 2024-08-29T45:00:00 — data que não existe. Hora impossível cai no padrão.
+def test_evento_com_hora_impossivel_cai_no_horario_padrao():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Sicrana #00000000353", cpf="00000000353",
+          eventos=[{"tipo": "Perícia", "data": "2024-08-29", "hora": "45:00",
+                    "trecho": "perícia 29/08 45:00"}]),
+    ]))
+    (ev,) = m["eventos"]
+    assert ev["data_hora"].startswith("2024-08-29T09:00")
+
+
+def test_evento_com_hora_de_verdade_continua_igual():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Sicrana #00000000353", cpf="00000000353",
+          eventos=[{"tipo": "Perícia", "data": "2027-04-13", "hora": "12:30",
+                    "trecho": "perícia 13.04 às 12:30"}]),
+    ]))
+    (ev,) = m["eventos"]
+    assert ev["data_hora"].startswith("2027-04-13T12:30")
+
+
+# ── 💵 Pagamentos: o checklist do To Do vira parcelas ─────────────────────
+
+def test_checklist_de_pagamentos_vira_lancamentos():
+    m = migrar.mapear(crm_json([
+        t("💵 Pagamentos", "Fulana #00000000191", cpf="00000000191", id="pg1",
+          checklist=[
+              {"id": "i1", "texto": "Entrada R$ 1.500,00 10/08/2026",
+               "feito": True, "feito_em": "2026-08-10"},
+              {"id": "i2", "texto": "2ª parcela 500 10/09/2026",
+               "feito": False, "feito_em": None},
+              {"id": "i3", "texto": "", "feito": False, "feito_em": None},
+          ]),
+    ]))
+    pgs = {p["todo_item_id"]: p for p in m["pagamentos"]}
+    assert set(pgs) == {"i1", "i2"}          # item vazio não vira lançamento
+    assert pgs["i1"]["status"] == "recebido"
+    assert pgs["i1"]["valor"] == 1500.0
+    assert pgs["i1"]["pago_em"] == "2026-08-10"
+    assert pgs["i2"]["status"] == "aberto"
+    assert pgs["i2"]["valor"] == 500.0
+    assert pgs["i2"]["vencimento"] == "2026-09-10"
+    (caso,) = m["casos"]
+    assert pgs["i1"]["caso_id"] == caso["id"]
+
+
+def test_valor_do_item_nao_confunde_ordinal_nem_data():
+    assert migrar.valor_do_item("2ª parcela 500") == 500
+    assert migrar.valor_do_item("parcela de 10/08") is None
+    assert migrar.valor_do_item("R$ 1.234,56 em 01/02/2026") == 1234.56
+    assert migrar.valor_do_item("honorários 1.500,00") == 1500.0
+    assert migrar.valor_do_item("pagou tudo") is None
+
+
+def test_item_concluido_sem_checkedDateTime_usa_a_data_do_texto():
+    pg = migrar.pagamento_do_item("k1", {"id": "i9", "texto": "Entrada 300 05/08/2026",
+                                         "feito": True, "feito_em": None})
+    assert pg["status"] == "recebido" and pg["pago_em"] == "2026-08-05"
+
+
+def test_checklist_fora_da_lista_pagamentos_nao_vira_lancamento():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Beltrano #00000000272", cpf="00000000272", id="x",
+          checklist=[{"id": "z1", "texto": "R$ 100", "feito": True, "feito_em": None}]),
+    ]))
+    assert m["pagamentos"] == []
+
+
+# ── 🙏 Aposentadorias Futuras -> 🔔 lembrete, nunca caso (08.90) ──────────
+
+def test_aposentadoria_futura_vira_lembrete_e_nao_caso():
+    m = migrar.mapear(crm_json([
+        t("🙏 Aposentadorias Futuras", "Ciclana #00000000353", cpf="00000000353",
+          prazo="2027-03-01", beneficio="B41",
+          andamentos=[{"data": "2026-06-10", "inicial": "P", "autor": "Paulo",
+                       "texto": "Faltam 8 meses de contribuição."}]),
+    ]))
+    assert m["casos"] == [] and m["andamentos"] == []
+    (l,) = m["lembretes"]
+    assert l["cliente_id"] == m["clientes"][0]["id"]
+    assert l["tipo"] == "aposentadoria_futura"
+    assert l["proximo_em"] == "2027-03-01"       # a conclusão da tarefa
+    assert l["ativo"] is True
+    (a,) = l["detalhes"]["anotacoes"]
+    assert a == {"data": "2026-06-10", "inicial": "P",
+                 "texto": "Faltam 8 meses de contribuição."}
+
+
+def test_aposentadoria_futura_concluida_desliga_o_lembrete():
+    m = migrar.mapear(crm_json([
+        t("🙏 Aposentadorias Futuras", "Ciclana #00000000353", cpf="00000000353",
+          concluida=True, concluida_em="2026-05-01"),
+    ]))
+    assert m["casos"] == []
+    (l,) = m["lembretes"]
+    assert l["ativo"] is False
+
+
+def test_aposentadoria_futura_checklist_soh_dados_de_cliente():
+    m = migrar.mapear(crm_json([
+        t("🙏 Aposentadorias Futuras", "Ciclana #00000000353", cpf="00000000353",
+          checklist=[{"texto": "(16) 99999-0000", "feito": False},
+                     {"texto": "Pagar GPS trimestral", "feito": False}]),
+    ]))
+    assert m["clientes"][0]["telefone"]           # dado entrou no cliente
+    assert m["tarefas"] == []                     # tarefa NÃO nasce sem caso
+    assert m["casos"] == []
+
+
+def test_aposentadoria_futura_lembrete_id_deterministico():
+    dados = crm_json([t("🙏 Aposentadorias Futuras", "Ciclana #00000000353",
+                        cpf="00000000353", id="ap1")])
+    a, b = migrar.mapear(dados), migrar.mapear(dados)
+    assert a["lembretes"][0]["id"] == b["lembretes"][0]["id"]
+
+
+# ── falta de índice/coluna NÃO derruba a sincronização (08.93) ────────────
+# O índice único de pagamentos.todo_item_id (seção 12 do schema) não tinha
+# sido rodado no banco: as 2.621 parcelas do To Do voltaram com 42P10, a
+# busca binária partiu o lote até a última linha (milhares de requisições,
+# 28 minutos de passo) e no fim o processo saiu com erro — o CRM passou o dia
+# dizendo "sem sincronizar", embora clientes, casos, andamentos e tarefas
+# tivessem entrado. Erro de ESQUEMA pula a tabela e a rodada termina bem.
+
+def _sobe(monkeypatch, falha_em, codigo, mapa):
+    """Roda subir_rest com um banco falso que recusa uma tabela."""
+    tentativas, enviados = [], []
+
+    def falso_rest(url, chave, metodo, caminho, corpo=None, prefer=None):
+        if metodo == "GET":
+            return []
+        tabela = caminho.split("?")[0].rsplit("/", 1)[-1]
+        if metodo == "POST" and tabela == falha_em:
+            tentativas.append(len(corpo))
+            raise migrar.BancoRecusou(
+                f"o banco recusou POST em '{tabela}' (400): {{\"code\":\"{codigo}\"}}")
+        if metodo == "POST" and isinstance(corpo, list):
+            enviados.extend(corpo)
+        return None
+    monkeypatch.setattr(migrar, "_rest", falso_rest)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    return tentativas, enviados, falso_rest
+
+
+def test_erro_de_esquema_nao_derruba_a_rodada_nem_bissecta(monkeypatch):
+    pg = [{"todo_item_id": f"i{n}", "caso_id": "k1"} for n in range(300)]
+    mapa = {"andamentos": [], "casos": [{"id": "k1", "todo_task_id": None, "cliente_id": None}],
+            "pagamentos": pg}
+    tentativas, enviados, _ = _sobe(monkeypatch, "pagamentos", "42P10", mapa)
+
+    migrar.subir_rest(mapa)                      # NÃO levanta BancoRecusou
+
+    assert tentativas == [300], f"bissectou o lote à toa: {tentativas}"
+    assert any(l.get("id") == "k1" for l in enviados), "o resto da rodada não entrou"
+
+
+def test_carimbo_da_sincronizacao_e_gravado_mesmo_faltando_schema(monkeypatch):
+    mapa = {"andamentos": [], "casos": [], "pagamentos": [{"todo_item_id": "i1"}]}
+    _, enviados, _ = _sobe(monkeypatch, "pagamentos", "42P10", mapa)
+    migrar.subir_rest(mapa)
+    assert any(l.get("chave") == "todo_sync_em" for l in enviados), \
+        "sem o carimbo, o CRM mostra 'sem sincronizar' o dia todo"
+
+
+def test_linha_ruim_de_verdade_continua_derrubando_com_erro(monkeypatch):
+    # regressão da regressão: 23505/23514 (linha culpada) tem que continuar
+    # bissectando e terminando com erro visível
+    mapa = {"andamentos": [], "casos": [], "pagamentos": [{"todo_item_id": f"i{n}"} for n in range(4)]}
+    tentativas, _, _ = _sobe(monkeypatch, "pagamentos", "23505", mapa)
+    with pytest.raises(migrar.BancoRecusou):
+        migrar.subir_rest(mapa)
+    assert len(tentativas) > 1, "deixou de procurar a linha culpada"
+
+
+# ── 💵 Pagamentos: lista do To Do = ABA do cliente, não caso (08.93) ──────
+# Combinado com o Paulo: lista do To Do não vira processo. A tarefa criada
+# direto em 💵 Pagamentos nascia como um segundo "caso" do cliente, disputando
+# a ficha com o processo de verdade.
+
+def test_parcela_carrega_o_cliente_alem_do_caso():
+    m = migrar.mapear(crm_json([
+        t("💵 Pagamentos", "Fulana #00000000191", cpf="00000000191", id="pg",
+          checklist=[{"id": "i1", "texto": "1ª parcela 500 10/08/2026",
+                      "feito": True, "feito_em": "2026-08-10"}]),
+    ]))
+    (pg,) = m["pagamentos"]
+    assert pg["cliente_id"] == m["clientes"][0]["id"]
+    assert pg["valor"] == 500 and pg["status"] == "recebido"
+
+
+def _rest_falso(existentes=(), clientes=(), patches=None):
+    """Banco falso: GET devolve `existentes` para /casos e `clientes` para
+    /clientes, POST guarda tudo e PATCH cai em `patches` (id -> corpo)."""
+    enviados = {}
+    exist = list(existentes)
+    cli = list(clientes)
+
+    def falso(url, chave, metodo, caminho, corpo=None, prefer=None):
+        tabela = caminho.split("?")[0].rsplit("/", 1)[-1]
+        if metodo == "GET":
+            return exist if tabela == "casos" else (cli if tabela == "clientes" else [])
+        if metodo == "PATCH" and patches is not None and tabela == "clientes":
+            patches[caminho.split("id=eq.")[-1]] = corpo
+            return None
+        if isinstance(corpo, list):
+            enviados.setdefault(tabela, []).extend(corpo)
+        return None
+    return falso, enviados
+
+
+def test_tarefa_nova_de_pagamentos_nao_vira_caso_e_o_dinheiro_vai_pro_cliente(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", id="jud",
+          andamentos=[{"data": "2026-06-01", "inicial": "P", "autor": "Paulo",
+                       "texto": "Inicial distribuída."}]),
+        t("💵 Pagamentos", "Fulana #00000000191", cpf="00000000191", id="pg",
+          andamentos=[{"data": "2026-08-10", "inicial": "M", "autor": "Marcos",
+                       "texto": "Cliente pagou a 1ª parcela."}],
+          checklist=[{"id": "i1", "texto": "1ª parcela 500", "feito": True, "feito_em": None}]),
+    ]))
+    falso, enviados = _rest_falso()
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+
+    kid_jud = next(k["id"] for k in m["casos"] if k["origem_lista"] == "👪 Judicial")
+    kid_pg = next(k["id"] for k in m["casos"] if k["origem_lista"] == "💵 Pagamentos")
+    migrar.subir_rest(m)
+
+    casos = enviados.get("casos", [])
+    assert kid_pg not in [k["id"] for k in casos], "a lista de pagamentos criou caso"
+    assert kid_jud in [k["id"] for k in casos], "o caso judicial sumiu junto"
+    # a parcela vai para a aba do cliente e se encosta no processo principal
+    (pg,) = enviados["pagamentos"]
+    assert pg["caso_id"] == kid_jud and pg["cliente_id"]
+    # a anotação do corpo entra na linha do tempo do processo, não some
+    textos = {a["texto"]: a["caso_id"] for a in enviados["andamentos"]}
+    assert textos["Cliente pagou a 1ª parcela."] == kid_jud
+
+
+def test_cliente_so_de_honorarios_fica_com_parcela_sem_caso(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("💵 Pagamentos", "Beltrano #00000000272", cpf="00000000272", id="pg",
+          andamentos=[{"data": "2026-08-10", "inicial": "M", "autor": "Marcos",
+                       "texto": "Acertou em 3x."}],
+          checklist=[{"id": "i9", "texto": "entrada 300", "feito": False}]),
+    ]))
+    falso, enviados = _rest_falso()
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    migrar.subir_rest(m)
+
+    assert enviados.get("casos", []) == [], "criou caso para quem só paga honorários"
+    (pg,) = enviados["pagamentos"]
+    assert pg["caso_id"] is None and pg["cliente_id"]
+    # sem caso onde escrever, a anotação não entra (e não quebra a rodada)
+    assert enviados.get("andamentos", []) == []
+
+
+def test_caso_de_pagamento_que_ja_existe_no_banco_continua_sendo_atualizado(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("💵 Pagamentos", "Ciclana #00000000353", cpf="00000000353", id="pg",
+          checklist=[{"id": "i2", "texto": "2ª parcela 400", "feito": False}]),
+    ]))
+    kid_pg = m["casos"][0]["id"]
+    falso, enviados = _rest_falso([{"id": kid_pg, "todo_task_id": "pg",
+                                    "processo": None, "nb": None}])
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    migrar.subir_rest(m)
+
+    assert kid_pg in [k["id"] for k in enviados["casos"]], \
+        "caso antigo de pagamento sumiu — perderia os andamentos dele"
+    (pg,) = enviados["pagamentos"]
+    assert pg["caso_id"] == kid_pg and pg["cliente_id"]
+
+
+def test_com_dois_casos_a_parcela_fica_sem_caso_para_o_escritorio_escolher(monkeypatch):
+    # chutar o "principal" contabilizaria honorário no benefício errado
+    m = migrar.mapear(crm_json([
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", id="jud"),
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191", id="inss"),
+        t("💵 Pagamentos", "Fulana #00000000191", cpf="00000000191", id="pg",
+          checklist=[{"id": "i1", "texto": "1ª parcela 500", "feito": False}]),
+    ]))
+    falso, enviados = _rest_falso()
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    migrar.subir_rest(m)
+
+    (pg,) = enviados["pagamentos"]
+    assert pg["caso_id"] is None, "vinculou no chute tendo dois casos"
+    assert pg["cliente_id"], "perdeu o cliente — a parcela sumiria da aba"
+
+
+# ── 🙋 Escritório: lista do To Do = CADASTRO do cliente, não caso (08.99) ──
+# Terceira lista a sair do modelo "tarefa = processo". Quem está no Escritório
+# ainda não tem processo: é cliente em atendimento, atrás de documento.
+
+def _sobe_escritorio(monkeypatch, m, existentes=(), clientes=()):
+    patches = {}
+    falso, enviados = _rest_falso(existentes, clientes, patches)
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    migrar.subir_rest(m)
+    return enviados, patches
+
+
+def test_tarefa_nova_do_escritorio_nao_vira_caso_e_vira_anotacao_do_cadastro(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("🙋 Escritório", "Fulana #00000000191", cpf="00000000191", id="esc",
+          andamentos=[{"data": "2026-08-12", "inicial": "A", "autor": "Amanda",
+                       "texto": "Cliente veio buscar orientação sobre a documentação."}],
+          checklist=[{"id": "i1", "texto": "Certidão de casamento", "feito": False}]),
+    ]))
+    kid = next(k["id"] for k in m["casos"] if k["origem_lista"] == "🙋 Escritório")
+    cid = m["clientes"][0]["id"]
+    enviados, patches = _sobe_escritorio(monkeypatch, m)
+
+    assert kid not in [k["id"] for k in enviados.get("casos", [])], \
+        "a lista Escritório continuou criando caso"
+    assert not enviados.get("andamentos"), "andamento ficou órfão, sem caso onde entrar"
+    campos = patches[cid]["campos"]
+    (nota,) = campos["atendimento"]
+    assert "orientação sobre a documentação" in nota["texto"] and nota["quem"] == "A"
+    (pedido,) = campos["docs_pedidos"]
+    assert pedido["itens"] == [{"nome": "Certidão de casamento", "entregue": None}]
+
+
+def test_caso_de_escritorio_que_ja_existe_no_banco_continua_sendo_atualizado(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("🙋 Escritório", "Fulana #00000000191", cpf="00000000191", id="esc",
+          andamentos=[{"data": "2026-08-12", "inicial": "P", "autor": "Paulo",
+                       "texto": "Cliente trouxe o CNIS."}]),
+    ]))
+    kid = next(k["id"] for k in m["casos"] if k["origem_lista"] == "🙋 Escritório")
+    enviados, patches = _sobe_escritorio(
+        monkeypatch, m, existentes=[{"id": kid, "todo_task_id": "esc",
+                                     "processo": None, "nb": None}])
+    assert kid in [k["id"] for k in enviados["casos"]], "caso antigo do Escritório sumiu"
+    assert enviados["andamentos"], "o histórico do caso antigo deixou de chegar"
+    assert not patches, "caso antigo virou anotação em duplicidade"
+
+
+def test_anotacao_do_escritorio_nao_apaga_os_dados_civis_do_cadastro(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("🙋 Escritório", "Fulana #00000000191", cpf="00000000191", id="esc",
+          andamentos=[{"data": "2026-08-12", "inicial": "P", "autor": "Paulo",
+                       "texto": "Faltou a certidão."}]),
+    ]))
+    cid = m["clientes"][0]["id"]
+    _, patches = _sobe_escritorio(monkeypatch, m, clientes=[
+        {"id": cid, "campos": {"civil": {"rg": "12.345.678-9"},
+                               "pasta_drive": "https://drive/x"}}])
+    campos = patches[cid]["campos"]
+    assert campos["civil"]["rg"] == "12.345.678-9", "o PATCH apagou os dados civis"
+    assert campos["pasta_drive"] == "https://drive/x", "o PATCH apagou a pasta do cliente"
+    assert campos["atendimento"], "a anotação não entrou"
+
+
+def test_reimportar_o_escritorio_nao_duplica_a_anotacao(monkeypatch):
+    def mapa():
+        return migrar.mapear(crm_json([
+            t("🙋 Escritório", "Fulana #00000000191", cpf="00000000191", id="esc",
+              andamentos=[{"data": "2026-08-12", "inicial": "P", "autor": "Paulo",
+                           "texto": "Ficou de trazer o comprovante."}]),
+        ]))
+    m1 = mapa()
+    cid = m1["clientes"][0]["id"]
+    _, p1 = _sobe_escritorio(monkeypatch, m1)
+    _, p2 = _sobe_escritorio(monkeypatch, mapa(), clientes=[{"id": cid, "campos": p1[cid]["campos"]}])
+    assert len(p2[cid]["campos"]["atendimento"]) == 1, "a segunda rodada duplicou a anotação"

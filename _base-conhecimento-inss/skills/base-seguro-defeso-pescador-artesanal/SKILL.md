@@ -7,7 +7,7 @@ description: "Seguro-defeso do pescador artesanal (B04), ótica pró-segurado. U
 
 ## Escopo
 
-Skill temática pró-segurado. Orienta a concessão do seguro-defeso (três parcelas mensais no valor de 1 salário mínimo) ao pescador artesanal durante o período de defeso da espécie em que atua. Integra-se com a categoria do segurado especial e tem particularidades operacionais fortes, pois o defeso varia por espécie, por região e por portaria do IBAMA, MMA ou MPA. Objetivo único é defender o pescador.
+Skill temática pró-segurado. Orienta a concessão do seguro-defeso (1 salário mínimo por mês de duração do defeso (Lei 10.779/2003)) ao pescador artesanal durante o período de defeso da espécie em que atua. Integra-se com a categoria do segurado especial e tem particularidades operacionais fortes, pois o defeso varia por espécie, por região e por portaria do IBAMA, MMA ou MPA. Objetivo único é defender o pescador.
 
 ## Marco normativo central
 
@@ -17,7 +17,7 @@ Lei 10.779/2003. Institui o seguro-defeso do pescador artesanal.
 
 Lei 8.213/91, art. 11, VII, b. Pescador artesanal como segurado especial.
 
-Lei 8.213/91, art. 25, parágrafo único. 12 meses de atividade pesqueira como carência (com abrandamentos).
+Lei 10.779/2003, art. 2º. Exigência de registro (RGP) e exercício da pesca há pelo menos 12 meses (com abrandamentos).
 
 Lei 13.134/2015. Alterou a Lei 10.779/2003.
 
@@ -47,7 +47,7 @@ Quinto, comprovação da atividade pesqueira (notas, GTA, declaração de colôn
 
 ## Cenários operacionais pró-segurado
 
-Primeiro, pescador artesanal com RGP há 2 anos. Defeso de 120 dias. 3 parcelas de 1 SM. Direito integral.
+Primeiro, pescador artesanal com RGP há 2 anos. Defeso de 120 dias. 4 parcelas mensais de 1 SM. Direito integral.
 
 Segundo, pescadora com RGP há 14 meses, tendo colaborado com o esposo pescador. Perspectiva de gênero. Reconhecimento.
 
@@ -75,7 +75,7 @@ Segundo, comprovar a atividade pesqueira com notas fiscais, GTA, declaração da
 
 Terceiro, em indeferimento por suposta pluriatividade, demonstrar subsistência e perspectiva de gênero.
 
-Quarto, em MS por mora, competência Federal Cível ou JEF conforme valor.
+Em MS por mora, competência sempre da Vara Federal comum (MS não tramita no JEF — art. 3º, §1º, I, da Lei 10.259/2001).
 
 Quinto, em defeso prorrogado, exigir parcela suplementar.
 

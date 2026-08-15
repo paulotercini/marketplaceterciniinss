@@ -18,9 +18,9 @@ Reafirmam o cômputo como tempo de contribuição e excluem carência.
 
 Fonte oficial em https://www.jf.jus.br
 
-### Tema 176 STF
+### [Retirado na auditoria 25/07/2026] Tema 176/STF
 
-Contagem recíproca, aspectos constitucionais.
+Tema de ICMS, estranho à matéria; a contagem recíproca decorre do art. 201, §9º, da CF.
 
 Fonte oficial em https://portal.stf.jus.br
 

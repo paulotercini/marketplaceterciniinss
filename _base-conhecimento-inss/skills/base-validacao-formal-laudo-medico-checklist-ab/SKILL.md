@@ -153,7 +153,7 @@ Item A.27. Período estimado de incapacidade (B31).
 
 Item A.28. Insuscetibilidade de reabilitação (B91).
 
-Item A.29. Nexo causal com o trabalho (B92 e B94).
+Item A.29. Nexo causal: para B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86; Tema 416 STJ) — nexo laboral só quando se pleiteia a natureza acidentária/competência estadual.
 
 Item A.30. Caracterização da sequela (B94).
 
@@ -207,19 +207,19 @@ Item B.16. Fatores pessoais.
 
 ### 5.4. Aplicação dos sete domínios do IF-BrA (LC 142/2013)
 
-Item B.17. Sensorial (visão, audição).
+Item B.17. Domínio Sensorial.
 
-Item B.18. Cognição (memória, atenção, raciocínio).
+Item B.18. Domínio Comunicação.
 
-Item B.19. Mobilidade (deslocamento, transferências).
+Item B.19. Domínio Mobilidade.
 
-Item B.20. Interações (relacionamento, comunicação).
+Item B.20. Domínio Cuidados pessoais.
 
-Item B.21. Cuidados pessoais (higiene, alimentação).
+Item B.21. Domínio Vida doméstica.
 
-Item B.22. Vida doméstica (tarefas domésticas).
+Item B.22. Domínio Educação, trabalho e vida econômica.
 
-Item B.23. Vida em sociedade (educação, trabalho, recreação).
+Item B.23. Domínio Socialização e vida comunitária.
 
 ### 5.5. Aplicação do IFBrM (BPC)
 
@@ -447,6 +447,14 @@ Histórico ambulatorial.
 
 Cartão de vacinação (BPC para crianças).
 
+### Requisitos obrigatórios x facultativos no Atestmed (Onda 72)
+
+O art. 2º da Portaria Conjunta MPS/INSS 13/2026, conferido no DOU de 24/03/2026, exige documento oficial com foto (caput) e documentação médica legível e sem rasuras contendo cinco incisos. Identificação do requerente, data de emissão, diagnóstico por extenso OU código CID (alternativos), assinatura do emitente e identificação do emitente com registro no Conselho de Classe legível.
+
+Prazo estimado em dias (art. 2º, §2º) e data de início do repouso (art. 2º, §1º c/c art. 4º, §1º) NÃO são requisitos obrigatórios. São, respectivamente, elemento facultativo e lacuna suprida por norma. Recomenda-se obtê-los por estratégia, para reduzir o espaço do art. 4º, §3º, mas sua ausência não é causa normativa de indeferimento.
+
+Detalhamento e uso pró-segurado da correção em `analise-documental-incapacidade`, seção Requisitos REAIS do art. 2º.
+
 ## 11. Cruzamento com outras skills
 
 `auditoria-laudo-pericial` para auditoria do laudo pericial.
@@ -487,6 +495,20 @@ Cartão de vacinação (BPC para crianças).
 
 `base-bpc-aposentadoria-pcd-procedimentos` para procedimentos BPC e PCD.
 
-## 13. Fontes
+## 13. Cruzamento com Onda 28 (Modelos Geradores)
+
+Para GERAR o modelo de relatório médico antes de enviar ao médico assistente (e depois usar esta skill para VALIDAR o que o médico devolver), acionar.
+
+`base-modelo-relatorio-medico-incapacidade-b31-b91-b92` para B31, B91, B92.
+
+`base-modelo-relatorio-medico-auxilio-acidente-b94` para B94.
+
+`base-modelo-relatorio-medico-aposentadoria-pcd-lc142` para aposentadoria PCD LC 142/2013.
+
+`base-modelo-relatorio-medico-bpc-loas-deficiente` para BPC/LOAS.
+
+Fluxo. Acionar skill geradora para preparar modelo personalizado. Enviar ao médico assistente. Médico preenche. Acionar esta skill validadora (Checklist A para incapacidade/B94, Checklist B para PCD/BPC) para auditar antes do protocolo administrativo ou judicial.
+
+## 14. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.

@@ -55,6 +55,20 @@ Tarefas administrativas previdenciárias seguem fluxos previsíveis. O que parec
 
 **Erro material em CNIS.** Identificação simples Amanda faz, mas a estratégia (administrativa ou judicial) é Paulo.
 
+## Semáforo de escalação (Onda 95)
+
+Régua objetiva aplicada a TODA tarefa que chega, antes de qualquer execução. Classificar em uma das três cores e agir conforme a cor. Em dúvida entre duas cores, vale a mais restritiva.
+
+VERDE, Amanda executa sozinha e registra no body. Tudo que está no quadro de delegação acima como decisão dela, onboarding documental, exigência simples de comunicado padrão, reiteração de contato, agendamento, confirmação de presença, GPS mensal, conferência de HISCRE, registro de fato consumado. Critério objetivo, existe regra escrita cobrindo o caso e nenhum gatilho VERMELHO presente.
+
+AMARELO, Amanda prepara e Paulo bate o martelo. A tarefa exige juízo, mas a preparação é delegável. Amanda monta o dossiê (documentos, prints, linha do tempo, minuta quando couber), registra `(A): Preparado para decisão, aguarda Paulo` e coloca a tarefa na fila dele. Casos típicos, exigência FORA do rol padrão, resposta a cliente que pergunta de estratégia, minuta de manifestação favorável simples em laudo, identificação de erro em CNIS (a estratégia é dele), acordo recebido (ela resume os termos, ele decide).
+
+VERMELHO, direto para Paulo, sem preparação que atrase o aviso. Gatilhos objetivos, qualquer um basta. Prazo processual ou administrativo correndo que Amanda não tem regra para cumprir. Indeferimento, suspensão ou cessação de benefício. Cliente insatisfeito, alterado ou falando em desistir ou trocar de advogado. Honorário em discussão. Pedido de informação sobre valores de acordo ou de RPV. Suspeita de fraude, de documento adulterado ou de dado inconsistente. Óbito de cliente. Contato de outro advogado, de órgão público ou de imprensa. Qualquer coisa sem regra escrita E com consequência irreversível.
+
+Regra de ouro do semáforo. VERDE sem regra escrita não existe, se não há regra documentada, a tarefa é no mínimo AMARELA, e a solução permanente é Paulo escrever a regra para a próxima virar VERDE. O semáforo alimenta o treinamento, toda tarefa AMARELA decidida por Paulo gera uma linha nova de regra quando o padrão se repetir três vezes.
+
+As respostas às consultas repetitivas de clientes, com os núcleos aprovados e os mesmos gatilhos VERMELHOS, estão na skill `atendimento-respostas-padrao` (Onda 95).
+
 ## Fluxo de tarefa nova em 🌻 INSS
 
 Quando entra cliente novo para benefício administrativo, fluxo padrão:

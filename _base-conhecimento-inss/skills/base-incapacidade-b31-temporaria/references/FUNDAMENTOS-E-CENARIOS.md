@@ -12,7 +12,7 @@ Lei 8.213/91, art. 60, §11-A. Introduzido para viabilizar o regime de análise 
 
 Lei 8.213/91, art. 26, II. Isenção de carência para acidente de qualquer natureza, acidente de trabalho e doenças listadas no art. 151.
 
-Lei 8.213/91, art. 151. Rol de doenças graves que isentam da carência, com abertura interpretativa pela Súmula 63 TNU para outras moléstias de igual gravidade.
+Lei 8.213/91, art. 151. Rol de doenças graves que isentam da carência, com abertura interpretativa da jurisprudência para outras moléstias de igual gravidade (auditoria 25/07/2026, retirada a Súmula 63/TNU, que trata de união estável).
 
 Lei 8.213/91, art. 25, I. Carência de 12 contribuições mensais para B31, ressalvadas as isenções.
 
@@ -56,7 +56,11 @@ Segurado com B31 indeferido por parecer de verossimilhança negativo. Cabe recur
 
 ### Cenário 8 — Limbo previdenciário-trabalhista
 
-INSS cessa B31 por alta, mas empresa recusa retorno por entender incapacidade persistente. Limbo previdenciário-trabalhista. Tema 1421 STF e jurisprudência do TST sobre responsabilidade.
+INSS cessa B31 por alta, mas empresa recusa retorno por entender incapacidade persistente. Limbo previdenciário-trabalhista.
+
+Fundamento a citar, **Tema 300 da TNU**, que mantém a qualidade de segurado até a rescisão contratual, quando só então começa a correr o período de graça do art. 15, II. O Tema 1421 do STF é a pendência que pode superá-lo, mérito não julgado em 20/07/2026, citar como risco e não como fundamento. O IRR 302 do TST está afetado e sem tese, sobre o ônus da prova da comunicação da alta.
+
+A tese exige prova do impedimento patronal, vínculo aberto no CNIS não basta. Acionar `base-limbo-previdenciario-tema300` para o roteiro probatório e a defesa antecipada, e nunca requerer RAC de baixa do vínculo em aberto.
 
 ## 3. Documentos essenciais
 
@@ -75,7 +79,7 @@ Até 15 dias antes da DCB, solicitar P1 pelo Meu INSS. Documentação médica at
 
 ## 5. Isenção de carência (art. 26, II e art. 151)
 
-Rol do art. 151 e abertura pela Súmula 63 TNU para outras moléstias de igual gravidade.
+Rol do art. 151 com abertura interpretativa da jurisprudência (auditoria 25/07/2026, retirada a Súmula 63/TNU, que trata de união estável).
 
 Primeiro, tuberculose ativa. Segundo, hanseníase. Terceiro, alienação mental. Quarto, neoplasia maligna. Quinto, cegueira. Sexto, paralisia irreversível e incapacitante. Sétimo, cardiopatia grave. Oitavo, doença de Parkinson. Nono, espondiloartrose anquilosante. Décimo, nefropatia grave. Décimo primeiro, estado avançado de doença de Paget (osteíte deformante). Décimo segundo, contaminação por radiação com base em conclusão da medicina especializada. Décimo terceiro, síndrome da imunodeficiência adquirida (AIDS). Décimo quarto, hepatopatia grave.
 

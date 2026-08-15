@@ -154,7 +154,7 @@ Em caso de decisão monocrática.
 
 Pedido de manifestação expressa sobre a presença de elemento de direito material.
 
-Súmula 98/STJ + Tema Repetitivo 698/STJ.
+Súmula 98/STJ; o Tema 698/STJ é o limite (multa na rediscussão de matéria pacificada).
 
 Pedido subsidiário de prequestionamento ficto pelo art. 1.025 CPC.
 

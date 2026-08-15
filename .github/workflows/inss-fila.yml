@@ -1,0 +1,47 @@
+name: CRM — fila do INSS (dados abertos)
+
+on:
+  schedule:
+    # dia 20, 08h BRT (11h UTC) — o INSS publica o retrato do mês anterior
+    # por volta do dia 15
+    - cron: '0 11 20 * *'
+  workflow_dispatch: {}
+
+concurrency:
+  group: inss-fila
+  cancel-in-progress: false
+
+jobs:
+  consultar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v4
+
+      - name: Configura Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Verifica segredos do Supabase
+        id: seg
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_KEY" ]; then
+            echo "tem=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Segredos SUPABASE_URL/SUPABASE_SERVICE_KEY ausentes — consulta pulada."
+          else
+            echo "tem=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Dados abertos do INSS -> inss_fila e casos na fase INSS
+        if: steps.seg.outputs.tem == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          UF_ESCRITORIO: SP
+        run: python crm/inss_fila.py

@@ -3,6 +3,11 @@ name: base-pericia-medica-federal-telepericia
 description: "Perícia Médica Federal e Teleperícia para benefícios por incapacidade e BPC, ótica pró-segurado. Use SEMPRE que mencionar perícia médica INSS, PMF, perito INSS, Teleperícia, Portaria DPMF/INSS 19/2026, videoconferência, telemedicina perícia, SAT Remoto, análise documental incapacidade, Portarias Conjuntas 13/2026, 14/2026 e 15/2026, parecer de verossimilhança, perícia presencial, perícia judicial, quesitos, assistente técnico, cerceamento Teleperícia, recusa Teleperícia, acessibilidade, acompanhante, impugnar laudo PMF, recurso CRPS laudo PMF, art. 60 §11-A. Cruza com auditoria-laudo-pericial, orientacao-cliente-pericia, peticao-previdenciaria, analise-documental-incapacidade, base-incapacidade-b31-temporaria, base-incapacidade-b91-permanente, base-incapacidade-acidentaria-b92, base-auxilio-acidente-b94-pos-reforma e analise-bpc-loas."
 ---
 
+## ATUALIZAÇÃO NORMATIVA (Etapa 5 da auditoria, 12/07/2026)
+
+A Teleperícia tem duas normas de regência. A Portaria Conjunta DPMF/INSS nº 19/2026 (regulamentação) e a Portaria DPMF/SRGPS/MPS nº 587/2026, de abril de 2026 (implementação operacional). Citar as duas ao tratar de agendamento, recusa ou nulidade de teleperícia. Conferir o texto da 587/2026 no DOU antes de transcrever.
+
+
 # Perícia Médica Federal e Teleperícia Pós EC 103/2019
 
 ## Escopo

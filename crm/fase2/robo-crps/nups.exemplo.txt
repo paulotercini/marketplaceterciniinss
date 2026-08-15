@@ -1,0 +1,9 @@
+# Cole aqui os links dos favoritos, um por linha (pode colar a URL inteira).
+# Depois salve este arquivo com o nome  nups.txt  na mesma pasta.
+#
+# Dica: escolha 2 ou 3 variados — um recurso recente, um antigo e, se tiver,
+# um já julgado/encerrado. NÃO use os marcados "senha do cliente".
+#
+# Exemplos do formato aceito (estes números são inventados):
+https://consultaprocessos.inss.gov.br/e/p/44230000000202599
+44230000000202598

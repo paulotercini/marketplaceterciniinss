@@ -88,7 +88,7 @@ Refutação. Até três testemunhas por parte é usual. Tempo rural pode exigir 
 
 Argumento adversário. Prazo superado.
 
-Refutação. MS por mora. Tema 1066 STF.
+Refutação. MS por mora. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
 ### Argumento 9 — Valor excedente em revisão
 

@@ -1,6 +1,6 @@
 ---
 name: base-contagem-reciproca-rgps-rpps
-description: "Contagem recíproca entre RGPS e RPPS, emissão e aceitação de CTC, compensação financeira entre regimes e vedações. Use SEMPRE que mencionar contagem recíproca, RGPS e RPPS, CTC, Certidão de Tempo de Contribuição, compensação financeira entre regimes, servidor público tempo privado, tempo celetista no serviço público, Lei 9.796/1999, art. 201 §9º CF, arts. 94 a 99 Lei 8.213/91, Tema 176 STF, Súmula 24 AGU, IN 128/2022 CTC, indenização de contribuições contagem recíproca, Enunciado 6 CRPS, desaverbação, cômputo de tempo rural CTC, cômputo especial CTC, conversão em RPPS vedada, averbação de tempo, migração de regime, RJU estatutário, EC 103/2019 contagem recíproca, Portaria 990/2022, Portaria 1.316/2025. Cruza com cnis-acerto-indicadores, documentos-comprobatorios-in128, peticao-previdenciaria, base-aluno-aprendiz, base-servico-militar-obrigatorio, base-tempo-rural-anterior-1991, indenizacao-contribuicoes-atraso e precedentes-previdenciarios."
+description: "Contagem recíproca entre RGPS e RPPS, emissão e aceitação de CTC, compensação financeira entre regimes e vedações. Procedimento operacional pela Portaria DIRBEN/INSS 998/2022 - Livro IX (Compensação Previdenciária), atualizada pela Portaria DIRBEN/INSS 1.250/2024. Use SEMPRE que mencionar contagem recíproca, RGPS e RPPS, CTC, Certidão de Tempo de Contribuição, compensação financeira entre regimes, servidor público tempo privado, tempo celetista no serviço público, Lei 9.796/1999, art. 201 §9º CF, arts. 94 a 99 Lei 8.213/91, Decreto 10.188/2019, Portaria MPS 1.400/2024, Portaria MTP 1.467/2022, Portaria DIRBEN/INSS 998/2022, Portaria DIRBEN/INSS 1.054/2022, Portaria DIRBEN/INSS 1.250/2024, Livro IX Compensação Previdenciária, Comprev, CADPREV, regime instituidor RI, regime de origem RO, estoque RGPS estoque RPPS, fluxo acumulado compensação, pró-rata mensal compensação, glosa compensação, revisão de ofício compensação financeira, Súmula 24 AGU, IN 128/2022 CTC, indenização de contribuições contagem recíproca, Enunciado 6 CRPS, desaverbação, cômputo de tempo rural CTC, cômputo especial CTC, conversão em RPPS vedada, averbação de tempo, migração de regime, RJU estatutário, EC 103/2019 contagem recíproca, art. 195 §14 CF compensação, Portaria 990/2022, Portaria 1.316/2025, contagem recíproca aluno aprendiz art. 43-A, decisão judicial compensação implantação. Cruza com cnis-acerto-indicadores, documentos-comprobatorios-in128, peticao-previdenciaria, base-aluno-aprendiz, base-servico-militar-obrigatorio, base-tempo-rural-anterior-1991, indenizacao-contribuicoes-atraso, base-rpps-na-otica-do-rgps, base-portarias-dpmf-inss-hub e precedentes-previdenciarios."
 ---
 
 # Contagem Recíproca RGPS e RPPS
@@ -27,7 +27,7 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 ## Marco jurisprudencial
 
-Tema 176 STF. Aspectos constitucionais da contagem recíproca.
+Art. 201, §9º, da CF e arts. 94 a 99 da Lei 8.213/91 regem a contagem recíproca (auditoria 25/07/2026, retirado o Tema 176/STF, que trata de ICMS).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -39,7 +39,7 @@ Tema 609 STJ. Indenização de contribuições para contagem recíproca.
 
 Fonte oficial em https://www.stj.jus.br
 
-Enunciado 6 CRPS. CTC e efeitos.
+Nota corretiva (Onda 66, verificado no DOU de 12/11/2019 via Comet). O Enunciado 6 do CRPS trata do salário-maternidade à gestante demitida sem justa causa, não da CTC. Não há Enunciado do CRPS específico sobre CTC e efeitos entre os Enunciados 1 a 19 vigentes. A tese de CTC e efeitos para contagem recíproca deve ser sustentada pelo art. 96 da Lei 8.213/91, pelo art. 130 da IN 128/2022, pelo Livro IX da Portaria DIRBEN/INSS 998/2022 e pelos Temas 176 STF e 609 STJ.
 
 ## Espaço pró-segurado
 
@@ -81,6 +81,7 @@ Para aluno-aprendiz, acionar `base-aluno-aprendiz`.
 Para serviço militar, acionar `base-servico-militar-obrigatorio`.
 Para tempo rural pré-1991, acionar `base-tempo-rural-anterior-1991`.
 Para indenização, acionar `indenizacao-contribuicoes-atraso`.
+Para conferir uma CTC estadual concreta e gerar os arquivos de importação do Prévius (tempo e salários), acionar `base-ctc-estadual-conferencia-e-lancamento-previus`.
 Ao redigir peça, acionar `peticao-previdenciaria`.
 Ao buscar precedentes, acionar `precedentes-previdenciarios`.
 
@@ -117,3 +118,13 @@ IBDP, defesa da contagem recíproca.
 ## O que NÃO está nesta skill
 
 Aluno-aprendiz está em `base-aluno-aprendiz`. Tempo militar está em `base-servico-militar-obrigatorio`. Tempo rural pré-1991 está em `base-tempo-rural-anterior-1991`. Conversão de tempo especial está em `base-tempo-especial-conversao`. Indenização de contribuições está em `indenizacao-contribuicoes-atraso`.
+
+## Enunciado 17 da I Jornada do TRF4, ALERTA (Onda 109)
+
+Texto literal, conferido no Caderno oficial da EMAGIS/TRF4 em 14/08/2026, página 22. "Não é possível a averbação no RGPS de período contributivo de RPPS relativo a vínculo ainda ativo."
+
+ALERTA DE SINAL CONTRÁRIO. Este enunciado é DESFAVORÁVEL ao segurado e o INSS pode invocá-lo. Registrado aqui para defesa antecipada, não para uso ofensivo.
+
+Fundamento invocado na justificativa. Art. 12 da Portaria MPS 154/2008 e art. 96, IV, da Lei 8.213/91, na redação da MP 871/2019 convertida na Lei 13.846/2019.
+
+Defesa possível. Primeiro, o enunciado tem caráter meramente doutrinário por declaração do próprio TRF4 e não vincula. Segundo, ele pressupõe vínculo ATIVO, de modo que a exoneração ou o encerramento do vínculo antes da DER afasta a hipótese, e a data do encerramento passa a ser o fato decisivo a provar. Terceiro, o marco da Lei 13.846/2019 abre discussão de direito adquirido para quem reuniu os requisitos antes dela.

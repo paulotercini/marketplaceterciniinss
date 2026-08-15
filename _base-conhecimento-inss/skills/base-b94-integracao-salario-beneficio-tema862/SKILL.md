@@ -1,6 +1,6 @@
 ---
 name: base-b94-integracao-salario-beneficio-tema862
-description: "Integração do auxílio-acidente B94 ao salário-de-benefício de aposentadoria pelo Tema 862 STJ, art. 31 Lei 8.213/91, Súmula 507 STJ, regra do tempo da prestação e direito adquirido sobre acumulação até MP 1.596-14/1997. Use SEMPRE que mencionar integração B94 SB, Tema 862 STJ, art. 31 Lei 8.213, Súmula 507 STJ, B94 entra na média da aposentadoria, acumulação B94 e aposentadoria, MP 1.596-14/1997, marco temporal acumulação, B94 anterior à aposentadoria, soma B94 contribuição, integração da renda mensal, base de cálculo aposentadoria com B94, RMI com integração de auxílio-acidente, Portaria 991/2022, Portaria 992/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-tema201 e base-calculo-rmi-ec103."
+description: "Integração do auxílio-acidente B94 ao salário-de-benefício de aposentadoria pelo Tema 862 STJ, art. 31 Lei 8.213/91, Súmula 507 STJ, regra do tempo da prestação e direito adquirido sobre acumulação até MP 1.596-14/1997. Use SEMPRE que mencionar integração B94 SB, Tema 862 STJ, art. 31 Lei 8.213, Súmula 507 STJ, B94 entra na média da aposentadoria, acumulação B94 e aposentadoria, MP 1.596-14/1997, marco temporal acumulação, B94 anterior à aposentadoria, soma B94 contribuição, integração da renda mensal, base de cálculo aposentadoria com B94, RMI com integração de auxílio-acidente, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-tema201 e base-calculo-rmi-ec103."
 ---
 
 # Integração do B94 ao Salário-de-Benefício
@@ -25,17 +25,15 @@ IN 128/2022.
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefícios acidentários (CF/88, art. 109, I, exclui da competência federal as ações acidentárias entre o INSS e o segurado).
 
 ## Marco jurisprudencial
 
-### Tema 862 STJ
+### Tema 862 STJ (CORREÇÃO DE AUDITORIA, 12/07/2026)
 
-Integração ao SB.
-
-Fonte oficial em https://www.stj.jus.br
+A tese repetitiva do Tema 862/STJ NÃO trata de integração ao salário-de-benefício. Tese literal, conferida na página oficial e reafirmada no REsp 2.270.389/RS (2026). "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se, se for o caso, a prescrição quinquenal de parcelas do benefício." Leading cases REsp 1.729.555/SP e 1.786.736/SP. Usar o Tema 862 para o TERMO INICIAL do B94. A integração ao cálculo das aposentadorias tem fundamento LEGAL direto no art. 31 da Lei 8.213/91 (o valor mensal do auxílio-acidente integra o salário de contribuição para fins de cálculo do salário de benefício de qualquer aposentadoria), sem tema repetitivo próprio.
 
 ### Súmula 507 STJ
 
@@ -47,17 +45,17 @@ Direito adquirido.
 
 ### REsp 1.296.673 STJ
 
-Cálculo RMI.
+Repetitivo dos Temas 555 e 556 STJ. Acumulação de auxílio-acidente com aposentadoria exige lesão incapacitante e aposentadoria anteriores a 11/11/1997. Origem da Súmula 507 STJ.
 
-## Tema 862 STJ
+## Integração do B94 ao cálculo da aposentadoria (art. 31 da Lei 8.213/91)
 
-Primeiro, valores do B94 integram o salário-de-benefício de aposentadoria do segurado.
+Primeiro, o fundamento da integração é o art. 31 da Lei 8.213/91, norma legal expressa, não um tema repetitivo. Os valores do B94 integram o salário de contribuição para fins de cálculo do salário de benefício de qualquer aposentadoria.
 
-Segundo, art. 31 da Lei 8.213/91.
+Segundo, RMI mais alta com a integração, conferir competência a competência no CNIS e na carta de concessão.
 
-Terceiro, RMI mais alta com integração.
+Terceiro, o Tema 862/STJ serve a esta skill apenas quanto ao TERMO INICIAL do B94 (dia seguinte à cessação do B31), o que define desde quando existem valores a integrar.
 
-Quarto, contagem específica conforme método.
+Quarto, em cumprimento de sentença, exigir que a Cecalc some os valores do B94 no PBC, erro recorrente do INSS.
 
 ## Acumulação histórica
 
@@ -65,13 +63,13 @@ Primeiro, antes da MP 1.596-14/1997 (11/11/1997), B94 podia acumular com aposent
 
 Segundo, Súmula 507 STJ assegura direito adquirido.
 
-Terceiro, B94 concedido antes dessa data acumula.
+Terceiro, acumula apenas quando a lesão incapacitante e a aposentadoria são ambas anteriores a essa data.
 
 Quarto, depois dessa data, há vedação à acumulação.
 
 ## Aplicação pró-segurado
 
-Primeiro, B94 anterior a 11/11/1997 acumula com aposentadoria.
+Primeiro, acumula com aposentadoria somente se a lesão incapacitante e a aposentadoria forem ambas anteriores a 11/11/1997.
 
 Segundo, B94 posterior integra o SB pela Tema 862.
 
@@ -81,7 +79,7 @@ Quarto, fator de recálculo aplicável.
 
 ## Cenários pró-segurado
 
-Cenário A, segurado com B94 desde 1995. Acumula com aposentadoria. Súmula 507 STJ.
+Cenário A, segurado com B94 desde 1995 e aposentadoria também anterior a 11/11/1997. Acumula. Súmula 507 STJ. Se a aposentadoria for posterior ao marco, não acumula; resta a integração ao SB.
 
 Cenário B, segurado com B94 desde 2010. Integra SB. Tema 862 STJ.
 
@@ -93,7 +91,7 @@ Cenário D, dupla aplicação. Direito adquirido e integração.
 
 Primeiro, INSS frequentemente nega integração. Tema 862 STJ é vinculante.
 
-Segundo, B94 anterior a 11/11/1997 não pode ser cessado pela aposentadoria.
+Segundo, a cessação pela aposentadoria só é afastada quando lesão incapacitante e aposentadoria são ambas anteriores a 11/11/1997 (Súmula 507 STJ).
 
 Terceiro, fator previdenciário pode ser elidido em revisões com aplicação do art. 29-C.
 

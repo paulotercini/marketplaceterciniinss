@@ -26,7 +26,7 @@ Limites de desconto. Fonte oficial em https://www.planalto.gov.br
 
 Boa-fé objetiva. Fonte oficial em https://www.stj.jus.br
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Mora administrativa. Fonte oficial em https://portal.stf.jus.br
 

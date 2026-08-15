@@ -55,7 +55,7 @@ Quarto, Tema 862 STJ.
 
 ## Direito adquirido anterior
 
-Primeiro, B94 concedido antes de 11/11/1997 acumula.
+Primeiro, a acumulação exige que a lesão incapacitante E a aposentadoria sejam ambas anteriores a 11/11/1997 (Súmula 507 STJ).
 
 Segundo, Súmula 507 STJ é vinculante.
 
@@ -75,7 +75,7 @@ Quarto, requerer restabelecimento ou integração.
 
 ## Cenários pró-segurado
 
-Cenário A, B94 desde 1995, aposentadoria 2005. Acumulação. Súmula 507 STJ.
+Cenário A, B94 desde 1995, aposentadoria 2005. NÃO acumula, porque a aposentadoria é posterior a 11/11/1997 (Súmula 507 STJ exige lesão e aposentadoria anteriores ao marco). O B94 cessa na aposentadoria; resta a integração ao SB pelo art. 31 da Lei 8.213/91 e Tema 862 STJ.
 
 Cenário B, B94 cessado indevidamente em 2010. Restabelecimento.
 

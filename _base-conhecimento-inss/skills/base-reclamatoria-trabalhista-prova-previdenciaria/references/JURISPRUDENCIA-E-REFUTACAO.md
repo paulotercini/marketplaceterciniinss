@@ -2,21 +2,21 @@
 
 ## 1. Precedentes relevantes
 
-### Súmula 31/TNU
+### Súmula 31/TNU (REVOGADA em 22/11/2023)
 
-Aceita sentença trabalhista. Fonte oficial em https://www.cjf.jus.br
+Não citar como vigente. A matéria é regida pelo Tema 1188/STJ.
 
 ### Súmula 149/STJ
 
 Exige início de prova material. Fonte oficial em https://www.stj.jus.br
 
-### Tema 297/TNU
+### [Retirado na auditoria 25/07/2026] Tema 297/TNU
 
-Requisitos da prova. Fonte oficial em https://www.cjf.jus.br
+O Tema 297/TNU real trata de auxílio emergencial (Lei 13.982/2020), não de prova trabalhista. O fundamento correto é o Tema 1188/STJ.
 
-### Tema 1.188/STF
+### Tema 1188/STJ (tese literal conferida em 11/07/2026, transitado em julgado, julgado em 13/09/2023)
 
-Participação do INSS. Fonte oficial em https://portal.stf.jus.br
+"A sentença trabalhista homologatória de acordo, assim como a anotação na CTPS e demais documentos dela decorrentes, somente será considerada início de prova material válida, conforme o disposto no art. 55, § 3º, da Lei 8.213/91, quando houver nos autos elementos probatórios contemporâneos que comprovem os fatos alegados e sejam aptos a demonstrar o tempo de serviço no período que se pretende reconhecer na ação previdenciária, exceto na hipótese de caso fortuito ou força maior."
 
 ### CF/88, art. 5º LV
 
@@ -40,7 +40,7 @@ Anotação na CTPS. Fonte oficial em https://www.planalto.gov.br
 
 Argumento adversário. INSS é terceiro.
 
-Refutação. Súmula 31 TNU. Início de prova material vincula.
+Refutação. Tema 1188/STJ. Sentença fundada em elementos probatórios contemporâneos constitui início de prova material válida.
 
 ### Argumento 2 — Súmula 149 STJ afasta sentença
 
@@ -58,7 +58,7 @@ Refutação. Acordo homologado é início de prova.
 
 Argumento adversário. Sem contraditório.
 
-Refutação. Súmula 31 TNU resguarda. Tema 1.188/STF.
+Refutação. Tema 1188/STJ. A eficácia probatória independe da participação do INSS na reclamatória, desde que haja elementos contemporâneos.
 
 ### Argumento 5 — Tríplice identidade
 
@@ -94,7 +94,7 @@ Refutação. Cabe ao INSS provar fraude.
 
 Argumento adversário. Declaração tardia é frágil.
 
-Refutação. Súmula 31 TNU não distingue tempo.
+Refutação. O Tema 1188/STJ não impõe limite temporal ao vínculo, exige apenas elementos probatórios contemporâneos aptos a demonstrar o período.
 
 ## 3. Cláusulas doutrinárias de apoio
 
@@ -124,4 +124,4 @@ Sexto, monitoramento.
 
 ## 5. Diligência de atualização
 
-Acompanhar Súmula 31/TNU. Revalidar Tema 297/TNU. Monitorar Tema 1.188/STF.
+Súmula 31/TNU revogada em 22/11/2023. Tema 1188/STJ julgado e transitado em julgado.

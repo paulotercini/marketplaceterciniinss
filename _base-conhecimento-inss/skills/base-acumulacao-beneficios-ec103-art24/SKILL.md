@@ -131,6 +131,8 @@ FAVORÁVEL ao segurado. Reforça que a vedação genérica do art. 24 não ating
 
 ### 5.7. RE 1.510.285/DF AgR
 
+Atenção (auditoria 25/07/2026, rodada 2). As fontes divergem sobre órgão julgador e data deste AgR (Segunda Turma em 09/12/2024 versus Primeira Turma em 26/05/2026, possivelmente agravos sucessivos). Conferir no portal do STF antes de citar em peça.
+
 Primeira Turma. Rel. Min. Nunes Marques. Julgamento confirmado em fev/2025.
 
 Aplicação do redutor do art. 24, § 2º, da EC 103/2019 em hipótese de acumulação de pensão por morte e aposentadoria de regimes distintos quando o óbito ocorreu APÓS 13/11/2019.
@@ -211,7 +213,7 @@ Eventual estratégia limita-se a planejamento da DIB para escolher qual benefíc
 
 ### 7.4. Cenário 4. Duas aposentadorias decorrentes de cargos constitucionalmente acumuláveis
 
-Não incide o redutor do art. 24, § 2º (Tema 627/STF).
+Não incide a vedação de acumulação quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999, regime anterior à EC 103; para o redutor do art. 24, ver ADI 7051, Tema 1300/STF e RE 1.510.285 AgR — auditoria 25/07/2026).
 
 Cada vínculo é considerado isoladamente para o teto remuneratório (Temas 377 e 384).
 

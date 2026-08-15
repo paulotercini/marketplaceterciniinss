@@ -14,7 +14,7 @@ Capacidade residual e prognóstico de reabilitação.
 
 Fonte oficial em https://www.jf.jus.br
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Razoável duração do processo.
 

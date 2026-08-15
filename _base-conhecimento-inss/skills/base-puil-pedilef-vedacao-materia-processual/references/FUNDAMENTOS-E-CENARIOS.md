@@ -364,7 +364,7 @@ Em caso de decisão monocrática de inadmissão.
 
 Pedido de manifestação expressa sobre a presença de elemento de direito material.
 
-Súmula 98/STJ + Tema Repetitivo 698/STJ. Embargos prequestionadores.
+Súmula 98/STJ, embargos prequestionadores não são protelatórios; o Tema 698/STJ pune a rediscussão de matéria pacificada (auditoria 25/07/2026).
 
 Pedido subsidiário de prequestionamento ficto pelo art. 1.025 CPC.
 
@@ -479,7 +479,7 @@ MS em hipóteses excepcionais.
 
 Quando a controvérsia for sobre revisão de benefício já concedido, cuidar para não cair em matéria processual.
 
-Reformular como divergência sobre a interpretação da norma material da revisão (Tema 1102/STF para RVT, Tema 327/STF para teto, art. 144 para buraco verde).
+Reformular como divergência sobre a interpretação da norma material da revisão (Tema 1102/STF para RVT, Tema 76/STF para teto, art. 144 para buraco verde).
 
 Cruzamento com `base-revisao-vida-toda-rvt`, `base-revisao-teto-buraco-negro-verde`, `base-revisao-art29-melhor-beneficio`.
 

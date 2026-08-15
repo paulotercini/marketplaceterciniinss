@@ -1,0 +1,2476 @@
+[
+ {
+  "tabela": "pagamentos",
+  "coluna": "todo_item_id",
+  "tipo": "nunca lida",
+  "quem": "sync_todo",
+  "ev": "crm/fase2/migrar.py:453 — `\"todo_item_id\": item[\"id\"], \"caso_id\": kid, \"cliente_id\": cid,` (pagamento_do_item); também crm/fase2/migrar.py:509 e :817 usam a coluna como chave de upsert. Nenhum leitor: `rg todo_item_id crm/fase2/app.html` = zero linhas; o valor só serve de trava de dedupe no ON CONFLICT do banco (comentário em crm/fase2/schema_por_em_dia.sql:242-253).",
+  "hits": 6,
+  "amostra": [
+   "crm/fase2/migrar.py:238:                    pagamentos[pg[\"todo_item_id\"]] = pg",
+   "crm/fase2/migrar.py:453:        \"todo_item_id\": item[\"id\"], \"caso_id\": kid, \"cliente_id\": cid,",
+   "crm/fase2/migrar.py:509:        _sql_insert(\"pagamentos\", mapa.get(\"pagamentos\", []), chave=\"todo_item_id\","
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/migrar.py:453: \"todo_item_id\": item[\"id\"], \"caso_id\": kid, \"cliente_id\": cid,"
+   ],
+   "leitura": [
+    "crm/fase2/migrar.py:238: pagamentos[pg[\"todo_item_id\"]] = pg"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/migrar.py:238: pagamentos[pg[\"todo_item_id\"]] = pg",
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "aposentadorias",
+  "coluna": "autor_id",
+  "tipo": "nunca lida",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:8308 — `body:JSON.stringify({cliente_id:cliId, data, especie, autor_id:eu.id,` e crm/fase2/app.html:8906 — `body:JSON.stringify({cliente_id:cliId, data, especie, autor_id:eu.id})`. Nenhuma leitura: as duas funções que consomem a tabela (lembretesApos em crm/fase2/app.html:8279-8292 e caixaApos em :8811-8871) usam apenas cliente_id, data, especie, lembrar_em e id — quem gravou a data nunca aparece na tela.",
+  "hits": 56,
+  "amostra": [
+   "crm/fase2/migrar.py:244:                \"autor_id\": (\"__INICIAL__\", a[\"inicial\"]) if a[\"inicial\"] != \"?\" else None,",
+   "crm/fase2/migrar.py:581:            for campo in (\"autor_id\", \"particular_de\"):",
+   "crm/fase2/migrar.py:702:            quem = a.get(\"autor_id\")"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:3429: body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:a.andamento,",
+    "crm/fase2/app.html:3444: body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:\"pat\","
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:5682: : m.autor_id ? (D.colPorId.get(m.autor_id)||{}).nome || \"escritório\" : \"\";"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "lembretes",
+  "coluna": "criado_por",
+  "tipo": "nunca lida",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:8682 — `responsavel_id:v(\"lb-resp\")||null, criado_por:eu.id})});` (criarLembrete); também :8793 (casoViraLembrete) e :13008 (criarCronogramaINSS). Nenhum leitor: `rg criado_por crm/fase2/app.html crm/fase2/migrar.py` devolve só essas três escritas — o select de migrar.py (crm/fase2/migrar.py:767-768) pede id, titulo, proximo_em, intervalo_meses, ativo, responsavel_id e origem_caso, e nunca criado_por.",
+  "hits": 3,
+  "amostra": [
+   "crm/fase2/app.html:8682:        responsavel_id:v(\"lb-resp\")||null, criado_por:eu.id})});",
+   "crm/fase2/app.html:8793:        origem_caso:k.id, criado_por:eu.id})});",
+   "crm/fase2/app.html:13008:        intervalo_meses:passo, proximo_em:cron[0].vence, criado_por:eu.id})});"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:8682: responsavel_id:v(\"lb-resp\")||null, criado_por:eu.id})});",
+    "crm/fase2/app.html:8793: origem_caso:k.id, criado_por:eu.id})});"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "lembrete_avisos",
+  "coluna": "em",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:8602 — `const avisos=(l.lembrete_avisos||[]).slice().sort((a,b)=>a.em<b.em?1:-1);` e :8624 — `último aviso: ${fmtTS(ult.em)}`. O único INSERT (crm/fase2/app.html:8691-8692) manda apenas `{lembrete_id, colaborador_id, canal}` — `em` nunca é enviada; o valor vem do default `now()` em crm/fase2/schema_por_em_dia.sql:210. (A linha :8697 monta um `em` só na cópia em memória, para a tela não esperar o recarregamento.)",
+  "hits": 674,
+  "amostra": [
+   "crm/fase2/extensao/pje-regras.js:4:// CNJ, partes, órgão, \"Distribuído em\" e — o que interessa — \"Último",
+   "crm/fase2/extensao/pje-regras.js:21:  const RE_DISTRIB = /Distribuído em\\s+(\\d{2})\\/(\\d{2})\\/(\\d{4})/;",
+   "crm/fase2/extensao/pje-regras.js:37:      orgao: org && !/^Distribuído em/.test(org) ? org : null,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2250: const em=rot.slice(0,i);",
+    "crm/fase2/app.html:5022: const em = d=>{ const x=new Date(hoje()+\"T12:00:00\"); x.setDate(x.getDate()+d); return x.toLocaleDateString(\"s"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1922: todas(\"lembretes\",\"select=*,lembrete_avisos(colaborador_id,em,canal)&ativo=is.true&order=proximo_em\")",
+    "crm/fase2/app.html:2086: .map(n=>n.em||\"\").sort().slice(-1)[0] || \"\";"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:2250: const em=rot.slice(0,i);",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "clientes",
+  "coluna": "criado_em",
+  "tipo": "nunca lida",
+  "quem": "o próprio banco (default now()) — nenhum código manda esse campo",
+  "ev": "crm/fase2/schema.sql:28 — `criado_em timestamptz not null default now()`; não há nenhuma leitura de `.criado_em` de cliente em crm/fase2/app.html (o único `c.criado_em` do arquivo, linha 3249, é de uma coleta da extensão, não de cliente)",
+  "hits": 53,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:138: order by m.criado_em desc",
+   "crm/fase2/migrar.py:245:                \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,",
+   "crm/fase2/migrar.py:704:                \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/claude_rotina.py:79: recentes = g(f\"/rest/v1/andamentos?criado_em=gte.{corte}\"",
+    "crm/fase2/migrar.py:245: \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,"
+   ],
+   "leitura": [
+    "crm/fase2/claude_rotina.py:79: recentes = g(f\"/rest/v1/andamentos?criado_em=gte.{corte}\"",
+    "crm/fase2/claude_rotina.py:80: \"&select=caso_id,texto,criado_em&order=criado_em.desc\") or []"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/claude_rotina.py:79: recentes = g(f\"/rest/v1/andamentos?criado_em=gte.{corte}\"",
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "clientes",
+  "coluna": "endereco_legado",
+  "tipo": "nunca lida",
+  "quem": "a migração SQL, uma vez só",
+  "ev": "crm/fase2/schema_f9_cadastro.sql:47-51 — `update clientes set endereco_legado = endereco where ...`; a palavra `endereco_legado` não aparece em nenhum .js/.py/.html do repositório",
+  "hits": 0,
+  "amostra": [],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "clientes",
+  "coluna": "bairro",
+  "tipo": "nunca escrita",
+  "quem": "app (documentos do escritório e o alerta do que falta para assinar)",
+  "ev": "crm/fase2/app.html:12707 — `\"<BAIRRO>\": v.bairro||lac` (v = civilDe(c)); e app.html:12430 na lista do faltaParaDocs. Nenhum PATCH manda `bairro`: o editor CAD_CAMPOS (app.html:12157-12167) só cobre sexo, estado_civil, profissao, rg, rg_orgao, nome_mae e pis_nit",
+  "hits": 7,
+  "amostra": [
+   "crm/fase2/robo-pat/peneira.js:39:const PESSOAL = /cpf|cnpj|nome|nasc|email|mail|telefone|celular|fone|endere|logra|bairro|munic|cep|rg\\b|documento|arq",
+   "crm/fase2/robo-pat/sonda-no-navegador.js:47:  const PESSOAL = /cpf|cnpj|nome|nasc|email|mail|telefone|celular|fone|endere|logra|bairro|munic|cep|rg\\b|",
+   "crm/fase2/app.html:8367:    `Procure o CRAS do seu bairro com RG, CPF, comprovante de residência e os documentos `+"
+  ],
+  "tem_escrita": false,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": [
+    "crm/fase2/app.html:12430: [\"bairro\",\"bairro\"],[\"cidade\",\"cidade\"],[\"uf\",\"UF\"],[\"cep\",\"CEP\"]])",
+    "crm/fase2/app.html:12707: \"<ENDERECO>\": c.endereco||lac, \"<BAIRRO>\": v.bairro||lac, \"<CIDADE>\": v.cidade||lac,"
+   ]
+  },
+  "confirmado": true,
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "clientes",
+  "coluna": "cidade",
+  "tipo": "nunca escrita",
+  "quem": "app (preenchimento da procuração/contrato)",
+  "ev": "crm/fase2/app.html:12707 — `\"<CIDADE>\": v.cidade||lac`; e app.html:12430. Nenhuma escrita: só a coluna `endereco` (texto corrido) é editável, em app.html:8933 (CAMPOS_CLI)",
+  "hits": 26,
+  "amostra": [
+   "build_portal_listas.py:15:Datas/horarios/cidade de pericia tambem sao publicos e podem aparecer no status.",
+   "build_portal_listas.py:184:    \"\"\"Procura por uma pericia/avaliacao FUTURA. Retorna (label, date, hora, cidade)",
+   "build_portal_listas.py:216:        # cidade: 'em <Cidade>' (capitalizada) ou 'INSS de <Cidade>'"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": [
+    "crm/fase2/app.html:12430: [\"bairro\",\"bairro\"],[\"cidade\",\"cidade\"],[\"uf\",\"UF\"],[\"cep\",\"CEP\"]])",
+    "crm/fase2/app.html:12707: \"<ENDERECO>\": c.endereco||lac, \"<BAIRRO>\": v.bairro||lac, \"<CIDADE>\": v.cidade||lac,"
+   ]
+  },
+  "confirmado": true,
+  "contra": "build_portal_listas.py:216:        # cidade: 'em <Cidade>' (capitalizada) ou 'INSS de <Cidade>'",
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "clientes",
+  "coluna": "uf",
+  "tipo": "nunca escrita",
+  "quem": "app (campo <ESTADO> dos modelos)",
+  "ev": "crm/fase2/app.html:12708 — `\"<ESTADO>\": v.uf||\"São Paulo\"`; sem nenhum body JSON com `uf` em app.html",
+  "hits": 14,
+  "amostra": [
+   "crm/fase2/djen/sonda.js:42:function montarUrl({ oab, uf, dias = 7, pagina = 1, porPagina = 100 }) {",
+   "crm/fase2/djen/sonda.js:45:    ufOab: String(uf).toUpperCase(),",
+   "crm/fase2/djen/sonda.js:68:  const [oab, uf, dias = '7'] = process.argv.slice(2);"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": [
+    "crm/fase2/app.html:7924: const uf=f.uf && f.uf!==\"BR\" ? `em ${esc(f.uf)}` : \"no país\";",
+    "crm/fase2/app.html:7927: 🌻 <b>Fila do INSS ${uf}:</b> ${Number(f.pendentes).toLocaleString(IDIOMA)} pedidos"
+   ]
+  },
+  "confirmado": true,
+  "contra": "crm/inss_fila.py:222:            \"servicos\": list(servicos), \"uf\": uf}",
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "clientes",
+  "coluna": "cep",
+  "tipo": "nunca escrita",
+  "quem": "app (campo <CEP> dos modelos)",
+  "ev": "crm/fase2/app.html:12708 — `\"<CEP>\": v.cep||lac`; sem nenhuma escrita",
+  "hits": 5,
+  "amostra": [
+   "crm/fase2/robo-pat/peneira.js:39:const PESSOAL = /cpf|cnpj|nome|nasc|email|mail|telefone|celular|fone|endere|logra|bairro|munic|cep|rg\\b|documento|arq",
+   "crm/fase2/robo-pat/sonda-no-navegador.js:47:  const PESSOAL = /cpf|cnpj|nome|nasc|email|mail|telefone|celular|fone|endere|logra|bairro|munic|cep|rg\\b|",
+   "crm/fase2/app.html:12417:                   \"logradouro\",\"numero\",\"complemento\",\"bairro\",\"cidade\",\"uf\",\"cep\"])"
+  ],
+  "tem_escrita": false,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": [
+    "crm/fase2/app.html:12430: [\"bairro\",\"bairro\"],[\"cidade\",\"cidade\"],[\"uf\",\"UF\"],[\"cep\",\"CEP\"]])",
+    "crm/fase2/app.html:12708: \"<ESTADO>\": v.uf||\"São Paulo\", \"<CEP>\": v.cep||lac,"
+   ]
+  },
+  "confirmado": true,
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "clientes",
+  "coluna": "logradouro",
+  "tipo": "nunca escrita",
+  "quem": "app (civilDe copia o valor) e a migração SQL, que testa se ele está vazio",
+  "ev": "crm/fase2/app.html:12417 — `for(const ch of [...,\"logradouro\",\"numero\",\"complemento\",...]) if(c[ch]) guardado[ch]=c[ch];` e crm/fase2/schema_f9_cadastro.sql:51 `and coalesce(logradouro, '') = ''`. Nenhum código grava",
+  "hits": 1,
+  "amostra": [
+   "crm/fase2/app.html:12417:                   \"logradouro\",\"numero\",\"complemento\",\"bairro\",\"cidade\",\"uf\",\"cep\"])"
+  ],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "clientes",
+  "coluna": "numero",
+  "tipo": "nunca escrita",
+  "quem": "app (civilDe copia o valor, mas nenhum modelo usa)",
+  "ev": "crm/fase2/app.html:12417 — está na lista do civilDe; nenhum <MARCADOR> em app.html:12704-12710 consome `v.numero`, e nenhum PATCH grava",
+  "hits": 104,
+  "amostra": [
+   "crm/fase2/extensao/pje-regras.js:27:    const numero = (h.match(RE_NUMERO) || [])[1] || null;",
+   "crm/fase2/extensao/pje-regras.js:28:    if (!numero) return null;                 // linha sem processo não é linha",
+   "crm/fase2/extensao/pje-regras.js:34:      numero,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:3127: `/rest/v1/coletas?select=id,fonte,criado_em,numero:dados->>numero&aplicada_em=is.null&order=criado_em.desc`) |",
+    "crm/fase2/app.html:4043: plano.andamentos.push({ caso_id:k.id, numero:p.numero, origem_id:oid,"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:3127: `/rest/v1/coletas?select=id,fonte,criado_em,numero:dados->>numero&aplicada_em=is.null&order=criado_em.desc`) |",
+    "crm/fase2/app.html:3139: const chave = c.fonte===\"pje-processo\" ? `${c.fonte}:${c.numero||c.id}` : c.fonte;"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:3127: `/rest/v1/coletas?select=id,fonte,criado_em,numero:dados->>numero&aplicada_em=is.null&order=criado_em.desc`) |",
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "clientes",
+  "coluna": "complemento",
+  "tipo": "nunca escrita",
+  "quem": "app (civilDe copia o valor, mas nenhum modelo usa)",
+  "ev": "crm/fase2/app.html:12417 — está na lista do civilDe; nenhum PATCH grava (os `.complemento` das linhas 9822/10708/10730 são do JSON do DataJud, não do cliente)",
+  "hits": 13,
+  "amostra": [
+   "crm/datajud.py:13:                \"complemento\": \"para decisão\",",
+   "crm/datajud.py:191:            \"complemento\": _complemento(m) or None,",
+   "crm/datajud.py:202:                         \"complemento\": _complemento(m) or None})"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:10732: ${segBtnHtml(segRegistrar(k.id, (m.nome||\"\")+(m.complemento?\" — \"+m.complemento:\"\"), null))}"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:9822: texto:(m.nome||\"\")+(m.complemento?` — ${m.complemento}`:\"\")",
+    "crm/fase2/app.html:10708: <b>Último andamento:</b> ${esc(u.nome||\"—\")}${u.complemento?` (${esc(u.complemento)})`:\"\"}"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:10732: ${segBtnHtml(segRegistrar(k.id, (m.nome||\"\")+(m.complemento?\" — \"+m.complemento:\"\"), null))}",
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "casos",
+  "coluna": "criado_em",
+  "tipo": "nunca lida",
+  "quem": "o próprio banco (default now())",
+  "ev": "crm/fase2/schema.sql:66 — `criado_em timestamptz not null default now()`; não existe nenhum `k.criado_em` em crm/fase2/app.html nem `order=criado_em` na consulta de casos (app.html:1889 é só `select=*`)",
+  "hits": 53,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:138: order by m.criado_em desc",
+   "crm/fase2/robo-pat/traduzir.js:214:    criado_em: (t || {}).dataCriacao || null,",
+   "crm/fase2/robo-pat/coletar-no-navegador.js:193:      criado_em: (t || {}).dataCriacao || null,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/claude_rotina.py:79: recentes = g(f\"/rest/v1/andamentos?criado_em=gte.{corte}\"",
+    "crm/fase2/migrar.py:245: \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,"
+   ],
+   "leitura": [
+    "crm/fase2/claude_rotina.py:79: recentes = g(f\"/rest/v1/andamentos?criado_em=gte.{corte}\"",
+    "crm/fase2/claude_rotina.py:80: \"&select=caso_id,texto,criado_em&order=criado_em.desc\") or []"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/claude_rotina.py:79: recentes = g(f\"/rest/v1/andamentos?criado_em=gte.{corte}\"",
+  "arquivos_olhados": 21
+ },
+ {
+  "tabela": "casos",
+  "coluna": "crps_nup",
+  "tipo": "nunca escrita",
+  "quem": "app e todo o robô do CRPS (é o número antigo, único, do recurso)",
+  "ev": "lido em crm/fase2/app.html:9883 `const unico=(k.crps_nup||\"\").replace(/\\D/g,\"\")`, crm/fase2/robo-crps/robo.js:271, robo-crps/ingerir.js:121, robo-crps/preparar.js:35, robo-crps/importar_favoritos.js:55 e crm/fase2/extensao/crm-api.js:124. NENHUM código grava um valor: as únicas escritas são `crps_nup: null` (app.html:10462, 10511, 11948 e robo-crps/separar.js:70) durante a migração para `crps_nups`. Quem tem valor lá foi preenchido à mão",
+  "hits": 28,
+  "amostra": [
+   "crm/fase2/extensao/crm-api.js:124:    `${url}/rest/v1/casos?select=crps_nups,crps_nup,arquivados&encerrado_em=is.null&limit=5000`,",
+   "crm/fase2/extensao/crm-api.js:127:    `${url}/rest/v1/casos?select=crps_nups,crps_nup&encerrado_em=is.null&limit=5000`,",
+   "crm/fase2/extensao/crm-api.js:133:    for (const n of [...(Array.isArray(l.crps_nups) ? l.crps_nups : []), l.crps_nup]) {"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:10167: crps_nup: null,",
+    "crm/fase2/app.html:10172: crps_nups: [n], crps_nup: null,"
+   ],
+   "leitura": [
+    "crm/fase2/extensao/crm-api.js:124: `${url}/rest/v1/casos?select=crps_nups,crps_nup,arquivados&encerrado_em=is.null&limit=5000`,",
+    "crm/fase2/extensao/crm-api.js:127: `${url}/rest/v1/casos?select=crps_nups,crps_nup&encerrado_em=is.null&limit=5000`,"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:10167: crps_nup: null,",
+  "arquivos_olhados": 21
+ },
+ {
+  "tabela": "casos",
+  "coluna": "revisado_em",
+  "tipo": "nunca escrita",
+  "quem": "app (a esteira 🔄 Revisão do acervo)",
+  "ev": "lido em crm/fase2/app.html:5009 e 8432 (`ativos().filter(k=>!k.revisado_em || k.revisado_em<=lim)`). Nenhum PATCH do app manda `revisado_em` — quem carimba é o gatilho `caso_tocado()` em crm/fase2/schema.sql:1888-1898, disparado por insert em andamentos",
+  "hits": 5,
+  "amostra": [
+   "crm/fase2/app.html:5009:  const parados = ativos().filter(k=>!k.revisado_em || k.revisado_em<=lim).length;",
+   "crm/fase2/app.html:8432:  const fila = ativos().filter(k=>!k.revisado_em || k.revisado_em<=lim)",
+   "crm/fase2/app.html:8433:    .sort((a,b)=>(a.revisado_em||\"0\")<(b.revisado_em||\"0\")?-1:1);"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:8455: const k=D.casoPorId.get(id); if(k) k.revisado_em=hoje();"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:5009: const parados = ativos().filter(k=>!k.revisado_em || k.revisado_em<=lim).length;",
+    "crm/fase2/app.html:8432: const fila = ativos().filter(k=>!k.revisado_em || k.revisado_em<=lim)"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:8455: const k=D.casoPorId.get(id); if(k) k.revisado_em=hoje();",
+  "arquivos_olhados": 21
+ },
+ {
+  "tabela": "andamentos",
+  "coluna": "publico",
+  "tipo": "nunca lida",
+  "quem": "app (sempre explicitamente false) e o default do banco",
+  "ev": "escrita em crm/fase2/app.html:3445, 3456, 3526, 4298, 4344, 4447, 4609, 4800, 4820, 4853 (`publico:false`) e default em crm/fase2/schema.sql:79. Nenhuma leitura em produção: não existe `.publico` em app.html nem filtro `publico=eq.` em nenhum .py/.js — o comentário do schema diz 'só true vai ao portal (Fase 3)', que não foi construída. Só aparece em teste (regras/testes/importar-tela.test.js:389)",
+  "hits": 22,
+  "amostra": [
+   "crm/fase2/robo-pat/traduzir.js:249:    // Eles nascem internos: `publico` fica false, então nada disso atravessa",
+   "crm/fase2/robo-pat/coletar-no-navegador.js:224:      // Eles nascem internos: `publico` fica false, então nada disso atravessa",
+   "build_portal_listas.py:132:# Marcos inequivocos exibidos no modo \"alta confianca\" (publico). Tipos vagos"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:3445: origem_id:`importado:${novo.protocolo}`, publico:false,",
+    "crm/fase2/app.html:3451: // (`publico:false`): nada disso atravessa para a ficha do cliente."
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "andamentos",
+  "coluna": "zap_mensagem_id",
+  "tipo": "nunca lida",
+  "quem": "smbot — a função zap_virar_andamento()",
+  "ev": "crm/fase2/schema.sql:1358 — `insert into andamentos (caso_id, autor_id, texto, origem, zap_mensagem_id, criado_em)`. A única leitura do valor é a própria função, para não promover a mesma mensagem duas vezes (schema.sql:1361 e 1366); nenhuma tela, robô ou script consulta a coluna — `zap_mensagem_id` não existe em app.html",
+  "hits": 0,
+  "amostra": [],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 8
+ },
+ {
+  "tabela": "tarefas",
+  "coluna": "criado_em",
+  "tipo": "nunca lida",
+  "quem": "o próprio banco (default now())",
+  "ev": "crm/fase2/schema.sql:130 — `criado_em timestamptz not null default now()`; a consulta do app é `todas(\"tarefas\",\"select=*\")` (app.html:1891) e nenhum dos usos de D.tarefas (app.html:2168, 3879, 5092, 10955, 12116, 13105...) toca em criado_em",
+  "hits": 53,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:138: order by m.criado_em desc",
+   "crm/fase2/robo-pat/traduzir.js:214:    criado_em: (t || {}).dataCriacao || null,",
+   "crm/fase2/migrar.py:245:                \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/migrar.py:245: \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,",
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),"
+   ],
+   "leitura": [
+    "crm/fase2/migrar.py:704: \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],",
+    "crm/fase2/migrar.py:799: \"/rest/v1/andamentos?origem=eq.app&select=caso_id,criado_em,texto\")"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/migrar.py:704: \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],",
+  "arquivos_olhados": 11
+ },
+ {
+  "tabela": "colaboradores",
+  "coluna": "auth_id",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:1830 — `const meus = await api(`/rest/v1/colaboradores?auth_id=eq.${sessao.user.id}&select=*`)`. Nenhum POST/PATCH grava auth_id; é preenchido à mão no SQL (crm/fase2/COMO-INSTALAR.md:46-50: `update colaboradores set auth_id = (select id from auth.users where email = ...)`).",
+  "hits": 1,
+  "amostra": [
+   "crm/fase2/app.html:1830:  const meus = await api(`/rest/v1/colaboradores?auth_id=eq.${sessao.user.id}&select=*`);"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1830: const meus = await api(`/rest/v1/colaboradores?auth_id=eq.${sessao.user.id}&select=*`);"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1830: const meus = await api(`/rest/v1/colaboradores?auth_id=eq.${sessao.user.id}&select=*`);"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1830: const meus = await api(`/rest/v1/colaboradores?auth_id=eq.${sessao.user.id}&select=*`);",
+  "arquivos_olhados": 6
+ },
+ {
+  "tabela": "colaboradores",
+  "coluna": "inicial",
+  "tipo": "nunca escrita",
+  "quem": "app, robo_crps, sync_todo",
+  "ev": "crm/fase2/app.html:1848 `uav.textContent = eu.inicial`; crm/fase2/robo-crps/robo.js:160 `/rest/v1/colaboradores?select=id,inicial&inicial=eq.C`; crm/fase2/escrever_todo.py:174 `(a.get(\"colaboradores\") or {}).get(\"inicial\")`. Só o seed de instalação grava (crm/fase2/schema.sql:1953 `insert into colaboradores (inicial, nome, cor) values`).",
+  "hits": 69,
+  "amostra": [
+   "crm/fase2/extensao/pat-pagina.js:177:      if (/inicial/.test(rot)) escrever(inp, br(desde));",
+   "build_portal_listas.py:113:    (\"Petição inicial protocolada\", \"Petição inicial protocolada / distribuída.\",",
+   "build_portal_listas.py:114:        [\"petição inicial protocolada\", \"peticao inicial protocolada\", \"petição inicial distribuída\","
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/sync_todo.py:179: \"inicial\": inicial or \"?\",",
+    "crm/fase2/migrar.py:207: \"anotacoes\": [{\"data\": a[\"data\"], \"inicial\": a[\"inicial\"],"
+   ],
+   "leitura": [
+    "crm/fase2/migrar.py:207: \"anotacoes\": [{\"data\": a[\"data\"], \"inicial\": a[\"inicial\"],",
+    "crm/fase2/migrar.py:244: \"autor_id\": (\"__INICIAL__\", a[\"inicial\"]) if a[\"inicial\"] != \"?\" else None,"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/sync_todo.py:179: \"inicial\": inicial or \"?\",",
+  "arquivos_olhados": 6
+ },
+ {
+  "tabela": "colaboradores",
+  "coluna": "nome",
+  "tipo": "nunca escrita",
+  "quem": "app, smbot",
+  "ev": "crm/fase2/app.html:1843 `document.getElementById(\"u-nome\").textContent = eu.nome`; crm/fase2/schema.sql:1095 `order by (...), co.nome` na função zap_escolher_atendente. Gravado só pelo seed em crm/fase2/schema.sql:1953.",
+  "hits": 587,
+  "amostra": [
+   "crm/fase2/extensao/pje-regras.js:18:  const RE_PARTES = /nome-parte\">([^<]+)</;",
+   "crm/fase2/extensao/pje-regras.js:23:  const RE_ORGAO = /nome-parte\">[^<]*<\\/span><\\/div>\\s*<div>\\s*([^<]+?)\\s*<\\/div>/;",
+   "crm/fase2/extensao/pje-regras.js:99:        docs.push({ id: m[1], nome: desHtml(m[2]).replace(/\\s+/g, ' ') });"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/sync_todo.py:144: nome = re.sub(r\"#\\s*[\\d.\\-]{11,}\", \"\", titulo or \"\")",
+    "crm/sync_todo.py:145: nome = re.sub(r\"#\\w+\", \"\", nome).strip(\" -–#\")"
+   ],
+   "leitura": [
+    "crm/sync_todo.py:271: if tf[\"nome\"] and (not c[\"nome\"] or not tf[\"concluida\"] and len(tf[\"nome\"]) > len(c[\"nome\"])):",
+    "crm/sync_todo.py:272: c[\"nome\"] = tf[\"nome\"]"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/sync_todo.py:144: nome = re.sub(r\"#\\s*[\\d.\\-]{11,}\", \"\", titulo or \"\")",
+  "arquivos_olhados": 6
+ },
+ {
+  "tabela": "colaboradores",
+  "coluna": "cor",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:1848 `uav.style.background = eu.cor` e crm/fase2/app.html:1932 `if(!/^#[0-9a-fA-F]{3,8}$/.test(co.cor||\"\")) co.cor=\"#8A9099\"`. Gravado só no SQL de instalação (crm/fase2/schema.sql:1966-1971 `update colaboradores set cor='#2564cf' where inicial='P'` etc.).",
+  "hits": 113,
+  "amostra": [
+   "crm/fase2/extensao/tela.js:9:window.faixa = window.faixa || function (texto, cor = '#2B5FC7') {",
+   "crm/fase2/extensao/tela.js:20:  f.style.background = cor;",
+   "crm/fase2/extensao/pat-pagina.js:30:  const mostrar = (texto, cor) => dizer('faixa', { texto, cor });"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1932: if(!/^#[0-9a-fA-F]{3,8}$/.test(co.cor||\"\")) co.cor=\"#8A9099\";",
+    "crm/fase2/app.html:5534: if(st===\"ligado\" && !morta) return {cor:\"#0a7d43\", txt:\"ponte ligada\"};"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1848: uav.textContent = eu.inicial; uav.style.background = eu.cor;",
+    "crm/fase2/app.html:1932: if(!/^#[0-9a-fA-F]{3,8}$/.test(co.cor||\"\")) co.cor=\"#8A9099\";"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1932: if(!/^#[0-9a-fA-F]{3,8}$/.test(co.cor||\"\")) co.cor=\"#8A9099\";",
+  "arquivos_olhados": 6
+ },
+ {
+  "tabela": "colaboradores",
+  "coluna": "papel",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:1846 `(eu.papel === \"admin\" ? \"administrador\" : eu.setor || \"equipe\")`. Nenhum PATCH do app toca `papel` — os três PATCH de colaboradores (app.html:6167, 6176, 6183) mandam só atende_zap, cargo e setor; fica no default 'colaborador' do schema.sql:15.",
+  "hits": 17,
+  "amostra": [
+   "crm/fase2/ponte/conferir.js:63:    const papel = papelDaChave(CHAVE);",
+   "crm/fase2/ponte/conferir.js:64:    if (papel === \"anon\" || papel === \"publicável\")",
+   "crm/fase2/ponte/conferir.js:67:    else ok(\"chave\", `parece ser a de serviço (${papel})`);"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": [
+    "crm/fase2/app.html:1846: (eu.papel === \"admin\" ? \"administrador\" : eu.setor || \"equipe\");",
+    "crm/fase2/app.html:4908: ${k.beneficio?`<span class=\"u-papel\" style=\"text-transform:none\">· ${esc(k.beneficio)}</span>`:\"\"}</div>"
+   ]
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/ponte/conferir.js:63:    const papel = papelDaChave(CHAVE);",
+  "arquivos_olhados": 6
+ },
+ {
+  "tabela": "colaboradores",
+  "coluna": "ativo",
+  "tipo": "nunca escrita",
+  "quem": "app, smbot",
+  "ev": "crm/fase2/app.html:3809 `D.colaboradores.filter(x=>x.ativo)` (e mais ~15 telas iguais); crm/fase2/schema.sql:1085 `where co.ativo and co.atende_zap`. Nenhum código grava — só o default true (schema.sql:16) ou um UPDATE à mão.",
+  "hits": 95,
+  "amostra": [
+   "crm/fase2/extensao/pat-pagina.js:99:    const ativo = t => !/conclu|cancel/i.test(t.status || '');",
+   "crm/fase2/extensao/pat-pagina.js:101:    const fila = OUT.lista.filter(t => ativo(t) && !feitos.has(String(t.protocolo)))",
+   "crm/fase2/migrar.py:177:        # 08.90): é gente sem pedido ativo, e caso aberto para cada uma"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/migrar.py:213: \"ativo\": not t[\"concluida\"],",
+    "crm/fase2/migrar.py:759: #    desliga o lembrete (ativo=false vence o banco)."
+   ],
+   "leitura": [
+    "crm/fase2/migrar.py:786: if l[\"ativo\"]:               # só a conclusão no To Do desliga",
+    "crm/fase2/migrar.py:787: l[\"ativo\"] = b.get(\"ativo\", True)"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/migrar.py:213: \"ativo\": not t[\"concluida\"],",
+  "arquivos_olhados": 6
+ },
+ {
+  "tabela": "credenciais",
+  "coluna": "criado_em",
+  "tipo": "nunca lida",
+  "quem": "ninguém explicitamente — só o default `now()` do banco",
+  "ev": "crm/fase2/schema.sql:37 `criado_em timestamptz not null default now()`. Os dois POST do app (crm/fase2/app.html:8994 `{cliente_id:cliId, tipo, valor:v}` e crm/fase2/app.html:13231 `{cliente_id, tipo, valor}`) e o dicionário do crm/fase2/migrar.py:194 `{\"id\":..., \"cliente_id\":..., \"tipo\":\"meu_inss\", \"valor\":...}` não mandam a coluna, e nenhuma tela ou robô a lê — a ficha pede só `select=id,tipo,cliente_id` (crm/fase2/app.html:7178).",
+  "hits": 53,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:138: order by m.criado_em desc",
+   "crm/fase2/migrar.py:245:                \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,",
+   "crm/fase2/migrar.py:704:                \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/migrar.py:245: \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,",
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),"
+   ],
+   "leitura": [
+    "crm/fase2/migrar.py:704: \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],",
+    "crm/fase2/migrar.py:799: \"/rest/v1/andamentos?origem=eq.app&select=caso_id,criado_em,texto\")"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/migrar.py:704: \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],",
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "credencial_vis",
+  "coluna": "credencial_id",
+  "tipo": "nunca lida",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:13218 `body:JSON.stringify({credencial_id:id,colaborador_id:eu.id})` (função copiarCred) e crm/fase2/app.html:13224 (função verCred). Não existe nenhum `select` de credencial_vis em app.html, migrar.py, escrever_todo.py, robo-pat/**, robo-crps/**, extensao/**, datajud.py, dou_rotina.py nem no schema.sql.",
+  "hits": 2,
+  "amostra": [
+   "crm/fase2/app.html:13218:    body:JSON.stringify({credencial_id:id,colaborador_id:eu.id})});",
+   "crm/fase2/app.html:13224:    body:JSON.stringify({credencial_id:id,colaborador_id:eu.id})});"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:13218: body:JSON.stringify({credencial_id:id,colaborador_id:eu.id})});",
+    "crm/fase2/app.html:13224: body:JSON.stringify({credencial_id:id,colaborador_id:eu.id})});"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "credencial_vis",
+  "coluna": "colaborador_id",
+  "tipo": "nunca lida",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:13218 e crm/fase2/app.html:13224 — mesmo POST. `grep -rn credencial_vis` no repositório inteiro devolve só app.html:13217, app.html:13223, schema.sql:40 (create table) e schema.sql:1916 (lista de tabelas que recebem RLS).",
+  "hits": 58,
+  "amostra": [
+   "crm/fase2/app.html:1900:      todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`",
+   "crm/fase2/app.html:1922:      todas(\"lembretes\",\"select=*,lembrete_avisos(colaborador_id,em,canal)&ativo=is.true&order=proximo_em\")",
+   "crm/fase2/app.html:1950:                           D.atrDoCaso.get(a.caso_id).push(a.colaborador_id); });"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2141: body:JSON.stringify({colaborador_id:eu.id, caso_id:casoId, dia:hoje()})});",
+    "crm/fase2/app.html:4614: colaborador_id:quem.quem, atribuido_por:eu.id, lembrar_em:dia})});"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1900: todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`",
+    "crm/fase2/app.html:1922: todas(\"lembretes\",\"select=*,lembrete_avisos(colaborador_id,em,canal)&ativo=is.true&order=proximo_em\")"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1900: todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "credencial_vis",
+  "coluna": "visto_em",
+  "tipo": "nunca lida",
+  "quem": "ninguém explicitamente — só o default `now()` do banco",
+  "ev": "crm/fase2/schema.sql:43 `visto_em timestamptz not null default now()`; o POST de crm/fase2/app.html:13218 não manda a coluna e nada a lê.",
+  "hits": 0,
+  "amostra": [],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "lista_pref",
+  "coluna": "atualizado",
+  "tipo": "nunca lida",
+  "quem": "ninguém explicitamente — só o default `now()` do banco, e só na primeira gravação de cada chave",
+  "ev": "crm/fase2/schema.sql:492 `atualizado timestamptz not null default now()`. Os dois POST do app mandam só as outras colunas — crm/fase2/app.html:6494 `body:JSON.stringify({chave, fundo:valor||null})` e crm/fase2/app.html:6623-6626 `{chave, ordem:i, fundo:...}` — e como o upsert usa `Prefer: resolution=merge-duplicates` (app.html:6493 e 6626), a coluna nem se renova nas trocas seguintes. Ninguém a lê: a única consulta é app.html:1915 `todas(\"lista_pref\",\"select=*\")` e os usos são só `p.fundo` (app.html:2010) e `p.ordem` (app.html:6614).",
+  "hits": 16,
+  "amostra": [
+   "crm/fase2/extensao/popup.js:3:  if (!iso) return 'nunca atualizado por aqui';",
+   "crm/fase2/extensao/popup.js:6:  return d <= 0 ? `atualizado hoje (${q})`",
+   "crm/fase2/extensao/popup.js:7:       : d === 1 ? `atualizado ontem (${q})`"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "config_app",
+  "coluna": "atualizado",
+  "tipo": "nunca lida",
+  "quem": "a ponte do WhatsApp (crm/fase2/ponte/ponte.js), e só ela",
+  "ev": "crm/fase2/ponte/ponte.js:63 `body: JSON.stringify({ chave, valor: String(valor), atualizado: agora() })`. Ninguém lê: o app carrega a tabela em crm/fase2/app.html:1916 `todas(\"config_app\",\"select=*\")` mas descarta tudo menos duas colunas em crm/fase2/app.html:1928 `D.config = new Map((cfgs||[]).map(x=>[x.chave,x.valor]))`, e as funções SQL leem só o valor (crm/fase2/schema.sql:1212-1214, 1235, 1243, 1474 — `select valor from config_app where chave=...`). Os demais escritores nem mandam a coluna (app.html:1879, migrar.py:920-922, robo-crps/robo.js:58, robo-crps/ingerir.js:247).",
+  "hits": 16,
+  "amostra": [
+   "crm/fase2/extensao/popup.js:3:  if (!iso) return 'nunca atualizado por aqui';",
+   "crm/fase2/extensao/popup.js:6:  return d <= 0 ? `atualizado hoje (${q})`",
+   "crm/fase2/extensao/popup.js:7:       : d === 1 ? `atualizado ontem (${q})`"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [
+    "crm/fase2/ponte/ponte.js:63: body: JSON.stringify({ chave, valor: String(valor), atualizado: agora() }),"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 5
+ },
+ {
+  "tabela": "integracao_token",
+  "coluna": "token",
+  "tipo": "nunca escrita",
+  "quem": "smbot",
+  "ev": "crm/fase2/schema.sql:311 `if p_token is null or p_token <> (select token from integracao_token where nome='smbot') then` (função smbot_entrada) e crm/fase2/schema.sql:415, idêntico, dentro de smbot_contato(payload jsonb) (declarada em schema.sql:401). Nenhum arquivo de produção grava: `grep -rn integracao_token` fora do schema só encontra os fixtures de teste crm/fase2/testes/smbot_entrada.sql:8 e crm/fase2/testes/smbot_contato.sql:9 (`insert into integracao_token (nome, token) values ('smbot','TK')`).",
+  "hits": 43,
+  "amostra": [
+   "crm/fase2/extensao/crm-api.js:26:let acesso = null;          // { token, ate } — vale ~1h; uma renovação por rodada basta",
+   "crm/fase2/extensao/crm-api.js:31:  const r = await fetch(`${url}/auth/v1/token?grant_type=password`, {",
+   "crm/fase2/extensao/crm-api.js:42:  acesso = { token: j.access_token, ate: Date.now() + (j.expires_in || 3600) * 1000 };"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/extensao/crm-api.js:42:  acesso = { token: j.access_token, ate: Date.now() + (j.expires_in || 3600) * 1000 };",
+  "arquivos_olhados": 0
+ },
+ {
+  "tabela": "integracao_token",
+  "coluna": "nome",
+  "tipo": "nunca escrita",
+  "quem": "smbot",
+  "ev": "crm/fase2/schema.sql:311 e crm/fase2/schema.sql:415 — sempre no filtro `where nome='smbot'`. Também nunca escrito por código de produção; a linha nasce de um insert manual no SQL Editor.",
+  "hits": 587,
+  "amostra": [
+   "crm/fase2/extensao/pje-regras.js:18:  const RE_PARTES = /nome-parte\">([^<]+)</;",
+   "crm/fase2/extensao/pje-regras.js:23:  const RE_ORGAO = /nome-parte\">[^<]*<\\/span><\\/div>\\s*<div>\\s*([^<]+?)\\s*<\\/div>/;",
+   "crm/fase2/extensao/pje-regras.js:99:        docs.push({ id: m[1], nome: desHtml(m[2]).replace(/\\s+/g, ' ') });"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/extensao/pje-regras.js:99:        docs.push({ id: m[1], nome: desHtml(m[2]).replace(/\\s+/g, ' ') });",
+  "arquivos_olhados": 0
+ },
+ {
+  "tabela": "crps_segredo",
+  "coluna": "atualizado_em",
+  "tipo": "nunca lida",
+  "quem": "gatilho_sql (a função crps_guardar_cracha, disparada pelo app)",
+  "ev": "crm/fase2/schema.sql:2008-2009 `values (1, p_cracha, now()) on conflict (id) do update set cracha = excluded.cracha, atualizado_em = now()`. Ninguém lê: o robô pede só o crachá — crm/fase2/robo-crps/robo.js:141 `sb('/rest/v1/crps_segredo?select=cracha&id=eq.1')` — e a data que o app mostra vem de outro lugar, da chave 'crps_cracha_em' do config_app (gravada em schema.sql:2012).",
+  "hits": 8,
+  "amostra": [
+   "build_portal_escritorio.py:160:            \"atualizado_em\": agora,",
+   "build_portal_escritorio.py:169:    meta[\"atualizado_em\"] = datetime.datetime.now().strftime(\"%d/%m/%Y %H:%M\")",
+   "build_portal_listas.py:576:            \"atualizado_em\": agora,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/cnj_producao.py:262:        l[\"atualizado_em\"] = hoje",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "documentos_beneficio",
+  "coluna": "beneficio",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:13090 `return D.docs.find(d=>dsa(d.beneficio)===b)` (e o seletor de espécie em app.html:12829 `D.docs.map(d=>`<option value=\"${esc(d.beneficio)}\"`). Escrito só pelo seed manual em crm/fase2/schema.sql:810-811 `insert into documentos_beneficio (beneficio, itens, extras, observacoes) values`",
+  "hits": 135,
+  "amostra": [
+   "crm/fase2/regras/marcadores.js:137:  const base = String((k && k.beneficio) || '').trim();",
+   "crm/fase2/migrar.py:203:                \"titulo\": t[\"beneficio\"] or \"Aposentadoria futura\",",
+   "crm/fase2/migrar.py:206:                    \"beneficio\": t[\"beneficio\"],"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2740: return { tipo: 'beneficio', especie: porCodigo, beneficio: null,",
+    "crm/fase2/app.html:2744: return { tipo: null, especie: null, beneficio: null, marcadores: [], urgente: false,"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1954: const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+\" \"+(k.processo||\"\")+\" \"+(k.nb||\"\")+\" \"+(k.benef",
+    "crm/fase2/app.html:2821: beneficio: esp.beneficio,"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:2740: return { tipo: 'beneficio', especie: porCodigo, beneficio: null,",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "documentos_beneficio",
+  "coluna": "extras",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:12006 `const extras=(d.extras||\"\").split(\"\\n\").filter(x=>x.trim());` e app.html:12813 `const extras=((cat&&cat.extras)||\"\")...`. O único PATCH da tabela (app.html:13202 `body:JSON.stringify({itens:doc.itens, observacoes:doc.observacoes})`) NÃO manda extras — a coluna nasce e morre no SQL (schema.sql:809-810)",
+  "hits": 17,
+  "amostra": [
+   "crm/fase2/regras/marcadores.js:151:    const extras = (m.porEspecie && m.porEspecie[e] && m.porEspecie[e].docs) || [];",
+   "crm/fase2/regras/marcadores.js:152:    for (const d of [...m.docs, ...extras]) {",
+   "crm/fase2/app.html:3792:      const extras=[];"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:3792: const extras=[];",
+    "crm/fase2/app.html:9259: const extras = (m.porEspecie && m.porEspecie[e] && m.porEspecie[e].docs) || [];"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:9260: for (const d of [...m.docs, ...extras]) {",
+    "crm/fase2/app.html:12006: const extras=(d.extras||\"\").split(\"\\n\").filter(x=>x.trim());"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:3792: const extras=[];",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "documentos_beneficio",
+  "coluna": "id",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:13201 `api(`/rest/v1/documentos_beneficio?id=eq.${doc.id}`,{method:\"PATCH\"...` — nunca é gravado, vem do default gen_random_uuid() (schema.sql:799)",
+  "hits": 1260,
+  "amostra": [
+   "crm/fase2/extensao/config.js:1:const $ = id => document.getElementById(id);",
+   "crm/fase2/ponte/PASSO-A-PASSO.md:137:  join zap_conversas c on c.id = m.conversa_id",
+   "crm/fase2/ponte/PASSO-A-PASSO.md:163:select id, 'saida', 'Teste de resposta saindo do CRM 👋', 'fila'"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1413: <div class=\"login\" id=\"tela-login\">",
+    "crm/fase2/app.html:1422: <div id=\"sem-js\">"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:503: .id-min{display:inline-flex;align-items:baseline;gap:7px;font-size:13px;",
+    "crm/fase2/app.html:505: .id-min b{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1413: <div class=\"login\" id=\"tela-login\">",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "checklist_modelo",
+  "coluna": "beneficio",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:12110-12111 `return D.ckls.find(x=>dsa(x.beneficio)===b) || D.ckls.find(x=>b.includes(dsa(x.beneficio)) || dsa(x.beneficio).includes(b));`",
+  "hits": 135,
+  "amostra": [
+   "crm/fase2/regras/marcadores.js:137:  const base = String((k && k.beneficio) || '').trim();",
+   "crm/fase2/robo-pat/traduzir.js:30:  TAIU:    { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade' },",
+   "crm/fase2/robo-pat/traduzir.js:31:  TAR:     { tipo: 'beneficio', especie: 'B41', nome: 'Aposentadoria por idade rural',"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2740: return { tipo: 'beneficio', especie: porCodigo, beneficio: null,",
+    "crm/fase2/app.html:2744: return { tipo: null, especie: null, beneficio: null, marcadores: [], urgente: false,"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1954: const texto = dsa([c.nome,c.cpf,c.telefone,ks.map(k=>k.titulo+\" \"+(k.processo||\"\")+\" \"+(k.nb||\"\")+\" \"+(k.benef",
+    "crm/fase2/app.html:2821: beneficio: esp.beneficio,"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:2740: return { tipo: 'beneficio', especie: porCodigo, beneficio: null,",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "checklist_modelo",
+  "coluna": "itens",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:12117 `const novos=modelo.itens.split(\"\\n\").map(x=>x.trim()).filter(x=>x && !existentes.has(dsa(x)));` — cada linha vira um POST em /rest/v1/tarefas (app.html:12119)",
+  "hits": 123,
+  "amostra": [
+   "crm/fase2/extensao/pje-regras.js:66:  // class=\"media data\"> com \"03 ago. 2026\" — seguidos dos itens do dia: <div",
+   "crm/fase2/extensao/pje-regras.js:86:    const itens = [];",
+   "crm/fase2/extensao/pje-regras.js:101:      itens.push({"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:3924: const itens = (coleta && coleta.itens) || {};",
+    "crm/fase2/app.html:4257: resumo: { itens:(dados.itens||[]).length, movimentos:0, conhecidos:0, docs:0 } };"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:3324: ${[[\"itens na cronologia\", q.itens], [\"movimentos novos\", q.movimentos],",
+    "crm/fase2/app.html:3618: const pend = (cp.docs_pedidos||[]).flatMap(p=>p.itens||[]).filter(i=>!i.entregue).length;"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:3924: const itens = (coleta && coleta.itens) || {};",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "modelos_documento",
+  "coluna": "id",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:13071 `const m=D.docModelos.find(x=>x.id===modeloId)` e app.html:5336 na URL do PATCH — nunca gravado, vem do default gen_random_uuid() (schema.sql:859)",
+  "hits": 1260,
+  "amostra": [
+   "crm/fase2/extensao/config.js:1:const $ = id => document.getElementById(id);",
+   "crm/fase2/extensao/pje-regras.js:7:// \"Autos Digitais\" carrega id&ca (a chave de acesso ao detalhe), guardados",
+   "crm/fase2/extensao/pje-regras.js:20:  const RE_LINK = /listProcessoCompletoAdvogado\\.seam\\?id=(\\d+)&(?:amp;)?ca=([0-9a-f]+)/;"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1413: <div class=\"login\" id=\"tela-login\">",
+    "crm/fase2/app.html:1422: <div id=\"sem-js\">"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:503: .id-min{display:inline-flex;align-items:baseline;gap:7px;font-size:13px;",
+    "crm/fase2/app.html:505: .id-min b{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1413: <div class=\"login\" id=\"tela-login\">",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "modelos_mensagem",
+  "coluna": "id",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5827 `<button class=\"btn-rap\" data-mz=\"${m.id}\"` e app.html:5835 `const m = ms.find(x=>x.id===b.dataset.mz)` — nunca gravado, default gen_random_uuid() (schema.sql:724)",
+  "hits": 1260,
+  "amostra": [
+   "crm/fase2/extensao/config.js:1:const $ = id => document.getElementById(id);",
+   "crm/fase2/extensao/pje-regras.js:7:// \"Autos Digitais\" carrega id&ca (a chave de acesso ao detalhe), guardados",
+   "crm/fase2/extensao/pje-regras.js:20:  const RE_LINK = /listProcessoCompletoAdvogado\\.seam\\?id=(\\d+)&(?:amp;)?ca=([0-9a-f]+)/;"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/claude_rotina.py:91: \"id\": uid(\"exig\", caso[\"id\"], a[\"criado_em\"][:10]),",
+    "crm/fase2/claude_rotina.py:115: \"id\": uid(\"prazo\", caso[\"id\"], caso[\"prazo\"]),"
+   ],
+   "leitura": [
+    "crm/fase2/claude_rotina.py:91: \"id\": uid(\"exig\", caso[\"id\"], a[\"criado_em\"][:10]),",
+    "crm/fase2/claude_rotina.py:92: \"caso_id\": caso[\"id\"], \"tipo\": \"exigencia\","
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/claude_rotina.py:91: \"id\": uid(\"exig\", caso[\"id\"], a[\"criado_em\"][:10]),",
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "frases_prontas",
+  "coluna": "categoria",
+  "tipo": "nunca lida",
+  "quem": "ninguém em tempo de execução — só o seed manual de crm/fase2/schema.sql",
+  "ev": "crm/fase2/schema.sql:633 `alter table frases_prontas add column if not exists categoria text;` e schema.sql:648-653 (`update frases_prontas set categoria='Agendamentos' ...`, 'Protocolos', 'Resultados', 'Contato'). Nenhuma leitura: o único consumo de D.frases é app.html:8019 `D.frases.forEach(f=>juntar(f.texto));` e a ordenação por texto em app.html:11547; o grep de `categoria` em app.html só acha usos de modelos_documento (linhas 5316, 5323, 5344, 7796) e dos selects de GPS (8663, 12855). O POST de frase nova (app.html:11544 `body:JSON.stringify({texto:t})`) tampouco a preenche.",
+  "hits": 6,
+  "amostra": [
+   "crm/fase2/app.html:5316:        <span class=\"chip neutro\">${esc(m.categoria)}</span>",
+   "crm/fase2/app.html:5323:        <input id=\"nd-cat\" placeholder=\"categoria (geral ou benefício)\" value=\"geral\">",
+   "crm/fase2/app.html:5344:    body:JSON.stringify({titulo:t, categoria:document.getElementById(\"nd-cat\").value.trim()||\"geral\","
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:5344: body:JSON.stringify({titulo:t, categoria:document.getElementById(\"nd-cat\").value.trim()||\"geral\","
+   ],
+   "leitura": [
+    "crm/fase2/app.html:5316: <span class=\"chip neutro\">${esc(m.categoria)}</span>",
+    "crm/fase2/app.html:7796: ${D.docModelos.filter(m=>m.categoria===\"geral\"||dsa(m.categoria)===dsa(ks[0]&&ks[0].beneficio||\"\")||ks.some(k="
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:5316: <span class=\"chip neutro\">${esc(m.categoria)}</span>",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "lembrar_motivos",
+  "coluna": "seed",
+  "tipo": "nunca lida",
+  "quem": "ninguém em tempo de execução — só o seed manual de crm/fase2/schema.sql",
+  "ev": "crm/fase2/schema.sql:696 `insert into lembrar_motivos (grupo, texto, listas, ordem, seed) values` e schema.sql:720 `on conflict (seed) do nothing`. Nunca sai no código: nem o POST (app.html:11441 `body:JSON.stringify({texto,grupo,listas,ordem})`) nem o PATCH (app.html:11435 `{texto,grupo,listas}`) a mencionam, e nenhuma linha de app.html lê `.seed`. Serve só para o próprio schema não ressuscitar motivo desativado ao ser re-rodado.",
+  "hits": 0,
+  "amostra": [],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "lembrar_motivos",
+  "coluna": "id",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:11417 `const m=lbMotivos().find(x=>x.id===id)` e as URLs de PATCH em app.html:11434 e 11451 — nunca gravado, default gen_random_uuid() (schema.sql:689)",
+  "hits": 1260,
+  "amostra": [
+   "crm/fase2/extensao/config.js:1:const $ = id => document.getElementById(id);",
+   "crm/fase2/ponte/PASSO-A-PASSO.md:137:  join zap_conversas c on c.id = m.conversa_id",
+   "crm/fase2/ponte/PASSO-A-PASSO.md:163:select id, 'saida', 'Teste de resposta saindo do CRM 👋', 'fila'"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1413: <div class=\"login\" id=\"tela-login\">",
+    "crm/fase2/app.html:1422: <div id=\"sem-js\">"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:503: .id-min{display:inline-flex;align-items:baseline;gap:7px;font-size:13px;",
+    "crm/fase2/app.html:505: .id-min b{font-size:10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700;"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1413: <div class=\"login\" id=\"tela-login\">",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_calendario",
+  "coluna": "faixa",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5947-5949 `const faixa = acima ? \"acima\" : \"ate\"; return (D.inssCal||[]).filter(x=>x.faixa===faixa && x.final===f && x.pagamento>=hoje())`",
+  "hits": 41,
+  "amostra": [
+   "crm/fase2/extensao/crps.js:28:      faixa('lendo os recursos do CRM…');",
+   "crm/fase2/extensao/crps.js:61:        faixa(`modo rápido: ${nups.length - fila.length} recurso(s) arquivados 🗄 ficam para a rodada completa semanal`);",
+   "crm/fase2/extensao/crps.js:66:        faixa(`recurso ${i + 1} de ${fila.length}…`);"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:5947: const faixa = acima ? \"acima\" : \"ate\";"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1074: .cartao .faixa{position:absolute;left:-4px;top:-1px;bottom:-1px;width:4px;",
+    "crm/fase2/app.html:5949: .filter(x=>x.faixa===faixa && x.final===f && x.pagamento>=hoje())"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:5947: const faixa = acima ? \"acima\" : \"ate\";",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_calendario",
+  "coluna": "final",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5949 `.filter(x=>x.faixa===faixa && x.final===f ...)`, com f vindo de finalDoNB() (app.html:5939-5943, que descarta o dígito verificador)",
+  "hits": 21,
+  "amostra": [
+   "crm/fase2/extensao/pat-pagina.js:178:      if (/final/.test(rot))   escrever(inp, br(new Date()));",
+   "crm/fase2/app.html:81:     continua sendo a palavra final. */",
+   "crm/fase2/app.html:5932:// O final é o último algarismo do NB ANTES do traço: o dígito depois do hífen"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:9614: <label style=\"font-size:12px;color:var(--cinza)\">prazo final: <input type=\"date\" id=\"ex-prazo\"></label>"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:5949: .filter(x=>x.faixa===faixa && x.final===f && x.pagamento>=hoje())"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:9614: <label style=\"font-size:12px;color:var(--cinza)\">prazo final: <input type=\"date\" id=\"ex-prazo\"></label>",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_calendario",
+  "coluna": "pagamento",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5949-5950 (filtro `x.pagamento>=hoje()` e sort), app.html:5957 `const ultimoPagamento = () => (D.inssCal||[]).reduce((m,x)=>x.pagamento>m?x.pagamento:m,\"\")` e a exibição em app.html:5977 `<b>${fmt(x.pagamento)}</b>`",
+  "hits": 68,
+  "amostra": [
+   "crm/fase2/migrar.py:15:    fase. 💵 Pagamentos vira caso com fase='pagamento' DENTRO do cliente —",
+   "crm/fase2/migrar.py:36:    \"💵 Pagamentos\": \"pagamento\",",
+   "crm/fase2/migrar.py:621:    # Casos de pagamento que JÁ EXISTEM no banco ficam como estão — carregam"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1970: pagamento:\"Pagamento\", aposentadoria_futura:\"Apos. Futura\",",
+    "crm/fase2/app.html:5957: const ultimoPagamento   = () => (D.inssCal||[]).reduce((m,x)=>x.pagamento>m?x.pagamento:m,\"\");"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:5351: [\"conselho\",\"🖥 Conselho\"],[\"judicial\",\"👪 Judicial\"],[\"pagamento\",\"💰 Pagamento\"]];",
+    "crm/fase2/app.html:5949: .filter(x=>x.faixa===faixa && x.final===f && x.pagamento>=hoje())"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1970: pagamento:\"Pagamento\", aposentadoria_futura:\"Apos. Futura\",",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_calendario",
+  "coluna": "competencia",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5956 `const ultimaCompetencia = () => (D.inssCal||[]).reduce((m,x)=>x.competencia>m?x.competencia:m,\"\")` e app.html:5978 `<small>competência ${mesPorExtenso(x.competencia)}</small>`",
+  "hits": 2,
+  "amostra": [
+   "crm/fase2/app.html:5956:const ultimaCompetencia = () => (D.inssCal||[]).reduce((m,x)=>x.competencia>m?x.competencia:m,\"\");",
+   "crm/fase2/app.html:5978:          <small>competência ${mesPorExtenso(x.competencia)}</small>"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:5956: const ultimaCompetencia = () => (D.inssCal||[]).reduce((m,x)=>x.competencia>m?x.competencia:m,\"\");"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:5956: const ultimaCompetencia = () => (D.inssCal||[]).reduce((m,x)=>x.competencia>m?x.competencia:m,\"\");",
+    "crm/fase2/app.html:5978: <small>competência ${mesPorExtenso(x.competencia)}</small>"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:5956: const ultimaCompetencia = () => (D.inssCal||[]).reduce((m,x)=>x.competencia>m?x.competencia:m,\"\");",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "orgao_producao",
+  "coluna": "conclusos_julgamento",
+  "tipo": "nunca lida",
+  "quem": "crm/cnj_producao.py",
+  "ev": "crm/cnj_producao.py:155 `\"conclusos_julgamento\": int(cj) if cj is not None else None,` (gravado no POST de crm/cnj_producao.py:265). Nenhum leitor no repositório: não está no select de crm/trf3_ordem.py:344-345 e não aparece em app.html — o grep do nome só acha a DDL (crm/fase2/schema.sql:589) e o próprio cnj_producao.py",
+  "hits": 0,
+  "amostra": [],
+  "tem_escrita": true,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [
+    "crm/cnj_producao.py:155: \"conclusos_julgamento\": int(cj) if cj is not None else None,"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "orgao_producao",
+  "coluna": "atualizado_em",
+  "tipo": "nunca lida",
+  "quem": "crm/cnj_producao.py",
+  "ev": "crm/cnj_producao.py:261-262 `for l in linhas: l[\"atualizado_em\"] = hoje`. Nunca é selecionada por ninguém — fora da lista de crm/trf3_ordem.py:344-345 e ausente de app.html; ninguém checa se o dado está velho",
+  "hits": 8,
+  "amostra": [
+   "build_portal_listas.py:576:            \"atualizado_em\": agora,",
+   "build_portal_listas.py:587:    meta[\"atualizado_em\"] = datetime.datetime.now().strftime(\"%d/%m/%Y %H:%M\")",
+   "crm/fase2/robo-pat/traduzir.js:215:    atualizado_em: (t || {}).dataUltimaAtualizacao || null,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": [
+    "crm/cnj_producao.py:262: l[\"atualizado_em\"] = hoje"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/cnj_producao.py:262: l[\"atualizado_em\"] = hoje",
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "orgao_producao",
+  "coluna": "grau",
+  "tipo": "nunca lida",
+  "quem": "crm/cnj_producao.py",
+  "ev": "crm/cnj_producao.py:152 `saida.append({\"tribunal\": tribunal, \"grau\": grau, \"orgao\": org, ...})`. Vem no select de crm/trf3_ordem.py:344 (`select=orgao,grau,julgados_ano_anterior,...`) mas o VALOR nunca é consumido: casar_orgao() só usa p[\"orgao\"] (crm/cnj_producao.py:201 e 212) e julgados_por_mes() só usa julgados_ano_anterior/atual (crm/cnj_producao.py:168 e 171). O único `grau` usado em crm/trf3_ordem.py:141-151 é o do painel do TRF3, gravado em casos.trf3 — outra coisa",
+  "hits": 51,
+  "amostra": [
+   "crm/fase2/extensao/fundo.js:13:    // aberta (1º ou 2º), qualquer uma — o coletor descobre o grau pelo host.",
+   "crm/fase2/extensao/fundo.js:14:    // Rode uma vez com cada grau aberto para cobrir os dois.",
+   "crm/fase2/regras/marcadores.js:67:      B42: { dica: 'LC 142/2013 — o grau da deficiência reduz o tempo de contribuição exigido',"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/cnj_producao.py:152: saida.append({\"tribunal\": tribunal, \"grau\": grau, \"orgao\": org,",
+    "crm/trf3_ordem.py:10: \"grau\": 2, \"prioridade\": \"S\", \"fase_desde\": \"2026-04-07\","
+   ],
+   "leitura": [
+    "crm/trf3_ordem.py:344: \"&select=orgao,grau,julgados_ano_anterior,\""
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/trf3_ordem.py:344: \"&select=orgao,grau,julgados_ano_anterior,\"",
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "andamentos_lidos",
+  "coluna": "lido_em",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:6781 `title=\"${esc(c.nome)} leu em ${horaLocal(l.lido_em)}\"` e app.html:6783 `Você leu em ${horaLocal(meu.lido_em)}`; nenhum corpo de POST a envia — app.html:4977 manda só `{andamento_id:id, colaborador_id:eu.id}` e app.html:6941/8453/11237 idem. Quem preenche é o `default now()` de crm/fase2/schema.sql:201.",
+  "hits": 5,
+  "amostra": [
+   "crm/fase2/app.html:6767:    .sort((x,y)=>(x.lido_em||\"\")<(y.lido_em||\"\")?-1:1);",
+   "crm/fase2/app.html:6781:        title=\"${esc(c.nome)} leu em ${horaLocal(l.lido_em)}\">${esc(c.inicial)}</span>`;}).join(\"\")}",
+   "crm/fase2/app.html:6783:      title=\"${meu ? `Você leu em ${horaLocal(meu.lido_em)} — clique para desfazer`"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:6944: if(a) (a.andamentos_lidos=lidosDe(a)).push({colaborador_id:eu.id, lido_em:agora});"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:6767: .sort((x,y)=>(x.lido_em||\"\")<(y.lido_em||\"\")?-1:1);",
+    "crm/fase2/app.html:6781: title=\"${esc(c.nome)} leu em ${horaLocal(l.lido_em)}\">${esc(c.inicial)}</span>`;}).join(\"\")}"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:6944: if(a) (a.andamentos_lidos=lidosDe(a)).push({colaborador_id:eu.id, lido_em:agora});",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "sugestoes",
+  "coluna": "decidido_por",
+  "tipo": "nunca lida",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5264 `body:JSON.stringify({status, decidido_por:eu.id, decidido_em:new Date().toISOString()})`. Fora dessa linha o nome só aparece na definição da coluna (crm/fase2/schema.sql:757) — nenhum código lê o valor, e o app nem carrega as sugestões já decididas (app.html:1904 filtra `status=eq.pendente`).",
+  "hits": 1,
+  "amostra": [
+   "crm/fase2/app.html:5264:    body:JSON.stringify({status, decidido_por:eu.id, decidido_em:new Date().toISOString()})});"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:5264: body:JSON.stringify({status, decidido_por:eu.id, decidido_em:new Date().toISOString()})});"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "sugestoes",
+  "coluna": "decidido_em",
+  "tipo": "nunca lida",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5264, mesmo corpo do PATCH. Única outra ocorrência no repositório é crm/fase2/schema.sql:758 (a definição). Ninguém lê: não há tela de histórico de sugestões.",
+  "hits": 1,
+  "amostra": [
+   "crm/fase2/app.html:5264:    body:JSON.stringify({status, decidido_por:eu.id, decidido_em:new Date().toISOString()})});"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:5264: body:JSON.stringify({status, decidido_por:eu.id, decidido_em:new Date().toISOString()})});"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "sugestoes",
+  "coluna": "tipo",
+  "tipo": "nunca lida",
+  "quem": "crm/fase2/claude_rotina.py (rotina diária, fora da lista de atores)",
+  "ev": "crm/fase2/claude_rotina.py:92 `\"caso_id\": caso[\"id\"], \"tipo\": \"exigencia\"` (também 116, 139, 241, 248). É lida em crm/fase2/app.html:5239 só para escolher o emoji `${ICONE[s.tipo]||\"💡\"}` — nada mais depende do valor.",
+  "hits": 373,
+  "amostra": [
+   "crm/fase2/extensao/config.js:28:    { tipo: 'crm', acao: 'entrar', email: $('email').value, senha: $('senha').value });",
+   "crm/fase2/extensao/config.js:39:  await chrome.runtime.sendMessage({ tipo: 'crm', acao: 'sair' });",
+   "crm/fase2/extensao/pje-regras.js:67:  // class=\"media interno tipo-M\"> (movimento) ou tipo-D (juntada), cada um com"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/claude_rotina.py:92: \"caso_id\": caso[\"id\"], \"tipo\": \"exigencia\",",
+    "crm/fase2/claude_rotina.py:116: \"caso_id\": caso[\"id\"], \"tipo\": \"prazo\","
+   ],
+   "leitura": [
+    "crm/fase2/claude_rotina.py:131: ctx = \"audiencia\" if \"audi\" in _sem_acento(e[\"tipo\"]).lower() else \"pericia\"",
+    "crm/fase2/claude_rotina.py:140: \"titulo\": f\"{e['tipo']} em {e['data_hora'][8:10]}.{e['data_hora'][5:7]} — avisar {cli['nome']}\","
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/claude_rotina.py:131: ctx = \"audiencia\" if \"audi\" in _sem_acento(e[\"tipo\"]).lower() else \"pericia\"",
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "sugestoes",
+  "coluna": "criado_em",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5241 `<span class=\"chip neutro\">${fmtTS(s.criado_em)}</span>` e ordenação em app.html:1904 `order=criado_em.desc`. O corpo gravado em crm/fase2/claude_rotina.py:90-98/114-120/137-143 nunca inclui `criado_em`; vem do `default now()` de crm/fase2/schema.sql:754.",
+  "hits": 53,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:138: order by m.criado_em desc",
+   "crm/fase2/migrar.py:245:                \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,",
+   "crm/fase2/migrar.py:704:                \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/claude_rotina.py:79: recentes = g(f\"/rest/v1/andamentos?criado_em=gte.{corte}\"",
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),"
+   ],
+   "leitura": [
+    "crm/fase2/claude_rotina.py:79: recentes = g(f\"/rest/v1/andamentos?criado_em=gte.{corte}\"",
+    "crm/fase2/claude_rotina.py:80: \"&select=caso_id,texto,criado_em&order=criado_em.desc\") or []"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/claude_rotina.py:79: recentes = g(f\"/rest/v1/andamentos?criado_em=gte.{corte}\"",
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "mencoes",
+  "coluna": "conversa_id",
+  "tipo": "nunca lida",
+  "quem": "smbot (função zap_entregar)",
+  "ev": "crm/fase2/schema.sql:1134 `insert into mencoes (para_id, conversa_id, texto) values (v_quem, p_conversa, '💬 ' || ... || ' está esperando no WhatsApp')`. Nenhuma leitura: as únicas ocorrências de `conversa_id` em crm/fase2/app.html (5615, 5627, 5750, 5752, 5788) são todas de `zap_mensagens`, nunca de menções — o cartão da menção em app.html:5276-5286 lê só de_id, caso_id, criado_em, texto e id.",
+  "hits": 10,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:137:  join zap_conversas c on c.id = m.conversa_id",
+   "crm/fase2/ponte/PASSO-A-PASSO.md:162:insert into zap_mensagens (conversa_id, direcao, texto, status)",
+   "crm/fase2/ponte/ponte.js:175:    conversa_id: conversa, externo_id: m.key.id, direcao: \"entrada\","
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:5615: zapMsgs = await todas(\"zap_mensagens\",`select=*&conversa_id=eq.${id}&order=seq`).catch(()=>[]);",
+    "crm/fase2/app.html:5627: zapMsgs = await todas(\"zap_mensagens\",`select=*&conversa_id=eq.${zapAberta}&order=seq`).catch(()=>zapMsgs);"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:5615: zapMsgs = await todas(\"zap_mensagens\",`select=*&conversa_id=eq.${id}&order=seq`).catch(()=>[]);",
+    "crm/fase2/app.html:5627: zapMsgs = await todas(\"zap_mensagens\",`select=*&conversa_id=eq.${zapAberta}&order=seq`).catch(()=>zapMsgs);"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:5615: zapMsgs = await todas(\"zap_mensagens\",`select=*&conversa_id=eq.${id}&order=seq`).catch(()=>[]);",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "mencoes",
+  "coluna": "criado_em",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5280 `<span class=\"chip neutro\">${fmtTS(m.criado_em)}</span>` e ordenação em app.html:1905. Nenhum dos três inserts o preenche (app.html:5303-5304, crm/fase2/schema.sql:1872 e 1134); vem do `default now()` de crm/fase2/schema.sql:770.",
+  "hits": 53,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:138: order by m.criado_em desc",
+   "crm/fase2/migrar.py:245:                \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,",
+   "crm/fase2/migrar.py:704:                \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:1901: +`&origem=in.(pat,crps,dou,pje)&criado_em=gte.${d30.toISOString()}&order=criado_em.desc`)"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:1900: todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "leads",
+  "coluna": "obs",
+  "tipo": "nunca lida",
+  "quem": "smbot (smbot_entrada e smbot_contato)",
+  "ev": "crm/fase2/schema.sql:329-333 `insert into leads (..., obs) values (..., 'Entrou pelo WhatsApp (SMBot).')` e schema.sql:443-445 `'Falou no WhatsApp (SMBot). A conversa está no painel do SMBot.'`. Nunca lida: no cartão do kanban (crm/fase2/app.html:5424-5434) não há `l.obs`, e a busca por `.obs` em app.html só devolve obs de eventos, de documentos e de telefones.",
+  "hits": 26,
+  "amostra": [
+   "build_portal_escritorio.py:125:                \"obs\": \"Use seu CPF e sua senha gov.br\",",
+   "crm/fase2/extensao/pje.js:58:      const obs = new MutationObserver(() => { clearTimeout(t); t = setTimeout(fim, quieto); });",
+   "crm/fase2/extensao/pje.js:60:      function fim() { obs.disconnect(); clearTimeout(t); clearTimeout(teimosia); res(); }"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:10481: setTimeout(()=>{ const obs = setInterval(()=>{",
+    "crm/fase2/app.html:11110: obs:texto.slice(0,160), status:data>=hoje()?\"agendada\":\"realizada\"})});"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:6283: <span>${esc([e.local,e.obs].filter(Boolean).join(\" · \"))} · ${esc(nomeStatusEvento(e.status))}</span></div>",
+    "crm/fase2/app.html:7654: <div class=\"oque\"><strong>${esc(e.tipo)}</strong><span>${esc([e.local,e.obs].filter(Boolean).join(\" · \"))} · $"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:6283: <span>${esc([e.local,e.obs].filter(Boolean).join(\" · \"))} · ${esc(nomeStatusEvento(e.status))}</span></div>",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "leads",
+  "coluna": "motivo_perda",
+  "tipo": "nunca lida",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5447 `if(l.etapa===\"perdido\") l.motivo_perda=prompt(\"Motivo da perda (opcional):\")||null;` gravado em app.html:5449. O valor gravado nunca volta: não existe nenhum `l.motivo_perda` de leitura, nem tela ou relatório de perdas — o percentual em app.html:5411 conta só quantos, não por quê.",
+  "hits": 2,
+  "amostra": [
+   "crm/fase2/app.html:5447:      if(l.etapa===\"perdido\") l.motivo_perda=prompt(\"Motivo da perda (opcional):\")||null;",
+   "crm/fase2/app.html:5449:        body:JSON.stringify({etapa:l.etapa, motivo_perda:l.motivo_perda||null,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:5449: body:JSON.stringify({etapa:l.etapa, motivo_perda:l.motivo_perda||null,"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:5447: if(l.etapa===\"perdido\") l.motivo_perda=prompt(\"Motivo da perda (opcional):\")||null;",
+    "crm/fase2/app.html:5449: body:JSON.stringify({etapa:l.etapa, motivo_perda:l.motivo_perda||null,"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:5447: if(l.etapa===\"perdido\") l.motivo_perda=prompt(\"Motivo da perda (opcional):\")||null;",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "leads",
+  "coluna": "responsavel_id",
+  "tipo": "nunca lida",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:5461 `origem:document.getElementById(\"nl-origem\").value, responsavel_id:eu.id`. Nada lê para lead: o cartão do funil (app.html:5424-5434) não mostra responsável; a ocorrência em app.html:8600 `D.colPorId.get(l.responsavel_id)` está dentro de painelLembretes(), onde `l` é um lembrete, não um lead.",
+  "hits": 19,
+  "amostra": [
+   "crm/fase2/migrar.py:768:                        \"intervalo_meses,ativo,responsavel_id,origem_caso\")}",
+   "crm/fase2/migrar.py:782:                # responsavel_id não é enviado — o banco já preserva sozinho",
+   "crm/fase2/robo-crps/manual.js:22://     consulta: { responsavel_id, cada_dias, proxima, total, checagens: [...] } }"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:5461: origem:document.getElementById(\"nl-origem\").value, responsavel_id:eu.id})});",
+    "crm/fase2/app.html:7077: responsavel_id:document.getElementById(\"rt-resp\").value||null,"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:6987: .filter(r=>!filtroColab || r.responsavel_id===filtroColab || !r.responsavel_id);",
+    "crm/fase2/app.html:6995: const feita=rotinaFeitaHoje(r), co=D.colPorId.get(r.responsavel_id);"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:6987: .filter(r=>!filtroColab || r.responsavel_id===filtroColab || !r.responsavel_id);",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "leads",
+  "coluna": "atualizado_em",
+  "tipo": "nunca lida",
+  "quem": "app e smbot",
+  "ev": "crm/fase2/app.html:5450 `atualizado_em:new Date().toISOString()` ao arrastar entre etapas, e crm/fase2/schema.sql:469 `update leads set ultimo_contato = now(), atualizado_em = now(), ...`. Nenhuma leitura em lugar nenhum — o app ordena por `criado_em` (app.html:1906), não por este campo.",
+  "hits": 8,
+  "amostra": [
+   "build_portal_escritorio.py:160:            \"atualizado_em\": agora,",
+   "build_portal_escritorio.py:169:    meta[\"atualizado_em\"] = datetime.datetime.now().strftime(\"%d/%m/%Y %H:%M\")",
+   "build_portal_listas.py:576:            \"atualizado_em\": agora,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2808: atualizado_em: (t || {}).dataUltimaAtualizacao || null,",
+    "crm/fase2/app.html:5450: atualizado_em:new Date().toISOString()})});"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/cnj_producao.py:262:        l[\"atualizado_em\"] = hoje",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "leads",
+  "coluna": "criado_em",
+  "tipo": "nunca escrita",
+  "quem": "app e smbot",
+  "ev": "Só como critério de ordem: crm/fase2/app.html:1906 `order=criado_em.desc` e, nas funções SQL, `order by criado_em desc limit 1` para achar o lead mais recente do telefone (crm/fase2/schema.sql:326, 442, 1024). Nunca é exibido nem gravado por código — `default now()` de crm/fase2/schema.sql:790.",
+  "hits": 53,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:138: order by m.criado_em desc",
+   "crm/fase2/migrar.py:245:                \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,",
+   "crm/fase2/migrar.py:704:                \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:1901: +`&origem=in.(pat,crps,dou,pje)&criado_em=gte.${d30.toISOString()}&order=criado_em.desc`)"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:1900: todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "rotinas",
+  "coluna": "criada_em",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "Usada apenas como critério de ordem em crm/fase2/app.html:1912 `todas(\"rotinas\",\"select=*&ativo=is.true&order=criada_em\")`. Nunca exibida (as telas são app.html:6990-7006 e 7030-7045) e nunca enviada em POST — o corpo em app.html:7076-7079 tem só titulo, detalhe, responsavel_id, dias_semana e dia_mes; vem do `default now()` de crm/fase2/schema.sql:565.",
+  "hits": 1,
+  "amostra": [
+   "crm/fase2/app.html:1912:      todas(\"rotinas\",\"select=*&ativo=is.true&order=criada_em\").catch(()=>[]),"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": [
+    "crm/fase2/app.html:1912: todas(\"rotinas\",\"select=*&ativo=is.true&order=criada_em\").catch(()=>[]),"
+   ]
+  },
+  "confirmado": true,
+  "contra": "crm/sync_todo.py:216:        \"criada_em\": (t.get(\"createdDateTime\") or \"\")[:10] or None,",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "rotinas_feitas",
+  "coluna": "colaborador_id",
+  "tipo": "nunca lida",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:7015 `body:JSON.stringify({rotina_id:id, dia, colaborador_id:eu.id})`. A única leitura da coleção é crm/fase2/app.html:6975 `(D.rotinasFeitas||[]).some(f=>f.rotina_id===r.id && f.dia===hoje())`, que usa só rotina_id e dia — nenhum ponto do app mostra QUEM deu baixa.",
+  "hits": 58,
+  "amostra": [
+   "crm/fase2/app.html:1900:      todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`",
+   "crm/fase2/app.html:1922:      todas(\"lembretes\",\"select=*,lembrete_avisos(colaborador_id,em,canal)&ativo=is.true&order=proximo_em\")",
+   "crm/fase2/app.html:1950:                           D.atrDoCaso.get(a.caso_id).push(a.colaborador_id); });"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2141: body:JSON.stringify({colaborador_id:eu.id, caso_id:casoId, dia:hoje()})});",
+    "crm/fase2/app.html:4614: colaborador_id:quem.quem, atribuido_por:eu.id, lembrar_em:dia})});"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1900: todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`",
+    "crm/fase2/app.html:1922: todas(\"lembretes\",\"select=*,lembrete_avisos(colaborador_id,em,canal)&ativo=is.true&order=proximo_em\")"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1900: todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "rotinas_feitas",
+  "coluna": "feito_em",
+  "tipo": "nunca lida",
+  "quem": "ninguém (só o `default now()` do banco)",
+  "ev": "Definida em crm/fase2/schema.sql:575 `feito_em timestamptz not null default now()`. A string `feito_em` não aparece em nenhum outro arquivo do repositório: não é enviada no POST de crm/fase2/app.html:7015 nem lida em lugar algum.",
+  "hits": 1,
+  "amostra": [
+   "crm/fase2/migrar.py:456:        \"pago_em\": (item.get(\"feito_em\") or data) if feito else None,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_fila",
+  "coluna": "servico",
+  "tipo": "nunca lida",
+  "quem": "crm/inss_fila.py (fora da lista de atores; workflow .github/workflows/inss-fila.yml)",
+  "ev": "crm/inss_fila.py:271-276 `linhas = [{\"servico\": s, \"uf\": uf, **v, \"atualizado_em\": hoje} ...]` seguido de `_rest(\"POST\", \"/rest/v1/inss_fila\", linhas[i:i+500], prefer=\"resolution=merge-duplicates,return=minimal\")`. Um grep por `rest/v1/inss_fila` em todo o repositório devolve APENAS essa linha 275 — nunca um GET.",
+  "hits": 17,
+  "amostra": [
+   "crm/fase2/robo-pat/traduzir.js:64:  ATUVCPG: { tipo: 'servico', nome: 'Atualizar vínculos e remunerações (CNIS)' },",
+   "crm/fase2/robo-pat/traduzir.js:65:  TVALFBR: { tipo: 'servico', nome: 'Validar contribuição de facultativo baixa renda' },",
+   "crm/fase2/robo-pat/traduzir.js:66:  ATUACAD: { tipo: 'servico', nome: 'Atualizar cadastro e/ou benefício' },"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/inss_fila.py:272: linhas = [{\"servico\": s, \"uf\": uf, **v, \"atualizado_em\": hoje}"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/robo-pat/importar.js:26:const NAO_ABRE_CASO = new Set(['servico', 'pagamento']);",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_fila",
+  "coluna": "uf",
+  "tipo": "nunca lida",
+  "quem": "crm/inss_fila.py",
+  "ev": "crm/inss_fila.py:272, mesma montagem de `linhas`, gravada em crm/inss_fila.py:275. Sem leitura da tabela.",
+  "hits": 14,
+  "amostra": [
+   "crm/fase2/app.html:7924:  const uf=f.uf && f.uf!==\"BR\" ? `em ${esc(f.uf)}` : \"no país\";",
+   "crm/fase2/app.html:7927:    🌻 <b>Fila do INSS ${uf}:</b> ${Number(f.pendentes).toLocaleString(IDIOMA)} pedidos",
+   "crm/fase2/app.html:7937:  const uf=f.uf&&f.uf!==\"BR\"?`em ${f.uf}`:\"no país\";"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/inss_fila.py:222: \"servicos\": list(servicos), \"uf\": uf}",
+    "crm/inss_fila.py:229: uf = f.get(\"uf\")"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/djen/sonda.js:75:  console.log(`Consultando o DJEN: OAB ${oab}/${uf.toUpperCase()}, últimos ${dias} dias\\n${url}\\n`);",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_fila",
+  "coluna": "pendentes",
+  "tipo": "nunca lida",
+  "quem": "crm/inss_fila.py",
+  "ev": "Entra pelo `**v` de crm/inss_fila.py:272 (v vem de agregar(); a chave aparece em crm/inss_fila.py:220 `{\"pendentes\": total, ...}`). Gravada em crm/inss_fila.py:275; a tabela nunca é relida.",
+  "hits": 7,
+  "amostra": [
+   "crm/fase2/robo-pat/coletar-no-navegador.js:342:    const pendentes = OUT.lista.length - OUT.detalhes.length - OUT.falhas.length;",
+   "crm/fase2/robo-pat/coletar-no-navegador.js:343:    if (pendentes > 0) return detalhar();",
+   "crm/fase2/app.html:6720:    <div class=\"card\"><h4>📥 Menções pendentes (minhas)</h4><div class=\"num\" style=\"color:var(--laranja)\">${D.mencoes.length}</"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/inss_fila.py:167: saida[chave] = {\"pendentes\": sum(porIdade.values()),",
+    "crm/inss_fila.py:220: return {\"pendentes\": total, \"dias_mediana\": pond(\"dias_mediana\"),"
+   ],
+   "leitura": [
+    "crm/inss_fila.py:215: total = sum(l[\"pendentes\"] for l in linhas)",
+    "crm/inss_fila.py:218: sum(l[campo] * l[\"pendentes\"] for l in linhas if l.get(campo) is not None)"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/inss_fila.py:215: total = sum(l[\"pendentes\"] for l in linhas)",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_fila",
+  "coluna": "dias_mediana",
+  "tipo": "nunca lida",
+  "quem": "crm/inss_fila.py",
+  "ev": "crm/inss_fila.py:220-221 `\"dias_mediana\": pond(\"dias_mediana\")`, gravada via crm/inss_fila.py:275. O que a ficha exibe (crm/fase2/app.html:7929 `${f.dias_mediana}`) vem de `k.inss_fila`, coluna jsonb de CASOS, não desta tabela.",
+  "hits": 2,
+  "amostra": [
+   "crm/fase2/app.html:7929:    <b>${f.dias_mediana} dias</b>${f.dias_p90?` (9 em cada 10, até ${f.dias_p90} dias)`:\"\"}",
+   "crm/fase2/app.html:7940:    `aguardando análise ${uf}, e metade deles já esperava há mais de ${f.dias_mediana} dias. `+"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/inss_fila.py:168: \"dias_mediana\": _percentil(pares, 0.5),",
+    "crm/inss_fila.py:220: return {\"pendentes\": total, \"dias_mediana\": pond(\"dias_mediana\"),"
+   ],
+   "leitura": [
+    "crm/inss_fila.py:238: f\"mais de {f['dias_mediana']} dias. É a régua da fila naquele \""
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/inss_fila.py:238: f\"mais de {f['dias_mediana']} dias. É a régua da fila naquele \"",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_fila",
+  "coluna": "dias_p90",
+  "tipo": "nunca lida",
+  "quem": "crm/inss_fila.py",
+  "ev": "crm/inss_fila.py:221 `\"dias_p90\": pond(\"dias_p90\")`, gravada em crm/inss_fila.py:275. A leitura em crm/fase2/app.html:7929 `${f.dias_p90}` é de casos.inss_fila.",
+  "hits": 1,
+  "amostra": [
+   "crm/fase2/app.html:7929:    <b>${f.dias_mediana} dias</b>${f.dias_p90?` (9 em cada 10, até ${f.dias_p90} dias)`:\"\"}"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/inss_fila.py:169: \"dias_p90\": _percentil(pares, 0.9),",
+    "crm/inss_fila.py:221: \"dias_p90\": pond(\"dias_p90\"), \"referencia\": linhas[0][\"referencia\"],"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/app.html:7929:    <b>${f.dias_mediana} dias</b>${f.dias_p90?` (9 em cada 10, até ${f.dias_p90} dias)`:\"\"}",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_fila",
+  "coluna": "referencia",
+  "tipo": "nunca lida",
+  "quem": "crm/inss_fila.py",
+  "ev": "crm/inss_fila.py:221 `\"referencia\": linhas[0][\"referencia\"]` e gravação em crm/inss_fila.py:275; o print de crm/inss_fila.py:277 lê da lista em memória, não do banco.",
+  "hits": 2,
+  "amostra": [
+   "crm/fase2/app.html:7930:    <span class=\"meio-sub\">— retrato oficial de ${fmt(f.referencia)}; é a régua da fila, não a data deste pedido</span>",
+   "crm/fase2/app.html:7938:  copiar(`Segundo os dados abertos do INSS (retrato de ${dbr(f.referencia)}), havia `+"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/inss_fila.py:132: def agregar(linhas, referencia=None):",
+    "crm/inss_fila.py:170: \"referencia\": ref.isoformat()}"
+   ],
+   "leitura": [
+    "crm/inss_fila.py:221: \"dias_p90\": pond(\"dias_p90\"), \"referencia\": linhas[0][\"referencia\"],",
+    "crm/inss_fila.py:277: ref = linhas[0][\"referencia\"] if linhas else \"?\""
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/inss_fila.py:221: \"dias_p90\": pond(\"dias_p90\"), \"referencia\": linhas[0][\"referencia\"],",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "inss_fila",
+  "coluna": "atualizado_em",
+  "tipo": "nunca lida",
+  "quem": "crm/inss_fila.py",
+  "ev": "crm/inss_fila.py:272 `\"atualizado_em\": hoje`, gravada em crm/inss_fila.py:275. Nunca lida por nada.",
+  "hits": 8,
+  "amostra": [
+   "build_portal_escritorio.py:160:            \"atualizado_em\": agora,",
+   "build_portal_escritorio.py:169:    meta[\"atualizado_em\"] = datetime.datetime.now().strftime(\"%d/%m/%Y %H:%M\")",
+   "build_portal_listas.py:576:            \"atualizado_em\": agora,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/inss_fila.py:272: linhas = [{\"servico\": s, \"uf\": uf, **v, \"atualizado_em\": hoje}"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/cnj_producao.py:262:        l[\"atualizado_em\"] = hoje",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "conversas",
+  "coluna": "plataforma",
+  "tipo": "nunca lida",
+  "quem": "smbot",
+  "ev": "Gravada fixa como 'whatsapp' em crm/fase2/schema.sql:342, 453 e 463. Nunca lida: o select do app (crm/fase2/app.html:7181) pede só `criado_em,texto,de_cliente`, e a busca por `plataforma` no repositório só devolve os inserts e a definição da coluna em crm/fase2/schema.sql:883.",
+  "hits": 0,
+  "amostra": [],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "conversas",
+  "coluna": "externo_id",
+  "tipo": "nunca lida",
+  "quem": "smbot",
+  "ev": "crm/fase2/schema.sql:342 (p_externo_id) e schema.sql:453/463 (v_ext). Serve exclusivamente ao `on conflict (externo_id) do nothing` de crm/fase2/schema.sql:344 e 454 — nenhum código lê o valor de volta.",
+  "hits": 3,
+  "amostra": [
+   "crm/fase2/ponte/ponte.js:157:      await sb(`/rest/v1/zap_mensagens?externo_id=eq.${encodeURIComponent(u.key.id)}`",
+   "crm/fase2/ponte/ponte.js:175:    conversa_id: conversa, externo_id: m.key.id, direcao: \"entrada\",",
+   "crm/fase2/ponte/ponte.js:269:                             externo_id: (r && r.key && r.key.id) || null }),"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/ponte/ponte.js:157:      await sb(`/rest/v1/zap_mensagens?externo_id=eq.${encodeURIComponent(u.key.id)}`",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "conversas",
+  "coluna": "atendente",
+  "tipo": "nunca lida",
+  "quem": "smbot (só smbot_entrada)",
+  "ev": "crm/fase2/schema.sql:341/343 `insert into conversas (..., atendente, texto) values (..., p_atendente, p_texto)`. smbot_contato nem preenche (schema.sql:452 e 462). Nenhuma leitura: não existe `.atendente` de conversas em crm/fase2/app.html (as ocorrências são todas `atendente_id` de zap_conversas).",
+  "hits": 0,
+  "amostra": [],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "conversas",
+  "coluna": "de_cliente",
+  "tipo": "nunca lida",
+  "quem": "smbot",
+  "ev": "crm/fase2/schema.sql:343 `coalesce(p_de_cliente, true)` e schema.sql:453/463 (`true` fixo). É PEDIDA no select de crm/fase2/app.html:7181 `select=criado_em,texto,de_cliente`, mas o único consumidor de D.convFicha é ultimoZap() em crm/fase2/app.html:8415-8422, que usa apenas `z.criado_em` e `z.texto` — o valor de de_cliente é trafegado e descartado.",
+  "hits": 1,
+  "amostra": [
+   "crm/fase2/app.html:7181:    todas(\"conversas\",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),"
+  ],
+  "tem_escrita": false,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": [
+    "crm/fase2/app.html:7181: todas(\"conversas\",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>["
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:7181: todas(\"conversas\",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "conversas",
+  "coluna": "criado_em",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "crm/fase2/app.html:8418 `const quando=\\`${fmtTS(z.criado_em)} às ${horaSP(z.criado_em)}\\`` (exibido na ficha via app.html:12390) e ordenação em app.html:7181 `order=criado_em.desc`. Nenhum dos três inserts o preenche (crm/fase2/schema.sql:340-343, 452-454, 462-464); vem do `default now()` de crm/fase2/schema.sql:890.",
+  "hits": 53,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:138: order by m.criado_em desc",
+   "crm/fase2/migrar.py:245:                \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,",
+   "crm/fase2/migrar.py:704:                \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:1901: +`&origem=in.(pat,crps,dou,pje)&criado_em=gte.${d30.toISOString()}&order=criado_em.desc`)"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:1900: todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "zap_conversas",
+  "coluna": "setor",
+  "tipo": "nunca lida",
+  "quem": "smbot (zap_entregar)",
+  "ev": "crm/fase2/schema.sql:1127 — `set atendente_id = v_quem, setor = coalesce(p_setor, setor),`. É a única escrita. Nenhum consumidor usa o valor: zap_escolher_atendente compara `co.setor` de colaboradores (schema.sql:1102), não o da conversa; o app puxa `select=*` (app.html:5512) mas cartaoConversa/pintarConversa nunca mencionam c.setor.",
+  "hits": 17,
+  "amostra": [
+   "crm/fase2/robo-pat/peneira.js:37:  'status', 'fase', 'canal', 'orgao', 'setor', 'tipotarefa',",
+   "crm/fase2/robo-pat/sonda-no-navegador.js:45:    'status', 'fase', 'canal', 'orgao', 'setor', 'tipotarefa',",
+   "crm/datajud.py:54:    123: \"O processo foi remetido a outro setor/instância.\","
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:6029: <select data-setor=\"${c.id}\" ${c.atende_zap?\"\":\"disabled\"}>",
+    "crm/fase2/app.html:6170: const sel = document.querySelector(`[data-setor=\"${el.dataset.atende}\"]`);"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1846: (eu.papel === \"admin\" ? \"administrador\" : eu.setor || \"equipe\");",
+    "crm/fase2/app.html:6031: ${SETORES.map(s=>`<option ${c.setor===s?\"selected\":\"\"}>${s}</option>`).join(\"\")}"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1846: (eu.papel === \"admin\" ? \"administrador\" : eu.setor || \"equipe\");",
+  "arquivos_olhados": 3
+ },
+ {
+  "tabela": "zap_conversas",
+  "coluna": "criado_em",
+  "tipo": "nunca lida",
+  "quem": "banco (default now())",
+  "ev": "crm/fase2/schema.sql:921 — `criado_em timestamptz not null default now()`. A lista ordena por ultima_em (app.html:5512 `order=ultima_em.desc.nullslast`) e o cartão mostra c.ultima_em (app.html:5597); nenhum arquivo lê criado_em de zap_conversas.",
+  "hits": 53,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:138: order by m.criado_em desc",
+   "crm/fase2/migrar.py:245:                \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,",
+   "crm/fase2/migrar.py:704:                \"id\": a[\"id\"], \"em\": a[\"criado_em\"], \"texto\": a[\"texto\"],"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:1901: +`&origem=in.(pat,crps,dou,pje)&criado_em=gte.${d30.toISOString()}&order=criado_em.desc`)"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:1900: todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+  "arquivos_olhados": 3
+ },
+ {
+  "tabela": "zap_conversas",
+  "coluna": "fixada",
+  "tipo": "nunca lida",
+  "quem": "ninguem (só o default do CREATE TABLE)",
+  "ev": "crm/fase2/schema.sql:920 — `fixada boolean not null default false`. É a ÚNICA ocorrência da palavra em todo o repositório fora de docs/ (rg 'fixada' em crm/ retorna só essa linha): coluna morta, ninguém escreve nem lê.",
+  "hits": 0,
+  "amostra": [],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 3
+ },
+ {
+  "tabela": "zap_conversas",
+  "coluna": "chave",
+  "tipo": "nunca escrita",
+  "quem": "smbot (zap_abrir)",
+  "ev": "crm/fase2/schema.sql:1010 — `select id into v_id from zap_conversas where chave = v_chave;` e o índice único schema.sql:926. É coluna GERADA (schema.sql:909 `chave text generated always as (fone_chave(telefone)) stored`), então nem o código nem a mão preenchem: o banco calcula a partir de telefone.",
+  "hits": 219,
+  "amostra": [
+   "crm/fase2/extensao/config.js:3:chrome.storage.local.get(['url', 'chave', 'quem']).then(c => {",
+   "crm/fase2/extensao/config.js:5:  $('chave').value = c.chave || '';",
+   "crm/fase2/extensao/config.js:17:    chave: $('chave').value.trim(),"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2017: const chave = buscaTxt?\"dashboard\":visao;",
+    "crm/fase2/app.html:2542: const chave = semAcento(bruto);"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1528: memoria[chave]=valor;",
+    "crm/fase2/app.html:1533: return memoria[chave] ?? null;"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:2017: const chave = buscaTxt?\"dashboard\":visao;",
+  "arquivos_olhados": 3
+ },
+ {
+  "tabela": "zap_mensagens",
+  "coluna": "aviso_ref",
+  "tipo": "nunca lida",
+  "quem": "smbot (zap_gerar_avisos)",
+  "ev": "crm/fase2/schema.sql:1531-1533 — `insert into zap_mensagens (... aviso_chave, aviso_ref) values (v_conv,'saida',true,v_txt,v_st, r.chave, r.ref)`. Nunca é selecionada por ninguém: só existe para o índice único schema.sql:1409-1410 `zap_msg_aviso_unico on zap_mensagens (aviso_chave, aviso_ref)`, a trava de 'nunca avisar duas vezes'. (A irmã aviso_chave, ao contrário, é lida em app.html:5695.)",
+  "hits": 0,
+  "amostra": [],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "zap_mensagens",
+  "coluna": "enviada_em",
+  "tipo": "nunca lida",
+  "quem": "ponte (crm/fase2/ponte/ponte.js) — ator fora da lista",
+  "ev": "crm/fase2/ponte/ponte.js:268 — `body: JSON.stringify({ status: \"enviada\", enviada_em: agora(), ...})`. O app mostra sempre outro relógio: app.html:5702 `${horaSP(m.quando_wa||m.criado_em)}`. Fora da definição (schema.sql:956) e dessa escrita, a coluna não aparece em nenhum arquivo.",
+  "hits": 1,
+  "amostra": [
+   "crm/fase2/ponte/ponte.js:268:      body: JSON.stringify({ status: \"enviada\", enviada_em: agora(),"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [
+    "crm/fase2/ponte/ponte.js:268: body: JSON.stringify({ status: \"enviada\", enviada_em: agora(),"
+   ],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "zap_mensagens",
+  "coluna": "seq",
+  "tipo": "nunca escrita",
+  "quem": "app e ponte",
+  "ev": "app.html:5615 `select=*&conversa_id=eq.${id}&order=seq` e ponte.js:235 `&order=seq&limit=5`. É `bigint generated always as identity` (schema.sql:936 e 959): o banco gera, nenhum código escreve — é o que garante que o aviso de 'fora do horário' saia antes do menu.",
+  "hits": 3,
+  "amostra": [
+   "crm/fase2/ponte/ponte.js:235:          + \"&order=seq&limit=5\");",
+   "crm/fase2/app.html:5615:  zapMsgs = await todas(\"zap_mensagens\",`select=*&conversa_id=eq.${id}&order=seq`).catch(()=>[]);",
+   "crm/fase2/app.html:5627:  zapMsgs = await todas(\"zap_mensagens\",`select=*&conversa_id=eq.${zapAberta}&order=seq`).catch(()=>zapMsgs);"
+  ],
+  "tem_escrita": false,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": [
+    "crm/fase2/app.html:5615: zapMsgs = await todas(\"zap_mensagens\",`select=*&conversa_id=eq.${id}&order=seq`).catch(()=>[]);",
+    "crm/fase2/app.html:5627: zapMsgs = await todas(\"zap_mensagens\",`select=*&conversa_id=eq.${zapAberta}&order=seq`).catch(()=>zapMsgs);"
+   ]
+  },
+  "confirmado": true,
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "zap_mensagens",
+  "coluna": "criado_em",
+  "tipo": "nunca escrita",
+  "quem": "app, gatilho_sql e smbot",
+  "ev": "app.html:5686 `${horaSP(m.criado_em)}` (bolha de nota interna); schema.sql:1244 `select max(criado_em) into ultimo from zap_mensagens where ... por_bot` (pausa do robô); schema.sql:1360 `coalesce(m.quando_wa, m.criado_em)` ao virar andamento. Nenhum POST/PATCH informa o campo — vem do default now() (schema.sql:955).",
+  "hits": 53,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:138: order by m.criado_em desc",
+   "crm/fase2/robo-pat/traduzir.js:214:    criado_em: (t || {}).dataCriacao || null,",
+   "crm/fase2/migrar.py:245:                \"criado_em\": a[\"data\"] + \"T12:00:00\" + TZ,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:1901: +`&origem=in.(pat,crps,dou,pje)&criado_em=gte.${d30.toISOString()}&order=criado_em.desc`)"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+    "crm/fase2/app.html:1900: todas(\"andamentos\",`select=id,caso_id,texto,origem,criado_em,andamentos_lidos(colaborador_id)`"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1895: todas(\"andamentos\",`select=autor_id,criado_em,caso_id&criado_em=gte.${d30.toISOString()}`),",
+  "arquivos_olhados": 2
+ },
+ {
+  "tabela": "zap_transferencias",
+  "coluna": "conversa_id",
+  "tipo": "nunca lida",
+  "quem": "smbot (zap_transferir)",
+  "ev": "crm/fase2/schema.sql:1043-1044 — `insert into zap_transferencias (conversa_id, de_id, para_id, motivo) values (p_conversa, v_de, p_para, nullif(trim(p_motivo),''))`. Nenhum SELECT em app.html, ponte.js ou no restante do schema.sql (rg 'zap_transferencias' fora de docs/ dá só: criação 964, índice 972, esse insert 1043, a lista de RLS 1925 e os testes).",
+  "hits": 10,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:137:  join zap_conversas c on c.id = m.conversa_id",
+   "crm/fase2/ponte/PASSO-A-PASSO.md:162:insert into zap_mensagens (conversa_id, direcao, texto, status)",
+   "crm/fase2/ponte/ponte.js:175:    conversa_id: conversa, externo_id: m.key.id, direcao: \"entrada\","
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/ponte/PASSO-A-PASSO.md:137:  join zap_conversas c on c.id = m.conversa_id",
+  "arquivos_olhados": 0
+ },
+ {
+  "tabela": "zap_transferencias",
+  "coluna": "de_id",
+  "tipo": "nunca lida",
+  "quem": "smbot (zap_transferir)",
+  "ev": "crm/fase2/schema.sql:1040-1044 — `select atendente_id into v_de from zap_conversas where id = p_conversa;` … `insert into zap_transferencias (conversa_id, de_id, ...)`. Nunca lida: a tela de transferência (app.html:5873-5889) só chama o RPC e recarrega a lista, sem exibir histórico.",
+  "hits": 2,
+  "amostra": [
+   "crm/fase2/app.html:5276:    const de=D.colPorId.get(m.de_id), k=m.caso_id&&D.casoPorId.get(m.caso_id),",
+   "crm/fase2/app.html:5303:      body:JSON.stringify({de_id:eu.id, para_id:co.id, caso_id:casoId,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/app.html:5276:    const de=D.colPorId.get(m.de_id), k=m.caso_id&&D.casoPorId.get(m.caso_id),",
+  "arquivos_olhados": 0
+ },
+ {
+  "tabela": "zap_transferencias",
+  "coluna": "para_id",
+  "tipo": "nunca lida",
+  "quem": "smbot (zap_transferir)",
+  "ev": "crm/fase2/schema.sql:1043-1044 (mesmo insert). Nenhum consumidor: quem quer saber quem atende hoje lê zap_conversas.atendente_id (app.html:5592).",
+  "hits": 3,
+  "amostra": [
+   "crm/fase2/app.html:1905:      todas(\"mencoes\",`select=*&para_id=eq.${eu.id}&lida_em=is.null&order=criado_em.desc`),",
+   "crm/fase2/app.html:5303:      body:JSON.stringify({de_id:eu.id, para_id:co.id, caso_id:casoId,",
+   "crm/fase2/app.html:6946:    const m=(D.mencoes||[]).find(x=>x.andamento_id===andId && x.para_id===eu.id && !x.lida_em);"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/app.html:1905:      todas(\"mencoes\",`select=*&para_id=eq.${eu.id}&lida_em=is.null&order=criado_em.desc`),",
+  "arquivos_olhados": 0
+ },
+ {
+  "tabela": "zap_transferencias",
+  "coluna": "motivo",
+  "tipo": "nunca lida",
+  "quem": "smbot (zap_transferir), com o texto digitado no app",
+  "ev": "app.html:5885 — `body:JSON.stringify({p_conversa:zapAberta, p_para:b.dataset.zt, p_motivo:motivo||null})` → crm/fase2/schema.sql:1044. O motivo é gravado e nunca mais aparece em tela nenhuma.",
+  "hits": 60,
+  "amostra": [
+   "crm/fase2/ponte/PASSO-A-PASSO.md:169:`status = 'enviada'`. Se der errado, ela vira `erro` com o motivo escrito no",
+   "crm/fase2/ponte/PASSO-A-PASSO.md:246:| mensagem em `erro` | leia o campo `erro` | número sem WhatsApp é o motivo mais comum |",
+   "crm/fase2/extensao/ponte-pat.js:14:// carregamento automático do script não acontece, seja qual for o motivo."
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/robo-pat/importar.js:241:        provavel: j.provavel, motivo: j.motivo });",
+  "arquivos_olhados": 0
+ },
+ {
+  "tabela": "zap_transferencias",
+  "coluna": "em",
+  "tipo": "nunca lida",
+  "quem": "banco (default now())",
+  "ev": "crm/fase2/schema.sql:970 — `em timestamptz not null default now()`. Só é usada pelo índice schema.sql:972 `(conversa_id, em desc)`, que hoje não serve a nenhuma consulta do sistema.",
+  "hits": 674,
+  "amostra": [
+   "crm/fase2/extensao/pje-regras.js:4:// CNJ, partes, órgão, \"Distribuído em\" e — o que interessa — \"Último",
+   "crm/fase2/extensao/pje-regras.js:21:  const RE_DISTRIB = /Distribuído em\\s+(\\d{2})\\/(\\d{2})\\/(\\d{4})/;",
+   "crm/fase2/extensao/pje-regras.js:37:      orgao: org && !/^Distribuído em/.test(org) ? org : null,"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "build_portal_listas.py:185:    ou None. Datas tipicas: 'para o dia 29/06 às 09h20 ... em Jaboticabal'.\"\"\"",
+  "arquivos_olhados": 0
+ },
+ {
+  "tabela": "zap_transferencias",
+  "coluna": "id",
+  "tipo": "nunca lida",
+  "quem": "banco (default gen_random_uuid())",
+  "ev": "crm/fase2/schema.sql:965 — `id uuid primary key default gen_random_uuid()`; nenhuma consulta busca por esse id.",
+  "hits": 1260,
+  "amostra": [
+   "crm/fase2/extensao/config.js:1:const $ = id => document.getElementById(id);",
+   "crm/fase2/ponte/PASSO-A-PASSO.md:137:  join zap_conversas c on c.id = m.conversa_id",
+   "crm/fase2/ponte/PASSO-A-PASSO.md:163:select id, 'saida', 'Teste de resposta saindo do CRM 👋', 'fila'"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "contra": "crm/fase2/ponte/PASSO-A-PASSO.md:137:  join zap_conversas c on c.id = m.conversa_id",
+  "arquivos_olhados": 0
+ },
+ {
+  "tabela": "zap_avisos",
+  "coluna": "chave",
+  "tipo": "nunca escrita",
+  "quem": "smbot (zap_gerar_avisos) e app",
+  "ev": "crm/fase2/schema.sql:1482 `select a.chave, a.texto, a.revisar, ...` → gravada na mensagem em 1533 como aviso_chave; e app.html:6223 `/rest/v1/${tabela}?chave=eq.${...}` usa a chave como filtro do PATCH. Nunca é escrita pelo código: só nasce nos INSERT sementes do schema.sql:1412, 1437 e 1443 — criar regra nova exige SQL na mão.",
+  "hits": 219,
+  "amostra": [
+   "crm/fase2/extensao/config.js:3:chrome.storage.local.get(['url', 'chave', 'quem']).then(c => {",
+   "crm/fase2/extensao/config.js:5:  $('chave').value = c.chave || '';",
+   "crm/fase2/extensao/config.js:17:    chave: $('chave').value.trim(),"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2017: const chave = buscaTxt?\"dashboard\":visao;",
+    "crm/fase2/app.html:2542: const chave = semAcento(bruto);"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1528: memoria[chave]=valor;",
+    "crm/fase2/app.html:1533: return memoria[chave] ?? null;"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:2017: const chave = buscaTxt?\"dashboard\":visao;",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "zap_avisos",
+  "coluna": "sobre",
+  "tipo": "nunca escrita",
+  "quem": "smbot (zap_gerar_avisos)",
+  "ev": "crm/fase2/schema.sql:1485 `join eventos e on a.sobre='evento'`, 1499 `a.sobre='cadunico'`, 1509 `a.sobre='dcb'`, 1522 `a.sobre='aniversario'` — é o campo que decide de onde a data vem. O app não tem nenhum controle para ele: renderConfig só desenha ativo, descricao, dias_antes, revisar e texto (app.html:6076-6088).",
+  "hits": 43,
+  "amostra": [
+   "crm/fase2/extensao/pje-regras.js:10:// Regex sobre o HTML da LINHA (tr.outerHTML), não sobre o DOM: é o que deixa",
+   "crm/fase2/robo-pat/traduzir.js:104:  // última palavra sobre a espécie",
+   "crm/fase2/robo-pat/traduzir.js:245:    // INSS sobre o processo (\"apresentar PPP\", \"exigência cumprida\"), e é"
+  ],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "zap_avisos",
+  "coluna": "tipo_ev",
+  "tipo": "nunca escrita",
+  "quem": "smbot (zap_gerar_avisos)",
+  "ev": "crm/fase2/schema.sql:1486 — `and (a.tipo_ev is null or e.tipo = a.tipo_ev)`, ou seja, é o que separa 'Perícia' de 'Audiência'. Nenhum PATCH do app o inclui (app.html:6230-6234); só o INSERT semente (schema.sql:1412).",
+  "hits": 0,
+  "amostra": [],
+  "tem_escrita": false,
+  "tem_leitura": false,
+  "provas": {
+   "escrita": [],
+   "leitura": []
+  },
+  "confirmado": true,
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "zap_avisos",
+  "coluna": "ordem",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "app.html:6011 — `todas(\"zap_avisos\",\"select=*&order=ordem\")`, só para a tela de configurações listar na sequência certa. Escrita apenas nos INSERT sementes (schema.sql:1412/1437/1443).",
+  "hits": 54,
+  "amostra": [
+   "crm/fase2/regras/marcadores.js:115:  // a ordem é a do catálogo, não a de clique: assim \"Rural + Especial\" é",
+   "crm/fase2/ponte/ponte.js:231:        // ordem pelo contador, não pelo relógio: duas mensagens gravadas no",
+   "crm/fase2/ponte/ponte.js:232:        // mesmo instante sairiam em ordem sorteada"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2417: // Nessa ordem: a 1 e a 2 são a assinatura da decisão; a 3 é o timbre.",
+    "crm/fase2/app.html:6614: return (p && p.ordem!=null) ? p.ordem : FASES.findIndex(x=>x[0]===v); };"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1911: todas(\"lembrar_motivos\",\"select=*&order=ordem\").catch(()=>[]),",
+    "crm/fase2/app.html:6011: todas(\"zap_avisos\",\"select=*&order=ordem\").catch(()=>[]),"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:2417: // Nessa ordem: a 1 e a 2 são a assinatura da decisão; a 3 é o timbre.",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "zap_bot_passos",
+  "coluna": "chave",
+  "tipo": "nunca escrita",
+  "quem": "gatilho_sql (zap_bot) e app",
+  "ev": "crm/fase2/schema.sql:1255 `select * into p from zap_bot_passos where chave='inicio' and ativo;`, 1263 `where chave=c.bot_passo`, 1289 `where chave=achou`; e app.html:6223 usa a chave como filtro do PATCH. Nunca escrita pelo código — só o INSERT semente do schema.sql:1157.",
+  "hits": 219,
+  "amostra": [
+   "crm/fase2/regras/marcadores.js:153:      const chave = d.trim().toLowerCase();",
+   "crm/fase2/regras/marcadores.js:154:      if (tidos.has(chave)) continue;",
+   "crm/fase2/regras/marcadores.js:155:      tidos.add(chave);"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2017: const chave = buscaTxt?\"dashboard\":visao;",
+    "crm/fase2/app.html:2542: const chave = semAcento(bruto);"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1528: memoria[chave]=valor;",
+    "crm/fase2/app.html:1533: return memoria[chave] ?? null;"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:2017: const chave = buscaTxt?\"dashboard\":visao;",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "zap_bot_passos",
+  "coluna": "opcoes",
+  "tipo": "nunca escrita",
+  "quem": "gatilho_sql (zap_bot)",
+  "ev": "crm/fase2/schema.sql:1269-1273 — `for op in select * from jsonb_array_elements(p.opcoes) loop ... if trim(txt) = lower(op->>'tecla') or txt ~ (op->>'quando') then achou := op->>'vai'`. É o cérebro do menu (teclas e palavras-chave) e nenhum PATCH do app o toca: app.html:6235-6236 só salva ativo e texto.",
+  "hits": 8,
+  "amostra": [
+   "crm/fase2/app.html:1687:async function api(caminho, opcoes={}, tentativa=0){",
+   "crm/fase2/app.html:1689:    ...opcoes,",
+   "crm/fase2/app.html:1694:      ...(opcoes.headers||{}),"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:1687: async function api(caminho, opcoes={}, tentativa=0){"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1689: ...opcoes,"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:1687: async function api(caminho, opcoes={}, tentativa=0){",
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "zap_bot_passos",
+  "coluna": "entrega_setor",
+  "tipo": "nunca escrita",
+  "quem": "gatilho_sql (zap_bot) e app",
+  "ev": "crm/fase2/schema.sql:1294-1295 — `if p.entrega_setor is not null then perform zap_entregar(new.conversa_id, p.entrega_setor, p.chave)`; e app.html:6099 apenas EXIBE `entrega para ${esc(s.entrega_setor)}`. Escrita só no INSERT semente (schema.sql:1157).",
+  "hits": 1,
+  "amostra": [
+   "crm/fase2/app.html:6099:            ${s.entrega_setor?`<span class=\"chip ben\">entrega para ${esc(s.entrega_setor)}</span>`"
+  ],
+  "tem_escrita": false,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [],
+   "leitura": [
+    "crm/fase2/app.html:6099: ${s.entrega_setor?`<span class=\"chip ben\">entrega para ${esc(s.entrega_setor)}</span>`"
+   ]
+  },
+  "confirmado": true,
+  "arquivos_olhados": 1
+ },
+ {
+  "tabela": "zap_bot_passos",
+  "coluna": "ordem",
+  "tipo": "nunca escrita",
+  "quem": "app",
+  "ev": "app.html:6012 — `todas(\"zap_bot_passos\",\"select=*&order=ordem\")`, para a tela de configurações listar os passos na ordem do menu. Escrita só no INSERT semente (schema.sql:1157).",
+  "hits": 54,
+  "amostra": [
+   "crm/fase2/regras/marcadores.js:115:  // a ordem é a do catálogo, não a de clique: assim \"Rural + Especial\" é",
+   "crm/fase2/extensao/pat-pagina.js:71:  // ordem certa (extensão primeiro, \"Buscar\" depois) era uma armadilha calada:",
+   "crm/fase2/ponte/ponte.js:231:        // ordem pelo contador, não pelo relógio: duas mensagens gravadas no"
+  ],
+  "tem_escrita": true,
+  "tem_leitura": true,
+  "provas": {
+   "escrita": [
+    "crm/fase2/app.html:2417: // Nessa ordem: a 1 e a 2 são a assinatura da decisão; a 3 é o timbre.",
+    "crm/fase2/app.html:6614: return (p && p.ordem!=null) ? p.ordem : FASES.findIndex(x=>x[0]===v); };"
+   ],
+   "leitura": [
+    "crm/fase2/app.html:1911: todas(\"lembrar_motivos\",\"select=*&order=ordem\").catch(()=>[]),",
+    "crm/fase2/app.html:6011: todas(\"zap_avisos\",\"select=*&order=ordem\").catch(()=>[]),"
+   ]
+  },
+  "confirmado": false,
+  "contra": "crm/fase2/app.html:2417: // Nessa ordem: a 1 e a 2 são a assinatura da decisão; a 3 é o timbre.",
+  "arquivos_olhados": 1
+ }
+]

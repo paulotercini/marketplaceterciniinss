@@ -42,7 +42,7 @@ Compensação tributária.
 
 Arquivamento de PA.
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Duração razoável.
 
@@ -58,7 +58,7 @@ Pagamento pretérito.
 
 ### Cenário A — Demora injustificada
 
-Tema 1066 STF.
+acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
 ### Cenário B — Exigência abusiva
 

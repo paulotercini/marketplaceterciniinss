@@ -1,0 +1,489 @@
+{
+ "pagamentos": {
+  "finalidade": "Cada parcela de dinheiro do cliente — honorários, RPV, precatório, acordo — com o que já entrou, o que ainda vai vencer, e a corrente de quem recebeu e quem conferiu.",
+  "escritores": [
+   "app",
+   "sync_todo"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Escrita pelo app em 5 pontos: crm/fase2/app.html:11720 (POST novoPgto: caso_id, cliente_id, descricao, valor, status, pago_em, vencimento, conferencias), :11845 (POST de honorários ao encerrar o caso — este NÃO manda cliente_id), :7498 (PATCH status/pago_em/conferencias no '💵 recebi'), :7507 (PATCH conferencias no '✔ conferi'), :7707 (PATCH caso_id ao escolher o benefício). Escrita pela sincronização em crm/fase2/migrar.py:439-458 (cada item do checklist da lista '💵 Pagamentos' vira uma parcela). Leitura só no app: crm/fase2/app.html:1893 (select=*), :3790 (quem está devendo), :6708 (dashboard, soma de `valor` dos abertos), :7210 (parcelas da ficha, por cliente_id ou caso_id), :7746-7752 (render: pago_em, vencimento, descricao, valor, conferencias, status). `conferencias` é do app e só do app — migrar.py nunca a envia (comentário em crm/fase2/migrar.py:815-817: 'conferências do app ficam intactas'). A sincronização NUNCA lê pagamentos do banco (os únicos _rest_todas de migrar.py são casos, clientes, lembretes e andamentos: linhas 588, 688, 766, 798, 886). `id` vem do default gen_random_uuid() (crm/fase2/schema.sql:104) — ninguém o escreve, o app o lê."
+ },
+ "meu_dia": {
+  "finalidade": "O 'para hoje' de cada pessoa: os casos que o colaborador puxou à mão para o dia dele, um registro por pessoa por dia.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Único ator: o app. Escrita em crm/fase2/app.html:2140-2141 (`POST /rest/v1/meu_dia` com `{colaborador_id:eu.id, caso_id:casoId, dia:hoje()}`), apagada em :2137 (`DELETE /rest/v1/meu_dia?id=eq.${ja.id}`) e o caso_id é remendado na fusão de casos em :11921-11923. Leitura em crm/fase2/app.html:1894 (`select=*&dia=eq.<hoje>`), :2109, :2134, :2164 e :3869 — todas usam só `caso_id` e `colaborador_id`. COLUNA MORTA: `tarefa_id` (crm/fase2/schema.sql:146) não é escrita nem lida por ninguém — `rg tarefa_id` no repo só devolve o próprio schema (linhas 146, 148, 153) e um .md antigo; a ideia de pôr uma tarefa solta no Meu Dia nunca foi implementada, embora o CHECK de crm/fase2/schema.sql:148 a aceite. `dia` é escrita (:2141) e usada apenas como filtro da consulta (:1894, :2144) — nenhum JavaScript lê o valor dela. `id` vem do default gen_random_uuid() e é lido só para montar o DELETE (:2137)."
+ },
+ "aposentadorias": {
+  "finalidade": "As datas em que cada cliente passa a ter direito de se aposentar (e de qual espécie), para o escritório avisá-lo antes de a data chegar.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Único ator: o app. Escreve em crm/fase2/app.html:8306-8309 (POST com lembrar_em, ao adiar uma aposentadoria automática), :8302-8304 (PATCH lembrar_em) e :8905-8906 (POST salvarApos); apaga em :8912. Lê em crm/fase2/app.html:1914 (`select=*&order=data`), :8269, :8280-8286 (lembretesApos), :8814 e :8836-8846 (render da ficha). Nem migrar.py, nem detectar_aposentado.py, nem os robôs tocam nesta tabela (`rg aposentadorias` fora de app.html/schema só devolve o site institucional e a base de conhecimento) — detectar_aposentado.py escreve em `clientes.aposentado`, não aqui. COLUNA MORTA: `observacao` (crm/fase2/schema.sql:245) não é escrita nem lida — `rg observacao crm/fase2/app.html` = zero linhas. `criado_em` (crm/fase2/schema.sql:247) só tem o default now() e nunca é lida. `id` vem do default e é lido (:8842, :8850)."
+ },
+ "lembretes": {
+  "finalidade": "A obrigação periódica do cliente que não pertence a processo nenhum — pagar a GPS do INSS, renovar o CadÚnico, retomar contato daqui a X meses — com a data do próximo aviso.",
+  "escritores": [
+   "app",
+   "sync_todo"
+  ],
+  "leitores": [
+   "app",
+   "sync_todo"
+  ],
+  "observacoes": "App escreve em crm/fase2/app.html:8679-8682 (criarLembrete: cliente_id, tipo, titulo, detalhes, intervalo_meses, proximo_em, responsavel_id, criado_por), :8694-8695 (PATCH proximo_em ou ativo=false ao registrar o aviso), :8712 (PATCH proximo_em, adiar), :8721 (PATCH ativo=false, desligar), :8756 (PATCH detalhes, ao transferir anotação para andamento), :8790-8793 (casoViraLembrete, único ponto que grava origem_caso) e :13004-13008 (cronograma de GPS). Sincronização escreve em crm/fase2/migrar.py:200-213 (toda tarefa da lista '🙏 Aposentadorias Futuras' vira um lembrete com id determinístico) e faz upsert merge-duplicates em :823, atualizando só detalhes, proximo_em e ativo (crm/fase2/migrar.py:511-512). Sincronização também LÊ: crm/fase2/migrar.py:766-768 busca id, titulo, proximo_em, intervalo_meses, ativo, responsavel_id e origem_caso para não sobrescrever o que a equipe editou no app. App lê em crm/fase2/app.html:1922 (select=* com lembrete_avisos embutido), :2169 (contador do Meu Dia), :8577, :8597-8620 (painel), :8765 (blocoLembretes). ATENÇÃO: `origem_caso` é escrita SÓ pelo app (:8793) e lida SÓ pela sincronização (crm/fase2/migrar.py:777-779) — nunca aparece na tela. `criado_em` só tem o default now() e nunca é lida. Dentro do jsonb `detalhes`, a chave `cronograma` é gravada em :13007 e nunca renderizada (o painel em :8615 só mostra codigo, valor, dia e anotacoes)."
+ },
+ "lembrete_avisos": {
+  "finalidade": "O histórico de 'já avisamos': quem falou com o cliente sobre aquele lembrete, quando e por qual canal — a resposta para \"já avisamos a dona Marcela este mês?\".",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Único ator: o app, e num único ponto de escrita — crm/fase2/app.html:8691-8692 (`POST /rest/v1/lembrete_avisos` com lembrete_id, colaborador_id, canal). Não há UPDATE nem DELETE em lugar nenhum: é um livro-caixa que só cresce. Leitura sempre por tabela embutida no carregamento do lembrete: crm/fase2/app.html:1922 (`select=*,lembrete_avisos(colaborador_id,em,canal)`), consumida em :8602-8603 e :8624. COLUNA MORTA: `obs` (crm/fase2/schema_por_em_dia.sql:212) não é escrita nem lida por ninguém. `id` (default gen_random_uuid, :207) também nunca é lida — nem para montar URL, porque a linha nunca é editada. `lembrete_id` é escrita (:8692) e nenhum JavaScript lê o valor dela, mas ela NÃO é supérflua: é a chave que o PostgREST usa para embutir os avisos dentro do lembrete em :1922."
+ },
+ "andamento_tarefas": {
+  "finalidade": "A tarefa pendurada num comentário do processo: para quem ela é, para que dia, e quando foi dada por concluída.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app",
+   "gatilho_sql",
+   "smbot"
+  ],
+  "observacoes": "Escrita só pelo app, em 8 pontos, todos com o mesmo corpo {andamento_id, caso_id, colaborador_id, atribuido_por, lembrar_em}: crm/fase2/app.html:4611 (encaminhar comentário), :4806 (caixa de segmento), :4823 (véspera de perícia), :4856, :6821 (o ＋ do comentário), :6898 (repetir a tarefa), :11225 (tarefa junto com o comentário novo) e :11682 (corrente de conferência do dinheiro). Baixa por PATCH concluida_em em :6874, :11633 e :11697; adiamento por PATCH lembrar_em em :6924; caso_id remendado na fusão em :11921. Leitores: (1) app — crm/fase2/app.html:1919 (`select=*&concluida_em=is.null`), :1936 (índice D.tarefasPorCaso), :7182 (as da ficha), :6759 e :6764-6776 (os chips de tarefa no comentário: colaborador_id, lembrar_em, concluida_em), :3564-3570, :3872, :5026, :6341; (2) gatilho_sql — o trigger `atarefa_avisar` em crm/fase2/schema.sql:1863-1879 lê new.atribuido_por, new.colaborador_id, new.andamento_id, new.caso_id e new.lembrar_em para criar a menção do destinatário; (3) smbot — a função `zap_escolher_atendente` em crm/fase2/schema.sql:1091-1093 lê colaborador_id, caso_id e concluida_em para mandar a conversa de WhatsApp para quem tem tarefa aberta do cliente. PONTO DE ATENÇÃO: `atribuido_por` é escrita pelo app nas 8 linhas acima e NUNCA é lida pelo app (`rg atribuido_por crm/fase2/app.html` devolve só escritas) — o único leitor é o gatilho SQL de crm/fase2/schema.sql:1868/1873, que a usa para o texto da menção; o 'P → A' que o comentário do schema promete (crm/fase2/schema.sql:1849) não aparece em tela nenhuma. `criado_em` (crm/fase2/schema.sql:1853) só tem o default now() e nunca é lida por ninguém."
+ },
+ "clientes": {
+  "finalidade": "O cadastro da pessoa atendida: nome, CPF, data de nascimento, telefones, endereço e os dados civis (RG, estado civil, profissão) que a procuração e o contrato precisam para sair prontos.",
+  "escritores": [
+   "app",
+   "sync_todo"
+  ],
+  "leitores": [
+   "app",
+   "sync_todo",
+   "robo_crps",
+   "smbot",
+   "gatilho_sql"
+  ],
+  "observacoes": "Escritas do app: nome/cpf/telefone/dn/endereco (app.html:8971), sexo (8919), aposentado+aposentado_fonte+aposentado_em+aposentado_prova (8880), rg/rg_orgao/estado_civil/profissao/nome_mae/pis_nit (12193, via salvarCliCampo), telefones (12250) e o jsonb `campos` (12101, 12923, 12936, 12979, 13012, 13039, 13052). O sync_todo escreve nome/cpf/dn/telefone (crm/fase2/migrar.py:167-172) e o `campos` das tarefas de 🙋 Escritório (migrar.py:743). FORA DA LISTA DE ATORES: crm/fase2/detectar_aposentado.py:146 também grava aposentado/aposentado_fonte/aposentado_em/aposentado_prova. Leituras: smbot procura o cliente pelo telefone (schema.sql:320 `select id into v_cli from clientes where fone_chave(telefone)=v_chave`) e zap_gerar_avisos usa nome/telefone/dn para o parabéns de aniversário (schema.sql:1520-1524). ATENÇÃO: `indicado_por` (schema_por_em_dia.sql:313 / schema_f9_cadastro.sql:66) não é escrita NEM lida por nenhum código — coluna morta. Todo o endereço estruturado (logradouro/numero/complemento/bairro/cidade/uf/cep) só pode ser preenchido à mão no SQL: a tela nunca grava esses campos."
+ },
+ "casos": {
+  "finalidade": "Cada pedido ou processo do cliente: benefício, em que fase está (Escritório, INSS, Conselho, Judicial), números (NB, protocolo, CNJ, NUP do recurso), prazos, datas do benefício e o resultado final.",
+  "escritores": [
+   "app",
+   "sync_todo",
+   "robo_crps",
+   "datajud",
+   "gatilho_sql"
+  ],
+  "leitores": [
+   "app",
+   "sync_todo",
+   "robo_pat",
+   "robo_crps",
+   "datajud",
+   "pje",
+   "smbot"
+  ],
+  "observacoes": "Escritor concentrado: `patchCaso()` (app.html:1863) é a porta única de PATCH do app, com ~52 chamadas. Do lado de fora do app escrevem: sync_todo (migrar.py:220-231 — titulo, beneficio, parceria, protocolos, fase, nb, processo, prazo, importante, origem_lista, todo_task_id, encerrado_em) e escrever_todo.py:104/144/149 (todo_task_id, origem_lista, mover_para); robo_crps (crps em robo-crps/robo.js:252 e ingerir.js:240, `importante:true` em ingerir.js:240, crps_nups em importar_favoritos.js:165); datajud (datajud.py:450 — datajud e datajud_multi); gatilho_sql (revisado_em). ROBO_PAT E PJE NÃO ESCREVEM DIRETO: robo-pat/importar.js só monta o plano (o arquivo diz 'Este arquivo NÃO grava nada', linha 3) e a extensão do PJe só grava na tabela `coletas` (extensao/crm-api.js:99) — quem aplica os dois é o app (app.html:3422-3438 para o PAT, 4089/4292/4333 para o PJe). FORA DA LISTA DE ATORES: crm/trf3_ordem.py:382 escreve `casos.trf3` e crm/inss_fila.py:294 escreve `casos.inss_fila` (ambas lidas pelo app em 10742-10898 e 7905-7940). COLUNAS TOTALMENTE MORTAS (nem escritas nem lidas por ninguém): `todo_list_id` (schema.sql:65 — a única ocorrência no repositório inteiro), `ronda` (schema.sql:2093; o próprio comentário diz 'a tela não usa') e `lembrete_meses` (schema_por_em_dia.sql:171)."
+ },
+ "andamentos": {
+  "finalidade": "A linha do tempo de cada caso: todo comentário datado, com autor e a origem (escritório, To Do, portal do INSS, CRPS, PJe, WhatsApp).",
+  "escritores": [
+   "app",
+   "sync_todo",
+   "robo_crps",
+   "smbot"
+  ],
+  "leitores": [
+   "app",
+   "sync_todo",
+   "robo_pat",
+   "gatilho_sql"
+  ],
+  "observacoes": "O app grava por dezenas de pontos (POST /rest/v1/andamentos), sempre com caso_id, autor_id, texto e — quando vem de robô — origem + origem_id (app.html:3428, 4342, 4445). sync_todo escreve na importação (migrar.py:241-250, com id determinístico UUID5 para não duplicar) e escrever_todo.py:204/215 marca `todo_sync:true` e apaga de vez os que o autor marcou `excluir` (escrever_todo.py:159 lê `excluir=eq.true`, linha 179 dá o DELETE). robo_crps insere comentários novos em robo-crps/robo.js:127 e robo-crps/ingerir.js:232. smbot insere pela zap_virar_andamento. gatilho_sql lê: o trigger `caso_tocado_ins` (schema.sql:1897) usa new.caso_id e new.criado_em para carimbar casos.revisado_em. `origem` aceita 'dou' (schema.sql:2177) mas o dou_rotina.py não fala com o Supabase — ele só cria tarefa no Microsoft To Do (dou_rotina.py:252-295), então nada nasce com essa origem hoje. Os andamentos com origem='pje' são escritos pelo APP (app.html:4342), não pela extensão."
+ },
+ "eventos": {
+  "finalidade": "A agenda do caso: perícia, audiência ou avaliação social — quando, onde, e se está marcada, já foi realizada ou foi cancelada.",
+  "escritores": [
+   "app",
+   "sync_todo"
+  ],
+  "leitores": [
+   "app",
+   "smbot"
+  ],
+  "observacoes": "Todas as sete colunas (id, caso_id, tipo, data_hora, local, status, obs) são escritas e lidas. Escritas do app: agendamento manual (app.html:11556-11559), perícia detectada no texto do andamento (11108-11110, que é quem preenche `obs`), agendamento vindo da sugestão (4813, 4844), perícia importada do PAT (3461-3462), cancelar/comparecer via PATCH de `status` (11569, 11579) e o carimbo '📞 avisado' em `obs` (11626). sync_todo escreve na importação (migrar.py:302-308). Leituras: calendário e listas do app (6283, 7654-7656) e, do lado do banco, a função zap_gerar_avisos() monta o lembrete de perícia lendo eventos.data_hora/status/tipo/local (crm/fase2/schema.sql:1487-1493). O robô do PAT propõe perícias novas (robo-pat/importar.js:126-133, eventosNovos), mas quem grava é o app. Há índice único (caso_id, tipo, data_hora) em schema.sql:101 — é o que impede a mesma perícia entrar duas vezes."
+ },
+ "tarefas": {
+  "finalidade": "Os afazeres: o checklist de documentos de cada caso e as tarefas particulares de cada pessoa do escritório, com prazo e baixa.",
+  "escritores": [
+   "app",
+   "sync_todo"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Escritas do app: tarefa particular (app.html:5112 — titulo, prazo, particular_de), item de checklist do caso (10972, 11280, 11294, 12039, 12119, 13140 — caso_id + titulo) e a baixa (5084 e 10981 — concluida + concluida_em). sync_todo escreve na importação: tarefa da lista particular (migrar.py:151-158), item de checklist virando subtarefa (migrar.py:284-289) e os '📄 documentos solicitados' extraídos dos andamentos (migrar.py:381-386). ATENÇÃO — `cliente_id` (schema.sql:123) NÃO É ESCRITA NEM LIDA POR NINGUÉM: não existe nenhum body JSON com cliente_id em POST /rest/v1/tarefas no app.html, migrar.py não põe a chave em nenhuma das três construções de tarefa, e não há nenhum `t.cliente_id` em lugar nenhum. Toda tarefa se pendura em caso_id ou em particular_de. `particular_de` também é lida pelo próprio banco, na política de RLS que esconde a tarefa pessoal dos outros (schema.sql:1938-1941)."
+ },
+ "atribuicoes": {
+  "finalidade": "Quem cuida de cada caso — a mesma causa pode ter mais de um advogado ou estagiário responsável.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app",
+   "smbot"
+  ],
+  "observacoes": "Tabela de duas colunas, ambas chave primária (crm/fase2/schema.sql:135-139), e as duas são escritas e lidas. Escreve só o app: ao criar cliente/caso novo (app.html:5210, 5471, 6671, 10248, 10494), ao marcar/desmarcar responsável na ficha (7480 POST, 7487 DELETE) e ao fundir dois casos (11937). Lê o app no carregamento (app.html:1890 `todas(\"atribuicoes\",\"select=*\")`, indexado em D.atrDoCaso na linha 1948) e a função de WhatsApp zap_escolher_atendente(), que procura quem já cuida daquele cliente antes de entregar a conversa (crm/fase2/schema.sql:1086-1088 — `exists (select 1 from atribuicoes a join casos k on k.id = a.caso_id where a.colaborador_id = co.id ...)`). O sync_todo NÃO escreve aqui: a lista 'ordem' do subir_rest (crm/fase2/migrar.py:806-820) não inclui atribuicoes — quem veio do To Do nasce sem responsável, e alguém precisa marcar na tela."
+ },
+ "colaboradores": {
+  "finalidade": "Cadastro das pessoas do escritório — quem pode entrar no sistema, com que inicial e cor aparece nos processos, qual o cargo/setor e quem recebe conversa do WhatsApp.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app",
+   "sync_todo",
+   "robo_crps",
+   "smbot"
+  ],
+  "observacoes": "Nenhum ator cria nem desativa colaborador: não existe POST em /rest/v1/colaboradores em lugar nenhum do repositório. O app só edita três interruptores da tela de Configurações (app.html:6167 atende_zap, 6176 cargo, 6183 setor), e essas três colunas também são lidas (app.html:6025/6031/6036 e schema.sql:1102 `co.setor = p_setor`), então nenhuma coluna é só-escrita. Admitir alguém no sistema é sempre um UPDATE manual no SQL Editor. A coluna `id` é gerada pelo banco (gen_random_uuid) e lida por todos como chave de autor/atribuição."
+ },
+ "credenciais": {
+  "finalidade": "Cofre das senhas do cliente (Meu INSS, gov.br), guardadas fora da ficha para que o acesso possa ser registrado.",
+  "escritores": [
+   "app",
+   "sync_todo"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Leitura em duas etapas, de propósito: a ficha carrega só `id,tipo,cliente_id` (app.html:7178) para saber SE existe senha, e o `valor` só sai do banco quando alguém clica em copiar ou ver (app.html:13215 e 13221, `select=valor`), momento em que o app grava a auditoria em credencial_vis. `tipo` é lido em app.html:7538 `creds.find(cr=>cr.tipo===\"meu_inss\")`. Trocar a senha é criar linha nova e apagar a antiga (app.html:8993-8995), então não fica histórico. A sincronização do To Do (migrar.py:193 e 264) cria a senha extraída do checklist com id determinístico e sobe com `ignore-duplicates` (migrar.py:808), ou seja, nunca sobrescreve o que o app gravou."
+ },
+ "credencial_vis": {
+  "finalidade": "Livro de quem no escritório abriu ou copiou a senha de cada cliente, e quando.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "ninguem"
+  ],
+  "observacoes": "A tabela inteira é só escrita. O sistema promete ao cliente que o acesso à senha \"fica registrado\" (crm/fase2/app.html:7546 title=\"fica registrado quem copiou\") e o registro é gravado de verdade, mas NENHUMA tela mostra esse histórico e nenhum robô o consulta — hoje só se descobre quem viu a senha de alguém abrindo o SQL Editor do Supabase. Além disso o POST é disparado sem `await` (app.html:13217 e 13223), então uma falha de rede perde o registro em silêncio: a senha aparece na tela do mesmo jeito."
+ },
+ "anexos": {
+  "finalidade": "Índice dos documentos do cliente (laudo, CNIS, RG, CTPS) guardados no cofre de arquivos: em qual processo estão, quem enviou e quando.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Atenção à ambiguidade do nome: existe a TABELA anexos e existe o BALDE (bucket) 'anexos' do Storage. Os robôs mexem no balde, não na tabela — crm/fase2/robo-crps/ingerir.js:25 `const BALDE = process.env.BUCKET || 'anexos'` e crm/fase2/ponte/ponte.js:31 idem; o acórdão que o robô do CRPS baixa vai para o balde e é preso ao andamento/caso, sem criar linha aqui. `grep -rn \"rest/v1/anexos\"` só encontra crm/fase2/app.html:9017 (POST) e crm/fase2/app.html:9035 (DELETE). Nenhuma coluna é só-escrita nem só-lida: o POST manda caso_id, cliente_id, autor_id, nome, caminho, tipo e tamanho (app.html:9018-9019) e a ficha usa cliente_id como filtro (app.html:7180), caso_id para separar por processo (app.html:9043), autor_id para o nome de quem anexou (app.html:9047), tipo para o ícone (app.html:9050), nome/criado_em/tamanho na linha do arquivo (app.html:9050-9051) e caminho para pedir a URL assinada (app.html:1736-1738, função abrirAnexo). `criado_em` vem do default now() (schema.sql:222) e é lido em app.html:9051 e usado na ordenação em app.html:7180."
+ },
+ "vinculos": {
+  "finalidade": "Liga um cliente a outro (esposa, irmão, quem indicou) — é o antigo checklist de parentes e amigos do To Do.",
+  "escritores": [
+   "app",
+   "sync_todo"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "As quatro colunas são escritas e lidas. O app grava cliente_id, ligado_a e relacao (crm/fase2/app.html:7860 `body:JSON.stringify({cliente_id:cliId, ligado_a:achados[0].id, relacao:rel})`) e a sincronização grava as mesmas mais o id determinístico (crm/fase2/migrar.py:318-319 `vinculos[vid] = {\"id\": vid, \"cliente_id\": cid, \"ligado_a\": outro, \"relacao\": relacao}`, subindo com `ignore-duplicates` na chave cliente_id,ligado_a — migrar.py:809). A leitura é a busca da ficha em app.html:7179 `select=*&or=(cliente_id.eq.${cliId},ligado_a.eq.${cliId})`, consumida em app.html:7570 (decide qual dos dois lados é \"o outro\"), app.html:7572 (mostra `v.relacao`) e app.html:7573/7865 (usa `v.id` para desvincular). O vínculo é gravado num sentido só, e por isso os dois lados do `or=` são obrigatórios — apagar esse `or` faria o parente sumir da ficha de metade dos clientes."
+ },
+ "lista_pref": {
+  "finalidade": "Guarda como cada lista do menu aparece para o escritório inteiro: a cor de fundo e a posição na barra lateral.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Tabela exclusiva do app — nenhum robô e nenhum script Python a toca. `chave` é a visão ('meudia', 'fase:inss'…), escrita nos dois POST e lida como chave do mapa em app.html:1927 `D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]))`. `fundo` é escrito em app.html:6494 e lido em app.html:2010 `return (p && p.fundo) || null`. `ordem` é escrito em app.html:6623 e lido em app.html:6614. Detalhe frágil: app.html:6623 reenvia o `fundo` atual junto com a ordem justamente porque o upsert por merge apagaria o fundo se ele não fosse repetido."
+ },
+ "config_app": {
+  "finalidade": "Ajustes que valem para todo o escritório e moram no banco em vez de em cada computador — endereço do painel do WhatsApp, horário e interruptores do robô de atendimento, e os carimbos de quando cada integração rodou pela última vez.",
+  "escritores": [
+   "app",
+   "sync_todo",
+   "robo_crps",
+   "gatilho_sql",
+   "smbot"
+  ],
+  "leitores": [
+   "app",
+   "smbot"
+  ],
+  "observacoes": "É o mural compartilhado do sistema, daí os cinco escritores. app grava qualquer ajuste da tela de Configurações (crm/fase2/app.html:1877-1879, função guardarCfgApp, upsert merge-duplicates) e lê tudo pelo cfgApp() de app.html:1875 (smbot_url em 4678, pat_ignorar em 3186, pje_ignorar em 4212, revisao_dias/revisao_dose em 8429, zap_* em 6015-6067, crps_estado em 6151). sync_todo grava o carimbo 'todo_sync_em' ao fim da importação (crm/fase2/migrar.py:920-923), lido no rodapé do menu em app.html:2309. robo_crps grava 'crps_estado'/'crps_visto_em' (crm/fase2/robo-crps/robo.js:56-59) e 'crps_sync_em' (crm/fase2/robo-crps/ingerir.js:245-247), lidos em app.html:6122 e 6151 — o robô só escreve, nunca lê. gatilho_sql grava por dentro da função crps_guardar_cracha (crm/fase2/schema.sql:2010 'crps_estado' e 2012 'crps_cracha_em'). smbot lê os interruptores do robô de WhatsApp nas funções zap_* (schema.sql:1235 `zap_bot_ligado`, 1243 `zap_pausa_bot`, 1474 `zap_avisos_ligado`, 1212-1214 horário e dias úteis). A escrita atribuída a smbot é literalmente de crm/fase2/ponte/ponte.js:60-63 (grava zap_status, zap_visto_em, zap_qr, lidos em app.html:5530/5551/6110) — a ponte não está na lista de atores da pergunta, mas é o processo do lado WhatsApp que alimenta as funções smbot_*/zap_*."
+ },
+ "integracao_token": {
+  "finalidade": "Guarda o segredo que o atendimento de WhatsApp (SMBot) precisa apresentar para registrar um contato — é a única chave dessa integração, e trocá-la não mexe em mais nada.",
+  "escritores": [
+   "ninguem"
+  ],
+  "leitores": [
+   "smbot"
+  ],
+  "observacoes": "Tabela 100% preenchida à mão: nenhum código de produção faz insert nem update. E é de propósito — crm/fase2/schema.sql:288 `alter table integracao_token enable row level security;   -- ninguém lê pela API` liga RLS sem criar policy nenhuma, então nem o app nem os robôs conseguem ler ou gravar pela API; só as funções security definer smbot_entrada e smbot_contato enxergam o token, e apenas para comparar com o que o webhook mandou (no corpo ou no cabeçalho `x-smbot-token`, schema.sql:413-414). A coluna `criado_em` (schema.sql:286, default now()) não é escrita nem lida por ninguém — nenhuma tela mostra a idade do token."
+ },
+ "crps_segredo": {
+  "finalidade": "Cofre do \"crachá\" de login do gov.br que o robô usa para consultar os recursos no Conselho — fica num lugar que nem a tela do sistema consegue ler de volta.",
+  "escritores": [
+   "app",
+   "gatilho_sql"
+  ],
+  "leitores": [
+   "robo_crps"
+  ],
+  "observacoes": "Única tabela do conjunto onde o app escreve sem poder ler de volta: crm/fase2/schema.sql:1998 `alter table crps_segredo enable row level security;   -- ninguém lê pela API`, sem policy nenhuma. O app grava só através da RPC security definer (crm/fase2/app.html:6199 `api(\"/rest/v1/rpc/crps_guardar_cracha\", ... {p_cracha:t})` → crm/fase2/schema.sql:2001-2013) e quem lê é o robô do CRPS com a service_role (crm/fase2/robo-crps/robo.js:141). O que a tela mostra sobre o crachá não é o crachá: é o semáforo 'crps_estado' (sem_cracha | ok | vencido) guardado no config_app e lido em crm/fase2/app.html:6151. A coluna `id` é fixa em 1 (schema.sql:1996 `constraint crps_segredo_unico check (id = 1)`), escrita pela função e usada como filtro pelo robô — a tabela guarda um crachá só, do escritório inteiro."
+ },
+ "documentos_beneficio": {
+  "finalidade": "Catálogo de quais documentos o cliente precisa providenciar em cada benefício — vira a carta impressa que o cliente leva e o checklist do caso.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Só duas colunas são realmente editáveis pelo CRM: `itens` e `observacoes`, pelo botão 'Salvar lista' (app.html:13197-13203). Consequência prática: o bloco 'Conforme a atividade do cliente' (coluna `extras`, que é a maior parte do catálogo — vínculos CLT, períodos rurais, PPP, CNIS etc.) APARECE na tela (app.html:12006 e 12887) mas não tem como ser alterado pelo app; só rodando SQL. Não há POST em lugar nenhum: benefício novo no catálogo também só entra por SQL. Leituras: impressão da carta (app.html:13158-13161), mensagem de WhatsApp (app.html:5849-5857), janela 'Solicitar documentos' na anotação (app.html:13102-13104), quadro do atendimento (app.html:12811-12813) e os datalists de benefício (app.html:5137, 5420, 7332, 7350, 7625). Nenhum robô (migrar/escrever_todo/robo-pat/robo-crps/datajud/dou/extensão) e nenhuma função SQL toca nesta tabela."
+ },
+ "checklist_modelo": {
+  "finalidade": "Roteiro-padrão de etapas por benefício — o caso novo já nasce com essas subtarefas no checklist.",
+  "escritores": [
+   "ninguem"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Tabela 100% somente-leitura para o código: no repositório inteiro há exatamente UMA chamada REST a ela, o GET de carga em crm/fase2/app.html:1908 `todas(\"checklist_modelo\",\"select=*\")`. Nenhum POST, nenhum PATCH, nenhum DELETE, em nenhum arquivo. As 8 linhas existentes vêm do seed manual em crm/fase2/schema.sql:844-853 (`on conflict (beneficio) do nothing`), logo mexer no roteiro de um benefício exige SQL. A coluna `id` (schema.sql:839) é carregada pelo select=* mas nunca é usada por nenhuma linha de código — nem lida nem escrita."
+ },
+ "modelos_documento": {
+  "finalidade": "Os modelos-ouro de documentos do escritório (procuração, contrato de honorários, hipossuficiência, autodeclaração rural), que saem impressos já preenchidos com os dados do cliente.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Única tabela deste grupo com ciclo completo dentro do app: POST cria (app.html:5343-5345, corpo `{titulo, categoria, conteudo}`) e PATCH edita (app.html:5336-5337, corpo `{conteudo}`). Atenção: o PATCH só grava `conteudo` — depois de criado, título e categoria de um modelo não têm como ser corrigidos pelo CRM, só por SQL. Leituras: lista de modelos (app.html:5314-5318), botões de impressão na aba Mensagens da ficha, filtrados por `categoria` (app.html:7796-7797), e a geração do documento preenchido (app.html:13071-13074, com preencherDoc trocando {nome},{cpf},{endereco},{nb},{processo},{beneficio},{data} em app.html:13059-13068). Seed de 4 modelos em schema.sql:865-874. Nenhum robô nem função SQL toca nela."
+ },
+ "modelos_mensagem": {
+  "finalidade": "Mensagens prontas para mandar ao cliente pelo WhatsApp (lembrete de perícia, protocolo, deferimento, pedido de documentos), já com nome, data, hora e local preenchidos.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Escrita só por POST (app.html:12084-12085, corpo `{titulo, texto, contexto}` — botão 'Salvar modelo' da aba Mensagens); não existe PATCH nem DELETE, então corrigir o texto de um modelo já criado só por SQL. Leituras no app: aba 5 da ficha do cliente (app.html:7785-7793), o ⚡ do WhatsApp agrupado por `contexto` (app.html:5817-5828) e o lembrete de perícia/audiência (app.html:11732-11733, via modeloPor(contexto) em app.html:2061). ATENÇÃO — leitor fora da lista de atores: crm/fase2/claude_rotina.py:265 `\"modelos\": {m[\"contexto\"]: m[\"texto\"] for m in g(\"/rest/v1/modelos_mensagem?select=contexto,texto\")}` (a rotina diária de sugestões). BUG DE ORDEM NO SCHEMA: crm/fase2/schema.sql:658 faz `insert into modelos_mensagem (...)` 65 linhas ANTES do `create table if not exists modelos_mensagem` (schema.sql:723) — num banco virgem esse primeiro bloco de 7 mensagens falha; ele só funciona porque a tabela já existe nos bancos atuais. As funções smbot_*/zap_* não usam esta tabela: os avisos automáticos do WhatsApp têm texto próprio em zap_avisos (schema.sql:1443 e zap_gerar_avisos em schema.sql:1469-1540)."
+ },
+ "frases_prontas": {
+  "finalidade": "Frases de uso interno que a equipe repete ao escrever andamentos, oferecidas como sugestão embaixo do campo de anotação.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "A coluna `categoria` é morta: o schema criou e classificou os 11 seeds em 4 grupos (schema.sql:648-653) mas a tela nunca agrupou nada — as frases entram numa lista chapada junto com os motivos do Lembrar (app.html:8016-8019), ordenada só por texto (`order=texto` em app.html:1910). Toda frase criada pelo app nasce com categoria NULL. `texto` é a única coluna viva: lida em app.html:8019, escrita em app.html:11543-11544 (com try/catch para o 409 do unique). Não há PATCH nem DELETE — frase errada só sai por SQL. A coluna `id` é devolvida pelo select=* e guardada em D.frases (app.html:11545) mas nunca é usada."
+ },
+ "lembrar_motivos": {
+  "finalidade": "Lista editável dos motivos prontos do 'Lembrar em' / sugestões de andamento, minerada do histórico do To Do e filtrada por lista (INSS, Judicial, Conselho...).",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Escrita completa pelo app na caixa '✎ Sugestões de andamento': POST cria (app.html:11440-11441, `{texto,grupo,listas,ordem}` com ordem = max+1 calculado em app.html:11439), PATCH edita (app.html:11434-11435, `{texto,grupo,listas}`) e o ✕ faz exclusão lógica (app.html:11451-11452, `body:JSON.stringify({ativo:false})`). Duas assimetrias reais: (a) `ativo` só é escrito como FALSE — não há caminho no CRM para reativar um motivo removido, isso exige SQL (leitura em app.html:11341 `return ms.filter(m=>m.ativo!==false)`); (b) `ordem` é escrita só na criação, nunca no PATCH de edição — reordenar a lista também é SQL (lida em app.html:11439 e no `order=ordem` da carga, app.html:1911). `grupo` (app.html:11375, 11395), `texto` (app.html:8018, 11383) e `listas` (app.html:8017 `.filter(m=>!(m.listas||[]).length || (m.listas||[]).includes(k.fase))`, app.html:11424) são lidos e escritos normalmente. Se a tabela não existir, o app cai numa lista de reserva no código (MOTIVOS_PADRAO, app.html:11334-11337)."
+ },
+ "inss_calendario": {
+  "finalidade": "Calendário oficial de pagamento do INSS (competências de dez/25 a dez/26): em que dia o dinheiro cai na conta conforme o final do NB e se o cliente recebe até ou acima de um salário mínimo.",
+  "escritores": [
+   "ninguem"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Tabela inteiramente somente-leitura para o código: a única chamada REST é o GET de carga em crm/fase2/app.html:1918 `todas(\"inss_calendario\",\"select=*\").catch(()=>[])`. As 260 linhas são digitadas à mão no SQL (crm/fase2/schema.sql:1567 em diante, `insert into inss_calendario (competencia, faixa, final, pagamento) values`), conferidas contra o PDF oficial pelo teste crm/fase2/testes/inss_calendario.sql. Todas as 4 colunas são lidas e nenhuma é escrita por ator nenhum. Nenhuma função ou trigger do schema.sql a consulta — a tabela aparece só na lista de RLS (schema.sql:1926). Comportamento de borda deliberado: se a tabela estiver vazia o app avisa 'tabela do INSS não cadastrada no banco — rode o schema.sql' (app.html:5965-5967) em vez de chutar data; e o bloco avisa quando o calendário está acabando (app.html:5983-5985). Para 2027 é preciso substituir o bloco de INSERT à mão."
+ },
+ "orgao_producao": {
+  "finalidade": "Velocidade de julgamento de cada gabinete/órgão (painel Justiça em Números do CNJ), usada para estimar quando o processo do cliente vai ser julgado.",
+  "escritores": [
+   "ninguem"
+  ],
+  "leitores": [
+   "ninguem"
+  ],
+  "observacoes": "ATENÇÃO — nenhum dos atores da lista escreve ou lê esta tabela; por isso 'ninguem' nos dois campos. Quem escreve de verdade é crm/cnj_producao.py:265 `_rest(\"POST\", \"/rest/v1/orgao_producao\", linhas[i:i+500], prefer=\"resolution=merge-duplicates,return=minimal\")`, com as linhas montadas em crm/cnj_producao.py:152-156. Quem lê de verdade é crm/trf3_ordem.py:343-346 `_todas(\"/rest/v1/orgao_producao?tribunal=eq.TRF3&select=orgao,grau,julgados_ano_anterior,julgados_ano_atual,dias_medios_julgamento&order=orgao\")`. Os dois rodam no mesmo workflow que o datajud (.github/workflows/consultas-publicas.yml:56-68), mas são arquivos distintos de crm/datajud.py. O CRM (app.html) NÃO conhece esta tabela: o resultado chega ao advogado já digerido dentro de casos.trf3 (PATCH em crm/trf3_ordem.py:382). Colunas realmente vivas: `orgao` (casamento de gabinete, crm/cnj_producao.py:201/212 e crm/trf3_ordem.py:371), `julgados_ano_anterior` (crm/cnj_producao.py:168, crm/trf3_ordem.py:372), `julgados_ano_atual` (crm/cnj_producao.py:171, só como plano B quando não há ano fechado) e `dias_medios_julgamento` (crm/trf3_ordem.py:373). `tribunal` é usada apenas como filtro na URL (crm/trf3_ordem.py:343, fixo em TRF3), o valor nunca é lido em memória — e note que cnj_producao.py grava TODOS os tribunais onde há processo nosso (crm/cnj_producao.py:244), então a produção de tribunal que não seja o TRF3 é gravada e nunca consultada."
+ },
+ "andamentos_lidos": {
+  "finalidade": "O \"visto\" da equipe: registra qual colaborador já leu cada comentário do processo, e quando, para nenhuma novidade do INSS/PJe passar sem alguém conferir.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Tabela 100% do app: escreve em 5 pontos (app.html:4975 marcar novidades em lote, 6885 conclusão de tarefa, 6940 visto manual, 8452, 11236 autor já leu o que escreveu) e apaga para desfazer o visto (app.html:6935 DELETE). É lida embutida no select dos andamentos, não sozinha: app.html:1900 `select=...,andamentos_lidos(colaborador_id)` alimenta a caixa 📣 Novidades e app.html:7176 `andamentos_lidos(colaborador_id,lido_em)` alimenta a ficha do cliente. Nenhum robô, nenhuma sincronização e nenhum gatilho SQL tocam nela. Todas as três colunas têm uso real."
+ },
+ "sugestoes": {
+  "finalidade": "Fila de sugestões geradas automaticamente todo dia (exigência a marcar, prazo parado, lembrete de perícia pronto) que só produzem efeito depois que alguém do escritório clica em Aceitar.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "ATENÇÃO: quem CRIA as linhas não está entre os atores listados — é crm/fase2/claude_rotina.py:282 `_rest(\"POST\", \"/rest/v1/sugestoes?on_conflict=id\", ...)`, rodando pelo workflow .github/workflows/crm-claude.yml. O `id` é determinístico (uuid5 em claude_rotina.py:43) justamente para a mesma sugestão não nascer duas vezes. O app só DECIDE (PATCH em app.html:5263) e lê (app.html:1904 no carregamento, render em app.html:5236-5247). `dados` é o campo que faz a sugestão \"valer\": app.html:5252-5261 lê `dados.exigencia_prazo`, `dados.exigencia_descricao`, `dados.andamento` e `dados.mensagem` para aplicar no caso. `status` só é usado como filtro no servidor (app.html:1904) — nunca é lido em JavaScript. Nenhum robô, To Do, DOU, PJe ou gatilho SQL grava aqui."
+ },
+ "mencoes": {
+  "finalidade": "Caixa de entrada pessoal de cada colaborador: avisa que alguém o citou com @ num comentário, delegou uma tarefa a ele, ou que tem cliente esperando resposta no WhatsApp.",
+  "escritores": [
+   "app",
+   "smbot",
+   "gatilho_sql"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Três origens distintas escrevem: o app quando o texto tem @Nome (app.html:5302, função criarMencoes); o gatilho SQL atarefa_avisar quando alguém atribui tarefa a outra pessoa (crm/fase2/schema.sql:1872, disparado pelo trigger de schema.sql:1878); e a função zap_entregar quando o WhatsApp cai no colo de um atendente (schema.sql:1134). Quem lê é só o app, e só as suas: app.html:1905 `para_id=eq.${eu.id}&lida_em=is.null`. Baixa em dois lugares: botão \"resolvida\" (app.html:5290) e marcar o comentário como lido, que resolve a menção junto (app.html:6948). CONSEQUÊNCIA PRÁTICA de conversa_id nunca ser lido: a menção vinda do WhatsApp chega sem `caso_id`, então o cartão em app.html:5285 não desenha o botão \"abrir ficha\" e não existe caminho na tela para abrir a conversa — só resta marcar como resolvida."
+ },
+ "leads": {
+  "finalidade": "Funil de vendas do escritório: cada prospecto que ainda não é cliente, da primeira conversa até virar contrato ou ser dado como perdido.",
+  "escritores": [
+   "app",
+   "smbot"
+  ],
+  "leitores": [
+   "app",
+   "smbot"
+  ],
+  "observacoes": "O app cria (app.html:5458), arrasta entre etapas (app.html:5448) e marca o lead como convertido (app.html:5474 `{cliente_id:cli.id}` dentro de leadParaCliente). O SMBot cria lead sozinho quando um número desconhecido fala no WhatsApp (crm/fase2/schema.sql:329 e 443) e incrementa o contador (schema.sql:469). A função zap_abrir só LÊ (schema.sql:1023-1025) para ligar a conversa do WhatsApp ao prospecto. Colunas com uso real dos dois lados: nome, telefone, beneficio_interesse (app.html:5427 e 5470), origem (5428), etapa (5423/5445), cliente_id (5432-5433, 5587), ultimo_contato e contatos (ambas escritas só por schema.sql:469 e lidas em app.html:5429). Resumo: quatro das treze colunas (obs, motivo_perda, responsavel_id, atualizado_em) são gravadas e jogadas fora — o motivo da perda, em especial, é pedido ao usuário num prompt e nunca mais aparece."
+ },
+ "rotinas": {
+  "finalidade": "Catálogo das tarefas fixas do escritório que se repetem (todo dia, dias úteis, um dia da semana ou um dia do mês) e que não pertencem a nenhum cliente.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Tabela exclusiva do app, sem robô nem gatilho. Todas as demais colunas têm uso real: titulo (app.html:6998 e 7035), detalhe (6999 e 7036), responsavel_id (6987 filtro por colaborador, 6995 e 7032 avatar), dias_semana e dia_mes (app.html:6967-6972 decidem se a rotina vence hoje, 6982-6984 escrevem a frase \"dias úteis\"/\"todo dia 5\"), ativo (filtro em app.html:1912 e 7030, contador na sidebar em 2241). Apagar uma rotina é lógico, nunca DELETE: app.html:7090 faz PATCH `{ativo:false}`, e por isso o histórico de rotinas_feitas não se perde."
+ },
+ "rotinas_feitas": {
+  "finalidade": "O \"já fiz\" do dia: uma linha por rotina concluída em cada data — é o que faz a tarefa sumir do Meu Dia hoje e voltar no próximo dia programado.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "O comentário do schema (crm/fase2/schema.sql:569) promete \"também o histórico de quem fez o quê\" — esse histórico é gravado mas nunca consultado: colaborador_id e feito_em morrem no banco. Além disso o app só carrega o dia de hoje (app.html:1913 `select=*&dia=eq.${hoje()}`), então nem haveria como montar histórico sem uma consulta nova. Desmarcar é DELETE de verdade (app.html:7011), com a linha do dia sumindo. O POST usa `resolution=merge-duplicates` (app.html:7014) porque a chave primária é (rotina_id, dia)."
+ },
+ "inss_fila": {
+  "finalidade": "Retrato mensal oficial da fila do INSS — quantos pedidos de cada serviço estão parados em cada estado e há quanto tempo — usado para dizer ao cliente quanto a análise costuma demorar.",
+  "escritores": [
+   "ninguem"
+  ],
+  "leitores": [
+   "ninguem"
+  ],
+  "observacoes": "ATENÇÃO — a tabela inss_fila é ESCRITA por crm/inss_fila.py:275 (script mensal do workflow .github/workflows/inss-fila.yml, que NÃO está entre os atores da lista; por isso escritores ficou 'ninguem') e NUNCA É LIDA POR NINGUÉM: nenhuma coluna dela chega ao CRM. Todas as sete colunas são escrita-e-esquece. O que a ficha do cliente mostra (crm/fase2/app.html:7921-7933 e a mensagem copiada em app.html:7935-7943) vem de `casos.inss_fila`, uma coluna JSONB da tabela CASOS (declarada em crm/fase2/schema.sql:192) que o MESMO script grava caso a caso em crm/inss_fila.py:294 `_rest(\"PATCH\", f\"/rest/v1/casos?id=eq.{k['id']}\", {\"inss_fila\": f})` — usando os dados que ainda estão na memória do processo (crm/inss_fila.py:288-292), sem passar pela tabela. Ou seja: a tabela é um arquivo morto do retrato mensal; se alguém apagá-la o CRM não muda em nada."
+ },
+ "coletas": {
+  "finalidade": "Fila de entrega da extensão do navegador: cada raspagem bruta do PAT/Meu INSS, do e-Recursos ou do PJe fica aqui esperando alguém conferir na tela antes de virar andamento na ficha.",
+  "escritores": [
+   "pje",
+   "app"
+  ],
+  "leitores": [
+   "app"
+  ],
+  "observacoes": "Nenhuma coluna morta — as cinco têm uso real dos dois lados. ESCRITA: a extensão (crm/fase2/extensao/**, o ator 'pje' da lista) posta em crm/fase2/extensao/crm-api.js:97-104 `enviar(fonte, dados)` -> `POST /rest/v1/coletas` com `{fonte, dados}`, chamada com quatro valores de fonte: 'pat' (crm/fase2/extensao/ponte-pat.js:39), 'crps' (crm/fase2/extensao/crps.js:80), 'pje' (crm/fase2/extensao/pje.js:301) e 'pje-processo' (crm/fase2/extensao/pje.js:208). O app só escreve `aplicada_em`, para tirar a coleta da fila: crm/fase2/app.html:3147 (descartar as antigas), 3467 (após aplicar o PAT), 4312, 4348 e 4450. LEITURA: só o app — crm/fase2/app.html:3126-3127 `select=id,fonte,criado_em,numero:dados->>numero&aplicada_em=is.null` monta a fila; `fonte` e `criado_em` viram o cartão em app.html:3249-3253; `dados` é lido inteiro ao conferir (app.html:3155 usarColeta, 3972, 4250, 4378, 4425); `aplicada_em` é o filtro de pendência. OBSERVAÇÃO IMPORTANTE: os diretórios crm/fase2/robo-pat/** e crm/fase2/robo-crps/** NÃO tocam nesta tabela — são caminho de arquivo local, paralelo. RLS restrita a autenticados (crm/fase2/schema.sql:2159) de propósito: uma coleta do PAT carrega nome, protocolo e comentário de dezenas de clientes."
+ },
+ "conversas": {
+  "finalidade": "Histórico das mensagens de WhatsApp que chegam pelo SMBot — na prática, o registro de que o cliente procurou o escritório e quando.",
+  "escritores": [
+   "smbot"
+  ],
+  "leitores": [
+   "app",
+   "smbot"
+  ],
+  "observacoes": "NÃO confundir com zap_conversas (a ponte de WhatsApp própria do escritório, crm/fase2/schema.sql:906 e crm/fase2/ponte/**), que é outra tabela e não entra aqui. ESCRITA: só as funções SQL do SMBot — smbot_entrada (crm/fase2/schema.sql:340) e smbot_contato, esta com dois caminhos, com texto (schema.sql:452) e sem texto, registrando só a passagem no máximo a cada 10 minutos (schema.sql:462). LEITURA: o app em crm/fase2/app.html:7181, uma consulta por cliente ao abrir a ficha, cujo resultado alimenta a tarja \"💬 falou pelo WhatsApp em ...\" (app.html:8415-8422, colada na ficha em app.html:12390); e a própria smbot_contato, que lê `telefone` e `criado_em` em crm/fase2/schema.sql:459-461 para não gravar dez linhas iguais. `cliente_id` é usada só como filtro (app.html:7181) e é escrita em todos os inserts. COLUNAS TOTALMENTE MORTAS: `anexo_nome` e `anexo_url` (crm/fase2/schema.sql:888-889) não são escritas nem lidas por absolutamente nada no repositório — a promessa do comentário de crm/fase2/schema.sql:877 (\"mensagens com anexo geram sugestão de andamento\") nunca foi implementada. Somando: das 11 colunas, 4 são escritas e ignoradas, 2 não existem na prática, e só criado_em, texto, cliente_id e telefone fazem algum trabalho."
+ },
+ "zap_conversas": {
+  "finalidade": "A caixa de entrada do WhatsApp do escritório: uma linha por número de telefone, dizendo quem é a pessoa, quem do escritório está atendendo e se a conversa está aberta, pendente ou resolvida.",
+  "escritores": [
+   "app",
+   "smbot",
+   "gatilho_sql"
+  ],
+  "leitores": [
+   "app",
+   "smbot",
+   "gatilho_sql"
+  ],
+  "observacoes": "O escritor/leitor mais movimentado NÃO está na lista de atores: é a ponte do WhatsApp (crm/fase2/ponte/ponte.js), serviço Node que lê telefone (ponte.js:253 `select=telefone`) para saber para quem mandar e grava a foto de perfil (ponte.js:299-301 PATCH `{foto_url: caminho}`); foto_url é lida pelo app em assinarFotosZap (app.html:5574). Detalhe por ator: app escreve só nao_lidas=0 ao abrir (app.html:5619-5620) e atendente_id/bot_ativo/status por mudarConversa (app.html:5862-5871), e lê tudo (select=* em app.html:5512 + o resumo do badge em app.html:1917/1941); smbot escreve por zap_abrir (schema.sql:1014-1029), zap_transferir (1042) e zap_entregar (1126-1129); gatilho_sql escreve por zap_toque (983-991: ultima_em, ultimo_texto, nao_lidas, status), zap_bot (1259/1278/1293: bot_passo, bot_erros) e zap_humano_assumiu (1310-1312: bot_ativo, atendente_id). lead_id só serve para achar o nome do prospecto (app.html:5587). sync_todo, robo_pat, robo_crps, datajud, dou e pje não citam esta tabela em lugar nenhum."
+ },
+ "zap_mensagens": {
+  "finalidade": "O histórico da conversa em si: cada mensagem que entrou, saiu ou ficou como nota interna da equipe, com foto/áudio/documento anexado e o estado do envio (fila, enviada, entregue, lida ou erro).",
+  "escritores": [
+   "app",
+   "gatilho_sql",
+   "smbot"
+  ],
+  "leitores": [
+   "app",
+   "gatilho_sql",
+   "smbot"
+  ],
+  "observacoes": "Quem realmente fala com o WhatsApp é a ponte (crm/fase2/ponte/ponte.js), que não está na lista de atores: ela INSERE o que chega (ponte.js:196), pega a fila (ponte.js:233 `status=eq.fila`), marca enviando/enviada/erro (ponte.js:246, 266, 274) e atualiza entregue/lida pelo externo_id (ponte.js:157). Por ator: app grava mensagem e nota interna (app.html:5748-5753 POST com direcao/status 'interna' ou 'fila'), anexo (5787-5790), libera rascunho (5714-5715 PATCH `{status:'fila', autor_id:eu.id}`) e descarta rascunho (5721 DELETE); gatilho_sql grava as falas do robô (schema.sql:1251, 1257, 1281, 1291) e lê a última fala do bot (1244); smbot grava os avisos automáticos (zap_gerar_avisos, 1531) e lê a mensagem para virar andamento (zap_virar_andamento, schema.sql:1345). Colunas que só a ponte usa nas duas pontas (logo não entram em nenhuma das duas listas acima): externo_id (ponte.js:175 grava, 157 usa como chave de busca), tentativas (ponte.js:234 lê, 276 grava) e midia_mime (ponte.js:213 lê, 189 grava). erro é escrita pela ponte (ponte.js:276) e lida pelo app (app.html:5704). sync_todo, robo_pat, robo_crps, datajud, dou e pje não citam a tabela."
+ },
+ "zap_transferencias": {
+  "finalidade": "O livro de passagem de bastão do WhatsApp: registra que a conversa saiu das mãos de um colaborador para outro, quando e por quê.",
+  "escritores": [
+   "smbot"
+  ],
+  "leitores": [
+   "ninguem"
+  ],
+  "observacoes": "Tabela 100% de escrita: hoje ela grava e ninguém consulta — nenhum relatório, nenhuma tela, nenhuma auditoria. Os únicos SELECTs existentes estão nos testes (crm/fase2/testes/zap.sql:118 e crm/fase2/testes/zap_bot.sql:187), que não são atores do sistema. Quem dispara a gravação é o app, mas indiretamente, pelo RPC (app.html:5884 `POST /rest/v1/rpc/zap_transferir`) — o app nunca faz INSERT direto. Atenção a um buraco de rastro: a distribuição AUTOMÁTICA do robô (zap_entregar, schema.sql:1119-1140) troca o atendente_id da conversa e cria uma menção, mas NÃO grava linha aqui; só a transferência feita à mão por um colaborador deixa rastro."
+ },
+ "zap_avisos": {
+  "finalidade": "O catálogo de lembretes automáticos ao cliente (perícia, audiência, CadÚnico, DCB e aniversário): quantos dias antes avisar, com que texto, e se a mensagem precisa ser conferida antes de sair.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app",
+   "smbot"
+  ],
+  "observacoes": "Nenhuma coluna é escrita-e-nunca-lida: até descricao, que o gerador ignora, é mostrada na tela de configurações (app.html:6080). O app é o único escritor e edita cinco campos, um a um, por PATCH: ativo, descricao, revisar, dias_antes e texto (app.html:6230-6234, via a função `linha(...)` de 6220-6229). Não existe POST nem DELETE — criar ou apagar uma regra de aviso é serviço de SQL na mão. Quem lê para valer é o smbot: zap_gerar_avisos (schema.sql:1469-1540) varre as quatro origens e enfileira em zap_mensagens como 'fila' ou, quando revisar=true, como 'rascunho' (schema.sql:1529). Quem chama essa função de hora em hora é a ponte (ponte.js:314 `rpc(\"zap_gerar_avisos\", {})`), ator fora da lista. sync_todo, robo_pat, robo_crps, datajud, dou e pje não citam a tabela."
+ },
+ "zap_bot_passos": {
+  "finalidade": "O roteiro do robô de atendimento: o texto de cada passo do menu do WhatsApp, o que cada resposta do cliente aciona e em que ponto a conversa é entregue a uma pessoa do setor certo.",
+  "escritores": [
+   "app"
+  ],
+  "leitores": [
+   "app",
+   "gatilho_sql"
+  ],
+  "observacoes": "O app é o único escritor e mexe em exatamente dois campos: ativo e texto (app.html:6235-6236 `linha(\"data-bp-ativo\",\"zap_bot_passos\",\"ativo\",...)` e `linha(\"data-bp-txt\",\"zap_bot_passos\",\"texto\",...)`). Ou seja: pela tela dá para reescrever o que o robô fala e desligar um passo, mas mudar as teclas/palavras-chave do menu (opcoes) ou para qual setor o passo entrega (entrega_setor) exige SQL na mão. Quem lê no dia a dia é o gatilho: zap_bot() é função de trigger disparada por cada mensagem que entra (schema.sql:1226 e o trigger em 1302-1303), e usa também o passo 'fora_horario' (schema.sql:1253). Nenhuma coluna é escrita-e-nunca-lida. sync_todo, robo_pat, robo_crps, datajud, dou e pje não citam a tabela."
+ }
+}

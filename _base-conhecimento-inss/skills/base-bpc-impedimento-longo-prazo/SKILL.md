@@ -7,7 +7,7 @@ description: "BPC/LOAS, impedimento de longo prazo, avaliação biopsicossocial,
 
 ## Escopo
 
-Skill temática pró-segurado. Focaliza o requisito específico do impedimento de longo prazo para concessão do BPC à pessoa com deficiência. Trata da avaliação biopsicossocial (conjunta médica e social), do Instrumento de Avaliação Biopsicossocial da Miserabilidade (IFBrM), da TCQ (Tabela Conclusiva de Qualificadores), dos gatilhos de elevação e da jurisprudência dominante. Objetivo único é a defesa integral do requerente.
+Skill temática pró-segurado. Focaliza o requisito específico do impedimento de longo prazo para concessão do BPC à pessoa com deficiência. Trata da avaliação biopsicossocial (conjunta médica e social), do Índice de Funcionalidade Brasileiro Modificado (IFBrM), da TCQ (Tabela Conclusiva de Qualificadores), dos gatilhos de elevação e da jurisprudência dominante. Objetivo único é a defesa integral do requerente.
 
 ## Marco normativo central
 
@@ -57,7 +57,7 @@ Qualificadores especiais. L (labor/incapacidade laboral). N (necessidade de cuid
 
 Lei 15.157/2025. Suprime incisos específicos do art. 8º do Decreto 6.214/2007, dispensando reavaliação em impedimento permanente, irreversível e irrecuperável.
 
-## IFBrM (Instrumento Funcional Brasileiro aplicado ao BPC)
+## IFBrM (Índice de Funcionalidade Brasileiro Modificado, aplicado ao BPC)
 
 Diferente do IF-BrA aplicado à aposentadoria PCD pela LC 142/2013. Não aplica o método Fuzzy, usado apenas no IF-BrA. No BPC, soma-se avaliação médica + social.
 
@@ -101,7 +101,7 @@ Sexto, em Teleperícia, avaliar se há cerceamento.
 
 Sétimo, em recurso, impugnar TCQ com crítica técnica.
 
-Oitavo, em MS por mora, competência Federal ou JEF.
+Em MS por mora, competência da Vara Federal comum (MS não tramita no JEF — art. 3º, §1º, I, da Lei 10.259/2001).
 
 ## Integração com outras skills
 
@@ -157,3 +157,27 @@ O IBDP sustenta a proteção integral.
 ## O que NÃO está nesta skill
 
 Requisitos estruturais estão em `base-bpc-loas-requisitos`. Renda em `base-bpc-renda-per-capita-miserabilidade`. Aposentadoria PCD LC 142 em `base-aposentadoria-pcd-lc142`. Procedimentos em `base-bpc-aposentadoria-pcd-procedimentos`.
+
+## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
+
+Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
+
+Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
+
+Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
+
+O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
+
+## Portaria Conjunta MDS/MPS/INSS 37/2026, conferida no DOU (Onda 90)
+
+CONFERIDA EM FONTE OFICIAL em 26/07/2026. DOU de 02/04/2026, Edição 63, Seção 1, página 46. Entrou em vigor na data da publicação (art. 3º). Altera a Portaria Conjunta MDS/INSS 2/2015.
+
+O que mudou. O art. 7º ganhou o inciso IV (informar se o impedimento é permanente, irreversível ou irrecuperável), o § 1º (o Perito Médico DEVE observar as alterações corporais na perspectiva interacional e multidimensional, considerando barreiras ambientais, limitações funcionais, desempenho de atividades e restrições de participação, além da disponibilidade de produtos e tecnologias para inclusão social) e o § 2º com as definições de permanente, irreversível e irrecuperável. O art. 8º foi reescrito por inteiro. Os Anexos I e II ganharam uma terceira pergunta.
+
+O ANEXO IV NÃO FOI ALTERADO. A Tabela Conclusiva de Qualificadores segue íntegra e o novo art. 8º continua remetendo a ela. A estratégia da base apoiada no Anexo IV permanece válida.
+
+CORREÇÃO DE RIGOR. A portaria NÃO tem dispositivo revogatório expresso. Os antigos incisos I e II do art. 8º desapareceram por SUBSTITUIÇÃO INTEGRAL do artigo com a marca (NR), não por revogação. Em peça, escrever que o art. 8º passou a vigorar com nova redação, jamais que os incisos foram revogados.
+
+Ganho pró-segurado. O § 1º do art. 7º incorpora a lógica da LBI à norma administrativa que rege a perícia do BPC, e a definição de irreversível do inciso II admite que a irreversibilidade decorra da limitação de acesso a tratamentos e tecnologias ou do contexto ambiental. Cautela com o parágrafo único do art. 8º, que autoriza indeferimento quando as alterações puderem ser resolvidas em menos de dois anos.
+
+Redação literal de todos os dispositivos, do quesito acrescido aos Anexos I e II e a leitura pró-segurado em cinco pontos em `references/PORTARIA-CONJUNTA-37-2026-CONFERIDA-DOU.md`.

@@ -41,9 +41,9 @@ Fonte oficial em https://www.stj.jus.br
 
 Professor e magistério.
 
-### Súmula 726 STF
+### Súmula 726/STF (restritiva) e sua mitigação
 
-Fator previdenciário não incide.
+Texto real. "Para efeito de aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula." Aplicação mitigada pela Lei 11.301/2006 e pela ADI 3772, que asseguram o cômputo de direção, coordenação e assessoramento pedagógico exercidos por professor de carreira (auditoria 25/07/2026).
 
 ## Requisitos da regra de pedágio (art. 20 §1º EC 103)
 
@@ -71,7 +71,7 @@ Quinto, somar ao tempo original para totalizar.
 
 Primeiro, a regra é vantajosa para professores próximos da aposentadoria em 2019.
 
-Segundo, a mulher com 24 anos em 13/11/2019 precisa de 25 + 2 de pedágio = 27 anos total.
+Segundo, a mulher com 24 anos de magistério em 13/11/2019: faltava 1 ano, pedágio de 100% = mais 1 ano; total 26 anos.
 
 Terceiro, funções de magistério contam. Lei 11.301 e ADI 3772.
 

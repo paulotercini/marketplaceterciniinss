@@ -2,9 +2,9 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 1370 STJ
+### [Corrigido na auditoria 25/07/2026] Tema 1370/STJ
 
-Rescisória e precedentes.
+Tema de decadência de revisão administrativa, afetado e pendente; não é fundamento de rescisória.
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -30,7 +30,7 @@ Fonte oficial em https://www.stj.jus.br
 
 RVT.
 
-### Tema 327 STF
+### Tema 76 STF
 
 Teto.
 
@@ -84,7 +84,7 @@ Refutação. Coisa julgada desfavorável. Interesse presente.
 
 Argumento adversário. Interpretação razoável.
 
-Refutação. Violação a precedente qualificado. Tema 1370 STJ.
+Refutação. Violação de norma jurídica (art. 966, V, do CPC) (auditoria 25/07/2026).
 
 ### Argumento 7 — Erro de fato exige documento
 
@@ -140,7 +140,7 @@ Sexto, sustentar em contrarrazões.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 1370 STJ.
+Acompanhar o Tema 1370/STJ (decadência de revisão, pendente).
 
 Revalidar Tema 100 STF.
 
