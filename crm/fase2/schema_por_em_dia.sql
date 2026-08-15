@@ -283,6 +283,27 @@ update casos set processos = jsonb_build_array(
   where coalesce(processo,'') <> '' and processos = '[]'::jsonb;
 
 
+-- ── 15. Ficha civil do cliente (o que os documentos pedem) ───────────────
+-- Procuração, contrato, declaração de pobreza e termo de representação são
+-- gerados a partir daqui: sem RG, estado civil, profissão e endereço em
+-- pedaços (logradouro, bairro, cidade, UF, CEP), a peça sai com lacuna e
+-- alguém preenche à mão — que é justamente o trabalho que o CRM tira.
+alter table clientes add column if not exists rg text;
+alter table clientes add column if not exists sexo text;            -- 'F' | 'M'
+alter table clientes add column if not exists profissao text;
+alter table clientes add column if not exists estado_civil text;    -- solteiro|casado|uniao|viuvo|divorciado
+alter table clientes add column if not exists bairro text;
+alter table clientes add column if not exists cidade text;
+alter table clientes add column if not exists uf text;
+alter table clientes add column if not exists cep text;
+-- o cliente costuma dar o telefone dele, o do filho e o do trabalho: a
+-- coluna `telefone` segue sendo o principal (é dela que o WhatsApp sai)
+alter table clientes add column if not exists telefones jsonb not null default '[]'::jsonb;
+-- quem indicou / parente que já é cliente: o vínculo vale para achar a
+-- família toda e para saber de onde veio o atendimento
+alter table clientes add column if not exists indicado_por text;
+
+
 -- ── conferência ───────────────────────────────────────────────────────────
 -- Lista as colunas que o CRM e a importação usam, mais a tabela `coletas` e
 -- a restrição de fase. Faltando alguma linha, o SQL não rodou inteiro — e é
