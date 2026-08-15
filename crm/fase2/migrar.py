@@ -664,6 +664,94 @@ def subir_rest(mapa):
               "as parcelas vão para a aba do cliente"
               + (f"; {soltos} anotação(ões) sem caso onde entrar" if soltos else ""))
 
+    # A LISTA 🙋 ESCRITÓRIO TAMBÉM NÃO É LISTA DE CASOS (pedido do Paulo).
+    # Terceira lista a sair do modelo "tarefa = processo", junto de 💵 Pagamentos
+    # e 🙏 Aposentadorias Futuras. Quem está no Escritório ainda não tem
+    # processo nenhum: é cliente em atendimento, atrás de documento. Virava caso
+    # com sub-abas de Andamento INSS e CRPS que nunca teriam conteúdo — e, pior,
+    # inflava a conta de "casos em andamento" do escritório.
+    #
+    # Agora a tarefa nova dessa lista entra no CADASTRO do cliente:
+    #   corpo datado  -> campos.atendimento (o quadro 🗒 Anotações da ficha)
+    #   checklist     -> campos.docs_pedidos (o "já pedimos ao cliente")
+    #   benefício     -> campos.especie, quando o cadastro ainda não tem uma
+    # Casos de Escritório que JÁ EXISTEM no banco ficam como estão: carregam
+    # andamentos de meses, e reescrever isso seria perder história.
+    novos_escr = {k["id"] for k in mapa["casos"]
+                  if k.get("origem_lista") == "🙋 Escritório" and k["id"] not in guardado}
+    if novos_escr:
+        por_caso = {k["id"]: k for k in mapa["casos"] if k["id"] in novos_escr}
+        # o campos é um jsonb inteiro: sem ler o que já está lá, o PATCH
+        # apagaria os dados civis e os documentos pedidos no app
+        campos_banco = {}
+        try:
+            for c in _rest_todas(url, chave, "/rest/v1/clientes?select=id,campos"):
+                campos_banco[c["id"]] = c.get("campos") or {}
+        except BancoRecusou:
+            campos_banco = None
+        if campos_banco is None:
+            print("  aviso: não consegui ler clientes.campos — as tarefas de "
+                  "🙋 Escritório ficaram como caso nesta rodada")
+            novos_escr = set()
+    if novos_escr:
+        anot, pedidos = {}, {}
+        for a in mapa["andamentos"]:
+            k = por_caso.get(a.get("caso_id"))
+            if not k:
+                continue
+            quem = a.get("autor_id")
+            anot.setdefault(k["cliente_id"], []).append({
+                "id": a["id"], "em": a["criado_em"], "texto": a["texto"],
+                "quem": quem[1] if isinstance(quem, tuple) else None,
+                "origem": "todo",
+            })
+        for tf in mapa.get("tarefas", []):
+            k = por_caso.get(tf.get("caso_id"))
+            if not k:
+                continue
+            item = {"nome": tf["titulo"],
+                    "entregue": (tf.get("concluida_em") or "")[:10] or None}
+            if tf.get("concluida") and not item["entregue"]:
+                # item marcado no To Do sem data: entra como entregue hoje, senão
+                # a ficha o mostraria de novo como pendência do cliente
+                item["entregue"] = datetime.date.today().isoformat()
+            p = pedidos.setdefault(k["cliente_id"], {
+                "id": k["id"], "em": None, "quem": "To Do",
+                "especie": k.get("beneficio"), "itens": []})
+            p["itens"].append(item)
+        # espécie do atendimento: só entra quando o cadastro não tem uma
+        especie = {}
+        for kid, k in por_caso.items():
+            if k.get("beneficio"):
+                especie.setdefault(k["cliente_id"], k["beneficio"])
+        gravados = 0
+        for cid in set(list(anot) + list(pedidos) + list(especie)):
+            campos = dict(campos_banco.get(cid) or {})
+            if cid in anot:
+                velhas = [n for n in (campos.get("atendimento") or [])
+                          if n.get("id") not in {x["id"] for x in anot[cid]}]
+                campos["atendimento"] = sorted(
+                    velhas + anot[cid], key=lambda n: n.get("em") or "")
+            if cid in pedidos:
+                outros = [p for p in (campos.get("docs_pedidos") or [])
+                          if p.get("id") != pedidos[cid]["id"]]
+                campos["docs_pedidos"] = outros + [pedidos[cid]]
+            if cid in especie and not campos.get("especie"):
+                campos["especie"] = especie[cid]
+            try:
+                _rest(url, chave, "PATCH", f"/rest/v1/clientes?id=eq.{cid}",
+                      {"campos": campos}, "return=minimal")
+                gravados += 1
+            except BancoRecusou as e:
+                print(f"  aviso: cadastro {cid} não recebeu as anotações ({e})")
+        # o caso e o que pendurava nele saem do lote — sem caso, a FK recusaria
+        for chave_t in ("andamentos", "eventos", "tarefas"):
+            mapa[chave_t] = [l for l in mapa.get(chave_t, [])
+                             if l.get("caso_id") not in novos_escr]
+        mapa["casos"] = [k for k in mapa["casos"] if k["id"] not in novos_escr]
+        print(f"  🙋 Escritório: {len(novos_escr)} tarefa(s) sem caso próprio — "
+              f"viraram anotações no cadastro de {gravados} cliente(s)")
+
     # 🔔 lembretes de Aposentadorias Futuras — três cuidados:
     # 1. MERGE NÃO-DESTRUTIVO: adiar, mudar intervalo, trocar título ou
     #    responsável são edições do APP e o banco vence; a importação só
