@@ -143,3 +143,9 @@ Cruzar com `base-facultativo-baixa-renda`, `perspectiva-genero-previdenciario` (
 ## O que NÃO está nesta skill
 
 Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.
+
+## Janela de quinze dias do pedido de prorrogação (Onda 115)
+
+O art. 339, § 3º, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026, dispõe que "o segurado poderá requerer a prorrogação nos últimos quinze dias do benefício caso o prazo fixado para a recuperação da capacidade para o trabalho ou para a atividade habitual revele-se insuficiente".
+
+Consequência operacional. Pedido ANTES da janela pode ser recusado por prematuridade. Pedido DEPOIS da DCB deixa de ser prorrogação e passa a ser novo requerimento, com todas as travas próprias, inclusive as das Portarias Conjuntas de análise documental. Registrar a data limite na agenda do cliente no momento da concessão.

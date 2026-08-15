@@ -125,3 +125,11 @@ Sempre leia os arquivos de referência pertinentes antes de analisar admissibili
 ## Cumprimento do acórdão favorável pelo INSS (Onda 88)
 
 Ganhar no CRPS não basta, é preciso o INSS implantar. O art. 581 da IN 128/2022 obriga o cumprimento das decisões do CRPS e o § 4º admite apenas duas exceções, deferimento de benefício mais vantajoso ou decisão judicial transitada em julgado sobre o mesmo objeto. Nem a Revisão de Acórdão (art. 308, § 1º, do Decreto 3.048/99, que não a considera recurso) nem recurso intempestivo da autarquia (art. 308, caput) suspendem o dever de cumprir. Contra a inércia, mandado de segurança, com a tese do TRF4 na RemNec 5000463-92.2026.4.04.7113/RS (5ª Turma, unânime, j. 15/07/2026) e o roteiro de `base-ms-cumprimento-inss/references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`.
+
+## Duas armadilhas de prazo da IN 212/2026 (Onda 115)
+
+PRIMEIRA. O art. 566, § 9º, da IN 128/2022, acrescido pela IN 212/2026, suspende os prazos processuais do INSS durante todo o período em EXIGÊNCIA. É a defesa da autarquia contra mandado de segurança por mora, e permite que exigências sucessivas paralisem o relógio indefinidamente. Antes de impetrar por demora, mapear as exigências e subtrair esses períodos para chegar ao prazo LÍQUIDO de tramitação. E atacar a exigência ABUSIVA pelo vício próprio, exigência sem previsão legal ou reiteração de prova sobre fato já demonstrado, porque exigência ilegal não suspende prazo legitimamente.
+
+SEGUNDA. Os arts. 574, § 4º, II, e 600, parágrafo único, na redação da IN 212/2026, dispõem que a falta de manifestação sobre exigência após TRINTA DIAS da ciência configura DESISTÊNCIA, com encerramento sem análise do mérito. A consequência é pior que o indeferimento, porque não há decisão de mérito a recorrer, e a via judicial esbarra em falta de interesse de agir e nos efeitos financeiros do Tema 1124 do STJ.
+
+Regra do escritório. Lançar a data limite de trinta dias na agenda no momento em que a exigência é registrada. Não sendo possível cumprir integralmente, MANIFESTAR-SE dentro do prazo com o que se tem e requerer dilação, porque o gatilho é a FALTA DE MANIFESTAÇÃO. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.

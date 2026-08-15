@@ -230,3 +230,13 @@ O IBDP sustenta institucionalmente o caráter indenizatório e a proteção cont
 ## O que NÃO está nesta skill
 
 Não está aqui o B31 temporário (antes da consolidação), objeto de `base-incapacidade-b31-temporaria`. Não está aqui o B92 (incapacidade permanente acidentária), objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o B91 (incapacidade permanente), objeto de `base-incapacidade-b91-permanente`. Não está aqui a perícia em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`.
+
+## Anexo III exemplificativo por norma do INSS (Onda 115)
+
+O art. 354, § 1º, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026 (DOU de 11/08/2026), reconhece que o Anexo III do RPS é rol MERAMENTE EXEMPLIFICATIVO e que o não enquadramento não impede a Perícia Médica Federal de verificar, no caso concreto, o preenchimento dos requisitos.
+
+Em peça administrativa, este dispositivo é fundamento PRINCIPAL, com a Súmula 88 da TNU e o Tema 416 do STJ como reforço. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
+
+## Termo inicial em desistência de aposentadoria (Onda 115)
+
+O art. 355, § 1º, II, na redação da IN 212/2026, fixa o termo inicial, na hipótese de desistência de aposentadoria do art. 181-B, § 2º, do RPS, a partir do dia seguinte da DCB do auxílio-acidente. Conferir a subsunção à hipótese concreta antes de invocar.

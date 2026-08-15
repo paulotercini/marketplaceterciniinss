@@ -128,3 +128,11 @@ Para acumulação de pensão por morte com aposentadoria sob EC 103/2019 art. 24
 ## O que NÃO está nesta skill
 
 Não está aqui o auxílio-reclusão B25, objeto de `base-auxilio-reclusao-pos-reforma`. Não estão aqui os detalhes administrativos de requerimento, objeto de `requerimento-administrativo-inss`. Não está aqui o cálculo específico de RMI da aposentadoria originária, objeto de `base-calculo-rmi-ec103`. Não está aqui a acumulação sob EC 103/2019 art. 24, objeto de `base-acumulacao-beneficios-ec103-art24`.
+
+## Filho nascido após o óbito, art. 369-A (Onda 115)
+
+O art. 369-A da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026, dispõe que "o filho nascido após o óbito do segurado fará jus ao benefício a partir da data do seu nascimento, observado o art. 369 no que tange aos efeitos financeiros".
+
+Leitura combinada. O direito nasce com o nascimento, e o efeito financeiro segue o art. 369, que fixa a DIP na DATA DO ÓBITO para o dependente menor de dezesseis anos quando o requerimento ocorre em até cento e oitenta dias do óbito. Como o filho póstumo é menor de dezesseis, a janela aplicável é a de cento e oitenta dias contados do ÓBITO, e não do nascimento.
+
+Regra prática. Requerer dentro da janela e pedir expressamente o efeito financeiro desde o óbito, sob pena de o INSS fixar a DIP na data do requerimento. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.

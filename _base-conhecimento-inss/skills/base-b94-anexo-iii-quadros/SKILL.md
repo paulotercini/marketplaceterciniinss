@@ -127,3 +127,11 @@ Para nexo, acionar `base-b94-nexo-acidentario-ntep`.
 ## O que NÃO está nesta skill
 
 Integração ao SB em `base-b94-integracao-salario-beneficio-tema862`. Cessação em `base-b94-cessacao-acumulacao-vedacao`. Sequela mínima em `base-b94-sequela-minima-tema201`. Nexo em `base-b94-nexo-acidentario-ntep`.
+
+## O INSS reconhece o Anexo III como EXEMPLIFICATIVO (Onda 115)
+
+O art. 354, § 1º, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026 (DOU de 11/08/2026), dispõe que "o Anexo III do RPS contém rol meramente exemplificativo das situações que ensejam o direito ao auxílio-acidente e o não enquadramento em alguma das situações listadas não impede que a Perícia Médica Federal verifique, no caso concreto, o preenchimento dos requisitos para a concessão do benefício".
+
+Mudança de patamar. O que antes se sustentava pela Súmula 88 da TNU e pelo Tema 416 do STJ passa a ter fundamento na NORMA INTERNA do próprio INSS.
+
+Regra de uso. Em requerimento e em recurso ao CRPS, citar o art. 354, § 1º, da IN 128 como fundamento PRINCIPAL e a jurisprudência como reforço, jamais o contrário, porque o CRPS é órgão administrativo vinculado à norma. Em indeferimento anterior fundado na taxatividade do Anexo III, sustentar a interpretação autêntica da Administração. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.

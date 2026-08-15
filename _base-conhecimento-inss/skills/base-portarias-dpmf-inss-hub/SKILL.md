@@ -391,3 +391,11 @@ Texto integral das Portarias. Consultar fontes oficiais.
 ## 24. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+
+## IN PRES/INSS 212, de 06/08/2026 (Onda 115)
+
+Altera a IN 128/2022, publicada no DOU de 11/08/2026, vigência imediata. Conferida em 15/08/2026 no portal oficial da IN consolidada, que registra a atualização. Análise artigo a artigo em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
+
+Três alterações mudam TESE, todas pró-segurado. O art. 184, § 10, estende as prorrogações do período de graça a TODAS as categorias de segurados obrigatórios. O art. 223, § 2º, I, manda considerar o SALÁRIO MÍNIMO nas competências do PBC com vínculo e sem remuneração, com direito a recálculo mediante prova. E o art. 354, § 1º, declara que o Anexo III do RPS é ROL MERAMENTE EXEMPLIFICATIVO para o auxílio-acidente.
+
+Duas são ARMADILHAS DE PRAZO. O art. 566, § 9º, suspende os prazos do INSS durante a exigência, e é a defesa da autarquia contra mandado de segurança por mora. Os arts. 574, § 4º, II, e 600, parágrafo único, transformam a falta de manifestação em exigência, por trinta dias, em DESISTÊNCIA com encerramento sem análise do mérito.

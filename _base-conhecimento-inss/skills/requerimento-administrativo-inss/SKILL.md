@@ -144,3 +144,13 @@ Consultar `references/FORMATTING.md` da skill peticao-previdenciaria para os par
 ## Decisor simulado antes do protocolo (Onda 114)
 
 Antes de protocolar, submeter a minuta e a relação de documentos ao agente `servidor-chefe-inss`, que decide por checklist e por trava de sistema, como o cargo real decide. Ele devolve DEFERIDO, EXIGÊNCIA, INDEFERIDO ou NÃO CONCLUÍDO POR PENDÊNCIA, com a motivação normativa e a lista fechada do que faria virar deferimento. Regra de ouro que ele revela, requerimento sustentado apenas em tese judicial é indeferido na origem, porque o servidor não aplica precedente do STJ nem relativiza critério legal.
+
+## Prazo de trinta dias da exigência e desistência (Onda 115)
+
+Pelos arts. 574, § 4º, II, e 600, parágrafo único, da IN 128/2022, na redação da IN PRES/INSS 212, de 06/08/2026, a falta de manifestação sobre exigência após TRINTA DIAS da ciência configura DESISTÊNCIA, com encerramento SEM ANÁLISE DO MÉRITO.
+
+Pior que indeferimento, porque não há decisão de mérito a recorrer e a via judicial esbarra em falta de interesse de agir e nos efeitos financeiros do Tema 1124 do STJ.
+
+Regra dura. Lançar a data limite na agenda no momento do registro da exigência. Não conseguindo cumprir integralmente, MANIFESTAR-SE dentro do prazo com o que houver e requerer dilação, porque o gatilho da desistência é a falta de manifestação, não o cumprimento parcial.
+
+Registrar também o art. 566, § 9º, que SUSPENDE os prazos do INSS enquanto o processo estiver em exigência. Isso afeta o cálculo do tempo de mora para eventual mandado de segurança.
