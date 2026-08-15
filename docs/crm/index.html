@@ -1101,6 +1101,16 @@
   .tf-chip.feita{color:#0a7d43;border-color:#bfe6cf;background:#eaf7ef}
   .tf-chip.atras{color:#b00020;border-color:#f3c1c8;background:#fdeef0}
   .tf-acao{font-size:11px}
+  /* o círculo da conclusão: alvo de 20px, que é o do To Do, e não um link de
+     texto de 60px de largura por 12 de altura */
+  .tf-ok{width:20px;height:20px;flex:none;border-radius:50%;border:2px solid var(--borda);
+    background:var(--branco);cursor:pointer;padding:0;position:relative;transition:.12s}
+  .tf-ok:hover{border-color:var(--verde);background:var(--verde-f)}
+  .tf-ok::after{content:"";position:absolute;left:5px;top:4px;width:6px;height:10px;
+    border:solid var(--verde);border-width:0 2px 2px 0;transform:rotate(42deg);opacity:0}
+  .tf-ok:hover::after{opacity:1}
+  .app.celular .tf-ok{width:26px;height:26px}
+  .app.celular .tf-ok::after{left:7px;top:5px;width:8px;height:13px}
   .tf-mais{font-size:13px}
   .tf-mais:hover{color:var(--azul)}
   .rev-par{margin-bottom:8px}
@@ -1308,6 +1318,10 @@
     box-shadow:0 4px 16px rgba(0,0,0,.35);opacity:0;transition:opacity .15s,transform .15s;
     pointer-events:none;z-index:99}
   .aviso.on{opacity:1;transform:translateX(-50%) translateY(0)}
+  .aviso.com-bt{display:flex;align-items:center;gap:12px}
+  .aviso-bt{border:1px solid #5A6170;background:none;color:#8FB6F5;font:inherit;
+    font-size:12.5px;font-weight:700;border-radius:6px;padding:3px 11px;cursor:pointer}
+  .aviso-bt:hover{background:#2A2F3A;color:#B7D0FA}
   /* Tela estreita com a ficha aberta: a lista sai de cena e a ficha ocupa
      o resto — o menu fica (retrátil pelo ☰). Substitui o antigo corte em
      980px que sumia com o menu inteiro. Entra ANTES do bloco do celular
@@ -1506,7 +1520,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.09 · F12 — raiz e ramos: de onde o caso partiu (NB, protocolo, DER) e no que ramificou (recursos no Conselho e processos judiciais), com o marcador acompanhado por processo</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.10 · F14 — o ritmo do To Do: concluir a tarefa em um clique no círculo, com a faixa de desfazer por oito segundos, e a janela de escrever o que foi feito ao lado, para quem quiser</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1766,9 +1780,36 @@ function limparRascunho(casoId){
 }
 function aviso(msg, som=true){
   const el = document.getElementById("aviso");
-  el.textContent = msg; el.classList.add("on");
+  clearTimeout(_desfazerTimer); _desfazer = null;
+  el.textContent = msg; el.classList.remove("com-bt"); el.classList.add("on");
+  el.style.pointerEvents = "none";
   setTimeout(()=>el.classList.remove("on"), 2600);
   if(som) plim("suave");
+}
+// F14 · DESFAZER
+// Concluir em um clique só é seguro com volta. O To Do desfaz clicando de novo
+// no círculo; aqui a faixa fica oito segundos com o botão, e some sozinha.
+// Oito e não três: o tempo de perceber o engano é o tempo de ler o que mudou.
+let _desfazer = null, _desfazerTimer = null;
+function avisoDesfazer(msg, voltar){
+  const el = document.getElementById("aviso");
+  if(!el || typeof voltar !== "function") return aviso(msg, false);
+  clearTimeout(_desfazerTimer);
+  _desfazer = voltar;
+  el.innerHTML = `${esc(msg)}<button class="aviso-bt" onclick="desfazerAgora()">desfazer</button>`;
+  el.classList.add("on","com-bt"); el.style.pointerEvents = "auto";
+  _desfazerTimer = setTimeout(esconderDesfazer, 8000);
+  plim("suave");
+}
+function esconderDesfazer(){
+  const el = document.getElementById("aviso");
+  if(el){ el.classList.remove("on","com-bt"); el.style.pointerEvents = "none"; }
+  clearTimeout(_desfazerTimer); _desfazer = null;
+}
+async function desfazerAgora(){
+  const f = _desfazer;
+  esconderDesfazer();
+  if(f) await f();
 }
 
 // ── API (PostgREST + GoTrue por fetch, com paginação e refresh) ───────────
@@ -6904,7 +6945,15 @@ function vistos(a){
                 :`tarefa para ${fmt(t.lembrar_em)}`}">
         <b style="background:${c.cor}">${esc(c.inicial)}</b>
         ${t.concluida_em?"✔":`🗓 ${fmt(t.lembrar_em).slice(0,5)}`}</span>`;}).join("")}
-    ${minha?`<button class="btn-mini tf-acao" onclick="concluirTarefa('${minha.id}')">✔ concluir</button>
+    ${/* F14 · o círculo do To Do: um clique conclui e a faixa oferece desfazer
+         por oito segundos. Quem quiser escrever o que fez continua tendo a
+         janela, agora no botão ao lado, que não é mais o caminho obrigatório
+         da baixa mais comum do dia. */""}
+    ${minha?`<button class="tf-ok" onclick="concluirDeVez('${minha.id}')"
+        title="concluir agora — dá para desfazer logo depois"
+        aria-label="concluir a sua tarefa"></button>
+      <button class="btn-mini tf-acao" onclick="concluirTarefa('${minha.id}')"
+        title="concluir escrevendo o que foi feito, com protocolo e repetição">concluir e escrever</button>
       <button class="btn-mini tf-acao" onclick="adiarTarefa('${minha.id}')">⏩ adiar</button>`:""}
     ${ls.map(l=>{ const c=D.colPorId.get(l.colaborador_id); if(!c) return "";
       return `<span class="visto-av" style="background:${c.cor}"
@@ -6997,10 +7046,20 @@ function concluirTarefa(id){
   ctRep = null;
 }
 async function fecharTarefa(id){
-  const t=(D.tarefasFicha||[]).find(x=>x.id===id); if(!t) return;
   const txt=(document.getElementById("ct-txt").value||"").trim();
   const prot=(document.getElementById("ct-prot").value||"").replace(/\D/g,"");
   fecharCaixa();
+  return concluirDeVez(id, txt, prot);
+}
+// F14 · CONCLUIR EM UM CLIQUE
+// O miolo da conclusão, separado da janela. Com o texto vazio ele escreve
+// "Tarefa concluída", que é o que o clique único manda — o histórico continua
+// existindo, só não exige digitação para a baixa mais comum do dia.
+async function concluirDeVez(id, txt, prot){
+  const t=(D.tarefasFicha||[]).find(x=>x.id===id)
+       || [...(D.tarefasPorCaso||new Map()).values()].flat().find(x=>x.id===id);
+  if(!t) return;
+  txt=(txt||"").trim(); prot=(prot||"").replace(/\D/g,"");
   await api(`/rest/v1/andamento_tarefas?id=eq.${id}`,{method:"PATCH",
     headers:{Prefer:"return=minimal"},
     body:JSON.stringify({concluida_em:new Date().toISOString()})});
@@ -7034,10 +7093,25 @@ async function fecharTarefa(id){
   t.concluida_em=new Date().toISOString();
   D.tarefasPorCaso.set(t.caso_id,(D.tarefasPorCaso.get(t.caso_id)||[]).filter(x=>x.id!==id));
   plim();
-  aviso(ctRep?`Concluída ✔ — nova rodada marcada para ${fmt(ctRep)} 🔁`
-             :"Sua parte está concluída ✔", false);
+  const repetiu = ctRep;
   ctRep = null;
+  avisoDesfazer(repetiu?`Concluída — nova rodada em ${fmt(repetiu)}`:"Concluída",
+    () => desfazerConclusao(t, and));
   if(clienteAberto) abrirFicha(clienteAberto);
+}
+// a volta: reabre a tarefa e apaga o comentário que a conclusão escreveu.
+// O que ela NÃO desfaz é o protocolo que foi para a ficha, porque protocolo
+// certo continua certo, e a nova rodada, que já é outra tarefa com vida.
+async function desfazerConclusao(t, and){
+  try{
+    await api(`/rest/v1/andamento_tarefas?id=eq.${t.id}`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({concluida_em:null})});
+    if(and) await api(`/rest/v1/andamentos?id=eq.${and.id}`,{method:"DELETE"}).catch(()=>{});
+    t.concluida_em=null;
+    tarefaNaMemoria(t);
+    aviso("Tarefa reaberta", false);
+  }catch(e){ aviso("Não consegui reabrir a tarefa — atualize a tela"); }
+  if(clienteAberto) abrirFicha(clienteAberto); else { montarSidebar(); render(); }
 }
 function adiarTarefa(id){
   caixa(`<h3>⏩ Adiar o lembrete</h3>
