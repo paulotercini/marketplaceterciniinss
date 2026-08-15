@@ -1,6 +1,6 @@
-# Arneses de fumaça do Cadastro e das fases F10 a F12
+# Arneses de fumaça do Cadastro e das fases F10 a F14
 
-Dez arquivos que sobem o `app.html` num servidor local, interceptam o Supabase
+Onze arquivos que sobem o `app.html` num servidor local, interceptam o Supabase
 e o ViaCEP, e trabalham com quatro clientes **inventados**. Nenhum dado real de
 cliente passa por aqui, e nenhuma chamada sai para a internet.
 
@@ -9,7 +9,7 @@ cd crm/fase2/testes/cadastro
 npm i playwright          # só na primeira vez
 cp ../../app.html .       # o arnês lê o app ao lado dele
 node triagem.js && node avisos.js && node documentos.js
-node trilha.js && node endereco.js
+node trilha.js && node concluir.js && node endereco.js
 node fila.js && node importar.js
 node interacao.js && node emoji.js && node fumaca.js
 ```
@@ -26,6 +26,7 @@ node interacao.js && node emoji.js && node fumaca.js
 | `avisos.js` | o CadÚnico virando lembrete de 2 anos (criar, mover, desligar) e o caso novo gerando menção | 17 |
 | `documentos.js` | nenhum marcador sai literal, a folha no padrão do escritório, e a conferência antes de gerar com lacuna | 25 |
 | `trilha.js` | a raiz e os ramos do caso numa árvore só, e o marcador acompanhado gravando | 11 |
+| `concluir.js` | conclusão em um clique sem janela, o histórico continuando, e o desfazer que reabre | 15 |
 
 Cada um sai com código 1 quando alguma asserção falha, então servem em CI.
 
