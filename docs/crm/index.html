@@ -993,7 +993,10 @@
   .cad-cont{margin-left:auto;font-weight:600;font-size:11px;color:var(--laranja);
     background:var(--laranja-f);padding:1px 8px;border-radius:9px;letter-spacing:0;text-transform:none}
   .cad-cont.cad-ok{color:var(--verde);background:var(--verde-f)}
-  .cad-grade{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
+  /* align-items:start — sem isto, a caixa alta (Telefones) estica a vizinha, e
+     o Endereço vazio virava um retângulo de 200px com três palavras no meio.
+     Cada campo passa a ter a altura do que tem dentro, com o piso de 58px. */
+  .cad-grade{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;align-items:start}
   .cad-c3{grid-column:span 3}.cad-c4{grid-column:span 4}
   .cad-c6{grid-column:span 6}.cad-c8{grid-column:span 8}.cad-c12{grid-column:span 12}
   @media (max-width:1000px){.cad-c3,.cad-c4{grid-column:span 6}.cad-c8{grid-column:span 12}}
@@ -1007,6 +1010,9 @@
   .cad-campo.vazio{border-style:dashed;background:#FCFCFD}
   .cad-campo.vazio .cad-v{color:var(--cinza-claro,#8A8F98);font-weight:400;font-size:13.5px}
   .cad-apoio{font-size:12px;font-weight:400;color:var(--cinza)}
+  /* a senha mascarada: mesma altura das outras linhas, sem o amarelo que o
+     sistema de tokens reserva para prazo */
+  .cad-segredo{font-variant-numeric:tabular-nums;letter-spacing:2px}
   .cad-lap{border:none;background:none;color:var(--cinza-claro,#8A8F98);padding:1px;
     display:inline-flex;border-radius:3px;cursor:pointer}
   .cad-lap:hover{color:var(--azul);background:#e8f1fb}
@@ -1155,9 +1161,13 @@
   .app.celular .zap-dir{height:70vh}
   .zap-ping{margin-top:6px;font-size:12px;font-weight:600;color:#0a7d43;background:#eaf7ef;
             border:1px solid #bfe6cf;border-radius:6px;padding:3px 8px;display:inline-block}
+  /* .id-secao só vive dentro do cartão "Ligações do cliente" (F9.2): o rótulo
+     segue a mesma régua do rótulo de campo da grade, senão o mesmo cartão
+     teria dois tamanhos de etiqueta */
   .id-secao{margin:12px 0}
-  .id-secao>label{display:block;font-size:12px;font-weight:700;color:var(--cinza);margin-bottom:5px}
-  .id-secao small{font-weight:400}
+  .id-secao>label{display:block;font-size:10px;font-weight:700;letter-spacing:.4px;
+    text-transform:uppercase;color:var(--cinza);margin-bottom:6px}
+  .id-secao small{font-weight:400;letter-spacing:0;text-transform:none}
   .pgto{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--fundo);flex-wrap:wrap}
   .pgto .desc{flex:1;min-width:140px}
   .pgto .valor{font-weight:700}
@@ -1418,7 +1428,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.00 · F9.1 — a Identificação do Cadastro em grade de 12 colunas: o nome abre a tela, campos novos (RG e órgão emissor, sexo, estado civil, profissão, nome da mãe, PIS/NIT), telefones em lista e campo em branco convidando a preencher, sem travessão e sem emoji</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.01 · F9.2 — o Cadastro em dois cartões: a senha do Meu INSS saiu da caixa amarela e virou campo da grade, CPF e nascimento aceitam clique no cartão inteiro, o endereço vazio parou de esticar e protocolos, parceria e parentes viraram o cartão Ligações do cliente</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7533,53 +7543,38 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${cd!=="identificacao" ? "" : `
     ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
          data que chega, não dado de cadastro (pedido do Paulo) */""}
-    ${fichaIdentificacao(c)}
+    ${fichaIdentificacao(c, creds)}
     ${(()=>{
-      const credInss = creds.find(cr=>cr.tipo==="meu_inss");
-      const outrasCreds = creds.filter(cr=>cr.tipo!=="meu_inss");
       const prots = [...new Set(ks.flatMap(k=>k.protocolos||[]))];
       const parcs = [...new Set(ks.map(k=>k.parceria).filter(Boolean))];
       return `
-    <div class="id-grid">
-      <div class="id-card destaque">
-        <label><span class="cad-ic">${CAD_IC.cadeado}</span> Senha Meu INSS</label>
-        ${credInss?`<div class="id-valor"><span id="cred-${credInss.id}">••••••••</span>
-          <button class="cop" onclick="copiarCred('${credInss.id}')" title="fica registrado quem copiou">${CAD_IC.copiar} copiar</button>
-          <button class="olho" onclick="verCred('${credInss.id}')" title="ver (fica registrado)">${CAD_IC.olho}</button>
-          <button class="cop" onclick="trocarSenha('${c.id}','meu_inss','${credInss.id}')">${CAD_IC.lapis} trocar</button></div>`
-        :`<div class="id-valor" style="color:var(--cinza);font-weight:400">não cadastrada
-          <button class="cop" onclick="document.getElementById('mais-opcoes').open=true;document.getElementById('nc-valor').focus()">${CAD_IC.mais} cadastrar</button></div>`}
-      </div>
-      ${outrasCreds.map(cr=>`<div class="id-card"><label>Senha ${esc(cr.tipo.replace("_"," "))}</label>
-        <div class="id-valor"><span id="cred-${cr.id}">••••••••</span>
-        <button class="cop" onclick="copiarCred('${cr.id}')">${CAD_IC.copiar} copiar</button>
-        <button class="olho" onclick="verCred('${cr.id}')" title="ver (fica registrado)">${CAD_IC.olho}</button></div></div>`).join("")}
-      <div class="id-card">
-        <label>Pasta do cliente</label>
-        <div class="id-valor">
-          <button class="cop" onclick="abrirDrive('${c.id}')" title="abre no Google Drive (navegador)">${CAD_IC.pasta} Drive</button>
-          <button class="cop" onclick="abrirExplorer('${c.id}')" title="abre no Windows Explorer (requer atalho instalado)">${CAD_IC.tela} Explorer</button></div>
+    ${/* segundo cartão: quem este cliente é para o INSS e a quem ele se liga.
+         Eram três blocos soltos, cada um com moldura própria, empilhados
+         abaixo do cartão. Agora falam a mesma língua visual do de cima. */""}
+    <div class="cad-cartao">
+      <div class="cad-tit"><span class="cad-ic">${CAD_IC.duplas}</span>Ligações do cliente
+        <span class="cad-tit-sub">protocolos no INSS, parceria e parentes já cadastrados</span></div>
+      <div class="id-secao"><label>Protocolos INSS <small>(extraídos dos andamentos — a pesquisa encontra o cliente por eles)</small></label>
+        ${prots.length?prots.map(pr=>`<span class="chip neutro" style="cursor:pointer" title="copiar" onclick="copiar('${pr}','Protocolo copiado')">${CAD_IC.doc} ${pr}</span>`).join(" ")
+        :`<span style="font-size:13px;color:var(--cinza)">nenhum protocolo anotado ainda</span>`}</div>
+      ${parcs.length?`<div class="id-secao"><label>Parceria</label>
+        ${parcs.map(pa=>`<span class="chip ben">${CAD_IC.duplas} ${esc(pa)}</span>`).join(" ")}</div>`:""}
+      <div class="id-secao"><label>Parentes e amigos <small>(clientes vinculados — clique para abrir a ficha)</small></label>
+        ${vincs.map(v=>{
+          const outroId = v.cliente_id===c.id ? v.ligado_a : v.cliente_id;
+          const o = D.cliPorId.get(outroId); if(!o) return "";
+          return `<span class="chip neutro" style="cursor:pointer" onclick="abrirFicha('${o.id}')">${CAD_IC.pessoa} ${esc(o.nome)}${v.relacao?" · "+esc(v.relacao):""}</span>
+            <button class="cad-lap" title="desvincular" onclick="removerVinculo('${v.id}')">${CAD_IC.fechar}</button>`;
+        }).join(" ")||`<span style="font-size:13px;color:var(--cinza)">nenhum vínculo ainda</span>`}
+        <div class="form-linha" style="margin-top:6px">
+          <input id="vin-nome" list="lista-clientes" placeholder="nome do outro cliente" style="flex:1;min-width:180px">
+          <input id="vin-rel" placeholder="relação (esposa, irmão, indicou…)" style="width:170px">
+          <button onclick="novoVinculo('${c.id}')">Vincular</button>
+        </div>
+        <datalist id="lista-clientes">${D.clientes.map(x=>x.id!==c.id?`<option value="${esc(x.nome)}">`:"").join("")}</datalist>
       </div>
     </div>
-    ${prots.length?`<div class="id-secao"><label><span class="cad-ic">${CAD_IC.doc}</span> Protocolos INSS <small>(extraídos dos andamentos — a pesquisa encontra o cliente por eles)</small></label>
-      ${prots.map(pr=>`<span class="chip neutro" style="cursor:pointer" title="copiar" onclick="copiar('${pr}','Protocolo copiado')">${CAD_IC.doc} ${pr}</span>`).join(" ")}</div>`:""}
-    ${parcs.length?`<div class="id-secao"><label><span class="cad-ic">${CAD_IC.duplas}</span> Parceria</label>
-      ${parcs.map(pa=>`<span class="chip ben">${CAD_IC.duplas} ${esc(pa)}</span>`).join(" ")}</div>`:""}
-    <div class="id-secao"><label><span class="cad-ic">${CAD_IC.duplas}</span> Parentes & amigos <small>(clientes vinculados — clique para abrir a ficha)</small></label>
-      ${vincs.map(v=>{
-        const outroId = v.cliente_id===c.id ? v.ligado_a : v.cliente_id;
-        const o = D.cliPorId.get(outroId); if(!o) return "";
-        return `<span class="chip neutro" style="cursor:pointer" onclick="abrirFicha('${o.id}')">${CAD_IC.pessoa} ${esc(o.nome)}${v.relacao?" · "+esc(v.relacao):""}</span>
-          <button class="olho" title="desvincular" onclick="removerVinculo('${v.id}')">✕</button>`;
-      }).join(" ")||`<span style="font-size:13px;color:var(--cinza)">nenhum vínculo ainda</span>`}
-      <div class="form-linha" style="margin-top:6px">
-        <input id="vin-nome" list="lista-clientes" placeholder="nome do outro cliente" style="flex:1;min-width:180px">
-        <input id="vin-rel" placeholder="relação (esposa, irmão, indicou…)" style="width:170px">
-        <button onclick="novoVinculo('${c.id}')">Vincular</button>
-      </div>
-      <datalist id="lista-clientes">${D.clientes.map(x=>x.id!==c.id?`<option value="${esc(x.nome)}">`:"").join("")}</datalist>
-    </div>
-    <details id="mais-opcoes" style="margin-top:14px"><summary style="cursor:pointer;color:var(--cinza)"><span class="cad-ic">${CAD_IC.engren}</span> Mais opções — cadastrar senha, vincular pasta, agendar atendimento</summary>
+    <details id="mais-opcoes" style="margin-top:14px"><summary style="cursor:pointer;color:var(--cinza)"><span class="cad-ic">${CAD_IC.engren}</span> Mais opções — cadastrar outra credencial, vincular pasta, agendar atendimento</summary>
       <div class="form-linha" style="margin-top:8px">
         <select id="nc-tipo"><option value="meu_inss">senha Meu INSS</option><option value="gov_br">senha gov.br</option><option value="outro">outra credencial</option></select>
         <input id="nc-valor" placeholder="valor (fica cifrado no banco)">
@@ -8985,15 +8980,17 @@ function reindexarCliente(c){
   c._ix = texto + " " + texto.replace(/\D/g, "");
   c._nome_ix = dsa(c.nome);
 }
-// trocar a senha do Meu INSS: guarda a nova e apaga a antiga
+// guarda a senha e apaga a antiga. Sem credId é cadastro novo — é por aqui
+// que o campo em branco da grade convida a preencher (F9.2)
 async function trocarSenha(cliId, tipo, credId){
-  const nova = prompt("Nova senha do Meu INSS (fica guardada com registro de quem acessa):");
+  const nova = prompt(credId ? "Nova senha do Meu INSS (fica guardada com registro de quem acessa):"
+                             : "Senha do Meu INSS (fica guardada com registro de quem acessa):");
   if(nova===null) return;
   const v=nova.trim(); if(!v) return;
   await api(`/rest/v1/credenciais`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({cliente_id:cliId, tipo, valor:v})});
   if(credId) await api(`/rest/v1/credenciais?id=eq.${credId}`,{method:"DELETE"}).catch(()=>{});
-  aviso("Senha trocada 🔑"); abrirFicha(cliId);
+  aviso(credId ? "Senha trocada" : "Senha guardada"); abrirFicha(cliId);
 }
 
 // ── anexar o documento (é para isto que o celular vai à casa do cliente) ──
@@ -12339,13 +12336,40 @@ async function guardarRG(cliId){
   await salvarCliCampo(cliId,"rg_orgao",org.trim());
   aviso("RG guardado", false); abrirFicha(cliId);
 }
-function fichaIdentificacao(c){
+// A senha do Meu INSS morava numa caixa amarela ao lado do cartão — e amarelo,
+// no sistema de tokens, quer dizer PRAZO. Senha não tem prazo. Agora ela é o
+// penúltimo campo da própria grade, com a mesma moldura dos outros: sem senha,
+// a borda tracejada convida a cadastrar, como todo campo em branco da tela.
+function cadCampoSenha(c, tipo, rot, cr){
+  return `<div class="cad-campo cad-c6${cr?"":" vazio"}"
+      ${cr?"":`onclick="trocarSenha('${c.id}','${tipo}','')" style="cursor:pointer"`}>
+    <label><span class="cad-ic">${CAD_IC.cadeado}</span>${esc(rot)}</label>
+    <div class="cad-v">${cr?`<span class="cad-segredo" id="cred-${cr.id}">••••••••</span>
+      <button class="cad-mini" title="copiar — fica registrado quem copiou" onclick="copiarCred('${cr.id}')">${CAD_IC.copiar}copiar</button>
+      <button class="cad-mini" title="ver — fica registrado" onclick="verCred('${cr.id}')">${CAD_IC.olho}ver</button>
+      <button class="cad-mini" title="guardar uma senha nova no lugar desta" onclick="trocarSenha('${c.id}','${tipo}','${cr.id}')">${CAD_IC.lapis}trocar</button>`
+    :"clique para cadastrar"}</div>
+  </div>`;
+}
+// a pasta do cliente fecha a grade: é onde o documento assinado vai parar
+function cadCampoPasta(c){
+  return `<div class="cad-campo cad-c6">
+    <label><span class="cad-ic">${CAD_IC.pasta}</span>Pasta do cliente</label>
+    <div class="cad-v">
+      <button class="cad-mini" onclick="abrirDrive('${c.id}')" title="abre no Google Drive (navegador)">${CAD_IC.pasta}Drive</button>
+      <button class="cad-mini" onclick="abrirExplorer('${c.id}')" title="abre no Windows Explorer (requer o atalho instalado)">${CAD_IC.tela}Explorer</button>
+      ${(c.campos||{}).pasta_drive?"":`<span class="cad-apoio">sem link fixo — a busca vai pelo nome</span>`}</div>
+  </div>`;
+}
+function fichaIdentificacao(c, creds){
   const falta = cadFaltando(c);
   const tels = telefonesDe(c);
   const idade = idadeDe(c.dn);
+  const credInss = (creds||[]).find(cr=>cr.tipo==="meu_inss");
+  const outrasCreds = (creds||[]).filter(cr=>cr.tipo!=="meu_inss");
   return `<div class="cad-cartao">
     <div class="cad-tit"><span class="cad-ic">${CAD_IC.pessoa}</span>Dados civis
-      <span class="cad-tit-sub">usados na procuração, no contrato e nas declarações</span>
+      <span class="cad-tit-sub">o que a procuração e o contrato exigem, mais o acesso do cliente</span>
       ${falta.length?`<span class="cad-cont" title="faltam: ${esc(falta.join(", "))}">${
         falta.length} campo${falta.length>1?"s":""} em branco</span>`
       :`<span class="cad-cont cad-ok">completo</span>`}</div>
@@ -12354,16 +12378,20 @@ function fichaIdentificacao(c){
         <label>Nome completo <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
         <div class="cad-v grande" id="campo-nome">${esc(c.nome)}</div>
       </div>
-      <div class="cad-campo cad-c4${c.cpf?"":" vazio"}">
-        <label>CPF <button class="cad-lap" title="alterar" onclick="editarCampo('cpf','${c.id}')">${CAD_IC.lapis}</button></label>
-        <div class="cad-v" id="campo-cpf">${c.cpf?fmtCpf(c.cpf):"clique no lápis para preencher"}
+      ${/* CPF e nascimento pediam o lápis; o resto da grade aceita clique no
+           cartão inteiro. Alvo de 4px contra alvo de 240px, na mesma tela. */""}
+      <div class="cad-campo cad-c4${c.cpf?"":" vazio"}"
+        onclick="if(!this.querySelector('#ed-campo'))editarCampo('cpf','${c.id}')" style="cursor:pointer">
+        <label>CPF <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
+        <div class="cad-v" id="campo-cpf">${c.cpf?fmtCpf(c.cpf):"clique para preencher"}
           ${c.cpf?`<button class="cad-mini" onclick="event.stopPropagation();copiar('${c.cpf}','CPF copiado')">${CAD_IC.copiar}copiar</button>`:""}</div>
       </div>
 
-      <div class="cad-campo cad-c3${c.dn?"":" vazio"}">
-        <label>Nascimento <button class="cad-lap" title="alterar" onclick="editarCampo('dn','${c.id}')">${CAD_IC.lapis}</button></label>
+      <div class="cad-campo cad-c3${c.dn?"":" vazio"}"
+        onclick="if(!this.querySelector('#ed-campo'))editarCampo('dn','${c.id}')" style="cursor:pointer">
+        <label>Nascimento <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
         <div class="cad-v" id="campo-dn">${c.dn?`${c.dn.slice(0,2)}.${c.dn.slice(2,4)}.${c.dn.slice(4)}
-          ${idade==null?"":`<span class="cad-apoio">${idade} anos</span>`}`:"clique no lápis para preencher"}</div>
+          ${idade==null?"":`<span class="cad-apoio">${idade} anos</span>`}`:"clique para preencher"}</div>
       </div>
       ${cadCampo(c, "sexo", 3)}
       ${cadCampo(c, "estado_civil", 3)}
@@ -12400,9 +12428,14 @@ function fichaIdentificacao(c){
       ${cadCampoRG(c)}
       ${cadCampo(c, "nome_mae", 4)}
       ${cadCampo(c, "pis_nit", 4)}
+
+      ${cadCampoSenha(c, "meu_inss", "Senha Meu INSS", credInss)}
+      ${outrasCreds.map(cr=>cadCampoSenha(c, cr.tipo, "Senha "+esc(cr.tipo.replace("_"," ")), cr)).join("")}
+      ${cadCampoPasta(c)}
     </div>
     <p class="cad-nota">Os campos em branco entram nas peças como espaço vazio. A procuração e o contrato
-      só ficam prontos para assinatura com nome, CPF, RG, nascimento, estado civil, profissão e endereço preenchidos.</p>
+      só ficam prontos para assinatura com nome, CPF, RG, nascimento, estado civil, profissão e endereço preenchidos.
+      Toda vez que alguém copia ou vê uma senha, fica registrado quem foi e quando.</p>
   </div>`;
 }
 
