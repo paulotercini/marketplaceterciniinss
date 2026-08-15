@@ -1486,7 +1486,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.06 · F10 — a Triagem do cliente: os oito passos da conferência, cinco deles respondidos pelo próprio CRM (processo judicial anterior, recurso no CRPS, CadÚnico, benefício ativo e protocolos), cada marcação com autoria e data, e a conclusão com o próximo passo recomendado</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.07 · F10 completa — a Triagem em oito passos, o CadÚnico virando lembrete de verdade a cada 2 anos, e o caso novo avisando quem decide</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5285,6 +5285,7 @@ async function criarCliente(){
       60, `Atendimento — ${casoTitulo}${cli.telefone?" · "+cli.telefone:""}`, "Escritório"), "_blank");
   }
   await carregar(); montarSidebar();
+  await avisarCasoNovo(caso.id, cli.id, "cliente novo cadastrado na tela");
   aviso("Cliente cadastrado ✔"); visao="fase:"+caso.fase; render();
   await abrirFicha(cli.id);
   if(dataAg){
@@ -5371,6 +5372,31 @@ async function criarMencoes(texto, casoId, andamentoId, extras){
       body:JSON.stringify({de_id:eu.id, para_id:co.id, caso_id:casoId,
         andamento_id:andamentoId, texto})});
   if(alvos.length) aviso("📥 "+alvos.map(a=>a.nome).join(", ")+" será(ão) avisado(s)");
+}
+
+// F10 · CASO NOVO AVISA QUEM DECIDE
+// Caso nasce e ninguém fica sabendo até abrir a lista. Quem decide estratégia
+// precisa ver o caso novo no dia em que ele nasce, não na revisão de 90 dias.
+//
+// Quem recebe sai de ⚙️ Configurações. Sem escolha gravada, o padrão são os
+// advogados ativos — que no escritório são exatamente Paulo, Marcos e Amanda.
+// Ninguém se avisa a si mesmo, então quem cria o caso não recebe menção.
+function quemAvisaCasoNovo(){
+  const ativos = (D.colaboradores||[]).filter(c=>c.ativo);
+  const escolhidos = String(cfgApp("avisar_caso_novo")||"").split(",").filter(Boolean);
+  return escolhidos.length ? ativos.filter(c=>escolhidos.includes(c.id))
+                           : ativos.filter(c=>c.cargo==="advogado");
+}
+async function avisarCasoNovo(casoId, cliId, comoNasceu){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const c = D.cliPorId.get(cliId);
+  const alvos = quemAvisaCasoNovo().filter(x=>x.id!==eu.id);
+  if(!alvos.length) return;
+  const texto = `Caso novo: ${tituloCaso(k)} — ${(c&&c.nome)||"cliente"}`
+    + (comoNasceu?` (${comoNasceu})`:"");
+  for(const co of alvos)
+    await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({de_id:eu.id, para_id:co.id, caso_id:casoId, texto})}).catch(()=>{});
 }
 
 // ── 📄 Modelos de documentos (gerenciar) ──────────────────────────────────
@@ -5543,6 +5569,7 @@ async function leadParaCliente(leadId){
     body:JSON.stringify({cliente_id:cli.id})});
   l.cliente_id=cli.id;
   await carregar(); montarSidebar();
+  await avisarCasoNovo(caso.id, cli.id, "veio do funil de vendas");
   aviso("Cliente criado a partir da venda ✔"); abrirFicha(cli.id);
 }
 
@@ -6094,6 +6121,11 @@ async function renderConfig(){
           <b style="min-width:110px">${esc(c.nome)}</b>
           <label class="cfg-ck"><input type="checkbox" data-atende="${c.id}"
             ${c.atende_zap?"checked":""}> atende</label>
+          ${/* F10: quem recebe menção quando nasce caso novo. Marcado sozinho
+               para quem tem cargo de advogado, enquanto ninguém escolher. */""}
+          <label class="cfg-ck" title="recebe uma menção sempre que um caso novo é criado na tela">
+            <input type="checkbox" data-casonovo="${c.id}"
+              ${quemAvisaCasoNovo().some(x=>x.id===c.id)?"checked":""}> caso novo</label>
           <select data-setor="${c.id}" ${c.atende_zap?"":"disabled"}>
             <option value="">setor…</option>
             ${SETORES.map(s=>`<option ${c.setor===s?"selected":""}>${s}</option>`).join("")}
@@ -6238,6 +6270,15 @@ function ligarConfig(){
     const sel = document.querySelector(`[data-setor="${el.dataset.atende}"]`);
     if(sel) sel.disabled = !el.checked;
     aviso(el.checked?"Passa a receber conversas 💬":"Deixa de receber conversas", false);
+  });
+  // quem é avisado de caso novo: a lista inteira vai para uma chave só, para
+  // não precisar de coluna nova em colaboradores
+  guarda("[data-casonovo]", el => el.onchange = async ()=>{
+    const marcados = [...document.querySelectorAll("[data-casonovo]")]
+      .filter(x=>x.checked).map(x=>x.dataset.casonovo);
+    await guardarCfgApp("avisar_caso_novo", marcados.join(","));
+    aviso(marcados.length ? `${marcados.length} pessoa(s) avisadas de caso novo`
+                          : "Ninguém será avisado de caso novo", false);
   });
   guarda("[data-cargo]", el => el.onchange = async ()=>{
     const c = D.colPorId.get(el.dataset.cargo);
@@ -6741,6 +6782,7 @@ async function addNaLista(){
   if(beneficio) await aplicarChecklistCaso(caso, true).catch(()=>{});
   inp.value=""; bi.value="";
   await carregar(); montarSidebar(); render();
+  await avisarCasoNovo(caso.id, cli.id, "＋ Adicionar, no pé da lista");
   inp.focus();                                  // pronto para o próximo, sem tirar a mão
   aviso(`✔ ${nome} entrou na lista`);
 }
@@ -8625,14 +8667,47 @@ function caixaCadunico(k, cli){
     </div>
   </div>`;
 }
+// F10 · o CadÚnico deixou de ser só uma data dentro do caso. Ele vira lembrete
+// de verdade: entra na aba 🔔, na agenda e no calendário, repete a cada 24
+// meses sozinho e guarda quem avisou o cliente e quando. O bloco calculado do
+// Meu Dia continua existindo para os casos antigos, que ainda não têm linha.
+async function sincronizarLembreteCadunico(k){
+  const venc = renovaCadunico(k);
+  const jah = (D.lembretes||[]).find(l=>l.origem_caso===k.id && l.tipo==="cadunico");
+  try{
+    if(!venc){                       // apagaram a data: o lembrete sai de cena
+      if(jah && jah.ativo!==false){
+        await api(`/rest/v1/lembretes?id=eq.${jah.id}`,{method:"PATCH",
+          headers:{Prefer:"return=minimal"}, body:JSON.stringify({ativo:false})});
+        jah.ativo = false;
+      }
+      return null;
+    }
+    if(jah){
+      await api(`/rest/v1/lembretes?id=eq.${jah.id}`,{method:"PATCH",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify({proximo_em:venc, ativo:true})});
+      jah.proximo_em = venc; jah.ativo = true;
+      return jah;
+    }
+    const [l] = await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:k.cliente_id, tipo:"cadunico",
+        titulo:"CadÚnico — atualizar no CRAS", intervalo_meses:CADUNICO_ANOS*12,
+        proximo_em:venc, origem_caso:k.id, criado_por:eu.id})});
+    if(l) (D.lembretes=D.lembretes||[]).push(l);
+    return l;
+  }catch(e){ return null; }        // banco atrasado: a data fica guardada mesmo assim
+}
 async function salvarCadunico(casoId, valor){
   const k=D.casoPorId.get(casoId); if(!k) return;
   k.cadunico = valor || null;
   try{
     await patchCaso(casoId, {cadunico:k.cadunico});
   }catch(e){ return aviso("Rode o schema.sql mais novo no Supabase para usar o CadÚnico"); }
+  const l = await sincronizarLembreteCadunico(k);
   const v=renovaCadunico(k);
-  aviso(v ? `CadÚnico guardado — renovar até ${fmt(v)}` : "Data do CadÚnico apagada");
+  aviso(v ? `CadÚnico guardado — ${l?"lembrete de 2 anos criado, renovar até":"renovar até"} ${fmt(v)}`
+          : "Data do CadÚnico apagada");
+  montarSidebar();
   if(clienteAberto) abrirFicha(clienteAberto);
 }
 function copiarMsgCadunico(cliId, casoId){
@@ -8809,6 +8884,9 @@ function blocoCadunico(){
     if(!c || !ehLoasIdoso(k,c)) return;
     const venc=renovaCadunico(k);
     if(!venc) return;
+    // caso que já virou lembrete (F10) aparece pelo bloco dos lembretes; sem
+    // este corte, o mesmo CadÚnico apareceria duas vezes no mesmo Meu Dia
+    if((D.lembretes||[]).some(l=>l.origem_caso===k.id && l.tipo==="cadunico" && l.ativo!==false)) return;
     const d=diasAte(venc);
     if(d<=90) itens.push({c, k, venc, d});
   });
@@ -8868,6 +8946,12 @@ function msgLembrete(l, c){
       +`, com vencimento até o dia ${d.dia||15}. O pagamento pode ser feito pelo `
       +`Meu INSS (meu.inss.gov.br) ou gerando a guia no SAL (sal.receita.economia.gov.br). `
       +`Qualquer dúvida, é só chamar!`;
+  }
+  // o CadÚnico já tinha uma mensagem escrita, com o CRAS e a lista de
+  // documentos: o lembrete usa a mesma, e não uma segunda versão para manter
+  if(l.tipo==="cadunico"){
+    const k = D.casoPorId.get(l.origem_caso);
+    if(k) return msgCadunico(c, k);
   }
   return `Olá, ${nome}! Lembrete do escritório: ${l.titulo}. Qualquer dúvida, é só chamar!`;
 }
@@ -11813,6 +11897,7 @@ async function novoCaso(cliId){
   D.casos.push(k); D.casoPorId.set(k.id,k);
   if(!D.casosDoCliente.has(cliId)) D.casosDoCliente.set(cliId,[]);
   D.casosDoCliente.get(cliId).push(k);
+  await avisarCasoNovo(k.id, cliId, "aberto na ficha do cliente");
   plim(); aviso("Caso criado — a sincronização cria a tarefa no To Do 📋");
   montarSidebar(); casoSel=k.id; abaAtiva=2; abrirFicha(cliId);
 }
@@ -13560,7 +13645,8 @@ async function criarCasoDoAtendimento(cliId){
   await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({campos:c.campos})}).catch(()=>{});
   reindexarCliente(c); plim();
-  aviso(`⚖️ Caso criado a partir do atendimento${docs?` · ${docs} documento(s) no checklist`:""} — a sincronização cria a tarefa no To Do`, false);
+  await avisarCasoNovo(k.id, cliId, "o atendimento virou caso");
+  aviso(`Caso criado a partir do atendimento${docs?` · ${docs} documento(s) no checklist`:""} — a sincronização cria a tarefa no To Do`, false);
   montarSidebar(); casoSel=k.id; abaAtiva=2; abrirFicha(cliId);
 }
 // indicação de pagamento ao INSS: lembrete com o cronograma inteiro
