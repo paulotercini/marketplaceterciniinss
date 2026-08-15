@@ -536,15 +536,20 @@ def test_parcela_carrega_o_cliente_alem_do_caso():
     assert pg["valor"] == 500 and pg["status"] == "recebido"
 
 
-def _rest_falso(existentes=()):
-    """Banco falso: GET devolve `existentes` para /casos, POST guarda tudo."""
+def _rest_falso(existentes=(), clientes=(), patches=None):
+    """Banco falso: GET devolve `existentes` para /casos e `clientes` para
+    /clientes, POST guarda tudo e PATCH cai em `patches` (id -> corpo)."""
     enviados = {}
     exist = list(existentes)
+    cli = list(clientes)
 
     def falso(url, chave, metodo, caminho, corpo=None, prefer=None):
         tabela = caminho.split("?")[0].rsplit("/", 1)[-1]
         if metodo == "GET":
-            return exist if tabela == "casos" else []
+            return exist if tabela == "casos" else (cli if tabela == "clientes" else [])
+        if metodo == "PATCH" and patches is not None and tabela == "clientes":
+            patches[caminho.split("id=eq.")[-1]] = corpo
+            return None
         if isinstance(corpo, list):
             enviados.setdefault(tabela, []).extend(corpo)
         return None
@@ -645,3 +650,85 @@ def test_com_dois_casos_a_parcela_fica_sem_caso_para_o_escritorio_escolher(monke
     (pg,) = enviados["pagamentos"]
     assert pg["caso_id"] is None, "vinculou no chute tendo dois casos"
     assert pg["cliente_id"], "perdeu o cliente — a parcela sumiria da aba"
+
+
+# ── 🙋 Escritório: lista do To Do = CADASTRO do cliente, não caso (08.99) ──
+# Terceira lista a sair do modelo "tarefa = processo". Quem está no Escritório
+# ainda não tem processo: é cliente em atendimento, atrás de documento.
+
+def _sobe_escritorio(monkeypatch, m, existentes=(), clientes=()):
+    patches = {}
+    falso, enviados = _rest_falso(existentes, clientes, patches)
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    migrar.subir_rest(m)
+    return enviados, patches
+
+
+def test_tarefa_nova_do_escritorio_nao_vira_caso_e_vira_anotacao_do_cadastro(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("🙋 Escritório", "Fulana #00000000191", cpf="00000000191", id="esc",
+          andamentos=[{"data": "2026-08-12", "inicial": "A", "autor": "Amanda",
+                       "texto": "Cliente veio buscar orientação sobre a documentação."}],
+          checklist=[{"id": "i1", "texto": "Certidão de casamento", "feito": False}]),
+    ]))
+    kid = next(k["id"] for k in m["casos"] if k["origem_lista"] == "🙋 Escritório")
+    cid = m["clientes"][0]["id"]
+    enviados, patches = _sobe_escritorio(monkeypatch, m)
+
+    assert kid not in [k["id"] for k in enviados.get("casos", [])], \
+        "a lista Escritório continuou criando caso"
+    assert not enviados.get("andamentos"), "andamento ficou órfão, sem caso onde entrar"
+    campos = patches[cid]["campos"]
+    (nota,) = campos["atendimento"]
+    assert "orientação sobre a documentação" in nota["texto"] and nota["quem"] == "A"
+    (pedido,) = campos["docs_pedidos"]
+    assert pedido["itens"] == [{"nome": "Certidão de casamento", "entregue": None}]
+
+
+def test_caso_de_escritorio_que_ja_existe_no_banco_continua_sendo_atualizado(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("🙋 Escritório", "Fulana #00000000191", cpf="00000000191", id="esc",
+          andamentos=[{"data": "2026-08-12", "inicial": "P", "autor": "Paulo",
+                       "texto": "Cliente trouxe o CNIS."}]),
+    ]))
+    kid = next(k["id"] for k in m["casos"] if k["origem_lista"] == "🙋 Escritório")
+    enviados, patches = _sobe_escritorio(
+        monkeypatch, m, existentes=[{"id": kid, "todo_task_id": "esc",
+                                     "processo": None, "nb": None}])
+    assert kid in [k["id"] for k in enviados["casos"]], "caso antigo do Escritório sumiu"
+    assert enviados["andamentos"], "o histórico do caso antigo deixou de chegar"
+    assert not patches, "caso antigo virou anotação em duplicidade"
+
+
+def test_anotacao_do_escritorio_nao_apaga_os_dados_civis_do_cadastro(monkeypatch):
+    m = migrar.mapear(crm_json([
+        t("🙋 Escritório", "Fulana #00000000191", cpf="00000000191", id="esc",
+          andamentos=[{"data": "2026-08-12", "inicial": "P", "autor": "Paulo",
+                       "texto": "Faltou a certidão."}]),
+    ]))
+    cid = m["clientes"][0]["id"]
+    _, patches = _sobe_escritorio(monkeypatch, m, clientes=[
+        {"id": cid, "campos": {"civil": {"rg": "12.345.678-9"},
+                               "pasta_drive": "https://drive/x"}}])
+    campos = patches[cid]["campos"]
+    assert campos["civil"]["rg"] == "12.345.678-9", "o PATCH apagou os dados civis"
+    assert campos["pasta_drive"] == "https://drive/x", "o PATCH apagou a pasta do cliente"
+    assert campos["atendimento"], "a anotação não entrou"
+
+
+def test_reimportar_o_escritorio_nao_duplica_a_anotacao(monkeypatch):
+    def mapa():
+        return migrar.mapear(crm_json([
+            t("🙋 Escritório", "Fulana #00000000191", cpf="00000000191", id="esc",
+              andamentos=[{"data": "2026-08-12", "inicial": "P", "autor": "Paulo",
+                           "texto": "Ficou de trazer o comprovante."}]),
+        ]))
+    m1 = mapa()
+    cid = m1["clientes"][0]["id"]
+    _, p1 = _sobe_escritorio(monkeypatch, m1)
+    _, p2 = _sobe_escritorio(monkeypatch, mapa(), clientes=[{"id": cid, "campos": p1[cid]["campos"]}])
+    assert len(p2[cid]["campos"]["atendimento"]) == 1, "a segunda rodada duplicou a anotação"

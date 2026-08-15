@@ -1368,7 +1368,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.98 · o Cadastro virou o ponto de partida do atendimento: anotações com espécie (ou "ainda não definido"), documentos do escritório prontos para assinar, catálogo do benefício e o site interno — tudo em divisões, e o menu enxuto (Cadastro, Lembretes, Casos, Perícias, Honorários)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.99 · a lista 🙋 Escritório deixa de ser lista de casos: quem está lá é cliente em atendimento, com as anotações e os documentos pedidos no cadastro — e a ficha de quem ainda não tem caso abre no Cadastro</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2021,6 +2021,20 @@ function gcal(titulo, dataIso, horaIni, minutos, detalhes, local){
 // lista "efetiva" do caso: um mover pedido no app vale na hora,
 // mesmo antes de o To Do acompanhar (escrever_todo faz o mover físico)
 function listaDe(k){ return k.mover_para || k.origem_lista || "—"; }
+// 🙋 ESCRITÓRIO NÃO É LISTA DE CASOS (08.99, pedido do Paulo). Quem está lá
+// ainda não tem processo: é cliente em atendimento, atrás de documento. A
+// lista passa a mostrar esses cadastros — a sincronização não cria mais caso
+// para as tarefas dessa lista, e os casos antigos continuam aparecendo.
+function clientesEmAtendimento(){
+  return D.clientes.filter(c=>{
+    const cp = c.campos||{};
+    if(!(cp.atendimento||[]).length && !cp.especie && !(cp.docs_pedidos||[]).length) return false;
+    return !(D.casosDoCliente.get(c.id)||[]).some(k=>k.fase!=="encerrado");
+  }).sort((a,b)=>ultimaAnotacao(b).localeCompare(ultimaAnotacao(a)));
+}
+const ultimaAnotacao = c => ((c.campos||{}).atendimento||[])
+  .map(n=>n.em||"").sort().slice(-1)[0] || "";
+
 function casosDaFase(f){
   // Tarefas com Prazo é a LISTA FIXA do To Do (não "tudo que tem data") —
   // a agenda geral por data fica na visão Planejado.
@@ -2195,7 +2209,7 @@ function montarSidebar(){
     `<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}`+
     (n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:"")+`</div>`).join("");
   document.getElementById("grupo-fases").innerHTML = ordemDasFases().map(([f,rot])=>{
-    const n = casosDaFase(f).length;
+    const n = casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
     return `<div class="lista-item" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`;
   }).join("");
   document.getElementById("grupo-visoes").innerHTML = [
@@ -3546,6 +3560,16 @@ function cartaoCliente(cli, casosMostrar){
     evFut?`<span class="dt ev" title="${esc(evFut.tipo)}${evFut.local?" — "+esc(evFut.local):""}">${
       esc(evFut.tipo.split(" ")[0])} ${(d=>d.slice(0,4)===hoje().slice(0,4)?fmt(d).slice(0,5):fmt(d))(dataSP(evFut.data_hora))} ${horaSP(evFut.data_hora)}</span>`:"",
     exig, dcb,
+    // cliente em atendimento (cadastro sem caso): a linha diz o que ele está
+    // buscando, senão o cartão apareceria mudo na lista 🙋 Escritório
+    (()=>{ if(ks.length) return "";
+      const cp = cli.campos||{};
+      if(!(cp.atendimento||[]).length && !cp.especie && !(cp.docs_pedidos||[]).length) return "";
+      const pend = (cp.docs_pedidos||[]).flatMap(p=>p.itens||[]).filter(i=>!i.entregue).length;
+      return `<span class="chip laranja" title="atendimento no cadastro — ainda não virou caso">🟡 ${
+        cp.especie?esc(cp.especie):"em atendimento"}</span>`
+        + (pend?`<span class="dt" title="documentos pedidos e ainda não entregues">📋 ${pend} doc(s)</span>`:"");
+    })(),
   ].filter(Boolean);
   // O círculo de "concluir" saiu. No To Do ele conclui a tarefa; aqui não
   // concluía nada — clicar nele só abria a ficha, como em qualquer ponto da
@@ -3760,9 +3784,15 @@ function render(){
     // ali o que os portais trouxeram encurta o caminho entre a mudança
     // acontecer e alguém saber dela. Só as primeiras, com o resto a um clique
     // — a lista continua sendo a do que ELE marcou, não uma segunda caixa.
+    // 🙋 Escritório: primeiro quem está em atendimento (cadastro sem caso), e
+    // só depois os casos antigos que a lista ainda carrega
+    const emAtend = visao==="fase:escritorio" && !filtroColab ? clientesEmAtendimento() : [];
     meio.innerHTML = chipsCol + (visao==="importante" ? blocoNovidadesTopo() : "")
+      + (emAtend.length?`<h3 class="secao">🟡 Em atendimento — buscando documentos (${emAtend.length})</h3>`
+          + emAtend.map(c=>cartaoCliente(c,[])).join("")
+          + (casosSel.length?`<h3 class="secao">Casos antigos desta lista (${casosSel.length})</h3>`:""):"")
       + (grupoClientes(casosSel).map(([c,ks])=>cartaoCliente(c,ks)).join("")
-      || "<p class='meio-sub'>Nenhum cliente aqui.</p>");
+      || (emAtend.length?"":"<p class='meio-sub'>Nenhum cliente aqui.</p>"));
     if(visao==="importante"){
       const v = document.getElementById("ver-novidades");
       if(v) v.onclick = () => { visao="novidades"; render(); };
@@ -7072,7 +7102,13 @@ async function abrirFicha(cliId){
   if(!c) return aviso("Cliente ainda carregando — tente de novo em instantes");
   const trocouCliente = clienteAberto !== cliId;
   if(trocouCliente){
-    casoSel = "__auto__"; abaAtiva = 2;   // cliente novo: abre no 1º caso ativo
+    casoSel = "__auto__";
+    // cliente novo: abre no 1º caso ativo — mas quem ainda não tem caso está
+    // EM ATENDIMENTO, e a aba Casos abriria vazia; para esse, o começo é o
+    // Cadastro, onde vivem as anotações e os documentos pedidos (08.99)
+    const temCaso = (D.casosDoCliente.get(cliId)||[]).some(k=>k.fase!=="encerrado");
+    abaAtiva = temCaso ? 2 : 0;
+    if(!temCaso && !SUB_CAD.some(([x])=>x===subCad)) subCad = "anotacoes";
     instSel = 0; tudoSoMarcos = false;    // escolhas do cliente ANTERIOR não vazam
     procSel = ""; nupSel = ""; fonteCnj = "oficial";   // idem: processo e fonte
   }
@@ -12565,7 +12601,9 @@ function caixaAtendimento(c, ks){
       </div>
     </div>`:`
     <div class="form-linha" style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
-      <select id="at-fase">${["escritorio","inss","conselho","judicial","outro"]
+      ${/* sem 🙋 Escritório: esse é o estado de ANTES do caso, e agora vive
+           no cadastro. Virar caso é justamente sair do Escritório. */""}
+      <select id="at-fase">${["inss","conselho","judicial","peticao_inicial","outro"]
         .map(f=>`<option value="${f}">${NOME_FASE[f]}</option>`).join("")}</select>
       <button onclick="criarCasoDoAtendimento('${c.id}')" ${esp?"":"disabled title='defina a espécie primeiro'"}>
         ⚖️ Criar o caso deste atendimento</button>
