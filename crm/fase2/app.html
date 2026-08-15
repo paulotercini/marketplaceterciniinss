@@ -1112,6 +1112,8 @@
   .sem-acao{margin:10px 0}
   .sem-acao summary{cursor:pointer;font-size:13px;font-weight:700;color:#8a6300;
     background:#fff8e1;border:1px solid #e0b955;border-radius:8px;padding:7px 12px}
+  /* a fila do endereço não é prazo, e amarelo aqui quer dizer prazo */
+  .sem-acao.neutro summary{color:var(--cinza);background:var(--branco);border-color:var(--borda)}
   .zap-b.interna{align-self:center;max-width:88%;background:#eceef5;
                  border:1px solid #c3c8dc;border-left:4px solid #8764b8}
   .zap-b.interna .autor{color:#5c4b7d}
@@ -1436,7 +1438,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.03 · F9.3 — o endereço capturado pela primeira vez: sete campos no lugar do texto livre, o CEP preenche rua, bairro, cidade e UF por botão, e a gravação alimenta também o campo que a procuração lê</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.04 · F9.3 — o endereço capturado pela primeira vez: sete campos no lugar do texto livre, o CEP preenche rua, bairro, cidade e UF por botão, a fila de quem está sem endereço em Cuidar do acervo, e a importação de uma planilha colada</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5012,7 +5014,7 @@ function renderAcervo(){
   tituloLista("🧹 Cuidar do acervo");
   document.getElementById("sub-lista").textContent =
     "Sem data e sem cobrança: o que fica para quando sobrar tempo. Nada aqui vence hoje.";
-  const corpo = blocoRevisao() + blocoSemAcao();
+  const corpo = blocoRevisao() + blocoSemAcao() + blocoSemEndereco();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -8482,6 +8484,51 @@ function blocoSemAcao(){
     ${grupos.slice(0,10).map(([c,kk])=>cartaoCliente(c,kk)).join("")}
     ${grupos.length>10?`<p class="meio-sub">…e mais ${grupos.length-10}. Abra cada um e registre um comentário com tarefa.</p>`:""}
   </details>`;
+}
+
+// F9.3 · A FILA DO ENDEREÇO
+// Cliente com processo em andamento e sem endereço nenhum. São 1.890
+// cadastros zerados: sem uma fila, o preenchimento depende de alguém lembrar
+// cliente a cliente, e toda procuração desses sai com a linha da rua em
+// branco. Fica em Cuidar do acervo porque é exatamente isso, trabalho sem
+// data que rende quando sobra tempo.
+//
+// De propósito FORA do contador da barra lateral (quantosNoAcervo): são
+// centenas, o número não cairia tão cedo, e um selo permanente de três
+// dígitos vira paisagem em uma semana.
+function blocoSemEndereco(){
+  const clis = [...new Set(ativos().map(k=>k.cliente_id))]
+    .map(id=>D.cliPorId.get(id))
+    .filter(c=>c && !enderecoLinha(c))
+    .sort((a,b)=>(a.nome||"")<(b.nome||"")?-1:1);
+  if(!clis.length) return "";
+  const mostra = clis.slice(0,25);
+  return `<details class="sem-acao neutro"><summary>Sem endereço no cadastro (${clis.length} cliente${
+      clis.length>1?"s":""}) — a procuração e o contrato desses saem com a linha da rua em branco</summary>
+    <div class="form-linha" style="margin:8px 0 4px;align-items:center">
+      <span class="meio-sub" style="flex:1">O botão abre a ficha com os sete campos já abertos.
+        Com o CEP em mãos, são dois cliques e o número da casa.</span>
+      <button class="btn-mini" onclick="janelaImportarEnderecos()"
+        title="colar uma planilha de CPF e endereço e gravar em lote">importar de uma planilha</button>
+    </div>
+    ${mostra.map(c=>`<div class="caso" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span class="titulo-caso" style="cursor:pointer" onclick="abrirFicha('${c.id}')"
+        title="abrir a ficha">${esc(c.nome)}</span>
+      <span class="meio-sub">${c.cpf?fmtCpf(c.cpf):"sem CPF"}</span>
+      <button class="btn-mini" style="margin-left:auto"
+        onclick="preencherEnderecoDe('${c.id}')">preencher endereço</button>
+    </div>`).join("")}
+    ${clis.length>mostra.length?`<p class="meio-sub">…e mais ${clis.length-mostra.length}.
+      A lista encurta sozinha conforme os endereços entram.</p>`:""}
+  </details>`;
+}
+// da fila direto para o campo: abre a ficha, vai para a Identificação e já
+// deixa o editor do endereço aberto, com o cursor no CEP
+async function preencherEnderecoDe(cliId){
+  await abrirFicha(cliId);
+  abaAtiva = 0; subCad = "identificacao";
+  repintarFicha();
+  editarEndereco(cliId);
 }
 
 // no Meu Dia: os recursos que o robô não enxerga e alguém tem de abrir no
@@ -12458,14 +12505,10 @@ async function buscarCep(cliId){
 }
 // uma gravação só, com os oito campos. Banco sem as colunas novas
 // (PGRST204/42703) cai em campos.civil, como salvarCliCampo já fazia —
-// `endereco` é coluna antiga e existe nos dois casos.
-async function guardarEndereco(cliId){
-  const c = D.cliPorId.get(cliId); if(!c) return;
-  const val = id => ((document.getElementById(id)||{}).value||"").trim();
-  const dados = {logradouro:val("end-logradouro"), numero:val("end-numero"),
-                 complemento:val("end-complemento"), bairro:val("end-bairro"),
-                 cidade:val("end-cidade"), uf:val("end-uf"), cep:soDigitos(val("end-cep"))};
-  if(dados.cep && dados.cep.length!==8) return aviso("O CEP tem 8 dígitos");
+// `endereco` é coluna antiga e existe nos dois casos. Devolve true quando
+// gravou; é o mesmo caminho da ficha e da importação em massa.
+async function gravarEnderecoCli(cliId, dados){
+  const c = D.cliPorId.get(cliId); if(!c) return false;
   const endereco = enderecoMontado(dados);
   const corpo = {}; for(const k in dados) corpo[k] = dados[k] || null;
   corpo.endereco = endereco || null;
@@ -12473,10 +12516,10 @@ async function guardarEndereco(cliId){
     await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify(corpo)});
     Object.assign(c, corpo);
+    return true;
   }catch(e){
     const msg = String((e && e.message) || e);
-    if(!/PGRST204|42703|does not exist|schema cache/i.test(msg))
-      return aviso("Não consegui guardar o endereço — tente de novo");
+    if(!/PGRST204|42703|does not exist|schema cache/i.test(msg)) return false;
     const civil = {...(((c.campos||{}).civil)||{})};
     for(const k in dados){ if(dados[k]) civil[k]=dados[k]; else delete civil[k]; }
     c.campos = {...(c.campos||{}), civil};
@@ -12484,10 +12527,110 @@ async function guardarEndereco(cliId){
       await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({campos:c.campos, endereco: endereco || null})});
       c.endereco = endereco || null;
-    }catch(e2){ return aviso("Não consegui guardar o endereço — tente de novo"); }
+      return true;
+    }catch(e2){ return false; }
   }
-  aviso(endereco ? "Endereço guardado" : "Endereço apagado", false);
+}
+async function guardarEndereco(cliId){
+  const val = id => ((document.getElementById(id)||{}).value||"").trim();
+  const dados = {logradouro:val("end-logradouro"), numero:val("end-numero"),
+                 complemento:val("end-complemento"), bairro:val("end-bairro"),
+                 cidade:val("end-cidade"), uf:val("end-uf"), cep:soDigitos(val("end-cep"))};
+  if(dados.cep && dados.cep.length!==8) return aviso("O CEP tem 8 dígitos");
+  if(!await gravarEnderecoCli(cliId, dados))
+    return aviso("Não consegui guardar o endereço — tente de novo");
+  aviso(enderecoMontado(dados) ? "Endereço guardado" : "Endereço apagado", false);
   abrirFicha(cliId);
+}
+
+// ── importação em massa ───────────────────────────────────────────────────
+// Preencher 1.890 endereços um a um é trabalho de semanas. Quem já tem a
+// lista fora do CRM (planilha do escritório, exportação do contador) cola
+// aqui. Colunas separadas por TAB, que é o que o Excel entrega no Ctrl+C;
+// ponto e vírgula também vale. Vírgula NÃO, porque endereço tem vírgula.
+//
+// Nada é gravado antes da conferência: a tela mostra linha a linha o que o
+// sistema entendeu e quem ele achou, e quem já tem endereço fica de fora
+// salvo ordem expressa.
+const IMP_COLUNAS = ["cpf","cep","logradouro","numero","complemento","bairro","cidade","uf"];
+let _impEnd = [];
+function janelaImportarEnderecos(){
+  caixa(`<h3>Importar endereços de uma planilha</h3>
+    <p class="meio-sub">Uma linha por cliente, colunas nesta ordem, separadas por TAB (Ctrl+C do Excel
+      já vem assim) ou por ponto e vírgula. Só o CPF e o logradouro são obrigatórios.</p>
+    <p class="meio-sub" style="font-family:monospace;background:var(--fundo);border-radius:6px;padding:8px">
+      CPF · CEP · logradouro · número · complemento · bairro · cidade · UF</p>
+    <textarea id="imp-txt" rows="8" style="width:100%;resize:vertical;font-family:monospace;font-size:12px"
+      placeholder="123.456.789-09&#9;15910-000&#9;Rua Rui Barbosa&#9;663&#9;sala 2&#9;Centro&#9;Monte Alto&#9;SP"></textarea>
+    <div class="form-linha" style="margin-top:8px">
+      <button onclick="conferirImportacao()">Conferir</button>
+      <button class="btn-mini" onclick="fecharCaixa()">cancelar</button>
+    </div>
+    <div id="imp-res"></div>`);
+}
+function conferirImportacao(){
+  const txt = (document.getElementById("imp-txt")||{}).value||"";
+  _impEnd = [];
+  txt.split(/\r?\n/).forEach(linha=>{
+    if(!linha.trim()) return;
+    const cel = linha.split(/\t|;/).map(x=>x.trim());
+    const cpf = soDigitos(cel[0]);
+    if(cpf.length !== 11) return;            // cabeçalho e lixo saem daqui
+    const dados = {};
+    IMP_COLUNAS.slice(1).forEach((nome,i)=>{ dados[nome] = cel[i+1] || ""; });
+    dados.cep = soDigitos(dados.cep);
+    dados.uf = (dados.uf||"").toUpperCase();
+    const c = D.clientes.find(x=>digitosCpf(x.cpf)===cpf);
+    let estado = "ok";
+    if(!c) estado = "sem_cadastro";
+    else if(enderecoLinha(c)) estado = "ja_tem";
+    else if(!dados.logradouro) estado = "sem_rua";
+    if(dados.cep && dados.cep.length!==8) estado = "cep_ruim";
+    if(dados.uf && !UF_NOME[dados.uf]) estado = "uf_ruim";
+    _impEnd.push({cpf, dados, cliente:c, estado});
+  });
+  const conta = e => _impEnd.filter(x=>x.estado===e).length;
+  const bons = conta("ok"), jaTem = conta("ja_tem");
+  const ROTULO = {ok:"pronto para gravar", ja_tem:"já tem endereço",
+    sem_cadastro:"CPF não está no CRM", sem_rua:"sem logradouro na linha",
+    cep_ruim:"CEP não tem 8 dígitos", uf_ruim:"UF não existe"};
+  document.getElementById("imp-res").innerHTML = !_impEnd.length
+    ? `<p class="meio-sub" style="margin-top:10px">Nenhuma linha com CPF de 11 dígitos.
+       Confira se as colunas estão separadas por TAB.</p>`
+    : `<p class="meio-sub" style="margin-top:10px">${_impEnd.length} linha(s) lidas ·
+        <b>${bons}</b> pronta(s) para gravar${jaTem?` · ${jaTem} com endereço já preenchido`:""}.</p>
+      <div style="max-height:34vh;overflow:auto;margin-top:6px">
+        ${_impEnd.map(l=>`<div class="caso" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <span class="titulo-caso">${l.cliente?esc(l.cliente.nome):fmtCpf(l.cpf)}</span>
+          <span class="meio-sub">${esc(enderecoMontado(l.dados)||"—")}${
+            l.dados.cidade?` · ${esc(l.dados.cidade)}${l.dados.uf?"/"+esc(l.dados.uf):""}`:""}</span>
+          <span class="chip ${l.estado==="ok"?"verde":"neutro"}" style="margin-left:auto">${ROTULO[l.estado]}</span>
+        </div>`).join("")}
+      </div>
+      ${jaTem?`<label class="cfg-ck" style="margin-top:8px">
+        <input type="checkbox" id="imp-subst"> substituir também os ${jaTem} que já têm endereço</label>`:""}
+      <div class="form-linha" style="margin-top:8px">
+        <button onclick="gravarImportacao()" ${bons||jaTem?"":"disabled"}>Gravar</button>
+        <button class="btn-mini" onclick="fecharCaixa()">cancelar</button>
+      </div>`;
+}
+async function gravarImportacao(){
+  const subst = (document.getElementById("imp-subst")||{}).checked;
+  const fila = _impEnd.filter(l=>l.estado==="ok" || (subst && l.estado==="ja_tem"));
+  if(!fila.length) return aviso("Nada para gravar");
+  const res = document.getElementById("imp-res");
+  let feitos = 0; const falhas = [];
+  for(const l of fila){
+    res.innerHTML = `<p class="meio-sub" style="margin-top:10px">gravando ${feitos+1} de ${fila.length}…</p>`;
+    if(await gravarEnderecoCli(l.cliente.id, l.dados)) feitos++;
+    else falhas.push(l.cliente.nome);
+  }
+  fecharCaixa();
+  plim();
+  aviso(falhas.length
+    ? `${feitos} endereço(s) gravados · ${falhas.length} falharam (${falhas.slice(0,3).join(", ")})`
+    : `${feitos} endereço(s) gravados`, false);
+  montarSidebar(); render();
 }
 
 // A senha do Meu INSS morava numa caixa amarela ao lado do cartão — e amarelo,
