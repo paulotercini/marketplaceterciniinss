@@ -354,22 +354,51 @@ def main():
         sys.exit("Defina SUPABASE_URL e SUPABASE_SERVICE_KEY.")
     hoje = datetime.date.today().isoformat()
 
-    casos = _rest("GET", "/rest/v1/casos?processo=not.is.null"
-                         "&fase=neq.encerrado&select=id,processo") or []
+    # UM CASO PODE TER VÁRIOS PROCESSOS. O caso nasce de um protocolo ou NB e
+    # ramifica: mandado de segurança, ação pelo rito comum, recurso. Todos
+    # entram na consulta — inclusive os marcados "não é nosso" (processo do
+    # cliente com outro advogado), que é justamente o que o escritório quer
+    # acompanhar sem trabalhar. O que fica de fora é o desmarcado da vista.
+    try:
+        casos = _rest("GET", "/rest/v1/casos?fase=neq.encerrado"
+                             "&or=(processo.not.is.null,processos.neq.[])"
+                             "&select=id,processo,processos,datajud_multi") or []
+    except Exception:      # banco sem a coluna `processos` (schema não rodado)
+        casos = _rest("GET", "/rest/v1/casos?processo=not.is.null"
+                             "&fase=neq.encerrado&select=id,processo") or []
     porTribunal = {}                    # alias -> {numero20: (formatado, [caso_ids])}
+    principal = {}                      # caso_id -> numero20 do processo principal
     for k in casos:
-        achado = cnj(k["processo"])
-        if not achado:
-            continue
-        n20, fmt, alias = achado
-        d = porTribunal.setdefault(alias, {})
-        d.setdefault(n20, (fmt, []))[1].append(k["id"])
+        nums = []
+        for p in (k.get("processos") or []):
+            if isinstance(p, str):
+                nums.append(p)
+            elif isinstance(p, dict) and p.get("acompanhar") is not False:
+                nums.append(p.get("numero"))
+        if k.get("processo"):
+            nums.insert(0, k["processo"])
+        vistos = set()
+        for n in nums:
+            achado = cnj(n or "")
+            if not achado or achado[0] in vistos:
+                continue
+            vistos.add(achado[0])
+            n20, fmt, alias = achado
+            if k.get("processo") and cnj(k["processo"]) and cnj(k["processo"])[0] == n20:
+                principal[k["id"]] = n20
+            d = porTribunal.setdefault(alias, {})
+            d.setdefault(n20, (fmt, []))[1].append(k["id"])
     if not porTribunal:
         print("nenhum caso com processo judicial reconhecido.")
         return
 
     achados = encontrados = ausentes = 0
     falhas = []
+    # o mapa por caso começa com o que JÁ está no banco: o teto de tempo pode
+    # cortar a rodada no meio, e reescrever só com o consultado agora apagaria
+    # o andamento dos processos que ficaram para a próxima
+    estado = {k["id"]: dict(k.get("datajud_multi") or {}) for k in casos}
+    sem_coluna = [False]
     # teto próprio, abaixo do teto do job (30 min): estourar o do job vira
     # "cancelled" sem diagnóstico; parar aqui grava o que já foi consultado
     # (o PATCH é por tribunal) e ainda avisa quem ficou para a próxima.
@@ -395,6 +424,7 @@ def main():
             print(f"  {alias} indisponível agora ({type(e).__name__}); segue")
             falhas.append(alias)
             continue
+        tocados = set()
         for n20, (fmt, ids) in mapa.items():
             t = res.get(n20)
             if t:
@@ -404,11 +434,31 @@ def main():
                 t = {"processo": fmt, "ultimo": None, "consultado_em": hoje}
                 ausentes += 1
             for cid in ids:
-                _rest("PATCH", f"/rest/v1/casos?id=eq.{cid}", {"datajud": t},
-                      prefer="return=minimal")
+                estado.setdefault(cid, {})[n20] = t
+                tocados.add(cid)
             achados += 1
+        # UM PATCH POR CASO, com o mapa inteiro: o caso pode ter processos em
+        # tribunais diferentes, e gravar processo a processo fazia o último
+        # apagar o anterior. `datajud` continua sendo o do principal, que é o
+        # que a ficha e as mensagens ao cliente já leem.
+        for cid in sorted(tocados):
+            corpo = {"datajud_multi": estado[cid]}
+            prin = principal.get(cid)
+            if prin and prin in estado[cid]:
+                corpo["datajud"] = estado[cid][prin]
+            try:
+                _rest("PATCH", f"/rest/v1/casos?id=eq.{cid}", corpo, prefer="return=minimal")
+            except Exception:
+                # banco sem a coluna nova: grava só o principal, como antes
+                if "datajud" in corpo:
+                    _rest("PATCH", f"/rest/v1/casos?id=eq.{cid}",
+                          {"datajud": corpo["datajud"]}, prefer="return=minimal")
+                    sem_coluna[0] = True
     print(f"processos consultados: {achados} · com andamento: {encontrados} "
           f"· sem registro público: {ausentes}")
+    if sem_coluna[0]:
+        print("::warning::O banco ainda não tem `casos.datajud_multi`: só o processo "
+              "principal de cada caso foi gravado. Rode crm/fase2/schema_por_em_dia.sql.")
     if falhas:
         print(f"::notice::tribunais que não responderam desta vez: "
               f"{', '.join(falhas)} — serão tentados na próxima consulta.")

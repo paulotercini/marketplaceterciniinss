@@ -261,6 +261,28 @@ update pagamentos p set cliente_id = k.cliente_id
   from casos k where p.caso_id = k.id and p.cliente_id is null;
 
 
+-- ── 14. Um caso, VÁRIOS processos judiciais ──────────────────────────────
+-- O caso nasce de um ponto de partida (protocolo ou NB) e dali ramifica: um
+-- mandado de segurança, depois a ação pelo rito comum, depois o recurso. Era
+-- um número só por caso (`casos.processo`), e o segundo processo obrigava a
+-- abrir um caso paralelo — que virava dois lugares para a mesma história.
+--
+-- `processos` é a lista: cada item {numero, rotulo, nosso, acompanhar}.
+--   nosso=false   -> processo do cliente que NÃO é do escritório (vem de
+--                    outro advogado), mas interessa acompanhar
+--   acompanhar=false -> arquivado da vista, sem apagar o histórico
+-- `casos.processo` continua sendo o PRINCIPAL: é por ele que o DataJud
+-- consulta, que a busca acha e que o coletor do PJe casa.
+alter table casos add column if not exists processos jsonb not null default '[]'::jsonb;
+-- o andamento oficial de CADA número: mapa "<20 dígitos>" -> mesmo formato de
+-- `datajud`. O `datajud` segue existindo, com o do processo principal.
+alter table casos add column if not exists datajud_multi jsonb;
+-- quem já tinha um processo gravado entra na lista com ele
+update casos set processos = jsonb_build_array(
+    jsonb_build_object('numero', processo, 'nosso', true, 'acompanhar', true))
+  where coalesce(processo,'') <> '' and processos = '[]'::jsonb;
+
+
 -- ── conferência ───────────────────────────────────────────────────────────
 -- Lista as colunas que o CRM e a importação usam, mais a tabela `coletas` e
 -- a restrição de fase. Faltando alguma linha, o SQL não rodou inteiro — e é

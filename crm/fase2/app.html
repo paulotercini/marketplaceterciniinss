@@ -1367,7 +1367,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.96 · o rascunho não se perde mais, as sugestões abrem sempre, e o celular acerta a folga do campo</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.97 · um caso, vários processos: sub-menu para escolher, botões separados para a coleta oficial e a do PJe, e marcação de processo que não é nosso</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1585,6 +1585,10 @@ let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
 let subAba = ler("crm_subaba") || "escritorio", instSel = 0;
+// qual PROCESSO do caso está sendo olhado (número, "" = o principal) e de que
+// FONTE: a consulta oficial do CNJ ou a coleta do PJe. Duas listas de
+// movimentos uma embaixo da outra não se lia — agora é escolha, não pilha.
+let procSel = "", fonteCnj = "oficial", nupSel = "";
 
 // som de retorno, como no To Do (gerado na hora — sem arquivo de áudio).
 // "plim" duplo ao concluir; tique curto nos avisos. 🔔 na lateral silencia.
@@ -7068,6 +7072,7 @@ async function abrirFicha(cliId){
   if(trocouCliente){
     casoSel = "__auto__"; abaAtiva = 2;   // cliente novo: abre no 1º caso ativo
     instSel = 0; tudoSoMarcos = false;    // escolhas do cliente ANTERIOR não vazam
+    procSel = ""; nupSel = ""; fonteCnj = "oficial";   // idem: processo e fonte
   }
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
@@ -9584,8 +9589,8 @@ function chaveCnj(inst, n){
 }
 // as instâncias do CNJ como o painel mostra — helper único para o painel e
 // para a etiqueta da aba não divergirem
-function cnjInstancias(k){
-  const t=k.datajud||{};
+function cnjInstancias(k, dj){
+  const t=dj||k.datajud||{};
   return (t.instancias&&t.instancias.length) ? t.instancias
     : [{rotulo:"Processo", orgao:t.orgao, classe:t.classe, ultimo:t.ultimo,
         historico:(t.recentes||[]).map(m=>({...m,decisao:false})), decisao:null}];
@@ -9997,11 +10002,22 @@ function painelCRPS(k){
       ${estadoCRPS().cor==="#c62828"?`<p class="meio-sub" style="color:#c62828;margin-top:6px">⚠ O crachá do gov.br venceu — renove em ⚙️ Configurações para o robô voltar a consultar.</p>`:""}
     </div>${gerNups}`;
   }
-  return `${avisoJuntos(k)}
+  // UM RECURSO POR VEZ. Um caso pode ter dois, três recursos administrativos;
+  // empilhados, a página virava um rolo em que ninguém achava o que procurava.
+  const todos = [...manuais, ...comEventos];
+  const escolhido = todos.find(b=>soDig(b.nup)===soDig(nupSel)) || todos[0];
+  const menuNup = todos.length>1 ? `<div class="sub-menu instancias" style="width:100%">
+    ${todos.map(b=>{
+      const ult=(b.eventos||[]).find(e=>e.data);
+      return `<button class="${soDig(b.nup)===soDig(escolhido.nup)?"on":""}"
+        onclick="nupSel='${esc(b.nup)}';repintarFicha()">${esc(formatarNup(b.nup))}${arqInfo(k,"crps:"+soDig(b.nup))?" 🗄":""}
+        <small>${b.manual?"consulta manual":ult&&ult.data?fmt(ult.data.slice(0,10)):"—"}</small></button>`;
+    }).join("")}
+  </div>` : "";
+  return `${avisoJuntos(k)}${menuNup}
     ${comEventos.length?`<div class="form-linha" style="margin-bottom:8px">
       <button class="btn-mini" onclick="copiarCrps('${k.id}')">💬 copiar mensagem ao cliente</button></div>`:""}
-    ${manuais.map(b=>quadroManual(b, k)).join("")}
-    ${comEventos.map(t=>blocoRecurso(t, k.id)).join("")}
+    ${escolhido ? (escolhido.manual ? quadroManual(escolhido, k) : blocoRecurso(escolhido, k.id)) : ""}
     ${gerNups}`;
 }
 
@@ -10396,9 +10412,8 @@ async function removerCrpsNup(casoId, nup){
 
 // o quadro dos movimentos que a extensão colheu no painel do PJe — andamento
 // oficial tanto quanto o DataJud, só que mais fresco (chega na hora da coleta)
-function caixaPje(k, ands){
-  const movs = andamentosPje(ands);
-  if(!movs.length) return "";
+function caixaPje(k, movs){
+  if(!movs || !movs.length) return "";
   return `<div class="caso" style="margin-bottom:10px">
     <div class="rotulo-caso">⚡ coletas do PJe (${movs.length})</div>
     <ul class="mov-lista">
@@ -10410,20 +10425,171 @@ function caixaPje(k, ands){
     </ul></div>`;
 }
 
+// ── UM CASO, VÁRIOS PROCESSOS ────────────────────────────────────────────
+// O caso tem um ponto de partida (protocolo/NB) e dali ramifica: mandado de
+// segurança, ação pelo rito comum, recurso. `casos.processos` é a lista;
+// `casos.processo` é o principal (o que o DataJud consulta e a busca acha).
+// Cada item pode ser marcado como NÃO NOSSO — processo que o cliente teve com
+// outro advogado, que interessa acompanhar mas não é trabalho do escritório.
+function processosDoCaso(k){
+  const lista = Array.isArray(k.processos) ? k.processos.slice() : [];
+  const norm = p => (typeof p === "string" ? {numero:p} : {...p});
+  const out = lista.map(norm).filter(p=>soDig(p.numero));
+  const prin = soDig(k.processo);
+  if(prin && !out.some(p=>soDig(p.numero)===prin))
+    out.unshift({numero:k.processo, nosso:true});
+  return out.map(p=>({
+    numero: p.numero,
+    rotulo: p.rotulo || "",
+    nosso: p.nosso !== false,
+    acompanhar: p.acompanhar !== false,
+    principal: soDig(p.numero)===prin,
+  }));
+}
+// o andamento oficial daquele número: o mapa por processo quando existe,
+// senão o `datajud` de sempre (que é o do principal)
+function datajudDe(k, numero){
+  const d = k.datajud_multi || {};
+  const achado = d[soDig(numero)];
+  if(achado) return achado;
+  return soDig(numero)===soDig(k.processo) ? (k.datajud||null) : null;
+}
+function rotuloProcesso(k, p){
+  const t = datajudDe(k, p.numero) || {};
+  const cls = p.rotulo || t.classe || (k.classe_judicial && p.principal ? k.classe_judicial : "");
+  return (cls ? classeCurta(cls)+" · " : "") + fmtProc(p.numero);
+}
+// "MSCiv" -> "Mandado de Segurança"; o resto fica como veio
+function classeCurta(c){
+  const s = String(c||"");
+  if(/^MSCiv/i.test(s)) return "Mandado de Segurança";
+  if(/^PJEC|JEC/i.test(s)) return "JEF";
+  if(/ProceComCiv|Procedimento Comum/i.test(s)) return "Rito comum";
+  if(/^ApCiv|Apela/i.test(s)) return "Apelação";
+  if(/^RecInoCiv|Inomin/i.test(s)) return "Recurso inominado";
+  return s;
+}
+const fmtProc = n => {
+  const d = soDig(n);
+  return d.length===20
+    ? `${d.slice(0,7)}-${d.slice(7,9)}.${d.slice(9,13)}.${d.slice(13,14)}.${d.slice(14,16)}.${d.slice(16)}`
+    : (n||"");
+};
+async function salvarProcessos(casoId, lista){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const antes = k.processos, antesP = k.processo;
+  k.processos = lista;
+  // o principal é o primeiro NOSSO que ainda está sendo acompanhado — é ele
+  // que o DataJud consulta e que a busca do CRM encontra
+  const prin = lista.find(p=>p.nosso!==false && p.acompanhar!==false) || lista[0];
+  k.processo = prin ? prin.numero : null;
+  try{
+    await patchCaso(casoId, {processos:lista, processo:k.processo});
+  }catch(e){
+    k.processos = antes; k.processo = antesP;
+    return aviso("Rode o crm/fase2/schema_por_em_dia.sql no Supabase — falta a coluna 'processos'");
+  }
+  repintarFicha();
+}
+async function acrescentarProcesso(casoId){
+  const inp = document.getElementById("proc-novo-"+casoId); if(!inp) return;
+  const n = (inp.value||"").trim(); if(!soDig(n)) return;
+  if(soDig(n).length!==20) return aviso("O número do processo (CNJ) tem 20 dígitos");
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const lista = processosDoCaso(k);
+  if(lista.some(p=>soDig(p.numero)===soDig(n))) return aviso("Esse processo já está no caso");
+  inp.value="";
+  await salvarProcessos(casoId, [...lista, {numero:fmtProc(n), nosso:true, acompanhar:true}]);
+  aviso("Processo acrescentado — o DataJud consulta na próxima rodada", false);
+}
+async function alternarNossoProcesso(casoId, numero){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  await salvarProcessos(casoId, processosDoCaso(k).map(p=>
+    soDig(p.numero)===soDig(numero) ? {...p, nosso:!p.nosso} : p));
+}
+async function removerProcesso(casoId, numero){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  if(!confirm(`Tirar o processo ${fmtProc(numero)} deste caso?\n\nOs andamentos já gravados continuam no histórico.`)) return;
+  await salvarProcessos(casoId, processosDoCaso(k).filter(p=>soDig(p.numero)!==soDig(numero)));
+}
+// o quadro de gerência, nos moldes do que a aba 🖥 Recurso já faz com os NUPs
+function gerenciaProcessos(k){
+  const ps = processosDoCaso(k);
+  return `<div class="caso">
+    <div class="rotulo-caso">processos judiciais deste caso (${ps.length})</div>
+    ${ps.map(p=>`<div class="form-linha" style="margin-top:4px;align-items:center">
+      <span class="chip neutro" style="font-family:monospace">${esc(fmtProc(p.numero))}</span>
+      ${p.principal?`<span class="chip ben" title="é por ele que o DataJud consulta e a busca encontra">principal</span>`:""}
+      ${p.nosso
+        ? `<button class="btn-mini" onclick="alternarNossoProcesso('${k.id}','${esc(p.numero)}')"
+             title="marcar como processo que NÃO é do escritório — fica só para acompanhar">🔭 não é nosso</button>`
+        : `<span class="chip neutro" title="processo do cliente com outro advogado — acompanhamos, não trabalhamos nele">🔭 só acompanho</span>
+           <button class="btn-mini" onclick="alternarNossoProcesso('${k.id}','${esc(p.numero)}')">é nosso</button>`}
+      <button class="btn-mini" onclick="removerProcesso('${k.id}','${esc(p.numero)}')" title="tirar este processo do caso">✕</button>
+    </div>`).join("") || `<p class="meio-sub">Nenhum processo judicial neste caso.</p>`}
+    <div class="form-linha" style="margin-top:8px">
+      <input id="proc-novo-${k.id}" placeholder="＋ número do processo (CNJ), 20 dígitos" style="flex:1"
+        onkeydown="if(event.key==='Enter')acrescentarProcesso('${k.id}')">
+      <button class="btn-mini" onclick="acrescentarProcesso('${k.id}')">adicionar</button>
+    </div>
+    <p class="meio-sub" style="margin-top:6px">Um caso pode ter mandado de segurança, ação pelo rito
+      comum e recurso — todos aqui, cada um com seu andamento. O que <b>não é do escritório</b> fica
+      marcado 🔭 e continua sendo acompanhado.</p>
+  </div>`;
+}
+
+// os movimentos do PJe DAQUELE processo: o texto da coleta traz o número no
+// fim ("… — MSCiv 5000469-84.2025.4.03.6136"). O que não disser de qual
+// processo é fica com o principal, que é de onde ele veio.
+function pjeDoProcesso(ands, numero, ehPrincipal){
+  const movs = andamentosPje(ands);
+  const d = soDig(numero);
+  const comNumero = movs.filter(a=>/\d{15,}/.test(soDig(a.texto||"")));
+  const meus = movs.filter(a=>soDig(a.texto||"").includes(d));
+  if(meus.length) return meus;
+  return ehPrincipal ? movs.filter(a=>!comNumero.includes(a)) : [];
+}
+
 function painelCNJ(k, ands){
-  const t = k.datajud;
-  const pjeBox = caixaPje(k, ands);
+  const ps = processosDoCaso(k);
+  // qual processo está sendo olhado: o escolhido, senão o principal
+  const p = ps.find(x=>soDig(x.numero)===soDig(procSel)) || ps.find(x=>x.principal) || ps[0] || null;
+  const numero = p ? p.numero : k.processo;
+  const t = p ? datajudDe(k, numero) : k.datajud;
+  const pjeMovs = pjeDoProcesso(ands, numero, !p || p.principal);
+  const temPje = pjeMovs.length > 0;
+  const temOficial = !!(t && (t.ultimo || (t.instancias||[]).length));
+  // com mais de um processo, escolher vem ANTES de ler
+  const menuProc = ps.length>1 ? `<div class="sub-menu instancias" style="width:100%">
+    ${ps.map(x=>`<button class="${soDig(x.numero)===soDig(numero)?"on":""}"
+      onclick="procSel='${esc(x.numero)}';instSel=0;repintarFicha()"
+      title="${x.nosso?"processo do escritório":"processo do cliente com outro advogado — só acompanhamos"}">
+      ${x.nosso?"":"🔭 "}${esc(rotuloProcesso(k,x))}</button>`).join("")}
+  </div>` : "";
+  // duas fontes, dois botões — nunca mais uma lista embaixo da outra. O botão
+  // do PJe só existe quando existe coleta do PJe para ESTE processo.
+  const fonte = (!temOficial && temPje) ? "pje" : (fonteCnj==="pje" && temPje ? "pje" : "oficial");
+  const menuFonte = (temPje && temOficial) ? `<div class="sub-menu fontes" style="width:100%">
+    <button class="${fonte==="oficial"?"on":""}" onclick="fonteCnj='oficial';repintarFicha()"
+      title="consulta pública do CNJ (DataJud), atualizada todo dia útil">⚖️ Coleta oficial (CNJ)</button>
+    <button class="${fonte==="pje"?"on":""}" onclick="fonteCnj='pje';repintarFicha()"
+      title="o que a extensão trouxe do PJe na sua sessão">⚡ Coleta do PJe (${pjeMovs.length})</button>
+  </div>` : "";
+  const cabec = menuProc + menuFonte;
+  const pjeBox = fonte==="pje" ? caixaPje(k, pjeMovs) : "";
+  if(fonte==="pje")
+    return `${cabec}${pjeBox}${gerenciaProcessos(k)}`;
   // judicial sem número: a aba existe justamente para dizer o que falta
-  if(!soDig(k.processo) && !(t && (t.ultimo || (t.instancias||[]).length)))
-    return `${pjeBox}<div class="caso"><p class="meio-sub">Este caso ainda não tem o número do processo.
-      Preencha <b>Processo (CNJ)</b> no quadro acima (lápis ✎) — com ele, o DataJud consulta
-      todo dia útil e o coletor do PJe passa a casar o processo sozinho.</p></div>`;
-  if(!t || !(t.ultimo || (t.instancias||[]).length))
-    return `${pjeBox}<div class="caso">${consultaPendente(k) || `<p class="meio-sub">Sem andamento oficial para este processo na base do CNJ.</p>`}</div>`;
-  const insts = cnjInstancias(k);
+  if(!soDig(numero) && !temOficial)
+    return `${cabec}<div class="caso"><p class="meio-sub">Este caso ainda não tem o número do processo.
+      Preencha <b>Processo (CNJ)</b> no quadro acima (lápis ✎) ou acrescente abaixo — com ele, o DataJud
+      consulta todo dia útil e o coletor do PJe passa a casar o processo sozinho.</p></div>${gerenciaProcessos(k)}`;
+  if(!temOficial)
+    return `${cabec}<div class="caso">${consultaPendente(k) || `<p class="meio-sub">Sem andamento oficial para este processo na base do CNJ.</p>`}</div>${gerenciaProcessos(k)}`;
+  const insts = cnjInstancias(k, t);
   const i = Math.min(instSel, insts.length-1), inst = insts[i];
   const u = inst.ultimo || {};
-  return `${previsaoBox(k)}
+  return `${cabec}${previsaoBox(k)}
   ${insts.length>1?`<div class="sub-menu instancias">
     ${insts.map((x,n)=>`<button class="${n===i?"on":""}" onclick="instSel=${n};repintarFicha()">${esc(x.rotulo||"instância")}${arqInfo(k,chaveCnj(x,n))?" 🗄":""}
       <small>${x.ultimo&&x.ultimo.data?fmt(x.ultimo.data):"—"}</small></button>`).join("")}
@@ -10453,7 +10619,6 @@ function painelCNJ(k, ands){
   </div>
   ${marcoCaso(k)}
   ${inssFilaCaso(k)}
-  ${pjeBox}
   <div class="caso">
     <div class="rotulo-caso">histórico oficial ${inst.total_movimentos?`(${(inst.historico||[]).length} de ${inst.total_movimentos} movimentos)`:""}</div>
     <ul class="mov-lista">
@@ -10464,7 +10629,8 @@ function painelCNJ(k, ands){
         ${segBtnHtml(segRegistrar(k.id, (m.nome||"")+(m.complemento?" — "+m.complemento:""), null))}
       </li>`).join("") || "<p class='meio-sub'>Sem movimentos.</p>"}
     </ul>
-  </div>`;
+  </div>
+  ${gerenciaProcessos(k)}`;
 }
 
 // A previsão é informação NOSSA, não do tribunal: fica num quadrado à parte,
