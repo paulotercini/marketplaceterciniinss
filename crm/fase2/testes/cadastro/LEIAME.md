@@ -1,6 +1,6 @@
-# Arneses de fumaça do Cadastro (F9.1 a F10)
+# Arneses de fumaça do Cadastro e da F10
 
-Sete arquivos que sobem o `app.html` num servidor local, interceptam o Supabase
+Oito arquivos que sobem o `app.html` num servidor local, interceptam o Supabase
 e o ViaCEP, e trabalham com quatro clientes **inventados**. Nenhum dado real de
 cliente passa por aqui, e nenhuma chamada sai para a internet.
 
@@ -8,7 +8,8 @@ cliente passa por aqui, e nenhuma chamada sai para a internet.
 cd crm/fase2/testes/cadastro
 npm i playwright          # só na primeira vez
 cp ../../app.html .       # o arnês lê o app ao lado dele
-node triagem.js && node endereco.js && node fila.js && node importar.js
+node triagem.js && node avisos.js && node endereco.js
+node fila.js && node importar.js
 node interacao.js && node emoji.js && node fumaca.js
 ```
 
@@ -21,6 +22,7 @@ node interacao.js && node emoji.js && node fumaca.js
 | `fila.js` | quem entra e quem não entra na fila de sem endereço, e o botão que abre no editor | 10 |
 | `importar.js` | conferir não grava, o cabeçalho não vira linha, e só as linhas prontas são escritas | 13 |
 | `triagem.js` | a leitura automática dos cinco passos que o CRM responde sozinho, e a marcação com autoria | 18 |
+| `avisos.js` | o CadÚnico virando lembrete de 2 anos (criar, mover, desligar) e o caso novo gerando menção | 17 |
 
 Cada um sai com código 1 quando alguma asserção falha, então servem em CI.
 
@@ -48,3 +50,9 @@ mexa nele, não em cada arnês.
 - **`:first-of-type` conta entre irmãos do mesmo elemento**, não entre os da
   mesma classe. Dentro do cartão, `.tri-passo:first-of-type` casava com o
   título. Por isso os passos vivem num `.tri-lista` próprio.
+- **Função que lê o formulário não roda sozinha no arnês.** `novoCaso()`
+  procura `#nk-ben`, `#nk-fase` e `#nk-prazo`, que só existem com a ficha
+  pintada. O `avisos.js` injeta os três antes de chamar.
+- **Duas falhas em três eram expectativa minha, não código.** A fila acusou 2
+  clientes onde eu esperava 3, e o padrão de quem recebe caso novo trouxe dois
+  advogados onde eu tinha escrito um. O código estava certo nas duas.
