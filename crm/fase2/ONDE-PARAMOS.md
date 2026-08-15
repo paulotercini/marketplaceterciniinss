@@ -1,236 +1,62 @@
-# Onde paramos — 15.08.2026
+# Onde paramos — 15.08.2026, versão 09.17
 
-Bilhete de passagem entre conversas. O contexto de uma sessão acaba; o
-repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
+## O que foi feito nesta rodada
 
-> **Mapa completo em `cowork/`** — seis arquivos gerados nesta data, cada um
-> com o seu gerador versionado ao lado, para o próximo retrato ser um comando:
-> `01-DOSSIE-BANCO.md` (o banco de produção, tabela a tabela),
-> `02-DOSSIE-SYNC-TODO.md` (como a sincronização funciona hoje),
-> `03-MAPA-APP.md` (índice das 13.381 linhas do app),
-> `04-ESTADO-E-PENDENCIAS.md` (o que falta, com esforço estimado),
-> `05-AMBIENTE.md` (rodar, publicar, homologação) e
-> `06-amostra-ficticia.json` (20 clientes inventados para testar).
+**F15 · contraste e alvo de toque** (09.13). Auditoria no CRM em uso, tela a
+tela. Doze cores de texto reprovavam nos 4,5:1 da WCAG; cinco alvos de clique
+ficavam abaixo de 24×24 px, três deles nas quinze telas.
 
-## Em que pé estão as coisas
+A primeira medida que fiz estava **errada** — ignorava o canal alfa e
+comparava texto claro com fundo transparente. Refiz compondo o alfa pela
+cadeia de pais até o primeiro fundo opaco. Nenhuma correção foi aplicada com
+a medida errada.
 
-**App na versão 09.12**, publicada em
-https://paulotercini.github.io/marketplaceterciniinss/crm/ (Ctrl+Shift+R para
-ver a versão nova).
+**F16 · a travada** (09.14 e 09.15). O que mais pesa no uso não era cor.
+`hoje()` montava um formatador de fuso a cada chamada e era chamada 5.790
+vezes num filtro só.
 
-**A reforma visual F1 a F8 está inteira no ar**, mais duas auditorias, a
-**F9.1** (a Identificação do Cadastro em grade de 12 colunas, com RG, sexo,
-estado civil, profissão, nome da mãe, PIS/NIT e telefones em lista) e a
-**F9.2**, em dois passos:
+| tela | antes | depois |
+|---|---|---|
+| ☀️ Meu Dia | 1.601 ms | 25 ms |
+| montarSidebar | 1.206 ms | 34 ms |
+| quantosNoMeuDia | 1.138 ms | 2 ms |
+| Planejado | 1.082 ms | 161 ms |
 
-- a senha do Meu INSS saiu da caixa amarela (amarelo quer dizer prazo) e
-  virou campo da grade, ao lado da pasta do cliente; sem senha, o campo fica
-  tracejado e convida a cadastrar. Morreram o `.id-card.destaque` e o bloco
-  `.id-grid` da aba;
-- CPF e nascimento passaram a aceitar clique no cartão inteiro, como os
-  demais campos — antes só o lápis de 4px abria o editor;
-- `.cad-grade` ganhou `align-items:start`: o cartão alto de Telefones
-  esticava o Endereço vazio para 200px com três palavras no meio;
-- protocolos, parceria e parentes viraram o cartão **Ligações do cliente**;
-- **zero emoji nas cinco divisões** do Cadastro (25 pictogramas saíram).
-  Onde o desenho carregava informação, entrou o SVG do `CAD_IC`.
+Mesma causa em `dataSP`, `horaSP` e `agoraSP`, que serviam a Agenda e ao
+Calendário. E um erro que derrubava a tela inteira: `visao="fase:pagamento"`
+fazia `FASES.find(...)[1]` sem guarda.
 
-**A F9.3 também está no ar**, em dois commits:
+**F17 · a espécie dentro da triagem** (09.16 e 09.17). Doze famílias de
+espécie, cada uma com três ou quatro pontos de conferência, cada uma nomeando
+a skill do escritório de onde o ponto veio. Entram entre o passo 7 e a
+conclusão, com etiqueta da espécie. A ferramenta do site interno aparece no
+passo em que serve. "Encerrar o atendimento" escreve uma linha no histórico
+do caso.
 
-- o **endereço em sete campos** dentro do próprio campo da grade, com o CEP
-  consultando o ViaCEP **por botão**, nunca a cada tecla. Grava numa PATCH só,
-  nas sete colunas mais o espelho `clientes.endereco`;
-- a **fila de quem está sem endereço** em Cuidar do acervo, com o botão que
-  abre a ficha já no editor, e a **importação de planilha colada** (TAB ou
-  ponto e vírgula), que confere linha a linha antes de gravar qualquer coisa.
+Dois erros reais que o teste achou: "Recurso especial ou incidente" caía na
+família da aposentadoria especial, e `casoSel` sobrevivia à troca de ficha, de
+modo que o atendimento de um cliente seria lançado no processo de outro.
 
-**A F10 está inteira no ar.** A peça grande foi a **sub-aba Triagem**, oito
-passos, cinco deles respondidos pelo próprio CRM (processo judicial anterior,
-recurso no CRPS, CadÚnico, benefício ativo e protocolos). CNIS lê os anexos
-procurando arquivo com CNIS no nome; Indicadores fica honesto, dizendo que o
-CRM não lê o extrato. Cada marcação grava estado, autor e data, e a conclusão
-traz o próximo passo nas três opções da regra do escritório. Mora em
-`clientes.triagem`, com `campos.triagem` de reserva, sem precisar de migração.
+## A suíte
 
-A outra metade também saiu. O **CadÚnico virou lembrete de verdade**: gravar
-a data cria uma linha em `lembretes`, tipo `cadunico`, a cada 24 meses, presa
-ao caso. Mudar a data move o vencimento em vez de criar um segundo; apagar
-desliga. O bloco calculado do Meu Dia pula quem já tem lembrete, senão o mesmo
-CadÚnico aparecia duas vezes.
+248 verificações em 16 arquivos, em `crm/fase2/testes/cadastro`. O LEIAME
+registra as armadilhas — inclusive as três desta rodada, todas do arquivo de
+teste e não do programa.
 
-E o **caso novo avisa quem decide**, nos cinco caminhos em que uma pessoa cria
-caso na tela. Os automáticos (PAT, PJe, separação de recursos) ficam de fora de
-propósito, senão uma importação de sessenta protocolos vira sessenta avisos.
-Quem recebe sai de ⚙️ Configurações, um visto por pessoa; sem escolha gravada,
-o padrão são os advogados ativos.
+## O que continua com você
 
-Dois defeitos que a captura expôs no gerador de documentos e já foram
-corrigidos: `<ESTADO>` imprimiria "Estado de SP" (agora há o mapa das 27 UFs
-por extenso) e a qualificação diria "na Av./Rua Rua Rui Barbosa" (o modelo
-passou a "domiciliado(a) na `<ENDERECO>`", por decisão do Paulo, nas três
-ocorrências).
+- 243 clientes sem CPF (duplicata esperando o dia em que alguém escrever o CPF
+  no título da tarefa do To Do)
+- a mão de volta CRM → To Do, decisão em aberto
+- confirmar que a F9.0 destravou as 2.621 parcelas — não tenho acesso ao banco
+- o rótulo do B26 e da Espécie 57: enquanto forem código de NB cru, esses
+  casos seguem com os oito passos fixos
+- HARs do e-SAJ e do eproc, resumos de acórdãos
 
-**Três listas do To Do deixaram de virar caso**, por decisão do Paulo:
+## O que eu proponho para a próxima
 
-- `💵 Pagamentos` → a aba 💰 Honorários da ficha do cliente (08.93);
-- `🙏 Aposentadorias Futuras` → 🔔 Lembrete, com as anotações do To Do dentro
-  e um botão que transfere cada uma para os andamentos de um caso (08.90);
-- `🙋 Escritório` → anotação no Cadastro do cliente; quem está lá aparece como
-  **🟡 Em atendimento — buscando documentos**, sem sub-abas de andamento
-  (08.99).
-
-**O Cadastro virou o ponto de partida do atendimento** (08.98/09.00): divisões
-Identificação · Anotações · Documentos · Consulta · Mensagens; documentos do
-escritório (procurações, contratos, declarações e termo) gerados a partir da
-ficha; catálogo de documentos por benefício impresso para o cliente e
-registrado no CRM; indicação de pagamento ao INSS virando lembrete com o
-cronograma inteiro, sem criar caso.
-
-**O menu da ficha ficou em cinco abas**: Cadastro · Lembretes · Casos ·
-Perícias · Honorários.
-
-**Sincronização To Do → CRM** de hora em hora, 07h–20h, seg–sáb. Escrita de
-volta CRM → To Do **DESLIGADA de propósito**, com trava dupla
-(`ESCREVER_TODO=1` no workflow e no próprio script). Não religue sem o Paulo
-pedir.
-
-## O que trava HOJE, e depende do Paulo
-
-1. **As três linhas do índice de `pagamentos`** — fim do
-   `crm/fase2/schema_conferencia.sql`. Sem elas, **2.621 parcelas** do To Do
-   são recusadas a cada hora com 42P10 e nenhum honorário do To Do existe no
-   CRM. O índice tinha sido criado como PARCIAL, e índice parcial não serve de
-   alvo para o `ON CONFLICT` que o PostgREST monta.
-2. **Rótulo da espécie B26** ("Auxílio-reclusão"?), ainda provisório.
-3. **HAR do e-SAJ e do eproc**, para os próximos coletores.
-4. **Decisão sobre os 9 resumos de acórdão** (8 precisam de OCR).
-
-## O que o retrato do banco revelou (15.08)
-
-- **`clientes.endereco` está em 0%** — nenhum dos 1.890 clientes tem endereço.
-  Nove dos dez modelos de documento usam endereço: hoje toda peça sai com essa
-  linha em branco. E a F9.2 **não tem legado para migrar**.
-- **As colunas da F9 já existem no banco e estão todas zeradas.** O gargalo da
-  geração de documentos não é código, é preenchimento.
-- **270 casos não aparecem em lista nenhuma**: vieram de listas com nome quase
-  igual ao mapeado, sem o emoji (`Escritório`, `Petição Inicial`, `Recurso
-  Administrativo`, `Impugnações`, `Audiências`). 194 estão ativos.
-- **243 clientes sem CPF** — cada um é uma duplicata à espera de alguém
-  escrever o CPF no título da tarefa.
-- **De 20.639 andamentos, 22 foram escritos dentro do CRM.** O resto veio do
-  To Do (19.068) e dos robôs.
-
-## As fases acabaram
-
-**F11, F12, F13 e F14 estão no ar.** A F11 pôs a peça no padrão do escritório
-(Bookman Old Style 12, espaçamento 1,5, timbre e rodapé) e passou a conferir o
-cadastro antes de gerar, listando o que sairia em branco. A F12 desenhou a raiz
-e os ramos do caso numa árvore só. A F13 acabou com o iframe da Consulta. E a
-F14 nasceu de um pedido do Paulo que não estava na lista, "que o CRM seja tão
-usável quanto o To Do": conclusão em um clique no círculo, desfazer por oito
-segundos e a lista andando no teclado.
-
-**A F13 não reconstruiu o site interno, e isso é decisão.** As calculadoras de
-ruído, IR, contribuição, aposentadoria e RPPS-SP continuam lá, porque copiar
-essas contas obrigaria a corrigir cada mudança de regra duas vezes. Para dentro
-do CRM vieram só as coisas que precisam do cliente aberto: as consultas com o
-CPF da ficha e os quinze anexos da IN 128.
-
-**A suíte tem treze arquivos e 209 asserções**, em `crm/fase2/testes/cadastro`.
-
-## O que vem a seguir (detalhe e esforço em `cowork/04`)
-
-F11 (terminar a geração de documentos, que
-já existe pela metade, **M**) · F12 (raiz e ramos processuais, **G**) · F13
-(Consulta sem iframe, **M**).
-
-**A concordância da qualificação foi resolvida.** A preposição saiu do modelo
-e é calculada pelo tipo do logradouro, com "em" para o que não é reconhecido.
-O dado no banco continua limpo, porque preposição é apresentação.
-
-**Os arneses estão versionados** em `crm/fase2/testes/cadastro`, sete arquivos
-com LEIAME, 69 asserções somadas, saindo com código 1 quando falham. Falta
-decidir se entram no workflow do GitHub Actions, que hoje só roda o `tests/`
-Python.
-
-A ordem acima é a de `cowork/00-PROJETO-CRM-COWORK.md`, escrita depois do
-retrato do banco. A ordem antiga era de reforma visual e ficou para trás.
-
-## Erros que já custaram caro (não repetir)
-
-- **Reescrever bloco por cima apaga o que não veio do portal.** Merge não
-  destrutivo sempre (`fundirBlocoCrps`; curados nunca regenerados).
-- **Supabase corta em 1000 linhas SEM avisar.** Lista grande = `todas()` no
-  app, `_rest_todas()` no Python. Já causou duplicação em série (23505).
-- **Memória de dedupe vem do banco NA HORA, no conferir E no aplicar.**
-  D.novid só tem 30 dias; plano que replaneja com D cru mente na tela.
-- **`criado_em` decide onde o andamento aparece**: agora = 📣 Novidades;
-  data do movimento = só história. Escolha consciente em cada fonte.
-- **Entidade HTML não protege dentro de onclick** — o parser devolve o
-  apóstrofo antes de virar JS. Lá é `escJs`, não `esc`.
-- **Lote é tudo ou nada no PostgREST**; o `migrar.py` parte o lote até achar
-  a linha culpada. **Erro sem a mensagem do servidor é silêncio** — repasse o
-  corpo da resposta.
-- **A coluna do autor em `andamentos` é `autor_id`** (teste barra a volta).
-- **O navegador do Paulo é o Comet** (Chromium); manifesto com chave nova
-  demais pode ser recusado inteiro, sem console.
-- **Índice único PARCIAL não serve de alvo para upsert.** O PostgREST monta
-  `ON CONFLICT (coluna)` sem o predicado, e o Postgres devolve 42P10 — mesmo
-  com o índice criado sem erro nenhum. Segurou 2.621 parcelas por dias.
-- **O SQL Editor do Supabase roda o arquivo como UMA transação.** Uma linha com
-  erro desfaz tudo e a tela mostra só o erro dela: dá para achar que "rodou
-  quase todo" quando não gravou nada. Confira com `schema_conferencia.sql`.
-- **A lista do To Do casa pelo nome EXATO, com emoji.** `Escritório` sem emoji
-  não é `🙋 Escritório`: a tarefa com CPF entra como fase `outro` e o caso não
-  aparece em lista nenhuma.
-- **`:focus-within` não segura o composer** — `<span>` não recebe foco, e em
-  Safari/Firefox botão também não: o painel fechava no `mousedown`. É a classe
-  `.esc-aberto`.
-- **`fill` de SVG como atributo congela na primeira pintura**; tem que vir do
-  CSS.
-- **Captura de tela pega o que teste de texto não pega.** Seis `undefined` na
-  tela da F9.1 passaram por todos os testes e apareceram na primeira imagem.
-- **E o contrário também.** A imagem da F9.2 não dizia se o cartão novo
-  REAGIA ao clique: só a asserção de interação pegou o CPF que continuava
-  abrindo o editor apenas pelo lápis. Imagem e asserção são duas provas
-  diferentes, e cada entrega precisa das duas.
-- **Grade CSS estica o item baixo até a altura do vizinho alto.** Sem
-  `align-items:start`, o Endereço vazio virava um retângulo de 200px.
-- **Git no diretório conectado não apaga o próprio `index.lock`.** Pelo
-  `device_bash`, todo comando que escreve o índice deixa um lock que o mount
-  se recusa a remover, e o commit seguinte falha com "File exists". O
-  caminho que funciona é o PowerShell na máquina (Windows-MCP), que apaga o
-  lock e roda o git normalmente.
-- **`pytest` não está instalado na máquina do escritório.** As 199 do
-  `tests/` rodam no GitHub Actions; localmente sobra o teste de sintaxe do
-  `<script>` e os arneses de fumaça.
-- **Coluna nova acende defeito velho em quem lê a coluna.** `<ESTADO>` da
-  procuração imprimia o valor cru e vinha caindo no padrão "São Paulo"
-  porque a UF era sempre vazia. Bastou a F9.3 gravar "SP" para a peça sair
-  "Estado de SP". Antes de preencher uma coluna zerada, ver quem já a lê.
-- **Quando o teste discorda do código, o teste pode ser o errado.** A fila
-  do endereço acusou 2 clientes onde eu esperava 3; a conta certa era 2.
-  Conferir a expectativa antes de mexer no código.
-- **`:first-of-type` conta entre irmãos do mesmo ELEMENTO**, não da mesma
-  classe. Dentro do cartão, `.tri-passo:first-of-type` casava com o título,
-  e a regra de CSS e o seletor do teste falhavam juntos, em silêncio. Os
-  passos passaram a viver num contêiner próprio.
-- **Cliente com mais de um caso ativo segura a pintura no teste.** O modal
-  "escolher processo" abre e `pintarFicha` nem roda. Já estava anotado em
-  `cowork/04`, e mordeu de novo. O contorno está no `triagem.js`.
-- **Duas falhas em três eram expectativa minha, não código.** A fila acusou 2
-  clientes onde eu esperava 3, e o padrão de quem recebe caso novo trouxe dois
-  advogados onde eu tinha escrito um. Nas duas o código estava certo. Conferir
-  a conta antes de mexer no que passou.
-
-## Como conferir se está tudo de pé
-
-```bash
-python3 -m pytest tests/ -q          # 199
-node --test "crm/fase2/*/testes/*.test.js"   # 278 pass
-# sintaxe do app: node -e "vm.Script sobre os blocos <script> do app.html"
-# fumaça no navegador (Playwright, dados fictícios): os harnesses ficam no
-# scratchpad da sessão — teste-f9.js, teste-atendimento.js, teste-escritorio.js,
-# teste-abas.js, teste-multiproc.js, teste-pgto.js, teste-composer.js.
-# NÃO estão versionados; se virarem suíte, o lugar é crm/fase2/testes/.
-```
+1. Agenda ainda leva 558 ms e Calendário 555 ms: sobrou trabalho por evento,
+   não mais formatador.
+2. Os 16 arneses no workflow do GitHub Actions, que hoje só roda o `tests/`
+   Python.
+3. Um Supabase de homologação, para provar o banco e não só a tela.
