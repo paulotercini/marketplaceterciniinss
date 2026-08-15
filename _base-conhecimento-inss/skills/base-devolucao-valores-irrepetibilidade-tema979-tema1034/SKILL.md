@@ -11,7 +11,7 @@ Acione SEMPRE que houver tentativa de cobrança regressiva pelo INSS após cessa
 
 ## 2. Marco normativo
 
-A Súmula 34/AGU consolida a irrepetibilidade dos valores recebidos de boa-fé. O Tema 979/STJ pacificou a impossibilidade de devolução em casos de erro administrativo. O Tema 1.034/STJ ampliou a irrepetibilidade para reforma de tutela antecipada quando há boa-fé objetiva.
+Tema 979/STJ (tese real): pagamentos por erro administrativo material/operacional SÃO repetíveis, com desconto de até 30% do benefício, SALVO se o segurado comprovar boa-fé objetiva (impossibilidade de perceber o pagamento indevido). Modulação: processos distribuídos após 23/04/2021.
 
 A natureza alimentar do benefício previdenciário é elemento central. Os valores são consumidos no sustento do segurado e família, não comportando devolução nas hipóteses ordinárias.
 
@@ -21,9 +21,9 @@ A Lei 8.213/91 no art. 115 lista hipóteses estritas de desconto, e o Decreto 3.
 
 A regra geral é a irrepetibilidade dos valores recebidos pelo segurado de boa-fé. Decorre da natureza alimentar e da boa-fé objetiva.
 
-A reforma de tutela antecipada não autoriza devolução automática. O Tema 1.034/STJ exige análise da boa-fé objetiva e da imprevisibilidade.
+A reforma de tutela antecipada AUTORIZA a devolução (Tema 692/STJ: devolução obrigatória, com desconto de até 30% do benefício). Exceção consolidada: benefício assistencial (BPC/LOAS), irrepetível. O antigo registro citava o Tema 1034, que é de plano de saúde.
 
-O erro administrativo do INSS gera direito do segurado a manter os valores recebidos. Tema 979/STJ.
+No erro administrativo, a manutenção dos valores depende de o segurado DEMONSTRAR boa-fé objetiva (Tema 979/STJ) — não é automática.
 
 A presunção de boa-fé do segurado é juris tantum. Cabe ao INSS provar má-fé.
 
@@ -31,13 +31,13 @@ A devolução, quando cabível, observa os limites do art. 115 da Lei 8.213 (lim
 
 ## 4. Fragilidades adversárias mais comuns
 
-O INSS argumenta que a sentença reformada autoriza devolução automática. Refute com Tema 1.034/STJ que exige análise da boa-fé.
+O INSS invocará o Tema 692/STJ (devolução na tutela revogada) — em regra, com razão. A defesa concentra-se nas exceções: benefício assistencial, coisa julgada anterior, ou erro administrativo com boa-fé objetiva (Tema 979).
 
 O INSS pretende descontar 100% do benefício atual. Refute com art. 115 que limita a 30%.
 
 O INSS alega presunção de má-fé. Refute com presunção juris tantum de boa-fé.
 
-O INSS aplica desconto sem prévio contraditório. Refute com art. 5º LV CF e Súmula Vinculante 35 STF.
+O INSS aplica desconto sem prévio contraditório. Refute com art. 5º LV CF e RE 594.296 (Tema 138 STF) e art. 69 da Lei 8.213/91.
 
 ## 5. Estratégia processual
 

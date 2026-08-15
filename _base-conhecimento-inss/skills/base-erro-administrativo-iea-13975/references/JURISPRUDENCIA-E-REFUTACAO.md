@@ -94,7 +94,7 @@ Lei 13.146/2015, art. 9º, VII. Prioridade na tramitação processual e nos proc
 
 ### 11.1. "A IEA é ato interno, não cabe requerimento externo"
 
-Refutação. A vedação do art. 13 §9º (Port. 1.231/2024) e do art. 26 §9º (Port. 1.309/2025) atinge a forma do requerimento, não o dever de autotutela. O advogado não está requerendo a IEA. Está provocando as autoridades nominalmente legitimadas a abrirem-na de ofício, no exercício do art. 53 da Lei 9.784/1999 e da Súmula 473/STF.
+Refutação. A vedação do art. 26, §9º, da Portaria DIRBEN/INSS 1.309/2025 (norma vigente, alterada pela Portaria 1.318/2025) atinge a forma do requerimento, não o dever de autotutela. O advogado não está requerendo a IEA. Está provocando as autoridades nominalmente legitimadas a abrirem-na de ofício, no exercício do art. 53 da Lei 9.784/1999 e da Súmula 473/STF. Registre-se que as revogadas Portarias 1.056/2022 e 1.231/2024 traziam disciplina equivalente, revogada em 04/11/2025.
 
 ### 11.2. "A análise está em fila, aguarde"
 
@@ -138,7 +138,7 @@ O IBDP (Instituto Brasileiro de Direito Previdenciário) sustenta a proteção i
 
 ## 13. Fontes oficiais consultáveis
 
-DOU (Diário Oficial da União) para verificação das Portarias DIRBEN/INSS 1.056/2022, 1.231/2024, 1.309/2025 e 1.318/2025.
+DOU (Diário Oficial da União) para verificação da Portaria DIRBEN/INSS 1.309/2025 (norma vigente) e da Portaria DIRBEN/INSS 1.318/2025 (que a alterou). As Portarias DIRBEN/INSS 1.056/2022 e 1.231/2024 foram expressamente revogadas pelo art. 44, III e V, da Portaria 1.309/2025, e permanecem no DOU apenas como referência histórica.
 
 SIRC (Sistema Nacional de Informações de Registro Civil).
 

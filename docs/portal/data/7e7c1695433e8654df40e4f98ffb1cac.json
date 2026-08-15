@@ -1,0 +1,58 @@
+{
+  "nome": "Davi Valentim da Silva",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "51237929881",
+      "dn": "08091991",
+      "nome": "Davi Valentim da Silva",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Davi Valentim da Silva",
+      "status": "Avaliacao social marcada para 30/06/2026 (em 23 dias)",
+      "proximo_evento": {
+        "tipo": "Avaliacao social",
+        "data": "2026-06-30",
+        "data_br": "30/06/2026",
+        "hora": "",
+        "local": ""
+      },
+      "timeline": [
+        {
+          "data": "2026-06-01",
+          "data_br": "01/06/2026",
+          "tipo": "Avaliação social",
+          "descricao": "Avaliação social designada para ser realizada até 30/06/2026."
+        },
+        {
+          "data": "2026-03-03",
+          "data_br": "03/03/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Benefício indeferido."
+        },
+        {
+          "data": "2025-11-09",
+          "data_br": "09/11/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Solicitado o benefício."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

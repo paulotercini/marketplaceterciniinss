@@ -1,0 +1,40 @@
+{
+  "nome": "Ivanildo Cândido Ribeiro",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "10909422818",
+      "dn": "17061968",
+      "nome": "Ivanildo Cândido Ribeiro",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Ivanildo Cândido Ribeiro",
+      "status": "Última atualização em 21/11/2024: Prorrogação",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2024-11-21",
+          "data_br": "21/11/2024",
+          "tipo": "Prorrogação",
+          "descricao": "3) Também em 11/12/2024 verificarmos sobre a prorrogação do benefício que encerrará em 23/12."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

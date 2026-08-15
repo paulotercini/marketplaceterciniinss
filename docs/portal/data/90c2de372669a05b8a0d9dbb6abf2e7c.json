@@ -1,0 +1,40 @@
+{
+  "nome": "Debora Bueno Pereira",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "09371128879",
+      "dn": "22091967",
+      "nome": "Debora Bueno Pereira",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Debora Bueno Pereira",
+      "status": "Última atualização em 29/06/2025: Ação judicial protocolada",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-06-29",
+          "data_br": "29/06/2025",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "02.01.2023: 1) Vara Federal 2) INSS - Revisão 3) Recurso Administrativo 4) Análise de Aposentadoria Atual andamento: 1) Processo distribuído em 13.09.2022."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

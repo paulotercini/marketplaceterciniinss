@@ -1,7 +1,12 @@
 ---
 name: base-calculo-rmi-ec103
-description: "Cálculo da RMI pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar cálculo RMI EC 103, art. 26 EC 103, média 100% PBC, 60% mais 2% ano excedente, divisor mínimo art. 26 §6º, renda mensal inicial pós-reforma, salário-de-benefício pós EC 103, RMI pedágio 100%, RMI 100% média, fator previdenciário afastado regra nova, Tema 1102 STF e modulação, revisão da vida toda, afastar regra 80% maiores, art. 29 Lei 8.213, RMI auxílios, pensão por morte pós-reforma, cálculo B31 B91 B92 B94 pós-reforma, benefícios acima do teto, Tema 1070 STJ concomitantes, Tema 862 STJ auxílio-acidente, Súmula 557 STJ teto. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 992/2022. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, base-aposentadoria-transicao-ec103, base-aposentadoria-regra-permanente-ec103 e impugnacao-cumprimento-concomitantes."
+description: "Cálculo da RMI pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar cálculo RMI EC 103, art. 26 EC 103, média 100% PBC, 60% mais 2% ano excedente, divisor mínimo art. 26 §6º, renda mensal inicial pós-reforma, salário-de-benefício pós EC 103, RMI pedágio 100%, RMI 100% média, fator previdenciário afastado regra nova, Tema 1102 STF e modulação, revisão da vida toda, afastar regra 80% maiores, art. 29 Lei 8.213, RMI auxílios, pensão por morte pós-reforma, cálculo B31 B91 B92 B94 pós-reforma, benefícios acima do teto, Tema 1070 STJ concomitantes, Tema 862 STJ auxílio-acidente, Súmula 557 STJ teto. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (Livro II - cálculo do reconhecimento), IN 128/2022. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, base-aposentadoria-transicao-ec103, base-aposentadoria-regra-permanente-ec103, impugnacao-cumprimento-concomitantes e base-legislacao-fontes-primarias."
 ---
+
+## NOTA DA ADI 6309 (12/07/2026)
+
+O STF, na ADI 6309 julgada em 03/06/2026, declarou CONSTITUCIONAL a fórmula de cálculo da aposentadoria especial pós-EC 103 (60% mais 2% ao ano excedente). Não sustentar mais a inconstitucionalidade do cálculo da especial por esta via. Na mesma ADI foi invalidada a idade mínima da especial, o que altera o momento de aquisição do direito, ver base-aposentadoria-especial-transicao-ec103.
+
 
 # Cálculo da RMI Pós EC 103/2019
 
@@ -13,7 +18,7 @@ Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Fil
 
 EC 103/2019, art. 26. Fixa a nova fórmula de cálculo. Média aritmética simples dos salários de contribuição desde julho de 1994 ou desde a filiação se posterior. Aplica-se 60% da média mais 2% por ano que exceder 20 anos (homem) ou 15 anos (mulher) de contribuição.
 
-EC 103/2019, art. 26, §6º. Divisor mínimo fixado, sem descarte dos 20% menores, o que afasta a regra anterior da Lei 9.876/99.
+EC 103/2019, art. 26, §6º. Faculdade PRÓ-SEGURADO de excluir do cálculo as contribuições que reduzam o benefício, mantido o tempo mínimo. O divisor mínimo de 108 contribuições é o art. 135-A da Lei 8.213/91 (Lei 14.331/2022).
 
 EC 103/2019, art. 26, §2º. A RMI não pode ser inferior ao salário mínimo nem superior ao teto do RGPS.
 
@@ -23,11 +28,11 @@ Lei 8.213/91, art. 29 (para benefícios pré-reforma) e art. 29-C (professor pr�
 
 Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Regra permanente e pedágio 100%
 
-Na regra permanente e nas três transições (pontos, idade progressiva, pedágio 50%), aplica-se o art. 26 da EC 103. Média aritmética simples de 100% das contribuições, com aplicação de 60% mais 2% por ano excedente a 20 (homem) ou 15 (mulher).
+Na regra permanente e nas transições por pontos e idade progressiva, aplica-se o art. 26 da EC 103 (60% + 2% por ano excedente a 20/15). O pedágio de 50% (art. 17) NÃO segue essa regra: a RMI é a média de 100% dos salários multiplicada pelo fator previdenciário; o pedágio de 100% (art. 20) garante 100% da média.
 
 No pedágio de 100% (art. 20), aplica-se integralidade. A RMI corresponde a 100% da média aritmética simples das contribuições.
 
@@ -53,7 +58,7 @@ Primeiro, segurado com 35 anos de contribuição na regra dos pontos (art. 15). 
 
 Segundo, segurada com 30 anos de contribuição na regra de idade progressiva. RMI = 60% + 2% × 15 (anos excedentes a 15) = 90% da média.
 
-Terceiro, segurado com 36 anos de contribuição (1 ano além do tempo mínimo) no pedágio de 50%. RMI = 60% + 2% × 16 = 92% da média.
+Terceiro, segurado com 36 anos no pedágio de 50%: RMI = média × fator previdenciário (art. 17, parágrafo único) — simular o fator; não se aplica o 60% + 2%.
 
 Quarto, segurado no pedágio de 100%. RMI = 100% da média, vantagem tangível em perfis de alta remuneração.
 
@@ -63,7 +68,7 @@ Sexto, pensão por morte com 3 dependentes. RMI = 50% + 10% × 3 = 80% do valor 
 
 ## Regra e estratégia
 
-A regra geral é de maximização da média. Verificar se todas as contribuições constam no CNIS. Acionar `cnis-acerto-indicadores`. Verificar se houve salário de contribuição mais alto em momentos específicos (13º salário, horas extras, adicional noturno, insalubridade, periculosidade). Exigir retificação ou complementação quando omitido.
+Verificar salários de contribuição mais altos em momentos específicos (horas extras habituais, comissões) — atenção: o 13º salário NÃO integra o salário de benefício desde a Lei 8.870/94 (art. 29, §3º).
 
 Afastar descarte indevido dos 80% maiores salários. A regra da Lei 9.876/99 de descarte dos 20% menores foi afastada pela EC 103 para benefícios pós-reforma. A fórmula é 100% das contribuições, o que pode ser mais vantajoso para perfis com muitos salários altos.
 

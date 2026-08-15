@@ -1,0 +1,75 @@
+{
+  "nome": "Renan Stechi",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "37774923888",
+      "dn": "28071991",
+      "nome": "Renan Stechi",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Renan Stechi",
+      "status": "Última atualização em 28/03/2026: Exigência do INSS cumprida",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-03-28",
+          "data_br": "28/03/2026",
+          "tipo": "Exigência cumprida",
+          "descricao": "Exigência do INSS cumprida."
+        },
+        {
+          "data": "2025-07-23",
+          "data_br": "23/07/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2024-07-01",
+          "data_br": "01/07/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-06-06",
+          "data_br": "06/06/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-06-05",
+          "data_br": "05/06/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-05-03",
+          "data_br": "03/05/2024",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        },
+        {
+          "data": "2024-05-03",
+          "data_br": "03/05/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2024-04-18",
+          "data_br": "18/04/2024",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

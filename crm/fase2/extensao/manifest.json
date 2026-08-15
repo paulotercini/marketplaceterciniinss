@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "CRM Tercini — atualizar",
+  "version": "1.6.1",
+  "description": "Traz para o CRM o que mudou no INSS (PAT/GERID), nos recursos (e-Recursos) e no PJe do TRF3, pela sua própria sessão logada.",
+  "permissions": ["storage", "tabs", "scripting"],
+  "host_permissions": [
+    "https://atendimento.inss.gov.br/*",
+    "https://consultaprocessos.inss.gov.br/*",
+    "https://pje1g.trf3.jus.br/*",
+    "https://pje2g.trf3.jus.br/*",
+    "https://*.supabase.co/*"
+  ],
+  "background": { "service_worker": "fundo.js", "type": "module" },
+  "action": { "default_popup": "popup.html", "default_title": "CRM Tercini — atualizar" },
+  "options_page": "config.html",
+  "content_scripts": [
+    {
+      "matches": ["https://atendimento.inss.gov.br/*"],
+      "js": ["tela.js", "comum.js", "ponte-pat.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://consultaprocessos.inss.gov.br/*"],
+      "js": ["tela.js", "comum.js", "crps.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://pje1g.trf3.jus.br/pje/Painel/*", "https://pje2g.trf3.jus.br/pje/Painel/*",
+                  "https://pje1g.trf3.jus.br/pje/Processo/*", "https://pje2g.trf3.jus.br/pje/Processo/*"],
+      "js": ["tela.js", "comum.js", "pje-regras.js", "pje.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["pat-pagina.js"],
+      "matches": ["https://atendimento.inss.gov.br/*"]
+    }
+  ]
+}

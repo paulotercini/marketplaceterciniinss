@@ -1,0 +1,45 @@
+{
+  "nome": "Cassia Regina Suffin de Biaggi",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "14100569882",
+      "dn": "10051970",
+      "nome": "Cassia Regina Suffin de Biaggi",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Cassia Regina Suffin de Biaggi",
+      "status": "Última atualização em 21/10/2025: Indeferimento do INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-10-21",
+          "data_br": "21/10/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Indeferido."
+        },
+        {
+          "data": "2025-09-19",
+          "data_br": "19/09/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia médica agendada para o dia 22/09 as 09:00h no INSS de Araraquara."
+        },
+        {
+          "data": "2025-08-05",
+          "data_br": "05/08/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Solicitado o benefício."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

@@ -18,15 +18,15 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação. Limita a RVT às hipóteses residuais preservadas pela modulação.
 
-### Tema 1117 STF
+### [Retirado na auditoria 25/07/2026] Tema 1117/STF
 
-Tese. Parâmetros para aplicação de teses vinculantes e efeitos prospectivos.
+Trata de previdência complementar privada, sem relação com a RVT.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Tema 1157 STF
+### [Retirado na auditoria 25/07/2026] Tema 1157/STF
 
-Tese. Discussão complementar sobre modulação.
+Trata de reenquadramento de servidor; a modulação da RVT está nas ADIs 2110 e 2111.
 
 Fonte oficial em https://portal.stf.jus.br
 

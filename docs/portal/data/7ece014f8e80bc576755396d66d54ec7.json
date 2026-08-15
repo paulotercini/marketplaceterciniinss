@@ -1,0 +1,50 @@
+{
+  "nome": "Divina Lima dos Santos",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "17539478802",
+      "dn": "01121935",
+      "nome": "Divina Lima dos Santos",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
+      "titulo_tarefa": "Divina Lima dos Santos",
+      "status": "Última atualização em 30/03/2026: Petição inicial protocolada / distribuída",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-03-30",
+          "data_br": "30/03/2026",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
+        {
+          "data": "2026-02-13",
+          "data_br": "13/02/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2026-01-08",
+          "data_br": "08/01/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 10/02/2026 às 07:35 em Bebedouro."
+        },
+        {
+          "data": "2025-12-18",
+          "data_br": "18/12/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

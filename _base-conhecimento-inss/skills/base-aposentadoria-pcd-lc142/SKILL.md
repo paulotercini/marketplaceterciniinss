@@ -1,13 +1,13 @@
 ---
 name: base-aposentadoria-pcd-lc142
-description: "Aposentadoria da pessoa com deficiência pela LC 142/2013, ótica pró-segurado. Use SEMPRE que mencionar LC 142, LC 142/2013, aposentadoria PCD, aposentadoria por tempo de contribuição PCD, aposentadoria por idade PCD, IF-BrA, IFBr, grau de deficiência, método Fuzzy, avaliação biopsicossocial LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015, domínios da deficiência PCD, pontuação IF-BrA, conversão tempo deficiência tempo comum, impedimento longo prazo LC 142, fibromialgia como deficiência Lei 15.176/2025, CID M79.7, DID Data Início Deficiência, formação documentação DID, idade PCD 55 60, tempo PCD 20 25 28 30 33, reconhecimento retroativo deficiência, cegueira monocular Súmula 377, deficiência auditiva Lei 14.768/2023, fator vedado LC 142, Portaria 991/2022, Portaria 992/2022. Aciona aposentadoria-deficiencia. Cruza com aposentadoria-deficiencia, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, formacao-documentacao-did-pcd e precedentes-previdenciarios."
+description: "Aposentadoria da pessoa com deficiência pela LC 142/2013, ótica pró-segurado. Use SEMPRE que mencionar LC 142, LC 142/2013, aposentadoria PCD, aposentadoria por tempo de contribuição PCD, aposentadoria por idade PCD, IF-BrA, IFBr, grau de deficiência, método Fuzzy, avaliação biopsicossocial LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014, domínios da deficiência PCD, pontuação IF-BrA, conversão tempo deficiência tempo comum, impedimento longo prazo LC 142, fibromialgia como deficiência Lei 15.176/2025, CID M79.7, DID Data Início Deficiência, formação documentação DID, idade PCD 55 60, tempo PCD 20 25 28 30 33, reconhecimento retroativo deficiência, cegueira monocular Súmula 377, deficiência auditiva Lei 14.768/2023, fator vedado LC 142, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona aposentadoria-deficiencia. Cruza com aposentadoria-deficiencia, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, formacao-documentacao-did-pcd e precedentes-previdenciarios."
 ---
 
 # Aposentadoria da Pessoa com Deficiência. LC 142/2013
 
 ## Escopo
 
-Skill temática pró-segurado. Focaliza a aposentadoria por tempo de contribuição e por idade da pessoa com deficiência na LC 142/2013. Trata da avaliação biopsicossocial com IF-BrA (Instrumento Funcional Brasileiro de Avaliação), método Fuzzy, domínios, conversão de tempo especial, DID (Data de Início da Deficiência), fibromialgia pela Lei 15.176/2025 e particularidades da deficiência auditiva pela Lei 14.768/2023. Objetivo único é a defesa integral do segurado PCD.
+Skill temática pró-segurado. Focaliza a aposentadoria por tempo de contribuição e por idade da pessoa com deficiência na LC 142/2013. Trata da avaliação biopsicossocial com IF-BrA (Índice de Funcionalidade Brasileiro Aplicado), método Fuzzy, domínios, conversão de tempo especial, DID (Data de Início da Deficiência), fibromialgia pela Lei 15.176/2025 e particularidades da deficiência auditiva pela Lei 14.768/2023. Objetivo único é a defesa integral do segurado PCD.
 
 ## Marco normativo central
 
@@ -25,7 +25,7 @@ LC 142/2013, art. 8º. Conversão de tempo de deficiência em tempo comum e vice
 
 Decreto 8.145/2013. Regulamento.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015. IF-BrA, domínios, método Fuzzy.
+Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014. IF-BrA, domínios, método Fuzzy.
 
 Lei 15.176/2025. Fibromialgia reconhecida como deficiência.
 
@@ -41,7 +41,7 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Tempo de contribuição exigido
 
@@ -61,7 +61,7 @@ Mulher 55 anos com 15 anos de contribuição na condição de PCD.
 
 Diferente do BPC. Aqui usa-se IF-BrA (não IFBrM). Aplica-se método Fuzzy para conversão da pontuação em grau.
 
-Domínios IF-BrA. Primeiro, sensorial. Segundo, comunicação. Terceiro, mobilidade. Quarto, cuidados pessoais. Quinto, vida doméstica. Sexto, educação. Sétimo, trabalho. Oitavo, vida econômica. Nono, socialização.
+Domínios IF-BrA (sete, conforme a Portaria Interministerial nº 1/2014): Primeiro, sensorial. Segundo, comunicação. Terceiro, mobilidade. Quarto, cuidados pessoais. Quinto, vida doméstica. Sexto, educação, trabalho e vida econômica (domínio único). Sétimo, socialização e vida comunitária.
 
 Pontuação. Cada domínio é pontuado. O método Fuzzy combina as pontuações para classificar em grave, moderado ou leve.
 
@@ -75,7 +75,7 @@ Efeitos. Define o tempo de contribuição como PCD. Converte tempo posterior à 
 
 ## Cálculo do benefício
 
-Regra da LC 142. Média aritmética simples dos 80% maiores salários desde 07/1994. Sem fator previdenciário em regra. 100% da média (não 70% + 1% por ano como a regra geral EC 103).
+Regra da LC 142. Média aritmética simples dos 80% maiores salários desde 07/1994. Sem fator previdenciário em regra. 100% da média (não 60% + 2% por ano excedente, regra geral do art. 26 da EC 103).
 
 Exceção. Em aposentadoria por idade PCD, 70% da média + 1% por grupo de 12 contribuições adicionais (verificar regra vigente).
 
@@ -164,3 +164,19 @@ O IBDP sustenta a proteção integral.
 ## O que NÃO está nesta skill
 
 BPC está em `base-bpc-loas-requisitos`, `base-bpc-renda-per-capita-miserabilidade` e `base-bpc-impedimento-longo-prazo`. Procedimentos operacionais estão em `base-bpc-aposentadoria-pcd-procedimentos`. Aposentadorias comuns estão nas skills de Onda 3.
+
+## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
+
+Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
+
+Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
+
+Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
+
+O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
+
+## Método Fuzzy, verificação obrigatória (Onda 106)
+
+Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
+
+A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.

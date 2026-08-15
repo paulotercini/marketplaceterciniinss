@@ -1,0 +1,43 @@
+name: CRM — dossiê do banco (somente leitura)
+
+# Roda só quando alguém pede. Lê a estrutura e conta linhas; não escreve nada
+# no banco e não imprime conteúdo de cliente — as consultas usam limit=0 e
+# count=exact, então o corpo das respostas vem vazio.
+on:
+  workflow_dispatch: {}
+
+jobs:
+  retrato:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repositório
+        uses: actions/checkout@v4
+
+      - name: Configura Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Retrato do banco
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_SERVICE_KEY" ]; then
+            echo "::error::Segredos do Supabase ausentes."; exit 1
+          fi
+          python crm/fase2/dossie_banco.py --json > dossie.json
+          echo "linhas do JSON: $(wc -l < dossie.json)"
+          echo "── RETRATO (estrutura e números, sem conteúdo) ──"
+          python crm/fase2/dossie_banco.py
+          echo "── AGREGADOS DA SINCRONIZAÇÃO ──"
+          python crm/fase2/dossie_banco.py --extra
+
+      - name: Publica o retrato como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: dossie-banco
+          path: dossie.json
+          retention-days: 7

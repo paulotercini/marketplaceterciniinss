@@ -1,0 +1,50 @@
+{
+  "nome": "José Mario Gregório da Silva 🌻",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "12919550896",
+      "dn": "22061971",
+      "nome": "José Mario Gregório da Silva 🌻",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
+      "titulo_tarefa": "José Mario Gregório da Silva 🌻",
+      "status": "Última atualização em 01/03/2026: Recurso Especial interposto",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-03-01",
+          "data_br": "01/03/2026",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Recurso Especial interposto."
+        },
+        {
+          "data": "2026-02-26",
+          "data_br": "26/02/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2025-12-03",
+          "data_br": "03/12/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-10-24",
+          "data_br": "24/10/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

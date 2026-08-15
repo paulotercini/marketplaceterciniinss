@@ -1,0 +1,40 @@
+{
+  "nome": "José Nilton dos Santos",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "07188705810",
+      "dn": "13111967",
+      "nome": "José Nilton dos Santos",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "José Nilton dos Santos",
+      "status": "Última atualização em 16/04/2026: Embargos de declaração interpostos",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-04-16",
+          "data_br": "16/04/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

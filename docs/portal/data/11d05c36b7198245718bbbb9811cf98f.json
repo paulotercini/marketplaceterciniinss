@@ -1,0 +1,63 @@
+{
+  "nome": "Paulo Roberto Kuner",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "10131831852",
+      "dn": "14041968",
+      "nome": "Paulo Roberto Kuner",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
+      "titulo_tarefa": "Paulo Roberto Kuner",
+      "status": "Última atualização em 14/02/2026: Recurso Especial interposto",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-02-14",
+          "data_br": "14/02/2026",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Apresentado recurso especial."
+        },
+        {
+          "data": "2026-02-11",
+          "data_br": "11/02/2026",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Sessão de Julgamento Ordinária Monocrática - Nº 0051/2026 - 13/02/26 13:30."
+        },
+        {
+          "data": "2025-12-30",
+          "data_br": "30/12/2025",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "35, § 1º, do Regimento Interno da Previdência Social \u0013 RICRPS, aprovado pela Portaria MTP nº 4.061/2022, e 74 da Instrução Normativa CRPS nº 1/2022, o interessado poderá juntar documentos, até a data de inclusão do recurso em pauta de julga"
+        },
+        {
+          "data": "2025-07-04",
+          "data_br": "04/07/2025",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso protocolado."
+        },
+        {
+          "data": "2025-06-05",
+          "data_br": "05/06/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido, mas com alteração da DER."
+        },
+        {
+          "data": "2024-08-23",
+          "data_br": "23/08/2024",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado - em análise."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

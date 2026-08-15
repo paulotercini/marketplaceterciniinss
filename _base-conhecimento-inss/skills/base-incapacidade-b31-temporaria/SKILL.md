@@ -1,6 +1,6 @@
 ---
 name: base-incapacidade-b31-temporaria
-description: "Auxílio por incapacidade temporária B31 pós EC 103, ótica exclusiva do segurado. Use SEMPRE que mencionar B31, auxílio-doença, art. 59 Lei 8.213, art. 60 §11-A, carência 12 meses, isenção art. 26 II, art. 151, DII DID, perícia documental, Portaria Conjunta 13/2026, Tema 1421 STF limbo, P1 P2 prorrogação, Alta Programada, cessação antecipada, restabelecimento B31, RMI 91% média, qualidade segurado, art. 27-A, art. 42 §2º, segurado especial rural, MEI B31, doméstica B31, Tema 246 TNU, Súmula 63 TNU, Súmula 47 TNU, Súmula 77 TNU, Tema 1083 STJ, trava três indeferimentos, 180 dias, agravamento, reabertura. Postura pró-segurado, Portaria 991/2022, Portaria 992/2022. Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, periodo-graca-qualidade-segurado, ntep-nexo-acidentario, base-incapacidade-b91-permanente e orientacao-cliente-pericia."
+description: "Auxílio por incapacidade temporária B31 pós EC 103, ótica exclusiva do segurado. Use SEMPRE que mencionar B31, auxílio-doença, art. 59 Lei 8.213, art. 60 §11-A, carência 12 meses, isenção art. 26 II, art. 151, DII DID, perícia documental, Portaria Conjunta 13/2026, Tema 1421 STF limbo, P1 P2 prorrogação, Alta Programada, cessação antecipada, restabelecimento B31, RMI 91% média, qualidade segurado, art. 27-A, art. 42 §2º, segurado especial rural, MEI B31, doméstica B31, Tema 246 TNU, Súmula 47 TNU, Súmula 77 TNU, trava três indeferimentos, 180 dias, agravamento, reabertura. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, periodo-graca-qualidade-segurado, ntep-nexo-acidentario, base-incapacidade-b91-permanente e orientacao-cliente-pericia."
 ---
 
 # Auxílio por Incapacidade Temporária (B31) Pós EC 103/2019
@@ -21,11 +21,11 @@ Lei 8.213/91, art. 26, II. Isenção de carência para acidente de qualquer natu
 
 Lei 8.213/91, art. 27-A. Reabertura de qualidade exige 1/2 da carência após novo vínculo para quem perdeu qualidade (com matizes jurisprudenciais).
 
-EC 103/2019, art. 26, §3º, I. Fixa RMI do B31 em 91% da média pelo novo cálculo da reforma.
+Lei 8.213/91, art. 61. Fixa a RMI do B31 em 91% do salário de benefício, com a média apurada na forma do art. 26 da EC 103/2019.
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Requisitos cumulativos
 
@@ -47,7 +47,7 @@ Terceiro, segurado especial rural com incapacidade. Carência cumprida pela ativ
 
 Quarto, segurado com B31 indeferido por perícia documental inconclusiva. Cabe P1 (pedido de prorrogação) ou recurso ao CRPS com fundamento em atestados e exames complementares. Acionar `analise-documental-incapacidade`.
 
-Quinto, segurado em limbo previdenciário-trabalhista. INSS cessou o B31 mas empresa não aceitou o retorno. Tema 1421 STF (em discussão) e jurisprudência consolidada no sentido da responsabilidade solidária ou subsidiária.
+Quinto, segurado em limbo previdenciário-trabalhista. INSS cessou o B31 mas a empresa não aceitou o retorno. O fundamento é o **Tema 300 da TNU**, que mantém a qualidade de segurado até a rescisão contratual, quando só então começa a correr o período de graça do art. 15, II. O Tema 1421 do STF é a pendência que pode superá-lo, mérito não julgado, citar como risco e não como fundamento. A aplicação exige prova do impedimento patronal, vínculo aberto no CNIS não basta, e não se deve requerer RAC de baixa desse vínculo. Acionar `base-limbo-previdenciario-tema300`.
 
 Sexto, MEI, contribuinte individual ou doméstica com recolhimento regular. Direito ao B31 nas mesmas condições de carência e qualidade.
 
@@ -109,6 +109,36 @@ O IBDP sustenta institucionalmente o direito do segurado à concessão ampla do 
 ## Cruzamento com Onda 24
 
 Para validação formal de relatório médico de incapacidade pelo Checklist A do escritório (B31, B91, B92, B94), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
+
+## PROGRAMA DE REVISÃO DE BENEFÍCIOS POR INCAPACIDADE DE LONGA DURAÇÃO - PRBI (Onda 49)
+
+Instituído pela Lei 13.846/2019 e operacionalizado pela Portaria INSS nº 914, de 06/08/2021.
+
+Convocação por carta com AR digital ao endereço cadastrado. Segurado tem 30 dias para agendar perícia (Meu INSS, app ou Central 135) e apenas 1 remarcação permitida (até 1 dia antes da data). Decorrido sem agendamento, suspensão pelo art. 77 RPS. Decorridos mais 60 dias da suspensão sem agendamento, CESSAÇÃO DEFINITIVA. Resultado disponível em 21h pela Central 135 ou Meu INSS. Prazo de 30 dias para recurso ao CRPS em caso de não concordância.
+
+Critérios de seleção. Orientação Interna SPREV/SEPRT nº 03, de 02/09/2019 (alterada por OI 03 de 08/06/2021).
+
+ESTRATÉGIA PRÓ-SEGURADO. Em caso de cessação por PRBI.
+1. Conferir se a notificação foi REGULAR (carta com AR efetivamente recebida no endereço atualizado).
+2. Reativação por agendamento durante a suspensão (60 dias) é direito automático.
+3. Após cessação definitiva, recurso ao CRPS em 30 dias.
+4. Em caso de notificação irregular, MS pode reverter a suspensão ou cessação.
+
+Texto integral da Portaria 914/2021 disponível em `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/06-Portarias/Portaria-INSS-914-2021-PRBI.md` (Onda 49).
+
+Cruzar com `analise-documental-incapacidade`, `admissibilidade-barreiras-crps`, `mandado-seguranca-previdenciario` para estratégia recursal e MS.
+
+## TRABALHO DOMÉSTICO NÃO REMUNERADO - INCAPACIDADE DA DONA DE CASA (Onda 52)
+
+**Precedente vinculante regional.** TRU 4ª Região, PUIL 5002876-10.2023.4.04.7202/TRF, Rel. Juíza Federal Susana Sbrogio Galia, sessão de 26/06/2026 em SJSC.
+
+**Tese.** A execução de trabalho doméstico não remunerado impõe exigência física e riscos ergonômicos EQUIPARADOS ao trabalho doméstico remunerado, salvo comprovação em sentido contrário.
+
+**Aplicação prática ao B31.** Segurada facultativa (ou facultativa de baixa renda) dona de casa que sofre incapacidade para as tarefas domésticas cotidianas TEM DIREITO ao B31. INSS não pode negar sob o argumento de que "trabalho doméstico não remunerado exige menos esforço".
+
+**Prova.** Basta laudo médico atestando as limitações. A tese TRU4 gera presunção favorável à segurada.
+
+Cruzar com `base-facultativo-baixa-renda`, `perspectiva-genero-previdenciario` (skill local) e `base-precedentes-catalogo-vinculantes/references/CATALOGO-PEDILEFS-PARADIGMATICOS-TNU.md`.
 
 ## O que NÃO está nesta skill
 

@@ -1,0 +1,79 @@
+{
+  "slug": "reabilitacao-profissional",
+  "category": "Incapacidade",
+  "title": "Reabilitação Profissional (B26)",
+  "nav_label": "Reabilitação Profissional",
+  "order": 4,
+  "facts": [["O que é", "Readaptação profissional"], ["Oferecido por", "INSS"]],
+  "meta_description": "Reabilitação profissional (B26) do INSS: programa de readaptação e recolocação do segurado no mercado de trabalho. Orientação em Monte Alto/SP.",
+  "hero_subtitle": "Serviço do INSS voltado a readaptar o segurado e prepará-lo para uma nova atividade compatível com sua capacidade, com vistas à recolocação no mercado de trabalho.",
+  "intro": [
+    "A reabilitação profissional (espécie B26) é um serviço do INSS previsto no art. 89 da Lei 8.213/91. Destina-se a readaptar o segurado que não pode mais exercer sua atividade original, preparando-o para uma nova ocupação compatível com sua capacidade residual.",
+    "Por meio do Programa de Reabilitação Profissional (PRP), o segurado passa por avaliação funcional, qualificação e, quando possível, recolocação no mercado de trabalho, inclusive com apoio da reserva legal de vagas para pessoas com deficiência e reabilitados (art. 93 da Lei 8.213/91)."
+  ],
+  "sections": [
+    {
+      "heading": "O que é",
+      "blocks": [
+        {"type": "p", "text": "A reabilitação profissional é uma providência a cargo do INSS (art. 89 da Lei 8.213/91) para proporcionar ao segurado os meios de readaptação ao trabalho. O Programa de Reabilitação Profissional (PRP) costuma envolver avaliação funcional e psicossocial, curso profissionalizante ou programa pedagógico, eventual estágio em empresa parceira e a inserção no mercado, encerrando-se com a alta e a emissão de um certificado de reabilitação."},
+        {"type": "callout", "text": "Durante o programa, o benefício por incapacidade do segurado é mantido. A alta sem a emissão do certificado de reabilitação é passível de revisão."}
+      ]
+    },
+    {
+      "heading": "Quem participa",
+      "blocks": [
+        {"type": "ul", "items": [
+          "Segurado que estava em auxílio-doença (B31) ou em aposentadoria por incapacidade (B91) e foi identificado como passível de reabilitação;",
+          "Segurado com incapacidade para a atividade original, mas com capacidade residual aproveitável em outra função;",
+          "Segurado com idade e perfil compatíveis com a readaptação e a recolocação."
+        ]}
+      ]
+    },
+    {
+      "heading": "Como funciona o programa",
+      "blocks": [
+        {"type": "p", "text": "O PRP é estruturado em etapas, com acompanhamento do INSS:"},
+        {"type": "ul", "items": [
+          "Avaliação funcional e psicossocial do segurado;",
+          "Curso profissionalizante ou programa pedagógico voltado à nova atividade;",
+          "Estágio em empresa parceira, quando cabível;",
+          "Inserção no mercado de trabalho, com apoio da cota de pessoas com deficiência e reabilitados (art. 93 da Lei 8.213/91);",
+          "Alta com emissão do certificado de reabilitação."
+        ]}
+      ]
+    },
+    {
+      "heading": "Pontos de atenção",
+      "blocks": [
+        {"type": "ul", "items": [
+          "A alta do programa sem a emissão do certificado de reabilitação é passível de revisão;",
+          "O limbo previdenciário-trabalhista é recorrente: o INSS dá alta, mas o empregador não readapta nem aceita o retorno; nesses casos, discute-se a manutenção do benefício ou a garantia de emprego;",
+          "Quando o programa se mostra inviável (PRP inconcluso ou sem perspectiva de recolocação), pode-se pleitear a conversão em aposentadoria por incapacidade permanente, com pedido de implantação imediata (Súmula 47 da TNU);",
+          "O empregador que não cumpre a reserva legal de vagas está sujeito a sanções (art. 93 da Lei 8.213/91)."
+        ]}
+      ]
+    },
+    {
+      "heading": "Como o escritório pode ajudar",
+      "blocks": [
+        {"type": "p", "text": "Podemos acompanhar o desenvolvimento do PRP com a documentação adequada, contestar altas indevidas e situações de limbo previdenciário-trabalhista, articular com a equipe médica e, quando o programa se mostra inviável, pleitear a conversão em aposentadoria por incapacidade permanente, na via administrativa ou judicial. Cada caso é avaliado individualmente."}
+      ]
+    }
+  ],
+  "documentos": [
+    "Documento de identidade e CPF",
+    "Comprovantes de vínculos e de recolhimentos ao INSS",
+    "Carta de concessão ou comunicação de encaminhamento à reabilitação profissional",
+    "Laudos, relatórios e atestados médicos sobre a incapacidade para a atividade original",
+    "Exames complementares e relatórios de especialistas",
+    "Documentos do programa de reabilitação e do certificado, quando emitidos",
+    "Comprovantes da relação de emprego e de eventual recusa de readaptação pelo empregador"
+  ],
+  "faq": [
+    {"q": "O que é a reabilitação profissional do INSS?", "a": "É um serviço previsto no art. 89 da Lei 8.213/91 que prepara o segurado, impedido de exercer sua atividade original, para uma nova ocupação compatível com sua capacidade. O Programa de Reabilitação Profissional (PRP) envolve avaliação, qualificação e recolocação no mercado de trabalho."},
+    {"q": "Continuo recebendo o benefício durante a reabilitação?", "a": "Sim. Durante o Programa de Reabilitação Profissional, o benefício por incapacidade é mantido. Cessações ou altas durante o programa, sem a devida conclusão, podem ser questionadas."},
+    {"q": "O INSS me deu alta, mas a empresa não me aceita de volta. O que fazer?", "a": "Essa é a situação conhecida como limbo previdenciário-trabalhista, bastante recorrente. Discute-se a manutenção do benefício ou a garantia de emprego. Recomenda-se buscar orientação para avaliar a melhor medida no caso concreto."},
+    {"q": "E se a reabilitação não der certo?", "a": "Quando o programa se mostra inviável, com prognóstico de não recolocação, pode-se pleitear a conversão em aposentadoria por incapacidade permanente, inclusive com pedido de implantação imediata, conforme a Súmula 47 da TNU."}
+  ],
+  "related": ["auxilio-doenca", "aposentadoria-incapacidade", "auxilio-acidente"]
+}

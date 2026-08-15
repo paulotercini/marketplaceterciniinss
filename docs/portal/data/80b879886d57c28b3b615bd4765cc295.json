@@ -1,0 +1,52 @@
+{
+  "nome": "Wilson de Lima Lapola",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "27385194826",
+      "dn": "06071978",
+      "nome": "Wilson de Lima Lapola",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Wilson de Lima Lapola",
+      "status": "Perícia médica marcada para 22/06/2026 (em 2 dias) às 16:00",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-05-26",
+          "data_br": "26/05/2026",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
+        },
+        {
+          "data": "2026-03-09",
+          "data_br": "09/03/2026",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
+        {
+          "data": "2026-01-05",
+          "data_br": "05/01/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

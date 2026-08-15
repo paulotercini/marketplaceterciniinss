@@ -1,0 +1,45 @@
+{
+  "nome": "Jose de Lourdes Vicente Barbosa",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "05750351882",
+      "dn": "24111960",
+      "nome": "Jose de Lourdes Vicente Barbosa",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
+      "titulo_tarefa": "Jose de Lourdes Vicente Barbosa",
+      "status": "Última atualização em 06/04/2025: Recurso Especial interposto",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-04-06",
+          "data_br": "06/04/2025",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Requerimento protocolado - Tarefa: 25342324 É sobre o recurso para a Câmara de Julgamento."
+        },
+        {
+          "data": "2025-02-25",
+          "data_br": "25/02/2025",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Apresentar recurso para as Câmaras de Julgamento."
+        },
+        {
+          "data": "2023-11-30",
+          "data_br": "30/11/2023",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Benefício indeferido."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

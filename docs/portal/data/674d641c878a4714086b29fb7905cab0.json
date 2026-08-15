@@ -1,0 +1,39 @@
+{
+  "nome": "Elisio Della Vecchia",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "02039910875",
+      "dn": "06101960",
+      "nome": "Elisio Della Vecchia",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Elisio Della Vecchia",
+      "status": "Última atualização em 05/12/2025: Benefício deferido pelo INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-12-05",
+          "data_br": "05/12/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido."
+        },
+        {
+          "data": "2025-09-22",
+          "data_br": "22/09/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido!"
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

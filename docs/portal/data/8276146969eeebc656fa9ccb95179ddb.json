@@ -1,0 +1,57 @@
+{
+  "nome": "Clarice Castilho",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "11141213800",
+      "dn": "28031961",
+      "nome": "Clarice Castilho",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Clarice Castilho",
+      "status": "Pericia medica marcada para 10/06/2026 (em 3 dias) às 09:20 — INSS de Bebedouro",
+      "proximo_evento": {
+        "tipo": "Pericia medica",
+        "data": "2026-06-10",
+        "data_br": "10/06/2026",
+        "hora": "09:20",
+        "local": "INSS de Bebedouro"
+      },
+      "timeline": [
+        {
+          "data": "2026-03-13",
+          "data_br": "13/03/2026",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para o dia 10/06 às 09h20 em Bebedouro."
+        },
+        {
+          "data": "2025-06-13",
+          "data_br": "13/06/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido até 25/10/2025."
+        },
+        {
+          "data": "2025-04-30",
+          "data_br": "30/04/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado - em análise."
+        },
+        {
+          "data": "2025-01-04",
+          "data_br": "04/01/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Benefício indeferido."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "nome": "Fabio Robert",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "15275312873",
+      "dn": "25071972",
+      "nome": "Fabio Robert",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Fabio Robert",
+      "status": "Última atualização em 25/11/2025: Benefício deferido pelo INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-11-25",
+          "data_br": "25/11/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-09-19",
+          "data_br": "19/09/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 24/11/2025 às 07:00 em Bebedouro."
+        },
+        {
+          "data": "2025-06-11",
+          "data_br": "11/06/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 15/07/2025 às 13:00."
+        },
+        {
+          "data": "2024-10-01",
+          "data_br": "01/10/2024",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2022-02-07",
+          "data_br": "07/02/2022",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    },
+    {
+      "cpf": "15275312873",
+      "dn": "25071972",
+      "nome": "Fabio Robert",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Fabio Robert",
+      "status": "Última atualização em 16/06/2026: Recurso inominado interposto",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-06-16",
+          "data_br": "16/06/2026",
+          "tipo": "Recurso inominado interposto",
+          "descricao": "Recurso inominado interposto."
+        },
+        {
+          "data": "2026-06-13",
+          "data_br": "13/06/2026",
+          "tipo": "Recurso inominado interposto",
+          "descricao": "Recurso inominado interposto."
+        },
+        {
+          "data": "2026-06-12",
+          "data_br": "12/06/2026",
+          "tipo": "Recurso inominado interposto",
+          "descricao": "Recurso inominado interposto."
+        },
+        {
+          "data": "2026-05-25",
+          "data_br": "25/05/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2026-05-20",
+          "data_br": "20/05/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2025-02-20",
+          "data_br": "20/02/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-02-10",
+          "data_br": "10/02/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 18/02/2025."
+        },
+        {
+          "data": "2025-01-10",
+          "data_br": "10/01/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2024-12-06",
+          "data_br": "06/12/2024",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 09/01/2025 às 08:00 em Jaboticabal."
+        },
+        {
+          "data": "2024-11-07",
+          "data_br": "07/11/2024",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2024-10-30",
+          "data_br": "30/10/2024",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 06/11/2024 às 07:20 em Matão."
+        },
+        {
+          "data": "2024-06-10",
+          "data_br": "10/06/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2024-05-13",
+          "data_br": "13/05/2024",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 29/05/2024 às 08:20."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

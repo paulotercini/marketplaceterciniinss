@@ -1,0 +1,105 @@
+{
+  "nome": "Marisa Bandeira Schineider",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "13855660867",
+      "dn": "03061963",
+      "nome": "Marisa Bandeira Schineider",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Marisa Bandeira Schineider",
+      "status": "Pericia medica marcada para 02/07/2026 (em 25 dias) às 07:40 — INSS de Bebedouro",
+      "proximo_evento": {
+        "tipo": "Pericia medica",
+        "data": "2026-07-02",
+        "data_br": "02/07/2026",
+        "hora": "07:40",
+        "local": "INSS de Bebedouro"
+      },
+      "timeline": [
+        {
+          "data": "2026-04-13",
+          "data_br": "13/04/2026",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para o dia 02/07/2026 às 07:40h no INSS de Bebedouro."
+        },
+        {
+          "data": "2026-03-17",
+          "data_br": "17/03/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Benefício prorrogado até 16/04/2026."
+        },
+        {
+          "data": "2026-03-16",
+          "data_br": "16/03/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Foi solicitada a prorrogação do benefício."
+        },
+        {
+          "data": "2026-02-14",
+          "data_br": "14/02/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Benefício prorrogado até 17/03/2026."
+        },
+        {
+          "data": "2026-02-12",
+          "data_br": "12/02/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Solicitada a prorrogação do benefício."
+        },
+        {
+          "data": "2026-01-26",
+          "data_br": "26/01/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Em 12/02 fazer a prorrogação e agendar por Bebedouro."
+        },
+        {
+          "data": "2025-12-09",
+          "data_br": "09/12/2025",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "A cessação do benefício é 15/02/2026, por isso deixo anotado dia 10/02 para verificar sobre prorrogação (ver de fazer por Bebedouro)."
+        },
+        {
+          "data": "2025-12-03",
+          "data_br": "03/12/2025",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "\"A perícia médica reconheceu a sua incapacidade para o trabalho ou atividade habitual e o AUXÍLIO POR INCAPACIDADE TEMPORÁRIA PREVIDENCIÁRIO nº 7258039660 foi concedido."
+        },
+        {
+          "data": "2025-12-01",
+          "data_br": "01/12/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Verificar resultado da perícia no dia 03/12."
+        },
+        {
+          "data": "2025-10-23",
+          "data_br": "23/10/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Solicitado o benefício por Matão e agendou para o dia 02/12 as 08:40h."
+        },
+        {
+          "data": "2025-05-23",
+          "data_br": "23/05/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Concedido!"
+        },
+        {
+          "data": "2025-05-02",
+          "data_br": "02/05/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "(P): Solicitado o benefício por Jaboticabal."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

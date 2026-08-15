@@ -1,0 +1,40 @@
+{
+  "nome": "João Batista da Costa",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "02656433843",
+      "dn": "16061961",
+      "nome": "João Batista da Costa",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "João Batista da Costa",
+      "status": "Última atualização em 25/01/2025: Petição inicial protocolada / distribuída",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-01-25",
+          "data_br": "25/01/2025",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

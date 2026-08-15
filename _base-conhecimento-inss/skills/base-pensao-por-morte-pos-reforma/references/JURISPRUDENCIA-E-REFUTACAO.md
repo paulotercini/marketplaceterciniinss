@@ -58,7 +58,7 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado. Orienta demonstração da dependência nas classes II e III.
 
-### Tema 732 STF (RE 605.867)
+### Tema 732/STJ (REsp 1.411.258) e Tema 1271/STF pendente (auditoria 25/07/2026)
 
 Tese. Menor sob guarda é equiparado a filho para fins de pensão por morte.
 
@@ -104,7 +104,7 @@ Refutação. Tema 15 TNU e Súmula 37 TNU. Filho com invalidez ou deficiência m
 
 Argumento adversário. Menor sob guarda foi excluído do rol de dependentes.
 
-Refutação. Tema 732 STF. Equiparação de menor sob guarda a filho foi restabelecida pela jurisprudência constitucional. Direito reconhecido.
+Refutação. Tema 732/STJ, o menor sob guarda tem direito à pensão comprovada a dependência econômica. Atenção (auditoria 25/07/2026), a matéria pós-EC 103 está afetada no Tema 1271/STF (RE 1.442.021), com suspensão nacional desde 21/01/2025.
 
 ### Argumento 6 — Redução drástica da RMI
 

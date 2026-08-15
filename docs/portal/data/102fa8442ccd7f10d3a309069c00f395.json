@@ -1,0 +1,46 @@
+{
+  "nome": "Daniel Sebastião de Lima",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "07187972806",
+      "dn": "11091967",
+      "nome": "Daniel Sebastião de Lima",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Daniel Sebastião de Lima",
+      "status": "Última atualização em 26/02/2026: Embargos de declaração interpostos",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-02-26",
+          "data_br": "26/02/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Verificar se cabe embargos de declaração."
+        },
+        {
+          "data": "2026-01-20",
+          "data_br": "20/01/2026",
+          "tipo": "Manifestação no processo judicial",
+          "descricao": "Apresentada manifestação."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

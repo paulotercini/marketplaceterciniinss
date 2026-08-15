@@ -1,0 +1,144 @@
+{
+  "slug": "salario-maternidade",
+  "category": "Outros benefícios",
+  "title": "Salário-Maternidade (B80/B81)",
+  "nav_label": "Salário-Maternidade",
+  "order": 2,
+  "facts": [
+    [
+      "Duração",
+      "120 dias (regra geral)"
+    ],
+    [
+      "Quem tem",
+      "Mãe segurada / adoção"
+    ]
+  ],
+  "meta_description": "Salário-maternidade (B80/B81): requisitos, carência e regras para empregada, contribuinte individual, segurada especial e adoção. Monte Alto/SP.",
+  "hero_subtitle": "Benefício pago à segurada do INSS em razão de parto, adoção, guarda para adoção, aborto não criminoso ou natimorto.",
+  "intro": [
+    "O salário-maternidade é o benefício devido à segurada do INSS por ocasião do parto, da adoção ou da guarda para fins de adoção, e também nos casos de aborto não criminoso e natimorto. Está previsto nos arts. 71 a 73 da Lei 8.213/91 e corresponde, em regra, à licença-maternidade de 120 dias prevista na Constituição.",
+    "O benefício alcança todas as categorias de seguradas: empregada, doméstica, trabalhadora avulsa, contribuinte individual, facultativa, MEI e segurada especial rural. As regras de carência e a forma de pagamento variam conforme a categoria."
+  ],
+  "sections": [
+    {
+      "heading": "O que é",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "O salário-maternidade (espécies B80 para parto e B81 para aborto não criminoso e natimorto, entre outras) é pago durante 120 dias, conforme o art. 72 da Lei 8.213/91, podendo ser estendido para 180 dias nas empresas que aderem ao Programa Empresa Cidadã. A Emenda Constitucional 103/2019 não alterou estruturalmente o benefício."
+        },
+        {
+          "type": "callout",
+          "text": "Para a segurada empregada, o benefício costuma ser pago pelo empregador, com posterior compensação; nas demais categorias, o pagamento é feito diretamente pelo INSS."
+        }
+      ]
+    },
+    {
+      "heading": "Quem tem direito",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Segurada gestante (empregada, doméstica, avulsa, contribuinte individual, facultativa, MEI ou especial rural).",
+            "Segurada ou segurado que adota ou obtém guarda judicial para fins de adoção (arts. 71-A e Lei 12.873/2013).",
+            "Segurada desempregada que mantém a qualidade de segurada pelo período de graça.",
+            "O pai ou cônjuge sobrevivente, em caso de óbito da mãe, recebe o benefício pelo período restante (LC 146/2014)."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Requisitos e carência",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "São exigidos a qualidade de segurada na data de início do benefício e o evento gerador (parto, adoção, guarda ou situação equivalente). A carência varia conforme a categoria:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Empregada, empregada doméstica e trabalhadora avulsa: isenção de carência (art. 26, VI, da Lei 8.213/91).",
+            "Contribuinte individual e facultativa: carência de 10 contribuições mensais (art. 25, III).",
+            "Segurada especial rural: comprovação de 10 meses de atividade rural, com benefício no valor de um salário mínimo (art. 39, parágrafo único).",
+            "Segurada desempregada: depende da manutenção da qualidade de segurada pelo período de graça, com a carência aplicável à sua categoria."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Situações específicas",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Parto: a data de início do benefício é a data do parto, podendo ser antecipada em até 28 dias a critério médico, em gravidez de risco.",
+            "Adoção ou guarda para adoção: o benefício é devido a partir da sentença de guarda ou adoção; na adoção conjunta, apenas um dos adotantes recebe o benefício.",
+            "Aborto não criminoso e natimorto: enquadram-se na espécie B81, com duração definida conforme o marco e a jurisprudência aplicável.",
+            "Óbito da mãe: o benefício pode ser transferido ao pai ou cônjuge sobrevivente, nos termos da LC 146/2014.",
+            "Segurada especial rural: a comprovação dos 10 meses de atividade pode ser feita com autodeclaração, DAP/CAF, contratos de arrendamento, notas, CCIR e ITR."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Pontos de atenção",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Para a segurada desempregada, o prazo do período de graça é decisivo; é importante requerer o benefício tempestivamente.",
+            "Para a contribuinte individual e a facultativa, é necessário conferir o efetivo recolhimento das contribuições que compõem a carência.",
+            "A segurada especial com atividade rural intermitente precisa demonstrar os 10 meses dentro do período exigido em lei.",
+            "Indeferimentos por suposta falta de qualidade de segurada, carência não cumprida ou deficiência documental podem ser revistos com a documentação adequada.",
+            "No aborto não criminoso, o benefício é de 14 dias; no caso de natimorto, mantém-se o período integral de 120 dias.",
+            "Para a segurada especial (rural), os 10 meses de atividade devem estar no período imediatamente anterior ao parto ou ao requerimento.",
+            "Quem perdeu a qualidade de segurada e voltou a contribuir precisa, em regra, de metade da carência (5 contribuições) quando a carência for exigida (art. 27-A)."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Como o escritório pode ajudar",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Podemos analisar a sua situação, identificar a categoria de segurada e a carência aplicável, verificar a manutenção da qualidade de segurada e organizar a documentação, inclusive a prova de atividade rural para a segurada especial. Também orientamos sobre os casos de adoção, óbito da mãe e demais situações, e sobre eventual recurso administrativo ou ação judicial. Cada caso é avaliado individualmente, à luz da legislação e das provas disponíveis."
+        }
+      ]
+    }
+  ],
+  "documentos": [
+    "Documento de identidade e CPF",
+    "Número do CNIS ou extrato de contribuições do INSS",
+    "Certidão de nascimento da criança ou documento do parto",
+    "Termo de guarda ou sentença de adoção, quando for o caso",
+    "Atestado médico, em caso de antecipação por gravidez de risco, aborto não criminoso ou natimorto",
+    "Carteira de trabalho e comprovantes de vínculos ou recolhimentos",
+    "Documentos de atividade rural (autodeclaração, DAP/CAF, CCIR, ITR), para a segurada especial",
+    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento, se houver"
+  ],
+  "faq": [
+    {
+      "q": "Trabalhadora desempregada tem direito ao salário-maternidade?",
+      "a": "Pode ter. Se a segurada mantém a qualidade de segurada pelo período de graça e cumpre a carência aplicável à sua categoria, o benefício é devido e pago diretamente pelo INSS. O prazo do período de graça é decisivo, por isso é importante requerer no tempo certo."
+    },
+    {
+      "q": "Quem adota uma criança recebe salário-maternidade?",
+      "a": "Sim. Em caso de adoção ou de guarda judicial para fins de adoção, há direito ao salário-maternidade, nos termos dos arts. 71-A da Lei 8.213/91 e da Lei 12.873/2013. Na adoção conjunta, apenas um dos adotantes recebe o benefício."
+    },
+    {
+      "q": "A segurada especial rural precisa ter contribuído?",
+      "a": "A segurada especial rural tem direito ao salário-maternidade no valor de um salário mínimo mediante a comprovação de 10 meses de atividade rural, e não necessariamente de contribuições, conforme o art. 39, parágrafo único, da Lei 8.213/91."
+    },
+    {
+      "q": "O benefício pode ser transferido ao pai?",
+      "a": "Sim. Em caso de óbito da mãe, o salário-maternidade pode ser transferido ao pai ou cônjuge sobrevivente pelo período restante, nos termos da LC 146/2014."
+    }
+  ],
+  "related": [
+    "pensao-por-morte",
+    "bpc-deficiente",
+    "aposentadoria-rural"
+  ]
+}

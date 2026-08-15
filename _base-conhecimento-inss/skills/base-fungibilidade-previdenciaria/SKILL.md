@@ -3,6 +3,17 @@ name: base-fungibilidade-previdenciaria
 description: "Fungibilidade previdenciária ampliativa em favor do segurado e vedação à conversão prejudicial pelo REsp 2.246.096/MG (Informativo 885/STJ, Min. Gurgel de Faria, Primeira Turma, 14/04/2026). Use SEMPRE que mencionar fungibilidade previdenciária, REsp 2.246.096, Informativo 885 STJ, conversão de benefício, Tema 217 TNU, Tema 1018 STJ direito de opção, Tema 995 STJ reafirmação DER, Tema 350 STF, Tema 334 STF, Tema 1124 STJ, fungibilidade B31 B91 B32 B92 B94, fungibilidade aposentadoria invalidez auxílio-acidente, fungibilidade idade rural híbrida, fungibilidade BPC aposentadoria, julgamento extra petita, reformatio in pejus, arts. 141 492 CPC, art. 326 CPC pedidos sucessivos, congruência adstrição, decisão surpresa art. 10 CPC, Súmula 45 STJ, Súmula 47 TNU, condições pessoais sociais, dever melhor benefício. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, reafirmacao-der, tema-1124-instrucao-administrativa."
 ---
 
+## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
+
+Conferencia em fonte oficial (CJF e STJ) sobre citacoes usadas nesta skill.
+
+1. Sumulas 88 e 89 da TNU EXISTEM e estao VIGENTES (aprovadas na Sessao Ordinaria de 17/04/2024, DJeN 24/04/2024). Texto literal da Sumula 88/TNU. "A existencia de limitacao, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessao do beneficio de auxilio-acidente, em observancia a tese fixada sob o Tema 416 do Superior Tribunal de Justica." Texto literal da Sumula 89/TNU. "Nao ha direito a concessao de beneficio de auxilio-acidente quando, apos consolidacao das lesoes decorrentes de acidente de qualquer natureza, resultarem sequelas que nao reduzem a capacidade laborativa habitual nem sequer demandam dispendio de maior esforco na execucao da atividade habitual." Usar sempre estes textos, nao parafrasear.
+2. Tema 201/TNU tem tese CONTRARIA ao contribuinte individual. "O contribuinte individual nao faz jus ao auxilio-acidente, diante de expressa exclusao legal." Nao usar como fundamento de sequela minima nem em favor da concessao. A tese de sequela minima e a Sumula 88/TNU c/c Tema 416/STJ.
+3. Nao confundir com a Sumula 89/STJ ("A acao acidentaria prescinde do exaurimento da via administrativa"), valida no contexto acidentario estadual.
+
+Quadro completo e errata em base-precedentes-catalogo-vinculantes/references/ATUALIZACAO-STATUS-2026-06.md.
+
+
 # Fungibilidade Previdenciária. REsp 2.246.096/MG e Limites Processuais
 
 ## 1. Quando acionar esta skill
@@ -59,7 +70,7 @@ Lei 12.016/2009 (Mandado de Segurança).
 
 ### 3.1. Dados oficiais
 
-REsp 2.246.096-MG. Relator Ministro Gurgel de Faria. Primeira Turma. Decisão por unanimidade. Julgamento em 14/04/2026.
+REsp 2.246.096-MG. Relator Ministro Gurgel de Faria. Primeira Turma. Decisão por unanimidade. Julgamento em 14/04/2026. [CONFERIDO na auditoria de 12/07/2026 contra o Informativo 885 no portal oficial do STJ, dados e tese literal batem integralmente.]
 
 Informativo de Jurisprudência nº 885/STJ. Publicado em 22/04/2026.
 
@@ -125,7 +136,7 @@ Quando a prova já constava do administrativo, a DIB recai na DER. Quando o INSS
 
 ### 5.1. Conversão prejudicial sem postulação
 
-A jurisprudência do STJ no REsp 2.246.096/MG vedou a conversão de B91 (auxílio-doença) em B94 (auxílio-acidente) sem postulação do segurado, quando isso reduz o valor recebido. O fundamento é a violação aos arts. 141 e 492 do CPC.
+A jurisprudência do STJ no REsp 2.246.096/MG vedou a conversão de B91 (auxílio-doença acidentário) em B94 (auxílio-acidente) sem postulação do segurado, quando isso reduz o valor recebido. O fundamento é a violação aos arts. 141 e 492 do CPC.
 
 ### 5.2. Reformatio in pejus
 
@@ -149,7 +160,7 @@ Quando a flexibilização indevida implica rateio menor com inclusão de depende
 
 ### 6.1. Benefícios por incapacidade
 
-Relação clássica fungível. B31 (auxílio-doença) e B91 (aposentadoria por invalidez). Segurado pleiteia B91, perícia constata incapacidade temporária. Cabível conceder B31 (REsp 824.075/PR, jurisprudência consolidada da TNU).
+Relação clássica fungível. B31 (auxílio-doença) e B32/B92 (aposentadoria por incapacidade permanente). Segurado pleiteia B91, perícia constata incapacidade temporária. Cabível conceder B31 (REsp 824.075/PR, jurisprudência consolidada da TNU).
 
 Inversa vedada pelo REsp 2.246.096/MG. Quando reduzir amparo, B91 não pode ser convertido em B31 nem em B94.
 
@@ -217,7 +228,7 @@ Formular pedidos sucessivos e alternativos (art. 326 do CPC). Indicar hierarquia
 
 Modelo recomendado.
 
-"a) concessão de aposentadoria por incapacidade permanente (B91), e, sucessivamente, na hipótese de não acolhimento, b) auxílio por incapacidade temporária (B31), e, somente na ausência de ambos, c) auxílio-acidente (B94), respeitada sempre a opção do autor pelo benefício mais vantajoso na fase de cumprimento, nos termos do Tema 1018/STJ".
+"a) concessão de aposentadoria por incapacidade permanente (B32; B92 quando acidentária), e, sucessivamente, na hipótese de não acolhimento, b) auxílio por incapacidade temporária (B31), e, somente na ausência de ambos, c) auxílio-acidente (B94), respeitada sempre a opção do autor pelo benefício mais vantajoso na fase de cumprimento, nos termos do Tema 1018/STJ".
 
 Cláusula de reserva. "Manifesta-se expressamente que a fungibilidade só pode ser aplicada em favor do segurado, jamais em prejuízo, com fundamento no REsp 2.246.096/MG e nos arts. 141 e 492 do CPC".
 

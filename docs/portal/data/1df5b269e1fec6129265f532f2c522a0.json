@@ -1,0 +1,33 @@
+{
+  "nome": "Osmair Zinhani",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "08663738889",
+      "dn": "16071963",
+      "nome": "Osmair Zinhani",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Osmair Zinhani",
+      "status": "Última atualização em 11/02/2026: Perícia médica realizada",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-02-11",
+          "data_br": "11/02/2026",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

@@ -1,13 +1,13 @@
 ---
 name: base-revisao-teto-buraco-negro-verde
-description: "Revisão do teto previdenciário, buraco negro e buraco verde, com aplicação das ECs 20/1998 e 41/2003, Tema 327 STF (RE 564.354), revisão do art. 26 da Lei 8.870/1994 e revisão pelo art. 144 da Lei 8.213/91. Use SEMPRE que mencionar revisão do teto, aplicação do teto previdenciário, limitador de RMI, buraco negro (outubro 1988 a abril 1991), buraco verde (março 1994 a fevereiro 1997), art. 144 Lei 8.213/91, art. 26 Lei 8.870/1994, Tema 327 STF, RE 564.354, EC 20/1998, EC 41/2003, readequação ao novo teto, RMI glosada pelo teto, salário de benefício limitado, valores acima do teto, revisão do teto aposentadorias, integração teto pensão por morte, teto após reforma, decadência revisão teto, prescrição parcelas teto. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103 e precedentes-previdenciarios."
+description: "Revisão do teto previdenciário, buraco negro e buraco verde, com aplicação das ECs 20/1998 e 41/2003, Tema 76 STF (RE 564.354), revisão do art. 26 da Lei 8.870/1994 e revisão pelo art. 144 da Lei 8.213/91. Use SEMPRE que mencionar revisão do teto, aplicação do teto previdenciário, limitador de RMI, buraco negro (outubro 1988 a abril 1991), buraco verde (março 1994 a fevereiro 1997), art. 144 Lei 8.213/91, art. 26 Lei 8.870/1994, Tema 76 STF, RE 564.354, EC 20/1998, EC 41/2003, readequação ao novo teto, RMI glosada pelo teto, salário de benefício limitado, valores acima do teto, revisão do teto aposentadorias, integração teto pensão por morte, teto após reforma, decadência revisão teto, prescrição parcelas teto. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103 e precedentes-previdenciarios."
 ---
 
 # Revisão do Teto Previdenciário (Buraco Negro e Buraco Verde)
 
 ## Escopo
 
-Skill temática pró-segurado. Orienta a discussão da revisão por aplicação de novos tetos constitucionais aos benefícios cujo Salário de Benefício foi originariamente glosado pelo teto vigente à época da concessão. Inclui a revisão do buraco negro, período entre outubro de 1988 e abril de 1991, e a revisão do buraco verde, período entre março de 1994 e fevereiro de 1997, além da readequação após as ECs 20/1998 e 41/2003.
+Skill temática pró-segurado. Orienta a discussão da revisão por aplicação de novos tetos constitucionais aos benefícios cujo Salário de Benefício foi originariamente glosado pelo teto vigente à época da concessão. Inclui a revisão do buraco negro, período entre outubro de 1988 e abril de 1991, e a revisão do buraco verde, período para benefícios com DIB entre 05/04/1991 e 31/12/1993, além da readequação após as ECs 20/1998 e 41/2003.
 
 ## Marco normativo central
 
@@ -19,7 +19,7 @@ Lei 8.213/91, art. 33. Limites do Salário de Benefício ao teto do Salário de 
 
 Lei 8.213/91, art. 144. Reajuste de benefícios concedidos entre outubro de 1988 e abril de 1991 (buraco negro).
 
-Lei 8.870/1994, art. 26. Congelamento temporário, origem do buraco verde (março de 1994 a fevereiro de 1997).
+Lei 8.870/1994, art. 26. Congelamento temporário, origem do buraco verde (DIB de 05/04/1991 a 31/12/1993).
 
 EC 20/1998. Novo teto.
 
@@ -27,7 +27,7 @@ EC 41/2003. Novo teto.
 
 ## Marco jurisprudencial
 
-Tema 327 STF, RE 564.354. Julgado em 2010. Fixou tese pela readequação dos benefícios concedidos antes das ECs 20/1998 e 41/2003 aos novos tetos, observada a parcela que excederia o teto anterior. Precedente nuclear da revisão do teto.
+Tema 76 STF, RE 564.354 (numeração corrigida de 327 para 76 na auditoria 25/07/2026). Julgado em 2010. Fixou tese pela readequação dos benefícios concedidos antes das ECs 20/1998 e 41/2003 aos novos tetos, observada a parcela que excederia o teto anterior. Precedente nuclear da revisão do teto.
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -41,7 +41,7 @@ Primeiro, benefícios com DIB antes de dezembro de 1998 cuja RMI teria superado 
 
 Segundo, benefícios concedidos entre outubro de 1988 e abril de 1991, sem aplicação do art. 144 da Lei 8.213/91.
 
-Terceiro, benefícios concedidos entre março de 1994 e fevereiro de 1997, pelo buraco verde, com limitação pelo art. 26 da Lei 8.870/1994.
+Terceiro, benefícios concedidos para benefícios com DIB entre 05/04/1991 e 31/12/1993, pelo buraco verde, com limitação pelo art. 26 da Lei 8.870/1994.
 
 Quarto, pensões derivadas de benefícios revisáveis, com direito à revisão reflexa.
 
@@ -51,7 +51,7 @@ Art. 103 da Lei 8.213/91. Decadência decenal contada do primeiro pagamento.
 
 Súmula 85 STJ. Prescrição quinquenal das parcelas.
 
-Benefícios concedidos há mais de 10 anos estão com decadência consumada. Para benefícios em que a decadência ainda não se implementou, verificar a tempestividade.
+A readequação aos tetos das ECs 20/98 e 41/03 (RE 564.354) NÃO se sujeita à decadência do art. 103, por não rever o ato de concessão — apenas as parcelas prescrevem (Súmula 85 STJ).
 
 ## Regra pró-segurado
 
@@ -78,7 +78,7 @@ Em revisão geral, acionar `revisao-peticao`.
 
 ## Alertas
 
-Primeiro, decadência decenal é crítica. Benefícios concedidos antes de 2015 tendem a estar esgotados.
+A decadência decenal permanece aplicável apenas às revisões de RMI propriamente ditas (art. 144 da Lei 8.213 e art. 26 da Lei 8.870/94); a readequação ao teto escapa dela.
 
 Segundo, pensões derivadas seguem a sorte do benefício originário, com decadência autônoma para os dependentes, conforme IAC 11 TRF4 e leitura do STJ.
 
@@ -94,7 +94,7 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 
 Wladimir Novaes Martinez, teto previdenciário.
 
-Frederico Amado, Tema 327 STF.
+Frederico Amado, Tema 76 STF.
 
 Hugo Goes, cálculo.
 

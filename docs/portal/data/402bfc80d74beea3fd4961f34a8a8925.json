@@ -1,0 +1,56 @@
+{
+  "nome": "Edileusa Vieira dos Santos Maciel",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "08358456808",
+      "dn": "12081959",
+      "nome": "Edileusa Vieira dos Santos Maciel",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Junta de Recursos",
+      "titulo_tarefa": "Edileusa Vieira dos Santos Maciel",
+      "status": "Última atualização em 12/05/2026: Processo distribuído ao conselheiro relator",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-05-12",
+          "data_br": "12/05/2026",
+          "tipo": "Processo distribuído ao relator",
+          "descricao": "Processo distribuído ao conselheiro relator."
+        },
+        {
+          "data": "2026-02-27",
+          "data_br": "27/02/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2026-02-19",
+          "data_br": "19/02/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-12-29",
+          "data_br": "29/12/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2025-11-21",
+          "data_br": "21/11/2025",
+          "tipo": "Exigência cumprida",
+          "descricao": "Exigência do INSS cumprida."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

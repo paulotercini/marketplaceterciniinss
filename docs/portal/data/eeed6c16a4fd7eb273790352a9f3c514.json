@@ -1,0 +1,38 @@
+{
+  "nome": "Artemir Luiz Marcelino",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "77577965987",
+      "dn": "14041971",
+      "nome": "Artemir Luiz Marcelino",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
+      "titulo_tarefa": "Artemir Luiz Marcelino",
+      "status": "Última atualização em 07/12/2025: Recurso Especial interposto",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-12-07",
+          "data_br": "07/12/2025",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Recurso Especial interposto."
+        },
+        {
+          "data": "2025-09-06",
+          "data_br": "06/09/2025",
+          "tipo": "Processo distribuído ao relator",
+          "descricao": "Processo distribuído ao conselheiro relator."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

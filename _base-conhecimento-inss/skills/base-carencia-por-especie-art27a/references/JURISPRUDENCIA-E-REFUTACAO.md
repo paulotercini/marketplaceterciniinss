@@ -6,9 +6,9 @@
 
 Reingresso. Fonte oficial em https://www.stj.jus.br
 
-### Tema 365 TNU
+### Tema 365 TNU (tese e data conferidas na página oficial do CJF, julgado em 12/11/2025, acórdão publicado em 18/12/2025 — auditoria 25/07/2026, a data antes registrada, 13/11/2025, estava errada)
 
-Carência. Fonte oficial em https://www.cjf.jus.br
+Tese literal. "Não é possível o cômputo do período de gozo de benefício por incapacidade intercalado entre contribuições para fins de aferição das mais de 120 contribuições mensais exigidas para a prorrogação do período de graça, nos termos do art. 15, § 1º, da Lei nº 8.213/91." PEDILEF 0500120-68.2021.4.05.8311/PE. ALERTA. Tese contrária ao segurado, restrita à prorrogação do período de graça (120 contribuições). Não confundir com o cômputo de benefício por incapacidade intercalado para CARÊNCIA, que permanece garantido pelo Tema 1125/STF e pelo Enunciado 18 do CRPS.
 
 ### Lei 8.213/91, art. 27-A
 

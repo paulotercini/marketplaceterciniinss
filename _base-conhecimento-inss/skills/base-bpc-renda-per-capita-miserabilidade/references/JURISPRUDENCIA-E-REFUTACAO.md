@@ -10,7 +10,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Abre flexibilização.
 
-### Tema 640 STF
+### Tema 640/STJ (REsp 1.355.052; corte corrigida na auditoria 25/07/2026)
 
 Tese. Constitucionalidade do art. 20, §3º, mas com possibilidade de interpretação conforme.
 
@@ -18,9 +18,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado em leitura integrada.
 
-### Tema 73 STJ
+### Tema 185/STJ (REsp 1.112.557)
 
-Tese. Flexibilização do critério de miserabilidade.
+Prova ampla da miserabilidade por todas as circunstâncias (auditoria 25/07/2026, corrigido o número antes citado como Tema 73/STJ).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -34,7 +34,7 @@ Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado.
 
-### Tema 312 TNU
+### RE 580.963/STF (corte corrigida na auditoria 25/07/2026)
 
 Tese. Cômputo de benefício excluído.
 
@@ -42,7 +42,7 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado.
 
-### Tema 640 TNU
+### Tema 640/STJ (REsp 1.355.052; corte corrigida na auditoria 25/07/2026)
 
 Tese. Exclusões de renda em situações específicas.
 

@@ -1,0 +1,76 @@
+{
+  "nome": "Marcio Roberto de Andrade",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "13299473808",
+      "dn": "04121973",
+      "nome": "Marcio Roberto de Andrade",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Marcio Roberto de Andrade",
+      "status": "Última atualização em 20/04/2026: Ação judicial protocolada",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-04-20",
+          "data_br": "20/04/2026",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Distribuí a inicial."
+        },
+        {
+          "data": "2026-03-02",
+          "data_br": "02/03/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Benefício negado."
+        },
+        {
+          "data": "2025-11-24",
+          "data_br": "24/11/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Somente aguardar para que leve na perícia no dia 15/12."
+        },
+        {
+          "data": "2025-10-08",
+          "data_br": "08/10/2025",
+          "tipo": "Perícia médica",
+          "descricao": "(P): Ok, fiz o requerimento do benefício e agendou a perícia para o dia 15/12 as 08:00h no INSS de Bebedouro."
+        },
+        {
+          "data": "2025-08-11",
+          "data_br": "11/08/2025",
+          "tipo": "Perícia médica",
+          "descricao": "Perícia agendada para o dia 08/09 às 10h00."
+        },
+        {
+          "data": "2025-06-06",
+          "data_br": "06/06/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Concedido!"
+        },
+        {
+          "data": "2025-05-14",
+          "data_br": "14/05/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado - em análise."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "nome": "Ivair Aguiar dos Santos",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "07556478823",
+      "dn": "10091964",
+      "nome": "Ivair Aguiar dos Santos",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Ivair Aguiar dos Santos",
+      "status": "Pericia medica marcada para 29/06/2026 (em 22 dias) às 09:20 — INSS de Jaboticabal",
+      "proximo_evento": {
+        "tipo": "Pericia medica",
+        "data": "2026-06-29",
+        "data_br": "29/06/2026",
+        "hora": "09:20",
+        "local": "INSS de Jaboticabal"
+      },
+      "timeline": [
+        {
+          "data": "2026-05-28",
+          "data_br": "28/05/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

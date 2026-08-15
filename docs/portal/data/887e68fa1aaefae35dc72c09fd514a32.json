@@ -1,0 +1,40 @@
+{
+  "nome": "Reginaldo Luiz",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "25826679867",
+      "dn": "18081976",
+      "nome": "Reginaldo Luiz",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Reginaldo Luiz",
+      "status": "Última atualização em 23/03/2026: Petição protocolada nos autos",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-03-23",
+          "data_br": "23/03/2026",
+          "tipo": "Petição protocolada",
+          "descricao": "Petição protocolada nos autos."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

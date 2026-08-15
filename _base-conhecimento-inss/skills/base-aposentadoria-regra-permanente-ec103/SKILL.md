@@ -1,6 +1,6 @@
 ---
 name: base-aposentadoria-regra-permanente-ec103
-description: "Regra permanente de aposentadoria por idade e tempo de contribuição na EC 103/2019, sob ótica exclusiva do segurado. Use SEMPRE que mencionar regra permanente EC 103, regra definitiva EC 103, art. 19 EC 103, aposentadoria idade urbana pós-reforma, aposentadoria pós 13/11/2019, novo segurado após a reforma, primeiro emprego após 2019, carência 180 aposentadoria idade, idade mínima 62 65 permanente, 15 anos tempo contribuição mulher, 20 anos tempo contribuição homem, art. 201 CF §7º pós-EC 103, dependência da regra permanente vs transição, RMI regra permanente, cláusula pétrea direito previdenciário, rejeição de interpretação restritiva INSS, aplicação para novos filiados, filiação após promulgação, carência mínima 180 RGPS, MP 905/2019 e sua rejeição, indisponibilidade de direitos previdenciários. Portaria 991/2022, Portaria 992/2022. Aciona peticao-previdenciaria. Cruza com peticao-previdenciaria, base-aposentadoria-transicao-ec103, base-calculo-rmi-ec103, precedentes-previdenciarios e revisao-peticao."
+description: "Regra permanente de aposentadoria por idade e tempo de contribuição na EC 103/2019, sob ótica exclusiva do segurado. Use SEMPRE que mencionar regra permanente EC 103, regra definitiva EC 103, art. 19 EC 103, aposentadoria idade urbana pós-reforma, aposentadoria pós 13/11/2019, novo segurado após a reforma, primeiro emprego após 2019, carência 180 aposentadoria idade, idade mínima 62 65 permanente, 15 anos tempo contribuição mulher, 20 anos tempo contribuição homem, art. 201 CF §7º pós-EC 103, dependência da regra permanente vs transição, RMI regra permanente, cláusula pétrea direito previdenciário, rejeição de interpretação restritiva INSS, aplicação para novos filiados, filiação após promulgação, carência mínima 180 RGPS, MP 905/2019 e sua rejeição, indisponibilidade de direitos previdenciários. Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona peticao-previdenciaria. Cruza com peticao-previdenciaria, base-aposentadoria-transicao-ec103, base-calculo-rmi-ec103, precedentes-previdenciarios e revisao-peticao."
 ---
 
 # Regra Permanente da EC 103/2019 (Aposentadoria)
@@ -23,7 +23,7 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Cálculo da RMI, renda mensal, acumulação e tributação na fonte.
+Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Dois ramos da regra permanente
 
@@ -49,7 +49,7 @@ A regra geral é de que a regra permanente é de último acesso. O planejamento 
 
 Para segurados com filiação após a reforma, a regra permanente é a única via por tempo e idade (além da aposentadoria por incapacidade permanente e da aposentadoria especial). Contudo, o planejamento pode otimizar contribuições para maximizar a RMI, nos termos do art. 26 da EC 103 (acionar `base-calculo-rmi-ec103`).
 
-Cuidado com o divisor mínimo. O §6º do art. 26 da EC 103 estabelece que o divisor da média é sempre o valor correspondente a 60% do período contributivo, com mínimo de 108 contribuições para quem se enquadra em alguns cenários. Quanto mais contribuições descartadas pelos 20% menores, melhor a média. Análise de afastamento da regra dos 60% pode ser estratégia para certos perfis.
+O art. 26, §6º, da EC 103 traz regra pró-segurado: podem ser EXCLUÍDAS, a pedido, as contribuições que reduzam o valor do benefício, desde que mantido o tempo mínimo. O divisor mínimo de 108 contribuições vem do art. 135-A da Lei 8.213/91 (Lei 14.331/2022). Pós-EC 103 a média usa 100% dos salários desde 07/1994 — não existe mais o descarte automático dos 20% menores (regra do art. 3º da Lei 9.876/99, aplicável só a direito adquirido pré-reforma).
 
 ## Integração com outras skills
 

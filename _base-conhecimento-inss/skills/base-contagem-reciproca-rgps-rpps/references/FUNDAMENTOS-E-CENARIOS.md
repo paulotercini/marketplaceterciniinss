@@ -28,9 +28,9 @@ IN 128/2022. Regras operacionais.
 
 ## 4. Marco jurisprudencial central
 
-### Tema 176 STF
+### Art. 201, §9º, da CF (contagem recíproca)
 
-Contagem recíproca e aspectos constitucionais.
+Base constitucional direta (auditoria 25/07/2026, retirado o Tema 176/STF, que trata de ICMS).
 
 ### Súmula 24 AGU
 
@@ -40,9 +40,9 @@ Cômputo de tempo em regimes distintos.
 
 Indenização de contribuições em tempo rural para contagem recíproca.
 
-### Enunciado 6 CRPS
+### Alerta corretivo Onda 66
 
-CTC e efeitos.
+O Enunciado 6 do CRPS, conforme redação oficial publicada no DOU de 12/11/2019 e verificada no Comet, NÃO trata de CTC. Ele trata do salário-maternidade à gestante demitida sem justa causa no curso da gravidez. Não existe Enunciado do CRPS entre os Enunciados 1 a 19 vigentes que trate especificamente de CTC e efeitos. A fundamentação normativa da CTC e da contagem recíproca deve remontar ao art. 96 da Lei 8.213/91, art. 130 da IN 128/2022, Livro IX da Portaria DIRBEN/INSS 998/2022, Tema 176 STF e Tema 609 STJ.
 
 ## 5. Cenários pró-segurado
 

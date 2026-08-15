@@ -1,0 +1,60 @@
+{
+  "nome": "Valter Bueno",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "12667688821",
+      "dn": "15011970",
+      "nome": "Valter Bueno",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Valter Bueno",
+      "status": "Em acompanhamento pelo escritório",
+      "proximo_evento": null,
+      "timeline": [],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    },
+    {
+      "cpf": "12667688821",
+      "dn": "15011970",
+      "nome": "Valter Bueno",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Valter Bueno",
+      "status": "Última atualização em 10/01/2022: Recurso administrativo protocolado",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2022-01-10",
+          "data_br": "10/01/2022",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso administrativo protocolado."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

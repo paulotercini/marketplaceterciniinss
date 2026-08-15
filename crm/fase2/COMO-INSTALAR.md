@@ -1,0 +1,195 @@
+# CRM Fase 2 — instalação (uma vez, ~30 minutos)
+
+A Fase 2 dá ao escritório um banco de dados próprio na nuvem (Supabase, plano
+gratuito), login individual por colaborador e escrita dupla com o Microsoft
+To Do — ninguém precisa mudar de rotina de uma vez.
+
+## 1. Criar o projeto no Supabase
+
+1. Acesse https://supabase.com → "Start your project" → crie a conta (pode usar
+   o e-mail do escritório) e um projeto chamado `crm-tercini`, região
+   `South America (São Paulo)`. Guarde a senha do banco.
+2. No painel do projeto, anote em **Settings → API**:
+   - `Project URL` (algo como `https://xxxx.supabase.co`)
+   - `anon public` key
+   - `service_role` key (⚠ secreta — fica só na máquina do Paulo, como o
+     `graph_tokens.json`; nunca no git, nunca no app).
+
+   ⚠ **Painel novo do Supabase usa outros nomes** — o mapa é:
+   - **Publishable key** (`sb_publishable_...`) = a antiga `anon public`
+     → vai no app.html (pode ser vista pela equipe).
+   - **Secret key** (`sb_secret_...`, atrás do botão Reveal) = a antiga
+     `service_role` → vai SÓ no GitHub Secrets. **"Publicável" nunca é a
+     service_role — são opostas.** Se existir a aba "Legacy API keys",
+     as chaves antigas (`eyJ...`) funcionam do mesmo jeito.
+
+## 2. Criar as tabelas
+
+No painel, **SQL Editor → New query**: cole o conteúdo de `schema.sql` e
+execute (Run). Deve terminar sem erros — os colaboradores P/A/M/D/I/C já
+ficam cadastrados.
+
+O mesmo arquivo cria o bucket `anexos` (foto de documento tirada pelo
+celular). Ele nasce **privado** de propósito: ali entram laudo médico, CNIS
+e RG, e nada disso pode ficar num link público que funciona para sempre —
+o app abre cada arquivo por uma URL assinada que vence em dois minutos.
+Confira em **Storage → anexos** que a coluna "Public" está desmarcada.
+
+## 3. Criar o login de cada colaborador
+
+Em **Authentication → Users → Add user**: crie um usuário por colaborador
+(e-mail + senha provisória) — Paulo, Amanda, Marcos, André, Ingrid.
+
+Depois, vincule cada usuário ao colaborador. No SQL Editor:
+
+```sql
+update colaboradores set auth_id = (select id from auth.users where email = 'paulo@exemplo.com')  where inicial = 'P';
+update colaboradores set auth_id = (select id from auth.users where email = 'amanda@exemplo.com') where inicial = 'A';
+update colaboradores set auth_id = (select id from auth.users where email = 'marcos@exemplo.com') where inicial = 'M';
+update colaboradores set auth_id = (select id from auth.users where email = 'andre@exemplo.com')  where inicial = 'D';
+update colaboradores set auth_id = (select id from auth.users where email = 'ingrid@exemplo.com') where inicial = 'I';
+```
+
+(O "C" é o Claude — não tem login; aparece como autor dos lançamentos
+automáticos, como o monitor do DOU.)
+
+## 4. Primeira carga dos dados
+
+Na máquina que tem o `graph_tokens.json` (a do Paulo):
+
+```bash
+python3 graph_refresh.py
+python3 crm/sync_todo.py                      # To Do -> crm/data/crm.json
+
+export SUPABASE_URL="https://xxxx.supabase.co"
+export SUPABASE_SERVICE_KEY="a service_role key"
+python3 crm/fase2/migrar.py                   # crm.json -> banco
+```
+
+(Alternativa mais rápida para a 1ª carga: `python3 crm/fase2/migrar.py --sql
+carga.sql` e rodar o arquivo via psql/SQL Editor.)
+
+## 5. Distribuir o app: use o endereço na internet
+
+**Não mande o arquivo.** Publique e passe o link:
+
+```bash
+python3 crm/publicar.py     # copia o app para docs/crm/index.html
+git add docs/crm && git commit -m "publica o CRM" && git push
+```
+
+O push na `main` dispara o GitHub Pages e o sistema fica em
+<https://paulotercini.github.io/marketplaceterciniinss/crm/>. Cada
+colaborador abre esse endereço e salva na tela de início do celular.
+
+Por que não mandar o arquivo: no celular, o HTML recebido por WhatsApp,
+Gmail ou Drive abre **dentro** do aplicativo, num visualizador que não
+executa JavaScript. A tela de login aparece, o botão não funciona e os
+campos somem ao clicar — parece que o sistema apagou tudo. Com o endereço,
+o navegador abre de verdade e toda atualização chega sozinha.
+
+**Primeiro acesso de cada aparelho:** a tela pede o `Project URL` e a
+`anon public` key (Supabase → *Settings → API*) e guarda no navegador —
+uma vez por aparelho, e só. Nada disso é segredo: a anon key é pública por
+natureza, e quem protege os dados são o login e as políticas RLS. Por isso
+o arquivo do repositório sai **sem** endereço e sem chave, e o
+`crm/publicar.py` recusa publicar um app que esteja com eles preenchidos.
+
+Quem preferir o arquivo solto continua podendo preencher o `CONFIG` no topo
+de `crm/fase2/app.html` — mas aí é o próprio arquivo que carrega o endereço,
+e ele não pode voltar para o git assim.
+
+## 6. A sincronização (rotina diária, automatizável)
+
+```bash
+python3 graph_refresh.py
+python3 crm/sync_todo.py             # To Do -> espelho
+python3 crm/fase2/migrar.py          # espelho -> banco (idempotente, sem duplicar)
+```
+
+**Mão única, de propósito.** Enquanto os dois sistemas convivem, só o To Do
+alimenta o CRM. Tarefas e blocos escritos no To Do aparecem no app na
+importação seguinte; o que se escreve no app **não** volta para o To Do.
+
+A escrita de volta existe (`crm/fase2/escrever_todo.py`) e está **desligada**
+nos dois lugares: o script só roda com `ESCREVER_TODO=1` no ambiente, e o
+passo do workflow só roda se existir a variável de repositório `ESCREVER_TODO`
+valendo `1`. A razão é simples: um andamento replicado por engano vira texto
+no corpo de uma tarefa do To Do, e desfazer isso é edição manual, uma a uma.
+
+Para religar um dia: *Settings > Secrets and variables > Actions > Variables*,
+criar `ESCREVER_TODO = 1`.
+
+## 7. Sincronização automática (recomendado)
+
+O ciclo acima roda sozinho no GitHub Actions — mesmo mecanismo que o monitor
+do DOU já usa (`.github/workflows/crm-sync.yml`, de hora em hora, 07h–20h,
+segunda a sábado). Para ligar, basta cadastrar dois segredos novos no GitHub:
+
+1. No repositório: **Settings → Secrets and variables → Actions → New
+   repository secret**:
+   - `SUPABASE_URL` = o Project URL
+   - `SUPABASE_SERVICE_KEY` = a service_role key
+   - `SENHA_PADRAO_MEUINSS` = a senha padrão do escritório (opcional — é a
+     senha que o item "Padrão" no checklist do To Do representa; a
+     sincronização a grava como senha Meu INSS do cliente. Nunca no código:
+     o repositório é público.)
+   (o `GRAPH_REFRESH_TOKEN` já existe — é o mesmo do monitor do DOU.)
+2. Pronto. Enquanto os segredos não existirem, o workflow roda e se pula sem
+   erro. Para testar na hora: **Actions → CRM — sincronização To Do ↔ banco →
+   Run workflow**.
+
+Com isso, nada precisa rodar na máquina de ninguém.
+
+## 8. Rotina diária do Claude (opcional, recomendado)
+
+Todo dia útil às 07h30, o workflow `crm-claude.yml` roda o
+`crm/fase2/claude_rotina.py`: detecta exigências do INSS em andamentos novos
+(sugerindo o prazo legal de 30 dias), prazos vencendo sem movimentação e
+perícias da semana (com a mensagem de lembrete já pronta), e — com a chave da
+Anthropic — o Claude analisa os casos sinalizados e redige próximo passo e
+mensagem ao cliente. Tudo aparece como sugestão pendente na visão 🤖 Claude
+do app; **nada é aplicado sem alguém aceitar**.
+
+Para ligar a análise completa: crie uma chave em https://console.anthropic.com
+(API Keys) e cadastre o segredo `ANTHROPIC_API_KEY` no GitHub (mesmo caminho
+do passo 6). Uma rodada diária analisa até 25 casos numa única chamada —
+custo típico de centavos de dólar por dia. Sem essa chave, a rotina roda só
+as detecções automáticas (que já valem muito).
+
+Nota de privacidade: a análise envia ao Claude (API da Anthropic) o nome do
+cliente, benefício, fase e últimos andamentos dos casos sinalizados — dados
+tratados sob a política de retenção da API (30 dias). Senhas e credenciais
+NUNCA são enviadas.
+
+## 9. Pasta do cliente no Windows Explorer (opcional, por máquina)
+
+O botão **📁 Drive** da ficha funciona sem configurar nada (abre o Drive no
+navegador — direto na pasta, se vinculada; senão, pesquisando pelo nome).
+Para o botão **🖥 Explorer** abrir a pasta local do Google Drive para
+Desktop, rode UMA vez em cada computador do escritório:
+
+1. Copie a pasta `crm/fase2/atalho-explorer/` para o computador
+   (ex.: `C:\CRM\atalho-explorer`), mantendo os dois arquivos juntos.
+2. Dê dois cliques em `instalar-atalho.bat` e informe a pasta base dos
+   clientes (ex.: `G:\Meu Drive\Clientes`).
+3. No primeiro clique em 🖥 no app, o navegador pergunta se pode abrir o
+   "crmpasta" — marque **sempre permitir**.
+
+O atalho abre a pasta do cliente e **cria a pasta se ainda não existir**
+(padronizada pelo nome do cliente).
+
+## Atualizando uma instalação existente
+
+O `schema.sql` é idempotente: quando ele ganhar tabelas ou colunas novas
+(ex.: exigências, modelos de mensagem, sugestões), basta rodá-lo de novo no
+SQL Editor — nada é apagado.
+
+## O que fica onde
+
+| Arquivo | Sensível? | Onde vive |
+|---|---|---|
+| `schema.sql`, `migrar.py`, `escrever_todo.py`, `app.html` (sem CONFIG) | não | git |
+| `service_role` key | ⚠ sim | só na máquina do Paulo (env) |
+| `anon` key + URL no app.html distribuído | ok expor à equipe | app/host |
+| dados dos clientes | ⚠ sim | só no banco (RLS) — nunca no git |

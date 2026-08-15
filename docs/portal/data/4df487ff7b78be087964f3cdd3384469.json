@@ -1,0 +1,50 @@
+{
+  "nome": "Catarina de Lourdes Teixeira",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "10899390862",
+      "dn": "27101954",
+      "nome": "Catarina de Lourdes Teixeira",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
+      "titulo_tarefa": "Catarina de Lourdes Teixeira",
+      "status": "Última atualização em 12/03/2025: Petição protocolada nos autos",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-03-12",
+          "data_br": "12/03/2025",
+          "tipo": "Petição protocolada",
+          "descricao": "Petição protocolada nos autos."
+        },
+        {
+          "data": "2025-01-29",
+          "data_br": "29/01/2025",
+          "tipo": "Réplica protocolada",
+          "descricao": "Réplica protocolada nos autos."
+        },
+        {
+          "data": "2024-12-03",
+          "data_br": "03/12/2024",
+          "tipo": "Recurso protocolado",
+          "descricao": "Recurso protocolado."
+        },
+        {
+          "data": "2024-11-25",
+          "data_br": "25/11/2024",
+          "tipo": "Recurso inominado interposto",
+          "descricao": "Recurso inominado interposto."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

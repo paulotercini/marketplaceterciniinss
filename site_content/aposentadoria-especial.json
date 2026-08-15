@@ -1,0 +1,145 @@
+{
+  "slug": "aposentadoria-especial",
+  "category": "Aposentadorias",
+  "title": "Aposentadoria Especial",
+  "nav_label": "Especial",
+  "order": 3,
+  "facts": [
+    [
+      "Tempo",
+      "15, 20 ou 25 anos"
+    ],
+    [
+      "Prova",
+      "PPP e LTCAT"
+    ]
+  ],
+  "meta_description": "Aposentadoria especial para quem trabalhou exposto a agentes nocivos: ruído, agentes químicos e mais, antes e após a EC 103/2019. Análise em Monte Alto/SP.",
+  "hero_subtitle": "Benefício destinado a quem trabalhou exposto a agentes nocivos à saúde, como ruído, calor, agentes químicos e biológicos, em condições que justificam aposentadoria com tempo reduzido.",
+  "intro": [
+    "A aposentadoria especial protege o segurado(a) que exerceu atividade exposta a agentes prejudiciais à saúde (insalubres) ou perigosos, em condições que autorizam a aposentadoria com tempo de trabalho menor do que o exigido na aposentadoria comum. A base legal central é o art. 57 da Lei 8.213/91 e o art. 64 e seguintes do Decreto 3.048/99.",
+    "A Reforma da Previdência (EC 103/2019) alterou os requisitos a partir de 14 de novembro de 2019, criando regra de transição por pontos e regra permanente com idade mínima. Ainda assim, todo o tempo especial trabalhado ao longo da vida é preservado e pode ser aproveitado, inclusive convertido em tempo comum para os períodos até 13/11/2019."
+  ],
+  "sections": [
+    {
+      "heading": "O que é",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "É o benefício do segurado(a) que comprova exposição habitual e permanente a agentes nocivos durante o tempo mínimo exigido. Conforme a atividade e o agente, o tempo de exposição é de 15, 20 ou 25 anos. A comprovação se faz, em regra, pelo PPP (Perfil Profissiográfico Previdenciário) e por laudos técnicos das condições do ambiente de trabalho."
+        }
+      ]
+    },
+    {
+      "heading": "Agentes nocivos que podem dar direito",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Cada agente tem regras técnicas e limites de tolerância próprios. Entre os mais comuns na prática do escritório estão:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ruído, com limites que variaram ao longo do tempo: 80 dB ou 90 dB até 05/03/1997, 90 dB até 18/11/2003 e 85 dB(A) a partir de 19/11/2003 (com apuração pelo Nível de Exposição Normalizado, o NEN).",
+            "Agentes químicos.",
+            "Agentes biológicos (comuns em atividades de saúde).",
+            "Calor.",
+            "Frio (câmara frigorífica).",
+            "Eletricidade e periculosidade (risco elétrico acima de 250V).",
+            "Radiação ionizante.",
+            "Vibração.",
+            "Periculosidade do motociclista (NR-16, Anexo V).",
+            "Enquadramento por categoria profissional, para períodos até 28/04/1995."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Quem tem direito após a EC 103/2019",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Após a reforma, organizam-se três situações, e a análise comparativa entre elas é fundamental:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Direito adquirido: quem, até 13/11/2019, já tinha 25 anos de atividade especial (risco baixo), 20 anos (risco médio) ou 15 anos (risco alto) mantém o direito à aposentadoria especial pela regra anterior, sem idade mínima e sem pontos.",
+            "Regra de transição por pontos (art. 21 da EC 103): combina o tempo mínimo de exposição (15, 20 ou 25 anos) com a soma de idade e tempo de contribuição, exigindo 66, 76 e 86 pontos, respectivamente.",
+            "Regra permanente (art. 19, §1º, III, da EC 103): exige idade mínima de 55 anos (risco alto), 58 anos (risco médio) ou 60 anos (risco baixo), combinada com o tempo mínimo de exposição de 15, 20 ou 25 anos."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Conversão de tempo especial em comum",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Quem não alcança o tempo mínimo da aposentadoria especial pode converter o tempo especial em comum e somar à aposentadoria por tempo de contribuição ou regra de transição. A conversão aplica o fator 1,4 para homens e 1,2 para mulheres (art. 70 do Decreto 3.048/99 e art. 57, §5º, da Lei 8.213/91), e vale para os períodos trabalhados até 13/11/2019."
+        },
+        {
+          "type": "callout",
+          "text": "A EC 103/2019 (art. 25, §2º) vedou a conversão do tempo especial em comum apenas para os períodos trabalhados a partir de 14/11/2019. Todo o tempo anterior continua conversível, conforme o Tema 422 do STJ, que fixou que se aplica a lei vigente na época da prestação do serviço."
+        }
+      ]
+    },
+    {
+      "heading": "Pontos de atenção",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "O EPI (equipamento de proteção) pode, em regra, afastar a nocividade (Tema 555 do STF; além do ruído, a alegação de EPI eficaz também é afastada para agentes cancerígenos, biológicos e químicos de absorção cutânea (Tema 1090 do STJ), e o ônus de provar a real eficácia do EPI é do INSS (Tema 213 da TNU)), mas o próprio STF reconheceu exceção para o ruído, em que o EPI não afasta a especialidade quando há exposição acima do limite.",
+            "PPP com informações incompletas ou divergentes pode ser impugnado e retificado junto à empresa.",
+            "Quando a empresa está extinta ou não fornece o PPP, é possível buscar prova por outros meios documentais.",
+            "A RMI (renda inicial) da aposentadoria especial pós-reforma segue, em regra, o art. 26 da EC 103: 60% da média mais 2% por ano que exceder o tempo mínimo.",
+            "Após a concessão da aposentadoria especial, o art. 57, §8º, da Lei 8.213/91 trata da vedação ao retorno à atividade especial, tema com controvérsia na jurisprudência."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Como o escritório pode ajudar",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Analisamos o seu histórico contributivo e cada PPP e laudo, identificando os períodos com exposição a agentes nocivos. Verificamos eventual direito adquirido, simulamos a transição por pontos, a regra permanente e a conversão do tempo especial em comum, para apurar o caminho mais adequado ao seu caso. Também acompanhamos o requerimento administrativo e, quando necessário, a discussão judicial. Uma avaliação individual do seu PPP e do seu CNIS indica o melhor caminho."
+        }
+      ]
+    }
+  ],
+  "documentos": [
+    "Documento de identidade e CPF",
+    "Comprovante de residência",
+    "Extrato do CNIS (Cadastro Nacional de Informações Sociais)",
+    "Carteira de Trabalho (CTPS) e contratos de trabalho",
+    "PPP (Perfil Profissiográfico Previdenciário) de cada empregador",
+    "Laudos técnicos das condições do ambiente de trabalho (LTCAT) e similares",
+    "Contracheques e folhas de ponto, se houve jornada com horas extras habituais",
+    "Cartas de indeferimento ou concessão anteriores do INSS"
+  ],
+  "faq": [
+    {
+      "q": "Qual o tempo de exposição necessário para a aposentadoria especial?",
+      "a": "Depende do agente nocivo e do grau de risco: 15, 20 ou 25 anos de atividade especial. A maioria dos casos envolve 25 anos, mas atividades de risco alto podem exigir menos tempo."
+    },
+    {
+      "q": "O uso de EPI impede o reconhecimento do tempo especial?",
+      "a": "Em regra, o uso eficaz de EPI pode afastar a nocividade, conforme o Tema 555 do STF; além do ruído, a alegação de EPI eficaz também é afastada para agentes cancerígenos, biológicos e químicos de absorção cutânea (Tema 1090 do STJ), e o ônus de provar a real eficácia do EPI é do INSS (Tema 213 da TNU). Para o ruído, porém, o próprio STF reconheceu exceção: mesmo com EPI, não se afasta a especialidade quando há exposição acima do limite."
+    },
+    {
+      "q": "Trabalhei exposto, mas não completei o tempo da especial. Perco tudo?",
+      "a": "Não. O tempo especial trabalhado até 13/11/2019 pode ser convertido em tempo comum, com fator 1,4 (homem) ou 1,2 (mulher), e somado para outras regras de aposentadoria."
+    },
+    {
+      "q": "A reforma acabou com a aposentadoria especial?",
+      "a": "Não. A EC 103/2019 alterou os requisitos a partir de 14/11/2019, criando a transição por pontos (66, 76 ou 86) e a regra permanente com idade mínima (55, 58 ou 60 anos). Quem já tinha o tempo completo até 13/11/2019 mantém o direito adquirido à regra anterior."
+    }
+  ],
+  "related": [
+    "aposentadoria-tempo-contribuicao",
+    "aposentadoria-pcd",
+    "planejamento-previdenciario"
+  ]
+}

@@ -1,0 +1,3574 @@
+{
+ "andamento_tarefas": {
+  "colunas": {
+   "andamento_id": {
+    "fk": "andamentos.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "atribuido_por": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "caso_id": {
+    "fk": "casos.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "colaborador_id": {
+    "fk": "colaboradores.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "concluida_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "timestamp with time zone"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "lembrar_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "date"
+   }
+  },
+  "linhas": 4
+ },
+ "andamentos": {
+  "colunas": {
+   "autor_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 89.9,
+    "pk": false,
+    "preench": 18561,
+    "tipo": "uuid"
+   },
+   "caso_id": {
+    "fk": "casos.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 20638,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 20638,
+    "tipo": "timestamp with time zone"
+   },
+   "excluir": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 20638,
+    "tipo": "boolean"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 20638,
+    "tipo": "uuid"
+   },
+   "origem": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "app",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 20638,
+    "tipo": "text"
+   },
+   "origem_id": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 7.5,
+    "pk": false,
+    "preench": 1549,
+    "tipo": "text"
+   },
+   "publico": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 20638,
+    "tipo": "boolean"
+   },
+   "responde_a": {
+    "fk": "andamentos.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 3,
+    "tipo": "uuid"
+   },
+   "texto": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 20638,
+    "tipo": "text"
+   },
+   "todo_sync": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 20638,
+    "tipo": "boolean"
+   },
+   "zap_mensagem_id": {
+    "fk": "zap_mensagens.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   }
+  },
+  "linhas": 20638
+ },
+ "andamentos_lidos": {
+  "colunas": {
+   "andamento_id": {
+    "fk": "andamentos.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 374,
+    "tipo": "uuid"
+   },
+   "colaborador_id": {
+    "fk": "colaboradores.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 374,
+    "tipo": "uuid"
+   },
+   "lido_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 374,
+    "tipo": "timestamp with time zone"
+   }
+  },
+  "linhas": 374
+ },
+ "anexos": {
+  "colunas": {
+   "autor_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "caminho": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "caso_id": {
+    "fk": "casos.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "nome": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "tamanho": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "int64"
+   },
+   "tipo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   }
+  },
+  "linhas": 0
+ },
+ "aposentadorias": {
+  "colunas": {
+   "autor_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 5,
+    "tipo": "uuid"
+   },
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 5,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 5,
+    "tipo": "timestamp with time zone"
+   },
+   "data": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 5,
+    "tipo": "date"
+   },
+   "especie": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 5,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 5,
+    "tipo": "uuid"
+   },
+   "lembrar_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 5,
+    "tipo": "date"
+   },
+   "observacao": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   }
+  },
+  "linhas": 5
+ },
+ "atribuicoes": {
+  "colunas": {
+   "caso_id": {
+    "fk": "casos.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 47,
+    "tipo": "uuid"
+   },
+   "colaborador_id": {
+    "fk": "colaboradores.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 47,
+    "tipo": "uuid"
+   }
+  },
+  "linhas": 47
+ },
+ "casos": {
+  "colunas": {
+   "ajuizado_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 5.1,
+    "pk": false,
+    "preench": 155,
+    "tipo": "date"
+   },
+   "arquivados": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 1,
+    "tipo": "jsonb"
+   },
+   "beneficio": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 39.7,
+    "pk": false,
+    "preench": 1218,
+    "tipo": "text"
+   },
+   "cadunico": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "date"
+   },
+   "classe_judicial": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 5.1,
+    "pk": false,
+    "preench": 155,
+    "tipo": "text"
+   },
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 3069,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 3069,
+    "tipo": "timestamp with time zone"
+   },
+   "crps": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 1.4,
+    "pk": false,
+    "preench": 42,
+    "tipo": "jsonb"
+   },
+   "crps_nup": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 1,
+    "tipo": "text"
+   },
+   "crps_nups": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 1.4,
+    "pk": false,
+    "preench": 42,
+    "tipo": "jsonb"
+   },
+   "dat": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "date"
+   },
+   "datajud": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 6.9,
+    "pk": false,
+    "preench": 213,
+    "tipo": "jsonb"
+   },
+   "datajud_multi": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "jsonb"
+   },
+   "dcb": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "date"
+   },
+   "dcb_prorrogacao_pedida": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 3069,
+    "tipo": "boolean"
+   },
+   "dcb_prorrogar_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "date"
+   },
+   "decisao_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "date"
+   },
+   "der": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 3.8,
+    "pk": false,
+    "preench": 116,
+    "tipo": "date"
+   },
+   "dib": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "date"
+   },
+   "dii": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "date"
+   },
+   "encerrado_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 76.3,
+    "pk": false,
+    "preench": 2342,
+    "tipo": "timestamp with time zone"
+   },
+   "encerrado_por": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.1,
+    "pk": false,
+    "preench": 3,
+    "tipo": "uuid"
+   },
+   "especie": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 1.1,
+    "pk": false,
+    "preench": 34,
+    "tipo": "text"
+   },
+   "exigencia_descricao": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "exigencia_prazo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "date"
+   },
+   "fase": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "escritorio",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 3069,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 3069,
+    "tipo": "uuid"
+   },
+   "importante": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 3069,
+    "tipo": "boolean"
+   },
+   "inss_fila": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 2.1,
+    "pk": false,
+    "preench": 64,
+    "tipo": "jsonb"
+   },
+   "lembrar_motivo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.1,
+    "pk": false,
+    "preench": 2,
+    "tipo": "text"
+   },
+   "lembrete_meses": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "int32"
+   },
+   "marcadores": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 0.5,
+    "pk": false,
+    "preench": 15,
+    "tipo": "jsonb"
+   },
+   "mover_para": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 1,
+    "tipo": "text"
+   },
+   "nb": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 5.5,
+    "pk": false,
+    "preench": 168,
+    "tipo": "text"
+   },
+   "orgao_judicial": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 4.5,
+    "pk": false,
+    "preench": 138,
+    "tipo": "text"
+   },
+   "origem_lista": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 99.8,
+    "pk": false,
+    "preench": 3063,
+    "tipo": "text"
+   },
+   "parceria": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 7.1,
+    "pk": false,
+    "preench": 218,
+    "tipo": "text"
+   },
+   "pje_link": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 5.1,
+    "pk": false,
+    "preench": 155,
+    "tipo": "text"
+   },
+   "prazo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 48.3,
+    "pk": false,
+    "preench": 1483,
+    "tipo": "date"
+   },
+   "processo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 9.3,
+    "pk": false,
+    "preench": 284,
+    "tipo": "text"
+   },
+   "processo_link": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 3.8,
+    "pk": false,
+    "preench": 116,
+    "tipo": "text"
+   },
+   "processos": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 9.3,
+    "pk": false,
+    "preench": 284,
+    "tipo": "jsonb"
+   },
+   "protocolos": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 12.9,
+    "pk": false,
+    "preench": 395,
+    "tipo": "jsonb"
+   },
+   "renda_acima_minimo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 3069,
+    "tipo": "boolean"
+   },
+   "resultado": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.1,
+    "pk": false,
+    "preench": 2,
+    "tipo": "text"
+   },
+   "revisado_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 64.5,
+    "pk": false,
+    "preench": 1978,
+    "tipo": "date"
+   },
+   "ronda": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "jsonb"
+   },
+   "situacao_inss": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 3.8,
+    "pk": false,
+    "preench": 116,
+    "tipo": "text"
+   },
+   "titulo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 3069,
+    "tipo": "text"
+   },
+   "todo_list_id": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "todo_task_id": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 99.0,
+    "pk": false,
+    "preench": 3037,
+    "tipo": "text"
+   },
+   "trf3": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 5.5,
+    "pk": false,
+    "preench": 168,
+    "tipo": "jsonb"
+   },
+   "urgente": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 3069,
+    "tipo": "boolean"
+   }
+  },
+  "linhas": 3069
+ },
+ "checklist_modelo": {
+  "colunas": {
+   "beneficio": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 8,
+    "tipo": "uuid"
+   },
+   "itens": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "text"
+   }
+  },
+  "linhas": 8
+ },
+ "clientes": {
+  "colunas": {
+   "aposentado": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.1,
+    "pk": false,
+    "preench": 1,
+    "tipo": "boolean"
+   },
+   "aposentado_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.1,
+    "pk": false,
+    "preench": 1,
+    "tipo": "date"
+   },
+   "aposentado_fonte": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.1,
+    "pk": false,
+    "preench": 1,
+    "tipo": "text"
+   },
+   "aposentado_prova": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "bairro": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "campos": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 0.1,
+    "pk": false,
+    "preench": 2,
+    "tipo": "jsonb"
+   },
+   "cep": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "cidade": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "complemento": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "cpf": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 87.1,
+    "pk": false,
+    "preench": 1647,
+    "tipo": "text"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1890,
+    "tipo": "timestamp with time zone"
+   },
+   "dn": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 42.3,
+    "pk": false,
+    "preench": 800,
+    "tipo": "text"
+   },
+   "endereco": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "endereco_legado": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "estado_civil": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 1890,
+    "tipo": "uuid"
+   },
+   "indicado_por": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "logradouro": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "nome": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1890,
+    "tipo": "text"
+   },
+   "nome_mae": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "numero": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "pis_nit": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "profissao": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "rg": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "rg_orgao": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "sexo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.5,
+    "pk": false,
+    "preench": 10,
+    "tipo": "text"
+   },
+   "telefone": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 29.2,
+    "pk": false,
+    "preench": 551,
+    "tipo": "text"
+   },
+   "telefones": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 29.2,
+    "pk": false,
+    "preench": 551,
+    "tipo": "jsonb"
+   },
+   "uf": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   }
+  },
+  "linhas": 1890
+ },
+ "colaboradores": {
+  "colunas": {
+   "atende_zap": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 6,
+    "tipo": "boolean"
+   },
+   "ativo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "True",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 6,
+    "tipo": "boolean"
+   },
+   "auth_id": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 16.7,
+    "pk": false,
+    "preench": 1,
+    "tipo": "uuid"
+   },
+   "cargo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 6,
+    "tipo": "text"
+   },
+   "cor": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "#2564cf",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 6,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 6,
+    "tipo": "uuid"
+   },
+   "inicial": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 6,
+    "tipo": "text"
+   },
+   "nome": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 6,
+    "tipo": "text"
+   },
+   "papel": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "colaborador",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 6,
+    "tipo": "text"
+   },
+   "setor": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   }
+  },
+  "linhas": 6
+ },
+ "coletas": {
+  "colunas": {
+   "aplicada_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 75,
+    "tipo": "timestamp with time zone"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 75,
+    "tipo": "timestamp with time zone"
+   },
+   "dados": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 75,
+    "tipo": "jsonb"
+   },
+   "fonte": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 75,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 75,
+    "tipo": "uuid"
+   }
+  },
+  "linhas": 75
+ },
+ "config_app": {
+  "colunas": {
+   "atualizado": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 15,
+    "tipo": "timestamp with time zone"
+   },
+   "chave": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 15,
+    "tipo": "text"
+   },
+   "valor": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 15,
+    "tipo": "text"
+   }
+  },
+  "linhas": 15
+ },
+ "conversas": {
+  "colunas": {
+   "anexo_nome": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "anexo_url": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "atendente": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "de_cliente": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "True",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "boolean"
+   },
+   "externo_id": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "plataforma": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "telefone": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "texto": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   }
+  },
+  "linhas": 0
+ },
+ "credenciais": {
+  "colunas": {
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1240,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1240,
+    "tipo": "timestamp with time zone"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 1240,
+    "tipo": "uuid"
+   },
+   "tipo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1240,
+    "tipo": "text"
+   },
+   "valor": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1240,
+    "tipo": "text"
+   }
+  },
+  "linhas": 1240
+ },
+ "credencial_vis": {
+  "colunas": {
+   "colaborador_id": {
+    "fk": "colaboradores.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "uuid"
+   },
+   "credencial_id": {
+    "fk": "credenciais.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "uuid"
+   },
+   "visto_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "timestamp with time zone"
+   }
+  },
+  "linhas": 8
+ },
+ "crps_segredo": {
+  "colunas": {
+   "atualizado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1,
+    "tipo": "timestamp with time zone"
+   },
+   "cracha": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "1",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 1,
+    "tipo": "int32"
+   }
+  },
+  "linhas": 1
+ },
+ "documentos_beneficio": {
+  "colunas": {
+   "beneficio": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 22,
+    "tipo": "text"
+   },
+   "extras": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 22,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 22,
+    "tipo": "uuid"
+   },
+   "itens": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 22,
+    "tipo": "text"
+   },
+   "observacoes": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 22,
+    "tipo": "text"
+   }
+  },
+  "linhas": 22
+ },
+ "eventos": {
+  "colunas": {
+   "caso_id": {
+    "fk": "casos.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1248,
+    "tipo": "uuid"
+   },
+   "data_hora": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1248,
+    "tipo": "timestamp with time zone"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 1248,
+    "tipo": "uuid"
+   },
+   "local": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.3,
+    "pk": false,
+    "preench": 4,
+    "tipo": "text"
+   },
+   "obs": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 99.6,
+    "pk": false,
+    "preench": 1243,
+    "tipo": "text"
+   },
+   "status": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "agendada",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1248,
+    "tipo": "text"
+   },
+   "tipo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1248,
+    "tipo": "text"
+   }
+  },
+  "linhas": 1248
+ },
+ "frases_prontas": {
+  "colunas": {
+   "categoria": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 11,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 11,
+    "tipo": "uuid"
+   },
+   "texto": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 11,
+    "tipo": "text"
+   }
+  },
+  "linhas": 11
+ },
+ "inss_calendario": {
+  "colunas": {
+   "competencia": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 260,
+    "tipo": "date"
+   },
+   "faixa": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 260,
+    "tipo": "text"
+   },
+   "final": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 260,
+    "tipo": "int32"
+   },
+   "pagamento": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 260,
+    "tipo": "date"
+   }
+  },
+  "linhas": 260
+ },
+ "inss_fila": {
+  "colunas": {
+   "atualizado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "CURRENT_DATE",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 844,
+    "tipo": "date"
+   },
+   "dias_mediana": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 844,
+    "tipo": "int32"
+   },
+   "dias_p90": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 844,
+    "tipo": "int32"
+   },
+   "pendentes": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 844,
+    "tipo": "int32"
+   },
+   "referencia": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 844,
+    "tipo": "date"
+   },
+   "servico": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 844,
+    "tipo": "text"
+   },
+   "uf": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 844,
+    "tipo": "text"
+   }
+  },
+  "linhas": 844
+ },
+ "integracao_token": {
+  "colunas": {
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "nome": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "token": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   }
+  },
+  "linhas": 0
+ },
+ "leads": {
+  "colunas": {
+   "atualizado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "beneficio_interesse": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "contatos": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "0",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "int32"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "etapa": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "novo",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "motivo_perda": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "nome": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "obs": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "origem": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "responsavel_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "telefone": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "ultimo_contato": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   }
+  },
+  "linhas": 0
+ },
+ "lembrar_motivos": {
+  "colunas": {
+   "ativo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "True",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 22,
+    "tipo": "boolean"
+   },
+   "grupo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "🙋 Cliente",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 22,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 22,
+    "tipo": "uuid"
+   },
+   "listas": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 68.2,
+    "pk": false,
+    "preench": 15,
+    "tipo": "jsonb"
+   },
+   "ordem": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "0",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 22,
+    "tipo": "int32"
+   },
+   "seed": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 95.5,
+    "pk": false,
+    "preench": 21,
+    "tipo": "text"
+   },
+   "texto": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 22,
+    "tipo": "text"
+   }
+  },
+  "linhas": 22
+ },
+ "lembrete_avisos": {
+  "colunas": {
+   "canal": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "colaborador_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "lembrete_id": {
+    "fk": "lembretes.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "obs": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   }
+  },
+  "linhas": 0
+ },
+ "lembretes": {
+  "colunas": {
+   "ativo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "True",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 419,
+    "tipo": "boolean"
+   },
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 419,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 419,
+    "tipo": "timestamp with time zone"
+   },
+   "criado_por": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "detalhes": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 419,
+    "tipo": "jsonb"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 419,
+    "tipo": "uuid"
+   },
+   "intervalo_meses": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "int32"
+   },
+   "origem_caso": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "proximo_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 98.6,
+    "pk": false,
+    "preench": 413,
+    "tipo": "date"
+   },
+   "responsavel_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "tipo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "geral",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 419,
+    "tipo": "text"
+   },
+   "titulo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 419,
+    "tipo": "text"
+   }
+  },
+  "linhas": 419
+ },
+ "lista_pref": {
+  "colunas": {
+   "atualizado": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 9,
+    "tipo": "timestamp with time zone"
+   },
+   "chave": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 9,
+    "tipo": "text"
+   },
+   "fundo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 22.2,
+    "pk": false,
+    "preench": 2,
+    "tipo": "text"
+   },
+   "ordem": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 77.8,
+    "pk": false,
+    "preench": 7,
+    "tipo": "int32"
+   }
+  },
+  "linhas": 9
+ },
+ "mencoes": {
+  "colunas": {
+   "andamento_id": {
+    "fk": "andamentos.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "caso_id": {
+    "fk": "casos.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "conversa_id": {
+    "fk": "zap_conversas.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "timestamp with time zone"
+   },
+   "de_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "lida_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "para_id": {
+    "fk": "colaboradores.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "texto": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "text"
+   }
+  },
+  "linhas": 4
+ },
+ "meu_dia": {
+  "colunas": {
+   "caso_id": {
+    "fk": "casos.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1,
+    "tipo": "uuid"
+   },
+   "colaborador_id": {
+    "fk": "colaboradores.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1,
+    "tipo": "uuid"
+   },
+   "dia": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "((now() AT TIME ZONE 'America/Sao_Paulo'::text))",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 1,
+    "tipo": "date"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 1,
+    "tipo": "uuid"
+   },
+   "tarefa_id": {
+    "fk": "tarefas.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   }
+  },
+  "linhas": 1
+ },
+ "modelos_documento": {
+  "colunas": {
+   "categoria": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "geral",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "text"
+   },
+   "conteudo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "titulo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "text"
+   }
+  },
+  "linhas": 4
+ },
+ "modelos_mensagem": {
+  "colunas": {
+   "contexto": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "geral",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 13,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 13,
+    "tipo": "uuid"
+   },
+   "texto": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 13,
+    "tipo": "text"
+   },
+   "titulo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 13,
+    "tipo": "text"
+   }
+  },
+  "linhas": 13
+ },
+ "orgao_producao": {
+  "colunas": {
+   "atualizado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "CURRENT_DATE",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 7763,
+    "tipo": "date"
+   },
+   "conclusos_julgamento": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 7763,
+    "tipo": "int32"
+   },
+   "dias_medios_julgamento": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 64.7,
+    "pk": false,
+    "preench": 5019,
+    "tipo": "int32"
+   },
+   "grau": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 7763,
+    "tipo": "text"
+   },
+   "julgados_ano_anterior": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 7763,
+    "tipo": "int32"
+   },
+   "julgados_ano_atual": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 7763,
+    "tipo": "int32"
+   },
+   "orgao": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 7763,
+    "tipo": "text"
+   },
+   "tribunal": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 7763,
+    "tipo": "text"
+   }
+  },
+  "linhas": 7763
+ },
+ "pagamentos": {
+  "colunas": {
+   "caso_id": {
+    "fk": "casos.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "conferencias": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "jsonb"
+   },
+   "descricao": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "pago_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "date"
+   },
+   "status": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "aberto",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "todo_item_id": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "valor": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "numeric"
+   },
+   "vencimento": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "date"
+   }
+  },
+  "linhas": 0
+ },
+ "rotinas": {
+  "colunas": {
+   "ativo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "True",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "boolean"
+   },
+   "criada_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "detalhe": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "dia_mes": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "int32"
+   },
+   "dias_semana": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "jsonb"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "responsavel_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "titulo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   }
+  },
+  "linhas": 0
+ },
+ "rotinas_feitas": {
+  "colunas": {
+   "colaborador_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "dia": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "date"
+   },
+   "feito_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "rotina_id": {
+    "fk": "rotinas.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "uuid"
+   }
+  },
+  "linhas": 0
+ },
+ "sugestoes": {
+  "colunas": {
+   "caso_id": {
+    "fk": "casos.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 204,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 204,
+    "tipo": "timestamp with time zone"
+   },
+   "dados": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 14.7,
+    "pk": false,
+    "preench": 30,
+    "tipo": "jsonb"
+   },
+   "decidido_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "decidido_por": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 204,
+    "tipo": "uuid"
+   },
+   "status": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "pendente",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 204,
+    "tipo": "text"
+   },
+   "texto": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 204,
+    "tipo": "text"
+   },
+   "tipo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 204,
+    "tipo": "text"
+   },
+   "titulo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 204,
+    "tipo": "text"
+   }
+  },
+  "linhas": 204
+ },
+ "tarefas": {
+  "colunas": {
+   "caso_id": {
+    "fk": "casos.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 90.8,
+    "pk": false,
+    "preench": 6955,
+    "tipo": "uuid"
+   },
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 0.0,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "concluida": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 7657,
+    "tipo": "boolean"
+   },
+   "concluida_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 8.7,
+    "pk": false,
+    "preench": 665,
+    "tipo": "timestamp with time zone"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 7657,
+    "tipo": "timestamp with time zone"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 7657,
+    "tipo": "uuid"
+   },
+   "particular_de": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": 9.2,
+    "pk": false,
+    "preench": 702,
+    "tipo": "uuid"
+   },
+   "prazo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 8.1,
+    "pk": false,
+    "preench": 618,
+    "tipo": "date"
+   },
+   "titulo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 7657,
+    "tipo": "text"
+   }
+  },
+  "linhas": 7657
+ },
+ "vinculos": {
+  "colunas": {
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": 100.0,
+    "pk": true,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "ligado_a": {
+    "fk": "clientes.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "uuid"
+   },
+   "relacao": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 4,
+    "tipo": "text"
+   }
+  },
+  "linhas": 4
+ },
+ "zap_avisos": {
+  "colunas": {
+   "ativo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "True",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "boolean"
+   },
+   "chave": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 8,
+    "tipo": "text"
+   },
+   "descricao": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "text"
+   },
+   "dias_antes": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "int32"
+   },
+   "ordem": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "0",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "int32"
+   },
+   "revisar": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "boolean"
+   },
+   "sobre": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "text"
+   },
+   "texto": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 8,
+    "tipo": "text"
+   },
+   "tipo_ev": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 62.5,
+    "pk": false,
+    "preench": 5,
+    "tipo": "text"
+   }
+  },
+  "linhas": 8
+ },
+ "zap_bot_passos": {
+  "colunas": {
+   "ativo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "True",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 9,
+    "tipo": "boolean"
+   },
+   "chave": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": true,
+    "preench": 9,
+    "tipo": "text"
+   },
+   "entrega_setor": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": 77.8,
+    "pk": false,
+    "preench": 7,
+    "tipo": "text"
+   },
+   "opcoes": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 11.1,
+    "pk": false,
+    "preench": 1,
+    "tipo": "jsonb"
+   },
+   "ordem": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "0",
+    "pct": 100.0,
+    "pk": false,
+    "preench": 9,
+    "tipo": "int32"
+   },
+   "texto": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": 100.0,
+    "pk": false,
+    "preench": 9,
+    "tipo": "text"
+   }
+  },
+  "linhas": 9
+ },
+ "zap_conversas": {
+  "colunas": {
+   "atendente_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "bot_ativo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "True",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "boolean"
+   },
+   "bot_erros": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "0",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "int32"
+   },
+   "bot_passo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "chave": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "cliente_id": {
+    "fk": "clientes.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "fixada": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "boolean"
+   },
+   "foto_url": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "lead_id": {
+    "fk": "leads.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "nao_lidas": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "0",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "int32"
+   },
+   "nome_perfil": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "setor": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "status": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "aberta",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "telefone": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "ultima_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "ultimo_texto": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   }
+  },
+  "linhas": 0
+ },
+ "zap_mensagens": {
+  "colunas": {
+   "autor_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "aviso_chave": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "aviso_ref": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "conversa_id": {
+    "fk": "zap_conversas.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "criado_em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "direcao": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "enviada_em": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "erro": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "externo_id": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "midia_mime": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "midia_nome": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "midia_url": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "por_bot": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "False",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "boolean"
+   },
+   "quando_wa": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "seq": {
+    "fk": null,
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "int64"
+   },
+   "status": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "enviada",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "tentativas": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "0",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "int32"
+   },
+   "texto": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "tipo": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "texto",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   }
+  },
+  "linhas": 0
+ },
+ "zap_transferencias": {
+  "colunas": {
+   "conversa_id": {
+    "fk": "zap_conversas.id",
+    "nulo": false,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "de_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "em": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "now()",
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "timestamp with time zone"
+   },
+   "id": {
+    "fk": null,
+    "nulo": false,
+    "padrao": "gen_random_uuid()",
+    "pct": null,
+    "pk": true,
+    "preench": 0,
+    "tipo": "uuid"
+   },
+   "motivo": {
+    "fk": null,
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "text"
+   },
+   "para_id": {
+    "fk": "colaboradores.id",
+    "nulo": true,
+    "padrao": null,
+    "pct": null,
+    "pk": false,
+    "preench": 0,
+    "tipo": "uuid"
+   }
+  },
+  "linhas": 0
+ }
+}

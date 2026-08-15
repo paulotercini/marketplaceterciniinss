@@ -1,0 +1,57 @@
+{
+  "nome": "Raul Donizete Fenerick",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "07413101807",
+      "dn": "19021966",
+      "nome": "Raul Donizete Fenerick",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
+      "titulo_tarefa": "Raul Donizete Fenerick",
+      "status": "Última atualização em 11/05/2026: Ação judicial protocolada",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-05-11",
+          "data_br": "11/05/2026",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Reclamação protocolada - 36777155571202694"
+        },
+        {
+          "data": "2026-03-29",
+          "data_br": "29/03/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício concedido."
+        },
+        {
+          "data": "2026-02-22",
+          "data_br": "22/02/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado."
+        },
+        {
+          "data": "2025-04-06",
+          "data_br": "06/04/2025",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Contrarrazões do INSS É sobre o recurso para as Câmaras de Julgamento."
+        },
+        {
+          "data": "2023-12-20",
+          "data_br": "20/12/2023",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "AR disponível da carta decisória - 202301132685 ____________________________________________________ Requerimento protocolado - Tarefa: 1438835634 ___________________________________________________ 13.04.2023: Fazer recurso administrativo."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

@@ -17,7 +17,7 @@ LC 142/2013.
 
 Decreto 8.145/2013.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014.
 
 IN 128/2022.
 
@@ -29,9 +29,9 @@ Deficiência intelectual.
 
 Fonte oficial em https://www.cjf.jus.br
 
-### Tema 305 TNU
+### Repercussão social e funcional na avaliação (IF-BrA)
 
-Avaliação biopsicossocial.
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ### Súmula 149 STJ
 
@@ -119,3 +119,13 @@ Para detalhes operacionais, acionar `aposentadoria-deficiencia`.
 ## O que NÃO está nesta skill
 
 Metodologia IF-BrA em `base-pcd-if-bra-metodologia`. Conversão em `base-pcd-conversao-tempo-especial-pcd`. Formação em `formacao-documentacao-did-pcd`.
+
+## Lei Brasileira de Inclusão como fundamento obrigatório (Onda 89)
+
+Acionar SEMPRE `base-lbi-inclusao-barreiras-lei13146` neste tipo de caso. A Lei 13.146/2015 define, no art. 2º, que pessoa com deficiência é aquela com impedimento de longo prazo que, EM INTERAÇÃO COM UMA OU MAIS BARREIRAS, pode obstruir a participação plena e efetiva em igualdade de condições. Sem barreira demonstrada, o caso se reduz a diagnóstico, e diagnóstico isolado o INSS indefere.
+
+Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existir com fato concreto e documento por ID. Urbanística, arquitetônica, nos transportes, nas comunicações e na informação, atitudinal e tecnológica.
+
+Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
+
+O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.

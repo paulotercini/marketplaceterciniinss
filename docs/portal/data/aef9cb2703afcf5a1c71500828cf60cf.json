@@ -1,0 +1,33 @@
+{
+  "nome": "Wilson Batista Barrozo",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "03559208831",
+      "dn": "01121961",
+      "nome": "Wilson Batista Barrozo",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Wilson Batista Barrozo",
+      "status": "Última atualização em 28/05/2026: Pedido protocolado no INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-05-28",
+          "data_br": "28/05/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Benefício solicitado - em análise."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

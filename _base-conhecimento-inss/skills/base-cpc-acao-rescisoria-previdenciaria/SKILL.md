@@ -1,6 +1,6 @@
 ---
 name: base-cpc-acao-rescisoria-previdenciaria
-description: "Ação rescisória previdenciária (art. 966 CPC), prova nova, prova falsa, violação de norma, competência no TRF, prazo decadencial bienal, cabimento contra coisa julgada previdenciária e Tema 1370 STJ. Use SEMPRE que mencionar ação rescisória previdenciária, art. 966 CPC, art. 975 CPC, prova nova, prova falsa, PPP retificado rescisória, violação de norma jurídica, sentença com erro de fato, coisa julgada previdenciária, desconstituição de sentença, prazo decadencial rescisória, prazo bienal, Enunciado 63 FONAJEF, Tema 1370 STJ, eficácia preclusiva, cabimento rescisória INSS, cabimento segurado, modulação de precedente. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, coisa-julgada-previdenciaria e decadencia-revisao-previdenciaria."
+description: "Ação rescisória previdenciária (art. 966 CPC), prova nova, prova falsa, violação de norma, competência no TRF, prazo decadencial bienal, cabimento contra coisa julgada previdenciária. Use SEMPRE que mencionar ação rescisória previdenciária, art. 966 CPC, art. 975 CPC, prova nova, prova falsa, PPP retificado rescisória, violação de norma jurídica, sentença com erro de fato, coisa julgada previdenciária, desconstituição de sentença, prazo decadencial rescisória, prazo bienal, Enunciado 63 FONAJEF, eficácia preclusiva, cabimento rescisória INSS, cabimento segurado, modulação de precedente. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, coisa-julgada-previdenciaria e decadencia-revisao-previdenciaria."
 ---
 
 # Ação Rescisória Previdenciária
@@ -15,9 +15,9 @@ CPC, art. 966. Hipóteses.
 
 CPC, art. 968. Petição inicial.
 
-CPC, art. 969. Deferimento.
+CPC, art. 969. A propositura não impede o cumprimento da decisão rescindenda, salvo tutela provisória.
 
-CPC, art. 974. Documentos.
+CPC, art. 968. Petição inicial, documentos e depósito de 5% (o art. 974 trata do julgamento).
 
 CPC, art. 975. Prazo decadencial de 2 anos.
 
@@ -25,11 +25,9 @@ CPC, art. 525 §§12 a 15. Precedentes.
 
 ## Marco jurisprudencial
 
-### Tema 1370 STJ
+### [Corrigido na auditoria 25/07/2026] Tema 1370/STJ não é de rescisória
 
-Ação rescisória e precedentes qualificados.
-
-Fonte oficial em https://www.stj.jus.br
+O Tema 1370/STJ (afetado em 12/08/2025, pendente, suspensão nacional) trata de prazos decadenciais autônomos na revisão administrativa. Para rescisória por violação de norma, o fundamento é o art. 966, V, do CPC.
 
 ### Tema 100 STF
 
@@ -91,7 +89,7 @@ Cenário A, PPP retificado extemporâneo. Prova nova. Tema 1116 STJ análogo.
 
 Cenário B, laudo pericial novo contradiz anterior. Avaliar erro de fato.
 
-Cenário C, Tema 1102/STF julgado após sentença desfavorável. Violação de norma. Tema 1370/STJ.
+Cenário C, Tema 1102/STF julgado após sentença desfavorável. Violação de norma (art. 966, V, do CPC; auditoria 25/07/2026, retirado o Tema 1370/STJ, que trata de decadência de revisão e está pendente).
 
 Cenário D, sentença fundada em documento falso. Art. 966 VI.
 
@@ -105,7 +103,7 @@ Segundo, competência do TRF para rescisórias de seus julgados.
 
 Terceiro, o segurado pode usar tanto rescisória como repropositura (Tema 629/STJ em contextos específicos).
 
-Quarto, Tema 1370/STJ admite rescisória para alinhar ao precedente qualificado em certas hipóteses, mas há modulação.
+Quarto, afirmação retirada na auditoria 25/07/2026. Não se confirma que o Tema 1370/STJ trate de rescisória; ele versa sobre decadência de revisão administrativa e está pendente.
 
 ## Hub de portarias administrativas
 

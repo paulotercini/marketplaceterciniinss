@@ -5,3 +5,21 @@ __pycache__/
 audit_excel/
 .claude/state/
 .claude/settings.local.json
+crm/data/
+crm/app.html
+# a ponte do WhatsApp: sessão é credencial, .env tem a service_role
+crm/fase2/ponte/sessao/
+crm/fase2/ponte/.env
+crm/fase2/ponte/node_modules/
+# robô do CRPS: perfil é a sessão gov.br, nups/resultado têm dados de cliente
+crm/fase2/robo-crps/perfil/
+crm/fase2/robo-crps/nups.txt
+crm/fase2/robo-crps/navegador.txt
+crm/fase2/robo-crps/sonda_resultado/
+crm/fase2/robo-crps/node_modules/
+crm/fase2/robo-crps/coletar.txt
+crm/fase2/robo-crps/crps_coletado.json
+crm/fase2/robo-crps/resumos_para_conferir.txt
+crm/fase2/robo-crps/dispositivos_para_calibrar.txt
+crm/fase2/robo-crps/acordaos_*.txt
+crm/fase2/robo-crps/resumos_claude.json

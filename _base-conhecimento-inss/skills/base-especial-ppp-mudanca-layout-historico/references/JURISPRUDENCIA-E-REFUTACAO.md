@@ -18,9 +18,9 @@ EPI cancerígeno. Fonte oficial em https://www.stj.jus.br
 
 Metodologia agente nocivo. Fonte oficial em https://www.cjf.jus.br/jurisprudencia/unificada
 
-### Tema 297 TNU
+### [Retirado na auditoria 25/07/2026] Tema 297/TNU
 
-Categoria profissional. Fonte oficial em https://www.cjf.jus.br/jurisprudencia/unificada
+O Tema 297/TNU real trata de auxílio emergencial e não pertence à matéria de PPP.
 
 ### Tema 1031 STJ
 

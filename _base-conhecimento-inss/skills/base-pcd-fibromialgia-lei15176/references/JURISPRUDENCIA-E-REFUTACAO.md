@@ -12,9 +12,9 @@ Fonte oficial em https://www.stj.jus.br
 
 Fibromialgia e incapacidade.
 
-### Tema 305 TNU
+### Repercussão social e funcional na avaliação (IF-BrA)
 
-Avaliação biopsicossocial.
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ### Tema 327 TNU
 
@@ -128,4 +128,4 @@ Acompanhar regulamentação Lei 15.176.
 
 Monitorar jurisprudência.
 
-Revalidar Tema 305 TNU.
+Item retirado na auditoria 25/07/2026 (Tema 305/TNU trata de auxílio emergencial).

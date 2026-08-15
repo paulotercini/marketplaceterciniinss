@@ -18,7 +18,7 @@ Fonte oficial em https://www.stj.jus.br
 
 Aplicação. Cautela estratégica para evitar extinção sem mérito.
 
-### Tema 1066 STF
+### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
 Tese. Silêncio administrativo e ativismo do segurado.
 
@@ -80,7 +80,7 @@ Refutação. Lei 13.460/2017. Formalismo excessivo vedado. Atualização gera re
 
 Argumento adversário. PA sem decisão por meses.
 
-Refutação. MS por mora. Tema 1066 STF. Razoável duração do processo.
+Refutação. MS por mora. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021). Razoável duração do processo.
 
 ### Argumento 4 — Reavaliação bienal cessou benefício
 
@@ -104,7 +104,7 @@ Refutação. Requerimento de nova perícia. Assistente técnico. Laudos compleme
 
 Argumento adversário. INSS alega extravio.
 
-Refutação. MS para reabertura do PA. Tema 1066 STF.
+Refutação. MS para reabertura do PA. acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
 ### Argumento 8 — Indeferimento sem motivação
 

@@ -1,0 +1,57 @@
+{
+  "nome": "Conceição de Souza Amaral Braga",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "33487275880",
+      "dn": "08121949",
+      "nome": "Conceição de Souza Amaral Braga",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
+      "titulo_tarefa": "Conceição de Souza Amaral Braga",
+      "status": "Última atualização em 27/05/2026: Sessão de julgamento agendada",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-05-27",
+          "data_br": "27/05/2026",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Sessão de Julgamento Extraordinária - Nº 0362/2026 - 10/06/26 09:30 E no outro benefício foi divulgado o acórdão."
+        },
+        {
+          "data": "2026-05-14",
+          "data_br": "14/05/2026",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Sessão de Julgamento Ordinária - Nº 0163/2026 - 27/05/26 08:01."
+        },
+        {
+          "data": "2025-11-01",
+          "data_br": "01/11/2025",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Apresentados embargos de declaração."
+        },
+        {
+          "data": "2025-10-09",
+          "data_br": "09/10/2025",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Julgamento agendado para o dia 28/10."
+        },
+        {
+          "data": "2025-04-17",
+          "data_br": "17/04/2025",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso protocolado."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

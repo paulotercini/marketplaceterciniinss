@@ -1,0 +1,63 @@
+{
+  "nome": "Vaudecir Risse",
+  "atualizado_em": "07/06/2026 as 22:15",
+  "processos": [
+    {
+      "cpf": "09115896862",
+      "dn": "30061966",
+      "nome": "Vaudecir Risse",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
+      "titulo_tarefa": "Vaudecir Risse",
+      "status": "Última atualização em 18/05/2026: Ação judicial protocolada",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-05-18",
+          "data_br": "18/05/2026",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Reclamação protocolada."
+        },
+        {
+          "data": "2025-12-02",
+          "data_br": "02/12/2025",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Apresentar recurso para as Câmaras de Julgamento."
+        },
+        {
+          "data": "2025-01-08",
+          "data_br": "08/01/2025",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração apresentado."
+        },
+        {
+          "data": "2024-11-30",
+          "data_br": "30/11/2024",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Processo retirado de pauta de julgamento."
+        },
+        {
+          "data": "2024-11-26",
+          "data_br": "26/11/2024",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Alteração no recurso - PAT: Sessão de Julgamento Extraordinária - Nº 0399/2024 - 22/11/24 09:25."
+        },
+        {
+          "data": "2024-01-06",
+          "data_br": "06/01/2024",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Fazer embargos de declaração."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "curado"
+    }
+  ]
+}

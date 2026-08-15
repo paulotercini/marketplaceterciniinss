@@ -1,0 +1,80 @@
+{
+  "nome": "Leandro Antônio Rezende",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "30286528894",
+      "dn": "23091982",
+      "nome": "Leandro Antônio Rezende",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
+      "titulo_tarefa": "Leandro Antônio Rezende",
+      "status": "Última atualização em 17/06/2026: Cessação programada do benefício (DCB)",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-06-17",
+          "data_br": "17/06/2026",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        },
+        {
+          "data": "2026-06-15",
+          "data_br": "15/06/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2026-03-31",
+          "data_br": "31/03/2026",
+          "tipo": "Exigência cumprida",
+          "descricao": "Exigência do INSS cumprida."
+        },
+        {
+          "data": "2025-05-28",
+          "data_br": "28/05/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-05-20",
+          "data_br": "20/05/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2025-03-24",
+          "data_br": "24/03/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-02-18",
+          "data_br": "18/02/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2025-02-11",
+          "data_br": "11/02/2025",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        },
+        {
+          "data": "2024-11-26",
+          "data_br": "26/11/2024",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

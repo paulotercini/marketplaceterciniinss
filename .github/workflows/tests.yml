@@ -1,0 +1,27 @@
+name: Testes da extração do portal
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "*.py"
+      - "tests/**"
+      - ".github/workflows/tests.yml"
+  pull_request:
+    paths:
+      - "*.py"
+      - "tests/**"
+      - ".github/workflows/tests.yml"
+  workflow_dispatch:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pytest
+      # suíte pura: sem rede, sem tokens Graph, não toca docs/portal/data
+      - run: python -m pytest tests/ -q

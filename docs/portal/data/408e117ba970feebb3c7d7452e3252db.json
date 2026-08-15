@@ -1,0 +1,51 @@
+{
+  "nome": "Fabio Henrique Barbieri",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "26457488803",
+      "dn": "21121977",
+      "nome": "Fabio Henrique Barbieri",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Fabio Henrique Barbieri",
+      "status": "Última atualização em 18/05/2026: Perícia médica agendada para 17/06/2026",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-05-18",
+          "data_br": "18/05/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 17/06/2026."
+        },
+        {
+          "data": "2026-02-26",
+          "data_br": "26/02/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2026-02-25",
+          "data_br": "25/02/2026",
+          "tipo": "Laudo pericial juntado",
+          "descricao": "Laudo pericial juntado aos autos."
+        },
+        {
+          "data": "2023-04-29",
+          "data_br": "29/04/2023",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

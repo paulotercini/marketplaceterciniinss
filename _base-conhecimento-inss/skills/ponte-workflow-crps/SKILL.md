@@ -76,7 +76,16 @@ CNIS via `cnis-acerto-indicadores` para divergências cadastrais que sustentem o
 
 ### Passo 10. Redação da peça e revisão
 
-Acionar `peticao-previdenciaria` no padrão CRPS (recuo 5cm, fonte Bookman Old Style 12pt, espaçamento 1,5, argumentação densa). Acionar `revisao-peticao`.
+Acionar `base-recurso-crps-peca-enxuta` (Onda 34) para diretrizes de redação enxuta, direta e clara no padrão CRPS pró-segurado. A peça deve ser puramente fundada em normativo (Constituição, leis, decretos, IN 128/2022, Portarias DIRBEN/INSS, Portaria MPS 125/2026 RICRPS, Pareceres CONJUR/AGU vinculantes, Enunciados, Resoluções e Súmulas do CRPS), com vedação ao uso de julgados judiciais como fundamento principal.
+
+Acionar `peticao-previdenciaria` ou `base-peticao-previdenciaria-padrao-visual` no padrão CRPS (recuo 5cm, fonte Bookman Old Style 12pt, espaçamento 1,5).
+
+Tamanho típico esperado.
+- Recurso ordinário. 3 a 6 páginas.
+- Recurso especial. 5 a 8 páginas.
+- Embargos. 1 a 2 páginas, máximo 3.
+
+Acionar `base-revisao-peticao-aprofundada` (Onda 33) para auditoria pós-redação. Atenção especial aos anti-patterns 5 (argumentação genérica), 6 (excesso de jurisprudência judicial transcrita) e 11 (excesso de destaques).
 
 ## 3. Documentos essenciais
 
@@ -84,7 +93,7 @@ Decisão recorrida (cópia). Comprovante de ciência. Procuração com poderes e
 
 ## 4. Pontos críticos pró-segurado
 
-Tempestividade é a primeira barreira. Recurso intempestivo não conhecido pode ser superado por relevação fundamentada (art. 112 da Lei 8.213/91 e jurisprudência do CRPS).
+Tempestividade é a primeira barreira. Recurso intempestivo não conhecido pode ser superado por relevação fundamentada (dispositivo próprio do RICRPS (Portaria MPS 125/2026) e jurisprudência do CRPS — atenção: o art. 112 da Lei 8.213/91 trata de valores não recebidos em vida pelo segurado).
 
 Renúncia tácita por ação judicial simultânea pode ser evitada com desistência da ação ou esclarecimento da diversidade de causas de pedir.
 
@@ -101,3 +110,7 @@ Pró-segurado integral. CRPS é a última via administrativa antes do Judiciári
 ## Hub de portarias administrativas
 
 Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
+## Decisores simulados no fluxo (Onda 114)
+
+Último passo do workflow, antes do protocolo. Recurso ordinário ao `conselheiro-junta-de-recursos`, recurso especial e incidentes ao `conselheiro-camara-de-julgamento`. Se o decisor simulado devolver NÃO CONHECIDO, o fluxo NÃO segue para o protocolo, volta para a correção da admissibilidade.

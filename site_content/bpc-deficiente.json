@@ -1,0 +1,146 @@
+{
+  "slug": "bpc-deficiente",
+  "category": "Assistencial",
+  "title": "BPC à Pessoa com Deficiência",
+  "nav_label": "BPC ao Deficiente",
+  "order": 2,
+  "facts": [
+    [
+      "Contribuição",
+      "Não exigida"
+    ],
+    [
+      "Requisito",
+      "Impedimento de longo prazo"
+    ],
+    [
+      "Renda",
+      "Até 1/4 do salário mínimo"
+    ]
+  ],
+  "meta_description": "BPC/LOAS à pessoa com deficiência (Lei 8.742/93): um salário mínimo mensal a quem tem impedimento de longo prazo e baixa renda, sem exigir contribuições. Monte Alto/SP.",
+  "hero_subtitle": "Benefício assistencial de um salário mínimo mensal para a pessoa com deficiência, de qualquer idade, com impedimento de longo prazo e em situação de miserabilidade.",
+  "intro": [
+    "O BPC à pessoa com deficiência (também chamado de LOAS) é um benefício da assistência social, e não da previdência. Está previsto no art. 203, V, da Constituição e na Lei 8.742/93 e garante um salário mínimo mensal a quem tem impedimento de longo prazo e baixa renda.",
+    "Por ser assistencial, não exige contribuições ao INSS. Avaliam-se a deficiência (por meio de avaliação biopsicossocial) e a situação de miserabilidade, aferida principalmente pela renda do grupo familiar."
+  ],
+  "sections": [
+    {
+      "heading": "O que é",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "O BPC à pessoa com deficiência é a garantia de um salário mínimo mensal a quem tenha impedimento de longo prazo e não tenha meios de prover a própria manutenção nem de tê-la provida por sua família, conforme o art. 203, V, da Constituição e o art. 20 da Lei 8.742/93. É um benefício assistencial, regulamentado pelo Decreto 6.214/2007, e independe de contribuições prévias ao INSS."
+        },
+        {
+          "type": "callout",
+          "text": "O impedimento de longo prazo exigido para o BPC não se confunde com a incapacidade para o trabalho dos benefícios por incapacidade da Lei 8.213/91 — a Justiça já fixou que o BPC não exige incapacidade laboral (Tema 385 da TNU)."
+        }
+      ]
+    },
+    {
+      "heading": "Quem tem direito",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Pessoa com deficiência de qualquer idade, com impedimento de longo prazo (mínimo de 2 anos) de natureza física, mental, intelectual ou sensorial.",
+            "Em situação de miserabilidade, aferida principalmente pela renda do grupo familiar.",
+            "Brasileiros e estrangeiros residentes no país, observado o Estatuto da Pessoa com Deficiência (Lei 13.146/2015).",
+            "Com residência e domicílio no Brasil e inscrição atualizada no CadÚnico."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Requisitos",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Impedimento de longo prazo, aferido por avaliação biopsicossocial (médica e social) do INSS.",
+            "Renda per capita familiar não superior a 1/4 do salário mínimo, critério que admite flexibilização pela jurisprudência (Tema 27 do STF e REsp 1.112.557 do STJ) quando demonstrada a miserabilidade concreta.",
+            "Inscrição e atualização no CadÚnico.",
+            "Não acumular o BPC com outro benefício da Seguridade Social, salvo exceções como a pensão especial de natureza indenizatória e a assistência médica.",
+            "Residência e domicílio no Brasil."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "A avaliação da deficiência e a renda",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A avaliação da deficiência é biopsicossocial: combina a perícia médica e a avaliação social e considera o impedimento em interação com as barreiras enfrentadas pela pessoa no dia a dia."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "O grupo familiar segue um rol taxativo (art. 20, §1º, da LOAS): o requerente, o cônjuge ou companheiro, os pais (e, na ausência de um deles, a madrasta ou o padrasto), os irmãos solteiros, os filhos e enteados solteiros e os menores tutelados, sob o mesmo teto. Tios, sobrinhos, cunhados, avós e netos não entram, ainda que morem na mesma casa.",
+            "Há exclusões de renda, como outro BPC ou benefício previdenciário de até um salário mínimo de idoso ou pessoa com deficiência no mesmo grupo (art. 20, §14) e gastos com medicamentos, fraldas e alimentação especial não cobertos pelo SUS.",
+            "A Lei 15.157/2025 dispensa a reavaliação periódica em casos de impedimento permanente, irreversível e irrecuperável."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Pontos de atenção",
+      "blocks": [
+        {
+          "type": "ul",
+          "items": [
+            "Atestados e laudos que descrevem bem as limitações no dia a dia (e não só o nome da doença ou o CID) fortalecem a avaliação biopsicossocial.",
+            "O benefício é devido desde a data do requerimento (DER), quando preenchidos os requisitos.",
+            "A revisão a cada dois anos pode levar à cessação; manter a documentação médica e o CadÚnico atualizados ajuda a preservar o benefício.",
+            "Indeferimentos por deficiência supostamente não configurada ou por excesso marginal de renda podem ser discutidos com documentação robusta e prova da miserabilidade concreta.",
+            "O Decreto 12.534/2025 atualizou as regras do BPC: valores do Bolsa Família passaram a contar no cálculo da renda, o registro biométrico tornou-se requisito e foram criados novos fluxos de notificação e bloqueio, com prazo de defesa de 30 dias.",
+            "Quem recebe Bolsa Família e pede o BPC deve ter cuidado com termos de desligamento do programa apresentados no atendimento (IN 54/2026) — não assine sem orientação.",
+            "A pessoa com deficiência com mobilidade reduzida tem direito ao Cadastro Domiciliar: a entrevista do CadÚnico pode ser feita em casa (IN 21/2026 e Lei 15.077/2024)."
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Como o escritório pode ajudar",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Analisamos a sua situação, verificamos a composição do grupo familiar e a renda per capita, identificamos exclusões de renda aplicáveis e organizamos a documentação médica e social para a avaliação biopsicossocial. Também orientamos sobre o CadÚnico, sobre a revisão bienal e sobre eventual recurso administrativo ou ação judicial. Cada caso é avaliado individualmente, à luz da LOAS e das provas disponíveis."
+        }
+      ]
+    }
+  ],
+  "documentos": [
+    "Documento de identidade e CPF do requerente e dos membros do grupo familiar",
+    "Comprovante de inscrição e atualização no CadÚnico",
+    "Comprovante de residência",
+    "Comprovantes de renda de todos os integrantes do grupo familiar",
+    "Laudos, exames, relatórios e prontuários médicos que descrevam o impedimento",
+    "Notas fiscais e receituários de gastos com medicamentos, fraldas e alimentação especial",
+    "Comprovante do requerimento administrativo (DER) e da carta de indeferimento, se houver"
+  ],
+  "faq": [
+    {
+      "q": "Preciso ter contribuído ao INSS para receber o BPC?",
+      "a": "Não. O BPC/LOAS é um benefício assistencial previsto na Lei 8.742/93 e independe de contribuições. Avaliam-se o impedimento de longo prazo e a situação de miserabilidade."
+    },
+    {
+      "q": "Qual a diferença entre o impedimento do BPC e a incapacidade do auxílio-doença?",
+      "a": "São coisas diferentes. O BPC exige impedimento de longo prazo (mínimo de 2 anos) avaliado de forma biopsicossocial, considerando as barreiras do dia a dia. Os benefícios por incapacidade da Lei 8.213/91 exigem incapacidade para o trabalho e dependem de qualidade de segurado e contribuições."
+    },
+    {
+      "q": "Qual é o critério de renda?",
+      "a": "A regra é a renda per capita familiar não superior a 1/4 do salário mínimo. Esse critério pode ser flexibilizado pela jurisprudência (Tema 27 do STF e REsp 1.112.557 do STJ) quando a miserabilidade for demonstrada por outras provas, e há exclusões de renda previstas em lei."
+    },
+    {
+      "q": "O BPC pode ser cancelado depois de concedido?",
+      "a": "Pode. A Lei 8.742/93 prevê revisão a cada dois anos. Manter a documentação médica e o CadÚnico atualizados ajuda a preservar o benefício, e a cessação indevida pode ser discutida administrativa ou judicialmente."
+    }
+  ],
+  "related": [
+    "bpc-idoso",
+    "aposentadoria-pcd",
+    "auxilio-doenca"
+  ]
+}

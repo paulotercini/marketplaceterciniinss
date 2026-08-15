@@ -53,9 +53,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Honorários sobre parcelas vencidas até a sentença.
 
-### Súmula 443 STJ
+### Súmula 345 STJ e art. 85, §1º, CPC
 
-Honorários em execução.
+Honorários em execução contra a Fazenda (a Súmula 443 STJ é matéria penal — não usar).
 
 ## Espaço pró-segurado
 
@@ -104,6 +104,10 @@ Terceiro, IR sobre atrasados pode gerar RRA favorável.
 Quarto, honorários sucumbenciais têm base diferente em JEF e rito ordinário.
 
 Quinto, impugnação do INSS exige resposta técnica pelo segurado.
+
+## Manual de Cálculos CJF 2026 e EC 136/2025 (Onda 76)
+
+A edição 2026 do Manual de Cálculos da Justiça Federal (Resolução CJF 990, de 03/07/2026) incorporou o encerramento da SELIC do art. 3º da EC 113/2021 na fase pré-requisitório a partir de setembro de 2025, por força da EC 136/2025 e do Tema 1419 STF (ARE 1.557.312/SP, com modulação nos embargos). Para benefícios previdenciários, de set/2025 em diante, correção pelo INPC e juros pela taxa legal (SELIC com dedução do INPC, art. 406 do CC na redação da Lei 14.905/2024). O Manual também trouxe diretrizes novas para as planilhas de cálculo destinadas à expedição de requisições, que devem apresentar todos os dados necessários ao ofício requisitório (Nota 5 do item 4.3.1.1). Quadros completos, consolidação de dez/2021 e tabela da taxa legal em `base-juros-correcao-monetaria/references/MANUAL-CJF-2026-QUADROS.md`.
 
 ## Hub de portarias administrativas
 

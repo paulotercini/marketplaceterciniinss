@@ -1,0 +1,503 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRM Tercini — Protótipo</title>
+<style>
+  :root{
+    --azul:#2564cf; --azul-escuro:#1e4fa3; --fundo:#faf9f8; --lateral:#eff6fc;
+    --texto:#292827; --cinza:#605e5c; --borda:#e1dfdd; --branco:#fff;
+    --verde:#0b6a0b; --laranja:#b4530a; --vermelho:#a4262c; --roxo:#5c2e91;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",system-ui,-apple-system,sans-serif}
+  body{background:var(--fundo);color:var(--texto);height:100vh;overflow:hidden;font-size:14px}
+  .app{display:grid;grid-template-columns:290px 1fr;height:100vh}
+  .app.detalhe-aberto{grid-template-columns:290px minmax(320px,1fr) minmax(480px,56%)}
+
+  /* ── Coluna esquerda: pesquisa + listas ───────────────────── */
+  .sidebar{background:var(--lateral);border-right:1px solid var(--borda);overflow-y:auto;padding:12px 0}
+  .busca{margin:0 12px 14px;position:relative}
+  .busca input{width:100%;padding:8px 10px 8px 32px;border:1px solid var(--borda);border-radius:6px;font-size:14px;background:var(--branco)}
+  .busca::before{content:"🔍";position:absolute;left:9px;top:7px;font-size:13px;opacity:.6}
+  .grupo{margin-bottom:6px}
+  .grupo h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--cinza);padding:8px 16px 4px}
+  .lista-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;border-left:3px solid transparent}
+  .lista-item:hover{background:#e3eefa}
+  .lista-item.ativa{background:#d6e6f7;border-left-color:var(--azul);font-weight:600}
+  .lista-item .cont{margin-left:auto;font-size:12px;color:var(--cinza);background:var(--branco);border-radius:10px;padding:1px 8px}
+  .lista-item .priv{margin-left:auto;font-size:10px;color:var(--roxo);background:#efe6f7;border-radius:8px;padding:1px 6px}
+  .sep{border-top:1px solid var(--borda);margin:8px 12px}
+  .usuario{display:flex;align-items:center;gap:10px;padding:10px 16px 4px}
+  .avatar{width:30px;height:30px;border-radius:50%;background:var(--azul);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:none}
+  .avatar.a{background:#c74e93}.avatar.m{background:#0b6a0b}.avatar.d{background:#b4530a}.avatar.i{background:#5c2e91}
+  .avatar.mini{width:22px;height:22px;font-size:10px}
+
+  /* ── Coluna do meio: clientes da lista ────────────────────── */
+  .meio{overflow-y:auto;padding:18px 22px}
+  .meio-topo{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+  .meio-topo h1{font-size:22px;color:var(--azul-escuro)}
+  .ordenar{margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--cinza);font-size:13px}
+  .ordenar select{padding:5px 8px;border:1px solid var(--borda);border-radius:6px;background:var(--branco);font-size:13px}
+  .meio-sub{color:var(--cinza);font-size:13px;margin-bottom:14px}
+  .nova{display:flex;gap:8px;align-items:center;background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:10px 14px;margin-bottom:14px;color:var(--azul);cursor:text}
+  .cartao{background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:11px 14px;margin-bottom:8px;cursor:pointer;display:flex;align-items:center;gap:12px}
+  .cartao:hover{box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  .cartao.sel{outline:2px solid var(--azul)}
+  .cartao .check{width:18px;height:18px;border:2px solid var(--cinza);border-radius:50%;flex:none}
+  .cartao .info{min-width:0;flex:1}
+  .cartao .nome{font-weight:600}
+  .cartao .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px;font-size:12px;color:var(--cinza);align-items:center}
+  .chip{border-radius:10px;padding:1px 8px;font-size:11px;font-weight:600;white-space:nowrap}
+  .chip.ben{background:#e8f1fb;color:var(--azul-escuro)}
+  .chip.prazo{background:#fdf3e7;color:var(--laranja)}
+  .chip.prazo.venc{background:#fbeaea;color:var(--vermelho)}
+  .chip.fase{background:#eef7ee;color:var(--verde)}
+  .chip.per{background:#efe6f7;color:var(--roxo)}
+  .cartao .avatares{display:flex;flex:none}
+  .cartao .avatares .avatar{margin-left:-6px;border:2px solid var(--branco)}
+  .estrela{flex:none;font-size:16px;color:#c8c6c4}
+  .estrela.on{color:#eaa300}
+
+  /* ── Painel direito (largo): ficha do cliente ─────────────── */
+  .detalhe{display:none;background:var(--branco);border-left:1px solid var(--borda);overflow-y:auto}
+  .app.detalhe-aberto .detalhe{display:block}
+  .det-topo{position:sticky;top:0;background:var(--branco);border-bottom:1px solid var(--borda);padding:16px 22px;z-index:2}
+  .det-topo .linha1{display:flex;align-items:center;gap:10px}
+  .det-topo h2{font-size:19px}
+  .fechar{margin-left:auto;border:none;background:none;font-size:20px;cursor:pointer;color:var(--cinza)}
+  .det-topo .resumo{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .abas{display:flex;gap:2px;margin-top:14px;flex-wrap:wrap}
+  .aba{padding:7px 14px;border:none;background:none;cursor:pointer;font-size:13px;color:var(--cinza);border-bottom:2px solid transparent;font-weight:600}
+  .aba.ativa{color:var(--azul);border-bottom-color:var(--azul)}
+  .painel{display:none;padding:18px 22px 90px}
+  .painel.ativo{display:block}
+
+  .campos{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+  .campo{background:var(--fundo);border:1px solid var(--borda);border-radius:8px;padding:9px 12px}
+  .campo label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--cinza);margin-bottom:3px}
+  .campo .valor{font-weight:600;display:flex;align-items:center;gap:8px}
+  .campo .valor a{color:var(--azul);text-decoration:none}
+  .olho{border:none;background:none;cursor:pointer;font-size:13px}
+  .add-campo{border:1px dashed var(--borda);border-radius:8px;padding:9px 12px;color:var(--azul);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;background:none;font-size:13px}
+
+  .caso{border:1px solid var(--borda);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+  .caso .cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .caso .cab strong{font-size:14px}
+  .caso .fases{display:flex;gap:0;margin-top:10px;font-size:11px;flex-wrap:wrap}
+  .fase-et{padding:4px 12px;background:var(--fundo);border:1px solid var(--borda);color:var(--cinza)}
+  .fase-et:first-child{border-radius:6px 0 0 6px}.fase-et:last-child{border-radius:0 6px 6px 0}
+  .fase-et.atual{background:var(--azul);border-color:var(--azul);color:#fff;font-weight:700}
+  .fase-et.feita{background:#eef7ee;color:var(--verde)}
+
+  .timeline{list-style:none}
+  .timeline li{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--fundo)}
+  .timeline .quando{flex:none;width:150px;font-size:12px;color:var(--cinza);display:flex;gap:8px;align-items:flex-start}
+  .timeline .quando .avatar{margin-top:-2px}
+  .timeline .texto{flex:1}
+  .escrever{position:sticky;bottom:0;background:var(--branco);border-top:1px solid var(--borda);padding:12px 22px;display:flex;gap:10px;align-items:center}
+  .escrever input{flex:1;padding:10px 12px;border:1px solid var(--borda);border-radius:8px;font-size:14px}
+  .escrever button{padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
+  .dica-auto{font-size:12px;color:var(--verde);margin:6px 22px 0;display:flex;gap:6px;align-items:center}
+
+  .evento{border:1px solid var(--borda);border-left:4px solid var(--roxo);border-radius:8px;padding:11px 14px;margin-bottom:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .evento .data-box{flex:none;text-align:center;background:#efe6f7;color:var(--roxo);border-radius:8px;padding:6px 12px;font-weight:700}
+  .evento .data-box small{display:block;font-weight:400;font-size:11px}
+  .evento .oque strong{display:block}
+  .evento .oque span{color:var(--cinza);font-size:13px}
+  .evento .acoes{margin-left:auto;display:flex;gap:8px}
+  .botaozinho{border:1px solid var(--borda);background:var(--branco);border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--azul)}
+
+  .arquivo{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--fundo)}
+  .arquivo .ext{flex:none;width:34px;height:34px;border-radius:6px;background:#e8f1fb;color:var(--azul-escuro);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+
+  /* ── Dashboard ────────────────────────────────────────────── */
+  .dash{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+  .card{background:var(--branco);border:1px solid var(--borda);border-radius:10px;padding:16px}
+  .card h4{font-size:13px;color:var(--cinza);margin-bottom:10px}
+  .num{font-size:30px;font-weight:700;color:var(--azul-escuro)}
+  .barra{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:13px}
+  .barra .rot{width:78px;flex:none;color:var(--cinza)}
+  .barra .tubo{flex:1;height:10px;background:var(--fundo);border-radius:5px;overflow:hidden}
+  .barra .tubo i{display:block;height:100%;background:var(--azul);border-radius:5px}
+  .barra .qt{width:44px;text-align:right;font-weight:600;flex:none}
+
+  .faixa-proto{background:#fff4ce;color:#795600;text-align:center;padding:5px;font-size:12px;position:fixed;bottom:0;left:0;right:0;z-index:9}
+  @media (max-width:980px){
+    .app.detalhe-aberto{grid-template-columns:0 0 1fr}
+    .app.detalhe-aberto .sidebar,.app.detalhe-aberto .meio{display:none}
+    .app{grid-template-columns:250px 1fr}
+  }
+</style>
+
+<div class="app" id="app">
+
+  <!-- ══ ESQUERDA ══ -->
+  <nav class="sidebar">
+    <div class="usuario"><span class="avatar">P</span><div><strong>Paulo Tercini</strong><div style="font-size:12px;color:var(--cinza)">conectado</div></div></div>
+    <div class="sep"></div>
+    <div class="busca"><input id="busca" placeholder="Pesquisar cliente, CPF, processo, texto…" oninput="filtrar()"></div>
+    <div class="grupo">
+      <div class="lista-item" data-lista="meudia" onclick="abrirLista(this)">☀️ <span>Meu Dia</span><span class="cont">3</span></div>
+      <div class="lista-item" data-lista="planejado" onclick="abrirLista(this)">🗓️ <span>Planejado</span><span class="cont">12</span></div>
+      <div class="lista-item" data-lista="atribuidas" onclick="abrirLista(this)">👤 <span>Atribuídas a mim</span><span class="cont">5</span></div>
+      <div class="lista-item" data-lista="importante" onclick="abrirLista(this)">⭐ <span>Importante</span><span class="cont">2</span></div>
+      <div class="lista-item" data-lista="tarefas" onclick="abrirLista(this)">📋 <span>Tarefas</span><span class="priv">🔒 só você</span></div>
+    </div>
+    <div class="sep"></div>
+    <div class="grupo">
+      <h3>Listas do escritório</h3>
+      <div class="lista-item" data-lista="prazo" onclick="abrirLista(this)">🗓 <span>Tarefas com Prazo</span><span class="cont">4</span></div>
+      <div class="lista-item" data-lista="escritorio" onclick="abrirLista(this)">🙋 <span>Escritório</span><span class="cont">2</span></div>
+      <div class="lista-item" data-lista="inss" onclick="abrirLista(this)">🌻 <span>INSS</span><span class="cont">2</span></div>
+      <div class="lista-item ativa" data-lista="judicial" onclick="abrirLista(this)">👪 <span>Judicial</span><span class="cont">3</span></div>
+      <div class="lista-item" data-lista="conselho" onclick="abrirLista(this)">🖥 <span>Conselho de Recursos</span><span class="cont">1</span></div>
+      <div class="lista-item" data-lista="pagamentos" onclick="abrirLista(this)">💵 <span>Pagamentos</span><span class="cont">2</span></div>
+    </div>
+    <div class="sep"></div>
+    <div class="grupo">
+      <h3>Visões novas</h3>
+      <div class="lista-item" data-lista="agenda" onclick="abrirLista(this)">🩺 <span>Perícias &amp; Audiências</span><span class="cont">3</span></div>
+      <div class="lista-item" data-lista="dashboard" onclick="abrirLista(this)">📊 <span>Dashboard</span></div>
+    </div>
+  </nav>
+
+  <!-- ══ MEIO ══ -->
+  <main class="meio">
+    <div class="meio-topo">
+      <h1 id="titulo-lista">👪 Judicial</h1>
+      <div class="ordenar">Ordenar: <select id="ordem" onchange="renderCartoes()">
+        <option value="alfa">Alfabética</option>
+        <option value="prazo">Prazo mais próximo</option>
+        <option value="atualizacao">Última atualização</option>
+        <option value="concluindo">Concluindo primeiro</option>
+      </select></div>
+    </div>
+    <div class="meio-sub" id="sub-lista">Cada cartão é um cliente — os casos dele ficam dentro da ficha.</div>
+    <div id="conteudo-meio"></div>
+  </main>
+
+  <!-- ══ DIREITA (LARGA) ══ -->
+  <aside class="detalhe" id="detalhe"></aside>
+</div>
+<div class="faixa-proto">Protótipo navegável — todos os nomes, CPFs e dados são fictícios</div>
+
+<script>
+// Dados fictícios (nenhum dado real do To Do)
+const HOJE = "01.08.2026";
+const CLIENTES = [
+ {id:1, nome:"Maria Aparecida Exemplo", cpf:"000.000.001-91", dn:"12.03.1961", tel:"(16) 90000-0001",
+  lista:["judicial","meudia","prazo"], estrela:true, ben:"Apos. por Idade Rural", fase:"Judicial",
+  resp:["P","A"], prazo:"05.08.2026", prazoVenc:false, atualizado:"31.07.2026",
+  casos:[
+    {titulo:"Aposentadoria por idade rural", nb:"NB 200.000.000-1", proc:"5000000-11.2026.4.03.6113",
+     fases:["Escritório","INSS","Conselho","Judicial","Pagamento"], atual:3},
+  ],
+  eventos:[{tipo:"Perícia médica", data:"09.08.2026", hora:"14:30", local:"Fórum Federal de Franca — sala 3", status:"Agendada"}],
+  timeline:[
+    {q:"31.07.2026", quem:"Amanda", ini:"A", t:"Laudo pericial juntado aos autos. Encaminhado para análise do Dr. Paulo."},
+    {q:"28.07.2026", quem:"Paulo", ini:"P", t:"Petição inicial protocolada. Distribuída para a 1ª Vara Federal."},
+    {q:"20.07.2026", quem:"Marcos", ini:"M", t:"Documentos rurais digitalizados e conferidos. Pasta completa no Drive."},
+  ],
+  arquivos:[{n:"Peticao_inicial_assinada.pdf",e:"PDF"},{n:"Documentos_rurais.zip",e:"ZIP"},{n:"Procuracao.pdf",e:"PDF"}]},
+
+ {id:2, nome:"João Modelo dos Santos", cpf:"000.000.002-72", dn:"05.11.1958", tel:"(16) 90000-0002",
+  lista:["judicial","atribuidas"], estrela:false, ben:"Revisão da Vida Toda", fase:"Judicial",
+  resp:["P","D"], prazo:"15.08.2026", prazoVenc:false, atualizado:"29.07.2026",
+  casos:[
+    {titulo:"Revisão de aposentadoria", nb:"NB 200.000.000-2", proc:"5000000-22.2026.4.03.6113",
+     fases:["Escritório","INSS","Conselho","Judicial","Pagamento"], atual:3},
+    {titulo:"Acerto de CNIS (vínculo 1989–1993)", nb:"—", proc:"—",
+     fases:["Escritório","INSS","Conselho","Judicial","Pagamento"], atual:1},
+  ],
+  eventos:[],
+  timeline:[
+    {q:"29.07.2026", quem:"André", ini:"D", t:"Contrarrazões apresentadas dentro do prazo."},
+    {q:"15.07.2026", quem:"Paulo", ini:"P", t:"INSS apresentou recurso. Prazo para contrarrazões anotado."},
+  ],
+  arquivos:[{n:"Contrarrazoes.pdf",e:"PDF"},{n:"CNIS_atualizado.pdf",e:"PDF"}]},
+
+ {id:3, nome:"Antônia Ficticia Oliveira", cpf:"000.000.003-53", dn:"22.06.1970", tel:"(16) 90000-0003",
+  lista:["judicial","importante","meudia"], estrela:true, ben:"Aux. por Incapacidade Temporária", fase:"Judicial",
+  resp:["A"], prazo:"02.08.2026", prazoVenc:true, atualizado:"01.08.2026",
+  casos:[
+    {titulo:"Restabelecimento de auxílio por incapacidade", nb:"NB 200.000.000-3", proc:"5000000-33.2026.4.03.6113",
+     fases:["Escritório","INSS","Conselho","Judicial","Pagamento"], atual:3},
+  ],
+  eventos:[{tipo:"Audiência de instrução", data:"12.08.2026", hora:"10:00", local:"1ª Vara Federal de Franca (videoconferência)", status:"Confirmada"}],
+  timeline:[
+    {q:"01.08.2026", quem:"Amanda", ini:"A", t:"Cliente confirmou presença na audiência. Testemunhas orientadas."},
+    {q:"25.07.2026", quem:"Paulo", ini:"P", t:"Audiência de instrução designada. Intimar testemunhas."},
+  ],
+  arquivos:[{n:"Laudos_medicos_2026.pdf",e:"PDF"}]},
+
+ {id:4, nome:"Sebastião Amostra Ferreira", cpf:"000.000.004-34", dn:"30.01.1963", tel:"(16) 90000-0004",
+  lista:["inss","prazo","atribuidas"], estrela:false, ben:"Apos. Tempo de Contribuição", fase:"INSS",
+  resp:["M"], prazo:"08.08.2026", prazoVenc:false, atualizado:"30.07.2026",
+  casos:[
+    {titulo:"Aposentadoria por tempo de contribuição", nb:"NB 200.000.000-4", proc:"—",
+     fases:["Escritório","INSS","Conselho","Judicial","Pagamento"], atual:1},
+  ],
+  eventos:[],
+  timeline:[
+    {q:"30.07.2026", quem:"Marcos", ini:"M", t:"Exigência do INSS: apresentar carteira de trabalho 1985–1990. Prazo 08.08."},
+    {q:"18.07.2026", quem:"Marcos", ini:"M", t:"Requerimento protocolado no Meu INSS."},
+  ],
+  arquivos:[{n:"Requerimento_MeuINSS.pdf",e:"PDF"}]},
+
+ {id:5, nome:"Luzia Teste Almeida", cpf:"000.000.005-15", dn:"14.09.1975", tel:"(16) 90000-0005",
+  lista:["inss","planejado"], estrela:false, ben:"BPC/LOAS", fase:"INSS",
+  resp:["I","A"], prazo:null, prazoVenc:false, atualizado:"27.07.2026",
+  casos:[
+    {titulo:"BPC — pessoa com deficiência", nb:"NB 200.000.000-5", proc:"—",
+     fases:["Escritório","INSS","Conselho","Judicial","Pagamento"], atual:1},
+  ],
+  eventos:[{tipo:"Avaliação social (INSS)", data:"20.08.2026", hora:"09:00", local:"APS Franca", status:"Agendada"}],
+  timeline:[
+    {q:"27.07.2026", quem:"Ingrid", ini:"I", t:"CadÚnico atualizado. Aguardando avaliação social agendada."},
+  ],
+  arquivos:[]},
+
+ {id:6, nome:"Carlos Protótipo Lima", cpf:"000.000.006-04", dn:"08.04.1966", tel:"(16) 90000-0006",
+  lista:["conselho","prazo"], estrela:false, ben:"Apos. Especial (ruído)", fase:"Conselho",
+  resp:["P","D"], prazo:"10.08.2026", prazoVenc:false, atualizado:"26.07.2026",
+  casos:[
+    {titulo:"Aposentadoria especial — recurso à Junta", nb:"NB 200.000.000-6", proc:"Recurso 44000.000001/2026-00",
+     fases:["Escritório","INSS","Conselho","Judicial","Pagamento"], atual:2},
+  ],
+  eventos:[],
+  timeline:[
+    {q:"26.07.2026", quem:"Paulo", ini:"P", t:"Recurso ordinário protocolado na 9ª Junta de Recursos com PPP e LTCAT."},
+  ],
+  arquivos:[{n:"Recurso_ordinario.pdf",e:"PDF"},{n:"PPP_LTCAT.pdf",e:"PDF"}]},
+
+ {id:7, nome:"Rita Simulada Costa", cpf:"000.000.007-87", dn:"19.12.1980", tel:"(16) 90000-0007",
+  lista:["escritorio","planejado"], estrela:false, ben:"Pensão por Morte", fase:"Escritório",
+  resp:["A"], prazo:null, prazoVenc:false, atualizado:"24.07.2026",
+  casos:[
+    {titulo:"Pensão por morte — análise de viabilidade", nb:"—", proc:"—",
+     fases:["Escritório","INSS","Conselho","Judicial","Pagamento"], atual:0},
+  ],
+  eventos:[],
+  timeline:[
+    {q:"24.07.2026", quem:"Amanda", ini:"A", t:"Aguardando cliente trazer certidão de óbito e comprovantes de união estável."},
+  ],
+  arquivos:[]},
+
+ {id:8, nome:"Osvaldo Demonstração Rocha", cpf:"000.000.008-68", dn:"03.07.1955", tel:"(16) 90000-0008",
+  lista:["pagamentos"], estrela:true, ben:"Apos. por Idade", fase:"Pagamento",
+  resp:["P"], prazo:null, prazoVenc:false, atualizado:"22.07.2026",
+  casos:[
+    {titulo:"Aposentadoria por idade — execução de atrasados", nb:"NB 200.000.000-8", proc:"5000000-88.2025.4.03.6113",
+     fases:["Escritório","INSS","Conselho","Judicial","Pagamento"], atual:4},
+  ],
+  eventos:[],
+  timeline:[
+    {q:"22.07.2026", quem:"Paulo", ini:"P", t:"RPV expedida. Previsão de pagamento em até 60 dias."},
+  ],
+  arquivos:[{n:"Calculo_atrasados.xlsx",e:"XLS"}]},
+];
+
+const LISTAS = {
+  meudia:{t:"☀️ Meu Dia", s:"Clientes e tarefas que você trouxe para hoje."},
+  planejado:{t:"🗓️ Planejado", s:"Tudo que tem data marcada, em ordem cronológica."},
+  atribuidas:{t:"👤 Atribuídas a mim", s:"Tarefas em que você é um dos responsáveis."},
+  importante:{t:"⭐ Importante", s:"Marcados com estrela por qualquer colaborador."},
+  tarefas:{t:"📋 Tarefas (particulares)", s:"🔒 Lista pessoal — os demais colaboradores não veem, mas os itens aparecem no seu Meu Dia."},
+  prazo:{t:"🗓 Tarefas com Prazo", s:"Prazos fatais do escritório — ordenados pelo mais próximo."},
+  escritorio:{t:"🙋 Escritório", s:"Clientes em fase interna: análise, documentação, procuração."},
+  inss:{t:"🌻 INSS", s:"Requerimentos administrativos em andamento."},
+  judicial:{t:"👪 Judicial", s:"Cada cartão é um cliente — os casos dele ficam dentro da ficha."},
+  conselho:{t:"🖥 Conselho de Recursos", s:"Recursos nas Juntas e Câmaras de Julgamento."},
+  pagamentos:{t:"💵 Pagamentos", s:"RPVs, precatórios e honorários a receber."},
+  agenda:{t:"🩺 Perícias & Audiências", s:"Todas as datas estruturadas, extraídas automaticamente das fichas — nada mais perdido no meio do texto."},
+  dashboard:{t:"📊 Dashboard", s:"Produção do escritório em tempo real (números ilustrativos)."},
+};
+
+let listaAtual="judicial", clienteSel=null, busca="";
+
+function abrirLista(el){
+  document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
+  el.classList.add("ativa");
+  listaAtual=el.dataset.lista; clienteSel=null;
+  document.getElementById("app").classList.remove("detalhe-aberto");
+  render();
+}
+function filtrar(){ busca=document.getElementById("busca").value.toLowerCase(); render(); }
+
+function render(){
+  const L=LISTAS[listaAtual];
+  document.getElementById("titulo-lista").textContent=L.t;
+  document.getElementById("sub-lista").textContent=L.s;
+  if(listaAtual==="dashboard") return renderDash();
+  if(listaAtual==="agenda") return renderAgenda();
+  if(listaAtual==="tarefas") return renderPrivadas();
+  renderCartoes();
+}
+
+function clientesDaLista(){
+  let cs = CLIENTES.filter(c=>listaAtual==="importante" ? c.estrela : c.lista.includes(listaAtual));
+  if(busca) cs = CLIENTES.filter(c=>
+    (c.nome+" "+c.cpf+" "+c.ben+" "+c.casos.map(k=>k.proc+" "+k.titulo).join(" ")+" "+c.timeline.map(t=>t.t).join(" "))
+    .toLowerCase().includes(busca));
+  const ord=document.getElementById("ordem").value;
+  if(ord==="alfa") cs.sort((a,b)=>a.nome.localeCompare(b.nome));
+  if(ord==="prazo") cs.sort((a,b)=>(a.prazo||"99")<(b.prazo||"99")?-1:1);
+  if(ord==="atualizacao") cs.sort((a,b)=>b.atualizado.split(".").reverse().join("")-a.atualizado.split(".").reverse().join(""));
+  if(ord==="concluindo") cs.sort((a,b)=>Math.max(...b.casos.map(k=>k.atual))-Math.max(...a.casos.map(k=>k.atual)));
+  return cs;
+}
+
+function renderCartoes(){
+  const cs=clientesDaLista();
+  document.getElementById("conteudo-meio").innerHTML =
+    `<div class="nova">＋ Adicionar cliente nesta lista</div>` +
+    (busca?`<div class="meio-sub">🔍 Resultado da pesquisa por "<b>${busca}</b>" — em todas as listas</div>`:"") +
+    cs.map(c=>`
+    <div class="cartao ${clienteSel===c.id?"sel":""}" onclick="abrirCliente(${c.id})">
+      <span class="check"></span>
+      <div class="info">
+        <div class="nome">${c.nome}</div>
+        <div class="meta">
+          <span class="chip ben">${c.ben}</span>
+          <span class="chip fase">${c.fase}</span>
+          ${c.prazo?`<span class="chip prazo ${c.prazoVenc?"venc":""}">⏰ ${c.prazo}${c.prazoVenc?" — vence amanhã!":""}</span>`:""}
+          ${c.eventos.length?`<span class="chip per">🩺 ${c.eventos[0].tipo} ${c.eventos[0].data}</span>`:""}
+          ${c.casos.length>1?`<span>${c.casos.length} casos</span>`:""}
+        </div>
+      </div>
+      <div class="avatares">${c.resp.map(r=>`<span class="avatar mini ${r.toLowerCase()==="a"?"a":r.toLowerCase()==="m"?"m":r.toLowerCase()==="d"?"d":r.toLowerCase()==="i"?"i":""}">${r}</span>`).join("")}</div>
+      <span class="estrela ${c.estrela?"on":""}" onclick="event.stopPropagation();this.classList.toggle('on')">★</span>
+    </div>`).join("") || `<div class="meio-sub">Nenhum cliente encontrado.</div>`;
+}
+
+function renderPrivadas(){
+  document.getElementById("conteudo-meio").innerHTML=`
+    <div class="nova">＋ Adicionar tarefa particular</div>
+    ${["Preparar aula de direito previdenciário","Renovar anuidade OAB","Ler acórdão TNU sobre atividade rural"].map(t=>`
+    <div class="cartao"><span class="check"></span><div class="info"><div class="nome">${t}</div>
+    <div class="meta"><span class="chip per">🔒 particular — visível só para você</span></div></div></div>`).join("")}`;
+}
+
+function renderAgenda(){
+  const evs=[];
+  CLIENTES.forEach(c=>c.eventos.forEach(e=>evs.push({...e,cliente:c})));
+  evs.sort((a,b)=>a.data.split(".").reverse().join("")-b.data.split(".").reverse().join(""));
+  document.getElementById("conteudo-meio").innerHTML = evs.map(e=>`
+    <div class="evento">
+      <div class="data-box">${e.data.slice(0,5)}<small>${e.hora}</small></div>
+      <div class="oque"><strong>${e.tipo} — ${e.cliente.nome}</strong><span>${e.local} · ${e.status}</span></div>
+      <div class="acoes"><button class="botaozinho" onclick="event.stopPropagation();abrirCliente(${e.cliente.id})">Abrir ficha</button>
+      <button class="botaozinho">📅 Agenda</button><button class="botaozinho">💬 Avisar cliente</button></div>
+    </div>`).join("");
+}
+
+function renderDash(){
+  const barras=(dados,max)=>dados.map(([r,q])=>`<div class="barra"><span class="rot">${r}</span><div class="tubo"><i style="width:${q/max*100}%"></i></div><span class="qt">${q}</span></div>`).join("");
+  document.getElementById("conteudo-meio").innerHTML=`<div class="dash">
+    <div class="card"><h4>Clientes ativos</h4><div class="num">1.502</div></div>
+    <div class="card"><h4>Prazos nos próximos 7 dias</h4><div class="num" style="color:var(--laranja)">14</div></div>
+    <div class="card"><h4>Perícias / audiências agendadas</h4><div class="num" style="color:var(--roxo)">9</div></div>
+    <div class="card"><h4>Aguardando cliente (documentos)</h4><div class="num" style="color:var(--vermelho)">21</div></div>
+    <div class="card" style="grid-column:span 2"><h4>Andamentos por colaborador (mês)</h4>
+      ${barras([["Paulo",164],["Amanda",87],["Marcos",73],["André",41],["Ingrid",12]],164)}</div>
+    <div class="card" style="grid-column:span 2"><h4>Casos por benefício</h4>
+      ${barras([["Revisão",302],["Incap. Temp.",264],["Apos. TC",252],["CNIS",226],["BPC/LOAS",192],["Apos. Idade",187]],302)}</div>
+    <div class="card" style="grid-column:span 2"><h4>Casos por fase</h4>
+      ${barras([["Escritório",628],["INSS",172],["Conselho",404],["Judicial",421],["Pagamento",359]],628)}</div>
+    <div class="card" style="grid-column:span 2"><h4>Taxa de êxito por benefício (deferidos)</h4>
+      ${barras([["Apos. Idade",78],["Rural",71],["Apos. TC",64],["BPC/LOAS",57],["Incap. Temp.",52]],100)}</div>
+  </div>`;
+}
+
+function abrirCliente(id){
+  clienteSel=id;
+  const c=CLIENTES.find(x=>x.id===id);
+  document.getElementById("app").classList.add("detalhe-aberto");
+  renderCartoes();
+  const det=document.getElementById("detalhe");
+  det.innerHTML=`
+  <div class="det-topo">
+    <div class="linha1">
+      <span class="avatar">${c.nome[0]}</span><h2>${c.nome}</h2>
+      <button class="fechar" onclick="fecharDetalhe()">✕</button>
+    </div>
+    <div class="resumo">
+      <span class="chip ben">${c.ben}</span><span class="chip fase">Fase: ${c.fase}</span>
+      ${c.prazo?`<span class="chip prazo ${c.prazoVenc?"venc":""}">⏰ Prazo ${c.prazo}</span>`:""}
+      <span style="font-size:12px;color:var(--cinza)">Responsáveis:</span>
+      <div class="avatares" style="display:flex">${c.resp.map(r=>`<span class="avatar mini ${r.toLowerCase()}">${r}</span>`).join(" ")}</div>
+      <button class="botaozinho">＋ atribuir</button>
+    </div>
+    <div class="abas">
+      ${["Dados","Casos","Andamentos","Perícias & Audiências","Arquivos"].map((a,i)=>
+        `<button class="aba ${i===2?"ativa":""}" onclick="aba(this,${i})">${a}${a==="Andamentos"?` (${c.timeline.length})`:""}${a==="Perícias & Audiências"&&c.eventos.length?` (${c.eventos.length})`:""}</button>`).join("")}
+    </div>
+  </div>
+
+  <div class="painel" data-p="0">
+    <div class="campos">
+      <div class="campo"><label>CPF</label><div class="valor">${c.cpf}</div></div>
+      <div class="campo"><label>Data de nascimento</label><div class="valor">${c.dn}</div></div>
+      <div class="campo"><label>Telefone / WhatsApp</label><div class="valor"><a href="#">💬 ${c.tel}</a></div></div>
+      <div class="campo"><label>Senha Meu INSS</label><div class="valor"><span class="senha">••••••••</span><button class="olho" onclick="mostrarSenha(this)">👁</button></div></div>
+      <div class="campo"><label>Senha gov.br</label><div class="valor"><span class="senha">••••••••</span><button class="olho" onclick="mostrarSenha(this)">👁</button></div></div>
+      <div class="campo"><label>Endereço</label><div class="valor" style="font-weight:400">Zona rural, Franca/SP</div></div>
+      <button class="add-campo">＋ Adicionar campo personalizado</button>
+    </div>
+    <p style="margin-top:12px;font-size:12px;color:var(--cinza)">Senhas ficam criptografadas e cada visualização é registrada (quem viu e quando).</p>
+  </div>
+
+  <div class="painel" data-p="1">
+    ${c.casos.map(k=>`
+    <div class="caso">
+      <div class="cab"><strong>${k.titulo}</strong>
+        ${k.nb!=="—"?`<span class="chip ben">${k.nb}</span>`:""}
+        ${k.proc!=="—"?`<span class="chip fase">${k.proc}</span>`:""}
+      </div>
+      <div class="fases">${k.fases.map((f,i)=>`<span class="fase-et ${i<k.atual?"feita":""} ${i===k.atual?"atual":""}">${f}</span>`).join("")}</div>
+      ${k.proc!=="—"?`<p style="margin-top:8px;font-size:12px;color:var(--cinza)">🔄 Andamentos do processo acompanhados automaticamente via DataJud/CNJ.</p>`:""}
+    </div>`).join("")}
+    <button class="add-campo" style="width:100%">＋ Novo caso para este cliente</button>
+  </div>
+
+  <div class="painel ativo" data-p="2">
+    <ul class="timeline" id="tl">
+      ${c.timeline.map(t=>`<li><span class="quando"><span class="avatar mini ${t.ini.toLowerCase()}">${t.ini}</span>${t.q}<br>${t.quem}</span><span class="texto">${t.t}</span></li>`).join("")}
+    </ul>
+  </div>
+
+  <div class="painel" data-p="3">
+    ${c.eventos.length?c.eventos.map(e=>`
+    <div class="evento">
+      <div class="data-box">${e.data.slice(0,5)}<small>${e.hora}</small></div>
+      <div class="oque"><strong>${e.tipo}</strong><span>${e.local} · ${e.status}</span></div>
+      <div class="acoes"><button class="botaozinho">📅 Agenda</button><button class="botaozinho">💬 Avisar cliente</button></div>
+    </div>`).join(""):`<p style="color:var(--cinza)">Nenhuma perícia ou audiência agendada.</p>`}
+    <button class="add-campo" style="width:100%;margin-top:10px">＋ Agendar perícia / audiência</button>
+  </div>
+
+  <div class="painel" data-p="4">
+    ${c.arquivos.length?c.arquivos.map(a=>`<div class="arquivo"><span class="ext">${a.e}</span><div><strong>${a.n}</strong><div style="font-size:12px;color:var(--cinza)">Google Drive · pasta do cliente</div></div></div>`).join(""):`<p style="color:var(--cinza)">Nenhum arquivo vinculado.</p>`}
+    <button class="add-campo" style="width:100%;margin-top:10px">＋ Anexar ou vincular do Drive</button>
+  </div>
+
+  <div class="dica-auto">✓ Data e autor são registrados automaticamente — ninguém mais digita "01.08.2026 (P):"</div>
+  <div class="escrever">
+    <span class="avatar">P</span>
+    <input id="novo-and" placeholder="Escreva o andamento… (data e autor entram sozinhos)" onkeydown="if(event.key==='Enter')addAndamento()">
+    <button onclick="addAndamento()">Registrar</button>
+  </div>`;
+}
+function fecharDetalhe(){ clienteSel=null; document.getElementById("app").classList.remove("detalhe-aberto"); renderCartoes(); }
+function aba(el,i){
+  el.parentElement.querySelectorAll(".aba").forEach(a=>a.classList.remove("ativa")); el.classList.add("ativa");
+  document.querySelectorAll(".painel").forEach(p=>p.classList.toggle("ativo",p.dataset.p==i));
+}
+function mostrarSenha(b){ const s=b.previousElementSibling; s.textContent = s.textContent.includes("•") ? "senha-exemplo-123" : "••••••••"; }
+function addAndamento(){
+  const inp=document.getElementById("novo-and"); if(!inp.value.trim()) return;
+  const c=CLIENTES.find(x=>x.id===clienteSel);
+  c.timeline.unshift({q:HOJE, quem:"Paulo", ini:"P", t:inp.value.trim()});
+  inp.value="";
+  document.getElementById("tl").innerHTML=c.timeline.map(t=>`<li><span class="quando"><span class="avatar mini ${t.ini.toLowerCase()}">${t.ini}</span>${t.q}<br>${t.quem}</span><span class="texto">${t.t}</span></li>`).join("");
+}
+render();
+</script>

@@ -14,9 +14,9 @@ Deficiência intelectual.
 
 Fonte oficial em https://www.cjf.jus.br
 
-### Tema 305 TNU
+### Repercussão social e funcional na avaliação (IF-BrA)
 
-Avaliação biopsicossocial.
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ### Tema 327 TNU
 
@@ -42,7 +42,7 @@ Fonte oficial em https://www.planalto.gov.br
 
 Argumento adversário. Restrição clínica.
 
-Refutação. Avaliação biopsicossocial é obrigatória. Tema 305 TNU.
+Refutação. Avaliação biopsicossocial é obrigatória (LC 142/2013, art. 4º, e Portaria Interministerial 1/2014; auditoria 25/07/2026).
 
 ### Argumento 2 — Pontuação binária
 

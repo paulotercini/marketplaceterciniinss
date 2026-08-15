@@ -1,0 +1,38 @@
+{
+  "nome": "Alessandro Francisco Rodrigues",
+  "atualizado_em": "20/06/2026 às 17:42",
+  "processos": [
+    {
+      "cpf": "14432411805",
+      "dn": "15111974",
+      "nome": "Alessandro Francisco Rodrigues",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Junta de Recursos",
+      "titulo_tarefa": "Alessandro Francisco Rodrigues",
+      "status": "Última atualização em 06/04/2025: Pedido de benefício protocolado junto ao INSS",
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2025-04-06",
+          "data_br": "06/04/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2023-07-27",
+          "data_br": "27/07/2023",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso administrativo protocolado."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

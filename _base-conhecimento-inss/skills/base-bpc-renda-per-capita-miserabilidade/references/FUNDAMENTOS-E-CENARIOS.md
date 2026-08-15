@@ -64,9 +64,9 @@ Tema 27 STF. Análise concreta da miserabilidade. Possibilidade de afastar ¼ SM
 
 REsp 1.112.557 STJ. Prova ampla da miserabilidade.
 
-Tema 73 STJ. Integração pró-segurado.
+Tema 185/STJ (REsp 1.112.557). Integração pró-segurada (auditoria 25/07/2026).
 
-Tema 312 TNU. Cômputo de benefício excluído.
+RE 580.963/STF. Cômputo de benefício excluído (auditoria 25/07/2026).
 
 Tema 640 TNU. Exclusões específicas.
 

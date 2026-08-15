@@ -52,7 +52,7 @@ DPMF/INSS 990/2022 (CNIS, indicadores, RAC) e arts. 92-94 (autodeclaração).
 
 DPMF/INSS 991/2022 (procedimento de concessão).
 
-DPMF/INSS 992/2022 (cálculo RMI).
+DPMF/INSS 992/2022 (manutenção do benefício, folha, descontos, suspensão e cessação).
 
 Portarias DIRBEN 1.079/2022 (art. 94 §5º), 1.209/2024 (quilombolas), 1.240/2024 (formulários RAC), 1.299/2025 (indígenas).
 
@@ -64,7 +64,7 @@ DPMF/INSS 990/2022 (CNIS, indicadores).
 
 DPMF/INSS 991/2022 (procedimento).
 
-DPMF/INSS 992/2022 (cálculo RMI).
+DPMF/INSS 992/2022 (manutenção do benefício, folha, descontos, suspensão e cessação).
 
 ### 3.3. Aposentadoria especial
 
@@ -104,7 +104,7 @@ Portarias incidentes.
 
 DPMF/INSS 991/2022 (procedimento).
 
-DPMF/INSS 992/2022 (cálculo).
+DPMF/INSS 992/2022 (manutenção do benefício).
 
 ### 3.7. BPC/LOAS
 
@@ -188,19 +188,19 @@ Capítulo IV. Diretrizes específicas por espécie de benefício.
 
 Anexos. Tabelas, formulários.
 
-## 8. Núcleo da Portaria 992/2022
+## 8. Núcleo da Portaria 992/2022 (Manutenção - Livro III)
 
-Disposições gerais sobre cálculo.
+Folha de pagamento de benefícios.
 
-Salários-de-contribuição.
+Descontos autorizados (consignações, IR, contribuição previdenciária).
 
-Atualização monetária.
+Atualização cadastral e prova de vida.
 
-Cálculo por espécie.
+Suspensão e cessação de benefícios em fase de manutenção.
 
-Atividades concomitantes (Tema 1.070/STJ).
+Revisão administrativa em fase de manutenção.
 
-Anexos. Tabelas e exemplos.
+ATENÇÃO. A Portaria 992/2022 NÃO trata de cálculo da RMI. Cálculo é regulado pela IN 128/2022 e pela Portaria 991/2022 (Livro II).
 
 ## 9. Indicadores CNIS bloqueantes (Portaria 990)
 
@@ -240,6 +240,6 @@ Portaria 990/2022 (CNIS) é universal. Sempre incide.
 
 Portaria 991/2022 (procedimento) é universal. Sempre incide.
 
-Portaria 992/2022 (cálculo) incide em todo benefício com cálculo de RMI.
+Portaria 992/2022 (manutenção) incide na fase pós-concessão em todo benefício (folha, descontos, suspensão, cessação).
 
 Portarias específicas incidem por espécie (incapacidade, EPI, BPC, IF-BrA, IEA).
