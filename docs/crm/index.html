@@ -211,7 +211,9 @@
   .rot-tit{font-size:14px;font-weight:600;color:var(--texto)}
   /* "ninguém" é um 🚫 apagado; escolhido, fica vermelho e sem dúvida */
   .esc-barra .fx-av{margin-left:3px}
-  .esc-barra .tf-ninguem{font-size:13px;filter:grayscale(1);opacity:.5}
+  /* opacity apagava o botão INTEIRO — traço, borda e fundo — e sobrava
+     1,58:1. O repouso agora é dito só pela cor do ícone. */
+  .esc-barra .tf-ninguem{font-size:13px;color:var(--cinza)}
   /* precisa vencer .fx-av.on, que vem depois e usa a cor da pessoa (aqui
      não há pessoa, e a cor caía para o padrão) */
   .esc-barra .tf-ninguem.on{filter:none;opacity:1;border-color:var(--vermelho);
@@ -228,7 +230,9 @@
     border:1px solid var(--borda);border-radius:999px;padding:4px 11px}
   .sug-it:hover{color:var(--azul);border-color:var(--azul)}
   .sug-it.on{background:#E7EEFB;border-color:var(--azul);color:var(--azul-escuro);font-weight:650}
-  .sug-mais{font-size:12px;color:var(--cinza);cursor:pointer;padding:3px 6px;align-self:center}
+  .sug-mais{font-size:12px;color:var(--cinza);cursor:pointer;padding:3px 6px;align-self:center;
+    border:none;background:none;font-family:inherit}
+  .sug-it{font-family:inherit;text-align:left}
   .sug-mais:hover{color:var(--azul)}
   #and-prazo-chip{margin-top:6px}
   .chip-prazo{display:inline-flex;align-items:center;gap:6px;background:#FFF8E7;border:1px solid #E9B44C;
@@ -411,8 +415,8 @@
   .cartao .acoes{display:flex;gap:1px;flex:none;margin-left:2px}
   /* o apagado era opacity .3 sobre um emoji colorido; com o traço SVG cinza
      isso virava 1.17:1 de contraste — o botão simplesmente sumia da linha */
-  .cartao .acao-card.fogo{filter:none;opacity:1;color:#9AA0A8}
-  .cartao:hover .acao-card.fogo{color:#7A8089}
+  .cartao .acao-card.fogo{filter:none;opacity:1;color:#6E747E}
+  .cartao:hover .acao-card.fogo{color:var(--texto)}
   .cartao .acao-card.fogo.on{filter:none;opacity:1;color:var(--laranja)}
   /* quem navega por teclado precisa ver onde está, mesmo nos botões que só
      aparecem no hover */
@@ -454,8 +458,10 @@
   /* apagado é CINZA LEGÍVEL, não fantasma: opacity .3 sobre um traço já
      cinza dava 1.17:1 — de longe o botão sumia da linha. O grayscale era
      para emoji e virou letra morta em SVG monocromático. */
-  .acao-card.sol,.acao-card.fogo{filter:none;opacity:1;color:#9AA0A8}
-  .acao-card{color:#8A8F98}
+  .acao-card.sol,.acao-card.fogo{filter:none;opacity:1;color:#6E747E}
+  /* #6E747E sobre branco dá ~4,7:1 e continua legível sobre o azul-fundo do
+     cartão selecionado; o #c8c6c4 de antes ficava em 1,7:1 */
+  .acao-card{color:#6E747E}
   .acao-card.sol.on,.acao-card.fogo.on{filter:none;opacity:1;color:var(--laranja)}
   .acao-card.fogo.on svg{fill:currentColor}
   .chip.urg{background:#fbeaea;color:var(--vermelho)}
@@ -777,16 +783,20 @@
      texto branco em fundo branco, botão invisível. */
   .escrever button:not(.btn-rap):not(.eq-ini):not(.esc-ic):not(.esc-reg):not(.fx-av):not(.sug-abrir){
     padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
-  /* ⭐/🔥 vivem dentro do composer: a regra genérica acima os pintaria de azul
-     e ninguém saberia se estão ligados. Emoji também não obedece a cor do
-     CSS: em fundo amarelo a ⭐ some. Vale aqui a mesma convenção dos
-     cartões — apagado é cinza, aceso é colorido. */
+  /* Os chips claros da barra (Hoje, Amanhã, Escolher a data, sem lembrete).
+     A regra nasceu para ⭐/🔥 em emoji — que não obedecem cor do CSS — e
+     apagava com grayscale+opacity .5. Só que ela pega TODOS os .btn-rap do
+     composer: os quatro botões de data ficavam lavados a 50%, com cara de
+     desabilitados, no mesmo passo em que a trava OBRIGA a escolher um deles.
+     Agora o repouso é dito pela cor do texto (bem acima de 4.5:1) e o
+     escolhido pela pastilha azul de .esc-barra .tf-dt.on. */
   .escrever .btn-rap{background:var(--branco);border:2px solid var(--borda);padding:5px 14px;
-    border-radius:999px;filter:grayscale(1);opacity:.5}
-  .escrever .btn-rap.on{filter:none;opacity:1}
+    border-radius:999px;color:var(--cinza)}
+  .escrever .btn-rap:hover{border-color:var(--cinza-claro);color:var(--texto)}
+  .escrever .btn-rap.on{color:var(--texto)}
   .escrever .btn-rap.imp.on{background:#FFF3CF;border-color:#D9A400}
   .escrever .btn-rap.urg.on{background:#FBE3E3;border-color:var(--vermelho)}
-  .escrever .btn-rap.anexar{filter:none;opacity:1;border-color:var(--borda);color:var(--cinza)}
+  .escrever .btn-rap.anexar{border-color:var(--borda);color:var(--cinza)}
   .escrever .btn-rap.anexar:hover{border-color:var(--azul)}
   /* arquivos do processo */
   .caso.caso-arq{background:#F7F5FB;border-color:#DDD4EC}
@@ -1255,12 +1265,18 @@
     .app.celular .sub-menu button{flex:1;padding:8px 6px;font-size:13px}
     .app.celular .caso-acoes{padding:8px 10px}
     .app.celular .equipe-chip{padding:4px 9px;margin:0 4px 4px 0;font-size:13px}
-    .app.celular .det-rolagem{padding-bottom:190px}    /* base; o JS ajusta à altura real */
+    /* a folga base cabe o composer RECOLHIDO (uma linha); o JS mede a altura
+       real a cada abre/fecha. Os 190px de antes eram do composer que vivia
+       aberto: em sub-aba sem campo de escrever sobrava quase uma tela vazia */
+    .app.celular .det-rolagem{padding-bottom:86px}
     /* orientação e ordenação são coisa de tela grande: no celular roubam
        um terço da altura útil sem o dedo pedir */
     .app.celular #sub-lista,.app.celular .ordenar{display:none}
     .app.celular ~ .aviso{bottom:78px}                    /* acima da barra de baixo */
-    .app.celular.detalhe-aberto ~ .aviso{bottom:200px}    /* e acima do composer */
+    /* acima do composer RECOLHIDO; quando ele abre, o JS sobe o aviso pela
+       altura real. Fixo em 200px, o aviso caía dentro do composer aberto —
+       e no celular ele é justamente quem manda usar os botões que cobria */
+    .app.celular.detalhe-aberto ~ .aviso{bottom:96px}
     /* dedo não é ponteiro: alvos de toque maiores */
     .app.celular .cartao{padding:11px 13px;margin-bottom:7px}
     .app.celular .visto-bt{font-size:19px;padding:6px 10px}
@@ -1351,7 +1367,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.95 · correções da auditoria: sub-abas não se sobrepõem mais aos fatos, o primeiro clique no composer vale, e ⭐/🔥 voltam a se ver</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 08.96 · o rascunho não se perde mais, as sugestões abrem sempre, e o celular acerta a folga do campo</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1589,6 +1605,20 @@ function plim(tipo){
       o.connect(g).connect(ctx.destination); o.start(t0+dt); o.stop(t0+dt+dur+.05);
     });
   }catch(e){}
+}
+// ── o rascunho do andamento (por caso, só nesta sessão do navegador) ──────
+// Guardar no sessionStorage e não no D: o que se quer é sobreviver às
+// repinturas da ficha, não virar dado do escritório. Fechar a aba descarta.
+function guardarRascunho(casoId, txt){
+  if(!casoId) return;
+  try{ (txt||"").trim() ? sessionStorage.setItem("rasc:"+casoId, txt)
+                        : sessionStorage.removeItem("rasc:"+casoId); }catch(e){}
+}
+function lerRascunho(casoId){
+  try{ return casoId ? (sessionStorage.getItem("rasc:"+casoId)||"") : ""; }catch(e){ return ""; }
+}
+function limparRascunho(casoId){
+  try{ sessionStorage.removeItem("rasc:"+casoId); }catch(e){}
 }
 function aviso(msg, som=true){
   const el = document.getElementById("aviso");
@@ -2080,18 +2110,24 @@ const SVG_MENU = {
   "📣":'<path d="M3 10v4l11 5V5L3 10Z"/><path d="M14 8.5c2.6.6 4.2 1.8 4.2 3.5s-1.6 2.9-4.2 3.5M7 15.5V19a1.5 1.5 0 0 0 3 0v-2.2"/>',
   "📥":'<path d="M3.5 13.5h5l1.5 2.5h4l1.5-2.5h5"/><path d="M5.5 5.5h13l2 8v5a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-5l2-8Z"/>',
   "📅":'<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 2.8V6M16 2.8V6"/>',
-  "🗓️":'<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 2.8V6M16 2.8V6"/>',
+  // Planejado tem o dia MARCADO; Calendário (📅) é a folha limpa. Recolhido,
+  // o menu mostra só o ícone: dois calendários idênticos, um logo abaixo do
+  // outro, obrigavam a esperar o balão do nome para saber onde clicar.
+  "🗓️":'<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 2.8V6M16 2.8V6"/><rect x="7" y="12.5" width="4" height="4" rx="1" fill="currentColor" stroke="none"/>',
   "🗓":'<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.2 2"/>',
   "👤":'<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.4 3.6-5.2 7-5.2s6.2 1.8 7 5.2"/>',
   "⭐":'<path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/>',
   "📋":'<rect x="5" y="4.5" width="14" height="16" rx="2"/><path d="M9 4.5V3h6v1.5M9 10h6M9 13.5h6M9 17h4"/>',
   "🔁":'<path d="M17.5 6.5H8a4 4 0 0 0-4 4v.5M6.5 17.5H16a4 4 0 0 0 4-4V13"/><path d="m14.5 3.5 3 3-3 3M9.5 20.5l-3-3 3-3"/>',
   "🧹":'<rect x="3.5" y="4" width="17" height="4.5" rx="1"/><path d="M5.5 8.5V18a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V8.5M10 12.5h4"/>',
-  "🙋":'<rect x="3.5" y="8" width="17" height="12" rx="2"/><path d="M9 8V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V8M3.5 13h17"/>',
+  // Escritório é gente com a mão levantada (era a mesma maleta de 💼 Vendas)
+  "🙋":'<circle cx="11" cy="7.5" r="3"/><path d="M4.5 20.5c.6-3.2 2.9-5 6.5-5s5.9 1.8 6.5 5"/><path d="M17.5 10.5V4.2M20 6.5l-2.5-2.3-2.5 2.3"/>',
   "🌻":'<path d="M4 9.5 12 4l8 5.5M5.5 9.5V19M18.5 9.5V19M9 12v7M15 12v7M3.5 19.5h17"/>',
   "🖥":'<path d="M9 6.5h11M9 12h11M9 17.5h11M4.5 6.5h.01M4.5 12h.01M4.5 17.5h.01"/>',
   "👪":'<path d="M12 3.5v17M8 20.5h8M12 6H6.5L3 12.5h7L6.5 6M12 6h5.5L21 12.5h-7L17.5 6M3 12.5a3.5 3.5 0 0 0 7 0M14 12.5a3.5 3.5 0 0 0 7 0"/>',
-  "💡":'<path d="M13.5 3.5H7A1.8 1.8 0 0 0 5.2 5.3v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8l-5.3-5.3Z"/><path d="M13.5 3.5V9h5.3M9 13.5h6M9 17h4"/>',
+  // Petições Iniciais é a lâmpada da peça que começa (era o mesmo documento
+  // de 📄 Modelos — as duas listas aparecem juntas no trilho recolhido)
+  "💡":'<path d="M9.3 17.5h5.4M10 20.5h4M12 3.5a5.5 5.5 0 0 0-3.2 10c.5.4.8 1 .8 1.6h4.8c0-.6.3-1.2.8-1.6A5.5 5.5 0 0 0 12 3.5Z"/>',
   "🙏":'<path d="M6.5 3.5h11M6.5 20.5h11M8 3.5v3.2a4 4 0 0 0 1.6 3.2L12 12l-2.4 2.1A4 4 0 0 0 8 17.3v3.2M16 3.5v3.2a4 4 0 0 1-1.6 3.2L12 12l2.4 2.1a4 4 0 0 1 1.6 3.2v3.2"/>',
   "🤖":'<path d="M12 3.5c.4 4.6 3.4 7.6 8 8-4.6.4-7.6 3.4-8 8-.4-4.6-3.4-7.6-8-8 4.6-.4 7.6-3.4 8-8Z"/>',
   "📄":'<path d="M13.5 3.5H7A1.8 1.8 0 0 0 5.2 5.3v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8l-5.3-5.3Z"/><path d="M13.5 3.5V9h5.3M9 13.5h6M9 17h4"/>',
@@ -7266,9 +7302,14 @@ function pintarFicha(){
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
   if(campoAnd){
     // Enter registra; Shift+Enter pula linha. O campo cresce até caber tudo.
+    // O TETO É O MESMO DOS DOIS LADOS. O CSS do celular limita o campo a
+    // 110px e o JS o fazia crescer até 220px com overflow:hidden: da quinta à
+    // décima terceira linha o texto ficava escondido E sem rolagem — não dava
+    // para reler o começo do próprio relato. Aqui o overflow é decidido pela
+    // altura EFETIVA, então vale para qualquer teto, em qualquer tela.
     const crescer=()=>{ campoAnd.style.height="auto";
-      campoAnd.style.height=Math.min(campoAnd.scrollHeight, 220)+"px";
-      campoAnd.style.overflowY = campoAnd.scrollHeight>220 ? "auto" : "hidden";
+      campoAnd.style.height=Math.min(campoAnd.scrollHeight, celular()?110:220)+"px";
+      campoAnd.style.overflowY = campoAnd.scrollHeight>campoAnd.clientHeight ? "auto" : "hidden";
       folgaComposer(); };
     campoAnd.onkeydown=e=>{
       if(e.key==="Enter" && !e.shiftKey){ e.preventDefault();
@@ -7282,10 +7323,28 @@ function pintarFicha(){
     const cxEsc = campoAnd.closest(".escrever");
     if(cxEsc){
       const abrirEsc = ()=>{ if(!cxEsc.classList.contains("esc-aberto")){
-        cxEsc.classList.add("esc-aberto"); setTimeout(folgaComposer,0); } };
+        cxEsc.classList.add("esc-aberto");
+        setTimeout(()=>{
+          folgaComposer();
+          // no celular o composer aberto come 190px do rodapé: quem estava
+          // lendo o último andamento via ele sumir atrás do campo. A folga
+          // cresce, mas a rolagem tem que acompanhar.
+          if(celular()){
+            const rol=document.querySelector(".det-rolagem");
+            if(rol && rol.scrollTop + rol.clientHeight > rol.scrollHeight - 260)
+              rol.scrollTop = rol.scrollHeight;
+          }
+        },0); } };
       const fecharEsc = ()=>{
         if(campoAnd.value.trim() || cxEsc.contains(document.activeElement)) return;
-        cxEsc.classList.remove("esc-aberto"); setTimeout(folgaComposer,0);
+        cxEsc.classList.remove("esc-aberto");
+        // as caixas que a barra abriu vão junto: sozinhas na tela, sem o botão
+        // que as fecha (ele mora na barra), viravam painéis órfãos
+        ["sug-box","preenche-box","exig-box","lembrar-box"].forEach(id=>{
+          const b=document.getElementById(id); if(b) b.style.display="none";
+        });
+        const bs=document.getElementById("sug-abrir"); if(bs) bs.classList.remove("on");
+        setTimeout(folgaComposer,0);
       };
       cxEsc.addEventListener("mousedown", abrirEsc);
       cxEsc.addEventListener("touchstart", abrirEsc, {passive:true});
@@ -7297,8 +7356,20 @@ function pintarFicha(){
     if(kAtual){
       prazoDetectado=null; prazoCancelado=false;
       pintarSugestoes(kAtual); pintarPrazoDoTexto(kAtual);
+      // O RASCUNHO NÃO PODE MORRER NUMA REPINTURA. Anexar uma foto, trocar de
+      // sub-aba para conferir um protocolo, abrir o menu de processos — tudo
+      // isso repinta a ficha, e o relato meio escrito ia embora sem aviso, no
+      // meio do atendimento. Agora ele fica guardado por caso, na sessão, e
+      // volta para a tela; some só quando o andamento é registrado.
       campoAnd.oninput=()=>{ crescer(); prazoCancelado=false;
+        guardarRascunho(kAtual.id, campoAnd.value);
         pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual); folgaComposer(); };
+      const rasc=lerRascunho(kAtual.id);
+      if(rasc && !campoAnd.value){
+        campoAnd.value=rasc;
+        if(cxEsc) cxEsc.classList.add("esc-aberto");   // com texto, as ferramentas ficam à mão
+        pintarPrazoDoTexto(kAtual); pintarSugestoes(kAtual);
+      }
       crescer();
     }
   }
@@ -7898,14 +7969,20 @@ function pintarSugestoes(k, forcar){
   const escritas = (inp&&inp.value||"").split("\n").map(l=>semMarcador(l));
   const marcadas = new Set(escritas.filter(Boolean).map(dsa));
   const ultima = escritas.length ? escritas[escritas.length-1] : "";
-  const q = catalogo.some(s=>dsa(s.texto)===dsa(ultima)) ? "" : dsa(ultima.trim());
+  // PEDIR A LISTA IGNORA O FILTRO. Quem escreveu com as próprias palavras e
+  // só então clicou em "Sugestões" via o botão acender e nada abrir: o texto
+  // digitado virava busca, não casava com frase nenhuma e a caixa nascia
+  // vazia. Clicar no botão é pedir o catálogo inteiro, não filtrar.
+  const q = forcar ? "" : (catalogo.some(s=>dsa(s.texto)===dsa(ultima)) ? "" : dsa(ultima.trim()));
   if(!q && !forcar && cx.style.display==="none") return;
   const todas = q ? catalogo : proprias;
   const lista=(q ? todas.filter(s=>dsa(s.texto).includes(q)) : todas).slice(0, q?6:ANOTACOES.length);
   if(q) cx.style.display = lista.length ? "flex" : "none";
+  // botão de verdade, não <span>: entra na ordem do Tab e o leitor de tela o
+  // anuncia como algo clicável (eram 22 frases inalcançáveis pelo teclado)
   cx.innerHTML = lista.map(s=>
-      `<span class="sug-it${marcadas.has(dsa(s.texto))?" on":""}" data-acao="${s.acao||""}">${s.acao==="exigencia"?"⚠ ":""}${esc(s.texto)}</span>`).join("")
-    + (q?"":`<span class="sug-mais" onclick="lbEditar('${k.id}')">✎ editar sugestões</span>`);
+      `<button type="button" class="sug-it${marcadas.has(dsa(s.texto))?" on":""}" data-acao="${s.acao||""}">${s.acao==="exigencia"?"⚠ ":""}${esc(s.texto)}</button>`).join("")
+    + (q?"":`<button type="button" class="sug-mais" onclick="lbEditar('${k.id}')">✎ editar sugestões</button>`);
   cx.querySelectorAll(".sug-it").forEach(el=>el.onclick=()=>usarSugestao(el, k));
 }
 // o campo de data só aparece quando é pedido — a barra fica limpa até lá
@@ -10714,8 +10791,24 @@ function irCel(destino){
 function folgaComposer(){
   const rol=document.querySelector(".det-rolagem"), esc=document.querySelector(".escrever");
   if(!rol) return;
-  rol.style.paddingBottom = (celular() && esc) ? (esc.offsetHeight + 18) + "px" : "";
+  const noCel = celular();
+  // sem composer (sub-aba de leitura) a folga é mínima: a regra base do CSS
+  // reservava espaço para um campo que nem está lá
+  rol.style.paddingBottom = !noCel ? "" : esc ? (esc.offsetHeight + 18) + "px" : "12px";
+  // o aviso sobe junto com o composer: parado em 200px, ele caía dentro do
+  // campo aberto e cobria os botões que o próprio aviso manda usar
+  const av=document.getElementById("aviso");
+  if(av) av.style.bottom = (noCel && esc && document.getElementById("app").classList.contains("detalhe-aberto"))
+    ? (esc.offsetHeight + 16) + "px" : "";
 }
+// girar o aparelho, abrir o teclado ou cruzar os 760px muda tudo isto: sem
+// recalcular, a folga do celular ficava presa na ficha do computador (até
+// 311px de vão morto) e o último andamento ficava inalcançável no celular
+let _timerFolga=null;
+window.addEventListener("resize", ()=>{
+  clearTimeout(_timerFolga);
+  _timerFolga=setTimeout(folgaComposer, 120);
+});
 function marcarBarraCel(){
   const foco = buscaTxt ? "busca" : visao;
   document.querySelectorAll("#barra-cel button").forEach(b=>
@@ -10885,6 +10978,7 @@ async function novoAndamento(casoUnico){
     lembrou=` · 🗓 lembrete para ${fmt(k.prazo)}`;
   }
   prazoDetectado=null; prazoCancelado=false;
+  limparRascunho(casoId);      // gravou: o rascunho guardado já cumpriu o papel
   // "DCB 16/09" escrita no comentário vira a data do caso — é assim que a
   // equipe sempre anotou no To Do, e ninguém precisa procurar o campo
   const mdcb = texto.match(/\bDCB\b\D{0,15}?(\d{1,2})[\/\.](\d{1,2})(?:[\/\.](\d{2,4}))?/i);
@@ -11115,13 +11209,19 @@ async function novaExigencia(){
 // hora e ____ de texto — nada de apagar tracinhos na mão
 function montarPreenchimento(texto){
   const box=document.getElementById("preenche-box");
-  const partes=texto.split(/(__\/__\/____|__:__|____)/);
+  // A ORDEM É DO MAIS LONGO PARA O MAIS CURTO: `__` casaria antes de
+  // `__/__/____` e picotaria a data em pedaços. Faltavam `__/__` e `__` — as
+  // frases que os usavam ("orientado sobre __", "aguardar até __/__") abriam
+  // a caixa "Complete a frase" SEM nenhum campo para completar.
+  const partes=texto.split(/(__\/__\/____|__:__|__\/__|____|__)/);
   let n=0;
   box.innerHTML = `<strong style="font-size:13px">⚡ Complete a frase:</strong>
     <div style="margin:8px 0;line-height:2.1">` + partes.map(p=>{
       if(p==="__/__/____") return `<input type="date" class="pr-campo" data-t="data" id="pr-${n++}" style="padding:3px 6px;border:1px solid var(--borda);border-radius:6px">`;
       if(p==="__:__")      return `<input type="time" class="pr-campo" data-t="hora" id="pr-${n++}" style="padding:3px 6px;border:1px solid var(--borda);border-radius:6px">`;
+      if(p==="__/__")      return `<input type="text" class="pr-campo" data-t="txt" id="pr-${n++}" placeholder="dd/mm" maxlength="5" inputmode="numeric" style="padding:3px 6px;border:1px solid var(--borda);border-radius:6px;width:78px">`;
       if(p==="____")       return `<input type="text" class="pr-campo" data-t="txt" id="pr-${n++}" placeholder="…" style="padding:3px 6px;border:1px solid var(--borda);border-radius:6px;width:150px">`;
+      if(p==="__")         return `<input type="text" class="pr-campo" data-t="txt" id="pr-${n++}" placeholder="…" style="padding:3px 6px;border:1px solid var(--borda);border-radius:6px;width:150px">`;
       return `<span data-fixo>${esc(p)}</span>`;
     }).join("") + `</div>
     <button onclick="inserirPreenchida()">➡ Inserir no andamento</button>
@@ -11136,7 +11236,9 @@ function inserirPreenchida(){
   const campos=[...box.querySelectorAll(".pr-campo")];
   let i=0;
   const texto=partes.map(p=>{
-    if(p==="__/__/____"||p==="__:__"||p==="____"){
+    // a MESMA lista de padrões do montarPreenchimento: um a menos aqui e o
+    // campo preenchido voltaria como tracinho para o andamento do cliente
+    if(p==="__/__/____"||p==="__:__"||p==="__/__"||p==="____"||p==="__"){
       const el=campos[i++]; const v=el.value;
       if(!v) return p;                       // não preencheu: fica o tracinho mesmo
       if(el.dataset.t==="data") return fmt(v).replace(/\./g,"/");
