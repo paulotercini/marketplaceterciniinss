@@ -1585,7 +1585,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.16 · F17 — a triagem passou a saber a espécie do caso: onze famílias trazem os pontos que a skill do escritório manda conferir, a ferramenta do site aparece no passo em que serve, e encerrar o atendimento vira uma linha no histórico do caso</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.17 · F17 — a triagem passou a saber a espécie do caso: doze famílias trazem os pontos que a skill do escritório manda conferir, a ferramenta do site aparece no passo em que serve, e encerrar o atendimento vira uma linha no histórico do caso</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8018,6 +8018,16 @@ const PONTOS_ESPECIE = [
        "complementação ou agrupamento da EC 103 antes de protocolar, senão o mês some da contagem"],
       ["apo_reciproca","Tempo de outro regime, militar ou aluno-aprendiz",
        "CTC pedida e averbada antes do requerimento; averbação pendente trava o benefício inteiro"],
+    ]},
+  { chave:"maternidade", teste:/maternidade|sal[áa]rio.matern/i, rot:"Salário-maternidade",
+    skill:"base-salario-maternidade-pos-reforma",
+    pontos:[
+      ["mat_qualidade","Qualidade de segurada na data do parto",
+       "período de graça alcança o parto em muitos casos; a desempregada mantém o direito dentro dele"],
+      ["mat_carencia","Carência conforme a categoria",
+       "empregada e doméstica não têm carência; contribuinte individual e facultativa, dez contribuições"],
+      ["mat_rural","Rural: os dez meses de atividade, não de contribuição",
+       "a segurada especial prova exercício, e o documento costuma estar em nome do marido ou do pai"],
     ]},
   { chave:"revisao", teste:/revis[ãa]o|recalcul/i, rot:"Revisão",
     skill:"decadencia-revisao-previdenciaria, base-revisao-art29-melhor-beneficio",
