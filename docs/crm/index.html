@@ -1172,6 +1172,27 @@
   /* ── F10 · TRIAGEM ──────────────────────────────────────────────────────
      Oito passos numerados. O número não é enfeite: a ordem é a da conferência,
      e a conclusão só faz sentido depois dos sete. */
+  /* F17: a faixa da espécie, entre o título e os passos. Não é alerta nem
+     prazo: é onde o caso está sendo lido, então cinza de placa, sem cor. */
+  .tri-especie{background:var(--placa);border:1px solid var(--borda-suave);border-radius:8px;
+    padding:8px 11px;margin:8px 0 2px;font-size:12.5px;color:var(--texto);
+    display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px}
+  .tri-skill{font-size:11.5px;color:var(--cinza-claro);font-family:ui-monospace,monospace}
+  .tri-ferr{margin-left:auto;font-size:12px;font-weight:600;color:var(--azul);
+    text-decoration:none;min-height:24px;display:inline-flex;align-items:center}
+  .tri-ferr:hover{text-decoration:underline}
+  /* de que espécie veio o passo: etiqueta discreta ao lado do nome */
+  /* .tri-tit é coluna: sem uma linha própria, a etiqueta virava uma faixa de
+     largura inteira embaixo do nome, e não uma etiqueta */
+  .tri-tit-l{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+  .tri-de{flex:none;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;
+    color:var(--azul-escuro);background:var(--azul-fundo);border:1px solid #D6E3F9;
+    border-radius:5px;padding:1px 6px}
+  /* o fecho do atendimento */
+  .tri-fecho{border-top:2px solid var(--borda);margin-top:14px;padding-top:12px;
+    display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .tri-fecho .cad-mini{min-height:30px}
+  .tri-fecho p{font-size:12.5px;color:var(--cinza);margin:0;flex:1;min-width:200px}
   .tri-passo{border-top:1px solid var(--borda-suave);padding:13px 0}
   .tri-lista>.tri-passo:first-child{border-top:0;padding-top:4px}
   .tri-cab{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
@@ -1564,7 +1585,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.15 · F16 — a travada das listas era conta de fuso refeita a cada chamada: ☀️ Meu Dia caiu de 1.601 ms para 25 ms, a lateral de 1.206 ms para 34 ms, e a Agenda e o Calendário passaram a reaproveitar o formatador em vez de montar um por evento</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.16 · F17 — a triagem passou a saber a espécie do caso: onze famílias trazem os pontos que a skill do escritório manda conferir, a ferramenta do site aparece no passo em que serve, e encerrar o atendimento vira uma linha no histórico do caso</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7889,6 +7910,152 @@ const TRIAGEM_PASSOS = [
   ["requerimento","Requerimentos anteriores","prévio requerimento (Tema 350) e a conformidade com o Tema 1124"],
   ["conclusao",  "Conclusão",             "o que o escritório decidiu, e o próximo passo"],
 ];
+// ══════════════════════════════════════════════════════════════════════════
+// F17 · O QUE A ESPÉCIE EXIGE — as skills do escritório dentro da triagem
+// ══════════════════════════════════════════════════════════════════════════
+// As 204 skills do escritório vivem fora do CRM e continuam lá: elas são o
+// raciocínio, e raciocínio não cabe numa tabela. O que desce para cá é a
+// parte que muda a decisão NO ATENDIMENTO — o ponto que, se ninguém conferir
+// enquanto o cliente está na cadeira, vira exigência, indeferimento ou
+// petição devolvida três meses depois.
+//
+// Os oito passos da F10 valem para todo mundo. Estes valem para a espécie do
+// caso, e entram entre o passo 7 e a conclusão. Cada família nomeia a skill
+// de onde veio, para quem quiser o inteiro teor saber onde procurar.
+const PONTOS_ESPECIE = [
+  { chave:"bpc", teste:/lo?as|bpc|assistencial|amparo social/i, rot:"BPC/LOAS",
+    skill:"base-bpc-loas-requisitos, base-bpc-renda-per-capita-miserabilidade",
+    ferramenta:["Calculadora de renda per capita", "https://advprevidenciaria.netlify.app/"],
+    pontos:[
+      ["bpc_renda","Renda per capita do grupo familiar",
+       "1/4 do salário mínimo é o critério legal; acima disso, provar a miserabilidade pelo gasto (saúde, fralda, alimentação especial)"],
+      ["bpc_grupo","Quem entra no grupo familiar",
+       "a lista do art. 20, §1º é fechada — filho casado, neto e genro não entram só por morarem juntos"],
+      ["bpc_cadunico","CadÚnico e Cadastro Domiciliar",
+       "obrigatório, renovado a cada 2 anos, e a entrevista domiciliar do Decreto 12.534/2025"],
+      ["bpc_avaliacao","Avaliação biopsicossocial (IFBrM)",
+       "impedimento de longo prazo de 2 anos; no menor de 16, o critério do Tema 299/TNU"],
+    ]},
+  { chave:"crps", teste:/recurso|conselho|crps|incidente/i, rot:"Recurso no CRPS",
+    skill:"base-recurso-crps-peca-enxuta, admissibilidade-barreiras-crps",
+    pontos:[
+      ["crp_prazo","Tempestividade, com a data na mão",
+       "30 dias da ciência; intempestivo não se conhece, e o mérito nem é lido"],
+      ["crp_enunciado","O Enunciado do CRPS que decide o caso",
+       "a Junta decide por norma e por enunciado, não por jurisprudência judicial"],
+      ["crp_motivo","O motivo EXATO do indeferimento",
+       "recurso que não ataca o motivo escrito na decisão é desprovido sem discussão"],
+    ]},
+  { chave:"especial", teste:/apos\w*\.?\s*especial|aposentadoria especial|insalubr|agente nocivo/i,
+    rot:"Aposentadoria especial",
+    skill:"auditoria-ppp, base-especial-ruido, base-especial-epi",
+    ferramenta:["Calculadora de ruído", "https://advprevidenciaria.netlify.app/"],
+    pontos:[
+      ["esp_ppp","PPP período a período",
+       "agente, dose, técnica de medição, EPI e CA, responsável pelos registros, extemporaneidade — cada período enquadra ou não por si"],
+      ["esp_epi","EPI declarado eficaz",
+       "não neutraliza ruído acima do limite (Tema 555/STF); nos demais agentes, exigir a prova da eficácia real"],
+      ["esp_ltcat","LTCAT ou laudo que sustente o PPP",
+       "PPP sem laudo de base é impugnado pelo INSS; pedir na empresa antes de protocolar"],
+      ["esp_conversao","Conversão e regra de transição",
+       "o que é anterior a 13.11.2019 converte; depois disso, só a especial pura da EC 103"],
+    ]},
+  { chave:"incapacidade", teste:/incapacidade|auxilio.doenca|auxílio.doença|invalidez|esp[ée]cie 3[12]|esp[ée]cie 9[12]/i,
+    rot:"Incapacidade",
+    skill:"base-incapacidade-b31-temporaria, analise-documental-incapacidade",
+    ferramenta:["Indicadores do CNIS", "https://advprevidenciaria.netlify.app/"],
+    pontos:[
+      ["inc_dii","DID e DII, uma ao lado da outra",
+       "doença anterior à filiação não bloqueia se a INCAPACIDADE veio depois por agravamento (art. 27-A e Enunciado 7 do CRPS)"],
+      ["inc_carencia","Carência, ou a dispensa do art. 151",
+       "a lista de doenças isentas dispensa os 12 meses — confira antes de desistir do caso"],
+      ["inc_qualidade","Qualidade de segurado na DII",
+       "período de graça, prorrogações do art. 15, e a data exata em que a incapacidade começou"],
+      ["inc_pericia","A perícia médica federal do PA",
+       "é o documento a desconstituir ponto a ponto: o que o perito examinou, o que ignorou e o que contraria o laudo assistente"],
+    ]},
+  { chave:"b94", teste:/aux.*acidente|esp[ée]cie 94/i, rot:"Auxílio-acidente",
+    skill:"base-auxilio-acidente-b94-pos-reforma, base-b94-nexo-acidentario-ntep",
+    pontos:[
+      ["b94_sequela","Sequela consolidada, com redução da capacidade",
+       "o Anexo III do Decreto 3.048/99 e a sequela mínima do Tema 201 — redução não precisa impedir o trabalho"],
+      ["b94_nexo","Nexo, inclusive por concausa",
+       "art. 21, I: doença degenerativa não exclui o nexo quando o trabalho contribuiu"],
+      ["b94_acumulacao","Acumulação e cessação",
+       "vedada a acumulação com aposentadoria; integra o salário-de-benefício (Tema 862)"],
+    ]},
+  { chave:"rural", teste:/rural|segurado especial|h[íi]brida|boia.fria/i, rot:"Rural e híbrida",
+    skill:"segurado-especial-rural, base-tempo-rural-anterior-1991",
+    pontos:[
+      ["rur_prova","Início de prova material contemporâneo",
+       "documento do período, não declaração feita hoje; certidões que citem lavrador valem por toda a família"],
+      ["rur_auto","Autodeclaração rural e as bases do INSS",
+       "arts. 92 a 94 da IN 128: a autodeclaração é confrontada com CAR, ITR, sindicato e escola"],
+      ["rur_teste","Testemunhas nomeadas, com o que cada uma viu",
+       "prova exclusivamente testemunhal não sustenta (Súmula 149/STJ), mas sem testemunha o início de prova morre"],
+      ["rur_genero","A mulher rural e o documento em nome do marido",
+       "trabalho feminino registrado como 'do lar' é o padrão da época, não ausência de trabalho"],
+    ]},
+  { chave:"pensao", teste:/pens[ãa]o por morte|aux.*reclus[ãa]o|esp[ée]cie 21|esp[ée]cie 2[35]/i,
+    rot:"Dependentes",
+    skill:"base-pensao-por-morte-pos-reforma, base-pensao-por-morte-uniao-estavel-prova",
+    pontos:[
+      ["dep_qualidade","Qualidade de segurado do falecido na data do óbito",
+       "perdida a qualidade, ainda cabe pensão se ele já tinha reunido os requisitos de alguma aposentadoria"],
+      ["dep_prova","Prova da união estável ou da dependência",
+       "documento contemporâneo à convivência; a prova só testemunhal é o ponto que o INSS ataca primeiro"],
+      ["dep_cota","Cotas e duração da pensão",
+       "a duração pela idade do cônjuge e o rateio entre dependentes mudam o valor do que se pede"],
+    ]},
+  { chave:"tempo", teste:/tempo de contribui|por idade|professor|defici[êe]ncia|planejamento/i,
+    rot:"Aposentadoria programável",
+    skill:"base-aposentadoria-transicao-ec103, base-calculo-rmi-ec103",
+    ferramenta:["Simulador de regras da EC 103", "https://advprevidenciaria.netlify.app/"],
+    pontos:[
+      ["apo_der","A melhor DER entre as regras possíveis",
+       "direito adquirido pré-reforma, cada transição e a permanente — comparadas, não presumidas"],
+      ["apo_minimo","Competências abaixo do mínimo",
+       "complementação ou agrupamento da EC 103 antes de protocolar, senão o mês some da contagem"],
+      ["apo_reciproca","Tempo de outro regime, militar ou aluno-aprendiz",
+       "CTC pedida e averbada antes do requerimento; averbação pendente trava o benefício inteiro"],
+    ]},
+  { chave:"revisao", teste:/revis[ãa]o|recalcul/i, rot:"Revisão",
+    skill:"decadencia-revisao-previdenciaria, base-revisao-art29-melhor-beneficio",
+    pontos:[
+      ["rev_decadencia","Decadência do art. 103",
+       "dez anos do primeiro pagamento; com menos de 12 meses para o fim, a revisão vira urgência"],
+      ["rev_tese","Qual revisão, exatamente",
+       "teto, IRSM, ORTN/OTN, art. 29, concomitantes — cada uma tem prova e cálculo próprios"],
+      ["rev_calculo","O cálculo do Prévius, antes da peça",
+       "revisão sem diferença apurada não se protocola"],
+    ]},
+  { chave:"cnis", teste:/acerto de cnis|cnis|v[íi]nculo/i, rot:"Acerto de CNIS",
+    skill:"base-cnis-acerto-indicadores, base-documentos-comprobatorios-in128",
+    ferramenta:["Indicadores do CNIS", "https://advprevidenciaria.netlify.app/"],
+    pontos:[
+      ["cni_indicador","Cada indicador do extrato, um a um",
+       "PEXT, PREC-MENOR, IEAN e companhia: o indicador diz qual Anexo da IN 128 abre a RAC"],
+      ["cni_anexo","RAC pelo Anexo certo",
+       "Anexo errado volta como exigência e queima o prazo"],
+      ["cni_prova","A prova do vínculo que falta",
+       "CTPS, ficha de registro, holerite, reclamatória trabalhista com início de prova material"],
+    ]},
+];
+// a família da espécie do caso — a primeira que casar
+function familiaDaEspecie(esp){
+  const t = String(esp||"").trim();
+  if(!t) return null;
+  return PONTOS_ESPECIE.find(f=>f.teste.test(t)) || null;
+}
+// os passos da triagem DESTE cliente: os oito fixos, com os da espécie
+// entrando antes da conclusão
+function triagemPassosDe(c, ks){
+  const fam = familiaDaEspecie(especieDoCliente(c, ks));
+  if(!fam) return TRIAGEM_PASSOS;
+  const fixos = TRIAGEM_PASSOS.slice(0, TRIAGEM_PASSOS.length-1);
+  const conc  = TRIAGEM_PASSOS[TRIAGEM_PASSOS.length-1];
+  return fixos.concat(fam.pontos.map(([k,r,d])=>[k,r,d,fam.rot]), [conc]);
+}
 const TRIAGEM_ESTADOS = [["ok","sem pendência"],["atencao","atenção"],["pendente","não conferido"]];
 const TRIAGEM_PROXIMO = [["inicial","Pronto para a inicial judicial"],
                          ["inss","Pronto para o protocolo no INSS"],
@@ -7952,31 +8119,43 @@ function triagemLeitura(passo, c, ks){
     return {cor:"neutro", txt:"leitura do extrato, ainda à mão — o CRM não lê o CNIS"};
   if(passo==="conclusao"){
     const t = triagemDe(c);
-    const feitos = TRIAGEM_PASSOS.slice(0,7).filter(([k])=>(t[k]||{}).estado && t[k].estado!=="pendente").length;
-    return feitos===7 ? {cor:"ok", txt:"os sete passos anteriores estão conferidos"}
-      : {cor:"neutro", txt:`${feitos} de 7 passos conferidos antes desta conclusão`};
+    const antes = triagemPassosDe(c, ks).slice(0,-1);
+    const feitos = antes.filter(([k])=>(t[k]||{}).estado && t[k].estado!=="pendente").length;
+    return feitos===antes.length
+      ? {cor:"ok", txt:`os ${antes.length} passos anteriores estão conferidos`}
+      : {cor:"neutro", txt:`${feitos} de ${antes.length} passos conferidos antes desta conclusão`};
   }
   return {cor:"neutro", txt:""};
 }
 function painelTriagemFicha(c, ks){
   const t = triagemDe(c);
-  const feitos = TRIAGEM_PASSOS.filter(([k])=>(t[k]||{}).estado && t[k].estado!=="pendente").length;
+  const PASSOS = triagemPassosDe(c, ks);
+  const fam = familiaDaEspecie(especieDoCliente(c, ks));
+  const feitos = PASSOS.filter(([k])=>(t[k]||{}).estado && t[k].estado!=="pendente").length;
   const prox = (t.conclusao||{}).proximo || "";
   return `<div class="cad-cartao">
     <div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Triagem do cliente
       <span class="cad-tit-sub">o que precisa estar conferido antes de protocolar ou distribuir</span>
-      <span class="cad-cont${feitos===TRIAGEM_PASSOS.length?" cad-ok":""}">${feitos} de ${TRIAGEM_PASSOS.length} conferidos</span></div>
+      <span class="cad-cont${feitos===PASSOS.length?" cad-ok":""}">${feitos} de ${PASSOS.length} conferidos</span></div>
+    ${fam?`<div class="tri-especie">
+      <b>${esc(fam.rot)}</b> — ${fam.pontos.length} pontos além dos oito de sempre, pela espécie deste caso.
+      <span class="tri-skill">skill do escritório: ${esc(fam.skill)}</span>
+      ${fam.ferramenta?`<a class="tri-ferr" href="${fam.ferramenta[1]}" target="_blank" rel="noopener">
+        ${esc(fam.ferramenta[0])} ↗</a>`:""}
+    </div>`:""}
     ${/* contêiner próprio: com os passos soltos dentro do cartão, o
          :first-of-type do CSS cairia no título, não no passo 1 */""}
     <div class="tri-lista">
-    ${TRIAGEM_PASSOS.map(([chave,rot,dica],i)=>{
+    ${PASSOS.map(([chave,rot,dica,dona],i)=>{
       const p = t[chave] || {};
       const l = triagemLeitura(chave, c, ks);
       const quem = p.quem && D.colPorId.get(p.quem);
       return `<div class="tri-passo${p.estado&&p.estado!=="pendente"?" feito":""}">
         <div class="tri-cab">
           <span class="tri-n">${i+1}</span>
-          <div class="tri-tit"><b>${esc(rot)}</b><span class="tri-dica">${esc(dica)}</span></div>
+          <div class="tri-tit"><span class="tri-tit-l"><b>${esc(rot)}</b>${
+            dona?`<span class="tri-de">${esc(dona)}</span>`:""}</span>
+            <span class="tri-dica">${esc(dica)}</span></div>
           <div class="tri-bt">${TRIAGEM_ESTADOS.map(([e,r])=>
             `<button class="tri-e ${e}${p.estado===e?" on":""}"
               onclick="marcarTriagem('${c.id}','${chave}','${e}')">${r}</button>`).join("")}</div>
@@ -7995,9 +8174,61 @@ function painelTriagemFicha(c, ks){
       </div>`;
     }).join("")}
     </div>
+    <div class="tri-fecho">
+      <button class="cad-mini" onclick="fecharAtendimento('${c.id}')"
+        title="grava no histórico do caso tudo o que foi conferido e decidido neste atendimento">
+        Encerrar o atendimento e lançar no caso</button>
+      <p>Uma linha no histórico do caso, com os ${PASSOS.length} passos, o que ficou pendente e o próximo
+         passo. Enquanto ninguém encerra, a triagem fica só na ficha.</p>
+    </div>
     <p class="cad-nota">A leitura em cinza é o que o CRM já sabe do próprio banco. Ela não substitui a
       conferência: o que vale é o que você marcar e escrever, que fica com o seu nome e a data.</p>
   </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// F17 · FECHAR O ATENDIMENTO — a triagem vira uma linha no caso
+// ══════════════════════════════════════════════════════════════════════════
+// A triagem fica na ficha do CLIENTE; o histórico fica no CASO. Sem este
+// fecho, quem abre o processo semanas depois não vê que houve atendimento,
+// nem o que foi conferido — e refaz tudo. Uma linha só, com o que decidiu.
+async function fecharAtendimento(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const ks = D.casosDoCliente.get(cliId) || [];
+  // `casoSel` é global e sobrevive à troca de ficha: sem conferir de quem ele
+  // é, o atendimento de um cliente seria lançado no processo de outro.
+  const sel = casoSel && ks.find(x=>x.id===casoSel);
+  const k = sel || ks.find(x=>x.fase!=="encerrado") || ks[0];
+  if(!k) return aviso("Este cliente não tem caso — o atendimento não tem onde ser lançado");
+  const t = triagemDe(c);
+  const PASSOS = triagemPassosDe(c, ks);
+  const conferidos = PASSOS.filter(([x])=>(t[x]||{}).estado && t[x].estado!=="pendente");
+  if(!conferidos.length) return aviso("Marque ao menos um passo antes de encerrar o atendimento");
+  const atencao = PASSOS.filter(([x])=>(t[x]||{}).estado==="atencao");
+  const faltam  = PASSOS.filter(([x])=>!(t[x]||{}).estado || t[x].estado==="pendente");
+  const prox = (t.conclusao||{}).proximo || "";
+  const rotProx = (TRIAGEM_PROXIMO.find(([v])=>v===prox)||[])[1];
+  const fam = familiaDaEspecie(especieDoCliente(c, ks));
+
+  const linhas = [`Atendimento — triagem conferida: ${conferidos.length} de ${PASSOS.length} passos.`];
+  if(fam) linhas.push(`Espécie lida como ${fam.rot}.`);
+  if(atencao.length)
+    linhas.push(`Com atenção: ${atencao.map(([x,r])=>r + ((t[x]||{}).nota?` (${t[x].nota})`:"")).join("; ")}.`);
+  if(faltam.length)
+    linhas.push(`Ainda não conferido: ${faltam.map(([,r])=>r).join("; ")}.`);
+  const notaConc = (t.conclusao||{}).nota;
+  if(notaConc) linhas.push(`Conclusão: ${notaConc}`);
+  linhas.push(`Próximo passo: ${rotProx || "não definido nesta triagem"}.`);
+
+  try{
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:linhas.join(" ")})});
+  }catch(e){ return aviso("Não consegui lançar no caso — tente de novo"); }
+  const t2 = {...t, atendimento:{em:hoje(), quem:eu.id, passos:PASSOS.length,
+                                 conferidos:conferidos.length, proximo:prox}};
+  await salvarTriagem(cliId, t2);
+  await carregar(); montarSidebar(); repintarFicha();
+  aviso(`Atendimento lançado em ${tituloCaso(k)} ✔`);
 }
 async function salvarTriagem(cliId, triagem){
   const c = D.cliPorId.get(cliId); if(!c) return false;

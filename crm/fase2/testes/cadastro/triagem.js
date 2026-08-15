@@ -87,8 +87,13 @@ FIX.casos.push(
       leitura: x.querySelector(".tri-leitura").innerText.replace(/\n/g, " · "),
       cor: [...x.querySelector(".tri-leitura").classList].filter(c => c !== "tri-leitura")[0],
     })));
-  conf(`são os oito passos, na ordem (${passos.length})`, passos.length === 8
-    && passos[0].tit === "CNIS" && passos[7].tit === "Conclusão");
+  // A F17 acrescenta os pontos da ESPÉCIE entre o passo 7 e a conclusão. Este
+  // cliente é rural, então são os oito fixos mais os quatro do rural, e a
+  // conclusão continua sendo o último — é isso que o teste tem de garantir.
+  conf(`os oito fixos abrem a lista, na ordem (${passos.length} no total)`,
+    passos.length >= 8 && passos[0].tit === "CNIS"
+    && passos[6].tit === "Requerimentos anteriores"
+    && passos[passos.length - 1].tit === "Conclusão");
 
   const por = t => passos.find(x => x.tit === t) || {};
   conf(`acha o processo judicial (${JSON.stringify(por("Ação judicial anterior").leitura.slice(0, 60))})`,
