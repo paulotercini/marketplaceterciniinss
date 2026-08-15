@@ -9,7 +9,10 @@
     /* proposta visual aprovada: neutros CINZA, um azul só para o "sistema" */
     --azul:#2B5FC7; --azul-escuro:#234E9E; --fundo:#EDEFF2; --lateral:#23262E;
     --texto:#25272B; --cinza:#5B6069; --borda:#D9DCE1; --branco:#fff;
-    --verde:#1E6F50; --laranja:#B4530A; --vermelho:#B3261E; --roxo:#5C2E91;
+    /* --laranja escurecido de #B4530A para #9C4607: no chip de prazo o antigo
+       dava 4,41:1 sobre --laranja-f, abaixo do mínimo. O novo dá 5,60:1 ali e
+       6,38:1 sobre branco (o 🔥 aceso do cartão). */
+    --verde:#1E6F50; --laranja:#9C4607; --vermelho:#B3261E; --roxo:#5C2E91;
     /* a placa: cinza de leitura. É o fundo dos quadros que se CONSULTAM
        (os fatos do benefício), separando-os do branco dos quadros em que se
        ESCREVE. Fica um degrau ABAIXO da faixa zebrada da linha do tempo
@@ -17,8 +20,16 @@
        hierarquia. */
     --placa:#EBEEF3;
     /* reforma visual padrão To Do (espec. aprovada): tokens novos */
-    --azul-claro:#7FA6F0; --azul-fundo:#F3F7FE;
-    --cinza-claro:#8A8F98; --borda-suave:#E7E9EE;
+    /* --azul-claro clareado de #7FA6F0 para #A8C0F7: sobre a lateral escura o
+       antigo dava 4,11:1 no contador da lista ativa, abaixo dos 4,5:1 exigidos
+       para texto pequeno (auditoria de contraste F15, medida com composição
+       alfa sobre a cadeia de pais). */
+    --azul-claro:#A8C0F7; --azul-fundo:#F3F7FE;
+    /* --cinza-claro escurecido de #8A8F98 para #666B74: o antigo dava 3,25:1
+       sobre branco (CPF do cartão) e reprovava em TODOS os fundos claros do
+       sistema. O novo passa em branco (5,36:1), --fundo (4,65:1), --placa
+       (4,61:1) e na zebra da linha do tempo (4,95:1). */
+    --cinza-claro:#666B74; --borda-suave:#E7E9EE;
     --verde-f:#E4F1EA; --laranja-f:#FCEEDF; --vermelho-f:#FBE9E8;
     --lateral-hover:rgba(255,255,255,.07); --lateral-ativo:rgba(255,255,255,.13);
     --sombra:0 1px 2px rgba(20,24,33,.06); --sombra-hover:0 2px 8px rgba(20,24,33,.12);
@@ -87,7 +98,10 @@
 
   .sidebar{background:var(--lateral);border-right:1px solid var(--lateral);overflow-y:auto;overflow-x:hidden;padding:12px 0;color:#E8EAED}
   .sync-todo{padding:2px 16px 8px;font-size:12px;color:#9AA0B0;white-space:nowrap}
-  #btn-lateral{display:block;margin:0 12px 8px;border:none;background:none;font-size:17px;cursor:pointer;color:#9AA0B0}
+  #btn-lateral{display:flex;align-items:center;justify-content:center;margin:0 8px 6px;
+    min-width:28px;min-height:28px;padding:2px 5px;border:none;border-radius:6px;
+    background:none;font-size:17px;cursor:pointer;color:#9AA0B0}
+  #btn-lateral:hover{background:var(--lateral-hover)}
 
   /* ── MENU RECOLHIDO ─────────────────────────────────────────────────────
      Aqui o ícone é a única palavra que sobra. A 14px, sobre fundo escuro, um
@@ -99,6 +113,18 @@
   .app.mini-lateral .sidebar .usuario>div,
   .app.mini-lateral .sidebar .sair,
   .app.mini-lateral .sidebar #btn-som{display:none}
+  /* o botão do som media 16x20; agora tem a área mínima de toque */
+  #btn-som{display:inline-flex;align-items:center;justify-content:center;
+    min-width:24px;min-height:24px;padding:2px;border:none;border-radius:6px;
+    background:none;cursor:pointer;line-height:1}
+  #btn-som:hover{background:var(--lateral-hover)}
+  /* caixas de marcar: 20px de caixa mais 2px de folga de cada lado fecham
+     os 24px exigidos pela exceção de espaçamento da 2.5.8 */
+  input[type=checkbox],input[type=radio]{width:20px;height:20px;margin:2px;accent-color:var(--azul)}
+  /* toda ligação e todo chip clicável com altura de toque */
+  a.chip,.chip.per,.titulo-caso[onclick],a[onclick]{min-height:24px;
+    display:inline-flex;align-items:center}
+  select{min-height:24px}
   .app.mini-lateral .sidebar .txt{display:none}
   /* a barra fica alta: são 27 destinos. Barra de rolagem fina e visível, para
      quem chega no ⚙️ Configurações saber que ela existe. */
@@ -167,7 +193,10 @@
   .btn-res{padding:8px 14px;border:1px solid var(--borda);border-radius:8px;background:var(--fundo);cursor:pointer;font-weight:600}
   .btn-res:hover{background:#e8f1fb}
   .usuario{display:flex;align-items:center;gap:10px;padding:2px 16px 10px}
-  .usuario .sair{margin-left:auto;border:none;background:none;color:#9AA0B0;cursor:pointer;font-size:12px}
+  .usuario .sair{margin-left:auto;display:inline-flex;align-items:center;justify-content:center;
+    min-width:34px;min-height:24px;padding:4px 6px;border:none;border-radius:6px;
+    background:none;color:#9AA0B0;cursor:pointer;font-size:12px}
+  .usuario .sair:hover{background:var(--lateral-hover);color:#fff}
   .sidebar .usuario div div{color:#9AA0B0!important}
   /* sub-menu do processo: separa o que é nosso do que é do tribunal */
   /* segmentado claro: a aba ativa é um cartão branco com a letra em azul —
@@ -280,7 +309,7 @@
   /* padrão To Do aprovado: itens com respiro lateral (8px de calha), canto
      arredondado e a pastilha do ativo como pseudo-elemento colado na calha */
   .grupo{padding:0 8px}
-  .grupo h3{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#7E8494;padding:12px 10px 5px}
+  .grupo h3{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#9AA1B2;padding:12px 10px 5px}
   .lista-item{display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer;
     border-radius:var(--raio);color:#D6D9E0;font-size:13.5px;position:relative;user-select:none}
   .lista-item:hover{background:var(--lateral-hover)}
@@ -300,6 +329,9 @@
   .lista-item .cont:empty{display:none}
   .lista-item.ativa .ic,.lista-item.ativa .cont{color:var(--azul-claro)}
   .u-papel{font-size:11px;color:#8D94A3;text-transform:lowercase}
+  /* mesma classe, dois fundos: na lateral escura #8D94A3 dá 5,6:1, no meio
+     branco dava 3,04:1. O meio recebe o cinza de leitura. */
+  .meio .u-papel,.det .u-papel{color:var(--cinza)}
   .lista-item .priv{margin-left:auto;font-size:10px;color:#D8C6EE;background:rgba(255,255,255,.12);border-radius:8px;padding:1px 6px}
   .sep{border-top:1px solid rgba(255,255,255,.12);margin:8px 12px}
   .avatar{width:28px;height:28px;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:none;background:var(--azul)}
@@ -337,7 +369,9 @@
   .meio .sug,.meio .modelo,.meio .card,.meio .mkt,.meio .cal-dia{
     box-shadow:0 1px 3px rgba(30,32,36,.08)}
   .meio .fchip{background:rgba(255,255,255,.75)}
-  .meio .fchip.on{background:var(--azul)}
+  .meio .fchip.on{background:var(--azul);color:#fff}
+  /* o contorno do avatar dentro do chip aceso some no azul sólido */
+  .meio .fchip.on .avatar{box-shadow:0 0 0 1px rgba(255,255,255,.55)}
   .ordenar{margin-left:auto;display:flex;align-items:center;gap:8px;color:var(--cinza);font-size:13px;flex-wrap:wrap}
   .ordenar select{padding:5px 8px;border:1px solid var(--borda);border-radius:6px;background:var(--branco);font-size:13px}
   .meio-sub{color:var(--cinza);font-size:13px;margin-bottom:12px}
@@ -366,7 +400,7 @@
   /* em lista longa, quem rola perde a divisão ("isto ainda é 'em exigência'?").
      O cabeçalho gruda no topo e responde sem exigir voltar. */
   h3.secao{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-    color:#7A808B;margin:16px 0 7px;position:sticky;top:0;z-index:2;
+    color:#5F656F;margin:16px 0 7px;position:sticky;top:0;z-index:2;
     background:inherit;padding:5px 0 5px 2px}
   /* ── a pauta ──────────────────────────────────────────────────────────
      Uma lista, não uma pilha de caixas: fundo branco contínuo, linhas
@@ -401,7 +435,7 @@
   /* a segunda linha: miúda, cinza, só datas — do jeito do To Do */
   .cartao .meta{display:flex;gap:6px;margin-top:2px;font-size:11.5px;color:var(--cinza);
     align-items:center;white-space:nowrap;overflow:hidden}
-  .cartao .meta .pt{color:#B9BDC6;flex:none}
+  .cartao .meta .pt{color:var(--cinza-claro);flex:none}
   .cartao .dt{flex:none;font-variant-numeric:tabular-nums}
   .cartao .dt.venc{color:var(--vermelho);font-weight:600}
   .cartao .dt.hoje{color:var(--azul);font-weight:600}
@@ -422,7 +456,7 @@
      aparecem no hover */
   .cartao .acao-card:focus-visible{opacity:1;filter:none;outline:2px solid var(--azul);
     outline-offset:1px;border-radius:4px}
-  .avatar.mini.vazio{background:#DCDFE5;color:#8A9099}
+  .avatar.mini.vazio{background:#DCDFE5;color:#5B6069}
   .chip{border-radius:10px;padding:1px 8px;font-size:11px;font-weight:600;white-space:nowrap}
   .chip.ben{background:#e8f1fb;color:var(--azul-escuro)}
   /* semáforo de prazo (espec. 6.3): vencido/hoje, até 15 dias, com folga */
@@ -989,7 +1023,7 @@
   .cad-tit{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
     color:var(--cinza);margin-bottom:11px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .cad-tit .cad-ic{color:var(--azul);display:inline-flex}
-  .cad-tit-sub{font-weight:400;letter-spacing:0;text-transform:none;color:var(--cinza-claro,#8A8F98)}
+  .cad-tit-sub{font-weight:400;letter-spacing:0;text-transform:none;color:var(--cinza-claro,#666B74)}
   .cad-cont{margin-left:auto;font-weight:600;font-size:11px;color:var(--laranja);
     background:var(--laranja-f);padding:1px 8px;border-radius:9px;letter-spacing:0;text-transform:none}
   .cad-cont.cad-ok{color:var(--verde);background:var(--verde-f)}
@@ -1002,13 +1036,13 @@
   @media (max-width:1000px){.cad-c3,.cad-c4{grid-column:span 6}.cad-c8{grid-column:span 12}}
   .cad-campo{border:1px solid var(--borda);border-radius:var(--raio,8px);padding:7px 11px;
     background:var(--branco);min-height:58px;display:flex;flex-direction:column;justify-content:center}
-  .cad-campo:hover{border-color:var(--cinza-claro,#8A8F98)}
+  .cad-campo:hover{border-color:var(--cinza-claro,#666B74)}
   .cad-campo label{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;
     letter-spacing:.4px;text-transform:uppercase;color:var(--cinza);margin-bottom:3px}
   .cad-v{font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .cad-v.grande{font-size:16px}
   .cad-campo.vazio{border-style:dashed;background:#FCFCFD}
-  .cad-campo.vazio .cad-v{color:var(--cinza-claro,#8A8F98);font-weight:400;font-size:13.5px}
+  .cad-campo.vazio .cad-v{color:var(--cinza-claro,#666B74);font-weight:400;font-size:13.5px}
   .cad-apoio{font-size:12px;font-weight:400;color:var(--cinza)}
   /* a senha mascarada: mesma altura das outras linhas, sem o amarelo que o
      sistema de tokens reserva para prazo */
@@ -1021,7 +1055,7 @@
   .cad-end{width:100%;font-weight:400}
   .cad-end .cad-linha{margin-top:6px}
   .cad-end .cad-linha:first-child{margin-top:2px}
-  .cad-lap{border:none;background:none;color:var(--cinza-claro,#8A8F98);padding:1px;
+  .cad-lap{border:none;background:none;color:var(--cinza-claro,#666B74);padding:1px;
     display:inline-flex;border-radius:3px;cursor:pointer}
   .cad-lap:hover{color:var(--azul);background:#e8f1fb}
   .cad-mini{border:1px solid var(--borda);background:var(--branco);border-radius:5px;
@@ -1076,7 +1110,7 @@
           padding:10px 12px;margin-bottom:6px}
   .cfg-linha{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0}
   .cfg-ck{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--cinza)}
-  .cfg-ck input[type=checkbox]{width:15px;height:15px}
+  .cfg-ck input[type=checkbox]{width:20px;height:20px;margin:2px}
   .cfg-reg{background:var(--branco);border:1px solid var(--borda);border-radius:10px;
            padding:8px 12px;margin-bottom:6px}
   .cfg-reg.off{opacity:.5;background:var(--fundo)}
@@ -1298,7 +1332,7 @@
   .cl.feito span:last-child{text-decoration:line-through;color:var(--cinza)}
   .kanban{display:flex;gap:10px;overflow-x:auto;align-items:flex-start;padding-bottom:10px}
   .coluna{background:var(--lateral);border:1px solid var(--borda);border-radius:10px;padding:10px;min-width:225px;flex:1}
-  .coluna h4{font-size:12px;color:var(--cinza);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;justify-content:space-between}
+  .coluna h4{font-size:12px;color:#C3C9D4;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;justify-content:space-between}
   .coluna.solta{outline:2px dashed var(--azul);outline-offset:-2px}
   .kcard{background:var(--branco);border:1px solid var(--borda);border-radius:8px;padding:8px 10px;margin-bottom:8px;cursor:grab;font-size:13px}
   .kcard:active{cursor:grabbing}
@@ -1530,7 +1564,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.12 · F13 — fim do iframe: a Consulta virou três cartões, com o CPF da ficha indo junto para TSE, Receita, Meu INSS e SAL, os quinze anexos da IN 128 a um clique, e o site interno abrindo em aba própria</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.13 · F15 — auditoria de contraste e de alvo de toque no sistema em uso: doze cores de texto que reprovavam nos 4,5:1 da WCAG e cinco botões menores que 24×24 px, medidos tela a tela com composição alfa</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3731,7 +3765,7 @@ function cartaoCliente(cli, casosMostrar){
   const kData = ks.find(x=>x.prazo===dataProx) || ks[0];
   const listas = [...new Set(ks.map(k=>listaDe(k)).filter(x=>x&&x!=="—"))];
   const orig = (!String(visao).startsWith("fase:") && listas.length)
-    ? `<span class="dt" style="color:#8A9099" title="${esc(listas.join(" · "))}">${
+    ? `<span class="dt" style="color:var(--cinza-claro)" title="${esc(listas.join(" · "))}">${
         esc((kData&&listaDe(kData)!=="—"?listaDe(kData):listas[0]))}${listas.length>1?` +${listas.length-1}`:""}</span>`
     : "";
   // como no To Do: o nome em cima, e embaixo — miúdo e cinza — a data. Nada
@@ -14410,6 +14444,47 @@ document.getElementById("btn-lateral").onclick=()=>{
   guardar("crm_menu", app.classList.contains("mini-lateral") ? "cheio" : "mini");
   aplicarMenu();
 };
+
+// ══════════════════════════════════════════════════════════════════════════
+// F15 · A LETRA DO AVATAR — texto claro sobre cor clara não se lê
+// ══════════════════════════════════════════════════════════════════════════
+// A cor do colaborador vem do banco e entra crua em `style="background:..."`
+// em quinze pontos de render. O CSS escreve a inicial sempre em branco, e
+// sobre um âmbar como #E6A700 isso dá 2,12:1 — a letra some. Escurecer a cor
+// escolhida mudaria a identidade que o escritório definiu; o certo é trocar a
+// LETRA quando o fundo é claro.
+//
+// Um observador é o único lugar que alcança todos os quinze pontos, mais os
+// avatares que nascem em janelas e na ficha, sem tocar em nenhum deles.
+function _lumHex(h){
+  h = String(h||"").replace("#","");
+  if(h.length===3) h = [...h].map(c=>c+c).join("");
+  if(!/^[0-9a-fA-F]{6,8}$/.test(h)) return 0;
+  const f = v => { v = parseInt(v,16)/255; return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); };
+  return 0.2126*f(h.slice(0,2)) + 0.7152*f(h.slice(2,4)) + 0.0722*f(h.slice(4,6));
+}
+// o ponto de virada é a luminância em que branco e quase-preto empatam
+function _lumCor(c){
+  c = String(c||"").trim();
+  if(c[0]==="#") return _lumHex(c);
+  const m = c.match(/rgba?\(([^)]+)\)/);
+  if(!m) return null;
+  const [r,g,b] = m[1].split(/[,\s\/]+/).filter(Boolean).map(Number);
+  const f = v => { v/=255; return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); };
+  return 0.2126*f(r) + 0.7152*f(g) + 0.0722*f(b);
+}
+function letraDoAvatar(el){
+  const L = _lumCor(el.style.background || el.style.backgroundColor);
+  if(L === null) return;
+  el.style.color = L > 0.183 ? "#1A1C20" : "#fff";
+}
+function pintarLetraAvatares(raiz){
+  (raiz.querySelectorAll ? raiz.querySelectorAll(".avatar[style]") : []).forEach(letraDoAvatar);
+  if(raiz.matches && raiz.matches(".avatar[style]")) letraDoAvatar(raiz);
+}
+new MutationObserver(ms=>{
+  for(const m of ms) for(const n of m.addedNodes) if(n.nodeType===1) pintarLetraAvatares(n);
+}).observe(document.documentElement, {childList:true, subtree:true});
 
 (async ()=>{
   if(faltaConfig()){
