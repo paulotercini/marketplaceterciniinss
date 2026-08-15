@@ -1,58 +1,83 @@
-# Onde paramos — 12.08.2026
+# Onde paramos — 15.08.2026
 
 Bilhete de passagem entre conversas. O contexto de uma sessão acaba; o
 repositório não. Quem chegar agora lê isto primeiro, depois o `CLAUDE.md`.
 
+> **Mapa completo em `cowork/`** — seis arquivos gerados nesta data, cada um
+> com o seu gerador versionado ao lado, para o próximo retrato ser um comando:
+> `01-DOSSIE-BANCO.md` (o banco de produção, tabela a tabela),
+> `02-DOSSIE-SYNC-TODO.md` (como a sincronização funciona hoje),
+> `03-MAPA-APP.md` (índice das 13.381 linhas do app),
+> `04-ESTADO-E-PENDENCIAS.md` (o que falta, com esforço estimado),
+> `05-AMBIENTE.md` (rodar, publicar, homologação) e
+> `06-amostra-ficticia.json` (20 clientes inventados para testar).
+
 ## Em que pé estão as coisas
 
-**Funcionando:**
+**App na versão 09.00**, publicada em
+https://paulotercini.github.io/marketplaceterciniinss/crm/ (Ctrl+Shift+R para
+ver a versão nova).
 
-- Sincronização To Do → CRM de hora em hora (07h–20h seg–sáb). O `migrar.py`
-  agora CARIMBA cada rodada completa em `config_app.todo_sync_em`, e o rodapé
-  do menu do app mostra "🔄 To Do há X min" (âmbar acima de 2h30).
-- Extensão do navegador **1.5.1**, coletando em três portais. No PJe do TRF3,
-  TESTADO AO VIVO (129+48 processos): o acervo entrega número, classe, partes,
-  órgão julgador, "Distribuído em", último movimento e o link id+ca dos autos;
-  com um processo ABERTO na frente, o mesmo botão coleta a CRONOLOGIA INTEIRA
-  (fonte \'pje-processo\'). Regras puras em `pje-regras.js`, com testes.
-- Importação do PJe no app: completa a ficha (classe/ajuizamento/órgão/link,
-  só onde estiver vazio — o link se renova), casa por nome tolerante, ➕ cria
-  caso, 🔍 ESCOLHER à mão quando o nome não casa, 🚫 ignora instrumentais de
-  vez. Histórico completo grava com `criado_em` = data do movimento (não passa
-  pelas Novidades); dedupe cruzada acervo×histórico pelos MOMENTOS
-  (`momentosPje`, prefixos mov:/hist:).
-- Ficha: chips judiciais (⚡ MS, 🏛 JEF/📜 rito comum, ⚖️ ajuizamento,
-  📍 órgão, 🔗 abrir no PJe — também nas 📣 Novidades e na aba CNJ);
-  ✔ compareceu fecha perícia vencida; trocar de aba REPINTA DA MEMÓRIA
-  (`pintarFicha`/`repintarFicha` — zero consultas por clique, provado em
-  Playwright); painéis Cadastro/Perícias/Pagamentos/Mensagens são funções.
-- `app.html` na versão **08.76**. A rodada 08.74 (três revisores + verificação
-  achado a achado) corrigiu 10 bugs — fuso da perícia do PAT (gravava 3h mais
-  cedo), tarefa criada sem aparecer até o F5, datas UTC nas
-  Novidades/Caso completo, Esc fechando a ficha por trás do modal, instSel
-  vazando entre clientes — e blindou o `esc()` (aspas/apóstrofos; `escJs`
-  para onclick; `urlOk` nos href de coleta; cores saneadas na carga).
-  `patchCaso()` é o helper único dos PATCH de casos.
-- **As colunas novas exigem rodar `schema_por_em_dia.sql`** (seção 11:
-  `classe_judicial`, `ajuizado_em`, `orgao_judicial`, `pje_link`; e a origem
-  \'pje\' no check de andamentos). Sem elas o app degrada sem quebrar.
+**A reforma visual F1 a F8 está inteira no ar**, mais duas auditorias e a
+**F9.1** (a Identificação do Cadastro em grade de 12 colunas, com RG, sexo,
+estado civil, profissão, nome da mãe, PIS/NIT e telefones em lista).
 
-**A escrita CRM → To Do está DESLIGADA de propósito.** Trava dupla
-(`ESCREVER_TODO=1` no workflow e no ambiente). Decisão do Paulo. Não religue
-sem ele pedir.
+**Três listas do To Do deixaram de virar caso**, por decisão do Paulo:
 
-## O que ficou pendente
+- `💵 Pagamentos` → a aba 💰 Honorários da ficha do cliente (08.93);
+- `🙏 Aposentadorias Futuras` → 🔔 Lembrete, com as anotações do To Do dentro
+  e um botão que transfere cada uma para os andamentos de um caso (08.90);
+- `🙋 Escritório` → anotação no Cadastro do cliente; quem está lá aparece como
+  **🟡 Em atendimento — buscando documentos**, sem sub-abas de andamento
+  (08.99).
 
-1. **Paulo rodar o `schema_por_em_dia.sql`** — o "0 gravados; 38 falharam" do
-   PJe foi banco sem a origem \'pje\'; as colunas novas idem.
-2. **Confirmar o rótulo da espécie B26** ("Auxílio-reclusão"?) — entrou a
-   pedido, com essa legenda provisória.
-3. **e-SAJ e eproc**: próximos coletores; falta o Paulo capturar os HAR
-   (mesmo passo a passo do PJe). MNI exige credencial no TRF3 (ação dele).
-4. **9 resumos de acórdão** (8 precisam de OCR; decisão do Paulo pendente) e
-   **crédito da API** do `resumir.js` (cai no motor de regras local).
-5. Propostas aprovadas em análise, não feitas: nada — os itens 1/2/3 da
-   revisão saíram nas 08.75/08.76.
+**O Cadastro virou o ponto de partida do atendimento** (08.98/09.00): divisões
+Identificação · Anotações · Documentos · Consulta · Mensagens; documentos do
+escritório (procurações, contratos, declarações e termo) gerados a partir da
+ficha; catálogo de documentos por benefício impresso para o cliente e
+registrado no CRM; indicação de pagamento ao INSS virando lembrete com o
+cronograma inteiro, sem criar caso.
+
+**O menu da ficha ficou em cinco abas**: Cadastro · Lembretes · Casos ·
+Perícias · Honorários.
+
+**Sincronização To Do → CRM** de hora em hora, 07h–20h, seg–sáb. Escrita de
+volta CRM → To Do **DESLIGADA de propósito**, com trava dupla
+(`ESCREVER_TODO=1` no workflow e no próprio script). Não religue sem o Paulo
+pedir.
+
+## O que trava HOJE, e depende do Paulo
+
+1. **As três linhas do índice de `pagamentos`** — fim do
+   `crm/fase2/schema_conferencia.sql`. Sem elas, **2.621 parcelas** do To Do
+   são recusadas a cada hora com 42P10 e nenhum honorário do To Do existe no
+   CRM. O índice tinha sido criado como PARCIAL, e índice parcial não serve de
+   alvo para o `ON CONFLICT` que o PostgREST monta.
+2. **Rótulo da espécie B26** ("Auxílio-reclusão"?), ainda provisório.
+3. **HAR do e-SAJ e do eproc**, para os próximos coletores.
+4. **Decisão sobre os 9 resumos de acórdão** (8 precisam de OCR).
+
+## O que o retrato do banco revelou (15.08)
+
+- **`clientes.endereco` está em 0%** — nenhum dos 1.890 clientes tem endereço.
+  Nove dos dez modelos de documento usam endereço: hoje toda peça sai com essa
+  linha em branco. E a F9.2 **não tem legado para migrar**.
+- **As colunas da F9 já existem no banco e estão todas zeradas.** O gargalo da
+  geração de documentos não é código, é preenchimento.
+- **270 casos não aparecem em lista nenhuma**: vieram de listas com nome quase
+  igual ao mapeado, sem o emoji (`Escritório`, `Petição Inicial`, `Recurso
+  Administrativo`, `Impugnações`, `Audiências`). 194 estão ativos.
+- **243 clientes sem CPF** — cada um é uma duplicata à espera de alguém
+  escrever o CPF no título da tarefa.
+- **De 20.639 andamentos, 22 foram escritos dentro do CRM.** O resto veio do
+  To Do (19.068) e dos robôs.
+
+## O que vem a seguir (detalhe e esforço em `cowork/04`)
+
+F9.2 (endereço estruturado, **P**) · F9.3 (credenciais fora do amarelo, **P**)
+· F9.4 (Triagem da Amanda, **G**) · F9.5 (CadÚnico e notificações, **M**) ·
+tela da recepção (**M**) · leitura do CNIS anexado (**G**) · trilha de
+ramificações do caso (**M**) · Consulta sem iframe (**G**).
 
 ## Erros que já custaram caro (não repetir)
 
@@ -72,14 +97,31 @@ sem ele pedir.
 - **A coluna do autor em `andamentos` é `autor_id`** (teste barra a volta).
 - **O navegador do Paulo é o Comet** (Chromium); manifesto com chave nova
   demais pode ser recusado inteiro, sem console.
+- **Índice único PARCIAL não serve de alvo para upsert.** O PostgREST monta
+  `ON CONFLICT (coluna)` sem o predicado, e o Postgres devolve 42P10 — mesmo
+  com o índice criado sem erro nenhum. Segurou 2.621 parcelas por dias.
+- **O SQL Editor do Supabase roda o arquivo como UMA transação.** Uma linha com
+  erro desfaz tudo e a tela mostra só o erro dela: dá para achar que "rodou
+  quase todo" quando não gravou nada. Confira com `schema_conferencia.sql`.
+- **A lista do To Do casa pelo nome EXATO, com emoji.** `Escritório` sem emoji
+  não é `🙋 Escritório`: a tarefa com CPF entra como fase `outro` e o caso não
+  aparece em lista nenhuma.
+- **`:focus-within` não segura o composer** — `<span>` não recebe foco, e em
+  Safari/Firefox botão também não: o painel fechava no `mousedown`. É a classe
+  `.esc-aberto`.
+- **`fill` de SVG como atributo congela na primeira pintura**; tem que vir do
+  CSS.
+- **Captura de tela pega o que teste de texto não pega.** Seis `undefined` na
+  tela da F9.1 passaram por todos os testes e apareceram na primeira imagem.
 
 ## Como conferir se está tudo de pé
 
 ```bash
-python3 -m pytest tests/ -q          # 179
-node --test \'crm/fase2/extensao/testes/*.test.js\' \'crm/fase2/robo-pat/testes/*.test.js\' \
-  \'crm/fase2/robo-crps/testes/*.test.js\' \'crm/fase2/regras/testes/*.test.js\' \
-  \'crm/fase2/ponte/testes/*.test.js\' \'crm/fase2/djen/testes/*.test.js\'   # 278 pass
+python3 -m pytest tests/ -q          # 199
+node --test "crm/fase2/*/testes/*.test.js"   # 278 pass
 # sintaxe do app: node -e "vm.Script sobre os blocos <script> do app.html"
-# fumaça no navegador: scratchpad da sessão tinha teste-menu.js/teste-abas.js
+# fumaça no navegador (Playwright, dados fictícios): os harnesses ficam no
+# scratchpad da sessão — teste-f9.js, teste-atendimento.js, teste-escritorio.js,
+# teste-abas.js, teste-multiproc.js, teste-pgto.js, teste-composer.js.
+# NÃO estão versionados; se virarem suíte, o lugar é crm/fase2/testes/.
 ```
