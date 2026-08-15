@@ -1331,6 +1331,7 @@
     background:var(--fundo);border:1px solid var(--borda);border-bottom-width:2px;
     border-radius:5px;padding:2px 8px;white-space:nowrap;text-align:center}
   .atalhos span{font-size:13px;color:var(--cinza)}
+  .lista-simples{margin:0;padding-left:19px;font-size:13px;color:var(--cinza);line-height:1.75}
   /* Tela estreita com a ficha aberta: a lista sai de cena e a ficha ocupa
      o resto — o menu fica (retrátil pelo ☰). Substitui o antigo corte em
      980px que sumia com o menu inteiro. Entra ANTES do bloco do celular
@@ -1529,7 +1530,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.11 · F14 — o ritmo do To Do: concluir em um clique no círculo com desfazer por oito segundos, e a lista andando no teclado (setas, Enter abre, Espaço conclui, N acrescenta, ? mostra os atalhos)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.12 · F13 — fim do iframe: a Consulta virou três cartões, com o CPF da ficha indo junto para TSE, Receita, Meu INSS e SAL, os quinze anexos da IN 128 a um clique, e o site interno abrindo em aba própria</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7744,7 +7745,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${cd==="anotacoes" ? caixaAtendimento(c, ks) : ""}
     ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) : ""}
     ${cd==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}
-    ${cd==="consulta" ? painelConsulta() : ""}
+    ${cd==="consulta" ? painelConsulta(c) : ""}
     ${cd!=="identificacao" ? "" : `
     ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
          data que chega, não dado de cadastro (pedido do Paulo) */""}
@@ -8015,15 +8016,111 @@ function catalogoNoCadastro(c, ks){
 // o site interno do escritório dentro do CRM (pedido do Paulo): contribuições,
 // qualidade de segurado, espécies e indicadores do CNIS, na tela do advogado
 const SITE_INTERNO = "https://advprevidenciaria.netlify.app/";
-function painelConsulta(){
-  return `<div class="form-linha" style="align-items:center">
-      <span class="meio-sub" style="flex:1">Site interno do escritório — documentos por benefício, códigos GPS,
-        qualidade de segurado, espécies e indicadores do CNIS. As divisões ficam nas abas do próprio site.</span>
-      <a class="btn-mini" href="${SITE_INTERNO}" target="_blank" rel="noopener" style="text-decoration:none">abrir em outra aba</a>
-    </div>
-    <iframe src="${SITE_INTERNO}" title="Site interno do escritório" loading="lazy"
-      style="width:100%;height:72vh;border:1px solid var(--borda);border-radius:10px;background:#fff"></iframe>`;
+// ══════════════════════════════════════════════════════════════════════════
+// F13 · CONSULTA SEM IFRAME
+// ══════════════════════════════════════════════════════════════════════════
+// O site interno vivia embutido numa moldura, e o resultado eram duas
+// identidades visuais na mesma tela: a barra do CRM em volta e um site inteiro
+// dentro, com a própria navegação, o próprio menu e a própria tipografia.
+//
+// A saída NÃO foi reconstruir o site. Ele tem calculadora de ruído, de IR, de
+// contribuição, simulador de aposentadoria, RPPS-SP e conversores de tempo,
+// que funcionam e são mantidos num lugar só. Copiá-los para cá obrigaria a
+// corrigir cada regra duas vezes, e regra previdenciária muda.
+//
+// O que entrou aqui é o que precisa do CLIENTE ABERTO, e que a moldura nunca
+// deu: o CPF desta ficha indo junto para a consulta externa, e os anexos da
+// IN 128 a um clique de quem está fazendo a triagem. O resto abre em aba
+// própria, sem fingir que está integrado.
+const ANEXOS_IN128 = [
+  ["RAC Completo (Anexo I)", "AnexoI.docx"],
+  ["RAC Acerto de Dados (Anexo I-A)", "AnexoI-A-2.1.docx"],
+  ["RAC Vínculos (Anexo I-B)", "AnexoI-B-2.2.docx"],
+  ["RAC Remunerações CI (Anexo I-D)", "AnexoI-D-2.4.docx"],
+  ["RAC Reconhecimento (Anexo I-E)", "AnexoI-E-2.5.docx"],
+  ["RAC Acerto de Contribuições (Anexo I-F)", "AnexoI-F-2.6.docx"],
+  ["DTC (Anexo IV)", "AnexoIV.docx"],
+  ["Relação de Remunerações (Anexo V)", "AnexoV.docx"],
+  ["Cálculo em Atraso (Anexo VII)", "AnexoVII.docx"],
+  ["Autodeclaração Rural (Anexo VIII)", "AnexoVIII.docx"],
+  ["PPP (Anexo XVII)", "AnexoXVII.docx"],
+  ["Procuração (Anexo XXII)", "AnexoXXII.docx"],
+  ["Declaração de Pensão (Anexo XXIV)", "AnexoXXIV.docx"],
+  ["Termo de Responsabilidade (Anexo XXVII)", "AnexoXXVII.docx"],
+  ["Termo de Compromisso (Anexo XXIX)", "AnexoXXIX.docx"],
+];
+const IN128_BASE = "https://portalin.inss.gov.br/assets/anexos/in/";
+// as ferramentas que continuam morando no site interno, cada uma com o que
+// ela faz. Os rótulos são os do próprio site, não descrição inventada.
+const FERRAMENTAS_SITE = [
+  "Calculadora de ruído (NEN, NHO-01 e NR-15 Anexo 1)",
+  "Calculadora de IR sobre aposentadoria",
+  "Simulador de aposentadoria",
+  "Contribuições e qualidade de segurado",
+  "Simulador RPPS-SP",
+  "Conversores de tempo (especial e deficiência)",
+  "Indicadores do CNIS",
+  "Espécies de benefício",
+  "Mínimo e teto",
+  "Padrão de digitalização",
+  "Publicações OAB/SP",
+];
+// leva o CPF desta ficha junto: é o que a moldura nunca fez
+async function consultaComCpf(cliId, url, onde){
+  const c = D.cliPorId.get(cliId);
+  const cpf = digitosCpf((c||{}).cpf||"");
+  if(!cpf) return aviso("Este cliente ainda não tem CPF no cadastro");
+  await copiar(fmtCpf(cpf), `CPF copiado — cole na busca do ${onde}`);
+  window.open(url, "_blank", "noopener");
 }
+function painelConsulta(c){
+  const temCpf = !!(c && c.cpf);
+  const ext = [
+    ["TSE", "https://www.tse.jus.br/servicos-eleitorais/titulo-e-local-de-votacao/consulta-por-titulo", "título de eleitor e biometria"],
+    ["Receita Federal", "https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp", "situação cadastral do CPF"],
+    ["Meu INSS", "https://meu.inss.gov.br/", "o portal do segurado"],
+    ["SAL", "https://sal.rfb.gov.br/", "gerar a guia da GPS"],
+  ];
+  return `
+    <div class="cad-cartao">
+      <div class="cad-tit"><span class="cad-ic">${CAD_IC.tela}</span>Consultas com o CPF deste cliente
+        <span class="cad-tit-sub">o CPF vai copiado; é só colar na busca do portal</span></div>
+      <div class="form-linha" style="flex-wrap:wrap">
+        ${ext.map(([rot,url,oque])=>`<button class="cad-mini" title="${esc(oque)}"
+          ${temCpf?`onclick="consultaComCpf('${c.id}','${url}','${esc(rot)}')"`:"disabled"}
+          >${esc(rot)}</button>`).join("")}
+      </div>
+      ${temCpf?"":`<p class="cad-nota">Sem CPF no cadastro, não há o que copiar. Preencha na
+        divisão Identificação e estes botões acendem.</p>`}
+    </div>
+
+    <div class="cad-cartao">
+      <div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Anexos da IN 128/2022
+        <span class="cad-tit-sub">os formulários oficiais, direto do portal do INSS</span></div>
+      <p class="cad-nota" style="margin:0 0 9px">O acerto do CNIS tem um anexo certo para cada
+        tipo de erro. Baixar o errado devolve a exigência semanas depois.</p>
+      <div class="form-linha" style="flex-wrap:wrap">
+        ${ANEXOS_IN128.map(([rot,arq])=>`<a class="cad-mini" style="text-decoration:none"
+          href="${IN128_BASE}${arq}" target="_blank" rel="noopener">${esc(rot)}</a>`).join("")}
+      </div>
+      <p class="cad-nota"><a href="https://portalin.inss.gov.br/anexos" target="_blank"
+        rel="noopener">Ver todos os anexos no portal</a></p>
+    </div>
+
+    <div class="cad-cartao">
+      <div class="cad-tit"><span class="cad-ic">${CAD_IC.engren}</span>Site interno do escritório
+        <span class="cad-tit-sub">abre em aba própria, com a navegação dele</span></div>
+      <p class="cad-nota" style="margin:0 0 9px">Estas ferramentas não foram copiadas para cá de
+        propósito: regra previdenciária muda, e duas cópias da mesma conta significam corrigir
+        cada mudança duas vezes.</p>
+      <ul class="lista-simples">${FERRAMENTAS_SITE.map(f=>`<li>${esc(f)}</li>`).join("")}</ul>
+      <div class="form-linha" style="margin-top:10px">
+        <a class="btn-mini" style="text-decoration:none" href="${SITE_INTERNO}"
+          target="_blank" rel="noopener">Abrir o site interno</a>
+      </div>
+    </div>`;
+}
+
 
 // aba 3 da ficha — extraída da pintarFicha (era um literal de 22 linhas)
 function painelPericiasFicha(c, ks, evs){

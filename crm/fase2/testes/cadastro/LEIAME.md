@@ -1,6 +1,6 @@
 # Arneses de fumaça do Cadastro e das fases F10 a F14
 
-Doze arquivos que sobem o `app.html` num servidor local, interceptam o Supabase
+Treze arquivos que sobem o `app.html` num servidor local, interceptam o Supabase
 e o ViaCEP, e trabalham com quatro clientes **inventados**. Nenhum dado real de
 cliente passa por aqui, e nenhuma chamada sai para a internet.
 
@@ -10,6 +10,7 @@ npm i playwright          # só na primeira vez
 cp ../../app.html .       # o arnês lê o app ao lado dele
 node triagem.js && node avisos.js && node documentos.js
 node trilha.js && node concluir.js && node teclado.js
+node consulta.js
 node endereco.js
 node fila.js && node importar.js
 node interacao.js && node emoji.js && node fumaca.js
@@ -29,6 +30,7 @@ node interacao.js && node emoji.js && node fumaca.js
 | `trilha.js` | a raiz e os ramos do caso numa árvore só, e o marcador acompanhado gravando | 11 |
 | `concluir.js` | conclusão em um clique sem janela, o histórico continuando, e o desfazer que reabre | 15 |
 | `teclado.js` | setas, Enter, Espaço, N e ?, e o teclado devolvido ao texto quando se está escrevendo | 17 |
+| `consulta.js` | zero iframe, o CPF da ficha indo junto para o portal, e os quinze anexos da IN 128 | 16 |
 
 Cada um sai com código 1 quando alguma asserção falha, então servem em CI.
 
@@ -55,7 +57,10 @@ mexa nele, não em cada arnês.
   esconder o `#modal` antes de pintar.
 - **`:first-of-type` conta entre irmãos do mesmo elemento**, não entre os da
   mesma classe. Dentro do cartão, `.tri-passo:first-of-type` casava com o
-  título. Por isso os passos vivem num `.tri-lista` próprio.
+  título. Por isso os passos vivem num `.tri-lista` próprio. **Esta pegou duas
+  vezes**: no CSS da Triagem e depois no seletor do `consulta.js`, onde
+  `.cad-cartao:first-of-type` casava com o sub-menu. Quando quiser o primeiro
+  de uma classe, pegue por índice.
 - **Função que lê o formulário não roda sozinha no arnês.** `novoCaso()`
   procura `#nk-ben`, `#nk-fase` e `#nk-prazo`, que só existem com a ficha
   pintada. O `avisos.js` injeta os três antes de chamar.
