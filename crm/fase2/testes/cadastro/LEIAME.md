@@ -194,3 +194,15 @@ pelo mesmo gravarEnderecoCli da ficha: as sete colunas + o espelho
 
 A fixtura ganha Amanda e Marcos (cargo advogado) SÓ dentro deste teste: a
 menção da triagem deve ir aos dois e nunca a quem cadastrou.
+
+## novocliente.js (F29) — o portão da triagem e a recepção completa
+
+O portão: cliente sem caso e sem triagem encerrada não vê Lembretes nem
+Anotações — os testes que dependiam da mesa (precaso.js, consulta.js)
+ganharam na fixtura `triagem.atendimento`, a pré-condição nova do mundo
+real. A prova do portão abre e fecha: some sem triagem, aparece com ela.
+
+Armadilha de captura: a ficha aberta de um bloco anterior encolhe a
+coluna do meio (F22) e a foto da tela sai estreita — fecharFicha() antes
+do screenshot. No CNIS, mãe/NIT só preenchem campo VAZIO; a segunda
+leitura não pode gerar PATCH de nome_mae.

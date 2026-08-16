@@ -61,6 +61,7 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: CPF_DOC };
   // ── 1. o CNIS ───────────────────────────────────────────────────────────
   const cnis = await p.evaluate(it => lerCnisPdf(it), ITENS_CNIS);
   conf(`acha o NIT do filiado (${cnis.filiado.nit})`, cnis.filiado.nit === "123.45678.90-1");
+  conf(`acha o nome da mãe (${cnis.filiado.mae})`, /PEDROSA/.test(cnis.filiado.mae || ""));
   conf(`acha o CPF (${cnis.filiado.cpf})`, cnis.filiado.cpf === "529.982.247-25");
   conf(`acha a data de nascimento (${cnis.filiado.nascimento})`,
     /^\d{2}\/\d{2}\/\d{4}$/.test(cnis.filiado.nascimento));
@@ -189,6 +190,13 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: CPF_DOC };
   const and = escritos.find(x => x.m === "POST" && x.t === "andamentos");
   conf(`lança no histórico do caso (${JSON.stringify(((and || {}).corpo || {}).texto || "").slice(0, 48)})`,
     and && /CNIS lido no CRM/.test(and.corpo.texto) && /PREC-FACULTCONC/.test(and.corpo.texto));
+  // F29 · o cabeçalho completa a Identificação: mãe e NIT nos campos vazios
+  const patMae = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.nome_mae);
+  conf("o nome da mãe e o NIT vazios se preenchem sozinhos na Identificação",
+    patMae && /PEDROSA/.test(patMae.corpo.nome_mae) && patMae.corpo.pis_nit === "123.45678.90-1");
+  conf("e a memória da ficha já reflete o preenchimento",
+    await p.evaluate(cli => { const c = D.cliPorId.get(cli);
+      return /PEDROSA/.test(c.nome_mae || "") && !!c.pis_nit; }, CLI_CHEIO));
 
   // a nota que já existia não é apagada
   await p.evaluate(cli => { const c = D.cliPorId.get(cli);
@@ -201,6 +209,8 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: CPF_DOC };
     pat2 && /anotação antiga do Marcos/.test(pat2.corpo.triagem.indicadores.nota)
     && pat2.corpo.triagem.indicadores.nota.indexOf("Lido do CNIS")
        < pat2.corpo.triagem.indicadores.nota.indexOf("anotação antiga"));
+  conf("mãe e NIT JÁ preenchidos não se tocam na segunda leitura",
+    !escritos.some(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.nome_mae));
 
   // a Declaração grava o NB no caso quando o caso está sem NB
   await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.triagem = {};

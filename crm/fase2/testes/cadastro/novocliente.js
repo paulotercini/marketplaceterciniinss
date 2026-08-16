@@ -101,6 +101,18 @@ FIX.colaboradores = [...FIX.colaboradores,
       const ops = [...document.querySelectorAll("#ncl-sexo option")].map(o => o.value);
       return ops.includes("F") && ops.includes("M");
     }));
+  conf("a tela colhe senha do Meu INSS, estado civil, profissão, cidade e UF",
+    await p.evaluate(() => !!(document.getElementById("ncl-senha")
+      && document.getElementById("ncl-civil") && document.getElementById("ncl-prof")
+      && document.getElementById("ncl-cidade") && document.getElementById("ncl-uf"))));
+  conf("a cidade nasce Monte Alto e a UF nasce SP (o foco do escritório)",
+    await p.evaluate(() => document.getElementById("ncl-cidade").value === "Monte Alto"
+      && document.getElementById("ncl-uf").value === "SP"));
+  conf("o estado civil traz as opções da ficha (casado, união estável…)",
+    await p.evaluate(() => {
+      const ops = [...document.querySelectorAll("#ncl-civil option")].map(o => o.value);
+      return ops.includes("casado") && ops.includes("uniao") && ops.includes("viuvo");
+    }));
   conf("a lista de ruas carrega os 1.048 CEPs de Monte Alto",
     (await p.evaluate(() => document.querySelectorAll("#lista-ruas option").length)) === 1048);
   conf("rua escolhida da lista mostra CEP, bairro e cidade na hora",
@@ -191,7 +203,8 @@ FIX.colaboradores = [...FIX.colaboradores,
   conf("e MESMO com benefício, caso não nasce na recepção",
     !escritos.some(x => x.m === "POST" && x.t === "casos"));
 
-  // rua de fora da lista: grava como digitada, sem CEP inventado
+  // rua de fora da lista (mas em Monte Alto): grava como digitada, com a
+  // cidade padrão e sem CEP inventado
   await abrirTela();
   escritos.length = 0;
   await p.fill("#ncl-nome", "Vicência Ficta Moraes");
@@ -202,8 +215,46 @@ FIX.colaboradores = [...FIX.colaboradores,
   const patFora = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.logradouro);
   conf("rua de fora grava como digitada, sem CEP nem bairro por adivinhação",
     patFora && patFora.corpo.logradouro === "Rua do Sítio Alheio"
-    && !patFora.corpo.cep && !patFora.corpo.bairro && !patFora.corpo.cidade
+    && !patFora.corpo.cep && !patFora.corpo.bairro && patFora.corpo.cidade === "Monte Alto"
     && patFora.corpo.endereco === "Rua do Sítio Alheio, nº 10");
+
+  // ── F29: cliente de OUTRA cidade ────────────────────────────────────────
+  await abrirTela();
+  escritos.length = 0;
+  await p.fill("#ncl-nome", "Genoveva Ficta Andrade");
+  await p.fill("#ncl-cidade", "Jaboticabal");
+  await p.fill("#ncl-rua", "Rua dos Lirios — Centro");
+  await p.fill("#ncl-num", "77");
+  conf("com outra cidade, a lista de Monte Alto NÃO casa nem por nome igual",
+    await p.evaluate(() => ruaNovoAchada() === null));
+  conf("e o recado diz de qual cidade o endereço é",
+    /Jaboticabal/.test(await p.evaluate(() => { conferirRuaNovo();
+      return document.getElementById("ncl-cep-recado").textContent; })));
+  await p.evaluate(() => criarCliente());
+  await p.waitForTimeout(900);
+  const patOutra = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.logradouro);
+  conf("o endereço de outra cidade grava com a cidade e a UF informadas",
+    patOutra && patOutra.corpo.cidade === "Jaboticabal" && patOutra.corpo.uf === "SP"
+    && !patOutra.corpo.cep && /Rua dos Lirios/.test(patOutra.corpo.logradouro));
+
+  // ── F29: senha do Meu INSS, estado civil e profissão ────────────────────
+  await abrirTela();
+  escritos.length = 0;
+  await p.fill("#ncl-nome", "Olavo Fictício Dias");
+  await p.fill("#ncl-senha", "senha-ficticia-123");
+  await p.selectOption("#ncl-civil", "casado");
+  await p.fill("#ncl-prof", "lavrador");
+  await p.evaluate(() => criarCliente());
+  await p.waitForTimeout(900);
+  const postOlavo = escritos.find(x => x.m === "POST" && x.t === "clientes");
+  conf("estado civil e profissão gravam no cadastro (a procuração precisa)",
+    postOlavo && postOlavo.corpo.estado_civil === "casado" && postOlavo.corpo.profissao === "lavrador");
+  const postCred = escritos.find(x => x.m === "POST" && x.t === "credenciais");
+  conf("a senha do Meu INSS grava pelo caminho das credenciais, como na ficha",
+    postCred && postCred.corpo.tipo === "meu_inss" && postCred.corpo.valor === "senha-ficticia-123"
+    && postCred.corpo.cliente_id);
+  conf("sem senha digitada, nenhuma credencial nasce (cadastros anteriores)",
+    !escritos.filter(x => x.t === "credenciais").some(x => !x.corpo.valor));
 
   // ── 4. CPF repetido continua barrado ────────────────────────────────────
   await abrirTela();
@@ -218,6 +269,45 @@ FIX.colaboradores = [...FIX.colaboradores,
   conf("e nada é gravado", !escritos.some(x => x.m === "POST"));
   await p.evaluate(() => fecharEscolha());
 
+  // ── F29: o portão da triagem — cliente novo vê SÓ o Cadastro ────────────
+  await p.evaluate(cli => { const c = D.cliPorId.get(cli);
+    c.campos = { atendimento: [{ em: "2026-08-16T12:00:00Z", quem: "Paulo",
+      texto: "Veio saber de aposentadoria do marido falecido." }] };
+    delete c.triagem; }, "c0000000-0000-0000-0000-000000000002");
+  await p.evaluate(cli => abrirFicha(cli), "c0000000-0000-0000-0000-000000000002");
+  await p.waitForTimeout(700);
+  conf("cliente novo NÃO vê a aba Lembretes",
+    await p.evaluate(() => ![...document.querySelectorAll(".menu-topo .mt")]
+      .some(b => /Lembretes/.test(b.textContent))));
+  conf("nem o botão Anotações — só Identificação e Triagem",
+    await p.evaluate(() => {
+      const subs = [...document.querySelectorAll(".sub-menu:not(.anot-trilho) button")].map(b => b.textContent.trim());
+      return !subs.some(x => /Anota/.test(x)) && subs.some(x => /Triagem/.test(x));
+    }));
+  conf("a ficha do cliente novo abre direto na Triagem",
+    await p.evaluate(() => !!document.querySelector(".tri-lista")));
+  conf("e o relato do balcão aparece DENTRO da Triagem até ela se encerrar",
+    /marido falecido/.test(await p.evaluate(() =>
+      (document.querySelector(".tri-balcao") || {}).textContent || "")));
+  // a triagem se encerra → Lembretes e Anotações se abrem
+  await p.evaluate(cli => { D.cliPorId.get(cli).triagem =
+    { atendimento: { em: "2026-08-16", quem: "11111111-1111-1111-1111-111111111111", passos: 8, conferidos: 8 } }; },
+    "c0000000-0000-0000-0000-000000000002");
+  await p.evaluate(() => repintarFicha());
+  await p.waitForTimeout(500);
+  conf("encerrada a triagem, a aba Lembretes aparece",
+    await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")]
+      .some(b => /Lembretes/.test(b.textContent))));
+  conf("e o botão Anotações também",
+    await p.evaluate(() => [...document.querySelectorAll(".sub-menu:not(.anot-trilho) button")]
+      .some(b => /Anota/.test(b.textContent))));
+  conf("o relato do balcão sai da Triagem (agora mora nas Anotações)",
+    await p.evaluate(() => !document.querySelector(".tri-balcao")));
+  conf("cliente COM caso segue vendo Lembretes e Anotações como sempre",
+    await p.evaluate(async cli => { await abrirFicha(cli);
+      return [...document.querySelectorAll(".menu-topo .mt")].some(b => /Lembretes/.test(b.textContent)); },
+      CLI_CHEIO));
+
   // ── 5. cliente só com pré-caso também aparece em atendimento ────────────
   conf("quem só tem pré-caso conta como 🟡 em atendimento",
     await p.evaluate(() => {
@@ -228,7 +318,11 @@ FIX.colaboradores = [...FIX.colaboradores,
       return ta;
     }));
 
+  // a ficha aberta do bloco anterior encolhe a coluna do meio — fecha antes
+  // da captura, senão a foto sai estreita e não representa a tela real
+  await p.evaluate(() => fecharFicha());
   await abrirTela();
+  await p.waitForTimeout(300);
   const form = await p.$(".caso");
   if (form) await form.screenshot({ path: path.join(__dirname, "f28-recepcao.png") });
 

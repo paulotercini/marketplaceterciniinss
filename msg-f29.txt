@@ -1,0 +1,15 @@
+F29: portao da triagem e recepcao completa (09.28)
+
+A recepcao colhe tambem a senha do Meu INSS (credenciais, ao lado do
+CPF), o estado civil, a profissao e a cidade/UF com padrao Monte
+Alto/SP - cliente de outra cidade grava a cidade digitada e a lista de
+CEPs nao casa de proposito. Portao novo: cliente sem caso e sem triagem
+encerrada ve SO o Cadastro (Identificacao e Triagem); encerrar a
+triagem abre Lembretes e Anotacoes, e ate la o relato do balcao aparece
+dentro da Triagem. O pre-caso da recepcao ja responde a porta da
+triagem. O CNIS anexado preenche sozinho nome da mae e NIT vazios da
+Identificacao. novocliente.js 49 provas, pdfinss.js 48; suite 25
+arquivos, 503 verificacoes verdes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3
