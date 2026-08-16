@@ -183,3 +183,14 @@ Armadilha: depois do cadastro o `carregar()` repõe a fixtura e o cliente
 novo some da memória — a prova é o corpo do POST capturado, nunca a lista
 renderizada. E `window.open` zerado antes do clique prova que o agendamento
 no Google Agenda saiu de fato do fluxo.
+
+## novocliente.js (F28) — sexo, CEPs de Monte Alto e menção da triagem
+
+A rua se prova nas três formas: escolhida da lista ("Rua — Bairro"), digitada
+por inteiro quando o nome é único, e AMBÍGUA quando existe em vários bairros
+(aí não casa de propósito — "Rua dos Lirios" tem cinco). O endereço grava
+pelo mesmo gravarEnderecoCli da ficha: as sete colunas + o espelho
+`endereco` da procuração, tudo num PATCH capturado.
+
+A fixtura ganha Amanda e Marcos (cargo advogado) SÓ dentro deste teste: a
+menção da triagem deve ir aos dois e nunca a quem cadastrou.

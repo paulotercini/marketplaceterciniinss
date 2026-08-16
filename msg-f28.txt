@@ -1,0 +1,14 @@
+F28: recepcao completa - sexo, CEPs de Monte Alto e mencao da triagem (09.27)
+
+Sexo (F/M) no cadastro da recepcao porque decide a data da aposentadoria.
+Endereco pela lista de 1.048 CEPs de Monte Alto embutida no app: a rua
+escolhida traz CEP, bairro e cidade, gravados pelo mesmo caminho da ficha
+(sete colunas + espelho da procuracao); rua ambigua exige escolher da
+lista, rua de fora grava como digitada. Todo cliente novo manda mencao
+aos advogados (quem cadastrou nao se avisa) para dar seguimento na
+triagem, presa ao cliente via mencoes.cliente_id (ALTER idempotente no
+schema_por_em_dia.sql, com fallback sem a coluna). Teste novocliente.js
+com 32 provas; suite 25 arquivos, 483 verificacoes verdes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3

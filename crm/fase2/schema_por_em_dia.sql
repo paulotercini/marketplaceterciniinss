@@ -341,3 +341,9 @@ select 'casos', 'fase aceita peticao_inicial', ''
  where conname = 'casos_fase_check'
    and pg_get_constraintdef(oid) like '%peticao_inicial%'
  order by 1, 2;
+
+-- ── F28 (09.27): menção de cliente novo da recepção ──────────────────────
+-- A recepção cadastra o cliente ANTES de existir caso; a menção aos
+-- advogados nasce presa ao cliente para o botão "abrir ficha" funcionar.
+-- Sem esta coluna o CRM segue funcionando (grava a menção só com o texto).
+alter table mencoes add column if not exists cliente_id uuid references clientes(id) on delete cascade;
