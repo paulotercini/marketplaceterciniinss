@@ -1209,6 +1209,25 @@
     background:var(--laranja-f);border-radius:5px;padding:1px 6px}
   .vida-ben .vida-quem{color:var(--azul-escuro);font-weight:600}
   .vida-aberto .vida-per b{color:var(--verde)}
+  /* F20 · o "＋ novo lembrete" fechado, e o bloco de contas do pé */
+  .lb-novo{margin-top:10px;border:1px solid var(--borda);border-radius:10px;
+    background:var(--branco);padding:0 12px}
+  .lb-novo summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--azul);
+    padding:10px 0;min-height:24px;display:flex;align-items:center;list-style:none}
+  .lb-novo summary::-webkit-details-marker{display:none}
+  .lb-novo[open] summary{border-bottom:1px solid var(--borda-suave);margin-bottom:4px}
+  .lb-novo .form-linha:last-child{padding-bottom:10px}
+  .conta-cx{margin-top:12px}
+  .conta-linha{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;
+    border-radius:8px;padding:8px 11px;font-size:13.5px}
+  .conta-linha.ok{background:var(--verde-f);color:var(--verde)}
+  /* laranja, não amarelo: amarelo neste sistema quer dizer prazo de peça */
+  .conta-linha.alerta{background:var(--laranja-f);color:var(--laranja)}
+  .conta-linha span{font-size:12.5px;font-weight:600}
+  .conta-prem{margin:8px 0 0;padding-left:18px;font-size:12.5px;color:var(--cinza);line-height:1.5}
+  .conta-prem li{padding:1px 0}
+  .conta-acao{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:9px}
+  .conta-ck{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--texto)}
   .tri-pdf{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:6px 0 0 32px}
   .tri-pdf-nota{font-size:11.5px;color:var(--cinza-claro)}
   .tri-nota{white-space:pre-wrap}
@@ -1608,7 +1627,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.19 · F19 — a vida contributiva sai do CNIS pronta para o parecer, em ordem cronológica e com os períodos de benefício que o próprio extrato traz; no cadastro, CPF e senha do Meu INSS passaram a ficar lado a lado, e o protocolo voltou para o caso, que é de quem ele é</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.20 · F20 — a aba de Lembretes na ordem do uso: aposentadoria provável no topo, um botão só para criar, e no pé o período de graça calculado do CNIS com as premissas à vista e a lei conferida no Planalto (o facultativo tem 6 meses, não 12)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8323,6 +8342,16 @@ function lerCnisPdf(itens){
   }
   r.indicadores = [...achados.values()].sort((a,b)=>b.ocorrencias-a.ocorrencias);
   r.linhaDoTempo = lerVinculosCnis(itens);
+  // competências com remuneração (MM/AAAA seguido de valor) e com contribuição
+  // (MM/AAAA seguido da data de pagamento). É a base do §1º do art. 15, os
+  // "mais de 120". Distintas, porque a mesma competência em dois vínculos
+  // continua sendo um mês só.
+  const comps = new Set();
+  for(const l of linhas){
+    for(const m of l.txt.matchAll(/(\d{2}\/\d{4})\s+(?:[\d.]+,\d{2}|\d{2}\/\d{2}\/\d{4})/g))
+      comps.add(m[1]);
+  }
+  r.competencias = comps.size;
   return r;
 }
 // ── a vida contributiva, como o CNIS a escreve ──────────────────────────
@@ -9948,6 +9977,140 @@ function msgLembrete(l, c){
   }
   return `Olá, ${nome}! Lembrete do escritório: ${l.titulo}. Qualquer dúvida, é só chamar!`;
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F20 · PERÍODO DE GRAÇA — a conta, com as premissas à vista
+// ══════════════════════════════════════════════════════════════════════════
+// Qualidade de segurado é conclusão jurídica, não campo de documento. O que o
+// CRM faz aqui é a ARITMÉTICA, mostrando de onde tirou cada número, para quem
+// atende conferir ou corrigir. Nenhum passo da triagem é marcado por isto.
+//
+// Texto conferido no Planalto em 16.08.2026:
+//   Lei 8.213/91, art. 15 — https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
+//     I  · sem limite de prazo, quem está em gozo de benefício, exceto do
+//          auxílio-acidente
+//     II · até 12 meses após a cessação das contribuições
+//     VI · até 6 meses após a cessação das contribuições, o segurado
+//          FACULTATIVO   ← é o que mais engana: metade do prazo
+//     §1º · prorroga para até 24 meses com mais de 120 contribuições mensais
+//           sem interrupção que acarrete a perda da qualidade de segurado
+//     §2º · acrescido de 12 meses para o segurado desempregado
+//   Decreto 3.048/99, art. 13, II — https://www.planalto.gov.br/ccivil_03/decreto/d3048.htm
+//     conta "após a cessação de BENEFÍCIO POR INCAPACIDADE ou das
+//     contribuições" — por isso o benefício do CNIS entra na conta
+//   Decreto 3.048/99, art. 14 — a perda ocorre "no dia seguinte ao do
+//     vencimento da contribuição do contribuinte individual relativa ao mês
+//     imediatamente posterior ao término daqueles prazos"
+//
+// O DIA exato depende do vencimento da contribuição do contribuinte
+// individual, que não conferi em fonte primária. Por isso a tela entrega a
+// COMPETÊNCIA-limite e transcreve a regra, em vez de cravar uma data.
+const GRACA_FONTE = "Lei 8.213/91, art. 15, e Decreto 3.048/99, arts. 13 e 14";
+function competenciaMais(comp, meses){
+  const [m, a] = comp.split("/").map(Number);
+  const t = (a*12 + (m-1)) + meses;
+  return String((t%12)+1).padStart(2,"0") + "/" + Math.floor(t/12);
+}
+const compHoje = () => { const h = hoje(); return h.slice(5,7)+"/"+h.slice(0,4); };
+const compMenor = (a,b) => (a.slice(3)+a.slice(0,2)) <= (b.slice(3)+b.slice(0,2));
+// a conta. `vs` é a linha do tempo do CNIS; `desempregado` é decisão de quem
+// atende, porque a prova do desemprego não está no extrato.
+function calcularGraca(vs, nContribs, desempregado){
+  const r = {premissas:[], fonte:GRACA_FONTE};
+  if(!vs || !vs.length) return null;
+  const emGozo = vs.some(v=>v.tipo==="Benefício" && !v.fim
+    && !/acidente/i.test(v.origem||""));
+  if(emGozo){
+    r.semLimite = true;
+    r.premissas.push("há benefício em manutenção no extrato, e o art. 15, I mantém a qualidade sem limite de prazo enquanto durar");
+    return r;
+  }
+  // a última competência "dentro": fim de vínculo, fim de benefício ou a
+  // última remuneração de um vínculo ainda aberto
+  const comps = [];
+  for(const v of vs){
+    if(v.fim) comps.push(v.fim.slice(3,5)+"/"+v.fim.slice(6));
+    if(v.ultRemun) comps.push(v.ultRemun);
+    if(v.aberto && !v.fim && v.tipo!=="Benefício") comps.push(compHoje());
+  }
+  if(!comps.length) return null;
+  const ultima = comps.reduce((a,b)=> compMenor(a,b) ? b : a);
+  r.ultima = ultima;
+  if(vs.some(v=>v.aberto && !v.fim && v.tipo!=="Benefício") && ultima===compHoje())
+    r.premissas.push("há vínculo sem data-fim no extrato, e a conta assume que ele continua até hoje — se acabou, a data de saída muda tudo");
+  // qual foi o ÚLTIMO registro, e de que tipo: facultativo tem metade do prazo
+  const doFim = vs.filter(v=>{
+    const c = v.fim ? v.fim.slice(3,5)+"/"+v.fim.slice(6) : v.ultRemun;
+    return c === ultima;
+  });
+  const facultativo = doFim.length>0 && doFim.every(v=>v.tipo==="Facultativo");
+  const porBeneficio = doFim.some(v=>v.tipo==="Benefício");
+  r.base = facultativo ? 6 : 12;
+  r.premissas.push(facultativo
+    ? "o último registro é de contribuinte FACULTATIVO, e o art. 15, VI dá 6 meses, não 12"
+    : porBeneficio
+      ? "o último registro é a cessação de benefício, e o art. 13, II do Decreto 3.048/99 conta os 12 meses a partir dela"
+      : "o último registro é vínculo ou contribuição, e o art. 15, II dá 12 meses");
+  r.mais120 = nContribs > 120;
+  if(r.mais120 && !facultativo){
+    r.base = 24;
+    r.premissas.push(`o extrato traz ${nContribs} competências, mais de 120, e o §1º prorroga para até 24 meses — a prorrogação exige que não tenha havido interrupção com perda da qualidade, e isso ninguém lê sozinho`);
+  }else if(r.mais120 && facultativo){
+    r.premissas.push(`o extrato traz ${nContribs} competências, mas o §1º prorroga o prazo do inciso II, e o facultativo está no inciso VI`);
+  }
+  if(desempregado){
+    r.base += 12;
+    r.premissas.push("mais 12 meses do §2º, pelo desemprego — a prova é do escritório, não está no extrato");
+  }
+  r.fim = competenciaMais(ultima, r.base);
+  r.vencida = compMenor(r.fim, compHoje());
+  r.desempregado = !!desempregado;
+  return r;
+}
+
+// ── o bloco de contas, no pé da aba de Lembretes ────────────────────────
+// "Questões pertinentes do site interno", pedido do Paulo. Só entra o que
+// muda decisão de prazo, porque esta aba é sobre data que chega. A conta
+// aparece quando o CNIS já foi lido na Triagem; antes disso, só o caminho.
+function blocoContas(c){
+  const g = ((triagemDe(c).pdf||{}).cnis||{});
+  const vs = g.vinculos || [];
+  const desemp = !!(triagemDe(c).graca||{}).desempregado;
+  const r = vs.length ? calcularGraca(vs, g.competencias||0, desemp) : null;
+  const cabeca = `<div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Contas deste cliente
+      <span class="cad-tit-sub">o que decide prazo, calculado do CNIS que você já leu</span></div>`;
+  if(!r) return `<div class="cad-cartao conta-cx">${cabeca}
+    <p class="cad-nota" style="margin:0">Leia o CNIS na aba <b>Cadastro → Triagem</b> e a qualidade de
+      segurado é calculada aqui, com as premissas à vista.</p></div>`;
+  const corpo = r.semLimite
+    ? `<div class="conta-linha ok"><b>Qualidade mantida sem limite de prazo</b>
+        <span>há benefício em manutenção</span></div>`
+    : `<div class="conta-linha ${r.vencida?"alerta":"ok"}">
+        <b>Período de graça até ${esc(r.fim)}</b>
+        <span>${r.vencida?"já venceu":"em curso"} · ${r.base} meses a partir de ${esc(r.ultima)}</span></div>`;
+  return `<div class="cad-cartao conta-cx">${cabeca}
+    ${corpo}
+    <ul class="conta-prem">${(r.premissas||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+    <div class="conta-acao">
+      <label class="conta-ck"><input type="checkbox" ${desemp?"checked":""}
+        onchange="marcarDesemprego('${c.id}',this.checked)">
+        segurado desempregado (§2º, mais 12 meses — a prova é do escritório)</label>
+      <a class="tri-ferr" href="https://advprevidenciaria.netlify.app/" target="_blank" rel="noopener">
+        Contribuições e qualidade de segurado ↗</a>
+    </div>
+    <p class="cad-nota" style="margin:8px 0 0">Fonte: ${esc(GRACA_FONTE)}, conferidos no Planalto.
+      O <b>dia</b> da perda depende do vencimento da contribuição do contribuinte individual
+      (art. 14 do Decreto 3.048/99); por isso aqui vai a competência, não a data.
+      Conta de apoio: quem conclui é você.</p>
+  </div>`;
+}
+async function marcarDesemprego(cliId, ligado){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const t = {...triagemDe(c)};
+  t.graca = {...(t.graca||{}), desempregado: !!ligado, em: hoje(), quem: eu.id};
+  if(!await salvarTriagem(cliId, t)) return aviso("Não consegui guardar");
+  repintarFicha();
+}
+
 function painelLembretes(c){
   const ls = lembretesDo(c.id).sort((a,b)=>(a.proximo_em||"9999")<(b.proximo_em||"9999")?-1:1);
   const apos = aposDoCliente(c);
@@ -9993,11 +10156,16 @@ function painelLembretes(c){
   };
   // o quadro da aposentadoria provável vive AQUI (08.98): é aviso de data que
   // chega, e o lugar de aviso é esta aba — não o cadastro
+  // ordem pedida pelo Paulo: aposentadoria provável no topo, os lembretes,
+  // um botão só para criar, e as contas no pé. A aba é sobre DATA QUE CHEGA, e
+  // tudo o que não é data que chega ficou de fora para a página não pesar.
   return `<div class="apos-faixa" style="justify-content:flex-start">${caixaApos(c)}</div>
-    ${ls.map(linha).join("") || `<p class="meio-sub">Nenhum lembrete ativo. Crie abaixo — é o lugar do
+    ${ls.map(linha).join("") || `<p class="meio-sub">Nenhum lembrete ativo. É o lugar do
       "avisar de tempos em tempos": contribuição do INSS, cadastro para renovar, retomar contato.</p>`}
-    <div class="caso" style="margin-top:10px">
-      <div class="rotulo-caso">＋ novo lembrete</div>
+    ${/* o formulário era uma parede de seis campos, sempre aberta, entre os
+         lembretes e o resto. Agora é um botão; as opções são as mesmas. */""}
+    <details class="lb-novo">
+      <summary>＋ novo lembrete</summary>
       <div class="form-linha" style="margin-top:6px">
         <select id="lb-tipo" onchange="document.getElementById('lb-gps').style.display=this.value==='contribuicao'?'flex':'none';
           var t=document.getElementById('lb-titulo'); if(!t.value||t.dataset.auto){t.value=this.options[this.selectedIndex].text.replace(/^\\S+\\s/,'');t.dataset.auto=1;}">
@@ -10022,7 +10190,8 @@ function painelLembretes(c){
         <span class="meio-sub">entram na mensagem pronta de WhatsApp</span>
       </div>
       <div class="form-linha"><button onclick="criarLembrete('${c.id}')">🔔 Criar lembrete</button></div>
-    </div>`;
+    </details>
+    ${blocoContas(c)}`;
 }
 async function criarLembrete(cliId){
   const v=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};
