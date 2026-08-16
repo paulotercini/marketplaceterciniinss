@@ -1684,7 +1684,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.25 · F25 — o pré-caso: a mesa do primeiro atendimento nas Anotações, com espécie, natureza, marcadores que abrem tópicos, honorários, anotações com atribuição, lembrete, importância e checklist; o cliente fica amarelo "em formação" só com Cadastro e Lembretes, e gerar o caso transfere tudo com data e autor originais</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.26 · F27 — Novo Cliente virou a tela da recepção: só o nome é obrigatório, o benefício é opcional (vira pré-caso, não caso), o relato do balcão é a primeira anotação do atendimento, e o agendamento no Google Agenda saiu; o cliente entra 🟡 em atendimento na lista Escritório e a advogada assume pela ficha</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2395,7 +2395,8 @@ function listaDe(k){ return k.mover_para || k.origem_lista || "—"; }
 function clientesEmAtendimento(){
   return D.clientes.filter(c=>{
     const cp = c.campos||{};
-    if(!(cp.atendimento||[]).length && !cp.especie && !(cp.docs_pedidos||[]).length) return false;
+    if(!(cp.atendimento||[]).length && !cp.especie && !(cp.docs_pedidos||[]).length
+       && !(cp.precasos||[]).length) return false;
     return !(D.casosDoCliente.get(c.id)||[]).some(k=>k.fase!=="encerrado");
   }).sort((a,b)=>ultimaAnotacao(b).localeCompare(ultimaAnotacao(a)));
 }
@@ -5441,11 +5442,16 @@ async function novaTarefa(){
   render();
 }
 
-// ── Novo Cliente (botão do topo) ──────────────────────────────────────────
+// ── Novo Cliente (botão do topo) — a tela da RECEPÇÃO ────────────────────
+// Quem cadastra é a recepção, e a recepção não identifica benefício: o campo
+// é opcional. Nada de caso aqui — o caso só nasce com procuração gerada e
+// contrato assinado (decisão do Paulo, F25). O cliente entra 🟡 em
+// atendimento na lista Escritório, com o relato como primeira anotação, e a
+// advogada assume pela ficha.
 function renderNovoCliente(){
   tituloLista("➕ Novo Cliente");
   document.getElementById("sub-lista").textContent=
-    "Cadastro completo: cria o cliente, o primeiro caso e (se quiser) já agenda o atendimento no Google Agenda — 001 para cliente novo, 002 para antigo.";
+    "A tela da recepção: só o nome é obrigatório. O cliente entra em atendimento na lista Escritório e a advogada assume pela ficha.";
   document.getElementById("conteudo-meio").innerHTML=`
     <div class="caso" style="max-width:640px">
       <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo *" style="flex:1;min-width:240px"></div>
@@ -5456,16 +5462,14 @@ function renderNovoCliente(){
         <input id="ncl-tel" placeholder="Telefone/WhatsApp">
       </div>
       <div class="form-linha">
-        <input id="ncl-caso" placeholder="Benefício / primeiro caso *" list="lista-beneficios" style="flex:1;min-width:240px">
-        <select id="ncl-fase">${FASES.filter(f=>f[0]!=="prazo").map(([f,r])=>`<option value="${f}">${r.replace(/^\S+ /,"")}</option>`).join("")}</select>
+        <input id="ncl-caso" placeholder="Benefício — só se a pessoa já souber dizer (opcional)" list="lista-beneficios" style="flex:1;min-width:240px">
       </div>
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
-      <p style="font-size:12px;color:var(--verde)">✓ Escolhendo um benefício da lista, a ficha já nasce com o botão 🖨 da lista de documentos para o cliente levar para casa.</p>
       <div class="form-linha">
-        <label style="font-size:13px;color:var(--cinza)">Agendar atendimento:
-          <select id="ncl-tipo"><option value="001">001 — cliente novo</option><option value="002">002 — cliente antigo</option></select></label>
-        <input id="ncl-data" type="date"><input id="ncl-hora" type="time" value="09:00">
+        <textarea id="ncl-relato" rows="3" style="flex:1;min-width:240px;border:1px solid var(--borda);border-radius:8px;padding:8px;font:inherit;font-size:13px;color:var(--texto);resize:vertical"
+          placeholder="O que a pessoa veio buscar, do jeito que ela contou — vira a primeira anotação do atendimento"></textarea>
       </div>
+      <p style="font-size:12px;color:var(--verde)">✓ Não precisa identificar o caso — isso é conversa da advogada, na triagem. Se o benefício vier da lista, a ficha já nasce com a lista de documentos para o cliente levar para casa.</p>
       <div class="form-linha"><button onclick="criarCliente()">Cadastrar</button></div>
       <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente também vira tarefa no To Do na próxima sincronização (título Nome #CPF), então quem estiver lá continua vendo.</p>
     </div>`;
@@ -5511,8 +5515,7 @@ function mostrarIdadeNovo(){
 }
 async function criarCliente(){
   const nome=document.getElementById("ncl-nome").value.trim();
-  const casoTitulo=document.getElementById("ncl-caso").value.trim();
-  if(!nome||!casoTitulo) return aviso("Preencha nome e primeiro caso");
+  if(!nome) return aviso("Preencha ao menos o nome");
   const cpf=document.getElementById("ncl-cpf").value.replace(/\D/g,"")||null;
   if(cpf){
     // procura na memória e confirma no banco: outro colaborador pode ter
@@ -5526,31 +5529,25 @@ async function criarCliente(){
     if(jaTem) return avisoCpfRepetido(jaTem, nome);
   }
   const dnIso=document.getElementById("ncl-dn").value;
+  const especie=document.getElementById("ncl-caso").value.trim();
+  const relato=((document.getElementById("ncl-relato")||{}).value||"").trim();
+  // rastro de quem cadastrou: o relato (ou a marca do cadastro) é a primeira
+  // anotação do atendimento — é ela que põe o cliente na seção 🟡 da lista
+  const campos={atendimento:[{em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0],
+    texto: relato || "Cliente cadastrado na recepção."}]};
+  // benefício conhecido vira PRÉ-CASO (não caso): a advogada confere na
+  // triagem e gera o caso quando sair a procuração com o contrato
+  if(especie) campos.precasos=[{id:"pc_"+Date.now().toString(36), especie,
+    natureza:"", marc:{}, honorarios:"", quem:eu.id, em:hoje()}];
   const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({nome, cpf, dn:dnIso?fmt(dnIso).replace(/\./g,""):null,
-      telefone:document.getElementById("ncl-tel").value.trim()||null})});
-  const [caso]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({cliente_id:cli.id, titulo:nome+(cpf?" #"+cpf:""),
-      beneficio:casoTitulo, fase:document.getElementById("ncl-fase").value})});
-  await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
-    body:JSON.stringify({caso_id:caso.id, colaborador_id:eu.id})});
-  await aplicarChecklistCaso(caso, true);   // caso nasce com o passo a passo do benefício
-  const dataAg=document.getElementById("ncl-data").value;
-  if(dataAg){
-    const cod=document.getElementById("ncl-tipo").value;
-    window.open(gcal(`${cod} - ${nome}`, dataAg, document.getElementById("ncl-hora").value||"09:00",
-      60, `Atendimento — ${casoTitulo}${cli.telefone?" · "+cli.telefone:""}`, "Escritório"), "_blank");
-  }
+      telefone:document.getElementById("ncl-tel").value.trim()||null, campos})});
   await carregar(); montarSidebar();
-  await avisarCasoNovo(caso.id, cli.id, "cliente novo cadastrado na tela");
-  aviso("Cliente cadastrado ✔"); visao="fase:"+caso.fase; render();
+  aviso("Cliente cadastrado ✔ — em atendimento");
+  visao="fase:escritorio"; render();
+  // a ficha abre direto na mesa do atendimento, com o relato já lá
+  subCad="anotacoes"; subAnot="atendimento";
   await abrirFicha(cli.id);
-  if(dataAg){
-    // atendimento marcado no cadastro: a ficha abre direto na lista de
-    // documentos do benefício — marcar, imprimir, virar checklist
-    casoSel=caso.id; abaAtiva=0; subCad="documentos"; repintarFicha();
-    aviso("📋 Marque os documentos que o cliente deve trazer no atendimento — imprima a lista; cada item vira checklist do caso", false);
-  }
 }
 
 // ── visão 🤖 Claude (sugestões com aprovação humana) ─────────────────────

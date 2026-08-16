@@ -171,3 +171,15 @@ O arneço devolve 201 com o corpo ecoado nos POST com return=representation:
 sem isso, `gerarCasoDoPre` não recebe o caso criado e a transferência não
 roda. E o ＋ fullwidth (U+FF0B) conta como pictograma na regra da F9.2 — o
 sinal de mais é o ASCII.
+
+## novocliente.js (F27) — a tela da recepção
+
+A tela não cria mais caso nenhum: cadastrar grava só o cliente, com o
+relato do balcão como primeira anotação de `campos.atendimento` e, se o
+benefício veio preenchido, um pré-caso em `campos.precasos`. O eco 201 do
+POST de clientes continua obrigatório (criarCliente consome `cli.id`).
+
+Armadilha: depois do cadastro o `carregar()` repõe a fixtura e o cliente
+novo some da memória — a prova é o corpo do POST capturado, nunca a lista
+renderizada. E `window.open` zerado antes do clique prova que o agendamento
+no Google Agenda saiu de fato do fluxo.
