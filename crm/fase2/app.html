@@ -1684,7 +1684,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.33 · F34 — o caminho de volta: quem está no Escritório está em NEGOCIAÇÃO, não tem caso — o botão «não é caso» (ao lado do Encerrar) e o lote da lista Escritório convertem o caso herdado em atendimento: andamentos viram anotações com data e autor preservados, documentos pedidos e anexos voltam ao cadastro, o benefício vira pré-caso, o caso sai do CRM e a sincronização com o To Do passa a alimentar as anotações (tarefa intacta; quem tem perícia ou pagamento fica de fora)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.34 · F35 — A REGRA DA VOLTA, agora completa: caso encerrado se reabre (volta à lista de origem, com registro de quem reabriu), o lembrete do pré-caso volta à mesa (e o lembrete se desativa), o pré-caso tirado se restaura pela lixeira, o «entregue» marcado por engano se desmarca no clique, e a própria anotação ou registro avulso se apaga (só o autor) — toda transição do CRM tem o seu desfazer</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8175,10 +8175,13 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         <button onclick="novoRegistroAvulso('${c.id}')">Registrar</button>
       </div>
       ${(()=>{ const rs=((c.campos||{}).registros||[]);
-        return rs.length?`<ul class="reg-avulso">${rs.slice().reverse().map(r=>{
+        return rs.length?`<ul class="reg-avulso">${rs.slice().reverse().map((r,ri)=>{
           const quem=D.colPorId.get(r.quem);
+          const idx=rs.length-1-ri;   // índice real no array (a lista sai invertida)
           return `<li><span class="q-dt">${fmt(r.em)}</span> ${esc(r.texto)}
-            <small>${quem?esc(quem.nome.split(" ")[0]):""}</small></li>`;}).join("")}</ul>`:"";
+            <small>${quem?esc(quem.nome.split(" ")[0]):""}</small>
+            ${r.quem===eu.id?`<button class="cad-lap" title="registro seu, por engano? apaga"
+              onclick="apagarRegistroAvulso('${c.id}',${idx})">${CAD_IC.fechar}</button>`:""}</li>`;}).join("")}</ul>`:"";
       })()}
       <div class="form-linha">
         <input id="pd-url" placeholder="colar o link da pasta deste cliente no Drive (opcional — sem link, a busca é pelo nome)"
@@ -10555,6 +10558,9 @@ function painelLembretes(c){
       <div class="cab">
         <span class="titulo-caso">${rotuloTipoLembrete(l.tipo).slice(0,2)} ${esc(l.titulo)}</span>
         <span class="chip neutro">${l.intervalo_meses?`🔁 ${l.intervalo_meses===1?"todo mês":`a cada ${l.intervalo_meses} meses`}`:"aviso único"}</span>
+        ${(l.detalhes||{}).origem==="precaso"?`<button class="btn-mini"
+          title="a regra da volta: o pré-caso retorna à mesa do atendimento e este lembrete se desativa"
+          onclick="voltarLembreteParaMesa('${c.id}','${esc((l.detalhes||{}).precaso_id||"")}')">↺ voltar ao atendimento</button>`:""}
         <span class="chip ${venc?"urg":"neutro"}">${l.proximo_em?(venc?"⏰ venceu em ":"próximo: ")+fmt(l.proximo_em):"sem data"}</span>
         ${resp?`<span class="avatar mini" style="background:${resp.cor}" title="responsável: ${esc(resp.nome)}">${esc(resp.inicial)}</span>`:""}
       </div>
@@ -11461,7 +11467,9 @@ function blocoFatos(k){
         ${k.fase==="encerrado"
         ? (co=>`<span class="chip fase" title="quem encerrou e quando">✔ encerrado${
             co?` por ${esc(co.nome.split(" ")[0])}`:""}${
-            k.encerrado_em?` · ${fmtTS(k.encerrado_em)} ${horaSP(k.encerrado_em)}`:""}</span>`)(D.colPorId.get(k.encerrado_por))
+            k.encerrado_em?` · ${fmtTS(k.encerrado_em)} ${horaSP(k.encerrado_em)}`:""}</span>
+           <button class="btn-mini" onclick="reabrirCaso('${k.id}')"
+             title="encerrou por erro ou o caso voltou a andar? Reabre na lista de origem, com registro de quem reabriu">↺ reabrir</button>`)(D.colPorId.get(k.encerrado_por))
         : `<button class="btn-mini" onclick="janelaEncerrar('${k.id}')"
              title="encerrar: resultado + honorários — fica registrado quem encerrou e quando">✔ Encerrar caso</button>`}</span>
     </div>
@@ -13890,6 +13898,25 @@ function zapLembrete(evId){
 //      encerra um requerimento e o próximo já entra — a pergunta poupa o
 //      caminho até a aba ＋, que é onde a resposta "sim" desemboca.
 function fecharJanela(){ const j=document.getElementById("janela"); if(j) j.remove(); }
+// F35 · A REGRA DA VOLTA (decisão permanente do Paulo, 16.08.2026): toda
+// transição do CRM precisa do caminho de volta — por erro ou por vontade.
+// Reabrir devolve o caso à lista de origem, limpa o encerramento e registra
+// quem reabriu. Os lançamentos de honorários ficam como estão.
+async function reabrirCaso(casoId){
+  const k=D.casoPorId.get(casoId); if(!k || k.fase!=="encerrado") return;
+  const fase=(LISTAS_MOVER.find(([l])=>l===k.origem_lista)||[])[1] || "outro";
+  const lista=(LISTAS_MOVER.find(([,f])=>f===fase)||[])[0] || k.origem_lista || "—";
+  if(!confirm(`Reabrir "${tituloCaso(k)}"?\n\nO caso volta para ${lista}, o resultado é limpo e fica registrado quem reabriu. Os honorários lançados não mudam.`)) return;
+  k.fase=fase; k.resultado=null; k.encerrado_em=null; k.encerrado_por=null;
+  const corpo={fase, resultado:null, encerrado_em:null, encerrado_por:null};
+  try{ await patchCaso(k.id, corpo); }
+  catch(e){ delete corpo.encerrado_por; await patchCaso(k.id, corpo); }
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+      texto:`[DECISÃO] Caso reaberto — voltou para ${lista}.`})}).catch(()=>{});
+  aviso(`Caso reaberto — de volta a ${lista} ✔`);
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+}
 function janelaEncerrar(casoId){
   fecharJanela();
   const k=D.casoPorId.get(casoId);
@@ -14760,6 +14787,19 @@ async function definirParceria(){
   aviso(`Parceria com ${nome} vinculada ✔`);
   repintarFicha(); montarSidebar();
 }
+// F35 · a regra da volta: registro avulso do próprio autor se apaga
+async function apagarRegistroAvulso(cliId, idx){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const rs=[...(((c.campos||{}).registros)||[])];
+  const r=rs[idx]; if(!r) return;
+  if(r.quem!==eu.id) return aviso("Só quem registrou apaga");
+  if(!confirm(`Apagar este registro seu?\n\n"${(r.texto||"").slice(0,120)}"`)) return;
+  rs.splice(idx,1);
+  c.campos={...(c.campos||{}), registros:rs};
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  aviso("Registro apagado", false); repintarFicha();
+}
 async function novoRegistroAvulso(cliId){
   const el = document.getElementById("ra-texto");
   const texto = (el && el.value || "").trim();
@@ -15526,9 +15566,42 @@ async function mudarPreCaso(cliId, pcId, campo, valor){
   if(await gravarPrecasos(cliId, pcs)) repintarFicha();
 }
 async function tirarPreCaso(cliId, pcId){
-  if(!confirm("Tirar este pré-caso? As anotações dele continuam guardadas.")) return;
-  const pcs = precasosDe(D.cliPorId.get(cliId)).filter(p=>p.id!==pcId);
+  if(!confirm("Tirar este pré-caso? As anotações dele continuam guardadas — e dá para restaurar pelo ↺ que fica na mesa.")) return;
+  const c = D.cliPorId.get(cliId);
+  const tirado = precasosDe(c).find(p=>p.id===pcId);
+  const pcs = precasosDe(c).filter(p=>p.id!==pcId);
+  // F35 · a regra da volta: o removido vai para a lixeira do cadastro, e a
+  // mesa oferece restaurar — por erro ou por vontade
+  if(tirado) c.campos = {...(c.campos||{}), pc_lixeira:{pc:tirado, em:hoje(), quem:eu.id}};
   if(await gravarPrecasos(cliId, pcs)) repintarFicha();
+}
+async function restaurarPreCaso(cliId){
+  const c = D.cliPorId.get(cliId);
+  const lix = ((c&&c.campos)||{}).pc_lixeira;
+  if(!lix || !lix.pc) return;
+  const pcs = [...precasosDe(c)];
+  if(!pcs.some(p=>p.id===lix.pc.id)) pcs.push(lix.pc);
+  c.campos = {...(c.campos||{})}; delete c.campos.pc_lixeira;
+  if(await gravarPrecasos(cliId, pcs)){ aviso("Pré-caso restaurado ↺"); repintarFicha(); }
+}
+// F35 · o "Somente gerar lembrete" também tem volta: o pré-caso retorna à
+// mesa e o lembrete criado a partir dele é desativado
+async function voltarLembreteParaMesa(cliId, pcId){
+  const pcs = precasosDe(D.cliPorId.get(cliId)).map(p=>{
+    if(p.id!==pcId) return p;
+    const novo={...p}; delete novo.so_lembrete; return novo;
+  });
+  for(const l of (D.lembretes||[]).filter(l=>l.cliente_id===cliId
+      && ((l.detalhes||{}).origem==="precaso") && (l.detalhes||{}).precaso_id===pcId)){
+    await api(`/rest/v1/lembretes?id=eq.${l.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({ativo:false})}).catch(()=>{});
+    l.ativo=false;
+  }
+  D.lembretes=(D.lembretes||[]).filter(l=>l.ativo!==false);
+  if(await gravarPrecasos(cliId, pcs)){
+    aviso("De volta à mesa do atendimento — o lembrete foi desativado ↺");
+    repintarFicha(); montarSidebar();
+  }
 }
 // os tópicos que os marcadores abrem: os pontos das famílias da F17, sem
 // duplicar conhecimento — rural/especial/deficiência apontam para as mesmas
@@ -15689,6 +15762,20 @@ async function salvarNotaAtendimento2(cliId){
   ta.value=""; aviso("Anotação guardada 📝", false);
   repintarFicha();
 }
+// F35 · a regra da volta vale para a própria anotação: quem escreveu apaga
+// (só o autor — o × não aparece nas anotações dos outros)
+async function apagarNotaAtendimento(cliId, idx){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const notas=[...((c.campos||{}).atendimento||[])];
+  const n=notas[idx]; if(!n) return;
+  if(n.quem!==(eu.nome||"").split(" ")[0]) return aviso("Só quem escreveu apaga");
+  if(!confirm(`Apagar esta anotação sua?\n\n"${(n.texto||"").slice(0,120)}"`)) return;
+  notas.splice(idx,1);
+  c.campos={...(c.campos||{}), atendimento:notas};
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  aviso("Anotação apagada", false); repintarFicha();
+}
 // checklist dentro da anotação: itens marcáveis, com autor no risco
 async function notaChecklistItem(cliId, idx){
   const el=document.getElementById("nck-"+idx);
@@ -15752,7 +15839,9 @@ function caixaAtendimento(c, ks){
         <span class="pc-nat">${[["concessao","concessão"],["revisao","revisão"],["acerto","acerto"]]
           .map(([v,r])=>`<button class="tri-e${pc.natureza===v?" on ok":""}"
             onclick="mudarPreCaso('${c.id}','${pc.id}','natureza','${pc.natureza===v?"":v}')">${r}</button>`).join("")}</span>
-        ${pc.so_lembrete?`<span class="chip verde" title="virou lembrete — acompanhamos a data sem gerar caso">acompanhando em Lembretes</span>`:""}
+        ${pc.so_lembrete?`<span class="chip verde" title="virou lembrete — acompanhamos a data sem gerar caso">acompanhando em Lembretes</span>
+          <button class="cad-mini" onclick="voltarLembreteParaMesa('${c.id}','${pc.id}')"
+            title="desfaz: o pré-caso volta à mesa do atendimento e o lembrete criado é desativado">↺ voltar à mesa</button>`:""}
         <button class="cad-lap" style="margin-left:auto" title="tirar este pré-caso"
           onclick="tirarPreCaso('${c.id}','${pc.id}')">${CAD_IC.fechar}</button>
       </div>
@@ -15846,6 +15935,9 @@ function caixaAtendimento(c, ks){
     <div class="pc-bloco">
       <div class="rotulo-caso">1 · De que se trata${pcs.length>1?` (${pcs.length})`:""}</div>
       ${pcs.map(card).join("") || `<p class="meio-sub">Nenhum atendimento aberto — acrescente pelo +.</p>`}
+      ${(lx=>lx&&lx.pc?`<p class="meio-sub" style="margin:4px 0"><button class="cad-mini"
+        onclick="restaurarPreCaso('${c.id}')" title="a regra da volta: o que se tira se restaura">↺ restaurar o pré-caso
+        removido</button> (${esc(lx.pc.especie||"sem espécie")} · tirado em ${fmt(lx.em)})</p>`:"")(campos.pc_lixeira)}
       <button class="cad-mini" onclick="novoPreCaso('${c.id}')">+ novo caso/atendimento</button>
       <label class="cad-mini" style="cursor:pointer" title="anexar documento do cliente (o arquivo passa para o caso quando ele for gerado)">
         <input type="file" id="pc-arq" accept="image/*,application/pdf" style="display:none"
@@ -15910,7 +16002,8 @@ function caixaAtendimento(c, ks){
           ${pedidos.map((p,pi)=>(p.itens||[]).map((it,ii)=>`<li>
             <span class="mov-data">${p.em?fmt(p.em.slice(0,10)):"—"}</span>
             <span class="mov-txt" style="${it.entregue?"text-decoration:line-through;color:var(--cinza)":""}">${esc(it.nome||it)}</span>
-            ${it.entregue?`<span class="chip verde">entregue ${fmt(it.entregue)}</span>`
+            ${it.entregue?`<span class="chip verde" style="cursor:pointer" onclick="docEntregue('${c.id}',${pi},${ii})"
+                title="marcado por engano? clique para desfazer">entregue ${fmt(it.entregue)} ↺</span>`
               :`<button class="btn-mini" onclick="docEntregue('${c.id}',${pi},${ii})">entregue</button>`}
           </li>`).join("")).join("")}
         </ul></div>`:""}
@@ -15951,6 +16044,9 @@ function caixaAtendimento(c, ks){
                 onchange="notaChecklistToggle('${c.id}',${idx},${ci})"><span style="${ck.feito?"text-decoration:line-through;color:var(--cinza-claro)":""}">${esc(ck.t)}</span></label>`).join("")}</span>`:""}
             <span class="nck-add"><input id="nck-${idx}" placeholder="+ item do checklist"
               onkeydown="if(event.key==='Enter'){event.preventDefault();notaChecklistItem('${c.id}',${idx});}"></span>
+            ${n.quem===(eu.nome||"").split(" ")[0]?`<button class="cad-lap" style="float:right"
+              title="anotação sua, escrita por engano? apaga (a regra da volta)"
+              onclick="apagarNotaAtendimento('${c.id}',${idx})">${CAD_IC.fechar}</button>`:""}
           </span></li>`;}).join("")}
       </ul>`:""}
     </div>
@@ -15996,12 +16092,14 @@ async function docEntregue(cliId, pi, ii){
   const c=D.cliPorId.get(cliId); if(!c) return;
   const pedidos=JSON.parse(JSON.stringify((c.campos||{}).docs_pedidos||[]));
   if(!pedidos[pi] || !pedidos[pi].itens[ii]) return;
-  pedidos[pi].itens[ii].entregue=hoje();
+  // F35 · a regra da volta: marcar de novo DESMARCA — entregue por engano
+  // volta a ser pendência do cliente
+  pedidos[pi].itens[ii].entregue = pedidos[pi].itens[ii].entregue ? null : hoje();
   c.campos={...(c.campos||{}), docs_pedidos:pedidos};
   try{
     await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({campos:c.campos})});
-  }catch(e){ return aviso("Não consegui marcar como entregue — tente de novo"); }
+  }catch(e){ return aviso("Não consegui gravar — tente de novo"); }
   abrirFicha(cliId);
 }
 

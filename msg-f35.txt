@@ -1,0 +1,15 @@
+F35: a regra da volta aplicada ao sistema inteiro (09.34)
+
+Decisao permanente do Paulo: toda transicao do CRM precisa do caminho de
+volta, por erro ou por vontade. Auditoria completa; cinco transicoes nao
+tinham e ganharam: caso encerrado se reabre (volta a lista de origem,
+resultado limpo, registro de quem reabriu), Somente gerar lembrete se
+desfaz (o pre-caso volta a mesa e o lembrete se desativa, botao na aba
+Lembretes), pre-caso tirado vai a lixeira e se restaura, entregue
+marcado por engano se desmarca no clique, e anotacao/registro avulso do
+proprio autor se apagam (so o autor). Fundir casos segue sem volta,
+anotado como pendencia consciente. Teste desfazer.js com 17 provas;
+suite 28 arquivos verdes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3

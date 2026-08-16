@@ -267,3 +267,19 @@ Armadilhas: abrirFicha com dois casos abre o modal de escolher processo
 (limpar #modal e fixar casoSel antes de mirar .fatos-topo); e o botão do
 lote não pode depender de filtroColab — o filtro nasce LIGADO no chip do
 usuário, e a condição `!filtroColab` escondia o cabeçalho para sempre.
+
+## desfazer.js (F35) — a regra da volta
+
+Decisão permanente do Paulo (16.08.2026): TODA transição nova do CRM
+nasce com o seu desfazer. O teste percorre os cinco que faltavam:
+reabrir caso encerrado (fase pela origem_lista, encerrado_por pode não
+existir no banco — retry sem a coluna), lembrete→mesa (o botão mora na
+ABA LEMBRETES, porque a mesa se recolhe quando o atendimento se
+resolve), lixeira do pré-caso, entregue-toggle e apagar nota/registro
+do próprio autor (a nota da colega NÃO ganha ×).
+
+Mapa do que já tinha volta: passos e porta da triagem (alternam),
+reabrir triagem (F30), caso↔atendimento (F34+gerar), concluir tarefa
+(desfazer F12), mover de lista, checklist de nota, andamento e anexo do
+autor. Sem volta CONSCIENTE: fundir casos (reversão exigiria snapshot —
+anotado como pendência).

@@ -1,4 +1,28 @@
-# Onde paramos — 16.08.2026, versão 09.33
+# Onde paramos — 16.08.2026, versão 09.34
+
+## REGRA PERMANENTE · A REGRA DA VOLTA (decisão do Paulo, 16.08.2026)
+
+**Toda transição do CRM precisa do caminho de volta — por erro ou por
+vontade. Toda atualização futura nasce pensando no "voltar/desfazer".**
+
+## F35 · A regra da volta, aplicada ao sistema inteiro (09.34)
+
+Auditoria completa das transições. Já tinham volta: passos e porta da
+triagem (clique alterna), reabrir triagem (F30), caso ↔ atendimento
+(F34 + Gerar o caso), concluir tarefa com desfazer (F12), mover de
+lista, importante/urgente, checklist de nota, apagar andamento e anexo
+(autor). Cinco NÃO tinham e ganharam: (1) caso encerrado se REABRE — o
+↺ ao lado do carimbo devolve à lista de origem, limpa resultado e
+registra quem reabriu ([DECISÃO] na linha do tempo; honorários lançados
+ficam); (2) "Somente gerar lembrete" se desfaz — "↺ voltar ao
+atendimento" na aba Lembretes (e no card): o pré-caso volta à mesa e o
+lembrete se desativa; (3) pré-caso tirado vai à lixeira
+(campos.pc_lixeira) e a mesa oferece "↺ restaurar"; (4) "entregue"
+marcado por engano se desmarca no clique (chip avisa); (5) anotação do
+atendimento e registro avulso do PRÓPRIO autor se apagam (só o autor vê
+o ×). Sem volta consciente, anotado como pendência: fundir casos
+(reversão exigiria snapshot do estado anterior). Teste desfazer.js, 17
+provas; suíte 28 arquivos.
 
 ## F34 · O caminho de volta — caso que não é caso vira atendimento (09.33)
 
