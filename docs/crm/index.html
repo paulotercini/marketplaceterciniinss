@@ -1189,6 +1189,11 @@
     color:var(--azul-escuro);background:var(--azul-fundo);border:1px solid #D6E3F9;
     border-radius:5px;padding:1px 6px}
   /* o fecho do atendimento */
+  /* o botão de ler o PDF, dentro do passo. A frase ao lado não é enfeite: é
+     a única forma de quem atende saber que o arquivo não está sendo enviado. */
+  .tri-pdf{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:6px 0 0 32px}
+  .tri-pdf-nota{font-size:11.5px;color:var(--cinza-claro)}
+  .tri-nota{white-space:pre-wrap}
   .tri-fecho{border-top:2px solid var(--borda);margin-top:14px;padding-top:12px;
     display:flex;flex-wrap:wrap;align-items:center;gap:10px}
   .tri-fecho .cad-mini{min-height:30px}
@@ -1585,7 +1590,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.17 · F17 — a triagem passou a saber a espécie do caso: doze famílias trazem os pontos que a skill do escritório manda conferir, a ferramenta do site aparece no passo em que serve, e encerrar o atendimento vira uma linha no histórico do caso</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.18 · F18 — a triagem lê o CNIS e a Declaração de Benefícios: o PDF é aberto no próprio navegador, os indicadores saem com a descrição oficial e a contagem, os benefícios saem com NB, espécie, situação e datas, e o CPF do documento é conferido contra o da ficha antes de qualquer gravação</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8137,6 +8142,331 @@ function triagemLeitura(passo, c, ks){
   }
   return {cor:"neutro", txt:""};
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F18 · LER O PDF DO INSS — o CNIS e a Declaração de Benefícios
+// ══════════════════════════════════════════════════════════════════════════
+// O arquivo NÃO sai da máquina. O PDF é lido no próprio navegador, por
+// `FileReader` e `pdf.js`; nada é enviado a servidor nenhum, nem ao Supabase,
+// enquanto ninguém mandar. O que atravessa a rede é só a biblioteca, buscada
+// uma vez do cdnjs quando o primeiro PDF é aberto.
+//
+// Os dois documentos saem do Meu INSS gerados por iText, em fonte de
+// codificação Identity com CMap ToUnicode. Extrair o texto à mão exigiria
+// resolver o CMap; a biblioteca resolve, e o que fica aqui é a parte que
+// interessa, a leitura do LAYOUT.
+const PDFJS_CDN = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+let _pdfjs = null;
+async function carregarPdfJs(){
+  if(_pdfjs) return _pdfjs;
+  if(!window.pdfjsLib){
+    await new Promise((ok, erro)=>{
+      const s = document.createElement("script");
+      s.src = PDFJS_CDN + "pdf.min.js";
+      s.onload = ok;
+      s.onerror = ()=>erro(new Error("cdn"));
+      document.head.appendChild(s);
+    });
+  }
+  if(!window.pdfjsLib) throw new Error("cdn");
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN + "pdf.worker.min.js";
+  return (_pdfjs = window.pdfjsLib);
+}
+// devolve cada pedaço de texto com a posição na folha. y cresce para BAIXO
+// aqui, ao contrário do PDF, para as linhas saírem na ordem de leitura.
+async function itensDoPdf(arquivo){
+  const lib = await carregarPdfJs();
+  const dados = new Uint8Array(await arquivo.arrayBuffer());
+  const doc = await lib.getDocument({data:dados, isEvalSupported:false}).promise;
+  const itens = [];
+  for(let p=1; p<=doc.numPages; p++){
+    const pag = await doc.getPage(p);
+    const alt = pag.getViewport({scale:1}).height;
+    const c = await pag.getTextContent();
+    for(const i of c.items){
+      const t = (i.str||"").trim();
+      if(t) itens.push({t, x:Math.round(i.transform[4]), y:Math.round(alt - i.transform[5]),
+                        w:Math.round(i.width||0), p});
+    }
+  }
+  try{ await doc.destroy(); }catch(e){}
+  return itens;
+}
+// O pdf.js devolve PEDAÇOS de texto, não palavras: um pedaço pode trazer
+// "123.456.789-0 CESSADO" junto, e aí nenhuma comparação de palavra casa. Aqui
+// tudo vira palavra, com o x repartido pela largura — assim o extrator não
+// depende de como o gerador do PDF picotou a linha.
+function palavrasDoPdf(itens){
+  const fora = [];
+  for(const i of itens){
+    const ps = String(i.t).split(/\s+/).filter(Boolean);
+    if(ps.length <= 1){ fora.push(i); continue; }
+    const total = ps.reduce((a,x)=>a+x.length,0) + (ps.length-1);
+    const larg = i.w || total * 5;
+    let corrido = 0;
+    for(const pal of ps){
+      fora.push({...i, t:pal, x:Math.round(i.x + larg*corrido/total),
+                 w:Math.round(larg*pal.length/total)});
+      corrido += pal.length + 1;
+    }
+  }
+  return fora;
+}
+// agrupa em linhas de leitura: mesma folha, alturas próximas, ordenado pelo x
+function linhasDoPdf(itens, folga){
+  const f = folga==null ? 3 : folga;
+  const linhas = [];
+  for(const i of itens.slice().sort((a,b)=> a.p-b.p || a.y-b.y || a.x-b.x)){
+    const ult = linhas[linhas.length-1];
+    if(ult && ult.p===i.p && Math.abs(ult.y - i.y) <= f){ ult.itens.push(i); ult.y=(ult.y+i.y)/2; }
+    else linhas.push({p:i.p, y:i.y, itens:[i]});
+  }
+  return linhas.map(l=>({...l, itens:l.itens.sort((a,b)=>a.x-b.x),
+                         txt:l.itens.sort((a,b)=>a.x-b.x).map(x=>x.t).join(" ")}));
+}
+// ── CNIS ────────────────────────────────────────────────────────────────
+// A Legenda de Indicadores, no fim do extrato, é a lista FECHADA dos códigos
+// que aquele extrato usa, com a descrição oficial ao lado. É de onde vem a
+// verdade: contar códigos soltos no corpo pega texto de rodapé e cabeçalho.
+const RX_IND = /^[A-Z]{3,}(?:-[A-Z0-9]{2,})*$/;
+function lerCnisPdf(itens){
+  itens = palavrasDoPdf(itens);
+  const linhas = linhasDoPdf(itens);
+  const tudo = linhas.map(l=>l.txt).join("\n");
+  const r = {tipo:"cnis", filiado:{}, indicadores:[], vinculos:0, paginas:0};
+  r.paginas = itens.length ? Math.max(...itens.map(i=>i.p)) : 0;
+
+  const pega = rx => { const m = tudo.match(rx); return m ? m[1].trim() : ""; };
+  r.filiado.nit  = pega(/NIT:\s*([\d.\-]{11,})/);
+  r.filiado.cpf  = pega(/CPF:\s*([\d.\-]{11,})/);
+  r.filiado.nascimento = pega(/Data de nascimento:\s*(\d{2}\/\d{2}\/\d{4})/);
+  r.filiado.nome = pega(/Nome:\s*(.+?)\s*$/m);
+
+  // cada vínculo abre uma linha "Seq." de dados logo abaixo do cabeçalho
+  r.vinculos = linhas.filter(l=>/^\d{1,3}\s+\d{3}\.\d{5}\.\d{2}-\d/.test(l.txt)).length;
+
+  // a legenda: duas colunas. O código é o primeiro item de cada coluna, e a
+  // descrição continua na mesma linha e pode transbordar para a seguinte.
+  const iLeg = linhas.findIndex(l=>/^Legenda de Indicadores/.test(l.txt));
+  const achados = new Map();
+  let colunas = [];   // os códigos da última linha, com o x em que cada um começa
+  if(iLeg >= 0){
+    for(let i=iLeg+1; i<linhas.length; i++){
+      const l = linhas[i];
+      if(/^O INSS poderá rever/.test(l.txt)) break;
+      if(/^Indicador\s+Descrição/.test(l.txt)) continue;
+      // a legenda tem DUAS colunas. Cada código manda do seu x até o x do
+      // próximo código da mesma linha; a descrição que transborda para a
+      // linha de baixo pertence à coluna em que ela está, não ao último
+      // código lido. Emendar no "último aberto" jogava o "concomitante com
+      // outros vínculos" do PREC-FACULTCONC (coluna esquerda) na descrição
+      // do PREC-MENOR-MIN (coluna direita), e a nota da triagem saía errada.
+      const cods = l.itens.filter(x=>RX_IND.test(x.t));
+      if(cods.length){
+        cods.forEach((it, j)=>{
+          const ate = cods[j+1] ? cods[j+1].x : Infinity;
+          const desc = l.itens.filter(x=>x.x>it.x && x.x<ate && !RX_IND.test(x.t))
+                              .map(x=>x.t).join(" ");
+          const ja = achados.get(it.t);
+          if(ja) ja.descricao = (ja.descricao + " " + desc).trim();
+          else achados.set(it.t, {codigo:it.t, descricao:desc.trim(), ocorrencias:0});
+        });
+        colunas = cods.map(x=>({cod:x.t, x:x.x}));
+      }else if(colunas.length){
+        for(const it of l.itens){
+          let dono = colunas[0];
+          for(const c of colunas) if(it.x >= c.x - 12) dono = c;
+          const a = achados.get(dono.cod);
+          if(a) a.descricao = (a.descricao + " " + it.t).trim();
+        }
+      }
+    }
+  }
+  // conta no CORPO, fora da legenda: é o número que diz o tamanho do problema
+  const corpo = linhas.slice(0, iLeg<0 ? linhas.length : iLeg);
+  for(const l of corpo) for(const it of l.itens){
+    const cod = it.t.replace(/,$/,"");
+    if(achados.has(cod)) achados.get(cod).ocorrencias++;
+  }
+  r.indicadores = [...achados.values()].sort((a,b)=>b.ocorrencias-a.ocorrencias);
+  return r;
+}
+// ── Declaração de Benefícios ────────────────────────────────────────────
+// Cada benefício é uma linha com o NB à esquerda e, em volta dela, o nome da
+// espécie quebrado em duas ou três linhas na faixa do meio da folha.
+const RX_NB = /^\d{3}\.\d{3}\.\d{3}-\d$/;
+function lerDeclaracaoPdf(itens){
+  itens = palavrasDoPdf(itens);
+  const linhas = linhasDoPdf(itens);
+  const tudo = linhas.map(l=>l.txt).join("\n");
+  const r = {tipo:"declaracao", cpf:"", nome:"", emitida:"", beneficios:[]};
+  const m = tudo.match(/CPF\s*n[ºo°]\s*([\d.\-]{11,})\s*pertencente a\s*(.+?)\s*:/s);
+  if(m){ r.cpf = m[1].trim(); r.nome = m[2].replace(/\s+/g," ").trim(); }
+  const e = tudo.match(/(\d{2}\/\d{2}\/\d{4})\s+\d{2}:\d{2}:\d{2}/);
+  if(e) r.emitida = e[1];
+
+  linhas.forEach((l, i)=>{
+    const nb = l.itens.find(x=>RX_NB.test(x.t));
+    if(!nb) return;
+    const dep = l.itens.filter(x=>x.x > nb.x);
+    const datas = dep.filter(x=>/^\d{2}\/\d{2}\/\d{4}$/.test(x.t)).sort((a,b)=>a.x-b.x);
+    const val = dep.find(x=>/^[\d.]+,\d{2}$/.test(x.t));
+    // a espécie é o que está na faixa do meio, nesta linha e nas vizinhas
+    const perto = linhas.filter(x=>x.p===l.p && Math.abs(x.y - l.y) <= 12);
+    const especie = perto.sort((a,b)=>a.y-b.y).flatMap(x=>x.itens)
+      .filter(x=>x.x>=nb.x+150 && (val ? x.x < val.x-10 : true) && !RX_NB.test(x.t)
+                 && !/^R\$$/.test(x.t) && !/^\d{2}\/\d{2}\/\d{4}$/.test(x.t)
+                 && !/^[\d.]+,\d{2}$/.test(x.t))
+      .map(x=>x.t).join(" ").replace(/\s+/g," ").trim();
+    // situação: entre o NB e a espécie
+    const sit = dep.filter(x=>x.x < nb.x + 150).map(x=>x.t).join(" ").trim();
+    r.beneficios.push({nb:nb.t, situacao:sit, especie,
+      valor: val ? val.t : "", inicio: datas[0] ? datas[0].t : "",
+      cessacao: datas[1] ? datas[1].t : ""});
+  });
+  return r;
+}
+// o CPF do documento é o do cliente aberto? Trocar o PDF de pessoa é o erro
+// mais fácil de cometer e o mais caro de descobrir depois.
+function conferePdfComCliente(lido, c){
+  const doDoc = digitos(lido.filiado ? lido.filiado.cpf : lido.cpf);
+  const daFicha = digitos(c && c.cpf);
+  if(!doDoc || !daFicha) return {ok:true, aviso:""};
+  if(doDoc === daFicha) return {ok:true, aviso:""};
+  return {ok:false, aviso:`O CPF do documento (${fmtCpf(doDoc)}) não é o do cliente aberto `
+    + `(${fmtCpf(daFicha)}). Nada foi gravado.`};
+}
+
+// ── o botão dentro do passo da triagem ───────────────────────────────────
+// CNIS alimenta os passos "CNIS" e "Indicadores e pendências"; a Declaração
+// alimenta "Benefício ativo". São os três passos que hoje dependem de alguém
+// abrir o PDF e ler linha por linha.
+const PDF_TRIAGEM = {
+  indicadores:{rot:"Ler o CNIS (PDF)", arq:"cnis",
+    dica:"o extrato do Meu INSS; o arquivo é lido aqui no navegador e não sai desta máquina"},
+  beneficio:{rot:"Ler a Declaração de Benefícios (PDF)", arq:"declaracao",
+    dica:"a declaração do Meu INSS; o arquivo é lido aqui no navegador e não sai desta máquina"},
+};
+function botaoPdfTriagem(cliId, chave){
+  const d = PDF_TRIAGEM[chave]; if(!d) return "";
+  return `<div class="tri-pdf">
+    <input type="file" accept="application/pdf" id="pdf-${chave}" style="display:none"
+      onchange="lerPdfDaTriagem('${cliId}','${chave}')">
+    <button class="cad-mini" onclick="document.getElementById('pdf-${chave}').click()"
+      title="${esc(d.dica)}">${esc(d.rot)}</button>
+    <span class="tri-pdf-nota">lido aqui no navegador, não sai desta máquina</span>
+  </div>`;
+}
+async function lerPdfDaTriagem(cliId, chave){
+  const inp = document.getElementById("pdf-"+chave);
+  const arq = inp && inp.files && inp.files[0];
+  if(!arq) return;
+  inp.value = "";
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
+  aviso("Lendo o PDF…", false);
+  let itens;
+  try{ itens = await itensDoPdf(arq); }
+  catch(e){
+    return aviso(/cdn/.test(String(e.message))
+      ? "Não consegui carregar o leitor de PDF — confira a conexão e tente de novo"
+      : "Não consegui abrir este PDF");
+  }
+  if(!itens.length)
+    return aviso("Este PDF não tem texto — deve ser digitalizado. O CRM não lê imagem.");
+
+  const eCnis = chave === "indicadores";
+  const lido = eCnis ? lerCnisPdf(itens) : lerDeclaracaoPdf(itens);
+  if(eCnis && !lido.indicadores.length && !lido.filiado.nit)
+    return aviso("Não reconheci este arquivo como um CNIS do Meu INSS");
+  if(!eCnis && !lido.beneficios.length && !lido.cpf)
+    return aviso("Não reconheci este arquivo como a Declaração de Benefícios");
+
+  const conf = conferePdfComCliente(lido, c);
+  if(!conf.ok) return aviso(conf.aviso);
+  return eCnis ? gravarCnisLido(cliId, lido) : gravarDeclaracaoLida(cliId, lido);
+}
+// ── o que fica gravado ───────────────────────────────────────────────────
+// A leitura escreve a NOTA do passo e assina como leitura de PDF, com a data.
+// O ESTADO (sem pendência, atenção, não conferido) continua sendo de quem
+// atende: máquina não confere CNIS, ela transcreve.
+async function gravarCnisLido(cliId, lido){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const t = {...triagemDe(c)};
+  const linhas = lido.indicadores.map(i=>
+    `${i.codigo}${i.ocorrencias?` (${i.ocorrencias}×)`:""} — ${i.descricao}`);
+  const texto = lido.indicadores.length
+    ? `Lido do CNIS em ${fmt(hoje())}: ${lido.indicadores.length} indicador(es).\n`
+      + linhas.join("\n")
+    : `Lido do CNIS em ${fmt(hoje())}: nenhum indicador na legenda do extrato.`;
+  t.indicadores = {...(t.indicadores||{}), nota: juntarNota((t.indicadores||{}).nota, texto),
+                   em:hoje(), quem:eu.id};
+  t.cnis = {...(t.cnis||{}),
+    nota: juntarNota((t.cnis||{}).nota,
+      `CNIS lido em ${fmt(hoje())}: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s)`
+      + (lido.filiado.nit?`, NIT ${lido.filiado.nit}`:"") + "."),
+    em:hoje(), quem:eu.id};
+  t.pdf = {...(t.pdf||{}), cnis:{em:hoje(), quem:eu.id, paginas:lido.paginas,
+    vinculos:lido.vinculos, indicadores:lido.indicadores.map(i=>i.codigo)}};
+  if(!await salvarTriagem(cliId, t)) return aviso("Li o PDF, mas não consegui guardar");
+  await lancarNoCaso(cliId, `CNIS lido no CRM: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s), `
+    + (lido.indicadores.length
+        ? `indicadores ${lido.indicadores.map(i=>i.codigo+(i.ocorrencias?`(${i.ocorrencias})`:"")).join(", ")}.`
+        : "nenhum indicador na legenda."));
+  repintarFicha();
+  aviso(`CNIS lido — ${lido.indicadores.length} indicador(es), ${lido.vinculos} vínculo(s) ✔`);
+}
+async function gravarDeclaracaoLida(cliId, lido){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const t = {...triagemDe(c)};
+  const linhas = lido.beneficios.map(b=>
+    `NB ${b.nb} · ${b.especie||"espécie não lida"} · ${b.situacao||"situação não lida"}`
+    + (b.inicio?` · início ${b.inicio}`:"") + (b.cessacao?` · cessação ${b.cessacao}`:"")
+    + (b.valor?` · R$ ${b.valor}`:""));
+  const ativos = lido.beneficios.filter(b=>!/CESSAD|SUSPENS|INDEFER/i.test(b.situacao||""));
+  const texto = lido.beneficios.length
+    ? `Lido da Declaração de Benefícios em ${fmt(hoje())}: ${lido.beneficios.length} benefício(s), `
+      + `${ativos.length} em manutenção.\n` + linhas.join("\n")
+    : `Lido da Declaração em ${fmt(hoje())}: nenhum benefício consta.`;
+  t.beneficio = {...(t.beneficio||{}), nota: juntarNota((t.beneficio||{}).nota, texto),
+                 em:hoje(), quem:eu.id};
+  t.pdf = {...(t.pdf||{}), declaracao:{em:hoje(), quem:eu.id,
+    beneficios:lido.beneficios.map(b=>({nb:b.nb, situacao:b.situacao}))}};
+  if(!await salvarTriagem(cliId, t)) return aviso("Li o PDF, mas não consegui guardar");
+
+  // o NB entra no caso quando o caso ainda não tem NB nenhum, e só então
+  const ks = D.casosDoCliente.get(cliId) || [];
+  const sel = casoSel && ks.find(x=>x.id===casoSel);
+  const k = sel || ks.find(x=>x.fase!=="encerrado") || ks[0];
+  let escreveu = "";
+  if(k && !k.nb && lido.beneficios.length){
+    const alvo = ativos[0] || lido.beneficios[0];
+    try{
+      await patchCaso(k.id, {nb:alvo.nb});
+      k.nb = alvo.nb;
+      escreveu = ` NB ${alvo.nb} gravado no caso.`;
+    }catch(e){ escreveu = " Não consegui gravar o NB no caso."; }
+  }
+  await lancarNoCaso(cliId, `Declaração de Benefícios lida no CRM: ${lido.beneficios.length} benefício(s), `
+    + `${ativos.length} em manutenção. ` + linhas.join(" | ") + "." + escreveu);
+  repintarFicha();
+  aviso(`Declaração lida — ${lido.beneficios.length} benefício(s) ✔`);
+}
+// a nota antiga não é apagada: a leitura entra acima do que já estava escrito
+function juntarNota(velha, nova){
+  const v = (velha||"").trim();
+  return v ? nova + "\n\n" + v : nova;
+}
+async function lancarNoCaso(cliId, texto){
+  const ks = D.casosDoCliente.get(cliId) || [];
+  const sel = casoSel && ks.find(x=>x.id===casoSel);
+  const k = sel || ks.find(x=>x.fase!=="encerrado") || ks[0];
+  if(!k) return;
+  try{
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto})});
+  }catch(e){}
+}
+
 function painelTriagemFicha(c, ks){
   const t = triagemDe(c);
   const PASSOS = triagemPassosDe(c, ks);
@@ -8172,6 +8502,7 @@ function painelTriagemFicha(c, ks){
         </div>
         <div class="tri-leitura ${l.cor}">${esc(l.txt)}${
           l.det?`<span class="tri-det">${esc(l.det)}</span>`:""}</div>
+        ${botaoPdfTriagem(c.id, chave)}
         ${chave==="conclusao"?`
         <div class="tri-prox">
           ${TRIAGEM_PROXIMO.map(([v,r])=>`<button class="tri-p${prox===v?" on":""}"
