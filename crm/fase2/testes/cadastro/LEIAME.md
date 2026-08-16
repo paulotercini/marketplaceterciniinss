@@ -244,3 +244,12 @@ Os CPFs da fixtura (123.456.789-09 e 529.982.247-25) são os exemplos
 clássicos VÁLIDOS, por isso servem de par com o dígito trocado
 (123.456.789-00) para provar o aviso. O recado inline usa a memória
 (D.clientes); a trava dura do submit continua conferindo o banco.
+
+## fluxo.js (F33) — o bloco 2 fecha
+
+Os documentos que o cliente vai trazer viraram <details> fechado: só o
+summary (com o resumo "lista de N itens · já pedimos X") fica à vista.
+O primeiro `details summary` da caixa deixou de ser o da cláusula de
+honorários — seletor por texto, nunca por posição. Conteúdo de details
+fechado tem innerText vazio (armadilha antiga): interação nos testes é
+por evaluate ou abrindo o details antes.
