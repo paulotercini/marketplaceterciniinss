@@ -1,0 +1,14 @@
+F31: documentos no fluxo e Consulta dentro de Documentos (09.30)
+
+A procuracao, a declaracao de pobreza, o contrato e os demais documentos
+do escritorio aparecem logo abaixo do botao Gerar o caso, no fim do
+fluxo do atendimento: imprime, colhe a assinatura e clica, sem trocar de
+tela. especieDoCliente ganhou fallback do pre-caso vivo, entao o
+contrato do fluxo sai na variante certa do beneficio. O menu Documentos
+incorporou a Consulta: documentos para assinar, catalogo do INSS e
+portais com CPF num painel so; o botao Consulta saiu do trilho e
+irSubCad('consulta') mapeia para documentos. Suite: 26 arquivos verdes,
+fluxo.js com 31 provas.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3

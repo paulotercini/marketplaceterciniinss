@@ -221,3 +221,17 @@ do painel 0 não está mais .ativo (clicar Cadastro antes de medir); e o
 botão "+ atendimento" no sub-menu NÃO pode ter classe cad-mini — o
 consulta.js clica o primeiro .cad-mini do painel e navegaria para longe
 (classe própria .trilho-mais).
+
+## fluxo.js (F31) — documentos no fluxo e Consulta dentro de Documentos
+
+Os documentos do escritório (caixaDocumentos) entram no FIM do fluxo do
+atendimento, logo abaixo do "Gerar o caso" — a função não tem ids DOM,
+então pode viver em dois lugares sem colisão. `especieDoCliente` ganhou o
+fallback do pré-caso vivo: sem ele, o contrato impresso no fluxo sairia
+na variante padrão em vez da do benefício escolhido.
+
+A Consulta virou seção do painel Documentos: o painel junta caixa de
+assinatura (.caixa-docs, sem .cad-cartao) + catálogo + os três cartões
+da consulta (.cad-cartao) — por isso o consulta.js antigo continua
+passando SEM mudança (os seletores .cad-cartao só existem na consulta).
+irSubCad("consulta") é mapeado para "documentos".

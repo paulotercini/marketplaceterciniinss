@@ -86,9 +86,10 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
       .map(b => b.innerText.trim()));
   conf(`o trilho do cliente triado sem caso (${divisoes.join(" · ")})`,
     /Identificação/.test(divisoes[0]) && divisoes.some(x => /Anotações/.test(x))
-    && divisoes.some(x => /Consulta/.test(x)) && divisoes.some(x => /Mensagens/.test(x))
+    && divisoes.some(x => /Documentos/.test(x))     // F31: carrega a Consulta
+    && divisoes.some(x => /Mensagens/.test(x))
     && !divisoes.some(x => /Triagem/.test(x))       // encerrada, sumiu
-    && !divisoes.some(x => /Documentos/.test(x)));  // só nasce com o caso
+    && !divisoes.some(x => /Consulta/.test(x)));    // mora dentro de Documentos
   await p.evaluate(() => irSubAnot("consulta"));
   await p.waitForTimeout(400);
   conf("a Consulta continua inteira, agora dentro de Anotações",

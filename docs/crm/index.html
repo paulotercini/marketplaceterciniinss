@@ -1684,7 +1684,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.29 · F30 — o Atendimento virou FLUXO: espécie (com "outros") e natureza, via administrativa ou judicial na incapacidade, documentos a trazer, anotações com atribuir/lembrar/anexar, honorários com o padrão do escritório por benefício (o ajuste entra no contrato impresso como disposição expressa em contrário) e a decisão por último — Gerar o caso (abre o botão Documentos com as procurações), Somente gerar lembrete (as anotações passam à aba Lembretes) ou Não gerar; a Triagem some quando encerrada (resumo vira a primeira informação das Anotações, com reabrir) e o fluxo vale também para quem já tem caso, pelo + atendimento</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.30 · F31 — a procuração, a declaração de pobreza e o contrato aparecem LOGO ABAIXO do "Gerar o caso" (imprime, colhe a assinatura e clica, sem trocar de tela — a espécie do pré-caso escolhe a variante certa), e o menu Documentos incorporou a Consulta: documentos para assinar, catálogo do INSS e portais com o CPF num painel só, um botão a menos no trilho</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8033,14 +8033,16 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   const pcsAll = precasosDe(c);
   const pcsVivos = pcsAll.filter(p=>!p.so_lembrete);
   const triFechada = triagemFechada(c);
-  const depois = triFechada || !semCaso;   // consulta/mensagens: depois do portão
+  const depois = triFechada || !semCaso;   // documentos/mensagens: depois do portão
   const vis = {identificacao:true,
     triagem: !triFechada,
     anotacoes: pcsVivos.length>0 || (triFechada && semCaso && !pcsAll.length),
-    documentos: !semCaso,
-    consulta: depois, mensagens: depois};
-  // valores antigos gravados: "atendimento" era o trilho interno de Anotações
+    documentos: depois,   // F31: carrega a Consulta junto — abre com o portão
+    mensagens: depois};
+  // valores antigos gravados: "atendimento" era o trilho interno de
+  // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
+         : subCad==="consulta" ? "documentos"
          : SUB_CAD.some(([v])=>v===subCad) ? subCad
          : (semCaso ? "anotacoes" : "identificacao");
   if(!vis[cd]) cd = cd==="triagem" ? (vis.anotacoes?"anotacoes":"identificacao")
@@ -8056,9 +8058,8 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         onclick="novoAtendimento('${c.id}')">+ atendimento</button>` : ""}
     </div>
     ${cd==="triagem" ? painelTriagemFicha(c, ks) : ""}
-    ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) : ""}
+    ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) + painelConsulta(c) : ""}
     ${cd==="anotacoes" ? caixaAtendimento(c, ks) : ""}
-    ${cd==="consulta" ? painelConsulta(c) : ""}
     ${cd==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}
     ${cd!=="identificacao" ? "" : `
     ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
@@ -8165,14 +8166,17 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
 // Anotações (a mesa do atendimento) da triagem encerrada até a decisão;
 // Documentos nasce com o caso (procuração e contrato para imprimir);
 // Consulta e Mensagens ganharam casa própria — o trilho interno acabou
+// F31 · a Consulta mora DENTRO de Documentos (pedido do Paulo) — um botão a
+// menos no trilho, e o painel traz documentos, catálogo e consulta juntos
 const SUB_CAD = [["identificacao","Identificação"],["triagem","Triagem"],
                  ["anotacoes","Anotações"],["documentos","Documentos"],
-                 ["consulta","Consulta"],["mensagens","Mensagens"]];
+                 ["mensagens","Mensagens"]];
 const SUB_ANOT = [["atendimento","Atendimento"],
                   ["consulta","Consulta"],["mensagens","Mensagens"]];
 let subAnot = ler("crm_subanot") || "atendimento";
 function irSubCad(qual){
   if(qual==="atendimento") qual="anotacoes";   // nome antigo do trilho interno
+  if(qual==="consulta") qual="documentos";     // F31: a Consulta mora em Documentos
   subCad = qual; guardar("crm_subcad", qual); repintarFicha();
 }
 // compatibilidade: o trilho interno de Anotações acabou na F30 — Consulta,
@@ -15136,7 +15140,11 @@ function preencherModeloDoc(txt, c, especie){
 // a que o atendimento anotou no cadastro
 function especieDoCliente(c, ks){
   const k = (casoSel && D.casoPorId.get(casoSel)) || (ks||[]).find(x=>x.fase!=="encerrado") || (ks||[])[0];
-  return (k && k.beneficio) || ((c.campos||{}).especie||"");
+  if(k && k.beneficio) return k.beneficio;
+  // F31 · sem caso, a espécie do PRÉ-CASO vivo responde: a procuração e o
+  // contrato impressos no fluxo saem da variante certa
+  const pcs = precasosDe(c).filter(p=>p.especie && !p.so_lembrete);
+  return (pcs[0]||{}).especie || ((c.campos||{}).especie||"");
 }
 function corpoDoDoc(chave, c, especie){
   const m=DOCS_ESCRITORIO[chave]; if(!m) return null;
@@ -15780,6 +15788,12 @@ function caixaAtendimento(c, ks){
 
     ${pcsVivos.map(blocoHonor).join("")}
     ${pcsVivos.map(blocoDecisao).join("")}
+    ${/* F31 · os documentos do escritório LOGO ABAIXO do criar caso: quem
+         está gerando imprime a procuração, a declaração de pobreza e o
+         contrato aqui mesmo, colhe a assinatura e clica Gerar o caso */""}
+    ${(pcsVivos.length && !ehPgto) ? `<div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+      ${caixaDocumentos(c, ks)}
+    </div>` : ""}
   </div>`;
 }
 function docExtraAtendimento(){

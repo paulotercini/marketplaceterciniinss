@@ -158,6 +158,15 @@ FIX.documentos_beneficio.push(
         && /15% sobre as parcelas, ajuste de balcão/.test(d.corpo);
     }, CLI_VAZIO));
 
+  // ── F31: os documentos do escritório logo abaixo do criar caso ──────────
+  const caixaTxt = await p.evaluate(() =>
+    (document.querySelector(".caixa-atend .caixa-docs") || {}).innerText || "");
+  conf("a procuração e a declaração de pobreza estão logo abaixo do Gerar o caso",
+    /Documentos para o cliente assinar/i.test(caixaTxt) && /Procuração/i.test(caixaTxt)
+    && /pobreza/i.test(caixaTxt));
+  conf("e o contrato anunciado segue a espécie do PRÉ-CASO (incapacidade)",
+    /Benefícios por incapacidade/i.test(caixaTxt));
+
   // ── 5. Somente gerar lembrete: Anotações some, notas vão a Lembretes ────
   await p.evaluate(cli => salvarNotaAtendimento2 && (document.getElementById("at-nota").value =
     "Vai juntar os exames e volta em setembro."), CLI_VAZIO);
@@ -201,6 +210,19 @@ FIX.documentos_beneficio.push(
   conf("o + atendimento abre a mesa também para quem já tem caso",
     await p.evaluate(() => !!document.querySelector(".caixa-atend"))
     && (await trilho()).some(x => /Anotações/.test(x)));
+
+  // ── 7. F31: o menu Documentos incorporou a Consulta ─────────────────────
+  conf("o botão Consulta saiu do trilho",
+    !(await trilho()).some(x => /^Consulta/.test(x)));
+  await p.evaluate(() => irSubCad("documentos"));
+  await p.waitForTimeout(500);
+  const docPainel = await p.evaluate(() =>
+    (document.querySelector('.painel[data-p="0"].ativo') || {}).innerText || "");
+  conf("o painel Documentos traz os documentos para assinar E a consulta",
+    /Documentos para o cliente assinar/i.test(docPainel)
+    && /Consultas com o CPF/i.test(docPainel) && /IN 128/i.test(docPainel));
+  conf("e o caminho antigo irSubCad('consulta') cai no lugar certo",
+    await p.evaluate(() => { irSubCad("consulta"); return subCad === "documentos"; }));
 
   console.log("=== o fluxo do atendimento (F30) ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
