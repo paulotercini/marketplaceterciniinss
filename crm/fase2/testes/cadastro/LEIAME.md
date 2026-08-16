@@ -235,3 +235,12 @@ assinatura (.caixa-docs, sem .cad-cartao) + catálogo + os três cartões
 da consulta (.cad-cartao) — por isso o consulta.js antigo continua
 passando SEM mudança (os seletores .cad-cartao só existem na consulta).
 irSubCad("consulta") é mapeado para "documentos".
+
+## novocliente.js (F32) — o CPF confere enquanto se digita
+
+`cpfValido` é o módulo 11 da Receita com a exclusão dos onze dígitos
+iguais (111.111.111-11 passa no cálculo cru — a exclusão é obrigatória).
+Os CPFs da fixtura (123.456.789-09 e 529.982.247-25) são os exemplos
+clássicos VÁLIDOS, por isso servem de par com o dígito trocado
+(123.456.789-00) para provar o aviso. O recado inline usa a memória
+(D.clientes); a trava dura do submit continua conferindo o banco.

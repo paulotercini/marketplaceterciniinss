@@ -1684,7 +1684,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.30 · F31 — a procuração, a declaração de pobreza e o contrato aparecem LOGO ABAIXO do "Gerar o caso" (imprime, colhe a assinatura e clica, sem trocar de tela — a espécie do pré-caso escolhe a variante certa), e o menu Documentos incorporou a Consulta: documentos para assinar, catálogo do INSS e portais com o CPF num painel só, um botão a menos no trilho</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.31 · F32 — o CPF é a chave: enquanto a recepção digita, aparece logo abaixo se o número já tem cadastro (com o nome do dono e o botão de abrir a ficha, mesmo que o nome tenha sido escrito diferente), o dígito verificador barra CPF digitado errado, e cadastrar de novo o mesmo CPF continua bloqueado</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5460,13 +5460,14 @@ function renderNovoCliente(){
     <div class="caso" style="max-width:640px">
       <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo *" style="flex:1;min-width:240px"></div>
       <div class="form-linha">
-        <input id="ncl-cpf" placeholder="CPF (só números)" maxlength="14">
+        <input id="ncl-cpf" placeholder="CPF (só números)" maxlength="14" oninput="conferirCpfNovo()">
         <input id="ncl-senha" placeholder="Senha Meu INSS" autocomplete="off"
           title="fica guardada com registro de quem copia ou vê, como na ficha">
         <input id="ncl-dn" type="date" title="data de nascimento"
           onchange="mostrarIdadeNovo()"><span id="ncl-idade" class="meio-sub"></span>
         <input id="ncl-tel" placeholder="Telefone/WhatsApp">
       </div>
+      <p id="ncl-cpf-recado" class="meio-sub" style="margin:0 0 6px"></p>
       <div class="form-linha">
         <select id="ncl-sexo" title="entra no cálculo da data da aposentadoria">
           <option value="">sexo…</option><option value="F">Mulher</option><option value="M">Homem</option>
@@ -5499,6 +5500,39 @@ function renderNovoCliente(){
       <div class="form-linha"><button onclick="criarCliente()">Cadastrar</button></div>
       <p style="font-size:12px;color:var(--cinza);margin-top:8px">O cliente também vira tarefa no To Do na próxima sincronização (título Nome #CPF), então quem estiver lá continua vendo.</p>
     </div>`;
+}
+// F32 · o CPF é a CHAVE da organização: mesmo com o nome escrito errado, é
+// ele que vincula o cliente. O dígito verificador (módulo 11, regra pública
+// da Receita) barra o CPF digitado errado antes de sujar a base.
+function cpfValido(d){
+  d = String(d||"").replace(/\D/g,"");
+  if(d.length!==11 || /^(\d)\1{10}$/.test(d)) return false;
+  for(const n of [9,10]){
+    let s=0; for(let i=0;i<n;i++) s += Number(d[i])*(n+1-i);
+    const dv=(s*10)%11%10;
+    if(dv!==Number(d[n])) return false;
+  }
+  return true;
+}
+// enquanto a recepção digita, a resposta aparece LOGO ABAIXO: CPF já
+// cadastrado mostra o dono e o atalho para o cadastro (pedido do Paulo)
+function conferirCpfNovo(){
+  const el=document.getElementById("ncl-cpf-recado"); if(!el) return;
+  const d=((document.getElementById("ncl-cpf")||{}).value||"").replace(/\D/g,"");
+  if(d.length<11){ el.innerHTML=""; return; }
+  const jaTem=D.clientes.find(c=>digitosCpf(c.cpf)===d);
+  if(jaTem){
+    const ks=(D.casosDoCliente.get(jaTem.id)||[]).filter(k=>k.fase!=="encerrado");
+    el.innerHTML=`<span style="color:var(--laranja)">⚠ Este CPF já é de
+      <b>${esc(jaTem.nome)}</b>${ks.length?` · ${ks.length} processo(s) em aberto`:""} —
+      não cadastre de novo.</span>
+      <button class="trilho-mais" onclick="abrirFicha('${jaTem.id}')">Abrir o cadastro</button>`;
+  } else if(!cpfValido(d)){
+    el.innerHTML=`<span style="color:var(--laranja)">✗ CPF inválido — confira os números
+      (ou apague e cadastre sem CPF, para completar depois).</span>`;
+  } else {
+    el.innerHTML=`<span style="color:var(--verde)">✓ CPF livre — nenhum cadastro com este número.</span>`;
+  }
 }
 // a rua digitada contra a lista de CEPs: escolhida da lista ("Rua — Bairro")
 // ou digitada por inteiro quando o nome só existe num bairro
@@ -5583,6 +5617,9 @@ async function criarCliente(){
   const nome=document.getElementById("ncl-nome").value.trim();
   if(!nome) return aviso("Preencha ao menos o nome");
   const cpf=document.getElementById("ncl-cpf").value.replace(/\D/g,"")||null;
+  // F32 · CPF digitado errado não entra: a base se organiza pelo CPF
+  if(cpf && !cpfValido(cpf))
+    return aviso("CPF inválido — confira os números (ou apague o campo e cadastre sem CPF)");
   if(cpf){
     // procura na memória e confirma no banco: outro colaborador pode ter
     // cadastrado o mesmo cliente enquanto esta tela estava aberta

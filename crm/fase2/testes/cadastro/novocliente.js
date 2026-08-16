@@ -256,6 +256,38 @@ FIX.colaboradores = [...FIX.colaboradores,
   conf("sem senha digitada, nenhuma credencial nasce (cadastros anteriores)",
     !escritos.filter(x => x.t === "credenciais").some(x => !x.corpo.valor));
 
+  // ── F32: o CPF confere ENQUANTO se digita ───────────────────────────────
+  await abrirTela();
+  await p.fill("#ncl-cpf", "123.456.789-09");   // o CPF da Aurélia, já cadastrada
+  await p.evaluate(() => conferirCpfNovo());
+  const rec = () => p.evaluate(() => (document.getElementById("ncl-cpf-recado") || {}).innerText || "");
+  conf("CPF já cadastrado aparece logo abaixo, com o dono",
+    /já é de/.test(await rec()) && /Aurélia Ficta de Souza/.test(await rec()));
+  conf("com o atalho para abrir o cadastro",
+    await p.evaluate(() => !!document.querySelector("#ncl-cpf-recado button")));
+  conf("o atalho abre a ficha do dono do CPF",
+    await p.evaluate(async cli => { document.querySelector("#ncl-cpf-recado button").click();
+      await new Promise(r => setTimeout(r, 600));
+      return clienteAberto === cli; }, CLI_CHEIO));
+  await abrirTela();
+  await p.fill("#ncl-cpf", "529.982.247-25");   // válido e livre
+  await p.evaluate(() => conferirCpfNovo());
+  conf("CPF válido e livre ganha o recado verde", /CPF livre/.test(await rec()));
+  await p.fill("#ncl-cpf", "123.456.789-00");   // dígito verificador errado
+  await p.evaluate(() => conferirCpfNovo());
+  conf("dígito verificador errado avisa na hora", /CPF inválido/.test(await rec()));
+  conf("onze dígitos iguais também não passam",
+    await p.evaluate(() => !cpfValido("11111111111") && !cpfValido("00000000000")));
+  conf("e os CPFs verdadeiros passam",
+    await p.evaluate(() => cpfValido("12345678909") && cpfValido("52998224725")));
+  // cadastrar com CPF inválido é barrado
+  escritos.length = 0;
+  await p.fill("#ncl-nome", "Zenaide Ficta Ramos");
+  await p.evaluate(() => criarCliente());
+  await p.waitForTimeout(500);
+  conf("cadastrar com CPF inválido é barrado antes de gravar",
+    !escritos.some(x => x.m === "POST"));
+
   // ── 4. CPF repetido continua barrado ────────────────────────────────────
   await abrirTela();
   escritos.length = 0;

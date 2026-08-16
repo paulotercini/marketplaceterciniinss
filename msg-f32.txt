@@ -1,0 +1,13 @@
+F32: o CPF e a chave, conferido enquanto se digita (09.31)
+
+Na tela da recepcao, o CPF responde na hora, logo abaixo do campo: ja
+cadastrado mostra o dono e os processos em aberto, com o botao Abrir o
+cadastro (mesmo com nome escrito diferente, o CPF vincula); valido e
+livre ganha o visto verde; digito verificador errado (modulo 11 da
+Receita, com exclusao de digitos repetidos) avisa na hora e o submit
+barra. Cadastrar sem CPF continua permitido para nao travar o balcao, e
+a janela de CPF repetido no submit segue como segunda trava. Teste
+novocliente.js com 57 provas; suite 26 arquivos verdes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3
