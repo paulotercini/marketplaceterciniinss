@@ -1,4 +1,12 @@
-# Onde paramos — 16.08.2026, versão 09.31
+# Onde paramos — 16.08.2026, versão 09.32
+
+## F33 · A lista de documentos nasce fechada (09.32)
+
+O bloco "2 · Documentos que o cliente vai trazer" do fluxo virou
+`<details>` fechado: só o título com o resumo (quantos itens, quantos
+já pedidos) fica à vista, e o clique abre a lista — tela mais limpa,
+pedido do Paulo. O summary carrega a classe `.rotulo-caso` para a
+prova de ordem do fluxo continuar valendo.
 
 ## F32 · O CPF é a chave, conferido enquanto se digita (09.31)
 

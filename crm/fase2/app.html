@@ -1684,7 +1684,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.31 · F32 — o CPF é a chave: enquanto a recepção digita, aparece logo abaixo se o número já tem cadastro (com o nome do dono e o botão de abrir a ficha, mesmo que o nome tenha sido escrito diferente), o dígito verificador barra CPF digitado errado, e cadastrar de novo o mesmo CPF continua bloqueado</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.32 · F33 — a lista dos documentos que o cliente vai trazer nasce fechada no fluxo do atendimento: só o título com o resumo (quantos itens, quantos já pedidos) fica à vista, e o clique abre a lista inteira — tela mais limpa</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15748,8 +15748,12 @@ function caixaAtendimento(c, ks){
         <button onclick="criarCronogramaINSS('${c.id}')">Criar o lembrete com o cronograma</button>
       </div>
     </div>`:`
-    <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
-      <div class="rotulo-caso">2 · Documentos que o cliente vai trazer</div>
+    ${/* F33 · o bloco nasce FECHADO (pedido do Paulo): a lista só aparece no
+         clique, e o título resume o que há dentro — tela mais limpa */""}
+    <details style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+      <summary class="rotulo-caso" style="cursor:pointer;display:list-item">2 · Documentos que o cliente vai trazer${
+        esp&&(itens.length||extras.length)?` <span class="meio-sub" style="text-transform:none">— lista de ${itens.length+extras.length} itens${pedidos.length?` · já pedimos ${pedidos.reduce((n,p)=>n+(p.itens||[]).length,0)}`:""} (clique para abrir)</span>`
+        :` <span class="meio-sub" style="text-transform:none">— clique para abrir</span>`}</summary>
       ${esp&&(itens.length||extras.length)?`
         <p class="meio-sub" style="margin:2px 0 6px">Marque, imprima para o cliente levar — e fica registrado no CRM o que pedimos.</p>
         <div id="at-docs" style="max-height:34vh;overflow:auto">
@@ -15782,7 +15786,7 @@ function caixaAtendimento(c, ks){
               :`<button class="btn-mini" onclick="docEntregue('${c.id}',${pi},${ii})">entregue</button>`}
           </li>`).join("")).join("")}
         </ul></div>`:""}
-    </div>`}
+    </details>`}
 
     <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
       <div class="rotulo-caso">3 · Anotações deste atendimento</div>

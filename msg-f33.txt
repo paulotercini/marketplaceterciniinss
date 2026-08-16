@@ -1,0 +1,10 @@
+F33: a lista de documentos nasce fechada (09.32)
+
+O bloco 2 do fluxo do atendimento (documentos que o cliente vai trazer)
+virou details fechado: so o titulo com o resumo (quantos itens, quantos
+ja pedidos) fica a vista, e o clique abre a lista inteira. Tela mais
+limpa, pedido do Paulo. Suite 26 arquivos verdes, fluxo.js com 34
+provas.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3

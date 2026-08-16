@@ -143,8 +143,31 @@ FIX.documentos_beneficio.push(
     /Padrão do escritório/.test(await p.evaluate(() => document.querySelector(".caixa-atend").innerText))
     && /20% sobre os 6 primeiros/.test(await p.evaluate(() => document.querySelector(".caixa-atend").innerText)));
   conf("a cláusula completa do contrato está a um clique",
-    await p.evaluate(() => /ver a cláusula completa/.test(
-      (document.querySelector(".caixa-atend details summary") || {}).innerText || "")));
+    await p.evaluate(() => [...document.querySelectorAll(".caixa-atend details summary")]
+      .some(x => /ver a cláusula completa/.test(x.innerText))));
+  // F33 · a lista de documentos nasce FECHADA, com o resumo no título
+  conf("o bloco 2 dos documentos nasce fechado, só o título à vista",
+    await p.evaluate(() => {
+      const d = [...document.querySelectorAll(".caixa-atend details")]
+        .find(x => /2 · documentos/i.test((x.querySelector("summary") || {}).innerText || ""));
+      return d && !d.open;
+    }));
+  conf("e o título resume a lista sem expor os itens",
+    await p.evaluate(() => {
+      const s = [...document.querySelectorAll(".caixa-atend details summary")]
+        .find(x => /2 · documentos/i.test(x.innerText));
+      return s && /lista de \d+ itens/.test(s.innerText)
+        && !/Documentos médicos/.test(s.parentElement.innerText.split("\n")[0]);
+    }));
+  conf("o clique abre a lista inteira",
+    await p.evaluate(() => {
+      const d = [...document.querySelectorAll(".caixa-atend details")]
+        .find(x => /2 · documentos/i.test((x.querySelector("summary") || {}).innerText || ""));
+      d.open = true;
+      const tem = d.querySelectorAll(".at-doc").length > 0;
+      d.open = false;
+      return tem;
+    }));
   escritos.length = 0;
   await p.evaluate(([cli, id]) => mudarPreCaso(cli, id, "honorarios", "15% sobre as parcelas, ajuste de balcão"), [CLI_VAZIO, pcId]);
   await p.waitForTimeout(500);
