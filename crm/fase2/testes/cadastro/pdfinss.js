@@ -91,11 +91,11 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: CPF_DOC };
   conf(`ordena pelo tamanho do problema (${cnis.indicadores.map(i => i.codigo)[0]} primeiro)`,
     cnis.indicadores[0].codigo === "PREC-FACULTCONC");
   conf(`conta os vínculos (${cnis.vinculos})`, cnis.vinculos >= 2);
-  conf(`conta as páginas (${cnis.paginas})`, cnis.paginas === 3);
+  conf(`conta as páginas (${cnis.paginas})`, cnis.paginas === 7);
 
   // um CNIS sem legenda nenhuma não pode inventar indicador
   const limpo = await p.evaluate(it =>
-    lerCnisPdf(it.filter(i => i.p !== 3)), ITENS_CNIS);
+    lerCnisPdf(it.filter(i => i.p !== 7)), ITENS_CNIS);
   conf(`sem a página da legenda, nenhum indicador é inventado (${limpo.indicadores.length})`,
     limpo.indicadores.length === 0 && limpo.filiado.nit === "123.45678.90-1");
 

@@ -1191,6 +1191,24 @@
   /* o fecho do atendimento */
   /* o botão de ler o PDF, dentro do passo. A frase ao lado não é enfeite: é
      a única forma de quem atende saber que o arquivo não está sendo enviado. */
+  /* a vida contributiva: lista fechada, aberta por quem quiser ver. Trinta
+     linhas soltas no passo enterrariam os indicadores. */
+  .vida-cx{margin:8px 0 0 32px;border:1px solid var(--borda-suave);border-radius:8px;
+    background:var(--placa);padding:0 10px}
+  .vida-cx summary{cursor:pointer;font-size:12.5px;font-weight:600;color:var(--texto);
+    padding:8px 0;min-height:24px;display:flex;align-items:center}
+  .vida-acao{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:0 0 8px}
+  .vida-lista{margin:0 0 10px;padding:0 0 0 26px;font-size:12.5px;color:var(--texto)}
+  .vida-lista li{padding:3px 0;border-top:1px solid var(--borda-suave);
+    display:flex;gap:8px;flex-wrap:wrap;align-items:baseline}
+  .vida-lista li:first-child{border-top:0}
+  .vida-per{font-variant-numeric:tabular-nums;flex:none;min-width:150px}
+  .vida-quem{flex:1;min-width:150px}
+  .vida-tipo{font-size:11.5px;color:var(--cinza)}
+  .vida-ind{font-size:11px;font-weight:700;color:var(--laranja);
+    background:var(--laranja-f);border-radius:5px;padding:1px 6px}
+  .vida-ben .vida-quem{color:var(--azul-escuro);font-weight:600}
+  .vida-aberto .vida-per b{color:var(--verde)}
   .tri-pdf{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:6px 0 0 32px}
   .tri-pdf-nota{font-size:11.5px;color:var(--cinza-claro)}
   .tri-nota{white-space:pre-wrap}
@@ -1590,7 +1608,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.18 · F18 — a triagem lê o CNIS e a Declaração de Benefícios: o PDF é aberto no próprio navegador, os indicadores saem com a descrição oficial e a contagem, os benefícios saem com NB, espécie, situação e datas, e o CPF do documento é conferido contra o da ficha antes de qualquer gravação</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.19 · F19 — a vida contributiva sai do CNIS pronta para o parecer, em ordem cronológica e com os períodos de benefício que o próprio extrato traz; no cadastro, CPF e senha do Meu INSS passaram a ficar lado a lado, e o protocolo voltou para o caso, que é de quem ele é</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7843,10 +7861,20 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
          abaixo do cartão. Agora falam a mesma língua visual do de cima. */""}
     <div class="cad-cartao">
       <div class="cad-tit"><span class="cad-ic">${CAD_IC.duplas}</span>Ligações do cliente
-        <span class="cad-tit-sub">protocolos no INSS, parceria e parentes já cadastrados</span></div>
-      <div class="id-secao"><label>Protocolos INSS <small>(extraídos dos andamentos — a pesquisa encontra o cliente por eles)</small></label>
-        ${prots.length?prots.map(pr=>`<span class="chip neutro" style="cursor:pointer" title="copiar" onclick="copiar('${pr}','Protocolo copiado')">${CAD_IC.doc} ${pr}</span>`).join(" ")
-        :`<span style="font-size:13px;color:var(--cinza)">nenhum protocolo anotado ainda</span>`}</div>
+        <span class="cad-tit-sub">parceria e parentes já cadastrados</span></div>
+      ${/* O protocolo NÃO mora mais aqui. Ele é do CASO, não do cliente: cada
+           protocolo é um requerimento, com a sua DER, o seu benefício e o seu
+           desfecho. Achatados numa fileira só, três protocolos de três casos
+           viravam três números sem dono, e ninguém sabia qual era de qual.
+           Onde eles vivem agora, os dois com propósito: na trilha do processo
+           ("De onde partiu"), ao lado do NB e da DER daquele caso; e no passo
+           Requerimentos anteriores da Triagem, consolidados, que é onde a
+           conferência do Tema 350 acontece. A pesquisa continua achando o
+           cliente pelo protocolo — ela lê o campo do caso, não este cartão. */""}
+      ${prots.length?`<div class="id-secao"><label>Protocolos no INSS <small>(${prots.length} — moram no processo a que pertencem)</small></label>
+        <span style="font-size:13px;color:var(--cinza)">Cada protocolo está na aba
+          <b>Casos</b> do processo dele, em "De onde partiu", e todos juntos na
+          <b>Triagem</b>, no passo "Requerimentos anteriores".</span></div>`:""}
       ${parcs.length?`<div class="id-secao"><label>Parceria</label>
         ${parcs.map(pa=>`<span class="chip ben">${CAD_IC.duplas} ${esc(pa)}</span>`).join(" ")}</div>`:""}
       <div class="id-secao"><label>Parentes e amigos <small>(clientes vinculados — clique para abrir a ficha)</small></label>
@@ -8118,10 +8146,16 @@ function triagemLeitura(passo, c, ks){
       det: pagando.map(k=>tituloCaso(k)+(k.nb?` · NB ${esc(k.nb)}`:"")).join(" · ")};
   }
   if(passo==="requerimento"){
-    const prots = [...new Set((ks||[]).flatMap(k=>k.protocolos||[]))];
-    return prots.length
-      ? {cor:"ok", txt:`${prots.length} protocolo(s) no INSS — há prévio requerimento (Tema 350)`,
-         det: prots.join(" · ")}
+    // protocolo solto não serve para nada: o que responde ao Tema 350 é o
+    // requerimento COM o pedido dele. Cada um sai com o caso a que pertence
+    // e com a DER, quando o caso tem DER anotada.
+    const pares = (ks||[]).flatMap(k=>(k.protocolos||[]).map(pr=>({pr, k})));
+    const vistos = new Set();
+    const unicos = pares.filter(x=> vistos.has(x.pr) ? false : (vistos.add(x.pr), true));
+    return unicos.length
+      ? {cor:"ok", txt:`${unicos.length} protocolo(s) no INSS — há prévio requerimento (Tema 350)`,
+         det: unicos.map(({pr,k})=>`${pr} · ${tituloCaso(k)}`
+           + (k.der?` · DER ${fmt(k.der)}`:"")).join(" · ")}
       : {cor:"alerta", txt:"nenhum protocolo do INSS no CRM — sem prévio requerimento a ação é extinta (Tema 350)"};
   }
   if(passo==="cnis"){
@@ -8288,7 +8322,86 @@ function lerCnisPdf(itens){
     if(achados.has(cod)) achados.get(cod).ocorrencias++;
   }
   r.indicadores = [...achados.values()].sort((a,b)=>b.ocorrencias-a.ocorrencias);
+  r.linhaDoTempo = lerVinculosCnis(itens);
   return r;
+}
+// ── a vida contributiva, como o CNIS a escreve ──────────────────────────
+// A linha de vínculo tem sete formatos no extrato, e o tipo de filiado quebra
+// para a linha de baixo ("Empregado ou Agente" + "Público"). O que muda entre
+// eles é quantas datas vêm: vínculo fechado traz início e fim, vínculo aberto
+// traz só o início, e alguns trazem a última remuneração no lugar do fim —
+// competência (MM/AAAA), não data. Confundir as duas coisas fecharia um
+// vínculo que ainda está aberto.
+// pares [o que está escrito, o nome que vale]. "Empregado ou Agente Público"
+// quebra em duas linhas no extrato, e quando o "Público" não cai na linha
+// seguinte o texto termina em "Empregado ou Agente" — sem esta entrada, o
+// casamento caía no "Empregado" solto e o tipo saía errado em 3 dos 30.
+// Do mais longo para o mais curto: o primeiro que casar é o que vale.
+const TIPOS_FILIADO = [
+  ["Empregado ou Agente Público","Empregado ou Agente Público"],
+  ["Empregado ou Agente","Empregado ou Agente Público"],
+  ["Empregado Doméstico","Empregado Doméstico"],
+  ["Contribuinte Individual","Contribuinte Individual"],
+  ["Trabalhador Avulso","Trabalhador Avulso"],
+  ["Segurado Especial","Segurado Especial"],
+  ["Empregador","Empregador"],
+  ["Empregado","Empregado"],
+  ["Facultativo","Facultativo"],
+];
+const SIT_BEN = {"1":"CESSADO","2":"ATIVO","3":"SUSPENSO"};
+function lerVinculosCnis(itens){
+  const linhas = linhasDoPdf(palavrasDoPdf(itens));
+  const out = [];
+  linhas.forEach((l, i)=>{
+    const m = l.txt.match(/^(\d{1,3})\s+(\d{3}\.\d{5}\.\d{2}-\d)\s+(.*)$/);
+    if(!m) return;
+    const [, seq, nit] = m;
+    let resto = m[3];
+    // "Empregado ou Agente" termina na linha seguinte, em "Público"
+    const seg = linhas[i+1];
+    if(seg && /^Público$/.test(seg.txt.trim()) && /Empregado ou Agente$/.test(resto.replace(/\s+\d.*$/,"").trim()))
+      resto = resto.replace(/(Empregado ou Agente)(?=\s|$)/, "$1 Público");
+
+    // período de benefício: o CNIS traz o benefício como se fosse vínculo, e
+    // é dele que sai a história de B31 sem precisar da Declaração
+    const b = resto.match(/^(\d{9,11})\s+Benefício\s+(\d+)\s*-\s*(.+?)\s+(\d{2}\/\d{2}\/\d{4})(?:\s+(\d{2}\/\d{2}\/\d{4}))?(?:\s+(\d+)\s*-\s*([A-ZÇÃÕÁÉÍÓÚ]+))?\s*$/);
+    if(b){
+      out.push({seq:+seq, nit, tipo:"Benefício", especie:b[2], origem:b[3].trim(),
+        nb:b[1], inicio:b[4], fim:b[5]||"", situacao:b[7] || SIT_BEN[b[6]] || "", aberto:!b[5]});
+      return;
+    }
+    // vínculo comum: acha o tipo de filiado, o mais longo que casar
+    const par = TIPOS_FILIADO.find(([escrito])=>resto.includes(escrito));
+    if(!par) return;
+    const [escrito, tipo] = par;
+    const antes = resto.slice(0, resto.indexOf(escrito)).trim();
+    const depois = resto.slice(resto.indexOf(escrito)+escrito.length).trim();
+    const datas = depois.match(/\d{2}\/\d{2}\/\d{4}/g) || [];
+    const comp  = depois.match(/(?:^|\s)(\d{2}\/\d{4})(?:\s|$)/);
+    const ind   = depois.match(/\b[A-Z]{3,}(?:-[A-Z0-9]{2,})*\b/g) || [];
+    // o código do empregador vem antes do nome: CNPJ, CEI ou número solto
+    const cod = antes.match(/^(\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}|[\d.\/-]{8,})\s+/);
+    out.push({seq:+seq, nit, tipo, origem:(cod ? antes.slice(cod[0].length) : antes).trim(),
+      codigo: cod ? cod[1] : "", inicio:datas[0]||"", fim:datas[1]||"",
+      ultRemun: comp ? comp[1] : "", indicadores: ind, aberto: !datas[1]});
+  });
+  // ordem cronológica: é assim que a vida contributiva se lê, e não pela
+  // sequência do INSS, que segue a ordem de cadastro
+  const chave = v => { const d=(v.inicio||"").split("/"); return d.length===3 ? d[2]+d[1]+d[0] : "9999"; };
+  return out.sort((a,b)=>chave(a).localeCompare(chave(b)) || a.seq-b.seq);
+}
+// o texto pronto para colar no parecer, na seção de vida contributiva
+function vidaContributivaTexto(vs){
+  const dt = d => d ? d.replace(/\//g,".") : "";
+  return vs.map(v=>{
+    const per = v.fim ? `${dt(v.inicio)} a ${dt(v.fim)}` : `${dt(v.inicio)} em aberto`;
+    if(v.tipo==="Benefício")
+      return `${per} · Benefício espécie ${v.especie} · ${v.origem}`
+        + (v.nb?` · NB ${v.nb}`:"") + (v.situacao?` · ${v.situacao}`:"");
+    return `${per} · ${v.tipo} · ${v.origem}`
+      + (v.codigo?` (${v.codigo})`:"")
+      + (v.indicadores && v.indicadores.length?` · ${v.indicadores.join(", ")}`:"");
+  }).join("\n");
 }
 // ── Declaração de Benefícios ────────────────────────────────────────────
 // Cada benefício é uma linha com o NB à esquerda e, em volta dela, o nome da
@@ -8336,6 +8449,49 @@ function conferePdfComCliente(lido, c){
     + `(${fmtCpf(daFicha)}). Nada foi gravado.`};
 }
 
+// ── a vida contributiva na tela ─────────────────────────────────────────
+// Trinta linhas dentro da anotação do passo enterrariam os indicadores. A
+// linha do tempo mora no próprio passo, fechada, e sai inteira num clique
+// para colar no parecer.
+function blocoVidaContributiva(c){
+  const g = ((triagemDe(c).pdf||{}).cnis||{});
+  const vs = g.vinculos || [];
+  if(!vs.length) return "";
+  const abertos = vs.filter(v=>v.aberto && v.tipo!=="Benefício").length;
+  const bens = vs.filter(v=>v.tipo==="Benefício").length;
+  return `<details class="vida-cx">
+    <summary>Vida contributiva lida do CNIS — ${vs.length} registros${
+      bens?`, ${bens} de benefício`:""}${abertos?`, ${abertos} em aberto`:""}</summary>
+    <div class="vida-acao">
+      <button class="cad-mini" onclick="copiarVidaContributiva('${c.id}')">Copiar para o parecer</button>
+      <span class="tri-pdf-nota">em ordem cronológica, do jeito que a seção do parecer pede</span>
+    </div>
+    <ol class="vida-lista">${vs.map(v=>{
+      const dt = d => d ? esc(d.replace(/\//g,".")) : "";
+      const per = v.fim ? `${dt(v.inicio)} a ${dt(v.fim)}`
+                        : `${dt(v.inicio)} <b>em aberto</b>`;
+      return `<li class="${v.tipo==="Benefício"?"vida-ben":""}${v.aberto?" vida-aberto":""}">
+        <span class="vida-per">${per}</span>
+        <span class="vida-quem">${esc(v.origem)}</span>
+        <span class="vida-tipo">${v.tipo==="Benefício"
+          ? `benefício espécie ${esc(v.especie)}${v.situacao?" · "+esc(v.situacao):""}`
+          : esc(v.tipo)}</span>
+        ${v.indicadores && v.indicadores.length
+          ? `<span class="vida-ind">${esc(v.indicadores.join(", "))}</span>`:""}
+      </li>`;
+    }).join("")}</ol>
+  </details>`;
+}
+async function copiarVidaContributiva(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const g = ((triagemDe(c).pdf||{}).cnis||{});
+  const vs = g.vinculos || []; if(!vs.length) return;
+  const txt = `VIDA CONTRIBUTIVA (lida do CNIS em ${fmt(g.em||hoje())})\n\n`
+    + vidaContributivaTexto(vs);
+  try{ await navigator.clipboard.writeText(txt);
+       aviso(`${vs.length} registros copiados — cole na seção do parecer ✔`); }
+  catch(e){ aviso("Não consegui copiar; o navegador bloqueou a área de transferência"); }
+}
 // ── o botão dentro do passo da triagem ───────────────────────────────────
 // CNIS alimenta os passos "CNIS" e "Indicadores e pendências"; a Declaração
 // alimenta "Benefício ativo". São os três passos que hoje dependem de alguém
@@ -8403,10 +8559,15 @@ async function gravarCnisLido(cliId, lido){
   t.cnis = {...(t.cnis||{}),
     nota: juntarNota((t.cnis||{}).nota,
       `CNIS lido em ${fmt(hoje())}: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s)`
+      + (()=>{ const lt=lido.linhaDoTempo||[];
+               const b=lt.filter(v=>v.tipo==="Benefício").length;
+               const ab=lt.filter(v=>v.aberto && v.tipo!=="Benefício").length;
+               return (b?`, ${b} período(s) de benefício`:"") + (ab?`, ${ab} em aberto`:""); })()
       + (lido.filiado.nit?`, NIT ${lido.filiado.nit}`:"") + "."),
     em:hoje(), quem:eu.id};
   t.pdf = {...(t.pdf||{}), cnis:{em:hoje(), quem:eu.id, paginas:lido.paginas,
-    vinculos:lido.vinculos, indicadores:lido.indicadores.map(i=>i.codigo)}};
+    qtVinculos:lido.vinculos, indicadores:lido.indicadores.map(i=>i.codigo),
+    vinculos:lido.linhaDoTempo||[]}};
   if(!await salvarTriagem(cliId, t)) return aviso("Li o PDF, mas não consegui guardar");
   await lancarNoCaso(cliId, `CNIS lido no CRM: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s), `
     + (lido.indicadores.length
@@ -8503,6 +8664,7 @@ function painelTriagemFicha(c, ks){
         <div class="tri-leitura ${l.cor}">${esc(l.txt)}${
           l.det?`<span class="tri-det">${esc(l.det)}</span>`:""}</div>
         ${botaoPdfTriagem(c.id, chave)}
+        ${chave==="cnis" ? blocoVidaContributiva(c) : ""}
         ${chave==="conclusao"?`
         <div class="tri-prox">
           ${TRIAGEM_PROXIMO.map(([v,r])=>`<button class="tri-p${prox===v?" on":""}"
@@ -13868,8 +14030,8 @@ async function gravarImportacao(){
 // no sistema de tokens, quer dizer PRAZO. Senha não tem prazo. Agora ela é o
 // penúltimo campo da própria grade, com a mesma moldura dos outros: sem senha,
 // a borda tracejada convida a cadastrar, como todo campo em branco da tela.
-function cadCampoSenha(c, tipo, rot, cr){
-  return `<div class="cad-campo cad-c6${cr?"":" vazio"}"
+function cadCampoSenha(c, tipo, rot, cr, colunas, extra){
+  return `<div class="cad-campo cad-c${colunas||6}${extra?" "+extra:""}${cr?"":" vazio"}"
       ${cr?"":`onclick="trocarSenha('${c.id}','${tipo}','')" style="cursor:pointer"`}>
     <label><span class="cad-ic">${CAD_IC.cadeado}</span>${esc(rot)}</label>
     <div class="cad-v">${cr?`<span class="cad-segredo" id="cred-${cr.id}">••••••••</span>
@@ -13902,7 +14064,11 @@ function fichaIdentificacao(c, creds){
         falta.length} campo${falta.length>1?"s":""} em branco</span>`
       :`<span class="cad-cont cad-ok">completo</span>`}</div>
     <div class="cad-grade">
-      <div class="cad-campo cad-c8" onclick="if(!this.querySelector('#ed-campo'))editarCampo('nome','${c.id}')" style="cursor:pointer">
+      ${/* O nome ganha a linha inteira, e a linha seguinte junta o que mais se
+           copia num atendimento: CPF, senha do Meu INSS e nascimento, lado a
+           lado. Antes a senha era o penúltimo campo do cartão, e entrar no Meu
+           INSS pedia copiar em cima, rolar até o fim e copiar de novo. */""}
+      <div class="cad-campo cad-c12" onclick="if(!this.querySelector('#ed-campo'))editarCampo('nome','${c.id}')" style="cursor:pointer">
         <label>Nome completo <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
         <div class="cad-v grande" id="campo-nome">${esc(c.nome)}</div>
       </div>
@@ -13914,16 +14080,17 @@ function fichaIdentificacao(c, creds){
         <div class="cad-v" id="campo-cpf">${c.cpf?fmtCpf(c.cpf):"clique para preencher"}
           ${c.cpf?`<button class="cad-mini" onclick="event.stopPropagation();copiar('${c.cpf}','CPF copiado')">${CAD_IC.copiar}copiar</button>`:""}</div>
       </div>
+      ${cadCampoSenha(c, "meu_inss", "Senha Meu INSS", credInss, 4)}
 
-      <div class="cad-campo cad-c3${c.dn?"":" vazio"}"
+      <div class="cad-campo cad-c4${c.dn?"":" vazio"}"
         onclick="if(!this.querySelector('#ed-campo'))editarCampo('dn','${c.id}')" style="cursor:pointer">
         <label>Nascimento <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
         <div class="cad-v" id="campo-dn">${c.dn?`${c.dn.slice(0,2)}.${c.dn.slice(2,4)}.${c.dn.slice(4)}
           ${idade==null?"":`<span class="cad-apoio">${idade} anos</span>`}`:"clique para preencher"}</div>
       </div>
-      ${cadCampo(c, "sexo", 3)}
-      ${cadCampo(c, "estado_civil", 3)}
-      ${cadCampo(c, "profissao", 3)}
+      ${cadCampo(c, "sexo", 4)}
+      ${cadCampo(c, "estado_civil", 4)}
+      ${cadCampo(c, "profissao", 4)}
 
       <div class="cad-campo cad-c6${tels.length?"":" vazio"}">
         <label>Telefones</label>
@@ -13952,7 +14119,6 @@ function fichaIdentificacao(c, creds){
       ${cadCampo(c, "nome_mae", 4)}
       ${cadCampo(c, "pis_nit", 4)}
 
-      ${cadCampoSenha(c, "meu_inss", "Senha Meu INSS", credInss)}
       ${outrasCreds.map(cr=>cadCampoSenha(c, cr.tipo, "Senha "+esc(cr.tipo.replace("_"," ")), cr)).join("")}
       ${cadCampoPasta(c)}
     </div>
