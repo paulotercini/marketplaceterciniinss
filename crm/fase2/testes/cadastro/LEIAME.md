@@ -128,3 +128,19 @@ Do arquivo de teste, duas:
 E uma de medida: dentro de um `<details>` fechado o Chromium **ainda devolve
 caixa de layout** para os campos. Medir a altura dos campos não diz se a coisa
 está aberta; medir a altura do próprio `<details>` diz.
+
+## anotacoes.js (F21) — a anotação com tipo
+
+O modelo veio de pesquisa (Clio, MyCase, Notion, Linear, Obsidian, Astrea,
+ADVBOX, Tabelas do CNJ), e três decisões merecem registro:
+
+1. **O tipo viaja como prefixo `[TIPO]` no texto.** Nenhuma coluna nova, o
+   To Do recebe legível, a pesquisa acha, e a tela troca o colchete por chip.
+2. **Não existe tipo OUTROS.** Viraria o dreno onde 80% cai. Sem tipo escolhido
+   o comentário continua livre, que é o comportamento de sempre.
+3. **O template preenche o VALOR, não o placeholder.** Esqueleto que a pessoa
+   completa (lição do Notion/Linear); placeholder some ao digitar.
+
+Armadilha de CSS: a `.escrever` pinta todo botão de azul por uma regra com
+lista de `:not()`. Chip novo dentro dela PRECISA entrar na lista, ou nasce
+azul sólido.
