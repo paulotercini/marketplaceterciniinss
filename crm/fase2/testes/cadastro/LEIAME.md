@@ -49,3 +49,35 @@ para cada uma. Duas armadilhas encontradas por ele, as duas no programa:
 Terceira armadilha, no teste: um retrato de `.cad-cartao` corta justamente os
 passos novos, porque eles ficam no fim de um cartão que rola. A captura clona
 os passos da espécie num contêiner próprio antes de fotografar.
+
+## pdfinss.js e fixt-pdf.js (F18) — ler o PDF do INSS
+
+O risco não é abrir o PDF, é entender o layout. Por isso `lerCnisPdf` e
+`lerDeclaracaoPdf` são funções PURAS sobre a lista de pedaços de texto com
+posição, e o teste roda sobre elas, com as coordenadas exatas de dois PDFs de
+verdade e todo dado de pessoa trocado.
+
+**A fixtura é mascarada por LISTA BRANCA**, não por substituição. `extract_words`
+já entrega o texto quebrado em palavras, então trocar "FULANO DE TAL" inteiro
+nunca casa — e o que sobra é meio nome real no arquivo de teste. Só passa
+palavra que esteja no vocabulário público do INSS; qualquer outra vira palavra
+inventada. A pontuação do fim precisa sobreviver à troca: sem os dois-pontos de
+`pertencente a FULANO:` o extrator não acha onde o nome termina.
+
+Três armadilhas do próprio programa, achadas aqui:
+
+1. **O pdf.js entrega PEDAÇOS de texto, não palavras.** Um pedaço pode vir
+   `"123.456.789-0 CESSADO"` junto, e aí nenhuma comparação de palavra casa. O
+   `palavrasDoPdf` quebra tudo em palavra repartindo o x pela largura, e o teste
+   confere o mesmo resultado com a fixtura recolada em 38 pedaços.
+2. **A legenda de indicadores tem duas colunas.** A descrição que transborda
+   para a linha de baixo pertence à COLUNA em que ela está, não ao último código
+   lido. Emendar no último jogava o "concomitante com outros vínculos" do
+   PREC-FACULTCONC dentro do PREC-MENOR-MIN.
+3. **A espécie da Declaração é escrita em TRÊS linhas em volta do NB.** Qualquer
+   leitura por linha de texto corrida quebra ali. O extrator ancora no NB e pega
+   a faixa do meio nas linhas vizinhas.
+
+O que o teste NÃO cobre, e é honesto dizer: o carregamento do pdf.js pelo cdnjs,
+porque o navegador do arneço não tem saída para a internet. Tudo o que vem
+depois dele é coberto.
