@@ -1,4 +1,4 @@
-# Onde paramos — 16.08.2026, versão 09.18
+# Onde paramos — 16.08.2026, versão 09.21
 
 ## O que foi feito nesta rodada
 
@@ -62,9 +62,33 @@ navegador. O navegador do arneço não tem saída para a internet, e a aba do
 Comet ficou sem permissão depois do último recarregamento. Tudo o que vem
 depois do carregamento está coberto por 44 verificações sobre o layout real.
 
+**F19 · a vida contributiva e o cadastro no lugar certo** (09.19). O CNIS traz
+os períodos de benefício como se fossem vínculo, e é dele que sai a linha do
+tempo pronta para o parecer, em ordem cronológica, com botão de copiar. No
+cadastro, CPF e senha do Meu INSS passaram a ficar lado a lado (o par que mais
+se copia), e o protocolo saiu da Identificação: ele é do CASO — vive na trilha
+do processo e no passo Requerimentos anteriores da Triagem, cada um com o caso
+e a DER.
+
+**F20 · Lembretes e o período de graça** (09.20). A aba na ordem do uso:
+aposentadoria provável, lembretes, um botão só para criar, e no pé o período
+de graça calculado do CNIS com as premissas à vista. A lei foi conferida no
+Planalto ANTES de escrever, e derrubou dois erros meus de memória: o
+facultativo tem 6 meses (art. 15, VI), e o prazo conta também da cessação de
+benefício por incapacidade (art. 13, II do Decreto 3.048/99). A tela entrega a
+competência-limite, não o dia, porque o vencimento da contribuição do CI
+(art. 14 do Decreto) não foi conferido em fonte primária.
+
+**F21 · a anotação com tipo** (09.21). Pesquisa sobre Clio, MyCase, Notion,
+Linear, Obsidian, Astrea, ADVBOX e Tabelas do CNJ. Seis chips (Exigência,
+Perícia, Prova, Contato, Decisão, Protocolo) que preenchem o esqueleto no
+padrão do escritório; o tipo viaja como prefixo [TIPO] no texto (nenhuma
+coluna nova, To Do legível) e vira chip na linha do tempo. Sem tipo "Outros".
+Três defeitos de layout da aba Casos medidos e consertados.
+
 ## A suíte
 
-292 verificações em 17 arquivos, em `crm/fase2/testes/cadastro`. O LEIAME
+375 verificações em 20 arquivos, em `crm/fase2/testes/cadastro`. O LEIAME
 registra as armadilhas — inclusive as três desta rodada, todas do arquivo de
 teste e não do programa.
 
