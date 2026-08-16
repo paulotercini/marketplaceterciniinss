@@ -103,3 +103,28 @@ E uma do programa: **"Empregado ou Agente Público" quebra em duas linhas.**
 Quando o "Público" não cai na linha seguinte, o texto termina em "Empregado ou
 Agente" e o casamento ingênuo caía no "Empregado" solto — 3 dos 30 vínculos
 saíam com o tipo errado.
+
+## lembretes.js (F20) — o período de graça, e duas armadilhas de aba
+
+Do programa, nada: a conta nasceu certa porque o texto da lei foi conferido no
+Planalto ANTES de escrever. E a conferência derrubou duas coisas que eu tinha
+escrito de memória:
+
+- **o segurado FACULTATIVO tem 6 meses, não 12** (art. 15, VI da Lei 8.213/91).
+  Metade do prazo. Teria saído errado em todo cliente que termina em
+  recolhimento facultativo — que é justamente o caso do CNIS de exemplo.
+- **o prazo conta também da cessação de BENEFÍCIO por incapacidade**
+  (art. 13, II do Decreto 3.048/99), não só das contribuições. É por isso que
+  os períodos de benefício que o CNIS traz entram na conta.
+
+Do arquivo de teste, duas:
+
+1. **A aba Lembretes é `data-vv="9"`, não `1`.** A numeração das abas não é a
+   ordem em que elas aparecem na tela.
+2. **Definir `abaAtiva` e chamar `pintarFicha()` não ativa o painel.** Quem põe
+   a classe `.ativo` é o clique no botão da aba; sem ele o painel existe e fica
+   invisível, e o teste espera para sempre por um seletor que está lá.
+
+E uma de medida: dentro de um `<details>` fechado o Chromium **ainda devolve
+caixa de layout** para os campos. Medir a altura dos campos não diz se a coisa
+está aberta; medir a altura do próprio `<details>` diz.
