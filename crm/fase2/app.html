@@ -1263,6 +1263,23 @@
   .tri-pdf-nota{font-size:11.5px;color:var(--cinza-claro)}
   .tri-nota{white-space:pre-wrap}
   /* F24 · a porta de entrada da triagem */
+  /* F25 · o pré-caso */
+  .pc-bloco{margin:10px 0;border-top:1px dashed var(--borda);padding-top:8px}
+  .pc-cartao{border:1px solid var(--borda);border-left:3px solid #E9B44C;border-radius:8px;
+    background:var(--branco);padding:9px 11px;margin:7px 0}
+  .pc-cartao.pc-lemb{border-left-color:var(--verde)}
+  .pc-cab{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .pc-nat{display:flex;gap:4px}
+  .pc-marcas{display:flex;gap:12px;align-items:center;margin-top:7px;font-size:12.5px;color:var(--cinza)}
+  .pc-topicos{margin:6px 0 0;padding-left:18px;font-size:12px;color:var(--cinza);line-height:1.45}
+  .pc-acao{margin-top:7px;align-items:center;flex-wrap:wrap}
+  .pc-ou{font-size:11.5px;color:var(--cinza-claro);text-transform:uppercase;letter-spacing:.04em}
+  .nck-lista{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+  .nck-add input{border:none;border-bottom:1px dashed var(--borda);background:none;
+    font-size:12px;padding:2px 0;width:150px}
+  .nck-add input:focus{outline:none;border-bottom-color:var(--azul)}
+  .anot-trilho{margin:2px 0 10px}
+  .anot-trilho button{font-size:12px;padding:3px 10px}
   .tri-porta{background:var(--azul-fundo);border:1px solid #D6E3F9;border-radius:8px;
     padding:9px 12px;margin:8px 0 2px;font-size:13px;display:flex;flex-wrap:wrap;
     align-items:center;gap:8px}
@@ -1667,7 +1684,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.24 · F24 — a triagem ganhou a porta de entrada ("de qual caso se trata?", com o "ainda não sei" honesto), as perguntas do escritório que a advogada acrescenta e valem para todos, e o encerramento que manda o resumo para as Anotações só quando há atenção ou não conferido</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.25 · F25 — o pré-caso: a mesa do primeiro atendimento nas Anotações, com espécie, natureza, marcadores que abrem tópicos, honorários, anotações com atribuição, lembrete, importância e checklist; o cliente fica amarelo "em formação" só com Cadastro e Lembretes, e gerar o caso transfere tudo com data e autor originais</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3914,10 +3931,12 @@ function cartaoCliente(cli, casosMostrar){
     // buscando, senão o cartão apareceria mudo na lista 🙋 Escritório
     (()=>{ if(ks.length) return "";
       const cp = cli.campos||{};
-      if(!(cp.atendimento||[]).length && !cp.especie && !(cp.docs_pedidos||[]).length) return "";
+      const pcs = (cp.precasos||[]).filter(p=>!p.so_lembrete);
+      if(!pcs.length && !(cp.atendimento||[]).length && !cp.especie && !(cp.docs_pedidos||[]).length) return "";
       const pend = (cp.docs_pedidos||[]).flatMap(p=>p.itens||[]).filter(i=>!i.entregue).length;
-      return `<span class="chip laranja" title="atendimento no cadastro — ainda não virou caso">🟡 ${
-        cp.especie?esc(cp.especie):"em atendimento"}</span>`
+      const rot = pcs.length ? (pcs[0].especie||"em formação")+(pcs.length>1?` +${pcs.length-1}`:"")
+                : cp.especie ? cp.especie : "em atendimento";
+      return `<span class="chip laranja" title="pré-caso em formação — ainda não virou caso">🟡 ${esc(rot)}</span>`
         + (pend?`<span class="dt" title="documentos pedidos e ainda não entregues">📋 ${pend} doc(s)</span>`:"");
     })(),
   ].filter(Boolean);
@@ -7585,6 +7604,11 @@ function pintarFicha(){
   const creds = (D._ficha||{}).creds||[], vincs = (D._ficha||{}).vincs||[];
   tfQuem = null; tfData = undefined;   // cada pintura recomeça a escolha
   const evs = D.eventos.filter(e=>ks.some(k=>k.id===e.caso_id)).sort((a,b)=>a.data_hora<b.data_hora?1:-1);
+  // F25 · o menu é dinâmico: se a aba apontada não existe para ESTE cliente
+  // (sem caso → sem Casos/Honorários; sem perícia → sem Perícias), a ficha
+  // abre no Cadastro em vez de numa aba invisível
+  if((abaAtiva===2 || abaAtiva===4) && !ks.length && !(D.pagamentos||[]).some(p=>p.cliente_id===cliId)) abaAtiva=0;
+  if(abaAtiva===3 && !evs.length) abaAtiva=0;
   // o dinheiro é do CLIENTE: a lista 💵 Pagamentos do To Do é ESTA aba, não um
   // caso. Por isso a parcela entra tanto pelo caso (as antigas) quanto pelo
   // cliente (as que chegam sem processo — acerto de honorários, por exemplo).
@@ -7617,7 +7641,8 @@ function pintarFicha(){
       ? `<span class="cli-st lemb" title="nenhum processo em andamento, mas o escritório avisa de tempos em tempos — veja a aba 🔔 Lembretes">🟡 Sem processo — ${lembCli.length} lembrete${lembCli.length>1?"s":""} ativo${lembCli.length>1?"s":""}</span>`
       : ks.length
         ? `<span class="cli-st inativo" title="nenhum trabalho em andamento para este cliente">🔴 Cliente inativo — ${ks.length>1?`os ${ks.length} casos`:"o único caso"} encerrado${ks.length>1?"s":""}${encDesde?` (último em ${fmt(dataSP(encDesde))})`:""}</span>`
-        : `<span class="cli-st atend" title="cliente em atendimento — ainda não virou caso; as anotações e os documentos pedidos ficam na aba Cadastro">🟡 Em atendimento — buscando documentos</span>`;
+        : (n=>n?`<span class="cli-st atend" title="pré-caso em formação: gerar o caso é gerar a procuração e assinar o contrato — até lá, o cliente fica amarelo, na lista Escritório">🟡 Em formação — ${n} pré-caso${n>1?"s":""}</span>`
+               :`<span class="cli-st atend" title="cliente em atendimento — ainda não virou caso; as anotações e os documentos pedidos ficam na aba Cadastro">🟡 Em atendimento — buscando documentos</span>`)(precasosDe(c).filter(p=>!p.so_lembrete).length);
   document.getElementById("detalhe").innerHTML=`
   <div class="det-principal">
   <div class="det-rolagem">
@@ -7655,11 +7680,15 @@ function pintarFicha(){
       ${/* o menu tem só as cinco divisões do cliente (pedido do Paulo):
            Cadastro, Lembretes, Casos, Perícias e Honorários. O caso escolhido
            aparece no cartão de fatos, não no rótulo da aba. */""}
-      <button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
+      ${/* F25 · o menu é DINÂMICO (pedido do Paulo): Casos só com caso,
+           Perícias só com perícia, Honorários só com caso ou recebimento.
+           Cliente em formação vê só Cadastro e Lembretes — menos abas,
+           menos lugar para se perder. */""}
+      ${ks.length ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="${(kk=>kk?"caso aberto: "+esc(tituloCaso(kk)):"escolher o caso do cliente")(casoSel&&D.casoPorId.get(casoSel))}">Casos${
-          (n=>n>1?` (${n})`:"")(processosDe(ks).length)} ▾</button>
-      <button class="mt ${abaAtiva===3?"on":""}" data-vv="3">Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}</button>
-      <button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>
+          (n=>n>1?` (${n})`:"")(processosDe(ks).length)} ▾</button>` : ""}
+      ${evs.length ? `<button class="mt ${abaAtiva===3?"on":""}" data-vv="3">Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}</button>` : ""}
+      ${(ks.length || pagK.length || pgs.length) ? `<button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>` : ""}
     </div>
     <button class="cel-tudo" onclick="fichaTudo()">⋯ mostrar tudo da ficha</button>
   </div>
@@ -7752,7 +7781,9 @@ function pintarFicha(){
   document.querySelectorAll(".mt[data-vv]").forEach(el=>el.onclick=()=>{
     abaAtiva=+el.dataset.vv; repintarFicha();
   });
-  document.getElementById("btn-processos").onclick=ev=>menuProcessos(ev, ks);
+  // com o menu dinâmico o botão Casos pode nem existir (cliente sem caso)
+  const btnProc=document.getElementById("btn-processos");
+  if(btnProc) btnProc.onclick=ev=>menuProcessos(ev, ks);
   const campoAnd=document.getElementById("and-texto");   // ausente em processo encerrado
   if(campoAnd){
     // Enter registra; Shift+Enter pula linha. O campo cresce até caber tudo.
@@ -7892,7 +7923,8 @@ function pintarFicha(){
     abrirFicha(clienteAberto);
   });
   ligarChecklistFicha();
-  if(abaAtiva===0 && subCad==="documentos") renderDocCatalogo();
+  if(abaAtiva===0 && (subCad==="anotacoes"||subCad==="documentos")
+     && (subAnot==="documentos"||subCad==="documentos")) renderDocCatalogo();
 }
 
 // aba 0 da ficha — extraída da pintarFicha (era um literal de 91 linhas)
@@ -7901,17 +7933,24 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // atendimento, dados do cliente, documentos e consulta. Sub-menu para não
   // virar rolagem infinita (pedido do Paulo) — sem caso, abre nas anotações.
   const semCaso = !(ks||[]).length;
-  const cd = SUB_CAD.some(([v])=>v===subCad) ? subCad : (semCaso ? "anotacoes" : "identificacao");
+  const legado = ["documentos","consulta","mensagens"].includes(subCad);
+  const cd = SUB_CAD.some(([v])=>v===subCad) ? subCad
+           : legado ? "anotacoes" : (semCaso ? "anotacoes" : "identificacao");
+  const an = legado ? subCad : (SUB_ANOT.some(([v])=>v===subAnot) ? subAnot : "atendimento");
   return `
     <div class="sub-menu" style="width:100%">
       ${SUB_CAD.map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
         v==="anotacoes"&&semCaso?` <span class="meio-sub">•</span>`:""}</button>`).join("")}
     </div>
     ${cd==="triagem" ? painelTriagemFicha(c, ks) : ""}
-    ${cd==="anotacoes" ? caixaAtendimento(c, ks) : ""}
-    ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) : ""}
-    ${cd==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}
-    ${cd==="consulta" ? painelConsulta(c) : ""}
+    ${cd!=="anotacoes" ? "" : `
+      <div class="sub-menu anot-trilho">
+        ${SUB_ANOT.map(([v,r])=>`<button class="${an===v?"on":""}" onclick="irSubAnot('${v}')">${r}</button>`).join("")}
+      </div>
+      ${an==="atendimento" ? caixaAtendimento(c, ks) : ""}
+      ${an==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) : ""}
+      ${an==="consulta" ? painelConsulta(c) : ""}
+      ${an==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}`}
     ${cd!=="identificacao" ? "" : `
     ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
          data que chega, não dado de cadastro (pedido do Paulo) */""}
@@ -8009,9 +8048,20 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
 // as divisões do Cadastro, na ordem em que o atendimento acontece
 // ordem da especificação F9 §2 — a do atendimento real. Mensagens fica no
 // fim: saiu do menu de cima na 08.99 e não é passo do atendimento.
-const SUB_CAD = [["identificacao","Identificação"],["triagem","Triagem"],["anotacoes","Anotações"],
-                 ["documentos","Documentos"],["consulta","Consulta"],["mensagens","Mensagens"]];
-function irSubCad(qual){ subCad = qual; guardar("crm_subcad", qual); repintarFicha(); }
+// F25 · o Cadastro tem TRÊS divisões (pedido do Paulo): Identificação,
+// Triagem e Anotações. Documentos, Consulta e Mensagens não sumiram —
+// viraram trilhos DENTRO de Anotações, porque servem ao atendimento e é lá
+// que o atendimento acontece.
+const SUB_CAD = [["identificacao","Identificação"],["triagem","Triagem"],["anotacoes","Anotações"]];
+const SUB_ANOT = [["atendimento","Atendimento"],["documentos","Documentos"],
+                  ["consulta","Consulta"],["mensagens","Mensagens"]];
+let subAnot = ler("crm_subanot") || "atendimento";
+function irSubCad(qual){
+  // valores antigos gravados (documentos/consulta/mensagens) caem no trilho
+  if(SUB_ANOT.some(([v])=>v===qual) && qual!=="atendimento"){ subAnot=qual; guardar("crm_subanot",qual); qual="anotacoes"; }
+  subCad = qual; guardar("crm_subcad", qual); repintarFicha();
+}
+function irSubAnot(qual){ subAnot = qual; guardar("crm_subanot", qual); subCad="anotacoes"; guardar("crm_subcad","anotacoes"); repintarFicha(); }
 
 // ══════════════════════════════════════════════════════════════════════════
 // F10 · TRIAGEM — os oito passos, com o que o CRM já sabe responder sozinho
@@ -15039,10 +15089,236 @@ function caixaDocumentos(c, ks){
 // Anotação do que o cliente contou + a espécie do benefício/serviço (que pode
 // ficar "ainda não definido") + a lista de documentos que o cliente vai
 // trazer — impressa para ele e registrada no CRM.
+// ══════════════════════════════════════════════════════════════════════════
+// F25 · O PRÉ-CASO — a mesa do primeiro atendimento (pedido do Paulo)
+// ══════════════════════════════════════════════════════════════════════════
+// "Gerado o caso" é quando saem as procurações e o cliente assina o contrato.
+// Antes disso existe o pré-caso: a espécie que se desenha, os marcadores
+// (rural, especial, deficiência), a natureza (concessão, revisão, acerto),
+// os honorários combinados e as anotações de cada conversa. Tudo com autor.
+// Mora em clientes.campos.precasos; o cliente fica AMARELO, na lista
+// Escritório, até o caso nascer — e pode haver mais de um pré-caso.
+function precasosDe(c){
+  const cp = c.campos||{};
+  const pcs = cp.precasos||[];
+  // legado: a espécie única de antes vira o primeiro pré-caso, na leitura
+  if(!pcs.length && cp.especie && cp.especie!==ESPECIE_PAGAMENTOS)
+    return [{id:"legado", especie:cp.especie, natureza:"", marc:{}, honorarios:"", quem:null, em:null}];
+  return pcs;
+}
+async function gravarPrecasos(cliId, pcs){
+  const c = D.cliPorId.get(cliId); if(!c) return false;
+  c.campos = {...(c.campos||{}), precasos:pcs};
+  // o legado materializado substitui a espécie única
+  if(pcs.some(p=>p.id==="legado")) delete c.campos.especie;
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})});
+    return true;
+  }catch(e){ aviso("Não consegui guardar — tente de novo"); return false; }
+}
+async function novoPreCaso(cliId){
+  const pcs = [...precasosDe(D.cliPorId.get(cliId))];
+  pcs.push({id:"pc_"+Date.now().toString(36), especie:"", natureza:"", marc:{},
+            honorarios:"", quem:eu.id, em:hoje()});
+  if(await gravarPrecasos(cliId, pcs)) repintarFicha();
+}
+async function mudarPreCaso(cliId, pcId, campo, valor){
+  const pcs = precasosDe(D.cliPorId.get(cliId)).map(p=>{
+    if(p.id!==pcId) return p;
+    const novo = {...p, quem:p.quem||eu.id, em:p.em||hoje()};
+    if(campo==="marc"){ novo.marc={...(p.marc||{})}; novo.marc[valor]=!novo.marc[valor]; }
+    else novo[campo]=valor;
+    return novo;
+  });
+  if(await gravarPrecasos(cliId, pcs)) repintarFicha();
+}
+async function tirarPreCaso(cliId, pcId){
+  if(!confirm("Tirar este pré-caso? As anotações dele continuam guardadas.")) return;
+  const pcs = precasosDe(D.cliPorId.get(cliId)).filter(p=>p.id!==pcId);
+  if(await gravarPrecasos(cliId, pcs)) repintarFicha();
+}
+// os tópicos que os marcadores abrem: os pontos das famílias da F17, sem
+// duplicar conhecimento — rural/especial/deficiência apontam para as mesmas
+// listas que a Triagem usa
+function topicosDoMarcador(m){
+  const fam = m==="rural" ? familiaDaEspecie("Rural")
+            : m==="especial" ? familiaDaEspecie("Apos. Especial")
+            : familiaDaEspecie("Apos. Tempo — Pessoa com Deficiência");
+  return fam ? fam.pontos : [];
+}
+// aposentadoria futura: NÃO gera caso — vira lembrete com responsável, e o
+// pré-caso fica aberto ("acompanhando"), como o Paulo descreveu
+async function preCasoParaLembrete(cliId, pcId){
+  const data = (document.getElementById("pcl-data-"+pcId)||{}).value;
+  const resp = (document.getElementById("pcl-resp-"+pcId)||{}).value || null;
+  if(!data) return aviso("Escolha a data do acompanhamento");
+  const pc = precasosDe(D.cliPorId.get(cliId)).find(p=>p.id===pcId);
+  try{
+    const [l]=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:cliId, tipo:"geral",
+        titulo:`Aposentadoria futura — ${pc&&pc.especie?pc.especie:"acompanhar"}`,
+        detalhes:{origem:"precaso", precaso_id:pcId},
+        proximo_em:data, responsavel_id:resp, criado_por:eu.id, ativo:true})});
+    if(l) (D.lembretes=D.lembretes||[]).push(l);
+  }catch(e){ return aviso("Rode o schema_por_em_dia.sql no Supabase — falta a tabela 'lembretes'"); }
+  const pcs = precasosDe(D.cliPorId.get(cliId)).map(p=>p.id===pcId?{...p, so_lembrete:true}:p);
+  await gravarPrecasos(cliId, pcs);
+  aviso("Lembrete criado — o cliente fica em Cadastro e Lembretes ✔");
+  repintarFicha(); montarSidebar();
+}
+// GERAR O CASO deste pré-caso: as anotações dele viram andamentos com a data
+// e o autor originais (decisão do Paulo), os honorários viram [DECISÃO], os
+// documentos pedidos viram checklist, e o pré-caso se encerra
+async function gerarCasoDoPre(cliId, pcId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const pcs = precasosDe(c);
+  const pc = pcs.find(p=>p.id===pcId);
+  if(!pc || !pc.especie) return aviso("Defina a espécie deste pré-caso primeiro");
+  const fase = (document.getElementById("pcf-"+pcId)||{}).value || "escritorio";
+  const nat = pc.natureza==="revisao" ? "revisão" : pc.natureza==="acerto" ? "acerto" : "concessão";
+  let k;
+  try{
+    [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:cliId, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
+        beneficio:pc.especie, fase,
+        origem_lista:(LISTAS_MOVER.find(([,f])=>f===fase)||["🙋 Escritório"])[0]})});
+  }catch(e){ return aviso("Não consegui criar o caso — tente de novo"); }
+  D.casos.push(k); D.casoPorId.set(k.id,k);
+  if(!D.casosDoCliente.has(cliId)) D.casosDoCliente.set(cliId,[]);
+  D.casosDoCliente.get(cliId).push(k);
+  const marcas = Object.entries(pc.marc||{}).filter(([,v])=>v).map(([m])=>m);
+  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+      texto:`[DECISÃO] Caso gerado do pré-caso: ${pc.especie} · natureza ${nat}`
+        + (marcas.length?` · envolve ${marcas.join(", ")}`:"")
+        + (pc.honorarios?` · honorários combinados: ${pc.honorarios}`:"")
+        + ` · procuração gerada e contrato assinado.`})}).catch(()=>{});
+  // as anotações DESTE pré-caso (e as sem dono, quando ele é o único)
+  const notas = ((c.campos||{}).atendimento||[]);
+  const unico = pcs.length===1;
+  const vao = notas.filter(n=>n.precaso_id===pcId || (unico && !n.precaso_id));
+  const ficam = notas.filter(n=>!vao.includes(n));
+  for(const n of vao){
+    const co = D.colaboradores.find(x=>(x.nome||"").split(" ")[0]===n.quem);
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:k.id, autor_id:(co&&co.id)||eu.id,
+        texto:n.texto, criado_em:n.em})}).catch(()=>{});
+  }
+  let docs=0;
+  for(const p of ((c.campos||{}).docs_pedidos||[])) for(const it of (p.itens||[])){
+    if(it.entregue) continue;
+    try{
+      const [tf]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:k.id, titulo:`📄 ${String(it.nome||it).split(" — ")[0]}`})});
+      if(tf){ D.tarefas.push(tf); docs++; }
+    }catch(e){}
+  }
+  // o anexo que entrou no pré-caso passa a pertencer ao caso
+  for(const a of (D.anexos||[]).filter(x=>!x.caso_id)){
+    await api(`/rest/v1/anexos?id=eq.${a.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:k.id})}).catch(()=>{});
+    a.caso_id = k.id;
+  }
+  c.campos = {...(c.campos||{}), atendimento:ficam.length?ficam:undefined,
+    docs_pedidos:undefined, especie:undefined,
+    precasos:pcs.filter(p=>p.id!==pcId)};
+  if(!c.campos.precasos.length) delete c.campos.precasos;
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  reindexarCliente(c); plim();
+  await avisarCasoNovo(k.id, cliId, "o pré-caso virou caso (procuração e contrato assinados)");
+  aviso(`Caso criado — ${vao.length} anotação(ões) viraram andamentos${docs?`, ${docs} documento(s) no checklist`:""}`, false);
+  montarSidebar(); casoSel=k.id; abaAtiva=2; abrirFicha(cliId);
+}
+// anexo do pré-caso: o arquivo do cliente que ainda não tem caso
+async function anexarPreCaso(cliId){
+  const inp=document.getElementById("pc-arq"), arq=inp&&inp.files&&inp.files[0];
+  if(!arq) return;
+  inp.value="";
+  if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
+  const stamp=new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
+  const caminho=`${cliId}/${stamp}-${nomeSeguro(arq.name)}`;
+  aviso("Enviando o arquivo…", false);
+  try{
+    await subirArquivo(caminho, arq);
+    const [an]=await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:null, cliente_id:cliId, autor_id:eu.id,
+        nome:arq.name, caminho, tipo:arq.type||null, tamanho:arq.size})});
+    if(an) (D.anexos=D.anexos||[]).unshift(an);
+    aviso("📎 Arquivo anexado ao atendimento");
+    repintarFicha();
+  }catch(e){
+    aviso(/40[34]|bucket/i.test(e.message)
+      ? "Rode o schema.sql mais novo no Supabase para usar os anexos"
+      : "Não consegui enviar o arquivo — tente de novo");
+  }
+}
+// a nota ganha corpo: importante, urgente, de qual pré-caso, atribuir e
+// lembrar (lembrar cria LEMBRETE de aviso único com responsável — a
+// estrutura pronta para o aviso de WhatsApp que já existe nos lembretes)
+async function salvarNotaAtendimento2(cliId){
+  const c=D.cliPorId.get(cliId), ta=document.getElementById("at-nota");
+  if(!c||!ta) return;
+  const t=(ta.value||"").trim(); if(!t) return aviso("Escreva a anotação");
+  const v=id=>{const e=document.getElementById(id);return e?e.value:"";};
+  const marcado=id=>{const e=document.getElementById(id);return !!(e&&e.checked);};
+  const nota={em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:t};
+  const pcSel=v("at-pc"); if(pcSel) nota.precaso_id=pcSel;
+  if(marcado("at-imp")) nota.importante=true;
+  if(marcado("at-urg")) nota.urgente=true;
+  const atrib=v("at-quem"), lembrar=v("at-lembrar");
+  if(atrib) nota.atribuido=atrib;
+  if(lembrar){
+    nota.lembrar_em=lembrar;
+    try{
+      const [l]=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({cliente_id:cliId, tipo:"geral",
+          titulo:`Anotação: ${t.slice(0,60)}`, detalhes:{origem:"anotacao"},
+          proximo_em:lembrar, responsavel_id:atrib||null, criado_por:eu.id, ativo:true})});
+      if(l) (D.lembretes=D.lembretes||[]).push(l);
+    }catch(e){ aviso("A anotação vale, mas o lembrete não gravou (rode o schema_por_em_dia.sql)"); }
+  }
+  const notas=[...((c.campos||{}).atendimento||[]), nota];
+  c.campos={...(c.campos||{}), atendimento:notas};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})});
+  }catch(e){ return aviso("Não consegui guardar a anotação — tente de novo"); }
+  ta.value=""; aviso("Anotação guardada 📝", false);
+  repintarFicha();
+}
+// checklist dentro da anotação: itens marcáveis, com autor no risco
+async function notaChecklistItem(cliId, idx){
+  const el=document.getElementById("nck-"+idx);
+  const t=(el&&el.value||"").trim(); if(!t) return;
+  const c=D.cliPorId.get(cliId);
+  const notas=[...((c.campos||{}).atendimento||[])];
+  const n={...notas[idx]}; n.checklist=[...(n.checklist||[]), {t, feito:false}];
+  notas[idx]=n;
+  c.campos={...(c.campos||{}), atendimento:notas};
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  repintarFicha();
+}
+async function notaChecklistToggle(cliId, idx, ci){
+  const c=D.cliPorId.get(cliId);
+  const notas=[...((c.campos||{}).atendimento||[])];
+  const n={...notas[idx]}; const ck=[...(n.checklist||[])];
+  ck[ci]={...ck[ci], feito:!ck[ci].feito, quem:(eu.nome||"").split(" ")[0], em:hoje()};
+  n.checklist=ck; notas[idx]=n;
+  c.campos={...(c.campos||{}), atendimento:notas};
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  repintarFicha();
+}
+
 function caixaAtendimento(c, ks){
   const semCaso = !(ks||[]).length;
   const campos=c.campos||{};
-  const esp=campos.especie||"", notas=campos.atendimento||[];
+  const pcsEsp = semCaso ? precasosDe(c) : [];
+  const esp=(pcsEsp.find(p=>p.especie&&!p.so_lembrete)||pcsEsp[0]||{}).especie||campos.especie||"";
+  const notas=campos.atendimento||[];
   const pedidos=campos.docs_pedidos||[];
   const cat=docDe(esp);
   const itens=((cat&&cat.itens)||"").split("\n").map(x=>x.trim()).filter(x=>x&&!x.startsWith("▸ "));
@@ -15056,28 +15332,103 @@ function caixaAtendimento(c, ks){
          busca os documentos.`
       : `O que não é andamento de processo mora aqui: o que o cliente contou, o que ficou combinado.`}</p>
 
-    ${semCaso?`
-    <div class="form-linha" style="align-items:center;flex-wrap:wrap">
-      <label style="font-size:12px;color:var(--cinza)">Benefício / serviço:
-        <select id="at-especie" style="display:block;min-width:260px" onchange="salvarEspecieAtendimento('${c.id}')">
-          <option value="" ${!esp?"selected":""}>ainda não definido</option>
-          <option value="${ESPECIE_PAGAMENTOS}" ${ehPgto?"selected":""}>${ESPECIE_PAGAMENTOS}</option>
-          ${D.docs.map(d=>`<option value="${esc(d.beneficio)}" ${esp===d.beneficio?"selected":""}>${esc(d.beneficio)}</option>`).join("")}
-        </select></label>
-      ${esp?`<span class="chip ben" style="align-self:flex-end">${esc(esp)}</span>`
-           :`<span class="chip neutro" style="align-self:flex-end" title="pode ficar assim — o atendimento não trava">ainda não definido</span>`}
-    </div>`:""}
+    ${!semCaso?"":(()=>{
+      const pcs = precasosDe(c);
+      const APOS_RX = /apos|tempo de contribui|por idade|especial|professor/i;
+      const card = pc => {
+        const marcas = pc.marc||{};
+        const eApos = APOS_RX.test(pc.especie||"");
+        const quem = pc.quem && D.colPorId.get(pc.quem);
+        const topicos = ["rural","especial","deficiencia"].filter(m=>marcas[m])
+          .flatMap(m=>topicosDoMarcador(m).map(([,r,d])=>({m,r,d})));
+        return `<div class="pc-cartao${pc.so_lembrete?" pc-lemb":""}">
+          <div class="pc-cab">
+            <select onchange="mudarPreCaso('${c.id}','${pc.id}','especie',this.value)">
+              <option value="">espécie — ainda não definida</option>
+              ${D.docs.map(d=>`<option value="${esc(d.beneficio)}" ${pc.especie===d.beneficio?"selected":""}>${esc(d.beneficio)}</option>`).join("")}
+            </select>
+            <span class="pc-nat">${[["concessao","concessão"],["revisao","revisão"],["acerto","acerto"]]
+              .map(([v,r])=>`<button class="tri-e${pc.natureza===v?" on ok":""}"
+                onclick="mudarPreCaso('${c.id}','${pc.id}','natureza','${pc.natureza===v?"":v}')">${r}</button>`).join("")}</span>
+            ${pc.so_lembrete?`<span class="chip verde" title="virou lembrete — acompanhamos a data sem gerar caso">acompanhando em Lembretes</span>`:""}
+            <button class="cad-lap" style="margin-left:auto" title="tirar este pré-caso"
+              onclick="tirarPreCaso('${c.id}','${pc.id}')">${CAD_IC.fechar}</button>
+          </div>
+          ${eApos?`<div class="pc-marcas">envolve:
+            ${[["rural","rural"],["especial","especial"],["deficiencia","deficiência"]].map(([m,r])=>
+              `<label class="conta-ck"><input type="checkbox" ${marcas[m]?"checked":""}
+                onchange="mudarPreCaso('${c.id}','${pc.id}','marc','${m}')">${r}</label>`).join("")}</div>`:""}
+          ${topicos.length?`<ul class="pc-topicos">${topicos.map(t=>
+            `<li><b>${esc(t.r)}</b> — ${esc(t.d)}</li>`).join("")}</ul>`:""}
+          <div class="form-linha" style="margin-top:6px">
+            <input value="${esc(pc.honorarios||"")}" placeholder="honorários combinados (ex.: 30% dos atrasados + 2 benefícios)"
+              style="flex:1;min-width:220px"
+              onchange="mudarPreCaso('${c.id}','${pc.id}','honorarios',this.value)">
+          </div>
+          <div class="form-linha pc-acao">
+            <select id="pcf-${pc.id}">${["inss","conselho","judicial","peticao_inicial","outro"]
+              .map(f=>`<option value="${f}">${NOME_FASE[f]}</option>`).join("")}</select>
+            <button onclick="gerarCasoDoPre('${c.id}','${pc.id}')" ${pc.especie?"":"disabled title='defina a espécie'"}
+              title="gerar o caso = procuração gerada e contrato assinado; as anotações viram andamentos">
+              Gerar o caso</button>
+            <span class="pc-ou">ou</span>
+            <input type="date" id="pcl-data-${pc.id}" min="${hoje()}" title="acompanhar em">
+            <select id="pcl-resp-${pc.id}" title="quem avisa o cliente na data"><option value="">responsável…</option>
+              ${D.colaboradores.filter(x=>x.ativo).map(x=>`<option value="${x.id}">${esc(x.nome.split(" ")[0])}</option>`).join("")}</select>
+            <button class="btn-mini" onclick="preCasoParaLembrete('${c.id}','${pc.id}')"
+              title="aposentadoria futura: NÃO gera caso — vira lembrete com responsável, e o cliente fica só com Cadastro e Lembretes">
+              não gerar — acompanhar em Lembretes</button>
+          </div>
+          ${quem?`<div class="tri-assin">${esc(quem.nome)} · ${fmt(pc.em)}</div>`:""}
+        </div>`;
+      };
+      return `<div class="pc-bloco">
+        <div class="rotulo-caso">Pré-caso${pcs.length>1?"s":""} — o caso que se desenha antes da procuração</div>
+        ${pcs.map(card).join("") || `<p class="meio-sub">Nenhum pré-caso ainda — acrescente o primeiro.</p>`}
+        <button class="cad-mini" onclick="novoPreCaso('${c.id}')">+ acrescentar caso</button>
+        <label class="cad-mini" style="cursor:pointer" title="anexar documento do cliente (o arquivo passa para o caso quando ele for gerado)">
+          <input type="file" id="pc-arq" accept="image/*,application/pdf" style="display:none"
+            onchange="anexarPreCaso('${c.id}')">📎 anexar documento</label>
+        ${(D.anexos||[]).filter(a=>!a.caso_id).length?`<ul class="reg-avulso">${
+          (D.anexos||[]).filter(a=>!a.caso_id).map(a=>`<li>
+            <button class="arq-abrir" onclick="abrirAnexo('${a.id}')">${esc(a.nome)}</button>
+            <small>${fmtTS(a.criado_em)}</small></li>`).join("")}</ul>`:""}
+      </div>`;
+    })()}
 
     <div style="margin-top:8px">
-      <textarea id="at-nota" rows="3" placeholder="o que o cliente contou — fica no cadastro e vai junto para o primeiro andamento do caso"
+      <textarea id="at-nota" rows="3" placeholder="a anotação deste atendimento — cada assunto pode ser uma anotação separada"
         style="width:100%;resize:vertical"></textarea>
-      <div class="form-linha" style="margin-top:4px">
-        <button class="btn-mini" onclick="salvarNotaAtendimento('${c.id}')">Guardar anotação</button>
+      <div class="form-linha" style="margin-top:4px;flex-wrap:wrap;align-items:center">
+        ${(pcs=>pcs.length>1?`<select id="at-pc" title="sobre qual pré-caso é esta anotação">
+          <option value="">(geral)</option>
+          ${pcs.map(p=>`<option value="${p.id}">${esc(p.especie||"sem espécie")}</option>`).join("")}</select>`
+          :`<input type="hidden" id="at-pc" value="">`)(semCaso?precasosDe(c):[])}
+        <select id="at-quem" title="atribuir a alguém"><option value="">atribuir…</option>
+          ${D.colaboradores.filter(x=>x.ativo).map(x=>`<option value="${x.id}">${esc(x.nome.split(" ")[0])}</option>`).join("")}</select>
+        <input type="date" id="at-lembrar" min="${hoje()}" title="lembrar em — cria um lembrete com o responsável escolhido">
+        <label class="conta-ck"><input type="checkbox" id="at-imp">importante</label>
+        <label class="conta-ck"><input type="checkbox" id="at-urg">urgente</label>
+        <button class="btn-mini" onclick="salvarNotaAtendimento2('${c.id}')">+ Guardar anotação</button>
       </div>
     </div>
     ${notas.length?`<ul class="mov-lista" style="margin-top:6px">
-      ${notas.slice().reverse().map(n=>`<li><span class="mov-data">${n.em?fmt(n.em.slice(0,10)):"—"}</span>
-        <span class="mov-txt">${n.quem?`<b>${esc(n.quem)}:</b> `:""}${esc(n.texto||"")}</span></li>`).join("")}
+      ${notas.map((n,idx)=>({n,idx})).reverse().map(({n,idx})=>{
+        const atr = n.atribuido && D.colPorId.get(n.atribuido);
+        const pcDe = n.precaso_id && precasosDe(c).find(p=>p.id===n.precaso_id);
+        return `<li>
+        <span class="mov-data">${n.em?fmt(n.em.slice(0,10)):"—"}</span>
+        <span class="mov-txt">${n.importante?"⭐ ":""}${n.urgente?"🔥 ":""}${
+          n.quem?`<b>${esc(n.quem)}:</b> `:""}${esc(n.texto||"")}
+          ${pcDe?`<span class="chip ben">${esc(pcDe.especie||"pré-caso")}</span>`:""}
+          ${atr?`<span class="avatar mini" style="background:${atr.cor}" title="atribuída a ${esc(atr.nome)}">${esc(atr.inicial)}</span>`:""}
+          ${n.lembrar_em?`<span class="chip neutro" title="tem lembrete criado">🗓 ${fmt(n.lembrar_em)}</span>`:""}
+          ${(n.checklist||[]).length?`<span class="nck-lista">${(n.checklist||[]).map((ck,ci)=>
+            `<label class="conta-ck"><input type="checkbox" ${ck.feito?"checked":""}
+              onchange="notaChecklistToggle('${c.id}',${idx},${ci})"><span style="${ck.feito?"text-decoration:line-through;color:var(--cinza-claro)":""}">${esc(ck.t)}</span></label>`).join("")}</span>`:""}
+          <span class="nck-add"><input id="nck-${idx}" placeholder="+ item do checklist"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();notaChecklistItem('${c.id}',${idx});}"></span>
+        </span></li>`;}).join("")}
     </ul>`:""}
 
     ${!semCaso?"":ehPgto?`
@@ -15102,15 +15453,8 @@ function caixaAtendimento(c, ks){
         <button onclick="criarCronogramaINSS('${c.id}')">Criar o lembrete com o cronograma</button>
       </div>
     </div>`:`
-    <div class="form-linha" style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
-      ${/* sem 🙋 Escritório: esse é o estado de ANTES do caso, e agora vive
-           no cadastro. Virar caso é justamente sair do Escritório. */""}
-      <select id="at-fase">${["inss","conselho","judicial","peticao_inicial","outro"]
-        .map(f=>`<option value="${f}">${NOME_FASE[f]}</option>`).join("")}</select>
-      <button onclick="criarCasoDoAtendimento('${c.id}')" ${esp?"":"disabled title='defina a espécie primeiro'"}>
-        Criar o caso deste atendimento</button>
-      <span class="meio-sub">as anotações acima entram como primeiro andamento</span>
-    </div>`}
+    <p class="meio-sub" style="margin-top:8px">Gerar o caso é assinar: cada pré-caso acima tem o
+      seu botão. Enquanto isso o cliente fica <b>em formação</b> — amarelo na lista Escritório.</p>`}
 
     ${(semCaso&&!ehPgto)?`
     <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
