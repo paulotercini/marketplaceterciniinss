@@ -1,4 +1,19 @@
-# Onde paramos — 16.08.2026, versão 09.29
+# Onde paramos — 16.08.2026, versão 09.30
+
+## F31 · Documentos no fluxo e Consulta dentro de Documentos (09.30)
+
+A procuração, a declaração de pobreza, o contrato e o resto da
+`caixaDocumentos` aparecem LOGO ABAIXO do "Gerar o caso", no fim do
+fluxo do atendimento: quem está gerando imprime ali mesmo, colhe a
+assinatura e clica, sem trocar de tela. `especieDoCliente` ganhou o
+fallback do pré-caso vivo (o contrato do fluxo sai na variante certa —
+antes sairia no padrão). O menu Documentos incorporou a Consulta
+(pedido do Paulo): um painel só com documentos para assinar, catálogo
+do INSS e os portais com CPF; o botão Consulta saiu do trilho
+(`irSubCad("consulta")` mapeia para "documentos") e a visibilidade de
+Documentos passou ao portão da triagem (triada OU com caso — o botão
+carrega a Consulta, que já era desse portão). Suíte: 26 arquivos,
+fluxo.js com 31 provas.
 
 ## F30 · O Atendimento virou FLUXO (09.29)
 
