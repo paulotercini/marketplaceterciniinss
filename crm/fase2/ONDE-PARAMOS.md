@@ -102,6 +102,15 @@ teste e não do programa.
   casos seguem com os oito passos fixos
 - HARs do e-SAJ e do eproc, resumos de acórdãos
 
+## Agenda e Calendário: o que a investigação mostrou
+
+Os ~555 ms medidos ao vivo NÃO se reproduzem no arneço: com 1.250 eventos,
+inclusive com timestamps com fuso (o caso da produção), a Agenda pinta em
+19 ms e o Calendário em 5 ms. A causa não é o código que o arneço alcança —
+pode ser o ambiente da medição (extensão, aba) ou algo nos dados reais que a
+fixtura não tem. Regra da casa: sem reproduzir, não se corrige às cegas.
+Próxima medição tem de ser ao vivo, com o Performance do DevTools.
+
 ## O que eu proponho para a próxima
 
 1. Agenda ainda leva 558 ms e Calendário 555 ms: sobrou trabalho por evento,
