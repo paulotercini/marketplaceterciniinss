@@ -1256,6 +1256,9 @@
   .conta-prem li{padding:1px 0}
   .conta-acao{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:9px}
   .conta-ck{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--texto)}
+  .reg-avulso{list-style:none;margin:6px 0 0;padding:0;font-size:12.5px;color:var(--texto)}
+  .reg-avulso li{padding:4px 0;border-top:1px solid var(--borda-suave);display:flex;gap:8px;align-items:baseline}
+  .reg-avulso li small{margin-left:auto;color:var(--cinza-claro)}
   .tri-pdf{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:6px 0 0 32px}
   .tri-pdf-nota{font-size:11.5px;color:var(--cinza-claro)}
   .tri-nota{white-space:pre-wrap}
@@ -1655,7 +1658,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.22 · F22 — os quatro defeitos apontados por captura: a ficha aberta encolhe a lateral para os ícones, o cartão da lista ganhou a fita colorida de quem está atribuído, o texto do andamento ocupa a largura toda, e o avatar virou o nó da linha do tempo no lugar da bolinha solta</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.23 · F23 — o RG saiu do sistema e de todos os modelos (CPF identifica sozinho), a parceria ganhou nome de advogado buscável e editável do cadastro, o "mais opções" trocou credencial por registro avulso com autor e data, e cliente já aposentado com caso de aposentadoria ganha o aviso de provável revisão</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7927,8 +7930,24 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         <span style="font-size:13px;color:var(--cinza)">Cada protocolo está na aba
           <b>Casos</b> do processo dele, em "De onde partiu", e todos juntos na
           <b>Triagem</b>, no passo "Requerimentos anteriores".</span></div>`:""}
-      ${parcs.length?`<div class="id-secao"><label>Parceria</label>
-        ${parcs.map(pa=>`<span class="chip ben">${CAD_IC.duplas} ${esc(pa)}</span>`).join(" ")}</div>`:""}
+      ${/* F23 · a parceria ganhou nome de advogado editável daqui: o campo é do
+           CASO (k.parceria) e a pesquisa e a lista 🤝 Parcerias já leem ele —
+           faltava onde ESCREVER sem abrir o processo. */""}
+      <div class="id-secao"><label>Parceria <small>(advogado parceiro — a pesquisa encontra o cliente por este nome, e a lista Parcerias agrupa)</small></label>
+        ${parcs.map(pa=>`<span class="chip ben">${CAD_IC.duplas} ${esc(pa)}</span>`).join(" ")||""}
+        ${(()=>{ const ativos=ks.filter(k=>k.fase!=="encerrado");
+          if(!ativos.length) return `<span style="font-size:13px;color:var(--cinza)">sem caso ativo para vincular parceria</span>`;
+          const sugest=[...new Set(D.casos.map(k=>k.parceria).filter(Boolean))];
+          return `<div class="form-linha" style="margin-top:6px">
+            ${ativos.length>1?`<select id="par-caso">${ativos.map(k=>`<option value="${k.id}">${esc(tituloCaso(k))}</option>`).join("")}</select>`
+              :`<input type="hidden" id="par-caso" value="${ativos[0].id}">`}
+            <input id="par-nome" list="lista-parceiros" placeholder="nome do advogado parceiro"
+              style="flex:1;min-width:180px"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();definirParceria();}">
+            <datalist id="lista-parceiros">${sugest.map(x=>`<option value="${esc(x)}">`).join("")}</datalist>
+            <button class="cad-mini" onclick="definirParceria()">${CAD_IC.duplas}vincular</button>
+          </div>`; })()}
+      </div>
       <div class="id-secao"><label>Parentes e amigos <small>(clientes vinculados — clique para abrir a ficha)</small></label>
         ${vincs.map(v=>{
           const outroId = v.cliente_id===c.id ? v.ligado_a : v.cliente_id;
@@ -7945,11 +7964,22 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
       </div>
     </div>
     <details id="mais-opcoes" style="margin-top:14px"><summary style="cursor:pointer;color:var(--cinza)"><span class="cad-ic">${CAD_IC.engren}</span> Mais opções — cadastrar outra credencial, vincular pasta, agendar atendimento</summary>
+      ${/* F23 · a credencial saiu daqui (a senha do Meu INSS já se cadastra no
+           próprio campo da grade). No lugar, o registro avulso: a observação
+           que não é andamento de caso nenhum — "prefere ligação de tarde",
+           "surdo do ouvido esquerdo", "quem ajuda é o sobrinho José". */""}
       <div class="form-linha" style="margin-top:8px">
-        <select id="nc-tipo"><option value="meu_inss">senha Meu INSS</option><option value="gov_br">senha gov.br</option><option value="outro">outra credencial</option></select>
-        <input id="nc-valor" placeholder="valor (fica cifrado no banco)">
-        <button onclick="novaCred('${c.id}')">Guardar</button>
+        <input id="ra-texto" placeholder="registrar algo avulso sobre o cliente (não é andamento de caso)"
+          style="flex:1;min-width:240px"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();novoRegistroAvulso('${c.id}');}">
+        <button onclick="novoRegistroAvulso('${c.id}')">Registrar</button>
       </div>
+      ${(()=>{ const rs=((c.campos||{}).registros||[]);
+        return rs.length?`<ul class="reg-avulso">${rs.slice().reverse().map(r=>{
+          const quem=D.colPorId.get(r.quem);
+          return `<li><span class="q-dt">${fmt(r.em)}</span> ${esc(r.texto)}
+            <small>${quem?esc(quem.nome.split(" ")[0]):""}</small></li>`;}).join("")}</ul>`:"";
+      })()}
       <div class="form-linha">
         <input id="pd-url" placeholder="colar o link da pasta deste cliente no Drive (opcional — sem link, a busca é pelo nome)"
           value="${esc((c.campos||{}).pasta_drive||"")}" style="flex:1;min-width:260px">
@@ -10365,6 +10395,23 @@ async function casoViraLembrete(casoId){
   abaAtiva=9; montarSidebar(); abrirFicha(k.cliente_id);
 }
 
+// F23 · aposentado + caso de aposentadoria programável = provável REVISÃO,
+// não concessão. Sem este aviso o colaborador olha "Apos. Tempo de
+// Contribuição" e imagina ato de concessão — e a peça sai errada. Derivado
+// (não gravado): desmarcado o "já se aposentou", o aviso morre sozinho.
+function provavelRevisao(k, c){
+  if(!k || !c) return false;
+  if(!(c.aposentado===1 || c.aposentado===true)) return false;
+  const b = dsa(k.beneficio||"");
+  if(!b) return false;
+  if(/revis|recalcul|acerto|cnis|pens[aã]o|reclus|matern|bpc|loas|auxil|incapac|acidente/.test(b)) return false;
+  return /apos|tempo de contribui|por idade|especial|professor|defici/.test(b);
+}
+function chipRevisao(k, c){
+  return provavelRevisao(k, c)
+    ? `<span class="chip laranja" title="o cliente está marcado como já aposentado: um caso de aposentadoria aqui tende a ser REVISÃO do benefício que ele já recebe, não concessão nova — confira antes de redigir">⚠ provável revisão, não concessão</span>`
+    : "";
+}
 function caixaApos(cli){
   const lista=aposDoCliente(cli);
   const auto=lista.find(a=>a.automatica);
@@ -11005,6 +11052,7 @@ function blocoFatos(k){
   return `<section class="fatos fatos-processo">
     <div class="fatos-topo">
       <h3>${esc(tituloCaso(k))}</h3>
+      ${chipRevisao(k, D.cliPorId.get(k.cliente_id))}
       ${/* EM QUE LISTA este caso está — a aba do processo responde na hora,
            sem voltar ao menu (pedido do Paulo) */""}
       <span class="chip ben" title="a lista deste caso (a mesma do To Do)">${
@@ -13874,14 +13922,12 @@ const CAD_CAMPOS = {
                  ops:[["solteiro","Solteiro(a)"],["casado","Casado(a)"],["uniao","União estável"],
                       ["viuvo","Viúvo(a)"],["divorciado","Divorciado(a)"]]},
   profissao:    {rot:"Profissão",         col:6, tipo:"texto"},
-  rg:           {rot:"RG",                col:6, tipo:"texto"},
-  rg_orgao:     {rot:"Órgão emissor",     col:6, tipo:"texto", dica:"SSP/SP"},
   nome_mae:     {rot:"Nome da mãe",       col:6, tipo:"texto", opcional:true},
   pis_nit:      {rot:"PIS / NIT",         col:6, tipo:"texto", opcional:true},
 };
 // o que a procuração, o contrato e as declarações exigem para sair prontos
-const CAD_PRECISA = ["nome","cpf","dn","rg","estado_civil","profissao","endereco"];
-const ROT_CAMPO = {nome:"nome completo", cpf:"CPF", dn:"nascimento", endereco:"endereço", rg:"RG"};
+const CAD_PRECISA = ["nome","cpf","dn","estado_civil","profissao","endereco"];
+const ROT_CAMPO = {nome:"nome completo", cpf:"CPF", dn:"nascimento", endereco:"endereço"};
 
 function valCli(c, campo){
   if(!c) return "";
@@ -14028,31 +14074,6 @@ function cadCampo(c, campo, colunas, conteudo, opcoes){
   </div>`;
 }
 // RG e órgão emissor: um campo na tela, duas colunas no banco
-function cadCampoRG(c){
-  const rg = valCli(c,"rg"), org = valCli(c,"rg_orgao");
-  return `<div class="cad-campo cad-c4${rg?"":" vazio"}"
-      onclick="if(!this.querySelector('#cad-ed'))editarRG('${c.id}')" style="cursor:pointer">
-    <label>RG e órgão emissor <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
-    <div class="cad-v" id="cad-rg">${rg?esc(rg)+(org?` <span class="cad-apoio">${esc(org)}</span>`:""):"clique para preencher"}</div>
-  </div>`;
-}
-function editarRG(cliId){
-  const c=D.cliPorId.get(cliId), cx=document.getElementById("cad-rg");
-  if(!c||!cx) return;
-  cx.innerHTML=`<input id="cad-ed" value="${esc(valCli(c,"rg"))}" placeholder="12.345.678-9" style="width:120px">
-    <input id="cad-ed2" value="${esc(valCli(c,"rg_orgao"))}" placeholder="SSP/SP" style="width:80px">
-    <button class="cad-mini" onclick="guardarRG('${cliId}')">Guardar</button>`;
-  const inp=document.getElementById("cad-ed"); inp.focus(); inp.select();
-  const teclas=e=>{ if(e.key==="Enter") guardarRG(cliId); if(e.key==="Escape") abrirFicha(cliId); };
-  inp.onkeydown=teclas; document.getElementById("cad-ed2").onkeydown=teclas;
-}
-async function guardarRG(cliId){
-  const rg=(document.getElementById("cad-ed")||{}).value||"";
-  const org=(document.getElementById("cad-ed2")||{}).value||"";
-  if(!await salvarCliCampo(cliId,"rg",rg.trim())) return;
-  await salvarCliCampo(cliId,"rg_orgao",org.trim());
-  aviso("RG guardado", false); abrirFicha(cliId);
-}
 // ══════════════════════════════════════════════════════════════════════════
 // F9.3 · ENDEREÇO — capturado pela primeira vez, não migrado
 // ══════════════════════════════════════════════════════════════════════════
@@ -14342,6 +14363,38 @@ function cadCampoPasta(c){
       ${(c.campos||{}).pasta_drive?"":`<span class="cad-apoio">sem link fixo — a busca vai pelo nome</span>`}</div>
   </div>`;
 }
+// F23 · registro avulso: anotação de cliente que não pertence a caso nenhum.
+// Fica em clientes.campos.registros, com autor e data — o rastro em tudo.
+// F23 · a parceria escrita do cadastro: grava k.parceria no caso escolhido.
+// A pesquisa e a lista 🤝 Parcerias já leem esse campo — este é só o lugar
+// de escrever que faltava.
+async function definirParceria(){
+  const caso = (document.getElementById("par-caso")||{}).value;
+  const nome = ((document.getElementById("par-nome")||{}).value||"").trim();
+  const k = D.casoPorId.get(caso);
+  if(!k) return aviso("Escolha o caso");
+  if(!nome) return aviso("Escreva o nome do advogado parceiro");
+  try{ await patchCaso(k.id, {parceria:nome}); }
+  catch(e){ return aviso("Não consegui gravar a parceria — tente de novo"); }
+  k.parceria = nome;
+  const dono = D.cliPorId.get(k.cliente_id);
+  if(dono) reindexarCliente(dono);   // a busca acha pelo advogado NA HORA
+  aviso(`Parceria com ${nome} vinculada ✔`);
+  repintarFicha(); montarSidebar();
+}
+async function novoRegistroAvulso(cliId){
+  const el = document.getElementById("ra-texto");
+  const texto = (el && el.value || "").trim();
+  if(!texto) return aviso("Escreva o que quer registrar");
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const registros = [...(((c.campos||{}).registros)||[]), {texto, quem:eu.id, em:hoje()}];
+  c.campos = {...(c.campos||{}), registros};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})});
+  }catch(e){ return aviso("Não consegui guardar o registro — tente de novo"); }
+  aviso("Registro guardado ✔"); repintarFicha();
+}
 function fichaIdentificacao(c, creds){
   const falta = cadFaltando(c);
   const tels = telefonesDe(c);
@@ -14406,15 +14459,14 @@ function fichaIdentificacao(c, creds){
 
       ${cadCampoEndereco(c)}
 
-      ${cadCampoRG(c)}
-      ${cadCampo(c, "nome_mae", 4)}
+            ${cadCampo(c, "nome_mae", 4)}
       ${cadCampo(c, "pis_nit", 4)}
 
       ${outrasCreds.map(cr=>cadCampoSenha(c, cr.tipo, "Senha "+esc(cr.tipo.replace("_"," ")), cr)).join("")}
       ${cadCampoPasta(c)}
     </div>
     <p class="cad-nota">Os campos em branco entram nas peças como espaço vazio. A procuração e o contrato
-      só ficam prontos para assinatura com nome, CPF, RG, nascimento, estado civil, profissão e endereço preenchidos.
+      só ficam prontos para assinatura com nome, CPF, nascimento, estado civil, profissão e endereço preenchidos.
       Toda vez que alguém copia ou vê uma senha, fica registrado quem foi e quando.</p>
   </div>`;
 }
@@ -14439,7 +14491,7 @@ function faltaParaDocs(c){
   if(!c.cpf) falta.push("CPF");
   if(!c.dn) falta.push("nascimento");
   if(!c.endereco) falta.push("endereço");
-  for(const [ch,rot] of [["rg","RG"],["estado_civil","estado civil"],["profissao","profissão"],
+  for(const [ch,rot] of [["estado_civil","estado civil"],["profissao","profissão"],
                          ["bairro","bairro"],["cidade","cidade"],["uf","UF"],["cep","CEP"]])
     if(!v[ch]) falta.push(rot);
   return falta;
@@ -14451,12 +14503,14 @@ function faltaParaDocs(c){
 // A profissão era pedida no cadastro, entrava em CAD_PRECISA e no contador de
 // campos em branco, e não aparecia em peça nenhuma além da procuração do B31.
 // Ou ela está na qualificação, ou não se cobra o campo. (F11)
-const QUALIF = "<NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>";
+// F23 · o RG saiu da qualificação (pedido do Paulo, 16.08.2026): documento
+// em desuso — CPF identifica sozinho, e é o que o INSS usa.
+const QUALIF = "<NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>";
 const ESCRITORIO_RODAPE = "Rua Rui Barbosa, nº 663, Centro, Monte Alto/SP, CEP 15.910-000, fone (16) 3242-2908 – Cel (16) 98140-9271";
 
 const CONTRATO_PARTES = `CONTRATANTE: ${QUALIF};
 
-CONTRATADOS: PAULO ROBERTO TERCINI FILHO, brasileiro, solteiro, advogado inscrito na OAB/SP sob o nº 331.110 e no CPF/MF nº 224.627.048-09, MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado inscrito na OAB/SP sob o nº 464.306 e no CPF/MF nº 105.950.296-80; AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, portadora RG nº. 44.211.638-X, inscrita no CPF nº. 381.533.048-36, inscrita na OAB/SP sob o nº. 511.528, todos com escritório profissional na ${ESCRITORIO_RODAPE}, onde recebem notificações e intimações em geral.
+CONTRATADOS: PAULO ROBERTO TERCINI FILHO, brasileiro, solteiro, advogado inscrito na OAB/SP sob o nº 331.110 e no CPF/MF nº 224.627.048-09, MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado inscrito na OAB/SP sob o nº 464.306 e no CPF/MF nº 105.950.296-80; AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, inscrita no CPF nº. 381.533.048-36, inscrita na OAB/SP sob o nº. 511.528, todos com escritório profissional na ${ESCRITORIO_RODAPE}, onde recebem notificações e intimações em geral.
 
 CLÁUSULA PRIMEIRA: O Contratante, neste ato, contrata os serviços profissionais dos Advogados Contratados, acima nominados, para defesa de seus interesses, em PEDIDO ADMINISTRATIVO DE CONCESSÃO OU REVISÃO DE BENEFÍCIO PREVIDENCIÁRIO e para ingressar judicialmente com AÇÃO PREVIDENCIÁRIA DE CONCESSÃO OU REVISÃO DE BENEFÍCIO PREVIDENCIÁRIO, tendo como requerido o INSS – Instituto Nacional do Seguro Social;
 
@@ -14569,7 +14623,7 @@ ______________________________________
 <NOMESEGURADO>`},
 
   proc_adm: {rot:"Procuração Administrativa", titulo:"PROCURAÇÃO", texto:
-`Pelo presente instrumento particular de procuração, ${QUALIF}, nomeia e constitui seu bastante procurador o Dr. Paulo Roberto Tercini Filho, brasileiro, solteiro, advogado, portador do RG nº. 44086138-X, inscrito no CPF nº. 224.627.048-09, inscrito na OAB/SP sob o nº. 331.110 e portador do NIT nº. 11966884529; Dr. Marcos Henrique de Pádua Amorim, brasileiro, solteiro, advogado, portador do RG nº. 60.366.107-5, inscrito no CPF nº. 105.950.296-80, inscrito na OAB/SP sob o nº. 464.306 e portador do NIT nº. 20061810473; e Dra. Amanda Cristiane Carneiro Garcez, brasileira, solteira, advogada, portadora RG nº. 44.211.638-X, inscrita no CPF nº. 381.533.048-36, inscrita na OAB/SP sob o nº. 511.528 e portador do NIT nº. 2725914270-2, todos com escritório profissional na cidade de Monte Alto, Estado de São Paulo, na Rua Rui Barbosa, n. 663, Centro, fone: (16) 3242-2908, CEP 15.910-000, com poderes em qualquer Foro, Juízo, Tribunal ou ente da administração pública, onde com esta se apresentar, defender os interesses do outorgante, podendo peticionar, acompanhar e requerer benefícios/serviços, revisão e interpor recursos perante o INSS – Instituto Nacional do Seguro Social, usando os recursos legais e acompanhando-os, conferindo-lhe ainda, os poderes especiais para renunciar, receber, dar quitação, fazer acordos, desistir, transigir, solicitar e receber documentos, inclusive laudos médicos e laudos sociais, nos termos do inc. II, §1º do art. 31, da Lei nº 12.527/2011, além de possibilitar o requerimento de senha do GOV.BR/MEUINSS, bem como praticar os demais atos para o perfeito desempenho deste mandato, o que dará por bom, firme e valioso, podendo os outorgados substabelecer no todo ou em parte, com ou sem reserva de iguais poderes.
+`Pelo presente instrumento particular de procuração, ${QUALIF}, nomeia e constitui seu bastante procurador o Dr. Paulo Roberto Tercini Filho, brasileiro, solteiro, advogado, inscrito no CPF nº. 224.627.048-09, inscrito na OAB/SP sob o nº. 331.110 e portador do NIT nº. 11966884529; Dr. Marcos Henrique de Pádua Amorim, brasileiro, solteiro, advogado, inscrito no CPF nº. 105.950.296-80, inscrito na OAB/SP sob o nº. 464.306 e portador do NIT nº. 20061810473; e Dra. Amanda Cristiane Carneiro Garcez, brasileira, solteira, advogada, inscrita no CPF nº. 381.533.048-36, inscrita na OAB/SP sob o nº. 511.528 e portador do NIT nº. 2725914270-2, todos com escritório profissional na cidade de Monte Alto, Estado de São Paulo, na Rua Rui Barbosa, n. 663, Centro, fone: (16) 3242-2908, CEP 15.910-000, com poderes em qualquer Foro, Juízo, Tribunal ou ente da administração pública, onde com esta se apresentar, defender os interesses do outorgante, podendo peticionar, acompanhar e requerer benefícios/serviços, revisão e interpor recursos perante o INSS – Instituto Nacional do Seguro Social, usando os recursos legais e acompanhando-os, conferindo-lhe ainda, os poderes especiais para renunciar, receber, dar quitação, fazer acordos, desistir, transigir, solicitar e receber documentos, inclusive laudos médicos e laudos sociais, nos termos do inc. II, §1º do art. 31, da Lei nº 12.527/2011, além de possibilitar o requerimento de senha do GOV.BR/MEUINSS, bem como praticar os demais atos para o perfeito desempenho deste mandato, o que dará por bom, firme e valioso, podendo os outorgados substabelecer no todo ou em parte, com ou sem reserva de iguais poderes.
 
 <DATAEXTENSO>
 
@@ -14589,7 +14643,7 @@ ______________________________________
   beneficiario: {rot:"Declaração de Beneficiário", titulo:"DECLARAÇÃO DE RECEBIMENTO DE PENSÃO OU APOSENTADORIA EM OUTRO REGIME DE PREVIDÊNCIA", texto:
 `ANEXO XXIV — INSTRUÇÃO NORMATIVA PRES/INSS Nº 128, DE 28 DE MARÇO DE 2022
 
-Eu, <NOMESEGURADO>, portador(a) do CPF nº <CPF> e RG nº <RG>, declaro, sob as penas do art. 299 do Código Penal, que:
+Eu, <NOMESEGURADO>, portador(a) do CPF nº <CPF>, declaro, sob as penas do art. 299 do Código Penal, que:
 
 ( X ) não recebo aposentadoria/pensão de outro regime e previdência.
 (   ) recebo aposentadoria/pensão de outro regime de previdência.
@@ -14616,7 +14670,7 @@ _____________________________________________________
 Assinatura e identificação do (a) requerente ou representante legal`},
 
   termo: {rot:"Termo de Representação", titulo:"TERMO DE REPRESENTAÇÃO E AUTORIZAÇÃO DE ACESSO A INFORMAÇÕES PREVIDENCIÁRIAS", texto:
-`Eu, <NOMESEGURADO>, inscrito (a) no CPF nº <CPF>, RG nº <RG>, residente e domiciliado (a) na <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>, representado pelos advogados DR. PAULO ROBERTO TERCINI FILHO, CPF nº 224.627.048-09, inscrito na OAB/SP Nº 331.110, NIT nº 11966884529 e DR. MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado, portador do RG nº. 60.366.107-5, inscrito no CPF nº. 105.950.296-80, inscrito na OAB/SP sob o nº. 464.306 e portador do NIT nº. 20061810473; DRA. AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, portadora RG nº. 44.211.638-X, inscrita no CPF nº. 381.533.048-36, inscrita na OAB/SP sob o nº. 511.528 e portador do NIT nº. 2725914270-2, CONFIRO PODERES ESPECÍFICOS para me representar perante o INSS na solicitação do serviço ou benefício abaixo indicado e AUTORIZO o (a) referido (a) profissional a ter acesso apenas às informações pessoais necessárias a subsidiar o requerimento eletrônico do serviço ou benefício abaixo elencado:
+`Eu, <NOMESEGURADO>, inscrito (a) no CPF nº <CPF>, residente e domiciliado (a) na <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>, representado pelos advogados DR. PAULO ROBERTO TERCINI FILHO, CPF nº 224.627.048-09, inscrito na OAB/SP Nº 331.110, NIT nº 11966884529 e DR. MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado, inscrito no CPF nº. 105.950.296-80, inscrito na OAB/SP sob o nº. 464.306 e portador do NIT nº. 20061810473; DRA. AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, inscrita no CPF nº. 381.533.048-36, inscrita na OAB/SP sob o nº. 511.528 e portador do NIT nº. 2725914270-2, CONFIRO PODERES ESPECÍFICOS para me representar perante o INSS na solicitação do serviço ou benefício abaixo indicado e AUTORIZO o (a) referido (a) profissional a ter acesso apenas às informações pessoais necessárias a subsidiar o requerimento eletrônico do serviço ou benefício abaixo elencado:
 
 ( X ) Atualização Cadastral
 ( X ) Atualização de Vínculos e Remunerações
@@ -14649,7 +14703,7 @@ Art. 299. Omitir, em documento público ou particular, declaração que devia co
   // do procedimento administrativo (pedido do Paulo — sai fora do "gerar
   // todos", é a folha que o cliente do auxílio por incapacidade assina)
   b31_proc: {rot:"Procuração Adm. — Incapacidade Temporária (B31)", titulo:"PROCURAÇÃO ADMINISTRATIVA", texto:
-`Pelo presente instrumento particular de procuração, <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>, nomeia e constitui seus bastantes procuradores os Drs. PAULO ROBERTO TERCINI FILHO, brasileiro, solteiro, advogado, RG nº 44.086.138-X, CPF nº 224.627.048-09, OAB/SP nº 331.110, NIT nº 11966884529; MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado, RG nº 60.366.107-5, CPF nº 105.950.296-80, OAB/SP nº 464.306, NIT nº 20061810473; e AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, RG nº 44.211.638-X, CPF nº 381.533.048-36, OAB/SP nº 511.528, NIT nº 2725914270-2, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, conferindo-lhes poderes especiais para representá-lo(a) perante o INSS — Instituto Nacional do Seguro Social, em qualquer agência ou unidade administrativa, podendo requerer benefícios por incapacidade, em especial AUXÍLIO POR INCAPACIDADE TEMPORÁRIA (B31), protocolar pedidos, cumprir exigências, peticionar, juntar e retirar documentos, prestar informações, acompanhar requerimentos, ter vistas e tomar ciência de decisões, interpor recursos administrativos, requerer prorrogação, reconsideração e revisão, receber laudos médicos e sociais, nos termos do inciso II, §1º do art. 31 da Lei nº 12.527/2011, requerer e utilizar a senha do GOV.BR e do MEU INSS, podendo praticar todos os demais atos necessários ao perfeito desempenho deste mandato, com cláusula ad judicia et extra e poderes para transigir, desistir, renunciar, dar quitação, fazer acordos e substabelecer, com ou sem reserva de iguais poderes.
+`Pelo presente instrumento particular de procuração, <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>, nomeia e constitui seus bastantes procuradores os Drs. PAULO ROBERTO TERCINI FILHO, brasileiro, solteiro, advogado, CPF nº 224.627.048-09, OAB/SP nº 331.110, NIT nº 11966884529; MARCOS HENRIQUE DE PÁDUA AMORIM, brasileiro, solteiro, advogado, CPF nº 105.950.296-80, OAB/SP nº 464.306, NIT nº 20061810473; e AMANDA CRISTIANE CARNEIRO GARCEZ, brasileira, solteira, advogada, CPF nº 381.533.048-36, OAB/SP nº 511.528, NIT nº 2725914270-2, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, conferindo-lhes poderes especiais para representá-lo(a) perante o INSS — Instituto Nacional do Seguro Social, em qualquer agência ou unidade administrativa, podendo requerer benefícios por incapacidade, em especial AUXÍLIO POR INCAPACIDADE TEMPORÁRIA (B31), protocolar pedidos, cumprir exigências, peticionar, juntar e retirar documentos, prestar informações, acompanhar requerimentos, ter vistas e tomar ciência de decisões, interpor recursos administrativos, requerer prorrogação, reconsideração e revisão, receber laudos médicos e sociais, nos termos do inciso II, §1º do art. 31 da Lei nº 12.527/2011, requerer e utilizar a senha do GOV.BR e do MEU INSS, podendo praticar todos os demais atos necessários ao perfeito desempenho deste mandato, com cláusula ad judicia et extra e poderes para transigir, desistir, renunciar, dar quitação, fazer acordos e substabelecer, com ou sem reserva de iguais poderes.
 
 Ademais, DECLARO, sob as penas dos arts. 171 e 299 do Código Penal, que NÃO recebo aposentadoria, pensão por morte ou qualquer outro benefício de caráter previdenciário em regime próprio de previdência social, federal, estadual, municipal, civil ou militar, e que esta declaração é a expressão da verdade.
 
@@ -14673,7 +14727,7 @@ Advogados Contratados`},
   b31_contrato: {rot:"Contrato — Incapacidade Temporária (B31)", titulo:"CONTRATO DE HONORÁRIOS ADVOCATÍCIOS", texto:
 `(Procedimento administrativo de benefício por incapacidade — B31)
 
-CONTRATANTE: <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, portador(a) do RG nº <RG>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>.
+CONTRATANTE: <NOMESEGURADO>, brasileiro(a), nascido(a) em <DATANASCIMENTO>, <ESTADOCIVIL>, <PROFISSAO>, inscrito(a) no CPF nº <CPF>, residente e domiciliado(a) <ENDERECO>, <BAIRRO>, na cidade de <CIDADE>, Estado de <ESTADO>, CEP <CEP>.
 
 CONTRATADOS: PAULO ROBERTO TERCINI FILHO, OAB/SP nº 331.110, CPF nº 224.627.048-09; MARCOS HENRIQUE DE PÁDUA AMORIM, OAB/SP nº 464.306, CPF nº 105.950.296-80; e AMANDA CRISTIANE CARNEIRO GARCEZ, OAB/SP nº 511.528, CPF nº 381.533.048-36, todos com escritório profissional na Rua Rui Barbosa, 663, Centro, Monte Alto/SP, CEP 15.910-000, telefone (16) 3242-2908, celular (16) 98140-9271.
 
@@ -14718,7 +14772,7 @@ function preencherModeloDoc(txt, c, especie){
   const dn = c.dn ? `${c.dn.slice(0,2)}/${c.dn.slice(2,4)}/${c.dn.slice(4)}` : "___/___/______";
   const dataExt = new Date(hoje()+"T12:00:00").toLocaleDateString(IDIOMA,{day:"numeric",month:"long",year:"numeric"});
   const mapa={
-    "<NOMESEGURADO>": c.nome||lac, "<CPF>": c.cpf?fmtCpf(c.cpf):lac, "<RG>": v.rg||lac,
+    "<NOMESEGURADO>": c.nome||lac, "<CPF>": c.cpf?fmtCpf(c.cpf):lac,
     "<DATANASCIMENTO>": dn, "<ESTADOCIVIL>": v.estado_civil||lac, "<PROFISSAO>": v.profissao||lac,
     // o marcador traz a preposição junto porque ela depende do logradouro:
     // "na Rua", "no Sítio", "em Boa Esperança"

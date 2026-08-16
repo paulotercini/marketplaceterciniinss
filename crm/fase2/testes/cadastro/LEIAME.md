@@ -144,3 +144,23 @@ ADVBOX, Tabelas do CNJ), e três decisões merecem registro:
 Armadilha de CSS: a `.escrever` pinta todo botão de azul por uma regra com
 lista de `:not()`. Chip novo dentro dela PRECISA entrar na lista, ou nasce
 azul sólido.
+
+## casos2.js (F22) — os defeitos apontados por captura
+
+A linha do tempo tinha TRÊS colunas à esquerda (avatar+data, trilho, bolinha
+oca) e o texto preso a 72ch — numa tela larga sobrava um vão branco entre o
+texto e o ✓ de "li". O redesenho: o avatar É o nó, o trilho passa por trás
+dele, e o texto ocupa a largura que existir. O CRPS (.crps-tl) mantém o
+desenho antigo, porque lá o nó é um ícone.
+
+Armadilha de medição: a fita de atribuição mede 1px de recuo, e o recuo é a
+PRÓPRIA borda do cartão — exigir 0px reprova o certo.
+
+## cadastro3.js (F23) — RG fora, parceria, registro avulso, revisão
+
+Duas armadilhas de teste: o registro avulso mora dentro do `<details>` "mais
+opções", e `repintarFicha` o fecha de novo — `innerText` de conteúdo oculto
+devolve vazio, `textContent` lê. E a pesquisa usa índice pré-montado
+(`c._ix`): gravar `k.parceria` sem `reindexarCliente(dono)` só aparece na
+busca depois de recarregar — esse era um defeito do programa, achado pelo
+teste.
