@@ -1,4 +1,14 @@
-# Onde paramos — 16.08.2026, versão 09.34
+# Onde paramos — 16.08.2026, versão 09.35
+
+## F36 · De Lembretes também se gera o caso (09.35)
+
+O lembrete que nasceu de um atendimento (origem precaso) tem agora DOIS
+botões: "↺ voltar ao atendimento" e "Gerar o caso". Gerar dali reativa o
+pré-caso e segue o MESMO gerarCasoDoPre da mesa — com três melhorias que
+valem para os dois caminhos: a via da incapacidade é exigida pela
+própria função (não só pelo botão), o lembrete de origem se desativa ao
+gerar (o acompanhamento acabou — existe caso), e sem o select da mesa a
+fase sai da via (adm→inss, jud→petição inicial), nunca "escritorio".
 
 ## REGRA PERMANENTE · A REGRA DA VOLTA (decisão do Paulo, 16.08.2026)
 

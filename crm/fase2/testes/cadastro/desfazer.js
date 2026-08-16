@@ -56,7 +56,12 @@ FIX.lembretes = [{ id: "lb000000-0000-0000-0000-000000000001", cliente_id: CLI_V
       return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(SESSAO) });
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
     if (m !== "GET") {
-      escritos.push({ m, t, u, corpo: JSON.parse(rota.request().postData() || "null") });
+      const corpo = JSON.parse(rota.request().postData() || "null");
+      escritos.push({ m, t, u, corpo });
+      // gerarCasoDoPre consome o caso criado — eco 201 obrigatório
+      if (m === "POST" && t === "casos")
+        return rota.fulfill({ status: 201, contentType: "application/json",
+          body: JSON.stringify([{ id: "b9999999-9999-9999-9999-999999999999", ...corpo }]) });
       return rota.fulfill({ status: 204, body: "" });
     }
     let corpo = FIX[t] || [];
@@ -178,7 +183,35 @@ FIX.lembretes = [{ id: "lb000000-0000-0000-0000-000000000001", cliente_id: CLI_V
     escritos.some(x => x.m === "PATCH" && x.t === "clientes"
       && x.corpo.campos.registros.length === 0));
 
-  console.log("=== a regra da volta (F35) ===");
+  // ── 6. F36: de Lembretes também se GERA o caso ──────────────────────────
+  // re-prepara: o pré-caso volta a "somente lembrete", com lembrete ativo
+  await p.evaluate(cli => { const c = D.cliPorId.get(cli);
+    const pcs = precasosDe(c).map(p2 => p2.id === "pcL" ? { ...p2, so_lembrete: true } : p2);
+    c.campos = { ...(c.campos || {}), precasos: pcs };
+    D.lembretes = [{ id: "lb000000-0000-0000-0000-000000000001", cliente_id: cli,
+      tipo: "geral", titulo: "BPC/LOAS — atendimento virou lembrete", ativo: true,
+      proximo_em: "2027-01-10", detalhes: { origem: "precaso", precaso_id: "pcL" } }];
+    abaAtiva = 9; pintarFicha(); }, CLI_VAZIO);
+  await p.waitForTimeout(400);
+  conf("o lembrete oferece TAMBÉM o Gerar o caso",
+    /Gerar o caso/.test(await p.evaluate(() =>
+      (document.querySelector('.painel[data-p="9"]') || {}).innerText || "")));
+  escritos.length = 0;
+  await p.evaluate(cli => gerarCasoDoLembrete(cli, "pcL"), CLI_VAZIO);
+  await p.waitForTimeout(900);
+  const postK = escritos.find(x => x.m === "POST" && x.t === "casos");
+  conf("gerar do lembrete cria o caso com a espécie do pré-caso",
+    postK && postK.corpo.beneficio === "BPC/LOAS");
+  conf("e a fase nunca cai em escritorio — sem o select da mesa, vai ao INSS",
+    postK && postK.corpo.fase === "inss");
+  conf("o lembrete se desativa ao gerar",
+    escritos.some(x => x.m === "PATCH" && x.t === "lembretes" && x.corpo.ativo === false));
+  conf("o pré-caso se encerra e some da lixeira de pendências",
+    await p.evaluate(cli => !precasosDe(D.cliPorId.get(cli)).some(p2 => p2.id === "pcL"), CLI_VAZIO));
+  conf("a ficha abre nos documentos da assinatura",
+    await p.evaluate(() => subCad === "documentos"));
+
+  console.log("=== a regra da volta (F35) + gerar do lembrete (F36) ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
   console.log("erros de console:", erros.length ? erros : "nenhum");
   const ruins = ok.filter(x => !x[1]).length;
