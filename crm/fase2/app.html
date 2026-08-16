@@ -226,6 +226,10 @@
   .proc-sub{display:block;font-size:13px;color:var(--cinza)}
   .proc-prazo{display:inline-block;font-size:13px;color:var(--azul);margin-top:4px}
   .vistos{display:inline-flex;align-items:center;gap:3px;margin-left:8px;vertical-align:middle}
+  /* na linha do tempo o li alinha pelo topo: as ações da tarefa ficam na
+     LINHA do comentário, não boiando no meio da altura do cartão */
+  .timeline>li>.vistos{margin-left:auto;flex:none;flex-wrap:wrap;justify-content:flex-end;
+    max-width:46%;row-gap:4px;padding-top:1px;margin-right:16px}
   .visto-av{width:19px;height:19px;border-radius:50%;color:#fff;font-size:10px;font-weight:700;
     display:inline-flex;align-items:center;justify-content:center;cursor:default}
   .visto-bt{border:none;background:none;cursor:pointer;font-size:15px;color:var(--cinza);line-height:1;padding:0 2px}
@@ -586,7 +590,7 @@
     border-radius:var(--raio);overflow:hidden;position:relative}
   .timeline::before{content:"";position:absolute;left:96px;top:14px;bottom:14px;width:2px;
     background:var(--borda-suave);border-radius:2px}
-  .timeline li{display:flex;gap:20px;padding:11px 12px;margin:0;
+  .timeline li{display:flex;gap:26px;padding:11px 12px;margin:0;align-items:flex-start;
     border-left:none!important;border-radius:0;position:relative;background:none!important}
   .timeline li::after{content:"";position:absolute;left:92.5px;top:18px;width:9px;height:9px;
     border-radius:50%;background:var(--branco);border:2px solid var(--cinza-claro);z-index:1}
@@ -816,7 +820,7 @@
   /* o azul cheio é só dos botões SEM classe própria (ex.: "Registrar
      exigência"). Sem o :not, ele pintava também os chips claros da barra —
      texto branco em fundo branco, botão invisível. */
-  .escrever button:not(.btn-rap):not(.eq-ini):not(.esc-ic):not(.esc-reg):not(.fx-av):not(.sug-abrir){
+  .escrever button:not(.btn-rap):not(.eq-ini):not(.esc-ic):not(.esc-reg):not(.fx-av):not(.sug-abrir):not(.tipo-ch){
     padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
   /* Os chips claros da barra (Hoje, Amanhã, Escolher a data, sem lembrete).
      A regra nasceu para ⭐/🔥 em emoji — que não obedecem cor do CSS — e
@@ -1134,6 +1138,14 @@
              display:inline-flex;align-items:center;justify-content:center}
   .tf-chip.feita{color:#0a7d43;border-color:#bfe6cf;background:#eaf7ef}
   .tf-chip.atras{color:#b00020;border-color:#f3c1c8;background:#fdeef0}
+  /* F21 · a fila de tipos da anotação, e o chip na linha do tempo */
+  .tipo-fila{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+  .escrever .tipo-ch,.tipo-ch{border:1px solid var(--borda);background:var(--branco);border-radius:14px;
+    padding:2px 10px;font-size:11.5px;font-weight:600;color:var(--cinza);cursor:pointer;
+    min-height:24px;width:auto}
+  .escrever .tipo-ch:hover,.tipo-ch:hover{border-color:var(--cinza-claro);color:var(--texto);background:var(--branco)}
+  .escrever .tipo-ch.on,.tipo-ch.on{background:var(--azul-fundo);border-color:var(--azul);color:var(--azul-escuro)}
+  .chip.tipo-tl{margin-right:6px;vertical-align:1px}
   .tf-acao{font-size:11px}
   /* o círculo da conclusão: alvo de 20px, que é o do To Do, e não um link de
      texto de 60px de largura por 12 de altura */
@@ -1627,7 +1639,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.20 · F20 — a aba de Lembretes na ordem do uso: aposentadoria provável no topo, um botão só para criar, e no pé o período de graça calculado do CNIS com as premissas à vista e a lei conferida no Planalto (o facultativo tem 6 meses, não 12)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.21 · F21 — a anotação ganhou tipo: seis chips (Exigência, Perícia, Prova, Contato, Decisão, Protocolo) que preenchem o esqueleto no padrão do escritório, o comentário rotulado sai com chip na linha do tempo, e três defeitos de layout da aba Casos foram consertados</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11158,7 +11170,15 @@ function painelEscritorio(k, ands){
     : `<div class="escrever">
       ${/* o texto primeiro, sozinho, para escrever ser a coisa principal; as
            ferramentas embaixo, e o Registrar por último, no fim da leitura */""}
-      <textarea id="and-texto" rows="1" placeholder="Escreva o andamento…  a data pode vir no texto: “verificar em 24/08”"></textarea>
+      ${/* F21 · o tipo antes do texto. Vocabulário FECHADO (lição de Clio,
+           Linear e das Tabelas do CNJ): tipo é o que permite perguntar
+           "quantos casos estão parados em exigência?". Sem tipo escolhido o
+           comentário continua livre, como sempre foi — tipo não é obrigação,
+           é atalho: clicar preenche o esqueleto da anotação, no padrão do
+           escritório, e quem escreve só completa as lacunas. */""}
+      <div class="tipo-fila" id="tipo-fila">${TIPOS_ANOTACAO.map(([ch,rot])=>
+        `<button class="tipo-ch" data-tipoand="${ch}" onclick="escolherTipoAnotacao('${ch}')">${esc(rot)}</button>`).join("")}</div>
+      <textarea id="and-texto" rows="2" placeholder="Escreva o andamento…  a data pode vir no texto: “verificar em 24/08” — ou clique num tipo acima e preencha as lacunas"></textarea>
       ${/* o id tf-box é a chave da TRAVA: é por ele que novoAndamento sabe
            que precisa exigir responsável e data. Renomear sem manter o id já
            derrubou a obrigatoriedade uma vez. */""}
@@ -11221,10 +11241,90 @@ function painelEscritorio(k, ands){
 // tarefas abertas, um "✔ Cumpri a exigência" perdido no topo não dizia de
 // qual delas era. Aqui a resposta fica embaixo do pedido, recuada: lê-se
 // "o que foi pedido → o que foi feito" de uma vez só.
+// ══════════════════════════════════════════════════════════════════════════
+// F21 · ANOTAÇÃO COM TIPO — o vocabulário fechado do escritório
+// ══════════════════════════════════════════════════════════════════════════
+// Pesquisa de 16.08.2026 sobre Clio, MyCase, Notion, Linear, Obsidian, Astrea,
+// ADVBOX e as Tabelas Unificadas do CNJ. O que todos os bons fazem igual:
+//   · a anotação humana é um EVENTO DATADO COM TIPO, de vocabulário FECHADO
+//     (Clio: activity categories da firma; CNJ: tabela de movimentos;
+//     Linear: um eixo com valores fechados) — tag livre apodrece;
+//   · autor e hora são CARIMBADOS, nunca digitados (Notion: Created by);
+//   · andamento capturado de máquina nunca se mistura com anotação de gente
+//     sem marcar a origem (Astrea, ADVBOX) — aqui já é assim, pelas sub-abas;
+//   · o texto livre não se codifica: o template dá o ESQUELETO e a pessoa
+//     preenche (Notion/Linear), o que separa "conversei com a cliente" de uma
+//     anotação com valor probatório seis meses depois.
+//
+// O tipo entra como prefixo [TIPO] no próprio texto: viaja para o To Do
+// legível, a pesquisa acha, e nenhuma coluna nova é preciso. Sem tipo, o
+// comentário continua livre — tipo é atalho, não obrigação. E não existe o
+// tipo "OUTROS": ele viraria o dreno onde tudo cai.
+const TIPOS_ANOTACAO = [
+  ["exigencia","Exigência","laranja",
+   "[EXIGÊNCIA] O que o INSS exigiu: \nPrazo para cumprir: \nDocumento que falta: \nQuem vai cumprir: "],
+  ["pericia","Perícia","per",
+   "[PERÍCIA] Resultado: \nO que o perito considerou: \nO que contraria o laudo assistente: \nPróximo passo: "],
+  ["prova","Prova","verde",
+   "[PROVA] O que chegou: \nPeríodo que cobre: \nOnde foi guardada: "],
+  ["contato","Contato","neutro",
+   "[CONTATO] Canal: \nO que foi dito ao cliente: \nCompromisso assumido: "],
+  ["decisao","Decisão","ben",
+   "[DECISÃO] O que o escritório decidiu: \nPor quê: "],
+  ["protocolo","Protocolo","neutro",
+   "[PROTOCOLO] Número: \nO que foi protocolado: \nDER: "],
+];
+const RX_TIPO_ANOT = /^\[(EXIGÊNCIA|PERÍCIA|PROVA|CONTATO|DECISÃO|PROTOCOLO)\]\s*/;
+const COR_TIPO_ANOT = {"EXIGÊNCIA":"laranja","PERÍCIA":"per","PROVA":"verde",
+                       "CONTATO":"neutro","DECISÃO":"ben","PROTOCOLO":"neutro"};
+function autoAltura(t){ if(!t) return; t.style.height="auto";
+  t.style.height=Math.min(t.scrollHeight, 220)+"px"; }
+function escolherTipoAnotacao(chave){
+  const inp = document.getElementById("and-texto"); if(!inp) return;
+  const t = TIPOS_ANOTACAO.find(x=>x[0]===chave); if(!t) return;
+  const molde = t[3].replace(/\\n/g, "\n");
+  const rotEmCima = RX_TIPO_ANOT.exec(inp.value.trim());
+  // clicar de novo no MESMO tipo tira o esqueleto, se ninguém escreveu nada
+  const soMolde = TIPOS_ANOTACAO.some(x=>{
+    const m = x[3].replace(/\\n/g, "\n");
+    return inp.value.trim() === m.trim() || inp.value === m;
+  });
+  if(rotEmCima && soMolde && molde.startsWith("["+rotEmCima[1]+"]")){
+    inp.value = ""; pintarTipoFila(); autoAltura(inp); inp.focus(); return;
+  }
+  if(!inp.value.trim() || soMolde){
+    inp.value = molde;
+  }else if(!RX_TIPO_ANOT.test(inp.value.trim())){
+    // já tem texto escrito: só o rótulo entra na frente, sem apagar nada
+    inp.value = molde.slice(0, molde.indexOf("]")+2) + inp.value;
+  }else{
+    // trocar o tipo de um texto já rotulado troca só o rótulo
+    inp.value = molde.slice(0, molde.indexOf("]")+2) + inp.value.replace(RX_TIPO_ANOT, "");
+  }
+  pintarTipoFila(); autoAltura(inp);
+  inp.focus();
+  // o cursor vai para o fim da primeira lacuna, que é onde se começa a escrever
+  const fim = inp.value.indexOf("\n");
+  inp.setSelectionRange(fim<0?inp.value.length:fim, fim<0?inp.value.length:fim);
+}
+function pintarTipoFila(){
+  const inp = document.getElementById("and-texto");
+  const m = inp && RX_TIPO_ANOT.exec(inp.value.trim());
+  document.querySelectorAll("#tipo-fila .tipo-ch").forEach(b=>{
+    const t = TIPOS_ANOTACAO.find(x=>x[0]===b.dataset.tipoand);
+    b.classList.toggle("on", !!(m && t && t[3].startsWith("["+m[1]+"]")));
+  });
+}
+// o comentário rotulado sai com o chip do tipo, não com o colchete cru
+function tipoDoComentario(texto){
+  const m = RX_TIPO_ANOT.exec(texto||"");
+  return m ? {rot:m[1], cor:COR_TIPO_ANOT[m[1]]||"neutro", resto:(texto||"").replace(RX_TIPO_ANOT,"")} : null;
+}
 function comentario(a, resposta){
   const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
+  const tp = tipoDoComentario(a.texto);
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span>${fmtTS(a.criado_em)}</span>
-    <span class="texto">${esc(a.texto)}${resposta||""}</span>
+    <span class="texto">${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${esc(tp?tp.resto:a.texto)}${resposta||""}</span>
     ${vistos(a)}
     ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}`;
 }
