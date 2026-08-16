@@ -1,120 +1,62 @@
-# Onde paramos — 16.08.2026, versão 09.21
+# Onde paramos — 16.08.2026, versão 09.25
 
-## O que foi feito nesta rodada
+## A rodada dos quinze pedidos (F22 a F26)
 
-**F15 · contraste e alvo de toque** (09.13). Auditoria no CRM em uso, tela a
-tela. Doze cores de texto reprovavam nos 4,5:1 da WCAG; cinco alvos de clique
-ficavam abaixo de 24×24 px, três deles nas quinze telas.
+**F22 · layout dos Casos** (09.22). Ficha aberta encolhe a lateral para os
+ícones (o ☰ é exceção da sessão, não preferência); fita colorida de
+atribuição na borda dos cartões; o texto do andamento perdeu o teto de 72ch e
+ocupa a largura; a bolinha oca morreu — o avatar é o nó da linha do tempo.
 
-A primeira medida que fiz estava **errada** — ignorava o canal alfa e
-comparava texto claro com fundo transparente. Refiz compondo o alfa pela
-cadeia de pais até o primeiro fundo opaco. Nenhuma correção foi aplicada com
-a medida errada.
+**F23 · cadastro** (09.23). O RG saiu do sistema e de TODOS os modelos
+(inclusive o dos advogados — OAB, CPF e NIT qualificam); parceria com nome de
+advogado buscável e editável do cadastro (com reindexação na hora); "mais
+opções" trocou credencial por registro avulso com autor e data; cliente já
+aposentado + caso de aposentadoria = aviso "provável revisão, não concessão",
+derivado.
 
-**F16 · a travada** (09.14 e 09.15). O que mais pesa no uso não era cor.
-`hoje()` montava um formatador de fuso a cada chamada e era chamada 5.790
-vezes num filtro só.
+**F24 · triagem** (09.24). A porta de entrada "De qual caso se trata?" com as
+doze famílias e o "ainda não sei" honesto (ficam só os passos padrão); as
+perguntas do escritório que a advogada acrescenta e valem para todos (autor e
+data); "Encerrar a triagem" manda o resumo para as Anotações SÓ com atenção
+ou não conferido.
 
-| tela | antes | depois |
-|---|---|---|
-| ☀️ Meu Dia | 1.601 ms | 25 ms |
-| montarSidebar | 1.206 ms | 34 ms |
-| quantosNoMeuDia | 1.138 ms | 2 ms |
-| Planejado | 1.082 ms | 161 ms |
+**F25 · o pré-caso** (09.25). "Gerado o caso" = procuração + contrato
+assinado. Antes disso: pré-casos nas Anotações (mais de um, pelo +), com
+espécie, natureza (concessão/revisão/acerto), marcadores rural/especial/
+deficiência que abrem os tópicos das famílias, honorários, anexo que passa
+para o caso, e o caminho alternativo "não gerar — acompanhar em Lembretes"
+(data + responsável viram lembrete). Anotações com atribuição, lembrar (cria
+lembrete com responsável, pronto para o WhatsApp), importante/urgente e
+checklist assinado. Cliente amarelo "Em formação", menu dinâmico (só Cadastro
+e Lembretes até o caso nascer), Cadastro com TRÊS divisões (Documentos/
+Consulta/Mensagens viraram trilho dentro de Anotações). Gerar o caso
+transfere as anotações como andamentos com data e autor originais.
 
-Mesma causa em `dataSP`, `horaSP` e `agoraSP`, que serviam a Agenda e ao
-Calendário. E um erro que derrubava a tela inteira: `visao="fase:pagamento"`
-fazia `FASES.find(...)[1]` sem guarda.
-
-**F17 · a espécie dentro da triagem** (09.16 e 09.17). Doze famílias de
-espécie, cada uma com três ou quatro pontos de conferência, cada uma nomeando
-a skill do escritório de onde o ponto veio. Entram entre o passo 7 e a
-conclusão, com etiqueta da espécie. A ferramenta do site interno aparece no
-passo em que serve. "Encerrar o atendimento" escreve uma linha no histórico
-do caso.
-
-Dois erros reais que o teste achou: "Recurso especial ou incidente" caía na
-família da aposentadoria especial, e `casoSel` sobrevivia à troca de ficha, de
-modo que o atendimento de um cliente seria lançado no processo de outro.
-
-**F18 · a triagem lê o CNIS e a Declaração de Benefícios** (09.18). O PDF é
-aberto no próprio navegador; nada é enviado a servidor nenhum. Do CNIS saem os
-indicadores com a descrição oficial e a contagem, mais NIT, CPF, nascimento,
-páginas e vínculos. Da Declaração saem NB, situação, espécie, início, cessação
-e último pagamento de cada benefício.
-
-Antes de gravar, o CPF do documento é comparado com o da ficha aberta. Não
-batendo, nada é gravado.
-
-A nota do passo recebe a leitura acima do que já estava escrito. O estado do
-passo continua sendo de quem atende: máquina não confere CNIS, transcreve. O NB
-entra no caso quando o caso está sem NB nenhum.
-
-Três erros achados escrevendo isto: o pdf.js entrega pedaços de texto e não
-palavras; a legenda de indicadores tem duas colunas e a linha que transborda
-pertence à coluna, não ao último código lido; a espécie da Declaração é escrita
-em três linhas em volta do NB.
-
-**Limite:** CNIS digitalizado (imagem) não é lido, e a tela avisa.
-
-**O que eu NÃO consegui verificar:** o carregamento do pdf.js pelo cdnjs no seu
-navegador. O navegador do arneço não tem saída para a internet, e a aba do
-Comet ficou sem permissão depois do último recarregamento. Tudo o que vem
-depois do carregamento está coberto por 44 verificações sobre o layout real.
-
-**F19 · a vida contributiva e o cadastro no lugar certo** (09.19). O CNIS traz
-os períodos de benefício como se fossem vínculo, e é dele que sai a linha do
-tempo pronta para o parecer, em ordem cronológica, com botão de copiar. No
-cadastro, CPF e senha do Meu INSS passaram a ficar lado a lado (o par que mais
-se copia), e o protocolo saiu da Identificação: ele é do CASO — vive na trilha
-do processo e no passo Requerimentos anteriores da Triagem, cada um com o caso
-e a DER.
-
-**F20 · Lembretes e o período de graça** (09.20). A aba na ordem do uso:
-aposentadoria provável, lembretes, um botão só para criar, e no pé o período
-de graça calculado do CNIS com as premissas à vista. A lei foi conferida no
-Planalto ANTES de escrever, e derrubou dois erros meus de memória: o
-facultativo tem 6 meses (art. 15, VI), e o prazo conta também da cessação de
-benefício por incapacidade (art. 13, II do Decreto 3.048/99). A tela entrega a
-competência-limite, não o dia, porque o vencimento da contribuição do CI
-(art. 14 do Decreto) não foi conferido em fonte primária.
-
-**F21 · a anotação com tipo** (09.21). Pesquisa sobre Clio, MyCase, Notion,
-Linear, Obsidian, Astrea, ADVBOX e Tabelas do CNJ. Seis chips (Exigência,
-Perícia, Prova, Contato, Decisão, Protocolo) que preenchem o esqueleto no
-padrão do escritório; o tipo viaja como prefixo [TIPO] no texto (nenhuma
-coluna nova, To Do legível) e vira chip na linha do tempo. Sem tipo "Outros".
-Três defeitos de layout da aba Casos medidos e consertados.
+**F26 · os modelos .docx da pasta do Drive**. Os dez modelos de
+"_Modelos Procurações/Nova pasta" foram sobrescritos sem RG (do segurado e
+dos advogados, remoção cirúrgica preservando negrito) e uniformizados em
+Bookman Old Style 12, espaçamento 1,5. Os originais estão em
+"_originais-antes-do-ajuste", dentro da mesma pasta.
 
 ## A suíte
 
-375 verificações em 20 arquivos, em `crm/fase2/testes/cadastro`. O LEIAME
-registra as armadilhas — inclusive as três desta rodada, todas do arquivo de
-teste e não do programa.
+451 verificações em 24 arquivos, todas passando. O LEIAME registra as
+armadilhas de cada fase.
 
 ## O que continua com você
 
-- 243 clientes sem CPF (duplicata esperando o dia em que alguém escrever o CPF
-  no título da tarefa do To Do)
-- a mão de volta CRM → To Do, decisão em aberto
-- confirmar que a F9.0 destravou as 2.621 parcelas — não tenho acesso ao banco
-- o rótulo do B26 e da Espécie 57: enquanto forem código de NB cru, esses
-  casos seguem com os oito passos fixos
-- HARs do e-SAJ e do eproc, resumos de acórdãos
+- 243 clientes sem CPF; a mão de volta CRM → To Do; confirmar as 2.621
+  parcelas da F9.0; o rótulo do B26/Espécie 57; HARs do e-SAJ/eproc.
+- Os ~555 ms da Agenda ao vivo seguem sem reprodução no arneço — medição ao
+  vivo com DevTools antes de mexer.
+- Conferir no seu navegador o leitor de PDF (Triagem → Ler o CNIS).
 
-## Agenda e Calendário: o que a investigação mostrou
+## Para a próxima rodada
 
-Os ~555 ms medidos ao vivo NÃO se reproduzem no arneço: com 1.250 eventos,
-inclusive com timestamps com fuso (o caso da produção), a Agenda pinta em
-19 ms e o Calendário em 5 ms. A causa não é o código que o arneço alcança —
-pode ser o ambiente da medição (extensão, aba) ou algo nos dados reais que a
-fixtura não tem. Regra da casa: sem reproduzir, não se corrige às cegas.
-Próxima medição tem de ser ao vivo, com o Performance do DevTools.
-
-## O que eu proponho para a próxima
-
-1. Agenda ainda leva 558 ms e Calendário 555 ms: sobrou trabalho por evento,
-   não mais formatador.
-2. Os 16 arneses no workflow do GitHub Actions, que hoje só roda o `tests/`
-   Python.
-3. Um Supabase de homologação, para provar o banco e não só a tela.
+1. O schema do banco não ganhou coluna nova: pré-casos, registros e porta da
+   triagem moram em campos JSONB — nada a rodar no Supabase.
+2. As perguntas do escritório usam config_app (chave triagem_extra) — também
+   sem migração.
+3. Se quiser o pré-caso também para clientes que JÁ têm casos (um caso novo
+   se desenhando ao lado dos existentes), é uma evolução pequena: hoje o
+   bloco aparece só para quem não tem caso nenhum.
