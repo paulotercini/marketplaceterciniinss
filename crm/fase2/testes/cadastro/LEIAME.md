@@ -164,3 +164,10 @@ devolve vazio, `textContent` lê. E a pesquisa usa índice pré-montado
 (`c._ix`): gravar `k.parceria` sem `reindexarCliente(dono)` só aparece na
 busca depois de recarregar — esse era um defeito do programa, achado pelo
 teste.
+
+## precaso.js (F25) — o pré-caso
+
+O arneço devolve 201 com o corpo ecoado nos POST com return=representation:
+sem isso, `gerarCasoDoPre` não recebe o caso criado e a transferência não
+roda. E o ＋ fullwidth (U+FF0B) conta como pictograma na regra da F9.2 — o
+sinal de mais é o ASCII.
