@@ -1,4 +1,4 @@
-# Onde paramos — 15.08.2026, versão 09.17
+# Onde paramos — 16.08.2026, versão 09.18
 
 ## O que foi feito nesta rodada
 
@@ -37,9 +37,34 @@ Dois erros reais que o teste achou: "Recurso especial ou incidente" caía na
 família da aposentadoria especial, e `casoSel` sobrevivia à troca de ficha, de
 modo que o atendimento de um cliente seria lançado no processo de outro.
 
+**F18 · a triagem lê o CNIS e a Declaração de Benefícios** (09.18). O PDF é
+aberto no próprio navegador; nada é enviado a servidor nenhum. Do CNIS saem os
+indicadores com a descrição oficial e a contagem, mais NIT, CPF, nascimento,
+páginas e vínculos. Da Declaração saem NB, situação, espécie, início, cessação
+e último pagamento de cada benefício.
+
+Antes de gravar, o CPF do documento é comparado com o da ficha aberta. Não
+batendo, nada é gravado.
+
+A nota do passo recebe a leitura acima do que já estava escrito. O estado do
+passo continua sendo de quem atende: máquina não confere CNIS, transcreve. O NB
+entra no caso quando o caso está sem NB nenhum.
+
+Três erros achados escrevendo isto: o pdf.js entrega pedaços de texto e não
+palavras; a legenda de indicadores tem duas colunas e a linha que transborda
+pertence à coluna, não ao último código lido; a espécie da Declaração é escrita
+em três linhas em volta do NB.
+
+**Limite:** CNIS digitalizado (imagem) não é lido, e a tela avisa.
+
+**O que eu NÃO consegui verificar:** o carregamento do pdf.js pelo cdnjs no seu
+navegador. O navegador do arneço não tem saída para a internet, e a aba do
+Comet ficou sem permissão depois do último recarregamento. Tudo o que vem
+depois do carregamento está coberto por 44 verificações sobre o layout real.
+
 ## A suíte
 
-248 verificações em 16 arquivos, em `crm/fase2/testes/cadastro`. O LEIAME
+292 verificações em 17 arquivos, em `crm/fase2/testes/cadastro`. O LEIAME
 registra as armadilhas — inclusive as três desta rodada, todas do arquivo de
 teste e não do programa.
 
