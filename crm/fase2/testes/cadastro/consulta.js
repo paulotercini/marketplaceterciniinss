@@ -8,6 +8,11 @@ const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CLI_VAZIO } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
+// F29: a Consulta vive dentro das Anotações, que exigem triagem
+// encerrada no cliente sem caso — a fixtura entrega o vazio já triado
+FIX.clientes[1] = { ...FIX.clientes[1], triagem: { atendimento:
+  { em: "2026-08-01", quem: "11111111-1111-1111-1111-111111111111", passos: 8, conferidos: 8 } } };
+
 (async () => {
   const s = http.createServer((q, r) => {
     const a = path.join(__dirname, q.url === "/" ? "app.html" : q.url.split("?")[0]);

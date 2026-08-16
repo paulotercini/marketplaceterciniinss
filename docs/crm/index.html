@@ -1684,7 +1684,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.27 · F28 — a recepção agora colhe sexo (homem/mulher, que entra na data da aposentadoria) e endereço pela lista de CEPs de Monte Alto (rua escolhida traz CEP, bairro e cidade — pronto para a procuração), e todo cliente novo manda menção aos advogados para dar seguimento na triagem</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.28 · F29 — a recepção colhe também a senha do Meu INSS, o estado civil, a profissão e a cidade (clientes de fora de Monte Alto previstos); o cliente novo vê SÓ o Cadastro (Lembretes e Anotações se abrem quando a triagem se encerra, e o relato do balcão aparece dentro da Triagem até lá); o CNIS anexado preenche sozinho o nome da mãe e o NIT vazios da Identificação</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5461,6 +5461,8 @@ function renderNovoCliente(){
       <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo *" style="flex:1;min-width:240px"></div>
       <div class="form-linha">
         <input id="ncl-cpf" placeholder="CPF (só números)" maxlength="14">
+        <input id="ncl-senha" placeholder="Senha Meu INSS" autocomplete="off"
+          title="fica guardada com registro de quem copia ou vê, como na ficha">
         <input id="ncl-dn" type="date" title="data de nascimento"
           onchange="mostrarIdadeNovo()"><span id="ncl-idade" class="meio-sub"></span>
         <input id="ncl-tel" placeholder="Telefone/WhatsApp">
@@ -5469,9 +5471,19 @@ function renderNovoCliente(){
         <select id="ncl-sexo" title="entra no cálculo da data da aposentadoria">
           <option value="">sexo…</option><option value="F">Mulher</option><option value="M">Homem</option>
         </select>
+        <select id="ncl-civil" title="a procuração e o contrato precisam do estado civil">
+          <option value="">estado civil…</option>
+          ${CAD_CAMPOS.estado_civil.ops.map(([v,r])=>`<option value="${v}">${r}</option>`).join("")}
+        </select>
+        <input id="ncl-prof" placeholder="Profissão" style="flex:1;min-width:140px">
+      </div>
+      <div class="form-linha">
         <input id="ncl-rua" placeholder="Endereço — comece a digitar a rua (lista de Monte Alto)"
           list="lista-ruas" style="flex:1;min-width:240px" oninput="conferirRuaNovo()">
         <input id="ncl-num" placeholder="nº" style="width:72px">
+        <input id="ncl-cidade" value="Monte Alto" title="a maioria é de Monte Alto, mas dá para trocar — a lista de ruas só vale para Monte Alto"
+          style="width:150px" oninput="conferirRuaNovo()">
+        <select id="ncl-uf" title="UF">${UFS.map(u=>`<option${u==="SP"?" selected":""}>${u}</option>`).join("")}</select>
       </div>
       <datalist id="lista-ruas">${CEPS_MONTE_ALTO.map(r=>`<option value="${esc(r[1])} — ${esc(r[2])}">`).join("")}</datalist>
       <p id="ncl-cep-recado" class="meio-sub" style="margin:0 0 6px"></p>
@@ -5491,6 +5503,10 @@ function renderNovoCliente(){
 // a rua digitada contra a lista de CEPs: escolhida da lista ("Rua — Bairro")
 // ou digitada por inteiro quando o nome só existe num bairro
 function ruaNovoAchada(){
+  // a lista de CEPs é a de MONTE ALTO: cliente de outra cidade não casa
+  // com ela — o endereço grava como digitado, com a cidade informada
+  const cid=((document.getElementById("ncl-cidade")||{}).value||"Monte Alto").trim();
+  if(dsa(cid)!=="monte alto") return null;
   const t=((document.getElementById("ncl-rua")||{}).value||"").trim();
   if(!t) return null;
   const cheia=CEPS_MONTE_ALTO.find(r=>r[1]+" — "+r[2]===t);
@@ -5501,9 +5517,13 @@ function ruaNovoAchada(){
 function conferirRuaNovo(){
   const el=document.getElementById("ncl-cep-recado"); if(!el) return;
   const t=((document.getElementById("ncl-rua")||{}).value||"").trim();
+  const cid=((document.getElementById("ncl-cidade")||{}).value||"").trim();
+  const foraDaCidade=dsa(cid)!=="monte alto";
   const r=ruaNovoAchada();
   el.textContent = r ? `CEP ${r[0]} · ${r[2]} · Monte Alto/SP`
-    : t ? "rua fora da lista de Monte Alto — grava como digitada e o CEP se completa depois, na ficha" : "";
+    : t ? (foraDaCidade
+        ? `endereço de ${cid||"outra cidade"} — grava como digitado e o CEP se completa depois, na ficha`
+        : "rua fora da lista de Monte Alto — grava como digitada e o CEP se completa depois, na ficha") : "";
   el.style.color = r ? "var(--verde)" : "var(--cinza-claro)";
 }
 // F28: cliente novo da recepção avisa os ADVOGADOS — a triagem começa com
@@ -5588,22 +5608,34 @@ async function criarCliente(){
   const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({nome, cpf, dn:dnIso?fmt(dnIso).replace(/\./g,""):null,
       telefone:document.getElementById("ncl-tel").value.trim()||null,
-      sexo:document.getElementById("ncl-sexo").value||null, campos})});
+      sexo:document.getElementById("ncl-sexo").value||null,
+      estado_civil:document.getElementById("ncl-civil").value||null,
+      profissao:document.getElementById("ncl-prof").value.trim()||null, campos})});
   D.clientes.push(cli); D.cliPorId.set(cli.id, cli);
+  // a senha do Meu INSS entra pelo MESMO caminho da ficha (credenciais,
+  // com registro de quem copia ou vê)
+  const senha=document.getElementById("ncl-senha").value.trim();
+  if(senha) await api(`/rest/v1/credenciais`,{method:"POST",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({cliente_id:cli.id, tipo:"meu_inss", valor:senha})}).catch(()=>
+      aviso("O cliente gravou, mas a senha não — cadastre de novo pela ficha"));
   // o endereço grava pelo MESMO caminho da ficha (colunas + espelho da
-  // procuração); rua da lista traz CEP, bairro e Monte Alto/SP de brinde
+  // procuração); rua da lista traz CEP, bairro e Monte Alto/SP de brinde,
+  // e cliente de outra cidade grava a cidade que a recepção escreveu
   const rua=ruaNovoAchada(), ruaTxt=document.getElementById("ncl-rua").value.trim();
   const num=document.getElementById("ncl-num").value.trim();
+  const cidTxt=document.getElementById("ncl-cidade").value.trim();
+  const ufTxt=document.getElementById("ncl-uf").value;
   if(rua||ruaTxt) await gravarEnderecoCli(cli.id, {
     logradouro: rua?rua[1]:ruaTxt.split("—")[0].trim(), numero:num, complemento:"",
-    bairro: rua?rua[2]:"", cidade: rua?"Monte Alto":"", uf: rua?"SP":"",
+    bairro: rua?rua[2]:"", cidade: rua?"Monte Alto":cidTxt, uf: rua?"SP":ufTxt,
     cep: rua?soDigitos(rua[0]):""});
   const avisados=await avisarClienteNovo(cli.id);
   await carregar(); montarSidebar();
   aviso(`Cliente cadastrado ✔ — em atendimento${avisados?` · ${avisados} advogado(s) avisado(s) para a triagem`:""}`);
   visao="fase:escritorio"; render();
-  // a ficha abre direto na mesa do atendimento, com o relato já lá
-  subCad="anotacoes"; subAnot="atendimento";
+  // a ficha abre na TRIAGEM: é o próximo passo — as Anotações só se abrem
+  // depois que a triagem se encerra (pedido do Paulo, F29)
+  subCad="triagem";
   await abrirFicha(cli.id);
 }
 
@@ -7612,7 +7644,8 @@ async function abrirFicha(cliId){
     // Cadastro, onde vivem as anotações e os documentos pedidos (08.99)
     const temCaso = (D.casosDoCliente.get(cliId)||[]).some(k=>k.fase!=="encerrado");
     abaAtiva = temCaso ? 2 : 0;
-    if(!temCaso && !SUB_CAD.some(([x])=>x===subCad)) subCad = "anotacoes";
+    if(!temCaso && !SUB_CAD.some(([x])=>x===subCad))
+      subCad = triagemFechada(c) ? "anotacoes" : "triagem";
     instSel = 0; tudoSoMarcos = false;    // escolhas do cliente ANTERIOR não vazam
     procSel = ""; nupSel = ""; fonteCnj = "oficial";   // idem: processo e fonte
   }
@@ -7663,6 +7696,10 @@ function pintarFicha(){
   // abre no Cadastro em vez de numa aba invisível
   if((abaAtiva===2 || abaAtiva===4) && !ks.length && !(D.pagamentos||[]).some(p=>p.cliente_id===cliId)) abaAtiva=0;
   if(abaAtiva===3 && !evs.length) abaAtiva=0;
+  // F29 · Lembretes só aparece depois da triagem (ou para quem já tem caso
+  // ou lembrete ativo): cliente novo vê SÓ o Cadastro
+  const temLemb = ks.length || triagemFechada(c) || lembretesDo(cliId).length;
+  if(abaAtiva===9 && !temLemb) abaAtiva=0;
   // o dinheiro é do CLIENTE: a lista 💵 Pagamentos do To Do é ESTA aba, não um
   // caso. Por isso a parcela entra tanto pelo caso (as antigas) quanto pelo
   // cliente (as que chegam sem processo — acerto de honorários, por exemplo).
@@ -7730,7 +7767,7 @@ function pintarFicha(){
       ${/* Documentos saiu do menu (08.98): ele é passo do atendimento, e o
            atendimento começa no Cadastro — o botão está lá dentro */""}
       <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">Cadastro</button>
-      <button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>
+      ${temLemb ? `<button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>` : ""}
       ${/* o menu tem só as cinco divisões do cliente (pedido do Paulo):
            Cadastro, Lembretes, Casos, Perícias e Honorários. O caso escolhido
            aparece no cartão de fatos, não no rótulo da aba. */""}
@@ -7987,13 +8024,18 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   // atendimento, dados do cliente, documentos e consulta. Sub-menu para não
   // virar rolagem infinita (pedido do Paulo) — sem caso, abre nas anotações.
   const semCaso = !(ks||[]).length;
+  // F29 · as Anotações (a mesa do atendimento) só se abrem DEPOIS que a
+  // triagem se encerra — antes disso, o caminho é Identificação e Triagem
+  const anotOk = !semCaso || triagemFechada(c);
   const legado = ["documentos","consulta","mensagens"].includes(subCad);
-  const cd = SUB_CAD.some(([v])=>v===subCad) ? subCad
+  let cd = SUB_CAD.some(([v])=>v===subCad) ? subCad
            : legado ? "anotacoes" : (semCaso ? "anotacoes" : "identificacao");
+  if(cd==="anotacoes" && !anotOk) cd="triagem";
   const an = legado ? subCad : (SUB_ANOT.some(([v])=>v===subAnot) ? subAnot : "atendimento");
   return `
     <div class="sub-menu" style="width:100%">
-      ${SUB_CAD.map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
+      ${SUB_CAD.filter(([v])=>v!=="anotacoes"||anotOk)
+        .map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
         v==="anotacoes"&&semCaso?` <span class="meio-sub">•</span>`:""}</button>`).join("")}
     </div>
     ${cd==="triagem" ? painelTriagemFicha(c, ks) : ""}
@@ -8296,7 +8338,11 @@ function familiaDaTriagem(c, ks){
   if(doCaso) return doCaso;
   const porta = (triagemDe(c).porta||{});
   if(porta.sei === false) return null;
-  return porta.especie ? familiaDaEspecie(porta.especie) : null;
+  if(porta.especie) return familiaDaEspecie(porta.especie);
+  // F29 · o benefício que a recepção anotou (pré-caso) já responde a porta:
+  // a triagem abre com os pontos da família sem perguntar de novo
+  const pcs = precasosDe(c).filter(p=>p.especie && !p.so_lembrete);
+  return pcs.length===1 ? familiaDaEspecie(pcs[0].especie) : null;
 }
 // as perguntas que o ESCRITÓRIO acrescentou, e que valem para todos os
 // clientes: só a vivência do dia a dia diz o que importa (pedido do Paulo).
@@ -8352,6 +8398,9 @@ const TRIAGEM_PROXIMO = [["inicial","Pronto para a inicial judicial"],
 function triagemDe(c){
   return (c && (c.triagem || ((c.campos||{}).triagem))) || {};
 }
+// F29 · a triagem encerrada é o portão: antes dela o cliente novo vê só o
+// Cadastro (sem Lembretes) e, dentro dele, só Identificação e Triagem
+const triagemFechada = c => !!(triagemDe(c).atendimento);
 // a leitura automática de cada passo: o que o CRM já sabe, sem perguntar
 function triagemLeitura(passo, c, ks){
   const vivos = (ks||[]).filter(k=>k.fase!=="encerrado");
@@ -8520,6 +8569,7 @@ function lerCnisPdf(itens){
   r.filiado.cpf  = pega(/CPF:\s*([\d.\-]{11,})/);
   r.filiado.nascimento = pega(/Data de nascimento:\s*(\d{2}\/\d{2}\/\d{4})/);
   r.filiado.nome = pega(/Nome:\s*(.+?)\s*$/m);
+  r.filiado.mae  = pega(/Nome da mãe:\s*(.+?)\s*$/m);
 
   // cada vínculo abre uma linha "Seq." de dados logo abaixo do cabeçalho
   r.vinculos = linhas.filter(l=>/^\d{1,3}\s+\d{3}\.\d{5}\.\d{2}-\d/.test(l.txt)).length;
@@ -8825,12 +8875,37 @@ async function gravarCnisLido(cliId, lido){
     qtVinculos:lido.vinculos, indicadores:lido.indicadores.map(i=>i.codigo),
     vinculos:lido.linhaDoTempo||[]}};
   if(!await salvarTriagem(cliId, t)) return aviso("Li o PDF, mas não consegui guardar");
+  // F29 · o cabeçalho do CNIS completa a Identificação: nome da mãe e NIT
+  // entram sozinhos NOS CAMPOS VAZIOS — o que já foi preenchido não se toca
+  const compl = {};
+  if(!c.nome_mae && !((c.campos||{}).civil||{}).nome_mae && lido.filiado.mae)
+    compl.nome_mae = lido.filiado.mae;
+  if(!c.pis_nit && !((c.campos||{}).civil||{}).pis_nit && lido.filiado.nit)
+    compl.pis_nit = lido.filiado.nit;
+  let preencheu = 0;
+  if(Object.keys(compl).length){
+    try{
+      await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify(compl)});
+      Object.assign(c, compl); preencheu = Object.keys(compl).length;
+    }catch(e){
+      // banco sem as colunas: o mesmo destino do resto do cadastro
+      const civil = {...(((c.campos||{}).civil)||{}), ...compl};
+      c.campos = {...(c.campos||{}), civil};
+      try{
+        await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+          body:JSON.stringify({campos:c.campos})});
+        preencheu = Object.keys(compl).length;
+      }catch(e2){}
+    }
+  }
   await lancarNoCaso(cliId, `CNIS lido no CRM: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s), `
     + (lido.indicadores.length
         ? `indicadores ${lido.indicadores.map(i=>i.codigo+(i.ocorrencias?`(${i.ocorrencias})`:"")).join(", ")}.`
         : "nenhum indicador na legenda."));
   repintarFicha();
-  aviso(`CNIS lido — ${lido.indicadores.length} indicador(es), ${lido.vinculos} vínculo(s) ✔`);
+  aviso(`CNIS lido — ${lido.indicadores.length} indicador(es), ${lido.vinculos} vínculo(s)${
+    preencheu?` · mãe/NIT preenchidos na Identificação`:""} ✔`);
 }
 async function gravarDeclaracaoLida(cliId, lido){
   const c = D.cliPorId.get(cliId); if(!c) return;
@@ -8892,10 +8967,18 @@ function painelTriagemFicha(c, ks){
   const porta = t.porta || null;
   const feitos = PASSOS.filter(([k])=>(t[k]||{}).estado && t[k].estado!=="pendente").length;
   const prox = (t.conclusao||{}).proximo || "";
+  // F29 · enquanto as Anotações não se abrem (triagem ainda não encerrada),
+  // o que a recepção registrou aparece AQUI — a advogada tria lendo o relato
+  const balcao = (!(ks||[]).length && !triagemFechada(c))
+    ? ((c.campos||{}).atendimento||[]).slice(-3) : [];
   return `<div class="cad-cartao">
     <div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Triagem do cliente
       <span class="cad-tit-sub">o que precisa estar conferido antes de protocolar ou distribuir</span>
       <span class="cad-cont${feitos===PASSOS.length?" cad-ok":""}">${feitos} de ${PASSOS.length} conferidos</span></div>
+    ${balcao.length?`<div class="tri-balcao" style="border:1px solid var(--borda);border-left:3px solid #E9B44C;border-radius:8px;padding:8px 12px;margin:8px 0;font-size:13px">
+      <b>O que a recepção registrou</b> <span class="meio-sub">(as Anotações completas se abrem quando a triagem se encerrar)</span>
+      ${balcao.map(n=>`<div style="margin-top:4px">“${esc(n.texto)}” <span class="meio-sub">— ${esc(n.quem||"?")}, ${esc(fmtTS(n.em))}</span></div>`).join("")}
+    </div>`:""}
     ${/* F24 · a porta: quando o CASO ainda não diz a espécie, quem atende
          responde — ou declara que não sabe, e ficam só os passos padrão. */""}
     ${doCaso ? "" : `
@@ -9030,11 +9113,14 @@ async function fecharAtendimento(cliId){
   const t2 = {...t, atendimento:{em:hoje(), quem:eu.id, passos:PASSOS.length,
                                  conferidos:conferidos.length, proximo:prox}};
   await salvarTriagem(cliId, t2);
+  // F29 · a triagem encerrada abre as Anotações e os Lembretes — sem caso,
+  // a ficha já leva para a mesa do atendimento que acabou de se abrir
+  if(!k){ subCad="anotacoes"; guardar("crm_subcad","anotacoes"); }
   await carregar(); montarSidebar(); repintarFicha();
   aviso(k ? `Triagem encerrada e lançada em ${tituloCaso(k)} ✔`
           : (atencao.length||faltam.length)
-            ? "Triagem encerrada — o resumo está nas Anotações ✔"
-            : "Triagem encerrada sem pendências ✔");
+            ? "Triagem encerrada — as Anotações se abriram, com o resumo ✔"
+            : "Triagem encerrada — as Anotações e os Lembretes se abriram ✔");
 }
 async function salvarTriagem(cliId, triagem){
   const c = D.cliPorId.get(cliId); if(!c) return false;

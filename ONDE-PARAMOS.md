@@ -1,4 +1,21 @@
-# Onde paramos — 16.08.2026, versão 09.27
+# Onde paramos — 16.08.2026, versão 09.28
+
+## F29 · O portão da triagem e a recepção que colhe tudo (09.28)
+
+A tela da recepção colhe também a senha do Meu INSS (POST em credenciais,
+o caminho da ficha, ao lado do CPF), o estado civil e a profissão (a
+procuração precisa) e a cidade/UF com padrão Monte Alto/SP — cliente de
+outra cidade grava a cidade digitada e a lista de CEPs não casa de
+propósito. O portão novo: cliente sem caso e sem triagem encerrada vê SÓ
+o Cadastro, e dentro dele só Identificação e Triagem; `triagemFechada(c)`
+(= `triagemDe(c).atendimento`, que o fecharAtendimento já gravava) abre
+Lembretes e Anotações. Até lá o relato do balcão aparece DENTRO da
+Triagem (`.tri-balcao`), e o pré-caso da recepção já responde a porta
+(familiaDaTriagem lê precasos). Encerrar a triagem sem caso leva direto
+às Anotações recém-abertas. O CNIS anexado preenche sozinho nome da mãe
+e NIT vazios da Identificação (campo preenchido não se toca). Testes:
+novocliente.js 49 provas, pdfinss.js 48; precaso.js e consulta.js
+ganharam a pré-condição do portão na fixtura.
 
 ## F28 · A recepção completa: sexo, endereço por CEP e menção da triagem (09.27)
 

@@ -14,6 +14,10 @@ const path = require("path");
 const { FIX, SESSAO, CLI_VAZIO, EU } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
+// F29: o pré-caso mora nas Anotações, que só se abrem com a triagem
+// encerrada — a fixtura entrega o cliente já triado
+FIX.clientes[1] = { ...FIX.clientes[1], triagem: { atendimento:
+  { em: "2026-08-01", quem: EU, passos: 8, conferidos: 8 } } };
 // espécies para os selects do pré-caso
 FIX.documentos_beneficio.push(
   { id: "db2", beneficio: "Apos. Tempo de Contribuição", itens: "Procuração assinada\nCNIS emitido", extras: "" },
