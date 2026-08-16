@@ -1,0 +1,16 @@
+F34: o caminho de volta - caso que nao e caso vira atendimento (09.33)
+
+Quem esta na lista Escritorio esta em negociacao, sem caso - a migracao
+antiga os transformou em casos. Entrou o botao 'nao e caso' ao lado do
+Encerrar e o lote 'converter todos' no cabecalho da lista Escritorio
+(decisao do Paulo: todos de uma vez). A conversao e o inverso do gerar:
+andamentos viram anotacoes com o MESMO id que o migrar.py usa no dedupe
+(a sync substitui em vez de duplicar), tarefas abertas viram docs
+pedidos, anexos voltam ao cadastro, beneficio vira pre-caso com id
+deterministico, e o caso e apagado - o que faz a sincronizacao passar a
+alimentar as anotacoes do cliente (a tarefa no To Do fica intacta).
+Pericia e pagamento (caso_id NOT NULL) travam a conversao. Teste
+conversao.js com 17 provas; suite 27 arquivos verdes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3

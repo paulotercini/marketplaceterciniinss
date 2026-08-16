@@ -1,4 +1,25 @@
-# Onde paramos — 16.08.2026, versão 09.32
+# Onde paramos — 16.08.2026, versão 09.33
+
+## F34 · O caminho de volta — caso que não é caso vira atendimento (09.33)
+
+O diagnóstico: a migração antiga transformou as tarefas da lista 🙋
+Escritório em CASOS, mas quem está ali é cliente em NEGOCIAÇÃO (atrás de
+documento), sem caso. Desde a 08.99 o migrar.py não cria mais caso para
+tarefa nova dessa lista (vira anotação no cadastro); faltava desfazer os
+657 legados. O que entrou: botão "↩ não é caso" ao lado do Encerrar
+(qualquer caso ativo) e o lote "converter todos" no cabeçalho da lista
+Escritório (decisão do Paulo: todos de uma vez). A conversão é o inverso
+do gerarCasoDoPre: andamentos → anotações com o MESMO id (o id que o
+migrar.py usa no dedupe — a sync substitui em vez de duplicar), tarefas
+abertas → docs_pedidos no formato da sync (id = caso), anexos → cadastro,
+benefício → pré-caso (id derivado do caso: reconverter não duplica), e o
+caso é APAGADO — o que faz a sincronização passar a alimentar as
+anotações do cliente (o migrar só trata como caso o que JÁ existe no
+banco; a tarefa no To Do fica intacta). Perícia e pagamento (caso_id NOT
+NULL) travam a conversão com aviso. Cliente convertido fica 🟡 em
+atendimento com Anotações abertas. Teste conversao.js, 17 provas; suíte
+27 arquivos. IMPORTANTE ao rodar o lote em produção: são ~657 casos,
+alguns minutos de conversão com avisos de progresso a cada 25.
 
 ## F33 · A lista de documentos nasce fechada (09.32)
 
