@@ -1,4 +1,15 @@
-# Onde paramos — 16.08.2026, versão 09.30
+# Onde paramos — 16.08.2026, versão 09.31
+
+## F32 · O CPF é a chave, conferido enquanto se digita (09.31)
+
+Na tela da recepção, o CPF digitado responde na hora, logo abaixo do
+campo: já cadastrado mostra "⚠ Este CPF já é de <Nome> · N processo(s)
+— não cadastre de novo" com o botão "Abrir o cadastro" (mesmo com o
+nome escrito diferente, o CPF vincula — a regra do Paulo); válido e
+livre ganha o ✓ verde; dígito verificador errado avisa e o submit barra
+(cpfValido = módulo 11 + exclusão de dígitos repetidos). Cadastrar sem
+CPF continua permitido, para nunca travar o balcão. A janela de CPF
+repetido no submit segue como segunda trava (confere também o banco).
 
 ## F31 · Documentos no fluxo e Consulta dentro de Documentos (09.30)
 
