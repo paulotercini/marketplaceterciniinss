@@ -1,0 +1,9 @@
+F27: Novo Cliente vira a tela da recepcao (09.26)
+
+Beneficio opcional (vira pre-caso, nunca caso), agendamento no Google
+Agenda removido, relato do balcao como primeira anotacao do atendimento
+com autor, cliente entra amarelo na lista Escritorio. Teste novocliente.js
+com 19 provas; suite completa 25 arquivos, 470 verificacoes verdes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3
