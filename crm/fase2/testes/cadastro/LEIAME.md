@@ -81,3 +81,25 @@ Três armadilhas do próprio programa, achadas aqui:
 O que o teste NÃO cobre, e é honesto dizer: o carregamento do pdf.js pelo cdnjs,
 porque o navegador do arneço não tem saída para a internet. Tudo o que vem
 depois dele é coberto.
+
+## cadastro2.js (F19) — vida contributiva, e onde cada coisa mora
+
+Três armadilhas novas, todas do arquivo de teste:
+
+1. **`abrirFicha` põe `casoSel` em `"__auto__"`.** Com mais de um processo em
+   aberto, ele devolve a janela "escolher processo" e a ficha **não chega a ser
+   pintada** — nem as abas existem. Definir `casoSel` depois do `abrirFicha`
+   não adianta: é preciso limpar o `#modal` e chamar `pintarFicha()`. Esconder
+   o modal com `style.display` também não basta, o `.modal-fundo` continua
+   interceptando o clique.
+2. **`innerText` ignora rótulo dentro de elemento escondido.** Para ler o texto
+   de um `<label>` use `textContent`.
+3. **A fixtura precisa conter a página que o teste afirma.** As três primeiras
+   versões dela não tinham nem período de benefício nem vínculo em aberto, e o
+   teste reprovava o programa por ausência de dado no arquivo de teste. As
+   páginas escolhidas estão nomeadas no cabeçalho da fixtura, uma a uma.
+
+E uma do programa: **"Empregado ou Agente Público" quebra em duas linhas.**
+Quando o "Público" não cai na linha seguinte, o texto termina em "Empregado ou
+Agente" e o casamento ingênuo caía no "Empregado" solto — 3 dos 30 vínculos
+saíam com o tipo errado.
