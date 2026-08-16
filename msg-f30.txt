@@ -1,0 +1,18 @@
+F30: o Atendimento virou fluxo (09.29)
+
+A ordem na tela: especie (com opcao outros) e natureza; via
+administrativa ou judicial obrigatoria na incapacidade (adm = 20% sobre
+as parcelas, fase INSS pre-escolhida); documentos que o cliente vai
+trazer; anotacoes com atribuir/lembrar/anexar; honorarios com o padrao
+do escritorio vindo da variante do contrato e ajuste que entra no
+contrato impresso como disposicao expressa em contrario; decisao por
+ultimo (Gerar o caso / Somente gerar lembrete / Nao gerar). O trilho
+virou maquina de estados: Triagem some quando encerrada (resumo vira a
+primeira informacao das Anotacoes, com reabrir), Anotacoes some quando o
+atendimento se resolve (as anotacoes do lembrete aparecem na aba
+Lembretes), Documentos nasce com o caso, Consulta e Mensagens subiram ao
+trilho principal, e + atendimento abre a mesa para qualquer cliente,
+inclusive quem ja tem caso. Suite: 26 arquivos, 528 provas verdes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3

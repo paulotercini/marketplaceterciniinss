@@ -79,19 +79,16 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
   conf("e a ficha abriu no Cadastro (a aba 2 não existe para ele)",
     (await p.evaluate(() => abaAtiva)) === 0);
 
-  // ── 2. as três divisões e o trilho das Anotações ────────────────────────
+  // ── 2. o trilho do fluxo (F30): triagem encerrada some, Documentos só
+  //       nasce com o caso, Consulta e Mensagens têm casa própria ──────────
   const divisoes = await p.evaluate(() =>
     [...document.querySelectorAll('.painel[data-p="0"].ativo .sub-menu')[0].querySelectorAll("button")]
       .map(b => b.innerText.trim()));
-  conf(`o Cadastro tem TRÊS divisões (${divisoes.join(" · ")})`,
-    divisoes.length === 3 && /Identificação/.test(divisoes[0])
-    && /Triagem/.test(divisoes[1]) && /Anotações/.test(divisoes[2]));
-  const trilho = await p.evaluate(() => {
-    const t = document.querySelector(".anot-trilho");
-    return t ? [...t.querySelectorAll("button")].map(b => b.innerText.trim()) : [];
-  });
-  conf(`dentro de Anotações, o trilho leva a Documentos, Consulta e Mensagens (${trilho.join(" · ")})`,
-    trilho.length === 4 && trilho.includes("Documentos") && trilho.includes("Consulta"));
+  conf(`o trilho do cliente triado sem caso (${divisoes.join(" · ")})`,
+    /Identificação/.test(divisoes[0]) && divisoes.some(x => /Anotações/.test(x))
+    && divisoes.some(x => /Consulta/.test(x)) && divisoes.some(x => /Mensagens/.test(x))
+    && !divisoes.some(x => /Triagem/.test(x))       // encerrada, sumiu
+    && !divisoes.some(x => /Documentos/.test(x)));  // só nasce com o caso
   await p.evaluate(() => irSubAnot("consulta"));
   await p.waitForTimeout(400);
   conf("a Consulta continua inteira, agora dentro de Anotações",

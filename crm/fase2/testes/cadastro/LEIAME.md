@@ -206,3 +206,18 @@ Armadilha de captura: a ficha aberta de um bloco anterior encolhe a
 coluna do meio (F22) e a foto da tela sai estreita — fecharFicha() antes
 do screenshot. No CNIS, mãe/NIT só preenchem campo VAZIO; a segunda
 leitura não pode gerar PATCH de nome_mae.
+
+## fluxo.js (F30) — o atendimento virou fluxo
+
+O trilho do Cadastro é máquina de estados: Triagem só enquanto aberta;
+Anotações da triagem encerrada até a decisão (caso gerado, lembrete ou
+não gerar); Documentos nasce com o caso; Consulta e Mensagens têm casa
+própria (o trilho interno anot-trilho morreu — irSubAnot é só casca de
+compatibilidade).
+
+Três armadilhas: os rótulos saem em MAIÚSCULAS pelo CSS (regex com /i);
+depois de "Somente gerar lembrete" a ficha muda para a aba 9 e o trilho
+do painel 0 não está mais .ativo (clicar Cadastro antes de medir); e o
+botão "+ atendimento" no sub-menu NÃO pode ter classe cad-mini — o
+consulta.js clica o primeiro .cad-mini do painel e navegaria para longe
+(classe própria .trilho-mais).
