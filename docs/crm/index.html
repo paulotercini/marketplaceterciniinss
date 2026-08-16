@@ -1684,7 +1684,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.34 · F35 — A REGRA DA VOLTA, agora completa: caso encerrado se reabre (volta à lista de origem, com registro de quem reabriu), o lembrete do pré-caso volta à mesa (e o lembrete se desativa), o pré-caso tirado se restaura pela lixeira, o «entregue» marcado por engano se desmarca no clique, e a própria anotação ou registro avulso se apaga (só o autor) — toda transição do CRM tem o seu desfazer</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.35 · F36 — quem está em Lembretes também GERA O CASO: o botão fica junto do lembrete, o pré-caso acompanhado segue o mesmo gerar da mesa (a via da incapacidade agora é exigida pela própria função, e a fase nunca cai em «escritorio»), o lembrete se desativa ao gerar e a ficha abre nos documentos da assinatura</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10560,7 +10560,10 @@ function painelLembretes(c){
         <span class="chip neutro">${l.intervalo_meses?`🔁 ${l.intervalo_meses===1?"todo mês":`a cada ${l.intervalo_meses} meses`}`:"aviso único"}</span>
         ${(l.detalhes||{}).origem==="precaso"?`<button class="btn-mini"
           title="a regra da volta: o pré-caso retorna à mesa do atendimento e este lembrete se desativa"
-          onclick="voltarLembreteParaMesa('${c.id}','${esc((l.detalhes||{}).precaso_id||"")}')">↺ voltar ao atendimento</button>`:""}
+          onclick="voltarLembreteParaMesa('${c.id}','${esc((l.detalhes||{}).precaso_id||"")}')">↺ voltar ao atendimento</button>
+        <button class="btn-mini"
+          title="o cliente resolveu assinar? Gera o caso direto daqui: o pré-caso vira caso, este lembrete se desativa e a ficha abre nos documentos para imprimir"
+          onclick="gerarCasoDoLembrete('${c.id}','${esc((l.detalhes||{}).precaso_id||"")}')">Gerar o caso</button>`:""}
         <span class="chip ${venc?"urg":"neutro"}">${l.proximo_em?(venc?"⏰ venceu em ":"próximo: ")+fmt(l.proximo_em):"sem data"}</span>
         ${resp?`<span class="avatar mini" style="background:${resp.cor}" title="responsável: ${esc(resp.nome)}">${esc(resp.inicial)}</span>`:""}
       </div>
@@ -15639,12 +15642,35 @@ async function preCasoParaLembrete(cliId, pcId){
 // GERAR O CASO deste pré-caso: as anotações dele viram andamentos com a data
 // e o autor originais (decisão do Paulo), os honorários viram [DECISÃO], os
 // documentos pedidos viram checklist, e o pré-caso se encerra
+// F36 · quem está em Lembretes TAMBÉM gera caso (pedido do Paulo): o
+// pré-caso acompanhado reativa e segue o MESMO gerar da mesa — o lembrete
+// se desativa lá dentro, e a ficha abre nos documentos da assinatura
+async function gerarCasoDoLembrete(cliId, pcId){
+  const cli=D.cliPorId.get(cliId); if(!cli) return;
+  const pcL=precasosDe(cli).find(p=>p.id===pcId);
+  if(!pcL) return aviso("Não achei o pré-caso deste lembrete — abra as Anotações");
+  if(pcL.so_lembrete){
+    const pcs2=precasosDe(cli).map(p=>{
+      if(p.id!==pcId) return p;
+      const novo={...p}; delete novo.so_lembrete; return novo;
+    });
+    if(!await gravarPrecasos(cliId, pcs2)) return;
+  }
+  await gerarCasoDoPre(cliId, pcId);
+}
 async function gerarCasoDoPre(cliId, pcId){
   const c = D.cliPorId.get(cliId); if(!c) return;
   const pcs = precasosDe(c);
   const pc = pcs.find(p=>p.id===pcId);
   if(!pc || !pc.especie) return aviso("Defina a espécie deste pré-caso primeiro");
-  const fase = (document.getElementById("pcf-"+pcId)||{}).value || "escritorio";
+  // F36 · a via é requisito da FUNÇÃO, não só do botão: incapacidade sem via
+  // não gera, venha o clique da mesa ou da aba Lembretes
+  if(/incapacidade|auxilio doenca|invalidez/.test(dsa(pc.especie||"")) && !pc.via)
+    return aviso("Benefício por incapacidade: escolha a via (administrativo ou judicial) na mesa do atendimento antes de gerar");
+  // sem o select da mesa (gerando da aba Lembretes), a fase sai da via —
+  // e nunca "escritorio", que desde a F34 não é lista de casos
+  const fase = (document.getElementById("pcf-"+pcId)||{}).value
+    || (pc.via==="jud" ? "peticao_inicial" : "inss");
   const nat = pc.natureza==="revisao" ? "revisão" : pc.natureza==="acerto" ? "acerto" : "concessão";
   let k;
   try{
@@ -15696,6 +15722,15 @@ async function gerarCasoDoPre(cliId, pcId){
   if(!c.campos.precasos.length) delete c.campos.precasos;
   await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  // F36 · o lembrete que nasceu deste pré-caso se desativa: o acompanhamento
+  // acabou — agora existe caso de verdade
+  for(const l of (D.lembretes||[]).filter(l=>l.cliente_id===cliId
+      && (l.detalhes||{}).origem==="precaso" && (l.detalhes||{}).precaso_id===pcId)){
+    await api(`/rest/v1/lembretes?id=eq.${l.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({ativo:false})}).catch(()=>{});
+    l.ativo=false;
+  }
+  D.lembretes=(D.lembretes||[]).filter(l=>l.ativo!==false);
   reindexarCliente(c); plim();
   await avisarCasoNovo(k.id, cliId, "o pré-caso virou caso (procuração e contrato assinados)");
   aviso(`Caso criado — ${vao.length} anotação(ões) viraram andamentos${docs?`, ${docs} documento(s) no checklist`:""}. Imprima a procuração e o contrato em Documentos.`, false);

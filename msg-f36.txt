@@ -1,0 +1,12 @@
+F36: de Lembretes tambem se gera o caso (09.35)
+
+O lembrete que nasceu de um atendimento tem agora dois botoes: voltar ao
+atendimento e Gerar o caso. Gerar dali reativa o pre-caso e segue o
+mesmo gerarCasoDoPre da mesa, com tres melhorias que valem para os dois
+caminhos: a via da incapacidade e exigida pela propria funcao, o
+lembrete de origem se desativa ao gerar, e sem o select da mesa a fase
+sai da via (adm->inss, jud->peticao inicial), nunca escritorio. Teste
+desfazer.js com 23 provas; suite 28 arquivos verdes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3

@@ -283,3 +283,17 @@ reabrir triagem (F30), caso↔atendimento (F34+gerar), concluir tarefa
 (desfazer F12), mover de lista, checklist de nota, andamento e anexo do
 autor. Sem volta CONSCIENTE: fundir casos (reversão exigiria snapshot —
 anotado como pendência).
+
+## desfazer.js (F36) — gerar o caso de dentro dos Lembretes
+
+O botão fica na linha do lembrete de origem precaso, ao lado do "voltar
+ao atendimento". gerarCasoDoLembrete reativa o pré-caso e delega ao
+gerarCasoDoPre — que agora valida a via da incapacidade NA FUNÇÃO (não
+só no botão da mesa), desativa os lembretes do pré-caso ao gerar, e sem
+o select da mesa manda a fase para inss/peticao_inicial pela via, nunca
+para "escritorio" (que desde a F34 não é lista de casos). O eco 201 do
+POST de casos entrou no route deste teste.
+
+Armadilha de edição que virou lição: âncora de Edit dentro do CORPO de
+uma função aninha a função nova ali dentro — gerarCasoDoLembrete nasceu
+dentro do gerarCasoDoPre e "is not defined" no escopo global.
