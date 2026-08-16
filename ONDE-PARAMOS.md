@@ -1,4 +1,28 @@
-# Onde paramos — 16.08.2026, versão 09.28
+# Onde paramos — 16.08.2026, versão 09.29
+
+## F30 · O Atendimento virou FLUXO (09.29)
+
+A ordem do Paulo, na tela: 1) espécie (select com "outros — escrever")
+e natureza concessão/revisão/acerto, com a via administrativa ou
+judicial OBRIGATÓRIA nos benefícios por incapacidade (adm pré-seleciona
+fase INSS e mostra o padrão de 20% sobre as parcelas); 2) documentos que
+o cliente vai trazer; 3) anotações com atribuir/lembrar/anexar (📎 novo
+no compositor); 4) honorários — o padrão do escritório vem da variante
+do CONTRATO (HONOR_RESUMO + cláusula completa num details), e o ajuste
+combinado grava em `campos.honor_ajuste[variante]` e entra no contrato
+impresso como "DISPOSIÇÃO EXPRESSA EM CONTRÁRIO" (textoContrato ganhou o
+parâmetro); 5) decisão por último — Gerar o caso (leva direto ao botão
+Documentos, que só nasce com o caso), Somente gerar lembrete (as
+anotações passam a aparecer na aba Lembretes) ou Não gerar.
+
+O trilho virou máquina de estados: Triagem some quando encerrada (o
+resumo com atenções vira a primeira informação das Anotações, com
+"reabrir triagem" — rastro em triagem.reaberta); Anotações some quando o
+atendimento se resolve; Consulta e Mensagens subiram para o trilho
+principal (anot-trilho morreu; irSubAnot é casca); "+ atendimento"
+(classe .trilho-mais, NUNCA cad-mini) abre pré-caso novo para qualquer
+cliente, inclusive quem já tem caso. Suíte: 26 arquivos, 528 provas
+(fluxo.js com 26).
 
 ## F29 · O portão da triagem e a recepção que colhe tudo (09.28)
 
