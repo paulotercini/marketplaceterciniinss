@@ -1,4 +1,21 @@
-# Onde paramos — 16.08.2026, versão 09.26
+# Onde paramos — 16.08.2026, versão 09.27
+
+## F28 · A recepção completa: sexo, endereço por CEP e menção da triagem (09.27)
+
+Sexo (Mulher/Homem, valores F/M da coluna `sexo`) entra no cadastro da
+recepção porque decide a data da aposentadoria (o `sexoDe` prefere o
+confirmado ao palpite pelo nome). O endereço sai da lista de 1.048 CEPs de
+Monte Alto (arquivo do Paulo, embutido no app como `CEPS_MONTE_ALTO`): a
+recepção digita a rua, o CEP, o bairro e Monte Alto/SP saem sozinhos, e a
+gravação usa o MESMO `gravarEnderecoCli` da ficha (sete colunas + espelho
+`endereco` da procuração). Rua ambígua (existe em mais de um bairro) exige
+escolher da lista; rua de fora grava como digitada, sem CEP inventado.
+Todo cliente novo dispara menção aos advogados (mesma escolha de ⚙️ do
+aviso de caso novo; quem cadastrou não se avisa) com "dar seguimento na
+triagem" — a menção nasce presa ao cliente (`mencoes.cliente_id`, ALTER
+idempotente acrescentado ao `schema_por_em_dia.sql`; sem rodar o ALTER o
+app cai no fallback e a menção chega só com o texto). A caixa 📥 resolve
+a ficha também por `cliente_id`. Teste `novocliente.js` com 32 provas.
 
 ## F27 · Novo Cliente = a tela da recepção (09.26)
 

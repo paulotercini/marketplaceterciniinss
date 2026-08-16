@@ -7,12 +7,29 @@
 //   3. benefício conhecido vira PRÉ-CASO com autor e data, nunca caso
 //   4. CPF repetido continua barrado pela janela de aviso
 //   5. cliente cujo único conteúdo é um pré-caso também aparece na lista
+//
+// F28 somou: sexo (entra na data da aposentadoria), endereço pela lista de
+// CEPs de Monte Alto (rua escolhida traz CEP, bairro e cidade, gravados
+// pelas colunas + espelho da procuração) e menção aos advogados a cada
+// cliente novo, para dar seguimento na triagem.
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, EU } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
+
+// os três advogados do escritório: quem cadastra (Paulo) não se avisa,
+// Amanda e Marcos recebem a menção da triagem
+const AMANDA = "22222222-2222-2222-2222-222222222222";
+const MARCOS = "33333333-3333-3333-3333-333333333333";
+FIX.colaboradores = [...FIX.colaboradores,
+  { id: AMANDA, auth_id: "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", nome: "Amanda Fictícia",
+    inicial: "A", cor: "#b10e1e", papel: "colaborador", ativo: true, atende_zap: true,
+    cargo: "advogado", setor: null },
+  { id: MARCOS, auth_id: "cccccccc-cccc-cccc-cccc-cccccccccccc", nome: "Marcos Fictício",
+    inicial: "M", cor: "#00666b", papel: "colaborador", ativo: true, atende_zap: false,
+    cargo: "advogado", setor: null }];
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -79,8 +96,39 @@ const SUPA = "https://ficticio.supabase.co";
     await p.evaluate(() => { document.getElementById("ncl-dn").value = "1960-05-10";
       mostrarIdadeNovo();
       return /\d+ anos/.test(document.getElementById("ncl-idade").textContent); }));
+  conf("o sexo tem os dois valores do sistema (F e M)",
+    await p.evaluate(() => {
+      const ops = [...document.querySelectorAll("#ncl-sexo option")].map(o => o.value);
+      return ops.includes("F") && ops.includes("M");
+    }));
+  conf("a lista de ruas carrega os 1.048 CEPs de Monte Alto",
+    (await p.evaluate(() => document.querySelectorAll("#lista-ruas option").length)) === 1048);
+  conf("rua escolhida da lista mostra CEP, bairro e cidade na hora",
+    await p.evaluate(() => {
+      document.getElementById("ncl-rua").value = "Rua dos Lirios — Centro";
+      conferirRuaNovo();
+      return /CEP 15910-001 · Centro · Monte Alto\/SP/.test(
+        document.getElementById("ncl-cep-recado").textContent);
+    }));
+  conf("rua de fora avisa que grava como digitada",
+    await p.evaluate(() => {
+      document.getElementById("ncl-rua").value = "Rua Que Não Existe Aqui";
+      conferirRuaNovo();
+      return /fora da lista/.test(document.getElementById("ncl-cep-recado").textContent);
+    }));
+  conf("rua única também casa sem o bairro escrito",
+    await p.evaluate(() => {
+      document.getElementById("ncl-rua").value = "Travessa Francisco Pelloso";
+      return (ruaNovoAchada() || [])[0] === "15910-017";
+    }));
+  conf("rua que existe em vários bairros NÃO casa sozinha — exige escolher da lista",
+    await p.evaluate(() => {
+      document.getElementById("ncl-rua").value = "Rua dos Lirios";
+      return ruaNovoAchada() === null;
+    }));
 
   // ── 2. cadastrar só com o nome: cliente sem caso, com a marca do balcão ─
+  await abrirTela();
   escritos.length = 0;
   await p.fill("#ncl-nome", "Ondina Fictícia Prado");
   await p.evaluate(() => document.getElementById("ncl-dn").value = "");
@@ -100,17 +148,41 @@ const SUPA = "https://ficticio.supabase.co";
     (await p.evaluate(() => window._abriu)) === 0);
   conf("a tela leva para a lista Escritório, onde o 🟡 mora",
     await p.evaluate(() => visao === "fase:escritorio"));
+  // F28 — as menções da triagem
+  const mencs = escritos.filter(x => x.m === "POST" && x.t === "mencoes");
+  conf(`os DOIS outros advogados recebem menção (${mencs.length})`,
+    mencs.length === 2
+    && mencs.some(x => x.corpo.para_id === AMANDA)
+    && mencs.some(x => x.corpo.para_id === MARCOS));
+  conf("quem cadastrou não se avisa a si mesmo",
+    !mencs.some(x => x.corpo.para_id === EU));
+  conf("a menção pede o seguimento na triagem e leva à ficha (cliente_id)",
+    mencs.every(x => /dar seguimento na triagem/.test(x.corpo.texto)
+      && /Ondina/.test(x.corpo.texto) && x.corpo.cliente_id));
 
-  // ── 3. benefício conhecido vira pré-caso, nunca caso ────────────────────
+  // ── 3. benefício conhecido vira pré-caso, nunca caso — e o cadastro
+  //       completo grava sexo e endereço da lista de CEPs ─────────────────
   await abrirTela();
   escritos.length = 0;
   await p.fill("#ncl-nome", "Teodoro Fictício Braga");
+  await p.selectOption("#ncl-sexo", "M");
+  await p.fill("#ncl-rua", "Rua dos Lirios — Jardim Califórnia");
+  await p.fill("#ncl-num", "245");
   await p.fill("#ncl-caso", "Aposentadoria por idade rural");
   await p.fill("#ncl-relato", "Trabalhou na roça a vida toda, quer se aposentar.");
   await p.evaluate(() => criarCliente());
   await p.waitForTimeout(900);
   const postCli2 = escritos.find(x => x.m === "POST" && x.t === "clientes");
   const pc = postCli2 && (postCli2.corpo.campos.precasos || [])[0];
+  conf("o sexo grava no cliente (homem/mulher — entra na data da aposentadoria)",
+    postCli2 && postCli2.corpo.sexo === "M");
+  const patEnd = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.logradouro);
+  conf("a rua da lista grava as sete colunas do endereço",
+    patEnd && patEnd.corpo.logradouro === "Rua dos Lirios" && patEnd.corpo.numero === "245"
+    && patEnd.corpo.bairro === "Jardim Califórnia" && patEnd.corpo.cidade === "Monte Alto"
+    && patEnd.corpo.uf === "SP" && patEnd.corpo.cep === "15914366");
+  conf("e o espelho da procuração sai montado",
+    patEnd && patEnd.corpo.endereco === "Rua dos Lirios, nº 245");
   conf("o benefício vira pré-caso com a espécie",
     pc && pc.especie === "Aposentadoria por idade rural");
   conf("com autor e data no pré-caso", pc && pc.quem === EU && /^\d{4}-\d{2}-\d{2}$/.test(pc.em));
@@ -118,6 +190,20 @@ const SUPA = "https://ficticio.supabase.co";
     /roça a vida toda/.test(((postCli2.corpo.campos.atendimento || [])[0] || {}).texto || ""));
   conf("e MESMO com benefício, caso não nasce na recepção",
     !escritos.some(x => x.m === "POST" && x.t === "casos"));
+
+  // rua de fora da lista: grava como digitada, sem CEP inventado
+  await abrirTela();
+  escritos.length = 0;
+  await p.fill("#ncl-nome", "Vicência Ficta Moraes");
+  await p.fill("#ncl-rua", "Rua do Sítio Alheio");
+  await p.fill("#ncl-num", "10");
+  await p.evaluate(() => criarCliente());
+  await p.waitForTimeout(900);
+  const patFora = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.logradouro);
+  conf("rua de fora grava como digitada, sem CEP nem bairro por adivinhação",
+    patFora && patFora.corpo.logradouro === "Rua do Sítio Alheio"
+    && !patFora.corpo.cep && !patFora.corpo.bairro && !patFora.corpo.cidade
+    && patFora.corpo.endereco === "Rua do Sítio Alheio, nº 10");
 
   // ── 4. CPF repetido continua barrado ────────────────────────────────────
   await abrirTela();
@@ -144,9 +230,9 @@ const SUPA = "https://ficticio.supabase.co";
 
   await abrirTela();
   const form = await p.$(".caso");
-  if (form) await form.screenshot({ path: path.join(__dirname, "f27-recepcao.png") });
+  if (form) await form.screenshot({ path: path.join(__dirname, "f28-recepcao.png") });
 
-  console.log("=== Novo Cliente = tela da recepção (F27) ===");
+  console.log("=== Novo Cliente = tela da recepção (F27+F28) ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
   console.log("erros de console:", erros.length ? erros : "nenhum");
   const ruins = ok.filter(x => !x[1]).length;
