@@ -1262,6 +1262,15 @@
   .tri-pdf{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:6px 0 0 32px}
   .tri-pdf-nota{font-size:11.5px;color:var(--cinza-claro)}
   .tri-nota{white-space:pre-wrap}
+  /* F24 · a porta de entrada da triagem */
+  .tri-porta{background:var(--azul-fundo);border:1px solid #D6E3F9;border-radius:8px;
+    padding:9px 12px;margin:8px 0 2px;font-size:13px;display:flex;flex-wrap:wrap;
+    align-items:center;gap:8px}
+  .tri-porta-ops{display:flex;flex-wrap:wrap;gap:5px}
+  .tri-naosei{border-style:dashed}
+  .tri-de-esc{color:var(--roxo);background:#F0E9F8;border-color:#DCCBF0}
+  .tri-nova-q{display:flex;gap:8px;margin-top:12px;align-items:center}
+  .tri-nova-q input{flex:1;min-width:220px}
   .tri-fecho{border-top:2px solid var(--borda);margin-top:14px;padding-top:12px;
     display:flex;flex-wrap:wrap;align-items:center;gap:10px}
   .tri-fecho .cad-mini{min-height:30px}
@@ -1658,7 +1667,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.23 · F23 — o RG saiu do sistema e de todos os modelos (CPF identifica sozinho), a parceria ganhou nome de advogado buscável e editável do cadastro, o "mais opções" trocou credencial por registro avulso com autor e data, e cliente já aposentado com caso de aposentadoria ganha o aviso de provável revisão</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.24 · F24 — a triagem ganhou a porta de entrada ("de qual caso se trata?", com o "ainda não sei" honesto), as perguntas do escritório que a advogada acrescenta e valem para todos, e o encerramento que manda o resumo para as Anotações só quando há atenção ou não conferido</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8174,12 +8183,63 @@ function familiaDaEspecie(esp){
 }
 // os passos da triagem DESTE cliente: os oito fixos, com os da espécie
 // entrando antes da conclusão
+// F24 · a porta de entrada: a advogada que atende nem sempre sabe de que
+// caso se trata. A espécie vem, nesta ordem, do CASO (quando já existe), da
+// RESPOSTA dada na porta ("de qual caso se trata?"), ou de lugar nenhum —
+// e sem resposta ficam só os passos padrão, que valem para qualquer caso.
+function familiaDaTriagem(c, ks){
+  const doCaso = familiaDaEspecie(especieDoCliente(c, ks));
+  if(doCaso) return doCaso;
+  const porta = (triagemDe(c).porta||{});
+  if(porta.sei === false) return null;
+  return porta.especie ? familiaDaEspecie(porta.especie) : null;
+}
+// as perguntas que o ESCRITÓRIO acrescentou, e que valem para todos os
+// clientes: só a vivência do dia a dia diz o que importa (pedido do Paulo).
+// Moram em config_app, chave triagem_extra, com autor e data.
+function perguntasDoEscritorio(){
+  try{ const v = cfgApp("triagem_extra"); return Array.isArray(v) ? v : (v ? JSON.parse(v) : []); }
+  catch(e){ return []; }
+}
 function triagemPassosDe(c, ks){
-  const fam = familiaDaEspecie(especieDoCliente(c, ks));
-  if(!fam) return TRIAGEM_PASSOS;
+  const fam = familiaDaTriagem(c, ks);
   const fixos = TRIAGEM_PASSOS.slice(0, TRIAGEM_PASSOS.length-1);
   const conc  = TRIAGEM_PASSOS[TRIAGEM_PASSOS.length-1];
-  return fixos.concat(fam.pontos.map(([k,r,d])=>[k,r,d,fam.rot]), [conc]);
+  const extras = perguntasDoEscritorio().map(q=>[q.chave, q.rot, q.dica||"", "escritório"]);
+  return fixos
+    .concat(extras)
+    .concat(fam ? fam.pontos.map(([k,r,d])=>[k,r,d,fam.rot]) : [])
+    .concat([conc]);
+}
+// gravar e desfazer a resposta da porta
+async function responderPorta(cliId, especie, sei){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const t = {...triagemDe(c)};
+  t.porta = especie===null && sei===null ? undefined
+    : {especie: especie||null, sei: sei!==false, quem: eu.id, em: hoje()};
+  if(t.porta===undefined) delete t.porta;
+  if(!await salvarTriagem(cliId, t)) return aviso("Não consegui guardar — tente de novo");
+  repintarFicha();
+}
+// acrescentar e tirar pergunta do escritório
+async function novaPerguntaEscritorio(){
+  const el = document.getElementById("tq-nova");
+  const rot = (el && el.value || "").trim();
+  if(!rot) return aviso("Escreva a pergunta");
+  const lista = perguntasDoEscritorio();
+  const chave = "esc_" + Date.now().toString(36);
+  lista.push({chave, rot, quem: eu.id, em: hoje()});
+  try{ await guardarCfgApp("triagem_extra", lista); }
+  catch(e){ return aviso("Não consegui guardar a pergunta — tente de novo"); }
+  aviso("Pergunta acrescentada — vale para todos os clientes ✔");
+  repintarFicha();
+}
+async function tirarPerguntaEscritorio(chave){
+  const lista = perguntasDoEscritorio().filter(q=>q.chave!==chave);
+  try{ await guardarCfgApp("triagem_extra", lista); }
+  catch(e){ return aviso("Não consegui tirar — tente de novo"); }
+  aviso("Pergunta retirada de todos os clientes");
+  repintarFicha();
 }
 const TRIAGEM_ESTADOS = [["ok","sem pendência"],["atencao","atenção"],["pendente","não conferido"]];
 const TRIAGEM_PROXIMO = [["inicial","Pronto para a inicial judicial"],
@@ -8723,13 +8783,32 @@ async function lancarNoCaso(cliId, texto){
 function painelTriagemFicha(c, ks){
   const t = triagemDe(c);
   const PASSOS = triagemPassosDe(c, ks);
-  const fam = familiaDaEspecie(especieDoCliente(c, ks));
+  const fam = familiaDaTriagem(c, ks);
+  const doCaso = familiaDaEspecie(especieDoCliente(c, ks));
+  const porta = t.porta || null;
   const feitos = PASSOS.filter(([k])=>(t[k]||{}).estado && t[k].estado!=="pendente").length;
   const prox = (t.conclusao||{}).proximo || "";
   return `<div class="cad-cartao">
     <div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Triagem do cliente
       <span class="cad-tit-sub">o que precisa estar conferido antes de protocolar ou distribuir</span>
       <span class="cad-cont${feitos===PASSOS.length?" cad-ok":""}">${feitos} de ${PASSOS.length} conferidos</span></div>
+    ${/* F24 · a porta: quando o CASO ainda não diz a espécie, quem atende
+         responde — ou declara que não sabe, e ficam só os passos padrão. */""}
+    ${doCaso ? "" : `
+    <div class="tri-porta">
+      <b>De qual caso se trata?</b>
+      ${porta ? `
+        <span class="chip ${porta.sei===false?"neutro":"ben"}">${
+          porta.sei===false ? "ainda não sabemos" : esc(porta.especie||"?")}</span>
+        <button class="cad-mini" onclick="responderPorta('${c.id}', null, null)">trocar</button>`
+      : `
+        <span class="tri-porta-ops">
+          ${PONTOS_ESPECIE.map(f=>`<button class="tri-p" title="abre os pontos específicos de ${esc(f.rot)}"
+            onclick="responderPorta('${c.id}', ${JSON.stringify(f.rot).replace(/"/g,"&quot;")}, true)">${esc(f.rot)}</button>`).join("")}
+          <button class="tri-p tri-naosei" title="sem problema: ficam os passos padrão, que valem para qualquer caso"
+            onclick="responderPorta('${c.id}', null, false)">ainda não sei</button>
+        </span>`}
+    </div>`}
     ${fam?`<div class="tri-especie">
       <b>${esc(fam.rot)}</b> — ${fam.pontos.length} pontos além dos oito de sempre, pela espécie deste caso.
       <span class="tri-skill">skill do escritório: ${esc(fam.skill)}</span>
@@ -8747,7 +8826,9 @@ function painelTriagemFicha(c, ks){
         <div class="tri-cab">
           <span class="tri-n">${i+1}</span>
           <div class="tri-tit"><span class="tri-tit-l"><b>${esc(rot)}</b>${
-            dona?`<span class="tri-de">${esc(dona)}</span>`:""}</span>
+            dona?`<span class="tri-de${dona==="escritório"?" tri-de-esc":""}">${esc(dona)}</span>`:""}${
+            dona==="escritório"?`<button class="cad-lap" title="tirar esta pergunta de TODOS os clientes"
+              onclick="event.stopPropagation();tirarPerguntaEscritorio('${chave}')">${CAD_IC.fechar}</button>`:""}</span>
             <span class="tri-dica">${esc(dica)}</span></div>
           <div class="tri-bt">${TRIAGEM_ESTADOS.map(([e,r])=>
             `<button class="tri-e ${e}${p.estado===e?" on":""}"
@@ -8769,12 +8850,20 @@ function painelTriagemFicha(c, ks){
       </div>`;
     }).join("")}
     </div>
+    ${/* F24 · a pergunta do escritório: a advogada acrescenta e vale para
+         TODOS os clientes, com autor e data gravados. */""}
+    <div class="tri-nova-q">
+      <input id="tq-nova" placeholder="acrescentar pergunta do escritório — vale para todos os clientes"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();novaPerguntaEscritorio();}">
+      <button class="cad-mini" onclick="novaPerguntaEscritorio()">acrescentar</button>
+    </div>
     <div class="tri-fecho">
       <button class="cad-mini" onclick="fecharAtendimento('${c.id}')"
-        title="grava no histórico do caso tudo o que foi conferido e decidido neste atendimento">
-        Encerrar o atendimento e lançar no caso</button>
-      <p>Uma linha no histórico do caso, com os ${PASSOS.length} passos, o que ficou pendente e o próximo
-         passo. Enquanto ninguém encerra, a triagem fica só na ficha.</p>
+        title="encerra a triagem: com atenção ou não conferido, o resumo vai para as Anotações; havendo caso, uma linha no histórico dele">
+        Encerrar a triagem</button>
+      <p>Com <b>atenção</b> ou <b>não conferido</b>, o resumo do que foi apurado vai para as
+         Anotações — leitura rápida do essencial. Sem pendência, não suja as Anotações;
+         havendo caso, fica uma linha no histórico dele.</p>
     </div>
     <p class="cad-nota">A leitura em cinza é o que o CRM já sabe do próprio banco. Ela não substitui a
       conferência: o que vale é o que você marcar e escrever, que fica com o seu nome e a data.</p>
@@ -8793,8 +8882,7 @@ async function fecharAtendimento(cliId){
   // `casoSel` é global e sobrevive à troca de ficha: sem conferir de quem ele
   // é, o atendimento de um cliente seria lançado no processo de outro.
   const sel = casoSel && ks.find(x=>x.id===casoSel);
-  const k = sel || ks.find(x=>x.fase!=="encerrado") || ks[0];
-  if(!k) return aviso("Este cliente não tem caso — o atendimento não tem onde ser lançado");
+  const k = sel || ks.find(x=>x.fase!=="encerrado") || ks[0] || null;
   const t = triagemDe(c);
   const PASSOS = triagemPassosDe(c, ks);
   const conferidos = PASSOS.filter(([x])=>(t[x]||{}).estado && t[x].estado!=="pendente");
@@ -8815,15 +8903,34 @@ async function fecharAtendimento(cliId){
   if(notaConc) linhas.push(`Conclusão: ${notaConc}`);
   linhas.push(`Próximo passo: ${rotProx || "não definido nesta triagem"}.`);
 
-  try{
-    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:linhas.join(" ")})});
-  }catch(e){ return aviso("Não consegui lançar no caso — tente de novo"); }
+  // F24 · com atenção ou não conferido, o resumo vai para as ANOTAÇÕES do
+  // cliente — leitura rápida do essencial no lugar em que o Paulo atende.
+  // Sem pendência, as Anotações ficam limpas.
+  if(atencao.length || faltam.length){
+    const resumo = [`Triagem encerrada: ${conferidos.length} de ${PASSOS.length} passos conferidos.`]
+      .concat(atencao.length?[`ATENÇÃO: ${atencao.map(([x,r])=>r+((t[x]||{}).nota?` (${t[x].nota})`:"")).join("; ")}.`]:[])
+      .concat(faltam.length?[`NÃO CONFERIDO: ${faltam.map(([,r])=>r).join("; ")}.`]:[])
+      .concat(rotProx?[`Próximo passo: ${rotProx}.`]:[]).join(" ");
+    const notas=[...((c.campos||{}).atendimento||[]),
+      {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:resumo, origem:"triagem"}];
+    c.campos={...(c.campos||{}), atendimento:notas};
+    try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos:c.campos})}); }catch(e){}
+  }
+  if(k){
+    try{
+      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:k.id, autor_id:eu.id, texto:linhas.join(" ")})});
+    }catch(e){ return aviso("Não consegui lançar no caso — tente de novo"); }
+  }
   const t2 = {...t, atendimento:{em:hoje(), quem:eu.id, passos:PASSOS.length,
                                  conferidos:conferidos.length, proximo:prox}};
   await salvarTriagem(cliId, t2);
   await carregar(); montarSidebar(); repintarFicha();
-  aviso(`Atendimento lançado em ${tituloCaso(k)} ✔`);
+  aviso(k ? `Triagem encerrada e lançada em ${tituloCaso(k)} ✔`
+          : (atencao.length||faltam.length)
+            ? "Triagem encerrada — o resumo está nas Anotações ✔"
+            : "Triagem encerrada sem pendências ✔");
 }
 async function salvarTriagem(cliId, triagem){
   const c = D.cliPorId.get(cliId); if(!c) return false;
