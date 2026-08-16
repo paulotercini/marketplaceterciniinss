@@ -1684,7 +1684,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.32 · F33 — a lista dos documentos que o cliente vai trazer nasce fechada no fluxo do atendimento: só o título com o resumo (quantos itens, quantos já pedidos) fica à vista, e o clique abre a lista inteira — tela mais limpa</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.33 · F34 — o caminho de volta: quem está no Escritório está em NEGOCIAÇÃO, não tem caso — o botão «não é caso» (ao lado do Encerrar) e o lote da lista Escritório convertem o caso herdado em atendimento: andamentos viram anotações com data e autor preservados, documentos pedidos e anexos voltam ao cadastro, o benefício vira pré-caso, o caso sai do CRM e a sincronização com o To Do passa a alimentar as anotações (tarefa intacta; quem tem perícia ou pagamento fica de fora)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4165,8 +4165,13 @@ function render(){
     const emAtend = visao==="fase:escritorio" && !filtroColab ? clientesEmAtendimento() : [];
     meio.innerHTML = chipsCol + (visao==="importante" ? blocoNovidadesTopo() : "")
       + (emAtend.length?`<h3 class="secao">🟡 Em atendimento — buscando documentos (${emAtend.length})</h3>`
-          + emAtend.map(c=>cartaoCliente(c,[])).join("")
-          + (casosSel.length?`<h3 class="secao">Casos antigos desta lista (${casosSel.length})</h3>`:""):"")
+          + emAtend.map(c=>cartaoCliente(c,[])).join(""):"")
+      + ((visao==="fase:escritorio" && casosDaFase("escritorio").length)
+          ?`<h3 class="secao">Casos antigos desta lista (${casosDaFase("escritorio").length} no total)
+              ${/* F34 · quem está no Escritório NÃO tem caso: é negociação. O
+                   lote desfaz os casos herdados da migração de uma vez. */""}
+              <button class="btn-mini" onclick="converterEscritorioEmMassa()"
+                title="andamentos viram anotações (data e autor preservados), benefício vira pré-caso, e estes casos são apagados — quem tem perícia ou pagamento fica de fora">↩ não são casos — converter todos em atendimentos</button></h3>`:"")
       + (grupoClientes(casosSel).map(([c,ks])=>cartaoCliente(c,ks)).join("")
       || (emAtend.length?"":"<p class='meio-sub'>Nenhum cliente aqui.</p>"));
     if(visao==="importante"){
@@ -11450,6 +11455,9 @@ function blocoFatos(k){
         ${((D.casosDoCliente.get(k.cliente_id)||[]).length>1 && k.fase!=="encerrado")
           ?`<button class="btn-mini" onclick="janelaFundir('${k.id}')"
               title="pedido → recurso → judicial é uma sequência só: incorpora outro caso a este, com todo o histórico">⇄ fundir</button>`:""}
+        ${k.fase!=="encerrado"
+          ?`<button class="btn-mini" onclick="naoEhCaso('${k.id}')"
+              title="cliente em negociação, ainda sem processo? Isto NÃO é caso: os andamentos viram anotações do atendimento (data e autor preservados) e o cliente volta a 🟡 em atendimento — a tarefa no To Do não muda">↩ não é caso</button>`:""}
         ${k.fase==="encerrado"
         ? (co=>`<span class="chip fase" title="quem encerrou e quando">✔ encerrado${
             co?` por ${esc(co.nome.split(" ")[0])}`:""}${
@@ -15362,6 +15370,126 @@ async function novoPreCaso(cliId){
 async function novoAtendimento(cliId){
   await novoPreCaso(cliId);
   irSubCad("anotacoes");
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// F34 · O CAMINHO DE VOLTA — caso que não é caso vira atendimento
+// ══════════════════════════════════════════════════════════════════════════
+// Quem está na lista Escritório está em NEGOCIAÇÃO: atrás de documento,
+// aguardando documento — ainda não gerou caso. A migração antiga transformou
+// essas tarefas em casos; desde a 08.99 a sincronização não cria mais caso
+// para a lista 🙋 Escritório (tarefa nova vira anotação no cadastro), e esta
+// é a peça que faltava: desfazer os que ficaram.
+//
+// A integração se corrige sozinha depois do apagamento: o migrar.py só trata
+// como caso a tarefa cujo caso JÁ existe no banco — apagado, a próxima
+// sincronização alimenta campos.atendimento/docs_pedidos daquele cliente. E
+// como a sync deduplica as anotações pelo id do bloco (que é o id do
+// andamento), copiamos cada andamento com o MESMO id: a rodada seguinte
+// substitui em vez de duplicar.
+async function dadosParaConversao(ids){
+  const ands=[], tfs=[];
+  for(let i=0;i<ids.length;i+=40){
+    const lote=ids.slice(i,i+40).join(",");
+    ands.push(...await todas("andamentos",`select=*&caso_id=in.(${lote})`).catch(()=>[]));
+    tfs.push(...await todas("tarefas",`select=*&caso_id=in.(${lote})`).catch(()=>[]));
+  }
+  return {ands, tfs};
+}
+// perícia e pagamento têm caso_id obrigatório no banco: morreriam junto com
+// o caso. Quem os tem não converte — resolve-se primeiro, à mão.
+function travaConversao(k){
+  const evs=(D.eventos||[]).filter(e=>e.caso_id===k.id && e.status!=="cancelada");
+  const pgs=(D.pagamentos||[]).filter(p=>p.caso_id===k.id);
+  if(evs.length) return `tem ${evs.length} perícia(s)/evento(s) marcado(s)`;
+  if(pgs.length) return `tem ${pgs.length} pagamento(s) lançado(s)`;
+  return "";
+}
+async function converterCasoEmAtendimento(k, c, dados){
+  const ands=dados.ands.filter(a=>a.caso_id===k.id)
+    .sort((a,b)=>String(a.criado_em||"").localeCompare(String(b.criado_em||"")));
+  const tfs=dados.tfs.filter(t=>t.caso_id===k.id);
+  const campos={...(c.campos||{})};
+  const atuais=campos.atendimento||[];
+  const idsAt=new Set(atuais.map(n=>n.id).filter(Boolean));
+  const notas=ands.filter(a=>!idsAt.has(a.id)).map(a=>{
+    const co=D.colPorId.get(a.autor_id);
+    return {id:a.id, em:a.criado_em, texto:a.texto,
+            quem:co?co.nome.split(" ")[0]:null, origem:a.origem||"todo"};
+  });
+  if(notas.length)
+    campos.atendimento=[...atuais, ...notas]
+      .sort((a,b)=>String(a.em||"").localeCompare(String(b.em||"")));
+  const abertas=tfs.filter(t=>!t.concluida);
+  if(abertas.length){
+    // mesmo formato e id (o do caso) que a sincronização usa: sem duplicar
+    const outros=(campos.docs_pedidos||[]).filter(p=>p.id!==k.id);
+    campos.docs_pedidos=[...outros, {id:k.id, em:null, quem:"To Do",
+      especie:k.beneficio||null,
+      itens:abertas.map(t=>({nome:t.titulo, entregue:null}))}];
+  }
+  // o benefício vira PRÉ-CASO com id derivado do caso — reconverter não duplica
+  const pcs=precasosDe(c).filter(p=>p.id!=="legado");
+  const pcId="pc_"+String(k.id).replace(/-/g,"").slice(0,10);
+  if(!pcs.some(p=>p.id===pcId))
+    pcs.push({id:pcId, especie:k.beneficio||"",
+      natureza:/revis/.test(dsa(k.beneficio||""))?"revisao":"", marc:{},
+      honorarios:"", quem:eu.id, em:hoje(), de_caso:k.id});
+  campos.precasos=pcs;
+  delete campos.especie;
+  await api(`/rest/v1/anexos?caso_id=eq.${k.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({caso_id:null})}).catch(()=>{});
+  await api(`/rest/v1/clientes?id=eq.${c.id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos})});
+  c.campos=campos;
+  await api(`/rest/v1/casos?id=eq.${k.id}`,{method:"DELETE"});
+  D.casos=D.casos.filter(x=>x.id!==k.id); D.casoPorId.delete(k.id);
+  D.casosDoCliente.set(c.id,(D.casosDoCliente.get(c.id)||[]).filter(x=>x.id!==k.id));
+  (D.anexos||[]).forEach(a=>{ if(a.caso_id===k.id) a.caso_id=null; });
+  reindexarCliente(c);
+}
+async function naoEhCaso(casoId){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  const c=D.cliPorId.get(k.cliente_id); if(!c) return;
+  const trava=travaConversao(k);
+  if(trava) return aviso(`Não dá para converter: este caso ${trava} — trate isso antes`);
+  if(!confirm(`"${tituloCaso(k)}" NÃO é caso?\n\nO que acontece:\n`
+    +`· os andamentos viram anotações do atendimento, com data e autor preservados\n`
+    +`· os anexos e os documentos pedidos voltam ao cadastro\n`
+    +`· o benefício vira pré-caso — o caso de verdade nasce quando assinar\n`
+    +`· este caso é APAGADO do CRM (a tarefa no To Do não muda)\n\n`
+    +`O cliente fica 🟡 em atendimento, na lista Escritório.`)) return;
+  const dados=await dadosParaConversao([k.id]);
+  await converterCasoEmAtendimento(k, c, dados);
+  plim(); aviso("O caso virou atendimento — anotações preservadas ✔");
+  montarSidebar(); casoSel=null; abaAtiva=0;
+  subCad="anotacoes"; guardar("crm_subcad","anotacoes");
+  render(); abrirFicha(c.id);
+}
+// o LOTE dos legados: todos os casos da fase Escritório de uma vez, pulando
+// só os travados (perícia/pagamento). Decisão do Paulo em 16.08.2026.
+async function converterEscritorioEmMassa(){
+  const alvos=D.casos.filter(k=>k.fase==="escritorio");
+  if(!alvos.length) return aviso("Nenhum caso na fase Escritório");
+  const travados=alvos.filter(k=>travaConversao(k));
+  const livres=alvos.filter(k=>!travaConversao(k));
+  if(!confirm(`Converter ${livres.length} caso(s) da lista Escritório em ATENDIMENTOS?\n\n`
+    +`Cada um: andamentos → anotações (data e autor preservados), documentos\n`
+    +`pedidos e anexos de volta ao cadastro, benefício → pré-caso, caso apagado.\n`
+    +(travados.length?`\n${travados.length} caso(s) com perícia ou pagamento ficam de fora.\n`:"")
+    +`\nAs tarefas no To Do não mudam; a sincronização passa a alimentar as\nanotações desses clientes.`)) return;
+  const dados=await dadosParaConversao(livres.map(k=>k.id));
+  let n=0;
+  for(const k of livres){
+    const c=D.cliPorId.get(k.cliente_id);
+    if(!c) continue;
+    try{ await converterCasoEmAtendimento(k, c, dados); n++; }
+    catch(e){ /* segue: o que falhou fica como caso e aparece na lista */ }
+    if(n%25===0) aviso(`Convertendo… ${n} de ${livres.length}`, false);
+  }
+  plim();
+  aviso(`✔ ${n} caso(s) viraram atendimentos${travados.length?` · ${travados.length} ficaram (perícia/pagamento)`:""}`);
+  montarSidebar(); render();
 }
 // F30 · reabrir a triagem: o marcador de encerrada sai (fica o rastro), o
 // botão Triagem volta e as Anotações se recolhem até novo encerramento

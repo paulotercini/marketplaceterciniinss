@@ -253,3 +253,17 @@ O primeiro `details summary` da caixa deixou de ser o da cláusula de
 honorários — seletor por texto, nunca por posição. Conteúdo de details
 fechado tem innerText vazio (armadilha antiga): interação nos testes é
 por evaluate ou abrindo o details antes.
+
+## conversao.js (F34) — o caminho de volta
+
+O inverso do gerarCasoDoPre. A prova central é a da INTEGRAÇÃO: cada
+anotação copiada leva o MESMO id do andamento, porque é esse id que o
+migrar.py usa no dedupe — a sincronização seguinte substitui em vez de
+duplicar. Perícia e pagamento (caso_id NOT NULL no schema) travam a
+conversão. O DELETE do caso é o que faz a sync parar de tratá-lo como
+caso (o migrar só respeita casos que JÁ existem no banco).
+
+Armadilhas: abrirFicha com dois casos abre o modal de escolher processo
+(limpar #modal e fixar casoSel antes de mirar .fatos-topo); e o botão do
+lote não pode depender de filtroColab — o filtro nasce LIGADO no chip do
+usuário, e a condição `!filtroColab` escondia o cabeçalho para sempre.
