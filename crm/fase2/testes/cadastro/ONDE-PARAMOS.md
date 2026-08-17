@@ -1,4 +1,31 @@
-# Onde paramos — 17.08.2026, versão 09.40
+# Onde paramos — 17.08.2026, versão 09.41
+
+## F42 · A CONVERSA DO CASO (09.41)
+
+O salto estrutural pedido pelo Paulo ("100 vezes melhor, layout e
+interação entre colaboradores"). A linha do tempo do escritório deixou
+de ser uma lista zebrada e virou uma conversa de equipe, com a
+assinatura na colaboração: **abrir o caso e ver exatamente o que chegou
+desde a sua última visita**.
+
+A faixa "🔵 N nova(s) para você" abre a conversa, com "✔ marcar todas
+como lidas" (liTudoNaFicha, sobre a andamentos_lidos que já existia);
+cada comentário não lido leva fundo e filete azul, e a fronteira
+"você já tinha visto daqui para baixo" fecha o bloco novo. Dias
+separam a leitura (Hoje/Ontem/data, reuso de dataRelativa). Registro
+de SISTEMA (situação do INSS, 📅 agendamentos, 🗓 vésperas, notícias
+de importação, ✔ prazo cumprido) encolhe para uma linha central
+discreta — MAS volta a cartão cheio se carrega tarefa ou não foi lido
+(função nunca some por estética, ehEventoSistema). Cada comentário
+mostra nome do autor na cor do time + hora; @menções destacadas
+(destacarMencoes, sobre o texto já escapado); 👍 ciente em um toque —
+gravado como resposta só-emoji (zero migração de schema) e agregado
+em chip com as iniciais; ações (👍 ↩ ✕) numa barra revelada no hover,
+sempre visível no celular.
+
+Teste conversa.js, 15 provas; casos2.js ajustado (os `li` estruturais
+tl-dia/tl-sys/tl-fim-novas entram na conta de seletores posicionais);
+suíte 33 arquivos.
 
 ## F41 · Anotações e comentários de ponta a ponta (09.40)
 

@@ -614,6 +614,33 @@
   .timeline:not(.crps-tl) .quando .avatar{box-shadow:0 0 0 3px var(--branco)}
   .timeline .q-dt{background:var(--branco);padding:0 3px;border-radius:4px}
   .timeline .texto{flex:1;white-space:pre-wrap;font-size:13px;line-height:1.5;min-width:0}
+  /* ── F42 · A CONVERSA DO CASO ─────────────────────────────────────────
+     A linha do tempo lê como conversa de equipe: dias separam, o que é
+     SISTEMA encolhe, o que é gente respira — e a linha do "não lido" diz
+     exatamente o que chegou desde a última visita. */
+  .timeline .tl-dia{display:block;text-align:center;padding:6px 0 2px;position:relative;z-index:1}
+  .timeline .tl-dia span{font-size:11px;font-weight:700;color:var(--cinza);
+    background:var(--fundo);border:1px solid var(--borda-suave);border-radius:999px;padding:2px 12px}
+  .timeline li.tl-sys{padding:1px 12px;justify-content:center;background:transparent}
+  .timeline li.tl-sys .texto{flex:none;white-space:normal;text-align:center;font-size:12px;
+    color:var(--cinza);line-height:1.4}
+  .timeline li.tl-sys .quando{width:auto}
+  .timeline li.tl-nao-lida{background:#F4F9FF;box-shadow:inset 3px 0 0 var(--azul)}
+  .tl-banner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#EAF3FF;
+    border:1px solid #CFE3FA;border-radius:10px;padding:6px 12px;margin:0 0 8px;font-size:13px;font-weight:600}
+  .timeline .tl-fim-novas{display:block;text-align:center;position:relative;padding:4px 0;z-index:1}
+  .timeline .tl-fim-novas span{font-size:11px;color:var(--azul);font-weight:700;
+    background:var(--branco);padding:0 10px}
+  .timeline .tl-fim-novas::before{content:"";position:absolute;left:8%;right:8%;top:50%;
+    border-top:1px dashed var(--azul);opacity:.5}
+  .timeline .autor-nome{font-weight:650;font-size:12.5px;margin-right:6px}
+  .timeline .tl-hora{font-size:11px;color:var(--cinza)}
+  .timeline .mencao-in{font-weight:700;color:var(--azul)}
+  .timeline .tl-acoes{display:inline-flex;gap:2px;align-items:center;opacity:0;transition:opacity .15s}
+  .timeline li:hover .tl-acoes,.timeline li:focus-within .tl-acoes{opacity:1}
+  .app.celular .timeline .tl-acoes{opacity:1}
+  .timeline .tl-reacoes{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+  .timeline .tl-reacoes .chip{cursor:default;background:var(--fundo);border:1px solid var(--borda-suave)}
   /* ── Fatos do benefício ───────────────────────────────────────────────
      Hierarquia por linha e espaço, não por bloco colorido: cor entra na
      letra (rótulo e nome do benefício em azul) e no estado (prazo). */
@@ -1689,7 +1716,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.40 · F41 — ANOTAÇÕES E COMENTÁRIOS revisados de ponta a ponta: ↩ responder em qualquer comentário (a resposta fica grudada nele), @ mencionar com menu (e aviso quando o @ não é ninguém da equipe), 👥 todos em um clique no composer, no ＋ do comentário, no seguimento e no atendimento; a anotação do atendimento fala a língua do composer (chips de iniciais, multi-atribuição, Hoje/Amanhã/+7); lembrete de anotação sem responsável agora é de quem escreveu; frases prontas voltaram a poder ser criadas (painel de sugestões); e um predicado único de equipe ativa — colaborador com cadastro incompleto não some mais de metade das telas. Fluxos mortos removidos (encaminhar, menuLembrar)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.41 · F42 — A CONVERSA DO CASO: a linha do tempo lê como conversa de equipe — dias separando (Hoje/Ontem), a faixa «N novas para você desde a última visita» com o ✔ marcar todas como lidas e a fronteira «você já tinha visto daqui para baixo», registros de sistema (situação do INSS, agendamentos, vésperas) encolhidos numa linha central para a conversa respirar (voltam a cartão cheio se carregam tarefa ou não foram lidos), nome do autor e hora em cada comentário, @menções destacadas na cor do time, 👍 ciente em um toque (agregado em chip com as iniciais) e as ações do comentário reveladas no hover (sempre visíveis no celular)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11847,15 +11874,46 @@ function tipoDoComentario(texto){
   const m = RX_TIPO_ANOT.exec(texto||"");
   return m ? {rot:m[1], cor:COR_TIPO_ANOT[m[1]]||"neutro", resto:(texto||"").replace(RX_TIPO_ANOT,"")} : null;
 }
-function comentario(a, resposta){
+// F42 · o texto escapado ganha as menções destacadas na cor do time —
+// "@Marcos" deixa de ser texto morto e vira sinal de quem foi chamado
+function destacarMencoes(html){
+  let h=html;
+  for(const co of (D.colaboradores||[])){
+    const pn=(co.nome||"").split(" ")[0]; if(!pn) continue;
+    h=h.replace(new RegExp("@"+pn+"\\b","gi"), m=>`<b class="mencao-in">${m}</b>`);
+  }
+  return h;
+}
+// reação = resposta que é SÓ um emoji: 👍 sem cerimônia, agregada em chip
+const EMOJIS_REACAO=["👍","👏","❤","🙏","✔"];
+const ehReacao = a => EMOJIS_REACAO.includes(String(a.texto||"").trim());
+async function reagir(andId, casoId){
+  try{
+    const [r]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:"👍",
+        responde_a:andId, origem:"app", publico:false})})||[];
+    if(r){ r.andamentos_lidos=[{colaborador_id:eu.id}]; (D._andsFicha=D._andsFicha||[]).unshift(r); }
+    repintarFicha();
+  }catch(e){ aviso("Não consegui registrar o 👍: "+String(e.message||e).slice(0,80)); }
+}
+function comentario(a, resposta, reacoes){
   const co=D.colPorId.get(a.autor_id), cor=co?co.cor:"#a19f9d";
   const tp = tipoDoComentario(a.texto);
+  const chipsReacao = (reacoes&&reacoes.length)
+    ? `<span class="tl-reacoes">${[...reacoes.reduce((m,r)=>{
+        const e=String(r.texto).trim(); if(!m.has(e)) m.set(e,[]);
+        m.get(e).push((D.colPorId.get(r.autor_id)||{}).inicial||"?"); return m;
+      },new Map())].map(([e,quem])=>`<span class="chip" title="${esc(quem.join(", "))}">${e} ${quem.join(" ")}</span>`).join("")}</span>`
+    : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
-    <span class="texto">${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${esc(tp?tp.resto:a.texto)}${resposta||""}</span>
+    <span class="texto"><b class="autor-nome" style="color:${cor}">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${horaSP(a.criado_em)}</span><br>${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${destacarMencoes(esc(tp?tp.resto:a.texto))}${chipsReacao}${resposta||""}</span>
     ${vistos(a)}
-    <button class="apaga resp-liga" title="responder a este comentário — a resposta fica grudada nele na linha do tempo"
-      onclick="armarResposta('${a.id}')">↩</button>
-    ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}`;
+    <span class="tl-acoes">
+      <button class="apaga" title="👍 ciente — um toque, sem texto" onclick="reagir('${a.id}','${a.caso_id}')">👍</button>
+      <button class="apaga resp-liga" title="responder a este comentário — a resposta fica grudada nele na linha do tempo"
+        onclick="armarResposta('${a.id}')">↩</button>
+      ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}
+    </span>`;
 }
 // F41 · RESPONDER de qualquer comentário: arma o responde_a e o próximo
 // Registrar entra aninhado no comentário original (como a conclusão de
@@ -11901,6 +11959,23 @@ function menuArroba(ev){
   });
   setTimeout(()=>document.addEventListener("click", fecharMenuArroba, {once:true}));
 }
+// F42 · o que é registro de SISTEMA (fato, não conversa) encolhe para uma
+// linha central — a conversa da equipe respira. Se o registro carrega tarefa
+// ou está por ler, volta a ser cartão cheio: função nunca some por estética.
+function ehEventoSistema(a){
+  const padrao = (a.origem==="pat" && String(a.origem_id||"").startsWith("situacao:"))
+    || /^(✔ \[PRAZO CUMPRIDO\]|📅 |🗓 Véspera|INSS · )/.test(a.texto||"");
+  return padrao && !tarefasDe(a).length && (euLi(a) || a.autor_id===eu.id);
+}
+async function liTudoNaFicha(casoId){
+  const ids=(D._andsFicha||[]).filter(a=>a.caso_id===casoId && !a.excluir
+    && !euLi(a) && a.autor_id!==eu.id).map(a=>a.id);
+  if(!ids.length) return;
+  await marcarLidas(ids);
+  for(const a of (D._andsFicha||[])) if(ids.includes(a.id))
+    a.andamentos_lidos=[...(a.andamentos_lidos||[]),{colaborador_id:eu.id}];
+  repintarFicha();
+}
 function linhaDoTempo(ands){
   const vivos = (ands||[]).filter(a=>!a.excluir);
   const porPai = new Map();
@@ -11911,14 +11986,38 @@ function linhaDoTempo(ands){
   // resposta órfã (o pai foi apagado) volta a ser comentário de primeiro
   // nível: sumir com o "feito" de alguém seria pior que mostrá-lo solto
   const temPai = new Set(vivos.map(a=>a.id));
-  const raiz = vivos.filter(a=>!a.responde_a || !temPai.has(a.responde_a));
+  const raiz = vivos.filter(a=>(!a.responde_a || !temPai.has(a.responde_a)) && !ehReacao(a));
+  const naoLi = a => !euLi(a) && a.autor_id!==eu.id;
+  const novas = raiz.filter(naoLi).length;
+  const casoId = vivos.length ? vivos[0].caso_id : null;
   const li = a => {
-    const filhas = (porPai.get(a.id)||[]).sort((x,y)=>(x.criado_em||"")<(y.criado_em||"")?-1:1);
+    const filhasTodas = (porPai.get(a.id)||[]).sort((x,y)=>(x.criado_em||"")<(y.criado_em||"")?-1:1);
+    const reacoes = filhasTodas.filter(ehReacao);
+    const filhas = filhasTodas.filter(f=>!ehReacao(f));
     const sub = filhas.length ? `<span class="resp">${filhas.map(f=>
       `<span class="resp-item">${comentario(f)}</span>`).join("")}</span>` : "";
-    return `<li>${comentario(a, sub)}</li>`;
+    if(ehEventoSistema(a) && !filhas.length)
+      return `<li class="tl-sys"><span class="texto" title="${esc(fmtTS(a.criado_em))} às ${esc(horaSP(a.criado_em))}">${esc(a.origem==="pat"?limparHtmlPat(a.texto):a.texto)}</span></li>`;
+    return `<li class="${naoLi(a)?"tl-nao-lida":""}">${comentario(a, sub, reacoes)}</li>`;
   };
-  return `<ul class="timeline">${raiz.map(li).join("")
+  // a linha do tempo vem do mais novo para o mais velho: os dias separam a
+  // leitura, e a fronteira do "não lido" mostra até onde você precisa descer
+  let corpo="", diaAtual=null, fronteira=false, passouNova=false;
+  for(const a of raiz){
+    const d=dataSP(a.criado_em);
+    if(passouNova && !fronteira && !naoLi(a)){
+      corpo+=`<li class="tl-fim-novas"><span>— você já tinha visto daqui para baixo —</span></li>`;
+      fronteira=true;
+    }
+    if(d!==diaAtual){ corpo+=`<li class="tl-dia"><span>${esc(dataRelativa(d))}</span></li>`; diaAtual=d; }
+    corpo+=li(a);
+    if(naoLi(a)) passouNova=true;
+  }
+  const banner = novas && casoId
+    ? `<div class="tl-banner">🔵 ${novas} nova(s) para você desde a última visita
+        <button class="btn-mini" onclick="liTudoNaFicha('${casoId}')">✔ marcar todas como lidas</button></div>`
+    : "";
+  return banner + `<ul class="timeline">${corpo
     || "<p class='meio-sub'>Sem andamentos ainda — escreva o primeiro no campo acima.</p>"}</ul>`;
 }
 

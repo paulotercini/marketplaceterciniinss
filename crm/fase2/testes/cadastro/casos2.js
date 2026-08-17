@@ -120,9 +120,9 @@ FIX.atribuicoes.push({ id: "at2", caso_id: CASO1, colaborador_id: COL2 });
   await p.evaluate(([cli, caso]) => { casoSel = caso;
     const m = document.getElementById("modal"); if (m) m.innerHTML = "";
     pintarFicha(); }, [CLI_CHEIO, CASO1]);
-  await p.waitForSelector(".timeline li");
+  await p.waitForSelector(".timeline li:not(.tl-dia):not(.tl-sys):not(.tl-fim-novas)");
   const geo = await p.evaluate(() => {
-    const li = document.querySelector(".timeline li");
+    const li = document.querySelector(".timeline li:not(.tl-dia):not(.tl-sys):not(.tl-fim-novas)");
     const tx = li.querySelector(".texto");
     const ul = li.closest(".timeline");
     const rli = li.getBoundingClientRect(), rtx = tx.getBoundingClientRect();
@@ -138,7 +138,7 @@ FIX.atribuicoes.push({ id: "at2", caso_id: CASO1, colaborador_id: COL2 });
   // ── 4. o avatar é o nó; a bolinha oca morreu ────────────────────────────
   conf("a bolinha oca (li::after) morreu na linha do escritório",
     (await p.evaluate(() => {
-      const li = document.querySelector(".timeline:not(.crps-tl) li");
+      const li = document.querySelector(".timeline:not(.crps-tl) li:not(.tl-dia):not(.tl-sys):not(.tl-fim-novas)");
       return getComputedStyle(li, "::after").content === "none";
     })));
   const no = await p.evaluate(() => {
