@@ -1716,7 +1716,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.42 · F43 — a ficha NUNCA mais fica presa no «abrindo a ficha…»: toda consulta da abertura tem rede de proteção (credenciais era a única sem — um erro dela travava tudo), qualquer erro na pintura vira uma tela com «↻ tentar de novo», e colaborador com cadastro pela metade no banco (sem nome/inicial) fica fora das telas em vez de derrubar o composer</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.43 · F44 — TODA movimentação do PAT consta em 📣 Novidades: protocolo cuja «última atualização» avançou no portal sem mudar situação, comentário ou agendamento agora vira a sua própria novidade (deduplicada pelo carimbo do portal — importar de novo não repete), e a PRIMEIRA situação importada também entra («INSS · Situação registrada: …», antes só a mudança constava); a conferência da importação mostra o contador «movimentações p/ 📣» e o botão Aplicar as inclui</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3331,7 +3331,10 @@ function eventosNovos(det, jaTem, hoje) {
 function andamentoDaMudanca(k, det) {
   const antes = k.situacao_inss || null;
   if (!det.situacao || det.situacao === antes) return null;
-  if (!antes) return null;                 // primeira vez não é mudança
+  // F44 · a primeira situação também consta em 📣 (pedido do Paulo: TODA
+  // movimentação do portal aparece em Novidades — antes, o primeiro import
+  // da situação entrava calado)
+  if (!antes) return `INSS · Situação registrada: ${det.situacao}`;
   return `INSS: ${antes} → ${det.situacao}`;
 }
 
@@ -3386,7 +3389,7 @@ function planoDeImportacao(pat, D, hoje) {
   }
 
   const plano = { atualizar: [], novos: [], possiveisDuplicados: [], semCliente: [],
-                  ignorados: [], eventos: [], comentarios: [], resumo: {} };
+                  ignorados: [], eventos: [], comentarios: [], atualizacoes: [], resumo: {} };
 
   for (const det of (pat.detalhes || [])) {
     const proto = digitos(det.protocolo);
@@ -3406,6 +3409,22 @@ function planoDeImportacao(pat, D, hoje) {
       if (evs.length) plano.eventos.push({ caso_id: k.id, protocolo: proto, eventos: evs });
       const coms = comentariosNovos(det, andDoCaso.get(k.id));
       if (coms.length) plano.comentarios.push({ caso_id: k.id, protocolo: proto, comentarios: coms });
+      // F44 · TODA movimentação consta em 📣: o protocolo cuja "última
+      // atualização" avançou no portal SEM mudar situação, comentário ou
+      // agendamento entrava calado. Agora vira a sua própria novidade,
+      // deduplicada pelo carimbo do portal (importar de novo não repete).
+      const ts = String(det.atualizado_em || daLista.atualizado_em || "").trim();
+      const chaveAt = ts ? `atualizacao:${proto}:${ts.replace(/\D/g, "")}` : null;
+      const jaVisto = chaveAt && (andDoCaso.get(k.id) || [])
+        .some(a => String(a.origem_id || "") === chaveAt);
+      // só suprime quando OUTRA novidade já vai contar a história (mudança de
+      // situação, comentário, agendamento) — backfill silencioso de campo não
+      // conta: ele não gera linha nenhuma em 📣
+      const teveOutra = and || coms.length || evs.length;
+      if (chaveAt && !jaVisto && !teveOutra)
+        plano.atualizacoes.push({ caso_id: k.id, protocolo: proto, ts,
+          situacao: det.situacao || daLista.situacao || null,
+          servico: det.beneficio || daLista.servico || null });
       if (Object.keys(mud).length || and || coms.length)
         plano.atualizar.push({ ...item, caso_id: k.id, mudancas: mud, andamento: and,
                                novos_comentarios: coms.length });
@@ -3447,6 +3466,7 @@ function planoDeImportacao(pat, D, hoje) {
     ignorados: plano.ignorados.length,
     eventos: plano.eventos.reduce((n, e) => n + e.eventos.length, 0),
     comentarios: plano.comentarios.reduce((n, c) => n + c.comentarios.length, 0),
+    movimentacoes: plano.atualizacoes.length,
     exigencias: (pat.detalhes || []).filter(d => d.situacao === 'Em exigência').length,
     apuracoes: (pat.detalhes || []).filter(d => d.urgente).length,
     a_confirmar: (pat.detalhes || []).filter(d => d.especie_a_confirmar).length,
@@ -3711,6 +3731,7 @@ function telaImportarPat(){
            ["casos novos", r.novos], ["confira antes", r.possiveis_duplicados],
            ["sem cliente no CRM", r.sem_cliente],
            ["perícias a agendar", r.eventos], ["comentários do INSS", r.comentarios],
+           ["movimentações p/ 📣", r.movimentacoes],
            ["em exigência", r.exigencias],
            ["apuração (urgente)", r.apuracoes], ["espécie a confirmar", r.a_confirmar]].map(cx).join("")}
       </div>
@@ -3732,7 +3753,7 @@ function telaImportarPat(){
         Entram marcados como urgentes.</div>` : ""}
       ${planoPat.erro ? `<div class="exig"><strong>Não vou gravar:</strong> ${esc(planoPat.erro)}</div>`
         : `<button class="novo-cli" style="width:auto;margin:12px 0 0;padding:10px 20px"
-             onclick="aplicarPat()">Aplicar ${r.atualizar + r.novos} mudança(s)</button>`}
+             onclick="aplicarPat()">Aplicar ${r.atualizar + r.novos + (r.movimentacoes||0)} mudança(s)</button>`}
       ${planoPat.possiveisDuplicados.length ? `<h3 class="secao">Confira antes de criar (${planoPat.possiveisDuplicados.length})</h3>
         <table class="tab"><tr><th>cliente</th><th>o que veio do INSS</th><th>o que já existe aqui</th><th>por quê</th><th></th></tr>
         ${planoPat.possiveisDuplicados.map(n=>`<tr><td>${esc(n.nome)}</td>
@@ -3841,6 +3862,15 @@ async function aplicarPatDeVerdade(){
           origem_id:`evento:${bloco.protocolo}:${dsa(ev.tipo)}:${ev.data}`, publico:false,
           texto:textoEvNovidade(ev)})}).catch(()=>{});
     });
+
+  // F44 · as movimentações "só última atualização" viram novidade em 📣 —
+  // origem_id com o carimbo do portal: importar a mesma coleta duas vezes
+  // não duplica (o plano já filtra pelo banco, e o índice único segura o resto)
+  for(const at of (planoPat.atualizacoes||[])) await tentar(`movimentação ${at.protocolo}`, () =>
+    api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:at.caso_id, autor_id:eu.id, origem:"pat",
+        origem_id:`atualizacao:${at.protocolo}:${String(at.ts).replace(/\D/g,"")}`, publico:false,
+        texto:`INSS · Movimentação no protocolo ${at.protocolo}${at.situacao?` — situação: ${at.situacao}`:""} (portal atualizado em ${at.ts}).`})}));
 
   // a coleta usada sai da fila: a mesma não pode ser oferecida duas vezes
   if(planoPat.coleta_id)

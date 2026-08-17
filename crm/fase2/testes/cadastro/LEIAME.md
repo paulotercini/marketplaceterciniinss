@@ -372,3 +372,13 @@ nulo) muda o que ENTRA nas telas: a linha meia-boca que o filtro velho
 escondia virou bomba no template (nome.split de null). Predicado novo
 exige a linha utilizável. No teste, o mock derruba credenciais com 500
 por uma flag mutável na rota — mais simples que duas rotas.
+
+## pat-novidades.js (F44) — toda movimentação do PAT em 📣
+
+planoDeImportacao é função PURA: testar regra de plano direto nela (com
+um D falso) é mais barato e mais preciso que montar a tela. Armadilhas:
+o `daLista` do plano é a linha NORMALIZADA (resumoDaLista → atualizado_em,
+cpf), não a crua do portal; a supressão da movimentação conta só o que
+CRIA novidade (mudança de situação, comentário, evento) — mudança
+silenciosa de campo (backfill de benefício) não suprime; e a fixtura do
+caso precisa estar sem backfill pendente para isolar a regra.
