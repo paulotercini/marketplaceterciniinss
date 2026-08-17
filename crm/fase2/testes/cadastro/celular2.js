@@ -62,6 +62,9 @@ FIX.andamentos.push({ id: A_NOVA, caso_id: CASO1, autor_id: EU2, origem: "app",
 
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForTimeout(900);
+  // F45: o Caso completo virou a primeira tela; este teste é do painel Escritório
+  await p.evaluate(() => { subAba = "escritorio"; repintarFicha(); });
+  await p.waitForTimeout(400);
 
   // 1) a conversa renderiza inteira em 390px, sem estouro horizontal
   conf("a faixa do não lido aparece no celular",

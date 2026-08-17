@@ -382,3 +382,16 @@ cpf), não a crua do portal; a supressão da movimentação conta só o que
 CRIA novidade (mudança de situação, comentário, evento) — mudança
 silenciosa de campo (backfill de benefício) não suprime; e a fixtura do
 caso precisa estar sem backfill pendente para isolar a regra.
+
+## paineis.js (F45) — uma estrutura para todas as linhas do tempo
+
+crpsBlocos(k) espera k.crps como ARRAY de blocos (ou um bloco solto),
+NUNCA {blocos:[...]} — fixtura no formato errado rende zero eventos sem
+erro nenhum. Com o Caso completo virando a primeira tela (subAba padrão
+"tudo" + forçada no abrirFicha), todo teste do painel Escritório precisa
+trocar de aba na mão: `subAba = "escritorio"; repintarFicha()` depois do
+abrirFicha (foi o que quebrou celular2, comentarios e conversa). O
+compositor agora existe TAMBÉM no Tudo — composerCaso(k) é um só,
+extraído de painelEscritorio; #and-texto aparece nas duas abas. Em
+tlOficial, o que é exclusivo da fonte (⭐ do CRPS, 📄, caixaResumo)
+viaja no campo html do item, nunca no esqueleto.

@@ -74,6 +74,9 @@ FIX.andamentos.push(
 
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForTimeout(900);
+  // F45: o Caso completo virou a primeira tela; este teste é do painel Escritório
+  await p.evaluate(() => { subAba = "escritorio"; repintarFicha(); });
+  await p.waitForTimeout(400);
 
   // 1) estrutura: dias separando e a faixa do não lido
   conf("os separadores de dia estão na conversa (Hoje e Ontem)",
