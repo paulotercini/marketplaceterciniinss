@@ -1720,7 +1720,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.44 · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.45 · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11863,8 +11863,10 @@ function tlOficial(itens, vazio){
     const d=(x.q||"").slice(0,10);
     if(d && d!==diaAtual){ corpo+=`<li class="tl-dia"><span>${esc(dataRelativa(d))}</span></li>`; diaAtual=d; }
     const hora=(x.q||"").length>=16 ? (x.q||"").slice(11,16) : "";
+    // F46 · registro do escritório leva o avatar COLORIDO do colaborador
+    // (corAv), não o selo neutro de fonte — a autoria salta como na conversa
     corpo+=`<li class="tl-of ${x.cls||""}${x.forte?" tudo-marco":""}">
-      <span class="quando" title="${esc(x.rot||"")}"><span class="avatar mini av-fonte">${x.em||"·"}</span><span class="q-dt">${d?fmt(d):"—"}</span></span>
+      <span class="quando" title="${esc(x.rot||"")}"><span class="avatar mini${x.corAv?`" style="background:${x.corAv}`:` av-fonte`}">${x.em||"·"}</span><span class="q-dt">${d?fmt(d):"—"}</span></span>
       <span class="texto"><b class="autor-nome">${esc(x.rot||"")}</b>${hora?`<span class="tl-hora">${hora}</span>`:""}<br>${x.forte?`<b>${esc(x.texto||"")}</b>`:esc(x.texto||"")}${x.html||""}</span>
     </li>`;
   }
@@ -12247,9 +12249,12 @@ function fatosDoCasoTodo(k, ands){
     }else if(a.origem==="pje"){
       itens.push({q:qSP(a.criado_em), chip:"⚖️ PJe", cor:"neutro", id:a.id, texto:(a.texto||"")});
     }else{
+      // F46 · quem escreveu aparece com NOME e COR (avatar do colaborador),
+      // não mais "P:" espremido no texto — a autoria vai nos campos próprios
       const co=D.colPorId.get(a.autor_id);
       itens.push({q:qSP(a.criado_em), chip:"🏢 Escritório", cor:"ben",
-        texto:(co?co.inicial+": ":"")+(a.texto||"")});
+        quem:co?co.nome:null, avIni:co?co.inicial:null, avCor:co?co.cor:null,
+        texto:(a.texto||"")});
     }
   }
   for(const b of crpsBlocos(k))
@@ -12286,7 +12291,10 @@ function painelTudo(k, ands){
   // do autor — o chip "🌻 INSS" vira selo + nome do cartão
   const linhas = mostra.map(x=>{
     const [em, ...resto] = String(x.chip||"· fonte").split(" ");
-    return { q: x.q, em: x.marco?"⭐":em, rot: resto.join(" ")||em, texto: x.texto,
+    const nosso = !!x.avIni;   // F46 · registro do escritório: avatar e nome do colaborador
+    return { q: x.q, em: x.marco?"⭐":(nosso?esc(x.avIni):em),
+      rot: nosso?(x.quem||resto.join(" ")):(resto.join(" ")||em),
+      corAv: (nosso && !x.marco)?x.avCor:null, texto: x.texto,
       forte: x.marco,
       html: `<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span>` };
   });
@@ -12316,7 +12324,7 @@ function copiarCasoCompleto(casoId){
     (k.protocolos||[]).length?`Protocolo(s): ${(k.protocolos||[]).join(", ")}`:"",
     k.der?`DER: ${fmt(k.der)}`:"", `Fase: ${NOME_FASE[k.fase]||k.fase}`,
   ].filter(Boolean).join("\n");
-  const corpo=itens.map(x=>`${x.marco?"⭐ ":"   "}${fmt((x.q||"").slice(0,10))} [${x.chip.replace(/^\S+\s/,"")}] ${x.texto}`).join("\n");
+  const corpo=itens.map(x=>`${x.marco?"⭐ ":"   "}${fmt((x.q||"").slice(0,10))} [${x.chip.replace(/^\S+\s/,"")}${x.quem?` · ${x.quem}`:""}] ${x.texto}`).join("\n");
   copiar(`${cab}\n\n${corpo}`, "Caso completo copiado 📖 — cole onde precisar");
 }
 
