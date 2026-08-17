@@ -1,4 +1,21 @@
-# Onde paramos — 17.08.2026, versão 09.44
+# Onde paramos — 17.08.2026, versão 09.45
+
+## F46 · No Caso completo, o colaborador aparece com nome e cor (09.45)
+
+Pedido do Paulo: no Caso completo, registro vindo do escritório não pode
+sair só com a inicial "P" — tem que levar o nome e a cor do colaborador,
+como na conversa do Escritório.
+
+fatosDoCasoTodo agora carrega quem/avIni/avCor no item do escritório (a
+inicial saiu de dentro do texto, onde vivia como "P: ..."); painelTudo
+passa isso a tlOficial pelos campos em/rot/corAv; e tlOficial ganhou o
+corAv — presente, o avatar sai com a COR do colaborador (sem av-fonte),
+ausente, o selo neutro de fonte de sempre. Marco continua com ⭐ no
+avatar, mas o rot segue sendo o nome. O 📋 copiar em texto sai com
+"[Escritório · Nome]". Três provas novas em paineis.js (16 no total),
+suíte 38 arquivos.
+
+# Onde paramos — versão 09.44
 
 ## F45 · Uma estrutura para todas as linhas do tempo + Caso completo primeiro (09.44)
 

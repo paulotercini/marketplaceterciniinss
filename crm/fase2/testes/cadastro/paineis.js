@@ -13,7 +13,11 @@ FIX.andamentos = FIX.andamentos || [];
 FIX.andamentos.push({ id: "a0000000-0000-0000-0000-00000000f451", caso_id: CASO1,
   autor_id: EU, origem: "pat", origem_id: "c-teste-1",
   criado_em: "2026-08-16T10:30:00Z", andamentos_lidos: [],
-  texto: "INSS · Processo em análise no setor de reconhecimento de direitos." });
+  texto: "INSS · Processo em análise no setor de reconhecimento de direitos." },
+// F46: registro do ESCRITÓRIO no Tudo — tem que sair com nome e cor do autor
+{ id: "a0000000-0000-0000-0000-00000000f461", caso_id: CASO1,
+  autor_id: EU, origem: "app", criado_em: "2026-08-14T09:00:00Z",
+  andamentos_lidos: [], texto: "Juntei a procuração assinada no protocolo." });
 FIX.casos[0] = { ...FIX.casos[0],
   crps: [{ nup: "355500011122233344", status: "Em julgamento",
     eventos: [{ tipo: "andamento", data: "2026-08-10T10:00:00",
@@ -80,6 +84,18 @@ FIX.casos[0] = { ...FIX.casos[0],
   conf("a decisão (Sentença) sai como marco destacado",
     await p.evaluate(() => [...document.querySelectorAll(".timeline li.tudo-marco")]
       .some(li => /Sentença/.test(li.textContent))));
+
+  // 2b) F46: registro do escritório com o NOME e a COR do colaborador
+  conf("o registro do escritório mostra o NOME do colaborador",
+    await p.evaluate(() => [...document.querySelectorAll(".timeline .autor-nome")]
+      .some(b => /Paulo Tercini/.test(b.textContent))));
+  conf("e o avatar leva a COR do colaborador com a inicial (não o selo neutro)",
+    await p.evaluate(() => [...document.querySelectorAll(".timeline .avatar.mini")]
+      .some(a => !a.classList.contains("av-fonte") && a.textContent.trim() === "P" &&
+        getComputedStyle(a).backgroundColor === "rgb(37, 100, 207)")));
+  conf("a inicial não vem mais espremida no texto ('P: ...')",
+    await p.evaluate(() => ![...document.querySelectorAll(".timeline .texto")]
+      .some(t => /P:\s*Juntei a procuração/.test(t.textContent))));
 
   // 3) registrar pelo compositor DO Caso completo funciona
   await p.fill("#and-texto", "Registrado direto do Caso completo.");
