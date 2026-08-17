@@ -361,3 +361,14 @@ com tarefa pendurada ou sem leitura, o registro volta a cartão cheio.
 A fixtura do "não lido" precisa de andamentos_lidos como array (vazio =
 ninguém leu) e autor DIFERENTE de eu — o próprio autor nunca conta
 como não lido.
+
+## ficha-blindada.js (F43) — a ficha nunca fica presa
+
+O placeholder "abrindo a ficha…" só é substituído por quem chega ao fim
+de abrirFicha: exceção no meio = tela presa MUDA. Duas lições. (1) Num
+Promise.all, UMA perna sem catch condena as outras cinco — credenciais
+era essa perna. (2) Alargar um predicado (equipeAtiva aceitando ativo
+nulo) muda o que ENTRA nas telas: a linha meia-boca que o filtro velho
+escondia virou bomba no template (nome.split de null). Predicado novo
+exige a linha utilizável. No teste, o mock derruba credenciais com 500
+por uma flag mutável na rota — mais simples que duas rotas.

@@ -1716,7 +1716,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.41 · F42 — A CONVERSA DO CASO: a linha do tempo lê como conversa de equipe — dias separando (Hoje/Ontem), a faixa «N novas para você desde a última visita» com o ✔ marcar todas como lidas e a fronteira «você já tinha visto daqui para baixo», registros de sistema (situação do INSS, agendamentos, vésperas) encolhidos numa linha central para a conversa respirar (voltam a cartão cheio se carregam tarefa ou não foram lidos), nome do autor e hora em cada comentário, @menções destacadas na cor do time, 👍 ciente em um toque (agregado em chip com as iniciais) e as ações do comentário reveladas no hover (sempre visíveis no celular)</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.42 · F43 — a ficha NUNCA mais fica presa no «abrindo a ficha…»: toda consulta da abertura tem rede de proteção (credenciais era a única sem — um erro dela travava tudo), qualquer erro na pintura vira uma tela com «↻ tentar de novo», e colaborador com cadastro pela metade no banco (sem nome/inicial) fica fora das telas em vez de derrubar o composer</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1966,7 +1966,10 @@ const moeda = v => v==null ? "—" : Number(v).toLocaleString(IDIOMA,{style:"cur
 // (F41) UM predicado para "quem está na equipe": metade do app filtrava
 // c.ativo (some quem tem ativo=null) e a outra metade ativo!==false. Agora
 // toda superfície de anotação/atribuição usa a mesma régua.
-const equipeAtiva = () => (D.colaboradores||[]).filter(c=>c.ativo!==false);
+// (F43) E a linha precisa ser UTILIZÁVEL: colaborador sem nome ou sem
+// inicial (cadastro pela metade, robô antigo) derrubava a pintura da ficha
+// inteira — quebrado fica fora até alguém completar o cadastro.
+const equipeAtiva = () => (D.colaboradores||[]).filter(c=>c.ativo!==false && c.nome && c.inicial);
 
 let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
@@ -7771,21 +7774,37 @@ async function abrirFicha(cliId){
   aplicarMenu();
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
   const ids = ks.map(k=>k.id).join(",");
-  const [ands, creds, vincs, anexos, convs, tarefasF] = await Promise.all([
-    ids?todas("andamentos",`select=*,andamentos_lidos(colaborador_id,lido_em)&caso_id=in.(${ids})&order=criado_em.desc`)
-        .catch(()=>todas("andamentos",`select=*&caso_id=in.(${ids})&order=criado_em.desc`)):[],
-    todas("credenciais",`select=id,tipo,cliente_id&cliente_id=eq.${cliId}`),
-    todas("vinculos",`select=*&or=(cliente_id.eq.${cliId},ligado_a.eq.${cliId})`).catch(()=>[]),
-    todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
-    todas("conversas",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
-    ids?todas("andamento_tarefas",`select=*&caso_id=in.(${ids})`).catch(()=>[]):[],
-  ]);
-  D.anexos = anexos;
-  D.convFicha = convs;
-  D.tarefasFicha = tarefasF;
-  D._andsFicha = ands;
-  D._ficha = { cliId, creds, vincs };   // o que a pintura usa além do D global
-  pintarFicha();
+  // F43 · a ficha NUNCA fica presa no "abrindo…": toda perna da busca tem
+  // rede de proteção (credenciais era a única sem catch — um erro dela
+  // rejeitava o conjunto e o placeholder ficava para sempre), e qualquer
+  // exceção na pintura vira uma tela de erro com "tentar de novo".
+  try{
+    const [ands, creds, vincs, anexos, convs, tarefasF] = await Promise.all([
+      ids?todas("andamentos",`select=*,andamentos_lidos(colaborador_id,lido_em)&caso_id=in.(${ids})&order=criado_em.desc`)
+          .catch(()=>todas("andamentos",`select=*&caso_id=in.(${ids})&order=criado_em.desc`).catch(()=>[])):[],
+      todas("credenciais",`select=id,tipo,cliente_id&cliente_id=eq.${cliId}`).catch(()=>[]),
+      todas("vinculos",`select=*&or=(cliente_id.eq.${cliId},ligado_a.eq.${cliId})`).catch(()=>[]),
+      todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
+      todas("conversas",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
+      ids?todas("andamento_tarefas",`select=*&caso_id=in.(${ids})`).catch(()=>[]):[],
+    ]);
+    D.anexos = anexos;
+    D.convFicha = convs;
+    D.tarefasFicha = tarefasF;
+    D._andsFicha = ands;
+    D._ficha = { cliId, creds, vincs };   // o que a pintura usa além do D global
+    pintarFicha();
+  }catch(e){
+    console.error("abrirFicha:", e);
+    const det=document.getElementById("detalhe");
+    if(det) det.innerHTML=`<div style="padding:24px;max-width:520px">
+      <h3 style="margin:0 0 6px">A ficha não abriu</h3>
+      <p class="meio-sub" style="margin:0 0 10px">${esc(String(e&&e.message||e).slice(0,180))}</p>
+      <button class="novo-cli" style="width:auto;padding:9px 18px"
+        onclick="abrirFicha('${cliId}')">↻ tentar de novo</button>
+      <button class="btn-mini" onclick="fecharFicha()">voltar à lista</button>
+    </div>`;
+  }
 }
 // REPINTAR SEM REBUSCAR. Trocar de aba, sub-aba ou instância não é motivo
 // para voltar à rede: as 6 consultas já foram feitas quando a ficha abriu, e
