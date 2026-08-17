@@ -196,7 +196,7 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: "52998224725" };
 
   // o desemprego é decisão de quem atende, e fica gravado
   escritos.length = 0;
-  await p.click(".conta-ck input");
+  await p.click('.painel[data-p="9"] .conta-ck input');
   await p.waitForTimeout(700);
   const pat = escritos.find(x => x.m === "PATCH" && x.t === "clientes");
   conf("marcar desemprego grava na triagem, com autor e data",

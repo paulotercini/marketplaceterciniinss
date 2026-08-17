@@ -1,0 +1,16 @@
+F38: Tarefas com Prazo no CRM e o deferido que continua (09.37)
+
+Prazo processual nao se perde: a anotacao do caso marcada com o relogio
+exige a data fatal, sai prefixada [PRAZO DD.MM.AAAA] na linha do tempo
+e move o caso para Tarefas com Prazo (fase outro + mover_para, o mesmo
+canal do select - o To Do acompanha quando o ESCREVER_TODO ligar),
+guardando a lista de origem em ronda.prazo_de (JSONB existente, sem
+migracao). A lista ordena os grupos pela menor data fatal. O prazo
+cumprido propoe devolver a lista de origem ja selecionada, com seletor
+para trocar. E a janela do Encerrar ganhou o terceiro caminho: gerou
+honorarios e o processo CONTINUA (cumprimento de sentenca) - lanca em
+Pagamentos, grava resultado e marco [DECISAO] sem mudar a fase. Teste
+prazos.js com 16 provas; suite 29 arquivos verdes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3

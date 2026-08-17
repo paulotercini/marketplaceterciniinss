@@ -1,4 +1,20 @@
-# Onde paramos — 17.08.2026, versão 09.36
+# Onde paramos — 17.08.2026, versão 09.37
+
+## F38 · Tarefas com Prazo no CRM e o deferido que continua (09.37)
+
+Prazo processual não se perde: a anotação do caso marcada com ⏰ exige a
+DATA FATAL, sai prefixada "[PRAZO DD.MM.AAAA]" na linha do tempo e move
+o caso para 🗓 Tarefas com Prazo (fase outro + mover_para, o mesmo
+canal do select — o To Do acompanha quando o ESCREVER_TODO ligar),
+guardando a lista de origem em ronda.prazo_de (JSONB existente, sem
+migração). A lista 🗓 ordena os GRUPOS pela menor data fatal. O "✔
+prazo cumprido" propõe devolver à lista de ORIGEM já selecionada, com
+seletor para trocar (decisão do Paulo), limpa o prazo e registra
+"[PRAZO CUMPRIDO]". E a janela do Encerrar ganhou o terceiro caminho
+"⚖️ Gerou — e o processo CONTINUA (cumprimento de sentença)": lança os
+honorários em Pagamentos, grava o resultado e o marco [DECISÃO] SEM
+mudar a fase — o caso segue em Judicial. Teste prazos.js, 16 provas;
+suíte 29 arquivos.
 
 ## F37 · A ficha do caso com fundo próprio (09.36)
 
