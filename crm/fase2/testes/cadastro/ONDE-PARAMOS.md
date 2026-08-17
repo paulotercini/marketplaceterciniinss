@@ -1,4 +1,27 @@
-# Onde paramos — 17.08.2026, versão 09.41
+# Onde paramos — 17.08.2026, versão 09.42
+
+## F43 · A ficha nunca mais fica presa no "abrindo a ficha…" (09.42)
+
+Bug reportado pelo Paulo com captura: clicou num cliente da lista do
+Conselho e a coluna ficou em "abrindo a ficha…" para sempre. O
+placeholder engolia exceções: das seis consultas da abertura, a de
+CREDENCIAIS era a única sem catch — um erro dela rejeitava o
+Promise.all e nada mais acontecia, sem mensagem. E havia uma segunda
+mina, plantada pela F41: o equipeAtiva() passou a incluir ativo NULO,
+então uma linha de colaborador pela metade no banco (sem nome/inicial
+— ex-funcionário, robô antigo) entrava nos chips do composer e
+derrubava a pintura inteira (nome.split de null).
+
+Correção em três camadas: toda perna da abertura com .catch (inclusive
+o fallback do fallback dos andamentos), o corpo inteiro
+busca+pintarFicha num try/catch que vira tela de erro com "↻ tentar de
+novo" e "voltar à lista" (nunca mais falha muda), e equipeAtiva exige
+linha utilizável (ativo!==false && nome && inicial). Teste
+ficha-blindada.js, 4 provas: colaborador quebrado fora dos chips e
+ficha pintando; credenciais em 500 e a ficha abrindo com degradação
+("sem senha"). Suíte 36 arquivos.
+
+# Onde paramos — versão 09.41
 
 ## F42 · A CONVERSA DO CASO (09.41)
 
