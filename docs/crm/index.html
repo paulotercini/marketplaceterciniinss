@@ -1686,7 +1686,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.36 · F37 — a FICHA do caso (espécie, protocolo, NB, DER, DIB, decisão, responsável e documentos) ganhou fundo azulado próprio: dado oficial num tom, conversa dos andamentos em branco — o olho separa na hora</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.37 · F38 — TAREFAS COM PRAZO dentro do CRM: a anotação marcada com ⏰ exige a data fatal e move o caso para 🗓 Tarefas com Prazo (ordenada do mais urgente), e o «✔ prazo cumprido» devolve o caso à lista de onde veio, com o seletor para trocar; e o Encerrar ganhou o terceiro caminho «gerou honorários e o processo CONTINUA» — deferido com cumprimento de sentença lança a cobrança sem tirar o caso da lista</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4128,7 +4128,10 @@ function render(){
     })();
     subt="Casos em recebimento e clientes com parcela em aberto — o dinheiro fica na aba Honorários da ficha."; }
   else if(visao.startsWith("fase:")){ const f=visao.slice(5);
-    titulo=(FASES.find(x=>x[0]===f)||[])[1] || NOME_FASE[f] || f; casosSel=casosDaFase(f); }
+    titulo=(FASES.find(x=>x[0]===f)||[])[1] || NOME_FASE[f] || f; casosSel=casosDaFase(f);
+    // F38 · Tarefas com Prazo ordena pela DATA FATAL: o mais urgente no topo,
+    // sem data no fim — é o controle apertado que a lista existe para dar
+    if(f==="prazo") casosSel.sort((a,b)=>String(a.prazo||"9999").localeCompare(String(b.prazo||"9999"))); }
   else { titulo=visao; casosSel=[]; }
   tituloLista(titulo); sub.textContent=subt;
   // filtro por colaborador em TODAS as listas — cada um vê só o que é seu
@@ -4174,7 +4177,10 @@ function render(){
                    lote desfaz os casos herdados da migração de uma vez. */""}
               <button class="btn-mini" onclick="converterEscritorioEmMassa()"
                 title="andamentos viram anotações (data e autor preservados), benefício vira pré-caso, e estes casos são apagados — quem tem perícia ou pagamento fica de fora">↩ não são casos — converter todos em atendimentos</button></h3>`:"")
-      + (grupoClientes(casosSel).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+      + ((gs=>{ if(visao==="fase:prazo") gs.sort((x,y)=>{
+            const m=ks=>ks.map(k=>k.prazo).filter(Boolean).sort()[0]||"9999";
+            return m(x[1]).localeCompare(m(y[1])); }); return gs; })(grupoClientes(casosSel))
+          .map(([c,ks])=>cartaoCliente(c,ks)).join("")
       || (emAtend.length?"":"<p class='meio-sub'>Nenhum cliente aqui.</p>"));
     if(visao==="importante"){
       const v = document.getElementById("ver-novidades");
@@ -11672,6 +11678,23 @@ function painelEscritorio(k, ands){
         </span>
       </div>
       <div id="and-prazo-chip"></div>
+      ${/* F38 · a anotação que É prazo processual: marca, dá a data fatal, e
+           o caso move para 🗓 Tarefas com Prazo — o controle apertado do
+           Paulo, agora dentro do CRM */""}
+      ${listaDe(k)!=="🗓 Tarefas com Prazo"?`
+      <div class="form-linha" style="margin-top:4px;align-items:center">
+        <label class="conta-ck" title="prazo processual: o caso vai para 🗓 Tarefas com Prazo, ordenado pela data fatal">
+          <input type="checkbox" id="and-prazo-ck"
+            onchange="document.getElementById('and-prazo-data').style.display=this.checked?'inline-block':'none';
+              if(this.checked&&prazoDetectado)document.getElementById('and-prazo-data').value=prazoDetectado;">
+          ⏰ esta anotação é uma tarefa com PRAZO</label>
+        <input type="date" id="and-prazo-data" min="${hoje()}" style="display:none" title="a data fatal do prazo">
+      </div>`:`
+      <div class="form-linha" style="margin-top:4px">
+        <span class="chip" style="background:#FDF3E7;color:#9C4607">⏰ em 🗓 Tarefas com Prazo${k.prazo?` · fatal ${fmt(k.prazo)}`:""}</span>
+        <button class="btn-mini" onclick="janelaPrazoCumprido('${k.id}')"
+          title="cumpriu o prazo: devolve o caso à lista de onde veio (dá para trocar)">✔ prazo cumprido</button>
+      </div>`}
       ${/* as sugestões viviam abertas e enchiam a tela; agora ficam atrás de
            um convite, e só aparecem para quem foi buscá-las */""}
       <button class="sug-abrir" id="sug-abrir" onclick="alternarSugestoes('${k.id}')">
@@ -13345,6 +13368,62 @@ function tfDia(qual, el){
     if(bt) bt.textContent="Escolher a data"; }
 }
 
+// ══════════════════════════════════════════════════════════════════════════
+// F38 · TAREFAS COM PRAZO — o controle apertado do Paulo, dentro do CRM
+// ══════════════════════════════════════════════════════════════════════════
+// Prazo processual não se perde. A anotação marcada como prazo move o caso
+// para 🗓 Tarefas com Prazo (fase "outro" + mover_para, como o select de
+// listas já faz), guarda de onde ele veio em ronda.prazo_de, e a lista
+// ordena pela data fatal. Cumprido, o caso volta à lista de origem — a
+// proposta vem pronta, o seletor deixa trocar (regra da volta).
+// Com a escrita CRM→To Do desligada, mover_para fica gravado e o To Do
+// acompanha quando o ESCREVER_TODO ligar.
+const LISTAS_VOLTA=[["🌻 INSS","inss"],["🖥 Conselho de Recursos","conselho"],
+  ["👪 Judicial","judicial"],["💡 Petições Iniciais","peticao_inicial"]];
+async function marcarTarefaComPrazo(casoId, data){
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  const de=listaDe(k);
+  const ronda={...(k.ronda||{}), prazo_de:de};
+  k.prazo=data; k.fase="outro"; k.mover_para="🗓 Tarefas com Prazo"; k.ronda=ronda;
+  await patchCaso(k.id, {prazo:data, fase:"outro",
+    mover_para:"🗓 Tarefas com Prazo", ronda}).catch(()=>{});
+  aviso(`⏰ Prazo fatal ${fmt(data)} — o caso foi para 🗓 Tarefas com Prazo (veio de ${de})`);
+  montarSidebar();
+}
+function janelaPrazoCumprido(casoId){
+  fecharJanela();
+  const k=D.casoPorId.get(casoId); if(!k) return;
+  const de=(k.ronda||{}).prazo_de;
+  const sugerida=LISTAS_VOLTA.some(([l])=>l===de) ? de
+    : (LISTAS_VOLTA.some(([l])=>l===k.origem_lista) ? k.origem_lista : "👪 Judicial");
+  const div=document.createElement("div"); div.id="janela";
+  div.innerHTML=`<div class="jan-caixa">
+    <h3>✔ Prazo cumprido: ${esc(tituloCaso(k))}</h3>
+    <p class="meio-sub" style="margin-top:6px">O caso sai de 🗓 Tarefas com Prazo e volta
+      para a lista de onde veio — troque se o cumprimento mudou a fase (ex.: protocolou
+      recurso e agora é Conselho).</p>
+    <div class="form-linha" style="margin-top:10px">
+      <select id="pz-volta">${LISTAS_VOLTA.map(([l])=>
+        `<option value="${esc(l)}" ${l===sugerida?"selected":""}>${esc(l)}</option>`).join("")}</select>
+      <button id="pz-ok">Devolver o caso</button>
+      <button class="btn-mini" id="pz-cancela">cancelar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(div);
+  document.getElementById("pz-cancela").onclick=fecharJanela;
+  document.getElementById("pz-ok").onclick=async()=>{
+    const lista=document.getElementById("pz-volta").value;
+    const fase=(LISTAS_VOLTA.find(([l])=>l===lista)||[])[1]||"outro";
+    const ronda={...(k.ronda||{})}; delete ronda.prazo_de;
+    k.fase=fase; k.mover_para=lista; k.prazo=null; k.ronda=ronda;
+    await patchCaso(k.id, {fase, mover_para:lista, prazo:null, ronda}).catch(()=>{});
+    await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
+        texto:`✔ [PRAZO CUMPRIDO] O caso saiu de 🗓 Tarefas com Prazo e voltou para ${lista}.`})}).catch(()=>{});
+    fecharJanela(); aviso(`✔ Prazo cumprido — o caso voltou para ${lista}`);
+    montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
+  };
+}
 async function novoAndamento(casoUnico){
   const sel=document.getElementById("and-caso");
   const casoId = casoUnico || (sel && sel.value);
@@ -13364,11 +13443,18 @@ async function novoAndamento(casoUnico){
   }
   // a ação mais usada do sistema não pode falhar em silêncio: rede caída ou
   // banco recusando têm que virar um aviso, não um clique que "não fez nada"
+  // F38 · anotação marcada como TAREFA COM PRAZO exige a data fatal
+  const prazoCk=document.getElementById("and-prazo-ck");
+  const prazoData=((document.getElementById("and-prazo-data")||{}).value)||"";
+  if(prazoCk && prazoCk.checked && !prazoData)
+    return aviso("Tarefa com prazo precisa da DATA FATAL — preencha o campo ao lado do ⏰");
+  const textoFinal = (prazoCk && prazoCk.checked) ? `⏰ [PRAZO ${fmt(prazoData)}] ${texto}` : texto;
   let and;
   try{
     [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
-      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto})});
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:textoFinal})});
   }catch(e){ return aviso("Não consegui registrar o andamento: "+String(e.message||e).slice(0,120)); }
+  if(prazoCk && prazoCk.checked && prazoData) await marcarTarefaComPrazo(casoId, prazoData);
   // data sem pessoa: quem escreveu "cobrar em 30 dias" quer ELE MESMO lembrar
   if(and && document.getElementById("tf-box")){
     const pessoas = (tfQuem&&tfQuem.length) ? tfQuem : (tfData ? [eu.id] : []);
@@ -13935,6 +14021,8 @@ function janelaEncerrar(casoId){
       <p class="meio-sub">O caso gerou honorários?</p>
       <div class="form-linha">
         <button class="btn-res" id="hon-sim">💰 Gerou — enviar para Pagamentos</button>
+        <button class="btn-res" id="hon-segue"
+          title="benefício concedido, honorários a receber, MAS o processo segue (cumprimento de sentença): lança a cobrança e o caso fica onde está">⚖️ Gerou — e o processo CONTINUA (cumprimento de sentença)</button>
         <button class="btn-res" id="hon-nao">Não gerou — encerrar de vez</button>
       </div>
       <div id="jan-hon-campos" style="display:none;margin-top:10px">
@@ -14006,10 +14094,19 @@ function janelaEncerrar(casoId){
   };
 
   // GEROU honorários: o caso não morre — muda para a fase 💰 Pagamentos
+  // F38 · modoSegue: deferido com CUMPRIMENTO DE SENTENÇA pela frente — os
+  // honorários se lançam, mas o caso NÃO sai da lista em que está. Não é
+  // encerramento: é marco. (Pedido do Paulo, 17.08.2026.)
+  let modoSegue=false;
   const enviarPagamentos=async()=>{
     if(!resultado) return aviso("Escolha o resultado primeiro");
-    k.fase="pagamento"; k.resultado=resultado;
-    await patchCaso(k.id, {fase:"pagamento", resultado});
+    if(!modoSegue){
+      k.fase="pagamento"; k.resultado=resultado;
+      await patchCaso(k.id, {fase:"pagamento", resultado});
+    } else {
+      k.resultado=resultado;
+      await patchCaso(k.id, {resultado});
+    }
     const v=document.getElementById("hon-valor").value;
     if(v){
       const venc=document.getElementById("hon-venc").value||null;
@@ -14023,14 +14120,35 @@ function janelaEncerrar(casoId){
     }
     await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({caso_id:k.id, autor_id:eu.id,
-        texto:`Resultado: ${resultado.toUpperCase()} — caso enviado para 💰 Pagamentos${v?` (honorários de R$ ${v} lançados)`:""}.${resultado==="deferido"?" 🎉":""}`})});
+        texto: modoSegue
+          ? `[DECISÃO] Resultado: ${resultado.toUpperCase()} — honorários${v?` de R$ ${v}`:""} lançados em 💰 Pagamentos; o caso SEGUE em ${listaDe(k)} para o cumprimento de sentença.${resultado==="deferido"?" 🎉":""}`
+          : `Resultado: ${resultado.toUpperCase()} — caso enviado para 💰 Pagamentos${v?` (honorários de R$ ${v} lançados)`:""}.${resultado==="deferido"?" 🎉":""}`})});
+    if(modoSegue){
+      fecharJanela(); plim(); montarSidebar();
+      aviso(`⚖️ Honorários lançados — o caso segue em ${listaDe(k)} para o cumprimento de sentença`);
+      if(clienteAberto) abrirFicha(clienteAberto);
+      return;
+    }
     aviso(`💰 Enviado para Pagamentos${v?" — honorários lançados":""}`);
     perguntaCasoNovo("💰 Enviado para Pagamentos");
   };
 
   document.getElementById("hon-sim").onclick=()=>{
     if(!resultado) return aviso("Escolha o resultado primeiro");
+    modoSegue=false;
+    document.getElementById("hon-segue").style.outline="";
+    document.getElementById("hon-sim").style.outline="2px solid var(--azul)";
     document.getElementById("jan-hon-campos").style.display="block";
+    document.getElementById("hon-valor").focus();
+  };
+  document.getElementById("hon-segue").onclick=()=>{
+    if(!resultado) return aviso("Escolha o resultado primeiro");
+    modoSegue=true;
+    document.getElementById("hon-sim").style.outline="";
+    document.getElementById("hon-segue").style.outline="2px solid var(--azul)";
+    document.getElementById("jan-hon-campos").style.display="block";
+    const bt=document.getElementById("hon-enviar");
+    if(bt) bt.textContent="⚖️ Lançar honorários — o caso continua";
     document.getElementById("hon-valor").focus();
   };
   document.getElementById("hon-nao").onclick=encerrarDeVez;

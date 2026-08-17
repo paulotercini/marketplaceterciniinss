@@ -305,3 +305,15 @@ Só CSS: .fx, .fatos-pe e .fx-prorrog trocaram o branco pelo token
 andamentos em branco. contraste.js seguiu verde (texto #1A1C20 sobre
 #F3F7FE ≈ 15:1). Alternativas creme e cinza mostradas ao Paulo em
 f37-opcoes.html — trocar é mudar um token.
+
+## prazos.js (F38) — tarefas com prazo e o deferido que continua
+
+O ⏰ do compositor guarda a origem em ronda.prazo_de (coluna JSONB que já
+existia — sem migração) e move com fase "outro" + mover_para, como o
+select de listas. Três armadilhas de teste: a caixa "para quem/quando"
+do compositor (tf-box) barra ANTES do guard do prazo — responder tfQuem
+e tfData; grupoClientes reordena os grupos (o sort de casosSel não
+basta — a lista 🗓 ordena os GRUPOS pela menor data fatal, ignorando o
+seletor de ordem); e o checkbox novo virou o primeiro `.conta-ck input`
+da página, quebrando o clique posicional do lembretes.js (seletor agora
+escopado ao painel 9).
