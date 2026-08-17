@@ -1,0 +1,11 @@
+F37: a ficha do caso com fundo proprio (09.36)
+
+Pedido do Paulo com captura: a grade de fatos do caso (especie,
+protocolo, NB, DER, DIB, decisao, responsavel, documentos solicitados)
+ganhou fundo azulado (--azul-fundo, token existente) - dado oficial num
+tom, conversa dos andamentos em branco. So CSS (.fx, .fatos-pe,
+.fx-prorrog); contraste segue verde. Alternativas creme e cinza
+mostradas em f37-opcoes.html. Suite 28 arquivos verdes.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01LYEaZ9AvTsTBkCJy93jVU3

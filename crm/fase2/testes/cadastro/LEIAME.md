@@ -297,3 +297,11 @@ POST de casos entrou no route deste teste.
 Armadilha de edição que virou lição: âncora de Edit dentro do CORPO de
 uma função aninha a função nova ali dentro — gerarCasoDoLembrete nasceu
 dentro do gerarCasoDoPre e "is not defined" no escopo global.
+
+## F37 — o fundo da ficha do caso
+
+Só CSS: .fx, .fatos-pe e .fx-prorrog trocaram o branco pelo token
+--azul-fundo (#F3F7FE), que já existia. Ficha (dado oficial) num tom,
+andamentos em branco. contraste.js seguiu verde (texto #1A1C20 sobre
+#F3F7FE ≈ 15:1). Alternativas creme e cinza mostradas ao Paulo em
+f37-opcoes.html — trocar é mudar um token.

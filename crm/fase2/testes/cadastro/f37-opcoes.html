@@ -1,0 +1,76 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<title>Fundo da ficha do caso — 3 opções</title>
+<style>
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:#F0F1F3;margin:0;padding:28px;color:#1A1C20}
+  h1{font-size:19px;margin:0 0 4px}
+  p.sub{color:#666B74;font-size:13px;margin:0 0 22px}
+  .linha{display:flex;gap:20px;flex-wrap:wrap}
+  .opcao{flex:1;min-width:280px;max-width:340px}
+  .opcao h2{font-size:13px;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+  .chip{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    padding:2px 8px;border-radius:10px;background:#2B5FC7;color:#fff}
+  .cartao{background:#fff;border:1px solid #E2E4E8;border-radius:10px;overflow:hidden;
+    box-shadow:0 1px 3px rgba(20,30,60,.07)}
+  .topo{padding:12px 15px}
+  .topo b{font-size:15px;color:#173A75}
+  .topo .lista{display:inline-block;font-size:11px;background:#FDF3E7;color:#9C4607;
+    border-radius:9px;padding:1px 8px;margin-left:6px}
+  .grade{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#E9EBEF;border-top:1px solid #E9EBEF}
+  .fx{padding:9px 15px}
+  .fx dt{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;color:#4A6398;margin:0}
+  .fx dd{font-size:13px;font-weight:650;margin:3px 0 0;font-variant-numeric:tabular-nums}
+  .pe{padding:10px 15px;border-top:1px solid #E2E4E8;font-size:11px;font-weight:700;
+    letter-spacing:.06em;color:#4A6398;display:flex;align-items:center;gap:8px}
+  .pe .av{width:24px;height:24px;border-radius:50%;background:#2564cf;color:#fff;display:inline-grid;
+    place-items:center;font-size:11px}
+  .and{padding:10px 15px;border-top:1px solid #E2E4E8;font-size:12.5px;color:#1A1C20;background:#fff}
+  .and small{color:#666B74}
+  .azul .fx,.azul .pe{background:#F3F7FE}
+  .creme .fx,.creme .pe{background:#FBF7EF}
+  .creme .fx dt,.creme .pe{color:#8a6a35}
+  .cinza .fx,.cinza .pe{background:#F4F5F7}
+  .cinza .fx dt,.cinza .pe{color:#5b626e}
+  .nota{margin-top:22px;font-size:13px;color:#666B74;max-width:720px}
+</style></head><body>
+<h1>O fundo da ficha do caso — a opção aplicada e duas alternativas</h1>
+<p class="sub">A ficha (espécie, protocolo, NB, DER, DIB, decisão, responsável) ganha um tom próprio; os andamentos seguem em branco. Já está no ar a opção 1 — para trocar, é só dizer.</p>
+<div class="linha">
+  <div class="opcao azul"><h2><span class="chip">no ar</span>1 · Azul da marca (5%)</h2>
+    <div class="cartao">
+      <div class="topo"><b>Apos. Tempo de Contribuição</b><span class="lista">🙋 Escritório</span></div>
+      <div class="grade">
+        <div class="fx"><dt>Espécie</dt><dd>B42</dd></div>
+        <div class="fx"><dt>Protocolo</dt><dd>1234567890</dd></div>
+        <div class="fx"><dt>NB</dt><dd>123.456.789-0</dd></div>
+        <div class="fx"><dt>DER</dt><dd>10.05.2026</dd></div>
+      </div>
+      <div class="pe">RESPONSÁVEL <span class="av">P</span></div>
+      <div class="and"><small>16.08.2026 · Paulo:</small> Cliente trouxe o CNIS; conferido, falta o PPP.</div>
+    </div></div>
+  <div class="opcao creme"><h2>2 · Creme (papel de ficha)</h2>
+    <div class="cartao">
+      <div class="topo"><b>Apos. Tempo de Contribuição</b><span class="lista">🙋 Escritório</span></div>
+      <div class="grade">
+        <div class="fx"><dt>Espécie</dt><dd>B42</dd></div>
+        <div class="fx"><dt>Protocolo</dt><dd>1234567890</dd></div>
+        <div class="fx"><dt>NB</dt><dd>123.456.789-0</dd></div>
+        <div class="fx"><dt>DER</dt><dd>10.05.2026</dd></div>
+      </div>
+      <div class="pe">RESPONSÁVEL <span class="av">P</span></div>
+      <div class="and"><small>16.08.2026 · Paulo:</small> Cliente trouxe o CNIS; conferido, falta o PPP.</div>
+    </div></div>
+  <div class="opcao cinza"><h2>3 · Cinza neutro</h2>
+    <div class="cartao">
+      <div class="topo"><b>Apos. Tempo de Contribuição</b><span class="lista">🙋 Escritório</span></div>
+      <div class="grade">
+        <div class="fx"><dt>Espécie</dt><dd>B42</dd></div>
+        <div class="fx"><dt>Protocolo</dt><dd>1234567890</dd></div>
+        <div class="fx"><dt>NB</dt><dd>123.456.789-0</dd></div>
+        <div class="fx"><dt>DER</dt><dd>10.05.2026</dd></div>
+      </div>
+      <div class="pe">RESPONSÁVEL <span class="av">P</span></div>
+      <div class="and"><small>16.08.2026 · Paulo:</small> Cliente trouxe o CNIS; conferido, falta o PPP.</div>
+    </div></div>
+</div>
+<p class="nota">A opção 1 usa o token --azul-fundo (#F3F7FE) que o sistema já tinha, liga o "dado oficial" ao azul da marca e mantém contraste sobrado (texto #1A1C20 ≈ 15:1). A 2 evoca ficha de papel, mas cria uma terceira família de cor na tela. A 3 é a mais discreta, ao custo de quase sumir em monitores claros.</p>
+</body></html>

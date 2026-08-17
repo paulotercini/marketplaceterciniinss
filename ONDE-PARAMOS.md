@@ -1,4 +1,13 @@
-# Onde paramos — 16.08.2026, versão 09.35
+# Onde paramos — 17.08.2026, versão 09.36
+
+## F37 · A ficha do caso com fundo próprio (09.36)
+
+Pedido do Paulo (com captura): a grade de fatos (espécie, protocolo,
+NB, DER, DIB, decisão, responsável, documentos solicitados) agora tem
+fundo azulado (--azul-fundo, token que já existia) — dado oficial num
+tom, conversa dos andamentos em branco. Só CSS (.fx, .fatos-pe,
+.fx-prorrog). Alternativas creme e cinza apresentadas em
+f37-opcoes.html; trocar é um token.
 
 ## F36 · De Lembretes também se gera o caso (09.35)
 

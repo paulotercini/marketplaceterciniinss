@@ -627,7 +627,9 @@
   /* grade de células brancas com divisórias de 1px (espec. 7.4) */
   .fx-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:1px;
     background:var(--borda-suave);border-top:1px solid var(--borda-suave)}
-  .fx{padding:9px 15px;background:var(--branco)}
+  /* F37 · a FICHA do caso (espécie, NB, DER…) tem fundo próprio, azulado:
+     dado oficial num tom, conversa (andamentos) em branco — pedido do Paulo */
+  .fx{padding:9px 15px;background:var(--azul-fundo)}
   .fx dt{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
     color:color-mix(in srgb, var(--azul) 72%, var(--cinza));cursor:help}
   .fx dd{font-size:13px;font-weight:650;margin-top:3px;font-variant-numeric:tabular-nums;
@@ -650,8 +652,8 @@
   .fx-incap-rot::after{content:"";flex:1;height:1px;background:color-mix(in srgb, var(--laranja) 25%, transparent)}
   .fx-incap .fx-grade{border-top:none}
   .fx-incap .fx dt{color:color-mix(in srgb, var(--laranja) 80%, var(--cinza))}
-  .fx-prorrog{display:flex;align-items:center;gap:12px;padding:8px 15px 11px;flex-wrap:wrap}
-  .fatos-pe{display:flex;align-items:center;gap:7px;padding:10px 15px;border-top:1px solid var(--borda);flex-wrap:wrap}
+  .fx-prorrog{display:flex;align-items:center;gap:12px;padding:8px 15px 11px;flex-wrap:wrap;background:var(--azul-fundo)}
+  .fatos-pe{display:flex;align-items:center;gap:7px;padding:10px 15px;border-top:1px solid var(--borda);flex-wrap:wrap;background:var(--azul-fundo)}
   .fx-rot{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;
     color:color-mix(in srgb, var(--azul) 72%, var(--cinza))}
   /* responsável: quem está no caso aparece cheio; os outros, discretos */
@@ -1684,7 +1686,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.35 · F36 — quem está em Lembretes também GERA O CASO: o botão fica junto do lembrete, o pré-caso acompanhado segue o mesmo gerar da mesa (a via da incapacidade agora é exigida pela própria função, e a fase nunca cai em «escritorio»), o lembrete se desativa ao gerar e a ficha abre nos documentos da assinatura</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.36 · F37 — a FICHA do caso (espécie, protocolo, NB, DER, DIB, decisão, responsável e documentos) ganhou fundo azulado próprio: dado oficial num tom, conversa dos andamentos em branco — o olho separa na hora</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
