@@ -985,7 +985,10 @@
   .form-linha input,.form-linha select{padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
   .form-linha button{padding:8px 14px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
   /* menu "Mover para…" (botão direito no cartão, como no To Do) */
-  #menu-mover{position:fixed;z-index:99;background:var(--branco);border:1px solid var(--borda);border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.18);padding:6px;min-width:230px;max-height:70vh;overflow-y:auto}
+  #menu-mover,#menu-arroba{position:fixed;z-index:99;background:var(--branco);border:1px solid var(--borda);border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.18);padding:6px;min-width:230px;max-height:70vh;overflow-y:auto}
+  #menu-arroba .mm-it{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:14px}
+  #menu-arroba .mm-it:hover{background:var(--fundo)}
+  #menu-arroba .mm-tit{font-size:12px;font-weight:700;color:var(--cinza);padding:4px 10px}
   #menu-mover .mm-tit{font-size:12px;font-weight:700;color:var(--cinza);padding:4px 10px}
   #menu-mover .mm-caso{font-size:11px;color:var(--cinza);padding:6px 10px 2px;border-top:1px solid var(--fundo)}
   #menu-mover .mm-it{padding:7px 10px;border-radius:6px;cursor:pointer;font-size:14px}
@@ -1686,7 +1689,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.39 · F40 — NADA da importação entra calado: o «é o mesmo — juntar» e o «é outro — criar» agora puxam na hora os comentários e agendamentos do protocolo (antes ficavam para a próxima importação) e todo agendamento vira linha em 📣 Novidades; o 📌 dar seguimento reconhece julgamento (e data com ano de 2 dígitos), sugere lembrar no dia seguinte útil, ganhou a linha ⏰ PRAZO (data fatal → 🗓 Tarefas com Prazo) e atalhos de véspera; botão 📋 copiar o nome do cliente na ficha e nas novidades</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.40 · F41 — ANOTAÇÕES E COMENTÁRIOS revisados de ponta a ponta: ↩ responder em qualquer comentário (a resposta fica grudada nele), @ mencionar com menu (e aviso quando o @ não é ninguém da equipe), 👥 todos em um clique no composer, no ＋ do comentário, no seguimento e no atendimento; a anotação do atendimento fala a língua do composer (chips de iniciais, multi-atribuição, Hoje/Amanhã/+7); lembrete de anotação sem responsável agora é de quem escreveu; frases prontas voltaram a poder ser criadas (painel de sugestões); e um predicado único de equipe ativa — colaborador com cadastro incompleto não some mais de metade das telas. Fluxos mortos removidos (encaminhar, menuLembrar)</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1932,6 +1935,11 @@ function limparBusca(){
   }
 }
 const moeda = v => v==null ? "—" : Number(v).toLocaleString(IDIOMA,{style:"currency",currency:"BRL"});
+
+// (F41) UM predicado para "quem está na equipe": metade do app filtrava
+// c.ativo (some quem tem ativo=null) e a outra metade ativo!==false. Agora
+// toda superfície de anotação/atribuição usa a mesma régua.
+const equipeAtiva = () => (D.colaboradores||[]).filter(c=>c.ativo!==false);
 
 let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
@@ -4223,7 +4231,7 @@ function render(){
   // filtro por colaborador em TODAS as listas — cada um vê só o que é seu
   if(filtroColab) casosSel = casosSel.filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(filtroColab));
   const chipsCol = `<div class="filtros">`+[`<button class="fchip ${filtroColab===null?"on":""}" data-fcol="">Todos</button>`]
-    .concat(D.colaboradores.filter(x=>x.ativo).map(x=>
+    .concat(equipeAtiva().map(x=>
       `<button class="fchip ${filtroColab===x.id?"on":""}" data-fcol="${x.id}">`+
       `<span class="avatar mini" style="background:${x.cor}">${esc(x.inicial)}</span>${esc(x.nome)}</button>`)).join("")+`</div>`;
   // na lista INSS, os casos em exigência (prazo legal de 30 dias) vêm primeiro
@@ -4271,7 +4279,6 @@ function render(){
     if(visao==="importante"){
       const v = document.getElementById("ver-novidades");
       if(v) v.onclick = () => { visao="novidades"; render(); };
-      ligarEncaminhar();
       document.querySelectorAll("[data-ler]").forEach(b=>b.onclick=e=>{
         e.stopPropagation(); marcarLidas([b.dataset.ler]); });
     }
@@ -4305,7 +4312,7 @@ function renderMeuDia(){
   const tVenc = D.tarefas.filter(t=>!t.concluida && t.prazo && t.prazo<hoje()).filter(tCol);
   const nVenc = vencK.length + tVenc.length;
   const chips = [`<button class="fchip ${filtroColab===null?"on":""}" data-f="">Todos</button>`]
-    .concat(D.colaboradores.filter(c=>c.ativo).map(c=>
+    .concat(equipeAtiva().map(c=>
       `<button class="fchip ${filtroColab===c.id?"on":""}" data-f="${c.id}">`+
       `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</button>`))
     .concat([`<button class="fchip ${filtroVencidas?"on":""}" id="chip-vencidas" style="margin-left:auto">🔴 mostrar vencidas (${nVenc})</button>`]);
@@ -4902,60 +4909,6 @@ function recadoDeFalhas(feitos, falhas){
     + ". Rode o schema_por_em_dia.sql no Supabase e tente de novo.";
 }
 
-// ENCAMINHAR — a triagem que a caixa de entrada pede. Ler a novidade é
-// metade; a outra metade é dizer a alguém o que fazer com ela, e isso
-// costumava significar abrir a ficha, achar o comentário e escrever de novo.
-//
-// A orientação entra como RESPOSTA do andamento que a motivou (`responde_a`):
-// na linha do tempo do cliente, o pedido do INSS e a instrução à equipe
-// ficam grudados, e ninguém precisa adivinhar de qual movimento era aquele
-// "Amanda, providenciar".
-let encaminhando = null;      // id da novidade com a caixa aberta
-
-function caixaEncaminhar(a){
-  const k = D.casoPorId.get(a.caso_id) || {};
-  const sugestoes = sugestoesDoTexto(a.texto);
-  return `<div class="enc" data-enc="${a.id}">
-    <div class="enc-linha">
-      <span class="rotulo-rap">PARA</span>
-      ${D.colaboradores.filter(c=>c.ativo).map(c=>
-        `<button class="fx-av enc-quem" data-quem="${c.id}" style="--cor-eq:${c.cor}"
-          title="${esc(c.nome)}">${esc(c.inicial)}</button>`).join("")}
-      <span class="tf-sep"></span>
-      <span class="rotulo-rap">ATÉ</span>
-      <button class="btn-rap enc-dia" data-dia="hoje">Hoje</button>
-      <button class="btn-rap enc-dia on" data-dia="amanha">Amanhã</button>
-      <input type="date" class="enc-data" value="${maisDias(1)}">
-    </div>
-    <textarea class="enc-txt" rows="2" placeholder="o que a pessoa precisa fazer…"></textarea>
-    ${sugestoes.length?`<div class="enc-sug">${sugestoes.map(s=>
-      `<button class="btn-rap" data-sug="${esc(s)}">${esc(s)}</button>`).join("")}
-      <span class="enc-dica">pode marcar mais de uma</span></div>`:""}
-    <div class="enc-linha">
-      <button class="esc-reg" data-enviar="${a.id}">Encaminhar</button>
-      <button class="btn-mini" data-cancelar="1">cancelar</button>
-      <span class="meio-sub" style="margin-left:auto">entra na ficha embaixo deste andamento</span>
-    </div>
-  </div>`;
-}
-
-// as frases que quase sempre servem, pelo que o andamento diz. Não adivinham
-// a decisão: só poupam a digitação do caso óbvio.
-function sugestoesDoTexto(t){
-  const s = (t||"").toLowerCase();
-  if(/exig|apresentar|juntar|ppp|documento/.test(s))
-    return ["Entrar em contato e pedir o documento", "Conferir se já temos nos anexos",
-            "Cumprir a exigência no Meu INSS"];
-  if(/negad|improv|indefer/.test(s))
-    return ["Avisar o cliente e explicar o próximo passo", "Preparar recurso",
-            "Avaliar ação judicial"];
-  if(/conced|deferid|provimento|acolhid/.test(s))
-    return ["Avisar o cliente", "Conferir a implantação e o valor", "Iniciar cobrança dos honorários"];
-  if(/per[ií]cia|avalia/.test(s))
-    return ["Avisar o cliente da data e do local", "Orientar sobre o que levar"];
-  return ["Entrar em contato com o cliente", "Conferir no portal e voltar a comentar"];
-}
-
 // ── marcar frases numa anotação ───────────────────────────────────────────
 // Pedir duas coisas de uma vez é o caso comum — "pede o PPP" E "avisa o
 // cliente". Vale para o encaminhamento e para o compositor da ficha (que é
@@ -4988,63 +4941,8 @@ function alternarFrase(inp, frase, conhecidas){
   return i<0;                                       // true = entrou
 }
 
-function ligarEncaminhar(){
-  document.querySelectorAll("[data-encaminhar]").forEach(b=>b.onclick=e=>{
-    e.stopPropagation();
-    encaminhando = encaminhando===b.dataset.encaminhar ? null : b.dataset.encaminhar;
-    render();
-  });
-  const cx = document.querySelector(".enc"); if(!cx) return;
-  cx.querySelectorAll(".enc-quem").forEach(b=>b.onclick=()=>{
-    cx.querySelectorAll(".enc-quem").forEach(x=>x.classList.remove("on"));
-    b.classList.add("on");
-  });
-  cx.querySelectorAll(".enc-dia").forEach(b=>b.onclick=()=>{
-    cx.querySelectorAll(".enc-dia").forEach(x=>x.classList.remove("on"));
-    b.classList.add("on");
-    cx.querySelector(".enc-data").value = b.dataset.dia==="hoje" ? hoje() : maisDias(1);
-  });
-  const frases = [...cx.querySelectorAll("[data-sug]")].map(x=>x.dataset.sug);
-  cx.querySelectorAll("[data-sug]").forEach(b=>b.onclick=()=>{
-    const t = cx.querySelector(".enc-txt");
-    b.classList.toggle("on", alternarFrase(t, b.dataset.sug, frases));
-    t.rows = Math.max(2, t.value.split("\n").length);
-    t.focus();
-  });
-  cx.querySelector("[data-cancelar]").onclick = () => { encaminhando=null; render(); };
-  cx.querySelector("[data-enviar]").onclick = () => enviarEncaminhamento(cx.dataset.enc);
-}
-
-async function enviarEncaminhamento(andId){
-  const cx = document.querySelector(`.enc[data-enc="${andId}"]`); if(!cx) return;
-  const quem = (cx.querySelector(".enc-quem.on")||{}).dataset;
-  const texto = cx.querySelector(".enc-txt").value.trim();
-  const dia = cx.querySelector(".enc-data").value;
-  // as duas exigências do composer valem aqui também: sem dono e sem data, a
-  // orientação vira recado no vazio — foi assim que o To Do encheu de tarefa
-  // que ninguém era responsável por fazer
-  if(!quem) return aviso("Escolha para quem vai");
-  if(!texto) return aviso("Escreva o que precisa ser feito");
-  if(!dia) return aviso("Escolha até quando");
-  const a = (D.novid||[]).find(x=>x.id===andId); if(!a) return;
-  try{
-    const [novo] = await api(`/rest/v1/andamentos`,{method:"POST",
-      headers:{Prefer:"return=representation"},
-      body:JSON.stringify({caso_id:a.caso_id, autor_id:eu.id, texto,
-        responde_a:andId, origem:"app", publico:false})}) || [];
-    if(novo){
-      const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",
-        headers:{Prefer:"return=representation"},
-        body:JSON.stringify({andamento_id:novo.id, caso_id:a.caso_id,
-          colaborador_id:quem.quem, atribuido_por:eu.id, lembrar_em:dia})});
-      tarefaNaMemoria(tf);
-    }
-    // encaminhou é porque leu: sai da caixa sem precisar do segundo clique
-    encaminhando = null;
-    await marcarLidas([andId]);
-    aviso(`✔ Encaminhado para ${esc((D.colPorId.get(quem.quem)||{}).nome||"")}`);
-  }catch(e){ aviso("Não consegui encaminhar: "+e.message); }
-}
+// (F41) O fluxo ENCAMINHAR morreu aqui: a caixa nunca era renderizada e os
+// botões nunca eram emitidos — o 📌 dar seguimento (F40) faz o mesmo, melhor.
 
 // ── 📣 Novidades ──────────────────────────────────────────────────────────
 // TUDO O QUE OS PORTAIS TROUXERAM, num lugar só, do mais novo para o mais
@@ -5188,8 +5086,9 @@ function abrirSeguimento(i){
       placeholder="anotação / o que precisa ser feito">${ev?`📞 Avisar ${esc(nome1)} que ${evFem(ev.tipo)?"a":"o"} ${esc(ev.tipo.toLowerCase())} foi agendad${evFem(ev.tipo)?"a":"o"} para ${fmt(ev.data)} às ${ev.hora} — oferecer atendimento de preparação antes.`:""}</textarea>
     <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
       <span style="font-size:12px;color:var(--cinza);font-weight:700">PARA</span>
-      ${D.colaboradores.filter(x=>x.ativo!==false).map(co=>`<button class="btn-rap seg-quem" data-col="${co.id}"
+      ${equipeAtiva().map(co=>`<button class="btn-rap seg-quem" data-col="${co.id}"
         style="padding:4px 10px" title="${esc(co.nome)}">${esc(co.inicial)}</button>`).join("")}
+      <button class="btn-rap" id="seg-todos" style="padding:4px 10px" title="a equipe inteira">👥 todos</button>
     </div>
     <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
       <span style="font-size:12px;color:var(--cinza);font-weight:700">LEMBRAR</span>
@@ -5221,6 +5120,14 @@ function abrirSeguimento(i){
     if(segAberto.quem.has(id)){ segAberto.quem.delete(id); b.classList.remove("on"); b.style.background=""; }
     else{ segAberto.quem.add(id); b.classList.add("on"); b.style.background="#E8F1FB"; }
   });
+  const bTodos=document.getElementById("seg-todos");
+  if(bTodos) bTodos.onclick=()=>{
+    const todos=equipeAtiva().map(c=>c.id);
+    const liga = segAberto.quem.size!==todos.length;
+    segAberto.quem = new Set(liga?todos:[]);
+    document.querySelectorAll(".seg-quem").forEach(b=>{
+      b.classList.toggle("on", liga); b.style.background = liga?"#E8F1FB":""; });
+  };
   const ta=document.getElementById("seg-txt"); ta.focus();
 }
 async function salvarSeguimento(){
@@ -5410,7 +5317,6 @@ function renderNovidades(){
   document.getElementById("ler-tudo").onclick=()=>marcarLidas(ns.map(a=>a.id));
   document.querySelectorAll(".nov-cli[data-cli]").forEach(el=>el.onclick=()=>{
     if(el.dataset.cli) abrirFicha(el.dataset.cli); });
-  ligarEncaminhar();
 }
 
 async function liNaFicha(id){
@@ -5488,7 +5394,7 @@ function renderPlanejado(){
   else if(filtroPlan==="7") base = base.filter(k=>k._dplan>=hoje() && k._dplan<=em(7));
   const chipsPer = per.map(([v,r])=>`<button class="fchip ${filtroPlan===v?"on":""}" data-per="${v}">${r}</button>`).join("");
   const chipsCol = [`<button class="fchip ${filtroPlanColab===null?"on":""}" data-pcol="">Todos</button>`]
-    .concat(D.colaboradores.filter(c=>c.ativo).map(c=>
+    .concat(equipeAtiva().map(c=>
       `<button class="fchip ${filtroPlanColab===c.id?"on":""}" data-pcol="${c.id}">`+
       `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</button>`)).join("");
   base = base.slice().sort((a,b)=>a._dplan<b._dplan?-1:1);
@@ -5867,9 +5773,17 @@ async function lerMencao(id){
 }
 async function criarMencoes(texto, casoId, andamentoId, extras){
   const ids=new Set((extras||[]).filter(id=>id!==eu.id));
-  D.colaboradores.forEach(co=>{ if(co.id!==eu.id && co.ativo &&
-    (new RegExp("@"+co.nome.split(" ")[0]+"\\b","i").test(texto) ||
-     new RegExp("@"+co.inicial+"\\b").test(texto))) ids.add(co.id); });
+  const casados=new Set();
+  equipeAtiva().forEach(co=>{ if(co.id===eu.id) return;
+    const bate = new RegExp("@"+co.nome.split(" ")[0]+"\\b","i").test(texto) ||
+                 new RegExp("@"+co.inicial+"\\b").test(texto);
+    if(bate){ ids.add(co.id); casados.add(co.nome.split(" ")[0].toLowerCase()); } });
+  // F41 · @Fulano que não é ninguém da equipe não pode morrer calado: quem
+  // escreveu acha que avisou e ninguém recebeu
+  const perdidas=[...String(texto||"").matchAll(/(?<!\S)@(\p{L}{2,})/gu)]
+    .map(m=>m[1]).filter(n=>!casados.has(dsa(n)) &&
+      !equipeAtiva().some(co=>dsa(co.nome.split(" ")[0])===dsa(n)||co.inicial.toLowerCase()===n.toLowerCase()));
+  if(perdidas.length) aviso(`⚠ @${perdidas[0]} não é ninguém da equipe — a menção não foi criada`);
   const alvos=D.colaboradores.filter(co=>ids.has(co.id));
   for(const co of alvos)
     await api(`/rest/v1/mencoes`,{method:"POST",headers:{Prefer:"return=minimal"},
@@ -5886,7 +5800,7 @@ async function criarMencoes(texto, casoId, andamentoId, extras){
 // advogados ativos — que no escritório são exatamente Paulo, Marcos e Amanda.
 // Ninguém se avisa a si mesmo, então quem cria o caso não recebe menção.
 function quemAvisaCasoNovo(){
-  const ativos = (D.colaboradores||[]).filter(c=>c.ativo);
+  const ativos = equipeAtiva();
   const escolhidos = String(cfgApp("avisar_caso_novo")||"").split(",").filter(Boolean);
   return escolhidos.length ? ativos.filter(c=>escolhidos.includes(c.id))
                            : ativos.filter(c=>c.cargo==="advogado");
@@ -6470,7 +6384,7 @@ const resolverConversa = () => { const c=zapConvs.find(x=>x.id===zapAberta);
   return mudarConversa({status: c&&c.status==="resolvida" ? "aberta" : "resolvida"}); };
 
 async function transferirConversa(){
-  const eqs = D.colaboradores.filter(c=>c.ativo && c.id!==eu.id);
+  const eqs = equipeAtiva().filter(c=>c.id!==eu.id);
   if(!eqs.length) return aviso("Não há outro colaborador ativo");
   caixa(`<h3>Transferir a conversa</h3>
     <p class="meio-sub">Fica registrado de quem para quem, e por quê.</p>
@@ -6619,7 +6533,7 @@ async function renderConfig(){
      <p class="meio-sub">Não é cadastro novo: é a mesma equipe do CRM. Quem não
         estiver marcado nunca recebe conversa — e quem já cuida do cliente tem
         preferência sobre o setor.</p>
-     <div class="cfg-cx">${D.colaboradores.filter(c=>c.ativo).map(c=>
+     <div class="cfg-cx">${equipeAtiva().map(c=>
        `<div class="cfg-linha">
           <span class="eq-ini ${c.atende_zap?"on":""}" style="--cor-eq:${c.cor}">${esc(c.inicial)}</span>
           <b style="min-width:110px">${esc(c.nome)}</b>
@@ -7416,9 +7330,10 @@ function novaTarefaComentario(andId, casoId){
   ntSel=[]; ntData=null;
   caixa(`<h3>➕ Mais uma tarefa neste comentário</h3>
     <p class="meio-sub">Outra pessoa, outra data — sem escrever o assunto de novo.</p>
-    <div class="form-linha">${D.colaboradores.filter(c=>c.ativo).map(c=>
+    <div class="form-linha">${equipeAtiva().map(c=>
       `<button class="eq-ini" data-nt="${c.id}" style="--cor-eq:${c.cor}" title="${esc(c.nome)}"
-        onclick="this.classList.toggle('on');ntToggle('${c.id}')">${esc(c.inicial)}</button>`).join("")}</div>
+        onclick="this.classList.toggle('on');ntToggle('${c.id}')">${esc(c.inicial)}</button>`).join("")}
+      <button class="btn-rap" onclick="ntTodos()" title="a equipe inteira">👥 todos</button></div>
     <div class="form-linha" style="margin-top:8px;align-items:center">
       <button class="btn-rap tf-dt" onclick="ntDia(hoje(),this)">Hoje</button>
       <button class="btn-rap tf-dt" onclick="ntDia(maisDias(1),this)">Amanhã</button>
@@ -7429,6 +7344,12 @@ function novaTarefaComentario(andId, casoId){
     </div>`);
 }
 function ntToggle(id){ ntSel = ntSel.includes(id) ? ntSel.filter(x=>x!==id) : [...ntSel, id]; }
+function ntTodos(){
+  const todos=equipeAtiva().map(c=>c.id);
+  const liga = ntSel.length!==todos.length;
+  ntSel = liga ? todos : [];
+  document.querySelectorAll(".modal-cx [data-nt]").forEach(b=>b.classList.toggle("on", liga));
+}
 function ntDia(d, el){
   ntData = d || null;
   document.querySelectorAll(".modal-cx .tf-dt.on").forEach(b=>b.classList.remove("on"));
@@ -7695,7 +7616,7 @@ function renderRotinas(){
         <input id="rt-titulo" placeholder="o que precisa ser feito? (ex.: conferir a caixa de e-mail)" style="flex:1;min-width:240px">
         <select id="rt-resp">
           <option value="">quem faz? (todos)</option>
-          ${D.colaboradores.filter(c=>c.ativo).map(c=>`<option value="${c.id}" ${c.id===eu.id?"selected":""}>${esc(c.nome)}</option>`).join("")}
+          ${equipeAtiva().map(c=>`<option value="${c.id}" ${c.id===eu.id?"selected":""}>${esc(c.nome)}</option>`).join("")}
         </select>
       </div>
       <div class="form-linha" style="align-items:center">
@@ -7848,6 +7769,8 @@ function repintarFicha(){
   else if(clienteAberto) abrirFicha(clienteAberto);
 }
 function pintarFicha(){
+  respondeA=null;               // repintou = o chip de resposta se foi com o DOM
+  atQuem=[];                    // e a seleção de responsáveis da anotação também
   const cliId = clienteAberto;
   const c = D.cliPorId.get(cliId); if(!c) return;
   const ks = (D.casosDoCliente.get(cliId)||[]).sort((a,b)=>(a.fase==="encerrado"?1:0)-(b.fase==="encerrado"?1:0));
@@ -9936,7 +9859,10 @@ function pintarSugestoes(k, forcar){
   // anuncia como algo clicável (eram 22 frases inalcançáveis pelo teclado)
   cx.innerHTML = lista.map(s=>
       `<button type="button" class="sug-it${marcadas.has(dsa(s.texto))?" on":""}" data-acao="${s.acao||""}">${s.acao==="exigencia"?"⚠ ":""}${esc(s.texto)}</button>`).join("")
-    + (q?"":`<button type="button" class="sug-mais" onclick="lbEditar('${k.id}')">✎ editar sugestões</button>`);
+    + (q?"":`<button type="button" class="sug-mais" onclick="lbEditar('${k.id}')">✎ editar sugestões</button>
+      <input id="nf-texto" placeholder="+ nova frase pronta — Enter salva, vale para toda a equipe"
+        style="flex:1;min-width:220px;font-size:12px;padding:4px 8px;border:1px solid var(--borda);border-radius:6px"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();novaFrase();}">`);
   cx.querySelectorAll(".sug-it").forEach(el=>el.onclick=()=>usarSugestao(el, k));
 }
 // o campo de data só aparece quando é pedido — a barra fica limpa até lá
@@ -10748,7 +10674,7 @@ function painelLembretes(c){
         </select>
         <input type="date" id="lb-prox" value="${hoje()}" title="primeiro aviso em">
         <select id="lb-resp"><option value="">responsável…</option>
-          ${D.colaboradores.filter(x=>x.ativo).map(x=>`<option value="${x.id}">${esc(x.nome)}</option>`).join("")}</select>
+          ${equipeAtiva().map(x=>`<option value="${x.id}">${esc(x.nome)}</option>`).join("")}</select>
       </div>
       <div class="form-linha" id="lb-gps" style="display:flex">
         <select id="lb-cod"><option value="">categoria da GPS…</option>
@@ -11663,7 +11589,7 @@ function blocoFatos(k){
       <span class="fx-rot">Responsável</span>
       ${/* quem responde vem primeiro, cheio e colorido; os demais ficam
            discretos, esperando um clique — em vez de seis quadrados iguais */""}
-      <span class="fx-eq">${D.colaboradores.filter(x=>x.ativo)
+      <span class="fx-eq">${equipeAtiva()
         .sort((a,b)=>(equipe.includes(b.id)?1:0)-(equipe.includes(a.id)?1:0))
         .map(co=>`<button class="fx-av ${equipe.includes(co.id)?"on":""}"
           data-eq="${co.id}" style="--cor-eq:${co.cor}"
@@ -11767,13 +11693,16 @@ function painelEscritorio(k, ands){
              escolhido — aí fica vermelho, para não passar despercebido */""}
         <button class="fx-av tf-ninguem" id="tf-ninguem" onclick="tfNinguem(this)"
           title="não atribuir a ninguém"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m6 18 12-12"/></svg></button>
-        ${D.colaboradores.filter(x=>x.ativo).map(co=>`<button class="fx-av tf-eq"
+        ${equipeAtiva().map(co=>`<button class="fx-av tf-eq"
           data-tfp="${co.id}" style="--cor-eq:${co.cor}" title="${esc(co.nome)}"
           onclick="tfPessoa('${co.id}',this)">${esc(co.inicial)}</button>`).join("")}
+        <button class="btn-rap tf-todos" id="tf-todos" onclick="tfTodos()"
+          title="a equipe inteira: uma tarefa para cada colaborador ativo">👥 todos</button>
         <span class="tf-sep"></span>
         <span class="rotulo-rap">LEMBRAR EM</span>
         <button class="btn-rap tf-dt" data-tfd="hoje" onclick="tfDia('hoje',this)">Hoje</button>
         <button class="btn-rap tf-dt" data-tfd="amanha" onclick="tfDia('amanha',this)">Amanhã</button>
+        <button class="btn-rap tf-dt" data-tfd="7" onclick="tfDia('7',this)">+7 dias</button>
         ${/* a data some até ser pedida: só o botão fica, e ele abre o campo */""}
         <button class="btn-rap tf-dt" id="tf-escolher" onclick="tfEscolherData(this)">Escolher a data</button>
         <input type="date" class="tf-data" id="tf-data" style="display:none" onchange="tfDia(this.value,this)">
@@ -11783,6 +11712,8 @@ function painelEscritorio(k, ands){
             style="display:none" onchange="anexar('${k.id}','${k.cliente_id}')">
           <button class="esc-ic" onclick="document.getElementById('arq-inp').click()"
             title="anexar: foto do documento ou arquivo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.5 12.2 19.3a4.6 4.6 0 0 1-6.5-6.5l8.3-8.3a3 3 0 0 1 4.3 4.3l-8.2 8.2a1.5 1.5 0 0 1-2.1-2.1l7.5-7.5"/></svg></button>
+          <button class="esc-ic" onclick="menuArroba(event)" style="font-weight:800;font-size:13px"
+            title="@ mencionar um colega: ele recebe esta anotação na caixa 📥 Menções">@</button>
           <button class="esc-ic" onclick="janelaDocsAnotacao()"
             title="solicitar documentos no meio do atendimento: marca na lista do benefício, entra na anotação e vira checklist — sem apagar o que você já digitou"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3.5H7A1.8 1.8 0 0 0 5.2 5.3v13.4A1.8 1.8 0 0 0 7 20.5h10a1.8 1.8 0 0 0 1.8-1.8V8.8l-5.3-5.3Z"/><path d="M13.5 3.5V9h5.3M9 13.5h6M9 17h4"/></svg></button>
           <button class="esc-ic imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="marcar o processo como importante"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/></svg></button>
@@ -11922,7 +11853,53 @@ function comentario(a, resposta){
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
     <span class="texto">${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${esc(tp?tp.resto:a.texto)}${resposta||""}</span>
     ${vistos(a)}
+    <button class="apaga resp-liga" title="responder a este comentário — a resposta fica grudada nele na linha do tempo"
+      onclick="armarResposta('${a.id}')">↩</button>
     ${a.autor_id===eu.id&&a.origem==="app"?`<button class="apaga" title="apagar este meu comentário" onclick="apagarAndamento('${a.id}',${a.todo_sync?1:0})">✕</button>`:""}`;
+}
+// F41 · RESPONDER de qualquer comentário: arma o responde_a e o próximo
+// Registrar entra aninhado no comentário original (como a conclusão de
+// tarefa já fazia — agora sem precisar de uma tarefa no meio).
+let respondeA = null;
+function armarResposta(andId){
+  const a=(D._andsFicha||[]).find(x=>x.id===andId);
+  respondeA = andId;
+  const inp=document.getElementById("and-texto");
+  document.getElementById("resp-chip")?.remove();
+  if(inp){
+    inp.insertAdjacentHTML("beforebegin",
+      `<div id="resp-chip" class="meio-sub" style="border-left:3px solid var(--azul);padding:2px 8px;margin-bottom:4px">
+        ↩ respondendo a “${esc(String((a&&a.texto)||"comentário").slice(0,80))}${a&&a.texto&&a.texto.length>80?"…":""}”
+        <button class="btn-mini" onclick="desarmarResposta()" title="cancelar a resposta">✕</button></div>`);
+    inp.focus();
+  }
+}
+function desarmarResposta(){
+  respondeA=null;
+  document.getElementById("resp-chip")?.remove();
+}
+// F41 · o @ com menu: descoberta da menção sem decorar nome — o clique
+// insere @Primeiro no texto e a menção nasce no Registrar (criarMencoes)
+function fecharMenuArroba(){ const m=document.getElementById("menu-arroba"); if(m) m.remove(); }
+function menuArroba(ev){
+  ev.preventDefault(); ev.stopPropagation(); fecharMenuArroba();
+  const eqs=equipeAtiva().filter(c=>c.id!==eu.id);
+  if(!eqs.length) return aviso("Não há outro colaborador ativo para mencionar");
+  const m=document.createElement("div"); m.id="menu-arroba";
+  m.innerHTML=`<div class="mm-tit">@ mencionar — recebe na caixa 📥</div>`+eqs.map(c=>
+    `<div class="mm-it" data-arr="${c.id}"><span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</div>`).join("");
+  document.body.appendChild(m);
+  const W=m.offsetWidth||240, H=m.offsetHeight||200;
+  m.style.left=Math.min(ev.clientX, innerWidth-W-8)+"px";
+  m.style.top =Math.min(ev.clientY, innerHeight-H-8)+"px";
+  m.querySelectorAll("[data-arr]").forEach(it=>it.onclick=()=>{
+    const co=D.colPorId.get(it.dataset.arr); fecharMenuArroba();
+    const inp=document.getElementById("and-texto"); if(!co||!inp) return;
+    const sep=inp.value && !/\s$/.test(inp.value) ? " " : "";
+    inp.value += `${sep}@${co.nome.split(" ")[0]} `;
+    inp.focus(); inp.dispatchEvent(new Event("input"));
+  });
+  setTimeout(()=>document.addEventListener("click", fecharMenuArroba, {once:true}));
 }
 function linhaDoTempo(ands){
   const vivos = (ands||[]).filter(a=>!a.excluir);
@@ -12680,7 +12657,7 @@ function manualAjustar(casoId, nup){
   const c = b.consulta||{};
   caixa(`<h3>⚙️ Quem confere este recurso, e quando</h3>
     <p class="meio-sub">Vencendo, ele aparece no Meu Dia de quem for escolhido.</p>
-    <div class="form-linha" style="margin-top:8px">${D.colaboradores.filter(x=>x.ativo).map(co=>
+    <div class="form-linha" style="margin-top:8px">${equipeAtiva().map(co=>
       `<button class="eq-ini ${c.responsavel_id===co.id?"on":""}" data-mnq="${co.id}"
         style="--cor-eq:${co.cor}" title="${esc(co.nome)}"
         onclick="document.querySelectorAll('[data-mnq]').forEach(b=>b.classList.remove('on'));this.classList.add('on')"
@@ -13462,6 +13439,14 @@ function tfNinguem(btn){
   document.querySelectorAll("#tf-box .tf-eq.on").forEach(b=>b.classList.remove("on"));
   btn.classList.add("on");
 }
+// F41 · a equipe inteira em um clique (clicar de novo desfaz)
+function tfTodos(){
+  const todos = equipeAtiva().map(c=>c.id);
+  const jaTodos = Array.isArray(tfQuem) && tfQuem.length===todos.length;
+  tfQuem = jaTodos ? [] : todos;
+  document.querySelectorAll("#tf-box .tf-eq").forEach(b=>b.classList.toggle("on", !jaTodos));
+  const nix=document.getElementById("tf-ninguem"); if(nix) nix.classList.remove("on");
+}
 function tfDia(qual, el){
   if(qual==="sem" && tfQuem && tfQuem.length)
     // tarefa para alguém precisa de data: o "sem lembrete" só vale sem gente
@@ -13564,8 +13549,10 @@ async function novoAndamento(casoUnico){
   let and;
   try{
     [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
-      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:textoFinal})});
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:textoFinal,
+        ...(respondeA?{responde_a:respondeA}:{})})});
   }catch(e){ return aviso("Não consegui registrar o andamento: "+String(e.message||e).slice(0,120)); }
+  desarmarResposta();
   if(prazoCk && prazoCk.checked && prazoData) await marcarTarefaComPrazo(casoId, prazoData);
   // data sem pessoa: quem escreveu "cobrar em 30 dias" quer ELE MESMO lembrar
   if(and && document.getElementById("tf-box")){
@@ -13690,30 +13677,8 @@ function lbMotivos(){
   const ms=(D.lembrarMotivos&&D.lembrarMotivos.length)?D.lembrarMotivos:MOTIVOS_PADRAO;
   return ms.filter(m=>m.ativo!==false);
 }
-// menu curto do Lembrar, no estilo do To Do: escolher a data e pronto.
-// O "porquê" não é perguntado — ele vem do texto do último andamento.
-function menuLembrar(ev, casoId){
-  ev.stopPropagation();
-  const b=document.getElementById("lembrar-box"); const k=D.casoPorId.get(casoId);
-  if(!b||!k) return;
-  if(b.style.display==="block"){ b.style.display="none"; return; }
-  const em=d=>{ const x=new Date(hoje()+"T12:00:00"); x.setDate(x.getDate()+d); return x.toLocaleDateString("sv"); };
-  b.innerHTML=`<div class="form-linha" style="align-items:center;margin:0">
-      ${[["Hoje",0],["Amanhã",1],["+7 dias",7],["+15 dias",15],["+30 dias",30]].map(([r,d])=>
-        `<button class="btn-mini" onclick="salvarPrazo('${casoId}','${em(d)}')">${r}</button>`).join("")}
-      <input type="date" id="lb-data" value="${k.prazo||""}" onchange="salvarPrazo('${casoId}',this.value)">
-      ${k.prazo?`<button class="btn-mini" onclick="salvarPrazo('${casoId}','')">limpar</button>`:""}
-    </div>`;
-  b.style.display="block";
-}
-async function salvarPrazo(casoId, iso){
-  const k=D.casoPorId.get(casoId); if(!k) return;
-  k.prazo = iso || null;
-  if(!iso) k.lembrar_motivo=null;
-  await patchCaso(casoId, {prazo:k.prazo, ...(iso?{}:{lembrar_motivo:null})});
-  aviso(iso?`🗓 Lembrete: ${diaSemana(iso)}, ${fmt(iso)}`:"Lembrete removido");
-  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto);
-}
+// (F41) menuLembrar e salvarPrazo saíram: ninguém os chamava — o prazo
+// hoje nasce do texto (estilo Todoist) ou do ⏰ tarefa com PRAZO (F38).
 
 // A caixa antiga do Lembrar virou o EDITOR DAS SUGESTÕES: os mesmos textos
 // que aparecem embaixo do campo de escrever, editáveis pela equipe.
@@ -13998,7 +13963,7 @@ async function salvarAvisado(evId, comAtendimento){
 // E Amanda conferirem (o primeiro que conferir dá baixa nas duas); Marcos ou
 // Amanda conferem -> nasce a tarefa de conferência final para o Paulo; o
 // Paulo confere e a corrente fecha. Papéis por NOME (não por inicial).
-const colPorNome = rx => (D.colaboradores||[]).filter(c=>c.ativo!==false).find(c=>rx.test(dsa(c.nome)));
+const colPorNome = rx => equipeAtiva().find(c=>rx.test(dsa(c.nome)));
 function proximoElo(quemId){
   const nome = dsa((D.colPorId.get(quemId)||{}).nome||"");
   if(/andre|ingrid/.test(nome))
@@ -15998,27 +15963,45 @@ async function anexarPreCaso(cliId, inpId){
 // a nota ganha corpo: importante, urgente, de qual pré-caso, atribuir e
 // lembrar (lembrar cria LEMBRETE de aviso único com responsável — a
 // estrutura pronta para o aviso de WhatsApp que já existe nos lembretes)
+// F41 · quem recebe a anotação: multi, como no composer do caso
+let atQuem=[];
+function atQuemToggle(id){ atQuem = atQuem.includes(id) ? atQuem.filter(x=>x!==id) : [...atQuem, id]; }
+function atQuemTodos(){
+  const todos=equipeAtiva().map(c=>c.id);
+  const liga = atQuem.length!==todos.length;
+  atQuem = liga ? todos : [];
+  document.querySelectorAll(".at-eq").forEach(b=>b.classList.toggle("on", liga));
+}
+function atLembrarDia(d){
+  const e=document.getElementById("at-lembrar"); if(e) e.value=d;
+}
 async function salvarNotaAtendimento2(cliId){
   const c=D.cliPorId.get(cliId), ta=document.getElementById("at-nota");
   if(!c||!ta) return;
   const t=(ta.value||"").trim(); if(!t) return aviso("Escreva a anotação");
   const v=id=>{const e=document.getElementById(id);return e?e.value:"";};
   const marcado=id=>{const e=document.getElementById(id);return !!(e&&e.checked);};
-  const nota={em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:t};
+  const nota={em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0],
+              autor_id:eu.id, texto:t};
   const pcSel=v("at-pc"); if(pcSel) nota.precaso_id=pcSel;
   if(marcado("at-imp")) nota.importante=true;
   if(marcado("at-urg")) nota.urgente=true;
-  const atrib=v("at-quem"), lembrar=v("at-lembrar");
-  if(atrib) nota.atribuido=atrib;
+  const atribs=[...atQuem], lembrar=v("at-lembrar");
+  if(atribs.length){ nota.atribuidos=atribs; nota.atribuido=atribs[0]; }
   if(lembrar){
     nota.lembrar_em=lembrar;
-    try{
-      const [l]=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
-        body:JSON.stringify({cliente_id:cliId, tipo:"geral",
-          titulo:`Anotação: ${t.slice(0,60)}`, detalhes:{origem:"anotacao"},
-          proximo_em:lembrar, responsavel_id:atrib||null, criado_por:eu.id, ativo:true})});
-      if(l) (D.lembretes=D.lembretes||[]).push(l);
-    }catch(e){ aviso("A anotação vale, mas o lembrete não gravou (rode o schema_por_em_dia.sql)"); }
+    // a regra do composer vale aqui: data sem pessoa = lembrete de quem
+    // escreveu; com pessoas, um lembrete por responsável
+    const donos = atribs.length ? atribs : [eu.id];
+    for(const dono of donos){
+      try{
+        const [l]=await api(`/rest/v1/lembretes`,{method:"POST",headers:{Prefer:"return=representation"},
+          body:JSON.stringify({cliente_id:cliId, tipo:"geral",
+            titulo:`Anotação: ${t.slice(0,60)}`, detalhes:{origem:"anotacao"},
+            proximo_em:lembrar, responsavel_id:dono, criado_por:eu.id, ativo:true})});
+        if(l) (D.lembretes=D.lembretes||[]).push(l);
+      }catch(e){ aviso("A anotação vale, mas o lembrete não gravou (rode o schema_por_em_dia.sql)"); break; }
+    }
   }
   const notas=[...((c.campos||{}).atendimento||[]), nota];
   c.campos={...(c.campos||{}), atendimento:notas};
@@ -16026,7 +16009,9 @@ async function salvarNotaAtendimento2(cliId){
     await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
       body:JSON.stringify({campos:c.campos})});
   }catch(e){ return aviso("Não consegui guardar a anotação — tente de novo"); }
-  ta.value=""; aviso("Anotação guardada 📝", false);
+  ta.value=""; atQuem=[];
+  const quantos=atribs.length;
+  aviso(`Anotação guardada 📝${quantos?` — atribuída a ${quantos} colaborador(es)`:""}${lembrar?` · 🗓 ${fmt(lembrar)}`:""}`, false);
   repintarFicha();
 }
 // F35 · a regra da volta vale para a própria anotação: quem escreveu apaga
@@ -16035,7 +16020,8 @@ async function apagarNotaAtendimento(cliId, idx){
   const c=D.cliPorId.get(cliId); if(!c) return;
   const notas=[...((c.campos||{}).atendimento||[])];
   const n=notas[idx]; if(!n) return;
-  if(n.quem!==(eu.nome||"").split(" ")[0]) return aviso("Só quem escreveu apaga");
+  if(n.autor_id ? n.autor_id!==eu.id : n.quem!==(eu.nome||"").split(" ")[0])
+    return aviso("Só quem escreveu apaga");
   if(!confirm(`Apagar esta anotação sua?\n\n"${(n.texto||"").slice(0,120)}"`)) return;
   notas.splice(idx,1);
   c.campos={...(c.campos||{}), atendimento:notas};
@@ -16170,7 +16156,7 @@ function caixaAtendimento(c, ks){
         <span class="pc-ou">ou</span>
         <input type="date" id="pcl-data-${pc.id}" min="${hoje()}" title="acompanhar em">
         <select id="pcl-resp-${pc.id}" title="quem avisa o cliente na data"><option value="">responsável…</option>
-          ${D.colaboradores.filter(x=>x.ativo).map(x=>`<option value="${x.id}">${esc(x.nome.split(" ")[0])}</option>`).join("")}</select>
+          ${equipeAtiva().map(x=>`<option value="${x.id}">${esc(x.nome.split(" ")[0])}</option>`).join("")}</select>
         <button class="btn-mini" onclick="preCasoParaLembrete('${c.id}','${pc.id}')"
           title="não gera caso: cria o lembrete (aposentadoria futura, pagar contribuições…) e abre o botão Lembretes para as anotações de acompanhamento">
           Somente gerar lembrete</button>
@@ -16285,9 +16271,18 @@ function caixaAtendimento(c, ks){
           <option value="">(geral)</option>
           ${pcs.map(p=>`<option value="${p.id}">${esc(p.especie||"sem espécie")}</option>`).join("")}</select>`
           :`<input type="hidden" id="at-pc" value="">`}
-        <select id="at-quem" title="atribuir a outro colaborador"><option value="">atribuir…</option>
-          ${D.colaboradores.filter(x=>x.ativo).map(x=>`<option value="${x.id}">${esc(x.nome.split(" ")[0])}</option>`).join("")}</select>
-        <input type="date" id="at-lembrar" min="${hoje()}" title="lembrar em — cria um lembrete com o responsável escolhido">
+        ${/* F41 · a MESMA linguagem do composer do caso: chips de iniciais,
+             multi-seleção e o 👥 todos — acabou o select de uma pessoa só */""}
+        <span class="rotulo-rap">PARA</span>
+        ${equipeAtiva().map(x=>`<button class="fx-av tf-eq at-eq" data-atq="${x.id}"
+          style="--cor-eq:${x.cor}" title="atribuir a ${esc(x.nome)}"
+          onclick="this.classList.toggle('on');atQuemToggle('${x.id}')">${esc(x.inicial)}</button>`).join("")}
+        <button class="btn-rap" onclick="atQuemTodos()" title="a equipe inteira">👥 todos</button>
+        <span class="rotulo-rap">LEMBRAR</span>
+        <button class="btn-rap" onclick="atLembrarDia(hoje())">Hoje</button>
+        <button class="btn-rap" onclick="atLembrarDia(maisDias(1))">Amanhã</button>
+        <button class="btn-rap" onclick="atLembrarDia(maisDias(7))">+7 dias</button>
+        <input type="date" id="at-lembrar" min="${hoje()}" title="lembrar em — cria o lembrete para os responsáveis marcados (sem ninguém marcado, para quem escreveu)">
         <label class="conta-ck"><input type="checkbox" id="at-imp">importante</label>
         <label class="conta-ck"><input type="checkbox" id="at-urg">urgente</label>
         <label class="cad-mini" style="cursor:pointer" title="anexar documento junto desta conversa">
@@ -16297,21 +16292,22 @@ function caixaAtendimento(c, ks){
       </div>
       ${notas.length?`<ul class="mov-lista" style="margin-top:6px">
         ${notas.map((n,idx)=>({n,idx})).reverse().map(({n,idx})=>{
-          const atr = n.atribuido && D.colPorId.get(n.atribuido);
+          const atrs = (n.atribuidos||[n.atribuido]).filter(Boolean)
+            .map(id=>D.colPorId.get(id)).filter(Boolean);
           const pcDe = n.precaso_id && pcs.find(p=>p.id===n.precaso_id);
           return `<li>
           <span class="mov-data">${n.em?fmt(n.em.slice(0,10)):"—"}</span>
           <span class="mov-txt">${n.importante?"⭐ ":""}${n.urgente?"🔥 ":""}${
             n.quem?`<b>${esc(n.quem)}:</b> `:""}${esc(n.texto||"")}
             ${pcDe?`<span class="chip ben">${esc(pcDe.especie||"pré-caso")}</span>`:""}
-            ${atr?`<span class="avatar mini" style="background:${atr.cor}" title="atribuída a ${esc(atr.nome)}">${esc(atr.inicial)}</span>`:""}
+            ${atrs.map(at=>`<span class="avatar mini" style="background:${at.cor}" title="atribuída a ${esc(at.nome)}">${esc(at.inicial)}</span>`).join("")}
             ${n.lembrar_em?`<span class="chip neutro" title="tem lembrete criado">🗓 ${fmt(n.lembrar_em)}</span>`:""}
             ${(n.checklist||[]).length?`<span class="nck-lista">${(n.checklist||[]).map((ck,ci)=>
               `<label class="conta-ck"><input type="checkbox" ${ck.feito?"checked":""}
                 onchange="notaChecklistToggle('${c.id}',${idx},${ci})"><span style="${ck.feito?"text-decoration:line-through;color:var(--cinza-claro)":""}">${esc(ck.t)}</span></label>`).join("")}</span>`:""}
             <span class="nck-add"><input id="nck-${idx}" placeholder="+ item do checklist"
               onkeydown="if(event.key==='Enter'){event.preventDefault();notaChecklistItem('${c.id}',${idx});}"></span>
-            ${n.quem===(eu.nome||"").split(" ")[0]?`<button class="cad-lap" style="float:right"
+            ${(n.autor_id ? n.autor_id===eu.id : n.quem===(eu.nome||"").split(" ")[0])?`<button class="cad-lap" style="float:right"
               title="anotação sua, escrita por engano? apaga (a regra da volta)"
               onclick="apagarNotaAtendimento('${c.id}',${idx})">${CAD_IC.fechar}</button>`:""}
           </span></li>`;}).join("")}
