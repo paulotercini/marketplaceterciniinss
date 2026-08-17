@@ -326,3 +326,15 @@ que escreve em `visao` por navegação do usuário (lista-item, btn-novo-cli,
 irCel). Armadilha de teste: o campo tem debounce de 200ms — esperar
 ~500ms depois do fill antes de afirmar qualquer coisa; e o nome pesquisado
 tem de existir nas fixturas ("Aurelia", não "Ficticio").
+
+## novidades.js (F40) — nada da importação entra calado
+
+ingerirDetalheNoCaso lê `arquivoPat` global (a coleta ainda em memória
+na conferência) e deduplica contra o BANCO na hora (GET de origem_id e
+eventos), não contra o D — juntar duas vezes não duplica. Armadilhas:
+o mock de rota precisa responder GET de andamentos e eventos por
+caso_id (o helper consulta antes de gravar); os POSTs de novidade usam
+return=representation (o id volta para o D.novid — sem ele, o "✔ li"
+não funcionaria); e a data do portal pode vir com ano de 2 dígitos
+("24/08/26 14:20"), o eventoNoTexto normaliza para 20xx. A concordância
+dos textos sai de evFem(tipo) — tipo terminado em "o" é masculino.

@@ -1,4 +1,28 @@
-# Onde paramos — 17.08.2026, versão 09.38
+# Onde paramos — 17.08.2026, versão 09.39
+
+## F40 · Nada da importação entra calado (09.39)
+
+O caso real que motivou: novidade do INSS, o CRM perguntou "é o mesmo
+caso?", a resposta foi sim — e o julgamento agendado (24/08/26 14:20)
+não apareceu em 📣 Novidades. Três portas vazavam: o "é o mesmo —
+juntar" e o "é outro — criar" deixavam comentários e agendamentos do
+protocolo "para a próxima importação" (agora `ingerirDetalheNoCaso`
+puxa tudo na hora, com dedupe pelo banco), e todo agendamento gravava
+o evento na aba 🩺 sem linha em 📣 (agora cada evento importado tem a
+sua novidade "📅 ... agendado para ..."). As novidades novas entram em
+`D.novid` na memória (`novidadeNaMemoria`) — sem F5.
+
+No 📌 dar seguimento (agora com esse NOME no botão das novidades):
+`eventoNoTexto` reconhece julgamento e data com ano de 2 dígitos;
+LEMBRAR vem sugerido para o dia seguinte útil quando é julgamento
+(conferir o resultado), com atalhos véspera / dia seguinte / 3 dias
+úteis antes ancorados NA DATA DO EVENTO (os antigos eram relativos a
+hoje); e a linha ⏰ PRAZO recebe a data fatal, prefixa a anotação
+"[PRAZO DD.MM.AAAA]" e manda o caso para 🗓 Tarefas com Prazo (mesmo
+canal da F38). Concordância por tipo (`evFem`): "o julgamento foi
+agendado", "a perícia foi agendada". E o 📋 copia o nome do cliente na
+ficha e na linha da novidade. Teste novidades.js, 16 provas; suíte 31
+arquivos.
 
 ## F39 · A pesquisa não prende mais o menu (09.38)
 
