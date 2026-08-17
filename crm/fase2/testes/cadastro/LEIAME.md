@@ -338,3 +338,14 @@ return=representation (o id volta para o D.novid — sem ele, o "✔ li"
 não funcionaria); e a data do portal pode vir com ano de 2 dígitos
 ("24/08/26 14:20"), o eventoNoTexto normaliza para 20xx. A concordância
 dos textos sai de evFem(tipo) — tipo terminado em "o" é masculino.
+
+## comentarios.js (F41) — anotações e comentários
+
+Três armadilhas. (1) As Anotações do atendimento só renderizam com a
+triagem ENCERRADA (F29/F30): a fixtura precisa de clientes[].triagem.
+atendimento preenchido, senão #at-nota nunca aparece. (2) Ao remover um
+bloco de código por âncoras de comentário, conferir os VIZINHOS: o
+bloco ENCAMINHAR tinha semMarcador/emItens/alternarFrase no meio —
+vivas e usadas pelas sugestões (restauradas). (3) equipeAtiva() é o
+único predicado de equipe: teste com colaborador ativo=null para
+garantir que ele aparece em toda superfície.

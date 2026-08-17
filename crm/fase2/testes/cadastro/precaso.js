@@ -132,7 +132,8 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
   // ── 4. a anotação com corpo ─────────────────────────────────────────────
   escritos.length = 0;
   await p.fill("#at-nota", "Cliente vai buscar o CNIS na agência e traz semana que vem.");
-  await p.selectOption("#at-quem", COL2);
+  // F41: o select de uma pessoa virou os chips do composer (multi)
+  await p.click('.at-eq[data-atq="' + COL2 + '"]');
   await p.fill("#at-lembrar", "2026-09-01");
   await p.evaluate(() => { document.getElementById("at-imp").checked = true; });
   await p.evaluate(cli => salvarNotaAtendimento2(cli), CLI_VAZIO);

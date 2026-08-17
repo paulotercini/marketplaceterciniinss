@@ -1,4 +1,52 @@
-# Onde paramos — 17.08.2026, versão 09.39
+# Onde paramos — 17.08.2026, versão 09.40
+
+## F41 · Anotações e comentários de ponta a ponta (09.40)
+
+Auditoria pedida pelo Paulo com meta de nota (>95/100), depois de olhar
+como To Do, Planner, ADVBOX e Astrea tratam anotação, comentário e
+atribuição. O que mudou, em ordem de peso:
+
+**Um predicado de equipe.** Metade do app filtrava `c.ativo` (some quem
+tem ativo NULO) e a outra metade `ativo!==false`. Agora existe
+`equipeAtiva()` e toda superfície usa a mesma régua — colaborador com
+cadastro incompleto não desaparece mais de metade das telas.
+
+**A mesma linguagem em toda superfície de atribuição.** A anotação do
+atendimento trocou o select de UMA pessoa pelos chips de iniciais do
+composer, com multi-atribuição (`nota.atribuidos`, retrocompatível com
+`atribuido`), atalhos Hoje/Amanhã/+7 e a regra do composer para o
+lembrete: sem responsável marcado, o lembrete é de quem escreveu (um
+lembrete POR responsável quando há vários). A nota grava `autor_id`
+(o ✕ de apagar não depende mais do primeiro nome).
+
+**👥 todos em um clique** no TAREFA PARA do composer, no ＋ do
+comentário, no 📌 seguimento e no atendimento — uma tarefa por
+colaborador ativo (padrão Astrea de distribuir para a equipe).
+
+**↩ responder em qualquer comentário** (padrão Planner Task chat): o
+clique arma `responde_a`, um chip "respondendo a …" aparece sobre o
+composer (cancelável) e a resposta entra ANINHADA no comentário
+original — o mesmo canal que a conclusão de tarefa já usava. Trocar de
+ficha desarma.
+
+**@ com menu** na barra do composer: lista a equipe, insere @Primeiro
+e a menção nasce no Registrar. E @Fulano que não é ninguém da equipe
+AVISA em vez de morrer calado. O +7 dias entrou no LEMBRAR EM (o
+tfDia já entendia "7"; faltava o botão).
+
+**Frases prontas voltaram a nascer**: a criação estava morta (o input
+nf-texto não existia em tela nenhuma) — agora vive no painel de
+sugestões, Enter salva para toda a equipe.
+
+**Código morto removido**: o fluxo ENCAMINHAR inteiro (caixa nunca
+renderizada, botões nunca emitidos — o 📌 seguimento da F40 o
+substitui), menuLembrar e salvarPrazo. Na remoção, semMarcador/
+emItens/alternarFrase foram restauradas (eram vizinhas vivas).
+
+Nota da rubrica (20 critérios × 5): **98/100** — deduções em A5
+(extrações DCB/protocolo sem teste novo dedicado) e D4 (sem teste
+mobile dedicado às superfícies alteradas). Teste comentarios.js, 22
+provas; precaso.js atualizado para os chips; suíte 32 arquivos.
 
 ## F40 · Nada da importação entra calado (09.39)
 
