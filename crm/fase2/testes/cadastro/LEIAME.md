@@ -317,3 +317,12 @@ basta — a lista 🗓 ordena os GRUPOS pela menor data fatal, ignorando o
 seletor de ordem); e o checkbox novo virou o primeiro `.conta-ck input`
 da página, quebrando o clique posicional do lembretes.js (seletor agora
 escopado ao painel 9).
+
+## pesquisa.js (F39) — a pesquisa não prende o menu
+
+render() atende buscaTxt ANTES da visao: navegação que não limpa a busca
+parece quebrada. A regra virou função (limparBusca) chamada em todo ponto
+que escreve em `visao` por navegação do usuário (lista-item, btn-novo-cli,
+irCel). Armadilha de teste: o campo tem debounce de 200ms — esperar
+~500ms depois do fill antes de afirmar qualquer coisa; e o nome pesquisado
+tem de existir nas fixturas ("Aurelia", não "Ficticio").

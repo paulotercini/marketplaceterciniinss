@@ -1686,7 +1686,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.37 · F38 — TAREFAS COM PRAZO dentro do CRM: a anotação marcada com ⏰ exige a data fatal e move o caso para 🗓 Tarefas com Prazo (ordenada do mais urgente), e o «✔ prazo cumprido» devolve o caso à lista de onde veio, com o seletor para trocar; e o Encerrar ganhou o terceiro caminho «gerou honorários e o processo CONTINUA» — deferido com cumprimento de sentença lança a cobrança sem tirar o caso da lista</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.38 · F39 — a pesquisa não prende mais o menu: com uma busca ativa, clicar em qualquer lista ou visão da barra lateral navega direto e apaga a pesquisa sozinho (campo e ✕, no desktop e no celular) — antes era preciso clicar no ✕ antes de conseguir sair</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1920,6 +1920,16 @@ function pesquisar(txt){
     const d = (noNome(b)?1:0) - (noNome(a)?1:0);
     return d || (a.nome||"").length - (b.nome||"").length;
   });
+}
+// F39 · navegar com a pesquisa ativa: o clique no menu VAI para a lista e a
+// pesquisa se apaga sozinha — antes era preciso clicar no ✕ primeiro. Um
+// helper só para os dois campos (desktop e celular) e os dois ✕.
+function limparBusca(){
+  buscaTxt="";
+  for(const [cid,xid] of [["busca","busca-x"],["busca-cel","busca-cel-x"]]){
+    const c=document.getElementById(cid); if(c) c.value="";
+    const x=document.getElementById(xid); if(x) x.style.display="none";
+  }
 }
 const moeda = v => v==null ? "—" : Number(v).toLocaleString(IDIOMA,{style:"currency",currency:"BRL"});
 
@@ -2608,13 +2618,13 @@ function montarSidebar(){
   };
   document.getElementById("btn-novo-cli").onclick=()=>{
     document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
-    visao="novocliente"; fecharMenuCel(); fecharFicha(false); render();
+    visao="novocliente"; limparBusca(); fecharMenuCel(); fecharFicha(false); render();
   };
   document.querySelectorAll(".lista-item").forEach(el=>{
     el.onclick=()=>{
       document.querySelectorAll(".lista-item").forEach(i=>i.classList.remove("ativa"));
       el.classList.add("ativa");
-      visao = el.dataset.v; esconderEtiqueta();
+      visao = el.dataset.v; limparBusca(); esconderEtiqueta();
       fecharMenuCel(); fecharFicha(false); render();
     };
     el.onmouseenter=()=>etiquetaMenu(el);
@@ -13226,8 +13236,7 @@ function irCel(destino){
     const b=document.getElementById("busca-cel");
     b.focus(); b.select(); render(); return marcarBarraCel();
   }
-  visao=destino; buscaTxt=""; document.getElementById("busca-cel").value="";
-  document.getElementById("busca").value="";
+  visao=destino; limparBusca();
   fecharFicha(false); montarSidebar(); render(); marcarBarraCel();
 }
 // no celular o campo de escrever fica preso no rodapé; a folga no fim da
