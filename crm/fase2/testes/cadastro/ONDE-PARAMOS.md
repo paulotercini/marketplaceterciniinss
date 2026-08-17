@@ -27,6 +27,17 @@ Teste conversa.js, 15 provas; casos2.js ajustado (os `li` estruturais
 tl-dia/tl-sys/tl-fim-novas entram na conta de seletores posicionais);
 suíte 33 arquivos.
 
+**Rodada de endurecimento (mesma 09.41, sem mudança no app):** as duas
+deduções da rubrica da F41 fecharam com prova. celular2.js (7 provas,
+390px): modo celular ativo, faixa do não lido, nada estoura a largura,
+ações sempre visíveis sem hover, marcar-todas tocável (38px) e
+funcionando no toque, composer registrando. extracoes.js (7 provas):
+chip do prazo enquanto digita, data do texto → lembrete do caso, DCB
+16/09 → 2026-09-16 com alarme, protocolo → ficha + índice de pesquisa,
+"documentos solicitados: X; Y" → checklist, perícia citada →
+agendamento. Rubrica: **100/100** nos termos dos 20 critérios. Suíte
+35 arquivos.
+
 ## F41 · Anotações e comentários de ponta a ponta (09.40)
 
 Auditoria pedida pelo Paulo com meta de nota (>95/100), depois de olhar
