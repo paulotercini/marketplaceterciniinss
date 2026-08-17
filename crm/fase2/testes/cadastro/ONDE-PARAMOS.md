@@ -1,4 +1,25 @@
-# Onde paramos — 17.08.2026, versão 09.42
+# Onde paramos — 17.08.2026, versão 09.43
+
+## F44 · Toda movimentação do PAT consta em 📣 (09.43)
+
+Pedido do Paulo com captura do PAT: protocolos com "Última Atualização"
+avançando e nada em Novidades. A importação só gerava novidade quando a
+SITUAÇÃO mudava, quando vinha comentário ou agendamento — protocolo que
+se mexeu sem mudar nada disso entrava calado, e a PRIMEIRA situação
+importada também ("primeira vez não é mudança").
+
+Duas regras novas no plano da importação: (1) protocolo casado cujo
+carimbo `atualizado_em` do portal é novo e sem outra novidade na mesma
+rodada entra em `plano.atualizacoes` e vira "INSS · Movimentação no
+protocolo N — situação: X (portal atualizado em TS)", com origem_id
+`atualizacao:{proto}:{carimbo}` (deduplicado pelo banco — importar de
+novo não repete; backfill silencioso de campo NÃO suprime, porque não
+gera linha nenhuma em 📣); (2) a primeira situação vira "INSS ·
+Situação registrada: X". A conferência mostra o contador "movimentações
+p/ 📣" e o botão Aplicar as inclui na conta. Teste pat-novidades.js, 6
+provas direto na função pura do plano + no aplicar; suíte 37 arquivos.
+
+# Onde paramos — versão 09.42
 
 ## F43 · A ficha nunca mais fica presa no "abrindo a ficha…" (09.42)
 
