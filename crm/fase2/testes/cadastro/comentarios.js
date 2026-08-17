@@ -73,6 +73,9 @@ FIX.andamentos.push({ id: AND1, caso_id: CASO1, autor_id: EU2, origem: "app",
   // 1) composer do caso: chips, 👥 todos e +7 dias
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
   await p.waitForTimeout(800);
+  // F45: o Caso completo virou a primeira tela; este teste é do painel Escritório
+  await p.evaluate(() => { subAba = "escritorio"; repintarFicha(); });
+  await p.waitForTimeout(400);
   conf("os 3 da equipe estão no TAREFA PARA",
     (await p.evaluate(() => document.querySelectorAll("#tf-box .tf-eq").length)) === 3);
   await p.evaluate(() => tfTodos());

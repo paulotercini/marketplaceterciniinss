@@ -1,4 +1,30 @@
-# Onde paramos — 17.08.2026, versão 09.43
+# Onde paramos — 17.08.2026, versão 09.44
+
+## F45 · Uma estrutura para todas as linhas do tempo + Caso completo primeiro (09.44)
+
+Pedido do Paulo: andamentos do INSS, recursos CRPS e andamentos CNJ na
+mesma estrutura de layout do Escritório, e o Caso completo como a
+primeira tela ao clicar no cliente.
+
+Nasceu tlOficial(itens, vazio), o esqueleto único das linhas do tempo
+oficiais: cada item {q, em, rot, texto, forte, cls, html} vira `li` com
+separador de dia (tl-dia via dataRelativa), selo da fonte (.av-fonte no
+avatar), NOME da fonte + hora (.autor-nome/.tl-hora) e marco destacado
+(li.tudo-marco quando forte). Convertidos: painelINSS (🌻/🏢), Recurso
+CRPS via blocoRecurso (⭐ crps-est, 📄 crps-pdf e caixaResumo
+preservados no html do item), CNJ histórico (⚖️, decisão como marco) e
+caixaPje. O painelTudo também migrou e agora abre com o compositor: o
+composerCaso(k) foi EXTRAÍDO de painelEscritorio e é reusado nos dois.
+
+subAba padrão virou "tudo" e abrirFicha força "tudo" a cada troca de
+cliente — abrir um cliente É abrir o Caso completo, com o compositor em
+cima e a visão inteira embaixo. Teste paineis.js, 13 provas (primeira
+tela, compositor gravando do Tudo, as quatro abas no mesmo esqueleto,
+⭐ preservado, Sentença como marco no Tudo e no CNJ); celular2.js,
+comentarios.js e conversa.js passaram a forçar subAba="escritorio"
+porque testam o painel do Escritório. Suíte 38 arquivos.
+
+# Onde paramos — versão 09.43
 
 ## F44 · Toda movimentação do PAT consta em 📣 (09.43)
 

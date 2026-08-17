@@ -641,6 +641,10 @@
   .app.celular .timeline .tl-acoes{opacity:1}
   .timeline .tl-reacoes{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
   .timeline .tl-reacoes .chip{cursor:default;background:var(--fundo);border:1px solid var(--borda-suave)}
+  /* F45 · a fonte oficial (INSS/Recurso/CNJ/PJe) usa o MESMO esqueleto do
+     Escritório: o avatar vira o selo da fonte, o resto é idêntico */
+  .timeline .av-fonte{background:var(--fundo);color:inherit;font-size:12px;box-shadow:0 0 0 3px var(--branco)}
+  .timeline li.tudo-marco{background:#FFFBEE}
   /* ── Fatos do benefício ───────────────────────────────────────────────
      Hierarquia por linha e espaço, não por bloco colorido: cor entra na
      letra (rótulo e nome do benefício em azul) e no estado (prazo). */
@@ -1716,7 +1720,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.43 · F44 — TODA movimentação do PAT consta em 📣 Novidades: protocolo cuja «última atualização» avançou no portal sem mudar situação, comentário ou agendamento agora vira a sua própria novidade (deduplicada pelo carimbo do portal — importar de novo não repete), e a PRIMEIRA situação importada também entra («INSS · Situação registrada: …», antes só a mudança constava); a conferência da importação mostra o contador «movimentações p/ 📣» e o botão Aplicar as inclui</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.44 · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -1975,7 +1979,7 @@ let sessao = null;   // {access_token, refresh_token, user}
 let eu = null;       // linha de colaboradores do usuário logado
 let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
-let subAba = ler("crm_subaba") || "escritorio", instSel = 0;
+let subAba = ler("crm_subaba") || "tudo", instSel = 0;   // F45 · Caso completo primeiro
 let subCad = ler("crm_subcad") || "";   // divisão aberta do Cadastro
 // qual PROCESSO do caso está sendo olhado (número, "" = o principal) e de que
 // FONTE: a consulta oficial do CNJ ou a coleta do PJe. Duas listas de
@@ -7793,6 +7797,7 @@ async function abrirFicha(cliId){
     }
     instSel = 0; tudoSoMarcos = false;    // escolhas do cliente ANTERIOR não vazam
     procSel = ""; nupSel = ""; fonteCnj = "oficial";   // idem: processo e fonte
+    subAba = "tudo";   // F45 · abrir um cliente É abrir o Caso completo (pedido do Paulo)
   }
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
@@ -11741,7 +11746,10 @@ async function novoProtocolo(casoId){
   aviso("Protocolo guardado ✔", false); abrirFicha(clienteAberto);
 }
 
-function painelEscritorio(k, ands){
+function composerCaso(k){
+  // F45 · o compositor saiu do painelEscritorio para servir também ao Caso
+  // completo (que virou a primeira tela): vê tudo E escreve dali — a
+  // anotação nasce no escritório e aparece nas duas linhas do tempo.
   const equipe = D.atrDoCaso.get(k.id) || [];
   const encerrado = k.fase==="encerrado";
   return `${caixaCadunico(k, D.cliPorId.get(k.cliente_id))}
@@ -11835,7 +11843,32 @@ function painelEscritorio(k, ands){
   ${/* os comentários do INSS têm aba própria (🌻) e os movimentos do PJe
        têm a aba ⚖️ CNJ; aqui fica só a conversa do escritório — misturados,
        ninguém achava nem uma coisa nem outra */""}
+  `;
+}
+function painelEscritorio(k, ands){
+  return composerCaso(k) + `
   ${linhaDoTempo(ands.filter(a=>!ehComentarioPat(a) && a.origem!=="pje"))}`;
+}
+// F45 · UMA estrutura para toda linha do tempo oficial (INSS, Recurso, CNJ,
+// PJe, Caso completo): dias em pílula, cartão com a FONTE e a hora, decisões
+// destacadas — o mesmo esqueleto da conversa do Escritório. O conteúdo é
+// registro oficial (sem vistos/tarefas: registro não se responde); os botões
+// de cada aba entram prontos pelo campo html.
+// item: {q:"AAAA-MM-DD[THH:MM]", em:emoji, rot:fonte, texto, forte, cls, html}
+function tlOficial(itens, vazio){
+  if(!(itens||[]).length)
+    return `<p class="meio-sub" style="padding:8px 12px">${vazio||"Sem movimentos."}</p>`;
+  let corpo="", diaAtual=null;
+  for(const x of itens){
+    const d=(x.q||"").slice(0,10);
+    if(d && d!==diaAtual){ corpo+=`<li class="tl-dia"><span>${esc(dataRelativa(d))}</span></li>`; diaAtual=d; }
+    const hora=(x.q||"").length>=16 ? (x.q||"").slice(11,16) : "";
+    corpo+=`<li class="tl-of ${x.cls||""}${x.forte?" tudo-marco":""}">
+      <span class="quando" title="${esc(x.rot||"")}"><span class="avatar mini av-fonte">${x.em||"·"}</span><span class="q-dt">${d?fmt(d):"—"}</span></span>
+      <span class="texto"><b class="autor-nome">${esc(x.rot||"")}</b>${hora?`<span class="tl-hora">${hora}</span>`:""}<br>${x.forte?`<b>${esc(x.texto||"")}</b>`:esc(x.texto||"")}${x.html||""}</span>
+    </li>`;
+  }
+  return `<ul class="timeline">${corpo}</ul>`;
 }
 
 // ── a linha do tempo do escritório ────────────────────────────────────────
@@ -12156,27 +12189,26 @@ function painelINSS(k, ands){
         quando o INSS escrever algo no processo, aparece aqui, igual ao site.</p>
         ${seloArquivo(k, "pat")}
       </div></div>`;
-  const linha = a=>{
+  // F45 · o mesmo esqueleto da conversa do Escritório
+  const itens = coms.map(a=>{
     const m = /^(INSS|Escritório)\s*·\s*/.exec(a.texto||"");
     const doInss = !m || m[1]==="INSS";     // sem etiqueta gravada, é do INSS
     // limpar de novo na saída: comentário gravado antes da limpeza de entrada
     // ainda carrega "<p>" e "&aacute;" no banco
-    const txt = esc(limparHtmlPat(m ? a.texto.slice(m[0].length) : a.texto));
     const jaLi=(a.andamentos_lidos||[]).some(l=>l.colaborador_id===eu.id);
-    return `<li>
-      <span class="quando" title="comentário no portal do INSS">${doInss?"🌻":"🏢"}<br>${fmtTS(a.criado_em)}</span>
-      <span class="texto"><span class="chip ${doInss?"fase":"neutro"}" style="margin-right:6px">${doInss?"INSS":"Escritório"}</span>${txt}
-        <span style="display:inline-flex;gap:4px;margin-left:6px;vertical-align:middle">
-          ${jaLi?"":`<button class="btn-mini" onclick="liNaFicha('${a.id}')" title="marcar como lido (sai das 📣 Novidades)">✔ li</button>`}
-          ${segBtnHtml(segRegistrar(k.id, a.texto, a.id))}</span></span>
-    </li>`;
-  };
+    return { q: qSP(a.criado_em), em: doInss?"🌻":"🏢",
+      rot: doInss?"INSS":"Escritório (no portal)",
+      texto: limparHtmlPat(m ? a.texto.slice(m[0].length) : a.texto),
+      html: `<span style="display:inline-flex;gap:4px;margin-left:6px;vertical-align:middle">
+        ${jaLi?"":`<button class="btn-mini" onclick="liNaFicha('${a.id}')" title="marcar como lido (sai das 📣 Novidades)">✔ li</button>`}
+        ${segBtnHtml(segRegistrar(k.id, a.texto, a.id))}</span>` };
+  });
   return `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo">
       <h3 style="font-size:14px">Comentários do processo no INSS</h3>
       ${seloArquivo(k, "pat")}
     </div>
-    <ul class="timeline crps-tl">${coms.map(linha).join("")}</ul>
+    ${tlOficial(itens)}
     <div class="fatos-pe" style="justify-content:flex-end">
       <span class="meio-sub">coletado do PAT — o mesmo que aparece no site do INSS</span>
     </div>
@@ -12243,18 +12275,22 @@ function fatosDoCasoTodo(k, ands){
 }
 function painelTudo(k, ands){
   const itens=fatosDoCasoTodo(k, ands);
+  // F45 · o Caso completo é a primeira tela — o compositor vem junto: vê
+  // tudo E escreve dali (a anotação nasce no Escritório e aparece aqui)
   if(!itens.length)
-    return `<div class="caso"><p class="meio-sub">Ainda não há nada registrado
+    return composerCaso(k) + `<div class="caso"><p class="meio-sub">Ainda não há nada registrado
       neste caso — em nenhuma das fontes.</p></div>`;
   const marcos=itens.filter(x=>x.marco);
   const mostra=(tudoSoMarcos && marcos.length) ? marcos : itens;
-  const linha=x=>`<li${x.marco?` class="tudo-marco"`:""}>
-    <span class="quando">${x.marco?"⭐<br>":""}${esc((x.q||"").slice(0,10)?fmt((x.q||"").slice(0,10)):"—")}</span>
-    <span class="texto"><span class="chip ${x.cor}" style="margin-right:6px">${x.chip}</span>${
-      x.marco?`<b>${esc(x.texto)}</b>`:esc(x.texto)}
-      <span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span></span>
-  </li>`;
-  return `<div class="fatos" style="margin-bottom:12px">
+  // F45 · a MESMA estrutura da conversa do Escritório, com a fonte no lugar
+  // do autor — o chip "🌻 INSS" vira selo + nome do cartão
+  const linhas = mostra.map(x=>{
+    const [em, ...resto] = String(x.chip||"· fonte").split(" ");
+    return { q: x.q, em: x.marco?"⭐":em, rot: resto.join(" ")||em, texto: x.texto,
+      forte: x.marco,
+      html: `<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, x.texto, x.id||null))}</span>` };
+  });
+  return composerCaso(k) + `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo">
       <h3 style="font-size:14px">📖 Caso completo — ${mostra.length}${tudoSoMarcos&&marcos.length?` de ${itens.length}`:""} registros, todas as fontes</h3>
       <span style="margin-left:auto;display:inline-flex;gap:6px">
@@ -12264,7 +12300,7 @@ function painelTudo(k, ands){
           title="a linha do tempo inteira em texto — para colar numa petição, num e-mail ou numa IA">📋 copiar em texto</button>
       </span>
     </div>
-    <ul class="timeline crps-tl">${mostra.map(linha).join("")}</ul>
+    ${tlOficial(linhas)}
     <div class="fatos-pe" style="justify-content:flex-end">
       <span class="meio-sub">⭐ = marco do caso · leitura, não edição — cada registro se corrige na aba de origem</span>
     </div>
@@ -12437,6 +12473,8 @@ function blocoRecurso(t, casoId){
   // a decisão mais recente manda na Situação: é a instância em que o caso
   // está agora, e é dela que sai (ou não) o prazo do recurso especial
   const ultima = cheios.find(decideOCaso);
+  // F45 · o mesmo esqueleto da conversa do Escritório; os botões próprios do
+  // recurso (⭐ destaque, 📄 acórdão, resumo conferível) entram pelo html
   const linha = e=>{
     const forte = decideOCaso(e);
     // acórdão guardado no CRM: abre sem depender do gov.br. Os demais anexos
@@ -12445,26 +12483,21 @@ function blocoRecurso(t, casoId){
     const selo = forte ? seloOrgao(e, guardados[0]) : "";
     // o tradutor já põe "(25ª Junta)" no fim do texto; com o selo ao lado
     // isso vira eco. Sai o parêntese, fica a etiqueta, que diz mais.
-    const txt = esc(String(e.resumo||e.bruto||"")
-      .replace(/\s*\((?:\d{1,2}ª\s*)?(?:Junta|Câmara|CRPS)[^)]*\)\s*$/,""));
+    const txt = String(e.resumo||e.bruto||"")
+      .replace(/\s*\((?:\d{1,2}ª\s*)?(?:Junta|Câmara|CRPS)[^)]*\)\s*$/,"");
     // ⭐ por movimentação: o que o robô traz é muito, e nem tudo pede ação.
-    // O que você marcar aqui acende o ⭐ do processo, que é o que faz o caso
-    // aparecer na sua frente nas listas — a ciência não depende de lembrar
-    // de abrir a aba do recurso.
     const i = evs.indexOf(e);
-    return `<li class="${e.importante?"crps-imp":""}">
-      <span class="quando" title="e-Recursos (INSS)">${esc(e.icone||"•")}<br>${esc((e.data||"").slice(0,10)||"—")}</span>
-      <span class="texto">${forte?`<b>${txt}</b>`:txt}
-        ${selo}
+    return { q: e.data||"", em: e.icone||"🖥", rot: "Recurso", texto: txt, forte,
+      cls: e.importante?"crps-imp":"",
+      html: ` ${selo}
+        <button class="crps-est ${e.importante?"on":""}" onclick="toggleImpCrps('${casoId}','${esc(t.nup||"")}',${i})"
+          title="${e.importante?"tirar o destaque desta movimentação"
+                               :"destacar esta movimentação — acende o ⭐ do processo"}">⭐</button>
+        ${segBtnHtml(segRegistrar(casoId, String(e.resumo||e.bruto||""), null))}
         ${guardados.map(a=>`<button class="crps-pdf" title="${esc(a.nome)}"
           onclick="abrirDecisao('${esc(a.storage)}')">📄 abrir ${/monocr/i.test(a.nome)?"decisão":"acórdão"}</button>`).join("")}
         ${e.docs?`<span class="meio-sub">📎 ${e.docs} documento${e.docs>1?"s":""}</span>`:""}
-        ${guardados.map(a=>caixaResumo(casoId, t.nup, a)).join("")}</span>
-      <button class="crps-est ${e.importante?"on":""}" onclick="toggleImpCrps('${casoId}','${esc(t.nup||"")}',${i})"
-        title="${e.importante?"tirar o destaque desta movimentação"
-                             :"destacar esta movimentação — acende o ⭐ do processo"}">⭐</button>
-      ${segBtnHtml(segRegistrar(casoId, String(e.resumo||e.bruto||""), null))}
-    </li>`;
+        ${guardados.map(a=>caixaResumo(casoId, t.nup, a)).join("")}` };
   };
   return `<div class="fatos" style="margin-bottom:12px">
     <div class="fatos-topo">
@@ -12478,9 +12511,9 @@ function blocoRecurso(t, casoId){
       ${ultima?seloOrgao(ultima, (ultima.arquivos||[]).find(a=>a.storage)):""}
       ${t.orgao_atual?`<div class="meio-sub" style="margin-top:3px">📍 onde está agora: ${esc(tituloOrgao(t.orgao_atual))}</div>`:""}
     </div>
-    <ul class="timeline crps-tl">${cheios.map(linha).join("") || "<li><span class='meio-sub'>Sem andamentos.</span></li>"}</ul>
+    ${tlOficial(cheios.map(linha), "Sem andamentos.")}
     ${ruido.length?`<details class="crps-ruido"><summary>+ ${ruido.length} movimentação interna (encaminhamentos automáticos, cadastro)</summary>
-      <ul class="timeline crps-tl">${ruido.map(linha).join("")}</ul></details>`:""}
+      ${tlOficial(ruido.map(linha))}</details>`:""}
     <div class="fatos-pe" style="justify-content:flex-end">
       <span class="meio-sub">consulta de ${t.consultado_em?fmt(dataSP(t.consultado_em)):"—"}</span>
     </div>
@@ -12929,15 +12962,13 @@ async function removerCrpsNup(casoId, nup){
 // oficial tanto quanto o DataJud, só que mais fresco (chega na hora da coleta)
 function caixaPje(k, movs){
   if(!movs || !movs.length) return "";
+  // F45 · o mesmo esqueleto da conversa do Escritório
   return `<div class="caso" style="margin-bottom:10px">
     <div class="rotulo-caso">⚡ coletas do PJe (${movs.length})</div>
-    <ul class="mov-lista">
-      ${movs.map(a=>`<li>
-        <span class="mov-data">${a.criado_em?fmt(dataSP(a.criado_em)):"—"}</span>
-        <span class="mov-txt">${esc(a.texto||"")}</span>
-        ${segBtnHtml(segRegistrar(k.id, a.texto||"", a.id))}
-      </li>`).join("")}
-    </ul></div>`;
+    ${tlOficial(movs.map(a=>({
+      q: qSP(a.criado_em), em: "⚖️", rot: "PJe", texto: a.texto||"",
+      html: `<span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, a.texto||"", a.id))}</span>`
+    })))}</div>`;
 }
 
 // ── UM CASO, VÁRIOS PROCESSOS ────────────────────────────────────────────
@@ -13136,14 +13167,13 @@ function painelCNJ(k, ands){
   ${inssFilaCaso(k)}
   <div class="caso">
     <div class="rotulo-caso">histórico oficial ${inst.total_movimentos?`(${(inst.historico||[]).length} de ${inst.total_movimentos} movimentos)`:""}</div>
-    <ul class="mov-lista">
-      ${(inst.historico||[]).map(m=>`<li class="${m.decisao?"decisao":""}">
-        <span class="mov-data">${m.data?fmt(m.data):"—"}</span>
-        <span class="mov-txt">${m.decisao?"⚖️ ":""}<b>${esc(m.nome||"")}</b>${m.complemento?` — ${esc(m.complemento)}`:""}
-          ${m.claro?`<div class="meio-sub">${esc(m.claro)}</div>`:""}</span>
-        ${segBtnHtml(segRegistrar(k.id, (m.nome||"")+(m.complemento?" — "+m.complemento:""), null))}
-      </li>`).join("") || "<p class='meio-sub'>Sem movimentos.</p>"}
-    </ul>
+    ${/* F45 · o mesmo esqueleto da conversa do Escritório */""}
+    ${tlOficial((inst.historico||[]).map(m=>({
+      q: m.data||"", em: "⚖️", rot: "CNJ", forte: !!m.decisao,
+      texto: (m.nome||"")+(m.complemento?` — ${m.complemento}`:""),
+      html: `${m.claro?`<span class="meio-sub" style="display:block">${esc(m.claro)}</span>`:""}
+        <span style="margin-left:6px;vertical-align:middle">${segBtnHtml(segRegistrar(k.id, (m.nome||"")+(m.complemento?" — "+m.complemento:""), null))}</span>`
+    })), "Sem movimentos.")}
   </div>
   ${gerenciaProcessos(k)}`;
 }
