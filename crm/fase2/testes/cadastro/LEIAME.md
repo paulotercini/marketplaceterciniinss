@@ -349,3 +349,15 @@ bloco ENCAMINHAR tinha semMarcador/emItens/alternarFrase no meio —
 vivas e usadas pelas sugestões (restauradas). (3) equipeAtiva() é o
 único predicado de equipe: teste com colaborador ativo=null para
 garantir que ele aparece em toda superfície.
+
+## conversa.js (F42) — a conversa do caso
+
+A timeline agora tem `li` ESTRUTURAIS (tl-dia, tl-sys, tl-fim-novas):
+qualquer teste que pegue ".timeline li" posicional precisa excluí-los
+(foi o que quebrou o casos2.js). Reação é resposta cujo texto é SÓ um
+emoji (EMOJIS_REACAO) — linhaDoTempo a tira do fio e agrega em chip no
+pai; não há coluna nova no banco. ehEventoSistema tem trava de função:
+com tarefa pendurada ou sem leitura, o registro volta a cartão cheio.
+A fixtura do "não lido" precisa de andamentos_lidos como array (vazio =
+ninguém leu) e autor DIFERENTE de eu — o próprio autor nunca conta
+como não lido.
