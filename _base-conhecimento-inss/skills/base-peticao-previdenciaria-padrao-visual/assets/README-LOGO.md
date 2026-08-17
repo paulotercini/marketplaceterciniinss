@@ -94,3 +94,34 @@ new ImageRun({
   transformation: { width: 83, height: 75 }
 })
 ```
+
+## Fundo branco obrigatório (Onda 116, 17/08/2026)
+
+O arquivo `logo-tercini.PNG` DEVE ser PNG opaco, modo RGB, sem canal alfa, com fundo branco puro.
+
+Motivo. O arquivo anterior era RGBA com alpha 0 no fundo, mas os pixels sob a transparência guardavam o padrão XADREZ do editor de imagem, em cinza 191,191,191 alternado com branco. Ao converter para PDF, ao subir no PJe ou ao imprimir, o xadrez reaparecia no cabeçalho.
+
+Correção. Composição sobre branco pelo próprio canal alfa, o que zera o xadrez e preserva as bordas suavizadas, seguida de conversão para RGB.
+
+Comando de verificação, a rodar antes de gerar peça.
+
+```python
+from PIL import Image
+im = Image.open('logo-tercini.PNG')
+assert im.mode == 'RGB', 'logo com canal alfa, refazer'
+rgb = im.convert('RGB')
+for p in [(5,5),(20,5),(5,20),(20,20)]:
+    assert rgb.getpixel(p) == (255,255,255), 'fundo nao e branco puro, refazer'
+print('logo OK')
+```
+
+Comando de correção, se a verificação falhar.
+
+```python
+from PIL import Image
+src = Image.open('ORIGEM.png').convert('RGBA')
+fundo = Image.new('RGBA', src.size, (255,255,255,255))
+Image.alpha_composite(fundo, src).convert('RGB').save('logo-tercini.PNG','PNG',optimize=True)
+```
+
+Backups na mesma pasta, nenhum utilizável. `logo-tercini-TRANSPARENTE-nao-usar.png.bak` e `logo-tercini-DEFEITUOSA-xadrez-impresso.png.bak`.

@@ -76,6 +76,11 @@ A primeira página exibe cabeçalho timbrado em tabela de duas colunas, sem bord
 - Arquivo real do escritório. `logo-tercini.PNG`, **538x421 px** (proporção 1,278), tipo **PNG**
 - Alinhada à direita
 - Dimensões de inserção. **Altura padrão 75 px, largura calculada pela proporção real do arquivo** (para o logo atual, 96x75). NUNCA usar largura fixa sem ler a proporção do arquivo
+- **FUNDO BRANCO OBRIGATÓRIO (Onda 116).** O arquivo do cabeçalho DEVE ser PNG **OPACO**, no modo RGB, **sem canal alfa**, com fundo branco puro. Transparência é PROIBIDA aqui.
+- Causa raiz registrada. O arquivo em uso até 17/08/2026 era RGBA com alpha 0 nas áreas de fundo, MAS os pixels sob a transparência guardavam o padrão XADREZ cinza-e-branco do editor de imagem (valores 191,191,191 alternados com 255,255,255). Renderizador que ignora ou achata o canal alfa de forma diferente, como acontece em conversão para PDF, no PJe e em impressão, faz o xadrez REAPARECER no cabeçalho da peça. A logo anterior a 10/08/2026 tinha o mesmo xadrez, porém já achatado e visível sempre.
+- Correção aplicada. A imagem foi composta sobre fundo branco pelo próprio canal alfa (`alpha_composite`), o que converteu toda área transparente em branco puro 255,255,255 e eliminou o xadrez, preservando o desenho e as bordas suavizadas. Salva em RGB sem alfa.
+- **VERIFICAÇÃO OBRIGATÓRIA antes de gerar qualquer peça.** Abrir o arquivo e conferir três coisas. Primeira, o modo é RGB e não RGBA. Segunda, os quatro cantos são 255,255,255. Terceira, não há pixel 191,191,191 ou 192,192,192 em área de fundo. Falhando qualquer uma, NÃO gerar a peça e refazer o achatamento sobre branco.
+- Backups mantidos na mesma pasta, ambos com nome autoexplicativo e nenhum deles utilizável. `logo-tercini-TRANSPARENTE-nao-usar.png.bak` e `logo-tercini-DEFEITUOSA-xadrez-impresso.png.bak`.
 - Nota histórica (Onda 69). A especificação anterior "Imagem JPEG, cx=791210 cy=712470" correspondia a 83x75 e DISTORCIA o logo real. Está superada. O tipo é detectado dinamicamente pelo arquivo encontrado, e as dimensões derivam do cabeçalho binário da imagem
 
 **Texto de identificação (coluna 2), centralizado.**

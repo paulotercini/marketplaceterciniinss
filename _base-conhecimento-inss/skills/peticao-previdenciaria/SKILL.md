@@ -897,3 +897,11 @@ Antes de gerar qualquer petição, esta skill aciona automaticamente as skills c
 - `reafirmacao-der`, `tutela-urgencia` (interna) — conforme política
 
 A revisão final do conteúdo da petição é responsabilidade da skill `revisao-peticao`, acionada automaticamente após esta skill concluir a geração.
+
+## Trava do cabeçalho, logo com fundo branco (Onda 116)
+
+ANTES de gerar qualquer .docx, verificar o arquivo `logo-tercini.PNG` na pasta de assets. Ele DEVE estar em modo RGB, sem canal alfa, com os quatro cantos em branco puro 255,255,255.
+
+Logo com transparência é PROIBIDA no cabeçalho, porque o arquivo do escritório carrega, sob o canal alfa, o padrão xadrez do editor de imagem, que reaparece na conversão para PDF, no PJe e na impressão. Verificação e correção em `base-peticao-previdenciaria-padrao-visual/assets/README-LOGO.md`.
+
+Falhando a verificação, NÃO gerar a peça. Refazer o achatamento sobre branco primeiro.
