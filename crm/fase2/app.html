@@ -1686,7 +1686,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.38 · F39 — a pesquisa não prende mais o menu: com uma busca ativa, clicar em qualquer lista ou visão da barra lateral navega direto e apaga a pesquisa sozinho (campo e ✕, no desktop e no celular) — antes era preciso clicar no ✕ antes de conseguir sair</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.39 · F40 — NADA da importação entra calado: o «é o mesmo — juntar» e o «é outro — criar» agora puxam na hora os comentários e agendamentos do protocolo (antes ficavam para a próxima importação) e todo agendamento vira linha em 📣 Novidades; o 📌 dar seguimento reconhece julgamento (e data com ano de 2 dígitos), sugere lembrar no dia seguinte útil, ganhou a linha ⏰ PRAZO (data fatal → 🗓 Tarefas com Prazo) e atalhos de véspera; botão 📋 copiar o nome do cliente na ficha e nas novidades</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3770,10 +3770,15 @@ async function aplicarPatDeVerdade(){
     // TODO CASO IMPORTADO CONSTA EM 📣 NOVIDADES — inclusive para dizer que
     // não há comentários novos: silêncio e "ninguém olhou" eram iguais.
     // origem_id fixo por protocolo: importar de novo não duplica (índice único).
-    if(k) await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
-      body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"pat",
-        origem_id:`importado:${novo.protocolo}`, publico:false,
-        texto:`INSS · Caso importado do PAT — situação: ${novo.situacao||"—"}. Sem comentários novos por enquanto.`})}).catch(()=>{});
+    // F40: e o que a coleta já trouxe (comentários, agendamentos) entra AGORA,
+    // não "na próxima importação".
+    if(k){
+      const r = await ingerirDetalheNoCaso(k.id, novo.protocolo).catch(()=>({coms:0,evs:0}));
+      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"pat",
+          origem_id:`importado:${novo.protocolo}`, publico:false,
+          texto:`INSS · Caso importado do PAT — situação: ${novo.situacao||"—"}. ${resumoIngestao(r)}`})}).catch(()=>{});
+    }
   });
 
   // OS COMENTÁRIOS DO INSS. É o que responde "o que mudou?" — sem eles a
@@ -3787,10 +3792,17 @@ async function aplicarPatDeVerdade(){
           ...(c.quando?{criado_em:c.quando+"T12:00:00"}:{})})}));
 
   for(const bloco of planoPat.eventos)
-    for(const ev of bloco.eventos) await tentar(`perícia ${bloco.protocolo}`, () =>
-      api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=minimal"},
+    for(const ev of bloco.eventos) await tentar(`perícia ${bloco.protocolo}`, async () => {
+      await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=minimal"},
         body:JSON.stringify({caso_id:bloco.caso_id, tipo:ev.tipo, status:"agendada",
-          data_hora:`${ev.data}T${ev.hora||"09:00"}:00-03:00`, local:ev.local})}));
+          data_hora:`${ev.data}T${ev.hora||"09:00"}:00-03:00`, local:ev.local})});
+      // F40: agendamento também É novidade — sem esta linha, o evento entrava
+      // na aba 🩺 e a caixa 📣 ficava calada sobre ele
+      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({caso_id:bloco.caso_id, autor_id:eu.id, origem:"pat",
+          origem_id:`evento:${bloco.protocolo}:${dsa(ev.tipo)}:${ev.data}`, publico:false,
+          texto:textoEvNovidade(ev)})}).catch(()=>{});
+    });
 
   // a coleta usada sai da fila: a mesma não pode ser oferecida duas vezes
   if(planoPat.coleta_id)
@@ -3815,6 +3827,15 @@ async function criarMesmoAssim(protocolo){
         marcadores:n.marcadores, urgente:n.urgente, processo_link:n.link,
         situacao_inss:n.situacao})}) || [];
     if(k){ D.casos.push(k); D.casoPorId.set(k.id,k); }
+    // F40: caso criado da conferência também recebe já o que a coleta trouxe
+    if(k){
+      const r = await ingerirDetalheNoCaso(k.id, n.protocolo).catch(()=>({coms:0,evs:0}));
+      const [nv]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"pat",
+          origem_id:`importado:${n.protocolo}`, publico:false,
+          texto:`INSS · Caso importado do PAT — situação: ${n.situacao||"—"}. ${resumoIngestao(r)}`})}).catch(()=>[])||[];
+      novidadeNaMemoria([nv]);
+    }
     planoPat.possiveisDuplicados = planoPat.possiveisDuplicados.filter(x=>x.protocolo!==protocolo);
     aviso("Caso criado"); render();
   }catch(e){ aviso("Não deu: "+e.message); }
@@ -3842,6 +3863,58 @@ async function juntarProvaveis(){
   if(falhas.length) console.warn("falhas ao juntar:", falhas);
 }
 
+// ── F40 · TUDO da importação passa por 📣 Novidades ──────────────────────
+// A regra (pedido do Paulo, 17.08): nada do que chega de importação entra
+// calado. Faltavam três portas: o "é o mesmo — juntar" e o "é outro — criar"
+// deixavam os comentários e agendamentos do protocolo para "a próxima
+// importação" (o julgamento agendado sumia até lá), e o agendamento gravava
+// o evento na aba 🩺 sem linha em 📣.
+function novidadeNaMemoria(rows){
+  const novas = (rows||[]).filter(a=>a && a.id);
+  for(const a of novas){ a.andamentos_lidos = a.andamentos_lidos||[]; (D.novid=D.novid||[]).unshift(a); }
+  if(novas.length) montarSidebar();
+}
+// o texto da novidade de um agendamento, com concordância pelo tipo
+const textoEvNovidade = ev =>
+  `📅 ${ev.tipo} agendad${evFem(ev.tipo)?"a":"o"} no INSS para ${fmt(ev.data)}`+
+  `${ev.hora?` às ${ev.hora}`:""}${ev.local?` — ${ev.local}`:""}.`;
+// ingere AGORA os comentários e agendamentos que a coleta trouxe para um
+// protocolo recém-ligado a um caso (juntado ou criado). O "já está na ficha"
+// vem do banco na hora, como no plano da importação.
+async function ingerirDetalheNoCaso(casoId, proto){
+  const p = digitos(proto);
+  const det = ((arquivoPat&&arquivoPat.detalhes)||[]).find(d=>digitos(d.protocolo)===p);
+  if(!det) return {coms:0, evs:0};
+  const [jaAnds, jaEvs] = await Promise.all([
+    api(`/rest/v1/andamentos?caso_id=eq.${casoId}&origem_id=not.is.null&select=origem_id`).catch(()=>[]),
+    api(`/rest/v1/eventos?caso_id=eq.${casoId}&select=tipo,data_hora`).catch(()=>[])]);
+  const coms = comentariosNovos(det, jaAnds||[]);
+  const evs  = eventosNovos(det, jaEvs||[], hoje());
+  const novas=[];
+  for(const c of coms){
+    const [a]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:c.texto, origem:"pat",
+        origem_id:c.origem_id, publico:false,
+        ...(c.quando?{criado_em:c.quando+"T12:00:00"}:{})})}).catch(()=>[])||[];
+    if(a) novas.push(a);
+  }
+  for(const ev of evs){
+    await api(`/rest/v1/eventos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({caso_id:casoId, tipo:ev.tipo, status:"agendada",
+        data_hora:`${ev.data}T${ev.hora||"09:00"}:00-03:00`, local:ev.local})}).catch(()=>{});
+    const [a]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:casoId, autor_id:eu.id, origem:"pat",
+        origem_id:`evento:${p}:${dsa(ev.tipo)}:${ev.data}`, publico:false,
+        texto:textoEvNovidade(ev)})}).catch(()=>[])||[];
+    if(a) novas.push(a);
+  }
+  novidadeNaMemoria(novas);
+  return {coms:coms.length, evs:evs.length};
+}
+const resumoIngestao = r => (r.coms||r.evs)
+  ? `${r.coms?`${r.coms} comentário(s)`:""}${r.coms&&r.evs?" e ":""}${r.evs?`${r.evs} agendamento(s)`:""} já entraram em 📣 Novidades.`
+  : `Sem comentários do portal para este protocolo por enquanto.`;
+
 // o miolo de juntar, sem aviso nem redesenho: serve ao clique e ao lote
 async function juntarUm(n){
   const k = D.casoPorId.get(n.caso_id); if(!k) return;
@@ -3849,12 +3922,15 @@ async function juntarUm(n){
     processo_link:n.link, ...(k.der?{}:{der:n.der}), ...(k.especie?{}:{especie:n.especie}) };
   await patchCaso(k.id, campos);
   Object.assign(k, campos);
+  // F40: o que a coleta trouxe deste protocolo entra AGORA (e passa por 📣)
+  const r = await ingerirDetalheNoCaso(k.id, n.protocolo).catch(()=>({coms:0,evs:0}));
   // o caso juntado também consta em 📣 Novidades — mesmo sem comentário novo,
   // "conferido e nada mudou" é informação. origem_id por protocolo: não duplica.
-  await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+  const [nv]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"pat",
       origem_id:`importado:${n.protocolo}`, publico:false,
-      texto:`INSS · Protocolo ${n.protocolo} juntado a este caso pela importação do PAT — situação: ${n.situacao||"—"}. Comentários do portal, se houver, entram na próxima importação.`})}).catch(()=>{});
+      texto:`INSS · Protocolo ${n.protocolo} juntado a este caso pela importação do PAT — situação: ${n.situacao||"—"}. ${resumoIngestao(r)}`})}).catch(()=>[])||[];
+  novidadeNaMemoria([nv]);
   planoPat.possiveisDuplicados = planoPat.possiveisDuplicados.filter(x=>x.protocolo!==n.protocolo);
   if(planoPat.resumo){
     planoPat.resumo.possiveis_duplicados = planoPat.possiveisDuplicados.length;
@@ -5048,15 +5124,17 @@ function abrirTodasNovidades(){
 // o texto traz perícia com data, ele abre já armado, pronto para confirmar.
 function eventoNoTexto(texto){
   const t = dsa(texto||"");
-  if(!/pericia|audienc|avaliacao social|comparecer/.test(t)) return null;
+  if(!/pericia|audienc|avaliacao social|comparecer|julgament/.test(t)) return null;
   // o texto do PAT traz DUAS datas ("solicitação: 12/08... agendada: 20/08
   // 12:00") — vale a que vem depois de agendada/comparecer/marcada; sem
-  // esse contexto, a primeira data futura serve
-  const rx = /(\d{2})\/(\d{2})\/(\d{4})(?:\D{0,12}?(\d{1,2})[:h](\d{2}))?/g;
+  // esse contexto, a primeira data futura serve. F40: o ano pode vir com 2
+  // dígitos ("24/08/26 14:20", como o portal escreve o julgamento).
+  const rx = /(\d{2})\/(\d{2})\/(\d{4}|\d{2})(?:\D{0,12}?(\d{1,2})[:h](\d{2}))?/g;
   const tx = String(texto||"");
   let melhor = null, m;
   while((m = rx.exec(tx))){
-    const data = `${m[3]}-${m[2]}-${m[1]}`;
+    const ano = m[3].length===2 ? "20"+m[3] : m[3];
+    const data = `${ano}-${m[2]}-${m[1]}`;
     if(!/^\d{4}-\d{2}-\d{2}$/.test(data) || data < hoje()) continue;
     const antes = dsa(tx.slice(Math.max(0, m.index-42), m.index));
     const marcada = /agendad|comparec|marcad|designad|remarcad/.test(antes);
@@ -5065,8 +5143,12 @@ function eventoNoTexto(texto){
   }
   if(!melhor) return null;
   return { data: melhor.data, hora: melhor.hora,
-           tipo: /audienc/.test(t) ? "Audiência" : /avaliacao social/.test(t) ? "Avaliação social" : "Perícia" };
+           tipo: /audienc/.test(t) ? "Audiência" : /julgament/.test(t) ? "Julgamento"
+             : /avaliacao social/.test(t) ? "Avaliação social" : "Perícia" };
 }
+// "a perícia agendada" mas "o julgamento agendado": o artigo e a concordância
+// saem da terminação do tipo (Julgamento/agendamento → masculino)
+const evFem = tipo => !/o$/i.test(String(tipo||"").trim());
 function diasUteisAntes(iso, n){
   const d = new Date(iso+"T12:00:00"); let c = 0;
   while(c < n){ d.setDate(d.getDate()-1); const w = d.getDay(); if(w!==0 && w!==6) c++; }
@@ -5085,8 +5167,8 @@ function segRegistrar(casoId, texto, andId, deNovidade){
   segItens.push({casoId, texto:String(texto||""), andId:andId||null, deNovidade:!!deNovidade});
   return segItens.length-1;
 }
-const segBtnHtml = i => `<button class="btn-mini" onclick="abrirSeguimento(${i})"
-  title="dar seguimento: anotar, atribuir a alguém com data — e, se houver perícia com data no texto, agendar com aviso 3 dias úteis antes">📌</button>`;
+const segBtnHtml = (i, rot) => `<button class="btn-mini" onclick="abrirSeguimento(${i})"
+  title="dar seguimento: anotar, atribuir a alguém com data, marcar prazo processual — e, se houver perícia/audiência/julgamento com data no texto, agendar">${rot||"📌"}</button>`;
 
 let segAberto = null;
 function abrirSeguimento(i){
@@ -5100,10 +5182,10 @@ function abrirSeguimento(i){
     <p class="meio-sub" style="margin:0 0 8px;max-height:64px;overflow:hidden">“${esc(s.texto.slice(0,180))}${s.texto.length>180?"…":""}”</p>
     ${ev?`<label style="display:flex;gap:6px;align-items:center;font-size:13px;margin-bottom:8px;${jaAg?"color:var(--cinza)":""}">
       <input type="checkbox" id="seg-evt" ${jaAg?"disabled":"checked"}>
-      🩺 agendar ${esc(ev.tipo)} de ${fmt(ev.data)} às ${ev.hora} na aba Perícias${jaAg?" — <b>já está agendada</b>":""}
+      🩺 agendar ${esc(ev.tipo)} de ${fmt(ev.data)} às ${ev.hora} na aba Perícias${jaAg?` — <b>já está agendad${evFem(ev.tipo)?"a":"o"}</b>`:""}
     </label>`:""}
     <textarea id="seg-txt" rows="2" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"
-      placeholder="anotação / o que precisa ser feito">${ev?`📞 Avisar ${esc(nome1)} que a ${esc(ev.tipo.toLowerCase())} foi agendada para ${fmt(ev.data)} às ${ev.hora} — oferecer atendimento de preparação antes.`:""}</textarea>
+      placeholder="anotação / o que precisa ser feito">${ev?`📞 Avisar ${esc(nome1)} que ${evFem(ev.tipo)?"a":"o"} ${esc(ev.tipo.toLowerCase())} foi agendad${evFem(ev.tipo)?"a":"o"} para ${fmt(ev.data)} às ${ev.hora} — oferecer atendimento de preparação antes.`:""}</textarea>
     <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
       <span style="font-size:12px;color:var(--cinza);font-weight:700">PARA</span>
       ${D.colaboradores.filter(x=>x.ativo!==false).map(co=>`<button class="btn-rap seg-quem" data-col="${co.id}"
@@ -5111,11 +5193,21 @@ function abrirSeguimento(i){
     </div>
     <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
       <span style="font-size:12px;color:var(--cinza);font-weight:700">LEMBRAR</span>
-      <input type="date" id="seg-data" value="${ev?hoje():""}">
-      ${ev?`<button class="btn-mini" onclick="document.getElementById('seg-data').value='${diasUteisAntes(ev.data,3)}'">3 dias úteis antes</button>`:""}
+      <input type="date" id="seg-data" value="${ev?(ev.tipo==="Julgamento"?proxDiaUtil(somaDias(ev.data,1)):hoje()):""}">
+      ${ev?`<button class="btn-mini" title="um dia útil depois de ${fmt(ev.data)} — para conferir o resultado"
+        onclick="document.getElementById('seg-data').value='${proxDiaUtil(somaDias(ev.data,1))}'">dia seguinte</button>
+      <button class="btn-mini" title="um dia útil antes de ${fmt(ev.data)}"
+        onclick="document.getElementById('seg-data').value='${diasUteisAntes(ev.data,1)}'">véspera</button>
+      <button class="btn-mini" onclick="document.getElementById('seg-data').value='${diasUteisAntes(ev.data,3)}'">3 dias úteis antes</button>`:""}
       <button class="btn-mini" onclick="document.getElementById('seg-data').value='${hoje()}'">hoje</button>
       <button class="btn-mini" onclick="document.getElementById('seg-data').value='${maisDias(1)}'">+1 dia útil</button>
       <button class="btn-mini" onclick="document.getElementById('seg-data').value='${maisDias(7)}'">+1 semana</button>
+    </div>
+    <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
+      <span style="font-size:12px;color:var(--cinza);font-weight:700">⏰ PRAZO</span>
+      <input type="date" id="seg-prazo">
+      <span class="meio-sub" style="font-size:12px">é prazo processual? preencha a DATA FATAL —
+        a anotação sai com “[PRAZO]” e o caso vai para 🗓 Tarefas com Prazo</span>
     </div>
     ${ev&&!jaAg?`<p class="meio-sub" style="margin:8px 0 0">🗓 junto com o agendamento nasce a VÉSPERA:
       lembrete ${fmt(diasUteisAntes(ev.data,3))} (3 dias úteis antes) para mandar a mensagem ao cliente.</p>`:""}
@@ -5133,10 +5225,15 @@ function abrirSeguimento(i){
 }
 async function salvarSeguimento(){
   const s = segAberto; if(!s) return;
-  const nota = (document.getElementById("seg-txt")||{}).value?.trim()||"";
+  let nota = (document.getElementById("seg-txt")||{}).value?.trim()||"";
   const dia = (document.getElementById("seg-data")||{}).value||"";
+  const prazo = (document.getElementById("seg-prazo")||{}).value||"";
   const agendar = s.ev && (document.getElementById("seg-evt")||{}).checked;
   const pessoas = [...s.quem];
+  // F40 · prazo processual direto da novidade: a anotação nasce prefixada
+  // como no compositor (F38) e o caso vai para 🗓 Tarefas com Prazo
+  if(prazo && !nota) nota = "Prazo processual anotado a partir da novidade do portal.";
+  if(prazo) nota = `⏰ [PRAZO ${fmt(prazo)}] ${nota}`;
   if(!nota && !agendar) return aviso("Escreva a anotação — ou marque o agendamento");
   if(pessoas.length && !dia) return aviso("Tarefa para alguém precisa de data — escolha quando lembrar");
   if(pessoas.length && !nota) return aviso("Tarefa para alguém precisa da anotação do que fazer");
@@ -5149,6 +5246,7 @@ async function salvarSeguimento(){
           publico:false, ...(s.andId?{responde_a:s.andId}:{})})})||[];
       feito.push("anotado");
     }
+    if(prazo){ await marcarTarefaComPrazo(s.casoId, prazo); feito.push(`⏰ prazo ${fmt(prazo)}`); }
     // sem pessoa mas com data: o lembrete é de quem registrou (regra da casa)
     const alvos = pessoas.length ? pessoas : (dia && nota ? [eu.id] : []);
     for(const pid of alvos){
@@ -5167,7 +5265,7 @@ async function salvarSeguimento(){
       const vesp = diasUteisAntes(s.ev.data, 3);
       const [av]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
         body:JSON.stringify({caso_id:s.casoId, autor_id:eu.id, origem:"app", publico:false,
-          texto:`🗓 Véspera da ${s.ev.tipo.toLowerCase()} de ${fmt(s.ev.data)}: mandar a mensagem de lembrete ao cliente (aba 🩺).`})})||[];
+          texto:`🗓 Véspera d${evFem(s.ev.tipo)?"a":"o"} ${s.ev.tipo.toLowerCase()} de ${fmt(s.ev.data)}: mandar a mensagem de lembrete ao cliente (aba 🩺).`})})||[];
       if(av){
         const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
           body:JSON.stringify({andamento_id:av.id, caso_id:s.casoId, colaborador_id:eu.id,
@@ -5208,9 +5306,10 @@ async function aplicarPericia(s){
       tarefaNaMemoria(tf);
     }
   };
-  await criar(`📞 Avisar ${nome1} que a ${ev.tipo.toLowerCase()} foi agendada para ${fmt(ev.data)} às ${ev.hora} — oferecer atendimento de preparação antes. (Registre pelo 📞 na aba 🩺.)`, hoje());
+  const fEv = evFem(ev.tipo);
+  await criar(`📞 Avisar ${nome1} que ${fEv?"a":"o"} ${ev.tipo.toLowerCase()} foi agendad${fEv?"a":"o"} para ${fmt(ev.data)} às ${ev.hora} — oferecer atendimento de preparação antes. (Registre pelo 📞 na aba 🩺.)`, hoje());
   const vesp = diasUteisAntes(ev.data, 3);
-  await criar(`🗓 Véspera da ${ev.tipo.toLowerCase()} de ${fmt(ev.data)}: mandar a mensagem de lembrete ao cliente (aba 🩺).`, vesp);
+  await criar(`🗓 Véspera d${fEv?"a":"o"} ${ev.tipo.toLowerCase()} de ${fmt(ev.data)}: mandar a mensagem de lembrete ao cliente (aba 🩺).`, vesp);
   return `agendada + avisar hoje + véspera ${fmt(vesp)}`;
 }
 async function periciaRapida(i){
@@ -5254,6 +5353,8 @@ function linhaNovidade(a){
     <span class="nov-fonte">${ROTULO_ORIGEM[a.origem]||a.origem}</span>
     <div class="nov-corpo">
       <div class="nov-cli" data-cli="${c.id||""}">${esc(c.nome||"cliente sem ficha")}
+        ${c.nome?`<button class="olho" title="copiar o nome"
+          onclick="event.stopPropagation();copiar('${escJs(c.nome)}','Nome copiado')">📋</button>`:""}
         ${k.beneficio?`<span class="u-papel" style="text-transform:none">· ${esc(k.beneficio)}</span>`:""}</div>
       <div class="nov-txt">${esc(a.origem==="pat"?limparHtmlPat(a.texto):a.texto)}</div>
     </div>
@@ -5264,7 +5365,7 @@ function linhaNovidade(a){
           title="abre a consulta do e-Recursos e copia o NUP — é só colar">e-Recursos ↗</button>`
       :k.processo_link?`<a class="btn-mini" href="${urlOk(k.processo_link)}" target="_blank" rel="noopener">abrir ↗</a>`:""}
     ${(i=>`${eventoNoTexto(a.texto)?`<button class="btn-mini" onclick="periciaRapida(${i})"
-      title="agenda na aba 🩺 e cria o aviso 3 dias úteis antes — um clique">🩺 agendar+aviso</button>`:""}${segBtnHtml(i)}`)(
+      title="agenda na aba 🩺 e cria o aviso 3 dias úteis antes — um clique">🩺 agendar+aviso</button>`:""}${segBtnHtml(i, "📌 dar seguimento")}`)(
       segRegistrar(a.caso_id, a.texto, a.id, true))}
     <button class="btn-mini" data-ler="${a.id}">✔ li</button>
   </div>`;
@@ -7810,6 +7911,8 @@ function pintarFicha(){
         <span class="avatar">${esc(c.nome[0])}</span><h2>${esc(c.nome)}</h2>
         <span class="cli-casos-seta">▾</span>
       </span>
+      <button class="olho" title="copiar o nome do cliente"
+        onclick="copiar('${escJs(c.nome)}','Nome copiado')">📋</button>
       ${c.telefone?`<button class="btn-mini" onclick="abrirSmbot('${c.id}')"
         style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:600"
         title="abre o SMBot numa aba e copia o telefone do cliente — é só colar na busca do atendimento">💬 SMBot</button>`:""}
