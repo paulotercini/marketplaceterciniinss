@@ -1,4 +1,30 @@
-# Onde paramos — 18.08.2026, versão 09.47
+# Onde paramos — 18.08.2026, versão 09.48
+
+## F49 · A análise de direito no trilho do primeiro atendimento (09.48)
+
+Pedido do Paulo: a análise geralmente nasce no primeiro atendimento, e
+precisava de um elo entre triagem, anotações e análise, com campos
+preenchíveis no momento das anotações.
+
+A mesa do atendimento ganhou o passo "4 · Análise de Direito deste
+atendimento", logo depois das anotações, com o MESMO formulário da aba
+⚖️ (formAnalise, renderizado uma vez só: quando a aba 8 está ativa ele
+vive lá — IDs únicos). Acima do formulário, a linha de estado
+statusAnalise: âmbar "Ainda sem análise de direito" ou verde "Análise de
+DD.MM.AAAA — melhor caminho: X" com "ver histórico". A MESMA linha
+aparece na TRIAGEM (com atalho para as Anotações), e o fecho da triagem
+registra no histórico "Análise de direito registrada em X" ou
+"PENDENTE". Análise salva SEM caso ativo vira ANOTAÇÃO do atendimento
+(origem "analise"), que migra para os andamentos quando o pré-caso virar
+caso, pela regra do F30 que já existia.
+
+Regras da casa que morderam: a aba Cadastro é LIMPA de pictogramas
+(emoji.js vigia) — statusAnalise, formAnalise e linhaCenario saíram sem
+emoji (✕ virou CAD_IC.fechar, ⭐ virou "melhor", + em ASCII); e fluxo.js
+ganhou a ordem nova dos blocos (1, 2, 3, 4-análise, honorários, e
+agora?). Teste analise-direito.js com 5 provas novas (23), suíte 40.
+
+# Onde paramos — versão 09.47
 
 ## F48 · ⚖️ ANÁLISE DE DIREITO — a memória dos atendimentos (09.47)
 

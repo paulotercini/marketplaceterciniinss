@@ -421,3 +421,13 @@ painelDireito(c) : ""}`). D.analises null significa "tabela não existe"
 então o cenário sem-tabela se simula com D.analises=null + render().
 O adPre do formulário é consumo único: pintou, os valores passam a viver
 no DOM — repintar sem salvar perde o pré-preenchido (de propósito).
+
+## F49 — o passo 4 da mesa e as duas regras da casa
+
+A aba Cadastro é LIMPA de pictogramas (emoji.js varre as 6 divisões):
+componente que renderiza lá dentro não pode ter emoji NEM dingbat (✕ e ＋
+contam) — use CAD_IC.* (SVG) e texto. E fluxo.js confere a ORDEM dos
+.rotulo-caso da mesa: bloco novo desloca os índices, o teste precisa
+acompanhar. O formAnalise renderiza em DOIS lugares excludentes (mesa
+quando abaAtiva!==8, aba ⚖️ quando ===8) — nunca os dois, senão os
+getElementById do salvar pegam o form errado.
