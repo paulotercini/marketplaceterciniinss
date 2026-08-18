@@ -431,3 +431,12 @@ contam) — use CAD_IC.* (SVG) e texto. E fluxo.js confere a ORDEM dos
 acompanhar. O formAnalise renderiza em DOIS lugares excludentes (mesa
 quando abaAtiva!==8, aba ⚖️ quando ===8) — nunca os dois, senão os
 getElementById do salvar pegam o form errado.
+
+## rapida.js (F50) — a anotação que atende o telefone
+
+O ⚡ vive FORA do .app (irmão, como a barra-cel) — o CSS do celular o
+posiciona com `.app.celular ~ .fab-rapida`. O modal reusa caixa()
+(que injeta dentro de modal-cab), então os ids ar-* só existem com a
+caixa aberta — testar fechamento por `#modal.style.display==="none"`.
+A nota rápida sem caso NÃO tem emoji no texto (o Cadastro é limpo;
+o 🔥 visível vem do render de n.urgente, que já existia).

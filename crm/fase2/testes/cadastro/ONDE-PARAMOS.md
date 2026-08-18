@@ -1,4 +1,26 @@
-# Onde paramos — 18.08.2026, versão 09.48
+# Onde paramos — 18.08.2026, versão 09.49
+
+## F50 · ⚡ Anotação rápida — o botão que atende o telefone (09.49)
+
+Pedido do Paulo: cliente liga ou aparece no balcão e o colaborador
+precisa anotar na hora, sem procurar ficha, e o registro deve nascer
+urgente ("é comum o cliente ir até o escritório e não ficar anotação
+nenhuma").
+
+Botão ⚡ FIXO no canto da tela (fab-rapida), desktop e celular (no
+celular fica acima da barra e some quando a ficha está aberta — lá o
+composer manda). Abre uma caixa com três coisas: busca de cliente
+(pesquisar() com lista de 6), a anotação e os toggles 🔥 urgente (JÁ
+LIGADO) e ⭐ importante. Cliente COM caso ativo: a anotação vira
+andamento e o caso é marcado urgente/importante via PATCH (Object.assign
+no k local — o 🔥 aparece sem recarregar); com mais de um caso ativo, um
+select escolhe (pré-selecionado no mais recente). Cliente SEM caso: vira
+anotação do atendimento (campos.atendimento) com urgente:true e origem
+"rapida" — sobe na mesa do atendimento e migra ao caso pela regra do
+F30. Sem cliente escolhido ou sem texto, nada grava. Teste rapida.js,
+11 provas; suíte 41 arquivos.
+
+# Onde paramos — versão 09.48
 
 ## F49 · A análise de direito no trilho do primeiro atendimento (09.48)
 
