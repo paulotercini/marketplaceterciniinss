@@ -101,10 +101,11 @@ FIX.documentos_beneficio.push(
   await p.waitForTimeout(500);
   const rotulos = await p.evaluate(() =>
     [...document.querySelectorAll(".caixa-atend .rotulo-caso")].map(x => x.innerText.trim()));
+  // F49: o passo 4 · Análise de Direito entrou no trilho, depois das anotações
   conf(`os blocos seguem a ordem do atendimento (${rotulos.length})`,
     /1 · de que se trata/i.test(rotulos[1] || "") && /2 · documentos/i.test(rotulos[2] || "")
-    && /3 · anotações/i.test(rotulos[3] || "") && /honorários/i.test(rotulos[4] || "")
-    && /e agora\?/i.test(rotulos[5] || ""));
+    && /3 · anotações/i.test(rotulos[3] || "") && /4 · análise de direito/i.test(rotulos[4] || "")
+    && /honorários/i.test(rotulos[5] || "") && /e agora\?/i.test(rotulos[6] || ""));
   conf("a espécie tem a opção outros para escrever",
     await p.evaluate(() => [...document.querySelectorAll(".pc-cartao select option")]
       .some(o => o.value === "__outros__")));

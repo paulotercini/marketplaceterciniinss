@@ -1036,6 +1036,11 @@
   .ad-cen-quando{font-size:11px;color:var(--cinza)}
   .ad-cen.ad-ok .ad-cen-quando{color:var(--verde);font-weight:700}
   .ad-cen-valor{font-size:15px;font-weight:700;color:var(--azul-escuro);margin-top:2px}
+  /* F49 · a linha de estado da análise, na triagem e nas anotações */
+  .ad-status{font-size:13px;border-radius:8px;padding:7px 10px;margin:6px 0}
+  .ad-status.pendente{background:#FFF8E7;border:1px solid #E9B44C}
+  .ad-status.feita{background:#F0F9F2;border:1px solid var(--verde)}
+  .tri-analise{margin-top:8px}
   .ad-tiles{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
   .ad-tile{flex:1;min-width:128px;background:var(--branco);border:1px solid var(--borda);
     border-radius:8px;padding:10px 12px;display:flex;flex-direction:column}
@@ -1754,7 +1759,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.47 · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.48 · F49 — a análise de direito NO TRILHO do primeiro atendimento: passo "4 · ⚖️ Análise de Direito" na mesa das Anotações com os campos preenchíveis (o mesmo formulário da aba ⚖️), linha de estado verde/âmbar na TRIAGEM (com atalho) e nas Anotações, o fecho da triagem registra "análise feita em X / PENDENTE", e análise salva SEM caso ativo vira anotação do atendimento (que migra para os andamentos quando o pré-caso virar caso, pela regra do F30). · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -9354,6 +9359,9 @@ function painelTriagemFicha(c, ks){
         onkeydown="if(event.key==='Enter'){event.preventDefault();novaPerguntaEscritorio();}">
       <button class="cad-mini" onclick="novaPerguntaEscritorio()">acrescentar</button>
     </div>
+    ${/* F49 · o elo triagem → análise: quem está triando vê na hora se a
+         análise de direito deste cliente já existe, e onde registrá-la */""}
+    <div class="tri-analise">${statusAnalise(c, true)}</div>
     <div class="tri-fecho">
       <button class="cad-mini" onclick="fecharAtendimento('${c.id}')"
         title="encerra a triagem: com atenção ou não conferido, o resumo vai para as Anotações; havendo caso, uma linha no histórico dele">
@@ -9398,6 +9406,11 @@ async function fecharAtendimento(cliId){
     linhas.push(`Ainda não conferido: ${faltam.map(([,r])=>r).join("; ")}.`);
   const notaConc = (t.conclusao||{}).nota;
   if(notaConc) linhas.push(`Conclusão: ${notaConc}`);
+  // F49 · o fecho da triagem registra o elo com a análise de direito: feita
+  // (com a data) ou pendente — quem ler o histórico sabe na hora
+  const ultA=analisesDe(cliId)[0];
+  linhas.push(ultA?`Análise de direito registrada em ${fmt(ultA.data_analise)}.`
+                  :`Análise de direito: PENDENTE.`);
   linhas.push(`Próximo passo: ${rotProx || "não definido nesta triagem"}.`);
 
   // F24 · com atenção ou não conferido, o resumo vai para as ANOTAÇÕES do
@@ -9407,6 +9420,7 @@ async function fecharAtendimento(cliId){
     const resumo = [`Triagem encerrada: ${conferidos.length} de ${PASSOS.length} passos conferidos.`]
       .concat(atencao.length?[`ATENÇÃO: ${atencao.map(([x,r])=>r+((t[x]||{}).nota?` (${t[x].nota})`:"")).join("; ")}.`]:[])
       .concat(faltam.length?[`NÃO CONFERIDO: ${faltam.map(([,r])=>r).join("; ")}.`]:[])
+      .concat(ultA?[]:["Análise de direito: PENDENTE."])
       .concat(rotProx?[`Próximo passo: ${rotProx}.`]:[]).join(" ");
     const notas=[...((c.campos||{}).atendimento||[]),
       {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], texto:resumo, origem:"triagem"}];
@@ -11130,14 +11144,14 @@ function linhaCenario(cn){
     <input class="ad-data" type="date" title="data prevista da aposentadoria" value="${cn&&cn.data||""}">
     <input class="ad-valor" type="number" step="0.01" min="0" placeholder="R$ valor" style="width:110px" value="${cn&&cn.valor||""}">
     <input class="ad-obs" placeholder="observação — ex.: falta averbar o rural" style="flex:1.4;min-width:150px" value="${esc(cn&&cn.obs||"")}">
-    <label class="meio-sub" style="cursor:pointer" title="o melhor caminho — sai destacado com ⭐"><input type="radio" name="ad-melhor" ${cn&&cn.melhor?"checked":""}> ⭐</label>
-    <button class="btn-mini" onclick="this.closest('.ad-row').remove()" title="tirar este cenário">✕</button>
+    <label class="meio-sub" style="cursor:pointer" title="o melhor caminho — sai destacado no cartão"><input type="radio" name="ad-melhor" ${cn&&cn.melhor?"checked":""}> melhor</label>
+    <button class="btn-mini" onclick="this.closest('.ad-row').remove()" title="tirar este cenário">${CAD_IC.fechar}</button>
   </div>`;
 }
 function formAnalise(c){
   const pre=adPre; adPre=null;   // consumo único: os valores passam a viver no DOM
   return `<details class="lb-novo" id="ad-novo" ${pre?"open":""}>
-    <summary>＋ registrar análise</summary>
+    <summary>+ registrar análise</summary>
     <div class="form-linha" style="margin-top:6px;align-items:center">
       <label class="meio-sub">feita em <input type="date" id="ad-data" value="${pre&&pre.data||hoje()}" max="${hoje()}"
         title="a análise antiga entra com a data original — a de 2020 entra como 2020"></label>
@@ -11152,8 +11166,8 @@ function formAnalise(c){
       style="width:100%;min-height:52px;margin-top:6px">${pre?esc(pre.texto||""):""}</textarea>
     <div id="ad-cens" style="margin-top:6px">${linhaCenario()}${linhaCenario()}</div>
     <div class="form-linha">
-      <button class="btn-mini" onclick="document.getElementById('ad-cens').insertAdjacentHTML('beforeend', linhaCenario())">＋ cenário</button>
-      <button style="margin-left:auto" onclick="salvarAnalise('${c.id}')">⚖️ Registrar análise</button>
+      <button class="btn-mini" onclick="document.getElementById('ad-cens').insertAdjacentHTML('beforeend', linhaCenario())">+ cenário</button>
+      <button style="margin-left:auto" onclick="salvarAnalise('${c.id}')">Registrar análise</button>
     </div>
     <datalist id="lista-regras">${REGRAS_DIREITO.map(r=>`<option value="${esc(r)}">`).join("")}</datalist>
   </details>`;
@@ -11183,17 +11197,30 @@ async function salvarAnalise(cliId){
     as.push(a); as.sort((x,y)=>x.data_analise<y.data_analise?1:-1);
     D.analisesPorCliente.set(cliId, as);
   }
-  // ⚖️ → 🏢 o comentário nos andamentos de TODOS os casos ativos do cliente
+  // ⚖️ → 🏢 o comentário nos andamentos de TODOS os casos ativos do cliente;
+  // F49 · no PRIMEIRO atendimento ainda não há caso — aí o registro vira
+  // ANOTAÇÃO do atendimento (e, quando o pré-caso virar caso, as anotações
+  // migram para os andamentos sozinhas, pela regra que já existe do F30)
   const ativosCli=D.casos.filter(k=>k.cliente_id===cliId && k.fase!=="encerrado");
+  const m=cenMelhor({cenarios}), outros=cenarios.length-(m?1:0);
+  const txt=`⚖️ Análise de Direito registrada (${fmt(data)})`
+    +(m?` — melhor caminho: ${m.regra||"?"}${m.data?` em ${fmt(m.data)}`:""}${m.valor?`, ${moedaBR(m.valor)}`:""}`:"")
+    +(outros>0?`; +${outros} cenário(s)`:"")+`. Detalhes na aba Análise de Direito.`;
   if(ativosCli.length){
-    const m=cenMelhor({cenarios}), outros=cenarios.length-(m?1:0);
-    const txt=`⚖️ Análise de Direito registrada (${fmt(data)})`
-      +(m?` — melhor caminho: ${m.regra||"?"}${m.data?` em ${fmt(m.data)}`:""}${m.valor?`, ${moedaBR(m.valor)}`:""}`:"")
-      +(outros>0?`; +${outros} cenário(s)`:"")+`. Detalhes na aba Análise de Direito.`;
     try{
       await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
         body:JSON.stringify(ativosCli.map(k=>({caso_id:k.id, autor_id:eu.id, origem:"app", texto:txt})))});
     }catch(e){}
+  }else{
+    const c=D.cliPorId.get(cliId);
+    if(c){
+      const notas=[...((c.campos||{}).atendimento||[]),
+        {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id,
+         texto:txt, origem:"analise"}];
+      c.campos={...(c.campos||{}), atendimento:notas};
+      try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify({campos:c.campos})}); }catch(e){}
+    }
   }
   // a anotação do To Do que originou esta análise ganha o carimbo "✔ virou"
   const nota=v("ad-nota");
@@ -11236,6 +11263,26 @@ function notaViraAnalise(lembId, i){
 // (🎂 no Meu Dia 3 meses antes) — nada novo para manter
 async function avisarCenario(cliId, data, regra){
   await lembrarApos(cliId, null, data, regra||"Aposentadoria", avisoApos(data));
+}
+// F49 · a linha de estado que liga triagem, anotações e análise: verde com a
+// última análise (e o melhor caminho) ou âmbar dizendo que ainda não há.
+// naTriagem=true acrescenta o atalho para as Anotações, onde o form vive.
+function statusAnalise(c, naTriagem){
+  // sem pictograma: os dois lugares desta linha (triagem e anotações) moram
+  // na aba Cadastro, que é LIMPA por regra da casa (emoji.js vigia)
+  if(D.analises===null)
+    return `<p class="meio-sub">Rode o <b>crm/fase2/schema_analise_direito.sql</b> no Supabase para
+      registrar análises de direito.</p>`;
+  const as=analisesDe(c.id), ult=as[0];
+  if(!ult) return `<div class="ad-status pendente"><b>Ainda sem análise de direito.</b>
+    Geralmente ela nasce no primeiro atendimento${naTriagem
+      ?` — registre nas <a onclick="irSubCad('anotacoes')" style="cursor:pointer;text-decoration:underline">Anotações (passo 4)</a>.`
+      :" — os campos estão aqui embaixo."}</div>`;
+  const m=cenMelhor(ult);
+  return `<div class="ad-status feita"><b>Análise de ${fmt(ult.data_analise)}</b>${
+    m?` — melhor caminho: ${esc(m.regra||"—")}${m.data?` em ${fmt(m.data)}`:""}${m.valor?` (${moedaBR(m.valor)})`:""}`:""}${
+    as.length>1?` · ${as.length} análises no histórico`:""}
+    <button class="btn-mini" onclick="abrirDireitoDe('${c.id}')" style="margin-left:6px">ver histórico</button></div>`;
 }
 function painelDireito(c){
   if(D.analises===null)
@@ -16930,6 +16977,17 @@ function caixaAtendimento(c, ks){
               onclick="apagarNotaAtendimento('${c.id}',${idx})">${CAD_IC.fechar}</button>`:""}
           </span></li>`;}).join("")}
       </ul>`:""}
+    </div>
+
+    ${/* F49 · a análise de direito NASCE AQUI, no primeiro atendimento, junto
+         das anotações (pedido do Paulo) — os campos preenchíveis são os
+         mesmos da aba ⚖️ (formAnalise), renderizados uma vez só: quando a
+         aba 8 está ativa o formulário vive lá, não aqui (IDs únicos) */""}
+    <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+      <div class="rotulo-caso">4 · Análise de Direito deste atendimento</div>
+      ${statusAnalise(c)}
+      ${abaAtiva!==8 ? formAnalise(c)
+        : `<p class="meio-sub">o formulário está aberto na aba Análise de Direito.</p>`}
     </div>
 
     ${pcsVivos.map(blocoHonor).join("")}

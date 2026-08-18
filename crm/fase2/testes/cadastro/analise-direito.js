@@ -6,7 +6,7 @@ const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const { FIX, SESSAO, CLI_CHEIO, CASO1, EU } = require("./fixturas");
+const { FIX, SESSAO, CLI_CHEIO, CLI_VAZIO, CASO1, EU } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
 // segundo caso ATIVO do mesmo cliente — prova do "comentário em todos"
@@ -165,7 +165,41 @@ FIX.lembretes = [{ id: "l0000000-0000-0000-0000-00000000f481", cliente_id: CLI_C
     await p.evaluate(() => /Direito alcançado — comunicar/.test(document.getElementById("conteudo-meio").textContent) &&
       !!document.querySelector(".ad-barra")));
 
-  // 10) tabela ausente = aviso do schema (banco atrasado não quebra a tela)
+  // 10) F49 · o trilho do PRIMEIRO atendimento: triagem → anotações → análise
+  await p.evaluate(cli => abrirFicha(cli), CLI_VAZIO);
+  await p.waitForTimeout(900);
+  conf("na TRIAGEM aparece o elo âmbar: ainda sem análise de direito",
+    await p.evaluate(() => { const t = document.querySelector(".tri-analise .ad-status.pendente");
+      return t && /Ainda sem análise/.test(t.textContent) && /Anotações \(passo 4\)/.test(t.textContent); }));
+  // triagem encerrada (em memória) abre a mesa das anotações
+  await p.evaluate(cli => { const c = D.cliPorId.get(cli);
+    c.triagem = { atendimento: { em: hoje(), quem: eu.id, passos: 8, conferidos: 8 } };
+    irSubCad("anotacoes"); }, CLI_VAZIO);
+  await p.waitForTimeout(400);
+  conf("a mesa tem o passo 4 · Análise de Direito com o formulário embutido",
+    await p.evaluate(() => /4 · Análise de Direito/.test(document.querySelector('[data-p="0"]').textContent) &&
+      !!document.getElementById("ad-novo") && !!document.querySelector('[data-p="0"] .ad-status.pendente')));
+  await p.evaluate(() => {
+    document.getElementById("ad-contexto").value = "Primeiro atendimento — deficiência constatada.";
+    const r = document.querySelector("#ad-cens .ad-row");
+    r.querySelector(".ad-regra").value = "PCD (LC 142)";
+    r.querySelector(".ad-data").value = "2027-03-01";
+    r.querySelector(".ad-valor").value = "4200";
+  });
+  escritos.length = 0;
+  await p.evaluate(cli => salvarAnalise(cli), CLI_VAZIO);
+  await p.waitForTimeout(1000);
+  conf("sem caso ativo, a análise grava e NÃO tenta andamento",
+    escritos.some(x => x.m === "POST" && x.t === "analises_direito") &&
+    !escritos.some(x => x.m === "POST" && x.t === "andamentos"));
+  conf("no lugar do andamento, vira ANOTAÇÃO do atendimento (regra do F30 leva ao caso depois)",
+    escritos.some(x => x.m === "PATCH" && x.t === "clientes" &&
+      ((x.corpo.campos || {}).atendimento || []).some(n => /⚖️ Análise de Direito registrada/.test(n.texto))));
+  conf("depois de salvar, o elo fica verde com o melhor caminho e o histórico",
+    await p.evaluate(() => { const s = document.querySelector('[data-p="0"] .ad-status.feita');
+      return s && /PCD \(LC 142\)/.test(s.textContent) && /ver histórico/.test(s.textContent); }));
+
+  // 11) tabela ausente = aviso do schema (banco atrasado não quebra a tela)
   await p.evaluate(() => { D.analises = null; render(); });
   await p.waitForTimeout(300);
   conf("sem a tabela no banco, a tela pede o schema_analise_direito.sql",
