@@ -395,3 +395,15 @@ compositor agora existe TAMBÉM no Tudo — composerCaso(k) é um só,
 extraído de painelEscritorio; #and-texto aparece nas duas abas. Em
 tlOficial, o que é exclusivo da fonte (⭐ do CRPS, 📄, caixaResumo)
 viaja no campo html do item, nunca no esqueleto.
+
+## sync-agora.js (F47) — o botão que dispara a Action
+
+O carimbo do To Do (#sync-todo) é pintado pelo montarSidebar, NÃO pelo
+render — mudar syncRodando e chamar render() não repinta o botão (foi o
+que derrubou duas provas). A ordem no fim da rodada importa: primeiro
+carregar(), depois syncRodando=false, depois montarSidebar() — invertido,
+o ⏳ volta a ser pintado por cima. No mock, o carregar() rebusca
+config_app com select=*, então a rodada "terminada" precisa avançar o
+carimbo em TODO GET de config_app, não só na consulta filtrada do espião.
+O 401 do cenário de token recusado aparece no console do Chromium como
+"Failed to load resource" — filtrar no coletor de erros, é proposital.
