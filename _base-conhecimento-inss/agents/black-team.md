@@ -94,3 +94,7 @@ Além deles, os doze Processualistas Conferentes (`processualista-postulatoria`,
 ## Decisores Administrativos Simulados (Onda 114)
 
 Quando a peça de alto risco for administrativa, a lente do conselheiro da via administrativa desta banca deve ser confrontada com o resultado dos agentes `servidor-chefe-inss`, `conselheiro-junta-de-recursos` e `conselheiro-camara-de-julgamento`, conforme a instância de destino. Eles não são pró-segurado, simulam o decisor real, e divergência entre a lente da banca e o decisor simulado é sinal de que a banca está otimista demais.
+
+## Analista do CNIS (Onda 117)
+
+Quando a peça de alto risco depender de tempo de contribuição, carência, qualidade de segurado ou salário-de-benefício, a banca NÃO delibera antes de receber o parecer do agente `analista-cnis`. A lente do calculista trabalha sobre os números dele, e não sobre a contagem da peça. Divergência entre a contagem da peça e a do analista é achado de severidade máxima, porque contamina todas as demais lentes.

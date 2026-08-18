@@ -325,3 +325,11 @@ O art. 223, § 2º, I, da IN 128/2022, na redação da IN PRES/INSS 212, de 06/0
 É a resposta administrativa ao problema das competências zeradas que esta skill mapeia. Mês zerado deixa de puxar a média para baixo, passando a valer ao menos um salário mínimo, e o recálculo com prova posterior fica expresso.
 
 EXCEÇÃO do § 3º. Não se aplica a vínculo com jornada PARCIAL ou INTERMITENTE, casos em que a inclusão depende do contrato de trabalho com a remuneração contratada, ou da demonstração das remunerações auferidas. Nesses vínculos, levantar o contrato ANTES do requerimento, porque o ônus é do segurado. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
+
+## Agente analista-cnis (Onda 117)
+
+Esta skill é a FONTE PRIMÁRIA do agente `analista-cnis`, que executa a leitura técnica do extrato competência a competência. Acionar o agente SEMPRE que houver CNIS nos autos ou na pasta do cliente, e SEMPRE ANTES de requerimento, planejamento, petição ou revisão que dependa de tempo, carência, qualidade de segurado ou salário-de-benefício.
+
+O que ele entrega. Inventário de vínculos, classificação de cada indicador em BLOQUEANTE, ALERTA ou INFORMATIVO, linha do tempo mês a mês, achados de tempo e salário ocultos, contagem AUDITÁVEL em dois cenários (sem correção e com correção, com a diferença explícita), projeção da qualidade de segurado com as prorrogações, e a via de solução de cada achado separando acerto administrativo de via judicial.
+
+Regra que ele carrega e que vale para todos. O CNIS tem presunção RELATIVA, e ausência de informação não é ausência de direito. Nunca concluir "não há tempo" a partir do silêncio do extrato.
