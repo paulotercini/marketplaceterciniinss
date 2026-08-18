@@ -1,4 +1,35 @@
-# Onde paramos — 18.08.2026, versão 09.46
+# Onde paramos — 18.08.2026, versão 09.47
+
+## F48 · ⚖️ ANÁLISE DE DIREITO — a memória dos atendimentos (09.47)
+
+O coração do escritório, pedido do Paulo: o cliente lembra da análise de
+2020, o escritório não. Cada análise registra QUANDO foi feita (retroativa
+entra com a data original), o que foi combinado (contexto) e os CENÁRIOS
+calculados na época, regra + data prevista + valor, com ⭐ no melhor
+caminho. Data que já chegou fica verde ("✓ direito alcançado").
+
+Tabela nova analises_direito (cenários em jsonb) — PENDENTE DO PAULO
+rodar crm/fase2/schema_analise_direito.sql no Supabase; sem ela, as telas
+avisam e nada quebra (D.analises null ≠ []). Entradas: aba própria na
+ficha (sempre visível, abaAtiva 8) e visão "direito" na barra lateral com
+sub-menu Análises | Dashboard. O contador da barra é acionável, clientes
+cuja análise mais recente diz que o direito JÁ chegou e não aposentaram.
+
+Integrações deliberadas, nada duplicado: salvar grava comentário nos
+andamentos de TODOS os casos ativos do cliente (uma chamada, corpo em
+array); o 🎂 "avisar na época" reusa aposentadorias + avisoApos (Meu Dia
+3 meses antes); as anotações antigas do To Do (lista 🙏, espelhadas nos
+lembretes aposentadoria_futura) aparecem na aba com "→ virar análise",
+que pré-preenche o formulário e carimba a anotação (analise_id) para não
+ser oferecida de novo. Dashboard: tiles (total, clientes, já podem,
+próximos 12 meses, 2+ anos para rever), lista "comunicar" com WhatsApp,
+próximas aposentadorias com 🎂, barras por regra. 📋 copiar gera o resumo
+pronto para WhatsApp ou petição. Fonte marca manual | Prévius | To Do
+(a importação automática dos PDFs do Prévius fica para quando o Paulo
+mandar os primeiros cálculos). Teste analise-direito.js, 18 provas;
+suíte 40 arquivos. Rubrica interna 98/100.
+
+# Onde paramos — versão 09.46
 
 ## F47 · Botão 🔄 agora — sincronizar com o To Do pelo próprio CRM (09.46)
 

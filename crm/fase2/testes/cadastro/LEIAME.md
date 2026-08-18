@@ -407,3 +407,17 @@ config_app com select=*, então a rodada "terminada" precisa avançar o
 carimbo em TODO GET de config_app, não só na consulta filtrada do espião.
 O 401 do cenário de token recusado aparece no console do Chromium como
 "Failed to load resource" — filtrar no coletor de erros, é proposital.
+
+## analise-direito.js (F48) — a memória dos atendimentos
+
+Cliente com DOIS processos ativos não abre a ficha direto: pintarFicha
+para em escolherProcesso() e o placeholder "abrindo a ficha…" fica atrás
+do modal — o teste precisa chamar escolhido(cli, caso) depois do
+abrirFicha (foi meia hora de caça). fmt() imprime com PONTOS (02.05.2020),
+não barras — regex de texto de andamento erra se usar \/. O painel 8 só
+pinta com abaAtiva===8 (renderização preguiçosa: `${abaAtiva===8 ?
+painelDireito(c) : ""}`). D.analises null significa "tabela não existe"
+(aviso do schema) e [] significa vazio — o mock devolve [] por padrão,
+então o cenário sem-tabela se simula com D.analises=null + render().
+O adPre do formulário é consumo único: pintou, os valores passam a viver
+no DOM — repintar sem salvar perde o pré-preenchido (de propósito).
