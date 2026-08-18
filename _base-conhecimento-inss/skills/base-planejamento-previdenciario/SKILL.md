@@ -113,3 +113,9 @@ IBDP, advocacia previdenciária.
 ## O que NÃO está nesta skill
 
 Cálculo técnico de RMI em `base-calculo-rmi-ec103`. Direito adquirido em `base-aposentadoria-direito-adquirido`. Reafirmação em `reafirmacao-der`.
+
+## CNIS antes do cenário (Onda 117)
+
+Nenhum cenário se projeta sobre CNIS não auditado. Despachar ao agente `analista-cnis` ANTES de simular qualquer regra, porque pendência bloqueante, competência zerada e alíquota reduzida mudam a data em que o direito se aperfeiçoa e mudam o salário-de-benefício.
+
+Regra prática. Contribuir para alcançar carência ou tempo sem antes limpar o CNIS é dinheiro parado, e recomendar espera com base em contagem errada custa meses ao cliente.

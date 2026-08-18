@@ -146,3 +146,9 @@ Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
 ## Decisor simulado antes do protocolo (Onda 114)
 
 Concluída a curadoria dos documentos e a petição administrativa, submeter ao agente `servidor-chefe-inss` antes de anexar no Meu INSS. Ele antecipa a EXIGÊNCIA que o INSS emitiria e a pendência de CNIS que travaria a conclusão, o que permite corrigir antes e evitar o ciclo de exigência com perda de semanas.
+
+## CNIS auditado antes do protocolo (Onda 117)
+
+Antes de montar o protocolo, despachar ao agente `analista-cnis`. Pendência bloqueante no extrato impede a conclusão do requerimento pelo servidor, e o processo trava em exigência sem que o mérito seja apreciado.
+
+Ordem correta. Analista do CNIS, depois curadoria dos documentos, depois o decisor simulado `servidor-chefe-inss`, e só então o protocolo.

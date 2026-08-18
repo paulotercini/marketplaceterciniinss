@@ -243,3 +243,9 @@ Antes de classificar qualquer caso, consultar os arquivos de referência.
 
 - `references/MAPA-CLASSIFICACAO.md` — árvore decisória de classificação por dados do segurado
 - `references/MAPA-ROTEAMENTO.md` — tabela de roteamento de skills por classificação
+
+## Análise do CNIS na triagem (Onda 117)
+
+Havendo extrato do CNIS, despachar ao agente `analista-cnis` ANTES de classificar o benefício cabível e de avaliar viabilidade. A contagem em dois cenários que ele devolve, sem correção e com correção, é o que permite dizer se o caso é de requerimento imediato, de acerto administrativo prévio ou de espera.
+
+Triagem feita sobre a leitura superficial do CNIS erra o benefício e erra a DER.
