@@ -1,4 +1,29 @@
-# Onde paramos — 17.08.2026, versão 09.45
+# Onde paramos — 18.08.2026, versão 09.46
+
+## F47 · Botão 🔄 agora — sincronizar com o To Do pelo próprio CRM (09.46)
+
+Pedido do Paulo: um botão no CRM para atualizar a sincronização com o
+Microsoft To Do. A sincronização roda numa GitHub Action de hora em hora
+(crm-sync.yml, 07h–20h seg–sáb); o botão dispara a MESMA Action na hora,
+pelo workflow_dispatch da API do GitHub.
+
+O 🔄 agora fica ao lado do carimbo "To Do há X min" no rodapé da barra
+(pintado pelo montarSidebar, não pelo render — pegadinha que derrubou o
+teste). Precisa de um token fino do GitHub (só o repositório, permissão
+Actions: Read and write), pedido UMA vez por prompt e guardado em
+config_app na chave gh_token, valendo para a equipe toda; 401/403 apaga
+o token e pede outro no próximo clique. Aceito o disparo (204), o botão
+vira ⏳ e espiarSync confere todo_sync_em a cada 30 s; carimbo avançou =
+carregar() + montarSidebar() + render() e aviso "To Do sincronizado ✔".
+Sem confirmação em 15 min, desiste e manda olhar a aba Actions. Teste
+sync-agora.js, 7 provas (workflow certo, token recusado esquecido, ⏳,
+recarga com carimbo novo); suíte 39 arquivos.
+
+PENDENTE DO PAULO: criar o token em github.com → Settings → Developer
+settings → Fine-grained tokens (repositório marketplaceterciniinss,
+Actions: Read and write) e colar no primeiro clique do botão.
+
+# Onde paramos — versão 09.45
 
 ## F46 · No Caso completo, o colaborador aparece com nome e cor (09.45)
 

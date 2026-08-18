@@ -1720,7 +1720,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.45 · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.46 · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2251,6 +2251,62 @@ async function guardarCfgApp(chave, valor){
   (D.config=D.config||new Map()).set(chave, valor);
 }
 
+// F47 · o botão "🔄 agora" do rodapé da barra: dispara no GitHub a MESMA
+// sincronização que roda de hora em hora (workflow crm-sync.yml, que lê o
+// To Do e espelha no banco) e depois espia o carimbo todo_sync_em até a
+// rodada terminar. Precisa de um token fino do GitHub (permissão Actions:
+// Read and write SÓ neste repositório), pedido uma vez e guardado em
+// config_app (chave gh_token) — vale para toda a equipe.
+const GH_REPO = "paulotercini/marketplaceterciniinss";
+let syncRodando = false, SYNC_POLL_MS = 30000;
+async function sincronizarToDoAgora(){
+  if(syncRodando) return;
+  let tok = (cfgApp("gh_token")||"").trim();
+  if(!tok){
+    tok = (prompt("Cole o token do GitHub para disparar a sincronização.\n\n"
+      +"Criar em github.com → Settings → Developer settings → Fine-grained tokens:\n"
+      +"só o repositório marketplaceterciniinss, permissão Actions: Read and write.")||"").trim();
+    if(!tok) return;
+    await guardarCfgApp("gh_token", tok);
+  }
+  let r;
+  try{
+    r = await fetch(`https://api.github.com/repos/${GH_REPO}/actions/workflows/crm-sync.yml/dispatches`,{
+      method:"POST",
+      headers:{Authorization:"Bearer "+tok, Accept:"application/vnd.github+json",
+        "Content-Type":"application/json"},
+      body:JSON.stringify({ref:"main"})});
+  }catch(e){ aviso("Sem resposta do GitHub — confira a internet."); return; }
+  if(r.status===401 || r.status===403){
+    // token vencido ou sem permissão: esquece o guardado e pede outro no próximo clique
+    await guardarCfgApp("gh_token","");
+    aviso("O GitHub recusou o token — clique de novo e cole um token válido.");
+    return;
+  }
+  if(r.status!==204){ aviso(`O GitHub respondeu ${r.status} — sincronização não disparada.`); return; }
+  // o carimbo é pintado pelo montarSidebar, não pelo render
+  syncRodando = true; montarSidebar();
+  aviso("Sincronização disparada — o To Do chega em uns 2 minutos.");
+  espiarSync(cfgApp("todo_sync_em")||"", Date.now());
+}
+async function espiarSync(base, inicio){
+  if(Date.now()-inicio > 15*60000){
+    syncRodando = false; montarSidebar();
+    aviso("A sincronização não confirmou em 15 min — confira a aba Actions do GitHub.");
+    return;
+  }
+  await new Promise(x=>setTimeout(x, SYNC_POLL_MS));
+  const linhas = await todas("config_app","select=chave,valor&chave=eq.todo_sync_em").catch(()=>null);
+  const agora = linhas && linhas[0] && linhas[0].valor;
+  if(agora && agora!==base){
+    await carregar();               // traz o que a rodada acabou de importar
+    syncRodando = false; montarSidebar(); render();
+    aviso("To Do sincronizado ✔ — dados atualizados.");
+    return;
+  }
+  espiarSync(base, inicio);
+}
+
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
   const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal, tarefasAnd, lembs] =
@@ -2679,12 +2735,17 @@ function montarSidebar(){
   const st = document.getElementById("sync-todo");
   if(st){
     const t = cfgApp("todo_sync_em");
-    if(!t) st.innerHTML = "";
+    // F47 · disparo manual ao lado do carimbo — some enquanto roda
+    const btnSync = syncRodando
+      ? `<span class="txt" style="color:#9AA0B0">⏳ sincronizando…</span>`
+      : `<button class="btn-mini" id="btn-sync-todo" onclick="sincronizarToDoAgora()"
+          title="dispara agora a sincronização To Do → CRM (a mesma que roda de hora em hora; leva ~2 min)">🔄 agora</button>`;
+    if(!t) st.innerHTML = btnSync;
     else{
       const min = Math.max(0, Math.round((Date.now()-new Date(t))/60000));
       const rel = min<1 ? "agora" : min<60 ? `há ${min} min`
         : min<1440 ? `há ${Math.round(min/60)} h` : `em ${fmt(dataSP(t))}`;
-      st.innerHTML = `<span title="última sincronização completa To Do → CRM: ${esc(fmtTS(t))} às ${esc(horaSP(t))}" style="display:inline-flex;align-items:center;gap:6px">${svgIc("🔁",13)} To Do ${rel}</span>`;
+      st.innerHTML = `<span title="última sincronização completa To Do → CRM: ${esc(fmtTS(t))} às ${esc(horaSP(t))}" style="display:inline-flex;align-items:center;gap:6px">${svgIc("🔁",13)} To Do ${rel}</span> ${btnSync}`;
       st.style.color = min>150 ? "#E8A13D" : "";
     }
   }
