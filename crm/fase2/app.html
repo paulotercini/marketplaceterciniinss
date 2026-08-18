@@ -1015,6 +1015,40 @@
   .form-linha{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .form-linha input,.form-linha select{padding:8px;border:1px solid var(--borda);border-radius:8px;font-size:13px}
   .form-linha button{padding:8px 14px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer}
+  /* ⚖️ F48 · Análise de Direito — a régua dos atendimentos: o ANO grande na
+     lateral conta a história (2020 → 2023 → 2025), e cada cenário é um
+     cartão onde a DATA e o VALOR são o que se lê primeiro, porque são os
+     dois números que o Paulo fala em voz alta para o cliente */
+  .ad-analise{display:flex;gap:12px;margin-top:10px}
+  .ad-lado{flex:none;width:78px;display:flex;flex-direction:column;align-items:center;gap:3px;
+    border-right:2px solid var(--borda);padding-right:10px}
+  .ad-ano{font-size:22px;font-weight:800;color:var(--azul-escuro);line-height:1}
+  .ad-dia{font-size:11px;color:var(--cinza)}
+  .ad-corpo{flex:1;min-width:0}
+  .ad-contexto{white-space:pre-wrap;margin-bottom:6px}
+  .ad-cens{display:flex;flex-wrap:wrap;gap:8px}
+  .ad-cen{border:1px solid var(--borda);border-radius:8px;padding:8px 10px;min-width:150px;
+    flex:1;max-width:240px;background:var(--branco)}
+  .ad-cen.ad-melhor{border-color:#E9B44C;background:#FFFBEE}
+  .ad-cen.ad-ok{border-color:var(--verde);background:#F0F9F2}
+  .ad-cen-topo{font-weight:700;font-size:13px}
+  .ad-cen-data{font-size:17px;font-weight:800;margin-top:2px}
+  .ad-cen-quando{font-size:11px;color:var(--cinza)}
+  .ad-cen.ad-ok .ad-cen-quando{color:var(--verde);font-weight:700}
+  .ad-cen-valor{font-size:15px;font-weight:700;color:var(--azul-escuro);margin-top:2px}
+  .ad-tiles{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .ad-tile{flex:1;min-width:128px;background:var(--branco);border:1px solid var(--borda);
+    border-radius:8px;padding:10px 12px;display:flex;flex-direction:column}
+  .ad-tile b{font-size:24px;line-height:1.1}
+  .ad-tile span{font-size:11px;color:var(--cinza)}
+  .ad-barra{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:12px}
+  .ad-barra-rot{flex:none;width:190px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ad-barra-tr{flex:1;background:var(--fundo);border-radius:6px;height:14px;overflow:hidden}
+  .ad-barra-in{display:block;height:100%;background:var(--azul);border-radius:6px}
+  .celular .ad-analise{flex-direction:column}
+  .celular .ad-lado{flex-direction:row;border-right:none;border-bottom:1px solid var(--borda);
+    width:auto;padding:0 0 6px}
+  .celular .ad-barra-rot{width:110px}
   /* menu "Mover para…" (botão direito no cartão, como no To Do) */
   #menu-mover,#menu-arroba{position:fixed;z-index:99;background:var(--branco);border:1px solid var(--borda);border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.18);padding:6px;min-width:230px;max-height:70vh;overflow-y:auto}
   #menu-arroba .mm-it{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;cursor:pointer;font-size:14px}
@@ -1720,7 +1754,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.46 · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.47 · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2309,7 +2343,7 @@ async function espiarSync(base, inicio){
 
 async function carregar(){
   const d30 = new Date(); d30.setDate(d30.getDate()-30);
-  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal, tarefasAnd, lembs] =
+  const [colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref, cfgs, zaps, inssCal, tarefasAnd, lembs, anals] =
     await Promise.all([
       todas("colaboradores","select=*&order=nome"),
       todas("clientes","select=*&order=nome"),
@@ -2348,9 +2382,19 @@ async function carregar(){
       // tabela pode nem existir num banco atrasado, daí o catch
       todas("lembretes","select=*,lembrete_avisos(colaborador_id,em,canal)&ativo=is.true&order=proximo_em")
         .catch(()=>todas("lembretes","select=*&ativo=is.true&order=proximo_em").catch(()=>[])),
+      // ⚖️ Análise de Direito (F48) — null (e não []) quando a tabela ainda
+      // não existe, para a tela saber avisar "rode o schema"
+      todas("analises_direito","select=*&order=data_analise.desc").catch(()=>null),
     ]);
   D = {colaboradores, clientes, casos, atribuicoes, tarefas, eventos, pagamentos, meudia, and30, novid, modelos, sugestoes, mencoes, leads, docs, ckls, docModelos, frases, lembrarMotivos, rotinas, rotinasFeitas, apos, listaPref};
   D.lembretes = lembs||[];
+  // ⚖️ F48 — null preservado de propósito (tabela ausente ≠ tabela vazia)
+  D.analises = anals;
+  D.analisesPorCliente = new Map();
+  for(const a of (anals||[])){
+    if(!D.analisesPorCliente.has(a.cliente_id)) D.analisesPorCliente.set(a.cliente_id,[]);
+    D.analisesPorCliente.get(a.cliente_id).push(a);
+  }
   D.prefPorLista = new Map((listaPref||[]).map(x=>[x.chave,x]));
   D.config = new Map((cfgs||[]).map(x=>[x.chave,x.valor]));
   // a cor do colaborador entra crua em dezenas de style="background:..." —
@@ -2691,6 +2735,9 @@ function montarSidebar(){
     return `<div class="lista-item" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`;
   }).join("");
   document.getElementById("grupo-visoes").innerHTML = [
+    // ⚖️ F48 — o coração do escritório: o número é o que exige ação, clientes
+    // cuja análise mais recente diz que o direito JÁ chegou
+    ["direito","⚖️ Análise de Direito", direitoAlcancado().length||null],
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
@@ -4299,6 +4346,7 @@ function render(){
     meio.innerHTML = achados.map(c=>cartaoCliente(c)).join("") || "<p class='meio-sub'>Nada encontrado.</p>";
     return ligarCartoes();
   }
+  if(visao==="direito") return renderDireito();
   if(visao==="dashboard") return renderDash();
   if(visao==="agenda") return renderAgenda();
   if(visao==="calendario") return renderCalendario();
@@ -7999,6 +8047,9 @@ function pintarFicha(){
            atendimento começa no Cadastro — o botão está lá dentro */""}
       <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">Cadastro</button>
       ${temLemb ? `<button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>` : ""}
+      ${/* ⚖️ F48 · sempre visível: cliente sem análise vê o convite a fazer
+           a primeira — é assim que o histórico começa a existir */""}
+      <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">Análise de Direito${(n=>n?` (${n})`:"")(analisesDe(cliId).length)}</button>
       ${/* o menu tem só as cinco divisões do cliente (pedido do Paulo):
            Cadastro, Lembretes, Casos, Perícias e Honorários. O caso escolhido
            aparece no cartão de fatos, não no rótulo da aba. */""}
@@ -8086,6 +8137,10 @@ function pintarFicha(){
       <button onclick="novoCaso('${c.id}')">Criar caso</button>
     </div>
     <p class="meio-sub">O caso nasce aqui e a sincronização cria a tarefa correspondente no To Do, na lista da fase.</p>
+  </div>
+
+  <div class="painel ${abaAtiva===8?"ativo":""}" data-p="8">
+    ${abaAtiva===8 ? painelDireito(c) : ""}
   </div>
 
   <div class="painel ${abaAtiva===9?"ativo":""}" data-p="9">
@@ -10985,6 +11040,322 @@ function chipRevisao(k, c){
     ? `<span class="chip laranja" title="o cliente está marcado como já aposentado: um caso de aposentadoria aqui tende a ser REVISÃO do benefício que ele já recebe, não concessão nova — confira antes de redigir">⚠ provável revisão, não concessão</span>`
     : "";
 }
+// ══════════════════════════════════════════════════════════════════════════
+// ⚖️ F48 · ANÁLISE DE DIREITO — a memória dos atendimentos
+// ══════════════════════════════════════════════════════════════════════════
+// O cliente lembra da conversa de 2020; o escritório, com centenas de
+// atendimentos, não. Cada análise registra QUANDO foi feita (pode ser
+// retroativa), o que foi visto/combinado e os CENÁRIOS calculados na época:
+// regra, data prevista de aposentadoria e valor estimado. O melhor caminho
+// leva ⭐; data que já chegou fica verde ("✓ direito alcançado").
+// Integrações deliberadas, nada duplicado: o aviso de época reusa a tabela
+// aposentadorias + avisoApos (o 🎂 que entra no Meu Dia 3 meses antes); as
+// anotações antigas do To Do (lista 🙏, espelhadas nos lembretes) aparecem
+// aqui com "→ virar análise"; e toda análise nova grava um comentário nos
+// andamentos de TODOS os casos ativos do cliente (pedido do Paulo).
+const REGRAS_DIREITO = ["Pontos","Pedágio 50%","Pedágio 100%","Idade progressiva",
+  "Idade urbana","Idade rural","Idade híbrida","Especial","PCD (LC 142)","Professor",
+  "Direito adquirido (pré-EC 103)","Incapacidade","BPC/LOAS","Revisão"];
+function analisesDe(cliId){ return (D.analisesPorCliente&&D.analisesPorCliente.get(cliId))||[]; }
+function moedaBR(v){ const n=Number(v);
+  return (v!==""&&v!=null&&isFinite(n)) ? n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"}) : ""; }
+function cenMelhor(a){ const cs=a.cenarios||[];
+  return cs.find(x=>x.melhor) || cs.filter(x=>x.data).sort((x,y)=>x.data<y.data?-1:1)[0] || cs[0] || null; }
+function mesesAte(iso){ const h=hoje();
+  return (+iso.slice(0,4)-+h.slice(0,4))*12 + (+iso.slice(5,7)-+h.slice(5,7)); }
+// quem JÁ pode aposentar segundo a análise mais recente e ainda não aposentou
+// — é o número da barra lateral, porque é o que exige ação
+function direitoAlcancado(){
+  const r=[];
+  for(const [cliId, as] of (D.analisesPorCliente||new Map())){
+    const c=D.cliPorId.get(cliId);
+    if(!c || c.aposentado===true) continue;
+    if(((as[0]||{}).cenarios||[]).some(x=>x.data && x.data<=hoje()))
+      r.push({cliente:c, analise:as[0]});
+  }
+  return r;
+}
+function cartaoCenario(cn, cliId){
+  const passou = cn.data && cn.data<=hoje();
+  const m = cn.data ? mesesAte(cn.data) : null;
+  return `<div class="ad-cen ${cn.melhor?"ad-melhor":""} ${passou?"ad-ok":""}">
+    <div class="ad-cen-topo">${cn.melhor?"⭐ ":""}${esc(cn.regra||"—")}</div>
+    ${cn.data?`<div class="ad-cen-data">${fmt(cn.data)}</div>
+      <div class="ad-cen-quando">${passou?"✓ direito alcançado":m<=0?"é agora":m===1?"falta 1 mês":`faltam ${m} meses`}</div>`
+      :`<div class="ad-cen-quando">sem data projetada</div>`}
+    ${cn.valor?`<div class="ad-cen-valor">${moedaBR(cn.valor)}</div>`:""}
+    ${cn.obs?`<div class="meio-sub" style="margin-top:3px">${esc(cn.obs)}</div>`:""}
+    ${cn.data && !passou ? `<button class="btn-mini" style="margin-top:5px"
+      title="cria o aviso 🎂 (entra no Meu Dia ${MESES_AVISO} meses antes da data) para comunicar o cliente"
+      onclick="avisarCenario('${cliId}','${cn.data}','${escJs(cn.regra||"")}')">🎂 avisar na época</button>`:""}
+  </div>`;
+}
+function resumoAnalise(a, c){
+  const cab=`⚖️ Análise de Direito — ${c.nome}, feita em ${fmt(a.data_analise)}`
+    +((co=>co?` por ${co.nome}`:"")(D.colPorId.get(a.autor_id)));
+  const cens=(a.cenarios||[]).map(x=>`• ${x.regra||"—"}${x.data?`: ${x.data<=hoje()?"direito desde":"aposenta em"} ${fmt(x.data)}`:""}${x.valor?` — ${moedaBR(x.valor)}`:""}${x.melhor?" ⭐":""}${x.obs?` (${x.obs})`:""}`);
+  return [cab, ...(a.contexto?[a.contexto]:[]), ...cens].join("\n");
+}
+function copiarAnalise(id){
+  const a=(D.analises||[]).find(x=>x.id===id); if(!a) return;
+  const c=D.cliPorId.get(a.cliente_id)||{};
+  copiar(resumoAnalise(a,c), "Análise copiada 📋 — cole no WhatsApp ou na petição");
+}
+function cartaoAnalise(a){
+  const co=D.colPorId.get(a.autor_id), cs=a.cenarios||[];
+  return `<div class="caso ad-analise">
+    <div class="ad-lado">
+      <div class="ad-ano">${(a.data_analise||"").slice(0,4)}</div>
+      <div class="ad-dia">${fmt(a.data_analise)}</div>
+      ${co?`<span class="avatar mini" style="background:${co.cor}" title="${esc(co.nome)}">${esc(co.inicial)}</span>`:""}
+      ${a.fonte==="previus"?`<span class="chip neutro" title="cenários vindos de cálculo do Prévius">Prévius</span>`
+        :a.fonte==="todo"?`<span class="chip neutro" title="nasceu de anotação antiga do To Do">To Do</span>`:""}
+    </div>
+    <div class="ad-corpo">
+      ${a.contexto?`<div class="ad-contexto">${esc(a.contexto)}</div>`:""}
+      ${cs.length?`<div class="ad-cens">${cs.map(x=>cartaoCenario(x, a.cliente_id)).join("")}</div>`:""}
+      <div class="form-linha" style="margin-top:6px">
+        <button class="btn-mini" onclick="copiarAnalise('${a.id}')">📋 copiar</button>
+        <button class="btn-mini" style="margin-left:auto" onclick="apagarAnalise('${a.id}')"
+          title="apaga a análise (os comentários já gravados nos casos ficam)">🗑</button>
+      </div>
+    </div>
+  </div>`;
+}
+// formulário — adPre carrega a anotação do To Do que está virando análise
+let adPre=null;
+function linhaCenario(cn){
+  return `<div class="ad-row form-linha">
+    <input class="ad-regra" list="lista-regras" placeholder="regra — ex.: Pontos" style="flex:1;min-width:140px" value="${esc(cn&&cn.regra||"")}">
+    <input class="ad-data" type="date" title="data prevista da aposentadoria" value="${cn&&cn.data||""}">
+    <input class="ad-valor" type="number" step="0.01" min="0" placeholder="R$ valor" style="width:110px" value="${cn&&cn.valor||""}">
+    <input class="ad-obs" placeholder="observação — ex.: falta averbar o rural" style="flex:1.4;min-width:150px" value="${esc(cn&&cn.obs||"")}">
+    <label class="meio-sub" style="cursor:pointer" title="o melhor caminho — sai destacado com ⭐"><input type="radio" name="ad-melhor" ${cn&&cn.melhor?"checked":""}> ⭐</label>
+    <button class="btn-mini" onclick="this.closest('.ad-row').remove()" title="tirar este cenário">✕</button>
+  </div>`;
+}
+function formAnalise(c){
+  const pre=adPre; adPre=null;   // consumo único: os valores passam a viver no DOM
+  return `<details class="lb-novo" id="ad-novo" ${pre?"open":""}>
+    <summary>＋ registrar análise</summary>
+    <div class="form-linha" style="margin-top:6px;align-items:center">
+      <label class="meio-sub">feita em <input type="date" id="ad-data" value="${pre&&pre.data||hoje()}" max="${hoje()}"
+        title="a análise antiga entra com a data original — a de 2020 entra como 2020"></label>
+      <select id="ad-fonte" title="de onde saiu o cálculo">
+        <option value="manual">análise manual</option>
+        <option value="previus">cálculo do Prévius</option>
+        <option value="todo" ${pre?"selected":""}>anotação do To Do</option>
+      </select>
+      <input type="hidden" id="ad-nota" value="${pre?`${pre.lembId}:${pre.i}`:""}">
+    </div>
+    <textarea id="ad-contexto" placeholder="o que foi visto e combinado com o cliente — ex.: prefere esperar a regra dos pontos; avisar quando faltar 6 meses"
+      style="width:100%;min-height:52px;margin-top:6px">${pre?esc(pre.texto||""):""}</textarea>
+    <div id="ad-cens" style="margin-top:6px">${linhaCenario()}${linhaCenario()}</div>
+    <div class="form-linha">
+      <button class="btn-mini" onclick="document.getElementById('ad-cens').insertAdjacentHTML('beforeend', linhaCenario())">＋ cenário</button>
+      <button style="margin-left:auto" onclick="salvarAnalise('${c.id}')">⚖️ Registrar análise</button>
+    </div>
+    <datalist id="lista-regras">${REGRAS_DIREITO.map(r=>`<option value="${esc(r)}">`).join("")}</datalist>
+  </details>`;
+}
+async function salvarAnalise(cliId){
+  const v=id=>{const e=document.getElementById(id);return e?e.value.trim():"";};
+  const data=v("ad-data"), contexto=v("ad-contexto"), fonte=v("ad-fonte")||"manual";
+  if(!data) return aviso("Diga a data em que a análise foi feita");
+  const cenarios=[...document.querySelectorAll("#ad-cens .ad-row")].map(r=>({
+    regra:r.querySelector(".ad-regra").value.trim()||null,
+    data:r.querySelector(".ad-data").value||null,
+    valor:(x=>x?+x:null)(r.querySelector(".ad-valor").value),
+    obs:r.querySelector(".ad-obs").value.trim()||null,
+    melhor:r.querySelector("input[type=radio]").checked||undefined,
+  })).filter(x=>x.regra||x.data||x.valor||x.obs);
+  if(!contexto && !cenarios.length)
+    return aviso("Registre pelo menos um cenário ou o que foi conversado");
+  let a;
+  try{
+    [a]=await api(`/rest/v1/analises_direito`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({cliente_id:cliId, autor_id:eu.id, data_analise:data,
+        contexto:contexto||null, fonte, cenarios})});
+  }catch(e){ return aviso("Rode o crm/fase2/schema_analise_direito.sql no Supabase — falta a tabela 'analises_direito'"); }
+  if(a){
+    D.analises=D.analises||[]; D.analises.push(a);
+    const as=D.analisesPorCliente.get(cliId)||[];
+    as.push(a); as.sort((x,y)=>x.data_analise<y.data_analise?1:-1);
+    D.analisesPorCliente.set(cliId, as);
+  }
+  // ⚖️ → 🏢 o comentário nos andamentos de TODOS os casos ativos do cliente
+  const ativosCli=D.casos.filter(k=>k.cliente_id===cliId && k.fase!=="encerrado");
+  if(ativosCli.length){
+    const m=cenMelhor({cenarios}), outros=cenarios.length-(m?1:0);
+    const txt=`⚖️ Análise de Direito registrada (${fmt(data)})`
+      +(m?` — melhor caminho: ${m.regra||"?"}${m.data?` em ${fmt(m.data)}`:""}${m.valor?`, ${moedaBR(m.valor)}`:""}`:"")
+      +(outros>0?`; +${outros} cenário(s)`:"")+`. Detalhes na aba Análise de Direito.`;
+    try{
+      await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify(ativosCli.map(k=>({caso_id:k.id, autor_id:eu.id, origem:"app", texto:txt})))});
+    }catch(e){}
+  }
+  // a anotação do To Do que originou esta análise ganha o carimbo "✔ virou"
+  const nota=v("ad-nota");
+  if(nota && a){
+    const [lembId, i]=nota.split(":");
+    const l=(D.lembretes||[]).find(x=>x.id===lembId);
+    const dts=l?{...(l.detalhes||{})}:null;
+    if(dts && (dts.anotacoes||[])[+i]){
+      dts.anotacoes=dts.anotacoes.slice();
+      dts.anotacoes[+i]={...dts.anotacoes[+i], analise_id:a.id};
+      try{
+        await api(`/rest/v1/lembretes?id=eq.${lembId}`,{method:"PATCH",
+          headers:{Prefer:"return=minimal"}, body:JSON.stringify({detalhes:dts})});
+        l.detalhes=dts;
+      }catch(e){}
+    }
+  }
+  aviso("⚖️ Análise registrada", false);
+  montarSidebar(); abrirFicha(cliId);
+}
+async function apagarAnalise(id){
+  const a=(D.analises||[]).find(x=>x.id===id); if(!a) return;
+  if(!confirm("Apagar esta análise? Os comentários já gravados nos casos ficam.")) return;
+  try{ await api(`/rest/v1/analises_direito?id=eq.${id}`,{method:"DELETE"}); }
+  catch(e){ return aviso("Não consegui apagar — tente de novo."); }
+  D.analises=D.analises.filter(x=>x.id!==id);
+  const as=(D.analisesPorCliente.get(a.cliente_id)||[]).filter(x=>x.id!==id);
+  if(as.length) D.analisesPorCliente.set(a.cliente_id, as); else D.analisesPorCliente.delete(a.cliente_id);
+  aviso("Análise apagada", false);
+  montarSidebar(); if(clienteAberto) abrirFicha(clienteAberto); else render();
+}
+function notaViraAnalise(lembId, i){
+  const l=(D.lembretes||[]).find(x=>x.id===lembId); if(!l) return;
+  const n=((l.detalhes||{}).anotacoes||[])[i]; if(!n) return;
+  adPre={data:n.data||hoje(), texto:n.texto||"", lembId, i};
+  abaAtiva=8; repintarFicha();
+  const d=document.getElementById("ad-novo"); if(d) d.scrollIntoView({block:"start"});
+}
+// o aviso de época reusa a máquina que já existe: aposentadorias + avisoApos
+// (🎂 no Meu Dia 3 meses antes) — nada novo para manter
+async function avisarCenario(cliId, data, regra){
+  await lembrarApos(cliId, null, data, regra||"Aposentadoria", avisoApos(data));
+}
+function painelDireito(c){
+  if(D.analises===null)
+    return `<p class="meio-sub">A tabela desta página ainda não existe no banco — rode o
+      <b>crm/fase2/schema_analise_direito.sql</b> no SQL Editor do Supabase e recarregue o CRM.</p>`;
+  const as=analisesDe(c.id);
+  const notas=[];
+  for(const l of (D.lembretes||[]).filter(x=>x.cliente_id===c.id && x.tipo==="aposentadoria_futura"))
+    ((l.detalhes||{}).anotacoes||[]).forEach((n,i)=>{ if(!n.analise_id) notas.push({...n, lembId:l.id, i}); });
+  return `
+    <h3 style="margin-bottom:4px">⚖️ Análise de Direito de ${esc(c.nome.split(" ")[0])}</h3>
+    <p class="meio-sub" style="margin-bottom:8px">O que já foi visto com o cliente, atendimento por
+      atendimento — a memória do escritório para a próxima conversa. Cada análise guarda os caminhos
+      calculados na época (regra, data prevista, valor) e o que foi combinado.</p>
+    ${formAnalise(c)}
+    ${as.length ? as.map(cartaoAnalise).join("")
+      : `<p class="meio-sub" style="margin-top:8px">Nenhuma análise registrada ainda — a primeira
+         começa no "＋ registrar análise" aqui em cima. Análise antiga entra com a data original.</p>`}
+    ${notas.length?`<div class="caso" style="margin-top:10px;border-left:3px solid var(--roxo)">
+      <div class="rotulo-caso">🗒 Anotações antigas do To Do (lista 🙏 Aposentadorias Futuras)</div>
+      <p class="meio-sub">O que você anotava para lembrar no futuro. "→ virar análise" traz a anotação
+        para cá, já com a data original.</p>
+      <ul class="mov-lista" style="margin-top:4px">${notas.map(n=>`<li>
+        <span class="mov-data">${n.data?fmt(n.data):"—"}</span>
+        <span class="mov-txt">${n.inicial&&n.inicial!=="?"?`<b>${esc(n.inicial)}:</b> `:""}${esc(n.texto||"")}</span>
+        <button class="btn-mini" onclick="notaViraAnalise('${n.lembId}',${n.i})">→ virar análise</button>
+      </li>`).join("")}</ul></div>`:""}`;
+}
+// ── a visão global da barra lateral: Análises | Dashboard ─────────────────
+let subDireito = ler("crm_subdireito") || "analises";
+function irSubDireito(s){ subDireito=s; guardar("crm_subdireito", s); render(); }
+function abrirDireitoDe(cliId){ abaAtiva=8; abrirFicha(cliId); }
+function renderDireito(){
+  tituloLista("⚖️ Análise de Direito");
+  const sub=document.getElementById("sub-lista"), meio=document.getElementById("conteudo-meio");
+  if(D.analises===null){
+    sub.textContent="";
+    meio.innerHTML=`<p class="meio-sub">A tabela desta página ainda não existe no banco — rode o
+      <b>crm/fase2/schema_analise_direito.sql</b> no SQL Editor do Supabase e recarregue o CRM.</p>`;
+    return;
+  }
+  const menu=`<div class="sub-menu" style="width:100%;margin-bottom:10px">
+    <button class="${subDireito==="analises"?"on":""}" onclick="irSubDireito('analises')">Análises</button>
+    <button class="${subDireito==="dash"?"on":""}" onclick="irSubDireito('dash')">Dashboard</button>
+  </div>`;
+  if(subDireito==="dash"){
+    sub.textContent="A régua do escritório: quem já pode, quem está chegando, o que precisa de revisão.";
+    meio.innerHTML = menu + dashDireito();
+    return;
+  }
+  sub.textContent="A memória dos atendimentos: o que já foi visto com cada cliente, para a próxima conversa.";
+  const grupos=[...(D.analisesPorCliente||new Map()).entries()]
+    .map(([cliId,as])=>({c:D.cliPorId.get(cliId), as})).filter(g=>g.c)
+    .sort((x,y)=>x.as[0].data_analise<y.as[0].data_analise?1:-1);
+  meio.innerHTML = menu + (grupos.length ? grupos.map(g=>{
+    const ult=g.as[0], m=cenMelhor(ult);
+    const alcancou=(ult.cenarios||[]).some(x=>x.data&&x.data<=hoje()) && g.c.aposentado!==true;
+    return `<div class="cartao" data-cli="${g.c.id}" onclick="abrirDireitoDe('${g.c.id}')">
+      <div class="info"><div class="nome">${esc(g.c.nome)}</div>
+        <div class="meta">
+          <span class="chip per">⚖️ ${g.as.length} análise${g.as.length>1?"s":""}</span>
+          <span>última em <b>${fmt(ult.data_analise)}</b></span>
+          ${m?`<span class="chip ${alcancou?"verde":"ben"}">${alcancou?"✓ direito alcançado":"melhor: "+esc(m.regra||"—")+(m.data?" em "+fmt(m.data):"")}</span>`:""}
+        </div></div></div>`;
+  }).join("") : `<p class="meio-sub">Nenhuma análise registrada ainda. Abra a ficha de um cliente na aba
+    <b>Análise de Direito</b> e registre a primeira — análise antiga entra com a data original
+    (a de 2020 entra como 2020).</p>`);
+}
+function dashDireito(){
+  const h=hoje(), lim=somaMeses(h,12), corte=somaMeses(h,-24);
+  const grupos=[...(D.analisesPorCliente||new Map()).entries()]
+    .map(([cliId,as])=>({c:D.cliPorId.get(cliId), ult:as[0]})).filter(g=>g.c);
+  const alc=direitoAlcancado();
+  const prox=[], regras=new Map(); let velhas=0;
+  for(const g of grupos){
+    if(g.ult.data_analise<corte && g.c.aposentado!==true) velhas++;
+    const m=cenMelhor(g.ult);
+    if(m&&m.regra) regras.set(m.regra,(regras.get(m.regra)||0)+1);
+    for(const cn of (g.ult.cenarios||[]))
+      if(cn.data && cn.data>h && cn.data<=lim && g.c.aposentado!==true) prox.push({c:g.c, cn});
+  }
+  prox.sort((x,y)=>x.cn.data<y.cn.data?-1:1);
+  const tile=(n,rot,cor)=>`<div class="ad-tile" style="border-top:3px solid ${cor}"><b>${n}</b><span>${rot}</span></div>`;
+  const barras=[...regras.entries()].sort((x,y)=>y[1]-x[1]);
+  const max=barras.length?barras[0][1]:1;
+  return `
+    <div class="ad-tiles">
+      ${tile((D.analises||[]).length,"análises registradas","var(--azul)")}
+      ${tile(grupos.length,"clientes analisados","var(--roxo)")}
+      ${tile(alc.length,"já podem aposentar","var(--verde)")}
+      ${tile(prox.length,"aposentam em até 12 meses","#E9B44C")}
+      ${tile(velhas,"análises com 2+ anos — rever","var(--vermelho)")}
+    </div>
+    ${alc.length?`<h3 class="secao">✓ Direito alcançado — comunicar (${alc.length})</h3>`+alc.map(x=>{
+      const cn=(x.analise.cenarios||[]).filter(c2=>c2.data&&c2.data<=h).sort((a2,b2)=>a2.data<b2.data?-1:1)[0];
+      return `<div class="cartao" data-cli="${x.cliente.id}" onclick="abrirDireitoDe('${x.cliente.id}')">
+        <div class="info"><div class="nome">${esc(x.cliente.nome)}</div>
+          <div class="meta"><span class="chip verde">✓ ${esc(cn.regra||"—")} desde ${fmt(cn.data)}</span>
+            ${cn.valor?`<span class="chip ben">${moedaBR(cn.valor)}</span>`:""}
+            ${x.cliente.telefone?`<a class="chip per" href="https://wa.me/55${x.cliente.telefone.replace(/\D/g,"")}"
+              target="_blank" rel="noopener" onclick="event.stopPropagation()">💬 chamar</a>`:""}</div></div></div>`;
+    }).join(""):""}
+    ${prox.length?`<h3 class="secao">🗓 Próximas aposentadorias (12 meses)</h3>`+prox.slice(0,20).map(x=>`
+      <div class="cartao" data-cli="${x.c.id}" onclick="abrirDireitoDe('${x.c.id}')">
+        <div class="info"><div class="nome">${esc(x.c.nome)}</div>
+          <div class="meta"><span class="chip fase">${esc(x.cn.regra||"—")}</span>
+            <span>direito em <b>${fmt(x.cn.data)}</b> (${(mm=>mm<=1?"1 mês":mm+" meses")(mesesAte(x.cn.data))})</span>
+            ${x.cn.valor?`<span class="chip ben">${moedaBR(x.cn.valor)}</span>`:""}</div></div>
+        <button class="btn-mini" style="flex:none" onclick="event.stopPropagation();avisarCenario('${x.c.id}','${x.cn.data}','${escJs(x.cn.regra||"")}')"
+          title="cria o aviso 🎂 que entra no Meu Dia ${MESES_AVISO} meses antes da data">🎂 avisar na época</button>
+      </div>`).join(""):""}
+    ${barras.length?`<h3 class="secao">Por regra (melhor caminho das análises mais recentes)</h3>
+      <div class="caso">${barras.map(([r,n])=>`
+        <div class="ad-barra"><span class="ad-barra-rot">${esc(r)}</span>
+          <span class="ad-barra-tr"><span class="ad-barra-in" style="width:${Math.round(n/max*100)}%"></span></span>
+          <b>${n}</b></div>`).join("")}</div>`:""}
+    ${!(D.analises||[]).length?`<p class="meio-sub">O dashboard acende quando as primeiras análises
+      forem registradas.</p>`:""}`;
+}
+
 function caixaApos(cli){
   const lista=aposDoCliente(cli);
   const auto=lista.find(a=>a.automatica);
