@@ -74,8 +74,10 @@ FIX.andamentos.push({ id: NOV, caso_id: CASO1, origem: "pat", origem_id: "novtes
   // 3) o modal: lembrar já sugerido para o dia seguinte útil, chips e ⏰ PRAZO
   await p.click('.nov button:has-text("dar seguimento")');
   await p.waitForTimeout(400);
+  // F51: julgamento não é "avisar para preparação" — o texto é o agendamento
+  // em si, com a conferência do resultado no dia seguinte
   conf("o modal abre com a anotação pré-escrita em bom português",
-    /o julgamento foi agendado/.test(await p.inputValue("#seg-txt")));
+    /Julgamento agendado para .* às .*Verificar o resultado/.test(await p.inputValue("#seg-txt")));
   conf("LEMBRAR já vem sugerido para o dia seguinte útil (25.08)",
     (await p.inputValue("#seg-data")) === "2026-08-25");
   conf("os atalhos véspera / dia seguinte existem",

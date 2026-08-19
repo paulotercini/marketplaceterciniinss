@@ -440,3 +440,12 @@ posiciona com `.app.celular ~ .fab-rapida`. O modal reusa caixa()
 caixa aberta — testar fechamento por `#modal.style.display==="none"`.
 A nota rápida sem caso NÃO tem emoji no texto (o Cadastro é limpo;
 o 🔥 visível vem do render de n.urgente, que já existia).
+
+## julgamento.js (F51) — julgamento não é perícia
+
+evJaAgendado trava reaplicação por (caso, data): num teste que agenda o
+MESMO dia duas vezes (modal e depois 1 clique), limpe D.eventos entre os
+passos ou o aplicarPericia devolve "já agendada" e nada grava. O chip
+pré-marcado do admin sai no template (classe on + fundo) a partir de
+segAberto.quem — o handler de clique continua fazendo o toggle certo
+porque lê o mesmo Set.

@@ -1767,7 +1767,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.49 · F50 — ⚡ ANOTAÇÃO RÁPIDA, o botão que atende o telefone: fixo no canto da tela (desktop e celular), abre nome + anotação + 🔥 urgente já ligado; com caso em andamento vira andamento E marca o caso URGENTE (sobe em toda lista), sem caso vira anotação urgente do atendimento na ficha — a ligação e o balcão nunca mais passam sem registro. · F49 — a análise de direito NO TRILHO do primeiro atendimento: passo "4 · ⚖️ Análise de Direito" na mesa das Anotações com os campos preenchíveis (o mesmo formulário da aba ⚖️), linha de estado verde/âmbar na TRIAGEM (com atalho) e nas Anotações, o fecho da triagem registra "análise feita em X / PENDENTE", e análise salva SEM caso ativo vira anotação do atendimento (que migra para os andamentos quando o pré-caso virar caso, pela regra do F30). · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.50 · F51 — JULGAMENTO no seguimento das Novidades corrigido (pedido do Paulo): nada de "avisar o cliente para preparação" — o texto vira "⚖️ Julgamento agendado para DD.MM.AAAA às HH:MM. Verificar o resultado no dia seguinte.", a tarefa nasce no dia útil seguinte ao julgamento e a atribuição padrão é do admin (Paulo), no modal 📌 (chip já marcado) e no 1 clique/lote; a véspera de "mensagem ao cliente" não nasce para julgamento. Perícia/audiência seguem como eram. · F50 — ⚡ ANOTAÇÃO RÁPIDA, o botão que atende o telefone: fixo no canto da tela (desktop e celular), abre nome + anotação + 🔥 urgente já ligado; com caso em andamento vira andamento E marca o caso URGENTE (sobe em toda lista), sem caso vira anotação urgente do atendimento na ficha — a ligação e o balcão nunca mais passam sem registro. · F49 — a análise de direito NO TRILHO do primeiro atendimento: passo "4 · ⚖️ Análise de Direito" na mesa das Anotações com os campos preenchíveis (o mesmo formulário da aba ⚖️), linha de estado verde/âmbar na TRIAGEM (com atalho) e nas Anotações, o fecho da triagem registra "análise feita em X / PENDENTE", e análise salva SEM caso ativo vira anotação do atendimento (que migra para os andamentos quando o pré-caso virar caso, pela regra do F30). · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5256,13 +5256,20 @@ function segRegistrar(casoId, texto, andId, deNovidade){
 const segBtnHtml = (i, rot) => `<button class="btn-mini" onclick="abrirSeguimento(${i})"
   title="dar seguimento: anotar, atribuir a alguém com data, marcar prazo processual — e, se houver perícia/audiência/julgamento com data no texto, agendar">${rot||"📌"}</button>`;
 
+// F51 · o responsável padrão do escritório: o admin ativo (o Paulo) — é
+// quem recebe, por padrão, a conferência do resultado de julgamento
+const colAdmin = () => equipeAtiva().find(c=>c.papel==="admin") || eu;
 let segAberto = null;
 function abrirSeguimento(i){
   const s = segItens[i]; if(!s) return;
   const k = D.casoPorId.get(s.casoId)||{}, c = D.cliPorId.get(k.cliente_id)||{};
   const ev = eventoNoTexto(s.texto);
   const jaAg = ev && evJaAgendado(s.casoId, ev.data);
-  segAberto = {...s, ev, quem:new Set()};
+  // F51 · julgamento (CRPS) não tem "preparação do cliente": o seguimento
+  // certo é registrar o agendamento e conferir o RESULTADO no dia seguinte,
+  // atribuído por padrão ao admin (pedido do Paulo)
+  const ehJulg = ev && ev.tipo==="Julgamento";
+  segAberto = {...s, ev, quem:new Set(ehJulg?[colAdmin().id]:[])};
   const nome1 = (c.nome||"o cliente").split(" ")[0];
   caixa(`<h3 style="margin:0 0 2px">📌 Dar seguimento — ${esc(c.nome||"")}</h3>
     <p class="meio-sub" style="margin:0 0 8px;max-height:64px;overflow:hidden">“${esc(s.texto.slice(0,180))}${s.texto.length>180?"…":""}”</p>
@@ -5271,11 +5278,13 @@ function abrirSeguimento(i){
       🩺 agendar ${esc(ev.tipo)} de ${fmt(ev.data)} às ${ev.hora} na aba Perícias${jaAg?` — <b>já está agendad${evFem(ev.tipo)?"a":"o"}</b>`:""}
     </label>`:""}
     <textarea id="seg-txt" rows="2" style="width:100%;font:inherit;padding:8px;border:1px solid var(--borda);border-radius:8px"
-      placeholder="anotação / o que precisa ser feito">${ev?`📞 Avisar ${esc(nome1)} que ${evFem(ev.tipo)?"a":"o"} ${esc(ev.tipo.toLowerCase())} foi agendad${evFem(ev.tipo)?"a":"o"} para ${fmt(ev.data)} às ${ev.hora} — oferecer atendimento de preparação antes.`:""}</textarea>
+      placeholder="anotação / o que precisa ser feito">${ev?(ehJulg
+        ?`⚖️ Julgamento agendado para ${fmt(ev.data)} às ${ev.hora}. Verificar o resultado no dia seguinte.`
+        :`📞 Avisar ${esc(nome1)} que ${evFem(ev.tipo)?"a":"o"} ${esc(ev.tipo.toLowerCase())} foi agendad${evFem(ev.tipo)?"a":"o"} para ${fmt(ev.data)} às ${ev.hora} — oferecer atendimento de preparação antes.`):""}</textarea>
     <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
       <span style="font-size:12px;color:var(--cinza);font-weight:700">PARA</span>
-      ${equipeAtiva().map(co=>`<button class="btn-rap seg-quem" data-col="${co.id}"
-        style="padding:4px 10px" title="${esc(co.nome)}">${esc(co.inicial)}</button>`).join("")}
+      ${equipeAtiva().map(co=>`<button class="btn-rap seg-quem${segAberto.quem.has(co.id)?" on":""}" data-col="${co.id}"
+        style="padding:4px 10px${segAberto.quem.has(co.id)?";background:#E8F1FB":""}" title="${esc(co.nome)}">${esc(co.inicial)}</button>`).join("")}
       <button class="btn-rap" id="seg-todos" style="padding:4px 10px" title="a equipe inteira">👥 todos</button>
     </div>
     <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
@@ -5296,7 +5305,7 @@ function abrirSeguimento(i){
       <span class="meio-sub" style="font-size:12px">é prazo processual? preencha a DATA FATAL —
         a anotação sai com “[PRAZO]” e o caso vai para 🗓 Tarefas com Prazo</span>
     </div>
-    ${ev&&!jaAg?`<p class="meio-sub" style="margin:8px 0 0">🗓 junto com o agendamento nasce a VÉSPERA:
+    ${ev&&!jaAg&&!ehJulg?`<p class="meio-sub" style="margin:8px 0 0">🗓 junto com o agendamento nasce a VÉSPERA:
       lembrete ${fmt(diasUteisAntes(ev.data,3))} (3 dias úteis antes) para mandar a mensagem ao cliente.</p>`:""}
     <div class="form-linha" style="margin-top:12px">
       <button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
@@ -5357,16 +5366,21 @@ async function salvarSeguimento(){
           data_hora:`${s.ev.data}T${s.ev.hora}:00-03:00`, local:null})})||[];
       if(evn) D.eventos.push(evn);
       feito.push(`🩺 ${fmt(s.ev.data)}`);
-      const vesp = diasUteisAntes(s.ev.data, 3);
-      const [av]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
-        body:JSON.stringify({caso_id:s.casoId, autor_id:eu.id, origem:"app", publico:false,
-          texto:`🗓 Véspera d${evFem(s.ev.tipo)?"a":"o"} ${s.ev.tipo.toLowerCase()} de ${fmt(s.ev.data)}: mandar a mensagem de lembrete ao cliente (aba 🩺).`})})||[];
-      if(av){
-        const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
-          body:JSON.stringify({andamento_id:av.id, caso_id:s.casoId, colaborador_id:eu.id,
-                               atribuido_por:eu.id, lembrar_em:vesp})});
-        tarefaNaMemoria(tf);
-        feito.push(`véspera ${fmt(vesp)}`);
+      // F51 · a véspera de "mensagem ao cliente" NÃO vale para julgamento —
+      // no CRPS não há presença nem preparação; o que importa é o resultado,
+      // e a tarefa de conferir já nasce do texto pré-preenchido + dia seguinte
+      if(s.ev.tipo!=="Julgamento"){
+        const vesp = diasUteisAntes(s.ev.data, 3);
+        const [av]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+          body:JSON.stringify({caso_id:s.casoId, autor_id:eu.id, origem:"app", publico:false,
+            texto:`🗓 Véspera d${evFem(s.ev.tipo)?"a":"o"} ${s.ev.tipo.toLowerCase()} de ${fmt(s.ev.data)}: mandar a mensagem de lembrete ao cliente (aba 🩺).`})})||[];
+        if(av){
+          const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+            body:JSON.stringify({andamento_id:av.id, caso_id:s.casoId, colaborador_id:eu.id,
+                                 atribuido_por:eu.id, lembrar_em:vesp})});
+          tarefaNaMemoria(tf);
+          feito.push(`véspera ${fmt(vesp)}`);
+        }
       }
     }
     if(s.deNovidade && s.andId) await marcarLidas([s.andId]);
@@ -5401,6 +5415,23 @@ async function aplicarPericia(s){
       tarefaNaMemoria(tf);
     }
   };
+  // F51 · JULGAMENTO (CRPS) é outro rito: não há preparação nem presença do
+  // cliente — o registro certo é o agendamento em si, e UMA tarefa de conferir
+  // o RESULTADO no dia útil seguinte, atribuída por padrão ao admin (o Paulo)
+  if(ev.tipo==="Julgamento"){
+    const conferir = proxDiaUtil(somaDias(ev.data, 1));
+    const [novo]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:s.casoId, autor_id:eu.id, origem:"app", publico:false,
+        texto:`⚖️ Julgamento agendado para ${fmt(ev.data)} às ${ev.hora}. Verificar o resultado no dia seguinte.`,
+        ...(s.andId?{responde_a:s.andId}:{})})})||[];
+    if(novo){
+      const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({andamento_id:novo.id, caso_id:s.casoId, colaborador_id:colAdmin().id,
+                             atribuido_por:eu.id, lembrar_em:conferir})});
+      tarefaNaMemoria(tf);
+    }
+    return `agendado + resultado ${fmt(conferir)} (${colAdmin().inicial})`;
+  }
   const fEv = evFem(ev.tipo);
   await criar(`📞 Avisar ${nome1} que ${fEv?"a":"o"} ${ev.tipo.toLowerCase()} foi agendad${fEv?"a":"o"} para ${fmt(ev.data)} às ${ev.hora} — oferecer atendimento de preparação antes. (Registre pelo 📞 na aba 🩺.)`, hoje());
   const vesp = diasUteisAntes(ev.data, 3);
