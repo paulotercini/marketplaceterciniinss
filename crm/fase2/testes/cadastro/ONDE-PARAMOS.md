@@ -1,4 +1,26 @@
-# Onde paramos — 18.08.2026, versão 09.49
+# Onde paramos — 19.08.2026, versão 09.50
+
+## F51 · Julgamento no seguimento: resultado, não "preparação" (09.50)
+
+Correção pedida pelo Paulo: quando a novidade é agendamento de
+JULGAMENTO do CRPS, o seguimento sugeria "📞 Avisar {cliente} que o
+julgamento foi agendado… oferecer atendimento de preparação antes" —
+texto de PERÍCIA, errado para julgamento (não há presença nem
+preparação do cliente no CRPS).
+
+Agora, julgamento é rito próprio nas duas portas: no modal 📌 o texto
+pré-escrito é "⚖️ Julgamento agendado para DD.MM.AAAA às HH:MM.
+Verificar o resultado no dia seguinte.", a data de lembrar já vem no
+dia útil seguinte (isso já existia) e o chip do ADMIN (o Paulo,
+colAdmin() = papel admin na equipeAtiva) nasce marcado — atribuição
+padrão dele; a véspera de "mensagem ao cliente" não é oferecida nem
+criada. No 1 clique/lote (aplicarPericia), julgamento agenda o evento
+e cria UMA tarefa de conferir o resultado no dia útil seguinte para o
+admin — sem 📞 nem véspera. Perícia/audiência seguem exatamente como
+eram (prova de regressão no teste). Teste julgamento.js, 11 provas;
+novidades.js atualizado à regra nova; suíte 42 arquivos.
+
+# Onde paramos — versão 09.49
 
 ## F50 · ⚡ Anotação rápida — o botão que atende o telefone (09.49)
 
