@@ -1,4 +1,42 @@
-# Onde paramos — 19.08.2026, versão 09.50
+# Onde paramos — 19.08.2026, versão 09.52
+
+## F53 · Anotação rápida: as duas saídas sempre embaixo da lista (09.52)
+
+Refinamento pedido pelo Paulo: qualquer parte do nome lista os clientes
+embaixo (já fazia), e SEMPRE deve haver saída de criação embaixo da
+lista — mesmo quando a busca acha homônimos parciais.
+
+Com 3+ letras, abaixo dos resultados aparecem sempre duas saídas:
+"➕ Cadastrar como CLIENTE novo" (arNovoCliente → POST clientes só com
+o nome, a anotação entra como atendimento urgente via PATCH campos, o
+cliente entra em D/cliPorId/casosDoCliente + reindexarCliente para a
+busca achar na hora, e a ficha abre para completar o cadastro) e
+"➕ Anotar como INTERESSADO" (F52, funil Vendas). Pegadinha de teste: o
+mock do rapida.js respondia escrita sem eco de representation — o POST
+clientes devolvia vazio e o fluxo caía no catch; igualado aos demais
+testes (eco com id). rapida.js com 20 provas; suíte 42.
+
+# Onde paramos — versão 09.51
+
+## F52 · Anotação rápida com porta fixa e interessados (09.51)
+
+Feedback do Paulo sobre a F50: não achou o ⚡ do canto, e o campo tem
+que estar VISÍVEL, mais fácil que a busca, com o mínimo de clique — e
+tem que servir para quem nem cliente é ainda.
+
+Porta nova FIXA no topo da barra lateral, acima da busca: o campo
+"⚡ Anotação rápida — nome…" com borda azul de destaque. Clicou, o
+painel abre com o cursor já no nome (onfocus → anotacaoRapida). Enter
+no texto guarda (Shift+Enter quebra linha). O ⚡ do canto continua (é
+a porta do celular). Destinos: cliente com caso → andamento + caso 🔥
+(F50); cliente sem caso → anotação urgente do atendimento (F50); e o
+NOVO, quem não é cliente → botão "➕ {nome} ainda não é cliente" cria
+INTERESSADO no funil 💼 Vendas (POST leads, origem "ligação/balcão",
+a anotação vai em beneficio_interesse — o campo que o cartão do funil
+exibe; sem coluna nova no banco). De lá, o caminho já existente
+"→ virar cliente" completa o ciclo. rapida.js com 16 provas; suíte 42.
+
+# Onde paramos — versão 09.50
 
 ## F51 · Julgamento no seguimento: resultado, não "preparação" (09.50)
 
