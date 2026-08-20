@@ -449,3 +449,13 @@ passos ou o aplicarPericia devolve "já agendada" e nada grava. O chip
 pré-marcado do admin sai no template (classe on + fundo) a partir de
 segAberto.quem — o handler de clique continua fazendo o toggle certo
 porque lê o mesmo Set.
+
+## F52 — a porta fixa da anotação rápida
+
+O input #ar-nome da barra lateral é HTML ESTÁTICO (fora de template) —
+comentário ali é <!-- -->, não ${""}. O onfocus abre o modal e o foco
+PULA para #ar-busca: quem digita rápido continua digitando no lugar
+certo. No Playwright, p.focus após setar value via evaluate não repete
+o fluxo humano — teste com p.click e confira o activeElement. O lead do
+não-cliente usa beneficio_interesse para a anotação (campo já exibido
+no kcard do funil): escolha deliberada para não criar coluna.

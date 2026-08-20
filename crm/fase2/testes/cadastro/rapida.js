@@ -30,7 +30,9 @@ const SUPA = "https://ficticio.supabase.co";
     if (m !== "GET") {
       const corpo = JSON.parse(rota.request().postData() || "{}");
       escritos.push({ m, t, corpo });
-      return rota.fulfill({ status: 204, body: "" });
+      const rep = /return=representation/.test(JSON.stringify(rota.request().headers()));
+      return rota.fulfill({ status: rep ? 201 : 204, contentType: "application/json",
+        body: rep ? JSON.stringify([{ id: "n" + escritos.length, ...corpo }]) : "" });
     }
     let corpo = FIX[t] || [];
     const f = u.match(/cliente_id=eq\.([0-9a-f-]+)/);
@@ -45,8 +47,19 @@ const SUPA = "https://ficticio.supabase.co";
   await p.waitForSelector("#app.logado");
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
-  // 1) o botão fixo existe em qualquer tela
+  // 1) as DUAS portas existem: o campo fixo no topo da barra e o botão do canto
   conf("o ⚡ está fixo na tela", await p.evaluate(() => !!document.getElementById("fab-rapida")));
+  conf("o campo ⚡ vive na barra lateral, ACIMA da busca (F52)",
+    await p.evaluate(() => { const a = document.getElementById("ar-nome"), b = document.getElementById("busca");
+      return a && b && (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING); }));
+  // clicar no campo já abre o painel com o cursor pronto para digitar o nome
+  await p.click("#ar-nome");
+  await p.waitForTimeout(300);
+  conf("clicar no campo abre o painel direto, cursor no nome",
+    await p.evaluate(() => document.getElementById("ar-busca") &&
+      document.activeElement === document.getElementById("ar-busca")));
+  await p.evaluate(() => fecharCaixa());
+  await p.waitForTimeout(200);
 
   // 2) abre com a busca focada e o urgente já ligado
   await p.click("#fab-rapida");
@@ -108,6 +121,53 @@ const SUPA = "https://ficticio.supabase.co";
         /balcão: trouxe a carteira/.test(n.texto) && n.urgente === true && n.origem === "rapida")));
   conf("e nenhum andamento é tentado (não há caso)",
     !escritos.some(x => x.t === "andamentos" || x.t === "casos"));
+
+  // 7) F52 · quem liga sem ser cliente vira INTERESSADO no funil, com a anotação
+  await p.click("#fab-rapida");
+  await p.waitForTimeout(300);
+  await p.fill("#ar-busca", "Zuleica Inexistente");
+  await p.evaluate(() => arProcurar("Zuleica Inexistente"));
+  await p.waitForTimeout(200);
+  conf("sem resultado, oferece anotar como interessado",
+    await p.evaluate(() => /ainda não é cliente/.test(document.getElementById("ar-achados").textContent)));
+  await p.evaluate(() => arNaoCliente());
+  await p.fill("#ar-texto", "Ligou perguntando de aposentadoria rural, retornar amanhã.");
+  escritos.length = 0;
+  await p.evaluate(() => salvarAnotacaoRapida());
+  await p.waitForTimeout(500);
+  conf("o interessado nasce no funil com a anotação como interesse",
+    escritos.some(x => x.m === "POST" && x.t === "leads" &&
+      x.corpo.nome === "Zuleica Inexistente" && x.corpo.origem === "ligação/balcão" &&
+      /aposentadoria rural/.test(x.corpo.beneficio_interesse || "")));
+  conf("nada vai para clientes/casos quando é interessado",
+    !escritos.some(x => x.t === "clientes" || x.t === "casos" || x.t === "andamentos"));
+
+  // 8) F53 · as duas saídas aparecem MESMO com resultados na lista
+  await p.click("#fab-rapida");
+  await p.waitForTimeout(300);
+  await p.fill("#ar-busca", "Aurelia");
+  await p.evaluate(() => arProcurar("Aurelia"));
+  await p.waitForTimeout(200);
+  conf("com resultado na lista, as saídas de criar continuam embaixo",
+    await p.evaluate(() => { const h = document.getElementById("ar-achados").textContent;
+      return /Aurélia/.test(h) && /CLIENTE novo/.test(h) && /INTERESSADO/.test(h); }));
+
+  // 9) F53 · cadastrar CLIENTE novo no ato, com a anotação como atendimento
+  await p.evaluate(() => { document.getElementById("ar-busca").value = "Otavio Recem Chegado"; arNovoCliente(); });
+  await p.waitForTimeout(200);
+  conf("a saída de cliente novo explica o destino",
+    await p.evaluate(() => /cliente novo/i.test(document.getElementById("ar-alvo").textContent)));
+  await p.fill("#ar-texto", "Veio ao balcão sem ser cliente, quer contratar amanhã.");
+  escritos.length = 0;
+  await p.evaluate(() => salvarAnotacaoRapida());
+  await p.waitForTimeout(600);
+  conf("o cliente novo nasce com nome e recebe a anotação urgente",
+    escritos.some(x => x.m === "POST" && x.t === "clientes" && x.corpo.nome === "Otavio Recem Chegado") &&
+    escritos.some(x => x.m === "PATCH" && x.t === "clientes" &&
+      ((x.corpo.campos || {}).atendimento || []).some(n => /balcão sem ser cliente/.test(n.texto) && n.urgente === true)));
+  conf("o cliente novo entra na memória e na busca",
+    await p.evaluate(() => D.clientes.some(c => c.nome === "Otavio Recem Chegado") &&
+      pesquisar("Otavio").some(c => c.nome === "Otavio Recem Chegado")));
 
   console.log("=== ⚡ anotação rápida (F50) ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
