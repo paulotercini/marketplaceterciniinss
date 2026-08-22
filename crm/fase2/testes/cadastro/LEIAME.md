@@ -545,3 +545,28 @@ irParaData clica o .mt[data-vv] correspondente com fallback no Cadastro
 (a aba 9 só existe com lembrete; a 3 idem) e, para nota, chama
 irSubCad("anotacoes") — que pode cair em identificacao pela regra
 F29/F30 (cliente com caso e sem pré-caso vivo não tem divisão Anotações).
+
+## F57 — o quadro de datas do caso
+
+quadroDatas roda DENTRO do template fatos-processo — repintarFicha após
+qualquer gravação reconstrói o quadro (e o resto da ficha). As linhas do
+quadro são do CLIENTE inteiro (todas as anotações, lembretes e prazos),
+não só do caso aberto — é o pedido do Paulo: um lugar só.
+
+A dedup nota↔lembrete casa por titulo EXATO
+`Anotação: ${texto.slice(0,60)}` — se mudar o formato do título em
+salvarNotaAtendimento2, mude aqui junto, senão a data aparece dobrada.
+
+qdMudarNota com valor vazio APAGA lembrar_em (delete, não string vazia) —
+string vazia em lembrar_em quebraria as comparações `< hoje()`.
+qdMudarPrazo com vazio grava prazo:null (não remove o caso da lista 🗓 —
+mover de lista é fluxo do processo, não do quadro).
+
+O "✔ feito" do lembrete é lembreteAvisado("id","manual") — POST em
+lembrete_avisos ANTES do PATCH; teste que conta escritos precisa esperar
+os dois. Lembrete recorrente (intervalo_meses) não desliga: avança
+proximo_em — a prova de "sai do quadro" só vale para o único.
+
+Os inputs date do quadro gravam no onchange — Playwright: setar .value
+via evaluate NÃO dispara onchange; chame a função (qdMudarNota etc.) ou
+dispatchEvent. As provas do quadro57.js chamam as funções direto.
