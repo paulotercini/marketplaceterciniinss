@@ -146,12 +146,13 @@ FIX.documentos_beneficio.push(
   conf("a cláusula completa do contrato está a um clique",
     await p.evaluate(() => [...document.querySelectorAll(".caixa-atend details summary")]
       .some(x => /ver a cláusula completa/.test(x.innerText))));
-  // F33 · a lista de documentos nasce FECHADA, com o resumo no título
-  conf("o bloco 2 dos documentos nasce fechado, só o título à vista",
+  // F33 · a lista nasce FECHADA — F54: EXCETO incapacidade, que nasce aberta
+  // (a espécie aqui é "Aux. Incapacidade Temporária (B31)", então: aberta)
+  conf("o bloco 2 nasce ABERTO quando a espécie é incapacidade (F54)",
     await p.evaluate(() => {
       const d = [...document.querySelectorAll(".caixa-atend details")]
         .find(x => /2 · documentos/i.test((x.querySelector("summary") || {}).innerText || ""));
-      return d && !d.open;
+      return d && d.open;
     }));
   conf("e o título resume a lista sem expor os itens",
     await p.evaluate(() => {

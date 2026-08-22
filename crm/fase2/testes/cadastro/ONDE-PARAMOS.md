@@ -1,3 +1,46 @@
+# Onde paramos — 22.08.2026, versão 09.53
+
+## F54 · Pacote do Paulo: PJe de volta, cadastro exigente, vínculo na análise, incapacidade com cidade e Pendências em aberto (09.53)
+
+Cinco pedidos numa mensagem só, todos entregues:
+
+1. **Tela do PJe sumida na aba CNJ (bug real).** Caso com o processo só
+na LISTA `processos[]` (sem `k.processo` preenchido) não tinha "principal",
+e `pjeDoProcesso(..., ehPrincipal=false)` descartava a coleta do PJe cujo
+texto não repete o número — resultado: `temPje=false` e a caixa invisível.
+Fix em painelCNJ: `!p || p.principal || ps.length===1` (um processo só na
+lista É o principal de fato). Reproduzido e confirmado antes do fix.
+
+2. **Cadastro pela anotação rápida exige nome completo e telefone.**
+arNovoCliente recusa nome com uma palavra só; o campo #ar-tel aparece nos
+ramos cliente novo E interessado; salvarAnotacaoRapida barra gravação com
+menos de 10 dígitos. Telefone vai em clientes.telefone / leads.telefone.
+
+3. **Vínculo da triagem viaja para a Análise de Direito.** Bloco novo na
+triagem (select #tri-vinc: empregado/CI/facultativo/não contribui + mês
+"desde" quando empregado) grava em triagem.vinculo via salvarTriagem.
+salvarAnalise anexa "Vínculo (triagem): X." ao contexto quando o texto
+ainda não menciona vínculo. Helper rotVinculo/salvarVinculoTriagem.
+
+4. **Incapacidade pergunta a cidade e abre o checklist.** No pré-caso com
+espécie de incapacidade: input "em qual cidade?" (grava pc.cidade — define
+competência e local da perícia) e o bloco "2 · Documentos" nasce
+`<details open>`. Bug achado pelo teste: ehIncap não casava
+"Auxílio-doença" (dsa vira "auxilio-doenca" com hífen e o regex pedia
+espaço) — regex agora `auxilio[ -]?doenca`.
+
+5. **Pendências em aberto.** Anotação antiga com tarefa pendente não morre
+soterrada: quadro "Pendências em aberto (N)" no topo do bloco 3 das
+Anotações lista toda nota não resolvida que seja urgente, marcada
+"pendência" (checkbox novo na criação) ou com checklist incompleto —
+com botão "Resolvida" (grava resolvida={em,quem}, selo verde na lista,
+sai do quadro). ehNotaPendente/quadroPendencias/resolverNotaAtendimento.
+
+Testes: pacote54.js novo (14 provas). Regressões esperadas ajustadas:
+fluxo.js (bloco 2 agora nasce ABERTO para incapacidade), rapida.js
+(preenche #ar-tel nos fluxos de criação). emoji.js ganhou espera de boot
+(D.cliPorId povoado) — corrida antiga que aflorou. Suíte: 43 arquivos.
+
 # Onde paramos — 19.08.2026, versão 09.52
 
 ## F53 · Anotação rápida: as duas saídas sempre embaixo da lista (09.52)

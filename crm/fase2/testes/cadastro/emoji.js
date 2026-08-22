@@ -41,6 +41,8 @@ const DIVISOES = ["identificacao", "triagem", "anotacoes", "documentos", "consul
   p.on("console", m => { if (m.type() === "error" && !/favicon/.test(m.text())) erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  // o login pinta antes de carregar() terminar — espera os clientes na memória
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
 
   let total = 0;
   for (const quem of [["cheio", CLI_CHEIO], ["sem-caso", CLI_VAZIO]]) {
