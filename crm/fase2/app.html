@@ -1801,6 +1801,17 @@
   .frase-viva{flex:1;min-width:220px;font-size:12.5px;color:var(--tinta);
     border:1px dashed var(--borda);border-radius:8px;padding:7px 10px;align-self:center}
   .frase-viva b{color:var(--azul)}
+
+  /* ── F56 · a data "volta em" à vista (o Concluir em do To Do) ──────────
+     Vermelho cobra, azul avisa, cinza denuncia a ausência de data. */
+  .volta-pilula{border-radius:999px;padding:4px 12px;font-size:12.5px;font-weight:600;
+    border:1px solid var(--borda);cursor:pointer;background:none;white-space:nowrap;
+    max-width:100%;overflow:hidden;text-overflow:ellipsis}
+  .volta-pilula.venceu{border-color:#D9534F;background:#D9534F14;color:#B22E2A}
+  .volta-pilula.futura{border-color:var(--azul);background:#E8F1FB;color:var(--azul)}
+  .volta-pilula.vazia{border-style:dashed;color:var(--cinza);cursor:default;font-weight:400}
+  .chip.volta-chip{border-color:var(--azul);background:#E8F1FB;color:var(--azul);font-weight:600}
+  .chip.venceu-chip{border-color:#D9534F;background:#D9534F14;color:#B22E2A;font-weight:600}
 </style>
 </head>
 <body>
@@ -1813,7 +1824,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.54 · F55 — a ficha respira (pedido do Paulo: menos informação de uma vez, sem flechinha misteriosa, fácil para quem tem pouco contato): a MESA SE ARRUMA SOZINHA — bloco resolvido recolhe numa linha verde que já INFORMA a decisão (espécie · natureza · via · cidade; análise de hoje; honorários com o padrão ou o ajuste à vista) e reabre num toque em "alterar"; a LINHA-GUIA no topo diz numa frase o que falta fazer no atendimento (ou que só resta a decisão final); e o rodapé da anotação virou CÁPSULAS COM PERGUNTA (Como marcar? · Quem cuida disso? com nome e cor · Lembrar quando? · ⏰ Prazo fatal?) com a FRASE-VIVA embaixo confirmando em português o que vai acontecer ao guardar — o prazo fatal agora sai direto da anotação (caso vai para 🗓 Tarefas com Prazo) e o 📌 dar seguimento fala a mesma língua (mesmas perguntas, mesma frase-viva). · F54 — pacote do Paulo: (1) a tela do PJe voltou na aba CNJ (caso com um só processo na lista casava errado e escondia a coleta); (2) cliente novo e interessado pela anotação rápida exigem NOME COMPLETO e TELEFONE; (3) a triagem pergunta o vínculo de hoje (empregado desde / CI / facultativo / não contribui) e a resposta viaja para a análise de direito; (4) benefício por incapacidade no atendimento pergunta a CIDADE e o checklist de documentos nasce aberto; (5) PENDÊNCIAS EM ABERTO — anotação marcada ⏳, urgente ou com checklist por fazer fica presa num quadro no topo das Anotações até alguém Resolver (o selo fica na lista). · F53 — na anotação rápida, qualquer parte do nome já lista os clientes embaixo, e SEMPRE há saída embaixo da lista: "➕ Cadastrar como CLIENTE novo" (cadastro mínimo com a anotação entrando como atendimento urgente e a ficha abrindo para completar) e "➕ Anotar como INTERESSADO" (funil 💼 Vendas) — mesmo quando a busca acha homônimos parciais. · F52 — a ANOTAÇÃO RÁPIDA ganhou porta fixa no TOPO da barra lateral, acima da busca (pedido do Paulo: mais fácil que pesquisar, mínimo de clique): clicou no campo ⚡, o painel abre já procurando o nome; Enter no texto guarda; e quem liga SEM ser cliente vira INTERESSADO no funil 💼 Vendas com a anotação como interesse — nenhuma ligação fica sem registro. O botão ⚡ do canto continua (é ele no celular). · F51 — JULGAMENTO no seguimento das Novidades corrigido (pedido do Paulo): nada de "avisar o cliente para preparação" — o texto vira "⚖️ Julgamento agendado para DD.MM.AAAA às HH:MM. Verificar o resultado no dia seguinte.", a tarefa nasce no dia útil seguinte ao julgamento e a atribuição padrão é do admin (Paulo), no modal 📌 (chip já marcado) e no 1 clique/lote; a véspera de "mensagem ao cliente" não nasce para julgamento. Perícia/audiência seguem como eram. · F50 — ⚡ ANOTAÇÃO RÁPIDA, o botão que atende o telefone: fixo no canto da tela (desktop e celular), abre nome + anotação + 🔥 urgente já ligado; com caso em andamento vira andamento E marca o caso URGENTE (sobe em toda lista), sem caso vira anotação urgente do atendimento na ficha — a ligação e o balcão nunca mais passam sem registro. · F49 — a análise de direito NO TRILHO do primeiro atendimento: passo "4 · ⚖️ Análise de Direito" na mesa das Anotações com os campos preenchíveis (o mesmo formulário da aba ⚖️), linha de estado verde/âmbar na TRIAGEM (com atalho) e nas Anotações, o fecho da triagem registra "análise feita em X / PENDENTE", e análise salva SEM caso ativo vira anotação do atendimento (que migra para os andamentos quando o pré-caso virar caso, pela regra do F30). · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.55 · F56 — o "Concluir em" do To Do chegou ao CRM (pedido do Paulo: a data da próxima tarefa era fácil de ver no To Do e não estava sendo no CRM): o topo da ficha agora mostra UMA pílula com a data em que o cliente volta à mesa — calculada sozinha, a menor entre lembretes ativos, anotações com data, prazos fatais e agendamentos; vencida grita "⏰ venceu DD.MM" em vermelho (a cobrança mais antiga primeiro), futura avisa "📅 volta DD.MM" em azul com o motivo, e sem data nenhuma a pílula cinza denuncia "sem próxima data" (cliente sem cobrança marcada é cliente esquecido); o clique leva até onde a data mora; nas Anotações, a nota com data ganha a pílula colorida no começo da linha (azul futura, vermelha vencida) e a data vencida sem resolução entra SOZINHA nas Pendências em aberto. · F55 — a ficha respira (pedido do Paulo: menos informação de uma vez, sem flechinha misteriosa, fácil para quem tem pouco contato): a MESA SE ARRUMA SOZINHA — bloco resolvido recolhe numa linha verde que já INFORMA a decisão (espécie · natureza · via · cidade; análise de hoje; honorários com o padrão ou o ajuste à vista) e reabre num toque em "alterar"; a LINHA-GUIA no topo diz numa frase o que falta fazer no atendimento (ou que só resta a decisão final); e o rodapé da anotação virou CÁPSULAS COM PERGUNTA (Como marcar? · Quem cuida disso? com nome e cor · Lembrar quando? · ⏰ Prazo fatal?) com a FRASE-VIVA embaixo confirmando em português o que vai acontecer ao guardar — o prazo fatal agora sai direto da anotação (caso vai para 🗓 Tarefas com Prazo) e o 📌 dar seguimento fala a mesma língua (mesmas perguntas, mesma frase-viva). · F54 — pacote do Paulo: (1) a tela do PJe voltou na aba CNJ (caso com um só processo na lista casava errado e escondia a coleta); (2) cliente novo e interessado pela anotação rápida exigem NOME COMPLETO e TELEFONE; (3) a triagem pergunta o vínculo de hoje (empregado desde / CI / facultativo / não contribui) e a resposta viaja para a análise de direito; (4) benefício por incapacidade no atendimento pergunta a CIDADE e o checklist de documentos nasce aberto; (5) PENDÊNCIAS EM ABERTO — anotação marcada ⏳, urgente ou com checklist por fazer fica presa num quadro no topo das Anotações até alguém Resolver (o selo fica na lista). · F53 — na anotação rápida, qualquer parte do nome já lista os clientes embaixo, e SEMPRE há saída embaixo da lista: "➕ Cadastrar como CLIENTE novo" (cadastro mínimo com a anotação entrando como atendimento urgente e a ficha abrindo para completar) e "➕ Anotar como INTERESSADO" (funil 💼 Vendas) — mesmo quando a busca acha homônimos parciais. · F52 — a ANOTAÇÃO RÁPIDA ganhou porta fixa no TOPO da barra lateral, acima da busca (pedido do Paulo: mais fácil que pesquisar, mínimo de clique): clicou no campo ⚡, o painel abre já procurando o nome; Enter no texto guarda; e quem liga SEM ser cliente vira INTERESSADO no funil 💼 Vendas com a anotação como interesse — nenhuma ligação fica sem registro. O botão ⚡ do canto continua (é ele no celular). · F51 — JULGAMENTO no seguimento das Novidades corrigido (pedido do Paulo): nada de "avisar o cliente para preparação" — o texto vira "⚖️ Julgamento agendado para DD.MM.AAAA às HH:MM. Verificar o resultado no dia seguinte.", a tarefa nasce no dia útil seguinte ao julgamento e a atribuição padrão é do admin (Paulo), no modal 📌 (chip já marcado) e no 1 clique/lote; a véspera de "mensagem ao cliente" não nasce para julgamento. Perícia/audiência seguem como eram. · F50 — ⚡ ANOTAÇÃO RÁPIDA, o botão que atende o telefone: fixo no canto da tela (desktop e celular), abre nome + anotação + 🔥 urgente já ligado; com caso em andamento vira andamento E marca o caso URGENTE (sobe em toda lista), sem caso vira anotação urgente do atendimento na ficha — a ligação e o balcão nunca mais passam sem registro. · F49 — a análise de direito NO TRILHO do primeiro atendimento: passo "4 · ⚖️ Análise de Direito" na mesa das Anotações com os campos preenchíveis (o mesmo formulário da aba ⚖️), linha de estado verde/âmbar na TRIAGEM (com atalho) e nas Anotações, o fecho da triagem registra "análise feita em X / PENDENTE", e análise salva SEM caso ativo vira anotação do atendimento (que migra para os andamentos quando o pré-caso virar caso, pela regra do F30). · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -8150,6 +8161,16 @@ function pintarFicha(){
         <button class="olho" title="copiar senha (fica registrado)" onclick="copiarCred('${cr.id}')">📋</button>
         <button class="olho" title="ver (fica registrado)" onclick="verCred('${cr.id}')">👁</button></span>`
         :`<span class="id-min"><b>Meu INSS</b> <span class="meio-sub">sem senha</span></span>`)(creds.find(x=>x.tipo==="meu_inss"))}
+      ${/* F56 · o "Concluir em" do To Do agora mora aqui: UMA data à vista
+           dizendo quando este cliente volta — vencida grita em vermelho,
+           futura avisa em azul, e a ausência de data também é informação */""}
+      ${(pd=>pd.venceu
+        ?`<button class="volta-pilula venceu" onclick="irParaData('${pd.venceu.tipo}')"
+            title="${esc(pd.venceu.rotulo)} — esperando desde ${fmt(pd.venceu.data)}; clique para ir até lá">⏰ venceu ${fmt(pd.venceu.data)} · ${esc(pd.venceu.rotulo)}</button>`
+        :pd.proxima
+        ?`<button class="volta-pilula futura" onclick="irParaData('${pd.proxima.tipo}')"
+            title="${esc(pd.proxima.rotulo)} — clique para ir até lá">📅 volta ${fmt(pd.proxima.data)} · ${esc(pd.proxima.rotulo)}</button>`
+        :`<span class="volta-pilula vazia" title="nenhuma data marcada para este cliente — sem lembrete, ninguém é cobrado de voltar aqui">📅 sem próxima data — marque nas Anotações</span>`)(proximaDataDe(cliId))}
     </div>
     <div class="menu-topo">
       ${/* abas em pivot claro (espec. 7.2): texto limpo, sem emoji de ícone */""}
@@ -10763,6 +10784,40 @@ const GPS_CATEGORIAS=[
 ];
 function lembretesDo(cliId){
   return (D.lembretes||[]).filter(l=>l.cliente_id===cliId && l.ativo!==false);
+}
+// F56 · o "Concluir em" do To Do, sem burocracia nova: o CRM CALCULA quando
+// este cliente volta à mesa — a menor data futura entre lembretes ativos,
+// anotações com data (não resolvidas), prazos fatais e agendamentos — e
+// também a cobrança mais antiga já VENCIDA (nota/lembrete/prazo; agendamento
+// que passou já aconteceu, não é dívida). Uma data, exposta no topo.
+function proximaDataDe(cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return {venceu:null, proxima:null};
+  const hj=hoje(), tudo=[];
+  ((c.campos||{}).atendimento||[]).forEach(n=>{
+    if(n.lembrar_em && !n.resolvida)
+      tudo.push({data:n.lembrar_em, tipo:"nota", rotulo:`Anotação: ${(n.texto||"").slice(0,46)}`});
+  });
+  lembretesDo(cliId).forEach(l=>{ if(l.proximo_em)
+    tudo.push({data:l.proximo_em, tipo:"lembrete", rotulo:l.titulo||"Lembrete"}); });
+  ((D.casosDoCliente&&D.casosDoCliente.get(cliId))||[]).forEach(k=>{
+    if(k.fase==="encerrado") return;
+    if(k.prazo) tudo.push({data:k.prazo, tipo:"prazo", rotulo:"PRAZO FATAL do caso"});
+    (D.eventos||[]).filter(e=>e.caso_id===k.id && !e.cancelado).forEach(e=>{
+      const d=(e.data_hora||"").slice(0,10);
+      if(d) tudo.push({data:d, tipo:"evento", rotulo:`${e.tipo||"Agendamento"} marcado`});
+    });
+  });
+  tudo.sort((a,b)=>a.data<b.data?-1:1);
+  return {venceu: tudo.find(x=>x.data<hj && x.tipo!=="evento")||null,
+          proxima: tudo.find(x=>x.data>=hj)||null};
+}
+// o clique da pílula leva para onde a data mora (aba pode não existir p/
+// este cliente — cai no Cadastro, onde vivem as anotações)
+function irParaData(tipo){
+  const vv={nota:"0", lembrete:"9", prazo:"2", evento:"3"}[tipo]||"0";
+  const b=document.querySelector(`.mt[data-vv="${vv}"]`)||document.querySelector('.mt[data-vv="0"]');
+  if(b) b.click();
+  if(tipo==="nota") irSubCad("anotacoes");
 }
 function rotuloTipoLembrete(t){
   return (LEMBRETE_TIPOS.find(([x])=>x===t)||[]) [1] || "🔔 Lembrete";
@@ -16884,8 +16939,11 @@ async function salvarNotaAtendimento2(cliId){
 // checklist por fazer. As pendentes ficam PRESAS num quadro no topo das
 // Anotações, com o ✔ resolver ali mesmo — em vez de reanotar, resolve-se.
 function ehNotaPendente(n){
+  // F56 · data de volta que passou sem resolução também é pendência — a
+  // anotação "volta 20.08" não pode morrer calada quando 20.08 passa
   return !n.resolvida && (n.pendente===true || n.urgente===true ||
-    (n.checklist||[]).some(i=>!i.feito));
+    (n.checklist||[]).some(i=>!i.feito) ||
+    (n.lembrar_em && n.lembrar_em < hoje()));
 }
 async function resolverNotaAtendimento(cliId, idx){
   const c=D.cliPorId.get(cliId); if(!c) return;
@@ -16908,7 +16966,9 @@ function quadroPendencias(c){
       antiga não se perde na pilha.</p>
     <ul class="mov-lista">${pend.map(({n,idx})=>`<li>
       <span class="mov-data">${n.em?fmt(n.em.slice(0,10)):"—"}</span>
-      <span class="mov-txt">${n.urgente?"🔥 ":""}${n.quem?`<b>${esc(n.quem)}:</b> `:""}${esc(n.texto||"")}
+      <span class="mov-txt">${n.urgente?"🔥 ":""}${n.lembrar_em?(n.lembrar_em<hoje()
+          ?`<span class="chip venceu-chip">⏰ venceu ${fmt(n.lembrar_em)}</span> `
+          :`<span class="chip volta-chip">📅 volta ${fmt(n.lembrar_em)}</span> `):""}${n.quem?`<b>${esc(n.quem)}:</b> `:""}${esc(n.texto||"")}
         ${(n.checklist||[]).some(i=>!i.feito)?`<span class="chip neutro">${(n.checklist||[]).filter(i=>!i.feito).length} item(ns) do checklist por fazer</span>`:""}</span>
       <button class="btn-mini" onclick="resolverNotaAtendimento('${c.id}',${idx})"
         title="marca como resolvida — sai daqui e ganha o selo na lista">Resolvida</button>
@@ -17444,12 +17504,17 @@ function caixaAtendimento(c, ks){
           return `<li>
           <span class="mov-data">${n.em?fmt(n.em.slice(0,10)):"—"}</span>
           <span class="mov-txt">${n.importante?"⭐ ":""}${n.urgente?"🔥 ":""}${
+            /* F56 · a data de volta abre a linha com cor — futura em azul,
+               vencida em vermelho; resolvida dispensa cobrança */
+            n.lembrar_em&&!n.resolvida?(n.lembrar_em<hoje()
+              ?`<span class="chip venceu-chip">⏰ venceu ${fmt(n.lembrar_em)}</span> `
+              :`<span class="chip volta-chip">📅 volta ${fmt(n.lembrar_em)}</span> `):""}${
             n.quem?`<b>${esc(n.quem)}:</b> `:""}${esc(n.texto||"")}
             ${n.resolvida?`<span class="chip verde" title="resolvida por ${esc(n.resolvida.quem||"")}">resolvida ${fmt(n.resolvida.em)}</span>`
               :ehNotaPendente(n)?`<span class="chip laranja">pendente</span>`:""}
             ${pcDe?`<span class="chip ben">${esc(pcDe.especie||"pré-caso")}</span>`:""}
             ${atrs.map(at=>`<span class="avatar mini" style="background:${at.cor}" title="atribuída a ${esc(at.nome)}">${esc(at.inicial)}</span>`).join("")}
-            ${n.lembrar_em?`<span class="chip neutro" title="tem lembrete criado">🗓 ${fmt(n.lembrar_em)}</span>`:""}
+            ${n.lembrar_em&&n.resolvida?`<span class="chip neutro" title="tinha lembrete para esta data">🗓 ${fmt(n.lembrar_em)}</span>`:""}
             ${(n.checklist||[]).length?`<span class="nck-lista">${(n.checklist||[]).map((ck,ci)=>
               `<label class="conta-ck"><input type="checkbox" ${ck.feito?"checked":""}
                 onchange="notaChecklistToggle('${c.id}',${idx},${ci})"><span style="${ck.feito?"text-decoration:line-through;color:var(--cinza-claro)":""}">${esc(ck.t)}</span></label>`).join("")}</span>`:""}
