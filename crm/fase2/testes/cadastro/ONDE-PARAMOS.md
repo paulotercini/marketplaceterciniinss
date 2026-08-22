@@ -1,3 +1,33 @@
+# Onde paramos — 23.08.2026, versão 09.56
+
+## F57 · O quadro de datas do caso: tudo à vista, tudo alterável (09.56)
+
+O Paulo não gostou da pílula única da F56 ("não gostei da forma que foi
+feito") e pediu, com print do cartão do caso: um quadro em cima (ou logo
+abaixo) dos dados do caso com TODOS os lembretes visíveis e alteráveis.
+
+**quadroDatas(k)** entra no cartão `.fatos-processo`, entre os marcadores
+e a `.fx-grade` (em cima dos dados: dado é consulta, data é trabalho).
+Uma linha por data, ordenadas: anotações datadas não resolvidas (📝),
+lembretes ativos (🔔, com responsável e recorrência), prazos fatais dos
+casos abertos (⏰) e agendamentos futuros (🩺, informativos — mexe na aba
+Perícias). DEDUP: a nota que já virou lembrete gêmeo (titulo
+"Anotação: {texto.slice(0,60)}", como salvarNotaAtendimento2 cria) entra
+uma vez só, pelo lembrete.
+
+**Alterável ali mesmo**: cada linha tem o `<input type="date">` aberto —
+trocar grava na hora (nota → qdMudarNota PATCH clientes.campos; lembrete
+→ adiarLembrete, o fluxo oficial; prazo → qdMudarPrazo PATCH casos, e
+vazio limpa). "✔ feito": nota → resolverNotaAtendimento; lembrete →
+lembreteAvisado (único desliga, recorrente avança — fluxo oficial da aba
+9, com lembrete_avisos). Rodapé cria lembrete novo (título + data +
+responsável, POST lembretes origem "quadro").
+
+Visual: vencida com fundo rosado, data vermelha e "venceu DD.MM"; até 7
+dias, data azul; futuro, neutro. A pílula do topo (F56) fica como resumo.
+
+Teste quadro57.js (13 provas, datas relativas). Suíte: 46 arquivos verde.
+
 # Onde paramos — 22.08.2026, versão 09.55
 
 ## F56 · A data de volta à vista: o "Concluir em" do To Do no CRM (09.55)
