@@ -1,3 +1,44 @@
+# Onde paramos — 22.08.2026, versão 09.54
+
+## F55 · A ficha respira: a mesa se arruma sozinha e o rodapé fala português (09.54)
+
+Pedido do Paulo: página do cliente com informação demais, e a solução
+"flechinha/mais" não serve — tem que ser intuitivo para colaborador com
+contato mínimo. E o atribuir / lembrar em / tarefa com prazo das anotações
+precisa ficar fácil. Autorizada mudança estrutural.
+
+**A mesa se arruma sozinha (colapso por ESTADO, não por clique).** Bloco
+resolvido recolhe numa linha verde que INFORMA a decisão (o corpo fica no
+DOM dentro de `<details class="mesa-feito">` sem marker; "alterar" à
+direita reabre). Critérios: bloco 1 quando todo pré-caso vivo tem
+espécie+natureza (+via+cidade se incapacidade); bloco 4 quando a análise
+mais recente é de HOJE; Honorários vive sempre recolhido com o padrão (ou
+o ajuste) na própria linha — literal "Padrão do escritório" preservado.
+Três regras de convivência: mexeu (mudarPreCaso/novoPreCaso) → mesaAberta
+abre o bloco até a ficha fechar (não recolhe embaixo da mão de quem
+edita); abrirFicha com troca de cliente → mesaAberta.clear(); aberto no
+toque → ontoggle grava no Set e sobrevive à repintura.
+
+**Linha-guia no topo.** Uma frase âmbar "Falta fazer: definir a espécie ·
+registrar a análise (passo 4) · resolver N pendências" gerada do estado —
+ou verde "Fluxo em ordem — só resta a decisão final". O leigo lê o topo e
+sabe onde clicar.
+
+**Rodapé em cápsulas com pergunta.** "Como marcar?" (chips ⭐/🔥/⏳ com
+:has(:checked)), "Quem cuida disso?" (chips com avatar colorido + NOME,
+classe .at-eq preservada), "Lembrar quando?" (atalhos + date à vista),
+"⏰ Prazo fatal?" (NOVO: id at-prazo — com exatamente 1 caso em andamento,
+a nota sai "⏰ [PRAZO dd.mm.aaaa]" e o caso vai para 🗓 Tarefas com Prazo,
+mesmo shape do 📌; sem caso, barra com aviso; 2+ casos, manda para o 📌).
+FRASE-VIVA (#at-frase, fraseAcao/atualizarFraseNota) confirma em
+português o efeito antes do clique. O 📌 dar seguimento fala a mesma
+língua: perguntas nos rótulos, nomes nos chips e #seg-frase.
+
+Testes: mesa55.js novo (14 provas). Ajustes de regressão: fluxo.js
+(rotulos e cláusula por textContent — honorários vive recolhido),
+precaso.js intacto (a regra "mexeu→fica aberto" o salvou), extracoes.js
+ganhou a espera de boot (mesma corrida do emoji.js). Suíte: 44 arquivos.
+
 # Onde paramos — 22.08.2026, versão 09.53
 
 ## F54 · Pacote do Paulo: PJe de volta, cadastro exigente, vínculo na análise, incapacidade com cidade e Pendências em aberto (09.53)

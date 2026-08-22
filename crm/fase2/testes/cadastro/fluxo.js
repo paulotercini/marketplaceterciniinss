@@ -99,8 +99,10 @@ FIX.documentos_beneficio.push(
   // ── 2. o fluxo na ordem ─────────────────────────────────────────────────
   await p.evaluate(cli => novoPreCaso(cli), CLI_VAZIO);
   await p.waitForTimeout(500);
+  // F55: honorários vive recolhido (o resumo mora no summary) — a ordem dos
+  // blocos se confere pela ESTRUTURA (textContent), não pela visibilidade
   const rotulos = await p.evaluate(() =>
-    [...document.querySelectorAll(".caixa-atend .rotulo-caso")].map(x => x.innerText.trim()));
+    [...document.querySelectorAll(".caixa-atend .rotulo-caso")].map(x => x.textContent.trim()));
   // F49: o passo 4 · Análise de Direito entrou no trilho, depois das anotações
   conf(`os blocos seguem a ordem do atendimento (${rotulos.length})`,
     /1 · de que se trata/i.test(rotulos[1] || "") && /2 · documentos/i.test(rotulos[2] || "")
@@ -145,7 +147,7 @@ FIX.documentos_beneficio.push(
     && /20% sobre os 6 primeiros/.test(await p.evaluate(() => document.querySelector(".caixa-atend").innerText)));
   conf("a cláusula completa do contrato está a um clique",
     await p.evaluate(() => [...document.querySelectorAll(".caixa-atend details summary")]
-      .some(x => /ver a cláusula completa/.test(x.innerText))));
+      .some(x => /ver a cláusula completa/.test(x.textContent))));
   // F33 · a lista nasce FECHADA — F54: EXCETO incapacidade, que nasce aberta
   // (a espécie aqui é "Aux. Incapacidade Temporária (B31)", então: aberta)
   conf("o bloco 2 nasce ABERTO quando a espécie é incapacidade (F54)",
