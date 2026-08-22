@@ -459,3 +459,38 @@ certo. No Playwright, p.focus após setar value via evaluate não repete
 o fluxo humano — teste com p.click e confira o activeElement. O lead do
 não-cliente usa beneficio_interesse para a anotação (campo já exibido
 no kcard do funil): escolha deliberada para não criar coluna.
+
+## F54 — o pacote de cinco
+
+pjeDoProcesso recebe ehPrincipal e a coleta SEM número no texto só entra
+quando ele é true: com processo apenas em `processos[]` (k.processo
+vazio), NINGUÉM era principal e o PJe sumia — por isso o
+`!p || p.principal || ps.length===1` em painelCNJ. Se mexer na lista de
+processos, rode pacote54.js antes de confiar no olho.
+
+O #ar-tel só EXISTE nos ramos arNovo/arLead do arMostrarAlvo — cliente
+já cadastrado não tem o campo, e o guard do salvar lê
+`(getElementById("ar-tel")||{}).value` para não quebrar nesse caso.
+Testes que criam cliente/interessado pela rápida DEVEM preencher
+#ar-tel (rapida.js quebrou por isso e foi ajustado).
+
+ehIncap (pré-caso) usa dsa(), que preserva o HÍFEN: "Auxílio-doença"
+vira "auxilio-doenca" — o regex precisa de `auxilio[ -]?doenca`. O
+mesmo ehIncap decide o `<details open>` do bloco 2: incapacidade nasce
+aberto, o resto continua fechado (F33) — fluxo.js testa o aberto.
+
+O vínculo da triagem grava em clientes.triagem.vinculo (salvarTriagem,
+com fallback campos.triagem) — NÃO é coluna nova. salvarAnalise só
+anexa o vínculo ao contexto se o texto ainda não fala em vínculo
+(regex /víncul|vincul/i) — sem duplicar quando o Paulo escreve.
+
+ehNotaPendente considera pendente===true OU urgente===true OU checklist
+com item não feito — e resolvida mata tudo. O quadroPendencias vive no
+BLOCO 3 da mesa (antes do textarea) e o índice passado a
+resolverNotaAtendimento é o índice REAL no array campos.atendimento
+(a lista renderiza invertida — cuidado ao mapear clique→índice).
+
+emoji.js: #app.logado pinta ANTES de carregar() terminar — abrirFicha
+imediato acha D.cliPorId vazio. A espera é
+`typeof D!=="undefined" && D.cliPorId && D.cliPorId.size>0`
+(window.D NÃO existe: D é let de script, não vira propriedade).

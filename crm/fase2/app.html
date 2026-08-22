@@ -1771,7 +1771,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.52 · F53 — na anotação rápida, qualquer parte do nome já lista os clientes embaixo, e SEMPRE há saída embaixo da lista: "➕ Cadastrar como CLIENTE novo" (cadastro mínimo com a anotação entrando como atendimento urgente e a ficha abrindo para completar) e "➕ Anotar como INTERESSADO" (funil 💼 Vendas) — mesmo quando a busca acha homônimos parciais. · F52 — a ANOTAÇÃO RÁPIDA ganhou porta fixa no TOPO da barra lateral, acima da busca (pedido do Paulo: mais fácil que pesquisar, mínimo de clique): clicou no campo ⚡, o painel abre já procurando o nome; Enter no texto guarda; e quem liga SEM ser cliente vira INTERESSADO no funil 💼 Vendas com a anotação como interesse — nenhuma ligação fica sem registro. O botão ⚡ do canto continua (é ele no celular). · F51 — JULGAMENTO no seguimento das Novidades corrigido (pedido do Paulo): nada de "avisar o cliente para preparação" — o texto vira "⚖️ Julgamento agendado para DD.MM.AAAA às HH:MM. Verificar o resultado no dia seguinte.", a tarefa nasce no dia útil seguinte ao julgamento e a atribuição padrão é do admin (Paulo), no modal 📌 (chip já marcado) e no 1 clique/lote; a véspera de "mensagem ao cliente" não nasce para julgamento. Perícia/audiência seguem como eram. · F50 — ⚡ ANOTAÇÃO RÁPIDA, o botão que atende o telefone: fixo no canto da tela (desktop e celular), abre nome + anotação + 🔥 urgente já ligado; com caso em andamento vira andamento E marca o caso URGENTE (sobe em toda lista), sem caso vira anotação urgente do atendimento na ficha — a ligação e o balcão nunca mais passam sem registro. · F49 — a análise de direito NO TRILHO do primeiro atendimento: passo "4 · ⚖️ Análise de Direito" na mesa das Anotações com os campos preenchíveis (o mesmo formulário da aba ⚖️), linha de estado verde/âmbar na TRIAGEM (com atalho) e nas Anotações, o fecho da triagem registra "análise feita em X / PENDENTE", e análise salva SEM caso ativo vira anotação do atendimento (que migra para os andamentos quando o pré-caso virar caso, pela regra do F30). · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.53 · F54 — pacote do Paulo: (1) a tela do PJe voltou na aba CNJ (caso com um só processo na lista casava errado e escondia a coleta); (2) cliente novo e interessado pela anotação rápida exigem NOME COMPLETO e TELEFONE; (3) a triagem pergunta o vínculo de hoje (empregado desde / CI / facultativo / não contribui) e a resposta viaja para a análise de direito; (4) benefício por incapacidade no atendimento pergunta a CIDADE e o checklist de documentos nasce aberto; (5) PENDÊNCIAS EM ABERTO — anotação marcada ⏳, urgente ou com checklist por fazer fica presa num quadro no topo das Anotações até alguém Resolver (o selo fica na lista). · F53 — na anotação rápida, qualquer parte do nome já lista os clientes embaixo, e SEMPRE há saída embaixo da lista: "➕ Cadastrar como CLIENTE novo" (cadastro mínimo com a anotação entrando como atendimento urgente e a ficha abrindo para completar) e "➕ Anotar como INTERESSADO" (funil 💼 Vendas) — mesmo quando a busca acha homônimos parciais. · F52 — a ANOTAÇÃO RÁPIDA ganhou porta fixa no TOPO da barra lateral, acima da busca (pedido do Paulo: mais fácil que pesquisar, mínimo de clique): clicou no campo ⚡, o painel abre já procurando o nome; Enter no texto guarda; e quem liga SEM ser cliente vira INTERESSADO no funil 💼 Vendas com a anotação como interesse — nenhuma ligação fica sem registro. O botão ⚡ do canto continua (é ele no celular). · F51 — JULGAMENTO no seguimento das Novidades corrigido (pedido do Paulo): nada de "avisar o cliente para preparação" — o texto vira "⚖️ Julgamento agendado para DD.MM.AAAA às HH:MM. Verificar o resultado no dia seguinte.", a tarefa nasce no dia útil seguinte ao julgamento e a atribuição padrão é do admin (Paulo), no modal 📌 (chip já marcado) e no 1 clique/lote; a véspera de "mensagem ao cliente" não nasce para julgamento. Perícia/audiência seguem como eram. · F50 — ⚡ ANOTAÇÃO RÁPIDA, o botão que atende o telefone: fixo no canto da tela (desktop e celular), abre nome + anotação + 🔥 urgente já ligado; com caso em andamento vira andamento E marca o caso URGENTE (sobe em toda lista), sem caso vira anotação urgente do atendimento na ficha — a ligação e o balcão nunca mais passam sem registro. · F49 — a análise de direito NO TRILHO do primeiro atendimento: passo "4 · ⚖️ Análise de Direito" na mesa das Anotações com os campos preenchíveis (o mesmo formulário da aba ⚖️), linha de estado verde/âmbar na TRIAGEM (com atalho) e nas Anotações, o fecho da triagem registra "análise feita em X / PENDENTE", e análise salva SEM caso ativo vira anotação do atendimento (que migra para os andamentos quando o pré-caso virar caso, pela regra do F30). · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -9410,6 +9410,24 @@ function painelTriagemFicha(c, ks){
         onkeydown="if(event.key==='Enter'){event.preventDefault();novaPerguntaEscritorio();}">
       <button class="cad-mini" onclick="novaPerguntaEscritorio()">acrescentar</button>
     </div>
+    ${/* F54 · o vínculo com a Previdência HOJE (pedido do Paulo): empregado
+         desde quando, ou CI/facultativo — vai junto para a análise de direito */""}
+    ${(v=>`<div class="tri-vinculo" style="margin-top:8px;border:1px solid var(--borda);border-radius:8px;padding:8px 10px">
+      <div class="rotulo-caso">Vínculo com a Previdência hoje</div>
+      <div class="form-linha" style="margin-top:4px;align-items:center">
+        <select id="tri-vinc" onchange="document.getElementById('tri-vinc-desde-cx').style.display=this.value==='empregado'?'inline-flex':'none';salvarVinculoTriagem('${c.id}')">
+          <option value="">como contribui hoje?…</option>
+          <option value="empregado" ${v.tipo==="empregado"?"selected":""}>Empregado (CLT)</option>
+          <option value="ci" ${v.tipo==="ci"?"selected":""}>Contribuinte individual</option>
+          <option value="facultativo" ${v.tipo==="facultativo"?"selected":""}>Facultativo</option>
+          <option value="sem" ${v.tipo==="sem"?"selected":""}>Não contribui</option>
+        </select>
+        <label id="tri-vinc-desde-cx" class="meio-sub" style="display:${v.tipo==="empregado"?"inline-flex":"none"};align-items:center;gap:4px">desde
+          <input type="month" id="tri-vinc-desde" value="${esc(v.desde||"")}" onchange="salvarVinculoTriagem('${c.id}')"></label>
+        ${v.em?`<span class="meio-sub">registrado em ${fmt(v.em)}</span>`:""}
+      </div>
+      <p class="cad-nota" style="margin:4px 0 0">Essa resposta acompanha a análise de direito do passo 4 das Anotações.</p>
+    </div>`)(triagemDe(c).vinculo||{})}
     ${/* F49 · o elo triagem → análise: quem está triando vê na hora se a
          análise de direito deste cliente já existe, e onde registrá-la */""}
     <div class="tri-analise">${statusAnalise(c, true)}</div>
@@ -11236,11 +11254,17 @@ async function salvarAnalise(cliId){
   })).filter(x=>x.regra||x.data||x.valor||x.obs);
   if(!contexto && !cenarios.length)
     return aviso("Registre pelo menos um cenário ou o que foi conversado");
+  // F54 · a resposta da triagem (empregado desde / CI / facultativo) viaja
+  // JUNTO com a análise — se o texto não a mencionar, ela é anexada
+  let contextoFinal=contexto;
+  const vinc=rotVinculo(triagemDe(D.cliPorId.get(cliId)||{}).vinculo);
+  if(vinc && !/víncul|vincul/i.test(contexto))
+    contextoFinal=(contexto?contexto+"\n":"")+`Vínculo (triagem): ${vinc}.`;
   let a;
   try{
     [a]=await api(`/rest/v1/analises_direito`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({cliente_id:cliId, autor_id:eu.id, data_analise:data,
-        contexto:contexto||null, fonte, cenarios})});
+        contexto:contextoFinal||null, fonte, cenarios})});
   }catch(e){ return aviso("Rode o crm/fase2/schema_analise_direito.sql no Supabase — falta a tabela 'analises_direito'"); }
   if(a){
     D.analises=D.analises||[]; D.analises.push(a);
@@ -11318,6 +11342,23 @@ async function avisarCenario(cliId, data, regra){
 // F49 · a linha de estado que liga triagem, anotações e análise: verde com a
 // última análise (e o melhor caminho) ou âmbar dizendo que ainda não há.
 // naTriagem=true acrescenta o atalho para as Anotações, onde o form vive.
+// F54 · o vínculo respondido na triagem, por extenso — vai para a análise
+function rotVinculo(v){
+  if(!v || !v.tipo) return "";
+  const nomes={empregado:"Empregado (CLT)", ci:"Contribuinte individual",
+    facultativo:"Facultativo", sem:"Não contribui"};
+  return (nomes[v.tipo]||v.tipo) + (v.tipo==="empregado" && v.desde ? ` desde ${v.desde.split("-").reverse().join("/")}` : "");
+}
+async function salvarVinculoTriagem(cliId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const tipo=(document.getElementById("tri-vinc")||{}).value||"";
+  const desde=(document.getElementById("tri-vinc-desde")||{}).value||"";
+  const t={...triagemDe(c)};
+  t.vinculo = tipo ? {tipo, desde:tipo==="empregado"?desde:null, em:hoje(), quem:eu.id} : undefined;
+  if(!t.vinculo) delete t.vinculo;
+  if(!await salvarTriagem(cliId, t)) return aviso("Não consegui guardar o vínculo — tente de novo");
+  aviso("Vínculo registrado na triagem", false);
+}
 function statusAnalise(c, naTriagem){
   // sem pictograma: os dois lugares desta linha (triagem e anotações) moram
   // na aba Cadastro, que é LIMPA por regra da casa (emoji.js vigia)
@@ -13640,7 +13681,10 @@ function painelCNJ(k, ands){
   const p = ps.find(x=>soDig(x.numero)===soDig(procSel)) || ps.find(x=>x.principal) || ps[0] || null;
   const numero = p ? p.numero : k.processo;
   const t = p ? datajudDe(k, numero) : k.datajud;
-  const pjeMovs = pjeDoProcesso(ands, numero, !p || p.principal);
+  // F54 · caso com UM processo na lista e nenhum "principal" marcado: esse um
+  // É o principal de fato — a coleta do PJe sem número no texto casa com ele
+  // (era o buraco que escondia a tela do PJe, relatado pelo Paulo)
+  const pjeMovs = pjeDoProcesso(ands, numero, !p || p.principal || ps.length===1);
   const temPje = pjeMovs.length > 0;
   const temOficial = !!(t && (t.ultimo || (t.instancias||[]).length));
   // com mais de um processo, escolher vem ANTES de ler
@@ -16702,6 +16746,7 @@ async function salvarNotaAtendimento2(cliId){
   const pcSel=v("at-pc"); if(pcSel) nota.precaso_id=pcSel;
   if(marcado("at-imp")) nota.importante=true;
   if(marcado("at-urg")) nota.urgente=true;
+  if(marcado("at-pend")) nota.pendente=true;   // F54 · presa nas Pendências até resolver
   const atribs=[...atQuem], lembrar=v("at-lembrar");
   if(atribs.length){ nota.atribuidos=atribs; nota.atribuido=atribs[0]; }
   if(lembrar){
@@ -16729,6 +16774,45 @@ async function salvarNotaAtendimento2(cliId){
   const quantos=atribs.length;
   aviso(`Anotação guardada 📝${quantos?` — atribuída a ${quantos} colaborador(es)`:""}${lembrar?` · 🗓 ${fmt(lembrar)}`:""}`, false);
   repintarFicha();
+}
+// ══════════════════════════════════════════════════════════════════════════
+// ⏳ F54 · PENDÊNCIAS EM ABERTO — a anotação antiga que não se resolve não
+// pode sumir na pilha (pedido do Paulo: "a primeira anotação fica esquecida")
+// ══════════════════════════════════════════════════════════════════════════
+// Uma anotação é PENDENTE enquanto não for resolvida e (a) tiver sido marcada
+// ⏳, (b) for urgente (a ligação da anotação rápida), ou (c) tiver item de
+// checklist por fazer. As pendentes ficam PRESAS num quadro no topo das
+// Anotações, com o ✔ resolver ali mesmo — em vez de reanotar, resolve-se.
+function ehNotaPendente(n){
+  return !n.resolvida && (n.pendente===true || n.urgente===true ||
+    (n.checklist||[]).some(i=>!i.feito));
+}
+async function resolverNotaAtendimento(cliId, idx){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const notas=[...((c.campos||{}).atendimento||[])];
+  if(!notas[idx]) return;
+  notas[idx]={...notas[idx], resolvida:{em:hoje(), quem:(eu.nome||"").split(" ")[0]}};
+  c.campos={...(c.campos||{}), atendimento:notas};
+  await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}).catch(()=>{});
+  plim(); aviso("Pendência resolvida ✔", false);
+  repintarFicha();
+}
+function quadroPendencias(c){
+  const notas=((c.campos||{}).atendimento||[]);
+  const pend=notas.map((n,idx)=>({n,idx})).filter(x=>ehNotaPendente(x.n));
+  if(!pend.length) return "";
+  return `<div class="caso" style="border-left:3px solid #E9B44C;margin-bottom:8px">
+    <div class="rotulo-caso">Pendências em aberto (${pend.length})</div>
+    <p class="meio-sub" style="margin:2px 0 4px">Ficam aqui em cima até alguém resolver — a anotação
+      antiga não se perde na pilha.</p>
+    <ul class="mov-lista">${pend.map(({n,idx})=>`<li>
+      <span class="mov-data">${n.em?fmt(n.em.slice(0,10)):"—"}</span>
+      <span class="mov-txt">${n.urgente?"🔥 ":""}${n.quem?`<b>${esc(n.quem)}:</b> `:""}${esc(n.texto||"")}
+        ${(n.checklist||[]).some(i=>!i.feito)?`<span class="chip neutro">${(n.checklist||[]).filter(i=>!i.feito).length} item(ns) do checklist por fazer</span>`:""}</span>
+      <button class="btn-mini" onclick="resolverNotaAtendimento('${c.id}',${idx})"
+        title="marca como resolvida — sai daqui e ganha o selo na lista">Resolvida</button>
+    </li>`).join("")}</ul></div>`;
 }
 // F35 · a regra da volta vale para a própria anotação: quem escreveu apaga
 // (só o autor — o × não aparece nas anotações dos outros)
@@ -16825,10 +16909,12 @@ function arProcurar(txt){
 function arNovoCliente(){
   const nome=(document.getElementById("ar-busca").value||"").trim();
   if(!nome) return;
+  // F54 · cadastro exige NOME COMPLETO (pedido do Paulo)
+  if(nome.split(/\s+/).length<2){ aviso("Escreva o nome COMPLETO (nome e sobrenome)"); return; }
   arCliSel=null; arLead=null; arNovo={nome};
   document.getElementById("ar-achados").innerHTML="";
   arMostrarAlvo();
-  const ta=document.getElementById("ar-texto"); if(ta) ta.focus();
+  const tel=document.getElementById("ar-tel"); if(tel) tel.focus();
 }
 function arEscolher(cliId){
   arCliSel=cliId; arLead=null;
@@ -16847,10 +16933,15 @@ function arNaoCliente(){
 }
 function arMostrarAlvo(){
   const div=document.getElementById("ar-alvo"); if(!div) return;
+  // F54 · quem entra novo (cliente ou interessado) entra com nome completo E
+  // telefone — sem contato, o registro não serve para ligar de volta
+  const telHtml=`<div class="form-linha" style="margin-top:6px;align-items:center">
+    <input id="ar-tel" type="tel" placeholder="telefone com DDD (obrigatório)" style="flex:1;min-width:170px">
+  </div>`;
   if(arNovo){ div.innerHTML=`<b>${esc(arNovo.nome)}</b> será cadastrado como <b>cliente novo</b>
-    (só o nome por enquanto — complete a ficha depois), e a anotação entra como atendimento.`; return; }
+    (nome e telefone — complete a ficha depois), e a anotação entra como atendimento.${telHtml}`; return; }
   if(arLead){ div.innerHTML=`<b>${esc(arLead.nome)}</b> vira <b>interessado</b> no funil 💼 Vendas,
-    com a anotação como interesse — de lá, um clique transforma em cliente.`; return; }
+    com a anotação como interesse — de lá, um clique transforma em cliente.${telHtml}`; return; }
   if(!arCliSel){ div.innerHTML=""; return; }
   const ks=(D.casosDoCliente.get(arCliSel)||[]).filter(k=>k.fase!=="encerrado")
     .sort((a,b)=>(a.criado_em||"")<(b.criado_em||"")?1:-1);
@@ -16868,13 +16959,17 @@ async function salvarAnotacaoRapida(){
   if(!t) return aviso("Escreva a anotação");
   // F53 · cliente NOVO no ato: cadastro mínimo (nome), a anotação já entra
   // como atendimento urgente, e a ficha abre para completar depois
+  // F54 · telefone obrigatório para quem entra novo no sistema
+  const arTelV=(document.getElementById("ar-tel")||{}).value||"";
+  if((arNovo||arLead) && arTelV.replace(/\D/g,"").length<10)
+    return aviso("Telefone com DDD é obrigatório para cadastrar");
   if(arNovo){
     const urg2=document.getElementById("ar-urg").checked;
     const imp2=document.getElementById("ar-imp").checked;
     let novoCli;
     try{
       [novoCli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
-        body:JSON.stringify({nome:arNovo.nome})});
+        body:JSON.stringify({nome:arNovo.nome, telefone:arTelV.trim()})});
       if(!novoCli) throw new Error("sem retorno");
       const nota={em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id,
         texto:t, origem:"rapida"};
@@ -16897,7 +16992,7 @@ async function salvarAnotacaoRapida(){
   if(arLead){
     try{
       const [l]=await api(`/rest/v1/leads`,{method:"POST",headers:{Prefer:"return=representation"},
-        body:JSON.stringify({nome:arLead.nome, origem:"ligação/balcão",
+        body:JSON.stringify({nome:arLead.nome, telefone:arTelV.trim()||null, origem:"ligação/balcão",
           beneficio_interesse:t.slice(0,80), responsavel_id:eu.id})});
       if(l) D.leads.unshift(l);
     }catch(e){ return aviso("Não consegui criar o interessado — tente de novo"); }
@@ -16954,7 +17049,7 @@ function caixaAtendimento(c, ks){
   const itens=((cat&&cat.itens)||"").split("\n").map(x=>x.trim()).filter(x=>x&&!x.startsWith("▸ "));
   const extras=((cat&&cat.extras)||"").split("\n").map(x=>x.trim()).filter(x=>x&&!x.startsWith("▸ "));
   const ehPgto = esp===ESPECIE_PAGAMENTOS;
-  const ehIncap = e => /incapacidade|auxilio doenca|invalidez/.test(dsa(e||""));
+  const ehIncap = e => /incapacidade|auxilio[ -]?doenca|invalidez/.test(dsa(e||""));
   const APOS_RX = /apos|tempo de contribui|por idade|especial|professor/i;
 
   // ── 1º · a espécie do benefício/serviço (com "outros") e a natureza ─────
@@ -16990,7 +17085,14 @@ function caixaAtendimento(c, ks){
             onclick="mudarPreCaso('${c.id}','${pc.id}','via','${pc.via===v?"":v}')">${r}</button>`).join("")}
         <span class="meio-sub">${pc.via==="adm"?"20% sobre as parcelas recebidas — procuração e contrato próprios"
           :pc.via==="jud"?"procuração e contrato judiciais"
-          :"a via define os honorários e a procuração/contrato certos"}</span></div>`:""}
+          :"a via define os honorários e a procuração/contrato certos"}</span>
+        <div class="form-linha" style="margin-top:6px;align-items:center">
+          <label class="meio-sub" style="display:inline-flex;align-items:center;gap:4px">em qual cidade?
+            <input value="${esc(pc.cidade||"")}" placeholder="cidade do cliente"
+              style="min-width:160px" onchange="mudarPreCaso('${c.id}','${pc.id}','cidade',this.value.trim())"
+              title="define a competência (Catanduva, Araraquara ou Ribeirão Preto) e o local da perícia"></label>
+          ${pc.cidade?`<span class="meio-sub">a lista de documentos está no passo 2, já aberta</span>`:""}
+        </div></div>`:""}
       ${eApos?`<div class="pc-marcas">envolve:
         ${[["rural","rural"],["especial","especial"],["deficiencia","deficiência"]].map(([m,r])=>
           `<label class="conta-ck"><input type="checkbox" ${marcas[m]?"checked":""}
@@ -17108,7 +17210,9 @@ function caixaAtendimento(c, ks){
     </div>`:`
     ${/* F33 · o bloco nasce FECHADO (pedido do Paulo): a lista só aparece no
          clique, e o título resume o que há dentro — tela mais limpa */""}
-    <details style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+    ${/* F54 · benefício por incapacidade: o checklist de documentos já nasce
+         ABERTO — é o momento de pedir tudo, não de procurar onde clicar */""}
+    <details ${ehIncap(esp)?"open":""} style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
       <summary class="rotulo-caso" style="cursor:pointer;display:list-item">2 · Documentos que o cliente vai trazer${
         esp&&(itens.length||extras.length)?` <span class="meio-sub" style="text-transform:none">— lista de ${itens.length+extras.length} itens${pedidos.length?` · já pedimos ${pedidos.reduce((n,p)=>n+(p.itens||[]).length,0)}`:""} (clique para abrir)</span>`
         :` <span class="meio-sub" style="text-transform:none">— clique para abrir</span>`}</summary>
@@ -17149,6 +17253,7 @@ function caixaAtendimento(c, ks){
 
     <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
       <div class="rotulo-caso">3 · Anotações deste atendimento</div>
+      ${quadroPendencias(c)}
       <textarea id="at-nota" rows="3" placeholder="a anotação deste atendimento — cada assunto pode ser uma anotação separada; o + guarda e abre espaço para a próxima"
         style="width:100%;resize:vertical"></textarea>
       <div class="form-linha" style="margin-top:4px;flex-wrap:wrap;align-items:center">
@@ -17170,6 +17275,7 @@ function caixaAtendimento(c, ks){
         <input type="date" id="at-lembrar" min="${hoje()}" title="lembrar em — cria o lembrete para os responsáveis marcados (sem ninguém marcado, para quem escreveu)">
         <label class="conta-ck"><input type="checkbox" id="at-imp">importante</label>
         <label class="conta-ck"><input type="checkbox" id="at-urg">urgente</label>
+        <label class="conta-ck" title="fica presa no quadro de pendências até alguém resolver"><input type="checkbox" id="at-pend">pendência</label>
         <label class="cad-mini" style="cursor:pointer" title="anexar documento junto desta conversa">
           <input type="file" id="pc-arq2" accept="image/*,application/pdf" style="display:none"
             onchange="anexarPreCaso('${c.id}','pc-arq2')">📎 anexar</label>
@@ -17184,6 +17290,8 @@ function caixaAtendimento(c, ks){
           <span class="mov-data">${n.em?fmt(n.em.slice(0,10)):"—"}</span>
           <span class="mov-txt">${n.importante?"⭐ ":""}${n.urgente?"🔥 ":""}${
             n.quem?`<b>${esc(n.quem)}:</b> `:""}${esc(n.texto||"")}
+            ${n.resolvida?`<span class="chip verde" title="resolvida por ${esc(n.resolvida.quem||"")}">resolvida ${fmt(n.resolvida.em)}</span>`
+              :ehNotaPendente(n)?`<span class="chip laranja">pendente</span>`:""}
             ${pcDe?`<span class="chip ben">${esc(pcDe.especie||"pré-caso")}</span>`:""}
             ${atrs.map(at=>`<span class="avatar mini" style="background:${at.cor}" title="atribuída a ${esc(at.nome)}">${esc(at.inicial)}</span>`).join("")}
             ${n.lembrar_em?`<span class="chip neutro" title="tem lembrete criado">🗓 ${fmt(n.lembrar_em)}</span>`:""}

@@ -131,6 +131,7 @@ const SUPA = "https://ficticio.supabase.co";
   conf("sem resultado, oferece anotar como interessado",
     await p.evaluate(() => /ainda não é cliente/.test(document.getElementById("ar-achados").textContent)));
   await p.evaluate(() => arNaoCliente());
+  await p.fill("#ar-tel", "16 98888-7777"); // F54: telefone obrigatório
   await p.fill("#ar-texto", "Ligou perguntando de aposentadoria rural, retornar amanhã.");
   escritos.length = 0;
   await p.evaluate(() => salvarAnotacaoRapida());
@@ -157,6 +158,7 @@ const SUPA = "https://ficticio.supabase.co";
   await p.waitForTimeout(200);
   conf("a saída de cliente novo explica o destino",
     await p.evaluate(() => /cliente novo/i.test(document.getElementById("ar-alvo").textContent)));
+  await p.fill("#ar-tel", "16 97777-6666"); // F54: telefone obrigatório
   await p.fill("#ar-texto", "Veio ao balcão sem ser cliente, quer contratar amanhã.");
   escritos.length = 0;
   await p.evaluate(() => salvarAnotacaoRapida());
