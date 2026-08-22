@@ -46,6 +46,8 @@ const SUPA = "https://ficticio.supabase.co";
   p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  // o login pinta antes de carregar() terminar — espera os clientes na memória
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);

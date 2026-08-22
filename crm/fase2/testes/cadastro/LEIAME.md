@@ -494,3 +494,35 @@ emoji.js: #app.logado pinta ANTES de carregar() terminar — abrirFicha
 imediato acha D.cliPorId vazio. A espera é
 `typeof D!=="undefined" && D.cliPorId && D.cliPorId.size>0`
 (window.D NÃO existe: D é let de script, não vira propriedade).
+
+## F55 — a mesa que se arruma sozinha
+
+O colapso é por ESTADO e o corpo fica NO DOM (details.mesa-feito):
+querySelector/textContent continuam achando tudo; o que muda é innerText
+(vazio quando recolhido) e p.click/p.fill em controle recolhido (invisível
+→ timeout). Prova de estrutura usa textContent; prova de interação abre o
+bloco antes (ou usa a regra "mexeu→fica aberto": mudarPreCaso/novoPreCaso
+adicionam em mesaAberta e o bloco não recolhe naquela ficha).
+
+mesaAberta é global e limpa em abrirFicha SÓ quando troca de cliente —
+repintarFicha preserva. O ontoggle grava abertura manual no Set: setar
+d.open=true via evaluate dispara ontoggle e persiste (é assim que o
+mesa55.js prova).
+
+A divisão Anotações NEM EXISTE para cliente com caso e sem pré-caso vivo
+(regra F29/F30 em vis.anotacoes) — teste do rodapé nesse cliente precisa
+de novoPreCaso antes do irSubCad, senão #at-nota não está na página (o
+mesa55 quebrou nisso; o cenário real do at-prazo é atendimento novo +
+caso ativo).
+
+O prazo fatal da nota (at-prazo) exige EXATAMENTE 1 caso com
+fase!=="encerrado" — o critério de "ativo" é o mesmo do arMostrarAlvo.
+Com 0 ou 2+, salvarNotaAtendimento2 barra ANTES de gravar qualquer coisa.
+
+A frase-viva atualiza por onchange/onclick dos controles e por dentro de
+atQuemToggle/atQuemTodos/atLembrarDia — controle novo no rodapé precisa
+chamar atualizarFraseNota() (no 📌, atualizarFraseSeg).
+
+CLI_CHEIO abre com modal escolherProcesso (2 processos): teste que só
+passa pela ficha dele precisa fecharCaixa()/escolhido() antes de seguir,
+senão o modal engole os cliques seguintes.
