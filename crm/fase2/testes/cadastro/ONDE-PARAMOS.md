@@ -1,3 +1,35 @@
+# Onde paramos — 22.08.2026, versão 09.55
+
+## F56 · A data de volta à vista: o "Concluir em" do To Do no CRM (09.55)
+
+Pedido do Paulo (com prints do To Do): lá, o "Concluir em" é UMA data
+exposta que diz quando o cliente volta à mesa — fácil de ver e entender.
+No CRM cada anotação pode ter data (mais poderoso), mas nada fica exposto.
+
+**proximaDataDe(cliId)** calcula a resposta sem burocracia nova: varre
+anotações com lembrar_em não resolvidas, lembretes ativos (proximo_em),
+prazos fatais de casos abertos e agendamentos (eventos futuros) e devolve
+{venceu, proxima} — venceu é a cobrança MAIS ANTIGA já passada (nota,
+lembrete ou prazo; agendamento que passou já aconteceu, não cobra),
+proxima é a menor data >= hoje.
+
+**A pílula no topo da ficha** (linha do CPF): vencida = vermelha
+"⏰ venceu DD.MM · motivo"; futura = azul "📅 volta DD.MM · motivo";
+nenhuma = cinza tracejada "sem próxima data — marque nas Anotações"
+(cliente sem cobrança marcada é cliente esquecido; a ausência também é
+informação). Clique → irParaData(tipo) leva à aba onde a data mora
+(nota→Cadastro/anotações, lembrete→aba 9, prazo→Casos, evento→Perícias,
+com fallback no Cadastro quando a aba não existe).
+
+**Nas Anotações**: nota com lembrar_em e sem resolvida abre a linha com a
+pílula colorida (azul futura, vermelha vencida); resolvida mostra só o
+registro neutro. E ehNotaPendente ganhou o critério lembrar_em < hoje —
+a nota "volta 20.08" que passa de 20.08 sem resolução entra SOZINHA nas
+Pendências em aberto. O quadro também mostra a pílula da data.
+
+Teste volta56.js (10 provas, datas relativas a hoje para não apodrecer).
+Suíte: 45 arquivos verde.
+
 # Onde paramos — 22.08.2026, versão 09.54
 
 ## F55 · A ficha respira: a mesa se arruma sozinha e o rodapé fala português (09.54)

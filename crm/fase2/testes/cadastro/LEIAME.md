@@ -526,3 +526,22 @@ chamar atualizarFraseNota() (no 📌, atualizarFraseSeg).
 CLI_CHEIO abre com modal escolherProcesso (2 processos): teste que só
 passa pela ficha dele precisa fecharCaixa()/escolhido() antes de seguir,
 senão o modal engole os cliques seguintes.
+
+## F56 — a data de volta
+
+proximaDataDe devolve DUAS coisas e a pílula prioriza venceu > proxima >
+vazia. "venceu" filtra tipo!=="evento" (perícia de ontem já aconteceu, não
+é dívida) e pega a MAIS ANTIGA (espera há mais tempo); "proxima" aceita
+qualquer tipo e pega a menor >= hoje. Nota resolvida não entra em nada.
+
+ehNotaPendente agora conta lembrar_em < hoje() — fixture de nota com data
+passada SEM resolvida entra no quadro Pendências e muda contagens de
+provas antigas; datas de teste sempre RELATIVAS a hoje (volta56.js usa
+mais(n)), nunca fixas, senão o teste apodrece quando o relógio passa.
+
+A pílula vive na linha do CPF (.resumo) e é <button> nas variantes
+venceu/futura e <span> na vazia — prova de clique só nas duas primeiras.
+irParaData clica o .mt[data-vv] correspondente com fallback no Cadastro
+(a aba 9 só existe com lembrete; a 3 idem) e, para nota, chama
+irSubCad("anotacoes") — que pode cair em identificacao pela regra
+F29/F30 (cliente com caso e sem pré-caso vivo não tem divisão Anotações).
