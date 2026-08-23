@@ -92,10 +92,12 @@ FIX.eventos = [
     abaAtiva = 2; pintarFicha(); }, CASO1);
   await p.waitForSelector(".fatos-topo");
   await p.waitForTimeout(400);
-  conf("o botão «não é caso» mora ao lado do Encerrar",
+  // F58: as ações moram juntas no RODAPÉ do cartão (por último, pedido do
+  // Paulo) — a prova confere que continuam lado a lado
+  conf("o botão «não é caso» mora ao lado do Encerrar (no rodapé)",
     await p.evaluate(() => {
-      const topo = document.querySelector(".fatos-topo");
-      return /não é caso/.test(topo.innerText) && /Encerrar caso/.test(topo.innerText);
+      const rodape = [...document.querySelectorAll(".fatos-processo .fatos-topo")].pop();
+      return rodape && /não é caso/.test(rodape.innerText) && /Encerrar caso/.test(rodape.innerText);
     }));
 
   // ── 3 (antes do 2). perícia trava a conversão ───────────────────────────

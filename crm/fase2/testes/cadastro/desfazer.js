@@ -85,8 +85,9 @@ FIX.lembretes = [{ id: "lb000000-0000-0000-0000-000000000001", cliente_id: CLI_V
     const m = document.getElementById("modal"); if (m) m.innerHTML = "";
     abaAtiva = 2; pintarFicha(); }, CASO1);
   await p.waitForTimeout(400);
+  // F58: as ações moram no RODAPÉ do cartão — procura no cartão inteiro
   conf("o caso encerrado mostra o ↺ reabrir ao lado do carimbo",
-    /reabrir/.test(await p.evaluate(() => document.querySelector(".fatos-topo").innerText)));
+    /reabrir/.test(await p.evaluate(() => document.querySelector(".fatos-processo").innerText)));
   escritos.length = 0;
   await p.evaluate(caso => reabrirCaso(caso), CASO1);
   await p.waitForTimeout(600);

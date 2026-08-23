@@ -77,10 +77,14 @@ FIX.casos[0].prazo = DAQUI20;
   await p.waitForTimeout(700);
 
   // 1) o quadro está no cartão do caso, ACIMA da grade de dados
-  conf("o quadro 📅 vive no cartão do caso, antes da grade de dados",
+  // F58: a espécie vem primeiro; o quadro vem depois dela e ANTES do ➕
+  conf("o quadro 📅 vive entre a espécie e o ➕ mais informações",
     await p.evaluate(() => { const q = document.getElementById("quadro-datas");
-      const g = document.querySelector(".fatos-processo .fx-grade");
-      return q && g && !!(q.compareDocumentPosition(g) & Node.DOCUMENT_POSITION_FOLLOWING); }));
+      const esp = document.querySelector(".fatos-processo .fx-grade");
+      const mais = document.querySelector(".fatos-processo .fx-mais");
+      return q && esp && mais &&
+        !!(esp.compareDocumentPosition(q) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+        !!(q.compareDocumentPosition(mais) & Node.DOCUMENT_POSITION_FOLLOWING); }));
 
   // 2) as quatro fontes aparecem, ordenadas, e a gêmea NÃO duplica
   const txt = await p.evaluate(() => document.getElementById("quadro-datas").textContent);
