@@ -690,3 +690,20 @@ conclusão já é o registro. O desfazer regrava prazoAntes INTEIRO
 nos dois lados. Em teste, espelhe o PATCH de casos na FIX (mesma
 pegadinha do reGET da F60) — prazo64.js já faz para PATCH de qualquer
 tabela com id=eq.
+
+## F66/F67 — a cancelada e a fantasma
+
+O campo de cancelamento de evento é `status:"cancelada"` — NÃO existe
+`e.cancelado`; dois filtros usavam o campo errado e deixavam a cancelada
+viva no quadro e na pílula. Todo filtro novo de eventos usa
+`e.status!=="cancelada"`.
+
+extrairEvento EXIGE palavra de agendamento (agendad|marcad|remarcad|
+reagendad|designad) entre o tipo e a data — sem ela, frase com
+"perícia"+data NÃO vira evento (era a origem das fantasmas, com a data
+sem ano empurrada para o ano seguinte). O grupo (?:...) não desloca os
+índices m[2..6]. A suspeita das já gravadas usa a obs: só o leitor de
+texto grava obs no evento (PAT e criação manual não) — obs presente sem
+palavra de agendamento = banner do Calendário; ✔ é real zera a obs (é o
+desligamento da suspeita, não inventamos coluna). cancelarEvento usa
+confirm() — teste stuba window.confirm no addInitScript.
