@@ -52,6 +52,7 @@ const VIACEP = {                       // resposta fictícia, formato do serviç
   p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
 
   const abrir = async id => {
     await p.evaluate(x => abrirFicha(x), id);

@@ -45,6 +45,7 @@ const SUPA = "https://ficticio.supabase.co";
   p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   // 1) as DUAS portas existem: o campo fixo no topo da barra e o botão do canto

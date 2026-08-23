@@ -49,6 +49,7 @@ FIX.colaboradores.push({ id: "99999999-9999-9999-9999-999999999999",
   p.on("pageerror", e => erros.push("pageerror: " + e.message));
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
   const detalhe = () => p.evaluate(() => (document.getElementById("detalhe") || {}).innerText || "");
 

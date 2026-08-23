@@ -612,3 +612,24 @@ identificação (regra F29/F30), comportamento aceito.
 
 A bolinha é .avatar.mini com background inline e title="responsável:
 {nome}" — prova por title*="Nome", nunca pelo texto da linha.
+
+## F60 — a quinta fonte de datas
+
+O quadro 📅 agora lê CINCO fontes: notas de atendimento, lembretes,
+prazos, eventos e andamento_tarefas (D.tarefasFicha — só existe com a
+ficha aberta, carregada por caso_id in ids). O texto da linha vem de
+D._andsFicha pelo andamento_id, com replace de tags.
+
+qdConcluirTarefa embrulha concluirDeVez + repintarFicha (concluirDeVez
+não repinta sozinho). ATENÇÃO ao mock: repintar → abrirFicha → reGET de
+andamento_tarefas — o teste PRECISA aplicar o PATCH na fixture (senão a
+tarefa concluída volta viva no reGET e a prova de "sai do quadro" falha).
+
+qdIrParaAndamento navega com setTimeout 700ms e acha o comentário pela
+âncora id="visto-{andamento_id}" (renderizada por vistos(a)); o brilho é
+a classe .qd-flash (animação, remove-se sozinha). casoSel é setado ANTES
+do clique na aba 2.
+
+A espera de boot (`waitForFunction typeof D !== "undefined" &&
+D.cliPorId.size > 0`) agora é PADRÃO em todos os testes, logo após
+waitForSelector("#app.logado") — teste novo nasce com ela, sempre.

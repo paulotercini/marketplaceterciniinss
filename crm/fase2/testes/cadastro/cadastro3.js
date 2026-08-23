@@ -51,6 +51,7 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "Apos. Tempo de Contribuição" };
   p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   // ── 1. o RG saiu do sistema ─────────────────────────────────────────────

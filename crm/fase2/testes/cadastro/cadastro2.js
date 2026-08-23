@@ -54,6 +54,7 @@ FIX.credenciais = [{ id: "cr1", cliente_id: CLI_CHEIO, tipo: "meu_inss",
   p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   // ── 1. a linha do tempo dos vínculos ────────────────────────────────────
