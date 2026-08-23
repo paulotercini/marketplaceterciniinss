@@ -672,3 +672,21 @@ só nasce de andamento do escritório (concluirDeVez/responder).
 tlOficial aceita x.cls por linha — é assim que o recuo entra
 (.tl-of.tl-resposta). A pílula de dia pode aparecer entre pai e filha
 quando a resposta é de outro dia: comportamento aceito (informativo).
+
+## F64 — concluir baixa o prazo fatal junto
+
+A baixa acontece no FUNIL ÚNICO concluirDeVez (o ✔ rápido e o ✎ escrever
+via fecharTarefa passam por ele) — não repita a lógica em quem chama. O
+gatilho é o carimbo `[PRAZO ${fmt(k.prazo)}]` do andamento de ORIGEM
+batendo com o prazo VIGENTE do caso: carimbo antigo (prazo remarcado
+depois) não baixa nada, de propósito. O texto vem de D._andsFicha com
+fallback em GET (a conclusão pode partir de tela sem a ficha carregada).
+
+Caso preso em 🗓 Tarefas com Prazo (F38) volta à lista de origem pela
+MESMA regra da janelaPrazoCumprido (ronda.prazo_de → origem_lista →
+"👪 Judicial"), sem perguntar e SEM postar "[PRAZO CUMPRIDO]" — o ✔ da
+conclusão já é o registro. O desfazer regrava prazoAntes INTEIRO
+({prazo, fase, mover_para, ronda}); se mexer nos campos do patch, mexa
+nos dois lados. Em teste, espelhe o PATCH de casos na FIX (mesma
+pegadinha do reGET da F60) — prazo64.js já faz para PATCH de qualquer
+tabela com id=eq.

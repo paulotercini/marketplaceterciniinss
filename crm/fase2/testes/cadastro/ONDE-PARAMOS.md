@@ -1,3 +1,29 @@
+# Onde paramos — 23.08.2026, versão 09.63
+
+## F64 · Concluir a tarefa baixa o prazo fatal junto (09.63)
+
+Pedido do Paulo: escrever o comentário de conclusão (✎ escrever) e AINDA
+ter que clicar em ✔ feito na linha do prazo fatal era clique sem
+necessidade — concluir a tarefa decorrente deve finalizar o prazo.
+
+Fix no funil único: concluirDeVez (por onde passam o ✔ rápido E o ✎
+escrever via fecharTarefa) agora, depois de concluir a tarefa, olha o
+andamento de origem (D._andsFicha; fallback GET) — se o texto carrega o
+carimbo `[PRAZO ${fmt(k.prazo)}]` batendo com o prazo VIGENTE do caso, o
+prazo baixa junto (patchCaso prazo:null). Se a F38 tinha movido o caso
+para 🗓 Tarefas com Prazo, ele volta sozinho à lista de origem pela
+regra da volta da janelaPrazoCumprido (ronda.prazo_de → origem_lista →
+"👪 Judicial"), limpando ronda.prazo_de, SEM perguntar. Carimbo antigo
+(prazo do caso mudou depois) não baixa nada. O aviso ganha "· ⏰ prazo
+fatal de dd.mm baixado junto" e o desfazer devolve TUDO (prazoAntes =
+{prazo, fase, mover_para, ronda} regravado inteiro em desfazerConclusao).
+montarSidebar() roda quando baixou (o caso pode ter trocado de lista).
+Não posta segundo andamento "[PRAZO CUMPRIDO]" — o ✔ da conclusão já
+conta a história.
+
+Teste prazo64.js (10 provas, incl. negativo sem carimbo e desfazer).
+Suíte: 52 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.62
 
 ## F63 · O Caso completo aprendeu a resposta (09.62)
