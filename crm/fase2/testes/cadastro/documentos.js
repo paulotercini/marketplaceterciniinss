@@ -56,6 +56,7 @@ FIX.casos.push({ ...FIX.casos[0], id: "b0000000-0000-0000-0000-0000000000c2",
   p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   // ── 1. todo marcador dos modelos é trocado ───────────────────────────────
@@ -109,7 +110,9 @@ FIX.casos.push({ ...FIX.casos[0], id: "b0000000-0000-0000-0000-0000000000c2",
   const aviso = await p.innerText(".modal-cx");
   conf(`a janela lista o que sai em branco (${JSON.stringify(aviso.split("\\n")[0])})`,
     /Faltam \d+ campos? no cadastro/.test(aviso));
-  conf("nomeia os campos, um a um", /endereço/.test(aviso) && /RG/.test(aviso) && /CPF/.test(aviso));
+  // F23 tirou o RG do sistema: a conferência agora nomeia os campos que
+  // continuam obrigatórios
+  conf("nomeia os campos, um a um", /endereço/.test(aviso) && /estado civil/.test(aviso) && /CPF/.test(aviso));
   conf("nada foi impresso enquanto ninguém decidiu",
     (await p.evaluate(() => window.__abertas.length)) === 0);
   conf("nada foi registrado enquanto ninguém decidiu", escritos.length === 0);

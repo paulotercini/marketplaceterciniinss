@@ -67,6 +67,7 @@ FAMILIAS.forEach(([ben], i) => {
   p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   // ── 1. a tabela de espécies, família por família ─────────────────────────
@@ -194,13 +195,20 @@ FAMILIAS.forEach(([ben], i) => {
       && x.corpo.triagem.atendimento.passos === 12));
 
   // cliente sem caso: avisa em vez de gravar
+  // F24 mudou a regra: sem caso a triagem AGORA encerra normalmente — o
+  // resumo vai para as Anotações. O que continua barrado é encerrar sem
+  // nenhum passo marcado.
   const semCaso = await p.evaluate(async cli => {
     if ((D.casosDoCliente.get(cli) || []).length) return "ERRO: o cliente tem caso";
+    const c = D.cliPorId.get(cli);
+    c.triagem = { cnis: { estado: "atencao", nota: "CNIS com pendência" } };
     await fecharAtendimento(cli);
-    return document.getElementById("aviso").innerText;
+    return { aviso: document.getElementById("aviso").innerText,
+      notas: ((c.campos || {}).atendimento || []).map(n => n.texto) };
   }, CLI_VAZIO);
-  conf(`cliente sem caso não quebra, avisa (${JSON.stringify(String(semCaso).slice(0, 44))})`,
-    /não tem caso/.test(String(semCaso)));
+  conf(`cliente sem caso encerra e o resumo vai para as Anotações (${JSON.stringify(String((semCaso.notas || [])[0] || "").slice(0, 40))})`,
+    /Triagem encerrada/.test(String(semCaso.aviso))
+    && (semCaso.notas || []).some(t => /ATENÇÃO: CNIS/.test(t)));
 
   console.log("=== atendimento e espécie (F17) ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));

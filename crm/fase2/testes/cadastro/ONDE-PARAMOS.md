@@ -1,3 +1,33 @@
+# Onde paramos — 23.08.2026, versão 09.59
+
+## F60 · A data do composer do caso no quadro, com ida ao andamento (09.59)
+
+Bug apontado pelo Paulo (com print): anotação de ANDAMENTO com data de
+lembrete (o "verificar em 24/08" do composer, F41) não aparecia no quadro
+📅 — o quadro cobria notas de atendimento, lembretes, prazos e eventos,
+mas não a QUINTA fonte: andamento_tarefas.
+
+Agora o quadro lista as tarefas de andamento ativas (concluida_em null)
+dos casos do cliente: texto do próprio andamento (tags removidas, 70
+chars), bolinha do responsável (colaborador_id), data aberta que adia
+pelo fluxo oficial (mudarLembrar → PATCH andamento_tarefas) e ✔ feito
+(qdConcluirTarefa → concluirDeVez, que responde o andamento com "✔" e
+tem desfazer; + repintarFicha). CLICAR na linha chama qdIrParaAndamento:
+casoSel, aba Casos, sub-aba escritorio, rolagem até a âncora
+visto-{andamento_id} e brilho .qd-flash de 2,4s. A pílula "volta em" do
+topo (proximaDataDe) também ganhou a fonte (tipo "tarefa" → aba 2).
+
+De quebra: a ESPERA DE BOOT (D.cliPorId povoado) entrou em TODOS os 38
+testes que ainda não a tinham — a corrida intermitente de abrirFicha
+antes de carregar() estava derrubando arquivos aleatórios conforme a
+carga da máquina; classe de flake extinta.
+
+Gotcha de mock: a ficha RECARREGA andamento_tarefas no repintar — teste
+que conclui tarefa precisa espelhar o PATCH na fixture, senão o reGET
+ressuscita a tarefa (tarefa60.js faz Object.assign no FIX).
+
+Teste tarefa60.js (8 provas, datas relativas). Suíte: 49 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.58
 
 ## F59 · A origem a um clique e o responsável na bolinha (09.58)

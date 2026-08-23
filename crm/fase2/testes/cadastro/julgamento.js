@@ -48,6 +48,7 @@ const TXT_PERI = "Perícia médica agendada para 28/08/2026 14:00 na APS local."
   p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   // 1) o modal 📌 com texto de JULGAMENTO

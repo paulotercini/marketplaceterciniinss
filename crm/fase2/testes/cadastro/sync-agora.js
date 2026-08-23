@@ -71,6 +71,7 @@ FIX.config_app = [
     erros.push("console: " + m.text()); });   // o 401 do cenário 2 é proposital
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   // 1) o botão está ao lado do carimbo do To Do

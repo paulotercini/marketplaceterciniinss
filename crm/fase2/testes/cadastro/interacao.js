@@ -46,6 +46,7 @@ const SUPA = "https://ficticio.supabase.co";
 
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
 
   const abrir = async id => {
     await p.evaluate(x => abrirFicha(x), id);

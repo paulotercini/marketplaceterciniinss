@@ -61,6 +61,7 @@ FIX.andamento_tarefas = [{ id: "t1", andamento_id: AND, caso_id: CASO1, colabora
   p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   await p.evaluate(([cli, caso]) => abrirFicha(cli).then(() => {
@@ -158,8 +159,10 @@ FIX.andamento_tarefas = [{ id: "t1", andamento_id: AND, caso_id: CASO1, colabora
     geo && (geo.vTop - geo.liTop) < 20);
   conf(`e não são cobertas pelo × de apagar (${geo && geo.vDir}px da borda)`,
     geo && geo.vDir >= 14);
+  // F22 mudou o desenho: a bolinha morreu e o gap caiu de 26 para 14 — o
+  // avatar virou o nó, então a folga exigida é a nova
   conf(`o ponto da linha do tempo tem folga até o texto (${geo && geo.folgaTexto}px)`,
-    geo && geo.folgaTexto >= 20);
+    geo && geo.folgaTexto >= 12);
   conf("a caixa de escrever tem duas linhas de partida",
     (await p.evaluate(() => document.getElementById("and-texto").rows)) === 2);
 

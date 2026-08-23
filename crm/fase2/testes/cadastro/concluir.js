@@ -51,6 +51,7 @@ FIX.andamento_tarefas = [{ id: TAR, andamento_id: AND, caso_id: CASO1, colaborad
   p.on("console", m => { if (m.type() === "error") erros.push("console: " + m.text()); });
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html`);
   await p.waitForSelector("#app.logado");
+  await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   await p.evaluate(([cli, caso]) => abrirFicha(cli).then(() => { casoSel = caso; abaAtiva = 2; subAba = "escritorio"; pintarFicha(); }),
