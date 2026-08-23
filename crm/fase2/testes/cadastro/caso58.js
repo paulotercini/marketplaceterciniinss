@@ -74,21 +74,19 @@ FIX.casos.push(
 
   // ── caso INSS (B31 rural) ───────────────────────────────────────────────
   await verCaso(CLI_VAZIO, C_INSS);
-  conf("INSS: a espécie vem primeiro na grade do topo",
-    await p.evaluate(() => { const g = document.querySelector(".fatos-processo .fx-grade");
-      return g && !!g.querySelector('[data-fato="especie"]'); }));
+  conf("INSS: a espécie vem primeiro — o código B no topo do cartão (F69)",
+    await p.evaluate(() => { const e = document.querySelector(".fatos-processo .esp-cod");
+      return e && e.closest(".fatos-topo") && /B31/.test(e.textContent); }));
   conf("INSS: as subespécies (rural…) aparecem logo abaixo da espécie",
     await p.evaluate(() => { const s = document.querySelector(".fatos-processo");
-      const i = s.innerHTML; return i.indexOf('data-fato="especie"') < i.search(/Rural/) &&
-        /Rural/.test([...s.querySelectorAll(":scope > *:not(details)")].map(x=>x.textContent).join(" ")); }));
-  conf("INSS: DER e Protocolo estão à vista na tela principal",
-    await p.evaluate(() => { const fora = [...document.querySelectorAll(".fatos-processo > dl.fx-grade, .fatos-processo > div")]
-        .map(x => x.textContent).join(" ");
-      return /DER/.test(fora) && /111222333/.test(fora); }));
-  conf("INSS: NB e DIB ficaram dobrados no ➕ mais informações",
-    await p.evaluate(() => { const mais = document.querySelector(".fatos-processo .fx-mais");
-      return mais && !mais.open && mais.querySelector('[data-fato="nb"]') &&
-        mais.querySelector('[data-fato="dib"]'); }));
+      const i = s.innerHTML; return i.indexOf("esp-cod") < i.search(/Rural/) &&
+        /Rural/.test([...s.querySelectorAll(":scope > *")].map(x=>x.textContent).join(" ")); }));
+  conf("INSS: a DER está à vista, dividindo a linha com o ➕ (F69)",
+    await p.evaluate(() => { const l = document.querySelector(".fatos-processo .fx-linha-der");
+      return l && /DER/.test(l.textContent) && !!l.querySelector(".fx-mais-bt"); }));
+  conf("INSS: NB, DIB e o protocolo ficaram dobrados no ➕ (F69: corpo fechado nem renderiza)",
+    await p.evaluate(() => { const s2 = document.querySelector(".fatos-processo");
+      return !s2.querySelector(".fx-mais-corpo") && !/111222333/.test(s2.textContent); }));
   conf("B31: a janelinha da incapacidade mostra a DCB com o prorrogar 15 dias antes",
     await p.evaluate(() => { const cx = document.querySelector(".fatos-processo .fx-incap");
       return cx && /DCB/.test(cx.textContent) && /30\.09\.2026/.test(cx.textContent) &&
@@ -98,13 +96,17 @@ FIX.casos.push(
       const rodape = blocos[blocos.length - 1];
       return /Encerrar caso/.test(rodape.textContent) && /não é caso/.test(rodape.textContent); }));
 
-  // o ➕ aberto sobrevive à repintura
-  await p.evaluate(() => { document.querySelector(".fatos-processo .fx-mais").open = true; });
-  await p.waitForTimeout(200);
+  // o ➕ aberto sobrevive à repintura (F69: botão + corpo, mesma mecânica)
+  await p.evaluate(() => document.querySelector(".fatos-processo .fx-mais-bt").click());
+  await p.waitForTimeout(400);
+  conf("o clique no ➕ abre o corpo com NB, DIB e o protocolo",
+    await p.evaluate(() => { const c = document.querySelector(".fatos-processo .fx-mais-corpo");
+      return c && c.querySelector('[data-fato="nb"]') && c.querySelector('[data-fato="dib"]') &&
+        /111222333/.test(c.textContent); }));
   await p.evaluate(() => pintarFicha());
   await p.waitForTimeout(500);
   conf("o ➕ aberto continua aberto depois da repintura (maisAberto)",
-    await p.evaluate(() => document.querySelector(".fatos-processo .fx-mais").open));
+    await p.evaluate(() => !!document.querySelector(".fatos-processo .fx-mais-corpo")));
 
   // ── caso no CONSELHO: datas recursais dinâmicas ─────────────────────────
   await p.evaluate(() => fecharFicha(false));
@@ -124,8 +126,10 @@ FIX.casos.push(
   conf("CRPS: gravado o ED, o campo do Recurso Especial aparece (dinâmico)",
     escritos.some(x => x.m === "PATCH" && x.t === "casos" && x.corpo.ed_protocolado_em === "2026-07-10") &&
     await p.evaluate(() => !!document.querySelector('.fatos-processo [data-fato="re_protocolado_em"]')));
+  await p.evaluate(() => document.querySelector(".fatos-processo .fx-mais-bt").click());
+  await p.waitForTimeout(400);
   conf("CRPS: o ➕ guarda os dados do INSS (DER e protocolo de lá)",
-    await p.evaluate(() => { const mais = document.querySelector(".fatos-processo .fx-mais");
+    await p.evaluate(() => { const mais = document.querySelector(".fatos-processo .fx-mais-corpo");
       return mais && mais.querySelector('[data-fato="der"]') && /444555666/.test(mais.textContent); }));
 
   // ── caso JUDICIAL: distribuição, onde está, processos ───────────────────
@@ -138,8 +142,10 @@ FIX.casos.push(
   conf("judicial: os números dos processos vinculados aparecem logo abaixo",
     await p.evaluate(() => { const el = document.querySelector(".fatos-processo .fx-procs, .fatos-processo > dl.fx-grade [data-fato=\"processo\"]");
       return !!el; }));
+  await p.evaluate(() => document.querySelector(".fatos-processo .fx-mais-bt").click());
+  await p.waitForTimeout(400);
   conf("judicial: a trilha (etapas anteriores) mora dentro do ➕",
-    await p.evaluate(() => { const mais = document.querySelector(".fatos-processo .fx-mais");
+    await p.evaluate(() => { const mais = document.querySelector(".fatos-processo .fx-mais-corpo");
       return mais && !!mais.querySelector(".trilha-proc"); }));
 
   console.log("=== F58 · o cartão do caso na ordem do Paulo ===");
