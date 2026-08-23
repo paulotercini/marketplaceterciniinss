@@ -1,6 +1,6 @@
 ---
 name: base-resp-relevancia-questao-federal
-description: "Skill da relevância da questão federal no recurso especial (EC 125/2022, art. 105, §§ 2º e 3º, CF) e da Emenda Regimental 53/2026 do STJ. Use SEMPRE que mencionar recurso especial, REsp, AREsp, filtro de relevância, relevância presumida, tópico de relevância, inadmissão por irrelevância, dois terços, PL 3.085/2026, art. 1.035-A CPC, reclamação art. 988 V, Emenda Regimental 53, art. 343-A RISTJ, resumo obrigatório de petição ao STJ, julgamento virtual do STJ, memoriais 48 horas, oposição ao julgamento virtual, reafirmação de jurisprudência eletrônica, art. 257-F, afetação eletrônica, PUIL dirigido ao STJ, jurisprudência dominante do STJ, valor da causa 500 salários mínimos, tópico de relevância modelo, como redigir relevância no REsp, dois ônus argumentativos, tese da explicitação, transcendência da controvérsia, relevância jurídica social e econômica, inadmissão por irrelevância defesa, quórum de dois terços. Use AUTOMATICAMENTE ao redigir ou revisar REsp, AREsp ou qualquer petição dirigida ao STJ em matéria previdenciária. Cruza com base-rito-ordinario-trf, base-precedentes-catalogo-vinculantes e base-puil-pedilef-vedacao-materia-processual. NÃO use para recurso inominado, TNU ou CRPS."
+description: "Skill da relevância da questão federal no recurso especial (EC 125/2022, art. 105, §§ 2º e 3º, CF) e da Emenda Regimental 53/2026 do STJ. Use SEMPRE que mencionar recurso especial, REsp, AREsp, filtro de relevância, relevância presumida, tópico de relevância, inadmissão por irrelevância, dois terços, PL 3.085/2026, art. 1.035-A CPC, reclamação art. 988 V, Emenda Regimental 53, art. 343-A RISTJ, resumo obrigatório de petição ao STJ, julgamento virtual do STJ, memoriais 48 horas, oposição ao julgamento virtual, reafirmação de jurisprudência eletrônica, art. 257-F, afetação eletrônica, PUIL dirigido ao STJ, jurisprudência dominante do STJ, valor da causa 500 salários mínimos, tópico de relevância modelo, como redigir relevância no REsp, dois ônus argumentativos, tese da explicitação, transcendência da controvérsia, relevância jurídica social e econômica, inadmissão por irrelevância defesa, quórum de dois terços. Use TAMBÉM para negativa de seguimento pelo art. 1.030 I b, agravo interno definitivo no tribunal de origem, art. 1.030 §2º, vedação de agravo em recurso especial, MS contra decisão de admissibilidade, teratologia, RMS 75406, Súmula 41 STJ. Use AUTOMATICAMENTE ao redigir ou revisar REsp, AREsp ou qualquer petição dirigida ao STJ em matéria previdenciária. Cruza com base-rito-ordinario-trf, base-precedentes-catalogo-vinculantes e base-puil-pedilef-vedacao-materia-processual. NÃO use para recurso inominado, TNU ou CRPS."
 ---
 
 # Relevância da Questão Federal no REsp e Reforma Regimental do STJ (2026)
@@ -58,3 +58,25 @@ Modelo pronto do tópico (vias do inciso V e da relevância demonstrada), triage
 ## Fontes conferidas em 18/07/2026
 
 EC 125/2022, texto literal no Planalto. Emenda Regimental STJ 53/2026, texto integral oficial (DJe 1º/07/2026). Aprovação do PL 3.085/2026 na Câmara em 14/07/2026 com remessa à sanção, notícias oficiais do STJ e da Câmara dos Deputados.
+
+## REsp barrado pelo art. 1.030, I, "b". Agravo interno definitivo e a válvula do MS (Onda 119)
+
+Conferido no SCON do STJ em 23/08/2026, a partir de material de rede social (Cadernos Sistematizados, InfoSTJ, Edição Extraordinária 31), com as fichas na fonte oficial.
+
+**A regra.** Quando o tribunal de origem NEGA SEGUIMENTO ao recurso especial com fundamento no art. 1.030, I, "b", do CPC, por estar o acórdão em conformidade com precedente firmado em repetitivo, o ÚNICO recurso cabível é o AGRAVO INTERNO, julgado pelo PRÓPRIO tribunal de origem, com exclusividade e em CARÁTER DEFINITIVO (art. 1.030, § 2º). Daí em diante NÃO cabe recurso algum ao STJ, nem agravo em recurso especial.
+
+**Precedente principal.** RMS 75.406/SP, Segunda Turma, Rel. Min. Marco Aurélio Bellizze, j. 03/03/2026, DJEN 06/03/2026, com tese em dois itens na ementa. Primeiro, o STJ não tem competência para MS contra ato de outros tribunais (art. 105, I, "b", da CF e Súmula 41/STJ), ainda que relacionado à admissibilidade de REsp. Segundo, sendo a decisão irrecorrível dali em diante, revela-se VIÁVEL a impetração de mandado de segurança NA CORTE LOCAL, demonstrado o direito líquido e certo ou a teratologia da decisão. No caso, o recurso foi PROVIDO para determinar que o TJSP julgue o MS que havia denegado por incabível. [CONFERIDO em 23/08/2026]
+
+**Limite, na mesma pesquisa.** AgInt no RMS 73.532/MG, Segunda Turma, Rel. Min. Maria Thereza de Assis Moura, j. 13/08/2025, DJEN 18/08/2025. O MS contra ato judicial é EXCEPCIONALÍSSIMO, cabível apenas em manifesta ilegalidade, teratologia ou abuso de poder com lesão irreparável, e controvérsia que exija reexame de prova não passa. [CONFERIDO em 23/08/2026]
+
+**Tradução operacional para o escritório, em quatro decisões.**
+
+Primeira, ANTES do REsp. Se o acórdão recorrido aplicou tese repetitiva, o caminho NÃO é insistir na contrariedade direta, que morre no art. 1.030, I, "b". É demonstrar DISTINGUISHING ou superação na própria interposição, porque é isso que desloca a hipótese para a admissibilidade comum.
+
+Segunda, negado seguimento pelo 1.030, I, "b". Agravo INTERNO no tribunal de origem, no prazo de 15 dias, com o distinguishing como núcleo. NUNCA agravo em recurso especial, que é o erro clássico e não será conhecido, queimando o prazo do recurso correto.
+
+Terceira, desprovido o agravo interno. A via recursal ACABOU. Restam o MS na Corte local, somente com teratologia ou ilegalidade manifesta demonstrável de plano, e a eventual reclamação quando houver usurpação ou desrespeito a precedente vinculante em sua literalidade.
+
+Quarta, o MS é válvula estreita e não terceira instância. Impetrar sem teratologia real desgasta e perde. O juízo honesto sobre a força do caso vem ANTES da impetração.
+
+**Encaixe previdenciário.** O cenário é frequente quando a origem enquadra o caso no Tema 1090 (EPI), no Tema 1124 (interesse de agir) ou em outro repetitivo desfavorável. A resposta certa quase sempre é o distinguishing bem construído no agravo interno, e não a tentativa de subir.

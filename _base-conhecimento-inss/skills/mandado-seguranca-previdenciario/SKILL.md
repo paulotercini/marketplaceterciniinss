@@ -148,3 +148,9 @@ O MS NÃO é cabível quando a questão exigir dilação probatória (perícia m
 ## 5. Alertas Automáticos
 
 Ao identificar cenário de MS, verificar SEMPRE se a questão é exclusivamente de direito ou se há componente fático que exija dilação probatória (se sim, MS não é cabível). Verificar se o prazo decadencial de 120 dias foi superado (se sim, analisar se o ato é omissão contínua que renova o prazo). Verificar no Meu INSS a fase atual do PA para definir autoridade coatora correta (remeter à skill `ms-competencia-autoridade-coatora`). Se o caso envolver B94 com laudo do INSS favorável mas indeferimento por Anexo III, alertar expressamente que MS é preferível à ação de concessão e explicar o risco da perícia judicial. Se o caso envolver cumprimento de CRPS, verificar tempestividade do eventual recurso do INSS antes de impetrar (art. 61 do Regimento Interno do CRPS, prazo de 30 dias).
+
+## MS contra decisão de admissibilidade do REsp na origem (Onda 119)
+
+Hipótese conferida no SCON em 23/08/2026. Desprovido o agravo interno contra a negativa de seguimento do REsp pelo art. 1.030, I, "b", do CPC, a decisão se torna IRRECORRÍVEL, e o STJ reconhece a viabilidade de mandado de segurança julgado pela PRÓPRIA Corte local, jamais pelo STJ (art. 105, I, "b", da CF e Súmula 41/STJ), demonstrado direito líquido e certo ou TERATOLOGIA (RMS 75.406/SP, Segunda Turma, j. 03/03/2026).
+
+Trava de honestidade. O mesmo STJ reafirma que o MS contra ato judicial é excepcionalíssimo e não admite reexame de prova (AgInt no RMS 73.532/MG). Sem teratologia demonstrável de plano, a impetração perde e desgasta. Roteiro completo em `base-resp-relevancia-questao-federal`.
