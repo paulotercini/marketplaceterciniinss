@@ -633,3 +633,12 @@ do clique na aba 2.
 A espera de boot (`waitForFunction typeof D !== "undefined" &&
 D.cliPorId.size > 0`) agora é PADRÃO em todos os testes, logo após
 waitForSelector("#app.logado") — teste novo nasce com ela, sempre.
+
+## F61 — o quadro é resumo
+
+NÃO recoloque criação de lembrete no quadro: decisão do Paulo — as datas
+nascem nos andamentos (composer), na aba Lembretes e nas Perícias; o
+quadro só reúne, mostra e altera. qdCriarLembrete foi REMOVIDA (o fluxo
+de criar continua em lembreteNovo da aba 9). A separação entre linhas é
+border-top na segunda em diante (.qd-linha + .qd-linha) — prova por
+getComputedStyle(ls[1]).borderTopWidth, nunca pela primeira linha.

@@ -1,3 +1,15 @@
+# Onde paramos — 23.08.2026, versão 09.60
+
+## F61 · O quadro vira resumo puro, com separação sutil (09.60)
+
+Dois refinamentos do Paulo no quadro 📅: (1) SAIU o rodapé "+ criar
+lembrete" (e a função qdCriarLembrete) — o quadro é um RESUMO; as datas
+nascem nos lugares próprios: andamentos do escritório, aba Lembretes,
+Perícias. O texto do vazio explica isso. (2) Cada lembrete ganhou
+separação sutil: `.qd-linha + .qd-linha{border-top:1px solid var(--borda)}`
+com padding 6px — o olho conta as linhas. quadro57.js trocou as provas do
+criar pelas do resumo (sem #qd-tit; borda entre vizinhas). Suíte: 49.
+
 # Onde paramos — 23.08.2026, versão 09.59
 
 ## F60 · A data do composer do caso no quadro, com ida ao andamento (09.59)
