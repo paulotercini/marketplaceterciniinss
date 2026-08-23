@@ -1,3 +1,23 @@
+# Onde paramos — 23.08.2026, versão 09.62
+
+## F63 · O Caso completo aprendeu a resposta (09.62)
+
+Bug apontado pelo Paulo (com print): concluir a tarefa pelo ✎ escrever
+mostrava o comentário SOLTO no 📖 Caso completo, como registro novo. A
+causa: fatosDoCasoTodo montava lista PLANA — o ramo do escritório nem
+carregava id/responde_a; só a conversa do Escritório (linhaDoTempo)
+aninha respostas.
+
+Fix na fonte: o ramo do escritório carrega id e pai (responde_a); depois
+de calcular marcos, as respostas cujo pai está na lista são penduradas
+NELE (raiz DESC; filhas do pai em ASC logo abaixo — a leitura "o que foi
+pedido → o que foi feito"); órfã de pai apagado continua no nível de
+cima. O render (painelTudo → tlOficial) leva cls "tl-resposta" (recuo +
+faixa verde, o visual da conversa) e o 📋 copiar em texto sai com "↳ "
+na resposta.
+
+Teste completo63.js (4 provas). Suíte: 51 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.61
 
 ## F62 · O parentesco das datas e o concluir escrevendo (09.61)

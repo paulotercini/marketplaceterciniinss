@@ -660,3 +660,15 @@ vale entre irmãos de qualquer tipo (linha/grupo), nunca dentro do grupo.
 concluirDeVez REPINTA sozinho (abrirFicha no fim) — não embrulhe de novo;
 o ✎ escrever é concluirTarefa(id), o modal oficial (ct-txt/ct-prot/
 fecharTarefa).
+
+## F63 — a resposta no Caso completo
+
+fatosDoCasoTodo devolve a lista JÁ REORDENADA com as respostas embaixo
+dos pais (x.resposta=true) — quem consome (painelTudo, copiarCasoCompleto)
+não deve reordenar por data de novo, senão desmonta os grupos. Só o ramo
+do ESCRITÓRIO carrega id/pai; PAT e PJe têm id mas nunca pai — resposta
+só nasce de andamento do escritório (concluirDeVez/responder).
+
+tlOficial aceita x.cls por linha — é assim que o recuo entra
+(.tl-of.tl-resposta). A pílula de dia pode aparecer entre pai e filha
+quando a resposta é de outro dia: comportamento aceito (informativo).
