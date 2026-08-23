@@ -1,3 +1,37 @@
+# Onde paramos — 23.08.2026, versão 09.57
+
+## F58 · O cartão do caso na ordem do Paulo, enxuto por fase (09.57)
+
+Pedido detalhado do Paulo (com print): pouca informação à vista, na ordem
+certa, tudo alterável, e o resto dobrado num "mais informações".
+
+**A ordem nova do blocoFatos**: topo (título + chip da LISTA + chips
+JEF/MS/onde está + exigência) → ESPÉCIE → o essencial DA FASE → janelinha
+da incapacidade (se B31/incap) → quadro 📅 Lembretes e datas → ➕ mais
+informações (details, estado em maisAberto/maisDobra como a mesa F55) →
+Responsável + 📎 Documentos → e as AÇÕES (fundir · não é caso · Encerrar)
+POR ÚLTIMO.
+
+**Por fase**: INSS/escritório = subespécies (linhaMarcadores) + DER +
+Protocolo; JUDICIAL = "Distribuído em" (rot novo de ajuizado_em) + "Onde
+está" (rot novo de orgao_judicial) + números dos processos vinculados
+(.fx-procs → sub-aba CNJ); CONSELHO = datas recursais DINÂMICAS
+(ro_protocolado_em sempre; ed_ aparece com RO gravado; re_ com ED) —
+colunas novas: rodar crm/fase2/schema_recursos_crps.sql. A DCB já
+preenche sozinha o "prorrogar a partir de" (-15 dias) no editarFato.
+
+**No ➕**: trilhaProcessual (De onde partiu/No que ramificou — as etapas
+anteriores), sugestão de continuidade/fundir, marcadores (fases judiciais)
+e a grade do resto (NB, DIB, decisão, classe, recorrer até…), tudo
+editável como sempre — nenhum campo repetido (ids fx-* são únicos).
+
+**Quadro de datas (F57) ganhou**: o atribuído de cada anotação na linha e
+o ✔ feito no prazo fatal (limpa a data).
+
+Testes: caso58.js novo (13 provas). Regressões ajustadas: conversao e
+desfazer (ações no rodapé), quadro57 (ordem espécie→quadro→➕), trilha
+(abre o ➕ antes). Suíte: 47 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.56
 
 ## F57 · O quadro de datas do caso: tudo à vista, tudo alterável (09.56)
