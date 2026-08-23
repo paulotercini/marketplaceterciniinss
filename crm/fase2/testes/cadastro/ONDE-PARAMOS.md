@@ -1,3 +1,32 @@
+# Onde paramos — 23.08.2026, versão 09.64
+
+## F65+F66+F67 · O raio, a cancelada e a fantasma (09.64)
+
+F65 (print do Paulo): a ⚡ Anotação rápida tinha a LUPA da classe .busca e
+parecia a pesquisa. Subiu para CIMA do "+ Novo Cliente" e o ::before dela
+virou o próprio ⚡ (background:none; content:"⚡"; mini-lateral com fonte
+maior). O placeholder perdeu o ⚡ (o ícone saiu do texto). rapida.js
+ganhou 3 provas (posição, ícone sem lupa, busca ainda com lupa).
+
+F66 (print): perícia CANCELADA continuava no Caso completo, no quadro 📅
+e na pílula "volta em". Causa: quadroDatas e proximaDataDe filtravam por
+`!e.cancelado` — campo que NÃO existe (o real é status==="cancelada") — e
+fatosDoCasoTodo não filtrava nada. Três filtros corrigidos para
+`e.status!=="cancelada"`. A aba Perícias segue mostrando o histórico.
+
+F67 (caso real: perícia 24/07/2027 que nunca existiu): extrairEvento
+criava evento de QUALQUER frase com "perícia"+data ("foi indeferida em
+24/07"), e data sem ano já passada era empurrada para o ano seguinte
+(24/07 lido em agosto/2026 → 24/07/2027). RE_EVENTO_JS agora EXIGE
+agendad|marcad|remarcad|reagendad|designad entre o tipo e a data. Para as
+fantasmas JÁ gravadas: banner 🕵️ no Calendário (evSuspeitos: evento
+futuro não cancelado com obs — só o leitor grava obs — sem palavra de
+agendamento), cada linha com ✕ fantasma (cancelarEvento, que agora dá
+render() sem ficha aberta) e ✔ é real (manterEvento: obs→null encerra a
+desconfiança). O Paulo confere Amaro e o resto ali.
+
+Teste pericia66.js (10 provas). Suíte: 53 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.63
 
 ## F64 · Concluir a tarefa baixa o prazo fatal junto (09.63)

@@ -53,6 +53,18 @@ const SUPA = "https://ficticio.supabase.co";
   conf("o campo ⚡ vive na barra lateral, ACIMA da busca (F52)",
     await p.evaluate(() => { const a = document.getElementById("ar-nome"), b = document.getElementById("busca");
       return a && b && (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING); }));
+  conf("F65: o campo subiu para CIMA do botão Novo Cliente",
+    await p.evaluate(() => { const a = document.getElementById("ar-nome"),
+        n = document.getElementById("btn-novo-cli");
+      return a && n && (a.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING); }));
+  conf("F65: sem lupa no campo — o ícone é o ⚡ (e o placeholder não duplica)",
+    await p.evaluate(() => { const cx = document.querySelector(".rapida-caixa");
+      const ps = getComputedStyle(cx, "::before");
+      return ps.backgroundImage === "none" && /⚡/.test(ps.content) &&
+        !/⚡/.test(document.getElementById("ar-nome").placeholder); }));
+  conf("a busca de verdade continua com a lupa",
+    await p.evaluate(() => { const cx = document.getElementById("busca").closest(".busca");
+      return /url\(/.test(getComputedStyle(cx, "::before").backgroundImage); }));
   // clicar no campo já abre o painel com o cursor pronto para digitar o nome
   await p.click("#ar-nome");
   await p.waitForTimeout(300);
