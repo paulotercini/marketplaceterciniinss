@@ -58,9 +58,9 @@ FIX.casos.push({ ...FIX.casos[0], id: CASO, cliente_id: CLI, fase: "judicial",
 
   await p.evaluate(([cli, caso]) => { abrirFicha(cli).then(() => { casoSel = caso; abaAtiva = 2; pintarFicha(); }); },
     [CLI, CASO]);
-  await p.waitForSelector(".fx-mais", { timeout: 10000 });
-  // F58: a trilha (etapas anteriores) mora dentro do ➕ mais informações
-  await p.evaluate(() => { document.querySelector(".fx-mais").open = true; });
+  await p.waitForSelector(".fx-mais-bt", { timeout: 10000 });
+  // F58/F69: a trilha (etapas anteriores) mora dentro do ➕ mais informações
+  await p.evaluate(() => document.querySelector(".fx-mais-bt").click());
   await p.waitForTimeout(400);
 
   const t = await p.innerText(".trilha-proc");

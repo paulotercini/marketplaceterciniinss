@@ -59,10 +59,9 @@ const SUPA = "https://ficticio.supabase.co";
     casoSel = caso; abaAtiva = 2; pintarFicha(); }); }, [CLI_CHEIO, CASO1]);
   await p.waitForTimeout(900);
 
-  conf("caso INSS: a linha Acompanhamento está logo abaixo da espécie",
+  conf("caso INSS: os chips do acompanhamento no cartão (F69: sem rótulo escrito)",
     await p.evaluate(() => { const f = document.querySelector(".fatos-processo .fx-acomp");
-      return f && /Acompanhamento/.test(f.textContent) &&
-        /Manual/.test(f.textContent) && /Automático/.test(f.textContent); }));
+      return f && /Manual/.test(f.textContent) && /Automático/.test(f.textContent); }));
   conf("o ✓ nasce cinza, com o título 'ninguém checou ainda'",
     await p.evaluate(() => { const c = document.querySelector(".acomp-check");
       return c && !c.classList.contains("ok") && /ninguém checou/.test(c.title); }));

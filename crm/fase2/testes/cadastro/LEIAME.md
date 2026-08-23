@@ -718,3 +718,22 @@ funções avisam sem aplicar em memória (não minta verde). A lista 🔎 é
 uma VISÃO (data-v="checagem"), não uma fase: nada de mover_para — o caso
 continua na lista dele. A ordem da lista é a fila de trabalho:
 String(checado_em||"") em localeCompare põe os nunca checados primeiro.
+
+## F69 — a faxina do cartão
+
+editarFato exige um elemento com id `fx-{campo}-{casoId}` — a espécie no
+topo (.esp-cod) CARREGA esse id, é assim que o ✎ segue funcionando sem
+mexer no editor. Se mover a espécie de novo, leve o id junto.
+
+O "mais informações" não é <details>: é botão (.fx-mais-bt) + corpo
+(.fx-mais-corpo) renderizado SÓ quando maisAberto tem o caso — teste que
+quer ler NB/protocolo/trilha precisa CLICAR no botão antes (o conteúdo
+fechado nem existe no DOM, diferente do details que existia oculto). O
+corpo abre em lugares diferentes por fase: INSS logo após a linha da DER,
+judicial/conselho depois do quadro.
+
+A .fx-linha-der força a grade interna a 1 coluna com !important — o
+painel 2 tem `.fx-grade{grid-template-columns:1fr 1fr}` mais específico
+que quebrava a DER em migalhas. O Responsável saiu SÓ do cartão: o
+atrDoCaso continua vivo (filtros por colaborador, Atribuídas a mim); não
+recriar a linha sem pedido do Paulo.

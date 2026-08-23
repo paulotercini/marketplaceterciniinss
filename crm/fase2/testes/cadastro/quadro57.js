@@ -76,15 +76,15 @@ FIX.casos[0].prazo = DAQUI20;
     if (m && m.style.display !== "none") escolhido(cli, caso); }, [CLI_CHEIO, CASO1]);
   await p.waitForTimeout(700);
 
-  // 1) o quadro está no cartão do caso, ACIMA da grade de dados
-  // F58: a espécie vem primeiro; o quadro vem depois dela e ANTES do ➕
-  conf("o quadro 📅 vive entre a espécie e o ➕ mais informações",
+  // 1) o quadro está no cartão do caso, DEPOIS da espécie e da linha da DER
+  // (F69: a espécie é o código B no topo; o ➕ virou botão na linha da DER)
+  conf("o quadro 📅 vem depois da espécie e da linha DER + ➕",
     await p.evaluate(() => { const q = document.getElementById("quadro-datas");
-      const esp = document.querySelector(".fatos-processo .fx-grade");
-      const mais = document.querySelector(".fatos-processo .fx-mais");
-      return q && esp && mais &&
+      const esp = document.querySelector(".fatos-processo .esp-cod");
+      const der = document.querySelector(".fatos-processo .fx-linha-der");
+      return q && esp && der &&
         !!(esp.compareDocumentPosition(q) & Node.DOCUMENT_POSITION_FOLLOWING) &&
-        !!(q.compareDocumentPosition(mais) & Node.DOCUMENT_POSITION_FOLLOWING); }));
+        !!(der.compareDocumentPosition(q) & Node.DOCUMENT_POSITION_FOLLOWING); }));
 
   // 2) as quatro fontes aparecem, ordenadas, e a gêmea NÃO duplica
   const txt = await p.evaluate(() => document.getElementById("quadro-datas").textContent);

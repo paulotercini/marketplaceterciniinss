@@ -1,3 +1,36 @@
+# Onde paramos — 23.08.2026, versão 09.66
+
+## F69 · A faxina do cartão do caso (09.66)
+
+Pedido do Paulo, item a item, sobre o cartão (fase INSS no print, regras
+aplicadas ao cartão todo): (1) a ESPÉCIE saiu do quadrão e virou o código
+B na frente do nome — span .esp-cod com id fx-especie-{k.id} no
+fatos-topo, então editarFato('especie') continua funcionando SEM mudança
+(ele injeta o input no elemento com esse id; datalist lista-especies vive
+fora do cartão). (2) Marcadores logo abaixo (como eram). (3) Acompanha-
+mento SEM o rótulo escrito — só os chips + ✓ (title no container).
+(4) A DER divide a linha com o ➕ (.fx-linha-der; grade forçada a 1
+coluna com !important contra o grid 2-colunas do painel; dd nowrap); o
+protocolo foi para DENTRO do mais (linhaProt agora incondicional no dl
+do corpo). (5) O <details .fx-mais> MORREU: virou botaoMais(k) (botão) +
+blocoMais() (corpo .fx-mais-corpo renderizado só quando maisAberto tem o
+caso) — INSS abre o corpo logo após a linha da DER; judicial/conselho
+depois do quadro. CSS do details removido. (6) Quadro 📅: frase do vazio
+encurtada ("Nenhuma data marcada para este cliente."), linha do PRAZO
+FATAL sempre destacada (.qd-prazo, faixa vermelha à esquerda mesmo sem
+vencer); o quadro JÁ consolidava todos os casos do cliente (prazos,
+eventos e tarefas varrem casosDoCliente — nada a mudar). (7) A linha
+RESPONSÁVEL (atribuição de caso, atrDoCaso) SAIU do cartão — fica só o
+📎 Documentos solicitados; o resto da atribuição (filtros, Atribuídas a
+mim, Quem cuida disso? das tarefas) NÃO foi tocado. (8) Ações no fim,
+como estavam.
+
+Regressões esperadas consertadas: acomp68 (rótulo saiu), caso58 (espécie
+no topo; protocolo dobrado; abrir = clicar .fx-mais-bt), quadro57 (ordem
+nova), trilha (idem).
+
+Teste cartao69.js (11 provas). Suíte: 55 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.65
 
 ## F68 · Acompanhamento Manual/Automático e a lista de checagem (09.65)
