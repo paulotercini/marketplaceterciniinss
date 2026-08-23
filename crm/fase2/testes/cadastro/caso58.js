@@ -81,9 +81,11 @@ FIX.casos.push(
     await p.evaluate(() => { const s = document.querySelector(".fatos-processo");
       const i = s.innerHTML; return i.indexOf("esp-cod") < i.search(/Rural/) &&
         /Rural/.test([...s.querySelectorAll(":scope > *")].map(x=>x.textContent).join(" ")); }));
-  conf("INSS: a DER está à vista, dividindo a linha com o ➕ (F69)",
-    await p.evaluate(() => { const l = document.querySelector(".fatos-processo .fx-linha-der");
-      return l && /DER/.test(l.textContent) && !!l.querySelector(".fx-mais-bt"); }));
+  conf("INSS: a DER está à vista, com o ➕ logo abaixo (F70)",
+    await p.evaluate(() => { const der = document.querySelector('.fatos-processo [data-fato="der"]');
+      const bt = document.querySelector(".fatos-processo .fx-mais-bt");
+      return der && bt &&
+        !!(der.compareDocumentPosition(bt) & Node.DOCUMENT_POSITION_FOLLOWING); }));
   conf("INSS: NB, DIB e o protocolo ficaram dobrados no ➕ (F69: corpo fechado nem renderiza)",
     await p.evaluate(() => { const s2 = document.querySelector(".fatos-processo");
       return !s2.querySelector(".fx-mais-corpo") && !/111222333/.test(s2.textContent); }));

@@ -78,10 +78,10 @@ FIX.casos[0].prazo = DAQUI20;
 
   // 1) o quadro está no cartão do caso, DEPOIS da espécie e da linha da DER
   // (F69: a espécie é o código B no topo; o ➕ virou botão na linha da DER)
-  conf("o quadro 📅 vem depois da espécie e da linha DER + ➕",
+  conf("o quadro 📅 vem depois da espécie, da DER e do ➕",
     await p.evaluate(() => { const q = document.getElementById("quadro-datas");
       const esp = document.querySelector(".fatos-processo .esp-cod");
-      const der = document.querySelector(".fatos-processo .fx-linha-der");
+      const der = document.querySelector('.fatos-processo [data-fato="der"]');
       return q && esp && der &&
         !!(esp.compareDocumentPosition(q) & Node.DOCUMENT_POSITION_FOLLOWING) &&
         !!(der.compareDocumentPosition(q) & Node.DOCUMENT_POSITION_FOLLOWING); }));

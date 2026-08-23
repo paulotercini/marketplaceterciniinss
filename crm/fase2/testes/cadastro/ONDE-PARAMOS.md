@@ -1,3 +1,21 @@
+# Onde paramos — 23.08.2026, versão 09.67
+
+## F70 · Dois retoques na faxina (09.67)
+
+(1) Espécie sem marcador ficou MUDA: especieJaDiz() morreu — B31 e afins
+não mostram linha nenhuma (a frase "o próprio código já diz…" saiu). O
+convite de preencher espécie mudou o texto ("no topo do cartão", porque
+a espécie subiu na F69). Marcador JÁ ATIVO fora do catálogo da espécie
+continua aparecendo (mostrar inclui os ativos — caso58 B31+rural prova).
+(2) O ➕ mais informações desceu para LOGO ABAIXO da DER (.fx-linha-der
+morreu, CSS incluído); a vaga AO LADO da DER está reservada — o Paulo
+ainda vai escolher o dado relevante do INSS que entra ali.
+
+Ajustes de prova: cartao69 (➕ abaixo da DER + frase banida), caso58,
+quadro57 (âncora [data-fato="der"]).
+
+Suíte: 55 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.66
 
 ## F69 · A faxina do cartão do caso (09.66)
