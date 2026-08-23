@@ -138,19 +138,15 @@ FIX.casos[0].prazo = DAQUI20;
     await p.evaluate(() => !/Rever documentos fictícios/.test(
       document.getElementById("quadro-datas").textContent)));
 
-  // 7) criar lembrete novo pelo rodapé do quadro
-  await p.fill("#qd-tit", "Ligar sobre a perícia fictícia");
-  await p.evaluate(quando => { document.getElementById("qd-data").value = quando; }, DAQUI2);
-  escritos.length = 0;
-  await p.evaluate(cli => qdCriarLembrete(cli), CLI_CHEIO);
-  await p.waitForTimeout(600);
-  conf("o + criar grava o lembrete com título, data e responsável",
-    escritos.some(x => x.m === "POST" && x.t === "lembretes" &&
-      x.corpo.titulo === "Ligar sobre a perícia fictícia" &&
-      x.corpo.proximo_em === DAQUI2 && x.corpo.responsavel_id === EU));
-  conf("o lembrete novo já aparece no quadro (sem F5)",
-    await p.evaluate(() => /Ligar sobre a perícia fictícia/.test(
-      document.getElementById("quadro-datas").textContent)));
+  // F61: o quadro virou RESUMO — o criar saiu (as datas nascem nos
+  // andamentos, na aba Lembretes e nas Perícias)
+  conf("o rodapé de criar lembrete NÃO existe mais no quadro",
+    await p.evaluate(() => !document.getElementById("qd-tit")));
+  conf("as linhas têm a separação sutil (borda entre vizinhas)",
+    await p.evaluate(() => { const ls = [...document.querySelectorAll("#quadro-datas .qd-linha")];
+      if (ls.length < 2) return false;
+      const b = getComputedStyle(ls[1]).borderTopWidth;
+      return b && b !== "0px"; }));
 
   console.log("=== F57 · o quadro de datas do caso ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
