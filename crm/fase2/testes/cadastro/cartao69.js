@@ -78,9 +78,14 @@ FIX.casos[0].prazo = mais(3);   // um prazo fatal FUTURO — o destaque não dep
         !!f.querySelector(".acomp-check"); }));
 
   // 3) DER + ➕ na mesma linha; protocolo só dentro do mais
-  conf("a DER divide a linha com o botão ➕ mais informações",
-    await p.evaluate(() => { const l = document.querySelector(".fx-linha-der");
-      return l && l.querySelector('[data-fato="der"]') && l.querySelector(".fx-mais-bt"); }));
+  conf("o ➕ mais informações fica logo abaixo da DER (F70)",
+    await p.evaluate(() => { const der = document.querySelector('.fatos-processo [data-fato="der"]');
+      const bt = document.querySelector(".fatos-processo .fx-mais-bt");
+      return der && bt &&
+        !!(der.compareDocumentPosition(bt) & Node.DOCUMENT_POSITION_FOLLOWING); }));
+  conf("nenhuma frase explicativa quando a espécie não tem marcador (F70)",
+    await p.evaluate(() => !/já diz o que é o pedido/.test(
+      document.querySelector(".fatos-processo").textContent)));
   conf("fechado, o protocolo não aparece no cartão",
     await p.evaluate(() => !document.querySelector(".fatos-processo .fx-prot")));
   await p.evaluate(() => document.querySelector(".fx-mais-bt").click());
