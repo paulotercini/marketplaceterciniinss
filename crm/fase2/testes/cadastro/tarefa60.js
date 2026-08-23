@@ -105,7 +105,7 @@ FIX.andamento_tarefas = [
 
   // 4) ✔ feito conclui pelo fluxo oficial e some do quadro
   escritos.length = 0;
-  await p.evaluate(id => qdConcluirTarefa(id), TAR1);
+  await p.evaluate(id => concluirDeVez(id), TAR1); // F62: o fluxo oficial repinta sozinho
   await p.waitForTimeout(700);
   conf("o feito grava concluida_em e responde o andamento com ✔",
     escritos.some(x => x.m === "PATCH" && x.t === "andamento_tarefas" && x.corpo.concluida_em) &&
