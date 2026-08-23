@@ -90,8 +90,12 @@ FIX.casos[0].prazo = DAQUI20;
   const txt = await p.evaluate(() => document.getElementById("quadro-datas").textContent);
   conf("a anotação vencida aparece com a cobrança em vermelho",
     /venceu/.test(txt) && /extrato fictício/.test(txt));
-  conf("o lembrete aparece com o responsável",
-    /Rever documentos fictícios · Paulo/.test(txt));
+  // F59: o responsável virou a bolinha colorida com a inicial (title = nome)
+  conf("o lembrete aparece com o responsável (bolinha com o nome no title)",
+    /Rever documentos fictícios/.test(txt) &&
+    await p.evaluate(() => [...document.querySelectorAll("#quadro-datas .qd-linha")]
+      .some(li => /Rever documentos fictícios/.test(li.textContent) &&
+        li.querySelector('.avatar.mini[title*="Paulo"]'))));
   conf("o prazo fatal do caso está na lista",
     /PRAZO FATAL/.test(txt));
   conf("a nota gêmea de lembrete entra UMA vez só (sem eco)",

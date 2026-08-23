@@ -596,3 +596,19 @@ inteiro ou o último bloco, nunca o primeiro .fatos-topo.
 "Distribuído em" e "Onde está" são os rot novos de ajuizado_em e
 orgao_judicial no FATOS — grep por "Ajuizado em"/"Órgão" em teste antigo
 não acha mais.
+
+## F59 — a origem a um clique
+
+qdVerLembrete acha a anotação de origem pelo MESMO título exato da dedup
+(`Anotação: ${texto.slice(0,60)}`) — as três pontas (criação em
+salvarNotaAtendimento2, dedup do quadro e clique de origem) usam a mesma
+chave; mudar uma exige mudar as três.
+
+O clique mora no .qd-rot (não na linha inteira — o input date e o ✔ feito
+têm cliques próprios). A caixa da anotação usa caixa()/fecharCaixa() e o
+"abrir nas Anotações" clica a aba 0 + irSubCad — para cliente com caso e
+sem pré-caso vivo, a divisão Anotações não existe e o irSubCad cai em
+identificação (regra F29/F30), comportamento aceito.
+
+A bolinha é .avatar.mini com background inline e title="responsável:
+{nome}" — prova por title*="Nome", nunca pelo texto da linha.

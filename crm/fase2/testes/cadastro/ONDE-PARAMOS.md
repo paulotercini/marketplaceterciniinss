@@ -1,3 +1,21 @@
+# Onde paramos — 23.08.2026, versão 09.58
+
+## F59 · A origem a um clique e o responsável na bolinha (09.58)
+
+Dois refinamentos do Paulo no quadro 📅: (1) a linha é CLICÁVEL — clicou,
+abre a ANOTAÇÃO que criou a data numa caixa (texto completo, marcações,
+atribuição, e o atalho "abrir nas Anotações" que leva à mesa); o lembrete
+GÊMEO acha a nota pelo título exato (a mesma chave da dedup F57); lembrete
+avulso mostra a própria ficha ("não nasceu de anotação") com atalho para a
+aba 9. (2) o responsável virou a BOLINHA colorida com a inicial
+(.avatar.mini, title = nome completo) — nota mostra os atribuídos,
+lembrete o responsável; some o nome escrito.
+
+qdVerNota/qdVerLembrete/qdCaixaNota/qdIrParaAnotacoes; .qd-link com
+cursor+underline no hover. Prova do nome no quadro57 atualizada (bolinha
+com title). triagem.js ganhou a espera de boot (a mesma corrida do
+emoji/extracoes). Teste origem59.js (6 provas). Suíte: 48 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.57
 
 ## F58 · O cartão do caso na ordem do Paulo, enxuto por fase (09.57)
