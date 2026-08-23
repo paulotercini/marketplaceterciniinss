@@ -46,11 +46,13 @@ Paradigma válido. Confira a origem do paradigma contra o que a corte destinatá
 
 Filtro de relevância no recurso especial. Confira se há tópico próprio de relevância, com a demonstração da transcendência da controvérsia, e se o caso se enquadra em hipótese de relevância presumida.
 
-Reação à inadmissão. Confira se a peça previu o agravo cabível contra a decisão de inadmissão, e o prazo dele.
+Reação à inadmissão, com a bifurcação que decide tudo. Inadmissão por fundamento COMUM comporta agravo em recurso especial ao STJ. Negativa de seguimento pelo art. 1.030, I, "b", por conformidade com repetitivo, comporta APENAS agravo interno no próprio tribunal de origem, definitivo, sem qualquer recurso posterior ao STJ. Confira se a peça identificou o fundamento da decisão ANTES de escolher o recurso, porque agravo em REsp contra decisão do 1.030, I, "b", não é conhecido e queima o prazo do recurso certo. Esgotado o agravo interno, resta somente o mandado de segurança na Corte local, em hipótese excepcionalíssima de teratologia, conferido na base em `base-resp-relevancia-questao-federal`.
 
 ## Erros processuais frequentes neste bloco
 
 Subir sem prequestionamento e sem embargos prequestionadores.
+
+Interpor agravo em recurso especial contra negativa de seguimento fundada no art. 1.030, I, "b", quando o cabível era agravo interno na origem.
 
 Formular uniformização sobre matéria processual sem revestimento material.
 
