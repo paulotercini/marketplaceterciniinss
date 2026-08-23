@@ -642,3 +642,21 @@ quadro só reúne, mostra e altera. qdCriarLembrete foi REMOVIDA (o fluxo
 de criar continua em lembreteNovo da aba 9). A separação entre linhas é
 border-top na segunda em diante (.qd-linha + .qd-linha) — prova por
 getComputedStyle(ls[1]).borderTopWidth, nunca pela primeira linha.
+
+## F62 — o parentesco das datas
+
+A filiação prazo→lembrete casa pelo CARIMBO LITERAL `[PRAZO ${fmt(data)}]`
+no textoCru (datas com PONTOS: 25.08.2026) + mesmo caso (casoId, quando a
+linha tem). As TRÊS pontas que geram o carimbo — salvarSeguimento (📌),
+salvarNotaAtendimento2 (mesa) e o composer com checkbox de prazo — usam
+fmt(); mudar o formato quebra a adoção silenciosamente.
+
+A adoção marca f.adotada e as soltas = linhas sem adotada; a ordenação
+dos irmãos usa a MENOR data do grupo (chave()), não a da mãe — o grupo
+de prazo 25.08 com lembrete 24.08 vem antes de um solto de 24.08+1.
+Dentro do grupo as filhas ordenam entre si. O separador sutil (borda-top)
+vale entre irmãos de qualquer tipo (linha/grupo), nunca dentro do grupo.
+
+concluirDeVez REPINTA sozinho (abrirFicha no fim) — não embrulhe de novo;
+o ✎ escrever é concluirTarefa(id), o modal oficial (ct-txt/ct-prot/
+fecharTarefa).

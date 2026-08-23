@@ -1,3 +1,24 @@
+# Onde paramos — 23.08.2026, versão 09.61
+
+## F62 · O parentesco das datas e o concluir escrevendo (09.61)
+
+Dois pedidos do Paulo no quadro 📅: (1) o ✔ feito da tarefa concluía sem
+deixar escrever — agora a linha tem os DOIS jeitos do andamento: ✔ feito
+(concluirDeVez, rápido com desfazer) e ✎ escrever (concluirTarefa, a
+janela oficial com texto, protocolo e repetição). O wrapper
+qdConcluirTarefa foi REMOVIDO — concluirDeVez já repinta sozinho
+(abrirFicha no fim). (2) anotação com prazo cria DUAS datas (lembrar +
+fatal) que apareciam soltas — agora o PRAZO FATAL ADOTA a decorrente:
+filiação pelo carimbo "[PRAZO dd.mm.aaaa]" no textoCru da tarefa/nota
+casando data (fmt) e caso; a filha aninha na mãe com "↳ lembrar",
+indentação e borda esquerda, perde o carimbo do rot, mantém bolinha,
+data editável e conclusões. O grupo ordena pela MENOR data dele (a
+primeira ação necessária) entre os irmãos; linhas sem parentesco seguem
+soltas com o separador sutil.
+
+Teste grupo62.js (6 provas); tarefa60.js ajustado (concluirDeVez direto).
+Suíte: 50 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.60
 
 ## F61 · O quadro vira resumo puro, com separação sutil (09.60)
