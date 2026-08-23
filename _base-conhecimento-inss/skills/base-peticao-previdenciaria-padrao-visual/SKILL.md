@@ -1,6 +1,6 @@
 ---
 name: base-peticao-previdenciaria-padrao-visual
-description: "Espelho versionado do padrão visual das petições do escritório Paulo Tercini. Replica peticao-previdenciaria com formatação A4, Bookman Old Style 12pt, espaçamento 1,5, cabeçalho timbrado, títulos de seção em tabelas pretas, recuo 2cm/4cm, proibição de dois-pontos, 5 componentes Visual Law, seção obrigatória de Efeitos Financeiros pelo Tema 1124/STJ e implementação em docx-js. Use SEMPRE que mencionar padrão visual petição, formatação petição Tercini, timbre escritório, título preto seção, tabela preta título, Visual Law petição, layout petição, docx-js Tercini, padrão A4, Bookman Old Style 12pt, dois-pontos vedado, recuo 2 cm 4 cm CRPS, linha do tempo, quadro resumo, síntese do caso duas linhas, ponto controvertido e o que se pede, regras anti-poluição Visual Law, teste do relance, fatos incontroversos, tabela comparativa, efeitos financeiros Tema 1124. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, tema-1124-instrucao-administrativa, mandado-seguranca-previdenciario, especificacao-provas, printscreen-impacto."
+description: "Espelho versionado do padrão visual das petições do escritório Paulo Tercini. Replica peticao-previdenciaria com formatação A4, Bookman Old Style 12pt, espaçamento 1,5, cabeçalho timbrado, títulos de seção em tabelas pretas, recuo 2cm/4cm, proibição de dois-pontos, 5 componentes Visual Law, seção obrigatória de Efeitos Financeiros pelo Tema 1124/STJ e implementação em docx-js. Use SEMPRE que mencionar padrão visual petição, formatação petição Tercini, timbre escritório, título preto seção, tabela preta título, Visual Law petição, layout petição, docx-js Tercini, padrão A4, Bookman Old Style 12pt, dois-pontos vedado, recuo 2 cm 4 cm CRPS, linha do tempo, quadro resumo, síntese do caso duas ou três linhas, ponto controvertido e o que se pede, exemplo canônico redutor de pensão, teto de três componentes, regras anti-poluição Visual Law, teste do relance, fatos incontroversos, tabela comparativa, efeitos financeiros Tema 1124. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, tema-1124-instrucao-administrativa, mandado-seguranca-previdenciario, especificacao-provas, printscreen-impacto."
 ---
 
 # Skill de Petições Previdenciárias – Escritório Paulo Tercini
@@ -377,7 +377,7 @@ Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na 
 - `[PROCESSUAL]` — marcos processuais (DER, ajuizamento, citação, audiência, sentença, decisão monocrática)
 - `[PROVA]` — provas produzidas (laudo particular, exames, PPP retificado, CTPS, certidões)
 
-**Limite de eventos.** Entre 4 e 8 eventos para manter legibilidade. Se o caso tiver mais marcos relevantes, selecionar os mais estratégicos.
+**Limite de eventos (apertado na Onda 118).** Entre 4 e 6 eventos. Linha do tempo com mais de seis marcos vira lista e perde a função. Se o caso tiver mais, selecionar os que decidem, e o critério é perguntar de cada evento se a sua remoção mudaria a compreensão da controvérsia. Não mudando, sai.
 
 ### Componente 2 — Quadro-Resumo (caseSummaryBox) [REFORMADO NA ONDA 104]
 
@@ -387,10 +387,18 @@ Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na 
 
 **Posição na petição.** Imediatamente após a qualificação das partes e a indicação "pelos fatos e fundamentos a seguir expostos", antes do primeiro título preto numerado.
 
-**Estrutura.** Tabela de duas colunas com cabeçalho preto único "SÍNTESE DO CASO", e SOMENTE DUAS LINHAS.
+**Estrutura.** Tabela de duas colunas com cabeçalho preto único "SÍNTESE DO CASO", com DUAS linhas, ou TRÊS no máximo quando o valor em disputa for o coração do caso.
 
 - Linha 1, rótulo **Ponto controvertido**. UMA frase, máximo de 25 palavras, que nomeia a única questão que o julgador precisa decidir. Sem histórico, sem citação de norma, sem data que não seja essencial à controvérsia.
-- Linha 2, rótulo **O que se pede**. UMA frase, máximo de 25 palavras, com a providência pretendida em linguagem direta. Em recurso, a reforma pretendida.
+- Linha 2, rótulo **O que se pede**. UMA frase, máximo de 25 palavras, com a providência pretendida em linguagem direta. Em recurso, a reforma pretendida. O valor mensal ou total em disputa PODE fechar esta frase, como no exemplo canônico.
+- Linha 3, OPCIONAL e rara, somente quando um dado quantitativo isolado decidir o caso e não couber na linha 2 sem inchá-la. Rótulo livre de uma ou duas palavras.
+
+**EXEMPLO CANÔNICO, validado pelo escritório em 19/08/2026 (Onda 118).** Caso real de redutor de acumulação em pensão.
+
+- Ponto controvertido. "O INSS reduziu pensão por morte concedida em **23/09/2008**, aplicando redutor criado pela EC 103/2019 por causa de aposentadoria concedida em 2025."
+- O que se pede. "Reforma da sentença para **suprimir o redutor de acumulação** e restituir R$ 245,14 mensais desde setembro de 2025."
+
+Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem são AS DUAS que decidem o caso (concessão pré-reforma e fato novo pós-reforma). O negrito marca só o núcleo. O valor aparece uma única vez, na providência. Nenhuma palavra sobra.
 
 - Coluna 1: **Rótulo** (largura 3000 twips), Bookman Old Style 10pt negrito, sombreamento cinza claro `F2F2F2`
 - Coluna 2: **Conteúdo** (largura 6213 twips), Bookman Old Style 10pt, com o NÚCLEO da frase em negrito (a data, o marco ou a providência que decide o caso)
@@ -429,6 +437,8 @@ Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na 
 
 **Vinculação a provas.** Cada fato DEVE referenciar o documento comprobatório por ID. Nunca classificar fato como incontroverso sem indicar a prova.
 
+**Limite de linhas (Onda 118).** Máximo de 5 fatos. A tabela existe para REDUZIR o campo de decisão, e dez linhas o ampliam de volta. Fato incontroverso que não sustenta nenhum pedido não entra. As colunas Prova e Fonte podem ser fundidas em uma única coluna "Prova" quando a origem for o próprio documento, encurtando a tabela.
+
 **Efeito estratégico.** Fixa para o julgador o campo de decisão, reduzindo a controvérsia ao ponto realmente disputado. Especialmente eficaz no JEF, onde o juiz precisa decidir rapidamente.
 
 ### Componente 4 — Tabela Comparativa (comparisonTable)
@@ -449,7 +459,7 @@ Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na 
 
 **Confronto de depoimentos.** Em peças com análise de audiência (alegações finais, memoriais pós-audiência, recurso inominado), a tabela é adaptada. Coluna 1, "Depoimento" (identificar a testemunha, a minutagem entre parênteses e transcrever apenas o trecho relevante, máximo 3 linhas). Coluna 2, "Contradição" (outro depoimento ou prova documental, com ID ou minutagem). Coluna 3, "Conclusão" (inferência objetiva em uma frase).
 
-**Limite de pontos.** Entre 2 e 6 pontos de confronto. Se houver mais divergências, agrupar por eixo temático. Em confronto testemunhal, entre 2 e 4 contradições.
+**Limite de pontos (apertado na Onda 118).** Entre 2 e 4 pontos de confronto, agrupando por eixo temático o que exceder. Em confronto testemunhal, entre 2 e 3 contradições. O confronto ganha pela precisão do golpe, não pela quantidade, e o quarto ponto fraco desvaloriza os três fortes.
 
 ### Componente 5 — Tabela-Resumo Pedido x Fundamento (requestSummaryTable)
 
@@ -464,25 +474,28 @@ Sexta, menos linhas comunicam mais. Os limites de cada componente (8 eventos na 
 
 **Cabeçalho**: fundo preto, texto branco em negrito.
 
-**Limite de linhas.** Máximo 8 linhas. Pedidos acessórios (custas, honorários, AJG) são agrupados em linha única.
+**Limite de linhas (apertado na Onda 118).** Máximo 6 linhas, com os acessórios (custas, honorários, AJG) agrupados em linha única. UM fundamento por linha, o mais forte. Empilhar três dispositivos e dois temas na mesma célula transforma o resumo em nova argumentação, que é exatamente o que ele existe para evitar.
 
-### Combinação de Componentes
+### Combinação de Componentes [REFORMADA NA ONDA 118]
 
-Uma petição inicial típica de concessão de B31 com indeferimento administrativo contém os cinco componentes, nesta ordem.
+**Teto de TRÊS componentes por peça, sendo o quadro-resumo sempre um deles.** A regra anterior mandava empilhar os cinco na inicial típica, e o resultado eram peças carregadas que cansavam a leitura. Visual Law funciona por contraste, e cinco tabelas não contrastam com nada.
 
-1. Quadro-resumo (após qualificação, antes do primeiro título preto)
-2. Linha do tempo (ao final dos fatos)
-3. Fatos incontroversos (entre fatos e direito)
-4. Tabela comparativa (dentro do direito)
-5. Tabela-resumo pedido x fundamento (antes dos pedidos)
+Escolha dos outros dois, pelo que DECIDE o caso concreto.
 
-Em petições mais simples (ex. restabelecimento por cessação automática), usar no mínimo o quadro-resumo e a linha do tempo.
+- A controvérsia é de SEQUÊNCIA de eventos (cessação, limbo, qualidade de segurado, prazo). Linha do tempo.
+- A controvérsia é de CONFRONTO com o que o INSS ou a sentença afirmou. Tabela comparativa.
+- A vitória depende de FIXAR o que já está provado (JEF, MS, réplica). Fatos incontroversos.
+- Há DOIS OU MAIS pedidos autônomos que o juiz pode confundir. Pedido x fundamento.
+
+Componente que não disputa a decisão não entra, ainda que ficasse bonito. O quarto e o quinto só aparecem em peça excepcionalmente complexa, com justificativa registrada, e nunca todos os cinco.
+
+Em petições simples (ex. restabelecimento por cessação automática), bastam o quadro-resumo e a linha do tempo.
 
 Em mandados de segurança, usar no mínimo o quadro-resumo, a linha do tempo e os fatos incontroversos.
 
 Em réplicas, usar no mínimo a tabela de fatos incontroversos/controvertidos (Componente 3 adaptado, com colunas "Fato alegado", "Impugnação pelo INSS" e "Situação processual").
 
-Em memoriais, usar no mínimo o quadro-resumo no formato reformado de duas linhas (Onda 104) e, quando pertinente, um printscreen de jurisprudência (Componente 5 da skill `printscreen-impacto`).
+Em memoriais, usar no mínimo o quadro-resumo no formato canônico (Ondas 104 e 118) e, quando pertinente, um printscreen de jurisprudência (Componente 5 da skill `printscreen-impacto`).
 
 Em recursos, avaliar caso a caso. A tabela comparativa é o componente mais útil em sede recursal, confrontando a sentença com as provas não valoradas.
 

@@ -905,3 +905,11 @@ ANTES de gerar qualquer .docx, verificar o arquivo `logo-tercini.PNG` na pasta d
 Logo com transparência é PROIBIDA no cabeçalho, porque o arquivo do escritório carrega, sob o canal alfa, o padrão xadrez do editor de imagem, que reaparece na conversão para PDF, no PJe e na impressão. Verificação e correção em `base-peticao-previdenciaria-padrao-visual/assets/README-LOGO.md`.
 
 Falhando a verificação, NÃO gerar a peça. Refazer o achatamento sobre branco primeiro.
+
+## Visual Law enxuto, regras da Onda 118
+
+Quadro SÍNTESE DO CASO no formato canônico validado pelo escritório. Duas linhas, Ponto controvertido e O que se pede, cada uma com no máximo 25 palavras, núcleo em negrito, valor em disputa fechando a segunda linha quando houver. Terceira linha só quando um dado quantitativo isolado decidir o caso. Proibido campo cadastral, norma, tema ou súmula dentro do quadro.
+
+Teto de TRÊS componentes Visual Law por peça, sendo o quadro-resumo sempre um deles, e os outros dois escolhidos pelo que DECIDE o caso. Sequência de eventos pede linha do tempo, confronto com o INSS pede tabela comparativa, fixação do provado pede fatos incontroversos, e pedidos múltiplos pedem a tabela pedido x fundamento. Nunca os cinco na mesma peça.
+
+Limites por componente. Linha do tempo com 4 a 6 eventos. Fatos incontroversos com até 5 linhas. Comparativa com 2 a 4 confrontos. Pedido x fundamento com até 6 linhas e UM fundamento por linha. Especificação completa e exemplo canônico em `base-peticao-previdenciaria-padrao-visual`.
