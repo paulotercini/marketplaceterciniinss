@@ -1830,6 +1830,17 @@
   .qd-novo{display:flex;gap:6px;flex-wrap:wrap;align-items:center;border-top:1px dashed var(--borda);
     padding-top:7px}
   .qd-novo input,.qd-novo select{border:1px solid var(--borda);border-radius:6px;padding:4px 8px;font:inherit}
+
+  /* ── F58 · o cartão do caso enxuto: ➕ mais informações dobrado ───────── */
+  .fx-mais{margin:8px 0;border:1px dashed var(--borda);border-radius:10px;padding:0}
+  .fx-mais>summary{list-style:none;cursor:pointer;padding:8px 12px;font-size:13px;
+    font-weight:600;color:var(--azul)}
+  .fx-mais>summary::-webkit-details-marker{display:none}
+  .fx-mais[open]>summary{border-bottom:1px dashed var(--borda)}
+  .fx-mais>*:not(summary){margin-left:10px;margin-right:10px}
+  .fx-mais>dl.fx-grade{margin:8px 10px}
+  .fx-procs{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:6px 0;
+    font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -1842,7 +1853,7 @@
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.56 · F57 — TODOS os lembretes à vista no caso (pedido do Paulo: a pílula sozinha não bastou): quadro "📅 Lembretes e datas" EM CIMA dos dados do caso com uma linha por data — anotações datadas, lembretes (com responsável e recorrência), prazos fatais e agendamentos — cada uma com o campo de data ABERTO (trocou, gravou na hora: anotação remarca, lembrete adia pelo fluxo oficial, prazo fatal move) e o "✔ feito" que resolve ali mesmo (lembrete único desliga, recorrente avança); vencida fica vermelha, a que chega em 7 dias fica azul; e o rodapé do quadro cria lembrete novo sem sair do caso (o quê + quando + quem). A pílula do topo (F56) continua como resumo de qualquer aba. · F56 — o "Concluir em" do To Do chegou ao CRM (pedido do Paulo: a data da próxima tarefa era fácil de ver no To Do e não estava sendo no CRM): o topo da ficha agora mostra UMA pílula com a data em que o cliente volta à mesa — calculada sozinha, a menor entre lembretes ativos, anotações com data, prazos fatais e agendamentos; vencida grita "⏰ venceu DD.MM" em vermelho (a cobrança mais antiga primeiro), futura avisa "📅 volta DD.MM" em azul com o motivo, e sem data nenhuma a pílula cinza denuncia "sem próxima data" (cliente sem cobrança marcada é cliente esquecido); o clique leva até onde a data mora; nas Anotações, a nota com data ganha a pílula colorida no começo da linha (azul futura, vermelha vencida) e a data vencida sem resolução entra SOZINHA nas Pendências em aberto. · F55 — a ficha respira (pedido do Paulo: menos informação de uma vez, sem flechinha misteriosa, fácil para quem tem pouco contato): a MESA SE ARRUMA SOZINHA — bloco resolvido recolhe numa linha verde que já INFORMA a decisão (espécie · natureza · via · cidade; análise de hoje; honorários com o padrão ou o ajuste à vista) e reabre num toque em "alterar"; a LINHA-GUIA no topo diz numa frase o que falta fazer no atendimento (ou que só resta a decisão final); e o rodapé da anotação virou CÁPSULAS COM PERGUNTA (Como marcar? · Quem cuida disso? com nome e cor · Lembrar quando? · ⏰ Prazo fatal?) com a FRASE-VIVA embaixo confirmando em português o que vai acontecer ao guardar — o prazo fatal agora sai direto da anotação (caso vai para 🗓 Tarefas com Prazo) e o 📌 dar seguimento fala a mesma língua (mesmas perguntas, mesma frase-viva). · F54 — pacote do Paulo: (1) a tela do PJe voltou na aba CNJ (caso com um só processo na lista casava errado e escondia a coleta); (2) cliente novo e interessado pela anotação rápida exigem NOME COMPLETO e TELEFONE; (3) a triagem pergunta o vínculo de hoje (empregado desde / CI / facultativo / não contribui) e a resposta viaja para a análise de direito; (4) benefício por incapacidade no atendimento pergunta a CIDADE e o checklist de documentos nasce aberto; (5) PENDÊNCIAS EM ABERTO — anotação marcada ⏳, urgente ou com checklist por fazer fica presa num quadro no topo das Anotações até alguém Resolver (o selo fica na lista). · F53 — na anotação rápida, qualquer parte do nome já lista os clientes embaixo, e SEMPRE há saída embaixo da lista: "➕ Cadastrar como CLIENTE novo" (cadastro mínimo com a anotação entrando como atendimento urgente e a ficha abrindo para completar) e "➕ Anotar como INTERESSADO" (funil 💼 Vendas) — mesmo quando a busca acha homônimos parciais. · F52 — a ANOTAÇÃO RÁPIDA ganhou porta fixa no TOPO da barra lateral, acima da busca (pedido do Paulo: mais fácil que pesquisar, mínimo de clique): clicou no campo ⚡, o painel abre já procurando o nome; Enter no texto guarda; e quem liga SEM ser cliente vira INTERESSADO no funil 💼 Vendas com a anotação como interesse — nenhuma ligação fica sem registro. O botão ⚡ do canto continua (é ele no celular). · F51 — JULGAMENTO no seguimento das Novidades corrigido (pedido do Paulo): nada de "avisar o cliente para preparação" — o texto vira "⚖️ Julgamento agendado para DD.MM.AAAA às HH:MM. Verificar o resultado no dia seguinte.", a tarefa nasce no dia útil seguinte ao julgamento e a atribuição padrão é do admin (Paulo), no modal 📌 (chip já marcado) e no 1 clique/lote; a véspera de "mensagem ao cliente" não nasce para julgamento. Perícia/audiência seguem como eram. · F50 — ⚡ ANOTAÇÃO RÁPIDA, o botão que atende o telefone: fixo no canto da tela (desktop e celular), abre nome + anotação + 🔥 urgente já ligado; com caso em andamento vira andamento E marca o caso URGENTE (sobe em toda lista), sem caso vira anotação urgente do atendimento na ficha — a ligação e o balcão nunca mais passam sem registro. · F49 — a análise de direito NO TRILHO do primeiro atendimento: passo "4 · ⚖️ Análise de Direito" na mesa das Anotações com os campos preenchíveis (o mesmo formulário da aba ⚖️), linha de estado verde/âmbar na TRIAGEM (com atalho) e nas Anotações, o fecho da triagem registra "análise feita em X / PENDENTE", e análise salva SEM caso ativo vira anotação do atendimento (que migra para os andamentos quando o pré-caso virar caso, pela regra do F30). · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
+    <h1>CRM Tercini <span style="font-size:11px;font-weight:400;color:var(--cinza)">· versão 09.57 · F58 — o cartão do caso na ordem do Paulo, enxuto: ESPÉCIE primeiro (com a lista do caso ao lado, no topo), depois só o essencial DA FASE — INSS mostra as subespécies (rural, especial, deficiência…), a DER e o protocolo; JUDICIAL mostra "Distribuído em", "Onde está" (JEF, Turma Recursal, vara) e os números dos processos vinculados; CONSELHO mostra as datas de protocolo do Recurso Ordinário, dos Embargos e do Recurso Especial (dinâmico — cada campo aparece quando a peça anterior existe; precisa do schema_recursos_crps.sql); auxílio-doença/incapacidade mantém a janelinha própria com DCB e o "prorrogar a partir de" (15 dias antes preenchido sozinho ao gravar a DCB); a JANELA DE LEMBRETES E DATAS vem logo abaixo (agora com o atribuído de cada anotação e o ✔ feito também no prazo fatal); depois o botão "➕ mais informações" guarda dobrado o que não precisa ficar à vista (etapas anteriores — De onde partiu/No que ramificou —, NB, DIB, decisão, classe e o resto, tudo editável como sempre); e as ações fundir / não é caso / Encerrar caso agora moram POR ÚLTIMO. · F57 — TODOS os lembretes à vista no caso (pedido do Paulo: a pílula sozinha não bastou): quadro "📅 Lembretes e datas" EM CIMA dos dados do caso com uma linha por data — anotações datadas, lembretes (com responsável e recorrência), prazos fatais e agendamentos — cada uma com o campo de data ABERTO (trocou, gravou na hora: anotação remarca, lembrete adia pelo fluxo oficial, prazo fatal move) e o "✔ feito" que resolve ali mesmo (lembrete único desliga, recorrente avança); vencida fica vermelha, a que chega em 7 dias fica azul; e o rodapé do quadro cria lembrete novo sem sair do caso (o quê + quando + quem). A pílula do topo (F56) continua como resumo de qualquer aba. · F56 — o "Concluir em" do To Do chegou ao CRM (pedido do Paulo: a data da próxima tarefa era fácil de ver no To Do e não estava sendo no CRM): o topo da ficha agora mostra UMA pílula com a data em que o cliente volta à mesa — calculada sozinha, a menor entre lembretes ativos, anotações com data, prazos fatais e agendamentos; vencida grita "⏰ venceu DD.MM" em vermelho (a cobrança mais antiga primeiro), futura avisa "📅 volta DD.MM" em azul com o motivo, e sem data nenhuma a pílula cinza denuncia "sem próxima data" (cliente sem cobrança marcada é cliente esquecido); o clique leva até onde a data mora; nas Anotações, a nota com data ganha a pílula colorida no começo da linha (azul futura, vermelha vencida) e a data vencida sem resolução entra SOZINHA nas Pendências em aberto. · F55 — a ficha respira (pedido do Paulo: menos informação de uma vez, sem flechinha misteriosa, fácil para quem tem pouco contato): a MESA SE ARRUMA SOZINHA — bloco resolvido recolhe numa linha verde que já INFORMA a decisão (espécie · natureza · via · cidade; análise de hoje; honorários com o padrão ou o ajuste à vista) e reabre num toque em "alterar"; a LINHA-GUIA no topo diz numa frase o que falta fazer no atendimento (ou que só resta a decisão final); e o rodapé da anotação virou CÁPSULAS COM PERGUNTA (Como marcar? · Quem cuida disso? com nome e cor · Lembrar quando? · ⏰ Prazo fatal?) com a FRASE-VIVA embaixo confirmando em português o que vai acontecer ao guardar — o prazo fatal agora sai direto da anotação (caso vai para 🗓 Tarefas com Prazo) e o 📌 dar seguimento fala a mesma língua (mesmas perguntas, mesma frase-viva). · F54 — pacote do Paulo: (1) a tela do PJe voltou na aba CNJ (caso com um só processo na lista casava errado e escondia a coleta); (2) cliente novo e interessado pela anotação rápida exigem NOME COMPLETO e TELEFONE; (3) a triagem pergunta o vínculo de hoje (empregado desde / CI / facultativo / não contribui) e a resposta viaja para a análise de direito; (4) benefício por incapacidade no atendimento pergunta a CIDADE e o checklist de documentos nasce aberto; (5) PENDÊNCIAS EM ABERTO — anotação marcada ⏳, urgente ou com checklist por fazer fica presa num quadro no topo das Anotações até alguém Resolver (o selo fica na lista). · F53 — na anotação rápida, qualquer parte do nome já lista os clientes embaixo, e SEMPRE há saída embaixo da lista: "➕ Cadastrar como CLIENTE novo" (cadastro mínimo com a anotação entrando como atendimento urgente e a ficha abrindo para completar) e "➕ Anotar como INTERESSADO" (funil 💼 Vendas) — mesmo quando a busca acha homônimos parciais. · F52 — a ANOTAÇÃO RÁPIDA ganhou porta fixa no TOPO da barra lateral, acima da busca (pedido do Paulo: mais fácil que pesquisar, mínimo de clique): clicou no campo ⚡, o painel abre já procurando o nome; Enter no texto guarda; e quem liga SEM ser cliente vira INTERESSADO no funil 💼 Vendas com a anotação como interesse — nenhuma ligação fica sem registro. O botão ⚡ do canto continua (é ele no celular). · F51 — JULGAMENTO no seguimento das Novidades corrigido (pedido do Paulo): nada de "avisar o cliente para preparação" — o texto vira "⚖️ Julgamento agendado para DD.MM.AAAA às HH:MM. Verificar o resultado no dia seguinte.", a tarefa nasce no dia útil seguinte ao julgamento e a atribuição padrão é do admin (Paulo), no modal 📌 (chip já marcado) e no 1 clique/lote; a véspera de "mensagem ao cliente" não nasce para julgamento. Perícia/audiência seguem como eram. · F50 — ⚡ ANOTAÇÃO RÁPIDA, o botão que atende o telefone: fixo no canto da tela (desktop e celular), abre nome + anotação + 🔥 urgente já ligado; com caso em andamento vira andamento E marca o caso URGENTE (sobe em toda lista), sem caso vira anotação urgente do atendimento na ficha — a ligação e o balcão nunca mais passam sem registro. · F49 — a análise de direito NO TRILHO do primeiro atendimento: passo "4 · ⚖️ Análise de Direito" na mesa das Anotações com os campos preenchíveis (o mesmo formulário da aba ⚖️), linha de estado verde/âmbar na TRIAGEM (com atalho) e nas Anotações, o fecho da triagem registra "análise feita em X / PENDENTE", e análise salva SEM caso ativo vira anotação do atendimento (que migra para os andamentos quando o pré-caso virar caso, pela regra do F30). · F48 — ⚖️ ANÁLISE DE DIREITO, a memória dos atendimentos: aba própria na ficha e visão na barra lateral (com Dashboard), cada análise com a data em que foi feita (retroativa entra com a data original), o que foi combinado e os cenários da época (regra, data prevista, valor; ⭐ no melhor, verde quando o direito já chegou); grava comentário nos andamentos de TODOS os casos ativos, cria o aviso 🎂 de época por cenário, e as anotações antigas do To Do (lista 🙏) viram análise em um clique. Precisa rodar schema_analise_direito.sql. · F47 — botão 🔄 agora ao lado do carimbo do To Do: dispara pelo próprio CRM a sincronização To Do → CRM no GitHub (workflow_dispatch da crm-sync.yml), acompanha o carimbo todo_sync_em e recarrega os dados sozinho quando a rodada termina; token fino do GitHub pedido uma vez e guardado em config_app (gh_token), recusado = pede outro. · F46 — no 📖 Caso completo, registro vindo do escritório leva o AVATAR COLORIDO e o NOME do colaborador (como na conversa), não mais a inicial espremida no texto; o 📋 copiar em texto também sai com o nome. · F45 — UMA estrutura para todas as linhas do tempo: as abas Andamentos INSS, Recurso (CRPS) e Andamentos do CNJ (histórico oficial e coletas do PJe) passaram a usar o MESMO esqueleto da conversa do Escritório (dias em pílula, cartão com a fonte e a hora, decisões destacadas), com os botões próprios de cada aba preservados (⭐ destaque, 📄 acórdão, resumo conferível, ✔ li, 📌); e o 📖 CASO COMPLETO virou a primeira tela ao abrir um cliente, com o compositor em cima — vê tudo e escreve dali</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11901,12 +11912,20 @@ const FATOS = {
   nb:         {rot:"NB",          tipo:"texto",   dica:"número do benefício"},
   processo:   {rot:"Processo (CNJ)", tipo:"texto",
                dica:"número único do processo judicial — é ele que liga o caso ao DataJud (consulta diária) e ao coletor do PJe"},
-  ajuizado_em:{rot:"Ajuizado em", tipo:"data",
-               dica:"data do ajuizamento — a coleta do PJe preenche sozinha pelo 'Distribuído em'"},
+  ajuizado_em:{rot:"Distribuído em", tipo:"data",
+               dica:"data da distribuição (ajuizamento) — a coleta do PJe preenche sozinha pelo 'Distribuído em'"},
   classe_judicial:{rot:"Classe", tipo:"texto",
                dica:"classe do processo (MSCiv, PJEC, ProceComCiv…) — é ela que diz se é Mandado de Segurança e se corre no JEF ou no rito comum"},
-  orgao_judicial:{rot:"Órgão", tipo:"texto",
-               dica:"vara, turma ou gabinete onde o processo está — a coleta do PJe preenche sozinha pelo acervo"},
+  orgao_judicial:{rot:"Onde está", tipo:"texto",
+               dica:"a localização atual: vara, JEF, Turma Recursal, gabinete — a coleta do PJe preenche sozinha pelo acervo"},
+  // F58 · as datas do CRPS (pedido do Paulo): cada peça com o seu protocolo —
+  // precisam das colunas do crm/fase2/schema_recursos_crps.sql
+  ro_protocolado_em:{rot:"Recurso Ordinário protocolado em", tipo:"data",
+               dica:"data do protocolo do Recurso Ordinário na Junta de Recursos"},
+  ed_protocolado_em:{rot:"Embargos de Declaração em", tipo:"data",
+               dica:"data do protocolo dos Embargos de Declaração no CRPS"},
+  re_protocolado_em:{rot:"Recurso Especial protocolado em", tipo:"data",
+               dica:"data do protocolo do Recurso Especial à Câmara de Julgamento"},
   der:        {rot:"DER",         tipo:"data",    dica:"Data de Entrada do Requerimento"},
   dib:        {rot:"DIB",         tipo:"data",    dica:"Data de Início do Benefício"},
   decisao_em: {rot:"Decisão em",  tipo:"data",    dica:"data em que a decisão foi proferida — conta o prazo de recurso"},
@@ -11958,7 +11977,11 @@ function quadroDatas(k){
   (((c.campos||{}).atendimento)||[]).forEach((n,idx)=>{
     if(!n.lembrar_em || n.resolvida) return;
     if(lembs.some(l=>l.titulo===`Anotação: ${(n.texto||"").slice(0,60)}`)) return;
-    linhas.push({data:n.lembrar_em, ico:"📝", rot:(n.texto||"").slice(0,70),
+    // F58 · a quem está atribuída também aparece (pedido do Paulo)
+    const donos=(n.atribuidos||[n.atribuido]).filter(Boolean)
+      .map(id=>D.colPorId.get(id)).filter(Boolean);
+    linhas.push({data:n.lembrar_em, ico:"📝",
+      rot:`${(n.texto||"").slice(0,70)}${donos.length?` · 👤 ${donos.map(d=>esc(d.nome.split(" ")[0])).join(", ")}`:""}`,
       edita:`onchange="qdMudarNota('${cliId}',${idx},this.value)"`,
       acao:`<button class="btn-mini" onclick="resolverNotaAtendimento('${cliId}',${idx})"
         title="marca a anotação como resolvida">✔ feito</button>`});
@@ -11975,7 +11998,9 @@ function quadroDatas(k){
     if(x.fase==="encerrado") return;
     if(x.prazo) linhas.push({data:x.prazo, ico:"⏰",
       rot:`PRAZO FATAL — ${tituloCaso(x)}`,
-      edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`, acao:""});
+      edita:`onchange="qdMudarPrazo('${x.id}',this.value)"`,
+      acao:`<button class="btn-mini" onclick="qdMudarPrazo('${x.id}','')"
+        title="prazo cumprido — a data sai do caso e desta janela">✔ feito</button>`});
     (D.eventos||[]).filter(e=>e.caso_id===x.id && !e.cancelado &&
         (e.data_hora||"")>=hj).forEach(e=>{
       linhas.push({data:(e.data_hora||"").slice(0,10), ico:"🩺",
@@ -12353,23 +12378,58 @@ function blocoFatos(k){
   const prots = (k.protocolos||[]);
   const equipe = D.atrDoCaso.get(k.id) || [];
   const st = subtarefasDe(k.id), feitas = st.filter(t=>t.concluida).length;
-  // `fatos-processo` é o que a grade da ficha (F8) mira para pôr ESTE quadro
-  // na coluna estreita. As sub-abas (INSS, Recurso, Caso completo) também
-  // devolvem cartões `.fatos`, e mirar a classe genérica empilhava os dois na
-  // mesma célula, um desenhado por cima do outro.
+  const procs = processosDoCaso(k);
+  // F58 · o cartão na ordem do Paulo: espécie → o essencial DA FASE → a
+  // janela de datas → "mais informações" (o resto, dobrado) → responsável →
+  // e as ações (fundir / não é caso / encerrar) POR ÚLTIMO. Poucas
+  // informações à vista; nada sumiu — o que saiu da frente mora no ➕.
+  const linhaProt = `<div class="fx"><dt title="protocolo do requerimento no INSS">Protocolo</dt>
+        <dd>${prots.length?prots.map(p=>`<span class="fx-prot" title="copiar" onclick="copiar('${p}','Protocolo copiado')">${esc(p)}</span>`).join(" "):`<span class="fx-vazio">—</span>`}
+        <button class="lapis" title="acrescentar protocolo" onclick="novoProtocolo('${k.id}')">✎</button></dd></div>`;
+  const linhaRec = rec?`<div class="fx fx-prazo ${dRec<0?"passou":dRec<=10?"perto":""}">
+        <dt title="30 dias contados da decisão">Recorrer até</dt>
+        <dd>${fmt(rec)} <small>${dRec<0?`venceu há ${-dRec} d`:dRec===0?"é hoje":`faltam ${dRec} d`}</small></dd></div>`:"";
+  const fase = k.fase;
+  // o essencial de cada fase (o resto vai para o ➕ mais informações)
+  let miolo="", noMais=[];
+  if(fase==="judicial"){
+    miolo = `<dl class="fx-grade">
+      ${campoFato(k,"ajuizado_em")}
+      ${campoFato(k,"orgao_judicial")}
+    </dl>
+    ${procs.length?`<div class="fx-procs">${procs.map(p=>`<span class="fx-prot" title="abrir a sub-aba Andamentos do CNJ"
+        onclick="irSubAba('cnj')">${esc(fmtProc(p.numero))}</span>${p.principal?`<span class="chip ben">principal</span>`:""}`).join(" ")}</div>`
+      :`<dl class="fx-grade">${campoFato(k,"processo")}</dl>`}`;
+    noMais = ["nb","dib","der","decisao_em","classe_judicial", ...(procs.length?["processo"]:[])];
+  } else if(fase==="conselho"){
+    const temRO=!!k.ro_protocolado_em, temED=!!k.ed_protocolado_em;
+    miolo = `<dl class="fx-grade">
+      ${campoFato(k,"ro_protocolado_em")}
+      ${(temRO||temED)?campoFato(k,"ed_protocolado_em"):""}
+      ${(temED||k.re_protocolado_em)?campoFato(k,"re_protocolado_em"):""}
+    </dl>`;
+    noMais = ["nb","der","dib","decisao_em",
+      ...(k.processo?["processo"]:[]), ...(k.ajuizado_em?["ajuizado_em"]:[]),
+      ...(k.classe_judicial?["classe_judicial"]:[]), ...(k.orgao_judicial?["orgao_judicial"]:[])];
+  } else {
+    // INSS, Escritório, Pagamento e afins: a vida administrativa
+    miolo = `${linhaMarcadores(k)}
+    <dl class="fx-grade">
+      ${campoFato(k,"der")}
+      ${linhaProt}
+    </dl>`;
+    noMais = ["nb","dib","decisao_em",
+      ...(k.processo?["processo"]:[]), ...(k.ajuizado_em?["ajuizado_em"]:[]),
+      ...(k.classe_judicial?["classe_judicial"]:[]), ...(k.orgao_judicial?["orgao_judicial"]:[])];
+  }
   return `<section class="fatos fatos-processo">
     <div class="fatos-topo">
       <h3>${esc(tituloCaso(k))}</h3>
       ${chipRevisao(k, D.cliPorId.get(k.cliente_id))}
-      ${/* EM QUE LISTA este caso está — a aba do processo responde na hora,
-           sem voltar ao menu (pedido do Paulo) */""}
       <span class="chip ben" title="a lista deste caso (a mesma do To Do)">${
         esc(listaDe(k)!=="—"?listaDe(k):(NOME_FASE[k.fase]||""))}</span>
-      ${/* o retrato judicial que o Paulo pediu: MS salta aos olhos; JEF ou
-           rito comum e a data do ajuizamento ficam ao lado */""}
       ${(j=>!j?"":`${j.ms?`<span class="chip per" title="classe: ${esc(j.classe||"")}">⚡ Mandado de Segurança</span>`:""}${
-        j.rito?`<span class="chip neutro" title="classe: ${esc(j.classe||"")}">${j.rito==="JEF"?"🏛 JEF":"📜 Rito comum"}</span>`:""}${
-        j.ajuizado?`<span class="chip neutro" title="data do ajuizamento (Distribuído em)">⚖️ ajuizado ${fmt(j.ajuizado)}</span>`:""}${
+        j.rito?`<span class="chip neutro" title="classe: ${esc(j.classe||"")} — a localização atual">${j.rito==="JEF"?"🏛 JEF":"📜 Rito comum"}</span>`:""}${
         j.orgao?`<span class="chip neutro" title="órgão julgador: ${esc(tituloOrgao(j.orgao)||j.orgao)}">📍 ${esc((tituloOrgao(j.orgao)||j.orgao).split(" - ")[0])}</span>`:""}`)(dadosJudiciais(k))}
       ${k.pje_link?`<a class="chip neutro" href="${urlOk(k.pje_link)}" target="_blank" rel="noopener"
         title="abrir os autos digitais na sua sessão do PJe" style="text-decoration:none">🔗 abrir no PJe</a>`:""}
@@ -12381,10 +12441,70 @@ function blocoFatos(k){
       ${k.parceria?`<span class="chip ben">🤝 ${esc(k.parceria)}</span>`:""}
       ${k.exigencia_prazo?`<button class="btn-mini" onclick="copiarMsgExigencia('${k.id}')">💬 msg ao cliente</button>
         <button class="btn-mini" onclick="cumprirExigencia('${k.id}')">✔ cumprida</button>`:""}
-      ${/* encerrar mora no canto direito do quadro dos fatos (pedido do
-           Paulo): é onde se olha o benefício, e é dali que se decide que
-           acabou. Encerrado, o mesmo canto diz quem encerrou e quando. */""}
-      <span style="margin-left:auto;display:inline-flex;gap:6px;align-items:center">
+    </div>
+    <dl class="fx-grade">${campoFato(k,"especie")}</dl>
+    ${miolo}
+    ${incap?`<div class="fx-incap">
+      <div class="fx-incap-rot">Benefício por incapacidade</div>
+      <dl class="fx-grade">
+        ${campoFato(k,"dii")}
+        ${ehAcidentario(k)?campoFato(k,"dat"):""}
+        ${campoFato(k,"dcb")}
+        ${k.dcb?campoFato(k,"dcb_prorrogar_em"):""}
+      </dl>
+      ${k.dcb?`<div class="fx-prorrog">
+        <label class="cfg-ck"><input type="checkbox" ${k.dcb_prorrogacao_pedida?"checked":""}
+          onchange="salvarProrrog('${k.id}',this.checked)"> prorrogação já pedida</label>
+        ${chipDcb(k)||`<span class="chip prazo ok">✔ alarme desligado</span>`}
+      </div>`:""}
+    </div>`:""}
+    ${quadroDatas(k)}
+    <details class="fx-mais" ${maisAberto.has(k.id)?"open":""} ontoggle="maisDobra('${k.id}',this.open)">
+      <summary>➕ mais informações <span class="meio-sub">— etapas anteriores, números e datas que não precisam ficar à vista</span></summary>
+      ${trilhaProcessual(k)}
+      ${(()=>{
+        if(k.fase!=="conselho" && k.fase!=="judicial") return "";
+        const pos=TRILHA.indexOf(k.fase);
+        const cands=(D.casosDoCliente.get(k.cliente_id)||[]).filter(x=>x.id!==k.id &&
+          (x.fase==="encerrado" || (TRILHA.indexOf(x.fase)>=0 && TRILHA.indexOf(x.fase)<pos)));
+        if(cands.length!==1) return "";
+        const o=cands[0];
+        return `<div class="fx-rec"><span class="fx-rot">⇄</span>
+          <span class="meio-sub">Este ${k.fase==="conselho"?"recurso":"processo judicial"} parece a
+            continuação de <b>${esc(tituloCaso(o))}</b>
+            (${esc(listaDe(o)!=="—"?listaDe(o):(NOME_FASE[o.fase]||""))}${o.fase==="encerrado"?" · ✔ encerrado":""}) —
+            o mesmo pedido, em fases diferentes.</span>
+          <button class="btn-mini" onclick="fundirCasos('${o.id}','${k.id}')">⇄ fundir os dois neste</button>
+        </div>`;})()}
+      ${(fase==="judicial"||fase==="conselho")?linhaMarcadores(k):""}
+      <dl class="fx-grade">
+        ${noMais.map(cp=>campoFato(k,cp)).join("")}
+        ${(fase==="judicial"||fase==="conselho")?linhaProt:""}
+        ${linhaRec}
+      </dl>
+      ${k.fase==="aposentadoria_futura"?`<div class="fx-rec">
+        <span class="fx-rot">🔔</span>
+        <button class="btn-mini" onclick="casoViraLembrete('${k.id}')">transformar em lembrete do cliente</button>
+        <span class="meio-sub">este caso é um "avisar de tempos em tempos"? O lugar disso agora é a
+          aba 🔔 Lembretes — o botão cria o lembrete e encerra o caso.</span>
+      </div>`:""}
+    </details>
+    <div class="fatos-pe">
+      <span class="fx-rot">Responsável</span>
+      <span class="fx-eq">${equipeAtiva()
+        .sort((a,b)=>(equipe.includes(b.id)?1:0)-(equipe.includes(a.id)?1:0))
+        .map(co=>`<button class="fx-av ${equipe.includes(co.id)?"on":""}"
+          data-eq="${co.id}" style="--cor-eq:${co.cor}"
+          title="${esc(co.nome)} — ${equipe.includes(co.id)?"clique para retirar":"clique para atribuir"}"
+          aria-label="${esc(co.nome)}">${esc(co.inicial)}</button>`).join("")}</span>
+      <button class="fx-docs" onclick="var d=document.getElementById('docs-${k.id}');d.classList.toggle('aberto')">
+        📎 Documentos solicitados <b>${feitas} / ${st.length}</b></button>
+    </div>
+    <div class="fx-docs-lista" id="docs-${k.id}">${checklistCaso(k)}</div>
+    ${/* F58 · as ações moram POR ÚLTIMO (pedido do Paulo): decidir o destino
+         do caso é a última coisa da leitura, não a primeira */""}
+    <div class="fatos-topo" style="border-top:1px dashed var(--borda);padding-top:8px;margin-top:8px">
+      <span style="margin-left:auto;display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap">
         ${((D.casosDoCliente.get(k.cliente_id)||[]).length>1 && k.fase!=="encerrado")
           ?`<button class="btn-mini" onclick="janelaFundir('${k.id}')"
               title="pedido → recurso → judicial é uma sequência só: incorpora outro caso a este, com todo o histórico">⇄ fundir</button>`:""}
@@ -12400,87 +12520,11 @@ function blocoFatos(k){
         : `<button class="btn-mini" onclick="janelaEncerrar('${k.id}')"
              title="encerrar: resultado + honorários — fica registrado quem encerrou e quando">✔ Encerrar caso</button>`}</span>
     </div>
-    ${trilhaProcessual(k)}
-    ${/* CONTINUIDADE (semiautomática, como o Paulo pediu): caso de recurso
-         ou judicial com o pedido anterior morando em OUTRO caso do mesmo
-         cliente. Um candidato só = sugestão com um clique; mais de um, o
-         botão ⇄ acima resolve com a escolha na mão. */""}
-    ${(()=>{
-      if(k.fase!=="conselho" && k.fase!=="judicial") return "";
-      const pos=TRILHA.indexOf(k.fase);
-      const cands=(D.casosDoCliente.get(k.cliente_id)||[]).filter(x=>x.id!==k.id &&
-        (x.fase==="encerrado" || (TRILHA.indexOf(x.fase)>=0 && TRILHA.indexOf(x.fase)<pos)));
-      if(cands.length!==1) return "";
-      const o=cands[0];
-      return `<div class="fx-rec"><span class="fx-rot">⇄</span>
-        <span class="meio-sub">Este ${k.fase==="conselho"?"recurso":"processo judicial"} parece a
-          continuação de <b>${esc(tituloCaso(o))}</b>
-          (${esc(listaDe(o)!=="—"?listaDe(o):(NOME_FASE[o.fase]||""))}${o.fase==="encerrado"?" · ✔ encerrado":""}) —
-          o mesmo pedido, em fases diferentes.</span>
-        <button class="btn-mini" onclick="fundirCasos('${o.id}','${k.id}')">⇄ fundir os dois neste</button>
-      </div>`;})()}
-    ${linhaMarcadores(k)}
-    ${/* F57 · o quadro de datas ACIMA dos dados (pedido do Paulo): os dados
-         do caso são consulta, as datas são trabalho — trabalho vem antes */""}
-    ${quadroDatas(k)}
-    <dl class="fx-grade">
-      ${campoFato(k,"especie")}
-      <div class="fx"><dt title="protocolo do requerimento no INSS">Protocolo</dt>
-        <dd>${prots.length?prots.map(p=>`<span class="fx-prot" title="copiar" onclick="copiar('${p}','Protocolo copiado')">${esc(p)}</span>`).join(" "):`<span class="fx-vazio">—</span>`}
-        <button class="lapis" title="acrescentar protocolo" onclick="novoProtocolo('${k.id}')">✎</button></dd></div>
-      ${campoFato(k,"nb")}
-      ${/* o nº CNJ entra à mão aqui (não tinha onde!): judicial sempre
-           mostra o campo; nas outras fases, só quando já está preenchido */""}
-      ${(k.fase==="judicial"||k.processo)?campoFato(k,"processo"):""}
-      ${(k.fase==="judicial"||k.ajuizado_em)?campoFato(k,"ajuizado_em"):""}
-      ${(k.fase==="judicial"||k.classe_judicial)?campoFato(k,"classe_judicial"):""}
-      ${(k.fase==="judicial"||k.orgao_judicial)?campoFato(k,"orgao_judicial"):""}
-      ${campoFato(k,"der")}
-      ${campoFato(k,"dib")}
-      ${campoFato(k,"decisao_em")}
-      ${rec?`<div class="fx fx-prazo ${dRec<0?"passou":dRec<=10?"perto":""}">
-        <dt title="30 dias contados da decisão">Recorrer até</dt>
-        <dd>${fmt(rec)} <small>${dRec<0?`venceu há ${-dRec} d`:dRec===0?"é hoje":`faltam ${dRec} d`}</small></dd></div>`:""}
-    </dl>
-    ${incap?`<div class="fx-incap">
-      <div class="fx-incap-rot">Benefício por incapacidade</div>
-      <dl class="fx-grade">
-        ${campoFato(k,"dii")}
-        ${ehAcidentario(k)?campoFato(k,"dat"):""}
-        ${campoFato(k,"dcb")}
-        ${k.dcb?campoFato(k,"dcb_prorrogar_em"):""}
-      </dl>
-      ${k.dcb?`<div class="fx-prorrog">
-        <label class="cfg-ck"><input type="checkbox" ${k.dcb_prorrogacao_pedida?"checked":""}
-          onchange="salvarProrrog('${k.id}',this.checked)"> prorrogação já pedida</label>
-        ${chipDcb(k)||`<span class="chip prazo ok">✔ alarme desligado</span>`}
-      </div>`:""}
-    </div>`:""}
-    ${/* o caso de 🙏 Aposentadorias Futuras que era "avisar de tempos em
-         tempos" migra para a aba 🔔 Lembretes num clique — combinado com o
-         Paulo: nada automático, um caso por vez, com confirmação */""}
-    ${k.fase==="aposentadoria_futura"?`<div class="fx-rec">
-      <span class="fx-rot">🔔</span>
-      <button class="btn-mini" onclick="casoViraLembrete('${k.id}')">transformar em lembrete do cliente</button>
-      <span class="meio-sub">este caso é um "avisar de tempos em tempos"? O lugar disso agora é a
-        aba 🔔 Lembretes — o botão cria o lembrete e encerra o caso.</span>
-    </div>`:""}
-    <div class="fatos-pe">
-      <span class="fx-rot">Responsável</span>
-      ${/* quem responde vem primeiro, cheio e colorido; os demais ficam
-           discretos, esperando um clique — em vez de seis quadrados iguais */""}
-      <span class="fx-eq">${equipeAtiva()
-        .sort((a,b)=>(equipe.includes(b.id)?1:0)-(equipe.includes(a.id)?1:0))
-        .map(co=>`<button class="fx-av ${equipe.includes(co.id)?"on":""}"
-          data-eq="${co.id}" style="--cor-eq:${co.cor}"
-          title="${esc(co.nome)} — ${equipe.includes(co.id)?"clique para retirar":"clique para atribuir"}"
-          aria-label="${esc(co.nome)}">${esc(co.inicial)}</button>`).join("")}</span>
-      <button class="fx-docs" onclick="var d=document.getElementById('docs-${k.id}');d.classList.toggle('aberto')">
-        📎 Documentos solicitados <b>${feitas} / ${st.length}</b></button>
-    </div>
-    <div class="fx-docs-lista" id="docs-${k.id}">${checklistCaso(k)}</div>
   </section>`;
 }
+// F58 · o ➕ aberto sobrevive à repintura (mesma mecânica da mesa F55)
+const maisAberto = new Set();
+function maisDobra(id, aberto){ aberto ? maisAberto.add(id) : maisAberto.delete(id); }
 
 // (o 🔁 por caso da 08.55 durou um dia: cliente com dois casos não dizia em
 // qual morava o aviso. O aviso periódico agora é do CLIENTE, na aba 🔔

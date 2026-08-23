@@ -570,3 +570,29 @@ proximo_em — a prova de "sai do quadro" só vale para o único.
 Os inputs date do quadro gravam no onchange — Playwright: setar .value
 via evaluate NÃO dispara onchange; chame a função (qdMudarNota etc.) ou
 dispatchEvent. As provas do quadro57.js chamam as funções direto.
+
+## F58 — o cartão do caso por fase
+
+O miolo muda com k.fase: judicial e conselho têm blocos próprios; TODO o
+resto (inss, escritorio, pagamento, outro, encerrado…) cai no ramo else
+(marcadores + DER + protocolo). Campo NUNCA repete entre a tela principal
+e o ➕ (id fx-{campo}-{k.id} duplicado faria editarFato pegar o primeiro):
+o noMais é calculado por fase excluindo o que já está fora.
+
+As datas do CRPS (ro/ed/re_protocolado_em) são COLUNAS novas —
+schema_recursos_crps.sql. Sem rodar, editarFato deixa o valor em memória
+e o PATCH falha (erro visível). A dinâmica: ED só aparece com RO gravado
+(ou ED já preenchido), REsp idem com ED — pintarFicha depois de gravar.
+
+maisAberto é irmão do mesaAberta (F55): ontoggle grava, pintarFicha
+preserva, e NÃO limpa ao trocar de cliente (o Set guarda por k.id — caso
+diferente, id diferente). trilha.js abre o ➕ via evaluate antes de ler
+.trilha-proc (innerText de details fechado é vazio; cliques idem).
+
+As ações moram no ÚLTIMO filho do .fatos-processo (um segundo .fatos-topo
+com border-top) — prova de "Encerrar/não é caso/reabrir" olha o cartão
+inteiro ou o último bloco, nunca o primeiro .fatos-topo.
+
+"Distribuído em" e "Onde está" são os rot novos de ajuizado_em e
+orgao_judicial no FATOS — grep por "Ajuizado em"/"Órgão" em teste antigo
+não acha mais.
