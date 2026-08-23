@@ -707,3 +707,14 @@ texto grava obs no evento (PAT e criação manual não) — obs presente sem
 palavra de agendamento = banner do Calendário; ✔ é real zera a obs (é o
 desligamento da suspeita, não inventamos coluna). cancelarEvento usa
 confirm() — teste stuba window.confirm no addInitScript.
+
+## F68 — acompanhamento e checagem
+
+A linha do Acompanhamento só existe nas fases "inss" e "conselho" (o
+judicial é acompanhado pelo CNJ — teste prova a AUSÊNCIA no judicial).
+Os campos vivem em casos (acompanhamento/checado_em/checado_por) e
+DEPENDEM do schema_acompanhamento.sql: sem as colunas o PATCH falha e as
+funções avisam sem aplicar em memória (não minta verde). A lista 🔎 é
+uma VISÃO (data-v="checagem"), não uma fase: nada de mover_para — o caso
+continua na lista dele. A ordem da lista é a fila de trabalho:
+String(checado_em||"") em localeCompare põe os nunca checados primeiro.

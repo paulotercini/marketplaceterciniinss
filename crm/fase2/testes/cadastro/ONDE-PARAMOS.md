@@ -1,3 +1,29 @@
+# Onde paramos — 23.08.2026, versão 09.65
+
+## F68 · Acompanhamento Manual/Automático e a lista de checagem (09.65)
+
+Pedido do Paulo: caso na lista INSS e no Conselho de Recursos precisa
+dizer se o acompanhamento é MANUAL (a equipe abre o portal — E-SISREC
+exige a senha do cliente) ou AUTOMÁTICO (o robô/coleta vigia), com um ✓
+que registra a checagem feita e uma lista própria dos manuais.
+
+Feito: linhaAcomp(k) entra no TOPO do miolo do blocoFatos nas fases
+"inss" e "conselho" (logo abaixo da espécie; judicial fica de fora) —
+chips Manual/Automático (mudarAcomp → casos.acompanhamento) e o
+✓ (.acomp-check, cinza; checarAcomp grava checado_em+checado_por, fica
+verde .ok e o title diz "checado por NOME em dd.mm.aaaa às hh:mm").
+Clicar de novo re-checa (atualiza quem/quando). A barra lateral ganhou
+🔎 Checagem manual no fim das Listas do escritório (data-v="checagem"):
+ativos com acompanhamento==="manual", ordenados como fila (nunca
+checados primeiro, depois checados há mais tempo — localeCompare de
+checado_em com vazio no topo).
+
+PENDÊNCIA DO PAULO: rodar schema_acompanhamento.sql no Supabase (três
+alter table em casos). Sem ele, mudarAcomp/checarAcomp avisam "rode o
+schema" e nada grava.
+
+Teste acomp68.js (10 provas). Suíte: 54 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.64
 
 ## F65+F66+F67 · O raio, a cancelada e a fantasma (09.64)
