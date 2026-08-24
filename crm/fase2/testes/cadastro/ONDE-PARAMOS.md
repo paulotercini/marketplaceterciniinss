@@ -1,3 +1,34 @@
+# Onde paramos — 24.08.2026, versão 09.72
+
+## F76 · Causa raiz da sync FECHADA (09.72)
+
+Sem esperar o print, li o log da Action direto do navegador do Paulo
+(Claude-in-Chrome → aba do CRM em paulotercini.github.io/…/crm/ →
+javascript_tool: gh_token de config_app via REST com o access_token da
+SESSÃO — a anon key pura toma RLS e volta [] — → API do GitHub → log do
+job; a extensão bloqueia retornos com padrão sensível, então o log ficou
+em window.__diag e saiu resumido e higienizado; __diag apagado no fim).
+
+VEREDITO: o passo Espelho → banco falha com "o banco recusou GET em
+'andamentos' (401): Invalid API key — Double check your Supabase anon or
+service role API key". O Graph está BOM (crawl passa); quem venceu foi o
+segredo SUPABASE_SERVICE_KEY do repositório (rotacionado/desativado no
+Supabase; a anon do navegador segue válida, por isso o CRM funciona).
+
+CONSERTO (ação do Paulo, credencial dele): painel do Supabase →
+Settings → API keys → copiar a service key atual; GitHub →
+marketplaceterciniinss → Settings → Secrets and variables → Actions →
+SUPABASE_SERVICE_KEY → Update; depois 🔄 no CRM. A caixa do 🩺 agora
+ensina esse caso também (dica do 401 ao lado da dica do Graph).
+
+Achado de mapa: o CRM de produção é servido pelo GitHub Pages em
+/marketplaceterciniinss/crm/ (docs/crm/index.html; deploy-pages.yml roda
+quando docs/** muda) — o crm/fase2/app.html do repo NÃO é o arquivo
+servido; algo copia para docs/. A conferir com o Paulo como as versões
+chegam lá (ele vê as novas versões, então o caminho existe).
+
+Suíte: sync72 5/5; demais inalterados (mudança de texto).
+
 # Onde paramos — 24.08.2026, versão 09.71
 
 ## F75 · O 🩺 mostra o motivo (09.71)
