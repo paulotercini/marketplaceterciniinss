@@ -913,3 +913,11 @@ Quadro SÍNTESE DO CASO no formato canônico validado pelo escritório. Duas lin
 Teto de TRÊS componentes Visual Law por peça, sendo o quadro-resumo sempre um deles, e os outros dois escolhidos pelo que DECIDE o caso. Sequência de eventos pede linha do tempo, confronto com o INSS pede tabela comparativa, fixação do provado pede fatos incontroversos, e pedidos múltiplos pedem a tabela pedido x fundamento. Nunca os cinco na mesma peça.
 
 Limites por componente. Linha do tempo com 4 a 6 eventos. Fatos incontroversos com até 5 linhas. Comparativa com 2 a 4 confrontos. Pedido x fundamento com até 6 linhas e UM fundamento por linha. Especificação completa e exemplo canônico em `base-peticao-previdenciaria-padrao-visual`.
+
+## Orçamento declarado antes da redação (Onda 120)
+
+Antes de escrever a primeira linha, declarar o tipo de peça, o orçamento de páginas correspondente e a distribuição por seção. Exemplo para petição inicial de 7 páginas, endereçamento e qualificação 0,5, fatos 2, direito 3, Parágrafo de Realidade 0,5, pedidos 1.
+
+A distribuição é plano de trabalho, não promessa. Seção que estourar o previsto sinaliza que ali há fundamento acessório sendo desenvolvido como se fosse decisivo, e é onde a fusão de fundamentos deve atuar primeiro.
+
+Peça sem orçamento declarado cresce por acúmulo, porque cada skill acionada acrescenta e nenhuma subtrai. O orçamento por tipo de peça e a passada de corte estão na Camada 6 da `base-revisao-peticao-aprofundada`.
