@@ -1,6 +1,6 @@
 ---
 name: base-revisao-peticao-aprofundada
-description: Skill aprimorada de revisão automática de petições previdenciárias do escritório Paulo Roberto Tercini Filho. Versionada no plugin como evolução da skill revisao-peticao do escritório, integra protocolo anti-alucinação de 5 níveis (existência, vigência, redação literal, modulação, número de processo) cruzado com a skill base-legislacao-fontes-primarias, diretrizes vinculantes do Manual de Admissibilidade Recursal da TNU 10ª edição via base-tnu-admissibilidade-manual, taxonomia corrigida das Portarias DIRBEN/INSS 990-996/2022, verificações automáticas obrigatórias (competência territorial e material, política de tutela de urgência, Tema 1124/STJ, prazo decadencial do art. 103 Lei 8.213, documentação IN 128/2022, BPC menor 16 anos IFBrM, tempestividade recursal, dialeticidade), 5 camadas de auditoria (formal, normativa, fática, argumentativa, integridade probatória), catálogo expandido de 22 anti-patterns com exemplos pró e contra, checklist por rito (JEF, ordinário federal, CRPS, MS, TNU, réplica, memorial, recurso administrativo, cumprimento de sentença) e severidade quádrupla (BLOQUEANTE, CRÍTICO, IMPORTANTE, MENOR). Use SEMPRE imediatamente após qualquer petição, recurso, contestação, embargos, agravo, MS, contrarrazões, memorial, réplica, manifestação ou peça processual gerada. Use SEMPRE que mencionar revisar petição, auditar petição, conferir peça, checar petição, segunda leitura, verificação de petição, validação de peça, revisão antialucinação, revisão profunda, auditoria de peça, revisão Tercini, revisão escritório. Dispara o agente ANALISTA-CNIS (Onda 117) antes dos demais em toda peça cuja causa de pedir dependa de tempo de contribuição, carência, qualidade de segurado ou salário-de-benefício, porque conferir tese sobre contagem errada é conferir a coisa errada. Dispara os DECISORES ADMINISTRATIVOS SIMULADOS (Onda 114) antes de todo protocolo na via administrativa, servidor-chefe-inss para requerimento e exigência, conselheiro-junta-de-recursos para recurso ordinário e conselheiro-camara-de-julgamento para recurso especial e incidentes. Dispara também os PROCESSUALISTAS CONFERENTES (Onda 113), doze agentes de conferência técnica por FASE processual, acionados por postulatória, competência, valor da causa, tutela provisória, especificação de provas, ônus da prova, cerceamento, art. 489, apelação, agravo, embargos, dialeticidade, PUIL, PEDILEF, REsp, relevância, prequestionamento, distinguishing, modulação, coisa julgada, rescisória, cumprimento de sentença, RPV, precatório, honorários, gratuidade, rito do JEF, renúncia ao teto e mandado de segurança. Achado com severidade PRECLUSÃO IMINENTE sobe sempre ao relatório principal. Dispara os JURISTAS CONFERENTES (Onda 110), dez agentes de conferência doutrinária por bloco temático, de um a três por revisão conforme os temas da peça, acionados por jurista conferente, conferência doutrinária, corrente majoritária, corrente ampliativa, doutrina do tema, parecer doutrinário. Eles discutem correntes e nunca atribuem posição a autor nominado. Aciona automaticamente todas as skills relevantes do plugin como hub de integração. Postura pró-segurado exclusiva. Honestidade radical sobre achados. Cruza com peticao-previdenciaria, base-peticao-previdenciaria-padrao-visual, base-legislacao-fontes-primarias, base-tnu-admissibilidade-manual, pedilef-cotejo-analitico-tnu, precedentes-previdenciarios, tema-1124-instrucao-administrativa, decadencia-revisao-previdenciaria, ms-competencia-autoridade-coatora, documentos-comprobatorios-in128, base-portarias-dpmf-inss-hub, base-efeito-translativo-tema-1124-defesa, reafirmacao-der, analise-documental-incapacidade, especificacao-provas, base-puil-pedilef-vedacao-materia-processual. NÃO use para auditoria de PPP (use auditoria-ppp) nem laudo pericial (use auditoria-laudo-pericial) nem sentença/acórdão (use auditoria-sentenca-acordao).
+description: Skill aprimorada de revisão automática de petições previdenciárias do escritório Paulo Roberto Tercini Filho. Versionada no plugin como evolução da skill revisao-peticao do escritório, integra protocolo anti-alucinação de 5 níveis (existência, vigência, redação literal, modulação, número de processo) cruzado com a skill base-legislacao-fontes-primarias, diretrizes vinculantes do Manual de Admissibilidade Recursal da TNU 10ª edição via base-tnu-admissibilidade-manual, taxonomia corrigida das Portarias DIRBEN/INSS 990-996/2022, verificações automáticas obrigatórias (competência territorial e material, política de tutela de urgência, Tema 1124/STJ, prazo decadencial do art. 103 Lei 8.213, documentação IN 128/2022, BPC menor 16 anos IFBrM, tempestividade recursal, dialeticidade), 5 camadas de auditoria (formal, normativa, fática, argumentativa, integridade probatória), catálogo expandido de 22 anti-patterns com exemplos pró e contra, checklist por rito (JEF, ordinário federal, CRPS, MS, TNU, réplica, memorial, recurso administrativo, cumprimento de sentença) e severidade quádrupla (BLOQUEANTE, CRÍTICO, IMPORTANTE, MENOR). Use SEMPRE imediatamente após qualquer petição, recurso, contestação, embargos, agravo, MS, contrarrazões, memorial, réplica, manifestação ou peça processual gerada. Use SEMPRE que mencionar revisar petição, auditar petição, conferir peça, checar petição, segunda leitura, verificação de petição, validação de peça, revisão antialucinação, revisão profunda, auditoria de peça, revisão Tercini, revisão escritório. Dispara o agente ANALISTA-CNIS (Onda 117) antes dos demais em toda peça cuja causa de pedir dependa de tempo de contribuição, carência, qualidade de segurado ou salário-de-benefício, porque conferir tese sobre contagem errada é conferir a coisa errada. Dispara também a CAMADA 6 de orçamento de extensão e legibilidade (Onda 120), acionada por petição muito grande, peça longa demais, reduzir petição, cortar petição, enxugar peça, orçamento de páginas, limite de páginas, peça difícil de ler, leitura difícil, parágrafo longo, parágrafo-modelo, frase-decreto, excesso de fundamentos, fundir fundamentos, passada de corte, redução de 20%. Dispara os DECISORES ADMINISTRATIVOS SIMULADOS (Onda 114) antes de todo protocolo na via administrativa, servidor-chefe-inss para requerimento e exigência, conselheiro-junta-de-recursos para recurso ordinário e conselheiro-camara-de-julgamento para recurso especial e incidentes. Dispara também os PROCESSUALISTAS CONFERENTES (Onda 113), doze agentes de conferência técnica por FASE processual, acionados por postulatória, competência, valor da causa, tutela provisória, especificação de provas, ônus da prova, cerceamento, art. 489, apelação, agravo, embargos, dialeticidade, PUIL, PEDILEF, REsp, relevância, prequestionamento, distinguishing, modulação, coisa julgada, rescisória, cumprimento de sentença, RPV, precatório, honorários, gratuidade, rito do JEF, renúncia ao teto e mandado de segurança. Achado com severidade PRECLUSÃO IMINENTE sobe sempre ao relatório principal. Dispara os JURISTAS CONFERENTES (Onda 110), dez agentes de conferência doutrinária por bloco temático, de um a três por revisão conforme os temas da peça, acionados por jurista conferente, conferência doutrinária, corrente majoritária, corrente ampliativa, doutrina do tema, parecer doutrinário. Eles discutem correntes e nunca atribuem posição a autor nominado. Aciona automaticamente todas as skills relevantes do plugin como hub de integração. Postura pró-segurado exclusiva. Honestidade radical sobre achados. Cruza com peticao-previdenciaria, base-peticao-previdenciaria-padrao-visual, base-legislacao-fontes-primarias, base-tnu-admissibilidade-manual, pedilef-cotejo-analitico-tnu, precedentes-previdenciarios, tema-1124-instrucao-administrativa, decadencia-revisao-previdenciaria, ms-competencia-autoridade-coatora, documentos-comprobatorios-in128, base-portarias-dpmf-inss-hub, base-efeito-translativo-tema-1124-defesa, reafirmacao-der, analise-documental-incapacidade, especificacao-provas, base-puil-pedilef-vedacao-materia-processual. NÃO use para auditoria de PPP (use auditoria-ppp) nem laudo pericial (use auditoria-laudo-pericial) nem sentença/acórdão (use auditoria-sentenca-acordao).
 ---
 
 # Skill Aprimorada de Revisão de Petições Previdenciárias
@@ -311,6 +311,62 @@ Esta camada é especialmente crítica em.
 - Reconhecimento de união estável (prova material + temporalidade).
 - Incapacidade B31/B91/B94 (laudos médicos + análise documental Portarias 13-15/2026).
 
+### Camada 6 - Orçamento de Extensão e Legibilidade (Onda 120)
+
+Esta camada existe porque o pipeline é aditivo. Os Juristas Conferentes, os Processualistas Conferentes e os Decisores Simulados devolvem sempre o fundamento que ficou de fora, e nunca o que sobra. Sem uma etapa que meça e corte, o crescimento da peça é o resultado natural do desenho, e a peça longa custa ao segurado, porque o julgador com pilha de processos lê uma vez só e decide.
+
+#### Orçamento por tipo de peça
+
+Petição inicial, 7 páginas. Recurso inominado, 4 páginas. Manifestação sobre laudo, 3 páginas. Recurso ao CRPS, 3 páginas. Embargos de declaração, 2 páginas. Petições comuns, 2 páginas. Memorial, 2 páginas, limite absoluto já vigente. Jurisprudência somada em toda a peça, 1 página, limite já vigente.
+
+O orçamento é teto de referência, nunca meta de preenchimento. Peça que resolve a matéria em menos páginas está certa e não se completa. Caso com múltiplas matérias relevantes admite excesso, desde que declarado e justificado no relatório, matéria por matéria.
+
+#### Como aferir
+
+A aferição é feita sobre o arquivo gerado, não por estimativa. Converter o .docx em PDF e contar as páginas, descontando a folha de rosto do endereçamento e as páginas ocupadas por tabela de linha do tempo e quadro de confronto, que têm limites próprios.
+
+```bash
+soffice --headless --convert-to pdf "<arquivo.docx>" --outdir /tmp
+python3 -c "import pypdf,sys; print(len(pypdf.PdfReader(sys.argv[1]).pages))" "/tmp/<arquivo>.pdf"
+```
+
+Disponibilidade verificada na Onda 120, o ambiente de geração tem soffice em /usr/bin/soffice e pypdf instalado, de modo que a contagem de páginas é a via padrão. Se a conversão falhar, usar contagem de palavras do corpo como aproximação, com a ressalva expressa de que é estimativa. A equivalência entre palavras e páginas no padrão visual do escritório (Bookman Old Style 12pt, A4, margens do escritório) precisa ser calibrada medindo três peças reais já protocoladas, e enquanto essa calibração não for feita a contagem de palavras não substitui a contagem de páginas.
+
+#### Passada de corte obrigatória
+
+Toda peça passa por uma leitura exclusiva de corte antes do relatório final, com meta de reduzir 20% sem perda de conteúdo. A meta é de esforço, não de resultado. Se a peça não comportar 20%, corta-se o que comportar e registra-se o percentual atingido.
+
+Alvos do corte, nesta ordem. Repetição de fundamento já desenvolvido. Contexto que o julgador já domina. Conclusão restatada ao fim de seção que já a trouxe no início. Adjetivo onde havia dado concreto disponível. Explicação de norma incontroversa. Transcrição de precedente que a súmula do fundamento já resolve.
+
+O que nunca se corta. Fato ligado a prova por ID. Ressalva, risco ou limitação. Requisito legal enfrentado. Elemento que a contestação previsível atacará.
+
+O relatório informa o número de páginas antes, depois e o percentual, e lista o que saiu, por seção, para conferência humana. Corte sem lista não é auditável e não conta.
+
+#### Fusão de fundamentos
+
+Por tese, um fundamento decisivo desenvolvido. Os demais entram em uma linha de menção, sem desenvolvimento, disponíveis para a réplica ou o recurso se o INSS os atacar.
+
+Essa regra é o freio direto do efeito aditivo dos Conferentes. O retorno deles entra na peça como fundamento decisivo, se for melhor que o adotado, ou como linha de menção. Nunca como seção nova.
+
+#### Amostragem de legibilidade
+
+Extensão dentro do orçamento não garante leitura fácil. Sortear três parágrafos do miolo, um da fundamentação de fato, um da de direito e um do confronto, e conferir cada um contra quatro pontos.
+
+1. O parágrafo tem entre 2 e 4 linhas.
+2. A primeira linha não resume o que as seguintes explicam (proibição do parágrafo-modelo).
+3. A abertura não é frase-decreto, e varia entre fato, data, documento por ID, norma ou consequência do parágrafo anterior.
+4. Termo técnico indispensável aparece definido em meia frase na primeira ocorrência.
+
+Falha em qualquer ponto gera achado, com o parágrafo transcrito e a reescrita sugerida. Falha em dois dos três parágrafos sorteados indica problema sistêmico, e a conferência se estende à peça inteira.
+
+#### Severidade dos achados desta camada
+
+Extensão até 30% acima do orçamento, IMPORTANTE. Acima de 30%, CRÍTICO. Nunca BLOQUEANTE, porque excesso de extensão não invalida a peça nem prejudica de forma irreversível o segurado.
+
+Excesso justificado por múltiplas matérias, com a justificativa matéria por matéria no relatório, não gera achado.
+
+Falha sistêmica de legibilidade, dois ou mais dos três parágrafos sorteados, IMPORTANTE.
+
 ## CLASSIFICAÇÃO DE SEVERIDADE QUÁDRUPLA
 
 **BLOQUEANTE** (novo nível, acima de CRÍTICO).
@@ -382,7 +438,9 @@ Estrutura padrão entregue após apresentação do .docx.
 
 **Resumo executivo.** Duas a três frases indicando o resultado geral, com contagem de achados por severidade. Se houver BLOQUEANTES, destacar no topo com selo "PEÇA NÃO DEVE SER PROTOCOLADA".
 
-**Achados por camada.** Ordem (Formal → Normativa → Fática → Argumentativa → Integridade Probatória). Dentro de cada camada, ordenados por severidade decrescente (Bloqueante → Crítico → Importante → Menor).
+**Painel de extensão.** Linha única com o tipo de peça, o orçamento, as páginas aferidas antes do corte, as páginas depois do corte e o percentual reduzido. Exemplo, "Petição inicial. Orçamento 7 páginas. Antes 11. Depois 8. Redução de 27%. Excesso de 1 página justificado pela cumulação de tempo especial e reafirmação da DER."
+
+**Achados por camada.** Ordem (Formal → Normativa → Fática → Argumentativa → Integridade Probatória → Extensão e Legibilidade). Dentro de cada camada, ordenados por severidade decrescente (Bloqueante → Crítico → Importante → Menor).
 
 **Modelo de achado individual.**
 
@@ -439,6 +497,12 @@ Se houver achados CRÍTICOS, IMPORTANTES ou MENORES sem BLOQUEANTES, perguntar.
 "Foram identificados [N] achados ([X] críticos, [Y] importantes, [Z] menores). Deseja que eu gere uma versão corrigida automaticamente? Posso também tratar apenas dos críticos."
 
 Aguardar resposta. Se autorizado, gerar nova versão do .docx aplicando as correções e apresentar o arquivo corrigido. Se autorizado tratar apenas críticos, perguntar se também deseja sugestões para os demais.
+
+Se a peça exceder o orçamento de extensão depois da passada de corte, informar antes da pergunta de correção.
+
+"A peça está com [N] páginas contra um orçamento de [M]. A passada de corte já reduziu [X]%. O excesso restante decorre de [motivo]. Posso executar um segundo corte, indicando o que sairia, ou manter e registrar a justificativa."
+
+Segundo corte nunca se executa em silêncio. O que sai vai listado antes, para decisão sua.
 
 ## CHECKLIST POR RITO
 
