@@ -1,3 +1,39 @@
+# Onde paramos — 24.08.2026, versão 09.68
+
+## F71 · A aba CNJ no lugar e as fantasmas do 📌 (09.68)
+
+Três pedidos do Paulo (prints com dados reais — NUNCA em fixtures):
+
+(1) Aba CNJ "com erro, parte em branco": NÃO era crash (4 variantes de
+datajud rodaram limpas) — era GRID. O .sub-menu das fontes tinha
+grid-column:1/-1 (regra genérica :not(.instancias)), precisava de linha
+inteira livre e o auto-placement o jogava, com TODO o conteúdo atrás,
+para depois das 99 linhas do span do cartão (fontesPos 573 = fim do
+cartão). Fix: `.painel[data-p="2"].ativo>.sub-menu.fontes{grid-column:2}`
+— o menu vai ao TOPO da coluna dos andamentos (204 = topo do cartão).
+O menu agora aparece com QUALQUER fonte, ⚡ PJe primeiro e como padrão
+(fonteCnj inicial virou "" — "oficial" só por clique; resets idem).
+
+(2) Perícia fantasma 02.02.2027 (outra porta): eventoNoTexto (o detector
+do 📌 dar seguimento) aceitava QUALQUER data futura num texto que
+mencionasse perícia — "Decorrido prazo ... 02/02/2027" de movimento PJe
+virava "Perícia" com o checkbox do modal já ligado. Agora exige palavra
+de agendamento (agendad|comparec|marcad|designad|remarcad) até 80 chars
+antes da data (janela era 42; "sem contexto, a primeira data futura
+serve" MORREU: `if(!melhor || !melhor.marcada) return null`).
+salvarSeguimento grava obs (trecho de origem) no evento — auditável e o
+banner 🕵️ pega. Fantasmas JÁ gravadas por essa porta: sem obs, não caem
+no banner — cancelar pela aba Perícias (✕).
+
+(3) Movimento do PJe no caso ERRADO (caso real): a coleta casa pelo
+NÚMERO gravado no caso (conferirPje/porProcesso) — intruso = número
+errado na ficha. Botão "⚠ não é deste caso" na linha da coleta
+(pjeForaDoCaso): DELETE do andamento + aviso que DENUNCIA quando o
+número do movimento está gravado no caso ("tire o número em ➕ mais
+informações, senão volta na próxima coleta").
+
+Teste cnj71.js (10 provas). Suíte: 56 arquivos verde.
+
 # Onde paramos — 23.08.2026, versão 09.67
 
 ## F70 · Dois retoques na faxina (09.67)
