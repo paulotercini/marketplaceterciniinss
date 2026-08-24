@@ -1,3 +1,25 @@
+# Onde paramos — 24.08.2026, versão 09.71
+
+## F75 · O 🩺 mostra o motivo (09.71)
+
+O print do Paulo cravou o diagnóstico da sync: TODAS as rodadas desde
+sáb 22/08 15:21 caem no passo "Espelho -> banco (idempotente)" — o
+migrar.py termina exit 1 (o token do Graph está BOM; o crawl passa). O
+migrar.py tem busca binária de linha culpada e imprime no stdout "o
+banco recusou POST em 'tabela' (código): detalhe" + nomeia as culpadas;
+erro de ESQUEMA pula a tabela e recomenda schema_por_em_dia.sql.
+
+F75: ssPasso agora também baixa o LOG do job (GET
+/actions/jobs/{id}/logs devolve TEXTO; o de runs/{id}/logs é zip — não
+usar) e mostra as últimas ~14 linhas relevantes num <pre .ss-log>
+(filtra timestamps e ##[group]; ##[error] vira ⛔). O Paulo clica e vê a
+tabela/linha culpada sem abrir o GitHub. AGUARDANDO o print do log para
+fechar a causa raiz (provável: linha recusada por unique/duplicata ou
+seção do schema_por_em_dia.sql não rodada).
+
+sync72.js agora com 5 provas (mock do endpoint de logs).
+Suíte: 58 arquivos verde.
+
 # Onde paramos — 24.08.2026, versão 09.70
 
 ## F74 · As datas do CRPS no formato certo (09.70)
