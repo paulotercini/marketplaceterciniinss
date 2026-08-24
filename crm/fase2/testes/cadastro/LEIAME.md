@@ -737,3 +737,19 @@ painel 2 tem `.fx-grade{grid-template-columns:1fr 1fr}` mais específico
 que quebrava a DER em migalhas. O Responsável saiu SÓ do cartão: o
 atrDoCaso continua vivo (filtros por colaborador, Atribuídas a mim); não
 recriar a linha sem pedido do Paulo.
+
+## F71 — o grid da aba CNJ e as portas das fantasmas
+
+O buraco em branco do CNJ era GRID, não crash: filho direto com
+grid-column:1/-1 depois do .fatos-processo (span 99 linhas) desce para a
+linha 102 E ARRASTA todo o conteúdo seguinte. Menu que deve ficar no topo
+da coluna dos andamentos usa grid-column:2 (.sub-menu.fontes). Cuidado ao
+criar novos filhos diretos do painel 2 com 1/-1.
+
+fonteCnj: "" = sem escolha (PJe é o padrão quando existe); "oficial" só
+por clique. As TRÊS portas de evento agora exigem palavra de agendamento:
+extrairEvento (composer, F67), eventoNoTexto (📌, F71) e a obs sempre
+gravada nas duas (o PAT/manual não grava obs — é o discriminador do
+banner 🕵️). pjeForaDoCaso apaga o intruso mas o dedupe NÃO o segura de
+volta: enquanto o número errado estiver na ficha, a próxima coleta
+reimporta — por isso o aviso manda tirar o número.
