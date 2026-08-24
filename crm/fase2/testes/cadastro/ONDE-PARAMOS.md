@@ -1,3 +1,28 @@
+# Onde paramos — 24.08.2026, versão 09.70
+
+## F74 · As datas do CRPS no formato certo (09.70)
+
+Print do Paulo ("vários erros nessa página", caso no Conselho): datas
+"20./2.26/0" e pílulas ", 20/2" na timeline. Causa: o evento do CRPS
+guarda data em dd/mm/aaaa (como a API do e-Recursos manda; o módulo tem
+CRPS.dataParaISO para converter), mas TRÊS consumidores formatavam cru —
+blocoRecurso (q: e.data), fatosDoCasoTodo (ramo 🖥 Recurso) e o menu dos
+NUPs (fmt(ult.data)). fmt() refatiava o BR e saía lixo, e a ORDENAÇÃO
+lexicográfica por dd/mm também errava. Fix: isoCrps(d) — aceita ISO ou
+BR — aplicado nos três. IMPORTANTE: isoCrps vive FORA do IIFE do módulo
+CRPS (linhas ~3057-3349 são cópia fiel de robo-crps/traduzir.js com
+teste que compara o fonte — não mexer lá dentro).
+
+Bônus achado no caminho: o chip "decidido em" da TRILHA processual
+(raiz e ramos, dentro do ➕) chamava `dataParaISO` sem prefixo — função
+global que NÃO existe (só CRPS.dataParaISO) → ReferenceError que
+derrubava o render do ➕ inteiro sempre que o recurso tinha DECISÃO
+(exatamente o caso do print, "Recurso provido EM PARTE"). Trocado por
+fmt(isoCrps(...)).
+
+Teste crps74.js (6 provas, incl. a trilha com decisão sem quebrar).
+Suíte: 58 arquivos verde.
+
 # Onde paramos — 24.08.2026, versão 09.69
 
 ## F72+F73 · A sincronização vigiada e o prazo fatal honesto (09.69)

@@ -766,3 +766,15 @@ que espelha e LIMPA — update_cols inclui prazo). O prazoDetectado (data
 solta no texto) cria andamento_tarefas, NUNCA casos.prazo — e só quando
 o tf-box não criou lembrete (a flag é capturada antes do reset de
 tfQuem/tfData; ler as globais depois do bloco tf-box lê zerado).
+
+## F74 — datas do CRPS e o módulo intocável
+
+Evento do CRPS guarda `data` em dd/mm/aaaa (formato da API). TODO
+consumidor que formata ou ordena passa por isoCrps() (aceita ISO e BR).
+O módulo CRPS (IIFE ~3057-3349, cópia fiel de robo-crps/traduzir.js) tem
+teste que compara o código-fonte — NUNCA editar lá dentro; helpers novos
+vivem FORA e usam CRPS.dataParaISO. Só existe dataParaISO DENTRO do
+módulo: chamar sem o prefixo em código de fora dá ReferenceError e
+derruba o render inteiro (foi o chip "decidido em" da trilha).
+decideOCaso exige tipo "decisao" ou acórdão/monocrática no texto —
+fixture de decisão usa tipo:"decisao".
