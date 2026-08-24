@@ -753,3 +753,16 @@ gravada nas duas (o PAT/manual não grava obs — é o discriminador do
 banner 🕵️). pjeForaDoCaso apaga o intruso mas o dedupe NÃO o segura de
 volta: enquanto o número errado estiver na ficha, a próxima coleta
 reimporta — por isso o aviso manda tirar o número.
+
+## F72/F73 — o 🩺 e as portas do prazo fatal
+
+saudeSync/ssPasso falam com api.github.com — teste MOCKA a rota
+(ctx.route("https://api.github.com/**")). O token é o gh_token de
+config_app (o mesmo do 🔄); sem ele a caixa nem abre.
+
+casos.prazo tem TRÊS portas legítimas: marcarTarefaComPrazo (⏰ do
+composer), qdMudarPrazo (quadro 📅) e o migrar.py (To Do "Concluir em",
+que espelha e LIMPA — update_cols inclui prazo). O prazoDetectado (data
+solta no texto) cria andamento_tarefas, NUNCA casos.prazo — e só quando
+o tf-box não criou lembrete (a flag é capturada antes do reset de
+tfQuem/tfData; ler as globais depois do bloco tf-box lê zerado).

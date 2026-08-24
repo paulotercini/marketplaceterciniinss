@@ -1,3 +1,32 @@
+# Onde paramos — 24.08.2026, versão 09.69
+
+## F72+F73 · A sincronização vigiada e o prazo fatal honesto (09.69)
+
+F72 (sync To Do falhando com recorrência): sem gh CLI na máquina e sem
+acesso aos logs, a saída foi dar OLHOS ao CRM — botão 🩺 no rodapé do
+To Do (ao lado do 🔄): saudeSync() lista as últimas 10 rodadas da
+crm-sync.yml pela API do GitHub (mesmo gh_token do F47; 401/403 manda
+trocar o token pelo 🔄), 🟢/🔴/🟡 + hora local + gatilho + "abrir ↗";
+na 🔴, ssPasso(runId) busca os jobs e aponta O PASSO que falhou. A caixa
+ensina: falha em "Renova token Microsoft Graph" = GRAPH_REFRESH_TOKEN
+vencido (Settings → Secrets do repo). O fluxo da Action: refresh token →
+sync_todo.py (crawl) → migrar.py (espelho → banco + carimbo).
+
+F73 (prazo fatal fantasma em caso SEM data no To Do): o culpado era o
+prazoDetectado do composer — data solta no texto ("verificar em 24/08")
+gravava casos.prazo + lembrar_motivo. Agora vira TAREFA DE LEMBRETE
+(andamento_tarefas de quem escreveu), e só se o tf-box não criou
+lembrete (flag tfCriouLembrete capturada ANTES do reset de tfQuem/
+tfData). casos.prazo só nasce de: ⏰ checkbox (marcarTarefaComPrazo),
+quadro 📅 (qdMudarPrazo) e To Do (migrar.py, que JÁ espelha "Concluir
+em" com update de prazo inclusive para NULL — verificado no fonte:
+update_cols tem prazo). Fantasma já gravado: a próxima sync boa rebate
+os casos vindos do To Do; caso sem To Do, ✔ feito no quadro.
+
+Testes sync72.js (4, com GitHub mockado) e extracoes.js ajustado (data
+do texto → POST andamento_tarefas, nunca PATCH casos.prazo).
+Suíte: 57 arquivos verde.
+
 # Onde paramos — 24.08.2026, versão 09.68
 
 ## F71 · A aba CNJ no lugar e as fantasmas do 📌 (09.68)

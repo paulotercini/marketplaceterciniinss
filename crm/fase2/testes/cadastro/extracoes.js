@@ -68,9 +68,12 @@ const SUPA = "https://ficticio.supabase.co";
     /24\.12\.2026/.test(await p.evaluate(() =>
       (document.getElementById("and-prazo-chip") || {}).textContent || "")));
   await registrar("Cobrar a agência, verificar em 24/12");
-  const patPrazo = escritos.find(x => x.m === "PATCH" && x.t === "casos" && x.corpo.prazo === "2026-12-24");
-  conf("a data do texto virou o lembrete do caso (prazo 24/12)",
-    patPrazo && /Cobrar a agência/.test(patPrazo.corpo.lembrar_motivo || ""));
+  // F73: a data do texto vira TAREFA DE LEMBRETE (andamento_tarefas), nunca
+  // mais casos.prazo — o PRAZO FATAL só nasce do ⏰, do quadro 📅 ou do To Do
+  conf("a data do texto virou tarefa de lembrete (24/12), não prazo fatal",
+    escritos.some(x => x.m === "POST" && x.t === "andamento_tarefas" &&
+      x.corpo.lembrar_em === "2026-12-24") &&
+    !escritos.some(x => x.m === "PATCH" && x.t === "casos" && "prazo" in x.corpo));
 
   // 2) "DCB 16/09" vira a data de cessação, com alarme
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
