@@ -29,9 +29,15 @@ FIX.config_app = [{ chave: "gh_token", valor: "ghp_ficticio" },
   // o GitHub de mentira: 3 rodadas (uma falha) e os jobs da falha
   await ctx.route("https://api.github.com/**", rota => {
     const u = rota.request().url();
+    if (/\/jobs\/777\/logs/.test(u))
+      return rota.fulfill({ status: 200, contentType: "text/plain",
+        body: ["2026-08-24T12:39:00.0000000Z ##[group]Run python crm/fase2/migrar.py",
+          "2026-08-24T12:39:41.0000000Z o banco recusou POST em 'eventos' (409): duplicate key fictício",
+          "2026-08-24T12:39:41.0000000Z BancoRecusou: linha culpada nomeada acima",
+          "2026-08-24T12:39:42.0000000Z ##[error]Process completed with exit code 1."].join("\n") });
     if (/\/runs\/9902\/jobs/.test(u))
       return rota.fulfill({ status: 200, contentType: "application/json",
-        body: JSON.stringify({ jobs: [{ name: "sincronizar", steps: [
+        body: JSON.stringify({ jobs: [{ id: 777, name: "sincronizar", steps: [
           { name: "Checkout repositório", conclusion: "success" },
           { name: "Renova token Microsoft Graph", conclusion: "failure" },
           { name: "Espelho -> banco (idempotente)", conclusion: "skipped" }] }] }) });
@@ -88,6 +94,10 @@ FIX.config_app = [{ chave: "gh_token", valor: "ghp_ficticio" },
   conf("o clique aponta o passo exato: Renova token Microsoft Graph",
     await p.evaluate(() => /falhou em: Renova token Microsoft Graph/.test(
       document.body.textContent)));
+  conf("F75: as últimas linhas do log aparecem com o motivo do banco",
+    await p.evaluate(() => { const pre = document.querySelector(".ss-log");
+      return pre && /o banco recusou POST em 'eventos'/.test(pre.textContent) &&
+        /exit code 1/.test(pre.textContent) && !/##\[group\]/.test(pre.textContent); }));
 
   console.log("=== F72 · o 🩺 da sincronização ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));

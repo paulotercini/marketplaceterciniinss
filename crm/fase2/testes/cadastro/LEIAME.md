@@ -778,3 +778,12 @@ módulo: chamar sem o prefixo em código de fora dá ReferenceError e
 derruba o render inteiro (foi o chip "decidido em" da trilha).
 decideOCaso exige tipo "decisao" ou acórdão/monocrática no texto —
 fixture de decisão usa tipo:"decisao".
+
+## F75 — o log do job no 🩺
+
+O endpoint que devolve TEXTO é /actions/jobs/{job_id}/logs (o de
+runs/{id}/logs devolve ZIP — inútil no browser). As linhas vêm com
+timestamp ISO na frente e marcadores ##[group]/##[error] — o filtro
+tira o timestamp, descarta ##[group] e transforma ##[error] em ⛔ (senão
+o exit code sumia). O migrar.py imprime o diagnóstico no stdout do
+passo; o traceback fica nas últimas linhas.
