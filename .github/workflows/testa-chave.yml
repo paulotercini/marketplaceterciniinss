@@ -1,0 +1,50 @@
+# Testa em SEGUNDOS o que está gravado no segredo SUPABASE_SERVICE_KEY,
+# sem rodar a sincronização inteira (que leva ~20 min pelo crawl do To Do).
+# Imprime tamanho/formato da chave e o veredito — nunca a chave em si.
+name: Testa a chave do Supabase
+
+on:
+  workflow_dispatch:
+
+jobs:
+  testar:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+    steps:
+      - name: Veredito do segredo
+        run: |
+          python3 - << 'EOF'
+          import os, json, urllib.request, urllib.error
+          url = (os.environ.get("SUPABASE_URL") or "").strip().rstrip("/")
+          chave = (os.environ.get("SUPABASE_SERVICE_KEY") or "").strip()
+          fmt = ("legada (eyJ...)" if chave.startswith("eyJ")
+                 else "nova (sb_...)" if chave.startswith("sb_")
+                 else "IRRECONHECIVEL (nao comeca com eyJ nem sb_)")
+          ref = url.split("//")[-1].split(".")[0] if url else "SEM URL"
+          print(f"chave no segredo: {len(chave)} caracteres, formato {fmt}; projeto alvo: {ref}")
+          if not url or not chave:
+              print("VEREDITO: segredo vazio - grave SUPABASE_URL e SUPABASE_SERVICE_KEY")
+              raise SystemExit(1)
+          # mesma regra do migrar.py (F78): sb_ vai so no apikey; eyJ vai nos dois
+          cab = {"apikey": chave}
+          if chave.startswith("eyJ"):
+              cab["Authorization"] = "Bearer " + chave
+          req = urllib.request.Request(url + "/rest/v1/config_app?select=chave&limit=1",
+                                       headers=cab)
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  corpo = json.loads(r.read() or b"[]")
+          except urllib.error.HTTPError as e:
+              print(f"VEREDITO: chave RECUSADA ({e.code}) - nao e a chave deste projeto; "
+                    "copie a service_role pelo BOTAO de copiar do painel e regrave o segredo")
+              raise SystemExit(1)
+          if corpo:
+              print("VEREDITO: chave ACEITA com forca de service - segredo CERTO, "
+                    "a sincronizacao vai passar")
+          else:
+              print("VEREDITO: chave aceita mas SEM forca de service (parece a anon/"
+                    "publishable) - copie a service_role, nao a publica")
+              raise SystemExit(1)
+          EOF
