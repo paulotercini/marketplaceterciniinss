@@ -1,5 +1,32 @@
 # Onde paramos — 25.08.2026, versão 09.74
 
+## F78 · DESFECHO: a sync VOLTOU (rodada verde 25/08 12:54 UTC)
+
+A causa raiz FINAL não era chave, era SHADOWING no migrar.py: o bloco
+das parcelas de pagamento (entrou sáb 22/08 15:21 — exatamente quando a
+sync caiu) tinha `for chave in ("andamentos","eventos","tarefas")`
+dentro de subir_rest, sombreando a variável `chave` que guardava a
+service key. Depois do loop, chave = "tarefas" (7 letras) e todo _rest
+seguinte tomava 401 "Invalid API key". O segredo do GitHub esteve CERTO
+o tempo todo; os "7 caracteres" do fingerprint eram a palavra do loop,
+não bolinhas coladas (essa hipótese foi perseguição de fantasma).
+
+Como o flagra fechou: o fingerprint do 401 (F78b) acusava 7 chars; o
+testa-chave.yml e o job-sonda (plantado no próprio crm-sync.yml) viam
+219 chars NO MESMO RUN em que o sincronizar via 7 — mesma run, mesmo
+segredo, valores diferentes = o lixo nascia DENTRO do job. A falha
+estourava em GET 'andamentos' e não na primeira chamada do script, o
+que apontou para um chamador específico; grep "for chave" cravou a 687.
+
+Conserto: loop renomeado para chave_m (commit 1af9a20) + comentário-
+trava no local + auditoria de que subir_rest nunca reatribui chave/url.
+Rodada 12:54 UTC verde; todo_sync_em = 2026-08-25T12:55:58 (5 dias de
+To Do entraram de uma vez). Legado da caça, que FICA: testador de chave
+no 🩺 (F77), workflow-relâmpago testa-chave.yml e job-sonda no crm-sync
+(medem o segredo em segundos; sonda também confirma que o segredo chega
+ao workflow). O conserto do Bearer para sb_secret_ (abaixo) continua
+correto e necessário caso o Paulo migre para as chaves novas.
+
 ## F78 · A causa raiz de verdade: sb_secret_ não vai em Bearer (09.74)
 
 O Paulo testou a chave copiada do painel e o testador respondeu ❌ (401).
