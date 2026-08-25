@@ -20,8 +20,18 @@ painel do Supabase → "testar a chave" → só levar ao GitHub a que
 responder ✅ → trocar o segredo → 🔄 → eu confirmo a rodada verde.
 
 Suíte: sync72 8/8 (3 provas novas com mock por apikey); 58 arquivos, 0
-falhas. Sync monitorada: 401 segue em todas as rodadas até 19:24;
-todo_sync_em parado em 20/08 23:22 — aguardando a troca do segredo.
+falhas. Sync monitorada: 401 segue em TODAS as rodadas, inclusive no
+disparo manual de 25/08 05:44 (Brasília) — a chave posta no segredo
+continua errada; todo_sync_em parado em 20/08 23:22.
+
+Achado que fecha a pendência do deploy (F76): docs/crm/index.html é
+CÓPIA MANUAL de crm/fase2/app.html feita na época do F38 e nunca mais —
+o GitHub Pages servia a 09.37 (36 versões atrás) e /crm/fase2/ é 404 no
+Pages. O Paulo vê as versões novas porque abre o ARQUIVO LOCAL do
+repositório; a URL pública ficou para trás. Nesta entrega a cópia foi
+atualizada para a 09.73 (deploy-pages.yml roda quando docs/** muda) —
+daqui em diante, TODA entrega copia app.html → docs/crm/index.html no
+mesmo commit.
 
 # Onde paramos — 24.08.2026, versão 09.72
 
