@@ -828,3 +828,15 @@ Diagnóstico que desmascarou: fingerprint no 401 (tamanho+formato) versus
 job-sonda no MESMO run — valores diferentes = o lixo nasce dentro do
 job, não no segredo. O log acusar a falha em tabela que NÃO é a primeira
 chamada do script também denuncia chamador específico, não credencial.
+
+## F79 — o recolher das seções do Meu Dia
+
+ligarSecoes() é DOM-walk genérico: flechinha e clique em toda h3.secao
+do #conteudo-meio, escondendo os irmãos até o próximo h3.secao. Regra de
+estrutura que passa a valer no Meu Dia: cartões e avisos de uma seção
+são IRMÃOS diretos do h3 (nada de wrapper único por seção, ou o walk
+esconde o wrapper inteiro — funciona, mas se um dia embrulharem seção em
+div, conferir). A chave do estado vem do TEXTO do título sem o "(N)"
+(chaveSecao) — renomear um título zera o estado daquela seção, sem dano.
+Só o renderMeuDia chama ligarSecoes(); h3.secao de outras visões não
+ganham clique.

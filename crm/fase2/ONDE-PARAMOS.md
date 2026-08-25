@@ -1,4 +1,20 @@
-# Onde paramos — 25.08.2026, versão 09.74
+# Onde paramos — 25.08.2026, versão 09.75
+
+## F79 · As seções do Meu Dia recolhem (09.75)
+
+Pedido do Paulo (print do Meu Dia): flechinha nas listas Aposentadorias
+a tratar, Lembretes a fazer, Adicionados ao dia, para recolher e trazer
+de volta com um clique. Feito GENÉRICO: ligarSecoes() percorre toda
+<h3 class="secao"> do #conteudo-meio, planta a .sec-seta (▾/▸), torna o
+título clicável (.sec-clic) e esconde/mostra os IRMÃOS até o próximo
+h3.secao — vale para as seções de hoje e para qualquer seção futura do
+Meu Dia sem mexer nos blocos. Estado em secRecolhida (Set global):
+sobrevive ao render(), zera só no recarregar. O contador "(N)" continua
+à vista com a seção fechada. Chamado só no renderMeuDia; outras visões
+com h3.secao ficam como estavam.
+
+Suíte: secoes79.js novo (7/7 — flechinha em toda seção, recolhe, vizinha
+intacta, sobrevive ao render, volta no 2º clique); 59 arquivos, 0 falhas.
 
 ## F78 · DESFECHO: a sync VOLTOU (rodada verde 25/08 12:54 UTC)
 
