@@ -99,6 +99,27 @@ FIX.config_app = [{ chave: "gh_token", valor: "ghp_ficticio" },
       return pre && /o banco recusou POST em 'eventos'/.test(pre.textContent) &&
         /exit code 1/.test(pre.textContent) && !/##\[group\]/.test(pre.textContent); }));
 
+  // F77 · o testador de chave: válida-service / anon / inválida
+  const testar = async chave => { await p.fill("#ss-chave", chave);
+    await p.evaluate(() => ssTestarChave()); await p.waitForTimeout(400);
+    return p.evaluate(() => document.getElementById("ss-chave-r").textContent); };
+  await ctx.route(SUPA + "/rest/v1/config_app*", rota => {
+    const k = rota.request().headers()["apikey"] || "";
+    if (k === "chave-service") return rota.fulfill({ status: 200,
+      contentType: "application/json", body: JSON.stringify([{ chave: "x" }]) });
+    if (k === "chave-anon") return rota.fulfill({ status: 200,
+      contentType: "application/json", body: "[]" });
+    return rota.fulfill({ status: 401, contentType: "application/json",
+      body: JSON.stringify({ message: "Invalid API key" }) });
+  });
+  conf("testador: a service key responde VÁLIDA com força de service",
+    /VÁLIDA e com força de service/.test(await testar("chave-service")));
+  conf("testador: a anon é apontada como sem força de service",
+    /anon\/publishable/.test(await testar("chave-anon")));
+  conf("testador: chave estranha responde INVÁLIDA e o campo esvazia",
+    /INVÁLIDA/.test(await testar("chave-qualquer")) &&
+    await p.evaluate(() => document.getElementById("ss-chave").value === ""));
+
   console.log("=== F72 · o 🩺 da sincronização ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
   console.log("erros de console:", erros.length ? erros : "nenhum");

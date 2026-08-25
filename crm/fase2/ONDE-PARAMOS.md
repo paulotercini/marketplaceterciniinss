@@ -1,4 +1,1141 @@
-# Onde paramos — 16.08.2026, versão 09.25
+# Onde paramos — 24.08.2026, versão 09.73
+
+## F77 · O testador de chave no 🩺 (09.73)
+
+O Paulo colou o log do 🩺 pela segunda vez (17:12, disparo manual) com o
+MESMO "Invalid API key" — a troca do segredo às cegas não fecha porque
+não dá para saber, olhando a chave, se ela é a service ou a anon. A
+caixa do 🩺 ganhou então o campo "cole aqui a chave copiada do Supabase
+para TESTAR" + botão "testar a chave" (aparece junto das dicas quando há
+rodada vermelha): ssTestarChave() faz GET em config_app usando a chave
+colada como apikey/Bearer e responde na hora — ❌ !ok = chave INVÁLIDA
+(outro projeto ou copiada errada); ✅ 200 COM linhas = válida e com
+força de service (essa vai no segredo SUPABASE_SERVICE_KEY); ⚠ 200
+VAZIO = aceita mas é a anon/publishable (a RLS esconde config_app da
+anon — é o discriminador). O campo esvazia ao responder e a chave NÃO é
+gravada em lugar nenhum.
+
+Roteiro para o Paulo: recarregar o CRM → 🩺 → colar a chave copiada do
+painel do Supabase → "testar a chave" → só levar ao GitHub a que
+responder ✅ → trocar o segredo → 🔄 → eu confirmo a rodada verde.
+
+Suíte: sync72 8/8 (3 provas novas com mock por apikey); 58 arquivos, 0
+falhas. Sync monitorada: 401 segue em todas as rodadas até 19:24;
+todo_sync_em parado em 20/08 23:22 — aguardando a troca do segredo.
+
+# Onde paramos — 24.08.2026, versão 09.72
+
+## F76 · Causa raiz da sync FECHADA (09.72)
+
+Sem esperar o print, li o log da Action direto do navegador do Paulo
+(Claude-in-Chrome → aba do CRM em paulotercini.github.io/…/crm/ →
+javascript_tool: gh_token de config_app via REST com o access_token da
+SESSÃO — a anon key pura toma RLS e volta [] — → API do GitHub → log do
+job; a extensão bloqueia retornos com padrão sensível, então o log ficou
+em window.__diag e saiu resumido e higienizado; __diag apagado no fim).
+
+VEREDITO: o passo Espelho → banco falha com "o banco recusou GET em
+'andamentos' (401): Invalid API key — Double check your Supabase anon or
+service role API key". O Graph está BOM (crawl passa); quem venceu foi o
+segredo SUPABASE_SERVICE_KEY do repositório (rotacionado/desativado no
+Supabase; a anon do navegador segue válida, por isso o CRM funciona).
+
+CONSERTO (ação do Paulo, credencial dele): painel do Supabase →
+Settings → API keys → copiar a service key atual; GitHub →
+marketplaceterciniinss → Settings → Secrets and variables → Actions →
+SUPABASE_SERVICE_KEY → Update; depois 🔄 no CRM. A caixa do 🩺 agora
+ensina esse caso também (dica do 401 ao lado da dica do Graph).
+
+Achado de mapa: o CRM de produção é servido pelo GitHub Pages em
+/marketplaceterciniinss/crm/ (docs/crm/index.html; deploy-pages.yml roda
+quando docs/** muda) — o crm/fase2/app.html do repo NÃO é o arquivo
+servido; algo copia para docs/. A conferir com o Paulo como as versões
+chegam lá (ele vê as novas versões, então o caminho existe).
+
+Suíte: sync72 5/5; demais inalterados (mudança de texto).
+
+# Onde paramos — 24.08.2026, versão 09.71
+
+## F75 · O 🩺 mostra o motivo (09.71)
+
+O print do Paulo cravou o diagnóstico da sync: TODAS as rodadas desde
+sáb 22/08 15:21 caem no passo "Espelho -> banco (idempotente)" — o
+migrar.py termina exit 1 (o token do Graph está BOM; o crawl passa). O
+migrar.py tem busca binária de linha culpada e imprime no stdout "o
+banco recusou POST em 'tabela' (código): detalhe" + nomeia as culpadas;
+erro de ESQUEMA pula a tabela e recomenda schema_por_em_dia.sql.
+
+F75: ssPasso agora também baixa o LOG do job (GET
+/actions/jobs/{id}/logs devolve TEXTO; o de runs/{id}/logs é zip — não
+usar) e mostra as últimas ~14 linhas relevantes num <pre .ss-log>
+(filtra timestamps e ##[group]; ##[error] vira ⛔). O Paulo clica e vê a
+tabela/linha culpada sem abrir o GitHub. AGUARDANDO o print do log para
+fechar a causa raiz (provável: linha recusada por unique/duplicata ou
+seção do schema_por_em_dia.sql não rodada).
+
+sync72.js agora com 5 provas (mock do endpoint de logs).
+Suíte: 58 arquivos verde.
+
+# Onde paramos — 24.08.2026, versão 09.70
+
+## F74 · As datas do CRPS no formato certo (09.70)
+
+Print do Paulo ("vários erros nessa página", caso no Conselho): datas
+"20./2.26/0" e pílulas ", 20/2" na timeline. Causa: o evento do CRPS
+guarda data em dd/mm/aaaa (como a API do e-Recursos manda; o módulo tem
+CRPS.dataParaISO para converter), mas TRÊS consumidores formatavam cru —
+blocoRecurso (q: e.data), fatosDoCasoTodo (ramo 🖥 Recurso) e o menu dos
+NUPs (fmt(ult.data)). fmt() refatiava o BR e saía lixo, e a ORDENAÇÃO
+lexicográfica por dd/mm também errava. Fix: isoCrps(d) — aceita ISO ou
+BR — aplicado nos três. IMPORTANTE: isoCrps vive FORA do IIFE do módulo
+CRPS (linhas ~3057-3349 são cópia fiel de robo-crps/traduzir.js com
+teste que compara o fonte — não mexer lá dentro).
+
+Bônus achado no caminho: o chip "decidido em" da TRILHA processual
+(raiz e ramos, dentro do ➕) chamava `dataParaISO` sem prefixo — função
+global que NÃO existe (só CRPS.dataParaISO) → ReferenceError que
+derrubava o render do ➕ inteiro sempre que o recurso tinha DECISÃO
+(exatamente o caso do print, "Recurso provido EM PARTE"). Trocado por
+fmt(isoCrps(...)).
+
+Teste crps74.js (6 provas, incl. a trilha com decisão sem quebrar).
+Suíte: 58 arquivos verde.
+
+# Onde paramos — 24.08.2026, versão 09.69
+
+## F72+F73 · A sincronização vigiada e o prazo fatal honesto (09.69)
+
+F72 (sync To Do falhando com recorrência): sem gh CLI na máquina e sem
+acesso aos logs, a saída foi dar OLHOS ao CRM — botão 🩺 no rodapé do
+To Do (ao lado do 🔄): saudeSync() lista as últimas 10 rodadas da
+crm-sync.yml pela API do GitHub (mesmo gh_token do F47; 401/403 manda
+trocar o token pelo 🔄), 🟢/🔴/🟡 + hora local + gatilho + "abrir ↗";
+na 🔴, ssPasso(runId) busca os jobs e aponta O PASSO que falhou. A caixa
+ensina: falha em "Renova token Microsoft Graph" = GRAPH_REFRESH_TOKEN
+vencido (Settings → Secrets do repo). O fluxo da Action: refresh token →
+sync_todo.py (crawl) → migrar.py (espelho → banco + carimbo).
+
+F73 (prazo fatal fantasma em caso SEM data no To Do): o culpado era o
+prazoDetectado do composer — data solta no texto ("verificar em 24/08")
+gravava casos.prazo + lembrar_motivo. Agora vira TAREFA DE LEMBRETE
+(andamento_tarefas de quem escreveu), e só se o tf-box não criou
+lembrete (flag tfCriouLembrete capturada ANTES do reset de tfQuem/
+tfData). casos.prazo só nasce de: ⏰ checkbox (marcarTarefaComPrazo),
+quadro 📅 (qdMudarPrazo) e To Do (migrar.py, que JÁ espelha "Concluir
+em" com update de prazo inclusive para NULL — verificado no fonte:
+update_cols tem prazo). Fantasma já gravado: a próxima sync boa rebate
+os casos vindos do To Do; caso sem To Do, ✔ feito no quadro.
+
+Testes sync72.js (4, com GitHub mockado) e extracoes.js ajustado (data
+do texto → POST andamento_tarefas, nunca PATCH casos.prazo).
+Suíte: 57 arquivos verde.
+
+# Onde paramos — 24.08.2026, versão 09.68
+
+## F71 · A aba CNJ no lugar e as fantasmas do 📌 (09.68)
+
+Três pedidos do Paulo (prints com dados reais — NUNCA em fixtures):
+
+(1) Aba CNJ "com erro, parte em branco": NÃO era crash (4 variantes de
+datajud rodaram limpas) — era GRID. O .sub-menu das fontes tinha
+grid-column:1/-1 (regra genérica :not(.instancias)), precisava de linha
+inteira livre e o auto-placement o jogava, com TODO o conteúdo atrás,
+para depois das 99 linhas do span do cartão (fontesPos 573 = fim do
+cartão). Fix: `.painel[data-p="2"].ativo>.sub-menu.fontes{grid-column:2}`
+— o menu vai ao TOPO da coluna dos andamentos (204 = topo do cartão).
+O menu agora aparece com QUALQUER fonte, ⚡ PJe primeiro e como padrão
+(fonteCnj inicial virou "" — "oficial" só por clique; resets idem).
+
+(2) Perícia fantasma 02.02.2027 (outra porta): eventoNoTexto (o detector
+do 📌 dar seguimento) aceitava QUALQUER data futura num texto que
+mencionasse perícia — "Decorrido prazo ... 02/02/2027" de movimento PJe
+virava "Perícia" com o checkbox do modal já ligado. Agora exige palavra
+de agendamento (agendad|comparec|marcad|designad|remarcad) até 80 chars
+antes da data (janela era 42; "sem contexto, a primeira data futura
+serve" MORREU: `if(!melhor || !melhor.marcada) return null`).
+salvarSeguimento grava obs (trecho de origem) no evento — auditável e o
+banner 🕵️ pega. Fantasmas JÁ gravadas por essa porta: sem obs, não caem
+no banner — cancelar pela aba Perícias (✕).
+
+(3) Movimento do PJe no caso ERRADO (caso real): a coleta casa pelo
+NÚMERO gravado no caso (conferirPje/porProcesso) — intruso = número
+errado na ficha. Botão "⚠ não é deste caso" na linha da coleta
+(pjeForaDoCaso): DELETE do andamento + aviso que DENUNCIA quando o
+número do movimento está gravado no caso ("tire o número em ➕ mais
+informações, senão volta na próxima coleta").
+
+Teste cnj71.js (10 provas). Suíte: 56 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.67
+
+## F70 · Dois retoques na faxina (09.67)
+
+(1) Espécie sem marcador ficou MUDA: especieJaDiz() morreu — B31 e afins
+não mostram linha nenhuma (a frase "o próprio código já diz…" saiu). O
+convite de preencher espécie mudou o texto ("no topo do cartão", porque
+a espécie subiu na F69). Marcador JÁ ATIVO fora do catálogo da espécie
+continua aparecendo (mostrar inclui os ativos — caso58 B31+rural prova).
+(2) O ➕ mais informações desceu para LOGO ABAIXO da DER (.fx-linha-der
+morreu, CSS incluído); a vaga AO LADO da DER está reservada — o Paulo
+ainda vai escolher o dado relevante do INSS que entra ali.
+
+Ajustes de prova: cartao69 (➕ abaixo da DER + frase banida), caso58,
+quadro57 (âncora [data-fato="der"]).
+
+Suíte: 55 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.66
+
+## F69 · A faxina do cartão do caso (09.66)
+
+Pedido do Paulo, item a item, sobre o cartão (fase INSS no print, regras
+aplicadas ao cartão todo): (1) a ESPÉCIE saiu do quadrão e virou o código
+B na frente do nome — span .esp-cod com id fx-especie-{k.id} no
+fatos-topo, então editarFato('especie') continua funcionando SEM mudança
+(ele injeta o input no elemento com esse id; datalist lista-especies vive
+fora do cartão). (2) Marcadores logo abaixo (como eram). (3) Acompanha-
+mento SEM o rótulo escrito — só os chips + ✓ (title no container).
+(4) A DER divide a linha com o ➕ (.fx-linha-der; grade forçada a 1
+coluna com !important contra o grid 2-colunas do painel; dd nowrap); o
+protocolo foi para DENTRO do mais (linhaProt agora incondicional no dl
+do corpo). (5) O <details .fx-mais> MORREU: virou botaoMais(k) (botão) +
+blocoMais() (corpo .fx-mais-corpo renderizado só quando maisAberto tem o
+caso) — INSS abre o corpo logo após a linha da DER; judicial/conselho
+depois do quadro. CSS do details removido. (6) Quadro 📅: frase do vazio
+encurtada ("Nenhuma data marcada para este cliente."), linha do PRAZO
+FATAL sempre destacada (.qd-prazo, faixa vermelha à esquerda mesmo sem
+vencer); o quadro JÁ consolidava todos os casos do cliente (prazos,
+eventos e tarefas varrem casosDoCliente — nada a mudar). (7) A linha
+RESPONSÁVEL (atribuição de caso, atrDoCaso) SAIU do cartão — fica só o
+📎 Documentos solicitados; o resto da atribuição (filtros, Atribuídas a
+mim, Quem cuida disso? das tarefas) NÃO foi tocado. (8) Ações no fim,
+como estavam.
+
+Regressões esperadas consertadas: acomp68 (rótulo saiu), caso58 (espécie
+no topo; protocolo dobrado; abrir = clicar .fx-mais-bt), quadro57 (ordem
+nova), trilha (idem).
+
+Teste cartao69.js (11 provas). Suíte: 55 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.65
+
+## F68 · Acompanhamento Manual/Automático e a lista de checagem (09.65)
+
+Pedido do Paulo: caso na lista INSS e no Conselho de Recursos precisa
+dizer se o acompanhamento é MANUAL (a equipe abre o portal — E-SISREC
+exige a senha do cliente) ou AUTOMÁTICO (o robô/coleta vigia), com um ✓
+que registra a checagem feita e uma lista própria dos manuais.
+
+Feito: linhaAcomp(k) entra no TOPO do miolo do blocoFatos nas fases
+"inss" e "conselho" (logo abaixo da espécie; judicial fica de fora) —
+chips Manual/Automático (mudarAcomp → casos.acompanhamento) e o
+✓ (.acomp-check, cinza; checarAcomp grava checado_em+checado_por, fica
+verde .ok e o title diz "checado por NOME em dd.mm.aaaa às hh:mm").
+Clicar de novo re-checa (atualiza quem/quando). A barra lateral ganhou
+🔎 Checagem manual no fim das Listas do escritório (data-v="checagem"):
+ativos com acompanhamento==="manual", ordenados como fila (nunca
+checados primeiro, depois checados há mais tempo — localeCompare de
+checado_em com vazio no topo).
+
+PENDÊNCIA DO PAULO: rodar schema_acompanhamento.sql no Supabase (três
+alter table em casos). Sem ele, mudarAcomp/checarAcomp avisam "rode o
+schema" e nada grava.
+
+Teste acomp68.js (10 provas). Suíte: 54 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.64
+
+## F65+F66+F67 · O raio, a cancelada e a fantasma (09.64)
+
+F65 (print do Paulo): a ⚡ Anotação rápida tinha a LUPA da classe .busca e
+parecia a pesquisa. Subiu para CIMA do "+ Novo Cliente" e o ::before dela
+virou o próprio ⚡ (background:none; content:"⚡"; mini-lateral com fonte
+maior). O placeholder perdeu o ⚡ (o ícone saiu do texto). rapida.js
+ganhou 3 provas (posição, ícone sem lupa, busca ainda com lupa).
+
+F66 (print): perícia CANCELADA continuava no Caso completo, no quadro 📅
+e na pílula "volta em". Causa: quadroDatas e proximaDataDe filtravam por
+`!e.cancelado` — campo que NÃO existe (o real é status==="cancelada") — e
+fatosDoCasoTodo não filtrava nada. Três filtros corrigidos para
+`e.status!=="cancelada"`. A aba Perícias segue mostrando o histórico.
+
+F67 (caso real: perícia 24/07/2027 que nunca existiu): extrairEvento
+criava evento de QUALQUER frase com "perícia"+data ("foi indeferida em
+24/07"), e data sem ano já passada era empurrada para o ano seguinte
+(24/07 lido em agosto/2026 → 24/07/2027). RE_EVENTO_JS agora EXIGE
+agendad|marcad|remarcad|reagendad|designad entre o tipo e a data. Para as
+fantasmas JÁ gravadas: banner 🕵️ no Calendário (evSuspeitos: evento
+futuro não cancelado com obs — só o leitor grava obs — sem palavra de
+agendamento), cada linha com ✕ fantasma (cancelarEvento, que agora dá
+render() sem ficha aberta) e ✔ é real (manterEvento: obs→null encerra a
+desconfiança). O Paulo confere Amaro e o resto ali.
+
+Teste pericia66.js (10 provas). Suíte: 53 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.63
+
+## F64 · Concluir a tarefa baixa o prazo fatal junto (09.63)
+
+Pedido do Paulo: escrever o comentário de conclusão (✎ escrever) e AINDA
+ter que clicar em ✔ feito na linha do prazo fatal era clique sem
+necessidade — concluir a tarefa decorrente deve finalizar o prazo.
+
+Fix no funil único: concluirDeVez (por onde passam o ✔ rápido E o ✎
+escrever via fecharTarefa) agora, depois de concluir a tarefa, olha o
+andamento de origem (D._andsFicha; fallback GET) — se o texto carrega o
+carimbo `[PRAZO ${fmt(k.prazo)}]` batendo com o prazo VIGENTE do caso, o
+prazo baixa junto (patchCaso prazo:null). Se a F38 tinha movido o caso
+para 🗓 Tarefas com Prazo, ele volta sozinho à lista de origem pela
+regra da volta da janelaPrazoCumprido (ronda.prazo_de → origem_lista →
+"👪 Judicial"), limpando ronda.prazo_de, SEM perguntar. Carimbo antigo
+(prazo do caso mudou depois) não baixa nada. O aviso ganha "· ⏰ prazo
+fatal de dd.mm baixado junto" e o desfazer devolve TUDO (prazoAntes =
+{prazo, fase, mover_para, ronda} regravado inteiro em desfazerConclusao).
+montarSidebar() roda quando baixou (o caso pode ter trocado de lista).
+Não posta segundo andamento "[PRAZO CUMPRIDO]" — o ✔ da conclusão já
+conta a história.
+
+Teste prazo64.js (10 provas, incl. negativo sem carimbo e desfazer).
+Suíte: 52 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.62
+
+## F63 · O Caso completo aprendeu a resposta (09.62)
+
+Bug apontado pelo Paulo (com print): concluir a tarefa pelo ✎ escrever
+mostrava o comentário SOLTO no 📖 Caso completo, como registro novo. A
+causa: fatosDoCasoTodo montava lista PLANA — o ramo do escritório nem
+carregava id/responde_a; só a conversa do Escritório (linhaDoTempo)
+aninha respostas.
+
+Fix na fonte: o ramo do escritório carrega id e pai (responde_a); depois
+de calcular marcos, as respostas cujo pai está na lista são penduradas
+NELE (raiz DESC; filhas do pai em ASC logo abaixo — a leitura "o que foi
+pedido → o que foi feito"); órfã de pai apagado continua no nível de
+cima. O render (painelTudo → tlOficial) leva cls "tl-resposta" (recuo +
+faixa verde, o visual da conversa) e o 📋 copiar em texto sai com "↳ "
+na resposta.
+
+Teste completo63.js (4 provas). Suíte: 51 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.61
+
+## F62 · O parentesco das datas e o concluir escrevendo (09.61)
+
+Dois pedidos do Paulo no quadro 📅: (1) o ✔ feito da tarefa concluía sem
+deixar escrever — agora a linha tem os DOIS jeitos do andamento: ✔ feito
+(concluirDeVez, rápido com desfazer) e ✎ escrever (concluirTarefa, a
+janela oficial com texto, protocolo e repetição). O wrapper
+qdConcluirTarefa foi REMOVIDO — concluirDeVez já repinta sozinho
+(abrirFicha no fim). (2) anotação com prazo cria DUAS datas (lembrar +
+fatal) que apareciam soltas — agora o PRAZO FATAL ADOTA a decorrente:
+filiação pelo carimbo "[PRAZO dd.mm.aaaa]" no textoCru da tarefa/nota
+casando data (fmt) e caso; a filha aninha na mãe com "↳ lembrar",
+indentação e borda esquerda, perde o carimbo do rot, mantém bolinha,
+data editável e conclusões. O grupo ordena pela MENOR data dele (a
+primeira ação necessária) entre os irmãos; linhas sem parentesco seguem
+soltas com o separador sutil.
+
+Teste grupo62.js (6 provas); tarefa60.js ajustado (concluirDeVez direto).
+Suíte: 50 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.60
+
+## F61 · O quadro vira resumo puro, com separação sutil (09.60)
+
+Dois refinamentos do Paulo no quadro 📅: (1) SAIU o rodapé "+ criar
+lembrete" (e a função qdCriarLembrete) — o quadro é um RESUMO; as datas
+nascem nos lugares próprios: andamentos do escritório, aba Lembretes,
+Perícias. O texto do vazio explica isso. (2) Cada lembrete ganhou
+separação sutil: `.qd-linha + .qd-linha{border-top:1px solid var(--borda)}`
+com padding 6px — o olho conta as linhas. quadro57.js trocou as provas do
+criar pelas do resumo (sem #qd-tit; borda entre vizinhas). Suíte: 49.
+
+# Onde paramos — 23.08.2026, versão 09.59
+
+## F60 · A data do composer do caso no quadro, com ida ao andamento (09.59)
+
+Bug apontado pelo Paulo (com print): anotação de ANDAMENTO com data de
+lembrete (o "verificar em 24/08" do composer, F41) não aparecia no quadro
+📅 — o quadro cobria notas de atendimento, lembretes, prazos e eventos,
+mas não a QUINTA fonte: andamento_tarefas.
+
+Agora o quadro lista as tarefas de andamento ativas (concluida_em null)
+dos casos do cliente: texto do próprio andamento (tags removidas, 70
+chars), bolinha do responsável (colaborador_id), data aberta que adia
+pelo fluxo oficial (mudarLembrar → PATCH andamento_tarefas) e ✔ feito
+(qdConcluirTarefa → concluirDeVez, que responde o andamento com "✔" e
+tem desfazer; + repintarFicha). CLICAR na linha chama qdIrParaAndamento:
+casoSel, aba Casos, sub-aba escritorio, rolagem até a âncora
+visto-{andamento_id} e brilho .qd-flash de 2,4s. A pílula "volta em" do
+topo (proximaDataDe) também ganhou a fonte (tipo "tarefa" → aba 2).
+
+De quebra: a ESPERA DE BOOT (D.cliPorId povoado) entrou em TODOS os 38
+testes que ainda não a tinham — a corrida intermitente de abrirFicha
+antes de carregar() estava derrubando arquivos aleatórios conforme a
+carga da máquina; classe de flake extinta.
+
+Gotcha de mock: a ficha RECARREGA andamento_tarefas no repintar — teste
+que conclui tarefa precisa espelhar o PATCH na fixture, senão o reGET
+ressuscita a tarefa (tarefa60.js faz Object.assign no FIX).
+
+Teste tarefa60.js (8 provas, datas relativas). Suíte: 49 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.58
+
+## F59 · A origem a um clique e o responsável na bolinha (09.58)
+
+Dois refinamentos do Paulo no quadro 📅: (1) a linha é CLICÁVEL — clicou,
+abre a ANOTAÇÃO que criou a data numa caixa (texto completo, marcações,
+atribuição, e o atalho "abrir nas Anotações" que leva à mesa); o lembrete
+GÊMEO acha a nota pelo título exato (a mesma chave da dedup F57); lembrete
+avulso mostra a própria ficha ("não nasceu de anotação") com atalho para a
+aba 9. (2) o responsável virou a BOLINHA colorida com a inicial
+(.avatar.mini, title = nome completo) — nota mostra os atribuídos,
+lembrete o responsável; some o nome escrito.
+
+qdVerNota/qdVerLembrete/qdCaixaNota/qdIrParaAnotacoes; .qd-link com
+cursor+underline no hover. Prova do nome no quadro57 atualizada (bolinha
+com title). triagem.js ganhou a espera de boot (a mesma corrida do
+emoji/extracoes). Teste origem59.js (6 provas). Suíte: 48 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.57
+
+## F58 · O cartão do caso na ordem do Paulo, enxuto por fase (09.57)
+
+Pedido detalhado do Paulo (com print): pouca informação à vista, na ordem
+certa, tudo alterável, e o resto dobrado num "mais informações".
+
+**A ordem nova do blocoFatos**: topo (título + chip da LISTA + chips
+JEF/MS/onde está + exigência) → ESPÉCIE → o essencial DA FASE → janelinha
+da incapacidade (se B31/incap) → quadro 📅 Lembretes e datas → ➕ mais
+informações (details, estado em maisAberto/maisDobra como a mesa F55) →
+Responsável + 📎 Documentos → e as AÇÕES (fundir · não é caso · Encerrar)
+POR ÚLTIMO.
+
+**Por fase**: INSS/escritório = subespécies (linhaMarcadores) + DER +
+Protocolo; JUDICIAL = "Distribuído em" (rot novo de ajuizado_em) + "Onde
+está" (rot novo de orgao_judicial) + números dos processos vinculados
+(.fx-procs → sub-aba CNJ); CONSELHO = datas recursais DINÂMICAS
+(ro_protocolado_em sempre; ed_ aparece com RO gravado; re_ com ED) —
+colunas novas: rodar crm/fase2/schema_recursos_crps.sql. A DCB já
+preenche sozinha o "prorrogar a partir de" (-15 dias) no editarFato.
+
+**No ➕**: trilhaProcessual (De onde partiu/No que ramificou — as etapas
+anteriores), sugestão de continuidade/fundir, marcadores (fases judiciais)
+e a grade do resto (NB, DIB, decisão, classe, recorrer até…), tudo
+editável como sempre — nenhum campo repetido (ids fx-* são únicos).
+
+**Quadro de datas (F57) ganhou**: o atribuído de cada anotação na linha e
+o ✔ feito no prazo fatal (limpa a data).
+
+Testes: caso58.js novo (13 provas). Regressões ajustadas: conversao e
+desfazer (ações no rodapé), quadro57 (ordem espécie→quadro→➕), trilha
+(abre o ➕ antes). Suíte: 47 arquivos verde.
+
+# Onde paramos — 23.08.2026, versão 09.56
+
+## F57 · O quadro de datas do caso: tudo à vista, tudo alterável (09.56)
+
+O Paulo não gostou da pílula única da F56 ("não gostei da forma que foi
+feito") e pediu, com print do cartão do caso: um quadro em cima (ou logo
+abaixo) dos dados do caso com TODOS os lembretes visíveis e alteráveis.
+
+**quadroDatas(k)** entra no cartão `.fatos-processo`, entre os marcadores
+e a `.fx-grade` (em cima dos dados: dado é consulta, data é trabalho).
+Uma linha por data, ordenadas: anotações datadas não resolvidas (📝),
+lembretes ativos (🔔, com responsável e recorrência), prazos fatais dos
+casos abertos (⏰) e agendamentos futuros (🩺, informativos — mexe na aba
+Perícias). DEDUP: a nota que já virou lembrete gêmeo (titulo
+"Anotação: {texto.slice(0,60)}", como salvarNotaAtendimento2 cria) entra
+uma vez só, pelo lembrete.
+
+**Alterável ali mesmo**: cada linha tem o `<input type="date">` aberto —
+trocar grava na hora (nota → qdMudarNota PATCH clientes.campos; lembrete
+→ adiarLembrete, o fluxo oficial; prazo → qdMudarPrazo PATCH casos, e
+vazio limpa). "✔ feito": nota → resolverNotaAtendimento; lembrete →
+lembreteAvisado (único desliga, recorrente avança — fluxo oficial da aba
+9, com lembrete_avisos). Rodapé cria lembrete novo (título + data +
+responsável, POST lembretes origem "quadro").
+
+Visual: vencida com fundo rosado, data vermelha e "venceu DD.MM"; até 7
+dias, data azul; futuro, neutro. A pílula do topo (F56) fica como resumo.
+
+Teste quadro57.js (13 provas, datas relativas). Suíte: 46 arquivos verde.
+
+# Onde paramos — 22.08.2026, versão 09.55
+
+## F56 · A data de volta à vista: o "Concluir em" do To Do no CRM (09.55)
+
+Pedido do Paulo (com prints do To Do): lá, o "Concluir em" é UMA data
+exposta que diz quando o cliente volta à mesa — fácil de ver e entender.
+No CRM cada anotação pode ter data (mais poderoso), mas nada fica exposto.
+
+**proximaDataDe(cliId)** calcula a resposta sem burocracia nova: varre
+anotações com lembrar_em não resolvidas, lembretes ativos (proximo_em),
+prazos fatais de casos abertos e agendamentos (eventos futuros) e devolve
+{venceu, proxima} — venceu é a cobrança MAIS ANTIGA já passada (nota,
+lembrete ou prazo; agendamento que passou já aconteceu, não cobra),
+proxima é a menor data >= hoje.
+
+**A pílula no topo da ficha** (linha do CPF): vencida = vermelha
+"⏰ venceu DD.MM · motivo"; futura = azul "📅 volta DD.MM · motivo";
+nenhuma = cinza tracejada "sem próxima data — marque nas Anotações"
+(cliente sem cobrança marcada é cliente esquecido; a ausência também é
+informação). Clique → irParaData(tipo) leva à aba onde a data mora
+(nota→Cadastro/anotações, lembrete→aba 9, prazo→Casos, evento→Perícias,
+com fallback no Cadastro quando a aba não existe).
+
+**Nas Anotações**: nota com lembrar_em e sem resolvida abre a linha com a
+pílula colorida (azul futura, vermelha vencida); resolvida mostra só o
+registro neutro. E ehNotaPendente ganhou o critério lembrar_em < hoje —
+a nota "volta 20.08" que passa de 20.08 sem resolução entra SOZINHA nas
+Pendências em aberto. O quadro também mostra a pílula da data.
+
+Teste volta56.js (10 provas, datas relativas a hoje para não apodrecer).
+Suíte: 45 arquivos verde.
+
+# Onde paramos — 22.08.2026, versão 09.54
+
+## F55 · A ficha respira: a mesa se arruma sozinha e o rodapé fala português (09.54)
+
+Pedido do Paulo: página do cliente com informação demais, e a solução
+"flechinha/mais" não serve — tem que ser intuitivo para colaborador com
+contato mínimo. E o atribuir / lembrar em / tarefa com prazo das anotações
+precisa ficar fácil. Autorizada mudança estrutural.
+
+**A mesa se arruma sozinha (colapso por ESTADO, não por clique).** Bloco
+resolvido recolhe numa linha verde que INFORMA a decisão (o corpo fica no
+DOM dentro de `<details class="mesa-feito">` sem marker; "alterar" à
+direita reabre). Critérios: bloco 1 quando todo pré-caso vivo tem
+espécie+natureza (+via+cidade se incapacidade); bloco 4 quando a análise
+mais recente é de HOJE; Honorários vive sempre recolhido com o padrão (ou
+o ajuste) na própria linha — literal "Padrão do escritório" preservado.
+Três regras de convivência: mexeu (mudarPreCaso/novoPreCaso) → mesaAberta
+abre o bloco até a ficha fechar (não recolhe embaixo da mão de quem
+edita); abrirFicha com troca de cliente → mesaAberta.clear(); aberto no
+toque → ontoggle grava no Set e sobrevive à repintura.
+
+**Linha-guia no topo.** Uma frase âmbar "Falta fazer: definir a espécie ·
+registrar a análise (passo 4) · resolver N pendências" gerada do estado —
+ou verde "Fluxo em ordem — só resta a decisão final". O leigo lê o topo e
+sabe onde clicar.
+
+**Rodapé em cápsulas com pergunta.** "Como marcar?" (chips ⭐/🔥/⏳ com
+:has(:checked)), "Quem cuida disso?" (chips com avatar colorido + NOME,
+classe .at-eq preservada), "Lembrar quando?" (atalhos + date à vista),
+"⏰ Prazo fatal?" (NOVO: id at-prazo — com exatamente 1 caso em andamento,
+a nota sai "⏰ [PRAZO dd.mm.aaaa]" e o caso vai para 🗓 Tarefas com Prazo,
+mesmo shape do 📌; sem caso, barra com aviso; 2+ casos, manda para o 📌).
+FRASE-VIVA (#at-frase, fraseAcao/atualizarFraseNota) confirma em
+português o efeito antes do clique. O 📌 dar seguimento fala a mesma
+língua: perguntas nos rótulos, nomes nos chips e #seg-frase.
+
+Testes: mesa55.js novo (14 provas). Ajustes de regressão: fluxo.js
+(rotulos e cláusula por textContent — honorários vive recolhido),
+precaso.js intacto (a regra "mexeu→fica aberto" o salvou), extracoes.js
+ganhou a espera de boot (mesma corrida do emoji.js). Suíte: 44 arquivos.
+
+# Onde paramos — 22.08.2026, versão 09.53
+
+## F54 · Pacote do Paulo: PJe de volta, cadastro exigente, vínculo na análise, incapacidade com cidade e Pendências em aberto (09.53)
+
+Cinco pedidos numa mensagem só, todos entregues:
+
+1. **Tela do PJe sumida na aba CNJ (bug real).** Caso com o processo só
+na LISTA `processos[]` (sem `k.processo` preenchido) não tinha "principal",
+e `pjeDoProcesso(..., ehPrincipal=false)` descartava a coleta do PJe cujo
+texto não repete o número — resultado: `temPje=false` e a caixa invisível.
+Fix em painelCNJ: `!p || p.principal || ps.length===1` (um processo só na
+lista É o principal de fato). Reproduzido e confirmado antes do fix.
+
+2. **Cadastro pela anotação rápida exige nome completo e telefone.**
+arNovoCliente recusa nome com uma palavra só; o campo #ar-tel aparece nos
+ramos cliente novo E interessado; salvarAnotacaoRapida barra gravação com
+menos de 10 dígitos. Telefone vai em clientes.telefone / leads.telefone.
+
+3. **Vínculo da triagem viaja para a Análise de Direito.** Bloco novo na
+triagem (select #tri-vinc: empregado/CI/facultativo/não contribui + mês
+"desde" quando empregado) grava em triagem.vinculo via salvarTriagem.
+salvarAnalise anexa "Vínculo (triagem): X." ao contexto quando o texto
+ainda não menciona vínculo. Helper rotVinculo/salvarVinculoTriagem.
+
+4. **Incapacidade pergunta a cidade e abre o checklist.** No pré-caso com
+espécie de incapacidade: input "em qual cidade?" (grava pc.cidade — define
+competência e local da perícia) e o bloco "2 · Documentos" nasce
+`<details open>`. Bug achado pelo teste: ehIncap não casava
+"Auxílio-doença" (dsa vira "auxilio-doenca" com hífen e o regex pedia
+espaço) — regex agora `auxilio[ -]?doenca`.
+
+5. **Pendências em aberto.** Anotação antiga com tarefa pendente não morre
+soterrada: quadro "Pendências em aberto (N)" no topo do bloco 3 das
+Anotações lista toda nota não resolvida que seja urgente, marcada
+"pendência" (checkbox novo na criação) ou com checklist incompleto —
+com botão "Resolvida" (grava resolvida={em,quem}, selo verde na lista,
+sai do quadro). ehNotaPendente/quadroPendencias/resolverNotaAtendimento.
+
+Testes: pacote54.js novo (14 provas). Regressões esperadas ajustadas:
+fluxo.js (bloco 2 agora nasce ABERTO para incapacidade), rapida.js
+(preenche #ar-tel nos fluxos de criação). emoji.js ganhou espera de boot
+(D.cliPorId povoado) — corrida antiga que aflorou. Suíte: 43 arquivos.
+
+# Onde paramos — 19.08.2026, versão 09.52
+
+## F53 · Anotação rápida: as duas saídas sempre embaixo da lista (09.52)
+
+Refinamento pedido pelo Paulo: qualquer parte do nome lista os clientes
+embaixo (já fazia), e SEMPRE deve haver saída de criação embaixo da
+lista — mesmo quando a busca acha homônimos parciais.
+
+Com 3+ letras, abaixo dos resultados aparecem sempre duas saídas:
+"➕ Cadastrar como CLIENTE novo" (arNovoCliente → POST clientes só com
+o nome, a anotação entra como atendimento urgente via PATCH campos, o
+cliente entra em D/cliPorId/casosDoCliente + reindexarCliente para a
+busca achar na hora, e a ficha abre para completar o cadastro) e
+"➕ Anotar como INTERESSADO" (F52, funil Vendas). Pegadinha de teste: o
+mock do rapida.js respondia escrita sem eco de representation — o POST
+clientes devolvia vazio e o fluxo caía no catch; igualado aos demais
+testes (eco com id). rapida.js com 20 provas; suíte 42.
+
+# Onde paramos — versão 09.51
+
+## F52 · Anotação rápida com porta fixa e interessados (09.51)
+
+Feedback do Paulo sobre a F50: não achou o ⚡ do canto, e o campo tem
+que estar VISÍVEL, mais fácil que a busca, com o mínimo de clique — e
+tem que servir para quem nem cliente é ainda.
+
+Porta nova FIXA no topo da barra lateral, acima da busca: o campo
+"⚡ Anotação rápida — nome…" com borda azul de destaque. Clicou, o
+painel abre com o cursor já no nome (onfocus → anotacaoRapida). Enter
+no texto guarda (Shift+Enter quebra linha). O ⚡ do canto continua (é
+a porta do celular). Destinos: cliente com caso → andamento + caso 🔥
+(F50); cliente sem caso → anotação urgente do atendimento (F50); e o
+NOVO, quem não é cliente → botão "➕ {nome} ainda não é cliente" cria
+INTERESSADO no funil 💼 Vendas (POST leads, origem "ligação/balcão",
+a anotação vai em beneficio_interesse — o campo que o cartão do funil
+exibe; sem coluna nova no banco). De lá, o caminho já existente
+"→ virar cliente" completa o ciclo. rapida.js com 16 provas; suíte 42.
+
+# Onde paramos — versão 09.50
+
+## F51 · Julgamento no seguimento: resultado, não "preparação" (09.50)
+
+Correção pedida pelo Paulo: quando a novidade é agendamento de
+JULGAMENTO do CRPS, o seguimento sugeria "📞 Avisar {cliente} que o
+julgamento foi agendado… oferecer atendimento de preparação antes" —
+texto de PERÍCIA, errado para julgamento (não há presença nem
+preparação do cliente no CRPS).
+
+Agora, julgamento é rito próprio nas duas portas: no modal 📌 o texto
+pré-escrito é "⚖️ Julgamento agendado para DD.MM.AAAA às HH:MM.
+Verificar o resultado no dia seguinte.", a data de lembrar já vem no
+dia útil seguinte (isso já existia) e o chip do ADMIN (o Paulo,
+colAdmin() = papel admin na equipeAtiva) nasce marcado — atribuição
+padrão dele; a véspera de "mensagem ao cliente" não é oferecida nem
+criada. No 1 clique/lote (aplicarPericia), julgamento agenda o evento
+e cria UMA tarefa de conferir o resultado no dia útil seguinte para o
+admin — sem 📞 nem véspera. Perícia/audiência seguem exatamente como
+eram (prova de regressão no teste). Teste julgamento.js, 11 provas;
+novidades.js atualizado à regra nova; suíte 42 arquivos.
+
+# Onde paramos — versão 09.49
+
+## F50 · ⚡ Anotação rápida — o botão que atende o telefone (09.49)
+
+Pedido do Paulo: cliente liga ou aparece no balcão e o colaborador
+precisa anotar na hora, sem procurar ficha, e o registro deve nascer
+urgente ("é comum o cliente ir até o escritório e não ficar anotação
+nenhuma").
+
+Botão ⚡ FIXO no canto da tela (fab-rapida), desktop e celular (no
+celular fica acima da barra e some quando a ficha está aberta — lá o
+composer manda). Abre uma caixa com três coisas: busca de cliente
+(pesquisar() com lista de 6), a anotação e os toggles 🔥 urgente (JÁ
+LIGADO) e ⭐ importante. Cliente COM caso ativo: a anotação vira
+andamento e o caso é marcado urgente/importante via PATCH (Object.assign
+no k local — o 🔥 aparece sem recarregar); com mais de um caso ativo, um
+select escolhe (pré-selecionado no mais recente). Cliente SEM caso: vira
+anotação do atendimento (campos.atendimento) com urgente:true e origem
+"rapida" — sobe na mesa do atendimento e migra ao caso pela regra do
+F30. Sem cliente escolhido ou sem texto, nada grava. Teste rapida.js,
+11 provas; suíte 41 arquivos.
+
+# Onde paramos — versão 09.48
+
+## F49 · A análise de direito no trilho do primeiro atendimento (09.48)
+
+Pedido do Paulo: a análise geralmente nasce no primeiro atendimento, e
+precisava de um elo entre triagem, anotações e análise, com campos
+preenchíveis no momento das anotações.
+
+A mesa do atendimento ganhou o passo "4 · Análise de Direito deste
+atendimento", logo depois das anotações, com o MESMO formulário da aba
+⚖️ (formAnalise, renderizado uma vez só: quando a aba 8 está ativa ele
+vive lá — IDs únicos). Acima do formulário, a linha de estado
+statusAnalise: âmbar "Ainda sem análise de direito" ou verde "Análise de
+DD.MM.AAAA — melhor caminho: X" com "ver histórico". A MESMA linha
+aparece na TRIAGEM (com atalho para as Anotações), e o fecho da triagem
+registra no histórico "Análise de direito registrada em X" ou
+"PENDENTE". Análise salva SEM caso ativo vira ANOTAÇÃO do atendimento
+(origem "analise"), que migra para os andamentos quando o pré-caso virar
+caso, pela regra do F30 que já existia.
+
+Regras da casa que morderam: a aba Cadastro é LIMPA de pictogramas
+(emoji.js vigia) — statusAnalise, formAnalise e linhaCenario saíram sem
+emoji (✕ virou CAD_IC.fechar, ⭐ virou "melhor", + em ASCII); e fluxo.js
+ganhou a ordem nova dos blocos (1, 2, 3, 4-análise, honorários, e
+agora?). Teste analise-direito.js com 5 provas novas (23), suíte 40.
+
+# Onde paramos — versão 09.47
+
+## F48 · ⚖️ ANÁLISE DE DIREITO — a memória dos atendimentos (09.47)
+
+O coração do escritório, pedido do Paulo: o cliente lembra da análise de
+2020, o escritório não. Cada análise registra QUANDO foi feita (retroativa
+entra com a data original), o que foi combinado (contexto) e os CENÁRIOS
+calculados na época, regra + data prevista + valor, com ⭐ no melhor
+caminho. Data que já chegou fica verde ("✓ direito alcançado").
+
+Tabela nova analises_direito (cenários em jsonb) — PENDENTE DO PAULO
+rodar crm/fase2/schema_analise_direito.sql no Supabase; sem ela, as telas
+avisam e nada quebra (D.analises null ≠ []). Entradas: aba própria na
+ficha (sempre visível, abaAtiva 8) e visão "direito" na barra lateral com
+sub-menu Análises | Dashboard. O contador da barra é acionável, clientes
+cuja análise mais recente diz que o direito JÁ chegou e não aposentaram.
+
+Integrações deliberadas, nada duplicado: salvar grava comentário nos
+andamentos de TODOS os casos ativos do cliente (uma chamada, corpo em
+array); o 🎂 "avisar na época" reusa aposentadorias + avisoApos (Meu Dia
+3 meses antes); as anotações antigas do To Do (lista 🙏, espelhadas nos
+lembretes aposentadoria_futura) aparecem na aba com "→ virar análise",
+que pré-preenche o formulário e carimba a anotação (analise_id) para não
+ser oferecida de novo. Dashboard: tiles (total, clientes, já podem,
+próximos 12 meses, 2+ anos para rever), lista "comunicar" com WhatsApp,
+próximas aposentadorias com 🎂, barras por regra. 📋 copiar gera o resumo
+pronto para WhatsApp ou petição. Fonte marca manual | Prévius | To Do
+(a importação automática dos PDFs do Prévius fica para quando o Paulo
+mandar os primeiros cálculos). Teste analise-direito.js, 18 provas;
+suíte 40 arquivos. Rubrica interna 98/100.
+
+# Onde paramos — versão 09.46
+
+## F47 · Botão 🔄 agora — sincronizar com o To Do pelo próprio CRM (09.46)
+
+Pedido do Paulo: um botão no CRM para atualizar a sincronização com o
+Microsoft To Do. A sincronização roda numa GitHub Action de hora em hora
+(crm-sync.yml, 07h–20h seg–sáb); o botão dispara a MESMA Action na hora,
+pelo workflow_dispatch da API do GitHub.
+
+O 🔄 agora fica ao lado do carimbo "To Do há X min" no rodapé da barra
+(pintado pelo montarSidebar, não pelo render — pegadinha que derrubou o
+teste). Precisa de um token fino do GitHub (só o repositório, permissão
+Actions: Read and write), pedido UMA vez por prompt e guardado em
+config_app na chave gh_token, valendo para a equipe toda; 401/403 apaga
+o token e pede outro no próximo clique. Aceito o disparo (204), o botão
+vira ⏳ e espiarSync confere todo_sync_em a cada 30 s; carimbo avançou =
+carregar() + montarSidebar() + render() e aviso "To Do sincronizado ✔".
+Sem confirmação em 15 min, desiste e manda olhar a aba Actions. Teste
+sync-agora.js, 7 provas (workflow certo, token recusado esquecido, ⏳,
+recarga com carimbo novo); suíte 39 arquivos.
+
+PENDENTE DO PAULO: criar o token em github.com → Settings → Developer
+settings → Fine-grained tokens (repositório marketplaceterciniinss,
+Actions: Read and write) e colar no primeiro clique do botão.
+
+# Onde paramos — versão 09.45
+
+## F46 · No Caso completo, o colaborador aparece com nome e cor (09.45)
+
+Pedido do Paulo: no Caso completo, registro vindo do escritório não pode
+sair só com a inicial "P" — tem que levar o nome e a cor do colaborador,
+como na conversa do Escritório.
+
+fatosDoCasoTodo agora carrega quem/avIni/avCor no item do escritório (a
+inicial saiu de dentro do texto, onde vivia como "P: ..."); painelTudo
+passa isso a tlOficial pelos campos em/rot/corAv; e tlOficial ganhou o
+corAv — presente, o avatar sai com a COR do colaborador (sem av-fonte),
+ausente, o selo neutro de fonte de sempre. Marco continua com ⭐ no
+avatar, mas o rot segue sendo o nome. O 📋 copiar em texto sai com
+"[Escritório · Nome]". Três provas novas em paineis.js (16 no total),
+suíte 38 arquivos.
+
+# Onde paramos — versão 09.44
+
+## F45 · Uma estrutura para todas as linhas do tempo + Caso completo primeiro (09.44)
+
+Pedido do Paulo: andamentos do INSS, recursos CRPS e andamentos CNJ na
+mesma estrutura de layout do Escritório, e o Caso completo como a
+primeira tela ao clicar no cliente.
+
+Nasceu tlOficial(itens, vazio), o esqueleto único das linhas do tempo
+oficiais: cada item {q, em, rot, texto, forte, cls, html} vira `li` com
+separador de dia (tl-dia via dataRelativa), selo da fonte (.av-fonte no
+avatar), NOME da fonte + hora (.autor-nome/.tl-hora) e marco destacado
+(li.tudo-marco quando forte). Convertidos: painelINSS (🌻/🏢), Recurso
+CRPS via blocoRecurso (⭐ crps-est, 📄 crps-pdf e caixaResumo
+preservados no html do item), CNJ histórico (⚖️, decisão como marco) e
+caixaPje. O painelTudo também migrou e agora abre com o compositor: o
+composerCaso(k) foi EXTRAÍDO de painelEscritorio e é reusado nos dois.
+
+subAba padrão virou "tudo" e abrirFicha força "tudo" a cada troca de
+cliente — abrir um cliente É abrir o Caso completo, com o compositor em
+cima e a visão inteira embaixo. Teste paineis.js, 13 provas (primeira
+tela, compositor gravando do Tudo, as quatro abas no mesmo esqueleto,
+⭐ preservado, Sentença como marco no Tudo e no CNJ); celular2.js,
+comentarios.js e conversa.js passaram a forçar subAba="escritorio"
+porque testam o painel do Escritório. Suíte 38 arquivos.
+
+# Onde paramos — versão 09.43
+
+## F44 · Toda movimentação do PAT consta em 📣 (09.43)
+
+Pedido do Paulo com captura do PAT: protocolos com "Última Atualização"
+avançando e nada em Novidades. A importação só gerava novidade quando a
+SITUAÇÃO mudava, quando vinha comentário ou agendamento — protocolo que
+se mexeu sem mudar nada disso entrava calado, e a PRIMEIRA situação
+importada também ("primeira vez não é mudança").
+
+Duas regras novas no plano da importação: (1) protocolo casado cujo
+carimbo `atualizado_em` do portal é novo e sem outra novidade na mesma
+rodada entra em `plano.atualizacoes` e vira "INSS · Movimentação no
+protocolo N — situação: X (portal atualizado em TS)", com origem_id
+`atualizacao:{proto}:{carimbo}` (deduplicado pelo banco — importar de
+novo não repete; backfill silencioso de campo NÃO suprime, porque não
+gera linha nenhuma em 📣); (2) a primeira situação vira "INSS ·
+Situação registrada: X". A conferência mostra o contador "movimentações
+p/ 📣" e o botão Aplicar as inclui na conta. Teste pat-novidades.js, 6
+provas direto na função pura do plano + no aplicar; suíte 37 arquivos.
+
+# Onde paramos — versão 09.42
+
+## F43 · A ficha nunca mais fica presa no "abrindo a ficha…" (09.42)
+
+Bug reportado pelo Paulo com captura: clicou num cliente da lista do
+Conselho e a coluna ficou em "abrindo a ficha…" para sempre. O
+placeholder engolia exceções: das seis consultas da abertura, a de
+CREDENCIAIS era a única sem catch — um erro dela rejeitava o
+Promise.all e nada mais acontecia, sem mensagem. E havia uma segunda
+mina, plantada pela F41: o equipeAtiva() passou a incluir ativo NULO,
+então uma linha de colaborador pela metade no banco (sem nome/inicial
+— ex-funcionário, robô antigo) entrava nos chips do composer e
+derrubava a pintura inteira (nome.split de null).
+
+Correção em três camadas: toda perna da abertura com .catch (inclusive
+o fallback do fallback dos andamentos), o corpo inteiro
+busca+pintarFicha num try/catch que vira tela de erro com "↻ tentar de
+novo" e "voltar à lista" (nunca mais falha muda), e equipeAtiva exige
+linha utilizável (ativo!==false && nome && inicial). Teste
+ficha-blindada.js, 4 provas: colaborador quebrado fora dos chips e
+ficha pintando; credenciais em 500 e a ficha abrindo com degradação
+("sem senha"). Suíte 36 arquivos.
+
+# Onde paramos — versão 09.41
+
+## F42 · A CONVERSA DO CASO (09.41)
+
+O salto estrutural pedido pelo Paulo ("100 vezes melhor, layout e
+interação entre colaboradores"). A linha do tempo do escritório deixou
+de ser uma lista zebrada e virou uma conversa de equipe, com a
+assinatura na colaboração: **abrir o caso e ver exatamente o que chegou
+desde a sua última visita**.
+
+A faixa "🔵 N nova(s) para você" abre a conversa, com "✔ marcar todas
+como lidas" (liTudoNaFicha, sobre a andamentos_lidos que já existia);
+cada comentário não lido leva fundo e filete azul, e a fronteira
+"você já tinha visto daqui para baixo" fecha o bloco novo. Dias
+separam a leitura (Hoje/Ontem/data, reuso de dataRelativa). Registro
+de SISTEMA (situação do INSS, 📅 agendamentos, 🗓 vésperas, notícias
+de importação, ✔ prazo cumprido) encolhe para uma linha central
+discreta — MAS volta a cartão cheio se carrega tarefa ou não foi lido
+(função nunca some por estética, ehEventoSistema). Cada comentário
+mostra nome do autor na cor do time + hora; @menções destacadas
+(destacarMencoes, sobre o texto já escapado); 👍 ciente em um toque —
+gravado como resposta só-emoji (zero migração de schema) e agregado
+em chip com as iniciais; ações (👍 ↩ ✕) numa barra revelada no hover,
+sempre visível no celular.
+
+Teste conversa.js, 15 provas; casos2.js ajustado (os `li` estruturais
+tl-dia/tl-sys/tl-fim-novas entram na conta de seletores posicionais);
+suíte 33 arquivos.
+
+**Rodada de endurecimento (mesma 09.41, sem mudança no app):** as duas
+deduções da rubrica da F41 fecharam com prova. celular2.js (7 provas,
+390px): modo celular ativo, faixa do não lido, nada estoura a largura,
+ações sempre visíveis sem hover, marcar-todas tocável (38px) e
+funcionando no toque, composer registrando. extracoes.js (7 provas):
+chip do prazo enquanto digita, data do texto → lembrete do caso, DCB
+16/09 → 2026-09-16 com alarme, protocolo → ficha + índice de pesquisa,
+"documentos solicitados: X; Y" → checklist, perícia citada →
+agendamento. Rubrica: **100/100** nos termos dos 20 critérios. Suíte
+35 arquivos.
+
+## F41 · Anotações e comentários de ponta a ponta (09.40)
+
+Auditoria pedida pelo Paulo com meta de nota (>95/100), depois de olhar
+como To Do, Planner, ADVBOX e Astrea tratam anotação, comentário e
+atribuição. O que mudou, em ordem de peso:
+
+**Um predicado de equipe.** Metade do app filtrava `c.ativo` (some quem
+tem ativo NULO) e a outra metade `ativo!==false`. Agora existe
+`equipeAtiva()` e toda superfície usa a mesma régua — colaborador com
+cadastro incompleto não desaparece mais de metade das telas.
+
+**A mesma linguagem em toda superfície de atribuição.** A anotação do
+atendimento trocou o select de UMA pessoa pelos chips de iniciais do
+composer, com multi-atribuição (`nota.atribuidos`, retrocompatível com
+`atribuido`), atalhos Hoje/Amanhã/+7 e a regra do composer para o
+lembrete: sem responsável marcado, o lembrete é de quem escreveu (um
+lembrete POR responsável quando há vários). A nota grava `autor_id`
+(o ✕ de apagar não depende mais do primeiro nome).
+
+**👥 todos em um clique** no TAREFA PARA do composer, no ＋ do
+comentário, no 📌 seguimento e no atendimento — uma tarefa por
+colaborador ativo (padrão Astrea de distribuir para a equipe).
+
+**↩ responder em qualquer comentário** (padrão Planner Task chat): o
+clique arma `responde_a`, um chip "respondendo a …" aparece sobre o
+composer (cancelável) e a resposta entra ANINHADA no comentário
+original — o mesmo canal que a conclusão de tarefa já usava. Trocar de
+ficha desarma.
+
+**@ com menu** na barra do composer: lista a equipe, insere @Primeiro
+e a menção nasce no Registrar. E @Fulano que não é ninguém da equipe
+AVISA em vez de morrer calado. O +7 dias entrou no LEMBRAR EM (o
+tfDia já entendia "7"; faltava o botão).
+
+**Frases prontas voltaram a nascer**: a criação estava morta (o input
+nf-texto não existia em tela nenhuma) — agora vive no painel de
+sugestões, Enter salva para toda a equipe.
+
+**Código morto removido**: o fluxo ENCAMINHAR inteiro (caixa nunca
+renderizada, botões nunca emitidos — o 📌 seguimento da F40 o
+substitui), menuLembrar e salvarPrazo. Na remoção, semMarcador/
+emItens/alternarFrase foram restauradas (eram vizinhas vivas).
+
+Nota da rubrica (20 critérios × 5): **98/100** — deduções em A5
+(extrações DCB/protocolo sem teste novo dedicado) e D4 (sem teste
+mobile dedicado às superfícies alteradas). Teste comentarios.js, 22
+provas; precaso.js atualizado para os chips; suíte 32 arquivos.
+
+## F40 · Nada da importação entra calado (09.39)
+
+O caso real que motivou: novidade do INSS, o CRM perguntou "é o mesmo
+caso?", a resposta foi sim — e o julgamento agendado (24/08/26 14:20)
+não apareceu em 📣 Novidades. Três portas vazavam: o "é o mesmo —
+juntar" e o "é outro — criar" deixavam comentários e agendamentos do
+protocolo "para a próxima importação" (agora `ingerirDetalheNoCaso`
+puxa tudo na hora, com dedupe pelo banco), e todo agendamento gravava
+o evento na aba 🩺 sem linha em 📣 (agora cada evento importado tem a
+sua novidade "📅 ... agendado para ..."). As novidades novas entram em
+`D.novid` na memória (`novidadeNaMemoria`) — sem F5.
+
+No 📌 dar seguimento (agora com esse NOME no botão das novidades):
+`eventoNoTexto` reconhece julgamento e data com ano de 2 dígitos;
+LEMBRAR vem sugerido para o dia seguinte útil quando é julgamento
+(conferir o resultado), com atalhos véspera / dia seguinte / 3 dias
+úteis antes ancorados NA DATA DO EVENTO (os antigos eram relativos a
+hoje); e a linha ⏰ PRAZO recebe a data fatal, prefixa a anotação
+"[PRAZO DD.MM.AAAA]" e manda o caso para 🗓 Tarefas com Prazo (mesmo
+canal da F38). Concordância por tipo (`evFem`): "o julgamento foi
+agendado", "a perícia foi agendada". E o 📋 copia o nome do cliente na
+ficha e na linha da novidade. Teste novidades.js, 16 provas; suíte 31
+arquivos.
+
+## F39 · A pesquisa não prende mais o menu (09.38)
+
+Com uma busca ativa, clicar em qualquer lista ou visão da barra lateral
+não ia: o clique trocava a `visao`, mas o render() via `buscaTxt`
+preenchido e repintava a pesquisa por cima — era preciso clicar no ✕
+antes de conseguir sair. Agora um helper único (`limparBusca()`) zera
+`buscaTxt`, esvazia os DOIS campos (desktop e celular) e esconde os
+DOIS ✕; ele roda no clique de `.lista-item`, no ＋ Novo cliente e no
+`irCel` da barra do celular (que já limpava o texto, mas deixava o ✕
+aceso — corrigido de carona). O ✕ continua funcionando como antes.
+Teste pesquisa.js, 13 provas; suíte 30 arquivos.
+
+## F38 · Tarefas com Prazo no CRM e o deferido que continua (09.37)
+
+Prazo processual não se perde: a anotação do caso marcada com ⏰ exige a
+DATA FATAL, sai prefixada "[PRAZO DD.MM.AAAA]" na linha do tempo e move
+o caso para 🗓 Tarefas com Prazo (fase outro + mover_para, o mesmo
+canal do select — o To Do acompanha quando o ESCREVER_TODO ligar),
+guardando a lista de origem em ronda.prazo_de (JSONB existente, sem
+migração). A lista 🗓 ordena os GRUPOS pela menor data fatal. O "✔
+prazo cumprido" propõe devolver à lista de ORIGEM já selecionada, com
+seletor para trocar (decisão do Paulo), limpa o prazo e registra
+"[PRAZO CUMPRIDO]". E a janela do Encerrar ganhou o terceiro caminho
+"⚖️ Gerou — e o processo CONTINUA (cumprimento de sentença)": lança os
+honorários em Pagamentos, grava o resultado e o marco [DECISÃO] SEM
+mudar a fase — o caso segue em Judicial. Teste prazos.js, 16 provas;
+suíte 29 arquivos.
+
+## F37 · A ficha do caso com fundo próprio (09.36)
+
+Pedido do Paulo (com captura): a grade de fatos (espécie, protocolo,
+NB, DER, DIB, decisão, responsável, documentos solicitados) agora tem
+fundo azulado (--azul-fundo, token que já existia) — dado oficial num
+tom, conversa dos andamentos em branco. Só CSS (.fx, .fatos-pe,
+.fx-prorrog). Alternativas creme e cinza apresentadas em
+f37-opcoes.html; trocar é um token.
+
+## F36 · De Lembretes também se gera o caso (09.35)
+
+O lembrete que nasceu de um atendimento (origem precaso) tem agora DOIS
+botões: "↺ voltar ao atendimento" e "Gerar o caso". Gerar dali reativa o
+pré-caso e segue o MESMO gerarCasoDoPre da mesa — com três melhorias que
+valem para os dois caminhos: a via da incapacidade é exigida pela
+própria função (não só pelo botão), o lembrete de origem se desativa ao
+gerar (o acompanhamento acabou — existe caso), e sem o select da mesa a
+fase sai da via (adm→inss, jud→petição inicial), nunca "escritorio".
+
+## REGRA PERMANENTE · A REGRA DA VOLTA (decisão do Paulo, 16.08.2026)
+
+**Toda transição do CRM precisa do caminho de volta — por erro ou por
+vontade. Toda atualização futura nasce pensando no "voltar/desfazer".**
+
+## F35 · A regra da volta, aplicada ao sistema inteiro (09.34)
+
+Auditoria completa das transições. Já tinham volta: passos e porta da
+triagem (clique alterna), reabrir triagem (F30), caso ↔ atendimento
+(F34 + Gerar o caso), concluir tarefa com desfazer (F12), mover de
+lista, importante/urgente, checklist de nota, apagar andamento e anexo
+(autor). Cinco NÃO tinham e ganharam: (1) caso encerrado se REABRE — o
+↺ ao lado do carimbo devolve à lista de origem, limpa resultado e
+registra quem reabriu ([DECISÃO] na linha do tempo; honorários lançados
+ficam); (2) "Somente gerar lembrete" se desfaz — "↺ voltar ao
+atendimento" na aba Lembretes (e no card): o pré-caso volta à mesa e o
+lembrete se desativa; (3) pré-caso tirado vai à lixeira
+(campos.pc_lixeira) e a mesa oferece "↺ restaurar"; (4) "entregue"
+marcado por engano se desmarca no clique (chip avisa); (5) anotação do
+atendimento e registro avulso do PRÓPRIO autor se apagam (só o autor vê
+o ×). Sem volta consciente, anotado como pendência: fundir casos
+(reversão exigiria snapshot do estado anterior). Teste desfazer.js, 17
+provas; suíte 28 arquivos.
+
+## F34 · O caminho de volta — caso que não é caso vira atendimento (09.33)
+
+O diagnóstico: a migração antiga transformou as tarefas da lista 🙋
+Escritório em CASOS, mas quem está ali é cliente em NEGOCIAÇÃO (atrás de
+documento), sem caso. Desde a 08.99 o migrar.py não cria mais caso para
+tarefa nova dessa lista (vira anotação no cadastro); faltava desfazer os
+657 legados. O que entrou: botão "↩ não é caso" ao lado do Encerrar
+(qualquer caso ativo) e o lote "converter todos" no cabeçalho da lista
+Escritório (decisão do Paulo: todos de uma vez). A conversão é o inverso
+do gerarCasoDoPre: andamentos → anotações com o MESMO id (o id que o
+migrar.py usa no dedupe — a sync substitui em vez de duplicar), tarefas
+abertas → docs_pedidos no formato da sync (id = caso), anexos → cadastro,
+benefício → pré-caso (id derivado do caso: reconverter não duplica), e o
+caso é APAGADO — o que faz a sincronização passar a alimentar as
+anotações do cliente (o migrar só trata como caso o que JÁ existe no
+banco; a tarefa no To Do fica intacta). Perícia e pagamento (caso_id NOT
+NULL) travam a conversão com aviso. Cliente convertido fica 🟡 em
+atendimento com Anotações abertas. Teste conversao.js, 17 provas; suíte
+27 arquivos. IMPORTANTE ao rodar o lote em produção: são ~657 casos,
+alguns minutos de conversão com avisos de progresso a cada 25.
+
+## F33 · A lista de documentos nasce fechada (09.32)
+
+O bloco "2 · Documentos que o cliente vai trazer" do fluxo virou
+`<details>` fechado: só o título com o resumo (quantos itens, quantos
+já pedidos) fica à vista, e o clique abre a lista — tela mais limpa,
+pedido do Paulo. O summary carrega a classe `.rotulo-caso` para a
+prova de ordem do fluxo continuar valendo.
+
+## F32 · O CPF é a chave, conferido enquanto se digita (09.31)
+
+Na tela da recepção, o CPF digitado responde na hora, logo abaixo do
+campo: já cadastrado mostra "⚠ Este CPF já é de <Nome> · N processo(s)
+— não cadastre de novo" com o botão "Abrir o cadastro" (mesmo com o
+nome escrito diferente, o CPF vincula — a regra do Paulo); válido e
+livre ganha o ✓ verde; dígito verificador errado avisa e o submit barra
+(cpfValido = módulo 11 + exclusão de dígitos repetidos). Cadastrar sem
+CPF continua permitido, para nunca travar o balcão. A janela de CPF
+repetido no submit segue como segunda trava (confere também o banco).
+
+## F31 · Documentos no fluxo e Consulta dentro de Documentos (09.30)
+
+A procuração, a declaração de pobreza, o contrato e o resto da
+`caixaDocumentos` aparecem LOGO ABAIXO do "Gerar o caso", no fim do
+fluxo do atendimento: quem está gerando imprime ali mesmo, colhe a
+assinatura e clica, sem trocar de tela. `especieDoCliente` ganhou o
+fallback do pré-caso vivo (o contrato do fluxo sai na variante certa —
+antes sairia no padrão). O menu Documentos incorporou a Consulta
+(pedido do Paulo): um painel só com documentos para assinar, catálogo
+do INSS e os portais com CPF; o botão Consulta saiu do trilho
+(`irSubCad("consulta")` mapeia para "documentos") e a visibilidade de
+Documentos passou ao portão da triagem (triada OU com caso — o botão
+carrega a Consulta, que já era desse portão). Suíte: 26 arquivos,
+fluxo.js com 31 provas.
+
+## F30 · O Atendimento virou FLUXO (09.29)
+
+A ordem do Paulo, na tela: 1) espécie (select com "outros — escrever")
+e natureza concessão/revisão/acerto, com a via administrativa ou
+judicial OBRIGATÓRIA nos benefícios por incapacidade (adm pré-seleciona
+fase INSS e mostra o padrão de 20% sobre as parcelas); 2) documentos que
+o cliente vai trazer; 3) anotações com atribuir/lembrar/anexar (📎 novo
+no compositor); 4) honorários — o padrão do escritório vem da variante
+do CONTRATO (HONOR_RESUMO + cláusula completa num details), e o ajuste
+combinado grava em `campos.honor_ajuste[variante]` e entra no contrato
+impresso como "DISPOSIÇÃO EXPRESSA EM CONTRÁRIO" (textoContrato ganhou o
+parâmetro); 5) decisão por último — Gerar o caso (leva direto ao botão
+Documentos, que só nasce com o caso), Somente gerar lembrete (as
+anotações passam a aparecer na aba Lembretes) ou Não gerar.
+
+O trilho virou máquina de estados: Triagem some quando encerrada (o
+resumo com atenções vira a primeira informação das Anotações, com
+"reabrir triagem" — rastro em triagem.reaberta); Anotações some quando o
+atendimento se resolve; Consulta e Mensagens subiram para o trilho
+principal (anot-trilho morreu; irSubAnot é casca); "+ atendimento"
+(classe .trilho-mais, NUNCA cad-mini) abre pré-caso novo para qualquer
+cliente, inclusive quem já tem caso. Suíte: 26 arquivos, 528 provas
+(fluxo.js com 26).
+
+## F29 · O portão da triagem e a recepção que colhe tudo (09.28)
+
+A tela da recepção colhe também a senha do Meu INSS (POST em credenciais,
+o caminho da ficha, ao lado do CPF), o estado civil e a profissão (a
+procuração precisa) e a cidade/UF com padrão Monte Alto/SP — cliente de
+outra cidade grava a cidade digitada e a lista de CEPs não casa de
+propósito. O portão novo: cliente sem caso e sem triagem encerrada vê SÓ
+o Cadastro, e dentro dele só Identificação e Triagem; `triagemFechada(c)`
+(= `triagemDe(c).atendimento`, que o fecharAtendimento já gravava) abre
+Lembretes e Anotações. Até lá o relato do balcão aparece DENTRO da
+Triagem (`.tri-balcao`), e o pré-caso da recepção já responde a porta
+(familiaDaTriagem lê precasos). Encerrar a triagem sem caso leva direto
+às Anotações recém-abertas. O CNIS anexado preenche sozinho nome da mãe
+e NIT vazios da Identificação (campo preenchido não se toca). Testes:
+novocliente.js 49 provas, pdfinss.js 48; precaso.js e consulta.js
+ganharam a pré-condição do portão na fixtura.
+
+## F28 · A recepção completa: sexo, endereço por CEP e menção da triagem (09.27)
+
+Sexo (Mulher/Homem, valores F/M da coluna `sexo`) entra no cadastro da
+recepção porque decide a data da aposentadoria (o `sexoDe` prefere o
+confirmado ao palpite pelo nome). O endereço sai da lista de 1.048 CEPs de
+Monte Alto (arquivo do Paulo, embutido no app como `CEPS_MONTE_ALTO`): a
+recepção digita a rua, o CEP, o bairro e Monte Alto/SP saem sozinhos, e a
+gravação usa o MESMO `gravarEnderecoCli` da ficha (sete colunas + espelho
+`endereco` da procuração). Rua ambígua (existe em mais de um bairro) exige
+escolher da lista; rua de fora grava como digitada, sem CEP inventado.
+Todo cliente novo dispara menção aos advogados (mesma escolha de ⚙️ do
+aviso de caso novo; quem cadastrou não se avisa) com "dar seguimento na
+triagem" — a menção nasce presa ao cliente (`mencoes.cliente_id`, ALTER
+idempotente acrescentado ao `schema_por_em_dia.sql`; sem rodar o ALTER o
+app cai no fallback e a menção chega só com o texto). A caixa 📥 resolve
+a ficha também por `cliente_id`. Teste `novocliente.js` com 32 provas.
+
+## F27 · Novo Cliente = a tela da recepção (09.26)
+
+Só o nome é obrigatório. O benefício é opcional e, preenchido, vira
+PRÉ-CASO em `campos.precasos` (nunca caso — coerente com a F25: caso é
+procuração + contrato). O relato do balcão é a primeira anotação de
+`campos.atendimento`, com autor, e é ela que põe o cliente 🟡 na lista
+Escritório; a escolha de fase e o agendamento no Google Agenda saíram da
+tela. `clientesEmAtendimento` agora também conta quem só tem pré-caso.
+Depois de cadastrar, a ficha abre direto em Anotações → Atendimento.
+Teste `novocliente.js` (19 provas); suíte com 25 arquivos, 470 verificações.
 
 ## A rodada dos quinze pedidos (F22 a F26)
 
