@@ -1,4 +1,33 @@
-# Onde paramos — 24.08.2026, versão 09.73
+# Onde paramos — 25.08.2026, versão 09.74
+
+## F78 · A causa raiz de verdade: sb_secret_ não vai em Bearer (09.74)
+
+O Paulo testou a chave copiada do painel e o testador respondeu ❌ (401).
+Isso não fechava com a anon do navegador continuar válida (sem rotação
+no projeto, a service verdadeira teria que passar). A documentação
+oficial do Supabase resolveu o enigma: as chaves NOVAS (sb_secret_… e
+sb_publishable_…) não são JWT e vão SÓ no header apikey — postas também
+em "Authorization: Bearer", o gateway tenta ler como JWT e RECUSA a
+requisição inteira com "Invalid API key", mesmo com a chave certa.
+
+O migrar.py (linha ~550) e o ssTestarChave mandavam a chave nos DOIS
+headers. Consequência dupla: se o segredo do GitHub guarda uma
+sb_secret_ válida desde ~22/08, o robô caía por culpa do CÓDIGO, não da
+chave; e o testador do F77 carimbava ❌ em chave boa. Consertados os
+dois no mesmo padrão: apikey sempre; Bearer só quando a chave começa
+com eyJ (legada). O ❌/✅ agora mostram a impressão digital (tamanho e
+10 primeiros caracteres) para conferência sem expor a chave.
+
+De quebra, o novidades.js quebrou sozinho na virada do dia (24→25/08):
+datas ABSOLUTAS na fixture ("24/08/26") viraram passado e o detector,
+correto, parou de criar o evento. Convertido para datas relativas
+(julgamento em dia útil de seg a qui, alguns dias à frente), como o
+resto da suíte. Regra reafirmada: fixture com data é fixture com mais(n).
+
+Suíte: sync72 9/9 (prova nova: sb_secret_ sem Authorization responde ✅;
+mock imita o gateway e recusa sb_ com Bearer); novidades 16/16; 58
+arquivos, 0 falhas. Próximo passo: disparar a sync e ver se o segredo
+atual já era bom (rodada verde encerra a saga sem o Paulo trocar nada).
 
 ## F77 · O testador de chave no 🩺 (09.73)
 

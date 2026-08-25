@@ -10,11 +10,21 @@ const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CASO1 } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
+// datas RELATIVAS (a suíte roda todo dia): julgamento num dia útil de seg a
+// qui, alguns dias à frente — assim o "dia seguinte útil" é o dia corrido
+const iso = d => d.toISOString().slice(0, 10);
+const mais = n => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
+const br = d => iso(d).split("-").reverse().join(".");
+let SALTO = 3; while ([0, 5, 6].includes(mais(SALTO).getDay())) SALTO++;
+const dJul = mais(SALTO), dLem = mais(SALTO + 1), dPrazo = mais(40);
+const curto = br(dJul).slice(0, 6) + iso(dJul).slice(2, 4);   // dd.mm.aa → dd/mm/aa
+const curtoBarra = curto.replace(/\./g, "/");
+
 const NOV = "a0000000-0000-0000-0000-00000000f401";
 FIX.andamentos = FIX.andamentos || [];
 FIX.andamentos.push({ id: NOV, caso_id: CASO1, origem: "pat", origem_id: "novtest",
   criado_em: "2026-08-17T09:00:00Z", andamentos_lidos: [],
-  texto: "Encaminhado para julgamento - Agendado para 24/08/26 14:20 - 25ª Junta de Recursos" });
+  texto: `Encaminhado para julgamento - Agendado para ${curtoBarra} 14:20 - 25ª Junta de Recursos` });
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -57,10 +67,10 @@ FIX.andamentos.push({ id: NOV, caso_id: CASO1, origem: "pat", origem_id: "novtes
   const ok = []; const conf = (n, v) => ok.push([n, !!v]);
 
   // 1) o julgamento com ano de 2 dígitos é reconhecido
-  const ev = await p.evaluate(() =>
-    eventoNoTexto("Encaminhado para julgamento - Agendado para 24/08/26 14:20"));
+  const ev = await p.evaluate(s => eventoNoTexto(s),
+    `Encaminhado para julgamento - Agendado para ${curtoBarra} 14:20`);
   conf("eventoNoTexto lê julgamento com ano de 2 dígitos",
-    ev && ev.tipo === "Julgamento" && ev.data === "2026-08-24" && ev.hora === "14:20");
+    ev && ev.tipo === "Julgamento" && ev.data === iso(dJul) && ev.hora === "14:20");
 
   // 2) a novidade aparece em 📣 com o botão nomeado e o 📋 do nome
   await p.evaluate(() => { visao = "novidades"; render(); });
@@ -79,42 +89,45 @@ FIX.andamentos.push({ id: NOV, caso_id: CASO1, origem: "pat", origem_id: "novtes
   // em si, com a conferência do resultado no dia seguinte
   conf("o modal abre com a anotação pré-escrita em bom português",
     /Julgamento agendado para .* às .*Verificar o resultado/.test(await p.inputValue("#seg-txt")));
-  conf("LEMBRAR já vem sugerido para o dia seguinte útil (25.08)",
-    (await p.inputValue("#seg-data")) === "2026-08-25");
+  conf("LEMBRAR já vem sugerido para o dia seguinte útil ao julgamento",
+    (await p.inputValue("#seg-data")) === iso(dLem));
   conf("os atalhos véspera / dia seguinte existem",
     await p.evaluate(() => [...document.querySelectorAll(".modal-cx .btn-mini")]
       .filter(b => /véspera|dia seguinte/.test(b.textContent)).length >= 2));
   conf("a linha ⏰ PRAZO existe", await p.evaluate(() => !!document.getElementById("seg-prazo")));
 
   // 4) preencher o PRAZO e registrar: anotação [PRAZO] + caso para 🗓
-  await p.fill("#seg-prazo", "2026-09-01");
+  await p.fill("#seg-prazo", iso(dPrazo));
   escritos.length = 0;
   await p.click('.modal-cx button:has-text("Registrar")');
   await p.waitForTimeout(800);
-  const andPrazo = escritos.find(x => x.m === "POST" && x.t === "andamentos" && /\[PRAZO 01\.09\.2026\]/.test(x.corpo.texto || ""));
-  conf("a anotação sai prefixada ⏰ [PRAZO 01.09.2026]", andPrazo);
+  const andPrazo = escritos.find(x => x.m === "POST" && x.t === "andamentos" &&
+    (x.corpo.texto || "").includes(`[PRAZO ${br(dPrazo)}]`));
+  conf("a anotação sai prefixada ⏰ [PRAZO dd.mm.aaaa]", andPrazo);
   const patPrazo = escritos.find(x => x.m === "PATCH" && x.t === "casos" && x.corpo.mover_para === "🗓 Tarefas com Prazo");
   conf("o caso vai para 🗓 Tarefas com Prazo com a data fatal",
-    patPrazo && patPrazo.corpo.prazo === "2026-09-01" && patPrazo.corpo.fase === "outro");
+    patPrazo && patPrazo.corpo.prazo === iso(dPrazo) && patPrazo.corpo.fase === "outro");
 
   // 5) o "é o mesmo — juntar" ingere AGORA comentários e agendamentos
   escritos.length = 0;
   const antesNovid = await p.evaluate(() => (D.novid || []).length);
-  await p.evaluate(([caso]) => {
+  await p.evaluate(([caso, dataJul]) => {
     arquivoPat = { detalhes: [{ protocolo: "9990001", situacao: "Em análise",
       comentarios: [{ id: "cm1", quando: "2026-08-16", do_inss: true, texto: "<p>Agendado julgamento do recurso</p>" }],
-      eventos: [{ tipo: "Julgamento", ativo: true, data: "2026-08-24", hora: "14:20", local: "25ª Junta" }] }] };
+      eventos: [{ tipo: "Julgamento", ativo: true, data: dataJul, hora: "14:20", local: "25ª Junta" }] }] };
     planoPat = { possiveisDuplicados: [{ protocolo: "9990001", caso_id: caso,
       situacao: "Em análise", link: null, der: null, especie: null }], resumo: {} };
     return juntarAoCaso("9990001");
-  }, [CASO1]);
+  }, [CASO1, iso(dJul)]);
   await p.waitForTimeout(800);
   const comIng = escritos.find(x => x.m === "POST" && x.t === "andamentos" && /Agendado julgamento do recurso/.test(x.corpo.texto || ""));
   conf("o comentário da coleta entra na hora (não na próxima importação)",
     comIng && comIng.corpo.origem === "pat" && comIng.corpo.origem_id === "cm1");
   conf("o agendamento vira evento na aba 🩺",
-    escritos.some(x => x.m === "POST" && x.t === "eventos" && /2026-08-24T14:20/.test(x.corpo.data_hora || "")));
-  const evNov = escritos.find(x => x.m === "POST" && x.t === "andamentos" && /📅 Julgamento agendado no INSS para 24\.08\.2026 às 14:20/.test(x.corpo.texto || ""));
+    escritos.some(x => x.m === "POST" && x.t === "eventos" &&
+      (x.corpo.data_hora || "").includes(iso(dJul) + "T14:20")));
+  const evNov = escritos.find(x => x.m === "POST" && x.t === "andamentos" &&
+    (x.corpo.texto || "").includes(`📅 Julgamento agendado no INSS para ${br(dJul)} às 14:20`));
   conf("o agendamento também vira linha em 📣 (com concordância certa)", evNov);
   const notícia = escritos.find(x => x.m === "POST" && x.t === "andamentos" && /juntado a este caso/.test(x.corpo.texto || ""));
   conf("a notícia do juntar conta o que entrou",

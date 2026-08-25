@@ -548,7 +548,12 @@ def _rest(url, chave, metodo, caminho, corpo=None, prefer=None):
         data=json.dumps(corpo).encode() if corpo is not None else None,
         method=metodo,
         headers={
-            "apikey": chave, "Authorization": f"Bearer {chave}",
+            # A chave nova do Supabase (sb_secret_…/sb_publishable_…) NÃO é
+            # JWT: mandada em Authorization, o gateway tenta ler como JWT e
+            # recusa TUDO com "Invalid API key". Ela vai SÓ no apikey; apenas
+            # a chave legada (eyJ…) vai também como Bearer.
+            "apikey": chave,
+            **({"Authorization": f"Bearer {chave}"} if chave.startswith("eyJ") else {}),
             "Content-Type": "application/json",
             **({"Prefer": prefer} if prefer else {}),
         },

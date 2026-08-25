@@ -104,9 +104,15 @@ FIX.config_app = [{ chave: "gh_token", valor: "ghp_ficticio" },
     await p.evaluate(() => ssTestarChave()); await p.waitForTimeout(400);
     return p.evaluate(() => document.getElementById("ss-chave-r").textContent); };
   await ctx.route(SUPA + "/rest/v1/config_app*", rota => {
-    const k = rota.request().headers()["apikey"] || "";
-    if (k === "chave-service") return rota.fulfill({ status: 200,
-      contentType: "application/json", body: JSON.stringify([{ chave: "x" }]) });
+    const h = rota.request().headers(), k = h["apikey"] || "";
+    // como o gateway real: chave não-JWT em Authorization = recusa geral
+    // (F78 — era isso que derrubava a sync e dava ❌ em sb_secret_ boa)
+    if (k.startsWith("sb_") && h["authorization"])
+      return rota.fulfill({ status: 401, contentType: "application/json",
+        body: JSON.stringify({ message: "Invalid API key" }) });
+    if (k === "chave-service" || k === "sb_secret_boa")
+      return rota.fulfill({ status: 200,
+        contentType: "application/json", body: JSON.stringify([{ chave: "x" }]) });
     if (k === "chave-anon") return rota.fulfill({ status: 200,
       contentType: "application/json", body: "[]" });
     return rota.fulfill({ status: 401, contentType: "application/json",
@@ -114,10 +120,14 @@ FIX.config_app = [{ chave: "gh_token", valor: "ghp_ficticio" },
   });
   conf("testador: a service key responde VÁLIDA com força de service",
     /VÁLIDA e com força de service/.test(await testar("chave-service")));
+  conf("F78: a sb_secret_ vai SÓ no apikey e responde VÁLIDA (antes dava ❌)",
+    /VÁLIDA e com força de service/.test(await testar("sb_secret_boa")));
   conf("testador: a anon é apontada como sem força de service",
     /anon\/publishable/.test(await testar("chave-anon")));
-  conf("testador: chave estranha responde INVÁLIDA e o campo esvazia",
+  conf("testador: chave estranha responde INVÁLIDA com a impressão digital",
     /INVÁLIDA/.test(await testar("chave-qualquer")) &&
+    await p.evaluate(() => /14 caracteres/.test(
+      document.getElementById("ss-chave-r").textContent)) &&
     await p.evaluate(() => document.getElementById("ss-chave").value === ""));
 
   console.log("=== F72 · o 🩺 da sincronização ===");
