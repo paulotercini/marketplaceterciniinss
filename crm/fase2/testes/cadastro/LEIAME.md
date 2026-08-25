@@ -814,3 +814,17 @@ E a lição do novidades.js: fixture com data ABSOLUTA apodrece na virada
 do dia (o "24/08/26" virou passado e o detector, certo, ignorou).
 Fixture com data usa mais(n)/iso()/br() — julgamento cai em dia útil de
 segunda a quinta para o "dia seguinte útil" ser o dia corrido.
+
+## F78 (desfecho) — o shadowing que derrubou a sync por 3 dias
+
+Dentro de subir_rest do migrar.py, `chave` É A SERVICE KEY e `url` é o
+banco. Loop novo com `for chave in (...)` sombreou a variável: depois
+dele, chave = "tarefas" (7 letras) e todo _rest seguinte tomou 401
+"Invalid API key" — o erro do banco aponta para credencial e NINGUÉM
+suspeita de variável pisoteada. Regra: nunca reusar os nomes chave/url
+em subir_rest (o local do conserto tem comentário-trava; auditoria
+rápida: `grep -n "for chave" migrar.py` e reatribuições de chave/url).
+Diagnóstico que desmascarou: fingerprint no 401 (tamanho+formato) versus
+job-sonda no MESMO run — valores diferentes = o lixo nasce dentro do
+job, não no segredo. O log acusar a falha em tabela que NÃO é a primeira
+chamada do script também denuncia chamador específico, não credencial.
