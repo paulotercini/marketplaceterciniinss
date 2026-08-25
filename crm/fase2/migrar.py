@@ -684,9 +684,14 @@ def subir_rest(mapa):
                 unico = quantos.get(pg.get("cliente_id"), 0) == 1
                 pg["caso_id"] = destino[pg["caso_id"]] if unico else None
         soltos = 0
-        for chave in ("andamentos", "eventos", "tarefas"):
+        # F78, a CAUSA RAIZ da sincronização caída desde 22/08: este loop se
+        # chamava "for chave in (...)" e SOMBREAVA a variável `chave` com a
+        # service key do Supabase — depois dele, chave = "tarefas" (7 letras)
+        # e todo _rest seguinte tomava 401 "Invalid API key". Nunca reusar o
+        # nome `chave` (nem `url`) dentro de subir_rest.
+        for chave_m in ("andamentos", "eventos", "tarefas"):
             mantidos = []
-            for linha in mapa.get(chave, []):
+            for linha in mapa.get(chave_m, []):
                 if linha.get("caso_id") in destino:
                     alvo = destino[linha["caso_id"]]
                     if not alvo:            # cliente sem nenhum outro caso
@@ -694,7 +699,7 @@ def subir_rest(mapa):
                         continue
                     linha["caso_id"] = alvo
                 mantidos.append(linha)
-            mapa[chave] = mantidos
+            mapa[chave_m] = mantidos
         mapa["casos"] = [k for k in mapa["casos"] if k["id"] not in novos_pgto]
         print(f"  💵 Pagamentos: {len(novos_pgto)} tarefa(s) sem caso próprio — "
               "as parcelas vão para a aba do cliente"
