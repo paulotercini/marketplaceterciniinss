@@ -570,6 +570,16 @@ def _rest(url, chave, metodo, caminho, corpo=None, prefer=None):
         detalhe = e.read().decode("utf-8", "replace")[:500]
         tabela = caminho.split("?")[0].rsplit("/", 1)[-1]
         recado = f"o banco recusou {metodo} em '{tabela}' ({e.code}): {detalhe}"
+        if e.code == 401:
+            # diagnóstico sem expor a chave: separa chave errada, URL errada
+            # e lixo colado no segredo (espaço, aspas, quebra de linha)
+            fmt = ("legada (eyJ…)" if chave.startswith("eyJ")
+                   else "nova (sb_…)" if chave.startswith("sb_")
+                   else "IRRECONHECÍVEL (não começa com eyJ nem sb_)")
+            ref = url.split("//")[-1].split(".")[0]
+            recado += (f"\nchave usada: {len(chave)} caracteres, formato {fmt}; "
+                       f"projeto alvo: {ref} — confira com o testador do 🩺 "
+                       "e confira também o segredo SUPABASE_URL.")
         if "PGRST204" in detalhe or "does not exist" in detalhe or "schema cache" in detalhe:
             recado += ("\nFalta coluna no banco: rode crm/fase2/schema_por_em_dia.sql "
                        "no Supabase e tente de novo.")
@@ -592,8 +602,8 @@ def _rest_todas(url, chave, caminho, pagina=1000):
 
 
 def subir_rest(mapa):
-    url = os.environ.get("SUPABASE_URL")
-    chave = os.environ.get("SUPABASE_SERVICE_KEY")
+    url = (os.environ.get("SUPABASE_URL") or "").strip()
+    chave = (os.environ.get("SUPABASE_SERVICE_KEY") or "").strip()
     if not url or not chave:
         sys.exit("Defina SUPABASE_URL e SUPABASE_SERVICE_KEY (ver COMO-INSTALAR.md).")
 
