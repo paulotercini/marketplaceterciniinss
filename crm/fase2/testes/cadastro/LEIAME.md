@@ -787,3 +787,14 @@ timestamp ISO na frente e marcadores ##[group]/##[error] — o filtro
 tira o timestamp, descarta ##[group] e transforma ##[error] em ⛔ (senão
 o exit code sumia). O migrar.py imprime o diagnóstico no stdout do
 passo; o traceback fica nas últimas linhas.
+
+## F77 — o testador de chave
+
+ssTestarChave() usa a chave COLADA como apikey e Bearer num GET de
+config_app. O truque do veredito é a RLS: a service key enxerga as
+linhas (200 com corpo), a anon toma RLS e recebe 200 VAZIO — por isso
+"200 e vazio" = anon/publishable, não sucesso. A chave nunca é gravada
+(nem localStorage, nem banco); o campo esvazia no finally do fluxo. No
+teste, o mock decide pelo header apikey (ctx.route de config_app*
+registrado DEPOIS do route geral do SUPA — o Playwright dá precedência
+ao registrado por último).
