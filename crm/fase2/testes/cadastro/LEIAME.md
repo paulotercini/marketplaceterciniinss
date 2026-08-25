@@ -798,3 +798,19 @@ linhas (200 com corpo), a anon toma RLS e recebe 200 VAZIO — por isso
 teste, o mock decide pelo header apikey (ctx.route de config_app*
 registrado DEPOIS do route geral do SUPA — o Playwright dá precedência
 ao registrado por último).
+
+## F78 — chave nova do Supabase não vai em Bearer
+
+Doc oficial (migrating-to-new-api-keys): sb_secret_/sb_publishable_ NÃO
+são JWT — vão SÓ no header apikey; em "Authorization: Bearer" o gateway
+tenta ler como JWT e recusa TUDO com "Invalid API key", mesmo com a
+chave certa. Padrão único no migrar.py (_rest) e no ssTestarChave:
+apikey sempre, Bearer só quando a chave começa com eyJ. Qualquer código
+novo que fale com o Supabase usando a service key segue a mesma regra.
+No teste, o mock do gateway recusa apikey sb_* acompanhada de header
+authorization — se alguém reintroduzir o Bearer, a prova cai.
+
+E a lição do novidades.js: fixture com data ABSOLUTA apodrece na virada
+do dia (o "24/08/26" virou passado e o detector, certo, ignorou).
+Fixture com data usa mais(n)/iso()/br() — julgamento cai em dia útil de
+segunda a quinta para o "dia seguinte útil" ser o dia corrido.
