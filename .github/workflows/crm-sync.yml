@@ -11,6 +11,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Sonda do diagnóstico F78: mede em SEGUNDOS o segredo tal como ESTE
+  # workflow o recebe (job separado, log disponível de imediato).
+  sonda:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+    steps:
+      - name: Sonda do segredo
+        run: |
+          python3 - << 'FIM'
+          import os
+          k = (os.environ.get("SUPABASE_SERVICE_KEY") or "").strip()
+          fmt = "eyJ" if k.startswith("eyJ") else ("sb_" if k.startswith("sb_") else "outro")
+          print(f"sonda: chave com {len(k)} caracteres, formato {fmt}")
+          FIM
+
   sincronizar:
     runs-on: ubuntu-latest
     timeout-minutes: 30
