@@ -26,7 +26,7 @@ const det = (o) => ({ protocolo: o.protocolo, situacao: o.situacao || 'Em análi
   tipo: o.tipo || 'beneficio', especie: o.especie || null, beneficio: o.beneficio || 'X',
   der: o.der || '2026-07-01', link: `https://atendimento.inss.gov.br/tarefas/detalhar_tarefa/${o.protocolo}`,
   marcadores: o.marcadores || [], urgente: !!o.urgente, eventos: o.eventos || [],
-  comentarios: o.comentarios || [] });
+  comentarios: o.comentarios || [], atualizado_em: o.atualizado_em || null });
 
 test('protocolo que já existe atualiza o caso, não cria outro', () => {
   const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
@@ -180,12 +180,55 @@ test('andamento só quando a situação MUDA', () => {
   assert.match(p2.atualizar[0].andamento, /Em análise → Em exigência/);
 });
 
-test('a primeira importação não inventa mudança de situação', () => {
+// F44 · antes o primeiro import da situação entrava CALADO — o caso ganhava
+// "Em exigência" no banco e nada aparecia em 📣. Agora ele se anuncia, mas
+// como REGISTRO, não como seta de mudança: não houve situação anterior e
+// inventar uma ("null → Em exigência") seria mentir sobre o histórico.
+test('a primeira situação é registrada, não vira seta de mudança', () => {
   const D = CRM();
   delete D.casos[0].situacao_inss;
   const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
                 detalhes: [det({ protocolo: '1462069078', situacao: 'Em exigência' })] };
-  assert.ok(!(I.planoDeImportacao(pat, D, HOJE).atualizar[0] || {}).andamento);
+  const and = I.planoDeImportacao(pat, D, HOJE).atualizar[0].andamento;
+  assert.match(and, /Situação registrada: Em exigência/);
+  assert.ok(!/→/.test(and), 'sem situação anterior não pode haver seta');
+});
+
+// ── a movimentação sem novidade visível (F44) ─────────────────────────────
+// O portal avança a "última atualização" do requerimento sem mudar situação,
+// sem comentário e sem agendamento. Isso é movimentação real — quem olha o
+// PAT vê a data mudar — e entrava calada no CRM.
+test('protocolo que só mudou de carimbo vira novidade própria', () => {
+  const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
+    detalhes: [det({ protocolo: '1462069078', atualizado_em: '2026-08-08 14:32' })] };
+  const p = I.planoDeImportacao(pat, CRM(), HOJE);
+  assert.equal(p.atualizacoes.length, 1);
+  assert.equal(p.atualizacoes[0].caso_id, 'k1');
+  assert.equal(p.resumo.movimentacoes, 1);
+  // preencher campo vazio (o backfill de benefício e DER) não é novidade e
+  // não gera linha em 📣 — por isso NÃO suprime a movimentação
+  assert.ok(!p.atualizar[0].andamento, 'backfill de campo não é andamento');
+});
+
+// Importar o mesmo arquivo duas vezes é rotina no escritório. Se o carimbo
+// já virou andamento, ele não pode virar de novo.
+test('a mesma movimentação não volta na importação seguinte', () => {
+  const D = CRM();
+  D.andamentos = [{ caso_id: 'k1', origem_id: 'atualizacao:1462069078:202608081432' }];
+  const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
+    detalhes: [det({ protocolo: '1462069078', atualizado_em: '2026-08-08 14:32' })] };
+  assert.equal(I.planoDeImportacao(pat, D, HOJE).atualizacoes.length, 0);
+});
+
+// Quando OUTRA novidade já conta a história, a movimentação genérica é ruído:
+// o escritório leria duas linhas em 📣 para o mesmo fato.
+test('movimentação não duplica novidade que já tem motivo', () => {
+  const pat = { lista: [{ protocolo: '1462069078', cpf: '11111111111' }],
+    detalhes: [det({ protocolo: '1462069078', situacao: 'Em exigência',
+                     atualizado_em: '2026-08-08 14:32' })] };
+  const p = I.planoDeImportacao(pat, CRM(), HOJE);
+  assert.match(p.atualizar[0].andamento, /Em análise → Em exigência/);
+  assert.equal(p.atualizacoes.length, 0);
 });
 
 // ── a conferência antes de gravar ─────────────────────────────────────────
@@ -200,8 +243,8 @@ test('o plano de um arquivo real passa na conferência', () => {
   assert.equal(I.conferirPlanoPat(pat, p), null);
   assert.deepStrictEqual(p.resumo,
     { lidos: 4, atualizar: 1, novos: 1, possiveis_duplicados: 0, provaveis: 0, sem_cliente: 1,
-      ignorados: 1, eventos: 0, comentarios: 0, exigencias: 0, apuracoes: 0,
-      a_confirmar: 0, novos_por_tipo: { recurso: 1 } });
+      ignorados: 1, eventos: 0, comentarios: 0, movimentacoes: 0, exigencias: 0,
+      apuracoes: 0, a_confirmar: 0, novos_por_tipo: { recurso: 1 } });
 });
 
 test('a conferência barra plano que manda recurso para a lista errada', () => {
