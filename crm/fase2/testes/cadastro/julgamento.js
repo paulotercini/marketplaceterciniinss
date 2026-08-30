@@ -8,8 +8,19 @@ const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CASO1, EU } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
-const TXT_JULG = "Sessão de julgamento agendada para 25/08/26 09:20 na 25ª Junta de Recursos.";
-const TXT_PERI = "Perícia médica agendada para 28/08/2026 14:00 na APS local.";
+// datas RELATIVAS, a mesma lição do novidades.js: com data fixa esta prova
+// passa na semana em que foi escrita e apodrece na virada do mês — o
+// detector, CERTO, ignora agendamento no passado. O julgamento cai num dia
+// útil de segunda a quinta para que o "dia útil seguinte" seja o dia corrido.
+const iso = d => d.toISOString().slice(0, 10);
+const mais = n => { const d = new Date(); d.setDate(d.getDate() + n); return d; };
+const br = d => iso(d).split("-").reverse().join(".");
+let SALTO = 3; while ([0, 5, 6].includes(mais(SALTO).getDay())) SALTO++;
+const dJul = mais(SALTO), dLem = mais(SALTO + 1), dPeri = mais(SALTO + 3);
+const curtoJul = br(dJul).slice(0, 6).replace(/\./g, "/") + iso(dJul).slice(2, 4);
+
+const TXT_JULG = `Sessão de julgamento agendada para ${curtoJul} 09:20 na 25ª Junta de Recursos.`;
+const TXT_PERI = `Perícia médica agendada para ${br(dPeri).replace(/\./g, "/")} 14:00 na APS local.`;
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -56,11 +67,11 @@ const TXT_PERI = "Perícia médica agendada para 28/08/2026 14:00 na APS local."
   await p.waitForTimeout(300);
   const txt = await p.evaluate(() => document.getElementById("seg-txt").value);
   conf("o texto é o agendamento em si, com dia e hora",
-    /Julgamento agendado para 25\.08\.2026 às 09:20/.test(txt) && /Verificar o resultado/.test(txt));
+    new RegExp(`Julgamento agendado para ${br(dJul)} às 09:20`).test(txt) && /Verificar o resultado/.test(txt));
   conf("nada de 'avisar para preparação' em julgamento",
     !/prepara/i.test(txt) && !/Avisar/i.test(txt));
   conf("a data de lembrar já vem no dia útil SEGUINTE ao julgamento",
-    (await p.evaluate(() => document.getElementById("seg-data").value)) === "2026-08-26");
+    (await p.evaluate(() => document.getElementById("seg-data").value)) === iso(dLem));
   conf("a atribuição padrão é do Paulo (admin), com o chip já marcado",
     await p.evaluate(id => segAberto.quem.has(id) &&
       document.querySelector(`.seg-quem[data-col="${id}"]`).classList.contains("on"), EU));
@@ -75,23 +86,23 @@ const TXT_PERI = "Perícia médica agendada para 28/08/2026 14:00 na APS local."
     escritos.some(x => x.t === "andamentos" && /Julgamento agendado/.test(x.corpo.texto || "")) &&
     escritos.some(x => x.t === "eventos" && x.corpo.tipo === "Julgamento"));
   conf("a tarefa de conferir nasce no dia seguinte, para o admin",
-    escritos.some(x => x.t === "andamento_tarefas" && x.corpo.lembrar_em === "2026-08-26" &&
+    escritos.some(x => x.t === "andamento_tarefas" && x.corpo.lembrar_em === iso(dLem) &&
       x.corpo.colaborador_id === EU));
   conf("nenhuma véspera nasce no julgamento",
     !escritos.some(x => x.t === "andamentos" && /Véspera/.test(x.corpo.texto || "")));
 
   // 3) o 1 clique (aplicarPericia) com julgamento: mesmo comportamento
   escritos.length = 0;
-  await p.evaluate(() => { D.eventos = []; });   // o passo 2 já tinha agendado 25/08
+  await p.evaluate(() => { D.eventos = []; });   // o passo 2 já tinha agendado o julgamento
   const r = await p.evaluate(([caso, tx]) =>
     aplicarPericia({ casoId: caso, texto: tx, andId: null }), [CASO1, TXT_JULG.replace("25ª", "9ª")]);
   await p.waitForTimeout(400);
   conf("o 1 clique agenda e programa o resultado (sem 📞 nem véspera)",
-    /agendado \+ resultado 26\.08\.2026/.test(r || "") &&
+    new RegExp(`agendado \\+ resultado ${br(dLem)}`).test(r || "") &&
     escritos.some(x => x.t === "andamentos" && /Verificar o resultado/.test(x.corpo.texto || "")) &&
     !escritos.some(x => x.t === "andamentos" && /(Avisar|Véspera)/.test(x.corpo.texto || "")));
   conf("a tarefa do 1 clique também é do admin no dia seguinte",
-    escritos.some(x => x.t === "andamento_tarefas" && x.corpo.lembrar_em === "2026-08-26" &&
+    escritos.some(x => x.t === "andamento_tarefas" && x.corpo.lembrar_em === iso(dLem) &&
       x.corpo.colaborador_id === EU));
 
   // 4) regressão: PERÍCIA continua com o aviso de preparação + véspera

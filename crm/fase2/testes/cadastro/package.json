@@ -1,0 +1,11 @@
+{
+  "name": "crm-testes-tela",
+  "private": true,
+  "description": "Suíte de tela do CRM: cada prova sobe o app num servidor local, abre o Chromium e finge o Supabase. Nada aqui fala com banco de verdade.",
+  "scripts": {
+    "test": "node rodar.js"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

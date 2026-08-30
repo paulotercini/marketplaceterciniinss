@@ -42,12 +42,14 @@ com a chave certa. Hoje ela vai só no `apikey`.
 e `docs/crm/index.html` são byte a byte idênticos (1.224.660 bytes). Não há
 versão zumbi no ar.
 
-**Testes: 199 do Python e 281 do node passando, nenhum vermelho.** A suíte de
-extração do To Do continua inteira, com os casos-ouro dos bugs antigos.
+**Testes: 199 do Python, 281 do node e 59 de tela passando, nenhum
+vermelho.** A suíte de extração do To Do continua inteira, com os casos-ouro
+dos bugs antigos.
 
-**A suíte de navegador virou patrimônio.** `crm/fase2/testes/cadastro/` tem
-**61 arquivos** versionados. É a primeira vez que a tela — e não só a lógica —
-tem rede de proteção. Ressalva honesta na seção 3.
+**A suíte de navegador virou patrimônio — e agora roda sozinha.**
+`crm/fase2/testes/cadastro/` tem **59 provas de tela**, e desde 30.08 um
+workflow as executa a cada mexida no app. É a primeira vez que a tela — e não
+só a lógica — tem rede de proteção de verdade.
 
 **O esquema do banco está documentado em sete arquivos SQL**, com o
 `schema_conferencia.sql` que só devolve ✅/❌ sem alterar nada. Foi ele que
@@ -87,14 +89,29 @@ movimentações — a que só mudou de carimbo vira novidade, a já vista não
 volta na importação seguinte, e a que já tem motivo não duplica. As 11
 funções gêmeas voltaram a bater. Suíte do node: **281 passando, 0 falhando**.
 
-### 3.2 A suíte de navegador não roda aqui
+### 3.2 A suíte de navegador nunca tinha rodado (RESOLVIDO em 30.08)
 
-Os 61 arquivos de `testes/cadastro/` dependem do pacote `playwright`; este
-ambiente tem só `playwright-core`. No `node --test`, **63 testes aparecem como
-`skipped`** — não como passando. Ou seja: a rede de proteção existe no
-repositório, mas **ninguém a executa automaticamente**. Ela só vale se rodar
-na sua máquina antes de publicar, ou num workflow do GitHub que instale o
-navegador.
+Os 59 programas de `testes/cadastro/` são provas de tela: cada um sobe um
+servidor, abre o Chromium, finge o Supabase e sai com código 1 se falhou.
+Ótimo para depurar uma prova; péssimo para conferir 59 antes de publicar —
+ninguém roda 59 comandos na mão. Resultado: a suíte existiu semanas
+versionada **sem nunca ter rodado inteira**.
+
+E cada prova serve o `app.html` da própria pasta, um arquivo que não está no
+git. Sem o passo de copiar `crm/fase2/app.html` para lá, a prova pode estar
+falando de uma cópia de duas semanas atrás — ou não rodar de todo.
+
+**Consertado em 30.08:** o corredor `rodar.js` (copia o app, roda as 59 em
+paralelo, imprime o placar de cada uma e devolve o log das que falharam) e o
+workflow `testes-tela.yml`, que roda tudo a cada push que toque o `app.html`
+ou a pasta, com cache do navegador e as capturas guardadas quando algo falha.
+
+**A primeira rodada completa já encontrou uma prova podre:** `julgamento.js`
+falhava 8 de 11 asserções porque a fixtura usava a data absoluta 25/08/26 —
+que virou passado, e o detector de agendamento, corretamente, ignora data no
+passado. O `novidades.js` já tinha aprendido essa lição e usa datas
+relativas; o `julgamento.js` ficou para trás. Passado para `mais(n)`, com o
+salto caindo sempre em dia útil. **Placar hoje: 59/59.**
 
 ### 3.3 303 casos invisíveis em todas as listas — e piorando
 
@@ -154,8 +171,10 @@ mais barata de escrever e mais cara de conferir. Três sintomas já mensuráveis
   `honorAjusteDe` (170), `irSubAnot` (165).
 
 Não estou propondo reescrever nada. O ponto é outro: **o custo de errar
-subiu**, e a única defesa barata hoje é a suíte de testes — que está com um
-vermelho e 63 pulados.
+subiu**, e a defesa barata é a suíte. Desde 30.08 ela está inteira e rodando
+sozinha (199 + 281 + 59, tudo verde) — o que muda o cálculo das próximas
+rodadas: dá para mexer no arquivo grande e descobrir o estrago em dois
+minutos, em vez de descobrir pelo print do Paulo.
 
 ---
 
@@ -164,9 +183,7 @@ vermelho e 63 pulados.
 Na ordem em que eu faria, do mais barato ao mais caro:
 
 1. ~~O gêmeo do PAT~~ — **feito em 30.08** (seção 3.1).
-2. **Rodar a suíte de navegador num workflow do GitHub** — instalar o
-   Playwright e deixar os 61 arquivos rodando a cada push em `crm/**`. Sem
-   isso, 63 testes são decoração.
+2. ~~A suíte de navegador no GitHub~~ — **feito em 30.08** (seção 3.2).
 3. **Uma tela para os 312 casos sem lista.** Não é classificar 312 casos à
    mão: é ter onde vê-los, com o botão que joga cada um na lista certa. Hoje
    eles são invisíveis por construção.
@@ -186,7 +203,8 @@ Na ordem em que eu faria, do mais barato ao mais caro:
   `cowork/03-MAPA-APP.md` e `cowork/mapa_app.json`);
 - banco: `python3 crm/fase2/dossie_banco.py`, que só faz `GET`/`HEAD` e usa
   `limit=0` com `Prefer: count=exact` — nenhum dado de cliente sai de lá;
-- testes: `python3 -m pytest tests/ -q` e `node --test "crm/fase2/*/testes/*.test.js"`;
+- testes: `python3 -m pytest tests/ -q`, `node --test "crm/fase2/*/testes/*.test.js"`
+  e `node crm/fase2/testes/cadastro/rodar.js`;
 - sincronização: log do job da `crm-sync.yml` no GitHub Actions.
 
 Nenhum nome, CPF, telefone ou texto de andamento foi lido para escrever este
