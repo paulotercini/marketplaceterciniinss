@@ -19,7 +19,64 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # PORTÃO. Até 30.08.2026 a publicação não consultava ninguém: um app.html
+  # quebrado ia ao ar do mesmo jeito, e o escritório descobria pelo próprio
+  # uso. As três suítes existem e são rápidas — agora elas decidem.
+  conferir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pytest
+      - name: Extração do portal (pytest)
+        run: python -m pytest tests/ -q
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Regras e robôs (node --test)
+        run: node --test "crm/fase2/*/testes/*.test.js"
+
+      # O que vai ao ar é docs/crm/index.html; o que a suíte de tela exercita
+      # é crm/fase2/app.html. Se os dois divergirem, o verde não vale nada —
+      # estaríamos aprovando um arquivo e publicando outro. O publicar.py
+      # mantém a cópia; esta conferência é a prova de que ele rodou.
+      - name: O publicado é o arquivo testado
+        run: |
+          if ! cmp -s crm/fase2/app.html docs/crm/index.html; then
+            echo "::error::docs/crm/index.html difere de crm/fase2/app.html."
+            echo "Rode 'python3 crm/publicar.py' e faça commit da cópia."
+            exit 1
+          fi
+          echo "idêntico ($(wc -c < docs/crm/index.html) bytes)"
+
+      - name: Cache do navegador
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ hashFiles('crm/fase2/testes/cadastro/package.json') }}
+      - name: Suíte de tela (59 provas)
+        working-directory: crm/fase2/testes/cadastro
+        run: |
+          npm install --no-audit --no-fund
+          npx playwright install --with-deps chromium chromium-headless-shell
+          node rodar.js
+
+      - name: Guardar as capturas
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas-da-falha
+          path: crm/fase2/testes/cadastro/*.png
+          retention-days: 7
+          if-no-files-found: ignore
+
   deploy:
+    needs: conferir
     runs-on: ubuntu-latest
     environment:
       name: github-pages

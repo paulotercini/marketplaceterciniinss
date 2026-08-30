@@ -34,6 +34,8 @@ jobs:
           python crm/fase2/dossie_banco.py
           echo "── AGREGADOS DA SINCRONIZAÇÃO ──"
           python crm/fase2/dossie_banco.py --extra
+          echo "── POR QUE OS CAMPOS DO CADASTRO ESTÃO EM ZERO ──"
+          python crm/fase2/dossie_banco.py --f9
 
       - name: Publica o retrato como artefato
         uses: actions/upload-artifact@v4
