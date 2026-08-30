@@ -138,16 +138,60 @@ portal.
 | `analises_direito` | **0** | a aba ⚖️ (F48/F49) está de pé, vazia |
 | `acompanhamento` | 3 | o F68 mal começou |
 | `lembrete_avisos` | 1 | idem |
-| `clientes.endereco` | 1 (0,1 %) | — |
-| `rg`, `estado_civil`, `profissao`, `nome_mae`, `pis_nit` | **0 %** | os campos da F9 |
+| `clientes.endereco` | 1 | — |
+| `estado_civil`, `profissao`, `nome_mae`, `pis_nit` | **0** | os campos que os documentos leem |
 | `exigencia_prazo`, `dcb` | 0 % | — |
 | `campos` (jsonb do cadastro) | 30 | — |
 
-Isto merece uma frase franca: **os sete campos que a F9 criou para gerar os
-documentos do escritório estão todos em zero.** Os documentos continuam sem
-matéria-prima. Ou o preenchimento não tem porta fácil na tela, ou não entrou
-na rotina de quem atende — mas do jeito que está, a F9 é uma promessa não
-cobrada.
+> **Correção.** Uma versão anterior desta análise listava o `rg` entre as
+> lacunas. Não é: o RG **saiu do sistema de propósito na F23** — do campo, da
+> lista de obrigatórios e de todos os modelos —, a qualificação passou a sair
+> direto do CPF, e o `cadastro3.js` prova a ausência em quatro asserções.
+> Zero ali é o resultado esperado; a coluna no banco é resíduo do schema.
+
+### Por que estão em zero (medido em 30.08, `dossie_banco.py --f9`)
+
+Três explicações produzem o mesmo zero, e a sonda separou as três:
+
+| pergunta | resposta |
+|---|---|
+| as colunas existem no banco? | **todas existem** — o `schema_f9_cadastro.sql` rodou |
+| a reserva `campos.civil` está recebendo no lugar? | **2 clientes**, de 1.942 |
+| então quem preencheu? | **ninguém** |
+
+Não é banco e não é desvio de gravação. Mas o número que reenquadra tudo é
+outro: **de 1.942 clientes, só 52 nasceram depois de 15.08**, quando a F9
+entrou — e 21 depois de 22.08. Os outros 1.890 nunca teriam esses campos, que
+só se preenchem à mão, um a um. O denominador honesto do "0 %" é 52, não
+1.942.
+
+E dentro desses 52 há um contraste que aponta o caminho:
+
+| campo | preenchido | onde ele mora |
+|---|---|---|
+| `sexo` | **14** | está no formulário da recepção (F28) |
+| `endereco` e as 7 colunas | 1 | idem, mas exige buscar o CEP |
+| `estado_civil`, `profissao`, `nome_mae`, `pis_nit` | **0** | só na grade Identificação, um clique por cartão |
+| `campos.atendimento` | 24 | o relato do balcão |
+| `campos.especie` | 19 | a espécie escolhida no atendimento |
+| `campos.docs_pedidos` | 12 | o checklist de documentos |
+| `campos.triagem` | **1** | a triagem encerrada |
+
+A leitura: **o fluxo de atendimento está sendo usado** — 24 relatos, 19
+espécies escolhidas, 12 checklists de documentos entregues. O que não é usado
+é exatamente o que **não está no caminho**: os campos civis só existem na
+grade Identificação, cada um atrás de um clique num cartão, depois que o
+atendimento já acabou. Ninguém volta lá.
+
+O app até sabe disso: `faltaParaDocs()` já calcula o que impede a procuração e
+o contrato de saírem prontos, e a ficha diz isso — numa nota cinza, no rodapé
+do cartão. Saber e avisar passivamente não é a mesma coisa que pedir.
+
+**Conserto na direção certa:** levar estado civil, profissão e endereço para
+**dentro do caminho do atendimento** (onde o checklist de documentos já mora,
+e já é preenchido 12 vezes), em vez de esperar que alguém volte à
+Identificação. E o `campos.triagem` em 1 diz que a porta da triagem também
+quase não é fechada — vale conferir se ela está no caminho ou ao lado dele.
 
 Em contraste, o que **está** sendo usado: `andamentos` 23.381 (21.497 do To
 Do, 875 do CRPS, 577 do PAT, 386 do PJe, 46 escritos no CRM), `sugestoes` 319,
@@ -187,10 +231,9 @@ Na ordem em que eu faria, do mais barato ao mais caro:
 3. **Uma tela para os 312 casos sem lista.** Não é classificar 312 casos à
    mão: é ter onde vê-los, com o botão que joga cada um na lista certa. Hoje
    eles são invisíveis por construção.
-4. **Descobrir por que os campos da F9 estão em zero.** Antes de escrever
-   qualquer coisa nova de cadastro, vale abrir a tela e tentar preencher um
-   cliente do começo ao fim. Se travar em algum ponto, é ali que está a
-   resposta — e é conserto pequeno.
+4. ~~Descobrir por que os campos da F9 estão em zero~~ — **respondido em
+   30.08** (seção 3.4): não é banco nem desvio de gravação; os campos estão
+   fora do caminho do atendimento. O conserto é levá-los para dentro dele.
 5. **Os 271 clientes sem CPF** — provavelmente vindos do To Do sem `#CPF` no
    título. Dá para listar e resolver aos poucos, mas só depois do item 4,
    porque o cadastro é a porta.
