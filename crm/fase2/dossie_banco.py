@@ -140,9 +140,55 @@ def extra():
         print(f"- tipo={t} | {total_de(f'/rest/v1/lembretes?tipo=eq.{t}')}")
 
 
+CAMPOS_F9 = ["estado_civil", "profissao", "nome_mae", "pis_nit", "endereco",
+             "logradouro", "numero", "bairro", "cidade", "uf", "cep", "sexo"]
+
+
+def f9():
+    """Por que os campos do cadastro estão em zero?
+
+    O dossiê diz QUE estão vazios; esta sonda tenta dizer POR QUÊ, separando
+    três explicações que produzem o mesmo zero:
+
+    a) a coluna não existe (o schema_f9_cadastro.sql não rodou) — aí toda
+       gravação cai no `campos.civil`, a reserva que a ficha usa quando o
+       banco recusa a coluna;
+    b) a coluna existe e a reserva está cheia — a ficha está errando o
+       diagnóstico e desviando gravação boa para o jsonb;
+    c) coluna e reserva vazias — ninguém preencheu, e o problema é de
+       caminho na tela ou de rotina, não de banco.
+
+    Contagem pura, como o resto do arquivo: nenhum valor de campo é lido.
+    """
+    esq = estrutura().get("clientes") or {}
+    print("## as colunas existem no banco?")
+    for c in CAMPOS_F9:
+        print(f"- clientes.{c} | {'existe' if c in esq else 'NÃO EXISTE'}")
+    print("## quantos clientes têm cada uma preenchida")
+    for c in CAMPOS_F9:
+        if c in esq:
+            print(f"- {c} | {preenchimento('clientes', c, esq[c].get('tipo'))}")
+    print("## a reserva (campos.civil) está sendo usada?")
+    print(f"- campos não vazio | {total_de('/rest/v1/clientes?campos=neq.' + urllib.parse.quote('{}'))}")
+    for ch in ["civil", "atendimento", "precasos", "triagem", "docs_pedidos", "especie"]:
+        print(f"- campos->{ch} presente | "
+              f"{total_de(f'/rest/v1/clientes?campos->{ch}=not.is.null')}")
+    # Os campos nascem vazios em TODO cliente antigo e só se preenchem à mão,
+    # um a um. Saber quantos clientes nasceram DEPOIS da F9 diz se o zero é
+    # "a tela não funciona" ou "quase ninguém passou por ela ainda".
+    print("## clientes por época (a F9 entrou em 15.08.2026)")
+    for corte in ["2026-08-15", "2026-08-22", "2026-08-29"]:
+        print(f"- criados a partir de {corte} | "
+              f"{total_de(f'/rest/v1/clientes?criado_em=gte.{corte}')}")
+    print(f"- total de clientes | {total_de('/rest/v1/clientes')}")
+
+
 def main():
     if "--extra" in sys.argv:
         extra()
+        return
+    if "--f9" in sys.argv:
+        f9()
         return
     esq = estrutura()
     tabelas = sorted(esq)
