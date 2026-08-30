@@ -1,3 +1,53 @@
+# A suíte de tela
+
+59 provas. Cada uma é um programa solto: sobe um servidor numa porta
+qualquer, serve o `app.html` **desta pasta**, abre o Chromium, finge o
+Supabase com `page.route` e sai com código 1 se alguma asserção falhou.
+Nenhuma fala com banco de verdade e nenhuma usa dado de cliente.
+
+## Rodar
+
+```bash
+cd crm/fase2/testes/cadastro
+npm install                                    # uma vez
+npx playwright install chromium chromium-headless-shell   # uma vez
+
+node rodar.js                 # as 59
+node rodar.js fluxo cadastro  # só as que casam com o filtro
+node rodar.js -j1             # uma por vez (para depurar)
+node fluxo.js                 # uma prova, com a saída inteira
+```
+
+**O `rodar.js` copia `crm/fase2/app.html` para cá antes de começar.** É esse
+passo que garante que a suíte fala do app de agora — chamar uma prova direto
+usa a cópia que estiver na pasta, que pode ser de duas semanas atrás. A cópia
+é descartável e está no `.gitignore`, junto dos retratos que cada rodada
+regrava.
+
+No GitHub, o `testes-tela.yml` roda tudo isso a cada push que toque o
+`app.html` ou esta pasta, e guarda as capturas quando alguma prova falha.
+
+## Duas regras que a suíte aprendeu doendo
+
+**Data em fixtura é RELATIVA, nunca absoluta.** `mais(n)`, `iso()`, `br()` —
+o `novidades.js` e o `julgamento.js` têm o molde. Prova com data fixa passa
+na semana em que foi escrita e apodrece depois: o detector, certo, ignora
+agendamento no passado, e o vermelho de amanhã parece defeito do programa
+sendo defeito do teste. Quando a data precisa cair em dia útil, escolha o
+salto com `while ([0,5,6].includes(mais(SALTO).getDay())) SALTO++`.
+
+**Prova nova nasce com a espera de boot**, logo depois do
+`waitForSelector("#app.logado")`:
+
+```js
+await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
+```
+
+`#app.logado` aparece ANTES de o `carregar()` terminar — sem essa espera, o
+`abrirFicha` encontra o `D.cliPorId` vazio. E `window.D` não existe: `D` é
+`let` de script, não vira propriedade do `window`.
+
+---
 
 ## contraste.js (F15) — o que essa prova pega, e a armadilha dela
 

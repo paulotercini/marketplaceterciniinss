@@ -36,7 +36,13 @@ seção 3.
 
 ```bash
 python3 -m pytest tests/ -q                       # 199 testes
-node --test "crm/fase2/*/testes/*.test.js"        # 278 testes
+node --test "crm/fase2/*/testes/*.test.js"        # 281 testes
+
+# a suíte de TELA (59 provas que abrem o app num Chromium de verdade):
+cd crm/fase2/testes/cadastro
+npm install && npx playwright install chromium chromium-headless-shell   # uma vez
+node rodar.js                                     # ~2 min, 4 em paralelo
+cd -
 
 # sintaxe do app (o erro mais comum ao mexer num arquivo de 13 mil linhas):
 node -e '

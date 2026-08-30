@@ -1,0 +1,68 @@
+name: Testes de tela do CRM
+
+# A suíte de tela (crm/fase2/testes/cadastro) existia versionada e nunca
+# rodava sozinha: 59 provas que só saíam do papel se alguém as chamasse uma
+# a uma na própria máquina. Aqui elas rodam a cada mexida no app.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "crm/fase2/app.html"
+      - "crm/fase2/testes/cadastro/**"
+      - ".github/workflows/testes-tela.yml"
+  pull_request:
+    paths:
+      - "crm/fase2/app.html"
+      - "crm/fase2/testes/cadastro/**"
+      - ".github/workflows/testes-tela.yml"
+  workflow_dispatch:
+
+# rodada nova na mesma branch cancela a anterior: o que interessa é o
+# veredito do último commit
+concurrency:
+  group: testes-tela-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tela:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: crm/fase2/testes/cadastro
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # o Chromium do Playwright são ~150 MB por rodada; a chave é a versão
+      # travada no package.json, então ele só volta a baixar quando a versão
+      # do Playwright muda
+      - name: Cache do navegador
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ runner.os }}-${{ hashFiles('crm/fase2/testes/cadastro/package.json') }}
+
+      - run: npm install --no-audit --no-fund
+
+      # --with-deps traz as bibliotecas de sistema que o Chromium exige no
+      # runner limpo (sem elas o launch falha com "missing dependencies")
+      - run: npx playwright install --with-deps chromium chromium-headless-shell
+
+      # o corredor copia crm/fase2/app.html para cá antes de começar: a
+      # suíte fala sempre do app deste commit
+      - name: Rodar as provas
+        run: node rodar.js
+
+      # falhou? as capturas contam a história melhor que o log
+      - name: Guardar as capturas
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas-da-falha
+          path: crm/fase2/testes/cadastro/*.png
+          retention-days: 7
+          if-no-files-found: ignore
