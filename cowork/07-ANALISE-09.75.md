@@ -42,8 +42,8 @@ com a chave certa. Hoje ela vai só no `apikey`.
 e `docs/crm/index.html` são byte a byte idênticos (1.224.660 bytes). Não há
 versão zumbi no ar.
 
-**Testes Python: 199 passando.** A suíte de extração do To Do continua
-inteira, com os casos-ouro dos bugs antigos.
+**Testes: 199 do Python e 281 do node passando, nenhum vermelho.** A suíte de
+extração do To Do continua inteira, com os casos-ouro dos bugs antigos.
 
 **A suíte de navegador virou patrimônio.** `crm/fase2/testes/cadastro/` tem
 **61 arquivos** versionados. É a primeira vez que a tela — e não só a lógica —
@@ -57,9 +57,9 @@ revelou, em produção, que o índice das parcelas não tinha entrado.
 
 ## 3. O que está quebrado agora
 
-### 3.1 O robô do PAT não registra a primeira situação (bug real, 1 linha)
+### 3.1 A importação do PAT rodava sem teste (RESOLVIDO em 30.08)
 
-O único teste vermelho da casa:
+O único teste vermelho da casa era este:
 
 ```
 not ok 289 - a cópia dentro do app.html é idêntica à testada aqui
@@ -67,16 +67,25 @@ not ok 289 - a cópia dentro do app.html é idêntica à testada aqui
   error: 'andamentoDaMudanca divergiu de importar.js'
 ```
 
-O F44 mudou `andamentoDaMudanca` **dentro do `app.html`** para que a primeira
-situação lida do portal também vire novidade ("INSS · Situação registrada:
-…"). O arquivo que o robô realmente executa — `crm/fase2/robo-pat/importar.js`
-— ficou com o comportamento antigo: `if (!antes) return null`.
+O F44 alterou a lógica **dentro do `app.html`**, que é onde a importação de
+fato roda — o `app.html` é arquivo único e não faz `require`. O
+`crm/fase2/robo-pat/importar.js` é o **gêmeo testado**: a mesma lógica em
+módulo, existindo só para a suíte do node poder exercitá-la. Ele ficou para
+trás em duas funções, `andamentoDaMudanca` e `planoDeImportacao`.
 
-Consequência prática: **quando o robô do PAT vê um caso pela primeira vez, a
-situação entra calada** — exatamente o que o F44 se propôs a corrigir. O
-pedido só valeu para a cópia de dentro do CRM. Conserto: uma linha em
-`importar.js`, e o teste volta ao verde sozinho (ele existe justamente para
-denunciar as duas cópias saindo do passo).
+Ou seja: o comportamento em produção estava certo — **o que estava errado era
+a cobertura**. O `assert` estourava na primeira função e nem chegava a
+comparar a segunda, então a divergência do `planoDeImportacao` (o bloco
+inteiro das movimentações do F44, ~1.000 caracteres) estava escondida atrás
+da primeira. A importação que toca cem requerimentos de uma vez passou
+semanas sendo verificada contra uma versão antiga de si mesma.
+
+**Consertado em 30.08:** o F44 foi portado para o gêmeo (as duas funções,
+mais o `movimentacoes` do resumo), o teste que afirmava o comportamento
+antigo foi reescrito, e entraram **três casos-ouro** para o bloco das
+movimentações — a que só mudou de carimbo vira novidade, a já vista não
+volta na importação seguinte, e a que já tem motivo não duplica. As 11
+funções gêmeas voltaram a bater. Suíte do node: **281 passando, 0 falhando**.
 
 ### 3.2 A suíte de navegador não roda aqui
 
@@ -134,7 +143,8 @@ Do, 875 do CRPS, 577 do PAT, 386 do PJe, 46 escritos no CRM), `sugestoes` 319,
 **Um arquivo de 18.702 linhas com 916 funções e 76 globais.** Cada rodada é
 mais barata de escrever e mais cara de conferir. Três sintomas já mensuráveis:
 
-- **duas cópias da mesma função** (o item 3.1) — o teste pegou desta vez;
+- **duas cópias da mesma lógica** (o item 3.1) — o teste pegou, mas só a
+  primeira das duas divergências: o `assert` estoura e para;
 - **37 funções órfãs** (definidas e nunca chamadas). Código que não roda mas
   ocupa espaço de leitura e finge estar vivo;
 - **609 `style=` escritos dentro de template** e mais 103 `elemento.style.X =`
@@ -153,8 +163,7 @@ vermelho e 63 pulados.
 
 Na ordem em que eu faria, do mais barato ao mais caro:
 
-1. **Uma linha em `importar.js`** — fecha o teste vermelho e faz o F44 valer
-   para o robô, que era o pedido original.
+1. ~~O gêmeo do PAT~~ — **feito em 30.08** (seção 3.1).
 2. **Rodar a suíte de navegador num workflow do GitHub** — instalar o
    Playwright e deixar os 61 arquivos rodando a cada push em `crm/**`. Sem
    isso, 63 testes são decoração.

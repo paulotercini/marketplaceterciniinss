@@ -139,7 +139,10 @@ function eventosNovos(det, jaTem, hoje) {
 function andamentoDaMudanca(k, det) {
   const antes = k.situacao_inss || null;
   if (!det.situacao || det.situacao === antes) return null;
-  if (!antes) return null;                 // primeira vez não é mudança
+  // F44 · a primeira situação também consta em 📣 (pedido do Paulo: TODA
+  // movimentação do portal aparece em Novidades — antes, o primeiro import
+  // da situação entrava calado)
+  if (!antes) return `INSS · Situação registrada: ${det.situacao}`;
   return `INSS: ${antes} → ${det.situacao}`;
 }
 
@@ -197,7 +200,7 @@ function planoDeImportacao(pat, D, hoje) {
   }
 
   const plano = { atualizar: [], novos: [], possiveisDuplicados: [], semCliente: [],
-                  ignorados: [], eventos: [], comentarios: [], resumo: {} };
+                  ignorados: [], eventos: [], comentarios: [], atualizacoes: [], resumo: {} };
 
   for (const det of (pat.detalhes || [])) {
     const proto = digitos(det.protocolo);
@@ -217,6 +220,22 @@ function planoDeImportacao(pat, D, hoje) {
       if (evs.length) plano.eventos.push({ caso_id: k.id, protocolo: proto, eventos: evs });
       const coms = comentariosNovos(det, andDoCaso.get(k.id));
       if (coms.length) plano.comentarios.push({ caso_id: k.id, protocolo: proto, comentarios: coms });
+      // F44 · TODA movimentação consta em 📣: o protocolo cuja "última
+      // atualização" avançou no portal SEM mudar situação, comentário ou
+      // agendamento entrava calado. Agora vira a sua própria novidade,
+      // deduplicada pelo carimbo do portal (importar de novo não repete).
+      const ts = String(det.atualizado_em || daLista.atualizado_em || "").trim();
+      const chaveAt = ts ? `atualizacao:${proto}:${ts.replace(/\D/g, "")}` : null;
+      const jaVisto = chaveAt && (andDoCaso.get(k.id) || [])
+        .some(a => String(a.origem_id || "") === chaveAt);
+      // só suprime quando OUTRA novidade já vai contar a história (mudança de
+      // situação, comentário, agendamento) — backfill silencioso de campo não
+      // conta: ele não gera linha nenhuma em 📣
+      const teveOutra = and || coms.length || evs.length;
+      if (chaveAt && !jaVisto && !teveOutra)
+        plano.atualizacoes.push({ caso_id: k.id, protocolo: proto, ts,
+          situacao: det.situacao || daLista.situacao || null,
+          servico: det.beneficio || daLista.servico || null });
       if (Object.keys(mud).length || and || coms.length)
         plano.atualizar.push({ ...item, caso_id: k.id, mudancas: mud, andamento: and,
                                novos_comentarios: coms.length });
@@ -258,6 +277,7 @@ function planoDeImportacao(pat, D, hoje) {
     ignorados: plano.ignorados.length,
     eventos: plano.eventos.reduce((n, e) => n + e.eventos.length, 0),
     comentarios: plano.comentarios.reduce((n, c) => n + c.comentarios.length, 0),
+    movimentacoes: plano.atualizacoes.length,
     exigencias: (pat.detalhes || []).filter(d => d.situacao === 'Em exigência').length,
     apuracoes: (pat.detalhes || []).filter(d => d.urgente).length,
     a_confirmar: (pat.detalhes || []).filter(d => d.especie_a_confirmar).length,
