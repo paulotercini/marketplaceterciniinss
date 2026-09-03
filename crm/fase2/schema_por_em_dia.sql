@@ -347,3 +347,34 @@ select 'casos', 'fase aceita peticao_inicial', ''
 -- advogados nasce presa ao cliente para o botão "abrir ficha" funcionar.
 -- Sem esta coluna o CRM segue funcionando (grava a menção só com o texto).
 alter table mencoes add column if not exists cliente_id uuid references clientes(id) on delete cascade;
+
+-- ── F49 (09.01): ⭐/⚡ POR ANOTAÇÃO ────────────────────────────────────────
+-- O ⭐ que já existia é do PROCESSO (casos.importante), herdado do To Do, onde
+-- só a tarefa se marca. Numa ficha com dezenas de andamentos, o que decide o
+-- caso são três — e eram três que ninguém achava sem reler tudo. Duas colunas
+-- booleanas resolvem, e o índice parcial faz a lista ⭐ Importante ler só as
+-- marcadas (o índice cobre uma fração mínima da tabela).
+alter table andamentos add column if not exists importante boolean not null default false;
+alter table andamentos add column if not exists urgente    boolean not null default false;
+create index if not exists idx_and_sinalizados on andamentos (criado_em desc)
+  where importante or urgente;
+
+-- ── F49 (09.01): UM CASO, DOIS GRAUS, DOIS ENDEREÇOS DO PJe ───────────────
+-- O número do CNJ é o MESMO no 1º e no 2º grau: muda o host (pje1g/pje2g) e
+-- mudam o id e a chave `ca` internos. Como as duas coletas casam pelo mesmo
+-- número, as duas escreviam no mesmo casos.pje_link e a última a rodar (na
+-- prática o acervo do 1º grau, que tem muito mais processo) sobrescrevia a do
+-- 2º — a novidade dizia "PJe (2º grau)" e o botão abria os autos do 1º.
+-- Agora cada grau guarda o seu: {"1º grau": "...", "2º grau": "..."}.
+-- casos.pje_link continua existindo, como retrato do mais recente.
+alter table casos add column if not exists pje_links jsonb not null default '{}'::jsonb;
+
+-- ── F49 (09.03): ⭐/⚡ nos movimentos do ⚖️ CNJ ────────────────────────────
+-- No 🖥 Recurso a marca mora no próprio evento (casos.crps) e o
+-- robo-crps/ingerir.js a reacende a cada coleta. No CNJ isso não serve: o
+-- datajud.py REESCREVE casos.datajud inteiro todo dia útil, e a marca sumiria
+-- na primeira rodada. Por isso o CNJ tem mapa próprio, que robô nenhum toca:
+--   {"<instância>|<data>|<hash do movimento>": {importante, urgente, txt, q}}
+-- txt e q viajam junto para a lista ⭐ Importante mostrar o movimento sem ter
+-- de reabrir o datajud de cada caso.
+alter table casos add column if not exists sinais_cnj jsonb not null default '{}'::jsonb;
