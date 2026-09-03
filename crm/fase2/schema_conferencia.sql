@@ -74,6 +74,20 @@ with esperado(secao, item, existe) as (
     from (values ('crps'),('crps_nups'),('arquivados'),('encerrado_por'),
                  ('classe_judicial'),('ajuizado_em'),('orgao_judicial'),
                  ('pje_link'),('lembrete_meses')) as c(nome)
+  -- ── F49: ⭐/⚡ por anotação e o link do PJe por grau ─────────────────────
+  union all
+  select 'F49', 'andamentos.' || c.nome,
+         exists(select 1 from information_schema.columns
+                 where table_name='andamentos' and column_name=c.nome)
+    from (values ('importante'),('urgente')) as c(nome)
+  union all
+  select 'F49', 'casos.sinais_cnj',
+         exists(select 1 from information_schema.columns
+                 where table_name='casos' and column_name='sinais_cnj')
+  union all
+  select 'F49', 'casos.pje_links',
+         exists(select 1 from information_schema.columns
+                 where table_name='casos' and column_name='pje_links')
   union all
   select 'anteriores', 'casos.fase aceita peticao_inicial',
          exists(select 1 from pg_constraint

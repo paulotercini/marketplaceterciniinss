@@ -61,9 +61,14 @@ function restaurarGuardados(bloco, jaTinha, antes) {
   // a estrela que alguém acendeu numa movimentação é do escritório, não do
   // e-Recursos — e o bloco é reescrito do zero a cada leitura. Sem isto, a
   // próxima coleta apagaria os destaques todos.
+  // o mesmo vale para o ⚡ urgente, que mora ao lado do ⭐ no próprio evento
   if (antes) {
     const acesas = new Set((antes.eventos || []).filter(e => e.importante).map(T.chaveEvento));
-    for (const e of (bloco.eventos || [])) if (acesas.has(T.chaveEvento(e))) e.importante = true;
+    const urgentes = new Set((antes.eventos || []).filter(e => e.urgente).map(T.chaveEvento));
+    for (const e of (bloco.eventos || [])) {
+      if (acesas.has(T.chaveEvento(e))) e.importante = true;
+      if (urgentes.has(T.chaveEvento(e))) e.urgente = true;
+    }
   }
   for (const e of (bloco.eventos || []))
     for (const a of (e.arquivos || [])) {
