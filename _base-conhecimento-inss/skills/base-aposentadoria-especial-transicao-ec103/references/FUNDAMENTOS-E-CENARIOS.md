@@ -18,11 +18,14 @@ Decreto 3.048/99, arts. 64 a 69-A. Regulamenta a aposentadoria especial.
 
 ## 2. Tabela de pontos da transição (art. 21 EC 103)
 
-Risco alto (15 anos, exposição a agentes classificados como de maior nocividade). Pontuação de 66 pontos em 13 de novembro de 2019, progredindo 1 ponto por ano.
+Risco alto (15 anos de efetiva exposição, agentes de maior nocividade). Pontuação FIXA de 66 pontos (art. 21, I, da EC 103/2019).
 
-Risco médio (20 anos, exposição a agentes de nocividade intermediária). Pontuação de 76 pontos em 13 de novembro de 2019, progredindo 1 ponto por ano.
+Risco médio (20 anos de efetiva exposição, agentes de nocividade intermediária). Pontuação FIXA de 76 pontos (art. 21, II, da EC 103/2019).
 
-Risco baixo (25 anos, exposição a agentes de menor nocividade relativa). Pontuação de 86 pontos em 13 de novembro de 2019, progredindo 1 ponto por ano.
+Risco baixo (25 anos de efetiva exposição, agentes de menor nocividade relativa). Pontuação FIXA de 86 pontos (art. 21, III, da EC 103/2019).
+
+**CORREÇÃO DE AUDITORIA (Onda 121, 04/09/2026).** A redação anterior deste arquivo afirmava que a pontuação do art. 21 "progredia 1 ponto por ano". Isso é FALSO e foi corrigido após apontamento do escritório, conferido no texto da EC 103/2019 no Planalto. O art. 21 tem apenas os incisos I a III, com 66, 76 e 86 pontos, e os §§ 1º a 3º, que tratam da apuração de idade e tempo em dias, do valor do benefício e dos servidores estaduais. Não existe dispositivo de progressão no art. 21. A pontuação da aposentadoria especial de transição é FIXA, e o PRISMA confirma ("Pontuação exigida: 86 anos" em DER de 2026). A progressão anual de 1 ponto pertence ao art. 15 (regra de pontos da aposentadoria por tempo de contribuição, até 100 pontos para a mulher e 105 para o homem), e a progressão de 6 meses ao art. 16 (idade progressiva). Confundir os regimes leva a exigir do segurado pontos que a Constituição não exige e a adiar indevidamente a DER.
+
 
 ## 3. Cenários operacionais pró-segurado
 

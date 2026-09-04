@@ -107,3 +107,11 @@ O IBDP sustenta institucionalmente a centralidade da aposentadoria especial como
 ## O que NÃO está nesta skill
 
 Não está aqui o direito adquirido pré-reforma detalhado, que é objeto de `base-aposentadoria-direito-adquirido`. Não estão aqui as análises técnicas de agentes específicos, que são objeto das skills `base-especial-*`. Não está aqui o cálculo detalhado da RMI, objeto de `base-calculo-rmi-ec103`. Não está aqui a aposentadoria da pessoa com deficiência pela LC 142/2013, objeto de `aposentadoria-deficiencia`.
+
+## PONTUAÇÃO FIXA do art. 21, trava contra erro recorrente (Onda 121)
+
+A pontuação da aposentadoria especial de transição NÃO progride. O art. 21 da EC 103/2019 exige 66 pontos com 15 anos de exposição, 76 com 20 e 86 com 25, e esses números são os mesmos em 2019, em 2026 e em qualquer DER futura. Conferido no Planalto em 04/09/2026, o artigo tem apenas os incisos I a III e os §§ 1º a 3º, sem dispositivo de progressão.
+
+A progressão anual de 1 ponto é do art. 15 (aposentadoria por tempo de contribuição, regra de pontos). A de 6 meses é do art. 16 (idade progressiva). Nenhuma delas se aplica ao art. 21.
+
+Consequência prática. Segurado que atingiu 86 pontos com 25 anos de exposição tem direito HOJE, e o parecer que aplica progressão adia a DER e pode fazê-lo perder meses de benefício. Em conferência de parecer ou de peça, tratar qualquer menção a progressão no art. 21 como erro a corrigir de imediato. O PRISMA confirma o caráter fixo ao registrar "Pontuação exigida: 86 anos" em DER de 2026.
