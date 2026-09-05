@@ -146,13 +146,15 @@ Relevância para o escritório — TRF3, jurisdição do escritório. Admitiu MS
 
 ## 7. CRPS — Enunciado 1
 
-Redação vigente (alterada pelo Despacho 37/2019):
+**CORREÇÃO DE AUDITORIA (Onda 122, 04/09/2026).** Os incisos I e II deste arquivo traziam redação NÃO OFICIAL, que não corresponde ao texto publicado. A redação anterior parafraseava o direito ao melhor benefício em termos genéricos e atribuía a alteração a um "Despacho 37/2019" não confirmado. Substituída pelo texto oficial conferido no DOU, o mesmo que consta do `base-precedentes-catalogo-vinculantes/references/CATALOGO-ENUNCIADOS-CRPS.md`. Enunciado citado em peça com redação parafraseada é passivo, porque o CRPS confere o próprio enunciado.
 
-I — O segurado tem direito adquirido ao benefício mais vantajoso, consideradas todas as datas de exercício possíveis desde o cumprimento dos requisitos para aposentadoria.
+Texto oficial (DOU 12/11/2019). Caput. "A Previdência Social deve conceder o melhor benefício a que o beneficiário fizer jus, cabendo ao servidor orientá-lo nesse sentido."
 
-II — O direito ao melhor benefício abrange a opção pela espécie de aposentadoria que resulte em maior renda mensal inicial.
+I — Satisfeitos os requisitos para a concessão de mais de um tipo de benefício, o INSS oferecerá ao interessado o direito de opção, mediante a apresentação dos demonstrativos financeiros de cada um deles.
 
-III — Implementados os requisitos para o reconhecimento do direito em momento posterior ao requerimento administrativo, poderá ser reafirmada a DER até a data do cumprimento da decisão do CRPS.
+II — Preenchidos os requisitos para mais de uma espécie de benefício na Data de Entrada do Requerimento (DER) e em não tendo sido oferecido ao interessado o direito de opção pelo melhor benefício, este poderá solicitar revisão e alteração para espécie que lhe é mais vantajosa, cujos efeitos financeiros remontarão à DER do benefício concedido originariamente, observada a decadência e a prescrição quinquenal.
+
+III — [O inciso mais útil desta skill.] Implementados os requisitos para o reconhecimento do direito em momento posterior ao requerimento administrativo, poderá ser reafirmada a DER até a data do cumprimento da decisão do CRPS.
 
 IV — Retornando os autos ao INSS, cabe ao interessado a opção pela reafirmação da DER mediante expressa concordância, aplicando-se a todas as situações que resultem em benefício mais vantajoso ao interessado.
 
@@ -165,3 +167,5 @@ Quando a TNU conhecer e prover incidente de uniformização em matéria de direi
 Aprovada na 6ª Sessão Ordinária da TNU, 14/08/2006.
 
 Aplicada nos PUILs 5001623-70 e PEDILEF 5053159-26 para adequação de julgados contrários à tese de reafirmação.
+
+**Por que os incisos III e IV decidem casos.** O inciso III fixa que a reafirmação da DER vai até o CUMPRIMENTO da decisão do CRPS, e não até a data do julgamento, o que amplia a janela de fatos supervenientes aproveitáveis. O inciso IV condiciona a reafirmação à EXPRESSA CONCORDÂNCIA do interessado e a estende a TODAS as situações que resultem em benefício mais vantajoso, o que impede tanto a reafirmação de ofício prejudicial quanto a recusa do INSS de reafirmar fora das hipóteses que ele elenca. Em recurso ao CRPS, requerer a reafirmação com menção expressa aos dois incisos, e registrar a concordância no corpo da peça para não depender de intimação posterior.

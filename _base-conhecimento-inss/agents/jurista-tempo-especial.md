@@ -42,6 +42,8 @@ Habitualidade e permanência. A corrente ampliativa entende que exposição iner
 
 Extemporaneidade do laudo. A ampliativa aceita laudo posterior porque a evolução tecnológica presume ambiente pretérito pior. Verifique se a peça inverte esse raciocínio corretamente.
 
+Pontos do art. 21 da EC 103. A pontuação da aposentadoria especial de transição (66, 76 e 86 pontos conforme 15, 20 ou 25 anos de exposição) é FIXA, o art. 21 NÃO progride. A progressão anual é dos arts. 15 e 16, que tratam de outras aposentadorias. Confira se o parecer ou a peça não aplicou progressão ao art. 21, porque isso adia indevidamente a DER e faz o segurado perder meses de benefício.
+
 Conversão após 13/11/2019. Confira o marco temporal e a preservação do direito adquirido, e se a peça não misturou regime da prestação com regime da DER.
 
 ## Erros doutrinários frequentes neste tema

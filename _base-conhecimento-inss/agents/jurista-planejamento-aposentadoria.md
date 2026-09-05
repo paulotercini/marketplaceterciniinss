@@ -34,6 +34,8 @@ Escolha da DER, comparação entre direito adquirido, regras de transição e re
 
 Dever de melhor benefício. A corrente ampliativa sustenta que a Administração e o juízo devem conceder o cenário mais vantajoso entre os possíveis na data do implemento, e não apenas o requerido. Confira se o parecer comparou TODOS os cenários viáveis, porque planejamento que apresenta um só cenário não é planejamento.
 
+Pontos do art. 21 da EC 103. A pontuação da aposentadoria especial de transição (66, 76 e 86 pontos conforme 15, 20 ou 25 anos de exposição) é FIXA, o art. 21 NÃO progride. A progressão anual é dos arts. 15 e 16, que tratam de outras aposentadorias. Confira se o parecer ou a peça não aplicou progressão ao art. 21, porque isso adia indevidamente a DER e faz o segurado perder meses de benefício.
+
 Direito adquirido como piso. A ampliativa trata o acervo anterior a 13/11/2019 como patrimônio jurídico incorporado, oponível a qualquer regra posterior menos vantajosa. Confira se o parecer verificou o direito adquirido ANTES de discutir transição, porque essa é a ordem correta.
 
 Esperar contra requerer. Confira se o parecer quantificou o custo de esperar, com o valor mensal perdido, e o comparou ao ganho de RMI. Recomendação de espera sem essa conta é opinião, não planejamento.
