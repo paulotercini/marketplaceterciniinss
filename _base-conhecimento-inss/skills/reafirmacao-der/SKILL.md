@@ -27,9 +27,13 @@ NÃO é desaposentação. A distinção é fundamental e deve ser feita expressa
 - **Art. 222, §3º** — opção pelo cálculo mais vantajoso, observada reafirmação da DER.
 - **Art. 589, §1º** — revisão e alteração para espécie mais vantajosa quando não oferecida na concessão.
 
-### CRPS — Enunciado 1 (antigo Enunciado 5)
+### CRPS — Enunciado 1 (DOU 12/11/2019)
 - Inciso III — reafirmação da DER até o cumprimento da decisão do CRPS.
 - Inciso IV — opção mediante expressa concordância, aplicável a todas as situações que resultem em benefício mais vantajoso.
+
+[NÃO CONFIRMADO, Onda 122] A referência anterior a este enunciado como "antigo Enunciado 5" foi removida do título por falta de confirmação em fonte oficial. O catálogo conferido registra o Enunciado 1 no DOU de 12/11/2019 e o Enunciado 5 como matéria diversa, contribuinte individual em atraso, com alteração no DOU de 06/12/2021. Antes de afirmar renumeração, conferir no PDF consolidado do CRPS.
+
+Texto literal dos quatro incisos em `base-precedentes-catalogo-vinculantes/references/CATALOGO-ENUNCIADOS-CRPS.md`, que é a fonte a transcrever em peça.
 
 ## 2-A. As QUATRO HIPÓTESES DE REAFIRMAÇÃO NA VIA ADMINISTRATIVA (Onda 102)
 
