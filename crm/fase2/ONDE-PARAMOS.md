@@ -1,3 +1,47 @@
+# Onde paramos — 06.09.2026, versão 09.76
+
+## F80 · Visual v10 (papel e petróleo) atrás de interruptor (09.76)
+
+Primeiro passo da aplicação do protótipo v10 ao CRM real. É uma CAMADA
+só de CSS, dentro de `<style id="tema-v10">`, escrita toda sob
+`html[data-tema="v10"]`: nenhum markup e nenhuma função mudaram. O boot
+(script antes do CSS, no head) lê `?tema=v10` e guarda em
+localStorage `crm_tema`; `?tema=` vazio desliga; sem parâmetro vale o
+guardado. O botão "visual" ao lado do nome, na barra lateral
+(alternarTema), liga e desliga e recarrega. As fontes do Google (IBM Plex
+Sans, IBM Plex Mono, Zilla Slab) só são pedidas com o tema ligado; sem
+rede caem em Segoe UI, Consolas e Georgia. Padrão DESLIGADO.
+
+O que a camada faz: tokens remapeados (--azul vira petróleo #0E5C58,
+--azul-claro idem para os contadores, --lateral clara), regra de cor por
+natureza do dado (petróleo ação do escritório, azul-aço #3A6491 o que
+veio de sistema, vermelho venceu, âmbar vence em breve, verde feito,
+placa cinza para os fatos), barra lateral clara, abas do cliente
+rotuladas CLIENTE e o sub-menu rotulado pelo que contém (CASO, CADASTRO,
+ANÁLISE, FONTE, via :has), cartão de fatos como placa, compositor branco
+com foco petróleo, linha do tempo com o autor em petróleo e a fonte de
+sistema em azul-aço, números em mono. No celular os rótulos de escopo
+saem e a barra do caso acompanha a margem de 12px.
+
+Provas: suíte de tela 57/59 no modo padrão (cnj71 e paineis já falhavam
+na 09.75, conferido no arquivo anterior). Com o tema forçado, 56/59: as
+duas a mais são asserções de VALOR da paleta antiga em contraste.js
+(--cinza-claro #666B74 e --azul-claro #A8C0F7), não defeito; a régua de
+contraste da mesma prova passa (zero texto abaixo de 4,5:1 nas 9 telas).
+Correções que a prova pediu e ficaram: .sync-todo, cabeçalho do Quadro,
+o ⚡ da anotação rápida, e :where() no .btn-mini para não roubar o
+branco dos botões cheios.
+
+Próximos passos, cada um atrás do mesmo interruptor: (2) régua por fase
+horizontal a partir do blocoFatos (DER e NB como âncoras, número vivo da
+fase com "Onde está", anteriores dobrados) e coluna "O que cobra ação"
+com Lembretes e datas, Documentos e perícias; (3) linha do tempo do
+Caso completo agrupada por fase, só a atual aberta; (4) barra lateral
+em três grupos com contadores. Campos que o protótipo mostra e o banco
+ainda não guarda: quem leu andamento de sistema já existe
+(andamentos_lidos); natureza do caso (concessão, revisão, acerto) e
+"Li" por entrada de robô precisam de coluna nova antes do passo 2.
+
 # Onde paramos — 25.08.2026, versão 09.75
 
 ## F79 · As seções do Meu Dia recolhem (09.75)
