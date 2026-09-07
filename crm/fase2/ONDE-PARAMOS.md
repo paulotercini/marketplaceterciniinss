@@ -1,3 +1,27 @@
+# Onde paramos — 07.09.2026, versão 09.77
+
+## F81 · Régua por fase, só com o tema v10 (09.77)
+
+Segundo passo do protótipo v10 no CRM real. `reguaCaso(k)` desenha,
+logo abaixo do sub-menu do caso (grid-column 1/-1, o cartão de fatos
+desce para grid-row 3), uma linha com as âncoras DER e NB (campoFato do
+mesmo jeito, com ✎ e 📋), o rótulo ONDE ESTÁ com a lista da fase e o
+número vivo (último protocolo no INSS, último NUP formatado no Conselho,
+processo principal formatado no judicial, cada um com 📋 e clique para a
+sub-aba da fonte) e, dobrados num details à direita, os números das
+fases anteriores. Chips de Mandado de Segurança e do rito vêm de
+dadosJudiciais. A função devolve "" com o tema desligado (temaV10()),
+então nada muda para quem não ligou. A linha da DER do cartão fica
+oculta só no tema (CSS), porque passou a morar na régua.
+
+Prova nova: regua81.js (16/16), cobre as três fases, o número vivo, os
+anteriores dobrados, a DER fora do cartão, a não sobreposição com o
+cartão e o modo desligado. Suíte: 58/60 no padrão, 57/60 com o tema
+forçado (as mesmas falhas herdadas de sempre).
+
+Próximo: (3) linha do tempo do Caso completo agrupada por fase, com só a
+atual aberta; (4) barra lateral em três grupos com contadores.
+
 # Onde paramos — 06.09.2026, versão 09.76
 
 ## F80 · Visual v10 (papel e petróleo) atrás de interruptor (09.76)
