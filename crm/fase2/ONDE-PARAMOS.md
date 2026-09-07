@@ -1,3 +1,35 @@
+# Onde paramos — 07.09.2026, versão 09.81
+
+## F85 · De que é o prazo, e o cumprido sai registrado (09.81)
+
+Segundo retorno do Paulo sobre a coluna da esquerda: "embora conste
+cada um dos prazos, não consigo saber do que é esse prazo; precisa ser
+intuitivo, por exemplo clicando ir ao comentário que constou o prazo. E
+constar somente os prazos vigentes, o que foi feito sai daqui e fica na
+anotação da tarefa".
+
+O elo já existia e não estava sendo usado: o composer com o ⏰ grava o
+comentário com o carimbo "⏰ [PRAZO dd.mm.aaaa]". `origemDoPrazo(k)`
+acha esse comentário; no tema, o rótulo da linha passa a ser o texto
+dele em negrito, com uma segunda linha "prazo fatal · caso · anotado
+por Fulano em dd.mm.aaaa", e o clique chama qdIrParaAndamento até o
+comentário. Sem origem (prazo vindo do "Concluir em" do To Do ou
+digitado na data), a linha diz "sem motivo anotado" em âmbar e o clique
+abre `explicarPrazo`, que grava o comentário com o carimbo — a partir
+dali a linha tem motivo e link. Exigência, recorrer até e DCB ganharam
+o mesmo formato de duas linhas (a exigência mostra a
+exigencia_descricao).
+
+`janelaPrazoCumprido` passou a perguntar O QUE FOI FEITO (com os
+CONCLUIR_PRESETS), grava o comentário "✔ [PRAZO CUMPRIDO] ..." como
+RESPOSTA à anotação de origem e só então baixa o prazo e devolve o caso
+à lista. Vale nos dois visuais — é registro, não estética. Na coluna de
+300px o motivo ocupa a primeira linha inteira do item; data, avatar e
+botões descem para a segunda.
+
+Prova nova: prazo85.js (15/15). acao84.js acompanhou o rótulo novo da
+exigência. Suíte: 62/64 (as duas herdadas de sempre).
+
 # Onde paramos — 07.09.2026, versão 09.80
 
 ## F84 · O que cobra ação, os prazos no topo da coluna (09.80)
