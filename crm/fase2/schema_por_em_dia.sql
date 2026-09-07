@@ -378,3 +378,20 @@ alter table casos add column if not exists pje_links jsonb not null default '{}'
 -- txt e q viajam junto para a lista ⭐ Importante mostrar o movimento sem ter
 -- de reabrir o datajud de cada caso.
 alter table casos add column if not exists sinais_cnj jsonb not null default '{}'::jsonb;
+
+-- ── F87 (09.83): NATUREZA DO PEDIDO ───────────────────────────────────────
+-- A espécie diz QUAL benefício; a natureza diz o que se pede sobre ele:
+-- conceder pela primeira vez, revisar o que já foi concedido, ou acertar o
+-- cadastro/CNIS que sustenta o pedido. Muda a peça, muda o prazo decadencial
+-- e muda a cobrança — e é por ela que a carteira se separa quando alguém
+-- pergunta quantas revisões estão em andamento. O mesmo conteúdo está em
+-- schema_natureza.sql, para quem prefere rodar só este pedaço.
+alter table casos add column if not exists natureza text;
+do $$
+begin
+  if not exists (select 1 from pg_constraint where conname = 'casos_natureza_valores') then
+    alter table casos add constraint casos_natureza_valores
+      check (natureza is null or natureza in ('concessao','revisao','acerto'));
+  end if;
+end $$;
+create index if not exists casos_natureza_idx on casos (natureza) where natureza is not null;

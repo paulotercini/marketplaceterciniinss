@@ -78,13 +78,13 @@ FIX.atribuicoes.push({ caso_id: C2, colaborador_id: EU }, { caso_id: C3, colabor
   conf("INSS: a régua existe", !!inss);
   conf("INSS: a DER e o NB estão na régua", inss && /DER 14\.03\.2025/.test(inss.texto) && /NB 41\/210\.334\.552-0/.test(inss.texto));
   conf("INSS: o número vivo é o ÚLTIMO protocolo", inss && inss.vivo === "9988776655");
-  conf("INSS: o protocolo anterior fica dobrado", inss && /1 número de fase anterior/.test(inss.anteriores));
+  conf("INSS: o protocolo anterior fica dobrado", inss && /Números anteriores · 1/.test(inss.anteriores));
   conf("INSS: a DER sumiu do cartão (mora na régua)", inss && !inss.derNoCartao);
   conf("INSS: a régua não sobrepõe o cartão", inss && !inss.sobrepoe);
   const cr = await regua(C2);
   conf("Conselho: o número vivo é o NUP do e-Sisrec, formatado", cr && cr.vivo === "44233.100482/2026-11");
-  conf("Conselho: NB sem valor aparece como 'a atribuir'", cr && /NB a atribuir/.test(cr.texto));
-  conf("Conselho: o protocolo do INSS virou fase anterior", cr && /1 número de fase anterior/.test(cr.anteriores));
+  conf("Conselho: NB sem valor aparece como 'não informado'", cr && /NB\s*não informado/.test(cr.texto));
+  conf("Conselho: o protocolo do INSS virou fase anterior", cr && /Números anteriores · 1/.test(cr.anteriores));
   const ju = await regua(C3);
   conf("Judicial: o número vivo é o CNJ formatado", ju && ju.vivo === "5000871-19.2026.4.03.6108");
   conf("Judicial: o rito aparece como chip", ju && /JEF/.test(ju.texto));

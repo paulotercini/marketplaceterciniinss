@@ -67,9 +67,9 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
   const on = await ler();
   conf("ligado: o quadro virou o bloco 'O que cobra ação', fora do cartão", on.bloco && !on.dentroDoCartao);
   conf("o bloco fica ACIMA do cartão de fatos", on.acima);
-  conf("o rótulo conta os prazos", /O que cobra ação · 3 prazos/.test(on.rotulo));
+  conf("o rótulo conta os prazos", /Prazos e providências · 3 prazos/.test(on.rotulo));
   conf("a primeira linha é o PRAZO FATAL vencido, em vermelho", on.linhas[0] && /PRAZO FATAL/.test(on.linhas[0].txt) && on.linhas[0].venceu && on.linhas[0].borda === "rgb(179, 38, 30)");
-  conf("a exigência do INSS entrou como prazo, em âmbar (vence em 3 dias)", on.linhas.some(l => /Exigência do INSS/.test(l.txt) && /prazo da exigência/.test(l.txt) && l.prazo && l.logo && l.borda === "rgb(143, 84, 0)"));
+  conf("a exigência do INSS entrou como prazo, em âmbar (vence em 3 dias)", on.linhas.some(l => /Exigência do INSS/.test(l.txt) && /[Pp]razo da exigência/.test(l.txt) && l.prazo && l.logo && l.borda === "rgb(143, 84, 0)"));
   conf("recorrer até (30 dias da decisão) entrou como prazo", on.linhas.some(l => /Recorrer até/.test(l.txt) && l.prazo));
   conf("a perícia marcada continua na lista, depois dos prazos", on.linhas.findIndex(l => /Perícia marcad/.test(l.txt)) > on.linhas.filter(l => l.prazo).length - 1);
   conf("os prazos vêm todos antes dos lembretes", on.linhas.map(l => l.prazo ? 1 : 0).join("") === "111" + "0".repeat(on.linhas.length - 3));
