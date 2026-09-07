@@ -89,6 +89,13 @@ with esperado(secao, item, existe) as (
          exists(select 1 from information_schema.columns
                  where table_name='casos' and column_name='pje_links')
   union all
+  select 'F87', 'casos.natureza',
+         exists(select 1 from information_schema.columns
+                 where table_name='casos' and column_name='natureza')
+  union all
+  select 'F87', 'casos.natureza com a trava dos três valores',
+         exists(select 1 from pg_constraint where conname='casos_natureza_valores')
+  union all
   select 'anteriores', 'casos.fase aceita peticao_inicial',
          exists(select 1 from pg_constraint
                  where conname='casos_fase_check'

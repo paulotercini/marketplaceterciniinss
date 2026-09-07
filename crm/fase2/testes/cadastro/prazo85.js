@@ -74,9 +74,9 @@ FIX.andamentos = [
   conf("ligado: os dois prazos aparecem", on.length === 2);
   const comMotivo = on.find(l => /Protocolar o recurso ordinário/.test(l.txt));
   conf("o prazo COM origem mostra o motivo escrito no comentário", !!comMotivo);
-  conf("e diz que é prazo fatal, de qual caso e quem anotou", comMotivo && /prazo fatal · Aposentadoria por idade · anotado por Paulo/.test(comMotivo.txt));
+  conf("e diz que é prazo fatal, de qual caso e quem anotou", comMotivo && /Prazo fatal · Aposentadoria por idade · registrado por Paulo/.test(comMotivo.txt));
   conf("clicar leva ao comentário que criou o prazo", comMotivo && comMotivo.onclick.includes(`qdIrParaAndamento('${CASO1}','${AND_ORIG}')`));
-  const semMotivo = on.find(l => /sem motivo anotado/.test(l.txt));
+  const semMotivo = on.find(l => /Sem descrição/.test(l.txt));
   conf("o prazo SEM origem avisa que não tem motivo", !!semMotivo);
   conf("e clicar nele abre a caixa de explicar", semMotivo && semMotivo.onclick.includes(`explicarPrazo('${C2}')`));
   conf("a ação do prazo é '✔ cumprido' pela janela que registra", comMotivo && /janelaPrazoCumprido/.test(comMotivo.acao));
@@ -94,7 +94,7 @@ FIX.andamentos = [
   await p.evaluate(id => janelaPrazoCumprido(id), CASO1);
   await p.waitForSelector("#pz-txt");
   const jan = await p.evaluate(() => document.getElementById("janela").textContent.replace(/\s+/g, " "));
-  conf("a janela do cumprido lembra qual era o prazo", /O prazo era: Protocolar o recurso ordinário/.test(jan));
+  conf("a janela do cumprido lembra qual era o prazo", /Prazo: Protocolar o recurso ordinário/.test(jan));
   await p.evaluate(() => { document.getElementById("pz-txt").value = "Recurso protocolado no e-Sisrec"; document.getElementById("pz-ok").click(); });
   await p.waitForTimeout(500);
   const cump = escritos.filter(e => e.t === "andamentos").map(e => JSON.parse(e.corpo)).find(b => /PRAZO CUMPRIDO/.test(b.texto || ""));

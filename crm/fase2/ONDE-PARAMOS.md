@@ -1,3 +1,43 @@
+# Onde paramos — 07.09.2026, versão 09.83
+
+## F87 · Vocabulário de escritório e natureza do pedido (09.83)
+
+Pedido do Paulo: "'Duas trilhas vivas', 'o que cobra ação' são coisas
+que não se constam em um CRM; melhore para parecer um CRM qualificado e
+profissional". Os rótulos que eu tinha inventado nas ondas F81 a F86
+saíram, e no lugar entrou a língua do escritório.
+
+| antes | agora |
+|---|---|
+| Onde está | Tramitação |
+| Duas trilhas vivas | Tramitação em paralelo |
+| O que cobra ação | Prazos e providências |
+| a atribuir | não informado |
+| N números de fase anterior | Números anteriores · N |
+| sem motivo anotado | Sem descrição — clique para descrever este prazo |
+| anotado por | registrado por |
+| Nada cobra ação... cliente esquecido | Sem prazos ou providências em aberto. Registre um andamento com data para criar o lembrete. |
+| escreva o que foi feito | Registre a providência cumprida |
+
+**Natureza do pedido.** A espécie diz qual benefício; a natureza diz o
+que se pede sobre ele — Concessão, Revisão ou Acerto de cadastro. Três
+botões no cartão do caso (abaixo do título, visíveis em toda fase, não
+dentro do "mais informações") e o chip no topo quando marcada.
+`definirNatureza` grava em casos.natureza e, sem a coluna, devolve o
+aviso com o nome do arquivo a rodar, desfazendo a marca na tela — o
+mesmo padrão dos marcadores.
+
+**Para o Supabase.** `crm/fase2/schema_natureza.sql` (novo, idempotente,
+com a trava dos três valores, o índice parcial e o comentário da
+coluna). O mesmo bloco foi acrescentado ao `schema_por_em_dia.sql`, que
+é o arquivo único de "pôr o banco em dia", e o `schema_conferencia.sql`
+passou a checar a coluna e a trava. Auditoria feita antes: de todas as
+colunas de `casos` que o app grava hoje, `natureza` era a única que
+faltava no schema.
+
+Provas: natureza87.js (15/15). As provas F81, F84 e F85 acompanharam o
+vocabulário novo. Suíte: 64/66 (as duas herdadas de sempre).
+
 # Onde paramos — 07.09.2026, versão 09.82
 
 ## F86 · Trilha paralela, e o que faltava do protótipo (09.82)
