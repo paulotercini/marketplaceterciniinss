@@ -69,7 +69,7 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
   conf("o bloco fica ACIMA do cartão de fatos", on.acima);
   conf("o rótulo conta os prazos", /O que cobra ação · 3 prazos/.test(on.rotulo));
   conf("a primeira linha é o PRAZO FATAL vencido, em vermelho", on.linhas[0] && /PRAZO FATAL/.test(on.linhas[0].txt) && on.linhas[0].venceu && on.linhas[0].borda === "rgb(179, 38, 30)");
-  conf("a exigência do INSS entrou como prazo, em âmbar (vence em 3 dias)", on.linhas.some(l => /exigência do INSS/.test(l.txt) && l.prazo && l.logo && l.borda === "rgb(143, 84, 0)"));
+  conf("a exigência do INSS entrou como prazo, em âmbar (vence em 3 dias)", on.linhas.some(l => /Exigência do INSS/.test(l.txt) && /prazo da exigência/.test(l.txt) && l.prazo && l.logo && l.borda === "rgb(143, 84, 0)"));
   conf("recorrer até (30 dias da decisão) entrou como prazo", on.linhas.some(l => /Recorrer até/.test(l.txt) && l.prazo));
   conf("a perícia marcada continua na lista, depois dos prazos", on.linhas.findIndex(l => /Perícia marcad/.test(l.txt)) > on.linhas.filter(l => l.prazo).length - 1);
   conf("os prazos vêm todos antes dos lembretes", on.linhas.map(l => l.prazo ? 1 : 0).join("") === "111" + "0".repeat(on.linhas.length - 3));
@@ -79,7 +79,7 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
   const off = await ler();
   conf("desligado: sem o bloco, o quadro segue dentro do cartão", !off.bloco && off.dentroDoCartao);
   conf("desligado: o rótulo é o de sempre", /Lembretes e datas/.test(off.rotulo));
-  conf("desligado: exigência e recorrer NÃO entram no quadro (ficam nos chips)", !off.linhas.some(l => /exigência do INSS|Recorrer até/.test(l.txt)));
+  conf("desligado: exigência e recorrer NÃO entram no quadro (ficam nos chips)", !off.linhas.some(l => /xigência do INSS|Recorrer até/.test(l.txt)));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
