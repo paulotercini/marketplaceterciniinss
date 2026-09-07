@@ -1,3 +1,26 @@
+# Onde paramos — 07.09.2026, versão 09.78
+
+## F82 · Caso completo por fase, só com o tema v10 (09.78)
+
+Terceiro passo do protótipo v10. `fasesDoCaso(k)` deriva os cortes de
+fase das datas que o caso já guarda (der, ro_protocolado_em ou o 1º
+evento do e-Sisrec, ajuizado_em ou o do DataJud, encerrado_em); a fase
+em que o caso ESTÁ sempre existe, mesmo sem data (começa em criado_em),
+e a primeira engole tudo o que veio antes dela. `casoCompletoPorFase`
+distribui as linhas do fatosDoCasoTodo pelos cortes (resposta fica
+onde está o pai) e desenha um `<details class="fase-b">` por fase, da
+mais nova para a mais antiga, com nome, período e contagem; só a atual
+nasce aberta e `fasesAbertas` (chave caso:fase) guarda as que o usuário
+abriu, para sobreviver ao repintarFicha. Com menos de duas fases, ou
+sem o tema, painelTudo chama tlOficial como sempre. `ligarFasesCaso()`
+roda no fim do pintarFicha.
+
+Prova nova: fases82.js (11/11). Suíte: 59/61 no padrão (as duas
+herdadas). No arquivo com o tema FORÇADO as provas novas acusam as
+asserções de "desligado", por construção, o resto igual.
+
+Próximo: (4) barra lateral em três grupos com contadores.
+
 # Onde paramos — 07.09.2026, versão 09.77
 
 ## F81 · Régua por fase, só com o tema v10 (09.77)
