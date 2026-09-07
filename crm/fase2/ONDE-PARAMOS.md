@@ -1,3 +1,34 @@
+# Onde paramos — 07.09.2026, versão 09.82
+
+## F86 · Trilha paralela, e o que faltava do protótipo (09.82)
+
+Comparação medida entre o protótipo v10 e o CRM com o tema ligado (as
+duas telas abertas em Playwright, inventário de rótulos e controles lado
+a lado). Quatro diferenças reais, todas fechadas nesta onda.
+
+**Trilha paralela.** `trilhaParalela(k)` reconhece o mandado de
+segurança que corre AO LADO da fase (classe MSCiv num caso cuja fase
+ainda é administrativa). A régua deixa de empurrar o processo do MS
+para "número de fase anterior" e passa a desenhar duas linhas vivas,
+Principal (a fase, com o número dela) e Instrumental (o MS, com o
+órgão), como no protótipo. `fasesDoCaso` ignora o ajuizado_em quando a
+trilha é paralela: o Caso completo não cria mais a fase "Ação
+judicial" que nunca aconteceu, e os registros do MS ficam na fase atual.
+
+**Telefone na faixa** do cliente, com copiar, ao lado do CPF e da senha.
+
+**✔ li** nas entradas de sistema dentro do Caso completo (o mesmo
+liNaFicha da aba INSS), com o selo "✔ lido" para quem já leu.
+
+Ficam fora, por decisão registrada: as dez abas planas do cliente do
+protótipo (o CRM tem menu dinâmico em dois níveis, já rotulado por
+escopo), a aba "Números" (o conteúdo vive na régua e no "mais
+informações"), o "Escalar a Paulo" (coberto por TAREFA PARA e @) e a
+natureza do caso (concessão, revisão, acerto), que pede coluna nova no
+Supabase.
+
+Prova nova: paralela86.js (11/11). Suíte: 63/65 (as duas herdadas).
+
 # Onde paramos — 07.09.2026, versão 09.81
 
 ## F85 · De que é o prazo, e o cumprido sai registrado (09.81)
