@@ -1,3 +1,26 @@
+# Onde paramos — 07.09.2026, versão 09.79
+
+## F83 · Barra lateral, o quarto e último passo do protótipo v10 (09.79)
+
+A barra já tinha os três grupos e os contadores; faltava o título do
+primeiro grupo e o sinal de vencido. Feito por CSS no tema
+(`#grupo-dinamicas::before` com "Trabalho de hoje", some no menu
+recolhido) e por `quantosVencidos()` (caso com prazo passado, tarefa de
+andamento com lembrar_em passado, tarefa particular vencida), que põe a
+classe `.cont.venc` e o título "N vencidas" no contador do Meu Dia. O
+vermelho só pinta no tema; em qualquer visual, o Meu Dia sem item de
+hoje mas com vencidas mostra as vencidas em cinza (antes o contador
+sumia). O `.sep` da lateral clara passou a usar --borda.
+
+Prova nova: lateral83.js (9/9). Suíte: 60/62 no padrão (as duas
+herdadas de sempre, cnj71 e paineis).
+
+Os quatro passos do protótipo v10 estão no CRM real, todos atrás do
+mesmo interruptor (?tema=v10 ou o botão "visual"). O que o protótipo
+mostrava e o banco ainda não guarda: natureza do caso (concessão,
+revisão, acerto) e o "Li" por entrada de robô fora do INSS. Ficam para
+quando o Paulo decidir criar as colunas.
+
 # Onde paramos — 07.09.2026, versão 09.78
 
 ## F82 · Caso completo por fase, só com o tema v10 (09.78)
