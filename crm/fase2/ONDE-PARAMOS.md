@@ -1,3 +1,24 @@
+# Onde paramos — 07.09.2026, versão 09.80
+
+## F84 · O que cobra ação, os prazos no topo da coluna (09.80)
+
+Pedido do Paulo ao ver a 09.79 num caso real: "no canto esquerdo não
+está aparecendo somente o que é prazo; prazo é o mais importante do
+CRM, não podemos perder, tem de ser o destaque". No tema v10 o
+quadroDatas sai do blocoFatos e é desenhado por pintarFicha numa
+`<section class="acao-caso">` logo depois da régua (grid-column 1,
+grid-row 3; o cartão desce para 4/span 99). Dentro do quadro, e só no
+tema, entram como linhas de PRAZO o que antes vivia em chips do cartão:
+exigencia_prazo (com o botão cumprirExigencia), recorrerAte (30 dias de
+decisao_em) e a DCB (ou dcb_prorrogar_em, quando a prorrogação ainda não
+foi pedida). A ordem no tema é prazos primeiro, depois lembretes e
+perícias, cada grupo pela data. Rótulo "O que cobra ação · N prazos e M
+lembretes"; vazio diz que cliente sem próxima data é cliente esquecido.
+Cor pela régua de sempre: vencido vermelho, 7 dias âmbar, fatal com a
+borda vermelha. Desligado, nada muda.
+
+Prova nova: acao84.js (12/12). Suíte: 61/63 no padrão (as duas herdadas).
+
 # Onde paramos — 07.09.2026, versão 09.79
 
 ## F83 · Barra lateral, o quarto e último passo do protótipo v10 (09.79)
