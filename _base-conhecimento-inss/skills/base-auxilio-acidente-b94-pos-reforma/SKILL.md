@@ -240,3 +240,9 @@ Em peça administrativa, este dispositivo é fundamento PRINCIPAL, com a Súmula
 ## Termo inicial em desistência de aposentadoria (Onda 115)
 
 O art. 355, § 1º, II, na redação da IN 212/2026, fixa o termo inicial, na hipótese de desistência de aposentadoria do art. 181-B, § 2º, do RPS, a partir do dia seguinte da DCB do auxílio-acidente. Conferir a subsunção à hipótese concreta antes de invocar.
+
+## Maior esforço, fundamentação atualizada (Onda 124)
+
+O "maior esforço" continua sendo argumento válido, mas MUDOU de base normativa. O art. 104, II, do Decreto 3.048/99 foi revogado pelo Decreto 10.410/2020, e a âncora atual é o Tema 416 do STJ (REsp 1.109.591/SC, Terceira Seção, j. 25/08/2010, DJe 08/09/2010, trânsito em julgado), cuja tese literal afirma que "o nível do dano e, em consequência, o grau do maior esforço, não interferem na concessão do benefício, o qual será devido ainda que mínima a lesão".
+
+Aplicação típica em amputação de quirodáctilo, com a construção da mão como conjunto harmônico e do órgão preensor. Detalhamento, quesitos e modelo em `base-b94-anexo-iii-quadros/references/MAIOR-ESFORCO-E-PERDA-DE-DEDO.md`.

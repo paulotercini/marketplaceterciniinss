@@ -135,3 +135,9 @@ Nota de manutenção (auditoria 25/07/2026). Os arquivos CHECKLIST.md e FUNDAMEN
 Em TODO caso de aposentadoria PCD, por tempo de contribuição ou por idade, verificar se o Modelo Linguístico Fuzzy era aplicável e se foi aplicado. Três gatilhos, bastando um. Atividade do domínio sensível com 25 ou 50, ou todas com 75. Ausência de auxílio de terceiros sempre que necessário. Resposta positiva à pergunta emblemática do tipo de deficiência. Presente o gatilho, a menor pontuação do domínio sensível se replica para todas as atividades daquele domínio, o que muda a soma e pode mudar o GRAU (e com ele o multiplicador de conversão e o próprio direito).
 
 A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e roteiro de impugnação em `base-pcd-if-bra-metodologia/references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`.
+
+## Laudo de B94 que nega incapacidade (Onda 124)
+
+Trava de leitura. Em auditoria de laudo cujo objeto é auxílio-acidente, NÃO parar na conclusão. O requisito do B94 é a REDUÇÃO da capacidade, não a incapacidade, e o perito que conclui "capaz" frequentemente respondeu a pergunta errada.
+
+Varrer a DESCRIÇÃO em busca de menção a esforço adicional, perda de força, limitação de amplitude, alteração de pinça ou de preensão, e de qualquer interferência funcional. Achado ali, registrar como CONTRADIÇÃO INTERNA entre a fundamentação e a conclusão, que é o achado mais forte deste cenário. Roteiro em `base-b94-anexo-iii-quadros/references/MAIOR-ESFORCO-E-PERDA-DE-DEDO.md`.
