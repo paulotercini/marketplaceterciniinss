@@ -84,3 +84,9 @@ Segundo. Sequela precisa ser permanente e pós-consolidação. Lesão em tratame
 Terceiro. Citar as Súmulas 88 e 89 da TNU sempre pelo texto literal desta skill, sem paráfrase.
 
 Quarto. As references desta skill (FUNDAMENTOS-E-CENARIOS.md e JURISPRUDENCIA-E-REFUTACAO.md) ainda NÃO passaram pela auditoria de veracidade. Em caso de conflito, prevalece este SKILL.md. Pendência registrada para a Etapa 2 da auditoria.
+
+## Perícia desfavorável que admite interferência funcional (Onda 124)
+
+Cenário distinto da sequela mínima discutida nesta skill, e que se resolve antes dela. O perito conclui pela ausência de INCAPACIDADE, requisito que o B94 não exige, mas descreve interferência funcional, esforço adicional ou perda de força. Nesse caso não se discute o grau da sequela, discute-se o ENQUADRAMENTO do requisito.
+
+Regra prática. Varrer a descrição do laudo antes de impugnar a conclusão. Encontrada a admissão de esforço adicional, a conclusão do perito contradiz a própria fundamentação, e a via é a valoração do que já está nos autos, não a nova perícia, que pode piorar. Roteiro em `base-b94-anexo-iii-quadros/references/MAIOR-ESFORCO-E-PERDA-DE-DEDO.md`.
