@@ -188,3 +188,31 @@ Medição sobre as **15.147 entradas datadas** com conteúdo na mesma linha.
 `09.10.2025 (D): Trouxe esses dois documentos anexados hoje ao escritório. (P): Amanda, junta esses dois documentos no pedido de benefício dele. Depois pode alterar a tarefa para o dia 14/10 para o André verificar.`
 
 Lição para a manutenção da base. Contagem de rótulo isolada não prova padrão de forma. Antes de converter um achado numérico em regra, conferir em QUE POSIÇÃO do texto o achado aparece.
+
+## Dois gêneros distintos de entrada (Onda 129, 09/09/2026) — CORREÇÃO da Onda 128
+
+A Onda 128 acertou ao derrubar os rótulos, e errou ao aplicar à transcrição de atendimento a estatística das notas de andamento. São gêneros diferentes.
+
+**Gênero A, nota de andamento.** É o que domina o acervo. Mediana de 10 palavras. Registra um fato processual e o próximo passo. `A sentença foi de improcedência. Gratuidade deferida. Tarefa encerrada.`
+
+**Gênero B, anotação de atendimento.** São as 482 entradas com 60 palavras ou mais. **Mediana de 83 palavras, percentil 90 em 131, máximo de 226.** O teto de 60 palavras fixado na Onda 128 ficava abaixo da própria mediana do gênero, e estrangulava o texto.
+
+Alvo fixado para a transcrição de atendimento, **80 a 140 palavras em blocos temáticos**.
+
+### Traços da voz, com o que o acervo sustenta e o que não sustenta
+
+Medição sobre as 482 entradas longas.
+
+| Traço | Ocorrências | % | Situação |
+|---|---|---|---|
+| Primeira pessoa do advogado, "Orientei", "Expliquei", "Solicitei" | 44 | 9,1% | Sustentado |
+| Fecho com data de retorno | 34 | 7,1% | Sustentado |
+| Aspas na fala do cliente | 15 | 3,1% | Sustentado |
+| Marca em caixa alta abrindo bloco, `ALERTA.`, `ATENÇÃO.` | 6 | 1,2% | Sustentado, e `ALERTA` aparece 473 vezes no acervo inteiro |
+| Ênfase por caixa alta na palavra, `NÃO` | 118 no acervo | — | Sustentado |
+| Abertura "Trata-se de" | 1 | 0,2% | NÃO sustentado pelo acervo |
+| Verbo de relato, "Refere que" | 4 | 0,8% | NÃO sustentado pelo acervo |
+
+**Por que os dois últimos entram mesmo assim.** O backup é quase inteiramente nota de andamento, e o gênero transcrição de atendimento completo mal existe nele, porque é justamente o que a skill está criando. Nesse gênero a voz é a do titular do escritório, e o exemplo canônico da SKILL.md é o padrão a replicar. O registro fica aqui para que ninguém, em auditoria futura, conclua que esses dois traços foram extraídos do acervo. Eles não foram.
+
+**Lição de método.** Antes de aplicar uma estatística a um formato, verificar se a amostra pertence ao mesmo GÊNERO do texto que se quer produzir. Mediana de corpus heterogêneo não descreve nenhum dos seus gêneros.
