@@ -34,6 +34,8 @@ Requisitos do art. 86 da Lei 8.213/91, consolidação das lesões e sequela perm
 
 A distinção que estrutura tudo. O B94 NÃO exige incapacidade, exige REDUÇÃO da capacidade para o trabalho que o segurado habitualmente exercia. Ele é INDENIZATÓRIO e não substitutivo, o segurado continua trabalhando e recebe o benefício junto com o salário. Confira se a peça sustentou redução, porque peça que tenta provar incapacidade em pedido de B94 erra o requisito e convida à improcedência.
 
+Maior esforço e perícia desfavorável. Quando o laudo nega INCAPACIDADE mas descreve interferência funcional, esforço adicional ou perda de força, o perito respondeu a pergunta errada, porque o B94 exige REDUÇÃO da capacidade. Confira se a peça explorou a contradição interna do laudo em vez de aceitar a conclusão. ALERTA NORMATIVO. O art. 104, II, do Decreto 3.048/99, que trazia o maior esforço expresso, foi REVOGADO pelo Decreto 10.410/2020. Peça que o cita hoje invoca dispositivo revogado. A âncora atual é o Tema 416 do STJ, cuja tese afirma que o grau do maior esforço não interfere na concessão. Trate a citação do inciso revogado como erro a corrigir de imediato.
+
 Sequela mínima. A corrente ampliativa concede ainda que a redução seja leve, bastando que seja permanente e que exija maior esforço para a mesma atividade. Confira se a peça enfrentou a objeção de insignificância, que é a defesa padrão do INSS.
 
 ATENÇÃO ao Tema 201 da TNU. A tese real trata do CONTRIBUINTE INDIVIDUAL e lhe é DESFAVORÁVEL. Não citar como se fosse tese de sequela mínima. A ancoragem correta da sequela leve é a Súmula 88 da TNU somada ao Tema 416 do STJ, com o limite negativo da Súmula 89.
@@ -53,6 +55,8 @@ Novo requerimento. A ampliativa dispensa novo requerimento administrativo quando
 ## Erros doutrinários frequentes neste tema
 
 Pedir B94 alegando incapacidade em vez de redução da capacidade.
+
+Citar o art. 104, II, do Decreto 3.048/99, revogado pelo Decreto 10.410/2020.
 
 Citar o Tema 201 da TNU como se sustentasse a sequela mínima, quando a tese real trata do contribuinte individual e é desfavorável.
 

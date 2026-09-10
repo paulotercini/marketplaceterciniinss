@@ -76,3 +76,7 @@ Consulta nova que se repetir três vezes ganha entrada nesta skill, com o núcle
 ## Integração com outras skills
 
 `processos-amanda-administrativo` para o semáforo e o quadro de delegação. `triagem` para a fila diária. `inss-canais-atendimento` para orientar canal e protocolo. `base-meu-inss-pat-gerid-fluxo` para conferir andamento antes de responder. `orientacao-cliente-pericia` quando a consulta for sobre perícia agendada. NÃO substitui parecer jurídico, peça ou orientação de estratégia, que são do advogado.
+
+## Origem no atendimento transcrito (Onda 125)
+
+Quando a resposta ao cliente nascer de atendimento gravado, a `transcricao-atendimento` roda antes e devolve o que foi efetivamente orientado e solicitado. A resposta padrão se constrói sobre esse registro, e não sobre a memória da conversa.

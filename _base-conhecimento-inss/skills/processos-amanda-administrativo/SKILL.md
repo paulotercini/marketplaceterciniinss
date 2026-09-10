@@ -168,3 +168,9 @@ Microsoft To Do, listas 🌻 INSS, 🙋 Escritório, 🙏 Aposentadorias Futuras
 
 Encontros semanais Amanda+André de 30 min, segunda 9h.
 Encontros mensais Amanda+Paulo de 1 hora, primeira segunda do mês 14h.
+
+## Transcrição de atendimento (Onda 125)
+
+Atendimento gravado ou anotado de forma corrida vira anotação padronizada pela skill `transcricao-atendimento`, que entrega a linha datada no formato do escritório, a lista sugerida e os alertas disparados.
+
+Regra que ela carrega e que vale para a equipe. A anotação NÃO é gravada automaticamente. O texto vem para conferência antes de ir ao To Do, porque entrada gravada não se apaga.
