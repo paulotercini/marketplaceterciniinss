@@ -1,6 +1,6 @@
 ---
 name: transcricao-atendimento
-description: "Converte transcrição de atendimento (áudio, vídeo, WhatsApp ou anotação corrida) na anotação padronizada do escritório, pronta para gravar no Microsoft To Do. Use SEMPRE que receber transcrição de atendimento, gravação de consulta, áudio de cliente, conversa de WhatsApp com cliente, resumo de reunião com segurado, ou anotação bruta de atendimento a transcrever. Extrai os pontos-chave que o escritório de fato registra, identificados na análise de 4.114 tarefas reais do To Do. Entrega linha datada no padrão DD.MM.AAAA (X), cabeçalho estruturado quando houver processo ou DER, hipótese de benefício, prazo ou data de verificação obrigatória, e a lista de documentos solicitados. Sinaliza o que o cliente disse mas não foi confirmado, e o que ficou faltando perguntar. NÃO grava sozinha, entrega o texto para conferência antes de ir ao To Do. Cruza com triagem-caso-novo, processos-amanda-administrativo, atendimento-respostas-padrao e base-protocolo-operacional-escritorio."
+description: "Converte transcrição de atendimento (áudio, vídeo, WhatsApp ou anotação corrida) na anotação padronizada do escritório, pronta para gravar no Microsoft To Do. Use SEMPRE que receber transcrição de atendimento, gravação de consulta, áudio de cliente, conversa de WhatsApp com cliente, resumo de reunião com segurado, ou anotação bruta de atendimento a transcrever. Extrai os pontos-chave que o escritório de fato registra, identificados na análise de 4.114 tarefas reais do To Do. Entrega a anotação POR ITENS ROTULADOS, com HIPÓTESE, ÚLTIMO EVENTO, QUADRO, PENDÊNCIA, SOLICITADO, ORIENTADO, ATITUDE A SER TOMADA e VERIFICAR EM, sob linha datada no padrão DD.MM.AAAA (X), com cabeçalho estruturado quando houver processo ou DER. Sinaliza o que o cliente disse mas não foi confirmado, e o que ficou faltando perguntar. NÃO grava sozinha, entrega o texto para conferência antes de ir ao To Do. Cruza com triagem-caso-novo, processos-amanda-administrativo, atendimento-respostas-padrao e base-protocolo-operacional-escritorio."
 ---
 
 # Transcrição de Atendimento
@@ -49,26 +49,48 @@ Dado sensível que o cliente pediu sigilo e que não afeta o caso.
 
 ## Formato de saída
 
-Sempre em dois blocos.
+Sempre em dois blocos, AMBOS por itens. Nada de parágrafo corrido, porque anotação em bloco cansa a leitura e esconde o que decide.
 
 ### Bloco 1, a anotação pronta para o To Do
 
-Uma linha datada, no padrão real do escritório. Data em DD.MM.AAAA, seguida do marcador de autoria entre parênteses e dois-pontos, e o conteúdo.
+Abre com a linha datada, no padrão real do escritório, e o conteúdo vem em ITENS ROTULADOS logo abaixo.
 
-Marcadores da equipe, confirmados no CRM. `(P)` Paulo, `(A)` Amanda, `(D)` André, `(I)` Ingrid, `(M)` Marcos, `(C)` Claude.
+Data em DD.MM.AAAA, marcador de autoria entre parênteses. `(P)` Paulo, `(A)` Amanda, `(D)` André, `(I)` Ingrid, `(M)` Marcos, `(C)` Claude. A transcrição usa o marcador de QUEM ATENDEU, nunca `(C)`, que é reservado à conclusão produzida pelo Claude na forma da regra 1 do protocolo.
 
-A anotação da transcrição usa o marcador de QUEM ATENDEU, não `(C)`. O `(C)` é reservado para conclusão produzida pelo Claude, na forma da regra 1 do protocolo.
+**Rótulos, todos extraídos do uso real do escritório.** Usar SOMENTE os que o caso alimentar. Rótulo sem conteúdo não entra.
+
+| Rótulo | Quando usar |
+|---|---|
+| `HIPÓTESE` | Espécie provável do benefício. Abre a anotação, porque orienta a leitura do resto |
+| `ÚLTIMO EVENTO` | O fato novo que motivou o atendimento, com data |
+| `QUADRO` | Limitação funcional, com a expressão do cliente entre aspas |
+| `SITUAÇÃO DO PROCESSO` | Havendo processo ou requerimento em curso |
+| `⚠️ PENDÊNCIA` | Erro em documento, prazo em risco, obstáculo ao protocolo. Sempre com o alerta |
+| `SOLICITADO` | Documento ou providência pedida ao cliente, item a item |
+| `ORIENTADO` | O que foi explicado ou decidido com o cliente |
+| `CONSIDERAÇÕES` | Avaliação do advogado que não cabe nos demais |
+| `ATITUDE A SER TOMADA` | O que o escritório fará |
+| `VERIFICAR EM` | Data de retorno. OBRIGATÓRIO, fecha a anotação |
+
+**Regras de forma.** Cada item com uma a duas linhas. Rótulo em caixa alta seguido de dois-pontos, exceção admitida à vedação geral porque campo estruturado não é prosa, e é assim que o escritório já escreve em `[DER]:` e `ENCAMINHAMENTO:`. Máximo de OITO itens, e o que exceder foi narrativa disfarçada.
 
 ```
-09.09.2026 (P): Trata-se de possível caso de auxílio-acidente. 44 anos,
-16 anos de contribuição. Refere condição na clavícula, na expressão dela
-"pendurada", com indicação de reconstrução de tendões e ligamentos.
-Origem em queda, sem acompanhamento nem tratamento à época.
-Solicitei documentos médicos antigos para fixar a data de início.
-Aguardar retorno até 25/09.
+09.09.2026 (P):
+HIPÓTESE: B31 por incapacidade pós-cirúrgica.
+ÚLTIMO EVENTO: Cirurgia de coluna lombar em 21.08.2026 com o Dr. André,
+descompressão por cânula com liberação do nervo ciático.
+QUADRO: Fica em pé "dois ou três minutos", dor que "queima como fogo",
+não toma banho sozinha. Pregabalina, Lisador e codeína.
+⚠️ PENDÊNCIA: Relatório traz a cirurgia como 21.09.2026, data futura e
+errada. Protocolar assim gera indeferimento.
+SOLICITADO: Relatório corrigido, aceito digital. Documento de identificação.
+ORIENTADO: Não usaremos a carta pré-cirúrgica. Deficiência visual não gera
+aposentadoria PCD agora, faltam os 15 anos na condição.
+ATITUDE A SER TOMADA: Protocolar B31 com perícia em Monte Alto.
+VERIFICAR EM: 18.09.2026.
 ```
 
-Havendo processo ou requerimento em curso, acrescentar o cabeçalho estruturado que o escritório usa nas listas Judicial e INSS, e só então o histórico.
+Havendo processo ou requerimento em curso, o cabeçalho estruturado do escritório vem ANTES da linha datada.
 
 ```
 [PROCESSO]: 
@@ -80,21 +102,23 @@ HISTÓRICO:
 ———————————————————————————
 ```
 
-Regra de posição. Histórico em ordem DECRESCENTE, entrada nova no TOPO. Nunca editar nem apagar entrada anterior.
+Regra de posição. Histórico em ordem DECRESCENTE, entrada nova no TOPO, entrada anterior intocada.
 
 ### Bloco 2, o controle interno
 
-Não vai para o To Do. Serve para o advogado decidir.
+Não vai para o To Do. Também por itens, com rótulo em negrito e uma a duas linhas cada.
 
-**Lista sugerida.** Qual das listas do escritório deve receber a tarefa, e por quê. Escritório para atendimento em avaliação, INSS para requerimento administrativo, Judicial para processo, Conselho de Recursos para recurso, Aposentadorias Futuras quando não há direito atual, Tarefas com Prazo quando houver prazo fatal.
+**Lista sugerida.** Qual lista recebe a tarefa e por quê. Escritório para atendimento em avaliação, INSS para requerimento, Judicial para processo, Conselho de Recursos para recurso, Aposentadorias Futuras sem direito atual, Tarefas com Prazo havendo prazo fatal.
 
-**Hipótese de benefício e alternativas.** A principal e, havendo, a sucessiva.
+**Hipótese e alternativas.** A principal e a sucessiva, cada uma em uma linha.
 
-**Afirmado mas NÃO confirmado.** Tudo que veio da boca do cliente e ainda não tem lastro documental. Esta seção existe para impedir que fala de cliente vire fato do caso.
+**Afirmado mas NÃO confirmado.** Um item por afirmação sem lastro documental, com o documento que resolve. Impede fala de cliente virar fato do caso.
 
-**Faltou perguntar.** Confrontar o atendimento com os dados mínimos da `triagem-caso-novo`. Idade, sexo, atividade atual e anterior, situação contributiva, queixa principal, requerimento anterior e resultado, motivo do indeferimento, documentos disponíveis. Listar o que não foi coletado, para a próxima conversa.
+**Faltou perguntar.** Um item por dado ausente, confrontado com os dados mínimos da `triagem-caso-novo`.
 
-**Alertas disparados.** Prazo decadencial do art. 103, prazo recursal, qualidade de segurado em risco, trava do Tema 1124 quando houver documento decisivo não apresentado ao INSS, janela de quinze dias para prorrogação em B31.
+**Alertas.** Um item por alerta, cada um com o PRAZO e a consequência. Decadência do art. 103, prazo recursal, qualidade de segurado, Tema 1124, janela de quinze dias da prorrogação em B31, e janelas normativas com data de fechamento.
+
+Alerta que tenha DATA DE FECHAMENTO vai em primeiro lugar e recebe destaque, porque é o único que pode inviabilizar a estratégia enquanto se conversa.
 
 ## Regras de execução
 
