@@ -1,3 +1,35 @@
+# Onde paramos — 09.09.2026, versão 09.84
+
+## F88 · Dar dono ao recurso sem caso (09.84)
+
+Print do Paulo na tela de importação: "46 número de recurso não tem
+caso. Isso precisamos corrigir para que apareça os casos para que eu
+escolha a quem pertence". A coleta lia 93 processos, atualizava 47 e
+descartava 46 em silêncio — e como o descarte era silencioso, o mesmo
+descarte se repetia em toda coleta.
+
+O dado para resolver já vinha junto: `CRPS.traduzirProcesso` devolve
+`recorrentes` (sem o procurador) e `num_proc`. `planoCrps` passou a
+guardar isso em `semCaso` e a sugerir o caso pelo nome, com o mesmo
+casamento tolerante do PJe (`nomesBatemPje`), quando o nome bate com UM
+cliente que tem UM caso ativo sem NUP. A tela ganhou a lista, espelhando
+o bloco que o acervo do PJe já tinha: NUP formatado, nome, NB, e os
+botões vincular / 🔍 escolher / 🚫, mais o "vincular os N" em lote.
+
+Vincular é `crps_nups = [...existentes, nup]` (nunca substitui), então a
+coleta seguinte casa sozinha e traz todos os movimentos. Escolher abre a
+busca por nome com os casos ativos do cliente e o "➕ caso no Conselho
+novo" para o segundo recurso. Ignorar guarda em `config_app.crps_ignorar`,
+com o "limpar e voltar a perguntar" — nada é decidido para sempre.
+
+Prova nova: recursos88.js (16/16).
+
+**Correção nas provas, não no programa.** lateral83 e acao84 quebraram
+sozinhas às 21h de SP: calculavam "ontem" em UTC, e à noite o dia de UTC
+já virou — o prazo "vencido" nascia vencendo hoje. As três provas com
+data relativa passaram a ancorar em São Paulo (`hojeSP()` / `emDias()`),
+que é o fuso do `hoje()` do app. Suíte: 65/67 (as duas herdadas).
+
 # Onde paramos — 07.09.2026, versão 09.83
 
 ## F87 · Vocabulário de escritório e natureza do pedido (09.83)
