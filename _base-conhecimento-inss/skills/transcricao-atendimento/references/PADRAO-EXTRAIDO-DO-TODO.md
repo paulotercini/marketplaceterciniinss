@@ -216,3 +216,44 @@ Medição sobre as 482 entradas longas.
 **Por que os dois últimos entram mesmo assim.** O backup é quase inteiramente nota de andamento, e o gênero transcrição de atendimento completo mal existe nele, porque é justamente o que a skill está criando. Nesse gênero a voz é a do titular do escritório, e o exemplo canônico da SKILL.md é o padrão a replicar. O registro fica aqui para que ninguém, em auditoria futura, conclua que esses dois traços foram extraídos do acervo. Eles não foram.
 
 **Lição de método.** Antes de aplicar uma estatística a um formato, verificar se a amostra pertence ao mesmo GÊNERO do texto que se quer produzir. Mediana de corpus heterogêneo não descreve nenhum dos seus gêneros.
+
+## Estrutura decisória e os dois modos (Onda 131, 09/09/2026)
+
+Análise do titular sobre o próprio padrão, conferida no acervo. Confirmada nos pontos verificáveis.
+
+### A ordem é decisória, e a Onda 129 estava errada
+
+Medição sobre as 7.893 entradas com marcador `(P)`.
+
+| Forma de abertura | Ocorrências | % |
+|---|---|---|
+| Fato ou resultado, "Benefício indeferido", "Perícia agendada", "Não trouxe", "Verifiquei que" | 1.036 | 13,1% |
+| "Trata-se de" ou "O cliente" | 90 | 1,1% |
+
+Proporção de doze para um. A Onda 129 fixou "Trata-se de pedido de" como abertura canônica, e o acervo diz o contrário. Corrigido. A fórmula fica reservada ao atendimento INICIAL, onde a hipótese é a própria conclusão do dia.
+
+### Demais traços conferidos
+
+| Traço | Ocorrências | % das entradas (P) |
+|---|---|---|
+| Próxima ação com data, verificar, aguardar, relembrar, cobrar | 1.125 | 14,3% |
+| Primeira pessoa, instrução dada | 663 | 8,4% |
+| `Tarefa encerrada` | 203 | 2,6% |
+| Preparação para ato crítico, perícia | 83 | 1,1% |
+| `Nada a ser feito` | 18 | 0,2% |
+
+### A regra central
+
+Registrar DECISÃO, MOTIVO RELEVANTE, PROVA NECESSÁRIA e PRÓXIMO MOVIMENTO. Frase que não move um dos quatro é dispensável. Este teste substitui a contagem de palavras como critério de corte, e a faixa de extensão passa a ser referência, não regra.
+
+### Dois modos, porque são dois gêneros
+
+Modo A, corrido decisório, para acompanhamento. É o dominante no acervo.
+
+Modo B, com FATOS, ANÁLISE e PROVIDÊNCIAS, para consulta inicial, triagem e planejamento. Proposto pelo titular em 09/09/2026. Os rótulos `FATOS` e `PEDIDOS` já aparecem 8 vezes cada no acervo, em bloco de parecer.
+
+Três correções aplicadas ao modelo proposto. ANÁLISE abre pela CONCLUSÃO e não pelo raciocínio. FATOS recebe só o apurado, sem juízo, porque "vínculo provavelmente deverá ser excluído" é análise disfarçada de fato. E o fecho com data de retorno é obrigatório também no Modo B, que tende a omiti-lo porque PROVIDÊNCIAS parece fechamento e não é.
+
+### Cortes acrescentados
+
+Explicação repetida ao cliente, detalhe pessoal que não altera requisito ou estratégia, e ato burocrático já refletido no andamento. Nada mudando, `Não retornou. Aguardar até DD/MM.` basta.

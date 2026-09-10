@@ -1,6 +1,6 @@
 ---
 name: transcricao-atendimento
-description: "Converte transcrição de atendimento (áudio, vídeo, WhatsApp ou anotação corrida) na anotação padronizada do escritório, pronta para o Microsoft To Do. Use SEMPRE que receber transcrição de atendimento, gravação de consulta, áudio de cliente, conversa de WhatsApp com cliente, resumo de reunião com segurado, ou anotação bruta a transcrever. Extrai o que o escritório de fato registra, medido em 15.147 entradas reais do To Do. Entrega a anotação em BLOCOS TEMÁTICOS de prosa, um assunto por bloco, abrindo pela hipótese na forma "Trata-se de pedido de", verbo de relato para o que o cliente disse, primeira pessoa para o que o escritório fez, marca em CAIXA ALTA no bloco que trava o protocolo, entre 80 e 140 palavras, sob linha datada em DD.MM.AAAA (X) com datas de conteúdo em DD/MM. Sinaliza o não confirmado e o que faltou perguntar. NÃO grava sozinha. Cruza com triagem-caso-novo, processos-amanda-administrativo e atendimento-respostas-padrao."
+description: "Converte transcrição de atendimento (áudio, vídeo, WhatsApp ou anotação corrida) na anotação padronizada do escritório, pronta para o Microsoft To Do. Use SEMPRE que receber transcrição de atendimento, gravação de consulta, áudio de cliente, conversa de WhatsApp com cliente, resumo de reunião com segurado, ou anotação bruta a transcrever. Produz ANOTAÇÃO DECISÓRIA, não ata. Registra decisão, motivo relevante, prova necessária e próximo movimento, e corta toda frase que não move um desses quatro. Dois modos. Modo A corrido decisório para acompanhamento, em blocos de prosa abrindo pelo fato ou resultado. Modo B com FATOS, ANÁLISE e PROVIDÊNCIAS para consulta inicial, triagem e planejamento. Nos dois, ANÁLISE abre pela conclusão, FATOS não recebe juízo, e o fecho com data de retorno é obrigatório. Linha datada em DD.MM.AAAA (X), datas de conteúdo em DD/MM. Conclui por encerrar quando a prova não sustenta. NÃO grava sozinha. Cruza com triagem-caso-novo e atendimento-respostas-padrao."
 ---
 
 # Transcrição de Atendimento
@@ -13,27 +13,56 @@ O padrão abaixo NÃO foi inventado. Saiu da análise do backup de 4.114 tarefas
 
 O que a análise mostrou, em uma frase. O escritório registra DECISÃO e PRÓXIMO PASSO COM DATA, não narrativa.
 
-## Regra de ouro
+## Regra de ouro, o teste dos quatro elementos
 
-Anotação de atendimento não é ata. Se a linha não muda uma decisão, não define um prazo, não registra um fato do caso ou não pede um documento, ela NÃO entra.
+A anotação não existe para narrar o atendimento. Existe para deixar o caso OPERACIONALMENTE RETOMÁVEL, de modo que meses depois se saiba o que foi decidido, por quê, e o que precisa acontecer em seguida.
 
-Transcrição de trinta minutos vira, tipicamente, de oitenta a cento e quarenta palavras, distribuídas em quatro a oito blocos temáticos.
+Daí a regra central. Registrar DECISÃO, MOTIVO RELEVANTE, PROVA NECESSÁRIA e PRÓXIMO MOVIMENTO. Frase que não altera nenhum dos quatro é dispensável.
 
-## O que SEMPRE extrair, na ordem
+**Teste de corte, obrigatório antes de entregar.** Passar frase a frase e perguntar qual dos quatro elementos ela move. Não movendo nenhum, cortar. Este teste vale mais que qualquer contagem de palavras, e é ele que decide a extensão final.
 
-**1. Identificação do caso.** Nome do cliente e, havendo, o CPF, para casar com a tarefa `Nome #CPF`. Havendo processo, número. Havendo requerimento, NB e DER.
+Faixa de referência, não camisa de força. Atendimento de rotina fica entre oitenta e cento e quarenta palavras. Consulta inicial ou de planejamento, com projeção de renda e comparação de cenários, sobe até duzentas e quarenta. Passou disso sem que cada frase mova um dos quatro elementos, virou ata.
 
-**2. Hipótese de benefício.** O escritório escreve assim, "trata-se de possível caso de auxílio-acidente". Nomear a espécie provável, ainda que provisória, porque é ela que orienta o próximo passo. Não havendo hipótese formada, dizer isso.
+## Ordem decisória, e não narrativa
 
-**3. Fatos do caso com valor jurídico.** Idade, tempo de contribuição aproximado, atividade exercida, origem da lesão ou da doença, data aproximada do início, tratamentos, existência de CAT, condição rural, agentes nocivos. Cada um só entra se o cliente TROUXE.
+A entrada abre pelo FATO OU RESULTADO relevante, ou pela CONCLUSÃO que muda a estratégia. Medido no acervo, 13,1% das entradas do titular abrem assim, contra 1,1% que abrem por "Trata-se de", proporção de doze para um.
 
-**4. A fala do cliente que descreve limitação.** Preservar a expressão do próprio cliente entre aspas quando ela descreve o problema melhor que o termo técnico. O padrão real do escritório faz isso, e é ouro para a peça e para o relatório médico, porque é linguagem de leigo que a perícia depois vai confrontar.
+`Benefício indeferido.` `Perícia agendada.` `Não trouxe o relatório médico.` `Verifiquei que já teve processo judicial com trânsito em julgado.`
 
-**5. O que foi orientado e o que foi solicitado.** Documento pedido, exame a fazer, providência do cliente. Listar item a item, porque essa lista vira a cobrança seguinte.
+Abertura pela hipótese, na forma "Trata-se de pedido de" ou "Caso de", cabe SOMENTE em atendimento inicial, e ali é legítima porque a hipótese é a própria conclusão do dia. Em atendimento de acompanhamento, abrir pelo fato novo.
 
-**6. Encaminhamento com DATA.** Fechamento obrigatório. O escritório usa "Verificar em DD/MM", "Aguardar até DD/MM" ou "Prazo é DD/MM". Anotação sem data de retorno é anotação que morre.
+Depois da abertura vem a leitura técnica, e ela registra a CONSEQUÊNCIA PRÁTICA, não a fundamentação. Descoberta a coisa julgada sobre períodos especiais, escreve-se que só resta a aposentadoria por idade, e não a teoria da coisa julgada.
 
-**7. Pendência de honorários ou contrato**, quando mencionada. Só o fato, sem valor negociado se o cliente não fechou.
+## O que SEMPRE extrair
+
+Oito grupos. Entram os que o atendimento alimentar, na ordem em que decidem.
+
+**1. Situação atual do benefício ou do processo.** O fato ou resultado que abre a entrada.
+
+**2. Conclusão técnica que muda a estratégia.** Só a consequência prática. Sem fundamentação extensa, que é da peça e do parecer, não do To Do.
+
+**3. Obstáculo ou risco principal.** É aqui que se preserva o RACIOCÍNIO, e só aqui. Havendo escolha estratégica ou risco relevante, como o de revisão integral do benefício ao pedir revisão, registrar o motivo da decisão, porque sem ele a decisão fica irretomável.
+
+**4. Documento ou prova que falta.** Não basta nomear o documento. Dizer o que ele precisa DEMONSTRAR.
+
+**5. Providência já realizada.** O que o escritório fez, em primeira pessoa.
+
+**6. Instrução dada ao cliente ou à equipe.** Chamar o colaborador pelo nome quando a tarefa é dele. Antes de ato crítico, como perícia, registrar o que o cliente deve levar e como deve comparecer, porque atendimento também é PREPARAÇÃO para o próximo ato.
+
+**7. Próxima ação, com data.** Fechamento obrigatório, salvo encerramento. "Verificar em DD/MM", "Aguardar até DD/MM", "Relembrar em DD/MM", "Cobrar em DD/MM". Presente em 14,3% das entradas do titular, e é o elemento mais constante do sistema.
+
+**8. Números decisivos**, em atendimento inicial ou de planejamento. Idade, tempo apurado, data provável de aposentadoria, valor aproximado do benefício e a diferença econômica entre alternativas, quando ela interfere na escolha. Sem número, o cenário não se retoma.
+
+## A tese que não se força
+
+O escritório conduz o caso por DECISÃO PROGRESSIVA. Identifica o benefício possível, procura o obstáculo dominante, pede a prova, aguarda e reavalia. Não tenta resolver tudo no primeiro contato.
+
+Sendo a prova insuficiente, a anotação conclui por ENCERRAR, e isso é resultado legítimo, não fracasso. `Tarefa encerrada` aparece em 2,6% das entradas do titular.
+
+`O PPP não favorece para pedir a revisão. Tarefa encerrada.`
+`Tem algo relacionado a depressão. Não tem carência. Nada a ser feito.`
+
+Encerrando, NÃO inventar data de retorno. Anotação encerrada dispensa o fechamento do grupo 7.
 
 ## O que NUNCA entra
 
@@ -46,6 +75,49 @@ Cálculo de tempo, RMI ou valor. Isso é do Prévius, regra 6 do protocolo.
 Promessa de resultado ao cliente.
 
 Dado sensível que o cliente pediu sigilo e que não afeta o caso.
+
+Explicação repetida ao cliente. O que foi explicado entra uma vez, como instrução, e não como transcrição do diálogo.
+
+Detalhe pessoal que não altera requisito, prova ou estratégia. Família, planos de vida, conversa de circunstância. Por mais que ocupem metade do atendimento, não movem nenhum dos quatro elementos.
+
+Ato burocrático já refletido no andamento do processo ou do requerimento. Se o sistema mostra, a anotação não precisa repetir. Nada mudando, `Não retornou. Aguardar até DD/MM.` basta.
+
+## Dois modos, escolhidos pelo gênero do atendimento
+
+**Modo A, corrido decisório.** Padrão do dia a dia, para acompanhamento, retorno, cobrança e cumprimento de exigência. Blocos temáticos de prosa em ordem decisória, abrindo pelo fato ou resultado. É o que o acervo pratica.
+
+**Modo B, FATOS, ANÁLISE e PROVIDÊNCIAS.** Para consulta inicial, triagem e planejamento, onde entra muito dado novo de uma vez e há comparação de cenários. Três rótulos, nunca mais que três. Cabe porque nesse gênero a separação entre o que foi apurado, o que se concluiu e o que se vai fazer é justamente o que se retoma meses depois.
+
+Regra de escolha. Havendo cenários a comparar ou apuração inicial de vida contributiva, Modo B. Havendo um fato novo em caso já conhecido, Modo A. Na dúvida, Modo A, porque é o dominante.
+
+**Três exigências que valem nos dois modos.**
+
+Primeira, ANÁLISE abre pela CONCLUSÃO, não pelo raciocínio. Escreve-se qual caminho é o melhor e só então por quê. Conclusão enterrada no meio do bloco obriga a reler tudo.
+
+Segunda, FATOS recebe só o apurado, e nunca juízo. "Vínculo de 1999 provavelmente deverá ser excluído" é análise disfarçada de fato, e o lugar dela é o bloco seguinte.
+
+Terceira, o fecho com data de retorno é obrigatório também no Modo B, em linha própria depois de PROVIDÊNCIAS. É o elemento mais constante do sistema, presente em 14,3% das entradas, e o Modo B tende a esquecê-lo porque PROVIDÊNCIAS já parece um fechamento. Não é. Providência sem data não é cobrada.
+
+```
+09.09.2026 (P):
+FATOS: 43 anos e 3 meses, 26 anos e 7 meses de contribuição, 23 anos e 10
+meses de atividade especial na projeção atual. Vínculos antigos sem data de
+saída e um vínculo de 1999 em duplicidade. Tem a CTPS física. PPP eletrônico
+a partir de 2023 aponta ruído de 94 dB. Refere hérnia de disco com episódios
+de limitação funcional.
+ANÁLISE: O melhor caminho tende a ser a aposentadoria da pessoa com
+deficiência, projetada em R$ 5.800,00 e sem exigir afastamento do trabalho,
+desde que haja prova antiga e atual da deficiência leve. A data de início da
+deficiência decide a contagem. A especial fica como alternativa, projetada em
+R$ 4.500,00, faltando 1 ano e 1 mês para os 25 anos, com requerimento
+possível em outubro de 2027 se o PPP confirmar os períodos anteriores.
+PROVIDÊNCIAS: Solicitar PPP no RH. Conferir e corrigir os vínculos do CNIS
+pela CTPS. Buscar exames antigos da coluna, tomografia ou ressonância, e não
+havendo, refazer e passar em ortopedista para relatório que detalhe as
+limitações. Revisar a contagem quando chegarem PPP e documentos médicos, e só
+então definir a via.
+Verificar em 09/10.
+```
 
 ## Formato de saída
 
@@ -65,7 +137,7 @@ Data de abertura em DD.MM.AAAA com PONTOS, marcador de autoria entre parênteses
 
 **A voz.**
 
-Primeiro, abertura pela hipótese, na forma "Trata-se de pedido de", seguida do quadro que a sustenta, com o fato clínico ou jurídico e sua data.
+Primeiro, abertura pelo FATO OU RESULTADO, ou pela conclusão que muda a estratégia, na forma da seção Ordem decisória. Só em atendimento inicial cabe abrir pela hipótese, com "Trata-se de pedido de" ou "Caso de", porque ali a hipótese é a conclusão do dia.
 
 Segundo, verbo de relato para o que veio do cliente. "Refere que", "Traz também", "Informa que". Marca a fronteira entre o que o cliente disse e o que o escritório apurou, e é o que a perícia depois vai confrontar.
 
@@ -75,7 +147,7 @@ Quarto, MARCA EM CAIXA ALTA abrindo o bloco que trava o protocolo ou faz perder 
 
 Quinto, ênfase por caixa alta na palavra que vira a frase, e o acervo traz 118 casos de `NÃO` assim.
 
-Sexto, aspas na fala do cliente que descreve limitação melhor que o termo técnico.
+Sexto, aspas na fala do cliente, e SOMENTE quando ela descreve a limitação melhor que o termo técnico e a limitação altera a estratégia. Diagnóstico e sintoma que não mudam a prova, a via ou o prazo ficam de fora, por mais vívidos que sejam.
 
 Sétimo, fecho em linha própria, "Verificar em DD/MM."
 
