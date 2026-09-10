@@ -101,3 +101,7 @@ Esta skill NÃO substitui as skills de CRPS (recurso-especial-crps, admissibilid
 - `references/RITO-COMUM-TRF3-TEMPO-ESPECIAL.md` – Posicionamento e estratégia perante Varas Federais e TRF3
 - `references/EPI-ESTRATEGIA-POR-ORGAO.md` – Tratamento da questão do EPI conforme o órgão julgador
 - `references/RUIDO-POR-ORGAO.md` – Posicionamento clássico e recente de CRPS, JEF/TNU e TRF3 sobre ruído (Enunciados 12 e 13, Temas 174, 317 e 1.083, Q=3 vs. Q=5, medição pontual, dosimetria, quadros comparativos)
+
+## Extensão
+
+Teto de a peça por rito, o orçamento da Camada 6, 7 páginas na inicial, 4 no recurso inominado, 3 no recurso ao CRPS. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

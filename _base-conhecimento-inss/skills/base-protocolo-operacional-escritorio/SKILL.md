@@ -1,6 +1,6 @@
 ---
 name: base-protocolo-operacional-escritorio
-description: "Protocolo operacional VINCULANTE do escritório Paulo Roberto Tercini Filho, aplicável a TODA sessão. Use SEMPRE ao registrar atendimento no To Do, ao fechar parecer ou relatório, ao partir de Modelo Ouro, ao ler documento recebido, ao calcular tempo, RMI ou valor da causa, e ao pesquisar na web. Gatilhos. Tarefa Nome CPF, anotação (C) no To Do, próximo passo recomendado, pendências em aberto, Modelo Ouro 2.0, Análise da Vida Completa, documento por ID no PJe, Prévius, subpasta Claude do cliente, SearXNG, crawl4ai, fonte oficial arquivada. Nove regras. To Do como registro oficial sem editar entrada existente. Fechamento com próximo passo e pendências. Peça a partir do Modelo Ouro. Parecer de uma página. Leitura integral com OCR e auditoria ponto a ponto. Cálculo é do Prévius. Skills centrais obrigatórias, com dados de cliente jamais em skill ou memória. Pesquisa em fonte oficial com inteiro teor. Rigor de fonte também fora do previdenciário. Espelho do CLAUDE.md do workspace."
+description: "Protocolo operacional VINCULANTE do escritório Paulo Roberto Tercini Filho, aplicável a TODA sessão. Use SEMPRE ao registrar atendimento no To Do, ao fechar parecer ou relatório, ao partir de Modelo Ouro, ao ler documento recebido, ao calcular tempo, RMI ou valor da causa, e ao pesquisar na web. Gatilhos. Tarefa Nome CPF, anotação (C) no To Do, próximo passo recomendado, pendências em aberto, Modelo Ouro 2.0, Análise da Vida Completa, documento por ID no PJe, Prévius, subpasta Claude do cliente, SearXNG, crawl4ai, fonte oficial arquivada. Dez regras. To Do como registro oficial sem editar entrada existente. Fechamento com próximo passo e pendências. Peça a partir do Modelo Ouro. Parecer de uma página. Leitura integral com OCR e auditoria ponto a ponto. Cálculo é do Prévius. Skills centrais obrigatórias, com dados de cliente jamais em skill ou memória. Pesquisa em fonte oficial com inteiro teor. Rigor de fonte fora do previdenciário. Padrão de escrita, teto antes de redigir. Espelho do CLAUDE.md."
 ---
 
 # Protocolo Operacional do Escritório
@@ -99,3 +99,23 @@ Consultas de saúde do Paulo recebem terminologia técnica, verificação em BUL
 Decisão clínica continua sendo do profissional que acompanha, e a informação técnica serve para qualificar a conversa com ele, não para substituí-la.
 
 Temas fora do previdenciário também exigem informação VERIFICADA. O rigor de fonte não é regra do direito previdenciário, é regra da casa.
+
+## 10. Padrão de escrita do escritório
+
+Vigente desde 09/09/2026. Extraído das correções que o titular fez ao longo de 132 Ondas. Detalhamento e tetos por tipo de documento em `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+**O leitor mede o texto pelo esforço de ler, não pelo que ele contém.** Todo entregável nasce dentro de um teto de extensão declarado ANTES da redação, e não é cortado depois. Parecer, uma página. Síntese do caso, duas ou três linhas. Anotação `(C)` no To Do, duas ou três linhas. Relatório de auditoria ou de agente, uma página. Peça judicial, o orçamento da Camada 6. Documento que estoura o teto não sai, volta para o corte.
+
+**Um ponto decisivo por documento.** Antes de escrever, nomear em uma frase o que decide o caso. O texto existe para provar essa frase. O que não a serve não entra.
+
+**Só o dado que decide.** Nome do segurado, idade, datas de nascimento, histórico sem consequência, explicação repetida, ato burocrático já visível no andamento, conversa de circunstância. Nada disso entra em síntese, quadro, tabela ou anotação. Tabela cheia cansa e esconde, tabela com três linhas mostra.
+
+**Formato do escritório, nunca formato inventado.** Toda peça parte do Modelo Ouro, todo relatório médico do modelo já em uso, toda anotação do padrão do To Do. Rótulo, seção, bloco ou estrutura que o escritório não pratica NÃO se cria. Na dúvida, prosa corrida em ordem decisória, abrindo pelo que decide.
+
+**Resolver, não delegar de volta.** Relatório que devolve "conferir X" sem ter conferido é trabalho empurrado ao titular. A skill abre a fonte, confere e reporta o resultado. Só sobe ao titular o que exige decisão dele.
+
+**Linguagem pelo destinatário.** Cliente recebe texto simples, autoexplicativo e com o ponto que ele deve sustentar. Documento interno recebe técnica seca, sem didática. Juiz e conselheiro recebem o mínimo que prova o ponto.
+
+**Sem quebra de linha artificial** em texto destinado ao To Do, ao WhatsApp ou a campo de formulário. Cada bloco em uma linha corrida.
+
+Permanecem as constraints de sempre. Sem dois-pontos introduzindo explicação, lista ou conclusão. Sem cara de IA, e a `humanizador-tedson` passa em todo texto em português.

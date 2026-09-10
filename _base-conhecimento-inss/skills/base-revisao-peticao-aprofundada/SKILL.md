@@ -442,6 +442,10 @@ Estrutura padrão entregue após apresentação do .docx.
 
 **Achados por camada.** Ordem (Formal → Normativa → Fática → Argumentativa → Integridade Probatória → Extensão e Legibilidade). Dentro de cada camada, ordenados por severidade decrescente (Bloqueante → Crítico → Importante → Menor).
 
+**Teto do relatório e consolidação (Onda 133).** O relatório consolidado tem DUAS PÁGINAS. BLOQUEANTE e CRÍTICO entram sempre, na frente. IMPORTANTE e MENOR entram até o teto, e o excedente vira uma linha de contagem por camada. Os pareceres dos agentes despachados, juristas, processualistas, decisores, analista do CNIS, red-team e black-team, NÃO se empilham no relatório. Cada um fica em anexo, com uma página cada, e o consolidado recebe só os achados deles que mudam o resultado, DEDUPLICADOS, porque dois agentes apontando o mesmo vício por lentes diferentes é um achado, não dois. A regra de subida continua a mesma, PRECLUSÃO IMINENTE, BLOQUEANTE e CRÍTICO sobem sempre. O relatório que empilha pareceres é o que o titular apontou como "muitas folhas que cansam o leitor", e o objetivo dele é que o titular leia o consolidado em cinco minutos e só abra o anexo se quiser a origem de um achado.
+
+**Resolver, não delegar de volta.** Achado do tipo "conferir X em fonte primária" só entra se a conferência foi TENTADA e falhou por bloqueio de acesso, e nesse caso diz qual fonte, qual via e qual o bloqueio. Achado que apenas recomenda ao titular fazer a conferência não é achado, é trabalho empurrado, e o titular pediu duas vezes que isso parasse. Regra 10 do protocolo.
+
 **Modelo de achado individual.**
 
 ```
