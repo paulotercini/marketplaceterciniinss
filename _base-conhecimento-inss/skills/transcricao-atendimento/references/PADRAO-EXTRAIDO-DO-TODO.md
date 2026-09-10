@@ -141,3 +141,20 @@ O formato de saída por ITENS não inventou vocabulário. Os rótulos vêm da co
 Por que a mudança. A primeira versão da skill produzia parágrafo corrido, fiel às notas mais antigas da lista Escritório. As notas das listas Judicial e INSS, porém, JÁ usam rótulos, e são as mais organizadas do acervo. O formato por itens generaliza a prática melhor do próprio escritório, e responde à diretriz de leitura por relance das Ondas 104 e 118.
 
 Regra de forma. Uma a duas linhas por item, máximo de oito itens, rótulo sem conteúdo não entra. O que exceder oito itens é narrativa disfarçada de estrutura.
+
+## Duas grafias de data no acervo (Onda 127, 09/09/2026)
+
+Contagem sobre as 27.872 linhas de Notes do backup, separando o carimbo de abertura das datas citadas no corpo do texto.
+
+| Posição | Com PONTO `DD.MM.AAAA` | Com BARRA `DD/MM/AAAA` |
+|---|---|---|
+| Abertura da linha, ao lado do marcador de autoria | **17.272** | 1.003 |
+| Dentro do conteúdo dos itens | 895 | **8.907** |
+
+A separação é praticada pelo escritório há anos, sem nunca ter sido escrita. Abertura em ponto, conteúdo em barra. A proporção de 17 para 1 na abertura e de 10 para 1 no conteúdo afasta a hipótese de coincidência.
+
+Razão funcional. O carimbo de entrada precisa ser localizável de relance dentro de um histórico longo em ordem decrescente. Grafia distinta faz o olho separar o marco temporal da entrada das datas de fato, sem ler o texto.
+
+Confirmação independente. O cabeçalho estruturado do escritório já emprega `[DER]: DD/MM/AAAA` e `[DISTRIBUIÇÃO]: DD/MM/AAAA`, ambos dados de conteúdo, ambos em barra.
+
+Exemplos colhidos no próprio backup. Abertura `10.07.2026 (D):`, conteúdo `Verificar em 02/07`, `Prazo é 10/10` e `agenda horário para o dia 15/07`.
