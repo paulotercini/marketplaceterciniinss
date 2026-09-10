@@ -1,6 +1,6 @@
 ---
 name: transcricao-atendimento
-description: "Converte transcrição de atendimento (áudio, vídeo, WhatsApp ou anotação corrida) na anotação padronizada do escritório, pronta para gravar no Microsoft To Do. Use SEMPRE que receber transcrição de atendimento, gravação de consulta, áudio de cliente, conversa de WhatsApp com cliente, resumo de reunião com segurado, ou anotação bruta de atendimento a transcrever. Extrai os pontos-chave que o escritório de fato registra, identificados na análise de 4.114 tarefas reais do To Do. Entrega a anotação POR ITENS ROTULADOS, com HIPÓTESE, ÚLTIMO EVENTO, QUADRO, PENDÊNCIA, SOLICITADO, ORIENTADO, ATITUDE A SER TOMADA e VERIFICAR EM, sob linha datada no padrão DD.MM.AAAA (X), com cabeçalho estruturado quando houver processo ou DER. Sinaliza o que o cliente disse mas não foi confirmado, e o que ficou faltando perguntar. NÃO grava sozinha, entrega o texto para conferência antes de ir ao To Do. Cruza com triagem-caso-novo, processos-amanda-administrativo, atendimento-respostas-padrao e base-protocolo-operacional-escritorio."
+description: "Converte transcrição de atendimento (áudio, vídeo, WhatsApp ou anotação corrida) na anotação padronizada do escritório, pronta para gravar no Microsoft To Do. Use SEMPRE que receber transcrição de atendimento, gravação de consulta, áudio de cliente, conversa de WhatsApp com cliente, resumo de reunião com segurado, ou anotação bruta de atendimento a transcrever. Extrai os pontos-chave que o escritório de fato registra, medidos em 15.147 entradas reais do To Do. Entrega a anotação em PROSA CORRIDA na voz do escritório, veredito na frente e ação embutida na frase, sob linha datada no padrão DD.MM.AAAA (X) com datas de conteúdo em DD/MM, teto de sessenta palavras, e cabeçalho estruturado quando houver processo ou DER. Sinaliza o que o cliente disse mas não foi confirmado, e o que ficou faltando perguntar. NÃO grava sozinha, entrega o texto para conferência antes de ir ao To Do. Cruza com triagem-caso-novo, processos-amanda-administrativo, atendimento-respostas-padrao e base-protocolo-operacional-escritorio."
 ---
 
 # Transcrição de Atendimento
@@ -49,48 +49,46 @@ Dado sensível que o cliente pediu sigilo e que não afeta o caso.
 
 ## Formato de saída
 
-Sempre em dois blocos, AMBOS por itens. Nada de parágrafo corrido, porque anotação em bloco cansa a leitura e esconde o que decide.
+Sempre em dois blocos. O primeiro é a anotação, e ela é PROSA CORRIDA, não formulário.
 
 ### Bloco 1, a anotação pronta para o To Do
 
-Abre com a linha datada, no padrão real do escritório, e o conteúdo vem em ITENS ROTULADOS logo abaixo.
+Abre com a linha datada e o texto SEGUE NA MESMA LINHA, logo após o marcador.
 
 Data de abertura em DD.MM.AAAA com PONTOS, marcador de autoria entre parênteses. `(P)` Paulo, `(A)` Amanda, `(D)` André, `(I)` Ingrid, `(M)` Marcos, `(C)` Claude. A transcrição usa o marcador de QUEM ATENDEU, nunca `(C)`, que é reservado à conclusão produzida pelo Claude na forma da regra 1 do protocolo.
 
-**Duas grafias de data, e elas não se misturam.** A data que CARIMBA a entrada, aquela que abre a linha ao lado do marcador de autoria, usa PONTOS no padrão `DD.MM.AAAA`. Toda data citada DENTRO do conteúdo dos itens usa BARRAS no padrão `DD/MM/AAAA`, e isso vale para `VERIFICAR EM`, `ÚLTIMO EVENTO`, `⚠️ PENDÊNCIA`, `SITUAÇÃO DO PROCESSO` e qualquer outro rótulo. A distinção não é estética, ela deixa o olho achar o carimbo da entrada em meio ao histórico sem ler o texto. O acervo do escritório já a pratica, com 17.272 aberturas em ponto contra 8.907 datas de conteúdo em barra, e o cabeçalho estruturado a confirma em `[DER]: DD/MM/AAAA`.
+**Duas grafias de data, e elas não se misturam.** A data que CARIMBA a entrada usa PONTOS no padrão `DD.MM.AAAA`. Toda data citada DENTRO do texto usa BARRAS, e o escritório abrevia para `DD/MM` quando o ano é o corrente. O acervo pratica isso com 17.272 aberturas em ponto contra 8.907 datas de conteúdo em barra, e o cabeçalho estruturado confirma em `[DER]: DD/MM/AAAA`.
 
-**Rótulos, todos extraídos do uso real do escritório.** Usar SOMENTE os que o caso alimentar. Rótulo sem conteúdo não entra.
+**A voz, medida no acervo.** Rótulo em caixa alta aparece em 0,1% das 15.147 entradas datadas, e mesmo assim em bloco processual, não em atendimento. Formulário NÃO é o padrão da casa, e transformá-lo em regra descaracteriza a anotação. A mediana é de 10 palavras por entrada, a média 16, e o percentil 90 fica em 34. Atendimento de consulta inteira é naturalmente maior, e ainda assim o TETO é de sessenta palavras. Passou disso, virou ata.
 
-| Rótulo | Quando usar |
-|---|---|
-| `HIPÓTESE` | Espécie provável do benefício. Abre a anotação, porque orienta a leitura do resto |
-| `ÚLTIMO EVENTO` | O fato novo que motivou o atendimento, com data |
-| `QUADRO` | Limitação funcional, com a expressão do cliente entre aspas |
-| `SITUAÇÃO DO PROCESSO` | Havendo processo ou requerimento em curso |
-| `⚠️ PENDÊNCIA` | Erro em documento, prazo em risco, obstáculo ao protocolo. Sempre com o alerta |
-| `SOLICITADO` | Documento ou providência pedida ao cliente, item a item |
-| `ORIENTADO` | O que foi explicado ou decidido com o cliente |
-| `CONSIDERAÇÕES` | Avaliação do advogado que não cabe nos demais |
-| `ATITUDE A SER TOMADA` | O que o escritório fará |
-| `VERIFICAR EM` | Data de retorno em DD/MM/AAAA. OBRIGATÓRIO, fecha a anotação |
+**Os seis traços que dão a voz do escritório.**
 
-**Regras de forma.** Cada item com uma a duas linhas. Rótulo em caixa alta seguido de dois-pontos, exceção admitida à vedação geral porque campo estruturado não é prosa, e é assim que o escritório já escreve em `[DER]:` e `ENCAMINHAMENTO:`. Máximo de OITO itens, e o que exceder foi narrativa disfarçada. Data dentro de item sempre em DD/MM/AAAA.
+Primeiro, veredito na frente. A entrada abre pelo que decide, e não pelo histórico. "A sentença foi de improcedência" antes de qualquer explicação.
+
+Segundo, a ação vem embutida na frase, jamais em campo. Escreve-se "Vamos aguardar até 16/10", "acompanhar", "Tarefa encerrada", dentro do próprio texto.
+
+Terceiro, fala direta com quem vai executar, em 5,4% das entradas. "Amanda, avisa a cliente que pode sacar", "Marcão, procura na agência". Havendo tarefa de colaborador, chamar pelo nome.
+
+Quarto, número concreto inline, sem cerimônia. Valor, protocolo, NB e data entram no meio da frase.
+
+Quinto, referência a anexo entre parênteses, na forma "(anexo)".
+
+Sexto, dois marcadores na MESMA entrada quando um responde ao outro, em 14,1% dos casos. `(D): Trouxe os documentos hoje. (P): Amanda, junta no pedido dele.`
+
+**O que fazer com o conteúdo.** A ordem do que SEMPRE extrair, acima, é ordem de PRIORIDADE do que entra, não roteiro de campos. Ela decide o que sobrevive ao corte, e o texto sai em frases encadeadas.
 
 ```
-09.09.2026 (P):
-HIPÓTESE: B31 por incapacidade pós-cirúrgica.
-ÚLTIMO EVENTO: Cirurgia de coluna lombar em 21/08/2026 com o Dr. André,
-descompressão por cânula com liberação do nervo ciático.
-QUADRO: Fica em pé "dois ou três minutos", dor que "queima como fogo",
-não toma banho sozinha. Pregabalina, Lisador e codeína.
-⚠️ PENDÊNCIA: Relatório traz a cirurgia como 21/09/2026, data futura e
-errada. Protocolar assim gera indeferimento.
-SOLICITADO: Relatório corrigido, aceito digital. Documento de identificação.
-ORIENTADO: Não usaremos a carta pré-cirúrgica. Deficiência visual não gera
-aposentadoria PCD agora, faltam os 15 anos na condição.
-ATITUDE A SER TOMADA: Protocolar B31 com perícia em Monte Alto.
-VERIFICAR EM: 18/09/2026.
+09.09.2026 (P): Caso de B31, operou a coluna lombar em 21/08 com o Dr. André,
+descompressão por cânula. Fica em pé "dois ou três minutos", dor que "queima
+como fogo", não toma banho sozinha, usa pregabalina e codeína. O relatório
+está com a data da cirurgia errada, consta 21/09, e assim gera indeferimento.
+Pediu o relatório corrigido, aceito digital, e o documento de identificação.
+Não usaremos a carta pré-cirúrgica. Expliquei que a deficiência visual não
+gera aposentadoria PCD agora, faltam os 15 anos na condição. Protocolar com
+perícia em Monte Alto. Verificar em 18/09.
 ```
+
+O alerta `⚠️` fica reservado ao que trava o protocolo ou faz perder prazo, e vai na frente da frase que o descreve, nunca como rótulo de campo.
 
 Havendo processo ou requerimento em curso, o cabeçalho estruturado do escritório vem ANTES da linha datada.
 
