@@ -187,7 +187,7 @@ O título genérico fica reservado para situações em que não houver elementos
 ### Fechamento e Assinatura
 
 - "Pede deferimento." ou "Nestes Termos, Pede e Espera Deferimento."
-- Local e data: "Monte Alto, [data por extenso]."
+- Local e data: "Monte Alto – SP, [data por extenso]." A unidade federativa é OBRIGATÓRIA, no mesmo padrão do rodapé timbrado e da carta de retificação de PPP, com travessão curto. Exemplo, "Monte Alto – SP, 10 de setembro de 2026."
 - Assinatura centralizada, com espaçamento maior antes (line break ou parágrafo vazio):
   - **PAULO ROBERTO TERCINI FILHO** (Bookman Old Style 12pt, negrito, caixa alta, centralizado)
   - **OAB/SP 331.110** (Bookman Old Style 12pt, negrito, centralizado)
