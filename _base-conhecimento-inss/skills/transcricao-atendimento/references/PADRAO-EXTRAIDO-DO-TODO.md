@@ -257,3 +257,29 @@ Três correções aplicadas ao modelo proposto. ANÁLISE abre pela CONCLUSÃO e 
 ### Cortes acrescentados
 
 Explicação repetida ao cliente, detalhe pessoal que não altera requisito ou estratégia, e ato burocrático já refletido no andamento. Nada mudando, `Não retornou. Aguardar até DD/MM.` basta.
+
+## Formato definitivo, quatro blocos opcionais (Onda 132, 09/09/2026)
+
+Definido pelo titular. Substitui os dois modos da Onda 131, que ficaram redundantes, porque um registro simples é o mesmo formato com dois blocos em vez de quatro.
+
+`FATOS`, `ANÁLISE`, `PROVIDÊNCIAS DO CLIENTE`, `PROVIDÊNCIAS DO ESCRITÓRIO`. Todos opcionais, rótulo e conteúdo na mesma linha, cada bloco em UMA LINHA CORRIDA sem quebra interna.
+
+### Honestidade sobre a origem da estrutura
+
+Esta estrutura é de PROJETO, não de extração. Medição sobre as 7.893 entradas com marcador `(P)` buscando mistura explícita de providência do cliente com providência do escritório encontrou 57 casos, 0,7%. Análise somada a providência interna, 12 casos, 0,2%. Os três juntos, 2 casos.
+
+Os números são baixos porque a entrada dominante é curta demais para misturar. A separação NÃO se justifica por frequência. Justifica-se por dois ganhos operacionais.
+
+Primeiro, retomada. Anotação como "PPP incompleto, pedir correção, aguardar até 29/03" empacota conclusão, tarefa do cliente e tarefa interna numa frase, e quem retoma precisa desempacotar.
+
+Segundo, delegação. Separadas, a equipe lê o bloco que é dela sem varrer o resto, o que casa com a `processos-amanda-administrativo`.
+
+Registrado assim para que auditoria futura não conclua que os quatro rótulos foram extraídos do backup. Não foram. No backup, rótulo em caixa alta aparece em 0,1% das entradas.
+
+### O que continua medido
+
+A ordem decisória, o fecho com data em 14,3%, a primeira pessoa em 8,4%, a ênfase por caixa alta com 118 casos de `NÃO`, o encerramento por prova insuficiente em 2,6% e as duas grafias de data seguem apoiados nas contagens registradas nas seções anteriores deste arquivo.
+
+### Regra de extensão
+
+O teste dos quatro elementos decide, e não a contagem de palavras. As faixas fixadas nas Ondas 129 e 130 saem. Acompanhamento fica em duas linhas, consulta inicial de planejamento chega a doze, e ambas estão certas se cada frase move decisão, motivo, prova ou próximo movimento.
