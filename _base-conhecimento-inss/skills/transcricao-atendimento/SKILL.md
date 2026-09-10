@@ -55,7 +55,9 @@ Sempre em dois blocos, AMBOS por itens. Nada de parágrafo corrido, porque anota
 
 Abre com a linha datada, no padrão real do escritório, e o conteúdo vem em ITENS ROTULADOS logo abaixo.
 
-Data em DD.MM.AAAA, marcador de autoria entre parênteses. `(P)` Paulo, `(A)` Amanda, `(D)` André, `(I)` Ingrid, `(M)` Marcos, `(C)` Claude. A transcrição usa o marcador de QUEM ATENDEU, nunca `(C)`, que é reservado à conclusão produzida pelo Claude na forma da regra 1 do protocolo.
+Data de abertura em DD.MM.AAAA com PONTOS, marcador de autoria entre parênteses. `(P)` Paulo, `(A)` Amanda, `(D)` André, `(I)` Ingrid, `(M)` Marcos, `(C)` Claude. A transcrição usa o marcador de QUEM ATENDEU, nunca `(C)`, que é reservado à conclusão produzida pelo Claude na forma da regra 1 do protocolo.
+
+**Duas grafias de data, e elas não se misturam.** A data que CARIMBA a entrada, aquela que abre a linha ao lado do marcador de autoria, usa PONTOS no padrão `DD.MM.AAAA`. Toda data citada DENTRO do conteúdo dos itens usa BARRAS no padrão `DD/MM/AAAA`, e isso vale para `VERIFICAR EM`, `ÚLTIMO EVENTO`, `⚠️ PENDÊNCIA`, `SITUAÇÃO DO PROCESSO` e qualquer outro rótulo. A distinção não é estética, ela deixa o olho achar o carimbo da entrada em meio ao histórico sem ler o texto. O acervo do escritório já a pratica, com 17.272 aberturas em ponto contra 8.907 datas de conteúdo em barra, e o cabeçalho estruturado a confirma em `[DER]: DD/MM/AAAA`.
 
 **Rótulos, todos extraídos do uso real do escritório.** Usar SOMENTE os que o caso alimentar. Rótulo sem conteúdo não entra.
 
@@ -70,24 +72,24 @@ Data em DD.MM.AAAA, marcador de autoria entre parênteses. `(P)` Paulo, `(A)` Am
 | `ORIENTADO` | O que foi explicado ou decidido com o cliente |
 | `CONSIDERAÇÕES` | Avaliação do advogado que não cabe nos demais |
 | `ATITUDE A SER TOMADA` | O que o escritório fará |
-| `VERIFICAR EM` | Data de retorno. OBRIGATÓRIO, fecha a anotação |
+| `VERIFICAR EM` | Data de retorno em DD/MM/AAAA. OBRIGATÓRIO, fecha a anotação |
 
-**Regras de forma.** Cada item com uma a duas linhas. Rótulo em caixa alta seguido de dois-pontos, exceção admitida à vedação geral porque campo estruturado não é prosa, e é assim que o escritório já escreve em `[DER]:` e `ENCAMINHAMENTO:`. Máximo de OITO itens, e o que exceder foi narrativa disfarçada.
+**Regras de forma.** Cada item com uma a duas linhas. Rótulo em caixa alta seguido de dois-pontos, exceção admitida à vedação geral porque campo estruturado não é prosa, e é assim que o escritório já escreve em `[DER]:` e `ENCAMINHAMENTO:`. Máximo de OITO itens, e o que exceder foi narrativa disfarçada. Data dentro de item sempre em DD/MM/AAAA.
 
 ```
 09.09.2026 (P):
 HIPÓTESE: B31 por incapacidade pós-cirúrgica.
-ÚLTIMO EVENTO: Cirurgia de coluna lombar em 21.08.2026 com o Dr. André,
+ÚLTIMO EVENTO: Cirurgia de coluna lombar em 21/08/2026 com o Dr. André,
 descompressão por cânula com liberação do nervo ciático.
 QUADRO: Fica em pé "dois ou três minutos", dor que "queima como fogo",
 não toma banho sozinha. Pregabalina, Lisador e codeína.
-⚠️ PENDÊNCIA: Relatório traz a cirurgia como 21.09.2026, data futura e
+⚠️ PENDÊNCIA: Relatório traz a cirurgia como 21/09/2026, data futura e
 errada. Protocolar assim gera indeferimento.
 SOLICITADO: Relatório corrigido, aceito digital. Documento de identificação.
 ORIENTADO: Não usaremos a carta pré-cirúrgica. Deficiência visual não gera
 aposentadoria PCD agora, faltam os 15 anos na condição.
 ATITUDE A SER TOMADA: Protocolar B31 com perícia em Monte Alto.
-VERIFICAR EM: 18.09.2026.
+VERIFICAR EM: 18/09/2026.
 ```
 
 Havendo processo ou requerimento em curso, o cabeçalho estruturado do escritório vem ANTES da linha datada.
