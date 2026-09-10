@@ -59,7 +59,7 @@ Data de abertura em DD.MM.AAAA com PONTOS, marcador de autoria entre parênteses
 
 **Duas grafias de data.** A data que CARIMBA a entrada usa PONTOS no padrão `DD.MM.AAAA`. Toda data citada DENTRO do texto usa BARRAS, abreviada para `DD/MM` quando o ano é o corrente. O acervo pratica isso com 17.272 aberturas em ponto contra 8.907 datas de conteúdo em barra.
 
-**Extensão, medida no gênero certo.** As 482 entradas longas do acervo, que são as de atendimento, têm mediana de 83 palavras, percentil 90 em 131 e máximo de 226. Este é o alvo, e não a mediana de 10 palavras das notas de andamento processual, que são outro gênero. Transcrição de consulta inteira cabe entre OITENTA e CENTO E QUARENTA palavras. Abaixo disso some informação do caso, acima disso vira ata.
+**Extensão, medida no gênero certo.** As 482 entradas longas do acervo, que são as de atendimento, têm mediana de 83 palavras, percentil 90 em 131 e máximo de 226. Este é o alvo, e não a mediana de 10 palavras das notas de andamento processual, que são outro gênero. Atendimento de rotina cabe entre OITENTA e CENTO E QUARENTA palavras. Consulta longa de triagem ou de planejamento, com projeção de renda, comparação de cenários e definição de estratégia, sobe até DUZENTAS E QUARENTA, que é a faixa do exemplo canônico abaixo e do máximo real do acervo. Abaixo do piso some informação do caso, acima do teto vira ata.
 
 **Blocos temáticos, não campos rotulados.** Cada assunto fecha em seu bloco e o bloco seguinte abre outro assunto. Quebra de linha entre eles. NÃO usar rótulo de campo em caixa alta seguido de dois-pontos, porque isso aparece em 0,1% das entradas do acervo e descaracteriza a anotação. A ordem dos blocos é a ordem de PRIORIDADE do que SEMPRE extrair, acima.
 
