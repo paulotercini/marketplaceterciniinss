@@ -120,3 +120,24 @@ A expressão do cliente sobre a própria limitação se preserva, porque é ling
 Histórico em ordem decrescente, entrada nova no topo, entrada anterior intocada.
 
 Hipótese de benefício é hipótese. Certeza vem do CNIS e dos documentos.
+
+## Origem dos rótulos do formato por itens (Onda 126)
+
+O formato de saída por ITENS não inventou vocabulário. Os rótulos vêm da contagem de uso real no acervo, na seção "Rótulos de seção usados no corpo" acima.
+
+| Rótulo do formato | Origem no acervo |
+|---|---|
+| `ATITUDE A SER TOMADA` | 90 ocorrências, uso literal |
+| `ENCAMINHAMENTO` | 143 ocorrências, uso literal |
+| `CONSIDERAÇÕES` | 92 ocorrências, uso literal |
+| `ÚLTIMO EVENTO` | 71 ocorrências, uso literal |
+| `SITUAÇÃO DO PROCESSO` | 70 ocorrências, uso literal |
+| `VERIFICAR EM` | 1.031 ocorrências de "Verificar em/até", convertidas em rótulo |
+| `HIPÓTESE` | Derivado do padrão de abertura "trata-se de possível caso de X" |
+| `QUADRO` | Derivado da descrição da limitação com a fala do cliente |
+| `SOLICITADO` e `ORIENTADO` | Derivados do passo 5 da anatomia observada |
+| `⚠️ PENDÊNCIA` | Derivado de `[ALERTA URGENTE]`, 454 ocorrências |
+
+Por que a mudança. A primeira versão da skill produzia parágrafo corrido, fiel às notas mais antigas da lista Escritório. As notas das listas Judicial e INSS, porém, JÁ usam rótulos, e são as mais organizadas do acervo. O formato por itens generaliza a prática melhor do próprio escritório, e responde à diretriz de leitura por relance das Ondas 104 e 118.
+
+Regra de forma. Uma a duas linhas por item, máximo de oito itens, rótulo sem conteúdo não entra. O que exceder oito itens é narrativa disfarçada de estrutura.
