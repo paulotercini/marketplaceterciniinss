@@ -1,6 +1,6 @@
 ---
 name: transcricao-atendimento
-description: "Converte transcrição de atendimento (áudio, vídeo, WhatsApp ou anotação corrida) na anotação padronizada do escritório, pronta para gravar no Microsoft To Do. Use SEMPRE que receber transcrição de atendimento, gravação de consulta, áudio de cliente, conversa de WhatsApp com cliente, resumo de reunião com segurado, ou anotação bruta de atendimento a transcrever. Extrai os pontos-chave que o escritório de fato registra, medidos em 15.147 entradas reais do To Do. Entrega a anotação em PROSA CORRIDA na voz do escritório, veredito na frente e ação embutida na frase, sob linha datada no padrão DD.MM.AAAA (X) com datas de conteúdo em DD/MM, teto de sessenta palavras, e cabeçalho estruturado quando houver processo ou DER. Sinaliza o que o cliente disse mas não foi confirmado, e o que ficou faltando perguntar. NÃO grava sozinha, entrega o texto para conferência antes de ir ao To Do. Cruza com triagem-caso-novo, processos-amanda-administrativo, atendimento-respostas-padrao e base-protocolo-operacional-escritorio."
+description: "Converte transcrição de atendimento (áudio, vídeo, WhatsApp ou anotação corrida) na anotação padronizada do escritório, pronta para o Microsoft To Do. Use SEMPRE que receber transcrição de atendimento, gravação de consulta, áudio de cliente, conversa de WhatsApp com cliente, resumo de reunião com segurado, ou anotação bruta a transcrever. Extrai o que o escritório de fato registra, medido em 15.147 entradas reais do To Do. Entrega a anotação em BLOCOS TEMÁTICOS de prosa, um assunto por bloco, abrindo pela hipótese na forma "Trata-se de pedido de", verbo de relato para o que o cliente disse, primeira pessoa para o que o escritório fez, marca em CAIXA ALTA no bloco que trava o protocolo, entre 80 e 140 palavras, sob linha datada em DD.MM.AAAA (X) com datas de conteúdo em DD/MM. Sinaliza o não confirmado e o que faltou perguntar. NÃO grava sozinha. Cruza com triagem-caso-novo, processos-amanda-administrativo e atendimento-respostas-padrao."
 ---
 
 # Transcrição de Atendimento
@@ -17,7 +17,7 @@ O que a análise mostrou, em uma frase. O escritório registra DECISÃO e PRÓXI
 
 Anotação de atendimento não é ata. Se a linha não muda uma decisão, não define um prazo, não registra um fato do caso ou não pede um documento, ela NÃO entra.
 
-Transcrição de trinta minutos vira, tipicamente, de cinco a doze linhas.
+Transcrição de trinta minutos vira, tipicamente, de oitenta a cento e quarenta palavras, distribuídas em quatro a oito blocos temáticos.
 
 ## O que SEMPRE extrair, na ordem
 
@@ -49,7 +49,7 @@ Dado sensível que o cliente pediu sigilo e que não afeta o caso.
 
 ## Formato de saída
 
-Sempre em dois blocos. O primeiro é a anotação, e ela é PROSA CORRIDA, não formulário.
+Sempre em dois blocos. O primeiro é a anotação, escrita em BLOCOS TEMÁTICOS de prosa, um assunto por bloco, separados por quebra de linha.
 
 ### Bloco 1, a anotação pronta para o To Do
 
@@ -57,38 +57,53 @@ Abre com a linha datada e o texto SEGUE NA MESMA LINHA, logo após o marcador.
 
 Data de abertura em DD.MM.AAAA com PONTOS, marcador de autoria entre parênteses. `(P)` Paulo, `(A)` Amanda, `(D)` André, `(I)` Ingrid, `(M)` Marcos, `(C)` Claude. A transcrição usa o marcador de QUEM ATENDEU, nunca `(C)`, que é reservado à conclusão produzida pelo Claude na forma da regra 1 do protocolo.
 
-**Duas grafias de data, e elas não se misturam.** A data que CARIMBA a entrada usa PONTOS no padrão `DD.MM.AAAA`. Toda data citada DENTRO do texto usa BARRAS, e o escritório abrevia para `DD/MM` quando o ano é o corrente. O acervo pratica isso com 17.272 aberturas em ponto contra 8.907 datas de conteúdo em barra, e o cabeçalho estruturado confirma em `[DER]: DD/MM/AAAA`.
+**Duas grafias de data.** A data que CARIMBA a entrada usa PONTOS no padrão `DD.MM.AAAA`. Toda data citada DENTRO do texto usa BARRAS, abreviada para `DD/MM` quando o ano é o corrente. O acervo pratica isso com 17.272 aberturas em ponto contra 8.907 datas de conteúdo em barra.
 
-**A voz, medida no acervo.** Rótulo em caixa alta aparece em 0,1% das 15.147 entradas datadas, e mesmo assim em bloco processual, não em atendimento. Formulário NÃO é o padrão da casa, e transformá-lo em regra descaracteriza a anotação. A mediana é de 10 palavras por entrada, a média 16, e o percentil 90 fica em 34. Atendimento de consulta inteira é naturalmente maior, e ainda assim o TETO é de sessenta palavras. Passou disso, virou ata.
+**Extensão, medida no gênero certo.** As 482 entradas longas do acervo, que são as de atendimento, têm mediana de 83 palavras, percentil 90 em 131 e máximo de 226. Este é o alvo, e não a mediana de 10 palavras das notas de andamento processual, que são outro gênero. Transcrição de consulta inteira cabe entre OITENTA e CENTO E QUARENTA palavras. Abaixo disso some informação do caso, acima disso vira ata.
 
-**Os seis traços que dão a voz do escritório.**
+**Blocos temáticos, não campos rotulados.** Cada assunto fecha em seu bloco e o bloco seguinte abre outro assunto. Quebra de linha entre eles. NÃO usar rótulo de campo em caixa alta seguido de dois-pontos, porque isso aparece em 0,1% das entradas do acervo e descaracteriza a anotação. A ordem dos blocos é a ordem de PRIORIDADE do que SEMPRE extrair, acima.
 
-Primeiro, veredito na frente. A entrada abre pelo que decide, e não pelo histórico. "A sentença foi de improcedência" antes de qualquer explicação.
+**A voz.**
 
-Segundo, a ação vem embutida na frase, jamais em campo. Escreve-se "Vamos aguardar até 16/10", "acompanhar", "Tarefa encerrada", dentro do próprio texto.
+Primeiro, abertura pela hipótese, na forma "Trata-se de pedido de", seguida do quadro que a sustenta, com o fato clínico ou jurídico e sua data.
 
-Terceiro, fala direta com quem vai executar, em 5,4% das entradas. "Amanda, avisa a cliente que pode sacar", "Marcão, procura na agência". Havendo tarefa de colaborador, chamar pelo nome.
+Segundo, verbo de relato para o que veio do cliente. "Refere que", "Traz também", "Informa que". Marca a fronteira entre o que o cliente disse e o que o escritório apurou, e é o que a perícia depois vai confrontar.
 
-Quarto, número concreto inline, sem cerimônia. Valor, protocolo, NB e data entram no meio da frase.
+Terceiro, primeira pessoa para o que o escritório fez. "Orientei", "Expliquei", "Solicitei", "Pedi". Presente em 9,1% das entradas longas do acervo.
 
-Quinto, referência a anexo entre parênteses, na forma "(anexo)".
+Quarto, MARCA EM CAIXA ALTA abrindo o bloco que trava o protocolo ou faz perder prazo, seguida de ponto. `PROBLEMA NO DOCUMENTO.`, `ALERTA.`, `ATENÇÃO.`. Uma por anotação, no máximo duas, e o acervo já as usa.
 
-Sexto, dois marcadores na MESMA entrada quando um responde ao outro, em 14,1% dos casos. `(D): Trouxe os documentos hoje. (P): Amanda, junta no pedido dele.`
+Quinto, ênfase por caixa alta na palavra que vira a frase, e o acervo traz 118 casos de `NÃO` assim.
 
-**O que fazer com o conteúdo.** A ordem do que SEMPRE extrair, acima, é ordem de PRIORIDADE do que entra, não roteiro de campos. Ela decide o que sobrevive ao corte, e o texto sai em frases encadeadas.
+Sexto, aspas na fala do cliente que descreve limitação melhor que o termo técnico.
+
+Sétimo, fecho em linha própria, "Verificar em DD/MM."
 
 ```
-09.09.2026 (P): Caso de B31, operou a coluna lombar em 21/08 com o Dr. André,
-descompressão por cânula. Fica em pé "dois ou três minutos", dor que "queima
-como fogo", não toma banho sozinha, usa pregabalina e codeína. O relatório
-está com a data da cirurgia errada, consta 21/09, e assim gera indeferimento.
-Pediu o relatório corrigido, aceito digital, e o documento de identificação.
-Não usaremos a carta pré-cirúrgica. Expliquei que a deficiência visual não
-gera aposentadoria PCD agora, faltam os 15 anos na condição. Protocolar com
-perícia em Monte Alto. Verificar em 18/09.
+09.09.2026 (P): Trata-se de pedido de B31 por incapacidade pós-cirúrgica.
+Cirurgia de coluna lombar em 21/08/2026 com o Dr. André, descompressão por
+cânula com liberação do nervo ciático. Refere que só fica em pé "dois ou três
+minutos", que "queima como fogo", não toma banho sozinha e depende do marido.
+Em uso de pregabalina, Lisador e codeína. Médico indicou 6 meses de afastamento
+e prevê 2 a 3 meses de recuperação.
+PROBLEMA NO DOCUMENTO. O relatório do Dr. André, emitido em 03/09/2026, traz a
+data da cirurgia como 21/09/2026, data futura e errada. O correto é 21/08/2026.
+Protocolar assim gera indeferimento. Orientei a obter relatório corrigido, que
+pode vir digital pelo celular.
+Não usaremos a carta pré-cirúrgica anterior, e sim o relatório atual.
+Traz também relatório oftalmológico com perda definitiva da visão do olho
+esquerdo por insucesso cirúrgico, CID H54.4. Expliquei que a deficiência visual
+sozinha NÃO gera aposentadoria PCD agora, porque faltam os 15 anos de
+contribuição na condição de PCD, e que o caminho atual é a incapacidade.
+Consulta de joelho com o Dr. Denis no fim de outubro.
+Último benefício mantido até dezembro/2025, qualidade de segurada preservada.
+Solicitei documento de identificação, pode ser a CNH. Orientei a não apresentar
+a CNH na perícia.
+Perícia será tentada em Monte Alto nesta primeira vez, porque cirurgia recente
+dificulta a negativa.
+Retorno com o Dr. André em 18/09 e nova consulta em 31/10.
+Verificar em 18/09.
 ```
-
-O alerta `⚠️` fica reservado ao que trava o protocolo ou faz perder prazo, e vai na frente da frase que o descreve, nunca como rótulo de campo.
 
 Havendo processo ou requerimento em curso, o cabeçalho estruturado do escritório vem ANTES da linha datada.
 
@@ -103,6 +118,8 @@ HISTÓRICO:
 ```
 
 Regra de posição. Histórico em ordem DECRESCENTE, entrada nova no TOPO, entrada anterior intocada.
+
+**Nota de honestidade sobre a base empírica.** Os traços quarto, quinto, sexto e sétimo estão medidos no acervo. Os traços primeiro, segundo e terceiro, na forma "Trata-se de" e "Refere que", aparecem em menos de 1% das entradas, porque o backup é quase todo NOTA DE ANDAMENTO e o gênero transcrição de atendimento completo mal existe nele. Nesse gênero a voz é a do titular do escritório, fixada no exemplo canônico acima, que é o padrão a replicar.
 
 ### Bloco 2, o controle interno
 
