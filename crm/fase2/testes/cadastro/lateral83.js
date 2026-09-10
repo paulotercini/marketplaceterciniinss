@@ -9,7 +9,12 @@ const path = require("path");
 const { FIX, SESSAO, CASO1 } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
-const ontem = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
+// as datas da fixtura seguem o fuso do app (São Paulo, -03): à noite, o dia
+// de UTC já virou e um "ontem" ingênuo cairia no hoje de SP — a prova
+// quebrava sozinha depois das 21h, sem nada ter mudado no programa
+const hojeSP = () => new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 10);
+const emDias = n => new Date(new Date(hojeSP() + "T12:00:00Z").getTime() + n * 864e5).toISOString().slice(0, 10);
+const ontem = emDias(-1);
 FIX.casos[0] = { ...FIX.casos[0], prazo: ontem };   // um caso com prazo VENCIDO
 
 (async () => {

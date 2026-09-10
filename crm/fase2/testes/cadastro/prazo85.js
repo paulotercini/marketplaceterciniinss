@@ -11,7 +11,12 @@ const path = require("path");
 const { FIX, SESSAO, CLI_CHEIO, CASO1, EU } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 
-const mais = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);
+// as datas da fixtura seguem o fuso do app (São Paulo, -03): à noite, o dia
+// de UTC já virou e um "ontem" ingênuo cairia no hoje de SP — a prova
+// quebrava sozinha depois das 21h, sem nada ter mudado no programa
+const hojeSP = () => new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 10);
+const emDias = n => new Date(new Date(hojeSP() + "T12:00:00Z").getTime() + n * 864e5).toISOString().slice(0, 10);
+const mais = emDias;
 const br = iso => iso.split("-").reverse().join(".");
 const PRAZO_A = mais(5), PRAZO_B = mais(9);
 const AND_ORIG = "a0000000-0000-0000-0000-00000000f851";
