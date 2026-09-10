@@ -158,3 +158,33 @@ Razão funcional. O carimbo de entrada precisa ser localizável de relance dentr
 Confirmação independente. O cabeçalho estruturado do escritório já emprega `[DER]: DD/MM/AAAA` e `[DISTRIBUIÇÃO]: DD/MM/AAAA`, ambos dados de conteúdo, ambos em barra.
 
 Exemplos colhidos no próprio backup. Abertura `10.07.2026 (D):`, conteúdo `Verificar em 02/07`, `Prazo é 10/10` e `agenda horário para o dia 15/07`.
+
+## A voz real da anotação (Onda 128, 09/09/2026) — CORREÇÃO da Onda 126
+
+Medição sobre as **15.147 entradas datadas** com conteúdo na mesma linha.
+
+**Rótulo em caixa alta aparece em 11 entradas, 0,1% do total.** As 143 ocorrências de `ENCAMINHAMENTO`, 92 de `CONSIDERAÇÕES` e 90 de `ATITUDE A SER TOMADA` contadas na Onda 125 estavam em linhas SEPARADAS de bloco processual estruturado, e não em anotação de atendimento. A Onda 126 leu essas contagens como se fossem o padrão da anotação e converteu a exceção em regra. Erro corrigido aqui.
+
+**Extensão.** Mediana de 10 palavras por entrada, média de 16, percentil 90 em 34. O bloco por rótulos gerado na Onda 126 tinha 120 palavras, três vezes e meia o percentil 90.
+
+**Traços medidos da voz.**
+
+| Traço | Ocorrências | % |
+|---|---|---|
+| Verbo de ação no próprio texto, aguardar, acompanhar, verificar, cobrar, ligar, agendar | 3.745 | 24,7% |
+| Dois ou mais marcadores de autoria na MESMA entrada, um respondendo ao outro | 2.142 | 14,1% |
+| Fala direta com colaborador pelo nome, "Amanda,", "Marcão," | 816 | 5,4% |
+| Menção a anexo | 584 | 3,9% |
+| Protocolo ou NB inline | 362 | 2,4% |
+| Encerramento explícito da tarefa | 221 | 1,5% |
+| Valor em reais inline | 239 | 1,6% |
+
+**Amostras que fixam a forma.**
+
+`23.02.2026 (P): A sentença foi de improcedência. A única matéria tratada na revisão foi a RVT. Gratuidade deferida. Nada a ser feito. Tarefa encerrada.`
+
+`14.01.2026 (P): Amanda, avisa a cliente que pode ir no Banco Itaú sacar os atrasados que serão R$12.406,97 a partir do dia 19/01. (...) Também agenda atendimento para o dia 21/01.`
+
+`09.10.2025 (D): Trouxe esses dois documentos anexados hoje ao escritório. (P): Amanda, junta esses dois documentos no pedido de benefício dele. Depois pode alterar a tarefa para o dia 14/10 para o André verificar.`
+
+Lição para a manutenção da base. Contagem de rótulo isolada não prova padrão de forma. Antes de converter um achado numérico em regra, conferir em QUE POSIÇÃO do texto o achado aparece.
