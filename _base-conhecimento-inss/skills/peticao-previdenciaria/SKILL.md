@@ -9,6 +9,16 @@ description: "Criação de petições previdenciárias no padrão do escritório
 
 Toda petição gerada segue rigorosamente o padrão visual do escritório Advocacia Previdenciária Dr. Paulo Roberto Tercini Filho. Entrega-se .docx com cabeçalho timbrado, formatação consistente e estrutura padronizada. As regras visuais desta skill foram extraídas diretamente das peças reais do escritório, mantidas como referência viva do padrão atual.
 
+## Antes de qualquer linha, o teto e o ponto
+
+Duas coisas vêm ANTES da primeira linha da peça, e sem elas não se escreve.
+
+Primeira, o orçamento de páginas do tipo de peça, com a distribuição por seção, na forma da seção "Orçamento declarado antes da redação" ao final desta skill. Inicial 7, recurso inominado 4, manifestação sobre laudo 3, recurso ao CRPS 3, embargos 2, petição comum 2, memorial 2 absoluto, jurisprudência transcrita 1 em toda a peça.
+
+Segunda, o ponto controvertido em uma frase, que é o que vai para a síntese do caso e é o que a peça inteira existe para provar. Fundamento que não serve a essa frase é acessório e não entra desenvolvido, entra enumerado.
+
+A peça nasce dentro do teto. A Camada 6 da revisão afere e corta o que passou, mas cortar depois é remendo, e o titular apontou a prolixidade como o defeito número um dos textos gerados. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
 ## Fluxo de Trabalho
 
 1. Validar o tipo de petição (judicial JEF, judicial rito ordinário, mandado de segurança, recurso, peça administrativa ao INSS, peça administrativa ao CRPS)

@@ -143,3 +143,7 @@ Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
   `base-efeito-translativo-tema-1124-defesa`, as `base-especial-*` e a `ponte-*` do
   beneficio, alem do `CLAUDE.md` do escritorio.
 - **Acervo no Drive:** pasta "Peticoes Ouro" (Modelos Ouro por beneficio e tipo de peca).
+
+## Extensão
+
+Teto de a petição inicial, 7 páginas, orçamento da Camada 6, com jurisprudência transcrita em no máximo 1 página. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

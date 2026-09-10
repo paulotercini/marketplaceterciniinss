@@ -144,6 +144,10 @@ Sexta, português correto do padrão do escritório, sem dois-pontos introduzind
 
 A portaria do IF-BrA aparece na base ora como "Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014", ora como "Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014" (grafia usada pelo usuário e comum na literatura). É a MESMA norma. Pendência de uniformização futura pela grafia do texto oficial, a conferir na fonte primária.
 
+## Extensão
+
+Teto de o estudo pré-perícia, 2 páginas, com o ponto que decide a perícia na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
 ## Integração com outras skills
 
 `orientacao-cliente-pericia` gera o entregável do cliente na sequência. `triagem-caso` fornece o dossiê quando o caso veio da fila. `auditoria-laudo-pericial` entra DEPOIS da perícia, sobre o laudo produzido, e a nota técnica do estudo (seção 7) alimenta os quesitos dela. `relatorio-medico-assistente` quando a reunião revelar que falta relatório do médico assistente.

@@ -154,3 +154,7 @@ Ao identificar cenário de MS, verificar SEMPRE se a questão é exclusivamente 
 Hipótese conferida no SCON em 23/08/2026. Desprovido o agravo interno contra a negativa de seguimento do REsp pelo art. 1.030, I, "b", do CPC, a decisão se torna IRRECORRÍVEL, e o STJ reconhece a viabilidade de mandado de segurança julgado pela PRÓPRIA Corte local, jamais pelo STJ (art. 105, I, "b", da CF e Súmula 41/STJ), demonstrado direito líquido e certo ou TERATOLOGIA (RMS 75.406/SP, Segunda Turma, j. 03/03/2026).
 
 Trava de honestidade. O mesmo STJ reafirma que o MS contra ato judicial é excepcionalíssimo e não admite reexame de prova (AgInt no RMS 73.532/MG). Sem teratologia demonstrável de plano, a impetração perde e desgasta. Roteiro completo em `base-resp-relevancia-questao-federal`.
+
+## Extensão
+
+Teto de a peça do mandado de segurança, 6 páginas, por analogia à inicial da Camada 6. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

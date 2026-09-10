@@ -76,3 +76,5 @@ Terceira, ataque duro não é parecer contra o cliente. O relatório existe para
 Quarta, dados do cliente ficam no relatório da sessão, nunca proponha registrá-los em skill ou memória permanente.
 
 Quinta, tudo em português correto, no padrão do escritório, sem dois-pontos introduzindo lista na prosa (o formato de bloco acima usa ponto após o rótulo por essa razão).
+
+Teto do relatório, duas páginas. FATAL e GRAVE entram sempre, na frente. MEDIA e MENOR entram só até completar cinco fragilidades no total, e o resto vira uma linha de contagem. Cada fragilidade com a defesa típica, o documento que falta e a blindagem em três linhas, não em três parágrafos. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

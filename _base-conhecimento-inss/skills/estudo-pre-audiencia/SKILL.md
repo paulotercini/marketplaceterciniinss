@@ -105,6 +105,10 @@ Quinta, o estudo é personalizado, texto que sobrevive à troca do nome não est
 
 Sexta, português correto do padrão do escritório, sem dois-pontos introduzindo lista na prosa.
 
+## Extensão
+
+Teto de o estudo pré-audiência, 2 páginas, com o fato que a audiência existe para provar na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
 ## Integração com outras skills
 
 `estudo-pre-pericia` é a irmã para o ato pericial, mesma etapa zero, mesmo espírito. `triagem-caso` fornece o dossiê. As skills de matéria listadas no mapa fornecem o mérito. `especificacao-provas` na fase anterior (é ela que pede a audiência com fatos controvertidos delimitados). `base-cpc-nulidades-cerceamento` quando a audiência for indeferida. Após a audiência, o relato alimenta memoriais pela `peticao-previdenciaria`.

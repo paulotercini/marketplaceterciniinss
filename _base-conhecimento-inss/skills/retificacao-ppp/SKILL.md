@@ -142,3 +142,7 @@ A skill auditoria-ppp é pré-requisito. A retificação só é gerada após a a
 Quando a empresa se recusar a retificar, acionar a skill peticao-previdenciaria para ação de obrigação de fazer ou para produção de prova pericial na ação previdenciária. O Tema 132/TST garante a imprescritibilidade da pretensão.
 
 Quando a retificação obtida alterar o cenário probatório na via administrativa, acionar a skill tema-1124-instrucao-administrativa para verificar o impacto nos efeitos financeiros.
+
+## Extensão
+
+Teto de a carta de retificação à empresa, 2 páginas, com os vícios em ordem de gravidade. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
