@@ -90,3 +90,37 @@ Achado sem consequência, listado para justificar o parecer. Não entra. Sem ach
 `base-peticao-previdenciaria-padrao-visual` para a síntese e o Visual Law.
 `transcricao-atendimento` para o teste dos quatro elementos.
 `humanizador-tedson` para a passada final em todo texto em português.
+
+## Redação argumentativa das peças (Onda 135, 11/09/2026)
+
+O titular avaliou as peças geradas e apontou dois defeitos que se somam. O primeiro é a prolixidade, já tratada na Onda 133. O segundo é a escrita truncada, feita de frases soltas que dificultam a compreensão, e ele foi claro ao dizer que quer linguagem formal e jurídica, mas simples, com argumentação desenvolvida e sem fórmulas vazias.
+
+### De onde veio o truncamento
+
+A causa estava nas próprias regras do plugin. A seção de estilo das skills de petição mandava "parágrafos curtos" sem medida e "opiniões contundentes sem hesitação", e a regra dos dois-pontos trazia como exemplo correto uma frase picada em três períodos. Somadas, essas instruções produziam o texto telegráfico e adjetivado que o titular rejeitou. A correção retirou a contundência, fixou a medida do parágrafo e trocou o exemplo, de modo que o complemento que viria após os dois-pontos passe a integrar o período por conectivo ou subordinação.
+
+### O estilo fixado
+
+A peça é escrita em estilo formal, técnico e argumentativo, e o titular dispensa padrão jurídico único e obrigatório. O que ele exige é clareza, com frases diretas e parágrafos bem organizados, argumentação ligada aos fatos, persuasão sóbria, fundamentação seletiva e pedidos específicos.
+
+**Clareza.** Frases completas, de tamanho médio, encadeadas por conectivos, sem rebuscamento e sem telegrama. O parágrafo tem três linhas, no máximo quatro, e desenvolve uma única ideia do começo ao fim.
+
+**Argumentação ligada aos fatos.** O parágrafo típico diz o que aconteceu, aponta a prova que sustenta a afirmação, com o ID do documento, e explica como a norma se aplica ao caso. Os três elementos aparecem juntos, na ordem em que o julgador precisa deles.
+
+**Persuasão sóbria.** Demonstram-se os erros e as consequências jurídicas com precisão, e não com adjetivos. O exemplo do titular resume a diferença. Em vez de "a decisão combatida revela-se manifestamente absurda e afronta os mais basilares princípios de justiça", escreve-se "a decisão não examinou o documento apresentado pela parte autora, embora seu conteúdo seja relevante para a análise do requisito controvertido".
+
+**Fundamentação seletiva.** Usa-se o dispositivo ou precedente relevante e explica-se a relação dele com o pedido. A citação exaustiva de artigos foi apontada pelo titular como um dos defeitos, e o texto mais curto vale mais do que o texto cheio de referências.
+
+**Pedidos específicos.** Cada pedido formula uma providência coerente com os fatos e com a fundamentação, nomeando o objeto e o fundamento.
+
+### Anti-padrões do truncamento
+
+Sequência de três ou mais frases com menos de doze palavras e sem conectivo entre elas. Parágrafo de uma frase que apenas anuncia o que o próximo vai dizer. Frase-decreto que reafirma a anterior com um adjetivo a mais. Período partido ao meio para evitar dois-pontos. Enumeração de dispositivos legais em sequência, sem uma frase que explique a aplicação de cada um.
+
+### Aferição na revisão
+
+A Camada 6 da `base-revisao-peticao-aprofundada` passa a medir, além da extensão, o tamanho dos parágrafos e a fluidez das frases. Parágrafo com mais de quatro linhas é achado IMPORTANTE. Sequência de frases soltas é achado IMPORTANTE. Dispositivo citado sem explicação de aplicação é achado MENOR, e cinco ou mais na mesma seção elevam a IMPORTANTE.
+
+### Nota de honestidade
+
+As regras das Ondas 126 a 133 foram escritas no ritmo de quem as escreveu, com veredito na frente e frase curta, e esse ritmo contaminou o plugin. O titular percebeu no resultado. Esta seção e as regras reescritas na Onda 135 foram redigidas no estilo que ele pediu, para que a própria skill sirva de exemplo do que manda fazer.
