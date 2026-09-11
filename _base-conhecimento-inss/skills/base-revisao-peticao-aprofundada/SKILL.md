@@ -356,8 +356,12 @@ Extensão dentro do orçamento não garante leitura fácil. Sortear três parág
 2. A primeira linha não resume o que as seguintes explicam (proibição do parágrafo-modelo).
 3. A abertura não é frase-decreto, e varia entre fato, data, documento por ID, norma ou consequência do parágrafo anterior.
 4. Termo técnico indispensável aparece definido em meia frase na primeira ocorrência.
+5. As frases são completas e encadeadas por conectivos. Sequência de três ou mais frases com menos de doze palavras e sem ligação entre elas é texto truncado, apontado pelo titular em 11/09/2026 como defeito tão grave quanto a prolixidade.
+6. O parágrafo argumentativo traz fato, prova por ID e norma aplicada, juntos. Faltando um dos três, o parágrafo é alegação, lista ou doutrina, e não argumento.
+7. Dispositivo legal citado vem acompanhado de uma frase que explica por que se aplica ao caso. Dispositivo listado sem essa frase é achado MENOR, e cinco ou mais na mesma seção elevam o conjunto a IMPORTANTE.
+8. Não há adjetivo de intensidade nem acusação ao julgador ou à autarquia. "Manifestamente", "absurda", "teratológica", "flagrante" e similares saem, e no lugar entra a descrição precisa do erro e da consequência.
 
-Falha em qualquer ponto gera achado, com o parágrafo transcrito e a reescrita sugerida. Falha em dois dos três parágrafos sorteados indica problema sistêmico, e a conferência se estende à peça inteira.
+Falha em qualquer ponto gera achado, com o parágrafo transcrito e a reescrita sugerida. Falha em dois dos três parágrafos sorteados indica problema sistêmico, e a conferência se estende à peça inteira. O padrão de referência está em `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`, seção de redação argumentativa.
 
 #### Severidade dos achados desta camada
 

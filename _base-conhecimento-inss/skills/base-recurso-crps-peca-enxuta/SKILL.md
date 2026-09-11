@@ -80,7 +80,7 @@ No caso, [fato concreto vinculado a ID do documento] preenche a hipótese, confo
 A decisão recorrida violou o dispositivo ao [erro específico].
 ```
 
-Por bloco temático, NÃO redigir mais de 8 parágrafos. Cada parágrafo no máximo 5 linhas.
+Por bloco temático, NÃO redigir mais de 8 parágrafos. Cada parágrafo com três linhas, no máximo quatro, desenvolvendo uma ideia em frases completas, e não em frases soltas.
 
 ### Seção 4 - Dos Pedidos (1 ou 2 parágrafos finais)
 

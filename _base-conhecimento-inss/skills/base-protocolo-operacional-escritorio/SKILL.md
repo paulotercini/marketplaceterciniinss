@@ -118,4 +118,10 @@ Vigente desde 09/09/2026. Extraído das correções que o titular fez ao longo d
 
 **Sem quebra de linha artificial** em texto destinado ao To Do, ao WhatsApp ou a campo de formulário. Cada bloco em uma linha corrida.
 
-Permanecem as constraints de sempre. Sem dois-pontos introduzindo explicação, lista ou conclusão. Sem cara de IA, e a `humanizador-tedson` passa em todo texto em português.
+**Redação das peças, fixada em 11/09/2026.** A linguagem é formal e jurídica, mas simples, e a peça convence pela precisão com que expõe o fato, a prova e a norma, nunca por adjetivos ou acusações. Em vez de escrever que "a decisão combatida revela-se manifestamente absurda e afronta os mais basilares princípios de justiça", escreve-se que "a decisão não examinou o documento apresentado pela parte autora, embora seu conteúdo seja relevante para a análise do requisito controvertido", porque a segunda redação diz o que aconteceu, aponta a prova e deixa a consequência ao alcance do julgador.
+
+Cada parágrafo tem três linhas, no máximo quatro, e desenvolve uma única ideia com começo, meio e fim, em frases completas e encadeadas por conectivos naturais. A regra de extensão não autoriza o parágrafo telegráfico, feito de frases soltas que o leitor precisa costurar, e esse texto truncado é tão inaceitável quanto o prolixo. O parágrafo argumentativo típico expõe o que aconteceu, indica a prova com o ID do documento e explica como a norma se aplica ao fato, tudo no mesmo parágrafo e nessa ordem.
+
+A fundamentação é seletiva. Cita-se o dispositivo que decide e explica-se em uma frase por que ele se aplica ao caso, e a lista de artigos sem essa explicação não entra, porque é a forma mais comum de prolixidade nas peças geradas. Os pedidos são específicos, cada um com a providência, o objeto e o fundamento que o sustenta. Uma redação convincente não garante que artigos, precedentes e conclusões estejam certos, e por isso toda peça é conferida com os autos e com as fontes antes de sair.
+
+Permanecem as constraints de sempre. Sem dois-pontos introduzindo explicação, lista ou conclusão, mas a solução para o dois-pontos é o conectivo ou a subordinação, nunca picar o período. Sem cara de IA, e a `humanizador-tedson` passa em todo texto em português.
