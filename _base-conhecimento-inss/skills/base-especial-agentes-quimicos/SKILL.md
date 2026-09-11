@@ -68,3 +68,7 @@ Não há regras sobre ruído, vibração, eletricidade, periculosidade, calor ou
 Agentes nominados em acórdão do TRF3 para dentista, mercúrio vivo, óxido de zinco, eugenol, resinas, ÁCIDO FOSFÓRICO e anestésicos tópicos (Ap 0030294-30.2016.4.03.9999, 10ª Turma, j. 25/07/2017). Somar orto-cresol e hidróxido de cálcio, este resolvido pela via dos ÁLCALIS CÁUSTICOS, cujo manuseio rotineiro basta, sem exigir fabricação (TRF4, AC 5012692-29.2022.4.04.7112/RS).
 
 Contra-linha a antecipar. Há julgados que afastam a especialidade de químicos "ordinariamente empregados no mister", pensando em produto de limpeza. O distinguishing da odontologia é que esses agentes são insumos do ATO-FIM, de manuseio direto e diário pelo profissional, com classificação técnica no Anexo 13 da NR-15 demonstrável por laudo. Fichas em `base-especial-agentes-biologicos/references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

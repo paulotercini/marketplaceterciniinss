@@ -124,3 +124,7 @@ Para acumulação de B91 com pensão por morte sob EC 103/2019 art. 24, redutore
 ## O que NÃO está nesta skill
 
 Não está aqui o B31 temporário, objeto de `base-incapacidade-b31-temporaria`. Não estão aqui os detalhes do caráter acidentário e da RMI integral, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia médica em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`. Não está aqui a acumulação sob EC 103/2019 art. 24, objeto de `base-acumulacao-beneficios-ec103-art24`.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria por incapacidade permanente" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

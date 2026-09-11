@@ -123,3 +123,7 @@ Jane Berwanger, segurado especial e feminino.
 ## O que NÃO está nesta skill
 
 Segurado especial pós-1991 está em `segurado-especial-rural`. Contagem recíproca está em `base-contagem-reciproca-rgps-rpps`. Tempo militar em `base-servico-militar-obrigatorio`. Aluno-aprendiz em `base-aluno-aprendiz`. Conversão de tempo especial em `base-tempo-especial-conversao`.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria rural" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
