@@ -1,7 +1,9 @@
 ---
 name: base-ms-liminar-art7-iii
-A Súmula 212 STJ foi CANCELADA pela 1ª Seção em 2022, em decorrência da ADI 4.296.
+description: "Liminar em mandado de segurança previdenciário (art. 7º III Lei 12.016/2009), fumus boni iuris, periculum in mora, requisitos pró-segurado, vedações, impedimentos e rito do agravo contra decisão liminar. Use SEMPRE que mencionar liminar em MS previdenciário, art. 7º III Lei 12.016, fumus boni iuris MS, periculum in mora MS, concessão de liminar INSS, suspensão de liminar, agravo de instrumento MS, revogação de liminar, implantação liminar de benefício, restabelecimento liminar, liminar contra CEAB, liminar contra CRPS, liminar pericial, Súmula 212 STJ, vedação de compensação tributária, caráter irreversível. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e peticao-previdenciaria."
 ---
+
+> Nota da auditoria de citações (25/07/2026). A Súmula 212 STJ foi CANCELADA pela 1ª Seção em 2022, em decorrência da ADI 4.296.
 
 # Liminar em MS Previdenciário
 
