@@ -102,3 +102,7 @@ Este roteiro é o ponto de entrada. A Fase 0 produz o mapa de ataque. Para arqui
 ## O que NÃO está nesta skill
 
 A redação da peça final está nas skills de cada via e na `peticao-previdenciaria`. A arquitetura do recurso está na `ponte-workflow-recurso-sentenca`. A disciplina de embargos está em `base-cpc-embargos-declaracao`. O mérito de cada benefício está nas skills temáticas correspondentes.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "técnica 6 (demonstrar por que a omissão altera o resultado)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

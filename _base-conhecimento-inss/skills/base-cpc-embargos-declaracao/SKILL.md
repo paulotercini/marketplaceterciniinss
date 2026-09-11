@@ -108,3 +108,7 @@ Para redigir, acionar `peticao-previdenciaria`. Para auditar, acionar `revisao-p
 ## O que NÃO está nesta skill
 
 Mérito recursal está no recurso próprio. Contradição interna detalhada está na reference compartilhada. Análise inicial da decisão em três eixos está em `base-analise-decisao-tres-eixos`.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "técnica 6 (demonstrar por que a omissão altera o resultado)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

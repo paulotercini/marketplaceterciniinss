@@ -65,3 +65,7 @@ Para os precedentes de avaliação social, acionar `base-precedentes-catalogo-vi
 ## O que NÃO está nesta skill
 
 A tese jurídica está nas skills temáticas do benefício. A formatação visual da peça está em `base-peticao-previdenciaria-padrao-visual`. Este componente não substitui a fundamentação, apenas a coroa.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "técnica 7 (humanizar com fatos verificáveis)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

@@ -99,3 +99,7 @@ O IBDP sustenta institucionalmente o direito do segurado à análise comparativa
 ## O que NÃO está nesta skill
 
 Não está aqui o direito adquirido pré-reforma, objeto de `base-aposentadoria-direito-adquirido`. Não está aqui a regra permanente pós-reforma, objeto de `base-aposentadoria-regra-permanente-ec103`. Não está aqui o cálculo da RMI, objeto de `base-calculo-rmi-ec103`. Não está aqui a aposentadoria especial de transição, objeto de `base-aposentadoria-especial-transicao-ec103`.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria pelas regras de transição" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

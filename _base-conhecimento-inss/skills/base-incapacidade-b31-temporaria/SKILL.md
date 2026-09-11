@@ -149,3 +149,7 @@ Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base
 O art. 339, § 3º, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026, dispõe que "o segurado poderá requerer a prorrogação nos últimos quinze dias do benefício caso o prazo fixado para a recuperação da capacidade para o trabalho ou para a atividade habitual revele-se insuficiente".
 
 Consequência operacional. Pedido ANTES da janela pode ser recusado por prematuridade. Pedido DEPOIS da DCB deixa de ser prorrogação e passa a ser novo requerimento, com todas as travas próprias, inclusive as das Portarias Conjuntas de análise documental. Registrar a data limite na agenda do cliente no momento da concessão.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "técnicas 1, 2 e 4 (controvérsia no início, condição clínica ligada às tarefas, cronologia)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
