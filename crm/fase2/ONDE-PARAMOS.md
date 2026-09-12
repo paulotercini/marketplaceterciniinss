@@ -1,3 +1,35 @@
+# Onde paramos — 12.09.2026, versão 09.85
+
+## F89 · O roteiro da perícia (09.85)
+
+O Paulo descreveu o procedimento que o escritório segue em TODA perícia
+médica e avaliação social: anotar o agendamento, tratar dos quesitos
+(na hora ou como tarefa futura), atribuir à Amanda o agendamento de um
+atendimento de preparação alguns dias antes, avaliar se vale pedir
+documento médico novo, e ser lembrado um dia antes do atendimento para
+estudar o processo — trocando depois a conclusão do caso para esse dia.
+Sete passos que eram sete lembretes escritos à mão, um a um.
+
+Agora o modal do 📌 dar seguimento, quando `eventoNoTexto` reconhece
+perícia ou avaliação social com data, abre com o roteiro: cada passo é
+uma linha com caixa de marcar, data e responsável. As datas saem da
+data da perícia — atendimento 3 dias úteis antes, estudo 1 dia útil
+antes do atendimento, conclusão no dia do estudo. Mexer no atendimento
+arrasta estudo e conclusão (`rotSincronizar`). No exemplo do Paulo,
+perícia 16/11 produz atendimento 11/11 e estudo/conclusão 10/11, que é
+exatamente o que ele fazia à mão.
+
+Detalhes que o uso pediu: quando o texto já diz "quesitos apresentados",
+o passo abre em "só registrar"; o responsável pelo atendimento fica
+guardado em `config_app.pericia_quem_atendimento`, então na segunda
+perícia já vem a Amanda sem nome nenhum estar escrito no código; o
+pedido de documentos não aparece em audiência; e julgamento do CRPS
+continua sem roteiro (não há preparação nem presença — só o resultado).
+A antiga véspera automática virou um passo do roteiro, com data e
+responsável à vista, em vez de nascer calada.
+
+Prova nova: roteiro89.js (20/20). Suíte: 66/68 (as duas herdadas).
+
 # Onde paramos — 09.09.2026, versão 09.84
 
 ## F88 · Dar dono ao recurso sem caso (09.84)
