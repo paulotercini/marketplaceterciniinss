@@ -29,7 +29,7 @@ NUNCA citar jurisprudência (temas repetitivos, repercussão geral, julgados de 
 
 ### Extensão
 
-O requerimento deve caber em poucas páginas. O ideal é uma a três páginas. Se o documento ultrapassar quatro páginas, revisar criticamente para eliminar repetições, fundamentação jurídica excessiva e parágrafos que não agregam informação nova. O servidor lê dezenas de requerimentos por dia. A concisão é condição de eficácia.
+Teto de UMA FOLHA, como já pratica a `inicial-inss`. O servidor lê dezenas de requerimentos por dia e decide por norma infralegal e trava de sistema, não por fundamentação. Declarar o teto antes de redigir, nomear em uma frase o que se pede e por qual dispositivo, e só o dado que sustenta o pedido entra. Estourou, volta para o corte. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ### Formato
 

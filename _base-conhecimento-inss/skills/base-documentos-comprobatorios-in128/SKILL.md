@@ -396,3 +396,7 @@ Verificar checklist do escritório ANTES do requerimento administrativo e ANTES 
 O art. 532, § 4º, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026, dispõe que a exceção do inciso II do caput não se aplica aos servidores públicos e aos militares quando estiverem exercendo a ADVOCACIA.
 
 O inciso II limita servidor público civil e militar EM ATIVIDADE a representar apenas cônjuge, companheiro e parentes até o segundo grau. Com o novo § 4º, essa limitação deixa de alcançar quem atua como advogado, o que resolve a recusa de procuração nessas hipóteses.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "técnica 3 (explicar o que cada documento comprova)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

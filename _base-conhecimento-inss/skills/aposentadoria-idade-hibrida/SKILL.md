@@ -216,3 +216,7 @@ Consultar skill `segurado-especial-rural` para tratamento completo das hipótese
 5. **Intercalação com contribuição facultativa é tese forte no TRF4 mas não pacífica nacionalmente.** Em outras regiões, fundamentar com cautela.
 
 6. **EC 103/2019 não alterou a idade do trabalhador rural** (55/60), mas aplicou-se à aposentadoria híbrida por esta seguir a regra de idade urbana (62/65).
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria rural e Aposentadoria por idade urbana e programada" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

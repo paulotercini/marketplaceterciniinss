@@ -103,3 +103,6 @@ Identificação completa. Enunciado 18 da I Jornada Regional Intrainstitucional 
 
 RESSALVA OBRIGATÓRIA DE USO. O próprio TRF4 declara que os enunciados têm "caráter meramente doutrinário e força persuasiva técnico-jurídica, não se confundindo com a posição do Tribunal Regional Federal da 4ª Região e de seus membros". Citar como DOUTRINA QUALIFICADA, jamais como precedente do tribunal. Em peça na 3ª Região, sinalizar a origem.
 
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

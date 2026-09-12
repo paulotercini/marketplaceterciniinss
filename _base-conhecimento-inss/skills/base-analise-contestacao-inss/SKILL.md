@@ -54,6 +54,10 @@ Nenhum precedente entra na réplica sem conferência na fonte primária. Citaç�
 
 Pró-segurado integral. A réplica ataca a defesa adversária ponto a ponto, fixa o incontroverso a favor do segurado, repele as preliminares e desmonta o mérito defensivo com prova por ID e precedente conferido. Vedada a réplica genérica que apenas reitera a inicial.
 
+## Extensão
+
+Teto de o mapa de ataque, 2 páginas, preliminares primeiro, e fato incontroverso em uma linha cada. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
 ## Integração com outras skills
 
 A leitura produz o mapa de ataque. Para arquitetar a réplica, acionar `ponte-workflow-replica-contestacao`. Para especificar provas na sequência, acionar `especificacao-provas`. Para redigir, acionar `peticao-previdenciaria`. Para auditar, acionar `revisao-peticao`.

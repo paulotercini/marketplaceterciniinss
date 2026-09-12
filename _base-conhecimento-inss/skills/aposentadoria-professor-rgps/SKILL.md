@@ -193,3 +193,7 @@ Ao analisar caso de aposentadoria do professor, verificar automaticamente:
 O Decreto 12.773/2025 (08/12/2025) atualizou a Política Nacional de Educação Especial Inclusiva (Decreto 12.686/2025), ampliando o público atendido para crianças de 0 a 3 anos, reforçando adaptações pedagógicas, acessibilidade e participação efetiva de estudantes com deficiência, TEA e altas habilidades. Aumentou a carga horária de formação dos professores de AEE para mínimo de 360 horas. A oferta de profissional de apoio escolar independe de laudo médico.
 
 Relevância previdenciária indireta — o decreto reforça o conceito de professor que atua no AEE como exercente de função de magistério, o que pode fortalecer teses de enquadramento como professor para fins previdenciários, especialmente quando combinado com a Lei 15.326/2026 e a ADI 3772/STF.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria do professor" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

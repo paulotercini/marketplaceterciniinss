@@ -144,3 +144,7 @@ Esta skill executa ferramentas. Para rodar, o ambiente precisa de:
   `base-cnis-acerto-indicadores`, `base-documentos-comprobatorios-in128` e a `base-*`/
   `ponte-*` do beneficio de cada cliente, alem do `CLAUDE.md` do escritorio (que traz
   o mapa de ativacao de skills e as verificacoes automaticas).
+
+## Extensão
+
+Teto de o parecer de triagem, 1 página, porque é parecer e segue a regra 4 do protocolo. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
