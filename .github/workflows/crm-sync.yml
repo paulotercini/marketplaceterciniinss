@@ -68,8 +68,14 @@ jobs:
               json.dumps({"refresh_token": os.environ["GRAPH_REFRESH_TOKEN"]}))
           PY
 
+      # Os segredos do Supabase entram aqui para o graph_refresh.py guardar o
+      # refresh_token novo na tabela graph_token (crm/fase2/schema_graph_token.sql).
+      # Sem isso, o crachá vence de tempos em tempos e a sincronização para.
       - name: Renova token Microsoft Graph
         if: steps.seg.outputs.tem == 'true'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
         run: python graph_refresh.py
 
       # ESCRITA DESLIGADA. Enquanto o To Do e o CRM convivem, o caminho seguro
