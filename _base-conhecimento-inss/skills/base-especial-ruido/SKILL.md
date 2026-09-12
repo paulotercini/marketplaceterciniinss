@@ -108,3 +108,7 @@ Valor pró-segurado. Os três itens resolvem, por presunção, exatamente o que 
 Identificação. Enunciado 12 da I Jornada Regional Intrainstitucional de Direito Previdenciário da Justiça Federal da 4ª Região, EMAGIS/TRF4, 1º e 2 de setembro de 2025.
 
 RESSALVA OBRIGATÓRIA. Por declaração do próprio TRF4, os enunciados têm caráter meramente doutrinário e força persuasiva técnico-jurídica, não se confundindo com a posição do tribunal. Citar como doutrina qualificada, jamais como precedente, e sinalizar a Região de origem em peça na 3ª Região.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

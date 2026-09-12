@@ -261,3 +261,7 @@ Enunciados 8 (labor infantil) e 15 (tempo especial) são as bases. Quando o INSS
 Antes de concluir análise ou peça com base nesta skill, leia também, conforme o caso concreto:
 
 - `references/precedentes-rurais.md` — material complementar desta skill
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria rural" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

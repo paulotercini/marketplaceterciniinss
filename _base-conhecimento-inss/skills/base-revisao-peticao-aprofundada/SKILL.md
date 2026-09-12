@@ -356,8 +356,12 @@ Extensão dentro do orçamento não garante leitura fácil. Sortear três parág
 2. A primeira linha não resume o que as seguintes explicam (proibição do parágrafo-modelo).
 3. A abertura não é frase-decreto, e varia entre fato, data, documento por ID, norma ou consequência do parágrafo anterior.
 4. Termo técnico indispensável aparece definido em meia frase na primeira ocorrência.
+5. As frases são completas e encadeadas por conectivos. Sequência de três ou mais frases com menos de doze palavras e sem ligação entre elas é texto truncado, apontado pelo titular em 11/09/2026 como defeito tão grave quanto a prolixidade.
+6. O parágrafo argumentativo traz fato, prova por ID e norma aplicada, juntos. Faltando um dos três, o parágrafo é alegação, lista ou doutrina, e não argumento.
+7. Dispositivo legal citado vem acompanhado de uma frase que explica por que se aplica ao caso. Dispositivo listado sem essa frase é achado MENOR, e cinco ou mais na mesma seção elevam o conjunto a IMPORTANTE.
+8. Não há adjetivo de intensidade nem acusação ao julgador ou à autarquia. "Manifestamente", "absurda", "teratológica", "flagrante" e similares saem, e no lugar entra a descrição precisa do erro e da consequência.
 
-Falha em qualquer ponto gera achado, com o parágrafo transcrito e a reescrita sugerida. Falha em dois dos três parágrafos sorteados indica problema sistêmico, e a conferência se estende à peça inteira.
+Falha em qualquer ponto gera achado, com o parágrafo transcrito e a reescrita sugerida. Falha em dois dos três parágrafos sorteados indica problema sistêmico, e a conferência se estende à peça inteira. O padrão de referência está em `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`, seção de redação argumentativa.
 
 #### Severidade dos achados desta camada
 
@@ -441,6 +445,10 @@ Estrutura padrão entregue após apresentação do .docx.
 **Painel de extensão.** Linha única com o tipo de peça, o orçamento, as páginas aferidas antes do corte, as páginas depois do corte e o percentual reduzido. Exemplo, "Petição inicial. Orçamento 7 páginas. Antes 11. Depois 8. Redução de 27%. Excesso de 1 página justificado pela cumulação de tempo especial e reafirmação da DER."
 
 **Achados por camada.** Ordem (Formal → Normativa → Fática → Argumentativa → Integridade Probatória → Extensão e Legibilidade). Dentro de cada camada, ordenados por severidade decrescente (Bloqueante → Crítico → Importante → Menor).
+
+**Teto do relatório e consolidação (Onda 133).** O relatório consolidado tem DUAS PÁGINAS. BLOQUEANTE e CRÍTICO entram sempre, na frente. IMPORTANTE e MENOR entram até o teto, e o excedente vira uma linha de contagem por camada. Os pareceres dos agentes despachados, juristas, processualistas, decisores, analista do CNIS, red-team e black-team, NÃO se empilham no relatório. Cada um fica em anexo, com uma página cada, e o consolidado recebe só os achados deles que mudam o resultado, DEDUPLICADOS, porque dois agentes apontando o mesmo vício por lentes diferentes é um achado, não dois. A regra de subida continua a mesma, PRECLUSÃO IMINENTE, BLOQUEANTE e CRÍTICO sobem sempre. O relatório que empilha pareceres é o que o titular apontou como "muitas folhas que cansam o leitor", e o objetivo dele é que o titular leia o consolidado em cinco minutos e só abra o anexo se quiser a origem de um achado.
+
+**Resolver, não delegar de volta.** Achado do tipo "conferir X em fonte primária" só entra se a conferência foi TENTADA e falhou por bloqueio de acesso, e nesse caso diz qual fonte, qual via e qual o bloqueio. Achado que apenas recomenda ao titular fazer a conferência não é achado, é trabalho empurrado, e o titular pediu duas vezes que isso parasse. Regra 10 do protocolo.
 
 **Modelo de achado individual.**
 

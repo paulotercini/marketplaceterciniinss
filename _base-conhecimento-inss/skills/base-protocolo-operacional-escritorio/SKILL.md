@@ -1,6 +1,6 @@
 ---
 name: base-protocolo-operacional-escritorio
-description: "Protocolo operacional VINCULANTE do escritório Paulo Roberto Tercini Filho, aplicável a TODA sessão. Use SEMPRE ao registrar atendimento no To Do, ao fechar parecer ou relatório, ao partir de Modelo Ouro, ao ler documento recebido, ao calcular tempo, RMI ou valor da causa, e ao pesquisar na web. Gatilhos. Tarefa Nome CPF, anotação (C) no To Do, próximo passo recomendado, pendências em aberto, Modelo Ouro 2.0, Análise da Vida Completa, documento por ID no PJe, Prévius, subpasta Claude do cliente, SearXNG, crawl4ai, fonte oficial arquivada. Nove regras. To Do como registro oficial sem editar entrada existente. Fechamento com próximo passo e pendências. Peça a partir do Modelo Ouro. Parecer de uma página. Leitura integral com OCR e auditoria ponto a ponto. Cálculo é do Prévius. Skills centrais obrigatórias, com dados de cliente jamais em skill ou memória. Pesquisa em fonte oficial com inteiro teor. Rigor de fonte também fora do previdenciário. Espelho do CLAUDE.md do workspace."
+description: "Protocolo operacional VINCULANTE do escritório Paulo Roberto Tercini Filho, aplicável a TODA sessão. Use SEMPRE ao registrar atendimento no To Do, ao fechar parecer ou relatório, ao partir de Modelo Ouro, ao ler documento recebido, ao calcular tempo, RMI ou valor da causa, e ao pesquisar na web. Gatilhos. Tarefa Nome CPF, anotação (C) no To Do, próximo passo recomendado, pendências em aberto, Modelo Ouro 2.0, Análise da Vida Completa, documento por ID no PJe, Prévius, subpasta Claude do cliente, SearXNG, crawl4ai, fonte oficial arquivada. Dez regras. To Do como registro oficial sem editar entrada existente. Fechamento com próximo passo e pendências. Peça a partir do Modelo Ouro. Parecer de uma página. Leitura integral com OCR e auditoria ponto a ponto. Cálculo é do Prévius. Skills centrais obrigatórias, com dados de cliente jamais em skill ou memória. Pesquisa em fonte oficial com inteiro teor. Rigor de fonte fora do previdenciário. Padrão de escrita, teto antes de redigir. Espelho do CLAUDE.md."
 ---
 
 # Protocolo Operacional do Escritório
@@ -99,3 +99,31 @@ Consultas de saúde do Paulo recebem terminologia técnica, verificação em BUL
 Decisão clínica continua sendo do profissional que acompanha, e a informação técnica serve para qualificar a conversa com ele, não para substituí-la.
 
 Temas fora do previdenciário também exigem informação VERIFICADA. O rigor de fonte não é regra do direito previdenciário, é regra da casa.
+
+## 10. Padrão de escrita do escritório
+
+Vigente desde 09/09/2026. Extraído das correções que o titular fez ao longo de 132 Ondas. Detalhamento e tetos por tipo de documento em `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+**O leitor mede o texto pelo esforço de ler, não pelo que ele contém.** Todo entregável nasce dentro de um teto de extensão declarado ANTES da redação, e não é cortado depois. Parecer, uma página. Síntese do caso, duas ou três linhas. Anotação `(C)` no To Do, duas ou três linhas. Relatório de auditoria ou de agente, uma página. Peça judicial, o orçamento da Camada 6. Documento que estoura o teto não sai, volta para o corte.
+
+**Um ponto decisivo por documento.** Antes de escrever, nomear em uma frase o que decide o caso. O texto existe para provar essa frase. O que não a serve não entra.
+
+**Só o dado que decide.** Nome do segurado, idade, datas de nascimento, histórico sem consequência, explicação repetida, ato burocrático já visível no andamento, conversa de circunstância. Nada disso entra em síntese, quadro, tabela ou anotação. Tabela cheia cansa e esconde, tabela com três linhas mostra.
+
+**Formato do escritório, nunca formato inventado.** Toda peça parte do Modelo Ouro, todo relatório médico do modelo já em uso, toda anotação do padrão do To Do. Rótulo, seção, bloco ou estrutura que o escritório não pratica NÃO se cria. Na dúvida, prosa corrida em ordem decisória, abrindo pelo que decide.
+
+**Resolver, não delegar de volta.** Relatório que devolve "conferir X" sem ter conferido é trabalho empurrado ao titular. A skill abre a fonte, confere e reporta o resultado. Só sobe ao titular o que exige decisão dele.
+
+**Linguagem pelo destinatário.** Cliente recebe texto simples, autoexplicativo e com o ponto que ele deve sustentar. Documento interno recebe técnica seca, sem didática. Juiz e conselheiro recebem o mínimo que prova o ponto.
+
+**Sem quebra de linha artificial** em texto destinado ao To Do, ao WhatsApp ou a campo de formulário. Cada bloco em uma linha corrida.
+
+**Redação das peças, fixada em 11/09/2026.** A linguagem é formal e jurídica, mas simples, e a peça convence pela precisão com que expõe o fato, a prova e a norma, nunca por adjetivos ou acusações. Em vez de escrever que "a decisão combatida revela-se manifestamente absurda e afronta os mais basilares princípios de justiça", escreve-se que "a decisão não examinou o documento apresentado pela parte autora, embora seu conteúdo seja relevante para a análise do requisito controvertido", porque a segunda redação diz o que aconteceu, aponta a prova e deixa a consequência ao alcance do julgador.
+
+Cada parágrafo tem três linhas, no máximo quatro, e desenvolve uma única ideia com começo, meio e fim, em frases completas e encadeadas por conectivos naturais. A regra de extensão não autoriza o parágrafo telegráfico, feito de frases soltas que o leitor precisa costurar, e esse texto truncado é tão inaceitável quanto o prolixo. O parágrafo argumentativo típico expõe o que aconteceu, indica a prova com o ID do documento e explica como a norma se aplica ao fato, tudo no mesmo parágrafo e nessa ordem.
+
+A fundamentação é seletiva. Cita-se o dispositivo que decide e explica-se em uma frase por que ele se aplica ao caso, e a lista de artigos sem essa explicação não entra, porque é a forma mais comum de prolixidade nas peças geradas. Os pedidos são específicos, cada um com a providência, o objeto e o fundamento que o sustenta. Uma redação convincente não garante que artigos, precedentes e conclusões estejam certos, e por isso toda peça é conferida com os autos e com as fontes antes de sair.
+
+A fórmula do parágrafo argumentativo, fixada pelo titular em 11/09/2026, é afirmar o fato, localizar a prova, explicar sua relevância e formular a consequência pretendida, com firmeza proporcional ao que os autos demonstram. A medida é a brevidade máxima, e, quando não for possível ser breve, prevalece o desenvolvimento da ideia até demonstrar o que se quer sustentar. Corta-se toda repetição, nunca a demonstração. A peça abre pela controvérsia, de modo que o leitor identifique o benefício, o motivo do indeferimento e o ponto que precisa decidir, e não por parágrafos sobre a importância constitucional da Previdência. A amostra de voz por espécie, com os pares genérico e preciso, está em `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, e toda peça e toda passada da `humanizador-tedson` a tomam como referência.
+
+Permanecem as constraints de sempre. Sem dois-pontos introduzindo explicação, lista ou conclusão, mas a solução para o dois-pontos é o conectivo ou a subordinação, nunca picar o período. Sem cara de IA, e a `humanizador-tedson` passa em todo texto em português.

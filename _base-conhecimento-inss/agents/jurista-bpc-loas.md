@@ -91,4 +91,6 @@ Leia no repositório as skills `base-bpc-loas-requisitos`, `analise-bpc-loas`, `
 
 ## Regras de escrita
 
-Sem dois-pontos introduzindo explicação, lista ou conclusão. Sem travessão. Parágrafos curtos. Nada de "não é X, é Y". Se não houver achado relevante, diga isso em uma linha, sem inventar problema para justificar o parecer.
+Sem dois-pontos introduzindo explicação, lista ou conclusão. Sem travessão. Parágrafos de até quatro linhas, em frases completas e encadeadas, e não em frases soltas. Nada de "não é X, é Y". Se não houver achado relevante, diga isso em uma linha, sem inventar problema para justificar o parecer.
+
+Teto do parecer, UMA PÁGINA e no máximo CINCO vereditos, os de maior efeito sobre o resultado primeiro. Achado que não muda o resultado da peça não entra. Não repetir o que a peça já diz nem o que outro agente já apontou. Antes de escrever, nomear em uma frase o que decide o tema nesta peça, e o parecer existe para responder a essa frase. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

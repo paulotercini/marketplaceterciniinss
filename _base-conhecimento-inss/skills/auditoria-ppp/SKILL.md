@@ -144,3 +144,11 @@ Antes de realizar a auditoria, leia obrigatoriamente os seguintes arquivos.
 Recorrente em dentista, médico e demais contribuintes individuais com consultório próprio. O INSS recusa o PPP alegando que foi emitido pelo próprio interessado.
 
 Resposta conferida no TRF3. O PPP e o laudo elaborados no próprio consultório são prova VÁLIDA (ApCiv 5000935-20.2020.4.03.6115, 7ª Turma, j. 27/02/2026). Somar a presunção de veracidade do PPP (STJ, Pet 10.262/RS), a validade do laudo extemporâneo (Súmula 68 da TNU), a irrelevância da ausência de código GFIP e a irrelevância do custeio (ARE 664.335), todos aplicados na ApelRemNec 5002311-80.2020.4.03.6102 (7ª Turma, j. 11/05/2026). A autodeclaração da Portaria 450/2020 é exigência administrativa e não se transporta para o juízo. Fichas em `base-especial-agentes-biologicos/references/ODONTOLOGIA-JURISPRUDENCIA-TRF3-TRF4.md`.
+
+## Extensão
+
+Teto de o relatório de auditoria, 2 páginas, achados em ordem de gravidade, e o que não muda o enquadramento não entra. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria especial" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

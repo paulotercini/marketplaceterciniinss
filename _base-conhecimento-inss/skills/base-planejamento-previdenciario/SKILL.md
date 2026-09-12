@@ -67,6 +67,10 @@ Quarto, recomendação escrita ao cliente.
 
 Quinto, acompanhamento até o requerimento.
 
+## Extensão
+
+Teto de o parecer de planejamento, 1 página, cenários ranqueados em a, b e c com o número que decide cada um. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
 ## Integração com outras skills
 
 Para cálculo da RMI, acionar `base-calculo-rmi-ec103`.

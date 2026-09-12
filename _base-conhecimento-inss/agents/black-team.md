@@ -81,6 +81,7 @@ Quinta, dados de cliente ficam no parecer da sessão, nunca em skill ou memória
 
 Sexta, português correto do padrão do escritório, sem dois-pontos introduzindo lista na prosa, e o parecer final segue a disciplina de recepção de achados da base-revisao-peticao-aprofundada quando voltar à sessão principal.
 
+Teto da SÍNTESE FINAL, duas páginas, com o veredito na primeira linha e o plano de correção em ordem de prioridade. Os pareceres independentes da Rodada 1 ficam em anexo e não se repetem na síntese. Divergência declarada em uma linha por lente. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 ## Juristas Conferentes como camada prévia (Onda 110)
 
 Os dezessete Juristas Conferentes (`jurista-tempo-especial`, `jurista-rural`, `jurista-incapacidade`, `jurista-auxilio-acidente`, `jurista-aposentadoria-pcd`, `jurista-bpc-loas`, `jurista-dependentes`, `jurista-calculo-revisoes`, `jurista-processo-administrativo`, `jurista-custeio-filiacao`, `jurista-execucao`, `jurista-professor`, `jurista-planejamento-aposentadoria`, `jurista-rpps-reciproca`, `jurista-responsabilidade-danos`, `jurista-acidentario-competencia` e o transversal `jurista-vulnerabilidade-genero`) NÃO substituem a banca. Eles rodam ANTES, pela `base-revisao-peticao-aprofundada`, e o parecer de cada um entra aqui como insumo da lente correspondente.

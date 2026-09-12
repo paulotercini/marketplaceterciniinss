@@ -141,3 +141,11 @@ A omissão é erro técnico frequente e atacável. Checklist, quesitos prontos e
 Trava de leitura. Em auditoria de laudo cujo objeto é auxílio-acidente, NÃO parar na conclusão. O requisito do B94 é a REDUÇÃO da capacidade, não a incapacidade, e o perito que conclui "capaz" frequentemente respondeu a pergunta errada.
 
 Varrer a DESCRIÇÃO em busca de menção a esforço adicional, perda de força, limitação de amplitude, alteração de pinça ou de preensão, e de qualquer interferência funcional. Achado ali, registrar como CONTRADIÇÃO INTERNA entre a fundamentação e a conclusão, que é o achado mais forte deste cenário. Roteiro em `base-b94-anexo-iii-quadros/references/MAIOR-ESFORCO-E-PERDA-DE-DEDO.md`.
+
+## Extensão
+
+Teto de o relatório de auditoria, 2 páginas, falhas em ordem de gravidade, e os nove blocos do Modo 3 são roteiro de análise, não de extensão. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "técnica 5 (impugnar o laudo por uma falha identificável)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

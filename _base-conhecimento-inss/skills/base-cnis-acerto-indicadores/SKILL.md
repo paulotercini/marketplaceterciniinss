@@ -333,3 +333,11 @@ Esta skill é a FONTE PRIMÁRIA do agente `analista-cnis`, que executa a leitura
 O que ele entrega. Inventário de vínculos, classificação de cada indicador em BLOQUEANTE, ALERTA ou INFORMATIVO, linha do tempo mês a mês, achados de tempo e salário ocultos, contagem AUDITÁVEL em dois cenários (sem correção e com correção, com a diferença explícita), projeção da qualidade de segurado com as prorrogações, e a via de solução de cada achado separando acerto administrativo de via judicial.
 
 Regra que ele carrega e que vale para todos. O CNIS tem presunção RELATIVA, e ausência de informação não é ausência de direito. Nunca concluir "não há tempo" a partir do silêncio do extrato.
+
+## Extensão
+
+Teto de o relatório de acerto do CNIS, 2 páginas, indicadores bloqueantes primeiro, e competência sem pendência não é listada. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria por idade urbana e programada" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.

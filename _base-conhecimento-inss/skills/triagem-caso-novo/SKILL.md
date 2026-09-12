@@ -255,3 +255,7 @@ Triagem feita sobre a leitura superficial do CNIS erra o benefício e erra a DER
 Vindo o caso de atendimento gravado, de áudio ou de conversa de WhatsApp, passar antes pela `transcricao-atendimento`, que converte a fala na anotação padronizada e devolve a seção "Faltou perguntar", confrontando o atendimento com os dados mínimos desta skill.
 
 Ganho da ordem. A triagem recebe o caso já com os dados críticos separados do que o cliente afirmou sem lastro, o que evita classificar benefício sobre fala não confirmada.
+
+## Extensão
+
+Teto de o relatório de triagem, 1 página, porque vira parecer e segue a regra 4 do protocolo. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

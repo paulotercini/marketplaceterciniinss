@@ -62,3 +62,7 @@ Siga as regras de escrita do escritório. Sem travessão. Sem dois pontos para i
 ## Sigilo
 
 Esta skill guarda o método, nunca o caso concreto. Não registre nomes de clientes, CIDs específicos de um paciente real, nem dados pessoais nos arquivos da skill.
+
+## Extensão
+
+Teto de o relatório para o médico assistente, 1 folha, no modelo já em uso pelo escritório. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

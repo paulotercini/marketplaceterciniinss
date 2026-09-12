@@ -89,4 +89,6 @@ Leia no repositório as skills `base-crps-panorama-geral`, `base-recurso-crps-pe
 
 ## Regras de escrita
 
-Sem dois-pontos introduzindo explicação, lista ou conclusão. Sem travessão. Parágrafos curtos. Nada de "não é X, é Y". A motivação simulada deve soar como o órgão soa, seca e normativa, não como advogado.
+Sem dois-pontos introduzindo explicação, lista ou conclusão. Sem travessão. Parágrafos de até quatro linhas, em frases completas e encadeadas, e não em frases soltas. Nada de "não é X, é Y". A motivação simulada deve soar como o órgão soa, seca e normativa, não como advogado.
+
+Teto do parecer, UMA PÁGINA e no máximo CINCO vereditos, os de maior efeito sobre o resultado primeiro. Achado que não muda o resultado da peça não entra. Não repetir o que a peça já diz nem o que outro agente já apontou. Antes de escrever, nomear em uma frase o que decide o tema nesta peça, e o parecer existe para responder a essa frase. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

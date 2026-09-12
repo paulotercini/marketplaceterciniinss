@@ -90,3 +90,7 @@ Cenário recorrente na Justiça Federal. O juízo indefere os quesitos prévios 
 Resposta normativa. O art. 465, § 1º, III, assegura à parte o direito de apresentar quesitos, e o art. 477, § 2º, o de pedir esclarecimentos sobre pontos não abordados. A condução da instrução é do juiz pelo art. 370, jamais do auxiliar, de modo que o perito não define a extensão do contraditório. E o art. 479 impõe ao juiz indicar na sentença os motivos de considerar ou não as conclusões do laudo, o que só faz sentido porque o laudo NÃO vincula nem goza de presunção absoluta.
 
 Regra prática. Indeferido o quesito prévio, PROTESTAR desde logo e reservar a manifestação para depois do laudo. Indeferidos os esclarecimentos, consignar o PREJUÍZO concreto (qual ponto controvertido ficou sem resposta e por que decide o mérito), porque é o prejuízo que converte irregularidade em nulidade. Arsenal completo em `auditoria-laudo-pericial/references/QUESITOS-NEGADOS-E-LAUDO-INSUFICIENTE.md`.
+
+## Redação da peça neste tema
+
+Ao transpor esta matéria para peça, seguir o bloco "técnica 5 (impugnar o laudo por uma falha identificável)" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
