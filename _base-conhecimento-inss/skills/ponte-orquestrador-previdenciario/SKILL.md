@@ -23,7 +23,7 @@ Fase 1. `auditoria-ppp` para o documento concreto, `cnis-acerto-indicadores` par
 Fase 2. `base-especial-*` correspondente ao agente nocivo (ruído, EPI, químicos, biológicos, calor, frio, radiação, vibração, eletricidade, periculosidade motociclista, penosidade enfermagem, categoria pré-1995). Acionar também `base-especial-ppp-mudanca-layout-historico` quando o PPP atravessar mudanças de layout.
 Fase 3. `base-aposentadoria-especial-transicao-ec103` ou `base-aposentadoria-direito-adquirido` para enquadramento temporal. `tempo-especial-peticoes-por-rito` para definição de rito.
 Fase 4. `peticao-previdenciaria` para a peça final. Quando houver vícios sanáveis, `retificacao-ppp` antes do peticionamento. Em caso de demora administrativa, `mandado-seguranca-previdenciario`.
-Fase 5. `revisao-peticao` automaticamente após a redação.
+Fase 5. `base-revisao-peticao-aprofundada` automaticamente após a redação, na ordem única de execução dela.
 
 Skill-ponte dedicada. `ponte-workflow-aposentadoria-especial`.
 
