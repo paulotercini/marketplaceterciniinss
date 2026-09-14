@@ -1158,4 +1158,4 @@ Antes de gerar qualquer petição, esta skill aciona automaticamente as skills c
 - `base-peticao-paragrafo-de-realidade` — para o Parágrafo de Realidade obrigatório antes dos pedidos, em peça de pessoa física
 - `reafirmacao-der`, `tutela-urgencia` (interna) — conforme política
 
-A revisão final do conteúdo da petição é responsabilidade da skill `revisao-peticao`, acionada automaticamente após esta skill concluir a geração.
+A revisão final do conteúdo da petição é responsabilidade da skill `base-revisao-peticao-aprofundada`, acionada automaticamente após esta skill concluir a geração.
