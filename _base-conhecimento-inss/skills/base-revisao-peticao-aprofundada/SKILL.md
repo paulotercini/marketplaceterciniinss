@@ -1,6 +1,6 @@
 ---
 name: base-revisao-peticao-aprofundada
-description: Skill aprimorada de revisão automática de petições previdenciárias do escritório Paulo Roberto Tercini Filho. Versionada no plugin como evolução da skill revisao-peticao do escritório, integra protocolo anti-alucinação de 5 níveis (existência, vigência, redação literal, modulação, número de processo) cruzado com a skill base-legislacao-fontes-primarias, diretrizes vinculantes do Manual de Admissibilidade Recursal da TNU 10ª edição via base-tnu-admissibilidade-manual, taxonomia corrigida das Portarias DIRBEN/INSS 990-996/2022, verificações automáticas obrigatórias (competência territorial e material, política de tutela de urgência, Tema 1124/STJ, prazo decadencial do art. 103 Lei 8.213, documentação IN 128/2022, BPC menor 16 anos IFBrM, tempestividade recursal, dialeticidade), 5 camadas de auditoria (formal, normativa, fática, argumentativa, integridade probatória), catálogo expandido de 22 anti-patterns com exemplos pró e contra, checklist por rito (JEF, ordinário federal, CRPS, MS, TNU, réplica, memorial, recurso administrativo, cumprimento de sentença) e severidade quádrupla (BLOQUEANTE, CRÍTICO, IMPORTANTE, MENOR). Use SEMPRE imediatamente após qualquer petição, recurso, contestação, embargos, agravo, MS, contrarrazões, memorial, réplica, manifestação ou peça processual gerada. Use SEMPRE que mencionar revisar petição, auditar petição, conferir peça, checar petição, segunda leitura, verificação de petição, validação de peça, revisão antialucinação, revisão profunda, auditoria de peça, revisão Tercini, revisão escritório. Dispara o agente ANALISTA-CNIS (Onda 117) antes dos demais em toda peça cuja causa de pedir dependa de tempo de contribuição, carência, qualidade de segurado ou salário-de-benefício, porque conferir tese sobre contagem errada é conferir a coisa errada. Dispara também a CAMADA 6 de orçamento de extensão e legibilidade (Onda 120), acionada por petição muito grande, peça longa demais, reduzir petição, cortar petição, enxugar peça, orçamento de páginas, limite de páginas, peça difícil de ler, leitura difícil, parágrafo longo, parágrafo-modelo, frase-decreto, excesso de fundamentos, fundir fundamentos, passada de corte, redução de 20%. Dispara os DECISORES ADMINISTRATIVOS SIMULADOS (Onda 114) antes de todo protocolo na via administrativa, servidor-chefe-inss para requerimento e exigência, conselheiro-junta-de-recursos para recurso ordinário e conselheiro-camara-de-julgamento para recurso especial e incidentes. Dispara também os PROCESSUALISTAS CONFERENTES (Onda 113), doze agentes de conferência técnica por FASE processual, acionados por postulatória, competência, valor da causa, tutela provisória, especificação de provas, ônus da prova, cerceamento, art. 489, apelação, agravo, embargos, dialeticidade, PUIL, PEDILEF, REsp, relevância, prequestionamento, distinguishing, modulação, coisa julgada, rescisória, cumprimento de sentença, RPV, precatório, honorários, gratuidade, rito do JEF, renúncia ao teto e mandado de segurança. Achado com severidade PRECLUSÃO IMINENTE sobe sempre ao relatório principal. Dispara os JURISTAS CONFERENTES (Onda 110), dez agentes de conferência doutrinária por bloco temático, de um a três por revisão conforme os temas da peça, acionados por jurista conferente, conferência doutrinária, corrente majoritária, corrente ampliativa, doutrina do tema, parecer doutrinário. Eles discutem correntes e nunca atribuem posição a autor nominado. Aciona automaticamente todas as skills relevantes do plugin como hub de integração. Postura pró-segurado exclusiva. Honestidade radical sobre achados. Cruza com peticao-previdenciaria, base-peticao-previdenciaria-padrao-visual, base-legislacao-fontes-primarias, base-tnu-admissibilidade-manual, pedilef-cotejo-analitico-tnu, precedentes-previdenciarios, tema-1124-instrucao-administrativa, decadencia-revisao-previdenciaria, ms-competencia-autoridade-coatora, documentos-comprobatorios-in128, base-portarias-dpmf-inss-hub, base-efeito-translativo-tema-1124-defesa, reafirmacao-der, analise-documental-incapacidade, especificacao-provas, base-puil-pedilef-vedacao-materia-processual. NÃO use para auditoria de PPP (use auditoria-ppp) nem laudo pericial (use auditoria-laudo-pericial) nem sentença/acórdão (use auditoria-sentenca-acordao).
+description: Revisão aprofundada de toda peça previdenciária do escritório Paulo Roberto Tercini Filho, acionada AUTOMATICAMENTE após qualquer petição, recurso, embargos, agravo, MS, contrarrazões, memorial, réplica ou manifestação gerada, e sempre que mencionar revisar, auditar, conferir, checar ou validar petição, segunda leitura, revisão antialucinação, revisão Tercini. Substitui a revisao-peticao. Protocolo antialucinação de cinco níveis, seis camadas (formal, normativa, fática, argumentativa, integridade probatória, extensão e legibilidade), severidade BLOQUEANTE, CRÍTICO, IMPORTANTE, MENOR, checklist por rito e ORDEM ÚNICA DE EXECUÇÃO dos agentes, analista-cnis, dezessete juristas, doze processualistas, decisores administrativos simulados, red-team-peticao, julgador-opositor, verificador-precedentes, black-team e passada de corte. Postura pró-segurado. NÃO use para PPP (auditoria-ppp), laudo (auditoria-laudo-pericial) nem decisão judicial (base-analise-decisao-tres-eixos).
 ---
 
 # Skill Aprimorada de Revisão de Petições Previdenciárias
@@ -13,7 +13,7 @@ A execução é AUTOMÁTICA e OBRIGATÓRIA após qualquer geração de peça pel
 
 Evolução desta versão em relação à anterior do escritório.
 
-1. **Integração com base-legislacao-fontes-primarias** (Onda 31) - protocolo de 5 níveis de verificação com cruzamento literal contra 19 arquivos verificados de Constituição, leis, decretos, IN 128/2022 e portarias.
+1. **Integração com base-legislacao-fontes-primarias** (Onda 31) - protocolo de 5 níveis de verificação com cruzamento literal contra os arquivos verificados de Constituição, leis, decretos, IN 128/2022 e portarias.
 
 2. **Integração com base-tnu-admissibilidade-manual** (Onda 30) - protocolos vinculantes para PUIL/PEDILEF do Manual TNU 10ª edição (24/02/2026).
 
@@ -35,9 +35,25 @@ Acionada imediatamente após geração do .docx pela skill geradora de peças. O
 
 Passo 1. Skill geradora produz a peça em .docx.
 Passo 2. Arquivo é apresentado ao usuário com link computer://.
-Passo 3. Esta skill é acionada AUTOMATICAMENTE.
+Passo 3. Esta skill é acionada AUTOMATICAMENTE pela `peticao-previdenciaria`. A `revisao-peticao` é apenas redirecionamento para esta desde a Onda 139.
 Passo 4. Relatório de revisão é entregue na conversa.
 Passo 5. Se houver achados BLOQUEANTES ou CRÍTICOS, perguntar se deseja correção automática antes do uso da peça.
+
+## ORDEM ÚNICA DE EXECUÇÃO (Onda 139)
+
+A revisão segue esta sequência, sem pular etapa e sem inverter a ordem. Cada etapa recebe o resultado da anterior. Etapa cujo agente não esteja disponível na sessão roda inline, com as mesmas regras. As seções seguintes detalham cada etapa e não alteram esta ordem.
+
+Etapa 1. Regra Zero, cascata de verificação de toda citação (Níveis 1 a 5). Lote de três ou mais citações não confirmadas vai ao `verificador-precedentes`.
+Etapa 2. `analista-cnis`, só em peça cuja causa de pedir dependa de tempo, carência, qualidade de segurado ou salário-de-benefício. Fixa os números antes de qualquer tese.
+Etapa 3. Camadas 1 a 5 desta skill, formal, normativa, fática, argumentativa e integridade probatória.
+Etapa 4. Juristas Conferentes, de um a três pelo tema, mais o transversal quando cabível, disparados em paralelo.
+Etapa 5. Processualistas Conferentes, de um a três pela fase, disparados na mesma mensagem da Etapa 4.
+Etapa 6. `red-team-peticao`, a contestação do INSS.
+Etapa 7. `julgador-opositor`, o julgador que procura razão para não acolher, recebendo o relatório da Etapa 6.
+Etapa 8. Decisor administrativo simulado, só em peça dirigida ao INSS ou ao CRPS.
+Etapa 9. `black-team`, só em peça de ALTO RISCO ou por pedido expresso, recebendo todos os relatórios anteriores.
+Etapa 10. Camada 6, aferição de extensão e passada de corte, depois de recebidos todos os pareceres, porque o pipeline é aditivo e o corte vem por último.
+Etapa 11. Relatório consolidado de duas páginas, com recepção dos achados pela disciplina da Onda 99 e fluxo pós-revisão.
 
 ## REGRA ZERO - PROTOCOLO ANTI-ALUCINAÇÃO DE 5 NÍVEIS
 
@@ -49,21 +65,23 @@ Nenhuma citação é considerada correta por presunção. Cada uma é tratada co
 
 Antes de emitir QUALQUER achado de "verificação não realizada", a skill DEVE executar AUTOMATICAMENTE a cascata de verificação dinâmica. NÃO depender do usuário para conferir o que o Claude pode conferir sozinho.
 
-**Nível 1 - Repositório Local.** Abrir os 19 arquivos de `base-legislacao-fontes-primarias` no workspace e buscar a citação.
+**Nível 1 - Repositório Local.** Abrir os arquivos de `base-legislacao-fontes-primarias` no workspace e buscar a citação.
 
 **Nível 2 - WebFetch Direto.** Se Nível 1 falhar, acionar `mcp__workspace__web_fetch` na URL oficial registrada (Planalto, gov.br, sirc.gov.br, etc).
 
 **Nível 3 - WebSearch + WebFetch.** Se Nível 2 falhar, acionar WebSearch para localizar fonte alternativa confiável e depois WebFetch.
 
-**Nível 4 - Navegador Comet/Chrome via MCP.** Se Níveis 1-3 falharem, abrir o navegador Comet (ou Chrome/Edge fallback) via `mcp__Claude in Chrome__*` e capturar a página oficial. Requer autorização do usuário.
+**Nível 4 - Navegador Comet/Chrome via MCP.** Se Níveis 1-3 falharem, abrir o navegador Comet (ou Chrome/Edge fallback) via `mcp__claude-in-chrome__*` e capturar a página oficial. Requer autorização do usuário.
 
 **Nível 5 - Reporte Final.** SOMENTE se TODOS os 4 níveis falharem, emitir o achado IMPORTANTE com fundamentação técnica completa.
+
+Prevalência. Para JULGADOS a Regra de Comet (Onda 65) prevalece sobre a cascata, e o navegador abre na primeira dúvida, sem esperar a falha dos Níveis 2 e 3. A cascata integral vale para NORMAS.
 
 Ver detalhamento exaustivo em `references/PROTOCOLO-VERIFICACAO-DINAMICA.md`.
 
 ## REGRA DE COMET PARA JULGADOS COM DÚVIDA (Onda 65)
 
-Sempre que houver QUALQUER DÚVIDA sobre um julgado (Tema STF, Tema STJ, Tema TNU, Súmula, Enunciado CRPS, IRDR, IAC, PUIL, PEDILEF, REsp, ARE, RE, HC, AC, acórdão, tese fixada, ementa, número de processo, órgão julgador, relator, data de julgamento, trânsito em julgado, modulação de efeitos), a skill deve ABRIR IMEDIATAMENTE o Comet via `mcp__claude-in-chrome__*` e fazer a conferência em fonte primária, SEM aguardar a falha dos Níveis 2 e 3.
+Sempre que houver QUALQUER DÚVIDA sobre um julgado (Tema STF, Tema STJ, Tema TNU, Súmula, Enunciado CRPS, IRDR, IAC, PUIL, PEDILEF, REsp, ARE, RE, HC, AC, acórdão, tese fixada, ementa, número de processo, órgão julgador, relator, data de julgamento, trânsito em julgado, modulação de efeitos), a skill deve ABRIR IMEDIATAMENTE o Comet via `mcp__claude-in-chrome__*` e fazer a conferência em fonte primária, SEM aguardar a falha dos Níveis 2 e 3. Comet é o nome histórico da regra. O navegador hoje é o Claude in Chrome (`mcp__claude-in-chrome__*`) ou o navegador integrado do app (`mcp__Claude_Browser__*`), conforme a skill `pesquisa-jurisprudencia-chrome`.
 
 Situações que ATIVAM automaticamente o gatilho da dúvida.
 
@@ -127,7 +145,7 @@ Não verificadas (após cascata). 0.
 
 Antes de aceitar qualquer citação, conferir que o artigo, tema ou súmula EXISTE. Procedimento.
 
-Para normas (CF, EC, LC, Lei, Decreto, IN, Portaria) catalogadas em `base-legislacao-fontes-primarias`, abrir o arquivo correspondente em `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/` (caminho Linux mount) ou `C:\Users\VAIO\INSS\base-legislacao\` (Windows). Buscar o artigo com Grep ou Read.
+Para normas (CF, EC, LC, Lei, Decreto, IN, Portaria) catalogadas em `base-legislacao-fontes-primarias`, abrir o arquivo correspondente em `C:\Users\VAIO\INSS\base-legislacao\` (no sandbox Linux, o mesmo repositório montado sob `/sessions/<sessão>/mnt/INSS/base-legislacao/`). Buscar o artigo com Grep ou Read.
 
 Para precedentes (Tema STF/STJ/TNU, súmula, enunciado CRPS, IRDR, IAC), acionar a skill `precedentes-previdenciarios` para verificação dinâmica.
 
@@ -182,17 +200,17 @@ A peça que cite norma ou precedente NÃO VERIFICÁVEL em fonte primária deve s
 
 ## AGENTES DO PLUGIN NA REVISÃO (Onda 81)
 
-A revisão aprofundada despacha duas frentes aos agentes do plugin, quando disponíveis na sessão.
+A revisão aprofundada despacha quatro frentes aos agentes do plugin, quando disponíveis na sessão.
 
 Primeiro, a leitura adversária. Antes de fechar o relatório, despachar a peça, o inventário de provas com IDs, o CNIS e o histórico administrativo ao agente `base-conhecimento-inss:red-team-peticao`. Ele simula a contestação do INSS, a Procuradoria e o voto contrário, devolve fragilidades por severidade (FATAL, GRAVE, MEDIA, MENOR) com blindagem recomendada e veredito de protocolo. Os achados do agente entram no relatório desta skill com a severidade mapeada (FATAL vira BLOQUEANTE, GRAVE vira CRÍTICO, MEDIA vira IMPORTANTE, MENOR vira MENOR).
 
-Primeiro e meio, o julgador opositor (Onda 138). Depois do red-team e antes de fechar o relatório, despachar a peça e o mesmo material ao agente `base-conhecimento-inss:julgador-opositor`. Ele não veste a pele do INSS, veste a do julgador que procura razão sustentável para NÃO acolher o pedido, e devolve, nesta ordem obrigatória, a tabela de vulnerabilidades (PONTO VULNERÁVEL, TRECHO DA PETIÇÃO, POSSÍVEL FUNDAMENTO PARA REJEIÇÃO, NÍVEL DE RISCO, O QUE PRECISO REVISAR), os três melhores fundamentos para rejeitar o pedido usando só as fragilidades da peça e dos documentos e, só então, como revisar ou fortalecer cada ponto. Na primeira passada ele não reescreve, não elogia e não melhora o texto. Conclusão que depende de informação ausente vem marcada VERIFICAÇÃO HUMANA NECESSÁRIA e NÃO se aplica sem o documento. Os achados entram no relatório desta skill com a severidade mapeada (ALTO vira CRÍTICO, e BLOQUEANTE quando o fundamento leva a extinção sem mérito ou a perda de efeitos financeiros, MÉDIO vira IMPORTANTE, BAIXO vira MENOR). Os três fundamentos de rejeição vão transcritos no relatório, porque são a lista de prioridade da correção.
+Segundo, o julgador opositor (Onda 138). Depois do red-team e antes de fechar o relatório, despachar a peça e o mesmo material ao agente `base-conhecimento-inss:julgador-opositor`. Ele não veste a pele do INSS, veste a do julgador que procura razão sustentável para NÃO acolher o pedido, e devolve, nesta ordem obrigatória, a tabela de vulnerabilidades (PONTO VULNERÁVEL, TRECHO DA PETIÇÃO, POSSÍVEL FUNDAMENTO PARA REJEIÇÃO, NÍVEL DE RISCO, O QUE PRECISO REVISAR), os três melhores fundamentos para rejeitar o pedido usando só as fragilidades da peça e dos documentos e, só então, como revisar ou fortalecer cada ponto. Na primeira passada ele não reescreve, não elogia e não melhora o texto. Conclusão que depende de informação ausente vem marcada VERIFICAÇÃO HUMANA NECESSÁRIA e NÃO se aplica sem o documento. Os achados entram no relatório desta skill com a severidade mapeada (ALTO vira CRÍTICO, e BLOQUEANTE quando o fundamento leva a extinção sem mérito ou a perda de efeitos financeiros, MÉDIO vira IMPORTANTE, BAIXO vira MENOR). Os três fundamentos de rejeição vão transcritos no relatório, porque são a lista de prioridade da correção.
 
-Segundo, a verificação de citações em lote. Quando a peça tiver três ou mais citações não confirmadas no catálogo local, despachar o lote ao agente `base-conhecimento-inss:verificador-precedentes`, que confere existência, vigência e tese literal em fonte oficial e devolve classificação por item. Dúvida isolada (uma ou duas citações) segue o fluxo normal dos Níveis 1 a 5 com a Regra de Comet.
+Terceiro, a verificação de citações em lote. Quando a peça tiver três ou mais citações não confirmadas no catálogo local, despachar o lote ao agente `base-conhecimento-inss:verificador-precedentes`, que confere existência, vigência e tese literal em fonte oficial e devolve classificação por item. Dúvida isolada (uma ou duas citações) segue o fluxo normal dos Níveis 1 a 5 com a Regra de Comet.
 
-Terceiro, a banca máxima (Onda 100). Em peça de ALTO RISCO, despachar ao agente `base-conhecimento-inss:black-team` DEPOIS da revisão desta skill e do red-team, entregando a peça, o inventário de provas, o CNIS e os DOIS relatórios anteriores como insumo. Gatilhos objetivos de alto risco, recurso a STJ, STF ou TNU, ação rescisória, tese nova ou minoritária, revisão de grande valor, caso com derrota anterior no mesmo objeto, ou pedido expresso do usuário (black team, banca completa, conferência máxima). O black-team simula sete lentes jurídicas fixas MAIS lentes técnicas convocadas pela prova dos autos (médico do trabalho quando houver laudo, assistente social quando houver avaliação social, engenheiro de segurança do trabalho quando houver PPP ou LTCAT, contador previdenciário quando houver CNIS com pendência ou GPS, clínico da patologia dominante, perito agrário em rural, documentoscopista em suspeita de rasura, até quatro por sessão), todas com pareceres independentes antes do cruzamento, delibera em três rodadas e devolve veredito em três faixas com divergências declaradas. O parecer das lentes técnicas orienta o advogado e alimenta quesitos, não vai aos autos como prova nem substitui assistente técnico habilitado quando exigido. Os achados dele entram no relatório final com a mesma disciplina de recepção (verificar antes de aplicar, corrigir na causa raiz).
+Quarto, a banca máxima (Onda 100). Em peça de ALTO RISCO, despachar ao agente `base-conhecimento-inss:black-team` DEPOIS da revisão desta skill e do red-team, entregando a peça, o inventário de provas, o CNIS e os relatórios anteriores como insumo. Gatilhos objetivos de alto risco, recurso a STJ, STF ou TNU, ação rescisória, tese nova ou minoritária, revisão de grande valor, caso com derrota anterior no mesmo objeto, ou pedido expresso do usuário (black team, banca completa, conferência máxima). O black-team simula sete lentes jurídicas fixas MAIS lentes técnicas convocadas pela prova dos autos (médico do trabalho quando houver laudo, assistente social quando houver avaliação social, engenheiro de segurança do trabalho quando houver PPP ou LTCAT, contador previdenciário quando houver CNIS com pendência ou GPS, clínico da patologia dominante, perito agrário em rural, documentoscopista em suspeita de rasura, até quatro por sessão), todas com pareceres independentes antes do cruzamento, delibera em três rodadas e devolve veredito em três faixas com divergências declaradas. O parecer das lentes técnicas orienta o advogado e alimenta quesitos, não vai aos autos como prova nem substitui assistente técnico habilitado quando exigido. Os achados dele entram no relatório final com a mesma disciplina de recepção (verificar antes de aplicar, corrigir na causa raiz).
 
-Os agentes somente verificam e reportam, nunca editam a peça. Toda correção decorrente dos relatórios deles é aplicada pela sessão principal, com nota datada. Sem os agentes disponíveis na sessão, executar as duas frentes inline, com as mesmas regras.
+Os agentes somente verificam e reportam, nunca editam a peça. Toda correção decorrente dos relatórios deles é aplicada pela sessão principal, com nota datada. Sem os agentes disponíveis na sessão, executar as frentes inline, com as mesmas regras.
 
 ## 5 CAMADAS DE REVISÃO
 
@@ -282,7 +300,7 @@ Critérios principais (ver detalhamento exaustivo no catálogo):
 12. Latim desnecessário (Regra da Clareza).
 13. Teste do leigo na parte fática.
 14. **Cotejo analítico ausente em PUIL** (novo, derivado da Onda 30).
-15. **Paradigma de TRF ou de STF em PUIL** (art. 14, §2º, Lei 10.259/2001; QO 48/TNU veda o paradigma do STF — auditoria 25/07/2026).
+15. **Paradigma de TRF ou de STF em PUIL** (art. 14, §2º, Lei 10.259/2001; QO 48/TNU veda o paradigma do STF, auditoria de 25/07/2026).
 16. **Citação de Portaria 992/2022 como cálculo de RMI** (novo, derivado da Onda 32).
 17. **Citação de Súmula 86/TNU como vigente** (novo, foi cancelada em 26/08/2021).
 18. **Citação de tese de Revisão da Vida Toda sem mencionar a modulação** (novo).
@@ -448,7 +466,7 @@ Estrutura padrão entregue após apresentação do .docx.
 
 **Achados por camada.** Ordem (Formal → Normativa → Fática → Argumentativa → Integridade Probatória → Extensão e Legibilidade). Dentro de cada camada, ordenados por severidade decrescente (Bloqueante → Crítico → Importante → Menor).
 
-**Teto do relatório e consolidação (Onda 133).** O relatório consolidado tem DUAS PÁGINAS. BLOQUEANTE e CRÍTICO entram sempre, na frente. IMPORTANTE e MENOR entram até o teto, e o excedente vira uma linha de contagem por camada. Os pareceres dos agentes despachados, juristas, processualistas, decisores, analista do CNIS, red-team e black-team, NÃO se empilham no relatório. Cada um fica em anexo, com uma página cada, e o consolidado recebe só os achados deles que mudam o resultado, DEDUPLICADOS, porque dois agentes apontando o mesmo vício por lentes diferentes é um achado, não dois. A regra de subida continua a mesma, PRECLUSÃO IMINENTE, BLOQUEANTE e CRÍTICO sobem sempre. O relatório que empilha pareceres é o que o titular apontou como "muitas folhas que cansam o leitor", e o objetivo dele é que o titular leia o consolidado em cinco minutos e só abra o anexo se quiser a origem de um achado.
+**Teto do relatório e consolidação (Onda 133).** O relatório consolidado tem DUAS PÁGINAS. BLOQUEANTE e CRÍTICO entram sempre, na frente. IMPORTANTE e MENOR entram até o teto, e o excedente vira uma linha de contagem por camada. Os pareceres dos agentes despachados, juristas, processualistas, decisores, analista do CNIS, red-team e black-team, NÃO se empilham no relatório. Cada parecer vai gravado na subpasta Claude do cliente, com uma página cada, e NÃO vai ao chat, salvo pedido expresso do titular. O consolidado recebe só os achados deles que mudam o resultado, DEDUPLICADOS e com a linha de origem (agente e item) para rastreio, porque dois agentes apontando o mesmo vício por lentes diferentes é um achado, não dois. A regra de subida continua a mesma, PRECLUSÃO IMINENTE, BLOQUEANTE e CRÍTICO sobem sempre. O relatório que empilha pareceres é o que o titular apontou como "muitas folhas que cansam o leitor", e o objetivo dele é que o titular leia o consolidado em cinco minutos e só abra o parecer gravado se quiser a origem de um achado.
 
 **Resolver, não delegar de volta.** Achado do tipo "conferir X em fonte primária" só entra se a conferência foi TENTADA e falhou por bloqueio de acesso, e nesse caso diz qual fonte, qual via e qual o bloqueio. Achado que apenas recomenda ao titular fazer a conferência não é achado, é trabalho empurrado, e o titular pediu duas vezes que isso parasse. Regra 10 do protocolo.
 
@@ -601,7 +619,7 @@ Histórico de evolução.
 
 Esta skill depende da disponibilidade do workspace `INSS\base-legislacao\` para a verificação literal de artigos. Em sessões sem o workspace, a skill ainda funciona mas marca a verificação literal como NÃO REALIZADA, recomendando WebFetch direto das URLs oficiais do Planalto registradas no índice da skill `base-legislacao-fontes-primarias`.
 
-Em casos de divergência entre a interpretação desta skill e a skill `revisao-peticao` do escritório, esta versão APROFUNDADA prevalece, pois incorpora as Ondas 30, 31 e 32 do plugin.
+A skill `revisao-peticao` é apenas redirecionamento para esta desde a Onda 139. Não existe mais interpretação divergente a resolver.
 
 ## Juristas Conferentes, camada doutrinária obrigatória (Onda 110)
 
@@ -643,7 +661,7 @@ Caso comum de disparo duplo. Ação de B31 ou B91 cujo laudo aponta sequela cons
 
 Zero. O `jurista-vulnerabilidade-genero` é TRANSVERSAL e não compete com os demais. Dispare-o SEMPRE que houver segurada mulher em contexto rural, informal ou doméstico, pessoa com deficiência, idoso, analfabeto ou qualquer hipossuficiência probatória, EM ACRÉSCIMO ao jurista do tema.
 
-Primeiro, disparar de UM a TRÊS juristas temáticos por revisão, escolhidos pelos temas efetivamente presentes na peça. Peça previdenciária quase sempre tem um tema de mérito e um de processo, e frequentemente um de custeio. Disparar os dez dilui e gasta contexto sem retorno.
+Primeiro, disparar de UM a TRÊS juristas temáticos por revisão, escolhidos pelos temas efetivamente presentes na peça. Peça previdenciária quase sempre tem um tema de mérito e um de processo, e frequentemente um de custeio. Disparar os dezessete dilui e gasta contexto sem retorno.
 
 Segundo, quando houver mais de um, disparar EM PARALELO na mesma mensagem, porque as conferências são independentes.
 

@@ -908,7 +908,7 @@ Dimensões do logo no header (EMU): cx=791210, cy=712470. Em pixels a 96 DPI, ap
 Antes de gerar qualquer petição, esta skill aciona automaticamente as skills complementares.
 
 - `precedentes-previdenciarios` — para fundamentação jurisprudencial
-- `revisao-peticao` — para auditoria automática após geração
+- `base-revisao-peticao-aprofundada` — para auditoria automática após geração
 - `triagem-caso-novo` — quando o caso não está enquadrado
 - `cnis-acerto-indicadores` — quando houver pendência de CNIS
 - `tema-1124-instrucao-administrativa` — para seção de efeitos financeiros
@@ -919,7 +919,7 @@ Antes de gerar qualquer petição, esta skill aciona automaticamente as skills c
 - `printscreen-impacto` — para inserção de documentos reais com destaque
 - `reafirmacao-der`, `tutela-urgencia` (interna) — conforme política
 
-A revisão final do conteúdo da petição é responsabilidade da skill `revisao-peticao`, acionada automaticamente após esta skill concluir a geração.
+A revisão final do conteúdo da petição é responsabilidade da skill `base-revisao-peticao-aprofundada`, acionada automaticamente após esta skill concluir a geração, na ordem única de execução dela. A `revisao-peticao` é apenas redirecionamento para ela desde a Onda 139.
 
 ## Trava do cabeçalho, logo com fundo branco (Onda 116)
 
