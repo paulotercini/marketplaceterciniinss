@@ -21,7 +21,9 @@ const os = require("os");
 const path = require("path");
 
 const AQUI = __dirname;
-const APP = path.join(AQUI, "..", "..", "app.html");
+// APP_HTML: rodar a suíte de uma cópia da pasta (fora do repositório, com um
+// node_modules emprestado) sem perder o app de agora
+const APP = process.env.APP_HTML || path.join(AQUI, "..", "..", "app.html");
 const COPIA = path.join(AQUI, "app.html");
 
 // não são provas: uma exporta as fixturas, a outra o PDF falso, e este

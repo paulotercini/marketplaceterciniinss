@@ -811,6 +811,12 @@
   .rot-campos{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
   .rot-campos input[type=date],.rot-campos select{padding:3px 6px;border:1px solid var(--borda);
     border-radius:6px;font:inherit;font-size:12.5px;background:var(--branco)}
+  /* F92 · o catálogo de prazos ao lado do campo de data fatal */
+  .cat-prazo{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12px}
+  .cat-prazo select,.cat-prazo input[type=date]{padding:3px 6px;border:1px solid var(--borda);
+    border-radius:6px;font:inherit;font-size:12.5px;background:var(--branco);max-width:280px}
+  .cat-prazo .cat-base{flex-basis:100%;color:var(--cinza);font-size:12px}
+  .cat-prazo .cat-base.venceu{color:var(--vermelho,#B3261E);font-weight:600}
   .marc.nat{border-radius:6px}
   .marc.nat.on{background:#EDF3FA;border-color:#2B5FC7;color:#234E9E}
   .chip.nat-chip{background:#EDF3FA;color:#234E9E}
@@ -2265,7 +2271,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 09.85</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 09.87</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3277,7 +3283,8 @@ function quantosVencidos(){
   const hj = hoje();
   const tfVenc = k => (D.tarefasPorCaso.get(k.id)||[]).some(t=>!t.concluida_em && t.lembrar_em && t.lembrar_em<hj);
   const vencK = ativos().filter(k=>(k.prazo && k.prazo<hj) || tfVenc(k)).length;
-  const tVenc = (D.tarefas||[]).filter(t=>!t.concluida && t.prazo && t.prazo<hj).length;
+  const tVenc = (D.tarefas||[]).filter(t=>!t.concluida && t.prazo && t.prazo<hj).length
+    + docsPreCasoComData().filter(t=>t.prazo<hj).length;   // F93
   return vencK + tVenc;
 }
 function quantosNoMeuDia(){
@@ -4889,10 +4896,14 @@ function cartaoCliente(cli, casosMostrar){
       const pcs = (cp.precasos||[]).filter(p=>!p.so_lembrete);
       if(!pcs.length && !(cp.atendimento||[]).length && !cp.especie && !(cp.docs_pedidos||[]).length) return "";
       const pend = (cp.docs_pedidos||[]).flatMap(p=>p.itens||[]).filter(i=>!i.entregue).length;
+      // F93 · a data de entrega mais antiga entre os pendentes pinta o chip
+      const ate = (cp.docs_pedidos||[]).filter(p=>p.ate && (p.itens||[]).some(i=>!i.entregue))
+        .map(p=>p.ate).sort()[0];
       const rot = pcs.length ? (pcs[0].especie||"em formação")+(pcs.length>1?` +${pcs.length-1}`:"")
                 : cp.especie ? cp.especie : "em atendimento";
       return `<span class="chip laranja" title="pré-caso em formação — ainda não virou caso">🟡 ${esc(rot)}</span>`
-        + (pend?`<span class="dt" title="documentos pedidos e ainda não entregues">📋 ${pend} doc(s)</span>`:"");
+        + (pend?`<span class="dt${ate&&ate<hoje()?" venc":""}" title="documentos pedidos e ainda não entregues${ate?` — entrega até ${fmt(ate)}`:""}">📋 ${pend} doc(s)${
+            ate?(ate<hoje()?` · venceu ${fmt(ate).slice(0,5)}`:` · até ${fmt(ate).slice(0,5)}`):""}</span>`:"");
     })(),
   ].filter(Boolean);
   // O círculo de "concluir" saiu. No To Do ele conclui a tarefa; aqui não
@@ -5173,8 +5184,9 @@ function renderMeuDia(){
   const vencK = ativos().filter(k=>(k.prazo && k.prazo<hoje() && doColab(k)) || tfDo(k, d=>d<hoje()))
     .filter(k=>!casosDia.includes(k));
   const tCol = t => !filtroColab || t.particular_de===filtroColab || !t.particular_de;
-  const tHoje = D.tarefas.filter(t=>!t.concluida && t.prazo===hoje()).filter(tCol);
-  const tVenc = D.tarefas.filter(t=>!t.concluida && t.prazo && t.prazo<hoje()).filter(tCol);
+  const docsPc = docsPreCasoComData();   // F93 · pedidos do pré-caso com data
+  const tHoje = [...D.tarefas.filter(t=>!t.concluida && t.prazo===hoje()), ...docsPc.filter(t=>t.prazo===hoje())].filter(tCol);
+  const tVenc = [...D.tarefas.filter(t=>!t.concluida && t.prazo && t.prazo<hoje()), ...docsPc.filter(t=>t.prazo<hoje())].filter(tCol);
   const nVenc = vencK.length + tVenc.length;
   const chips = [`<button class="fchip ${filtroColab===null?"on":""}" data-f="">Todos</button>`]
     .concat(equipeAtiva().map(c=>
@@ -6260,6 +6272,7 @@ function abrirSeguimento(i){
   // atribuído por padrão ao admin (pedido do Paulo)
   const ehJulg = ev && ev.tipo==="Julgamento";
   segAberto = {...s, ev, quem:new Set(ehJulg?[colAdmin().id]:[])};
+  delete catPrazo.seg;   // F92 · o cálculo de um modal não vaza para o próximo
   const nome1 = (c.nome||"o cliente").split(" ")[0];
   caixa(`<h3 style="margin:0 0 2px">📌 Dar seguimento — ${esc(c.nome||"")}</h3>
     <p class="meio-sub" style="margin:0 0 8px;max-height:64px;overflow:hidden">“${esc(s.texto.slice(0,180))}${s.texto.length>180?"…":""}”</p>
@@ -6292,6 +6305,7 @@ function abrirSeguimento(i){
     <div class="form-linha" style="margin:8px 0 0;align-items:center;flex-wrap:wrap">
       <span class="cap-perg">⏰ Prazo fatal?</span>
       <input type="date" id="seg-prazo" onchange="atualizarFraseSeg()">
+      ${catalogoPrazoHtml("seg")}
       <span class="meio-sub" style="font-size:12px">só se for prazo processual — a anotação sai com
         “[PRAZO]” e o caso vai para 🗓 Tarefas com Prazo</span>
     </div>
@@ -6369,6 +6383,14 @@ async function gravarRoteiroPericia(s){
   }
   if(on("rot-docs")){
     await passo(`📄 Pedir a ${nome1} documentos médicos novos até o dia d${a} ${tipo} (${fmt(s.ev.data)}) — cobrar no atendimento de preparação.`, dAt||"", qAt);
+    // F93 · o pedido entra no checklist com a data d(a) perícia: tem estado
+    // (pendente, vencido, recebido) e cobrança num clique
+    const titulo=`📄 Documentos médicos novos (${tipo} de ${fmt(s.ev.data)})`;
+    if(!D.tarefas.some(t=>t.caso_id===s.casoId && dsa(t.titulo)===dsa(titulo))){
+      const [t]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:s.casoId, titulo, prazo:s.ev.data})}).catch(()=>[]);
+      if(t) D.tarefas.push(t);
+    }
     feito.push("documentos novos");
   }
   if(on("rot-vesp") && val("rot-vesp-data")){
@@ -6399,8 +6421,10 @@ async function salvarSeguimento(){
   const pessoas = [...s.quem];
   // F40 · prazo processual direto da novidade: a anotação nasce prefixada
   // como no compositor (F38) e o caso vai para 🗓 Tarefas com Prazo
-  if(prazo && !nota) nota = "Prazo processual anotado a partir da novidade do portal.";
-  if(prazo) nota = `⏰ [PRAZO ${fmt(prazo)}] ${nota}`;
+  // F92 · vindo do catálogo, o carimbo já diz de que é o prazo
+  const carimbo = carimboCatalogo("seg", prazo);
+  if(prazo && !nota && !carimbo) nota = "Prazo processual anotado a partir da novidade do portal.";
+  if(prazo) nota = `⏰ [PRAZO ${fmt(prazo)}] ${carimbo}${nota}`.trim();
   if(!nota && !agendar) return aviso("Escreva a anotação — ou marque o agendamento");
   if(pessoas.length && !dia) return aviso("Tarefa para alguém precisa de data — escolha quando lembrar");
   if(pessoas.length && !nota) return aviso("Tarefa para alguém precisa da anotação do que fazer");
@@ -6768,12 +6792,19 @@ function renderPlanejado(){
 
 // ── Minhas Tarefas (particulares) ─────────────────────────────────────────
 function cartaoTarefa(t){
+  // F93 · item de checklist do caso (ou pedido do pré-caso) é DOCUMENTO
+  // pedido ao cliente: o cartão diz de quem é, abre a ficha e cobra
+  const k=t.caso_id?D.casoPorId.get(t.caso_id):null;
+  const c=D.cliPorId.get(t.cliente_id||(k&&k.cliente_id));
+  const doc=!!(c && (k || t.virtual));
   return `<div class="cartao ${t.concluida?"feita":""}" data-tarefa="${t.id}">
-    <span class="check" data-conclui="${t.id}"></span>
-    <div class="info"><div class="nome">${esc(t.titulo)}</div>
+    ${t.virtual?`<span class="check" style="visibility:hidden"></span>`:`<span class="check" data-conclui="${t.id}"></span>`}
+    <div class="info"><div class="nome">${doc?`<a href="#" style="color:inherit" onclick="event.preventDefault();abrirFicha('${c.id}')">${esc(c.nome)}</a> · `:""}${esc(t.titulo)}</div>
       <div class="meta">
         ${t.particular_de?`<span class="chip per">🔒 particular</span>`:""}
-        ${t.prazo?(t.concluida?`<span class="chip prazo">⏰ ${fmt(t.prazo)}</span>`:chipPrazo(t.prazo)):""}
+        ${t.prazo?(t.concluida?`<span class="chip prazo">⏰ ${fmt(t.prazo)}</span>`:chipPrazo(t.prazo, doc?"o cliente entrega até":"")):""}
+        ${doc&&!t.concluida?`<button class="btn-mini" onclick="event.stopPropagation();cobrarDocs('${c.id}','${k?k.id:""}')"
+          title="mensagem pronta no WhatsApp com os pendentes; a cobrança fica registrada">📲 cobrar</button>`:""}
       </div></div></div>`;
 }
 function ligarTarefas(){
@@ -7928,6 +7959,13 @@ async function renderConfig(){
            <label class="cfg-ck">silêncio do robô entre falas:
              <input type="number" id="cf-pausa" min="0" max="300" style="width:70px"
                value="${esc(cfgApp("zap_pausa_bot")||"15")}"> s</label>
+           ${/* F92 · os feriados que o catálogo de prazos não conhece: os da
+                comarca e os forenses. Os nacionais (fixos e móveis) já estão
+                no programa. */""}
+           <label class="cfg-ck" style="flex-basis:100%" title="feriados locais e forenses, para a contagem dos prazos em dias úteis. Os nacionais já estão no programa. Formato: dd/mm (todo ano) ou dd/mm/aaaa, separados por vírgula">
+             📅 feriados locais (contagem de prazos):
+             <input id="cf-feriados" placeholder="ex.: 09/07, 20/01, 15/08/2026" style="flex:1;min-width:240px"
+               value="${esc(cfgApp("feriados_extra")||"")}"></label>
          </div>
        </div>`
 
@@ -8082,6 +8120,9 @@ function ligarConfig(){
   cfgSalva("cf-avisos","zap_avisos_ligado", el=>el.checked?"sim":"nao");
   cfgSalva("cf-rev-dias","revisao_dias", el=>String(Math.max(15, +el.value||90)));
   cfgSalva("cf-rev-dose","revisao_dose", el=>String(Math.max(1, +el.value||5)));
+  // F92 · só o que tem cara de data entra; o resto é descartado em silêncio
+  cfgSalva("cf-feriados","feriados_extra", el=>String(el.value||"").split(/[,;\s]+/)
+    .filter(x=>/^\d{2}\/\d{2}(\/\d{4})?$/.test(x)).join(", "));
   guarda("[data-dia]", el => el.onchange = async ()=>{
     const dias = [...document.querySelectorAll("[data-dia]")].filter(x=>x.checked)
                    .map(x=>x.dataset.dia).join(",");
@@ -14085,9 +14126,11 @@ function composerCaso(k){
         <label class="conta-ck" title="prazo processual: o caso vai para 🗓 Tarefas com Prazo, ordenado pela data fatal">
           <input type="checkbox" id="and-prazo-ck"
             onchange="document.getElementById('and-prazo-data').style.display=this.checked?'inline-block':'none';
+              document.getElementById('and-prazo-mais').style.display=this.checked?'inline-flex':'none';
               if(this.checked&&prazoDetectado)document.getElementById('and-prazo-data').value=prazoDetectado;">
           ⏰ esta anotação é uma tarefa com PRAZO</label>
         <input type="date" id="and-prazo-data" min="${hoje()}" style="display:none" title="a data fatal do prazo">
+        <span id="and-prazo-mais" style="display:none">${catalogoPrazoHtml("and","and-prazo-data")}</span>
       </div>`:`
       <div class="form-linha" style="margin-top:4px">
         <span class="chip" style="background:#FDF3E7;color:#9C4607">⏰ em 🗓 Tarefas com Prazo${k.prazo?` · fatal ${fmt(k.prazo)}`:""}</span>
@@ -16011,10 +16054,18 @@ async function salvarBeneficio(casoId){
 function subtarefasDe(casoId){ return D.tarefas.filter(t=>t.caso_id===casoId); }
 function checklistCaso(k){
   const st=subtarefasDe(k.id), feitas=st.filter(t=>t.concluida).length;
+  const abertas=st.filter(t=>!t.concluida);
+  const c=D.cliPorId.get(k.cliente_id)||{};
+  // F93 · cada pedido tem estado (pendente, vence hoje, vencido, recebido) e
+  // data, e os pendentes se cobram num clique — a mensagem sai pronta
   return `<div style="margin-top:10px">
-    ${st.length?`<div class="meio-sub">📄 Checklist de Documentos Solicitados — ${feitas} de ${st.length}</div>`:""}
+    ${st.length?`<div class="meio-sub" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">📄 Checklist de Documentos Solicitados — ${feitas} de ${st.length}
+      ${abertas.length?`<button class="btn-mini" onclick="cobrarDocs('${k.cliente_id}','${k.id}')"
+        title="${c.telefone?"abre o WhatsApp com a lista dos pendentes e registra a cobrança no caso":"cliente sem telefone: copia a mensagem e registra a cobrança"}">📲 cobrar ${abertas.length} pendente${abertas.length>1?"s":""}</button>`:""}</div>`:""}
     ${!st.length&&cklDe(k.beneficio)?`<button class="btn-mini" onclick='aplicarChecklistCaso(D.casoPorId.get("${k.id}")).then(()=>{abaAtiva=2;abrirFicha(clienteAberto);})'>📋 Aplicar checklist do benefício</button>`:""}
-    ${st.filter(t=>!t.concluida).map(t=>`<div class="cl"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span></div>`).join("")}
+    ${abertas.map(t=>`<div class="cl"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span>
+      ${t.prazo?chipPrazo(t.prazo, "o cliente entrega até"):""}
+      <button class="btn-mini" style="padding:1px 6px" onclick="prazoDoDoc('${t.id}')" title="${t.prazo?"trocar a data de entrega":"dar data de entrega: vencida, entra no Meu Dia para cobrar"}">📅</button></div>`).join("")}
     ${feitas?`<details><summary style="cursor:pointer;color:var(--cinza);font-size:12px;padding:2px 0">✔ Concluídas (${feitas}) — clique na caixinha para desfazer</summary>
       ${st.filter(t=>t.concluida).map(t=>`<div class="cl feito"><span class="box" data-subt="${t.id}" style="cursor:pointer"></span><span>${esc(t.titulo)}</span></div>`).join("")}</details>`:""}
     <div class="form-linha"><input id="nsub-${k.id}" placeholder="＋ item do checklist deste caso" style="flex:1"
@@ -16042,6 +16093,104 @@ function ligarChecklistFicha(){
     // natural; o que importa agora é o ✓ visível e o texto do colega intacto.
     el.parentElement.classList.toggle("feito", t.concluida);
   });
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// F93 · O PEDIDO DE DOCUMENTO COM ESTADO. O checklist já dizia O QUE foi
+// pedido e se chegou; faltava QUANDO tem de chegar e QUEM lembra de cobrar.
+// Agora o pedido tem data de entrega (a coluna `tarefas.prazo`, que já
+// existia), o item vencido sobe ao Meu Dia como qualquer prazo, e a cobrança
+// é um clique: a mensagem sai pronta no WhatsApp com a lista dos pendentes, e
+// fica registrada no caso com data e autor. Recebido = a caixinha do
+// checklist, como sempre foi. No pré-caso (cliente ainda sem caso) vale o
+// mesmo, sobre `docs_pedidos`.
+// ══════════════════════════════════════════════════════════════════════════
+async function prazoDoDoc(id){
+  const t=D.tarefas.find(x=>x.id===id); if(!t) return;
+  caixa(`<h3 style="margin:0 0 4px">📅 Entrega de “${esc(t.titulo)}”</h3>
+    <p class="meio-sub" style="margin:0 0 8px">Vencida a data, o pedido aparece no Meu Dia para cobrar.</p>
+    <div class="form-linha" style="align-items:center">
+      <input type="date" id="pd-data" value="${t.prazo||somaDias(hoje(),15)}">
+      <button class="btn-mini" onclick="document.getElementById('pd-data').value='${somaDias(hoje(),7)}'">+7 dias</button>
+      <button class="btn-mini" onclick="document.getElementById('pd-data').value='${somaDias(hoje(),15)}'">+15 dias</button>
+      <button class="btn-mini" onclick="document.getElementById('pd-data').value='${somaDias(hoje(),30)}'">+30 dias</button>
+    </div>
+    <div class="form-linha" style="margin-top:12px">
+      <button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
+      ${t.prazo?`<button class="btn-rap" onclick="gravarPrazoDoc('${t.id}',null)">sem data</button>`:""}
+      <button class="btn-mini forte" style="margin-left:auto" onclick="gravarPrazoDoc('${t.id}',document.getElementById('pd-data').value)">Guardar</button>
+    </div>`);
+}
+async function gravarPrazoDoc(id, data){
+  const t=D.tarefas.find(x=>x.id===id); if(!t) return;
+  try{
+    await api(`/rest/v1/tarefas?id=eq.${id}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({prazo:data||null})});
+  }catch(e){ return aviso("Não consegui gravar a data — tente de novo"); }
+  t.prazo=data||null; fecharCaixa();
+  aviso(data?`📅 entrega até ${fmt(data)}`:"Pedido sem data", false);
+  if(clienteAberto) abrirFicha(clienteAberto); else render();
+}
+// os pendentes de um cliente: do checklist do caso, ou do pré-caso
+function docsPendentes(cliId, casoId){
+  if(casoId) return D.tarefas.filter(t=>t.caso_id===casoId && !t.concluida)
+    .map(t=>({nome:t.titulo.replace(/^📄\s*/,""), ate:t.prazo||null}));
+  const c=D.cliPorId.get(cliId)||{};
+  return ((c.campos||{}).docs_pedidos||[]).flatMap(p=>(p.itens||[])
+    .filter(i=>!i.entregue).map(i=>({nome:i.nome||i, ate:p.ate||null})));
+}
+function msgCobrancaDocs(c, itens, k){
+  const nome=(c.nome||"").split(" ")[0];
+  const lista=itens.map(i=>`• ${i.nome}${i.ate?` (até ${fmt(i.ate)})`:""}`).join("\n");
+  return `Olá, ${nome}! Aqui é do escritório Paulo R. Tercini Filho.\n\n`+
+    `Para dar andamento ao seu ${k?tituloCaso(k).toLowerCase():"atendimento"}, ainda precisamos de:\n${lista}\n\n`+
+    `Pode nos enviar por aqui mesmo (foto legível) ou trazer ao escritório. Qualquer dúvida, é só chamar. 🙏`;
+}
+async function cobrarDocs(cliId, casoId){
+  const c=D.cliPorId.get(cliId); if(!c) return;
+  const k=casoId?D.casoPorId.get(casoId):null;
+  const itens=docsPendentes(cliId, casoId);
+  if(!itens.length) return aviso("Nada pendente — tudo recebido");
+  const msg=msgCobrancaDocs(c, itens, k);
+  const tel=(c.telefone||"").replace(/\D/g,"");
+  if(tel) window.open(`https://wa.me/55${tel}?text=${encodeURIComponent(msg)}`,"_blank");
+  else{ try{ await navigator.clipboard.writeText(msg); }catch(e){} }
+  // o registro: no caso é andamento; no pré-caso é anotação do atendimento
+  const texto=`📲 Cobrados de ${c.nome.split(" ")[0]} os documentos pendentes: ${itens.map(i=>i.nome).join("; ")}.`;
+  try{
+    if(k){
+      const [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
+        body:JSON.stringify({caso_id:k.id, autor_id:eu.id, origem:"app", publico:false, texto})})||[];
+      if(and) await api(`/rest/v1/andamentos_lidos`,{method:"POST",
+        headers:{Prefer:"return=minimal,resolution=merge-duplicates"},
+        body:JSON.stringify({andamento_id:and.id, colaborador_id:eu.id})}).catch(()=>{});
+    } else {
+      const nota={em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], autor_id:eu.id, texto};
+      c.campos={...(c.campos||{}), atendimento:[...((c.campos||{}).atendimento||[]), nota]};
+      await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+        body:JSON.stringify({campos:c.campos})});
+    }
+  }catch(e){ return aviso("A mensagem abriu, mas a cobrança não ficou registrada: "+String(e.message||e).slice(0,80)); }
+  aviso(tel?`📲 Cobrança registrada — ${itens.length} documento(s)`:"📋 Cliente sem telefone: mensagem copiada, cobrança registrada", false);
+  if(clienteAberto===cliId) abrirFicha(cliId);
+}
+// no Meu Dia: os pedidos do pré-caso com data, ao lado dos do checklist. São
+// cartões virtuais (não têm linha em `tarefas`): sem caixinha de concluir —
+// o "entregue" fica na ficha, onde o item mora.
+function docsPreCasoComData(){
+  const out=[];
+  for(const c of (D.clientes||[])){
+    const kAtivo=(D.casosDoCliente.get(c.id)||[]).some(k=>k.fase!=="encerrado");
+    if(kAtivo) continue;   // com caso, o checklist do caso é que vale
+    ((c.campos||{}).docs_pedidos||[]).forEach((p,pi)=>{
+      if(!p.ate) return;
+      const pend=(p.itens||[]).filter(i=>!i.entregue);
+      if(!pend.length) return;
+      out.push({id:`pc|${c.id}|${pi}`, cliente_id:c.id, virtual:true, prazo:p.ate,
+        titulo:`📄 ${pend.map(i=>i.nome||i).join("; ")}`});
+    });
+  }
+  return out;
 }
 
 // datas em linguagem natural ("amanhã", "sexta", "dia 15") no adicionar tarefa
@@ -16224,6 +16373,117 @@ function somaDias(iso, n){
   d.setDate(d.getDate()+n);
   return d.toLocaleDateString("sv");
 }
+
+// ══════════════════════════════════════════════════════════════════════════
+// F92 · O CATÁLOGO DE PRAZOS. A data fatal era digitada à mão, e a conta
+// (dias úteis, feriado, recesso, prorrogação do vencimento) ficava na cabeça
+// de quem anotava. Agora o prazo é ESCOLHIDO pelo nome e CONTADO a partir da
+// intimação, com a regra de cada rito: os judiciais em dias úteis (art. 219
+// do CPC; no JEF, art. 12-A da Lei 9.099/95), suspensos no recesso de 20/12 a
+// 20/01 (art. 220 do CPC); os administrativos em dias corridos, prorrogados
+// para o dia útil seguinte quando o vencimento cai em dia sem expediente
+// (art. 78, § 4º, do RICRPS; art. 66, § 1º, da Lei 9.784/99); o decadencial
+// do mandado de segurança NÃO prorroga — cai em dia sem expediente, antecipa.
+// O dia da intimação é excluído da contagem (art. 224 do CPC; art. 78 do
+// RICRPS). O carimbo da anotação passa a dizer de que é o prazo e de onde a
+// data saiu (F85), sem ninguém escrever.
+//
+// Feriados: os nacionais (fixos e os móveis, pela Páscoa) estão aqui; os
+// locais e forenses da comarca entram em Configurações ("feriados_extra").
+// ══════════════════════════════════════════════════════════════════════════
+const PRAZOS_CATALOGO = [
+  {id:"ed",    rot:"Embargos de declaração",              n:5,   uteis:true,  base:"art. 1.023 do CPC; art. 49 da Lei 9.099/95"},
+  {id:"ri",    rot:"Recurso inominado (JEF)",             n:10,  uteis:true,  base:"art. 42 da Lei 9.099/95"},
+  {id:"cri",   rot:"Contrarrazões ao recurso inominado",  n:10,  uteis:true,  base:"art. 42, § 2º, da Lei 9.099/95"},
+  {id:"ap",    rot:"Apelação",                            n:15,  uteis:true,  base:"art. 1.003, § 5º, do CPC"},
+  {id:"cap",   rot:"Contrarrazões de apelação",           n:15,  uteis:true,  base:"art. 1.010, § 1º, do CPC"},
+  {id:"ai",    rot:"Agravo de instrumento",               n:15,  uteis:true,  base:"art. 1.003, § 5º, do CPC"},
+  {id:"rep",   rot:"Réplica à contestação",               n:15,  uteis:true,  base:"arts. 350 e 351 do CPC"},
+  {id:"laudo", rot:"Manifestação sobre o laudo pericial", n:15,  uteis:true,  base:"art. 477, § 1º, do CPC"},
+  {id:"ques",  rot:"Quesitos e assistente técnico",       n:15,  uteis:true,  base:"art. 465, § 1º, do CPC"},
+  {id:"emen",  rot:"Emenda da inicial",                   n:15,  uteis:true,  base:"art. 321 do CPC"},
+  {id:"u5",    rot:"Outro prazo judicial de 5 dias úteis",  n:5,  uteis:true, base:"art. 219 do CPC"},
+  {id:"u10",   rot:"Outro prazo judicial de 10 dias úteis", n:10, uteis:true, base:"art. 219 do CPC"},
+  {id:"u15",   rot:"Outro prazo judicial de 15 dias úteis", n:15, uteis:true, base:"art. 219 do CPC"},
+  {id:"u30",   rot:"Outro prazo judicial de 30 dias úteis", n:30, uteis:true, base:"art. 219 do CPC"},
+  {id:"crps",  rot:"Recurso ao CRPS (ordinário ou especial)", n:30, uteis:false, base:"art. 77 do Regimento Interno do CRPS"},
+  {id:"ccrps", rot:"Contrarrazões no CRPS",               n:30,  uteis:false, base:"art. 77 do Regimento Interno do CRPS"},
+  {id:"exig",  rot:"Cumprimento de exigência do INSS",    n:30,  uteis:false, base:"art. 574, § 4º, II, da IN 128/2022"},
+  {id:"ms",    rot:"Mandado de segurança (decadência)",   n:120, uteis:false, dec:true, base:"art. 23 da Lei 12.016/2009"},
+];
+// feriados nacionais fixos (Lei 662/1949, Lei 6.802/1980, Lei 14.759/2023)
+const FERIADOS_FIXOS = ["01-01","04-21","05-01","09-07","10-12","11-02","11-15","11-20","12-25"];
+function pascoa(ano){   // Meeus/Jones/Butcher
+  const a=ano%19, b=Math.floor(ano/100), c=ano%100, d=Math.floor(b/4), e=b%4,
+        f=Math.floor((b+8)/25), g=Math.floor((b-f+1)/3), h=(19*a+b-d-g+15)%30,
+        i=Math.floor(c/4), k=c%4, l=(32+2*e+2*i-h-k)%7, m=Math.floor((a+11*h+22*l)/451),
+        mes=Math.floor((h+l-7*m+114)/31), dia=((h+l-7*m+114)%31)+1;
+  return `${ano}-${String(mes).padStart(2,"0")}-${String(dia).padStart(2,"0")}`;
+}
+const _feriadosAno = new Map();
+function feriadosNacionais(ano){
+  if(!_feriadosAno.has(ano)){
+    const p = pascoa(ano), s = new Set(FERIADOS_FIXOS.map(md=>`${ano}-${md}`));
+    [-48,-47,-2,60].forEach(n=>s.add(somaDias(p,n)));   // carnaval (2ª e 3ª), sexta-feira santa, corpus christi
+    _feriadosAno.set(ano, s);
+  }
+  return _feriadosAno.get(ano);
+}
+// os locais e forenses do escritório: "dd/mm" (todo ano) ou "dd/mm/aaaa"
+const feriadosExtra = () => String(cfgApp("feriados_extra")||"").split(/[,;\s]+/).filter(Boolean);
+function ehFeriado(iso){
+  if(feriadosNacionais(+iso.slice(0,4)).has(iso)) return true;
+  const dm = iso.slice(8,10)+"/"+iso.slice(5,7);
+  return feriadosExtra().some(f=>f===dm || f===dm+"/"+iso.slice(0,4));
+}
+const ehDiaUtil = iso => { const w=new Date(iso+"T12:00:00").getDay(); return w!==0 && w!==6 && !ehFeriado(iso); };
+const emRecessoForense = iso => { const md=iso.slice(5); return md>="12-20" || md<="01-20"; };
+// da data da intimação (excluída) à data fatal, pela regra do item
+function contarPrazo(de, item){
+  if(!de || !item) return "";
+  let d = de;
+  if(item.uteis){
+    let c = 0;
+    while(c < item.n){ d = somaDias(d,1); if(ehDiaUtil(d) && !emRecessoForense(d)) c++; }
+    return d;
+  }
+  d = somaDias(de, item.n);
+  while(!ehDiaUtil(d)) d = somaDias(d, item.dec ? -1 : 1);
+  return d;
+}
+// o widget: catálogo + "intimado em", ao lado de um campo de data fatal.
+// `alvo` é o id do campo que recebe a data (por padrão, `${p}-prazo`).
+const catPrazo = {};
+function catalogoPrazoHtml(p, alvo){
+  return `<span class="cat-prazo" data-alvo="${alvo||p+"-prazo"}">
+    <select id="${p}-cat" onchange="aplicarCatalogoPrazo('${p}')" title="escolha o prazo pelo nome: a data fatal é contada a partir da intimação">
+      <option value="">…ou calcule pelo catálogo</option>
+      ${PRAZOS_CATALOGO.map(x=>`<option value="${x.id}">${esc(x.rot)} · ${x.n} dias${x.uteis?" úteis":""}</option>`).join("")}
+    </select>
+    <label class="meio-sub">intimado em <input type="date" id="${p}-de" value="${hoje()}" onchange="aplicarCatalogoPrazo('${p}')"></label>
+    <span class="cat-base" id="${p}-cat-base"></span></span>`;
+}
+function aplicarCatalogoPrazo(p){
+  const sel=document.getElementById(`${p}-cat`), base=document.getElementById(`${p}-cat-base`);
+  const de=(document.getElementById(`${p}-de`)||{}).value||"";
+  const item=PRAZOS_CATALOGO.find(x=>x.id===(sel||{}).value);
+  const alvo=document.getElementById((sel&&sel.closest(".cat-prazo")||{dataset:{}}).dataset.alvo||`${p}-prazo`);
+  if(!item || !de){ delete catPrazo[p]; if(base){ base.textContent=""; base.classList.remove("venceu"); } return; }
+  const fatal=contarPrazo(de, item);
+  catPrazo[p]={...item, de, fatal};
+  if(alvo){ alvo.value=fatal; alvo.dispatchEvent(new Event("change")); }
+  if(base){
+    base.textContent=`${item.n} dias ${item.uteis?"úteis":"corridos"} de ${fmt(de)} → fatal ${fmt(fatal)} (${item.base})`
+      + (fatal<hoje()?" ⚠ já venceu":"");
+    base.classList.toggle("venceu", fatal<hoje());
+  }
+}
+// o carimbo da anotação: de que é o prazo e de onde a data saiu. Só entra se
+// a data gravada for a que o catálogo calculou (trocou à mão, fica só a data).
+function carimboCatalogo(p, prazo){
+  const c=catPrazo[p]; if(!c || !prazo || c.fatal!==prazo) return "";
+  return `${c.rot} — ${c.n} dias${c.uteis?" úteis":" corridos"} (${c.base}), intimação de ${fmt(c.de)}. `;
+}
 function tfPessoa(id, btn){
   if(!Array.isArray(tfQuem)) tfQuem=[];
   tfQuem = tfQuem.includes(id) ? tfQuem.filter(x=>x!==id) : [...tfQuem, id];
@@ -16355,13 +16615,15 @@ async function novoAndamento(casoUnico){
   const prazoData=((document.getElementById("and-prazo-data")||{}).value)||"";
   if(prazoCk && prazoCk.checked && !prazoData)
     return aviso("Tarefa com prazo precisa da DATA FATAL — preencha o campo ao lado do ⏰");
-  const textoFinal = (prazoCk && prazoCk.checked) ? `⏰ [PRAZO ${fmt(prazoData)}] ${texto}` : texto;
+  const textoFinal = (prazoCk && prazoCk.checked)
+    ? `⏰ [PRAZO ${fmt(prazoData)}] ${carimboCatalogo("and", prazoData)}${texto}` : texto;
   let and;
   try{
     [and]=await api(`/rest/v1/andamentos`,{method:"POST",headers:{Prefer:"return=representation"},
       body:JSON.stringify({caso_id:casoId, autor_id:eu.id, texto:textoFinal,
         ...(respondeA?{responde_a:respondeA}:{})})});
   }catch(e){ return aviso("Não consegui registrar o andamento: "+String(e.message||e).slice(0,120)); }
+  delete catPrazo.and;   // F92 · o cálculo desta anotação não vaza para a próxima
   desarmarResposta();
   if(prazoCk && prazoCk.checked && prazoData) await marcarTarefaComPrazo(casoId, prazoData);
   // data sem pessoa: quem escreveu "cobrar em 30 dias" quer ELE MESMO lembrar
@@ -18861,7 +19123,8 @@ async function salvarNotaAtendimento2(cliId){
   if(prazoFatal && ksAtivos.length!==1)
     return aviso(ksAtivos.length?"Mais de um caso em andamento — marque o prazo pelo 📌 do próprio caso":"Prazo fatal pede caso em andamento — sem caso, use o marcador pendência");
   const nota={em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0],
-              autor_id:eu.id, texto:(prazoFatal?`⏰ [PRAZO ${fmt(prazoFatal)}] `:"")+t};
+              autor_id:eu.id, texto:(prazoFatal?`⏰ [PRAZO ${fmt(prazoFatal)}] ${carimboCatalogo("at", prazoFatal)}`:"")+t};
+  delete catPrazo.at;
   const pcSel=v("at-pc"); if(pcSel) nota.precaso_id=pcSel;
   if(marcado("at-imp")) nota.importante=true;
   if(marcado("at-urg")) nota.urgente=true;
@@ -19395,25 +19658,32 @@ function caixaAtendimento(c, ks){
             ${extras.map(it=>`<label style="display:flex;gap:8px;align-items:flex-start;font-size:13px;padding:2px 0;cursor:pointer">
               <input type="checkbox" class="at-doc" value="${esc(it)}" style="margin-top:3px"><span>${esc(it)}</span></label>`).join("")}`:""}
         </div>
-        <div class="form-linha" style="margin-top:6px">
+        <div class="form-linha" style="margin-top:6px;align-items:center">
           <input id="at-doc-extra" placeholder="outro documento — Enter acrescenta" style="flex:1;min-width:200px"
             onkeydown="if(event.key==='Enter'){event.preventDefault();docExtraAtendimento();}">
+          <label class="meio-sub" title="F93 · vencida a data, o pedido aparece no Meu Dia para cobrar">entrega até
+            <input type="date" id="at-doc-ate" min="${hoje()}" value="${somaDias(hoje(),15)}"></label>
           <button onclick="pedirDocsAtendimento('${c.id}')">Imprimir e registrar o pedido</button>
         </div>`
       :`<p class="meio-sub">${esp?"Não há catálogo cadastrado para esta espécie — acrescente à mão o que o cliente precisa trazer."
         :"Defina a espécie acima para o sistema sugerir a lista do benefício."}</p>
-        <div class="form-linha" style="margin-top:4px">
+        <div class="form-linha" style="margin-top:4px;align-items:center">
           <div id="at-docs"></div>
           <input id="at-doc-extra" placeholder="documento — Enter acrescenta" style="flex:1;min-width:200px"
             onkeydown="if(event.key==='Enter'){event.preventDefault();docExtraAtendimento();}">
+          <label class="meio-sub" title="F93 · vencida a data, o pedido aparece no Meu Dia para cobrar">entrega até
+            <input type="date" id="at-doc-ate" min="${hoje()}" value="${somaDias(hoje(),15)}"></label>
           <button onclick="pedirDocsAtendimento('${c.id}')">Imprimir e registrar o pedido</button>
         </div>`}
       ${pedidos.length?`<div style="margin-top:8px">
-        <div class="meio-sub" style="margin-bottom:3px">Já pedimos a ${esc(c.nome.split(" ")[0])}:</div>
+        <div class="meio-sub" style="margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">Já pedimos a ${esc(c.nome.split(" ")[0])}:
+          ${pedidos.some(p=>(p.itens||[]).some(i=>!i.entregue))?`<button class="btn-mini" onclick="cobrarDocs('${c.id}','')"
+            title="mensagem pronta no WhatsApp com os pendentes; a cobrança fica nas anotações">📲 cobrar pendentes</button>`:""}</div>
         <ul class="mov-lista">
           ${pedidos.map((p,pi)=>(p.itens||[]).map((it,ii)=>`<li>
             <span class="mov-data">${p.em?fmt(p.em.slice(0,10)):"—"}</span>
             <span class="mov-txt" style="${it.entregue?"text-decoration:line-through;color:var(--cinza)":""}">${esc(it.nome||it)}</span>
+            ${p.ate&&!it.entregue?chipPrazo(p.ate, "entrega combinada até"):""}
             ${it.entregue?`<span class="chip verde" style="cursor:pointer" onclick="docEntregue('${c.id}',${pi},${ii})"
                 title="marcado por engano? clique para desfazer">entregue ${fmt(it.entregue)} ↺</span>`
               :`<button class="btn-mini" onclick="docEntregue('${c.id}',${pi},${ii})">entregue</button>`}
@@ -19459,7 +19729,8 @@ function caixaAtendimento(c, ks){
           </div></div>
         <div class="capsula"><span class="cap-perg">⏰ Prazo fatal?</span>
           <div class="cap-ctl"><input type="date" id="at-prazo" min="${hoje()}" onchange="atualizarFraseNota()"
-            title="prazo processual: a anotação sai com [PRAZO] e o caso vai para 🗓 Tarefas com Prazo"></div>
+            title="prazo processual: a anotação sai com [PRAZO] e o caso vai para 🗓 Tarefas com Prazo">
+            ${catalogoPrazoHtml("at")}</div>
           <span class="cap-dica">move o caso para 🗓 Tarefas com Prazo</span></div>
       </div>
       <div class="caps-linha" style="align-items:center">
@@ -19540,9 +19811,10 @@ async function pedirDocsAtendimento(cliId){
   if(!itens.length) return aviso("Marque ao menos um documento");
   const esp=(c.campos||{}).especie||"benefício a definir";
   imprimirListaDocs(c, esp, itens, (docPorNome(esp)||{}).observacoes);
+  const ate=(document.getElementById("at-doc-ate")||{}).value||null;   // F93
   const pedidos=[...((c.campos||{}).docs_pedidos||[]),
     {em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0], especie:esp,
-     itens:itens.map(nome=>({nome, entregue:null}))}];
+     ...(ate?{ate}:{}), itens:itens.map(nome=>({nome, entregue:null}))}];
   c.campos={...(c.campos||{}), docs_pedidos:pedidos};
   try{
     await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
@@ -19626,6 +19898,16 @@ function janelaDocsAnotacao(){
       <input id="jd-extra" placeholder="＋ outro documento — Enter acrescenta" style="flex:1"
         onkeydown="if(event.key==='Enter'){event.preventDefault();docExtraAnotacao();}">
     </div>
+    ${/* F93 · o pedido tem data: vencida, o item aparece no Meu Dia para
+         cobrar — a cobrança deixa de depender de alguém lembrar */""}
+    <div class="form-linha" style="margin-top:8px;align-items:center">
+      <span class="cap-perg">O cliente entrega até</span>
+      <input type="date" id="jd-ate" min="${hoje()}" value="${somaDias(hoje(),15)}">
+      <button class="btn-mini" onclick="document.getElementById('jd-ate').value='${somaDias(hoje(),7)}'">+7 dias</button>
+      <button class="btn-mini" onclick="document.getElementById('jd-ate').value='${somaDias(hoje(),15)}'">+15 dias</button>
+      <button class="btn-mini" onclick="document.getElementById('jd-ate').value='${somaDias(hoje(),30)}'">+30 dias</button>
+      <span class="meio-sub">sem data, o item fica no checklist sem cobrança</span>
+    </div>
     <div class="form-linha" style="margin-top:12px">
       <button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
       <button style="margin-left:auto;padding:9px 18px;border:none;border-radius:8px;background:var(--azul);color:#fff;font-weight:600;cursor:pointer"
@@ -19644,12 +19926,13 @@ async function solicitarDocsAnotacao(casoId){
   const sel=[...document.querySelectorAll(".jd-doc:checked")].map(x=>x.value);
   if(!sel.length) return aviso("Marque ao menos um documento");
   const ja=new Set(D.tarefas.filter(t=>t.caso_id===casoId).map(t=>dsa(t.titulo)));
+  const ate=(document.getElementById("jd-ate")||{}).value||null;   // F93
   let novos=0;
   try{
     for(const titulo of sel){
       if(ja.has(dsa(titulo))) continue;            // repetir não duplica
       const [t]=await api(`/rest/v1/tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
-        body:JSON.stringify({caso_id:casoId, titulo})});
+        body:JSON.stringify({caso_id:casoId, titulo, ...(ate?{prazo:ate}:{})})});
       if(t){ D.tarefas.push(t); novos++; }
     }
   }catch(e){ return aviso("Não consegui criar o checklist: "+String(e.message||e).slice(0,100)); }
@@ -19657,7 +19940,9 @@ async function solicitarDocsAnotacao(casoId){
   // migrar reconhece a frase e não recria os itens na sincronização
   const ta=document.getElementById("and-texto");
   if(ta){
-    const frase=`Solicitei os documentos: ${sel.join("; ")}.`;
+    // a data vai ANTES dos dois-pontos: o migrar.py separa os itens por ";"
+    // depois deles, e uma data colada no último item viraria item novo
+    const frase=`Solicitei os documentos${ate?` (entrega até ${fmt(ate)})`:""}: ${sel.join("; ")}.`;
     ta.value=(ta.value.trim()?ta.value.trim()+"\n":"")+frase;
     ta.dispatchEvent(new Event("input"));
     ta.focus();
