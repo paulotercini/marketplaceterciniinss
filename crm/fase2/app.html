@@ -2271,7 +2271,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 09.88</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 09.89</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -4311,11 +4311,12 @@ function coletasPorFonte(){
   for(const c of coletasPendentes){
     // processo completo: cada PROCESSO é uma fila própria — a coleta de um
     // não engole a de outro (só a repetição do mesmo número é "velha")
-    // acervo judicial: cada HOST é uma fila própria — o 1º e o 2º grau do
-    // PJe e os quatro eprocs do TJSP chegam todos como fonte "pje", e a coleta
-    // de um host não pode engolir a de outro como se fosse repetição
+    // acervo judicial: cada HOST+GRAU é uma fila própria — o 1º e o 2º grau
+    // do PJe, os quatro eprocs e os dois graus do e-SAJ (mesmo host) chegam
+    // todos como fonte "pje", e a coleta de um não pode engolir a de outro
+    // como se fosse repetição
     const chave = c.fonte==="pje-processo" ? `${c.fonte}:${c.numero||c.id}`
-                : c.fonte==="pje" ? `${c.fonte}:${c.host||""}` : c.fonte;
+                : c.fonte==="pje" ? `${c.fonte}:${c.host||""}:${c.grau||""}` : c.fonte;
     if(!nova[chave]) nova[chave] = c; else velhas.push(c);
   }
   return { novas: Object.values(nova), velhas };
@@ -5432,14 +5433,17 @@ function nomesBatemPje(a, b){
 // diz de onde veio — o rótulo e o prefixo do andamento seguem esse campo.
 // Sem `sistema` (coletas antigas), é PJe.
 function rotuloSistemaPje(d){
-  return (d && d.sistema==="eproc") ? "🏛 eproc TJSP" : "⚖️ PJe TRF3";
+  const s = d && d.sistema;
+  return s==="eproc" ? "🏛 eproc TJSP" : s==="esaj" ? "⚖️ e-SAJ TJSP" : "⚖️ PJe TRF3";
 }
 function prefixoPje(d){
-  return (d && d.sistema==="eproc") ? "eproc TJSP" : "PJe";
+  const s = d && d.sistema;
+  return s==="eproc" ? "eproc TJSP" : s==="esaj" ? "e-SAJ TJSP" : "PJe";
 }
 // o endereço dos autos digitais que o próprio acervo carrega (id + chave ca)
 // — é o "abrir no PJe" das Novidades e da ficha, aberto na sessão logada
 function linkPje(host, p){
+  if(p && p.link) return p.link;                 // o e-SAJ manda a ficha pronta
   return (host && p && p.id && p.ca)
     ? `https://${host}/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam?id=${p.id}&ca=${p.ca}`
     : null;
@@ -5468,12 +5472,44 @@ function linkPjeDoCaso(k, grau){
 // o grau que o próprio texto do andamento carrega: ele nasce como
 // "PJe (2º grau): ..." nas duas coletas (acervo e processo completo)
 function grauDoAndamentoPje(a){
-  const m = /^(?:PJe|eproc TJSP)\s*\(([^)]+)\)/.exec((a && a.texto) || "");
+  const m = /^(?:PJe|eproc TJSP|e-SAJ TJSP)\s*\(([^)]+)\)/.exec((a && a.texto) || "");
   return m ? m[1].trim() : null;
 }
-// o link certo para UM andamento do PJe
+// F95 · o sistema que o texto do andamento carrega ("eproc TJSP (1º grau):…")
+function sistemaDoAndamentoPje(a){
+  const m = /^(PJe|eproc TJSP|e-SAJ TJSP)\s*\(/.exec((a && a.texto) || "");
+  return m ? m[1] : null;
+}
+// o nome do sistema pelo endereço: "abrir no PJe" não pode abrir o eproc
+function nomeSistemaDoLink(u){
+  return /eproc/i.test(u||"") ? "eproc" : /esaj\.tjsp/i.test(u||"") ? "e-SAJ" : "PJe";
+}
+// e-SAJ sem link guardado: a consulta por número cai na ficha do processo (a
+// mesma regra da extensão, esaj-regras.js). O eproc não tem esse atalho —
+// o endereço dele leva um hash da sessão, e só chega pela coleta.
+function linkEsajPorNumero(grau, numero){
+  const n=String(numero||"").trim(), m=n.match(/^(\d{7}-\d{2})\.(\d{4})\.8\.26\.(\d{4})$/);
+  if(!m) return null;
+  const [,nd,ano,foro]=m;
+  return grau==="2º grau"
+    ? `https://esaj.tjsp.jus.br/cposg/search.do?conversationId=&paginaConsulta=1&cbPesquisa=NUMPROC&numeroDigitoAnoUnificado=${nd}.${ano}&foroNumeroUnificado=${foro}&dePesquisaNuUnificado=${n}&dePesquisaNuUnificado=UNIFICADO&dePesquisa=&tipoNuProcesso=UNIFICADO`
+    : `https://esaj.tjsp.jus.br/cpopg/search.do?conversationId=&cbPesquisa=NUMPROC&numeroDigitoAnoUnificado=${nd}.${ano}&foroNumeroUnificado=${foro}&dadosConsulta.valorConsultaNuUnificado=${n}&dadosConsulta.valorConsultaNuUnificado=UNIFICADO&dadosConsulta.valorConsulta=&dadosConsulta.tipoNuProcesso=UNIFICADO`;
+}
+// o link certo para UM andamento do PJe / eproc / e-SAJ
 function linkPjeDoAndamento(a, k){
-  return linkPjeDoCaso(k, grauDoAndamentoPje(a));
+  const grau = grauDoAndamentoPje(a), sis = sistemaDoAndamentoPje(a);
+  const guardado = linkPjeDoCaso(k, grau);
+  // o mapa de links é por grau, não por sistema: um processo migrado do e-SAJ
+  // para o eproc tem os dois — o link guardado só vale se for do sistema
+  // deste andamento
+  const bate = !guardado ? false
+    : sis==="eproc TJSP" ? /eproc/i.test(guardado)
+    : sis==="e-SAJ TJSP" ? /esaj\.tjsp/i.test(guardado)
+    : sis==="PJe" ? !/eproc|esaj\.tjsp/i.test(guardado) : true;
+  if(guardado && bate) return guardado;
+  if(sis!=="e-SAJ TJSP") return null;
+  const noTexto = (String((a&&a.texto)||"").match(/\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}/)||[])[0];
+  return linkEsajPorNumero(grau, noTexto || (k&&k.processo));
 }
 // na ficha, um botão POR GRAU: com o processo no 1º e no 2º, um botão só
 // obrigava a adivinhar qual dos dois ele abria
@@ -5483,10 +5519,10 @@ function botoesPjeDoCaso(k, cls, extra){
   const bt = (href, rot, tit) => `<a class="${cls}" href="${urlOk(href)}" target="_blank"
     rel="noopener" title="${esc(tit)}"${extra||""}>${esc(rot)}</a>`;
   if(graus.length)
-    return graus.sort().map(g=>bt(m[g], `🔗 PJe · ${g}`,
-      `abrir os autos digitais do ${g} na sua sessão do PJe`)).join(" ");
-  return k.pje_link ? bt(k.pje_link, "🔗 abrir no PJe",
-    "abrir os autos digitais na sua sessão do PJe") : "";
+    return graus.sort().map(g=>bt(m[g], `🔗 ${nomeSistemaDoLink(m[g])} · ${g}`,
+      `abrir os autos digitais do ${g} na sua sessão do ${nomeSistemaDoLink(m[g])}`)).join(" ");
+  return k.pje_link ? bt(k.pje_link, `🔗 abrir no ${nomeSistemaDoLink(k.pje_link)}`,
+    `abrir os autos digitais na sua sessão do ${nomeSistemaDoLink(k.pje_link)}`) : "";
 }
 // o que gravar na ficha quando uma coleta traz um link: o do grau dela entra
 // no mapa, sem derrubar o do outro grau
@@ -6658,12 +6694,12 @@ function linhaNovidade(a){
     </div>
     ${/* o link segue o GRAU do próprio andamento: um caso tem os dois, e abrir
          o 1º grau numa novidade do 2º era o defeito que se via na tela */""}
-    ${(g=>a.origem==="pje" && linkPjeDoAndamento(a,k)
-      ?`<a class="btn-mini" href="${urlOk(linkPjeDoAndamento(a,k))}" target="_blank" rel="noopener" title="abrir os autos digitais${g?` do ${esc(g)}`:""} na sua sessão do PJe">abrir no PJe${g?` · ${esc(g)}`:""} ↗</a>`
+    ${((g,l)=>a.origem==="pje" && l
+      ?`<a class="btn-mini" href="${urlOk(l)}" target="_blank" rel="noopener" title="abrir os autos digitais${g?` do ${esc(g)}`:""} na sua sessão do ${nomeSistemaDoLink(l)}">abrir no ${nomeSistemaDoLink(l)}${g?` · ${esc(g)}`:""} ↗</a>`
       :a.origem==="crps"
       ?`<button class="btn-mini" onclick="abrirERecursos('${a.caso_id}','${a.id}')"
-          title="abre a consulta do e-Recursos e copia o NUP — é só colar">e-Recursos ↗</button>`
-      :k.processo_link?`<a class="btn-mini" href="${urlOk(k.processo_link)}" target="_blank" rel="noopener">abrir ↗</a>`:"")(grauDoAndamentoPje(a))}
+          title="abre o recurso no e-Recursos e copia o NUP">e-Recursos ↗</button>`
+      :k.processo_link?`<a class="btn-mini" href="${urlOk(k.processo_link)}" target="_blank" rel="noopener">abrir ↗</a>`:"")(grauDoAndamentoPje(a), a.origem==="pje"?linkPjeDoAndamento(a,k):null)}
     ${(i=>`${eventoNoTexto(a.texto)?`<button class="btn-mini" onclick="periciaRapida(${i})"
       title="agenda na aba 🩺 e cria o aviso 3 dias úteis antes — um clique">🩺 agendar+aviso</button>`:""}${segBtnHtml(i, "📌 dar seguimento")}`)(
       segRegistrar(a.caso_id, a.texto, a.id, true))}
