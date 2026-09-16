@@ -204,7 +204,7 @@ A revisão aprofundada despacha quatro frentes aos agentes do plugin, quando dis
 
 Primeiro, a leitura adversária. Antes de fechar o relatório, despachar a peça, o inventário de provas com IDs, o CNIS e o histórico administrativo ao agente `base-conhecimento-inss:red-team-peticao`. Ele simula a contestação do INSS, a Procuradoria e o voto contrário, devolve fragilidades por severidade (FATAL, GRAVE, MEDIA, MENOR) com blindagem recomendada e veredito de protocolo. Os achados do agente entram no relatório desta skill com a severidade mapeada (FATAL vira BLOQUEANTE, GRAVE vira CRÍTICO, MEDIA vira IMPORTANTE, MENOR vira MENOR).
 
-Segundo, o julgador opositor (Onda 138). Depois do red-team e antes de fechar o relatório, despachar a peça e o mesmo material ao agente `base-conhecimento-inss:julgador-opositor`. Ele não veste a pele do INSS, veste a do julgador que procura razão sustentável para NÃO acolher o pedido, e devolve, nesta ordem obrigatória, a tabela de vulnerabilidades (PONTO VULNERÁVEL, TRECHO DA PETIÇÃO, POSSÍVEL FUNDAMENTO PARA REJEIÇÃO, NÍVEL DE RISCO, O QUE PRECISO REVISAR), os três melhores fundamentos para rejeitar o pedido usando só as fragilidades da peça e dos documentos e, só então, como revisar ou fortalecer cada ponto. Na primeira passada ele não reescreve, não elogia e não melhora o texto. Conclusão que depende de informação ausente vem marcada VERIFICAÇÃO HUMANA NECESSÁRIA e NÃO se aplica sem o documento. Os achados entram no relatório desta skill com a severidade mapeada (ALTO vira CRÍTICO, e BLOQUEANTE quando o fundamento leva a extinção sem mérito ou a perda de efeitos financeiros, MÉDIO vira IMPORTANTE, BAIXO vira MENOR). Os três fundamentos de rejeição vão transcritos no relatório, porque são a lista de prioridade da correção.
+Segundo, o julgador opositor (Onda 140). Depois do red-team e antes de fechar o relatório, despachar a peça e o mesmo material ao agente `base-conhecimento-inss:julgador-opositor`. Ele não veste a pele do INSS, veste a do julgador que procura razão sustentável para NÃO acolher o pedido, e devolve, nesta ordem obrigatória, a tabela de vulnerabilidades (PONTO VULNERÁVEL, TRECHO DA PETIÇÃO, POSSÍVEL FUNDAMENTO PARA REJEIÇÃO, NÍVEL DE RISCO, O QUE PRECISO REVISAR), os três melhores fundamentos para rejeitar o pedido usando só as fragilidades da peça e dos documentos e, só então, como revisar ou fortalecer cada ponto. Na primeira passada ele não reescreve, não elogia e não melhora o texto. Conclusão que depende de informação ausente vem marcada VERIFICAÇÃO HUMANA NECESSÁRIA e NÃO se aplica sem o documento. Os achados entram no relatório desta skill com a severidade mapeada (ALTO vira CRÍTICO, e BLOQUEANTE quando o fundamento leva a extinção sem mérito ou a perda de efeitos financeiros, MÉDIO vira IMPORTANTE, BAIXO vira MENOR). Os três fundamentos de rejeição vão transcritos no relatório, porque são a lista de prioridade da correção.
 
 Terceiro, a verificação de citações em lote. Quando a peça tiver três ou mais citações não confirmadas no catálogo local, despachar o lote ao agente `base-conhecimento-inss:verificador-precedentes`, que confere existência, vigência e tese literal em fonte oficial e devolve classificação por item. Dúvida isolada (uma ou duas citações) segue o fluxo normal dos Níveis 1 a 5 com a Regra de Comet.
 
@@ -367,6 +367,10 @@ O relatório informa o número de páginas antes, depois e o percentual, e lista
 Por tese, um fundamento decisivo desenvolvido. Os demais entram em uma linha de menção, sem desenvolvimento, disponíveis para a réplica ou o recurso se o INSS os atacar.
 
 Essa regra é o freio direto do efeito aditivo dos Conferentes. O retorno deles entra na peça como fundamento decisivo, se for melhor que o adotado, ou como linha de menção. Nunca como seção nova.
+
+#### Medição mecânica, primeiro (Onda 140)
+
+Antes da amostragem, rodar `python3 peticao-previdenciaria/scripts/medir_peca.py peca.md --tipo <tipo>` sobre o Markdown da peça. O script aplica o padrão calibrado, parágrafo de 20 a 42 palavras, sem sequência de frases curtas, sem adjetivo de intensidade nem fórmula vazia, dispositivo citado com explicação, documento com ID e orçamento de páginas. Cada linha da saída é um achado desta camada, com a severidade que o script atribui. Peça que FALHA no script volta para a redação antes de qualquer outra camada, porque revisar prosa fora da medida é revisar o que vai ser reescrito. A amostragem abaixo cobre o que o script não mede.
 
 #### Amostragem de legibilidade
 
@@ -583,7 +587,7 @@ Toda revisão DEVE executar as verificações abaixo, conforme política consoli
 Esta skill é HUB de integração e DEVE acionar.
 
 - Agente `red-team-peticao` para a leitura adversária da peça (Onda 81).
-- Agente `julgador-opositor` para a leitura do julgador que procura razão para não acolher, tabela de vulnerabilidades e três fundamentos de rejeição (Onda 138).
+- Agente `julgador-opositor` para a leitura do julgador que procura razão para não acolher, tabela de vulnerabilidades e três fundamentos de rejeição (Onda 140).
 - Agente `verificador-precedentes` para lotes de três ou mais citações não confirmadas (Onda 81).
 - `base-legislacao-fontes-primarias` antes de validar qualquer citação de norma.
 - `base-tnu-admissibilidade-manual` em qualquer peça destinada à TNU.

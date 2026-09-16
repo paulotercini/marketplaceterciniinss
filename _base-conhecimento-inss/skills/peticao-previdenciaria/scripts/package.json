@@ -1,0 +1,1 @@
+{ "name": "peticao-scripts", "private": true, "dependencies": { "docx": "^8.5.0" } }
