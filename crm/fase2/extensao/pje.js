@@ -211,13 +211,22 @@
     return { ok: itens.length };
   }
 
-  window.crmRodar = async () => {
+  const PAINEL = '/pje/Painel/painel_usuario/advogado.seam';
+  window.crmRodar = async (_desde, opts) => {
     try {
       if (!REG) { faixaErr('pje-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
-      // na janela de um processo aberto, o botão coleta o histórico COMPLETO dele
-      if (/\/pje\/Processo\/ConsultaProcesso\/Detalhe\/listProcessoCompletoAdvogado\.seam/.test(location.pathname))
-        return await coletarProcessoAberto();
-      if (!/\/pje\/Painel\/painel_usuario\/advogado\.seam/.test(location.pathname)) {
+      const noProcesso = /\/pje\/Processo\/ConsultaProcesso\/Detalhe\/listProcessoCompletoAdvogado\.seam/.test(location.pathname);
+      // na janela de um processo aberto, o CLIQUE coleta o histórico COMPLETO
+      // dele. F97 · o "atualizar tudo" (opts.acervo) quer o acervo: vai ao
+      // Painel e recomeça de lá, como já se faz quando a conversa cai.
+      if (noProcesso && !(opts && opts.acervo)) return await coletarProcessoAberto();
+      if (!new RegExp(PAINEL.replace(/\./g, '\\.')).test(location.pathname)) {
+        if (agendarRetomada()) {
+          faixa('indo ao Painel do Advogado para ler o acervo…');
+          setTimeout(() => { location.href = PAINEL; }, 600);
+          return { erro: 'retomando' };
+        }
+        sessionStorage.removeItem(RETOMAR);
         faixaErr('abra o Painel do Advogado do PJe (ou um processo) e clique de novo');
         return { erro: 'fora do painel' };
       }
