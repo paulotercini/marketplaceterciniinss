@@ -2271,7 +2271,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 09.89</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 09.90</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5344,10 +5344,9 @@ async function conferirPje(coletaId){
     // chave exata, o MOMENTO (processo+data+hora) de tudo que já está gravado
     // — inclusive pelo histórico completo (hist:) — para o acervo não regravar
     // como novo um movimento que o histórico do processo já trouxe.
-    const bancoPje = (await todas("andamentos",
-      "select=origem_id&origem=eq.pje&origem_id=not.is.null").catch(()=>[]))
-      .map(a=>a.origem_id);
-    const vistos = new Set(bancoPje);
+    const bancoPje = await todas("andamentos",
+      "select=origem_id,texto&origem=eq.pje&origem_id=not.is.null").catch(()=>[]);
+    const vistos = new Set(bancoPje.map(a=>a.origem_id));
     const momentos = momentosPje(bancoPje);
     const porProcesso = new Map();
     for(const k of D.casos){
@@ -5401,8 +5400,10 @@ async function conferirPje(coletaId){
       if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); plano.resumo.fichas++; }
       if(!p.movimento){ plano.resumo.sem_mudanca++; continue; }
       const oid = `mov:${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`;
-      if(vistos.has(oid) || momentos.has(`${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`)){
+      const momento = `${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`;
+      if(vistos.has(oid) || momentoConhecido(momentos, momento, p.movimento.texto)){
         plano.resumo.sem_mudanca++; continue; }
+      marcarMomento(momentos, momento, p.movimento.texto);
       // criado_em fica em branco de propósito: o banco carimba AGORA e o
       // andamento entra na janela de 30 dias das 📣 Novidades — gravado com
       // a data do movimento, o que era mais velho nascia invisível. A data
@@ -5693,13 +5694,35 @@ async function limparIgnoradosPje(){
 // o MOMENTO de cada andamento do PJe já gravado (processo:dataThora), venha
 // ele do acervo (mov:) ou do histórico completo (hist:) — é o que impede as
 // duas fontes de gravarem o mesmo movimento duas vezes
-function momentosPje(origemIds){
-  const s=new Set();
-  for(const oid of origemIds||[]){
-    const m=/^(?:mov|hist):(\d+:\d{4}-\d{2}-\d{2}T\d{2}:\d{2})/.exec(oid||"");
-    if(m) s.add(m[1]);
+// F96 · O MOMENTO SOZINHO NÃO BASTA. O PJe registra vários eventos no mesmo
+// minuto (a distribuição é "Recebido pelo Distribuidor" + "Distribuído por
+// sorteio" + a inicial com os anexos, tudo às 12:50), e o processo completo
+// de um caso real mostrou "4 conhecidos, 0 novos" com a ficha guardando só
+// dois. O momento agora carrega os TEXTOS já gravados nele, e o item só é
+// conhecido quando o seu texto está entre eles.
+function momentosPje(linhas){
+  const m=new Map();
+  for(const l of linhas||[]){
+    const oid = typeof l==="string" ? l : (l&&l.origem_id);
+    const x=/^(?:mov|hist):(\d+:\d{4}-\d{2}-\d{2}T\d{2}:\d{2})/.exec(oid||"");
+    if(!x) continue;
+    if(!m.has(x[1])) m.set(x[1], []);
+    if(l && typeof l==="object" && l.texto) m.get(x[1]).push(dsa(l.texto));
   }
-  return s;
+  return m;
+}
+// o miolo do texto: a primeira parte antes do " · " (os anexos vêm depois)
+const miolo = t => dsa(String(t||"").split(" · ")[0]).trim();
+function momentoConhecido(momentos, momento, texto){
+  if(!momento || !momentos.has(momento)) return false;
+  const ts = momentos.get(momento), t = miolo(texto);
+  if(!ts.length || !t) return true;      // gravado sem texto: vale o minuto, como antes
+  return ts.some(x=>x.includes(t));
+}
+function marcarMomento(momentos, momento, texto){
+  if(!momento) return;
+  if(!momentos.has(momento)) momentos.set(momento, []);
+  momentos.get(momento).push(dsa(texto||""));
 }
 function hashDjb(s){ let h=5381; for(let i=0;i<s.length;i++) h=((h*33)^s.charCodeAt(i))>>>0; return h.toString(36); }
 
@@ -5722,10 +5745,9 @@ async function conferirPjeProc(coletaId){
                     caso_id: k?k.id:null, fichas: [], andamentos: [],
                     resumo: { itens:(dados.itens||[]).length, movimentos:0, conhecidos:0, docs:0 } };
     if(!k){ planoPjeProcAtual = plano; render(); return; }
-    const bancoPje = (await todas("andamentos",
-      "select=origem_id&origem=eq.pje&origem_id=not.is.null").catch(()=>[]))
-      .map(a=>a.origem_id);
-    const vistos = new Set(bancoPje);
+    const bancoPje = await todas("andamentos",
+      "select=origem_id,texto&origem=eq.pje&origem_id=not.is.null").catch(()=>[]);
+    const vistos = new Set(bancoPje.map(a=>a.origem_id));
     const momentos = momentosPje(bancoPje);
     const campos={};
     if(dados.classe && !k.classe_judicial) campos.classe_judicial=dados.classe;
@@ -5738,8 +5760,8 @@ async function conferirPjeProc(coletaId){
       plano.resumo.docs += (it.docs||[]).length;
       const oid=`hist:${dig}:${it.data||"s-d"}T${it.hora||"00:00"}:${hashDjb(texto)}`;
       const momento=it.data&&it.hora?`${dig}:${it.data}T${it.hora}`:null;
-      if(vistos.has(oid) || (momento&&momentos.has(momento))){ plano.resumo.conhecidos++; continue; }
-      vistos.add(oid); if(momento) momentos.add(momento);   // dentro da própria coleta também
+      if(vistos.has(oid) || momentoConhecido(momentos, momento, texto)){ plano.resumo.conhecidos++; continue; }
+      vistos.add(oid); marcarMomento(momentos, momento, texto);   // dentro da própria coleta também
       plano.andamentos.push({ caso_id:k.id, origem_id:oid,
         quando: it.data?`${it.data}T${it.hora||"12:00"}:00-03:00`:null,
         texto:`${prefixoPje(dados)}${dados.grau?` (${dados.grau})`:""}: ${texto}${
