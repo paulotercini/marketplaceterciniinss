@@ -97,11 +97,14 @@
   // recomeça quando a página abrir — o sinal vive no sessionStorage
   const RETOMAR = 'crm_eproc_retomar';
 
-  window.crmRodar = async () => {
+  window.crmRodar = async (_desde, opts) => {
     try {
       if (!REG) { faixaErr('eproc-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
       if (!logado()) { faixaErr('faça login no eproc (certificado ou senha) e clique de novo'); return { erro: 'sem login' }; }
-      if (document.getElementById('tblEventos') && /acao=processo_selecionar/.test(location.search))
+      // F97 · o "atualizar tudo" (opts.acervo) quer a relação inteira, mesmo
+      // com um processo aberto na aba; o clique manual coleta o processo
+      if (document.getElementById('tblEventos') && /acao=processo_selecionar/.test(location.search)
+          && !(opts && opts.acervo))
         return await coletarProcessoAberto();
       if (!formLista()) {
         const l = linkRelacao();
