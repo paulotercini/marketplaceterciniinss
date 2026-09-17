@@ -2215,45 +2215,42 @@ html[data-tema="v10"] .pz .pz-data{font-size:17px}
 html[data-tema="v10"] :is(button,a,input,select,textarea,summary,[data-cop]):focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:4px}
 html[data-tema="v10"] .ico-pin{vertical-align:-2px}
 .cli-parc-k{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.75;margin-right:5px}
-/* ── F107 · FUNDO E FIGURA. A ficha corre sobre um cinza real; branco só no
-   que se lê de perto (cabeçalho, linha do caso, quadros) e no que se escreve.
-   O compositor é a única superfície elevada; a conversa corre direto sobre o
-   fundo, sem cartão nem moldura; as ações de cada registro só aparecem ao
-   passar o mouse. Pedido do Paulo em 17.09: "estou achando pesado". ──────── */
-html[data-tema="v10"]{--chao:#E3E6EA}
-html[data-tema="v10"] .det-rolagem{background:var(--chao)}
-html[data-tema="v10"] .det-topo{background:#FFFFFF}
+/* ── F109 · PAPEL. Fundo branco, sem caixas: réguas escuras separam as seções
+   (compositor, conversa), linhas finas separam os registros, os controles do
+   compositor viram texto; o "dar seguimento" de cada registro só aparece ao
+   passar o mouse. Só o cabeçalho do cliente tem cor própria, para a identidade
+   não se misturar com o papel. Substitui a F107 (fundo cinza), que o Paulo
+   não aprovou em 17.09. ─────────────────────────────────────────────────── */
+html[data-tema="v10"] .det-rolagem{background:#FFFFFF}
+html[data-tema="v10"] .det-topo{background:var(--placa);border-bottom:1px solid var(--borda)}
 html[data-tema="v10"] .painel{background:transparent}
 html[data-tema="v10"] .linha-caso,html[data-tema="v10"] .linha-caso+.sub-menu{background:#FFFFFF}
-html[data-tema="v10"] .linha-caso{border-top:1px solid var(--borda)}
-html[data-tema="v10"] .linha-caso+.sub-menu{border-bottom:none;box-shadow:inset 0 -1px 0 var(--borda)}
-html[data-tema="v10"] .id-min .cop{border-color:transparent;background:var(--fundo);color:var(--texto)}
-/* o compositor: a única superfície elevada */
-html[data-tema="v10"] .painel .escrever{border:none;box-shadow:0 4px 14px rgba(19,28,36,.14)}
-html[data-tema="v10"] .painel .escrever:focus-within{box-shadow:0 4px 14px rgba(19,28,36,.14),0 0 0 3px rgba(14,92,88,.14)}
-html[data-tema="v10"] .painel .tipo-ch,html[data-tema="v10"] .painel .escrever .btn-rap{border-color:transparent;background:var(--fundo)}
-html[data-tema="v10"] .painel .escrever .btn-rap.on,html[data-tema="v10"] .painel .esc-barra .tf-dt.on{border-color:var(--azul);background:var(--azul-fundo)}
-/* a conversa corre sobre o fundo, sem cartão */
+html[data-tema="v10"] .linha-caso{border-bottom:1px solid var(--borda)}
+html[data-tema="v10"] .linha-caso+.sub-menu{border-bottom:1px solid var(--borda)}
+html[data-tema="v10"] .id-min .cop{border:none;background:none;padding:0;color:var(--texto);border-bottom:1px dotted var(--cinza-claro);border-radius:0;font-weight:500}
+/* o compositor: uma régua escura em cima, sem caixa */
+html[data-tema="v10"] .painel .escrever{border:none;border-top:2px solid var(--texto);border-radius:0;background:#FFFFFF;box-shadow:none;padding-top:10px}
+html[data-tema="v10"] .painel .escrever:focus-within{box-shadow:none;border-top-color:var(--azul)}
+html[data-tema="v10"] .painel .tipo-ch,html[data-tema="v10"] .painel .escrever .btn-rap{border-color:transparent;background:transparent;color:var(--azul-escuro);padding-left:0;padding-right:10px}
+html[data-tema="v10"] .painel .escrever .btn-rap.on,html[data-tema="v10"] .painel .esc-barra .tf-dt.on{background:var(--azul-fundo);color:var(--azul-escuro);padding:0 9px}
+/* a conversa: régua escura no título, linhas finas entre os registros, sem fio */
 html[data-tema="v10"] .painel[data-p="2"] .fatos:not(.fatos-processo){border:none;background:transparent}
-html[data-tema="v10"] .painel[data-p="2"] .fatos:not(.fatos-processo)>.fatos-topo{padding:18px 0 6px}
+html[data-tema="v10"] .painel[data-p="2"] .fatos:not(.fatos-processo)>.fatos-topo{padding:18px 0 4px;border-bottom:2px solid var(--texto)}
 html[data-tema="v10"] .painel[data-p="2"] .fatos:not(.fatos-processo)>.fatos-pe{background:transparent;border:none;padding:4px 0 0}
 html[data-tema="v10"] .painel[data-p="2"] .timeline{border:none;background:transparent}
-html[data-tema="v10"] .painel[data-p="2"] .timeline:not(.crps-tl)::before{background:var(--borda)}
-html[data-tema="v10"] .painel[data-p="2"] .timeline:not(.crps-tl) .quando .avatar{box-shadow:0 0 0 3px var(--chao)}
-html[data-tema="v10"] .painel[data-p="2"] .timeline .q-dt{background:var(--chao)}
-html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-nao-lida{background:#FFFFFF!important;border-radius:8px}
-html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-dia span{background:#FFFFFF;border-color:transparent}
-html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-imp,html[data-tema="v10"] .painel[data-p="2"] .timeline li.tudo-marco{background:#FFF6E3!important;border-radius:8px}
-html[data-tema="v10"] .painel[data-p="2"] .resp-item{background:#FFFFFF;border-left-color:var(--borda)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline:not(.crps-tl)::before{display:none}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li+li:not(.tl-dia){border-top:1px solid var(--borda-suave)}
+html[data-tema="v10"] .painel[data-p="2"] .timeline .tl-dia span{background:#FFFFFF;border:none}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li.tl-imp,html[data-tema="v10"] .painel[data-p="2"] .timeline li.tudo-marco{background:#FFF6E3!important}
 html[data-tema="v10"] .painel[data-p="2"] .fase-b{background:transparent;border-top-color:var(--borda)}
-html[data-tema="v10"] .painel[data-p="2"] .fase-b:not([open]) summary{background:#FFFFFF;border-radius:8px}
 /* o "dar seguimento" de cada registro: fantasma até o mouse chegar */
-html[data-tema="v10"] .painel[data-p="2"] .timeline button[onclick^="abrirSeguimento"]{border-color:transparent;background:transparent;color:var(--cinza-claro);padding:2px 5px}
-html[data-tema="v10"] .painel[data-p="2"] .timeline li:hover button[onclick^="abrirSeguimento"],html[data-tema="v10"] .painel[data-p="2"] .timeline li:focus-within button[onclick^="abrirSeguimento"]{background:#FFFFFF;color:var(--azul-escuro)}
-/* quadros e faixas, brancos sobre o fundo */
-html[data-tema="v10"] .pz.pz-lemb{background:#FFFFFF;border:none;border-left:3px solid var(--cinza-claro)}
-html[data-tema="v10"] .fixo-caso{border:none}
-html[data-tema="v10"] .painel[data-p="2"] .caso{border:none}
+html[data-tema="v10"] .painel[data-p="2"] .timeline button[onclick^="abrirSeguimento"]{border-color:transparent;background:transparent;color:var(--cinza-claro);opacity:.55;padding:2px 5px}
+html[data-tema="v10"] .painel[data-p="2"] .timeline li:hover button[onclick^="abrirSeguimento"],html[data-tema="v10"] .painel[data-p="2"] .timeline li:focus-within button[onclick^="abrirSeguimento"]{opacity:1;color:var(--azul-escuro)}
+/* quadros e faixas: cantos retos, o lembrete com a lâmina cinza */
+html[data-tema="v10"] .pz{border-radius:0}
+html[data-tema="v10"] .pz.pz-lemb{background:#FFFFFF;border:1px solid var(--borda);border-left:3px solid var(--cinza-claro)}
+html[data-tema="v10"] .fixo-caso{border-radius:0}
+html[data-tema="v10"] .painel[data-p="2"] .caso{border:none;border-top:1px solid var(--borda);border-radius:0}
 /* no tema a ficha do caso é uma coluna só: linha do caso, menu, prazos, trabalho */
 @container ficha (min-width:900px){ html[data-tema="v10"] .painel[data-p="2"].ativo{display:block} }
 /* ── F82 · Caso completo por fase (só no tema) ─────────────────────────── */
@@ -2347,7 +2344,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.01</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.02</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
