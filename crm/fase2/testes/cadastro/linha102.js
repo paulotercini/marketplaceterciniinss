@@ -134,13 +134,18 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
 
   // ── F103 · o menu dos andamentos ─────────────────────────────────────────
   const menu = await p.evaluate(() => {
-    const m = document.querySelector(".painel[data-p='2'] .sub-menu"), lc = document.querySelector(".linha-caso");
+    const m = document.querySelector(".painel[data-p='2'] .sub-menu.menu-andamentos"), esc = document.querySelector(".escrever"), tl = document.querySelector(".painel[data-p='2'] .timeline");
     return { botoes: [...m.querySelectorAll("button")].map(b => b.textContent.replace(/\s+/g, " ").trim()), on: (m.querySelector("button.on") || {}).textContent,
-      abaixo: m.getBoundingClientRect().top >= lc.getBoundingClientRect().bottom - 1, fundo: getComputedStyle(m).backgroundColor, fundoLinha: getComputedStyle(lc).backgroundColor, rotulo: getComputedStyle(m, "::before").content };
+      abaixoDoCompositor: m.getBoundingClientRect().top >= esc.getBoundingClientRect().bottom - 1,
+      acimaDaConversa: tl && m.getBoundingClientRect().bottom <= tl.getBoundingClientRect().top + 1,
+      umCompositor: document.querySelectorAll("#and-texto").length === 1, rotulo: getComputedStyle(m, "::before").content };
   });
-  conf("o menu vem abaixo da linha, na mesma superfície dela, sem o rótulo 'CASO'", menu.abaixo && menu.fundo === menu.fundoLinha && /none/.test(menu.rotulo));
+  conf("o menu dos andamentos fica entre onde se escreve e o que se lê, sem o rótulo 'CASO'", menu.abaixoDoCompositor && menu.acimaDaConversa && menu.umCompositor && /none/.test(menu.rotulo));
   conf("Escritório · INSS · Recurso (CRPS) · Caso completo — Judicial só existe com número", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Andamentos do Escritório|INSS|Recurso (CRPS)|Caso completo");
   conf("o Caso completo abre por padrão", /Caso completo/.test(menu.on || ""));
+  const idTudo = await p.evaluate(() => { const li = [...document.querySelectorAll(".painel[data-p='2'] .timeline li.tl-of")].find(l => /Contestar o laudo/.test(l.textContent));
+    const av = li && li.querySelector(".quando .avatar"); return av && { ini: av.textContent.trim(), cor: av.style.background, fonte: av.classList.contains("av-fonte"), marco: li.classList.contains("tudo-marco") }; });
+  conf("no Caso completo quem escreveu aparece com a bolinha da sua cor, mesmo sendo marco", idTudo && idTudo.ini === "P" && /rgb\(37, 100, 207\)|#2564cf/i.test(idTudo.cor) && !idTudo.fonte);
   await p.evaluate(() => irSubAba("crps")); await p.waitForTimeout(300);
   const crps = await p.evaluate(() => ({ menu: [...document.querySelectorAll(".sub-menu.instancias button")].map(b => b.textContent.replace(/\s+/g, " ").trim()),
     on: (document.querySelector(".sub-menu.instancias button.on") || {}).textContent || "",
