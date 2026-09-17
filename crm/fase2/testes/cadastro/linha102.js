@@ -135,9 +135,9 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   const menu = await p.evaluate(() => {
     const m = document.querySelector(".painel[data-p='2'] .sub-menu"), lc = document.querySelector(".linha-caso");
     return { botoes: [...m.querySelectorAll("button")].map(b => b.textContent.replace(/\s+/g, " ").trim()), on: (m.querySelector("button.on") || {}).textContent,
-      abaixo: m.getBoundingClientRect().top >= lc.getBoundingClientRect().bottom - 1, fundo: getComputedStyle(m).backgroundColor, rotulo: getComputedStyle(m, "::before").content };
+      abaixo: m.getBoundingClientRect().top >= lc.getBoundingClientRect().bottom - 1, fundo: getComputedStyle(m).backgroundColor, fundoLinha: getComputedStyle(lc).backgroundColor, rotulo: getComputedStyle(m, "::before").content };
   });
-  conf("o menu vem abaixo da linha, no mesmo cinza, sem o rótulo 'CASO'", menu.abaixo && menu.fundo === "rgb(234, 237, 239)" && /none/.test(menu.rotulo));
+  conf("o menu vem abaixo da linha, na mesma superfície dela, sem o rótulo 'CASO'", menu.abaixo && menu.fundo === menu.fundoLinha && /none/.test(menu.rotulo));
   conf("Escritório · INSS · Recurso (CRPS) · Caso completo — Judicial só existe com número", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Andamentos do Escritório|INSS|Recurso (CRPS)|Caso completo");
   conf("o Caso completo abre por padrão", /Caso completo/.test(menu.on || ""));
   await p.evaluate(() => irSubAba("crps")); await p.waitForTimeout(300);
@@ -151,6 +151,16 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("escolhido um, só ele aparece", await p.evaluate(() => document.querySelectorAll(".timeline .tl-of").length === 1 && /000111/.test(document.querySelector(".painel[data-p='2'] .fatos:not(.fatos-processo) .fatos-topo h3").textContent)));
   await p.evaluate(() => { nupSel = ""; irSubAba("inss"); }); await p.waitForTimeout(200);
   conf("a aba INSS também escreve dali (compositor) e lista o comentário do INSS", await p.evaluate(() => !!document.querySelector("#and-texto") && /Solicitamos a apresentação de CTPS/.test(document.querySelector(".timeline").textContent)));
+
+  // ── F107 · fundo e figura ────────────────────────────────────────────────
+  const ff = await p.evaluate(() => ({ chao: getComputedStyle(document.querySelector(".det-rolagem")).backgroundColor,
+    topo: getComputedStyle(document.querySelector(".det-topo")).backgroundColor,
+    escrever: (e => e && { borda: getComputedStyle(e).borderTopStyle, sombra: getComputedStyle(e).boxShadow })(document.querySelector(".escrever")),
+    tl: (e => e && { borda: getComputedStyle(e).borderTopStyle, fundo: getComputedStyle(e).backgroundColor })(document.querySelector(".painel[data-p='2'] .timeline")),
+    pin: (b => b && getComputedStyle(b).backgroundColor)(document.querySelector('.timeline button[onclick^="abrirSeguimento"]')) }));
+  conf("a ficha corre sobre o cinza; cabeçalho e linha do caso em branco", ff.chao === "rgb(227, 230, 234)" && ff.topo === "rgb(255, 255, 255)");
+  conf("o compositor é a única superfície elevada (sem borda, com sombra); a conversa corre sem cartão", ff.escrever && ff.escrever.borda === "none" && ff.escrever.sombra !== "none" && ff.tl && ff.tl.borda === "none" && ff.tl.fundo === "rgba(0, 0, 0, 0)");
+  conf("o 'dar seguimento' de cada registro fica fantasma até o mouse chegar", ff.pin === "rgba(0, 0, 0, 0)");
 
   // ── F104 · os quadros ────────────────────────────────────────────────────
   const cards = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({ tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, onclick: c.querySelector(".pz-mais").getAttribute("onclick") })));
