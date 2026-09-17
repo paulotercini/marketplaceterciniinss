@@ -68,7 +68,8 @@ FIX.casos[0].crps = [];
   const patch = escritos.filter(e => e.t === "casos" && e.m === "PATCH").map(e => JSON.parse(e.corpo)).pop() || {};
   conf("o caso passa a ter os DOIS números, gravados no banco", Array.isArray(patch.crps_nups) && patch.crps_nups.join("|") === `${NUP1}|${NUP2}`);
   conf("nenhum caso novo foi criado", !escritos.some(e => e.t === "casos" && e.m === "POST"));
-  await p.waitForSelector(`#crps-nup-${CASO1}`);
+  // a repintura vem depois do PATCH: espera o aviso dos dois recursos, não só o campo
+  await p.waitForFunction(() => /2 recursos neste caso/.test(document.getElementById("detalhe").textContent), null, { timeout: 5000 });
   const t1 = await p.evaluate(() => document.getElementById("detalhe").textContent);
   conf("a aba lista os dois, com o aviso neutro e o separar como opção",
     t1.includes(NUP1) && t1.includes(NUP2) && /2 recursos neste caso/.test(t1) && /separar em 2 casos/.test(t1) && !/O certo é um caso para cada um/.test(t1));

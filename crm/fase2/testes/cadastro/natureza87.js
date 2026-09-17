@@ -65,33 +65,31 @@ Object.assign(FIX.casos[0], { fase: "conselho", origem_lista: "🖥 Conselho de 
 
   // ── (a) vocabulário ──────────────────────────────────────────────────────
   await abrir("?tema=v10");
+  await p.evaluate((id) => lcAbrir(id, 2), CASO1); await p.waitForTimeout(200);
   const tela = await p.evaluate(() => ({
-    regua: document.querySelector(".regua-caso").textContent.replace(/\s+/g, " "),
-    acao: document.querySelector(".acao-caso").textContent.replace(/\s+/g, " "),
+    linha: document.querySelector(".linha-caso").innerText.replace(/\s+/g, " "),
+    prazos: document.querySelector(".faixa-prazos").textContent.replace(/\s+/g, " "),
     tudo: document.querySelector(".painel[data-p='2']").textContent.replace(/\s+/g, " ") }));
-  conf("a régua diz 'Tramitação em paralelo'", /Tramitação em paralelo/.test(tela.regua));
-  conf("os números antigos são 'Números anteriores · N'", /Números anteriores · 1/.test(tela.regua));
-  conf("o campo vazio diz 'não informado', não 'a atribuir'", /NB\s*não informado/.test(tela.regua) && !/a atribuir/.test(tela.regua));
-  conf("a coluna se chama 'Prazos e providências'", /Prazos e providências/.test(tela.acao));
-  conf("e o vazio dela fala como escritório", /Sem prazos ou providências em aberto/.test(tela.acao));
-  conf("sumiram as expressões inventadas", !/trilhas vivas|cobra ação|cliente esquecido/.test(tela.tudo));
-  await p.evaluate(() => { const k = D.casoPorId.get(casoSel); k.processo = null; k.processos = []; k.classe_judicial = null; repintarFicha(); });
-  conf("com uma frente só, o rótulo é 'Tramitação'", await p.evaluate(() => /Tramitação/.test(document.querySelector(".rg-lbl").textContent) && !/paralelo/.test(document.querySelector(".rg-lbl").textContent)));
+  conf("a linha diz 'Tramitação' e onde tramita", /TRAMITAÇÃO Conselho de Recursos/i.test(tela.linha));
+  conf("os números do caso estão no ➕, com o MS como instrumental", /E-SISREC/i.test(tela.linha) && /MS · INSTRUMENTAL/i.test(tela.linha));
+  conf("o campo vazio diz 'nenhum', não 'a atribuir'", /Protocolos 4712009318/i.test(tela.linha) && !/a atribuir/.test(tela.linha));
+  conf("a faixa de prazos fala como escritório quando vazia", /Sem prazos ou lembretes em aberto/.test(tela.prazos));
+  conf("sumiram as expressões inventadas", !/trilhas vivas|cobra ação|cliente esquecido|Números anteriores/.test(tela.tudo));
 
   // ── (b) natureza do pedido ───────────────────────────────────────────────
   const nat = await p.evaluate(() => {
     const l = [...document.querySelectorAll(".nat-linha")][0];
     return l ? { rot: l.querySelector(".marc-rot").textContent.trim(), botoes: [...l.querySelectorAll("button")].map(b => b.textContent.trim()) } : null;
   });
-  conf("o cartão tem a linha NATUREZA DO PEDIDO", nat && nat.rot === "NATUREZA DO PEDIDO");
+  conf("a ficha completa (no ➕ da gestão) tem a linha NATUREZA DO PEDIDO", nat && nat.rot === "NATUREZA DO PEDIDO");
   conf("com os três valores do escritório", nat && nat.botoes.join("|") === "Concessão|Revisão|Acerto de cadastro");
   await p.evaluate(() => document.querySelectorAll(".nat-linha button")[1].click());
   await p.waitForTimeout(300);
   const gravou = escritos.filter(e => e.t === "casos").map(e => JSON.parse(e.corpo)).find(b => "natureza" in b);
   conf("clicar grava a natureza escolhida", gravou && gravou.natureza === "revisao");
-  conf("o botão fica marcado e o chip sobe para o topo do cartão", await p.evaluate(() =>
+  conf("o botão fica marcado e o chip sobe para a linha do caso", await p.evaluate(() =>
     document.querySelectorAll(".nat-linha button")[1].classList.contains("on") &&
-    /Revisão/.test((document.querySelector(".fatos-topo .nat-chip") || {}).textContent || "")));
+    /Revisão/.test((document.querySelector(".lc-topo .nat-chip") || {}).textContent || "")));
   await p.evaluate(() => document.querySelectorAll(".nat-linha button")[1].click());
   await p.waitForTimeout(300);
   conf("clicar de novo tira a natureza", await p.evaluate(() => D.casoPorId.get(casoSel).natureza === null));

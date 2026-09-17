@@ -59,18 +59,16 @@ FIX.andamentos = [
   };
 
   await abrir("?tema=v10", "escritorio");
+  await p.evaluate((id) => lcAbrir(id, 1), CASO1); await p.waitForTimeout(200);
   const rg = await p.evaluate(() => {
-    const r = document.querySelector(".regua-caso");
-    return { txt: r.textContent.replace(/\s+/g, " ").trim(), trilhas: r.querySelectorAll(".rg-trk").length,
-      papeis: [...r.querySelectorAll(".rg-papel")].map(e => e.textContent.trim()),
-      lbl: (r.querySelector(".rg-lbl") || {}).textContent };
+    const r = document.querySelector(".linha-caso");
+    return { tram: (r.querySelector(".lc-tram") || {}).textContent, nums: r.querySelector(".lc-numeros").innerText.replace(/\s+/g, " ").trim(),
+      papeis: [...r.querySelectorAll(".lc-papel")].map(e => e.textContent.trim()) };
   });
-  conf("a régua diz que há DUAS trilhas vivas", /Duas trilhas vivas/.test(rg.lbl));
-  conf("são duas linhas de trilha", rg.trilhas === 2);
-  conf("o recurso no Conselho é a trilha PRINCIPAL", rg.papeis[0] === "Principal" && /Recurso e-Sisrec ?44233\.100482\/2026-11/.test(rg.txt));
-  conf("o mandado de segurança é a trilha INSTRUMENTAL", rg.papeis[1] === "Instrumental" && /Mandado de Segurança/.test(rg.txt));
-  conf("o processo do MS NÃO caiu em 'fase anterior'", !/2 números de fases anteriores/.test(rg.txt) && /1 número de fase anterior/.test(rg.txt));
-  conf("e o órgão do MS aparece na trilha", /1ª Vara Federal de Catanduva/.test(rg.txt));
+  conf("a tramitação segue no Conselho de Recursos (o MS não é a fase seguinte)", rg.tram === "Conselho de Recursos");
+  conf("o recurso e o processo do MS estão nos números, lado a lado", /44233\.100482\/2026-11/.test(rg.nums) && /5001234-56\.2026\.4\.03\.6108/.test(rg.nums));
+  conf("o mandado de segurança é marcado como INSTRUMENTAL", rg.papeis.some(x => /MS · instrumental/.test(x)));
+  conf("e o órgão do MS aparece ao lado", /1ª Vara Federal de Catanduva/.test(rg.nums));
 
   await p.evaluate(() => { subAba = "tudo"; repintarFicha(); }); await p.waitForTimeout(200);
   const fases = await p.evaluate(() => [...document.querySelectorAll(".fase-b summary .nm")].map(e => e.textContent.trim()));
@@ -89,10 +87,10 @@ FIX.andamentos = [
 
   await abrir("?tema=", "escritorio");
   const off = await p.evaluate(() => ({
-    regua: !!document.querySelector(".regua-caso"),
+    regua: !!document.querySelector(".linha-caso"),
     tel: !![...document.querySelectorAll(".det-topo .resumo .id-min")].find(x => /Telefone/.test(x.textContent)),
     li: document.querySelectorAll(".timeline .tl-li").length }));
-  conf("desligado: sem régua, sem telefone na faixa, sem ✔ li no completo", !off.regua && !off.tel && off.li === 0);
+  conf("desligado: sem linha do caso, sem telefone na faixa, sem ✔ li no completo", !off.regua && !off.tel && off.li === 0);
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
