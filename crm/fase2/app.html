@@ -1171,12 +1171,15 @@
   /* 📣 Novidades: a caixa de entrada do que os portais trouxeram */
   /* card em flex (espec. 6.4): fonte + corpo flexível + ações à direita —
      nome e texto com ellipsis/clamp, nenhum botão sobre o texto */
-  .nov{display:flex;align-items:flex-start;gap:10px;background:var(--branco);
+  /* F100 · com a ficha aberta a coluna encolhe: o corpo tem largura mínima
+     e as ações DESCEM para a linha de baixo, em vez de vazarem pela margem
+     (era o defeito visto com "abrir no PJe · 2º grau" + "dar seguimento") */
+  .nov{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 10px;background:var(--branco);
     border:1px solid var(--borda-suave);border-radius:var(--raio);padding:10px 12px;
-    margin-bottom:5px;box-shadow:var(--sombra)}
+    margin-bottom:5px;box-shadow:var(--sombra);overflow:hidden}
   .nov-fonte{flex:none;font-size:11px;font-weight:700;color:var(--cinza);
     background:var(--placa);border-radius:6px;padding:3px 7px;white-space:nowrap}
-  .nov-corpo{flex:1;min-width:0}
+  .nov-corpo{flex:1 1 220px;min-width:0}
   .nov-cli{font-weight:650;font-size:14px;cursor:pointer;
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .nov-cli:hover{color:var(--azul)}
@@ -2271,7 +2274,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 09.92</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 09.93</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
