@@ -1,4 +1,4 @@
-// F85 — DE QUE É O PRAZO. O prazo fatal nasce com o carimbo "⏰ [PRAZO data]"
+// F85/F104 — DE QUE É O PRAZO. O prazo fatal nasce com o carimbo "⏰ [PRAZO data]"
 // no comentário que o criou: a linha do "O que cobra ação" tem de mostrar
 // ESSE texto (e não só o nome do caso) e levar ao comentário num clique.
 // Prazo sem carimbo diz que não tem motivo e convida a escrever. E o ✔
@@ -74,17 +74,20 @@ FIX.andamentos = [
     onclick: (l.querySelector(".qd-rot") || {}).getAttribute ? (l.querySelector(".qd-rot").getAttribute("onclick") || "") : "",
     acao: (l.querySelector("button.btn-mini") || {}).getAttribute ? l.querySelector("button.btn-mini").getAttribute("onclick") : "" })));
 
+  // F104 · no tema, o prazo é um QUADRO comandado pela anotação de origem
+  const cards = () => p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({
+    tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, onclick: c.querySelector(".pz-mais").getAttribute("onclick") })));
+  const fmtBR = iso => `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
   await abrir("?tema=v10");
-  const on = await linhas();
-  conf("ligado: os dois prazos aparecem", on.length === 2);
-  const comMotivo = on.find(l => /Protocolar o recurso ordinário/.test(l.txt));
-  conf("o prazo COM origem mostra o motivo escrito no comentário", !!comMotivo);
-  conf("e diz que é prazo fatal, de qual caso e quem anotou", comMotivo && /Prazo fatal · Aposentadoria por idade · registrado por Paulo/.test(comMotivo.txt));
-  conf("clicar leva ao comentário que criou o prazo", comMotivo && comMotivo.onclick.includes(`qdIrParaAndamento('${CASO1}','${AND_ORIG}')`));
-  const semMotivo = on.find(l => /Sem descrição/.test(l.txt));
-  conf("o prazo SEM origem avisa que não tem motivo", !!semMotivo);
-  conf("e clicar nele abre a caixa de explicar", semMotivo && semMotivo.onclick.includes(`explicarPrazo('${C2}')`));
-  conf("a ação do prazo é '✔ cumprido' pela janela que registra", comMotivo && /janelaPrazoCumprido/.test(comMotivo.acao));
+  const on = await cards();
+  conf("ligado: o prazo COM anotação de origem vira um quadro de prazo processual", on.length === 1 && on[0].tipo === "Prazo processual" && on[0].data === fmtBR(PRAZO_A));
+  conf("o 'saber mais' leva ao comentário que criou o prazo", on[0] && on[0].onclick.includes(`qdIrParaAndamento('${CASO1}','${AND_ORIG}')`));
+  conf("o compositor lembra a data fatal e oferece o ✔ cumprido pela janela", await p.evaluate(() => /fatal/.test(document.querySelector(".escrever").textContent) && !!document.querySelector('button[onclick^="janelaPrazoCumprido"]')));
+  // o outro caso tem prazo SEM origem: não vira quadro (pedido do Paulo) — o convite a explicar fica no compositor
+  await p.evaluate(id => { casoSel = id; repintarFicha(); }, C2); await p.waitForTimeout(200);
+  const c2 = await cards();
+  conf("o prazo SEM origem não vira quadro", !c2.some(c => c.tipo === "Prazo processual"));
+  conf("mas o compositor convida a explicá-lo", await p.evaluate(() => !!document.querySelector('button[onclick^="explicarPrazo"]')));
 
   // explicar um prazo cria o comentário com o carimbo
   await p.evaluate(id => explicarPrazo(id), C2);
@@ -95,7 +98,8 @@ FIX.andamentos = [
   const expl = escritos.find(e => e.t === "andamentos" && /\[PRAZO /.test(e.corpo) && /contrarraz/.test(e.corpo));
   conf("explicar grava o comentário com o carimbo do prazo", !!expl && JSON.parse(expl.corpo).caso_id === C2);
 
-  // cumprir: escreve o que foi feito, como resposta à origem, e some da lista
+  // cumprir: escreve o que foi feito, como resposta à origem, e some dos quadros
+  await p.evaluate(id => { casoSel = id; repintarFicha(); }, CASO1); await p.waitForTimeout(200);
   await p.evaluate(id => janelaPrazoCumprido(id), CASO1);
   await p.waitForSelector("#pz-txt");
   const jan = await p.evaluate(() => document.getElementById("janela").textContent.replace(/\s+/g, " "));
@@ -106,8 +110,8 @@ FIX.andamentos = [
   conf("o que foi feito vira comentário no caso", cump && /Recurso protocolado no e-Sisrec/.test(cump.texto));
   conf("e fica pendurado na anotação que criou o prazo", cump && cump.responde_a === AND_ORIG);
   conf("o caso deixou de ter prazo", await p.evaluate(id => D.casoPorId.get(id).prazo === null, CASO1));
-  const depois = await linhas();
-  conf("o prazo cumprido SAIU do 'O que cobra ação'", depois.length === 1 && !/Protocolar o recurso/.test(depois[0].txt));
+  await p.evaluate(id => { casoSel = id; repintarFicha(); }, CASO1); await p.waitForTimeout(200);
+  conf("o prazo cumprido SAIU dos quadros", !(await cards()).some(c => c.tipo === "Prazo processual"));
 
   // desligado: como sempre
   await abrir("?tema=");

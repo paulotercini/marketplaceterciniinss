@@ -1,4 +1,4 @@
-// F81 — a RÉGUA POR FASE do tema v10. Só existe com o tema ligado; a linha da
+// F81/F102 — a LINHA DO CASO do tema v10 (era a régua por fase). Só existe com o tema ligado; a linha da
 // DER some do cartão (ela mora na régua); o número vivo troca com a fase:
 // protocolo no INSS, NUP do e-Sisrec no Conselho, número CNJ no judicial; os
 // números das fases anteriores ficam dobrados. Com o tema desligado nada
@@ -57,47 +57,53 @@ FIX.atribuicoes.push({ caso_id: C2, colaborador_id: EU }, { caso_id: C3, colabor
     await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
     await p.evaluate(async (cli) => { await abrirFicha(cli); }, CLI_CHEIO);
   };
-  const regua = async (id) => {
-    await p.evaluate(async (a) => { casoSel = a; abaAtiva = 2; subAba = "escritorio"; repintarFicha(); }, id);
+  // F102 · a régua virou a LINHA DO CASO: DER e tramitação à vista, os
+  // números (NB, e-Sisrec, judicial) no ➕ da direita, o cartão no ➕ da gestão
+  const linha = async (id) => {
+    await p.evaluate(async (a) => { casoSel = a; abaAtiva = 2; subAba = "escritorio"; lcAbrir(a, 1); }, id);
     await p.waitForTimeout(150);
     return p.evaluate(() => {
-      const r = document.querySelector(".regua-caso"); if (!r) return null;
-      const f = document.querySelector(".fatos-processo");
-      const rr = r.getBoundingClientRect(), fr = f.getBoundingClientRect();
-      const der = document.querySelector('.fatos-processo .fx[data-fato="der"]');
-      return { texto: r.innerText.replace(/\s+/g, " ").trim(), vivo: (r.querySelector(".rg-f.vivo .rg-v") || {}).textContent || "",
-        sobrepoe: rr.bottom > fr.top + 1, derNoCartao: !!der && getComputedStyle(der).display !== "none",
-        anteriores: (r.querySelector(".rg-ant summary") || {}).textContent || "" };
+      const r = document.querySelector(".linha-caso"); if (!r) return null;
+      const topo = r.querySelector(".lc-topo"), nums = r.querySelector(".lc-numeros");
+      return { topo: topo.innerText.replace(/\s+/g, " ").trim(), nums: nums ? nums.innerText.replace(/\s+/g, " ").trim() : "",
+        tram: (r.querySelector(".lc-tram") || {}).textContent || "",
+        cops: [...r.querySelectorAll("[data-cop]")].map(e => e.dataset.cop),
+        cartaoFora: !document.querySelector(".painel[data-p='2'] > .fatos-processo") };
     });
   };
 
   // ── ligado ───────────────────────────────────────────────────────────────
   await abrir("?tema=v10");
   conf("o tema v10 está no <html>", await p.evaluate(() => document.documentElement.getAttribute("data-tema") === "v10"));
-  const inss = await regua(CASO1);
-  conf("INSS: a régua existe", !!inss);
-  conf("INSS: a DER e o NB estão na régua", inss && /DER 14\.03\.2025/.test(inss.texto) && /NB 41\/210\.334\.552-0/.test(inss.texto));
-  conf("INSS: o número vivo é o ÚLTIMO protocolo", inss && inss.vivo === "9988776655");
-  conf("INSS: o protocolo anterior fica dobrado", inss && /Números anteriores · 1/.test(inss.anteriores));
-  conf("INSS: a DER sumiu do cartão (mora na régua)", inss && !inss.derNoCartao);
-  conf("INSS: a régua não sobrepõe o cartão", inss && !inss.sobrepoe);
-  const cr = await regua(C2);
-  conf("Conselho: o número vivo é o NUP do e-Sisrec, formatado", cr && cr.vivo === "44233.100482/2026-11");
-  conf("Conselho: NB sem valor aparece como 'não informado'", cr && /NB\s*não informado/.test(cr.texto));
-  conf("Conselho: o protocolo do INSS virou fase anterior", cr && /Números anteriores · 1/.test(cr.anteriores));
-  const ju = await regua(C3);
-  conf("Judicial: o número vivo é o CNJ formatado", ju && ju.vivo === "5000871-19.2026.4.03.6108");
-  conf("Judicial: o rito aparece como chip", ju && /JEF/.test(ju.texto));
-  const cop = await p.evaluate(() => { const b = document.querySelector('.regua-caso .rg-f.vivo .olho'); return !!b && /copiar/i.test(b.title); });
-  conf("o número vivo tem o 📋 de copiar", cop);
+  const inss = await linha(CASO1);
+  conf("INSS: a linha do caso existe e o cartão saiu da frente", !!inss && inss.cartaoFora);
+  conf("INSS: a DER está na linha, em dd/mm/aaaa", inss && /DER 14\/03\/2025/.test(inss.topo));
+  conf("INSS: a tramitação é INSS", inss && inss.tram === "INSS");
+  conf("INSS: o NB mora no ➕ dos números", inss && /NB 41\/210\.334\.552-0/.test(inss.nums));
+  conf("INSS: os protocolos não poluem a linha (ficam na gestão)", inss && !/9988776655/.test(inss.topo + inss.nums));
+  conf("a DER copia no clique", inss && inss.cops.includes("14/03/2025"));
+  const cr = await linha(C2);
+  conf("Conselho: a tramitação é Conselho de Recursos", cr && cr.tram === "Conselho de Recursos");
+  conf("Conselho: o e-Sisrec formatado está nos números", cr && /E-SISREC 44233\.100482\/2026-11/i.test(cr.nums));
+  conf("Conselho: sem NB, o ➕ oferece incluir NB", cr && /Incluir \+ NB/i.test(cr.nums));
+  const ju = await linha(C3);
+  conf("Judicial: a tramitação é Judicial e o CNJ formatado está nos números", ju && ju.tram === "Judicial" && /5000871-19\.2026\.4\.03\.6108/.test(ju.nums));
+  conf("Judicial: o rito aparece ao lado do processo", ju && /JEF/.test(ju.nums));
+  conf("Judicial: o número copia no clique", ju && ju.cops.includes("5000871-19.2026.4.03.6108"));
+  await p.evaluate((id) => lcAbrir(id, 2), C3); await p.waitForTimeout(150);
+  const gest = await p.evaluate(() => ({ gestao: !!document.querySelector(".lc-gestao"), prot: /3391552077/.test(document.querySelector(".lc-gestao").innerText),
+    ficha: !!document.querySelector(".lc-ficha .fatos-processo"),
+    derNoCartao: (d => !!d && getComputedStyle(d).display !== "none")(document.querySelector('.lc-ficha .fx[data-fato="der"]')) }));
+  conf("o segundo ➕ traz protocolos e a ficha completa dobrada", gest.gestao && gest.prot && gest.ficha);
+  conf("a DER não se repete dentro da ficha completa", !gest.derNoCartao);
 
   // ── desligado ────────────────────────────────────────────────────────────
   await abrir("?tema=");
   const off = await p.evaluate(async (a) => { casoSel = a; abaAtiva = 2; repintarFicha(); await new Promise(r => setTimeout(r, 150));
-    return { tema: document.documentElement.getAttribute("data-tema"), regua: !!document.querySelector(".regua-caso"),
+    return { tema: document.documentElement.getAttribute("data-tema"), linha: !!document.querySelector(".linha-caso"),
       der: !!document.querySelector('.fatos-processo .fx[data-fato="der"]') }; }, CASO1);
   conf("desligado: sem data-tema", !off.tema);
-  conf("desligado: a régua não existe", !off.regua);
+  conf("desligado: a linha do caso não existe", !off.linha);
   conf("desligado: a DER continua no cartão", off.der);
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);

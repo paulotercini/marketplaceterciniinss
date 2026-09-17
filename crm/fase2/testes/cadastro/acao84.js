@@ -1,4 +1,4 @@
-// F84 — O QUE COBRA AÇÃO (tema v10). Os prazos são o que o escritório não
+// F84/F104 — OS QUADROS DE PRAZO (tema v10). Os prazos são o que o escritório não
 // pode perder: no tema, o quadro de datas sai de dentro do cartão e vira o
 // primeiro bloco da coluna da esquerda, com os PRAZOS no topo (fatal,
 // exigência do INSS, recorrer até, DCB), vencido em vermelho e os 7 dias
@@ -16,6 +16,7 @@ const SUPA = "https://ficticio.supabase.co";
 const hojeSP = () => new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 10);
 const emDias = n => new Date(new Date(hojeSP() + "T12:00:00Z").getTime() + n * 864e5).toISOString().slice(0, 10);
 const mais = emDias;
+const fmtBR = iso => `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
 FIX.casos[0] = { ...FIX.casos[0], prazo: mais(-1), exigencia_prazo: mais(3), decisao_em: mais(-10) };
 FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tipo: "Perícia",
   data_hora: mais(12) + "T09:30:00", local: "JEF", status: "agendada" }];
@@ -57,34 +58,37 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
     await p.waitForTimeout(200);
   };
   const ler = () => p.evaluate(() => {
-    const bloco = document.querySelector(".acao-caso");
+    const faixa = document.querySelector(".faixa-prazos");
     const qd = document.querySelector("#quadro-datas");
     const dentroDoCartao = !!qd && !!qd.closest(".fatos-processo");
-    const linhas = [...document.querySelectorAll("#quadro-datas .qd-linha")].map(l => ({
-      txt: l.textContent.replace(/\s+/g, " ").trim(), prazo: l.classList.contains("qd-prazo"),
-      venceu: l.classList.contains("qd-venceu"), logo: l.classList.contains("qd-logo"),
-      borda: getComputedStyle(l).borderLeftColor }));
-    const acima = bloco && document.querySelector(".fatos-processo") && bloco.getBoundingClientRect().bottom <= document.querySelector(".fatos-processo").getBoundingClientRect().top + 1;
-    return { bloco: !!bloco, dentroDoCartao, rotulo: qd ? qd.querySelector(".rotulo-caso").textContent.trim() : "", linhas, acima };
+    const cards = [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({
+      tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, prazo: c.classList.contains("pz-prazo"),
+      fundo: getComputedStyle(c).backgroundColor, mais: !!c.querySelector(".pz-mais") }));
+    const acima = faixa && document.querySelector(".escrever") && faixa.getBoundingClientRect().bottom <= document.querySelector(".escrever").getBoundingClientRect().top + 1;
+    return { faixa: !!faixa, dentroDoCartao, cards, acima, linhaCaso: !!document.querySelector(".linha-caso") };
   });
 
   await abrir("?tema=v10");
   const on = await ler();
-  conf("ligado: o quadro virou o bloco 'O que cobra ação', fora do cartão", on.bloco && !on.dentroDoCartao);
-  conf("o bloco fica ACIMA do cartão de fatos", on.acima);
-  conf("o rótulo conta os prazos", /Prazos e providências · 3 prazos/.test(on.rotulo));
-  conf("a primeira linha é o PRAZO FATAL vencido, em vermelho", on.linhas[0] && /PRAZO FATAL/.test(on.linhas[0].txt) && on.linhas[0].venceu && on.linhas[0].borda === "rgb(179, 38, 30)");
-  conf("a exigência do INSS entrou como prazo, em âmbar (vence em 3 dias)", on.linhas.some(l => /Exigência do INSS/.test(l.txt) && /[Pp]razo da exigência/.test(l.txt) && l.prazo && l.logo && l.borda === "rgb(143, 84, 0)"));
-  conf("recorrer até (30 dias da decisão) entrou como prazo", on.linhas.some(l => /Recorrer até/.test(l.txt) && l.prazo));
-  conf("a perícia marcada continua na lista, depois dos prazos", on.linhas.findIndex(l => /Perícia marcad/.test(l.txt)) > on.linhas.filter(l => l.prazo).length - 1);
-  conf("os prazos vêm todos antes dos lembretes", on.linhas.map(l => l.prazo ? 1 : 0).join("") === "111" + "0".repeat(on.linhas.length - 3));
-  conf("o ✔ cumprida da exigência está na linha", await p.evaluate(() => !!document.querySelector('#quadro-datas button[onclick^="cumprirExigencia"]')));
+  conf("ligado: os prazos viraram QUADROS lado a lado, fora do cartão", on.faixa && !on.dentroDoCartao);
+  conf("os quadros ficam acima do compositor (o trabalho vem depois)", on.acima);
+  conf("o prazo fatal SEM anotação de origem não vira quadro (pedido do Paulo)", !on.cards.some(c => c.data === fmtBR(mais(-1))));
+  conf("a exigência do INSS é um quadro de PRAZO PROCESSUAL, em vermelho", on.cards.some(c => c.tipo === "Prazo processual" && c.data === fmtBR(mais(3)) && c.prazo && c.fundo === "rgb(179, 38, 30)"));
+  conf("recorrer até (30 dias da decisão) entrou como quadro de prazo", on.cards.filter(c => c.prazo).length === 2);
+  conf("a perícia marcada é um quadro cinza, depois dos prazos", (i => i > 0 && !on.cards[i].prazo && on.cards[i].fundo !== "rgb(179, 38, 30)")(on.cards.findIndex(c => c.tipo === "Perícia")));
+  conf("os prazos vêm todos antes dos lembretes", on.cards.map(c => c.prazo ? 1 : 0).join("") === "11" + "0".repeat(on.cards.length - 2));
+  conf("cada quadro tem só a data e o 'saber mais'", on.cards.every(c => c.mais) && on.cards.every(c => /^\d\d\/\d\d\/\d{4}$/.test(c.data)));
+  // o "saber mais" da exigência abre a ficha dela, com o ✔ cumprida
+  await p.evaluate(() => document.querySelector(".faixa-prazos .pz-prazo .pz-mais").click());
+  await p.waitForTimeout(200);
+  conf("o 'saber mais' da exigência traz o que é e o ✔ cumprida", await p.evaluate(() => {
+    const m = document.getElementById("modal"); return /Exigência do INSS/.test(m.textContent) && !!m.querySelector('button[onclick^="cumprirExigencia"]'); }));
+  await p.evaluate(() => fecharCaixa());
 
   await abrir("?tema=");
   const off = await ler();
-  conf("desligado: sem o bloco, o quadro segue dentro do cartão", !off.bloco && off.dentroDoCartao);
-  conf("desligado: o rótulo é o de sempre", /Lembretes e datas/.test(off.rotulo));
-  conf("desligado: exigência e recorrer NÃO entram no quadro (ficam nos chips)", !off.linhas.some(l => /xigência do INSS|Recorrer até/.test(l.txt)));
+  conf("desligado: sem quadros, o quadro de datas segue dentro do cartão", !off.faixa && off.dentroDoCartao && !off.linhaCaso);
+  conf("desligado: exigência e recorrer NÃO entram no quadro (ficam nos chips)", await p.evaluate(() => ![...document.querySelectorAll("#quadro-datas .qd-linha")].some(l => /xigência do INSS|Recorrer até/.test(l.textContent))));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);
