@@ -2271,7 +2271,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 09.91</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 09.92</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -15427,16 +15427,16 @@ function conferirPlano(k, plano) {
 // do caso vira a de um recurso escolhido por acaso; o comentário do robô cai
 // numa linha do tempo compartilhada e ninguém sabe de qual recurso é aquele
 // "Recurso negado"; e encerrar o caso quando um acaba enterra os outros.
+// F99 · vários recursos no mesmo caso é o normal (decisão do Paulo, 17.09):
+// a aba mostra um por vez, com menu. Separar em casos fica como ferramenta,
+// para quando os recursos seguirem vidas diferentes — não como cobrança.
 function avisoJuntos(k){
   const n = crpsNups(k).length;
   if(n < 2) return "";
-  return `<div class="caso juntos">
-    <div class="rotulo-caso">⚠ ${n} recursos neste mesmo caso</div>
-    <p class="meio-sub" style="margin:4px 0 8px">Cada recurso tem protocolo, prazo e decisão próprios —
-      juntos, a Situação da ficha passa a ser a de um deles por acaso, os comentários do robô se misturam
-      e encerrar o caso enterra os outros. O certo é um caso para cada um.</p>
-    <button class="btn-rap" onclick="separarRecursos('${k.id}')">✂️ Separar em ${n} casos</button>
-  </div>`;
+  return `<p class="meio-sub" style="margin:0 0 8px;display:flex;align-items:center;gap:8px">
+    ${n} recursos neste caso — escolha qual ver no menu abaixo.
+    <button class="btn-mini" onclick="separarRecursos('${k.id}')"
+      title="dar a cada recurso uma ficha própria, com o histórico dele">✂️ separar em ${n} casos</button></p>`;
 }
 function separarRecursos(casoId){
   const k = D.casoPorId.get(casoId); if(!k) return;
@@ -15689,33 +15689,37 @@ async function salvarCrpsNup(casoId, elId){
   const k = D.casoPorId.get(casoId);
   const jaTem = crpsNups(k);
   if(jaTem.includes(v)) return aviso("Este recurso já está neste caso");
+  // F99 · o segundo recurso ENTRA NO MESMO CASO (decisão do Paulo, 17.09):
+  // a aba já mostra um recurso por vez, com menu, e o robô consulta todos os
+  // números do caso. Caso próprio continua sendo uma escolha, não a regra.
   if(jaTem.length){
-    const {ok} = await perguntarNovoCaso(k, v);
-    if(!ok) return;
-    return criarCasoDoRecurso(k, v);
+    const {modo} = await perguntarNovoCaso(k, v);
+    if(modo==="separado") return criarCasoDoRecurso(k, v);
+    if(modo!=="junto") return;
   }
-  k.crps_nups = [v]; k.crps_nup = null;
-  await patchCaso(casoId, {crps_nups:[v], crps_nup:null});
-  aviso("Recurso vinculado ✔ — o robô consulta na próxima rodada", false);
+  const nova = [...jaTem, v];
+  k.crps_nups = nova; k.crps_nup = null;
+  await patchCaso(casoId, {crps_nups:nova, crps_nup:null});
+  aviso(`Recurso ${jaTem.length?"acrescentado":"vinculado"} ✔ — o robô consulta na próxima rodada`, false);
   abrirFicha(clienteAberto);
 }
 function perguntarNovoCaso(k, nup){
   return new Promise(resolve=>{
-    caixa(`<h3>➕ Novo recurso — caso próprio</h3>
-      <p class="meio-sub">Este caso já acompanha o recurso
-        <b style="font-family:monospace">${esc(formatarNup(crpsNups(k)[0]))}</b>.
-        Como cada recurso tem protocolo, prazo e decisão próprios, o
-        <b style="font-family:monospace">${esc(formatarNup(nup))}</b> vai nascer em caso separado,
-        do mesmo cliente e na mesma fase.</p>
+    caixa(`<h3>➕ Mais um recurso neste caso</h3>
+      <p class="meio-sub">Este caso já acompanha ${crpsNups(k).length===1?"o recurso":"os recursos"}
+        <b style="font-family:monospace">${crpsNups(k).map(n=>esc(formatarNup(n))).join(", ")}</b>.
+        O <b style="font-family:monospace">${esc(formatarNup(nup))}</b> pode entrar aqui mesmo, com
+        andamento próprio na aba 🖥 Recurso, ou nascer em caso separado do mesmo cliente.</p>
       <div class="form-linha" style="margin-top:10px">
         <button class="btn-rap" onclick="fecharCaixa()">cancelar</button>
-        <button class="btn-rap" style="margin-left:auto" id="pnc-ok">Criar o caso</button>
+        <button class="btn-rap" id="pnc-sep" title="ficha própria, mesmo cliente e mesma fase">caso próprio</button>
+        <button class="btn-mini forte" style="margin-left:auto" id="pnc-ok">acrescentar a este caso</button>
       </div>`);
-    const b = document.getElementById("pnc-ok");
-    b.onclick = ()=>{ fecharCaixa(); resolve({ok:true}); };
+    document.getElementById("pnc-ok").onclick = ()=>{ fecharCaixa(); resolve({modo:"junto"}); };
+    document.getElementById("pnc-sep").onclick = ()=>{ fecharCaixa(); resolve({modo:"separado"}); };
     // fechar de qualquer outro jeito conta como desistir
     setTimeout(()=>{ const obs = setInterval(()=>{
-      if(!document.getElementById("pnc-ok")){ clearInterval(obs); resolve({ok:false}); }
+      if(!document.getElementById("pnc-ok")){ clearInterval(obs); resolve({modo:null}); }
     }, 250); }, 300);
   });
 }
