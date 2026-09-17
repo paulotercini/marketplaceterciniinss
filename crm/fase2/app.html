@@ -2229,7 +2229,18 @@ html[data-tema="v10"] .sub-menu.menu-andamentos button:first-child{padding-left:
 html[data-tema="v10"] .id-min .cop{border:none;background:none;padding:0;color:var(--texto);border-bottom:1px dotted var(--cinza-claro);border-radius:0;font-weight:500}
 /* o compositor: o bloco "Hoje" */
 html[data-tema="v10"] .painel .escrever{border:none;border-radius:10px;box-shadow:none;background:#F1F3F5;padding:12px 14px}
-html[data-tema="v10"] .painel .escrever::before{content:"Hoje";display:block;font-family:var(--f-tit);font-size:15px;font-weight:600;color:var(--texto);margin-bottom:6px}
+/* F112 · sem o "Hoje"; tipos + Sugestões sempre à vista; o resto abre ao clicar no campo:
+   prazo com o Lembrar em ao lado, e Atribuir para com as ferramentas e o Registrar à direita */
+html[data-tema="v10"] .escrever .tipo-fila .sug-abrir{display:inline-flex;align-items:center;gap:5px;margin:0 0 0 auto;padding:3px 10px;border:1px dashed var(--borda);border-radius:14px;background:#FFFFFF;color:var(--cinza);font-size:11px}
+html[data-tema="v10"] .escrever .tipo-fila .sug-abrir.on{border-style:solid;border-color:var(--azul);color:var(--azul-escuro)}
+html[data-tema="v10"] .escrever .esc-barra{flex-direction:column;align-items:stretch;gap:8px;padding:10px 2px 2px}
+html[data-tema="v10"] .esc-linha{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-height:36px}
+html[data-tema="v10"] .esc-lembrar{display:inline-flex;align-items:center;gap:6px;margin-left:auto;flex-wrap:wrap}
+html[data-tema="v10"] .esc-linha .esc-ferr{margin-left:auto}
+html[data-tema="v10"] .esc-ic{width:36px;height:36px;border-radius:8px}
+html[data-tema="v10"] .esc-ic svg{width:19px;height:19px}
+html[data-tema="v10"] .esc-reg{height:36px;padding:0 20px}
+html[data-tema="v10"] .esc-linha .conta-ck{margin:0}
 html[data-tema="v10"] .painel .escrever:focus-within{box-shadow:0 0 0 2px rgba(14,92,88,.18)}
 html[data-tema="v10"] .painel .escrever #and-texto{background:#FFFFFF;border:none;border-radius:6px;padding:8px 10px}
 html[data-tema="v10"] .painel .tipo-ch,html[data-tema="v10"] .painel .escrever .btn-rap{border-color:transparent;background:#FFFFFF;color:var(--azul-escuro)}
@@ -2356,7 +2367,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.04</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.05</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14521,53 +14532,40 @@ function composerCaso(k){
   // F45 · o compositor saiu do painelEscritorio para servir também ao Caso
   // completo (que virou a primeira tela): vê tudo E escreve dali — a
   // anotação nasce no escritório e aparece nas duas linhas do tempo.
+  // F112 · as peças são as mesmas nos dois temas; muda só a montagem. No tema
+  // v10 (pedido do Paulo, 17.09): tipos + Sugestões numa linha, o campo, e o
+  // resto só aparece ao clicar no campo — prazo com Lembrar em ao lado, e
+  // Atribuir para com as ferramentas e o Registrar à direita.
   const equipe = D.atrDoCaso.get(k.id) || [];
   const encerrado = k.fase==="encerrado";
-  return `${caixaCadunico(k, D.cliPorId.get(k.cliente_id))}
-  <div class="caso-acoes">
-    <div id="lembrar-box" style="display:none;border:1px solid #E9B44C;border-radius:8px;background:var(--branco);margin-top:8px;padding:10px"></div>
-    ${encerrado ? `<p class="meio-sub" style="margin:2px 0 0">✔ Processo encerrado — comentários desativados. Reabra pela trilha acima para voltar a comentar.</p>`
-    : `<div class="escrever">
-      ${/* o texto primeiro, sozinho, para escrever ser a coisa principal; as
-           ferramentas embaixo, e o Registrar por último, no fim da leitura */""}
-      ${/* F21 · o tipo antes do texto. Vocabulário FECHADO (lição de Clio,
-           Linear e das Tabelas do CNJ): tipo é o que permite perguntar
-           "quantos casos estão parados em exigência?". Sem tipo escolhido o
-           comentário continua livre, como sempre foi — tipo não é obrigação,
-           é atalho: clicar preenche o esqueleto da anotação, no padrão do
-           escritório, e quem escreve só completa as lacunas. */""}
-      ${/* F105 · no tema v10 cada tipo abre uma janela com campos (POPS_ANOTACAO);
-           sem o tema, o esqueleto entra direto no texto, como sempre */""}
-      <div class="tipo-fila" id="tipo-fila">${temaV10()
-        ? Object.entries(POPS_ANOTACAO).map(([ch,P])=>
+  const v10 = temaV10();
+  // F21 · o tipo antes do texto. Vocabulário FECHADO (lição de Clio, Linear e
+  // das Tabelas do CNJ). F105 · no tema cada tipo abre uma janela (POPS_ANOTACAO);
+  // sem o tema, o esqueleto entra direto no texto, como sempre
+  const chips = v10
+    ? Object.entries(POPS_ANOTACAO).map(([ch,P])=>
           `<button class="tipo-ch" data-tipoand="${ch}" onclick="popAnotacao('${ch}')">${esc(P.rot)}</button>`).join("")
-        : TIPOS_ANOTACAO.map(([ch,rot])=>
-          `<button class="tipo-ch" data-tipoand="${ch}" onclick="escolherTipoAnotacao('${ch}')">${esc(rot)}</button>`).join("")}</div>
-      <textarea id="and-texto" rows="2" placeholder="Escreva o andamento…  a data pode vir no texto: “verificar em 24/08” — ou clique num tipo acima e preencha as lacunas"></textarea>
-      ${/* o id tf-box é a chave da TRAVA: é por ele que novoAndamento sabe
-           que precisa exigir responsável e data. Renomear sem manter o id já
-           derrubou a obrigatoriedade uma vez. */""}
-      <div class="esc-barra" id="tf-box">
-        <span class="rotulo-rap">TAREFA PARA</span>
-        ${/* mesma bolinha do Responsável; "ninguém" é o 🚫, cinza até ser
-             escolhido — aí fica vermelho, para não passar despercebido */""}
-        <button class="fx-av tf-ninguem" id="tf-ninguem" onclick="tfNinguem(this)"
+    : TIPOS_ANOTACAO.map(([ch,rot])=>
+          `<button class="tipo-ch" data-tipoand="${ch}" onclick="escolherTipoAnotacao('${ch}')">${esc(rot)}</button>`).join("");
+  const area = `<textarea id="and-texto" rows="2" placeholder="Escreva o andamento…  a data pode vir no texto: “verificar em 24/08” — ou clique num tipo acima e preencha as lacunas"></textarea>`;
+  // o id tf-box é a chave da TRAVA: é por ele que novoAndamento sabe que
+  // precisa exigir responsável e data. Renomear sem manter o id já derrubou
+  // a obrigatoriedade uma vez.
+  const atribuir = `<button class="fx-av tf-ninguem" id="tf-ninguem" onclick="tfNinguem(this)"
           title="não atribuir a ninguém"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m6 18 12-12"/></svg></button>
         ${equipeAtiva().map(co=>`<button class="fx-av tf-eq"
           data-tfp="${co.id}" style="--cor-eq:${co.cor}" title="${esc(co.nome)}"
           onclick="tfPessoa('${co.id}',this)">${esc(co.inicial)}</button>`).join("")}
         <button class="btn-rap tf-todos" id="tf-todos" onclick="tfTodos()"
-          title="a equipe inteira: uma tarefa para cada colaborador ativo">👥 todos</button>
-        <span class="tf-sep"></span>
-        <span class="rotulo-rap">LEMBRAR EM</span>
-        <button class="btn-rap tf-dt" data-tfd="hoje" onclick="tfDia('hoje',this)">Hoje</button>
+          title="a equipe inteira: uma tarefa para cada colaborador ativo">👥 todos</button>`;
+  const lembrar = `<button class="btn-rap tf-dt" data-tfd="hoje" onclick="tfDia('hoje',this)">Hoje</button>
         <button class="btn-rap tf-dt" data-tfd="amanha" onclick="tfDia('amanha',this)">Amanhã</button>
         <button class="btn-rap tf-dt" data-tfd="7" onclick="tfDia('7',this)">+7 dias</button>
         ${/* a data some até ser pedida: só o botão fica, e ele abre o campo */""}
         <button class="btn-rap tf-dt" id="tf-escolher" onclick="tfEscolherData(this)">Escolher a data</button>
         <input type="date" class="tf-data" id="tf-data" style="display:none" onchange="tfDia(this.value,this)">
-        <button class="btn-rap tf-dt" data-tfd="sem" onclick="tfDia('sem',this)">sem lembrete</button>
-        <span class="esc-ferr">
+        <button class="btn-rap tf-dt" data-tfd="sem" onclick="tfDia('sem',this)">sem lembrete</button>`;
+  const ferr = `<span class="esc-ferr">
           <input type="file" id="arq-inp" accept="image/*,application/pdf" capture="environment"
             style="display:none" onchange="anexar('${k.id}','${k.cliente_id}')">
           <button class="esc-ic" onclick="document.getElementById('arq-inp').click()"
@@ -14579,37 +14577,29 @@ function composerCaso(k){
           <button class="esc-ic imp ${k.importante?"on":""}" onclick="toggleImp('${k.id}')" title="marcar o processo como importante"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.3 2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.5l5.9-.8L12 3.3Z"/></svg></button>
           <button class="esc-ic urg ${k.urgente?"on":""}" onclick="toggleUrg('${k.id}')" title="marcar o processo como urgente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c.4 2.6-1 4.1-2.3 5.6C8.4 10.6 7.5 12.1 7.5 14a4.5 4.5 0 0 0 9 0c0-1.6-.7-3-1.7-4.2-.2 1.1-.8 2-1.8 2.5.6-2.6-.1-5.6-1-8.8Z"/></svg></button>
           <button class="esc-reg" onclick="novoAndamento('${k.id}')">Registrar</button>
-        </span>
-      </div>
-      <div id="and-prazo-chip"></div>
-      ${/* F38 · a anotação que É prazo processual: marca, dá a data fatal, e
-           o caso move para 🗓 Tarefas com Prazo — o controle apertado do
-           Paulo, agora dentro do CRM */""}
-      ${listaDe(k)!=="🗓 Tarefas com Prazo"?`
-      <div class="form-linha" style="margin-top:4px;align-items:center">
-        <label class="conta-ck" title="prazo processual: o caso vai para 🗓 Tarefas com Prazo, ordenado pela data fatal">
+        </span>`;
+  // F38 · a anotação que É prazo processual: marca, dá a data fatal, e o
+  // caso move para 🗓 Tarefas com Prazo. F104 · prazo sem anotação de origem
+  // não vira quadro: o convite a explicá-lo mora aqui, ao lado da data fatal
+  const prazoRow = listaDe(k)!=="🗓 Tarefas com Prazo"
+    ? `<label class="conta-ck" title="prazo processual: o caso vai para 🗓 Tarefas com Prazo, ordenado pela data fatal">
           <input type="checkbox" id="and-prazo-ck"
             onchange="document.getElementById('and-prazo-data').style.display=this.checked?'inline-block':'none';
               document.getElementById('and-prazo-mais').style.display=this.checked?'inline-flex':'none';
               if(this.checked&&prazoDetectado)document.getElementById('and-prazo-data').value=prazoDetectado;">
           ⏰ esta anotação é uma tarefa com PRAZO</label>
         <input type="date" id="and-prazo-data" min="${hoje()}" style="display:none" title="a data fatal do prazo">
-        <span id="and-prazo-mais" style="display:none">${catalogoPrazoHtml("and","and-prazo-data")}</span>
-      </div>`:`
-      <div class="form-linha" style="margin-top:4px">
-        <span class="chip" style="background:#FDF3E7;color:#9C4607">⏰ em 🗓 Tarefas com Prazo${k.prazo?` · fatal ${fmt(k.prazo)}`:""}</span>
+        <span id="and-prazo-mais" style="display:none">${catalogoPrazoHtml("and","and-prazo-data")}</span>`
+    : `<span class="chip" style="background:#FDF3E7;color:#9C4607">⏰ em 🗓 Tarefas com Prazo${k.prazo?` · fatal ${fmt(k.prazo)}`:""}</span>
         ${/* F104 · prazo sem anotação de origem não vira quadro: o convite a
              explicá-lo mora aqui, ao lado da data fatal */""}
         ${(temaV10() && k.prazo && !origemDoPrazo(k))?`<button class="btn-mini" onclick="explicarPrazo('${k.id}')"
           title="este prazo não tem anotação dizendo do que é — escreva, e ele vira quadro de prazo">✎ explicar o prazo</button>`:""}
         <button class="btn-mini" onclick="janelaPrazoCumprido('${k.id}')"
-          title="cumpriu o prazo: devolve o caso à lista de onde veio (dá para trocar)">✔ prazo cumprido</button>
-      </div>`}
-      ${/* as sugestões viviam abertas e enchiam a tela; agora ficam atrás de
-           um convite, e só aparecem para quem foi buscá-las */""}
-      <button class="sug-abrir" id="sug-abrir" onclick="alternarSugestoes('${k.id}')">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.3 17.5h5.4M10 20.5h4M12 3.5a5.5 5.5 0 0 0-3.2 10c.5.4.8 1 .8 1.6h4.8c0-.6.3-1.2.8-1.6A5.5 5.5 0 0 0 12 3.5Z"/></svg> Sugestões de anotações</button>
-      <div id="sug-box" class="sugestoes" style="display:none"></div>
+          title="cumpriu o prazo: devolve o caso à lista de onde veio (dá para trocar)">✔ prazo cumprido</button>`;
+  const sugBt = `<button class="sug-abrir" id="sug-abrir" onclick="alternarSugestoes('${k.id}')">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.3 17.5h5.4M10 20.5h4M12 3.5a5.5 5.5 0 0 0-3.2 10c.5.4.8 1 .8 1.6h4.8c0-.6.3-1.2.8-1.6A5.5 5.5 0 0 0 12 3.5Z"/></svg> ${v10?"Sugestões":"Sugestões de anotações"}</button>`;
+  const caixas = `<div id="sug-box" class="sugestoes" style="display:none"></div>
       <div id="preenche-box" style="display:none;border:1px solid var(--borda);border-radius:8px;background:var(--branco);margin-top:6px;padding:10px"></div>
       <div id="exig-box" style="display:none;border:1px solid #f0c36d;border-radius:8px;background:#fffaf0;margin-top:6px;padding:10px">
         <strong style="font-size:13px">⚠ Registrar exigência do INSS</strong>
@@ -14618,8 +14608,36 @@ function composerCaso(k){
           <label style="font-size:12px;color:var(--cinza)">prazo final: <input type="date" id="ex-prazo"></label>
           <button onclick="novaExigencia()">Registrar exigência</button>
         </div>
+      </div>`;
+  const escrever = v10
+    ? `<div class="escrever">
+      <div class="tipo-fila" id="tipo-fila">${chips}${sugBt}</div>
+      ${area}
+      <div class="esc-barra" id="tf-box">
+        <div class="esc-linha">${prazoRow}<span class="esc-lembrar"><span class="rotulo-rap">LEMBRAR EM</span>${lembrar}</span></div>
+        <div class="esc-linha"><span class="rotulo-rap">ATRIBUIR PARA</span>${atribuir}${ferr}</div>
       </div>
-    </div>`}
+      <div id="and-prazo-chip"></div>
+      ${caixas}
+    </div>`
+    : `<div class="escrever">
+      <div class="tipo-fila" id="tipo-fila">${chips}</div>
+      ${area}
+      <div class="esc-barra" id="tf-box">
+        <span class="rotulo-rap">TAREFA PARA</span>${atribuir}
+        <span class="tf-sep"></span>
+        <span class="rotulo-rap">LEMBRAR EM</span>${lembrar}
+        ${ferr}
+      </div>
+      <div id="and-prazo-chip"></div>
+      <div class="form-linha" style="margin-top:4px;align-items:center">${prazoRow}</div>
+      ${sugBt}
+      ${caixas}
+    </div>`;
+  return `${caixaCadunico(k, D.cliPorId.get(k.cliente_id))}
+  <div class="caso-acoes">
+    <div id="lembrar-box" style="display:none;border:1px solid #E9B44C;border-radius:8px;background:var(--branco);margin-top:8px;padding:10px"></div>
+    ${encerrado ? `<p class="meio-sub" style="margin:2px 0 0">✔ Processo encerrado — comentários desativados. Reabra pela trilha acima para voltar a comentar.</p>` : escrever}
   </div>
   ${caixaArquivos(k)}
   ${/* os comentários do INSS têm aba própria (🌻) e os movimentos do PJe

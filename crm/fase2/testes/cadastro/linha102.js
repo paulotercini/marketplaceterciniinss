@@ -172,7 +172,25 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       pin: (b => b && getComputedStyle(b).opacity)(document.querySelector('.timeline button[onclick^="abrirSeguimento"]')) };
   });
   conf("a ficha é branca e só o cabeçalho do cliente tem cor própria", ff.chao === "rgb(255, 255, 255)" && ff.topo === "rgb(234, 237, 239)");
-  conf("o compositor é o bloco 'Hoje': sem borda, fundo leve, rótulo Hoje", ff.escrever && ff.escrever.borda === "none" && ff.escrever.fundo === "rgb(241, 243, 245)" && /Hoje/.test(ff.escrever.hoje));
+  conf("o compositor é um bloco leve, sem borda e sem o rótulo 'Hoje' (F112)", ff.escrever && ff.escrever.borda === "none" && ff.escrever.fundo === "rgb(241, 243, 245)" && !/Hoje/.test(ff.escrever.hoje));
+  // F112 · fechado: só tipos + Sugestões e o campo; aberto: prazo com Lembrar em ao lado, Atribuir para com as ferramentas e o Registrar
+  const VIS = 'const vis = sel => { const e = document.querySelector(sel); return !!e && getComputedStyle(e).display !== "none" && e.getBoundingClientRect().height > 0; };';
+  const fechado = await p.evaluate(`(() => { ${VIS}
+    const sug = document.querySelector("#tipo-fila .sug-abrir");
+    return { sug: !!sug && vis("#tipo-fila .sug-abrir") && sug.textContent.trim() === "Sugestões", campo: vis("#and-texto"), barra: vis("#tf-box"), prazo: vis("#and-prazo-ck") }; })()`);
+  conf("fechado: ficam à vista só os tipos, o Sugestões ao lado deles e o campo", fechado.sug && fechado.campo && !fechado.barra && !fechado.prazo);
+  await p.click("#and-texto"); await p.waitForTimeout(250);
+  const aberto = await p.evaluate(`(() => { ${VIS}
+    const linhas = [...document.querySelectorAll("#tf-box .esc-linha")];
+    const y = el => { const r = el.getBoundingClientRect(); return r.top + r.height / 2; };
+    const mesmaLinha = (a, b) => Math.abs(y(document.querySelector(a)) - y(document.querySelector(b))) < 10;
+    return { barra: vis("#tf-box"), linhas: linhas.length,
+      l1: linhas[0] && /tarefa com PRAZO/.test(linhas[0].textContent) && /LEMBRAR EM/i.test(linhas[0].textContent) && mesmaLinha("#and-prazo-ck", "#tf-box .tf-dt"),
+      l2: linhas[1] && /ATRIBUIR PARA/i.test(linhas[1].textContent) && !!linhas[1].querySelector(".esc-reg") && mesmaLinha("#tf-ninguem", ".esc-reg"),
+      icone: getComputedStyle(document.querySelector(".esc-ic svg")).width }; })()`);
+  conf("aberto: linha 1 = prazo e Lembrar em; linha 2 = Atribuir para e as ferramentas com o Registrar", aberto.barra && aberto.linhas === 2 && aberto.l1 && aberto.l2);
+  conf("os ícones das ferramentas cresceram (19px)", aberto.icone === "19px");
+  await p.evaluate(() => { document.getElementById("and-texto").blur(); document.body.click(); }); await p.waitForTimeout(400);
   conf("a conversa vira blocos por dia: um bloco por dia, cada um com a data e seus registros, nada solto", ff.blocos >= 1 && ff.soltos === 0 && ff.itensPorBloco.every(n => n >= 1) && ff.dias.every(Boolean));
   conf("o bloco do dia tem o cinza leve (e o seguinte, quando há, é branco)", ff.fundos[0] === "rgb(241, 243, 245)" && (ff.fundos.length < 2 || ff.fundos[1] === "rgb(255, 255, 255)"));
   conf("o 'dar seguimento' de cada registro fica invisível até o mouse chegar", ff.pin === "0");
