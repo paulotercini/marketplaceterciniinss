@@ -2271,7 +2271,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 09.90</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 09.91</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3956,6 +3956,7 @@ function resumoDaLista(t) {
     protocolo: String((t || {}).protocolo || '').trim(),
     situacao: situacaoDe((t || {}).status),
     cpf: String((t || {}).cpfRequerente || '').replace(/\D/g, '').padStart(11, '0'),
+    nome: (t || {}).nomeRequerente || null,          // F98 · para cadastrar quem não tem ficha
     servico: (t || {}).nomeServico || null,
     sigla: (t || {}).siglaServico || null,
     unidade: (t || {}).nomeUnidade || null,
@@ -3965,11 +3966,32 @@ function resumoDaLista(t) {
   };
 }
 
+// F98 · quem é o requerente, do jeito que o cadastro do CRM guarda: o PAT
+// traz em `interessados` nome, CPF, nome da mãe, nascimento e celular —
+// tudo que a ficha pede. É o que permite cadastrar quem não tem ficha na
+// própria tela de importação, sem digitar nada de novo.
+function requerenteDe(det) {
+  const cpfReq = String((det || {}).cpfRequerente || '').replace(/\D/g, '');
+  const lista = Array.isArray((det || {}).interessados) ? det.interessados : [];
+  const i = lista.find(x => String((x || {}).cpf || '').replace(/\D/g, '') === cpfReq) || lista[0];
+  if (!i) return null;
+  const dn = (String(i.dataNascimento || '').match(/^(\d{4})-(\d{2})-(\d{2})/) || []);
+  const cel = (i.contatos || []).find(c => c && c.valor && /CELULAR|TELEFONE/i.test(c.tipo || ''))
+           || (i.contatos || []).find(c => c && c.valor);
+  return {
+    nome: String(i.nome || '').trim() || null,
+    cpf: String(i.cpf || '').replace(/\D/g, '') || cpfReq || null,
+    nome_mae: String(i.nomeMae || '').trim() || null,
+    dn: dn.length ? `${dn[3]}${dn[2]}${dn[1]}` : null,     // DDMMAAAA, como o cadastro guarda
+    telefone: cel ? String(cel.valor).trim() : null,
+  };
+}
 function resumoDoDetalhe(d) {
   const det = d || {};
   const esp = especieDe(det);
   return {
     protocolo: String(det.protocolo || '').trim(),
+    requerente: requerenteDe(det),
     situacao: situacaoDe(det.status),
     tipo: esp.tipo,
     especie: esp.especie,
@@ -4223,7 +4245,14 @@ function planoDeImportacao(pat, D, hoje) {
 
     const cli = porCpf.get(cpf);
     const lista = LISTA_POR_TIPO[det.tipo] || 'inss';
-    if (!cli) { plano.semCliente.push({ ...item, lista }); continue; }
+    if (!cli) {
+      // F98 · quem é, para o cadastro sair num clique: o detalhe traz a
+      // pessoa inteira; a lista, ao menos o nome
+      const r = det.requerente || {};
+      plano.semCliente.push({ ...item, lista, nome: r.nome || daLista.nome || null,
+        dn: r.dn || null, nome_mae: r.nome_mae || null, telefone: r.telefone || null });
+      continue;
+    }
     // O PROTOCOLO CASOU EM POUCOS PORQUE O CAMPO QUASE NUNCA FOI PREENCHIDO,
     // não porque o caso não existe. Criar sem olhar duplicaria a ficha de
     // quem já está no CRM — e ninguém desfaz setenta duplicatas na mão.
@@ -4361,6 +4390,46 @@ async function montarPlanoPat(arquivo){
   plano.resumo.provaveis = plano.possiveisDuplicados.filter(x=>x.provavel).length;
   plano.erro = conferirPlanoPat(arquivo, plano);
   return plano;
+}
+// F98 · o cadastro a partir do requerimento: a ficha nasce com o que o PAT
+// trouxe (nome, CPF, nascimento, nome da mãe, celular) e o plano é refeito —
+// o protocolo sai de "sem cliente" e entra em "casos novos", pronto para o
+// Aplicar. Mesmas travas do cadastro comum: CPF válido e sem repetição.
+async function cadastrarDoPat(protocolo){
+  const n = planoPat && (planoPat.semCliente||[]).find(x=>x.protocolo===protocolo);
+  if(!n) return aviso("Não achei esse requerimento no plano");
+  if(!n.nome) return aviso("O PAT não trouxe o nome — cadastre pelo ＋ Novo Cliente");
+  const cpf = digitosCpf(n.cpf)||null;
+  if(cpf && !cpfValido(cpf)) return aviso(`CPF ${fmtCpf(cpf)} inválido no PAT — cadastre pelo ＋ Novo Cliente e confira`);
+  if(cpf){
+    let jaTem = D.clientes.find(c=>digitosCpf(c.cpf)===cpf);
+    if(!jaTem){
+      const achados = await api(`/rest/v1/clientes?select=*&cpf=eq.${cpf}`).catch(()=>[]);
+      if(achados && achados.length){ jaTem=achados[0]; D.clientes.push(jaTem); D.cliPorId.set(jaTem.id, jaTem); }
+    }
+    if(jaTem){ aviso(`${jaTem.nome} já tem ficha com esse CPF — o plano foi refeito`, false);
+      return refazerPlanoPat(); }
+  }
+  const campos={atendimento:[{em:new Date().toISOString(), quem:(eu.nome||"").split(" ")[0],
+    texto:`Cadastrado a partir do requerimento ${protocolo} do INSS (importação do PAT)${n.quem_protocolou?` — protocolado por ${n.quem_protocolou}`:""}.`}]};
+  let cli;
+  try{
+    [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({nome:n.nome, cpf, dn:n.dn||null, nome_mae:n.nome_mae||null,
+        telefone:n.telefone||null, campos})})||[];
+  }catch(e){ return aviso("Não consegui cadastrar: "+String(e.message||e).slice(0,100)); }
+  if(!cli) return aviso("O banco não devolveu a ficha — tente de novo");
+  D.clientes.push(cli); D.cliPorId.set(cli.id, cli);
+  if(D.casosDoCliente && !D.casosDoCliente.has(cli.id)) D.casosDoCliente.set(cli.id, []);
+  aviso(`✔ ${cli.nome} cadastrado — o requerimento ${protocolo} entrou em "casos novos"`, false);
+  await refazerPlanoPat();
+}
+async function refazerPlanoPat(){
+  if(!arquivoPat) return render();
+  const id = planoPat && planoPat.coleta_id;
+  planoPat = await montarPlanoPat(arquivoPat);
+  if(id) planoPat.coleta_id = id;
+  render();
 }
 function patIgnorados(){
   const v = cfgApp("pat_ignorar");
@@ -4557,7 +4626,19 @@ function telaImportarPat(){
         </div>` : ""}</div>` : ""}
       ${r.sem_cliente ? `<div class="exig"><strong>${r.sem_cliente} requerimento(s) sem cliente no CRM.</strong>
         São protocolos que existem no INSS e não têm ficha aqui — quase sempre quem
-        protocolou sozinho pelo Meu INSS. Eles NÃO entram: cadastre o cliente antes.</div>` : ""}
+        protocolou sozinho pelo Meu INSS. Eles NÃO entram enquanto o cliente não tiver ficha.
+        ${/* F98 · o cadastro sai daqui mesmo, com o que o PAT já sabe da pessoa;
+             cadastrado, o requerimento passa para "casos novos" na hora */""}
+        <table class="tab" style="margin-top:8px"><tr><th>quem</th><th>CPF</th><th>o que veio do INSS</th><th></th></tr>
+        ${planoPat.semCliente.map(n=>`<tr>
+          <td>${esc(n.nome||"(sem nome no PAT)")}${n.dn?` <span class="meio-sub">· nasc. ${esc(n.dn.replace(/^(\d{2})(\d{2})(\d{4})$/,"$1/$2/$3"))}</span>`:""}</td>
+          <td style="font-family:monospace">${esc(fmtCpf(n.cpf))}</td>
+          <td>${esc(n.beneficio||n.tipo||"—")} ${n.especie?`<span class="chip">${esc(n.especie)}</span>`:""}
+            <span class="meio-sub">protocolo ${esc(n.protocolo)}${n.quem_protocolou?` · ${esc(n.quem_protocolou)}`:""}</span>
+            ${n.link?`<a href="${urlOk(n.link)}" target="_blank" rel="noopener">↗</a>`:""}</td>
+          <td><button class="btn-mini forte" onclick="cadastrarDoPat('${n.protocolo}')"
+            title="cria a ficha com nome, CPF, nascimento, nome da mãe e celular que o PAT trouxe — e o requerimento entra como caso novo">＋ cadastrar cliente</button></td>
+        </tr>`).join("")}</table></div>` : ""}
       ${r.apuracoes ? `<div class="exig"><strong>⚠ ${r.apuracoes} apuração de irregularidade.</strong>
         É o INSS revendo benefício que já paga — pode suspender, cancelar e cobrar o recebido.
         Entram marcados como urgentes.</div>` : ""}
