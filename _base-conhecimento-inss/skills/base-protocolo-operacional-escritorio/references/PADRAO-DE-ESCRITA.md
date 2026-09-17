@@ -124,3 +124,23 @@ A Camada 6 da `base-revisao-peticao-aprofundada` passa a medir, além da extens�
 ### Nota de honestidade
 
 As regras das Ondas 126 a 133 foram escritas no ritmo de quem as escreveu, com veredito na frente e frase curta, e esse ritmo contaminou o plugin. O titular percebeu no resultado. Esta seção e as regras reescritas na Onda 135 foram redigidas no estilo que ele pediu, para que a própria skill sirva de exemplo do que manda fazer.
+
+## Por que as regras não pegavam, e a arquitetura nova (Onda 138, 16/09/2026)
+
+O titular relatou que tentou skills, personalização e prompts para obter parágrafos de três a quatro linhas e texto menos truncado, sem resultado. A causa não era falta de regra. Era a forma como a regra chegava ao modelo.
+
+**Diluição.** Ao redigir uma petição, o modelo recebia cerca de quarenta mil palavras de instrução somando as skills que disparam, e a regra de extensão era uma frase entre elas. Dentro da própria skill de petição, o estilo ocupava setecentas palavras contra quatro mil e quinhentas de mecânica de docx-js e tabelas.
+
+**Redação dentro de código.** A peça era escrita dentro de chamadas `new Paragraph({children:[new TextRun(...)]})`, com a atenção do modelo na sintaxe e não na prosa.
+
+**Medida errada.** "Três linhas" na cabeça do modelo é linha de tela, de sessenta a oitenta palavras. No papel do escritório, medido em 16/09/2026 com soffice e pdftotext em Bookman Old Style 12, A4, margens da skill, recuo de 2 cm e espaçamento 1,5, uma linha tem cerca de DEZ palavras. Trinta palavras são três linhas, quarenta são quatro. O modelo escrevia o dobro do que cabia, a revisão mandava cortar, e o corte produzia o texto picado. Prolixidade e truncamento eram o mesmo defeito, antes e depois do corte.
+
+**Nenhuma verificação mecânica.** Toda regra era prosa instruindo prosa, sem script que medisse e devolvesse.
+
+### O que mudou
+
+Três fases separadas na `peticao-previdenciaria`. Redigir em Markdown puro. Medir com `scripts/medir_peca.py`, que devolve PASSA ou FALHA com a lista exata dos parágrafos fora do padrão calibrado, das sequências de frases curtas, dos adjetivos de intensidade, das fórmulas vazias, dos documentos sem ID, dos dispositivos sem explicação e do orçamento de páginas. Converter com `scripts/md2docx.js`, que aplica todo o padrão visual de forma determinística. A skill caiu de 8.600 para 4.000 palavras, o espelho visual de 10.600 para 400, e a mecânica foi para `references/MECANICA-DOCX.md` e `references/VISUAL-LAW.md`.
+
+O teto do medidor é de 45 palavras por parágrafo, e não 40, porque a primeira linha é recuada e porque o exemplo canônico de abertura pela controvérsia fixado pelo titular tem 45 palavras. Ajustável em uma constante do script.
+
+A Camada 6 da revisão roda o mesmo medidor antes de qualquer outra camada.
