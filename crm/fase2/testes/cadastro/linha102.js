@@ -153,17 +153,24 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.evaluate(() => { nupSel = ""; irSubAba("inss"); }); await p.waitForTimeout(200);
   conf("a aba INSS também escreve dali (compositor) e lista o comentário do INSS", await p.evaluate(() => !!document.querySelector("#and-texto") && /Solicitamos a apresentação de CTPS/.test(document.querySelector(".timeline").textContent)));
 
-  // ── F109 · papel ─────────────────────────────────────────────────────────
-  const ff = await p.evaluate(() => ({ chao: getComputedStyle(document.querySelector(".det-rolagem")).backgroundColor,
-    topo: getComputedStyle(document.querySelector(".det-topo")).backgroundColor,
-    escrever: (e => e && { borda: getComputedStyle(e).borderTopWidth + " " + getComputedStyle(e).borderTopStyle, lados: getComputedStyle(e).borderLeftStyle, sombra: getComputedStyle(e).boxShadow })(document.querySelector(".escrever")),
-    tl: (e => e && { borda: getComputedStyle(e).borderTopStyle, fio: getComputedStyle(e, "::before").display })(document.querySelector(".painel[data-p='2'] .timeline")),
-    titulo: (e => e && getComputedStyle(e).borderBottomWidth)(document.querySelector(".painel[data-p='2'] .fatos:not(.fatos-processo)>.fatos-topo")),
-    pin: (b => b && getComputedStyle(b).backgroundColor)(document.querySelector('.timeline button[onclick^="abrirSeguimento"]')) }));
-  conf("papel: a ficha é branca e só o cabeçalho do cliente tem cor própria", ff.chao === "rgb(255, 255, 255)" && ff.topo === "rgb(234, 237, 239)");
-  conf("o compositor tem só a régua escura em cima (sem caixa, sem sombra)", ff.escrever && ff.escrever.borda === "2px solid" && ff.escrever.lados === "none" && ff.escrever.sombra === "none");
-  conf("a conversa não tem moldura nem fio; o título tem a régua escura", ff.tl && ff.tl.borda === "none" && ff.tl.fio === "none" && ff.titulo === "2px");
-  conf("o 'dar seguimento' de cada registro fica fantasma até o mouse chegar", ff.pin === "rgba(0, 0, 0, 0)");
+  // ── F110 · blocos por dia ────────────────────────────────────────────────
+  const ff = await p.evaluate(() => {
+    const tl = document.querySelector(".painel[data-p='2'] .timeline");
+    const blocos = tl ? [...tl.querySelectorAll(":scope > li.dia-bloco")] : [];
+    return { chao: getComputedStyle(document.querySelector(".det-rolagem")).backgroundColor,
+      topo: getComputedStyle(document.querySelector(".det-topo")).backgroundColor,
+      escrever: (e => e && { borda: getComputedStyle(e).borderTopStyle, fundo: getComputedStyle(e).backgroundColor, hoje: getComputedStyle(e, "::before").content })(document.querySelector(".escrever")),
+      blocos: blocos.length, dias: blocos.map(b => (b.querySelector(".tl-dia span") || {}).textContent),
+      itensPorBloco: blocos.map(b => b.querySelectorAll(":scope > .dia-itens > li").length),
+      fundos: blocos.map(b => getComputedStyle(b).backgroundColor),
+      soltos: tl ? tl.querySelectorAll(":scope > li:not(.dia-bloco)").length : -1,
+      pin: (b => b && getComputedStyle(b).opacity)(document.querySelector('.timeline button[onclick^="abrirSeguimento"]')) };
+  });
+  conf("a ficha é branca e só o cabeçalho do cliente tem cor própria", ff.chao === "rgb(255, 255, 255)" && ff.topo === "rgb(234, 237, 239)");
+  conf("o compositor é o bloco 'Hoje': sem borda, fundo leve, rótulo Hoje", ff.escrever && ff.escrever.borda === "none" && ff.escrever.fundo === "rgb(241, 243, 245)" && /Hoje/.test(ff.escrever.hoje));
+  conf("a conversa vira blocos por dia: um bloco por dia, cada um com a data e seus registros, nada solto", ff.blocos >= 1 && ff.soltos === 0 && ff.itensPorBloco.every(n => n >= 1) && ff.dias.every(Boolean));
+  conf("o bloco do dia tem o cinza leve (e o seguinte, quando há, é branco)", ff.fundos[0] === "rgb(241, 243, 245)" && (ff.fundos.length < 2 || ff.fundos[1] === "rgb(255, 255, 255)"));
+  conf("o 'dar seguimento' de cada registro fica invisível até o mouse chegar", ff.pin === "0");
 
   // ── F104 · os quadros ────────────────────────────────────────────────────
   const cards = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({ tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, onclick: c.querySelector(".pz-mais").getAttribute("onclick") })));
