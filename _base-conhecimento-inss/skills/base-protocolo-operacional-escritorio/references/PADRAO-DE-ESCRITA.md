@@ -144,3 +144,32 @@ Três fases separadas na `peticao-previdenciaria`. Redigir em Markdown puro. Med
 O teto do medidor é de 45 palavras por parágrafo, e não 40, porque a primeira linha é recuada e porque o exemplo canônico de abertura pela controvérsia fixado pelo titular tem 45 palavras. Ajustável em uma constante do script.
 
 A Camada 6 da revisão roda o mesmo medidor antes de qualquer outra camada.
+
+## Médicos Conferentes e a linguagem do parecer clínico (Onda 141, 17/09/2026)
+
+Oito agentes médicos passam a ler os documentos clínicos antes de a tese ser construída. O recorte NÃO foi escolhido por palpite. Saiu da medição das 616 tarefas do To Do que trazem documento médico ou perícia, feita em 17/09/2026.
+
+| Área | Tarefas | Agente |
+|---|---:|---|
+| Coluna | 72 | `medico-coluna` |
+| Psiquiatria | 49 | `medico-psiquiatra` |
+| Joelho, quadril e pé | 60 | `medico-membro-inferior` |
+| Reumatologia | 36 | `medico-reumatologista` |
+| Mão, punho e cotovelo | 27 | `medico-membro-superior` |
+| Ombro | 26 | `medico-ombro` |
+| Visão e audição | 34 | `medico-sensorial` |
+| Câncer, coração, neuro e pulmão | 62 | `medico-doencas-graves` |
+
+A ortopedia foi dividida por região porque, somada, responde por 185 tarefas, quase um terço do universo, e porque coluna, joelho, ombro e mão têm exames, achados e correlação com a atividade profissional inteiramente distintos. Um único ortopedista diluiria justamente onde o escritório mais trabalha.
+
+### A linguagem do parecer
+
+O titular pediu um médico que o povo compreende, e essa é a regra de escrita destes agentes. Termo técnico entra quando é o nome da coisa, seguido da tradução em meia frase na primeira ocorrência. "Hérnia de disco L5-S1, que é o desgaste do amortecedor entre os dois últimos ossos da lombar, bem em cima do nervo da perna."
+
+O parecer não diz "incapacidade", que é conclusão jurídica do advogado e do julgador. Ele diz o que o corpo não faz, traduzido em gesto de trabalho. Flexionar o tronco, permanecer em pé, elevar o braço acima do ombro, sustentar atenção por jornada inteira, compreender ordem verbal em ambiente ruidoso.
+
+### Travas éticas
+
+Os agentes leem documento já produzido por outro profissional. Não diagnosticam, não prescrevem e não orientam conduta clínica. O parecer é instrumento INTERNO, orienta a peça e alimenta quesitos, e não vai aos autos como prova nem substitui laudo de médico assistente ou assistente técnico habilitado. Havendo registro de risco à saúde, o agente aponta o encaminhamento ao médico assistente e não sugere conduta.
+
+Nenhum agente completa laudo com o que seria esperado no quadro. Documento ilegível, incompleto ou sem data é reportado como tal, e não interpretado.

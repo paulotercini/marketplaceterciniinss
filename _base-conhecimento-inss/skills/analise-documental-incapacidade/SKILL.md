@@ -441,3 +441,22 @@ Padrão sistêmico de indeferimentos por CID. Depende de dados via LAI.
 
 ### Requerimento administrativo de B31/B91/B94
 Quando o caso exigir novo requerimento administrativo de incapacidade (primeiro requerimento ou novo requerimento após cessação/indeferimento), acionar a skill `requerimento-administrativo-inss` para gerar a peça no formato adequado ao servidor do INSS, integrando os requisitos documentais das Portarias 13, 14 e 15/2026 mapeados por esta skill.
+
+## Médicos Conferentes, acionamento obrigatório (Onda 141)
+
+Na análise documental, o INSS decide sem examinar o segurado, e por isso o documento precisa demonstrar sozinho. Despachar o médico da área com os documentos ANTES de orientar o requerimento, porque é ele que diz se o dossiê se sustenta na via documental ou se o caso exige perícia presencial.
+
+| Se os documentos tratarem de | Despachar ao agente |
+|---|---|
+| Coluna, lombar, cervical, hérnia de disco, ciática, estenose, artrodese, CID M40 a M54 | `base-conhecimento-inss:medico-coluna` |
+| Joelho, menisco, ligamento cruzado, artrose de joelho, prótese, quadril, tornozelo, fascite plantar | `base-conhecimento-inss:medico-membro-inferior` |
+| Ombro, manguito rotador, supraespinhal, bursite, capsulite, CID M75 | `base-conhecimento-inss:medico-ombro` |
+| Punho, mão, dedo, amputação, túnel do carpo, tenossinovite, epicondilite, LER e DORT | `base-conhecimento-inss:medico-membro-superior` |
+| Depressão, ansiedade, bipolar, esquizofrenia, TEPT, burnout, CAPS, CID F20 a F48 | `base-conhecimento-inss:medico-psiquiatra` |
+| Fibromialgia, artrite reumatoide, lúpus, espondilite, artrose difusa, osteoporose | `base-conhecimento-inss:medico-reumatologista` |
+| Visão monocular, cegueira, glaucoma, retinopatia, surdez, audiometria, PAIR, implante coclear | `base-conhecimento-inss:medico-sensorial` |
+| Câncer, infarto, insuficiência cardíaca, AVC, epilepsia, Parkinson, DPOC, insuficiência renal, HIV | `base-conhecimento-inss:medico-doencas-graves` |
+
+Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra na orientação do requerimento e no que se pede ao médico assistente.
+
+O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
