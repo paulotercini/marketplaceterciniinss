@@ -246,3 +246,22 @@ O art. 355, § 1º, II, na redação da IN 212/2026, fixa o termo inicial, na hi
 O "maior esforço" continua sendo argumento válido, mas MUDOU de base normativa. O art. 104, II, do Decreto 3.048/99 foi revogado pelo Decreto 10.410/2020, e a âncora atual é o Tema 416 do STJ (REsp 1.109.591/SC, Terceira Seção, j. 25/08/2010, DJe 08/09/2010, trânsito em julgado), cuja tese literal afirma que "o nível do dano e, em consequência, o grau do maior esforço, não interferem na concessão do benefício, o qual será devido ainda que mínima a lesão".
 
 Aplicação típica em amputação de quirodáctilo, com a construção da mão como conjunto harmônico e do órgão preensor. Detalhamento, quesitos e modelo em `base-b94-anexo-iii-quadros/references/MAIOR-ESFORCO-E-PERDA-DE-DEDO.md`.
+
+## Médicos Conferentes, acionamento obrigatório (Onda 141)
+
+No B94 o que decide é a sequela consolidada e a redução da capacidade. Despachar o médico da área com os documentos, porque é ele que descreve a perda funcional residual.
+
+| Se os documentos tratarem de | Despachar ao agente |
+|---|---|
+| Coluna, lombar, cervical, hérnia de disco, ciática, estenose, artrodese, CID M40 a M54 | `base-conhecimento-inss:medico-coluna` |
+| Joelho, menisco, ligamento cruzado, artrose de joelho, prótese, quadril, tornozelo, fascite plantar | `base-conhecimento-inss:medico-membro-inferior` |
+| Ombro, manguito rotador, supraespinhal, bursite, capsulite, CID M75 | `base-conhecimento-inss:medico-ombro` |
+| Punho, mão, dedo, amputação, túnel do carpo, tenossinovite, epicondilite, LER e DORT | `base-conhecimento-inss:medico-membro-superior` |
+| Depressão, ansiedade, bipolar, esquizofrenia, TEPT, burnout, CAPS, CID F20 a F48 | `base-conhecimento-inss:medico-psiquiatra` |
+| Fibromialgia, artrite reumatoide, lúpus, espondilite, artrose difusa, osteoporose | `base-conhecimento-inss:medico-reumatologista` |
+| Visão monocular, cegueira, glaucoma, retinopatia, surdez, audiometria, PAIR, implante coclear | `base-conhecimento-inss:medico-sensorial` |
+| Câncer, infarto, insuficiência cardíaca, AVC, epilepsia, Parkinson, DPOC, insuficiência renal, HIV | `base-conhecimento-inss:medico-doencas-graves` |
+
+Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra na demonstração da sequela e na redução funcional.
+
+O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.

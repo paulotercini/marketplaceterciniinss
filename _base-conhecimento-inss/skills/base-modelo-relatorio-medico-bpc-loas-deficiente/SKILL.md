@@ -220,3 +220,22 @@ Percorrer as SEIS barreiras do art. 3º, IV, uma a uma, registrando a que existi
 Cobrar os quatro incisos do art. 2º, § 1º, na avaliação e no relatório. Impedimentos nas funções e estruturas do corpo, fatores socioambientais, psicológicos e pessoais, limitação no desempenho de atividades e restrição de participação. Laudo que só descreve o corpo deixa de avaliar três quartos do que a lei manda avaliar.
 
 O conceito tem base convencional com estatura de emenda constitucional (Decreto Legislativo 186/2008 e Decreto 6.949/2009), o que impede portaria, instrução normativa ou instrumento de avaliação de restringi-lo.
+
+## Médicos Conferentes, acionamento obrigatório (Onda 141)
+
+Antes de redigir o modelo, despachar o médico da área com os documentos, porque o relatório para BPC precisa falar a língua da avaliação biopsicossocial e não a do diagnóstico.
+
+| Se os documentos tratarem de | Despachar ao agente |
+|---|---|
+| Coluna, lombar, cervical, hérnia de disco, ciática, estenose, artrodese, CID M40 a M54 | `base-conhecimento-inss:medico-coluna` |
+| Joelho, menisco, ligamento cruzado, artrose de joelho, prótese, quadril, tornozelo, fascite plantar | `base-conhecimento-inss:medico-membro-inferior` |
+| Ombro, manguito rotador, supraespinhal, bursite, capsulite, CID M75 | `base-conhecimento-inss:medico-ombro` |
+| Punho, mão, dedo, amputação, túnel do carpo, tenossinovite, epicondilite, LER e DORT | `base-conhecimento-inss:medico-membro-superior` |
+| Depressão, ansiedade, bipolar, esquizofrenia, TEPT, burnout, CAPS, CID F20 a F48 | `base-conhecimento-inss:medico-psiquiatra` |
+| Fibromialgia, artrite reumatoide, lúpus, espondilite, artrose difusa, osteoporose | `base-conhecimento-inss:medico-reumatologista` |
+| Visão monocular, cegueira, glaucoma, retinopatia, surdez, audiometria, PAIR, implante coclear | `base-conhecimento-inss:medico-sensorial` |
+| Câncer, infarto, insuficiência cardíaca, AVC, epilepsia, Parkinson, DPOC, insuficiência renal, HIV | `base-conhecimento-inss:medico-doencas-graves` |
+
+Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra no conteúdo que o modelo pede ao assistente, ligado aos domínios.
+
+O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.

@@ -476,3 +476,22 @@ O conceito tem base convencional com estatura de emenda constitucional (Decreto 
 ## Extensão
 
 Teto de o parecer de análise, 2 páginas, domínio a domínio só onde houver gatilho, e o veredito na primeira linha. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
+## Médicos Conferentes, acionamento obrigatório (Onda 141)
+
+Na avaliação biopsicossocial do BPC, o médico da área traduz a condição clínica para os domínios da Portaria Conjunta 2/2014 e para os gatilhos do TCQ. Despachar com os documentos antes de fechar a análise.
+
+| Se os documentos tratarem de | Despachar ao agente |
+|---|---|
+| Coluna, lombar, cervical, hérnia de disco, ciática, estenose, artrodese, CID M40 a M54 | `base-conhecimento-inss:medico-coluna` |
+| Joelho, menisco, ligamento cruzado, artrose de joelho, prótese, quadril, tornozelo, fascite plantar | `base-conhecimento-inss:medico-membro-inferior` |
+| Ombro, manguito rotador, supraespinhal, bursite, capsulite, CID M75 | `base-conhecimento-inss:medico-ombro` |
+| Punho, mão, dedo, amputação, túnel do carpo, tenossinovite, epicondilite, LER e DORT | `base-conhecimento-inss:medico-membro-superior` |
+| Depressão, ansiedade, bipolar, esquizofrenia, TEPT, burnout, CAPS, CID F20 a F48 | `base-conhecimento-inss:medico-psiquiatra` |
+| Fibromialgia, artrite reumatoide, lúpus, espondilite, artrose difusa, osteoporose | `base-conhecimento-inss:medico-reumatologista` |
+| Visão monocular, cegueira, glaucoma, retinopatia, surdez, audiometria, PAIR, implante coclear | `base-conhecimento-inss:medico-sensorial` |
+| Câncer, infarto, insuficiência cardíaca, AVC, epilepsia, Parkinson, DPOC, insuficiência renal, HIV | `base-conhecimento-inss:medico-doencas-graves` |
+
+Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra na análise domínio a domínio e nos gatilhos de elevação.
+
+O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
