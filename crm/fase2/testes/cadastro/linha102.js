@@ -135,7 +135,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.evaluate(() => document.querySelector(".lc-mais2").click()); await p.waitForTimeout(200);
   const g = await p.evaluate(() => ({ txt: document.querySelector(".lc-gestao").innerText.replace(/\s+/g, " "),
     ficha: !!document.querySelector(".lc-ficha .fatos-processo"), fichaFechada: !document.querySelector(".lc-ficha").open,
-    acoes: [...document.querySelectorAll(".lc-gestao .lc-linha:nth-child(4) button")].map(b => b.textContent.trim()) }));
+    acoes: [...[...document.querySelectorAll(".lc-gestao .lc-linha")].find(l => /^Ações/.test(l.textContent.trim())).querySelectorAll("button")].map(b => b.textContent.trim()) }));
   conf("o segundo ➕ traz protocolos, a escolha Manual/Automática com o botão de verificar, o comentário fixo e as ações",
     /PROTOCOLOS 1234567890/i.test(g.txt) && /verifiquei agora/.test(g.txt) && /COMENTÁRIO FIXO/i.test(g.txt) && g.acoes.some(t => /não é caso/.test(t)) && g.acoes.some(t => /Encerrar caso/.test(t)));
   conf("a ficha completa do caso continua ali, dobrada (nada sumiu)", g.ficha && g.fichaFechada);
@@ -249,6 +249,40 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.evaluate(() => { document.getElementById("pa-qual").value = "Recurso Especial"; });
   await p.evaluate(() => popInserir("peticao")); await p.waitForTimeout(200);
   conf("Recurso Especial protocolado grava a data no caso (re_protocolado_em)", (patches("re_protocolado_em").pop() || {}).re_protocolado_em === hojeSP());
+
+  // ── F114 · o essencial da espécie na linha, o resto em gestão do caso ───
+  conf("a aposentadoria por idade não pede data extra, a DER basta", await p.evaluate(() => camposEssenciais(D.casoPorId.get(casoSel)).length === 0));
+  await p.evaluate((id) => gravarEspecie(id, "B31", "B31"), CASO1); await p.waitForTimeout(300);
+  const rotsDa = () => p.evaluate(() => [...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()));
+  const b31 = await rotsDa();
+  conf("a incapacidade temporária traz DII e DCB na própria linha", b31.includes("DII") && b31.includes("DCB"));
+  await p.evaluate((id) => lcAbrir(id, 2), CASO1); await p.waitForTimeout(200);
+  await p.evaluate((id) => lcNovaData(id), CASO1); await p.waitForTimeout(200);
+  conf("o ＋ das datas só oferece o que falta e explica cada uma", await p.evaluate(() => {
+    const o = [...document.getElementById("lc-dt-campo").options].map(x => x.value);
+    return !o.includes("der") && o.includes("dcb") && o.includes("obito_em") && /CadÚnico|decadência|óbito|prorroga|Início/i.test(document.getElementById("lc-dt-dica").textContent);
+  }));
+  await p.evaluate((d) => { document.getElementById("lc-dt-campo").value = "dcb"; document.getElementById("lc-dt-valor").value = d; }, emDias(9));
+  await p.evaluate((id) => lcGuardarData(id), CASO1); await p.waitForTimeout(350);
+  const dcbP = patches("dcb").pop();
+  conf("a data gravada pelo ＋ rearma a prorrogação 15 dias antes da DCB", dcbP && dcbP.dcb === emDias(9) && dcbP.dcb_prorrogar_em === emDias(-6) && dcbP.dcb_prorrogacao_pedida === false);
+  conf("a DCB na linha diz sozinha quantos dias faltam", await p.evaluate(() => /em 9 d/.test(document.querySelector(".lc-topo #lc-dcb-" + casoSel).parentElement.textContent)));
+  await p.evaluate((id) => gravarEspecie(id, "B42", "B42.PCD.ESP"), CASO1); await p.waitForTimeout(350);
+  const pcd = await rotsDa();
+  conf("a aposentadoria da pessoa com deficiência troca DII e DCB por DID e Grau", pcd.includes("DID") && pcd.includes("Grau") && !pcd.includes("DII") && !pcd.includes("DCB"));
+  conf("a DCB preenchida não se perde, desce para gestão do caso", await p.evaluate(() => !!document.querySelector(".lc-gestao #lc-dcb-" + casoSel)));
+  await p.evaluate((id) => editarFato(id, "grau_deficiencia", "lc"), CASO1); await p.waitForTimeout(200);
+  await p.evaluate(() => { const s = document.querySelector("#lc-grau_deficiencia-" + casoSel + " select"); s.value = "grave"; s.dispatchEvent(new Event("change")); });
+  await p.waitForTimeout(350);
+  conf("o grau se escolhe numa lista de leve, moderada e grave", (patches("grau_deficiencia").pop() || {}).grau_deficiencia === "grave");
+  await p.evaluate((id) => gravarEspecie(id, "B21", "B21.CONJ"), CASO1); await p.waitForTimeout(350);
+  conf("a pensão por morte pede a data do óbito na linha", await p.evaluate(() => !!document.querySelector(".lc-topo #lc-obito_em-" + casoSel)));
+  const obitoDiz = async (d) => { await p.evaluate(async (a) => { await patchCaso(a.id, { obito_em: a.d }); D.casoPorId.get(a.id).obito_em = a.d; repintarFicha(); }, { id: CASO1, d });
+    await p.waitForTimeout(250);
+    return p.evaluate(() => document.querySelector(".lc-topo #lc-obito_em-" + casoSel).parentElement.textContent); };
+  conf("óbito com a DER dentro dos 90 dias, a linha avisa que a DIB é no óbito", /DIB no óbito/.test(await obitoDiz("2024-04-01")));
+  conf("óbito com a DER fora dos 90 dias, a linha avisa que a DIB cai na DER", /fora dos 90 d/.test(await obitoDiz("2023-01-01")));
+  await p.evaluate((id) => gravarEspecie(id, "B41", "B41"), CASO1); await p.waitForTimeout(300);
 
   // ── desligado: nada disso muda o tema antigo ─────────────────────────────
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html?tema=`);

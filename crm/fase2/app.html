@@ -2137,6 +2137,10 @@ html[data-tema="v10"] .lc-f{display:inline-flex;align-items:center;gap:6px;white
 html[data-tema="v10"] .lc-k{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
 html[data-tema="v10"] .lc-num{font-family:var(--f-mono);font-weight:500;color:var(--texto)}
 html[data-tema="v10"] .lc-vazio{color:var(--cinza-claro);font-style:italic}
+/* F114 · o aviso que a própria data calcula, ao lado dela */
+html[data-tema="v10"] .lc-jan{font-size:11px;color:var(--cinza);white-space:nowrap}
+html[data-tema="v10"] .lc-jan.venc{color:var(--vermelho);font-weight:600}
+html[data-tema="v10"] .lc-jan.ok{color:var(--verde);font-weight:600}
 html[data-tema="v10"] .lc-tram{font-weight:600;color:var(--azul-escuro);background:#FFFFFF;border:1px solid var(--borda);border-radius:4px;padding:1px 7px}
 html[data-tema="v10"] .lc-manual{color:var(--venc);font-weight:700}
 html[data-tema="v10"] .lc-auto{color:var(--feito);font-weight:600}
@@ -2377,7 +2381,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.06</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.07</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13516,6 +13520,25 @@ const FATOS = {
   dat:        {rot:"DAT",         tipo:"data",    dica:"Data do Acidente de Trabalho"},
   dcb:        {rot:"DCB",         tipo:"data",    dica:"Data de Cessação do Benefício"},
   dcb_prorrogar_em:{rot:"Prorrogar a partir de", tipo:"data", dica:"o sistema lembra nesta data (padrão: 15 dias antes da DCB)"},
+  // F114 · as datas que cada espécie exige (schema_linha_caso.sql)
+  obito_em:   {rot:"Óbito",       tipo:"data",
+               dica:"data do óbito do instituidor — requerimento em até 90 dias retroage ao óbito, 180 dias para dependente menor de 16 anos (art. 74, I, da Lei 8.213/91)"},
+  prisao_em:  {rot:"Prisão",      tipo:"data",
+               dica:"data do recolhimento à prisão — é ela que define carência, teto de baixa renda e regime admitido no auxílio-reclusão"},
+  parto_em:   {rot:"Parto",       tipo:"data",
+               dica:"data do parto; na adoção ou guarda, a data da guarda judicial, que é a DIB do salário-maternidade"},
+  did:        {rot:"DID",         tipo:"data",
+               dica:"Data de Início da Deficiência ou da Doença — define o tempo computado por grau na aposentadoria PCD e sustenta a tese de doença preexistente agravada"},
+  consolidacao_em:{rot:"Consolidação", tipo:"data",
+               dica:"consolidação das lesões — é ela que separa o auxílio por incapacidade do auxílio-acidente"},
+  cat_em:     {rot:"CAT",         tipo:"data",
+               dica:"data de emissão da CAT, distinta da data do acidente; a CAT pode ser emitida pelo próprio segurado, pelo sindicato ou pelo médico (art. 22, §2º, da Lei 8.213/91)"},
+  primeiro_pagamento_em:{rot:"1º pagamento", tipo:"data",
+               dica:"data do primeiro pagamento do benefício revisado — a decadência do art. 103 conta do dia primeiro do mês seguinte a ela"},
+  cadunico:   {rot:"CadÚnico",    tipo:"data",
+               dica:"data da última atualização do CadÚnico — vale 2 anos e, sem ela, o BPC é bloqueado"},
+  grau_deficiencia:{rot:"Grau",   tipo:"lista", opcoes:["leve","moderada","grave"],
+               dica:"grau de deficiência da LC 142/2013 — grave 25 anos (homem) e 20 (mulher), moderada 29 e 24, leve 33 e 28"},
 };
 const ehAcidentario = k => /^B9[123]$|^B94$/.test(k.especie||"") || /acident/i.test(k.beneficio||"");
 
@@ -14333,6 +14356,42 @@ function lcNumeros(k){
       title="protocolos, verificação, comentário fixo e ações do caso">${lcNivel(k.id)===2?"− gestão do caso":"+ gestão do caso"}</button></div>`;
 }
 const lcFichaAberta = new Set();
+// F114 · todas as datas do caso, na ordem da leitura. A linha mostra as
+// essenciais da espécie e gestão do caso guarda o resto.
+const DATAS_SECUNDARIAS = ["der","dib","dii","dat","cat_em","dcb","dcb_prorrogar_em","did","grau_deficiencia",
+  "consolidacao_em","obito_em","prisao_em","parto_em","cadunico","primeiro_pagamento_em","decisao_em","ajuizado_em"];
+function lcNovaData(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const faltam = DATAS_SECUNDARIAS.filter(c=>!k[c]);
+  if(!faltam.length) return aviso("Todas as datas do caso já estão preenchidas");
+  caixa(`<h3 style="margin:0 0 6px">＋ Data do caso</h3>
+    <p class="meio-sub" style="margin:0 0 8px">A espécie escolhida já traz na linha as datas que decidem este pedido. Aqui entram as demais.</p>
+    <div class="form-linha" style="align-items:center">
+      <select id="lc-dt-campo" style="flex:1;min-width:180px">${faltam.map(c=>`<option value="${c}">${esc(FATOS[c].rot)}</option>`).join("")}</select>
+      <input type="date" id="lc-dt-valor">
+      <button class="btn-mini forte" onclick="lcGuardarData('${casoId}')">guardar</button>
+    </div>
+    <p class="meio-sub" id="lc-dt-dica" style="margin:8px 0 0">${esc(FATOS[faltam[0]].dica)}</p>`);
+  const sel = document.getElementById("lc-dt-campo");
+  sel.onchange = () => {
+    const f = FATOS[sel.value];
+    document.getElementById("lc-dt-dica").textContent = f.dica;
+    document.getElementById("lc-dt-valor").style.display = f.tipo==="data" ? "" : "none";
+  };
+  document.getElementById("lc-dt-valor").focus();
+}
+async function lcGuardarData(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const campo = document.getElementById("lc-dt-campo").value;
+  const valor = document.getElementById("lc-dt-valor").value || null;
+  if(!valor) return aviso("Escolha a data");
+  const corpo = {[campo]: valor};
+  if(campo==="dcb"){ corpo.dcb_prorrogacao_pedida = false; corpo.dcb_prorrogar_em = somaDias(valor,-15); }
+  try{ await patchCaso(casoId, corpo); }
+  catch(e){ return aviso("Não gravou — rode o crm/fase2/schema_linha_caso.sql no Supabase"); }
+  Object.assign(k, corpo); fecharCaixa();
+  aviso(`${FATOS[campo].rot} guardada ✔`, false); repintarFicha();
+}
 function lcGestao(k){
   const prots = (k.protocolos||[]).map(String).filter(Boolean);
   const fx = k.fixo || {};
@@ -14351,12 +14410,106 @@ function lcGestao(k){
       ? `<span class="lc-fixo-txt">${esc(fx.texto)}</span>${fx.lembrar_em?`<span class="lc-papel">lembrar ${fmtBarra(fx.lembrar_em)}</span>`:""}
          <button class="btn-mini" onclick="lcEditarFixo('${k.id}')">✎ editar</button>`
       : `<button class="lc-add" onclick="lcEditarFixo('${k.id}')" title="fixar um comentário em destaque acima dos prazos" aria-label="fixar um comentário">+</button>`}</div>
+    ${/* F114 · as datas secundárias moram aqui, fora da linha. Aparecem as
+         preenchidas; as vazias entram pelo ＋, que só oferece o que falta. */""}
+    <div class="lc-linha"><span class="lc-k">Datas</span>${(()=>{
+      const ess = camposEssenciais(k), tem = DATAS_SECUNDARIAS.filter(c=>c!=="der" && !ess.includes(c) && k[c]);
+      return (tem.length ? tem.map(c=>lcCampo(k,c)).join("") : `<span class="lc-vazio">só as da linha do caso</span>`);
+    })()}
+      <button class="lc-add" onclick="lcNovaData('${k.id}')" title="informar outra data do caso" aria-label="informar outra data do caso">+</button></div>
     <div class="lc-linha"><span class="lc-k">Ações</span>${acoesDoCaso(k)}</div>
     <details class="lc-ficha" ${lcFichaAberta.has(k.id)?"open":""} ontoggle="this.open?lcFichaAberta.add('${k.id}'):lcFichaAberta.delete('${k.id}')">
       <summary>Ficha completa do caso — natureza, datas, incapacidade, documentos solicitados</summary>
       ${blocoFatos(k)}
     </details>
   </div>`;
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F114 · O ESSENCIAL DE CADA ESPÉCIE NA LINHA DO CASO (pedido do Paulo,
+// 17.09). A linha mostra o que decide AQUELE pedido e só isso. Incapacidade
+// temporária pede DCB; aposentadoria da pessoa com deficiência pede DID e
+// grau; pensão pede a data do óbito; auxílio-reclusão, a data da prisão. O
+// resto das datas desce para gestão do caso, onde nada se perde.
+// A regra é herdada: a ESPÉCIE traz a lista base e a SUBESPÉCIE acrescenta.
+// "B42.PCD.ESP" resolve como B42 mais B42.PCD, nunca como regra nova.
+// Levantamento em crm/fase2/REGRAS-POR-ESPECIE.md, com a fonte de cada item.
+// ══════════════════════════════════════════════════════════════════════════
+const ESSENCIAL = {
+  // incapacidade · a DII fixa qualidade e carência, a DCB comanda a prorrogação
+  B31:["dii","dcb"], "B31.PREEX":["did"],
+  B91:["dat","dii","dcb"],
+  B32:["dii"], "B32.CONV":["dcb"],
+  B92:["dat","dii"],
+  // auxílio-acidente · a consolidação separa do B31 e a DCB do B31 fixa a DIB
+  B36:["consolidacao_em","dcb"],
+  B94:["dat","consolidacao_em","dcb"],
+  B26:["dii"],
+  // aposentadorias · a DER já está na linha; só a PCD pede data e grau
+  B41:[], "B41.PCD":["did","grau_deficiencia"],
+  B42:[], "B42.PCD":["did","grau_deficiencia"],
+  B46:[], B57:[],
+  // dependentes · a data do evento é que abre a janela de retroação
+  B21:["obito_em"], "B21.INVAL":["did"],
+  B93:["obito_em","dat"],
+  B25:["prisao_em"],
+  // maternidade e assistenciais
+  B80:["parto_em"],
+  B87:["did","cadunico"], B88:["cadunico"],
+  // revisões e serviços · o 1º pagamento é que conta a decadência do art. 103
+  REV:["primeiro_pagamento_em","dib"],
+  REST:["dcb"],
+};
+function camposEssenciais(k){
+  const chave = k.subespecie || k.especie || "";
+  if(!chave) return [];
+  const p = String(chave).split("."), out = [];
+  for(let i=1;i<=p.length;i++)
+    for(const c of (ESSENCIAL[p.slice(0,i).join(".")] || []))
+      if(!out.includes(c)) out.push(c);
+  return out;
+}
+// o aviso que a própria data calcula — aparece só quando muda a conduta
+function lcJanela(k, campo){
+  if(campo==="dcb" && k.dcb && !k.dcb_prorrogacao_pedida && k.fase!=="encerrado"){
+    const d = diasAte(k.dcb);
+    if(d<0) return `<small class="lc-jan venc" title="o benefício já cessou e a prorrogação não foi pedida">cessou há ${-d} d</small>`;
+    return `<small class="lc-jan ${d<=15?"venc":""}" title="${d<=15?"a prorrogação se pede nos últimos 15 dias do benefício":"a prorrogação se pede nos últimos 15 dias do benefício, não antes"}">em ${d} d</small>`;
+  }
+  if((campo==="obito_em" || campo==="prisao_em") && k[campo]){
+    const ondeDib = campo==="obito_em" ? "no óbito" : "na prisão";
+    const t = `requerimento em até 90 dias retroage ${ondeDib}, e em até 180 dias para dependente menor de 16 anos (art. 74, I, da Lei 8.213/91)`;
+    const lim = somaDias(k[campo], 90);
+    if(k.der) return k.der <= lim
+      ? `<small class="lc-jan ok" title="${esc(t)}">DIB ${ondeDib}</small>`
+      : `<small class="lc-jan venc" title="${esc(t)}">DER fora dos 90 d, DIB na DER</small>`;
+    const d = diasAte(lim);
+    return d<0 ? `<small class="lc-jan venc" title="${esc(t)}">os 90 d venceram há ${-d} d</small>`
+               : `<small class="lc-jan ${d<=30?"venc":""}" title="${esc(t)}">90 d até ${fmtBarra(lim)}</small>`;
+  }
+  if(campo==="cadunico" && k.cadunico){
+    const d = diasAte(somaDias(k.cadunico, 730));
+    return d<0 ? `<small class="lc-jan venc" title="o CadÚnico vence em 2 anos e o benefício é bloqueado sem atualização">venceu há ${-d} d</small>`
+      : `<small class="lc-jan ${d<=60?"venc":""}" title="o CadÚnico vale 2 anos">vence em ${d} d</small>`;
+  }
+  if(campo==="primeiro_pagamento_em" && k.primeiro_pagamento_em){
+    const lim = somaDias(k.primeiro_pagamento_em, 3653), d = diasAte(lim);
+    const t = "a decadência do art. 103 conta do dia primeiro do mês seguinte ao primeiro pagamento; a ação não a interrompe (Tema 975/STJ)";
+    return d<0 ? `<small class="lc-jan venc" title="${esc(t)}">decaiu há ${-Math.round(d/30)} meses</small>`
+      : `<small class="lc-jan ${d<=365?"venc":""}" title="${esc(t)}">decai em ${fmtBarra(lim)}</small>`;
+  }
+  return "";
+}
+// um campo do caso na linha, com o valor, o aviso e a canetinha. O prefixo
+// "lc" mantém os ids fora do caminho do cartão de fatos, que usa "fx".
+function lcCampo(k, campo){
+  const f = FATOS[campo]; if(!f) return "";
+  const v = k[campo];
+  const mostra = !v ? `<span class="lc-vazio">a informar</span>`
+    : f.tipo==="data" ? `<span class="cop lc-num" data-cop="${fmtBarra(v)}" data-cop-msg="${esc(f.rot)} copiada" title="clique para copiar">${fmtBarra(v)}</span>`
+    : `<b class="lc-manual">${esc(v)}</b>`;
+  return `<span class="lc-f" title="${esc(f.dica)}"><span class="lc-k">${esc(f.rot)}</span>
+    <span id="lc-${campo}-${k.id}">${mostra}</span>${lcJanela(k, campo)}
+    <button class="lapis" title="alterar ${esc(f.rot)}" onclick="editarFato('${k.id}','${campo}','lc')">✎</button></span>`;
 }
 function linhaCaso(k){
   const n = lcNivel(k.id);
@@ -14372,6 +14525,8 @@ function linhaCaso(k){
       <span class="lc-f"><span class="lc-k">DER</span>${k.der
         ? `<span class="cop lc-num" data-cop="${fmtBarra(k.der)}" data-cop-msg="DER copiada" title="clique para copiar">${fmtBarra(k.der)}</span>`
         : `<span class="lc-vazio">não informada</span>`}<button class="lapis" title="alterar a DER" onclick="editarFato('${k.id}','der')">✎</button></span>
+      ${/* F114 · o que decide ESTA espécie, e só isso; o resto em gestão do caso */""}
+      ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
       <span class="lc-f"><span class="lc-k">Tramitação</span><span class="lc-tram">${esc(tram)}</span></span>
       ${lcVerificacao(k)}
       <button class="lc-mais" onclick="lcAbrir('${k.id}',${n?0:1})" aria-expanded="${n?"true":"false"}"
@@ -14638,17 +14793,19 @@ function somaMeses(iso, m){
 }
 
 // edição no lugar: o lápis vira campo, salva ao sair e volta a ser texto
-function editarFato(casoId, campo){
+function editarFato(casoId, campo, pref){
   const k = D.casoPorId.get(casoId); if(!k) return;
-  const f = FATOS[campo], cx = document.getElementById(`fx-${campo}-${casoId}`);
+  const f = FATOS[campo], cx = document.getElementById(`${pref||"fx"}-${campo}-${casoId}`);
   if(!cx) return;
   const v = k[campo] || "";
   cx.innerHTML = f.tipo==="data"
     ? `<input type="date" value="${esc(v)}" class="fx-inp">`
     : f.tipo==="especie"
       ? `<input class="fx-inp" list="lista-especies" value="${esc(v)}" placeholder="B31">`
-      : `<input class="fx-inp" value="${esc(v)}" placeholder="${esc(f.rot)}">`;
-  const inp = cx.querySelector("input");
+      : f.tipo==="lista"
+        ? `<select class="fx-inp"><option value="">—</option>${f.opcoes.map(o=>`<option value="${esc(o)}" ${o===v?"selected":""}>${esc(o)}</option>`).join("")}</select>`
+        : `<input class="fx-inp" value="${esc(v)}" placeholder="${esc(f.rot)}">`;
+  const inp = cx.querySelector("input,select");
   inp.focus(); if(inp.select) inp.select();
   let salvo = false;
   const guardar = async ()=>{
@@ -14679,6 +14836,7 @@ function editarFato(casoId, campo){
     abrirFicha(clienteAberto);
   };
   inp.onblur = guardar;
+  if(inp.tagName==="SELECT") inp.onchange = guardar;
   inp.onkeydown = e=>{ if(e.key==="Enter"){e.preventDefault();guardar();}
                        if(e.key==="Escape"){salvo=true;abrirFicha(clienteAberto);} };
 }
