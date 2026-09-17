@@ -5,3 +5,6 @@
 --   fixo : {"texto": "...", "lembrar_em": "AAAA-MM-DD"|null, "por": uuid, "em": iso}
 alter table casos add column if not exists nbs  jsonb not null default '[]'::jsonb;
 alter table casos add column if not exists fixo jsonb;
+-- F113 · a SUBESPÉCIE do escritório (chave do catálogo SUBESPECIES do app,
+-- ex.: "B42.PCD.ESP"); o título do caso passa a ser o nome dela.
+alter table casos add column if not exists subespecie text;

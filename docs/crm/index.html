@@ -2132,7 +2132,7 @@ html[data-tema="v10"] .app.celular .sub-menu button{padding:8px 6px}
 html[data-tema="v10"] .linha-caso{margin:-14px -22px 0;width:calc(100% + 44px);background:var(--placa);border-bottom:1px solid var(--borda);font-size:13px}
 html[data-tema="v10"] .lc-topo{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:9px 22px;min-height:46px;box-sizing:border-box}
 html[data-tema="v10"] .lc-esp{font-family:var(--f-mono);font-weight:600;font-size:13px;background:#FFFFFF;border:1px solid var(--borda);border-radius:4px;padding:1px 6px;white-space:nowrap}
-html[data-tema="v10"] .lc-ben{font-family:var(--f-tit);font-size:17px;font-weight:600;color:var(--texto);min-width:0;max-width:34%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html[data-tema="v10"] .lc-ben{font-family:var(--f-tit);font-size:17px;font-weight:600;color:var(--texto);min-width:0;max-width:100%;line-height:1.25}
 html[data-tema="v10"] .lc-f{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 html[data-tema="v10"] .lc-k{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
 html[data-tema="v10"] .lc-num{font-family:var(--f-mono);font-weight:500;color:var(--texto)}
@@ -2274,6 +2274,16 @@ html[data-tema="v10"] .pz{border-radius:10px}
 html[data-tema="v10"] .pz.pz-lemb{background:#F1F3F5;border:none}
 html[data-tema="v10"] .fixo-caso{border-radius:10px;border:none}
 html[data-tema="v10"] .painel[data-p="2"] .caso{border:none;background:#F1F3F5;border-radius:10px}
+/* ── F113 · a janela das espécies ──────────────────────────────────────── */
+.esp-lista{max-height:52vh;overflow:auto;margin-top:8px;border:1px solid var(--borda-suave);border-radius:8px;padding:4px 6px}
+.esp-fam-rot{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro);padding:10px 6px 4px}
+.esp-it{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:none;background:none;padding:6px 8px;border-radius:6px;font:inherit;font-size:13px;color:var(--texto);cursor:pointer}
+.esp-it:hover{background:var(--fundo)}
+.esp-it.on{background:var(--azul-fundo);color:var(--azul-escuro);font-weight:600}
+.esp-it.sub{padding-left:26px}
+.esp-it .esp-cod-mini{font-family:var(--f-mono,monospace);font-size:11px;color:var(--cinza-claro);min-width:40px}
+.esp-it.sub .esp-cod-mini{visibility:hidden}
+html[data-tema="v10"] .lc-topo>.lapis{margin-left:-8px}
 /* no tema a ficha do caso é uma coluna só: linha do caso, menu, prazos, trabalho */
 @container ficha (min-width:900px){ html[data-tema="v10"] .painel[data-p="2"].ativo{display:block} }
 /* ── F82 · Caso completo por fase (só no tema) ─────────────────────────── */
@@ -2367,7 +2377,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.05</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.06</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11443,6 +11453,9 @@ function beneficioGenerico(k, esp){
   return !!(b.match(/^esp(?:ecie)?\.?\s*b?\s*\d{1,3}$/) || b.match(/^b\s*\d{1,3}$/));
 }
 function tituloCaso(k){
+  // F113 · a subespécie do escritório manda no título, quando existe
+  const sub = k.subespecie && nomeDaSubespecie(k.subespecie);
+  if(sub) return sub;
   const esp = nomeDaEspecie(k.especie);
   // decisão do Paulo (13.08): a ESPÉCIE define o título, sempre — nome
   // padronizado do catálogo, sem "Acerto de CNIS" e "B41" disputando o
@@ -13316,6 +13329,166 @@ const ESPECIES = [
   ["GPS","Regularização de contribuições (GPS)"],
   ["SD","Seguro-defeso (pescador artesanal)"],
 ];
+// ══════════════════════════════════════════════════════════════════════════
+// F113 · O CATÁLOGO DE ESPÉCIES DO ESCRITÓRIO. Maior que o do INSS de
+// propósito (pedido do Paulo, 17.09): a espécie do INSS (B42) ganha as
+// SUBESPÉCIES que o escritório distingue e o INSS não nomeia — é por elas
+// que, no futuro, o CRM vai trazer as regras específicas de cada pedido.
+// A subespécie fica em casos.subespecie (chave estável, ex.: "B42.PCD.ESP");
+// o nome vira o título do caso. Pedido fora do catálogo (Repetição de
+// Indébito, ação não previdenciária) se escreve à mão: especie vazia e o
+// benefício com o texto — o título é o texto.
+// Códigos do INSS conferidos no conhecimento geral das espécies; conferir
+// na tabela oficial ao acrescentar código novo.
+// ══════════════════════════════════════════════════════════════════════════
+const FAMILIAS_ESPECIE = [
+  ["Incapacidade", ["B31","B91","B32","B92","B36","B94"]],
+  ["Aposentadorias", ["B41","B42","B46","B57"]],
+  ["Pensão e reclusão", ["B21","B93","B25","B26"]],
+  ["Maternidade e família", ["B80"]],
+  ["Assistenciais", ["B87","B88","B30","B40"]],
+  ["Rurais e especiais (espécies antigas)", ["B01","B04","B07","B08","B52","B29","B56","B89","B96"]],
+  ["Serviços e revisões", ["CNIS","CTC","REV","REST","COPIA","JA","IIR","GPS","SD"]],
+];
+const ESPECIES_MAIS = [
+  ["B01","Pensão por morte de trabalhador rural"],
+  ["B04","Aposentadoria por invalidez de trabalhador rural"],
+  ["B07","Aposentadoria por idade de trabalhador rural"],
+  ["B08","Aposentadoria por idade de empregador rural"],
+  ["B52","Auxílio-doença de trabalhador rural"],
+  ["B29","Pensão especial de ex-combatente"],
+  ["B30","Renda mensal vitalícia por invalidez"],
+  ["B40","Renda mensal vitalícia por idade"],
+  ["B56","Pensão vitalícia dos seringueiros (soldados da borracha)"],
+  ["B89","Pensão especial aos portadores da síndrome da Talidomida"],
+  ["B96","Pensão especial aos portadores de hanseníase (Lei 11.520/2007)"],
+];
+for(const e of ESPECIES_MAIS) if(!ESPECIES.some(([c])=>c===e[0])) ESPECIES.push(e);
+// as subespécies, por código do INSS: [chave, nome completo]
+const SUBESPECIES = {
+  B31:[["B31","Auxílio por incapacidade temporária"],
+       ["B31.RURAL","Auxílio por incapacidade temporária do segurado especial (rural)"],
+       ["B31.PREEX","Auxílio por incapacidade temporária por doença preexistente agravada"]],
+  B91:[["B91","Auxílio por incapacidade acidentário (acidente de trabalho)"],
+       ["B91.OCUP","Auxílio por incapacidade acidentário por doença ocupacional"],
+       ["B91.TRAJETO","Auxílio por incapacidade acidentário por acidente de trajeto"]],
+  B32:[["B32","Aposentadoria por incapacidade permanente"],
+       ["B32.25","Aposentadoria por incapacidade permanente com acréscimo de 25% (grande invalidez)"],
+       ["B32.CONV","Aposentadoria por incapacidade permanente por conversão do auxílio (B31)"]],
+  B92:[["B92","Aposentadoria por incapacidade acidentária"],
+       ["B92.25","Aposentadoria por incapacidade acidentária com acréscimo de 25%"]],
+  B36:[["B36","Auxílio-acidente previdenciário"],
+       ["B36.CONS","Auxílio-acidente previdenciário após consolidação das lesões (pedido sucessivo ao B31)"]],
+  B94:[["B94","Auxílio-acidente acidentário (acidente de trabalho)"],
+       ["B94.OCUP","Auxílio-acidente acidentário por doença ocupacional"]],
+  B41:[["B41","Aposentadoria por idade urbana"],
+       ["B41.RURAL","Aposentadoria por idade rural (segurado especial)"],
+       ["B41.HIBRIDA","Aposentadoria por idade híbrida (tempo urbano e rural)"],
+       ["B41.PCD","Aposentadoria por idade da pessoa com deficiência (LC 142/2013)"],
+       ["B41.ESP","Aposentadoria por idade urbana com períodos especiais"],
+       ["B41.RUR","Aposentadoria por idade urbana com períodos rurais"]],
+  B42:[["B42","Aposentadoria por tempo de contribuição"],
+       ["B42.PCD","Aposentadoria por tempo de contribuição da pessoa com deficiência"],
+       ["B42.PCD.ESP","Aposentadoria por tempo de contribuição da pessoa com deficiência e períodos especiais"],
+       ["B42.PCD.RUR","Aposentadoria por tempo de contribuição da pessoa com deficiência e períodos rurais"],
+       ["B42.PCD.ESP.RUR","Aposentadoria por tempo de contribuição da pessoa com deficiência, períodos especiais e rurais"],
+       ["B42.ESP","Aposentadoria por tempo de contribuição com períodos especiais"],
+       ["B42.ESP.RUR","Aposentadoria por tempo de contribuição com períodos especiais e rurais"],
+       ["B42.RUR","Aposentadoria por tempo de contribuição com períodos rurais"],
+       ["B42.APRENDIZ","Aposentadoria por tempo de contribuição com tempo de aluno-aprendiz"],
+       ["B42.MILITAR","Aposentadoria por tempo de contribuição com tempo de serviço militar"],
+       ["B42.RECIPROCA","Aposentadoria por tempo de contribuição com contagem recíproca (RPPS)"],
+       ["B42.DIREITO","Aposentadoria por tempo de contribuição por direito adquirido (regras anteriores à EC 103)"]],
+  B46:[["B46","Aposentadoria especial"],
+       ["B46.RUR","Aposentadoria especial com períodos rurais"],
+       ["B46.RECIPROCA","Aposentadoria especial com contagem recíproca (RPPS)"],
+       ["B46.CONV","Conversão de tempo especial em comum (para outra aposentadoria)"]],
+  B57:[["B57","Aposentadoria de professor"],
+       ["B57.INFANTIL","Aposentadoria de professor com tempo de educação infantil (Lei 15.326/2026)"],
+       ["B57.ESP","Aposentadoria de professor com períodos especiais"],
+       ["B57.EC20","Aposentadoria de professor por direito adquirido (EC 20/1998)"]],
+  B21:[["B21","Pensão por morte"],
+       ["B21.CONJ","Pensão por morte ao cônjuge"],
+       ["B21.COMP","Pensão por morte ao companheiro (união estável)"],
+       ["B21.FILHO","Pensão por morte ao filho menor"],
+       ["B21.INVAL","Pensão por morte ao filho inválido ou com deficiência"],
+       ["B21.GUARDA","Pensão por morte ao menor sob guarda"],
+       ["B21.PAIS","Pensão por morte aos pais (dependência econômica)"],
+       ["B21.EX","Pensão por morte ao ex-cônjuge com alimentos"],
+       ["B21.RURAL","Pensão por morte de segurado especial (rural)"]],
+  B93:[["B93","Pensão por morte acidentária"]],
+  B25:[["B25","Auxílio-reclusão"],["B25.RURAL","Auxílio-reclusão de segurado especial (rural)"]],
+  B80:[["B80","Salário-maternidade"],
+       ["B80.EMP","Salário-maternidade da empregada"],
+       ["B80.CI","Salário-maternidade da contribuinte individual ou facultativa"],
+       ["B80.RURAL","Salário-maternidade da segurada especial (rural)"],
+       ["B80.ADOCAO","Salário-maternidade por adoção ou guarda"],
+       ["B80.DESEMP","Salário-maternidade da desempregada (período de graça)"]],
+  B87:[["B87","BPC/LOAS à pessoa com deficiência"],
+       ["B87.TEA","BPC/LOAS à pessoa com deficiência — autismo (TEA)"],
+       ["B87.FIBRO","BPC/LOAS à pessoa com deficiência — fibromialgia (Lei 15.176/2025)"],
+       ["B87.MENOR","BPC/LOAS à criança ou adolescente com deficiência"]],
+  B88:[["B88","BPC/LOAS ao idoso"]],
+  REV:[["REV","Revisão de benefício"],
+       ["REV.ART29","Revisão pelo art. 29, II (melhor benefício)"],
+       ["REV.TETO","Revisão do teto (buraco negro e verde)"],
+       ["REV.IRSM","Revisão pelo IRSM de fevereiro/1994"],
+       ["REV.RVT","Revisão da vida toda"],
+       ["REV.CONCOM","Revisão por atividades concomitantes (Tema 1070)"],
+       ["REV.ESP","Revisão por reconhecimento de tempo especial"],
+       ["REV.RUR","Revisão por reconhecimento de tempo rural"],
+       ["REV.PCD","Revisão por aposentadoria da pessoa com deficiência (LC 142)"],
+       ["REV.INDEB","Repetição de indébito / devolução de valores"]],
+};
+function subespeciesDe(cod){ return SUBESPECIES[cod] || (nomeDaEspecie(cod) ? [[cod, nomeDaEspecie(cod)]] : []); }
+function nomeDaSubespecie(chave){
+  for(const lista of Object.values(SUBESPECIES)){ const s = lista.find(([c])=>c===chave); if(s) return s[1]; }
+  return null;
+}
+let espBusca = "";
+function escolherEspecie(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  espBusca = "";
+  caixa(`<h3 style="margin:0 0 8px">Espécie do caso <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
+    <input id="esp-busca" placeholder="procurar: tempo de contribuição, rural, pensão, B42…" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--borda);border-radius:6px;font-size:13px"
+      oninput="espBusca=this.value;pintarEspecies('${casoId}')">
+    <div id="esp-lista" class="esp-lista"></div>
+    <div class="form-linha" style="margin-top:10px;align-items:center;gap:8px">
+      <input id="esp-livre" placeholder="outro pedido, à mão (ex.: Repetição de Indébito)" style="flex:1;min-width:220px"
+        onkeydown="if(event.key==='Enter')gravarEspecie('${casoId}',null,null,this.value)">
+      <button class="btn-mini" onclick="gravarEspecie('${casoId}',null,null,document.getElementById('esp-livre').value)">usar este nome</button>
+    </div>`);
+  pintarEspecies(casoId);
+  document.getElementById("esp-busca").focus();
+}
+function pintarEspecies(casoId){
+  const k = D.casoPorId.get(casoId) || {}, q = dsa(espBusca||"").trim();
+  const bate = t => !q || dsa(t).includes(q);
+  const html = FAMILIAS_ESPECIE.map(([fam, cods]) => {
+    const itens = cods.flatMap(cod => subespeciesDe(cod).filter(([ch, nome]) => bate(`${cod} ${ch} ${nome}`)).map(([ch, nome]) => {
+      const on = (k.subespecie||k.especie)===ch || (!k.subespecie && k.especie===cod && ch===cod);
+      return `<button class="esp-it ${on?"on":""} ${ch===cod?"":"sub"}" onclick="gravarEspecie('${casoId}','${cod}','${ch}')">
+        <span class="esp-cod-mini">${esc(cod)}</span>${esc(nome)}</button>`; }));
+    return itens.length ? `<div class="esp-fam"><div class="esp-fam-rot">${esc(fam)}</div>${itens.join("")}</div>` : "";
+  }).join("");
+  document.getElementById("esp-lista").innerHTML = html || `<p class="meio-sub" style="padding:6px 2px">Nada com “${esc(espBusca)}”. Escreva o pedido à mão no campo abaixo.</p>`;
+}
+async function gravarEspecie(casoId, cod, chave, livre){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  let corpo;
+  if(cod){
+    const nome = (chave && nomeDaSubespecie(chave)) || nomeDaEspecie(cod);
+    corpo = {especie:cod, subespecie:(chave && chave!==cod) ? chave : null, beneficio:nome};
+  } else {
+    const t = String(livre||"").trim(); if(!t) return aviso("Escreva o nome do pedido");
+    corpo = {especie:null, subespecie:null, beneficio:t};
+  }
+  try{ await patchCaso(casoId, corpo); }
+  catch(e){ return aviso(/42703|subespecie/.test(String(e.message||e)) ? "Rode o crm/fase2/schema_linha_caso.sql no Supabase — falta a coluna subespecie" : "Não gravou — tente de novo"); }
+  Object.assign(k, corpo); fecharCaixa();
+  aviso(`Espécie: ${tituloCaso(k)} ✔`, false);
+  abrirFicha(clienteAberto);
+}
 // o que cada sigla quer dizer, para quem está aprendendo (fica no title)
 const FATOS = {
   especie:    {rot:"Espécie",     tipo:"especie", dica:"o que define o TÍTULO do caso: espécie de benefício (B31, B41…) ou serviço do INSS (CNIS, REV, CTC…)"},
@@ -14187,13 +14360,13 @@ function lcGestao(k){
 }
 function linhaCaso(k){
   const n = lcNivel(k.id);
-  const esp = k.especie ? esc(String(k.especie).toUpperCase()) : `<span class="lc-vazio">espécie?</span>`;
   const tram = TRAMITA[k.fase] || NOME_FASE[k.fase] || k.fase || "";
   return `<section class="linha-caso" aria-label="O caso">
     <div class="lc-topo">
-      <span class="lc-esp" id="fx-especie-${k.id}">${esp}<button class="lapis" title="alterar a espécie — a lista mostra as espécies cabíveis"
-        onclick="editarFato('${k.id}','especie')">✎</button></span>
-      <b class="lc-ben" title="${esc(tituloCaso(k))}">${esc(tituloCaso(k))}</b>
+      ${/* F113 · só o nome do pedido e a canetinha; o código do INSS fica no title e na janela */""}
+      <b class="lc-ben ${(k.especie||k.beneficio)?"":"lc-vazio"}" title="${esc(k.especie?`${k.especie} · `:"")}${esc(tituloCaso(k))} — clique na canetinha para trocar">${
+        (k.especie||k.beneficio) ? esc(tituloCaso(k)) : "definir o pedido"}</b>
+      <button class="lapis" title="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button>
       ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
       ${k.urgente?`<span class="chip urg">🔥 URGENTE</span>`:""}
       <span class="lc-f"><span class="lc-k">DER</span>${k.der
@@ -14488,6 +14661,7 @@ function editarFato(casoId, campo){
     // espécie definida arrasta o benefício junto quando ele está vazio ou é
     // o genérico da mesma família — o nome do caso conta a mesma história
     // que o campo (gravado, vale também para a busca e para o To Do)
+    if(campo==="especie"){ corpo.subespecie = null; k.subespecie = null; }
     if(campo==="especie" && novo){
       const esp = nomeDaEspecie(novo);
       if(esp && beneficioGenerico(k, esp)){
