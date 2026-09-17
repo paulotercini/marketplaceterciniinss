@@ -94,7 +94,27 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       nivel1: !!r.querySelector(".lc-numeros"), semRegua: !document.querySelector(".regua-caso"), semCartaoFora: !document.querySelector(".painel[data-p='2'] > .fatos-processo"),
       semPrazoFatalSolto: !/Prazo fatal do caso|PRAZO FATAL/.test(document.querySelector(".painel[data-p='2']").textContent) };
   });
-  conf("uma linha só: espécie, benefício, DER em dd/mm/aaaa, tramitação e verificação", /^B41/.test(lc.txt) && /Aposentadoria por idade/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && /TRAMITAÇÃO INSS/i.test(lc.txt) && /VERIFICAÇÃO Manual/i.test(lc.txt));
+  conf("uma linha só: o nome do pedido (sem o código), DER em dd/mm/aaaa, tramitação e verificação", /^Aposentadoria por idade/.test(lc.txt) && !/^B41/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && /TRAMITAÇÃO INSS/i.test(lc.txt) && /VERIFICAÇÃO Manual/i.test(lc.txt));
+  // ── F113 · a espécie pela janela, com subespécies e pedido à mão ─────────
+  conf("a canetinha ao lado do nome abre a janela das espécies", await p.evaluate(() => /escolherEspecie/.test((document.querySelector(".lc-topo .lc-ben + .lapis") || {}).getAttribute("onclick") || "")));
+  await p.evaluate((id) => escolherEspecie(id), CASO1); await p.waitForTimeout(150);
+  const jan = await p.evaluate(() => { const m = document.getElementById("modal"); return { itens: m.querySelectorAll(".esp-it").length, b36: /Auxílio-acidente previdenciário/.test(m.textContent),
+    b42: [...m.querySelectorAll(".esp-it")].filter(b => /Aposentadoria por tempo de contribuição/.test(b.textContent)).length, livre: !!m.querySelector("#esp-livre") }; });
+  conf("a janela lista o catálogo inteiro, com o B36 e as subespécies do B42 (deficiência, especiais, rurais e combinações)", jan.itens > 60 && jan.b36 && jan.b42 >= 8 && jan.livre);
+  await p.evaluate(() => { espBusca = "deficiência e períodos especiais"; pintarEspecies(casoSel); });
+  const achou = await p.evaluate(() => [...document.querySelectorAll("#esp-lista .esp-it")].map(b => b.textContent.trim()));
+  conf("a busca acha a subespécie certa", achou.length >= 1 && achou.every(t => /pessoa com deficiência/.test(t) && /especiais/.test(t)));
+  await p.evaluate((id) => gravarEspecie(id, "B42", "B42.PCD.ESP"), CASO1); await p.waitForTimeout(300);
+  const esp = patches("subespecie").pop();
+  conf("escolher grava espécie B42 + subespécie + nome, e o título do caso vira o nome da subespécie",
+    esp && esp.especie === "B42" && esp.subespecie === "B42.PCD.ESP" && /pessoa com deficiência e períodos especiais/.test(esp.beneficio)
+    && await p.evaluate(() => /Aposentadoria por tempo de contribuição da pessoa com deficiência e períodos especiais/.test(document.querySelector(".lc-topo .lc-ben").textContent)));
+  await p.evaluate((id) => gravarEspecie(id, null, null, "Repetição de Indébito"), CASO1); await p.waitForTimeout(300);
+  const livre = patches("subespecie").pop();
+  conf("o pedido à mão grava sem espécie e vira o título", livre && livre.especie === null && livre.beneficio === "Repetição de Indébito"
+    && await p.evaluate(() => document.querySelector(".lc-topo .lc-ben").textContent.trim() === "Repetição de Indébito"));
+  await p.evaluate((id) => gravarEspecie(id, "B41", "B41"), CASO1); await p.waitForTimeout(300);
+  conf("voltar à espécie do INSS limpa a subespécie", (patches("subespecie").pop() || {}).subespecie === null && await p.evaluate(() => /^Aposentadoria por idade/.test(document.querySelector(".lc-topo .lc-ben").textContent.trim())));
   conf("'Manual' em vermelho", lc.manual === "Manual" && lc.corManual === "rgb(179, 38, 30)");
   conf("fechada, a linha não mostra os números; a régua e o cartão saíram da frente", !lc.nivel1 && lc.semRegua && lc.semCartaoFora);
   conf("o 'venceu … Prazo fatal do caso' sumiu de vez", lc.semPrazoFatalSolto);
