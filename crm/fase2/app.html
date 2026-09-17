@@ -2347,7 +2347,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.00</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.01</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -9558,7 +9558,9 @@ function pintarFicha(){
       ${/* F56 · o "Concluir em" do To Do agora mora aqui: UMA data à vista
            dizendo quando este cliente volta — vencida grita em vermelho,
            futura avisa em azul, e a ausência de data também é informação */""}
-      ${(pd=>pd.venceu
+      ${/* F108 · no tema v10 a pílula saiu (pedido do Paulo, 17.09): a data
+           que cobra ação já mora nos quadros de prazo do caso */""}
+      ${temaV10()?"":(pd=>pd.venceu
         ?`<button class="volta-pilula venceu" onclick="irParaData('${pd.venceu.tipo}')"
             title="${esc(pd.venceu.rotulo)} — esperando desde ${fmt(pd.venceu.data)}; clique para ir até lá">⏰ venceu ${fmt(pd.venceu.data)} · ${esc(pd.venceu.rotulo)}</button>`
         :pd.proxima

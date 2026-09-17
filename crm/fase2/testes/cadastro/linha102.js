@@ -84,6 +84,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("a parceria aparece ao lado do nome, só porque existe", /Dr\. Fictício Parceiro/.test(cab.parc || "") && cab.parcAntesDoStatus);
   conf("a pílula 'Cliente ativo' está no canto direito, colada no ✕", cab.stNoCanto);
   conf("o CPF copia no clique (cursor de copiar, sem botão)", cab.cpfCop === "12345678909" && cab.cursor === "copy");
+  conf("a pílula 'volta dd.mm.aaaa' saiu do cabeçalho (F108)", await p.evaluate(() => !document.querySelector(".det-topo .volta-pilula")));
 
   // ── F102 · a linha do caso ───────────────────────────────────────────────
   const lc = await p.evaluate(() => {
