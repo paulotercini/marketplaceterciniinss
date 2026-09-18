@@ -82,7 +82,7 @@ DIB. Dia seguinte ao da cessação do benefício por incapacidade que o originou
 
 Cessação. Pela aposentadoria (vedação MP 1.596-14/1997). Direito adquirido pela Súmula 507/STJ para benefícios anteriores à MP.
 
-Integração ao salário-de-benefício de aposentadoria. Tema 862/STJ.
+Integração ao salário-de-benefício de aposentadoria. Art. 31 da Lei 8.213/91.
 
 Anexo III do Decreto 3.048/99 é EXEMPLIFICATIVO (Súmulas 88 e 89/TNU + Tema 416/STJ).
 

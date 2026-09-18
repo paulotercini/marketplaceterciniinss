@@ -1,6 +1,6 @@
 ---
 name: base-b94-cessacao-acumulacao-vedacao
-description: "Cessação do auxílio-acidente B94 pela aposentadoria, vedação de acumulação após MP 1.596-14/1997, direito adquirido da Súmula 507 STJ, art. 86 §2º Lei 8.213/91 e estratégias contra cessação automática indevida. Use SEMPRE que mencionar cessação B94, B94 cessou pela aposentadoria, vedação acumulação B94 aposentadoria, art. 86 §2º Lei 8.213, MP 1.596-14/1997 vedação, marco temporal 11/11/1997, B94 anterior preservado, Súmula 507 STJ direito adquirido, B94 cessado indevidamente, restabelecimento B94 cessado, retroatividade vedação acumulação, B94 concedido antes 1997, lei velha B94, tempus regit actum B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-tema862, base-b94-anexo-iii-quadros, base-b94-sequela-minima-tema201 e decadencia-revisao-previdenciaria."
+description: "Cessação do auxílio-acidente B94 pela aposentadoria, vedação de acumulação após MP 1.596-14/1997, direito adquirido da Súmula 507 STJ, art. 86 §2º Lei 8.213/91 e estratégias contra cessação automática indevida. Use SEMPRE que mencionar cessação B94, B94 cessou pela aposentadoria, vedação acumulação B94 aposentadoria, art. 86 §2º Lei 8.213, MP 1.596-14/1997 vedação, marco temporal 11/11/1997, B94 anterior preservado, Súmula 507 STJ direito adquirido, B94 cessado indevidamente, restabelecimento B94 cessado, retroatividade vedação acumulação, B94 concedido antes 1997, lei velha B94, tempus regit actum B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-art31, base-b94-anexo-iii-quadros, base-b94-sequela-minima-tema201 e decadencia-revisao-previdenciaria."
 ---
 
 # Cessação e Vedação de Acumulação do B94
@@ -39,9 +39,19 @@ Fonte oficial em https://www.stj.jus.br
 
 Direito adquirido.
 
-### Tema 862 STJ
+### Integração ao salário-de-benefício. Art. 31 da Lei 8.213/91
 
-Integração ao SB.
+O fundamento é LEGAL e direto, sem tema repetitivo. O art. 31 da Lei 8.213/91 determina que o valor mensal do auxílio-acidente integra o salário de contribuição para fins de cálculo do salário de benefício de qualquer aposentadoria. Não citar o Tema 862 aqui, porque ele é termo inicial.
+
+### Tema 862 STJ. TERMO INICIAL do auxílio-acidente
+
+Tese literal, conferida na página oficial de precedentes qualificados do STJ em 18/09/2026. "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ."
+
+Primeira Seção, leading cases REsp 1.729.555/SP e REsp 1.786.736/SP, julgados em 09/06/2021, acórdão publicado em 01/07/2021. **Trânsito em julgado.** A matéria subiu ao STF como Tema 1225, e o Supremo decidiu em 13/08/2022 que NÃO há repercussão geral por ser questão infraconstitucional, com trânsito em 15/09/2022, de modo que a tese do STJ está firme e definitiva.
+
+**ALERTA de uso.** O Tema 862 NÃO trata de integração do B94 ao salário-de-benefício. Essa integração tem fundamento legal direto no art. 31 da Lei 8.213/91 e NÃO possui tema repetitivo próprio. Citar o Tema 862 para sustentar integração entrega ao INSS um erro de fundamento.
+
+**Regra prática desfavorável, registrada com honestidade.** A descrição oficial do Tema 1225/STF registra que o STJ, na ementa do julgado, considerou como termo inicial a DATA DA CITAÇÃO do INSS quando não houver auxílio-doença prévio nem requerimento administrativo do auxílio-acidente. Havendo B31 anterior, vale o dia seguinte à cessação. Não havendo, o requerimento administrativo prévio passa a ser decisivo para não perder retroativos.
 
 ## Vedação após 11/11/1997
 
@@ -51,7 +61,7 @@ Segundo, art. 86 §2º veda acumulação.
 
 Terceiro, integração ao SB substitui acumulação.
 
-Quarto, Tema 862 STJ.
+Quarto, art. 31 da Lei 8.213/91 para a integração, e Tema 862 STJ apenas para o termo inicial.
 
 ## Direito adquirido anterior
 
@@ -75,7 +85,7 @@ Quarto, requerer restabelecimento ou integração.
 
 ## Cenários pró-segurado
 
-Cenário A, B94 desde 1995, aposentadoria 2005. NÃO acumula, porque a aposentadoria é posterior a 11/11/1997 (Súmula 507 STJ exige lesão e aposentadoria anteriores ao marco). O B94 cessa na aposentadoria; resta a integração ao SB pelo art. 31 da Lei 8.213/91 e Tema 862 STJ.
+Cenário A, B94 desde 1995, aposentadoria 2005. NÃO acumula, porque a aposentadoria é posterior a 11/11/1997 (Súmula 507 STJ exige lesão e aposentadoria anteriores ao marco). O B94 cessa na aposentadoria; resta a integração ao SB pelo art. 31 da Lei 8.213/91.
 
 Cenário B, B94 cessado indevidamente em 2010. Restabelecimento.
 
@@ -116,11 +126,11 @@ IBDP.
 ## Integração com outras skills
 
 Para detalhes operacionais, acionar `auxilio-acidente-b94`.
-Para integração ao SB, acionar `base-b94-integracao-salario-beneficio-tema862`.
+Para integração ao SB, acionar `base-b94-integracao-salario-beneficio-art31`.
 Para Anexo III, acionar `base-b94-anexo-iii-quadros`.
 Para sequela mínima, acionar `base-b94-sequela-minima-tema201`.
 Para decadência, acionar `decadencia-revisao-previdenciaria`.
 
 ## O que NÃO está nesta skill
 
-Integração ao SB em `base-b94-integracao-salario-beneficio-tema862`. Anexo III em `base-b94-anexo-iii-quadros`. Sequela mínima em `base-b94-sequela-minima-tema201`.
+Integração ao SB em `base-b94-integracao-salario-beneficio-art31`. Anexo III em `base-b94-anexo-iii-quadros`. Sequela mínima em `base-b94-sequela-minima-tema201`.

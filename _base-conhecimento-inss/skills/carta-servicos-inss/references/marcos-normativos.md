@@ -72,7 +72,7 @@ ADI 3931 STF (presunção do NTEP).
 
 Art. 86 Lei 8.213/91. Anexo III Decreto 3.048/99 (caráter exemplificativo).
 
-Tema 416 STJ (benefício devido ainda que mínima a lesão; Anexo III exemplificativo). Súmula 88 TNU (limitação ainda que leve enseja concessão, 17/04/2024). Súmula 89 TNU (limite negativo, sem redução nem maior esforço não há benefício, 17/04/2024). Tema 201 TNU (contribuinte individual não faz jus ao B94, regra geral com exceção jurisprudencial no período de graça). Súmula 89 STJ (ação acidentária prescinde do exaurimento da via administrativa). Tema 862 STJ (integração ao salário-de-benefício). Súmula 507 STJ (acumulação para B94 com lesão e aposentadoria anteriores a 11/11/1997). Citações conferidas na auditoria de 11/07/2026.
+Tema 416 STJ (benefício devido ainda que mínima a lesão; Anexo III exemplificativo). Súmula 88 TNU (limitação ainda que leve enseja concessão, 17/04/2024). Súmula 89 TNU (limite negativo, sem redução nem maior esforço não há benefício, 17/04/2024). Tema 201 TNU (contribuinte individual não faz jus ao B94, regra geral com exceção jurisprudencial no período de graça). Súmula 89 STJ (ação acidentária prescinde do exaurimento da via administrativa). Tema 862 STJ (termo inicial do B94, dia seguinte à cessação do B31). Art. 31 da Lei 8.213/91 (integração ao salário-de-benefício). Súmula 507 STJ (acumulação para B94 com lesão e aposentadoria anteriores a 11/11/1997). Citações conferidas na auditoria de 11/07/2026.
 
 Vedação a contribuintes individuais e facultativos pelo art. 18 §1º Lei 8.213/91.
 

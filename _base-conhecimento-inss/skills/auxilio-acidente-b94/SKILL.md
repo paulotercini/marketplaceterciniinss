@@ -1,6 +1,6 @@
 ---
 name: auxilio-acidente-b94
-description: Skill do auxílio-acidente (B94). Use SEMPRE que mencionar auxílio-acidente, B94, sequela, redução da capacidade laborativa, consolidação de lesões, Anexo III Decreto 3.048, art. 86 Lei 8.213, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 TNU, período de graça B94, CI auxílio-acidente, PUIL 5000733, PUIL 5026380, MS auxílio-acidente, Anexo III exemplificativo, cálculo RMI B94, art. 31 integração salário-de-contribuição, Tema 862 STJ, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, reabilitação profissional B94, sequela mínima, quadros do Anexo III, NTEP B94, nexo acidentário B94, estabilidade art. 118, ou qualquer petição, auditoria ou estratégia de auxílio-acidente. Acionar AUTOMATICAMENTE com peticao-previdenciaria, auditoria-laudo-pericial, ntep-nexo-acidentario, ms-competencia-autoridade-coatora quando envolver B94. NÃO use para B31/B91/B32/B92 sem pedido cumulativo de B94, BPC/LOAS ou aposentadoria especial.
+description: Skill do auxílio-acidente (B94). Use SEMPRE que mencionar auxílio-acidente, B94, sequela, redução da capacidade laborativa, consolidação de lesões, Anexo III Decreto 3.048, art. 86 Lei 8.213, Tema 416 STJ, Súmula 88 TNU, Súmula 89 TNU, Tema 201 TNU, Tema 350 TNU, período de graça B94, CI auxílio-acidente, PUIL 5000733, PUIL 5026380, MS auxílio-acidente, Anexo III exemplificativo, cálculo RMI B94, art. 31 integração salário-de-contribuição, Tema 862 STJ termo inicial, Súmula 507 STJ, Tema 555 STJ, Tema 322 TNU, reabilitação profissional B94, sequela mínima, quadros do Anexo III, NTEP B94, nexo acidentário B94, estabilidade art. 118, ou qualquer petição, auditoria ou estratégia de auxílio-acidente. Acionar AUTOMATICAMENTE com peticao-previdenciaria, auditoria-laudo-pericial, ntep-nexo-acidentario, ms-competencia-autoridade-coatora quando envolver B94. NÃO use para B31/B91/B32/B92 sem pedido cumulativo de B94, BPC/LOAS ou aposentadoria especial.
 ---
 
 ## NOTA DE AUDITORIA (11/07/2026)
@@ -107,7 +107,7 @@ O INSS erra sistematicamente o cálculo, aplicando 50% sobre a RMI do auxílio-d
 
 **Art. 31, Lei 8.213/91** — o valor do B94 integra o salário-de-contribuição mês a mês para cálculo de qualquer aposentadoria. **Tema 322/TNU** — pode incrementar inclusive aposentadoria por idade rural do segurado especial.
 
-B94 reconhecido tardiamente (com atrasados prescritos) ainda impacta o cálculo da aposentadoria. A prescrição limita o pagamento de parcelas, não extingue o direito. O reconhecimento do período como devido sustenta a revisão da RMI da aposentadoria (art. 86, §2º + **Tema 862/STJ**).
+B94 reconhecido tardiamente (com atrasados prescritos) ainda impacta o cálculo da aposentadoria. A prescrição limita o pagamento de parcelas, não extingue o direito. O reconhecimento do período como devido sustenta a revisão da RMI da aposentadoria (art. 31 da Lei 8.213/91).
 
 **Cumulação vedada** — Súmula 507/STJ + Tema 555/STJ. B94 não acumula com aposentadoria (salvo fato gerador anterior à Lei 9.528/97, 11/11/1997).
 
@@ -168,7 +168,7 @@ O segurado tem sequela consolidada após acidente?
 ### Precedentes adicionais conforme o caso
 - Período de graça CI → PUIL 5000733/SC + PUIL 5026380/ES
 - Cálculo da RMI → TRF4 AI 5029923/RS
-- Integração na aposentadoria → Art. 31 + Tema 322/TNU + Tema 862/STJ
+- Integração na aposentadoria → Art. 31 da Lei 8.213/91 + Tema 322/TNU. O Tema 862/STJ NÃO serve aqui, porque é termo inicial
 - Cumulação vedada → Súmula 507/STJ + Tema 555/STJ
 - Qualidade de segurado → Tema 350/TNU
 - Afastamento de laudo → TRF3 ApCiv 5007232

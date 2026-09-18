@@ -120,4 +120,4 @@ Quinto, dialeticidade.
 
 ## 10. Integração prática
 
-`auxilio-acidente-b94`, `base-b94-anexo-iii-quadros`, `base-b94-integracao-salario-beneficio-tema862`, `base-b94-cessacao-acumulacao-vedacao`, `base-b94-sequela-minima-tema201`, `ntep-nexo-acidentario`, `peticao-previdenciaria`.
+`auxilio-acidente-b94`, `base-b94-anexo-iii-quadros`, `base-b94-integracao-salario-beneficio-art31`, `base-b94-cessacao-acumulacao-vedacao`, `base-b94-sequela-minima-tema201`, `ntep-nexo-acidentario`, `peticao-previdenciaria`.

@@ -61,7 +61,7 @@ Cenário recorrente — o segurado obtém judicialmente o B94 anos depois, com p
 **A prescrição limita o pagamento de parcelas atrasadas, não extingue o direito.** O reconhecimento do período como devido sustenta o impacto no cálculo da RMI da aposentadoria e a possível revisão.
 
 **Art. 86, §2º** — DIB do B94 no dia seguinte à cessação do auxílio-doença.
-**Tema 862/STJ (repetitivo)** — confirma a lógica, com prescrição quinquenal para atrasados.
+**Tema 862/STJ (repetitivo)** — trata do TERMO INICIAL do B94, dia seguinte à cessação do B31, com prescrição quinquenal da Súmula 85/STJ. Define desde quando existem valores a integrar, e não a integração em si, cujo fundamento é o art. 31 da Lei 8.213/91.
 
 ## 7. Vedação de Cumulação com Aposentadoria
 

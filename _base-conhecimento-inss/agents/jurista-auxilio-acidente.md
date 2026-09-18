@@ -70,7 +70,7 @@ Aceitar cessação automática do B94 pela aposentadoria sem conferir se a seque
 
 ## Fontes internas
 
-Leia no repositório as skills `base-auxilio-acidente-b94-pos-reforma`, `auxilio-acidente-b94`, `base-b94-anexo-iii-quadros`, `base-b94-sequela-minima-tema201`, `base-b94-integracao-salario-beneficio-tema862`, `base-b94-cessacao-acumulacao-vedacao`, `base-b94-nexo-acidentario-ntep`, `auditoria-laudo-pericial` e `base-termo-inicial-dib-por-especie`. Confira toda citação de Tema, Súmula ou Enunciado contra `base-precedentes-catalogo-vinculantes/references/CATALOGO-*`. Citação suspeita de homônimo, superação ou tese divergente NÃO se resolve aqui, despache ao agente `verificador-precedentes`.
+Leia no repositório as skills `base-auxilio-acidente-b94-pos-reforma`, `auxilio-acidente-b94`, `base-b94-anexo-iii-quadros`, `base-b94-sequela-minima-tema201`, `base-b94-integracao-salario-beneficio-art31`, `base-b94-cessacao-acumulacao-vedacao`, `base-b94-nexo-acidentario-ntep`, `auditoria-laudo-pericial` e `base-termo-inicial-dib-por-especie`. Confira toda citação de Tema, Súmula ou Enunciado contra `base-precedentes-catalogo-vinculantes/references/CATALOGO-*`. Citação suspeita de homônimo, superação ou tese divergente NÃO se resolve aqui, despache ao agente `verificador-precedentes`.
 
 ## Formato de saída
 

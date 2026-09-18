@@ -2,7 +2,7 @@
 
 ## 1. Conceito operacional
 
-A acumulação do B94 com aposentadoria foi vedada pela MP 1.596-14/1997, com marco em 11/11/1997. B94 concedido antes preserva acumulação por direito adquirido. B94 posterior integra ao SB pelo Tema 862 STJ.
+A acumulação do B94 com aposentadoria foi vedada pela MP 1.596-14/1997, com marco em 11/11/1997. B94 concedido antes preserva acumulação por direito adquirido. B94 posterior integra ao SB pelo art. 31 da Lei 8.213/91.
 
 ## 2. Fundamento constitucional
 
@@ -34,9 +34,9 @@ Acumulação preservada.
 
 Direito adquirido.
 
-### Tema 862 STJ
+### Tema 862 STJ. TERMO INICIAL, não integração
 
-Integração para B94 posterior.
+Tese literal, conferida na página oficial do STJ em 18/09/2026. "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ." Primeira Seção, REsp 1.729.555/SP e 1.786.736/SP, trânsito em julgado. A integração ao salário-de-benefício tem fundamento no art. 31 da Lei 8.213/91 e não neste tema.
 
 ## 5. Cenários pró-segurado
 
@@ -118,4 +118,4 @@ Quinto, dialeticidade.
 
 ## 10. Integração prática
 
-`auxilio-acidente-b94`, `base-b94-integracao-salario-beneficio-tema862`, `base-b94-anexo-iii-quadros`, `base-b94-sequela-minima-tema201`, `decadencia-revisao-previdenciaria`, `peticao-previdenciaria`.
+`auxilio-acidente-b94`, `base-b94-integracao-salario-beneficio-art31`, `base-b94-anexo-iii-quadros`, `base-b94-sequela-minima-tema201`, `decadencia-revisao-previdenciaria`, `peticao-previdenciaria`.

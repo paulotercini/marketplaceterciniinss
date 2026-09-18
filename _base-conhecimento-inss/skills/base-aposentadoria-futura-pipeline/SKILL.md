@@ -1,6 +1,6 @@
 ---
 name: base-aposentadoria-futura-pipeline
-description: "Pipeline operacional pró-segurado de gestão da carteira de Aposentadorias Futuras, identificando o momento exato de acionamento, antecipação documental e contato preventivo. Use SEMPRE que mencionar carteira de aposentadoria futura, lista 🙏 Aposentadorias Futuras, cliente esperando direito amadurecer, monitoramento de DER próxima, marco etário próximo, completar idade para aposentadoria, completar tempo de contribuição, gatilho de acionamento, contato preventivo cliente, maturação de direito, janela de protocolo, carteira potencial INSS, conversão futuro em ativo, follow-up de cliente em espera, dueDateTime D-60, contato D-90 preventivo, próxima ação aposentadoria futura, abandonadas Aposentadorias Futuras. Cruza com base-aposentadoria-regra-permanente-ec103, base-aposentadoria-transicao-ec103, base-aposentadoria-pcd-lc142, base-aposentadoria-direito-adquirido, ponte-orquestrador-previdenciario e base-cnis-conferencia-divergencias."
+description: "Pipeline operacional pró-segurado de gestão da carteira de Aposentadorias Futuras, identificando o momento exato de acionamento, antecipação documental e contato preventivo. Use SEMPRE que mencionar carteira de aposentadoria futura, lista 🙏 Aposentadorias Futuras, cliente esperando direito amadurecer, monitoramento de DER próxima, marco etário próximo, completar idade para aposentadoria, completar tempo de contribuição, gatilho de acionamento, contato preventivo cliente, maturação de direito, janela de protocolo, carteira potencial INSS, conversão futuro em ativo, follow-up de cliente em espera, dueDateTime D-60, contato D-90 preventivo, próxima ação aposentadoria futura, abandonadas Aposentadorias Futuras. Cruza com base-aposentadoria-regra-permanente-ec103, base-aposentadoria-transicao-ec103, base-aposentadoria-pcd-lc142, base-aposentadoria-direito-adquirido, ponte-orquestrador-previdenciario e base-cnis-acerto-indicadores."
 ---
 
 # Pipeline de Aposentadorias Futuras
@@ -121,7 +121,7 @@ Se há divergência de cálculo, ação ordinária revisional pós-concessão. N
 - `base-aposentadoria-direito-adquirido` para regras transitórias
 - `base-aposentadoria-regra-permanente-ec103`, `base-aposentadoria-transicao-ec103` para enquadramento
 - `base-aposentadoria-pcd-lc142` para PCD
-- `base-cnis-conferencia-divergencias` para auditoria documental antes do protocolo
+- `base-cnis-acerto-indicadores` para auditoria documental antes do protocolo
 - `base-ms-decadencia-omissao-demora` para mora pós-DER
 - `ponte-orquestrador-previdenciario` para casos com pluralidade de hipóteses
 

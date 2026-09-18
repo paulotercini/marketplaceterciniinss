@@ -1,6 +1,6 @@
 ---
 name: base-b94-nexo-acidentario-ntep
-description: "Nexo acidentário do B94, NTEP, art. 21-A Lei 8.213/91, Lista B Anexo II Decreto 3.048/99, conversão B31 para B91 com pedido de B94, ADI 3931 STF, presunção e refutação INSS. Use SEMPRE que mencionar nexo acidentário B94, NTEP B94, art. 21-A B94, Lista B B94, conversão B31 B91 com B94, ADI 3931 STF, presunção NTEP, refutação NTEP INSS, doença ocupacional B94, acidente trabalho B94, CAT B94, CNAE CID B94, concausa B94, doença equiparada acidente, art. 19 21 Lei 8.213, equiparação acidente, agressão trabalho B94, viagem serviço B94, refeição descanso B94, contaminação acidental B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-integracao-salario-beneficio-tema862, base-b94-sequela-minima-tema201 e ntep-nexo-acidentario."
+description: "Nexo acidentário do B94, NTEP, art. 21-A Lei 8.213/91, Lista B Anexo II Decreto 3.048/99, conversão B31 para B91 com pedido de B94, ADI 3931 STF, presunção e refutação INSS. Use SEMPRE que mencionar nexo acidentário B94, NTEP B94, art. 21-A B94, Lista B B94, conversão B31 B91 com B94, ADI 3931 STF, presunção NTEP, refutação NTEP INSS, doença ocupacional B94, acidente trabalho B94, CAT B94, CNAE CID B94, concausa B94, doença equiparada acidente, art. 19 21 Lei 8.213, equiparação acidente, agressão trabalho B94, viagem serviço B94, refeição descanso B94, contaminação acidental B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-integracao-salario-beneficio-art31, base-b94-sequela-minima-tema201 e ntep-nexo-acidentario."
 ---
 
 ## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
@@ -134,7 +134,7 @@ IBDP.
 
 Para detalhes operacionais, acionar `auxilio-acidente-b94`.
 Para Anexo III, acionar `base-b94-anexo-iii-quadros`.
-Para integração ao SB, acionar `base-b94-integracao-salario-beneficio-tema862`.
+Para integração ao SB, acionar `base-b94-integracao-salario-beneficio-art31`.
 Para sequela mínima, acionar `base-b94-sequela-minima-tema201`.
 Para NTEP geral, acionar `ntep-nexo-acidentario`.
 

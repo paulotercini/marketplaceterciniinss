@@ -1,6 +1,6 @@
 ---
 name: processos-amanda-administrativo
-description: "Processos administrativos repetíveis delegados a Amanda no escritório Paulo Roberto Tercini Filho, com objetivo de redundância (André ou Ingrid podem substituir em ausência) e descongestionar Paulo do gargalo decisório. Use SEMPRE que mencionar processos da Amanda, redundância de processo administrativo, delegação de tarefas, fluxo Amanda INSS, autonomia administrativa, processos repetíveis, padronização operacional, substituição em ausência, treinamento André Ingrid, lista de decisões delegadas, fluxo de cumprimento de exigência, fluxo de protocolo administrativo, follow-up de cliente padrão, descongestionar Paulo. Cruza com base-meu-inss-pat-gerid-fluxo, base-aposentadoria-futura-pipeline, base-honorarios-contratuais-cobranca, base-pericia-medica-federal-telepericia e base-cnis-conferencia-divergencias."
+description: "Processos administrativos repetíveis delegados a Amanda no escritório Paulo Roberto Tercini Filho, com objetivo de redundância (André ou Ingrid podem substituir em ausência) e descongestionar Paulo do gargalo decisório. Use SEMPRE que mencionar processos da Amanda, redundância de processo administrativo, delegação de tarefas, fluxo Amanda INSS, autonomia administrativa, processos repetíveis, padronização operacional, substituição em ausência, treinamento André Ingrid, lista de decisões delegadas, fluxo de cumprimento de exigência, fluxo de protocolo administrativo, follow-up de cliente padrão, descongestionar Paulo. Cruza com base-meu-inss-pat-gerid-fluxo, base-aposentadoria-futura-pipeline, base-honorarios-contratuais-cobranca, base-pericia-medica-federal-telepericia e base-cnis-acerto-indicadores."
 ---
 
 # Processos Administrativos da Amanda - Padronização e Redundância
@@ -151,7 +151,7 @@ Caminhos:
 - `base-aposentadoria-futura-pipeline` (Amanda executa o D-60 e D-90)
 - `base-honorarios-contratuais-cobranca` (Amanda monitora 💵 Pagamentos)
 - `base-pericia-medica-federal-telepericia` (Amanda agenda e acompanha perícia)
-- `base-cnis-conferencia-divergencias` (Amanda faz auditoria CNIS)
+- `base-cnis-acerto-indicadores` (Amanda faz auditoria CNIS)
 - `ponte-workflow-crps` (recurso é Paulo, mas Amanda executa após decisão)
 
 ## Métrica de sucesso

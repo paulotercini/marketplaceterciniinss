@@ -1,13 +1,13 @@
 ---
-name: base-b94-integracao-salario-beneficio-tema862
-description: "Integração do auxílio-acidente B94 ao salário-de-benefício de aposentadoria pelo Tema 862 STJ, art. 31 Lei 8.213/91, Súmula 507 STJ, regra do tempo da prestação e direito adquirido sobre acumulação até MP 1.596-14/1997. Use SEMPRE que mencionar integração B94 SB, Tema 862 STJ, art. 31 Lei 8.213, Súmula 507 STJ, B94 entra na média da aposentadoria, acumulação B94 e aposentadoria, MP 1.596-14/1997, marco temporal acumulação, B94 anterior à aposentadoria, soma B94 contribuição, integração da renda mensal, base de cálculo aposentadoria com B94, RMI com integração de auxílio-acidente, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-tema201 e base-calculo-rmi-ec103."
+name: base-b94-integracao-salario-beneficio-art31
+description: "Integração do auxílio-acidente B94 ao salário-de-benefício de aposentadoria pelo ART. 31 da Lei 8.213/91, Súmula 507 STJ e direito adquirido sobre acumulação até a MP 1.596-14/1997. ATENÇÃO, a integração NÃO tem tema repetitivo próprio, e o Tema 862 do STJ é TERMO INICIAL do B94, não integração, erro corrigido na Onda 143. Use SEMPRE que mencionar integração B94 salário-de-benefício, art. 31 Lei 8.213, Súmula 507 STJ, B94 entra na média da aposentadoria, acumulação B94 e aposentadoria, MP 1.596-14/1997, marco temporal 11/11/1997, B94 anterior à aposentadoria, soma B94 salário-de-contribuição, base de cálculo da aposentadoria com B94, RMI com integração de auxílio-acidente, Portaria 991/2022, Portaria 992/2022, TJSP. Cruza com auxilio-acidente-b94, base-precedentes-catalogo-vinculantes, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-tema201 e base-calculo-rmi-ec103."
 ---
 
 # Integração do B94 ao Salário-de-Benefício
 
 ## Escopo
 
-Skill pró-segurado sobre a integração do B94 ao salário-de-benefício de aposentadoria, Tema 862 STJ e direito adquirido à acumulação anterior à MP 1.596-14/1997.
+Skill pró-segurado sobre a integração do B94 ao salário-de-benefício de aposentadoria pelo art. 31 da Lei 8.213/91, e sobre o direito adquirido à acumulação anterior à MP 1.596-14/1997. A integração NÃO tem tema repetitivo próprio, e o Tema 862 do STJ é termo inicial do B94.
 
 ## Marco normativo central
 
@@ -31,9 +31,9 @@ TJSP, jurisprudência consolidada das Câmaras de Direito Público em benefício
 
 ## Marco jurisprudencial
 
-### Tema 862 STJ (CORREÇÃO DE AUDITORIA, 12/07/2026)
+### Tema 862 STJ (CORREÇÃO DE AUDITORIA, 12/07/2026, reconferida em 18/09/2026)
 
-A tese repetitiva do Tema 862/STJ NÃO trata de integração ao salário-de-benefício. Tese literal, conferida na página oficial e reafirmada no REsp 2.270.389/RS (2026). "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se, se for o caso, a prescrição quinquenal de parcelas do benefício." Leading cases REsp 1.729.555/SP e 1.786.736/SP. Usar o Tema 862 para o TERMO INICIAL do B94. A integração ao cálculo das aposentadorias tem fundamento LEGAL direto no art. 31 da Lei 8.213/91 (o valor mensal do auxílio-acidente integra o salário de contribuição para fins de cálculo do salário de benefício de qualquer aposentadoria), sem tema repetitivo próprio.
+A tese repetitiva do Tema 862/STJ NÃO trata de integração ao salário-de-benefício. Tese literal, conferida na página oficial e reafirmada no REsp 2.270.389/RS (2026). "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ." (Redação literal reconferida na página oficial de precedentes qualificados do STJ em 18/09/2026, Onda 143. A redação que esta skill trazia desde 12/07/2026 era paráfrase e foi substituída pela oficial.) Leading cases REsp 1.729.555/SP e 1.786.736/SP. Usar o Tema 862 para o TERMO INICIAL do B94. A integração ao cálculo das aposentadorias tem fundamento LEGAL direto no art. 31 da Lei 8.213/91 (o valor mensal do auxílio-acidente integra o salário de contribuição para fins de cálculo do salário de benefício de qualquer aposentadoria), sem tema repetitivo próprio.
 
 ### Súmula 507 STJ
 
@@ -71,7 +71,7 @@ Quarto, depois dessa data, há vedação à acumulação.
 
 Primeiro, acumula com aposentadoria somente se a lesão incapacitante e a aposentadoria forem ambas anteriores a 11/11/1997.
 
-Segundo, B94 posterior integra o SB pela Tema 862.
+Segundo, B94 posterior integra o salário-de-benefício pelo art. 31 da Lei 8.213/91.
 
 Terceiro, escolha pela maior RMI.
 
@@ -81,7 +81,7 @@ Quarto, fator de recálculo aplicável.
 
 Cenário A, segurado com B94 desde 1995 e aposentadoria também anterior a 11/11/1997. Acumula. Súmula 507 STJ. Se a aposentadoria for posterior ao marco, não acumula; resta a integração ao SB.
 
-Cenário B, segurado com B94 desde 2010. Integra SB. Tema 862 STJ.
+Cenário B, segurado com B94 desde 2010. Integra o salário-de-benefício pelo art. 31 da Lei 8.213/91.
 
 Cenário C, sequela com majoração no recálculo. Revisão.
 
@@ -89,7 +89,7 @@ Cenário D, dupla aplicação. Direito adquirido e integração.
 
 ## Alertas
 
-Primeiro, INSS frequentemente nega integração. Tema 862 STJ é vinculante.
+Primeiro, o INSS frequentemente nega a integração, e a resposta é o art. 31 da Lei 8.213/91, que é norma legal expressa e dispensa precedente.
 
 Segundo, a cessação pela aposentadoria só é afastada quando lesão incapacitante e aposentadoria são ambas anteriores a 11/11/1997 (Súmula 507 STJ).
 
