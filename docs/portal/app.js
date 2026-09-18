@@ -92,15 +92,24 @@ function renderProcesso(p) {
     wrap.appendChild(box);
   }
 
-  // Localizacao Atual no Escritorio — card grande em DESTAQUE
-  if (p.localizacao) {
+  // Localizacao Atual no Escritorio — card grande em DESTAQUE.
+  // F120 · havendo ETAPA declarada pelo escritorio no CRM, e ela que ocupa a
+  // linha grande, porque responde a pergunta que o cliente realmente faz, como
+  // esta o meu processo. A localizacao desce para a legenda. Sem etapa, tudo
+  // fica como antes.
+  if (p.etapa || p.localizacao) {
     const card = el("div", "loc-destaque");
-    card.appendChild(el("div", "ld-label", "LOCALIZAÇÃO ATUAL NO ESCRITÓRIO"));
-    card.appendChild(el("div", "ld-valor", esc(p.localizacao)));
+    card.appendChild(el("div", "ld-label",
+      p.etapa ? "SITUAÇÃO ATUAL DO SEU CASO" : "LOCALIZAÇÃO ATUAL NO ESCRITÓRIO"));
+    card.appendChild(el("div", "ld-valor", esc(p.etapa || p.localizacao)));
+    if (p.etapa && p.localizacao) {
+      card.appendChild(el("div", "ld-onde", esc(p.localizacao)));
+    }
     wrap.appendChild(card);
   }
 
   // Ultimo andamento — caixa discreta
+
   if (p.timeline && p.timeline.length > 0) {
     const ult = p.timeline[0];
     const box = el("div", "ult-andamento");

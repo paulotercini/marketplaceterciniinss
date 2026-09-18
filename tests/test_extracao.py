@@ -198,3 +198,86 @@ def test_dedup_mesmo_tipo_mesma_data():
     body = ("10.06.2026 (P): Prorrogação solicitada.\n\n"
             "10.06.2026 (A): Pedido de prorrogação feito.\n")
     assert len(build_timeline(body)) == 1
+
+
+# ------------------------------------------------- F120 · a etapa no portal
+# A etapa que o escritorio DECLARA no CRM passa a ser a frase que o cliente le.
+# Tres regras: ela vence a deducao do ultimo comentario, ela NAO vence a
+# pericia marcada (que traz data e hora), e etapa escrita a mao nao e publicada.
+
+def test_etapa_do_crm_vence_a_frase_deduzida():
+    from build_portal_listas import montar_processo_safe
+    body = "10.09.2026 (P): Recurso ordinário protocolado.\n"
+    item = {"lista": "🌻 INSS", "nome": "Fulano", "body": body}
+    sem = montar_processo_safe("1" * 11, "01012000", item)
+    com = montar_processo_safe("1" * 11, "01012000", item, "aguardando análise")
+    assert sem["status"].startswith("Última atualização")
+    assert com["status"] == "Aguardando análise"
+
+
+def test_pericia_marcada_vence_a_etapa():
+    from build_portal_listas import montar_processo_safe
+    hoje = datetime.date.today()
+    futuro = hoje + datetime.timedelta(days=20)
+    body = (f"{hoje.strftime('%d.%m.%Y')} (P): Perícia médica marcada para o dia "
+            f"{futuro.strftime('%d/%m')} às 09h20 em Monte Alto.\n")
+    item = {"lista": "🌻 INSS", "nome": "Fulano", "body": body}
+    p = montar_processo_safe("1" * 11, "01012000", item, "aguardando análise")
+    assert "Perícia" in p["status"] and futuro.strftime("%d/%m/%Y") in p["status"]
+
+
+def test_caso_sem_marco_e_sem_etapa_mantem_a_frase_neutra():
+    from build_portal_listas import montar_processo_safe
+    item = {"lista": "🌻 INSS", "nome": "Fulano", "body": "10.09.2026 (P): Amanda, ligar para o cliente.\n"}
+    assert montar_processo_safe("1" * 11, "01012000", item)["status"] == "Em acompanhamento pelo escritório"
+
+
+def test_etapa_escrita_a_mao_nao_vai_para_o_portal(monkeypatch):
+    """[PRIVACIDADE] so o catalogo e publicavel: texto livre fica no CRM."""
+    import portal_common as pc
+    monkeypatch.setenv("SUPABASE_URL", "https://exemplo.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    linhas = {
+        "clientes": [{"id": "c1", "cpf": "111.111.111-11"}, {"id": "c2", "cpf": "22222222222"}],
+        "casos": [
+            {"cliente_id": "c1", "etapa": "aguardando perícia", "fase": "inss",
+             "mover_para": "🌻 INSS", "origem_lista": None},
+            {"cliente_id": "c2", "etapa": "cliente sumiu, cobrar honorário", "fase": "inss",
+             "mover_para": "🌻 INSS", "origem_lista": None},
+        ],
+    }
+    monkeypatch.setattr(pc, "_supa_pagina",
+                        lambda url, chave, caminho, pagina=1000:
+                        linhas["clientes"] if "clientes" in caminho else linhas["casos"])
+    mapa = pc.etapas_do_crm()
+    assert mapa == {("11111111111", "🌻 INSS"): "aguardando perícia"}
+
+
+def test_sem_banco_o_portal_roda_igual(monkeypatch):
+    import portal_common as pc
+    monkeypatch.delenv("SUPABASE_URL", raising=False)
+    monkeypatch.delenv("SUPABASE_SERVICE_KEY", raising=False)
+    assert pc.etapas_do_crm() == {}
+
+
+def test_caso_encerrado_nao_publica_etapa(monkeypatch):
+    import portal_common as pc
+    monkeypatch.setenv("SUPABASE_URL", "https://exemplo.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(pc, "_supa_pagina",
+                        lambda url, chave, caminho, pagina=1000:
+                        [{"id": "c1", "cpf": "11111111111"}] if "clientes" in caminho else
+                        [{"cliente_id": "c1", "etapa": "decidido", "fase": "encerrado",
+                          "mover_para": "🌻 INSS", "origem_lista": None}])
+    assert pc.etapas_do_crm() == {}
+
+
+def test_processo_do_portal_carrega_o_campo_etapa():
+    """[F120] o portal precisa do campo proprio: e ele que vira a SITUACAO ATUAL,
+    mostrada SEMPRE, e nao so quando falta andamento."""
+    from build_portal_listas import montar_processo_safe
+    item = {"lista": "🌻 INSS", "nome": "Fulano",
+            "body": "10.09.2026 (P): Recurso ordinário protocolado.\n"}
+    com = montar_processo_safe("1" * 11, "01012000", item, "em exigência")
+    sem = montar_processo_safe("1" * 11, "01012000", item)
+    assert com["etapa"] == "Em exigência" and sem["etapa"] is None
