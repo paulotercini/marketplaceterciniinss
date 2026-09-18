@@ -17,9 +17,11 @@
 - **Uso obrigatório:** em TODA petição de B94
 - **Alcance:** vinculante para todos os juízes e tribunais
 
-### Tema 862/STJ
-- **Tese:** O auxílio-acidente é devido a partir do dia seguinte ao da cessação do auxílio-doença, observada a prescrição quinquenal para parcelas atrasadas.
-- **Uso:** quando houver discussão sobre DIB ou sobre impacto do B94 reconhecido tardiamente no cálculo da aposentadoria
+### Tema 862/STJ. TERMO INICIAL
+- **Tese literal**, conferida na página oficial do STJ em 18/09/2026. "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ."
+- **Situação:** trânsito em julgado. O Tema 1225/STF não teve repercussão geral reconhecida, por ser questão infraconstitucional, com trânsito em 15/09/2022.
+- **Uso:** apenas para a DIB do B94. NÃO serve à integração ao salário-de-benefício, cujo fundamento é o art. 31 da Lei 8.213/91.
+- **Regra prática desfavorável:** sem B31 prévio e sem requerimento administrativo, o STJ fixou o termo inicial na CITAÇÃO do INSS. O requerimento prévio evita a perda de retroativos
 - **Combinação:** art. 86, §2º, Lei 8.213/91
 
 ### Tema 555/STJ

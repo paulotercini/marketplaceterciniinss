@@ -12,9 +12,9 @@ Fonte oficial em https://www.stj.jus.br
 
 Direito adquirido.
 
-### Tema 862 STJ
+### Tema 862 STJ. TERMO INICIAL, não integração
 
-Integração ao SB.
+Tese literal, conferida na página oficial do STJ em 18/09/2026. "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ." Primeira Seção, REsp 1.729.555/SP e 1.786.736/SP, trânsito em julgado. A integração ao salário-de-benefício tem fundamento no art. 31 da Lei 8.213/91 e não neste tema.
 
 ### REsp 1.296.673 STJ
 
@@ -126,6 +126,6 @@ Sexto, dialeticidade.
 
 Acompanhar Súmula 507 STJ.
 
-Revalidar Tema 555 e Tema 862.
+Revalidar Tema 555 e Tema 862, este último apenas quanto ao termo inicial.
 
 Monitorar precedentes sobre direito adquirido.

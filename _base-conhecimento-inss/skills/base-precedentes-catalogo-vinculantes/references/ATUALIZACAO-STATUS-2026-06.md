@@ -144,7 +144,7 @@ PENDÊNCIA OBRIGATÓRIA. Conferir na ata de julgamento e no acórdão o disposit
 
 Rel. Min. Teodoro Silva Santos, Segunda Turma, sessão virtual encerrada em 17/06/2026, unânime, DJEN de 23/06/2026. Três definições pró-segurado em auxílio-acidente precedido de auxílio-doença. Primeira, a conversão de B31 cessado em B94 pelo mesmo fato gerador dispensa novo requerimento administrativo (exceção do Tema 350/STF, relação jurídica já inaugurada), interesse de agir configurado pela própria cessação. Segunda, DIB no dia seguinte à cessação do B31, na forma do Tema 862/STJ (tese literal reafirmada, leading cases REsp 1.729.555/SP e 1.786.736/SP). Terceira, o fundo de direito é imprescritível, prescrevem só as parcelas do quinquênio (EREsp 1.269.726/MG, Primeira Seção, transcrito no voto), no caso concreto o B31 havia cessado em 08/02/2010 e a ação, ajuizada anos depois, foi provida. Julgado de Turma, persuasivo, usar junto com o Tema 350/STF e o Tema 862/STJ, que são os vinculantes.
 
-CORREÇÃO DERIVADA. A skill base-b94-integracao-salario-beneficio-tema862 atribuía ao Tema 862/STJ a tese de integração do B94 ao salário-de-benefício. FALSO. O Tema 862 é o TERMO INICIAL do B94. A integração ao cálculo das aposentadorias decorre do art. 31 da Lei 8.213/91, norma legal sem repetitivo próprio. Skill corrigida em 12/07/2026.
+CORREÇÃO DERIVADA. A skill base-b94-integracao-salario-beneficio-art31 atribuía ao Tema 862/STJ a tese de integração do B94 ao salário-de-benefício. FALSO. O Tema 862 é o TERMO INICIAL do B94. A integração ao cálculo das aposentadorias decorre do art. 31 da Lei 8.213/91, norma legal sem repetitivo próprio. Skill corrigida em 12/07/2026.
 
 ## CORREÇÃO INTEGRAL DA base-pcd-conversao-tempo-especial-pcd (12/07/2026, apontamento do escritório)
 

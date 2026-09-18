@@ -26,9 +26,15 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado. Afasta indeferimento por não enquadramento no rol.
 
-### Tema 862 STJ
+### Tema 862 STJ. TERMO INICIAL do auxílio-acidente
 
-Tese. O salário-de-benefício do B94 deve considerar as verbas remuneratórias integrantes do salário-de-contribuição.
+Tese literal, conferida na página oficial de precedentes qualificados do STJ em 18/09/2026. "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ."
+
+Primeira Seção, leading cases REsp 1.729.555/SP e REsp 1.786.736/SP, julgados em 09/06/2021, acórdão publicado em 01/07/2021. **Trânsito em julgado.** A matéria subiu ao STF como Tema 1225, e o Supremo decidiu em 13/08/2022 que NÃO há repercussão geral por ser questão infraconstitucional, com trânsito em 15/09/2022, de modo que a tese do STJ está firme e definitiva.
+
+**ALERTA de uso.** O Tema 862 NÃO trata de integração do B94 ao salário-de-benefício. Essa integração tem fundamento legal direto no art. 31 da Lei 8.213/91 e NÃO possui tema repetitivo próprio. Citar o Tema 862 para sustentar integração entrega ao INSS um erro de fundamento.
+
+**Regra prática desfavorável, registrada com honestidade.** A descrição oficial do Tema 1225/STF registra que o STJ, na ementa do julgado, considerou como termo inicial a DATA DA CITAÇÃO do INSS quando não houver auxílio-doença prévio nem requerimento administrativo do auxílio-acidente. Havendo B31 anterior, vale o dia seguinte à cessação. Não havendo, o requerimento administrativo prévio passa a ser decisivo para não perder retroativos.
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -124,7 +130,7 @@ Refutação. Art. 86, §3º. Cessação apenas pela aposentadoria. Conversão ob
 
 Argumento adversário. A RMI foi calculada sem verbas remuneratórias.
 
-Refutação. Tema 862 STJ. Art. 31. Cabe revisão para incluir todas as verbas legítimas no salário-de-contribuição.
+Refutação. Art. 31 da Lei 8.213/91. Cabe revisão para incluir todas as verbas legítimas no salário-de-contribuição.
 
 ### Argumento 8 — Ausência de qualidade de segurado
 
@@ -140,7 +146,7 @@ Segundo, em sequela fora do Anexo III, invocar Súmula 89 TNU.
 
 Terceiro, em acumulação de B94 anterior com aposentadoria, invocar Tema 555 STJ.
 
-Quarto, em revisão de RMI, invocar Tema 862 STJ e art. 31.
+Quarto, em revisão de RMI, invocar o art. 31 da Lei 8.213/91, e não o Tema 862, que é termo inicial.
 
 Quinto, em cessação indevida, restabelecimento imediato com Súmula 47 TNU.
 

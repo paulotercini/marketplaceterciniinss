@@ -76,7 +76,7 @@ INSS cessa B94 sem que o segurado tenha se aposentado. Violação do art. 86 §3
 
 ### Cenário 8 — Revisão de RMI
 
-Segurado com B94 calculado sem inclusão de verbas salariais. Tema 862 STJ. Revisão para incluir.
+Segurado com B94 calculado sem inclusão de verbas salariais. Art. 31 da Lei 8.213/91. Revisão para incluir.
 
 ## 5. Documentos essenciais
 
