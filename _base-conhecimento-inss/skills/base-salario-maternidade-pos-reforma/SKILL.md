@@ -145,3 +145,9 @@ O IBDP sustenta institucionalmente a proteção integral à maternidade.
 ## O que NÃO está nesta skill
 
 Não está aqui o salário-família, objeto de `base-salario-familia-quota`. Não está aqui o seguro-defeso feminino, objeto de `base-seguro-defeso-pescador-artesanal`. Não está aqui a pensão por morte em caso de óbito da mãe, objeto de `base-pensao-por-morte-pos-reforma`.
+
+## Gestação de alto risco, benefício diverso do salário-maternidade (Onda 142)
+
+A Portaria Interministerial MPS/MS nº 15, de 03/07/2026, incluiu a gestação de alto risco entre as afecções que dispensam carência nos benefícios por INCAPACIDADE, e não no salário-maternidade.
+
+São benefícios diversos e sucessivos. A gestante de alto risco com incapacidade por mais de quinze dias recebe B31 durante a gestação, e o salário-maternidade a partir do parto, com regras próprias de carência. Confundir os dois leva a pedido errado. Ver `base-carencia-por-especie-art27a/references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.
