@@ -1,6 +1,6 @@
 ---
 name: precedentes-previdenciarios
-description: Skill de precedentes vinculantes previdenciários (STJ, STF, TNU). Use SEMPRE que redigir petição, recurso, embargos, agravo, mandado de segurança ou peça processual previdenciária. Use SEMPRE que auditar sentença, acórdão, decisão administrativa ou laudo pericial. Use SEMPRE que mencionar tema repetitivo, repercussão geral, tema TNU, precedente vinculante, tese firmada, recurso sobrestado, suspensão nacional, PEDILEF, REsp repetitivo ou jurisprudência vinculante previdenciária. Use quando as skills peticao-previdenciaria, auditoria-sentenca-acordao, auditoria-laudo-pericial, analise-bpc-loas, aposentadoria-deficiencia ou qualquer skill previdenciária do escritório for acionada. Fonte primária de fundamentação jurisprudencial. Consultar ANTES de redigir fundamento jurídico em peça previdenciária.
+description: Skill de precedentes vinculantes previdenciários (STJ, STF, TNU). Use SEMPRE que redigir petição, recurso, embargos, agravo, mandado de segurança ou peça processual previdenciária. Use SEMPRE que auditar sentença, acórdão, decisão administrativa ou laudo pericial. Use SEMPRE que mencionar tema repetitivo, repercussão geral, tema TNU, precedente vinculante, tese firmada, recurso sobrestado, suspensão nacional, PEDILEF, REsp repetitivo ou jurisprudência vinculante previdenciária. Use quando as skills peticao-previdenciaria, base-auditoria-adversarial-decisao-judicial, auditoria-laudo-pericial, analise-bpc-loas, aposentadoria-deficiencia ou qualquer skill previdenciária do escritório for acionada. Fonte primária de fundamentação jurisprudencial. Consultar ANTES de redigir fundamento jurídico em peça previdenciária.
 ---
 
 # Precedentes Vinculantes Previdenciários
@@ -51,7 +51,7 @@ Os precedentes estão organizados em arquivos temáticos na pasta `references/`.
 4. Incorporar na fundamentação jurídica os temas que favorecem a tese do segurado
 5. Antecipar e distinguir os temas que o INSS poderia invocar em sentido contrário
 
-### Ao auditar sentença ou acórdão (skill auditoria-sentenca-acordao)
+### Ao auditar sentença ou acórdão (skill base-auditoria-adversarial-decisao-judicial)
 
 1. Verificar se a decisão contraria algum tema vinculante
 2. Se contrariar, fundamentar o recurso na violação do precedente qualificado

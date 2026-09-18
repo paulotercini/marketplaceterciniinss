@@ -319,7 +319,7 @@ Acionar `peticao-previdenciaria` para formatação, `precedentes-previdenciarios
 
 ### 9.2 Ao auditar decisão administrativa ou judicial
 
-Acionar `auditoria-sentenca-acordao` para auditoria da decisão. Verificar se a DIB foi fixada conforme o marco temporal correto. Verificar se houve aplicação indevida do REsp 2.103.603/PB para limitar DIB de menor no JEF (onde o Tema 81/TNU prevalece). Verificar aplicação do Tema 371/TNU sobre contemporaneidade de 24 meses.
+Acionar `base-auditoria-adversarial-decisao-judicial` para auditoria da decisão. Verificar se a DIB foi fixada conforme o marco temporal correto. Verificar se houve aplicação indevida do REsp 2.103.603/PB para limitar DIB de menor no JEF (onde o Tema 81/TNU prevalece). Verificar aplicação do Tema 371/TNU sobre contemporaneidade de 24 meses.
 
 ### 9.3 Ao orientar documentação
 

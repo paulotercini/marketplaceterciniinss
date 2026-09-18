@@ -148,7 +148,7 @@ Ao redigir petição de revisão de benefício, esta skill deve ser consultada A
 
 O Tema 1124/STJ impacta diretamente os efeitos financeiros da revisão. Se a revisão foi ajuizada com documentação não apresentada na via administrativa, os efeitos financeiros podem ser deslocados da DER para a citação. A conjugação dos Temas 1124 e 975 exige atenção redobrada.
 
-### Com a skill auditoria-sentenca-acordao
+### Com a skill base-auditoria-adversarial-decisao-judicial
 
 Ao auditar sentenças ou acórdãos que reconheceram ou negaram decadência, verificar se a fundamentação está alinhada com o estado atual da controvérsia (especialmente a suspensão nacional pelo Tema 1370).
 

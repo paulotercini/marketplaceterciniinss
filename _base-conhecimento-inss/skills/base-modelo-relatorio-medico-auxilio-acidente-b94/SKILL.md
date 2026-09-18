@@ -200,7 +200,7 @@ Eu gero o relatório personalizado em formato .docx pronto para entrega ao médi
 
 `base-b94-nexo-acidentario-ntep` para o NTEP em B94.
 
-`base-b94-integracao-salario-beneficio-tema862` para integração ao SB de aposentadoria (Tema 862/STJ).
+`base-b94-integracao-salario-beneficio-art31` para integração ao salário-de-benefício de aposentadoria (art. 31 da Lei 8.213/91).
 
 `base-b94-cessacao-acumulacao-vedacao` para cessação e acumulação.
 

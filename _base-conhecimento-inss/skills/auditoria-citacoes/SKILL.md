@@ -108,3 +108,15 @@ O agente `verificador-precedentes` (pasta `agents/` do plugin) é o braço execu
 ## 8. O que NÃO está nesta skill
 
 Revisão de petição individual (é da `base-revisao-peticao-aprofundada`). Verificação de texto de lei, decreto ou portaria (é da `base-legislacao-fontes-primarias`). Atualização de status do catálogo curado (rotina própria da `base-precedentes-catalogo-vinculantes`).
+
+## Correção completa, e não só da definição (Onda 143)
+
+Duas falhas de método detectadas no caso do Tema 862, e que passam a integrar o roteiro.
+
+**Primeira, a varredura de usos.** Corrigido um item na Etapa 4, a Etapa 5 roda `grep -rn` do número em toda a base e LÊ o contexto de cada ocorrência, uma a uma. Corrigir a seção onde o tema é definido e não varrer os usos deixa o erro vivo, e foi o que aconteceu entre julho e setembro de 2026, com vinte ocorrências sobreviventes em seis skills.
+
+**Segunda, o nome do arquivo.** Número de tema, súmula ou enunciado no nome de diretório ou de seção também é citação, e é lido antes do conteúdo. Estando errada a associação, o achado é BLOQUEANTE, o arquivo é renomeado por `git mv` e todas as referências cruzadas são atualizadas na mesma Onda.
+
+**Terceira, menor.** Tese entre aspas é transcrição e se confere caractere a caractere. Paráfrase não vai entre aspas, e se identifica como resumo.
+
+O caso completo está em `references/CORRECAO-PARCIAL-E-NOME-CONTAMINADO.md`.

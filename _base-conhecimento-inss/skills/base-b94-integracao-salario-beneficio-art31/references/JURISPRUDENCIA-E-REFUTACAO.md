@@ -2,9 +2,9 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 862 STJ
+### Tema 862 STJ. TERMO INICIAL, não integração
 
-Integração do B94 ao salário-de-benefício.
+Tese literal, conferida na página oficial do STJ em 18/09/2026. "O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ." Primeira Seção, REsp 1.729.555/SP e 1.786.736/SP, trânsito em julgado. A integração ao salário-de-benefício tem fundamento no art. 31 da Lei 8.213/91 e não neste tema.
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -40,7 +40,7 @@ Marco temporal em 11/11/1997.
 
 Argumento adversário. Negação direta.
 
-Refutação. Tema 862 STJ é vinculante.
+Refutação. O art. 31 da Lei 8.213/91 é norma legal expressa e a integração independe de precedente.
 
 ### Argumento 2 — B94 anterior cessa com aposentadoria
 
@@ -58,7 +58,7 @@ Refutação. Marco fixado em 11/11/1997.
 
 Argumento adversário. Cálculo.
 
-Refutação. Tema 862 STJ permite revisão.
+Refutação. A revisão decorre do art. 31 da Lei 8.213/91 c/c o art. 103, observado o prazo decadencial.
 
 ### Argumento 5 — Decadência consumada
 
@@ -76,7 +76,7 @@ Refutação. Causa de pedir diversa, Tema 629 STJ.
 
 Argumento adversário. Severidade.
 
-Refutação. Tema 201 TNU e Tema 862.
+Refutação. Tema 416 STJ e Súmula 88 TNU, que admitem o B94 ainda que leve a redução.
 
 ### Argumento 8 — Cálculo do INSS é correto
 
@@ -88,7 +88,7 @@ Refutação. Pericial contábil refuta.
 
 Argumento adversário. Espécie.
 
-Refutação. Tema 862 não distingue espécie.
+Refutação. O art. 31 da Lei 8.213/91 não distingue espécie de aposentadoria.
 
 ### Argumento 10 — Sem documentação
 
@@ -116,7 +116,7 @@ Segundo, definição do regime.
 
 Terceiro, cálculo da RMI revisada.
 
-Quarto, fundamentação Tema 862.
+Quarto, fundamentação no art. 31 da Lei 8.213/91.
 
 Quinto, requerimento ou ação.
 
@@ -124,7 +124,7 @@ Sexto, monitoramento.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 862 STJ.
+Acompanhar o Tema 862 STJ apenas quanto ao termo inicial, porque já transitou em julgado.
 
 Revalidar Súmula 507 STJ.
 
