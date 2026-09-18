@@ -50,3 +50,11 @@ Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISP
 ## Hub de portarias administrativas
 
 Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
+
+## Gestação de alto risco, dispensa de carência (Onda 142)
+
+A Portaria Interministerial MPS/MS nº 15, de 03/07/2026, publicada no DOU de 24/07/2026, acrescentou o inciso XVIII ao art. 2º da Portaria Interministerial MTP/MS nº 22/2022, incluindo a **gestação de alto risco** entre as afecções que dispensam carência nos benefícios por incapacidade, com fundamento no art. 26, II, da Lei 8.213/91.
+
+A própria ementa registra que a alteração cumpre determinação judicial na Ação Civil Pública nº 5051528-83.2017.4.04.7100, o que abre a discussão sobre indeferimentos anteriores a 24/07/2026. A dispensa resolve apenas a carência, e permanecem exigíveis a qualidade de segurada e a incapacidade por mais de quinze dias.
+
+Texto literal, requisitos remanescentes, o que pedir ao médico assistente e o que está ou não confirmado em fonte primária estão em `references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.
