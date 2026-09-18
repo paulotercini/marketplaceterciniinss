@@ -109,3 +109,11 @@ Para Lei 13.460, acionar `lei-13460-usuario-servico-publico`.
 ## O que NÃO está nesta skill
 
 Cabimento geral em `base-ms-cabimento-direito-liquido-certo`. Liminar em `base-ms-liminar-art7-iii`. Cumprimento em `base-ms-cumprimento-inss`.
+
+## O PGB e o prazo de 30 dias (Onda 142)
+
+A Lei nº 15.497, de 04/09/2026, conversão da MP 1.369/2026, reduziu de 45 para 30 dias o marco do inciso I do parágrafo único do art. 2º da Lei 15.201/2025, de modo que processos e serviços administrativos com análise superior a trinta dias, ou com prazo judicial expirado, integram o Programa de Gerenciamento de Benefícios.
+
+O PGB NÃO cria prazo legal de decisão nem concessão automática, e afirmar isso em peça é erro que a Procuradoria desmonta. Ele entra como reforço de razoabilidade no MS por demora, e o art. 6º, § 2º, da Lei 15.201/2025 obriga relatórios trimestrais públicos com o tempo médio de atendimento, que é prova produzida pelo próprio INSS.
+
+O programa vigora até 31/12/2026, na forma do art. 8º. Detalhamento e uso em peça em `references/PGB-PRAZO-30-DIAS-LEI-15497.md`.

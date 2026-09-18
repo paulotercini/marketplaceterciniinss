@@ -341,3 +341,11 @@ Teto de o relatório de acerto do CNIS, 2 páginas, indicadores bloqueantes prim
 ## Redação da peça neste tema
 
 Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria por idade urbana e programada" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
+
+## Indicadores do segurado especial, CAFIR e RGP (Onda 142)
+
+Os indicadores `PSE-POS`, `PSE-PEN`, `PSE-NEG`, `ASE-RPOS`, `ASE-RNEG` e `ASE-NSE` registram a classificação automática de período rural migrado das bases CAFIR e RGP. A redação oficial de cada um está em `base-segurado-especial-autodeclaracao-arts-92-93-94/references/INDICADORES-CNIS-SEGURADO-ESPECIAL-CAFIR-RGP.md`.
+
+**Trava do `ASE-NSE`.** Período excluído com esse motivo só se comprova depois por decisão judicial ou recursal, conforme o Anexo V da Portaria 990/2022. O mesmo risco existe no `ASE-RNEG`, que registra confirmação da descaracterização pelo próprio segurado. Nenhum tratamento de período rural no Portal CNIS é feito sem análise prévia.
+
+**Registro de rigor.** As siglas "ASE VAUT" e "ASE IAUT", que circulam em material de divulgação como indicadores de validação e invalidação automática, NÃO constam do Anexo V nem do DOU, conferido em 18/09/2026. Não citar.

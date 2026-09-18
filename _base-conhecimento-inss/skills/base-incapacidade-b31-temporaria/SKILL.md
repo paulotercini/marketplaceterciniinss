@@ -172,3 +172,9 @@ Havendo documentos médicos no caso, despachar o médico da área antes de fecha
 Havendo mais de uma área nos documentos, despachar até TRÊS agentes, os das áreas que decidem o caso. Os pareceres voltam em uma página cada, em linguagem simples, e o que eles apontarem entra na fixação da DII, no prognóstico e nos quesitos.
 
 O parecer médico é instrumento INTERNO. Ele orienta a peça, alimenta quesitos e indica o que pedir ao médico assistente, e NÃO vai aos autos como prova nem substitui laudo de assistente nem assistente técnico habilitado.
+
+## Gestação de alto risco (Onda 142)
+
+Desde a Portaria Interministerial MPS/MS nº 15, de 03/07/2026, a gestação de alto risco consta expressamente do rol de afecções que dispensam carência para os benefícios por incapacidade, como inciso XVIII do art. 2º da Portaria Interministerial MTP/MS nº 22/2022.
+
+Permanecem exigíveis a qualidade de segurada na DII e a incapacidade por mais de quinze dias consecutivos, com recomendação médica de afastamento. O detalhamento está em `base-carencia-por-especie-art27a/references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.
