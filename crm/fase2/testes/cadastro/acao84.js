@@ -62,7 +62,7 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
     const qd = document.querySelector("#quadro-datas");
     const dentroDoCartao = !!qd && !!qd.closest(".fatos-processo");
     const cards = [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({
-      tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, prazo: c.classList.contains("pz-prazo"),
+      tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, prazo: c.classList.contains("pz-fatal"),
       fundo: getComputedStyle(c).backgroundColor, mais: !!c.querySelector(".pz-mais") }));
     const acima = faixa && document.querySelector(".escrever") && faixa.getBoundingClientRect().bottom <= document.querySelector(".escrever").getBoundingClientRect().top + 1;
     return { faixa: !!faixa, dentroDoCartao, cards, acima, linhaCaso: !!document.querySelector(".linha-caso") };
@@ -73,13 +73,13 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
   conf("ligado: os prazos viraram QUADROS lado a lado, fora do cartão", on.faixa && !on.dentroDoCartao);
   conf("os quadros ficam acima do compositor (o trabalho vem depois)", on.acima);
   conf("o prazo fatal SEM anotação de origem não vira quadro (pedido do Paulo)", !on.cards.some(c => c.data === fmtBR(mais(-1))));
-  conf("a exigência do INSS é um quadro de PRAZO PROCESSUAL, em vermelho", on.cards.some(c => c.tipo === "Prazo processual" && c.data === fmtBR(mais(3)) && c.prazo && c.fundo === "rgb(179, 38, 30)"));
+  conf("a exigência do INSS é um quadro de PRAZO FATAL, em vermelho", on.cards.some(c => c.tipo === "Prazo fatal" && c.data === fmtBR(mais(3)) && c.prazo && c.fundo === "rgb(179, 38, 30)"));
   conf("recorrer até (30 dias da decisão) entrou como quadro de prazo", on.cards.filter(c => c.prazo).length === 2);
   conf("a perícia marcada é um quadro cinza, depois dos prazos", (i => i > 0 && !on.cards[i].prazo && on.cards[i].fundo !== "rgb(179, 38, 30)")(on.cards.findIndex(c => c.tipo === "Perícia")));
   conf("os prazos vêm todos antes dos lembretes", on.cards.map(c => c.prazo ? 1 : 0).join("") === "11" + "0".repeat(on.cards.length - 2));
   conf("cada quadro tem só a data e o 'saber mais'", on.cards.every(c => c.mais) && on.cards.every(c => /^\d\d\/\d\d\/\d{4}$/.test(c.data)));
   // o "saber mais" da exigência abre a ficha dela, com o ✔ cumprida
-  await p.evaluate(() => document.querySelector(".faixa-prazos .pz-prazo .pz-mais").click());
+  await p.evaluate(() => document.querySelector(".faixa-prazos .pz-fatal .pz-mais").click());
   await p.waitForTimeout(200);
   conf("o 'saber mais' da exigência traz o que é e o ✔ cumprida", await p.evaluate(() => {
     const m = document.getElementById("modal"); return /Exigência do INSS/.test(m.textContent) && !!m.querySelector('button[onclick^="cumprirExigencia"]'); }));

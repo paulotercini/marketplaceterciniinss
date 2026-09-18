@@ -92,7 +92,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     return { txt: topo.innerText.replace(/\s+/g, " ").trim(), manual: (r.querySelector(".lc-manual") || {}).textContent,
       corManual: r.querySelector(".lc-manual") && getComputedStyle(r.querySelector(".lc-manual")).color,
       nivel1: !!r.querySelector(".lc-numeros"), semRegua: !document.querySelector(".regua-caso"), semCartaoFora: !document.querySelector(".painel[data-p='2'] > .fatos-processo"),
-      semPrazoFatalSolto: !/Prazo fatal do caso|PRAZO FATAL/.test(document.querySelector(".painel[data-p='2']").textContent) };
+      semPrazoFatalSolto: !/Prazo fatal do caso/.test(document.querySelector(".painel[data-p='2']").textContent) };
   });
   conf("uma linha só: o nome do pedido (sem o código), DER em dd/mm/aaaa, tramitação e verificação", /^Aposentadoria por idade/.test(lc.txt) && !/^B41/.test(lc.txt) && /DER 12\/05\/2024/.test(lc.txt) && /TRAMITAÇÃO INSS/i.test(lc.txt) && /VERIFICAÇÃO Manual/i.test(lc.txt));
   // ── F113 · a espécie pela janela, com subespécies e pedido à mão ─────────
@@ -205,7 +205,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     const y = el => { const r = el.getBoundingClientRect(); return r.top + r.height / 2; };
     const mesmaLinha = (a, b) => Math.abs(y(document.querySelector(a)) - y(document.querySelector(b))) < 10;
     return { barra: vis("#tf-box"), linhas: linhas.length,
-      l1: linhas[0] && /tarefa com PRAZO/.test(linhas[0].textContent) && /LEMBRAR EM/i.test(linhas[0].textContent) && mesmaLinha("#and-prazo-ck", "#tf-box .tf-dt"),
+      l1: linhas[0] && /PRAZO FATAL/.test(linhas[0].textContent) && linhas[0].querySelectorAll(".tf-nt").length === 2 && mesmaLinha("#and-prazo-ck", "#tf-box .tf-dt"),
       l2: linhas[1] && /ATRIBUIR PARA/i.test(linhas[1].textContent) && !!linhas[1].querySelector(".esc-reg") && mesmaLinha("#tf-ninguem", ".esc-reg"),
       icone: getComputedStyle(document.querySelector(".esc-ic svg")).width }; })()`);
   conf("aberto: linha 1 = prazo e Lembrar em; linha 2 = Atribuir para e as ferramentas com o Registrar", aberto.barra && aberto.linhas === 2 && aberto.l1 && aberto.l2);
@@ -218,7 +218,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   // ── F104 · os quadros ────────────────────────────────────────────────────
   const cards = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({ tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, onclick: c.querySelector(".pz-mais").getAttribute("onclick") })));
   conf("o prazo com anotação de origem vira quadro vermelho e o 'saber mais' vai até a anotação",
-    cards.some(c => c.tipo === "Prazo processual" && c.data === fmtBR(emDias(9)) && /qdIrParaAndamento/.test(c.onclick)));
+    cards.some(c => c.tipo === "Prazo fatal" && c.data === fmtBR(emDias(9)) && /qdIrParaAndamento/.test(c.onclick)));
   conf("o 'lembrar antes' da mesma anotação é um quadro cinza ao lado", cards.some(c => c.tipo === "Lembrar antes" && c.data === fmtBR(emDias(4))));
 
   // ── F105 · a janela do tipo ──────────────────────────────────────────────
@@ -236,7 +236,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     card: [...document.querySelectorAll(".faixa-prazos .pz")].map(c => c.dataset.tipo + " " + c.querySelector(".pz-data").textContent) }));
   conf("o comentário padronizado entra no compositor, com a observação no fim",
     ex.txt === `[EXIGÊNCIA] O que o INSS exigiu: Apresentar CTPS\nPrazo para cumprir: ${fmtBR(emDias(6))}\nDocumento que falta: CTPS\nQuem vai cumprir: —\nCliente avisada.` && ex.modal === "none");
-  conf("a exigência grava o prazo no caso e vira quadro vermelho na hora", patches("exigencia_prazo").pop().exigencia_prazo === emDias(6) && ex.card.includes("Prazo processual " + fmtBR(emDias(6))));
+  conf("a exigência grava o prazo no caso e vira quadro vermelho na hora", patches("exigencia_prazo").pop().exigencia_prazo === emDias(6) && ex.card.includes("Prazo fatal " + fmtBR(emDias(6))));
   await p.evaluate(() => popAnotacao("documentos")); await p.waitForTimeout(150);
   conf("Trouxe documentos: lista de documentos e o toque 'anexei no Drive' com a explicação do nome do PDF", await p.evaluate(() => {
     const m = document.getElementById("modal"); return !!m.querySelector("#pa-docs") && !!m.querySelector("#pa-drive") && /Nome do documento \+ data/.test(m.textContent); }));
@@ -249,6 +249,25 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.evaluate(() => { document.getElementById("pa-qual").value = "Recurso Especial"; });
   await p.evaluate(() => popInserir("peticao")); await p.waitForTimeout(200);
   conf("Recurso Especial protocolado grava a data no caso (re_protocolado_em)", (patches("re_protocolado_em").pop() || {}).re_protocolado_em === hojeSP());
+
+  // ── F117 · protocolar move o caso de etapa, com desfazer ────────────────
+  await p.waitForTimeout(300);
+  conf("protocolado no CRPS, o caso anda de 🌻 INSS para 🖥 Conselho de Recursos sozinho", await p.evaluate(() => {
+    const k = D.casoPorId.get(casoSel);
+    return k.fase === "conselho" && k.mover_para === "🖥 Conselho de Recursos"; }));
+  conf("o movimento diz o motivo e oferece desfazer", await p.evaluate(() => {
+    const a = document.getElementById("aviso");
+    return a.classList.contains("com-bt") && /Conselho de Recursos/.test(a.textContent) && /Recurso Especial protocolado em/.test(a.textContent); }));
+  await p.evaluate(() => desfazerAgora()); await p.waitForTimeout(350);
+  conf("desfazer devolve o caso para onde estava", await p.evaluate(() => D.casoPorId.get(casoSel).fase === "inss"));
+  conf("a etapa nunca anda para trás sozinha", await p.evaluate(async () => {
+    const k = D.casoPorId.get(casoSel); k.fase = "judicial";
+    const foi = await andarEtapa(k.id, "🖥 Conselho de Recursos", "teste");
+    const ok = foi === false && k.fase === "judicial"; k.fase = "inss"; return ok; }));
+  conf("caso encerrado não é movido por providência nenhuma", await p.evaluate(async () => {
+    const k = D.casoPorId.get(casoSel); k.fase = "encerrado";
+    const foi = await andarEtapa(k.id, "👪 Judicial", "teste");
+    const ok = foi === false && k.fase === "encerrado"; k.fase = "inss"; repintarFicha(); return ok; }));
 
   // ── F114 · o essencial da espécie na linha, o resto em gestão do caso ───
   conf("a aposentadoria por idade não enche a linha: sem DIB nem DCB, a DER basta", await p.evaluate(() =>
@@ -292,6 +311,26 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("óbito com a DER dentro dos 90 dias, a linha avisa que a DIB é no óbito", /DIB no óbito/.test(await obitoDiz("2024-04-01")));
   conf("óbito com a DER fora dos 90 dias, a linha avisa que a DIB cai na DER", /fora dos 90 d/.test(await obitoDiz("2023-01-01")));
   await p.evaluate((id) => gravarEspecie(id, "B41", "B41"), CASO1); await p.waitForTimeout(300);
+
+  // ── F116 · prazo fatal, compromisso e lembrete ──────────────────────────
+  await p.waitForTimeout(250);
+  conf("o compositor separa as três naturezas: o ⏰ é o PRAZO FATAL, e ao lado se escolhe compromisso ou lembrete", await p.evaluate(() =>
+    /PRAZO FATAL/.test(document.querySelector(".esc-linha .conta-ck").textContent)
+    && [...document.querySelectorAll(".tf-nt")].map(b => b.dataset.nat).join("|") === "compromisso|lembrete"
+    && document.querySelector('.tf-nt[data-nat="compromisso"]').classList.contains("on")));
+  await p.evaluate(() => document.querySelector('.tf-nt[data-nat="lembrete"]').click());
+  conf("escolher lembrete acende só ele", await p.evaluate(() => tfNatureza === "lembrete"
+    && !document.querySelector('.tf-nt[data-nat="compromisso"]').classList.contains("on")));
+  await p.evaluate(() => { const t = document.getElementById("and-texto");
+    t.value = "Voltar a olhar a aposentadoria futura"; t.dispatchEvent(new Event("input"));
+    tfQuem = []; tfDia("7", document.querySelector('#tf-box [data-tfd="7"]')); });
+  await p.evaluate(() => novoAndamento(casoSel)); await p.waitForTimeout(500);
+  const tf = escritos.filter(e => e.t === "andamento_tarefas" && e.m === "POST").map(e => JSON.parse(e.corpo)).pop();
+  conf("a tarefa nasce com a natureza escolhida no compositor", tf && tf.natureza === "lembrete" && tf.lembrar_em === emDias(7));
+  conf("registrada a anotação, o compositor volta ao padrão compromisso", await p.evaluate(() => tfNatureza === "compromisso"));
+  const nats = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => `${c.dataset.tipo}/${c.dataset.nat}`));
+  conf("os cartões dizem a natureza: Prazo fatal em vermelho, Compromisso em âmbar, Lembrete em cinza",
+    nats.some(r => r === "Prazo fatal/fatal") && nats.some(r => r.endsWith("/lembrete")));
 
   // ── F115 · havendo DCB, o lembrete de 15 dias antes existe sozinho ──────
   await p.evaluate((id) => gravarEspecie(id, "B31", "B31"), CASO1); await p.waitForTimeout(300);

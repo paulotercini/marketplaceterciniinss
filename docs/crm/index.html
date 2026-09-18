@@ -2183,13 +2183,13 @@ html[data-tema="v10"] .pz .pz-tipo{grid-column:1/-1;font-size:10px;font-weight:6
 html[data-tema="v10"] .pz .pz-data{font-family:var(--f-mono);font-size:16px;font-weight:600;line-height:1.2}
 html[data-tema="v10"] .pz .pz-rel{font-size:11px;color:var(--cinza);white-space:nowrap}
 html[data-tema="v10"] .pz .pz-mais{grid-column:1/-1;justify-self:start;margin-top:4px;border:1px solid var(--borda);background:#FFFFFF;color:var(--azul-escuro);border-radius:5px;padding:2px 8px;font-size:11px;cursor:pointer}
-html[data-tema="v10"] .pz.pz-prazo{background:var(--venc);border-color:var(--venc);color:#FFFFFF}
-html[data-tema="v10"] .pz.pz-prazo .pz-tipo,html[data-tema="v10"] .pz.pz-prazo .pz-rel{color:rgba(255,255,255,.85)}
-html[data-tema="v10"] .pz.pz-prazo .pz-mais{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.14);color:#FFFFFF}
-html[data-tema="v10"] .pz.pz-prazo .pz-mais:hover{background:rgba(255,255,255,.26)}
-html[data-tema="v10"] .pz.pz-lemb.pz-venceu{border-color:var(--venc)}
-html[data-tema="v10"] .pz.pz-lemb.pz-venceu .pz-rel{color:var(--venc);font-weight:600}
-html[data-tema="v10"] .pz.pz-lemb .pz-mais:hover{border-color:var(--azul)}
+html[data-tema="v10"] .pz.pz-fatal{background:var(--venc);border-color:var(--venc);color:#FFFFFF}
+html[data-tema="v10"] .pz.pz-fatal .pz-tipo,html[data-tema="v10"] .pz.pz-fatal .pz-rel{color:rgba(255,255,255,.85)}
+html[data-tema="v10"] .pz.pz-fatal .pz-mais{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.14);color:#FFFFFF}
+html[data-tema="v10"] .pz.pz-fatal .pz-mais:hover{background:rgba(255,255,255,.26)}
+html[data-tema="v10"] .pz.pz-lembrete.pz-venceu{border-color:var(--venc)}
+html[data-tema="v10"] .pz.pz-lembrete.pz-venceu .pz-rel{color:var(--venc);font-weight:600}
+html[data-tema="v10"] .pz.pz-lembrete .pz-mais:hover{border-color:var(--azul)}
 /* ── F103 · as abas de andamento no padrão do Escritório: conversa em branco, cabeçalho leve ── */
 html[data-tema="v10"] .painel[data-p="2"] .fatos:not(.fatos-processo){background:#FFFFFF;border-color:var(--borda-suave)}
 html[data-tema="v10"] .painel[data-p="2"] .fatos:not(.fatos-processo)>.fatos-topo h3{font-family:var(--f-ui);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro)}
@@ -2275,7 +2275,17 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline button[onclick^="abrirSeguim
 html[data-tema="v10"] .painel[data-p="2"] .timeline li:hover button[onclick^="abrirSeguimento"],html[data-tema="v10"] .painel[data-p="2"] .timeline li:focus-within button[onclick^="abrirSeguimento"]{opacity:1;color:var(--azul-escuro)}
 /* quadros e faixas na mesma forma dos blocos */
 html[data-tema="v10"] .pz{border-radius:10px}
-html[data-tema="v10"] .pz.pz-lemb{background:#F1F3F5;border:none}
+html[data-tema="v10"] .pz.pz-lembrete{background:#F1F3F5;border:none}
+/* F116 · o COMPROMISSO fica entre os dois: não é sangue, mas é trabalho
+   marcado para o dia. Cartão claro com a faixa âmbar e o rótulo em âmbar. */
+html[data-tema="v10"] .pz.pz-compromisso{background:#FFFFFF;border:1px solid var(--borda);border-left:4px solid var(--laranja)}
+html[data-tema="v10"] .pz.pz-compromisso .pz-tipo{color:var(--laranja)}
+html[data-tema="v10"] .pz.pz-compromisso.pz-venceu{border-color:var(--venc);border-left-color:var(--venc)}
+html[data-tema="v10"] .pz.pz-compromisso.pz-venceu .pz-rel{color:var(--venc);font-weight:600}
+/* os dois botões da natureza no compositor */
+html[data-tema="v10"] .tf-nat{display:inline-flex;gap:4px;margin-left:6px;padding-left:8px;border-left:1px solid var(--borda)}
+html[data-tema="v10"] .tf-nt.on{background:var(--laranja-f);border-color:var(--laranja);color:var(--laranja);font-weight:600}
+html[data-tema="v10"] .tf-nt[data-nat="lembrete"].on{background:#EEF0F2;border-color:var(--cinza-claro);color:var(--cinza)}
 html[data-tema="v10"] .fixo-caso{border-radius:10px;border:none}
 html[data-tema="v10"] .painel[data-p="2"] .caso{border:none;background:#F1F3F5;border-radius:10px}
 /* ── F113 · a janela das espécies ──────────────────────────────────────── */
@@ -2381,7 +2391,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.09</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.10</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3380,6 +3390,36 @@ async function moverCaso(casoId, lista){
   fecharMenuMover();
   aviso(`Movido para ${lista} — o To Do acompanha na próxima sincronização`);
   montarSidebar(); render();
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// F117 · A ETAPA ANDA SOZINHA (pedido do Paulo, 18.09). Protocolar o recurso
+// sempre foi seguido de arrastar o caso de 🌻 INSS para 🖥 Conselho de
+// Recursos na mão. O gesto que registra a providência agora move o caso.
+// Três travas, porque mover caso alheio é pior do que não mover. Só anda para
+// FRENTE na trilha, nunca mexe em caso encerrado ou em pagamento, e a faixa
+// fica oito segundos com o DESFAZER, que é a regra da volta da F35.
+// ══════════════════════════════════════════════════════════════════════════
+const ORDEM_ETAPA = ["escritorio","inss","conselho","judicial","pagamento"];
+async function andarEtapa(casoId, lista, motivo){
+  const k = D.casoPorId.get(casoId); if(!k) return false;
+  const fase = (LISTAS_MOVER.find(([l])=>l===lista)||[])[1];
+  if(!fase || k.fase===fase) return false;
+  if(k.fase==="encerrado" || k.fase==="pagamento") return false;
+  const de = ORDEM_ETAPA.indexOf(k.fase), para = ORDEM_ETAPA.indexOf(fase);
+  if(de>=0 && para>=0 && para<de) return false;          // nunca volta sozinho
+  const antes = {fase:k.fase, mover_para:k.mover_para||null};
+  k.fase = fase; k.mover_para = lista;
+  try{ await patchCaso(casoId, {fase, mover_para:lista}); }
+  catch(e){ Object.assign(k, antes); return false; }
+  montarSidebar(); render(); if(clienteAberto) repintarFicha();
+  avisoDesfazer(`Caso movido para ${lista} · ${motivo}`, async ()=>{
+    Object.assign(k, antes);
+    await patchCaso(casoId, antes);
+    montarSidebar(); render(); if(clienteAberto) repintarFicha();
+    aviso("O caso voltou para onde estava", false);
+  });
+  return true;
 }
 
 // o número do ☀️ na barra, como o To Do mostra: o que está marcado para HOJE
@@ -13643,7 +13683,7 @@ function linhasDeDatas(cliId){
     if(lembs.some(l=>l.titulo===`Anotação: ${(n.texto||"").slice(0,60)}`)) return;
     const donos=(n.atribuidos||[n.atribuido]).filter(Boolean)
       .map(id=>D.colPorId.get(id)).filter(Boolean);
-    linhas.push({data:n.lembrar_em, ico:"📝", rot:(n.texto||"").slice(0,70),
+    linhas.push({data:n.lembrar_em, ico:"📝", natureza:"lembrete", rot:(n.texto||"").slice(0,70),
       textoCru:(n.texto||""),
       avs:donos.map(bolinha).join(""),
       clique:`onclick="qdVerNota('${cliId}',${idx})"`,
@@ -13652,7 +13692,7 @@ function linhasDeDatas(cliId){
         title="marca a anotação como resolvida">✔ feito</button>`});
   });
   lembs.forEach(l=>{ if(!l.proximo_em) return;
-    linhas.push({data:l.proximo_em, ico:"🔔",
+    linhas.push({data:l.proximo_em, ico:"🔔", natureza:"lembrete",
       rot:`${l.titulo||"Lembrete"}${l.intervalo_meses?` · repete a cada ${l.intervalo_meses} mês(es)`:""}`,
       avs:bolinha(D.colPorId.get(l.responsavel_id)),
       clique:`onclick="qdVerLembrete('${l.id}')"`,
@@ -13668,7 +13708,7 @@ function linhasDeDatas(cliId){
     if(t.concluida_em || !t.lembrar_em || !idsCasos.has(t.caso_id)) return;
     const a=(D._andsFicha||[]).find(x=>x.id===t.andamento_id);
     const texto=a?(a.texto||"").replace(/<[^>]*>/g,""):"";
-    linhas.push({data:t.lembrar_em, ico:"🗓",
+    linhas.push({data:t.lembrar_em, ico:"🗓", natureza:(t.natureza||"compromisso"),
       rot:texto?texto.slice(0,70):"Tarefa do andamento",
       textoCru:texto, casoId:t.caso_id, andId:t.andamento_id,
       avs:bolinha(D.colPorId.get(t.colaborador_id)),
@@ -13687,21 +13727,21 @@ function linhasDeDatas(cliId){
     // moravam só em chips do cartão entram aqui como linhas, com a mesma
     // régua de cor — exigência do INSS, prazo de recurso e DCB
     if(temaV10()){
-      if(x.exigencia_prazo) linhas.push({data:x.exigencia_prazo, ico:"⚠", ehPrazo:true, casoId:x.id, cru:true,
+      if(x.exigencia_prazo) linhas.push({data:x.exigencia_prazo, ico:"⚠", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true,
         rot:`<b>Exigência do INSS${x.exigencia_descricao?` — ${esc(String(x.exigencia_descricao).slice(0,110))}`:""}</b>
              <small class="qd-de">Prazo da exigência · ${esc(tituloCaso(x))}</small>`, edita:"",
         acao:`<button class="btn-mini" onclick="copiarMsgExigencia('${x.id}')" title="mensagem pronta ao cliente sobre a exigência">💬 msg ao cliente</button>
               <button class="btn-mini" onclick="cumprirExigencia('${x.id}')" title="registra a exigência como cumprida">✔ cumprida</button>`});
       const rec=recorrerAte(x);
-      if(rec && x.fase!=="pagamento") linhas.push({data:rec, ico:"⚖️", ehPrazo:true, casoId:x.id, cru:true,
+      if(rec && x.fase!=="pagamento") linhas.push({data:rec, ico:"⚖️", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true,
         rot:`<b>Recorrer até</b> <small class="qd-de">Prazo recursal · 30 dias da decisão de ${fmt(x.decisao_em)} · ${esc(tituloCaso(x))}</small>`,
         edita:"", acao:""});
-      if(prorrogarEm(x)) linhas.push({data:prorrogarEm(x), ico:"🩺", ehPrazo:true, casoId:x.id, cru:true, rotulo:"Pedir a prorrogação",
+      if(prorrogarEm(x)) linhas.push({data:prorrogarEm(x), ico:"🩺", ehPrazo:true, natureza:"compromisso", casoId:x.id, cru:true, rotulo:"Pedir a prorrogação",
         rot:`<b>Pedir a prorrogação</b>
              <small class="qd-de">Cessação marcada para ${fmt(x.dcb)}${x.dcb_prorrogar_em?"":` · lembrete automático, ${DIAS_PRORROG} dias antes`} · ${esc(tituloCaso(x))}</small>`,
         edita:"", acao:`<button class="btn-mini" onclick="salvarProrrog('${x.id}',true)" title="a prorrogação já foi pedida — desliga o alarme">✔ prorrogação pedida</button>`});
       // F102 · o comentário fixo com data lembra na data
-      if(x.fixo && x.fixo.texto && x.fixo.lembrar_em) linhas.push({data:x.fixo.lembrar_em, ico:"📌", casoId:x.id, cru:true,
+      if(x.fixo && x.fixo.texto && x.fixo.lembrar_em) linhas.push({data:x.fixo.lembrar_em, ico:"📌", natureza:"lembrete", casoId:x.id, cru:true,
         rot:`<b>${esc(x.fixo.texto.slice(0,110))}</b> <small class="qd-de">Comentário fixo · ${esc(tituloCaso(x))}</small>`,
         clique:`onclick="lcEditarFixo('${x.id}')"`, edita:"", acao:""});
     }
@@ -13714,7 +13754,7 @@ function linhasDeDatas(cliId){
            <small class="qd-de">Prazo fatal · ${esc(tituloCaso(x))} · registrado por ${esc(og.quem)} em ${fmt(og.em)}</small>`
         : `<b>PRAZO FATAL — ${esc(tituloCaso(x))}</b>
            <small class="qd-de qd-semmotivo">Sem descrição — clique para descrever este prazo</small>`;
-      linhas.push({data:x.prazo, ico:"⏰", ehPrazo:true, casoId:x.id, cru:true,
+      linhas.push({data:x.prazo, ico:"⏰", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true,
         andId: og ? og.id : null, semMotivo: temaV10() && !og,
         rot: temaV10() ? rotV10 : `PRAZO FATAL — ${tituloCaso(x)}`,
         clique: temaV10() ? (og?`onclick="qdIrParaAndamento('${x.id}','${og.id}')"`
@@ -13789,6 +13829,9 @@ function quadroDatas(k){
 // O prazo fatal sem anotação de origem NÃO vira quadro (pedido do Paulo).
 // ══════════════════════════════════════════════════════════════════════════
 let faixaAtual = [];
+// F116 · as três naturezas da data, com os nomes que o escritório usa
+const NAT_ROT = {fatal:"Prazo fatal", compromisso:"Compromisso", lembrete:"Lembrete"};
+const natDaLinha = x => x.natureza || (x.ehPrazo ? "fatal" : "lembrete");
 function faixaPrazos(k){
   const {soltas} = linhasDeDatas(k.cliente_id), hj = hoje();
   const minhas = [];
@@ -13802,11 +13845,14 @@ function faixaPrazos(k){
     <span class="meio-sub">Sem prazos ou lembretes em aberto. Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.</span></div>`;
   const card = (x, i) => {
     const venceu = x.data<hj, d = diasAte(x.data);
-    // F115 · o cartão diz o que é, e não só que é prazo
-    const tipo = x.rotulo || (x.ehPrazo ? "Prazo processual" : x.ico==="🩺" ? "Perícia" : x.ico==="📌" ? "Comentário fixo" : x.filha ? "Lembrar antes" : "Lembrete");
+    // F115 · o cartão diz o que é, e não só que é prazo.
+    // F116 · e diz de que NATUREZA é: prazo fatal, compromisso ou lembrete.
+    const nat = natDaLinha(x);
+    const tipo = x.rotulo || (x.ico==="🩺" && !x.ehPrazo ? "Perícia" : x.ico==="📌" ? "Comentário fixo"
+      : x.filha ? "Lembrar antes" : NAT_ROT[nat]);
     const rel = d===0 ? "hoje" : d<0 ? `venceu há ${-d} d` : d===1 ? "amanhã" : `em ${d} d`;
     const ir = x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')` : `prazoSaberMais(${i})`;
-    return `<div class="pz ${x.ehPrazo?"pz-prazo":"pz-lemb"}${venceu?" pz-venceu":""}" data-tipo="${tipo}">
+    return `<div class="pz pz-${nat}${venceu?" pz-venceu":""}" data-tipo="${tipo}" data-nat="${nat}">
       <span class="pz-tipo">${tipo}</span>
       <b class="pz-data">${fmtBarra(x.data)}</b>
       <small class="pz-rel">${rel}</small>
@@ -14917,9 +14963,16 @@ function composerCaso(k){
         <button class="btn-rap tf-dt" data-tfd="amanha" onclick="tfDia('amanha',this)">Amanhã</button>
         <button class="btn-rap tf-dt" data-tfd="7" onclick="tfDia('7',this)">+7 dias</button>
         ${/* a data some até ser pedida: só o botão fica, e ele abre o campo */""}
-        <button class="btn-rap tf-dt" id="tf-escolher" onclick="tfEscolherData(this)">Escolher a data</button>
+        <button class="btn-rap tf-dt" id="tf-escolher" onclick="tfEscolherData(this)" title="escolher a data no calendário">Escolher</button>
         <input type="date" class="tf-data" id="tf-data" style="display:none" onchange="tfDia(this.value,this)">
-        <button class="btn-rap tf-dt" data-tfd="sem" onclick="tfDia('sem',this)">sem lembrete</button>`;
+        <button class="btn-rap tf-dt" data-tfd="sem" onclick="tfDia('sem',this)" title="registrar sem data nenhuma">sem data</button>`;
+  // F116 · a mesma data tem três naturezas. O prazo FATAL é o ⏰ da esquerda;
+  // aqui se escolhe entre o COMPROMISSO, que é trabalho marcado para o dia, e
+  // o LEMBRETE, que é só um aviso. A escolha ocupa o lugar do antigo rótulo.
+  const natChips = `<span class="tf-nat">${["compromisso","lembrete"].map(n=>
+          `<button class="btn-rap tf-nt ${tfNatureza===n?"on":""}" data-nat="${n}" onclick="tfNat('${n}',this)"
+            title="${n==="compromisso"?"trabalho marcado para este dia, por exemplo escrever a petição"
+                                      :"só um aviso neste dia, por exemplo voltar a olhar a aposentadoria futura"}">${n}</button>`).join("")}</span>`;
   const ferr = `<span class="esc-ferr">
           <input type="file" id="arq-inp" accept="image/*,application/pdf" capture="environment"
             style="display:none" onchange="anexar('${k.id}','${k.cliente_id}')">
@@ -14937,12 +14990,12 @@ function composerCaso(k){
   // caso move para 🗓 Tarefas com Prazo. F104 · prazo sem anotação de origem
   // não vira quadro: o convite a explicá-lo mora aqui, ao lado da data fatal
   const prazoRow = listaDe(k)!=="🗓 Tarefas com Prazo"
-    ? `<label class="conta-ck" title="prazo processual: o caso vai para 🗓 Tarefas com Prazo, ordenado pela data fatal">
+    ? `<label class="conta-ck" title="prazo fatal: o dia em que o direito morre. O caso vai para 🗓 Tarefas com Prazo, ordenado pela data fatal">
           <input type="checkbox" id="and-prazo-ck"
             onchange="document.getElementById('and-prazo-data').style.display=this.checked?'inline-block':'none';
               document.getElementById('and-prazo-mais').style.display=this.checked?'inline-flex':'none';
               if(this.checked&&prazoDetectado)document.getElementById('and-prazo-data').value=prazoDetectado;">
-          ⏰ esta anotação é uma tarefa com PRAZO</label>
+          ⏰ PRAZO FATAL</label>
         <input type="date" id="and-prazo-data" min="${hoje()}" style="display:none" title="a data fatal do prazo">
         <span id="and-prazo-mais" style="display:none">${catalogoPrazoHtml("and","and-prazo-data")}</span>`
     : `<span class="chip" style="background:#FDF3E7;color:#9C4607">⏰ em 🗓 Tarefas com Prazo${k.prazo?` · fatal ${fmt(k.prazo)}`:""}</span>
@@ -14969,7 +15022,7 @@ function composerCaso(k){
       <div class="tipo-fila" id="tipo-fila">${chips}${sugBt}</div>
       ${area}
       <div class="esc-barra" id="tf-box">
-        <div class="esc-linha">${prazoRow}<span class="esc-lembrar"><span class="rotulo-rap">LEMBRAR EM</span>${lembrar}</span></div>
+        <div class="esc-linha">${prazoRow}<span class="esc-lembrar">${natChips}<span class="rotulo-rap">EM</span>${lembrar}</span></div>
         <div class="esc-linha"><span class="rotulo-rap">ATRIBUIR PARA</span>${atribuir}${ferr}</div>
       </div>
       <div id="and-prazo-chip"></div>
@@ -14981,7 +15034,7 @@ function composerCaso(k){
       <div class="esc-barra" id="tf-box">
         <span class="rotulo-rap">TAREFA PARA</span>${atribuir}
         <span class="tf-sep"></span>
-        <span class="rotulo-rap">LEMBRAR EM</span>${lembrar}
+        ${natChips}<span class="rotulo-rap">EM</span>${lembrar}
         ${ferr}
       </div>
       <div id="and-prazo-chip"></div>
@@ -15177,7 +15230,14 @@ const POPS_ANOTACAO = {
     efeito:async(k,v)=>{
       const campo = v.onde==="CRPS" ? {"Recurso Ordinário":"ro_protocolado_em","Recurso Especial":"re_protocolado_em","Embargos de Declaração":"ed_protocolado_em"}[v.qual]
         : (v.onde==="Judicial" && v.qual==="Petição Inicial" && !k.ajuizado_em) ? "ajuizado_em" : null;
-      if(campo){ k[campo]=v.data; await patchCaso(k.id,{[campo]:v.data}); } }},
+      if(campo){ k[campo]=v.data; await patchCaso(k.id,{[campo]:v.data}); }
+      // F117 · protocolou, o caso anda de etapa sozinho (com desfazer)
+      if(v.onde==="CRPS")
+        await andarEtapa(k.id, "🖥 Conselho de Recursos", `${v.qual} protocolado em ${fmtBarra(v.data)}`);
+      else if(v.onde==="Judicial" && v.qual==="Petição Inicial")
+        await andarEtapa(k.id, "👪 Judicial", `ação distribuída em ${fmtBarra(v.data)}`);
+      else if(v.onde==="INSS" && v.qual==="Requerimento")
+        await andarEtapa(k.id, "🌻 INSS", `requerimento protocolado em ${fmtBarra(v.data)}`); }},
   decisao:{rot:"Decisão", cor:"ben", campos:[
       {id:"res", rot:"Resultado", tipo:"select", opts:["Benefício concedido","Benefício indeferido","Recurso provido","Recurso improvido","Sentença procedente","Sentença improcedente","Parcialmente procedente","Outra"]},
       {id:"data", rot:"Data da decisão", tipo:"date", req:true},
@@ -15248,15 +15308,17 @@ async function popInserir(chave){
     autoAltura(inp);
   }
   fecharCaixa();
+  const alvo = document.getElementById("and-texto");
+  if(alvo){ alvo.focus(); alvo.setSelectionRange(alvo.value.length, alvo.value.length); }
+  aviso(`${P.rot} preenchido — complete e clique em Registrar`, false);
+  // F117 · o efeito vem DEPOIS do aviso: ele pode mover o caso de etapa, e a
+  // faixa do desfazer não pode ser apagada pelo aviso seguinte
   if(P.efeito){
     // o dado gravado muda a tela (quadro de prazo, datas do caso): repinta;
     // o texto sobrevive porque é rascunho guardado por caso
     try{ await P.efeito(k, v); repintarFicha(); }
     catch(e){ aviso("O texto entrou, mas o dado do caso não gravou: "+String(e.message||e).slice(0,80)); }
   }
-  const alvo = document.getElementById("and-texto");
-  if(alvo){ alvo.focus(); alvo.setSelectionRange(alvo.value.length, alvo.value.length); }
-  aviso(`${P.rot} preenchido — complete e clique em Registrar`, false);
 }
 // o comentário rotulado sai com o chip do tipo, não com o colchete cru
 function tipoDoComentario(texto){
@@ -16551,6 +16613,7 @@ async function salvarCrpsNup(casoId, elId, valor){
   const nova = [...jaTem, v];
   k.crps_nups = nova; k.crps_nup = null;
   await patchCaso(casoId, {crps_nups:nova, crps_nup:null});
+  await andarEtapa(casoId, "🖥 Conselho de Recursos", "recurso com número no e-Sisrec");
   aviso(`Recurso ${jaTem.length?"acrescentado":"vinculado"} ✔ — o robô consulta na próxima rodada`, false);
   abrirFicha(clienteAberto);
 }
@@ -16712,7 +16775,8 @@ async function acrescentarProcesso(casoId, valor){
   if(lista.some(p=>soDig(p.numero)===soDig(n))) return aviso("Esse processo já está no caso");
   inp.value="";
   await salvarProcessos(casoId, [...lista, {numero:fmtProc(n), nosso:true, acompanhar:true}]);
-  aviso("Processo acrescentado — o DataJud consulta na próxima rodada", false);
+  if(!await andarEtapa(casoId, "👪 Judicial", "processo acrescentado, o DataJud consulta na próxima rodada"))
+    aviso("Processo acrescentado — o DataJud consulta na próxima rodada", false);
 }
 async function alternarNossoProcesso(casoId, numero){
   const k = D.casoPorId.get(casoId); if(!k) return;
@@ -17420,6 +17484,13 @@ async function salvarProrrog(casoId, pedida){
 // tfQuem: null = ainda não escolheu · [] = "ninguém" · [ids] = pessoas
 // tfData: undefined = ainda não escolheu · null = "sem lembrete" · data
 let tfQuem = null, tfData;
+// F116 · a natureza da data escolhida no compositor. Compromisso é trabalho
+// marcado; lembrete é aviso. O prazo fatal não passa por aqui, ele tem o ⏰.
+let tfNatureza = "compromisso";
+function tfNat(v, bt){
+  tfNatureza = v;
+  document.querySelectorAll(".tf-nt").forEach(b=>b.classList.toggle("on", b===bt));
+}
 function proxDiaUtil(iso){
   const d=new Date(iso+"T12:00:00");
   while(d.getDay()===0||d.getDay()===6) d.setDate(d.getDate()+1);
@@ -17699,11 +17770,11 @@ async function novoAndamento(casoUnico){
       try{
         const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
           body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:pid,
-                               atribuido_por:eu.id, lembrar_em:tfData})});
+                               atribuido_por:eu.id, lembrar_em:tfData, natureza:tfNatureza})});
         tarefaNaMemoria(tf);
       }catch(e){ aviso("⚠ a tarefa do lembrete não gravou: "+String(e.message||e).slice(0,80)); }
     }
-    tfQuem=null; tfData=undefined;
+    tfQuem=null; tfData=undefined; tfNatureza="compromisso";
   }
   // quem está ATRIBUÍDO ao caso fica sabendo (é essa a função do Atribuído a),
   // além de quem for citado com @ no texto
@@ -17726,7 +17797,7 @@ async function novoAndamento(casoUnico){
       try{
         const [tf]=await api(`/rest/v1/andamento_tarefas`,{method:"POST",headers:{Prefer:"return=representation"},
           body:JSON.stringify({andamento_id:and.id, caso_id:casoId, colaborador_id:eu.id,
-                               atribuido_por:eu.id, lembrar_em:prazoDetectado})});
+                               atribuido_por:eu.id, lembrar_em:prazoDetectado, natureza:"lembrete"})});
         tarefaNaMemoria(tf);
         lembrou=` · 🗓 lembrete para ${fmt(prazoDetectado)}`;
       }catch(e){}
