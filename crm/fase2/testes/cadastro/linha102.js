@@ -272,7 +272,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   // ── F114 · o essencial da espécie na linha, o resto em gestão do caso ───
   conf("a aposentadoria por idade não enche a linha: sem DIB nem DCB, a DER basta", await p.evaluate(() =>
     camposEssenciais(D.casoPorId.get(casoSel)).every(t => t[0] === "?") &&
-    ![...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()).some(r => !["DER","Tramitação","Verificação"].includes(r))));
+    ![...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()).some(r => !["DER","Tramitação","Verificação","Etapa"].includes(r))));
   await p.evaluate((id) => gravarEspecie(id, "B31", "B31"), CASO1); await p.waitForTimeout(300);
   const rotsDa = () => p.evaluate(() => [...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()));
   const b31 = await rotsDa();
@@ -311,6 +311,45 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("óbito com a DER dentro dos 90 dias, a linha avisa que a DIB é no óbito", /DIB no óbito/.test(await obitoDiz("2024-04-01")));
   conf("óbito com a DER fora dos 90 dias, a linha avisa que a DIB cai na DER", /fora dos 90 d/.test(await obitoDiz("2023-01-01")));
   await p.evaluate((id) => gravarEspecie(id, "B41", "B41"), CASO1); await p.waitForTimeout(300);
+
+  // ── F118 · a DCB é prazo fatal e tem quadro próprio ─────────────────────
+  await p.evaluate(async (a) => { const c = { dcb: a.d, dcb_prorrogar_em: null, dcb_prorrogacao_pedida: false };
+    await patchCaso(a.id, c); Object.assign(D.casoPorId.get(a.id), c); repintarFicha(); }, { id: CASO1, d: emDias(20) });
+  await p.waitForTimeout(300);
+  const dois = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => `${c.dataset.nat}|${c.dataset.tipo}|${c.querySelector(".pz-data").textContent}`));
+  conf("a DCB vira quadro de PRAZO FATAL no dia da cessação", dois.includes(`fatal|DCB, o benefício cessa|${fmtBR(emDias(20))}`));
+  conf("e o dia de pedir a prorrogação continua ao lado, como compromisso", dois.includes(`compromisso|Pedir a prorrogação|${fmtBR(emDias(5))}`));
+  conf("marcada a prorrogação, os dois quadros somem juntos", await p.evaluate(async (id) => {
+    await salvarProrrog(id, true); await new Promise(r => setTimeout(r, 300));
+    const t = [...document.querySelectorAll(".faixa-prazos .pz")].map(c => c.dataset.tipo).join("|");
+    await salvarProrrog(id, false); return !/DCB|prorroga/i.test(t); }, CASO1));
+  await p.waitForTimeout(300);
+
+  // ── F119 · a etapa, o passo dentro da fase ──────────────────────────────
+  conf("a exigência registrada lá atrás já tinha declarado a etapa sozinha", await p.evaluate(() =>
+    D.casoPorId.get(casoSel).etapa === "em exigência" && document.querySelector(".lc-etapa").textContent.trim() === "em exigência"));
+  await p.evaluate(() => gravarEtapa(casoSel, "")); await p.waitForTimeout(300);
+  conf("a linha mostra a etapa ao lado da tramitação, e vazia ela convida a definir", await p.evaluate(() => {
+    const rots = [...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim());
+    return rots.includes("Tramitação") && rots.includes("Etapa") && document.querySelector(".lc-etapa").textContent.trim() === "a definir"; }));
+  await p.evaluate((id) => escolherEtapa(id), CASO1); await p.waitForTimeout(200);
+  conf("a janela só oferece as etapas da fase em que o caso está", await p.evaluate(() => {
+    const t = [...document.querySelectorAll("#modal .esp-it")].map(b => b.textContent.trim());
+    return t.includes("aguardando perícia") && t.includes("em exigência") && !t.includes("aguardando sentença"); }));
+  await p.evaluate(() => gravarEtapa(casoSel, "aguardando perícia")); await p.waitForTimeout(350);
+  conf("escolher a etapa grava e aparece na linha", (patches("etapa").pop() || {}).etapa === "aguardando perícia"
+    && await p.evaluate(() => document.querySelector(".lc-etapa").textContent.trim() === "aguardando perícia"));
+  await p.evaluate(() => popAnotacao("exigencia")); await p.waitForTimeout(200);
+  await p.evaluate((d) => { document.getElementById("pa-oque").value = "RG"; document.getElementById("pa-prazo").value = d; }, emDias(6));
+  await p.evaluate(() => popInserir("exigencia")); await p.waitForTimeout(400);
+  conf("registrar a exigência declara sozinho a etapa 'em exigência'", (patches("etapa").pop() || {}).etapa === "em exigência"
+    && await p.evaluate(() => D.casoPorId.get(casoSel).etapa === "em exigência"));
+  conf("mudar de lista à mão limpa a etapa que era da fase antiga", await p.evaluate(async () => {
+    await moverCaso(casoSel, "👪 Judicial");
+    const k = D.casoPorId.get(casoSel), ok = k.fase === "judicial" && k.etapa === null;
+    k.fase = "inss"; k.mover_para = null; await patchCaso(k.id, { fase: "inss", mover_para: null }); repintarFicha();
+    return ok; }));
+  await p.waitForTimeout(300);
 
   // ── F116 · prazo fatal, compromisso e lembrete ──────────────────────────
   await p.waitForTimeout(250);

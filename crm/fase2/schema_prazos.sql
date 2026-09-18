@@ -16,3 +16,11 @@ do $$ begin
     add constraint andamento_tarefas_natureza_ck
     check (natureza in ('compromisso','lembrete'));
 exception when duplicate_object then null; end $$;
+
+-- F119 · A ETAPA do caso, o passo dentro da fase (decisão do Paulo, 18.09.2026,
+-- a partir da arquitetura fase → etapa → tarefa observada na ADVBOX).
+-- A FASE é o trilho grande e já existe (🌻 INSS, 🖥 Conselho, 👪 Judicial).
+-- A ETAPA é onde o caso está dentro dele, "aguardando perícia", "em exigência",
+-- "aguardando sentença". É o estado que o escritório DECLARA, e é ele que um
+-- dia o cliente vai ler no portal, no lugar da frase deduzida do último evento.
+alter table casos add column if not exists etapa text;
