@@ -2381,7 +2381,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.07</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.08</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14413,7 +14413,8 @@ function lcGestao(k){
     ${/* F114 · as datas secundárias moram aqui, fora da linha. Aparecem as
          preenchidas; as vazias entram pelo ＋, que só oferece o que falta. */""}
     <div class="lc-linha"><span class="lc-k">Datas</span>${(()=>{
-      const ess = camposEssenciais(k), tem = DATAS_SECUNDARIAS.filter(c=>c!=="der" && !ess.includes(c) && k[c]);
+      const naLinha = new Set(camposEssenciais(k).map(soCampo));
+      const tem = DATAS_SECUNDARIAS.filter(c=>c!=="der" && !naLinha.has(c) && k[c]);
       return (tem.length ? tem.map(c=>lcCampo(k,c)).join("") : `<span class="lc-vazio">só as da linha do caso</span>`);
     })()}
       <button class="lc-add" onclick="lcNovaData('${k.id}')" title="informar outra data do caso" aria-label="informar outra data do caso">+</button></div>
@@ -14432,25 +14433,31 @@ function lcGestao(k){
 // resto das datas desce para gestão do caso, onde nada se perde.
 // A regra é herdada: a ESPÉCIE traz a lista base e a SUBESPÉCIE acrescenta.
 // "B42.PCD.ESP" resolve como B42 mais B42.PCD, nunca como regra nova.
+// Acima de todas elas, DIB e DCB preenchidas aparecem na linha em QUALQUER
+// espécie: benefício que já saiu e cessação marcada não se escondem atrás
+// de um clique (pedido do Paulo, 18.09).
 // Levantamento em crm/fase2/REGRAS-POR-ESPECIE.md, com a fonte de cada item.
 // ══════════════════════════════════════════════════════════════════════════
+// O campo com "?" na frente só aparece PREENCHIDO. Serve para o dado que
+// nasce depois, como a DIB, que não existe enquanto o pedido está em pé.
 const ESSENCIAL = {
   // incapacidade · a DII fixa qualidade e carência, a DCB comanda a prorrogação
   B31:["dii","dcb"], "B31.PREEX":["did"],
   B91:["dat","dii","dcb"],
   B32:["dii"], "B32.CONV":["dcb"],
   B92:["dat","dii"],
+  B52:["dii","dcb"], B04:["dii"],
   // auxílio-acidente · a consolidação separa do B31 e a DCB do B31 fixa a DIB
   B36:["consolidacao_em","dcb"],
   B94:["dat","consolidacao_em","dcb"],
   B26:["dii"],
-  // aposentadorias · a DER já está na linha; só a PCD pede data e grau
+  // aposentadorias · quem decide é a DER, já na linha, e a DIB quando sai
   B41:[], "B41.PCD":["did","grau_deficiencia"],
   B42:[], "B42.PCD":["did","grau_deficiencia"],
   B46:[], B57:[],
   // dependentes · a data do evento é que abre a janela de retroação
   B21:["obito_em"], "B21.INVAL":["did"],
-  B93:["obito_em","dat"],
+  B01:["obito_em"], B93:["obito_em","dat"],
   B25:["prisao_em"],
   // maternidade e assistenciais
   B80:["parto_em"],
@@ -14458,15 +14465,24 @@ const ESSENCIAL = {
   // revisões e serviços · o 1º pagamento é que conta a decadência do art. 103
   REV:["primeiro_pagamento_em","dib"],
   REST:["dcb"],
+  IIR:["did"],
 };
+// vale para TODA espécie, inclusive a que não tem lista própria: benefício
+// que já saiu mostra a DIB, e cessação marcada mostra a DCB — sem abrir
+// gestão do caso (pedido do Paulo, 18.09).
+const ESSENCIAL_SEMPRE = ["?dib","?dcb"];
+const soCampo = t => String(t).replace(/^\?/,"");
 function camposEssenciais(k){
-  const chave = k.subespecie || k.especie || "";
-  if(!chave) return [];
-  const p = String(chave).split("."), out = [];
-  for(let i=1;i<=p.length;i++)
-    for(const c of (ESSENCIAL[p.slice(0,i).join(".")] || []))
-      if(!out.includes(c)) out.push(c);
-  return out;
+  const toks = [];
+  const juntar = lista => { for(const t of (lista||[])){
+    const i = toks.findIndex(x=>soCampo(x)===soCampo(t));
+    if(i<0) toks.push(t);
+    else if(t[0]!=="?") toks[i] = t;   // o "sempre à vista" vence o "só preenchido"
+  }};
+  const p = String(k.subespecie || k.especie || "").split(".");
+  for(let i=1;i<=p.length;i++) juntar(ESSENCIAL[p.slice(0,i).join(".")]);
+  juntar(ESSENCIAL_SEMPRE);
+  return toks;
 }
 // o aviso que a própria data calcula — aparece só quando muda a conduta
 function lcJanela(k, campo){
@@ -14501,9 +14517,11 @@ function lcJanela(k, campo){
 }
 // um campo do caso na linha, com o valor, o aviso e a canetinha. O prefixo
 // "lc" mantém os ids fora do caminho do cartão de fatos, que usa "fx".
-function lcCampo(k, campo){
+function lcCampo(k, token){
+  const so = String(token)[0]==="?", campo = soCampo(token);
   const f = FATOS[campo]; if(!f) return "";
   const v = k[campo];
+  if(so && !v) return "";              // o dado que só existe depois, como a DIB
   const mostra = !v ? `<span class="lc-vazio">a informar</span>`
     : f.tipo==="data" ? `<span class="cop lc-num" data-cop="${fmtBarra(v)}" data-cop-msg="${esc(f.rot)} copiada" title="clique para copiar">${fmtBarra(v)}</span>`
     : `<b class="lc-manual">${esc(v)}</b>`;

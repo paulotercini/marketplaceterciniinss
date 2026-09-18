@@ -251,7 +251,9 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("Recurso Especial protocolado grava a data no caso (re_protocolado_em)", (patches("re_protocolado_em").pop() || {}).re_protocolado_em === hojeSP());
 
   // ── F114 · o essencial da espécie na linha, o resto em gestão do caso ───
-  conf("a aposentadoria por idade não pede data extra, a DER basta", await p.evaluate(() => camposEssenciais(D.casoPorId.get(casoSel)).length === 0));
+  conf("a aposentadoria por idade não enche a linha: sem DIB nem DCB, a DER basta", await p.evaluate(() =>
+    camposEssenciais(D.casoPorId.get(casoSel)).every(t => t[0] === "?") &&
+    ![...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()).some(r => !["DER","Tramitação","Verificação"].includes(r))));
   await p.evaluate((id) => gravarEspecie(id, "B31", "B31"), CASO1); await p.waitForTimeout(300);
   const rotsDa = () => p.evaluate(() => [...document.querySelectorAll(".lc-topo .lc-f .lc-k")].map(x => x.textContent.trim()));
   const b31 = await rotsDa();
@@ -269,8 +271,15 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("a DCB na linha diz sozinha quantos dias faltam", await p.evaluate(() => /em 9 d/.test(document.querySelector(".lc-topo #lc-dcb-" + casoSel).parentElement.textContent)));
   await p.evaluate((id) => gravarEspecie(id, "B42", "B42.PCD.ESP"), CASO1); await p.waitForTimeout(350);
   const pcd = await rotsDa();
-  conf("a aposentadoria da pessoa com deficiência troca DII e DCB por DID e Grau", pcd.includes("DID") && pcd.includes("Grau") && !pcd.includes("DII") && !pcd.includes("DCB"));
-  conf("a DCB preenchida não se perde, desce para gestão do caso", await p.evaluate(() => !!document.querySelector(".lc-gestao #lc-dcb-" + casoSel)));
+  conf("a aposentadoria da pessoa com deficiência troca a DII por DID e Grau", pcd.includes("DID") && pcd.includes("Grau") && !pcd.includes("DII"));
+  conf("a DCB preenchida continua na PRIMEIRA linha em espécie que não a pede, sem abrir gestão do caso",
+    pcd.includes("DCB") && await p.evaluate(() => !!document.querySelector(".lc-topo #lc-dcb-" + casoSel) && !document.querySelector(".lc-gestao #lc-dcb-" + casoSel)));
+  await p.evaluate(async (id) => { await patchCaso(id, { dib: "2026-03-01" }); D.casoPorId.get(id).dib = "2026-03-01"; repintarFicha(); }, CASO1);
+  await p.waitForTimeout(250);
+  conf("a DIB preenchida entra na linha de qualquer espécie, e some quando não há", (await rotsDa()).includes("DIB"));
+  await p.evaluate(async (id) => { await patchCaso(id, { dib: null }); D.casoPorId.get(id).dib = null; repintarFicha(); }, CASO1);
+  await p.waitForTimeout(250);
+  conf("sem DIB a linha não pede DIB, porque ela só nasce com a concessão", !(await rotsDa()).includes("DIB"));
   await p.evaluate((id) => editarFato(id, "grau_deficiencia", "lc"), CASO1); await p.waitForTimeout(200);
   await p.evaluate(() => { const s = document.querySelector("#lc-grau_deficiencia-" + casoSel + " select"); s.value = "grave"; s.dispatchEvent(new Event("change")); });
   await p.waitForTimeout(350);
