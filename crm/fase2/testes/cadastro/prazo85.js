@@ -80,13 +80,13 @@ FIX.andamentos = [
   const fmtBR = iso => `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
   await abrir("?tema=v10");
   const on = await cards();
-  conf("ligado: o prazo COM anotação de origem vira um quadro de prazo processual", on.length === 1 && on[0].tipo === "Prazo processual" && on[0].data === fmtBR(PRAZO_A));
+  conf("ligado: o prazo COM anotação de origem vira um quadro de prazo fatal", on.length === 1 && on[0].tipo === "Prazo fatal" && on[0].data === fmtBR(PRAZO_A));
   conf("o 'saber mais' leva ao comentário que criou o prazo", on[0] && on[0].onclick.includes(`qdIrParaAndamento('${CASO1}','${AND_ORIG}')`));
   conf("o compositor lembra a data fatal e oferece o ✔ cumprido pela janela", await p.evaluate(() => /fatal/.test(document.querySelector(".escrever").textContent) && !!document.querySelector('button[onclick^="janelaPrazoCumprido"]')));
   // o outro caso tem prazo SEM origem: não vira quadro (pedido do Paulo) — o convite a explicar fica no compositor
   await p.evaluate(id => { casoSel = id; repintarFicha(); }, C2); await p.waitForTimeout(200);
   const c2 = await cards();
-  conf("o prazo SEM origem não vira quadro", !c2.some(c => c.tipo === "Prazo processual"));
+  conf("o prazo SEM origem não vira quadro", !c2.some(c => c.tipo === "Prazo fatal"));
   conf("mas o compositor convida a explicá-lo", await p.evaluate(() => !!document.querySelector('button[onclick^="explicarPrazo"]')));
 
   // explicar um prazo cria o comentário com o carimbo
@@ -111,7 +111,7 @@ FIX.andamentos = [
   conf("e fica pendurado na anotação que criou o prazo", cump && cump.responde_a === AND_ORIG);
   conf("o caso deixou de ter prazo", await p.evaluate(id => D.casoPorId.get(id).prazo === null, CASO1));
   await p.evaluate(id => { casoSel = id; repintarFicha(); }, CASO1); await p.waitForTimeout(200);
-  conf("o prazo cumprido SAIU dos quadros", !(await cards()).some(c => c.tipo === "Prazo processual"));
+  conf("o prazo cumprido SAIU dos quadros", !(await cards()).some(c => c.tipo === "Prazo fatal"));
 
   // desligado: como sempre
   await abrir("?tema=");
