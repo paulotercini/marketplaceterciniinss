@@ -2142,6 +2142,10 @@ html[data-tema="v10"] .lc-jan{font-size:11px;color:var(--cinza);white-space:nowr
 html[data-tema="v10"] .lc-jan.venc{color:var(--vermelho);font-weight:600}
 html[data-tema="v10"] .lc-jan.ok{color:var(--verde);font-weight:600}
 html[data-tema="v10"] .lc-tram{font-weight:600;color:var(--azul-escuro);background:#FFFFFF;border:1px solid var(--borda);border-radius:4px;padding:1px 7px}
+/* F119 · a etapa fica ao lado da tramitação, em letra menor e sem caixa: a
+   fase é o trilho, a etapa é só onde o caso está nele */
+html[data-tema="v10"] .lc-etapa{font-weight:600;color:var(--texto)}
+html[data-tema="v10"] .lc-etapa.lc-vazio{font-weight:400}
 html[data-tema="v10"] .lc-manual{color:var(--venc);font-weight:700}
 html[data-tema="v10"] .lc-auto{color:var(--feito);font-weight:600}
 html[data-tema="v10"] .lc-check{font-family:var(--f-mono);font-size:12px;color:var(--cinza-claro);border:1px solid var(--borda);border-radius:4px;padding:0 5px;background:#FFFFFF}
@@ -2391,7 +2395,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.10</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.11</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3385,8 +3389,9 @@ async function alternarMeuDia(casoId){
 async function moverCaso(casoId, lista){
   const k=D.casoPorId.get(casoId); if(!k || listaDe(k)===lista) return fecharMenuMover();
   const fase=(LISTAS_MOVER.find(([l])=>l===lista)||[])[1];
-  k.mover_para=lista; if(fase) k.fase=fase;
-  await patchCaso(casoId, {mover_para:lista, ...(fase?{fase}:{})});
+  const limpaEtapa = fase && fase!==k.fase && k.etapa && !(ETAPAS_POR_FASE[fase]||[]).includes(k.etapa);
+  k.mover_para=lista; if(fase) k.fase=fase; if(limpaEtapa) k.etapa=null;
+  await patchCaso(casoId, {mover_para:lista, ...(fase?{fase}:{}), ...(limpaEtapa?{etapa:null}:{})});
   fecharMenuMover();
   aviso(`Movido para ${lista} — o To Do acompanha na próxima sincronização`);
   montarSidebar(); render();
@@ -3401,19 +3406,71 @@ async function moverCaso(casoId, lista){
 // fica oito segundos com o DESFAZER, que é a regra da volta da F35.
 // ══════════════════════════════════════════════════════════════════════════
 const ORDEM_ETAPA = ["escritorio","inss","conselho","judicial","pagamento"];
-async function andarEtapa(casoId, lista, motivo){
+// ══════════════════════════════════════════════════════════════════════════
+// F119 · A ETAPA, o passo DENTRO da fase (pedido do Paulo, 18.09). A fase diz
+// em que trilho o caso corre, 🌻 INSS ou 👪 Judicial. A etapa diz onde ele
+// está nesse trilho, aguardando perícia, em exigência, aguardando sentença.
+// É o estado que o escritório DECLARA, e não o que o sistema deduz do último
+// comentário — é por isso que ele serve para falar com o cliente.
+// ══════════════════════════════════════════════════════════════════════════
+const ETAPAS_POR_FASE = {
+  escritorio: ["em atendimento","reunindo documentos","análise de direito","aguardando o cliente"],
+  inss:       ["requerimento protocolado","aguardando perícia","perícia realizada","em exigência",
+               "aguardando análise","decidido"],
+  conselho:   ["recurso protocolado","aguardando distribuição","em diligência","em pauta","julgado"],
+  judicial:   ["ação distribuída","aguardando citação","contestação apresentada","perícia designada",
+               "perícia realizada","aguardando sentença","sentença publicada","em recurso"],
+  peticao_inicial: ["a redigir","redigida","a protocolar"],
+  pagamento:  ["aguardando implantação","benefício implantado","aguardando RPV","RPV expedida","recebido"],
+  aposentadoria_futura: ["monitorando","documentação em dia","pronto para protocolar"],
+};
+const etapasDaFase = k => ETAPAS_POR_FASE[k && k.fase] || [];
+function escolherEtapa(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const lista = etapasDaFase(k);
+  if(!lista.length) return aviso("Esta lista não tem etapas");
+  caixa(`<h3 style="margin:0 0 4px">Etapa do caso <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
+    <p class="meio-sub" style="margin:0 0 10px">Onde o caso está dentro de ${esc(TRAMITA[k.fase]||k.fase)}. É esta palavra que responde ao cliente quando ele pergunta como está o processo.</p>
+    <div class="esp-lista">${lista.map(e=>`<button class="esp-it ${k.etapa===e?"on":""}" onclick="gravarEtapa('${casoId}',${JSON.stringify(e).replace(/"/g,"&quot;")})">${esc(e)}</button>`).join("")}</div>
+    <div class="form-linha" style="margin-top:10px;align-items:center">
+      <input id="et-livre" placeholder="outra etapa, à mão" style="flex:1;min-width:200px" value="${esc(lista.includes(k.etapa)?"":(k.etapa||""))}"
+        onkeydown="if(event.key==='Enter')gravarEtapa('${casoId}',this.value)">
+      <button class="btn-mini" onclick="gravarEtapa('${casoId}',document.getElementById('et-livre').value)">usar</button>
+      <button class="btn-rap" onclick="gravarEtapa('${casoId}','')">tirar a etapa</button>
+    </div>`);
+}
+async function gravarEtapa(casoId, etapa){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const nova = (etapa||"").trim() || null;
+  if(nova === (k.etapa||null)) return fecharCaixa();
+  k.etapa = nova;
+  try{ await patchCaso(casoId, {etapa:nova}); }
+  catch(e){ return aviso("Não gravou — rode o crm/fase2/schema_prazos.sql no Supabase"); }
+  fecharCaixa(); aviso(nova?`Etapa: ${nova} ✔`:"Etapa retirada", false);
+  montarSidebar(); render(); if(clienteAberto) repintarFicha();
+}
+// a etapa que a própria providência declara, sem mover o caso de lista
+async function marcarEtapa(casoId, etapa){
+  const k = D.casoPorId.get(casoId); if(!k || !etapa || k.etapa===etapa) return false;
+  k.etapa = etapa;
+  try{ await patchCaso(casoId, {etapa}); }catch(e){ return false; }
+  return true;
+}
+async function andarEtapa(casoId, lista, motivo, etapa){
   const k = D.casoPorId.get(casoId); if(!k) return false;
   const fase = (LISTAS_MOVER.find(([l])=>l===lista)||[])[1];
-  if(!fase || k.fase===fase) return false;
+  if(!fase || k.fase===fase) return etapa ? await marcarEtapa(casoId, etapa) : false;
   if(k.fase==="encerrado" || k.fase==="pagamento") return false;
   const de = ORDEM_ETAPA.indexOf(k.fase), para = ORDEM_ETAPA.indexOf(fase);
   if(de>=0 && para>=0 && para<de) return false;          // nunca volta sozinho
-  const antes = {fase:k.fase, mover_para:k.mover_para||null};
-  k.fase = fase; k.mover_para = lista;
-  try{ await patchCaso(casoId, {fase, mover_para:lista}); }
+  const antes = {fase:k.fase, mover_para:k.mover_para||null, etapa:k.etapa||null};
+  // F119 · etapa da fase antiga não faz sentido na nova
+  const nova = etapa || null;
+  k.fase = fase; k.mover_para = lista; k.etapa = nova;
+  try{ await patchCaso(casoId, {fase, mover_para:lista, etapa:nova}); }
   catch(e){ Object.assign(k, antes); return false; }
   montarSidebar(); render(); if(clienteAberto) repintarFicha();
-  avisoDesfazer(`Caso movido para ${lista} · ${motivo}`, async ()=>{
+  avisoDesfazer(`Caso movido para ${lista}${k.etapa?`, ${k.etapa}`:""} · ${motivo}`, async ()=>{
     Object.assign(k, antes);
     await patchCaso(casoId, antes);
     montarSidebar(); render(); if(clienteAberto) repintarFicha();
@@ -13736,6 +13793,13 @@ function linhasDeDatas(cliId){
       if(rec && x.fase!=="pagamento") linhas.push({data:rec, ico:"⚖️", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true,
         rot:`<b>Recorrer até</b> <small class="qd-de">Prazo recursal · 30 dias da decisão de ${fmt(x.decisao_em)} · ${esc(tituloCaso(x))}</small>`,
         edita:"", acao:""});
+      // F118 · a DCB é PRAZO FATAL e tem quadro próprio (pedido do Paulo,
+      // 18.09): o dia em que o benefício cessa fica à vista ao lado do dia em
+      // que ainda dá para pedir a prorrogação
+      if(x.dcb && !x.dcb_prorrogacao_pedida && x.fase!=="encerrado") linhas.push({data:x.dcb, ico:"🩸", ehPrazo:true, natureza:"fatal", casoId:x.id, cru:true, rotulo:"DCB, o benefício cessa",
+        rot:`<b>DCB, o benefício cessa</b>
+             <small class="qd-de">Sem prorrogação pedida até aqui, o pagamento para · ${esc(tituloCaso(x))}</small>`,
+        edita:"", acao:`<button class="btn-mini" onclick="salvarProrrog('${x.id}',true)" title="a prorrogação já foi pedida — desliga o alarme">✔ prorrogação pedida</button>`});
       if(prorrogarEm(x)) linhas.push({data:prorrogarEm(x), ico:"🩺", ehPrazo:true, natureza:"compromisso", casoId:x.id, cru:true, rotulo:"Pedir a prorrogação",
         rot:`<b>Pedir a prorrogação</b>
              <small class="qd-de">Cessação marcada para ${fmt(x.dcb)}${x.dcb_prorrogar_em?"":` · lembrete automático, ${DIAS_PRORROG} dias antes`} · ${esc(tituloCaso(x))}</small>`,
@@ -14597,6 +14661,11 @@ function linhaCaso(k){
       ${/* F114 · o que decide ESTA espécie, e só isso; o resto em gestão do caso */""}
       ${camposEssenciais(k).map(c=>lcCampo(k,c)).join("")}
       <span class="lc-f"><span class="lc-k">Tramitação</span><span class="lc-tram">${esc(tram)}</span></span>
+      ${/* F119 · a etapa, o passo dentro da fase. É ela que responde ao
+           cliente quando ele pergunta como está o processo. */""}
+      ${etapasDaFase(k).length ? `<span class="lc-f" title="onde o caso está dentro de ${esc(tram)}">
+        <span class="lc-k">Etapa</span><span class="lc-etapa ${k.etapa?"":"lc-vazio"}">${esc(k.etapa||"a definir")}</span>
+        <button class="lapis" title="mudar a etapa do caso" onclick="escolherEtapa('${k.id}')">✎</button></span>` : ""}
       ${lcVerificacao(k)}
       <button class="lc-mais" onclick="lcAbrir('${k.id}',${n?0:1})" aria-expanded="${n?"true":"false"}"
         aria-label="${n?"fechar os números do caso":"abrir os números do caso"}" title="${n?"fechar":"os números do caso: NB, e-Sisrec, processo judicial"}">${n?"−":"+"}</button>
@@ -15203,14 +15272,16 @@ const POPS_ANOTACAO = {
     texto:v=>`[EXIGÊNCIA] O que o INSS exigiu: ${v.oque}\nPrazo para cumprir: ${fmtBarra(v.prazo)}\nDocumento que falta: ${v.doc||"—"}\nQuem vai cumprir: ${v.quem||"—"}`,
     // a exigência é PRAZO do caso: entra nos quadros vermelhos e na lista ⚠
     efeito:async(k,v)=>{ k.exigencia_prazo=v.prazo; k.exigencia_descricao=v.oque;
-      await patchCaso(k.id,{exigencia_prazo:v.prazo, exigencia_descricao:v.oque}); }},
+      await patchCaso(k.id,{exigencia_prazo:v.prazo, exigencia_descricao:v.oque});
+      await marcarEtapa(k.id, "em exigência"); }},
   pericia:{rot:"Perícia", cor:"per", campos:[
       {id:"tipo", rot:"Tipo", tipo:"select", opts:["Perícia médica","Avaliação social","Perícia judicial","Audiência"]},
       {id:"data", rot:"Data", tipo:"date", req:true},
       {id:"hora", rot:"Hora", tipo:"time"},
       {id:"local", rot:"Local", tipo:"text", ph:"APS Monte Alto · fórum · sala"}],
     // no formato que o Registrar já lê: vira agendamento na aba Perícias
-    texto:v=>`${v.tipo} agendada para ${fmtBarra(v.data)}${v.hora?` às ${v.hora}`:""}${v.local?` em ${v.local}`:""}.`},
+    texto:v=>`${v.tipo} agendada para ${fmtBarra(v.data)}${v.hora?` às ${v.hora}`:""}${v.local?` em ${v.local}`:""}.`,
+    efeito:async(k,v)=>{ await marcarEtapa(k.id, k.fase==="judicial" ? "perícia designada" : "aguardando perícia"); }},
   protocolo:{rot:"Protocolo", cor:"neutro", campos:[
       {id:"num", rot:"Número do protocolo", tipo:"text", ph:"só os dígitos", req:true},
       {id:"oque", rot:"O que foi protocolado", tipo:"text", ph:"requerimento de …"},
@@ -15233,18 +15304,20 @@ const POPS_ANOTACAO = {
       if(campo){ k[campo]=v.data; await patchCaso(k.id,{[campo]:v.data}); }
       // F117 · protocolou, o caso anda de etapa sozinho (com desfazer)
       if(v.onde==="CRPS")
-        await andarEtapa(k.id, "🖥 Conselho de Recursos", `${v.qual} protocolado em ${fmtBarra(v.data)}`);
+        await andarEtapa(k.id, "🖥 Conselho de Recursos", `${v.qual} protocolado em ${fmtBarra(v.data)}`, "recurso protocolado");
       else if(v.onde==="Judicial" && v.qual==="Petição Inicial")
-        await andarEtapa(k.id, "👪 Judicial", `ação distribuída em ${fmtBarra(v.data)}`);
+        await andarEtapa(k.id, "👪 Judicial", `ação distribuída em ${fmtBarra(v.data)}`, "ação distribuída");
       else if(v.onde==="INSS" && v.qual==="Requerimento")
-        await andarEtapa(k.id, "🌻 INSS", `requerimento protocolado em ${fmtBarra(v.data)}`); }},
+        await andarEtapa(k.id, "🌻 INSS", `requerimento protocolado em ${fmtBarra(v.data)}`, "requerimento protocolado");
+      else if(v.onde==="INSS" && v.qual==="Cumprimento de exigência") await marcarEtapa(k.id, "aguardando análise"); }},
   decisao:{rot:"Decisão", cor:"ben", campos:[
       {id:"res", rot:"Resultado", tipo:"select", opts:["Benefício concedido","Benefício indeferido","Recurso provido","Recurso improvido","Sentença procedente","Sentença improcedente","Parcialmente procedente","Outra"]},
       {id:"data", rot:"Data da decisão", tipo:"date", req:true},
       {id:"motivo", rot:"Motivo / fundamento", tipo:"text", larga:true}],
     texto:v=>`[DECISÃO] ${v.res} em ${fmtBarra(v.data)}.${v.motivo?` Motivo: ${v.motivo}`:""}`,
     // decisão contrária arma o "Recorrer até" (30 dias) nos quadros de prazo
-    efeito:async(k,v)=>{ if(/indeferid|improvid|improcedente|parcial/i.test(v.res)){ k.decisao_em=v.data; await patchCaso(k.id,{decisao_em:v.data}); } }},
+    efeito:async(k,v)=>{ if(/indeferid|improvid|improcedente|parcial/i.test(v.res)){ k.decisao_em=v.data; await patchCaso(k.id,{decisao_em:v.data}); }
+      await marcarEtapa(k.id, k.fase==="judicial" ? "sentença publicada" : k.fase==="conselho" ? "julgado" : "decidido"); }},
   contato:{rot:"Contato", cor:"neutro", campos:[
       {id:"canal", rot:"Canal", tipo:"select", opts:["WhatsApp","Telefone","Presencial","E-mail"]},
       {id:"dito", rot:"O que foi dito ao cliente", tipo:"text", larga:true},
@@ -16613,7 +16686,7 @@ async function salvarCrpsNup(casoId, elId, valor){
   const nova = [...jaTem, v];
   k.crps_nups = nova; k.crps_nup = null;
   await patchCaso(casoId, {crps_nups:nova, crps_nup:null});
-  await andarEtapa(casoId, "🖥 Conselho de Recursos", "recurso com número no e-Sisrec");
+  await andarEtapa(casoId, "🖥 Conselho de Recursos", "recurso com número no e-Sisrec", "recurso protocolado");
   aviso(`Recurso ${jaTem.length?"acrescentado":"vinculado"} ✔ — o robô consulta na próxima rodada`, false);
   abrirFicha(clienteAberto);
 }
@@ -16775,7 +16848,7 @@ async function acrescentarProcesso(casoId, valor){
   if(lista.some(p=>soDig(p.numero)===soDig(n))) return aviso("Esse processo já está no caso");
   inp.value="";
   await salvarProcessos(casoId, [...lista, {numero:fmtProc(n), nosso:true, acompanhar:true}]);
-  if(!await andarEtapa(casoId, "👪 Judicial", "processo acrescentado, o DataJud consulta na próxima rodada"))
+  if(!await andarEtapa(casoId, "👪 Judicial", "processo acrescentado, o DataJud consulta na próxima rodada", "ação distribuída"))
     aviso("Processo acrescentado — o DataJud consulta na próxima rodada", false);
 }
 async function alternarNossoProcesso(casoId, numero){
