@@ -18,7 +18,8 @@ Requer graph_tokens.json valido (rode graph_devflow.py / graph_refresh.py).
 """
 import re, json, datetime
 from graph_client import list_lists, list_tasks, _req
-from portal_common import DATA_DIR, dn_from_items, cpf_from_task, split_blocks, derivar_hash
+from portal_common import (DATA_DIR, dn_from_items, cpf_from_task, split_blocks,
+                           derivar_hash, etapas_do_crm, frase_da_etapa)
 
 LISTA_ESCRITORIO = "🙋 Escritório"
 
@@ -107,6 +108,7 @@ def main():
             by_cpf.setdefault(e["cpf"], e)
 
     agora = datetime.datetime.now().strftime("%d/%m/%Y às %H:%M")
+    etapas = etapas_do_crm()      # F120 · o que o escritório declarou no CRM
     gerados = 0
     for cpf, e in by_cpf.items():
         dn = cpf2dn[cpf]
@@ -115,7 +117,9 @@ def main():
             "lista": LISTA_ESCRITORIO,
             "localizacao": loc,
             "titulo_tarefa": e["nome"],
-            "status": "Em atendimento pelo escritório",
+            # F120 · a etapa declarada no CRM fala mais que a frase fixa
+            "status": frase_da_etapa(etapas.get((cpf, LISTA_ESCRITORIO))) or "Em atendimento pelo escritório",
+            "etapa": frase_da_etapa(etapas.get((cpf, LISTA_ESCRITORIO))) or None,
             "proximo_evento": None,
             "timeline": [],
             "notas_publicas": [],
