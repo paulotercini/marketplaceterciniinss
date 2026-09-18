@@ -538,3 +538,13 @@ Cálculo de RMI específico em skills de cálculo.
 ## 16. Fontes
 
 Consulte os arquivos `references/FUNDAMENTOS-E-CENARIOS.md` e `references/JURISPRUDENCIA-E-REFUTACAO.md`.
+
+## Indicadores do CNIS na validação automática do período rural (Onda 142)
+
+O INSS migra períodos de segurado especial das bases CAFIR e RGP e os classifica automaticamente, e o CNIS registra isso em seis indicadores. Na pendência, `PSE-POS`, `PSE-PEN` e `PSE-NEG`. No acerto, `ASE-RPOS`, `ASE-RNEG` e `ASE-NSE`.
+
+**Alerta que decide casos.** O Anexo V da Portaria 990/2022 diz, sobre o `ASE-NSE`, que "períodos excluídos com esse motivo só poderão ser comprovados posteriormente mediante decisão judicial ou recursal". Nenhuma ratificação ou exclusão no Portal CNIS é feita pelo cliente sem análise prévia do escritório, porque a exclusão fecha a via administrativa comum.
+
+O critério automático do CAFIR é a área superior a quatro módulos fiscais, com o marco de 23/06/2008 separando `PSE-PEN` de `PSE-NEG`. Ele inverte o ponto de partida e não encerra a discussão, que segue pelo Tema 1115 do STJ e pela prova do art. 106.
+
+Redação oficial de cada indicador e a correção das siglas que circulam em material de divulgação estão em `references/INDICADORES-CNIS-SEGURADO-ESPECIAL-CAFIR-RGP.md`.
