@@ -2381,7 +2381,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.08</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.09</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7029,7 +7029,8 @@ function renderPlanejado(){
     const dmin = ts.map(t=>t.lembrar_em).sort()[0];
     const doCaso = !filtroPlanColab || (D.atrDoCaso.get(k.id)||[]).includes(filtroPlanColab);
     const pz = doCaso ? k.prazo : null;
-    const db = (doCaso && k.dcb && !k.dcb_prorrogacao_pedida) ? k.dcb : null;
+    // F115 · no Planejado o caso aparece no dia de PEDIR, não no dia de cessar
+    const db = doCaso ? prorrogarEm(k) : null;
     return [dmin, pz, db].filter(Boolean).sort()[0] || null;
   };
   let base = ativos().map(k=>{ k._dplan = dataDe(k); return k; }).filter(k=>k._dplan);
@@ -8512,9 +8513,9 @@ function itensDoCalendario(){
     if(k.exigencia_prazo) push(k.exigencia_prazo,"exig",`${c.nome} — exigência vence`,c.id);
     if(k.dcb && !k.dcb_prorrogacao_pedida){
       push(k.dcb,"dcb",`${c.nome} — benefício cessa (pedir prorrogação)`,c.id);
-      // a data de PEDIR vem antes da data de cessar: é ela que salva o cliente
-      if(k.dcb_prorrogar_em)
-        push(k.dcb_prorrogar_em,"prorrog",`${c.nome} — já dá para pedir a prorrogação`,c.id);
+      // a data de PEDIR vem antes da data de cessar: é ela que salva o cliente.
+      // F115 · existe sempre que existe DCB, preenchida ou não
+      push(prorrogarEm(k),"prorrog",`${c.nome} — já dá para pedir a prorrogação`,c.id);
     }
     (d=>{ if(d) push(d,"recurso",`${c.nome} — último dia para recorrer`,c.id); })(recorrerAte(k));
   });
@@ -13519,7 +13520,7 @@ const FATOS = {
   dii:        {rot:"DII",         tipo:"data",    dica:"Data de Início da Incapacidade"},
   dat:        {rot:"DAT",         tipo:"data",    dica:"Data do Acidente de Trabalho"},
   dcb:        {rot:"DCB",         tipo:"data",    dica:"Data de Cessação do Benefício"},
-  dcb_prorrogar_em:{rot:"Prorrogar a partir de", tipo:"data", dica:"o sistema lembra nesta data (padrão: 15 dias antes da DCB)"},
+  dcb_prorrogar_em:{rot:"Prorrogar a partir de", tipo:"data", dica:"o dia do lembrete para pedir a prorrogação. Vazio, o CRM lembra 15 dias antes da DCB, que é quando a prorrogação pode ser pedida; a data que você escrever aqui prevalece"},
   // F114 · as datas que cada espécie exige (schema_linha_caso.sql)
   obito_em:   {rot:"Óbito",       tipo:"data",
                dica:"data do óbito do instituidor — requerimento em até 90 dias retroage ao óbito, 180 dias para dependente menor de 16 anos (art. 74, I, da Lei 8.213/91)"},
@@ -13695,9 +13696,9 @@ function linhasDeDatas(cliId){
       if(rec && x.fase!=="pagamento") linhas.push({data:rec, ico:"⚖️", ehPrazo:true, casoId:x.id, cru:true,
         rot:`<b>Recorrer até</b> <small class="qd-de">Prazo recursal · 30 dias da decisão de ${fmt(x.decisao_em)} · ${esc(tituloCaso(x))}</small>`,
         edita:"", acao:""});
-      if(x.dcb && !x.dcb_prorrogacao_pedida) linhas.push({data:x.dcb_prorrogar_em||x.dcb, ico:"🩺", ehPrazo:true, casoId:x.id, cru:true,
-        rot:`<b>${x.dcb_prorrogar_em?`Pedir a prorrogação`:`DCB — cessação do benefício`}</b>
-             <small class="qd-de">${x.dcb_prorrogar_em?`Cessação marcada para ${fmt(x.dcb)}`:"Cessação do benefício"} · ${esc(tituloCaso(x))}</small>`,
+      if(prorrogarEm(x)) linhas.push({data:prorrogarEm(x), ico:"🩺", ehPrazo:true, casoId:x.id, cru:true, rotulo:"Pedir a prorrogação",
+        rot:`<b>Pedir a prorrogação</b>
+             <small class="qd-de">Cessação marcada para ${fmt(x.dcb)}${x.dcb_prorrogar_em?"":` · lembrete automático, ${DIAS_PRORROG} dias antes`} · ${esc(tituloCaso(x))}</small>`,
         edita:"", acao:`<button class="btn-mini" onclick="salvarProrrog('${x.id}',true)" title="a prorrogação já foi pedida — desliga o alarme">✔ prorrogação pedida</button>`});
       // F102 · o comentário fixo com data lembra na data
       if(x.fixo && x.fixo.texto && x.fixo.lembrar_em) linhas.push({data:x.fixo.lembrar_em, ico:"📌", casoId:x.id, cru:true,
@@ -13801,7 +13802,8 @@ function faixaPrazos(k){
     <span class="meio-sub">Sem prazos ou lembretes em aberto. Um andamento com data cria o lembrete; a anotação com ⏰ cria o prazo.</span></div>`;
   const card = (x, i) => {
     const venceu = x.data<hj, d = diasAte(x.data);
-    const tipo = x.ehPrazo ? "Prazo processual" : x.ico==="🩺" ? "Perícia" : x.ico==="📌" ? "Comentário fixo" : x.filha ? "Lembrar antes" : "Lembrete";
+    // F115 · o cartão diz o que é, e não só que é prazo
+    const tipo = x.rotulo || (x.ehPrazo ? "Prazo processual" : x.ico==="🩺" ? "Perícia" : x.ico==="📌" ? "Comentário fixo" : x.filha ? "Lembrar antes" : "Lembrete");
     const rel = d===0 ? "hoje" : d<0 ? `venceu há ${-d} d` : d===1 ? "amanhã" : `em ${d} d`;
     const ir = x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')` : `prazoSaberMais(${i})`;
     return `<div class="pz ${x.ehPrazo?"pz-prazo":"pz-lemb"}${venceu?" pz-venceu":""}" data-tipo="${tipo}">
@@ -13905,7 +13907,10 @@ async function qdMudarPrazo(casoId, valor){
 
 function campoFato(k, campo){
   const f = FATOS[campo], v = k[campo];
-  const mostra = !v ? `<span class="fx-vazio">—</span>`
+  // F115 · o lembrete da prorrogação existe mesmo sem ninguém ter preenchido
+  const mostra = !v ? (campo==="dcb_prorrogar_em" && prorrogarEm(k)
+      ? `<span class="fx-vazio" title="lembrete automático, ${DIAS_PRORROG} dias antes da DCB">${fmt(prorrogarEm(k))} · automático</span>`
+      : `<span class="fx-vazio">—</span>`)
     : f.tipo==="data" ? fmt(v)
     : f.tipo==="especie" ? `${esc(v)}${(e=>e?` <small>${esc(e[1])}</small>`:"")(ESPECIES.find(e=>e[0]===String(v).toUpperCase()))}`
     : esc(v);
@@ -14386,7 +14391,7 @@ async function lcGuardarData(casoId){
   const valor = document.getElementById("lc-dt-valor").value || null;
   if(!valor) return aviso("Escolha a data");
   const corpo = {[campo]: valor};
-  if(campo==="dcb"){ corpo.dcb_prorrogacao_pedida = false; corpo.dcb_prorrogar_em = somaDias(valor,-15); }
+  if(campo==="dcb"){ corpo.dcb_prorrogacao_pedida = false; corpo.dcb_prorrogar_em = somaDias(valor,-DIAS_PRORROG); }
   try{ await patchCaso(casoId, corpo); }
   catch(e){ return aviso("Não gravou — rode o crm/fase2/schema_linha_caso.sql no Supabase"); }
   Object.assign(k, corpo); fecharCaixa();
@@ -14846,7 +14851,7 @@ function editarFato(casoId, campo, pref){
     // DCB nova rearma o alarme e sugere a data de prorrogação (15 dias antes)
     if(campo==="dcb"){
       k.dcb_prorrogacao_pedida = false; corpo.dcb_prorrogacao_pedida = false;
-      k.dcb_prorrogar_em = somaDias(novo, -15);
+      k.dcb_prorrogar_em = novo ? somaDias(novo, -DIAS_PRORROG) : null;
       corpo.dcb_prorrogar_em = k.dcb_prorrogar_em;
     }
     await patchCaso(casoId, corpo);
@@ -17376,6 +17381,15 @@ async function extrairEvento(texto, casoId){
 // ── DCB: a data em que o benefício cessa sozinho ──────────────────────────
 const ehIncapacidade = k => /incapacidade|auxílio|auxilio|doença|doenca|acidente/i
   .test(k.beneficio||"");
+// F115 · O LEMBRETE DA PRORROGAÇÃO É OBRIGATÓRIO (pedido do Paulo, 18.09).
+// Havendo DCB, o lembrete existe 15 dias antes dela, que é quando a
+// prorrogação pode ser pedida, e não depende de ninguém ter preenchido o
+// campo. O Paulo muda a data e a dele prevalece; marcada a prorrogação como
+// pedida, o lembrete se desliga. É esta função que todo o CRM consulta —
+// ficha, calendário e Planejado — para não haver duas contas diferentes.
+const DIAS_PRORROG = 15;
+const prorrogarEm = k => (!k || !k.dcb || k.dcb_prorrogacao_pedida || k.fase==="encerrado") ? null
+  : (k.dcb_prorrogar_em || somaDias(k.dcb, -DIAS_PRORROG));
 function chipDcb(k){
   if(!k.dcb || k.dcb_prorrogacao_pedida || k.fase==="encerrado") return "";
   const d = diasAte(k.dcb);
@@ -17389,8 +17403,9 @@ async function salvarDCB(casoId, data){
   k.dcb = data||null;
   // DCB nova rearma o alarme: a prorrogação pedida era da DCB antiga
   k.dcb_prorrogacao_pedida = false;
-  await patchCaso(casoId, {dcb:k.dcb, dcb_prorrogacao_pedida:false});
-  aviso(data?`DCB anotada — alarme 15 dias antes de ${fmt(data)} 🩸`:"DCB apagada", false);
+  k.dcb_prorrogar_em = data ? somaDias(data, -DIAS_PRORROG) : null;
+  await patchCaso(casoId, {dcb:k.dcb, dcb_prorrogacao_pedida:false, dcb_prorrogar_em:k.dcb_prorrogar_em});
+  aviso(data?`DCB anotada — lembrete em ${fmt(k.dcb_prorrogar_em)}, ${DIAS_PRORROG} dias antes 🩸`:"DCB apagada", false);
   if(clienteAberto) abrirFicha(clienteAberto);
 }
 async function salvarProrrog(casoId, pedida){
@@ -17729,8 +17744,9 @@ async function novoAndamento(casoUnico){
     if(!mdcb[3] && dataDcb < hoje()) dataDcb = `${+ano+1}-${mes}-${dia}`;
     if(!isNaN(new Date(dataDcb+"T12:00:00").getTime()) && k.dcb!==dataDcb){
       k.dcb=dataDcb; k.dcb_prorrogacao_pedida=false;
-      await patchCaso(casoId, {dcb:dataDcb, dcb_prorrogacao_pedida:false});
-      aviso(`🩸 DCB anotada para ${fmt(dataDcb)} — alarme 15 dias antes`, false);
+      k.dcb_prorrogar_em=somaDias(dataDcb, -DIAS_PRORROG);
+      await patchCaso(casoId, {dcb:dataDcb, dcb_prorrogacao_pedida:false, dcb_prorrogar_em:k.dcb_prorrogar_em});
+      aviso(`🩸 DCB anotada para ${fmt(dataDcb)} — lembrete em ${fmt(k.dcb_prorrogar_em)}, ${DIAS_PRORROG} dias antes`, false);
     }
   }
   // protocolo citado entra na ficha e vira pesquisável ("protocolo 210...")
