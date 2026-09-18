@@ -174,8 +174,142 @@ de um sistema novo.
 
 ---
 
-## 5. ORDEM RECOMENDADA
+## 5. ORDEM RECOMENDADA (primeiro lote)
 
 Primeiro 2.1 e 2.2, que são fundação e corrigem um erro real de contagem de prazo. Depois 2.3 e
 2.4, que aproveitam a espécie que acabamos de implantar. Depois 2.6 e 2.7, que são acabamento.
 Por último 2.5, que é a mais cara e só rende sobre a fundação pronta.
+
+---
+---
+
+# PARTE 2. SEGUNDO LOTE DE PRINTS (18.09.2026)
+
+Dezoito prints novos, dois deles transição de vídeo sem informação (prints 22 e 35). O tema
+central deste lote não é tela, é **arquitetura**, e nela está o achado mais importante das duas
+análises.
+
+## 6. FASE, ETAPA E TAREFA. A PEÇA QUE FALTA NO NOSSO CRM
+
+**O que eles têm** (prints 21, 23, 33, 34, 36, 37 e 38). Três níveis encaixados.
+
+A **fase processual** é o trilho grande. As deles são Marketing, Negociação, Administrativo,
+Judicial, Recursal, Execução e Cobrança, Serviços e Consultorias, e RH e Financeiro.
+
+A **etapa** é o passo dentro da fase. Dentro de Judicial, por exemplo, Ação iniciada, Processo
+protocolado, Audiência marcada, Audiência próxima, Perícia e Aguardando sentença. O cadastro
+tem dois campos apenas, nome da etapa e fase a que pertence.
+
+A **tarefa** é o trabalho de alguém.
+
+O desenho fica claro no print 37, e a própria tela de cadastro o diz em uma frase. A tarefa liga
+os COLABORADORES, é vida interna. A etapa liga o CLIENTE, é vida externa. Nas palavras deles,
+as etapas são "utilizadas para facilitar a transmissão de informação aos clientes". O print 21
+fecha o raciocínio, a etapa muda e o cliente recebe o aviso.
+
+**O que temos.** Fase sim, tarefa sim, etapa não. Nossas listas são fases e são melhores que as
+deles para o nosso trabalho, porque falam a língua certa, 🌻 INSS, 🖥 Conselho de Recursos, 👪
+Judicial. Desde a versão 10.10 a fase até anda sozinha quando a providência é registrada. Mas
+entre a fase e a tarefa não há nada. O caso fica meses em 🌻 INSS sem que o sistema saiba dizer
+se está aguardando perícia, em exigência ou aguardando análise.
+
+**A consequência mais séria está no portal do cliente**, que já existe e já está publicado. Hoje
+a frase que o cliente lê é montada por dedução, a função `status_line` pega o último evento
+classificado da timeline e escreve "Última atualização em tal data". Quando o texto do To Do não
+é classificável, o cliente lê "Em andamento", que não informa nada. O escritório sabe em que
+pé está o caso, mas não tem onde dizer isso.
+
+**O que fazer.** Criar a etapa como estado nomeado do caso dentro da fase, em três frentes ao
+mesmo tempo. Na linha do caso, ao lado da tramitação. No portal, substituindo a frase deduzida
+pela etapa declarada. E no automático, porque a etapa muda pelos mesmos gestos que já movem a
+fase, protocolar, receber decisão, agendar perícia.
+
+Etapas prováveis por fase, a confirmar com o Paulo. Em 🌻 INSS, requerimento protocolado,
+aguardando perícia, perícia realizada, em exigência, aguardando análise e decidido. Em 🖥
+Conselho de Recursos, recurso protocolado, aguardando distribuição, em pauta e julgado. Em 👪
+Judicial, ação distribuída, aguardando contestação, perícia designada, aguardando sentença,
+sentença publicada e em recurso. Onda média, e é a que recomendo fazer primeiro no próximo
+bloco.
+
+## 7. A ETAPA AVISA O CLIENTE (print 21)
+
+**O que eles têm.** A troca de etapa dispara notificação ao cliente, com o envelope aparecendo
+no desenho.
+
+**O que temos.** Portal passivo, o cliente entra e lê. Já existe a mensagem pronta de exigência,
+que o `copiarMsgExigencia` copia para o WhatsApp.
+
+**O que fazer.** Quando a etapa mudar, gerar o texto pronto para o WhatsApp, no mesmo molde da
+exigência, e deixar o envio na mão de quem fala com o cliente. Não construir SMS nem e-mail
+automático. Onda pequena, e só depois da etapa existir.
+
+## 8. FINANCEIRO, O LANÇAMENTO PARCELADO E O RECORRENTE (prints 24, 25, 26 e 28)
+
+**O que eles têm.** No lançamento, Pessoa, Processo, Descrição, Valor, Vencimento, Competência,
+Pagamento, a marca "apenas registro interno", e a repetição em duas formas, Recorrente, que é
+lançamento fixo mensal, ou Parcelado, em que se informa o valor total e o número de parcelas e
+o sistema escreve "6 parcelas de R$ 1.000,00". Há ainda gerar cobrança em boleto ou cartão e
+anexar arquivo. Uma regra deles merece nota, a competência do lançamento recorrente é sempre
+atualizada para o mês atual.
+
+**O que temos.** A aba Honorários guarda os pagamentos do caso. Não há parcelamento automático,
+não há competência separada do vencimento e não há recorrência.
+
+**O que fazer.** Só o **parcelamento**, que é o caso real do escritório. Contratado o honorário
+em seis parcelas, o sistema cria as seis com vencimento mensal, em vez de alguém lançar uma a
+uma. Junto vem a separação entre vencimento, competência e pagamento, que já estava apontada na
+parte 1. Recorrente só se houver contrato de mensalidade. Boleto e cartão, não, porque é
+integração de meio de pagamento e o escritório não cobra assim. Onda pequena a média.
+
+## 9. INTIMAÇÕES, MONITORAMENTO DE DIÁRIOS (prints 29 e 30)
+
+**O que eles têm.** Monitoramento da OAB e de nomes nos diários oficiais e tribunais
+eletrônicos, com a lista das publicações recebidas trazendo processo, data da publicação,
+tribunal, responsável e o botão ANALISAR. Filtro lateral por período, cliente, tribunal e
+número do processo, e o selo "todos os monitoramentos estão ativos, atualizado hoje".
+
+**O que temos.** Coleta por número de processo, pelo DataJud e pelo PJe, mais a sonda de
+tribunais. Não monitoramos publicação por OAB.
+
+**Avaliação honesta.** Monitoramento de diário é serviço comprado de terceiro, não é código. O
+ganho específico dele é pegar publicação de processo que não está cadastrado, o que no
+previdenciário acontece pouco, porque o caso nasce no escritório antes de existir processo. Não
+recomendo obra. Vale a pergunta ao Paulo sobre contratar o serviço, se já aconteceu de perder
+publicação de processo não cadastrado.
+
+**O que copiar de graça.** A coluna SITUAÇÃO e o botão ANALISAR, isto é, tratar cada publicação
+como item com estado, pendente ou resolvida. Nós já temos o ✔ li nos andamentos do CNJ, falta o
+filtro que mostra só o que ninguém analisou.
+
+## 10. ATIVIDADES, OS FILTROS QUE FALTAM NO NOSSO PLANEJADO (prints 31 e 32)
+
+**O que eles têm.** Filtro lateral com Tarefa, Responsável, Origem, Situação, Fase do processo,
+Período e Prioridade, mais a caixa "mostrar futuras". Dois valem ser copiados. A **Origem**, com
+a opção "que eu recebi", separa o que me atribuíram do que eu mesmo criei. E a **Situação**,
+pendente ou resolvida, que eles explicam na própria tela.
+
+**O que temos.** O Planejado filtra por pessoa e por janela de tempo, vencidas, hoje, três dias,
+sete dias e todas.
+
+**O que fazer.** Acrescentar ao Planejado o "que eu recebi" e o "mostrar futuras". São dois
+filtros e resolvem a pergunta que a equipe faz todo dia, o que caiu no meu colo e o que ainda
+não chegou. Onda pequena.
+
+## 11. O QUE NÃO SERVE NESTE LOTE
+
+As fases Marketing, Negociação, Serviços e Consultorias e RH e Financeiro (print 33) mostram
+que o CRM deles atende o escritório inteiro, inclusive o comercial. Não é o nosso caso, e
+acrescentar fase vazia só suja a barra lateral.
+
+Gerar cobrança em boleto ou cartão dentro do CRM (prints 25 e 28) é integração de meio de
+pagamento, com custo e responsabilidade, para um escritório que cobra por transferência.
+
+## 12. ORDEM RECOMENDADA DOS DOIS LOTES, CONSOLIDADA
+
+Primeiro a **etapa** da parte 2, item 6, porque é a peça que falta na arquitetura e porque ela
+conserta o portal do cliente, que hoje fala por dedução. Depois o **prazo fatal separado** e o
+**cálculo em dias úteis** da parte 1, itens 2.1 e 2.2, sendo que o prazo fatal já foi entregue
+na versão 10.10. Depois o **roteiro por espécie** da parte 1, item 2.3, que a etapa deixa mais
+fácil, porque cada passo do roteiro termina numa etapa. Depois o **parcelamento de honorários**
+da parte 2, item 8, e os **dois filtros do Planejado** da parte 2, item 10. Por último a
+**sugestão de tarefas a partir da intimação** da parte 1, item 2.5.
