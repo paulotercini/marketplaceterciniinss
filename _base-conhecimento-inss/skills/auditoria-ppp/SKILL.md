@@ -114,7 +114,7 @@ Quando a questão do EPI for determinante para o enquadramento ou a análise do 
 
 Quando a análise revelar necessidade de peticionamento, orientar o usuário a acionar a skill `peticao-previdenciaria` para a redação da peça processual.
 
-Quando a análise do PPP for feita no contexto de auditoria de sentença ou acórdão, a skill `auditoria-sentenca-acordao` deve ser consultada em conjunto.
+Quando a análise do PPP for feita no contexto de auditoria de sentença ou acórdão, a skill `base-auditoria-adversarial-decisao-judicial` deve ser consultada em conjunto.
 
 Quando o segurado for menor de idade no período analisado, registrar a fundamentação sobre a vedação constitucional que protege o trabalhador (art. 7º, XXXIII, CF/88) e a jurisprudência consolidada de que a proibição não pode prejudicar o segurado.
 

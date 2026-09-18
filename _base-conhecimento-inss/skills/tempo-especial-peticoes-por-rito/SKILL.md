@@ -1,13 +1,13 @@
 ---
 name: tempo-especial-peticoes-por-rito
-description: "Skill para transposição de análise de PPP em petições de tempo especial adaptadas ao rito e posicionamento do órgão julgador. Use SEMPRE que análise de PPP estiver concluída e for necessário redigir petição perante CRPS, JEF ou rito ordinário TRF3. Use quando mencionar 'petição tempo especial', 'recurso CRPS tempo especial', 'ação JEF aposentadoria especial', 'ação rito comum tempo especial', 'recurso inominado tempo especial', 'apelação TRF3', 'posicionamento CRPS sobre EPI', 'posicionamento TRF3 ruído', 'diferença JEF rito comum especial', 'estratégia processual tempo especial', ou conversão de análise técnica de PPP em peça processual adaptada ao órgão julgador. Complementar a analise-ppp-tempo-especial, ppp-agentes-especializados e peticao-previdenciaria. NÃO use para análise isolada de PPP sem peticionamento."
+description: "Skill para transposição de análise de PPP em petições de tempo especial adaptadas ao rito e posicionamento do órgão julgador. Use SEMPRE que análise de PPP estiver concluída e for necessário redigir petição perante CRPS, JEF ou rito ordinário TRF3. Use quando mencionar 'petição tempo especial', 'recurso CRPS tempo especial', 'ação JEF aposentadoria especial', 'ação rito comum tempo especial', 'recurso inominado tempo especial', 'apelação TRF3', 'posicionamento CRPS sobre EPI', 'posicionamento TRF3 ruído', 'diferença JEF rito comum especial', 'estratégia processual tempo especial', ou conversão de análise técnica de PPP em peça processual adaptada ao órgão julgador. Complementar a auditoria-ppp, ppp-agentes-especializados e peticao-previdenciaria. NÃO use para análise isolada de PPP sem peticionamento."
 ---
 
 # Skill de Transposição de Análise de PPP em Petições por Rito e Órgão Julgador
 
 ## Visão Geral
 
-Esta skill converte o resultado da análise de PPP (produzida pelas skills `analise-ppp-tempo-especial` e `ppp-agentes-especializados`) em petições adaptadas ao rito processual e ao posicionamento específico do órgão julgador. A mesma tese de tempo especial exige argumentação, estrutura, ênfase probatória e fundamentação normativa diferentes conforme tramite perante o CRPS, o JEF ou o rito ordinário do TRF3.
+Esta skill converte o resultado da análise de PPP (produzida pelas skills `auditoria-ppp` e `ppp-agentes-especializados`) em petições adaptadas ao rito processual e ao posicionamento específico do órgão julgador. A mesma tese de tempo especial exige argumentação, estrutura, ênfase probatória e fundamentação normativa diferentes conforme tramite perante o CRPS, o JEF ou o rito ordinário do TRF3.
 
 O erro mais grave que um advogado pode cometer ao peticionar tempo especial é tratar todos os ritos e órgãos julgadores como se fossem idênticos. Cada instância tem sua cultura decisória, seus precedentes dominantes, seu grau de receptividade a determinados argumentos e suas limitações normativas. Esta skill mapeia essas diferenças e orienta a redação.
 

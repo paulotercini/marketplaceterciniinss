@@ -135,7 +135,7 @@ No CRPS, o equivalente é a manifestação após diligência ou na fase de instr
 
 Quando a skill peticao-previdenciaria for acionada para gerar manifestação na fase de especificação de provas, esta skill deve ser consultada ANTES e o documento .docx deve seguir o padrão do escritório (Bookman Old Style 12pt, 1.5, recuo de 2cm no JEF, timbre e rodapé).
 
-### auditoria-sentenca-acordao
+### base-auditoria-adversarial-decisao-judicial
 
 Se a sentença indeferir o pedido por insuficiência de provas após a manifestação de suficiência ter sido apresentada sem impugnação do INSS, a auditoria deve identificar esse ponto como fundamento prioritário para recurso.
 
