@@ -293,6 +293,35 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("óbito com a DER fora dos 90 dias, a linha avisa que a DIB cai na DER", /fora dos 90 d/.test(await obitoDiz("2023-01-01")));
   await p.evaluate((id) => gravarEspecie(id, "B41", "B41"), CASO1); await p.waitForTimeout(300);
 
+  // ── F115 · havendo DCB, o lembrete de 15 dias antes existe sozinho ──────
+  await p.evaluate((id) => gravarEspecie(id, "B31", "B31"), CASO1); await p.waitForTimeout(300);
+  const porDcb = async (dcb, prorrogar, pedida) => {
+    await p.evaluate(async (a) => { const c = { dcb: a.dcb, dcb_prorrogar_em: a.pr, dcb_prorrogacao_pedida: !!a.pd };
+      await patchCaso(a.id, c); Object.assign(D.casoPorId.get(a.id), c); repintarFicha(); },
+      { id: CASO1, dcb, pr: prorrogar, pd: pedida });
+    await p.waitForTimeout(300);
+    return p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => c.innerText.replace(/\s+/g, " ")));
+  };
+  const semCampo = await porDcb(emDias(20), null, false);
+  conf("DCB anotada sem data de prorrogação já gera o lembrete 15 dias antes",
+    semCampo.some(t => /pedir a prorrogação/i.test(t) && t.includes(fmtBR(emDias(5)))));
+  conf("o lembrete diz de que DCB é e que nasceu sozinho", await p.evaluate(() => {
+    const r = faixaAtual.map(x => x.rot).join(" ");
+    return /Cessação marcada para/.test(r) && /lembrete automático/.test(r); }));
+  const comCampo = await porDcb(emDias(20), emDias(3), false);
+  conf("a data que eu escrevo prevalece sobre os 15 dias", comCampo.some(t => /pedir a prorrogação/i.test(t) && t.includes(fmtBR(emDias(3)))) && !comCampo.some(t => t.includes(fmtBR(emDias(5)))));
+  const desligado = await porDcb(emDias(20), null, true);
+  conf("marcada a prorrogação como pedida, o lembrete se desliga", !desligado.some(t => /pedir a prorrogação/i.test(t)));
+  conf("a mesma conta serve ao calendário e ao Planejado, sem segunda versão", await p.evaluate(() => {
+    const k = D.casoPorId.get(casoSel);
+    k.dcb_prorrogacao_pedida = false; k.dcb_prorrogar_em = null;
+    return prorrogarEm(k) === somaDias(k.dcb, -15) && itensDoCalendario().some(i => i.tipo === "prorrog" && i.dia === prorrogarEm(k));
+  }));
+  await p.evaluate(async (id) => { const c = { dcb: null, dcb_prorrogar_em: null, dcb_prorrogacao_pedida: false };
+    await patchCaso(id, c); Object.assign(D.casoPorId.get(id), c); repintarFicha(); }, CASO1);
+  await p.waitForTimeout(250);
+  await p.evaluate((id) => gravarEspecie(id, "B41", "B41"), CASO1); await p.waitForTimeout(300);
+
   // ── desligado: nada disso muda o tema antigo ─────────────────────────────
   await p.goto(`http://127.0.0.1:${s.address().port}/app.html?tema=`);
   await p.waitForSelector("#app.logado");
