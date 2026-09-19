@@ -74,6 +74,23 @@ def split_blocks(body):
     return blocks
 
 
+def gravar_json(path, dados):
+    """Grava a ficha em UTF-8 e de forma ATÔMICA.
+
+    [BUG 19.09.2026] `path.write_text(...)` sem encoding usa o padrão do
+    sistema. No Windows isso é cp1252, que não sabe escrever o 🌻 do nome da
+    lista: o Python ABRE o arquivo (esvaziando-o), estoura no emoji e a ficha
+    do cliente fica com ZERO byte. Duas fichas foram zeradas assim.
+
+    Por isso, duas regras aqui: encoding SEMPRE explícito, e a escrita vai num
+    temporário ao lado, que só substitui o arquivo bom quando terminou inteira.
+    Falha no meio do caminho não destrói mais a ficha que já estava publicada.
+    """
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(json.dumps(dados, ensure_ascii=False, indent=2), encoding="utf-8")
+    tmp.replace(path)
+
+
 def derivar_hash(cpf, dn, salt, iters):
     bits = hashlib.pbkdf2_hmac("sha256", (cpf + "|" + dn).encode(), salt.encode(), iters, dklen=32)
     return hashlib.sha256(bits).digest()[:16].hex()
