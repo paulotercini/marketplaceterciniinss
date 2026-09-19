@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Script do Windows: preserva CRLF no checkout e o BOM, que o Windows PowerShell 5.1 exige para ler acentos
+*.ps1 text eol=crlf
