@@ -144,11 +144,16 @@ def _supa_pagina(url, chave, caminho, pagina=1000):
         inicio += pagina
 
 
-def etapas_do_crm():
-    """{(cpf, lista): etapa} com as etapas que o escritório declarou no CRM.
+def crm_do_cliente():
+    """{(cpf, lista): {"etapa": …, "fila": …, "fila_em": …}} com o que o CRM sabe.
+
+    ETAPA é o estado que o escritório DECLARA, e só sai se estiver no catálogo.
+    FILA é a posição do processo na ordem de julgamento do TRF3 (F121), lida do
+    painel público e gravada em casos.trf3. É número, não texto livre, e por
+    isso não passa pelo catálogo — mas só vale para caso na fase judicial.
 
     Devolve {} quando não há banco configurado ou a leitura falha — o portal
-    continua sendo gerado, só sem a etapa."""
+    continua sendo gerado, só sem nada disso."""
     url = (os.environ.get("SUPABASE_URL") or "").strip().rstrip("/")
     chave = (os.environ.get("SUPABASE_SERVICE_KEY") or "").strip()
     if not url or not chave:
@@ -156,24 +161,42 @@ def etapas_do_crm():
     try:
         clientes = _supa_pagina(url, chave, "/rest/v1/clientes?select=id,cpf&cpf=not.is.null")
         casos = _supa_pagina(url, chave,
-                             "/rest/v1/casos?select=cliente_id,etapa,fase,mover_para,origem_lista"
-                             "&etapa=not.is.null")
+                             "/rest/v1/casos?select=cliente_id,etapa,fase,mover_para,origem_lista,trf3"
+                             "&or=(etapa.not.is.null,trf3.not.is.null)")
     except Exception as e:
-        print(f"   (etapas do CRM indisponíveis: {type(e).__name__})")
+        print(f"   (dados do CRM indisponíveis: {type(e).__name__})")
         return {}
     cpf_de = {c["id"]: digits(c.get("cpf")) for c in clientes if digits(c.get("cpf")) }
     mapa = {}
     for k in casos:
         if k.get("fase") == "encerrado":
             continue
-        etapa = (k.get("etapa") or "").strip()
-        if etapa not in ETAPAS_PUBLICAS:      # etapa à mão não vai ao portal
-            continue
         cpf = cpf_de.get(k.get("cliente_id"))
         lista = k.get("mover_para") or k.get("origem_lista")
-        if cpf and lista:
-            mapa[(cpf, lista)] = etapa
+        if not (cpf and lista):
+            continue
+        fora = {}
+        etapa = (k.get("etapa") or "").strip()
+        if etapa in ETAPAS_PUBLICAS:          # etapa à mão não vai ao portal
+            fora["etapa"] = etapa
+        t = k.get("trf3") or {}
+        if k.get("fase") == "judicial" and isinstance(t, dict) and t.get("ordem"):
+            fora["fila"] = f"{t['ordem']}º de {t['total']}" if t.get("total") else f"{t['ordem']}º"
+            if t.get("consultado_em"):
+                fora["fila_em"] = _br(t["consultado_em"])
+        if fora:
+            mapa[(cpf, lista)] = fora
     return mapa
+
+
+def _br(iso):
+    s = str(iso or "")[:10]
+    return f"{s[8:10]}/{s[5:7]}/{s[:4]}" if len(s) == 10 else ""
+
+
+def etapas_do_crm():
+    """{(cpf, lista): etapa} — compatibilidade com quem só quer a etapa."""
+    return {ch: v["etapa"] for ch, v in crm_do_cliente().items() if v.get("etapa")}
 
 
 def frase_da_etapa(etapa):

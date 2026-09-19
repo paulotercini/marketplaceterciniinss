@@ -17,10 +17,17 @@
 // daqui em diante vive só o refresh_token, que o Supabase troca a cada uso e
 // que você pode revogar quando quiser.
 
+// endereço e chave vão em CABEÇALHO HTTP, que só aceita ASCII: um espaço
+// invisível ou um "…" colado junto da chave derrubava o fetch inteiro com
+// "String contains non ISO-8859-1 code point". Tudo que não é ASCII visível
+// cai fora aqui — a chave e o endereço legítimos nunca têm nada disso.
+export const soAscii = s => String(s || '').replace(/[^!-~]/g, '');
+
 export async function config() {
   const c = await chrome.storage.local.get(['url', 'chave']);
-  if (!c.url || !c.chave) throw new Error('Configure o endereço do CRM na extensão (⚙)');
-  return { url: String(c.url).replace(/\/$/, ''), chave: c.chave };
+  const url = soAscii(c.url).replace(/\/$/, ''), chave = soAscii(c.chave);
+  if (!url || !chave) throw new Error('Configure o endereço do CRM na extensão (⚙)');
+  return { url, chave };
 }
 
 let acesso = null;          // { token, ate } — vale ~1h; uma renovação por rodada basta
@@ -34,8 +41,12 @@ export async function entrar(email, senha) {
     body: JSON.stringify({ email: String(email || '').trim(), password: senha || '' }),
   });
   const j = await r.json().catch(() => ({}));
+  // 401 "Invalid API key" é a CHAVE do Supabase errada, não a senha — medido
+  // em 15.09: senha errada é 400 invalid_credentials; chave errada é 401
   if (!r.ok) throw new Error(
-    r.status === 400 || r.status === 401 ? 'e-mail ou senha não conferem'
+    /api key/i.test(j.message || j.msg || '') || r.status === 401
+      ? 'a chave do Supabase não confere — cole de novo em ⚙ (é a "chave anônima" das Configurações do CRM)'
+    : r.status === 400 ? 'e-mail ou senha não conferem'
     : j.error_description || j.msg || `falha no login (${r.status})`);
   const quem = (j.user && j.user.email) || String(email || '').trim();
   await chrome.storage.local.set({ refresh: j.refresh_token, quem });
@@ -51,7 +62,7 @@ export async function sair() {
 export async function cracha() {
   if (acesso && acesso.ate > Date.now() + 60000) return acesso.token;
   const { url, chave } = await config();
-  const { refresh } = await chrome.storage.local.get(['refresh']);
+  const refresh = soAscii((await chrome.storage.local.get(['refresh'])).refresh);
   if (!refresh) throw new Error('entre no CRM pela extensão (⚙) — sem isso o banco não devolve nada');
   const r = await fetch(`${url}/auth/v1/token?grant_type=refresh_token`, {
     method: 'POST',
@@ -138,6 +149,29 @@ export async function nups() {
       }
     }
   return { nups: [...fora], arquivados: [...arq], fichas: linhas.length };
+}
+
+// Os processos do TJSP que o CRM conhece — a lista-mãe do coletor do e-SAJ.
+//
+// A consulta por OAB do e-SAJ só devolve os processos em que a OAB está
+// cadastrada na parte (68 de um acervo bem maior, medido em 15.09.2026); o
+// acervo de verdade está nas fichas: `casos.processo` e `casos.processos[]`,
+// todo número com ".8.26." no meio (justiça estadual, TJSP). Só ficha aberta
+// (encerrado_em nulo) — caso encerrado não precisa de movimento.
+export async function processosTjsp() {
+  const { url } = await config();
+  const r = await fetchTeimoso(
+    `${url}/rest/v1/casos?select=processo,processos&encerrado_em=is.null&limit=5000`,
+    { headers: await cabecalhos() });
+  if (!r.ok) throw new Error(`não consegui ler os processos do CRM (${r.status})`);
+  const linhas = await r.json();
+  const fora = new Set();
+  const pega = v => { const m = String(v || '').match(/\d{7}-\d{2}\.\d{4}\.8\.26\.\d{4}/); if (m) fora.add(m[0]); };
+  for (const l of linhas) {
+    pega(l.processo);
+    for (const p of (Array.isArray(l.processos) ? l.processos : [])) pega(p && (p.numero || p));
+  }
+  return { numeros: [...fora], fichas: linhas.length };
 }
 
 // o que o popup mostra no "testar conexão": responde de uma vez quem está

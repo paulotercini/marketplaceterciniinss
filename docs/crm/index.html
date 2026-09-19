@@ -2397,7 +2397,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.12</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.13</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14436,6 +14436,10 @@ const TRAMITA = {escritorio:"Escritório", inss:"INSS", conselho:"Conselho de Re
   pagamento:"Pagamento", encerrado:"Encerrado", aposentadoria_futura:"Aposentadoria futura"};
 const lcCop = (v, rot) => `<span class="cop lc-num" data-cop="${esc(v)}" data-cop-msg="${esc(rot)} copiado" title="clique para copiar">${esc(v)}</span>`;
 function lcVerificacao(k){
+  // F122 · no Judicial o acompanhamento é automático para todo caso (o robô lê o
+  // andamento do processo), então dizer isso na linha só ocupa espaço. A escolha
+  // e o registro continuam no segundo ➕, para o caso raro que exija vigia manual.
+  if(k.fase==="judicial") return "";
   const quem = k.checado_por && D.colPorId.get(k.checado_por);
   const tit = k.checado_em
     ? `verificado por ${quem?quem.nome:"?"} em ${fmt(dataSP(k.checado_em))} às ${horaSP(k.checado_em)}`

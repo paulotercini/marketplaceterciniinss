@@ -210,7 +210,7 @@ def test_etapa_do_crm_vence_a_frase_deduzida():
     body = "10.09.2026 (P): Recurso ordinário protocolado.\n"
     item = {"lista": "🌻 INSS", "nome": "Fulano", "body": body}
     sem = montar_processo_safe("1" * 11, "01012000", item)
-    com = montar_processo_safe("1" * 11, "01012000", item, "aguardando análise")
+    com = montar_processo_safe("1" * 11, "01012000", item, {"etapa": "aguardando análise"})
     assert sem["status"].startswith("Última atualização")
     assert com["status"] == "Aguardando análise"
 
@@ -222,7 +222,7 @@ def test_pericia_marcada_vence_a_etapa():
     body = (f"{hoje.strftime('%d.%m.%Y')} (P): Perícia médica marcada para o dia "
             f"{futuro.strftime('%d/%m')} às 09h20 em Monte Alto.\n")
     item = {"lista": "🌻 INSS", "nome": "Fulano", "body": body}
-    p = montar_processo_safe("1" * 11, "01012000", item, "aguardando análise")
+    p = montar_processo_safe("1" * 11, "01012000", item, {"etapa": "aguardando análise"})
     assert "Perícia" in p["status"] and futuro.strftime("%d/%m/%Y") in p["status"]
 
 
@@ -278,9 +278,64 @@ def test_processo_do_portal_carrega_o_campo_etapa():
     from build_portal_listas import montar_processo_safe
     item = {"lista": "🌻 INSS", "nome": "Fulano",
             "body": "10.09.2026 (P): Recurso ordinário protocolado.\n"}
-    com = montar_processo_safe("1" * 11, "01012000", item, "em exigência")
+    com = montar_processo_safe("1" * 11, "01012000", item, {"etapa": "em exigência"})
     sem = montar_processo_safe("1" * 11, "01012000", item)
     assert com["etapa"] == "Em exigência" and sem["etapa"] is None
+
+
+# ---------------------------------------------- [F121] a fila do TRF3 no portal
+
+def _falso_supa(pc, monkeypatch, clientes, casos):
+    monkeypatch.setenv("SUPABASE_URL", "https://exemplo.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(pc, "_supa_pagina",
+                        lambda url, chave, caminho, pagina=1000:
+                        clientes if "clientes" in caminho else casos)
+
+
+def test_fila_do_trf3_vai_ao_portal_com_a_data_da_consulta(monkeypatch):
+    import portal_common as pc
+    _falso_supa(pc, monkeypatch,
+                [{"id": "c1", "cpf": "11111111111"}],
+                [{"cliente_id": "c1", "etapa": "aguardando sentença", "fase": "judicial",
+                  "mover_para": "👪 Judicial", "origem_lista": None,
+                  "trf3": {"ordem": 60, "total": 944, "consultado_em": "2026-09-18"}}])
+    assert pc.crm_do_cliente() == {("11111111111", "👪 Judicial"): {
+        "etapa": "aguardando sentença", "fila": "60º de 944", "fila_em": "18/09/2026"}}
+
+
+def test_fila_so_sai_quando_o_caso_esta_no_judicial(monkeypatch):
+    """O dado do painel pode ficar gravado de uma fase anterior. Dizer ao
+    cliente que ele está na fila quando o caso já saiu de lá é mentira."""
+    import portal_common as pc
+    _falso_supa(pc, monkeypatch,
+                [{"id": "c1", "cpf": "11111111111"}],
+                [{"cliente_id": "c1", "etapa": "decidido", "fase": "inss",
+                  "mover_para": "🌻 INSS", "origem_lista": None,
+                  "trf3": {"ordem": 60, "total": 944}}])
+    assert pc.crm_do_cliente() == {("11111111111", "🌻 INSS"): {"etapa": "decidido"}}
+
+
+def test_fila_sai_mesmo_sem_etapa_declarada(monkeypatch):
+    """A posição vem do tribunal, não depende de o escritório ter declarado nada."""
+    import portal_common as pc
+    _falso_supa(pc, monkeypatch,
+                [{"id": "c1", "cpf": "11111111111"}],
+                [{"cliente_id": "c1", "etapa": None, "fase": "judicial",
+                  "mover_para": "👪 Judicial", "origem_lista": None,
+                  "trf3": {"ordem": 7}}])
+    assert pc.crm_do_cliente() == {("11111111111", "👪 Judicial"): {"fila": "7º"}}
+
+
+def test_processo_do_portal_carrega_a_fila():
+    from build_portal_listas import montar_processo_safe
+    item = {"lista": "👪 Judicial", "nome": "Fulano",
+            "body": "10.09.2026 (P): Ação distribuída.\n"}
+    p = montar_processo_safe("1" * 11, "01012000", item,
+                             {"etapa": "aguardando sentença", "fila": "60º de 944",
+                              "fila_em": "18/09/2026"})
+    assert p["fila"] == "60º de 944" and p["fila_em"] == "18/09/2026"
+    assert montar_processo_safe("1" * 11, "01012000", item)["fila"] is None
 
 
 # ------------------------------- [BUG 19.09.2026] cp1252 zerou duas fichas

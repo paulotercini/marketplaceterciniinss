@@ -17,6 +17,11 @@
 <h1>CRM Tercini — atualizar</h1>
 <p>Roda na sua sessão já logada. Nada é gravado no CRM sem você conferir o plano depois.</p>
 
+<button id="b-tudo">🔁 Atualizar tudo</button>
+<div class="nota">Tudo ao mesmo tempo: o INSS vem para a frente na hora e <b>você dá um clique em
+  "Buscar"</b>; e-Recursos, PJe, eproc e e-SAJ já correm atrás, nas abas que estiverem abertas
+  (abre as que faltarem). Acompanhe pela faixa de cada aba e pelas datas aqui embaixo.</div>
+
 <button id="b-pat">🌻 INSS (PAT/GERID)</button>
 <div class="quando" id="q-pat"></div>
 <div class="nota">No INSS, a lista pede reCAPTCHA. A extensão abre a tela e preenche
@@ -29,6 +34,20 @@
 <div class="quando" id="q-pje"></div>
 <div class="nota">Lê o <b>último movimento de todos os processos</b> do acervo, sem abrir
   um por um. Rode com o painel do grau aberto (1º ou 2º) — para os dois graus, rode duas vezes.</div>
+
+<button id="b-eproc" class="claro">🏛 eproc TJSP (relação)</button>
+<div class="quando" id="q-eproc"></div>
+<div class="nota">Lê a <b>Relação de Processos</b> do eproc com o último evento de cada um.
+  Rode com a aba do eproc aberta (1º grau, 2º grau, execução fiscal ou criminal) — coleta o host
+  da aba ativa; para os outros, troque o perfil no topo do eproc e rode de novo.
+  Com um processo aberto, coleta a lista completa de eventos dele.</div>
+
+<button id="b-esaj" class="claro">⚖️ e-SAJ TJSP (acervo)</button>
+<div class="quando" id="q-esaj"></div>
+<div class="nota">Lê os processos das <b>pastas de favoritos "A a J" e "I a Z"</b>, os números do
+  TJSP nas fichas do CRM e a consulta por OAB (1º e 2º grau), e busca a ficha e o último
+  movimento de cada um, um a um, com pausa — uns 3 segundos por processo. Processo arquivado
+  fica de fora por 7 dias. Deixe a aba do e-SAJ aberta e sem outras consultas enquanto roda.</div>
 
 <button id="b-teste" class="claro">🔎 Testar a ligação com o CRM</button>
 <button id="b-pagina" class="claro">🩺 Testar a página aberta</button>

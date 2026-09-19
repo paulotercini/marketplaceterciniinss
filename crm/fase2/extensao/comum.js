@@ -27,6 +27,10 @@ window.CRM = window.CRM || {
   // devolve { nups, fichas }: o número de fichas lidas é o que distingue
   // "não há recurso cadastrado" de "não estou enxergando o banco"
   nupsDoCrm: () => CRM.pedir({ tipo: 'crm', acao: 'nups' }),
+  // devolve { numeros, fichas }: os números do TJSP nas fichas abertas
+  processosTjsp: () => CRM.pedir({ tipo: 'crm', acao: 'processos-tjsp' }),
+  // devolve { favoritos }: os links de processo do e-SAJ nas pastas "X a Y" dos favoritos
+  favoritosEsaj: () => CRM.pedir({ tipo: 'crm', acao: 'favoritos-esaj' }),
 };
 
 // PROVA DE VIDA. O console do navegador nem sempre mostra o que a extensão

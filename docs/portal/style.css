@@ -209,6 +209,17 @@ button.link:hover { background: transparent; color: var(--azul); }
   font-weight: 600;
 }
 
+/* F121 · a posição na fila de julgamento do TRF3, dentro do mesmo card, com
+   uma linha separando: é resposta à mesma pergunta, mas vem do tribunal. */
+.loc-destaque .ld-fila {
+  margin-top: 0.7rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid #a7f3d0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ok);
+}
+
 .status-box {
   background: #f0f7ff;
   border-left: 4px solid var(--azul-claro);

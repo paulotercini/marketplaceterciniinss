@@ -27,7 +27,7 @@ Requer graph_tokens.json valido (rode graph_devflow.py / graph_refresh.py).
 import re, json, datetime, sys
 from graph_client import list_lists, list_tasks, _req
 from portal_common import (gravar_json, DATA_DIR, HOJE, digits, dn_from_aniversario, dn_from_items,
-                           etapas_do_crm, frase_da_etapa,
+                           crm_do_cliente, frase_da_etapa,
                            dn_from_body, cpf_from_task, split_blocks, derivar_hash)
 
 # DN recuperada manualmente (ex.: do CNIS no Drive) para clientes cujo checklist
@@ -459,7 +459,7 @@ def montar_processo(cpf, dn, item):
     }
 
 
-def montar_processo_safe(cpf, dn, item, etapa=None):
+def montar_processo_safe(cpf, dn, item, crm=None):
     """Processo gerado automaticamente em modo ALTA CONFIANCA: timeline apenas
     com marcos inequivocos (ALTA_CONFIANCA), descartando o ambiguo. Localizacao
     fixa e status derivado do ultimo marco confiavel ou da pericia futura.
@@ -467,7 +467,14 @@ def montar_processo_safe(cpf, dn, item, etapa=None):
     F120 · a ETAPA declarada no CRM tem precedencia sobre a frase deduzida do
     ultimo comentario. A ordem e: pericia marcada (que traz data e hora, mais
     informativa que qualquer palavra), depois a etapa declarada, e so entao a
-    deducao de antes."""
+    deducao de antes.
+
+    F121 · quando o caso e judicial e o painel do TRF3 ja deu a posicao na
+    ordem de julgamento, ela vai junto. E a resposta a pergunta que o cliente
+    faz o tempo todo, e vem do painel publico do tribunal, nao de estimativa
+    nossa. Por isso viaja com a data da consulta ao lado."""
+    crm = crm or {}
+    etapa = crm.get("etapa")
     lista, body = item["lista"], item["body"]
     timeline = [e for e in build_timeline(body) if e["tipo"] in ALTA_CONFIANCA]
     pericia = parse_pericia(split_blocks(body))
@@ -490,6 +497,9 @@ def montar_processo_safe(cpf, dn, item, etapa=None):
         # F120 · campo próprio, para o portal mostrar a SITUAÇÃO ATUAL sempre,
         # e não só quando falta andamento
         "etapa": frase_da_etapa(etapa) or None,
+        # F121 · a posição na fila de julgamento do TRF3, com a data da consulta
+        "fila": crm.get("fila"),
+        "fila_em": crm.get("fila_em"),
         "proximo_evento": None,
         "timeline": timeline,
         "notas_publicas": [],
@@ -539,7 +549,7 @@ def main():
     meta = json.loads((DATA_DIR / "_meta.json").read_text(encoding="utf-8"))
     salt, iters = meta["salt"], meta["iter"]
     cpf2dn, by_cpf, nomes = coletar()
-    etapas = etapas_do_crm()      # F120 · o que o escritório declarou no CRM
+    crm = crm_do_cliente()        # F120/F121 · etapa declarada e fila do TRF3
 
     if "--validate" in sys.argv:
         validate(cpf2dn, by_cpf)
@@ -577,7 +587,7 @@ def main():
         # preserva o que e curado a mao; o resto (auto) e regerado do To Do
         curados = [p for p in existentes if p.get("origem") == "curado"]
         curado_listas = {p.get("lista") for p in curados}
-        autos = [montar_processo_safe(cpf, dn, por_lista[L], etapas.get((cpf, L)))
+        autos = [montar_processo_safe(cpf, dn, por_lista[L], crm.get((cpf, L)))
                  for L in PRIORIDADE if L in por_lista and L not in curado_listas]
 
         if not autos:
@@ -605,7 +615,10 @@ def main():
     print(f"Fichas regeneradas (auto): {regeneradas}")
     print(f"Clientes 100% curados (intactos): {intactas}")
     print(f"Total de fichas no portal: {total}")
-    print(f"Etapas declaradas no CRM e usadas no portal: {len(etapas)}")
+    print(f"Etapas declaradas no CRM e usadas no portal: "
+          f"{sum(1 for v in crm.values() if v.get('etapa'))}")
+    print(f"Posições na fila do TRF3 levadas ao portal: "
+          f"{sum(1 for v in crm.values() if v.get('fila'))}")
     print(f"Sem DN resolvivel (NAO publicados): {len(sem_dn)}")
     for nome, cpf in sem_dn:
         print(f"   - {nome}  (CPF {cpf})")
