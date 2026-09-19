@@ -5,13 +5,28 @@ TOKENS_PATH = pathlib.Path("graph_tokens.json")
 
 
 def _token():
-    return json.loads(TOKENS_PATH.read_text())["access_token"]
+    return json.loads(TOKENS_PATH.read_text(encoding="utf-8"))["access_token"]
+
+
+def _renovar_cracha():
+    """[BUG 19.09.2026] O crachá da Microsoft dura ~1h. Um crawl completo do To
+    Do passa disso, e o gerador seguinte morria com 401 no meio do caminho. Em
+    vez de exigir que a pessoa rode o graph_refresh.py na hora certa, o próprio
+    cliente renova UMA vez e repete a chamada. Devolve True se renovou."""
+    try:
+        import graph_refresh
+        graph_refresh.main()
+        return True
+    except SystemExit:
+        return False        # refresh_token vencido: aí é login novo mesmo
+    except Exception:
+        return False
 
 
 def _req(method, path, body=None, _tentativas=5):
     url = path if path.startswith("http") else f"{GRAPH}{path}"
     data = json.dumps(body).encode("utf-8") if body is not None else None
-    ultimo_erro = None
+    ultimo_erro, renovou = None, False
     for i in range(_tentativas):
         req = urllib.request.Request(
             url,
@@ -28,6 +43,12 @@ def _req(method, path, body=None, _tentativas=5):
                 return json.loads(raw) if raw else None
         except urllib.error.HTTPError as e:
             # HTTPError É subclasse de URLError — tratar ANTES. Só retenta 5xx/429.
+            # 401 é crachá vencido: renova UMA vez e repete a mesma chamada.
+            if e.code == 401 and not renovou:
+                renovou = True
+                if _renovar_cracha():
+                    continue
+                raise
             if e.code in (429, 500, 502, 503, 504) and i < _tentativas - 1:
                 ultimo_erro = e
                 time.sleep(2 ** i)

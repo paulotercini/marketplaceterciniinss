@@ -2145,6 +2145,8 @@ html[data-tema="v10"] .lc-tram{font-weight:600;color:var(--azul-escuro);backgrou
 /* F119 · a etapa fica ao lado da tramitação, em letra menor e sem caixa: a
    fase é o trilho, a etapa é só onde o caso está nele */
 html[data-tema="v10"] .lc-etapa{font-weight:600;color:var(--texto)}
+/* F121 · a posição na fila do TRF3, só o número */
+html[data-tema="v10"] .lc-fila{font-family:var(--f-mono);font-weight:700;color:var(--azul-escuro)}
 html[data-tema="v10"] .lc-etapa.lc-vazio{font-weight:400}
 html[data-tema="v10"] .lc-manual{color:var(--venc);font-weight:700}
 html[data-tema="v10"] .lc-auto{color:var(--feito);font-weight:600}
@@ -2395,7 +2397,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.11</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.12</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14644,6 +14646,18 @@ function lcCampo(k, token){
     <span id="lc-${campo}-${k.id}">${mostra}</span>${lcJanela(k, campo)}
     <button class="lapis" title="alterar ${esc(f.rot)}" onclick="editarFato('${k.id}','${campo}','lc')">✎</button></span>`;
 }
+// F121 · a posição na fila de julgamento, só o número, na linha do caso
+function filaTrf3(k){
+  const t = k.trf3;
+  if(!t || !t.ordem || k.fase!=="judicial") return "";
+  const tot = t.total ? ` de ${Number(t.total).toLocaleString(IDIOMA)}` : "";
+  const dica = `posição na ordem de julgamento de ${t.orgao||"o órgão julgador"}${t.turma?` (${t.turma})`:""}`
+    + `${t.consultado_em?`, consulta de ${fmtBarra(t.consultado_em)}`:""}`
+    + ". Painel público do TRF3. Clique para copiar a mensagem pronta ao cliente.";
+  return `<span class="lc-f" title="${esc(dica)}" onclick="copiarTrf3('${k.id}')" style="cursor:copy">
+    <span class="lc-k">Fila</span><b class="lc-fila">${t.ordem}º</b><small class="lc-jan">${esc(tot)}</small>
+    ${t.prioridade==="S"?`<small class="lc-jan ok" title="o processo tramita com prioridade">prioridade</small>`:""}</span>`;
+}
 function linhaCaso(k){
   const n = lcNivel(k.id);
   const tram = TRAMITA[k.fase] || NOME_FASE[k.fase] || k.fase || "";
@@ -14663,6 +14677,12 @@ function linhaCaso(k){
       <span class="lc-f"><span class="lc-k">Tramitação</span><span class="lc-tram">${esc(tram)}</span></span>
       ${/* F119 · a etapa, o passo dentro da fase. É ela que responde ao
            cliente quando ele pergunta como está o processo. */""}
+      ${/* F121 · a POSIÇÃO NA FILA do TRF3 (pedido do Paulo, 19.09). O painel
+           público do tribunal já é lido todo dia pelo crm/trf3_ordem.py e o
+           número mora em casos.trf3. Na linha entra só a posição, que é o que
+           responde ao cliente em um segundo; o resto (órgão, turma, previsão,
+           mensagem pronta) continua no cartão do caso. */""}
+      ${filaTrf3(k)}
       ${etapasDaFase(k).length ? `<span class="lc-f" title="onde o caso está dentro de ${esc(tram)}">
         <span class="lc-k">Etapa</span><span class="lc-etapa ${k.etapa?"":"lc-vazio"}">${esc(k.etapa||"a definir")}</span>
         <button class="lapis" title="mudar a etapa do caso" onclick="escolherEtapa('${k.id}')">✎</button></span>` : ""}

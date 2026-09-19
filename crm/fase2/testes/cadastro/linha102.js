@@ -351,6 +351,29 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     return ok; }));
   await p.waitForTimeout(300);
 
+  // ── F121 · a posição na fila do TRF3 na linha do caso ───────────────────
+  await p.evaluate(async (a) => { const c = { fase: "judicial", trf3: a.t };
+    await patchCaso(a.id, c); Object.assign(D.casoPorId.get(a.id), c); repintarFicha(); },
+    { id: CASO1, t: { processo: "0000001-14.2015.4.03.9999", ordem: 60, total: 944,
+      orgao: "Gab. 37 Des. Fed. Fictício", turma: "10ª Turma", prioridade: "S",
+      consultado_em: "2026-09-18" } });
+  await p.waitForTimeout(300);
+  const filaTrf = await p.evaluate(() => {
+    const e = document.querySelector(".lc-topo .lc-fila");
+    return e && { pos: e.textContent.trim(), resto: e.parentElement.innerText.replace(/\s+/g, " "),
+      dica: e.parentElement.getAttribute("title"), copia: e.parentElement.getAttribute("onclick") }; });
+  conf("no caso judicial, a linha mostra só a posição na fila, com o total ao lado",
+    filaTrf && filaTrf.pos === "60º" && /de 944/.test(filaTrf.resto) && /prioridade/.test(filaTrf.resto));
+  conf("a dica diz de que fila é, de quando é a consulta, e o clique copia a mensagem ao cliente",
+    filaTrf && /ordem de julgamento/.test(filaTrf.dica) && /18\/09\/2026/.test(filaTrf.dica) && /copiarTrf3/.test(filaTrf.copia));
+  conf("fora do Judicial a fila não aparece, mesmo com o dado no caso", await p.evaluate(async (id) => {
+    const k = D.casoPorId.get(id); k.fase = "inss"; repintarFicha();
+    const some = !document.querySelector(".lc-topo .lc-fila");
+    k.fase = "judicial"; return some; }, CASO1));
+  await p.evaluate(async (id) => { const c = { fase: "inss", trf3: null };
+    await patchCaso(id, c); Object.assign(D.casoPorId.get(id), c); repintarFicha(); }, CASO1);
+  await p.waitForTimeout(250);
+
   // ── F116 · prazo fatal, compromisso e lembrete ──────────────────────────
   await p.waitForTimeout(250);
   conf("o compositor separa as três naturezas: o ⏰ é o PRAZO FATAL, e ao lado se escolhe compromisso ou lembrete", await p.evaluate(() =>
@@ -360,12 +383,19 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.evaluate(() => document.querySelector('.tf-nt[data-nat="lembrete"]').click());
   conf("escolher lembrete acende só ele", await p.evaluate(() => tfNatureza === "lembrete"
     && !document.querySelector('.tf-nt[data-nat="compromisso"]').classList.contains("on")));
+  await p.click("#and-texto");
   await p.evaluate(() => { const t = document.getElementById("and-texto");
-    t.value = "Voltar a olhar a aposentadoria futura"; t.dispatchEvent(new Event("input"));
-    tfQuem = []; tfDia("7", document.querySelector('#tf-box [data-tfd="7"]')); });
-  await p.evaluate(() => novoAndamento(casoSel)); await p.waitForTimeout(500);
+    t.value = "Voltar a olhar a aposentadoria futura"; t.dispatchEvent(new Event("input")); });
+  await p.waitForTimeout(300);
+  await p.evaluate(() => { tfQuem = []; tfDia("7", document.querySelector('#tf-box [data-tfd="7"]')); });
+  conf("a barra do compositor está aberta para registrar", await p.evaluate(() =>
+    !!document.getElementById("tf-box") && typeof tfData === "string"));
+  await p.evaluate(() => novoAndamento(casoSel)); await p.waitForTimeout(600);
   const tf = escritos.filter(e => e.t === "andamento_tarefas" && e.m === "POST").map(e => JSON.parse(e.corpo)).pop();
-  conf("a tarefa nasce com a natureza escolhida no compositor", tf && tf.natureza === "lembrete" && tf.lembrar_em === emDias(7));
+  // a data é a que o próprio botão "+7 dias" produz: maisDias() pula para o
+  // próximo dia útil, e no sábado +7 cai na segunda seguinte
+  const dtBotao = await p.evaluate(() => maisDias(7));
+  conf("a tarefa nasce com a natureza escolhida no compositor", tf && tf.natureza === "lembrete" && tf.lembrar_em === dtBotao);
   conf("registrada a anotação, o compositor volta ao padrão compromisso", await p.evaluate(() => tfNatureza === "compromisso"));
   const nats = await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz")].map(c => `${c.dataset.tipo}/${c.dataset.nat}`));
   conf("os cartões dizem a natureza: Prazo fatal em vermelho, Compromisso em âmbar, Lembrete em cinza",
