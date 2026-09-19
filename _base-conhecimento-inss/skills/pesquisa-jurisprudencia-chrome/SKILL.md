@@ -1,6 +1,6 @@
 ---
 name: pesquisa-jurisprudencia-chrome
-description: Protocolo obrigatório de pesquisa de jurisprudência com o Claude in Chrome como via primária. Use SEMPRE que for preciso localizar, conferir ou citar acórdão, ementa, Tema, Súmula, Enunciado, PEDILEF, PUIL, IRDR, IAC, REsp ou RE, e sempre que o pedido mencionar pesquisar jurisprudência, buscar precedente, achar julgado, conferir tese, verificar redação literal, base textual do TRF3, Turmas Recursais, TRU da 3ª Região, jurisprudência unificada do CJF, TNU, STJ, STF, TRF4 ou súmulas do TRF3. Define a hierarquia de fontes, o passo a passo por base, a ficha de registro do achado e a marcação [CONFERIDO] ou [NÃO CONFIRMADO]. NÃO use para pesquisa de legislação em texto compilado, que sai direto do Planalto, nem para consulta processual de cliente.
+description: Protocolo obrigatório de pesquisa de jurisprudência com o Claude in Chrome como via primária. Use SEMPRE que for preciso localizar, conferir ou citar acórdão, ementa, Tema, Súmula, Enunciado, PEDILEF, PUIL, IRDR, IAC, REsp ou RE, e sempre que o pedido mencionar pesquisar jurisprudência, buscar precedente, achar julgado, conferir tese, verificar redação literal, base textual do TRF3, Turmas Recursais, TRU da 3ª Região, jurisprudência unificada do CJF, TNU, STJ, STF, TRF4 ou súmulas do TRF3. Define a hierarquia de fontes, o passo a passo por base, a ficha de registro do achado e a marcação [CONFERIDO] ou [NÃO CONFIRMADO]. NÃO use para pesquisa de legislação em texto compilado, que sai direto do Planalto, nem para consulta processual de cliente. Desde a Onda 144, julgado do TRF3 e das Recursais da 3ª Região é localizado no servidor MCP trf3 e CONFERIDO no portal do TRF3 antes de qualquer citação, com marcação NÃO CONFERIDO até a conferência.
 ---
 
 # Pesquisa de jurisprudência, protocolo do escritório
@@ -128,3 +128,19 @@ Busca por índice de terceiro devolve rede social e portal de escritório no top
 Consulta ampla devolve volume inútil. `"aposentadoria especial" e "ruído" e "EPI"` retornou 90.325 acórdãos. Refinar por período, órgão julgador e campo de ementa antes de começar a ler.
 
 Sessão do TRF3 expira. Se a lista vier vazia depois de um tempo parado, recarregar a página inicial e refazer a consulta em vez de insistir na paginação.
+
+## MCP trf3, localizar no servidor e CONFERIR no portal (Onda 144)
+
+Julgado do TRF3 ou de Turma Recursal da 3ª Região passa a ser localizado primeiro no servidor MCP `trf3`, que guarda base local montada da Jurisprudência Unificada do CJF, com a 7ª à 10ª Turma, a 3ª Seção e as Recursais de SP e MS, sem monocráticas.
+
+**O MCP localiza, o portal confirma.** Todo julgado vindo do MCP nasce marcado `[NÃO CONFERIDO]` e não entra em peça nessa condição. Só recebe `[CONFERIDO em DD/MM/AAAA]` depois de aberto em `https://web.trf3.jus.br/jurisprudencia/`. Não achado no portal, não entra. Divergindo os dois, prevalece o portal.
+
+**A busca por número faz-se pela PESQUISA LIVRE**, com o número CNJ completo e pontuado. O campo `numero` preenchido sozinho devolve erro, testado em 19/09/2026. O campo de pesquisa livre tem `id` `txtPesqLivre` e `name` `txtPesquisaLivre`.
+
+**Por que a conferência vale.** O portal traz as PARTES, que o MCP não tem, e é ali que se confirma quem recorreu, em vez de confiar no `polo_recorrente`, que é inferido. O campo `resultado` também é inferido, e "provido" não significa favorável ao segurado.
+
+**Alerta que decide peça.** A ementa do próprio tribunal pode conter citação incorreta. No acórdão usado no teste, a tese de julgamento ancorava a exceção do ruído no Tema 534 do STJ, que é eletricidade, e numa IN PRES/INSS nº 170/2024 não localizada no DOU. Toda citação de tema, súmula ou norma que venha dentro de ementa do TRF3 passa pelo `base-precedentes-catalogo-vinculantes` antes de ser reproduzida, porque copiar ementa importa os erros da ementa.
+
+Enquanto a carga não cobrir um ano, `perfil_orgao_trf3` e `perfil_relator_trf3` não entram em relatório, porque semanas não fazem amostra e a distribuição por órgão reflete a ordem da coleta.
+
+Roteiro completo, mecânica do portal e o caso do teste em `references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.

@@ -560,3 +560,15 @@ Postura pró-segurado sempre. Antes de invocar uma Súmula, conferir se ela favo
 ## Boletins da TNU (Onda 105)
 
 Para a tese nacional que a TRU e as Turmas Recursais aplicam, consultar a skill `base-boletins-tnu`, com o índice dos 241 temas nos 104 boletins oficiais do acervo. Súmula regional do TRF3 e tese da TNU são fontes distintas e complementares, e a segunda prevalece no microssistema dos Juizados quando houver conflito.
+
+## MCP trf3 nas Turmas Recursais e o paradigma de PUIL (Onda 144)
+
+O servidor MCP `trf3` cobre também as Turmas Recursais de São Paulo e do Mato Grosso do Sul, no acervo `recursais`, e serve para localizar paradigma de PUIL e de PEDILEF.
+
+**Duas particularidades da fonte.** Nas Recursais o CJF entrega o texto SEM acentuação, e a busca ali usa palavras sem acento, como `ruido`, `contribuicao`, `aposentadoria especial` e `Secao Judiciaria`. E a TRU da 3ª Região ainda NÃO foi confirmada na base, de modo que ausência de acórdão da TRU no MCP não autoriza afirmar que ele não existe.
+
+**A conferência é a mesma da `pesquisa-jurisprudencia-chrome`, e aqui ela é ainda mais exigente.** Paradigma de PUIL precisa de identificação exata de órgão, relator, data e tese, porque o cotejo analítico se faz sobre esses dados e erro neles derruba a admissibilidade. Todo acórdão localizado no MCP nasce `[NÃO CONFERIDO]` e só é citado depois de aberto no portal do TRF3, na aba Turmas Recursais, com leitura do inteiro teor.
+
+**Súmula do TRF3 e da TRU continuam saindo do repositório oficial**, e não do MCP, que é base de acórdãos e não de enunciados.
+
+Detalhamento do fluxo em `pesquisa-jurisprudencia-chrome/references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.

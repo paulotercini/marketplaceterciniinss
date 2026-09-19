@@ -269,3 +269,11 @@ Honestidade radical não admite exceções.
 ## Boletins da TNU (Onda 105)
 
 As teses de TNU deste catálogo têm fonte primária nos boletins oficiais, indexados na skill `base-boletins-tnu` (241 temas, 104 boletins, sessões de 18/02/2016 a 24/06/2026). Tema novo relevante se promove ao catálogo a partir da leitura do boletim, com redação literal, na forma da disciplina de alimentação acima.
+
+## Citação vinda de ementa de tribunal (Onda 144)
+
+Ementa de acórdão NÃO é fonte de precedente. Ela é uso de precedente por um terceiro, e pode estar errada.
+
+Caso real, conferido em 19/09/2026. Acórdão da 9ª Turma do TRF3, ApCiv 5347474-56.2020.4.03.9999, sustenta na tese de julgamento que a exceção do ruído ao EPI decorre dos "STJ Temas 534, 694 e 1.083" e da "IN PRES/INSS nº 170/2024, art. 291, §2º". O Tema 534 do STJ é ELETRICIDADE, armadilha de homônimo já registrada na Onda 108, e a IN 170/2024 não foi localizada no DOU em busca por expressão exata sem restrição de data.
+
+**Regra.** Todo tema, súmula ou norma que chegar por dentro de uma ementa passa por este catálogo antes de ser reproduzido, e o que não constar aqui vai ao `verificador-precedentes`. O acórdão segue aproveitável pela RATIO, e o que não se reproduz é a cadeia de citações que ele carrega.
