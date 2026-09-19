@@ -299,7 +299,8 @@ def test_fila_do_trf3_vai_ao_portal_com_a_data_da_consulta(monkeypatch):
                 [{"id": "c1", "cpf": "11111111111"}],
                 [{"cliente_id": "c1", "etapa": "aguardando sentença", "fase": "judicial",
                   "mover_para": "👪 Judicial", "origem_lista": None,
-                  "trf3": {"ordem": 60, "total": 944, "consultado_em": "2026-09-18"}}])
+                  "trf3": {"ordem": 60, "total": 944, "orgao": "Gab. 37 Des. Fed. Fulano",
+                           "consultado_em": "2026-09-18"}}])
     assert pc.crm_do_cliente() == {("11111111111", "👪 Judicial"): {
         "etapa": "aguardando sentença", "fila": "60º de 944", "fila_em": "18/09/2026"}}
 
@@ -312,8 +313,24 @@ def test_fila_so_sai_quando_o_caso_esta_no_judicial(monkeypatch):
                 [{"id": "c1", "cpf": "11111111111"}],
                 [{"cliente_id": "c1", "etapa": "decidido", "fase": "inss",
                   "mover_para": "🌻 INSS", "origem_lista": None,
-                  "trf3": {"ordem": 60, "total": 944}}])
+                  "trf3": {"ordem": 60, "total": 944, "orgao": "Gab. 37 Des. Fed. Fulano"}}])
     assert pc.crm_do_cliente() == {("11111111111", "🌻 INSS"): {"etapa": "decidido"}}
+
+
+def test_fila_de_primeiro_grau_nao_vai_ao_cliente(monkeypatch):
+    """[BUG 19.09.2026] o painel devolve tambem processo de primeiro grau, e la o
+    numero e a fila da vara, nao ordem de julgamento de recurso. Nessas linhas o
+    DSR ainda vem deslocado (vara com turma, grau com data em milissegundos)."""
+    import portal_common as pc
+    _falso_supa(pc, monkeypatch,
+                [{"id": "c1", "cpf": "11111111111"}],
+                [{"cliente_id": "c1", "etapa": "aguardando sentença", "fase": "judicial",
+                  "mover_para": "👪 Judicial", "origem_lista": None,
+                  "trf3": {"ordem": 120, "total": 1221, "grau": 1775260800000,
+                           "orgao": "01ª VF Previd. com JEF Cível e Previd. de Catanduva",
+                           "turma": "10ª Turma"}}])
+    assert pc.crm_do_cliente() == {
+        ("11111111111", "👪 Judicial"): {"etapa": "aguardando sentença"}}
 
 
 def test_fila_sai_mesmo_sem_etapa_declarada(monkeypatch):
@@ -323,7 +340,7 @@ def test_fila_sai_mesmo_sem_etapa_declarada(monkeypatch):
                 [{"id": "c1", "cpf": "11111111111"}],
                 [{"cliente_id": "c1", "etapa": None, "fase": "judicial",
                   "mover_para": "👪 Judicial", "origem_lista": None,
-                  "trf3": {"ordem": 7}}])
+                  "trf3": {"ordem": 7, "orgao": "Gab. 12 Des. Fed. Fulano"}}])
     assert pc.crm_do_cliente() == {("11111111111", "👪 Judicial"): {"fila": "7º"}}
 
 

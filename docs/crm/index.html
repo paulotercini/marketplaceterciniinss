@@ -14651,9 +14651,16 @@ function lcCampo(k, token){
     <button class="lapis" title="alterar ${esc(f.rot)}" onclick="editarFato('${k.id}','${campo}','lc')">✎</button></span>`;
 }
 // F121 · a posição na fila de julgamento, só o número, na linha do caso
+// [BUG 19.09.2026] O painel do TRF3 devolve também processos de PRIMEIRO GRAU,
+// e ali o número é a fila da VARA, não ordem de julgamento de recurso. Pior, nas
+// linhas de vara o DSR do Power BI vem deslocado (o campo grau chega com data em
+// milissegundos e a turma vem preenchida, o que vara não tem), então o registro
+// inteiro é suspeito. Só confio na linha de GABINETE, que é relator, e é dela
+// que sai a frase "posição na ordem de julgamento".
+const filaDeGabinete = t => /^Gab\./i.test(String((t && t.orgao) || ""));
 function filaTrf3(k){
   const t = k.trf3;
-  if(!t || !t.ordem || k.fase!=="judicial") return "";
+  if(!t || !t.ordem || k.fase!=="judicial" || !filaDeGabinete(t)) return "";
   const tot = t.total ? ` de ${Number(t.total).toLocaleString(IDIOMA)}` : "";
   const dica = `posição na ordem de julgamento de ${t.orgao||"o órgão julgador"}${t.turma?` (${t.turma})`:""}`
     + `${t.consultado_em?`, consulta de ${fmtBarra(t.consultado_em)}`:""}`
