@@ -376,6 +376,15 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     const ok = !document.querySelector(".lc-topo .lc-fila")
       && !!document.querySelector(".lc-topo .lc-verif");
     k.fase = "judicial"; return ok; }, CASO1));
+  // [BUG 19.09.2026] o painel devolve também processo de primeiro grau, e ali o
+  // número é a fila da vara, não ordem de julgamento. E o registro vem deslocado.
+  conf("fila de vara (primeiro grau) não aparece, só a de gabinete", await p.evaluate((id) => {
+    const k = D.casoPorId.get(id), antes = k.trf3;
+    k.trf3 = { ordem: 120, total: 1221, grau: 1775260800000, turma: "10ª Turma",
+      orgao: "01ª VF Previd. com JEF Cível e Previd. de Catanduva" };
+    repintarFicha();
+    const some = !document.querySelector(".lc-topo .lc-fila");
+    k.trf3 = antes; repintarFicha(); return some; }, CASO1));
   await p.evaluate(async (id) => { const c = { fase: "inss", trf3: null };
     await patchCaso(id, c); Object.assign(D.casoPorId.get(id), c); repintarFicha(); }, CASO1);
   await p.waitForTimeout(250);
