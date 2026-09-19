@@ -44,6 +44,7 @@ assert d["e_razoes"].startswith("3. O PPP") and d["e_dispositivo"] == "4. Apela�
 for campo in ("ementa_texto", "inteiro_teor"):
     assert "BELTRANO" not in d[campo] and "CICRANO" not in d[campo], "nome de parte ou advogado gravado"
 assert len(parser.extrair(resposta, "trf3", so_previdenciario=False)) == 2
+assert parser.ORGAOS_PREV.search("Turma Regional de Uniformizao"), "TRU3 chega do CJF sem acento e não pode cair no recorte"
 
 try:
     parser.extrair(resposta.replace("Órgão julgador", "Outro rótulo"), "trf3")
