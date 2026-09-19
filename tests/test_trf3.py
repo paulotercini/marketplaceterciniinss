@@ -83,6 +83,42 @@ def test_decode_dsr_repeticao_e_dicionarios():
                          1783641600000]
 
 
+# [BUG 19.09.2026] amostra REAL colhida do painel em 19.09.2026, com um processo
+# de gabinete e um de vara de JEF. A linha da vara não tem órgão julgador de
+# turma, e o DSR marca essa coluna na máscara de nulos ("Ø": 8), sem mandá-la em
+# C. Ignorar a máscara empurrava a linha inteira uma casa para a esquerda, e o
+# grau passava a receber a data em milissegundos.
+DSR_COM_NULO = {"dsr": {"DS": [{
+    "N": "DS0",
+    "PH": [{"DM0": [
+        {"S": [{"N": "G0", "T": 1, "DN": "D0"}, {"N": "G1", "T": 4},
+               {"N": "G2", "T": 1, "DN": "D1"}, {"N": "G3", "T": 1, "DN": "D2"},
+               {"N": "G4", "T": 4}, {"N": "G5", "T": 1, "DN": "D3"},
+               {"N": "G6", "T": 7}],
+         "C": [0, 3764, 0, 0, 2, 0, 1788134400000]},
+        {"C": [1, 118, 1, 1, 1780876800000], "R": 32, "Ø": 8},
+    ]}],
+    "ValueDicts": {
+        "D0": ["5000005-94.2024.4.03.6136", "5000850-63.2023.4.03.6136"],
+        "D1": ["Gab. 30 Des. Fed. Cristina Melo",
+               "01ª VF Previd. com JEF Cível e Previd. de Catanduva"],
+        "D2": ["09ª Turma"],
+        "D3": ["N"],
+    },
+}]}}
+
+
+def test_decode_dsr_respeita_a_mascara_de_nulos():
+    linhas = trf3.decode_dsr(DSR_COM_NULO)
+    assert linhas[0] == ["5000005-94.2024.4.03.6136", 3764,
+                         "Gab. 30 Des. Fed. Cristina Melo", "09ª Turma", 2, "N",
+                         1788134400000]
+    # a vara: turma nula, grau 1 (não uma data), prioridade repetida da anterior
+    assert linhas[1] == ["5000850-63.2023.4.03.6136", 118,
+                         "01ª VF Previd. com JEF Cível e Previd. de Catanduva",
+                         None, 1, "N", 1780876800000]
+
+
 def test_data_ms():
     assert trf3._data_ms(1775520000000) == "2026-04-07"
     assert trf3._data_ms(None) is None
@@ -95,7 +131,7 @@ def test_frase_cliente_completa():
         "orgao": "Gab. 37 Des. Fed. Nelson Porfirio", "turma": "10ª Turma",
         "prioridade": "S", "fase_desde": "2026-04-07", "consultado_em": "2026-08-03"})
     assert frase == (
-        "O processo nº 0000001-14.2015.4.03.9999 aguarda julgamento no TRF3 e "
+        "O processo nº 0000001-14.2015.4.03.9999 aguarda julgamento e "
         "hoje ocupa a posição 60 de uma fila de 944 processos na ordem de "
         "julgamento do órgão responsável — Gab. 37 Des. Fed. Nelson Porfirio "
         "(10ª Turma). Está concluso para julgamento desde 07/04/2026. "

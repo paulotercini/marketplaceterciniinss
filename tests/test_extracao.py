@@ -317,20 +317,18 @@ def test_fila_so_sai_quando_o_caso_esta_no_judicial(monkeypatch):
     assert pc.crm_do_cliente() == {("11111111111", "🌻 INSS"): {"etapa": "decidido"}}
 
 
-def test_fila_de_primeiro_grau_nao_vai_ao_cliente(monkeypatch):
-    """[BUG 19.09.2026] o painel devolve tambem processo de primeiro grau, e la o
-    numero e a fila da vara, nao ordem de julgamento de recurso. Nessas linhas o
-    DSR ainda vem deslocado (vara com turma, grau com data em milissegundos)."""
+def test_fila_de_primeiro_grau_tambem_vai_ao_cliente(monkeypatch):
+    """O painel cobre a 3ª Região inteira. A fila da vara de JEF é fila de
+    julgamento daquele órgão, e o cliente do primeiro grau pergunta o mesmo."""
     import portal_common as pc
     _falso_supa(pc, monkeypatch,
                 [{"id": "c1", "cpf": "11111111111"}],
                 [{"cliente_id": "c1", "etapa": "aguardando sentença", "fase": "judicial",
                   "mover_para": "👪 Judicial", "origem_lista": None,
-                  "trf3": {"ordem": 120, "total": 1221, "grau": 1775260800000,
-                           "orgao": "01ª VF Previd. com JEF Cível e Previd. de Catanduva",
-                           "turma": "10ª Turma"}}])
-    assert pc.crm_do_cliente() == {
-        ("11111111111", "👪 Judicial"): {"etapa": "aguardando sentença"}}
+                  "trf3": {"ordem": 118, "total": 1221, "grau": 1,
+                           "orgao": "01ª VF Previd. com JEF Cível e Previd. de Catanduva"}}])
+    assert pc.crm_do_cliente() == {("11111111111", "👪 Judicial"): {
+        "etapa": "aguardando sentença", "fila": "118º de 1221"}}
 
 
 def test_fila_sai_mesmo_sem_etapa_declarada(monkeypatch):

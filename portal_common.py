@@ -180,12 +180,9 @@ def crm_do_cliente():
         if etapa in ETAPAS_PUBLICAS:          # etapa à mão não vai ao portal
             fora["etapa"] = etapa
         t = k.get("trf3") or {}
-        # [BUG 19.09.2026] o painel também devolve processo de PRIMEIRO GRAU, e
-        # lá o número é a fila da vara, não ordem de julgamento de recurso. Nessas
-        # linhas o DSR ainda vem deslocado (grau com data em milissegundos, vara
-        # com turma). Só o registro de GABINETE, que é relator, vai ao cliente.
-        gabinete = str((t or {}).get("orgao") or "").lower().startswith("gab.")
-        if k.get("fase") == "judicial" and isinstance(t, dict) and t.get("ordem") and gabinete:
+        # o painel cobre a 3ª Região inteira, vara e JEF de primeiro grau
+        # inclusive, e a fila de cada um é fila de julgamento do seu órgão
+        if k.get("fase") == "judicial" and isinstance(t, dict) and t.get("ordem"):
             fora["fila"] = f"{t['ordem']}º de {t['total']}" if t.get("total") else f"{t['ordem']}º"
             if t.get("consultado_em"):
                 fora["fila_em"] = _br(t["consultado_em"])

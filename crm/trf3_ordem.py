@@ -86,12 +86,23 @@ def _consultar(query, top=1000):
     return d["results"][0]["result"]["data"]
 
 
+MASCARA_NULO = "Ø"     # a chave "Ø" do DSR: colunas nulas nesta linha
+
+
 def decode_dsr(data):
     """Achata o DSR do Power BI em linhas [v0, v1, ...] na ordem do Select.
 
     Cada linha traz só os valores que mudaram: o bitmask R diz quais colunas
     repetem a linha anterior; índices inteiros em colunas com dicionário (DN)
     apontam para ValueDicts.
+
+    [BUG 19.09.2026] Falta va ler a terceira máscara, a de NULOS ("Ø"). Coluna
+    nula não vem em C nem em R, simplesmente não vem. Ignorá-la empurrava todo
+    o resto da linha uma casa para a esquerda. Era o que acontecia com processo
+    de PRIMEIRO GRAU, que não tem órgão julgador de turma: o grau passava a
+    receber a data em milissegundos e a fila do JEF ficava com registro
+    impossível. Processo, ordem e órgão vêm antes e escapavam, por isso o erro
+    passou despercebido.
     """
     ds = data["dsr"]["DS"][0]
     dicts = ds.get("ValueDicts", {})
@@ -103,9 +114,12 @@ def decode_dsr(data):
             if schema is None:
                 continue
             C, R, ci = ent.get("C", []), ent.get("R", 0), 0
+            nulos = ent.get(MASCARA_NULO, 0)
             bruta = []
             for i in range(len(schema)):
-                if R >> i & 1:
+                if nulos >> i & 1:
+                    bruta.append(None)
+                elif R >> i & 1:
                     bruta.append(anterior[i])
                 else:
                     bruta.append(C[ci] if ci < len(C) else None)
@@ -277,7 +291,9 @@ def frase_cliente(t):
              if t.get("fase_desde") else "")
     data = (f"{t['consultado_em'][8:10]}/{t['consultado_em'][5:7]}/{t['consultado_em'][0:4]}"
             if t.get("consultado_em") else "")
-    return (f"O processo nº {t['processo']} aguarda julgamento no TRF3 e hoje ocupa "
+    # o painel cobre a 3ª Região inteira, inclusive vara e JEF de primeiro grau,
+    # então a frase nomeia o ÓRGÃO, em vez de afirmar que o caso está no TRF3
+    return (f"O processo nº {t['processo']} aguarda julgamento e hoje ocupa "
             f"{pos}{total} na ordem de julgamento do órgão responsável — "
             f"{orgao}{turma}.{desde}{pri} "
             f"Fonte: painel público de estatísticas do TRF3 (consulta de {data}).")
