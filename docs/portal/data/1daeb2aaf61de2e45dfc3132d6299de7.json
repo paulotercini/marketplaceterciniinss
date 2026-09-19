@@ -1,6 +1,6 @@
 {
   "nome": "Keli Cristina de Carvalho",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "41572638800",
@@ -9,9 +9,22 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Keli Cristina de Carvalho",
-      "status": "Última atualização em 17/04/2026: Perícia médica realizada",
+      "status": "Última atualização em 28/06/2026: Laudo pericial juntado aos autos",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-06-28",
+          "data_br": "28/06/2026",
+          "tipo": "Laudo pericial juntado",
+          "descricao": "Laudo pericial juntado aos autos."
+        },
+        {
+          "data": "2026-06-25",
+          "data_br": "25/06/2026",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
+        },
         {
           "data": "2026-04-17",
           "data_br": "17/04/2026",

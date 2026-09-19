@@ -1,6 +1,6 @@
 {
   "nome": "Bruna Maria Rossi Ulian",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "38992822804",
@@ -9,9 +9,22 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Bruna Maria Rossi Ulian",
-      "status": "Última atualização em 28/05/2026: Benefício deferido pelo INSS",
+      "status": "Última atualização em 24/08/2026: Perícia médica agendada para 25/08/2026 às 13:50 em Araraquara",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-08-24",
+          "data_br": "24/08/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 25/08/2026 às 13:50 em Araraquara."
+        },
+        {
+          "data": "2026-08-11",
+          "data_br": "11/08/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
         {
           "data": "2026-05-28",
           "data_br": "28/05/2026",
@@ -54,7 +67,8 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Bruna Maria Rossi Ulian",
-      "status": "Perícia médica marcada para 16/12/2026 (em 179 dias)",
+      "status": "Perícia médica marcada para 16/12/2026 (em 88 dias)",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
         {

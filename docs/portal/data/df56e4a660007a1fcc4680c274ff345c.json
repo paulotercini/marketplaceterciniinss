@@ -1,6 +1,6 @@
 {
   "nome": "Alexandre Francisco Silva",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "25991262829",
@@ -10,6 +10,7 @@
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Alexandre Francisco Silva",
       "status": "Última atualização em 26/05/2026: Recurso Especial interposto",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
         {
@@ -98,6 +99,7 @@
       "localizacao": "Aguardando decisão da Junta de Recursos",
       "titulo_tarefa": "Alexandre Francisco Silva",
       "status": "Última atualização em 06/04/2025: Pedido de benefício protocolado junto ao INSS",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
         {
@@ -148,6 +150,7 @@
       "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "Alexandre Francisco Silva",
       "status": "Em acompanhamento pelo escritório",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [],
       "notas_publicas": [],

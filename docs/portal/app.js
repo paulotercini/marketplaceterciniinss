@@ -105,6 +105,14 @@ function renderProcesso(p) {
     if (p.etapa && p.localizacao) {
       card.appendChild(el("div", "ld-onde", esc(p.localizacao)));
     }
+    // F121 · a posicao na fila de julgamento do TRF3. Vem do painel publico do
+    // tribunal, nao de calculo nosso, e por isso vai sempre com a data da
+    // consulta: o numero anda, e o cliente precisa saber de quando ele e.
+    if (p.fila) {
+      card.appendChild(el("div", "ld-fila",
+        "Posição na fila de julgamento: " + esc(p.fila) +
+        (p.fila_em ? " (consulta de " + esc(p.fila_em) + ")" : "")));
+    }
     wrap.appendChild(card);
   }
 

@@ -366,10 +366,16 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     filaTrf && filaTrf.pos === "60º" && /de 944/.test(filaTrf.resto) && /prioridade/.test(filaTrf.resto));
   conf("a dica diz de que fila é, de quando é a consulta, e o clique copia a mensagem ao cliente",
     filaTrf && /ordem de julgamento/.test(filaTrf.dica) && /18\/09\/2026/.test(filaTrf.dica) && /copiarTrf3/.test(filaTrf.copia));
-  conf("fora do Judicial a fila não aparece, mesmo com o dado no caso", await p.evaluate(async (id) => {
+  // F122 · no Judicial o acompanhamento é automático em todo caso, então a
+  // linha não gasta espaço dizendo isso. A escolha continua no segundo ➕.
+  conf("no Judicial a linha não fala de Verificação, que ali é automática sempre",
+    await p.evaluate(() => !document.querySelector(".lc-topo .lc-verif")
+      && !!document.querySelector(".lc-topo .lc-fila")));
+  conf("fora do Judicial a fila some e a Verificação volta", await p.evaluate(async (id) => {
     const k = D.casoPorId.get(id); k.fase = "inss"; repintarFicha();
-    const some = !document.querySelector(".lc-topo .lc-fila");
-    k.fase = "judicial"; return some; }, CASO1));
+    const ok = !document.querySelector(".lc-topo .lc-fila")
+      && !!document.querySelector(".lc-topo .lc-verif");
+    k.fase = "judicial"; return ok; }, CASO1));
   await p.evaluate(async (id) => { const c = { fase: "inss", trf3: null };
     await patchCaso(id, c); Object.assign(D.casoPorId.get(id), c); repintarFicha(); }, CASO1);
   await p.waitForTimeout(250);

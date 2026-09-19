@@ -1,7 +1,107 @@
 {
   "nome": "Marcio Roberto de Andrade",
-  "atualizado_em": "07/06/2026 as 22:15",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
+    {
+      "cpf": "13299473808",
+      "dn": "04121973",
+      "nome": "Marcio Roberto de Andrade",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Marcio Roberto de Andrade",
+      "status": "Última atualização em 18/08/2026: Cessação programada do benefício (DCB)",
+      "etapa": null,
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-08-18",
+          "data_br": "18/08/2026",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        },
+        {
+          "data": "2026-08-06",
+          "data_br": "06/08/2026",
+          "tipo": "Cessação programada (DCB)",
+          "descricao": "Cessação programada do benefício (DCB)."
+        },
+        {
+          "data": "2026-06-18",
+          "data_br": "18/06/2026",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
+        },
+        {
+          "data": "2026-04-20",
+          "data_br": "20/04/2026",
+          "tipo": "Petição inicial protocolada",
+          "descricao": "Petição inicial protocolada / distribuída."
+        },
+        {
+          "data": "2026-03-11",
+          "data_br": "11/03/2026",
+          "tipo": "Ação judicial protocolada",
+          "descricao": "Ação judicial protocolada."
+        },
+        {
+          "data": "2025-12-16",
+          "data_br": "16/12/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada às 08:18 em Brasília."
+        },
+        {
+          "data": "2025-10-08",
+          "data_br": "08/10/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 15/12/2025 às 08:00 em Bebedouro."
+        },
+        {
+          "data": "2025-08-11",
+          "data_br": "11/08/2025",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 08/09/2025 às 10:00."
+        },
+        {
+          "data": "2025-08-10",
+          "data_br": "10/08/2025",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2025-06-10",
+          "data_br": "10/06/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-06-06",
+          "data_br": "06/06/2025",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2025-06-04",
+          "data_br": "04/06/2025",
+          "tipo": "Exigência cumprida",
+          "descricao": "Exigência do INSS cumprida."
+        },
+        {
+          "data": "2025-05-14",
+          "data_br": "14/05/2025",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    },
     {
       "cpf": "13299473808",
       "dn": "04121973",

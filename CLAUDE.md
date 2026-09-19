@@ -10,12 +10,18 @@ Sistema do escritório de advocacia previdenciária Paulo R. Tercini Filho, com 
 2. **Portal do cliente** — `docs/portal/` (app estático). O cliente informa CPF + data de nascimento; `app.js` deriva `PBKDF2-SHA256(cpf|dn, salt, iter)` → `SHA-256` → 16 bytes hex e busca `docs/portal/data/<hash>.json`. Não há backend: a "autenticação" é o nome do arquivo ser inderivável sem CPF+DN corretos. `salt`/`iter` vêm de `docs/portal/data/_meta.json` e têm que bater com `derivar_hash()` nos geradores Python.
 
    A **SITUAÇÃO ATUAL** que o cliente lê vem da **etapa declarada no CRM** (`casos.etapa`, F119),
-   e não mais de dedução do último comentário. `portal_common.etapas_do_crm()` lê o Supabase por
+   e não mais de dedução do último comentário. `portal_common.crm_do_cliente()` lê o Supabase por
    `SUPABASE_URL` + `SUPABASE_SERVICE_KEY` (as mesmas do `graph_refresh.py`) e devolve
-   `{(cpf, lista): etapa}`. Três regras não podem ser quebradas: **somente leitura**, **só sai
-   etapa do catálogo `ETAPAS_PUBLICAS`** (etapa escrita à mão no CRM fica no CRM, é a mesma
-   barreira do `is_internal()`), e **sem banco o portal roda igual ao de antes**. Ao acrescentar
-   etapa em `ETAPAS_POR_FASE` no `crm/fase2/app.html`, acrescente também em `ETAPAS_PUBLICAS`.
+   `{(cpf, lista): {"etapa", "fila", "fila_em"}}`. Três regras não podem ser quebradas: **somente
+   leitura**, **só sai etapa do catálogo `ETAPAS_PUBLICAS`** (etapa escrita à mão no CRM fica no
+   CRM, é a mesma barreira do `is_internal()`), e **sem banco o portal roda igual ao de antes**.
+   Ao acrescentar etapa em `ETAPAS_POR_FASE` no `crm/fase2/app.html`, acrescente também em
+   `ETAPAS_PUBLICAS`.
+
+   A **fila** (F121) é a posição na ordem de julgamento do TRF3, lida do painel público por
+   `crm/trf3_ordem.py` e gravada em `casos.trf3`. Não passa pelo catálogo porque é número, não
+   texto livre, mas **só sai quando o caso está na fase judicial** (o dado pode ter ficado de uma
+   fase anterior) e **viaja sempre com a data da consulta**, já que a posição anda.
 3. **Base de conhecimento** — `_base-conhecimento-inss/` é um plugin Claude (134 skills jurídicas) versionado neste mesmo repo; atualizado por ondas (`.claude-plugin/plugin.json` tem a versão). Não misture mudanças do portal com ondas da base.
 
 A fonte de dados dos geradores é o **Microsoft To Do** (Graph API, conta pessoal), onde cada tarefa é um cliente: título `Nome #CPF`, corpo com blocos datados `DD.MM.AAAA (Autor): texto` (mais novo no topo), checklist com aniversário.

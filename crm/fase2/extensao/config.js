@@ -11,17 +11,19 @@ function mostrarQuem(quem) {
   $('quem').textContent = quem ? `✔ conectado como ${quem}` : 'ainda não entrou';
 }
 
+// cabeçalho HTTP só aceita ASCII: o que vier invisível junto do colado sai já aqui
+const soAscii = s => String(s || '').replace(/[^!-~]/g, '');
 $('salvar').onclick = async () => {
   await chrome.storage.local.set({
-    url: $('url').value.trim(),
-    chave: $('chave').value.trim(),
+    url: soAscii($('url').value),
+    chave: soAscii($('chave').value),
   });
   $('ok').textContent = '✔ guardado';
 };
 
 $('entrar').onclick = async () => {
   // salva o endereço junto: entrar sem ter guardado o Supabase é o erro óbvio
-  await chrome.storage.local.set({ url: $('url').value.trim(), chave: $('chave').value.trim() });
+  await chrome.storage.local.set({ url: soAscii($('url').value), chave: soAscii($('chave').value) });
   $('quem').className = 'ok';
   $('quem').textContent = 'entrando…';
   const r = await chrome.runtime.sendMessage(

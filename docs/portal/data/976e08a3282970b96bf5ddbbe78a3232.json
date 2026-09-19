@@ -1,6 +1,6 @@
 {
   "nome": "Maria de Lourdes de Oliveira Terribele",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "35658809886",
@@ -9,9 +9,16 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Maria de Lourdes de Oliveira Terribele",
-      "status": "Última atualização em 11/01/2026: Petição inicial protocolada / distribuída",
+      "status": "Última atualização em 30/06/2026: Laudo pericial juntado aos autos",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-06-30",
+          "data_br": "30/06/2026",
+          "tipo": "Laudo pericial juntado",
+          "descricao": "Laudo pericial juntado aos autos."
+        },
         {
           "data": "2026-01-11",
           "data_br": "11/01/2026",

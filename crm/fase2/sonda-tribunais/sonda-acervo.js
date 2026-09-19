@@ -115,6 +115,22 @@
     return m ? `9999999-99.${m[3]}.${m[4]}.${m[5]}.9999` : forma(n);
   };
 
+  // ── o que é formato, e o que só PARECE formato ─────────────────────────
+  // A regra antiga aqui era "só dígito e pontuação = data/hora, deixa passar".
+  // Ela vazou: 258.266.798-67 é só dígito e pontuação, e uma sondagem real da
+  // ficha entregou CPF de duas partes por causa dela. Também escapavam por
+  // aqui os números antigos de processo do e-SAJ (368.01.2005.004008), CNPJ,
+  // NB, RG e telefone.
+  //
+  // Agora é pela POSITIVA: passa cru só o que eu consigo NOMEAR como data,
+  // hora ou número curto (até 4 dígitos — ano, número de vara, contador de
+  // página). O resto vira forma, e a sonda não perde nada: 999.999.999-99
+  // mostra o esqueleto tão bem quanto o CPF de verdade.
+  const RE_DATA = /^\d{1,2}\/\d{1,2}\/\d{2,4}(\s+(às\s+)?\d{1,2}:\d{2}(:\d{2})?)?$/;
+  const RE_HORA = /^\d{1,2}:\d{2}(:\d{2})?$/;
+  const ehFormatoSeguro = s => RE_DATA.test(s) || RE_HORA.test(s)
+    || (/^[\d\s.,]+$/.test(s) && s.replace(/\D/g, '').length <= 4);
+
   // Conta em quantas LINHAS cada texto aparece. Duas ou mais = rótulo do
   // sistema, e rótulo é exatamente o que o robô procura. Uma só = dado.
   function frequencias(linhas) {
@@ -150,7 +166,7 @@
         for (const num of nums) saida = saida.split(num).join(cnjMascarado(num));
         // o resto do texto ao redor do número ainda é dado
         saida = saida.replace(/(?!9999999-99\.\d{4}\.\d\.\d{2}\.9999)[A-Za-zÀ-ÿ]{2,}/g, forma);
-      } else if (/^[\d\/\.\-:\s]+$/.test(s)) {
+      } else if (ehFormatoSeguro(s)) {
         continue;                                             // data/hora: fica
       } else {
         saida = forma(s);

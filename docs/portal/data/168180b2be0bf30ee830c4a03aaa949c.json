@@ -1,6 +1,6 @@
 {
   "nome": "Eliane Pengo Santana",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "34822037843",
@@ -9,9 +9,22 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Eliane Pengo Santana",
-      "status": "Última atualização em 20/06/2024: Perícia médica realizada",
+      "status": "Última atualização em 06/09/2026: Recurso Especial interposto",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-09-06",
+          "data_br": "06/09/2026",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Recurso Especial interposto."
+        },
+        {
+          "data": "2026-08-11",
+          "data_br": "11/08/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
         {
           "data": "2024-06-20",
           "data_br": "20/06/2024",

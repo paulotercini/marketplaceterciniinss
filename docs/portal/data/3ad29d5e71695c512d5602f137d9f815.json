@@ -1,6 +1,6 @@
 {
   "nome": "Adauto Carcinoni",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "09031543829",
@@ -9,9 +9,74 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Adauto Carcinoni",
-      "status": "Avaliação social marcada para 08/07/2026 (em 18 dias) às 16:30",
+      "status": "Última atualização em 09/09/2026: Perícia médica agendada para 16/09/2026 às 13:00 em Araraquara",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-09-09",
+          "data_br": "09/09/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 16/09/2026 às 13:00 em Araraquara."
+        },
+        {
+          "data": "2026-08-19",
+          "data_br": "19/08/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    },
+    {
+      "cpf": "09031543829",
+      "dn": "22031965",
+      "nome": "Adauto Carcinoni",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Junta de Recursos",
+      "titulo_tarefa": "Adauto Carcinoni",
+      "status": "Perícia médica marcada para 07/10/2026 (em 18 dias) — INSS de Araraquara",
+      "etapa": null,
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-08-18",
+          "data_br": "18/08/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2026-08-10",
+          "data_br": "10/08/2026",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso administrativo protocolado."
+        },
+        {
+          "data": "2026-07-31",
+          "data_br": "31/07/2026",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso administrativo protocolado."
+        },
+        {
+          "data": "2026-07-15",
+          "data_br": "15/07/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2026-07-08",
+          "data_br": "08/07/2026",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
+        },
         {
           "data": "2026-06-02",
           "data_br": "02/06/2026",
@@ -82,9 +147,8 @@
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
         }
       ],
       "origem": "auto"

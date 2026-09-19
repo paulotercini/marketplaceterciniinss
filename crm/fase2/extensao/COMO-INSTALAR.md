@@ -98,3 +98,74 @@ extensão depois, ela continua de onde a busca parou.
 E respeita o limite de velocidade do portal: 3 segundos entre chamadas, e
 para na primeira recusa em vez de insistir. Se parar, espere alguns minutos
 e clique de novo — ela continua de onde estava.
+
+## eproc TJSP (1º e 2º grau) — desde 1.7.0
+
+**🏛 eproc TJSP (relação)** — lê a *Relação de Processos* (menu Relatórios)
+com o último evento de cada processo e entrega ao CRM no mesmo formato do
+PJe: a tela 📥 Importar casa pelo número do processo.
+
+O TJSP tem quatro eprocs, um por host, e o seletor de perfil no topo da
+página (SP / EF / CR / TJSP) abre cada um numa aba nova:
+
+| perfil | host                        | o que é           |
+|--------|-----------------------------|-------------------|
+| SP     | eproc1g.tjsp.jus.br         | 1º grau cível     |
+| EF     | eproc1g-ef.tjsp.jus.br      | execução fiscal   |
+| CR     | eproc1g-crim.tjsp.jus.br    | criminal          |
+| TJSP   | eproc2g.tjsp.jus.br         | 2º grau           |
+
+O botão coleta o host da **aba ativa**. Para cobrir outro, troque o perfil
+no topo do eproc (abre a aba do outro host, já logado) e clique de novo.
+Sem aba de eproc aberta, o botão abre o 1º grau cível; se pedir login,
+entre e clique de novo.
+
+Com um **processo aberto** na aba ativa, o botão coleta a lista completa de
+eventos dele (com a data de cada um), como no PJe.
+
+Processos baixados ficam de fora — não movimentam.
+
+## e-SAJ TJSP (1º e 2º grau) — desde 1.8.0
+
+**⚖️ e-SAJ TJSP (acervo)** — o e-SAJ não tem relação de processos, e a
+*consulta por OAB* só lista os processos em que a sua OAB está cadastrada na
+parte (68 no 1º grau em 15.09.2026, de um acervo bem maior). Por isso a
+lista-mãe são os seus **favoritos do navegador**: as pastas com nome no
+padrão "A a J", "I a Z" (qualquer "X a Y"), que já são o jeito da casa de
+acompanhar os processos ativos. A extensão lê essas pastas direto (permissão
+"bookmarks"); processo novo entra quando você salva o favorito. Somam-se os
+números `.8.26.` das fichas abertas do CRM e a consulta por OAB, que descobre
+processo sem favorito e sem ficha — ele aparece em 📥 Importar como "sem
+caso no CRM", para vincular.
+
+Para cada processo o botão abre a ficha no e-SAJ (que dá situação e partes)
+e pede as movimentações, um de cada vez, com pausa — uns 3 segundos por
+processo. A ficha é obrigatória: o e-SAJ só devolve as movimentações do
+processo cuja ficha foi aberta na sessão.
+
+**Modo rápido.** Processo cuja ficha diz Arquivado/Baixado/Encerrado fica
+anotado no navegador e, por 7 dias, não é consultado de novo. Uma rodada
+completa semanal confere todos.
+
+O e-SAJ trava "múltiplas consultas simultâneas" por sessão — durante a
+coleta, não faça outras consultas nele; se travar, o coletor espera e
+retoma sozinho.
+
+Cada processo chega ao CRM com o link da ficha (`show.do?processo.codigo=…`),
+que abre na sua sessão do e-SAJ, e com o nome das partes, que é o que
+permite vincular processo novo a cliente pelo nome.
+
+**Processo que não está nos favoritos "X a Y", nem no CRM, nem na consulta
+por OAB não é visto.** As pastas "Processos / Parte 1…3" dos favoritos ficam
+de fora de propósito: são o acervo antigo, quase todo extinto.
+
+## 🔁 Atualizar tudo — desde 1.9.0
+
+Um clique roda e-Recursos, PJe, eproc e e-SAJ ao mesmo tempo, cada um na
+sua aba e em segundo plano (as abas que faltarem são abertas atrás). Para
+o PJe e o eproc, roda uma vez por aba aberta: com o 1º e o 2º grau abertos,
+cobre os dois. O INSS vem primeiro e para a frente, porque o reCAPTCHA
+exige o seu clique em "Buscar" — é o único passo humano que sobra, e ele
+acontece enquanto os outros já rodam. Onde faltar login, a fonte falha sozinha e o resumo no popup avisa.
+
+O que continua igual: nada é gravado no CRM sem você conferir em 📥 Importar.

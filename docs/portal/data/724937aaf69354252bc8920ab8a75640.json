@@ -1,30 +1,30 @@
 {
   "nome": "Eucharis Felicio Freire",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "24566193829",
       "dn": "04031961",
       "nome": "Eucharis Felicio Freire",
-      "lista": "🌻 INSS",
-      "localizacao": "Aguardando decisão do INSS",
+      "lista": "🗓 Tarefas com Prazo",
+      "localizacao": "Para apresentação de petição pelo advogado",
       "titulo_tarefa": "Eucharis Felicio Freire",
-      "status": "Última atualização em 08/04/2026: Pedido indeferido pelo INSS",
+      "status": "Última atualização em 24/07/2026: Perícia médica realizada",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
         {
-          "data": "2026-04-08",
-          "data_br": "08/04/2026",
-          "tipo": "Indeferimento do INSS",
-          "descricao": "Pedido indeferido pelo INSS."
+          "data": "2026-07-24",
+          "data_br": "24/07/2026",
+          "tipo": "Perícia médica realizada",
+          "descricao": "Perícia médica realizada."
         }
       ],
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
         }
       ],
       "origem": "auto"

@@ -1,6 +1,6 @@
 {
   "nome": "Liana Rocha Vieira",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "52454827387",
@@ -9,9 +9,28 @@
       "lista": "🌻 INSS",
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Liana Rocha Vieira",
-      "status": "Última atualização em 07/03/2026: Pedido de benefício protocolado junto ao INSS",
+      "status": "Última atualização em 15/09/2026: Avaliação social agendada para 18/09/2026 às 10:00",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-09-15",
+          "data_br": "15/09/2026",
+          "tipo": "Avaliação social agendada",
+          "descricao": "Avaliação social agendada para 18/09/2026 às 10:00."
+        },
+        {
+          "data": "2026-09-10",
+          "data_br": "10/09/2026",
+          "tipo": "Avaliação social agendada",
+          "descricao": "Avaliação social agendada para 18/09/2026."
+        },
+        {
+          "data": "2026-08-21",
+          "data_br": "21/08/2026",
+          "tipo": "Avaliação social realizada",
+          "descricao": "Avaliação social realizada."
+        },
         {
           "data": "2026-03-07",
           "data_br": "07/03/2026",

@@ -1,0 +1,46 @@
+{
+  "nome": "Lupércio Rodoaldo Idebrand",
+  "atualizado_em": "19/09/2026 às 08:44",
+  "processos": [
+    {
+      "cpf": "08697851840",
+      "dn": "25091966",
+      "nome": "Lupércio Rodoaldo Idebrand",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Lupércio Rodoaldo Idebrand",
+      "status": "Última atualização em 20/08/2026: Pedido de prorrogação do benefício",
+      "etapa": null,
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-08-20",
+          "data_br": "20/08/2026",
+          "tipo": "Prorrogação",
+          "descricao": "Pedido de prorrogação do benefício."
+        },
+        {
+          "data": "2026-08-14",
+          "data_br": "14/08/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2026-07-31",
+          "data_br": "31/07/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

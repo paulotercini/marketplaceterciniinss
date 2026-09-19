@@ -1,6 +1,6 @@
 {
   "nome": "Dorino Rodrigues",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "08904765862",
@@ -9,9 +9,22 @@
       "lista": "🖥 Conselho de Recursos",
       "localizacao": "Aguardando decisão da Câmara de Julgamento",
       "titulo_tarefa": "Dorino Rodrigues",
-      "status": "Última atualização em 15/06/2026: Sessão de julgamento agendada",
+      "status": "Última atualização em 17/09/2026: Sessão de julgamento agendada",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-09-17",
+          "data_br": "17/09/2026",
+          "tipo": "Sessão de julgamento agendada",
+          "descricao": "Sessão de julgamento agendada."
+        },
+        {
+          "data": "2026-06-20",
+          "data_br": "20/06/2026",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Recurso Especial interposto."
+        },
         {
           "data": "2026-06-15",
           "data_br": "15/06/2026",

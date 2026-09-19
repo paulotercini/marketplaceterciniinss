@@ -7,10 +7,12 @@ const fmt = iso => {
        : d === 1 ? `atualizado ontem (${q})`
        : `faz ${d} dias (${q})`;
 };
-chrome.storage.local.get(['ultima_pat', 'ultima_crps', 'ultima_pje', 'quem']).then(c => {
+chrome.storage.local.get(['ultima_pat', 'ultima_crps', 'ultima_pje', 'ultima_eproc', 'ultima_esaj', 'quem']).then(c => {
   document.getElementById('q-pat').textContent = fmt(c.ultima_pat);
   document.getElementById('q-crps').textContent = fmt(c.ultima_crps);
   document.getElementById('q-pje').textContent = fmt(c.ultima_pje);
+  document.getElementById('q-eproc').textContent = fmt(c.ultima_eproc);
+  document.getElementById('q-esaj').textContent = fmt(c.ultima_esaj);
   // sem login não se lê nada do CRM, e o erro só apareceria lá na frente
   document.getElementById('quem').textContent = c.quem
     ? `CRM: ${c.quem}` : '⚠ ainda não entrou no CRM — clique abaixo';
@@ -68,9 +70,23 @@ document.getElementById('b-pagina').onclick = () => {
   });
 };
 
+document.getElementById('b-tudo').onclick = () => {
+  res.style.color = '#5B6069';
+  res.textContent = 'rodando tudo — na aba do INSS, clique em "Buscar"; os outros já correm atrás';
+  chrome.runtime.sendMessage({ tipo: 'rodar-tudo' }, r => {
+    if (!r) return (res.textContent = 'sem resposta — as coletas seguem nas abas; confira em 📥 Importar');
+    if (r.erro) { res.style.color = '#B3261E'; res.textContent = r.erro; return; }
+    const linha = f => `${f.rotulo}: ${f.erro ? '⚠ ' + f.erro : '✔ ' + (f.ok === 'retomado' ? 'ok' : f.ok)}`;
+    res.style.color = r.feitos.some(f => f.erro) ? '#B4530A' : '#1E6F50';
+    res.textContent = r.feitos.map(linha).join(' · ') + ' · INSS: '
+      + (r.pat && r.pat.esperando ? 'tela pronta — clique em "Buscar"' : (r.pat && r.pat.erro) || 'ok');
+  });
+};
 document.getElementById('b-pat').onclick  = () => rodar('pat');
 document.getElementById('b-crps').onclick = () => rodar('crps');
 document.getElementById('b-pje').onclick  = () => rodar('pje');
+document.getElementById('b-eproc').onclick = () => rodar('eproc');
+document.getElementById('b-esaj').onclick = () => rodar('esaj');
 document.getElementById('cfg').onclick = e => {
   e.preventDefault(); chrome.runtime.openOptionsPage();
 };

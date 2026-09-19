@@ -1,6 +1,6 @@
 {
   "nome": "Fabio Robert",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "15275312873",
@@ -10,6 +10,7 @@
       "localizacao": "Aguardando decisão do INSS",
       "titulo_tarefa": "Fabio Robert",
       "status": "Última atualização em 25/11/2025: Benefício deferido pelo INSS",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
         {
@@ -60,9 +61,22 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Fabio Robert",
-      "status": "Última atualização em 16/06/2026: Recurso inominado interposto",
+      "status": "Última atualização em 05/09/2026: Embargos de declaração interpostos",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-09-05",
+          "data_br": "05/09/2026",
+          "tipo": "Embargos de declaração interpostos",
+          "descricao": "Embargos de declaração interpostos."
+        },
+        {
+          "data": "2026-08-29",
+          "data_br": "29/08/2026",
+          "tipo": "Acórdão: negou provimento ao recurso",
+          "descricao": "Acórdão: recurso não provido."
+        },
         {
           "data": "2026-06-16",
           "data_br": "16/06/2026",

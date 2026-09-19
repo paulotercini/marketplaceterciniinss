@@ -1,0 +1,46 @@
+{
+  "nome": "Eliane Cristina Calegari Vendramini",
+  "atualizado_em": "19/09/2026 às 08:44",
+  "processos": [
+    {
+      "cpf": "20046599800",
+      "dn": "28021974",
+      "nome": "Eliane Cristina Calegari Vendramini",
+      "lista": "🌻 INSS",
+      "localizacao": "Aguardando decisão do INSS",
+      "titulo_tarefa": "Eliane Cristina Calegari Vendramini",
+      "status": "Última atualização em 15/09/2026: Benefício deferido pelo INSS",
+      "etapa": null,
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-09-15",
+          "data_br": "15/09/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        },
+        {
+          "data": "2026-08-27",
+          "data_br": "27/08/2026",
+          "tipo": "Exigência cumprida",
+          "descricao": "Exigência do INSS cumprida."
+        },
+        {
+          "data": "2026-07-16",
+          "data_br": "16/07/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "Consultar no Meu INSS",
+          "url": "https://meu.inss.gov.br/",
+          "obs": "Use seu CPF e sua senha gov.br"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

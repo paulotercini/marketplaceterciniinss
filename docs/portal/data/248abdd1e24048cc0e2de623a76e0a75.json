@@ -1,17 +1,36 @@
 {
   "nome": "Carlos Edevaldo Camassuti",
-  "atualizado_em": "20/06/2026 às 17:42",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
       "cpf": "05682948823",
       "dn": "11101963",
       "nome": "Carlos Edevaldo Camassuti",
       "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Junta de Recursos",
+      "localizacao": "Aguardando decisão da Câmara de Julgamento",
       "titulo_tarefa": "Carlos Edevaldo Camassuti",
-      "status": "Última atualização em 17/04/2026: Sessão de julgamento agendada",
+      "status": "Última atualização em 08/09/2026: Recurso Especial interposto",
+      "etapa": null,
       "proximo_evento": null,
       "timeline": [
+        {
+          "data": "2026-09-08",
+          "data_br": "08/09/2026",
+          "tipo": "Recurso Especial interposto",
+          "descricao": "Recurso Especial interposto."
+        },
+        {
+          "data": "2026-08-18",
+          "data_br": "18/08/2026",
+          "tipo": "Acórdão: deu provimento parcial ao recurso",
+          "descricao": "Acórdão: recurso parcialmente provido."
+        },
+        {
+          "data": "2026-07-29",
+          "data_br": "29/07/2026",
+          "tipo": "Processo distribuído ao relator",
+          "descricao": "Processo distribuído ao conselheiro relator."
+        },
         {
           "data": "2026-04-17",
           "data_br": "17/04/2026",

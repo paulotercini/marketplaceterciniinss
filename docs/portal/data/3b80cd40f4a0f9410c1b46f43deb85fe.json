@@ -1,0 +1,59 @@
+{
+  "nome": "Gilson Antônio Bento",
+  "atualizado_em": "19/09/2026 às 08:44",
+  "processos": [
+    {
+      "cpf": "19545470801",
+      "dn": "18041974",
+      "nome": "Gilson Antônio Bento",
+      "lista": "👪 Judicial",
+      "localizacao": "Aguardando Decisão Judicial",
+      "titulo_tarefa": "Gilson Antônio Bento",
+      "status": "Perícia médica marcada para 03/10/2026 (em 14 dias) às 17:20",
+      "etapa": null,
+      "proximo_evento": null,
+      "timeline": [
+        {
+          "data": "2026-08-20",
+          "data_br": "20/08/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 03/10/2026 às 17:20."
+        },
+        {
+          "data": "2026-07-31",
+          "data_br": "31/07/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2026-06-26",
+          "data_br": "26/06/2026",
+          "tipo": "Pedido protocolado no INSS",
+          "descricao": "Pedido de benefício protocolado junto ao INSS."
+        },
+        {
+          "data": "2026-06-10",
+          "data_br": "10/06/2026",
+          "tipo": "Benefício deferido pelo INSS",
+          "descricao": "Benefício deferido pelo INSS."
+        }
+      ],
+      "notas_publicas": [],
+      "links_externos": [
+        {
+          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
+          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "PJe TRF3 — 2º grau",
+          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
+        },
+        {
+          "label": "ESAJ — TJSP (Justiça Estadual)",
+          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
+        }
+      ],
+      "origem": "auto"
+    }
+  ]
+}

@@ -1,20 +1,42 @@
 {
   "nome": "Silvio Biancardi Serrano",
-  "atualizado_em": "28/06/2026 às 20:33",
+  "atualizado_em": "19/09/2026 às 08:44",
   "processos": [
     {
-      "lista": "🙋 Escritório",
-      "localizacao": "Em análise pelo escritório",
+      "cpf": "15704817840",
+      "dn": "17011971",
+      "nome": "Silvio Biancardi Serrano",
+      "lista": "🖥 Conselho de Recursos",
+      "localizacao": "Aguardando decisão da Junta de Recursos",
       "titulo_tarefa": "Silvio Biancardi Serrano",
-      "status": "Em atendimento pelo escritório",
+      "status": "Última atualização em 08/09/2026: Recurso administrativo protocolado",
+      "etapa": null,
       "proximo_evento": null,
-      "timeline": [],
+      "timeline": [
+        {
+          "data": "2026-09-08",
+          "data_br": "08/09/2026",
+          "tipo": "Recurso administrativo protocolado",
+          "descricao": "Recurso administrativo protocolado."
+        },
+        {
+          "data": "2026-08-23",
+          "data_br": "23/08/2026",
+          "tipo": "Indeferimento do INSS",
+          "descricao": "Pedido indeferido pelo INSS."
+        },
+        {
+          "data": "2026-07-30",
+          "data_br": "30/07/2026",
+          "tipo": "Perícia médica agendada",
+          "descricao": "Perícia médica agendada para 10/08/2026 às 10:10."
+        }
+      ],
       "notas_publicas": [],
       "links_externos": [
         {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
+          "label": "Consultar no e-SISREC",
+          "url": "https://consultaprocessos.inss.gov.br/"
         }
       ],
       "origem": "auto"
