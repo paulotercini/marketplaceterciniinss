@@ -18,7 +18,7 @@ Requer graph_tokens.json valido (rode graph_devflow.py / graph_refresh.py).
 """
 import re, json, datetime
 from graph_client import list_lists, list_tasks, _req
-from portal_common import (DATA_DIR, dn_from_items, cpf_from_task, split_blocks,
+from portal_common import (gravar_json, DATA_DIR, dn_from_items, cpf_from_task, split_blocks,
                            derivar_hash, etapas_do_crm, frase_da_etapa)
 
 LISTA_ESCRITORIO = "🙋 Escritório"
@@ -75,7 +75,7 @@ def infer_status(body):
 
 
 def main():
-    meta = json.loads((DATA_DIR / "_meta.json").read_text())
+    meta = json.loads((DATA_DIR / "_meta.json").read_text(encoding="utf-8"))
     salt, iters = meta["salt"], meta["iter"]
 
     lists = list_lists()
@@ -135,7 +135,7 @@ def main():
         existentes, nome_existente = [], None
         if path.exists():
             try:
-                d0 = json.loads(path.read_text())
+                d0 = json.loads(path.read_text(encoding="utf-8"))
                 existentes = d0.get("processos", [])
                 nome_existente = d0.get("nome")
             except Exception:
@@ -164,14 +164,14 @@ def main():
             "atualizado_em": agora,
             "processos": processos,
         }
-        path.write_text(json.dumps(ficha, ensure_ascii=False, indent=2))
+        gravar_json(path, ficha)
         gerados += 1
 
     # 3) atualiza _meta.json
     total = len([p for p in DATA_DIR.glob("*.json") if p.name != "_meta.json"])
     meta["total_clientes"] = total
     meta["atualizado_em"] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
-    (DATA_DIR / "_meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2))
+    gravar_json(DATA_DIR / "_meta.json", meta)
 
     print(f"Escritorio: {gerados} fichas gravadas. Total no portal: {total}.")
 

@@ -26,7 +26,7 @@ Requer graph_tokens.json valido (rode graph_devflow.py / graph_refresh.py).
 """
 import re, json, datetime, sys
 from graph_client import list_lists, list_tasks, _req
-from portal_common import (DATA_DIR, HOJE, digits, dn_from_aniversario, dn_from_items,
+from portal_common import (gravar_json, DATA_DIR, HOJE, digits, dn_from_aniversario, dn_from_items,
                            etapas_do_crm, frase_da_etapa,
                            dn_from_body, cpf_from_task, split_blocks, derivar_hash)
 
@@ -504,7 +504,7 @@ def validate(cpf2dn, by_cpf):
     for f in DATA_DIR.glob("*.json"):
         if f.name == "_meta.json":
             continue
-        d = json.loads(f.read_text())
+        d = json.loads(f.read_text(encoding="utf-8"))
         for p in d.get("processos", []):
             if p.get("lista") in ALVO and p.get("cpf"):
                 pub.setdefault(p["cpf"], {})[p["lista"]] = p
@@ -536,7 +536,7 @@ def validate(cpf2dn, by_cpf):
 
 
 def main():
-    meta = json.loads((DATA_DIR / "_meta.json").read_text())
+    meta = json.loads((DATA_DIR / "_meta.json").read_text(encoding="utf-8"))
     salt, iters = meta["salt"], meta["iter"]
     cpf2dn, by_cpf, nomes = coletar()
     etapas = etapas_do_crm()      # F120 · o que o escritório declarou no CRM
@@ -570,7 +570,7 @@ def main():
         existentes = []
         if path.exists():
             try:
-                existentes = json.loads(path.read_text()).get("processos", [])
+                existentes = json.loads(path.read_text(encoding="utf-8")).get("processos", [])
             except Exception:
                 existentes = []
 
@@ -590,7 +590,7 @@ def main():
             "atualizado_em": agora,
             "processos": processos,
         }
-        path.write_text(json.dumps(ficha, ensure_ascii=False, indent=2))
+        gravar_json(path, ficha)
         if existentes:
             regeneradas += 1
         else:
@@ -599,7 +599,7 @@ def main():
     total = len([p for p in DATA_DIR.glob("*.json") if p.name != "_meta.json"])
     meta["total_clientes"] = total
     meta["atualizado_em"] = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
-    (DATA_DIR / "_meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2))
+    gravar_json(DATA_DIR / "_meta.json", meta)
 
     print(f"Fichas novas criadas: {novas_fichas}")
     print(f"Fichas regeneradas (auto): {regeneradas}")

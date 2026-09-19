@@ -3,7 +3,7 @@
 Cada teste marcado [BUG] reproduz um defeito REAL já corrigido em produção —
 se falhar, o defeito voltou. Rode com: python3 -m pytest tests/ -q
 (puro: sem rede, sem tokens, sem tocar docs/portal/data)."""
-import datetime
+import datetime, json
 import sys, pathlib
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
@@ -281,3 +281,46 @@ def test_processo_do_portal_carrega_o_campo_etapa():
     com = montar_processo_safe("1" * 11, "01012000", item, "em exigência")
     sem = montar_processo_safe("1" * 11, "01012000", item)
     assert com["etapa"] == "Em exigência" and sem["etapa"] is None
+
+
+# ------------------------------- [BUG 19.09.2026] cp1252 zerou duas fichas
+# `write_text` sem encoding usa cp1252 no Windows, estoura no 🌻 do nome da
+# lista e deixa a ficha do cliente com ZERO byte, porque o arquivo já foi
+# aberto (e esvaziado) antes da falha. Correção: encoding explícito + escrita
+# atômica por arquivo temporário.
+
+def test_gravar_json_escreve_utf8_com_emoji_e_acento(tmp_path):
+    from portal_common import gravar_json
+    alvo = tmp_path / "ficha.json"
+    gravar_json(alvo, {"lista": "🌻 INSS", "nome": "José Antônio", "etapa": "Aguardando perícia"})
+    lido = json.loads(alvo.read_text(encoding="utf-8"))
+    assert lido["lista"] == "🌻 INSS" and lido["etapa"] == "Aguardando perícia"
+
+
+def test_gravar_json_nunca_escreve_no_encoding_do_sistema(tmp_path, monkeypatch):
+    """[BUG] se alguem tirar o encoding="utf-8", este teste cai."""
+    import pathlib
+    vistos = []
+    original = pathlib.Path.write_text
+
+    def espiao(self, data, encoding=None, *a, **kw):
+        vistos.append(encoding)
+        return original(self, data, encoding=encoding, *a, **kw)
+
+    monkeypatch.setattr(pathlib.Path, "write_text", espiao)
+    from portal_common import gravar_json
+    gravar_json(tmp_path / "f.json", {"lista": "🙋 Escritório"})
+    assert vistos == ["utf-8"]
+
+
+def test_falha_no_meio_da_escrita_nao_destroi_a_ficha_publicada(tmp_path):
+    """[BUG] o arquivo bom so e substituido quando a escrita terminou inteira."""
+    from portal_common import gravar_json
+    alvo = tmp_path / "ficha.json"
+    alvo.write_text('{"nome": "ficha boa"}', encoding="utf-8")
+    try:
+        gravar_json(alvo, {"impossivel": {1, 2, 3}})   # set nao vira JSON
+    except TypeError:
+        pass
+    assert json.loads(alvo.read_text(encoding="utf-8"))["nome"] == "ficha boa"
+    assert alvo.stat().st_size > 0

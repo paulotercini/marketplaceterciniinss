@@ -34,3 +34,6 @@ crm/fase2/testes/cadastro/node_modules/
 crm/fase2/testes/cadastro/package-lock.json
 crm/fase2/testes/cadastro/*.png
 crm/fase2/testes/cadastro/antes*.json
+
+# ficha a meio caminho de ser gravada (escrita atômica do portal)
+docs/portal/data/*.tmp
