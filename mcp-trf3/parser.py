@@ -87,6 +87,23 @@ def segmentar_ementa(ementa):
     return out
 
 
+def _sem_cargo(nome):
+    # formas medidas: "Desembargadora Federal", "Juiz Federal Convocado", "JUÍZA CONVOCADA" e, nas Recursais,
+    # "Juza Federal", sem o acento
+    return re.sub(r"^(Desembargadora?(\s+Federal)?|Ju[ií]?za?(\s+Federal)?(\s+(Convocad[oa]|Substitut[oa]))?)\s+", "",
+                  nome or "", flags=re.I).strip() or None
+
+
+def relator_titular(teor):
+    """Linha "RELATOR: NOME" do cabeçalho do inteiro teor, que traz o titular do gabinete."""
+    m = re.search(r"(?m)^\s*RELATORA?(?:\(A\))?\s*:\s*(.+)$", teor[:4000])
+    if not m:
+        return None
+    # medido em 19/09/2026, a linha traz só o nome; o prefixo de cargo sai apenas se vier no início
+    return re.sub(r"^(DES(EMBARGADORA?)?\.?\s*(FED(ERAL)?\.?)?|JU[IÍ]ZA?\s+FEDERAL(\s+CONVOCAD[OA])?)\s+", "",
+                  m.group(1).strip(), flags=re.I).strip() or None
+
+
 def ids(resposta):
     return RE_DOC.findall(resposta)
 
@@ -112,8 +129,8 @@ def extrair(resposta, acervo, so_previdenciario=True):
             "id": id_fonte, "acervo": acervo, "numero_cnj": cnj.group(),
             "classe_sigla": sigla.strip() or None, "classe_nome": nome.strip(),
             "orgao_julgador": orgao,
-            "relator": re.sub(r"^(Desembargador|Ju[ií]z)a?\s+Federal(\s+(Convocad[oa]|Substitut[oa]))?\s+", "",
-                              c.get("Relator(a)", ""), flags=re.I),
+            "relator": _sem_cargo(c.get("Relator(a)")) or "",
+            "relator_titular": relator_titular(bruto_teor), "relator_acordao": _sem_cargo(c.get("Relator para Acórdão")),
             "data_julgamento": _iso(c["Data"]), "data_publicacao": _iso(c.get("Data da publicação")),
             "polo_recorrente": polo_recorrente(bruto_teor + "\n" + bruto_ementa),
             "resultado": resultado(secoes["e_dispositivo"] or ementa[-1500:]),

@@ -23,7 +23,7 @@ def doc(id_, cnj, orgao, ementa=True):
             + par("Órgão julgador", orgao) + par("Data", '<font color="blue"><b>21/08/2026</b></font>')
             + par("Data da publicação", "26/08/2026")
             + (par("Ementa", f'<div id="painel_ementa-{id_}">{texto}</div>') if ementa else "")
-            + (par("Decisão", "APELADO: BELTRANO DA SILVA<br/>RELATÓRIO<br/>Trata-se de apelação.<br/>VOTO<br/>Nego provimento.")
+            + (par("Decisão", "RELATOR: CICLANA TITULAR MENDES<br/>APELADO: BELTRANO DA SILVA<br/>RELATÓRIO<br/>Trata-se de apelação.<br/>VOTO<br/>Nego provimento.")
                if ementa else par("Inteiro teor", "Acesse Aqui"))
             + "</tbody></table>")
 
@@ -44,6 +44,12 @@ assert d["e_razoes"].startswith("3. O PPP") and d["e_dispositivo"] == "4. Apela�
 for campo in ("ementa_texto", "inteiro_teor"):
     assert "BELTRANO" not in d[campo] and "CICRANO" not in d[campo], "nome de parte ou advogado gravado"
 assert len(parser.extrair(resposta, "trf3", so_previdenciario=False)) == 2
+assert (d["relator_titular"], d["relator_acordao"]) == ("CICLANA TITULAR MENDES", None), d
+assert parser.relator_titular("RELATOR: DES. FED. ANDRE MENDES SILVA") == "ANDRE MENDES SILVA"
+assert parser.relator_titular("RELATORA: ANA LIMA") == "ANA LIMA"
+for bruto in ("JUÍZA CONVOCADA VANESSA LIMA", "Juza Federal VANESSA LIMA", "Juiz Federal Convocado VANESSA LIMA",
+              "Desembargadora Federal VANESSA LIMA"):
+    assert parser._sem_cargo(bruto) == "VANESSA LIMA", bruto
 assert parser.ORGAOS_PREV.search("Turma Regional de Uniformizao"), "TRU3 chega do CJF sem acento e não pode cair no recorte"
 
 try:
@@ -67,6 +73,7 @@ assert banco.obter(con, d["id"], 10)["truncado"] is True
 assert banco.visao_geral(con)["total"] == 1
 p = banco.perfil(con, "relator", "fulano")
 assert p["por_polo_recorrente"]["inss"] == {"negado": 1, "taxa_provimento": 0.0}, p
+assert banco.buscar(con, "", relator="ciclana")["total"] == 1, "relator titular também é filtro"
 
 # regressão sobre página real, quando existir
 reais = sorted((banco.DADOS / "bruto" / "trf3").glob("*/p0001.xml.gz"))

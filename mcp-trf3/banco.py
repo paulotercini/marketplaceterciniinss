@@ -15,7 +15,9 @@ CREATE TABLE IF NOT EXISTS documento (
   classe_sigla    TEXT,
   classe_nome     TEXT,
   orgao_julgador  TEXT,
-  relator         TEXT,
+  relator         TEXT,               -- "Relator(a)" do CJF, quem relatou (pode ser o convocado)
+  relator_titular TEXT,               -- linha RELATOR do inteiro teor, o titular do gabinete
+  relator_acordao TEXT,               -- "Relator para Acórdão" do CJF, quando o voto do relator vencido
   data_julgamento TEXT,               -- AAAA-MM-DD
   data_publicacao TEXT,
   polo_recorrente TEXT,               -- inss | segurado | ambos | indefinido
@@ -75,6 +77,10 @@ def abrir(caminho=None, leitura=False):
         caminho.parent.mkdir(parents=True, exist_ok=True)
         con = sqlite3.connect(caminho)
         con.executescript(ESQUEMA)
+        cols = {l[1] for l in con.execute("PRAGMA table_info(documento)")}
+        for c in ("relator_titular", "relator_acordao"):      # base criada antes de 19/09/2026
+            if c not in cols:
+                con.execute(f"ALTER TABLE documento ADD COLUMN {c} TEXT")
     con.row_factory = sqlite3.Row
     return con
 
@@ -107,9 +113,11 @@ def _filtros(f):
     for campo, op in (("acervo", "="), ("classe_sigla", "="), ("resultado", "="), ("polo_recorrente", "=")):
         if f.get(campo):
             sql.append(f"d.{campo} {op} ?"); args.append(f[campo])
-    for campo in ("orgao_julgador", "relator"):      # por nome, parcial, sem caixa
-        if f.get(campo):
-            sql.append(f"d.{campo} LIKE ?"); args.append(f"%{f[campo]}%")
+    if f.get("orgao_julgador"):                      # por nome, parcial, sem caixa
+        sql.append("d.orgao_julgador LIKE ?"); args.append(f"%{f['orgao_julgador']}%")
+    if f.get("relator"):                             # acha o nome em qualquer dos três papéis
+        sql.append("(d.relator LIKE ? OR d.relator_titular LIKE ? OR d.relator_acordao LIKE ?)")
+        args += [f"%{f['relator']}%"] * 3
     if f.get("data_inicial"):
         sql.append("d.data_julgamento >= ?"); args.append(f["data_inicial"])
     if f.get("data_final"):
@@ -132,7 +140,7 @@ def buscar(con, consulta="", pagina=1, **filtros):
     total = con.execute(f"SELECT count(*) FROM (SELECT 1 FROM {de}{onde} LIMIT {TETO_CONTAGEM + 1})",
                         args).fetchone()[0]
     linhas = con.execute(
-        f"""SELECT d.id, d.acervo, d.numero_cnj, d.classe_sigla, d.orgao_julgador, d.relator,
+        f"""SELECT d.id, d.acervo, d.numero_cnj, d.classe_sigla, d.orgao_julgador, d.relator, d.relator_titular, d.relator_acordao,
                    d.data_julgamento, d.data_publicacao, d.polo_recorrente, d.resultado,
                    substr(coalesce(d.e_dispositivo, d.ementa_texto), 1, 600) AS ementa_resumo
             FROM {de}{onde} ORDER BY {ordem} LIMIT 10 OFFSET ?""",

@@ -36,7 +36,9 @@ def buscar_acordaos_trf3(consulta: str = "", acervo: str = "", classe_sigla: str
                          relator: str = "", data_inicial: str = "", data_final: str = "", resultado: str = "",
                          polo_recorrente: str = "", pagina: int = 1) -> dict:
     """Busca textual, dez por página. acervo: trf3 | recursais. Datas AAAA-MM-DD, de julgamento.
-    resultado: provido | parcial | negado | nao_conhecido | outro. polo_recorrente: inss | segurado | ambos."""
+    resultado: provido | parcial | negado | nao_conhecido | outro. polo_recorrente: inss | segurado | ambos.
+    relator acha o nome em qualquer dos três papéis. Cada resultado traz relator (quem relatou, às vezes juiz
+    convocado), relator_titular (titular do gabinete) e relator_acordao (quando o relator ficou vencido)."""
     return banco.buscar(_con(), consulta, pagina, acervo=acervo, classe_sigla=classe_sigla,
                         orgao_julgador=orgao_julgador, relator=relator, data_inicial=data_inicial,
                         data_final=data_final, resultado=resultado, polo_recorrente=polo_recorrente)
@@ -50,7 +52,8 @@ def obter_acordao_trf3(id: str, max_caracteres: int = 40000) -> dict:
 
 @mcp.tool()
 def perfil_relator_trf3(relator: str, consulta: str = "", data_inicial: str = "", data_final: str = "") -> dict:
-    """Distribuição de resultados de um relator por polo recorrente, opcionalmente restrita a um tema."""
+    """Distribuição de resultados de um relator por polo recorrente, opcionalmente restrita a um tema.
+    Conta os julgados em que o nome aparece como relator, titular ou relator para acórdão."""
     return banco.perfil(_con(), "relator", relator, consulta, data_inicial=data_inicial, data_final=data_final)
 
 
