@@ -8,7 +8,8 @@ resposta bruta comprimida antes de parsear e retoma de onde parou. Para no prime
 que o parser não reconhecer.
 
     python coletor.py --meses 1 --paginas 3        # primeiro teste
-    python coletor.py                              # dez anos, TRF3 e Recursais
+    python coletor.py                              # dez anos do TRF3, depois dez anos das Recursais
+    python coletor.py --reprocessar                # relê o bruto já baixado, sem rede
 """
 import argparse, datetime, gzip, http.cookiejar, math, os, re, ssl, sys, time
 import urllib.parse, urllib.request
@@ -165,9 +166,21 @@ if __name__ == "__main__":
     ap.add_argument("--acervo", choices=list(ACERVOS), action="append")
     ap.add_argument("--meses", type=int, default=120)
     ap.add_argument("--paginas", type=int, help="teste: só as N primeiras páginas de cada mês, sem fechar o mês")
+    ap.add_argument("--reprocessar", action="store_true",
+                    help="relê as páginas brutas já baixadas e atualiza os campos de relator, sem ir ao CJF")
     a = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
-    con, cjf = banco.abrir(), Cjf()
-    for ini, fim in meses(a.meses):                     # mês a mês, para a base servir desde o primeiro dia
-        for acervo in a.acervo or ACERVOS:
+    con = banco.abrir()
+    if a.reprocessar:
+        n = 0
+        for arq in sorted((banco.DADOS / "bruto").glob("*/*/p*.xml.gz")):
+            for d in parser.extrair(gzip.decompress(arq.read_bytes()).decode("utf-8"), arq.parts[-3]):
+                n += con.execute("UPDATE documento SET relator=?, relator_titular=?, relator_acordao=? WHERE id=?",
+                                 (d["relator"], d["relator_titular"], d["relator_acordao"], d["id"])).rowcount
+        con.commit()
+        raise SystemExit(f"{n} documentos atualizados")
+    cjf = Cjf()
+    # o TRF3 inteiro antes das Recursais; dentro de cada acervo, do mês mais recente para o mais antigo
+    for acervo in a.acervo or ACERVOS:
+        for ini, fim in meses(a.meses):
             coletar_mes(cjf, con, acervo, ini, fim, a.paginas)
