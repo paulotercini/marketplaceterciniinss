@@ -1,6 +1,6 @@
 {
   "nome": "Benedito Leopoldino Sobrinho",
-  "atualizado_em": "19/09/2026 às 08:44",
+  "atualizado_em": "19/09/2026 às 11:46",
   "processos": [
     {
       "cpf": "86392859853",
@@ -9,8 +9,10 @@
       "lista": "👪 Judicial",
       "localizacao": "Aguardando Decisão Judicial",
       "titulo_tarefa": "Benedito Leopoldino Sobrinho",
-      "status": "Última atualização em 08/01/2024: Petição inicial protocolada / distribuída",
-      "etapa": null,
+      "status": "Em recurso",
+      "etapa": "Em recurso",
+      "fila": "3763º de 3983",
+      "fila_em": "18/09/2026",
       "proximo_evento": null,
       "timeline": [
         {

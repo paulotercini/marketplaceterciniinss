@@ -1,6 +1,6 @@
 {
   "nome": "Elza de Macedo Guerra Ribeiro",
-  "atualizado_em": "19/09/2026 às 08:44",
+  "atualizado_em": "19/09/2026 às 11:46",
   "processos": [
     {
       "cpf": "26282949823",
@@ -11,6 +11,8 @@
       "titulo_tarefa": "Elza de Macedo Guerra Ribeiro",
       "status": "Última atualização em 04/10/2025: Embargos de declaração interpostos",
       "etapa": null,
+      "fila": null,
+      "fila_em": null,
       "proximo_evento": null,
       "timeline": [
         {

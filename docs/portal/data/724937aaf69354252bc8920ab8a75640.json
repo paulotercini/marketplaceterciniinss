@@ -1,6 +1,6 @@
 {
   "nome": "Eucharis Felicio Freire",
-  "atualizado_em": "19/09/2026 às 08:44",
+  "atualizado_em": "19/09/2026 às 11:46",
   "processos": [
     {
       "cpf": "24566193829",
@@ -11,6 +11,8 @@
       "titulo_tarefa": "Eucharis Felicio Freire",
       "status": "Última atualização em 24/07/2026: Perícia médica realizada",
       "etapa": null,
+      "fila": null,
+      "fila_em": null,
       "proximo_evento": null,
       "timeline": [
         {

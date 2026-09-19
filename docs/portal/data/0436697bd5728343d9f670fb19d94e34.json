@@ -1,6 +1,6 @@
 {
   "nome": "Fabio Robert",
-  "atualizado_em": "19/09/2026 às 08:44",
+  "atualizado_em": "19/09/2026 às 11:46",
   "processos": [
     {
       "cpf": "15275312873",
@@ -11,6 +11,8 @@
       "titulo_tarefa": "Fabio Robert",
       "status": "Última atualização em 25/11/2025: Benefício deferido pelo INSS",
       "etapa": null,
+      "fila": null,
+      "fila_em": null,
       "proximo_evento": null,
       "timeline": [
         {
@@ -63,6 +65,8 @@
       "titulo_tarefa": "Fabio Robert",
       "status": "Última atualização em 05/09/2026: Embargos de declaração interpostos",
       "etapa": null,
+      "fila": null,
+      "fila_em": null,
       "proximo_evento": null,
       "timeline": [
         {

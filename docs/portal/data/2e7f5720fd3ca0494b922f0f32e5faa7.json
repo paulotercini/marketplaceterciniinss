@@ -1,6 +1,6 @@
 {
   "nome": "Waldir Vicente Junior",
-  "atualizado_em": "19/09/2026 às 08:44",
+  "atualizado_em": "19/09/2026 às 11:46",
   "processos": [
     {
       "cpf": "14100360819",
@@ -11,6 +11,8 @@
       "titulo_tarefa": "Waldir Vicente Junior",
       "status": "Última atualização em 12/12/2025: Petição protocolada nos autos",
       "etapa": null,
+      "fila": null,
+      "fila_em": null,
       "proximo_evento": null,
       "timeline": [
         {

@@ -1,6 +1,6 @@
 {
   "nome": "Adauto Carcinoni",
-  "atualizado_em": "19/09/2026 às 08:44",
+  "atualizado_em": "19/09/2026 às 11:46",
   "processos": [
     {
       "cpf": "09031543829",
@@ -11,6 +11,8 @@
       "titulo_tarefa": "Adauto Carcinoni",
       "status": "Última atualização em 09/09/2026: Perícia médica agendada para 16/09/2026 às 13:00 em Araraquara",
       "etapa": null,
+      "fila": null,
+      "fila_em": null,
       "proximo_evento": null,
       "timeline": [
         {
@@ -45,6 +47,8 @@
       "titulo_tarefa": "Adauto Carcinoni",
       "status": "Perícia médica marcada para 07/10/2026 (em 18 dias) — INSS de Araraquara",
       "etapa": null,
+      "fila": null,
+      "fila_em": null,
       "proximo_evento": null,
       "timeline": [
         {

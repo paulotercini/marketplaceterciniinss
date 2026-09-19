@@ -123,8 +123,9 @@ def coletar_mes(cjf, con, acervo, ini, fim, limite=None):
     # previdenciário (cerca de dois terços no TRF3). Se o tempo de carga pesar, filtrar por texto no
     # campo Ementa/Decisão, depois de medir a perda de cobertura.
     total = cjf.pesquisar(acervo, ini, fim)
-    paginas, novos = math.ceil(total / POR_PAGINA), 0
-    for k in range(1, min(paginas, limite or paginas) + 1):
+    paginas, novos, k = math.ceil(total / POR_PAGINA), 0, 0
+    while k < min(paginas, limite or paginas):
+        k += 1
         arq = pasta / f"p{k:04}.xml.gz"
         if fechado and arq.exists():
             r = gzip.decompress(arq.read_bytes()).decode("utf-8")
@@ -136,8 +137,13 @@ def coletar_mes(cjf, con, acervo, ini, fim, limite=None):
                     break
                 except SessaoPerdida as e:
                     print(f"    {e}. Refazendo a pesquisa.", flush=True)
-                    if cjf.pesquisar(acervo, ini, fim) != total:
-                        raise SystemExit(f"{chave}: o total mudou no meio da coleta, rode de novo")
+                    novo = cjf.pesquisar(acervo, ini, fim)
+                    if novo != total and fechado:
+                        raise SystemExit(f"{chave}: o total de um mês fechado mudou no meio da coleta, rode de novo")
+                    # mês aberto cresce enquanto se coleta: segue com o total novo, e o que escorregar
+                    # de página entra na próxima rodada, porque mês aberto é sempre refeito
+                    total, paginas = novo, math.ceil(novo / POR_PAGINA)
+                    esperados = min(POR_PAGINA, total - (k - 1) * POR_PAGINA)
             else:
                 raise SystemExit(f"{chave}: página {k} não veio completa em 3 tentativas")
             arq.write_bytes(gzip.compress(r.encode("utf-8")))
