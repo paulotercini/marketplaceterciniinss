@@ -120,3 +120,9 @@ Duas falhas de método detectadas no caso do Tema 862, e que passam a integrar o
 **Terceira, menor.** Tese entre aspas é transcrição e se confere caractere a caractere. Paráfrase não vai entre aspas, e se identifica como resumo.
 
 O caso completo está em `references/CORRECAO-PARCIAL-E-NOME-CONTAMINADO.md`.
+
+## Ementa de tribunal como vetor de erro (Onda 144)
+
+A auditoria varre skills e Modelos Ouro. Passa a varrer também as citações IMPORTADAS de ementas, porque acórdão que o escritório usa como fundamento carrega as citações do relator, e elas podem estar erradas.
+
+Achando na base um tema atribuído a assunto diverso do catálogo, verificar se a atribuição veio de ementa copiada. Vindo, a correção é dupla, corrige-se a citação e registra-se que o acórdão de origem a contém, para que ninguém a reintroduza ao reler o mesmo julgado.
