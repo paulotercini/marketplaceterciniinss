@@ -131,13 +131,16 @@ def coletar_mes(cjf, con, acervo, ini, fim, limite=None):
             r = gzip.decompress(arq.read_bytes()).decode("utf-8")
         else:
             esperados = min(POR_PAGINA, total - (k - 1) * POR_PAGINA)
-            for tentativa in range(3):
+            for tentativa in range(6):
                 try:
                     r = cjf.pagina(k, esperados)
                     break
                 except SessaoPerdida as e:
                     print(f"    {e}. Refazendo a pesquisa.", flush=True)
                     novo = cjf.pesquisar(acervo, ini, fim)
+                    if novo == 0:                      # o CJF às vezes devolve lista vazia por instantes
+                        time.sleep(30)
+                        continue
                     if novo != total and fechado:
                         raise SystemExit(f"{chave}: o total de um mês fechado mudou no meio da coleta, rode de novo")
                     # mês aberto cresce enquanto se coleta: segue com o total novo, e o que escorregar
@@ -145,7 +148,7 @@ def coletar_mes(cjf, con, acervo, ini, fim, limite=None):
                     total, paginas = novo, math.ceil(novo / POR_PAGINA)
                     esperados = min(POR_PAGINA, total - (k - 1) * POR_PAGINA)
             else:
-                raise SystemExit(f"{chave}: página {k} não veio completa em 3 tentativas")
+                raise SystemExit(f"{chave}: página {k} não veio completa em 6 tentativas")
             arq.write_bytes(gzip.compress(r.encode("utf-8")))
         novos += banco.gravar(con, parser.extrair(r, acervo))          # LayoutMudou derruba a coleta
         if k % 20 == 0:
