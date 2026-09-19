@@ -9,7 +9,8 @@ mudança de layout.
 import datetime, html as _html, re
 
 RE_CNJ = re.compile(r"\d{7}-\d{2}\.\d{4}\.4\.03\.\d{4}")
-ORGAOS_PREV = re.compile(r"^(7|8|9|10)ª Turma$|^3ª Seção$|Turma Recursal|Turma Regional de Uniformização", re.I)
+# nas Recursais o CJF entrega o nome sem os acentos ("Turma Regional de Uniformizao"), daí o prefixo
+ORGAOS_PREV = re.compile(r"^(7|8|9|10)ª Turma$|^3ª Seção$|Turma Recursal|Turma Regional de Uniformiza", re.I)
 RE_DOC = re.compile(r'<table class="table_pesquisa_lista" id="doc_([^"]+)"')
 RE_PAR = re.compile(r'<span class="label_pontilhada">(.*?)</span>\s*</td>\s*</tr>\s*<tr>\s*<td>(.*?)</td>\s*</tr>',
                     re.S)
