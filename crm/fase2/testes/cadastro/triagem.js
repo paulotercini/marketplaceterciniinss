@@ -82,63 +82,149 @@ FIX.casos.push(
     await p.waitForTimeout(250);
   };
 
+  // F127 · a triagem passou a mostrar UM passo por vez, com o CNIS
+  // respondendo os primeiros; o trilho em cima tem uma etapa por passo
   await abrir(CLI_CHEIO2);
-  const passos = await p.evaluate(() =>
-    [...document.querySelectorAll('.painel[data-p="0"].ativo .tri-passo')].map(x => ({
-      tit: x.querySelector(".tri-tit b").innerText.trim(),
-      leitura: x.querySelector(".tri-leitura").innerText.replace(/\n/g, " · "),
-      cor: [...x.querySelector(".tri-leitura").classList].filter(c => c !== "tri-leitura")[0],
-    })));
-  // A F17 acrescenta os pontos da ESPÉCIE entre o passo 7 e a conclusão. Este
-  // cliente é rural, então são os oito fixos mais os quatro do rural, e a
-  // conclusão continua sendo o último — é isso que o teste tem de garantir.
-  conf(`os oito fixos abrem a lista, na ordem (${passos.length} no total)`,
-    passos.length >= 8 && passos[0].tit === "CNIS"
-    && passos[6].tit === "Requerimentos anteriores"
-    && passos[passos.length - 1].tit === "Conclusão");
+  const trilho = () => p.evaluate(() => [...document.querySelectorAll(".tri-etapa")].map(x => x.title));
+  const aberto = () => p.evaluate(() => {
+    const x = document.querySelector('.painel[data-p="0"].ativo .tri-passo');
+    const l = x.querySelector(".tri-leitura");
+    return { tit: x.querySelector(".tri-tit b").innerText.trim(),
+      leitura: l ? l.innerText.replace(/\n/g, " · ") : "",
+      cor: l ? [...l.classList].filter(c => c !== "tri-leitura")[0] : "",
+      marcado: (x.querySelector(".tri-e.on") || {}).textContent || "" };
+  });
+  const passos = await trilho();
+  conf(`os nove fixos abrem o trilho, na ordem (${passos.length} no total)`,
+    passos.length >= 9 && passos[0] === "CNIS" && passos[1] === "Indicadores"
+    && passos[2] === "Benefício ativo" && passos[3] === "Vínculo com a Previdência hoje"
+    && passos[7] === "Requerimentos anteriores" && passos[passos.length - 1] === "Conclusão");
+  conf("só UM passo aparece por vez",
+    (await p.evaluate(() => document.querySelectorAll('.painel[data-p="0"].ativo .tri-passo').length)) === 1);
+  conf("o botão de abrir/inserir o CNIS é a primeira coisa da triagem",
+    await p.evaluate(() => { const c = document.querySelector('.painel[data-p="0"].ativo .cad-cartao');
+      return !!c && c.querySelector(".cnis-abrir") === c.querySelector(".cnis-abrir, .tri-passo, .tri-trilho"); }));
+  conf("e logo abaixo vem o que a recepção registrou, com a espécie",
+    /O que a recepção registrou/.test(await p.innerText(".tri-balcao")) && /Espécie/.test(await p.innerText(".tri-balcao")));
+  let a = await aberto();
+  conf(`sem CNIS, o passo 1 pede o extrato (${JSON.stringify(a.leitura.slice(0, 50))})`,
+    a.tit === "CNIS" && /CNIS ainda não inserido/.test(a.leitura));
 
-  const por = t => passos.find(x => x.tit === t) || {};
-  conf(`acha o processo judicial (${JSON.stringify(por("Ação judicial anterior").leitura.slice(0, 60))})`,
-    /1 caso\(s\) com processo judicial/.test(por("Ação judicial anterior").leitura)
-    && por("Ação judicial anterior").cor === "alerta");
-  conf("acha o recurso no CRPS", /1 recurso\(s\) no Conselho/.test(por("Recurso no CRPS").leitura));
-  conf(`vê o CadÚnico vencido (${JSON.stringify(por("CadÚnico").leitura.slice(0, 40))})`,
-    /venceu em/.test(por("CadÚnico").leitura) && por("CadÚnico").cor === "alerta");
-  conf("vê o benefício ativo e cobra o art. 24 da EC 103",
-    /art\. 24 da EC 103/.test(por("Benefício ativo").leitura));
-  conf("acha o protocolo e dá o Tema 350 por atendido",
-    /Tema 350/.test(por("Requerimentos anteriores").leitura)
-    && por("Requerimentos anteriores").cor === "ok");
-  conf("diz que não lê o CNIS sozinho",
-    /à mão/.test(por("Indicadores e pendências").leitura));
-  await (await p.$(".det-rolagem")).screenshot({ path: path.join(__dirname, "f10-triagem.png") });
+  // um extrato lido, em memória: vínculo em aberto, erro de empregador,
+  // competência abaixo do mínimo, dois indicadores e um benefício ativo
+  await p.evaluate(cli => {
+    const lido = { paginas: 5, vinculos: 3, nits: ["123.45678.90-1"], filiado: { nit: "123.45678.90-1", cpf: "", mae: "" },
+      indicadores: [{ codigo: "PREC-MENOR-MIN", descricao: "Recolhimento abaixo do valor mínimo", ocorrencias: 1 },
+                    { codigo: "IEAN", descricao: "Exposição a agente nocivo informada pelo empregador", ocorrencias: 2 },
+                    { codigo: "AVRC-DEF", descricao: "Acerto confirmado pelo INSS", ocorrencias: 1 }],
+      linhaDoTempo: [
+        { seq: 1, nit: "123.45678.90-1", tipo: "Empregado", origem: "FAZENDA FICTICIA LTDA", inicio: "01/03/2015", fim: "", aberto: true, indicadores: ["PEMP-CAD"],
+          comps: [{ c: "03/2015", v: 300 }, { c: "12/2019", v: 500 }, { c: "01/2020", v: 1045 }, { c: "05/2021", v: 1100 }] },
+        { seq: 2, nit: "123.45678.90-1", tipo: "Contribuinte Individual", origem: "RECOLHIMENTO", inicio: "01/01/2010", fim: "31/12/2010", aberto: false, indicadores: [],
+          comps: [{ c: "06/2010", v: 400 }, { c: "07/2010", v: 510 }] },
+        { seq: 3, nit: "123.45678.90-1", tipo: "Benefício", especie: "31", origem: "AUXÍLIO POR INCAPACIDADE TEMPORÁRIA", nb: "1234567890", inicio: "10/02/2024", fim: "", situacao: "ATIVO", aberto: true },
+      ] };
+    return gravarCnisLido(cli, lido, { id: "an000000-0000-0000-0000-000000000001", caminho: `${cli}/x-cnis.pdf` });
+  }, CLI_CHEIO2);
+  await p.waitForTimeout(700);
+  a = await aberto();
+  conf(`o passo CNIS lê o vínculo sem data fim (${JSON.stringify(a.leitura.slice(0, 60))})`,
+    /1 vínculo\(s\) sem data fim/.test(a.leitura) && /FAZENDA FICTICIA/.test(a.leitura));
+  conf("aponta o erro no cadastro do empregador", /Erro no cadastro do empregador/.test(a.leitura) && /PEMP-CAD/.test(a.leitura));
+  const abaixo = (a.leitura.match(/\d+ competência\(s\) abaixo do salário mínimo:[^·]*/) || [""])[0];
+  conf(`lista a competência abaixo do mínimo, e só a partir de 11/2019 para o empregado (${JSON.stringify(abaixo.slice(0, 60))})`,
+    /^2 /.test(abaixo) && /12\/2019 \(R\$\s?500,00 de R\$\s?998,00, Empregado/.test(abaixo)
+    && /06\/2010 \(R\$\s?400,00 de R\$\s?510,00, Contribuinte Individual/.test(abaixo)
+    && !/03\/2015/.test(abaixo) && !/07\/2010/.test(abaixo));
+  conf("a resposta pré-pronta é atenção, com o botão já marcado", a.cor === "alerta" && /atenção/.test(a.marcado));
+  conf("o botão Abrir CNIS aparece com a data do extrato",
+    /Abrir CNIS/.test(await p.innerText(".cnis-abrir")) && !(await p.$(".cnis-abrir.sem")));
+  conf("e a Identificação ganhou o campo CNIS e os NITs",
+    await p.evaluate(cli => { const c = D.cliPorId.get(cli); return /123\.45678\.90-1/.test(c.pis_nit || ((c.campos || {}).civil || {}).pis_nit || ""); }, CLI_CHEIO2));
 
-  // cliente sem nada: as leituras viram o convite de perguntar ao cliente
-  await abrir(CLI_VAZIO);
-  const vazio = await p.innerText('.painel[data-p="0"].ativo');
-  conf("sem processo, manda perguntar ao cliente",
-    /pergunte ao cliente se já processou o INSS antes/.test(vazio));
-  conf("sem protocolo, avisa do Tema 350",
-    /sem prévio requerimento a ação é extinta/.test(vazio));
-  conf("sem BPC, não cobra CadÚnico", /o CadÚnico não é exigido aqui/.test(vazio));
-  conf("o contador começa em zero", /0 de 8 conferidos/.test(vazio));
-
-  // marcar um passo grava com autoria e data
-  await p.click('.painel[data-p="0"].ativo .tri-lista .tri-passo:first-child .tri-e.ok');
-  await p.waitForTimeout(500);
+  // Próxima: confirma o passo e abre o seguinte
+  gravados.length = 0;
+  await p.click(".tri-prox-bt .principal");
+  await p.waitForTimeout(600);
   const g1 = gravados.filter(x => x.tabela === "clientes").pop();
   const t1 = (g1.corpo.triagem || (g1.corpo.campos || {}).triagem || {});
-  conf(`marcar grava o estado, quem e quando (${JSON.stringify(t1.cnis)})`,
-    t1.cnis && t1.cnis.estado === "ok" && t1.cnis.quem === EU && !!t1.cnis.em);
-  conf("o contador anda", /1 de 8 conferidos/.test(await p.innerText('.painel[data-p="0"].ativo')));
+  conf(`Próxima grava o passo com estado, texto, quem e quando (${JSON.stringify((t1.cnis || {}).estado)})`,
+    t1.cnis && t1.cnis.estado === "atencao" && t1.cnis.quem === EU && !!t1.cnis.feito && /vínculo\(s\) sem data fim/.test(t1.cnis.texto || ""));
+  a = await aberto();
+  conf(`e abre o passo seguinte, Indicadores (${a.tit})`, a.tit === "Indicadores");
+  conf(`com a contagem por tipo (${JSON.stringify(a.leitura.slice(0, 70))})`,
+    /3 indicador\(es\)/.test(a.leitura) && /1 pendência/.test(a.leitura) && /1 alerta/.test(a.leitura) && /1 acerto/.test(a.leitura));
+  const legenda = await p.evaluate(() => [...document.querySelectorAll(".ind-lista li")].map(x => ({
+    cls: x.className, cod: x.querySelector(".ind-cod").textContent, tipo: x.querySelector(".ind-tipo").textContent, txt: x.textContent })));
+  conf("a legenda colore cada indicador: pendência, alerta, acerto",
+    legenda.length === 3
+    && legenda.find(x => x.cod === "PREC-MENOR-MIN").cls === "ind-P" && legenda.find(x => x.cod === "PREC-MENOR-MIN").tipo === "pendência"
+    && legenda.find(x => x.cod === "IEAN").cls === "ind-I" && legenda.find(x => x.cod === "IEAN").tipo === "alerta"
+    && legenda.find(x => x.cod === "AVRC-DEF").cls === "ind-A" && legenda.find(x => x.cod === "AVRC-DEF").tipo === "acerto");
+  conf("com a descrição de cada um", legenda.every(x => /Recolhimento abaixo|agente nocivo|Acerto confirmado/.test(x.txt)));
+  conf("o contador anda", /1 de \d+ respondidos/.test(await p.innerText('.painel[data-p="0"].ativo .cad-cont')));
+  conf("o trilho pinta a etapa respondida com a cor da resposta",
+    await p.evaluate(() => document.querySelectorAll(".tri-etapa")[0].classList.contains("atencao")));
 
-  // clicar de novo no mesmo estado desmarca
-  await p.click('.painel[data-p="0"].ativo .tri-lista .tri-passo:first-child .tri-e.ok');
+  await p.click(".tri-prox-bt .principal");
+  await p.waitForTimeout(600);
+  a = await aberto();
+  conf(`Benefício ativo sai do CNIS (${JSON.stringify(a.leitura.slice(0, 60))})`,
+    a.tit === "Benefício ativo" && /1 benefício\(s\) ativo\(s\)/.test(a.leitura) && /espécie 31/.test(a.leitura) && /atenção/.test(a.marcado));
+  await p.click(".tri-prox-bt .principal");
+  await p.waitForTimeout(600);
+  a = await aberto();
+  conf(`o vínculo hoje vem do vínculo em aberto (${JSON.stringify(a.leitura.slice(0, 70))})`,
+    a.tit === "Vínculo com a Previdência hoje" && /Empregado \(CLT\) na FAZENDA FICTICIA/.test(a.leitura) && /em aberto/.test(a.leitura));
+  conf("e a resposta de vínculo já viaja para a análise (t.vinculo)",
+    await p.evaluate(cli => { const v = triagemDe(D.cliPorId.get(cli)).vinculo; return v && v.tipo === "empregado" && v.desde === "2015-03"; }, CLI_CHEIO2));
+
+  // cada passo respondido já está na Análise de Direito, com quem respondeu
+  await p.evaluate(() => { abaAtiva = 8; repintarFicha(); });
+  await p.waitForTimeout(400);
+  const feed = await p.evaluate(() => [...document.querySelectorAll('.painel[data-p="8"] .ad-feed li')].map(x => x.textContent));
+  conf(`a Análise de Direito lista os três passos respondidos (${feed.length} linhas)`,
+    feed.filter(x => /^Triagem · /.test(x)).length === 3);
+  conf("do mais novo para o mais velho", /Benefício ativo/.test(feed[0]) && /Indicadores/.test(feed[1]) && /CNIS/.test(feed[2]));
+  conf("cada linha traz o texto explícito, a resposta e quem respondeu",
+    /vínculo\(s\) sem data fim/.test(feed[2]) && /— atenção\./.test(feed[2]) && /Paulo/.test(feed[2]));
+  conf("a Análise de Direito tem o botão de abrir o CNIS",
+    await p.evaluate(() => /Abrir CNIS/.test(document.querySelector('.painel[data-p="8"]').textContent)));
+  conf("a aba da ficha também",
+    await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].some(b => /Abrir CNIS/.test(b.textContent))));
+  conf("sem a explicação embaixo",
+    !(await p.evaluate(() => /memória do escritório para a próxima conversa/.test(document.querySelector('.painel[data-p="8"]').textContent))));
+  await p.evaluate(() => { abaAtiva = 0; repintarFicha(); });
+  await p.waitForTimeout(300);
+
+  // cliente sem nada: o passo 1 convida a inserir; o trilho volta e avança
+  await abrir(CLI_VAZIO);
+  conf("o contador começa em zero", /0 de 9 respondidos/.test(await p.innerText('.painel[data-p="0"].ativo .cad-cont')));
+  // um passo do meio pelo trilho
+  await p.evaluate(cli => irPassoTriagem(cli, 4), CLI_VAZIO);
+  await p.waitForTimeout(400);
+  a = await aberto();
+  conf("o trilho abre o passo escolhido (Ação judicial anterior)",
+    a.tit === "Ação judicial anterior" && /pergunte ao cliente se já processou o INSS antes/.test(a.leitura));
+  conf("o passo aberto ganha ‹ anterior", !!(await p.$('.tri-prox-bt .cad-mini')));
+
+  // marcar um passo grava com autoria e data, e já conta como respondido
+  gravados.length = 0;
+  await p.click('.painel[data-p="0"].ativo .tri-passo .tri-e.ok');
   await p.waitForTimeout(500);
-  const t2 = (x => x.corpo.triagem || (x.corpo.campos || {}).triagem)(gravados.filter(x => x.tabela === "clientes").pop());
-  conf("clicar no mesmo estado desmarca", t2.cnis.estado === "");
+  const g2 = gravados.filter(x => x.tabela === "clientes").pop();
+  const t2 = (g2.corpo.triagem || (g2.corpo.campos || {}).triagem || {});
+  conf(`marcar grava o estado, quem e quando (${JSON.stringify((t2.judicial || {}).estado)})`,
+    t2.judicial && t2.judicial.estado === "ok" && t2.judicial.quem === EU && !!t2.judicial.em && !!t2.judicial.feito);
+  conf("o contador anda", /1 de 9 respondidos/.test(await p.innerText('.painel[data-p="0"].ativo .cad-cont')));
+  await p.click('.painel[data-p="0"].ativo .tri-passo .tri-e.ok');
+  await p.waitForTimeout(500);
+  const t3 = (x => x.corpo.triagem || (x.corpo.campos || {}).triagem)(gravados.filter(x => x.tabela === "clientes").pop());
+  conf("clicar no mesmo estado desmarca", t3.judicial.estado === "");
 
-  // a nota grava ao sair do campo, e não grava se nada mudou
+  // a conclusão: nota ao sair do campo e o próximo passo recomendado
+  await p.evaluate(cli => irPassoTriagem(cli, 8), CLI_VAZIO);
+  await p.waitForTimeout(400);
   const antes = gravados.length;
   await p.click("#tri-conclusao");
   await p.evaluate(() => document.getElementById("tri-conclusao").blur());
@@ -147,18 +233,18 @@ FIX.casos.push(
   await p.fill("#tri-conclusao", "Falta o CNIS atualizado. Cliente traz na sexta.");
   await p.evaluate(() => document.getElementById("tri-conclusao").blur());
   await p.waitForTimeout(500);
-  const t3 = (x => x.corpo.triagem || (x.corpo.campos || {}).triagem)(gravados.filter(x => x.tabela === "clientes").pop());
-  conf("a nota grava ao sair do campo", /Cliente traz na sexta/.test((t3.conclusao || {}).nota || ""));
-
-  // o próximo passo recomendado
+  const t4 = (x => x.corpo.triagem || (x.corpo.campos || {}).triagem)(gravados.filter(x => x.tabela === "clientes").pop());
+  conf("a nota grava ao sair do campo", /Cliente traz na sexta/.test((t4.conclusao || {}).nota || ""));
   await p.click('.tri-p:has-text("Aguardando")');
   await p.waitForTimeout(500);
-  const t4 = (x => x.corpo.triagem || (x.corpo.campos || {}).triagem)(gravados.filter(x => x.tabela === "clientes").pop());
-  conf("grava o próximo passo recomendado", (t4.conclusao || {}).proximo === "aguardando");
-  conf("a nota anterior não foi apagada", /Cliente traz na sexta/.test((t4.conclusao || {}).nota || ""));
-  await (await p.$(".det-rolagem")).screenshot({ path: path.join(__dirname, "f10-triagem-vazio.png") });
+  const t5 = (x => x.corpo.triagem || (x.corpo.campos || {}).triagem)(gravados.filter(x => x.tabela === "clientes").pop());
+  conf("grava o próximo passo recomendado", (t5.conclusao || {}).proximo === "aguardando");
+  conf("a nota anterior não foi apagada", /Cliente traz na sexta/.test((t5.conclusao || {}).nota || ""));
+  conf("no último passo, o botão principal encerra a triagem",
+    /Encerrar a triagem/.test(await p.innerText(".tri-prox-bt .principal")));
+  await (await p.$(".det-rolagem")).screenshot({ path: path.join(__dirname, "f127-triagem.png") });
 
-  console.log("=== triagem (F10) ===");
+  console.log("=== triagem, um passo por vez (F10 → F127) ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
   console.log("erros de console:", erros.length ? erros : "nenhum");
   const ruins = ok.filter(x => !x[1]).length;

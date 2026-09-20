@@ -81,7 +81,8 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       stNoCanto: st && x && (x.getBoundingClientRect().left - st.getBoundingClientRect().right) < 20,
       cpfCop: cpf && cpf.dataset.cop, cursor: cpf && getComputedStyle(cpf).cursor };
   });
-  conf("a parceria aparece ao lado do nome, só porque existe", /Dr\. Fictício Parceiro/.test(cab.parc || "") && cab.parcAntesDoStatus);
+  // F127 · o chip limpa o "Dr./Dra." e o "com a/o" do To Do e fica só com o nome
+  conf("a parceria aparece ao lado do nome, só porque existe", /Fictício Parceiro/.test(cab.parc || "") && !/Dr\./.test(cab.parc || "") && cab.parcAntesDoStatus);
   conf("a pílula 'Cliente ativo' está no canto direito, colada no ✕", cab.stNoCanto);
   conf("o CPF copia no clique (cursor de copiar, sem botão)", cab.cpfCop === "12345678909" && cab.cursor === "copy");
   conf("a pílula 'volta dd.mm.aaaa' saiu do cabeçalho (F108)", await p.evaluate(() => !document.querySelector(".det-topo .volta-pilula")));

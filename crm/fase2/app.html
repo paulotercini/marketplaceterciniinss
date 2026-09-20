@@ -1225,15 +1225,64 @@
   .cad-c3{grid-column:span 3}.cad-c4{grid-column:span 4}
   .cad-c6{grid-column:span 6}.cad-c8{grid-column:span 8}.cad-c12{grid-column:span 12}
   @media (max-width:1000px){.cad-c3,.cad-c4{grid-column:span 6}.cad-c8{grid-column:span 12}}
+  /* F127 · o preenchido em cinza e o vazio em vermelho-claro (pedido do
+     Paulo, 20.09): de relance se vê o que falta na Identificação */
   .cad-campo{border:1px solid var(--borda);border-radius:var(--raio,8px);padding:7px 11px;
-    background:var(--branco);min-height:58px;display:flex;flex-direction:column;justify-content:center}
+    background:#F1F2F4;min-height:58px;display:flex;flex-direction:column;justify-content:center}
   .cad-campo:hover{border-color:var(--cinza-claro,#666B74)}
   .cad-campo label{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:700;
     letter-spacing:.4px;text-transform:uppercase;color:var(--cinza);margin-bottom:3px}
   .cad-v{font-size:14.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
   .cad-v.grande{font-size:16px}
-  .cad-campo.vazio{border-style:dashed;background:#FCFCFD}
-  .cad-campo.vazio .cad-v{color:var(--cinza-claro,#666B74);font-weight:400;font-size:13.5px}
+  .cad-campo.vazio{border-style:dashed;background:#FDECEC;border-color:#F0B4B4}
+  .cad-campo.vazio .cad-v{color:#9B3B3B;font-weight:400;font-size:13.5px}
+  /* F127 · a parceria em VERDE ao lado do nome, na Identificação e no
+     cabeçalho da ficha; e a lista de parceiros para escolher */
+  .chip.parc{background:var(--verde-f);color:var(--verde);border:1px solid #BFE3CC;font-weight:700}
+  .chip.parc .cli-parc-k{color:var(--verde);opacity:.75;font-weight:600;font-size:10px;text-transform:uppercase;margin-right:4px}
+  .parc-sel{font-size:12.5px;border:1px solid #BFE3CC;border-radius:6px;padding:3px 6px;background:var(--branco);color:var(--verde);font-family:inherit}
+  /* F127 · o CNIS: o botão de abrir é a primeira coisa da triagem */
+  .cnis-abrir{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:9px;
+    border:1px solid #BFD3EA;background:#EAF2FB;color:var(--azul);font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
+  .cnis-abrir:hover{background:#DCE9F8}
+  .cnis-abrir.sem{background:#FDECEC;border-color:#F0B4B4;color:#9B3B3B}
+  .cnis-faixa{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0 10px}
+  .cnis-faixa .meio-sub{font-size:12px}
+  /* F127 · a triagem UM PASSO POR VEZ: o trilho de etapas em cima, o passo
+     aberto embaixo, e o botão Próxima que avança */
+  .tri-trilho{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0 10px}
+  .tri-etapa{border:1px solid var(--borda);background:var(--branco);border-radius:14px;padding:2px 9px;
+    font-size:11.5px;font-weight:600;color:var(--cinza);cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:4px}
+  .tri-etapa.on{border-color:var(--azul);color:var(--azul);background:#EAF2FB}
+  .tri-etapa.ok{border-color:#BFE3CC;color:var(--verde);background:var(--verde-f)}
+  .tri-etapa.atencao{border-color:#F1D48A;color:#8A6A00;background:#FFF7DD}
+  .tri-etapa.pendente{border-color:#F0B4B4;color:#9B3B3B;background:#FDECEC}
+  .tri-um .tri-passo{border:1px solid var(--borda);border-radius:10px;padding:12px 14px;background:var(--branco)}
+  .tri-um .tri-tit b{font-size:15px}
+  .tri-um .tri-leitura{margin-top:8px;font-size:13.5px;line-height:1.5;white-space:pre-line}
+  .tri-um .tri-leitura.alerta{border-left:3px solid #E9B44C;padding-left:8px}
+  .tri-um .tri-leitura.ok{border-left:3px solid var(--verde);padding-left:8px}
+  .tri-prox-bt{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+  .tri-prox-bt .principal{margin-left:auto;padding:8px 18px;border-radius:8px;border:none;background:var(--azul);color:#fff;font-weight:700;cursor:pointer;font-family:inherit;font-size:13.5px}
+  .tri-prox-bt .principal:hover{filter:brightness(.95)}
+  /* a legenda dos indicadores, com a cor de cada tipo */
+  .ind-lista{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
+  .ind-lista li{display:flex;gap:8px;align-items:baseline;font-size:13px;line-height:1.4}
+  .ind-cod{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;font-weight:700;padding:1px 7px;border-radius:5px;white-space:nowrap}
+  .ind-P .ind-cod{background:#FDECEC;color:#9B3B3B;border:1px solid #F0B4B4}
+  .ind-I .ind-cod{background:#FFF7DD;color:#8A6A00;border:1px solid #F1D48A}
+  .ind-A .ind-cod{background:var(--verde-f);color:var(--verde);border:1px solid #BFE3CC}
+  .ind-tipo{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+  .ind-P .ind-tipo{color:#9B3B3B}.ind-I .ind-tipo{color:#8A6A00}.ind-A .ind-tipo{color:var(--verde)}
+  /* F127 · a Análise de Direito como FEED: triagem e anotações, do mais novo
+     para o mais velho, cada linha com quem respondeu */
+  .ad-feed{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+  .ad-feed li{border:1px solid var(--borda);border-left:3px solid var(--azul);border-radius:8px;padding:8px 12px;font-size:13.5px;line-height:1.5;background:var(--branco);white-space:pre-line}
+  .ad-feed li.anot{border-left-color:#E9B44C}
+  .ad-feed li.ok{border-left-color:var(--verde)}
+  .ad-feed li.atencao{border-left-color:#E9B44C}
+  .ad-feed li.pendente{border-left-color:#D9534F}
+  .ad-feed .ad-quem{display:block;font-size:12px;color:var(--cinza);margin-top:3px}
   .cad-apoio{font-size:12px;font-weight:400;color:var(--cinza)}
   /* a senha mascarada: mesma altura das outras linhas, sem o amarelo que o
      sistema de tokens reserva para prazo */
@@ -2416,7 +2465,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.23</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.24</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7328,6 +7377,16 @@ function renderNovoCliente(){
       <div class="form-linha">
         <input id="ncl-caso" placeholder="Benefício — só se a pessoa já souber dizer (opcional)" list="lista-beneficios" style="flex:1;min-width:240px">
       </div>
+      ${/* F127 · o CNIS entra no cadastro: lido depois de gravar o cliente,
+           preenche mãe e NITs e já responde os primeiros passos da triagem */""}
+      <div class="form-linha" style="align-items:center">
+        <input type="file" id="ncl-cnis" accept="application/pdf" style="display:none"
+          onchange="document.getElementById('ncl-cnis-nome').textContent=this.files[0]?this.files[0].name:''">
+        <button class="cad-mini" onclick="document.getElementById('ncl-cnis').click()"
+          title="o Extrato Previdenciário (CNIS) do Meu INSS, em PDF">Inserir o CNIS (PDF)</button>
+        <span id="ncl-cnis-nome" class="meio-sub"></span>
+        <span class="meio-sub">lido aqui no navegador; o extrato fica guardado na ficha para abrir depois</span>
+      </div>
       <datalist id="lista-beneficios">${D.docs.map(d=>`<option value="${esc(d.beneficio)}">`).join("")}</datalist>
       <div class="form-linha">
         <textarea id="ncl-relato" rows="3" style="flex:1;min-width:240px;border:1px solid var(--borda);border-radius:8px;padding:8px;font:inherit;font-size:13px;color:var(--texto);resize:vertical"
@@ -7527,7 +7586,10 @@ async function criarCliente(){
     bairro: rua?rua[2]:"", cidade: rua?"Monte Alto":cidTxt, uf: rua?"SP":ufTxt,
     cep: rua?soDigitos(rua[0]):""});
   const avisados=await avisarClienteNovo(cli.id);
+  // F127 · o CNIS escolhido no cadastro é lido agora, já com o cliente gravado
+  const cnisArq=(document.getElementById("ncl-cnis")||{}).files; const cnis=cnisArq&&cnisArq[0];
   await carregar(); montarSidebar();
+  if(cnis) await processarCnis(cli.id, cnis);
   aviso(`Cliente cadastrado ✔ — em atendimento${avisados?` · ${avisados} advogado(s) avisado(s) para a triagem`:""}`);
   visao="fase:escritorio"; render();
   // a ficha abre na TRIAGEM: é o próximo passo — as Anotações só se abrem
@@ -9747,8 +9809,7 @@ function pintarFicha(){
         onclick="copiar('${escJs(c.nome)}','Nome copiado')">📋</button>
       ${/* F101 · a parceria ao lado do nome, só quando existe: quem abre a
            ficha vê de cara que o caso é dividido com outro advogado */""}
-      ${[...new Set(ks.filter(k=>k.parceria&&k.fase!=="encerrado").map(k=>k.parceria))].map(p=>
-        `<span class="chip ben cli-parc" title="caso dividido com outro advogado: ${esc(ks.filter(k=>k.parceria===p).map(tituloCaso).join(" · "))}"><span class="cli-parc-k">parceria</span>${esc(p)}</span>`).join("")}
+      ${chipParceria(c, ks)}
       ${c.telefone?`<button class="btn-mini" onclick="abrirSmbot('${c.id}')"
         style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:600"
         title="abre o SMBot numa aba e copia o telefone do cliente — é só colar na busca do atendimento">💬 SMBot</button>`:""}
@@ -9789,6 +9850,8 @@ function pintarFicha(){
       ${/* ⚖️ F48 · sempre visível: cliente sem análise vê o convite a fazer
            a primeira — é assim que o histórico começa a existir */""}
       <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">Análise de Direito${(n=>n?` (${n})`:"")(analisesDe(cliId).length)}</button>
+      ${/* F127 · o CNIS abre em outra aba de qualquer lugar da ficha */""}
+      ${cnisDe(c)&&cnisDe(c).caminho?`<button class="mt" onclick="abrirCnis('${cliId}')" title="abre o extrato guardado em outra aba">Abrir CNIS ↗</button>`:""}
       ${/* o menu tem só as cinco divisões do cliente (pedido do Paulo):
            Cadastro, Lembretes, Casos, Perícias e Honorários. O caso escolhido
            aparece no cartão de fatos, não no rótulo da aba. */""}
@@ -10128,20 +10191,12 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
       ${/* F23 · a parceria ganhou nome de advogado editável daqui: o campo é do
            CASO (k.parceria) e a pesquisa e a lista 🤝 Parcerias já leem ele —
            faltava onde ESCREVER sem abrir o processo. */""}
-      <div class="id-secao"><label>Parceria <small>(advogado parceiro — a pesquisa encontra o cliente por este nome, e a lista Parcerias agrupa)</small></label>
-        ${parcs.map(pa=>`<span class="chip ben">${CAD_IC.duplas} ${esc(pa)}</span>`).join(" ")||""}
-        ${(()=>{ const ativos=ks.filter(k=>k.fase!=="encerrado");
-          if(!ativos.length) return `<span style="font-size:13px;color:var(--cinza)">sem caso ativo para vincular parceria</span>`;
-          const sugest=[...new Set(D.casos.map(k=>k.parceria).filter(Boolean))];
-          return `<div class="form-linha" style="margin-top:6px">
-            ${ativos.length>1?`<select id="par-caso">${ativos.map(k=>`<option value="${k.id}">${esc(tituloCaso(k))}</option>`).join("")}</select>`
-              :`<input type="hidden" id="par-caso" value="${ativos[0].id}">`}
-            <input id="par-nome" list="lista-parceiros" placeholder="nome do advogado parceiro"
-              style="flex:1;min-width:180px"
-              onkeydown="if(event.key==='Enter'){event.preventDefault();definirParceria();}">
-            <datalist id="lista-parceiros">${sugest.map(x=>`<option value="${esc(x)}">`).join("")}</datalist>
-            <button class="cad-mini" onclick="definirParceria()">${CAD_IC.duplas}vincular</button>
-          </div>`; })()}
+      ${/* F127 · a parceria mudou-se para o lado do nome (em verde) e para a
+           Análise de Direito; aqui fica só o atalho */""}
+      <div class="id-secao"><label>Parceria <small>(a pesquisa encontra o cliente por este nome, e a lista Parcerias agrupa)</small></label>
+        ${chipParceria(c, ks) || `<span style="font-size:13px;color:var(--cinza)">sem parceria</span>`}
+        ${seletorParceria(c, ks, "parc-sel-lig")}
+        ${parcs.filter(pa=>limparParceria(pa)!==parceriaDe(c, ks)).map(pa=>`<span class="chip neutro" title="anotado no To Do">${esc(pa)}</span>`).join(" ")}
       </div>
       <div class="id-secao"><label>Parentes e amigos <small>(clientes vinculados — clique para abrir a ficha)</small></label>
         ${vincs.map(v=>{
@@ -10234,15 +10289,19 @@ function irSubAnot(qual){ irSubCad(qual==="atendimento" ? "anotacoes" : qual); }
 // ONDE MORA: `clientes.triagem` quando o banco tem a coluna, `campos.triagem`
 // quando não tem — o mesmo caminho da F9.1, para a tela funcionar antes e
 // depois da migração.
+// F127 · a ordem é a do atendimento com o CNIS na mão (pedido do Paulo,
+// 20.09): o que o extrato responde vem primeiro, e as explicações saíram — a
+// tela mostra UM passo por vez, limpa.
 const TRIAGEM_PASSOS = [
-  ["cnis",       "CNIS",                  "conferido, sem vínculo faltando nem competência abaixo do mínimo"],
-  ["indicadores","Indicadores e pendências","os indicadores do extrato tratados, ou RAC aberta pelo Anexo certo"],
-  ["judicial",   "Ação judicial anterior", "litispendência, coisa julgada e averbação pendente — é o que destrava benefício"],
-  ["crps",       "Recurso no CRPS",       "recurso administrativo em curso ou já decidido"],
-  ["cadunico",   "CadÚnico",              "obrigatório no BPC, renovação a cada 2 anos"],
-  ["beneficio",  "Benefício ativo",       "o que o cliente já recebe, e se acumula (art. 24 da EC 103)"],
-  ["requerimento","Requerimentos anteriores","prévio requerimento (Tema 350) e a conformidade com o Tema 1124"],
-  ["conclusao",  "Conclusão",             "o que o escritório decidiu, e o próximo passo"],
+  ["cnis",       "CNIS",                     ""],
+  ["indicadores","Indicadores",              ""],
+  ["beneficio",  "Benefício ativo",          ""],
+  ["vinculo",    "Vínculo com a Previdência hoje", ""],
+  ["judicial",   "Ação judicial anterior",   ""],
+  ["crps",       "Recurso no CRPS",          ""],
+  ["cadunico",   "CadÚnico",                 ""],
+  ["requerimento","Requerimentos anteriores",""],
+  ["conclusao",  "Conclusão",                ""],
 ];
 // ══════════════════════════════════════════════════════════════════════════
 // F17 · O QUE A ESPÉCIE EXIGE — as skills do escritório dentro da triagem
@@ -10495,14 +10554,44 @@ function triagemLeitura(passo, c, ks){
       : {cor:"ok", txt:`CadÚnico em dia até ${fmt(venc)}`};
   }
   if(passo==="beneficio"){
+    // F127 · o CNIS responde: benefício sem cessação é benefício ativo
+    const g = cnisDe(c);
+    if(g && g.analise){
+      const at = g.analise.benefAtivos || [];
+      if(!at.length) return {cor:"ok", estado:"ok",
+        txt:`Pelo CNIS de ${fmt(g.em)}: nenhum benefício ativo.`};
+      return {cor:"alerta", estado:"atencao",
+        txt:`Pelo CNIS de ${fmt(g.em)}: ${at.length} benefício(s) ativo(s). Confira a acumulação (art. 24 da EC 103).`,
+        det: at.map(b=>`espécie ${b.especie}${b.origem?` ${b.origem}`:""}${b.nb?` · NB ${b.nb}`:""} desde ${b.inicio}${b.situacao?` · ${b.situacao}`:""}`).join(" · ")};
+    }
     const pagando = (ks||[]).filter(k=>k.fase==="pagamento" || k.nb);
     const apos = c.aposentado===1 || c.aposentado===true;
     if(!pagando.length && !apos)
-      return {cor:"neutro", txt:"nenhum benefício ativo registrado no CRM"};
+      return {cor:"neutro", txt:"nenhum benefício ativo registrado no CRM — insira o CNIS para a resposta sair do extrato"};
     return {cor:"alerta",
       txt:`${apos?"cliente marcado como aposentado":""}${apos&&pagando.length?" · ":""}${
         pagando.length?`${pagando.length} caso(s) com NB ou em pagamento`:""} — confira a acumulação do art. 24 da EC 103`,
       det: pagando.map(k=>tituloCaso(k)+(k.nb?` · NB ${esc(k.nb)}`:"")).join(" · ")};
+  }
+  if(passo==="vinculo"){
+    // F127 · o mês anterior à data da triagem, lido do CNIS
+    const g = cnisDe(c);
+    if(!(g && g.analise)) return {cor:"neutro", txt:"insira o CNIS para o CRM ler como o cliente contribui hoje"};
+    const a = g.analise.agora || {};
+    const nomes = {empregado:"Empregado (CLT)", ci:"Contribuinte individual", facultativo:"Facultativo", especial:"Segurado especial"};
+    if(a.tipo==="sem"){
+      const u = a.ultima;
+      return {cor:"alerta", estado:"atencao",
+        txt:`Sem contribuição em ${g.analise.mesAnt} (desempregado ou sem recolhimento). `
+          + (u ? `Última contribuição ao INSS em ${u.comp}, como ${u.tipo}${u.origem?` (${u.origem})`:""}.`
+               : "Nenhuma contribuição encontrada no extrato.")};
+    }
+    if(a.aberto)
+      return {cor:"ok", estado:"ok",
+        txt:`${nomes[a.tipo]||a.tipo}${a.origem?` na ${a.origem}`:""}, vínculo em aberto no CNIS desde ${a.desde||"?"}`
+          + (a.ultRemun?` (última remuneração informada: ${a.ultRemun})`:"") + "."};
+    return {cor:"ok", estado:"ok",
+      txt:`${nomes[a.tipo]||a.tipo}${a.origem?` (${a.origem})`:""}: há contribuição em ${a.comp}, o mês anterior à análise.`};
   }
   if(passo==="requerimento"){
     // protocolo solto não serve para nada: o que responde ao Tema 350 é o
@@ -10518,13 +10607,34 @@ function triagemLeitura(passo, c, ks){
       : {cor:"alerta", txt:"nenhum protocolo do INSS no CRM — sem prévio requerimento a ação é extinta (Tema 350)"};
   }
   if(passo==="cnis"){
-    const arqs = (D.anexos||[]).filter(a=>/cnis|extrato/i.test(a.nome||""));
-    return arqs.length
-      ? {cor:"ok", txt:`${arqs.length} arquivo(s) de CNIS anexados`, det: arqs.map(a=>a.nome).join(" · ")}
-      : {cor:"neutro", txt:"nenhum arquivo com CNIS no nome, entre os anexos deste cliente"};
+    // F127 · vínculo em aberto, erro no empregador e competência abaixo do
+    // mínimo — o que o extrato diz sem ninguém ler linha por linha
+    const g = cnisDe(c);
+    if(!g) return {cor:"neutro", txt:"CNIS ainda não inserido — insira pelo botão acima para o CRM conferir o extrato"};
+    const an = g.analise;
+    if(!an) return {cor:"neutro", txt:`CNIS lido em ${fmt(g.em)}: ${g.paginas} página(s). Insira de novo para a conferência automática.`};
+    const probs = [];
+    if(an.abertos.length)
+      probs.push(`${an.abertos.length} vínculo(s) sem data fim: ` + an.abertos.map(v=>`${v.origem||"?"} (${v.tipo}, desde ${v.inicio||"?"}${v.ultRemun?`, última remuneração ${v.ultRemun}`:""})`).join("; ") + ".");
+    if(an.errosEmp.length)
+      probs.push(`Erro no cadastro do empregador: ` + [...new Set(an.errosEmp.map(e=>`${e.cod} em ${e.origem||"?"}`))].join("; ") + ".");
+    if(an.abaixo.length)
+      probs.push(`${an.abaixo.length} competência(s) abaixo do salário mínimo: `
+        + an.abaixo.map(x=>`${x.comp} (${moedaBR(x.valor)} de ${moedaBR(x.minimo)}, ${x.tipo}${x.origem?` ${x.origem}`:""})`).join("; ") + ".");
+    if(!probs.length)
+      return {cor:"ok", estado:"ok", txt:`CNIS lido em ${fmt(g.em)}: ${g.paginas} página(s). Sem erros.`};
+    return {cor:"alerta", estado:"atencao", txt:`CNIS lido em ${fmt(g.em)}: ${g.paginas} página(s).\n` + probs.join("\n")};
   }
-  if(passo==="indicadores")
-    return {cor:"neutro", txt:"leitura do extrato, ainda à mão — o CRM não lê o CNIS"};
+  if(passo==="indicadores"){
+    const g = cnisDe(c);
+    if(!g) return {cor:"neutro", txt:"insira o CNIS para os indicadores do extrato aparecerem aqui, com a legenda"};
+    const inds = (g.indicadores||[]).map(i=>typeof i==="string" ? {codigo:i} : i);
+    if(!inds.length) return {cor:"ok", estado:"ok", txt:`Nenhum indicador na legenda do CNIS de ${fmt(g.em)}.`};
+    const tipos = inds.map(i=>tipoIndicador(i.codigo));
+    const nP = tipos.filter(x=>x==="P").length, nI = tipos.filter(x=>x==="I").length;
+    const txt = `${inds.length} indicador(es) no CNIS de ${fmt(g.em)}: ${nP} pendência(s), ${nI} alerta(s), ${inds.length-nP-nI} acerto(s). Confira no extrato se todos estão aqui.`;
+    return {cor: nP||nI ? "alerta" : "ok", estado: nP||nI ? "atencao" : "ok", txt, legenda: inds};
+  }
   if(passo==="conclusao"){
     const t = triagemDe(c);
     const antes = triagemPassosDe(c, ks).slice(0,-1);
@@ -10650,6 +10760,266 @@ function linhasDoPdf(itens, folga){
 // que aquele extrato usa, com a descrição oficial ao lado. É de onde vem a
 // verdade: contar códigos soltos no corpo pega texto de rodapé e cabeçalho.
 const RX_IND = /^[A-Z]{3,}(?:-[A-Z0-9]{2,})*$/;
+// ══════════════════════════════════════════════════════════════════════════
+// F127 · A LEGENDA DOS INDICADORES — pendência, alerta ou acerto
+// ══════════════════════════════════════════════════════════════════════════
+// A tabela vem da lista pública de indicadores do CNIS (planilha da
+// Tramitação Inteligente, atualizada até 09/2026) e segue a convenção do
+// próprio INSS: código começado em P é pendência (vermelho), em I é
+// indicador de alerta (amarelo), em A é acerto (verde). As exceções ao prefixo
+// ficam em IND_TIPO_FIXO. A descrição do extrato, quando vem, prevalece.
+const IND_TIPO_FIXO = {"PCTC-NTR":"I", "NDET":"P", "GFIP":"I"};
+function tipoIndicador(cod){
+  const c = String(cod||"").toUpperCase();
+  if(IND_TIPO_FIXO[c]) return IND_TIPO_FIXO[c];
+  if(/^FBR-AUT/.test(c)) return "P";
+  return c[0]==="P" ? "P" : c[0]==="A" ? "A" : "I";
+}
+const IND_TIPO_ROT = {P:"pendência", I:"alerta", A:"acerto"};
+const IND_CNIS = {
+"ACNISVR":"Acerto realizado pelo INSS",
+"ADIV-DADOS-GFIP":"Validação de vínculo ou remuneração com divergência de dado cadastral do trabalhador em GFIP",
+"AEXT-IND":"Vínculo extemporâneo não confirmado pelo INSS",
+"AEXT-INDJ":"Vínculo extemporâneo não confirmado por decisão judicial",
+"AEXT-INDR":"Vínculo extemporâneo não confirmado por decisão recursal",
+"AEXT-VI":"Vínculo extemporâneo não confirmado pelo INSS",
+"AEXT-VP":"Vínculo extemporâneo confirmado parcialmente pelo INSS",
+"AEXT-VPR":"Vínculo extemporâneo confirmado parcialmente por decisão recursal",
+"AEXT-VPT":"Vínculo extemporâneo confirmado parcialmente por decisão judicial",
+"AEXT-VT":"Vínculo extemporâneo confirmado pelo INSS",
+"AEXT-VTJ":"Vínculo extemporâneo confirmado por decisão judicial",
+"AEXT-VTR":"Vínculo extemporâneo confirmado por decisão recursal",
+"ASE-DEF":"Acerto de período de segurado especial deferido",
+"ASE-DEFJ":"Acerto de período de segurado especial deferido judicial",
+"ASE-DEFR":"Acerto de período de segurado especial deferido recursal",
+"ASEF-DEF":"Acerto de período de segurado especial FUNAI deferido",
+"ASEF-DEFJ":"Acerto de período de segurado especial FUNAI deferido judicial",
+"ASE-IND":"Acerto de período de segurado especial indeferido",
+"ASE-INDR":"Acerto de período de segurado especial indeferido recursal",
+"ASE-NSE":"Acerto de período não segurado especial",
+"ASE-RNEG":"Acerto de período de segurado especial negativo ratificado",
+"ASE-RPOS":"Acerto de período de segurado especial positivo ratificado",
+"AVR-AGPVINC":"Acerto de agrupamento de vínculos",
+"AVRC-AGPVINC":"Acerto de agrupamento de vínculos",
+"AVRC-DEF":"Acerto confirmado pelo INSS",
+"AVRC-DEFJ":"Acerto confirmado por decisão judicial",
+"AVRC-DEFR":"Acerto confirmado por decisão recursal",
+"AVRC-DGPVINC":"Acerto de desagrupamento de vínculos",
+"AVRC-IND":"Acerto negado pelo INSS",
+"AVRC-INDJ":"Acerto negado por decisão judicial",
+"AVRC-INDR":"Acerto negado por decisão recursal",
+"FBR-AUT-BAT":"Recolhimento de facultativo de baixa renda com atualização cadastral no CNIS aguardando batimentos",
+"FBR-AUT-CONCBEN":"Recolhimento de facultativo de baixa renda concomitante com benefício incompatível (previdenciário, BPC ou PA)",
+"FBR-AUT-CONCQSA":"Recolhimento de facultativo de baixa renda participante de quadro societário de empresa",
+"FBR-AUT-CONCSD":"Recolhimento de facultativo de baixa renda concomitante com seguro-desemprego",
+"FBR-AUT-DUPGRUPFAM":"Recolhimento de facultativo de baixa renda com duplicidade de grupo familiar",
+"FBR-AUT-EXPCAD":"Recolhimento de facultativo de baixa renda sem atualização bienal no CadÚnico",
+"FBR-AUT-FACULTCONC":"Recolhimento de facultativo de baixa renda concomitante com filiação incompatível (segurado obrigatório)",
+"FBR-AUT-OBITO":"Recolhimento de facultativo de baixa renda com óbito anterior à competência ou ao pagamento",
+"FBR-AUT-PENDCAD":"Recolhimento de facultativo de baixa renda sem cadastro no CadÚnico",
+"FBR-AUT-PENDPROCES":"Recolhimento de facultativo de baixa renda pendente de processamento no CadÚnico",
+"FBR-AUT-RENPES":"Recolhimento de facultativo de baixa renda com renda pessoal informada no CadÚnico",
+"FBR-AUT-RENSUP":"Recolhimento de facultativo de baixa renda com renda familiar superior a 2 salários mínimos",
+"GFIP":"Remuneração da competência declarada em GFIP",
+"IAGRU-MIN-SM-EC103":"Competência agrupada que recebeu valor mas permaneceu abaixo do mínimo (favorecida)",
+"IAGRUP-MN-SM-EC103":"Competência agrupada que recebeu de outra competência mas permaneceu abaixo do mínimo (favorecida)",
+"IAGRUP-SM-EC103":"Competência agrupada que resultou em salário de contribuição igual ao mínimo (favorecida)",
+"IAGRUP-VR-EC103":"Competência agrupada em que restou valor residual (desfavorecida)",
+"IAGRUP-ZER-EC103":"Competência agrupada que restou zerada (desfavorecida)",
+"IAGRU-SP-M-SM-EC103":"Competência agrupada que resultou em salário de contribuição igual ao mínimo (favorecida)",
+"ICED-VR-EXC-EC103":"Competência que cedeu valor excedente para outra competência",
+"ICOMPL-VR-SM-EC103":"Competência com recolhimento de complementação para o valor mínimo",
+"IDARF-ALT-CODRECEITA":"DARF incluído por alteração de código de receita aplicável pelo INSS",
+"IDARF-ALT-COMPETENCIA":"DARF incluído por alteração de competência dentro do período de vigência",
+"IDARF-ALT-CPF":"DARF alterado pela RFB para o CPF do titular",
+"IDARF-ALT-DADOS":"DARF incluído por alteração de dados",
+"IDARF-CPF-NAO-INF":"DARF para CPF não informado no evento",
+"IDARF-DESFAZ-CANCEL":"DARF com cancelamento desfeito",
+"IDARF-DESFAZ-RESTIT-PARCIAL":"DARF com valor restituído parcial desfeito",
+"IDARF-DESFAZRESTITPARCIAL":"DARF com valor restituído parcial desfeito",
+"IDARF-DESFAZ-RESTIT-TOTAL":"DARF com valor restituído total desfeito",
+"IDARF-DESFAZRESTITTOTAL":"DARF com valor restituído total desfeito",
+"IDARF-ESPECIE-CI-INVALIDA":"DARF para espécie de CI inválida na competência",
+"IDARF-EXT-SEM-ANO-CIV":"DARF sem ano civil presente no extrato",
+"IDARF-FIL-CAD-DIV":"DARF para filiado com dados cadastrais divergentes entre CNIS e RFB",
+"IDARF-FIL-NAO-ENC":"DARF para filiado não encontrado no cadastro de pessoas físicas",
+"IDARF-SEM-EMISS-ANT":"DARF sem emissão registrada anteriormente",
+"IDARF-TIPO-FILIADO-INVALIDO":"DARF para tipo de filiado inválido na competência",
+"IDARF-TIPO-FILIADO-NAO-INFORMADO":"DARF para tipo de filiado não informado na competência",
+"IDESINDEXA":"Contribuição da competência desindexada",
+"IDT":"Demanda de natureza trabalhista",
+"IEAN":"Exposição a agente nocivo informada pelo empregador, passível de comprovação",
+"IREC-DESINDEXA":"Contribuição da competência desindexada",
+"IREC-FBR":"Recolhimento de facultativo de baixa renda (Lei 12.470/2011)",
+"IREC-FBR-DEF":"Recolhimento de facultativo de baixa renda deferido/válido via Portal CNIS",
+"IREC-FBR-IND":"Recolhimento de facultativo de baixa renda indeferido/inválido via Portal CNIS",
+"IREC-INDPEND":"Recolhimentos com indicadores ou pendências",
+"IREC-LC123":"Recolhimento no Plano Simplificado de Previdência Social (LC 123/2006)",
+"IREC-LC123-SUP":"Recolhimento no Plano Simplificado (LC 123/2006) superior ao salário mínimo",
+"IREC-LIM-SM":"Contribuição da competência limitada ao salário mínimo",
+"IREC-MEI":"Contribuição da competência recolhida com código MEI",
+"IRECOL":"Contribuição da competência é recolhimento",
+"IREL-PREV-POSSUI-COMP-AJUST":"Relação previdenciária com competência ajustada (favorecida ou desfavorecida)",
+"IREL-PREV-POSSUI-COMPA-JUST":"Relação previdenciária com competência ajustada (favorecida ou desfavorecida)",
+"IREM-ACD":"Remuneração com parcela de acordo, convenção ou dissídio coletivo",
+"IREM-INDPEND":"Remunerações com indicadores ou pendência",
+"IREM-PARC-CEDIDO":"Remuneração com parcela decorrente de trabalhador cedido",
+"IREM-PARC-DIR-SIND":"Remuneração com parcela decorrente de dirigente sindical",
+"IREM-PARC-DIRSIND":"Remuneração com parcela decorrente de dirigente sindical",
+"IREM-PERQRT":"Remuneração em período de quarentena",
+"IREM-PER-QUARENTENA":"Remuneração informada após o desligamento, referente ao período de quarentena",
+"IREM-RECL-TRAB":"Remuneração com parcela de reclamatória trabalhista",
+"IREM-REINTEG-PARC-PROC-TRAB":"Remuneração de período de reintegração parcial oriunda de processo trabalhista",
+"IREM-REINTEG-TOT-PROC-TRAB":"Remuneração de período de reintegração total oriunda de processo trabalhista",
+"IREM-TRAB-INTERM":"Remuneração relacionada a trabalho intermitente",
+"IREM-TRAB-VERDE-AMARELO":"Remuneração de vínculo com período de categoria da carteira verde e amarela",
+"IREM-TRANSF-TSVE-PROC-TRAB":"Remunerações transferidas para o vínculo por unicidade contratual de TSVE em processo trabalhista",
+"IREM-TSVE-PER-QUARENTENA":"Remuneração informada após o término do TSVE, referente ao período de quarentena",
+"IREM-VINC-PROC-TRAB":"Remuneração no vínculo oriunda de processo trabalhista",
+"ISALMIN":"Contribuição da competência limitada ao salário mínimo",
+"ISE-CVU":"Período de segurado especial concomitante com outro período urbano",
+"IUTILIZ-EXC-EC103":"Competência favorecida por valor excedente de outra competência",
+"IUTILIZ-EXC-MN-SM-EC103":"Competência favorecida por valor excedente de outra competência, mas ainda inferior ao mínimo",
+"IVIN-AGRUP-VINC":"Vínculo gerado pelo serviço de agrupamento de vínculos",
+"IVIN-AGRUP-VINC-PART":"Vínculo que foi alvo do serviço de agrupamento de vínculos",
+"IVIN-DESLIG-JUSTICA-TRAB":"Data de desligamento incluída pela Justiça do Trabalho (evento S-8299 do eSocial)",
+"IVIN-DESLIG-JUSTIÇA-TRAB":"Data de desligamento incluída pela Justiça do Trabalho (evento S-8299 do eSocial)",
+"IVIN-JORN-DIFERENCIADA":"Vínculo com regime de jornada diferenciada",
+"IVIN-MAND-ELETIVO-PARCIAL":"Vínculo parcialmente caracterizado como mandato eletivo",
+"IVIN-POSSUI-REG-PRELIM":"Relação trabalhista com registro preliminar informado anteriormente no eSocial",
+"IVIN-POSSUI-REM-TRAB-INTERM":"Relação trabalhista com remunerações de trabalho intermitente",
+"IVIN-POSSUI-REM-TRANS":"Vínculo com remuneração transferida por cessionário de dirigente sindical ou trabalhador cedido",
+"IVIN-PROC-TRAB":"Vínculo com processo trabalhista",
+"IVIN-REG-PRELIM":"Relação trabalhista que é registro preliminar de vínculo no eSocial",
+"IVIN-REINTEG":"Vínculo com reintegração no último desligamento (decisão judicial, reversão, recondução ou reinclusão)",
+"IVIN-REINTEG-ANISTIA":"Reintegração por anistia legal",
+"IVIN-REINTEG-OUTROSTIPOS":"Vínculo com reintegração por iniciativa do empregador ou por outros motivos",
+"IVIN-REINTEG-PARC":"Sentença trabalhista determinando reintegração e pagamento de remunerações de período parcial",
+"IVIN-REINTEG-PARC-PROC-TRAB":"Vínculo com reintegração parcial oriunda de processo trabalhista",
+"IVIN-REINTEG-PROC-TRAB":"Vínculo com reintegração no último desligamento oriunda de processo trabalhista",
+"IVIN-REINTEG-TOT":"Sentença trabalhista determinando reintegração e pagamento retroativo do período total",
+"IVIN-REINTEG-TOT-PROC-TRAB":"Vínculo com reintegração total oriunda de processo trabalhista",
+"IVIN-TRAB-INTERM":"Vínculo com informações de trabalho intermitente",
+"IVIN-TRAB-VERDE-AMARELO":"Vínculo com período de categoria da carteira verde e amarela",
+"IVIN-UNIC-CONTR-PROC-TRAB":"Vínculo com unicidade contratual oriunda de processo trabalhista",
+"IVIN-UNIC-CONTR-TSVE-PROC-TRAB":"Vínculo com unicidade contratual do período de TSVE oriunda de processo trabalhista",
+"IVLR-DARF-LIMITADO":"Valor do DARF limitado para a competência não ultrapassar o salário mínimo",
+"NDET":"Data de início de atividade estimada na migração",
+"PADM-EMPR":"Data de admissão incompatível com o período de atividade do empregador",
+"PCEI-EQP-INV":"Empregador com identificador inválido",
+"PCTC-NTR":"Certidão de Tempo de Contribuição pendente de análise do INSS",
+"PDARF-ALT-COMP-FORA-VIG":"DARF incluído por alteração de competência fora do período de vigência",
+"PDARF-ALT-CPF":"DARF desassociado do CPF originário pela RFB",
+"PDARF-EVENTO-INCONSISTENTE":"Evento inconsistente",
+"PDARF-INV-ALT-CODRECEITA":"DARF invalidado por alteração pela RFB para código de receita não tratado",
+"PDARF-RESTIT-PARCIAL":"DARF com valor restituído parcial",
+"PDARF-RESTIT-TOTAL":"DARF com valor restituído total",
+"PDESFAZ-AJ-EC103":"Pendência por desfazimento de agrupamento ou utilização",
+"PDIV-DADOS-GFIP":"Vínculo ou remuneração pendente por divergência de dado cadastral do trabalhador em GFIP",
+"PDT-NASC-FIL-INV":"Idade do filiado menor que a permitida pela legislação",
+"PDT-NASC-FIL-MENOR-INV":"Idade do filiado menor aprendiz menor que a permitida pela legislação",
+"PEMP-CAD":"Faltam dados cadastrais do empregador (CNPJ ou CEI)",
+"PEMP-IDINV":"Empregador com identificador inválido",
+"PEXT":"Vínculo com informação extemporânea, passível de comprovação",
+"PMOV-INCONSIST":"Registro inconsistente de movimentação entre competências",
+"PNIT-0094":"NIT invalidado pertencente à faixa crítica do tipo Ofício INSS 094",
+"PNIT-CRIT":"NIT em faixa crítica",
+"PNIT-IND":"NIT indeterminado",
+"PNIT-O094":"NIT invalidado pertencente à faixa crítica do tipo Ofício INSS 094",
+"PNIT-SC":"NIT não encontrado no cadastro ou inexistente",
+"PNIT-SUP":"NIT com indício de superposição de dados",
+"PREC-CDCONC":"Recolhimento ou período de contribuinte em dobro concomitante com outro tipo de filiado no vínculo",
+"PREC-CDONC":"Recolhimento ou período de contribuinte em dobro concomitante com outro tipo de filiação no vínculo",
+"PREC-COD1821":"Recolhimento com código de pagamento 1821 (mandato eletivo)",
+"PREC-COD1821_FORA_VIG":"Recolhimento com código de pagamento 1821 (mandato eletivo) fora da vigência",
+"PREC-CSE":"Recolhimento de segurado especial pendente de comprovação da atividade",
+"PREC-FACULTCONC":"Recolhimento ou período de facultativo concomitante com outros vínculos",
+"PREC-FAUCULTCONC":"Recolhimento ou período de facultativo concomitante com outros vínculos",
+"PREC-FBR":"Recolhimento de facultativo de baixa renda não validado",
+"PREC-FBR-ANT":"Recolhimento de facultativo de baixa renda anterior a 09/2011 (inválido)",
+"PREC-LC123-ANT":"Recolhimento no Plano Simplificado (LC 123/2006) anterior à competência 04/2007",
+"PREC-LC150-DOM":"Pagamento de doméstica em GPS em período de remuneração de fonte INSS/eSocial",
+"PREC-MENOR-MIN":"Recolhimento abaixo do valor mínimo",
+"PREC-OBITO":"Competência do recolhimento posterior ao mês do óbito",
+"PREC-PMIG-DOM":"Recolhimento de empregado doméstico sem comprovação de vínculo",
+"PREM-BLOQ-EC103":"Bloqueio de remuneração ou contribuição para ajuste entre competências",
+"PREM-EMPR":"Remunerações incompatíveis com o período de atividade do empregador",
+"PREM-EXT":"Remuneração informada fora do prazo, passível de comprovação",
+"PREM_EXT":"Remuneração informada fora do prazo, passível de comprovação",
+"PREM-FORA-ATIV-INTERM":"Remuneração de trabalho intermitente fora do período de atividade",
+"PREM-FORA-CONVOC":"Remuneração de trabalho intermitente não coberta por convocatória",
+"PREM-FORA-REINTEG-ANISTIA":"Remuneração fora do período da reintegração por anistia legal",
+"PREM-FORA-REINTEG-OUTROSTIPOS":"Remuneração fora do período da reintegração por iniciativa do empregador ou outros motivos",
+"PREM-FORA-REINTEG-PROC-TRAB":"Remuneração fora do período da reintegração oriunda de processo trabalhista",
+"PREM-FVIN":"Remuneração após o fim do vínculo",
+"PREM-IVIN":"Remuneração antes do início do vínculo",
+"PREM-NASC":"Remuneração antes da data de nascimento do filiado",
+"PREM-OBITO":"Remuneração após o óbito",
+"PREM-PER-DESLIG-APOSENT":"Remuneração após o desligamento por aposentadoria de servidor, com competência já informada no eSocial",
+"PREM-PER-DESLIG-JUD":"Remuneração após o desligamento reconhecido judicialmente, com competência já informada no eSocial",
+"PREM-PER-QUARENTENA":"Remuneração informada após o desligamento, referente ao período de quarentena",
+"PREM-POS-DESLIG-APOSENT":"Remuneração após o período entre o desligamento por aposentadoria de servidor e o último dia trabalhado",
+"PREM-POS-DESLIG-JUD":"Remuneração após o período entre o desligamento e o último dia trabalhado",
+"PREM-POSGRT":"Remuneração posterior ao período de quarentena",
+"PREM-POSQRT":"Remuneração posterior ao período de quarentena",
+"PREM-POS-QUARENTENA":"Remuneração informada após o período de quarentena",
+"PREM-REINTEG-ANISTIA":"Pendência em remuneração de período de anistia legal",
+"PREM-REINTEG-OUTROSTIPOS":"Pendência em remuneração de reintegração por iniciativa do empregador ou outros motivos",
+"PREM-TSVE-PER-QUARENTENA":"Remuneração informada após o término do TSVE, referente ao período de quarentena",
+"PREM-TSVE-PER-TERM-JUD":"Remuneração após o término do TSVE reconhecido judicialmente, com competências já informadas no eSocial",
+"PREM-TSVE-POS-QUARENTENA":"Remuneração informada para TSVE após o período de quarentena",
+"PREM-TSVE-POS-TERM-JUD":"Remuneração após o período entre o término do TSVE e o último dia trabalhado",
+"PREM-TSVE-PROC-TRAB":"Reconhecimento de remuneração de trabalhador sem vínculo oriundo de processo trabalhista",
+"PREM-TSVE-RESP-INDIRETO-PROC-TRAB":"Remuneração de TSVE informada por responsável indireto em processo trabalhista",
+"PREM-VINC-PROC-TRAB":"Reconhecimento de remuneração no vínculo oriunda de processo trabalhista",
+"PREM-VINV":"Remuneração antes do início do vínculo",
+"PRES-EMPR":"Data de rescisão incompatível com o período de atividade do empregador",
+"PRPPS":"Vínculo de empregado com informações de Regime Próprio (servidor público)",
+"PRPSE":"Vínculo de empregado de regime de previdência no exterior (não utilizável pelo RGPS)",
+"PSC-MEN-SM-EC103":"Competência com salário de contribuição menor que o mínimo, não tratada; passível de complementação, utilização ou agrupamento",
+"PSE-NEG":"Período de segurado especial negativo",
+"PSE-PEN":"Período de segurado especial pendente",
+"PSE-POS":"Período de segurado especial positivo",
+"PSUC-DIVERG-DT-ADM":"Vínculo sucessor com divergência na data de admissão em relação ao vínculo sucedido",
+"PVIN-ADMISSAO-DESLIG-PROC-TRAB":"Alteração da data de admissão e inclusão ou alteração da data de desligamento em processo trabalhista",
+"PVIN-ADMISSAO-PROC-TRAB":"Alteração da data de admissão oriunda de processo trabalhista",
+"PVIN-ADM-OBITO":"Data de admissão posterior ao óbito",
+"PVIN-AGRUP-INC":"Inconsistência em vínculo agrupador: nem todos os vínculos agrupados foram encontrados",
+"PVIN-CAGED":"Vínculo oriundo da fonte CAGED",
+"PVIN-DESLIG-JUSTIÇA-TRAB":"Data de desligamento incluída pela Justiça do Trabalho (evento S-8299 do eSocial)",
+"PVIN-DESLIG-OBITO":"Data do desligamento posterior à data do óbito",
+"PVIN-DESLIG-PROC-TRAB":"Inclusão ou alteração da data de desligamento oriunda de processo trabalhista",
+"PVIN-IRREG":"Vínculo em situação de irregularidade",
+"PVIN-MAND-ELETIVO-TOTAL":"Vínculo totalmente caracterizado como mandato eletivo",
+"PVIN-ME":"Vínculo de mandato eletivo, passível de comprovação",
+"PVIN-OBITO":"Data de admissão posterior ao óbito",
+"PVIN-RE":"Causa de rescisão estimada, por não ter sido informada pela fonte (RAIS, FGTS ou GRE)",
+"PVIN-REC-PROC-TRAB":"Reconhecimento de vínculo oriundo de processo trabalhista",
+"PVIN-RESP-INDIRETO-PROC-TRAB":"Reconhecimento de vínculo informado por responsável indireto em processo trabalhista",
+"PVIN-SUBSTIT-INC":"Inconsistência em vínculo prevalente: nem todos os vínculos relacionados foram encontrados",
+"PVIN-TRAB-INTERM":"Pendência em vínculo com informações de trabalho intermitente",
+"PVIN-UNIC-CONTR-PROC-TRAB":"Vínculo com unicidade contratual oriunda de processo trabalhista",
+"PVIN-UNIC-CONTR-TSVE-PROC-TRAB":"Vínculo com unicidade contratual do período de TSVE oriunda de processo trabalhista",
+};
+function descIndicador(cod, doExtrato){
+  return (doExtrato||"").trim() || IND_CNIS[String(cod||"").toUpperCase()] || "descrição não catalogada — conferir no extrato";
+}
+// o salário mínimo por competência, desde o Real (DIEESE/gov.br, conferido
+// em 20.09.2026). Antes de 07/1994 a moeda é outra e a conferência não vale.
+const SAL_MIN = [["1994-07",64.79],["1994-09",70],["1995-05",100],["1996-05",112],["1997-05",120],
+  ["1998-05",130],["1999-05",136],["2000-04",151],["2001-04",180],["2002-04",200],["2003-04",240],
+  ["2004-05",260],["2005-05",300],["2006-04",350],["2007-04",380],["2008-03",415],["2009-02",465],
+  ["2010-01",510],["2011-01",540],["2011-03",545],["2012-01",622],["2013-01",678],["2014-01",724],
+  ["2015-01",788],["2016-01",880],["2017-01",937],["2018-01",954],["2019-01",998],["2020-01",1039],
+  ["2020-02",1045],["2021-01",1100],["2022-01",1212],["2023-01",1302],["2023-05",1320],
+  ["2024-01",1412],["2025-01",1518],["2026-01",1621]];
+// ponytail: tabela fixa; competência depois da última linha usa o último valor
+function salarioMinimo(comp){
+  const [m, a] = String(comp||"").split("/"); if(!m || !a) return null;
+  const k = `${a}-${m}`; let v = null;
+  for(const [ini, val] of SAL_MIN){ if(ini <= k) v = val; else break; }
+  return v;
+}
 function lerCnisPdf(itens){
   itens = palavrasDoPdf(itens);
   const linhas = linhasDoPdf(itens);
@@ -10719,6 +11089,9 @@ function lerCnisPdf(itens){
   }
   r.indicadores = [...achados.values()].sort((a,b)=>b.ocorrencias-a.ocorrencias);
   r.linhaDoTempo = lerVinculosCnis(itens);
+  // F127 · um cliente pode ter VÁRIOS NITs: o do cabeçalho e o de cada
+  // vínculo. Todos, sem repetir, na ordem em que aparecem.
+  r.nits = [...new Set([r.filiado.nit, ...r.linhaDoTempo.map(v=>v.nit)].filter(Boolean))];
   // competências com remuneração (MM/AAAA seguido de valor) e com contribuição
   // (MM/AAAA seguido da data de pagamento). É a base do §1º do art. 15, os
   // "mais de 120". Distintas, porque a mesma competência em dois vínculos
@@ -10755,12 +11128,33 @@ const TIPOS_FILIADO = [
   ["Facultativo","Facultativo"],
 ];
 const SIT_BEN = {"1":"CESSADO","2":"ATIVO","3":"SUSPENSO"};
+// F127 · as competências de uma linha do extrato, com o valor que vale.
+// Remuneração: "01/2020 1.045,00 02/2020 1.045,00" (três por linha).
+// Contribuição do CI: "01/2020 15/02/2020 209,00 1.045,00 IREC-INDPEND" —
+// aí o salário de contribuição é o MAIOR valor do grupo (a contribuição é
+// 20% dele), e é ele que se compara com o mínimo.
+function competenciasDaLinha(txt){
+  const out = []; let atual = null;
+  for(const tok of String(txt||"").split(/\s+/)){
+    if(/^\d{2}\/\d{4}$/.test(tok)){ atual = {c:tok, vals:[]}; out.push(atual); continue; }
+    if(atual && /^[\d.]+,\d{2}$/.test(tok)) atual.vals.push(+tok.replace(/\./g,"").replace(",","."));
+  }
+  return out.filter(x=>x.vals.length).map(x=>({c:x.c, v:Math.max(...x.vals)}));
+}
 function lerVinculosCnis(itens){
   const linhas = linhasDoPdf(palavrasDoPdf(itens));
   const out = [];
   linhas.forEach((l, i)=>{
     const m = l.txt.match(/^(\d{1,3})\s+(\d{3}\.\d{5}\.\d{2}-\d)\s+(.*)$/);
-    if(!m) return;
+    if(!m){
+      // F127 · linha de competências: pertence ao último vínculo aberto acima
+      const ult = out[out.length-1];
+      if(ult && ult.tipo!=="Benefício"){
+        const cps = competenciasDaLinha(l.txt);
+        if(cps.length) ult.comps = (ult.comps||[]).concat(cps);
+      }
+      return;
+    }
     const [, seq, nit] = m;
     let resto = m[3];
     // "Empregado ou Agente" termina na linha seguinte, em "Público"
@@ -10903,8 +11297,6 @@ async function copiarVidaContributiva(cliId){
 // alimenta "Benefício ativo". São os três passos que hoje dependem de alguém
 // abrir o PDF e ler linha por linha.
 const PDF_TRIAGEM = {
-  indicadores:{rot:"Ler o CNIS (PDF)", arq:"cnis",
-    dica:"o extrato do Meu INSS; o arquivo é lido aqui no navegador e não sai desta máquina"},
   beneficio:{rot:"Ler a Declaração de Benefícios (PDF)", arq:"declaracao",
     dica:"a declaração do Meu INSS; o arquivo é lido aqui no navegador e não sai desta máquina"},
 };
@@ -10918,92 +11310,192 @@ function botaoPdfTriagem(cliId, chave){
     <span class="tri-pdf-nota">lido aqui no navegador, não sai desta máquina</span>
   </div>`;
 }
+// lê o PDF e devolve os pedaços, ou avisa e devolve null
+async function pedacosDoPdfOuAviso(arq){
+  if(arq.size > MAX_ARQ){ aviso("Arquivo grande demais (máximo 20 MB)"); return null; }
+  aviso("Lendo o PDF…", false);
+  let itens;
+  try{ itens = await itensDoPdf(arq); }
+  catch(e){
+    aviso(/cdn/.test(String(e.message))
+      ? "Não consegui carregar o leitor de PDF — confira a conexão e tente de novo"
+      : "Não consegui abrir este PDF");
+    return null;
+  }
+  if(!itens.length){
+    aviso("Este PDF não tem texto: é digitalizado ou foi impresso como imagem. "
+      + "Baixe o PDF original no Meu INSS (Extrato do CNIS ou Declaração de Benefícios), "
+      + "que vem com texto, e tente de novo.");
+    return null;
+  }
+  return itens;
+}
 async function lerPdfDaTriagem(cliId, chave){
   const inp = document.getElementById("pdf-"+chave);
   const arq = inp && inp.files && inp.files[0];
   if(!arq) return;
   inp.value = "";
   const c = D.cliPorId.get(cliId); if(!c) return;
-  if(arq.size > MAX_ARQ) return aviso("Arquivo grande demais (máximo 20 MB)");
-  aviso("Lendo o PDF…", false);
-  let itens;
-  try{ itens = await itensDoPdf(arq); }
-  catch(e){
-    return aviso(/cdn/.test(String(e.message))
-      ? "Não consegui carregar o leitor de PDF — confira a conexão e tente de novo"
-      : "Não consegui abrir este PDF");
-  }
-  if(!itens.length)
-    return aviso("Este PDF não tem texto: é digitalizado ou foi impresso como imagem. "
-      + "Baixe o PDF original no Meu INSS (Extrato do CNIS ou Declaração de Benefícios), "
-      + "que vem com texto, e tente de novo.");
-
-  const eCnis = chave === "indicadores";
-  const lido = eCnis ? lerCnisPdf(itens) : lerDeclaracaoPdf(itens);
-  // [20.09.2026] a recusa passou a dizer O QUE viu, para o próximo relato
-  // trazer a causa: páginas, pedaços de texto e as âncoras que faltaram
+  if(chave === "cnis" || chave === "indicadores") return processarCnis(cliId, arq);
+  const itens = await pedacosDoPdfOuAviso(arq); if(!itens) return;
+  const lido = lerDeclaracaoPdf(itens);
   const viu = txt => itens.some(i=>i.t.includes(txt));
-  const raio = `${lido.paginas||Math.max(0,...itens.map(i=>i.p))} pág., ${itens.length} pedaços de texto`;
-  if(eCnis && !lido.indicadores.length && !lido.filiado.nit && !lido.ehExtrato)
-    return aviso(`Não reconheci este arquivo como um CNIS do Meu INSS (${raio}; `
-      + `${viu("NIT")?"achei":"não achei"} "NIT", ${viu("Legenda")?"achei":"não achei"} a legenda de indicadores). `
-      + "Se for o Extrato Previdenciário do Meu INSS, me mande este recado.");
-  if(!eCnis && !lido.beneficios.length && !lido.cpf)
+  const raio = `${Math.max(0,...itens.map(i=>i.p))} pág., ${itens.length} pedaços de texto`;
+  if(!lido.beneficios.length && !lido.cpf)
     return aviso(`Não reconheci este arquivo como a Declaração de Benefícios (${raio}; `
       + `${viu("CPF")?"achei":"não achei"} "CPF", ${viu("NB")||viu("Benefício")?"achei":"não achei"} "NB").`);
-
   const conf = conferePdfComCliente(lido, c);
   if(!conf.ok) return aviso(conf.aviso);
-  return eCnis ? gravarCnisLido(cliId, lido) : gravarDeclaracaoLida(cliId, lido);
+  return gravarDeclaracaoLida(cliId, lido);
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F127 · O CNIS ENTRA NO CADASTRO — lido, guardado e respondendo a triagem
+// ══════════════════════════════════════════════════════════════════════════
+// O extrato é lido aqui no navegador (pdf.js), conferido contra o CPF do
+// cliente, GUARDADO no bucket privado (para o botão "Abrir CNIS" abri-lo em
+// outra aba, quantas vezes for preciso) e transformado nas respostas que a
+// triagem consegue dar sozinha: vínculo em aberto, erro no empregador,
+// competência abaixo do mínimo, indicadores, benefício ativo e o vínculo
+// com a Previdência hoje.
+async function processarCnis(cliId, arq){
+  const c = D.cliPorId.get(cliId); if(!c) return false;
+  const itens = await pedacosDoPdfOuAviso(arq); if(!itens) return false;
+  const lido = lerCnisPdf(itens);
+  const viu = txt => itens.some(i=>i.t.includes(txt));
+  const raio = `${lido.paginas||Math.max(0,...itens.map(i=>i.p))} pág., ${itens.length} pedaços de texto`;
+  if(!lido.indicadores.length && !lido.filiado.nit && !lido.ehExtrato){
+    aviso(`Não reconheci este arquivo como um CNIS do Meu INSS (${raio}; `
+      + `${viu("NIT")?"achei":"não achei"} "NIT", ${viu("Legenda")?"achei":"não achei"} a legenda de indicadores). `
+      + "Se for o Extrato Previdenciário do Meu INSS, me mande este recado.");
+    return false;
+  }
+  const conf = conferePdfComCliente(lido, c);
+  if(!conf.ok){ aviso(conf.aviso); return false; }
+  // o arquivo fica guardado: é ele que o botão "Abrir CNIS" abre
+  let anexo = null;
+  try{
+    const stamp = new Date().toISOString().replace(/[:.]/g,"-").toLowerCase();
+    const caminho = `${cliId}/${stamp}-cnis.pdf`;
+    await subirArquivo(caminho, arq);
+    [anexo] = await api(`/rest/v1/anexos`,{method:"POST",headers:{Prefer:"return=representation"},
+      body:JSON.stringify({caso_id:null, cliente_id:cliId, autor_id:eu.id,
+        nome:`CNIS ${fmt(hoje())}.pdf`, caminho, tipo:"application/pdf", tamanho:arq.size})});
+    if(anexo && clienteAberto===cliId) (D.anexos=D.anexos||[]).unshift(anexo);
+  }catch(e){
+    aviso("Li o CNIS, mas não consegui guardar o arquivo — o botão Abrir CNIS fica sem ele até uma nova inserção", true);
+  }
+  await gravarCnisLido(cliId, lido, anexo);
+  return true;
+}
+// o CNIS guardado deste cliente, se houver
+function cnisDe(c){ return ((triagemDe(c).pdf||{}).cnis)||null; }
+async function abrirCnis(cliId){
+  const c = D.cliPorId.get(cliId); const g = c && cnisDe(c);
+  if(!g || !g.caminho) return aviso("Este cliente ainda não tem o CNIS inserido — insira pelo Cadastro");
+  const guia = window.open("", "_blank");            // abrir agora: o navegador
+  try{                                               // bloqueia janela tardia
+    const url = await linkArquivo(g.caminho, 600);
+    if(guia) guia.location = url; else window.location = url;
+  }catch(e){ if(guia) guia.close(); aviso("Não consegui abrir o CNIS"); }
+}
+function botaoAbrirCnis(c, grande){
+  const g = cnisDe(c);
+  if(g && g.caminho)
+    return `<button class="${grande?"cnis-abrir":"cad-mini"}" onclick="abrirCnis('${c.id}')"
+      title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(g.em))})">${grande?"":""}Abrir CNIS${grande?` <span class="meio-sub" style="font-weight:500">de ${esc(fmt(g.em))}</span>`:""}</button>`;
+  return `<button class="${grande?"cnis-abrir sem":"cad-mini"}" onclick="escolherCnis('${c.id}')"
+      title="o extrato do Meu INSS, em PDF; é lido aqui no navegador e guardado para abrir depois">${g?"Inserir o CNIS de novo":"Inserir o CNIS"}</button>`;
+}
+// o seletor de arquivo nasce no clique: sem input escondido repetido em cada
+// painel da ficha
+function escolherCnis(cliId){
+  const i = document.createElement("input"); i.type = "file"; i.accept = "application/pdf";
+  i.onchange = async ()=>{ const a = i.files && i.files[0];
+    if(a && await processarCnis(cliId, a) && clienteAberto===cliId) repintarFicha(); };
+  i.click();
+}
+function botaoInserirCnisNovo(c){
+  const g = cnisDe(c);
+  return g && g.caminho ? `<button class="cad-mini" onclick="escolherCnis('${c.id}')" title="substitui pelo extrato mais novo">inserir um CNIS mais novo</button>` : "";
+}
+// ── o que o CNIS responde sozinho ────────────────────────────────────────
+const TIPO_REMUN = /Empregado|Avulso/;   // remuneração informada pelo empregador
+// indicadores que dizem "erro no cadastro do empregador" ou no vínculo
+const RX_ERRO_EMPREGADOR = /^(PEMP-CAD|PEMP-IDINV|PCEI-EQP-INV|PADM-EMPR|PRES-EMPR|PREM-EMPR|PVIN-IRREG|PVIN-CAGED|NDET|PVIN-RE)$/;
+const chaveComp = c => String(c||"").split("/").reverse().join("-");   // MM/AAAA → AAAA-MM
+function analisarCnis(lido, ref){
+  const vs = (lido.linhaDoTempo||[]).filter(v=>v.tipo!=="Benefício");
+  const bens = (lido.linhaDoTempo||[]).filter(v=>v.tipo==="Benefício");
+  const abertos = vs.filter(v=>v.aberto).map(v=>({tipo:v.tipo, origem:v.origem, inicio:v.inicio,
+    ultRemun: (v.comps||[]).map(x=>x.c).sort((a,b)=>chaveComp(a).localeCompare(chaveComp(b))).pop()||v.ultRemun||""}));
+  const errosEmp = [];
+  vs.forEach(v=>(v.indicadores||[]).forEach(i=>{ if(RX_ERRO_EMPREGADOR.test(i)) errosEmp.push({cod:i, origem:v.origem}); }));
+  // competência abaixo do mínimo: empregado só a partir de 11/2019 (EC 103);
+  // CI e facultativo em qualquer época do Real
+  const abaixo = [];
+  for(const v of vs) for(const cp of (v.comps||[])){
+    const [m, a] = cp.c.split("/"); if(+m < 1 || +m > 12) continue;
+    if(TIPO_REMUN.test(v.tipo) && `${a}-${m}` < "2019-11") continue;
+    const sm = salarioMinimo(cp.c); if(sm == null) continue;
+    if(cp.v < sm - 0.005) abaixo.push({comp:cp.c, valor:cp.v, minimo:sm, tipo:v.tipo, origem:v.origem});
+  }
+  abaixo.sort((x,y)=>chaveComp(x.comp).localeCompare(chaveComp(y.comp)));
+  // o vínculo hoje: o mês anterior à data de referência
+  const d = new Date((ref||hoje()) + "T12:00:00"); d.setMonth(d.getMonth()-1);
+  const mesAnt = `${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
+  let ultima = null;
+  for(const v of vs) for(const cp of (v.comps||[])){
+    if(+cp.c.slice(0,2) > 12) continue;
+    if(!ultima || chaveComp(cp.c) > chaveComp(ultima.comp)) ultima = {comp:cp.c, tipo:v.tipo, origem:v.origem};
+  }
+  const tipoCurto = t => /Facultativo/.test(t) ? "facultativo" : /Individual|Empregador/.test(t) ? "ci"
+                       : /Segurado Especial/.test(t) ? "especial" : "empregado";
+  const abertoEmp = abertos.find(v=>TIPO_REMUN.test(v.tipo));
+  const noMes = vs.find(v=>(v.comps||[]).some(cp=>cp.c===mesAnt));
+  const agora = abertoEmp
+    ? {tipo:"empregado", origem:abertoEmp.origem, desde:abertoEmp.inicio, ultRemun:abertoEmp.ultRemun, aberto:true}
+    : noMes ? {tipo:tipoCurto(noMes.tipo), origem:noMes.origem, comp:mesAnt}
+    : {tipo:"sem", ultima};
+  const benefAtivos = bens.filter(v=>!v.fim || /ATIVO/i.test(v.situacao||""))
+    .map(v=>({especie:v.especie, origem:v.origem, nb:v.nb, inicio:v.inicio, situacao:v.situacao}));
+  return {abertos, errosEmp, abaixo, mesAnt, agora, benefAtivos,
+    qtComps: vs.reduce((n,v)=>n+((v.comps||[]).length),0)};
 }
 // ── o que fica gravado ───────────────────────────────────────────────────
-// A leitura escreve a NOTA do passo e assina como leitura de PDF, com a data.
-// O ESTADO (sem pendência, atenção, não conferido) continua sendo de quem
-// atende: máquina não confere CNIS, ela transcreve.
-async function gravarCnisLido(cliId, lido){
+// A leitura grava o extrato (o arquivo e o que foi lido) e as respostas
+// PRÉ-PRONTAS dos passos que o CNIS responde. Quem atende confirma passo a
+// passo; até lá o estado fica marcado como automático.
+async function gravarCnisLido(cliId, lido, anexo){
   const c = D.cliPorId.get(cliId); if(!c) return;
   const t = {...triagemDe(c)};
-  const linhas = lido.indicadores.map(i=>
-    `${i.codigo}${i.ocorrencias?` (${i.ocorrencias}×)`:""} — ${i.descricao}`);
-  const texto = lido.indicadores.length
-    ? `Lido do CNIS em ${fmt(hoje())}: ${lido.indicadores.length} indicador(es).\n`
-      + linhas.join("\n")
-    : `Lido do CNIS em ${fmt(hoje())}: nenhum indicador na legenda do extrato.`;
-  t.indicadores = {...(t.indicadores||{}), nota: juntarNota((t.indicadores||{}).nota, texto),
-                   em:hoje(), quem:eu.id};
-  // [20.09.2026] os BENEFÍCIOS que o CNIS registra saem listados na nota, um
-  // por linha, com espécie, NB, período e situação. É a pergunta que a triagem
-  // faz primeiro (o que a pessoa já recebeu, e se ainda recebe), e ficava
-  // escondida numa contagem.
-  const bens = (lido.linhaDoTempo||[]).filter(v=>v.tipo==="Benefício");
-  const linhasBen = bens.map(v=>`  • ${v.inicio}${v.fim?` a ${v.fim}`:" (em aberto)"} · espécie ${v.especie}`
-    + (v.origem?` ${v.origem}`:"") + (v.nb?` · NB ${v.nb}`:"") + (v.situacao?` · ${v.situacao}`:""));
-  t.cnis = {...(t.cnis||{}),
-    nota: juntarNota((t.cnis||{}).nota,
-      `CNIS lido em ${fmt(hoje())}: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s)`
-      + (()=>{ const lt=lido.linhaDoTempo||[];
-               const ab=lt.filter(v=>v.aberto && v.tipo!=="Benefício").length;
-               return (bens.length?`, ${bens.length} benefício(s)`:"") + (ab?`, ${ab} vínculo(s) em aberto`:""); })()
-      + (lido.filiado.nit?`, NIT ${lido.filiado.nit}`:"") + "."
-      + (linhasBen.length ? "\nBenefícios no CNIS:\n" + linhasBen.join("\n") : "")),
-    em:hoje(), quem:eu.id};
-  // e o passo "Benefício ativo" ganha o que o CNIS já diz, quando há benefício
-  // sem data de cessação: a Declaração confirma, mas a triagem não fica cega
-  const ativosCnis = bens.filter(v=>!v.fim || /ATIVO/i.test(v.situacao||""));
-  if(ativosCnis.length && !(t.beneficio||{}).nota)
-    t.beneficio = {...(t.beneficio||{}), em:hoje(), quem:eu.id,
-      nota:`Pelo CNIS (${fmt(hoje())}): ${ativosCnis.map(v=>`espécie ${v.especie}${v.nb?` NB ${v.nb}`:""} desde ${v.inicio}`).join("; ")}. Confirmar na Declaração de Benefícios.`};
+  const an = analisarCnis(lido, hoje());
   t.pdf = {...(t.pdf||{}), cnis:{em:hoje(), quem:eu.id, paginas:lido.paginas,
-    qtVinculos:lido.vinculos, indicadores:lido.indicadores.map(i=>i.codigo),
-    vinculos:lido.linhaDoTempo||[]}};
+    qtVinculos:lido.vinculos, nits:lido.nits||[],
+    indicadores:lido.indicadores.map(i=>({codigo:i.codigo, descricao:i.descricao, ocorrencias:i.ocorrencias})),
+    vinculos:(lido.linhaDoTempo||[]).map(({comps, ...v})=>v),
+    analise:an,
+    anexo_id: anexo ? anexo.id : ((t.pdf||{}).cnis||{}).anexo_id || null,
+    caminho:  anexo ? anexo.caminho : ((t.pdf||{}).cnis||{}).caminho || null}};
+  // as respostas pré-prontas: só onde ninguém respondeu à mão
+  const ks = D.casosDoCliente.get(cliId) || [];
+  for(const chave of ["cnis","indicadores","beneficio","vinculo"]){
+    const atual = t[chave] || {};
+    if(atual.estado && !atual.auto) continue;
+    const l = triagemLeitura(chave, {...c, triagem:t}, ks);
+    t[chave] = {...atual, estado: l.estado || "", auto:true, em:hoje(), quem:eu.id};
+  }
+  // F54 · o vínculo hoje viaja para a análise de direito (rotVinculo)
+  t.vinculo = {tipo:an.agora.tipo, desde: an.agora.desde ? an.agora.desde.split("/").reverse().slice(0,2).join("-") : null,
+               em:hoje(), quem:eu.id, auto:true};
   if(!await salvarTriagem(cliId, t)) return aviso("Li o PDF, mas não consegui guardar");
-  // F29 · o cabeçalho do CNIS completa a Identificação: nome da mãe e NIT
-  // entram sozinhos NOS CAMPOS VAZIOS — o que já foi preenchido não se toca
+  // F29 · o cabeçalho do CNIS completa a Identificação: nome da mãe entra no
+  // campo vazio; os NITs entram todos, sem repetir os já anotados
   const compl = {};
   if(!c.nome_mae && !((c.campos||{}).civil||{}).nome_mae && lido.filiado.mae)
     compl.nome_mae = lido.filiado.mae;
-  if(!c.pis_nit && !((c.campos||{}).civil||{}).pis_nit && lido.filiado.nit)
-    compl.pis_nit = lido.filiado.nit;
+  const nitsJa = String(valCli(c,"pis_nit")||"").split(/[\s·,;]+/).filter(Boolean);
+  const nitsNovos = (lido.nits||[]).filter(n=>!nitsJa.includes(n));
+  if(nitsNovos.length) compl.pis_nit = nitsJa.concat(nitsNovos).join(" · ");
   let preencheu = 0;
   if(Object.keys(compl).length){
     try{
@@ -11021,12 +11513,12 @@ async function gravarCnisLido(cliId, lido){
       }catch(e2){}
     }
   }
-  await lancarNoCaso(cliId, `CNIS lido no CRM: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s), `
+  await lancarNoCaso(cliId, `CNIS inserido no CRM: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s), `
     + (lido.indicadores.length
         ? `indicadores ${lido.indicadores.map(i=>i.codigo+(i.ocorrencias?`(${i.ocorrencias})`:"")).join(", ")}.`
         : "nenhum indicador na legenda."));
-  repintarFicha();
-  aviso(`CNIS lido — ${lido.indicadores.length} indicador(es), ${lido.vinculos} vínculo(s)${
+  if(clienteAberto===cliId) repintarFicha();
+  aviso(`CNIS inserido — ${lido.indicadores.length} indicador(es), ${lido.vinculos} vínculo(s)${
     preencheu?` · mãe/NIT preenchidos na Identificação`:""} ✔`);
 }
 async function gravarDeclaracaoLida(cliId, lido){
@@ -11081,83 +11573,153 @@ async function lancarNoCaso(cliId, texto){
   }catch(e){}
 }
 
+// F127 · a triagem UM PASSO POR VEZ (pedido do Paulo, 20.09). Em cima, o
+// botão de abrir o CNIS; depois, o que a recepção anotou (espécie e relato);
+// e então os passos, um de cada vez, com a resposta que o CNIS já deu
+// pré-marcada e o botão Próxima. Cada passo respondido aparece na hora na
+// Análise de Direito, com o nome de quem respondeu.
+function passoAtualTriagem(c, PASSOS){
+  const t = triagemDe(c);
+  const n = PASSOS.length;
+  if(Number.isInteger(t.passo)) return Math.max(0, Math.min(n-1, t.passo));
+  const i = PASSOS.findIndex(([k])=>!(t[k]||{}).feito);
+  return i < 0 ? n-1 : i;
+}
+async function irPassoTriagem(cliId, i){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const t = {...triagemDe(c), passo:i};
+  if(!await salvarTriagem(cliId, t)) return aviso("Não consegui guardar — tente de novo");
+  repintarFicha();
+}
+// Próxima: guarda a nota, confirma o passo (estado pré-pronto vale) e
+// escreve na Análise de Direito; no último passo, encerra a triagem
+async function proximaTriagem(cliId, chave){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const ks = D.casosDoCliente.get(cliId) || [];
+  const PASSOS = triagemPassosDe(c, ks);
+  const i = PASSOS.findIndex(([k])=>k===chave);
+  const el = document.getElementById("tri-"+chave);
+  const nota = el ? (el.value||"").trim() : ((triagemDe(c)[chave]||{}).nota||"");
+  const t = {...triagemDe(c)};
+  const l = triagemLeitura(chave, c, ks);
+  const atual = t[chave] || {};
+  t[chave] = {...atual, nota, estado: atual.estado || l.estado || "",
+              texto: [l.txt, l.det].filter(Boolean).join(" "), feito: Date.now(), em: hoje(), quem: eu.id};
+  delete t[chave].auto;
+  if(i >= 0 && i < PASSOS.length-1) t.passo = i+1;
+  if(!await salvarTriagem(cliId, t)) return aviso("Não consegui guardar o passo — tente de novo");
+  if(i === PASSOS.length-1) return fecharAtendimento(cliId);
+  repintarFicha();
+}
+function legendaIndicadores(inds){
+  return `<ul class="ind-lista">${inds.map(i=>{
+    const tp = tipoIndicador(i.codigo);
+    return `<li class="ind-${tp}"><span class="ind-cod">${esc(i.codigo)}</span>
+      <span class="ind-tipo">${IND_TIPO_ROT[tp]}</span>
+      <span>${esc(descIndicador(i.codigo, i.descricao))}${i.ocorrencias?` <span class="meio-sub">(${i.ocorrencias}×)</span>`:""}</span></li>`;
+  }).join("")}</ul>`;
+}
 function painelTriagemFicha(c, ks){
   const t = triagemDe(c);
   const PASSOS = triagemPassosDe(c, ks);
   const fam = familiaDaTriagem(c, ks);
   const doCaso = familiaDaEspecie(especieDoCliente(c, ks));
   const porta = t.porta || null;
-  const feitos = PASSOS.filter(([k])=>(t[k]||{}).estado && t[k].estado!=="pendente").length;
+  const feitos = PASSOS.filter(([k])=>(t[k]||{}).feito || ((t[k]||{}).estado && !(t[k]||{}).auto)).length;
   const prox = (t.conclusao||{}).proximo || "";
-  // F29 · enquanto as Anotações não se abrem (triagem ainda não encerrada),
-  // o que a recepção registrou aparece AQUI — a advogada tria lendo o relato
+  const i = passoAtualTriagem(c, PASSOS);
+  const [chave, rot, , dona] = PASSOS[i];
+  const p = t[chave] || {};
+  const l = triagemLeitura(chave, c, ks);
+  const quem = p.quem && D.colPorId.get(p.quem);
+  // a resposta pré-pronta aparece marcada até alguém responder à mão
+  const estadoMarcado = p.estado || (!p.feito ? (l.estado||"") : "");
+  // o que a recepção registrou: a espécie e o relato
   const balcao = (!(ks||[]).length && !triagemFechada(c))
     ? ((c.campos||{}).atendimento||[]).slice(-3) : [];
+  const especie = especieDoCliente(c, ks) || (porta && porta.especie) || "";
   return `<div class="cad-cartao">
     <div class="cad-tit"><span class="cad-ic">${CAD_IC.doc}</span>Triagem do cliente
-      <span class="cad-tit-sub">o que precisa estar conferido antes de protocolar ou distribuir</span>
-      <span class="cad-cont${feitos===PASSOS.length?" cad-ok":""}">${feitos} de ${PASSOS.length} conferidos</span></div>
-    ${balcao.length?`<div class="tri-balcao" style="border:1px solid var(--borda);border-left:3px solid #E9B44C;border-radius:8px;padding:8px 12px;margin:8px 0;font-size:13px">
-      <b>O que a recepção registrou</b> <span class="meio-sub">(as Anotações completas se abrem quando a triagem se encerrar)</span>
+      <span class="cad-cont${feitos===PASSOS.length?" cad-ok":""}">${feitos} de ${PASSOS.length} respondidos</span></div>
+    <div class="cnis-faixa">
+      ${botaoAbrirCnis(c, true)}
+      ${botaoInserirCnisNovo(c)}
+      <span class="meio-sub">o extrato abre em outra aba; o CRM lê vínculos, indicadores e benefícios e responde os primeiros passos</span>
+    </div>
+    <div class="tri-balcao" style="border:1px solid var(--borda);border-left:3px solid #E9B44C;border-radius:8px;padding:8px 12px;margin:8px 0;font-size:13px">
+      <b>O que a recepção registrou</b>
+      <div style="margin-top:4px">Espécie: ${especie ? `<span class="chip ben">${esc(especie)}</span>` : `<span class="meio-sub">não informada</span>`}
+        ${fam?`<span class="tri-especie meio-sub">· ${fam.pontos.length} pontos próprios de <b>${esc(fam.rot)}</b> entram na triagem${
+          fam.ferramenta?` · <a class="tri-ferr" href="${fam.ferramenta[1]}" target="_blank" rel="noopener">${esc(fam.ferramenta[0])} ↗</a>`:""}</span>`:""}</div>
       ${balcao.map(n=>`<div style="margin-top:4px">“${esc(n.texto)}” <span class="meio-sub">— ${esc(n.quem||"?")}, ${esc(fmtTS(n.em))}</span></div>`).join("")}
-    </div>`:""}
-    ${/* F24 · a porta: quando o CASO ainda não diz a espécie, quem atende
-         responde — ou declara que não sabe, e ficam só os passos padrão. */""}
-    ${doCaso ? "" : `
-    <div class="tri-porta">
-      <b>De qual caso se trata?</b>
-      ${porta ? `
-        <span class="chip ${porta.sei===false?"neutro":"ben"}">${
-          porta.sei===false ? "ainda não sabemos" : esc(porta.especie||"?")}</span>
-        <button class="cad-mini" onclick="responderPorta('${c.id}', null, null)">trocar</button>`
-      : `
-        <span class="tri-porta-ops">
-          ${PONTOS_ESPECIE.map(f=>`<button class="tri-p" title="abre os pontos específicos de ${esc(f.rot)}"
-            onclick="responderPorta('${c.id}', ${JSON.stringify(f.rot).replace(/"/g,"&quot;")}, true)">${esc(f.rot)}</button>`).join("")}
-          <button class="tri-p tri-naosei" title="sem problema: ficam os passos padrão, que valem para qualquer caso"
-            onclick="responderPorta('${c.id}', null, false)">ainda não sei</button>
-        </span>`}
-    </div>`}
-    ${fam?`<div class="tri-especie">
-      <b>${esc(fam.rot)}</b> — ${fam.pontos.length} pontos além dos oito de sempre, pela espécie deste caso.
-      <span class="tri-skill">skill do escritório: ${esc(fam.skill)}</span>
-      ${fam.ferramenta?`<a class="tri-ferr" href="${fam.ferramenta[1]}" target="_blank" rel="noopener">
-        ${esc(fam.ferramenta[0])} ↗</a>`:""}
-    </div>`:""}
-    ${/* contêiner próprio: com os passos soltos dentro do cartão, o
-         :first-of-type do CSS cairia no título, não no passo 1 */""}
-    <div class="tri-lista">
-    ${PASSOS.map(([chave,rot,dica,dona],i)=>{
-      const p = t[chave] || {};
-      const l = triagemLeitura(chave, c, ks);
-      const quem = p.quem && D.colPorId.get(p.quem);
-      return `<div class="tri-passo${p.estado&&p.estado!=="pendente"?" feito":""}">
+      ${/* F24 · a porta: quando o CASO ainda não diz a espécie, quem atende
+           responde — ou declara que não sabe, e ficam só os passos padrão. */""}
+      ${doCaso ? "" : `
+      <div class="tri-porta" style="margin-top:6px">
+        <b>De qual caso se trata?</b>
+        ${porta ? `
+          <span class="chip ${porta.sei===false?"neutro":"ben"}">${
+            porta.sei===false ? "ainda não sabemos" : esc(porta.especie||"?")}</span>
+          <button class="cad-mini" onclick="responderPorta('${c.id}', null, null)">trocar</button>`
+        : `
+          <span class="tri-porta-ops">
+            ${PONTOS_ESPECIE.map(f=>`<button class="tri-p" title="abre os pontos específicos de ${esc(f.rot)}"
+              onclick="responderPorta('${c.id}', ${JSON.stringify(f.rot).replace(/"/g,"&quot;")}, true)">${esc(f.rot)}</button>`).join("")}
+            <button class="tri-p tri-naosei" title="sem problema: ficam os passos padrão, que valem para qualquer caso"
+              onclick="responderPorta('${c.id}', null, false)">ainda não sei</button>
+          </span>`}
+      </div>`}
+    </div>
+    ${/* o trilho: uma etapa por passo, com a cor da resposta; clique volta */""}
+    <div class="tri-trilho">${PASSOS.map(([k,r],j)=>{
+      const q = t[k]||{};
+      const cls = j===i ? "on" : (q.feito||(q.estado&&!q.auto)) ? (q.estado||"pendente") : "";
+      return `<button class="tri-etapa ${cls}" onclick="irPassoTriagem('${c.id}',${j})" title="${esc(r)}">${j+1}${j===i?` ${esc(r)}`:""}</button>`;
+    }).join("")}</div>
+    <div class="tri-lista tri-um">
+      <div class="tri-passo${p.feito?" feito":""}">
         <div class="tri-cab">
           <span class="tri-n">${i+1}</span>
           <div class="tri-tit"><span class="tri-tit-l"><b>${esc(rot)}</b>${
             dona?`<span class="tri-de${dona==="escritório"?" tri-de-esc":""}">${esc(dona)}</span>`:""}${
             dona==="escritório"?`<button class="cad-lap" title="tirar esta pergunta de TODOS os clientes"
-              onclick="event.stopPropagation();tirarPerguntaEscritorio('${chave}')">${CAD_IC.fechar}</button>`:""}</span>
-            <span class="tri-dica">${esc(dica)}</span></div>
+              onclick="event.stopPropagation();tirarPerguntaEscritorio('${chave}')">${CAD_IC.fechar}</button>`:""}</span></div>
           <div class="tri-bt">${TRIAGEM_ESTADOS.map(([e,r])=>
-            `<button class="tri-e ${e}${p.estado===e?" on":""}"
+            `<button class="tri-e ${e}${estadoMarcado===e?" on":""}"
               onclick="marcarTriagem('${c.id}','${chave}','${e}')">${r}</button>`).join("")}</div>
         </div>
-        <div class="tri-leitura ${l.cor}">${esc(l.txt)}${
-          l.det?`<span class="tri-det">${esc(l.det)}</span>`:""}</div>
-        ${botaoPdfTriagem(c.id, chave)}
+        ${l.txt?`<div class="tri-leitura ${l.cor}">${esc(l.txt)}${
+          l.det?`<span class="tri-det">${esc(l.det)}</span>`:""}</div>`:""}
+        ${l.legenda ? legendaIndicadores(l.legenda) : ""}
         ${chave==="cnis" ? blocoVidaContributiva(c) : ""}
+        ${botaoPdfTriagem(c.id, chave)}
+        ${chave==="vinculo" ? (v=>`<div class="form-linha" style="margin-top:8px;align-items:center">
+          <span class="meio-sub">corrigir, se o extrato estiver defasado:</span>
+          <select id="tri-vinc" onchange="document.getElementById('tri-vinc-desde-cx').style.display=this.value==='empregado'?'inline-flex':'none';salvarVinculoTriagem('${c.id}')">
+            <option value="">como contribui hoje?…</option>
+            <option value="empregado" ${v.tipo==="empregado"?"selected":""}>Empregado (CLT)</option>
+            <option value="ci" ${v.tipo==="ci"?"selected":""}>Contribuinte individual</option>
+            <option value="facultativo" ${v.tipo==="facultativo"?"selected":""}>Facultativo</option>
+            <option value="especial" ${v.tipo==="especial"?"selected":""}>Segurado especial</option>
+            <option value="sem" ${v.tipo==="sem"?"selected":""}>Não contribui</option>
+          </select>
+          <label id="tri-vinc-desde-cx" class="meio-sub" style="display:${v.tipo==="empregado"?"inline-flex":"none"};align-items:center;gap:4px">desde
+            <input type="month" id="tri-vinc-desde" value="${esc(v.desde||"")}" onchange="salvarVinculoTriagem('${c.id}')"></label>
+        </div>`)(t.vinculo||{}) : ""}
         ${chave==="conclusao"?`
         <div class="tri-prox">
           ${TRIAGEM_PROXIMO.map(([v,r])=>`<button class="tri-p${prox===v?" on":""}"
             onclick="marcarProximo('${c.id}','${v}')">${r}</button>`).join("")}
         </div>`:""}
         <textarea class="tri-nota" id="tri-${chave}" rows="2"
-          placeholder="${chave==="conclusao"?"o que foi decidido e por quê":"o que você encontrou, e o que falta"}"
+          placeholder="${chave==="conclusao"?"o que foi decidido e por quê":"anotação, se quiser"}"
           onblur="salvarNotaTriagem('${c.id}','${chave}')">${esc(p.nota||"")}</textarea>
-        ${p.em?`<div class="tri-assin">${quem?esc(quem.nome):"alguém"} · ${fmt(p.em)}</div>`:""}
-      </div>`;
-    }).join("")}
+        ${p.feito?`<div class="tri-assin">respondido por ${quem?esc(quem.nome):"alguém"} · ${fmt(p.em)}</div>`:""}
+        <div class="tri-prox-bt">
+          ${i>0?`<button class="cad-mini" onclick="irPassoTriagem('${c.id}',${i-1})">‹ anterior</button>`:""}
+          <button class="principal" onclick="proximaTriagem('${c.id}','${chave}')">${i===PASSOS.length-1?"Encerrar a triagem":"Próxima ›"}</button>
+        </div>
+      </div>
     </div>
     ${/* F24 · a pergunta do escritório: a advogada acrescenta e vale para
          TODOS os clientes, com autor e data gravados. */""}
@@ -11166,24 +11728,6 @@ function painelTriagemFicha(c, ks){
         onkeydown="if(event.key==='Enter'){event.preventDefault();novaPerguntaEscritorio();}">
       <button class="cad-mini" onclick="novaPerguntaEscritorio()">acrescentar</button>
     </div>
-    ${/* F54 · o vínculo com a Previdência HOJE (pedido do Paulo): empregado
-         desde quando, ou CI/facultativo — vai junto para a análise de direito */""}
-    ${(v=>`<div class="tri-vinculo" style="margin-top:8px;border:1px solid var(--borda);border-radius:8px;padding:8px 10px">
-      <div class="rotulo-caso">Vínculo com a Previdência hoje</div>
-      <div class="form-linha" style="margin-top:4px;align-items:center">
-        <select id="tri-vinc" onchange="document.getElementById('tri-vinc-desde-cx').style.display=this.value==='empregado'?'inline-flex':'none';salvarVinculoTriagem('${c.id}')">
-          <option value="">como contribui hoje?…</option>
-          <option value="empregado" ${v.tipo==="empregado"?"selected":""}>Empregado (CLT)</option>
-          <option value="ci" ${v.tipo==="ci"?"selected":""}>Contribuinte individual</option>
-          <option value="facultativo" ${v.tipo==="facultativo"?"selected":""}>Facultativo</option>
-          <option value="sem" ${v.tipo==="sem"?"selected":""}>Não contribui</option>
-        </select>
-        <label id="tri-vinc-desde-cx" class="meio-sub" style="display:${v.tipo==="empregado"?"inline-flex":"none"};align-items:center;gap:4px">desde
-          <input type="month" id="tri-vinc-desde" value="${esc(v.desde||"")}" onchange="salvarVinculoTriagem('${c.id}')"></label>
-        ${v.em?`<span class="meio-sub">registrado em ${fmt(v.em)}</span>`:""}
-      </div>
-      <p class="cad-nota" style="margin:4px 0 0">Essa resposta acompanha a análise de direito do passo 4 das Anotações.</p>
-    </div>`)(triagemDe(c).vinculo||{})}
     ${/* F49 · o elo triagem → análise: quem está triando vê na hora se a
          análise de direito deste cliente já existe, e onde registrá-la */""}
     <div class="tri-analise">${statusAnalise(c, true)}</div>
@@ -11191,12 +11735,7 @@ function painelTriagemFicha(c, ks){
       <button class="cad-mini" onclick="fecharAtendimento('${c.id}')"
         title="encerra a triagem: com atenção ou não conferido, o resumo vai para as Anotações; havendo caso, uma linha no histórico dele">
         Encerrar a triagem</button>
-      <p>Com <b>atenção</b> ou <b>não conferido</b>, o resumo do que foi apurado vai para as
-         Anotações — leitura rápida do essencial. Sem pendência, não suja as Anotações;
-         havendo caso, fica uma linha no histórico dele.</p>
     </div>
-    <p class="cad-nota">A leitura em cinza é o que o CRM já sabe do próprio banco. Ela não substitui a
-      conferência: o que vale é o que você marcar e escrever, que fica com o seu nome e a data.</p>
   </div>`;
 }
 
@@ -11294,8 +11833,14 @@ async function marcarTriagem(cliId, passo, estado){
   const c = D.cliPorId.get(cliId); if(!c) return;
   const t = {...triagemDe(c)};
   const atual = t[passo] || {};
-  t[passo] = {...atual, estado: atual.estado===estado ? "" : estado,
+  // F127 · a resposta à mão substitui a pré-pronta e já conta como
+  // respondida: entra na Análise de Direito na hora, com o nome de quem clicou
+  const ks = D.casosDoCliente.get(cliId) || [];
+  const l = triagemLeitura(passo, c, ks);
+  t[passo] = {...atual, estado: atual.estado===estado && !atual.auto ? "" : estado,
+              texto: [l.txt, l.det].filter(Boolean).join(" "), feito: Date.now(),
               em: hoje(), quem: eu.id};
+  delete t[passo].auto;
   if(!await salvarTriagem(cliId, t)) return aviso("Não consegui guardar a triagem — tente de novo");
   repintarFicha();
 }
@@ -13162,7 +13707,7 @@ async function avisarCenario(cliId, data, regra){
 function rotVinculo(v){
   if(!v || !v.tipo) return "";
   const nomes={empregado:"Empregado (CLT)", ci:"Contribuinte individual",
-    facultativo:"Facultativo", sem:"Não contribui"};
+    facultativo:"Facultativo", especial:"Segurado especial", sem:"Não contribui"};
   return (nomes[v.tipo]||v.tipo) + (v.tipo==="empregado" && v.desde ? ` desde ${v.desde.split("-").reverse().join("/")}` : "");
 }
 async function salvarVinculoTriagem(cliId){
@@ -13182,33 +13727,55 @@ function statusAnalise(c, naTriagem){
     return `<p class="meio-sub">Rode o <b>crm/fase2/schema_analise_direito.sql</b> no Supabase para
       registrar análises de direito.</p>`;
   const as=analisesDe(c.id), ult=as[0];
-  if(!ult) return `<div class="ad-status pendente"><b>Ainda sem análise de direito.</b>
-    Geralmente ela nasce no primeiro atendimento${naTriagem
-      ?` — registre nas <a onclick="irSubCad('anotacoes')" style="cursor:pointer;text-decoration:underline">Anotações (passo 4)</a>.`
-      :" — os campos estão aqui embaixo."}</div>`;
+  // F127 · cada passo respondido já está na Análise de Direito; o botão leva
+  // até lá, e o do CNIS abre o extrato ao lado
+  const bts=`<button class="btn-mini" onclick="abrirDireitoDe('${c.id}')" style="margin-left:6px">ver a Análise de Direito</button> ${botaoAbrirCnis(c, false)}`;
+  if(!ult) return `<div class="ad-status pendente"><b>Cenários de aposentadoria ainda não registrados.</b>
+    ${naTriagem?"Os passos respondidos aqui já aparecem na Análise de Direito.":"Os campos estão aqui embaixo."} ${bts}</div>`;
   const m=cenMelhor(ult);
   return `<div class="ad-status feita"><b>Análise de ${fmt(ult.data_analise)}</b>${
     m?` — melhor caminho: ${esc(m.regra||"—")}${m.data?` em ${fmt(m.data)}`:""}${m.valor?` (${moedaBR(m.valor)})`:""}`:""}${
-    as.length>1?` · ${as.length} análises no histórico`:""}
-    <button class="btn-mini" onclick="abrirDireitoDe('${c.id}')" style="margin-left:6px">ver histórico</button></div>`;
+    as.length>1?` · ${as.length} análises no histórico`:""} ${bts}</div>`;
+}
+// F127 · o feed da Análise de Direito: cada passo respondido na triagem e
+// cada anotação do atendimento, do mais novo ao mais velho, com quem fez
+function feedDireito(c, ks){
+  const t = triagemDe(c);
+  const itens = [];
+  for(const [k, rot] of triagemPassosDe(c, ks)){
+    const p = t[k]||{};
+    if(!p.feito && !(p.estado && !p.auto)) continue;
+    const quem = D.colPorId.get(p.quem);
+    const est = (TRIAGEM_ESTADOS.find(([e])=>e===p.estado)||[])[1];
+    itens.push({ts: p.feito || Date.parse(p.em||"")||0, cls: p.estado||"",
+      texto: `Triagem · ${rot}: ${p.texto||""}${p.nota?` Anotação: ${p.nota}`:""}${est?` — ${est}.`:""}`,
+      quem: quem ? quem.nome : "", em: p.em});
+  }
+  for(const n of ((c.campos||{}).atendimento||[]))
+    itens.push({ts: Date.parse(n.em)||0, cls:"anot", texto: n.texto||"", quem: n.quem||"", em: n.em});
+  return itens.sort((a,b)=>b.ts-a.ts);
 }
 function painelDireito(c){
   if(D.analises===null)
     return `<p class="meio-sub">A tabela desta página ainda não existe no banco — rode o
       <b>crm/fase2/schema_analise_direito.sql</b> no SQL Editor do Supabase e recarregue o CRM.</p>`;
   const as=analisesDe(c.id);
+  const ks=D.casosDoCliente.get(c.id)||[];
   const notas=[];
   for(const l of (D.lembretes||[]).filter(x=>x.cliente_id===c.id && x.tipo==="aposentadoria_futura"))
     ((l.detalhes||{}).anotacoes||[]).forEach((n,i)=>{ if(!n.analise_id) notas.push({...n, lembId:l.id, i}); });
+  const feed=feedDireito(c, ks);
   return `
-    <h3 style="margin-bottom:4px">⚖️ Análise de Direito de ${esc(c.nome.split(" ")[0])}</h3>
-    <p class="meio-sub" style="margin-bottom:8px">O que já foi visto com o cliente, atendimento por
-      atendimento — a memória do escritório para a próxima conversa. Cada análise guarda os caminhos
-      calculados na época (regra, data prevista, valor) e o que foi combinado.</p>
+    <div class="form-linha" style="align-items:center;gap:10px;margin-bottom:6px">
+      <h3 style="margin:0">⚖️ Análise de Direito de ${esc(c.nome.split(" ")[0])}</h3>
+      ${botaoAbrirCnis(c, false)}
+      ${/* F127 · a parceria se escolhe aqui; aparece em verde ao lado do nome */""}
+      <span class="meio-sub" style="margin-left:auto">parceria</span>${chipParceria(c, ks)}${seletorParceria(c, ks, "parc-sel-ad")}
+    </div>
     ${formAnalise(c)}
-    ${as.length ? as.map(cartaoAnalise).join("")
-      : `<p class="meio-sub" style="margin-top:8px">Nenhuma análise registrada ainda — a primeira
-         começa no "＋ registrar análise" aqui em cima. Análise antiga entra com a data original.</p>`}
+    ${as.length ? as.map(cartaoAnalise).join("") : ""}
+    ${feed.length?`<ul class="ad-feed">${feed.map(f=>`<li class="${esc(f.cls)}">${esc(f.texto)}<span class="ad-quem">${
+      f.quem?esc(f.quem):"—"}${f.em?` · ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>`:""}
     ${notas.length?`<div class="caso" style="margin-top:10px;border-left:3px solid var(--roxo)">
       <div class="rotulo-caso">🗒 Anotações antigas do To Do (lista 🙏 Aposentadorias Futuras)</div>
       <p class="meio-sub">O que você anotava para lembrar no futuro. "→ virar análise" traz a anotação
@@ -13254,6 +13821,7 @@ function renderDireito(){
           <span class="chip per">⚖️ ${g.as.length} análise${g.as.length>1?"s":""}</span>
           <span>última em <b>${fmt(ult.data_analise)}</b></span>
           ${m?`<span class="chip ${alcancou?"verde":"ben"}">${alcancou?"✓ direito alcançado":"melhor: "+esc(m.regra||"—")+(m.data?" em "+fmt(m.data):"")}</span>`:""}
+          ${cnisDe(g.c)&&cnisDe(g.c).caminho?`<button class="btn-mini" onclick="event.stopPropagation();abrirCnis('${g.c.id}')">Abrir CNIS ↗</button>`:""}
         </div></div></div>`;
   }).join("") : `<p class="meio-sub">Nenhuma análise registrada ainda. Abra a ficha de um cliente na aba
     <b>Análise de Direito</b> e registre a primeira — análise antiga entra com a data original
@@ -19495,23 +20063,8 @@ function cadCampoPasta(c){
 }
 // F23 · registro avulso: anotação de cliente que não pertence a caso nenhum.
 // Fica em clientes.campos.registros, com autor e data — o rastro em tudo.
-// F23 · a parceria escrita do cadastro: grava k.parceria no caso escolhido.
-// A pesquisa e a lista 🤝 Parcerias já leem esse campo — este é só o lugar
-// de escrever que faltava.
-async function definirParceria(){
-  const caso = (document.getElementById("par-caso")||{}).value;
-  const nome = ((document.getElementById("par-nome")||{}).value||"").trim();
-  const k = D.casoPorId.get(caso);
-  if(!k) return aviso("Escolha o caso");
-  if(!nome) return aviso("Escreva o nome do advogado parceiro");
-  try{ await patchCaso(k.id, {parceria:nome}); }
-  catch(e){ return aviso("Não consegui gravar a parceria — tente de novo"); }
-  k.parceria = nome;
-  const dono = D.cliPorId.get(k.cliente_id);
-  if(dono) reindexarCliente(dono);   // a busca acha pelo advogado NA HORA
-  aviso(`Parceria com ${nome} vinculada ✔`);
-  repintarFicha(); montarSidebar();
-}
+// F23 → F127 · a parceria passou a ser escolhida na lista de parceiros
+// (definirParceriaCliente), ao lado do nome e na Análise de Direito
 // F35 · a regra da volta: registro avulso do próprio autor se apaga
 async function apagarRegistroAvulso(cliId, idx){
   const c=D.cliPorId.get(cliId); if(!c) return;
@@ -19538,12 +20091,84 @@ async function novoRegistroAvulso(cliId){
   }catch(e){ return aviso("Não consegui guardar o registro — tente de novo"); }
   aviso("Registro guardado ✔"); repintarFicha();
 }
+// ══════════════════════════════════════════════════════════════════════════
+// F127 · PARCERIA — a lista de advogados parceiros do escritório
+// ══════════════════════════════════════════════════════════════════════════
+// Os nomes vêm do To Do (etiquetas #Nome e "com a Dra. …" nos títulos) e da
+// lista do Paulo; "outro…" acrescenta um nome novo à lista de todos. A
+// escolha vale para o CLIENTE (campos.parceria) e desce para os casos ativos
+// (k.parceria), que é o campo que a pesquisa e a lista 🤝 Parcerias leem.
+const PARCEIROS_PADRAO = ["João Eduardo","Laís","Flávio","Natieli","Walter","Amanda","Marcos","Márcio",
+  "Anderson","Mayara","Larissa","Alessandra","Fernanda","Cibele","Carlos Eduardo","Patrícia","João Álvaro"];
+function parceiros(){
+  try{ const v = cfgApp("parceiros"); const l = Array.isArray(v) ? v : (v ? JSON.parse(v) : null);
+       return l && l.length ? l : PARCEIROS_PADRAO; }
+  catch(e){ return PARCEIROS_PADRAO; }
+}
+// "com a Dra. Lais #Laís" → "Laís"; "com o Dr. Flávio" → "Flávio"
+function limparParceria(s){
+  const t = String(s||"").trim(); if(!t) return "";
+  const tag = t.match(/#([\wÀ-ú]+)/);
+  if(tag) return tag[1].replace(/([a-zà-ú])([A-ZÀ-Ú])/g, "$1 $2");
+  return t.replace(/^com\s+(a|o)\s+/i, "").replace(/^dr\.?a?\.?\s+/i, "").split(",")[0].trim();
+}
+function parceriaDe(c, ks){
+  const p = (c.campos||{}).parceria; if(p) return p;
+  const k = (ks||[]).find(x=>x.parceria && x.fase!=="encerrado") || (ks||[]).find(x=>x.parceria);
+  return k ? limparParceria(k.parceria) : "";
+}
+async function definirParceriaCliente(cliId, nome){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  nome = (nome||"").trim();
+  if(nome === "__outro"){
+    nome = (prompt("Nome do advogado parceiro")||"").trim();
+    if(!nome) return repintarFicha();
+    const lista = parceiros();
+    if(!lista.includes(nome)){ try{ await guardarCfgApp("parceiros", lista.concat([nome])); }catch(e){} }
+  }
+  c.campos = {...(c.campos||{}), parceria: nome||null};
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}); }
+  catch(e){ return aviso("Não consegui gravar a parceria — tente de novo"); }
+  for(const k of (D.casosDoCliente.get(cliId)||[]).filter(x=>x.fase!=="encerrado")){
+    try{ await patchCaso(k.id, {parceria: nome||null}); k.parceria = nome||null; }catch(e){}
+  }
+  reindexarCliente(c);
+  aviso(nome ? `Parceria com ${nome} registrada ✔` : "Parceria retirada", false);
+  repintarFicha(); montarSidebar();
+}
+function seletorParceria(c, ks, id){
+  const atual = parceriaDe(c, ks);
+  const lista = parceiros();
+  const ops = atual && !lista.includes(atual) ? [atual].concat(lista) : lista;
+  return `<select class="parc-sel" id="${id}" onclick="event.stopPropagation()"
+      onchange="event.stopPropagation();definirParceriaCliente('${c.id}', this.value)" title="advogado parceiro neste cliente">
+    <option value="">sem parceria</option>
+    ${ops.map(p=>`<option value="${esc(p)}" ${p===atual?"selected":""}>${esc(p)}</option>`).join("")}
+    <option value="__outro">outro…</option>
+  </select>`;
+}
+function chipParceria(c, ks){
+  const p = parceriaDe(c, ks); if(!p) return "";
+  return `<span class="chip parc cli-parc" title="caso em parceria com ${esc(p)}"><span class="cli-parc-k">parceria</span>${esc(p)}</span>`;
+}
+// F127 · o CNIS na Identificação: quando foi lido, e o botão de abrir
+function cadCampoCnis(c){
+  const g = cnisDe(c);
+  return `<div class="cad-campo cad-c4${g?"":" vazio"}">
+    <label>CNIS</label>
+    <div class="cad-v">${g ? `lido em ${esc(fmt(g.em))} · ${g.paginas} pág. · ${g.qtVinculos} vínculo(s)` : "não inserido"}
+      ${botaoAbrirCnis(c, false)}
+      ${botaoInserirCnisNovo(c)}</div>
+  </div>`;
+}
 function fichaIdentificacao(c, creds){
   const falta = cadFaltando(c);
   const tels = telefonesDe(c);
   const idade = idadeDe(c.dn);
   const credInss = (creds||[]).find(cr=>cr.tipo==="meu_inss");
   const outrasCreds = (creds||[]).filter(cr=>cr.tipo!=="meu_inss");
+  const ks = D.casosDoCliente.get(c.id) || [];
   return `<div class="cad-cartao">
     <div class="cad-tit"><span class="cad-ic">${CAD_IC.pessoa}</span>Dados civis
       <span class="cad-tit-sub">o que a procuração e o contrato exigem, mais o acesso do cliente</span>
@@ -19555,9 +20180,12 @@ function fichaIdentificacao(c, creds){
            copia num atendimento: CPF, senha do Meu INSS e nascimento, lado a
            lado. Antes a senha era o penúltimo campo do cartão, e entrar no Meu
            INSS pedia copiar em cima, rolar até o fim e copiar de novo. */""}
+      ${/* F127 · a parceria em VERDE ao lado do nome, com a lista para trocar */""}
       <div class="cad-campo cad-c12" onclick="if(!this.querySelector('#ed-campo'))editarCampo('nome','${c.id}')" style="cursor:pointer">
         <label>Nome completo <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
-        <div class="cad-v grande" id="campo-nome">${esc(c.nome)}</div>
+        <div class="cad-v grande" id="campo-nome">${esc(c.nome)}
+          ${chipParceria(c, ks)}
+          ${seletorParceria(c, ks, "parc-sel-id")}</div>
       </div>
       ${/* CPF e nascimento pediam o lápis; o resto da grade aceita clique no
            cartão inteiro. Alvo de 4px contra alvo de 240px, na mesma tela. */""}
@@ -19602,8 +20230,9 @@ function fichaIdentificacao(c, creds){
 
       ${cadCampoEndereco(c)}
 
-            ${cadCampo(c, "nome_mae", 4)}
-      ${cadCampo(c, "pis_nit", 4)}
+      ${cadCampo(c, "nome_mae", 4)}
+      ${cadCampo(c, "pis_nit", 4, undefined, {rot:"PIS / NIT (todos)"})}
+      ${cadCampoCnis(c)}
 
       ${outrasCreds.map(cr=>cadCampoSenha(c, cr.tipo, "Senha "+esc(cr.tipo.replace("_"," ")), cr)).join("")}
       ${cadCampoPasta(c)}

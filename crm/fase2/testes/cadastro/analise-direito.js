@@ -169,9 +169,11 @@ FIX.lembretes = [{ id: "l0000000-0000-0000-0000-00000000f481", cliente_id: CLI_C
   // 10) F49 · o trilho do PRIMEIRO atendimento: triagem → anotações → análise
   await p.evaluate(cli => abrirFicha(cli), CLI_VAZIO);
   await p.waitForTimeout(900);
-  conf("na TRIAGEM aparece o elo âmbar: ainda sem análise de direito",
+  // F127 · a linha diz que os cenários ainda não foram registrados e leva
+  // à Análise de Direito, onde os passos da triagem já vão aparecendo
+  conf("na TRIAGEM aparece o elo âmbar: cenários ainda não registrados",
     await p.evaluate(() => { const t = document.querySelector(".tri-analise .ad-status.pendente");
-      return t && /Ainda sem análise/.test(t.textContent) && /Anotações \(passo 4\)/.test(t.textContent); }));
+      return t && /ainda não registrados/.test(t.textContent) && /ver a Análise de Direito/.test(t.textContent); }));
   // triagem encerrada (em memória) abre a mesa das anotações
   await p.evaluate(cli => { const c = D.cliPorId.get(cli);
     c.triagem = { atendimento: { em: hoje(), quem: eu.id, passos: 8, conferidos: 8 } };
@@ -198,7 +200,7 @@ FIX.lembretes = [{ id: "l0000000-0000-0000-0000-00000000f481", cliente_id: CLI_C
       ((x.corpo.campos || {}).atendimento || []).some(n => /⚖️ Análise de Direito registrada/.test(n.texto))));
   conf("depois de salvar, o elo fica verde com o melhor caminho e o histórico",
     await p.evaluate(() => { const s = document.querySelector('[data-p="0"] .ad-status.feita');
-      return s && /PCD \(LC 142\)/.test(s.textContent) && /ver histórico/.test(s.textContent); }));
+      return s && /PCD \(LC 142\)/.test(s.textContent) && /ver a Análise de Direito/.test(s.textContent); }));
 
   // 11) tabela ausente = aviso do schema (banco atrasado não quebra a tela)
   await p.evaluate(() => { D.analises = null; render(); });

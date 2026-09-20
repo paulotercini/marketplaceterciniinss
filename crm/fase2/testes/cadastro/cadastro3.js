@@ -90,15 +90,20 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "Apos. Tempo de Contribuição" };
     }, CLI_CHEIO)));
 
   // ── 2. a parceria com nome de advogado ──────────────────────────────────
-  conf("o cadastro tem onde escrever o advogado parceiro",
-    await p.$("#par-nome"));
+  // F127 · a parceria se escolhe numa LISTA (ao lado do nome, em verde) e
+  // grava no cliente E nos casos ativos
+  conf("o cadastro tem a lista de advogados parceiros ao lado do nome",
+    await p.$("#campo-nome .parc-sel"));
   escritos.length = 0;
-  await p.fill("#par-nome", "Dra. Fictícia Parceira Nogueira");
-  await p.evaluate(() => definirParceria());
+  await p.evaluate(cli => definirParceriaCliente(cli, "Dra. Fictícia Parceira Nogueira"), CLI_CHEIO);
   await p.waitForTimeout(600);
   const pat = escritos.find(x => x.m === "PATCH" && x.t === "casos");
-  conf(`vincular grava a parceria no CASO (${pat && pat.corpo.parceria})`,
+  conf(`escolher grava a parceria no CASO (${pat && pat.corpo.parceria})`,
     pat && pat.corpo.parceria === "Dra. Fictícia Parceira Nogueira");
+  conf("e no cliente, em campos.parceria",
+    escritos.some(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.campos && x.corpo.campos.parceria === "Dra. Fictícia Parceira Nogueira"));
+  conf("o chip verde aparece ao lado do nome",
+    await p.evaluate(() => /Nogueira/.test((document.querySelector("#campo-nome .chip.parc") || {}).textContent || "")));
   conf("e a pesquisa passa a achar o cliente pelo nome do advogado",
     (await p.evaluate(cli => pesquisar("Nogueira").some(c => c.id === cli), CLI_CHEIO)));
   conf("a lista Parcerias da lateral conta este caso",
