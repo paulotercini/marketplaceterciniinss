@@ -85,6 +85,19 @@ FIX.lembretes = [{ id: "l0000000-0000-0000-0000-00000000f481", cliente_id: CLI_C
   await p.waitForTimeout(400);
   conf("o painel abre com o formulário de registrar",
     await p.evaluate(() => !!document.getElementById("ad-novo") && !!document.getElementById("ad-data")));
+  // F128 · a idade atual é a primeira coisa; o CNIS fica no canto direito; a
+  // explicação saiu (Aurélia nasceu em 14.03.1962)
+  const topo = await p.evaluate(() => { const t = document.querySelector('.painel[data-p="8"] .ad-topo');
+    const bts = [...t.querySelectorAll("button")]; const idade = t.querySelector(".ad-idade-hoje");
+    return { primeiro: t.firstElementChild === idade, txt: idade ? idade.textContent : "",
+      cnisUltimo: bts.length && /CNIS/.test(bts[bts.length - 1].textContent) };
+  });
+  const anosHoje = (() => { const h = new Date(); let a = h.getFullYear() - 1962; if (h.getMonth() + 1 < 3 || (h.getMonth() + 1 === 3 && h.getDate() < 14)) a--; return a; })();
+  conf(`a idade atual do segurado é a primeira coisa da Análise de Direito (${topo.txt.slice(0, 12).trim()})`,
+    topo.primeiro && new RegExp("^" + anosHoje + " anos").test(topo.txt.trim()));
+  conf("o botão do CNIS fica no canto direito", topo.cnisUltimo);
+  conf("a explicação de rodapé saiu da tela",
+    !(await p.evaluate(() => /memória do escritório para a próxima conversa/.test(document.querySelector('.painel[data-p="8"]').textContent))));
   conf("a anotação antiga do To Do aparece, com a data original",
     await p.evaluate(() => [...document.querySelectorAll(".mov-txt")]
       .some(x => /aposenta por pontos em 2025/.test(x.textContent))));
@@ -116,6 +129,8 @@ FIX.lembretes = [{ id: "l0000000-0000-0000-0000-00000000f481", cliente_id: CLI_C
     post && post.corpo.data_analise === "2020-05-02" && post.corpo.fonte === "todo" &&
     (post.corpo.cenarios || []).length === 2 && post.corpo.cenarios[0].melhor === true &&
     post.corpo.cenarios[0].valor === 3000);
+  conf("o cartão da análise abre com a idade NA DATA da análise (58 anos em 02.05.2020)",
+    await p.evaluate(() => /Idade na data da análise:\s*58 anos/.test((document.querySelector('.painel[data-p="8"] .ad-analise .ad-idade') || {}).textContent || "")));
   const andPost = escritos.find(x => x.m === "POST" && x.t === "andamentos");
   conf("o comentário vai para TODOS os casos ativos (2), e não para o encerrado",
     andPost && Array.isArray(andPost.corpo) && andPost.corpo.length === 2 &&

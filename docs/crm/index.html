@@ -1283,6 +1283,24 @@
   .ad-feed li.atencao{border-left-color:#E9B44C}
   .ad-feed li.pendente{border-left-color:#D9534F}
   .ad-feed .ad-quem{display:block;font-size:12px;color:var(--cinza);margin-top:3px}
+  /* F128 · a idade do segurado abre a Análise de Direito e cada análise */
+  .ad-idade-hoje{font-size:15px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .ad-idade-hoje b{font-size:22px;font-variant-numeric:tabular-nums}
+  .ad-idade{font-size:12.5px;color:var(--cinza);margin-bottom:4px}
+  .ad-idade b{color:var(--texto);font-size:13.5px}
+  /* F128 · a mesa das Anotações: cada bloco com o seu fundo, para a leitura
+     não se perder entre espécie, documentos, anotações e análise */
+  .mesa-bloco{border-radius:10px;padding:10px 14px;margin-top:10px;border:1px solid var(--borda)}
+  .mesa-bloco > .rotulo-caso,.mesa-bloco > summary.rotulo-caso{margin-top:0}
+  .mesa-b1{background:#EAF2FB;border-color:#BFD3EA}
+  .mesa-b2{background:#F1F2F4;border-color:#D9DCE1}
+  .mesa-b3{background:#FFF7DD;border-color:#F1D48A}
+  .mesa-b4{background:var(--verde-f);border-color:#BFE3CC}
+  .mesa-b5{background:#F7F0FA;border-color:#DCC8E6}
+  .mesa-bloco .pc-cartao{background:var(--branco)}
+  .esp-escolhida{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13.5px}
+  .esp-escolhida .esp-cod-mini{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;background:#fff;border:1px solid var(--borda);border-radius:5px;padding:1px 6px}
+  .esp-escolhida.vazia{color:#9B3B3B}
   .cad-apoio{font-size:12px;font-weight:400;color:var(--cinza)}
   /* a senha mascarada: mesma altura das outras linhas, sem o amarelo que o
      sistema de tokens reserva para prazo */
@@ -2465,7 +2483,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.24</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.25</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11004,8 +11022,10 @@ const IND_CNIS = {
 function descIndicador(cod, doExtrato){
   return (doExtrato||"").trim() || IND_CNIS[String(cod||"").toUpperCase()] || "descrição não catalogada — conferir no extrato";
 }
-// o salário mínimo por competência, desde o Real (DIEESE/gov.br, conferido
-// em 20.09.2026). Antes de 07/1994 a moeda é outra e a conferência não vale.
+// o salário mínimo por competência, desde o Real. Conferido em 20.09.2026 no
+// DIEESE, no gov.br e na tabela do Portal Contábeis (contabeis.com.br/tabelas/
+// salario-minimo, com o ato legal de cada valor) — as três batem, linha a
+// linha. Antes de 07/1994 a moeda é outra e a conferência não vale.
 const SAL_MIN = [["1994-07",64.79],["1994-09",70],["1995-05",100],["1996-05",112],["1997-05",120],
   ["1998-05",130],["1999-05",136],["2000-04",151],["2001-04",180],["2002-04",200],["2003-04",240],
   ["2004-05",260],["2005-05",300],["2006-04",350],["2007-04",380],["2008-03",415],["2009-02",465],
@@ -12531,9 +12551,11 @@ function diaUtilAntes(iso){
 // a data do aviso de uma aposentadoria: três meses antes, em dia útil
 function avisoApos(data){ return diaUtilAntes(menosMeses(data, MESES_AVISO)); }
 // idade completa hoje, para mostrar junto do nascimento
-function idadeDe(dn){
-  const iso=dnIso(dn); if(!iso) return null;
-  const [a,m,d]=iso.split("-").map(Number), h=hoje().split("-").map(Number);
+function idadeDe(dn){ return idadeEm(dn, hoje()); }
+// F128 · a idade numa data qualquer (a da análise de direito, por exemplo)
+function idadeEm(dn, dataIso){
+  const iso=dnIso(dn); if(!iso || !dataIso) return null;
+  const [a,m,d]=iso.split("-").map(Number), h=String(dataIso).slice(0,10).split("-").map(Number);
   let anos=h[0]-a;
   if(h[1]<m || (h[1]===m && h[2]<d)) anos--;
   return anos>=0 && anos<130 ? anos : null;
@@ -13535,7 +13557,8 @@ function cartaoCenario(cn, cliId){
   </div>`;
 }
 function resumoAnalise(a, c){
-  const cab=`⚖️ Análise de Direito — ${c.nome}, feita em ${fmt(a.data_analise)}`
+  const idade=idadeEm(c.dn, a.data_analise);
+  const cab=`⚖️ Análise de Direito — ${c.nome}${idade!=null?` (${idade} anos na data da análise)`:""}, feita em ${fmt(a.data_analise)}`
     +((co=>co?` por ${co.nome}`:"")(D.colPorId.get(a.autor_id)));
   const cens=(a.cenarios||[]).map(x=>`• ${x.regra||"—"}${x.data?`: ${x.data<=hoje()?"direito desde":"aposenta em"} ${fmt(x.data)}`:""}${x.valor?` — ${moedaBR(x.valor)}`:""}${x.melhor?" ⭐":""}${x.obs?` (${x.obs})`:""}`);
   return [cab, ...(a.contexto?[a.contexto]:[]), ...cens].join("\n");
@@ -13547,6 +13570,9 @@ function copiarAnalise(id){
 }
 function cartaoAnalise(a){
   const co=D.colPorId.get(a.autor_id), cs=a.cenarios||[];
+  // F128 · a idade do segurado NA DATA da análise abre o cartão
+  const cli=D.cliPorId.get(a.cliente_id)||{};
+  const idade=idadeEm(cli.dn, a.data_analise);
   return `<div class="caso ad-analise">
     <div class="ad-lado">
       <div class="ad-ano">${(a.data_analise||"").slice(0,4)}</div>
@@ -13556,6 +13582,7 @@ function cartaoAnalise(a){
         :a.fonte==="todo"?`<span class="chip neutro" title="nasceu de anotação antiga do To Do">To Do</span>`:""}
     </div>
     <div class="ad-corpo">
+      <div class="ad-idade">${idade==null?"Idade na data da análise: sem data de nascimento na ficha":`Idade na data da análise: <b>${idade} anos</b>`}</div>
       ${a.contexto?`<div class="ad-contexto">${esc(a.contexto)}</div>`:""}
       ${cs.length?`<div class="ad-cens">${cs.map(x=>cartaoCenario(x, a.cliente_id)).join("")}</div>`:""}
       <div class="form-linha" style="margin-top:6px">
@@ -13765,12 +13792,16 @@ function painelDireito(c){
   for(const l of (D.lembretes||[]).filter(x=>x.cliente_id===c.id && x.tipo==="aposentadoria_futura"))
     ((l.detalhes||{}).anotacoes||[]).forEach((n,i)=>{ if(!n.analise_id) notas.push({...n, lembId:l.id, i}); });
   const feed=feedDireito(c, ks);
+  // F128 · a idade do segurado é a PRIMEIRA coisa da tela; o CNIS fica no
+  // canto direito; a parceria (F127) entre os dois
+  const idade=idadeDe(c.dn);
   return `
-    <div class="form-linha" style="align-items:center;gap:10px;margin-bottom:6px">
-      <h3 style="margin:0">⚖️ Análise de Direito de ${esc(c.nome.split(" ")[0])}</h3>
-      ${botaoAbrirCnis(c, false)}
-      ${/* F127 · a parceria se escolhe aqui; aparece em verde ao lado do nome */""}
+    <div class="form-linha ad-topo" style="align-items:center;gap:10px;margin-bottom:6px">
+      <div class="ad-idade-hoje">${idade==null
+        ? `<b>Idade</b> <span class="meio-sub">sem data de nascimento na ficha — preencha na Identificação</span>`
+        : `<b>${idade} anos</b> <span class="meio-sub">nascido${c.sexo==="F"?"a":""} em ${esc(fmt(dnIso(c.dn)))} · hoje ${esc(fmt(hoje()))}</span>`}</div>
       <span class="meio-sub" style="margin-left:auto">parceria</span>${chipParceria(c, ks)}${seletorParceria(c, ks, "parc-sel-ad")}
+      ${botaoAbrirCnis(c, false)}
     </div>
     ${formAnalise(c)}
     ${as.length ? as.map(cartaoAnalise).join("") : ""}
@@ -14269,32 +14300,58 @@ function nomeDaSubespecie(chave){
   return null;
 }
 let espBusca = "";
-function escolherEspecie(casoId){
-  const k = D.casoPorId.get(casoId); if(!k) return;
-  espBusca = "";
-  caixa(`<h3 style="margin:0 0 8px">Espécie do caso <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
+// F128 · o catálogo é UM só, e serve ao caso e ao pré-caso das Anotações:
+// espCtx guarda a escolha atual e quem recebe o clique
+let espCtx = null;
+function abrirCatalogoEspecies(titulo, atual, escolher){
+  espBusca = ""; espCtx = {atual: atual||{}, escolher};
+  caixa(`<h3 style="margin:0 0 8px">Espécie do caso <small class="meio-sub">· ${esc(titulo)}</small></h3>
     <input id="esp-busca" placeholder="procurar: tempo de contribuição, rural, pensão, B42…" style="width:100%;box-sizing:border-box;padding:8px 10px;border:1px solid var(--borda);border-radius:6px;font-size:13px"
-      oninput="espBusca=this.value;pintarEspecies('${casoId}')">
+      oninput="espBusca=this.value;pintarEspecies()">
     <div id="esp-lista" class="esp-lista"></div>
     <div class="form-linha" style="margin-top:10px;align-items:center;gap:8px">
       <input id="esp-livre" placeholder="outro pedido, à mão (ex.: Repetição de Indébito)" style="flex:1;min-width:220px"
-        onkeydown="if(event.key==='Enter')gravarEspecie('${casoId}',null,null,this.value)">
-      <button class="btn-mini" onclick="gravarEspecie('${casoId}',null,null,document.getElementById('esp-livre').value)">usar este nome</button>
+        onkeydown="if(event.key==='Enter')espCtx.escolher(null,null,this.value)">
+      <button class="btn-mini" onclick="espCtx.escolher(null,null,document.getElementById('esp-livre').value)">usar este nome</button>
     </div>`);
-  pintarEspecies(casoId);
+  pintarEspecies();
   document.getElementById("esp-busca").focus();
 }
-function pintarEspecies(casoId){
-  const k = D.casoPorId.get(casoId) || {}, q = dsa(espBusca||"").trim();
+function escolherEspecie(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  abrirCatalogoEspecies(tituloCaso(k), {cod:k.especie, chave:k.subespecie||k.especie},
+    (cod, chave, livre)=>gravarEspecie(casoId, cod, chave, livre));
+}
+function pintarEspecies(){
+  const at = (espCtx||{}).atual||{}, q = dsa(espBusca||"").trim();
   const bate = t => !q || dsa(t).includes(q);
   const html = FAMILIAS_ESPECIE.map(([fam, cods]) => {
     const itens = cods.flatMap(cod => subespeciesDe(cod).filter(([ch, nome]) => bate(`${cod} ${ch} ${nome}`)).map(([ch, nome]) => {
-      const on = (k.subespecie||k.especie)===ch || (!k.subespecie && k.especie===cod && ch===cod);
-      return `<button class="esp-it ${on?"on":""} ${ch===cod?"":"sub"}" onclick="gravarEspecie('${casoId}','${cod}','${ch}')">
+      const on = at.chave ? at.chave===ch : (at.cod===cod && ch===cod);
+      return `<button class="esp-it ${on?"on":""} ${ch===cod?"":"sub"}" onclick="espCtx.escolher('${cod}','${ch}')">
         <span class="esp-cod-mini">${esc(cod)}</span>${esc(nome)}</button>`; }));
     return itens.length ? `<div class="esp-fam"><div class="esp-fam-rot">${esc(fam)}</div>${itens.join("")}</div>` : "";
   }).join("");
   document.getElementById("esp-lista").innerHTML = html || `<p class="meio-sub" style="padding:6px 2px">Nada com “${esc(espBusca)}”. Escreva o pedido à mão no campo abaixo.</p>`;
+}
+// o pré-caso das Anotações escolhe no MESMO catálogo do caso (pedido do
+// Paulo, 20.09): guarda o nome (que o resto da mesa lê), o código e a
+// subespécie, que descem para o caso quando ele for gerado
+function escolherEspeciePre(cliId, pcId){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const pc = precasosDe(c).find(p=>p.id===pcId); if(!pc) return;
+  abrirCatalogoEspecies(pc.especie||"pré-caso", {cod:pc.cod, chave:pc.sub||pc.cod},
+    async (cod, chave, livre)=>{
+      let nome, corpo;
+      if(cod){ nome = (chave && nomeDaSubespecie(chave)) || nomeDaEspecie(cod);
+               corpo = {especie:nome, cod, sub:(chave && chave!==cod) ? chave : null}; }
+      else{ nome = String(livre||"").trim(); if(!nome) return aviso("Escreva o nome do pedido");
+            corpo = {especie:nome, cod:null, sub:null}; }
+      fecharCaixa();
+      mesaAberta.add("b1");
+      const pcs = precasosDe(c).map(p=>p.id===pcId ? {...p, ...corpo, quem:p.quem||eu.id, em:p.em||hoje()} : p);
+      if(await gravarPrecasos(cliId, pcs)){ aviso(`Espécie: ${nome} ✔`, false); repintarFicha(); }
+    });
 }
 async function gravarEspecie(casoId, cod, chave, livre){
   const k = D.casoPorId.get(casoId); if(!k) return;
@@ -21028,11 +21085,16 @@ async function gerarCasoDoPre(cliId, pcId){
     || (pc.via==="jud" ? "peticao_inicial" : "inss");
   const nat = pc.natureza==="revisao" ? "revisão" : pc.natureza==="acerto" ? "acerto" : "concessão";
   let k;
+  // F128 · o código e a subespécie escolhidos no catálogo descem para o caso
+  // (a coluna subespecie vem do schema_linha_caso.sql; sem ela, vai sem)
+  const base = {cliente_id:cliId, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
+    beneficio:pc.especie, fase, especie:pc.cod||null,
+    origem_lista:(LISTAS_MOVER.find(([,f])=>f===fase)||["🙋 Escritório"])[0]};
+  const criar = corpo => api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
+    body:JSON.stringify(corpo)});
   try{
-    [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-      body:JSON.stringify({cliente_id:cliId, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
-        beneficio:pc.especie, fase,
-        origem_lista:(LISTAS_MOVER.find(([,f])=>f===fase)||["🙋 Escritório"])[0]})});
+    try{ [k]=await criar(pc.sub ? {...base, subespecie:pc.sub} : base); }
+    catch(e){ if(pc.sub && /subespecie|42703|PGRST204/.test(String(e.message||e))) [k]=await criar(base); else throw e; }
   }catch(e){ return aviso("Não consegui criar o caso — tente de novo"); }
   D.casos.push(k); D.casoPorId.set(k.id,k);
   if(!D.casosDoCliente.has(cliId)) D.casosDoCliente.set(cliId,[]);
@@ -21511,18 +21573,19 @@ function caixaAtendimento(c, ks){
     const marcas = pc.marc||{};
     const eApos = APOS_RX.test(pc.especie||"");
     const quem = pc.quem && D.colPorId.get(pc.quem);
-    const naLista = !pc.especie || D.docs.some(d=>d.beneficio===pc.especie);
     const topicos = ["rural","especial","deficiencia"].filter(m=>marcas[m])
       .flatMap(m=>topicosDoMarcador(m).map(([,r,d])=>({m,r,d})));
     return `<div class="pc-cartao${pc.so_lembrete?" pc-lemb":""}">
       <div class="pc-cab">
-        <select onchange="if(this.value==='__outros__'){this.nextElementSibling.style.display='inline-block';this.nextElementSibling.focus();}else{mudarPreCaso('${c.id}','${pc.id}','especie',this.value)}">
-          <option value="">espécie — ainda não definida</option>
-          ${D.docs.map(d=>`<option value="${esc(d.beneficio)}" ${pc.especie===d.beneficio?"selected":""}>${esc(d.beneficio)}</option>`).join("")}
-          <option value="__outros__" ${pc.especie&&!naLista?"selected":""}>outros — escrever a espécie/serviço</option>
-        </select><input style="display:${pc.especie&&!naLista?"inline-block":"none"};min-width:180px"
-          value="${esc(!naLista?pc.especie:"")}" placeholder="qual benefício/serviço?"
-          onchange="mudarPreCaso('${c.id}','${pc.id}','especie',this.value.trim())">
+        ${/* F128 · a espécie sai do MESMO catálogo do caso (famílias e
+             subespécies); o clique abre a janela de escolher */""}
+        <span class="esp-escolhida${pc.especie?"":" vazia"}">
+          ${pc.especie
+            ? `${pc.cod?`<span class="esp-cod-mini">${esc(pc.cod)}</span>`:""}<b>${esc(pc.especie)}</b>`
+            : `<b>espécie ainda não definida</b>`}
+          <button class="cad-mini" onclick="escolherEspeciePre('${c.id}','${pc.id}')"
+            title="escolher no catálogo de espécies e subespécies do escritório">${pc.especie?"trocar":"escolher a espécie"}</button>
+        </span>
         <span class="pc-nat">${[["concessao","concessão"],["revisao","revisão"],["acerto","acerto"]]
           .map(([v,r])=>`<button class="tri-e${pc.natureza===v?" on ok":""}"
             onclick="mudarPreCaso('${c.id}','${pc.id}','natureza','${pc.natureza===v?"":v}')">${r}</button>`).join("")}</span>
@@ -21569,7 +21632,7 @@ function caixaAtendimento(c, ks){
       `Honorários${pcsVivos.length>1?` — ${esc(pc.especie||"")}`:""} — ${pc.honorarios
         ?`combinado diferente: ${esc(pc.honorarios)}`
         :`Padrão do escritório: ${esc(HONOR_RESUMO[vr]||"")}${ehIncap(pc.especie)&&pc.via==="adm"?" (via administrativa: 20% sobre as parcelas recebidas)":""}`}`, `
-    <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+    <div class="mesa-bloco mesa-b5">
       <div class="rotulo-caso">Honorários${pcsVivos.length>1?` — ${esc(pc.especie||"sem espécie")}`:""}</div>
       <p class="meio-sub" style="margin:2px 0 4px">Padrão do escritório para <b>${esc(v.rot)}</b>:
         ${esc(HONOR_RESUMO[vr]||"")}${ehIncap(pc.especie)&&pc.via==="adm"?" — <b>via administrativa: 20% sobre as parcelas recebidas</b>":""}</p>
@@ -21590,7 +21653,7 @@ function caixaAtendimento(c, ks){
     if(pc.especie===ESPECIE_PAGAMENTOS) return "";
     const semVia = ehIncap(pc.especie) && !pc.via;
     const trava = !pc.especie ? "defina a espécie" : semVia ? "escolha a via (administrativo ou judicial)" : "";
-    return `<div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+    return `<div class="mesa-bloco mesa-b5">
       <div class="rotulo-caso">E agora?${pcsVivos.length>1?` — ${esc(pc.especie||"sem espécie")}`:""}</div>
       <p class="meio-sub" style="margin:2px 0 6px"><b>O caso será gerado somente quando o cliente assinar a
         procuração.</b> Gerar o caso abre o botão de documentos com as procurações e o contrato para imprimir.</p>
@@ -21655,7 +21718,7 @@ function caixaAtendimento(c, ks){
       `1 · De que se trata — ${pcsVivos.map(p=>[esc(p.especie),NAT_ROT[p.natureza]||"",
         p.via?(p.via==="adm"?"administrativo":"judicial"):"", p.cidade?esc(p.cidade):""]
         .filter(Boolean).join(" · ")).join("  |  ")}`, `
-    <div class="pc-bloco">
+    <div class="pc-bloco mesa-bloco mesa-b1">
       <div class="rotulo-caso">1 · De que se trata${pcs.length>1?` (${pcs.length})`:""}</div>
       ${pcs.map(card).join("") || `<p class="meio-sub">Nenhum atendimento aberto — acrescente pelo +.</p>`}
       ${(lx=>lx&&lx.pc?`<p class="meio-sub" style="margin:4px 0"><button class="cad-mini"
@@ -21695,7 +21758,7 @@ function caixaAtendimento(c, ks){
          clique, e o título resume o que há dentro — tela mais limpa */""}
     ${/* F54 · benefício por incapacidade: o checklist de documentos já nasce
          ABERTO — é o momento de pedir tudo, não de procurar onde clicar */""}
-    <details ${ehIncap(esp)?"open":""} style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+    <details ${ehIncap(esp)?"open":""} class="mesa-bloco mesa-b2">
       <summary class="rotulo-caso" style="cursor:pointer;display:list-item">2 · Documentos que o cliente vai trazer${
         esp&&(itens.length||extras.length)?` <span class="meio-sub" style="text-transform:none">— lista de ${itens.length+extras.length} itens${pedidos.length?` · já pedimos ${pedidos.reduce((n,p)=>n+(p.itens||[]).length,0)}`:""} (abre e fecha no toque)</span>`
         :` <span class="meio-sub" style="text-transform:none">— abre e fecha no toque</span>`}</summary>
@@ -21741,7 +21804,7 @@ function caixaAtendimento(c, ks){
         </ul></div>`:""}
     </details>`}
 
-    <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+    <div class="mesa-bloco mesa-b3">
       <div class="rotulo-caso">3 · Anotações deste atendimento</div>
       ${quadroPendencias(c)}
       <textarea id="at-nota" rows="3" placeholder="a anotação deste atendimento — cada assunto pode ser uma anotação separada; o + guarda e abre espaço para a próxima"
@@ -21828,7 +21891,7 @@ function caixaAtendimento(c, ks){
     ${dobra("b4", D.analises!==null && (analisesDe(c.id)[0]||{}).data_analise===hoje(),
       (()=>{const u=(analisesDe(c.id)||[])[0]||{},m=u.id?cenMelhor(u):null;
         return `4 · Análise de Direito — registrada hoje${m?` — melhor caminho: ${esc(m.regra||"")}${m.data?` em ${fmt(m.data)}`:""}`:""}`;})(), `
-    <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
+    <div class="mesa-bloco mesa-b4">
       <div class="rotulo-caso">4 · Análise de Direito deste atendimento</div>
       ${statusAnalise(c)}
       ${abaAtiva!==8 ? formAnalise(c)
