@@ -95,10 +95,14 @@ FIX.casos.push(
       marcado: (x.querySelector(".tri-e.on") || {}).textContent || "" };
   });
   const passos = await trilho();
-  conf(`os nove fixos abrem o trilho, na ordem (${passos.length} no total)`,
-    passos.length >= 9 && passos[0] === "CNIS" && passos[1] === "Indicadores"
+  conf(`os dez fixos abrem o trilho, na ordem (${passos.length} no total)`,
+    passos.length >= 10 && passos[0] === "CNIS" && passos[1] === "Indicadores"
     && passos[2] === "Benefício ativo" && passos[3] === "Vínculo com a Previdência hoje"
-    && passos[7] === "Requerimentos anteriores" && passos[passos.length - 1] === "Conclusão");
+    && passos[4] === "Parentes ou amigos" && passos[8] === "Requerimentos anteriores" && passos[passos.length - 1] === "Conclusão");
+  conf("o trilho é só pontos, sem números",
+    await p.evaluate(() => [...document.querySelectorAll(".tri-etapa")].every(x => x.textContent.trim() === "")));
+  conf("o passo aberto não leva número",
+    !(await p.$('.painel[data-p="0"].ativo .tri-passo .tri-n')));
   conf("só UM passo aparece por vez",
     (await p.evaluate(() => document.querySelectorAll('.painel[data-p="0"].ativo .tri-passo').length)) === 1);
   conf("o botão de abrir/inserir o CNIS é a primeira coisa da triagem",
@@ -182,12 +186,15 @@ FIX.casos.push(
   // cada passo respondido já está na Análise de Direito, com quem respondeu
   await p.evaluate(() => { abaAtiva = 8; repintarFicha(); });
   await p.waitForTimeout(400);
-  const feed = await p.evaluate(() => [...document.querySelectorAll('.painel[data-p="8"] .ad-feed li')].map(x => x.textContent));
-  conf(`a Análise de Direito lista os três passos respondidos (${feed.length} linhas)`,
-    feed.filter(x => /^Triagem · /.test(x)).length === 3);
+  // F129 · a triagem fica num quadro próprio, agrupada pela cor da resposta
+  const feed = await p.evaluate(() => [...document.querySelectorAll('.painel[data-p="8"] .ad-q-tri .ad-grupo.atencao li')].map(x => x.textContent));
+  conf(`a Análise de Direito lista os três passos respondidos no quadro da triagem, no grupo Atenção (${feed.length} linhas)`,
+    feed.length === 3 && (await p.evaluate(() => /Atenção/.test(document.querySelector('.painel[data-p="8"] .ad-q-tri .ad-grupo.atencao .ad-grupo-tit').textContent))));
   conf("do mais novo para o mais velho", /Benefício ativo/.test(feed[0]) && /Indicadores/.test(feed[1]) && /CNIS/.test(feed[2]));
-  conf("cada linha traz o texto explícito, a resposta e quem respondeu",
-    /vínculo\(s\) sem data fim/.test(feed[2]) && /— atenção\./.test(feed[2]) && /Paulo/.test(feed[2]));
+  conf("cada linha traz o texto explícito e quem respondeu, sem repetir a cor em cada item",
+    /vínculo\(s\) sem data fim/.test(feed[2]) && !/— atenção\./.test(feed[2]) && /Paulo/.test(feed[2]));
+  conf("o quadro da triagem é separado do das anotações",
+    await p.evaluate(() => !!document.querySelector('.painel[data-p="8"] .ad-q-tri') && !document.querySelector('.painel[data-p="8"] .ad-q-tri .ad-feed')));
   conf("a Análise de Direito tem o botão de abrir o CNIS",
     await p.evaluate(() => /Abrir CNIS/.test(document.querySelector('.painel[data-p="8"]').textContent)));
   conf("a aba da ficha também",
@@ -199,9 +206,9 @@ FIX.casos.push(
 
   // cliente sem nada: o passo 1 convida a inserir; o trilho volta e avança
   await abrir(CLI_VAZIO);
-  conf("o contador começa em zero", /0 de 9 respondidos/.test(await p.innerText('.painel[data-p="0"].ativo .cad-cont')));
+  conf("o contador começa em zero", /0 de 10 respondidos/.test(await p.innerText('.painel[data-p="0"].ativo .cad-cont')));
   // um passo do meio pelo trilho
-  await p.evaluate(cli => irPassoTriagem(cli, 4), CLI_VAZIO);
+  await p.evaluate(cli => irPassoTriagem(cli, 5), CLI_VAZIO);
   await p.waitForTimeout(400);
   a = await aberto();
   conf("o trilho abre o passo escolhido (Ação judicial anterior)",
@@ -216,14 +223,14 @@ FIX.casos.push(
   const t2 = (g2.corpo.triagem || (g2.corpo.campos || {}).triagem || {});
   conf(`marcar grava o estado, quem e quando (${JSON.stringify((t2.judicial || {}).estado)})`,
     t2.judicial && t2.judicial.estado === "ok" && t2.judicial.quem === EU && !!t2.judicial.em && !!t2.judicial.feito);
-  conf("o contador anda", /1 de 9 respondidos/.test(await p.innerText('.painel[data-p="0"].ativo .cad-cont')));
+  conf("o contador anda", /1 de 10 respondidos/.test(await p.innerText('.painel[data-p="0"].ativo .cad-cont')));
   await p.click('.painel[data-p="0"].ativo .tri-passo .tri-e.ok');
   await p.waitForTimeout(500);
   const t3 = (x => x.corpo.triagem || (x.corpo.campos || {}).triagem)(gravados.filter(x => x.tabela === "clientes").pop());
   conf("clicar no mesmo estado desmarca", t3.judicial.estado === "");
 
   // a conclusão: nota ao sair do campo e o próximo passo recomendado
-  await p.evaluate(cli => irPassoTriagem(cli, 8), CLI_VAZIO);
+  await p.evaluate(cli => irPassoTriagem(cli, 9), CLI_VAZIO);
   await p.waitForTimeout(400);
   const antes = gravados.length;
   await p.click("#tri-conclusao");
@@ -242,6 +249,11 @@ FIX.casos.push(
   conf("a nota anterior não foi apagada", /Cliente traz na sexta/.test((t5.conclusao || {}).nota || ""));
   conf("no último passo, o botão principal encerra a triagem",
     /Encerrar a triagem/.test(await p.innerText(".tri-prox-bt .principal")));
+  conf("a pergunta do escritório fica por último, atrás de uma seta, abaixo do encerrar",
+    await p.evaluate(() => { const d = document.querySelector(".tri-mais-q"), f = document.querySelector(".tri-fecho");
+      return d && f && !d.open && (f.compareDocumentPosition(d) & Node.DOCUMENT_POSITION_FOLLOWING) && !!d.querySelector("#tq-nova"); }));
+  conf("na triagem não há botão de inserir o CNIS, só Abrir CNIS",
+    await p.evaluate(() => { const t = document.querySelector('.painel[data-p="0"].ativo').textContent; return !/Inserir o CNIS|CNIS mais novo/.test(t) && /Abrir CNIS/.test(t); }));
   await (await p.$(".det-rolagem")).screenshot({ path: path.join(__dirname, "f127-triagem.png") });
 
   console.log("=== triagem, um passo por vez (F10 → F127) ===");

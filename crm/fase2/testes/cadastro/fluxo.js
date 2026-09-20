@@ -106,9 +106,11 @@ FIX.documentos_beneficio.push(
     [...document.querySelectorAll(".caixa-atend .rotulo-caso")].map(x => x.textContent.trim()));
   // F49: o passo 4 · Análise de Direito entrou no trilho, depois das anotações
   conf(`os blocos seguem a ordem do atendimento (${rotulos.length})`,
-    /1 · de que se trata/i.test(rotulos[1] || "") && /2 · documentos/i.test(rotulos[2] || "")
-    && /3 · anotações/i.test(rotulos[3] || "") && /4 · análise de direito/i.test(rotulos[4] || "")
-    && /honorários/i.test(rotulos[5] || "") && /e agora\?/i.test(rotulos[6] || ""));
+    /1 · de que se trata/i.test(rotulos[1] || "") && /parentes ou amigos/i.test(rotulos[2] || "") && /2 · documentos/i.test(rotulos[3] || "")
+    && /3 · anotações/i.test(rotulos[4] || "") && /4 · análise de direito/i.test(rotulos[5] || "")
+    && /honorários/i.test(rotulos[6] || "") && /e agora\?/i.test(rotulos[7] || ""));
+  conf("as Anotações têm o Abrir CNIS e não o inserir",
+    await p.evaluate(() => { const t = document.querySelector(".caixa-atend").textContent; return /Abrir CNIS/.test(t) && !/Inserir o CNIS/.test(t); }));
   // F128 · a espécie do pré-caso sai do MESMO catálogo do caso (famílias e
   // subespécies), pela janela de escolher; o "outros" é o campo livre dela
   const pcId = await p.evaluate(cli => precasosDe(D.cliPorId.get(cli))[0].id, CLI_VAZIO);

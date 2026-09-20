@@ -1301,6 +1301,31 @@
   .esp-escolhida{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13.5px}
   .esp-escolhida .esp-cod-mini{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:700;background:#fff;border:1px solid var(--borda);border-radius:5px;padding:1px 6px}
   .esp-escolhida.vazia{color:#9B3B3B}
+  /* F129 · o trilho da triagem vira pontos, sem número */
+  .tri-etapa.tri-ponto{width:14px;height:14px;padding:0;border-radius:50%;background:var(--branco);border:1.5px solid var(--borda)}
+  .tri-etapa.tri-ponto.on{border-color:var(--azul);background:var(--azul);box-shadow:0 0 0 3px #EAF2FB}
+  .tri-etapa.tri-ponto.ok{background:var(--verde);border-color:var(--verde)}
+  .tri-etapa.tri-ponto.atencao{background:#D9534F;border-color:#D9534F}
+  .tri-etapa.tri-ponto.pendente{background:#E9B44C;border-color:#E9B44C}
+  .tri-mais-q{margin-top:14px}
+  .tri-mais-q summary{cursor:pointer;font-size:12px}
+  .tri-mais-q .tri-nova-q{margin-top:6px}
+  .parentes-lista{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  /* F129 · a Análise de Direito em dois quadros: triagem (por cor da
+     resposta) e anotações */
+  .ad-quadro{border:1px solid var(--borda);border-radius:10px;padding:10px 14px;margin-top:10px;background:var(--branco)}
+  .ad-quadro > .rotulo-caso{margin:0 0 6px}
+  .ad-grupo{border-radius:8px;padding:8px 12px;margin-top:6px;font-size:13.5px;line-height:1.5}
+  .ad-grupo .ad-grupo-tit{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px}
+  .ad-grupo ul{margin:0;padding-left:16px}
+  .ad-grupo li{margin:2px 0;white-space:pre-line}
+  .ad-grupo .ad-quem{font-size:12px;color:var(--cinza)}
+  .ad-grupo.atencao{background:#FDECEC;border:1px solid #F0B4B4}
+  .ad-grupo.atencao .ad-grupo-tit{color:#9B3B3B}
+  .ad-grupo.pendente{background:#FFF7DD;border:1px solid #F1D48A}
+  .ad-grupo.pendente .ad-grupo-tit{color:#8A6A00}
+  .ad-grupo.ok{background:var(--verde-f);border:1px solid #BFE3CC}
+  .ad-grupo.ok .ad-grupo-tit{color:var(--verde)}
   .cad-apoio{font-size:12px;font-weight:400;color:var(--cinza)}
   /* a senha mascarada: mesma altura das outras linhas, sem o amarelo que o
      sistema de tokens reserva para prazo */
@@ -2483,7 +2508,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.25</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.26</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10191,8 +10216,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
          Eram três blocos soltos, cada um com moldura própria, empilhados
          abaixo do cartão. Agora falam a mesma língua visual do de cima. */""}
     <div class="cad-cartao">
-      <div class="cad-tit"><span class="cad-ic">${CAD_IC.duplas}</span>Ligações do cliente
-        <span class="cad-tit-sub">parceria e parentes já cadastrados</span></div>
+      <div class="cad-tit"><span class="cad-ic">${CAD_IC.duplas}</span>Parentes ou Amigos</div>
       ${/* O protocolo NÃO mora mais aqui. Ele é do CASO, não do cliente: cada
            protocolo é um requerimento, com a sua DER, o seu benefício e o seu
            desfecho. Achatados numa fileira só, três protocolos de três casos
@@ -10216,19 +10240,8 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         ${seletorParceria(c, ks, "parc-sel-lig")}
         ${parcs.filter(pa=>limparParceria(pa)!==parceriaDe(c, ks)).map(pa=>`<span class="chip neutro" title="anotado no To Do">${esc(pa)}</span>`).join(" ")}
       </div>
-      <div class="id-secao"><label>Parentes e amigos <small>(clientes vinculados — clique para abrir a ficha)</small></label>
-        ${vincs.map(v=>{
-          const outroId = v.cliente_id===c.id ? v.ligado_a : v.cliente_id;
-          const o = D.cliPorId.get(outroId); if(!o) return "";
-          return `<span class="chip neutro" style="cursor:pointer" onclick="abrirFicha('${o.id}')">${CAD_IC.pessoa} ${esc(o.nome)}${v.relacao?" · "+esc(v.relacao):""}</span>
-            <button class="cad-lap" title="desvincular" onclick="removerVinculo('${v.id}')">${CAD_IC.fechar}</button>`;
-        }).join(" ")||`<span style="font-size:13px;color:var(--cinza)">nenhum vínculo ainda</span>`}
-        <div class="form-linha" style="margin-top:6px">
-          <input id="vin-nome" list="lista-clientes" placeholder="nome do outro cliente" style="flex:1;min-width:180px">
-          <input id="vin-rel" placeholder="relação (esposa, irmão, indicou…)" style="width:170px">
-          <button onclick="novoVinculo('${c.id}')">Vincular</button>
-        </div>
-        <datalist id="lista-clientes">${D.clientes.map(x=>x.id!==c.id?`<option value="${esc(x.nome)}">`:"").join("")}</datalist>
+      <div class="id-secao"><label>Parentes ou amigos <small>(cliente da base abre a ficha; outra pessoa fica anotada)</small></label>
+        ${blocoParentes(c, vincs, "cad")}
       </div>
     </div>
     <details id="mais-opcoes" style="margin-top:14px"><summary style="cursor:pointer;color:var(--cinza)"><span class="cad-ic">${CAD_IC.engren}</span> Mais opções — cadastrar outra credencial, vincular pasta, agendar atendimento</summary>
@@ -10315,6 +10328,7 @@ const TRIAGEM_PASSOS = [
   ["indicadores","Indicadores",              ""],
   ["beneficio",  "Benefício ativo",          ""],
   ["vinculo",    "Vínculo com a Previdência hoje", ""],
+  ["parentes",   "Parentes ou amigos",       ""],
   ["judicial",   "Ação judicial anterior",   ""],
   ["crps",       "Recurso no CRPS",          ""],
   ["cadunico",   "CadÚnico",                 ""],
@@ -10590,6 +10604,12 @@ function triagemLeitura(passo, c, ks){
       txt:`${apos?"cliente marcado como aposentado":""}${apos&&pagando.length?" · ":""}${
         pagando.length?`${pagando.length} caso(s) com NB ou em pagamento`:""} — confira a acumulação do art. 24 da EC 103`,
       det: pagando.map(k=>tituloCaso(k)+(k.nb?` · NB ${esc(k.nb)}`:"")).join(" · ")};
+  }
+  if(passo==="parentes"){
+    // F129 · quem é da família ou de confiança: cliente vinculado ou anotado
+    const txt = parentesTexto(c);
+    return txt ? {cor:"ok", txt:`Anotados: ${txt}.`}
+               : {cor:"neutro", txt:"Nenhum parente ou amigo anotado. Pergunte quem acompanha o cliente (cônjuge, filho, quem indicou)."};
   }
   if(passo==="vinculo"){
     // F127 · o mês anterior à data da triagem, lido do CNIS
@@ -11418,13 +11438,19 @@ async function abrirCnis(cliId){
     if(guia) guia.location = url; else window.location = url;
   }catch(e){ if(guia) guia.close(); aviso("Não consegui abrir o CNIS"); }
 }
+// F129 · fora do cadastro só existe ABRIR: o CNIS entra pela recepção
+// (Novo Cliente ou Identificação). Sem CNIS, o clique avisa onde inserir.
 function botaoAbrirCnis(c, grande){
+  const g = cnisDe(c), tem = !!(g && g.caminho);
+  return `<button class="${grande?"cnis-abrir":"cad-mini"}${tem?"":" sem"}" onclick="abrirCnis('${c.id}')"
+      title="${tem?`abre o extrato guardado em outra aba (CNIS de ${esc(fmt(g.em))})`:"o CNIS ainda não foi inserido no cadastro (Identificação)"}">Abrir CNIS${
+      grande && tem ? ` <span class="meio-sub" style="font-weight:500">de ${esc(fmt(g.em))}</span>` : ""}</button>`;
+}
+// o botão de INSERIR (só na Identificação e no Novo Cliente)
+function botaoInserirCnis(c){
   const g = cnisDe(c);
-  if(g && g.caminho)
-    return `<button class="${grande?"cnis-abrir":"cad-mini"}" onclick="abrirCnis('${c.id}')"
-      title="abre o extrato guardado em outra aba (CNIS de ${esc(fmt(g.em))})">${grande?"":""}Abrir CNIS${grande?` <span class="meio-sub" style="font-weight:500">de ${esc(fmt(g.em))}</span>`:""}</button>`;
-  return `<button class="${grande?"cnis-abrir sem":"cad-mini"}" onclick="escolherCnis('${c.id}')"
-      title="o extrato do Meu INSS, em PDF; é lido aqui no navegador e guardado para abrir depois">${g?"Inserir o CNIS de novo":"Inserir o CNIS"}</button>`;
+  return `<button class="cad-mini" onclick="escolherCnis('${c.id}')"
+      title="o extrato do Meu INSS, em PDF; é lido aqui no navegador e guardado para abrir depois">${g&&g.caminho?"inserir um CNIS mais novo":"Inserir o CNIS"}</button>`;
 }
 // o seletor de arquivo nasce no clique: sem input escondido repetido em cada
 // painel da ficha
@@ -11433,10 +11459,6 @@ function escolherCnis(cliId){
   i.onchange = async ()=>{ const a = i.files && i.files[0];
     if(a && await processarCnis(cliId, a) && clienteAberto===cliId) repintarFicha(); };
   i.click();
-}
-function botaoInserirCnisNovo(c){
-  const g = cnisDe(c);
-  return g && g.caminho ? `<button class="cad-mini" onclick="escolherCnis('${c.id}')" title="substitui pelo extrato mais novo">inserir um CNIS mais novo</button>` : "";
 }
 // ── o que o CNIS responde sozinho ────────────────────────────────────────
 const TIPO_REMUN = /Empregado|Avulso/;   // remuneração informada pelo empregador
@@ -11663,8 +11685,7 @@ function painelTriagemFicha(c, ks){
       <span class="cad-cont${feitos===PASSOS.length?" cad-ok":""}">${feitos} de ${PASSOS.length} respondidos</span></div>
     <div class="cnis-faixa">
       ${botaoAbrirCnis(c, true)}
-      ${botaoInserirCnisNovo(c)}
-      <span class="meio-sub">o extrato abre em outra aba; o CRM lê vínculos, indicadores e benefícios e responde os primeiros passos</span>
+      <span class="meio-sub">${cnisDe(c)&&cnisDe(c).caminho ? "abre em outra aba; o CRM já leu vínculos, indicadores e benefícios" : "a recepção insere o CNIS no cadastro (Identificação)"}</span>
     </div>
     <div class="tri-balcao" style="border:1px solid var(--borda);border-left:3px solid #E9B44C;border-radius:8px;padding:8px 12px;margin:8px 0;font-size:13px">
       <b>O que a recepção registrou</b>
@@ -11690,28 +11711,26 @@ function painelTriagemFicha(c, ks){
           </span>`}
       </div>`}
     </div>
-    ${/* o trilho: uma etapa por passo, com a cor da resposta; clique volta */""}
+    ${/* F129 · o trilho sem números: um ponto por pergunta, na cor da
+         resposta; o clique volta à pergunta (o nome fica no title) */""}
     <div class="tri-trilho">${PASSOS.map(([k,r],j)=>{
       const q = t[k]||{};
       const cls = j===i ? "on" : (q.feito||(q.estado&&!q.auto)) ? (q.estado||"pendente") : "";
-      return `<button class="tri-etapa ${cls}" onclick="irPassoTriagem('${c.id}',${j})" title="${esc(r)}">${j+1}${j===i?` ${esc(r)}`:""}</button>`;
+      return `<button class="tri-etapa tri-ponto ${cls}" onclick="irPassoTriagem('${c.id}',${j})" title="${esc(r)}"></button>`;
     }).join("")}</div>
     <div class="tri-lista tri-um">
       <div class="tri-passo${p.feito?" feito":""}">
         <div class="tri-cab">
-          <span class="tri-n">${i+1}</span>
           <div class="tri-tit"><span class="tri-tit-l"><b>${esc(rot)}</b>${
             dona?`<span class="tri-de${dona==="escritório"?" tri-de-esc":""}">${esc(dona)}</span>`:""}${
             dona==="escritório"?`<button class="cad-lap" title="tirar esta pergunta de TODOS os clientes"
               onclick="event.stopPropagation();tirarPerguntaEscritorio('${chave}')">${CAD_IC.fechar}</button>`:""}</span></div>
-          <div class="tri-bt">${TRIAGEM_ESTADOS.map(([e,r])=>
-            `<button class="tri-e ${e}${estadoMarcado===e?" on":""}"
-              onclick="marcarTriagem('${c.id}','${chave}','${e}')">${r}</button>`).join("")}</div>
         </div>
         ${l.txt?`<div class="tri-leitura ${l.cor}">${esc(l.txt)}${
           l.det?`<span class="tri-det">${esc(l.det)}</span>`:""}</div>`:""}
         ${l.legenda ? legendaIndicadores(l.legenda) : ""}
         ${chave==="cnis" ? blocoVidaContributiva(c) : ""}
+        ${chave==="parentes" ? blocoParentes(c, null, "tri") : ""}
         ${botaoPdfTriagem(c.id, chave)}
         ${chave==="vinculo" ? (v=>`<div class="form-linha" style="margin-top:8px;align-items:center">
           <span class="meio-sub">corrigir, se o extrato estiver defasado:</span>
@@ -11735,18 +11754,15 @@ function painelTriagemFicha(c, ks){
           placeholder="${chave==="conclusao"?"o que foi decidido e por quê":"anotação, se quiser"}"
           onblur="salvarNotaTriagem('${c.id}','${chave}')">${esc(p.nota||"")}</textarea>
         ${p.feito?`<div class="tri-assin">respondido por ${quem?esc(quem.nome):"alguém"} · ${fmt(p.em)}</div>`:""}
+        ${/* F129 · as respostas e a navegação numa linha só, no rodapé */""}
         <div class="tri-prox-bt">
-          ${i>0?`<button class="cad-mini" onclick="irPassoTriagem('${c.id}',${i-1})">‹ anterior</button>`:""}
-          <button class="principal" onclick="proximaTriagem('${c.id}','${chave}')">${i===PASSOS.length-1?"Encerrar a triagem":"Próxima ›"}</button>
+          <div class="tri-bt">${TRIAGEM_ESTADOS.map(([e,r])=>
+            `<button class="tri-e ${e}${estadoMarcado===e?" on":""}"
+              onclick="marcarTriagem('${c.id}','${chave}','${e}')">${r}</button>`).join("")}</div>
+          ${i>0?`<button class="cad-mini" style="margin-left:auto" onclick="irPassoTriagem('${c.id}',${i-1})">‹ anterior</button>`:""}
+          <button class="principal" style="${i>0?"margin-left:0":""}" onclick="proximaTriagem('${c.id}','${chave}')">${i===PASSOS.length-1?"Encerrar a triagem":"Próxima ›"}</button>
         </div>
       </div>
-    </div>
-    ${/* F24 · a pergunta do escritório: a advogada acrescenta e vale para
-         TODOS os clientes, com autor e data gravados. */""}
-    <div class="tri-nova-q">
-      <input id="tq-nova" placeholder="acrescentar pergunta do escritório — vale para todos os clientes"
-        onkeydown="if(event.key==='Enter'){event.preventDefault();novaPerguntaEscritorio();}">
-      <button class="cad-mini" onclick="novaPerguntaEscritorio()">acrescentar</button>
     </div>
     ${/* F49 · o elo triagem → análise: quem está triando vê na hora se a
          análise de direito deste cliente já existe, e onde registrá-la */""}
@@ -11756,6 +11772,17 @@ function painelTriagemFicha(c, ks){
         title="encerra a triagem: com atenção ou não conferido, o resumo vai para as Anotações; havendo caso, uma linha no histórico dele">
         Encerrar a triagem</button>
     </div>
+    ${/* F24 → F129 · a pergunta do escritório fica por último, atrás de uma
+         seta, abaixo do encerrar (pedido do Paulo): vale para TODOS os
+         clientes, com autor e data gravados. */""}
+    <details class="tri-mais-q">
+      <summary class="meio-sub">acrescentar pergunta do escritório</summary>
+      <div class="tri-nova-q">
+        <input id="tq-nova" placeholder="a pergunta nova — vale para todos os clientes"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();novaPerguntaEscritorio();}">
+        <button class="cad-mini" onclick="novaPerguntaEscritorio()">acrescentar</button>
+      </div>
+    </details>
   </div>`;
 }
 
@@ -13766,21 +13793,44 @@ function statusAnalise(c, naTriagem){
 }
 // F127 · o feed da Análise de Direito: cada passo respondido na triagem e
 // cada anotação do atendimento, do mais novo ao mais velho, com quem fez
-function feedDireito(c, ks){
+// F129 · dois quadros separados: a TRIAGEM, agrupada pela cor da resposta
+// (atenção em vermelho, não conferido em amarelo, sem pendência em verde,
+// a cor anotada uma vez no grupo), e as ANOTAÇÕES do atendimento
+function feedTriagem(c, ks){
   const t = triagemDe(c);
-  const itens = [];
+  const grupos = {atencao:[], pendente:[], ok:[]};
   for(const [k, rot] of triagemPassosDe(c, ks)){
     const p = t[k]||{};
     if(!p.feito && !(p.estado && !p.auto)) continue;
     const quem = D.colPorId.get(p.quem);
-    const est = (TRIAGEM_ESTADOS.find(([e])=>e===p.estado)||[])[1];
-    itens.push({ts: p.feito || Date.parse(p.em||"")||0, cls: p.estado||"",
-      texto: `Triagem · ${rot}: ${p.texto||""}${p.nota?` Anotação: ${p.nota}`:""}${est?` — ${est}.`:""}`,
+    const g = p.estado==="ok" ? "ok" : p.estado==="atencao" ? "atencao" : "pendente";
+    grupos[g].push({ts: p.feito || Date.parse(p.em||"")||0, rot,
+      texto: [p.texto||"", p.nota?`Anotação: ${p.nota}`:""].filter(Boolean).join(" "),
       quem: quem ? quem.nome : "", em: p.em});
   }
-  for(const n of ((c.campos||{}).atendimento||[]))
-    itens.push({ts: Date.parse(n.em)||0, cls:"anot", texto: n.texto||"", quem: n.quem||"", em: n.em});
-  return itens.sort((a,b)=>b.ts-a.ts);
+  for(const g of Object.values(grupos)) g.sort((a,b)=>b.ts-a.ts);
+  return grupos;
+}
+function feedAnotacoes(c){
+  return ((c.campos||{}).atendimento||[])
+    .map(n=>({ts: Date.parse(n.em)||0, texto: n.texto||"", quem: n.quem||"", em: n.em}))
+    .sort((a,b)=>b.ts-a.ts);
+}
+function quadrosDireito(c, ks){
+  const tri = feedTriagem(c, ks), anot = feedAnotacoes(c);
+  const grupo = (cls, tit, itens) => !itens.length ? "" : `<div class="ad-grupo ${cls}">
+    <div class="ad-grupo-tit">${tit}</div>
+    <ul>${itens.map(f=>`<li><b>${esc(f.rot)}:</b> ${esc(f.texto)} <span class="ad-quem">— ${f.quem?esc(f.quem):"—"}${f.em?`, ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>
+  </div>`;
+  const temTri = tri.atencao.length || tri.pendente.length || tri.ok.length;
+  return (temTri ? `<div class="ad-quadro ad-q-tri"><div class="rotulo-caso">Triagem</div>
+      ${grupo("atencao", "Atenção", tri.atencao)}
+      ${grupo("pendente", "Não conferido", tri.pendente)}
+      ${grupo("ok", "Sem pendência", tri.ok)}
+    </div>` : "")
+    + (anot.length ? `<div class="ad-quadro ad-q-anot"><div class="rotulo-caso">Anotações</div>
+      <ul class="ad-feed">${anot.map(f=>`<li class="anot">${esc(f.texto)}<span class="ad-quem">${f.quem?esc(f.quem):"—"}${f.em?` · ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>
+    </div>` : "");
 }
 function painelDireito(c){
   if(D.analises===null)
@@ -13791,7 +13841,6 @@ function painelDireito(c){
   const notas=[];
   for(const l of (D.lembretes||[]).filter(x=>x.cliente_id===c.id && x.tipo==="aposentadoria_futura"))
     ((l.detalhes||{}).anotacoes||[]).forEach((n,i)=>{ if(!n.analise_id) notas.push({...n, lembId:l.id, i}); });
-  const feed=feedDireito(c, ks);
   // F128 · a idade do segurado é a PRIMEIRA coisa da tela; o CNIS fica no
   // canto direito; a parceria (F127) entre os dois
   const idade=idadeDe(c.dn);
@@ -13805,8 +13854,7 @@ function painelDireito(c){
     </div>
     ${formAnalise(c)}
     ${as.length ? as.map(cartaoAnalise).join("") : ""}
-    ${feed.length?`<ul class="ad-feed">${feed.map(f=>`<li class="${esc(f.cls)}">${esc(f.texto)}<span class="ad-quem">${
-      f.quem?esc(f.quem):"—"}${f.em?` · ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>`:""}
+    ${quadrosDireito(c, ks)}
     ${notas.length?`<div class="caso" style="margin-top:10px;border-left:3px solid var(--roxo)">
       <div class="rotulo-caso">🗒 Anotações antigas do To Do (lista 🙏 Aposentadorias Futuras)</div>
       <p class="meio-sub">O que você anotava para lembrar no futuro. "→ virar análise" traz a anotação
@@ -20215,8 +20263,8 @@ function cadCampoCnis(c){
   return `<div class="cad-campo cad-c4${g?"":" vazio"}">
     <label>CNIS</label>
     <div class="cad-v">${g ? `lido em ${esc(fmt(g.em))} · ${g.paginas} pág. · ${g.qtVinculos} vínculo(s)` : "não inserido"}
-      ${botaoAbrirCnis(c, false)}
-      ${botaoInserirCnisNovo(c)}</div>
+      ${g && g.caminho ? botaoAbrirCnis(c, false) : ""}
+      ${botaoInserirCnis(c)}</div>
   </div>`;
 }
 function fichaIdentificacao(c, creds){
@@ -20228,7 +20276,6 @@ function fichaIdentificacao(c, creds){
   const ks = D.casosDoCliente.get(c.id) || [];
   return `<div class="cad-cartao">
     <div class="cad-tit"><span class="cad-ic">${CAD_IC.pessoa}</span>Dados civis
-      <span class="cad-tit-sub">o que a procuração e o contrato exigem, mais o acesso do cliente</span>
       ${falta.length?`<span class="cad-cont" title="faltam: ${esc(falta.join(", "))}">${
         falta.length} campo${falta.length>1?"s":""} em branco</span>`
       :`<span class="cad-cont cad-ok">completo</span>`}</div>
@@ -20294,10 +20341,81 @@ function fichaIdentificacao(c, creds){
       ${outrasCreds.map(cr=>cadCampoSenha(c, cr.tipo, "Senha "+esc(cr.tipo.replace("_"," ")), cr)).join("")}
       ${cadCampoPasta(c)}
     </div>
-    <p class="cad-nota">Os campos em branco entram nas peças como espaço vazio. A procuração e o contrato
-      só ficam prontos para assinatura com nome, CPF, nascimento, estado civil, profissão e endereço preenchidos.
-      Toda vez que alguém copia ou vê uma senha, fica registrado quem foi e quando.</p>
   </div>`;
+}
+// ══════════════════════════════════════════════════════════════════════════
+// F129 · PARENTES OU AMIGOS — um bloco só, que serve à Identificação, à
+// Triagem (é pergunta) e às Anotações
+// ══════════════════════════════════════════════════════════════════════════
+// Duas fontes: o VÍNCULO com outro cliente da base (tabela vinculos, clique
+// abre a ficha) e a pessoa ESCRITA à mão (campos.parentes), que não é
+// cliente. O mesmo formulário resolve os dois: nome da lista vira vínculo,
+// nome fora da lista vira parente anotado.
+function parentesDe(c){ return ((c.campos||{}).parentes)||[]; }
+function vincsDoCliente(c){
+  return (D._ficha && D._ficha.cliId===c.id) ? (D._ficha.vincs||[]) : [];
+}
+function blocoParentes(c, vincs, pref){
+  vincs = vincs || vincsDoCliente(c);
+  const lig = vincs.map(v=>{
+    const outroId = v.cliente_id===c.id ? v.ligado_a : v.cliente_id;
+    const o = D.cliPorId.get(outroId); if(!o) return "";
+    return `<span class="chip neutro" style="cursor:pointer" onclick="abrirFicha('${o.id}')" title="cliente do escritório — abre a ficha">${CAD_IC.pessoa} ${esc(o.nome)}${v.relacao?" · "+esc(v.relacao):""}</span>
+      <button class="cad-lap" title="desvincular" onclick="removerVinculo('${v.id}')">${CAD_IC.fechar}</button>`;
+  }).join(" ");
+  const livres = parentesDe(c).map((p,i)=>`<span class="chip neutro" title="anotado à mão${p.quem?` por ${esc(p.quem)}`:""}">${esc(p.nome)}${p.relacao?" · "+esc(p.relacao):""}${p.telefone?" · "+esc(p.telefone):""}</span>
+      <button class="cad-lap" title="tirar" onclick="tirarParente('${c.id}',${i})">${CAD_IC.fechar}</button>`).join(" ");
+  return `<div class="parentes-cx">
+    <div class="parentes-lista">${[lig, livres].filter(Boolean).join(" ") || `<span class="meio-sub">nenhum parente ou amigo anotado</span>`}</div>
+    <div class="form-linha" style="margin-top:6px">
+      <input id="${pref}-par-nome" list="lista-clientes-${pref}" placeholder="nome (cliente da lista ou outra pessoa)" style="flex:1;min-width:180px"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();novoParente('${c.id}','${pref}');}">
+      <input id="${pref}-par-rel" placeholder="relação (esposa, filho, indicou…)" style="width:170px"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();novoParente('${c.id}','${pref}');}">
+      <input id="${pref}-par-tel" placeholder="telefone (opcional)" style="width:150px"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();novoParente('${c.id}','${pref}');}">
+      <button class="cad-mini" onclick="novoParente('${c.id}','${pref}')">${CAD_IC.mais}acrescentar</button>
+    </div>
+    <datalist id="lista-clientes-${pref}">${D.clientes.map(x=>x.id!==c.id?`<option value="${esc(x.nome)}">`:"").join("")}</datalist>
+  </div>`;
+}
+async function novoParente(cliId, pref){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const v = id => ((document.getElementById(`${pref}-par-${id}`)||{}).value||"").trim();
+  const nome = v("nome"), relacao = v("rel"), telefone = v("tel");
+  if(!nome) return aviso("Escreva o nome");
+  const outro = D.clientes.find(x=>x.id!==cliId && x.nome.toLowerCase()===nome.toLowerCase());
+  if(outro){
+    try{ await api(`/rest/v1/vinculos`,{method:"POST",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({cliente_id:cliId, ligado_a:outro.id, relacao:relacao||null})}); }
+    catch(e){ if(e.status!==409) return aviso("Não consegui vincular — tente de novo"); }
+    aviso(`${outro.nome.split(" ")[0]} vinculado como cliente 👪`, false);
+    return abrirFicha(cliId);
+  }
+  const parentes = parentesDe(c).concat([{nome, relacao:relacao||null, telefone:telefone||null,
+    quem:(eu.nome||"").split(" ")[0], em:hoje()}]);
+  c.campos = {...(c.campos||{}), parentes};
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}); }
+  catch(e){ return aviso("Não consegui guardar — tente de novo"); }
+  aviso("Anotado ✔", false); repintarFicha();
+}
+async function tirarParente(cliId, i){
+  const c = D.cliPorId.get(cliId); if(!c) return;
+  const parentes = parentesDe(c).filter((_,n)=>n!==i);
+  c.campos = {...(c.campos||{}), parentes};
+  try{ await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+    body:JSON.stringify({campos:c.campos})}); }
+  catch(e){ return aviso("Não consegui guardar — tente de novo"); }
+  repintarFicha();
+}
+// o texto de uma linha, para a triagem e a análise
+function parentesTexto(c, vincs){
+  const lig = (vincs||vincsDoCliente(c)).map(v=>{
+    const o = D.cliPorId.get(v.cliente_id===c.id ? v.ligado_a : v.cliente_id);
+    return o ? o.nome + (v.relacao?` (${v.relacao})`:"") + " · cliente" : ""; }).filter(Boolean);
+  const livres = parentesDe(c).map(p=>p.nome + (p.relacao?` (${p.relacao})`:""));
+  return lig.concat(livres).join("; ");
 }
 
 // os documentos leem daqui: a COLUNA de `clientes` quando o banco já tem
@@ -21682,7 +21800,8 @@ function caixaAtendimento(c, ks){
   const t = triagemDe(c), tA = t.atendimento;
   const atencaoTri = tA ? triagemPassosDe(c, ks).filter(([k])=>(t[k]||{}).estado==="atencao") : [];
   return `<div class="caso caixa-atend" style="margin-bottom:12px;border-left:3px solid var(--azul)">
-    <div class="rotulo-caso">Atendimento${semCaso?` — ${esc(c.nome.split(" ")[0])} ainda não tem caso`:""}</div>
+    <div class="rotulo-caso" style="display:flex;align-items:center;gap:10px">Atendimento${semCaso?` — ${esc(c.nome.split(" ")[0])} ainda não tem caso`:""}
+      <span style="margin-left:auto">${botaoAbrirCnis(c, false)}</span></div>
     ${tA?`<div class="tri-resumo-anot" style="border:1px solid var(--borda);border-left:3px solid var(--verde);border-radius:8px;padding:8px 12px;margin:6px 0 10px;font-size:13px">
       <b>Triagem encerrada</b> em ${fmt(tA.em)}${(q=>q?` por ${esc(q.nome.split(" ")[0])}`:"")(D.colPorId.get(tA.quem)||null)}
       — ${tA.conferidos} de ${tA.passos} passos conferidos.
@@ -21733,6 +21852,11 @@ function caixaAtendimento(c, ks){
           <button class="arq-abrir" onclick="abrirAnexo('${a.id}')">${esc(a.nome)}</button>
           <small>${fmtTS(a.criado_em)}</small></li>`).join("")}</ul>`:""}
     </div>`)}
+    ${/* F129 · parentes ou amigos: quem acompanha o cliente, também aqui */""}
+    <div class="mesa-bloco mesa-b2">
+      <div class="rotulo-caso">Parentes ou amigos</div>
+      ${blocoParentes(c, null, "anot")}
+    </div>
 
     ${ehPgto?`
     <div style="margin-top:10px;border-top:1px dashed var(--borda);padding-top:8px">
