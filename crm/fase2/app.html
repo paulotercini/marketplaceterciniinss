@@ -2147,6 +2147,10 @@ html[data-tema="v10"] .lc-tram{font-weight:600;color:var(--azul-escuro);backgrou
 html[data-tema="v10"] .lc-etapa{font-weight:600;color:var(--texto)}
 /* F121 · a posição na fila do TRF3, só o número */
 html[data-tema="v10"] .lc-fila{font-family:var(--f-mono);font-weight:700;color:var(--azul-escuro)}
+/* F126 · o filtro por pessoa do Meu Dia e do Planejado mostra só a inicial na
+   cor do colaborador; o nome inteiro fica no title (pedido do Paulo, 20.09.2026) */
+.fchip.fchip-ini{padding:4px 6px;gap:0}
+.fchip.fchip-ini .avatar.mini{margin:0}
 /* a tela da recepção ocupa a largura toda (pedido do Paulo, 20.09.2026): o
    cadastro é digitado de uma vez, e caber tudo sem rolar vale mais que a
    coluna estreita de leitura */
@@ -2412,7 +2416,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.22</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.23</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5502,8 +5506,8 @@ function renderMeuDia(){
   const nVenc = vencK.length + tVenc.length + apos.antes.length + lemb.antes.length;
   const chips = [`<button class="fchip ${filtroColab===null?"on":""}" data-f="">Todos</button>`]
     .concat(equipeAtiva().map(c=>
-      `<button class="fchip ${filtroColab===c.id?"on":""}" data-f="${c.id}">`+
-      `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</button>`))
+      `<button class="fchip fchip-ini ${filtroColab===c.id?"on":""}" data-f="${c.id}" title="${esc(c.nome)}">`+
+      `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span></button>`))
     .concat([`<button class="fchip ${filtroVencidas?"on":""}" id="chip-vencidas" style="margin-left:auto">🔴 mostrar vencidas (${nVenc})</button>`]);
   // F123 · MEU DIA É O QUE VENCE HOJE, E NADA MAIS (decisão do Paulo,
   // 20.09.2026). Entram as três naturezas de data, prazo fatal, compromisso e
@@ -7185,8 +7189,8 @@ function renderPlanejado(){
   const chipsPer = per.map(([v,r])=>`<button class="fchip ${filtroPlan===v?"on":""}" data-per="${v}">${r}</button>`).join("");
   const chipsCol = [`<button class="fchip ${filtroPlanColab===null?"on":""}" data-pcol="">Todos</button>`]
     .concat(equipeAtiva().map(c=>
-      `<button class="fchip ${filtroPlanColab===c.id?"on":""}" data-pcol="${c.id}">`+
-      `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</button>`)).join("");
+      `<button class="fchip fchip-ini ${filtroPlanColab===c.id?"on":""}" data-pcol="${c.id}" title="${esc(c.nome)}">`+
+      `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span></button>`)).join("");
   base = base.slice().sort((a,b)=>a._dplan<b._dplan?-1:1);
   document.getElementById("ordem").value="prazo";   // agenda em ordem cronológica
   // seções estilo To Do: vencidas → hoje → amanhã → semana → mais tarde
@@ -10569,12 +10573,20 @@ async function itensDoPdf(arquivo){
   const itens = [];
   for(let p=1; p<=doc.numPages; p++){
     const pag = await doc.getPage(p);
-    const alt = pag.getViewport({scale:1}).height;
+    // [BUG 20.09.2026] O EXTRATO EM PAISAGEM. O Meu INSS passou a gerar o CNIS
+    // com a página girada (/Rotate 90). Lendo a posição crua do texto, os eixos
+    // ficavam trocados: o que era coluna virava linha, o cabeçalho da página
+    // caía na mesma "linha" da legenda, nenhum vínculo casava e a legenda de
+    // indicadores saía vazia. A posição passa pela mesma transformação que o
+    // visualizador usa para desenhar a página, e aí x e y são os da folha
+    // como se lê, girada ou não.
+    const vp = pag.getViewport({scale:1});
     const c = await pag.getTextContent();
     for(const i of c.items){
       const t = (i.str||"").trim();
-      if(t) itens.push({t, x:Math.round(i.transform[4]), y:Math.round(alt - i.transform[5]),
-                        w:Math.round(i.width||0), p});
+      if(!t) continue;
+      const [x, y] = vp.convertToViewportPoint(i.transform[4], i.transform[5]);
+      itens.push({t, x:Math.round(x), y:Math.round(y), w:Math.round(i.width||0), p});
     }
   }
   try{ await doc.destroy(); }catch(e){}
@@ -10668,7 +10680,9 @@ function lerCnisPdf(itens){
   if(iLeg >= 0){
     for(let i=iLeg+1; i<linhas.length; i++){
       const l = linhas[i];
-      if(/^O INSS poderá rever/.test(l.txt)) break;
+      // a legenda acaba onde começa o rodapé da folha: a nota do INSS, o
+      // aviso de autenticidade ou o número da página
+      if(/^O INSS poderá rever|autenticidade|^Página\s+\d/.test(l.txt)) break;
       if(/^Indicador\s+Descrição/.test(l.txt)) continue;
       // a legenda tem DUAS colunas. Cada código manda do seu x até o x do
       // próximo código da mesma linha; a descrição que transborda para a
