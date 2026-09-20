@@ -2,8 +2,10 @@ name: CRM — sincronização To Do → banco
 
 on:
   schedule:
-    # de hora em hora, 07h–20h BRT (10h–23h UTC), segunda a sábado
-    - cron: '0 10-23 * * 1-6'
+    # de hora em hora, 07h–20h BRT (10h–23h UTC), TODO DIA. Domingo estava de
+    # fora, e num domingo de trabalho o CRM passava o dia inteiro parado sem
+    # ninguém entender por quê (20.09.2026).
+    - cron: '0 10-23 * * *'
   workflow_dispatch: {}
 
 concurrency:
