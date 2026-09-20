@@ -109,10 +109,25 @@ FIX.documentos_beneficio.push(
     /1 · de que se trata/i.test(rotulos[1] || "") && /2 · documentos/i.test(rotulos[2] || "")
     && /3 · anotações/i.test(rotulos[3] || "") && /4 · análise de direito/i.test(rotulos[4] || "")
     && /honorários/i.test(rotulos[5] || "") && /e agora\?/i.test(rotulos[6] || ""));
-  conf("a espécie tem a opção outros para escrever",
-    await p.evaluate(() => [...document.querySelectorAll(".pc-cartao select option")]
-      .some(o => o.value === "__outros__")));
+  // F128 · a espécie do pré-caso sai do MESMO catálogo do caso (famílias e
+  // subespécies), pela janela de escolher; o "outros" é o campo livre dela
   const pcId = await p.evaluate(cli => precasosDe(D.cliPorId.get(cli))[0].id, CLI_VAZIO);
+  conf("o pré-caso abre o catálogo de espécies do caso",
+    await p.evaluate(() => /escolherEspeciePre/.test((document.querySelector(".pc-cartao .esp-escolhida button") || {}).getAttribute("onclick") || "")));
+  await p.evaluate(([cli, id]) => escolherEspeciePre(cli, id), [CLI_VAZIO, pcId]);
+  await p.waitForTimeout(200);
+  conf("a janela traz famílias, subespécies e o campo livre (outros)",
+    await p.evaluate(() => { const m = document.getElementById("modal");
+      return m.querySelectorAll(".esp-it").length > 40 && /Aposentadoria por idade rural/.test(m.textContent) && !!m.querySelector("#esp-livre"); }));
+  await p.evaluate(() => espCtx.escolher("B41", "B41.RURAL"));
+  await p.waitForTimeout(400);
+  conf("escolher grava nome, código e subespécie no pré-caso",
+    await p.evaluate(cli => { const pc = precasosDe(D.cliPorId.get(cli))[0];
+      return pc.cod === "B41" && pc.sub === "B41.RURAL" && /idade rural/.test(pc.especie); }, CLI_VAZIO));
+  conf("e a mesa mostra o código e o nome escolhidos",
+    /B41/.test(await p.evaluate(() => document.querySelector(".pc-cartao .esp-escolhida").textContent)));
+  conf("os blocos da mesa têm fundo próprio (1 a 4)",
+    await p.evaluate(() => ["mesa-b1", "mesa-b2", "mesa-b3", "mesa-b4"].every(k => document.querySelector(".caixa-atend ." + k))));
   await p.evaluate(([cli, id]) => mudarPreCaso(cli, id, "especie", "Guia de pagamento avulsa GPS"), [CLI_VAZIO, pcId]);
   await p.waitForTimeout(400);
   conf("espécie fora da lista (outros) grava como escrita",
