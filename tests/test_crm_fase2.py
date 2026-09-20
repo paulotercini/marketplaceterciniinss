@@ -732,3 +732,51 @@ def test_reimportar_o_escritorio_nao_duplica_a_anotacao(monkeypatch):
     _, p1 = _sobe_escritorio(monkeypatch, m1)
     _, p2 = _sobe_escritorio(monkeypatch, mapa(), clientes=[{"id": cid, "campos": p1[cid]["campos"]}])
     assert len(p2[cid]["campos"]["atendimento"]) == 1, "a segunda rodada duplicou a anotação"
+
+
+# ── [BUG 17.09.2026] uma cliente cadastrada no app derrubava a sincronização ──
+# Ellen foi cadastrada no CRM (id aleatório) e também era tarefa do To Do. Toda
+# rodada tentava inserir a MESMA pessoa com o id determinístico, o banco recusava
+# pelo unique do CPF (clientes_cpf_key), o caso dela caía na chave estrangeira
+# (casos_cliente_id_fkey) e a rodada inteira terminava em erro — três dias sem
+# sincronizar por causa de uma pessoa.
+
+def test_cliente_cadastrado_no_app_nao_e_reinserido_pelo_cpf():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana #00000000191", cpf="00000000191", id="tarefa-1"),
+    ]))
+    assert len(m["clientes"]) == 1
+    n = migrar.remapear_clientes(m, {"00000000191": "af8b2c2e-0000-0000-0000-000000000001"})
+    assert n == 1
+    assert m["clientes"][0]["id"] == "af8b2c2e-0000-0000-0000-000000000001"
+    assert m["casos"][0]["cliente_id"] == "af8b2c2e-0000-0000-0000-000000000001", \
+        "o caso ficou apontando para um cliente que não existe (FK)"
+
+
+def test_duas_linhas_do_mesmo_cpf_viram_uma_so():
+    """Mandar dois ids com o mesmo CPF no mesmo insert quebra igual."""
+    m = {"clientes": [
+            {"id": "id-por-nome", "cpf": "00000000191", "nome": "Fulana", "dn": None,
+             "telefone": "(16) 99999-0000"},
+            {"id": "id-por-cpf", "cpf": "00000000191", "nome": "Fulana de Tal e Tal",
+             "dn": "01011960", "telefone": None}],
+         "casos": [{"id": "k1", "cliente_id": "id-por-nome"}],
+         "credenciais": [{"id": "c1", "cliente_id": "id-por-nome"}],
+         "lembretes": [{"id": "l1", "cliente_id": "id-por-nome"}],
+         "vinculos": []}
+    migrar.remapear_clientes(m, {"00000000191": "id-do-banco"})
+    assert len(m["clientes"]) == 1
+    c = m["clientes"][0]
+    assert c["id"] == "id-do-banco"
+    assert c["nome"] == "Fulana de Tal e Tal", "ficou o nome mais curto"
+    assert c["dn"] == "01011960" and c["telefone"] == "(16) 99999-0000"
+    assert m["casos"][0]["cliente_id"] == "id-do-banco"
+    assert m["credenciais"][0]["cliente_id"] == "id-do-banco"
+    assert m["lembretes"][0]["cliente_id"] == "id-do-banco"
+
+
+def test_cliente_sem_cpf_continua_como_estava():
+    m = migrar.mapear(crm_json([t("🌻 INSS", "Sem Documento", id="tarefa-2")]))
+    antes = m["clientes"][0]["id"]
+    assert migrar.remapear_clientes(m, {}) == 0
+    assert m["clientes"][0]["id"] == antes
