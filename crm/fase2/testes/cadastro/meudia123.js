@@ -124,6 +124,16 @@ const EXTRA = {
   conf("o subtítulo do acervo avisa que nada ali vence hoje",
     /Nada aqui vence hoje/.test(await p.evaluate(() => document.getElementById("sub-lista").textContent)));
 
+  // F126 · o filtro por pessoa mostra só a inicial, na cor do colaborador
+  await p.evaluate(() => { visao = "meudia"; render(); });
+  await p.waitForTimeout(300);
+  conf("o chip do colaborador mostra só a inicial, com a cor, e o nome fica no title",
+    await p.evaluate(() => {
+      const b = document.querySelector(".fchip[data-f]:not([data-f=''])");
+      return !!b && b.textContent.trim() === "P" && /Paulo/.test(b.getAttribute("title"))
+        && !!b.querySelector(".avatar.mini") && b.querySelector(".avatar.mini").style.background;
+    }));
+
   conf("nenhum erro de página", erros.length === 0);
 
   console.log("=== F123 · Meu Dia só com o que vence hoje ===");
