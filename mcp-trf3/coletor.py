@@ -124,7 +124,7 @@ def coletar_mes(cjf, con, acervo, ini, fim, limite=None):
     # previdenciário (cerca de dois terços no TRF3). Se o tempo de carga pesar, filtrar por texto no
     # campo Ementa/Decisão, depois de medir a perda de cobertura.
     total = cjf.pesquisar(acervo, ini, fim)
-    paginas, novos, k = math.ceil(total / POR_PAGINA), 0, 0
+    paginas, novos, k, instavel = math.ceil(total / POR_PAGINA), 0, 0, False
     while k < min(paginas, limite or paginas):
         k += 1
         arq = pasta / f"p{k:04}.xml.gz"
@@ -142,10 +142,10 @@ def coletar_mes(cjf, con, acervo, ini, fim, limite=None):
                     if novo == 0:                      # o CJF às vezes devolve lista vazia por instantes
                         time.sleep(30)
                         continue
-                    if novo != total and fechado:
-                        raise SystemExit(f"{chave}: o total de um mês fechado mudou no meio da coleta, rode de novo")
-                    # mês aberto cresce enquanto se coleta: segue com o total novo, e o que escorregar
-                    # de página entra na próxima rodada, porque mês aberto é sempre refeito
+                    # o total muda no meio da coleta, no mês aberto porque ele cresce e no fechado porque o
+                    # CJF oscila. Segue com o total novo, e o mês que mudou não é dado por concluído, para
+                    # ser refeito na próxima rodada e cobrir o que escorregou de página
+                    instavel = instavel or novo != total
                     total, paginas = novo, math.ceil(novo / POR_PAGINA)
                     esperados = min(POR_PAGINA, total - (k - 1) * POR_PAGINA)
             else:
@@ -154,7 +154,11 @@ def coletar_mes(cjf, con, acervo, ini, fim, limite=None):
         novos += banco.gravar(con, parser.extrair(r, acervo))          # LayoutMudou derruba a coleta
         if k % 20 == 0:
             print(f"    {chave[2]} {acervo}: página {k}/{paginas}", flush=True)
-    if fechado and not limite and total:      # total zero pode ser índice do CJF atrasado: tenta de novo na próxima rodada
+    if instavel:                              # páginas deslocadas não servem de cache na próxima rodada
+        for arq in pasta.glob("p*.xml.gz"):
+            arq.unlink()
+        print(f"    {chave[2]} {acervo}: o total mudou durante a coleta, o mês será refeito", flush=True)
+    elif fechado and not limite and total:    # total zero pode ser índice do CJF atrasado: tenta de novo na próxima rodada
         con.execute("INSERT INTO progresso VALUES (?,?,?,?,?,?)",
                     (*chave, paginas, total, datetime.datetime.now().isoformat(timespec="seconds")))
         con.commit()
