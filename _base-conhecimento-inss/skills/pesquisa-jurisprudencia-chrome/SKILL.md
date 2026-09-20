@@ -137,6 +137,10 @@ Julgado do TRF3 ou de Turma Recursal da 3ª Região passa a ser localizado prime
 
 **A busca por número faz-se pela PESQUISA LIVRE**, com o número CNJ completo e pontuado. O campo `numero` preenchido sozinho devolve erro, testado em 19/09/2026. O campo de pesquisa livre tem `id` `txtPesqLivre` e `name` `txtPesquisaLivre`.
 
+**O número devolve o PROCESSO, não o acórdão.** A pesquisa por número CNJ traz todos os julgados colegiados daqueles autos, e o certo é o que tem a DATA DE JULGAMENTO igual à do MCP. A classe não distingue, porque o TRF3 mantém a classe originária mesmo em embargos e agravo interno, conferido em 19/09/2026 nos processos 5248998-80.2020.4.03.9999 e 5003069-93.2024.4.03.6110, que devolveram dois resultados de mesma classe cada.
+
+**E há julgamento anulado no acervo.** No 5003069-93.2024.4.03.6110, o acórdão de 02/03/2026 traz "NULIDADE DO JULGAMENTO" por questão de ordem, e o de 29/06/2026 é o refeito. A lista não sinaliza isso. Vindo mais de um resultado, ler a ementa dos demais à procura de anulação, retratação ou efeitos infringentes antes de citar qualquer um.
+
 **Por que a conferência vale.** O portal traz as PARTES, que o MCP não tem, e é ali que se confirma quem recorreu, em vez de confiar no `polo_recorrente`, que é inferido. O campo `resultado` também é inferido, e "provido" não significa favorável ao segurado.
 
 **Alerta que decide peça.** A ementa do próprio tribunal pode conter citação incorreta. No acórdão usado no teste, a tese de julgamento ancorava a exceção do ruído no Tema 534 do STJ, que é eletricidade, e numa IN PRES/INSS nº 170/2024 não localizada no DOU. Toda citação de tema, súmula ou norma que venha dentro de ementa do TRF3 passa pelo `base-precedentes-catalogo-vinculantes` antes de ser reproduzida, porque copiar ementa importa os erros da ementa.
