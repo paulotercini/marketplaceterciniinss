@@ -37,3 +37,20 @@ crm/fase2/testes/cadastro/antes*.json
 
 # ficha a meio caminho de ser gravada (escrita atômica do portal)
 docs/portal/data/*.tmp
+
+# MCPs locais do escritório (Onda 151). VIAJA SÓ CÓDIGO.
+# O trf3.db passa de 2 GB e traz texto de acórdão com nome de parte. O
+# acervo.db guarda as peças do escritório, com nome, CPF e dado médico no
+# arquivo de origem. O normas.db é remontado do corpus em segundos e não
+# precisa viajar. O repositório é PÚBLICO, e um `git add -A` distraído em
+# qualquer um deles é irreversível.
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+mcp-trf3/bruto/
+mcp-acervo/bruto/
+mcp-normas/bruto/
+# rascunho de download do corpus de legislação, que não é fonte citável
+mcp-normas/corpus/**/_downloads/
