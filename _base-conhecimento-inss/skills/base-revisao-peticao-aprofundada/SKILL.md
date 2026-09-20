@@ -324,6 +324,7 @@ Verificações.
 - Pedidos de prova (perícia, testemunhas, ofícios) estão direcionados a fatos específicos.
 - Em réplicas, a especificação de provas segue a técnica da skill `especificacao-provas`.
 - CNIS cruzado com documentação comprobatória conforme `documentos-comprobatorios-in128`.
+- Nenhum parágrafo veio de peça de outro cliente. Trecho do MCP `acervo` é ponto de partida para redação nova, e reaproveitamento automático é VEDADO. O sinal de alerta é o dado que não bate com os autos deste cliente, como data, protocolo ou valor que a peça afirma e o processo não confirma. Severidade BLOQUEANTE.
 
 Esta camada é especialmente crítica em.
 
