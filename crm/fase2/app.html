@@ -2397,7 +2397,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.16</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.17</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3569,7 +3569,8 @@ function montarSidebar(){
     ["novidades","📣 Novidades", novidades().length],
     ["mencoes","📥 Menções", D.mencoes.length],
     ["calendario","📅 Calendário", null],
-    ["planejado","🗓️ Planejado", ativos().filter(k=>k.prazo).length],
+    // F124 · o mesmo que a tela mostra: caso, tarefa e lembrete com data
+    ["planejado","🗓️ Planejado", quantosNoPlanejado()],
     ["minhas","👤 Atribuídas a mim", ativos().filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(eu.id)
         || (D.tarefasPorCaso.get(k.id)||[]).some(t=>t.colaborador_id===eu.id)).length],
     ["importante","⭐ Importante", ativos().filter(k=>k.importante).length
@@ -7121,6 +7122,14 @@ function quantosNoAcervo(){
 
 // ── 🗓️ Planejado (a agenda: filtros por período e por colaborador) ────────
 let filtroPlan="todas", filtroPlanColab=null;   // Planejado abre mostrando tudo, em seções
+// o número da barra lateral tem de ser o mesmo que a tela conta, senão o menu
+// promete uma agenda e a tela entrega outra
+function quantosNoPlanejado(){
+  return ativos().filter(k=>k.prazo || (D.tarefasPorCaso.get(k.id)||[]).some(t=>t.lembrar_em)
+                              || prorrogarEm(k)).length
+    + D.tarefas.filter(t=>!t.concluida && t.prazo).length
+    + (D.lembretes||[]).filter(l=>l.ativo!==false && l.proximo_em).length;
+}
 function renderPlanejado(){
   tituloLista("🗓️ Planejado");
   document.getElementById("sub-lista").textContent=
@@ -7139,11 +7148,25 @@ function renderPlanejado(){
     const db = doCaso ? prorrogarEm(k) : null;
     return [dmin, pz, db].filter(Boolean).sort()[0] || null;
   };
-  let base = ativos().map(k=>{ k._dplan = dataDe(k); return k; }).filter(k=>k._dplan);
-  if(filtroPlan==="venc") base = base.filter(k=>k._dplan<hoje());
-  else if(filtroPlan==="hoje") base = base.filter(k=>k._dplan===hoje());
-  else if(filtroPlan==="3") base = base.filter(k=>k._dplan>=hoje() && k._dplan<=em(3));
-  else if(filtroPlan==="7") base = base.filter(k=>k._dplan>=hoje() && k._dplan<=em(7));
+  // F124 · O PLANEJADO É O DO TO DO: TODA DATA, NÃO SÓ A DO CASO (decisão do
+  // Paulo, 20.09.2026). No To Do, Planejado reúne toda tarefa com data, venha
+  // da lista que vier. Aqui entram as três origens que têm data, o caso, a
+  // tarefa (inclusive o documento pedido ao cliente) e o lembrete — que é onde
+  // moram as aposentadorias futuras desde a migração.
+  const noPeriodo = d => filtroPlan==="venc" ? d<hoje()
+    : filtroPlan==="hoje" ? d===hoje()
+    : filtroPlan==="3" ? (d>=hoje() && d<=em(3))
+    : filtroPlan==="7" ? (d>=hoje() && d<=em(7)) : true;
+  const tCol = t => !filtroPlanColab || t.particular_de===filtroPlanColab || !t.particular_de;
+  const tarefasPlan = [...D.tarefas.filter(t=>!t.concluida && t.prazo),
+                       ...docsPreCasoComData()].filter(tCol)
+    .filter(t=>noPeriodo(t.prazo)).sort((a,b)=>a.prazo<b.prazo?-1:1);
+  // lembrete não tem dono; com o filtro por pessoa ligado, ele sai de cena
+  const lembPlan = (filtroPlanColab ? [] : (D.lembretes||[])
+    .filter(l=>l.ativo!==false && l.proximo_em && noPeriodo(l.proximo_em)))
+    .sort((a,b)=>a.proximo_em<b.proximo_em?-1:1);
+  let base = ativos().map(k=>{ k._dplan = dataDe(k); return k; })
+    .filter(k=>k._dplan && noPeriodo(k._dplan));
   const chipsPer = per.map(([v,r])=>`<button class="fchip ${filtroPlan===v?"on":""}" data-per="${v}">${r}</button>`).join("");
   const chipsCol = [`<button class="fchip ${filtroPlanColab===null?"on":""}" data-pcol="">Todos</button>`]
     .concat(equipeAtiva().map(c=>
@@ -7153,24 +7176,30 @@ function renderPlanejado(){
   document.getElementById("ordem").value="prazo";   // agenda em ordem cronológica
   // seções estilo To Do: vencidas → hoje → amanhã → semana → mais tarde
   const secoes=[
-    ["🔴 Vencidas",        k=>k._dplan<hoje()],
-    ["🟡 Vencem hoje",     k=>k._dplan===hoje()],
-    ["🟢 Amanhã",          k=>k._dplan===em(1)],
-    ["🗓 Próximos 7 dias", k=>k._dplan>em(1) && k._dplan<=em(7)],
-    ["📅 Mais tarde",      k=>k._dplan>em(7)],
+    ["🔴 Vencidas",        d=>d<hoje()],
+    ["🟡 Vencem hoje",     d=>d===hoje()],
+    ["🟢 Amanhã",          d=>d===em(1)],
+    ["🗓 Próximos 7 dias", d=>d>em(1) && d<=em(7)],
+    ["📅 Mais tarde",      d=>d>em(7)],
   ];
+  const total = base.length + tarefasPlan.length + lembPlan.length;
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chipsPer}</div><div class="filtros">${chipsCol}</div>`
-    + `<div class="meio-sub">${base.length} data(s) neste filtro</div>`
+    + `<div class="meio-sub">${total} data(s) neste filtro — caso, tarefa e lembrete, como no To Do</div>`
     + secoes.map(([tit,f])=>{
-        const g=base.filter(f);
-        return g.length?`<h3 class="secao">${tit} (${g.length})</h3>`
-          + grupoClientes(g).map(([c,ks])=>cartaoCliente(c,ks)).join(""):"";
+        const g=base.filter(k=>f(k._dplan));
+        const tg=tarefasPlan.filter(t=>f(t.prazo));
+        const lg=lembPlan.filter(l=>f(l.proximo_em));
+        const n=g.length+tg.length+lg.length;
+        return n?`<h3 class="secao">${tit} (${n})</h3>`
+          + grupoClientes(g).map(([c,ks])=>cartaoCliente(c,ks)).join("")
+          + tg.map(t=>cartaoTarefa(t)).join("")
+          + lg.map(l=>cartaoLembrete(l)).join(""):"";
       }).join("")
-    + (base.length? "" : "<p class='meio-sub'>Nada por aqui — agenda limpa. ✨</p>");
+    + (total? "" : "<p class='meio-sub'>Nada por aqui — agenda limpa. ✨</p>");
   document.querySelectorAll("[data-per]").forEach(b=>b.onclick=()=>{ filtroPlan=b.dataset.per; render(); });
   document.querySelectorAll("[data-pcol]").forEach(b=>b.onclick=()=>{ filtroPlanColab=b.dataset.pcol||null; render(); });
-  ligarCartoes();
+  ligarCartoes(); ligarTarefas();
 }
 
 // ── Minhas Tarefas (particulares) ─────────────────────────────────────────
@@ -12745,7 +12774,11 @@ async function salvarAnotacaoNoCaso(lembId, i, casoId){
 function itensLembretes(){
   const venc=(D.lembretes||[]).filter(l=>l.ativo!==false && l.proximo_em && l.proximo_em<=hoje())
     .sort((a,b)=>a.proximo_em<b.proximo_em?-1:1);
-  const linha = l=>{
+  return { hoje: venc.filter(l=>l.proximo_em===hoje()).map(cartaoLembrete),
+           antes: venc.filter(l=>l.proximo_em<hoje()).map(cartaoLembrete) };
+}
+// o cartão do lembrete, um só para o Meu Dia e para o Planejado
+function cartaoLembrete(l){
     const c=D.cliPorId.get(l.cliente_id)||{};
     return `<div class="cartao" data-cli="${c.id||""}">
       <div class="info"><div class="nome">${esc(c.nome||"cliente sem ficha")}</div>
@@ -12756,10 +12789,9 @@ function itensLembretes(){
       ${c.telefone?`<button class="btn-mini" style="flex:none" title="WhatsApp com a mensagem pronta"
         onclick="event.stopPropagation();zapAvisoLembrete('${l.id}')">📲</button>`:""}
       <span class="lembrar-caixa" onclick="event.stopPropagation()" title="adiar">🗓
-        <input type="date" min="${hoje()}" onchange="adiarLembrete('${l.id}',this.value)"></span>
-    </div>`;};
-  return { hoje: venc.filter(l=>l.proximo_em===hoje()).map(linha),
-           antes: venc.filter(l=>l.proximo_em<hoje()).map(linha) };
+        <input type="date" min="${hoje()}" value="${l.proximo_em||""}"
+          onchange="adiarLembrete('${l.id}',this.value)"></span>
+    </div>`;
 }
 // migração combinada com o Paulo: os casos de 🙏 Aposentadorias Futuras que
 // eram "avisar de tempos em tempos" viram lembrete — um clique por caso,
