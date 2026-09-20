@@ -19,6 +19,10 @@ Firecrawl e SearXNG entram como apoio, nunca como fonte final da citação.
 
 **Nível 2, Firecrawl local mais SearXNG.** Serve para localizar candidatos rápido (`firecrawl_search` com operador `site:`) e para converter em markdown limpo um inteiro teor cuja URL já é conhecida (`firecrawl_scrape`). O achado nasce como [NÃO CONFIRMADO] e só muda de status depois de aberto no Nível 1.
 
+**Nível 2-A, os servidores MCP `trf3` e `iurisprudencia`.** Localizam rápido dentro de base própria, e o achado nasce [NÃO CONFERIDO] como qualquer Nível 2. A forma de pesquisar em cada um, com os filtros, as particularidades de acentuação, a ausência de operador OU e a via oficial de conferência de cada base, está em `references/PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`. O `trf3` cobre a 7ª à 10ª Turma, a 3ª Seção, as Turmas Recursais de SP e MS e a TRU3. O `iurisprudencia` cobre a TNU e o CRPS.
+
+**Conferência do que vem do `iurisprudencia`.** O `link_portal` que ele devolve aponta para `iurisprudencia.com.br`, que NÃO é fonte oficial e não autoriza [CONFERIDO]. Acórdão da TNU se confere em `https://eproctnu-jur.cjf.jus.br`, na forma da seção 4.4. Enunciado do CRPS se confere na página oficial do Conselho no gov.br, e o texto vigente e as redações anteriores saem de `enunciados_pleno_inss_crps`. Para acórdão do CRPS a consulta pública oficial não foi localizada até 19/09/2026, e o julgado fica [NÃO CONFIRMADO] até que a via seja definida.
+
 **Nível 3, catálogo do escritório.** `base-precedentes-catalogo-vinculantes` e o CATALOGO-COMPLEMENTAR-VERIFICADO valem como conferência prévia de redação literal e de status. Se o item já está lá com redação verificada e data, basta conferir se houve mudança de status.
 
 Ordem de consulta por origem do precedente, vinculantes de STF, STJ e TNU antes de TRF3, e TRF3 antes de qualquer outro Regional. Julgado de outro TRF entra só como persuasivo e vai sinalizado como tal na peça.
@@ -136,6 +140,8 @@ Julgado do TRF3 ou de Turma Recursal da 3ª Região passa a ser localizado prime
 **O MCP localiza, o portal confirma.** Todo julgado vindo do MCP nasce marcado `[NÃO CONFERIDO]` e não entra em peça nessa condição. Só recebe `[CONFERIDO em DD/MM/AAAA]` depois de aberto em `https://web.trf3.jus.br/jurisprudencia/`. Não achado no portal, não entra. Divergindo os dois, prevalece o portal.
 
 **A busca por número faz-se pela PESQUISA LIVRE**, com o número CNJ completo e pontuado. O campo `numero` preenchido sozinho devolve erro, testado em 19/09/2026. O campo de pesquisa livre tem `id` `txtPesqLivre` e `name` `txtPesquisaLivre`.
+
+**Lidos os demais acórdãos do processo, e não só o que casa a data.** Escolhido pela data de julgamento o julgado que corresponde ao registro do MCP, leem-se os outros acórdãos daqueles autos, porque a tese completa raramente está num só. Embargos rejeitados confirmam sem acrescentar. Embargos com efeito modificativo, agravo interno provido e retratação alteram o resultado, e o acórdão anterior deixa de valer sozinho. Cita-se o que traz a razão de decidir, indicando os posteriores que a mantiveram ou modificaram. Seção "Vários acórdãos no mesmo processo" de `references/PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`, com o caso medido do processo 5248998-80.2020.4.03.9999, em que a tese estava na monocrática confirmada por agravo interno, e não nos embargos que o MCP devolveu.
 
 **O número devolve o PROCESSO, não o acórdão.** A pesquisa por número CNJ traz todos os julgados colegiados daqueles autos, e o certo é o que tem a DATA DE JULGAMENTO igual à do MCP. A classe não distingue, porque o TRF3 mantém a classe originária mesmo em embargos e agravo interno, conferido em 19/09/2026 nos processos 5248998-80.2020.4.03.9999 e 5003069-93.2024.4.03.6110, que devolveram dois resultados de mesma classe cada.
 
