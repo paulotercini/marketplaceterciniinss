@@ -387,6 +387,60 @@ def remapear_casos(mapa, task_para_id_existente):
     return len(troca)
 
 
+def casos_movidos(mapa, banco, minimo_seguro=50):
+    """Acerta o que a MUDANÇA DE LISTA no To Do quebra.
+
+    Mover a tarefa de lista faz a Microsoft apagar e recriar a tarefa com id
+    novo. Sem isto, cada mudança abria um caso a mais do mesmo cliente, e o
+    caso velho ficava aberto para sempre com o prazo do dia da mudança.
+
+    Devolve (quantos casos foram ADOTADOS, lista de (id, título) a ENCERRAR).
+    Adotar é o caso novo assumir o id do caso velho do mesmo cliente com o
+    mesmo título, de modo que andamentos, números e comentários continuem no
+    mesmo lugar. Encerrar é o que sobrou sem dono, porque a tarefa que lhe deu
+    origem não existe mais em lista nenhuma.
+
+    A trava `minimo_seguro` existe porque um crawl incompleto do To Do faria
+    esta função encerrar a carteira inteira. Abaixo disso, ela não encerra nada.
+    """
+    vivos = {k.get("todo_task_id") for k in mapa.get("casos") or []}
+    ja_no_banco = {c["todo_task_id"] for c in banco}
+    # casos do banco cuja tarefa sumiu do To Do, do mais novo para o mais velho
+    orfaos = [c for c in banco
+              if c.get("fase") != "encerrado" and c["todo_task_id"] not in vivos]
+    por_chave = {}
+    for c in orfaos:
+        por_chave.setdefault((c.get("cliente_id"), c.get("titulo")), []).append(c)
+
+    troca, adotados = {}, 0
+    for k in mapa.get("casos") or []:
+        if k.get("todo_task_id") in ja_no_banco:
+            continue                      # já existe: o remapeamento por id cuidou
+        fila = por_chave.get((k.get("cliente_id"), k.get("titulo")))
+        if not fila:
+            continue
+        velho = fila.pop()                # um caso velho serve a um caso novo só
+        troca[k["id"]] = velho["id"]
+        k["id"] = velho["id"]
+        adotados += 1
+    if troca:
+        for a in mapa.get("andamentos") or []:
+            a["caso_id"] = troca.get(a["caso_id"], a["caso_id"])
+        for e in mapa.get("eventos") or []:
+            e["caso_id"] = troca.get(e["caso_id"], e["caso_id"])
+        for tf in mapa.get("tarefas") or []:
+            if tf.get("caso_id"):
+                tf["caso_id"] = troca.get(tf["caso_id"], tf["caso_id"])
+        for pg in mapa.get("pagamentos") or []:
+            pg["caso_id"] = troca.get(pg["caso_id"], pg["caso_id"])
+
+    if len(vivos) < minimo_seguro:        # crawl incompleto: não encerra nada
+        return adotados, []
+    sobrou = [(c["id"], c.get("titulo"))
+              for fila in por_chave.values() for c in fila]
+    return adotados, sobrou
+
+
 def remapear_clientes(mapa, cpf_para_id_existente):
     """[BUG 17.09.2026] Cliente cadastrado NO APP ganha id aleatório. Se a
     mesma pessoa também é tarefa do To Do, a importação seguinte tentava
@@ -684,10 +738,31 @@ def subir_rest(mapa):
     # casos que já existem no banco (inclusive criados no app): remapear
     exist = _rest_todas(url, chave,
                         "/rest/v1/casos?todo_task_id=not.is.null"
-                        "&select=id,todo_task_id,processo,nb")
+                        "&select=id,todo_task_id,processo,nb,cliente_id,titulo,fase")
     n = remapear_casos(mapa, {c["todo_task_id"]: c["id"] for c in exist})
     if n:
         print(f"  casos remapeados para ids já existentes: {n}")
+
+    # [BUG 20.09.2026] MOVER A TAREFA DE LISTA NO TO DO TROCA O ID DELA. A
+    # Microsoft apaga e recria a tarefa, então o mesmo cliente, ao andar de
+    # 🌻 INSS para 🖥 Conselho e depois para 👪 Judicial, virava TRÊS casos
+    # abertos aqui, cada um guardando o prazo que tinha no dia da mudança. Era
+    # isso que enchia o 🗓️ Planejado de datas de julho e agosto: 445 casos com
+    # prazo, dos quais 203 eram fantasmas de tarefas que não existem mais.
+    adotados, encerrar = casos_movidos(mapa, exist)
+    if adotados:
+        print(f"  casos que mudaram de lista no To Do (id novo, mesmo caso): {adotados}")
+    for cid, titulo in encerrar:
+        try:
+            _rest(url, chave, "PATCH", f"/rest/v1/casos?id=eq.{cid}",
+                  {"fase": "encerrado",
+                   "encerrado_em": datetime.datetime.now(datetime.timezone.utc)
+                       .isoformat(timespec="seconds")},
+                  prefer="return=minimal")
+        except BancoRecusou as e:
+            print(f"  aviso: não encerrei o caso fantasma {cid}: {e}")
+    if encerrar:
+        print(f"  casos fantasmas encerrados (a tarefa sumiu do To Do): {len(encerrar)}")
 
     # MERGE NÃO-DESTRUTIVO do processo/NB: o upsert manda a linha INTEIRA, e
     # tarefa sem número no To Do mandava processo=null — apagando, toda hora,
