@@ -13,10 +13,15 @@ const hoje = new Date().toISOString().slice(0, 10);
 
 // o que esta prova acrescenta ao cenário: um lembrete vencido, um aviso de
 // aposentadoria que já chegou a hora e uma rotina de todo dia
+const ONTEM = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
 const EXTRA = {
   lembretes: [{ id: "l0000000-0000-0000-0000-000000000001", cliente_id: CLI_CHEIO,
     tipo: "geral", titulo: "Ligar sobre a perícia", intervalo_meses: 6,
-    proximo_em: hoje, ativo: true, criado_por: EU, detalhes: {} }],
+    proximo_em: hoje, ativo: true, criado_por: EU, detalhes: {} },
+    // atrasado: não é de hoje, e por isso fica atrás do 🔴 mostrar vencidas
+    { id: "l0000000-0000-0000-0000-000000000002", cliente_id: CLI_CHEIO,
+      tipo: "geral", titulo: "Cobrar o documento antigo", intervalo_meses: null,
+      proximo_em: ONTEM, ativo: true, criado_por: EU, detalhes: {} }],
   aposentadorias: [{ id: "a0000000-0000-0000-0000-000000000001", cliente_id: CLI_CHEIO,
     especie: "Idade", data: hoje, lembrar_em: hoje, autor_id: EU }],
   rotinas: [{ id: "r0000000-0000-0000-0000-000000000001", titulo: "Conferir o e-mail do escritório",
@@ -88,6 +93,28 @@ const EXTRA = {
     /já tem direito/.test(venc.txt));
   conf("o contador do título conta tudo que está embaixo dele",
     (venc.titulo.match(/\((\d+)\)/) || [])[1] === String(venc.n));
+  // [BUG 20.09.2026] o aviso atrasado entupia "Vencem hoje" com gente que não
+  // vence nada hoje: o lembrete de aposentadoria nasce meses antes da data
+  conf("lembrete ATRASADO não aparece em Vencem hoje",
+    !/Cobrar o documento antigo/.test(venc.txt));
+  conf("ele fica atrás do 🔴 mostrar vencidas, e é contado ali", await p.evaluate(() => {
+    const chip = document.getElementById("chip-vencidas");
+    const n = (chip.textContent.match(/\((\d+)\)/) || [])[1];
+    chip.click();
+    return n === "1";
+  }));
+  await p.waitForTimeout(300);
+  conf("aberto o 🔴, o atrasado aparece na seção das vencidas",
+    await p.evaluate(() => {
+      const h = [...document.querySelectorAll("#conteudo-meio h3.secao")]
+        .find(x => /Vencidas/.test(x.textContent));
+      if (!h) return false;
+      let el = h.nextElementSibling, txt = "";
+      while (el && !(el.tagName === "H3" && el.classList.contains("secao"))) {
+        txt += el.textContent; el = el.nextElementSibling;
+      }
+      return /Cobrar o documento antigo/.test(txt);
+    }));
 
   await p.evaluate(() => { visao = "acervo"; render(); });
   await p.waitForTimeout(300);

@@ -2397,7 +2397,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.15</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.16</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5482,7 +5482,8 @@ function renderMeuDia(){
   const docsPc = docsPreCasoComData();   // F93 · pedidos do pré-caso com data
   const tHoje = [...D.tarefas.filter(t=>!t.concluida && t.prazo===hoje()), ...docsPc.filter(t=>t.prazo===hoje())].filter(tCol);
   const tVenc = [...D.tarefas.filter(t=>!t.concluida && t.prazo && t.prazo<hoje()), ...docsPc.filter(t=>t.prazo<hoje())].filter(tCol);
-  const nVenc = vencK.length + tVenc.length;
+  const apos = itensApos(), lemb = itensLembretes();
+  const nVenc = vencK.length + tVenc.length + apos.antes.length + lemb.antes.length;
   const chips = [`<button class="fchip ${filtroColab===null?"on":""}" data-f="">Todos</button>`]
     .concat(equipeAtiva().map(c=>
       `<button class="fchip ${filtroColab===c.id?"on":""}" data-f="${c.id}">`+
@@ -5496,8 +5497,9 @@ function renderMeuDia(){
   // mão e o CadÚnico saíram para 🧹 Cuidar do acervo: são conferência
   // periódica, não data que vence. Fica o aviso do crachá do CRPS, que não é
   // lista, é pane do robô.
-  const apos = itensApos(), lemb = itensLembretes();
-  const nHoje = hojeK.length + tHoje.length + apos.length + lemb.length;
+  // e VENCE HOJE é só o de hoje: o aviso que já passou da data é atrasado, e
+  // atrasado mora atrás do 🔴, senão a tela do dia vira a lista de tudo
+  const nHoje = hojeK.length + tHoje.length + apos.hoje.length + lemb.hoje.length;
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chips.join("")}</div>`
     + avisoCRPS()
@@ -5506,10 +5508,11 @@ function renderMeuDia(){
     + `<h3 class="secao">🟡 Vencem hoje (${nHoje})</h3>`
     + (grupoClientes(hojeK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
        + tHoje.map(t=>cartaoTarefa(t)).join("")
-       + apos.join("") + lemb.join("") || "<p class='meio-sub'>Nada vence hoje. 🎉</p>")
+       + apos.hoje.join("") + lemb.hoje.join("") || "<p class='meio-sub'>Nada vence hoje. 🎉</p>")
     + (filtroVencidas ? `<h3 class="secao">🔴 Vencidas (${nVenc})</h3>`
        + (grupoClientes(vencK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
-          + tVenc.map(t=>cartaoTarefa(t)).join("") || "<p class='meio-sub'>Nenhuma vencida. 👏</p>") : "");
+          + tVenc.map(t=>cartaoTarefa(t)).join("")
+          + apos.antes.join("") + lemb.antes.join("") || "<p class='meio-sub'>Nenhuma vencida. 👏</p>") : "");
   document.querySelectorAll(".fchip[data-f]").forEach(b=>b.onclick=()=>{ filtroColab=b.dataset.f||null; render(); });
   document.getElementById("chip-vencidas").onclick=()=>{ filtroVencidas=!filtroVencidas; render(); };
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
@@ -11999,10 +12002,14 @@ async function lembrarApos(cliId, aposId, data, especie, quando){
 // F123 · o aviso de aposentadoria É lembrete, e lembrete vencido entra na
 // lista única do que vence hoje. Por isso esta função devolve só as LINHAS,
 // sem título de seção própria: quem monta o título é o Meu Dia.
+// [BUG 20.09.2026] devolve SEPARADO o que vence hoje e o que venceu antes. O
+// aviso de aposentadoria nasce meses antes da data do direito, então quase
+// todo ele está atrasado: jogado inteiro em "Vencem hoje", enchia a tela de
+// gente que não vence nada hoje. Atrasado é atrasado, e mora no 🔴 vencidas.
 function itensApos(){
   const chegou=lembretesApos().filter(a=>a.aviso<=hoje())
     .sort((x,y)=>x.data<y.data?-1:1);
-  return chegou.map(a=>`<div class="cartao" data-cli="${a.cliente.id}">
+  const linha = a=>`<div class="cartao" data-cli="${a.cliente.id}">
       <span class="check" style="border-color:var(--verde)"></span>
       <div class="info"><div class="nome">${esc(a.cliente.nome)}</div>
         <div class="meta"><span class="chip fase">${esc(a.especie)}</span>
@@ -12020,7 +12027,9 @@ function itensApos(){
         title="adiar: some daqui e volta na data escolhida">🗓 Lembrar em
         <input type="date" min="${hoje()}" value="${a.lembrar_em||""}"
           onchange="lembrarApos('${a.cliente.id}','${a.id}','${a.data}','${esc(a.especie)}',this.value)"></span>
-      </div>`);
+      </div>`;
+  return { hoje: chegou.filter(a=>a.aviso===hoje()).map(linha),
+           antes: chegou.filter(a=>a.aviso<hoje()).map(linha) };
 }
 // ── LOAS idoso e o CadÚnico ──────────────────────────────────────────────
 // O BPC do idoso (65 anos, para homem e mulher) exige CadÚnico em dia: ele
@@ -12731,10 +12740,12 @@ async function salvarAnotacaoNoCaso(lembId, i, casoId){
 // no Meu Dia: os lembretes que venceram, prontos para despachar dali mesmo.
 // F123 · devolve só as LINHAS: elas entram na lista única do que vence hoje,
 // junto do prazo fatal e do compromisso, em vez de morarem em seção à parte.
+// [BUG 20.09.2026] o mesmo do aviso de aposentadoria: lembrete atrasado não é
+// lembrete de hoje. Sai separado, e o atrasado fica no 🔴 vencidas.
 function itensLembretes(){
   const venc=(D.lembretes||[]).filter(l=>l.ativo!==false && l.proximo_em && l.proximo_em<=hoje())
     .sort((a,b)=>a.proximo_em<b.proximo_em?-1:1);
-  return venc.map(l=>{
+  const linha = l=>{
     const c=D.cliPorId.get(l.cliente_id)||{};
     return `<div class="cartao" data-cli="${c.id||""}">
       <div class="info"><div class="nome">${esc(c.nome||"cliente sem ficha")}</div>
@@ -12746,7 +12757,9 @@ function itensLembretes(){
         onclick="event.stopPropagation();zapAvisoLembrete('${l.id}')">📲</button>`:""}
       <span class="lembrar-caixa" onclick="event.stopPropagation()" title="adiar">🗓
         <input type="date" min="${hoje()}" onchange="adiarLembrete('${l.id}',this.value)"></span>
-    </div>`;});
+    </div>`;};
+  return { hoje: venc.filter(l=>l.proximo_em===hoje()).map(linha),
+           antes: venc.filter(l=>l.proximo_em<hoje()).map(linha) };
 }
 // migração combinada com o Paulo: os casos de 🙏 Aposentadorias Futuras que
 // eram "avisar de tempos em tempos" viram lembrete — um clique por caso,
