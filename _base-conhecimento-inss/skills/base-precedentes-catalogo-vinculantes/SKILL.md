@@ -277,3 +277,16 @@ Ementa de acórdão NÃO é fonte de precedente. Ela é uso de precedente por um
 Caso real, conferido em 19/09/2026. Acórdão da 9ª Turma do TRF3, ApCiv 5347474-56.2020.4.03.9999, sustenta na tese de julgamento que a exceção do ruído ao EPI decorre dos "STJ Temas 534, 694 e 1.083" e da "IN PRES/INSS nº 170/2024, art. 291, §2º". O Tema 534 do STJ é ELETRICIDADE, armadilha de homônimo já registrada na Onda 108, e a IN 170/2024 não foi localizada no DOU em busca por expressão exata sem restrição de data.
 
 **Regra.** Todo tema, súmula ou norma que chegar por dentro de uma ementa passa por este catálogo antes de ser reproduzido, e o que não constar aqui vai ao `verificador-precedentes`. O acórdão segue aproveitável pela RATIO, e o que não se reproduz é a cadeia de citações que ele carrega.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

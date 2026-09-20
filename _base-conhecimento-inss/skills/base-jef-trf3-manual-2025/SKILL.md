@@ -342,3 +342,16 @@ Detalhamento operacional completo em `references/NUCLEOS-JUSTICA-4-0-TRF3.md`, c
 Extinção sem mérito por inércia na regularização (art. 47) é A CAUSA MAIS COMUM de perda processual evitável no JEF TRF3. A revisão prévia de qualquer inicial deve passar OBRIGATORIAMENTE pelo checklist das 52 irregularidades.
 
 Para detalhamento operacional dos Fluxos Especiais e do JECRIM, ver `references/FLUXOS-ESPECIAIS-E-PERICIAS.md` e `references/CHECKLIST-52-IRREGULARIDADES.md`. Para Núcleos 4.0 TRF3, ver `references/NUCLEOS-JUSTICA-4-0-TRF3.md`.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

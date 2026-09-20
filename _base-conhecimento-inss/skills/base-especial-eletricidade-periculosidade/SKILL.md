@@ -46,6 +46,19 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 
 Frederico Amado, em Direito Previdenciário, sustenta a manutenção do enquadramento por eletricidade após a Lei 9.032/95, desde que presente a exposição acima de 250 volts. Hugo Goes, em Manual, reforça a natureza qualitativa do risco elétrico. Fábio Zambitte Ibrahim, em Curso, defende a integração sistemática entre o Decreto 53.831/64 e a NR-10. Wladimir Novaes Martinez enfrenta a lógica do risco de morte iminente. O IBDP, em teses institucionais, sustenta que o risco elétrico dispensa tempo mínimo e permanência contínua.
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## Integração com outras skills
 
 Ao redigir peça, acione `peticao-previdenciaria`.

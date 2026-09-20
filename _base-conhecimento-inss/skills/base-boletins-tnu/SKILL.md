@@ -55,6 +55,19 @@ A cada boletim novo, salvar o PDF na pasta `Boletins TNU` e reexecutar `referenc
 
 Tema novo com tese relevante para o escritório deve ser promovido ao `base-precedentes-catalogo-vinculantes` com redação literal, conforme a disciplina de alimentação do catálogo.
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## Integração com outras skills
 
 `base-precedentes-catalogo-vinculantes` é o destino das teses promovidas. `pesquisa-jurisprudencia-chrome` dá o protocolo de conferência e a base oficial do CJF para julgados recentes. `base-tnu-admissibilidade-manual` e `pedilef-cotejo-analitico-tnu` cuidam da admissibilidade e do cotejo quando o caso for de PUIL. `base-recursos-jef` e `base-tru-trf3-sumulas-jurisprudencia` completam o quadro do microssistema dos Juizados. O agente `verificador-precedentes` pode usar este acervo como fonte local antes de sair para a rede.

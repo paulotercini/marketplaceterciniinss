@@ -298,3 +298,16 @@ Antes de escrever a primeira linha, declarar o tipo de peça, o orçamento de p�
 A distribuição é plano de trabalho, não promessa. Seção que estourar o previsto sinaliza que ali há fundamento acessório sendo desenvolvido como se fosse decisivo, e é onde a fusão de fundamentos deve atuar primeiro.
 
 Peça sem orçamento declarado cresce por acúmulo, porque cada skill acionada acrescenta e nenhuma subtrai. O orçamento por tipo de peça e a passada de corte estão na Camada 6 da `base-revisao-peticao-aprofundada`.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

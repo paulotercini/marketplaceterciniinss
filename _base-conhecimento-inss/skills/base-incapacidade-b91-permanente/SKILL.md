@@ -72,6 +72,19 @@ Sempre verificar caráter acidentário. Se presente, converter para B91 acident�
 
 Sempre verificar direito ao acréscimo de 25% (grande invalidez), com avaliação da necessidade de assistência permanente. Art. 45 da Lei 8.213/91. Atenção: o STF (Tema 1095, RE 1.221.446, j. 2021) restringiu o acréscimo de 25% à aposentadoria por incapacidade permanente, superando a extensão a outros benefícios que se discutia no Tema 982 STJ.
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## Integração com outras skills
 
 Ao redigir peça, acione `peticao-previdenciaria`.

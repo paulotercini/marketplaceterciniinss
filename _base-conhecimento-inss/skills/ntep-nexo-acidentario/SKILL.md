@@ -122,3 +122,16 @@ Antes de realizar a análise, ler obrigatoriamente os seguintes arquivos conform
 - `references/CONVERSAO-B31-B91.md` — Estratégia de conversão de espécie
 - `references/INTEGRACAO-SKILLS.md` — Cruzamento com skills do escritório
 - `references/RISCOS-PSICOSSOCIAIS-NR1.md` — Riscos psicossociais NR-1, PGR como prova, burnout e estratégias probatórias para transtornos mentais ocupacionais
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

@@ -98,6 +98,19 @@ Para o checklist documental, acionar `base-documentos-comprobatorios-in128`.
 Para os benefícios de destino, acionar `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`, `base-auxilio-acidente-b94-pos-reforma` e `pensao-por-morte`.
 Para o nexo e a estabilidade do art. 118, acionar `ntep-nexo-acidentario`.
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## O que NÃO está nesta skill
 
 A responsabilidade do empregador pelos salários do período é matéria trabalhista e não se resolve aqui. O dano moral pelo limbo depende de conferência do IRR 88 e está em quarentena. O cômputo do período de limbo como tempo de contribuição ou carência não foi decidido pela TNU e não pode ser afirmado como tese vinculante.

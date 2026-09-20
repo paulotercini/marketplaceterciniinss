@@ -144,3 +144,16 @@ Art. 70 da IN PRES/INSS 128/2022 (CTC pelo Anexo XV, acompanhada da Relação da
 Portaria MTP 1.467/2022, Anexo X (Relação das Bases de Cálculo de Contribuição, RBCC). CONFERIDO em fonte oficial (gov.br, Manual de CTC do INSS e Portal IN/INSS), por não constar do repositório local de legislação. Registrado nas notas de manutenção da `base-legislacao-fontes-primarias` como norma a baixar.
 
 Prévius. O formato dos importadores (colunas, tipos, separador) é do software de cálculo do escritório, não é norma. Descrição operacional, não jurídica.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
