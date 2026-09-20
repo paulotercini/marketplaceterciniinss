@@ -399,3 +399,16 @@ Altera a IN 128/2022, publicada no DOU de 11/08/2026, vigência imediata. Confer
 Três alterações mudam TESE, todas pró-segurado. O art. 184, § 10, estende as prorrogações do período de graça a TODAS as categorias de segurados obrigatórios. O art. 223, § 2º, I, manda considerar o SALÁRIO MÍNIMO nas competências do PBC com vínculo e sem remuneração, com direito a recálculo mediante prova. E o art. 354, § 1º, declara que o Anexo III do RPS é ROL MERAMENTE EXEMPLIFICATIVO para o auxílio-acidente.
 
 Duas são ARMADILHAS DE PRAZO. O art. 566, § 9º, suspende os prazos do INSS durante a exigência, e é a defesa da autarquia contra mandado de segurança por mora. Os arts. 574, § 4º, II, e 600, parágrafo único, transformam a falta de manifestação em exigência, por trinta dias, em DESISTÊNCIA com encerramento sem análise do mérito.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

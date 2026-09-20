@@ -217,3 +217,16 @@ Recurso CRPS rejeitado por argumentação difusa é falha estratégica do escrit
 Recurso ordinário vai ao agente `conselheiro-junta-de-recursos`. Recurso especial, pedido de uniformização e reclamação vão ao `conselheiro-camara-de-julgamento`. Ambos fazem primeiro o juízo de ADMISSIBILIDADE, que é onde a maioria dos recursos morre, e devolvem o acórdão simulado com a lista do que mudaria o resultado.
 
 O que eles confirmam sobre o padrão desta skill. A fundamentação no CRPS é NORMATIVA. Recurso construído sobre Tema do STJ com pouca ancoragem em lei, decreto, instrução normativa, portaria, enunciado ou parecer vinculante perde força no colegiado administrativo, ainda que estivesse ótimo para o Judiciário.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

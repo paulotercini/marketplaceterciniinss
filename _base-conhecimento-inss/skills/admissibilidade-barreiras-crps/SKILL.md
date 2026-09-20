@@ -133,3 +133,16 @@ PRIMEIRA. O art. 566, § 9º, da IN 128/2022, acrescido pela IN 212/2026, suspen
 SEGUNDA. Os arts. 574, § 4º, II, e 600, parágrafo único, na redação da IN 212/2026, dispõem que a falta de manifestação sobre exigência após TRINTA DIAS da ciência configura DESISTÊNCIA, com encerramento sem análise do mérito. A consequência é pior que o indeferimento, porque não há decisão de mérito a recorrer, e a via judicial esbarra em falta de interesse de agir e nos efeitos financeiros do Tema 1124 do STJ.
 
 Regra do escritório. Lançar a data limite de trinta dias na agenda no momento em que a exigência é registrada. Não sendo possível cumprir integralmente, MANIFESTAR-SE dentro do prazo com o que se tem e requerer dilação, porque o gatilho é a FALTA DE MANIFESTAÇÃO. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

@@ -51,6 +51,19 @@ Para segurados com filiação após a reforma, a regra permanente é a única vi
 
 O art. 26, §6º, da EC 103 traz regra pró-segurado: podem ser EXCLUÍDAS, a pedido, as contribuições que reduzam o valor do benefício, desde que mantido o tempo mínimo. O divisor mínimo de 108 contribuições vem do art. 135-A da Lei 8.213/91 (Lei 14.331/2022). Pós-EC 103 a média usa 100% dos salários desde 07/1994 — não existe mais o descarte automático dos 20% menores (regra do art. 3º da Lei 9.876/99, aplicável só a direito adquirido pré-reforma).
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## Integração com outras skills
 
 Ao redigir peça, acione `peticao-previdenciaria`.

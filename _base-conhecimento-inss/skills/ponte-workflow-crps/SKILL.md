@@ -114,3 +114,16 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 ## Decisores simulados no fluxo (Onda 114)
 
 Último passo do workflow, antes do protocolo. Recurso ordinário ao `conselheiro-junta-de-recursos`, recurso especial e incidentes ao `conselheiro-camara-de-julgamento`. Se o decisor simulado devolver NÃO CONHECIDO, o fluxo NÃO segue para o protocolo, volta para a correção da admissibilidade.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

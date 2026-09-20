@@ -56,6 +56,19 @@ Nenhum fato. Nenhum ID. Nenhuma imagem. Três adjetivos inflados. O julgador lê
 
 Este componente é o complemento positivo da proibição de argumentação genérica, diz como fazer o que aquela regra manda não errar. Alimenta a técnica de demonstração de urgência, porque o Parágrafo de Realidade fornece o prejuízo concreto exigido em liminares. Convive com os componentes Visual Law, a tabela mostra o processo e o parágrafo mostra a pessoa. Em segurada mulher em contexto rural, informal ou doméstico, cruzar com `perspectiva-genero-previdenciario`. Em BPC, os dados do parágrafo são a própria matéria da avaliação social, e a peça deve dizer isso, invocando o Tema 385/TNU e o Tema 378/TNU sobre avaliação biopsicossocial, ambos verificados no catálogo, e a Súmula 80/TNU, cuja vigência e teor devem ser conferidos em `base-precedentes-catalogo-vinculantes` antes de citar. Para inserir o documento real com destaque ao lado do parágrafo, acionar `printscreen-impacto`.
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## Integração com outras skills
 
 Acionada automaticamente por `base-peticao-previdenciaria-padrao-visual` e por `peticao-previdenciaria` ao gerar peça em favor de pessoa física.

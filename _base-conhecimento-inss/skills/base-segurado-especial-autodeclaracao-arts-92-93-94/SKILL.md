@@ -548,3 +548,16 @@ O INSS migra períodos de segurado especial das bases CAFIR e RGP e os classific
 O critério automático do CAFIR é a área superior a quatro módulos fiscais, com o marco de 23/06/2008 separando `PSE-PEN` de `PSE-NEG`. Ele inverte o ponto de partida e não encerra a discussão, que segue pelo Tema 1115 do STJ e pela prova do art. 106.
 
 Redação oficial de cada indicador e a correção das siglas que circulam em material de divulgação estão em `references/INDICADORES-CNIS-SEGURADO-ESPECIAL-CAFIR-RGP.md`.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
