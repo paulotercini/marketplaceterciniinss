@@ -47,9 +47,15 @@ assert len(parser.extrair(resposta, "trf3", so_previdenciario=False)) == 2
 assert (d["relator_titular"], d["relator_acordao"]) == ("CICLANA TITULAR MENDES", None), d
 assert parser.relator_titular("RELATOR: DES. FED. ANDRE MENDES SILVA") == "ANDRE MENDES SILVA"
 assert parser.relator_titular("RELATORA: ANA LIMA") == "ANA LIMA"
+assert parser.relator_titular("RELATOR: Gab. 50 - DES. FED. SILVIA ROCHA") == "SILVIA ROCHA"
+assert parser.relator_titular("RELATOR: Gab. 29 - SILVIA ROCHA") == "SILVIA ROCHA"
 for bruto in ("JUÍZA CONVOCADA VANESSA LIMA", "Juza Federal VANESSA LIMA", "Juiz Federal Convocado VANESSA LIMA",
               "Desembargadora Federal VANESSA LIMA"):
     assert parser._sem_cargo(bruto) == "VANESSA LIMA", bruto
+sumula = doc("TRF3S42", "5000003-11.2022.4.03.6100", "8ª Turma").replace(">Acórdão<", ">Súmula<")
+assert parser.extrair(sumula, "trf3") == [], "Súmula do TRF3 não é julgado e não entra na base"
+antigo = doc("TRF3ANT", "5000004-11.2022.4.03.6100", "8ª Turma").replace("5000004-11.2022.4.03.6100", "95.03.012345-6")
+assert parser.extrair(antigo, "trf3")[0]["numero_cnj"] == "95.03.012345-6", "número fora do padrão CNJ é gravado como vem"
 assert parser.ORGAOS_PREV.search("Turma Regional de Uniformizao"), "TRU3 chega do CJF sem acento e não pode cair no recorte"
 
 try:
