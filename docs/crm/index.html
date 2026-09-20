@@ -2412,7 +2412,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.21</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.22</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10578,7 +10578,28 @@ async function itensDoPdf(arquivo){
     }
   }
   try{ await doc.destroy(); }catch(e){}
-  return itens;
+  return colarPedacosDoPdf(itens);
+}
+// [BUG 20.09.2026] "NÃO RECONHECI ESTE ARQUIVO COMO UM CNIS". Há PDFs do Meu
+// INSS em que o gerador entrega o texto LETRA POR LETRA, cada glifo um pedaço.
+// Aí "NIT:" chega como N, I, T e dois-pontos, "IREC-INDPEND" vira doze pedaços,
+// e nenhuma expressão casa: nem o NIT, nem a legenda, e o extrato é recusado.
+// Esta passada cola os pedaços vizinhos da mesma linha quando o vão entre eles
+// é menor que uma letra; um vão maior é espaço de verdade e continua separando.
+function colarPedacosDoPdf(itens){
+  const ord = itens.slice().sort((a,b)=> a.p-b.p || a.y-b.y || a.x-b.x);
+  const fora = [];
+  for(const i of ord){
+    const u = fora[fora.length-1];
+    if(u && u.p===i.p && Math.abs(u.y-i.y)<=2 && u.w>0){
+      const vao = i.x - (u.x + u.w);
+      if(vao <= 1 && !/\s$/.test(u.t) && !/^\s/.test(i.t)){
+        u.t += i.t; u.w = (i.x + (i.w||0)) - u.x; continue;
+      }
+    }
+    fora.push({...i});
+  }
+  return fora;
 }
 // O pdf.js devolve PEDAÇOS de texto, não palavras: um pedaço pode trazer
 // "123.456.789-0 CESSADO" junto, e aí nenhuma comparação de palavra casa. Aqui
@@ -10625,8 +10646,13 @@ function lerCnisPdf(itens){
   r.paginas = itens.length ? Math.max(...itens.map(i=>i.p)) : 0;
 
   const pega = rx => { const m = tudo.match(rx); return m ? m[1].trim() : ""; };
-  r.filiado.nit  = pega(/NIT:\s*([\d.\-]{11,})/);
-  r.filiado.cpf  = pega(/CPF:\s*([\d.\-]{11,})/);
+  // [20.09.2026] o "NIT:" e o número podem chegar em pedaços separados do
+  // pdf.js (rótulo colado ao título da seção, número quebrado no hífen).
+  // Aceita espaço no meio e limpa depois; e o extrato é reconhecido pelo
+  // próprio cabeçalho, mesmo que o NIT não case.
+  r.filiado.nit  = pega(/NIT\s*:?\s*([\d][\d.\-\s]{9,20}\d)/).replace(/\s+/g,"");
+  r.filiado.cpf  = pega(/CPF\s*:?\s*([\d][\d.\-\s]{9,16}\d)/).replace(/\s+/g,"");
+  r.ehExtrato = /Extrato\s+Previdenci/i.test(tudo) && /CNIS/.test(tudo);
   r.filiado.nascimento = pega(/Data de nascimento:\s*(\d{2}\/\d{2}\/\d{4})/);
   r.filiado.nome = pega(/Nome:\s*(.+?)\s*$/m);
   r.filiado.mae  = pega(/Nome da mãe:\s*(.+?)\s*$/m);
@@ -10904,7 +10930,7 @@ async function lerPdfDaTriagem(cliId, chave){
   // trazer a causa: páginas, pedaços de texto e as âncoras que faltaram
   const viu = txt => itens.some(i=>i.t.includes(txt));
   const raio = `${lido.paginas||Math.max(0,...itens.map(i=>i.p))} pág., ${itens.length} pedaços de texto`;
-  if(eCnis && !lido.indicadores.length && !lido.filiado.nit)
+  if(eCnis && !lido.indicadores.length && !lido.filiado.nit && !lido.ehExtrato)
     return aviso(`Não reconheci este arquivo como um CNIS do Meu INSS (${raio}; `
       + `${viu("NIT")?"achei":"não achei"} "NIT", ${viu("Legenda")?"achei":"não achei"} a legenda de indicadores). `
       + "Se for o Extrato Previdenciário do Meu INSS, me mande este recado.");
