@@ -297,11 +297,12 @@ def test_uma_linha_ruim_nao_derruba_o_lote(monkeypatch):
     caso = lambda i: {"id": i, "todo_task_id": None, "cliente_id": None}
     mapa = {"andamentos": [],
             "casos": [caso("a"), caso("ruim"), caso("b"), caso("c")]}
-    with pytest.raises(migrar.BancoRecusou) as caiu:
-        migrar.subir_rest(mapa)
+    saida = []
+    monkeypatch.setattr("builtins.print", lambda *a, **k: saida.append(" ".join(map(str, a))))
+    migrar.subir_rest(mapa)          # uma linha ruim NÃO derruba mais a rodada
 
     assert set(enviados) == {"a", "b", "c"}, f"o resto não entrou: {enviados}"
-    assert "ruim" in str(caiu.value), "não disse qual linha foi recusada"
+    assert any("ruim" in l for l in saida), "não disse qual linha foi recusada"
     assert len(tentativas) > 1, "não chegou a partir o lote para achar a culpada"
 
 
@@ -510,14 +511,25 @@ def test_carimbo_da_sincronizacao_e_gravado_mesmo_faltando_schema(monkeypatch):
         "sem o carimbo, o CRM mostra 'sem sincronizar' o dia todo"
 
 
-def test_linha_ruim_de_verdade_continua_derrubando_com_erro(monkeypatch):
+def test_linha_ruim_de_verdade_continua_sendo_procurada(monkeypatch):
     # regressão da regressão: 23505/23514 (linha culpada) tem que continuar
-    # bissectando e terminando com erro visível
+    # bissectando. [BUG 20.09.2026] o punhado de linhas recusadas virou AVISO:
+    # derrubar a rodada por causa delas deixava o carimbo sem gravar e o CRM
+    # dizendo "sem sincronizar", embora o resto da carteira tivesse entrado.
     mapa = {"andamentos": [], "casos": [], "pagamentos": [{"todo_item_id": f"i{n}"} for n in range(4)]}
     tentativas, _, _ = _sobe(monkeypatch, "pagamentos", "23505", mapa)
+    migrar.subir_rest(mapa)
+    assert len(tentativas) > 1, "deixou de procurar a linha culpada"
+
+
+def test_recusa_em_massa_continua_derrubando_com_erro(monkeypatch):
+    """Acima do limite não é caso isolado, é o banco ou o esquema fora do ar."""
+    mapa = {"andamentos": [], "casos": [],
+            "pagamentos": [{"todo_item_id": f"i{n}"}
+                           for n in range(migrar.LIMITE_RECUSADAS + 5)]}
+    _sobe(monkeypatch, "pagamentos", "23505", mapa)
     with pytest.raises(migrar.BancoRecusou):
         migrar.subir_rest(mapa)
-    assert len(tentativas) > 1, "deixou de procurar a linha culpada"
 
 
 # ── 💵 Pagamentos: lista do To Do = ABA do cliente, não caso (08.93) ──────

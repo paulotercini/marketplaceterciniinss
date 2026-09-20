@@ -387,6 +387,10 @@ def remapear_casos(mapa, task_para_id_existente):
     return len(troca)
 
 
+LIMITE_FAXINA = 300     # fantasmas encerrados por rodada, para a mudança ser vista
+LIMITE_RECUSADAS = 25   # acima disso a rodada falha: não é caso isolado, é pane
+
+
 def casos_movidos(mapa, banco, minimo_seguro=50):
     """Acerta o que a MUDANÇA DE LISTA no To Do quebra.
 
@@ -749,20 +753,35 @@ def subir_rest(mapa):
     # abertos aqui, cada um guardando o prazo que tinha no dia da mudança. Era
     # isso que enchia o 🗓️ Planejado de datas de julho e agosto: 445 casos com
     # prazo, dos quais 203 eram fantasmas de tarefas que não existem mais.
-    adotados, encerrar = casos_movidos(mapa, exist)
-    if adotados:
-        print(f"  casos que mudaram de lista no To Do (id novo, mesmo caso): {adotados}")
-    for cid, titulo in encerrar:
-        try:
-            _rest(url, chave, "PATCH", f"/rest/v1/casos?id=eq.{cid}",
-                  {"fase": "encerrado",
-                   "encerrado_em": datetime.datetime.now(datetime.timezone.utc)
-                       .isoformat(timespec="seconds")},
-                  prefer="return=minimal")
-        except BancoRecusou as e:
-            print(f"  aviso: não encerrei o caso fantasma {cid}: {e}")
-    if encerrar:
-        print(f"  casos fantasmas encerrados (a tarefa sumiu do To Do): {len(encerrar)}")
+    # A FAXINA NÃO PODE DERRUBAR A SINCRONIZAÇÃO. Ela é melhoria; o que não
+    # pode faltar é o To Do chegar ao CRM. Qualquer tropeço aqui vira aviso.
+    try:
+        adotados, encerrar = casos_movidos(mapa, exist)
+        if adotados:
+            print(f"  casos que mudaram de lista no To Do (id novo, mesmo caso): {adotados}")
+        if encerrar:
+            print(f"  casos fantasmas a encerrar (a tarefa sumiu do To Do): {len(encerrar)}")
+        feitos, falhas = 0, 0
+        for cid, titulo in encerrar[:LIMITE_FAXINA]:
+            try:
+                _rest(url, chave, "PATCH", f"/rest/v1/casos?id=eq.{cid}",
+                      {"fase": "encerrado",
+                       "encerrado_em": datetime.datetime.now(datetime.timezone.utc)
+                           .isoformat(timespec="seconds")},
+                      prefer="return=minimal")
+                feitos += 1
+            except Exception as e:                      # noqa: BLE001
+                falhas += 1
+                if falhas <= 3:
+                    print(f"  aviso: não encerrei o caso fantasma {cid}: {e}")
+        if feitos or falhas:
+            print(f"  fantasmas encerrados nesta rodada: {feitos}"
+                  + (f", falharam {falhas}" if falhas else "")
+                  + (f", faltam {len(encerrar) - LIMITE_FAXINA} para a próxima"
+                     if len(encerrar) > LIMITE_FAXINA else ""))
+    except Exception as e:                              # noqa: BLE001
+        print(f"::warning::A faxina dos casos fantasmas falhou ({type(e).__name__}: {e}). "
+              "A sincronização seguiu normalmente.")
 
     # MERGE NÃO-DESTRUTIVO do processo/NB: o upsert manda a linha INTEIRA, e
     # tarefa sem número no To Do mandava processo=null — apagando, toda hora,
@@ -1086,10 +1105,17 @@ def subir_rest(mapa):
             print(f"::warning::A tabela '{tabela}' não recebeu nada: falta rodar "
                   f"crm/fase2/schema_por_em_dia.sql no Supabase. Resposta do banco: {msg}")
 
+    # [BUG 20.09.2026] PUNHADO DE LINHAS RECUSADAS É AVISO, NÃO PARADA.
+    # O resto da carteira já entrou, e derrubar a rodada só escondia isso: o
+    # carimbo não era gravado, o CRM dizia "sem sincronizar" e o escritório
+    # passava o dia achando que nada tinha chegado. Erro em massa continua
+    # derrubando, porque aí é o banco ou o esquema que estão fora do ar.
     if recusadas:
         det = "\n".join(f"  {t} id={i}: {m}" for t, i, m in recusadas[:10])
-        raise BancoRecusou(
-            f"{len(recusadas)} linha(s) o banco recusou (o resto entrou):\n{det}")
+        recado = f"{len(recusadas)} linha(s) o banco recusou (o resto entrou):\n{det}"
+        if len(recusadas) > LIMITE_RECUSADAS:
+            raise BancoRecusou(recado)
+        print(f"::warning::{recado}")
 
     # o carimbo que o CRM mostra no rodapé do menu ("🔄 To Do há X min").
     # Só depois de TUDO entrar — sincronização pela metade não conta.
