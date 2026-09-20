@@ -780,3 +780,62 @@ def test_cliente_sem_cpf_continua_como_estava():
     antes = m["clientes"][0]["id"]
     assert migrar.remapear_clientes(m, {}) == 0
     assert m["clientes"][0]["id"] == antes
+
+
+# ── [BUG 20.09.2026] mover a tarefa de lista no To Do troca o id dela ────────
+# A Microsoft apaga e recria a tarefa. Sem tratar isso, o mesmo cliente andando
+# de 🌻 INSS para 🖥 Conselho e depois para 👪 Judicial virava TRÊS casos
+# abertos, cada um com o prazo do dia da mudança — e o 🗓️ Planejado enchia de
+# datas velhas de processos que já andaram.
+
+def _banco(*linhas):
+    return [dict(zip(("id", "todo_task_id", "cliente_id", "titulo", "fase"), l))
+            for l in linhas]
+
+
+def test_caso_que_mudou_de_lista_assume_o_caso_antigo():
+    m = migrar.mapear(crm_json([
+        t("🖥 Conselho de Recursos", "Fulana #00000000191", cpf="00000000191",
+          id="tarefa-nova",
+          andamentos=[{"data": "2026-09-19", "inicial": "P", "autor": "Paulo",
+                       "texto": "Recurso protocolado."}]),
+    ]))
+    cli = m["clientes"][0]["id"]
+    ado, encerrar = migrar.casos_movidos(
+        m, _banco(("caso-velho", "tarefa-antiga", cli, "Fulana #00000000191", "inss")),
+        minimo_seguro=1)
+    assert ado == 1 and encerrar == []
+    assert m["casos"][0]["id"] == "caso-velho", "abriu um caso novo em vez de reaproveitar"
+    assert m["andamentos"][0]["caso_id"] == "caso-velho", "o andamento ficou órfão"
+
+
+def test_caso_sem_tarefa_viva_e_sem_sucessor_e_encerrado():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Outro Cliente #00000000272", cpf="00000000272", id="tarefa-viva"),
+    ]))
+    ado, encerrar = migrar.casos_movidos(
+        m, _banco(("fantasma", "tarefa-que-sumiu", "cli-x", "Sumido #1", "inss")),
+        minimo_seguro=1)
+    assert ado == 0
+    assert [c[0] for c in encerrar] == ["fantasma"]
+
+
+def test_crawl_incompleto_nao_encerra_a_carteira():
+    """Trava dura: leitura parcial do To Do não pode apagar o escritório."""
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Outro Cliente #00000000272", cpf="00000000272", id="tarefa-viva"),
+    ]))
+    ado, encerrar = migrar.casos_movidos(
+        m, _banco(("fantasma", "tarefa-que-sumiu", "cli-x", "Sumido #1", "inss")),
+        minimo_seguro=50)
+    assert encerrar == [], "encerrou casos com o espelho pela metade"
+
+
+def test_caso_ja_encerrado_nao_entra_na_conta():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Outro Cliente #00000000272", cpf="00000000272", id="tarefa-viva"),
+    ]))
+    ado, encerrar = migrar.casos_movidos(
+        m, _banco(("velho", "tarefa-que-sumiu", "cli-x", "Sumido #1", "encerrado")),
+        minimo_seguro=1)
+    assert (ado, encerrar) == (0, [])
