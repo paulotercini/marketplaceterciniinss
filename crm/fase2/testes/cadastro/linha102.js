@@ -376,6 +376,24 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     const ok = !document.querySelector(".lc-topo .lc-fila")
       && !!document.querySelector(".lc-topo .lc-verif");
     k.fase = "judicial"; return ok; }, CASO1));
+  // [BUG 20.09.2026] recurso do Conselho sem movimento há meses precisa dizer
+  // isso na linha: o da Maria Izilda Ferreira Pinto estava parado desde 2021 e
+  // o caso seguia aberto na lista, sem nada avisando.
+  conf("caso no Conselho com recurso parado há anos avisa na linha",
+    await p.evaluate((id) => {
+      const k = D.casoPorId.get(id), fase = k.fase, crps = k.crps;
+      k.fase = "conselho";
+      k.crps = [{ nup: "1", eventos: [{ data: "14/02/2021 02:14:27", tipo: "andamento" }] }];
+      repintarFicha();
+      const e = document.querySelector(".lc-topo .lc-parado");
+      const ok = !!e && /14\/02\/2021/.test(e.textContent)
+        && /e-Sisrec/.test(e.parentElement.getAttribute("title"));
+      k.crps = [{ nup: "1", eventos: [{ data: new Date().toLocaleDateString("pt-BR") + " 10:00:00" }] }];
+      repintarFicha();
+      const some = !document.querySelector(".lc-topo .lc-parado");
+      k.fase = fase; k.crps = crps; repintarFicha();
+      return ok && some;
+    }, CASO1));
   // o painel cobre a 3ª Região inteira: a vara de JEF tem fila como o gabinete
   conf("caso de JEF em primeiro grau também mostra a fila, com o nome da vara",
     await p.evaluate((id) => {

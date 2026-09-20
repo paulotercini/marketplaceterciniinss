@@ -2147,6 +2147,9 @@ html[data-tema="v10"] .lc-tram{font-weight:600;color:var(--azul-escuro);backgrou
 html[data-tema="v10"] .lc-etapa{font-weight:600;color:var(--texto)}
 /* F121 · a posição na fila do TRF3, só o número */
 html[data-tema="v10"] .lc-fila{font-family:var(--f-mono);font-weight:700;color:var(--azul-escuro)}
+/* recurso do Conselho sem movimento há meses: âmbar, para ser revisto */
+html[data-tema="v10"] .lc-parado{color:#92400E;background:#FEF3C7;border:1px solid #FCD34D;
+  border-radius:6px;padding:1px 6px;font-weight:600}
 html[data-tema="v10"] .lc-etapa.lc-vazio{font-weight:400}
 html[data-tema="v10"] .lc-manual{color:var(--venc);font-weight:700}
 html[data-tema="v10"] .lc-auto{color:var(--feito);font-weight:600}
@@ -2402,7 +2405,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.18</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.19</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14716,6 +14719,30 @@ function lcCampo(k, token){
     <button class="lapis" title="alterar ${esc(f.rot)}" onclick="editarFato('${k.id}','${campo}','lc')">✎</button></span>`;
 }
 // F121 · a posição na fila de julgamento, só o número, na linha do caso
+// [BUG 20.09.2026] RECURSO PARADO HÁ ANOS ficava aberto no Conselho sem dizer
+// nada. Quando o NUP órfão do e-Sisrec vira caso, ninguém confere a idade do
+// recurso: o da Maria Izilda Ferreira Pinto não tem movimento desde 14/02/2021
+// e estava lá, ativo, na lista. O CRM não sabe se acabou, mas sabe dizer há
+// quanto tempo não anda — e isso basta para o caso ser revisto.
+const MESES_PARADO = 6;
+function ultimoEventoCrps(k){
+  let maior = "";
+  for(const b of crpsBlocos(k)) for(const e of (b.eventos || [])){
+    const d = String(e.data || "").slice(0, 10);       // dd/mm/aaaa
+    const iso = /^\d{2}\/\d{2}\/\d{4}$/.test(d) ? `${d.slice(6)}-${d.slice(3,5)}-${d.slice(0,2)}` : "";
+    if(iso > maior) maior = iso;
+  }
+  return maior || null;
+}
+function recursoParado(k){
+  if(k.fase !== "conselho") return "";
+  const u = ultimoEventoCrps(k);
+  if(!u || u >= somaMeses(hoje(), -MESES_PARADO)) return "";
+  const dica = `o recurso não tem movimento no e-Sisrec desde ${fmtBarra(u)}. `
+    + "Confira se já foi decidido: caso encerrado no Conselho não deveria seguir nesta lista.";
+  return `<span class="lc-f" title="${esc(dica)}">
+    <span class="lc-k">Recurso</span><b class="lc-parado">parado desde ${fmtBarra(u)}</b></span>`;
+}
 // O painel cobre a 3ª Região inteira, vara e JEF de primeiro grau inclusive, e
 // a fila de cada um é fila de julgamento do seu órgão. Por isso a posição vale
 // para todos, e a dica nomeia o órgão em vez de afirmar segundo grau.
@@ -14755,6 +14782,7 @@ function linhaCaso(k){
            responde ao cliente em um segundo; o resto (órgão, turma, previsão,
            mensagem pronta) continua no cartão do caso. */""}
       ${filaTrf3(k)}
+      ${recursoParado(k)}
       ${etapasDaFase(k).length ? `<span class="lc-f" title="onde o caso está dentro de ${esc(tram)}">
         <span class="lc-k">Etapa</span><span class="lc-etapa ${k.etapa?"":"lc-vazio"}">${esc(k.etapa||"a definir")}</span>
         <button class="lapis" title="mudar a etapa do caso" onclick="escolherEtapa('${k.id}')">✎</button></span>` : ""}
