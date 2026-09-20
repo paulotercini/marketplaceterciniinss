@@ -90,3 +90,16 @@ Quarto. As references desta skill (FUNDAMENTOS-E-CENARIOS.md e JURISPRUDENCIA-E-
 Cenário distinto da sequela mínima discutida nesta skill, e que se resolve antes dela. O perito conclui pela ausência de INCAPACIDADE, requisito que o B94 não exige, mas descreve interferência funcional, esforço adicional ou perda de força. Nesse caso não se discute o grau da sequela, discute-se o ENQUADRAMENTO do requisito.
 
 Regra prática. Varrer a descrição do laudo antes de impugnar a conclusão. Encontrada a admissão de esforço adicional, a conclusão do perito contradiz a própria fundamentação, e a via é a valoração do que já está nos autos, não a nova perícia, que pode piorar. Roteiro em `base-b94-anexo-iii-quadros/references/MAIOR-ESFORCO-E-PERDA-DE-DEDO.md`.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

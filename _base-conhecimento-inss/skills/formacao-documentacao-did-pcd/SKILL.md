@@ -149,3 +149,16 @@ Antes de executar a skill, leia os seguintes arquivos conforme o modo de operaç
 ## Alerta Final
 
 A ausência de documentação médica pretérita NÃO inviabiliza a aposentadoria PCD. A LC 142/2013 exige fixação da DID por ocasião da primeira avaliação, e essa fixação pode ser feita com base em relatório médico atual fundamentado em fisiopatologia temporal, ainda que sem prontuário antigo. A estratégia correta combina produção de documentos novos de qualidade técnica elevada com busca estruturada em fontes que o cliente desconhece. O erro estratégico mais comum é desistir da tese retroativa por ausência aparente de documentação. O segundo erro mais comum é forçar DID anterior à sustentabilidade médica. Este skill previne ambos os erros.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

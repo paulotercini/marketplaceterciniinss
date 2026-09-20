@@ -80,3 +80,16 @@ Terceira, desprovido o agravo interno. A via recursal ACABOU. Restam o MS na Cor
 Quarta, o MS é válvula estreita e não terceira instância. Impetrar sem teratologia real desgasta e perde. O juízo honesto sobre a força do caso vem ANTES da impetração.
 
 **Encaixe previdenciário.** O cenário é frequente quando a origem enquadra o caso no Tema 1090 (EPI), no Tema 1124 (interesse de agir) ou em outro repetitivo desfavorável. A resposta certa quase sempre é o distinguishing bem construído no agravo interno, e não a tentativa de subir.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

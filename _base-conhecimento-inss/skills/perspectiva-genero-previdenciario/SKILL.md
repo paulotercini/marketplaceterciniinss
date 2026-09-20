@@ -172,3 +172,16 @@ Até março de 2026, o banco registra mais de 8 mil decisões, com maioria na Ju
 6. **Prova emprestada do cônjuge.** A jurisprudência consolidada (Tema 327/TNU) e o Protocolo convergem para aceitar documentos do cônjuge como início de prova material. Mas atenção ao que já foi decidido pela Súmula 149/STJ, que não foi revogada. O início de prova material continua sendo exigido. O que o Protocolo faz é ampliar o conceito do que constitui início de prova material.
 
 7. **Interseccionalidade.** Quando a segurada for mulher, negra, idosa e de baixa escolaridade, a argumentação interseccional potencializa o impacto do Protocolo. A CEDAW reconhece discriminação múltipla ou agravada.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

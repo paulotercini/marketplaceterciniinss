@@ -153,3 +153,16 @@ Concluída a curadoria dos documentos e a petição administrativa, submeter ao 
 Antes de montar o protocolo, despachar ao agente `analista-cnis`. Pendência bloqueante no extrato impede a conclusão do requerimento pelo servidor, e o processo trava em exigência sem que o mérito seja apreciado.
 
 Ordem correta. Analista do CNIS, depois curadoria dos documentos, depois o decisor simulado `servidor-chefe-inss`, e só então o protocolo.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

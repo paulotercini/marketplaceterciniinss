@@ -349,3 +349,16 @@ Os indicadores `PSE-POS`, `PSE-PEN`, `PSE-NEG`, `ASE-RPOS`, `ASE-RNEG` e `ASE-NS
 **Trava do `ASE-NSE`.** Período excluído com esse motivo só se comprova depois por decisão judicial ou recursal, conforme o Anexo V da Portaria 990/2022. O mesmo risco existe no `ASE-RNEG`, que registra confirmação da descaracterização pelo próprio segurado. Nenhum tratamento de período rural no Portal CNIS é feito sem análise prévia.
 
 **Registro de rigor.** As siglas "ASE VAUT" e "ASE IAUT", que circulam em material de divulgação como indicadores de validação e invalidação automática, NÃO constam do Anexo V nem do DOU, conferido em 18/09/2026. Não citar.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

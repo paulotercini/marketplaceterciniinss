@@ -53,6 +53,19 @@ Segundo, fora das hipóteses do art. 1.015, o agravo só passa pelo Tema 988 com
 
 Terceiro, o que não é agravável não preclui, então não há desespero, há a via da apelação.
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## Integração com outras skills
 
 Acionada pelo eixo 1 e pelo eixo 3 de `base-analise-decisao-tres-eixos`.

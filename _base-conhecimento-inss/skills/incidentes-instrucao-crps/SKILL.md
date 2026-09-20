@@ -87,3 +87,16 @@ Sempre leia os arquivos de referência pertinentes antes de analisar incidentes 
 ## Revisão de Acórdão não suspende o cumprimento (Onda 88)
 
 A Revisão de Acórdão NÃO tem natureza de recurso e não suspende o prazo de cumprimento da decisão do CRPS. Base inequívoca no art. 308, § 1º, do Decreto 3.048/99 ("não se considera recurso o pedido de revisão de acórdão endereçado às Juntas de Recursos e Câmaras de Julgamento"), reforçada pelo caput do art. 308, que só atribui efeito suspensivo a recurso interposto TEMPESTIVAMENTE. Quando o INSS usa a revisão para não implantar benefício já reconhecido, cabe mandado de segurança, conforme o TRF4 na RemNec 5000463-92.2026.4.04.7113/RS (5ª Turma, Rel. Juíza Federal Graziela Soares, unânime, j. 15/07/2026). Roteiro em `base-ms-cumprimento-inss/references/MS-CUMPRIMENTO-ACORDAO-CRPS.md`. Cautela de citação, a numeração do dispositivo regimental da Revisão de Acórdão varia entre versões do RICRPS, conferir antes de citar e ancorar no Decreto 3.048/99.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

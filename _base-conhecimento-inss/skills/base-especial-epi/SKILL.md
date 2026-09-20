@@ -64,6 +64,19 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 
 A posição pró-segurado é reforçada em doutrina consolidada. Frederico Amado, em Direito Previdenciário, sustenta que a mera anotação no campo 15.7 é insuficiente. Fábio Zambitte Ibrahim, em Curso de Direito Previdenciário, aponta que a primazia é do EPC sobre o EPI, e que o EPI certificado não neutraliza automaticamente o risco. Hugo Goes, em Manual de Direito Previdenciário, reforça que a eficácia real em campo exige demonstração documental pela empresa. O IBDP sustenta em teses institucionais que a neutralização só opera quando a eficácia é comprovada para o agente e a intensidade específicos, não bastando a eficácia em laboratório.
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## Integração com outras skills
 
 Ao redigir peça, acione `peticao-previdenciaria`.

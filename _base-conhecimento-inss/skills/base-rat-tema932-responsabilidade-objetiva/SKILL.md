@@ -168,3 +168,16 @@ Verificado e INCORPORADO. Existência do Tema 932 e do RE 828.040. Estrutura da 
 Verificado e RECUSADO. A afirmação de que o grau 3 prova o nexo causal ou ativa automaticamente a responsabilidade objetiva. A tese literal não contém RAT, CNAE nem grau, e exige três requisitos cumulativos aferidos sobre a atividade concreta do trabalhador. A responsabilidade objetiva dispensa culpa, não nexo.
 
 Ressalva sobre citação. Não foi possível confrontar o texto entre aspas do material de divulgação com a tese oficial, por não ter sido fornecida a transcrição literal do slide. Aplicar a seção 8 antes de qualquer aproveitamento. A tese oficial é a da seção 1, e apenas ela deve ser transcrita entre aspas.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

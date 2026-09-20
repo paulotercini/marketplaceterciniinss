@@ -263,3 +263,16 @@ O art. 216, V, da IN 128/2022, na redação da IN PRES/INSS 212, de 06/08/2026, 
 O § 1º é o ponto PRÓ-SEGURADO e precisa ser invocado sempre. O período com alíquota reduzida É CONSIDERADO para a aposentadoria PROGRAMADA e para a aposentadoria POR IDADE. A restrição alcança apenas tempo de contribuição e contagem recíproca.
 
 Três cuidados. Primeiro, não aceitar recusa de cômputo em aposentadoria programada ou por idade. Segundo, quantificar o custo da complementação antes de recomendá-la, comparando com o cenário sem ela. Terceiro, discutir a aplicação a período anterior a 11/08/2026, porque norma interna não retroage para restringir. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

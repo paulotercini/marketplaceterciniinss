@@ -230,3 +230,16 @@ Os §§ 4º e 5º são exatamente as duas prorrogações, mais doze meses por 12
 Uso em indeferimento anterior a 11/08/2026 fundado na recusa. Sustentar o § 10 como interpretação AUTÊNTICA da Administração, e não como norma nova, porque o art. 15 da Lei 8.213/91 nunca distinguiu categorias.
 
 CONFRONTO OBRIGATÓRIO. O § 5º da IN continua exigindo registro no SINE ou seguro-desemprego, exigência MAIS RESTRITIVA do que o Tema 1360 do STJ, cuja tese admite outros meios de prova "tanto na via administrativa quanto na judicial". Invocar o Tema 1360 justamente por essa expressão, que vincula o INSS. Detalhamento em `base-portarias-dpmf-inss-hub/references/IN-212-2026-ALTERACOES-IN-128.md`.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

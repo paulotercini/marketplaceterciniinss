@@ -46,6 +46,19 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 
 Frederico Amado, em Direito Previdenciário, sustenta a prevalência do enquadramento qualitativo para os agentes da NR-15 com avaliação qualitativa. Hugo Goes, em Manual, reforça a exigência de medição apenas para os Anexos 11 e 12. Fábio Zambitte Ibrahim, em Curso, defende a interpretação ampla do Anexo 13 com presunção de nocividade para os agentes listados. Wladimir Novaes Martinez trata do princípio in dubio pro operario em matéria probatória previdenciária. O IBDP sustenta em teses institucionais a superação de exigências quantitativas indevidas.
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## Integração com outras skills
 
 Ao redigir peça, acione `peticao-previdenciaria`.

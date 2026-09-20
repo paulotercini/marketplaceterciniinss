@@ -244,3 +244,16 @@ Este é hoje **um dos terrenos mais favoráveis ao beneficiário no contencioso 
 A janela de oportunidade é grande, mas a **pressão prescricional é real e crescente**. Cada mês de omissão da União aproxima beneficiários do limite quinquenal pela tese rigorosa. A captação deve ser proativa e o ajuizamento ágil, com construção argumentativa pronta para neutralizar a alegação de prescrição que a AGU oporá em todas as contestações.
 
 **Para clientes do escritório que possam conhecer profissionais de saúde falecidos por Covid-19 ou com sequelas permanentes, a divulgação ativa do direito é estratégica** — o público-alvo majoritariamente desconhece a existência da Lei.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
