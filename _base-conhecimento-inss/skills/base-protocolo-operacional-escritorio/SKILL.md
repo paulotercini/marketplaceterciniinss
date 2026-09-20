@@ -77,10 +77,13 @@ Antes de pedir o print do Prévius, PROCURAR na pasta do cliente. Pedir o que j�
 `base-calculo-rmi-ec103` em cálculo.
 `ponte-workflow-*` para orquestração.
 `auditoria-citacoes` para manutenção da base.
+`base-acervo-escritorio` e o MCP `acervo` antes de redigir qualquer peça ou parecer, para ler o que o escritório já sustentou no tema.
 
 Achado que se REPETE gera sugestão de skill nova.
 
 Dados de cliente NUNCA entram em skill nem em memória permanente.
+
+O MCP `acervo` responde pela produção do escritório e é base LOCAL. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO, e o trecho devolvido é ponto de partida para redação nova.
 
 ## 8. Pesquisa na web
 
@@ -127,3 +130,16 @@ A fundamentação é seletiva. Cita-se o dispositivo que decide e explica-se em 
 A fórmula do parágrafo argumentativo, fixada pelo titular em 11/09/2026, é afirmar o fato, localizar a prova, explicar sua relevância e formular a consequência pretendida, com firmeza proporcional ao que os autos demonstram. A medida é a brevidade máxima, e, quando não for possível ser breve, prevalece o desenvolvimento da ideia até demonstrar o que se quer sustentar. Corta-se toda repetição, nunca a demonstração. A peça abre pela controvérsia, de modo que o leitor identifique o benefício, o motivo do indeferimento e o ponto que precisa decidir, e não por parágrafos sobre a importância constitucional da Previdência. A amostra de voz por espécie, com os pares genérico e preciso, está em `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, e toda peça e toda passada da `humanizador-tedson` a tomam como referência.
 
 Permanecem as constraints de sempre. Sem dois-pontos introduzindo explicação, lista ou conclusão, mas a solução para o dois-pontos é o conectivo ou a subordinação, nunca picar o período. Sem cara de IA, e a `humanizador-tedson` passa em todo texto em português.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

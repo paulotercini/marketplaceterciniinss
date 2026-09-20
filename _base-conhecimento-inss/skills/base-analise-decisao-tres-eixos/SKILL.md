@@ -95,6 +95,19 @@ Embargos tempestivos interrompem o prazo do recurso seguinte.
 
 Nenhum precedente entra na peça sem conferência na fonte primária, na ordem da hierarquia. Citação conferida entra como [CONFERIDO]. Citação não conferida entra como [NÃO CONFIRMADO] ou sai. Proibido inventar tese, súmula, enunciado, número de processo, data ou relator. Acionar `base-precedentes-catalogo-vinculantes` antes de qualquer citação.
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## Integração com outras skills
 
 Este roteiro é o ponto de entrada. A Fase 0 produz o mapa de ataque. Para arquitetar o recurso por rito, acionar `ponte-workflow-recurso-sentenca`. Para redigir a peça escolhida, acionar `peticao-previdenciaria`. Para auditar a peça, acionar `revisao-peticao`.

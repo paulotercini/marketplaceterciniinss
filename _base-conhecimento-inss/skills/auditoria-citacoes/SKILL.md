@@ -126,3 +126,16 @@ O caso completo está em `references/CORRECAO-PARCIAL-E-NOME-CONTAMINADO.md`.
 A auditoria varre skills e Modelos Ouro. Passa a varrer também as citações IMPORTADAS de ementas, porque acórdão que o escritório usa como fundamento carrega as citações do relator, e elas podem estar erradas.
 
 Achando na base um tema atribuído a assunto diverso do catálogo, verificar se a atribuição veio de ementa copiada. Vindo, a correção é dupla, corrige-se a citação e registra-se que o acórdão de origem a contém, para que ninguém a reintroduza ao reler o mesmo julgado.
+
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.

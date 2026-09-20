@@ -64,6 +64,19 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 
 Frederico Amado, em Direito Previdenciário, sustenta que o Anexo 14 da NR-15 traz presunção de insalubridade para atividades em ambiente hospitalar e afins. Hugo Goes, em Manual, reforça a avaliação qualitativa em biológicos. Fábio Zambitte Ibrahim, em Curso, defende interpretação ampla do rol diante da natureza do risco biológico. Wladimir Novaes Martinez enfrenta a falácia da exposição eventual, lembrando que a jornada de profissionais da saúde integra o risco de forma indissociável. O IBDP, em teses institucionais, sustenta a irrelevância do EPI em biológicos, salvo demonstração robusta e impossível em regra pelo INSS.
 
+## Acervo do escritório
+
+Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
+por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
+argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
+chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
+`base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
+de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
+conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
+arquivo de origem não é.
+
 ## Integração com outras skills
 
 Ao redigir peça, acione `peticao-previdenciaria`.
