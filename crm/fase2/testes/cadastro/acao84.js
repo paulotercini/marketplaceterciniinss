@@ -63,6 +63,7 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
     const dentroDoCartao = !!qd && !!qd.closest(".fatos-processo");
     const cards = [...document.querySelectorAll(".faixa-prazos .pz")].map(c => ({
       tipo: c.dataset.tipo, data: c.querySelector(".pz-data").textContent, prazo: c.classList.contains("pz-fatal"),
+      semMotivo: c.classList.contains("pz-semmotivo"), txtTipo: c.querySelector(".pz-tipo").textContent,
       fundo: getComputedStyle(c).backgroundColor, mais: !!c.querySelector(".pz-mais") }));
     const acima = faixa && document.querySelector(".escrever") && faixa.getBoundingClientRect().bottom <= document.querySelector(".escrever").getBoundingClientRect().top + 1;
     return { faixa: !!faixa, dentroDoCartao, cards, acima, linhaCaso: !!document.querySelector(".linha-caso") };
@@ -72,14 +73,18 @@ FIX.eventos = [{ id: "e0000000-0000-0000-0000-00000000f841", caso_id: CASO1, tip
   const on = await ler();
   conf("ligado: os prazos viraram QUADROS lado a lado, fora do cartão", on.faixa && !on.dentroDoCartao);
   conf("os quadros ficam acima do compositor (o trabalho vem depois)", on.acima);
-  conf("o prazo fatal SEM anotação de origem não vira quadro (pedido do Paulo)", !on.cards.some(c => c.data === fmtBR(mais(-1))));
+  // 10.18 · o prazo do To Do SEM anotação de origem passou a aparecer, em
+  // âmbar e marcado "do To Do" (caso do Nelson: a data existia e não se via)
+  conf("o prazo fatal SEM anotação de origem vira quadro âmbar, marcado como do To Do",
+    on.cards.some(c => c.data === fmtBR(mais(-1)) && c.semMotivo && /do To Do/.test(c.txtTipo)));
   conf("a exigência do INSS é um quadro de PRAZO FATAL, em vermelho", on.cards.some(c => c.tipo === "Prazo fatal" && c.data === fmtBR(mais(3)) && c.prazo && c.fundo === "rgb(179, 38, 30)"));
-  conf("recorrer até (30 dias da decisão) entrou como quadro de prazo", on.cards.filter(c => c.prazo).length === 2);
+  conf("recorrer até (30 dias da decisão) entrou como quadro de prazo", on.cards.filter(c => c.prazo && !c.semMotivo).length === 2);
   conf("a perícia marcada é um quadro cinza, depois dos prazos", (i => i > 0 && !on.cards[i].prazo && on.cards[i].fundo !== "rgb(179, 38, 30)")(on.cards.findIndex(c => c.tipo === "Perícia")));
-  conf("os prazos vêm todos antes dos lembretes", on.cards.map(c => c.prazo ? 1 : 0).join("") === "11" + "0".repeat(on.cards.length - 2));
+  conf("os prazos vêm todos antes dos lembretes", /^1+0*$/.test(on.cards.map(c => c.prazo ? 1 : 0).join("")) && on.cards.filter(c => c.prazo).length === 3);
   conf("cada quadro tem só a data e o 'saber mais'", on.cards.every(c => c.mais) && on.cards.every(c => /^\d\d\/\d\d\/\d{4}$/.test(c.data)));
   // o "saber mais" da exigência abre a ficha dela, com o ✔ cumprida
-  await p.evaluate(() => document.querySelector(".faixa-prazos .pz-fatal .pz-mais").click());
+  await p.evaluate(() => [...document.querySelectorAll(".faixa-prazos .pz-fatal:not(.pz-semmotivo)")]
+    .find(c => /Prazo fatal/.test(c.dataset.tipo)).querySelector(".pz-mais").click());
   await p.waitForTimeout(200);
   conf("o 'saber mais' da exigência traz o que é e o ✔ cumprida", await p.evaluate(() => {
     const m = document.getElementById("modal"); return /Exigência do INSS/.test(m.textContent) && !!m.querySelector('button[onclick^="cumprirExigencia"]'); }));

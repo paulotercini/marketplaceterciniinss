@@ -72,15 +72,17 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
     [...document.querySelectorAll(".tri-porta .tri-p")].map(x => x.innerText.trim()));
   conf(`as famílias são as opções (${ops.length}), mais o "ainda não sei"`,
     ops.length >= 12 && ops.includes("BPC/LOAS") && ops.includes("ainda não sei"));
+  // F127 · a tela mostra um passo por vez; o TRILHO tem uma etapa por passo,
+  // e são nove os fixos (entrou o Vínculo com a Previdência hoje)
   conf("antes de responder, ficam só os passos padrão",
-    (await p.evaluate(() => document.querySelectorAll(".tri-passo").length)) === 8);
+    (await p.evaluate(() => document.querySelectorAll(".tri-etapa").length)) === 9);
 
   // responder BPC abre os pontos da família
   escritos.length = 0;
   await p.evaluate(cli => responderPorta(cli, "BPC/LOAS", true), CLI_CHEIO);
   await p.waitForTimeout(600);
   conf("responder abre os pontos daquela família",
-    (await p.evaluate(() => document.querySelectorAll(".tri-passo").length)) === 12);
+    (await p.evaluate(() => document.querySelectorAll(".tri-etapa").length)) === 13);
   const pat = escritos.find(x => x.m === "PATCH" && x.t === "clientes");
   conf("a resposta fica gravada com autor e data",
     pat && pat.corpo.triagem.porta && pat.corpo.triagem.porta.quem === EU
@@ -93,8 +95,8 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
   await p.waitForTimeout(400);
   await p.evaluate(cli => responderPorta(cli, null, false), CLI_CHEIO);
   await p.waitForTimeout(500);
-  conf('"ainda não sei" deixa só os oito passos padrão',
-    (await p.evaluate(() => document.querySelectorAll(".tri-passo").length)) === 8);
+  conf('"ainda não sei" deixa só os nove passos padrão',
+    (await p.evaluate(() => document.querySelectorAll(".tri-etapa").length)) === 9);
   conf("e a porta mostra a resposta dada",
     /ainda não sabemos/.test(await p.innerText(".tri-porta")));
 
@@ -119,23 +121,26 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
   conf("com autor e data", cfg && new RegExp(EU).test(JSON.stringify(cfg.corpo)));
   await p.waitForTimeout(300);
   const passos = await p.evaluate(() =>
-    [...document.querySelectorAll(".tri-passo .tri-tit b")].map(x => x.innerText.trim()));
+    [...document.querySelectorAll(".tri-etapa")].map(x => x.title));
   conf(`a pergunta aparece como passo (${passos.length} passos)`,
     passos.some(x => /advogado anterior/.test(x)));
+  // a pergunta do escritório entra depois dos nove fixos: é o passo 9 (índice 8)
+  await p.evaluate(cli => irPassoTriagem(cli, 8), CLI_CHEIO);
+  await p.waitForTimeout(400);
   conf("com a etiqueta do escritório",
     await p.$(".tri-de-esc"));
   // em OUTRO cliente também
   await abrir(CLI_VAZIO);
   conf("e vale para outro cliente também",
     (await p.evaluate(() =>
-      [...document.querySelectorAll(".tri-passo .tri-tit b")].map(x => x.innerText.trim())))
+      [...document.querySelectorAll(".tri-etapa")].map(x => x.title)))
       .some(x => /advogado anterior/.test(x)));
   // tirar
   await p.evaluate(() => tirarPerguntaEscritorio(perguntasDoEscritorio()[0].chave));
   await p.waitForTimeout(500);
   conf("tirar remove de todos",
     !(await p.evaluate(() =>
-      [...document.querySelectorAll(".tri-passo .tri-tit b")].map(x => x.innerText.trim())))
+      [...document.querySelectorAll(".tri-etapa")].map(x => x.title)))
       .some(x => /advogado anterior/.test(x)));
 
   // ── 3. o encerramento e as Anotações ────────────────────────────────────

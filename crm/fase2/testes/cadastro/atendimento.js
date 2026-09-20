@@ -75,9 +75,9 @@ FAMILIAS.forEach(([ben], i) => {
     const c = D.cliPorId.get(cli), ks = D.casosDoCliente.get(cli) || [];
     const f = familiaDaEspecie(ben);
     const passos = triagemPassosDe(c, ks);
-    return { ben, esperado: rot, achou: f ? f.rot : null, extras: passos.length - 8,
+    return { ben, esperado: rot, achou: f ? f.rot : null, extras: passos.length - 9,   // F127: nove fixos (entrou o Vínculo hoje)
       ultimo: passos[passos.length - 1][0],
-      chaves: passos.slice(7, passos.length - 1).map(x => x[0]) };
+      chaves: passos.slice(8, passos.length - 1).map(x => x[0]) };
   }), FAMILIAS);
   const erradas = fam.filter(x => x.achou !== x.esperado);
   conf(`cada espécie cai na sua família${erradas.length ? "\n          " + JSON.stringify(erradas) : ""}`,
@@ -87,13 +87,13 @@ FAMILIAS.forEach(([ben], i) => {
     contas.length === 0);
   conf("a conclusão continua sendo o último passo, em todas",
     fam.every(x => x.ultimo === "conclusao"));
-  conf(`a espécie sem família fica com os oito de sempre (${fam[fam.length - 1].extras} extras)`,
+  conf(`a espécie sem família fica com os nove de sempre (${fam[fam.length - 1].extras} extras)`,
     fam[fam.length - 1].achou === null && fam[fam.length - 1].extras === 0);
   const todasChaves = fam.flatMap(x => x.chaves);
   conf(`nenhuma chave de passo se repete entre famílias (${todasChaves.length})`,
     new Set(todasChaves).size === todasChaves.length);
   const fixas = await p.evaluate(() => TRIAGEM_PASSOS.map(x => x[0]));
-  conf(`nenhum ponto da espécie colide com os oito fixos (${fixas.join(",")})`,
+  conf(`nenhum ponto da espécie colide com os nove fixos (${fixas.join(",")})`,
     !todasChaves.some(k => fixas.includes(k)));
 
   // ── 2. a tela mostra de onde veio cada ponto ─────────────────────────────
@@ -108,36 +108,43 @@ FAMILIAS.forEach(([ben], i) => {
   };
   await abrir(bpc);
   const faixa = await p.innerText(".tri-especie");
-  conf(`a faixa nomeia a espécie lida (${JSON.stringify(faixa.split("\n")[0].slice(0, 46))})`,
-    /BPC\/LOAS/.test(faixa) && /4 pontos além dos oito/.test(faixa));
-  conf("e diz de qual skill do escritório o ponto veio",
-    /base-bpc-loas-requisitos/.test(faixa));
+  // F127 · a faixa mora no bloco "o que a recepção registrou", enxuta: a
+  // espécie e quantos pontos próprios entram; a skill saiu da tela
+  conf(`a faixa nomeia a espécie lida (${JSON.stringify(faixa.slice(0, 46))})`,
+    /BPC\/LOAS/.test(faixa) && /4 pontos próprios/.test(faixa));
   const ferr = await p.evaluate(() => { const a = document.querySelector(".tri-ferr");
     return a ? { rot: a.innerText.trim(), href: a.href, alvo: a.target, rel: a.rel } : null; });
   conf(`a ferramenta do site interno aparece no passo em que serve (${ferr ? ferr.rot : "não achei"})`,
     ferr && /renda per capita/i.test(ferr.rot) && /advprevidenciaria/.test(ferr.href)
     && ferr.alvo === "_blank" && /noopener/.test(ferr.rel));
-  const etiquetas = await p.evaluate(() =>
-    [...document.querySelectorAll(".tri-passo")].map(x => {
-      const d = x.querySelector(".tri-de");
-      return { tit: x.querySelector(".tri-tit b").innerText.trim(), de: d ? d.innerText.trim() : null }; }));
+  // F127 · a tela mostra UM passo por vez; a etiqueta da espécie sai no
+  // passo aberto quando ele é da família — confere pelo trilho e abrindo um
+  const etiquetas = await p.evaluate(cli => {
+    const c = D.cliPorId.get(cli), ks = D.casosDoCliente.get(cli) || [];
+    return triagemPassosDe(c, ks).map(x => ({ tit: x[1], de: x[3] || null })); }, bpc);
   conf(`só os pontos da espécie levam etiqueta (${etiquetas.filter(x => x.de).length} de ${etiquetas.length})`,
-    etiquetas.slice(0, 7).every(x => !x.de) && etiquetas.slice(7, 11).every(x => x.de === "BPC/LOAS")
+    etiquetas.slice(0, 8).every(x => !x.de) && etiquetas.slice(8, 12).every(x => x.de === "BPC/LOAS")
     && !etiquetas[etiquetas.length - 1].de);
-  conf(`o contador conta os doze (${await p.innerText(".cad-cont")})`,
-    /de 12 conferidos/.test(await p.innerText(".cad-cont")));
+  conf("o trilho tem uma etapa por passo, e só um passo aberto",
+    (await p.evaluate(() => document.querySelectorAll(".tri-etapa").length)) === 13
+    && (await p.evaluate(() => document.querySelectorAll(".tri-passo").length)) === 1);
+  await p.evaluate(cli => irPassoTriagem(cli, 8), bpc);
+  await p.waitForTimeout(400);
+  conf("aberto um ponto da espécie, ele leva a etiqueta BPC/LOAS",
+    (await p.evaluate(() => (document.querySelector(".tri-passo .tri-de") || {}).textContent || "")) === "BPC/LOAS");
+  conf(`o contador conta os treze (${await p.innerText(".cad-cont")})`,
+    /de 13 respondidos/.test(await p.innerText(".cad-cont")));
   // a captura precisa mostrar a faixa da espécie E os pontos que ela trouxe:
   // um retrato do cartão inteiro corta justamente o que a F17 acrescentou
   await p.evaluate(() => {
     const r = document.querySelector(".det-rolagem");
-    const alvo = document.querySelectorAll(".tri-passo")[7];
-    if (r && alvo) r.scrollTop = 0;
+    if (r) r.scrollTop = 0;
   });
   await p.waitForTimeout(200);
   const faixaEl = await p.$(".tri-especie");
   if (faixaEl) await faixaEl.screenshot({ path: path.join(__dirname, "f17-faixa-especie.png") });
   await p.evaluate(() => {
-    const ps = [...document.querySelectorAll(".tri-passo")].slice(7, 11);
+    const ps = [...document.querySelectorAll(".tri-passo")];
     if (!ps.length) return;
     const cx = document.createElement("div");
     cx.id = "retrato-f17"; cx.style.cssText = "background:#fff;padding:10px 14px";
@@ -180,7 +187,7 @@ FAMILIAS.forEach(([ben], i) => {
   conf(`é UMA linha só (${txt.length} caracteres)`, and && !/\n/.test(txt));
   // três: CNIS, renda per capita e a própria conclusão — a conclusão é passo
   conf(`conta quantos passos foram conferidos (${JSON.stringify(txt.slice(0, 56))})`,
-    /triagem conferida: 3 de 12 passos/.test(txt));
+    /triagem conferida: 3 de 13 passos/.test(txt));
   conf("nomeia a espécie que foi lida", /Espécie lida como BPC\/LOAS/.test(txt));
   conf("registra o que ficou em atenção, com a anotação",
     /Com atenção: Renda per capita do grupo familiar \(renda de R\$ 412/.test(txt));
@@ -192,7 +199,7 @@ FAMILIAS.forEach(([ben], i) => {
     escritos.some(x => x.t === "clientes" && x.corpo.triagem
       && x.corpo.triagem.atendimento && x.corpo.triagem.atendimento.quem === EU
       && x.corpo.triagem.atendimento.conferidos === 3
-      && x.corpo.triagem.atendimento.passos === 12));
+      && x.corpo.triagem.atendimento.passos === 13));
 
   // cliente sem caso: avisa em vez de gravar
   // F24 mudou a regra: sem caso a triagem AGORA encerra normalmente — o

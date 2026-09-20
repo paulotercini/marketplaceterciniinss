@@ -83,7 +83,8 @@ const SUPA = "https://ficticio.supabase.co";
   });
   conf("senha existente: mascarada com copiar/ver/trocar",
     senha && /•/.test(senha.txt) && /copiar/.test(senha.txt) && /ver/.test(senha.txt) && /trocar/.test(senha.txt));
-  conf("senha NÃO está em fundo amarelo", senha && senha.amarelo === "rgb(255, 255, 255)");
+  // F127 · o campo preenchido é CINZA (rgb 241,242,244), nunca amarelo
+  conf("senha NÃO está em fundo amarelo", senha && senha.amarelo === "rgb(241, 242, 244)");
 
   // 4. sem senha: convite tracejado e o clique abre o prompt e grava
   await abrir(CLI_VAZIO);

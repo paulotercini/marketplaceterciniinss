@@ -111,6 +111,9 @@ FIX.documentos_beneficio = [...FIX.documentos_beneficio,
   // ── 3 · o vínculo da triagem viaja para a análise ────────────────────────
   await p.evaluate(cli => abrirFicha(cli), CLI_VAZIO);
   await p.waitForTimeout(900);
+  // F127 · o vínculo é o 4º passo da triagem (um passo por vez): abre-se ele
+  await p.evaluate(cli => { subCad = "triagem"; return irPassoTriagem(cli, 3); }, CLI_VAZIO);
+  await p.waitForTimeout(500);
   conf("a triagem pergunta o vínculo com a Previdência hoje",
     await p.evaluate(() => !!document.getElementById("tri-vinc")));
   escritos.length = 0;

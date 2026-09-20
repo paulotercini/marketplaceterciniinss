@@ -184,58 +184,60 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: CPF_DOC };
     CLI_CHEIO);
   await p.waitForSelector(".tri-lista");
   await p.waitForTimeout(300);
+  // F127 · o CNIS entra pelo CADASTRO e pelo botão grande do topo da triagem;
+  // o passo Benefício ativo (3º) continua lendo a Declaração de Benefícios
+  conf("o topo da triagem convida a inserir o CNIS",
+    /Inserir o CNIS/.test(await p.innerText(".cnis-abrir")));
+  await p.evaluate(cli => irPassoTriagem(cli, 2), CLI_CHEIO);
+  await p.waitForSelector(".tri-pdf");
   const bt = await p.evaluate(() =>
     [...document.querySelectorAll(".tri-pdf button")].map(x => x.innerText.trim()));
-  conf(`o botão aparece nos dois passos certos (${bt.join(" | ")})`,
-    bt.length === 2 && /Ler o CNIS/.test(bt[0]) && /Declaração de Benefícios/.test(bt[1]));
+  conf(`o passo Benefício ativo tem o botão da Declaração (${bt.join(" | ")})`,
+    bt.length === 1 && /Declaração de Benefícios/.test(bt[0]));
   conf("e a tela diz que o arquivo não sai da máquina",
     /não sai desta máquina/.test(await p.innerText(".tri-pdf")));
 
   escritos.length = 0;
-  await p.evaluate(([cli, it]) => gravarCnisLido(cli, lerCnisPdf(it)), [CLI_CHEIO, ITENS_CNIS]);
+  await p.evaluate(([cli, it]) => gravarCnisLido(cli, lerCnisPdf(it), null), [CLI_CHEIO, ITENS_CNIS]);
   await p.waitForTimeout(700);
   const pat = escritos.find(x => x.m === "PATCH" && x.t === "clientes");
   const tri = pat && pat.corpo.triagem;
   conf("a leitura do CNIS grava na triagem", !!tri);
-  conf(`a nota do passo Indicadores lista os quatro códigos (${JSON.stringify(((tri || {}).indicadores || {}).nota || "").slice(0, 50)})`,
-    tri && /PREC-FACULTCONC/.test(tri.indicadores.nota) && /PEXT/.test(tri.indicadores.nota)
-    && /IREC-INDPEND/.test(tri.indicadores.nota) && /PREC-MENOR-MIN/.test(tri.indicadores.nota));
-  conf("e traz a descrição junto do código",
-    tri && /Recolhimento abaixo do valor mínimo/.test(tri.indicadores.nota));
-  conf(`o passo CNIS registra páginas e vínculos (${JSON.stringify(((tri || {}).cnis || {}).nota || "").slice(0, 46)})`,
-    tri && /CNIS lido em/.test(tri.cnis.nota) && /vínculo\(s\)/.test(tri.cnis.nota));
-  // [20.09.2026] os benefícios que o CNIS registra saem LISTADOS na nota, um
-  // por linha, em vez de escondidos numa contagem (pedido do Paulo)
+  const gi = tri && tri.pdf && tri.pdf.cnis && tri.pdf.cnis.indicadores || [];
+  conf(`os quatro indicadores ficam guardados com a descrição (${gi.map(i => i.codigo).sort().join(", ")})`,
+    gi.length === 4 && gi.every(i => i.descricao) && gi.some(i => /Recolhimento abaixo do valor mínimo/.test(i.descricao)));
+  conf("o passo Indicadores sai pré-marcado com atenção (há pendências), como automático",
+    tri && tri.indicadores.estado === "atencao" && tri.indicadores.auto === true);
+  conf("o passo CNIS também sai pré-marcado, como automático",
+    tri && ["ok", "atencao"].includes(tri.cnis.estado) && tri.cnis.auto === true);
   const nBen = (await p.evaluate(it => lerCnisPdf(it).linhaDoTempo.filter(v => v.tipo === "Benefício").length, ITENS_CNIS));
-  conf(`a nota do passo CNIS lista os benefícios recebidos (${nBen} no extrato)`,
-    tri && (nBen === 0 || (/Benefícios no CNIS:/.test(tri.cnis.nota)
-      && (tri.cnis.nota.match(/• /g) || []).length === nBen && /espécie \d+/.test(tri.cnis.nota))));
-  conf("o ESTADO do passo não é marcado pela máquina: quem confere é quem atende",
-    tri && !tri.indicadores.estado && !tri.cnis.estado);
+  conf(`os benefícios do extrato ficam na linha do tempo guardada (${nBen} no extrato)`,
+    tri && (tri.pdf.cnis.vinculos || []).filter(v => v.tipo === "Benefício").length === nBen);
+  conf("o vínculo com a Previdência hoje é respondido pelo extrato",
+    tri && tri.vinculo && ["empregado", "ci", "facultativo", "especial", "sem"].includes(tri.vinculo.tipo) && tri.vinculo.auto === true);
   conf("fica registrado quem leu e quando",
-    tri && tri.pdf && tri.pdf.cnis && tri.pdf.cnis.quem === EU && tri.pdf.cnis.indicadores.length === 4);
+    tri && tri.pdf && tri.pdf.cnis && tri.pdf.cnis.quem === EU && tri.pdf.cnis.analise);
   const and = escritos.find(x => x.m === "POST" && x.t === "andamentos");
   conf(`lança no histórico do caso (${JSON.stringify(((and || {}).corpo || {}).texto || "").slice(0, 48)})`,
-    and && /CNIS lido no CRM/.test(and.corpo.texto) && /PREC-FACULTCONC/.test(and.corpo.texto));
-  // F29 · o cabeçalho completa a Identificação: mãe e NIT nos campos vazios
+    and && /CNIS inserido no CRM/.test(and.corpo.texto) && /PREC-FACULTCONC/.test(and.corpo.texto));
+  // F29 · o cabeçalho completa a Identificação: mãe e os NITs nos campos vazios
   const patMae = escritos.find(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.nome_mae);
   conf("o nome da mãe e o NIT vazios se preenchem sozinhos na Identificação",
-    patMae && /PEDROSA/.test(patMae.corpo.nome_mae) && patMae.corpo.pis_nit === "123.45678.90-1");
+    patMae && /PEDROSA/.test(patMae.corpo.nome_mae) && /123\.45678\.90-1/.test(patMae.corpo.pis_nit));
   conf("e a memória da ficha já reflete o preenchimento",
     await p.evaluate(cli => { const c = D.cliPorId.get(cli);
       return /PEDROSA/.test(c.nome_mae || "") && !!c.pis_nit; }, CLI_CHEIO));
 
-  // a nota que já existia não é apagada
+  // a resposta dada À MÃO e a nota que já existia não são tocadas pela releitura
   await p.evaluate(cli => { const c = D.cliPorId.get(cli);
-    c.triagem = { ...(c.triagem || {}), indicadores: { nota: "anotação antiga do Marcos" } }; }, CLI_CHEIO);
+    c.triagem = { ...(c.triagem || {}), indicadores: { estado: "ok", nota: "anotação antiga do Marcos" } }; }, CLI_CHEIO);
   escritos.length = 0;
-  await p.evaluate(([cli, it]) => gravarCnisLido(cli, lerCnisPdf(it)), [CLI_CHEIO, ITENS_CNIS]);
+  await p.evaluate(([cli, it]) => gravarCnisLido(cli, lerCnisPdf(it), null), [CLI_CHEIO, ITENS_CNIS]);
   await p.waitForTimeout(700);
   const pat2 = escritos.find(x => x.m === "PATCH" && x.t === "clientes");
-  conf("a leitura entra ACIMA da anotação que já estava lá, sem apagá-la",
-    pat2 && /anotação antiga do Marcos/.test(pat2.corpo.triagem.indicadores.nota)
-    && pat2.corpo.triagem.indicadores.nota.indexOf("Lido do CNIS")
-       < pat2.corpo.triagem.indicadores.nota.indexOf("anotação antiga"));
+  conf("a releitura não mexe no que foi respondido à mão nem na anotação",
+    pat2 && pat2.corpo.triagem.indicadores.estado === "ok"
+    && pat2.corpo.triagem.indicadores.nota === "anotação antiga do Marcos");
   conf("mãe e NIT JÁ preenchidos não se tocam na segunda leitura",
     !escritos.some(x => x.m === "PATCH" && x.t === "clientes" && x.corpo.nome_mae));
 
