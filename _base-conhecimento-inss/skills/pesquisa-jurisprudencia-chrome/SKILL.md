@@ -1,6 +1,6 @@
 ---
 name: pesquisa-jurisprudencia-chrome
-description: Protocolo obrigatório de pesquisa de jurisprudência com o Claude in Chrome como via primária. Use SEMPRE que for preciso localizar, conferir ou citar acórdão, ementa, Tema, Súmula, Enunciado, PEDILEF, PUIL, IRDR, IAC, REsp ou RE, e sempre que o pedido mencionar pesquisar jurisprudência, buscar precedente, achar julgado, conferir tese, verificar redação literal, base textual do TRF3, Turmas Recursais, TRU da 3ª Região, jurisprudência unificada do CJF, TNU, STJ, STF, TRF4 ou súmulas do TRF3. Define a hierarquia de fontes, o passo a passo por base, a ficha de registro do achado e a marcação [CONFERIDO] ou [NÃO CONFIRMADO]. NÃO use para pesquisa de legislação em texto compilado, que sai direto do Planalto, nem para consulta processual de cliente. Desde a Onda 144, julgado do TRF3 e das Recursais da 3ª Região é localizado no servidor MCP trf3 e CONFERIDO no portal do TRF3 antes de qualquer citação, com marcação NÃO CONFERIDO até a conferência.
+description: Protocolo obrigatório de pesquisa de jurisprudência. Use SEMPRE que for preciso localizar, conferir ou citar acórdão, ementa, Tema, Súmula, Enunciado, PEDILEF, PUIL, IRDR, IAC, REsp ou RE, e sempre que o pedido mencionar pesquisar jurisprudência, buscar precedente, achar julgado, conferir tese, verificar redação literal, base textual do TRF3, Turmas Recursais, TRU da 3ª Região, CJF, TNU, CRPS, STJ, STF ou TRF4. TRÊS CAMINHOS. Julgado do TRF3 e das Turmas Recursais da 3ª Região é localizado no MCP trf3, com conferência OBRIGATÓRIA no portal do TRF3 antes da citação. Julgado da TNU e do CRPS é localizado no MCP iurisprudencia, com conferência OBRIGATÓRIA na base oficial, o eproctnu-jur do CJF para a TNU e o gov.br para enunciado do CRPS, porque o link daquele MCP não é fonte oficial. Demais tribunais vão direto ao navegador. Nenhum MCP autoriza CONFERIDO. Define a hierarquia de fontes, o passo a passo por base e a ficha do achado. NÃO use para legislação compilada nem para consulta processual de cliente.
 ---
 
 # Pesquisa de jurisprudência, protocolo do escritório
@@ -10,6 +10,8 @@ Todos os endereços e campos abaixo foram abertos e testados no navegador em 30.
 ## 1. Regra primária
 
 Toda pesquisa de jurisprudência começa no **Claude in Chrome**, operando o formulário oficial do tribunal no navegador do Paulo. Os sistemas de busca dos tribunais dependem de POST com sessão e de JavaScript, e nenhuma raspagem automatizada do escritório executa esses formulários. Quem não abre a base oficial não está pesquisando jurisprudência, está garimpando índice de terceiro.
+
+Julgado do TRF3 e de Turma Recursal da 3ª Região começa antes disso, no servidor MCP `trf3`, e julgado da TNU e do CRPS no MCP `iurisprudencia`. Um e outro LOCALIZAM e não conferem, de modo que o achado nasce `[NÃO CONFERIDO]` e depende da abertura da base oficial no Chrome, na forma da seção "MCP trf3, localizar no servidor e CONFERIR no portal" e da referência `PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`.
 
 Firecrawl e SearXNG entram como apoio, nunca como fonte final da citação.
 
@@ -31,7 +33,7 @@ Ordem de consulta por origem do precedente, vinculantes de STF, STJ e TNU antes 
 
 1. Definir a pergunta de pesquisa em uma linha, com o agente nocivo, o benefício, o dispositivo ou a tese em disputa.
 2. Checar o catálogo do escritório antes de abrir o navegador.
-3. Abrir a base oficial no Chrome e rodar a consulta.
+3. Rodar a consulta pelo caminho da origem. TRF3 e Turmas Recursais da 3ª Região pelo MCP `trf3`, com conferência obrigatória no portal do TRF3. TNU e CRPS pelo MCP `iurisprudencia`, com conferência obrigatória na base oficial de cada um. Demais tribunais direto no navegador, o do Comet ou o interno. O detalhe de cada caminho está na seção do MCP trf3 e na referência `PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`.
 4. Ler a ementa inteira, não o trecho do resultado. Ementa favorável com dispositivo contrário é armadilha frequente.
 5. Abrir o inteiro teor e confirmar relator, órgão julgador, data de julgamento, data de publicação e resultado.
 6. Preencher a ficha da seção 7.
