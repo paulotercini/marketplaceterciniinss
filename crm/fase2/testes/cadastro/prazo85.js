@@ -83,11 +83,19 @@ FIX.andamentos = [
   conf("ligado: o prazo COM anotação de origem vira um quadro de prazo fatal", on.length === 1 && on[0].tipo === "Prazo fatal" && on[0].data === fmtBR(PRAZO_A));
   conf("o 'saber mais' leva ao comentário que criou o prazo", on[0] && on[0].onclick.includes(`qdIrParaAndamento('${CASO1}','${AND_ORIG}')`));
   conf("o compositor lembra a data fatal e oferece o ✔ cumprido pela janela", await p.evaluate(() => /fatal/.test(document.querySelector(".escrever").textContent) && !!document.querySelector('button[onclick^="janelaPrazoCumprido"]')));
-  // o outro caso tem prazo SEM origem: não vira quadro (pedido do Paulo) — o convite a explicar fica no compositor
+  // [BUG 20.09.2026] o prazo SEM origem é o que vem do "Concluir em" do To Do,
+  // que é como o escritório marca prazo. Escondê-lo fazia a ficha dizer "sem
+  // prazos em aberto" com data marcada no To Do (caso do Nelson dos Santos).
   await p.evaluate(id => { casoSel = id; repintarFicha(); }, C2); await p.waitForTimeout(200);
   const c2 = await cards();
-  conf("o prazo SEM origem não vira quadro", !c2.some(c => c.tipo === "Prazo fatal"));
-  conf("mas o compositor convida a explicá-lo", await p.evaluate(() => !!document.querySelector('button[onclick^="explicarPrazo"]')));
+  conf("o prazo SEM descrição TAMBÉM vira quadro, marcado como vindo do To Do",
+    c2.some(c => /Prazo fatal/.test(c.tipo) && c.data === fmtBR(PRAZO_B)));
+  conf("e o quadro dele pergunta do que é, em âmbar", await p.evaluate(() => {
+    const c = document.querySelector(".faixa-prazos .pz.pz-semmotivo");
+    return !!c && /do que é/.test(c.querySelector(".pz-mais").textContent)
+      && /explicarPrazo/.test(c.querySelector(".pz-mais").getAttribute("onclick"));
+  }));
+  conf("o compositor continua convidando a explicá-lo", await p.evaluate(() => !!document.querySelector('button[onclick^="explicarPrazo"]')));
 
   // explicar um prazo cria o comentário com o carimbo
   await p.evaluate(id => explicarPrazo(id), C2);

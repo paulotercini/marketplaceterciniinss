@@ -2193,6 +2193,11 @@ html[data-tema="v10"] .pz.pz-fatal{background:var(--venc);border-color:var(--ven
 html[data-tema="v10"] .pz.pz-fatal .pz-tipo,html[data-tema="v10"] .pz.pz-fatal .pz-rel{color:rgba(255,255,255,.85)}
 html[data-tema="v10"] .pz.pz-fatal .pz-mais{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.14);color:#FFFFFF}
 html[data-tema="v10"] .pz.pz-fatal .pz-mais:hover{background:rgba(255,255,255,.26)}
+/* [BUG 20.09.2026] a data que veio do "Concluir em" do To Do, ainda sem
+   descrição: fica à vista em âmbar, pedindo que alguém diga do que é */
+html[data-tema="v10"] .pz.pz-semmotivo{background:var(--ambar-fundo,#FEF3C7);border-color:var(--aviso,#D97706);color:var(--texto)}
+html[data-tema="v10"] .pz.pz-semmotivo .pz-tipo,html[data-tema="v10"] .pz.pz-semmotivo .pz-rel{color:#92400E}
+html[data-tema="v10"] .pz.pz-semmotivo .pz-mais{border-color:var(--aviso,#D97706);background:#FFFFFF;color:#92400E;font-weight:600}
 html[data-tema="v10"] .pz.pz-lembrete.pz-venceu{border-color:var(--venc)}
 html[data-tema="v10"] .pz.pz-lembrete.pz-venceu .pz-rel{color:var(--venc);font-weight:600}
 html[data-tema="v10"] .pz.pz-lembrete .pz-mais:hover{border-color:var(--azul)}
@@ -2397,7 +2402,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.17</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.18</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -13953,7 +13958,13 @@ function faixaPrazos(k){
   const {soltas} = linhasDeDatas(k.cliente_id), hj = hoje();
   const minhas = [];
   for(const x of soltas){
-    if((x.casoId && x.casoId!==k.id) || x.semMotivo) continue;
+    // [BUG 20.09.2026] O PRAZO SEM DESCRIÇÃO SUMIA DA FICHA. Ele ficava de
+    // fora porque não nasceu de anotação nossa — só que é exatamente esse o
+    // caso da data que veio do "Concluir em" do To Do, que é como o escritório
+    // marca prazo. O caso do Nelson dos Santos tinha 29/09 no To Do e a ficha
+    // dizia "sem prazos ou lembretes em aberto". Agora ele aparece, em âmbar,
+    // convidando a dizer do que é.
+    if(x.casoId && x.casoId!==k.id) continue;
     minhas.push(x);
     for(const f of (x.filhas||[]).sort((a,b)=>a.data<b.data?-1:1)) minhas.push({...f, filha:true});
   }
@@ -13968,12 +13979,15 @@ function faixaPrazos(k){
     const tipo = x.rotulo || (x.ico==="🩺" && !x.ehPrazo ? "Perícia" : x.ico==="📌" ? "Comentário fixo"
       : x.filha ? "Lembrar antes" : NAT_ROT[nat]);
     const rel = d===0 ? "hoje" : d<0 ? `venceu há ${-d} d` : d===1 ? "amanhã" : `em ${d} d`;
-    const ir = x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')` : `prazoSaberMais(${i})`;
-    return `<div class="pz pz-${nat}${venceu?" pz-venceu":""}" data-tipo="${tipo}" data-nat="${nat}">
-      <span class="pz-tipo">${tipo}</span>
+    const ir = x.andId ? `qdIrParaAndamento('${x.casoId}','${x.andId}')`
+      : x.semMotivo ? `explicarPrazo('${x.casoId}')` : `prazoSaberMais(${i})`;
+    return `<div class="pz pz-${nat}${venceu?" pz-venceu":""}${x.semMotivo?" pz-semmotivo":""}" data-tipo="${tipo}" data-nat="${nat}">
+      <span class="pz-tipo">${tipo}${x.semMotivo?" · do To Do":""}</span>
       <b class="pz-data">${fmtBarra(x.data)}</b>
       <small class="pz-rel">${rel}</small>
-      <button class="pz-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo":"ver o que é e o que fazer"}">saber mais</button>
+      <button class="pz-mais" onclick="${ir}" title="${x.andId?"ir até a anotação que criou este prazo"
+        :x.semMotivo?"esta data veio do “Concluir em” do To Do — diga do que ela é":"ver o que é e o que fazer"}">${
+        x.semMotivo?"do que é?":"saber mais"}</button>
     </div>`;
   };
   return `<div class="faixa-prazos" aria-label="Prazos e providências">${minhas.map(card).join("")}</div>`;
