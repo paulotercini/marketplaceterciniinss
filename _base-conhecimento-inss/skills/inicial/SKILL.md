@@ -15,6 +15,7 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
 - Localize a tarefa do cliente no To Do (por nome/CPF) com `graph_client`
   (`list_lists`/`list_tasks`); use a tarefa ATIVA. Extraia list_id, task_id e
   **leia TODAS as instrucoes do corpo** (historico inteiro), checklist e anexos.
+- Antes de ajustar a peca, consultar o MCP `acervo` para ver como o escritorio ja sustentou a tese, na Fase 0 da `peticao-previdenciaria`. O trecho e ponto de partida para redacao nova, e reaproveitamento automatico de texto de um cliente em peca de outro e VEDADO.
 
 ## 2. Leitura integral (cadeia obrigatoria)
 - Localize a pasta do cliente no Drive e **leia a INTEGRALIDADE** de cada documento

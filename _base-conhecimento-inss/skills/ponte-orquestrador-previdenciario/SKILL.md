@@ -140,6 +140,10 @@ Exemplo. Caso de aposentadoria especial por ruído com PPP do cliente.
 
 Pipeline. (1) `auditoria-ppp` no documento. (2) `base-especial-ruido` para fundamento. (3) `defesa-probatoria-especial` para EPI e standard probatório. (4) `tempo-especial-peticoes-por-rito` para rito. (5) `peticao-previdenciaria` para peça. (6) `revisao-peticao` para auditoria final.
 
+## Mapa dos quatro MCPs da casa (Onda 149)
+
+O escritório opera quatro servidores locais, cada um dono de uma matéria. O `trf3` guarda a jurisprudência do TRF3 e das Turmas Recursais da 3ª Região. O `iurisprudencia` guarda a da TNU e do CRPS, com os enunciados do Conselho Pleno. O `normas` guarda a legislação. O `acervo` guarda o que o próprio escritório já escreveu. A articulação entre eles é a remissão, nunca a cópia, de modo que um trecho do `acervo` que cite o Tema 1090 devolve a referência e o inteiro teor se lê no MCP de jurisprudência. **Nenhum dos quatro autoriza `[CONFERIDO]`.**
+
 ## 6. Postura
 
 Postura exclusivamente pró-segurado. Toda a orquestração deve identificar fragilidades da posição adversária e converter conhecimento normativo em vantagem processual concreta para o segurado.

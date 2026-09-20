@@ -1,11 +1,23 @@
 ---
 name: peticao-previdenciaria
-description: "Criação de petições previdenciárias no padrão do escritório Paulo Roberto Tercini Filho (OAB/SP 331.110), incluindo política de tutela de urgência e liminar. Use SEMPRE que pedir para redigir, criar, gerar ou montar qualquer petição, recurso, contestação, embargos, agravo, pedido de uniformização, recurso administrativo, recurso especial ao CRPS, mandado de segurança ou qualquer peça processual previdenciária. Use quando mencionar petição inicial, recurso inominado, embargos de declaração, agravo interno, pedido TNU, recurso ordinário, recurso especial CRPS, ação de concessão, ação de restabelecimento, pensão por morte, aposentadoria, auxílio-doença, BPC/LOAS, tutela de urgência, tutela antecipada, liminar, antecipação de tutela, medida liminar. NÃO use para análise de casos, pareceres ou respostas que não resultem em documento formal. Onda 140, redação em Markdown, medição por medir_peca.py e conversão por md2docx.js."
+description: "Criação de petições previdenciárias no padrão do escritório Paulo Roberto Tercini Filho (OAB/SP 331.110), incluindo política de tutela de urgência e liminar. Use SEMPRE que pedir para redigir, criar, gerar ou montar qualquer petição, recurso, contestação, embargos, agravo, pedido de uniformização, recurso administrativo, recurso especial ao CRPS, mandado de segurança ou qualquer peça processual previdenciária. Use quando mencionar petição inicial, recurso inominado, embargos de declaração, agravo interno, pedido TNU, recurso ordinário, recurso especial CRPS, ação de concessão, ação de restabelecimento, pensão por morte, aposentadoria, auxílio-doença, BPC/LOAS, tutela de urgência, tutela antecipada, liminar, antecipação de tutela, medida liminar. Fase 0, consultar o MCP acervo, vedado reaproveitar texto de um cliente em peça de outro. NÃO use para análise de casos, pareceres ou respostas que não resultem em documento formal. Onda 140, redação em Markdown, medição por medir_peca.py e conversão por md2docx.js."
 ---
 
 # Petições Previdenciárias do Escritório Paulo Tercini
 
 Toda peça sai em .docx no padrão visual do escritório, com cabeçalho timbrado e títulos em tabela preta. A partir da Onda 140 a redação e a formatação são etapas SEPARADAS, porque escrever prosa dentro de código docx-js degradava o texto, e as regras de estilo se perdiam entre milhares de palavras de mecânica.
+
+## Fase 0, consultar o acervo do escritório (Onda 149)
+
+Antes de escrever a primeira linha, consulta-se o MCP `acervo` para ver como o escritório já sustentou a tese. É passo do fluxo, não sugestão. A busca começa por `buscar_tese_acervo` com UMA palavra central, e o trecho encontrado se lê inteiro por `obter_trecho_acervo`, porque o resultado da busca vem cortado no meio da frase.
+
+**A vedação vale em voz alta.** O trecho é ponto de partida para redação NOVA, conferida contra os autos deste cliente. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO, e o próprio servidor devolve essa vedação em toda resposta.
+
+**O trecho é anonimizado, o arquivo de origem não.** O nome do cliente sai como `[NOME]` no trecho, no nome do arquivo e no caminho, mas `caminho_da_peca_acervo` devolve o caminho de verdade, e quem abrir o arquivo verá nome, CPF e dado médico. Medido em 20/09/2026, a anonimização também não cobre número de protocolo nem data de requerimento.
+
+**Dois limites impedem ler a base como estatística.** O campo `beneficio` erra, com parte das peças em `indefinido` e peça de BPC classificada como incapacidade, de modo que o filtro por matéria seleciona mal. E nenhuma peça tem resultado anotado, `com_resultado_anotado` é 0, de modo que o filtro por resultado não existe e a base não diz o que venceu. A distribuição da `visao_geral_acervo` é contagem de arquivo classificado por heurística, não desempenho do escritório.
+
+A forma de pesquisar, os filtros confiáveis e os que não são, e o que foi medido em 20/09/2026, estão em `references/PESQUISA-NO-MCP-ACERVO.md`.
 
 ## Fluxo em três fases, obrigatório
 
@@ -271,6 +283,7 @@ Antes de gerar qualquer petição, esta skill aciona automaticamente as skills c
 - `mandado-seguranca-previdenciario` + `ms-competencia-autoridade-coatora` — em MS
 - `auditoria-laudo-pericial`, `auditoria-ppp` — quando houver laudo/PPP para auditar
 - `printscreen-impacto` — para inserção de documentos reais com destaque
+- MCP `acervo` — na Fase 0, para ler o que o escritório já sustentou, e MCP `normas` pela `base-legislacao-fontes-primarias` quando for citar dispositivo
 - `reafirmacao-der`, `tutela-urgencia` (interna) — conforme política
 
 A revisão final do conteúdo da petição é responsabilidade da skill `base-revisao-peticao-aprofundada`, acionada automaticamente após esta skill concluir a geração, na ordem única de execução dela. A `revisao-peticao` é apenas redirecionamento para ela desde a Onda 139.
