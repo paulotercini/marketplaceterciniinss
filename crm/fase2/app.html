@@ -2412,7 +2412,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.20</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.21</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -10894,14 +10894,23 @@ async function lerPdfDaTriagem(cliId, chave){
       : "Não consegui abrir este PDF");
   }
   if(!itens.length)
-    return aviso("Este PDF não tem texto — deve ser digitalizado. O CRM não lê imagem.");
+    return aviso("Este PDF não tem texto: é digitalizado ou foi impresso como imagem. "
+      + "Baixe o PDF original no Meu INSS (Extrato do CNIS ou Declaração de Benefícios), "
+      + "que vem com texto, e tente de novo.");
 
   const eCnis = chave === "indicadores";
   const lido = eCnis ? lerCnisPdf(itens) : lerDeclaracaoPdf(itens);
+  // [20.09.2026] a recusa passou a dizer O QUE viu, para o próximo relato
+  // trazer a causa: páginas, pedaços de texto e as âncoras que faltaram
+  const viu = txt => itens.some(i=>i.t.includes(txt));
+  const raio = `${lido.paginas||Math.max(0,...itens.map(i=>i.p))} pág., ${itens.length} pedaços de texto`;
   if(eCnis && !lido.indicadores.length && !lido.filiado.nit)
-    return aviso("Não reconheci este arquivo como um CNIS do Meu INSS");
+    return aviso(`Não reconheci este arquivo como um CNIS do Meu INSS (${raio}; `
+      + `${viu("NIT")?"achei":"não achei"} "NIT", ${viu("Legenda")?"achei":"não achei"} a legenda de indicadores). `
+      + "Se for o Extrato Previdenciário do Meu INSS, me mande este recado.");
   if(!eCnis && !lido.beneficios.length && !lido.cpf)
-    return aviso("Não reconheci este arquivo como a Declaração de Benefícios");
+    return aviso(`Não reconheci este arquivo como a Declaração de Benefícios (${raio}; `
+      + `${viu("CPF")?"achei":"não achei"} "CPF", ${viu("NB")||viu("Benefício")?"achei":"não achei"} "NB").`);
 
   const conf = conferePdfComCliente(lido, c);
   if(!conf.ok) return aviso(conf.aviso);
@@ -10922,15 +10931,28 @@ async function gravarCnisLido(cliId, lido){
     : `Lido do CNIS em ${fmt(hoje())}: nenhum indicador na legenda do extrato.`;
   t.indicadores = {...(t.indicadores||{}), nota: juntarNota((t.indicadores||{}).nota, texto),
                    em:hoje(), quem:eu.id};
+  // [20.09.2026] os BENEFÍCIOS que o CNIS registra saem listados na nota, um
+  // por linha, com espécie, NB, período e situação. É a pergunta que a triagem
+  // faz primeiro (o que a pessoa já recebeu, e se ainda recebe), e ficava
+  // escondida numa contagem.
+  const bens = (lido.linhaDoTempo||[]).filter(v=>v.tipo==="Benefício");
+  const linhasBen = bens.map(v=>`  • ${v.inicio}${v.fim?` a ${v.fim}`:" (em aberto)"} · espécie ${v.especie}`
+    + (v.origem?` ${v.origem}`:"") + (v.nb?` · NB ${v.nb}`:"") + (v.situacao?` · ${v.situacao}`:""));
   t.cnis = {...(t.cnis||{}),
     nota: juntarNota((t.cnis||{}).nota,
       `CNIS lido em ${fmt(hoje())}: ${lido.paginas} página(s), ${lido.vinculos} vínculo(s)`
       + (()=>{ const lt=lido.linhaDoTempo||[];
-               const b=lt.filter(v=>v.tipo==="Benefício").length;
                const ab=lt.filter(v=>v.aberto && v.tipo!=="Benefício").length;
-               return (b?`, ${b} período(s) de benefício`:"") + (ab?`, ${ab} em aberto`:""); })()
-      + (lido.filiado.nit?`, NIT ${lido.filiado.nit}`:"") + "."),
+               return (bens.length?`, ${bens.length} benefício(s)`:"") + (ab?`, ${ab} vínculo(s) em aberto`:""); })()
+      + (lido.filiado.nit?`, NIT ${lido.filiado.nit}`:"") + "."
+      + (linhasBen.length ? "\nBenefícios no CNIS:\n" + linhasBen.join("\n") : "")),
     em:hoje(), quem:eu.id};
+  // e o passo "Benefício ativo" ganha o que o CNIS já diz, quando há benefício
+  // sem data de cessação: a Declaração confirma, mas a triagem não fica cega
+  const ativosCnis = bens.filter(v=>!v.fim || /ATIVO/i.test(v.situacao||""));
+  if(ativosCnis.length && !(t.beneficio||{}).nota)
+    t.beneficio = {...(t.beneficio||{}), em:hoje(), quem:eu.id,
+      nota:`Pelo CNIS (${fmt(hoje())}): ${ativosCnis.map(v=>`espécie ${v.especie}${v.nb?` NB ${v.nb}`:""} desde ${v.inicio}`).join("; ")}. Confirmar na Declaração de Benefícios.`};
   t.pdf = {...(t.pdf||{}), cnis:{em:hoje(), quem:eu.id, paginas:lido.paginas,
     qtVinculos:lido.vinculos, indicadores:lido.indicadores.map(i=>i.codigo),
     vinculos:lido.linhaDoTempo||[]}};
