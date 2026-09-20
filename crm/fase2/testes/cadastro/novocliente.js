@@ -277,6 +277,26 @@ FIX.colaboradores = [...FIX.colaboradores,
   await p.fill("#ncl-cpf", "123.456.789-00");   // dígito verificador errado
   await p.evaluate(() => conferirCpfNovo());
   conf("dígito verificador errado avisa na hora", /CPF inválido/.test(await rec()));
+
+  // F125 · a tela da recepção ocupa a largura toda, e o CPF traz o nome que o
+  // CRM já conhece — de ficha cadastrada ou de requerimento importado do PAT.
+  // Não há consulta à Receita: nome que o CRM não sabe continua sendo digitado.
+  conf("a tela do cadastro ocupa a largura do conteúdo", await p.evaluate(() => {
+    const f = document.querySelector("#conteudo-meio .ncl-larga");
+    return !!f && f.offsetWidth >= document.getElementById("conteudo-meio").clientWidth - 40;
+  }));
+  await abrirTela();
+  await p.evaluate(() => { planoPat = { semCliente: [
+    { protocolo: "2101234567", cpf: "529.982.247-25", nome: "Fulano Vindo do PAT" }] }; });
+  await p.fill("#ncl-cpf", "529.982.247-25");
+  await p.evaluate(() => conferirCpfNovo());
+  conf("CPF de requerimento do PAT preenche o nome sozinho",
+    await p.evaluate(() => document.getElementById("ncl-nome").value === "Fulano Vindo do PAT"));
+  conf("e o recado diz de onde o nome veio, para conferência",
+    /PAT/.test(await rec()) && /Confira/.test(await rec()));
+  await p.evaluate(() => { planoPat = null; });
+  await abrirTela();
+  await p.fill("#ncl-cpf", "123.456.789-00");   // volta ao CPF inválido do teste seguinte
   conf("onze dígitos iguais também não passam",
     await p.evaluate(() => !cpfValido("11111111111") && !cpfValido("00000000000")));
   conf("e os CPFs verdadeiros passam",
