@@ -2397,7 +2397,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.14</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.15</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5488,23 +5488,25 @@ function renderMeuDia(){
       `<button class="fchip ${filtroColab===c.id?"on":""}" data-f="${c.id}">`+
       `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome)}</button>`))
     .concat([`<button class="fchip ${filtroVencidas?"on":""}" id="chip-vencidas" style="margin-left:auto">🔴 mostrar vencidas (${nVenc})</button>`]);
+  // F123 · MEU DIA É O QUE VENCE HOJE, E NADA MAIS (decisão do Paulo,
+  // 20.09.2026). Entram as três naturezas de data, prazo fatal, compromisso e
+  // lembrete, numa LISTA SÓ. O aviso de aposentadoria e o lembrete do cliente
+  // são lembrete como qualquer outro, então perderam a seção própria e entram
+  // aqui dentro. A rotina do escritório, os recursos do CRPS para conferir à
+  // mão e o CadÚnico saíram para 🧹 Cuidar do acervo: são conferência
+  // periódica, não data que vence. Fica o aviso do crachá do CRPS, que não é
+  // lista, é pane do robô.
+  const apos = itensApos(), lemb = itensLembretes();
+  const nHoje = hojeK.length + tHoje.length + apos.length + lemb.length;
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros">${chips.join("")}</div>`
     + avisoCRPS()
-    + blocoRotinas()
-    + blocoCrpsManual()
-    + blocoApos()
-    + blocoLembretes()
-    + blocoCadunico()
-    // A REVISÃO DO ACERVO E O "SEM PRÓXIMA AÇÃO" SAÍRAM DAQUI. Meu Dia é o
-    // que vence hoje e o que eu escolhi para hoje — coisas com data. Os dois
-    // blocos que saíram são FILA, não agenda: nunca acabam, e empurravam para
-    // baixo justamente o que vence. Agora moram em 🧹 Cuidar do acervo.
     + `<h3 class="secao">☀️ Adicionados ao dia (${casosDia.length})</h3>`
     + (grupoClientes(casosDia).map(([c,ks])=>cartaoCliente(c,ks)).join("") || "<p class='meio-sub'>Nada adicionado — clique com o botão direito num cliente e escolha ☀️ Adicionar ao Meu Dia.</p>")
-    + `<h3 class="secao">🟡 Vencem hoje (${hojeK.length+tHoje.length})</h3>`
+    + `<h3 class="secao">🟡 Vencem hoje (${nHoje})</h3>`
     + (grupoClientes(hojeK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
-       + tHoje.map(t=>cartaoTarefa(t)).join("") || "<p class='meio-sub'>Nada vence hoje. 🎉</p>")
+       + tHoje.map(t=>cartaoTarefa(t)).join("")
+       + apos.join("") + lemb.join("") || "<p class='meio-sub'>Nada vence hoje. 🎉</p>")
     + (filtroVencidas ? `<h3 class="secao">🔴 Vencidas (${nVenc})</h3>`
        + (grupoClientes(vencK).map(([c,ks])=>cartaoCliente(c,ks)).join("")
           + tVenc.map(t=>cartaoTarefa(t)).join("") || "<p class='meio-sub'>Nenhuma vencida. 👏</p>") : "");
@@ -7083,23 +7085,25 @@ async function marcarLidas(ids){
 }
 
 // ── 🧹 Cuidar do acervo ───────────────────────────────────────────────────
-// O que saiu do Meu Dia. São duas FILAS, não uma agenda: processos sem
-// próxima ação e processos parados há muito tempo. Nenhuma das duas tem
-// data, nenhuma das duas acaba — e é por isso que não podiam morar na tela
-// que responde "o que vence hoje?".
+// O que saiu do Meu Dia. São FILAS e CONFERÊNCIAS PERIÓDICAS, não agenda:
+// processos sem próxima ação, processos parados há muito tempo, a rotina do
+// escritório, os recursos do CRPS que o robô não enxerga e o CadÚnico a
+// renovar. Nada disso responde "o que vence hoje?", e enquanto morava no Meu
+// Dia empurrava para baixo justamente o que vence (F123, 20.09.2026).
 //
-// Aqui elas ficam à mão para quando sobrar tempo, com o número na barra
-// lateral dizendo o tamanho da fila sem cobrar nada.
+// Aqui ficam à mão para quando sobrar tempo, com o número na barra lateral
+// dizendo o tamanho da fila sem cobrar nada.
 function renderAcervo(){
   tituloLista("🧹 Cuidar do acervo");
   document.getElementById("sub-lista").textContent =
-    "Sem data e sem cobrança: o que fica para quando sobrar tempo. Nada aqui vence hoje.";
-  const corpo = blocoRevisao() + blocoSemAcao() + blocoSemEndereco();
+    "O trabalho sem data marcada: rotina, conferências e processos parados. Nada aqui vence hoje.";
+  const corpo = blocoRotinas() + blocoCrpsManual() + blocoCadunico()
+    + blocoRevisao() + blocoSemAcao() + blocoSemEndereco();
   document.getElementById("conteudo-meio").innerHTML = corpo
     || "<p class='meio-sub'>Acervo em dia — nenhum processo parado nem sem próxima ação. 👏</p>";
   document.querySelectorAll("[data-revks]").forEach(b=>b.onclick=e=>{
     e.stopPropagation(); marcarRevisado(b.dataset.revks.split(",")); });
-  ligarCartoes();
+  ligarCartoes(); ligarSecoes();
 }
 // quantos esperam ali — o mesmo critério dos dois blocos, sem montar a tela
 function quantosNoAcervo(){
@@ -11992,12 +11996,13 @@ async function lembrarApos(cliId, aposId, data, especie, quando){
 }
 // no Meu Dia: o aviso que já chegou a hora. Sem isto o lembrete ficaria só
 // no calendário, e calendário só ajuda quem lembra de abrir
-function blocoApos(){
+// F123 · o aviso de aposentadoria É lembrete, e lembrete vencido entra na
+// lista única do que vence hoje. Por isso esta função devolve só as LINHAS,
+// sem título de seção própria: quem monta o título é o Meu Dia.
+function itensApos(){
   const chegou=lembretesApos().filter(a=>a.aviso<=hoje())
     .sort((x,y)=>x.data<y.data?-1:1);
-  if(!chegou.length) return "";
-  return `<h3 class="secao">🎂 Aposentadorias a tratar (${chegou.length})</h3>` +
-    chegou.map(a=>`<div class="cartao" data-cli="${a.cliente.id}">
+  return chegou.map(a=>`<div class="cartao" data-cli="${a.cliente.id}">
       <span class="check" style="border-color:var(--verde)"></span>
       <div class="info"><div class="nome">${esc(a.cliente.nome)}</div>
         <div class="meta"><span class="chip fase">${esc(a.especie)}</span>
@@ -12015,7 +12020,7 @@ function blocoApos(){
         title="adiar: some daqui e volta na data escolhida">🗓 Lembrar em
         <input type="date" min="${hoje()}" value="${a.lembrar_em||""}"
           onchange="lembrarApos('${a.cliente.id}','${a.id}','${a.data}','${esc(a.especie)}',this.value)"></span>
-      </div>`).join("");
+      </div>`);
 }
 // ── LOAS idoso e o CadÚnico ──────────────────────────────────────────────
 // O BPC do idoso (65 anos, para homem e mulher) exige CadÚnico em dia: ele
@@ -12723,12 +12728,13 @@ async function salvarAnotacaoNoCaso(lembId, i, casoId){
   aviso("✔ Anotação copiada para os andamentos do caso", false);
   if(clienteAberto) abrirFicha(clienteAberto);
 }
-// no Meu Dia: os lembretes que venceram, prontos para despachar dali mesmo
-function blocoLembretes(){
+// no Meu Dia: os lembretes que venceram, prontos para despachar dali mesmo.
+// F123 · devolve só as LINHAS: elas entram na lista única do que vence hoje,
+// junto do prazo fatal e do compromisso, em vez de morarem em seção à parte.
+function itensLembretes(){
   const venc=(D.lembretes||[]).filter(l=>l.ativo!==false && l.proximo_em && l.proximo_em<=hoje())
     .sort((a,b)=>a.proximo_em<b.proximo_em?-1:1);
-  if(!venc.length) return "";
-  return `<h3 class="secao">🔔 Lembretes a fazer (${venc.length})</h3>`+venc.map(l=>{
+  return venc.map(l=>{
     const c=D.cliPorId.get(l.cliente_id)||{};
     return `<div class="cartao" data-cli="${c.id||""}">
       <div class="info"><div class="nome">${esc(c.nome||"cliente sem ficha")}</div>
@@ -12740,7 +12746,7 @@ function blocoLembretes(){
         onclick="event.stopPropagation();zapAvisoLembrete('${l.id}')">📲</button>`:""}
       <span class="lembrar-caixa" onclick="event.stopPropagation()" title="adiar">🗓
         <input type="date" min="${hoje()}" onchange="adiarLembrete('${l.id}',this.value)"></span>
-    </div>`;}).join("");
+    </div>`;});
 }
 // migração combinada com o Paulo: os casos de 🙏 Aposentadorias Futuras que
 // eram "avisar de tempos em tempos" viram lembrete — um clique por caso,
