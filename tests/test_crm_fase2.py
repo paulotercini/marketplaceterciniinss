@@ -851,3 +851,41 @@ def test_caso_ja_encerrado_nao_entra_na_conta():
         m, _banco(("velho", "tarefa-que-sumiu", "cli-x", "Sumido #1", "encerrado")),
         minimo_seguro=1)
     assert (ado, encerrar) == (0, [])
+
+
+# ── o #CPF sai do título do caso (decisão do Paulo, 20.09.2026) ─────────────
+# No To Do o CPF depois do nome amarra a tarefa ao cliente. No CRM a amarração
+# já existe, o CPF tem campo próprio, e repetir onze dígitos no título só
+# espalha o documento do cliente por telas onde ele não precisa estar.
+
+def test_titulo_do_caso_sai_sem_o_cpf():
+    m = migrar.mapear(crm_json([
+        t("🌻 INSS", "Fulana de Tal #00000000191 #B41", cpf="00000000191", id="k1"),
+    ]))
+    assert m["casos"][0]["titulo"] == "Fulana de Tal #B41", "o #CPF continua no título"
+
+
+def test_cpf_pontuado_tambem_sai():
+    assert migrar.sem_cpf("Fulano #000.000.001-91") == "Fulano"
+    assert migrar.sem_cpf("Fulano #000.000.001-91 #B31") == "Fulano #B31"
+
+
+def test_o_que_nao_e_cpf_fica():
+    """#B42, #NB e número de protocolo no título continuam onde estão."""
+    assert migrar.sem_cpf("Fulano #B42") == "Fulano #B42"
+    assert migrar.sem_cpf("Fulano #1234567890") == "Fulano #1234567890"
+
+
+def test_mudanca_de_lista_ainda_e_reconhecida_com_o_titulo_antigo():
+    """Na rodada em que os títulos perdem o #CPF, o banco ainda tem o título
+    velho. Sem normalizar os dois lados, toda mudança de lista viraria caso
+    novo justamente nessa rodada."""
+    m = migrar.mapear(crm_json([
+        t("🖥 Conselho de Recursos", "Fulana #00000000191", cpf="00000000191", id="nova"),
+    ]))
+    cli = m["clientes"][0]["id"]
+    ado, encerrar = migrar.casos_movidos(
+        m, _banco(("caso-velho", "antiga", cli, "Fulana #00000000191", "inss")),
+        minimo_seguro=1)
+    assert (ado, encerrar) == (1, [])
+    assert m["casos"][0]["id"] == "caso-velho"

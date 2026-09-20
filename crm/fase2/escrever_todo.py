@@ -90,15 +90,22 @@ def main():
     # 1) clientes/casos criados no app ainda sem tarefa no To Do -> criar
     novos = _rest("GET", "/rest/v1/casos"
                          "?todo_task_id=is.null&fase=neq.encerrado"
-                         "&select=id,titulo,fase,prazo") or []
+                         "&select=id,titulo,fase,prazo,clientes(cpf)") or []
     criados = 0
     for k in novos:
         lista_nome = fase_para_lista(k["fase"])
         lista_id = listas_map.get(lista_nome)
         if not lista_id:
             continue
+        # O CPF saiu do título do caso no CRM (20.09.2026), mas no TO DO ele é
+        # o que amarra a tarefa ao cliente na importação seguinte. Então volta
+        # aqui, e só aqui.
+        cpf = ((k.get("clientes") or {}).get("cpf") or "").strip()
+        titulo = k["titulo"] or ""
+        if cpf and cpf not in titulo:
+            titulo = f"{titulo} #{cpf}".strip()
         t = graph_client.create_task(
-            lista_id, k["titulo"],
+            lista_id, titulo,
             body_content="Criado pelo CRM.",
             due_date_iso=(k["prazo"] + "T12:00:00") if k.get("prazo") else None)
         _rest("PATCH", f"/rest/v1/casos?id=eq.{k['id']}",

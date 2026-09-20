@@ -153,6 +153,21 @@ def md5(s):
     return hashlib.md5((s or "").encode()).hexdigest()
 
 
+RE_CPF_TITULO = re.compile(r"\s*#\s*\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b")
+
+
+def sem_cpf(titulo):
+    """Tira o "#CPF" do título do caso (decisão do Paulo, 20.09.2026).
+
+    No To Do o CPF depois do nome é o que amarra a tarefa ao cliente. No CRM
+    essa amarração já foi feita, o CPF tem campo próprio na ficha, e repetir
+    onze dígitos no título só atrapalha a leitura — e espalha o documento do
+    cliente por telas onde ele não precisa estar. O "#B42" fica, porque diz a
+    espécie e o CRM ainda lê isso.
+    """
+    return RE_CPF_TITULO.sub("", titulo or "").strip()
+
+
 def _cliente_key(t):
     return ("cpf", t["cpf"]) if t["cpf"] else ("nome", t["nome"] or t["titulo"])
 
@@ -241,7 +256,7 @@ def mapear(dados):
         protocolos = sorted({m for a in t["andamentos"]
                              for m in RE_PROTOCOLO.findall(a["texto"])})
         casos[kid] = {
-            "id": kid, "cliente_id": cid, "titulo": t["titulo"],
+            "id": kid, "cliente_id": cid, "titulo": sem_cpf(t["titulo"]),
             "beneficio": t["beneficio"],
             "parceria": t.get("parceria"),
             "protocolos": protocolos,
@@ -412,15 +427,18 @@ def casos_movidos(mapa, banco, minimo_seguro=50):
     # casos do banco cuja tarefa sumiu do To Do, do mais novo para o mais velho
     orfaos = [c for c in banco
               if c.get("fase") != "encerrado" and c["todo_task_id"] not in vivos]
+    # o título entra pela forma SEM o #CPF nos dois lados: o banco ainda tem
+    # títulos antigos com o CPF, e sem isto a mudança de lista deixaria de ser
+    # reconhecida justamente na rodada em que os títulos mudam
     por_chave = {}
     for c in orfaos:
-        por_chave.setdefault((c.get("cliente_id"), c.get("titulo")), []).append(c)
+        por_chave.setdefault((c.get("cliente_id"), sem_cpf(c.get("titulo"))), []).append(c)
 
     troca, adotados = {}, 0
     for k in mapa.get("casos") or []:
         if k.get("todo_task_id") in ja_no_banco:
             continue                      # já existe: o remapeamento por id cuidou
-        fila = por_chave.get((k.get("cliente_id"), k.get("titulo")))
+        fila = por_chave.get((k.get("cliente_id"), sem_cpf(k.get("titulo"))))
         if not fila:
             continue
         velho = fila.pop()                # um caso velho serve a um caso novo só
