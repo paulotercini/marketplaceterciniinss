@@ -186,8 +186,9 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: CPF_DOC };
   await p.waitForTimeout(300);
   // F127 · o CNIS entra pelo CADASTRO e pelo botão grande do topo da triagem;
   // o passo Benefício ativo (3º) continua lendo a Declaração de Benefícios
-  conf("o topo da triagem convida a inserir o CNIS",
-    /Inserir o CNIS/.test(await p.innerText(".cnis-abrir")));
+  // F129 · na triagem só existe ABRIR; o inserir fica com a recepção, no cadastro
+  conf("o topo da triagem só tem o Abrir CNIS (o inserir é do cadastro)",
+    /Abrir CNIS/.test(await p.innerText(".cnis-abrir")) && !/Inserir/.test(await p.innerText(".cnis-faixa")));
   await p.evaluate(cli => irPassoTriagem(cli, 2), CLI_CHEIO);
   await p.waitForSelector(".tri-pdf");
   const bt = await p.evaluate(() =>

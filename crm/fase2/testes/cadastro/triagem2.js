@@ -75,14 +75,14 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
   // F127 · a tela mostra um passo por vez; o TRILHO tem uma etapa por passo,
   // e são nove os fixos (entrou o Vínculo com a Previdência hoje)
   conf("antes de responder, ficam só os passos padrão",
-    (await p.evaluate(() => document.querySelectorAll(".tri-etapa").length)) === 9);
+    (await p.evaluate(() => document.querySelectorAll(".tri-etapa").length)) === 10);
 
   // responder BPC abre os pontos da família
   escritos.length = 0;
   await p.evaluate(cli => responderPorta(cli, "BPC/LOAS", true), CLI_CHEIO);
   await p.waitForTimeout(600);
   conf("responder abre os pontos daquela família",
-    (await p.evaluate(() => document.querySelectorAll(".tri-etapa").length)) === 13);
+    (await p.evaluate(() => document.querySelectorAll(".tri-etapa").length)) === 14);
   const pat = escritos.find(x => x.m === "PATCH" && x.t === "clientes");
   conf("a resposta fica gravada com autor e data",
     pat && pat.corpo.triagem.porta && pat.corpo.triagem.porta.quem === EU
@@ -95,8 +95,8 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
   await p.waitForTimeout(400);
   await p.evaluate(cli => responderPorta(cli, null, false), CLI_CHEIO);
   await p.waitForTimeout(500);
-  conf('"ainda não sei" deixa só os nove passos padrão',
-    (await p.evaluate(() => document.querySelectorAll(".tri-etapa").length)) === 9);
+  conf('"ainda não sei" deixa só os dez passos padrão',
+    (await p.evaluate(() => document.querySelectorAll(".tri-etapa").length)) === 10);
   conf("e a porta mostra a resposta dada",
     /ainda não sabemos/.test(await p.innerText(".tri-porta")));
 
@@ -112,6 +112,8 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
 
   // ── 2. as perguntas do escritório ───────────────────────────────────────
   escritos.length = 0;
+  // F129 · o formulário fica atrás de uma seta, no fim da tela
+  await p.evaluate(() => { document.querySelector(".tri-mais-q").open = true; });
   await p.fill("#tq-nova", "O cliente tem advogado anterior no caso?");
   await p.evaluate(() => novaPerguntaEscritorio());
   await p.waitForTimeout(600);
@@ -124,8 +126,8 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
     [...document.querySelectorAll(".tri-etapa")].map(x => x.title));
   conf(`a pergunta aparece como passo (${passos.length} passos)`,
     passos.some(x => /advogado anterior/.test(x)));
-  // a pergunta do escritório entra depois dos nove fixos: é o passo 9 (índice 8)
-  await p.evaluate(cli => irPassoTriagem(cli, 8), CLI_CHEIO);
+  // a pergunta do escritório entra depois dos dez fixos: índice 9
+  await p.evaluate(cli => irPassoTriagem(cli, 9), CLI_CHEIO);
   await p.waitForTimeout(400);
   conf("com a etiqueta do escritório",
     await p.$(".tri-de-esc"));
