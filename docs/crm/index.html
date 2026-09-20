@@ -2147,6 +2147,13 @@ html[data-tema="v10"] .lc-tram{font-weight:600;color:var(--azul-escuro);backgrou
 html[data-tema="v10"] .lc-etapa{font-weight:600;color:var(--texto)}
 /* F121 · a posição na fila do TRF3, só o número */
 html[data-tema="v10"] .lc-fila{font-family:var(--f-mono);font-weight:700;color:var(--azul-escuro)}
+/* a tela da recepção ocupa a largura toda (pedido do Paulo, 20.09.2026): o
+   cadastro é digitado de uma vez, e caber tudo sem rolar vale mais que a
+   coluna estreita de leitura */
+.ncl-larga{max-width:none;width:100%}
+.ncl-larga .form-linha{gap:10px}
+.ncl-larga input,.ncl-larga select{min-height:38px}
+.ncl-larga textarea{min-height:76px}
 /* recurso do Conselho sem movimento há meses: âmbar, para ser revisto */
 html[data-tema="v10"] .lc-parado{color:#92400E;background:#FEF3C7;border:1px solid #FCD34D;
   border-radius:6px;padding:1px 6px;font-weight:600}
@@ -2405,7 +2412,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.19</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.20</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7283,8 +7290,8 @@ function renderNovoCliente(){
   document.getElementById("sub-lista").textContent=
     "A tela da recepção: só o nome é obrigatório. O cliente entra em atendimento na lista Escritório e a advogada assume pela ficha.";
   document.getElementById("conteudo-meio").innerHTML=`
-    <div class="caso" style="max-width:640px">
-      <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo *" style="flex:1;min-width:240px"></div>
+    <div class="caso ncl-larga">
+      <div class="form-linha"><input id="ncl-nome" placeholder="Nome completo *" style="flex:1;min-width:320px;font-size:16px"></div>
       <div class="form-linha">
         <input id="ncl-cpf" placeholder="CPF (só números)" maxlength="14" oninput="conferirCpfNovo()">
         <input id="ncl-senha" placeholder="Senha Meu INSS" autocomplete="off"
@@ -7342,11 +7349,34 @@ function cpfValido(d){
 }
 // enquanto a recepção digita, a resposta aparece LOGO ABAIXO: CPF já
 // cadastrado mostra o dono e o atalho para o cadastro (pedido do Paulo)
-function conferirCpfNovo(){
+// F125 · digitou o CPF, o CRM diz de quem é — QUANDO ELE JÁ SABE. Não há
+// consulta ao cadastro da Receita aqui, e inventar nome seria pior que pedir
+// para digitar. O que existe é memória própria: ficha já cadastrada, e o nome
+// que veio de um requerimento importado do PAT e ainda não virou ficha.
+function nomeConhecidoPeloCpf(d){
+  const c = D.clientes.find(x=>digitosCpf(x.cpf)===d);
+  if(c) return {nome:c.nome, cliente:c, de:"ficha já cadastrada"};
+  const p = (typeof planoPat!=="undefined" && planoPat)
+    ? (planoPat.semCliente||[]).find(x=>digitosCpf(x.cpf)===d && x.nome) : null;
+  if(p) return {nome:p.nome, pat:p, de:`requerimento ${p.protocolo} importado do PAT`};
+  return null;
+}
+async function conferirCpfNovo(){
   const el=document.getElementById("ncl-cpf-recado"); if(!el) return;
   const d=((document.getElementById("ncl-cpf")||{}).value||"").replace(/\D/g,"");
   if(d.length<11){ el.innerHTML=""; return; }
-  const jaTem=D.clientes.find(c=>digitosCpf(c.cpf)===d);
+  const achado = nomeConhecidoPeloCpf(d);
+  // o nome entra sozinho no campo vazio, e o recado diz de onde ele veio
+  if(achado && achado.pat){
+    const nm=document.getElementById("ncl-nome");
+    if(nm && !nm.value.trim()) nm.value=achado.nome;
+    el.innerHTML=`<span style="color:var(--verde)">✓ <b>${esc(achado.nome)}</b> —
+      nome trazido do ${esc(achado.de)}. Confira antes de cadastrar.</span>`;
+    return;
+  }
+  const jaTem=achado ? achado.cliente
+    : (await api(`/rest/v1/clientes?select=*&cpf=eq.${d}`).catch(()=>[]) || [])[0];
+  if(jaTem && !D.cliPorId.has(jaTem.id)){ D.clientes.push(jaTem); D.cliPorId.set(jaTem.id, jaTem); }
   if(jaTem){
     const ks=(D.casosDoCliente.get(jaTem.id)||[]).filter(k=>k.fase!=="encerrado");
     el.innerHTML=`<span style="color:var(--laranja)">⚠ Este CPF já é de
