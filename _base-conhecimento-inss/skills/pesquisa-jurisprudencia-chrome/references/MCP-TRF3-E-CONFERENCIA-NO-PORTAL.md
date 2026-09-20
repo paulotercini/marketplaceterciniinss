@@ -26,6 +26,32 @@ O endereço é `https://web.trf3.jus.br/jurisprudencia/`, com as abas TRF3, Mono
 
 Esse campo tem `id` `txtPesqLivre` e `name` `txtPesquisaLivre`, e a divergência entre os dois já derrubou automação antes. O formulário posta em `https://web.trf3.jus.br/jurisprudencia/Home/ResultadoTotais` e o resultado abre em `Home/ListaResumida`.
 
+## O número CNJ devolve TODOS os acórdãos do processo
+
+Registrado na conferência de 19/09/2026, nos processos 5248998-80.2020.4.03.9999 e 5003069-93.2024.4.03.6110, ambos reconferidos em 20/09/2026.
+
+A busca pelo número CNJ não devolve um acórdão, devolve o PROCESSO inteiro. Um mesmo número traz o julgamento da apelação, o dos embargos de declaração, o do agravo interno e o que mais tenha sido julgado por colegiado naqueles autos.
+
+**O julgado certo é o que tem a DATA DE JULGAMENTO igual à do registro do MCP.** Essa é a única chave confiável, e não a classe.
+
+**Por que não serve a classe.** Nos dois processos conferidos, os dois resultados vieram com a MESMA classe. No 5248998-80.2020.4.03.9999, duas `ApelRemNec` da 8ª Turma, julgadas em 11/03/2026 e em 13/11/2025. No 5003069-93.2024.4.03.6110, duas `ApCiv`, julgadas em 29/06/2026 e em 02/03/2026. O TRF3 mantém a classe originária dos autos ainda quando o que se julga são embargos ou agravo interno, de modo que a classe não distingue um ato do outro.
+
+### O risco que isso cria, e que é maior do que parecer o julgado errado
+
+No processo 5003069-93.2024.4.03.6110, o acórdão de 02/03/2026 tem a ementa "QUESTÃO DE ORDEM. INCOMPATIBILIDADE ENTRE VOTOS. PROCLAMAÇÃO DE UNANIMIDADE. NULIDADE DO JULGAMENTO", e o de 29/06/2026 é o julgamento REFEITO, que deu provimento à apelação do INSS.
+
+O portal guarda os dois, sem marca visível na lista de que o primeiro foi anulado. Quem escolher pela ordem em que aparecem, ou pela classe, pode citar em peça um julgamento declarado NULO pelo próprio tribunal. A Procuradoria derruba isso em uma linha, e o custo é a credibilidade da peça inteira.
+
+### Roteiro, quando o número devolver mais de um resultado
+
+Primeiro, conferir a data de julgamento de cada um contra a do MCP, e isolar o que bate.
+
+Segundo, ler a ementa dos DEMAIS assim mesmo, procurando por anulação, nulidade do julgamento, questão de ordem, juízo de retratação ou efeitos infringentes. Achando qualquer um, entender a sequência antes de citar, porque a existência de julgamento posterior pode ter substituído o que se pretende usar.
+
+Terceiro, citando o acórdão de embargos ou de agravo interno, dizer isso na peça. "Acórdão dos embargos de declaração no ApCiv nº ..., j. em ..." é diferente de citar a apelação, e o julgador percebe a imprecisão.
+
+Quarto, não havendo no portal nenhum julgado com a data que o MCP registra, tratar como divergência e NÃO citar, na forma da regra geral.
+
 ## O que se confere, campo a campo
 
 Classe e sigla, órgão julgador, relator, data de julgamento, data de publicação no DJEN e o texto da ementa, todos confrontados com o registro do MCP.

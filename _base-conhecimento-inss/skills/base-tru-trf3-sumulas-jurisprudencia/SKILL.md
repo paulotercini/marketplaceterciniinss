@@ -569,6 +569,8 @@ O servidor MCP `trf3` cobre também as Turmas Recursais de São Paulo e do Mato 
 
 **A conferência é a mesma da `pesquisa-jurisprudencia-chrome`, e aqui ela é ainda mais exigente.** Paradigma de PUIL precisa de identificação exata de órgão, relator, data e tese, porque o cotejo analítico se faz sobre esses dados e erro neles derruba a admissibilidade. Todo acórdão localizado no MCP nasce `[NÃO CONFERIDO]` e só é citado depois de aberto no portal do TRF3, na aba Turmas Recursais, com leitura do inteiro teor.
 
+**A busca por número devolve o processo inteiro (Onda 146).** Conferindo paradigma, lembrar que o número CNJ traz todos os julgados colegiados daqueles autos, e o certo é o que casa a DATA DE JULGAMENTO com a do MCP. A classe não distingue. Pior, há julgamento anulado no acervo sem marca na lista, e citar acórdão nulo como paradigma de PUIL é vício que a contraminuta explora. Detalhe em `pesquisa-jurisprudencia-chrome/references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.
+
 **Súmula do TRF3 e da TRU continuam saindo do repositório oficial**, e não do MCP, que é base de acórdãos e não de enunciados.
 
 Detalhamento do fluxo em `pesquisa-jurisprudencia-chrome/references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.
