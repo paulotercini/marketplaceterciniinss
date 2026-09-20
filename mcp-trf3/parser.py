@@ -100,8 +100,10 @@ def relator_titular(teor):
     if not m:
         return None
     # medido em 19/09/2026, a linha traz só o nome; o prefixo de cargo sai apenas se vier no início
+    # outra forma, conferida no portal em 19/09/2026: "Gab. 50 - DES. FED. SILVIA ROCHA", com o nome abreviado
+    nome = re.sub(r"^GAB\.?\s*\d+\s*-\s*", "", m.group(1).strip(), flags=re.I)
     return re.sub(r"^(DES(EMBARGADORA?)?\.?\s*(FED(ERAL)?\.?)?|JU[IÍ]ZA?\s+FEDERAL(\s+CONVOCAD[OA])?)\s+", "",
-                  m.group(1).strip(), flags=re.I).strip() or None
+                  nome, flags=re.I).strip() or None
 
 
 def ids(resposta):
@@ -114,10 +116,14 @@ def extrair(resposta, acervo, so_previdenciario=True):
     docs = []
     for id_fonte, corpo in zip(partes[1::2], partes[2::2]):
         c = {re.sub(r"\s+", " ", _texto(r)): _texto(v) for r, v in RE_PAR.findall(corpo)}
+        if c.get("Tipo", "").lower() != "acórdão":   # o acervo também traz Súmula do TRF3, que não é julgado
+            continue
         cnj = RE_CNJ.search(c.get("Número", ""))
         orgao, bruto_ementa, bruto_teor = c.get("Órgão julgador", ""), c.get("Ementa", ""), c.get("Decisão", "")
-        if not cnj or not orgao or not c.get("Data"):
+        if not c.get("Número") or not orgao or not c.get("Data"):
             raise LayoutMudou(f"doc {id_fonte}: rótulos lidos = {sorted(c)}")
+        # processo antigo pode vir fora do padrão CNJ; grava-se o número como a fonte o dá
+        numero = cnj.group() if cnj else c["Número"].splitlines()[0].strip()
         if not (bruto_ementa or bruto_teor):     # o CJF tem registro antigo só com link de inteiro teor, sem texto
             continue
         if so_previdenciario and not ORGAOS_PREV.search(orgao):
@@ -126,7 +132,7 @@ def extrair(resposta, acervo, so_previdenciario=True):
         nome, _, sigla = c.get("Classe", "").partition("..SIGLA_CLASSE:")
         secoes = segmentar_ementa(ementa)
         docs.append({
-            "id": id_fonte, "acervo": acervo, "numero_cnj": cnj.group(),
+            "id": id_fonte, "acervo": acervo, "numero_cnj": numero,
             "classe_sigla": sigla.strip() or None, "classe_nome": nome.strip(),
             "orgao_julgador": orgao,
             "relator": _sem_cargo(c.get("Relator(a)")) or "",
