@@ -184,6 +184,12 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: CPF_DOC };
     tri && /Recolhimento abaixo do valor mínimo/.test(tri.indicadores.nota));
   conf(`o passo CNIS registra páginas e vínculos (${JSON.stringify(((tri || {}).cnis || {}).nota || "").slice(0, 46)})`,
     tri && /CNIS lido em/.test(tri.cnis.nota) && /vínculo\(s\)/.test(tri.cnis.nota));
+  // [20.09.2026] os benefícios que o CNIS registra saem LISTADOS na nota, um
+  // por linha, em vez de escondidos numa contagem (pedido do Paulo)
+  const nBen = (await p.evaluate(it => lerCnisPdf(it).linhaDoTempo.filter(v => v.tipo === "Benefício").length, ITENS_CNIS));
+  conf(`a nota do passo CNIS lista os benefícios recebidos (${nBen} no extrato)`,
+    tri && (nBen === 0 || (/Benefícios no CNIS:/.test(tri.cnis.nota)
+      && (tri.cnis.nota.match(/• /g) || []).length === nBen && /espécie \d+/.test(tri.cnis.nota))));
   conf("o ESTADO do passo não é marcado pela máquina: quem confere é quem atende",
     tri && !tri.indicadores.estado && !tri.cnis.estado);
   conf("fica registrado quem leu e quando",
