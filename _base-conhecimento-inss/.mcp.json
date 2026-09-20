@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "normas": {
+      "command": "uv",
+      "args": ["run", "--script", "${CLAUDE_PLUGIN_ROOT}/mcp-normas/servidor.py"],
+      "env": { "PYTHONIOENCODING": "utf-8" }
+    },
+    "trf3": {
+      "command": "uv",
+      "args": ["run", "--script", "${CLAUDE_PLUGIN_ROOT}/mcp-trf3/servidor.py"],
+      "env": { "PYTHONIOENCODING": "utf-8" }
+    },
+    "acervo": {
+      "command": "uv",
+      "args": ["run", "--script", "${CLAUDE_PLUGIN_ROOT}/mcp-acervo/servidor.py"],
+      "env": { "PYTHONIOENCODING": "utf-8" }
+    }
+  }
+}
