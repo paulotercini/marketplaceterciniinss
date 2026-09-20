@@ -387,6 +387,57 @@ def remapear_casos(mapa, task_para_id_existente):
     return len(troca)
 
 
+def remapear_clientes(mapa, cpf_para_id_existente):
+    """[BUG 17.09.2026] Cliente cadastrado NO APP ganha id aleatório. Se a
+    mesma pessoa também é tarefa do To Do, a importação seguinte tentava
+    inserir a MESMA pessoa com o id determinístico, e o banco recusava pelo
+    unique do CPF (clientes_cpf_key). O caso dela vinha logo atrás e caía na
+    chave estrangeira (casos_cliente_id_fkey). Uma pessoa derrubava a rodada
+    inteira, e o CRM passava dias sem sincronizar.
+
+    Aqui o id determinístico cede ao id que JÁ está no banco, e as referências
+    vão junto. Vale também para duas linhas do mesmo CPF dentro da própria
+    importação (a tarefa de 🙏 Aposentadorias Futuras entra pelo NOME e pode
+    receber o CPF do checklist depois): as duas viram uma só, porque mandar
+    dois ids com o mesmo CPF no mesmo insert quebra do mesmo jeito.
+    """
+    troca, canonico = {}, {}
+    fora = []
+    for c in mapa.get("clientes") or []:
+        cpf = (c.get("cpf") or "").strip()
+        if not cpf:
+            fora.append(c)
+            continue
+        alvo = cpf_para_id_existente.get(cpf) or uid("cliente", "cpf", cpf)
+        if alvo != c["id"]:
+            troca[c["id"]] = alvo
+            c["id"] = alvo
+        ja = canonico.get(alvo)
+        if ja is None:
+            canonico[alvo] = c
+            fora.append(c)
+            continue
+        # duas linhas da mesma pessoa: fica o nome mais completo e o primeiro
+        # dado preenchido de cada campo, que é a regra do resto do mapeamento
+        if len(c.get("nome") or "") > len(ja.get("nome") or ""):
+            ja["nome"] = c["nome"]
+        for campo in ("dn", "telefone"):
+            ja[campo] = ja.get(campo) or c.get(campo)
+    if "clientes" in mapa:
+        mapa["clientes"] = fora
+    if troca:
+        for k in mapa.get("casos") or []:
+            k["cliente_id"] = troca.get(k["cliente_id"], k["cliente_id"])
+        for tab in ("credenciais", "lembretes"):
+            for l in mapa.get(tab, []):
+                l["cliente_id"] = troca.get(l["cliente_id"], l["cliente_id"])
+        for v in mapa.get("vinculos", []):
+            for campo in ("cliente_id", "ligado_a"):
+                if v.get(campo):
+                    v[campo] = troca.get(v[campo], v[campo])
+    return len(troca)
+
+
 def tarefas_docs_de(andamentos):
     """Andamentos com "documentos solicitados: X; Y" viram itens 📄 do
     Checklist de Documentos Solicitados (ids determinísticos, inserção única).
@@ -619,6 +670,16 @@ def subir_rest(mapa):
                     l[campo] = colab.get(l[campo][1])
             out.append(l)
         return out
+
+    # clientes que já existem no banco pelo CPF (inclusive cadastrados no app,
+    # que têm id aleatório): o id determinístico cede ao que está lá, senão o
+    # unique do CPF recusa a pessoa e a chave estrangeira derruba o caso dela
+    cli_exist = _rest_todas(url, chave,
+                            "/rest/v1/clientes?cpf=not.is.null&select=id,cpf")
+    nc = remapear_clientes(mapa, {(c.get("cpf") or "").strip(): c["id"]
+                                  for c in cli_exist if (c.get("cpf") or "").strip()})
+    if nc:
+        print(f"  clientes remapeados para ids já existentes: {nc}")
 
     # casos que já existem no banco (inclusive criados no app): remapear
     exist = _rest_todas(url, chave,
