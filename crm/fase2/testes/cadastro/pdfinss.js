@@ -70,6 +70,26 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: CPF_DOC };
   conf(`acha os quatro indicadores da legenda (${cods.join(", ")})`,
     JSON.stringify(cods) === JSON.stringify(["IREC-INDPEND", "PEXT", "PREC-FACULTCONC", "PREC-MENOR-MIN"]));
   const porCod = c => cnis.indicadores.find(i => i.codigo === c) || {};
+
+  // [BUG 20.09.2026] "Não reconheci este arquivo como um CNIS": há PDFs do
+  // Meu INSS em que o pdf.js devolve o texto LETRA POR LETRA. O mesmo extrato,
+  // explodido em glifos com a largura proporcional, tem de ler igual.
+  const glifos = await p.evaluate(it => {
+    const solto = [];
+    for (const i of it) {
+      const t = String(i.t), w = i.w || t.length * 5, cada = w / Math.max(1, t.length);
+      let x = i.x;
+      for (const ch of t) { solto.push({ t: ch, x: Math.round(x * 100) / 100, y: i.y, w: cada, p: i.p }); x += cada; }
+    }
+    const colado = colarPedacosDoPdf(solto);
+    const r = lerCnisPdf(colado);
+    return { nit: r.filiado.nit, cods: r.indicadores.map(i => i.codigo).sort(), n: colado.length, antes: solto.length };
+  }, ITENS_CNIS);
+  conf(`o extrato letra por letra volta a ser palavras (${glifos.antes} glifos → ${glifos.n} pedaços)`,
+    glifos.n < glifos.antes / 3);
+  conf(`e lê o NIT igual (${glifos.nit})`, glifos.nit === "123.45678.90-1");
+  conf(`e os quatro indicadores iguais (${glifos.cods.join(", ")})`,
+    JSON.stringify(glifos.cods) === JSON.stringify(["IREC-INDPEND", "PEXT", "PREC-FACULTCONC", "PREC-MENOR-MIN"]));
   conf(`cada indicador vem com a descrição oficial (${JSON.stringify((porCod("PREC-MENOR-MIN").descricao || "").slice(0, 40))})`,
     /Recolhimento abaixo do valor mínimo/.test(porCod("PREC-MENOR-MIN").descricao || ""));
   conf(`a descrição que quebra em duas linhas vem inteira (${JSON.stringify((porCod("PEXT").descricao || "").slice(-24))})`,
