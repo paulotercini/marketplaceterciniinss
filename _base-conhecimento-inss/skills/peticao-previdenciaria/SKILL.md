@@ -9,13 +9,15 @@ Toda peça sai em .docx no padrão visual do escritório, com cabeçalho timbrad
 
 ## Fase 0, consultar o acervo do escritório (Onda 149)
 
-Antes de escrever a primeira linha, consulta-se o MCP `acervo` para ver como o escritório já sustentou a tese. É passo do fluxo, não sugestão. A busca começa por `buscar_tese_acervo` com UMA palavra central, e o trecho encontrado se lê inteiro por `obter_trecho_acervo`, porque o resultado da busca vem cortado no meio da frase.
+Antes de escrever a primeira linha, consulta-se o MCP `acervo` para ver como o escritório já sustentou a tese. É passo do fluxo, não sugestão. A busca começa por `buscar_tese_acervo` pelo termo da tese e SEM filtro de benefício, que é o campo fraco, e o trecho encontrado se lê inteiro por `obter_trecho_acervo`, porque o resultado da busca vem cortado no meio da frase. Consulta que zera pede uma palavra a menos antes de virar conclusão sobre o acervo.
 
 **A vedação vale em voz alta.** O trecho é ponto de partida para redação NOVA, conferida contra os autos deste cliente. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO, e o próprio servidor devolve essa vedação em toda resposta.
 
-**O trecho é anonimizado, o arquivo de origem não.** O nome do cliente sai como `[NOME]` no trecho, no nome do arquivo e no caminho, mas `caminho_da_peca_acervo` devolve o caminho de verdade, e quem abrir o arquivo verá nome, CPF e dado médico. Medido em 20/09/2026, a anonimização também não cobre número de protocolo nem data de requerimento.
+**O trecho é anonimizado, o arquivo de origem não.** O nome do cliente sai como `[NOME]` e o processo como `[PROCESSO]`, mas `caminho_da_peca_acervo` devolve o caminho de verdade, e quem abrir o arquivo verá nome, CPF e dado médico. A anonimização tem três falhas medidas em 20/09/2026, nome embutido sem separador que escapa no nome do arquivo, protocolo e data que ficam em claro no trecho, e palavra comum apagada por engano, como "Contribuição" e "Benefícios", virando `[NOME]`. Nenhuma delas dispensa a conferência antes do uso.
 
-**Dois limites impedem ler a base como estatística.** O campo `beneficio` erra, com parte das peças em `indefinido` e peça de BPC classificada como incapacidade, de modo que o filtro por matéria seleciona mal. E nenhuma peça tem resultado anotado, `com_resultado_anotado` é 0, de modo que o filtro por resultado não existe e a base não diz o que venceu. A distribuição da `visao_geral_acervo` é contagem de arquivo classificado por heurística, não desempenho do escritório.
+**Dois limites impedem ler a base como estatística.** O campo `beneficio` não é confiável, porque a maioria das peças protocoladas veio com ele nulo e há peça de BPC classificada como incapacidade, de modo que filtrar por matéria esconde mais do que seleciona. E nenhuma peça tem resultado anotado, de modo que a base não diz o que venceu. A distribuição da `visao_geral_acervo` é contagem de arquivo classificado por heurística, não desempenho do escritório.
+
+**Número de peça não entra em peça nem em parecer.** A base é reingerida e o tamanho muda no mesmo dia. Afirmação sobre cobertura sai da `visao_geral_acervo` chamada naquela sessão, nunca de memória.
 
 A forma de pesquisar, os filtros confiáveis e os que não são, e o que foi medido em 20/09/2026, estão em `references/PESQUISA-NO-MCP-ACERVO.md`.
 
