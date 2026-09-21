@@ -205,6 +205,30 @@ def _titulo_hierarquia(linha, proximas):
     return NIVEL[especie], _limpo(f"{m.group(1)} {m.group(2)} {nome}")[:160]
 
 
+def sem_cabecalhos(linhas):
+    """Tira do corpo do artigo o cabeçalho de estrutura que vem antes do artigo seguinte, que
+    vazava para o texto ('#### Subseção XII Do Abono' colado ao § 6º do art. 86 da Lei 8.213).
+    Só sai o que é estrutura: LIVRO, TÍTULO, CAPÍTULO, Seção, Subseção, ANEXO e ADCT, com o nome
+    que na IN 128 vem na linha seguinte. O resto fica, só sem os '#': a conversão promoveu a
+    heading pedaço de artigo, como '## parte do País;' dentro de um inciso da CF, e cortar ali
+    perderia 2.319 linhas de texto no corpus."""
+    fora, pular = [], set()
+    for k, l in enumerate(linhas):
+        if k in pular:
+            continue
+        m = RE_HIERARQUIA.match(l)
+        if m and _titulo_hierarquia(l, linhas[k + 1:k + 4]):
+            if not _limpo(m.group(3)):
+                prox = next((j for j in range(k + 1, min(k + 4, len(linhas))) if linhas[j].strip()), None)
+                if prox is not None:
+                    pular.add(prox)
+            continue
+        if RE_ANEXO.match(l) or RE_ADCT.match(l):
+            continue
+        fora.append(re.sub(r'^[ \t]*#{1,6}[ \t]*', "", l))
+    return fora
+
+
 def _e_artigo(linha):
     m = RE_ARTIGO.match(linha)
     if not m:
@@ -288,7 +312,7 @@ def ler_arquivo(texto, arquivo, contexto_inicial=None, parte_inicial="principal"
     for j, (i, m, contexto, parte_marcada) in enumerate(cabecalhos):
         fim = cabecalhos[j + 1][0] if j + 1 < len(cabecalhos) else len(linhas)
         primeira = _limpo(linhas[i][m.end():])
-        linhas_art = reagrupar([primeira] + linhas[i + 1:fim])
+        linhas_art = reagrupar([primeira] + sem_cabecalhos(linhas[i + 1:fim]))
         texto_art = "\n".join(linhas_art)
         cabeca = linhas_art[0] if linhas_art else ""
         chave, num, sufixo = normalizar_chave(m.group(1), m.group(2))
