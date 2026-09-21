@@ -133,6 +133,22 @@ assert a[0]["contexto"] == "LIVRO I DA ADMINISTRAÇÃO", a[0]["contexto"]
 a = artigos("Seção III , especialmente no art. 33 desta Lei.\n\n**Art. 86.** Caput.")
 assert a[0]["contexto"] == "", a[0]["contexto"]
 
+# cabeçalho de estrutura não vaza para o texto do artigo anterior: o § 6º do art. 86 da Lei
+# 8.213 terminava em "#### Subseção XII Do Abono de Permanência em Serviço"
+a = artigos("**Art. 86.** Caput.\n\n§ 6º Último parágrafo.\n\n#### Subseção XII Do Abono\n\n**Art. 87.** Outro.")
+assert a[0]["texto"].endswith("§ 6º Último parágrafo."), a[0]["texto"]
+assert a[1]["contexto"] == "Subseção XII Do Abono", a[1]["contexto"]
+# na IN 128 o nome do LIVRO vem na linha de baixo, e sai junto
+a = artigos("Art. 510. Caput.\n\nLIVRO III\nDA CONTAGEM RECÍPROCA\n\nArt. 511. Outro.")
+assert a[0]["texto"] == "Caput.", a[0]["texto"]
+# ANEXO sai do texto do artigo, mas abre a parte nova do mesmo jeito
+a = artigos("Art. 2º Caput.\n\nANEXO\n\nArt. 1º Do anexo.")
+assert a[0]["texto"] == "Caput." and a[1]["parte"] == "anexo", a
+# pedaço de artigo que a conversão promoveu a heading fica no texto, só sem os '#'.
+# Cortar ali perderia 2.319 linhas no corpus.
+a = artigos("**Art. 12.** Caput:\n\nVI - em cada Estado, na\n\n## parte do País;\n\nVII - o outro.")
+assert "na parte do País;" in a[0]["texto"] and "#" not in a[0]["texto"], a[0]["texto"]
+
 # frontmatter: quatro famílias de chave, uma saída canônica, e arquivo sem frontmatter não quebra
 m, corpo, _ = parser.frontmatter("---\nfonte_oficial: http://x\ndata_captura: 2026-07-06\n"
                                  "hash_sha256_corpo: abc\n---\n\nArt. 1º Caput.")
@@ -269,6 +285,11 @@ assert um("SELECT count(*) FROM artigo WHERE arquivo LIKE '%anexos-II-III-IV%'")
 
 # toda norma na base tem fonte e data, que é a razão de os três sem frontmatter ficarem fora
 assert um("SELECT count(*) FROM norma WHERE fonte_oficial='' OR data_download=''") == 0
+
+# nenhum '#' de Markdown no texto gravado: antes da correção eram 247 artigos
+assert um("SELECT count(*) FROM artigo WHERE texto LIKE '%#%'") == 0,     um("SELECT group_concat(id) FROM artigo WHERE texto LIKE '%#%'")
+assert um(f"SELECT texto FROM artigo WHERE {L} AND chave='86' AND vigente=1").endswith(
+    "(Vigência encerrada)"), "o art. 86 não pode terminar no título da Subseção XII"
 
 # nada de texto vazio, que é o modo silencioso de a extração falhar
 assert um("SELECT count(*) FROM artigo WHERE length(trim(texto))<3") == 0, \
