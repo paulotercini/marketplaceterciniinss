@@ -2508,7 +2508,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.26</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.27</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3291,6 +3291,8 @@ async function carregar(){
   // aberta sem dono nenhum. O resto não precisa de contador piscando.
   D.zapResumo = (zaps||[]).filter(z=>z.status!=="resolvida"
     && ((z.atendente_id===eu.id && z.nao_lidas>0) || !z.atendente_id)).length;
+  // F130 · o "#CPF" do título é coisa do To Do; no CRM não aparece nunca
+  casos.forEach(k=>{ k.titulo = semCpfTitulo(k.titulo); });
   D.cliPorId = new Map(clientes.map(c=>[c.id,c]));
   D.casoPorId = new Map(casos.map(c=>[c.id,c]));
   D.colPorId = new Map(colaboradores.map(c=>[c.id,c]));
@@ -5982,7 +5984,7 @@ async function vincularProcessoPje(numero){
 // escolha à mão quando o cliente não tem caso vago
 async function criarCasoPjeParaCliente(p, c){
   if(!confirm(`Criar um caso Judicial novo para ${c.nome} com o processo ${p.numero}?`)) return;
-  const base={cliente_id:c.id, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
+  const base={cliente_id:c.id, titulo:c.nome,
     fase:"judicial", processo:p.numero, origem_lista:"👪 Judicial"};
   const extra={...(p.classe?{classe_judicial:p.classe}:{}),
                ...(p.distribuido?{ajuizado_em:p.distribuido}:{}),
@@ -6371,7 +6373,7 @@ async function criarCasoCrpsPara(nup, cliId){
   if(!x || !c) return;
   if(!confirm("Criar um caso no Conselho de Recursos para "+c.nome+" com o recurso "+formatarNup(nup)+"?")) return;
   fecharCaixa();
-  const base={cliente_id:c.id, titulo:c.nome+(c.cpf?" #"+c.cpf:""),
+  const base={cliente_id:c.id, titulo:c.nome,
     fase:"conselho", origem_lista:"\ud83d\udda5 Conselho de Recursos", crps_nups:[nup]};
   let k;
   try{
@@ -9157,7 +9159,7 @@ async function addNaLista(){
   const [cli]=await api(`/rest/v1/clientes`,{method:"POST",headers:{Prefer:"return=representation"},
     body:JSON.stringify({nome, cpf})});
   const [caso]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({cliente_id:cli.id, titulo:nome+(cpf?" #"+cpf:""), beneficio, fase})});
+    body:JSON.stringify({cliente_id:cli.id, titulo:nome, beneficio, fase})});
   await api(`/rest/v1/atribuicoes`,{method:"POST",headers:{Prefer:"return=minimal"},
     body:JSON.stringify({caso_id:caso.id, colaborador_id:eu.id})}).catch(()=>{});
   if(beneficio) await aplicarChecklistCaso(caso, true).catch(()=>{});
@@ -12284,6 +12286,9 @@ function beneficioGenerico(k, esp){
   // ficha deixava o título preso no código velho (o "Espécie 94" com B36)
   return !!(b.match(/^esp(?:ecie)?\.?\s*b?\s*\d{1,3}$/) || b.match(/^b\s*\d{1,3}$/));
 }
+// F130 · o título do caso no CRM é o nome do cliente; o "#CPF" que o To Do
+// usa como chave fica só lá (escrever_todo.py o devolve ao criar a tarefa)
+const semCpfTitulo = t => String(t||"").replace(/\s*#\s*[\d.\-]{11,14}\b/g,"").trim();
 function tituloCaso(k){
   // F113 · a subespécie do escritório manda no título, quando existe
   const sub = k.subespecie && nomeDaSubespecie(k.subespecie);
@@ -19022,7 +19027,7 @@ async function novoCaso(cliId){
   const prazo=document.getElementById("nk-prazo").value||null;
   const c=D.cliPorId.get(cliId);
   const [k]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-    body:JSON.stringify({cliente_id:cliId, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
+    body:JSON.stringify({cliente_id:cliId, titulo:c.nome,
       beneficio:ben, fase, prazo, origem_lista:(LISTAS_MOVER.find(([,f])=>f===fase)||["🙋 Escritório"])[0]})});
   D.casos.push(k); D.casoPorId.set(k.id,k);
   if(!D.casosDoCliente.has(cliId)) D.casosDoCliente.set(cliId,[]);
@@ -19588,7 +19593,7 @@ async function solicitarDocsCatalogo(){
   if(dest==="__novo__"){
     const c=D.cliPorId.get(clienteAberto);
     const [nk]=await api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
-      body:JSON.stringify({cliente_id:clienteAberto, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
+      body:JSON.stringify({cliente_id:clienteAberto, titulo:c.nome,
         beneficio:ben, fase:"escritorio", origem_lista:"🙋 Escritório"})});
     D.casos.push(nk); D.casoPorId.set(nk.id,nk);
     if(!D.casosDoCliente.has(clienteAberto)) D.casosDoCliente.set(clienteAberto,[]);
@@ -21205,7 +21210,7 @@ async function gerarCasoDoPre(cliId, pcId){
   let k;
   // F128 · o código e a subespécie escolhidos no catálogo descem para o caso
   // (a coluna subespecie vem do schema_linha_caso.sql; sem ela, vai sem)
-  const base = {cliente_id:cliId, titulo:`${c.nome}${c.cpf?" #"+c.cpf:""}`,
+  const base = {cliente_id:cliId, titulo:c.nome,
     beneficio:pc.especie, fase, especie:pc.cod||null,
     origem_lista:(LISTAS_MOVER.find(([,f])=>f===fase)||["🙋 Escritório"])[0]};
   const criar = corpo => api(`/rest/v1/casos`,{method:"POST",headers:{Prefer:"return=representation"},
