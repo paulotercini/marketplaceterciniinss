@@ -2508,7 +2508,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.28</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.29</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -6063,7 +6063,9 @@ function filtrarEscolhaPje(numero){
         <b>${esc(c.nome)}</b>
         ${casos.map(x=>{ const tem=soDig(x.processo);
           return `<div class="meio-sub" style="display:flex;gap:6px;align-items:center;margin-top:3px;flex-wrap:wrap">
-            ${esc(tituloCaso(x))}${tem?` <small>· já tem o ${esc(x.processo)}</small>`
+            ${esc(tituloCaso(x))}${tem?` <small>· já tem o ${esc(x.processo)}</small>
+              <button class="btn-mini" onclick="vincularIncidentePje('${numero}','${x.id}')"
+                title="cumprimento de sentença, RPV, precatório: entra como número anexo deste caso, não como caso novo">incidente deste caso</button>`
               :` <button class="btn-mini" onclick="vincularEscolhidoPje('${numero}','${x.id}')">vincular aqui</button>`}
           </div>`;}).join("") || `<div class="meio-sub" style="margin-top:3px">sem caso ativo</div>`}
         <button class="btn-mini" style="margin-top:5px"
@@ -6078,6 +6080,21 @@ async function vincularEscolhidoPje(numero, casoId){
   fecharCaixa();
   const cli=D.cliPorId.get(k.cliente_id)||{};
   await vincularPjeNoCaso(p, k, cli.nome);
+}
+// F132 · o incidente (cumprimento de sentença, RPV, precatório) NÃO é caso
+// novo: entra como número anexo do caso que já tem o processo principal, com
+// a classe como rótulo — e a coleta passa a casar sozinha pelos anexos
+async function vincularIncidentePje(numero, casoId){
+  const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
+  const k=D.casoPorId.get(casoId);
+  if(!p || !k) return;
+  const lista=processosDoCaso(k);
+  if(lista.some(x=>soDig(x.numero)===soDig(p.numero))) return aviso("Esse número já está no caso");
+  fecharCaixa();
+  await salvarProcessos(casoId, [...lista, {numero:fmtProc(p.numero), nosso:true, acompanhar:true,
+    rotulo:p.classe||p.tipo||"Incidente", principal:false}]);
+  aviso(`⚖️ ${p.classe||"Incidente"} ${p.numero} anexado ao caso`, false);
+  conferirPje(planoPjeAtual.coleta_id);
 }
 async function criarCasoEscolhidoPje(numero, cliId){
   const p=((planoPjeAtual||{}).semCaso||[]).find(x=>x.numero===numero);
