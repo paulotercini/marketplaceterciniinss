@@ -61,7 +61,7 @@ IN 128/2022, arts. 286, 287, 290. Documentos comprobatórios da incapacidade.
 
 Portaria Conjunta MPS/INSS 13/2026. Análise documental B31.
 
-Portaria Conjunta MPS/INSS 14/2026. Análise documental B91.
+Portaria Conjunta MPS/INSS 14/2026. Amplia, em caráter transitório, de 30 para 90 dias o limite de duração do B31 concedido por análise documental, prorrogada por 365 dias pela Portaria Conjunta MPS/INSS 43/2026 (DOU de 21/09/2026). Não é a norma da análise documental do B91.
 
 Portaria Conjunta MPS/INSS 15/2026. Análise documental B94.
 
