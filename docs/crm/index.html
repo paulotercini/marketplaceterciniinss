@@ -2508,7 +2508,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.27</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.28</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5757,10 +5757,15 @@ async function conferirPje(coletaId){
       "select=origem_id,texto&origem=eq.pje&origem_id=not.is.null").catch(()=>[]);
     const vistos = new Set(bancoPje.map(a=>a.origem_id));
     const momentos = momentosPje(bancoPje);
+    // F131 · o caso casa pelo número principal E pelos números anexos
+    // (casos.processos, onde o cumprimento de sentença entra à mão)
     const porProcesso = new Map();
     for(const k of D.casos){
       const dig = soDig(k.processo);
       if(dig) porProcesso.set(dig, k);
+      for(const px of (Array.isArray(k.processos)?k.processos:[])){
+        const d2 = soDig(px && (px.numero||px)); if(d2 && !porProcesso.has(d2)) porProcesso.set(d2, k);
+      }
     }
     const plano = { coleta_id: coletaId, grau: dados.grau||"", host: dados.host||"",
                     sistema: dados.sistema||"", andamentos: [], semCaso: [],
@@ -5770,9 +5775,16 @@ async function conferirPje(coletaId){
     // processos marcados como "não é caso nosso" (instrumental, de terceiro
     // — o do pai da Alicia, usado só para a certidão de cárcere) ficam fora
     const fora = new Set(pjeIgnorados());
+    const paiDe = new Map();   // número do incidente → número do seu processo principal, nesta coleta
+    for(const p of (dados.processos||[])) if(p.principal && soDig(p.numero)!==soDig(p.principal)) paiDe.set(soDig(p.numero), soDig(p.principal));
     for(const p of (dados.processos||[])){
       if(fora.has(soDig(p.numero))){ plano.resumo.ignorados++; continue; }
-      const k = porProcesso.get(soDig(p.numero));
+      // o incidente do e-SAJ (cumprimento, RPV, precatório) casa pelo seu
+      // número ou pelo "Processo principal" que a ficha dele aponta
+      // a RPV aponta para o cumprimento, e o cumprimento para o processo
+      // principal: sobe a cadeia (dois degraus) até achar um número da ficha
+      const k = porProcesso.get(soDig(p.numero)) || (p.principal ? porProcesso.get(soDig(p.principal)) : null)
+        || (p.principal && paiDe.get(soDig(p.principal)) ? porProcesso.get(paiDe.get(soDig(p.principal))) : null);
       if(!k){
         // SEM NÚMERO NA FICHA ≠ SEM CLIENTE NO CRM: 142 dos processos do
         // acervo eram de clientes da casa com o campo "processo" vazio. O
@@ -5805,11 +5817,17 @@ async function conferirPje(coletaId){
       if(p.orgao && !k.orgao_judicial) campos.orgao_judicial=p.orgao;
       // o link se RENOVA a cada coleta (como o processo_link do PAT): a chave
       // ca pode mudar, e o link mais novo é o que abre
-      Object.assign(campos, camposLinkPje(k, dados.grau, linkPje(dados.host, p)));
+      // F131 · no e-SAJ o cumprimento de sentença e as requisições (RPV,
+      // precatório) chegam com o MESMO número e código próprio: o link da
+      // ficha continua sendo o do processo principal, e o movimento de cada
+      // incidente entra com o código na chave, para não colidir
+      const incidente = !!(p.codigo && (p.principal || /cumprimento|requisi|precat|rpv|incidente|impugna|habilita/i.test((p.tipo||"")+" "+(p.classe||""))));
+      if(!incidente) Object.assign(campos, camposLinkPje(k, dados.grau, linkPje(dados.host, p)));
       if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); plano.resumo.fichas++; }
       if(!p.movimento){ plano.resumo.sem_mudanca++; continue; }
-      const oid = `mov:${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`;
-      const momento = `${soDig(p.numero)}:${p.movimento.data}T${p.movimento.hora}`;
+      const sufixo = incidente ? `:${p.codigo}` : "";
+      const oid = `mov:${soDig(p.numero)}${sufixo}:${p.movimento.data}T${p.movimento.hora}`;
+      const momento = `${soDig(p.numero)}${sufixo}:${p.movimento.data}T${p.movimento.hora}`;
       if(vistos.has(oid) || momentoConhecido(momentos, momento, p.movimento.texto)){
         plano.resumo.sem_mudanca++; continue; }
       marcarMomento(momentos, momento, p.movimento.texto);

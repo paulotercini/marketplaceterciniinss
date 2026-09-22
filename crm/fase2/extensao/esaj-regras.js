@@ -134,14 +134,24 @@
   // (Suspenso, Baixado, Encerrado…) e as PARTES com nome, em
   // #tablePartesPrincipais (span.tipoDeParticipacao + td.nomeParteEAdvogado,
   // com o advogado depois do <br>).
-  const ehFicha = html => /id=["']?numeroProcesso\b/.test(String(html || ''));
+  // a ficha do processo principal tem id=numeroProcesso; a de INCIDENTE
+  // (cumprimento de sentença, requisição de pagamento) não tem: o cabeçalho
+  // é span.unj-label ("Incidente" / "Execução de Sentença") + span.unj-larger
+  // ("Requisição de Pequeno Valor (0000035-73.2026.8.26.0381) (02)"), e o
+  // "Processo principal" vem em a.processoPrinc (conferido ao vivo em 22.09.2026)
+  const ehFicha = html => /id=["']?(?:numeroProcesso|containerDadosPrincipaisProcesso)\b/.test(String(html || ''));
   const codigoDaUrl = url => (String(url || '').match(/processo\.codigo=([A-Za-z0-9]+)/) || [])[1] || null;
   function lerFichaHtml(html) {
     const h = String(html || '');
     if (!ehFicha(h)) return null;
     const idTexto = id => texto((h.match(new RegExp('id=["\']?' + id + '["\']?[^>]*>([^]*?)</(?:span|div)>', 'i')) || [])[1] || '');
-    const numero = (idTexto('numeroProcesso').match(RE_CNJ) || [])[0] || null;
+    const larger = texto(porClasse(h, 'unj-larger', 'span'));
+    const numero = (idTexto('numeroProcesso').match(RE_CNJ) || larger.match(RE_CNJ) || [])[0] || null;
     const situacao = idTexto('labelSituacaoProcesso') || idTexto('situacaoProcesso') || null;
+    const principal = (texto(porClasse(h, 'processoPrinc', 'a')).match(RE_CNJ) || [])[0] || null;
+    const tipo = texto((h.match(/<span[^>]*class="[^"]*\bunj-label\b[^"]*"[^>]*>([^<]*)<\/span>\s*<div[^>]*>\s*<span[^>]*class="[^"]*\bunj-larger\b/i) || [])[1] || '') || null;
+    // "Requisição de Pequeno Valor (0000035-73.2026.8.26.0381) (02)" → "Requisição de Pequeno Valor (02)"
+    const classeLarger = larger.replace(/\s*\(\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}\)/, '').trim() || null;
     const partes = [];
     const tabela = (h.match(/id=["']?tablePartesPrincipais["']?[^>]*>([^]*?)<\/table>/i) || [])[1] || '';
     for (const m of tabela.matchAll(/tipoDeParticipacao\b[^>]*>([^]*?)<\/span>[^]*?nomeParteEAdvogado\b[^>]*>([^]*?)<\/td>/gi)) {
@@ -150,8 +160,8 @@
       if (nome && !/advogad/i.test(tipo)) partes.push(`${tipo} ${nome}`);
     }
     return {
-      numero, situacao,
-      classe: idTexto('classeProcesso') || null,
+      numero, situacao, principal, tipo,
+      classe: idTexto('classeProcesso') || classeLarger,
       orgao: idTexto('varaProcesso') || idTexto('orgaoJulgadorProcesso') || idTexto('secaoProcesso') || null,
       foro: idTexto('foroProcesso') || null,
       partes: partes.join(' X ') || null,

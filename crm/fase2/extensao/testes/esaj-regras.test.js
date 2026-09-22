@@ -78,9 +78,30 @@ test('a ficha: número, situação, classe, órgão e as partes principais sem o
   assert.deepStrictEqual(R.lerFichaHtml(FICHA), {
     numero: '0004008-13.2005.8.26.0368', situacao: 'Suspenso', classe: 'Execução Fiscal',
     orgao: 'Unidade 2 - Núcleo 4.0 Execuções Fiscais Estaduais', foro: 'Foro 2 - Núcleo 4.0',
-    partes: 'Exeqte União Federal - PRFN X Exectdo Italo S/A - Indústrias' });
+    partes: 'Exeqte União Federal - PRFN X Exectdo Italo S/A - Indústrias', principal: null, tipo: null });
   assert.equal(R.lerFichaHtml(PAGINA), null, 'lista não é ficha');
   assert.ok(R.ehFicha(FICHA) && !R.ehFicha(PAGINA));
+});
+
+// [22.09.2026] a ficha de INCIDENTE (cumprimento de sentença, requisição de
+// pagamento) não tem id=numeroProcesso: o número vem no span.unj-larger, o
+// tipo no unj-label do cabeçalho e o processo principal em a.processoPrinc.
+// Sem isto, a coleta pulava o cumprimento e as RPVs (caso da Izilda)
+const FICHA_INC = `<div id="containerDadosPrincipaisProcesso" class="container"><div class="row"><div class="col-lg-12"><span class="unj-label">Incidente</span><div><span class="unj-larger">Requisi&ccedil;&atilde;o de Pequeno Valor (0000035-73.2026.8.26.0381) (02)</span></div></div></div>
+<div class="row"><div class="col-lg-2"><span id="labelAssuntoProcesso" class="unj-label">Assunto</span><div><span id="assuntoProcesso">Aux&iacute;lio-Acidente (Art. 86)</span></div></div>
+<div class="col-lg-3"><span id="labelVaraProcesso" class="unj-label">Vara</span><div><span id="varaProcesso">Vara do N&uacute;cleo 4.0</span></div></div>
+<div class="col-lg-4"><span class="unj-label">Processo principal</span><div><a class="processoPrinc" href="/cpopg/show.do?processo.codigo=AL0000LWD0000">0000035-73.2026.8.26.0381</a></div></div></div></div>
+<table id="tablePartesPrincipais"><tr><td class="label"><span class="tipoDeParticipacao">Reqte</span></td><td class="nomeParteEAdvogado">Paulo Roberto Tercini Filho</td></tr>
+<tr><td class="label"><span class="tipoDeParticipacao">Ent. Devedora</span></td><td class="nomeParteEAdvogado">INSS</td></tr></table>`;
+test('a ficha de incidente (RPV): reconhecida, com número, classe com a ordem, tipo e o processo principal', () => {
+  assert.ok(R.ehFicha(FICHA_INC));
+  const f = R.lerFichaHtml(FICHA_INC);
+  assert.equal(f.numero, '0000035-73.2026.8.26.0381');
+  assert.equal(f.classe, 'Requisição de Pequeno Valor (02)');
+  assert.equal(f.tipo, 'Incidente');
+  assert.equal(f.principal, '0000035-73.2026.8.26.0381');
+  assert.equal(f.orgao, 'Vara do Núcleo 4.0');
+  assert.equal(f.partes, 'Reqte Paulo Roberto Tercini Filho X Ent. Devedora INSS');
 });
 
 test('a consulta por número, o código na URL da ficha e a situação que dispensa releitura', () => {
