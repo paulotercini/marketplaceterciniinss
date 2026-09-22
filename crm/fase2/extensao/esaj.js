@@ -79,7 +79,7 @@
         html = (await baixarComPaciencia(base.replace(/&paginaConsulta=\d+/, '') + `&paginaConsulta=${pag}`, rot)).html;
       }
       let novos = 0;
-      for (const p of REG.lerListaHtml(html)) if (!mapa.has(p.numero)) { mapa.set(p.numero, { ...p, grau, origem: 'oab' }); novos++; }
+      for (const p of REG.lerListaHtml(html)) if (!mapa.has(p.numero) && !mapa.has('cod:' + p.codigo) && ![...mapa.values()].some(x => x.numero === p.numero && x.grau === grau)) { mapa.set(p.numero, { ...p, grau, origem: 'oab' }); novos++; }
       if (pag > 1 && !novos) break;
     }
   }
@@ -106,6 +106,7 @@
     const out = { ...p, codigo, numero: p.numero || ficha.numero || null,
       classe: p.classe || ficha.classe || null, orgao: p.orgao || ficha.orgao || null,
       partes: ficha.partes || p.partes || null, situacao: ficha.situacao || null,
+      principal: ficha.principal || null, tipo: ficha.tipo || null,
       link: p.link || (codigo ? `https://${host}${p.grau === '2º grau' ? '/cposg' : '/cpopg'}/show.do?processo.codigo=${codigo}` : null),
       movimento: null };
     if (!codigo || !out.numero) return { ...out, semFicha: true };   // sem número não há como o CRM casar
@@ -125,21 +126,25 @@
       if (!oab) { faixaErr('faça login no e-SAJ (painel do advogado) e clique de novo'); return { erro: 'sem login' }; }
 
       // a lista-mãe: os favoritos do navegador (pastas "A a J", "I a Z"), que
-      // é como o escritório acompanha os ativos do TJSP. Chave: o código —
-      // muitos favoritos não trazem o número, e ele vem da ficha
+      // é como o escritório acompanha os ativos do TJSP. Chave: o CÓDIGO, e
+      // não o número — o cumprimento de sentença e as requisições de
+      // pagamento (RPV, precatório) têm o MESMO número do processo e códigos
+      // diferentes (…0000, …0001, …0002). Chavear pelo número engolia os
+      // incidentes (caso da Izilda, 22.09.2026); cada favorito é um processo
       faixa('lendo os favoritos do e-SAJ…');
       const { favoritos } = await CRM.favoritosEsaj();
-      const mapa = new Map();                       // chave: numero ou "cod:"+codigo
+      const mapa = new Map();                       // chave: "cod:"+codigo, ou o numero sem código
       for (const f of favoritos) {
-        const chave = f.numero || 'cod:' + f.codigo;
-        if (mapa.has(chave) || [...mapa.values()].some(x => x.codigo === f.codigo)) continue;
+        const chave = 'cod:' + f.codigo;
+        if (mapa.has(chave)) continue;
         mapa.set(chave, { numero: f.numero, grau: f.grau, origem: 'favorito', codigo: f.codigo,
           link: `https://${host}${f.grau === '2º grau' ? '/cposg' : '/cpopg'}/show.do?processo.codigo=${f.codigo}${f.foro ? '&processo.foro=' + f.foro : ''}` });
       }
       // mais os números do TJSP nas fichas abertas do CRM
       faixa('lendo os processos do TJSP no CRM…');
       const { numeros, fichas } = await CRM.processosTjsp();
-      for (const n of numeros) if (!mapa.has(n)) mapa.set(n, { numero: n, grau: '1º grau', origem: 'crm', codigo: null, link: null });
+      const temNumero = n => [...mapa.values()].some(x => x.numero === n);
+      for (const n of numeros) if (!mapa.has(n) && !temNumero(n)) mapa.set(n, { numero: n, grau: '1º grau', origem: 'crm', codigo: null, link: null });
       // e o complemento: a consulta por OAB nos dois graus, que descobre o que
       // não tem favorito nem ficha
       const antesOab = mapa.size;
@@ -170,7 +175,9 @@
           const x = await lerProcesso(p, 'e-SAJ ' + p.grau);
           if (x.semFicha) { falhas++; continue; }
           if (REG.arquivado(x.situacao)) arq[chaveArq(p)] = new Date().toISOString(); else delete arq[chaveArq(p)];
-          const k = x.grau + ':' + x.numero;
+          // o mesmo processo pode vir de favorito E de ficha; incidente com o
+          // mesmo número e outro código é OUTRO registro
+          const k = x.grau + ':' + (x.codigo || x.numero);
           if (vistos.has(k)) continue;
           vistos.add(k); lidos.push(x);
         } catch (e) { falhas++; }
@@ -186,6 +193,7 @@
         const processos = lidos.filter(p => p.grau === grau)
           .map(p => ({ numero: p.numero, classe: p.classe, partes: p.partes, orgao: p.orgao, assunto: p.assunto || null,
                        distribuido: p.distribuido || null, situacao: p.situacao, codigo: p.codigo, link: p.link,
+                       principal: p.principal || null, tipo: p.tipo || null,
                        movimento: p.movimento, id: null, ca: null }));
         if (!processos.length) continue;
         await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab, quando,
