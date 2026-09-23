@@ -216,9 +216,13 @@ test('anexo é contagem; comentário vem inteiro, e nada de cliente atravessa', 
   assert.equal(r.anexos, 1, 'o anexo não pode virar conteúdo');
   assert.equal(r.comentarios.length, 3);
   assert.match(r.comentarios[0].texto, /lombar/, 'o comentário do INSS tem de chegar inteiro');
-  const s = JSON.stringify(r);
+  // F98 · a pessoa do requerente passou a vir, de propósito, no campo
+  // `requerente` (é o que cadastra quem não tem ficha). Fora dele, nada.
+  const { requerente, ...resto } = r;
+  const s = JSON.stringify(resto);
   for (const vaza of ['laudo_oncologia', 'ALMIR', 'TRONFINI', '08575979817', '1958'])
     assert.ok(!s.includes(vaza), `o resumo levou "${vaza}" junto`);
+  assert.ok(!JSON.stringify(requerente || {}).includes('laudo_oncologia'), 'o anexo não entra no requerente');
 });
 
 // O `id` do comentário é o que impede o mesmo texto de virar andamento de
@@ -263,7 +267,7 @@ test('a cópia dentro do coletor é idêntica à testada aqui', () => {
   const col = fs.readFileSync(path.join(__dirname, '..', 'coletar-no-navegador.js'), 'utf8');
   const nu = s => s.replace(/\s+/g, ' ').trim();
   for (const fn of ['especieDe', 'dataIso', 'eventosDe', 'comentariosDe',
-                    'resumoDaLista', 'resumoDoDetalhe']) {
+                    'resumoDaLista', 'requerenteDe', 'resumoDoDetalhe']) {
     const i = col.indexOf(`function ${fn}(`);
     assert.notEqual(i, -1, `${fn} sumiu do coletor`);
     let n = 0, j = col.indexOf('{', i);
@@ -295,7 +299,7 @@ test('o auxílio-acidente se resolve quando o código do INSS vem junto', () => 
 test('a cópia dentro do app.html é idêntica à testada aqui', () => {
   const app = fs.readFileSync(path.join(__dirname, '..', '..', 'app.html'), 'utf8');
   const nu = s => s.replace(/\s+/g, ' ').trim();
-  for (const fn of ['especieDe', 'dataIso', 'eventosDe', 'resumoDaLista', 'resumoDoDetalhe']) {
+  for (const fn of ['especieDe', 'dataIso', 'eventosDe', 'resumoDaLista', 'requerenteDe', 'resumoDoDetalhe']) {
     const i = app.indexOf(`function ${fn}(`);
     assert.notEqual(i, -1, `${fn} sumiu do app.html`);
     let n = 0, j = app.indexOf('{', i);
