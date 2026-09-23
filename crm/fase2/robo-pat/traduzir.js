@@ -208,6 +208,7 @@ function resumoDaLista(t) {
     protocolo: String((t || {}).protocolo || '').trim(),
     situacao: situacaoDe((t || {}).status),
     cpf: String((t || {}).cpfRequerente || '').replace(/\D/g, '').padStart(11, '0'),
+    nome: (t || {}).nomeRequerente || null,          // F98 · para cadastrar quem não tem ficha
     servico: (t || {}).nomeServico || null,
     sigla: (t || {}).siglaServico || null,
     unidade: (t || {}).nomeUnidade || null,
@@ -221,11 +222,32 @@ function resumoDaLista(t) {
 // propósito: são laudo médico, relato de doença e dado do interessado. O CRM
 // guarda o link para o portal, não a cópia — é a mesma regra que vale para a
 // ficha pública do cliente, e vale mais ainda aqui.
+// F98 · quem é o requerente, do jeito que o cadastro do CRM guarda: o PAT
+// traz em `interessados` nome, CPF, nome da mãe, nascimento e celular —
+// tudo que a ficha pede. É o que permite cadastrar quem não tem ficha na
+// própria tela de importação, sem digitar nada de novo.
+function requerenteDe(det) {
+  const cpfReq = String((det || {}).cpfRequerente || '').replace(/\D/g, '');
+  const lista = Array.isArray((det || {}).interessados) ? det.interessados : [];
+  const i = lista.find(x => String((x || {}).cpf || '').replace(/\D/g, '') === cpfReq) || lista[0];
+  if (!i) return null;
+  const dn = (String(i.dataNascimento || '').match(/^(\d{4})-(\d{2})-(\d{2})/) || []);
+  const cel = (i.contatos || []).find(c => c && c.valor && /CELULAR|TELEFONE/i.test(c.tipo || ''))
+           || (i.contatos || []).find(c => c && c.valor);
+  return {
+    nome: String(i.nome || '').trim() || null,
+    cpf: String(i.cpf || '').replace(/\D/g, '') || cpfReq || null,
+    nome_mae: String(i.nomeMae || '').trim() || null,
+    dn: dn.length ? `${dn[3]}${dn[2]}${dn[1]}` : null,     // DDMMAAAA, como o cadastro guarda
+    telefone: cel ? String(cel.valor).trim() : null,
+  };
+}
 function resumoDoDetalhe(d) {
   const det = d || {};
   const esp = especieDe(det);
   return {
     protocolo: String(det.protocolo || '').trim(),
+    requerente: requerenteDe(det),
     situacao: situacaoDe(det.status),
     tipo: esp.tipo,
     especie: esp.especie,
@@ -258,4 +280,4 @@ function resumoDoDetalhe(d) {
 }
 
 module.exports = { SERVICOS, ESPECIE_POR_CODIGO, CANAIS, SITUACOES, semAcento, comentariosDe,
-  especieDe, situacaoDe, dataIso, eventosDe, resumoDaLista, resumoDoDetalhe };
+  especieDe, situacaoDe, dataIso, eventosDe, resumoDaLista, requerenteDe, resumoDoDetalhe };
