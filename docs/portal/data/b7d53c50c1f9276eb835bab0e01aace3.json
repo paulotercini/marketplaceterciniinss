@@ -1,49 +1,5 @@
 {
-  "nome": "Luiz Carlos Vanço",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "09887449881",
-      "dn": "04031968",
-      "nome": "Luiz Carlos Vanço",
-      "lista": "👪 Judicial",
-      "localizacao": "Aguardando Decisão Judicial",
-      "titulo_tarefa": "Luiz Carlos Vanço",
-      "status": "Última atualização em 03/06/2025: Embargos de declaração interpostos",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2025-06-03",
-          "data_br": "03/06/2025",
-          "tipo": "Embargos de declaração interpostos",
-          "descricao": "Embargos de declaração interpostos."
-        },
-        {
-          "data": "2025-06-01",
-          "data_br": "01/06/2025",
-          "tipo": "Embargos de declaração interpostos",
-          "descricao": "Embargos de declaração interpostos."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
-          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
-        },
-        {
-          "label": "PJe TRF3 — 2º grau",
-          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
-        },
-        {
-          "label": "ESAJ — TJSP (Justiça Estadual)",
-          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "ZtErmc+bS66l4JrC",
+  "ct": "7XiC1rvXeM3hTUmbOIGcSv+wKp6+Mh+CD3JxtypskqrnzdEU4zFSVl03HSykrDXAGVbPr0aICbaNelicHZZQaJpRVY5qNcxLrO33AGr+DyGIoXQ7VBVM41jABtjxFSb6R3xyD2QCPE99s+tWo4cDS6bLtgItXhxzSIEUdCTMhyENWPEWhuNL7zFNDrXkePGHTHdy0a+8WBSlxDWQuIPL9TjgYLzIvDOp+7PvCxzNfr7zuwxvsYfwYuAqleQ4lJRSsTVz4kz0XvjGyz9jY7/HtdwOEhKAtbIxc8nTGcED0b22eZbAjaz3A5mxRJH7MH5Qy00r/na4auKb797CjXOM4wthwKIWLpFc1XSUsGt6UHj1YCTNi75/h0tHj6qlLH5Ool+XM26jRkaMWW+TGsKVReegwYS3lD9ukvQsxGGXwdwM6JxaxrJYLTfhfh5TppkTW4NZuWoIryAoU4LUO6yBp6xAhoSUxuo2He/kmGSpI1v+5c2ls+0vjKRIOVuwW3gaUo/p9+Fc0PxbR5KpxWjIiTg+FrjyIyZXMkAGIrA3Mh8jjVCnEFEfkmnnlh9+Qx4A0wa+yNcUAC/gcojxELbwHH3uqJ8BjHTksg0wgduM7TbRTsRtGH7ErklSSj9wURxvuSWIBuroWZRNOn8EGy+hssJhNLek7zXfoWDkrgBuxeiJmGlXeanbOu189pmJWzgyUHyMzr1pb8Bwn8TSbn/Lh4gdwBySyT8vz069+258WGsEiyL6x+AGYXT9HitGsd7eMWY2sk0MU1/av0UYQmtP40jqE0xio2dDg6IgTcaSjbw1FgOX4dxXuV98T/Ao6AA5z2sCzoV2/c6Uk4JR6vX9BWTbtHAoPvGFDWjWjsbWKDaa+AHxrjwBYR2Qea39BgfMpSddg8RMiWIxqxS3i762SvSfHhVv4wT0xGFB/deHUUyd955uzB2RGv6de5Awn2cKv80B3NJz8/kjUYHSI9ksWDKtKswfsMxFCqW/0+z8+N4hQUX8AVgHqwbb0c+8EcpCrnnqEYLwLEkce5CmvMwylhzQTDIPzrLhCM+y4pGq8ZHRcyMwq6dBpnGIMjS/dueSrb5c3kw1/dQ4FTeLEOAkNXZPltXGyas732GDlBWE3gwOpJORxIiqg8kOywwlQgjYNnEacs+bXBrmjrgWfEjNe9pFmnZ2HrPzne9PHq3t5ZCNcAKgiuISgv9mrXo3M7rxbTma9E2VM/2k4ejnFyFtV+z3J4HJlsXah3mJYSX90gL3M1aMEDUkQA378SiJ/KHtMSiF5c7m52JPn1wqJ0cxlS0qza4wv5+6GrkZnxHHyhtFQxuqbcIc6keowrklGitPCej6msDJxbx53o1H9RlONClmFrqsX7zHKwbZKNr5XKAb4NeRsXH+qs0G3kIeFFktA6G37Wr31R1Ypn9kwmXi54aCzQ=="
 }

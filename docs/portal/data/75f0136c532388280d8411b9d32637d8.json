@@ -1,41 +1,5 @@
 {
-  "nome": "Charles Luiz dos Santos",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "16397421821",
-      "dn": "22061975",
-      "nome": "Charles Luiz dos Santos",
-      "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Câmara de Julgamento",
-      "titulo_tarefa": "Charles Luiz dos Santos",
-      "status": "Última atualização em 27/02/2026: Recurso Especial interposto",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2026-02-27",
-          "data_br": "27/02/2026",
-          "tipo": "Recurso Especial interposto",
-          "descricao": "Recurso Especial interposto."
-        },
-        {
-          "data": "2025-04-06",
-          "data_br": "06/04/2025",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Pedido de benefício protocolado junto ao INSS."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no e-SISREC",
-          "url": "https://consultaprocessos.inss.gov.br/"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "w8O7HiEFa4Dd4F5Q",
+  "ct": "OAGczAZUKsyGOKUMsumy22De/tpWwoCvRZ/J/0fol2LOL0TUEou5QFTcKp8lWtJlQe3J60M8mbPFMvKOc4t1C/l+02YpRrx0cIEKxgv5a6kq9O3jRvco3P0BdsS0Z9SoEtjF7INcwJ3d9qHt+X5xZzt86BeLEJFLte13oVMc2ZulzXaL4SoCva7u/bEeCI3pNaxHfyWyX7j48+fxvmfdY1zGQGrJi7XZx/JezvoQX1hJvbtNUV9xNiQ5GklcMwSmc8cRggbIL0A19/FPHQqa2vxIzK4+k7e8Dp1m2ORFJpK11TKXUhWBiYM1d8+k/HFUPFOqrR0GNN/XYpp52Tno6HuWB/PIa/ESzXbmgyNVeBY6PpVVQqIXAQfVxL2Y8IbOe1Qnh44xV3NhssYyvBYp2Njhy7EgWk7NQRXyWhbuRZiTBq3v/6Gag/h3W1bC/VLfQWwDP1fYVWaaQ0SCNHv/W646IE9/pg3pY1TuP8DNfjMIOVHcRSw8h9dsEKdKGX+D1jJz4cmMbSUhs1zc8nPSRz43QKwnNHzPyPCzKaIECxKeVYcJzzUJsc48ZSZtZDozqUIepYjhBH7CuQZYNS5xIuBg+EQ0IQ9T4qWMGJekOQs2/JDpZ11cfl0HnIRCr4/xJ7lSmySD2IF5VjH/r78nDoZmELmRXwabI5KTJd3DeLRW+vQgpOvfayuAHwZvlH3bdrWbykc6Deh5tzi1CsEmXPZ4O7l505+gPxoqOGnS6enPtxkapCMU8VZaoJ2kiGEqF6z6Sk1lDPYY44NhsTEVP64koc+KIrHq1IA+036hHk8vKthxSkkn3EQ6JVATSCSsPU4yANSCu6upZ5tvO6AtUXVil4c+fFsFeDiqOHniJwn941Rf/GUmMhxtgTlqR6k29/FIz4xkUkGTSqYyi6sp+Y4qXrkmpziont3LsAIWxr6Pd2sgRBKX2NF3EguY14uIsDetwXzOIS4JZvf6LeU9bnff9KPoVgE/zlIs/p+KFFJXqN3vgVbRpRmlItN9xHSQHLiCIDDkO8i2ASkr9vrsy7ZSby8aQTsP7oH1gqv4gsf1oCwm5UrEX0BNoPS+nhwc8b297+6dYY8a5lt8hfIhQLx45uMP+zo9FA8mV2KWaiBRb44ZydxuNb7DMgrckLSBlVHKb8JOe+dCwy7+BHR/mg=="
 }

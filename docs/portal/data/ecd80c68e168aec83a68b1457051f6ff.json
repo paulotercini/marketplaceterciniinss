@@ -1,43 +1,5 @@
 {
-  "nome": "Dirceu Ferreira de Brito",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "59468459853",
-      "dn": "18101951",
-      "nome": "Dirceu Ferreira de Brito",
-      "lista": "👪 Judicial",
-      "localizacao": "Aguardando Decisão Judicial",
-      "titulo_tarefa": "Dirceu Ferreira de Brito",
-      "status": "Última atualização em 15/05/2026: Embargos de declaração interpostos",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2026-05-15",
-          "data_br": "15/05/2026",
-          "tipo": "Embargos de declaração interpostos",
-          "descricao": "Embargos de declaração interpostos."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
-          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
-        },
-        {
-          "label": "PJe TRF3 — 2º grau",
-          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
-        },
-        {
-          "label": "ESAJ — TJSP (Justiça Estadual)",
-          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "LJzP6Q2VgbrLTLb6",
+  "ct": "yXaa3/IGQCOaxEhxjbnhjb0mbEJFwsBAw5QGy3V1NRfbPCKMdkYFibgb125fGOIcgopbSnZMMijRnuEsbV9HPAwxbMT+8A7/+fvROI9Cqr6a4jVTx1oMRvvc2DryeAEVPkbvSj4lO1e2K6q3bj/SvZk6F/oHFLL3OsjsvNW9wvBd6CbbYRgKEMSti1zfdH3CA9Q/xb3ZX0wnPoCFuu7rGmraqUApEnw+HuSaVzj0phq9oQgn34B57h2Tp1pC5nuYa63x7PlzfTxp6OE/yLxfBrfU9ZrRW8mZD8up/Th6FvHPdOatvEgFTSQ4yyJHIR65+a0GM6ABZOtXRIvfiBTjzeYILjw8+OMkXrDCiKl+tTPgoonPefjbR2G3vUqJKgzlnj+PmaPZs+SGxbPoAoVC3lxWUf6TJ7NudO33Wp0gHCoS0Y8EFSpF72qBK+yWsyHoVVViEB6Kxl9Z+Cbd481/x1hmVe4hxq7PZ1DNuwV8w0ipzz4dsg/boxDa7kLatE0NDUW2esFajZ1bh2wFdGFulVDGYxTJQf9YomGMNg6KKRo8DX6SLxmOqL3CdI1uLNykIiZwhUZuAK5gafCjdeFSG4fW4a+DW799FKz6FIP98azA1siryNaOkHGFpu7e73pbydoDo0uamoqW8hyCSp2HJvJuVmMTT2FV8PG4R8t+7RRP6NDyANt1BXw4mv01xuwEcOJO62S8KwKigcVwrXD1/Y9aveP1sYeFjX1mNcJzftrvtvCg7XwWahzYyThZowDMUMXGVq/xWpctOhIcoU38C8RPFjkdRkdJUTP3Xui8zqKkfgi4ctF14chDYStwjRqOAlx23MPx+9O3r6O+/3mDySxN/e9OG/P8oEosccIkKTkx8BKHIbkFg8vq1a718C5GW0dcJp5qD/zlue25h1sTFdtYVDgETbUJCZRHX4oARnj7e6M+W29wp8/UQHwZR46C9p3AuRQULT+sG7C35fZyOx2BC3UI4OKLw+MEsBqVZB5VG8mzdN/a5MwrHFafil+ZHkrJbTiKw2ozSyTvY7YGjmmwV6nbyWKNKdsitGmvlWzJr5UGs6f7JhVMhJ75OVmq1eSWFCVErpp8I8T4u0vxZQbH7oXOEqUwd1/wugt9/6jWIJvdeU2vr1L6hrT0ilfdH7T/KK9tdBf3D42StVN5wN4kO8537LsJdJZIjHkHaECg7OuqCJ6qfwP0SFrucnXOGmuckoiXVvkvcsbfFPtlNXszgssEL21E8v/0xghk"
 }

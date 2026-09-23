@@ -1,53 +1,5 @@
 {
-  "nome": "Walter Aparecido dos Santos",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "05761945819",
-      "dn": "12061962",
-      "nome": "Walter Aparecido dos Santos",
-      "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Junta de Recursos",
-      "titulo_tarefa": "Walter Aparecido dos Santos",
-      "status": "Última atualização em 06/04/2025: Processo distribuído ao conselheiro relator",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2025-04-06",
-          "data_br": "06/04/2025",
-          "tipo": "Processo distribuído ao relator",
-          "descricao": "Processo distribuído ao conselheiro relator."
-        },
-        {
-          "data": "2024-05-13",
-          "data_br": "13/05/2024",
-          "tipo": "Benefício deferido pelo INSS",
-          "descricao": "Benefício deferido pelo INSS."
-        },
-        {
-          "data": "2024-05-10",
-          "data_br": "10/05/2024",
-          "tipo": "Exigência cumprida",
-          "descricao": "Exigência do INSS cumprida."
-        },
-        {
-          "data": "2023-12-11",
-          "data_br": "11/12/2023",
-          "tipo": "Recurso administrativo protocolado",
-          "descricao": "Recurso administrativo protocolado."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no e-SISREC",
-          "url": "https://consultaprocessos.inss.gov.br/"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "MbmKg3cy0KUaaQSP",
+  "ct": "fgG5FjOWsoiV7EoFuyM7fzNTrVQ+uWmWKsW2nkUJVM6lSslxVoVSjLmEc5Xw+dsQ62o42VtiZK19QAcBaRLMCP1j4cHpRERLJcSUnE0MI3xeBd3tm+J8HUsQvbMsqAb/fvlLBhmCSX6Lw1QfZZIWGb4JstgfwDHpideF0wNwHXrbN0iMwdouEp+fOoWf0jGiIB2Uhm5QpL2iNnYK3zhWurB9JQrN91CLsNu0KnkPsXlKP4omzw1rvbkO490LehQRiHNFmXfy/QKadx6/JF+TnD1oJE4fbq90IHDYwDhq3o2MnRBlYuBCkckdBnN5YUFPG3mOmh56SCU48e5OS8Zgcc19uC7MeXZ09r03Eh7F/sojihAQTKp2eTEe6OWIJmbtY5zZ38eAlJMsGHz6mcjfKnwh3fK571z+S4Tef2K35i8H5/8udbY43BYejgx8FSvW1Y21IpMYpQMq0WnMgPO/E4gOGM9clTVPAVMl+KuMNa24yf2q0Dbu9cCZbIjERkgduncs1kr+jMMeJToq1RgKhigrs2zgcCwkeVr/SZCPnxc1cMAKrCZSl5gUz3pR74xRxp/pkbvkERBIGHn8vUZAT/greIcEnNA8r5PC5cK8EZ6azffUOfwygmqNQaCW0omXfyqtPgxFKZ5D3m/gtt3kbq8t4uYCSYoHSFQ9qkRwBJrWj/x+ohnquDFahD83wMQeL7sVa26G8Uw6tkxAeYUKKGekCOE5YkZow5qpJQfdHSzfBmq/4Vc1hj0orfOtoc3RTRrnT/uBkdY6S9thAV4AzcBnxJHjT3dMYknSxb82vC9mZvQ80cCYhML4IB/w8qSfZSdi7xyy9G3frcieH78HsWexR31ZE65c6g8HgZcnRTRKl70fnMMnh8w2OJzD3XibBqgllypgK5ANJtDWnEqcy9idQmwkJ29TKe5ISPihhO5ixBeBmbhr/6+5H1y9Th0cpCPu2KB6V0Pa4jI+onvTlgC4pN9RdX7jJRDwspY5dOD8cs53a7i/CwR3hMcgdHQBONIbVrELVADfgkNtDrFE7teF6x9O9JZ6H0Q66bTmEE08sCy6cm6IvC4bMAR+5MwBxTsVD5pTPnrtgu0tcuaSKhCpG2ajFsEFex30T+fftxqbvo08mHDkZI0lDyrDuMUUjVXbsBrtEInpd0OQU/LqkIRKErSPsb2z2xppMI3wjgfM8lOw6ogy+FPXV+sHLZt3gdoKjQ/PisgKpp0jXBNKZkCbPteLoZFtZzpIlEZ+x9Jci/66xm17MuiKwDQsm4CuN9fVfIRZHwg+BHfCDKR2Gag3VX14016iJLIMVhsHf5lWeoy//lMn5OC0VvSeXT6zollx+SrIaFaQ3qRbuFGyV2QPmARvEeU2sL2sqq2Zd42Wnhk4Y9769W7ON0Q+pyAFmkqzhGoBuUD4ywS5EayNHBPyMcu7+0/ucgm7FcY/NfnZc5FSIBm1peq0Z3q5AK1TWriL0v8Z7D8cXsipgOXLMfXP6dxA49oITc2zkN3RDr6mVzEaasBrCPT/5xotZswrRra3niDqfasnQGw/JzKE7SJbpny0sItQrhhf8Y1Po4Bp"
 }

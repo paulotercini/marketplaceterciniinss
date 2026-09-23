@@ -1,53 +1,5 @@
 {
-  "nome": "Edson Baliero",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "16612688890",
-      "dn": "27111971",
-      "nome": "Edson Baliero",
-      "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Junta de Recursos",
-      "titulo_tarefa": "Edson Baliero",
-      "status": "Última atualização em 11/09/2026: Recurso administrativo protocolado",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2026-09-11",
-          "data_br": "11/09/2026",
-          "tipo": "Recurso administrativo protocolado",
-          "descricao": "Recurso administrativo protocolado."
-        },
-        {
-          "data": "2026-08-26",
-          "data_br": "26/08/2026",
-          "tipo": "Recurso administrativo protocolado",
-          "descricao": "Recurso administrativo protocolado."
-        },
-        {
-          "data": "2026-07-03",
-          "data_br": "03/07/2026",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Pedido de benefício protocolado junto ao INSS."
-        },
-        {
-          "data": "2026-06-29",
-          "data_br": "29/06/2026",
-          "tipo": "Perícia médica agendada",
-          "descricao": "Perícia médica agendada."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no e-SISREC",
-          "url": "https://consultaprocessos.inss.gov.br/"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "txi4pYsPMW/nbaZC",
+  "ct": "gk/jcQKK1dlJ2SyVD9Mrbi8Waa5+xvixXcfmgJFoKyx0jPQ+h+BnPfqLzDaIz+nLlE7L3p4fq7CHwZulEQQAoMMBvlJo7/9FZZeU56IF6dlEEDCxAfTakT1Y6gPGjptqDwewpUImySscp4mFwiS6cF4tVd0XUfOw7uDQpeV/9eEXsUusM638bsMwP5h2WW63gXXrxxZuJktxOENdyV5RJVcWR14gxb0diG4k2AHPbYr/MhdYU+1kKX+kCUdCF6SqBY3Y1tMSI2BFk+lIXyo1yw009jdfG5zn/Jw5GbXuZKDUunk1vk//Cn5lT1eVIzBZfFLbKfHcg90ueFtdTlA14LAtb/h6szeviYhfKNFH7xIG1UVsU0db5PkhFo7Ad6wQngfzEGTX26Z9PlIOdaCMVjDGAjpx3D2zQ7u5R5l5gLSAR4riDTtRxuWJsy5E5oqI4I9vuGbVSZb7JaZC3oLk29yL+rnzbjesC0dgzGQNGvxF0fY2uBH7aSn2ePzWfbDz1j5ebyI3J0bLe7lt+h3O9ehwST/1916cUvSXminw/YZ5CV4O1Wqu2WqbKvS9Fz5MpwBpas7WEkuzY/n3cCcXblbYwigNX1gCDCDjt51jI1A5FTMsZq2aRMtDVTVgUoAxHwvPgilOirUzpo4sLU8BChqEbQ6+7jzXP6FnzFXxdeUaHYNGKVFTlp9qx+q/DBHrikLjubwb2Ba1Vd+uD6tdbnpcQ/H+MQGy/kqz7tQkqbKHhuR2mUjmkUv8o03ouIAP9PJtT03kSQnV4rhNH13d7dAswcBgIVM+khFgTChgyMWuNHd6xcTRJoVikj1dX1SF26Z50PJVHfcTPZ9b1p7hZ19XFQeJyZFk8HCEeJNkoD7V3Dj9S42NuQGMp6H2exfwKevf8beN/lpYCePmAwf5eExHnhD8u0QBxtVWXeFdN4UGJYNV44vPzE+MGushBQqHToVKDr0CAe9Fo3FqxZG8RAIgTNEgC+NuInDq8LBltHY6GFycEceyDNvUymPm19Jsq66K9tf5SWpWpAHCPMJesonmdiGOqx3AOOBtbSPhZwSd9kYGtlLjYI4C7vgHyxOcZ33c7sWEQ0tDSLA609tezFMHs7GEXj75kZxY9OTBOGqqZ7t81l3MdI0nNIGxD99j7SVsno3cCCpFZVfsLkUND9yj+uhr+/Yv26XcI+3+2u73JyDRguuYm0+UnWdCv2PeIKagK7HLaLsPFFO7BBOO2FoouFHyFpCS1/0maZqJqS1LsYF/evUZAUm4i4j8XcrJR6P7x5GhW0VSnlodtvYHHDNXJaDigoAV2FAq1NrekoC5m2Zs61XqfKDUKZf1AIqvo/Y4/D9IZcumzzsfpFXj0YZy6YU4otjyisnzDG6aZViJh9lbExGiOK9epgKdT4EghZmAdPDAT0kbbzK2xSiCsimc8uq/NOM+ZnvPogC5P43Rew2T7dKclP6Jdc2+FR0yJmlRDZm/lEd71K5t6xU9wC+6agiqYOYGICiXZ3JVzwijKZyytXBX"
 }

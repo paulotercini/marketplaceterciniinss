@@ -1,28 +1,5 @@
 {
-  "nome": "Oridis Aparecido Lerri",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "08163072881",
-      "dn": "04031968",
-      "nome": "Oridis Aparecido Lerri",
-      "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Junta de Recursos",
-      "titulo_tarefa": "Oridis Aparecido Lerri",
-      "status": "Em acompanhamento pelo escritório",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no e-SISREC",
-          "url": "https://consultaprocessos.inss.gov.br/"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "nYU69GvfE84XGdnn",
+  "ct": "LrvfEKoFZc2AH3U9rJZpHLrsWaCY67AdXovGMCghhZt1zlcep64tr1j9yHXaiqz/8RJSi6JixN6QbuKE44lOm97Ahao1/FJfLrGqYn2seS08ru9KwKVJ6No3BdgvZuXDIfkmFqO9r/3SyjsFfQGtCp6dcNEtvlxZ+XypzCzI8QcdzP5TRTTQxD58dLLGWxwwlNrYB+GwBopyavRMF3v66TG/glg0PoCplODsl4Hshc4Ji1fCEs4RrMHIQMc3PnwGb/4bj+hvo/V4grpbNWcxJhC4IZ88Zb6CsovwYHLU214jIYyBHihLI01NoSl5ZM6JoBSmKhUEAeafxlNEk5YjyGVJrnXUdiJ/8JJjH0gs+GLERDC04+60anBr85K0qawdh7cNNNlCwpyX2jTZw41stE+2XpxbHtPOqD0f5uwyOy71Oa5y7hxA8Lwq8jbsRxscam3BVk+kJHlDcdrdKPgvHsJDdt2gJIS6u/te8S4Sh86GmLO4z4trCA+8yTsDX4l4ey/Lw2s9aoUQ3EeEjwQmnTi6VoYs0yzZ6KYOfSEatY5UtdMOnV5BZiP4M3oGQw3IoHPoFZMexmMU0Ew2Z2bXWkHiTToGYpYXbImr+QkPB5+D1q5nBbRhlmxCuhXEd7X7x8j9Naqhh/ueuvOhd6OOLUChMCE7lDssyCXMGyiYiSh1L+D0I3Rf1wfhXsbH3tQFleLsLjN1n9CDBcQbiR2mI3r40zAY2Rfv+RD3RBVeQmRK"
 }

@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Sistema do escritório de advocacia previdenciária Paulo R. Tercini Filho, com três partes independentes:
 
 1. **Site institucional** — `build_site.py` lê `site_content/*.json` e gera `docs/*.html` (páginas de benefícios).
-2. **Portal do cliente** — `docs/portal/` (app estático). O cliente informa CPF + data de nascimento; `app.js` deriva `PBKDF2-SHA256(cpf|dn, salt, iter)` → `SHA-256` → 16 bytes hex e busca `docs/portal/data/<hash>.json`. Não há backend: a "autenticação" é o nome do arquivo ser inderivável sem CPF+DN corretos. `salt`/`iter` vêm de `docs/portal/data/_meta.json` e têm que bater com `derivar_hash()` nos geradores Python.
+2. **Portal do cliente** — `docs/portal/` (app estático). O cliente informa CPF + data de nascimento; `app.js` deriva `PBKDF2-SHA256(cpf|dn, salt, iter)` → `SHA-256` → 16 bytes hex e busca `docs/portal/data/<hash>.json`. Não há backend. O repositório é público, por isso a ficha é **cifrada** (F122): do mesmo PBKDF2 saem o nome do arquivo e a chave AES-256-GCM (`derivar()` em `portal_common.py` e em `app.js`, vetor fixo em `tests/test_extracao.py`). Grave e leia fichas só por `gravar_ficha()`/`ler_ficha()`; nunca grave ficha em claro, nem CPF ou DN dentro dela. Ficha que não se decifra levanta `ValueError` e não é regravada (preserva os curados). `salt`/`iter` vêm de `docs/portal/data/_meta.json`. Os geradores exigem `pip install cryptography`.
 
    A **SITUAÇÃO ATUAL** que o cliente lê vem da **etapa declarada no CRM** (`casos.etapa`, F119),
    e não mais de dedução do último comentário. `portal_common.crm_do_cliente()` lê o Supabase por
