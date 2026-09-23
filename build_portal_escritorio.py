@@ -19,7 +19,7 @@ Requer graph_tokens.json valido (rode graph_devflow.py / graph_refresh.py).
 import re, json, datetime
 from graph_client import list_lists, list_tasks, _req
 from portal_common import (gravar_json, DATA_DIR, dn_from_items, cpf_from_task, split_blocks,
-                           derivar_hash, etapas_do_crm, frase_da_etapa)
+                           derivar, ler_ficha, gravar_ficha, etapas_do_crm, frase_da_etapa)
 
 LISTA_ESCRITORIO = "🙋 Escritório"
 
@@ -130,16 +130,15 @@ def main():
             }],
             "origem": "auto",
         }
-        h = derivar_hash(cpf, dn, salt, iters)
+        h, chave = derivar(cpf, dn, salt, iters)
         path = DATA_DIR / f"{h}.json"
-        existentes, nome_existente = [], None
-        if path.exists():
-            try:
-                d0 = json.loads(path.read_text(encoding="utf-8"))
-                existentes = d0.get("processos", [])
-                nome_existente = d0.get("nome")
-            except Exception:
-                existentes = []
+        try:
+            d0 = ler_ficha(path, chave, h) or {}
+        except ValueError as err:
+            print(f"   ! {e['nome']}: {err} (NAO regravada)")
+            continue      # regravar por cima apagaria os processos das outras listas
+        existentes = d0.get("processos", [])
+        nome_existente = d0.get("nome")
 
         # MERGE não-destrutivo: preserva todos os processos de outras listas e os
         # processos Escritório CURADOS; para o Escritório auto, só atualiza a
@@ -164,7 +163,7 @@ def main():
             "atualizado_em": agora,
             "processos": processos,
         }
-        gravar_json(path, ficha)
+        gravar_ficha(path, ficha, chave, h)
         gerados += 1
 
     # 3) atualiza _meta.json

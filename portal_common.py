@@ -3,10 +3,11 @@
 
 Aqui vive tudo que os dois geradores precisam igual: parsing de CPF/DN das
 tarefas do To Do, a quebra do corpo em blocos datados e a derivação da chave
-de login hash(CPF|DN) — que TEM de bater bit a bit com docs/portal/app.js
-(PBKDF2-SHA256 + SHA-256, 16 bytes hex, salt/iter de data/_meta.json).
+de login hash(CPF|DN) e da chave que cifra a ficha — que TÊM de bater bit a
+bit com docs/portal/app.js (PBKDF2-SHA256 + SHA-256, 16 bytes hex, salt/iter
+de data/_meta.json; AES-256-GCM, ver F122).
 """
-import re, os, json, hashlib, pathlib, datetime, urllib.request
+import re, os, json, hmac, base64, hashlib, pathlib, datetime, urllib.request
 
 DATA_DIR = pathlib.Path("docs/portal/data")
 HOJE = datetime.date.today()
@@ -91,9 +92,75 @@ def gravar_json(path, dados):
     tmp.replace(path)
 
 
+def _bits(cpf, dn, salt, iters):
+    return hashlib.pbkdf2_hmac("sha256", (cpf + "|" + dn).encode(), salt.encode(), iters, dklen=32)
+
+
 def derivar_hash(cpf, dn, salt, iters):
-    bits = hashlib.pbkdf2_hmac("sha256", (cpf + "|" + dn).encode(), salt.encode(), iters, dklen=32)
-    return hashlib.sha256(bits).digest()[:16].hex()
+    return hashlib.sha256(_bits(cpf, dn, salt, iters)).digest()[:16].hex()
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# F122 · A FICHA PUBLICADA É CIFRADA
+#
+# O repositório é público. O nome do arquivo derivado de CPF|DN só impedia
+# adivinhar o endereço; quem listasse docs/portal/data lia nome, CPF, DN e a
+# linha do tempo de todos os clientes. Agora o CONTEÚDO também depende de
+# CPF|DN: do mesmo PBKDF2 saem dois valores independentes,
+#   nome do arquivo = SHA-256(bits)[:16]            (como antes)
+#   chave AES-256   = HMAC-SHA256(bits, ROTULO_CHAVE)
+# e a ficha vai gravada como {"v":1,"iv":...,"ct":...} em AES-GCM, com o nome
+# do arquivo como dado autenticado (a ficha não serve em outro endereço).
+# docs/portal/app.js refaz a mesma conta no navegador e decifra lá.
+# ══════════════════════════════════════════════════════════════════════════
+
+ROTULO_CHAVE = b"portal-tercini-chave-v1"
+
+
+def derivar(cpf, dn, salt, iters):
+    """(nome do arquivo, chave AES) com um PBKDF2 só."""
+    bits = _bits(cpf, dn, salt, iters)
+    return (hashlib.sha256(bits).digest()[:16].hex(),
+            hmac.new(bits, ROTULO_CHAVE, hashlib.sha256).digest())
+
+
+def _aesgcm(chave):
+    try:
+        from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+    except ImportError:
+        raise SystemExit("Falta a biblioteca de cifra: rode  pip install cryptography")
+    return AESGCM(chave)
+
+
+def cifrar_ficha(ficha, chave, h):
+    iv = os.urandom(12)
+    ct = _aesgcm(chave).encrypt(iv, json.dumps(ficha, ensure_ascii=False).encode("utf-8"), h.encode())
+    return {"v": 1, "iv": base64.b64encode(iv).decode(), "ct": base64.b64encode(ct).decode()}
+
+
+def decifrar_ficha(dados, chave, h):
+    """Aceita a ficha cifrada e, por compatibilidade, a ficha em claro antiga."""
+    if "ct" not in dados:
+        return dados
+    pt = _aesgcm(chave).decrypt(base64.b64decode(dados["iv"]), base64.b64decode(dados["ct"]), h.encode())
+    return json.loads(pt.decode("utf-8"))
+
+
+def ler_ficha(path, chave, h):
+    """Ficha decifrada, ou None se não existe. Ficha que existe e não se lê
+    levanta ValueError: regravar por cima dela apagaria os processos curados."""
+    if not path.exists():
+        return None
+    try:
+        return decifrar_ficha(json.loads(path.read_text(encoding="utf-8")), chave, h)
+    except SystemExit:
+        raise
+    except Exception as e:
+        raise ValueError(f"ficha ilegível {path.name}: {type(e).__name__}") from e
+
+
+def gravar_ficha(path, ficha, chave, h):
+    gravar_json(path, cifrar_ficha(ficha, chave, h))
 
 
 # ══════════════════════════════════════════════════════════════════════════
