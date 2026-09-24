@@ -29,6 +29,21 @@ const ARQUIVOS = {
 const casa = (url, dominios) => dominios.some(d =>
   new RegExp('^' + d.replace(/[.]/g, '\\.').replace(/\*/g, '.*')).test(url || ''));
 const pausa = ms => new Promise(r => setTimeout(r, ms));
+// entre várias abas do mesmo portal, a do Painel/relação vem antes da de um
+// processo aberto: o "atualizar tudo" quer o acervo, e mandar a aba do
+// processo ao painel tirava a tela de quem estava lendo
+const abaPreferida = abas => abas.slice().sort((a, b) =>
+  (/\/Painel\/|painel_adv|tarefas-adv|consultaprocessos/.test(b.url || '') ? 1 : 0)
+  - (/\/Painel\/|painel_adv|tarefas-adv|consultaprocessos/.test(a.url || '') ? 1 : 0))[0];
+// aba recém-criada: espera o "complete" (teto 20s) em vez de 3,5s fixos —
+// o PJe leva mais que isso e o coletor respondia "sem acervo"
+async function esperarAba(tabId, tetoMs = 20000) {
+  for (let t = 0; t < tetoMs; t += 500) {
+    try { const a = await chrome.tabs.get(tabId); if (a.status === 'complete') break; } catch (e) { break; }
+    await pausa(500);
+  }
+  await pausa(1500);
+}
 
 // UMA fonte, numa aba: reaproveita a aba do portal se ela já estiver aberta
 // (abrir uma segunda faria o portal recomeçar a sessão do zero). Com
@@ -41,10 +56,10 @@ async function rodarFonte(fonte, { aba = null, ativar = true } = {}) {
     const [ativa] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (ativa && casa(ativa.url, dominios)) aba = ativa;
   }
-  if (!aba) [aba] = await chrome.tabs.query({ url: dominios });
+  if (!aba) aba = abaPreferida(await chrome.tabs.query({ url: dominios }));
   const usar = aba || await chrome.tabs.create({ url: ALVO[fonte], active: ativar });
   if (aba) { if (ativar) await chrome.tabs.update(aba.id, { active: true }); }
-  else await pausa(3500);                              // deixa a página carregar
+  else await esperarAba(usar.id);                      // deixa a página carregar de verdade
   // quem tem acesso ao chrome.storage é este worker: a data da última coleta
   // vai como argumento, já pronta
   const { ultima_pat } = await chrome.storage.local.get(['ultima_pat']);
@@ -70,6 +85,12 @@ async function rodarFonte(fonte, { aba = null, ativar = true } = {}) {
                                      : { erro: 'a página ainda não terminou de abrir — dê F5 e tente de novo' },
       args: [ultima_pat || null, { acervo: !ativar }],
     });
+    // a resposta que vale é a do QUADRO DE CIMA (frameId 0): os iframes do
+    // painel devolvem "a página ainda não terminou de abrir" e, vindo antes na
+    // lista, escondiam o "retomando" de cima — o "atualizar tudo" desistia
+    // de esperar e a coleta ficava sem conclusão
+    const topo = res.find(r => r && r.frameId === 0);
+    if (topo && topo.result) return topo.result;
     const bons = res.map(r => r && r.result).filter(r => r && !r.erro);
     return bons[0] || (res[0] && res[0].result) || { erro: 'sem resposta da página' };
   } catch (e) { return { erro: String(e.message || e) }; }
@@ -118,7 +139,8 @@ async function rodarTudo() {
   for (const fonte of ['pje', 'eproc']) {
     const abas = await chrome.tabs.query({ url: DOMINIOS[fonte] });
     const porHost = new Map();
-    for (const a of abas) { const h = new URL(a.url).host; if (!porHost.has(h)) porHost.set(h, a); }
+    for (const a of abas) { const h = new URL(a.url).host; if (!porHost.has(h)) porHost.set(h, []); porHost.get(h).push(a); }
+    for (const [h, lista] of porHost) porHost.set(h, abaPreferida(lista));
     if (!porHost.size) roda(fonte, null, fonte === 'pje' ? 'PJe' : 'eproc');
     for (const [h, a] of porHost) roda(fonte, a, `${fonte === 'pje' ? 'PJe' : 'eproc'} ${h.split('.')[0]}`);
   }
