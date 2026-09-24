@@ -2508,7 +2508,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.34</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.35</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -2545,6 +2545,8 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
       <div><strong id="u-nome"></strong><div class="u-papel txt" id="u-papel"></div></div>
       <button id="btn-som" title="ligar/desligar o som de conclusão"
         style="border:none;background:none;font-size:15px;cursor:pointer;opacity:.75">🔔</button>
+      <button id="btn-vercomo" class="sair" onclick="alternarVerComo()" style="display:none"
+        title="mostra a barra exatamente como o colaborador a vê; clique de novo para voltar">ver como colaborador</button>
       <button id="btn-tema" class="sair" onclick="alternarTema()"
         title="alternar entre o visual atual e o visual novo (v10, papel e petróleo)">visual</button>
       <button class="sair" onclick="sair()">sair</button></div>
@@ -3714,6 +3716,24 @@ function montarSidebar(){
       // vermelho no tema v10), porque prazo passado é o que mais cobra alguém
       :(id==="meudia"&&nVenc)?`<span class="cont venc" title="${nVenc} vencida${nVenc>1?"s":""}">${n||nVenc}</span>`
       :n?`<span class="cont">${n}</span>`:"")+`</div>`).join("");
+  if(visaoColab()){
+    // F131 · ordem do Paulo: Minhas Tarefas e Organizacional entram nas
+    // Listas do escritório, antes das fases; Visões some inteira
+    const fasesColab = ["prazo","escritorio","inss","conselho","judicial","peticao_inicial"];
+    document.getElementById("grupo-dinamicas").innerHTML = din
+      .filter(([id])=>LISTAS_COLAB.includes(id) && !["particulares","rotinas"].includes(id))
+      .map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${
+        (id==="meudia"&&nVenc)?`<span class="cont venc">${n||nVenc}</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("");
+    document.getElementById("grupo-fases").innerHTML =
+      din.filter(([id])=>["particulares","rotinas"].includes(id)).map(([id,rot,n])=>
+        `<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n==="🔒"?`<span class="priv">🔒 só você</span>`:n?`<span class="cont">${n}</span>`:""}</div>`).join("")
+      + fasesColab.map(f=>{ const rot=FASES.find(x=>x[0]===f)[1];
+          const n = casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
+          return `<div class="lista-item" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`; }).join("");
+    document.getElementById("grupo-visoes").innerHTML = "";
+    document.getElementById("grupo-visoes").parentElement.style.display = "none";
+  } else {
+  document.getElementById("grupo-visoes").parentElement.style.display = "";
   document.getElementById("grupo-fases").innerHTML = ordemDasFases().map(([f,rot])=>{
     const n = casosDaFase(f).length + (f==="escritorio"?clientesEmAtendimento().length:0);
     return `<div class="lista-item" data-v="fase:${f}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`;
@@ -3740,6 +3760,12 @@ function montarSidebar(){
     ["patinss","📥 Importar do INSS", null],
     ...(souAdmin() ? [["config","⚙️ Configurações", null]] : []),
   ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`).join("");
+  }
+  const bVer=document.getElementById("btn-vercomo");
+  if(bVer){ bVer.style.display = souAdmin() ? "" : "none"; bVer.classList.toggle("on", visaoColab());
+    bVer.textContent = visaoColab() ? "voltar" : "ver como colaborador"; }
+  document.getElementById("u-papel").textContent = visaoColab() && souAdmin() ? "visão do colaborador"
+    : (eu.papel === "admin" ? "administrador" : eu.setor || "equipe");
   const bSom=document.getElementById("btn-som");
   const sinoSvg = on => `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10ZM10 19a2 2 0 0 0 4 0"/>${on?"":'<path d="M4.5 4.5 19.5 19.5"/>'}</svg>`;
   bSom.innerHTML = sinoSvg(somLigado());
@@ -5430,6 +5456,7 @@ function ligarCartoes(){
 let vistaAnimada="";
 function render(){
   aplicarTema(); marcarBarraCel();
+  if(visaoColab() && !LISTAS_COLAB.includes(visao)) visao="meudia";
   // o fade só quando a VISTA muda (trocar de lista, pesquisar) — render()
   // também roda em clique de chip/estrela e piscaria a cada toque
   const chaveVista=visao+"|"+(buscaTxt||"");
@@ -6799,6 +6826,17 @@ const segBtnHtml = (i, rot) => `<button class="btn-mini" onclick="abrirSeguiment
 const colAdmin = () => equipeAtiva().find(c=>c.papel==="admin") || eu;
 // F130 · quem administra: edita a equipe, vê ⚙️ Configurações e o 🔄/🩺
 const souAdmin = () => !!eu && eu.papel==="admin";
+// F131 · a barra do colaborador é a do To Do: só as listas que a equipe já
+// conhece. O admin vê a mesma barra ligando "ver como colaborador".
+const visaoColab = () => !souAdmin() || ler("crm_ver_como")==="colab";
+const LISTAS_COLAB = ["meudia","calendario","planejado","importante","particulares","rotinas",
+  "fase:prazo","fase:escritorio","fase:inss","fase:conselho","fase:judicial","fase:peticao_inicial",
+  "novocliente"];
+function alternarVerComo(){
+  guardar("crm_ver_como", visaoColab() ? "" : "colab");
+  if(visaoColab() && !LISTAS_COLAB.includes(visao)) visao="meudia";
+  montarSidebar(); render();
+}
 let segAberto = null;
 function abrirSeguimento(i){
   const s = segItens[i]; if(!s) return;
