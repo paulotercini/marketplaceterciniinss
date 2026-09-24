@@ -2508,7 +2508,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.30</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.31</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5826,12 +5826,13 @@ async function conferirPje(coletaId){
       if(Object.keys(campos).length){ plano.fichas.push({caso_id:k.id, campos}); plano.resumo.fichas++; }
       if(!p.movimento){ plano.resumo.sem_mudanca++; continue; }
       const sufixo = incidente ? `:${p.codigo}` : "";
-      // [24.09.2026] o e-SAJ não dá hora (vem 00:00): dois movimentos no mesmo
-      // dia caíam na MESMA chave e o segundo sumia como "sem mudança" (o
-      // "Petição Juntada" de 23/09 atrás do "Mudança de Magistrado"). A chave
-      // leva um resumo do texto quando não há hora
-      const semHora = !p.movimento.hora || p.movimento.hora==="00:00";
-      const oid = `mov:${soDig(p.numero)}${sufixo}:${p.movimento.data}T${p.movimento.hora}${semHora?`:${hashDjb(dsa(p.movimento.texto||""))}`:""}`;
+      // [24.09.2026] o e-SAJ não dá hora (vem 00:00) e o eproc nem sempre dá:
+      // dois movimentos no mesmo dia caíam na MESMA chave e o segundo sumia
+      // como "sem mudança" (o "Petição Juntada" de 23/09 atrás do "Mudança de
+      // Magistrado"). A chave leva um resumo do texto, em toda fonte — no PJe
+      // fecha também o caso de dois movimentos no mesmo minuto. O que já está
+      // gravado com a chave antiga continua reconhecido pelo texto (momentos)
+      const oid = `mov:${soDig(p.numero)}${sufixo}:${p.movimento.data}T${p.movimento.hora}:${hashDjb(dsa(p.movimento.texto||""))}`;
       const momento = `${soDig(p.numero)}${sufixo}:${p.movimento.data}T${p.movimento.hora}`;
       if(vistos.has(oid) || momentoConhecido(momentos, momento, p.movimento.texto)){
         plano.resumo.sem_mudanca++; continue; }
