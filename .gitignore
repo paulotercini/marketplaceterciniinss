@@ -49,8 +49,8 @@ docs/portal/data/*.tmp
 *.db-shm
 *.sqlite
 *.sqlite3
-mcp-trf3/bruto/
-mcp-acervo/bruto/
-mcp-normas/bruto/
+# com barra interna a regra fica ancorada na raiz e não alcança a cópia dentro
+# do plugin, que é justamente a publicada. Com ** vale em qualquer profundidade.
+**/bruto/
 # rascunho de download do corpus de legislação, que não é fonte citável
-mcp-normas/corpus/**/_downloads/
+**/_downloads/

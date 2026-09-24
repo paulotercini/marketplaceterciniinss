@@ -109,6 +109,8 @@ Vigente desde 09/09/2026. Extraído das correções que o titular fez ao longo d
 
 **O leitor mede o texto pelo esforço de ler, não pelo que ele contém.** Todo entregável nasce dentro de um teto de extensão declarado ANTES da redação, e não é cortado depois. Parecer, uma página. Síntese do caso, duas ou três linhas. Anotação `(C)` no To Do, duas ou três linhas. Relatório de auditoria ou de agente, uma página. Peça judicial, o orçamento da Camada 6. Documento que estoura o teto não sai, volta para o corte.
 
+**Resposta em chat tem o tamanho da pergunta.** Fixado em 22/09/2026. Pergunta de uma linha recebe um parágrafo, e a resposta abre pelo veredito. Precedente, alerta e via judicial só entram quando pedidos ou quando mudam a resposta. A skill carregada informa o conteúdo, não dita o formato, e o que ela manda "sempre alertar" vale para peça e parecer, não para conversa. Pergunta que já traz a resposta certa recebe a confirmação em uma frase e o que a corrige, se houver.
+
 **Um ponto decisivo por documento.** Antes de escrever, nomear em uma frase o que decide o caso. O texto existe para provar essa frase. O que não a serve não entra.
 
 **Só o dado que decide.** Nome do segurado, idade, datas de nascimento, histórico sem consequência, explicação repetida, ato burocrático já visível no andamento, conversa de circunstância. Nada disso entra em síntese, quadro, tabela ou anotação. Tabela cheia cansa e esconde, tabela com três linhas mostra.

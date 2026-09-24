@@ -247,7 +247,14 @@ function planoDeImportacao(pat, D, hoje) {
 
     const cli = porCpf.get(cpf);
     const lista = LISTA_POR_TIPO[det.tipo] || 'inss';
-    if (!cli) { plano.semCliente.push({ ...item, lista }); continue; }
+    if (!cli) {
+      // F98 · quem é, para o cadastro sair num clique: o detalhe traz a
+      // pessoa inteira; a lista, ao menos o nome
+      const r = det.requerente || {};
+      plano.semCliente.push({ ...item, lista, nome: r.nome || daLista.nome || null,
+        dn: r.dn || null, nome_mae: r.nome_mae || null, telefone: r.telefone || null });
+      continue;
+    }
     // O PROTOCOLO CASOU EM POUCOS PORQUE O CAMPO QUASE NUNCA FOI PREENCHIDO,
     // não porque o caso não existe. Criar sem olhar duplicaria a ficha de
     // quem já está no CRM — e ninguém desfaz setenta duplicatas na mão.

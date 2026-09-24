@@ -28,6 +28,7 @@ A coluna Origem distingue o que o titular FIXOU do que foi PROPOSTO nesta Onda p
 
 | Documento | Teto | Origem |
 |---|---|---|
+| Resposta em chat | O tamanho da pergunta, um parágrafo para pergunta de uma linha | Fixado, 22/09/2026 |
 | Parecer | 1 página | Fixado, protocolo regra 4 |
 | Análise da Vida Completa | Conclusão no topo, sem teto de páginas | Fixado, protocolo regra 4 |
 | Anotação `(C)` no To Do | 2 a 3 linhas | Fixado, protocolo regra 1 |

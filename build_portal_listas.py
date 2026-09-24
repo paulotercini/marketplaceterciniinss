@@ -28,7 +28,8 @@ import re, json, datetime, sys
 from graph_client import list_lists, list_tasks, _req
 from portal_common import (gravar_json, DATA_DIR, HOJE, digits, dn_from_aniversario, dn_from_items,
                            crm_do_cliente, frase_da_etapa,
-                           dn_from_body, cpf_from_task, split_blocks, derivar_hash)
+                           dn_from_body, cpf_from_task, split_blocks, derivar,
+                           ler_ficha, gravar_ficha)
 
 # DN recuperada manualmente (ex.: do CNIS no Drive) para clientes cujo checklist
 # nao traz a data de nascimento. CPF (11 digitos) -> DN (DDMMAAAA).
@@ -486,9 +487,9 @@ def montar_processo_safe(cpf, dn, item, crm=None):
         status = status_line(timeline, None)
     else:
         status = "Em acompanhamento pelo escritório"
+    # F122 · CPF e DN não entram na ficha: o gerador os tem pelo To Do, e o
+    # cliente, que é quem decifra, já os digitou
     return {
-        "cpf": cpf,
-        "dn": dn,
         "nome": item["nome"],
         "lista": lista,
         "localizacao": localizacao_for(lista, timeline, body),
@@ -508,16 +509,23 @@ def montar_processo_safe(cpf, dn, item, crm=None):
     }
 
 
-def validate(cpf2dn, by_cpf):
-    """Compara a extracao (tipos+datas da timeline) com as fichas ja publicadas."""
+def validate(cpf2dn, by_cpf, salt, iters):
+    """Compara a extracao (tipos+datas da timeline) com as fichas ja publicadas.
+    F122 · a ficha e cifrada: cada uma se abre com o CPF e a DN do To Do."""
     pub = {}
-    for f in DATA_DIR.glob("*.json"):
-        if f.name == "_meta.json":
+    for cpf in by_cpf:
+        dn = cpf2dn.get(cpf)
+        if not dn:
             continue
-        d = json.loads(f.read_text(encoding="utf-8"))
-        for p in d.get("processos", []):
-            if p.get("lista") in ALVO and p.get("cpf"):
-                pub.setdefault(p["cpf"], {})[p["lista"]] = p
+        h, chave = derivar(cpf, dn, salt, iters)
+        try:
+            d = ler_ficha(DATA_DIR / f"{h}.json", chave, h)
+        except ValueError as e:
+            print(f"   ! {e}")
+            continue
+        for p in (d or {}).get("processos", []):
+            if p.get("lista") in ALVO:
+                pub.setdefault(cpf, {})[p["lista"]] = p
     tot = ok = parcial = 0
     difs = []
     for cpf, procs in by_cpf.items():
@@ -536,7 +544,7 @@ def validate(cpf2dn, by_cpf):
             else:
                 parcial += 1
                 if len(difs) < 12:
-                    difs.append((ref["nome"], item["lista"],
+                    difs.append((item["nome"], item["lista"],
                                  sorted(ref_ev - my_ev), sorted(my_ev - ref_ev)))
     print(f"VALIDACAO timeline (tipos+datas): {ok}/{tot} identicos, {parcial} divergentes")
     for nome, L, falta, sobra in difs:
@@ -552,13 +560,14 @@ def main():
     crm = crm_do_cliente()        # F120/F121 · etapa declarada e fila do TRF3
 
     if "--validate" in sys.argv:
-        validate(cpf2dn, by_cpf)
+        validate(cpf2dn, by_cpf, salt, iters)
         return
 
     novas_fichas = 0      # arquivos criados do zero
     regeneradas = 0       # fichas com processos auto (re)gerados
     intactas = 0          # clientes 100% curados (nada a (re)gerar)
     sem_dn = []
+    ilegiveis = []
     agora = HOJE.strftime("%d/%m/%Y") + " às " + datetime.datetime.now().strftime("%H:%M")
 
     def ordem(p):
@@ -575,14 +584,13 @@ def main():
         for item in procs:
             por_lista.setdefault(item["lista"], item)
 
-        h = derivar_hash(cpf, dn, salt, iters)
+        h, chave = derivar(cpf, dn, salt, iters)
         path = DATA_DIR / f"{h}.json"
-        existentes = []
-        if path.exists():
-            try:
-                existentes = json.loads(path.read_text(encoding="utf-8")).get("processos", [])
-            except Exception:
-                existentes = []
+        try:
+            existentes = (ler_ficha(path, chave, h) or {}).get("processos", [])
+        except ValueError as e:
+            ilegiveis.append((nomes.get(cpf, "?"), str(e)))
+            continue      # nao regrava por cima: perderia os curados
 
         # preserva o que e curado a mao; o resto (auto) e regerado do To Do
         curados = [p for p in existentes if p.get("origem") == "curado"]
@@ -600,7 +608,7 @@ def main():
             "atualizado_em": agora,
             "processos": processos,
         }
-        gravar_json(path, ficha)
+        gravar_ficha(path, ficha, chave, h)
         if existentes:
             regeneradas += 1
         else:
@@ -622,6 +630,9 @@ def main():
     print(f"Sem DN resolvivel (NAO publicados): {len(sem_dn)}")
     for nome, cpf in sem_dn:
         print(f"   - {nome}  (CPF {cpf})")
+    print(f"Fichas ilegiveis (NAO regravadas): {len(ilegiveis)}")
+    for nome, erro in ilegiveis:
+        print(f"   - {nome}  ({erro})")
 
 
 if __name__ == "__main__":

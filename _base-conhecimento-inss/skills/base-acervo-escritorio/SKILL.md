@@ -55,6 +55,38 @@ O trecho é anonimizado na ingestão, então nome, CPF, número de benefício e 
 
 Exemplo de consulta, "ruído sem NEN" ou "qualidade de segurado período de graça".
 
+## O que a resposta devolve e o que ela esconde
+
+O trecho sai anonimizado, com nome, CPF, número de benefício e CID trocados por marcadores como
+`[NOME]` e `[CPF]`. O nome do arquivo e o caminho também saem mascarados em todas as
+ferramentas, porque o nome do cliente costuma estar neles. O caminho real sai só por
+`caminho_da_peca_acervo`, que é um pedido separado e deliberado, e o arquivo de origem não é
+anonimizado.
+
+## Como ler o rito
+
+O rito vem do endereçamento da peça, e não do corpo do texto. Uma inicial que cita o STJ não é
+peça dirigida ao STJ. Quando o endereçamento não é legível, o rito fica indefinido, e o filtro
+por rito deixa essas peças de fora.
+
+## Trecho e versão
+
+O trecho tem no máximo cerca de 200 palavras, partido em fim de frase. Parágrafo longo pode vir
+em mais de um trecho seguido da mesma peça, e `obter_trecho_acervo` com `contexto` devolve os
+vizinhos para ler o argumento inteiro.
+
+Quando o cliente tem a mesma peça salva mais de uma vez, a busca mostra só uma versão, dando
+preferência à assinada. A `visao_geral_acervo` informa em `versoes_ocultas` quantas ficaram
+fora. O mesmo parágrafo em peças de clientes diferentes continua aparecendo, porque isso é o
+escritório sustentando a mesma tese em casos distintos.
+
+## Manutenção da base
+
+A base é local e se atualiza por comando, com `uv run coletor.py` na pasta do MCP. A rodada
+termina com a auditoria de anonimização, que varre a base inteira. A base só deve ser usada
+quando a auditoria termina com `AUDITORIA OK` e zero vazamento. O comando
+`uv run coletor.py --versoes` remarca as versões sem reler arquivo nenhum.
+
 ## VEDAÇÃO
 
 **O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.**
