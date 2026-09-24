@@ -18,6 +18,7 @@
 // na mesma sessão e lê o HTML com as regras puras de eproc-regras.js. A
 // página é ISO-8859-1 — decodificar errado vira "SENTEN�A".
 (() => {
+  if (window !== window.top) return;      // a retomada navega a janela em que roda: só a de cima
   if (window.__crmColetorNoAr) return;
   window.__crmColetorNoAr = true;
 

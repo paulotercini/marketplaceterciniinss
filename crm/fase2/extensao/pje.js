@@ -10,6 +10,14 @@
 // árvore, espera a tabela assentar, vira as páginas do scroller e LÊ as
 // linhas com as regras puras de pje-regras.js.
 (() => {
+  // [24.09.2026] SÓ O QUADRO DE CIMA COLETA. Ao abrir a aba Acervo o painel
+  // cria três iframes da MESMA origem (caixas de filtro do RichFaces, com
+  // spacer.gif). A reinjeção do fundo.js (allFrames) punha o coletor em cada
+  // um; fora do caminho do Painel, cada iframe agendava retomada (o
+  // sessionStorage é o mesmo do quadro de cima), navegava PARA o painel
+  // dentro do iframe e nascia uma coleta inteira ali — três leituras extras
+  // de um clique só, e o contador de retomadas queimado por elas.
+  if (window !== window.top) return;
   if (window.__crmColetorNoAr) return;
   window.__crmColetorNoAr = true;
 
@@ -212,9 +220,28 @@
   }
 
   const PAINEL = '/pje/Painel/painel_usuario/advogado.seam';
+  // a página acabou de abrir (aba criada pelo "atualizar tudo", ou F5): a aba
+  // Acervo ainda não existe no DOM e o coletor respondia "sem acervo" na hora
+  async function esperarPainelPronto() {
+    for (let i = 0; i < 40; i++) {
+      if (document.readyState === 'complete'
+          && (tabela() || nosDaArvore().length || document.getElementById('tabAcervo_shifted') || paginaMorreu())) return;
+      if (i === 3) faixa('esperando o Painel do Advogado terminar de abrir…');
+      await pausa(700);
+    }
+  }
+  // duas coletas na mesma aba ao mesmo tempo atropelam os postbacks uma da
+  // outra e a conversa cai; a segunda chamada é recusada, não enfileirada
+  let rodando = false;
   window.crmRodar = async (_desde, opts) => {
+    if (rodando) { faixa('já há uma coleta em andamento nesta aba — aguarde a faixa terminar'); return { erro: 'já está rodando nesta aba' }; }
+    rodando = true;
+    try { return await rodarDeVerdade(opts); } finally { rodando = false; }
+  };
+  async function rodarDeVerdade(opts) {
     try {
       if (!REG) { faixaErr('pje-regras.js não subiu — recarregue a página (F5)'); return { erro: 'sem regras' }; }
+      await esperarPainelPronto();
       const noProcesso = /\/pje\/Processo\/ConsultaProcesso\/Detalhe\/listProcessoCompletoAdvogado\.seam/.test(location.pathname);
       // na janela de um processo aberto, o CLIQUE coleta o histórico COMPLETO
       // dele. F97 · o "atualizar tudo" (opts.acervo) quer o acervo: vai ao
@@ -326,7 +353,7 @@
       }
       return { ok: mapa.size, parcial: !inteira };
     } catch (e) { faixaErr(e.message); return { erro: String(e.message || e) }; }
-  };
+  }
 
   // a outra ponta da retomada: a página recarregou por nossa conta — quando
   // ela assentar, a coleta recomeça sem ninguém clicar. Só no painel: se o
