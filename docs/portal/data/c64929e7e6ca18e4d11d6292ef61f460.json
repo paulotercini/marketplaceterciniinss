@@ -1,44 +1,5 @@
 {
-  "nome": "Amauri Benedito Ferracine",
-  "atualizado_em": "20/06/2026 às 17:42",
-  "processos": [
-    {
-      "cpf": "29905857885",
-      "dn": "04051981",
-      "nome": "Amauri Benedito Ferracine",
-      "lista": "🗓 Tarefas com Prazo",
-      "localizacao": "Para apresentação de petição pelo advogado",
-      "titulo_tarefa": "Amauri Benedito Ferracine",
-      "status": "Última atualização em 04/03/2026: Recurso inominado interposto",
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2026-03-04",
-          "data_br": "04/03/2026",
-          "tipo": "Recurso inominado interposto",
-          "descricao": "Recurso inominado interposto."
-        },
-        {
-          "data": "2026-02-25",
-          "data_br": "25/02/2026",
-          "tipo": "Recurso inominado interposto",
-          "descricao": "Recurso inominado interposto."
-        },
-        {
-          "data": "2025-09-29",
-          "data_br": "29/09/2025",
-          "tipo": "Petição inicial protocolada",
-          "descricao": "Petição inicial protocolada / distribuída."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no e-SISREC",
-          "url": "https://consultaprocessos.inss.gov.br/"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "7KAf/6nmmreZELHZ",
+  "ct": "or9qkn3GIz47nRctcZmBabMpTXajiTDC+8U0XhYeONvwg7451dPCu+lx7rD6+lhloOZYDA5FMF2Oq4m6KZph1W1JhSb2zXPlM+E69faXZdwPuP1mo8x8KUc/Ak9Aw2qOh3R1qp7sWBP1Hk2FLnnq+KqiUsLLfZnF4ouM3a5B0yEuHu2/UeXbag/vMlyeowMiaFusJ9grpygxS0GtyXCod7aiYtVZomOOS2pam717V+nVZcTp1BNQbfRtR9jRHnqQuusI6PLzgptUjg4WqsdSpujCDDwCQKGBiWZa9B0QXAttkkkkBQypLMyCWVcO0fe97aLzUbbbv/9ecQxxW6V/8m5JRCx7bfbDILtxa4e9QBFM/8oFljjrl0B6CMAxhO5KUj/h0YcFvjjr+s+Ht13qE8kD3W98iR53fO2aJCWvo6ru5Ww9iCC4EacPILYAaYR+OWaGIcjniUJLKI2FHqzvd9FVkm/QI0NN8pvEML0W84y48cnp2BFljwkbHGjOG5ZhHaOTqosUHwCliXJRAPyECk1jcCrNCx5b9OpHYQ1MyfXEys9I3LGaewocCIZCo0K+qhqOL/1LzQaTGilWtFVuPG4pa/wNKnId+3iL4GT7CAQk6odQKGc4lnEkalv3NQB5+OH7lD9WtB1HYUSoXu2HNOURrb6E3E5AvBdWWV9363QiSggVl8AD6a7f/8L8+dymh7QqaVUrDTI0eF1OyZA6nWXk+QtU+DDQc975ADtItqw9GT/tR425ynInAtzf+YT1eN80Yh9h1Bnxri+OFbX6br60DbvOfW8KZzqyzFWyYQRl4Em8Z3TPY69Ekli+bxqPT5TxebAGmyI8Oi3OPnCspNyHX6oe7AH70lTtDee+5xUeUsRYABOtOnSbBffU99FtPrQwwKW71aUgea2OIXA9Mhtwx9v2+j+EQVckDHfkaegHrkcGWGVQnplQlG9O+C/0SRyb/+Xt9VIgzIZa7Dm4R9qATmCaPUkiqLVkRQsQUPpbIhkN3rpJHcQeOvG5Mlh7rUWIlF9YgezwEjWa1Mao2cLgzGpou91tGt5MYBek7udJJlEAiZo3b0ye0Imus9+ZJ5MbhfbOt/AgMPavCmGfPMwhza84h1Ec9uIz119GFfWrUBRVVJeFxdwugzkf3ut6HeS9b2PNGTtL8F1duIAVPZqNCOlJT3BUKTF8EXqrmF4TFS57PsaGWtFSEFbnDPvb9/4zSwkGc0+D54QEeNRxXbqruYYEGAf7yuebZqFDbSipZdMGLMQcprLsJir98wphMWVTw7Gv2RrSiQTFbXhZonAf"
 }

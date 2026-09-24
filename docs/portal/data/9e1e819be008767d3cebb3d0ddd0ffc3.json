@@ -1,43 +1,5 @@
 {
-  "nome": "Jose Marcos de Oliveira",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "19644910885",
-      "dn": "19021972",
-      "nome": "Jose Marcos de Oliveira",
-      "lista": "👪 Judicial",
-      "localizacao": "Aguardando Decisão Judicial",
-      "titulo_tarefa": "Jose Marcos de Oliveira",
-      "status": "Última atualização em 13/10/2024: Embargos de declaração interpostos",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2024-10-13",
-          "data_br": "13/10/2024",
-          "tipo": "Embargos de declaração interpostos",
-          "descricao": "Embargos de declaração interpostos."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
-          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
-        },
-        {
-          "label": "PJe TRF3 — 2º grau",
-          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
-        },
-        {
-          "label": "ESAJ — TJSP (Justiça Estadual)",
-          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "525FqCTVluNDjS9O",
+  "ct": "DBIlcso33fv0awalfT5W7wdhzlNi7CxcKCj02lg+LG5xO1TEqJFqwFEA4WkyUp9HC5en7CXlXkV/lzmHTUV3ylL8bikrjyYASEMa6MRsmWktq/BYhHreEnT6tHto29qDtjn8XO1sR1L6zk6y2IcIRJ/H5y7KH5iwAMI/TjZxsumuEZwpFl2ncWOy28ZVd/8noBEU38Zdp+r9yg2JKPqQT9NW3yAqI04zSCc+oyzVwQuWp2ZsQ+LormrlWb4mMBOsRuxhUhVGbGLUb2JEEvi48/PmzqZ5163G69xdXrMQXP28Y0R2FW6mywiGbdTvXgbsvq+Ot+s2z3+QKL/qyhcLkmYqy6ZPxQGxMLneq3FS5qrZ/4Pj26VwDZx6TrHa6ynMMl8d8n1Hk8d7ApC/2g2gIFfjTU6KQQ8sSuKZGwOb/Q89IHp88soA5W15BACD7Cg9UYcKUOEz7elrYizOBGrbilVAhSxaV8TONyaIhdS3x/OCGbK5NQdALS3C1cNaG/rLv2p8PiwMqO1ICG78G0PM+jwd3RVDKWHY3yYO4+ZXM4QZ41iH5XSZwNZG/I732H0Lth+NOrqqsfbpq9F6w8UU0sNV2HXM11QEcVYVbLvNpyblkMT/Dx5Xj0lYELMA0tntZw6SrCZUDeBxrqVBcWoLHKB90jG67J9ak2yqMvZDeLFc0H3uxPXQYdM8JiQGdg97Ml/eBUCxgiMEEYJ3AG12hWLk1xo35CCJoRuPqqFt/SyPNnCdwdI2CYLknGdNpM9vByM54duypDzRsQrX3i97UU0//XrvDLtFwGkx+pvt5stkImgQlKfqW97Qi226dKiZT3gHyR9jFhwV1315lhXA7gxUbomkIKVPA2wJGQO95f5le2uOGJ3VyXWHQjBK4Ir6PYj5/G3xoN6LuhVu9WOuUkuijrnmYacOlXOiQ72DcqStW73+ehpW2j2otX5saH1CJpa9Zr/i08iXUnpLbbAMqhUwiYOj2Ejuija4rfp54BGN5WOWQATcibvYsHv6jR+23ad7eOGrsqweZPDUB15WgA5eosM0jCvoeMHfJA2PjxBzfR8+5j/PYm5RqO0A9QlQVZTdX7mXBuY1ckaBq4OJWXuUbTDFT4RpecZyQWevDRKAT9KOSgIhe68ggN5gwk1kyMyGLTnVZsZqyaqydGYFAPpnbflghPUwlhsnea+SvatiucutTt/j78rDfpX88TtV4FDAsWinLeaeKRIg3SceWJDO4d4JWk3eObNF"
 }

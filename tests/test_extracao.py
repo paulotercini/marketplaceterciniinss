@@ -4,11 +4,13 @@ Cada teste marcado [BUG] reproduz um defeito REAL já corrigido em produção �
 se falhar, o defeito voltou. Rode com: python3 -m pytest tests/ -q
 (puro: sem rede, sem tokens, sem tocar docs/portal/data)."""
 import datetime, json
+import pytest
 import sys, pathlib
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 
-from portal_common import split_blocks, cpf_from_task, dn_from_items, derivar_hash
+from portal_common import (split_blocks, cpf_from_task, dn_from_items, derivar_hash, derivar,
+                           gravar_ficha, ler_ficha)
 from build_portal_listas import (
     classify, headline, is_internal, build_timeline, pericia_evento,
     ALTA_CONFIANCA, REGRAS, status_line,
@@ -39,6 +41,47 @@ def test_derivar_hash_estavel():
     assert derivar_hash("00000000000", "01011990", "salt", 1000) == \
            derivar_hash("00000000000", "01011990", "salt", 1000)
     assert len(derivar_hash("00000000000", "01011990", "salt", 1000)) == 32
+
+
+def test_derivar_vetor_fixo():
+    # F122 · vetor conferido contra o derivar() do docs/portal/app.js no Node;
+    # mudar qualquer lado sem o outro tranca todos os clientes fora do portal
+    h, chave = derivar("00000000000", "01011990", "salt", 1000)
+    assert h == derivar_hash("00000000000", "01011990", "salt", 1000) == \
+        "66d76c9f264e042ca899711076f8b663"
+    assert chave.hex() == "248cfb7057cd9e2078093a2770aaa976c4f724a2884a798937d738605c193a44"
+
+
+def test_ficha_cifrada_nao_expoe_nada_e_volta_inteira(tmp_path):
+    ficha = {"nome": "Fulana de Tal", "processos": [{"lista": "🌻 INSS", "origem": "curado"}]}
+    h, chave = derivar("00000000000", "01011990", "salt", 1000)
+    path = tmp_path / f"{h}.json"
+    gravar_ficha(path, ficha, chave, h)
+    bruto = path.read_text(encoding="utf-8")
+    assert "Fulana" not in bruto and "INSS" not in bruto and "curado" not in bruto
+    assert set(json.loads(bruto)) == {"v", "iv", "ct"}
+    assert ler_ficha(path, chave, h) == ficha
+
+
+def test_ficha_com_chave_errada_nao_se_le(tmp_path):
+    # a ficha ilegível levanta erro, para o gerador NÃO regravar por cima dos curados
+    h, chave = derivar("00000000000", "01011990", "salt", 1000)
+    _, outra = derivar("00000000000", "02011990", "salt", 1000)
+    path = tmp_path / f"{h}.json"
+    gravar_ficha(path, {"nome": "X", "processos": []}, chave, h)
+    with pytest.raises(ValueError):
+        ler_ficha(path, outra, h)
+    # nem copiada para o endereço de outro cliente (o nome do arquivo é autenticado)
+    with pytest.raises(ValueError):
+        ler_ficha(path, chave, "0" * 32)
+
+
+def test_ficha_em_claro_antiga_ainda_se_le(tmp_path):
+    h, chave = derivar("00000000000", "01011990", "salt", 1000)
+    path = tmp_path / f"{h}.json"
+    path.write_text(json.dumps({"nome": "Antiga", "processos": []}), encoding="utf-8")
+    assert ler_ficha(path, chave, h)["nome"] == "Antiga"
+    assert ler_ficha(tmp_path / "inexistente.json", chave, h) is None
 
 
 # ------------------------------------------------------------------ classify

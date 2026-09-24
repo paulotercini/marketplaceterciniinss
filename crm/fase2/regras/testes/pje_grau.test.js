@@ -33,6 +33,7 @@ function extrair(nome) {
 const ctx = { console };
 vm.createContext(ctx);
 for (const f of ["linksPjeDoCaso", "linkPjeDoCaso", "grauDoAndamentoPje",
+                 "sistemaDoAndamentoPje", "linkEsajPorNumero",
                  "linkPjeDoAndamento", "camposLinkPje"])
   vm.runInContext(extrair(f), ctx);
 const { linkPjeDoCaso, grauDoAndamentoPje, linkPjeDoAndamento, camposLinkPje } = ctx;

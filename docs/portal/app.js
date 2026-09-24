@@ -1,9 +1,11 @@
 /* Portal Tercini - lado cliente.
- * Recebe CPF + DN, deriva uma chave via PBKDF2-SHA256, busca o JSON do
- * cliente em data/<hash>.json e renderiza os processos.
+ * Recebe CPF + DN, deriva via PBKDF2-SHA256 o nome do arquivo e a chave,
+ * busca data/<hash>.json, decifra (AES-256-GCM) e renderiza os processos.
  *
  * Toda a logica eh local (no navegador). Nenhum dado eh enviado a um
  * servidor — apenas a requisicao estatica do arquivo JSON pelo nome.
+ * F122 · a ficha publicada eh cifrada; a conta tem de bater com derivar()
+ * e cifrar_ficha() de portal_common.py.
  */
 
 const META_URL = "data/_meta.json";
@@ -39,7 +41,9 @@ function normalizar(cpf, dn) {
   return { cpf: cpfDigits, dn: dnDigits };
 }
 
-async function derivarHash(cpf, dn, salt, iter) {
+const ROTULO_CHAVE = "portal-tercini-chave-v1";
+
+async function derivar(cpf, dn, salt, iter) {
   const enc = new TextEncoder();
   const senha = enc.encode(cpf + "|" + dn);
   const saltBytes = enc.encode(salt);
@@ -50,12 +54,34 @@ async function derivarHash(cpf, dn, salt, iter) {
     { name: "PBKDF2", salt: saltBytes, iterations: iter, hash: "SHA-256" },
     key, 256
   );
-  // hash final = SHA-256(derived), pega 16 bytes (32 hex)
+  // nome do arquivo = SHA-256(derived), pega 16 bytes (32 hex)
   const hash = await crypto.subtle.digest("SHA-256", bits);
-  return Array.from(new Uint8Array(hash))
-              .slice(0, 16)
-              .map((b) => b.toString(16).padStart(2, "0"))
-              .join("");
+  const h = Array.from(new Uint8Array(hash))
+                 .slice(0, 16)
+                 .map((b) => b.toString(16).padStart(2, "0"))
+                 .join("");
+  // chave AES = HMAC-SHA256(derived, ROTULO_CHAVE)
+  const mac = await crypto.subtle.importKey(
+    "raw", bits, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+  );
+  const chave = await crypto.subtle.sign("HMAC", mac, enc.encode(ROTULO_CHAVE));
+  return { h, chave };
+}
+
+function b64(s) {
+  return Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+}
+
+async function decifrar(dados, chave, h) {
+  if (!dados.ct) return dados;          // ficha antiga, em claro
+  const k = await crypto.subtle.importKey(
+    "raw", chave, { name: "AES-GCM" }, false, ["decrypt"]
+  );
+  const pt = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv: b64(dados.iv), additionalData: new TextEncoder().encode(h) },
+    k, b64(dados.ct)
+  );
+  return JSON.parse(new TextDecoder().decode(pt));
 }
 
 async function carregarMeta() {
@@ -217,10 +243,10 @@ async function consultar(cpfRaw, dnRaw) {
   } catch (e) {
     return { erro: "Falha ao carregar o portal. Tente novamente em instantes." };
   }
-  const h = await derivarHash(norm.cpf, norm.dn, meta.salt, meta.iter);
+  const { h, chave } = await derivar(norm.cpf, norm.dn, meta.salt, meta.iter);
   const r = await fetch("data/" + h + ".json", { cache: "no-cache" });
   if (!r.ok) return { vazio: true };
-  const dados = await r.json();
+  const dados = await decifrar(await r.json(), chave, h);
   return { dados, meta };
 }
 

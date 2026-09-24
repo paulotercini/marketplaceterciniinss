@@ -1,45 +1,5 @@
 {
-  "nome": "Jose de Lourdes Vicente Barbosa",
-  "atualizado_em": "07/06/2026 as 22:15",
-  "processos": [
-    {
-      "cpf": "05750351882",
-      "dn": "24111960",
-      "nome": "Jose de Lourdes Vicente Barbosa",
-      "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Câmara de Julgamento",
-      "titulo_tarefa": "Jose de Lourdes Vicente Barbosa",
-      "status": "Última atualização em 06/04/2025: Recurso Especial interposto",
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2025-04-06",
-          "data_br": "06/04/2025",
-          "tipo": "Recurso Especial interposto",
-          "descricao": "Requerimento protocolado - Tarefa: 25342324 É sobre o recurso para a Câmara de Julgamento."
-        },
-        {
-          "data": "2025-02-25",
-          "data_br": "25/02/2025",
-          "tipo": "Recurso Especial interposto",
-          "descricao": "Apresentar recurso para as Câmaras de Julgamento."
-        },
-        {
-          "data": "2023-11-30",
-          "data_br": "30/11/2023",
-          "tipo": "Indeferimento do INSS",
-          "descricao": "Benefício indeferido."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no e-SISREC",
-          "url": "https://consultaprocessos.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
-        }
-      ],
-      "origem": "curado"
-    }
-  ]
+  "v": 1,
+  "iv": "RJqdQ1zU6Tw8Aakj",
+  "ct": "IVxqr0ee9hqSQNiF9GipPp6lzAIedTjEwclg+CtpNBhV/ko7KGLRO1DJZsPN1sU09Rvw6M54JIuyaLZuH1xTaswKgwvXwW82H3f46jlfhZ+Qq5SpNxe78TLMjvRc7XHmWT4Y84Zc39I6mxVMIaUpApjlFChwKfLvfetsQX3hRhw3L5AsuNPO7i0/iJVtm5ps1ObkizYk7nQVgOhl0MMAWKWhi1obBggUFHz/iDdris9ulbyG05Mg23oI2+pkntmkFxFHlK2/hgNmMJxDGobNFfXTqqiZ6jetziQZu8mFjwtVGOtAWQhe/8o5le7hkhoD7s97SLF+5u7ciuvCWKV4e6VcXI3gDrkagrwIFDNnb4i1VkfJ+1WBgRg3lremu/0PypW4LANDUxgWTEffFgiM0ulOvGUKGQ95C1GcLSGBWA4VY1JtSetJINStHkD/6kySoaUvrYosc2CJdQj5d//tZlIrkndnZojdKfNk1USAFgXMCmslQG33FrwhX/ruaWfRamyYmCD9CGnA5FplZRYRpTub+pEixSjVsHpUdf9XUJr4PRY60/5npTG7qzYp6uipgP27lpcUDpM43Vd8N7oEX4l11hcoOFijQqjuRENWZ9jDvZ1kuhLmjqlMVqJjoziUeQWPoFwv+FNSEL89U8ylx20QWxNFO36EG/uD5qWqC/JIIUQH+WBoCG0LeS/NxFh/ZoAUMnbHJ69OIwO7HXat624s6ztSYu3Dv6832rPwOyvIzmFEm2WOFUFzbpKrF8xlJ8jn30MUBq4SzgoOklN33HW2Dxb3rBxyMn0m7FuCcWs65tYkfFlWDvpCK+EEBOuMU44xamJsGWR/naI5qdUFGq3xMItEUff88GFi6x85zuCNbVzRPsTZNk/1i+gBtpZloTeAuzU1VHzNEScckwfsUACY7q0oY2fTphn+xKDqF44AB+yt5zy5H+GsELKtMkt+oRcuJpNdIAB3bRdCrZJS5/zmF4sI+0nLDo7ECF1Iz5sPVj3pb6KxJCztOlan0ufiKj+F3pUEZ8NiEKzsydIx/HRNE17zZYKUwyHy5YIYXTmSCxCHnpdQ9QihO6420YO+zcrz3/TfM9BbII/LWJE0kcpQ/iw2cLZMzRuX53CsQRgr+kmuFvDvVShq97+hLi+MGC2st2AJ4sH9Rz87/FqL5NYEYcSsjmUsmuAhc5+jIG22gUlU981MB9vjjcA3vSWzLn0eGVcBG8uL+jaL6Z2PZINWNKpJE33eYPhepR8+FPpS3yDXNDOmoXS5aQ1Ln+O83wYGNSHZ0EbY3pxWBKeTdhv9GzWKAKQOOITlc1A/isYLrF1CEyrBTBWVQJv81Knf+lqx2QIUgfaQn8p+EJt+hfgoYO+XWnhZRL9KaWYA20HU+4kpQQeq8tDJZNEeids0yOS0o4CNlzR1wnNpO2L44WzIn3SmurfGUbzr2WXuuZfzlcnSg43Y7D7M47Z6gxo9tFBYwls5r3iyuG0gJEQeV/Ty+XWUzQQfJg=="
 }

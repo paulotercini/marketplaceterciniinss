@@ -1,47 +1,5 @@
 {
-  "nome": "Edson Luiz Paggioli",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "03110105802",
-      "dn": "04061958",
-      "nome": "Edson Luiz Paggioli",
-      "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Câmara de Julgamento",
-      "titulo_tarefa": "Edson Luiz Paggioli",
-      "status": "Última atualização em 13/07/2025: Recurso Especial interposto",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2025-07-13",
-          "data_br": "13/07/2025",
-          "tipo": "Recurso Especial interposto",
-          "descricao": "Recurso Especial interposto."
-        },
-        {
-          "data": "2025-06-29",
-          "data_br": "29/06/2025",
-          "tipo": "Embargos de declaração interpostos",
-          "descricao": "Embargos de declaração interpostos."
-        },
-        {
-          "data": "2024-09-29",
-          "data_br": "29/09/2024",
-          "tipo": "Embargos de declaração interpostos",
-          "descricao": "Embargos de declaração interpostos."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no e-SISREC",
-          "url": "https://consultaprocessos.inss.gov.br/"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "HhXR40PE11nKQIT5",
+  "ct": "Uod2F1rEiKg8FAKpqkGnzStr/ujNYKHv3uQLgRbeyRRPfS+w7cJ1Ks4t1d4LSwWwYG3Lf3mCGLb85TCf9P4D3U1656r65s7mIr/VaZwUkEd1o3WjcSAAMraUxmZqyS9wNCNofiRVxPFjZIGHpKG7NUVRupcIR/wVh0dtp8e8UxI83A5p358Z0pDa33ZpR2haw0Vii/Naa+SFdYJ072nyBotWdiwnxJ6GSSNr1FvEqP+cxNfRQsladn52FR4qTHopS5idIRkVWGiLmwVtsK1G2BfzpkpdBIRN7v1IJx5p/patYZUpD/vUiVf9465zGp/X524R/y9QUSPGzWpR4p1wsu+WOBngsWWOU8alq4sQaHMbvxPZ8Opq/MMQ7jONlwfPpE/wV3M2dettS2qizeE5GMB3xi12/x/tBYt02w5K3kWRm/wr9lhsMOYpZdiXXJVa1D18PX1KShkYB+vNLk2opPRR/YlVWM2+33+1Bwe5q8RkDbrYxaxS11ckFUBMlQcdWgFKNXfXIvG7igPLN0EP36I3jyEhGiAMGxVkpyrytaaEkc2ErNFU7YhjCxW1BmZKgRxL6zGk7V6b0A6jcRsCDuk0wnU5/6B0/aSZhTbtE0HH8+2IGamlyFtPCuxuIr4MpuBKnQrWkJ+6PXJZ53KCZLIi7PD7e7OFtkHMhn0kQbaPROjS/9uXi11McjD19uCr0wUZ64fn0kY1MZ2LCXkDloKlIh0uD8/Zgav49SnjeWGjJYsoZMZLR4Q31TCs95m/Mmn4w2Ra5WM7z90UafEmhN89i6IFV1t6tAfEgUTXN6DPrCRkVsIgWPMBbW/8hnkk+iLqx4VjN4eMhwilsE+/yYG2vXYlnRbLxCBQBI/tZR4Voqrttli7h9VmOLUTv6hr1pDB2kzgVc+sCLHK4lQ2w39GLZjD1wbv87djRi8qWKPiaxJyO8sWa/lOaxiXBvJcW9g1A09rPGyJ7KTiyEpFM6zAn7jCRXyWiddQpNG1woL6ICBPNgCj3BcF8QdMRlTaoMddOxnHc+fU0A3Q4pzrMNsSxTVt3Y8aNwgN0A7Je3z1DCBhzaD4dJwCsmwU5b4oOLClD6Xs2W/2fnbGdlxyN43xpy51aTWhZWFgJSivq4jHbZ1w9HstDI5GOFuOpsZVGXD54C2pNP4qhKYJNb0YIb7RzHjd/9vJYATBO4Bk4cRkVwCReJeoyhUynqiqr7Kew3qgNGEYbRUYcmdYjtgUXGUOwhtuPOFJrHGS7zfwnhw5jnRPgUbMbmDyUnarwmlPFgNkPpRMMCPDQ15AUBl5j0qL2GqqOCWCIfZi155NNaEDd/owmVq8ZAWXtB1nE9EJiFhHjI6zj1PhrPs="
 }

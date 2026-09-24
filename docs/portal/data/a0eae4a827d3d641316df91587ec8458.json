@@ -1,41 +1,5 @@
 {
-  "nome": "Susete do Carmo Garbin",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "07588602856",
-      "dn": "06031966",
-      "nome": "Susete do Carmo Garbin",
-      "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Junta de Recursos",
-      "titulo_tarefa": "Susete do Carmo Garbin",
-      "status": "Última atualização em 10/07/2026: Acórdão: recurso provido",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2026-07-10",
-          "data_br": "10/07/2026",
-          "tipo": "Acórdão: deu provimento ao recurso",
-          "descricao": "Acórdão: recurso provido."
-        },
-        {
-          "data": "2025-04-06",
-          "data_br": "06/04/2025",
-          "tipo": "Indeferimento do INSS",
-          "descricao": "Pedido indeferido pelo INSS."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no e-SISREC",
-          "url": "https://consultaprocessos.inss.gov.br/"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "Lw1nYeYR/59d5zL9",
+  "ct": "87XSgOQJLj4eu1sFlNGLQGU0uq7PPruzBzz4Vi6iNZHO5flssGPS3dhkz1fVfC3byNJyEntnD8vZZmhW5AW9ok0DyDoY1obiz5fHrRu+depy+FnAZ2Z4njb4anRVvQMjuRaUplErMXNDe9e64lqfuhUsSGkuFrcL+mr+v2ouXuhCuk4ptdo0D0zF4qFs2Uyhh9P4r1+uv3mkXyYC2kD30VcbwxOT8Dx0aANFF+YpaqYBqHDGmEjuV41xAPPlTONq5bP6ENeA0xffHZOg10AIalakOP9WDXhWXQVZ1fCRQOfjjrbdwtEbRCLtidKyT99D98nBzCJmUbve9cQ6hta6Qnv/H6MUjovqZH9hCiXPbI8Zv9t7G9DAsBhBUCKQnXZP4eSYqPpEscGTME0PB6XJ4VT8UbIukgjGKcl5dipbKwaH5VYgwhCy2eWxTv2l9bXDxzNhnRYE9HhGWobbIQuqMtHYYbBiTuSJvR9DRJ/0jfGTMHgkzpRNW5LxG6R41UBRinoS9p/3/4fJLi8kHTIJIK3azsW2jyLY0EP/OHg454RAmC5HLP0deqWB1WIsJmQe1dO4aIrgmHHyQvP9IZ2QtKTWogkaach0nLYL3dgihwKa/93oUIpF0RGlOJcRMoTCeTMQoc4lxITf8S8OcZ7k+kixppysHN1BZSubo+rxQNzdovP+BvFk/W9h15mmfGIDGoshGfJL9yVBQqtp32GQc4cteoYWY3bd8Vq+0N/u1BQfJ1BNfzwlgJuESfNWul70pkcNI70KHmpE4hwCfvV41JSawz42oad0Mbq5TDHG+VYlRFFMzjlo5i6P+W4s54U23WgtISSYcMm+FApxy3Swb4S+lhvfHhYco8uJLSfdAVJ+DNRplsOj+6J/vwJoqpTjMphYeX1skJBC2u/MZzLLKapkjOnqwX688S2A1sY28jWV5aTXf+owKuFQ5uP5wzUDrfpRarxJtG6QSy7OeW+cthC3DCdJ3H8XjKvNbtBDzf9cwXEFYeZEbib3Q4HbnkvSklwqYJcUZM41kiGm2iDWy17JWJF3VKNFeBPtzz5XPtdSKocdcrGhukLCzDhVw3pFjJW6wYYGv6n3p7L68fUDrxXI6EIAiNhc1LIndtBf2nI4a/aeMFJxKQ=="
 }

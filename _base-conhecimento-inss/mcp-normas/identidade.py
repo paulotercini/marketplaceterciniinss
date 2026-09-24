@@ -195,6 +195,9 @@ NORMAS = {
     "Portaria-MPS-125-2026.md": (
         "portaria-mps-125-2026", "portaria", "125", 2026,
         "Portaria MPS nº 125, de 26 de janeiro de 2026 — Regimento Interno do CRPS"),
+    "Portaria-Conjunta-MPS-INSS-43-2026.md": (
+        "portaria-conjunta-43-2026", "portaria", "43", 2026,
+        "Portaria Conjunta MPS/INSS nº 43, de 18 de setembro de 2026 — prorroga o limite de 90 dias do B31 documental"),
 }
 
 # arquivo -> motivo de ficar fora do banco. Sai na visão geral, para o vazio ser declarado e

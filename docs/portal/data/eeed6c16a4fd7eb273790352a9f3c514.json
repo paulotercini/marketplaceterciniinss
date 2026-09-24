@@ -1,41 +1,5 @@
 {
-  "nome": "Artemir Luiz Marcelino",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "77577965987",
-      "dn": "14041971",
-      "nome": "Artemir Luiz Marcelino",
-      "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Câmara de Julgamento",
-      "titulo_tarefa": "Artemir Luiz Marcelino",
-      "status": "Última atualização em 07/12/2025: Recurso Especial interposto",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2025-12-07",
-          "data_br": "07/12/2025",
-          "tipo": "Recurso Especial interposto",
-          "descricao": "Recurso Especial interposto."
-        },
-        {
-          "data": "2025-09-06",
-          "data_br": "06/09/2025",
-          "tipo": "Processo distribuído ao relator",
-          "descricao": "Processo distribuído ao conselheiro relator."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no e-SISREC",
-          "url": "https://consultaprocessos.inss.gov.br/"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "gNQvM8yjOswOs+TL",
+  "ct": "lmtEyU0vIecRabllwC5XthS1Z3pi75V6F9FohPd64J/NvZ0gnV6A3dTDXneszE+WME2sDK0kq85D2KVmN1vWQfgHVTitQQYRD9cXW+Re0+YGRVZC+DFbMy1KcviybTQjnrslmNEYZ+PeOuv1QLta7viK+Wn0tXL012xWOHxMZ7Ve3kT6YpPK52HiZ1UW5RGlTVc5YI8IcZZ0anVITg1QBXsnYB5RZodyGkWIBK+R1ycbbSncbEWQpur29BtjXTsPtVaXg81WRM1275JYQCH4OI8UPtuR6q8sx/zj72mUVYrtip0F1Gy87UMdV7dnnGqEif8sMNx7kzaEiegfI3xFeez9uMjWdMJEJbAG4uih0rmm+8pgiDJXcbrjmX9YyU2d1imMoW72HN9KJ9uMhn4qcoLQNy7KakFCr3JjX7i7V5qWfBnfkt0bMON26hZiUZyXSasDx1lulJOOYSYAVhBkX8GSE7qFXYnaA62jo232koiskQptM7Un/8/xct4JU4DidjezJJFyIZ2WksyK0oDJrLTGQgKAI/PterqDmk7LmMF2MQGUU+bCiKb+6j+NgtSOA85fUzO2SfVQjDBwJzwHHvxuP3O5/VEYCQbwyAzt9nNGz8KsTDDYYkIyUpI+qDA29naRMh5QKNLyxoo0SQ3jFli/akgwdfc+ow5JSrCbuphibNv06GE83eKKwhwDgyaaaFm7rRMhtQq48PG3hnQDJ+GyGXZnbg1gEDqFu6c3dvhqtf3DNVY2Q30HTnAsvPGPFym734hUpbZld1vlYv93NRT2LWIK5lezfwMcewdRM+EXhRrIHlCa9qHklFXJ9FF7Ezr1aNJcbYIz9/cPtFioONM6aS3zA1QxC2x5kLHgG1LPamx7OYYk/Y89aXpH6uk+w67JDBfC1dHs5Rie4eyZgNZg/WSAMvJcFnQ1gapjj4FMEHPXjlO3JENeVPF0m4rz6PIuBeJ7cSwuwVzk289wF7k1+G/b+PfDOBPSAf+ab9zs6iufFYO9UJV6FkF+awIBVHLaJR+ZscM1VTJw1wbb+FV+vspcwo/N1Z/w747GxeluuC8wNcT7PJoEJsy6OEsUoMQQy2EDaNlqoAqcAX6bwtlMaPtaQzdozLvfzDU61sXH3357TLjKaXPUch27lquOeJBc1/8y/X+JWkrNujXyREw="
 }

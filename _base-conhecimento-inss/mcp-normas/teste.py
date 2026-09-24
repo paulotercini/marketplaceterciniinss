@@ -14,13 +14,13 @@ sys.stdout.reconfigure(encoding="utf-8")
 # ---------------------------------------------------------------- 1. tabela de identidade
 
 todos = [p.name for p in __import__("ingestor").arquivos(incluir_fora=True)]
-assert len(todos) == 60, f"o corpus tinha 60 arquivos .md em 20/09/2026, agora tem {len(todos)}"
+assert len(todos) == 61, f"o corpus tinha 61 arquivos .md em 22/09/2026 (60 + Portaria Conjunta 43/2026), agora tem {len(todos)}"
 faltam = [n for n in todos if n not in identidade.NORMAS]
 assert not faltam, f"arquivos fora da tabela de identidade: {faltam}"
 sobram = [n for n in identidade.NORMAS if n not in todos]
 assert not sobram, f"tabela de identidade aponta arquivo que não existe: {sobram}"
 assert all(n in identidade.NORMAS for n in identidade.FORA), "FORA cita arquivo fora da tabela"
-assert len({v[0] for v in identidade.NORMAS.values()}) == 52, "52 normas em 60 arquivos"
+assert len({v[0] for v in identidade.NORMAS.values()}) == 53, "53 normas em 61 arquivos"
 try:
     identidade.identidade("Lei-inexistente.md")
     raise SystemExit("arquivo fora da tabela tinha de levantar KeyError")
@@ -232,9 +232,9 @@ except Exception:
 
 um = lambda s, *a: real.execute(s, a).fetchone()[0]
 
-# medido em 20/09/2026 contra os 55 arquivos ingeridos
-assert um("SELECT count(*) FROM norma") == 48, um("SELECT count(*) FROM norma")
-assert um("SELECT count(*) FROM artigo") == 6728, um("SELECT count(*) FROM artigo")
+# medido em 22/09/2026 contra os 56 arquivos ingeridos (Onda 154 acrescentou a Portaria Conjunta 43/2026, 3 artigos)
+assert um("SELECT count(*) FROM norma") == 49, um("SELECT count(*) FROM norma")
+assert um("SELECT count(*) FROM artigo") == 6731, um("SELECT count(*) FROM artigo")
 assert um("SELECT count(*) FROM artigo WHERE vigente=1 AND revogado=1") == 0, \
     "nenhuma versão revogada pode estar marcada como vigente"
 

@@ -1,38 +1,5 @@
 {
-  "nome": "Alessandro Francisco Rodrigues",
-  "atualizado_em": "20/06/2026 às 17:42",
-  "processos": [
-    {
-      "cpf": "14432411805",
-      "dn": "15111974",
-      "nome": "Alessandro Francisco Rodrigues",
-      "lista": "🖥 Conselho de Recursos",
-      "localizacao": "Aguardando decisão da Junta de Recursos",
-      "titulo_tarefa": "Alessandro Francisco Rodrigues",
-      "status": "Última atualização em 06/04/2025: Pedido de benefício protocolado junto ao INSS",
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2025-04-06",
-          "data_br": "06/04/2025",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Pedido de benefício protocolado junto ao INSS."
-        },
-        {
-          "data": "2023-07-27",
-          "data_br": "27/07/2023",
-          "tipo": "Recurso administrativo protocolado",
-          "descricao": "Recurso administrativo protocolado."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no e-SISREC",
-          "url": "https://consultaprocessos.inss.gov.br/"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "dpl8NBql0xdT6vqR",
+  "ct": "71E5r2fGKO0vmJx7gJTCe3dWps8g57pQeRie91QLU9vj9A5bBjMzIQQlXdDuig+DOTBwYPnYFwqcfeaPMB036DKwQVVarzl0RvBmEsaTjW3O/xQMnnjCYeiRuwnVi9p8JfaSzNqvamoqYUtcNTg1hABfWU2lk4rIUFiWOMGqva37uCEvKTemb+qmxcsQp+Y1RQqkc9l8wGMJntG+RV3IPYXdH4uHWWT8GSgs6y9FDbMPJDCovqXaTVPgv4xh9MWhj+u0OoC/jxRroo17QaxXgS2oPTCVcXJggrYBXkbQjuSzaUQ9I5q4InVb7Lp2B5ja3UBC1Q8Q2V0eyCSp9aBnLdC8QJZXhHjUhrpZZ4iH5eJL8C3qaJ7WSIdphoYb2uu9ZQPXTuKg6nfUZvDUtCFDL5Ct3Ia2e11OvHvoipxCy7qMb7/EPjDTCL5q/clAz6YFr4xpBJjUjsw18xhFiZZp8yUEDbJQIYJ/qfcAgSn8Pn2B3CwmT56HfOtd29AM3WwZEHDydj4aMga5kUUt0uXwsOD/lVNUYHHvf7edkS4Wz4Vtl5ifhCvR+4Xb3EqsyIzo1EwNpckcW0/Fv9j/Mo3jRUc9PL+9etkR7OczOwcPdxCHtmd8fRefBsoVeN7j4ss5aFBPbmiDi4M7mTRzAMRk/KcmTnXmxmBmT9bgNF7HG35EafZMBOepgFILxbIwbYNP3QBkIdxQDDxvkPADZiEWycCWqGsAlnUAOhq7z+yiR2QmcbEIT6omGhm51aJHQPDVByD6zpQJGrj7xOhCFHGdo49rCWvoXRulstHhQmJG3mgxufpt/S8Tmso82S0lNMjnfW4S0R71eiqhAOOjZPz44+8ynrH3PFPSSKBXPgiBPmpkHhnWplmtrYUyIf6Th+tgoTW1MbPd5bW+42pY7NHzswzFQIRSzy+Woapt2XaRynbnTbaQIPUjRO148eTWpTO5ClPFd3nnLPSquqSXBDHyvJflhSr9d3v83z76M4yfWot1OHjJOHBAt0b8xERWKF/rulENg+xq6HRvs0NkozrgGghenC+C9Jtt3RJvulywdyo2B1r2AO0nG7G0vJtRs2d3G5MwNf1RVpBSM0w/M1q6JP69E8yb4bLcCVMGHIKF+G66aREhFno2n1x+7RNODUZnh00tTK4FudzSOBrpJFG5oEUnrDs="
 }

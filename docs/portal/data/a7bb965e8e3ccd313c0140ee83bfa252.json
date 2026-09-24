@@ -1,36 +1,5 @@
 {
-  "nome": "Valdir Furio",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "07558843880",
-      "dn": "25071965",
-      "nome": "Valdir Furio",
-      "lista": "🌻 INSS",
-      "localizacao": "Aguardando decisão do INSS",
-      "titulo_tarefa": "Valdir Furio",
-      "status": "Última atualização em 27/08/2026: Pedido de benefício protocolado junto ao INSS",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2026-08-27",
-          "data_br": "27/08/2026",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Pedido de benefício protocolado junto ao INSS."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "EVWXFc+xYwU0o5yR",
+  "ct": "aY+ZEEL9g8DKa/LxJ3vENfI+QbecMnd+CW+6kIvZ7/gotyx2l08uXZ/uYIn5ZWgPhcx39Yi5LT9CT7dnescGXuYSq3j5k7dmo8eHyR0tda+22GMrIhdpdELY43exi8/WexVYTMXhubqDKUZx23bKnhcuov8yS7tOP0tO0pIOZn7S2nW8ImgY5s3i9VE24POa8eVjQVKtoVdYLPFy4G8ZWVsOO1qvAwtcRGAYT8f7bkOfUy5DDpQxPOVwBs8cA5CjL+I1x3wcSoWaMNie5UI5gjIcfKrPF2dgmv7qsp+zrQleub9IPRxZYmBNBuNFEy3OcBqMZ51Z4E9JHHS4YSYtkvH5pePsmswyiFAWiZIcKGZ/SC3CNCeaXhQP03rY9vn4rPCtC9Jy1Rrchee3my5/CiwIlqdnxGf38owqpRBPK4W65ZuC/2yLO7Xopx6BGOzHE0qgj6nOwpCVWugpgmIw1jdBfJiDctoRBArbmcOwcO+3O286mLaN2+ZExddmbeeMoKTJgZBoAYiHz5UejVdSYNQH38ODOchZz3FYRyz3WxSOQEx5LYk3vi/uDvKAjpHlg1QchfJOy21EeSqDpGluqeF2CHxO1H9uNOtqKuI650FrsPSJ1thUBZCLRSx5lNpRZgxEvupoZKrqjAfPg7yzQRJKaqdH4zdSM4hAwLkqak+hHApqPTwxzE2rNDXeRxxp8V7eiNbgwlOT/8luqo37UC5qpSN/1jK73pQe8aDV5bt/WbDkFJSy0/3C5VIeEiUZiWUVb9KGXVMwuAu1nTep3csVaZ79WMzB5D+KGdPqWJ6jvWmXyWM8ifDl+cjXYmv/e6QkvKiflEHElIefYaEHRaelsaom07KODIHuyU669MmZ4jNqAnuKKWUmbWXKIHHm3vRc4/H2rmU1ahViPlZyHwPRTnrx9TtzTwKyFos8kYu++ojxCDTqc7yJ0mpVU/SSYFSaNT6Skw=="
 }

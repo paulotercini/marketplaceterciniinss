@@ -1,29 +1,5 @@
 {
-  "nome": "Edevaldo Cesar Augusto",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "14221928816",
-      "dn": "22021973",
-      "nome": "Edevaldo Cesar Augusto",
-      "lista": "🌻 INSS",
-      "localizacao": "Aguardando decisão do INSS",
-      "titulo_tarefa": "Edevaldo Cesar Augusto",
-      "status": "Em acompanhamento pelo escritório",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "j0VmpoiprPX7k48t",
+  "ct": "wJ3rMfQCMDoi/BqBLkLhHrqVidaeAKfPfCTc/R5reBuHVK8re81b7wScKb6Kmq/VccQsFUQBZGHH6D+UCuPAoXXwp1suxh+nSDMIdHGcD1orH4eVYEB0bPKoaXtJ/FY/sVubOdzhMPWN9beWTAIN2VAyeFempC1P59oeL+d0R7XmWmENL8ayUhFryAOPwKBpiTn3BDxxuZU/ZsAP8xxMPbo6DwurJU5758jTQpIS5fcODdHwpuO/B3vXlm1gqB9RyhZRpsdmvwdI33+zlqCnd6/wXRZ+T9ve10LrNmeOWRW2vdlYYlzou7GbO/BX33nuWEtbpM9JCA1HrZa5mmKR6dhKWK5DLy3f8F1ns4erzL/9FoOWgk+MAxyDV8KVdrMM3NCcN7aQTk+451st9EW+rHyJpDfWNMpd8iRr/MzdcoLWq0IL8WLhPjEvlrgy8tRJflg7ObeDxWK0amOM22jwH9G+UEIkOV4nlJCD++MoD6/dinspRWBNT8j97C6NEgmeMVhydCjpYbjyx3j8GCn0OnuSOQF+MoXJGVMRUfqQAbTcDN1Yecsjrai/o0GD7DNIEa8O2r6Sk2BndiDyhqZPl90bdcFVQAEBmFaJV+eJDYkfWItcfGzNysyv9CBkpiJ+ijWdS6wzQCX2hUj1+SJVERxndGnYBVOP8IozprfLbExFV+qzpu8mPaUR6kdFC6y7du3qRInWq4UoMcZig1EfRgGKtKhroIV1GesP/oyOug=="
 }

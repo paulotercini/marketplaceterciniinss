@@ -1,6 +1,6 @@
 ---
 name: analise-documental-incapacidade
-description: "Skill do regime de análise documental para B31, B91 e auxílio-acidente (B94), Portarias Conjuntas MPS/INSS nº 13, 14 e 15 de 23/03/2026. Use SEMPRE que mencionar análise documental INSS, perícia documental, Portaria Conjunta 13/2026, 14/2026, 15/2026, B31 documental, B91 documental, B94 documental, limite 30 dias, limite 90 dias, trava 180 dias, trava três indeferimentos, art. 60 §11-A, parecer verossimilhança, tempo médio CID, requisitos documentais perícia, sequela auxílio-acidente, consolidação lesões, triagem documental PMF, novo requerimento após cessação ou indeferimento, prorrogação auxílio-doença, 4 campos Meu INSS, autodeclaração sintomas, padrão de autodeclaração, como preencher os campos do Meu INSS, texto dos sintomas para o INSS, descrição da atividade no requerimento, pedido de ajuda no requerimento, atividade habitual, Teleperícia, Portaria DPMF/INSS 19/2026, telemedicina perícia, videoconferência perícia, SAT Remoto, recusa Teleperícia, cerceamento Teleperícia. Use AUTOMATICAMENTE ao redigir petição ou recurso de B31, B91, B94 e ao orientar requerimento administrativo. NÃO use para B32/B92, BPC/LOAS ou aposentadoria especial."
+description: "Skill do regime de análise documental para B31, B91 e auxílio-acidente (B94), Portarias Conjuntas MPS/INSS nº 13, 14 e 15 de 23/03/2026. Use SEMPRE que mencionar análise documental INSS, perícia documental, Portaria Conjunta 13/2026, 14/2026, 15/2026, Portaria Conjunta 43/2026 prorrogação 90 dias, B31 documental, B91 documental, B94 documental, limite 30 dias, limite 90 dias, trava 180 dias, trava três indeferimentos, art. 60 §11-A, parecer verossimilhança, tempo médio CID, requisitos documentais perícia, sequela auxílio-acidente, consolidação lesões, triagem documental PMF, novo requerimento após cessação ou indeferimento, prorrogação auxílio-doença, 4 campos Meu INSS, autodeclaração sintomas, padrão de autodeclaração, como preencher os campos do Meu INSS, texto dos sintomas para o INSS, descrição da atividade no requerimento, pedido de ajuda no requerimento, atividade habitual, Teleperícia, Portaria DPMF/INSS 19/2026, telemedicina perícia, videoconferência perícia, SAT Remoto, recusa Teleperícia, cerceamento Teleperícia. Use AUTOMATICAMENTE ao redigir petição ou recurso de B31, B91, B94 e ao orientar requerimento administrativo. NÃO use para B32/B92, BPC/LOAS ou aposentadoria especial."
 ---
 
 # Regime de Análise Documental — Incapacidade Temporária e Auxílio-Acidente
@@ -19,7 +19,7 @@ description: "Skill do regime de análise documental para B31, B91 e auxílio-ac
 - Publicação — DOU de 24/03/2026
 - Vigência — Imediata (24/03/2026)
 - Objeto — Ampliação excepcional e transitória do prazo máximo de duração do auxílio por incapacidade temporária concedido por análise documental
-- Duração da excepcionalidade — 180 dias (até aproximadamente 20/09/2026)
+- Duração da excepcionalidade — 180 dias a partir de 24/03/2026, PRORROGADA por 365 dias pela Portaria Conjunta MPS/INSS 43/2026 (DOU de 21/09/2026), até aproximadamente 20/09/2027 [CONFERIDO no DOU em 22/09/2026]
 - Processos — 35014.060869/2026-86 e 10128.003950/2026-51
 
 ### Portaria Conjunta MPS/INSS nº 15, de 23/03/2026
@@ -95,7 +95,7 @@ Antes de escolher entre novo requerimento e prorrogação, aplicar o ALERTA 7. I
 A soma dos benefícios de auxílio por incapacidade temporária concedidos por análise documental não pode ultrapassar 30 dias, inclusive se não consecutivos.
 
 ### Exceção transitória (Portaria 14/2026)
-Em caráter excepcional, o limite é ampliado para 90 dias, com vigência de 180 dias a partir de 24/03/2026 (até aproximadamente 20/09/2026). Após esse prazo, o teto retorna a 30 dias.
+Em caráter excepcional, o limite é ampliado para 90 dias, com vigência inicial de 180 dias a partir de 24/03/2026. A **Portaria Conjunta MPS/INSS 43/2026**, de 18/09/2026, publicada no DOU de 21/09/2026, prorrogou essa vigência por 365 dias, de modo que o teto de 90 dias segue até aproximadamente 20/09/2027, e as demais disposições da 14/2026 ficaram inalteradas (art. 2º). Fundamento, art. 60, § 11-I, da Lei 8.213/91. Só depois disso o teto retorna a 30 dias, salvo nova prorrogação [CONFERIDO no DOU em 22/09/2026].
 
 ## Natureza Acidentária (B91)
 
@@ -188,7 +188,7 @@ Dor crônica, fibromialgia, transtornos mentais, síndromes funcionais e outras 
 Os documentos do parágrafo único do art. 2º da Portaria nº 15 (laudos, exames de imagem, CAT, boletim de ocorrência) devem ser tratados como obrigatórios na prática, embora normativamente sejam facultativos. A diferença entre deferimento e indeferimento depende da robustez do conjunto probatório.
 
 ### ALERTA 5 — Impacto da expiração da Portaria nº 14
-Após 180 dias de vigência (≈20/09/2026), o teto retorna a 30 dias. Segurados com doenças de recuperação lenta que obtiveram até 90 dias por análise documental precisarão de exame presencial para continuidade. Monitorar a eventual prorrogação ou substituição normativa.
+A prorrogação veio, pela Portaria Conjunta 43/2026, e o teto de 90 dias vale até aproximadamente 20/09/2027. Segurados com doença de recuperação lenta continuam obtendo até 90 dias por análise documental, e a volta ao teto de 30 dias fica para setembro de 2027, salvo nova prorrogação. Monitorar em agosto de 2027.
 
 ### ALERTA 6 — Art. 8º como funil, regra vigente x tese impugnável
 No fluxo administrativo vigente, a via documental é a porta de entrada do B31 e o INSS opera o art. 8º como funil, perícia presencial garantida só após três indeferimentos documentais sucessivos, e novo pedido pós-indeferimento documental só após 30 dias (art. 6º, VI). Orientar o cliente por essa regra. A leitura do art. 8º como norma de garantia (direito à perícia presencial desde o primeiro requerimento) é TESE DE IMPUGNAÇÃO, a sustentar por MS ou em juízo, ver seção própria e a seção 7.6 do arquivo de referência. Nunca apresentar a tese ao cliente como se fosse o funcionamento do sistema.

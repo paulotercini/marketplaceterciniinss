@@ -1,45 +1,5 @@
 {
-  "nome": "Cassia Regina Suffin de Biaggi",
-  "atualizado_em": "07/06/2026 as 22:15",
-  "processos": [
-    {
-      "cpf": "14100569882",
-      "dn": "10051970",
-      "nome": "Cassia Regina Suffin de Biaggi",
-      "lista": "🌻 INSS",
-      "localizacao": "Aguardando decisão do INSS",
-      "titulo_tarefa": "Cassia Regina Suffin de Biaggi",
-      "status": "Última atualização em 21/10/2025: Indeferimento do INSS",
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2025-10-21",
-          "data_br": "21/10/2025",
-          "tipo": "Indeferimento do INSS",
-          "descricao": "Indeferido."
-        },
-        {
-          "data": "2025-09-19",
-          "data_br": "19/09/2025",
-          "tipo": "Perícia médica",
-          "descricao": "Perícia médica agendada para o dia 22/09 as 09:00h no INSS de Araraquara."
-        },
-        {
-          "data": "2025-08-05",
-          "data_br": "05/08/2025",
-          "tipo": "Pedido protocolado no INSS",
-          "descricao": "Solicitado o benefício."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "Consultar no Meu INSS",
-          "url": "https://meu.inss.gov.br/",
-          "obs": "Use seu CPF e sua senha gov.br"
-        }
-      ],
-      "origem": "curado"
-    }
-  ]
+  "v": 1,
+  "iv": "TZOrWvzV0AWonAGY",
+  "ct": "PnIVHGJUDTKdlMEcDQFqIYdUz6LAqBLuqHw5JDwoFztNS1pjZaaOmZTsA0s4Gq/B1PddmS9hToi2gYTIb+eXpTwM9am9IJhwAPtfUPuQJUHGw6CAof0JFyznNwJ2W5tS6BkOY910U99M5mBEY4G+7xCQuTPMrzEMp0zVZxau1Sdxj38n8qRQk5uVPHSGCtdVlD0OI6AmfUBHUlBECFT4GL/k3W/OKn4uoQi+Ri1o/wYau+bVB/h5AFP2+KrIjK0qWV0zh6WCPpjdraX3gGHlVYgGIkod5T6xYeaz0dpf54uhKnSOivFHmEpRgk21X9rKaIHgc5CjVtyD3lxV/NKSFBw99jNroxpKG968iPKmQMcejIagNEnBRQf0aQYivg46SliEgw3HhassDCfknm7lmsqRl0YwE6Qg4yQ9UyuO7D7kYSyySdDUQQRHCZvmwU0cH1FvDuYAxnE2qNJ+A2gYnfDmB9g22kYAs6Lj748S8ATGzeRqt3HitwMdw2tYqE4LxS0n2PnswcfWz9WClmGieqCng8H7tYGcpc0GKo/HQ5aD6zjKt8+b/1LBpooHxh9Ky1bCACheyyOq2QCl3gQfTGfjO5SAWA9fEEQFkXhkyJH5CVLWAEy3RuVSKt5ojSdHaGSIjaNgNdJuGL27H7Uk2Ut5jSLIbJcmiCp+a5Z45iAznSdWTnHIdqlsxzRzfT3mkXEz9QkvOEpOd5mYpp+3RSeZ+zYP1DsELkRrIv5R/d1o2gtcIMFnzzEHs2Y5qWS4oCwWq9hLbEnveyobmPQSXfFu5kd7T1pYmn5jzbo834/laiwp1rEYSuo+xnfb1vTWiDQngYv+oFfxSJ7tCGCyi8vAGV0NjMWxa9YFV5KTZhEezyHSpJFO5sNgrgSBTUexkAVqXSt5uscdVMd2SbhbuUxu9Iv067UZpNzL2do/cMb8Rq9TeoupF5VU2sx1iLkohUf9ls8v5e6Be/uI5jlZRw+WcBg3RG2NIiVfi4r1I2jcfM/IwFlM3JgMLj3HVXJF4fgjng5Q3bHp8clYO35VpwZwq6ZJYJF+Ob41TYs1UmSCXU2Mm/TMIFb6Wa3lSd3/l0aTmLqaA98mYnWhZ9D8s0f7ZyRrTXd0LVQ5RODt4QAFw9bU/T0kkyroG2nP356KDxgi6NbZF2C2EMQqa1x122LACCgoiQt3XB1d698b3+JiKGBe1JlVgOnwb5Mh6xW31NRYiCq239tB3S6v/5I5rmRnOTvu+18gge+qbb4HHszCoL2tRJiLjoS/Bkc6EM5MW1WEOm0kp2DBvMw4/+ixNN1yYYQEdpCEAJzydRcWBemUWs4ZhMkwmvfPIq1FzLk="
 }

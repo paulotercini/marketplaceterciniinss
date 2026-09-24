@@ -1,43 +1,5 @@
 {
-  "nome": "Lucimara Aparecida Truguilo Sanches",
-  "atualizado_em": "19/09/2026 às 11:46",
-  "processos": [
-    {
-      "cpf": "12243715856",
-      "dn": "13111967",
-      "nome": "Lucimara Aparecida Truguilo Sanches",
-      "lista": "👪 Judicial",
-      "localizacao": "Aguardando Decisão Judicial",
-      "titulo_tarefa": "Lucimara Aparecida Truguilo Sanches",
-      "status": "Última atualização em 14/07/2026: Laudo pericial juntado aos autos",
-      "etapa": null,
-      "fila": null,
-      "fila_em": null,
-      "proximo_evento": null,
-      "timeline": [
-        {
-          "data": "2026-07-14",
-          "data_br": "14/07/2026",
-          "tipo": "Laudo pericial juntado",
-          "descricao": "Laudo pericial juntado aos autos."
-        }
-      ],
-      "notas_publicas": [],
-      "links_externos": [
-        {
-          "label": "PJe TRF3 — 1º grau (Justiça Federal SP/MS)",
-          "url": "https://pje1g.trf3.jus.br/pje/login.seam"
-        },
-        {
-          "label": "PJe TRF3 — 2º grau",
-          "url": "https://pje2g.trf3.jus.br/pje/login.seam"
-        },
-        {
-          "label": "ESAJ — TJSP (Justiça Estadual)",
-          "url": "https://esaj.tjsp.jus.br/cpopg/open.do"
-        }
-      ],
-      "origem": "auto"
-    }
-  ]
+  "v": 1,
+  "iv": "mwDFdO6r1bqe8Ldm",
+  "ct": "UbAAB/lCmt2EyOLS9MV1sESEGCiXFdvJpPHB90nq+87XmdRrRENXenrd3mY8beCGJiVz8B7uRhh2XQNHRsCFdgNfmEluhzGnlXAETbj1hmObZxfbxmy8/JLJ48tGP4EY8Qj8ZmLF9rJEN4lRC8pmzoNjFkVMQq7VridfABNz56nGv4wAdEI71YL9rdfWn8ubGrhefkdDWYb36TV/HZQrRjf9PEODTYvI2gfp1z7MjpFZ81q3jmAim+BeGrUWcAwPTl4TEs6UzvwVJGfkdVyRdvuHRAHncmtNMFovToY0oTWsUxuzyJZQWGf9kb5vDwRigD3pl3YS/Yy3z8RQIMxH3jJyJUGCoSpv60sLqkKCdJMhO/M0xwCs7DMGW4CIglHJyY1TrIhyAZb++MjzlDpFG0MlYnTV71pQ96y6JKVqJ0P4ljNU+dj5oBf8JMqAoA4W6j7eWiUvybuyWJcijf+6YYA7OntAEJzX+tpiWYPN/y1KbXj+9CnjnC5MNx+TL0GBRVXf0xA+u/BfVWLWhG9ae8eP+oq5elmVBNrTMB9L9agcL9s1zTUmcv5xpS44G0vwMGmeZNEmWgVa8rIbFDddjNQ3nRbvnXSkKE5W7Fn9ugvE9wBOZLIsWvRzA5ti/o0nSd7uHkxXv7euxRXHl1eYPOeKeAzvMJGT0yxeXPlKk0hlHcgliY8HdUpwcImQ7+AbKLMdvO/DddYz+0eWW6ap+Ku42yWw+juYdbsoMYrmOsjubhUUZkAiX9soqhHavrpSAUojqs7+EheqyxRMfly4jHh8BD2PnHBe9jsdqDjJNeegsVvDE0Yv3dKE2CKXm89BZ62xyfnvnqvy5m3snFSGNu9sGHt6K0QeBNwVcRaA3EW/uohnp/Prn82bwFGEMpvw/DwdFB2ySrXxFTfgYuk+LQG/Hf9CKjyyyPqnamgK3xi1OQWuJ/K6CnwgpKdyGd2LQjoeeLFhtBbLJ4MNBTimxFm+s5aANXHx5uDVsSYeu87eJoHOSmIntvPYFPLEBN82Nx5Rgtimun0dYx5S34TmrhnSM9zDXHXjohjAdzECBI/pBUOBo+JlW2t7dzeF6lIzir+BraAcS+ZexG0bu0qLNFNmOtGkTgkxR+Mx+p1O8nTPUajLmgxZ+Y+eeI3VHTIc71rXVhFSt4msP8C4e8jk12d1KVAFvu9heNik2EoJPMJZUGfbA8cVdP0Bn8TptFMqKzmpuYvjEq5xVk0sJoW5/Wrthb/DZ3Btl9IsEtG2qqolqrW8EUwsxnA="
 }
