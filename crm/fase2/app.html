@@ -1722,6 +1722,17 @@
   .kcard .nome{font-weight:600}
   .kcard .meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
   .kcard .acao{margin-top:6px}
+  /* F132 · quadros por horizonte */
+  .kq .kcard{cursor:pointer}
+  .kq .kcard .quem{display:inline-flex;align-items:center;gap:4px;margin-left:auto}
+  .kq .kcard .topo{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--cinza)}
+  .kq .kcard.venceu{border-left:3px solid var(--vermelho)}
+  .kq .faixa{margin:6px 0 4px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--cinza)}
+  .kq .faixa .avatar.mini{width:18px;height:18px;font-size:10px}
+  .kq2{display:grid;gap:8px;align-items:start}
+  .kq2 .cel{background:var(--lateral);border:1px solid var(--borda);border-radius:10px;padding:8px;min-height:48px}
+  .kq2 .cab{font-size:12px;color:#C3C9D4;text-transform:uppercase;letter-spacing:.04em;padding:4px 2px;display:flex;align-items:center;gap:6px}
+  .kq2 .lin{font-size:12px;font-weight:600;color:var(--cinza);padding:8px 2px}
   .mencao{border:1px solid var(--borda);border-left:4px solid var(--laranja);border-radius:8px;padding:11px 14px;margin-bottom:8px;background:var(--branco)}
   .mencao .cab{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px}
   .mencao .texto{font-size:13px;white-space:pre-wrap}
@@ -2508,7 +2519,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.35</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.36</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3749,6 +3760,8 @@ function montarSidebar(){
     ["claude","🤖 Claude", D.sugestoes.length],
     ["docmodelos","📄 Modelos", D.docModelos.length],
     ["quadro","📌 Quadro", null],
+    // F132 · três desenhos do quadro por horizonte, em teste (24.09.2026)
+    ["quadro1","📌 Quadro 1", null], ["quadro2","📌 Quadro 2", null], ["quadro3","📌 Quadro 3", null],
     ["vendas","💼 Vendas", D.leads.filter(l=>!["fechado","perdido"].includes(l.etapa)).length],
     // o número que aparece é o que exige ação: não lida ou sem dono
     ["whatsapp","💬 WhatsApp", (D.zapResumo||0) || null],
@@ -5491,6 +5504,7 @@ function render(){
   if(visao==="mencoes") return renderMencoes();
   if(visao==="docmodelos") return renderModelosDoc();
   if(visao==="quadro") return renderQuadro();
+  if(/^quadro[123]$/.test(visao)) return renderQuadroN(+visao.slice(-1));
   if(visao==="vendas") return renderVendas();
   if(visao==="whatsapp") return renderWhats();
   if(visao==="novidades") return renderNovidades();
@@ -7918,6 +7932,104 @@ function ligarQuadro(){
       aviso("Fase: "+NOME_FASE[k.fase]); montarSidebar(); renderQuadro();
     };
   });
+}
+
+// ── 📌 Quadros por horizonte (F132, em teste) ──────────────────────────────
+// Uma providência com data por cartão: prazo fatal, lembrete de comentário,
+// pedir prorrogação, tarefa, lembrete de época e perícia agendada. O dono é
+// quem a anotação atribuiu; caso sem atribuição fica "sem dono".
+let quadroColab = null;
+function providenciasComData(){
+  const out=[];
+  const nomeC = k => (D.cliPorId.get(k.cliente_id)||{}).nome || "cliente sem ficha";
+  const donos = k => (D.atrDoCaso.get(k.id)||[]);
+  ativos().forEach(k=>{
+    if(k.prazo){ const og = origemDoPrazo(k);
+      out.push({data:k.prazo, ico:"⏰", tipo:"Prazo fatal", txt: og?og.texto:tituloCaso(k), nome:nomeC(k), cli:k.cliente_id, donos:donos(k)}); }
+    const pe = prorrogarEm(k);
+    if(pe) out.push({data:pe, ico:"🩹", tipo:"Pedir prorrogação", txt:`DCB ${fmt(k.dcb)}`, nome:nomeC(k), cli:k.cliente_id, donos:donos(k)});
+    (D.tarefasPorCaso.get(k.id)||[]).filter(t=>t.lembrar_em && !t.concluida_em).forEach(t=>
+      out.push({data:t.lembrar_em, ico:"🔔", tipo:"Lembrete", txt:tituloCaso(k), nome:nomeC(k), cli:k.cliente_id, donos:[t.colaborador_id]}));
+  });
+  D.tarefas.filter(t=>!t.concluida && t.prazo).forEach(t=>{
+    const c = t.cliente_id ? D.cliPorId.get(t.cliente_id) : null;
+    out.push({data:t.prazo, ico:"📋", tipo:"Tarefa", txt:t.titulo, nome:c?c.nome:"", cli:c?c.id:null, donos:t.particular_de?[t.particular_de]:[]});
+  });
+  (D.lembretes||[]).filter(l=>l.ativo!==false && l.proximo_em).forEach(l=>{
+    const c = D.cliPorId.get(l.cliente_id)||{};
+    out.push({data:l.proximo_em, ico:"🎂", tipo:rotuloTipoLembrete(l.tipo).replace(/^\S+\s/,""), txt:l.titulo, nome:c.nome||"", cli:c.id||null, donos:[]});
+  });
+  D.eventos.filter(e=>e.status==="agendada").forEach(e=>{
+    const k = D.casoPorId.get(e.caso_id); if(!k) return;
+    out.push({data:dataSP(e.data_hora), ico:"🩺", tipo:e.tipo, txt:horaSP(e.data_hora), nome:nomeC(k), cli:k.cliente_id, donos:donos(k)});
+  });
+  return out.sort((a,b)=>a.data<b.data?-1:1);
+}
+// horizontes: vencidas, hoje, amanhã, resto da semana (até domingo), resto do mês
+function horizontes(){
+  const h = hoje(), d0 = new Date(h+"T12:00:00");
+  const em = n => { const x=new Date(d0); x.setDate(x.getDate()+n); return x.toLocaleDateString("sv"); };
+  const dow = d0.getDay();                       // 0 = domingo
+  const fimSem = em(dow===0 ? 0 : 7-dow);
+  const fimMes = new Date(d0.getFullYear(), d0.getMonth()+1, 0).toLocaleDateString("sv");
+  return [
+    ["venc","🔴 Vencidas", d=>d<h],
+    ["hoje","Hoje", d=>d===h],
+    ["amanha","Amanhã", d=>d===em(1)],
+    ["semana","Restante da semana", d=>d>em(1) && d<=fimSem],
+    ["mes","Restante do mês", d=>d>fimSem && d<=fimMes],
+  ];
+}
+function kcardProv(p){
+  const quem = p.donos.map(id=>D.colPorId.get(id)).filter(Boolean);
+  return `<div class="kcard ${p.data<hoje()?"venceu":""}" ${p.cli?`data-cli="${p.cli}"`:""}>
+    <div class="topo"><span>${p.ico} ${esc(p.tipo)} · ${fmt(p.data)}</span>
+      <span class="quem">${quem.length?quem.map(c=>`<span class="avatar mini" style="background:${c.cor}" title="${esc(c.nome)}">${esc(c.inicial)}</span>`).join("")
+        :`<span class="meio-sub" title="caso sem atribuição">sem dono</span>`}</span></div>
+    <div class="nome">${esc(p.nome)}</div>
+    <div class="meta"><span>${esc((p.txt||"").slice(0,90))}</span></div></div>`;
+}
+function chipsQuadro(){
+  return `<div class="filtros">`+[`<button class="fchip ${quadroColab===null?"on":""}" data-qcol="">Todos</button>`]
+    .concat(equipeAtiva().map(c=>
+      `<button class="fchip fchip-ini ${quadroColab===c.id?"on":""}" data-qcol="${c.id}" title="${esc(c.nome)}">`+
+      `<span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span></button>`)).join("")+`</div>`;
+}
+function renderQuadroN(n){
+  tituloLista(`📌 Quadro ${n}`);
+  const subs = {1:"Colunas por horizonte, filtro por colaborador — o que vence e quando.",
+                2:"Linhas por horizonte, colunas por colaborador — quem carrega o quê.",
+                3:"Colunas por horizonte com uma faixa por colaborador — as duas leituras numa tela."};
+  document.getElementById("sub-lista").textContent = subs[n] + " Em teste: clique no cartão abre a ficha.";
+  const todas = providenciasComData();
+  const hz = horizontes();
+  const ps = todas.filter(p=>!quadroColab || p.donos.includes(quadroColab));
+  const eq = equipeAtiva();
+  let html = chipsQuadro();
+  if(n===1){
+    html += `<div class="kanban kq">`+hz.map(([id,rot,f])=>{ const g=ps.filter(p=>f(p.data));
+      return `<div class="coluna" data-hz="${id}"><h4>${rot}<span>${g.length}</span></h4>${g.map(kcardProv).join("")}</div>`; }).join("")+`</div>`;
+  } else if(n===2){
+    const cols = [...eq, {id:null, nome:"Sem dono", inicial:"—", cor:"#9AA0B0"}].filter(c=>!quadroColab || c.id===quadroColab);
+    const de = (c, g) => g.filter(p=> c.id ? p.donos.includes(c.id) : !p.donos.length);
+    html += `<div class="kq kq2" style="grid-template-columns:120px repeat(${cols.length},minmax(170px,1fr))">`
+      + `<div></div>` + cols.map(c=>`<div class="cab"><span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome.split(" ")[0])}</div>`).join("")
+      + hz.map(([id,rot,f])=>{ const g=ps.filter(p=>f(p.data));
+          return `<div class="lin">${rot} <span class="meio-sub">${g.length}</span></div>`
+            + cols.map(c=>`<div class="cel">${de(c,g).map(kcardProv).join("")}</div>`).join(""); }).join("")
+      + `</div>`;
+  } else {
+    html += `<div class="kanban kq">`+hz.map(([id,rot,f])=>{ const g=ps.filter(p=>f(p.data));
+      const faixas = [...eq.filter(c=>!quadroColab || c.id===quadroColab).map(c=>[c, g.filter(p=>p.donos.includes(c.id))]),
+                      [{nome:"Sem dono", inicial:"—", cor:"#9AA0B0"}, quadroColab?[]:g.filter(p=>!p.donos.length)]]
+        .filter(([,x])=>x.length);
+      return `<div class="coluna" data-hz="${id}"><h4>${rot}<span>${g.length}</span></h4>`
+        + faixas.map(([c,x])=>`<div class="faixa"><span class="avatar mini" style="background:${c.cor}">${esc(c.inicial)}</span>${esc(c.nome.split(" ")[0])} <span class="meio-sub">${x.length}</span></div>${x.map(kcardProv).join("")}`).join("")
+        + `</div>`; }).join("")+`</div>`;
+  }
+  document.getElementById("conteudo-meio").innerHTML = html;
+  document.querySelectorAll("[data-qcol]").forEach(b=>b.onclick=()=>{ quadroColab=b.dataset.qcol||null; render(); });
+  document.querySelectorAll(".kq .kcard[data-cli]").forEach(el=>el.onclick=()=>abrirFicha(el.dataset.cli));
 }
 
 // ── 💼 Vendas (funil de prospectos) ───────────────────────────────────────
