@@ -72,6 +72,11 @@ RE_EVENTO = re.compile(
     r"(?:[^\n]{0,20}?\b(\d{1,2})[:hH](\d{2})?)?",
     re.I,
 )
+# [24.09.2026] "perícia do dia 14." colado no cabeçalho do bloco seguinte
+# ("10.07.2026 (A):") virava "14.10.07.2026" e nascia perícia em 14/10 do
+# ano seguinte. Data seguida de outra data é o cabeçalho de bloco, não a data
+# do evento.
+RE_DATA_COLADA = re.compile(r"^[./]\d{1,2}[./]\d{4}")
 RE_TELEFONE = re.compile(r"\(?\b\d{2}\)?\s?9?\d{4}[- ]?\d{4}\b")
 RE_PROCESSO = re.compile(r"\b\d{7}-?\d{2}\.\d{4}\.\d\.\d{2}\.\d{4}\b")
 RE_NB = re.compile(r"\bNB[:\s]*(\d[\d.\-/ ]{7,})", re.I)
@@ -103,6 +108,8 @@ def eventos_de(texto, data_ref):
     for m in RE_EVENTO.finditer(texto or ""):
         tipo = _sem_acento(m.group(1)).lower()
         tipo = {"pericia": "Perícia", "audiencia": "Audiência"}.get(tipo, "Avaliação social")
+        if not m.group(4) and RE_DATA_COLADA.match(texto[m.end(3):m.end(3) + 12]):
+            continue
         try:
             if m.group(4):
                 data = datetime.date(int(m.group(4)), int(m.group(3)), int(m.group(2)))

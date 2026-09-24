@@ -2508,7 +2508,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.31</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.32</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -14557,9 +14557,15 @@ function recorrerAte(k){
 function origemDoPrazo(k){
   if(!k || !k.prazo) return null;
   const carimbo = `[PRAZO ${fmt(k.prazo)}]`;
-  const a = (D._andsFicha||[]).filter(x=>x.caso_id===k.id && !x.excluir)
-    .filter(x=>(x.texto||"").includes(carimbo))
-    .sort((x,y)=>(x.criado_em||"")<(y.criado_em||"")?1:-1)[0];
+  const dos = (D._andsFicha||[]).filter(x=>x.caso_id===k.id && !x.excluir)
+    .sort((x,y)=>(x.criado_em||"")<(y.criado_em||"")?1:-1);
+  // [24.09.2026] o prazo que veio do "Concluir em" do To Do não tem carimbo,
+  // mas quase sempre tem a anotação que o motivou ("Verificar em 25/09"): a
+  // nota mais recente que cita a data, com ou sem ano, é a origem
+  const [aa, mm, dd] = String(k.prazo).slice(0,10).split("-");
+  const reData = new RegExp(`\\b${dd}[./]${mm}(?:[./]${aa})?\\b(?![./]\\d)`);
+  const a = dos.find(x=>(x.texto||"").includes(carimbo))
+         || dos.find(x=>reData.test(x.texto||"") && !/^(PJe|e-SAJ|eproc|CRPS)/.test(x.texto||""));
   if(!a) return null;
   const co = D.colPorId.get(a.autor_id);
   return {id:a.id, quem:co?co.nome.split(" ")[0]:"", em:dataSP(a.criado_em),

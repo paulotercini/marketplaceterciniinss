@@ -180,3 +180,15 @@ def test_evento_com_ano_completo_continua_igual():
     evs = sync_todo.eventos_de("Perícia agendada dia 13.04.2027 às 12:30 em Bebedouro",
                                datetime.date(2026, 8, 1))
     assert evs[0]["data"] == "2027-04-13" and evs[0]["hora"] == "12:30"
+
+
+def test_evento_nao_nasce_de_data_colada_no_cabecalho_do_bloco():
+    # [24.09.2026] "perícia do dia 14." colado em "10.07.2026 (A):" virava
+    # perícia em 14/10 do ano seguinte (caso real, ficha do Geziel)
+    import datetime
+    from crm import sync_todo as st
+    assert st.eventos_de("Foi instruído para a perícia do dia 14.10.07.2026 (A): Entrei em contato",
+                         datetime.date(2026, 8, 12)) == []
+    # a data completa continua valendo
+    ev = st.eventos_de("perícia marcada para 14/10/2026 às 9h", datetime.date(2026, 8, 12))
+    assert ev and ev[0]["data"] == "2026-10-14"
