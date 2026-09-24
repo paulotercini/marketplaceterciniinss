@@ -2508,7 +2508,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.32</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.33</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -5517,8 +5517,8 @@ function render(){
   if(filtroColab) casosSel = casosSel.filter(k=>(D.atrDoCaso.get(k.id)||[]).includes(filtroColab));
   const chipsCol = `<div class="filtros">`+[`<button class="fchip ${filtroColab===null?"on":""}" data-fcol="">Todos</button>`]
     .concat(equipeAtiva().map(x=>
-      `<button class="fchip ${filtroColab===x.id?"on":""}" data-fcol="${x.id}">`+
-      `<span class="avatar mini" style="background:${x.cor}">${esc(x.inicial)}</span>${esc(x.nome)}</button>`)).join("")+`</div>`;
+      `<button class="fchip fchip-ini ${filtroColab===x.id?"on":""}" data-fcol="${x.id}" title="${esc(x.nome)}">`+
+      `<span class="avatar mini" style="background:${x.cor}">${esc(x.inicial)}</span></button>`)).join("")+`</div>`;
   // na lista INSS, os casos em exigência (prazo legal de 30 dias) vêm primeiro
   const emExig = casosSel.filter(emExigencia);
   if(visao==="fase:inss" && (emExig.length || soExigencia)){
