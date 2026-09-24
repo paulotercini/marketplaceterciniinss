@@ -2508,7 +2508,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.33</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.34</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3738,7 +3738,7 @@ function montarSidebar(){
     ["agenda","🩺 Perícias & Audiências", D.eventos.filter(e=>e.status==="agendada" && dataSP(e.data_hora)>=hoje()).length],
     ["dashboard","📊 Dashboard", null],
     ["patinss","📥 Importar do INSS", null],
-    ["config","⚙️ Configurações", null],
+    ...(souAdmin() ? [["config","⚙️ Configurações", null]] : []),
   ].map(([id,rot,n])=>`<div class="lista-item" data-v="${id}" aria-label="${soTexto(rot)}">${rotu(rot)}${n?`<span class="cont">${n}</span>`:""}</div>`).join("");
   const bSom=document.getElementById("btn-som");
   const sinoSvg = on => `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10ZM10 19a2 2 0 0 0 4 0"/>${on?"":'<path d="M4.5 4.5 19.5 19.5"/>'}</svg>`;
@@ -3771,7 +3771,8 @@ function montarSidebar(){
   if(st){
     const t = cfgApp("todo_sync_em");
     // F47 · disparo manual ao lado do carimbo — some enquanto roda
-    const btnSync = (syncRodando
+    // F130 · o disparo e o 🩺 usam o gh_token, que só o admin lê
+    const btnSync = !souAdmin() ? "" : (syncRodando
       ? `<span class="txt" style="color:#9AA0B0">⏳ sincronizando…</span>`
       : `<button class="btn-mini" id="btn-sync-todo" onclick="sincronizarToDoAgora()"
           title="dispara agora a sincronização To Do → CRM (a mesma que roda de hora em hora; leva ~2 min)">🔄 agora</button>`)
@@ -5468,7 +5469,7 @@ function render(){
   if(visao==="novidades") return renderNovidades();
   if(visao==="acervo") return renderAcervo();
   if(visao==="patinss") return renderImportarPat();
-  if(visao==="config") return renderConfig();
+  if(visao==="config") return souAdmin() ? renderConfig() : renderMeuDia();
   if(visao==="parcerias") return renderParcerias();
   if(visao==="marketing") return renderMarketing();
 
@@ -6796,6 +6797,8 @@ const segBtnHtml = (i, rot) => `<button class="btn-mini" onclick="abrirSeguiment
 // F51 · o responsável padrão do escritório: o admin ativo (o Paulo) — é
 // quem recebe, por padrão, a conferência do resultado de julgamento
 const colAdmin = () => equipeAtiva().find(c=>c.papel==="admin") || eu;
+// F130 · quem administra: edita a equipe, vê ⚙️ Configurações e o 🔄/🩺
+const souAdmin = () => !!eu && eu.papel==="admin";
 let segAberto = null;
 function abrirSeguimento(i){
   const s = segItens[i]; if(!s) return;
@@ -8526,6 +8529,10 @@ async function renderConfig(){
             <option value="">setor…</option>
             ${SETORES.map(s=>`<option ${c.setor===s?"selected":""}>${s}</option>`).join("")}
           </select>
+          <input type="email" data-email="${c.id}" value="${esc(c.email||"")}" placeholder="e-mail de login"
+            title="o mesmo e-mail cadastrado em Authentication → Users no Supabase; ao criar o usuário lá, o CRM liga sozinho"
+            style="min-width:200px">
+          <span class="meio-sub" title="${c.auth_id?"login ligado":"sem login ainda"}">${c.auth_id?"🔑":"—"}</span>
           <select data-cargo="${c.id}">
             <option value="">cargo…</option>
             ${[["advogado","advogado(a)"],["estagiario","estagiário(a)"],["assistente","assistente (IA)"]]
@@ -8682,6 +8689,16 @@ function ligarConfig(){
     await guardarCfgApp("avisar_caso_novo", marcados.join(","));
     aviso(marcados.length ? `${marcados.length} pessoa(s) avisadas de caso novo`
                           : "Ninguém será avisado de caso novo", false);
+  });
+  guarda("[data-email]", el => el.onchange = async ()=>{
+    const c = D.colPorId.get(el.dataset.email);
+    const email = (el.value||"").trim().toLowerCase() || null;
+    try{
+      await api(`/rest/v1/colaboradores?id=eq.${el.dataset.email}`,{method:"PATCH",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify({email})});
+    }catch(e){ return aviso("Não gravou — só o administrador altera a equipe."); }
+    if(c) c.email = email;
+    aviso("E-mail guardado ✔ — crie o usuário com esse e-mail no Supabase (Authentication → Users) e o login liga sozinho", false);
   });
   guarda("[data-cargo]", el => el.onchange = async ()=>{
     const c = D.colPorId.get(el.dataset.cargo);
