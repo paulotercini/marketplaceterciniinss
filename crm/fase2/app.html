@@ -1184,6 +1184,8 @@
   .nov{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 10px;background:var(--branco);
     border:1px solid var(--borda-suave);border-radius:var(--raio);padding:10px 12px;
     margin-bottom:5px;box-shadow:var(--sombra);overflow:hidden}
+  /* F133 · novidade de caso em acompanhamento MANUAL: aviso em vermelho */
+  .nov-manual{flex:none;font-size:11px;font-weight:800;color:#fff;background:var(--vermelho);border-radius:6px;padding:2px 7px;letter-spacing:.03em}
   .nov-fonte{flex:none;font-size:11px;font-weight:700;color:var(--cinza);
     background:var(--placa);border-radius:6px;padding:3px 7px;white-space:nowrap}
   .nov-corpo{flex:1 1 220px;min-width:0}
@@ -2519,7 +2521,7 @@ html[data-tema="v10"] .fab-rapida{background:var(--azul)}
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.36</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.37</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -7215,6 +7217,7 @@ function linhaNovidade(a){
   const c = D.cliPorId.get(k.cliente_id) || {};
   return `<div class="nov" data-and="${a.id}">
     <span class="nov-fonte">${ROTULO_ORIGEM[a.origem]||a.origem}</span>
+    ${k.acompanhamento==="manual"?`<span class="nov-manual" title="este caso está marcado como acompanhamento MANUAL: a equipe precisa abrir o portal e checar, o robô não cobre">⚠ CASO MANUAL</span>`:""}
     <div class="nov-corpo">
       <div class="nov-cli" data-cli="${c.id||""}">${esc(c.nome||"cliente sem ficha")}
         ${c.nome?`<button class="olho" title="copiar o nome"
