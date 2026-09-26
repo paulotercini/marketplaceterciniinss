@@ -143,6 +143,8 @@ Elementos do parágrafo de qualificação na ordem.
 
 O título genérico fica reservado para situações em que não houver elementos fáticos suficientes para antecipação (raro em peças bem instruídas).
 
+**Exceção das cortes superiores (Onda 157).** Em recurso especial, extraordinário, agravo em recurso especial, agravo interno, embargos perante STJ ou STF e pedido de uniformização à TNU, o título é formal e nominal, numerado, iniciado por DA, DO ou DOS, e nomeia o vício processual ou o requisito de admissibilidade, sem fato antecipado, porque o relator dessas cortes lê o título como delimitação do capítulo impugnado, e o título persuasivo soa como rediscussão de prova. Cabe em uma linha da tabela preta. Exemplos, "2. DA IMPUGNAÇÃO ESPECÍFICA DA DECISÃO AGRAVADA" e "3. DA OMISSÃO QUANTO AO TRABALHO HABITUALMENTE EXERCIDO".
+
 ### Fechamento e Assinatura
 
 - "Pede deferimento." ou "Nestes Termos, Pede e Espera Deferimento."

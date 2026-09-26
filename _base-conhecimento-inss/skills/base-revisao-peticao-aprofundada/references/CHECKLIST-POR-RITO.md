@@ -135,19 +135,20 @@ Skills relevantes. `base-tnu-admissibilidade-manual` (OBRIGATÓRIA), `pedilef-co
 - [ ] Tese revestida como direito material previdenciário.
 - [ ] Dialeticidade contra todos os fundamentos do acórdão recorrido.
 - [ ] Antecipação da defesa contra cada filtro do art. 14 RITNU.
+- [ ] Títulos formais e nominais, numerados, iniciados por DA, DO ou DOS, sem fato antecipado (Onda 157). Título persuasivo é achado MENOR.
 
 **Estrutura mínima da peça.**
 
 ```
-I - PRESSUPOSTOS RECURSAIS GERAIS
-II - HIPÓTESE DE CABIMENTO (art. 12 §1º RITNU)
-III - PREQUESTIONAMENTO
-IV - COTEJO ANALÍTICO
-V - NÃO INCIDÊNCIA DA SÚMULA 42/TNU
-VI - NÃO INCIDÊNCIA DA SÚMULA 43/TNU
-VII - DIALETICIDADE
-VIII - MÉRITO
-IX - PEDIDOS (conhecimento + provimento + subsidiário de retratação)
+1. DOS PRESSUPOSTOS RECURSAIS GERAIS
+2. DA HIPÓTESE DE CABIMENTO (art. 12 §1º RITNU)
+3. DO PREQUESTIONAMENTO
+4. DO COTEJO ANALÍTICO
+5. DA NÃO INCIDÊNCIA DA SÚMULA 42/TNU
+6. DA NÃO INCIDÊNCIA DA SÚMULA 43/TNU
+7. DA DIALETICIDADE
+8. DO MÉRITO
+9. DOS PEDIDOS (conhecimento + provimento + subsidiário de retratação)
 ```
 
 ### Agravo Contra Inadmissão de PUIL
@@ -179,6 +180,7 @@ Skills relevantes. `base-tnu-admissibilidade-manual` (item 22), `precedentes-pre
 - [ ] Prequestionamento (Súmula 282 + Súmula 356 STF + art. 1.025 CPC).
 - [ ] Repercussão geral em tópico destacado.
 - [ ] Princípio da unirrecorribilidade respeitado.
+- [ ] Títulos formais e nominais, numerados, iniciados por DA, DO ou DOS, sem fato antecipado (Onda 157). Vale também para REsp, AREsp, agravo interno e embargos no STJ ou STF. Título persuasivo é achado MENOR.
 
 ## RITO 7 - Réplica
 
