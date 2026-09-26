@@ -1,3 +1,36 @@
+# Onde paramos — 26.09.2026, versão 10.38
+
+## F134 · Ficha v11 e base de celular (10.38)
+
+O Paulo aprovou o redesenho v11 da ficha (canvas "CRM Tercini, redesenho v11",
+molde estático em `design-systems/ficha-v11/`, fora do repositório). Esta
+entrega leva a parte de maior efeito para o tema v10, sem mexer em regra de
+negócio.
+
+**A faixa do caso** (`linhaCaso`) ganhou duas partes dentro da mesma `.lc-topo`,
+para não quebrar as suítes que leem `.lc-topo .lc-f .lc-k`: `.lc-cab`, com o
+nome do pedido, a canetinha, a natureza, o selo Urgente (sem emoji) e o ➕; e
+`.lc-placa`, um quadro por dado fixo, rótulo em cima e valor embaixo. A placa
+usa `grid-auto-flow:column` com colunas iguais. O `repeat(auto-fit, minmax())`
+foi descartado porque, com as trilhas vazias recolhidas, o Chrome esticava a
+linha para 212 px. No celular a placa vira duas colunas.
+
+**Base de celular** (vale nos dois visuais): `viewport-fit=cover` e
+`theme-color`; sem o realce cinza do toque; `touch-action: manipulation`;
+`overscroll-behavior: none` no html e no body; altura em `100dvh` onde o
+navegador tem; campo com 16 px em ponteiro grosso; `scale(.97)` no `:active`
+dos botões, cortado em movimento reduzido. Na ficha do celular, o cabeçalho
+quebra de linha em vez de empurrar o SMBot para fora, os tipos de andamento
+correm numa faixa só e a rolagem ganha 180 px de folga para o campo fixo.
+
+**Ficou para depois:** os 92 `:hover` ainda não estão protegidos por
+`(hover: hover)`, os cerca de 1.350 emoji seguem no resto do app, e o prazo
+mais próximo ainda não entrou na placa (a `faixaPrazos` continua logo abaixo).
+
+Prova nova: `testes/cadastro/placa134.js` (14 asserções, computador e celular).
+As falhas de `cnj71.js`, `extracoes.js` e `paineis.js` já existiam antes desta
+entrega, conferidas contra o `app.html` da `main`.
+
 # Onde paramos — 12.09.2026, versão 09.85
 
 ## F89 · O roteiro da perícia (09.85)
