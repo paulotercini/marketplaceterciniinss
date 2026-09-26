@@ -266,6 +266,12 @@ Antes de concluir análise ou peça com base nesta skill, leia também, conforme
 
 Ao transpor esta matéria para peça, seguir o bloco "Aposentadoria rural" de `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, que traz os pares de redação genérica e precisa fixados pelo titular. A fórmula é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, em parágrafos de três a quatro linhas e sem adjetivo de intensidade.
 
+## Conjunto probatório rural para protocolo (Onda 159)
+
+O titular fixou a forma do conjunto probatório que acompanha o requerimento ou a ação. Cada documento vira um PDF próprio, com o contrato inteiro em um arquivo e a nota fiscal separada por página, e o nome segue o padrão "NN - AAAA-MM-DD - tipo e emitente", numerado em sequência na ordem cronológica, dentro de subpasta própria.
+
+Entram só os documentos em nome do cliente e do imóvel da tese, e nenhum documento de outra propriedade rural ou de terceiros. O documento acessório que não traz o nome do imóvel entra quando vinculado a ele por CNPJ, inscrição estadual, endereço ou número da nota, e recebe asterisco no nome. A pasta leva um índice cronológico com a cobertura por ano e um relatório das exclusões, com o motivo de cada uma.
+
 ## MCPs da casa
 
 Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
