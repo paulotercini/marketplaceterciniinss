@@ -565,25 +565,24 @@ Para a tese nacional que a TRU e as Turmas Recursais aplicam, consultar a skill 
 
 O servidor MCP `trf3` cobre também as Turmas Recursais de São Paulo e do Mato Grosso do Sul, no acervo `recursais`, e serve para localizar paradigma de PUIL e de PEDILEF.
 
-**Duas particularidades da fonte.** Nas Recursais o CJF entrega o texto SEM acentuação, e a busca ali usa palavras sem acento, como `ruido`, `contribuicao`, `aposentadoria especial` e `Secao Judiciaria`. E a TRU da 3ª Região ainda NÃO foi confirmada na base, de modo que ausência de acórdão da TRU no MCP não autoriza afirmar que ele não existe.
+**Duas particularidades da fonte.** Nas Recursais o CJF entrega o texto SEM acentuação, e a busca ali usa palavras sem acento, como `ruido`, `contribuicao`, `aposentadoria especial` e `Secao Judiciaria`. A TRU da 3ª Região está na base desde a coleta de 09/2026, filtrada pelo órgão `Uniformiza`, e ausência de acórdão no MCP continua não autorizando afirmar que ele não existe.
 
-**A conferência é a mesma da `pesquisa-jurisprudencia-chrome`, e aqui ela é ainda mais exigente.** Paradigma de PUIL precisa de identificação exata de órgão, relator, data e tese, porque o cotejo analítico se faz sobre esses dados e erro neles derruba a admissibilidade. Todo acórdão localizado no MCP nasce `[NÃO CONFERIDO]` e só é citado depois de aberto no portal do TRF3, na aba Turmas Recursais, com leitura do inteiro teor.
+**A conferência é a mesma da `pesquisa-jurisprudencia-chrome`, e aqui ela é ainda mais exigente.** Paradigma de PUIL precisa de identificação exata de órgão, relator, data e tese, porque o cotejo analítico se faz sobre esses dados e erro neles derruba a admissibilidade. Todo acórdão localizado no MCP nasce `[NÃO CONFIRMADO]` e só é citado depois de aberto no portal do TRF3, na aba Turmas Recursais, com leitura do inteiro teor.
 
 **A busca por número devolve o processo inteiro (Onda 146).** Conferindo paradigma, lembrar que o número CNJ traz todos os julgados colegiados daqueles autos, e o certo é o que casa a DATA DE JULGAMENTO com a do MCP. A classe não distingue. Pior, há julgamento anulado no acervo sem marca na lista, e citar acórdão nulo como paradigma de PUIL é vício que a contraminuta explora. Detalhe em `pesquisa-jurisprudencia-chrome/references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.
 
-**Súmula do TRF3 e da TRU continuam saindo do repositório oficial**, e não do MCP, que é base de acórdãos e não de enunciados.
+**Súmula do TRF3 pode ser localizada no MCP pelo acervo `sumulas`**, e a citação continua saindo do repositório oficial. Súmula da TRU não está no MCP.
 
 Detalhamento do fluxo em `pesquisa-jurisprudencia-chrome/references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.
 
-## Acervo do escritório
+## MCPs da casa
 
-Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
-por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
-argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
-chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
-`base-acervo-escritorio`.
+Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
 
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
-de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
-conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
-arquivo de origem não é.
+Legislação. Todo dispositivo citado nesta skill se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo. Para tese de direito adquirido, `redacao_na_data`, que responde por ano. A citação em peça exige a `fonte_oficial` que a resposta devolve. Detalhe em `base-legislacao-fontes-primarias`.
+
+Jurisprudência do TRF3 e das Turmas Recursais. Localize pelo MCP `trf3`, com `buscar_acordaos_trf3` (consulta, `polo_recorrente`, `resultado`, `orgao_julgador` e datas) e `obter_acordao_trf3` no id devolvido. `resultado` e `polo_recorrente` são inferidos. O achado nasce [NÃO CONFIRMADO] e só entra na peça depois de aberto no portal do TRF3, na forma de `pesquisa-jurisprudencia-chrome`. TNU e CRPS ficam no MCP `iurisprudencia`.
+
+Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado, chame `precedentes_do_acervo` e leia o campo `corte` da resposta, porque o mesmo número de Tema existe em mais de uma corte. Detalhe em `base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.

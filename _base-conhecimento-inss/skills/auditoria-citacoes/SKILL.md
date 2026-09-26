@@ -41,6 +41,8 @@ INFORMATIVO. O item consta do catálogo, mas o registro ainda não traz a tese l
 
 Meio de verificação (Onda 96). A verificação na fonte roda pelo Claude in Chrome, na base oficial do tribunal de origem do item, seguindo a skill `pesquisa-jurisprudencia-chrome`. Firecrawl e SearXNG podem ser usados para localizar o documento, nunca para classificar o item. A classificação CONFIRMADO_FONTE_OFICIAL exige o inteiro teor ou a página do tema aberta na base do tribunal, com data da conferência registrada. Item verificado apenas em portal jurídico recebe, no máximo, PROVAVEL_FONTE_SECUNDARIA.
 
+Item que for acórdão do TRF3 ou de Turma Recursal da 3ª Região passa primeiro por `buscar_acordaos_trf3` com o número CNJ. Achado no MCP classifica no máximo como PROVAVEL_FONTE_SECUNDARIA.
+
 Verificação em lotes de dez a vinte itens pelo agente do plugin `base-conhecimento-inss:verificador-precedentes` (Onda 78), invocado pela Agent tool. O agente recebe cada lote com ID normalizado, arquivo, linha e contexto da afirmação, executa a ordem obrigatória e devolve relatório no formato do catálogo complementar, pronto para colagem. Ele somente verifica e reporta, sem editar arquivo algum (a correção fica com a Etapa 4, na sessão principal). Quando o agente do plugin não estiver disponível na sessão, usar subagente genérico com as mesmas instruções.
 
 A ordem obrigatória, por item.
@@ -127,15 +129,14 @@ A auditoria varre skills e Modelos Ouro. Passa a varrer também as citações IM
 
 Achando na base um tema atribuído a assunto diverso do catálogo, verificar se a atribuição veio de ementa copiada. Vindo, a correção é dupla, corrige-se a citação e registra-se que o acórdão de origem a contém, para que ninguém a reintroduza ao reler o mesmo julgado.
 
-## Acervo do escritório
+## MCPs da casa
 
-Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
-por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
-argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
-chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
-`base-acervo-escritorio`.
+Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
 
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
-de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
-conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
-arquivo de origem não é.
+Legislação. Todo dispositivo citado nesta skill se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo. Para tese de direito adquirido, `redacao_na_data`, que responde por ano. A citação em peça exige a `fonte_oficial` que a resposta devolve. Detalhe em `base-legislacao-fontes-primarias`.
+
+Jurisprudência do TRF3 e das Turmas Recursais. Localize pelo MCP `trf3`, com `buscar_acordaos_trf3` (consulta, `polo_recorrente`, `resultado`, `orgao_julgador` e datas) e `obter_acordao_trf3` no id devolvido. `resultado` e `polo_recorrente` são inferidos. O achado nasce [NÃO CONFIRMADO] e só entra na peça depois de aberto no portal do TRF3, na forma de `pesquisa-jurisprudencia-chrome`. TNU e CRPS ficam no MCP `iurisprudencia`.
+
+Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado, chame `precedentes_do_acervo` e leia o campo `corte` da resposta, porque o mesmo número de Tema existe em mais de uma corte. Detalhe em `base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.

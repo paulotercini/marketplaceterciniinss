@@ -18,9 +18,9 @@ Número de processo se busca no próprio campo de consulta, com a pontuação do
 
 ## Particularidades do trf3
 
-Os filtros são o acervo (`trf3` ou `recursais`), a classe pela sigla (`ApCiv`, `ApelRemNec`, `AI`, `RecInoCiv`, `PUILCiv`), o órgão por parte do nome, as datas de julgamento, o resultado inferido e o polo recorrente inferido. O filtro de relator procura o nome em três papéis, quem relatou, o titular do gabinete e o relator para acórdão, porque o CJF registra o juiz convocado e o portal mostra o titular.
+Os filtros são o acervo (`trf3`, `recursais` ou `sumulas`, este com as Súmulas do TRF3, sem resultado nem polo), a classe pela sigla (`ApCiv`, `ApelRemNec`, `AI`, `RecInoCiv`, `PUILCiv`), o órgão por parte do nome, as datas de julgamento, o resultado inferido e o polo recorrente inferido. O filtro de relator procura o nome em três papéis, quem relatou, o titular do gabinete e o relator para acórdão, porque o CJF registra o juiz convocado e o portal mostra o titular.
 
-Nas Turmas Recursais o texto chega do CJF sem os caracteres acentuados, e a busca ali usa a palavra sem acento. A TRU3 se filtra pelo órgão `Uniformiza`, porque o nome também vem sem acento. Sem consulta, a lista vem da data mais recente para a mais antiga. Com consulta, vem pela relevância, que pesa mais a ementa que o inteiro teor.
+Nas Turmas Recursais o texto chega do CJF sem os caracteres acentuados, e a busca ali usa a palavra sem acento. A TRU3 se filtra pelo órgão `Uniformiza`, porque o nome também vem sem acento. Sem consulta, a lista vem da data mais recente para a mais antiga. Com consulta, vem pela relevância, que pesa mais a ementa que o inteiro teor. A TRU3 está na base, filtrada pelo órgão `Uniformiza`, e a contagem sai de `visao_geral_trf3`.
 
 ## Particularidades do iurisprudencia
 

@@ -99,3 +99,11 @@ Quando a peça de alto risco for administrativa, a lente do conselheiro da via a
 ## Analista do CNIS (Onda 117)
 
 Quando a peça de alto risco depender de tempo de contribuição, carência, qualidade de segurado ou salário-de-benefício, a banca NÃO delibera antes de receber o parecer do agente `analista-cnis`. A lente do calculista trabalha sobre os números dele, e não sobre a contagem da peça. Divergência entre a contagem da peça e a do analista é achado de severidade máxima, porque contamina todas as demais lentes.
+
+## MCPs da casa
+
+Você alcança os servidores locais `normas`, `trf3` e `acervo` do plugin. Use-os antes de WebSearch e de WebFetch. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
+
+Dispositivo legal se lê por `obter_artigo` no `normas`, com o identificador da norma e o número do artigo, no campo `texto`, e vale a última ocorrência de cada parágrafo. Redação de outra época se lê por `redacao_na_data`, que responde por ano. Acórdão do TRF3 e das Turmas Recursais se localiza por `buscar_acordaos_trf3` e se lê por `obter_acordao_trf3`, lembrando que `resultado` e `polo_recorrente` são inferidos. O que o escritório já sustentou se lê por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, sem reaproveitar texto de um cliente em peça de outro. TNU e CRPS ficam no servidor `iurisprudencia`, quando disponível.
+
+No parecer, todo achado de MCP sai marcado [NÃO CONFIRMADO] com o id devolvido pelo servidor, para a sessão principal conferir na fonte oficial. Achado de MCP nunca sobe a [CONFERIDO] dentro do agente.

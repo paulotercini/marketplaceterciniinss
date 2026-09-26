@@ -11,7 +11,7 @@ Todos os endereços e campos abaixo foram abertos e testados no navegador em 30.
 
 Toda pesquisa de jurisprudência começa no **Claude in Chrome**, operando o formulário oficial do tribunal no navegador do Paulo. Os sistemas de busca dos tribunais dependem de POST com sessão e de JavaScript, e nenhuma raspagem automatizada do escritório executa esses formulários. Quem não abre a base oficial não está pesquisando jurisprudência, está garimpando índice de terceiro.
 
-Julgado do TRF3 e de Turma Recursal da 3ª Região começa antes disso, no servidor MCP `trf3`, e julgado da TNU e do CRPS no MCP `iurisprudencia`. Um e outro LOCALIZAM e não conferem, de modo que o achado nasce `[NÃO CONFERIDO]` e depende da abertura da base oficial no Chrome, na forma da seção "MCP trf3, localizar no servidor e CONFERIR no portal" e da referência `PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`.
+Julgado do TRF3 e de Turma Recursal da 3ª Região começa antes disso, no servidor MCP `trf3`, e julgado da TNU e do CRPS no MCP `iurisprudencia`. Um e outro LOCALIZAM e não conferem, de modo que o achado nasce `[NÃO CONFIRMADO]` e depende da abertura da base oficial no Chrome, na forma da seção "MCP trf3, localizar no servidor e CONFERIR no portal" e da referência `PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`.
 
 Firecrawl e SearXNG entram como apoio, nunca como fonte final da citação.
 
@@ -21,7 +21,7 @@ Firecrawl e SearXNG entram como apoio, nunca como fonte final da citação.
 
 **Nível 2, Firecrawl local mais SearXNG.** Serve para localizar candidatos rápido (`firecrawl_search` com operador `site:`) e para converter em markdown limpo um inteiro teor cuja URL já é conhecida (`firecrawl_scrape`). O achado nasce como [NÃO CONFIRMADO] e só muda de status depois de aberto no Nível 1.
 
-**Nível 2-A, os servidores MCP `trf3` e `iurisprudencia`.** Localizam rápido dentro de base própria, e o achado nasce [NÃO CONFERIDO] como qualquer Nível 2. A forma de pesquisar em cada um, com os filtros, as particularidades de acentuação, a ausência de operador OU e a via oficial de conferência de cada base, está em `references/PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`. O `trf3` cobre a 7ª à 10ª Turma, a 3ª Seção, as Turmas Recursais de SP e MS e a TRU3. O `iurisprudencia` cobre a TNU e o CRPS.
+**Nível 2-A, os servidores MCP `trf3` e `iurisprudencia`.** Localizam rápido dentro de base própria, e o achado nasce [NÃO CONFIRMADO] como qualquer Nível 2. A forma de pesquisar em cada um, com os filtros, as particularidades de acentuação, a ausência de operador OU e a via oficial de conferência de cada base, está em `references/PESQUISA-NOS-MCPS-TRF3-E-IURISPRUDENCIA.md`. O `trf3` cobre a 7ª à 10ª Turma, a 3ª Seção, as Turmas Recursais de SP e MS e a TRU3. O `iurisprudencia` cobre a TNU e o CRPS.
 
 **Conferência do que vem do `iurisprudencia`.** O `link_portal` que ele devolve aponta para `iurisprudencia.com.br`, que NÃO é fonte oficial e não autoriza [CONFERIDO]. Acórdão da TNU se confere em `https://eproctnu-jur.cjf.jus.br`, na forma da seção 4.4. Enunciado do CRPS se confere na página oficial do Conselho no gov.br, e o texto vigente e as redações anteriores saem de `enunciados_pleno_inss_crps`. Para acórdão do CRPS a consulta pública oficial não foi localizada até 19/09/2026, e o julgado fica [NÃO CONFIRMADO] até que a via seja definida.
 
@@ -139,7 +139,7 @@ Sessão do TRF3 expira. Se a lista vier vazia depois de um tempo parado, recarre
 
 Julgado do TRF3 ou de Turma Recursal da 3ª Região passa a ser localizado primeiro no servidor MCP `trf3`, que guarda base local montada da Jurisprudência Unificada do CJF, com a 7ª à 10ª Turma, a 3ª Seção e as Recursais de SP e MS, sem monocráticas.
 
-**O MCP localiza, o portal confirma.** Todo julgado vindo do MCP nasce marcado `[NÃO CONFERIDO]` e não entra em peça nessa condição. Só recebe `[CONFERIDO em DD/MM/AAAA]` depois de aberto em `https://web.trf3.jus.br/jurisprudencia/`. Não achado no portal, não entra. Divergindo os dois, prevalece o portal.
+**O MCP localiza, o portal confirma.** Todo julgado vindo do MCP nasce marcado `[NÃO CONFIRMADO]` e não entra em peça nessa condição. Só recebe `[CONFERIDO em DD/MM/AAAA]` depois de aberto em `https://web.trf3.jus.br/jurisprudencia/`. Não achado no portal, não entra. Divergindo os dois, prevalece o portal.
 
 **A busca por número faz-se pela PESQUISA LIVRE**, com o número CNJ completo e pontuado. O campo `numero` preenchido sozinho devolve erro, testado em 19/09/2026. O campo de pesquisa livre tem `id` `txtPesqLivre` e `name` `txtPesquisaLivre`.
 
@@ -157,15 +157,14 @@ Enquanto a carga não cobrir um ano, `perfil_orgao_trf3` e `perfil_relator_trf3`
 
 Roteiro completo, mecânica do portal e o caso do teste em `references/MCP-TRF3-E-CONFERENCIA-NO-PORTAL.md`.
 
-## Acervo do escritório
+## MCPs da casa
 
-Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
-por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
-argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
-chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
-`base-acervo-escritorio`.
+Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
 
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
-de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
-conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
-arquivo de origem não é.
+Legislação. Todo dispositivo citado nesta skill se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo. Para tese de direito adquirido, `redacao_na_data`, que responde por ano. A citação em peça exige a `fonte_oficial` que a resposta devolve. Detalhe em `base-legislacao-fontes-primarias`.
+
+Jurisprudência do TRF3 e das Turmas Recursais. Localize pelo MCP `trf3`, com `buscar_acordaos_trf3` (consulta, `polo_recorrente`, `resultado`, `orgao_julgador` e datas) e `obter_acordao_trf3` no id devolvido. `resultado` e `polo_recorrente` são inferidos. O achado nasce [NÃO CONFIRMADO] e só entra na peça depois de aberto no portal do TRF3, na forma de `pesquisa-jurisprudencia-chrome`. TNU e CRPS ficam no MCP `iurisprudencia`.
+
+Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado, chame `precedentes_do_acervo` e leia o campo `corte` da resposta, porque o mesmo número de Tema existe em mais de uma corte. Detalhe em `base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
