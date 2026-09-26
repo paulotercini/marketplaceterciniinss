@@ -11,6 +11,7 @@ while ($quedas -lt 30 -and $voltas -lt 2) {
     # via cmd, porque o >> do PowerShell 5 grava em UTF-16 e embaralha o log
     cmd /c "python coletor.py 1>> `"$dados\coleta.log`" 2>> `"$dados\coleta.err`""
     if ($LASTEXITCODE -eq 0) { $voltas++; $quedas = 0 }
+    elseif ($LASTEXITCODE -eq 3) { Add-Content -Encoding UTF8 "$dados\coleta.log" "=== CJF incompleto, nova tentativa em 30 min ==="; Start-Sleep 1800 }
     else { $quedas++; Add-Content -Encoding UTF8 "$dados\coleta.log" "=== queda $quedas, retomando em 5 min ==="; Start-Sleep 300 }
 }
 Add-Content -Encoding UTF8 "$dados\coleta.log" "=== fim $(Get-Date -Format 'dd/MM/yyyy HH:mm'), $voltas varreduras completas, $quedas quedas seguidas ==="
