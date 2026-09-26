@@ -2,7 +2,7 @@
 
 Tudo que o servidor responde sai daqui, para ser testável sem o SDK do MCP.
 """
-import os, pathlib, re, sqlite3
+import os, pathlib, re, sqlite3, statistics
 
 DADOS = pathlib.Path(os.environ.get("TRF3_DADOS", r"C:\Users\VAIO\trf3-jurisprudencia"))
 TETO_CONTAGEM = 10000
@@ -34,6 +34,8 @@ CREATE INDEX IF NOT EXISTS ix_cnj     ON documento(numero_cnj);
 CREATE INDEX IF NOT EXISTS ix_relator ON documento(relator);
 CREATE INDEX IF NOT EXISTS ix_orgao   ON documento(orgao_julgador);
 CREATE INDEX IF NOT EXISTS ix_julg    ON documento(data_julgamento);
+CREATE INDEX IF NOT EXISTS ix_acervo  ON documento(acervo);
+CREATE INDEX IF NOT EXISTS ix_coletado ON documento(coletado_em);   -- sem ele a visão geral varria 5 GB
 
 CREATE VIRTUAL TABLE IF NOT EXISTS documento_fts USING fts5(
   ementa_texto, e_razoes, e_dispositivo, inteiro_teor,
@@ -59,6 +61,9 @@ AVISOS = [
     "Provimento não equivale a decisão favorável ao segurado, porque o recorrente frequentemente é o INSS. Confira polo_recorrente.",
     "A base tem corte temporal e recorte previdenciário (7ª a 10ª Turmas, 3ª Seção, Turmas Recursais e TRU3). Ausência aqui não é ausência no TRF3.",
     "O campo resultado é inferido por heurística sobre o dispositivo, e não é dado oficial.",
+    "O CJF não tem todos os acórdãos que o portal do TRF3 tem em alguns meses. Medido em 22/09/2026, abril de "
+    "2025 tem 1.519 no CJF contra 9.122 no portal, e setembro de 2024 tem 1.555 contra 8.506. Veja "
+    "meses_com_cobertura_parcial_no_cjf antes de concluir que um julgado não existe.",
     "Fonte: Jurisprudência Unificada do CJF. Nas recursais o texto vem da fonte sem os caracteres acentuados, e "
     "registros antigos sem ementa nem decisão ficam de fora. Citação em peça exige conferência no portal do TRF3.",
 ]
@@ -66,16 +71,20 @@ AVISOS = [
 
 def abrir(caminho=None, leitura=False):
     if caminho == ":memory:":
-        con = sqlite3.connect(caminho)
+        con = sqlite3.connect(caminho, timeout=30)
+        # WAL deixa o MCP ler enquanto o coletor grava; no modo padrão a leitura esperava a escrita e falhava
+        con.execute("PRAGMA journal_mode=WAL")
         con.executescript(ESQUEMA)
         con.row_factory = sqlite3.Row
         return con
     caminho = pathlib.Path(caminho or DADOS / "trf3.db")
     if leitura:
-        con = sqlite3.connect(f"file:{caminho.as_posix()}?mode=ro", uri=True)
+        con = sqlite3.connect(f"file:{caminho.as_posix()}?mode=ro", uri=True, timeout=30)
     else:
         caminho.parent.mkdir(parents=True, exist_ok=True)
-        con = sqlite3.connect(caminho)
+        con = sqlite3.connect(caminho, timeout=30)
+        # WAL deixa o MCP ler enquanto o coletor grava; no modo padrão a leitura esperava a escrita e falhava
+        con.execute("PRAGMA journal_mode=WAL")
         con.executescript(ESQUEMA)
         cols = {l[1] for l in con.execute("PRAGMA table_info(documento)")}
         for c in ("relator_titular", "relator_acordao"):      # base criada antes de 19/09/2026
@@ -164,9 +173,18 @@ def visao_geral(con):
     um = lambda q: con.execute(q).fetchone()
     por = lambda c: {l[0]: l[1] for l in con.execute(
         f"SELECT {c}, count(*) FROM documento GROUP BY 1 ORDER BY 2 DESC")}
-    ini, fim, total, coleta = um(
-        "SELECT min(data_julgamento), max(data_julgamento), count(*), max(coletado_em) FROM documento")
+    # cada agregado sai de um índice; juntar tudo numa consulta obrigava varredura da tabela inteira
+    ini, fim = um("SELECT min(data_julgamento), max(data_julgamento) FROM documento")
+    total = um("SELECT count(*) FROM documento")[0]
+    coleta = um("SELECT max(coletado_em) FROM documento")[0]
+    # o CJF tem mês com muito menos acórdão que o portal do TRF3 (abril/2025 tem 1.519 no CJF e 9.122 no
+    # portal, medido em 22/09/2026). O mês fica na base, e a lacuna é declarada em vez de escondida
+    meses = [tuple(l) for l in con.execute(
+        "SELECT mes, documentos FROM progresso WHERE acervo = 'trf3' ORDER BY mes")]
+    corte = 0.3 * (statistics.median([d for _, d in meses]) if meses else 0)
+    parciais = {m: d for m, d in meses if d < corte}
     return {"total": total, "julgados_de": ini, "julgados_ate": fim, "ultima_coleta": coleta,
+            "meses_com_cobertura_parcial_no_cjf": parciais,
             "por_acervo": por("acervo"), "por_orgao": por("orgao_julgador"),
             "relatores": len(por("relator")), "avisos": AVISOS}
 

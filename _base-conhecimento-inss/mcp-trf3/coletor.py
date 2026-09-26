@@ -17,18 +17,22 @@ import urllib.parse, urllib.request
 import banco, parser
 
 URL = "https://jurisprudencia.cjf.jus.br/unificada/index.xhtml"
-# campos do formulário JSF, medidos em 19/09/2026. Os j_idtNN são gerados pelo servidor e podem
-# mudar num redeploy do CJF: aí a pesquisa devolve total zero e a coleta para com aviso.
-DATA_INI, DATA_FIM, TIPO_DATA, TABELA = ("formulario:j_idt43_input", "formulario:j_idt45_input",
-                                         "formulario:combo_tipo_data_input", "formulario:tabelaDocumentos")
-ACERVOS = {"trf3": {"formulario:j_idt51": "TRF3"},
-           "recursais": {"formulario:trMarcado_input": "on", "formulario:tribuna_tr": "TR3"}}
-PAUSA, POR_PAGINA = 3, 50
+# Os campos j_idtNN do formulário JSF são gerados pelo servidor e MUDAM a cada redeploy do CJF (em 21/09/2026
+# o seletor de tribunal passou de j_idt51 a j_idt77 e as datas de j_idt43/45 a j_idt69/71). Por isso são
+# lidos do próprio formulário a cada sessão, e só os nomes estáveis ficam fixos aqui.
+TIPO_DATA, TABELA = "formulario:combo_tipo_data_input", "formulario:tabelaDocumentos"
+RECURSAIS = {"formulario:trMarcado_input": "on", "formulario:tribuna_tr": "TR3"}
+PAUSA, POR_PAGINA = 8, 50   # 3 s bastavam até 22/09/2026; com o CJF instável, é ritmo mais folgado
+MINIMO_MES = 500           # nenhum mês do TRF3 medido tem menos que isso; abaixo, é índice incompleto
 AJAX = {"javax.faces.partial.ajax": "true", "formulario": "formulario"}
 
 
 class SessaoPerdida(Exception):
     pass
+
+
+class MesFalhou(Exception):
+    """O CJF não entregou o mês. Não é defeito do coletor, e o mês fica para a próxima rodada."""
 
 
 class Cjf:
@@ -55,7 +59,7 @@ class Cjf:
             try:
                 with self.op.open(req, timeout=180) as r:
                     txt = r.read().decode(r.headers.get_content_charset() or "utf-8", "replace")
-                self.ultimo = time.monotonic()
+                self.ultimo, self.ultima = time.monotonic(), txt
                 m = re.search(r'javax\.faces\.ViewState[^>]*?(?:value="|<!\[CDATA\[)([^"\]]+)', txt)
                 if m:
                     self.vs = m.group(1)
@@ -72,22 +76,33 @@ class Cjf:
                     "javax.faces.behavior.event": "change", "javax.faces.partial.event": "change",
                     "javax.faces.ViewState": self.vs})
 
-    def pesquisar(self, acervo, ini, fim):
+    def pesquisar(self, acervo, ini, fim, tentativa=0):
         """Abre sessão nova, liga a pesquisa avançada e pesquisa o período. Devolve o total."""
         self.nova()
-        self.pedir()
+        inicial = self.pedir()
+        trib = re.search(r'name="(formulario:[^"]+)"[^>]*value="TRF3"', inicial)
         self.estado = {"formulario:ckbAvancada_input": "on"}
         self._alternar("ckbAvancada", self.estado)
+        # as duas datas são os únicos campos j_idtNN_input do formulário avançado, na ordem início e fim
+        datas = list(dict.fromkeys(re.findall(r'name="(formulario:j_idt\d+_input)"', self.ultima)))
+        if not trib or len(datas) != 2:
+            raise SystemExit(f"formulário do CJF sem o seletor de tribunal ou sem as duas datas: {datas}")
         if acervo == "recursais":                 # o seletor de região só existe no servidor depois deste passo
             self.estado["formulario:trMarcado_input"] = "on"
             self._alternar("trMarcado", self.estado)
-        self.estado.update(ACERVOS[acervo])
+            self.estado.update(RECURSAIS)
+        else:
+            self.estado[trib.group(1)] = "TRF3"
         r = self.pedir({**AJAX, **self.estado, "formulario:textoLivre": "",
-                        DATA_INI: ini.strftime("%d/%m/%Y"), DATA_FIM: fim.strftime("%d/%m/%Y"), TIPO_DATA: "DTDP",
+                        datas[0]: ini.strftime("%d/%m/%Y"), datas[1]: fim.strftime("%d/%m/%Y"), TIPO_DATA: "DTDP",
                         "javax.faces.source": "formulario:actPesquisar", "javax.faces.partial.execute": "@all",
                         "javax.faces.partial.render": "formulario:resultado",
                         "formulario:actPesquisar": "formulario:actPesquisar", "javax.faces.ViewState": self.vs})
         m = re.search(r"\(Exibindo[^)]*?de\s+(\d+)\s*,", r)
+        if not m and "Sessão expirada" in r and tentativa < 3:
+            print("    CJF devolveu sessão expirada, abrindo outra em 60 s", flush=True)
+            time.sleep(60)
+            return self.pesquisar(acervo, ini, fim, tentativa + 1)
         if not m:
             raise SystemExit("pesquisa sem contador de resultados, o formulário do CJF mudou: "
                              + re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", r))[:200])
@@ -149,7 +164,9 @@ def coletar_mes(cjf, con, acervo, ini, fim, limite=None):
                     total, paginas = novo, math.ceil(novo / POR_PAGINA)
                     esperados = min(POR_PAGINA, total - (k - 1) * POR_PAGINA)
             else:
-                raise SystemExit(f"{chave}: página {k} não veio completa em 6 tentativas")
+                for arq_ in pasta.glob("p*.xml.gz"):     # páginas podem ter escorregado, não servem de cache
+                    arq_.unlink()
+                raise MesFalhou(f"{chave}: página {k} não veio completa em 6 tentativas")
             arq.write_bytes(gzip.compress(r.encode("utf-8")))
         novos += banco.gravar(con, parser.extrair(r, acervo))          # LayoutMudou derruba a coleta
         if k % 20 == 0:
@@ -158,7 +175,9 @@ def coletar_mes(cjf, con, acervo, ini, fim, limite=None):
         for arq in pasta.glob("p*.xml.gz"):
             arq.unlink()
         print(f"    {chave[2]} {acervo}: o total mudou durante a coleta, o mês será refeito", flush=True)
-    elif fechado and not limite and total:    # total zero pode ser índice do CJF atrasado: tenta de novo na próxima rodada
+    # o CJF já devolveu mês com 2 acórdãos que tinha 10 mil, com o índice incompleto depois de um redeploy.
+    # Mês só é dado por concluído com total plausível e confirmado por uma segunda pesquisa igual
+    elif fechado and not limite and total >= MINIMO_MES and cjf.pesquisar(acervo, ini, fim) == total:
         con.execute("INSERT INTO progresso VALUES (?,?,?,?,?,?)",
                     (*chave, paginas, total, datetime.datetime.now().isoformat(timespec="seconds")))
         con.commit()
@@ -167,7 +186,7 @@ def coletar_mes(cjf, con, acervo, ini, fim, limite=None):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--acervo", choices=list(ACERVOS), action="append")
+    ap.add_argument("--acervo", choices=["trf3", "recursais"], action="append")
     ap.add_argument("--meses", type=int, default=120)
     ap.add_argument("--paginas", type=int, help="teste: só as N primeiras páginas de cada mês, sem fechar o mês")
     ap.add_argument("--reprocessar", action="store_true",
@@ -186,7 +205,25 @@ if __name__ == "__main__":
         con.commit()
         raise SystemExit(f"{n} documentos atualizados")
     cjf = Cjf()
+    # sentinela: o CJF já devolveu, depois de um redeploy em 21/09/2026, meses de 2024 com zero ou um terço
+    # dos acórdãos, enquanto 2023 e 2025 vinham inteiros. Por isso confere o maior mês fechado de CADA ano; se
+    # algum vier bem abaixo do gravado, o índice está incompleto e coletar agora gravaria meses pela metade.
+    # Sai com código 3, e o supervisor espera meia hora.
+    amostra = con.execute("""SELECT acervo, mes, max(documentos) FROM progresso
+                             GROUP BY acervo, substr(mes, 1, 4)""").fetchall()
+    for acervo_s, mes_s, gravado in ([] if a.paginas else amostra):
+        ini = datetime.date.fromisoformat(mes_s + "-01")
+        fim = (ini.replace(day=28) + datetime.timedelta(days=4)).replace(day=1) - datetime.timedelta(days=1)
+        agora = cjf.pesquisar(acervo_s, ini, fim)
+        if agora < 0.95 * gravado:
+            print(f"  índice do CJF incompleto: {acervo_s} {mes_s} tinha {gravado} e agora tem {agora}, esperando",
+                  flush=True)
+            sys.exit(3)
     # o TRF3 inteiro antes das Recursais; dentro de cada acervo, do mês mais recente para o mais antigo
-    for acervo in a.acervo or ACERVOS:
+    for acervo in a.acervo or ["trf3", "recursais"]:
         for ini, fim in meses(a.meses):
-            coletar_mes(cjf, con, acervo, ini, fim, a.paginas)
+            try:
+                coletar_mes(cjf, con, acervo, ini, fim, a.paginas)
+            except MesFalhou as e:                      # o CJF falhou neste mês, segue para o próximo
+                print(f"  {e}. Fica para a próxima rodada.", flush=True)
+                time.sleep(120)

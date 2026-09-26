@@ -59,10 +59,12 @@ assert (su["acervo"], su["numero_cnj"], su["classe_sigla"]) == ("sumulas", "42",
 assert su["resultado"] is None and su["polo_recorrente"] is None and su["ementa_texto"], su
 antigo = doc("TRF3ANT", "5000004-11.2022.4.03.6100", "8ª Turma").replace("5000004-11.2022.4.03.6100", "95.03.012345-6")
 assert parser.extrair(antigo, "trf3")[0]["numero_cnj"] == "95.03.012345-6", "número fora do padrão CNJ é gravado como vem"
+semorgao = doc("TRF3SO", "5000005-11.2022.4.03.6100", "8ª Turma").replace(">8ª Turma<", "><")
+assert parser.extrair(semorgao, "trf3", so_previdenciario=False) == [], "acórdão sem órgão julgador é pulado, não derruba"
 assert parser.ORGAOS_PREV.search("Turma Regional de Uniformizao"), "TRU3 chega do CJF sem acento e não pode cair no recorte"
 
 try:
-    parser.extrair(resposta.replace("Órgão julgador", "Outro rótulo"), "trf3")
+    parser.extrair(resposta.replace(">Número<", ">Outro rótulo<"), "trf3")
     raise SystemExit("layout alterado tinha de falhar")
 except parser.LayoutMudou:
     pass

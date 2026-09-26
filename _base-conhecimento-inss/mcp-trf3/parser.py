@@ -140,8 +140,10 @@ def extrair(resposta, acervo, so_previdenciario=True):
             continue
         cnj = RE_CNJ.search(c.get("Número", ""))
         orgao, bruto_ementa, bruto_teor = c.get("Órgão julgador", ""), c.get("Ementa", ""), c.get("Decisão", "")
-        if not c.get("Número") or not orgao or not c.get("Data"):
+        if not c.get("Número") or not c.get("Data"):
             raise LayoutMudou(f"doc {id_fonte}: rótulos lidos = {sorted(c)}")
+        if not orgao:            # o CJF tem acórdão sem órgão julgador nem relator, que não dá para recortar
+            continue
         # processo antigo pode vir fora do padrão CNJ; grava-se o número como a fonte o dá
         numero = cnj.group() if cnj else c["Número"].splitlines()[0].strip()
         if not (bruto_ementa or bruto_teor):     # o CJF tem registro antigo só com link de inteiro teor, sem texto
