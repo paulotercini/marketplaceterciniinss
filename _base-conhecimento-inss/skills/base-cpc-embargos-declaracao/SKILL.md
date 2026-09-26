@@ -55,7 +55,7 @@ Antes de redigir, responder três perguntas.
 
 Primeiro, o defeito é interno ao julgado ou é discordância com o resultado? Se for discordância, é recurso, não embargos.
 
-Segundo, o ponto omitido era capaz de mudar a conclusão? Omissão de argumento irrelevante não sustenta embargos.
+Segundo, o ponto omitido era capaz de mudar a conclusão? Omissão de argumento irrelevante não sustenta embargos. A omissão mais forte é a da objeção que a peça anterior nomeou e refutou em parágrafo próprio, como a eficácia do EPI ou a extemporaneidade do laudo, porque o art. 489, § 1º, IV, do CPC obriga o julgado a enfrentar o argumento capaz de infirmar a conclusão, e o embargo aponta o parágrafo e o ID em que a questão foi posta (técnica 6 da seção "Persuasão com base empírica" de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`).
 
 Terceiro, existe trecho concreto a citar? Sem página e parágrafo do vício, não há embargos, há inconformismo.
 

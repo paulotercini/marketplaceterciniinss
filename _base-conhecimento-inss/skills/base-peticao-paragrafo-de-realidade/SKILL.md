@@ -9,6 +9,8 @@ description: "Parágrafo de Realidade, humanização ancorada em prova, componen
 
 O julgador federal decide dezenas de causas previdenciárias por dia. Ele conhece a lei, os temas e os formulários. O que ele não conhece é a pessoa. A peça que apresenta apenas teses disputa a atenção com outras cem peças idênticas. A peça que mostra a pessoa por trás do número do benefício transforma o processo em um caso, e caso é o que o julgador carrega ao redigir a decisão. A realidade da vida do segurado, quando documentada e bem contada, converte a subsunção fria em juízo de justiça. É o elemento que mais convence, porque não se rebate em contrarrazões. O INSS impugna teses. Não impugna a vida provada nos autos.
 
+A pesquisa confirma a regra (Onda 160). O julgador organiza a prova em uma história causal e escolhe a versão mais coerente (Pennington e Hastie, 1992), e a linguagem menos emocional obteve mais votos na Suprema Corte americana, com controle da qualidade do caso (Black e outros, 2016). Por isso o parágrafo liga cada elo da história ao ID do documento e deixa a força no fato, sem adjetivo. Detalhe na seção "Persuasão com base empírica" de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
 ## Regra de acionamento
 
 Toda petição do escritório em favor de pessoa física deve conter um Parágrafo de Realidade. Vale para petição inicial, recurso inominado, apelação, embargos de declaração, mandado de segurança, réplica, memorial e recurso ao CRPS, em qualquer benefício. Só se dispensa em peças puramente processuais sem juízo de valor sobre o direito, como juntada de documentos, pedido de dilação e ciência.
@@ -36,7 +38,7 @@ Passo 4, costurar com a tese. A última frase liga a vida provada ao requisito j
 5. A última frase sempre conecta ao requisito legal em disputa. Sem essa costura o parágrafo é decorativo.
 6. Jamais inventar, arredondar ou presumir dado pessoal. Idade, datas, valores e diagnósticos saem do documento, nunca da memória.
 7. O parágrafo coroa a fundamentação técnica. Nunca a substitui. Peça sem tese não se salva com biografia.
-8. Verificar se algum dado abre flanco, como vínculo recente no CNIS, renda não declarada ou contradição com o laudo. Dado que enfraquece a tese não entra no parágrafo, entra na análise estratégica do caso.
+8. Verificar se algum dado abre flanco, como vínculo recente no CNIS, renda não declarada ou contradição com o laudo. Dado que enfraquece a tese não entra no parágrafo, entra na análise estratégica do caso, e se o julgador o encontrará nos autos é enfrentado na fundamentação pela refutação antecipada, porque omitir prova contrária relevante viola o dever de veracidade (arts. 77, I, e 80, II, do CPC).
 
 ## Exemplo aprovado
 
