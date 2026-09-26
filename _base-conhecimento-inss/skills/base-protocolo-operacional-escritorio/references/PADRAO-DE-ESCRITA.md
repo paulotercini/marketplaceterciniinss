@@ -46,7 +46,7 @@ A coluna Origem distingue o que o titular FIXOU do que foi PROPOSTO nesta Onda p
 | Orientação ao cliente para perícia | 1 página | Fixado, Onda 96 |
 | Requerimento administrativo | 1 folha | Fixado, inicial-inss |
 | Transcrição de atendimento | Teste dos quatro elementos, sem contagem | Fixado, Onda 132 |
-| Mandado de segurança | 6 páginas | Proposto, por analogia à inicial |
+| Mandado de segurança | 5 páginas e 4 seções | Fixado, personalização 2.4 (Onda 158) |
 | Carta de retificação de PPP à empresa | 2 páginas | Proposto |
 | Estudo pré-perícia e pré-audiência | 2 páginas | Proposto, a partir de "sem enrolação" |
 | Relatório de auditoria (PPP, laudo, CNIS, contestação, decisão) | 2 páginas, achados em ordem de gravidade | Proposto |

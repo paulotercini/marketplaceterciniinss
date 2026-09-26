@@ -363,6 +363,8 @@ Toda peça passa por uma leitura exclusiva de corte antes do relatório final, c
 
 Alvos do corte, nesta ordem. Repetição de fundamento já desenvolvido. Contexto que o julgador já domina. Conclusão restatada ao fim de seção que já a trouxe no início. Adjetivo onde havia dado concreto disponível. Explicação de norma incontroversa. Transcrição de precedente que a súmula do fundamento já resolve.
 
+O corte retira unidade inteira, seja parágrafo, fundamento ou transcrição, e nunca encurta frase nem desfaz o conectivo que liga uma frase à outra, porque o encurtamento é o que produz o texto telegráfico (Onda 138). Depois do corte, o medidor roda de novo.
+
 O que nunca se corta. Fato ligado a prova por ID. Ressalva, risco ou limitação. Requisito legal enfrentado. Elemento que a contestação previsível atacará.
 
 O relatório informa o número de páginas antes, depois e o percentual, e lista o que saiu, por seção, para conferência humana. Corte sem lista não é auditável e não conta.

@@ -157,7 +157,7 @@ Trava de honestidade. O mesmo STJ reafirma que o MS contra ato judicial é excep
 
 ## Extensão
 
-Teto de a peça do mandado de segurança, 6 páginas, por analogia à inicial da Camada 6. Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+Teto da peça do mandado de segurança, 5 páginas e 4 seções, fixado na personalização do titular (Onda 158). Declarado antes de redigir, aferido no arquivo gerado, e documento que estoura volta para o corte com lista do que saiu. Antes de escrever, nomear em uma frase o ponto que decide, e só o dado que o prova entra. Regra 10 do protocolo e `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
 
 ## MCPs da casa
 
