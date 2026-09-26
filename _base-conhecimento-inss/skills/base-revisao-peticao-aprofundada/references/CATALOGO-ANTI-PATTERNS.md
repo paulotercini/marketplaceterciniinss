@@ -116,6 +116,8 @@ Seção "DOS REQUISITOS DA TUTELA DE URGÊNCIA" com demonstração concreta. "O 
 
 **Correção.** Reformular título para antecipar conclusão.
 
+**Exceção (Onda 157).** Em recurso especial, extraordinário, agravo em recurso especial, agravo interno, embargos perante STJ ou STF e PUIL, a regra se inverte. O título é formal e nominal, iniciado por DA, DO ou DOS, e nomeia o vício ou o requisito de admissibilidade, porque o título persuasivo soa como rediscussão de prova. Nessas peças, o achado MENOR é o título persuasivo, e não o nominal.
+
 ## 9. Réplica como Contestação da Contestação
 
 **Definição.** Réplica responde ponto a ponto a cada linha da contestação sem delimitação prévia de pontos controvertidos/incontroversos.

@@ -17,7 +17,7 @@ import re, sys, argparse
 
 PAL_LINHA = 10                       # calibrado
 PARAG_MIN, PARAG_MAX = 20, 45        # 2 a 4 linhas. 45 porque a 1a linha é recuada e o exemplo canônico do titular tem 45
-FRASE_CURTA = 9                      # frase com menos de 9 palavras
+FRASE_CURTA = 12                     # frase com menos de 12 palavras (Onda 157, alinhado ao PADRAO-DE-ESCRITA)
 SEQ_CURTAS = 3                       # 3 seguidas = truncamento
 PAGINAS = {'inicial':7,'inominado':4,'laudo':3,'crps':3,'embargos':2,'comum':2,'memorial':2,'ms':6}
 PAL_PAGINA = 300                     # ~30 linhas úteis x 10 palavras, descontando títulos

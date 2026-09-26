@@ -555,6 +555,8 @@ Ver detalhamento completo em `references/CHECKLIST-POR-RITO.md`. Resumo abaixo.
 
 **PUIL/PEDILEF (TNU).** Verificação obrigatória das 4 hipóteses de cabimento (art. 12 §1º RITNU), paradigma válido (não TRF/STF/TST/TSE - QO 48), cotejo analítico em duas etapas, prequestionamento (QO 10/35/36 + Súmulas 282/356 STF + art. 1.025 CPC), não incidência das Súmulas 42/TNU (reexame fato) e 43/TNU (matéria processual), dialeticidade. Acionar OBRIGATORIAMENTE `base-tnu-admissibilidade-manual` e `pedilef-cotejo-analitico-tnu`.
 
+**Títulos nas cortes superiores (Onda 157).** Em recurso especial, extraordinário, agravo em recurso especial, agravo interno, embargos perante STJ ou STF e pedido de uniformização à TNU, o título é formal e nominal, numerado, iniciado por DA, DO ou DOS, e nomeia o vício processual ou o requisito de admissibilidade, sem fato antecipado, porque o relator dessas cortes lê o título como delimitação do capítulo impugnado, e o título persuasivo soa como rediscussão de prova. Cabe em uma linha da tabela preta. Título persuasivo nessas peças é achado MENOR, com a reformulação nominal indicada no relatório.
+
 **Réplica.** Estrutura de delimitação de pontos controvertidos/incontroversos (seção 1) + réplica compartimentalizada (seção 2) + reconsideração de tutela quando aplicável (seção 3) + pedidos de prova direcionados (seção 4). Tabela de fatos com colunas "Fato alegado", "Impugnação pelo INSS", "Situação processual".
 
 **Memorial.** Limite de duas páginas (CRÍTICO se exceder). Framework EVO. Apenas elementos essenciais (questão central, fundamento para reforma, provas e resultados, pedido final).

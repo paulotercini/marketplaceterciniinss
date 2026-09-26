@@ -104,7 +104,7 @@ A causa estava nas próprias regras do plugin. A seção de estilo das skills de
 
 A peça é escrita em estilo formal, técnico e argumentativo, e o titular dispensa padrão jurídico único e obrigatório. O que ele exige é clareza, com frases diretas e parágrafos bem organizados, argumentação ligada aos fatos, persuasão sóbria, fundamentação seletiva e pedidos específicos.
 
-**Clareza.** Frases completas, de tamanho médio, encadeadas por conectivos, sem rebuscamento e sem telegrama. O parágrafo tem três linhas, no máximo quatro, e desenvolve uma única ideia do começo ao fim.
+**Clareza.** Frases completas, de 12 a 25 palavras, encadeadas por conectivo ou subordinação, sem rebuscamento e sem telegrama (medida fixada na Onda 157). O parágrafo tem três linhas, no máximo quatro, e desenvolve uma única ideia do começo ao fim.
 
 **Argumentação ligada aos fatos.** O parágrafo típico diz o que aconteceu, aponta a prova que sustenta a afirmação, com o ID do documento, e explica como a norma se aplica ao caso. Os três elementos aparecem juntos, na ordem em que o julgador precisa deles.
 
@@ -145,6 +145,40 @@ Três fases separadas na `peticao-previdenciaria`. Redigir em Markdown puro. Med
 O teto do medidor é de 45 palavras por parágrafo, e não 40, porque a primeira linha é recuada e porque o exemplo canônico de abertura pela controvérsia fixado pelo titular tem 45 palavras. Ajustável em uma constante do script.
 
 A Camada 6 da revisão roda o mesmo medidor antes de qualquer outra camada.
+
+## Persuasão com base empírica (Onda 157, 26/09/2026)
+
+O titular pediu escrita de fácil interpretação, formal e jurídica, mas extremamente convincente, e sugeriu a programação neurolinguística. A pesquisa descartou a PNL e adotou oito técnicas cuja eficácia foi medida em juízes, advogados ou leitores em geral, todas aplicadas sobre fato verdadeiro e prova que está nos autos.
+
+### Por que a PNL ficou de fora
+
+A revisão de Witkowski (2010), que examinou trinta e cinco anos de pesquisa sobre o método, concluiu que a base empírica não sustenta as afirmações da PNL. As técnicas típicas, como o comando embutido, a pressuposição oculta e o espelhamento, são percebidas pelo julgador experiente como manobra e corroem a credibilidade do advogado. O que a PNL divulga como ancoragem e enquadramento vem da psicologia cognitiva, e é dessa fonte que as regras abaixo foram tiradas.
+
+### As oito técnicas
+
+**1. Fluência de leitura.** O texto lido sem esforço é julgado mais crível, e a palavra rebuscada usada sem necessidade faz o autor parecer menos inteligente (Oppenheimer, 2006). Em pesquisa com cerca de oitocentos juízes, a linguagem simples venceu o estilo forense tradicional com folga (Flammer, 2010), e a legibilidade da peça se correlacionou com o êxito em pedidos de julgamento antecipado na justiça federal americana (Spencer e Feldman, 2018). Por isso a palavra comum vem antes da rara, e o termo técnico entra quando é o nome exato da coisa.
+
+**2. Narrativa.** Em estudo com noventa e cinco juízes, assessores e advogados de tribunais recursais, 64% consideraram mais persuasiva a peça que conta a história do caso, e entre juízes com mais de quinze anos de carreira a preferência chegou a 73% (Chestek, 2010). Os fatos são narrados como sequência de causa e consequência, com o segurado como agente concreto, e o Parágrafo de Realidade cumpre essa função sem apelo sentimental.
+
+**3. Concretude.** A mesma afirmação redigida em termos concretos é julgada mais verdadeira do que a sua versão abstrata (Hansen e Wänke, 2010). A frase "exposição a ruído de 89 dB(A) na prensa hidráulica, de 2005 a 2023, conforme o PPP de ID 4521" convence mais do que "exposição habitual a agentes nocivos", e por isso número, data, ID, nome do agente e gesto de trabalho substituem a categoria genérica.
+
+**4. Ancoragem.** Juízes e promotores com mais de dez anos de carreira deslocaram a pena na direção de um número sabidamente aleatório, e a experiência não reduziu o efeito (Englich, Mussweiler e Strack, 2006). O primeiro número que o julgador lê na peça é o do segurado, como o tempo total apurado, a DIB pretendida ou o grau de deficiência, e o número do INSS aparece depois, já em confronto. A âncora é sempre dado provado, porque a âncora inflada destrói a credibilidade quando descoberta.
+
+**5. Primazia.** O leitor forma juízo cedo e lê o restante para confirmá-lo, de modo que o argumento mais forte abre a peça e cada seção, como recomendam Scalia e Garner em Making Your Case (2008). O argumento fraco não entra para fazer volume, porque dilui o forte, e o pedido final retoma com as mesmas palavras a tese anunciada na síntese.
+
+**6. Refutação antecipada.** A mensagem que apresenta o argumento contrário e o refuta persuade mais do que a que o ignora, enquanto a que o apresenta sem refutar persuade menos (Allen, 1991). A peça nomeia a defesa previsível do INSS no ponto em que ela surgiria e a refuta na mesma frase ou na seguinte, e o contra-argumento nunca é mencionado sem resposta.
+
+**7. Coerência com o que o INSS já reconheceu.** O julgador aceita com mais facilidade a conclusão que decorre de premissa admitida pela própria parte contrária, aplicação forense do princípio da coerência descrito por Cialdini (1984). O tempo averbado, o vínculo no CNIS, o enquadramento feito em processo anterior e o laudo do perito do INSS servem de ponto de partida, e a controvérsia fica reduzida ao que resta. Esta técnica não tem medição específica em juízes e se apoia na delimitação do controvertido que o escritório já usa na réplica.
+
+**8. Credibilidade pela precisão.** O uso de intensificadores como "claramente" e "manifestamente" se associou a menor chance de reforma em recursos (Long e Christensen, 2008, citados por Spencer e Feldman, 2018). A força do texto vem do dado exato e da consequência jurídica demonstrada, e o `medir_peca.py` já marca esses termos.
+
+### Limite ético
+
+Nenhuma técnica autoriza omitir documento desfavorável que o julgador encontrará nos autos, arredondar número a favor do segurado ou atribuir ao INSS reconhecimento que ele não fez. A persuasão do escritório depende de o julgador confiar que cada dado da peça confere com o documento indicado.
+
+### Fontes
+
+Witkowski, T., Thirty-Five Years of Research on Neuro-Linguistic Programming, Polish Psychological Bulletin, 2010. Oppenheimer, D., Consequences of erudite vernacular utilized irrespective of necessity, Applied Cognitive Psychology, 2006. Flammer, S., Persuading Judges, Legal Writing, v. 16, 2010. Spencer, S. e Feldman, A., Words Count, Legal Writing, 2018. Chestek, K., Judging by the Numbers, Legal Communication & Rhetoric: JALWD, 2010. Hansen, J. e Wänke, M., Truth From Language and Truth From Fit, Personality and Social Psychology Bulletin, 2010. Englich, B., Mussweiler, T. e Strack, F., Playing Dice With Criminal Sentences, Personality and Social Psychology Bulletin, 2006. Allen, M., Meta-analysis comparing the persuasiveness of one-sided and two-sided messages, Western Journal of Speech Communication, 1991. Scalia, A. e Garner, B., Making Your Case, 2008. Cialdini, R., Influence, 1984.
 
 ## Médicos Conferentes e a linguagem do parecer clínico (Onda 141, 17/09/2026)
 
