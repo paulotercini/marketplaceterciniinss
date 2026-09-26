@@ -369,6 +369,10 @@ O que nunca se corta. Fato ligado a prova por ID. Ressalva, risco ou limitação
 
 O relatório informa o número de páginas antes, depois e o percentual, e lista o que saiu, por seção, para conferência humana. Corte sem lista não é auditável e não conta.
 
+#### Conferência de persuasão (Onda 160)
+
+Depois do corte, a revisão confere quatro técnicas da seção "Persuasão com base empírica" de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`. A defesa previsível do INSS sem nomeação e refutação em parágrafo próprio é achado IMPORTANTE, porque a peça perde a base de embargos por omissão. O número do INSS lido antes do número do segurado na seção decisiva é achado MENOR, assim como o reconhecimento administrativo disponível nos autos e não usado como premissa. A pretensão redigida como pedido de exceção, quando cabe descrevê-la como aplicação ordinária de norma, também é achado MENOR.
+
 #### Fusão de fundamentos
 
 Por tese, um fundamento decisivo desenvolvido. Os demais entram em uma linha de menção, sem desenvolvimento, disponíveis para a réplica ou o recurso se o INSS os atacar.
@@ -377,7 +381,7 @@ Essa regra é o freio direto do efeito aditivo dos Conferentes. O retorno deles 
 
 #### Medição mecânica, primeiro (Onda 140)
 
-Antes da amostragem, rodar `python3 peticao-previdenciaria/scripts/medir_peca.py peca.md --tipo <tipo>` sobre o Markdown da peça. O script aplica o padrão calibrado, parágrafo de 20 a 42 palavras, sem sequência de frases curtas, sem adjetivo de intensidade nem fórmula vazia, dispositivo citado com explicação, documento com ID e orçamento de páginas. Cada linha da saída é um achado desta camada, com a severidade que o script atribui. Peça que FALHA no script volta para a redação antes de qualquer outra camada, porque revisar prosa fora da medida é revisar o que vai ser reescrito. A amostragem abaixo cobre o que o script não mede.
+Antes da amostragem, rodar `python3 peticao-previdenciaria/scripts/medir_peca.py peca.md --tipo <tipo>` sobre o Markdown da peça. O script aplica o padrão calibrado, parágrafo de 20 a 45 palavras, sem sequência de frases curtas, sem adjetivo de intensidade nem fórmula vazia, dispositivo citado com explicação, documento com ID e orçamento de páginas. Cada linha da saída é um achado desta camada, com a severidade que o script atribui. Peça que FALHA no script volta para a redação antes de qualquer outra camada, porque revisar prosa fora da medida é revisar o que vai ser reescrito. A amostragem abaixo cobre o que o script não mede.
 
 #### Amostragem de legibilidade
 
