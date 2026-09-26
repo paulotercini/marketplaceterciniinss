@@ -142,7 +142,7 @@ Pipeline. (1) `auditoria-ppp` no documento. (2) `base-especial-ruido` para funda
 
 ## Mapa dos quatro MCPs da casa (Onda 149)
 
-O escritório opera quatro servidores locais, cada um dono de uma matéria. O `trf3` guarda a jurisprudência do TRF3 e das Turmas Recursais da 3ª Região. O `iurisprudencia` guarda a da TNU e do CRPS, com os enunciados do Conselho Pleno. O `normas` guarda a legislação. O `acervo` guarda o que o próprio escritório já escreveu. A articulação entre eles é a remissão, nunca a cópia, de modo que um trecho do `acervo` que cite o Tema 1090 devolve a referência e o inteiro teor se lê no MCP de jurisprudência. **Nenhum dos quatro autoriza `[CONFERIDO]`.**
+O escritório opera quatro servidores locais, cada um dono de uma matéria. O `trf3` guarda a jurisprudência do TRF3 e das Turmas Recursais da 3ª Região. O `iurisprudencia` guarda a da TNU e do CRPS, com os enunciados do Conselho Pleno. O `normas` guarda a legislação. O `acervo` guarda o que o próprio escritório já escreveu. A articulação entre eles é a remissão, nunca a cópia, de modo que um trecho do `acervo` que cite o Tema 1090 devolve a referência e o inteiro teor se lê no MCP de jurisprudência. **Nenhum dos quatro autoriza `[CONFERIDO]`.** A ordem de consulta é fixa. Primeiro o `normas`, para o texto do dispositivo. Depois o catálogo `base-precedentes-catalogo-vinculantes`, para o vinculante. Depois o `trf3` e o `iurisprudencia`, para o caso concreto da região e da TNU. Por último o `acervo`, para o que já se sustentou. As ferramentas de cada um estão no bloco "MCPs da casa" de toda skill.
 
 ## 6. Postura
 
@@ -156,15 +156,14 @@ Fungibilidade previdenciária. Acionar `base-fungibilidade-previdenciaria` para 
 
 Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-portarias-dpmf-inss-hub` para identificar quais Portarias regem o procedimento administrativo, o cálculo, as ratificações e os recursos no caso concreto.
 
-## Acervo do escritório
+## MCPs da casa
 
-Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
-por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
-argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
-chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
-`base-acervo-escritorio`.
+Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
 
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
-de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
-conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
-arquivo de origem não é.
+Legislação. Todo dispositivo citado nesta skill se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo. Para tese de direito adquirido, `redacao_na_data`, que responde por ano. A citação em peça exige a `fonte_oficial` que a resposta devolve. Detalhe em `base-legislacao-fontes-primarias`.
+
+Jurisprudência do TRF3 e das Turmas Recursais. Localize pelo MCP `trf3`, com `buscar_acordaos_trf3` (consulta, `polo_recorrente`, `resultado`, `orgao_julgador` e datas) e `obter_acordao_trf3` no id devolvido. `resultado` e `polo_recorrente` são inferidos. O achado nasce [NÃO CONFIRMADO] e só entra na peça depois de aberto no portal do TRF3, na forma de `pesquisa-jurisprudencia-chrome`. TNU e CRPS ficam no MCP `iurisprudencia`.
+
+Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado, chame `precedentes_do_acervo` e leia o campo `corte` da resposta, porque o mesmo número de Tema existe em mais de uma corte. Detalhe em `base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.

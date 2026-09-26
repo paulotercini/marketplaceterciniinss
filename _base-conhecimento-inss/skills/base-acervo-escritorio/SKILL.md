@@ -52,6 +52,7 @@ O trecho é anonimizado na ingestão, então nome, CPF, número de benefício e 
 2. `buscar_tese_acervo` com os termos do caso e, quando útil, o filtro de `beneficio` e de `tipo_peca`.
 3. `obter_trecho_acervo` no trecho que interessa, para ler o argumento inteiro.
 4. `precedentes_do_acervo` quando a pergunta for em que peças já se usou determinado Tema, Súmula ou Enunciado.
+5. Em `precedentes_do_acervo`, ler o campo `corte` de cada ocorrência. Medido em 26/09/2026, `Tema 555` devolveu o Tema 555/STF (EPI e ruído) e o Tema 555/STJ (acumulação de auxílio-acidente) na mesma lista, e nove ocorrências vieram com corte `indefinido`, que se confere no trecho.
 
 Exemplo de consulta, "ruído sem NEN" ou "qualidade de segurado período de graça".
 

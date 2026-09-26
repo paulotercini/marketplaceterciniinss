@@ -14,6 +14,11 @@ Toda afirmação normativa ou jurisprudencial foi verificada em fonte primária 
 base-conhecimento-inss/
 ├── .claude-plugin/
 │   └── plugin.json
+├── .mcp.json
+├── agents/
+├── mcp-acervo/
+├── mcp-normas/
+├── mcp-trf3/
 ├── skills/
 │   ├── base-especial-ruido/
 │   │   ├── SKILL.md
@@ -22,8 +27,13 @@ base-conhecimento-inss/
 │   ├── base-especial-agentes-quimicos/
 │   └── ...
 └── scripts/
-    └── ingest-tema.sh
+    ├── ingest-tema.sh
+    └── onda-156-mcps.py
 ```
+
+## Servidores MCP
+
+O plugin sobe três servidores locais declarados em `.mcp.json`. O `normas` responde pela legislação, o `trf3` pela jurisprudência do TRF3 e das Turmas Recursais da 3ª Região, e o `acervo` pelo que o próprio escritório já escreveu. TNU e CRPS ficam no servidor `iurisprudencia`, externo ao plugin. Os quatro localizam e não conferem. Nenhum autoriza a marca [CONFERIDO], que só nasce da fonte oficial aberta no navegador. A regra de uso está no bloco "MCPs da casa" de cada skill e de cada agente. Requisito, `uv` no PATH, sem o qual nenhum dos três sobe.
 
 ## Governança editorial
 

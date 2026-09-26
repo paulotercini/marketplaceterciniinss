@@ -150,15 +150,14 @@ Antes de executar a skill, leia os seguintes arquivos conforme o modo de operaç
 
 A ausência de documentação médica pretérita NÃO inviabiliza a aposentadoria PCD. A LC 142/2013 exige fixação da DID por ocasião da primeira avaliação, e essa fixação pode ser feita com base em relatório médico atual fundamentado em fisiopatologia temporal, ainda que sem prontuário antigo. A estratégia correta combina produção de documentos novos de qualidade técnica elevada com busca estruturada em fontes que o cliente desconhece. O erro estratégico mais comum é desistir da tese retroativa por ausência aparente de documentação. O segundo erro mais comum é forçar DID anterior à sustentabilidade médica. Este skill previne ambos os erros.
 
-## Acervo do escritório
+## MCPs da casa
 
-Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
-por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
-argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
-chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
-`base-acervo-escritorio`.
+Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
 
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
-de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
-conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
-arquivo de origem não é.
+Legislação. Todo dispositivo citado nesta skill se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo. Para tese de direito adquirido, `redacao_na_data`, que responde por ano. A citação em peça exige a `fonte_oficial` que a resposta devolve. Detalhe em `base-legislacao-fontes-primarias`.
+
+Jurisprudência do TRF3 e das Turmas Recursais. Localize pelo MCP `trf3`, com `buscar_acordaos_trf3` (consulta, `polo_recorrente`, `resultado`, `orgao_julgador` e datas) e `obter_acordao_trf3` no id devolvido. `resultado` e `polo_recorrente` são inferidos. O achado nasce [NÃO CONFIRMADO] e só entra na peça depois de aberto no portal do TRF3, na forma de `pesquisa-jurisprudencia-chrome`. TNU e CRPS ficam no MCP `iurisprudencia`.
+
+Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado, chame `precedentes_do_acervo` e leia o campo `corte` da resposta, porque o mesmo número de Tema existe em mais de uma corte. Detalhe em `base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.

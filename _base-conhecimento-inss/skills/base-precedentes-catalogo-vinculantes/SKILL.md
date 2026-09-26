@@ -48,7 +48,9 @@ Esta skill é a fonte do Nível 1 do `PROTOCOLO-VERIFICACAO-DINAMICA.md` para pr
 
 **Nível 1 (esta skill).** Buscar no catálogo local em `references/`.
 
-**Nível 2.** Se não localizado nesta skill, acionar `mcp__workspace__web_fetch` na URL oficial.
+**Nível 1-B.** Antes de sair para a rede, localizar nos MCPs da casa. Acórdão do TRF3 e de Turma Recursal por `buscar_acordaos_trf3`, com o número CNJ ou a tese na consulta. Uso anterior do precedente pelo escritório por `precedentes_do_acervo`, lendo o campo `corte`. Tema, Súmula e Enunciado não estão nos MCPs do plugin, e seguem para o Nível 2. Achado de MCP nasce [NÃO CONFIRMADO].
+
+**Nível 2.** Se não localizado nesta skill, acionar `WebFetch` na URL oficial.
 - STF. https://portal.stf.jus.br
 - STJ. https://www.stj.jus.br
 - TNU. https://www.cjf.jus.br/cjf/jef/turma-nacional-de-uniformizacao
@@ -278,15 +280,14 @@ Caso real, conferido em 19/09/2026. Acórdão da 9ª Turma do TRF3, ApCiv 534747
 
 **Regra.** Todo tema, súmula ou norma que chegar por dentro de uma ementa passa por este catálogo antes de ser reproduzido, e o que não constar aqui vai ao `verificador-precedentes`. O acórdão segue aproveitável pela RATIO, e o que não se reproduz é a cadeia de citações que ele carrega.
 
-## Acervo do escritório
+## MCPs da casa
 
-Antes de redigir, consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece
-por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o
-argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado,
-chame `precedentes_do_acervo`. O detalhamento das ferramentas e dos filtros está em
-`base-acervo-escritorio`.
+Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
 
-**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático
-de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova,
-conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o
-arquivo de origem não é.
+Legislação. Todo dispositivo citado nesta skill se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo. Para tese de direito adquirido, `redacao_na_data`, que responde por ano. A citação em peça exige a `fonte_oficial` que a resposta devolve. Detalhe em `base-legislacao-fontes-primarias`.
+
+Jurisprudência do TRF3 e das Turmas Recursais. Localize pelo MCP `trf3`, com `buscar_acordaos_trf3` (consulta, `polo_recorrente`, `resultado`, `orgao_julgador` e datas) e `obter_acordao_trf3` no id devolvido. `resultado` e `polo_recorrente` são inferidos. O achado nasce [NÃO CONFIRMADO] e só entra na peça depois de aberto no portal do TRF3, na forma de `pesquisa-jurisprudencia-chrome`. TNU e CRPS ficam no MCP `iurisprudencia`.
+
+Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado, chame `precedentes_do_acervo` e leia o campo `corte` da resposta, porque o mesmo número de Tema existe em mais de uma corte. Detalhe em `base-acervo-escritorio`.
+
+**Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.

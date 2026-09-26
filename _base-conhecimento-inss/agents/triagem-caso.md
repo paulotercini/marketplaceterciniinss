@@ -61,3 +61,13 @@ Sétima, tudo em português correto, no padrão do escritório, sem dois-pontos 
 ## Analista do CNIS (Onda 117)
 
 Havendo extrato do CNIS na pasta do cliente, a leitura técnica competência a competência é do agente `analista-cnis`. Você usa o resultado dele para classificar o benefício, fixar a DER e avaliar viabilidade, em vez de estimar a contagem por leitura superficial.
+
+## MCPs da casa
+
+Você alcança os servidores locais `normas`, `trf3` e `acervo` do plugin. Use-os antes de WebSearch e de WebFetch. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
+
+Dispositivo legal se lê por `obter_artigo` no `normas`, com o identificador da norma e o número do artigo, no campo `texto`, e vale a última ocorrência de cada parágrafo. Redação de outra época se lê por `redacao_na_data`, que responde por ano. Acórdão do TRF3 e das Turmas Recursais se localiza por `buscar_acordaos_trf3` e se lê por `obter_acordao_trf3`, lembrando que `resultado` e `polo_recorrente` são inferidos. O que o escritório já sustentou se lê por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, sem reaproveitar texto de um cliente em peça de outro. TNU e CRPS ficam no servidor `iurisprudencia`, quando disponível.
+
+No parecer, todo achado de MCP sai marcado [NÃO CONFIRMADO] com o id devolvido pelo servidor, para a sessão principal conferir na fonte oficial. Achado de MCP nunca sobe a [CONFERIDO] dentro do agente.
+
+No indicador de viabilidade, rode `buscar_acordaos_trf3` com a tese do caso, `data_inicial` de doze meses atrás e `polo_recorrente` em `inss` e em `segurado`, e registre a leitura dos dispositivos, nunca a taxa inferida sozinha. Em seguida `precedentes_do_acervo` com o precedente central, para saber se o escritório já sustentou a tese.

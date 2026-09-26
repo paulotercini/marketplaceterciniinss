@@ -35,6 +35,10 @@ Procedimento.
 
 Tempo médio. 2 a 5 segundos.
 
+### Nível 1-B - MCPs da casa
+
+Antes de sair para a rede, localizar nos MCPs da casa. Acórdão do TRF3 e de Turma Recursal por `buscar_acordaos_trf3`, com o número CNJ ou a tese na consulta. Uso anterior do precedente pelo escritório por `precedentes_do_acervo`, lendo o campo `corte`. Tema, Súmula e Enunciado não estão nos MCPs do plugin, e seguem para o Nível 2. Achado de MCP nasce [NÃO CONFIRMADO]. Dispositivo legal citado na peça se confere por `obter_artigo` no `normas`, campo `texto`, antes de qualquer WebFetch.
+
 ### Nível 2 - WebFetch Direto da URL Oficial
 
 Se o artigo NÃO estiver no repositório local (cobre apenas 19 normas), buscar via WebFetch direto da URL oficial registrada no índice de `base-legislacao-fontes-primarias`.
@@ -51,7 +55,7 @@ URLs oficiais por categoria.
 Procedimento.
 
 1. Identificar a URL oficial correspondente à norma.
-2. Acionar `mcp__workspace__web_fetch` ou ferramenta equivalente.
+2. Acionar `WebFetch` ou ferramenta equivalente.
 3. Receber HTML/PDF processado.
 4. Buscar o artigo no conteúdo retornado.
 5. Confirmar literalmente e registrar APROVADO.

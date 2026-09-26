@@ -14,7 +14,7 @@ Nas Turmas Recursais o CJF entrega o texto SEM acentuação, e por isso a busca 
 
 ## A regra
 
-Todo julgado localizado no MCP nasce marcado **[NÃO CONFERIDO]** e NÃO entra em peça, parecer ou relatório nessa condição. Ele só recebe **[CONFERIDO]** com data depois de aberto no portal do TRF3.
+Todo julgado localizado no MCP nasce marcado **[NÃO CONFIRMADO]** e NÃO entra em peça, parecer ou relatório nessa condição. Ele só recebe **[CONFERIDO]** com data depois de aberto no portal do TRF3.
 
 Não sendo encontrado no portal, o julgado NÃO entra na peça. Havendo divergência entre o MCP e o portal, prevalece o portal.
 
@@ -66,6 +66,8 @@ No teste, o MCP registrou a relatora como "JULIANA BLANCO WOJTOWICZ". O portal e
 
 São três formas para o mesmo julgado, e a explicação é que há relator titular e magistrada convocada que relatou. Citar apenas um dos nomes pode ser impreciso, e a conferência existe para que o advogado veja os dois e decida como citar.
 
+Caso de 26/09/2026, ApCiv 5051091-92.2023.4.03.9999, 7ª Turma, j. 13/08/2026. O cabeçalho da ementa registra "RELATOR: JEAN MARCOS FERREIRA" e o voto registra a Juíza Federal Convocada Adriana Delboni Taricco como relatora. A divergência vem da fonte CJF, e o nome a citar se lê no portal, nunca no cabeçalho do MCP.
+
 ## A armadilha maior. A ementa do tribunal pode estar errada
 
 O acórdão testado sustenta, na própria tese de julgamento, que a exceção do ruído decorre dos "STJ Temas 534, 694 e 1.083" e da "IN PRES/INSS nº 170/2024, art. 291, §2º".
@@ -92,4 +94,4 @@ Quinto, marcação `[CONFERIDO em DD/MM/AAAA]` e registro, no relatório, de qua
 
 ## Valor estatístico
 
-Enquanto a carga não cobrir pelo menos um ano, comparação entre Turmas ou entre relatores NÃO tem valor, porque semanas não fazem amostra. A distribuição por órgão reflete a ordem da coleta, e não a realidade do tribunal. O `perfil_orgao_trf3` e o `perfil_relator_trf3` só entram em relatório depois que a base cobrir doze meses.
+A base cobre de outubro de 2021 em diante, e a data exata sai de `visao_geral_trf3`. Com mais de doze meses de cobertura, `perfil_orgao_trf3` e `perfil_relator_trf3` entram em relatório interno, sempre com três ressalvas escritas. O `resultado` é inferido por heurística sobre o dispositivo. O `polo_recorrente` é inferido, e provimento não é vitória do segurado. A base tem recorte previdenciário e corte temporal, e ausência aqui não é ausência no TRF3. Taxa não entra em peça. O que entra é o acórdão lido e conferido.
