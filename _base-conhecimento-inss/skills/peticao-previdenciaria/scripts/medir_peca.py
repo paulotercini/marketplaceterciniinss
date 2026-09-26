@@ -19,7 +19,7 @@ PAL_LINHA = 10                       # calibrado
 PARAG_MIN, PARAG_MAX = 20, 45        # 2 a 4 linhas. 45 porque a 1a linha é recuada e o exemplo canônico do titular tem 45
 FRASE_CURTA = 12                     # frase com menos de 12 palavras (Onda 157, alinhado ao PADRAO-DE-ESCRITA)
 SEQ_CURTAS = 3                       # 3 seguidas = truncamento
-PAGINAS = {'inicial':7,'inominado':4,'laudo':3,'crps':3,'embargos':2,'comum':2,'memorial':2,'ms':6}
+PAGINAS = {'inicial':7,'inominado':4,'laudo':3,'crps':3,'embargos':2,'comum':2,'memorial':2,'ms':5}
 PAL_PAGINA = 300                     # ~30 linhas úteis x 10 palavras, descontando títulos
 
 ADJ_VEDADOS = r'\b(manifestamente|flagrante(?:mente)?|absurd[oa]|teratol[óo]gic[oa]|basilares?|inequ[íi]voc[oa](?:mente)?|induvidos[oa](?:mente)?|escancarad[oa]|gritante|inadmiss[íi]vel|descabid[oa]|esdr[úu]xul[oa]|desesperador[a]?|abandonad[oa] à pr[óo]pria sorte|cristalin[oa]|patente(?:mente)?|not[óo]ri[oa](?:mente)?|evidentemente|obviamente|claramente)\b'
