@@ -203,6 +203,20 @@ g.evento(q[0], "08:00", "12:00", "Agenda Livre", { transparency: "transparent" }
   await p.waitForSelector(".aq-alerta");
   conf("F151 · feriado bloqueia a quarta e, sem vaga, aparece o alerta", /Nenhuma vaga/.test(await p.textContent(".aq-alerta")) && /Feriado ou férias/.test(await p.textContent(".aq-faixa")));
 
+  // F154: cliente sem telefone recebe o campo, e o número vai para o cadastro
+  await p.evaluate(() => { try { fecharCaixa(); } catch (e) {} fluxo = null; abrirFluxoAgenda(); });
+  await p.fill("#aq-busca", "belmiro");
+  await p.waitForSelector('[data-aqcli]');
+  await p.click('[data-aqcli]');
+  const temCampo = await p.isVisible("#aq-tel");
+  const antesTel = escritas.length;
+  await p.fill("#aq-tel", "16988887777");
+  await p.click("#aq-seg2");
+  await p.waitForSelector("[data-aqacomp]");
+  const patch = escritas.slice(antesTel).find(e => e.m === "PATCH" && e.t === "clientes");
+  conf("F154 · sem telefone no cadastro aparece o campo, e o número digitado é gravado no cliente",
+    temCampo && patch && JSON.parse(patch.corpo).telefone === "(16) 98888-7777");
+
   const passos = await p.evaluate(() => {
     const adm = cardLigarAgenda(), era = souAdmin(), papel = eu.papel; eu.papel = "equipe";
     const eq = cardLigarAgenda(); eu.papel = papel;
