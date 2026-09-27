@@ -2792,7 +2792,7 @@ html[data-tema="v10"] .pl-grupo .mais-plan{margin:8px 16px 12px}
 html[data-tema="v10"] .sidebar .usuario,html[data-tema="v10"] .sidebar .rapida-caixa,html[data-tema="v10"] #btn-novo-cli,
 html[data-tema="v10"] .sidebar #btn-lateral,html[data-tema="v10"] .sidebar .sync-todo,html[data-tema="v10"] .sidebar > .sep{display:none}
 html[data-tema="v10"] .v10-topo{display:flex;align-items:center;gap:8px;padding:14px 12px 12px;position:relative}
-html[data-tema="v10"] .v10-marca{flex:1;min-width:0;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--texto);line-height:1.3}
+html[data-tema="v10"] .v10-marca{flex:1;min-width:0;font-size:10.5px;font-weight:600;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;color:var(--texto);line-height:1.3}
 html[data-tema="v10"] .v10-conta{display:inline-flex;align-items:center;gap:6px;flex:none;height:32px;padding:0 8px 0 4px;border:1px solid var(--borda);
   border-radius:999px;background:#fff;color:var(--texto);font:inherit;font-size:13px;cursor:pointer}
 html[data-tema="v10"] .v10-conta .avatar{width:24px;height:24px;font-size:11px}
@@ -2821,12 +2821,15 @@ html[data-tema="v10"] .mais-visoes{display:flex;align-items:center;gap:6px;width
   font:inherit;font-size:13.5px;color:var(--cinza);cursor:pointer;border-radius:8px}
 html[data-tema="v10"] .app.mini-lateral .mais-visoes{padding:6px;justify-content:center}
 @media (hover:hover) and (pointer:fine){html[data-tema="v10"] .mais-visoes:hover{background:var(--lateral-hover)}}
-html[data-tema="v10"] .app.mini-lateral .v10-marca,html[data-tema="v10"] .app.mini-lateral .v10-acoes{display:none}
+html[data-tema="v10"] .app.mini-lateral .v10-marca,html[data-tema="v10"] .app.mini-lateral .busca-kbd{display:none}
+html[data-tema="v10"] .app.mini-lateral .v10-acoes{grid-template-columns:1fr;padding:0 6px 8px;gap:6px}
+html[data-tema="v10"] .app.mini-lateral .v10-acoes .txt{display:none}
 html[data-tema="v10"] .app.mini-lateral .v10-topo{justify-content:center;padding:12px 4px}
 html[data-tema="v10"] .app.mini-lateral .v10-conta{padding:0 4px}
 /* o topo da agenda: título, a frase do dia e o filtro por pessoa */
 .topo-extra:empty{display:none}
 html[data-tema="v10"] .topo-extra{margin-left:auto}
+html[data-tema="v10"] .meio.ag-v10 .meio-topo h1{font-size:26px;line-height:1.2}
 html[data-tema="v10"] .meio.ag-v10 #btn-fundo,html[data-tema="v10"] .meio.ag-v10 .ordenar{display:none}
 html[data-tema="v10"] .seg-colab{display:inline-flex;gap:2px;padding:3px;background:var(--placa);border-radius:10px}
 html[data-tema="v10"] .seg-colab button{border:0;background:none;padding:5px 12px;border-radius:7px;font:inherit;font-size:13px;color:var(--cinza);cursor:pointer}
