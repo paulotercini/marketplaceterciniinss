@@ -203,6 +203,13 @@ g.evento(q[0], "08:00", "12:00", "Agenda Livre", { transparency: "transparent" }
   await p.waitForSelector(".aq-alerta");
   conf("F151 · feriado bloqueia a quarta e, sem vaga, aparece o alerta", /Nenhuma vaga/.test(await p.textContent(".aq-alerta")) && /Feriado ou férias/.test(await p.textContent(".aq-faixa")));
 
+  const passos = await p.evaluate(() => {
+    const adm = cardLigarAgenda(), era = souAdmin(), papel = eu.papel; eu.papel = "equipe";
+    const eq = cardLigarAgenda(); eu.papel = papel;
+    return { adm: era && /adicionarColaborador/.test(adm) && /revogarColaborador/.test(adm) && /script\.google\.com\/home\/projects\//.test(adm), eq: /adicionarColaborador/.test(eq) };
+  });
+  conf("F153 · passo a passo do colaborador novo aparece só para o admin", passos.adm && !passos.eq);
+
   console.log("=== F151 · agenda de quarta ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
   console.log("erros de console:", erros.length ? erros : "nenhum");
