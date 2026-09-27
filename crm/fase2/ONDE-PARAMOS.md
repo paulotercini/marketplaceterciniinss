@@ -1,5 +1,8 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F144 · versão 10.48 · agenda e barra lateral do mock (27.09.2026)
+Branch crm-10-48-planejado, sem publicar. Só no tema v10: `renderAgendaV10()` desenha Planejado e Meu Dia a partir de `itensAgenda(col)` (uma linha por data: tarefa do comentário, prazo fatal, prorrogação, perícia/audiência agendada, tarefa avulsa, lembrete); `linhaAgenda()` monta a linha; o texto do comentário vem de `buscarTextosAgenda()` (uma consulta, um repaint). Contadores do v10 (Planejado, Meu Dia, vencidas) contam as mesmas linhas. Barra: `montarSidebar()` refaz os grupos no v10 (HOJE, 6 listas, 2 visões + "Mais N visões", estado em crm_mais_visoes) e `montarConta()` monta o menu da conta. O tema antigo segue igual.
+
 ## F143 · Papel quente com o petróleo mantido (10.47)
 
 Escolha do Paulo entre três prévias (atual, papel quente com petróleo, papel quente com ações em
