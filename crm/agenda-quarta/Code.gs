@@ -1,5 +1,5 @@
 /**
- * Agenda de atendimentos presenciais de quarta-feira
+ * Agenda de atendimentos presenciais (Paulo às quartas; Marcos e Amanda de segunda a sexta)
  * Escritório Paulo Roberto Tercini Filho
  * Web App: executar como o proprietário; acesso: qualquer pessoa (a autorização é feita por token).
  * Requer o serviço avançado Calendar (v3).
@@ -9,19 +9,25 @@ const CONFIG = {
   TZ: 'America/Sao_Paulo',
   OFFSET: '-03:00',               // Brasil sem horário de verão desde 2019
   CALENDAR_ID: 'primary',
-  DIA_SEMANA: 3,                  // 0 domingo ... 3 quarta
   JANELAS: [['08:00', '12:30'], ['13:30', '18:30']],
-  RESERVAS_PAULO: [['18:00', '18:30']],
   DURACAO: { '001': 45, '002': 30 },
   PASSO_MIN: 15,
-  MAX_ATENDIMENTOS_DIA: 14,
-  SEMANAS_A_EXIBIR: 6,
   PRAZO_ALERTA_DIAS: 15,
   REGEX_ATENDIMENTO: /^\s*(00[12])/,
-  COR: { '001': '10', '002': '9' },
+  // Os três atendem na MESMA agenda (a do Paulo); a cor do evento diz de
+  // quem ele é (colorId do Google: 9 = mirtilo/azul, 10 = manjericão/verde,
+  // 5 = banana/amarelo). Evento sem essas cores bloqueia todos.
+  // dias: 0 domingo ... 6 sábado. limite/reservas: só o Paulo tem.
+  PROFISSIONAIS: {
+    paulo:  { nome: 'Paulo',  tratamento: 'o Dr. Paulo Roberto Tercini Filho', cor: '9',  dias: [3],             limite: 14,   reservas: [['18:00', '18:30']], exibir: 6 },
+    marcos: { nome: 'Marcos', tratamento: 'o Dr. Marcos',                      cor: '10', dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 },
+    amanda: { nome: 'Amanda', tratamento: 'a Dra. Amanda',                     cor: '5',  dias: [1, 2, 3, 4, 5], limite: null, reservas: [],                   exibir: 10 }
+  },
+  PADRAO: 'paulo',
+  // dia inteiro nestas agendas bloqueia o dia de quem está na lista
   CALENDARIOS_BLOQUEIO_DIA_INTEIRO: [
-    'e83gr2c3gb344uo2nkll6geaac@group.calendar.google.com', // Férias
-    'ipt0crldsn7gg9s0gl9hn6l5b8@group.calendar.google.com'  // Feriado
+    { id: 'e83gr2c3gb344uo2nkll6geaac@group.calendar.google.com', quem: ['paulo'] },                    // Férias
+    { id: 'ipt0crldsn7gg9s0gl9hn6l5b8@group.calendar.google.com', quem: ['paulo', 'marcos', 'amanda'] } // Feriado
   ]
 };
 
@@ -44,6 +50,9 @@ function doPost(e) {
       case 'remarcar':            out = remarcar_(user, req); break;
       case 'agendamentosFuturos': out = agendamentosFuturos_(user, req); break;
       case 'quemSouEu':           out = { ok: true, usuario: user.nome, papel: user.papel }; break;
+      case 'definirDias':         out = definirDias_(user, req); break;
+      case 'trocarDia':           out = trocarDia_(user, req); break;
+      case 'desfazerAjuste':      out = desfazerAjuste_(user, req); break;
       default: throw erro_('ACAO_INVALIDA', 'Ação desconhecida.');
     }
   } catch (err) {
@@ -93,26 +102,62 @@ function sobrepoe_(a1, a2, b1, b2) { return a1 < b2 && b1 < a2; }
 function ehAtendimento_(ev) { return CONFIG.REGEX_ATENDIMENTO.test((ev && ev.summary) || ''); }
 function recusado_(ev) { return (ev.attendees || []).some(a => a.self && a.responseStatus === 'declined'); }
 
-function proximasQuartas_(n) {
+/* Ajustes feitos pelo Paulo no CRM, guardados nas propriedades do script:
+   dias da semana fixos de cada profissional e as trocas pontuais (folgas e
+   dias extras). Valem sobre o CONFIG, sem precisar editar este arquivo. */
+function ajustes_() { return JSON.parse(PropertiesService.getScriptProperties().getProperty('AJUSTES') || '{}'); }
+function gravarAjustes_(a) { PropertiesService.getScriptProperties().setProperty('AJUSTES', JSON.stringify(a)); }
+
+function prof_(id) {
+  const chave = String(id || CONFIG.PADRAO).toLowerCase();
+  const p = CONFIG.PROFISSIONAIS[chave];
+  if (!p) throw erro_('PARAMETRO', 'Profissional desconhecido.');
+  const aj = ajustes_()[chave] || {};
+  return Object.assign({ id: chave }, p, {
+    dias: Array.isArray(aj.dias) ? aj.dias : p.dias,
+    extras: aj.extras || [], folgas: aj.folgas || []
+  });
+}
+/** Atende nesta data? O dia fixo da semana, menos as folgas, mais os dias extras. */
+function atendeNoDia_(prof, data) {
+  if (prof.folgas.indexOf(data) >= 0) return false;
+  return prof.extras.indexOf(data) >= 0 || prof.dias.indexOf(diaSemana_(data)) >= 0;
+}
+/** De quem é o evento, pela cor (ou pela marca gravada pelo CRM). null = de ninguém = bloqueia todos. */
+function donoDoEvento_(ev) {
+  const p = (ev.extendedProperties && ev.extendedProperties.private) || {};
+  if (p.profissional && CONFIG.PROFISSIONAIS[p.profissional]) return p.profissional;
+  const achado = Object.keys(CONFIG.PROFISSIONAIS).find(k => CONFIG.PROFISSIONAIS[k].cor === String(ev.colorId || ''));
+  return achado || null;
+}
+
+function proximosDias_(prof, n) {
   const res = [];
   let d = dt_(ymd_(new Date()), '12:00');
-  while (res.length < n) {
+  for (let i = 0; res.length < n && i < 400; i++) {
     const data = ymd_(d);
-    if (diaSemana_(data) === CONFIG.DIA_SEMANA) res.push(data);
+    if (atendeNoDia_(prof, data)) res.push(data);
     d = new Date(d.getTime() + 86400000);
   }
   return res;
 }
 
-function diaBloqueado_(data) {
+function diaBloqueado_(data, prof) {
   const timeMin = dt_(data, '00:00').toISOString();
   const timeMax = dt_(data, '23:59').toISOString();
-  return CONFIG.CALENDARIOS_BLOQUEIO_DIA_INTEIRO.some(id => {
+  return CONFIG.CALENDARIOS_BLOQUEIO_DIA_INTEIRO.some(c => {
+    if (c.quem.indexOf(prof.id) < 0) return false;
     try {
-      const r = Calendar.Events.list(id, { timeMin, timeMax, singleEvents: true, maxResults: 20 });
+      const r = Calendar.Events.list(c.id, { timeMin, timeMax, singleEvents: true, maxResults: 20 });
       return (r.items || []).some(ev => ev.status !== 'cancelled' && ev.start && ev.start.date);
     } catch (e) { return false; }
   });
+}
+/** O que ocupa o profissional: os eventos dele e os de ninguém (sem cor de profissional). */
+/** Atendimento que conta no dia de quem: o da cor dele; sem cor, conta para o Paulo (dono da agenda). */
+function contaPara_(ev, prof) { const d = donoDoEvento_(ev); return d === prof.id || (d === null && prof.id === CONFIG.PADRAO); }
+function eventosDoProfissional_(evs, prof) {
+  return evs.filter(ev => { const d = donoDoEvento_(ev); return d === null || d === prof.id; });
 }
 
 function eventosDoDia_(data) {
@@ -133,7 +178,7 @@ function resumo_(ev) {
   const m = titulo.match(CONFIG.REGEX_ATENDIMENTO);
   return {
     id: ev.id, titulo, data: ymd_(ini), inicio: hm_(ini), fim: hm_(fim),
-    atendimento: !!m, tipo: m ? m[1] : null,
+    atendimento: !!m, tipo: m ? m[1] : null, profissional: donoDoEvento_(ev),
     confirmado: /(^|\s)confirmado\s*$/i.test(titulo) && !/n[ãa]o confirmado\s*$/i.test(titulo),
     origemCrm: p.origem === 'crm-agenda',
     clienteId: p.clienteId || null, nome: p.nome || null,
@@ -141,7 +186,7 @@ function resumo_(ev) {
   };
 }
 
-function horariosLivres_(data, tipo, ocupados, user, agora) {
+function horariosLivres_(data, tipo, ocupados, user, agora, prof) {
   const dur = CONFIG.DURACAO[tipo] * 60000;
   const passo = CONFIG.PASSO_MIN * 60000;
   const bordas = new Set(ocupados.map(([, f]) => f.getTime()));
@@ -153,7 +198,7 @@ function horariosLivres_(data, tipo, ocupados, user, agora) {
       const i = new Date(t), f = new Date(t + dur);
       if (i <= agora) continue;
       if (ocupados.some(([oi, of]) => sobrepoe_(i, f, oi, of))) continue;
-      const reserva = CONFIG.RESERVAS_PAULO.some(([ra, rb]) => sobrepoe_(i, f, dt_(data, ra), dt_(data, rb)));
+      const reserva = prof.reservas.some(([ra, rb]) => sobrepoe_(i, f, dt_(data, ra), dt_(data, rb)));
       if (reserva && user.papel !== 'admin') continue;
       res.push({ inicio: hm_(i), fim: hm_(f), encaixado: bordas.has(t), reserva });
     }
@@ -164,41 +209,45 @@ function horariosLivres_(data, tipo, ocupados, user, agora) {
 /* ---------------------------- Ações ---------------------------- */
 
 function disponibilidade_(user, r) {
-  const n = Math.min(Number(r.semanas) || CONFIG.SEMANAS_A_EXIBIR, 12);
+  const prof = prof_(r.profissional);
+  const n = Math.min(Number(r.dias) || prof.exibir, 30);
   const agora = new Date();
-  const dias = proximasQuartas_(n).map(data => {
-    if (diaBloqueado_(data)) {
-      return { data, bloqueado: true, atendimentos: 0, limite: CONFIG.MAX_ATENDIMENTOS_DIA,
-               lotado: true, eventos: [], livres: { '001': [], '002': [] } };
+  const dias = proximosDias_(prof, n).map(data => {
+    const base = { data, diaSemana: diaSemana_(data), limite: prof.limite };
+    if (diaBloqueado_(data, prof)) {
+      return Object.assign(base, { bloqueado: true, atendimentos: 0, lotado: true, eventos: [], livres: { '001': [], '002': [] } });
     }
-    const evs = eventosDoDia_(data);
+    const evs = eventosDoProfissional_(eventosDoDia_(data), prof);
     const ocupados = evs.map(ev => [new Date(ev.start.dateTime), new Date(ev.end.dateTime)]);
-    const atend = evs.filter(ehAtendimento_).length;
-    const lotado = atend >= CONFIG.MAX_ATENDIMENTOS_DIA;
+    const atend = evs.filter(ev => ehAtendimento_(ev) && contaPara_(ev, prof)).length;
+    const lotado = !!prof.limite && atend >= prof.limite;
     const livres = {};
     Object.keys(CONFIG.DURACAO).forEach(tipo => {
-      livres[tipo] = (lotado && user.papel !== 'admin') ? [] : horariosLivres_(data, tipo, ocupados, user, agora);
+      livres[tipo] = (lotado && user.papel !== 'admin') ? [] : horariosLivres_(data, tipo, ocupados, user, agora, prof);
     });
-    return { data, bloqueado: false, atendimentos: atend, limite: CONFIG.MAX_ATENDIMENTOS_DIA,
-             lotado, eventos: evs.map(resumo_), livres,
-             reservas: CONFIG.RESERVAS_PAULO.map(([a, b]) => ({ inicio: a, fim: b })),
-             janelas: CONFIG.JANELAS.map(([a, b]) => ({ inicio: a, fim: b })) };
+    return Object.assign(base, { bloqueado: false, atendimentos: atend, lotado, eventos: evs.map(resumo_), livres,
+             reservas: prof.reservas.map(([a, b]) => ({ inicio: a, fim: b })),
+             janelas: CONFIG.JANELAS.map(([a, b]) => ({ inicio: a, fim: b })) });
   });
 
   const primeira = dias.find(d => !d.bloqueado && (d.livres['001'].length || d.livres['002'].length));
   let alerta = null;
   if (!primeira) {
-    alerta = 'Nenhuma vaga nas próximas ' + n + ' quartas-feiras.';
+    alerta = 'Nenhuma vaga para ' + prof.nome + ' nos próximos ' + n + ' dias de atendimento.';
   } else {
     const dd = Math.round((dt_(primeira.data, '12:00') - dt_(ymd_(agora), '12:00')) / 86400000);
     if (dd > CONFIG.PRAZO_ALERTA_DIAS) {
-      alerta = 'A primeira vaga está a ' + dd + ' dias, acima do prazo de ' + CONFIG.PRAZO_ALERTA_DIAS + ' dias. Avise o Paulo.';
+      alerta = 'A primeira vaga de ' + prof.nome + ' está a ' + dd + ' dias, acima do prazo de ' + CONFIG.PRAZO_ALERTA_DIAS + ' dias. Avise o Paulo.';
     }
   }
-  return { ok: true, usuario: user.nome, papel: user.papel, duracao: CONFIG.DURACAO, dias, alerta };
+  const profissionais = Object.keys(CONFIG.PROFISSIONAIS).map(k => ({ id: k, nome: CONFIG.PROFISSIONAIS[k].nome,
+    tratamento: CONFIG.PROFISSIONAIS[k].tratamento, cor: CONFIG.PROFISSIONAIS[k].cor, dias: CONFIG.PROFISSIONAIS[k].dias }));
+  return { ok: true, usuario: user.nome, papel: user.papel, profissional: prof.id, profissionais, duracao: CONFIG.DURACAO, dias, alerta,
+           ajustes: { dias: prof.dias, extras: prof.extras.filter(d => d >= ymd_(agora)), folgas: prof.folgas.filter(d => d >= ymd_(agora)) } };
 }
 
 function agendar_(user, r) {
+  const prof = prof_(r.profissional);
   const tipo = String(r.tipo || '');
   if (!CONFIG.DURACAO[tipo]) throw erro_('PARAMETRO', 'Tipo inválido. Use 001 ou 002.');
   const nome = String(r.nome || '').replace(/\s+/g, ' ').trim();
@@ -212,18 +261,19 @@ function agendar_(user, r) {
   if (r.orientacoesConfirmadas !== true) {
     throw erro_('ORIENTACOES', 'Confirme que o cliente foi orientado sobre a senha do Meu INSS e sobre o agendamento individual.');
   }
-  if (diaSemana_(r.data) !== CONFIG.DIA_SEMANA) throw erro_('PARAMETRO', 'Atendimentos presenciais só às quartas-feiras.');
-  if (diaBloqueado_(r.data)) throw erro_('DIA_BLOQUEADO', 'Data bloqueada por feriado ou férias.');
+  if (!atendeNoDia_(prof, r.data)) throw erro_('PARAMETRO', prof.nome + ' não atende nesta data.');
+  if (diaBloqueado_(r.data, prof)) throw erro_('DIA_BLOQUEADO', 'Data bloqueada por feriado ou férias.');
 
   const lock = LockService.getScriptLock();
   if (!lock.tryLock(20000)) throw erro_('OCUPADO', 'Sistema ocupado. Tente novamente em alguns segundos.');
   try {
-    const evs = eventosDoDia_(r.data);
-    if (evs.filter(ehAtendimento_).length >= CONFIG.MAX_ATENDIMENTOS_DIA && user.papel !== 'admin') {
-      throw erro_('LOTADO', 'Limite de ' + CONFIG.MAX_ATENDIMENTOS_DIA + ' atendimentos atingido nesta quarta-feira.');
+    const evs = eventosDoProfissional_(eventosDoDia_(r.data), prof);
+    const atend = evs.filter(ev => ehAtendimento_(ev) && contaPara_(ev, prof)).length;
+    if (prof.limite && atend >= prof.limite && user.papel !== 'admin') {
+      throw erro_('LOTADO', 'Limite de ' + prof.limite + ' atendimentos de ' + prof.nome + ' atingido neste dia.');
     }
     const ocupados = evs.map(ev => [new Date(ev.start.dateTime), new Date(ev.end.dateTime)]);
-    const slot = horariosLivres_(r.data, tipo, ocupados, user, new Date()).find(s => s.inicio === r.inicio);
+    const slot = horariosLivres_(r.data, tipo, ocupados, user, new Date(), prof).find(s => s.inicio === r.inicio);
     if (!slot) throw erro_('HORARIO_INDISPONIVEL', 'O horário acabou de ser ocupado. A agenda será atualizada.');
 
     const ini = dt_(r.data, r.inicio);
@@ -231,6 +281,7 @@ function agendar_(user, r) {
     const descricao = [
       'Telefone: ' + tel,
       'Tipo: ' + (tipo === '001' ? 'Primeiro atendimento' : 'Cliente do escritório'),
+      'Com: ' + prof.nome,
       'Agendado por: ' + user.nome + ' em ' + Utilities.formatDate(new Date(), CONFIG.TZ, 'dd/MM/yyyy HH:mm'),
       'Orientações dadas: senha do Meu INSS atualizada; agendamento individual.',
       r.observacoes ? 'Observações: ' + String(r.observacoes).trim() : ''
@@ -239,11 +290,11 @@ function agendar_(user, r) {
     const ev = Calendar.Events.insert({
       summary: tipo + ' - ' + nome + ' - Não confirmado',
       description: descricao,
-      colorId: CONFIG.COR[tipo],
+      colorId: prof.cor,
       start: { dateTime: ini.toISOString(), timeZone: CONFIG.TZ },
       end:   { dateTime: fim.toISOString(), timeZone: CONFIG.TZ },
       extendedProperties: { private: {
-        origem: 'crm-agenda', tipo, nome, telefone: tel,
+        origem: 'crm-agenda', tipo, nome, telefone: tel, profissional: prof.id,
         clienteId: r.clienteId ? String(r.clienteId) : '', agendadoPor: user.nome
       } }
     }, CONFIG.CALENDAR_ID);
@@ -279,6 +330,7 @@ function remarcar_(user, r) {
     throw erro_('NAO_PERMITIDO', 'Somente agendamentos feitos pelo CRM podem ser remarcados por aqui.');
   }
   const novo = agendar_(user, {
+    profissional: r.profissional || donoDoEvento_(antigo) || CONFIG.PADRAO,
     tipo: p.tipo || r.tipo, nome: p.nome || r.nome, telefone: p.telefone || r.telefone,
     clienteId: p.clienteId || r.clienteId, data: r.data, inicio: r.inicio,
     observacoes: r.observacoes, orientacoesConfirmadas: true
@@ -296,8 +348,53 @@ function agendamentosFuturos_(user, r) {
   return { ok: true, agendamentos: items.map(resumo_) };
 }
 
+/* ---------------------------- Dias de atendimento (só o Paulo) ---------------------------- */
+
+function soAdmin_(user) { if (user.papel !== 'admin') throw erro_('NAO_PERMITIDO', 'Só o Paulo muda os dias de atendimento.'); }
+function dataValida_(d) { if (!/^\d{4}-\d{2}-\d{2}$/.test(String(d || ''))) throw erro_('PARAMETRO', 'Data em formato inválido.'); return String(d); }
+function atendimentosNaData_(prof, data) {
+  return eventosDoDia_(data).filter(ev => ehAtendimento_(ev) && contaPara_(ev, prof)).length;
+}
+
+/** Dias fixos da semana (0 domingo ... 6 sábado). */
+function definirDias_(user, r) {
+  soAdmin_(user);
+  const prof = prof_(r.profissional);
+  const dias = (r.dias || []).map(Number).filter(n => n >= 0 && n <= 6);
+  if (!dias.length) throw erro_('PARAMETRO', 'Escolha ao menos um dia da semana.');
+  const aj = ajustes_(); aj[prof.id] = Object.assign({}, aj[prof.id], { dias: Array.from(new Set(dias)).sort() });
+  gravarAjustes_(aj);
+  return { ok: true, dias: aj[prof.id].dias };
+}
+
+/** Troca pontual: deixa de atender em "de" e passa a atender em "para". */
+function trocarDia_(user, r) {
+  soAdmin_(user);
+  const prof = prof_(r.profissional);
+  const de = r.de ? dataValida_(r.de) : null, para = r.para ? dataValida_(r.para) : null;
+  if (!de && !para) throw erro_('PARAMETRO', 'Informe o dia que sai e o dia que entra.');
+  const aj = ajustes_(); const a = Object.assign({ extras: [], folgas: [] }, aj[prof.id]);
+  a.extras = a.extras || []; a.folgas = a.folgas || [];
+  if (de) { a.extras = a.extras.filter(d => d !== de); if (atendeNoDia_(prof, de)) a.folgas.push(de); }
+  if (para) { a.folgas = a.folgas.filter(d => d !== para); if (!atendeNoDia_(Object.assign({}, prof, { folgas: a.folgas, extras: a.extras }), para)) a.extras.push(para); }
+  a.extras = Array.from(new Set(a.extras)).sort(); a.folgas = Array.from(new Set(a.folgas)).sort();
+  aj[prof.id] = a; gravarAjustes_(aj);
+  // quem já estava marcado no dia que saiu continua na agenda: o CRM avisa para remarcar
+  return { ok: true, extras: a.extras, folgas: a.folgas, atendimentosNoDiaQueSai: de ? atendimentosNaData_(prof, de) : 0 };
+}
+
+function desfazerAjuste_(user, r) {
+  soAdmin_(user);
+  const prof = prof_(r.profissional), data = dataValida_(r.data);
+  const aj = ajustes_(); const a = aj[prof.id] || {};
+  a.extras = (a.extras || []).filter(d => d !== data); a.folgas = (a.folgas || []).filter(d => d !== data);
+  aj[prof.id] = a; gravarAjustes_(aj);
+  return { ok: true, extras: a.extras, folgas: a.folgas };
+}
+
 /* ---------------------------- Teste no editor ---------------------------- */
 
 function testeDisponibilidade() {
-  Logger.log(JSON.stringify(disponibilidade_({ nome: 'Teste', papel: 'admin' }, { semanas: 3 }), null, 2));
+  ['paulo', 'marcos', 'amanda'].forEach(p =>
+    Logger.log(JSON.stringify(disponibilidade_({ nome: 'Teste', papel: 'admin' }, { profissional: p, dias: 3 }), null, 2)));
 }

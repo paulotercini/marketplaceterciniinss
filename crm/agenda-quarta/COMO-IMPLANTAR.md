@@ -1,4 +1,4 @@
-# Agenda de quarta · implantação do Apps Script
+# Agenda de atendimentos · implantação do Apps Script
 
 O CRM fala com este Apps Script, que roda na conta do Paulo e é o único ponto que grava no Google Agenda. Copie `appsscript.json` e `Code.gs` desta pasta para o projeto no script.google.com.
 
@@ -19,3 +19,11 @@ O CRM fala com este Apps Script, que roda na conta do Paulo e é o único ponto 
 2. As sobreposições já existentes nas próximas quartas precisam ser resolvidas manualmente antes da virada, porque o sistema impede novas, mas não desfaz as antigas.
 3. A partir da data de virada, agendamento só pelo CRM.
 
+
+## Profissionais, cores e dias (F152)
+
+Paulo, Marcos e Amanda agendam na MESMA agenda do Google (a do Paulo). A cor do evento diz de quem ele é: azul-mirtilo (colorId 9) é do Paulo, verde-manjericão (10) do Marcos e amarelo-banana (5) da Amanda. Um compromisso na cor de alguém bloqueia só essa pessoa; sem uma dessas cores, bloqueia todos. Um atendimento 001/002 sem cor conta no limite do Paulo. Se a equipe usar outro tom (por exemplo, pavão ou sálvia), ajuste `cor` em `CONFIG.PROFISSIONAIS`.
+
+O limite de 14 por dia e o encaixe das 18h00 às 18h30 são só do Paulo. O Paulo atende às quartas; Marcos e Amanda, de segunda a sexta. O tratamento usado na mensagem de WhatsApp (por exemplo, "o Dr. Marcos") também está em `CONFIG.PROFISSIONAIS`: confira os nomes completos antes de implantar.
+
+Os dias fixos e as trocas pontuais (a quarta 07/10 pela quinta 08/10, por exemplo) são mudados pelo próprio CRM, em "Dias de atendimento", só com o token do Paulo. Ficam nas propriedades do script (AJUSTES), sem editar o código. A agenda "Férias" bloqueia só o Paulo; a "Feriado", todos.

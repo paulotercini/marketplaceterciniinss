@@ -70,7 +70,7 @@ g.evento(q[0], "08:00", "12:00", "Agenda Livre", { transparency: "transparent" }
   const foto = n => process.env.FOTO ? p.screenshot({ path: process.env.FOTO + "-" + n + ".png" }) : null;
   await foto("tela");
   const tela = await p.evaluate(() => ({ dias: document.querySelectorAll(".aq-dia").length,
-    manual: !!document.querySelector(".aq-ev.t002"), outro: !!document.querySelector(".aq-ev.outro"),
+    manual: !!document.querySelector(".aq-ev.p-nenhum"), outro: !!document.querySelector(".aq-ev.outro"),
     livre: [...document.querySelectorAll(".aq-ev")].some(e => /Agenda Livre/.test(e.textContent)),
     reserva: !!document.querySelector(".aq-reserva"), almoco: !!document.querySelector(".aq-almoco") }));
   conf("F151 · seis quartas na faixa; atendimento manual, audiência em cinza, almoço e reserva do Paulo", tela.dias === 6 && tela.manual && tela.outro && tela.almoco && tela.reserva);
@@ -108,7 +108,7 @@ g.evento(q[0], "08:00", "12:00", "Agenda Livre", { transparency: "transparent" }
   conf(`F151 · gravou '002 - Aurélia Ficta de Souza - Não confirmado', 30 minutos (${ev1 && ev1.summary}, ${dur1})`, ev1 && /^002 - Aurélia Ficta de Souza - Não confirmado$/.test(ev1.summary) && dur1 === 30);
   conf("F151 · a mensagem de WhatsApp sai pronta, com a senha do Meu INSS", /senha do Meu INSS/.test(await p.textContent(".aq-whats")) && await p.locator("text=Abrir no WhatsApp").count() === 1);
   conf("F151 · o cliente recebe o registro (andamento) e o próximo atendimento no cadastro",
-    escritas.some(w => w.t === "andamentos" && /Atendimento presencial agendado para/.test(w.corpo)) && escritas.some(w => w.t === "clientes" && /agenda_quarta/.test(w.corpo || "")));
+    escritas.some(w => w.t === "andamentos" && /Atendimento presencial com Paulo agendado para/.test(w.corpo)) && escritas.some(w => w.t === "clientes" && /agenda_quarta/.test(w.corpo || "")));
   conf("F151 · para o Paulo aparece o encaixe urgente das 18h00", temUrgente);
   // a segunda pessoa sugere o horário logo depois
   await p.click("#aq-segunda");
@@ -156,14 +156,50 @@ g.evento(q[0], "08:00", "12:00", "Agenda Livre", { transparency: "transparent" }
   await p.waitForTimeout(500);
   conf("F151 · Cancelar tira o evento e registra no cliente", !g.eventos.some(e => e.id === idA) && escritas.slice(antes).some(w => /cancelado/.test(w.corpo || "")));
 
+  // F152 · o Marcos atende no mesmo horário que o Paulo, em verde, e não vê o evento azul
+  await p.evaluate(() => { fecharCaixa(); visao = "agendaq"; render(); });
+  await p.click('[data-aqprof="marcos"]');
+  await p.waitForFunction(() => agq.prof === "marcos" && agq.disp && agq.disp.profissional === "marcos");
+  await p.waitForTimeout(300); await foto("marcos");
+  const mar = await p.evaluate(() => ({ dias: agq.disp.dias.length, seg: agq.disp.dias.some(d => d.diaSemana === 1), azul: !!document.querySelector(".aq-ev.p-paulo") }));
+  conf(`F152 · Marcos atende de segunda a sexta (${mar.dias} dias) e não vê o atendimento azul do Paulo`, mar.dias === 10 && mar.seg && !mar.azul);
+  await p.click(".aq-agendar");
+  await p.fill("#aq-busca", "souza aurelia"); await p.click(`[data-aqcli="${CLI_CHEIO}"]`); await p.click("#aq-seg2");
+  await p.waitForSelector("[data-aqacomp]"); await p.click('[data-aqacomp="nao"]'); await p.click("#aq-seg4");
+  await p.waitForSelector("[data-aqhora]");
+  conf("F152 · no fluxo, o Marcos vem escolhido e sem encaixe urgente", await p.evaluate(() => fluxo.prof === "marcos" && !/Encaixe urgente/.test(document.querySelector(".aq-fluxo").textContent)));
+  await p.click(`[data-aqdata="${q[0]}"]`); await p.click('[data-aqhora="08:00"]'); await p.click("#aq-seg5");
+  await p.check("#aq-o1"); await p.check("#aq-o2"); await p.click("#aq-gravar");
+  await p.waitForSelector(".aq-whats");
+  const evM = g.eventos.find(e => /Aurélia/.test(e.summary) && e.colorId === "10");
+  conf("F152 · o mesmo horário (08h00) vale para o Marcos, gravado em verde", !!evM && new Date(evM.start.dateTime).getTime() === new Date(q[0] + "T08:00:00-03:00").getTime());
+  conf("F152 · a mensagem cita o profissional escolhido", /com o Dr\. Marcos/.test(await p.textContent(".aq-whats")));
+  await p.evaluate(() => fecharCaixa());
+  // F152 · o Paulo troca a quarta por uma quinta
+  await p.click('[data-aqprof="paulo"]');
+  await p.waitForFunction(() => agq.prof === "paulo" && agq.disp && agq.disp.profissional === "paulo");
+  const quinta = (() => { const d = new Date(q[1] + "T12:00:00Z"); d.setUTCDate(d.getUTCDate() + 1); return d.toISOString().slice(0, 10); })();
+  await p.click('#topo-extra button:has-text("Dias de atendimento")');
+  await p.waitForTimeout(300); await foto("dias");
+  await p.selectOption("#dj-de", q[1]); await p.fill("#dj-para", quinta); await p.click("#dj-trocar");
+  await p.waitForFunction(q1 => agq.cache.paulo && !agq.cache.paulo.dias.some(d => d.data === q1), q[1]);
+  conf("F152 · trocar a quarta pela quinta: a quinta entra e a quarta sai da agenda do Paulo",
+    await p.evaluate(qi => agq.cache.paulo.dias.some(d => d.data === qi && d.diaSemana === 4), quinta));
+  await p.evaluate(() => fecharCaixa());
+
   // equipe: sem reserva do Paulo
   await p.evaluate(async () => { guardar("crm_agenda_token", "t-eq"); agq.disp = null; await carregarAgenda(); });
   const semReserva = await p.evaluate(() => agq.disp.dias.every(d => d.bloqueado || (d.livres["002"] || []).every(s => !s.reserva && s.inicio < "18:00")));
   conf("F151 · para a equipe, o encaixe das 18h00 não aparece", semReserva);
+  await p.evaluate(() => { visao = "agendaq"; render(); });
+  conf("F152 · só o Paulo vê 'Dias de atendimento'", await p.locator('#topo-extra button:has-text("Dias de atendimento")').count() === 0);
 
   // sem vaga nas seis quartas: o alerta aparece
-  q.forEach(d => g.diaInteiro("ipt0crldsn7gg9s0gl9hn6l5b8@group.calendar.google.com", d, "Feriado"));
-  await p.evaluate(async () => { agq.disp = null; visao = "agendaq"; render(); await new Promise(r => setTimeout(r, 600)); });
+  // (a quinta que entrou na troca também precisa de feriado para zerar as vagas)
+  q.forEach(d => { g.diaInteiro("ipt0crldsn7gg9s0gl9hn6l5b8@group.calendar.google.com", d, "Feriado");
+    const x = new Date(d + "T12:00:00Z"); x.setUTCDate(x.getUTCDate() + 1); g.diaInteiro("ipt0crldsn7gg9s0gl9hn6l5b8@group.calendar.google.com", x.toISOString().slice(0, 10), "Feriado"); });
+  await p.evaluate(() => { agq.prof = "paulo"; agq.cache = {}; });
+  await p.evaluate(async () => { agq.disp = null; agq.cache = {}; visao = "agendaq"; render(); await new Promise(r => setTimeout(r, 600)); });
   await p.waitForSelector(".aq-alerta");
   conf("F151 · feriado bloqueia a quarta e, sem vaga, aparece o alerta", /Nenhuma vaga/.test(await p.textContent(".aq-alerta")) && /Feriado ou férias/.test(await p.textContent(".aq-faixa")));
 
