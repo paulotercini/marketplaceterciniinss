@@ -62,20 +62,35 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
 
   const plan = await p.evaluate(() => {
     const cs = [...document.querySelectorAll("#conteudo-meio .cartao")];
-    const seg = document.querySelector(".seg-per");
-    const meta = cs[0] && cs[0].querySelector(".meta");
-    const orig = cs[0] && cs[0].querySelector(".orig");
+    const seg = document.querySelector(".seg-colab");
+    const l0 = cs[0];
     return { n: cs.length, colados: cs.every(c => c.closest(".pl-grupo") && getComputedStyle(c).borderRadius === "0px"),
-      dataPrimeiro: !!(meta && meta.firstElementChild && meta.firstElementChild.classList.contains("chip")),
-      origTexto: !!(orig && !/mono/i.test(getComputedStyle(orig).fontFamily) && orig.querySelector("svg")),
+      dataPrimeiro: !!(l0 && l0.children[1] && l0.children[1].classList.contains("ag-data")),
+      espMono: !!(document.querySelector(".ag-esp") && /mono/i.test(getComputedStyle(document.querySelector(".ag-esp")).fontFamily)),
       segLinha: !!(seg && new Set([...seg.children].map(b => Math.round(b.getBoundingClientRect().top))).size === 1),
-      sub: document.getElementById("conteudo-meio").textContent };
+      sub: document.getElementById("sub-lista").textContent };
   });
   conf(`cada seção é um bloco, com as linhas separadas por um fio (${plan.n})`, plan.n >= 4 && plan.colados);
-  conf("a data abre a segunda linha do cartão", plan.dataPrimeiro);
-  conf("o nome da lista usa letra de texto e o ícone desenhado", plan.origTexto);
-  conf("o período cabe numa linha só", plan.segLinha);
-  conf("a contagem diz datas, no plural certo", /\d+ datas neste filtro/.test(plan.sub) && !/data\(s\)/.test(plan.sub));
+  conf("F144 · a data abre a linha, logo depois da caixa de concluir", plan.dataPrimeiro);
+  conf("F144 · a espécie com a lista vai em selo de letra mono", plan.espMono);
+  conf("F144 · o filtro por pessoa cabe numa linha só", plan.segLinha);
+  conf("F144 · a frase do topo diz o dia e o que vence", /\d+ (vencidas?|para hoje)/.test(plan.sub) && /de \p{L}+\./u.test(plan.sub));
+
+  const lat = await p.evaluate(() => {
+    document.getElementById("btn-conta").click();
+    const menu = document.getElementById("menu-conta").textContent;
+    document.getElementById("btn-conta").click();
+    const hoje = [...document.querySelectorAll("#grupo-dinamicas .lista-item")].map(e => e.dataset.v);
+    const listas = [...document.querySelectorAll("#grupo-fases .lista-item")].map(e => e.dataset.v);
+    return { marca: getComputedStyle(document.querySelector(".v10-marca")).textTransform === "uppercase"
+        && /Advocacia previdenciária/i.test(document.querySelector(".v10-marca").textContent),
+      menu, hoje: hoje.join(","), nListas: listas.length, prazoFora: !listas.includes("fase:prazo"),
+      mais: /^Mais \d+ visões$/.test(document.getElementById("btn-mais-visoes").textContent.trim()) };
+  });
+  conf("F144 · a marca diz ADVOCACIA PREVIDENCIÁRIA", lat.marca);
+  conf("F144 · o menu da conta tem Sincronizar e Configurações", /Sincronizar/.test(lat.menu) && /Configurações/.test(lat.menu) && /Sair/.test(lat.menu));
+  conf("F144 · HOJE tem Meu Dia, Menções, Planejado e Atribuídas", lat.hoje === "meudia,mencoes,planejado,minhas");
+  conf("F144 · seis listas do escritório; o resto vai para Mais visões", lat.nListas === 6 && lat.prazoFora && lat.mais);
 
   // F140 · o círculo de concluir a tarefa era um <span> vazio de 0×0 px
   await p.evaluate(() => { visao = "particulares"; render(); }); await p.waitForTimeout(300);

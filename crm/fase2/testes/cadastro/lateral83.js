@@ -63,7 +63,7 @@ FIX.casos[0] = { ...FIX.casos[0], prazo: ontem };   // um caso com prazo VENCIDO
 
   await abrir("?tema=v10");
   const on = await ler();
-  conf("ligado: o primeiro grupo diz 'Trabalho de hoje' (por CSS)", /Trabalho de hoje/.test(on.antes));
+  conf("ligado: o primeiro grupo diz 'Hoje' (por CSS)", /^"Hoje"$/.test(on.antes));
   conf("os outros dois títulos continuam", on.titulos.join("|") === "Listas do escritório|Visões");
   conf("são três grupos", on.grupos === 3);
   conf("o caso com prazo de ontem conta como vencido", on.vencidos === 1);
