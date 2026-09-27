@@ -11,7 +11,7 @@ O CRM fala com este Apps Script, que roda na conta do Paulo e é o único ponto 
 5. Implantar, em Nova implantação, tipo "App da Web", executar como "Eu", acesso "Qualquer pessoa". Copiar a URL gerada e entregá-la à sessão do CRM.
 6. Depois de testada a agenda no CRM, abrir o Google Agenda no computador, em Configurações, na agenda paulotercini@gmail.com, seção "Compartilhar com pessoas específicas", e alterar a permissão de Amanda, André, Ingrid e Marcos para **"Ver todos os detalhes dos eventos"**. Sem essa alteração a equipe continua podendo lançar eventos por cima da agenda do CRM.
 7. Toda alteração no `Code.gs` exige nova versão da implantação (Implantar, Gerenciar implantações, editar, Nova versão), mantendo a mesma URL.
-8. Para revogar um token, executar `configurarTokens` de novo e redistribuir os tokens.
+8. Colaborador novo: no topo do bloco de tokens do `Code.gs`, escrever o nome em `COLABORADOR` (papel `equipe` ou `admin`), salvar e executar `adicionarColaborador`. O token sai no registro de execução e os tokens dos demais continuam valendo. Colaborador que sai: mesmo nome em `COLABORADOR`, executar `revogarColaborador`. Quem tem acesso hoje: `listarColaboradores`. Nada disso exige nova implantação. `configurarTokens` só serve para trocar os tokens de todos de uma vez.
 
 ## 7. Transição
 
