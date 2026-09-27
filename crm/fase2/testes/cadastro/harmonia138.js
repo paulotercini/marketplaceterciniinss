@@ -65,13 +65,13 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
     const seg = document.querySelector(".seg-per");
     const meta = cs[0] && cs[0].querySelector(".meta");
     const orig = cs[0] && cs[0].querySelector(".orig");
-    return { n: cs.length, colados: cs.slice(1).every(c => getComputedStyle(c).marginTop === "-1px"),
+    return { n: cs.length, colados: cs.every(c => c.closest(".pl-grupo") && getComputedStyle(c).borderRadius === "0px"),
       dataPrimeiro: !!(meta && meta.firstElementChild && meta.firstElementChild.classList.contains("chip")),
       origTexto: !!(orig && !/mono/i.test(getComputedStyle(orig).fontFamily) && orig.querySelector("svg")),
       segLinha: !!(seg && new Set([...seg.children].map(b => Math.round(b.getBoundingClientRect().top))).size === 1),
       sub: document.getElementById("conteudo-meio").textContent };
   });
-  conf(`a lista é um grupo só, com os cartões colados por um fio (${plan.n})`, plan.n >= 4 && plan.colados);
+  conf(`cada seção é um bloco, com as linhas separadas por um fio (${plan.n})`, plan.n >= 4 && plan.colados);
   conf("a data abre a segunda linha do cartão", plan.dataPrimeiro);
   conf("o nome da lista usa letra de texto e o ícone desenhado", plan.origTexto);
   conf("o período cabe numa linha só", plan.segLinha);

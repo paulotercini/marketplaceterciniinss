@@ -2769,6 +2769,23 @@ html[data-tema="v10"] .painel[data-p="2"] .timeline .quando .avatar.av-fonte:has
 .timeline .av-fonte .fonte-mono{display:block;margin:auto;font:600 9px/1 var(--f-mono,ui-monospace,monospace);
   letter-spacing:-.02em;color:var(--cinza);text-transform:lowercase}
 .cc-ponto{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--marco,#B7791F);margin-right:5px;vertical-align:0}
+
+/* ══ F144 · Planejado em blocos (mock do Paulo, 27.09.2026) ══
+   Cada seção é uma caixa branca com borda fina; o cabeçalho é uma faixa
+   tingida pelo estado (vencidas em vermelho, hoje em âmbar, o resto neutro)
+   e os itens são linhas separadas por uma divisória, sem cartão dentro de
+   cartão. */
+html[data-tema="v10"]{--venc-fundo:#FBEAE7;--venc-tinta:#B3261E;--hoje-fundo:#F8ECD8;--hoje-tinta:#8A5300}
+html[data-tema="v10"] .pl-grupo{background:#fff;border:1px solid var(--borda);border-radius:12px;overflow:hidden;margin:0 0 20px}
+html[data-tema="v10"] .pl-grupo h3.secao{margin:0;padding:10px 16px;background:var(--placa);color:var(--cinza);
+  font-size:11px;font-weight:600;letter-spacing:.08em;border-bottom:1px solid var(--borda)}
+html[data-tema="v10"] .pl-grupo h3.secao .pl-n{margin-left:4px;font-family:var(--f-mono);letter-spacing:0}
+html[data-tema="v10"] .pl-grupo[data-tom="venc"] h3.secao{background:var(--venc-fundo);color:var(--venc-tinta);border-bottom-color:#F1D5D0}
+html[data-tema="v10"] .pl-grupo[data-tom="hoje"] h3.secao{background:var(--hoje-fundo);color:var(--hoje-tinta);border-bottom-color:#EEDCBC}
+html[data-tema="v10"] #conteudo-meio .pl-grupo .cartao{border:0;border-radius:0;margin:0;box-shadow:none}
+html[data-tema="v10"] #conteudo-meio .pl-grupo .cartao + .cartao{margin-top:0;border-top:1px solid var(--borda)}
+html[data-tema="v10"] .meio .pl-grupo .cartao::before{display:none}
+html[data-tema="v10"] .pl-grupo .mais-plan{margin:8px 16px 12px}
 </style>
 </head>
 <body>
@@ -7666,18 +7683,20 @@ function renderPlanejado(){
   base = base.slice().sort((a,b)=>a._dplan<b._dplan?-1:1);
   document.getElementById("ordem").value="prazo";   // agenda em ordem cronológica
   // seções estilo To Do: vencidas → hoje → amanhã → semana → mais tarde
+  // F144 · cada seção é um bloco com faixa de cor no cabeçalho (vermelho
+  // para o que venceu, âmbar para hoje, neutro para o resto)
   const secoes=[
-    ["🔴 Vencidas",        d=>d<hoje()],
-    ["🟡 Vencem hoje",     d=>d===hoje()],
-    ["🟢 Amanhã",          d=>d===em(1)],
-    ["🗓 Próximos 7 dias", d=>d>em(1) && d<=em(7)],
-    ["📅 Mais tarde",      d=>d>em(7)],
+    ["Vencidas",           d=>d<hoje(),                "venc"],
+    ["Hoje",               d=>d===hoje(),              "hoje"],
+    ["Amanhã",             d=>d===em(1),               ""],
+    ["Próximos sete dias", d=>d>em(1) && d<=em(7),     ""],
+    ["Mais tarde",         d=>d>em(7),                 ""],
   ];
   const total = base.length + tarefasPlan.length + lembPlan.length;
   document.getElementById("conteudo-meio").innerHTML =
     `<div class="filtros seg-per" role="group" aria-label="Período">${chipsPer}</div><div class="filtros">${chipsCol}</div>`
     + `<div class="meio-sub">${total} ${total===1?"data":"datas"} neste filtro · casos, tarefas e lembretes</div>`
-    + secoes.map(([tit,f])=>{
+    + secoes.map(([tit,f,tom])=>{
         const g=base.filter(k=>f(k._dplan));
         const tg=tarefasPlan.filter(t=>f(t.prazo));
         const lg=lembPlan.filter(l=>f(l.proximo_em));
@@ -7688,8 +7707,10 @@ function renderPlanejado(){
         const lim=limPlan[tit]||50;
         const cartoes=[...grupoClientes(g).map(([c,ks])=>()=>cartaoCliente(c,ks)),
           ...tg.map(t=>()=>cartaoTarefa(t)), ...lg.map(l=>()=>cartaoLembrete(l))];
-        return `<h3 class="secao">${tit} (${n})</h3>` + cartoes.slice(0,lim).map(f=>f()).join("")
-          + (cartoes.length>lim ? `<button class="btn-rap mais-plan" data-mais="${esc(tit)}">Mostrar mais ${Math.min(200,cartoes.length-lim)} de ${cartoes.length-lim}</button>` : "");
+        return `<section class="pl-grupo"${tom?` data-tom="${tom}"`:""}><h3 class="secao">${tit} <span class="pl-n">${n}</span></h3>`
+          + cartoes.slice(0,lim).map(f=>f()).join("")
+          + (cartoes.length>lim ? `<button class="btn-rap mais-plan" data-mais="${esc(tit)}">Mostrar mais ${Math.min(200,cartoes.length-lim)} de ${cartoes.length-lim}</button>` : "")
+          + `</section>`;
       }).join("")
     + (total? "" : "<p class='meio-sub'>Nada por aqui — agenda limpa. ✨</p>");
   document.querySelectorAll("[data-per]").forEach(b=>b.onclick=()=>{ filtroPlan=b.dataset.per; limPlan={}; render(); });

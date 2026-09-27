@@ -69,14 +69,14 @@ const TUDO = {
 
   const t1 = await tela();
   conf("a agenda conta as três origens, não só o caso", /4 datas/.test(t1.sub));
-  conf("o caso com prazo de hoje entra em Vencem hoje",
-    /Vencem hoje \(1\)/.test(t1.secoes.join(" ")) && /Aurélia/.test(t1.txt));
+  conf("o caso com prazo de hoje entra em Hoje",
+    /Hoje 1/.test(t1.secoes.join(" ")) && /Aurélia/.test(t1.txt));
   conf("a tarefa do caso entra no dia dela",
-    /Amanhã \(1\)/.test(t1.secoes.join(" ")) && /Escrever a petição/.test(t1.txt));
+    /Amanhã 1/.test(t1.secoes.join(" ")) && /Escrever a petição/.test(t1.txt));
   conf("a tarefa particular atrasada entra em Vencidas",
-    /Vencidas \(1\)/.test(t1.secoes.join(" ")) && /Levar o carro/.test(t1.txt));
+    /Vencidas 1/.test(t1.secoes.join(" ")) && /Levar o carro/.test(t1.txt));
   conf("o lembrete de aposentadoria futura entra em Mais tarde",
-    /Mais tarde \(1\)/.test(t1.secoes.join(" ")) && /Aposentadoria futura/.test(t1.txt));
+    /Mais tarde 1/.test(t1.secoes.join(" ")) && /Aposentadoria futura/.test(t1.txt));
   conf("o cartão do lembrete traz o ✔ avisado e a caixa de adiar com a data",
     await p.evaluate(d => {
       const txt = document.getElementById("conteudo-meio").innerText;
