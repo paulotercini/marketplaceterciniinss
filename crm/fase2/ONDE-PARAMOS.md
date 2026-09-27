@@ -1,5 +1,21 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F137 · Quatro acertos visíveis da revisão impeccable (10.41)
+
+Barra de baixo do celular no tema v10: herdava o texto claro do tema escuro sobre o fundo claro
+da lateral (aba ativa branca sobre papel); ganhou cor própria no v10 e os ícones SVG do menu
+(`svgIc`, com o ☰ desenhado à parte). Cabeçalho do usuário: `.usuario` com flex-wrap, os botões
+quebram de linha em vez de se sobrepor. Celular: tocar e segurar 500 ms num `.cartao` abre o
+`menuMover` (o iPhone não dispara contextmenu); o `touchend` cancela o clique que abriria a ficha,
+e o `_segurou` impede o contextmenu do Android de abrir o menu duas vezes. O Meu Dia vazio diz
+"toque e segure" quando `celular()`. O selo `.cli-st.ativo` perdeu o 🟢 (o ponto vem do ::before).
+Prova: testes/cadastro/acertos137.js (8/8).
+
+Pendências da revisão impeccable: itens do menu lateral sem foco de teclado (div sem tabindex,
+axe acusa 30 aria-label proibidos); contraste do `.btn-mini` e dos botões Concessão/Revisão no tema
+padrão; 20 tamanhos de fonte e 12 raios distintos; cabeçalho da ficha alto no celular; emojis no
+conteúdo e 32 faixas de borda esquerda (decisão de identidade, aguarda o Paulo).
+
 ## F136 · Revisão mobile-native do celular (10.40)
 
 Auditoria a 360x740 nos dois temas (script de rascunho cel.js, fora do repo). Correções:
