@@ -1,5 +1,12 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F142 · e-SAJ e eproc da coleta do PJe com o próprio símbolo (10.46)
+
+Print do Paulo: andamento "e-SAJ TJSP (1º grau): …" (origem pje) aparecia com o símbolo e o nome
+do PJe. `fonteDoItem` agora usa `sistemaDoAndamentoPje()` (a mesma leitura do começo do texto da
+F95) e o rótulo vira o nome do sistema. O símbolo passou a ocupar a bolinha inteira (20 px, o
+tamanho da inicial do autor), com um fio fino em volta. Prova: harmonia138.js (20/20).
+
 ## F141 · Símbolo do sistema de origem no Caso completo (10.45)
 
 Pedido do Paulo: a ⭐ na bolinha da fonte confundia com o botão de importante. `FONTES_SIS`
