@@ -102,6 +102,21 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   conf(`F146 · 8.26 é e-SAJ ou eproc; 4.03 é sempre PJe (${sis.join(" | ")})`,
     sis.join("|") === "e-SAJ TJSP|e-SAJ TJSP|eproc TJSP|PJe|PJe|e-SAJ");
 
+  const lista = await p.evaluate(async () => {
+    visao = "fase:inss"; render(); await new Promise(r => setTimeout(r, 200));
+    const l = document.querySelector("#conteudo-meio .cartao[data-cli]");
+    const r = { agenda: !!(l && l.classList.contains("ag-linha") && l.children[1].classList.contains("ag-data")),
+      semCpf: !/#\d{3}\.\d{3}/.test(document.getElementById("conteudo-meio").textContent) };
+    abrirFicha(l.dataset.cli); await new Promise(r => setTimeout(r, 900));
+    const ls = [...document.querySelectorAll("#conteudo-meio .ag-linha")];
+    r.umaLinha = ls.length > 0 && ls.every(x => x.getBoundingClientRect().height <= 44)
+      && ls.every(x => getComputedStyle(x.querySelector(".ag-selos")).display === "none");
+    fecharFicha(false); visao = "planejado"; render();
+    return r;
+  });
+  conf("F147 · as listas usam a linha da agenda e não mostram o #CPF", lista.agenda && lista.semCpf);
+  conf("F147 · com a ficha aberta, cada item cabe numa linha só", lista.umaLinha);
+
   // F140 · o círculo de concluir a tarefa era um <span> vazio de 0×0 px
   await p.evaluate(() => { visao = "particulares"; render(); }); await p.waitForTimeout(300);
   const ck = await p.evaluate(() => { const c = document.querySelector('.cartao[data-tarefa] .check');
