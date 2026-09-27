@@ -57,16 +57,17 @@ const SUPA = "https://ficticio.supabase.co";
       return { placa: !!placa, cab: !!cab,
         benNoCab: !!(cab && cab.querySelector(".lc-ben + .lapis")),
         maisNoCab: !!(cab && cab.querySelector(".lc-mais")),
+        maisDepois: !!(placa && placa.nextElementSibling && placa.nextElementSibling.classList.contains("lc-mais")),
         rotulos: placa ? [...placa.querySelectorAll(".lc-f > .lc-k")].map(x => x.textContent.trim()) : [],
         altura: placa ? Math.round(placa.getBoundingClientRect().height) : 0,
         colunas: placa ? getComputedStyle(placa).gridTemplateColumns.split(" ").length : 0,
         urgenteSemEmoji: !/🔥/.test((cab && cab.textContent) || "") };
     });
     conf("a faixa do caso tem o cabeçalho e a placa dentro da .lc-topo", r.placa && r.cab);
-    conf("o nome do pedido e a canetinha ficam no cabeçalho, com o ➕", r.benNoCab && r.maisNoCab);
+    conf("F145 · o nome do pedido e a canetinha no cabeçalho; o ➕ logo abaixo da placa", r.benNoCab && !r.maisNoCab && r.maisDepois);
     conf("a placa traz DER, Tramitação e Etapa, um quadro por dado", ["DER", "Tramitação", "Etapa"].every(x => r.rotulos.includes(x)));
-    conf(`a placa tem a altura de uma linha de quadros no computador (${r.altura}px)`, r.altura > 40 && r.altura < 90);
-    conf(`um quadro por coluna, sem colunas vazias (${r.colunas})`, r.colunas === r.rotulos.length);
+    conf(`F145 · a placa tem uma linha a cada par de quadros (${r.altura}px)`, r.altura > 40 * Math.ceil(r.rotulos.length / 2) && r.altura < 70 * Math.ceil(r.rotulos.length / 2));
+    conf(`F145 · a placa fica em pares, duas colunas (${r.colunas})`, r.colunas === 2);
     conf("o selo de urgente não usa emoji", r.urgenteSemEmoji);
     const meta = await p.evaluate(() => document.querySelector('meta[name="viewport"]').content);
     conf("o viewport cobre o entalhe (viewport-fit=cover)", /viewport-fit=cover/.test(meta));

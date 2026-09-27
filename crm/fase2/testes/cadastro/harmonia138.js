@@ -118,12 +118,21 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
     const peq = [...document.querySelectorAll(".timeline .tl-sinal, .timeline .tl-li, .pz .pz-mais")].filter(vis)
       .filter(e => { const r = e.getBoundingClientRect(); return Math.min(r.width, r.height) < 24; });
     return { segoe: fam.filter(x => /Segoe/.test(x)).length, plex: fam.filter(x => /IBM Plex Sans/.test(x)).length,
-      primeira: abas[0] && abas[0].textContent.trim(),
+      primeira: abas[0] && abas[0].textContent.trim(), ultima: abas.at(-1) && abas.at(-1).textContent.trim(),
+      esq: (e => e && getComputedStyle(e).position === "sticky" && !!e.querySelector(".lc-placa") && !!e.querySelector(".faixa-prazos"))(document.querySelector(".caso-esq")),
+      dir: (e => !!(e && e.firstElementChild.classList.contains("caso-acoes") && e.querySelector(".menu-andamentos + .fatos, .menu-andamentos ~ .fatos")))(document.querySelector(".caso-dir")),
+      placa2: (e => e && getComputedStyle(e).gridTemplateColumns.split(" ").length === 2)(document.querySelector(".caso-esq .lc-placa")),
+      pzDesc: (d => d.every((x, i) => !i || d[i-1] >= x))([...document.querySelectorAll(".caso-esq .pz .pz-data")].map(b => b.textContent.split("/").reverse().join(""))),
+      pzFina: [...document.querySelectorAll(".caso-esq .pz")].every(e => e.getBoundingClientRect().height <= 40),
       verifNeutra: !!(verif && verif.querySelector(".lc-vazio") && !verif.querySelector(".lc-manual")),
       peq: peq.length };
   });
   conf(`a ficha usa só a fonte do tema (${f.plex} em Plex, ${f.segoe} em Segoe UI)`, f.segoe === 0 && f.plex > 20);
-  conf(`a primeira aba dos andamentos é o Caso completo (${f.primeira})`, /^Caso completo/.test(f.primeira || ""));
+  conf(`F145 · as abas vão de Escritório a Caso Completo (${f.primeira} … ${f.ultima})`, /^Escritório/.test(f.primeira || "") && /^Caso Completo/.test(f.ultima || ""));
+  conf("F145 · à esquerda, parada, a placa e os prazos", f.esq);
+  conf("F145 · à direita, o campo de escrever em cima e os andamentos embaixo", f.dir);
+  conf("F145 · a placa em pares, duas colunas", f.placa2);
+  conf("F145 · os prazos em linhas finas, em ordem decrescente", f.pzDesc && f.pzFina);
   conf("Verificação a definir fica cinza como a Etapa, sem o vermelho", f.verifNeutra);
   conf(`os botões da linha do tempo e dos prazos têm ao menos 24px (${f.peq} menores)`, f.peq === 0);
 

@@ -1,5 +1,8 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F145 · versão 10.49 · o caso em duas colunas (27.09.2026)
+Pedido do Paulo: a tela de Casos volta a ter duas colunas no v10. O painel do caso agora é `.caso-2col` com `aside.caso-esq` (linhaCaso, faixaFixo, faixaPrazos) e `.caso-dir` (composer, menu, painel da aba). Em ficha de 900 px ou mais a esquerda tem 340 px e fica `sticky`; abaixo disso empilha. A placa vira pares (a última célula ímpar ocupa a linha), o ➕ saiu do cabeçalho e desceu para baixo da placa (`.lc-mais-pe`), e os prazos viraram linhas finas em ordem decrescente de data, com o `.pz-mais` cobrindo a linha. Abas: Escritório, INSS, Recurso (CRPS), Judicial, Caso Completo (saiu o `order:-1` da F139); INSS, Recurso e Judicial continuam aparecendo só quando o caso tem dado daquela fonte.
+
 ## F144 · versão 10.48 · agenda e barra lateral do mock (27.09.2026)
 Branch crm-10-48-planejado, sem publicar. Só no tema v10: `renderAgendaV10()` desenha Planejado e Meu Dia a partir de `itensAgenda(col)` (uma linha por data: tarefa do comentário, prazo fatal, prorrogação, perícia/audiência agendada, tarefa avulsa, lembrete); `linhaAgenda()` monta a linha; o texto do comentário vem de `buscarTextosAgenda()` (uma consulta, um repaint). Contadores do v10 (Planejado, Meu Dia, vencidas) contam as mesmas linhas. Barra: `montarSidebar()` refaz os grupos no v10 (HOJE, 6 listas, 2 visões + "Mais N visões", estado em crm_mais_visoes) e `montarConta()` monta o menu da conta. O tema antigo segue igual.
 
