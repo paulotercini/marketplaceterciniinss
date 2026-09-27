@@ -68,7 +68,7 @@ const TUDO = {
   }));
 
   const t1 = await tela();
-  conf("a agenda conta as três origens, não só o caso", /4 data\(s\)/.test(t1.sub));
+  conf("a agenda conta as três origens, não só o caso", /4 datas/.test(t1.sub));
   conf("o caso com prazo de hoje entra em Vencem hoje",
     /Vencem hoje \(1\)/.test(t1.secoes.join(" ")) && /Aurélia/.test(t1.txt));
   conf("a tarefa do caso entra no dia dela",

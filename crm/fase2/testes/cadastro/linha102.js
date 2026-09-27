@@ -189,6 +189,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       blocos: blocos.length, dias: blocos.map(b => (b.querySelector(".tl-dia span") || {}).textContent),
       itensPorBloco: blocos.map(b => b.querySelectorAll(":scope > .dia-itens > li").length),
       fundos: blocos.map(b => getComputedStyle(b).backgroundColor),
+      fios: blocos.map(b => getComputedStyle(b).borderTopWidth),
       soltos: tl ? tl.querySelectorAll(":scope > li:not(.dia-bloco)").length : -1,
       pin: (b => b && getComputedStyle(b).opacity)(document.querySelector('.timeline button[onclick^="abrirSeguimento"]')) };
   });
@@ -213,7 +214,9 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   conf("os ícones das ferramentas cresceram (19px)", aberto.icone === "19px");
   await p.evaluate(() => { document.getElementById("and-texto").blur(); document.body.click(); }); await p.waitForTimeout(400);
   conf("a conversa vira blocos por dia: um bloco por dia, cada um com a data e seus registros, nada solto", ff.blocos >= 1 && ff.soltos === 0 && ff.itensPorBloco.every(n => n >= 1) && ff.dias.every(Boolean));
-  conf("o bloco do dia tem o cinza leve (e o seguinte, quando há, é branco)", ff.fundos[0] === "rgb(241, 243, 245)" && (ff.fundos.length < 2 || ff.fundos[1] === "rgb(255, 255, 255)"));
+  // F138 · a zebra cinza/branco saiu: os dias ficam sobre o mesmo fundo,
+  // separados por um fio, e o primeiro não tem fio em cima
+  conf("os dias não alternam fundo e se separam por um fio", ff.fundos.every(f => f === "rgba(0, 0, 0, 0)") && ff.fios[0] === "0px" && ff.fios.slice(1).every(w => w === "1px"));
   conf("o 'dar seguimento' de cada registro fica invisível até o mouse chegar", ff.pin === "0");
 
   // ── F104 · os quadros ────────────────────────────────────────────────────
