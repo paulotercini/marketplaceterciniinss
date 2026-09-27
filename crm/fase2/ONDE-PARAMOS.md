@@ -1,5 +1,8 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F150 · versão 10.54 · o CRM mais rápido de abrir (27.09.2026)
+Quatro frentes, autorizadas pelo Paulo. (1) Pré-carregamento: `ligarCartoes` busca a ficha com 100 ms de mouse parado ou no toque (`preCarregarFicha`, até 6 em memória, válido 20 s e só se nada foi gravado desde então); `abrirFicha` usa a busca a caminho só ao TROCAR de cliente. (2) Duas levas: `CARGA_1` (listas) e `CARGA_2` (telas secundárias); `carregar({cedo})` monta D com a primeira, pinta, e `completarD` preenche o resto sem refazer D; sem `cedo`, a carga é a de sempre. (3) `crm/fase2/sw.js`, copiado pelo `publicar.py` para `docs/crm/sw.js`: guarda só a página (mesma origem), abre com a cópia e, se o site mudou, avisa (`#nova-versao`, botão Recarregar). Liga em https ou com `crm_sw=1`. (4) Sessão guardada no IndexedDB `crm-sessao` (`guardarSessao` ao fim de cada carga; 7 dias; por colaborador; apagada no `sair()`): a entrada monta D dela, marca `.dados-guardados` ("atualizando…") e troca pelo banco; se houve gravação nesse meio tempo (`escritas`), lê de novo. Não repinta por cima de formulário com foco. Prova: rapido150.js (9/9).
+
 ## F149 · versão 10.53 · esqueleto nas esperas de rede (27.09.2026)
 No v10, `esqueletoLista()` e `esqueletoLateral()` pintam a lista e a barra durante o `carregar()` da entrada (com a conta, a busca e sem Ordenar/fundo), e `esqueletoFicha()` substitui o "abrindo a ficha…" até os andamentos chegarem. Mesma regra da dashboard: geometria final, visível só após 150 ms, sem animação em movimento reduzido. Cliente com mais de um processo abre o seletor por cima do esqueleto, como antes abria por cima do texto. Prova: esqueleto149.js (rede lenta simulada, 4/4).
 
