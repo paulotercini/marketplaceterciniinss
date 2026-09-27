@@ -193,8 +193,9 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       soltos: tl ? tl.querySelectorAll(":scope > li:not(.dia-bloco)").length : -1,
       pin: (b => b && getComputedStyle(b).opacity)(document.querySelector('.timeline button[onclick^="abrirSeguimento"]')) };
   });
-  conf("a ficha é branca e só o cabeçalho do cliente tem cor própria", ff.chao === "rgb(255, 255, 255)" && ff.topo === "rgb(234, 237, 239)");
-  conf("o compositor é um bloco leve, sem borda e sem o rótulo 'Hoje' (F112)", ff.escrever && ff.escrever.borda === "none" && ff.escrever.fundo === "rgb(241, 243, 245)" && !/Hoje/.test(ff.escrever.hoje));
+  // F143 · papel quente: cabeçalho em pedra clara (#EFEEEB) e compositor em #F3F2EE
+  conf("a ficha é branca e só o cabeçalho do cliente tem cor própria", ff.chao === "rgb(255, 255, 255)" && ff.topo === "rgb(239, 238, 235)");
+  conf("o compositor é um bloco leve, sem borda e sem o rótulo 'Hoje' (F112)", ff.escrever && ff.escrever.borda === "none" && ff.escrever.fundo === "rgb(243, 242, 238)" && !/Hoje/.test(ff.escrever.hoje));
   // F112 · fechado: só tipos + Sugestões e o campo; aberto: prazo com Lembrar em ao lado, Atribuir para com as ferramentas e o Registrar
   const VIS = 'const vis = sel => { const e = document.querySelector(sel); return !!e && getComputedStyle(e).display !== "none" && e.getBoundingClientRect().height > 0; };';
   const fechado = await p.evaluate(`(() => { ${VIS}
