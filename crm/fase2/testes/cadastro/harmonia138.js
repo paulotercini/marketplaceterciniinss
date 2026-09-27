@@ -23,6 +23,8 @@ FIX.casos[0].datajud = { sistema: "Pje", instancias: [
   { rotulo: "2º grau", sistema: "Eproc", historico: [{ data: dia(-5), nome: "Distribuição", decisao: false }] }] };
 FIX.andamentos = [1, 2, 3].map(i => ({ id: `a3000000-0000-0000-0000-00000000000${i}`, caso_id: CASO1,
   autor_id: FIX.colaboradores[0].id, origem: "escritorio", texto: `Registro fictício ${i}`, criado_em: dia(-i) + "T15:00:00Z" }));
+FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1, autor_id: null, origem: "pje",
+  texto: "e-SAJ TJSP (1º grau): Certidão de Publicação Expedida — processo fictício", criado_em: dia(-2) + "T12:00:00Z" });
 
 (async () => {
   const s = http.createServer((q, r) => {
@@ -137,6 +139,17 @@ FIX.andamentos = [1, 2, 3].map(i => ({ id: `a3000000-0000-0000-0000-00000000000$
   conf(`os registros do CNJ trazem o símbolo do sistema (${fo.map(x => x.rot).join(", ")})`,
     fo.length >= 2 && fo.every(x => x.ic) && fo.some(x => /^PJe · CNJ/.test(x.rot)) && fo.some(x => /^eproc · CNJ/.test(x.rot)));
   conf("nenhuma bolinha de fonte usa a ⭐", fo.every(x => !x.estrela));
+  // F142 · e-SAJ que chega pela coleta do PJe mostra o e-SAJ, do tamanho da inicial do autor
+  const sj = await p.evaluate(() => {
+    const li = [...document.querySelectorAll('.painel[data-p="2"] .timeline li.tl-of')].find(l => /Certidão de Publicação/.test(l.textContent));
+    const ic = li && li.querySelector(".av-fonte"), el = ic && ic.querySelector(".fonte-ic,.fonte-mono");
+    const autor = document.querySelector('.painel[data-p="2"] .timeline .quando .avatar:not(.av-fonte)');
+    return { rot: li && li.querySelector(".autor-nome").textContent, alt: el && (el.alt || el.title),
+      w: ic && Math.round(ic.getBoundingClientRect().width), wa: autor && Math.round(autor.getBoundingClientRect().width),
+      wi: el && el.classList.contains("fonte-ic") ? Math.round(el.getBoundingClientRect().width) : null };
+  });
+  conf(`o e-SAJ da coleta do PJe aparece como e-SAJ (${sj.rot}, ${sj.alt})`, sj.rot === "e-SAJ" && sj.alt === "e-SAJ");
+  conf(`o símbolo tem o tamanho da inicial do autor (${sj.w} e ${sj.wa}px, ícone ${sj.wi})`, sj.w === sj.wa && (sj.wi === null || sj.wi === sj.w));
 
   console.log("=== F138 · Planejado e ficha em harmonia ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
