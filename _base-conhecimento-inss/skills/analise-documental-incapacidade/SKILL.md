@@ -179,7 +179,9 @@ Ressalva de método. Obter atestado COM data de início do repouso e COM prazo e
 No regime de análise documental, a qualidade da documentação médica apresentada no requerimento administrativo define o resultado. Relatórios genéricos serão rejeitados. Cada requisito do art. 2º das Portarias nº 13 e nº 15 deve ser individualmente atendido, observada a distinção entre requisito obrigatório e elemento facultativo da seção anterior.
 
 ### ALERTA 2 — Tema 1124/STJ
-A documentação apresentada no requerimento administrativo define os efeitos financeiros em eventual ação judicial. Toda documentação relevante deve ser apresentada na via administrativa. Se omitida sem justificativa, os efeitos financeiros podem retroagir apenas à citação.
+A documentação apresentada no requerimento administrativo define o interesse de agir e os efeitos financeiros em eventual ação judicial. Toda documentação relevante deve ser apresentada na via administrativa, porque o documento médico que já existia e não foi levado ao INSS leva à extinção sem mérito, e só o surgido depois do ajuizamento, como o agravamento constatado na perícia judicial, desloca a DIB para a citação. A perícia médica judicial que reconhece a incapacidade desde a DER, sem agravamento nem doença nova, mantém a DIB na DER.
+
+Os embargos de declaração do Tema 1124 (j. 09/09/2026, DJEN 21/09/2026) registraram, como exemplo, que o restabelecimento ou a manutenção do benefício cessado por alta programada exige novo requerimento, porque a persistência da incapacidade é fato novo (Tema 1.196/STF). O mesmo voto dispensou o novo requerimento para o auxílio-acidente quando a perícia do INSS no benefício temporário constatou a recuperação e identificou sequela. O pedido de prorrogação tempestivo, dentro do benefício ainda ativo, é a forma de evitar a discussão. Detalhe em `tema-1124-instrucao-administrativa`.
 
 ### ALERTA 3 — Patologias subjetivas em risco
 Dor crônica, fibromialgia, transtornos mentais, síndromes funcionais e outras patologias de diagnóstico predominantemente clínico têm alto risco de indeferimento na triagem documental, porque a análise por verossimilhança tende a exigir evidência objetiva.

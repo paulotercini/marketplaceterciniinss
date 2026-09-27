@@ -168,19 +168,17 @@ Quadro. Cliente pretende revisão de aposentadoria já concedida. Não fez novo 
 
 Estratégia.
 
-Aplicação direta da exceção do Tema 350/STF (revisão de benefício já concedido dispensa novo PA).
+Aplicação da exceção do Tema 350/STF, com o limite dos embargos de declaração do Tema 1124 (09/09/2026). A revisão porque o INSS não concedeu o benefício adequado às provas que tinha dispensa novo PA, e a revisão que pretende provar fato novo exige novo PA com as provas.
 
 Demonstração do PA original que gerou a aposentadoria.
 
-### 6.5. Cenário E. Ação ajuizada antes de 30/03/2022
+### 6.5. Cenário E. Ação antiga alcançada pelo Tema 1124
 
-Quadro. Ação ajuizada em 2020 com base em jurisprudência consolidada da época. Em 2024, tribunal aplica Tema 1124.
+Quadro. Ação ajuizada antes do julgamento do Tema 1124, com base na jurisprudência da época, e o tribunal aplica o Tema.
 
 Estratégia.
 
-Argumentar a modulação do Tema 1124.
-
-Aplicação prospectiva, com proteção das ações pré-publicação.
+O STJ negou a modulação no acórdão de mérito (DJEN 06/11/2025) e nos embargos de declaração (j. 09/09/2026, DJEN 21/09/2026). A tese se aplica aos processos pendentes cuja discussão sobre a DIB não esteja preclusa. A defesa é a preclusão da DIB já decidida e o enquadramento nos itens 2.1, 2.2 ou na exceção do item 1.6, conforme a matriz de `tema-1124-instrucao-administrativa`.
 
 ### 6.6. Cenário F. Cliente menor com PA do responsável legal
 

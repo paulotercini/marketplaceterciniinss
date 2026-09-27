@@ -1,172 +1,150 @@
 ---
 name: tema-1124-instrucao-administrativa
-description: "Skill do Tema 1124/STJ sobre interesse de agir, instrução administrativa e efeitos financeiros. Use SEMPRE que mencionar Tema 1124, interesse de agir, requerimento administrativo, PPP não apresentado ao INSS, prova nova em juízo, efeitos financeiros DER vs citação, DPR, indeferimento forçado, requerimento inapto, dever de cooperação INSS, Tema 350/STF, Tema 995/STJ, art. 176-C Decreto 3.048/99, art. 347 §4º Decreto 3.048/99, ou documentação insuficiente na via administrativa. Use OBRIGATORIAMENTE com a skill peticao-previdenciaria para petições de concessão ou revisão. Use com a skill decadencia-revisao-previdenciaria quando extinção sem mérito exigir retorno à via administrativa. SEMPRE alertar quando documentos essenciais não foram apresentados ao INSS."
+description: "Skill do Tema 1124/STJ (REsp 1.905.830/SP, mérito publicado em 06/11/2025, embargos de declaração julgados em 09/09/2026 e publicados em 21/09/2026) sobre interesse de agir, instrução administrativa e efeitos financeiros. Use SEMPRE que mencionar Tema 1124, interesse de agir, requerimento administrativo, requerimento apto, indeferimento forçado, carta de exigência, indeferimento automático, robô do INSS, justificação administrativa, PPP não apresentado ao INSS, novo PPP em juízo, prova nova em juízo, perícia judicial confirmatória, efeitos financeiros DER ou citação, reafirmação da DER, Tema 350/STF, Tema 995/STJ, benefício diverso do requerido, formulário preenchido errado, restabelecimento de auxílio por incapacidade, alta programada, auxílio-acidente após perícia, revisão com fato novo, modulação do Tema 1124, arts. 176 e 176-E do Decreto 3.048/99, art. 347, § 4º, do Decreto 3.048/99. Use OBRIGATORIAMENTE com a skill peticao-previdenciaria para petições de concessão ou revisão, e com decadencia-revisao-previdenciaria quando a extinção sem mérito exigir retorno à via administrativa. SEMPRE alertar quando documentos essenciais não foram apresentados ao INSS."
 ---
 
-# Tema 1124/STJ – Instrução Administrativa, Interesse de Agir e Efeitos Financeiros
+# Tema 1124/STJ, instrução administrativa, interesse de agir e efeitos financeiros
 
 ## Finalidade
 
-Esta skill consolida as regras fixadas pelo Tema 1124 do STJ sobre interesse de agir em ações previdenciárias e termo inicial dos efeitos financeiros quando há prova não submetida ao INSS na via administrativa. Estabelece procedimentos obrigatórios de verificação da instrução administrativa antes do ajuizamento e alertas sobre riscos de perda de atrasados.
+Esta skill consolida o Tema 1124/STJ sobre interesse de agir em ações previdenciárias e sobre o termo inicial dos efeitos financeiros quando há prova não submetida ao INSS. A Onda 161 (27/09/2026) substituiu a paráfrase anterior da tese, que trazia a numeração dos itens 1.1 a 1.6 trocada, pela tese literal, e incorporou os quatro acórdãos dos embargos de declaração, que esclareceram as hipóteses de enquadramento.
+
+## Fontes primárias
+
+**Mérito.** REsp 1.905.830/SP, Primeira Seção, julgado em 08/10/2025, relator para o acórdão o Ministro Paulo Sérgio Domingues, vencida a relatora Ministra Maria Thereza de Assis Moura quanto à redação da tese, acórdão publicado no DJEN de 06/11/2025. O caso concreto teve os efeitos financeiros fixados na data da contestação, que precedeu a juntada do mandado de citação, porque a CTC do regime próprio só foi apresentada com a petição inicial.
+
+**Embargos de declaração.** Quatro acórdãos da Primeira Seção, relator o Ministro Paulo Sérgio Domingues, julgados por unanimidade em 09/09/2026 e publicados no DJEN de 21/09/2026. Os do IBDP (Pet 1109666/2025) e da autora Sueli de Freitas Pedroso (Pet 1111895/2025) foram parcialmente acolhidos, sem efeitos infringentes, apenas para esclarecer o item 1.4 quanto ao indeferimento automático. Os do INSS (Pet 1124016/2025) foram rejeitados. Os da CUT (Pet 1112497/2025) não foram conhecidos, porque o amicus curiae não tem legitimidade para defender o interesse particular da parte no caso concreto.
+
+Os arquivos em PDF dos cinco acórdãos estão com o titular. A ementa dos embargos do INSS menciona "Tema 955 do STJ", mas o corpo do voto trata do Tema 995, e a referência correta é o Tema 995/STJ.
 
 ## ALERTA OBRIGATÓRIO DE INSTRUÇÃO
 
-### Quando emitir alerta
+SEMPRE que o usuário informar dados de um caso concreto para ajuizamento de ação de concessão ou revisão, verificar a instrução administrativa ANTES de redigir a petição.
 
-SEMPRE que o usuário informar dados de um caso concreto para ajuizamento de ação previdenciária (concessão ou revisão), verificar ANTES de redigir a petição
+**ALERTA VERMELHO, instrução insuficiente.** O segurado não apresentou ao INSS documento essencial ao direito (PPP, LTCAT, CTC, laudo médico, prova rural, certidão). O ajuizamento pode terminar em extinção sem mérito por falta de interesse de agir, e a extinção pode consumar a decadência da revisão. O caminho é o novo requerimento administrativo com o documento.
 
-**ALERTA VERMELHO – INSTRUÇÃO INSUFICIENTE**
-Se o segurado NÃO apresentou ao INSS os documentos essenciais para o reconhecimento do direito (PPP, LTCAT, CTC, laudos médicos, certidões, comprovantes de atividade rural, etc.), alertar que o ajuizamento nessas condições pode resultar em (a) extinção sem mérito por falta de interesse de agir, (b) deslocamento dos efeitos financeiros da DER para a citação, ou (c) necessidade de retorno à via administrativa com risco de consumação da decadência.
+**ALERTA LARANJA, instrução parcial.** O requerimento era apto, mas incompleto, e o INSS indeferiu sem carta de exigência ou sem oferecer justificação administrativa. O caso se enquadra no item 2.2, com DIB na DER, e o indeferimento sem exigência é conduta vedada pelo item 1.4, conforme os embargos de declaração.
 
-**ALERTA LARANJA – INSTRUÇÃO PARCIAL**
-Se o segurado apresentou documentação parcial ao INSS mas faltam elementos complementares (ex. PPP de um dos vínculos, LTCAT atualizado, comprovante de exposição a agente específico), alertar que, embora o requerimento possa ser considerado "apto", o INSS pode ter descumprido o dever de exigir complementação, o que enquadra o caso no cenário 2.2 do Tema 1124.
+**SEM ALERTA, instrução adequada.** Toda a documentação relevante foi apresentada ao INSS. O caso segue o item 2.1, com DIB na DER.
 
-**SEM ALERTA – INSTRUÇÃO ADEQUADA**
-Se toda a documentação relevante foi apresentada ao INSS no requerimento administrativo. Prosseguir normalmente.
+**Dados mínimos para a verificação.** Cópia do processo administrativo ou descrição do que foi apresentado, lista dos documentos que fundamentam a ação, identificação dos que estavam e dos que não estavam no processo administrativo, existência de carta de exigência e seu cumprimento. Faltando esses dados, pedir antes de redigir.
 
-### Dados mínimos para verificação
+## TESE LITERAL (acórdão de mérito, conferida no PDF do DJEN de 06/11/2025)
 
-- Cópia do requerimento administrativo ou descrição do que foi apresentado
-- Lista de documentos que fundamentam o direito na ação judicial
-- Identificação de quais documentos estavam e quais NÃO estavam no processo administrativo
-- Se houve exigência do INSS e se foi cumprida
+**1) Configuração do interesse de agir para a propositura da ação judicial previdenciária.**
 
-Se o usuário não informar, solicitar expressamente antes de prosseguir com a petição.
+1.1) O segurado deve apresentar requerimento administrativo apto, ou seja, com documentação minimamente suficiente para viabilizar a compreensão e a análise do requerimento.
 
-## TESE COMPLETA DO TEMA 1124/STJ
+1.2) A apresentação de requerimento sem as mínimas condições de admissão ("indeferimento forçado") pode levar ao indeferimento imediato por parte do INSS.
 
-### Dados do julgamento
+1.3) O indeferimento de requerimento administrativo por falta de documentação mínima, configurando indeferimento forçado, ou a omissão do segurado na complementação da documentação após ser intimado, impede o reconhecimento do interesse de agir do segurado; ao reunir a documentação necessária, o segurado deverá apresentar novo requerimento administrativo.
 
-REsp 1.905.830/SP, REsp 1.913.152/SP e REsp 1.912.784/SP, 1ª Seção do STJ, j. 08/10/2025, acórdão publicado em 06/11/2025.
+1.4) Quando o requerimento administrativo for acompanhado de documentação apta ao seu conhecimento, porém insuficiente à concessão do benefício, o INSS tem o dever legal de intimar o segurado a complementar a documentação ou a prova, por carta de exigência ou outro meio idôneo. Caso o INSS não o faça, o interesse de agir estará configurado.
 
-### Parte 1 – Interesse de Agir
+1.5) Sempre caberá a análise fundamentada, pelo Juiz, sobre se houve ou não desídia do segurado na apresentação de documentos ou de provas de seu alegado direito ou, por outro lado, se ocorreu uma ação não colaborativa do INSS ao deixar de oportunizar ao segurado a complementação da documentação ou a produção de prova.
 
-**Item 1.1** O segurado deve apresentar requerimento administrativo com documentação minimamente suficiente para que o INSS possa compreender e analisar o pedido. Um requerimento sem condições mínimas de admissão configura "indeferimento forçado" e não gera interesse de agir.
+1.6) O interesse de agir do segurado se configura quando este levar a Juízo os mesmos fatos e as mesmas provas que levou ao processo administrativo. Se desejar apresentar novos documentos ou arguir novos fatos para pleitear seu benefício, deverá apresentar novo requerimento administrativo (Tema 350/STF). A ação judicial proposta nessas condições deve ser extinta sem julgamento do mérito por falta de interesse de agir. A exceção a este tópico ocorrerá apenas quando o segurado apresentar em juízo documentos tidos pelo juiz como não essenciais, mas complementares ou em reforço à prova já apresentada na via administrativa e considerada pelo Juiz como apta, por si só, a levar à concessão do benefício.
 
-**Item 1.2** Se o requerimento é apto mas a instrução é deficiente, o INSS tem o dever legal de intimar o segurado para complementar a documentação. Se não o fizer, o interesse de agir está configurado pela desídia da autarquia.
+**2) Data do início do benefício e seus efeitos financeiros.**
 
-**Item 1.3** O juiz deve analisar fundamentadamente se houve desídia do segurado na apresentação de documentos ou, ao contrário, ação não colaborativa do INSS ao deixar de oportunizar complementação.
+2.1) Configurado o interesse de agir, por serem levados a Juízo os mesmos fatos e mesmas provas apresentadas ao INSS no processo administrativo, em caso de procedência da ação o Magistrado fixará a Data do Início do Benefício na Data de Entrada do Requerimento, se entender que os requisitos já estariam preenchidos quando da apresentação do requerimento administrativo, a partir da análise da prova produzida no processo administrativo ou da prova produzida em juízo que confirme o conjunto probatório do processo administrativo. Se entender que os requisitos foram preenchidos depois, fixará a DIB na data do preenchimento posterior dos requisitos, nos termos do Tema 995/STJ.
 
-**Item 1.4** Se o requerimento é inapto mas o INSS não orientou o segurado a complementar, o INSS deve fazê-lo. Se o fizer e o segurado não cumprir, o INSS pode indeferir. Se o INSS não o fizer, o interesse de agir está configurado.
+2.2) Quando o INSS, ao receber um pedido administrativo apto, mas com instrução deficiente, deixar de oportunizar a complementação da prova, quando tinha a obrigação de fazê-lo, e a prova for levada a Juízo pelo segurado ou produzida em Juízo, o magistrado poderá fixar a Data do Início do Benefício na Data da Entrada do Requerimento Administrativo, quando entender que o segurado já faria jus ao benefício na DER, ou em data posterior em que os requisitos para o benefício teriam sido cumpridos, ainda que anterior à citação, reafirmando a DER nos termos do Tema 995/STJ.
 
-**Item 1.5** O interesse de agir se configura quando o segurado leva a juízo os mesmos fatos e mesmas provas que levou ao processo administrativo. Se desejar apresentar novos documentos ou arguir novos fatos, deverá apresentar novo requerimento administrativo (Tema 350/STF). A ação judicial proposta com base em elementos novos deve ser extinta sem julgamento do mérito por falta de interesse de agir.
+2.3) Quando presente o interesse de agir e for apresentada prova somente em juízo, não levada ao conhecimento do INSS na via administrativa porque surgida após a propositura da ação ou por comprovada impossibilidade material (como por exemplo uma perícia judicial que reconheça atividade especial, um PPP novo ou LTCAT, o reconhecimento de vínculo ou de trabalho rural a partir de prova surgida após a propositura da ação), o juiz fixará a Data do Início do Benefício na citação válida ou na data posterior em que preenchidos os requisitos, nos termos do Tema 995/STJ.
 
-### Parte 2 – Efeitos Financeiros (DIB)
+2.4) Em qualquer caso deve ser respeitada a prescrição das parcelas anteriores aos cinco últimos anos contados da propositura da ação.
 
-**Cenário 2.1 – Mesmas provas na via administrativa e judicial**
-Se o segurado levou a juízo os mesmos fatos e provas do processo administrativo, a DIB é fixada na DER (se os requisitos já estavam preenchidos) ou na data posterior de preenchimento dos requisitos (Tema 995/STJ).
+## MATRIZ DE ENQUADRAMENTO, conforme o mérito e os embargos de declaração
 
-**Cenário 2.2 – Instrução deficiente por omissão do INSS**
-Se o INSS recebeu pedido apto mas com instrução deficiente e não oportunizou complementação, o magistrado pode fixar a DIB na DER (se o segurado já fazia jus ao benefício) ou em data posterior ao preenchimento dos requisitos, mesmo que anterior à citação (Tema 995/STJ).
+A tese não pretende abranger todas as situações, e a ementa dos embargos (item 3) qualifica as situações descritas no voto como exemplos, com valor de obiter dictum. A exceção é o esclarecimento do item 1.4, sobre o indeferimento automático, que é a parte acolhida dos embargos e integra o julgado. Na peça, o exemplo desfavorável do voto se enfrenta como obiter, e o favorável se usa como reforço da tese, nunca como a tese. A matriz abaixo reúne os exemplos do item 5 do voto condutor e os esclarecimentos de 09/09/2026, e cada linha deve ser conferida contra o caso concreto.
 
-**Cenário 2.3 – Prova produzida exclusivamente em juízo**
-Se a prova foi apresentada somente em juízo (porque surgiu após a propositura da ação ou por comprovada impossibilidade material), a DIB é fixada na citação válida ou em data posterior. Exemplos incluem perícia judicial, PPP novo ou LTCAT surgidos após o ajuizamento, reconhecimento de vínculo ou trabalho rural.
+**DIB na DER, item 2.1.** O PPP ou a CTPS apresentados ao INSS bastavam, e o juiz apenas os valorou de outra forma. A perícia judicial confirmou o que o PPP apresentado ao INSS já descrevia. A perícia médica judicial reconheceu a incapacidade desde a DER, sem agravamento nem doença nova. Os embargos acrescentaram que a prova técnica judicial, seja médica, social ou ambiental, que confirma fatos já comprovados por documento hábil na via administrativa leva a DIB à DER quando o INSS não ofertou ou negou a complementação da prova.
 
-**Cenário 2.4 – Prescrição quinquenal**
-Em todos os cenários, respeita-se a prescrição das parcelas anteriores aos cinco últimos anos contados da propositura da ação.
+**DIB na DER, item 2.2.** Requerimento apto e incompleto, indeferido sem carta de exigência ou sem oferta de justificação administrativa. Os embargos declararam **vedado o indeferimento automático, por servidor ou por ferramenta automatizada, sem oportunidade de complementar a prova ou de oferecer justificação administrativa**, quando a documentação de contribuições, vínculos e qualidade de segurado foi anexada e só precisa ser esclarecida ou complementada. A reafirmação da DER para data anterior à citação é possível, inclusive no curso do processo administrativo (art. 577, II, da IN 128/2022).
 
-### DPR nas revisões – Art. 347, §4º, Decreto 3.048/99
+**DIB na citação, item 2.3.** Prova surgida depois da propositura da ação ou impossível de obter antes, como a perícia judicial que reconhece atividade especial sem PPP prévio, o PPP ou LTCAT emitido depois do ajuizamento, o vínculo ou o trabalho rural reconhecido por prova surgida no curso da ação, a incapacidade ou o agravamento surgido no curso do processo e a mudança do grupo familiar depois do ajuizamento. Se a incapacidade constatada surgiu depois da citação, a DIB é a data em que surgiu.
 
-Em revisões de benefício em manutenção, quando há apresentação de novos elementos extemporaneamente ao ato concessório, os efeitos financeiros são fixados na data do pedido de revisão ou do recurso administrativo (DPR), e não na DER original. O Tema 1124 amplia essa lógica para a esfera judicial.
+**Extinção sem mérito, item 1.6.** Os embargos foram expressos em dizer que **a juntada, na ação, de documento novo que existia e não foi levado ao INSS, como um novo PPP, afasta o interesse de agir**, e o processo deve ser extinto para que o documento seja apresentado em novo requerimento. A mesma consequência atinge o fato novo e o formulário eletrônico preenchido com pedido diverso do pretendido. O voto dos embargos também afirmou ser impossível a fungibilidade de pedidos entre a via administrativa e a judicial, mas a afirmação é obiter, e entre BPC e benefício por incapacidade o Tema 217/TNU segue invocável, com o risco declarado (ver `base-fungibilidade-previdenciaria`).
 
-## DISTINÇÃO FUNDAMENTAL – PROVA NOVA VS. PROVA COMPLEMENTAR
+**Exceção da prova complementar, final do item 1.6.** Documento não essencial, que apenas reforça prova administrativa já suficiente por si, não afasta o interesse de agir nem desloca a DIB. O voto condutor cita os recibos de despesas comuns na união estável e os contracheques que reforçam vínculo anotado em CTPS, e admite a DIB na DER quando o início de prova material apresentado ao INSS bastava, ainda que o segurado não tenha levado testemunhas na via administrativa.
 
-### O precedente do TRF4 (5ª Turma, Apelação Cível 5015397-63.2023.4.04.7112, j. 25/11/2025)
+**Incapacidade.** O restabelecimento ou a manutenção de benefício cessado por alta programada exige novo requerimento administrativo, porque a persistência da incapacidade é situação fática nova (Tema 1.196/STF). A exceção é o auxílio-acidente, dispensado de novo requerimento quando a perícia do INSS no benefício por incapacidade temporária constatou a recuperação e identificou sequela, e o INSS não o implantou.
 
-O TRF4 afastou a aplicação automática do Tema 1124 ao distinguir entre "ausência de prova" (comprovação só surge com elementos novos em juízo) e "valoração da prova já existente" (direito já razoavelmente demonstrado na via administrativa, com prova judicial apenas complementar).
+**Revisão.** A revisão que pretende provar fato novo exige novo requerimento administrativo com as provas. A revisão porque o INSS não concedeu o benefício adequado às provas que tinha dispensa novo requerimento, porque o pedido e a causa de pedir são os mesmos.
 
-Se na DER já havia CTPS, PPPs e laudos técnicos demonstrando atividade especial, a perícia judicial que apenas reforça e detalha a situação fática já delineada NÃO justifica o deslocamento dos efeitos financeiros para a citação.
+**Notória resistência e demora.** Permanecem as exceções do Tema 350/STF. Na dúvida, cabe ao segurado provar que o indeferimento é notório ou que houve demora excessiva no processo administrativo.
 
-### Aplicação prática desta distinção
+**Justificação administrativa.** O INSS deve oferecê-la para prova oral suplementar ou substitutiva de documento quando legalmente possível. Quando o documento não existe ou não está disponível, cabe ao segurado informar a ausência e pedir a justificação (art. 108 da Lei 8.213/1991 e art. 570 da IN 128/2022), e o pedido deve constar do processo administrativo.
 
-Em toda petição de concessão ou revisão, verificar se é possível argumentar que a prova produzida em juízo tem caráter meramente complementar ou acessório. Se sim, fundamentar expressamente que o caso se enquadra na hipótese de prova complementar e não de prova nova, afastando a incidência do cenário 2.3 do Tema 1124.
+**Modulação.** Não houve modulação. A Primeira Seção a negou no mérito, por considerar que o julgado consolidou a jurisprudência do STJ e do STF, e rejeitou o pedido nos embargos. A tese se aplica aos processos pendentes cuja discussão sobre a DIB não esteja preclusa, e a aplicação imediata vale tanto para os deveres do segurado quanto para os do INSS.
 
-## INTERAÇÃO COM A DECADÊNCIA – A ARMADILHA PROCESSUAL
+**Benefícios com DIB legal.** As datas de início previstas nos arts. 49, 54, 57, § 2º, 60, 74 e 80 da Lei 8.213/1991 continuam valendo, desde que o requerimento apto tenha sido formulado dentro das hipóteses legais.
 
-### O cenário mais perigoso
+## Uso ofensivo na peça
 
-Se o segurado ajuiza ação de revisão com PPP apresentado exclusivamente em juízo, e o juiz extingue sem mérito por falta de interesse de agir (ou desloca os efeitos financeiros para a citação), o segurado precisa retornar à via administrativa. Se nesse momento o prazo decadencial de 10 anos já se esgotou, o direito à revisão pode estar perdido.
+O item 1.4, com o esclarecimento dos embargos, é o fundamento mais forte do escritório. Todo indeferimento de requerimento apto sem carta de exigência ou sem oferta de justificação administrativa deve ser apontado na inicial com o ID do processo administrativo, porque configura o interesse de agir e leva a DIB à DER pelo item 2.2. A objeção previsível do INSS, de que a prova é nova, deve ser nomeada e refutada em parágrafo próprio, com a demonstração de que a prova judicial apenas confirma o documento já apresentado, o que prepara os embargos por omissão se a sentença não enfrentar o ponto.
 
-O ajuizamento de ação judicial NÃO interrompe o prazo decadencial do art. 103 da Lei 8.213/91 (art. 207 do Código Civil, Tema 975/STJ).
+A distinção entre ausência de prova e valoração de prova existente, adotada pelo TRF4 (5ª Turma, Apelação Cível 5015397-63.2023.4.04.7112, j. 25/11/2025) [NÃO CONFIRMADO], converge com os embargos, mas o fundamento a citar é o próprio Tema 1124, itens 2.1 e 2.2 e o esclarecimento de 09/09/2026, e não o precedente regional.
 
-A única forma de "interromper" (rectius, gerar novo prazo autônomo) é o pedido de revisão administrativa, conforme a tese do Tema 256/TNU, atualmente em xeque pelo Tema 1370/STJ.
+## DPR nas revisões, art. 347, § 4º, do Decreto 3.048/99
 
-### Procedimento obrigatório do escritório
+Em revisões de benefício em manutenção, quando há apresentação de novos elementos depois do ato concessório, os efeitos financeiros são fixados na data do pedido de revisão (DPR), e não na DER original. A lógica coincide com a exigência de novo requerimento para a revisão fundada em fato novo.
 
-SEMPRE que verificar risco de extinção por falta de interesse de agir em ação de revisão, e o prazo decadencial estiver próximo do esgotamento
+## INTERAÇÃO COM A DECADÊNCIA, A ARMADILHA PROCESSUAL
 
-1. Protocolar imediatamente pedido de revisão administrativa com toda a documentação, especificando as matérias objeto da revisão
-2. Guardar comprovante com data e protocolo
-3. Se possível, manter a ação judicial em paralelo, argumentando que a documentação apresentada em juízo é complementar (e não nova)
-4. Consultar a skill decadencia-revisao-previdenciaria para emitir os alertas de prazo correspondentes
+Se o segurado ajuíza revisão com documento apresentado só em juízo e o juiz extingue sem mérito, o segurado precisa voltar à via administrativa. Se o prazo decadencial de 10 anos já tiver se esgotado, o direito à revisão pode estar perdido, e o ajuizamento não interrompe esse prazo (art. 207 do Código Civil, Tema 975/STJ). O pedido de revisão administrativa é a única via que gera prazo autônomo, conforme o Tema 256/TNU, hoje em discussão no Tema 1370/STJ.
+
+**Procedimento obrigatório.** Havendo risco de extinção em revisão e prazo decadencial próximo do fim, protocolar de imediato o pedido de revisão administrativa com toda a documentação, guardar o comprovante e consultar a skill decadencia-revisao-previdenciaria. A ação só se mantém em paralelo quando o documento judicial se enquadrar na exceção da prova complementar do item 1.6.
 
 ## CHECKLIST PRÉ-AJUIZAMENTO OBRIGATÓRIO
 
-Antes de redigir qualquer petição inicial de concessão ou revisão, o advogado deve verificar
-
-**1. O requerimento administrativo existe?**
-Se não, avaliar se há interesse de agir por outra via (Tema 350/STF, item III, posição notoriamente contrária do INSS).
-
-**2. O requerimento era apto?**
-Se continha informações mínimas sobre datas, funções, natureza da atividade, sim. Se era genérico sem qualquer especificação, pode ser considerado inapto.
-
-**3. Toda a documentação essencial foi apresentada ao INSS?**
-Se não, identificar quais documentos faltaram e por quê. O dever de exigência era do INSS? O documento simplesmente não existia na época?
-
-**4. O INSS fez exigência de complementação?**
-Se fez e o segurado não cumpriu, há risco de falta de interesse de agir. Se não fez quando deveria, o cenário 2.2 protege o segurado.
-
-**5. Há documentos que só existem agora?**
-Se o PPP, LTCAT ou laudo surgiu após o requerimento administrativo, o cenário 2.3 fixa a DIB na citação (perda de atrasados).
-
-**6. É possível argumentar prova complementar?**
-Se na DER já havia início de prova material (CTPS, PPPs parciais, laudos) e a prova judicial apenas detalha, fundamentar expressamente o caráter complementar para preservar a DER.
-
-**7. O prazo decadencial está em risco?**
-Se sim, consultar a skill decadencia-revisao-previdenciaria e seguir o protocolo de alerta.
-
-**8. A petição contém seção própria sobre efeitos financeiros?**
-Verificar se a petição inclui a seção obrigatória "DOS EFEITOS FINANCEIROS" com a classificação expressa de cada documento (já apresentado ao INSS / complementar / novo) e a fundamentação do cenário aplicável do Tema 1124. Se a seção estiver ausente, a petição deve ser devolvida para complementação antes de protocolar.
+1. **O requerimento administrativo existe?** Se não, verificar as exceções do Tema 350/STF, notória resistência ou demora excessiva, que o segurado precisa provar na dúvida.
+2. **O requerimento era apto?** Documentos pessoais, comprovante de residência e um ou outro recolhimento esporádico não tornam o requerimento apto, e o indeferimento forçado exige novo requerimento.
+3. **O benefício pedido em juízo é o mesmo do processo administrativo?** Se for diverso, ou se o formulário eletrônico registrou pedido diverso, é preciso novo requerimento.
+4. **Toda a documentação essencial foi apresentada ao INSS?** Identificar cada documento que faltou e o motivo.
+5. **O INSS emitiu carta de exigência ou ofereceu justificação administrativa?** Se não emitiu, o item 1.4 configura o interesse de agir e o item 2.2 protege a DER. Se emitiu e o segurado não cumpriu, há risco de falta de interesse de agir (item 1.3).
+6. **Há documento novo que existia antes do ajuizamento e não foi ao INSS?** Um novo PPP nessa situação leva à extinção, e o caminho é o novo requerimento antes da ação.
+7. **Há prova que só pôde surgir depois do ajuizamento?** Enquadra-se no item 2.3, com DIB na citação.
+8. **A prova judicial é só confirmatória ou complementar?** Se sim, fundamentar o item 2.1 ou a exceção do item 1.6 para preservar a DER.
+9. **O caso é de restabelecimento de benefício por incapacidade?** Exige novo requerimento, salvo o auxílio-acidente com sequela já constatada pela perícia do INSS.
+10. **O prazo decadencial está em risco?** Consultar a skill decadencia-revisao-previdenciaria.
+11. **A petição tem a seção "DOS EFEITOS FINANCEIROS"?** A seção classifica cada documento como já apresentado ao INSS, complementar ou surgido depois do ajuizamento, indica o item da tese aplicável e explica por que a DIB deve ser a DER. Sem essa seção, a petição volta para complementação.
 
 ## QUADRO NORMATIVO DE REFERÊNCIA
 
 | Fonte | Conteúdo |
 |---|---|
-| Tema 1124/STJ (j. 08/10/2025) | Interesse de agir e efeitos financeiros |
-| Tema 350/STF (RE 631.240) | Prévio requerimento administrativo |
+| Tema 1124/STJ, REsp 1.905.830/SP (mérito j. 08/10/2025, DJEN 06/11/2025) | Interesse de agir e efeitos financeiros |
+| EDcl no REsp 1.905.830/SP (j. 09/09/2026, DJEN 21/09/2026) | Vedação do indeferimento automático sem exigência, matriz de enquadramento, ausência de modulação |
+| Tema 350/STF (RE 631.240) e RE 1.553.134 | Prévio requerimento e mesmo conjunto probatório |
 | Tema 995/STJ | Reafirmação da DER |
-| Art. 176-C, Decreto 3.048/99 | Dever de cooperação do INSS |
-| Art. 176-E, Decreto 3.048/99 | Dever de conceder o melhor benefício |
-| Art. 347, §4º, Decreto 3.048/99 | Efeitos financeiros da DPR em revisões |
-| ADI 6096/STF | Inconstitucionalidade da decadência para indeferimento |
+| Tema 1.196/STF | Prazo estimado do auxílio por incapacidade temporária |
+| Art. 88 da Lei 8.213/1991 e arts. 176 e 176-E do Decreto 3.048/99 | Dever de exigência e de conceder o benefício devido |
+| Art. 108 da Lei 8.213/1991 e art. 570 da IN 128/2022 | Justificação administrativa |
+| Art. 577, II, da IN 128/2022 | Reafirmação da DER no processo administrativo |
+| Art. 347, § 4º, do Decreto 3.048/99 | Efeitos financeiros da DPR em revisões |
+| Tema 313/STF | Sem decadência do fundo de direito contra indeferimento |
 | Tema 975/STJ | Decadência mesmo para matéria não apreciada |
-| Tema 256/TNU | Prazos autônomos (em xeque pelo Tema 1370) |
-| Tema 1370/STJ | Pendente, suspensão nacional |
+| Tema 256/TNU e Tema 1370/STJ | Prazo autônomo da revisão administrativa, em discussão |
+
+Os dispositivos da Lei 8.213/1991, do Decreto 3.048/99 e da IN 128/2022 foram transcritos a partir dos acórdãos e devem ser conferidos no MCP `normas` antes de entrar em peça.
 
 ## INTERAÇÃO COM OUTRAS SKILLS
 
-### Com a skill peticao-previdenciaria
-SEMPRE consultar esta skill antes de redigir petição de concessão ou revisão. Se a instrução administrativa for insuficiente, fundamentar na petição o enquadramento no cenário 2.2 (omissão do INSS) ou argumentar o caráter complementar da prova judicial.
+**peticao-previdenciaria.** Consultar esta skill antes de toda petição de concessão ou revisão, e redigir a seção "DOS EFEITOS FINANCEIROS" com o item aplicável da tese.
 
-A skill peticao-previdenciaria exige seção obrigatória intitulada "DOS EFEITOS FINANCEIROS" em toda petição inicial de concessão ou revisão. Essa seção deve classificar cada documento como "já apresentado ao INSS", "complementar" ou "novo", fundamentar o cenário aplicável do Tema 1124 e indicar expressamente por que a DIB deve retroagir à DER. A ausência dessa seção é considerada falha estrutural da petição.
+**base-efeito-translativo-tema-1124-defesa.** Defesa contra a aplicação de ofício do Tema 1124 em grau recursal, sem o argumento de modulação, que o STJ afastou.
 
-### Com a skill decadencia-revisao-previdenciaria
-Quando o Tema 1124 resultar em extinção sem mérito e retorno à via administrativa, verificar imediatamente o prazo decadencial. Se em risco, adotar as medidas emergenciais descritas naquela skill.
+**decadencia-revisao-previdenciaria.** Acionar quando o Tema 1124 levar à extinção e ao retorno à via administrativa.
 
-### Com a skill auditoria-laudo-pericial
-Se o caso envolve perícia judicial que reconheceu atividade especial, verificar se na DER já existiam elementos probatórios que permitam classificar a perícia como complementar (e não constitutiva), para afastar a incidência do cenário 2.3 e preservar a DER.
+**auditoria-laudo-pericial e auditoria-ppp.** Verificar se a perícia judicial apenas confirma o documento apresentado ao INSS, o que preserva a DER.
 
-### Com a skill competencia-foro-escritorio
-As regras do Tema 1124 aplicam-se tanto ao JEF quanto ao rito ordinário. A competência territorial não é afetada.
+**base-documentos-comprobatorios-in128.** Conferir quais documentos eram exigíveis do segurado e quais dependiam de providência do INSS, como pesquisa externa e justificação administrativa.
 
-### Com a skill documentos-comprobatorios-in128
-Consultar a skill de documentos da IN 128 para verificar quais documentos eram exigíveis do segurado na via administrativa e quais dependiam de ação do INSS (ex. Pesquisa Externa, Justificação Administrativa).
+**requerimento-administrativo-inss.** Acionar quando faltar requerimento, quando o requerimento foi inapto ou quando a extinção exigir novo pedido, que deve trazer toda a documentação e o pedido expresso de justificação administrativa se faltar documento.
 
-### Com a skill cartas-documentos-previdencia
-Atualizar a carta de documentos do escritório sempre que um caso concreto revelar que a ausência de determinado documento na via administrativa resultou em perda de atrasados ou extinção por falta de interesse de agir. Esse aprendizado deve ser incorporado à instrução de futuros clientes.
-
-### Com a skill requerimento-administrativo-inss
-Quando a verificação de instrução identificar que o segurado ainda não fez requerimento administrativo ou que o requerimento existente foi deficiente, acionar a skill de requerimento administrativo para gerar peça no formato adequado ao servidor do INSS. A peça administrativa bem instruída é o primeiro passo para preservar os efeitos financeiros desde a DER. Quando o caso exigir retorno à via administrativa após extinção judicial sem mérito, a skill de requerimento administrativo deve ser acionada para garantir que o novo requerimento contemple toda a documentação que faltou na primeira tentativa.
+**analise-documental-incapacidade.** Nos benefícios por incapacidade, o restabelecimento depois da alta programada exige novo requerimento.
 
 ## MCPs da casa
 
