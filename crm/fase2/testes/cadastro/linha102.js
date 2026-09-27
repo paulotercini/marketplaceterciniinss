@@ -162,8 +162,8 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
       umCompositor: document.querySelectorAll("#and-texto").length === 1, rotulo: getComputedStyle(m, "::before").content };
   });
   conf("o menu dos andamentos fica entre onde se escreve e o que se lê, sem o rótulo 'CASO'", menu.abaixoDoCompositor && menu.acimaDaConversa && menu.umCompositor && /none/.test(menu.rotulo));
-  conf("Escritório · INSS · Recurso (CRPS) · Caso completo — Judicial só existe com número", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Andamentos do Escritório|INSS|Recurso (CRPS)|Caso completo");
-  conf("o Caso completo abre por padrão", /Caso completo/.test(menu.on || ""));
+  conf("Escritório · INSS · Recurso (CRPS) · Caso Completo — Judicial só existe com número", menu.botoes.join("|").replace(/ \(sem dados\)/g, "") === "Escritório|INSS|Recurso (CRPS)|Caso Completo");
+  conf("o Caso Completo abre por padrão", /Caso Completo/.test(menu.on || ""));
   const idTudo = await p.evaluate(() => { const li = [...document.querySelectorAll(".painel[data-p='2'] .timeline li.tl-of")].find(l => /Contestar o laudo/.test(l.textContent));
     const av = li && li.querySelector(".quando .avatar"); return av && { ini: av.textContent.trim(), cor: av.style.background, fonte: av.classList.contains("av-fonte"), marco: li.classList.contains("tudo-marco") }; });
   conf("no Caso completo quem escreveu aparece com a bolinha da sua cor, mesmo sendo marco", idTudo && idTudo.ini === "P" && /rgb\(37, 100, 207\)|#2564cf/i.test(idTudo.cor) && !idTudo.fonte);
@@ -208,8 +208,8 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     const y = el => { const r = el.getBoundingClientRect(); return r.top + r.height / 2; };
     const mesmaLinha = (a, b) => Math.abs(y(document.querySelector(a)) - y(document.querySelector(b))) < 10;
     return { barra: vis("#tf-box"), linhas: linhas.length,
-      l1: linhas[0] && /PRAZO FATAL/.test(linhas[0].textContent) && linhas[0].querySelectorAll(".tf-nt").length === 2 && mesmaLinha("#and-prazo-ck", "#tf-box .tf-dt"),
-      l2: linhas[1] && /ATRIBUIR PARA/i.test(linhas[1].textContent) && !!linhas[1].querySelector(".esc-reg") && mesmaLinha("#tf-ninguem", ".esc-reg"),
+      l1: linhas[0] && /PRAZO FATAL/.test(linhas[0].textContent) && linhas[0].querySelectorAll(".tf-nt").length === 2,   // F145 · na coluna da direita a linha pode quebrar
+      l2: linhas[1] && /ATRIBUIR PARA/i.test(linhas[1].textContent) && !!linhas[1].querySelector(".esc-reg"),
       icone: getComputedStyle(document.querySelector(".esc-ic svg")).width }; })()`);
   conf("aberto: linha 1 = prazo e Lembrar em; linha 2 = Atribuir para e as ferramentas com o Registrar", aberto.barra && aberto.linhas === 2 && aberto.l1 && aberto.l2);
   conf("os ícones das ferramentas cresceram (19px)", aberto.icone === "19px");
