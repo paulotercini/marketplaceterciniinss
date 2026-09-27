@@ -18,6 +18,9 @@ for (let i = 0; i < 3; i++) {
 }
 FIX.tarefas = [{ id: "t-f140", titulo: "Tarefa fictícia de conferência", concluida: false,
   particular_de: FIX.colaboradores[0].id, prazo: null, criado_em: "2026-09-01T00:00:00Z" }];
+FIX.casos[0].datajud = { sistema: "Pje", instancias: [
+  { rotulo: "1º grau", sistema: "Pje", historico: [{ data: dia(-4), nome: "Conclusão", decisao: false }] },
+  { rotulo: "2º grau", sistema: "Eproc", historico: [{ data: dia(-5), nome: "Distribuição", decisao: false }] }] };
 FIX.andamentos = [1, 2, 3].map(i => ({ id: `a3000000-0000-0000-0000-00000000000${i}`, caso_id: CASO1,
   autor_id: FIX.colaboradores[0].id, origem: "escritorio", texto: `Registro fictício ${i}`, criado_em: dia(-i) + "T15:00:00Z" }));
 
@@ -125,6 +128,15 @@ FIX.andamentos = [1, 2, 3].map(i => ({ id: `a3000000-0000-0000-0000-00000000000$
   await p.waitForTimeout(150);
   conf("copiar o CPF mostra o selo copiado em cima do número", await p.evaluate(() =>
     !!document.querySelector(".id-min .cop.copiado") && getComputedStyle(document.querySelector(".id-min .cop.copiado"), "::after").content.includes("copiado")));
+
+  // F141 · a bolinha da fonte mostra o sistema de origem, e nunca a ⭐
+  const fo = await p.evaluate(() => [...document.querySelectorAll('.painel[data-p="2"] .timeline li.tl-of')]
+    .filter(li => !li.querySelector(".avatar:not(.av-fonte)"))
+    .map(li => ({ rot: li.querySelector(".autor-nome").textContent, ic: !!li.querySelector(".av-fonte .fonte-ic,.av-fonte .fonte-mono"),
+      estrela: /⭐/.test(li.querySelector(".av-fonte").textContent) })));
+  conf(`os registros do CNJ trazem o símbolo do sistema (${fo.map(x => x.rot).join(", ")})`,
+    fo.length >= 2 && fo.every(x => x.ic) && fo.some(x => /^PJe · CNJ/.test(x.rot)) && fo.some(x => /^eproc · CNJ/.test(x.rot)));
+  conf("nenhuma bolinha de fonte usa a ⭐", fo.every(x => !x.estrela));
 
   console.log("=== F138 · Planejado e ficha em harmonia ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
