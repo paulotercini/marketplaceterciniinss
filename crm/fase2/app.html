@@ -24010,7 +24010,7 @@ function avisoNovaVersao(){
 // então duas pessoas não conseguem o mesmo horário. O CRM só consulta e pede.
 // A URL do script vale para o escritório (config_app agenda_url); o token é
 // de cada colaborador e fica só neste navegador.
-const AGENDA_URL_PADRAO = "";
+const AGENDA_URL_PADRAO = "https://script.google.com/macros/s/AKfycbwO6RbGD4WvH2q0cleS1ACXY1EWyrVu-jfBYgB3KbVTXJtkifZIu5Pf7KFfk79x7MH9/exec"; // implantação v1, 27.09.2026
 function agendaUrl(){ return (cfgApp("agenda_url")||AGENDA_URL_PADRAO||"").trim(); }
 function agendaToken(){ return (ler("crm_agenda_token")||"").trim(); }
 async function agendaApi(acao, dados={}){
