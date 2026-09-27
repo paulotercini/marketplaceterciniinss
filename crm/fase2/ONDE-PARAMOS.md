@@ -1,5 +1,24 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F138 · Planejado e ficha em harmonia (10.42)
+
+Pedido do Paulo com dois prints (Planejado e Caso completo), revisão impeccable, apple-design,
+emil-design-eng e frontend-design. Quase tudo é CSS do tema v10, num bloco próprio no fim de
+`<style id="tema-v10">`. Listas do meio: cartões colados num grupo (`margin-top:-1px`, raio só nas
+pontas via `:has`), CPF escondido por container query em `#conteudo-meio` abaixo de 560px, o ＋
+vazio de atribuir só no hover (ponteiro fino), ações com 30px no ponteiro fino. `cartaoCliente`:
+a data vem antes da lista, a lista virou `.orig` (letra de texto e `svgIc`), e a bolinha
+`quem-prazo` não repete quem já está nos atribuídos. Planejado: período num controle segmentado
+`.seg-per` (rótulos 3 dias e 7 dias, com title) e "N datas neste filtro · casos, tarefas e
+lembretes". Ficha: `.pz` com a mesma borda (sem a faixa de 4px do compromisso), ponto vermelho
+no "venceu há"; `.lc-placa .cop` sublinhada como o CPF. `tlOficial`: `x.html` e os sinais foram
+para `<span class="tl-fim">`, coluna à direita; dias sem zebra, fio entre dias, trilho na
+`.dia-itens` e o marco como ponto (`::before`), texto do marco em 500. Testes: harmonia138.js
+(7/7); linha102.js passou a conferir a ausência da zebra; planejado124.js lê "4 datas".
+
+Pendência: cabeçalho da ficha no celular (CPF e telefone com sublinhado largo e SMBot numa
+linha própria) segue da revisão impeccable anterior.
+
 ## F137 · Quatro acertos visíveis da revisão impeccable (10.41)
 
 Barra de baixo do celular no tema v10: herdava o texto claro do tema escuro sobre o fundo claro
