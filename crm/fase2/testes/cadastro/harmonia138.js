@@ -92,6 +92,16 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   conf("F144 · HOJE tem Meu Dia, Menções, Planejado e Atribuídas", lat.hoje === "meudia,mencoes,planejado,minhas");
   conf("F144 · seis listas do escritório; o resto vai para Mais visões", lat.nListas === 6 && lat.prazoFora && lat.mais);
 
+  const sis = await p.evaluate(() => [
+    sistemaDoAndamentoPje({texto:"PJe (1º grau): Certidão de Publicação Expedida — Cumprimento de Sentença 0000019-61.2026.8.26.0368"}),
+    sistemaDoAndamentoPje({texto:"e-SAJ TJSP (1º grau): Certidão — 0000019-61.2026.8.26.0368"}),
+    sistemaDoAndamentoPje({texto:"eproc TJSP (1º grau): Juntada — 1000087-72.2018.8.26.0368"}),
+    sistemaDoAndamentoPje({texto:"PJe (1º grau): Sentença — MSCiv 5000469-84.2025.4.03.6136"}),
+    sistemaDoAndamentoPje({texto:"e-SAJ TJSP (1º grau): erro de rótulo — 5000469-84.2025.4.03.6136"}),
+    nomeDaColeta([{texto:"PJe (1º grau): x 0000019-61.2026.8.26.0368"}])]);
+  conf(`F146 · 8.26 é e-SAJ ou eproc; 4.03 é sempre PJe (${sis.join(" | ")})`,
+    sis.join("|") === "e-SAJ TJSP|e-SAJ TJSP|eproc TJSP|PJe|PJe|e-SAJ");
+
   // F140 · o círculo de concluir a tarefa era um <span> vazio de 0×0 px
   await p.evaluate(() => { visao = "particulares"; render(); }); await p.waitForTimeout(300);
   const ck = await p.evaluate(() => { const c = document.querySelector('.cartao[data-tarefa] .check');

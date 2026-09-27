@@ -1,5 +1,8 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F146 · versão 10.50 · o número CNJ diz o sistema (27.09.2026)
+Caso real (Almir Tronfini): a aba Judicial mostrava "Coleta do PJe" e "PJe" em movimentos do e-SAJ. `justicaDoNumeroCnj()` lê o J.TR do número (8.26 estadual, 4.03 federal) e `sistemaDoAndamentoPje()` passa a decidir pelo último número CNJ do texto: 4.03 é sempre PJe; 8.26 é e-SAJ, salvo o texto dizer eproc. `nomeDaColeta()` e `sisCurtoDoMov()` dão o nome do botão, do quadro e de cada linha da `caixaPje`, que no v10 usa o símbolo de `iconeFonte`. Caso-ouro em harmonia138.js.
+
 ## F145 · versão 10.49 · o caso em duas colunas (27.09.2026)
 Pedido do Paulo: a tela de Casos volta a ter duas colunas no v10. O painel do caso agora é `.caso-2col` com `aside.caso-esq` (linhaCaso, faixaFixo, faixaPrazos) e `.caso-dir` (composer, menu, painel da aba). Em ficha de 900 px ou mais a esquerda tem 340 px e fica `sticky`; abaixo disso empilha. A placa vira pares (a última célula ímpar ocupa a linha), o ➕ saiu do cabeçalho e desceu para baixo da placa (`.lc-mais-pe`), e os prazos viraram linhas finas em ordem decrescente de data, com o `.pz-mais` cobrindo a linha. Abas: Escritório, INSS, Recurso (CRPS), Judicial, Caso Completo (saiu o `order:-1` da F139); INSS, Recurso e Judicial continuam aparecendo só quando o caso tem dado daquela fonte.
 
