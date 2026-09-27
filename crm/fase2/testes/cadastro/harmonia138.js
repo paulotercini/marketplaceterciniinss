@@ -16,6 +16,8 @@ for (let i = 0; i < 3; i++) {
   FIX.casos.push({ id: `b2000000-0000-0000-0000-00000000000${i}`, cliente_id: cid, titulo: "Pensão", beneficio: "Pensão por morte",
     especie: "B21", fase: "judicial", origem_lista: "👪 Judicial", prazo: dia(-5 - i), criado_em: "2026-01-01T00:00:00Z" });
 }
+FIX.tarefas = [{ id: "t-f140", titulo: "Tarefa fictícia de conferência", concluida: false,
+  particular_de: FIX.colaboradores[0].id, prazo: null, criado_em: "2026-09-01T00:00:00Z" }];
 FIX.andamentos = [1, 2, 3].map(i => ({ id: `a3000000-0000-0000-0000-00000000000${i}`, caso_id: CASO1,
   autor_id: FIX.colaboradores[0].id, origem: "escritorio", texto: `Registro fictício ${i}`, criado_em: dia(-i) + "T15:00:00Z" }));
 
@@ -70,6 +72,11 @@ FIX.andamentos = [1, 2, 3].map(i => ({ id: `a3000000-0000-0000-0000-00000000000$
   conf("o período cabe numa linha só", plan.segLinha);
   conf("a contagem diz datas, no plural certo", /\d+ datas neste filtro/.test(plan.sub) && !/data\(s\)/.test(plan.sub));
 
+  // F140 · o círculo de concluir a tarefa era um <span> vazio de 0×0 px
+  await p.evaluate(() => { visao = "particulares"; render(); }); await p.waitForTimeout(300);
+  const ck = await p.evaluate(() => { const c = document.querySelector('.cartao[data-tarefa] .check');
+    const r = c && c.getBoundingClientRect(); return r ? Math.round(r.width) : 0; });
+  conf(`a tarefa tem o círculo de concluir visível (${ck}px)`, ck >= 20);
   await p.evaluate(c => abrirFicha(c), CLI_CHEIO); await p.waitForTimeout(1000);
   const tl = await p.evaluate(() => {
     const bl = [...document.querySelectorAll('.painel[data-p="2"] .timeline li.dia-bloco')];
@@ -99,6 +106,25 @@ FIX.andamentos = [1, 2, 3].map(i => ({ id: `a3000000-0000-0000-0000-00000000000$
   conf(`a primeira aba dos andamentos é o Caso completo (${f.primeira})`, /^Caso completo/.test(f.primeira || ""));
   conf("Verificação a definir fica cinza como a Etapa, sem o vermelho", f.verifNeutra);
   conf(`os botões da linha do tempo e dos prazos têm ao menos 24px (${f.peq} menores)`, f.peq === 0);
+
+  // F140 · peso até 500 fora do nome e do título, texto de leitura em 14px,
+  // inicial com o tom do nome e o selo "copiado" no próprio número
+  const g = await p.evaluate(() => {
+    const vis = e => e.getBoundingClientRect().width > 0;
+    const tx = [...document.querySelectorAll(".detalhe *")].filter(e => vis(e) && [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()));
+    const pesados = tx.filter(e => +getComputedStyle(e).fontWeight >= 600 && !e.closest(".det-topo h2,.lc-ben,.avatar"));
+    const t = document.querySelector('.painel[data-p="2"] .timeline .texto');
+    const av = document.querySelector(".det-topo .cli-casos .avatar");
+    return { pesados: pesados.length, ex: pesados.slice(0, 3).map(e => e.className || e.tagName),
+      corpo: t && getComputedStyle(t).fontSize, av: av && getComputedStyle(av).getPropertyValue("--av").trim(), fundo: av && getComputedStyle(av).backgroundColor };
+  });
+  conf(`fora do nome e do título, nada passa do peso 500 (${g.pesados} ${g.ex.join(",")})`, g.pesados === 0);
+  conf(`o texto dos registros tem 14px (${g.corpo})`, g.corpo === "14px");
+  conf(`a inicial do cliente tem o tom do nome (${g.av} → ${g.fundo})`, /^#[0-9A-F]{6}$/i.test(g.av || "") && g.fundo === `rgb(${parseInt(g.av.slice(1,3),16)}, ${parseInt(g.av.slice(3,5),16)}, ${parseInt(g.av.slice(5,7),16)})`);
+  await p.evaluate(() => { const c = document.querySelector(".id-min .cop"); c && c.click(); });
+  await p.waitForTimeout(150);
+  conf("copiar o CPF mostra o selo copiado em cima do número", await p.evaluate(() =>
+    !!document.querySelector(".id-min .cop.copiado") && getComputedStyle(document.querySelector(".id-min .cop.copiado"), "::after").content.includes("copiado")));
 
   console.log("=== F138 · Planejado e ficha em harmonia ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));
