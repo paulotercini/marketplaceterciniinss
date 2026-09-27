@@ -1,5 +1,14 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F143 · Papel quente com o petróleo mantido (10.47)
+
+Escolha do Paulo entre três prévias (atual, papel quente com petróleo, papel quente com ações em
+quase preto). Tokens do v10: fundo #F8F8F6, lateral #F3F2EE, placa #EFEEEB, texto #121212, cinzas
+#4A4944 e #686660 (o #7B7974 da referência dá 4,1:1, abaixo do AA), borda única #E7E6E1, e
+`--marco:#D97757` só para o ponto do marco. Os cinzas frios fixos do bloco v10 foram trocados pelos
+equivalentes quentes; petróleo e cores de prazo intactos. Cartões com `--r-cartao` 16px.
+linha102.js passou a conferir as cores novas do cabeçalho e do compositor.
+
 ## F142 · e-SAJ e eproc da coleta do PJe com o próprio símbolo (10.46)
 
 Print do Paulo: andamento "e-SAJ TJSP (1º grau): …" (origem pje) aparecia com o símbolo e o nome
