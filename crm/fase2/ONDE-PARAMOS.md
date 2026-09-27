@@ -1,5 +1,20 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F136 · Revisão mobile-native do celular (10.40)
+
+Auditoria a 360x740 nos dois temas (script de rascunho cel.js, fora do repo). Correções:
+viewport com `interactive-widget=resizes-content` (teclado do Android encolhe a tela em vez de
+cobrir o campo); em `pointer:coarse` todo input, select e textarea com 16px (add-nome e add-ben
+davam zoom no iPhone), `.cel-voltar` e itens do menu com 44px; `overscroll-behavior:contain` na
+sidebar, no detalhe, na rolagem da ficha, nos modais e no dialog de confirmação; `max-height`
+e `height` em vh ganharam a linha seguinte em dvh (fallback para navegador antigo).
+Resultado: alvos abaixo de 44px no menu do tema padrão 28/34 → 10/29; nenhum input abaixo de
+16px na lista; nenhum estouro horizontal.
+
+Pendências: chips `.marc` e `.chip-acomp` do tema padrão abaixo de 24px; três regras de hover
+misturadas com :focus-within (`.timeline li`, `.fx .lapis`, timeline do v10); sem manifest PWA.
+Só num aparelho real se confirma rubber-band, safe area com entalhe e o comportamento do teclado.
+
 ## F135 · Ajustes do teste de carga e da revisão emil-design-eng (10.39)
 
 Teste com 2.000 clientes fictícios e 250 ms de latência (documento "CRM
