@@ -1,5 +1,15 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F141 · Símbolo do sistema de origem no Caso completo (10.45)
+
+Pedido do Paulo: a ⭐ na bolinha da fonte confundia com o botão de importante. `FONTES_SIS`
+mapeia pje, esaj, eproc, inss, crps e cnj; `fonteDoItem(x)` lê o chip do item e, no CNJ, o
+`sistema` da instância do DataJud (campo `sis`, novo no item). `iconeFonte()` usa o favicon do
+site oficial pelo serviço de ícones do Google (só o domínio vai na requisição); falhou, entra a
+sigla (`semIcone`). O eproc não tem favicon acessível e usa a sigla "ep". Os favicons não foram
+copiados nem redesenhados. Rótulo do CNJ vira "PJe · CNJ" quando o sistema é conhecido. Legenda e
+botão "só os marcos" usam o ponto nos dois temas. Prova: harmonia138.js (18/18).
+
 ## F140 · Acabamento pela referência do Claude (Refero Styles) e do Spell UI (10.44)
 
 Método refero-design: trava de referência na identidade v10; do sistema do Claude no Refero
