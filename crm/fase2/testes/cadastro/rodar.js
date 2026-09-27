@@ -28,7 +28,7 @@ const COPIA = path.join(AQUI, "app.html");
 
 // não são provas: uma exporta as fixturas, a outra o PDF falso, e este
 // arquivo é o próprio corredor
-const NAO_SAO_PROVAS = new Set(["fixturas.js", "fixt-pdf.js", "rodar.js"]);
+const NAO_SAO_PROVAS = new Set(["fixturas.js", "fixt-pdf.js", "rodar.js", "agendagas.js"]);
 
 // teto por prova. As mais pesadas (desempenho.js pinta 7.000 tarefas) levam
 // perto de um minuto; acima disso é travamento, não lentidão.
