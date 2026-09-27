@@ -1,5 +1,8 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F147 · versão 10.51 · todas as listas na linha da agenda (27.09.2026)
+No v10, `cartaoCliente()` devolve a mesma `.ag-linha` da agenda (data do lembrete mais próximo, nome, motivo ou título do caso, selos de prazo fatal, perícia, exigência, DCB e espécie, com a lista só fora das fases, avatares, fogo e estrela). O `#CPF` saiu do cartão nos dois visuais. Com `.app.detalhe-aberto`, a linha fica numa altura só e esconde resumo e selos. A coluna do caso não rola mais de lado.
+
 ## F146 · versão 10.50 · o número CNJ diz o sistema (27.09.2026)
 Caso real (Almir Tronfini): a aba Judicial mostrava "Coleta do PJe" e "PJe" em movimentos do e-SAJ. `justicaDoNumeroCnj()` lê o J.TR do número (8.26 estadual, 4.03 federal) e `sistemaDoAndamentoPje()` passa a decidir pelo último número CNJ do texto: 4.03 é sempre PJe; 8.26 é e-SAJ, salvo o texto dizer eproc. `nomeDaColeta()` e `sisCurtoDoMov()` dão o nome do botão, do quadro e de cada linha da `caixaPje`, que no v10 usa o símbolo de `iconeFonte`. Caso-ouro em harmonia138.js.
 
