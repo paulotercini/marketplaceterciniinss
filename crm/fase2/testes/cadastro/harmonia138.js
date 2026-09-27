@@ -1,4 +1,4 @@
-// F138 · Planejado e ficha em harmonia (tema v10): a lista vira um grupo só,
+// F138/F139 · Planejado e ficha em harmonia (tema v10): a lista vira um grupo só,
 // a data abre a linha, o nome da lista usa letra de texto, o período cabe
 // numa linha, e na linha do tempo os dias perdem a zebra e os botões ganham
 // uma coluna própria. Datas RELATIVAS, nunca fixas.
@@ -79,6 +79,26 @@ FIX.andamentos = [1, 2, 3].map(i => ({ id: `a3000000-0000-0000-0000-00000000000$
   });
   conf(`os dias do Caso completo não alternam fundo (${tl.blocos} dias)`, tl.blocos >= 2 && tl.semZebra);
   conf("os botões de cada registro ficam numa coluna própria, no fim da linha", tl.coluna);
+
+  // F139 · uma fonte só na ficha: a regra * {font-family:"Segoe UI"} do começo
+  // do arquivo fixava a fonte em todo elemento e o tema não chegava neles
+  const f = await p.evaluate(() => {
+    const vis = e => e.getBoundingClientRect().width > 0;
+    const tx = [...document.querySelectorAll(".detalhe *")].filter(e => vis(e) && [...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()));
+    const fam = tx.map(e => getComputedStyle(e).fontFamily.split(",")[0].replace(/"/g, ""));
+    const abas = [...document.querySelectorAll(".menu-andamentos button")].sort((a, b) => a.getBoundingClientRect().left - b.getBoundingClientRect().left);
+    const verif = document.querySelector(".lc-verif");
+    const peq = [...document.querySelectorAll(".timeline .tl-sinal, .timeline .tl-li, .pz .pz-mais")].filter(vis)
+      .filter(e => { const r = e.getBoundingClientRect(); return Math.min(r.width, r.height) < 24; });
+    return { segoe: fam.filter(x => /Segoe/.test(x)).length, plex: fam.filter(x => /IBM Plex Sans/.test(x)).length,
+      primeira: abas[0] && abas[0].textContent.trim(),
+      verifNeutra: !!(verif && verif.querySelector(".lc-vazio") && !verif.querySelector(".lc-manual")),
+      peq: peq.length };
+  });
+  conf(`a ficha usa só a fonte do tema (${f.plex} em Plex, ${f.segoe} em Segoe UI)`, f.segoe === 0 && f.plex > 20);
+  conf(`a primeira aba dos andamentos é o Caso completo (${f.primeira})`, /^Caso completo/.test(f.primeira || ""));
+  conf("Verificação a definir fica cinza como a Etapa, sem o vermelho", f.verifNeutra);
+  conf(`os botões da linha do tempo e dos prazos têm ao menos 24px (${f.peq} menores)`, f.peq === 0);
 
   console.log("=== F138 · Planejado e ficha em harmonia ===");
   ok.forEach(([n, v]) => console.log((v ? "PASSOU  " : "FALHOU  ") + n));

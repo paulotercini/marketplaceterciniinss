@@ -1,5 +1,19 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F139 · A tela do caso com uma fonte, uma escala e um peso por papel (10.43)
+
+Causa raiz achada com script de medição (fonte, tamanho, peso, alvos): a regra
+`*{font-family:"Segoe UI",...}` do começo do CSS fixa a fonte em todo elemento, e o tema v10 só
+trocava onde tinha regra própria (65 textos da ficha em Segoe UI, 16 em Plex). Correção:
+`:where(html[data-tema="v10"]) *{font-family:inherit}` (especificidade zero, então toda regra de
+classe, como a mono, continua vencendo). Resultado: 0 em Segoe UI. Demais: rótulos de 10 para
+11 px, `.tipo-ch` em 500 e cinza, Verificação "a definir" com `.lc-vazio` (antes `.lc-manual`,
+vermelho), aba Caso completo primeiro (`order:-1`), título do Caso completo virou contagem
+(`.cc-conta`), bolinha da fonte com `svgIc` no v10 (a ⭐ confundia com o botão de importante),
+legenda e botão "só os marcos" com o ponto (`.cc-ponto`), `.texto` com 75ch, alvos de 24 px,
+`.cop` com sublinhado no texto (no celular a borda ia longe por causa do padding de toque).
+Prova: harmonia138.js (11/11). recursos99.js oscila entre 6/7 e 7/7 também na 10.42.
+
 ## F138 · Planejado e ficha em harmonia (10.42)
 
 Pedido do Paulo com dois prints (Planejado e Caso completo), revisão impeccable, apple-design,
