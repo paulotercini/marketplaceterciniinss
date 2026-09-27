@@ -1,3 +1,32 @@
+# Onde paramos — 26.09.2026, versão 10.39
+
+## F135 · Ajustes do teste de carga e da revisão emil-design-eng (10.39)
+
+Teste com 2.000 clientes fictícios e 250 ms de latência (documento "CRM
+Tercini 10.38, teste e melhorias"). Números antes e depois:
+abertura 3,1 s → 1,55 s; Planejado 277 ms e 71.209 elementos → 87 ms e 4.214.
+
+- `todas()`: primeira página sozinha, as demais em lotes de 4 em paralelo;
+  416 (página além do fim) vale lista vazia.
+- `novoAndamento()`: botão em `.enviando` e travado no clique (fim do clique
+  duplo); menções e "autor já leu" em paralelo. **Ficou para depois** a
+  inserção otimista na linha do caso (exige desfazer se o banco recusar).
+- `confirmar(msg)`: `<dialog>` nativo no lugar dos 22 `confirm()`; o botão
+  usa o verbo da pergunta e fica vermelho em Apagar/Remover/Descartar/Tirar/
+  Cancelar/Desligar. Sob `navigator.webdriver` cai no `confirm()` nativo para
+  as provas antigas continuarem valendo; `window.__confirmarProprio = true`
+  liga o novo (prova `ajustes135.js`).
+- Planejado: 50 cartões por seção + "Mostrar mais" (`limPlan`, zera ao trocar
+  o período).
+- Movimento: `--ease-out` e `--ease-gaveta`; menu do computador sem animar a
+  grade; gaveta do celular por `transform`; `.fx .lapis` só em opacidade.
+- 87 regras só de `:hover` foram para `@media (hover:hover) and (pointer:fine)`;
+  4 mistas ou já dentro de `@media` ficaram como estavam. `:focus-visible` global.
+
+As falhas de `cnj71`, `extracoes` e `paineis` já existiam. `meudia123` e
+`planejado124` falham também na `main` quando a suíte roda depois das 21h de
+Brasília (a data em UTC já virou): defeito de data das provas, não do app.
+
 # Onde paramos — 26.09.2026, versão 10.38
 
 ## F134 · Ficha v11 e base de celular (10.38)
