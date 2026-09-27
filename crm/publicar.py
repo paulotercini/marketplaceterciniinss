@@ -38,6 +38,10 @@ def publicar(origem: Path = ORIGEM, destino: Path = DESTINO) -> str:
         )
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_text(html, encoding="utf-8")
+    # F150 · o service worker mora ao lado da página (o escopo dele é a pasta)
+    sw = origem.parent / "sw.js"
+    if sw.exists():
+        (destino.parent / "sw.js").write_text(sw.read_text(encoding="utf-8"), encoding="utf-8")
     return html
 
 
