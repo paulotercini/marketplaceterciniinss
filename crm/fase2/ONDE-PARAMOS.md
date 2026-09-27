@@ -1,5 +1,17 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F140 · Acabamento pela referência do Claude (Refero Styles) e do Spell UI (10.44)
+
+Método refero-design: trava de referência na identidade v10; do sistema do Claude no Refero
+Styles vieram peso até 500 fora de `.det-topo h2` e `.lc-ben`, `.timeline .texto` a 14px e
+cantos em três tokens (`--r-ctl` 8, `--r-cartao` 12, `--r-bloco` 16) com borda única
+(`--borda` e `--borda-suave` = #DCE0E4 dentro de `.detalhe`). Do Spell UI: `corDoNome()` dá à
+inicial da ficha um de seis tons escuros (var `--av`); o clique em `[data-cop]` põe `.copiado`
+e um selo com entrada por desfoque; tarefa concluída anima o risco só no cartão recém-concluído
+(`window.__risca`). Defeito achado no caminho: `.cartao .check` nunca teve estilo (0×0 px),
+então o círculo de concluir tarefa era invisível; agora 22 px (28 no toque). No celular, a
+bolinha do autor fica na linha do nome. Prova: harmonia138.js (16/16).
+
 ## F139 · A tela do caso com uma fonte, uma escala e um peso por papel (10.43)
 
 Causa raiz achada com script de medição (fonte, tamanho, peso, alvos): a regra
