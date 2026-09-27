@@ -89,7 +89,7 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
   });
   conf("F144 · a marca diz ADVOCACIA PREVIDENCIÁRIA", lat.marca);
   conf("F144 · o menu da conta tem Sincronizar e Configurações", /Sincronizar/.test(lat.menu) && /Configurações/.test(lat.menu) && /Sair/.test(lat.menu));
-  conf("F144 · HOJE tem Meu Dia, Menções, Planejado e Atribuídas", lat.hoje === "meudia,mencoes,planejado,minhas");
+  conf("F144/F151 · HOJE tem Meu Dia, Menções, Planejado, Agenda de quarta e Atribuídas", lat.hoje === "meudia,mencoes,planejado,agendaq,minhas");
   conf("F144 · seis listas do escritório; o resto vai para Mais visões", lat.nListas === 6 && lat.prazoFora && lat.mais);
 
   const sis = await p.evaluate(() => [
