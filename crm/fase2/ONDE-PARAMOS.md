@@ -1,5 +1,8 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F148 · versão 10.52 · a dashboard nova e o esqueleto (27.09.2026)
+Blueprint aprovado pelo Paulo. No v10, `renderDash()` chama `renderDashV10()`: o esqueleto (`esqueletoDash()`, mesma grade e alturas da tela pronta, `aria-busy`) entra no mesmo quadro; ele só fica visível após 150 ms (`sk-aparece` com delay) e brilha em 1,4 s; movimento reduzido desliga tudo. A conta (`metricasDash(col, dias)`, pura, sem banco novo) roda depois do primeiro paint e os cinco blocos entram um por tarefa, na ordem de leitura; `dashVez` cancela a carga se a tela mudar. Cores validadas pelo validador da skill dataviz: prazo fatal #B3261E, compromisso #B7791F, lembrete #2F6FB0; o financeiro usa o petróleo #00907F cheio (recebido) e só em contorno (previsto). Limites conhecidos: o funil mostra a distribuição por fase, não a passagem entre fases (não há histórico de fase); a taxa de êxito só aparece com 5 resultados ou mais; o financeiro depende dos pagamentos lançados. Prova: dash148.js (10/10).
+
 ## F147 · versão 10.51 · todas as listas na linha da agenda (27.09.2026)
 No v10, `cartaoCliente()` devolve a mesma `.ag-linha` da agenda (data do lembrete mais próximo, nome, motivo ou título do caso, selos de prazo fatal, perícia, exigência, DCB e espécie, com a lista só fora das fases, avatares, fogo e estrela). O `#CPF` saiu do cartão nos dois visuais. Com `.app.detalhe-aberto`, a linha fica numa altura só e esconde resumo e selos. A coluna do caso não rola mais de lado.
 
