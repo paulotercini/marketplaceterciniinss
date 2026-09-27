@@ -117,13 +117,13 @@ Esta seção é obrigatória porque o Tema 1124/STJ condiciona o termo inicial d
 
    a) **Já apresentado ao INSS na DER** — documento que integrava o processo administrativo desde o requerimento. Enquadra o caso no cenário 2.1 do Tema 1124 (DIB na DER)
 
-   b) **Complementar a prova já existente** — documento produzido em juízo que apenas confirma, detalha ou reforça o conjunto probatório já presente na via administrativa. Enquadra o caso no cenário 2.2 do Tema 1124, afastando a incidência do cenário 2.3 por aplicação da distinção entre prova nova e prova complementar (TRF4, 5ª Turma, Apelação Cível 5015397-63.2023.4.04.7112, j. 25/11/2025)
+   b) **Complementar a prova já existente** — documento não essencial ou prova técnica judicial que apenas confirma, detalha ou reforça o conjunto probatório já suficiente na via administrativa. Enquadra o caso no item 2.1 do Tema 1124 e na exceção final do item 1.6, com DIB na DER. Os embargos de declaração de 09/09/2026 confirmaram que a perícia judicial que confirma o PPP apresentado ao INSS leva a DIB à DER quando o INSS não ofertou a complementação da prova
 
-   c) **Novo, inexistente na via administrativa** — documento que surge exclusivamente em juízo. Se inevitável, fundamentar a impossibilidade material de apresentação anterior e argumentar, quando possível, que o requerimento administrativo já era apto e que o INSS descumpriu o dever de oportunizar complementação
+   c) **Surgido depois do ajuizamento ou impossível de obter antes** — documento que só pôde existir em juízo. Enquadra o caso no item 2.3, com DIB na citação, e exige a demonstração da impossibilidade material. O documento que já existia e não foi levado ao INSS, como um novo PPP, NÃO entra nesta categoria, porque os embargos de 09/09/2026 determinam a extinção sem mérito nesse caso, e o caminho é o novo requerimento antes da ação
 
 2. Fundamentar expressamente que a DIB deve ser fixada na DER (ou na data do preenchimento dos requisitos, se posterior à DER), invocando o cenário aplicável do Tema 1124/STJ
 
-3. Se o INSS não emitiu carta de exigência quando deveria, fundamentar a omissão do dever de cooperação (art. 176-C, Decreto 3.048/99) e enquadrar no cenário 2.2 do Tema 1124
+3. Se o INSS não emitiu carta de exigência nem ofereceu justificação administrativa quando deveria, fundamentar a omissão do dever legal (art. 88 da Lei 8.213/1991 e arts. 176 e 176-E do Decreto 3.048/99, conferidos no MCP `normas`) e enquadrar no item 2.2 do Tema 1124, citando o esclarecimento dos embargos de declaração de 09/09/2026, que vedou o indeferimento automático, por servidor ou por ferramenta automatizada, de requerimento apto sem essa oportunidade
 
 4. Se houver duas ou mais DERs, demonstrar a continuidade do conjunto probatório entre elas, indicando que os documentos da DER posterior "apenas confirmaram" o acervo já existente, para preservar os efeitos financeiros desde a DER mais antiga
 

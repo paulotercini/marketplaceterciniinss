@@ -310,7 +310,7 @@ STJ para MS contra ato de TRF.
 
 | Tese | Fundamento normativo | Tribunal | Aplicação |
 | --- | --- | --- | --- |
-| Tema 1124/STJ aplicação restrita | Modulação | STJ | Prospectiva 30/03/2022 |
+| Tema 1124/STJ sem modulação | Acórdão de mérito e EDcl de 09/09/2026 | STJ | Processos pendentes com DIB não preclusa |
 | Tema 350/STF hipóteses excepcionais | Const | STF | Revisão / notório / MS preventivo |
 | acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021) demora administrativa | Art. 5º LXXVIII CF | STF | >45 dias |
 | Súmula 98/STJ embargos prequestionadores | Procedimental | STJ | Embargos sem multa |

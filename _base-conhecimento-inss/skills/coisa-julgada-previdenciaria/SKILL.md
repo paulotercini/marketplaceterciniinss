@@ -246,7 +246,7 @@ Quando o segurado repropõe a ação com novas provas com base no Tema 629, os e
 
 Se as novas provas foram apresentadas ao INSS e houve indeferimento, os efeitos financeiros retroagem à DER do requerimento administrativo em que foram apresentadas.
 
-Se as novas provas NÃO foram apresentadas ao INSS, os efeitos financeiros são da citação válida na nova ação (cenário 2 do Tema 1124). Recomendação firme ao cliente — antes de ajuizar nova ação, protocolar novo requerimento administrativo com as novas provas. Acionar skill tema-1124-instrucao-administrativa.
+Se as novas provas NÃO foram apresentadas ao INSS e já existiam antes do ajuizamento, a nova ação corre risco de extinção sem mérito por falta de interesse de agir (item 1.6 do Tema 1124, reafirmado nos embargos de declaração de 09/09/2026), e a DIB na citação só se aplica à prova surgida depois do ajuizamento ou de obtenção materialmente impossível antes (item 2.3). Recomendação firme ao cliente — antes de ajuizar nova ação, protocolar novo requerimento administrativo com as novas provas. Acionar skill tema-1124-instrucao-administrativa.
 
 ### Tema 629 + Tema 995
 

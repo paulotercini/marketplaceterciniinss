@@ -151,23 +151,19 @@ Tema 1124/STJ na perspectiva do efeito translativo.
 
 ## 8. Modulação do Tema 1124
 
-### 8.1. Datas-chave
+### 8.1. Não houve modulação (Onda 161, conferido nos acórdãos)
 
-O Tema 1124/STJ foi julgado pela 1ª Seção em 2025; a modulação e os marcos de aplicação devem ser conferidos no inteiro teor do acórdão (REsp 1.905.830) antes de qualquer invocação em peça.
+O Tema 1124/STJ foi julgado pela Primeira Seção em 08/10/2025 (REsp 1.905.830/SP, DJEN 06/11/2025), e o acórdão de mérito negou a modulação por entender que apenas consolidou a jurisprudência do STJ e do STF. Os embargos de declaração julgados em 09/09/2026 (DJEN 21/09/2026) rejeitaram o pedido de modulação e o de regime transitório para tutelas, execuções, perícias e ações pendentes. A tese se aplica aos processos pendentes cuja discussão sobre a DIB não esteja preclusa.
 
-Modulação. Aplicação a partir da publicação, com proteção das ações ajuizadas em momento anterior.
+A versão anterior desta seção recomendava sustentar a inaplicabilidade do Tema 1124 a ações anteriores a uma modulação. Esse argumento não tem mais base e não deve ser usado.
 
-### 8.2. Aplicação prática
+### 8.2. O que resta de defesa
 
-A aplicação a processos em curso segue o que o próprio acórdão do Tema 1124 dispuser — não presuma marcos sem conferir.
-
-Em caso de aplicação retroativa, argumentar.
+Os embargos afirmaram que a aplicação imediata vale tanto para os deveres do segurado quanto para os do INSS. A defesa se desloca para o enquadramento. Primeiro, a DIB já decidida e não impugnada no momento próprio está preclusa. Segundo, o requerimento apto indeferido sem carta de exigência ou sem oferta de justificação administrativa atrai o item 2.2 e a DER, inclusive quando o indeferimento foi automático. Terceiro, a prova judicial que apenas confirma o documento apresentado ao INSS atrai o item 2.1 e a exceção do item 1.6.
 
 ### 8.3. Estratégia
 
-Demonstrar a data de ajuizamento da ação.
-
-Sustentar a inaplicabilidade do Tema 1124 a ações pré-modulação.
+Mapear, documento por documento, o que o INSS recebeu, se houve carta de exigência e o que a prova judicial acrescentou, na forma da matriz de enquadramento de `tema-1124-instrucao-administrativa`.
 
 ## 9. Distinguishing do Tema 1124
 
@@ -243,13 +239,13 @@ Estratégia. Demonstrar a demora como hipótese excepcional. Aplicação do Tema
 
 Quadro. Pretensão de revisão de benefício já concedido.
 
-Estratégia. Aplicação direta da exceção do Tema 350/STF (revisão dispensa novo PA).
+Estratégia. Aplicação da exceção do Tema 350/STF, com o limite dos embargos de declaração do Tema 1124 (09/09/2026). A revisão porque o INSS não concedeu o benefício adequado às provas que tinha dispensa novo requerimento, e a revisão que pretende provar fato novo exige novo requerimento com as provas.
 
-### 11.5. Cenário E. Tribunal extingue ação ajuizada antes de 30/03/2022
+### 11.5. Cenário E. Tribunal extingue ação antiga pelo Tema 1124
 
-Quadro. Ação ajuizada em 2020, julgamento em 2024. Tribunal aplica Tema 1124.
+Quadro. Ação ajuizada antes do julgamento do Tema 1124 e extinta ou com DIB deslocada em grau recursal.
 
-Estratégia. Argumentar a modulação do Tema 1124.
+Estratégia. O STJ negou a modulação no mérito e nos embargos de declaração de 09/09/2026, de modo que o argumento temporal não serve. A defesa é a preclusão da DIB já decidida, o enquadramento no item 2.2 quando o INSS não emitiu carta de exigência e o enquadramento no item 2.1 ou na exceção do item 1.6 quando a prova judicial só confirmou a administrativa.
 
 ## 12. Pedidos típicos em embargos de declaração
 

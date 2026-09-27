@@ -132,6 +132,10 @@ REsp 1.905.830, Min. Paulo Sérgio Domingues, Primeira Seção. Acórdão public
 
 Quando a prova já constava do administrativo, a DIB recai na DER. Quando o INSS deveria ter pedido complementação probatória e não o fez, a DIB pode ser fixada na DER. Quando a prova é genuinamente nova, surgida após o ajuizamento, a DIB é fixada na citação válida ou em data posterior.
 
+**Limite fixado nos embargos de declaração (j. 09/09/2026, DJEN 21/09/2026).** O STJ afirmou ser "impossível a fungibilidade de pedidos em esferas distintas". O segurado que pediu um benefício ao INSS e pede outro em juízo, aproveitando o mesmo conjunto de provas, precisa de novo requerimento, porque o pedido e a causa de pedir são diferentes, e o mesmo vale para o formulário eletrônico preenchido com pedido diverso do pretendido. A fungibilidade ampliativa desta skill continua cabível dentro da mesma esfera, quando o INSS ou o juiz, com base nos elementos do processo administrativo, reconhece o benefício mais vantajoso ou diverso (art. 176-E do Decreto 3.048/99). A petição deve demonstrar que a causa de pedir levada ao INSS é a mesma da ação, e a peça que pede em juízo benefício que o INSS nunca examinou arrisca a extinção.
+
+A ementa dos embargos (item 3) qualifica as situações do voto como exemplos, com valor de obiter dictum, e por isso a afirmação não integra a tese vinculante. O Tema 217/TNU, que admite conhecer em juízo do BPC ou do benefício por incapacidade não requerido especificamente, continua sendo o fundamento a invocar nessa hipótese, com o risco declarado ao cliente e com a demonstração de que o INSS já tinha, no processo administrativo, os elementos do benefício concedido em juízo.
+
 ## 5. Fungibilidade restritiva. O que está VEDADO
 
 ### 5.1. Conversão prejudicial sem postulação
