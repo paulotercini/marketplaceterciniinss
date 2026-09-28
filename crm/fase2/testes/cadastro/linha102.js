@@ -143,6 +143,7 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
   await p.evaluate((id) => checarAcomp(id), CASO1); await p.waitForTimeout(200);
   conf("verificar registra quem e quando, e o ✓ acende na linha", patches("checado_em").length === 1 && await p.evaluate(() => document.querySelector(".lc-topo .lc-check").classList.contains("ok")));
   // comentário fixo
+  const botaoAntes = await p.evaluate(() => !!document.querySelector(".caso-esq .fixar-caso"));
   await p.evaluate((id) => lcEditarFixo(id), CASO1);
   await p.evaluate((d) => { document.getElementById("lc-fx-texto").value = "Só ligar de manhã."; document.getElementById("lc-fx-data").value = d; }, emDias(20));
   await p.evaluate((id) => lcGuardarFixo(id), CASO1); await p.waitForTimeout(300);
@@ -152,6 +153,12 @@ FIX.andamento_tarefas = [{ id: "t0000000-0000-0000-0000-0000000f1021", andamento
     return { txt: f && f.textContent, acima: f && pr && f.getBoundingClientRect().bottom <= pr.getBoundingClientRect().top + 1,
       lemb: [...document.querySelectorAll(".faixa-prazos .pz")].some(c => c.dataset.tipo === "Comentário fixo") }; });
   conf("e aparece em destaque acima dos quadros de prazo, com o lembrete dele na faixa", /Só ligar de manhã/.test(faixaFx.txt || "") && faixaFx.acima && faixaFx.lemb);
+  const largo = await p.evaluate(() => { const f = document.querySelector(".fixo-caso"), e = document.querySelector(".caso-esq"), d = document.querySelector(".caso-dir");
+    return { fora: !!f && !f.closest(".caso-esq") && !f.closest(".caso-dir"), cobre: !!(f && e && d) && f.getBoundingClientRect().right >= d.getBoundingClientRect().right - 2,
+      italico: !!f && getComputedStyle(f.querySelector(".fixo-txt")).fontStyle === "italic", botao: !!document.querySelector(".fixar-caso") }; });
+  conf("F155 · 'Fixar comentário' fica na coluna do caso; fixado, a faixa em itálico atravessa as duas colunas e o botão some",
+    botaoAntes && largo.fora && largo.cobre && largo.italico && !largo.botao);
+  if (process.env.FOTO) await p.screenshot({ path: process.env.FOTO + "-fixo.png" });
 
   // ── F103 · o menu dos andamentos ─────────────────────────────────────────
   const menu = await p.evaluate(() => {
