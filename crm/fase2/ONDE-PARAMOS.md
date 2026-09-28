@@ -1,5 +1,9 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F153 · versão 10.57 · passo a passo do colaborador novo (27.09.2026)
+
+`passoColaboradorAgenda()` entra no `cardLigarAgenda()` só para o admin: roteiro de `adicionarColaborador`, `revogarColaborador` e `listarColaboradores` do Code.gs, com link direto para o projeto do Apps Script (`AGENDA_SCRIPT_EDITOR`). Implantação real: projeto 1cfpCFF…, versão 1, URL em `AGENDA_URL_PADRAO`.
+
 ## F152 · versão 10.56 · agenda de todos os profissionais (27.09.2026)
 Decisões do Paulo: mesma agenda Google, dono pela cor (Paulo 9 azul, Marcos 10 verde, Amanda 5 amarela); Paulo às quartas, Marcos e Amanda seg–sex; compromisso bloqueia só o dono da cor (sem cor, todos); limite 14 e encaixe das 18h00 só do Paulo; o Paulo troca dias pelo CRM. Code.gs: `CONFIG.PROFISSIONAIS`, `prof_()` (aplica AJUSTES das propriedades), `donoDoEvento_()`, `contaPara_()` (atendimento sem cor conta para o Paulo), `atendeNoDia_()` (dias fixos − folgas + extras), ações `definirDias`, `trocarDia` e `desfazerAjuste` (só admin). CRM: `agq.cache` por profissional, abas Paulo/Marcos/Amanda, faixa com os próximos dias do escolhido, cores por profissional, escolha do profissional na etapa do horário, mensagem com o `tratamento`, diálogo "Dias de atendimento" (só com token admin). Rótulo da barra: "Agenda". Prova: agenda151.js 28/28.
 
