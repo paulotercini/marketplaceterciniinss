@@ -88,6 +88,46 @@ function configurarTokens() {
   PropertiesService.getScriptProperties().setProperty('TOKENS', JSON.stringify(mapa));
 }
 
+/* Colaborador que entra ou sai, sem mexer no token dos demais: escreva o nome
+   abaixo, salve e execute adicionarColaborador ou revogarColaborador. */
+const COLABORADOR = { nome: '', papel: 'equipe' };   // papel: 'equipe' ou 'admin'
+
+function tokens_() { return JSON.parse(PropertiesService.getScriptProperties().getProperty('TOKENS') || '{}'); }
+function gravarTokens_(m) { PropertiesService.getScriptProperties().setProperty('TOKENS', JSON.stringify(m)); }
+function nomeColaborador_() {
+  const nome = String(COLABORADOR.nome || '').trim();
+  if (!nome) throw new Error('Escreva o nome em COLABORADOR antes de executar.');
+  return nome;
+}
+
+/** Cria o token só da pessoa nova. Os demais continuam valendo. */
+function adicionarColaborador() {
+  const nome = nomeColaborador_(), mapa = tokens_();
+  if (Object.values(mapa).some(p => p.nome.toLowerCase() === nome.toLowerCase())) {
+    throw new Error(nome + ' já tem token. Para trocar, execute revogarColaborador e depois adicionarColaborador.');
+  }
+  const t = Utilities.getUuid();
+  mapa[t] = { nome, papel: COLABORADOR.papel === 'admin' ? 'admin' : 'equipe' };
+  gravarTokens_(mapa);
+  Logger.log(nome + ': ' + t);
+}
+
+/** Tira o acesso só dessa pessoa. */
+function revogarColaborador() {
+  const nome = nomeColaborador_(), mapa = tokens_();
+  const antes = Object.keys(mapa).length;
+  Object.keys(mapa).forEach(t => { if (mapa[t].nome.toLowerCase() === nome.toLowerCase()) delete mapa[t]; });
+  if (Object.keys(mapa).length === antes) throw new Error(nome + ' não tem token.');
+  gravarTokens_(mapa);
+  Logger.log('Acesso de ' + nome + ' revogado.');
+}
+
+/** Quem tem acesso hoje, com o token (para reenviar a quem perdeu). */
+function listarColaboradores() {
+  const mapa = tokens_();
+  Object.keys(mapa).forEach(t => Logger.log(mapa[t].nome + ' (' + mapa[t].papel + '): ' + t));
+}
+
 /* ---------------------------- Utilitários ---------------------------- */
 
 function json_(obj) {
