@@ -1,5 +1,9 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F156 · versão 10.60 · papel de cada processo e escolha do principal (29.09.2026)
+
+Cada item de `casos.processos` pode ter `papel` ("acao", "ms" ou "cumprimento"). Sem escolha, `processosDoCaso()` lê o papel da classe (`papelDaClasse`: rótulo do incidente, classe do DataJud do número ou `classe_judicial` do principal). O quadro `gerenciaProcessos()` mostra o seletor Ação · MS · Cumprimento e o botão "tornar principal". `salvarProcessos(casoId, lista, principalNum)` mantém o principal atual enquanto ele for nosso e acompanhado; ao trocar, guarda `classe/orgao/ajuizado` da ficha no número antigo e traz os do novo (ou vazio, com `datajud` tirado de `datajud_multi`). `trilhaParalela()` passa a achar o MS pelo papel. Prova: testes/cadastro/papel156.js.
+
 ## F153 · versão 10.57 · passo a passo do colaborador novo (27.09.2026)
 
 `passoColaboradorAgenda()` entra no `cardLigarAgenda()` só para o admin: roteiro de `adicionarColaborador`, `revogarColaborador` e `listarColaboradores` do Code.gs, com link direto para o projeto do Apps Script (`AGENDA_SCRIPT_EDITOR`). Implantação real: projeto 1cfpCFF…, versão 1, URL em `AGENDA_URL_PADRAO`.
