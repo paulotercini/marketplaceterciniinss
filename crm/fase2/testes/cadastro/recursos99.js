@@ -65,7 +65,13 @@ FIX.casos[0].crps = [];
   conf("a caixa pergunta: acrescentar a este caso (principal) ou caso próprio", /acrescentar a este caso/.test(caixa.ok) && /caso próprio/.test(caixa.sep));
   await p.click("#pnc-ok");
   await p.waitForFunction(([caso]) => crpsNups(D.casoPorId.get(caso)).length === 2, [CASO1]);
-  const patch = escritos.filter(e => e.t === "casos" && e.m === "PATCH").map(e => JSON.parse(e.corpo)).pop() || {};
+  // [29.09.2026] a prova falhava uma vez em cinco: pegava o ÚLTIMO PATCH, e às
+  // vezes o da etapa (andarEtapa) já tinha chegado depois do dos números. O
+  // PATCH certo é o que leva crps_nups, e ele sai depois de a memória mudar.
+  const doNumero = () => escritos.filter(e => e.t === "casos" && e.m === "PATCH")
+    .map(e => JSON.parse(e.corpo)).filter(c => "crps_nups" in c).pop();
+  for (let i = 0; i < 40 && !doNumero(); i++) await p.waitForTimeout(50);
+  const patch = doNumero() || {};
   conf("o caso passa a ter os DOIS números, gravados no banco", Array.isArray(patch.crps_nups) && patch.crps_nups.join("|") === `${NUP1}|${NUP2}`);
   conf("nenhum caso novo foi criado", !escritos.some(e => e.t === "casos" && e.m === "POST"));
   // a repintura vem depois do PATCH: espera o aviso dos dois recursos, não só o campo
