@@ -4144,9 +4144,12 @@ function cacheApagar(){ return new Promise(ok=>{ try{ const r = indexedDB.delete
 // por mês (29.09.2026: 10,19 GB gastos no ciclo). O banco carimba mudou_em em
 // toda alteração REAL (a regravação idêntica da sincronização não conta) e
 // anota em `apagados` o que sai. Com a cópia já na memória, o CRM pede só o
-// que mudou desde a carga anterior, com 15 min de folga para gravações que
-// terminaram fora de ordem. Carga completa na primeira vez, com o banco sem o
-// carimbo, depois de falha da incremental e uma vez por semana.
+// que mudou desde a carga anterior, com 2 min de folga: o carimbo é a hora em
+// que a gravação COMEÇOU, e uma gravação lenta pode terminar depois de uma
+// rápida (a mais longa, o lote de 500 linhas da sincronização, leva segundos).
+// Folga maior rebaixaria a cada 3 min, em cada tela aberta, o que já veio.
+// Carga completa na primeira vez, com o banco sem o carimbo, depois de falha
+// da incremental e uma vez por semana.
 const ordPor = campo => (a,b) => { const x=a[campo], y=b[campo];
   return x==null ? (y==null?0:1) : y==null ? -1 : String(x).localeCompare(String(y), "pt-BR"); };
 const INCREMENTAIS = {
@@ -4160,7 +4163,7 @@ const INCREMENTAIS = {
   lembs:      {t:"lembretes",  sel:"select=*,lembrete_avisos(colaborador_id,em,canal)",
                ord:ordPor("proximo_em"), fica:l=>l.ativo===true},
 };
-const FOLGA_INCREMENTAL = 15*60000, CARGA_CHEIA_A_CADA = 7*864e5;
+const FOLGA_INCREMENTAL = 2*60000, CARGA_CHEIA_A_CADA = 7*864e5;
 const levar = async tabela => { const ks = Object.keys(tabela);
   const vs = await Promise.all(ks.map(k=>tabela[k]())); return Object.fromEntries(ks.map((k,i)=>[k,vs[i]])); };
 const marcaDe = (linhas, antes=0) => linhas.reduce((m,l)=>{ const t=Date.parse(l.mudou_em); return t>m ? t : m; }, antes);
