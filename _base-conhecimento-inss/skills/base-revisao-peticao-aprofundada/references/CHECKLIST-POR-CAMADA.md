@@ -16,13 +16,10 @@ Checklist exaustivo de cada uma das 5 camadas da revisão aprofundada. Use como 
 - [ ] Recuo de parágrafo. 2 cm para rito judicial. 4 cm para CRPS.
 - [ ] Rodapé do escritório (Paulo Roberto Tercini Filho, OAB/SP 331.110, endereço, contatos).
 
-### 1.2 Proibição de Dois-Pontos Lógicos
+### 1.2 Dois-Pontos (Onda 163)
 
-- [ ] Não há uso de dois-pontos para introduzir explicações.
-- [ ] Não há uso de dois-pontos para introduzir listas (usar parágrafos independentes ou conjunções).
-- [ ] Não há uso de dois-pontos para introduzir fundamentos.
-- [ ] Não há uso de dois-pontos para introduzir conclusões.
-- [ ] Dois-pontos apenas em citações literais que originalmente o continham.
+- [ ] Dois-pontos apenas antes de citação literal ou de enumeração de pedidos ou requisitos.
+- [ ] Nenhum dois-pontos antes de miniconclusão ou de explicação que caberia no mesmo período.
 
 ### 1.3 Referenciação Documental
 

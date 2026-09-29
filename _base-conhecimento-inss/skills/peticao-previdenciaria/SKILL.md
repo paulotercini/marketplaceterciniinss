@@ -31,9 +31,9 @@ A forma de pesquisar, os filtros confiáveis e os que não são, e o que foi med
 
 ## O estilo, calibrado no papel do escritório
 
-Uma linha da peça, em Bookman Old Style 12, A4, margens do escritório, recuo de 2 cm e espaçamento 1,5, tem cerca de DEZ palavras. Medido em 16/09/2026 com soffice e pdftotext. Portanto, **parágrafo de três linhas tem 30 palavras e de quatro linhas tem 40**, e é isso que o medidor cobra. Um parágrafo bom tem duas frases de quinze a vinte palavras, ou uma de vinte e cinco e outra de dez, e desenvolve uma única ideia com começo, meio e fim.
+Uma linha da peça, em Bookman Old Style 12, A4, margens do escritório, recuo de 2 cm e espaçamento 1,5, tem cerca de DEZ palavras. Medido em 16/09/2026 com soffice e pdftotext. Portanto, **o parágrafo de quatro a cinco linhas tem de 40 a 55 palavras, e o teto de seis linhas corresponde a 65**, que é o que o medidor cobra desde a Onda 163. Um parágrafo bom tem três ou quatro frases de 15 a 35 palavras, ligadas por transições, e desenvolve uma única ideia com começo, meio e fim. Os parágrafos-modelo estão em `references/ESTILO-MODELO.md`, lidos antes de redigir.
 
-Não se escreve um parágrafo de oitenta palavras para cortar depois, porque o corte é o que produz o texto picado. Escreve-se dentro da medida desde a primeira versão. O medidor também recusa frases soltas em sequência, adjetivo de intensidade, fórmula vazia, documento sem ID e dispositivo legal citado sem a frase que explica por que se aplica ao caso.
+Não se escreve um parágrafo de oitenta palavras para cortar depois, porque o corte é o que produz o texto picado. Escreve-se dentro da medida desde a primeira versão. O medidor também recusa frases soltas em sequência, aponta a frase acima de 45 palavras e o parágrafo sem transição, e recusa adjetivo de intensidade, fórmula vazia, documento sem ID e dispositivo legal citado sem a frase que explica por que se aplica ao caso.
 
 A voz é a que o titular fixou em `references/REDACAO-POR-ESPECIE.md`, com os pares de redação genérica e precisa por espécie. Antes de redigir, ler o bloco da espécie. A fórmula do parágrafo argumentativo é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, e a peça abre pela controvérsia, de modo que o leitor saiba em três linhas qual é o benefício, por que foi negado e o que precisa decidir.
 
@@ -49,21 +49,20 @@ Endereçamentos por tipo de peça, qualificação, a regra de títulos formais e
 
 Estas regras são inegociáveis e seguidas em TODAS as petições.
 
-### Proibição Absoluta de Dois-Pontos
+### Dois-pontos (Onda 163)
 
-NUNCA utilize o caractere dois-pontos para introduzir explicações, listas, fundamentos, conclusões ou qualquer complemento lógico da frase. O complemento passa a integrar o período por conectivo, por oração subordinada ou por reordenação, e o período continua fluido. Picar a frase em períodos curtos e soltos NÃO é a solução, porque produz o texto truncado que o titular apontou em 11/09/2026.
+Os dois-pontos são admitidos antes de citação literal de lei, ementa ou documento e antes de enumeração de pedidos ou de requisitos. Continuam vedados antes de miniconclusão ou de explicação que caberia no mesmo período, e nesse caso o complemento entra por conectivo ou subordinação, sem picar o texto.
 
 **ERRADO.** "O benefício foi indeferido por dois motivos: falta de carência e ausência de incapacidade."
 **TRUNCADO, também errado.** "O benefício foi indeferido por dois motivos. O primeiro é a falta de carência. O segundo é a ausência de incapacidade."
 **CORRETO.** "O benefício foi indeferido pela falta de carência e pela ausência de incapacidade, e nenhum dos dois fundamentos resiste ao CNIS juntado."
-
-A única exceção são citações literais de legislação, jurisprudência ou ementas, onde os dois-pontos aparecem no texto original.
+**CORRETO, citação.** "O art. 59 da Lei 8.213/1991 dispõe nos seguintes termos:" seguido da transcrição recuada.
 
 ### Tom e Estilo de Redação
 
 A peça é escrita em linguagem formal e jurídica, mas simples, no estilo que o titular fixou em 11/09/2026 e que está detalhado na regra 10 do protocolo. O texto é técnico, argumentativo e firme, e a firmeza vem da precisão com que expõe o fato, a prova e a norma, nunca de adjetivos ou de acusações. A frase "a decisão combatida revela-se manifestamente absurda e afronta os mais basilares princípios de justiça" não entra em peça do escritório. Em seu lugar escreve-se que "a decisão não examinou o documento apresentado pela parte autora, embora seu conteúdo seja relevante para a análise do requisito controvertido", porque essa segunda redação diz o que aconteceu, aponta a prova e deixa a consequência ao alcance do julgador.
 
-**Parágrafo de três linhas, no máximo quatro.** Cada parágrafo desenvolve uma única ideia com começo, meio e fim, em frases completas e encadeadas por conectivos naturais. A regra de extensão não autoriza o parágrafo telegráfico, feito de frases soltas de cinco palavras que o leitor precisa costurar sozinho. Um parágrafo de três linhas bem construído tem duas ou três frases de tamanho médio, e é assim que se lê com facilidade.
+**Parágrafo de quatro a cinco linhas, no máximo seis (Onda 163).** Cada parágrafo desenvolve uma única ideia com começo, meio e fim, em três ou quatro frases completas ligadas por transições, como "ocorre que", "por essa razão", "de modo que", "ainda assim" e "nem se diga que". A regra de extensão não autoriza o parágrafo telegráfico, feito de frases soltas que o leitor precisa costurar sozinho, e a partir do segundo parágrafo de cada seção a abertura retoma o anterior.
 
 **Argumentação ligada aos fatos.** O parágrafo argumentativo típico expõe o que aconteceu, indica a prova que sustenta a afirmação, com o ID do documento no PJe, e explica como a norma se aplica àquele fato. Fato sem prova é alegação, e norma sem fato é doutrina. A peça convence quando os três aparecem juntos, no mesmo parágrafo, na ordem em que o julgador precisa deles.
 
@@ -73,7 +72,7 @@ A peça é escrita em linguagem formal e jurídica, mas simples, no estilo que o
 
 **Pedidos específicos.** Cada pedido nomeia a providência, o benefício ou período a que se refere e o fundamento que o sustenta, em coerência com os fatos narrados. Pedido genérico, do tipo "seja julgada procedente a ação", só aparece como fecho depois dos pedidos concretos.
 
-**Sobre os dois-pontos.** A vedação de dois-pontos lógicos continua, mas a solução não é picar o período em frases curtas. O complemento que viria depois dos dois-pontos passa a ser introduzido por conectivo, por oração subordinada ou por reordenação da frase, de modo que o período continue fluido. Travessão longo como separador de ideias segue vedado. Travessão curto é permitido em referências como "Monte Alto – SP" ou "INSTITUTO NACIONAL DO SEGURO SOCIAL – INSS".
+**Sobre os dois-pontos.** Admitidos antes de citação literal e de enumeração, vedados antes de miniconclusão. Quando o complemento cabe no período, entra por conectivo ou subordinação, e nunca por frases curtas em sequência. Travessão longo como separador de ideias segue vedado. Travessão curto é permitido em referências como "Monte Alto – SP" ou "INSTITUTO NACIONAL DO SEGURO SOCIAL – INSS".
 
 ---
 

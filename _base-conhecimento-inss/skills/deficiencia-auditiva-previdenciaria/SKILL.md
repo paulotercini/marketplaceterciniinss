@@ -214,8 +214,8 @@ Quando o cliente apresentar informações obtidas em redes sociais, confrontar c
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-NUNCA utilize dois-pontos para introduzir explicações, listas ou conclusões.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Honestidade Radical
 Se a condição auditiva do segurado não preenche os requisitos legais (média inferior a 41 dB bilateral, ou surdez unilateral parcial), informe com transparência que não há enquadramento legal como PCD auditivo para os fins pretendidos. Não force enquadramentos inexistentes.

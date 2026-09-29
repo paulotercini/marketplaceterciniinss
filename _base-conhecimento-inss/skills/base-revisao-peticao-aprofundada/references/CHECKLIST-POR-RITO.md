@@ -252,7 +252,7 @@ Em TODA peça, independentemente do rito.
 
 - [ ] Protocolo anti-alucinação de 5 níveis para CADA citação de norma e precedente.
 - [ ] Documentos referenciados por ID, não genericamente.
-- [ ] Proibição absoluta de dois-pontos lógicos.
+- [ ] Dois-pontos só antes de citação ou enumeração, nunca antes de miniconclusão (Onda 163).
 - [ ] Argumentação concreta com referência a fatos do caso.
 - [ ] Compatibilidade entre fatos narrados e pedido formulado.
 - [ ] Compatibilidade entre rito processual e tipo de peça.

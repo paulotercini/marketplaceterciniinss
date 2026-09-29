@@ -88,7 +88,7 @@ Checklist exaustivo de verificação ANTES do protocolo de PUIL/PEDILEF e recurs
 - [ ] **K.1 Cabeçalho timbrado do escritório (Bell MT 24pt).**
 - [ ] **K.2 Fonte Bookman Old Style 12pt, espaçamento 1,5.**
 - [ ] **K.3 Recuo de 2 cm (judicial) ou 4 cm (CRPS não se aplica aqui, pois TNU é judicial).**
-- [ ] **K.4 Proibição absoluta de dois-pontos lógicos respeitada.**
+- [ ] **K.4 Dois-pontos só antes de citação ou enumeração, nunca antes de miniconclusão (Onda 163).**
 - [ ] **K.5 Títulos de seção em tabelas pretas com texto branco em negrito.**
 - [ ] **K.6 Estrutura mínima.** I - Pressupostos / II - Cabimento / III - Prequestionamento / IV - Cotejo / V - Não incidência Súm 42 / VI - Não incidência Súm 43 / VII - Dialeticidade / VIII - Mérito / IX - Pedidos.
 - [ ] **K.7 Linha do tempo Visual Law (intimação > ED > acórdão > PUIL).**

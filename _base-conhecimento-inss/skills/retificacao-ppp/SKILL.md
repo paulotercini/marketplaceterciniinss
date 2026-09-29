@@ -22,8 +22,8 @@ A solicitação de retificação é instrumento extrajudicial. Não é petição
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-NUNCA utilize dois-pontos para introduzir explicações, listas ou conclusões. Reestruture sempre em frases independentes ou conectadas por conjunções.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Título do Documento
 O título é sempre **SOLICITAÇÃO DE RETIFICAÇÃO DE PPP**, centralizado, negrito, Bookman Old Style 14pt (28 half-points). Nunca utilizar "Notificação Extrajudicial" como título.

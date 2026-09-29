@@ -131,7 +131,7 @@ A fundamentação é seletiva. Cita-se o dispositivo que decide e explica-se em 
 
 A fórmula do parágrafo argumentativo, fixada pelo titular em 11/09/2026, é afirmar o fato, localizar a prova, explicar sua relevância e formular a consequência pretendida, com firmeza proporcional ao que os autos demonstram. A medida é a brevidade máxima, e, quando não for possível ser breve, prevalece o desenvolvimento da ideia até demonstrar o que se quer sustentar. Corta-se toda repetição, nunca a demonstração. A peça abre pela controvérsia, de modo que o leitor identifique o benefício, o motivo do indeferimento e o ponto que precisa decidir, e não por parágrafos sobre a importância constitucional da Previdência. A amostra de voz por espécie, com os pares genérico e preciso, está em `peticao-previdenciaria/references/REDACAO-POR-ESPECIE.md`, e toda peça e toda passada da `humanizador-tedson` a tomam como referência.
 
-Permanecem as constraints de sempre. Sem dois-pontos introduzindo explicação, lista ou conclusão, mas a solução para o dois-pontos é o conectivo ou a subordinação, nunca picar o período. Sem cara de IA, e a `humanizador-tedson` passa em todo texto em português.
+Permanecem as constraints de sempre. Dois-pontos só antes de citação literal ou enumeração (Onda 163), e fora disso a solução é o conectivo ou a subordinação, nunca picar o período. Sem cara de IA, e a `humanizador-tedson` passa em todo texto em português.
 
 ## MCPs da casa
 

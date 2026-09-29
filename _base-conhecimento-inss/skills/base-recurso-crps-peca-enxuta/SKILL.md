@@ -92,7 +92,7 @@ Modelo. "Pelo exposto, requer o conhecimento e provimento do recurso para reform
 
 REGRAS de redação a serem seguidas em TODA peça CRPS.
 
-1. **Proibição absoluta de dois-pontos lógicos.** Para introduzir explicações, listas ou conclusões, usar parágrafos independentes ou conjunções.
+1. **Dois-pontos.** Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 2. **Vedada transcrição extensa de ementas judiciais.** No CRPS, basta o normativo. Se o julgado vinculante for citado (excepção do art. 109 RICRPS), uma frase de remissão é suficiente.
 
@@ -130,7 +130,7 @@ Conforme `base-peticao-previdenciaria-padrao-visual`.
 - Recuo de 5 cm (padrão CRPS, diferente de 2 cm judicial).
 - Títulos de seção em tabelas pretas com texto branco em negrito.
 - Documentos referenciados por ID ou protocolo administrativo.
-- Vedados dois-pontos lógicos.
+- Dois-pontos só antes de citação ou enumeração, nunca antes de miniconclusão (Onda 163).
 - Rodapé do escritório.
 
 ## TIPOS DE RECURSO CRPS COBERTOS

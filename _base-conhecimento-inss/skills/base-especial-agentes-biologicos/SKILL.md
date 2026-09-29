@@ -48,7 +48,7 @@ Detalhamento completo em `base-tema383-tnu-fundacentro-epi-biologicos`.
 
 ## Regras rígidas de redação
 
-Primeiro, ausência absoluta de dois-pontos como separador lógico.
+Primeiro, dois-pontos só antes de citação literal ou de enumeração, nunca antes de miniconclusão (Onda 163).
 
 Segundo, nunca admitir que o segurado tem ônus de produzir prova quantitativa de exposição biológica.
 

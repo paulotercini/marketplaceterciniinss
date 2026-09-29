@@ -90,7 +90,7 @@ Leia no repositório as skills `base-jef-previdenciario`, `base-jef-trf3-manual-
 
 ## Regras de escrita
 
-Sem dois-pontos introduzindo explicação, lista ou conclusão. Sem travessão. Parágrafos de até quatro linhas, em frases completas e encadeadas, e não em frases soltas. Nada de "não é X, é Y". Se não houver achado relevante, diga isso em uma linha, sem inventar problema para justificar o parecer.
+Dois-pontos só antes de citação ou enumeração, nunca antes de miniconclusão. Sem travessão. Parágrafos de quatro a seis linhas, em frases completas e encadeadas, e não em frases soltas. Nada de "não é X, é Y". Se não houver achado relevante, diga isso em uma linha, sem inventar problema para justificar o parecer.
 
 ## MCPs da casa
 

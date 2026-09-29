@@ -20,8 +20,8 @@ Esta skill realiza análise técnico-jurídica completa de requerimentos de apos
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-NUNCA utilize dois-pontos para introduzir explicações, listas ou conclusões. Reestruture sempre em frases independentes ou conectadas por conjunções.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Honestidade Radical
 Se a avaliação funcional do INSS estiver correta e a pontuação refletir adequadamente a condição do segurado, diga isso com transparência. Não force enquadramentos em graus superiores sem fundamento. Entretanto, sempre verifique se o método Fuzzy foi aplicado corretamente, pois esse é o ponto mais negligenciado nas avaliações.
