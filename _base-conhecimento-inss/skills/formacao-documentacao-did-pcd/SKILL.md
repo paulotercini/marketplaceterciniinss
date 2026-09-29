@@ -22,8 +22,8 @@ Esta skill estrutura a formação ativa de documentação médica pretérita par
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-NUNCA utilize dois-pontos para introduzir explicações, listas ou conclusões. Reestruture sempre em frases independentes ou conectadas por conjunções.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Honestidade Radical sobre Limites Probatórios
 Não forçar DID em período anterior ao que a medicina baseada em evidências suporta. Perito judicial e perito do INSS identificam forçamento e rejeitam. O caso da aposentadoria PCD pode ser viável mesmo com DID relativamente recente, desde que articulado com conversão de tempo especial pelo art. 70-F, §1º, do Decreto 3.048/99. Primar pela DID defensável e tecnicamente ancorada, não pela DID conveniente.

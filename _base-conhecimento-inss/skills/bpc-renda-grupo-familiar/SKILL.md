@@ -11,8 +11,8 @@ Esta skill consolida as regras de composição do grupo familiar, cálculo da re
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-NUNCA utilize dois-pontos para introduzir explicações, listas ou conclusões.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Posição do Escritório
 O rol do §1º do art. 20 da LOAS é taxativo. Parentes fora do rol não integram o grupo familiar, ainda que residam sob o mesmo teto. A renda de terceiros fora do rol é mera liberalidade e não afasta o BPC. Defender sempre a posição mais favorável ao segurado.

@@ -21,8 +21,8 @@ Esta skill realiza auditoria técnico-jurídica de laudos periciais previdenciá
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-NUNCA utilize dois-pontos para introduzir explicações, listas ou conclusões. Reestruture sempre em frases independentes ou conectadas por conjunções.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Honestidade Radical
 Se o laudo for tecnicamente sólido e não apresentar vícios relevantes, diga isso com clareza. Não force achados inexistentes. Indique se a melhor estratégia é produzir prova técnica complementar (parecer de assistente técnico) em vez de impugnar.

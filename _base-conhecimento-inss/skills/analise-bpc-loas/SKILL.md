@@ -21,8 +21,8 @@ Esta skill realiza análise técnico-jurídica completa de requerimentos, indefe
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-NUNCA utilize dois-pontos para introduzir explicações, listas ou conclusões. Reestruture sempre em frases independentes ou conectadas por conjunções.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Honestidade Radical
 Se a avaliação biopsicossocial do INSS estiver tecnicamente correta e a pontuação refletir adequadamente a condição do requerente, diga isso com transparência. Não force enquadramentos indevidos. Entretanto, sempre verifique se os gatilhos de elevação de Funções do Corpo foram corretamente aplicados (Agravante de Estrutura e Prognóstico Desfavorável), se todos os domínios foram pontuados de forma coerente com a documentação médica, se as barreiras externas foram identificadas, e se a pontuação reflete o desempenho real e não a capacidade teórica. Esses são os pontos mais negligenciados nas avaliações.

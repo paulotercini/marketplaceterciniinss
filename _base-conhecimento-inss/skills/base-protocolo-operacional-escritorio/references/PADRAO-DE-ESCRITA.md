@@ -104,7 +104,7 @@ A causa estava nas próprias regras do plugin. A seção de estilo das skills de
 
 A peça é escrita em estilo formal, técnico e argumentativo, e o titular dispensa padrão jurídico único e obrigatório. O que ele exige é clareza, com frases diretas e parágrafos bem organizados, argumentação ligada aos fatos, persuasão sóbria, fundamentação seletiva e pedidos específicos.
 
-**Clareza.** Frases completas, de 12 a 25 palavras, encadeadas por conectivo ou subordinação, sem rebuscamento e sem telegrama (medida fixada na Onda 157). O parágrafo tem três linhas, no máximo quatro, e desenvolve uma única ideia do começo ao fim.
+**Clareza.** Frases completas, de 12 a 25 palavras, encadeadas por conectivo ou subordinação, sem rebuscamento e sem telegrama (medida fixada na Onda 157). O parágrafo tem de quatro a cinco linhas, no máximo seis, desde a Onda 163, e desenvolve uma única ideia do começo ao fim em frases ligadas por transições.
 
 **Argumentação ligada aos fatos.** O parágrafo típico diz o que aconteceu, aponta a prova que sustenta a afirmação, com o ID do documento, e explica como a norma se aplica ao caso. Os três elementos aparecem juntos, na ordem em que o julgador precisa deles.
 
@@ -120,7 +120,7 @@ Sequência de três ou mais frases com menos de doze palavras e sem conectivo en
 
 ### Aferição na revisão
 
-A Camada 6 da `base-revisao-peticao-aprofundada` passa a medir, além da extensão, o tamanho dos parágrafos e a fluidez das frases. Parágrafo com mais de quatro linhas é achado IMPORTANTE. Sequência de frases soltas é achado IMPORTANTE. Dispositivo citado sem explicação de aplicação é achado MENOR, e cinco ou mais na mesma seção elevam a IMPORTANTE.
+A Camada 6 da `base-revisao-peticao-aprofundada` passa a medir, além da extensão, o tamanho dos parágrafos e a fluidez das frases. Parágrafo com mais de seis linhas (65 palavras, Onda 163) é achado IMPORTANTE. Sequência de frases soltas é achado IMPORTANTE. Dispositivo citado sem explicação de aplicação é achado MENOR, e cinco ou mais na mesma seção elevam a IMPORTANTE.
 
 ### Nota de honestidade
 
@@ -142,9 +142,13 @@ O titular relatou que tentou skills, personalização e prompts para obter pará
 
 Três fases separadas na `peticao-previdenciaria`. Redigir em Markdown puro. Medir com `scripts/medir_peca.py`, que devolve PASSA ou FALHA com a lista exata dos parágrafos fora do padrão calibrado, das sequências de frases curtas, dos adjetivos de intensidade, das fórmulas vazias, dos documentos sem ID, dos dispositivos sem explicação e do orçamento de páginas. Converter com `scripts/md2docx.js`, que aplica todo o padrão visual de forma determinística. A skill caiu de 8.600 para 4.000 palavras, o espelho visual de 10.600 para 400, e a mecânica foi para `references/MECANICA-DOCX.md` e `references/VISUAL-LAW.md`.
 
-O teto do medidor é de 45 palavras por parágrafo, e não 40, porque a primeira linha é recuada e porque o exemplo canônico de abertura pela controvérsia fixado pelo titular tem 45 palavras. Ajustável em uma constante do script.
+O teto do medidor passou de 45 para 65 palavras na Onda 163, a pedido do titular, porque o teto antigo obrigava o modelo a comprimir fato, prova, norma e consequência em duas frases e produzia o texto picado. Ajustável em uma constante do script.
 
 A Camada 6 da revisão roda o mesmo medidor antes de qualquer outra camada.
+
+## Calibragem de 29/09/2026 (Onda 163)
+
+O titular relatou que as peças continuavam truncadas e de difícil compreensão, e aprovou a calibragem em que o parágrafo passa a ter de quatro a cinco linhas, com teto de seis, a frase de 15 a 35 palavras e as transições se tornam obrigatórias. Também aprovou a retirada de proibições sem utilidade no texto jurídico formal, como a vedação absoluta de dois-pontos e a lista que tratava termos técnicos como adjetivos. As medidas, a lista de transições, o que continua vedado e os parágrafos-modelo estão em `peticao-previdenciaria/references/ESTILO-MODELO.md`.
 
 ## Persuasão com base empírica (Onda 157, 26/09/2026)
 

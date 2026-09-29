@@ -30,7 +30,7 @@ O Tema 211 TNU firma que a habitualidade não exige permanência contínua. O Te
 
 ## Regras rígidas de redação
 
-Primeiro, ausência absoluta de dois-pontos como separador lógico.
+Primeiro, dois-pontos só antes de citação literal ou de enumeração, nunca antes de miniconclusão (Onda 163).
 
 Segundo, nunca admitir que a ausência de limite expresso nos Decretos 2.172/97 e 3.048/99 afasta o enquadramento. A remissão à NR-15 e às NHO da Fundacentro é pacífica.
 

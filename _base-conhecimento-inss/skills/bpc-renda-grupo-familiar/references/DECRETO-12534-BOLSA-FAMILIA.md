@@ -6,8 +6,8 @@ Esta skill cobre o enfrentamento jurídico do Decreto nº 12.534, de 25 de junho
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-NUNCA utilize dois-pontos para introduzir explicações, listas ou conclusões.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Posição Firme
 O Decreto 12.534/2025 é inconstitucional por excesso de poder regulamentar e por violação ao mínimo existencial, à dignidade humana e à vedação ao retrocesso social. Esta é a posição do escritório. Não relativizar.

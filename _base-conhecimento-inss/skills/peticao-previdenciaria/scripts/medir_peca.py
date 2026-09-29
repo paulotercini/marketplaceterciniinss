@@ -16,15 +16,17 @@ Saída: relatório no stdout, código 0 se PASSA e 1 se FALHA.
 import re, sys, argparse
 
 PAL_LINHA = 10                       # calibrado
-PARAG_MIN, PARAG_MAX = 20, 45        # 2 a 4 linhas. 45 porque a 1a linha é recuada e o exemplo canônico do titular tem 45
+PARAG_MIN, PARAG_MAX = 20, 65        # Onda 163, alvo 4 a 5 linhas (40 a 55), teto 6 linhas (65). Acervo do escritório, mediana 42 e p90 75
+FRASE_LONGA = 45                     # frase acima de 45 palavras pesa a leitura (Onda 163)
 FRASE_CURTA = 12                     # frase com menos de 12 palavras (Onda 157, alinhado ao PADRAO-DE-ESCRITA)
 SEQ_CURTAS = 3                       # 3 seguidas = truncamento
 PAGINAS = {'inicial':7,'inominado':4,'laudo':3,'crps':3,'embargos':2,'comum':2,'memorial':2,'ms':5}
 PAL_PAGINA = 300                     # ~30 linhas úteis x 10 palavras, descontando títulos
 
-ADJ_VEDADOS = r'\b(manifestamente|flagrante(?:mente)?|absurd[oa]|teratol[óo]gic[oa]|basilares?|inequ[íi]voc[oa](?:mente)?|induvidos[oa](?:mente)?|escancarad[oa]|gritante|inadmiss[íi]vel|descabid[oa]|esdr[úu]xul[oa]|desesperador[a]?|abandonad[oa] à pr[óo]pria sorte|cristalin[oa]|patente(?:mente)?|not[óo]ri[oa](?:mente)?|evidentemente|obviamente|claramente)\b'
-FORMULAS_VAZIAS = r'(?i)\b(é cediço|é de se ver|como se sabe|insta salientar|cumpre ressaltar|mister se faz|data venia|com o devido respeito|resta claro|resta evidente|não há que se falar|à luz dos mais comezinhos|os mais basilares|princípios de justiça)\b'
+ADJ_VEDADOS = r'\b(manifestamente|flagrante(?:mente)?|absurd[oa]|basilares?|induvidos[oa](?:mente)?|escancarad[oa]|gritante|esdr[úu]xul[oa]|desesperador[a]?|abandonad[oa] à pr[óo]pria sorte|cristalin[oa]|patente(?:mente)?|evidentemente|obviamente|claramente)\b'
+FORMULAS_VAZIAS = r'(?i)\b(é cediço|é de se ver|como se sabe|insta salientar|cumpre ressaltar|mister se faz|resta claro|resta evidente|à luz dos mais comezinhos|os mais basilares|princípios de justiça)\b'
 ART_RX = r'\b(art(?:igo)?s?\.?\s*\d+[º°]?(?:[-\.]?[A-Z])?)'
+CONECTIVO_RX = r'(?i)\b(além disso|soma-se a isso|também|porque|uma vez que|já que|visto que|por isso|por essa razão|por esse motivo|de modo que|assim|dessa forma|desse modo|portanto|logo|ocorre que|todavia|contudo|entretanto|no entanto|ainda assim|mesmo diante|nem se diga|tampouco|na sequência|a partir de então|em seguida|nesse contexto|nesse ponto|com efeito|isso porque|de fato|embora|pois|razão pela qual|diante disso)\b'
 EXPLICA_RX = r'(?i)(porque|pois|uma vez que|na medida em que|de modo que|razão pela qual|o que significa|isto é|ou seja|aplica-se|incide|toma como referência|exige|prevê|estabelece|assegura|garante|dispõe|determina)'
 
 def paragrafos(md):
@@ -67,7 +69,7 @@ def medir(md, tipo):
         if n>PARAG_MAX and qualificacao:
             continue   # qualificação civil é parágrafo único por padrão do escritório
         if n>PARAG_MAX:
-            achados.append(('IMPORTANTE', f'Parágrafo com {n} palavras (~{-(-n//PAL_LINHA)} linhas) em "{sec}". Teto 40. Dividir em dois ou cortar repetição.', p[:110]))
+            achados.append(('IMPORTANTE', f'Parágrafo com {n} palavras (~{-(-n//PAL_LINHA)} linhas) em "{sec}". Teto 65, cerca de seis linhas. Dividir em dois parágrafos ligados por transição, ou retirar o que não decide.', p[:110]))
         elif n<PARAG_MIN and not re.match(r'(?i)^(requer|pede|nestes termos|termos em que|pelo exposto|diante do exposto|ante o exposto)', p):
             achados.append(('MENOR', f'Parágrafo com {n} palavras em "{sec}". Abaixo de 2 linhas, provável frase-decreto ou ideia não desenvolvida.', p[:110]))
     # 2. truncamento, sequencia de frases curtas
@@ -77,6 +79,14 @@ def medir(md, tipo):
             seq = seq+1 if len(f.split())<FRASE_CURTA else 0
             if seq>=SEQ_CURTAS:
                 achados.append(('IMPORTANTE', f'Texto truncado em "{sec}", {SEQ_CURTAS} ou mais frases seguidas com menos de {FRASE_CURTA} palavras. Encadear por conectivo ou subordinação.', p[:110])); break
+    # 2b. frase longa e parágrafo sem conectivo (Onda 163)
+    for sec,p in ps:
+        fs=frases(p)
+        for f in fs:
+            if len(f.split())>FRASE_LONGA:
+                achados.append(('MENOR', f'Frase com {len(f.split())} palavras em "{sec}". Acima de {FRASE_LONGA}, dividir em duas ligadas por conectivo.', f[:110])); break
+        if len(fs)>=3 and not re.search(CONECTIVO_RX, ' '.join(fs[1:])):
+            achados.append(('MENOR', f'Parágrafo de {len(fs)} frases sem transição em "{sec}". Ligar as frases por conectivo (por isso, ocorre que, além disso, de modo que).', p[:110]))
     # 3. adjetivos e formulas
     for sec,p in ps:
         for m in re.finditer(ADJ_VEDADOS, p, re.I):
@@ -95,8 +105,9 @@ def medir(md, tipo):
         achados.append((sev, f'{len(arts)} dispositivo(s) citado(s) sem frase que explique a aplicação ao caso em "{sec}". {", ".join(dict.fromkeys(arts))}', ''))
     # 5. dois-pontos logicos fora de citacao
     for sec,p in ps:
-        if re.search(r'[a-zà-ú\)]:\s+[a-zà-úA-Z]', p) and not p.startswith('"'):
-            achados.append(('MENOR', f'Dois-pontos introduzindo complemento em "{sec}". Trocar por conectivo ou subordinação, sem picar o período.', p[:110]))
+        m=re.search(r'([^\s]+)\s*:\s+(\S+)', p)
+        if m and not p.startswith('"') and re.search(r'[a-zà-ú\)]:\s+[a-zà-úA-Z]', p) and not re.search(r'(?i)(seguinte|seguintes|termos|verbis|literal|abaixo|a saber|dispõe|estabelece|prevê|determina|assim redigid[oa]|in verbis):\s', p) and not re.search(r':\s+(["“]|[a-zI]\)|\d+[\.\)]|[IVX]+\s*[-–])', p):
+            achados.append(('MENOR', f'Dois-pontos antes de complemento que não é citação nem enumeração, em "{sec}". Trocar por conectivo ou subordinação, sem picar o período.', p[:110]))
     # 6. "conforme anexo" sem ID
     for sec,p in ps:
         if re.search(r'(?i)(conforme|documento[s]?)\s+(em\s+)?anexo', p) and not re.search(r'\bID\s*\d', p):

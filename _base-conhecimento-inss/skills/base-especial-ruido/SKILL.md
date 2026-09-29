@@ -74,7 +74,7 @@ Rigor de fonte (conferência de 30/07/2026). A EXISTÊNCIA e o TEOR da Nota est�
 
 ## Regras rígidas de redação
 
-Primeiro, ausência absoluta de dois-pontos como separador lógico.
+Primeiro, dois-pontos só antes de citação literal ou de enumeração, nunca antes de miniconclusão (Onda 163).
 
 Segundo, hierarquia normativa respeitada. A Constituição Federal vem antes. Depois as leis complementares, leis ordinárias, decretos, IN 128/2022, portarias, enunciados do CRPS, orientações internas.
 

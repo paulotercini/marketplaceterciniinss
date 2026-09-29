@@ -30,7 +30,7 @@ O Tema 298 TNU firmou que, para exposição a agentes cancerígenos constantes d
 
 ## Regras rígidas de redação
 
-Primeiro, ausência absoluta de dois-pontos como separador lógico.
+Primeiro, dois-pontos só antes de citação literal ou de enumeração, nunca antes de miniconclusão (Onda 163).
 
 Segundo, nunca admitir que o segurado tem o ônus de produzir medição quantitativa para agentes sujeitos a avaliação qualitativa.
 

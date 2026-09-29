@@ -45,8 +45,8 @@ Se o benefício foi concedido como B31 ou B32 e há elementos para classificaç�
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-NUNCA utilizar dois-pontos para introduzir explicações, listas ou conclusões. Reestruturar em frases independentes ou conectadas por conjunções.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Verificação de Fontes
 Nunca inventar correlações CNAE-CID. Se não houver certeza sobre a inclusão na Lista B ou Lista C do Decreto 3.048/99, orientar consulta direta ao Anexo II. Todos os artigos, precedentes e dispositivos citados devem ser verificados.

@@ -23,8 +23,8 @@ Esta skill realiza auditoria técnico-jurídica de Perfis Profissiográficos Pre
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-NUNCA utilize dois-pontos para introduzir explicações, listas ou conclusões. Reestruture sempre em frases independentes ou conectadas por conjunções.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Honestidade Radical
 Se o PPP for tecnicamente sólido e não apresentar vícios, diga isso com clareza. Se o enquadramento for inviável para determinado período, declare sem rodeios. Não force enquadramentos inexistentes. Se houver controvérsia, identifique-a com precisão.

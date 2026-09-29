@@ -47,8 +47,8 @@ O INSS apresenta contestações padronizadas, mas com ênfases diferentes confor
 
 ## Regras Críticas
 
-### Proibição Absoluta de Dois-Pontos
-Mesma regra de todas as skills do escritório. NUNCA utilizar dois-pontos para introduzir explicações, listas ou conclusões.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Verificação de Posicionamento Atualizado
 Os posicionamentos dos órgãos julgadores mudam. Esta skill registra os posicionamentos conhecidos até a data de sua criação. Antes de afirmar categoricamente que determinado órgão adota determinada posição, verificar se houve mudança recente via pesquisa em fontes primárias. Se não houver confirmação segura, escrever "posicionamento a ser confirmado em jurisprudência atualizada".

@@ -231,7 +231,7 @@ Itens auditados:
 - Títulos de seção em tabelas pretas com texto branco em negrito.
 - Recuo de 2 cm (rito judicial) ou 4 cm (CRPS).
 - Rodapé do escritório.
-- **Proibição absoluta de dois-pontos lógicos** (não usar para introduzir explicações, listas, fundamentos, conclusões).
+- **Dois-pontos** só antes de citação literal ou enumeração, nunca antes de miniconclusão (Onda 163).
 - Documentos referenciados por ID, não por "documento em anexo".
 - Estrutura mínima da peça compatível com o rito.
 
@@ -381,13 +381,13 @@ Essa regra é o freio direto do efeito aditivo dos Conferentes. O retorno deles 
 
 #### Medição mecânica, primeiro (Onda 140)
 
-Antes da amostragem, rodar `python3 peticao-previdenciaria/scripts/medir_peca.py peca.md --tipo <tipo>` sobre o Markdown da peça. O script aplica o padrão calibrado, parágrafo de 20 a 45 palavras, sem sequência de frases curtas, sem adjetivo de intensidade nem fórmula vazia, dispositivo citado com explicação, documento com ID e orçamento de páginas. Cada linha da saída é um achado desta camada, com a severidade que o script atribui. Peça que FALHA no script volta para a redação antes de qualquer outra camada, porque revisar prosa fora da medida é revisar o que vai ser reescrito. A amostragem abaixo cobre o que o script não mede.
+Antes da amostragem, rodar `python3 peticao-previdenciaria/scripts/medir_peca.py peca.md --tipo <tipo>` sobre o Markdown da peça. O script aplica o padrão calibrado, parágrafo de 20 a 65 palavras, frase de até 45 palavras, transição entre as frases, sem sequência de frases curtas, sem adjetivo de intensidade nem fórmula vazia, dispositivo citado com explicação, documento com ID e orçamento de páginas. Cada linha da saída é um achado desta camada, com a severidade que o script atribui. Peça que FALHA no script volta para a redação antes de qualquer outra camada, porque revisar prosa fora da medida é revisar o que vai ser reescrito. A amostragem abaixo cobre o que o script não mede.
 
 #### Amostragem de legibilidade
 
 Extensão dentro do orçamento não garante leitura fácil. Sortear três parágrafos do miolo, um da fundamentação de fato, um da de direito e um do confronto, e conferir cada um contra quatro pontos.
 
-1. O parágrafo tem entre 2 e 4 linhas.
+1. O parágrafo tem de 4 a 6 linhas e suas frases se ligam por transições (Onda 163).
 2. A primeira linha não resume o que as seguintes explicam (proibição do parágrafo-modelo).
 3. A abertura não é frase-decreto, e varia entre fato, data, documento por ID, norma ou consequência do parágrafo anterior.
 4. Termo técnico indispensável aparece definido em meia frase na primeira ocorrência.
@@ -459,7 +459,7 @@ Estilo ou forma. Não afeta o resultado, mas compromete o padrão do escritório
 
 Exemplos.
 
-- Uso de dois-pontos fora de citação literal.
+- Dois-pontos antes de miniconclusão ou de explicação que caberia no período.
 - Desvio de formatação.
 - Referência genérica a "documentos em anexo".
 - Repetição argumentativa.

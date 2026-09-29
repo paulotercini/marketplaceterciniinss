@@ -57,8 +57,8 @@ Entre maio/2025 e maio/2026, a fiscalização da inclusão de riscos psicossocia
 
 ## Regras Críticas
 
-### Proibição de Dois-Pontos
-NUNCA utilize dois-pontos para introduzir explicações, listas ou conclusões. Reestruture em frases independentes ou conectadas por conjunções.
+### Dois-pontos
+Dois-pontos só antes de citação literal ou de enumeração de pedidos ou requisitos, e nunca antes de miniconclusão. O complemento lógico entra no mesmo período por conectivo ou subordinação, sem picar o texto em frases soltas (Onda 163).
 
 ### Honestidade Radical
 Se a documentação médica do segurado não demonstra nexo temporal entre o trabalho e o transtorno mental, declare sem rodeios. Se o CID não consta na Lista B para o CNAE do empregador, informe que o NTEP não se aplica automaticamente, mas que o nexo pode ser demonstrado por outros meios.
