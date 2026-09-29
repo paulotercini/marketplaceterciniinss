@@ -297,7 +297,7 @@ Critérios principais (ver detalhamento exaustivo no catálogo):
 5. Argumentação genérica (Regra Tipografia Jurídica).
 6. Excesso de jurisprudência (Regra do limite de uma página).
 7. Urgência sinalizada por formatação (Regra mostre-não-diga).
-8. Títulos burocráticos genéricos.
+8. Título argumentativo, narrativo ou informal (Onda 162, IMPORTANTE).
 9. Réplica como contestação da contestação.
 10. Memorial com mais de duas páginas.
 11. Excesso de destaques por página (Regra Von Restorff).
@@ -464,7 +464,7 @@ Exemplos.
 - Referência genérica a "documentos em anexo".
 - Repetição argumentativa.
 - Excesso de destaques por página (Von Restorff).
-- Títulos burocráticos genéricos.
+- Título argumentativo, narrativo ou informal, fora do padrão formal e nominal (Onda 162).
 - Excesso de jurisprudência transcrita por extenso.
 
 ## FORMATO DO RELATÓRIO
@@ -561,7 +561,7 @@ Ver detalhamento completo em `references/CHECKLIST-POR-RITO.md`. Resumo abaixo.
 
 **PUIL/PEDILEF (TNU).** Verificação obrigatória das 4 hipóteses de cabimento (art. 12 §1º RITNU), paradigma válido (não TRF/STF/TST/TSE - QO 48), cotejo analítico em duas etapas, prequestionamento (QO 10/35/36 + Súmulas 282/356 STF + art. 1.025 CPC), não incidência das Súmulas 42/TNU (reexame fato) e 43/TNU (matéria processual), dialeticidade. Acionar OBRIGATORIAMENTE `base-tnu-admissibilidade-manual` e `pedilef-cotejo-analitico-tnu`.
 
-**Títulos nas cortes superiores (Onda 157).** Em recurso especial, extraordinário, agravo em recurso especial, agravo interno, embargos perante STJ ou STF e pedido de uniformização à TNU, o título é formal e nominal, numerado, iniciado por DA, DO ou DOS, e nomeia o vício processual ou o requisito de admissibilidade, sem fato antecipado, porque o relator dessas cortes lê o título como delimitação do capítulo impugnado, e o título persuasivo soa como rediscussão de prova. Cabe em uma linha da tabela preta. Título persuasivo nessas peças é achado MENOR, com a reformulação nominal indicada no relatório.
+**Títulos em todas as peças (Onda 162, determinação do titular).** O título de seção é formal, jurídico, numerado e nominal, iniciado por DA, DO, DOS ou DAS, nomeia o instituto, o requisito, o vício ou o pedido, tem até doze palavras e não traz fato, data, número, ID, adjetivo nem juízo de valor. A regra vale para petição inicial, recurso, réplica, mandado de segurança, recurso ao CRPS e peças às cortes superiores, e substitui a regra de títulos persuasivos e a exceção restrita às cortes superiores da Onda 157. Título fora do padrão é achado IMPORTANTE, e o `medir_peca.py` o aponta de forma mecânica.
 
 **Réplica.** Estrutura de delimitação de pontos controvertidos/incontroversos (seção 1) + réplica compartimentalizada (seção 2) + reconsideração de tutela quando aplicável (seção 3) + pedidos de prova direcionados (seção 4). Tabela de fatos com colunas "Fato alegado", "Impugnação pelo INSS", "Situação processual".
 

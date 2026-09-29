@@ -146,7 +146,7 @@ Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem 
 
 **Quando usar.** Obrigatória em petições iniciais com dois ou mais pedidos autônomos (ex. reconhecimento de tempo especial + conversão + concessão, ou concessão de benefício + indenização por dano moral). Recomendada em réplicas e memoriais com múltiplos pontos. Opcional em peças com pedido único simples.
 
-**Posição na petição.** Imediatamente antes dos pedidos, como última seção argumentativa da peça. Pode receber título preto "SÍNTESE DOS PEDIDOS E FUNDAMENTOS" ou ser inserida sem subtítulo.
+**Posição na petição.** Imediatamente antes dos pedidos, como última seção argumentativa da peça. Pode receber título preto "DA SÍNTESE DOS PEDIDOS E FUNDAMENTOS" ou ser inserida sem subtítulo.
 
 **Estrutura.** Tabela de duas colunas.
 

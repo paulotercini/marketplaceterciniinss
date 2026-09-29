@@ -37,13 +37,13 @@ Não se escreve um parágrafo de oitenta palavras para cortar depois, porque o c
 
 A voz é a que o titular fixou em `references/REDACAO-POR-ESPECIE.md`, com os pares de redação genérica e precisa por espécie. Antes de redigir, ler o bloco da espécie. A fórmula do parágrafo argumentativo é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, e a peça abre pela controvérsia, de modo que o leitor saiba em três linhas qual é o benefício, por que foi negado e o que precisa decidir.
 
-A persuasão segue as nove técnicas da seção "Persuasão com base empírica" de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md` (Ondas 157 e 160), lidas antes da redação. Na prática, o fato vem com número, data e ID, a narrativa segue a ordem de causa e consequência, o primeiro número lido é o do segurado, o argumento mais forte abre a seção, e o que o INSS já reconheceu serve de premissa. A defesa previsível do INSS é nomeada e refutada em parágrafo próprio, o que obriga o julgador a enfrentá-la (art. 489, § 1º, IV, do CPC), e a pretensão é descrita como aplicação ordinária de norma e precedente, nunca como pedido de exceção. Nenhuma técnica de PNL entra na peça. Em recurso dirigido ao STJ, ao STF ou à TNU, os títulos são nominais, conforme a exceção registrada em `references/MECANICA-DOCX.md`.
+A persuasão segue as nove técnicas da seção "Persuasão com base empírica" de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md` (Ondas 157 e 160), lidas antes da redação. Na prática, o fato vem com número, data e ID, a narrativa segue a ordem de causa e consequência, o primeiro número lido é o do segurado, o argumento mais forte abre a seção, e o que o INSS já reconheceu serve de premissa. A defesa previsível do INSS é nomeada e refutada em parágrafo próprio, o que obriga o julgador a enfrentá-la (art. 489, § 1º, IV, do CPC), e a pretensão é descrita como aplicação ordinária de norma e precedente, nunca como pedido de exceção. Nenhuma técnica de PNL entra na peça. Em todas as peças, os títulos são formais e nominais, conforme a regra de títulos de `references/MECANICA-DOCX.md`, e a persuasão fica na primeira frase da seção, nunca no título.
 
 ## Gramática do Markdown da peça
 
 `@endereco: texto` produz o endereçamento em negrito e caixa alta. `@processo: texto` produz a linha do processo. O parágrafo de qualificação é texto comum, com o nome do autor, o nome da ação e o INSS em `**negrito**`, tudo inline, sem parágrafo isolado. `## 1. TÍTULO` produz a tabela preta, e `### 1.1. SUBTÍTULO` também. `> texto` produz citação recuada em itálico, reservada a transcrição literal de lei ou ementa. `| a | b |` produz tabela, e a primeira coluna sai em negrito, o que serve ao quadro-resumo. `@fecho` produz "Nestes termos, pede deferimento.", a linha "Monte Alto – SP, [data por extenso]." e a assinatura. Todo o resto é parágrafo justificado com recuo.
 
-Endereçamentos por tipo de peça, qualificação, títulos persuasivos e peças de duas partes estão em `references/MECANICA-DOCX.md`, e o modelo consulta essa referência para o TEXTO desses elementos, nunca para a formatação. Os componentes Visual Law, no máximo três por peça com o quadro-resumo sempre entre eles, estão em `references/VISUAL-LAW.md`.
+Endereçamentos por tipo de peça, qualificação, a regra de títulos formais e nominais (Onda 162) e peças de duas partes estão em `references/MECANICA-DOCX.md`, e o modelo consulta essa referência para o TEXTO desses elementos, nunca para a formatação. Os componentes Visual Law, no máximo três por peça com o quadro-resumo sempre entre eles, estão em `references/VISUAL-LAW.md`.
 
 ## Regras Críticas de Estilo do Escritório
 
@@ -107,7 +107,7 @@ Citações longas (ementas, trechos de lei) devem ser formatadas em **itálico**
 
 ## Seção Obrigatória — Efeitos Financeiros (Petições Iniciais de Concessão e Revisão)
 
-Toda petição inicial de concessão ou revisão de benefício previdenciário DEVE conter uma seção própria intitulada "DOS EFEITOS FINANCEIROS" (ou variação adequada ao caso, como "DOS EFEITOS FINANCEIROS — DA PROVA PRODUZIDA NA DER [data]"), renderizada com o título preto padrão.
+Toda petição inicial de concessão ou revisão de benefício previdenciário DEVE conter uma seção própria intitulada "DOS EFEITOS FINANCEIROS", sem acréscimo de data ou de fato no título (regra de títulos da Onda 162), renderizada com o título preto padrão.
 
 Esta seção é obrigatória porque o Tema 1124/STJ condiciona o termo inicial dos efeitos financeiros ao momento em que a prova foi produzida. Sem fundamentação expressa, o juiz pode deslocar a DIB da DER para a citação, causando perda substancial de atrasados.
 
@@ -162,7 +162,7 @@ Quando a petição envolver indeferimento ou não cômputo de período por pend�
 
 **Passo 2.** Identificar os argumentos de impugnação específicos do indicador. Os indicadores mais contestáveis são PDIV-DADOS-GFIP (algoritmo Levenshtein), PEXT (extemporaneidade), PDT-NASC-FIL-INV (trabalho infantil), PVIN-MAND-ELETIVO-TOTAL, PVIN-TRAB-INTERM, indicadores de reclamatória trabalhista e indicadores de empresa encerrada (PADM-EMPR, PRES-EMPR, PREM-EMPR).
 
-**Passo 3.** Na seção "DO DIREITO", incluir subseção específica denominada "DA IRREGULARIDADE DO INDICADOR [SIGLA]" ou "DO BLOQUEIO INDEVIDO NO CNIS", com os seguintes elementos.
+**Passo 3.** Na seção "DO DIREITO", incluir subseção específica denominada "DO INDICADOR [SIGLA] NO CNIS" ou "DO ACERTO DO VÍNCULO NO CNIS", com os seguintes elementos.
 
 1. Identificação precisa do indicador (sigla e descrição oficial da Portaria DIRBEN/INSS 990/2022, alterada pela 1.316/2025)
 2. Demonstração de que o indicador opera como presunção relativa (juris tantum), ilidível por prova

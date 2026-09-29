@@ -194,7 +194,7 @@ Ver o catálogo completo de 22 anti-patterns no arquivo `CATALOGO-ANTI-PATTERNS.
 - [ ] 5. Argumentação genérica (superlativos sem fato).
 - [ ] 6. Excesso de jurisprudência transcrita.
 - [ ] 7. Urgência sinalizada por formatação.
-- [ ] 8. Títulos burocráticos genéricos.
+- [ ] 8. Título argumentativo, narrativo ou informal (todas as peças, Onda 162).
 - [ ] 9. Réplica respondendo ponto a ponto.
 - [ ] 10. Memorial com mais de duas páginas.
 - [ ] 11. Excesso de destaques (Von Restorff).

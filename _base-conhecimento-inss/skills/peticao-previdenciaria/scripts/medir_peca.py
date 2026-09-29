@@ -40,6 +40,20 @@ def paragrafos(md):
         out.append((sec, ' '.join(b.split())))
     return out
 
+TITULO_MAX = 12                      # palavras no título de seção (Onda 162)
+TITULO_DADO_RX = r'(?<![/\d.])\b(19|20)\d{2}\b|\b\d{1,2}/\d{1,2}(/\d{2,4})?\b|\bID\s*\d|\d\s*dB|\d\s*%|R\$'
+TITULO_VALOR_RX = r'(?i)\b(comprovad[oa]s?|demonstrad[oa]s?|indevid[oa]s?|ilega(l|is)|abusiv[oa]s?|equivocad[oa]s?|err[ôo]ne[oa]s?|desde|arbitr[áa]ri[oa]s?|flagrante|manifest[oa]|inequ[íi]voc[oa]|evidente|absurd[oa]|injust[oa]|mantid[oa]|total e permanente)\b'
+
+def titulos(md):
+    """Títulos de seção em Markdown, sem os # e sem a numeração."""
+    out=[]
+    for linha in md.splitlines():
+        if linha.startswith('#'):
+            t=re.sub(r'^#+\s*','',linha).strip()
+            t=re.sub(r'^([IVXLC]+|\d+(\.\d+)*)[\.\s\-–]+','',t).strip()
+            if t: out.append(t)
+    return out
+
 def frases(p):
     return [f.strip() for f in re.split(r'(?<=[\.\!\?;])\s+', p) if f.strip()]
 
@@ -87,6 +101,16 @@ def medir(md, tipo):
     for sec,p in ps:
         if re.search(r'(?i)(conforme|documento[s]?)\s+(em\s+)?anexo', p) and not re.search(r'\bID\s*\d', p):
             achados.append(('IMPORTANTE', f'Referência a documento sem ID em "{sec}". No PJe, todo documento entra por ID.', p[:110]))
+    # 8. titulos formais e nominais (Onda 162)
+    for t in titulos(md):
+        erros=[]
+        if not re.match(r'(?i)^D(A|O|AS|OS)\s', t): erros.append('não começa por DA, DO, DOS ou DAS')
+        if len(t.split())>TITULO_MAX: erros.append(f'{len(t.split())} palavras, teto {TITULO_MAX}')
+        if re.search(TITULO_DADO_RX, t): erros.append('traz ano, data, número, valor ou ID')
+        v=re.search(TITULO_VALOR_RX, t)
+        if v: erros.append(f'termo valorativo "{v.group(0)}"')
+        if erros:
+            achados.append(('IMPORTANTE', f'Título fora do padrão formal e nominal, {"; ".join(erros)}. Nomear o instituto, o requisito, o vício ou o pedido, e levar o dado para a primeira frase da seção.', t))
     # 7. orcamento
     teto=PAGINAS.get(tipo); pag=total/PAL_PAGINA
     if teto:
