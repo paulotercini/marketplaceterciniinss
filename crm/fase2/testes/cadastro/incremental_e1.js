@@ -112,8 +112,9 @@ function filtrar(linhas, q) {
   await p.evaluate(() => fecharCaixa());
   await p.evaluate(() => vigiarMudancas());
   const qs = casosPedidos();
-  const esperado = new Date(Date.parse(T0) - 15 * 60000).toISOString();
-  conf(`a vigia pede os casos com mudou_em desde o carimbo menos 15 min (${qs.length} pedido)`,
+  const folga = await p.evaluate(() => FOLGA_INCREMENTAL);
+  const esperado = new Date(Date.parse(T0) - folga).toISOString();
+  conf(`a vigia pede os casos com mudou_em desde o carimbo menos a folga de ${folga / 60000} min (${qs.length} pedido)`,
     qs.length === 1 && decodeURIComponent(qs[0]).includes("mudou_em=gte." + esperado));
   conf("nenhuma das seis tabelas grandes veio inteira na vigia",
     pedidos.filter(x => ["clientes", "casos", "tarefas", "eventos", "pagamentos", "lembretes"].includes(x[0]))
