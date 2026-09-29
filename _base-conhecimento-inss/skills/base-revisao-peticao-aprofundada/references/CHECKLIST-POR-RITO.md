@@ -135,7 +135,7 @@ Skills relevantes. `base-tnu-admissibilidade-manual` (OBRIGATÓRIA), `pedilef-co
 - [ ] Tese revestida como direito material previdenciário.
 - [ ] Dialeticidade contra todos os fundamentos do acórdão recorrido.
 - [ ] Antecipação da defesa contra cada filtro do art. 14 RITNU.
-- [ ] Títulos formais e nominais, numerados, iniciados por DA, DO ou DOS, sem fato antecipado (Onda 157). Título persuasivo é achado MENOR.
+- [ ] Títulos formais e nominais, numerados, iniciados por DA, DO, DOS ou DAS, sem fato antecipado (regra geral de todas as peças, Onda 162). Título fora do padrão é achado IMPORTANTE.
 
 **Estrutura mínima da peça.**
 
@@ -180,7 +180,7 @@ Skills relevantes. `base-tnu-admissibilidade-manual` (item 22), `precedentes-pre
 - [ ] Prequestionamento (Súmula 282 + Súmula 356 STF + art. 1.025 CPC).
 - [ ] Repercussão geral em tópico destacado.
 - [ ] Princípio da unirrecorribilidade respeitado.
-- [ ] Títulos formais e nominais, numerados, iniciados por DA, DO ou DOS, sem fato antecipado (Onda 157). Vale também para REsp, AREsp, agravo interno e embargos no STJ ou STF. Título persuasivo é achado MENOR.
+- [ ] Títulos formais e nominais, numerados, iniciados por DA, DO, DOS ou DAS, sem fato antecipado (regra geral de todas as peças, Onda 162). Título fora do padrão é achado IMPORTANTE.
 
 ## RITO 7 - Réplica
 

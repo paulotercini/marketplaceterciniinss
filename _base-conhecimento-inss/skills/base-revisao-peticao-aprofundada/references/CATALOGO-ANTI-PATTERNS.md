@@ -102,21 +102,19 @@ Seção "DOS REQUISITOS DA TUTELA DE URGÊNCIA" com demonstração concreta. "O 
 
 **Correção.** Demonstrar urgência factualmente.
 
-## 8. Títulos Burocráticos Genéricos
+## 8. Título Argumentativo, Narrativo ou Informal
 
-**Definição.** Títulos das seções genéricos como "DO DIREITO", "DA INCAPACIDADE", "DOS FATOS" sem antecipação persuasiva do argumento.
+**Definição (reescrita na Onda 162, 29/09/2026, por determinação do titular).** Título de seção que antecipa conclusão, narra fato, traz data, número, valor, ID ou nome de documento do caso, usa adjetivo ou juízo de valor, ou não começa por DA, DO, DOS ou DAS. Vale para TODAS as peças. A versão anterior deste item mandava o contrário e está revogada.
 
-**Severidade.** MENOR.
+**Severidade.** IMPORTANTE.
 
 **Exemplo CONTRA.**
-"3. DA INCAPACIDADE"
-
-**Exemplo PRÓ.**
 "3. DA INCAPACIDADE TOTAL E PERMANENTE COMPROVADA DESDE MARÇO DE 2024 PELO LAUDO ID 13476890"
 
-**Correção.** Reformular título para antecipar conclusão.
+**Exemplo PRÓ.**
+"3. DA INCAPACIDADE LABORATIVA"
 
-**Exceção (Onda 157).** Em recurso especial, extraordinário, agravo em recurso especial, agravo interno, embargos perante STJ ou STF e PUIL, a regra se inverte. O título é formal e nominal, iniciado por DA, DO ou DOS, e nomeia o vício ou o requisito de admissibilidade, porque o título persuasivo soa como rediscussão de prova. Nessas peças, o achado MENOR é o título persuasivo, e não o nominal.
+**Correção.** Reduzir o título ao nome do instituto, do requisito, do vício ou do pedido, em até doze palavras, e levar o dado decisivo para a primeira frase da seção. O `medir_peca.py` aponta o defeito de forma mecânica.
 
 ## 9. Réplica como Contestação da Contestação
 
@@ -295,7 +293,7 @@ Negrito apenas em fatos-chave, elementos de prova e argumentos centrais.
 | 5 | Argumentação genérica | IMPORTANTE |
 | 6 | Excesso de jurisprudência | MENOR/IMPORTANTE |
 | 7 | Urgência por formatação | IMPORTANTE |
-| 8 | Títulos burocráticos | MENOR |
+| 8 | Título argumentativo, narrativo ou informal | IMPORTANTE |
 | 9 | Réplica como contestação da contestação | IMPORTANTE |
 | 10 | Memorial >2 páginas | CRÍTICO |
 | 11 | Excesso de destaques (Von Restorff) | MENOR |

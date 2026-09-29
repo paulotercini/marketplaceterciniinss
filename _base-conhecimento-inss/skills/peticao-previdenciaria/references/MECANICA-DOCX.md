@@ -135,15 +135,16 @@ Elementos do parágrafo de qualificação na ordem.
 - `4. DA REAFIRMAÇÃO DA DER`
 - `5. DOS PEDIDOS`
 
-**Regra de títulos persuasivos.** O título de seção funciona como antecipação do argumento, não como rótulo burocrático. O julgador que lê apenas os títulos pretos já forma juízo da tese. Sempre que houver elementos fáticos disponíveis, o título incorpora a conclusão antecipada.
+**Regra de títulos formais (Onda 162, 29/09/2026, determinação do titular para TODAS as peças).** O título de seção é formal, jurídico, numerado e nominal. Começa por DA, DO, DOS ou DAS e nomeia o instituto, o requisito, o vício ou o pedido, como os exemplos reais acima, em no máximo doze palavras e de preferência em uma linha da tabela preta. O título não traz fato, data, número, valor, ID, nome de documento do caso, adjetivo, advérbio nem juízo de valor, e não antecipa a conclusão.
 
-- Em vez de "2. DA INCAPACIDADE", usar "2. DA INCAPACIDADE TOTAL E PERMANENTE COMPROVADA DESDE MARÇO DE 2024"
-- Em vez de "2. DO TEMPO ESPECIAL", usar "2. DA EXPOSIÇÃO HABITUAL E PERMANENTE A RUÍDO DE 89 dB(A) NO PERÍODO DE 2005 A 2023"
-- Em vez de "2. DA QUALIDADE DE SEGURADO", usar "2. DA QUALIDADE DE SEGURADO MANTIDA PELO PERÍODO DE GRAÇA ATÉ A DATA DO ÓBITO"
+- Certo, "2. DA INCAPACIDADE LABORATIVA". Errado, "2. DA INCAPACIDADE TOTAL E PERMANENTE COMPROVADA DESDE MARÇO DE 2024".
+- Certo, "2. DA ATIVIDADE ESPECIAL POR EXPOSIÇÃO A RUÍDO". Errado, "2. DA EXPOSIÇÃO HABITUAL E PERMANENTE A RUÍDO DE 89 dB(A) NO PERÍODO DE 2005 A 2023".
+- Certo, "2. DA QUALIDADE DE SEGURADO". Errado, "2. DA QUALIDADE DE SEGURADO MANTIDA PELO PERÍODO DE GRAÇA ATÉ A DATA DO ÓBITO".
+- Certo, "3. DA OMISSÃO QUANTO AO TRABALHO HABITUALMENTE EXERCIDO", "2. DA IMPUGNAÇÃO ESPECÍFICA DA DECISÃO AGRAVADA", "4. DOS EFEITOS FINANCEIROS".
 
-O título genérico fica reservado para situações em que não houver elementos fáticos suficientes para antecipação (raro em peças bem instruídas).
+A persuasão que antes ia no título passa para a primeira frase da seção, que apresenta o dado decisivo com número, data e ID. O título delimita o capítulo, e o texto convence. A regra de títulos persuasivos das versões anteriores está revogada, inclusive a distinção que a Onda 157 fazia entre cortes superiores e demais peças.
 
-**Exceção das cortes superiores (Onda 157).** Em recurso especial, extraordinário, agravo em recurso especial, agravo interno, embargos perante STJ ou STF e pedido de uniformização à TNU, o título é formal e nominal, numerado, iniciado por DA, DO ou DOS, e nomeia o vício processual ou o requisito de admissibilidade, sem fato antecipado, porque o relator dessas cortes lê o título como delimitação do capítulo impugnado, e o título persuasivo soa como rediscussão de prova. Cabe em uma linha da tabela preta. Exemplos, "2. DA IMPUGNAÇÃO ESPECÍFICA DA DECISÃO AGRAVADA" e "3. DA OMISSÃO QUANTO AO TRABALHO HABITUALMENTE EXERCIDO".
+O `scripts/medir_peca.py` confere os títulos e aponta como achado IMPORTANTE o título que não começa por DA, DO, DOS ou DAS, que passa de doze palavras, que traz ano, data, número ou ID, ou que usa termo valorativo como "comprovada", "indevido", "ilegal", "equivocado" ou "desde".
 
 ### Fechamento e Assinatura
 
