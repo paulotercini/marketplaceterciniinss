@@ -189,7 +189,7 @@ Consultar skill `segurado-especial-rural` para tratamento completo das hipótese
 | Segurada mulher em contexto rural | `perspectiva-genero-previdenciario` |
 | Fundamentação jurisprudencial | `precedentes-previdenciarios` |
 | Orientar documentação | `documentos-comprobatorios-in128` |
-| Carta de documentos ao cliente | `cartas-documentos-previdencia` |
+| Carta de documentos ao cliente | `atendimento-respostas-padrao` (seção "Pedido de documentos ao cliente") |
 | Indenização de contribuições em atraso | `indenizacao-contribuicoes-atraso` |
 | Verificar Tema 1124/STJ | `tema-1124-instrucao-administrativa` |
 | Mandado de segurança | `ms-competencia-autoridade-coatora` |

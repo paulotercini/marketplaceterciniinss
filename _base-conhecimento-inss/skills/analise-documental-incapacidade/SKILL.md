@@ -404,7 +404,7 @@ A Teleperícia é via alternativa, não obrigatória. O segurado tem direito de 
 - **documentos-comprobatorios-in128** — Fonte primária para checklist de documentos, agora integrada com os requisitos mínimos dos arts. 2º das Portarias 13 e 15
 - **tema-1124-instrucao-administrativa** — Toda documentação deve ser apresentada na via administrativa para preservar efeitos financeiros retroativos à DER
 - **inss-canais-atendimento** — Requerimento pelo 135 fica pendente de exigência para anexar documentação (art. 1º, §3º, Portaria 13/2026). Orientar uso do Meu INSS para anexação imediata
-- **cartas-documentos-previdencia** — Atualizar as cartas de documentos para incluir os requisitos mínimos das novas portarias
+- **atendimento-respostas-padrao** — Incluir os requisitos mínimos das novas portarias no pedido de documentos ao cliente
 - **admissibilidade-relevacao-crps** — O recurso contra indeferimento por análise documental segue o regime geral de admissibilidade
 - **sustentacao-diligencias-crps** — Pedir sustentação oral no recurso ao CRPS para converter monocrática em colegiado
 - **portaria-462-restricao-recursal** — Se usar revisão administrativa ao invés de recurso ao CRPS, alerta sobre armadilha do art. 112, §7º

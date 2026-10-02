@@ -49,6 +49,34 @@ Gatilho VERMELHO por definição (indeferimento sempre escala). Núcleo da prime
 
 Conferir o checklist do benefício (`base-documentos-comprobatorios-in128` e a carta de documentos do cliente). Núcleo, lista curta e específica do que falta DAQUELE cliente, com a forma de envio.
 
+### Pedido de documentos ao cliente (Onda 164, 02/10/2026)
+
+O titular comparou duas listas de documentos para o mesmo caso de pensão por morte. A gerada pelo plugin falava com o juiz, chamava a cliente de "autora", citava artigo da IN 128/2022, número de benefício e de requerimento, tinha treze itens e expunha à cliente a suspeita sobre a data de um atestado e o histórico de tentativas de suicídio. A gerada pelo ChatGPT falava com a cliente pelo nome, explicava em uma frase o que precisava ser provado e trazia sete itens com o lugar onde obter cada documento. O titular aprovou a segunda forma, e ela é o padrão.
+
+O pedido de documentos ao cliente segue sete regras. Primeira, fala com a pessoa pelo nome, em "você" ou "a senhora", com saudação curta. Segunda, diz em uma ou duas frases o que precisa ser provado e por quê, sem artigo de lei, sem número de benefício e sem número de requerimento. Terceira, diz qual é a prioridade, quantos documentos e de que período. Quarta, traz no máximo sete itens numerados, cada um com o documento, onde se consegue e o período exigido. Quinta, só entra o que o cliente consegue obter, e o que o escritório obtém sozinho, como a cópia do processo administrativo, as comunicações do Meu INSS e o CNIS, fica na anotação interna da tarefa. Sexta, nenhuma estratégia, suspeita ou divergência é explicada ao cliente, e o documento é pedido sem o motivo interno. Sétima, nenhum dado sensível desnecessário aparece na mensagem, e o pedido de documentos médicos usa termos neutros, como relatórios e receitas médicas de determinado período.
+
+A linguagem é a do cliente. Escreve-se "morava com sua mãe" e "ajudava no seu sustento", e não "residência comum" e "dependência econômica". Os dois-pontos antes da lista são admitidos.
+
+**Modelo aprovado, com os dados do caso substituídos por marcadores.**
+
+> [Nome], bom dia! Tudo bem?
+>
+> Para pedir a pensão por morte, precisamos comprovar que você dependia financeiramente da sua mãe, e essa prova não foi feita quando você fez o pedido ao INSS.
+>
+> Fiz uma relação dos documentos que podem ajudar. Veja, por favor, quais deles você consegue obter. O mais importante é conseguirmos pelo menos dois documentos que mostrem que vocês moravam juntas e que sua mãe ajudava no seu sustento, de preferência entre [mês e ano] e [mês e ano].
+>
+> 1. Prontuário da internação na [hospital], principalmente se constar seu endereço ou sua mãe como responsável ou acompanhante. Você pode pedir esse prontuário no próprio hospital.
+> 2. Notas de farmácia e recibos de consultas médicas pagos pela sua mãe, entre [ano] e [ano].
+> 3. Declaração de Imposto de Renda da sua mãe, caso você constasse como dependente.
+> 4. Plano de saúde, seguro de vida, plano funerário ou outro cadastro em que você apareça como dependente ou beneficiária dela.
+> 5. Contas, boletos, faturas ou correspondências em seu nome no endereço [endereço], entre [ano] e [ano].
+> 6. O atestado médico original que foi apresentado ao INSS.
+> 7. Nome, RG, CPF e endereço de até três pessoas, como vizinhos, amigos ou colegas, que saibam que você morava com sua mãe e que ela ajudava no seu sustento. Parentes próximos não podem ser testemunhas.
+>
+> Veja o que você tem ou consegue obter e me avise, por favor.
+
+O modelo corrige dois defeitos do texto original do ChatGPT. O item das testemunhas pedia parentes e, na frase seguinte, os excluía, e o original trazia a concordância "precisa ser documentos". Os parentes que não podem depor estão no art. 447, § 2º, I, do CPC, e a regra deve ser conferida no MCP `normas` antes de constar de peça.
+
 ### "Recebi uma ligação/mensagem dizendo que é do INSS"
 
 Núcleo, alertar para golpe, o INSS não liga pedindo dados, senha ou pagamento, orientar a não clicar em link e a encaminhar o print ao escritório. Registrar. Se o cliente já forneceu dados ou pagou, VERMELHO.
@@ -67,7 +95,7 @@ Núcleo, responder NO MESMO DIA ainda que sem novidade, "sem movimentação nova
 
 ## Forma das mensagens
 
-Linguagem simples, frases curtas, sem juridiquês, tratamento respeitoso (senhor, senhora, o nome da pessoa). Uma informação por mensagem, no máximo duas. Sem promessa, sem adjetivo de expectativa ("ótima notícia" só quando a notícia É ótima e confirmada). Sem dois-pontos introduzindo lista. Toda mensagem enviada gera registro `(A):` no body da tarefa do cliente.
+Linguagem simples, frases curtas, sem juridiquês, tratamento respeitoso (senhor, senhora, o nome da pessoa). Uma informação por mensagem, no máximo duas. Sem promessa, sem adjetivo de expectativa ("ótima notícia" só quando a notícia É ótima e confirmada). Dois-pontos admitidos antes de lista. Pedido de documentos segue o modelo da seção própria acima. Toda mensagem enviada gera registro `(A):` no body da tarefa do cliente.
 
 ## Manutenção
 

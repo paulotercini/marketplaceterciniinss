@@ -323,7 +323,7 @@ Acionar `base-auditoria-adversarial-decisao-judicial` para auditoria da decisão
 
 ### 9.3 Ao orientar documentação
 
-Acionar `documentos-comprobatorios-in128` e `cartas-documentos-previdencia` para checklist documental.
+Acionar `documentos-comprobatorios-in128` e `atendimento-respostas-padrao` (seção "Pedido de documentos ao cliente") para checklist documental.
 
 ### 9.4 Ao analisar complementação de contribuições
 
