@@ -155,6 +155,14 @@ Cada processo chega ao CRM com o link da ficha (`show.do?processo.codigo=…`),
 que abre na sua sessão do e-SAJ, e com o nome das partes, que é o que
 permite vincular processo novo a cliente pelo nome.
 
+**Recursos dentro do recurso (desde 1.12.0).** No 2º grau, os embargos de
+declaração e o agravo interno de uma apelação têm o mesmo número dela e não
+aparecem nos favoritos nem na consulta por OAB. Para todo número com
+processo no 2º grau, ou com o 1º grau "em grau de recurso", a extensão
+consulta o número no 2º grau e lê cada registro da caixa "Selecione o
+processo" que a rodada ainda não leu. Cada processo leva as cinco
+movimentações mais recentes, e o CRM grava as que ainda não conhece.
+
 **Processo que não está nos favoritos "X a Y", nem no CRM, nem na consulta
 por OAB não é visto.** As pastas "Processos / Parte 1…3" dos favoritos ficam
 de fora de propósito: são o acervo antigo, quase todo extinto.

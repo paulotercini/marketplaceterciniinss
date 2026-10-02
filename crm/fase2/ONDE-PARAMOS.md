@@ -1,5 +1,11 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F158 · versão 10.62 · extensão 1.12.0 · recursos dentro do recurso no e-SAJ (02.10.2026)
+
+Motivo: o julgamento dos embargos de declaração na apelação de um caso (01/10, "Julgado virtualmente, rejeitaram os embargos") não chegou ao CRM. No 2º grau, os embargos e o agravo interno têm o MESMO número da apelação e código próprio, e só aparecem na consulta por número, na caixa "Selecione o processo" (`input[name=processoSelecionado]`, os de dentro em `.list__hierarquia-dependentes`). A ficha deles não tem `#numeroProcesso` nem `#containerDadosPrincipaisProcesso`, e a extensão entregava só o último movimento de cada processo.
+
+Extensão 1.12.0: `esaj-regras.js` ganha `lerSelecaoHtml()` (código, classe, incidente) e `ehFicha()` reconhece `#tablePartesPrincipais`, com a situação em `span.unj-tag`; `esaj.js` ganha `lerRecursosDoNumero()`, que consulta por número no 2º grau todo número lido no 2º grau ou com o 1º grau "em grau de recurso" e lê os códigos ainda não lidos, e cada processo leva `movimentos` (as cinco mais recentes). CRM: `conferirPje()` trata embargos de declaração e agravo interno como incidente (chave `mov:<número>:<código>:…`), grava de `movimentos` o que não conhece desde `ultimasDatasPje()` (sem histórico, os últimos 7 dias; a mais recente sempre), e incidente não preenche classe, ajuizamento, órgão nem link da ficha. Conferido ao vivo no e-SAJ com as regras novas (caixa com 2 códigos, as duas fichas lidas, 5 movimentações dos embargos). Provas: testes/cadastro/esaj158.js e extensao/testes/esaj-regras.test.js (rodada inteira com o e-SAJ fingido).
+
 ## F157 · versão 10.61 · tráfego do Supabase, sincronização a cada 10 min e auditoria (29.09.2026)
 
 Motivo: a organização do Supabase (plano gratuito, 5 GB de tráfego de saída por mês) gastou 10,19 GB no ciclo iniciado em 02/09/2026, com tolerância até 29/09/2026. Cada abertura do CRM baixava ~18 MB (casos 11,8 MB, metade em `datajud`, `datajud_multi` e `crps`), cerca de 1.030 cargas desde 02/08. O Supabase mede o tráfego antes da compressão do Cloudflare. Quatro partes, cada uma com seu SQL, aplicado na publicação:

@@ -139,7 +139,11 @@
   // é span.unj-label ("Incidente" / "Execução de Sentença") + span.unj-larger
   // ("Requisição de Pequeno Valor (0000035-73.2026.8.26.0381) (02)"), e o
   // "Processo principal" vem em a.processoPrinc (conferido ao vivo em 22.09.2026)
-  const ehFicha = html => /id=["']?(?:numeroProcesso|containerDadosPrincipaisProcesso)\b/.test(String(html || ''));
+  // [02.10.2026] o RECURSO dentro do recurso no 2º grau (embargos de
+  // declaração na apelação) não tem nenhum dos dois: o cabeçalho é
+  // span.unj-label "Recurso" + span.unj-larger, a situação vem em
+  // span.unj-tag, e as partes na mesma #tablePartesPrincipais
+  const ehFicha = html => /id=["']?(?:numeroProcesso|containerDadosPrincipaisProcesso|tablePartesPrincipais)\b/.test(String(html || ''));
   const codigoDaUrl = url => (String(url || '').match(/processo\.codigo=([A-Za-z0-9]+)/) || [])[1] || null;
   function lerFichaHtml(html) {
     const h = String(html || '');
@@ -147,7 +151,8 @@
     const idTexto = id => texto((h.match(new RegExp('id=["\']?' + id + '["\']?[^>]*>([^]*?)</(?:span|div)>', 'i')) || [])[1] || '');
     const larger = texto(porClasse(h, 'unj-larger', 'span'));
     const numero = (idTexto('numeroProcesso').match(RE_CNJ) || larger.match(RE_CNJ) || [])[0] || null;
-    const situacao = idTexto('labelSituacaoProcesso') || idTexto('situacaoProcesso') || null;
+    const situacao = idTexto('labelSituacaoProcesso') || idTexto('situacaoProcesso')
+      || texto(porClasse(h, 'unj-tag', 'span')) || null;
     const principal = (texto(porClasse(h, 'processoPrinc', 'a')).match(RE_CNJ) || [])[0] || null;
     const tipo = texto((h.match(/<span[^>]*class="[^"]*\bunj-label\b[^"]*"[^>]*>([^<]*)<\/span>\s*<div[^>]*>\s*<span[^>]*class="[^"]*\bunj-larger\b/i) || [])[1] || '') || null;
     // "Requisição de Pequeno Valor (0000035-73.2026.8.26.0381) (02)" → "Requisição de Pequeno Valor (02)"
@@ -167,6 +172,31 @@
       partes: partes.join(' X ') || null,
     };
   }
+  // ── a caixa "Selecione o processo" (consulta por número no 2º grau) ─────
+  // Quando o número tem mais de um registro no 2º grau (o recurso principal e
+  // os recursos dentro dele: embargos de declaração, agravo interno), a
+  // consulta por número não cai na ficha: devolve esta caixa. Cada registro é
+  // um <input name="processoSelecionado" value="CÓDIGO">; os de dentro vêm em
+  // .list__hierarquia-dependentes, com o título "50000 - Embargos de
+  // Declaração Cível (Julgado)". Estão no HTML da resposta, sem clique
+  // nenhum (conferido ao vivo em 02.10.2026).
+  function lerSelecaoHtml(html) {
+    const h = String(html || '');
+    const marcas = [...h.matchAll(/<input[^>]*\bname="processoSelecionado"[^>]*>/gi)];
+    const out = [];
+    marcas.forEach((m, i) => {
+      const codigo = (m[0].match(/\bvalue="([A-Za-z0-9]+)"/) || [])[1];
+      if (!codigo || out.some(x => x.codigo === codigo)) return;
+      const trecho = h.slice(m.index, i + 1 < marcas.length ? marcas[i + 1].index : h.length);
+      const titulo = texto(porClasse(trecho, 'list__hierarquia-dependentes__item__label__info__title', 'em'));
+      const classe = titulo
+        ? titulo.replace(/^\d+\s*-\s*/, '').replace(/\s*\([^)]*\)\s*$/, '').trim()
+        : texto(porClasse(trecho, 'modal__lista-processos__item__header__process-info__content__item', 'div'));
+      out.push({ codigo, classe: classe || null, incidente: !!titulo });
+    });
+    return out;
+  }
+
   // processo que não movimenta mais: a situação diz, e o modo rápido pula
   const arquivado = s => /arquivad|baixad|encerrad|extint|cancelad/i.test(String(s || ''));
 
@@ -181,7 +211,7 @@
   }
 
   const API = { lerLinhaLista, lerListaHtml, totalRegistros, totalPaginas, bloqueado, pedeLogin, lerMovimentacoesHtml,
-                ehFicha, codigoDaUrl, lerFichaHtml, arquivado, urlBuscaNumero };
+                ehFicha, codigoDaUrl, lerFichaHtml, lerSelecaoHtml, arquivado, urlBuscaNumero };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.ESAJ_REGRAS = raiz.ESAJ_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);
