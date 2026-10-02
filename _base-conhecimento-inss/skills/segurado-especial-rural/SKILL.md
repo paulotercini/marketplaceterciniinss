@@ -224,7 +224,7 @@ Enunciados 8 (labor infantil) e 15 (tempo especial) são as bases. Quando o INSS
 | Redigir petição | `peticao-previdenciaria` |
 | Segurada mulher | `perspectiva-genero-previdenciario` |
 | Orientar documentação | `documentos-comprobatorios-in128` |
-| Carta de documentos ao cliente | `cartas-documentos-previdencia` |
+| Carta de documentos ao cliente | `atendimento-respostas-padrao` (seção "Pedido de documentos ao cliente") |
 | Fundamentação jurisprudencial | `precedentes-previdenciarios` |
 | Indenizar contribuições pós-1991 | `indenizacao-contribuicoes-atraso` |
 | Verificar Tema 1124/STJ | `tema-1124-instrucao-administrativa` |

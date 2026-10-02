@@ -90,7 +90,7 @@ Estas skills são acionadas independentemente da classificação.
 
 - **documentos-comprobatorios-in128** — documentação obrigatória por categoria e espécie
 - **precedentes-previdenciarios** — temas vinculantes aplicáveis ao caso
-- **cartas-documentos-previdencia** — gerar lista de documentos para o cliente
+- **atendimento-respostas-padrao** — gerar o pedido de documentos ao cliente, no modelo da seção "Pedido de documentos ao cliente" (a skill cartas-documentos-previdencia não existe no plugin)
 - **inss-canais-atendimento** — orientar canal adequado se for via administrativa
 - **requerimento-administrativo-inss** — quando o caso exigir requerimento administrativo, gerar peça no formato adequado ao servidor do INSS (linguagem instrutiva, normas internas, formato tabular)
 
@@ -107,7 +107,7 @@ Ler `references/MAPA-ROTEAMENTO.md` para a tabela completa de roteamento por cla
 → Acionar `requerimento-administrativo-inss` para gerar o requerimento no formato adequado ao servidor do INSS
 → Exceção para MS quando o ato ilegal é a recusa de protocolo ou exigência abusiva
 → Acionar `inss-canais-atendimento` para o canal correto
-→ Acionar `cartas-documentos-previdencia` para a lista de documentos
+→ Acionar `atendimento-respostas-padrao` (seção "Pedido de documentos ao cliente") para a lista de documentos
 
 **Caso com indeferimento ou cessação**
 → Avaliar viabilidade de recurso administrativo vs. ação judicial
@@ -213,7 +213,7 @@ Todos os alertas automáticos disparados, ordenados por urgência.
 
 ### Seção 6 — Documentação Necessária
 
-Lista de documentos que o cliente precisa providenciar, gerada a partir da skill `cartas-documentos-previdencia` e complementada pela skill `documentos-comprobatorios-in128`. Se o usuário autorizar, gerar a carta de documentos completa em formato para envio ao cliente.
+Lista de documentos que o cliente precisa providenciar, gerada a partir da skill `base-documentos-comprobatorios-in128`. A lista técnica fica no relatório, e a mensagem ao cliente segue o modelo da seção "Pedido de documentos ao cliente" de `atendimento-respostas-padrao`, com até sete itens, em linguagem do cliente e sem estratégia interna.
 
 ### Seção 7 — Plano de Ação
 
@@ -237,7 +237,7 @@ Lista das skills consultadas durante a triagem, para rastreabilidade.
 
 **Não calcular RMI.** A triagem não realiza cálculos de renda mensal inicial. Se o caso envolver análise de valor, indicar que o cálculo exige CNIS completo e remeter ao fluxo de planejamento previdenciário.
 
-**Registrar aprendizados.** Se durante a triagem o usuário relatar resultado de caso anterior que revele aprendizado documental, acionar `cartas-documentos-previdencia` no Fluxo B.
+**Registrar aprendizados.** Se durante a triagem o usuário relatar resultado de caso anterior que revele aprendizado documental, acionar `atendimento-respostas-padrao` (seção "Pedido de documentos ao cliente") no Fluxo B.
 
 ## Referências
 
