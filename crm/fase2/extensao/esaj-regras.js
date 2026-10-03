@@ -197,6 +197,25 @@
     return out;
   }
 
+  // ── os incidentes listados NA FICHA ────────────────────────────────────
+  // No 1º grau a consulta por número cai direto na ficha do processo
+  // principal mesmo quando ele tem cumprimento de sentença (conferido ao vivo
+  // em 03.10.2026): o cumprimento só aparece no bloco "Incidentes, ações
+  // incidentais, recursos e execuções de sentenças" da própria ficha, como
+  // <a class="incidente" href="…processo.codigo=X">Classe (número)</a>. Sem
+  // ler esse bloco, o cumprimento (onde a RPV e o precatório andam) só
+  // entrava quando estava nos favoritos.
+  function lerIncidentesFicha(html) {
+    const out = [];
+    for (const m of String(html || '').matchAll(/<a[^>]*class="[^"]*\bincidente\b[^"]*"[^>]*href="([^"]*)"[^>]*>([^]*?)<\/a>/gi)) {
+      const codigo = codigoDaUrl(desHtml(m[1]));
+      if (!codigo || out.some(x => x.codigo === codigo)) continue;
+      const classe = texto(m[2]).replace(/\s*\([^)]*\)\s*$/, '').trim() || null;
+      out.push({ codigo, classe });
+    }
+    return out;
+  }
+
   // processo que não movimenta mais: a situação diz, e o modo rápido pula
   const arquivado = s => /arquivad|baixad|encerrad|extint|cancelad/i.test(String(s || ''));
 
@@ -211,7 +230,7 @@
   }
 
   const API = { lerLinhaLista, lerListaHtml, totalRegistros, totalPaginas, bloqueado, pedeLogin, lerMovimentacoesHtml,
-                ehFicha, codigoDaUrl, lerFichaHtml, lerSelecaoHtml, arquivado, urlBuscaNumero };
+                ehFicha, codigoDaUrl, lerFichaHtml, lerSelecaoHtml, lerIncidentesFicha, arquivado, urlBuscaNumero };
   if (typeof module !== 'undefined' && module.exports) module.exports = API;
   else raiz.ESAJ_REGRAS = raiz.ESAJ_REGRAS || API;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -76,3 +76,9 @@ grant usage on schema cron to postgres;
 grant all privileges on all tables in schema cron to postgres;
 select cron.schedule('faxina-apagados', '0 6 * * *',
   $$delete from public.apagados where em < now() - interval '8 days'$$);
+-- [03.10.2026] a fila da extensão guarda a resposta crua dos portais (a do
+-- e-Recursos pesa ~220 KB cada): 586 coletas em dois meses somavam 25 MB.
+-- Coleta aplicada há mais de 30 dias não serve a nada — o que valia dela já
+-- está nos andamentos
+select cron.schedule('faxina-coletas', '10 6 * * *',
+  $$delete from public.coletas where aplicada_em < now() - interval '30 days'$$);

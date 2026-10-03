@@ -9,11 +9,11 @@ const vm = require('vm');
 const fs = require('fs');
 const path = require('path');
 
-for (const arq of ['pje.js', 'eproc.js']) {
+for (const arq of ['pje.js', 'eproc.js', 'esaj.js', 'crps.js']) {
   test(`${arq}: num iframe não define crmRodar nem a guarda`, () => {
     const janela = { top: {} };                      // ≠ window: é um iframe
     janela.window = janela;
-    const ctx = vm.createContext({ ...janela, location: { host: 'pje1g.trf3.jus.br', pathname: '/x' },
+    const ctx = vm.createContext({ ...janela, location: { host: 'pje1g.trf3.jus.br', pathname: '/x' }, ESAJ_REGRAS: {},
       document: { getElementById: () => null, querySelectorAll: () => [] },
       sessionStorage: { getItem: () => null } });
     vm.runInContext(fs.readFileSync(path.join(__dirname, '..', arq), 'utf8'), ctx);
