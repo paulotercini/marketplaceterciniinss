@@ -5,6 +5,10 @@
 // pega no CRM os processos que precisam ser olhados, consulta um por um e
 // entrega o resultado.
 (() => {
+  if (window !== window.top) return;      // só o quadro de cima coleta (a reinjeção vai a todos)
+  if (window.__crmColetorNoAr) return;
+  window.__crmColetorNoAr = true;
+
   const SISTEMAS = ['esisrec', 'recben'];
 
   function crachas() {
@@ -136,12 +140,16 @@
                     portal: { total: doPortal.nups.length, sistema: doPortal.sis,
                               novos } };
       let seguidas = 0, abortou = false;
+      // [03.10.2026] cada recurso vive num sistema só: o que a lista do
+      // portal indicou vem primeiro, e achado o recurso não se consulta o
+      // outro — antes eram duas consultas (e duas pausas) por recurso
+      const ordem = doPortal.sis ? [doPortal.sis, ...SISTEMAS.filter(s => s !== doPortal.sis)] : SISTEMAS;
       for (let i = 0; i < fila.length; i++) {
         faixa(`recurso ${i + 1} de ${fila.length}…`);
-        for (const sis of SISTEMAS) {
+        for (const sis of ordem) {
           try {
             const r = await consultar(sis, fila[i], modo);
-            if (r.ok) { OUT.itens[`${fila[i]}_${sis}`] = await r.json(); seguidas = 0; }
+            if (r.ok) { OUT.itens[`${fila[i]}_${sis}`] = await r.json(); seguidas = 0; await pausa(2500); break; }
             else if (r.status !== 404) {
               OUT.falhas.push({ nup: fila[i], sis, status: r.status });
               if (++seguidas >= 6) { faixaErr(`o portal parou (${r.status}) — clique de novo mais tarde`); abortou = true; i = fila.length; break; }

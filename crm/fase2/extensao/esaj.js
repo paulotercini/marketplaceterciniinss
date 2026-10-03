@@ -24,6 +24,7 @@
 // anotado no navegador e, por 7 dias, não é consultado de novo — é onde vai
 // a maior parte do acervo antigo. Uma rodada completa semanal confere todos.
 (() => {
+  if (window !== window.top) return;      // só o quadro de cima coleta (a reinjeção vai a todos)
   if (window.__crmColetorNoAr) return;
   window.__crmColetorNoAr = true;
 
@@ -108,7 +109,7 @@
       partes: ficha.partes || p.partes || null, situacao: ficha.situacao || null,
       principal: ficha.principal || null, tipo: ficha.tipo || null,
       link: p.link || (codigo ? `https://${host}${p.grau === '2º grau' ? '/cposg' : '/cpopg'}/show.do?processo.codigo=${codigo}` : null),
-      movimento: null };
+      incidentes: REG.lerIncidentesFicha(html), movimento: null };
     if (!codigo || !out.numero) return { ...out, semFicha: true };   // sem número não há como o CRM casar
     await espera(900);
     const mv = REG.lerMovimentacoesHtml((await baixarComPaciencia(g.movs(codigo), rot)).html);
@@ -212,6 +213,13 @@
           const k = x.grau + ':' + (x.codigo || x.numero);
           if (vistos.has(k)) continue;
           vistos.add(k); lidos.push(x);
+          // [03.10.2026] os incidentes que a ficha lista (cumprimento de
+          // sentença, RPV) entram no fim da fila, se a rodada ainda não os
+          // tem — antes só os favoritados eram lidos
+          for (const inc of x.incidentes || [])
+            if (!vistos.has(x.grau + ':' + inc.codigo) && !fila.some(f => f.codigo === inc.codigo))
+              fila.push({ numero: x.numero, grau: x.grau, origem: 'incidente', codigo: inc.codigo, classe: inc.classe,
+                link: `https://${host}${x.grau === '2º grau' ? '/cposg' : '/cpopg'}/show.do?processo.codigo=${inc.codigo}` });
         } catch (e) { falhas++; }
       }
       const comRecurso = [...new Set(lidos.filter(x => x.grau === '2º grau' || /grau de recurso/i.test(x.situacao || ''))
@@ -236,7 +244,7 @@
                        movimento: p.movimento, movimentos: p.movimentos || null, id: null, ca: null }));
         if (!processos.length) continue;
         await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab, quando,
-                                  parcial: falhas > 0 || pulados > 0, processos });
+                                  parcial: falhas > 0, pulados, processos });
       }
       await chrome.storage.local.set({ ultima_esaj: quando, ...(rapido ? {} : { ultima_esaj_full: quando }) });
       faixaOk(`✔ ${lidos.length} processos do e-SAJ entregues ao CRM${falhas ? ` (${falhas} sem ficha ou sem resposta)` : ''}${rapido ? ' (modo rápido)' : ''} — confira em 📥 Importar.`);

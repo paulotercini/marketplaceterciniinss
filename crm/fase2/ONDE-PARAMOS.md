@@ -1,5 +1,19 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## Extensão 1.12.0 · checagem completa (03.10.2026)
+
+Pedida pelo Paulo. Lido todo o código da extensão e a fila `coletas` ao vivo. Erros e correções, na mesma 1.12.0 (ainda não publicada):
+
+1. **Cumprimento de sentença fora dos favoritos não era lido.** No 1º grau a consulta por número cai direto na ficha do principal; o cumprimento e a RPV só aparecem no bloco "Incidentes" da ficha (`a.incidente`, conferido ao vivo). `lerIncidentesFicha()` lê o bloco e `esaj.js` põe os códigos no fim da fila da rodada. Prova no harness (`rodada` em esaj-regras.test.js).
+2. **Entrega sem segunda chance.** `enviar()` falhava à primeira queda de rede ou 5xx e perdia minutos de leitura; agora três tentativas com pausa (4xx continua erro na hora).
+3. **e-Recursos consultava os dois sistemas para todo recurso**, mesmo depois de achar; agora o sistema que listou o acervo vem primeiro e a consulta para no acerto. Metade das chamadas e das pausas. Prova: testes/crps.test.js.
+4. **`esaj.js` e `crps.js` sem a guarda do quadro de cima** que `pje.js` e `eproc.js` têm; a reinjeção do fundo vai a todos os frames. Guarda posta; `crps.js` passou a marcar `__crmColetorNoAr` (o "testar a página" dizia que o coletor não subiu).
+5. **`parcial` sempre verdadeiro no e-SAJ** porque o modo rápido pula arquivados (46 de 46 coletas). Agora `parcial` é só falha; `pulados` vai à parte.
+6. **Versão instalada sem aviso.** O popup compara a versão instalada com o manifesto da `main` no GitHub e avisa quando difere (o PC ficou na 1.11 sem ninguém saber).
+7. **`coletas` cresce sem fim** (25 MB em dois meses, 220 KB por coleta do e-Recursos): pg_cron `faxina-coletas` em `schema_carga_incremental.sql` apaga aplicada há mais de 30 dias.
+
+Conferido e sem defeito: PJe (retomada, modo rápido), eproc, PAT, crachá do Supabase (nenhum POST recusado em 24 h nos logs), favoritos. Fica para depois: a chave do arquivado no e-SAJ é por número, e incidente com o mesmo número herda a marca do principal (sem efeito hoje, porque incidente vem sem situação).
+
 ## F158 · versão 10.62 · extensão 1.12.0 · recursos dentro do recurso no e-SAJ (02.10.2026)
 
 Motivo: o julgamento dos embargos de declaração na apelação de um caso (01/10, "Julgado virtualmente, rejeitaram os embargos") não chegou ao CRM. No 2º grau, os embargos e o agravo interno têm o MESMO número da apelação e código próprio, e só aparecem na consulta por número, na caixa "Selecione o processo" (`input[name=processoSelecionado]`, os de dentro em `.list__hierarquia-dependentes`). A ficha deles não tem `#numeroProcesso` nem `#containerDadosPrincipaisProcesso`, e a extensão entregava só o último movimento de cada processo.
