@@ -4,7 +4,7 @@
 
 Onda 68, incorporada em 16/07/2026. Consolidação de material de campanha da colega advogada previdenciarista Thamires Matos (@thamiresmatos.adv), post publicado em 16/07/2026 no Instagram, adaptado à postura pró-segurado do escritório e integrado à disciplina do plugin.
 
-Objetivo. Dar ao advogado do escritório uma pauta enxuta e imediatamente utilizável para orientar o médico assistente, redigir o laudo e ancorar cada tese na petição de B31, B91 e B92, com correspondência direta entre elemento clínico exigido e texto para a peça.
+Objetivo. Dar ao advogado do escritório uma pauta enxuta e imediatamente utilizável para orientar o médico assistente, redigir o laudo e ancorar cada tese na petição de B31, B32, B91 e B92, com correspondência direta entre elemento clínico exigido e texto para a peça.
 
 Regra do escritório. Cada roteiro é ponto de partida. Deve ser cruzado com o quadro concreto do segurado (documentos por ID, CID, DII/DID, prognóstico, ocupação declarada no CNIS). Nada de padronização cega. Nada de adjetivo inflado sem lastro documental.
 
@@ -42,7 +42,7 @@ Texto padrão para a petição.
 
 "Conforme documentos médicos anexos (ID [...], ID [...] e ID [...]), a parte autora apresenta importante limitação funcional osteomuscular, com restrição de mobilidade e dor persistente, incapacitante para atividades que demandem permanência prolongada em ortostatismo, sedestação ou deambulação, comprometendo diretamente sua capacidade laboral no exercício da atividade habitual de [ocupação do CNIS]."
 
-Alerta de mitigação. Doenças ortopédicas degenerativas (M15-M19, M50-M54) sofrem forte resistência do INSS sob a alegação de "quadro compatível com a idade". Confrontar com jornada, esforço físico específico e histórico ocupacional documentado. Nexo com atividade laboral reforça a tese para B92.
+Alerta de mitigação. Doenças ortopédicas degenerativas (M15-M19, M50-M54) sofrem forte resistência do INSS sob a alegação de "quadro compatível com a idade". Confrontar com jornada, esforço físico específico e histórico ocupacional documentado. Nexo com atividade laboral reforça a tese para B91 ou B92.
 
 Em artrose (M15 a M19 e M47), o elemento de imagem é o grau de Kellgren-Lawrence na radiografia datada, e os graus III e IV são reforço documental, não prova de incapacidade. A prova é a limitação em verbos com medida ligada à tarefa da ocupação do CNIS. Ao argumento "é degenerativo, é da idade", responde-se que a lei avalia a incapacidade para a atividade habitual, e a mesma gonartrose grau III incapacita o pedreiro e não incapacita quem trabalha sentado. Quando a DID é anterior à filiação, a petição cita a progressão ou o agravamento (art. 42, § 2º, e art. 59, § 1º, da Lei 8.213/1991) com o marco documental da DII. Na tese acidentária, o INSS oporá o art. 20, § 1º, "a", que exclui a doença degenerativa do conceito de doença do trabalho, e a resposta é o agravamento pelo trabalho, art. 21, I (Onda 165).
 
@@ -68,7 +68,7 @@ Texto padrão para a petição.
 
 "A enfermidade psiquiátrica documentada (ID [...] e ID [...]) compromete funções cognitivas essenciais, como concentração, memória operacional e tomada de decisão, somando-se aos efeitos adversos da medicação psicotrópica em uso contínuo, incluindo lentificação, sonolência e redução de reflexos, circunstâncias que tornam inseguro o exercício da atividade laboral de [ocupação do CNIS], em especial em ambientes que exigem [descrever exigência típica da função]."
 
-Alerta de mitigação. Transtornos mentais comuns (F32, F33, F41) sofrem descrédito por serem tidos como recuperáveis com tratamento ambulatorial. Reforçar cronicidade, reincidência de crises, hospitalizações, tentativas terapêuticas insuficientes e prognóstico. Em burnout (QD85 CID-11), invocar NR-1 (riscos psicossociais) e nexo ocupacional para B92.
+Alerta de mitigação. Transtornos mentais comuns (F32, F33, F41) sofrem descrédito por serem tidos como recuperáveis com tratamento ambulatorial. Reforçar cronicidade, reincidência de crises, hospitalizações, tentativas terapêuticas insuficientes e prognóstico. Em burnout (QD85 CID-11), invocar NR-1 (riscos psicossociais) e nexo ocupacional para B91 ou B92.
 
 ## 3. Cardiologia
 
@@ -146,7 +146,7 @@ Alerta de mitigação. INSS costuma conceder DCB curta em pós-operatório sob a
 
 ## Integração com o restante do plugin
 
-Este reference é aplicável ao modelo de relatório médico para B31, B91 e B92. Deve ser cruzado com.
+Este reference é aplicável ao modelo de relatório médico para B31, B32, B91 e B92. Deve ser cruzado com.
 
 `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`. Modelo narrativo enxuto de uma folha, com sub-modelos por especialidade que agora ganham roteiro probatório concreto.
 

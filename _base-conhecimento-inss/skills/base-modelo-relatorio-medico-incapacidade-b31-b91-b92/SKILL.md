@@ -1,9 +1,9 @@
 ---
 name: base-modelo-relatorio-medico-incapacidade-b31-b91-b92
-description: "Modelo narrativo enxuto (1 folha) de relatório médico para incapacidade B31, B91 e B92, com sub-modelos por especialidade. Use SEMPRE que mencionar modelo relatório médico incapacidade, modelo laudo B31, modelo laudo B91, modelo laudo B92, relatório auxílio-doença, relatório aposentadoria invalidez, relatório ortopedista incapacidade, relatório psiquiatra incapacidade, relatório reumatologista incapacidade, relatório clínico geral incapacidade, relatório oftalmologista incapacidade, relatório cardiologista incapacidade, DII, DID, prognóstico incapacidade, insuscetibilidade reabilitação, nexo acidentário, carta médico assistente, gerar relatório cliente. Cruza com base-validacao-formal-laudo-medico-checklist-ab, base-incapacidade-b31-temporaria, base-incapacidade-b91-permanente, base-incapacidade-acidentaria-b92, auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria."
+description: "Modelo narrativo enxuto (1 folha) de relatório médico para incapacidade B31, B32, B91 e B92, com sub-modelos por especialidade. Use SEMPRE que mencionar modelo relatório médico incapacidade, modelo laudo B31, modelo laudo B32, modelo laudo B91, modelo laudo B92, relatório auxílio-doença, relatório aposentadoria invalidez, relatório ortopedista incapacidade, relatório psiquiatra incapacidade, relatório reumatologista incapacidade, relatório clínico geral incapacidade, relatório oftalmologista incapacidade, relatório cardiologista incapacidade, DII, DID, prognóstico incapacidade, insuscetibilidade reabilitação, nexo acidentário, carta médico assistente, gerar relatório cliente. Cruza com base-validacao-formal-laudo-medico-checklist-ab, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente, base-incapacidade-acidentaria-b92, auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria."
 ---
 
-# Modelo de Relatório Médico para Benefícios por Incapacidade (B31, B91, B92)
+# Modelo de Relatório Médico para Benefícios por Incapacidade (B31, B32, B91, B92)
 
 ## 1. Quando acionar esta skill
 
@@ -198,15 +198,15 @@ Detalhamento e uso pró-segurado da correção em `analise-documental-incapacida
 
 `base-incapacidade-b31-temporaria` para o regime do B31.
 
-`base-incapacidade-b91-permanente` para o regime do B91.
+`base-incapacidade-b32-permanente` para o regime do B32.
 
-`base-incapacidade-acidentaria-b92` para o regime do B92.
+`base-incapacidade-acidentaria-b92` para o regime do B91 ou do B92.
 
 `auditoria-laudo-pericial` para auditoria do laudo da perícia oficial.
 
 `analise-documental-incapacidade` para a análise documental do INSS.
 
-`ntep-nexo-acidentario` para o NTEP em B92.
+`ntep-nexo-acidentario` para o NTEP em B91 ou B92.
 
 `base-pericia-medica-federal-telepericia` para a perícia oficial.
 

@@ -47,7 +47,7 @@ Cenário A, concessão de aposentadoria com DER e documentação completa. Tutel
 
 Cenário B, restabelecimento de B31 cessado sem perícia. Tutela cabível.
 
-Cenário C, implantação de B91 com laudo pericial judicial favorável. Tutela cabível.
+Cenário C, implantação de B32 com laudo pericial judicial favorável. Tutela cabível.
 
 Cenário D, tutela de evidência em tese firmada (Tema 1102/STF RVT, Tema 76/STF teto, Tema 1124/STJ).
 

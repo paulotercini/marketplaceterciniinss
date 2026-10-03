@@ -1,6 +1,6 @@
 ---
 name: base-validacao-formal-laudo-medico-checklist-ab
-description: "Validação formal de relatório médico pelos Checklists A e B do escritório, regime CFM e Portarias MPS/INSS 13/2026, 14/2026, 15/2026. Use SEMPRE que mencionar checklist A laudo médico, checklist B laudo PCD BPC, validação formal laudo, auditoria documental relatório médico, Resolução CFM 1.851/2008, Resolução CFM 2.314/2022 telemedicina, IN 128/2022 art. 286 287 290, B31 laudo, B91 laudo, B92 laudo, B94 laudo, BPC laudo, PCD laudo IF-BrA, IFBrM laudo, laudo extemporâneo, validade temporal laudo, prognóstico laudo, exames complementares, CID laudo, dupla codificação CID DSM-5-TR autismo, fibromialgia laudo Lei 15.176, perícia documental Portaria 13/2026 14/2026 15/2026, parecer verossimilhança, Lei 12.842/2013, art. 60 §11-A Lei 8.213. Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, base-incapacidade-b31-temporaria, base-incapacidade-b91-permanente, base-auxilio-acidente-b94-pos-reforma, analise-bpc-loas, aposentadoria-deficiencia, peticao-previdenciaria."
+description: "Validação formal de relatório médico pelos Checklists A e B do escritório, regime CFM e Portarias MPS/INSS 13/2026, 14/2026, 15/2026. Use SEMPRE que mencionar checklist A laudo médico, checklist B laudo PCD BPC, validação formal laudo, auditoria documental relatório médico, Resolução CFM 1.851/2008, Resolução CFM 2.314/2022 telemedicina, IN 128/2022 art. 286 287 290, B31 laudo, B32 laudo, B91 laudo, B92 laudo, B94 laudo, BPC laudo, PCD laudo IF-BrA, IFBrM laudo, laudo extemporâneo, validade temporal laudo, prognóstico laudo, exames complementares, CID laudo, dupla codificação CID DSM-5-TR autismo, fibromialgia laudo Lei 15.176, perícia documental Portaria 13/2026 14/2026 15/2026, parecer verossimilhança, Lei 12.842/2013, art. 60 §11-A Lei 8.213. Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente, base-auxilio-acidente-b94-pos-reforma, analise-bpc-loas, aposentadoria-deficiencia, peticao-previdenciaria."
 ---
 
 # Validação Formal de Relatório Médico. Checklist A e B do Escritório
@@ -9,7 +9,7 @@ description: "Validação formal de relatório médico pelos Checklists A e B do
 
 Acione SEMPRE que houver necessidade de validação formal de relatório médico para fins previdenciários ou assistenciais.
 
-Hipóteses típicas. Análise de relatório médico para protocolo de B31, B91, B92, B94. Análise de relatório médico para BPC. Análise de relatório médico para aposentadoria PCD (LC 142/2013). Auditoria de laudo defeituoso. Refazimento de laudo após indeferimento.
+Hipóteses típicas. Análise de relatório médico para protocolo de B31, B32, B91, B92, B94. Análise de relatório médico para BPC. Análise de relatório médico para aposentadoria PCD (LC 142/2013). Auditoria de laudo defeituoso. Refazimento de laudo após indeferimento.
 
 A skill é fonte primária pró-segurado para distinguir os Checklists A (incapacidade laboral) e B (deficiência funcional para PCD/BPC), evitando confusão entre os dois universos probatórios.
 
@@ -17,7 +17,7 @@ A skill é fonte primária pró-segurado para distinguir os Checklists A (incapa
 
 ### 2.1. Checklist A. Incapacidade laboral
 
-Aplicável a B31, B91, B92, B94 (com particularidades para auxílio-acidente).
+Aplicável a B31, B32, B91, B92, B94 (com particularidades para auxílio-acidente).
 
 Foco. Incapacidade para o trabalho habitual ou para qualquer atividade que garanta subsistência.
 
@@ -35,7 +35,7 @@ Eixo central. DID (data de início da deficiência), funcionalidade conforme CIF
 
 Erro comum. Médico assistente redige laudo de "incapacidade" para fins de BPC ou aposentadoria PCD, sem abordar a funcionalidade.
 
-Erro comum reverso. Médico redige laudo de "deficiência" para fins de B91, sem caracterizar a incapacidade.
+Erro comum reverso. Médico redige laudo de "deficiência" para fins de B32, sem caracterizar a incapacidade.
 
 Solução. Solicitar laudo segmentado conforme finalidade, com checklist específico.
 
@@ -83,7 +83,7 @@ LC 142/2013. Aposentadoria PCD.
 
 Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014. IF-BrA.
 
-## 4. Checklist A. Validação de laudo para incapacidade (B31, B91, B92, B94)
+## 4. Checklist A. Validação de laudo para incapacidade (B31, B32, B91, B92, B94)
 
 ### 4.1. Cabeçalho
 
@@ -159,7 +159,7 @@ Item A.27. Período estimado de incapacidade (B31).
 
 Item A.28. Insuscetibilidade de reabilitação (B32 ou B92).
 
-Item A.29. Nexo causal: para B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86; Tema 416 STJ) — nexo laboral só quando se pleiteia a natureza acidentária/competência estadual. Na concausa, o laudo descreve o esforço da função que contribuiu para o agravamento, ainda que não seja a causa única. Em doença degenerativa (artrose), a concausa precisa de descrição concreta do esforço, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho.
+Item A.29. Nexo causal: para B91 ou B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86; Tema 416 STJ) — nexo laboral só quando se pleiteia a natureza acidentária/competência estadual. Na concausa, o laudo descreve o esforço da função que contribuiu para o agravamento, ainda que não seja a causa única. Em doença degenerativa (artrose), a concausa precisa de descrição concreta do esforço, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho.
 
 Item A.30. Caracterização da sequela (B94).
 
@@ -289,7 +289,7 @@ Refutação. Insuficiência probatória. Solicitar laudo detalhado conforme chec
 
 Laudo não fixa data de início da doença ou da deficiência.
 
-Crítico para. B91 (com adicional 25%). Aposentadoria PCD (DID retroativa). BPC (caracterização do impedimento de longo prazo).
+Crítico para. B32 ou B92 (com adicional 25%). Aposentadoria PCD (DID retroativa). BPC (caracterização do impedimento de longo prazo).
 
 Cruzamento com `formacao-documentacao-did-pcd`.
 
@@ -303,7 +303,7 @@ Solicitar fundamentação técnica.
 
 Para BPC e aposentadoria PCD, laudo deve abordar funcionalidade conforme CIF.
 
-Para B91, laudo deve abordar funcionalidade laboral (limitações para o trabalho habitual).
+Para B32, laudo deve abordar funcionalidade laboral (limitações para o trabalho habitual).
 
 ### 6.5. Vício de validade temporal
 
@@ -375,7 +375,7 @@ Cruzamento com `analise-documental-incapacidade` e `base-incapacidade-b31-tempor
 
 Checklist A com ênfase na insuscetibilidade de reabilitação.
 
-Cruzamento com `base-incapacidade-b91-permanente`.
+Cruzamento com `base-incapacidade-b32-permanente`.
 
 ### 8.3. B92 (aposentadoria por incapacidade permanente acidentária) e B91 (auxílio por incapacidade temporária acidentário)
 
@@ -483,9 +483,9 @@ Detalhamento e uso pró-segurado da correção em `analise-documental-incapacida
 
 `base-incapacidade-b31-temporaria` para B31.
 
-`base-incapacidade-b91-permanente` para B91.
+`base-incapacidade-b32-permanente` para B32.
 
-`base-incapacidade-acidentaria-b92` para B92.
+`base-incapacidade-acidentaria-b92` para B91 ou B92.
 
 `base-auxilio-acidente-b94-pos-reforma` para B94.
 
@@ -519,7 +519,7 @@ Detalhamento e uso pró-segurado da correção em `analise-documental-incapacida
 
 Para GERAR o modelo de relatório médico antes de enviar ao médico assistente (e depois usar esta skill para VALIDAR o que o médico devolver), acionar.
 
-`base-modelo-relatorio-medico-incapacidade-b31-b91-b92` para B31, B91, B92.
+`base-modelo-relatorio-medico-incapacidade-b31-b91-b92` para B31, B32, B91, B92.
 
 `base-modelo-relatorio-medico-auxilio-acidente-b94` para B94.
 

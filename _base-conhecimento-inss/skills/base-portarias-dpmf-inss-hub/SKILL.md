@@ -171,7 +171,7 @@ Detalhamento em `base-tema383-tnu-fundacentro-epi-biologicos` e `base-especial-e
 
 Disciplina o Programa de Controle Médico de Saúde Ocupacional (PCMSO).
 
-Aplicação. Documentação ambiental para B31, B91, B92, B94 e aposentadoria especial. Cruza com NR-32 e PGR.
+Aplicação. Documentação ambiental para B31, B32, B91, B92, B94 e aposentadoria especial. Cruza com NR-32 e PGR.
 
 ## 14. Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014
 

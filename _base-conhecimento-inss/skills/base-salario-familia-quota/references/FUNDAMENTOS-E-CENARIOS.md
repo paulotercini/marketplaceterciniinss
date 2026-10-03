@@ -143,7 +143,7 @@ Em não pagamento pelo empregador. Ação judicial de cobrança e restituição,
 Acionar `peticao-previdenciaria` para peça.
 Acionar `documentos-comprobatorios-in128` para documentação.
 Acionar `precedentes-previdenciarios` para jurisprudência.
-Acionar `base-incapacidade-b91-permanente` se segurado estiver em B32/B92.
+Acionar `base-incapacidade-b32-permanente` se segurado estiver em B32/B92.
 
 ## 10. Alerta estratégico
 

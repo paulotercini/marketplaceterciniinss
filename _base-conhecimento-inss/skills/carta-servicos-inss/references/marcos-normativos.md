@@ -38,7 +38,7 @@ Categoria profissional pré-1995 (Súmula 198 TFR, Decretos 53.831/64 e 83.080/7
 
 Motociclista (Lei 12.997/2014, NR-16 Anexo V, Portaria MTE 2.021/2025).
 
-### Aposentadoria por Incapacidade Permanente B91
+### Aposentadoria por Incapacidade Permanente B32
 
 Arts. 42 a 48 Lei 8.213/91. Acréscimo 25%, art. 45 Lei 8.213/91 e Anexo I Decreto 3.048/99.
 

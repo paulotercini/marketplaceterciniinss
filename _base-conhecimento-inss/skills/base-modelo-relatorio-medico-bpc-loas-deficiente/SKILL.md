@@ -210,7 +210,7 @@ Após o médico preencher, validar com `base-validacao-formal-laudo-medico-check
 
 ## 10. O que NÃO está nesta skill
 
-Modelo para incapacidade B31/B91/B92 está em `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`.
+Modelo para incapacidade B31/B32/B91/B92 está em `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`.
 
 Modelo para B94 está em `base-modelo-relatorio-medico-auxilio-acidente-b94`.
 

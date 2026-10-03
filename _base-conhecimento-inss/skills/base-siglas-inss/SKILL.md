@@ -89,7 +89,7 @@ Data a partir da qual o segurado é diagnosticado com a moléstia. CRÍTICA na a
 
 ### DII - Data do Início da Incapacidade
 
-Data a partir da qual o segurado se torna incapacitado para o trabalho. CRÍTICA para verificar qualidade de segurado em B31 e B91 (Súmula 11 TRU 3 - Skill `base-tru-trf3-sumulas-jurisprudencia`).
+Data a partir da qual o segurado se torna incapacitado para o trabalho. CRÍTICA para verificar qualidade de segurado nos benefícios por incapacidade, B31, B32, B91 e B92 (Súmula 11 TRU 3 - Skill `base-tru-trf3-sumulas-jurisprudencia`).
 
 ### DN - Data de Nascimento
 
@@ -223,7 +223,7 @@ B32 acidentário. Competência da Justiça Estadual.
 
 ### B94 - Auxílio-Acidente por Acidente do Trabalho
 
-Benefício indenizatório por sequela de acidente. Competência da Justiça Estadual. Cruzar com `auxilio-acidente-b94` e `base-auxilio-acidente-b94-pos-reforma`.
+Benefício indenizatório por sequela de acidente do trabalho ou doença ocupacional (art. 86 c/c arts. 19 a 21 da Lei 8.213/91). Competência da Justiça Estadual. Quando o acidente não é do trabalho, a espécie é a B36, de competência federal. Em várias skills, "B94" aparece como nome genérico do auxílio-acidente; no requerimento e na petição, indicar a espécie correta. Cruzar com `auxilio-acidente-b94` e `base-auxilio-acidente-b94-pos-reforma`.
 
 ### B41 - Aposentadoria por Idade (urbana, rural e híbrida)
 
@@ -251,6 +251,8 @@ Benefício indenizatório por sequela de acidente. Competência da Justiça Esta
 Benefício permanente por incapacidade laboral total, insuscetível de reabilitação.
 
 ### B36 - Auxílio-Acidente Previdenciário
+
+Benefício indenizatório por sequela de acidente de qualquer natureza que não seja do trabalho (art. 86 da Lei 8.213/91). Competência da Justiça Federal, no JEF até 60 salários mínimos.
 
 ### B58 - Aposentadoria do Anistiado Político
 
@@ -344,7 +346,7 @@ Documento individual de medicina do trabalho. Pode ter peso probatório retrospe
 
 ### CAT - Comunicação de Acidente de Trabalho
 
-Formulário oficial que comunica ao INSS a ocorrência de acidente de trabalho. Crítica para B92, B94 e ações acidentárias na Justiça Estadual.
+Formulário oficial que comunica ao INSS a ocorrência de acidente de trabalho. Crítica para B91, B92, B94 e ações acidentárias na Justiça Estadual.
 
 ### CIRB - Comunicado de Indeferimento de Benefício
 
@@ -352,7 +354,7 @@ Formulário oficial que comunica ao INSS a ocorrência de acidente de trabalho. 
 
 ### SABI - Sistema de Acompanhamento de Benefício por Incapacidade
 
-Sistema do INSS para gestão dos benefícios por incapacidade (B31, B91, B92).
+Sistema do INSS para gestão dos benefícios por incapacidade (B31, B32, B91, B92).
 
 ### PLENUS / SISBEN - Sistema de Benefícios
 

@@ -39,7 +39,7 @@ Antes de formular QUALQUER argumento sobre DII, isenção de carência ou contra
 ## Tipos de Laudo
 
 ### Laudo de Incapacidade Laboral
-Utilizado em processos de auxílio-doença (B31), aposentadoria por invalidez (B32/B92) e auxílio-acidente (B36/B94). A análise foca na existência, grau, duração e data de início da incapacidade, na relação entre a patologia e a capacidade para a atividade habitual, e nas condições pessoais do segurado.
+Utilizado em processos de auxílio-doença (B31/B91), aposentadoria por invalidez (B32/B92) e auxílio-acidente (B36/B94). A análise foca na existência, grau, duração e data de início da incapacidade, na relação entre a patologia e a capacidade para a atividade habitual, e nas condições pessoais do segurado.
 
 ### Laudo de Avaliação de Deficiência (BPC/LOAS)
 Utilizado em processos de Benefício de Prestação Continuada. A avaliação segue o modelo biopsicossocial com base na Classificação Internacional de Funcionalidade (CIF), conforme a Lei 13.146/2015 e o Decreto 6.214/2007 (com alterações do Decreto 11.016/2022). A análise verifica se todos os domínios foram corretamente avaliados e se as barreiras ambientais e sociais foram consideradas.

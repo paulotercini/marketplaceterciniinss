@@ -38,7 +38,7 @@ Justiça Estadual onde não houver Vara Federal ou JEF. Recurso ao TRF.
 
 ## 5. Cenários pró-segurado
 
-### Cenário A — Concessão de B91 com atrasados moderados
+### Cenário A — Concessão de B32 com atrasados moderados
 
 Ação direta no JEF, valor estimado até o teto.
 

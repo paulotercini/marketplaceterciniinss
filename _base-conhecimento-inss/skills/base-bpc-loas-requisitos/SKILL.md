@@ -224,7 +224,7 @@ Mapa exaustivo das alterações em `references/DECRETO-6214-2007-ATUALIZACAO-202
 
 5. **Sem impedimento moderado, não há BPC.** Item 4 da ementa.
 
-**Aplicação combinada com o Parâmetro (ii).** Em segurados com laudo de incapacidade total permanente (B91), há PRESUNÇÃO iuris tantum de deficiência para fins de BPC, dispensando apenas a AVALIAÇÃO SOCIAL. Cabe pedido cumulativo ou sucessivo.
+**Aplicação combinada com o Parâmetro (ii).** Em segurados com laudo de incapacidade total permanente (B32), há PRESUNÇÃO iuris tantum de deficiência para fins de BPC, dispensando apenas a AVALIAÇÃO SOCIAL. Cabe pedido cumulativo ou sucessivo.
 
 Detalhamento integral em `base-precedentes-catalogo-vinculantes/references/TEMA-385-TNU-FUNDAMENTACAO-COMPLETA.md` (Onda 53) com os 9 itens da ementa transcritos literalmente do acórdão.
 

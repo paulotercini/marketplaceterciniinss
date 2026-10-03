@@ -56,7 +56,7 @@ Refutação. Art. 62 Lei 8.213, art. 101 Decreto 3.048. Sem certificado não há
 
 Argumento adversário. Segurado irrecuperável.
 
-Refutação. Súmula 47 TNU. Avaliação conjunta de idade, grau de instrução e condição social. Se irrecuperável, B91.
+Refutação. Súmula 47 TNU. Avaliação conjunta de idade, grau de instrução e condição social. Se irrecuperável, B32.
 
 ### Argumento 3 — Segurado com idade avançada
 
@@ -132,7 +132,7 @@ Quarto, exigir inserção real via cota.
 
 Quinto, ação judicial no limbo.
 
-Sexto, em irrecuperabilidade, B91.
+Sexto, em irrecuperabilidade, B32.
 
 ## 6. Diligência de atualização
 

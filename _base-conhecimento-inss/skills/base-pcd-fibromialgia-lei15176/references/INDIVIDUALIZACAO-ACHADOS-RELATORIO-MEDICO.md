@@ -60,7 +60,7 @@ Regra de ouro dos instrumentos. Transcrever o escore POR DOMÍNIO ou por item re
 
 ## Da individualização para o benefício pretendido
 
-Em B31, B91 e B92, o alvo é a incapacidade para a atividade habitual concreta. Cada eixo precisa terminar na tarefa da ocupação declarada no CNIS, com DII fundamentada em marco documental (piora registrada em prontuário, afastamento, mudança de função, aumento de dose).
+Em B31, B32, B91 e B92, o alvo é a incapacidade para a atividade habitual concreta. Cada eixo precisa terminar na tarefa da ocupação declarada no CNIS, com DII fundamentada em marco documental (piora registrada em prontuário, afastamento, mudança de função, aumento de dose).
 
 Em aposentadoria PCD da LC 142/2013, o alvo são os domínios do IF-BrA. Traduzir os eixos para sensorial, comunicação, mobilidade, cuidados pessoais, vida doméstica, educação e trabalho, e vida comunitária, com a DID ancorada em documento pretérito conforme `base-pcd-did-retroativa`. A Lei 15.176/2025 dá o enquadramento, mas a pontuação vem do detalhamento funcional.
 

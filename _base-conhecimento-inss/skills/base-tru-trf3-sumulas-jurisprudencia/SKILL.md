@@ -233,11 +233,11 @@ Enunciado 23 do JEFSP. Súmula nº 18 das Turmas Recursais da Seção Judiciári
 
 ### Análise pró-segurado
 
-**CRÍTICA para B31 e B91**. O termo inicial da verificação da qualidade de segurado é a DATA DE INÍCIO DA INCAPACIDADE (DII), não a DER ou DIB.
+**CRÍTICA para B31 e B32**. O termo inicial da verificação da qualidade de segurado é a DATA DE INÍCIO DA INCAPACIDADE (DII), não a DER ou DIB.
 
 Aplicação. Segurado com qualidade de segurado na DII mas que perdeu posteriormente NÃO TEM o direito negado.
 
-Cruza com `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`, `periodo-graca-qualidade-segurado`.
+Cruza com `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `periodo-graca-qualidade-segurado`.
 
 ## 14 SÚMULA 12 - CONTRIBUIÇÃO PREVIDENCIÁRIA SOBRE 13º SALÁRIO
 
@@ -526,7 +526,7 @@ Para BPC. Cruzar com `base-bpc-renda-per-capita-miserabilidade`, `bpc-renda-grup
 
 Para aposentadoria por idade. Cruzar com `aposentadoria-idade-hibrida` e `periodo-graca-qualidade-segurado`.
 
-Para incapacidade. Cruzar com `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`.
+Para incapacidade. Cruzar com `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`.
 
 Para pensão por morte. Cruzar com `pensao-por-morte` e `base-pensao-por-morte-uniao-estavel-prova`.
 

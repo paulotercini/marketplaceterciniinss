@@ -150,7 +150,7 @@ Marco Aurélio Serau Junior. Direito Previdenciário e Processo Judicial Previde
 
 Theodoro Vicente Agostinho. Aposentadoria Rural.
 
-Daniel Pulino. Aposentadoria por Invalidez (relacionada ao segurado especial em B91).
+Daniel Pulino. Aposentadoria por Invalidez (relacionada ao segurado especial em B32).
 
 ## 9. Fontes oficiais
 

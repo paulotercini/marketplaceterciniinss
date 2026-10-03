@@ -164,11 +164,11 @@ Quando a flexibilização indevida implica rateio menor com inclusão de depende
 
 ### 6.1. Benefícios por incapacidade
 
-Relação clássica fungível. B31 (auxílio-doença) e B32/B92 (aposentadoria por incapacidade permanente). Segurado pleiteia B91, perícia constata incapacidade temporária. Cabível conceder B31 (REsp 824.075/PR, jurisprudência consolidada da TNU).
+Relação clássica fungível. B31 (auxílio-doença) e B32/B92 (aposentadoria por incapacidade permanente). Segurado pleiteia B32, perícia constata incapacidade temporária. Cabível conceder B31 (REsp 824.075/PR, jurisprudência consolidada da TNU).
 
-Inversa vedada pelo REsp 2.246.096/MG. Quando reduzir amparo, B91 não pode ser convertido em B31 nem em B94.
+Inversa vedada pelo REsp 2.246.096/MG. Quando reduzir amparo, B32 não pode ser convertido em B31 nem em B94.
 
-Súmula 47/TNU. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez". Instrumento poderoso para impedir que B91 seja substituído por B31.
+Súmula 47/TNU. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez". Instrumento poderoso para impedir que B32 seja substituído por B31.
 
 Súmula 88/TNU (17/04/2024). Auxílio-acidente devido independentemente do grau (Tema 416/STJ).
 
@@ -288,7 +288,7 @@ Enunciado nº 18/CRPS (Resolução 27/2024) trata do cômputo de períodos em fr
 
 Juiz ou tribunal aplica fungibilidade de ofício para converter benefício em renda menor.
 
-Hipóteses críticas. B91 para B31, B91 ou B31 para B94 (caso do REsp 2.246.096/MG), aposentadoria pleiteada substituída por BPC, pensão por morte com rateio reduzido.
+Hipóteses críticas. B32 para B31, B91 ou B31 para B94 (caso do REsp 2.246.096/MG), aposentadoria pleiteada substituída por BPC, pensão por morte com rateio reduzido.
 
 Mitigação. Pedido expresso de oitiva prévia, ressalva de fungibilidade só em favor, impugnação imediata por embargos e recurso.
 
@@ -366,7 +366,7 @@ Tributação em `tributacao-beneficios-previdenciarios` (RRA, IR sobre atrasados
 
 Análise documental em `analise-documental-incapacidade`, `analise-bpc-loas`, `auxilio-acidente-b94`, `pensao-por-morte`, `auxilio-reclusao-previdenciario`, `aposentadoria-deficiencia`, `aposentadoria-idade-hibrida`, `aposentadoria-professor-rgps`, `segurado-especial-rural`.
 
-Auditoria de laudo em `auditoria-laudo-pericial` (para B91 vs B31 vs B94).
+Auditoria de laudo em `auditoria-laudo-pericial` (para B32 vs B31 vs B94).
 
 Auditoria de PPP em `auditoria-ppp` (para aposentadoria comum vs especial).
 
@@ -396,7 +396,7 @@ Oitavo, em fase administrativa pedir aplicação do Tema 1018/STJ (direito de op
 
 Nono, em cumprimento de sentença manter benefício mais vantajoso.
 
-Décimo, em conversão B91 → B31, B91 → B94, aposentadoria → BPC, atacar imediatamente.
+Décimo, em conversão B32 → B31, B91 → B94, aposentadoria → BPC, atacar imediatamente.
 
 ## 14. Doutrina de apoio
 

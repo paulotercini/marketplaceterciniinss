@@ -22,7 +22,7 @@ O encerramento do PRP (art. 51 das Portarias DIRBEN) só ocorre nas hipóteses t
 
 ## 6. Cenário 5 — Retorno ao trabalho
 
-O retorno ao trabalho com função compatível encerra o PRP com certificado de reabilitação, nos termos do art. 53 das Portarias DIRBEN. Sem função compatível identificada, deve haver conversão em B91. A devolução do segurado ao mercado sem habilitação documentada é vedada.
+O retorno ao trabalho com função compatível encerra o PRP com certificado de reabilitação, nos termos do art. 53 das Portarias DIRBEN. Sem função compatível identificada, deve haver conversão em B32. A devolução do segurado ao mercado sem habilitação documentada é vedada.
 
 ## 7. Cenário 6 — Encaminhamento obrigatório à PMF
 
@@ -34,11 +34,11 @@ A Portaria 1.333/2026 admite reagendamento excepcional em até 30 dias, com moti
 
 ## 9. Cenário 8 — "Não necessita de RP"
 
-A conclusão de que o segurado "não necessita de RP" exige avaliação social, funcional e médica. Em ato puramente médico, sem assistente social e sem avaliação funcional, há nulidade. Em decorrência, deve-se requerer conversão em B91.
+A conclusão de que o segurado "não necessita de RP" exige avaliação social, funcional e médica. Em ato puramente médico, sem assistente social e sem avaliação funcional, há nulidade. Em decorrência, deve-se requerer conversão em B32.
 
-## 10. Cenário 9 — Conversão administrativa de B31 em B91
+## 10. Cenário 9 — Conversão administrativa de B31 em B32
 
-Comprovada a impossibilidade de reabilitação, o INSS deve converter o B31 em B91 sem novo requerimento. A exigência de novo DER configura barreira administrativa abusiva, violando o art. 6º III Lei 13.460/2017 e o Tema 1124 STJ.
+Comprovada a impossibilidade de reabilitação, o INSS deve converter o B31 em B32 sem novo requerimento. A exigência de novo DER configura barreira administrativa abusiva, violando o art. 6º III Lei 13.460/2017 e o Tema 1124 STJ.
 
 ## 11. Cenário 10 — Limbo previdenciário pós-RP
 

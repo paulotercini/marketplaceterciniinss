@@ -43,7 +43,7 @@ Nestes casos o empregador continua pagando o salário ou paga a diferença, e o 
 O trabalhador fica em gozo de benefício, o vínculo permanece, a qualidade de segurado é mantida (art. 15, I Lei 8.213/91), mas a competência não recebe salário-de-contribuição direto do empregador. **ATENÇÃO.** Há tese pró-segurado consolidada de que o período em gozo de auxílio-doença conta como tempo de contribuição quando INTERCALADO com períodos contributivos (Tema 998/STJ), mas o INSS resiste a computar administrativamente e o advogado precisa peticionar. Cruzar com `precedentes-previdenciarios`.
 
 - **01.** Acidente/Doença não relacionada ao trabalho (a partir do 16º dia, INSS assume via B31, mesmo antes o empregador paga integralmente).
-- **02.** Acidente do trabalho ou doença ocupacional (a partir do 16º dia, INSS via B91-acidentário ou nomenclatura nova B32).
+- **02.** Acidente do trabalho ou doença ocupacional (a partir do 16º dia, INSS via B91).
 - **03.** Acidente ou doença relacionada ao trabalho.
 - **05.** Aposentadoria por invalidez (na verdade, encerra o vínculo previdenciário para efeitos de novo tempo).
 - **17.** Licença-maternidade (quando paga integralmente pelo INSS a partir de determinados enquadramentos).

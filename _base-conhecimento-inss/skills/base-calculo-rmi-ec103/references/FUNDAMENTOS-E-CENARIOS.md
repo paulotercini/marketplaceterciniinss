@@ -12,7 +12,7 @@ Art. 26, §2º, II. Para aposentadoria do servidor público pela regra específi
 
 Art. 26, §3º, I. Para auxílio por incapacidade temporária (B31), 91% da média.
 
-Art. 26, §3º, II. Para aposentadoria por incapacidade permanente (B91) não acidentária, 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher). Para B91 acidentária, 100% da média (art. 26, §3º, III combinado com art. 26, §2º, II).
+Art. 26, §3º, II. Para aposentadoria por incapacidade permanente (B32) não acidentária, 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher). Para B92 acidentária, 100% da média (art. 26, §3º, III combinado com art. 26, §2º, II).
 
 Art. 26, §6º. Média calculada sobre 100% das contribuições desde julho de 1994 ou filiação posterior, sem descarte.
 
@@ -44,11 +44,11 @@ Média = R$ 3.000,00. Tempo excedente a 15 anos = 0. RMI = 60%. RMI = R$ 1.800,0
 
 Média = R$ 8.000,00. RMI = 100%. Se abaixo do teto, RMI = R$ 8.000,00. Se acima, teto vigente.
 
-### Cenário 4 — B91 não acidentária
+### Cenário 4 — B32 não acidentária
 
-Segurado com 22 anos de contribuição (homem). Média = R$ 4.000,00. RMI = 60% + 2% × 2 = 64%. RMI = R$ 2.560,00. Verificar possibilidade de conversão para B91 acidentária pelo Tema 1083 STJ (incapacidade preexistente agravada pela atividade).
+Segurado com 22 anos de contribuição (homem). Média = R$ 4.000,00. RMI = 60% + 2% × 2 = 64%. RMI = R$ 2.560,00. Verificar possibilidade de conversão para B92 acidentária pelo Tema 1083 STJ (incapacidade preexistente agravada pela atividade).
 
-### Cenário 5 — B91 acidentária
+### Cenário 5 — B92 acidentária
 
 Mesmo cenário anterior, mas com caráter acidentário reconhecido (doença profissional ou acidente de trabalho). RMI = 100% = R$ 4.000,00. Vantagem expressiva.
 
@@ -95,7 +95,7 @@ Quinto, inclusão de período especial não computado (acionar `auditoria-ppp`).
 
 Acionar `cnis-acerto-indicadores` para verificação de pendências.
 Acionar `auditoria-ppp` para tempo especial.
-Acionar `ntep-nexo-acidentario` para converter B91 em B91 acidentária ou B92.
+Acionar `ntep-nexo-acidentario` para converter B32 em B92.
 Acionar `reafirmacao-der` para postergação vantajosa.
 Acionar `impugnacao-cumprimento-concomitantes` para execução.
 Acionar `revisao-peticao` para revisar petição.

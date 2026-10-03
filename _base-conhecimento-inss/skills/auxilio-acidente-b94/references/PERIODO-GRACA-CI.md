@@ -21,7 +21,7 @@
 
 Segurado empregado na Olaria Pedro Ivo Ltda de 01/08/2018 a 20/02/2020. Após a demissão, refiliou-se como CI de 01/03/2020 a 31/05/2020 (3 contribuições). Em 29/05/2020, sofreu acidente doméstico. Recebeu auxílio por incapacidade temporária de 29/05/2020 a 18/11/2020. Requereu B94 em 19/11/2020.
 
-O acidente ocorreu apenas 3 meses após o fim do vínculo empregatício, dentro do período de graça de 12 meses. O INSS indeferiu com base no art. 18, §1º (CI não tem direito a B94). A Turma Recursal de SC manteve o indeferimento com base na tese anterior. A TNU reformou.
+O acidente ocorreu apenas 3 meses após o fim do vínculo empregatício, dentro do período de graça de 12 meses. O INSS indeferiu com base no art. 18, §1º (CI não tem direito ao auxílio-acidente). A Turma Recursal de SC manteve o indeferimento com base na tese anterior. A TNU reformou.
 
 ## 3. Fundamentos Normativos
 

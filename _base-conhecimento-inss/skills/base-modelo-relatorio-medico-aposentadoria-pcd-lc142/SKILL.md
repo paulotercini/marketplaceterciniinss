@@ -21,7 +21,7 @@ Impedimento de longo prazo.
 
 ## 2. Diferença fundamental do modelo PCD
 
-Diferentemente dos benefícios por incapacidade (B31/B91/B92), o foco do laudo para LC 142/2013 NÃO é a INCAPACIDADE para o trabalho, mas a DEFICIÊNCIA FUNCIONAL.
+Diferentemente dos benefícios por incapacidade (B31/B32/B91/B92), o foco do laudo para LC 142/2013 NÃO é a INCAPACIDADE para o trabalho, mas a DEFICIÊNCIA FUNCIONAL.
 
 O segurado pode CONTINUAR trabalhando. A LC 142/2013 reconhece o direito a uma aposentadoria mais cedo em razão da deficiência.
 
@@ -214,7 +214,7 @@ Após o médico preencher, validar com `base-validacao-formal-laudo-medico-check
 
 ## 11. O que NÃO está nesta skill
 
-Modelo para incapacidade B31/B91/B92 está em `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`.
+Modelo para incapacidade B31/B32/B91/B92 está em `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`.
 
 Modelo para auxílio-acidente B94 está em `base-modelo-relatorio-medico-auxilio-acidente-b94`.
 

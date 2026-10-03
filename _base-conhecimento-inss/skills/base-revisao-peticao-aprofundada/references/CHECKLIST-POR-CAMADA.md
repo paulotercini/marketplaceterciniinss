@@ -245,7 +245,7 @@ Ver o catálogo completo de 22 anti-patterns no arquivo `CATALOGO-ANTI-PATTERNS.
 - [ ] Temporalidade da prova (contemporaneidade ao período).
 - [ ] Início de prova material adequado.
 
-**Incapacidade B31/B91/B94.**
+**Incapacidade B31/B32/B91/B92/B94.**
 - [ ] Laudos médicos por especialidade adequada ao CID.
 - [ ] Análise documental conforme Portarias 13, 14 e 15/2026.
 - [ ] CID e laudo em consistência com a tese de incapacidade.

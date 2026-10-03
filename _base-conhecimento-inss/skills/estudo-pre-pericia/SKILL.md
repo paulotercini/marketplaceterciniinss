@@ -76,13 +76,13 @@ ESTUDO PRÉ-PERÍCIA — [NOME DO CLIENTE]
 
 ## Mapa do ponto decisivo por benefício
 
-### Incapacidade (B31, B91, B92)
+### Incapacidade (B31, B32, B91, B92)
 
 A equação é atividade habitual contra limitação. O perito não avalia doença, avalia se ESTA pessoa consegue exercer ESTA função. A reunião concentra em três coisas. O cliente sabe descrever a própria função em tarefas (quanto tempo em pé, quanto peso, qual movimento repetido). O cliente sabe ligar cada dor ou limitação a uma dessas tarefas. O cliente sabe contar a linha do tempo (quando começou, quando piorou, o que já tentou de tratamento).
 
 Detalhe que muda perícia, condições pessoais. Idade, escolaridade e histórico só de trabalho braçal entram na conversa quando a tese incluir a inviabilidade real de reabilitação (Súmula 47 da TNU).
 
-Em B91, acrescentar o prognóstico, por que não há perspectiva de voltar a nenhuma função compatível. Em acidentário (B91/B92), o nexo com o trabalho entra no roteiro (CAT, NTEP, história do acidente contada sempre do mesmo jeito).
+Em B32 ou B92, acrescentar o prognóstico, por que não há perspectiva de voltar a nenhuma função compatível. Em acidentário (B91/B92), o nexo com o trabalho entra no roteiro (CAT, NTEP, história do acidente contada sempre do mesmo jeito).
 
 ### BPC/LOAS (B87/B88)
 
@@ -116,7 +116,7 @@ Quando o ato agendado for administrativo, somar o reference PERICIA-ADMINISTRATI
 
 ## Relação de skills por benefício (consultar antes de redigir)
 
-Incapacidade. `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`, `base-incapacidade-acidentaria-b92`, `analise-documental-incapacidade`, `ntep-nexo-acidentario` e o reference INCAPACIDADE da `orientacao-cliente-pericia`.
+Incapacidade. `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `base-incapacidade-acidentaria-b92`, `analise-documental-incapacidade`, `ntep-nexo-acidentario` e o reference INCAPACIDADE da `orientacao-cliente-pericia`.
 
 BPC. `analise-bpc-loas`, `base-bpc-impedimento-longo-prazo` (com o reference da Portaria Conjunta 37/2026 conferida no DOU), `bpc-renda-grupo-familiar`, `base-lbi-inclusao-barreiras-lei13146` e o reference BPC-LOAS da `orientacao-cliente-pericia`.
 

@@ -106,7 +106,7 @@ Cruzamento. `defesa-probatoria-especial`, `base-tolueno-tema-382-tnu-via-cutanea
 
 ### 4.2. Cenário B. NTEP afastado pela TR
 
-Quadro. NTEP afastado, mantendo B31 puro. Cliente quer B92.
+Quadro. NTEP afastado, mantendo B31 puro. Cliente quer B91.
 
 Estratégia correta.
 
@@ -242,7 +242,7 @@ Risco processual. Argumentar cerceamento por ausência de perícia presencial.
 
 Solução. Reformular como divergência sobre a interpretação do art. 60, § 11-A, e das Portarias 13/2026.
 
-### 6.2. B91 (aposentadoria por incapacidade permanente)
+### 6.2. B32 (aposentadoria por incapacidade permanente)
 
 Direito material típico. Comprovação da incapacidade permanente e da insuscetibilidade de reabilitação.
 

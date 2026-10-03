@@ -1,6 +1,6 @@
 ---
 name: base-incapacidade-b31-temporaria
-description: "Auxílio por incapacidade temporária B31 pós EC 103, ótica exclusiva do segurado. Use SEMPRE que mencionar B31, auxílio-doença, art. 59 Lei 8.213, art. 60 §11-A, carência 12 meses, isenção art. 26 II, art. 151, DII DID, perícia documental, Portaria Conjunta 13/2026, Tema 1421 STF limbo, P1 P2 prorrogação, Alta Programada, cessação antecipada, restabelecimento B31, RMI 91% média, qualidade segurado, art. 27-A, art. 42 §2º, segurado especial rural, MEI B31, doméstica B31, Tema 246 TNU, Súmula 47 TNU, Súmula 77 TNU, trava três indeferimentos, 180 dias, agravamento, reabertura. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, periodo-graca-qualidade-segurado, ntep-nexo-acidentario, base-incapacidade-b91-permanente e orientacao-cliente-pericia."
+description: "Auxílio por incapacidade temporária B31 pós EC 103, ótica exclusiva do segurado. Use SEMPRE que mencionar B31, auxílio-doença, art. 59 Lei 8.213, art. 60 §11-A, carência 12 meses, isenção art. 26 II, art. 151, DII DID, perícia documental, Portaria Conjunta 13/2026, Tema 1421 STF limbo, P1 P2 prorrogação, Alta Programada, cessação antecipada, restabelecimento B31, RMI 91% média, qualidade segurado, art. 27-A, art. 42 §2º, segurado especial rural, MEI B31, doméstica B31, Tema 246 TNU, Súmula 47 TNU, Súmula 77 TNU, trava três indeferimentos, 180 dias, agravamento, reabertura. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com auditoria-laudo-pericial, analise-documental-incapacidade, peticao-previdenciaria, periodo-graca-qualidade-segurado, ntep-nexo-acidentario, base-incapacidade-b32-permanente e orientacao-cliente-pericia."
 ---
 
 # Auxílio por Incapacidade Temporária (B31) Pós EC 103/2019
@@ -59,9 +59,9 @@ Sempre pedir P1 antes da DCB. Acumular atestados, receitas e exames complementar
 
 Em caso de perícia documental com parecer desfavorável, recurso ao CRPS com novos documentos ou ação judicial com perícia médica judicial. Acionar `auditoria-laudo-pericial` para laudo pericial judicial.
 
-Sempre verificar a possibilidade de conversão em B91 quando a incapacidade se protrair ou se agravar. Acionar `base-incapacidade-b91-permanente`.
+Sempre verificar a possibilidade de conversão em B32 quando a incapacidade se protrair ou se agravar. Acionar `base-incapacidade-b32-permanente`.
 
-Em caso de doença ocupacional ou acidente de trabalho, verificar caráter acidentário para conversão em B91 acidentário (B91-A ou B92). Acionar `base-incapacidade-acidentaria-b92` e `ntep-nexo-acidentario`.
+Em caso de doença ocupacional ou acidente de trabalho, verificar caráter acidentário para conversão em B91 acidentário (ou B92, se permanente). Acionar `base-incapacidade-acidentaria-b92` e `ntep-nexo-acidentario`.
 
 ## MCPs da casa
 
@@ -81,7 +81,7 @@ Ao redigir peça, acione `peticao-previdenciaria`.
 Ao analisar perícia documental, acione `analise-documental-incapacidade`.
 Ao auditar laudo pericial, acione `auditoria-laudo-pericial`.
 Ao verificar qualidade de segurado, acione `periodo-graca-qualidade-segurado`.
-Ao converter para B91, acione `base-incapacidade-b91-permanente`.
+Ao converter para B32, acione `base-incapacidade-b32-permanente`.
 Ao atestar caráter acidentário, acione `ntep-nexo-acidentario` e `base-incapacidade-acidentaria-b92`.
 Ao orientar para perícia, acione `orientacao-cliente-pericia`.
 Ao buscar precedentes, acione `precedentes-previdenciarios`.
@@ -114,13 +114,13 @@ Hugo Goes, em Manual, detalha o B31 e adverte para a necessidade de P1 para evit
 
 Fábio Zambitte Ibrahim, em Curso, critica a trava da análise documental e defende o amplo direito à concessão quando há documentação médica consistente.
 
-Wladimir Novaes Martinez analisa a transitoriedade do benefício e defende a conversão em B91 quando houver prognóstico desfavorável.
+Wladimir Novaes Martinez analisa a transitoriedade do benefício e defende a conversão em B32 quando houver prognóstico desfavorável.
 
 O IBDP sustenta institucionalmente o direito do segurado à concessão ampla do B31 e à proteção durante a recuperação da capacidade laboral.
 
 ## Cruzamento com Onda 24
 
-Para validação formal de relatório médico de incapacidade pelo Checklist A do escritório (B31, B91, B92, B94), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
+Para validação formal de relatório médico de incapacidade pelo Checklist A do escritório (B31, B32, B91, B92, B94), acionar `base-validacao-formal-laudo-medico-checklist-ab`.
 
 ## PROGRAMA DE REVISÃO DE BENEFÍCIOS POR INCAPACIDADE DE LONGA DURAÇÃO - PRBI (Onda 49)
 
@@ -154,7 +154,7 @@ Cruzar com `base-facultativo-baixa-renda`, `perspectiva-genero-previdenciario` (
 
 ## O que NÃO está nesta skill
 
-Não está aqui a aposentadoria por incapacidade permanente B91, objeto de `base-incapacidade-b91-permanente`. Não está aqui o caráter acidentário B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.
+Não está aqui a aposentadoria por incapacidade permanente B32, objeto de `base-incapacidade-b32-permanente`. Não está aqui o caráter acidentário B91 ou B92, objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui a perícia documental em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`. Não está aqui o Checklist A de validação formal do laudo, objeto de `base-validacao-formal-laudo-medico-checklist-ab`.
 
 ## Janela de quinze dias do pedido de prorrogação (Onda 115)
 

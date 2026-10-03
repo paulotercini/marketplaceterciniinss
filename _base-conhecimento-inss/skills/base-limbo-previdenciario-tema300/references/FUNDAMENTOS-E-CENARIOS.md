@@ -103,7 +103,7 @@ Levantar CNIS do instituidor, RAIS, CTPS Digital e eventual RT. Se houver senten
 
 O limbo mantém a qualidade de segurado e permite alcançar DII posterior que o INSS considerava fora da manutenção. Cruzar com a DII fixada em perícia, atenção ao Tema 343 da TNU sobre a excepcionalidade de fixar a DII na data da perícia.
 
-Acionar `base-incapacidade-b31-temporaria` ou `base-incapacidade-b91-permanente`, e `auditoria-laudo-pericial`.
+Acionar `base-incapacidade-b31-temporaria` ou `base-incapacidade-b32-permanente`, e `auditoria-laudo-pericial`.
 
 ### Cenário E. Empregador declarou afastamento como suspensão contratual
 

@@ -122,9 +122,9 @@ Terceiro, em cessação antecipada, recurso ao CRPS ou ação judicial com pedid
 
 Quarto, em caso de perícia documental desfavorável, ação judicial com perícia judicial.
 
-Quinto, em caráter acidentário, converter B31 em B91 acidentário (B92 integral). Acionar `ntep-nexo-acidentario` e `base-incapacidade-acidentaria-b92`.
+Quinto, em caráter acidentário, converter B31 em B91 acidentário (ou B92 integral, se permanente). Acionar `ntep-nexo-acidentario` e `base-incapacidade-acidentaria-b92`.
 
-Sexto, em agravamento com prognóstico desfavorável, pedido subsidiário de B91. Acionar `base-incapacidade-b91-permanente`.
+Sexto, em agravamento com prognóstico desfavorável, pedido subsidiário de B32. Acionar `base-incapacidade-b32-permanente`.
 
 ## 4. Cláusulas doutrinárias de apoio
 
@@ -134,7 +134,7 @@ Hugo Goes, em Manual, detalha a isenção de carência e adverte para a rigidez 
 
 Fábio Zambitte Ibrahim, em Curso, critica a Alta Programada e defende a necessidade de perícia específica para cessação.
 
-Wladimir Novaes Martinez analisa a transitoriedade do B31 e defende conversão em B91 quando há prognóstico desfavorável.
+Wladimir Novaes Martinez analisa a transitoriedade do B31 e defende conversão em B32 quando há prognóstico desfavorável.
 
 O IBDP sustenta institucionalmente o direito do segurado à concessão ampla do B31 e à proteção durante o processo de recuperação.
 

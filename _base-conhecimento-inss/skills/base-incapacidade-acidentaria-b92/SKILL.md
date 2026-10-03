@@ -1,6 +1,6 @@
 ---
 name: base-incapacidade-acidentaria-b92
-description: "Aposentadoria por incapacidade permanente acidentária B92 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B92, auxílio-doença acidentário B91, acidente de trabalho, doença ocupacional, doença profissional, doença do trabalho, nexo acidentário, NTEP, CAT Comunicação Acidente Trabalho, art. 19 Lei 8.213, art. 20 Lei 8.213, art. 21 Lei 8.213, art. 21-A NTEP, Anexo II Decreto 3.048, Tema 862 STJ termo inicial B94, ADI 3931, Lista B, Lista C, concausa, acidente trajeto, equiparação acidente, art. 118 estabilidade, FGTS afastamento, RMI 100% acidentário, art. 26 §3º II EC 103, doença preexistente agravada, burnout QD85, transtorno mental ocupacional, PGR, NR-1 riscos psicossociais, responsabilidade empresa. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, base-incapacidade-b31-temporaria, base-incapacidade-b91-permanente e base-auxilio-acidente-b94-pos-reforma."
+description: "Aposentadoria por incapacidade permanente acidentária B92 pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar B92, auxílio-doença acidentário B91, acidente de trabalho, doença ocupacional, doença profissional, doença do trabalho, nexo acidentário, NTEP, CAT Comunicação Acidente Trabalho, art. 19 Lei 8.213, art. 20 Lei 8.213, art. 21 Lei 8.213, art. 21-A NTEP, Anexo II Decreto 3.048, Tema 862 STJ termo inicial B94, ADI 3931, Lista B, Lista C, concausa, acidente trajeto, equiparação acidente, art. 118 estabilidade, FGTS afastamento, RMI 100% acidentário, art. 26 §3º II EC 103, doença preexistente agravada, burnout QD85, transtorno mental ocupacional, PGR, NR-1 riscos psicossociais, responsabilidade empresa. Postura pró-segurado, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção), TJSP. Cruza com auditoria-laudo-pericial, peticao-previdenciaria, ntep-nexo-acidentario, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente e base-auxilio-acidente-b94-pos-reforma."
 ---
 
 Nota de convenção de espécies INSS: B31 = auxílio-doença previdenciário; B91 = auxílio-doença acidentário; B32 = aposentadoria por incapacidade permanente previdenciária; B92 = acidentária; B94 = auxílio-acidente.
@@ -10,7 +10,7 @@ Nota de convenção de espécies INSS: B31 = auxílio-doença previdenciário; B
 
 ## Escopo
 
-Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Orienta o reconhecimento do caráter acidentário (B91-A/B92 e B31 acidentário) sob o novo regime jurídico, com destaque para a RMI integral de 100%, o nexo técnico epidemiológico e as doenças ocupacionais. Objetivo único é defender o segurado, jamais a autarquia.
+Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Filho. Orienta o reconhecimento do caráter acidentário (B92 e B91) sob o novo regime jurídico, com destaque para a RMI integral de 100%, o nexo técnico epidemiológico e as doenças ocupacionais. Objetivo único é defender o segurado, jamais a autarquia.
 
 ## Marco normativo central
 
@@ -48,13 +48,13 @@ Terceiro, qualidade de segurado e carência, observadas as isenções do art. 26
 
 ## Cenários operacionais pró-segurado
 
-Primeiro, operário com LER/DORT (CID M65, M70, M75) em atividade com CNAE correspondente. NTEP automático. Conversão B31 em B91 acidentário (B92).
+Primeiro, operário com LER/DORT (CID M65, M70, M75) em atividade com CNAE correspondente. NTEP automático. Conversão B31 em B91 acidentário (ou B92).
 
 Segundo, trabalhador com depressão grave após assédio moral ou sobrecarga. Transtorno mental ocupacional (CID F32/F33) com nexo comprovado. B92 com RMI integral.
 
 Terceiro, burnout (CID QD85 na CID-11 ou Z73.0 na CID-10). Classificado como fenômeno ocupacional pela OMS. Portaria MTE 1.419/2024 inclui riscos psicossociais na NR-1. Nexo ocupacional comprovável.
 
-Quarto, acidente de trajeto com incapacidade. Art. 21, IV, d, Lei 8.213/91 equipara a acidente de trabalho. B92 devido, mesmo após MP 905/2019 (revogada).
+Quarto, acidente de trajeto com incapacidade. Art. 21, IV, d, Lei 8.213/91 equipara a acidente de trabalho. B91 ou B92 devido, mesmo após MP 905/2019 (revogada).
 
 Quinto, doença preexistente agravada pela atividade. O agravamento/concausa gera nexo acidentário (art. 21, I, da Lei 8.213/91, c/c arts. 42, §2º, e 59, §1º).
 
@@ -62,11 +62,11 @@ Sexto, segurado com CAT emitida. Presunção reforçada de acidentariedade, aind
 
 Sétimo, empresa sem emissão de CAT mas com documentação interna (PGR, LTCAT, PPP) que demonstra exposição. Nexo por via documental.
 
-Oitavo, aposentadoria por invalidez acidentária retroativa. Conversão de B91 não acidentário em B92, com recálculo da RMI para 100% da média.
+Oitavo, aposentadoria por invalidez acidentária retroativa. Conversão de B32 não acidentário em B92, com recálculo da RMI para 100% da média.
 
 ## Regra e estratégia
 
-A regra geral é que caráter acidentário gera RMI integral (100% no B92) e estabilidade pós-cessação (art. 118). O INSS tende a classificar como não acidentário (B31/B91) para reduzir a RMI. Sempre contestar a classificação.
+A regra geral é que caráter acidentário gera RMI integral (100% no B92) e estabilidade pós-cessação (art. 118). O INSS tende a classificar como não acidentário (B31/B32) para reduzir a RMI. Sempre contestar a classificação.
 
 Primeiro, verificar CNAE e CID para aplicação do NTEP.
 
@@ -97,14 +97,14 @@ Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já susten
 Ao redigir peça, acione `peticao-previdenciaria`.
 Ao analisar nexo, acione `ntep-nexo-acidentario`.
 Ao auditar laudo, acione `auditoria-laudo-pericial`.
-Ao converter B31 em B92, acione `base-incapacidade-b31-temporaria` e `base-incapacidade-b91-permanente`.
+Ao converter B31 em B92, acione `base-incapacidade-b31-temporaria` e `base-incapacidade-b32-permanente`.
 Ao tratar sequela (não incapacidade), acione `base-auxilio-acidente-b94-pos-reforma`.
 Ao calcular RMI, acione `base-calculo-rmi-ec103`.
 Ao verificar precedentes, acione `precedentes-previdenciarios`.
 
 ## Alertas
 
-Primeiro, a diferença entre RMI de B91 não acidentário (60% + 2%) e B92 (100%) é decisiva para o segurado. Sempre investigar caráter acidentário antes de conformar com classificação não acidentária.
+Primeiro, a diferença entre RMI de B32 não acidentário (60% + 2%) e B92 (100%) é decisiva para o segurado. Sempre investigar caráter acidentário antes de conformar com classificação não acidentária.
 
 Segundo, CAT pode ser emitida por médico assistente, sindicato, segurado ou autoridade pública, não dependendo da empresa. Sua ausência não afasta nexo, mas sua presença reforça.
 
@@ -134,4 +134,4 @@ O IBDP sustenta institucionalmente a proteção integral em caso de acidente ou 
 
 ## O que NÃO está nesta skill
 
-Não está aqui o B31 genérico não acidentário, objeto de `base-incapacidade-b31-temporaria`. Não está aqui o B91 não acidentário, objeto de `base-incapacidade-b91-permanente`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui o detalhamento procedimental da perícia, objeto de `base-pericia-medica-federal-telepericia`.
+Não está aqui o B31 genérico não acidentário, objeto de `base-incapacidade-b31-temporaria`. Não está aqui o B32 não acidentário, objeto de `base-incapacidade-b32-permanente`. Não está aqui o auxílio-acidente B94, objeto de `base-auxilio-acidente-b94-pos-reforma`. Não está aqui o detalhamento procedimental da perícia, objeto de `base-pericia-medica-federal-telepericia`.

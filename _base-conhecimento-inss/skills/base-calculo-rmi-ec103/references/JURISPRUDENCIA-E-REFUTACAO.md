@@ -88,11 +88,11 @@ Argumento adversário. Salários de contribuição anteriores a julho de 1994 n�
 
 Refutação. Tema 1102 STF, dentro dos limites da modulação. Cabível em benefícios concedidos até 13 de novembro de 2019 sem trânsito em julgado, observados os critérios fixados.
 
-### Argumento 5 — Desconsideração do caráter acidentário na B91
+### Argumento 5 — Desconsideração do caráter acidentário na B92
 
-Argumento adversário. A B91 é sempre calculada em 60% + 2% por ano excedente, sem integralidade.
+Argumento adversário. A B32 ou B92 é sempre calculada em 60% + 2% por ano excedente, sem integralidade.
 
-Refutação. Art. 26, §3º, III, da EC 103 combinado com §2º, II. B91 acidentária tem RMI de 100% da média. Acionar `ntep-nexo-acidentario` para conversão e `auditoria-laudo-pericial`.
+Refutação. Art. 26, §3º, III, da EC 103 combinado com §2º, II. B92 acidentária tem RMI de 100% da média. Acionar `ntep-nexo-acidentario` para conversão e `auditoria-laudo-pericial`.
 
 ### Argumento 6 — Pensão por morte com RMI fixa de 60%
 

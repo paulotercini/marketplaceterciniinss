@@ -1,6 +1,6 @@
 ---
 name: base-pericia-medica-federal-telepericia
-description: "Perícia Médica Federal e Teleperícia para benefícios por incapacidade e BPC, ótica pró-segurado. Use SEMPRE que mencionar perícia médica INSS, PMF, perito INSS, Teleperícia, Portaria DPMF/INSS 19/2026, videoconferência, telemedicina perícia, SAT Remoto, análise documental incapacidade, Portarias Conjuntas 13/2026, 14/2026 e 15/2026, parecer de verossimilhança, perícia presencial, perícia judicial, quesitos, assistente técnico, cerceamento Teleperícia, recusa Teleperícia, acessibilidade, acompanhante, impugnar laudo PMF, recurso CRPS laudo PMF, art. 60 §11-A. Cruza com auditoria-laudo-pericial, orientacao-cliente-pericia, peticao-previdenciaria, analise-documental-incapacidade, base-incapacidade-b31-temporaria, base-incapacidade-b91-permanente, base-incapacidade-acidentaria-b92, base-auxilio-acidente-b94-pos-reforma e analise-bpc-loas."
+description: "Perícia Médica Federal e Teleperícia para benefícios por incapacidade e BPC, ótica pró-segurado. Use SEMPRE que mencionar perícia médica INSS, PMF, perito INSS, Teleperícia, Portaria DPMF/INSS 19/2026, videoconferência, telemedicina perícia, SAT Remoto, análise documental incapacidade, Portarias Conjuntas 13/2026, 14/2026 e 15/2026, parecer de verossimilhança, perícia presencial, perícia judicial, quesitos, assistente técnico, cerceamento Teleperícia, recusa Teleperícia, acessibilidade, acompanhante, impugnar laudo PMF, recurso CRPS laudo PMF, art. 60 §11-A. Cruza com auditoria-laudo-pericial, orientacao-cliente-pericia, peticao-previdenciaria, analise-documental-incapacidade, base-incapacidade-b31-temporaria, base-incapacidade-b32-permanente, base-incapacidade-acidentaria-b92, base-auxilio-acidente-b94-pos-reforma e analise-bpc-loas."
 ---
 
 ## ATUALIZAÇÃO NORMATIVA (Etapa 5 da auditoria, 12/07/2026)
@@ -115,8 +115,8 @@ Ao auditar laudo, acione `auditoria-laudo-pericial`.
 Ao analisar perícia documental, acione `analise-documental-incapacidade`.
 Ao orientar o segurado, acione `orientacao-cliente-pericia`.
 Para B31, acione `base-incapacidade-b31-temporaria`.
-Para B91, acione `base-incapacidade-b91-permanente`.
-Para B92, acione `base-incapacidade-acidentaria-b92`.
+Para B32, acione `base-incapacidade-b32-permanente`.
+Para B91 ou B92, acione `base-incapacidade-acidentaria-b92`.
 Para B94, acione `base-auxilio-acidente-b94-pos-reforma`.
 Para BPC, acione `analise-bpc-loas` e `bpc-renda-grupo-familiar`.
 Para aposentadoria PCD, acione `aposentadoria-deficiencia`.
@@ -154,4 +154,4 @@ O IBDP sustenta institucionalmente o direito à perícia adequada e ao laudo fun
 
 ## O que NÃO está nesta skill
 
-Não está aqui a auditoria de laudos específicos, objeto de `auditoria-laudo-pericial`. Não estão aqui as regras específicas de cada benefício (B31/B91/B92/B94), objeto de skills temáticas próprias. Não está aqui a avaliação biopsicossocial do BPC em detalhe, objeto de `analise-bpc-loas`. Não está aqui a orientação direta ao segurado, objeto de `orientacao-cliente-pericia`.
+Não está aqui a auditoria de laudos específicos, objeto de `auditoria-laudo-pericial`. Não estão aqui as regras específicas de cada benefício (B31/B32/B91/B92/B94), objeto de skills temáticas próprias. Não está aqui a avaliação biopsicossocial do BPC em detalhe, objeto de `analise-bpc-loas`. Não está aqui a orientação direta ao segurado, objeto de `orientacao-cliente-pericia`.

@@ -154,7 +154,7 @@ Cruzamento com `base-b94-nexo-acidentario-ntep` e `ntep-nexo-acidentario`.
 
 Laudo de "incapacidade". B94 NÃO é incapacidade, é REDUÇÃO de capacidade. Médico não pode redigir como se fosse B31/B91.
 
-Laudo sem consolidação. Se a lesão ainda está em tratamento sem consolidação, é B31, não B94. Documentar a consolidação.
+Laudo sem consolidação. Se a lesão ainda está em tratamento sem consolidação, é B31 ou B91, não B94. Documentar a consolidação.
 
 Laudo sem nexo. Sem afirmação expressa do nexo causal, perícia indefere a tese acidentária.
 
@@ -218,7 +218,7 @@ Eu gero o relatório personalizado em formato .docx pronto para entrega ao médi
 
 ## 12. O que NÃO está nesta skill
 
-Modelo para incapacidade B31/B91/B92 está em `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`.
+Modelo para incapacidade B31/B32/B91/B92 está em `base-modelo-relatorio-medico-incapacidade-b31-b91-b92`.
 
 Modelo para aposentadoria PCD está em `base-modelo-relatorio-medico-aposentadoria-pcd-lc142`.
 

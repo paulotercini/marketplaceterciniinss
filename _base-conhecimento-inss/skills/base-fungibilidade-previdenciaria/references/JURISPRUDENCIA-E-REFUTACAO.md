@@ -96,7 +96,7 @@ Súmula 41/TNU. Atividade urbana de membro da família não descaracteriza, por 
 
 Súmula 46/TNU. Atividade urbana intercalada não impede o benefício rural.
 
-Súmula 47/TNU. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez". Instrumento poderoso para impedir conversão B91 em B31.
+Súmula 47/TNU. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez". Instrumento poderoso para impedir conversão B32 em B31.
 
 Súmula 73/TNU. Não é exigida atividade ininterrupta na carência rural.
 

@@ -1,4 +1,4 @@
-# Sub-Modelos por Especialidade. Incapacidade B31, B91 e B92
+# Sub-Modelos por Especialidade. Incapacidade B31, B32, B91 e B92
 
 **Onda 165 (03/10/2026).** O relatório entregue ao médico segue a extensão e a ordem do `MODELO-BASE.md` curto, de meia a uma página e sem citar lei. Os sub-modelos abaixo servem como banco de conteúdo por especialidade, para escolher os achados, exames e verbos de cada área, e não como forma a copiar inteira.
 
@@ -97,7 +97,7 @@ O prognóstico funcional é [reservado / desfavorável], considerando o tempo de
 
 **Data de início da incapacidade e duração estimada**
 
-A DII é fixada em [DD/MM/AAAA], conforme [primeira consulta psiquiátrica / internação / afastamento documentado]. Recomenda-se afastamento por [X dias / X meses / por tempo indeterminado]. [Permanente, B32 ou B92: paciente insuscetível de reabilitação profissional]. [Para B92: nexo causal com o ambiente laboral documentado por (CAT, histórico ocupacional, perícia ergonômica)].
+A DII é fixada em [DD/MM/AAAA], conforme [primeira consulta psiquiátrica / internação / afastamento documentado]. Recomenda-se afastamento por [X dias / X meses / por tempo indeterminado]. [Permanente, B32 ou B92: paciente insuscetível de reabilitação profissional]. [Para B91 ou B92: nexo causal com o ambiente laboral documentado por (CAT, histórico ocupacional, perícia ergonômica)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -139,7 +139,7 @@ O prognóstico funcional é desfavorável. A [fibromialgia é doença crônica s
 
 **Data de início da incapacidade e duração estimada**
 
-A DII é fixada em [DD/MM/AAAA], conforme [primeiro diagnóstico reumatológico documentado]. Recomenda-se afastamento [por tempo indeterminado, tendo em vista a natureza crônica da patologia]. [Para B91: paciente insuscetível de reabilitação profissional, em razão da cronicidade e da ausência de remissão após X anos de tratamento]. [Para B92: doença reconhecida como ocupacional pela exposição a (fatores de risco)].
+A DII é fixada em [DD/MM/AAAA], conforme [primeiro diagnóstico reumatológico documentado]. Recomenda-se afastamento [por tempo indeterminado, tendo em vista a natureza crônica da patologia]. [Para B32 ou B92: paciente insuscetível de reabilitação profissional, em razão da cronicidade e da ausência de remissão após X anos de tratamento]. [Para B91 ou B92: doença reconhecida como ocupacional pela exposição a (fatores de risco)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -179,7 +179,7 @@ O prognóstico funcional é [reservado / desfavorável], considerando a natureza
 
 **Data de início da incapacidade e duração estimada**
 
-A DII é fixada em [DD/MM/AAAA], conforme [internação documentada / descompensação clínica / instituição de tratamento intensivo]. Recomenda-se afastamento por [X meses / por tempo indeterminado]. [Para B91: insuscetibilidade de reabilitação, em razão da progressão das complicações sistêmicas]. [Para B92: nexo causal com (atividade laboral ou exposição ocupacional)].
+A DII é fixada em [DD/MM/AAAA], conforme [internação documentada / descompensação clínica / instituição de tratamento intensivo]. Recomenda-se afastamento por [X meses / por tempo indeterminado]. [Para B32 ou B92: insuscetibilidade de reabilitação, em razão da progressão das complicações sistêmicas]. [Para B91 ou B92: nexo causal com (atividade laboral ou exposição ocupacional)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -218,7 +218,7 @@ A perda visual compromete [autocuidado, mobilidade autônoma, leitura, manuseio 
 
 **Data de início da incapacidade e duração estimada**
 
-A DII é fixada em [DD/MM/AAAA], conforme [piora documentada na acuidade visual / descolamento de retina / cegueira instalada]. Recomenda-se afastamento [por X meses / por tempo indeterminado]. [Para B91: paciente insuscetível de reabilitação visual, em razão de (irreversibilidade da lesão)]. [Para B92: nexo causal com (acidente ocular, exposição ocupacional a químicos, radiação)].
+A DII é fixada em [DD/MM/AAAA], conforme [piora documentada na acuidade visual / descolamento de retina / cegueira instalada]. Recomenda-se afastamento [por X meses / por tempo indeterminado]. [Para B32 ou B92: paciente insuscetível de reabilitação visual, em razão de (irreversibilidade da lesão)]. [Para B91 ou B92: nexo causal com (acidente ocular, exposição ocupacional a químicos, radiação)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -257,7 +257,7 @@ A cardiopatia compromete [tolerância ao esforço (NYHA III/IV inviabiliza ativi
 
 **Data de início da incapacidade e duração estimada**
 
-A DII é fixada em [DD/MM/AAAA], conforme [internação por IAM / descompensação aguda / implante de dispositivo]. Recomenda-se afastamento [por X meses / por tempo indeterminado]. [Para B91: insuscetibilidade de reabilitação cardíaca, com manutenção de classe funcional NYHA III/IV após terapia otimizada]. [Para B92: nexo causal com (estresse ocupacional, exposição a fatores de risco)].
+A DII é fixada em [DD/MM/AAAA], conforme [internação por IAM / descompensação aguda / implante de dispositivo]. Recomenda-se afastamento [por X meses / por tempo indeterminado]. [Para B32 ou B92: insuscetibilidade de reabilitação cardíaca, com manutenção de classe funcional NYHA III/IV após terapia otimizada]. [Para B91 ou B92: nexo causal com (estresse ocupacional, exposição a fatores de risco)].
 
 [Local], [DD] de [mês] de [ano].
 

@@ -334,7 +334,7 @@ Esta camada é especialmente crítica em.
 - BPC/LOAS (cruzamento de IFBrM/TCQ com prontuários).
 - Reconhecimento de tempo rural (início de prova material + testemunhas).
 - Reconhecimento de união estável (prova material + temporalidade).
-- Incapacidade B31/B91/B94 (laudos médicos + análise documental Portarias 13-15/2026).
+- Incapacidade B31/B32/B91/B92/B94 (laudos médicos + análise documental Portarias 13-15/2026).
 
 ### Camada 6 - Orçamento de Extensão e Legibilidade (Onda 120)
 
@@ -654,7 +654,7 @@ Razão da regra. Atribuir a autor vivo uma tese que ele não escreveu é o mesmo
 |---|---|
 | Agente nocivo, PPP, LTCAT, EPI, conversão, aposentadoria especial | `jurista-tempo-especial` |
 | Segurado especial, rural, híbrida, prova material, pescador | `jurista-rural` |
-| B31, B91, B92, perícia, nexo, reabilitação, limbo (sem B94) | `jurista-incapacidade` |
+| B31, B32, B91, B92, perícia, nexo, reabilitação, limbo (sem B94) | `jurista-incapacidade` |
 | B94, sequela, consolidação, redução da capacidade, Anexo III, integração ao SB | `jurista-auxilio-acidente` |
 | LC 142, IF-BrA, Fuzzy, grau, DID retroativa, conversão por grau | `jurista-aposentadoria-pcd` |
 | BPC, LOAS, miserabilidade, grupo familiar, IFBrM, CadÚnico, irrepetibilidade | `jurista-bpc-loas` |
@@ -672,9 +672,9 @@ Razão da regra. Atribuir a autor vivo uma tese que ele não escreveu é o mesmo
 
 ### Regras de disparo
 
-Fronteiras que NÃO se cruzam, sob pena de conferência errada. B31, B91 e B92 são do `jurista-incapacidade`, que avalia INCAPACIDADE. O B94 é do `jurista-auxilio-acidente`, que avalia REDUÇÃO da capacidade e benefício de natureza indenizatória. A LC 142 é do `jurista-aposentadoria-pcd`, benefício CONTRIBUTIVO que avalia FUNCIONALIDADE pelo IF-BrA. O BPC é do `jurista-bpc-loas`, benefício ASSISTENCIAL avaliado pelo IFBrM e por vulnerabilidade econômica. Quatro regimes de reconhecimento distintos, quatro agentes.
+Fronteiras que NÃO se cruzam, sob pena de conferência errada. B31, B32, B91 e B92 são do `jurista-incapacidade`, que avalia INCAPACIDADE. O B94 é do `jurista-auxilio-acidente`, que avalia REDUÇÃO da capacidade e benefício de natureza indenizatória. A LC 142 é do `jurista-aposentadoria-pcd`, benefício CONTRIBUTIVO que avalia FUNCIONALIDADE pelo IF-BrA. O BPC é do `jurista-bpc-loas`, benefício ASSISTENCIAL avaliado pelo IFBrM e por vulnerabilidade econômica. Quatro regimes de reconhecimento distintos, quatro agentes.
 
-Caso comum de disparo duplo. Ação de B31 ou B91 cujo laudo aponta sequela consolidada sem incapacidade pede TAMBÉM o `jurista-auxilio-acidente`, para conferir o pedido sucessivo de B94.
+Caso comum de disparo duplo. Ação de B31 ou B32 cujo laudo aponta sequela consolidada sem incapacidade pede TAMBÉM o `jurista-auxilio-acidente`, para conferir o pedido sucessivo de B94.
 
 Zero. O `jurista-vulnerabilidade-genero` é TRANSVERSAL e não compete com os demais. Dispare-o SEMPRE que houver segurada mulher em contexto rural, informal ou doméstico, pessoa com deficiência, idoso, analfabeto ou qualquer hipossuficiência probatória, EM ACRÉSCIMO ao jurista do tema.
 

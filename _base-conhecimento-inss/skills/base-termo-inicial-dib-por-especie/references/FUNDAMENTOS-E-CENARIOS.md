@@ -24,7 +24,7 @@ DIB na DER (art. 49). Possibilidade de reafirmação.
 
 DIB na DER ou afastamento da atividade especial.
 
-## 7. Cenário 6 — Aposentadoria por incapacidade permanente (B91)
+## 7. Cenário 6 — Aposentadoria por incapacidade permanente (B32)
 
 DIB no afastamento ou DER conforme art. 60 c/c 49.
 

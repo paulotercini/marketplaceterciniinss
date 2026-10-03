@@ -40,7 +40,7 @@ Razoável duração do processo.
 
 Conversão para B26.
 
-### Cenário B — B91 com possibilidade de reabilitação
+### Cenário B — B32 com possibilidade de reabilitação
 
 Conversão para B26.
 
@@ -112,4 +112,4 @@ Quinto, ação judicial em alta indevida.
 
 ## 10. Integração prática
 
-`base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`, `analise-documental-incapacidade`, `peticao-previdenciaria`, `ntep-nexo-acidentario`.
+`base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `analise-documental-incapacidade`, `peticao-previdenciaria`, `ntep-nexo-acidentario`.
