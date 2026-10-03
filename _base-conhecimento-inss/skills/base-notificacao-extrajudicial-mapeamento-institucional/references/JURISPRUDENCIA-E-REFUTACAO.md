@@ -12,11 +12,9 @@ Aplicação. Quando há requerimento prévio (mesmo que viciado) e omissão na c
 
 RE 1.171.152/SC. Acordo homologado. Parâmetro nacional de 90 dias para análise de requerimentos previdenciários.
 
-## 2. STF. Razoável duração do processo administrativo
+## 2. CF. Razoável duração do processo administrativo
 
-ADI 6038. Reafirma o art. 5º, LXXVIII, CF.
-
-A razoável duração do processo é direito fundamental autônomo. Sua violação enseja MS imediato.
+Art. 5º, LXXVIII, CF. Assegura a razoável duração do processo no âmbito judicial e administrativo (auditoria 03/10/2026, retirada a ADI 6038, que julgou lei alagoana sobre ensino).
 
 ## 3. STJ. Polo passivo em MS contra INSS
 
@@ -74,9 +72,9 @@ Art. 24. Aplicação subsidiária do CPC.
 
 Art. 26. Comportamento do impetrado.
 
-## 8. Súmula 376 STJ. Competência
+## 8. Competência
 
-A Justiça Federal é competente para causas em que o INSS seja parte. Foro do domicílio do autor (CF art. 109, §2º) ou do domicílio funcional da autoridade coatora (Lei 12.016/2009, art. 2º).
+A Justiça Federal é competente para causas em que o INSS seja parte (CF, art. 109, I). A Súmula 376 STJ não rege o tema, pois cuida do MS contra ato de juizado especial (auditoria 03/10/2026). Foro do domicílio do autor (CF art. 109, §2º) ou do domicílio funcional da autoridade coatora (Lei 12.016/2009, art. 2º).
 
 ## 9. Refutação a alegações comuns do INSS em MS por omissão
 

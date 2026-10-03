@@ -28,7 +28,7 @@ IN 128/2022.
 
 ### ADI 5760 STF
 
-Constitucionalidade.
+Objeto real. Declarou inconstitucional o art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91 (Rel. Min. Alexandre de Moraes, 13/09/2019, unânime). Não sustenta tese sobre aposentadoria da pessoa com deficiência nem sobre a avaliação biopsicossocial (auditoria 03/10/2026).
 
 ### Tema 173 TNU
 

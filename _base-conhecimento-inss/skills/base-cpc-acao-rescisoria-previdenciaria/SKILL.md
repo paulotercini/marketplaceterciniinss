@@ -37,7 +37,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Enunciado 44 FONAJEF
 
-Não cabe ação rescisória no JEF, Enunciado 44 da lista de 2014 [NÃO CONFIRMADO], em linha com o art. 59 da Lei 9.099/1995. A vedação não alcança o procedimento comum, em que a rescisória segue cabível no TRF, art. 966 do CPC (auditoria 03/10/2026).
+Não cabe ação rescisória no JEF, Enunciado 44 FONAJEF (lista completa do CJF, arquivo de 17/02/2016), em linha com o art. 59 da Lei 9.099/1995. A vedação não alcança o procedimento comum, em que a rescisória segue cabível no TRF, art. 966 do CPC (auditoria 03/10/2026).
 
 ### Súmula 343 STF
 

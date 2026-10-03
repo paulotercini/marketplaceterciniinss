@@ -2,7 +2,7 @@
 
 ## 1. Marco normativo aplicável
 
-CF/88, arts. 5º X, 37 §6º. CC, arts. 186 e 927. Lei 8.213/91, arts. 71 a 75 (responsabilidade do INSS pela liquidação). Súmula 387 STJ. Súmula 326 STJ.
+CF/88, arts. 5º X, 37 §6º. CC, arts. 186 e 927. Lei 8.213/91, arts. 71 a 75 (responsabilidade do INSS pela liquidação). Súmula 37 STJ (auditoria 03/10/2026). Súmula 326 STJ.
 
 ## 2. Cenário 1 — Cessação indevida de auxílio-doença
 
@@ -18,7 +18,7 @@ INSS exige reiteradamente documentos já apresentados, prolongando indevidamente
 
 ## 5. Cenário 4 — Falso indício de fraude
 
-INSS suspende benefício por suposta fraude sem prova ou apuração. Súmula 160 TFR e jurisprudência consolidada admitem dano moral.
+INSS suspende benefício por suposta fraude sem prova ou apuração. A Súmula 160 TFR exige apuração em procedimento administrativo antes da suspensão [NÃO CONFIRMADO], e o dano moral vem da jurisprudência, não da súmula (auditoria 03/10/2026).
 
 ## 6. Cenário 5 — Perícia humilhante
 

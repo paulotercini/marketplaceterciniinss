@@ -26,7 +26,7 @@ Resoluções CJF.
 
 ### Tema 810 STF
 
-IPCA-E e juros poupança, com modulação.
+IPCA-E [NÃO CONFIRMADO] e juros poupança, sem modulação (embargos rejeitados em 03/10/2019) (auditoria 03/10/2026).
 
 ### Tema 905 STJ
 

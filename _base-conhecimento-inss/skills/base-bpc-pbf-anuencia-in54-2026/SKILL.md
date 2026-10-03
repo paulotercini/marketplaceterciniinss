@@ -215,8 +215,6 @@ Decreto 12.534/2025. VIGENTE.
 
 Lei 14.601/2023. VIGENTE.
 
-ADI 7765 (em construção). Pendente análise de constitucionalidade do Decreto 12.534/2025. Aguardar julgamento.
-
 ## 13. Cruzamento com outras skills
 
 `analise-bpc-loas` para análise técnica.

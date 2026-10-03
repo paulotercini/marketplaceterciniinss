@@ -12,7 +12,7 @@ Reforma de tutela antecipada. Tese adversa: obriga a devolução, por desconto d
 
 ### Súmula 34/AGU
 
-Boa-fé na percepção de valores. Fonte oficial em https://www.gov.br/agu
+Trata de servidor público que recebe de boa-fé valores pagos por errônea interpretação da lei pela Administração. A redação da Portaria AGU 516/2025 admite o ressarcimento em erro de cálculo ou operacional, salvo boa-fé objetiva comprovada. No RGPS a súmula serve só por analogia, ao lado do Tema 979/STJ (auditoria 03/10/2026). Fonte oficial em https://www.gov.br/agu/pt-br/composicao/cgu/cgu/sumula
 
 ### CF, art. 5º, LV (auditoria 03/10/2026)
 
@@ -54,7 +54,7 @@ Refutação. Art. 115 Lei 8.213 limita a 30%.
 
 Argumento adversário. Recebimento indevido demonstra má-fé.
 
-Refutação. Presunção juris tantum de boa-fé. Súmula 34/AGU.
+Refutação. Presunção juris tantum de boa-fé. Súmula 34/AGU, por analogia, pois trata de servidor público (auditoria 03/10/2026).
 
 ### Argumento 5 — Sem contraditório prévio
 
@@ -72,7 +72,7 @@ Refutação. Benefício previdenciário é alimentar.
 
 Argumento adversário. Súmula é interna.
 
-Refutação. STJ adota orientação. AGU vinculou.
+Refutação. STJ adota orientação. AGU vinculou seus órgãos jurídicos, mas o enunciado trata de servidor público e no RGPS serve só por analogia, ao lado do Tema 979/STJ (auditoria 03/10/2026).
 
 ### Argumento 8 — Tema 692 STJ afasta a boa-fé
 

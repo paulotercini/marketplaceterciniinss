@@ -358,7 +358,7 @@ Em BPC para menor de 16 anos com TEA (situação muito frequente), aplicar o **A
 
 ### Síntese da jurisprudência aplicável ao TEA no BPC
 
-**Tema 27/STF** (RE 567.985 e RE 580.963, j. 18/04/2013) flexibiliza o critério de 1/4 do salário mínimo para miserabilidade. **Tema 185/STJ** (REsp 1.112.557/MG, j. 28/10/2009) admite prova ampla da miserabilidade. **Súmula 79/TNU** exige laudo de assistente social ou auto de constatação. **Súmula 80/TNU** exige avaliação social por assistente social "ou outras providências aptas a revelar a efetiva condição vivida no meio social" (PUIL 1005655-57.2022.4.01.3602), vedando indeferimento por perícia médica isolada (auditoria 03/10/2026). **Tema 173/TNU** exige impedimento de longo prazo com duração mínima de 2 anos (auditoria 03/10/2026). **Tema 299/TNU** trata da análise social do núcleo familiar para menor de 16. **Tema 376/TNU** fixou que o diagnóstico de TEA não dispensa a avaliação biopsicossocial (auditoria 03/10/2026). **TRF3, ApCiv 5000875-90.2025.4.03.6141** (7ª Turma, Rel. Des. Federal Inês Virgínia Prado Soares, j. 07/11/2025) declarou ilegal a negativa de BPC com fundamento genérico de que "autismo não é deficiência". **Não foi localizado precedente vinculante específico do STF, STJ ou TNU sobre o efeito da migração CID-10 → CID-11 em direito previdenciário ou assistencial já constituído** — direito adquirido sob CID-10 deve ser sustentado por argumentação principiológica (CF art. 5º XXXVI, LINDB art. 6º).
+**Tema 27/STF** (RE 567.985 e RE 580.963, j. 18/04/2013) flexibiliza o critério de 1/4 do salário mínimo para miserabilidade. **Tema 185/STJ** (REsp 1.112.557/MG, j. 28/10/2009) admite prova ampla da miserabilidade. **Súmula 79/TNU** exige laudo de assistente social ou auto de constatação e, inviabilizados esses meios, admite prova testemunhal (auditoria 03/10/2026). **Súmula 80/TNU** exige avaliação social por assistente social "ou outras providências aptas a revelar a efetiva condição vivida no meio social" (PUIL 1005655-57.2022.4.01.3602) (auditoria 03/10/2026). **Tema 173/TNU** exige impedimento de longo prazo com duração mínima de 2 anos (auditoria 03/10/2026). **Tema 299/TNU** trata da análise social do núcleo familiar para menor de 16. **Tema 376/TNU** fixou que o diagnóstico de TEA não dispensa a avaliação biopsicossocial (auditoria 03/10/2026). **TRF3, ApCiv 5000875-90.2025.4.03.6141** (7ª Turma, Rel. Des. Federal Inês Virgínia Prado Soares, j. 07/11/2025) declarou ilegal a negativa de BPC com fundamento genérico de que "autismo não é deficiência". **Não foi localizado precedente vinculante específico do STF, STJ ou TNU sobre o efeito da migração CID-10 → CID-11 em direito previdenciário ou assistencial já constituído** — direito adquirido sob CID-10 deve ser sustentado por argumentação principiológica (CF art. 5º XXXVI, LINDB art. 6º).
 
 ## Estrutura do Relatório de Análise
 
@@ -479,7 +479,7 @@ Teto de o parecer de análise, 2 páginas, domínio a domínio só onde houver g
 
 ## Médicos Conferentes, acionamento obrigatório (Onda 141)
 
-Na avaliação biopsicossocial do BPC, o médico da área traduz a condição clínica para os domínios da Portaria Conjunta 2/2014 e para os gatilhos do TCQ. Despachar com os documentos antes de fechar a análise.
+Na avaliação biopsicossocial do BPC, o médico da área traduz a condição clínica para os domínios da Portaria Conjunta 2/2015 (auditoria 03/10/2026) e para os gatilhos do TCQ. Despachar com os documentos antes de fechar a análise.
 
 | Se os documentos tratarem de | Despachar ao agente |
 |---|---|

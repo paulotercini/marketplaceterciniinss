@@ -39,7 +39,7 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Tema 1091 STF
 
-Professor e magistério.
+Constitucionalidade do fator previdenciário (RE 1.221.630, trânsito em 27/06/2020). Tese. "É constitucional o fator previdenciário previsto no art. 29, caput, incisos e parágrafos, da Lei nº 8.213/91, com a redação dada pelo art. 2º da Lei nº 9.876/99." Tese adversa. Só pesa no benefício calculado com fator, como a aposentadoria por tempo de contribuição com requisitos reunidos entre a Lei 9.876/99 e a EC 103/2019; nas regras de transição do professor o valor segue o art. 26 da EC 103/2019, sem fator (auditoria 03/10/2026).
 
 ## Lei 15.326/2026
 

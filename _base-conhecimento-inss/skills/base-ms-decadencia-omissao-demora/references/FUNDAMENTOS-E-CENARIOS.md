@@ -34,7 +34,7 @@ Duração razoável PA.
 
 ### Tema 374 STF
 
-Foro.
+Foro do art. 109, §2º, CF nas ações contra autarquias federais, à escolha do autor. A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ## 5. Cenários pró-segurado
 

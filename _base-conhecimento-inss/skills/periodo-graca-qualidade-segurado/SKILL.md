@@ -63,7 +63,7 @@ O segurado que comprova mais de 120 contribuições mensais sem interrupção qu
 
 **TRF4, AC 5015395-67.2021.4.04.7208/SC** (9ª Turma, Rel. Des. Paulo Afonso Brum Vaz, j. 16/05/2023) — confirmou a tese de incorporação ao patrimônio jurídico em caso de pensão por morte, negando apelação do INSS por unanimidade. A prorrogação é exercível a qualquer tempo, sendo irrelevante a posterior perda e readquisição da qualidade.
 
-**ALERTA — Tema 1352/STJ [PENDENTE]** (Rel. Min. Paulo Sérgio Domingues, REsp 2.188.858/SP e outros, afetação em junho/2025). O STJ definirá se a prorrogação por 120 contribuições se incorpora ao patrimônio jurídico para uso ilimitado ou se é de exercício único. A 2ª Turma do STJ (REsp 1.517.010/SP) sinalizou interpretação restritiva. Processos em segunda instância e no STJ estão **suspensos**. A TNU abriu Tema 338 para revisão do Tema 255 à luz dessa jurisprudência superveniente. RISCO RELEVANTE de reversão.
+**ALERTA — Tema 1352/STJ [PENDENTE]** (Rel. Min. Paulo Sérgio Domingues, REsp 2.188.858/SP e outros, afetação em junho/2025). O STJ definirá se a prorrogação por 120 contribuições se incorpora ao patrimônio jurídico para uso ilimitado ou se é de exercício único. A 2ª Turma do STJ (REsp 1.517.010/SP) sinalizou interpretação restritiva. A suspensão alcança apenas os recursos especiais e os agravos em recurso especial (auditoria 03/10/2026). A TNU abriu Tema 338 para revisão do Tema 255 à luz dessa jurisprudência superveniente. RISCO RELEVANTE de reversão.
 
 ### 2.2 Prorrogação por desemprego involuntário (§2º)
 
@@ -169,7 +169,7 @@ A carência de reingresso (art. 27-A da Lei 8.213/91) varia conforme a norma vig
 
 **18/06/2019 em diante** (Lei 13.846/2019) — 1/2 da carência. Auxílio-incapacidade exige 6. Salário-maternidade exigia 5, regra superada conforme o parágrafo seguinte (auditoria 03/10/2026). Auxílio-reclusão exige 12.
 
-**Salário-maternidade a partir de 05/04/2024** — não exige mais carência (ADI 2.110/STF), tornando irrelevante a questão do reingresso para este benefício. O Enunciado 19/CRPS (Resolução CRPS nº 13/2026, vigente desde 13/07/2026) confirma a inexigibilidade e mantém a prova da qualidade de segurada (auditoria 03/10/2026).
+**Salário-maternidade.** Não exige mais carência (ADI 2.110/STF, julgada em 21/03/2024), o que torna irrelevante a questão do reingresso para este benefício. O registro do portal do STF não mostra modulação para a carência [NÃO CONFIRMADO quanto à ausência de modulação, inteiro teor não lido], e 05/04/2024, data da ata, é o corte da irrepetibilidade na revisão da vida toda, não marco desta regra (auditoria 03/10/2026). O Enunciado 19/CRPS (Resolução CRPS nº 13/2026, vigente desde 13/07/2026) confirma a inexigibilidade e mantém a prova da qualidade de segurada (auditoria 03/10/2026).
 
 ## 5. §4º DO ART. 15 — EXTENSÃO ATÉ O VENCIMENTO DA CONTRIBUIÇÃO SEGUINTE
 

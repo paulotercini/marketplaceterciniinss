@@ -30,7 +30,7 @@ O Tema 382 rejeitou essa tese, que não pode ser usada em peça (auditoria 03/10
 
 Súmula 9/TNU, específica do ruído e aplicável aqui só por analogia, e Tema 555/STF aplicáveis ao EPI (auditoria 03/10/2026).
 
-Aplicação subsidiária ao tolueno do Anexo 13.
+Aplicação subsidiária à eficácia do EPI no tolueno com medição acima do limite do Anexo 11, já que o Tema 382/TNU afastou a análise qualitativa pelo Anexo 13 (auditoria 03/10/2026).
 
 ### 2.2. Precedentes não localizados
 
@@ -52,9 +52,9 @@ Aplicação. Pode-se demonstrar a ineficácia do EPI fornecido para tolueno cut�
 
 Tese. EPI eficaz pode descaracterizar a especialidade.
 
-Excepcionalmente, a especialidade não é descaracterizada para certos agentes (ruído, agentes biológicos, hidrocarbonetos do Anexo 13 por absorção cutânea).
+Excepcionalmente, a declaração de EPI eficaz no PPP não descaracteriza a especialidade no ruído acima do limite de tolerância (item II da tese). A tese não estende essa exceção aos hidrocarbonetos por absorção cutânea (auditoria 03/10/2026).
 
-Aplicação. EPI ineficaz para hidrocarbonetos aromáticos do Anexo 13.
+Aplicação. Para o tolueno, a ineficácia do EPI se prova no caso concreto. O item II do Tema 1090/STJ é adverso, pois põe esse ônus no autor; o caminho é provar luva inadequada ao agente ou certificado irregular, e a dúvida favorece o autor pelo item III.
 
 ### 3.3. Súmula 9/TNU
 
@@ -76,7 +76,7 @@ Aplicação. Há excepcionalidade reconhecida pelo próprio STF para agentes em 
 
 ### 5.1. TRF3
 
-Decisões reconhecendo o tolueno do Anexo 13 da NR-15 como agente qualitativo, especialmente em hipóteses de sapateiros e gráficas.
+Decisões anteriores ao Tema 382/TNU reconheciam o tolueno como agente qualitativo pelo Anexo 13 da NR-15, especialmente em hipóteses de sapateiros e gráficas. Essa linha foi superada pelo Tema 382/TNU e não serve à peça (auditoria 03/10/2026).
 
 Verificar inteiro teor das decisões antes de citar com número de processo.
 
@@ -96,9 +96,9 @@ Verificar inteiro teor antes de citar.
 
 ### 6.1. Tese 1 do INSS. "O tolueno só tem enquadramento quantitativo (Anexo 11)"
 
-Refutação. O tolueno está no Anexo 11 (78 ppm) e no Anexo 13 (absorção cutânea). Os dois regimes são cumulativos, não excludentes.
+Refutação superada. O Tema 382/TNU acolheu essa tese. Segundo o acórdão, o tolueno é previsto apenas no Anexo 11 (78 ppm), e a via cutânea não autoriza a análise qualitativa do Anexo 13 (auditoria 03/10/2026).
 
-Onde há contato cutâneo, aplica-se o Anexo 13 com enquadramento qualitativo.
+O caminho do segurado é o da seção 1.2, com medição acima do limite do Anexo 11, co-exposição a benzeno ou ineficácia do EPI.
 
 ### 6.2. Tese 2 do INSS. "O Tema 382/TNU afasta o enquadramento qualitativo do tolueno pela via cutânea"
 
@@ -118,7 +118,7 @@ Refutação. A ACGIH é referência técnica internacional reconhecida pela juri
 
 ### 6.5. Tese 5 do INSS. "Não há prova de exposição cutânea"
 
-Refutação. A prova da exposição cutânea pode ser feita por.
+Refutação. Após o Tema 382/TNU, a exposição cutânea não basta para o enquadramento e interessa à prova da ineficácia do EPI (auditoria 03/10/2026). Essa prova pode ser feita por.
 
 PPP com indicação no campo 15.3 ou 15.4.
 
@@ -162,7 +162,7 @@ Tema 555/STF.
 
 Tema 1090/STJ.
 
-ACGIH 20 ppm (TLV-TWA 2017).
+ACGIH 20 ppm (TLV-TWA), valor citado no acórdão do Tema 382/TNU (auditoria 03/10/2026).
 
 NHO-08 da Fundacentro.
 
@@ -172,7 +172,7 @@ Súmula 198/TFR.
 
 ### 8.1. Pedido principal
 
-Reconhecimento do tempo de serviço como especial pela exposição ao tolueno, com aplicação do Anexo 13 da NR-15.
+Reconhecimento do tempo de serviço como especial pela exposição ao tolueno acima do limite de tolerância do Anexo 11 da NR-15, comprovada por medição (auditoria 03/10/2026).
 
 ### 8.2. Pedido alternativo
 
@@ -208,11 +208,11 @@ Concessão da aposentadoria especial. Subsidiariamente, anulação da decisão a
 
 ### 10.1. Wladimir Novaes Martinez
 
-"Comentários ao Decreto 3.048/99". Hidrocarbonetos aromáticos como agentes qualitativos do Anexo 13. Reconhecimento da via cutânea como mecanismo de exposição.
+"Comentários ao Decreto 3.048/99". Hidrocarbonetos aromáticos como agentes qualitativos do Anexo 13. Reconhecimento da via cutânea como mecanismo de exposição. Para o tolueno, essa leitura foi rejeitada pelo Tema 382/TNU (auditoria 03/10/2026).
 
 ### 10.2. Frederico Amado
 
-"Direito Previdenciário". Anexo 13 da NR-15 como rol taxativo qualitativo. Inversão do ônus da prova.
+"Direito Previdenciário". Anexo 13 da NR-15 como rol taxativo qualitativo. Inversão do ônus da prova. Para o tolueno pela via cutânea, o Tema 382/TNU afasta o Anexo 13 (auditoria 03/10/2026).
 
 ### 10.3. Hugo Goes
 
@@ -224,13 +224,13 @@ Concessão da aposentadoria especial. Subsidiariamente, anulação da decisão a
 
 ### 10.5. Marisa Ferreira dos Santos
 
-"Direito Previdenciário Esquematizado". Anexo 13 da NR-15 e enquadramento qualitativo. Doutrina pró-segurado.
+"Direito Previdenciário Esquematizado". Anexo 13 da NR-15 e enquadramento qualitativo. Doutrina pró-segurado, sem aplicação ao tolueno pela via cutânea após o Tema 382/TNU (auditoria 03/10/2026).
 
 ## 11. Inversão do ônus da prova (IRDR 15/TRF4)
 
 ### 11.1. Aplicação
 
-Quando o segurado apresenta o PPP com tolueno indicado no campo 15.3 ou 15.4, cabe ao INSS desconstruir a presunção de nocividade.
+Quando o PPP indica tolueno com concentração acima do limite do Anexo 11, cabe ao INSS desconstruir a nocividade. A simples indicação do agente não basta após o Tema 382/TNU (auditoria 03/10/2026).
 
 ### 11.2. Pedidos correlatos
 
@@ -248,7 +248,7 @@ Eventual perícia em similar (Súmula 198/TFR).
 
 PPP genérico ("hidrocarbonetos aromáticos" sem especificação).
 
-PPP sem indicação do Anexo 13.
+PPP com avaliação apenas qualitativa do tolueno, insuficiente após o Tema 382/TNU (auditoria 03/10/2026).
 
 PPP com EPI eficaz sem demonstração de adequação ao tolueno.
 

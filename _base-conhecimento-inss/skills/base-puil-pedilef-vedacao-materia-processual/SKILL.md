@@ -323,7 +323,7 @@ Crítica à interpretação restritiva que esvazia o instrumento de uniformizaç
 | Aplicação de Tema 1124 de ofício | Art. 18 da Lei 8.213/91, Tema 350/STF | base-efeito-translativo-tema-1124-defesa |
 | Não realização de perícia documental | Art. 60 §11-A Lei 8.213, Portarias 13/14/15/2026 | analise-documental-incapacidade |
 | Não enfrentamento de NTEP | Art. 21-A Lei 8.213, Lista B Anexo II Decreto 3.048 | ntep-nexo-acidentario |
-| Falta de avaliação biopsicossocial | Art. 20 §10 LOAS, Portaria Conjunta 2/2014 | analise-bpc-loas |
+| Falta de avaliação biopsicossocial | Art. 20 §10 LOAS, Portaria Conjunta 2/2015 (auditoria 03/10/2026) | analise-bpc-loas |
 
 ## 18. O que NÃO está nesta skill
 

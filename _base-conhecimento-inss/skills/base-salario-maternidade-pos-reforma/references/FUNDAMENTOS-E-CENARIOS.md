@@ -16,7 +16,7 @@ Lei 8.213/91, art. 72. Duração de 120 dias.
 
 Lei 8.213/91, art. 73. Pagamento. Empregador reembolsado pelo INSS para empregada.
 
-Lei 8.213/91, art. 25, III. Previa carência de 10 contribuições para CI, facultativa e segurada especial, exigência declarada inconstitucional (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]). O Enunciado 19/CRPS declara a carência inexigível e mantém a prova da qualidade de segurada (auditoria 03/10/2026).
+Lei 8.213/91, art. 25, III. Previa carência de 10 contribuições para CI, facultativa e segurada especial, exigência declarada inconstitucional (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]). O Enunciado 19/CRPS declara a carência inexigível e mantém a prova da qualidade de segurada (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 25, parágrafo único. Reduzia a carência do inciso III em caso de parto antecipado e perdeu utilidade com a inexigibilidade dessa carência. A segurada especial rege-se pelo art. 39, parágrafo único, com atividade rural, ainda que descontínua, nos 12 meses anteriores ao benefício (auditoria 03/10/2026).
 

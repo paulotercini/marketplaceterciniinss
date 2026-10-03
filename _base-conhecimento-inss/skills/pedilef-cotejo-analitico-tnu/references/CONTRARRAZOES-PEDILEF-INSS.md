@@ -2,7 +2,7 @@
 
 ## Posição Estratégica
 
-O PEDILEF é arma de dois gumes. Quando o INSS interpõe, o segurado tem a oportunidade de virar o ônus técnico contra a autarquia, explorando as mesmas QOs que poderiam prejudicá-lo. O PEDILEF da autarquia frequentemente é interposto em massa, com paradigmas genéricos e sem cotejo analítico consistente, exatamente o padrão que a QO 59 (pendente confirmação) pretende impedir.
+O PEDILEF é arma de dois gumes. Quando o INSS interpõe, o segurado tem a oportunidade de virar o ônus técnico contra a autarquia, explorando as mesmas QOs que poderiam prejudicá-lo. O PEDILEF da autarquia frequentemente é interposto em massa, com paradigmas genéricos e sem cotejo analítico consistente, exatamente o padrão que a QO 59 (aprovada em 15/04/2026) pretende impedir (auditoria 03/10/2026).
 
 ## Eixo Central da Impugnação
 
@@ -44,7 +44,7 @@ Demonstrar, paradigma por paradigma, que as bases fáticas do caso em julgamento
 
 O PEDILEF do INSS frequentemente se limita a transcrever ementas, sem o confronto analítico das teses. Este é o núcleo da impugnação.
 
-**Argumentação padrão.** A autarquia limita-se à mera transcrição de ementas dos acórdãos paradigmas, sem demonstrar analiticamente a divergência nos termos da jurisprudência consolidada da TNU (QOs 22 e, se confirmada, 59) e do STJ (art. 1.029, §1º, CPC/2015, por analogia estrutural). A demonstração da divergência exige descrição comparativa individualizada entre (a) os fatos em julgamento do recorrido e do paradigma; (b) os fundamentos determinantes de cada um. O INSS não realizou esse confronto, o que impede o conhecimento do PEDILEF.
+**Argumentação padrão.** A autarquia limita-se à mera transcrição de ementas dos acórdãos paradigmas, sem demonstrar analiticamente a divergência nos termos da jurisprudência consolidada da TNU (QOs 22 e 59) e do STJ (art. 1.029, §1º, CPC/2015, por analogia estrutural). A demonstração da divergência exige descrição comparativa individualizada entre (a) os fatos em julgamento do recorrido e do paradigma; (b) os fundamentos determinantes de cada um. O INSS não realizou esse confronto, o que impede o conhecimento do PEDILEF (auditoria 03/10/2026).
 
 ### 7. Fundamento Único Autônomo Não Impugnado (QO 18)
 

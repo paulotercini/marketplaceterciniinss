@@ -30,7 +30,7 @@ Lei 8.213/91, art. 73. Pagamento pelo empregador no caso de empregada, com compe
 
 Lei 8.213/91, art. 26, VI. Isenção de carência para empregada, empregada doméstica e trabalhadora avulsa.
 
-Lei 8.213/91, art. 25, III. Previa carência de 10 contribuições para a CI, a facultativa e a segurada especial, e o STF declarou essa exigência inconstitucional (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026], com a ADI 2111, julgamento concluído em 21/03/2024 e acórdão publicado em 24/05/2024, sem modulação temporal segundo fonte secundária). O Enunciado 19/CRPS (Resolução CRPS nº 13/2026, vigente desde 13/07/2026) declara a carência inexigível e mantém a prova da qualidade de segurada, e a IN PRES/INSS 188/2025 revogou o art. 197 da IN 128/2022, que fixava a carência por categoria (auditoria 03/10/2026).
+Lei 8.213/91, art. 25, III. Previa carência de 10 contribuições para a CI, a facultativa e a segurada especial, e o STF declarou essa exigência inconstitucional (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150], com a ADI 2111, julgamento concluído em 21/03/2024 e acórdão publicado em 24/05/2024, sem modulação temporal segundo fonte secundária). O Enunciado 19/CRPS (Resolução CRPS nº 13/2026, vigente desde 13/07/2026) declara a carência inexigível e mantém a prova da qualidade de segurada, e a IN PRES/INSS 188/2025 revogou o art. 197 da IN 128/2022, que fixava a carência por categoria (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 39, par. único. Garante à segurada especial o salário-maternidade de 1 salário mínimo, com prova de atividade rural, ainda que descontínua, nos 12 meses imediatamente anteriores ao início do benefício. Os 10 meses que o INSS cobrava como carência não se exigem mais, e o Enunciado 19/CRPS, III, trata o período de 12 meses como prova da qualidade de segurada, sem exigir exercício contínuo (auditoria 03/10/2026).
 
@@ -60,7 +60,7 @@ Quinta, salário-maternidade ao pai em caso de óbito da mãe (LC 146/2014).
 
 Primeiro, qualidade de segurada na DIB.
 
-Segundo, carência, que não se exige mais de nenhuma categoria. A empregada, a doméstica e a avulsa já eram isentas (art. 26, VI), e a exigência do art. 25, III, para CI, facultativa e segurada especial caiu com a ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026] e com o Enunciado 19/CRPS. Prova-se a qualidade de segurada, com os requisitos de cada categoria em `references/FUNDAMENTOS-E-CENARIOS.md`, seção 2 (auditoria 03/10/2026).
+Segundo, carência, que não se exige mais de nenhuma categoria. A empregada, a doméstica e a avulsa já eram isentas (art. 26, VI), e a exigência do art. 25, III, para CI, facultativa e segurada especial caiu com a ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150] e com o Enunciado 19/CRPS. Prova-se a qualidade de segurada, com os requisitos de cada categoria em `references/FUNDAMENTOS-E-CENARIOS.md`, seção 2 (auditoria 03/10/2026).
 
 Terceiro, parto, adoção, guarda ou evento equivalente.
 
@@ -86,7 +86,7 @@ Nono, adoção conjunta. Apenas um dos adotantes recebe o salário-maternidade. 
 
 ## Regra e estratégia
 
-A regra geral é concessão ampla do salário-maternidade para todas as seguradas. O INSS tende a indeferir por ausência de qualidade, carência não cumprida ou deficiências documentais. A carência, porém, já não fundamenta indeferimento, por força da ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026] e do Enunciado 19/CRPS (auditoria 03/10/2026).
+A regra geral é concessão ampla do salário-maternidade para todas as seguradas. O INSS tende a indeferir por ausência de qualidade, carência não cumprida ou deficiências documentais. A carência, porém, já não fundamenta indeferimento, por força da ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150] e do Enunciado 19/CRPS (auditoria 03/10/2026).
 
 Primeiro, em desempregada, verificar período de graça (art. 15 Lei 8.213). Prorrogação por 12 meses em caso de desemprego involuntário.
 
@@ -162,4 +162,4 @@ Não está aqui o salário-família, objeto de `base-salario-familia-quota`. Nã
 
 A Portaria Interministerial MPS/MS nº 15, de 03/07/2026, incluiu a gestação de alto risco entre as afecções que dispensam carência nos benefícios por INCAPACIDADE, e não no salário-maternidade.
 
-São benefícios diversos e sucessivos. A gestante de alto risco com incapacidade por mais de quinze dias recebe B31 durante a gestação, e o salário-maternidade a partir do parto, que dispensa carência e exige a qualidade de segurada (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS) (auditoria 03/10/2026). Confundir os dois leva a pedido errado. Ver `base-carencia-por-especie-art27a/references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.
+São benefícios diversos e sucessivos. A gestante de alto risco com incapacidade por mais de quinze dias recebe B31 durante a gestação, e o salário-maternidade a partir do parto, que dispensa carência e exige a qualidade de segurada (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]; Enunciado 19/CRPS) (auditoria 03/10/2026). Confundir os dois leva a pedido errado. Ver `base-carencia-por-especie-art27a/references/GESTACAO-ALTO-RISCO-DISPENSA-CARENCIA.md`.

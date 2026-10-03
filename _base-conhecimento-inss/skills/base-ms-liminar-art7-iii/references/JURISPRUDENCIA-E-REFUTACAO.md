@@ -4,13 +4,13 @@
 
 ### Súmula 212 STJ
 
-Compensação tributária.
+Compensação tributária. Súmula CANCELADA pela 1ª Seção em 14/09/2022 (PS 375, DJe 19/09/2022) (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 405 STF
 
-Efeitos.
+"Denegado o mandado de segurança pela sentença, ou no julgamento do agravo, dela interposto, fica sem efeito a liminar concedida, retroagindo os efeitos da decisão contrária." Tese adversa ao impetrante; o caminho do segurado é instruir a inicial com prova pré-constituída completa (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -84,7 +84,7 @@ Refutação. A Súmula 729 STF afasta a ADC 4 da antecipação de tutela em caus
 
 Argumento adversário. Valores.
 
-Refutação. Súmula 212 STJ específica para tributos.
+Refutação. A Súmula 212 STJ tratava só de compensação tributária e foi cancelada em 14/09/2022 (PS 375, DJe 19/09/2022) (auditoria 03/10/2026).
 
 ### Argumento 8 — Liminar para efeitos financeiros vedada
 

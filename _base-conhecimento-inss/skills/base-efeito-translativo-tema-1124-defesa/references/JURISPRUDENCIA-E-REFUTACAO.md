@@ -292,7 +292,7 @@ Inaplicabilidade do Tema 1124 às ações ajuizadas antes da publicação da tes
 
 ### 16.1. Cabimento excepcional
 
-Súmula 267/STF. MS contra ato judicial passível de recurso é incabível, exceto em hipóteses extremas.
+Súmula 267/STF. "Não cabe mandado de segurança contra ato judicial passível de recurso ou correição." A exceção para decisão teratológica é construção posterior e não consta do enunciado [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### 16.2. Hipóteses
 

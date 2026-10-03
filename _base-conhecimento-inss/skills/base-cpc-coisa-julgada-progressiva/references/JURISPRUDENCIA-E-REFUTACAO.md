@@ -10,7 +10,7 @@ Fonte oficial em https://www.trf4.jus.br
 
 ### Tema 28 STF
 
-Precatório ou RPV da parte incontroversa e autônoma transitada em julgado (RE 1.205.530) [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Precatório ou RPV da parte incontroversa e autônoma transitada em julgado (RE 1.205.530) [CONFERIDO] (https://portal.stf.jus.br/jurisprudenciaRepercussao/verAndamentoProcesso.asp?incidente=5684509&numeroProcesso=1205530&classeProcesso=RE&numeroTema=28) (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -64,9 +64,9 @@ Refutação. Capítulos autônomos transitam em separado.
 
 ### Argumento 3 — Execução provisória vedada contra Fazenda
 
-Argumento adversário. Tema 28 STF [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Argumento adversário. Não cabe execução contra a Fazenda antes do trânsito em julgado (auditoria 03/10/2026).
 
-Refutação. Cabe a execução definitiva da parte transitada.
+Refutação. Cabe a execução definitiva da parte transitada, que comporta precatório ou RPV (Tema 28 STF) [CONFERIDO].
 
 ### Argumento 4 — RMI em discussão suspende tudo
 
@@ -142,6 +142,6 @@ Sexto, resistir a suspensão.
 
 Acompanhar IRDR 18 TRF4.
 
-Revalidar Tema 28 STF [NÃO CONFIRMADO] no acórdão do RE 1.205.530 (auditoria 03/10/2026).
+Tema 28 STF [CONFERIDO] no portal do STF, RE 1.205.530, trânsito em 19/08/2020 (auditoria 03/10/2026).
 
 Acompanhar modulações do Tema 1030 STJ.

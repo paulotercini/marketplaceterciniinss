@@ -50,11 +50,11 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 729 STF
 
-Tutela contra Fazenda Pública, modulação.
+Texto oficial, "A decisão na Ação Direta de Constitucionalidade 4 não se aplica à antecipação de tutela em causa de natureza previdenciária." O enunciado não trata de modulação (auditoria 03/10/2026).
 
 ### Tema 1102 STF
 
-RVT, tese firmada permite tutela de evidência.
+RVT. A ADI 2111 (21/03/2024) declarou cogente o art. 3º da Lei 9.876/99, sem opção pelo art. 29, I e II, o que afasta a tese e o seu uso em tutela de evidência (auditoria 03/10/2026).
 
 ### Tema 76 STF
 

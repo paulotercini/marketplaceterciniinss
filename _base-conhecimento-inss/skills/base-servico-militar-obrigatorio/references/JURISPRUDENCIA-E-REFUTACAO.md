@@ -2,9 +2,9 @@
 
 ## 1. Precedentes relevantes
 
-### Súmula 45 ex-TFR
+### Art. 55, I, da Lei 8.213/91
 
-Aplicação supletiva histórica para cômputo do tempo militar.
+O tempo de serviço militar, inclusive o voluntário, conta ainda que anterior à filiação ao RGPS, desde que não contado para inatividade remunerada nas Forças Armadas ou aposentadoria no serviço público (auditoria 03/10/2026, retirada a Súmula 45 do TFR, que trata de multas fiscais segundo fonte secundária).
 
 ### Art. 94 da Lei 8.213/91
 

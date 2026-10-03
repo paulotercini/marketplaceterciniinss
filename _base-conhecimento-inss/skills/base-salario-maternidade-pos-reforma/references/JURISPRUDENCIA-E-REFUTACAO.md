@@ -16,19 +16,19 @@ Regra legal, sem tema da TNU. O art. 25, III, exigia 10 contribuições da facul
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurada. Perdeu objeto com a inexigibilidade da carência (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS). O Tema 245/TNU, antes citado aqui, trata da invalidação do ato de concessão e não se aplica ao salário-maternidade (auditoria 03/10/2026).
+Aplicação pró-segurada. Perdeu objeto com a inexigibilidade da carência (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]; Enunciado 19/CRPS). O Tema 245/TNU, antes citado aqui, trata da invalidação do ato de concessão e não se aplica ao salário-maternidade (auditoria 03/10/2026).
 
 ### Tema 327 TNU
 
-Tese. Perspectiva de gênero na comprovação de atividade rural da segurada especial para fins de salário-maternidade.
+Tese. Constitui início de prova material do exercício de atividade rural a documentação em nome do cônjuge ou companheiro que o qualifica como empregado rural, para fins de concessão de benefício na condição de segurado especial (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurada. Flexibiliza a prova em favor da mulher rural.
 
-### Tema 161 STF (RE 778.889)
+### Tema 782 STF (RE 778.889)
 
-Tese. Licença-adoção equivalente à licença-maternidade em duração, para a mãe adotiva, independente da idade da criança.
+Tese. "Os prazos da licença adotante não podem ser inferiores aos prazos da licença gestante, o mesmo valendo para as respectivas prorrogações. Em relação à licença adotante, não é possível fixar prazos diversos em função da idade da criança adotada." O tema trata da licença da servidora, e a aplicação ao salário-maternidade do RGPS é por analogia (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -62,19 +62,19 @@ Refutação. Art. 15 da Lei 8.213/91. Período de graça de 12 meses após a ces
 
 Argumento adversário. CI/facultativa sem 10 contribuições.
 
-Refutação. O STF declarou inconstitucional a carência do art. 25, III (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]), o Enunciado 19/CRPS a declara inexigível, e a IN PRES/INSS 188/2025 revogou o art. 197 da IN 128/2022, que a previa. Resta a qualidade de segurada. A CI sem inscrição formal prova a atividade remunerada e ao menos uma contribuição (inciso I), e a facultativa prova o pagamento, com filiação anterior ao fato gerador (inciso IV), sempre com contribuição paga até o vencimento da competência, observado o Enunciado 5/CRPS (§ 2º) (auditoria 03/10/2026).
+Refutação. O STF declarou inconstitucional a carência do art. 25, III (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]), o Enunciado 19/CRPS a declara inexigível, e a IN PRES/INSS 188/2025 revogou o art. 197 da IN 128/2022, que a previa. Resta a qualidade de segurada. A CI sem inscrição formal prova a atividade remunerada e ao menos uma contribuição (inciso I), e a facultativa prova o pagamento, com filiação anterior ao fato gerador (inciso IV), sempre com contribuição paga até o vencimento da competência, observado o Enunciado 5/CRPS (§ 2º) (auditoria 03/10/2026).
 
 ### Argumento 3 — Segurada especial sem 10 meses
 
 Argumento adversário. Segurada especial sem 10 meses de atividade rural nos últimos 12 meses.
 
-Refutação. Os 10 meses deixaram de ser exigíveis como carência (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]), e o Enunciado 19/CRPS, III, pede atividade rural nos 12 meses anteriores ao fato gerador, ainda que descontínua, sem exercício contínuo em todo o período (auditoria 03/10/2026). Tema 327 TNU. Perspectiva de gênero flexibiliza prova. Acionar `perspectiva-genero-previdenciario`. Documentação do cônjuge aproveita à mulher em economia familiar.
+Refutação. Os 10 meses deixaram de ser exigíveis como carência (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]), e o Enunciado 19/CRPS, III, pede atividade rural nos 12 meses anteriores ao fato gerador, ainda que descontínua, sem exercício contínuo em todo o período (auditoria 03/10/2026). Tema 327 TNU. O documento do cônjuge ou companheiro qualificado como empregado rural é início de prova material da segurada especial (auditoria 03/10/2026). Acionar `perspectiva-genero-previdenciario`. Documentação do cônjuge aproveita à mulher em economia familiar.
 
 ### Argumento 4 — Adoção de criança com mais de 8 anos
 
 Argumento adversário. Adoção de criança mais velha tem licença reduzida.
 
-Refutação. Tema 161 STF (RE 778.889). Igualdade com licença-maternidade biológica. 120 dias independentes da idade.
+Refutação. Tema 782 STF (RE 778.889), aplicado por analogia (auditoria 03/10/2026). Igualdade com licença-maternidade biológica. 120 dias independentes da idade.
 
 ### Argumento 5 — Natimorto = aborto
 
@@ -92,7 +92,7 @@ Refutação. LC 146/2014 aplica-se a óbito da mãe no período do salário-mate
 
 Argumento adversário. Recolhimentos em código errado não geram carência.
 
-Refutação. Carência não se exige mais (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS), e o código só importa para provar o pagamento que sustenta a qualidade de segurada (inciso IV) (auditoria 03/10/2026). Retificação de código é admitida. Acionar `cnis-acerto-indicadores`.
+Refutação. Carência não se exige mais (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]; Enunciado 19/CRPS), e o código só importa para provar o pagamento que sustenta a qualidade de segurada (inciso IV) (auditoria 03/10/2026). Retificação de código é admitida. Acionar `cnis-acerto-indicadores`.
 
 ### Argumento 8 — Dispensa da empregada gestante por justa causa
 

@@ -46,7 +46,7 @@ Etapa segunda é apresentar o LTCAT e o PGR ou PPRA como documentos complementar
 
 Etapa terceira é, se a prova documental não resolver, oficiar a empresa para retificação do PPP. A skill `retificacao-ppp` automatiza o expediente.
 
-Etapa quarta é pedido de perícia indireta por similaridade, com invocação do art. 369 e art. 370 CPC e dos Enunciados 91 e 225 FONAJEF. Skill `defesa-probatoria-especial` cobre esse ponto.
+Etapa quarta é pedido de perícia indireta por similaridade, com invocação do art. 369 e art. 370 CPC e do Enunciado 225 FONAJEF. O Enunciado 91 FONAJEF não autoriza perícia por similaridade e limita a competência do JEF para perícias complexas ou onerosas (auditoria 03/10/2026). Skill `defesa-probatoria-especial` cobre esse ponto.
 
 ## Cenário 7 — Exposição mista com múltiplos agentes
 

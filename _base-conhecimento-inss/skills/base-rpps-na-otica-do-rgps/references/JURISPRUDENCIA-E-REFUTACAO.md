@@ -2,10 +2,6 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 1054 STF
-
-Tempo no RPPS e direito adquirido. Fonte oficial em https://portal.stf.jus.br
-
 ### Tema 942/STF (RE 1.014.286)
 
 Conversão de tempo especial de servidor. Até a EC 103/2019 aplicam-se as regras do RGPS; depois, depende de lei complementar do ente (auditoria 25/07/2026, corte corrigida).

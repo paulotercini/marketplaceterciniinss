@@ -8,7 +8,7 @@ Concubinato impuro. Fonte oficial em https://portal.stf.jus.br
 
 ### Súmula 63/TNU (redação de 18/09/2025, fatos geradores até a MP 871/2019 — auditoria 25/07/2026)
 
-Início de prova material e testemunhal. Fonte oficial em https://www.cjf.jus.br
+Para fatos geradores ocorridos até a entrada em vigor da MP 871/2019, a comprovação de união estável para concessão de pensão por morte prescinde de início de prova material (auditoria 03/10/2026). Fonte oficial em https://www.cjf.jus.br
 
 ### CF/88, art. 226 §3º
 

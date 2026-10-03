@@ -22,7 +22,7 @@ Sem carência (art. 26, I, da Lei 8.213/91). As 18 contribuições só afetam a 
 
 ## 6. Cenário 5 — Salário-maternidade sem carência (auditoria 03/10/2026)
 
-Carência inexigível. O art. 25, III, que previa 10 contribuições para CI, facultativa e segurada especial, foi declarado inconstitucional (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]), e o Enunciado 19/CRPS exige só a qualidade de segurada, com os requisitos por categoria em `base-salario-maternidade-pos-reforma` (auditoria 03/10/2026).
+Carência inexigível. O art. 25, III, que previa 10 contribuições para CI, facultativa e segurada especial, foi declarado inconstitucional (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]), e o Enunciado 19/CRPS exige só a qualidade de segurada, com os requisitos por categoria em `base-salario-maternidade-pos-reforma` (auditoria 03/10/2026).
 
 ## 7. Cenário 6 — Auxílio-acidente sem carência
 

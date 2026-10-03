@@ -81,7 +81,7 @@ O impetrante pode escolher entre quatro foros, conforme art. 109, §2º, CF/88, 
 
 **Foro 3.** **Capital do estado-membro** onde o segurado tem domicílio (Súmula 689/STF).
 
-**Foro 4.** **Distrito Federal** (Súmula 689/STF).
+**Foro 4.** **Distrito Federal** (art. 109, §2º, CF/88) (auditoria 03/10/2026).
 
 ### 2.2. Aplicação ao MS contra CEAB
 

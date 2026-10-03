@@ -38,7 +38,7 @@ Precedente de apoio. PEDILEF 0001717 TNU.
 
 Argumento adversário. O LTCAT que fundamenta o PPP foi emitido em data posterior ao período laborado, logo as condições ambientais não estariam comprovadas para a época.
 
-Refutação. A Súmula 68 TNU admite laudo extemporâneo quando demonstrada estabilidade das condições ambientais. A presunção é de continuidade das condições, cabendo ao INSS provar alteração relevante. Em caso de dúvida, pedir perícia por similaridade com fundamento no art. 369 e art. 370 do CPC e nos Enunciados 91 e 225 FONAJEF.
+Refutação. A Súmula 68 TNU admite laudo extemporâneo quando demonstrada estabilidade das condições ambientais. A presunção é de continuidade das condições, cabendo ao INSS provar alteração relevante. Em caso de dúvida, pedir perícia por similaridade com fundamento no art. 369 e art. 370 do CPC e no Enunciado 225 FONAJEF; o Enunciado 91 FONAJEF não autoriza perícia por similaridade (auditoria 03/10/2026).
 
 Precedente de apoio. Súmula 68 TNU.
 
@@ -70,7 +70,7 @@ Precedente de apoio. Princípio constitucional do direito adquirido, art. 5º XX
 
 Argumento adversário. O juiz pode julgar improcedente a ação sem produção de prova técnica, por considerar que o PPP é suficiente e que não houve requerimento oportuno de perícia.
 
-Refutação. Em aposentadoria especial, a prova técnica é componente estrutural da tese. O indeferimento de perícia ou o julgamento antecipado que desconsidere PPP com vício configura cerceamento de defesa, impugnável por apelação ou embargos. Os Enunciados 91 e 225 FONAJEF admitem prova técnica simplificada mesmo no JEF. A skill `defesa-probatoria-especial` tem a fundamentação completa.
+Refutação. Em aposentadoria especial, a prova técnica é componente estrutural da tese. O indeferimento de perícia ou o julgamento antecipado que desconsidere PPP com vício configura cerceamento de defesa, impugnável por apelação ou embargos. O Enunciado 225 FONAJEF admite prova técnica simplificada no JEF; o Enunciado 91 FONAJEF declara o JEF incompetente para perícias complexas ou onerosas e pode ser invocado pelo INSS (auditoria 03/10/2026). A skill `defesa-probatoria-especial` tem a fundamentação completa.
 
 Precedente de apoio. Súmula 198 TFR e REsp 2.152.968 (auditoria 03/10/2026, retirado o Tema 1031 STJ, que trata do vigilante).
 

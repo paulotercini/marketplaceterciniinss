@@ -58,13 +58,13 @@ Fonte oficial em https://portal.stf.jus.br (auditoria 03/10/2026).
 
 Aplicação pró-segurado. Tese adversa; pelo item II, a DIB é a DER mesmo que o segurado continue no labor especial, e o pagamento só cessa se ele permanecer ou retornar à atividade nociva após a implantação (auditoria 03/10/2026).
 
-### ADI 4827 STF (retorno à atividade especial)
+A ADI 4827, antes citada aqui, trata de lei de Alagoas sobre o efetivo da Polícia Militar e não de aposentadoria especial; o retorno à atividade especial está no Tema 709 acima (auditoria 03/10/2026).
 
-Tese. O STF declarou constitucional a vedação do art. 57, §8º, da Lei 8.213/91 no Tema 709, e a questão está pacificada (auditoria 03/10/2026).
 
-Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Atenção à modulação e à aplicação em cada caso. Não há controvérsia ativa, ver o Tema 709 acima (auditoria 03/10/2026).
+
+
+
 
 ### Tema 1083 STJ
 

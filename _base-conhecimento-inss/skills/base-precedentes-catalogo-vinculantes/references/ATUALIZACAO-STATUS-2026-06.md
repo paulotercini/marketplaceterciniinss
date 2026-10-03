@@ -126,7 +126,7 @@ NÃO CONFIRMADAS NESTA RODADA (quarentena leve, conferir no DOU antes de citar).
 
 - **Pacotes .skill do escritório regenerados na Etapa 5.** pensao-por-morte e auxilio-reclusao-previdenciario atualizados com o Tema 1421/STJ julgado (tese literal, alerta de triagem dos 180 dias, estratégia pós-julgamento) e carta-servicos-inss com o rótulo da Lei 15.108/2025 corrigido (menor sob guarda) e o Tema 1421 incluído.
 
-## ADI 6309/STF JULGADA, APOSENTADORIA ESPECIAL DA EC 103 (registro de 12/07/2026, notícia oficial do STF de 03/06/2026 conferida via navegador)
+## ADI 6309/STF JULGADA EM 03/06/2026, APOSENTADORIA ESPECIAL DA EC 103 (registro de 12/07/2026, notícia oficial do STF de 03/06/2026 conferida via navegador)
 
 Julgamento por maioria em 03/06/2026, ação da CNTI contra dispositivos da EC 103/2019 sobre aposentadoria especial. Três definições.
 

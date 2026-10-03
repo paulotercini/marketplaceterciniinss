@@ -31,7 +31,7 @@ Fonte oficial em https://www.trf4.jus.br
 
 ### Tema 28 STF
 
-Precatório ou RPV da parte incontroversa e autônoma transitada em julgado (RE 1.205.530) [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Precatório ou RPV da parte incontroversa e autônoma transitada em julgado (RE 1.205.530) [CONFERIDO] (https://portal.stf.jus.br/jurisprudenciaRepercussao/verAndamentoProcesso.asp?incidente=5684509&numeroProcesso=1205530&classeProcesso=RE&numeroTema=28) (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -85,7 +85,7 @@ Primeiro, necessário demonstrar que o capítulo é autônomo e que o recurso n�
 
 Segundo, INSS pode tentar argumentar que a apelação devolve integralmente. Refutar com art. 1.013 §1º CPC e IRDR 18.
 
-Terceiro, cumprimento provisório contra Fazenda é restrito. Tema 28/STF [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Terceiro, cumprimento provisório contra Fazenda é restrito, mas a parte incontroversa e autônoma, já transitada em julgado, comporta precatório ou RPV (Tema 28/STF) [CONFERIDO] (auditoria 03/10/2026).
 
 Quarto, em JEF a dialeticidade é mais rigorosa. Súmula 284/STF.
 

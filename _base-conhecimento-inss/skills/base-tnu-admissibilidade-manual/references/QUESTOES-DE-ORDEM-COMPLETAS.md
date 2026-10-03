@@ -12,13 +12,13 @@ ESTRATÉGIA PRÓ-SEGURADO. Antes de protocolar PUIL, conferir alinhamento entre 
 
 ## QO 13/TNU
 
-Sobrestamento dos PUIL idênticos em curso, aguardando definição em representativo de controvérsia.
+Alterada em 18/09/2019. Não se admite PUIL quando a jurisprudência da TNU se firmou no mesmo sentido do acórdão recorrido (auditoria 03/10/2026).
 
-APLICAÇÃO. Quando há tese idêntica afetada como representativo, os demais PUIL ficam sobrestados (art. 16 §5º RITNU).
+APLICAÇÃO. Em contrarrazões a PUIL do INSS, invocar a QO 13 quando o acórdão recorrido seguir a jurisprudência firmada da TNU; no PUIL do segurado, demonstrar que essa jurisprudência não se firmou ou foi superada. O sobrestamento por tese idêntica afetada como representativo é regra das QOs 23 e 57 (art. 16 §5º RITNU) (auditoria 03/10/2026).
 
 ## QO 17/TNU
 
-Anulação do acórdão da TR quando há omissão expressamente impugnada em ED não sanada.
+Quando o acórdão decidir tema alheio à controvérsia, a TNU deve anular o julgado (DJ 17/06/2005). A omissão expressamente impugnada em ED é hipótese da QO 47, que remete a esta (auditoria 03/10/2026).
 
 APLICAÇÃO. Combinada com QO 47/TNU, permite anulação do acórdão recorrido por PUIL quando a omissão foi impugnada em ED, apresentado paradigma válido.
 
