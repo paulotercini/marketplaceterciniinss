@@ -406,7 +406,7 @@ Direito processual previdenciário.
 
 `direitos-pcd-previdenciarios` para direitos extraprevidenciários.
 
-`base-devolucao-valores-irrepetibilidade-tema979-tema1034` para irrepetibilidade.
+`base-devolucao-valores-irrepetibilidade-tema979-tema692` para irrepetibilidade.
 
 `lei-13460-usuario-servico-publico` para direitos do usuário.
 

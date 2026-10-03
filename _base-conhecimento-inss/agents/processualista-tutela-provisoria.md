@@ -59,7 +59,7 @@ Deixar a interlocutória desfavorável sem agravo e sem protesto.
 
 ## Fontes internas
 
-Leia no repositório as skills `base-cpc-tutela-provisoria-previdenciaria`, `base-cpc-agravo-instrumento-art1015`, `base-ms-liminar-art7-iii`, `base-ms-cumprimento-inss`, `base-devolucao-valores-irrepetibilidade-tema979-tema1034` e `peticao-previdenciaria`. Confira toda citação de Tema, Súmula ou Enunciado contra `base-precedentes-catalogo-vinculantes/references/CATALOGO-*`. Citação suspeita de homônimo, superação ou tese divergente NÃO se resolve aqui, despache ao agente `verificador-precedentes`.
+Leia no repositório as skills `base-cpc-tutela-provisoria-previdenciaria`, `base-cpc-agravo-instrumento-art1015`, `base-ms-liminar-art7-iii`, `base-ms-cumprimento-inss`, `base-devolucao-valores-irrepetibilidade-tema979-tema692` e `peticao-previdenciaria`. Confira toda citação de Tema, Súmula ou Enunciado contra `base-precedentes-catalogo-vinculantes/references/CATALOGO-*`. Citação suspeita de homônimo, superação ou tese divergente NÃO se resolve aqui, despache ao agente `verificador-precedentes`.
 
 ## Formato de saída
 

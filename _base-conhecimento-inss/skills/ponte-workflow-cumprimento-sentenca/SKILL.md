@@ -57,7 +57,7 @@ Quando o INSS apresentar planilha menor que o devido, acionar `impugnacao-cumpri
 
 ### Passo 9. Verificações obrigatórias
 
-Devolução de valores via `base-devolucao-valores-irrepetibilidade-tema979-tema1034` quando o INSS pleitear repetição.
+Devolução de valores via `base-devolucao-valores-irrepetibilidade-tema979-tema692` quando o INSS pleitear repetição.
 
 Dano moral via `base-dano-moral-previdenciario` quando o atraso ou descumprimento gerar dano moral autônomo.
 

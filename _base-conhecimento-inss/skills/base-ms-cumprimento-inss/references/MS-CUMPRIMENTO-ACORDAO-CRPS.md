@@ -54,7 +54,7 @@ Quinto, o que o INSS vai responder. Que interpôs Revisão de Acórdão ou Recur
 
 Sexto, honorários. Não cabem em mandado de segurança (Súmula 105/STJ, Súmula 512/STF e art. 25 da Lei 12.016/2009), o que afasta inclusive os honorários recursais. Advertir o cliente disso na contratação, ver `base-honorarios-contratuais-cobranca`.
 
-Sétimo, alerta ao cliente. A sentença mantida consignou que eventual admissão do incidente e modificação do acórdão implicará cessação do benefício e devolução dos valores recebidos na vigência da decisão judicial. Registrar essa hipótese por escrito ao cliente. Sobre a devolução, a tese de irrepetibilidade da `base-devolucao-valores-irrepetibilidade-tema979-tema1034` merece ser confrontada com o Tema 692/STJ no caso concreto.
+Sétimo, alerta ao cliente. A sentença mantida consignou que eventual admissão do incidente e modificação do acórdão implicará cessação do benefício e devolução dos valores recebidos na vigência da decisão judicial. Registrar essa hipótese por escrito ao cliente. Sobre a devolução, a tese de irrepetibilidade da `base-devolucao-valores-irrepetibilidade-tema979-tema692` merece ser confrontada com o Tema 692/STJ no caso concreto.
 
 ## Jurisprudência de apoio citada no acórdão (TRF4)
 

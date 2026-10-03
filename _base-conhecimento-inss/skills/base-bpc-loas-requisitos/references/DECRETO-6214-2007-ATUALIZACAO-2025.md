@@ -245,7 +245,7 @@ VIII. Não comparecimento ou não reagendamento à reavaliação da deficiência
 
 "Cabe ao INSS, sem prejuízo da aplicação de outras medidas legais, adotar as providências necessárias à restituição do valor do benefício pago indevidamente, **ressalvados os casos de recebimento de boa-fé**."
 
-**EFEITO PRÓ-SEGURADO.** Mantido o princípio da boa-fé. Cruzar com `base-devolucao-valores-irrepetibilidade-tema979-tema1034`.
+**EFEITO PRÓ-SEGURADO.** Mantido o princípio da boa-fé. Cruzar com `base-devolucao-valores-irrepetibilidade-tema979-tema692`.
 
 ## QUADRO DE TÓPICOS PRÓ-SEGURADO vs ANTI-SEGURADO
 
@@ -313,7 +313,7 @@ Esta reference deve ser acionada AUTOMATICAMENTE em conjunto com.
 - `mandado-seguranca-previdenciario`. MS.
 - `coisa-julgada-previdenciaria`. Coisa julgada.
 - `base-cpc-coisa-julgada-progressiva`. Coisa julgada progressiva.
-- `base-devolucao-valores-irrepetibilidade-tema979-tema1034`. Boa-fé.
+- `base-devolucao-valores-irrepetibilidade-tema979-tema692`. Boa-fé.
 
 ## FONTE PRIMÁRIA
 

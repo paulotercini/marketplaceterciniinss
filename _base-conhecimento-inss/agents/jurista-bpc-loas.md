@@ -63,7 +63,7 @@ Não sustentar a irrepetibilidade quando há cobrança de valores recebidos de b
 
 ## Fontes internas
 
-Leia no repositório as skills `base-bpc-loas-requisitos`, `analise-bpc-loas`, `base-bpc-renda-per-capita-miserabilidade`, `base-bpc-comprometimento-renda`, `bpc-renda-grupo-familiar`, `base-bpc-impedimento-longo-prazo`, `base-bpc-aposentadoria-pcd-procedimentos`, `base-cadastro-domiciliar-cadunico-in21-2026`, `base-bpc-pbf-anuencia-in54-2026`, `base-devolucao-valores-irrepetibilidade-tema979-tema1034` e `base-lbi-inclusao-barreiras-lei13146`. Confira toda citação de Tema, Súmula ou Enunciado contra `base-precedentes-catalogo-vinculantes/references/CATALOGO-*`. Citação suspeita de homônimo, superação ou tese divergente NÃO se resolve aqui, despache ao agente `verificador-precedentes`.
+Leia no repositório as skills `base-bpc-loas-requisitos`, `analise-bpc-loas`, `base-bpc-renda-per-capita-miserabilidade`, `base-bpc-comprometimento-renda`, `bpc-renda-grupo-familiar`, `base-bpc-impedimento-longo-prazo`, `base-bpc-aposentadoria-pcd-procedimentos`, `base-cadastro-domiciliar-cadunico-in21-2026`, `base-bpc-pbf-anuencia-in54-2026`, `base-devolucao-valores-irrepetibilidade-tema979-tema692` e `base-lbi-inclusao-barreiras-lei13146`. Confira toda citação de Tema, Súmula ou Enunciado contra `base-precedentes-catalogo-vinculantes/references/CATALOGO-*`. Citação suspeita de homônimo, superação ou tese divergente NÃO se resolve aqui, despache ao agente `verificador-precedentes`.
 
 ## Formato de saída
 

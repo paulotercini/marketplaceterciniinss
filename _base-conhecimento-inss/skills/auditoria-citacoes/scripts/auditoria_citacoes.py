@@ -51,7 +51,7 @@ def resolver_raizes(args):
 # ---------------------------------------------------------------- padroes
 PATTERNS = [
     ("TEMA", re.compile(r"Tema\s+(?:Repetitivo\s+)?(\d{1,4})\s*(?:/\s*|\s+d[oa]\s+|\s+)(STF|STJ|TNU|TST|TRU)", re.I)),
-    ("SUMULA", re.compile(r"S[uú]mula\s+(?:Vinculante\s+)?(\d{1,3})\s*(?:/\s*|\s+d[oa]\s+|\s+)(STF|STJ|TNU|TFR|TCU|AGU|TST|CRPS|ex-TFR)", re.I)),
+    ("SUMULA", re.compile(r"S[uú]mula\s+(?!Vinculante)(\d{1,3})\s*(?:/\s*|\s+d[oa]\s+|\s+)(STF|STJ|TNU|TFR|TCU|AGU|TST|CRPS|ex-TFR)", re.I)),
     ("SUMULA_VINC", re.compile(r"S[uú]mula\s+Vinculante\s+(?:n?[ºo°]?\s*)?(\d{1,2})", re.I)),
     ("ENUNCIADO", re.compile(r"Enunciado\s+(\d{1,3})\s*(?:/\s*|\s+d[oa]\s+|\s+)(CRPS|FONAJEF)", re.I)),
     ("RESP", re.compile(r"\b(AREsp|EREsp|REsp)\s*\.?\s*n?[ºo°]?\s*([\d][\d\.]{4,11})", re.I)),
