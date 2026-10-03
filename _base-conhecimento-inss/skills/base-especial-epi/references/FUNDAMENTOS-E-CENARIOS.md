@@ -60,7 +60,7 @@ Linha argumentativa. Citar diretamente o Tema 555, apresentando o acórdão no A
 
 ### Cenário 2 — Exposição a agentes cancerígenos da LINACH
 
-A hipótese excepcional foi reconhecida pelo STJ nos EDcl no REsp 2.116.343/RJ, do Tema 1090 (auditoria 03/10/2026). A exposição a cancerígeno listado dispensa a verificação quantitativa.
+A hipótese excepcional foi reconhecida pelo STJ nos EDcl no REsp 2.116.343/RJ, do Tema 1090. A exposição a cancerígeno listado dispensa a verificação quantitativa (art. 68, §§ 2º e 4º, do Decreto 3.048/99). Na redação do Decreto 10.410/2020, porém, o §4º descaracteriza a exposição quando medidas de controle eliminam a nocividade, texto adverso diante do qual o segurado exige do LTCAT a prova de que a nocividade foi eliminada, e não só reduzida (auditoria 03/10/2026).
 
 Linha argumentativa. Trazer a lista LINACH em vigor, confirmada em https://www.gov.br/trabalho-e-emprego, e demonstrar que o agente do PPP consta da lista.
 

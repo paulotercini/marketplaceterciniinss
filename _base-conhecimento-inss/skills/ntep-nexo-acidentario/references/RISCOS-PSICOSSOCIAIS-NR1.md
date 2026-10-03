@@ -33,7 +33,7 @@ Em juízo, o argumento é direto. A empresa era obrigada a mapear riscos psicoss
 
 Quando o perito judicial conclui pela ausência de nexo causal entre o transtorno mental e o trabalho, o PGR que reconhece riscos psicossociais no ambiente é prova documental apta a impugnar o laudo. A conclusão pericial que ignora os riscos formalmente mapeados pela própria empresa é tecnicamente inconsistente.
 
-Nessa hipótese, requerer esclarecimentos periciais específicos sobre os riscos psicossociais identificados no PGR (art. 477 do CPC) e, se necessário, produção de parecer técnico contrário (art. 472 do CPC, Tema 339/STJ).
+Nessa hipótese, requerer esclarecimentos periciais específicos sobre os riscos psicossociais identificados no PGR (art. 477 do CPC) e, se necessário, produção de parecer técnico contrário (art. 472 do CPC) (auditoria 03/10/2026, retirado o Tema 339/STJ).
 
 ### 4. NTEP e Inversão do Ônus da Prova
 

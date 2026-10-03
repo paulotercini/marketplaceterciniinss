@@ -18,11 +18,11 @@ Lei 8.213/91, art. 29. Cálculo do Salário de Benefício.
 
 Lei 8.213/91, art. 103. Decadência decenal.
 
-## 4. Marco jurisprudencial central
+## 4. Marco da revisão e da prescrição
 
-### Tema 415 STJ, REsp 1.168.657
+### Lei 10.999/2004
 
-Tese firmada em 2010. Os salários de contribuição anteriores à conversão para URV devem ser corrigidos pelo IRSM de fevereiro de 1994, no percentual de 39,67%, antes do cálculo da RMI.
+Autorizou a revisão com o IRSM de fevereiro de 1994, de 39,67%, sobre os salários de contribuição anteriores a março de 1994, antes do cálculo da RMI [NÃO CONFIRMADO]. A base legal é o art. 21, §1º, da Lei 8.880/1994, que manda corrigir esses salários até fevereiro de 1994. O Tema 415 do STJ, antes citado aqui, trata de entrega de carnês de IPTU (auditoria 03/10/2026).
 
 Aplicação. Obrigatória pelo INSS nas concessões e revisões.
 
@@ -52,7 +52,7 @@ Hipótese em que o INSS aplicou IRSM em alguns salários e não em outros. Recá
 
 ### Cenário E — Benefício concedido após 2010 com IRSM aplicado
 
-Após o Tema 415, aplicação administrativa tornou-se rotineira. Em regra, sem distorção.
+Após a Lei 10.999/2004, aplicação administrativa tornou-se rotineira (auditoria 03/10/2026). Em regra, sem distorção.
 
 ### Cenário F — Decadência consumada
 

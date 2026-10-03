@@ -21,7 +21,7 @@ A NR-16 Anexo V reconhece a atividade do motociclista como perigosa. A redação
 
 O argumento do INSS de que motociclista não consta do rol do Anexo IV do Decreto 3.048/99 não exclui o reconhecimento. O art. 193, §4º, da CLT e a NR-16, Anexo V, qualificam a atividade como perigosa (auditoria 03/10/2026).
 
-A habitualidade e permanência são presumidas em atividade profissional contínua, conforme Súmula 49 TNU e jurisprudência do TRF4.
+A habitualidade e a permanência decorrem da atividade profissional contínua, conforme jurisprudência do TRF4, porque a exposição ao risco da via pública é indissociável da prestação do serviço (art. 65 do Decreto 3.048/99). A Súmula 49 TNU não ampara esse ponto, pois apenas dispensa a permanência antes de 29/4/1995 (auditoria 03/10/2026).
 
 A exposição ao risco da via pública é caracterizada pela exposição constante a acidentes, ataques, intempéries e deslocamento contínuo.
 

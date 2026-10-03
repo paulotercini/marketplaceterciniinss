@@ -53,7 +53,7 @@ Quando a petição incluir pedido de perícia, os quesitos devem obrigatoriament
 **Precedentes mais relevantes para nexo acidentário**
 - ADI 3931/STF — Constitucionalidade do NTEP
 - Consultar `references/incapacidade.md` da skill de precedentes para temas sobre benefícios por incapacidade, nexo causal, DII, condições pessoais
-- Tema 339/STJ — Valor probatório do parecer do assistente técnico
+
 
 ### 6. portaria-462-restricao-recursal
 **Quando cruzar** — Antes de orientar revisão administrativa de espécie.

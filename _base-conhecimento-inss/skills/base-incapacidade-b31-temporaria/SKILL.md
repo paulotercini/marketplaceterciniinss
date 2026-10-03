@@ -136,7 +136,7 @@ ESTRATÉGIA PRÓ-SEGURADO. Em caso de cessação por PRBI.
 3. Após cessação definitiva, recurso ao CRPS em 30 dias.
 4. Em caso de notificação irregular, MS pode reverter a suspensão ou cessação.
 
-Texto integral da Portaria 914/2021 disponível em `/sessions/fervent-bold-lovelace/mnt/INSS/base-legislacao/06-Portarias/Portaria-INSS-914-2021-PRBI.md` (Onda 49).
+Texto integral da Portaria 914/2021 disponível na própria base, em `mcp-normas/corpus/06-Portarias/Portaria-INSS-914-2021-PRBI.md` (Onda 49; auditoria 03/10/2026).
 
 Cruzar com `analise-documental-incapacidade`, `admissibilidade-barreiras-crps`, `mandado-seguranca-previdenciario` para estratégia recursal e MS.
 

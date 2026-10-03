@@ -2,7 +2,7 @@
 
 ## 1. Conceito operacional
 
-Sequela mínima é a redução pequena, mas funcional e permanente, da capacidade laborativa habitual. Tema 201 TNU admite B94 nessa hipótese.
+Sequela mínima é a redução pequena, mas funcional e permanente, da capacidade laborativa habitual. A Súmula 88 TNU e o Tema 416 STJ admitem B94 nessa hipótese (auditoria 03/10/2026).
 
 ## 2. Fundamento constitucional
 
@@ -22,13 +22,13 @@ IN 128/2022.
 
 ## 4. Marco jurisprudencial central
 
-### Tema 201 TNU
+### Tema 201 TNU (tese adversa)
 
-Sequela mínima admitida.
+Tese. "O contribuinte individual não faz jus ao auxílio-acidente, diante de expressa exclusão legal." Não trata de sequela mínima (auditoria 03/10/2026). Caminho do segurado. Provar que, na data do acidente, a categoria real era de empregado, doméstico, avulso ou segurado especial (art. 18, §1º, da Lei 8.213/91).
 
 ### Súmula 88 TNU
 
-Exemplificativo.
+Sequela mínima admitida. A limitação, ainda que leve, para a atividade habitual enseja o B94, em linha com o Tema 416 STJ (auditoria 03/10/2026).
 
 ### Súmula 89 TNU
 
@@ -88,7 +88,7 @@ Primeiro, perícia detalhada.
 
 Segundo, comparação com Anexo III.
 
-Terceiro, fundamentação Tema 201 TNU.
+Terceiro, fundamentação na Súmula 88 TNU e no Tema 416 STJ (auditoria 03/10/2026).
 
 Quarto, prova funcional.
 
@@ -110,7 +110,7 @@ Risco de sequela transitória.
 
 Primeiro, perícia técnica.
 
-Segundo, fundamentação Tema 201 TNU.
+Segundo, fundamentação na Súmula 88 TNU e no Tema 416 STJ (auditoria 03/10/2026).
 
 Terceiro, recurso ou ação.
 

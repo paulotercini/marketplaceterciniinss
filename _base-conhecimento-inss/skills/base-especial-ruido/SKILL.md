@@ -54,7 +54,7 @@ Em sessão de 09/12/2024, o Conselho Pleno do CRPS revogou o inciso III do Enunc
 
 ### Tese 4. Normalização por jornada efetiva
 
-Quando o ruído declarado no campo 15.4 do PPP está na faixa de 82 a 85 dB(A) sem normalização e o segurado cumpria habitualmente jornada superior a 480 minutos em virtude de horas extras frequentes, cabe solicitar a normalização pela fórmula da NHO-01 com fator 10, aplicando NEN igual a NE mais dez vezes o logaritmo na base dez do quociente entre o tempo de exposição em minutos e 480. Esse cálculo com frequência eleva o resultado acima de 85 dB(A), configurando especialidade no período pós 18/11/2003. A comprovação da jornada se faz por contracheques, folhas de ponto, Reclamação Trabalhista e CNIS.
+Quando o ruído declarado no campo 15.4 do PPP fica pouco abaixo de 85 dB(A) sem normalização e o segurado cumpria habitualmente jornada superior a 480 minutos em virtude de horas extras frequentes, cabe solicitar a normalização pela fórmula da NHO-01 com fator 10, aplicando NEN igual a NE mais dez vezes o logaritmo na base dez do quociente entre o tempo de exposição em minutos e 480. Esse cálculo só eleva o resultado acima de 85 dB(A), configurando especialidade no período pós 18/11/2003, quando o valor medido está perto do limite. Em jornada de 600 minutos, o acréscimo é de 0,97 dB, e só valores a partir de 84,1 dB(A) passam de 85 dB(A) (auditoria 03/10/2026). A comprovação da jornada se faz por contracheques, folhas de ponto, Reclamação Trabalhista e CNIS.
 
 O passo a passo aplicado está em `references/CENARIOS-ENQUADRAMENTO.md` cenário 5.
 

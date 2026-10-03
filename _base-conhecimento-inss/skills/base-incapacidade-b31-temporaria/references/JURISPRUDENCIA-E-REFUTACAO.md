@@ -6,7 +6,7 @@
 
 Retirada a Súmula 63/TNU na auditoria 25/07/2026; ela trata de união estável em pensão por morte, não de carência.
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm (auditoria 03/10/2026)
 
 Aplicação pró-segurado. Abre o rol do art. 151 para outras moléstias graves, como doenças neuromusculares e outras de igual gravidade comprovada. Esclerose múltipla e hanseníase já constam do texto do art. 151, na redação da Lei 13.135/2015 (auditoria 03/10/2026).
 

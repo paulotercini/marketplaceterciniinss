@@ -1,14 +1,14 @@
 # Revisão IRSM/1994 — Jurisprudência Verificada e Refutação
 
-## 1. Precedentes vinculantes
+## 1. Fundamento e precedentes
 
-### Tema 415 STJ, REsp 1.168.657
+### Fundamento da revisão do IRSM
 
-Tese. Os salários de contribuição anteriores à conversão em URV devem ser corrigidos pelo IRSM de fevereiro de 1994, no percentual de 39,67%, antes da apuração da RMI.
+Tese. A correção dos salários de contribuição anteriores a março de 1994 vai até o mês de fevereiro de 1994 (art. 21, §1º, da Lei 8.880/1994), o que inclui o IRSM desse mês, de 39,67%, antes da apuração da RMI. A Lei 10.999/2004 autorizou a revisão administrativa nesses termos [NÃO CONFIRMADO]. O Tema 415 do STJ, antes citado aqui, trata de entrega de carnês de IPTU (auditoria 03/10/2026).
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://www.planalto.gov.br
 
-Aplicação. Obrigatória e vinculante.
+Aplicação. Obrigatória por força de lei; não se identificou precedente vinculante sobre o mérito (auditoria 03/10/2026).
 
 ### Tema 975 STJ
 
@@ -62,7 +62,7 @@ Refutação. Verificar CNIS completo. Em alguns casos, períodos antigos foram o
 
 Argumento adversário. INSS aplicou índice parcial.
 
-Refutação. O Tema 415 fixou 39,67%. Qualquer aplicação inferior é incompleta. Pedido de diferença é cabível.
+Refutação. O IRSM de fevereiro de 1994 é de 39,67%, e a correção do art. 21, §1º, da Lei 8.880/1994 o alcança por inteiro (auditoria 03/10/2026). Qualquer aplicação inferior é incompleta. Pedido de diferença é cabível.
 
 ### Argumento 6 — Revisão não cabe em pensão por morte
 
@@ -98,7 +98,7 @@ Refutação. Reconhecimento retroage à DIB, com prescrição quinquenal. Tema 1
 
 Wladimir Novaes Martinez, análise do Plano Real.
 
-Frederico Amado, Tema 415 STJ.
+Frederico Amado, revisão do IRSM (auditoria 03/10/2026).
 
 Hugo Goes, cálculo com IRSM.
 
@@ -126,7 +126,7 @@ Sexto, pedido de implantação imediata após trânsito em julgado.
 
 ## 6. Diligência de atualização
 
-Acompanhar acórdãos do STJ sobre a aplicação concreta do Tema 415.
+Acompanhar acórdãos do STJ sobre a aplicação concreta da revisão do IRSM (auditoria 03/10/2026).
 
 Acompanhar IACs dos TRFs.
 

@@ -153,7 +153,7 @@ Regra geral — 12 meses após cessação das contribuições ou do benefício p
 
 > Para regime jurídico completo do período de graça, incluindo todas as teses e precedentes, consultar skill `periodo-graca-qualidade-segurado`.
 
-**Incorporação ao patrimônio jurídico das 120 contribuições** — Tema 255/TNU (j. 16/10/2020) e TRF4, AC 5015395-67.2021.4.04.7208/SC (9ª Turma, Rel. Des. Paulo Afonso Brum Vaz, j. 16/05/2023) firmaram que o pagamento de 120+ contribuições incorpora-se definitivamente ao patrimônio jurídico do segurado, sendo exercível em qualquer filiação posterior, a qualquer tempo, independentemente de nova perda da qualidade. **ALERTA — Tema 1352/STJ [PENDENTE]** (afetação junho/2025, processos suspensos) pode restringir a tese ao uso único.
+**Incorporação ao patrimônio jurídico das 120 contribuições** — Tema 255/TNU (j. 16/10/2020) e TRF4, AC 5015395-67.2021.4.04.7208/SC (9ª Turma, Rel. Des. Paulo Afonso Brum Vaz, j. 16/05/2023) firmaram que o pagamento de 120+ contribuições incorpora-se definitivamente ao patrimônio jurídico do segurado, sendo exercível em qualquer filiação posterior, a qualquer tempo, independentemente de nova perda da qualidade. **ALERTA — Tema 1352/STJ [PENDENTE]** (afetação junho/2025, suspensos apenas os recursos especiais e os agravos em recurso especial) (auditoria 03/10/2026) pode restringir a tese ao uso único.
 
 **Cômputo das 120 contribuições — restrição do Tema 365/TNU** (j. 12/11/2025, auditoria 25/07/2026, rodada 2, data conferida na pagina oficial do CJF) — períodos de gozo de benefício por incapacidade intercalados NÃO contam para as 120 contribuições. Somente contribuições efetivamente pagas.
 

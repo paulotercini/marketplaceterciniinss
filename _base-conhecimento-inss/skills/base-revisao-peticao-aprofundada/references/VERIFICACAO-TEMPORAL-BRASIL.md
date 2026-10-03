@@ -37,7 +37,7 @@ Prazos.
 - Embargos de declaração. 5 dias úteis.
 - PUIL (à TRU ou TNU). 15 dias úteis (art. 12 RITNU c/c art. 14 Lei 10.259).
 
-ATENÇÃO. O JEF segue dias úteis também após CPC/15. Verificar Súmula 53/TNU (suspensão de prazo no JEF para recesso forense).
+ATENÇÃO. O JEF segue dias úteis também após CPC/15. Verificar no calendário do tribunal a suspensão de prazo no recesso forense (auditoria 03/10/2026, retirada a Súmula 53/TNU, que trata de incapacidade preexistente ao reingresso).
 
 ### Sub-cenário 1.3 - CRPS (Recursos Administrativos)
 

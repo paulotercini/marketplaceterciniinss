@@ -25,7 +25,7 @@ Lei 8.213/91, art. 39, parágrafo único (carência rural por meses corresponden
 
 Lei 8.213/91, art. 48 §§ 1º a 4º (aposentadoria por idade rural pura e híbrida).
 
-Lei 8.213/91, art. 96, IV (cômputo do período rural mediante indenização).
+Lei 8.213/91, art. 96, IV (indenização do período rural, exigida só na contagem recíproca) (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 106 (rol exemplificativo de provas materiais).
 
@@ -503,7 +503,7 @@ Sexto, em recurso e ação, citar expressamente os Temas 532, 642, 1007, 1115/ST
 
 Sétimo, em comodato verbal, oferecer prova testemunhal sob Súmula 577/STJ.
 
-Oitavo, em quilombola e indígena, juntar declaração específica antes do protocolo (Portarias 1209/2024 e 1299/2025).
+Oitavo, em quilombola e indígena, juntar declaração específica antes do protocolo (Portarias 1209/2024 e 1.079/2022) (auditoria 03/10/2026).
 
 Nono, em SDPA notificado e não pago, buscar outras bases.
 

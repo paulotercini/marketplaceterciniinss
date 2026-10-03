@@ -8,7 +8,7 @@ Súmula 6/TNU. Certidão de casamento civil ou religioso onde o cônjuge é qual
 
 Súmula 14/TNU. "Para a concessão de aposentadoria rural por idade, não se exige que o início de prova material corresponda a todo o período equivalente à carência do benefício."
 
-Súmula 30/TNU. Tratamento do segurado especial em casos particulares.
+Súmula 30/TNU. O imóvel superior ao módulo rural não afasta, por si só, a qualidade de segurado especial, se comprovada a exploração em regime de economia familiar (PUIL 5003245-83.2018.4.04.7006) [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Súmula 34/TNU. Contemporaneidade do início de prova material à época dos fatos.
 

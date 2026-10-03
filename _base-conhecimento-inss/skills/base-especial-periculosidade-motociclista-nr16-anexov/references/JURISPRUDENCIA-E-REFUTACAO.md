@@ -58,7 +58,7 @@ Refutação. Tema 555 STF e Tema 1090 STJ não se aplicam à periculosidade. Ris
 
 Argumento adversário. Uso eventual da moto descaracteriza.
 
-Refutação. Profissional de motocicleta tem habitualidade presumida (Súmula 49 TNU). Cabe ao INSS provar a eventualidade.
+Refutação. No profissional de motocicleta, a exposição ao risco da via pública é indissociável da prestação do serviço, o que caracteriza a permanência (art. 65 do Decreto 3.048/99). A Súmula 49 TNU não serve aqui, pois apenas dispensa a permanência antes de 29/4/1995 (auditoria 03/10/2026). Cabe ao INSS provar a eventualidade.
 
 ### Argumento 5 — Sem LTCAT específico
 

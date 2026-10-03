@@ -16,7 +16,7 @@ Fonte oficial em https://www.cjf.jus.br
 
 ### Repercussão social e funcional na avaliação (IF-BrA)
 
-A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (IF-BrA) (auditoria 03/10/2026) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ### Tema 327 TNU
 
@@ -28,7 +28,7 @@ Trata do início de prova material rural em nome do cônjuge, não do protocolo 
 
 Fonte oficial em https://www.planalto.gov.br
 
-### Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 (auditoria 03/10/2026)
+### Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026)
 
 Fonte oficial em https://www.gov.br
 
@@ -48,7 +48,7 @@ Refutação. Avaliação biopsicossocial é obrigatória (LC 142/2013, art. 4º,
 
 Argumento adversário. Sim ou não.
 
-Refutação. Lógica fuzzy é exigência da Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 (auditoria 03/10/2026).
+Refutação. Lógica fuzzy é exigência da Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 ### Argumento 3 — Sem assistente social
 
@@ -128,7 +128,7 @@ Sexto, monitoramento do grau.
 
 ## 6. Diligência de atualização
 
-Acompanhar Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 (auditoria 03/10/2026).
+Acompanhar Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 Revalidar ADI 5760.
 

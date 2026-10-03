@@ -130,4 +130,4 @@ IBDP, advocacia previdenciária.
 
 ## O que NÃO está nesta skill
 
-Reafirmação da DER em `reafirmacao-der`. Planejamento em `base-planejamento-previdenciario`. Revisões específicas em skills próprias (Tema 327, Tema 415, Tema 334, Tema 1102).
+Reafirmação da DER em `reafirmacao-der`. Planejamento em `base-planejamento-previdenciario`. Revisões específicas em skills próprias (Tema 327, IRSM de fevereiro de 1994, Tema 334, Tema 1102) (auditoria 03/10/2026).

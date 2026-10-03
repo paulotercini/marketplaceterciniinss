@@ -36,9 +36,9 @@ A reforma da tutela obriga a devolução, com desconto de até 30 por cento (aud
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Tema 1009 STJ
+### Devolução de valores na revisão posterior
 
-Devolução de valores, revisão posterior.
+Rege-se pelo Tema 692/STJ, acima (auditoria 03/10/2026, retirado o Tema 1009/STJ, que trata de servidor público).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -122,7 +122,7 @@ Sexto, sustentar em caso de suspensão.
 
 Risco de indeferimento liminar. Interpor agravo de instrumento.
 
-Risco de revogação posterior. O Tema 692/STJ impõe a devolução (teto de 30 por cento); as exceções reais são o BPC (art. 49 do Decreto 6.214/2007), o erro administrativo com boa-fé (Tema 979/STJ) e a interpretação errônea da lei (Tema 1034/STJ) (auditoria 25/07/2026, retirado o Tema 1009/STJ, não confirmado).
+Risco de revogação posterior. O Tema 692/STJ impõe a devolução (teto de 30 por cento); a tese alcança também o benefício assistencial, e o caminho do segurado é a distinção, quando o valor não decorreu da tutela revogada (auditoria 03/10/2026, retirados o Tema 1009/STJ, que trata de servidor público, e o Tema 1034/STJ, que trata de plano de saúde).
 
 Risco de suspensão de segurança. Preparar defesa.
 

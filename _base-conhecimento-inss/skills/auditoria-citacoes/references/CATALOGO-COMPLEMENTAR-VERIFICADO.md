@@ -429,3 +429,26 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. STJ. Órgão e data não registrados no relatório E3.
 - Fonte oficial. scon.stj.jus.br/SCON/sumstj (Súmula 37)
 - Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### TEMA 988/STJ
+- Situação. CONFIRMADO_FONTE_OFICIAL (auditoria de 03/10/2026, rodada R2, página oficial dos repetitivos do STJ).
+- Tese literal. Não transcrita nesta rodada, que registra só esta síntese: o rol do art. 1.015 do CPC é de taxatividade mitigada, e o agravo de instrumento cabe fora dele quando demonstrada a urgência. Copiar a redação literal da fonte antes de citar em peça.
+- Órgão e leading case. STJ, Corte Especial, REsp 1.696.396/MT e REsp 1.704.520/MT, julgados em 05/12/2018.
+- Fonte oficial. https://processo.stj.jus.br/repetitivos/temas_repetitivos/
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### TEMA 955/STJ
+- Situação. CONFIRMADO_FONTE_OFICIAL (auditoria de 03/10/2026, rodada R2, página oficial dos repetitivos do STJ). Tema de previdência complementar, não do RGPS; não confundir com o Tema 995/STJ (reafirmação da DER).
+- Tese literal. Não transcrita nesta rodada, que registra só esta síntese: os reflexos de horas extras reconhecidas pela Justiça do Trabalho não integram a complementação de aposentadoria já concedida. Copiar a redação literal da fonte antes de citar em peça.
+- Órgão e leading case. STJ, Segunda Seção, REsp 1.312.736/RS. Data não registrada nesta rodada.
+- Fonte oficial. https://processo.stj.jus.br/repetitivos/temas_repetitivos/
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+Homônimos do STJ a evitar (auditoria 03/10/2026). Ficam sem título ### para que o script não os registre como conferidos. Cada número existe no STJ, mas trata de outro assunto e não serve como precedente previdenciário.
+- TEMA 394/STJ. Depósito judicial e IRPJ, matéria tributária (REsp 1.168.038/SP).
+- TEMA 96/STJ. Constituição do crédito tributário pela declaração do contribuinte (REsp 1.101.728/SP).
+- TEMA 415/STJ. Entrega de carnês de IPTU e privilégio postal (REsp 1.141.300/MG).
+- TEMA 339/STJ. Liberação de veículo retido, matéria da Súmula 510/STJ.
+- TEMA 1340/STJ. Home care em plano de saúde, afetado e sem tese.
+- TEMA 1009/STJ. Devolução de valores recebidos por servidor público por erro administrativo (REsp 1.769.306/AL); no RGPS, a matéria é do Tema 979/STJ.
+- TEMA 1036/STJ. Apreensão de instrumento de infração ambiental (Lei 9.605/1998, art. 25, § 4º; REsp 1.814.945/CE).

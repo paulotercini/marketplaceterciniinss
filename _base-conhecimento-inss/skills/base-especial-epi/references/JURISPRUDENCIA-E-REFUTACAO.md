@@ -120,7 +120,7 @@ Hugo Goes, em Manual de Direito Previdenciário, enfatiza que a eficácia real e
 
 Wladimir Novaes Martinez, em comentários à legislação previdenciária, coloca o EPI como elemento secundário frente ao risco efetivamente existente no ambiente laboral.
 
-O IBDP, em teses institucionais, defende a interpretação pró-segurado com ônus probatório invertido sempre que o agente for cancerígeno, biológico ou de absorção cutânea.
+O IBDP, em teses institucionais, defendeu a interpretação pró-segurado com ônus probatório invertido sempre que o agente for cancerígeno, biológico ou de absorção cutânea. Essa tese foi vencida no Tema 1090 do STJ, cujo item II atribui ao autor o ônus de comprovar a ineficácia do EPI. O caminho do segurado é a impugnação específica do PPP, e a dúvida razoável sobre a eficácia leva ao reconhecimento do período especial, conforme o Tema 213 da TNU (auditoria 03/10/2026).
 
 ## 5. Diligência de atualização
 

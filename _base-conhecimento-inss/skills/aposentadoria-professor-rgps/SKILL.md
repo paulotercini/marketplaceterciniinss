@@ -109,7 +109,7 @@ Idade mínima inicial em 2019 — 56 anos (homem) e 51 anos (mulher), com acrés
 | 2030 | 60a     | 56a6m   |
 | 2031 | 60a     | 57a     |
 
-Teto — 60 anos (homem) e 57 anos (mulher). A partir desses limites, a regra de transição se torna idêntica à regra definitiva.
+Teto — 60 anos (homem) e 57 anos (mulher). A partir desses limites, a idade da transição se iguala à da regra definitiva. O tempo não se iguala para o homem, que segue com 30 anos de magistério na transição, enquanto a regra definitiva exige 25 anos para ambos os sexos (auditoria 03/10/2026).
 
 ### 4.3 Regra de transição por pedágio de 100% (art. 20, §1º, EC 103/2019)
 
@@ -157,7 +157,7 @@ Todas as regras de aposentadoria do professor exigem 180 meses de carência (art
 
 ## 8. DOCUMENTAÇÃO COMPROBATÓRIA
 
-Para comprovar o exercício de magistério perante o INSS, a IN 128/2022 (arts. 250 a 255) (auditoria 03/10/2026) exige documentação que demonstre a atividade de magistério na educação básica. Documentos pertinentes incluem CTPS com registro de professor, contrato de trabalho, portaria de nomeação, declaração do empregador com indicação do período e da função exercida, PPP (quando houver), registros em diários de classe e histórico funcional.
+Para comprovar o exercício de magistério perante o INSS, o Decreto 3.048/99, art. 54, §3º, exige o diploma registrado ou documento que comprove a habilitação para o magistério e os registros em CTPS, complementados, quando necessário, por declaração do estabelecimento de ensino (auditoria 03/10/2026). Documentos pertinentes incluem CTPS com registro de professor, contrato de trabalho, portaria de nomeação, declaração do empregador com indicação do período e da função exercida, PPP (quando houver), registros em diários de classe e histórico funcional.
 
 Para cargos híbridos da educação infantil (Lei 15.326/2026), reforçar a prova material com descrição de função constante da lei local ou edital, atos internos da unidade escolar e documentos da rotina pedagógica (planos de aula, relatórios pedagógicos, atas de reuniões).
 

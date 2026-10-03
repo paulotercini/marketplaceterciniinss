@@ -26,12 +26,6 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurada. Flexibiliza a prova em favor da mulher rural.
 
-### Súmula 37 TNU
-
-Tese. Aplicação sobre comprovação de invalidez (contexto diferente, mas citável quando relevante).
-
-Fonte oficial em https://www.cjf.jus.br
-
 ### Tema 161 STF (RE 778.889)
 
 Tese. Licença-adoção equivalente à licença-maternidade em duração, para a mãe adotiva, independente da idade da criança.

@@ -2,14 +2,6 @@
 
 ## 1. Precedentes vinculantes
 
-### Tema 1036 STJ (por analogia com aposentadoria especial)
-
-Tese. Parâmetros para concessão com cuidado na produção probatória.
-
-Fonte oficial em https://www.stj.jus.br
-
-Aplicação contextual.
-
 ### Súmula 377 STJ
 
 Tese. Visão monocular dá direito às vagas reservadas em concurso público. Na aposentadoria PCD, a base é a Lei 14.126/2021 [NÃO CONFIRMADO], e o grau depende do IF-BrA (auditoria 03/10/2026).
@@ -172,4 +164,4 @@ O IBDP sustenta proteção integral.
 
 ## 5. Diligência de atualização
 
-Revalidar Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 (auditoria 03/10/2026; retirados os Temas 249, 452 e 641/TNU, por tese trocada ou não localizados). Acompanhar temas TNU e STJ sobre DID e IF-BrA. Acionar `precedentes-previdenciarios`.
+Revalidar Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026; retirados os Temas 249, 452 e 641/TNU, por tese trocada ou não localizados, e o Tema 1036/STJ, que trata de apreensão de instrumento de infração ambiental). Acompanhar temas TNU e STJ sobre DID e IF-BrA. Acionar `precedentes-previdenciarios`.

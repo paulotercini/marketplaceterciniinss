@@ -1,6 +1,6 @@
 ---
 name: base-cumprimento-sentenca-rpv-precatorio
-description: "Cumprimento de sentença contra o INSS, expedição de RPV e precatório, juros e correção monetária, honorários, tributação e destaque. Use SEMPRE que mencionar cumprimento de sentença previdenciário, execução INSS, RPV, precatório, art. 100 CF, art. 17 Lei 10.259, Lei 11.960/2009, Tema 810 STF, Tema 905 STJ, Tema 96 STJ, art. 85 CPC, honorários sucumbenciais, Súmula 111 STJ, Tema 1050 STJ, destaque honorários, IR sobre atrasados, RRA art. 12-A Lei 7.713, Tema 368 STF, deságio precatório, teto RPV, 60 salários-mínimos, parcelamento, expedição de ofício, dialeticidade recursal execução, impugnação ao cumprimento, IRDR 18 TRF4. Cruza com execucao-cumprimento-previdenciario, peticao-previdenciaria, tributacao-beneficios-previdenciarios, honorarios-contrato-previdenciario e impugnacao-cumprimento-concomitantes."
+description: "Cumprimento de sentença contra o INSS, expedição de RPV e precatório, juros e correção monetária, honorários, tributação e destaque. Use SEMPRE que mencionar cumprimento de sentença previdenciário, execução INSS, RPV, precatório, art. 100 CF, art. 17 Lei 10.259, Lei 11.960/2009, Tema 810 STF, Tema 905 STJ, art. 85 CPC, honorários sucumbenciais, Súmula 111 STJ, Tema 1050 STJ, destaque honorários, IR sobre atrasados, RRA art. 12-A Lei 7.713, Tema 368 STF, deságio precatório, teto RPV, 60 salários-mínimos, parcelamento, expedição de ofício, dialeticidade recursal execução, impugnação ao cumprimento, IRDR 18 TRF4. Cruza com execucao-cumprimento-previdenciario, peticao-previdenciaria, tributacao-beneficios-previdenciarios, honorarios-contrato-previdenciario e impugnacao-cumprimento-concomitantes."
 ---
 
 # Cumprimento de Sentença Previdenciário. RPV e Precatório
@@ -29,7 +29,7 @@ Tema 1050 STJ. Proveito econômico em honorários.
 
 ### Tema 810 STF
 
-Correção monetária pelo IPCA-E e juros pela remuneração da caderneta de poupança, com modulação. SELIC unificada a partir de 09/12/2021.
+Correção monetária pelo IPCA-E e juros pela remuneração da caderneta de poupança, sem modulação, que os embargos de declaração no RE 870.947 rejeitaram [NÃO CONFIRMADO]. No benefício previdenciário, a correção segue o INPC do Tema 905/STJ [NÃO CONFIRMADO]. SELIC unificada a partir de 09/12/2021 (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -39,9 +39,9 @@ Juros e correção em benefícios previdenciários.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 96 STJ
+### Prescrição em cumprimento
 
-Prescrição em cumprimento.
+Sem precedente vinculante conferido nesta base (auditoria 03/10/2026, retirado o Tema 96/STJ, que trata de crédito tributário).
 
 ### Tema 368 STF
 

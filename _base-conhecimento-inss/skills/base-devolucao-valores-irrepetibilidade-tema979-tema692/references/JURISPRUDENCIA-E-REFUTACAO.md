@@ -4,7 +4,7 @@
 
 ### Tema 979/STJ
 
-Irrepetibilidade em erro administrativo. Fonte oficial em https://www.stj.jus.br
+Erro administrativo: valores repetíveis, com desconto de até 30%, salvo boa-fé objetiva comprovada pelo segurado. Modulação para processos distribuídos a partir da publicação do acórdão, em 23/04/2021 [NÃO CONFIRMADO] (auditoria 03/10/2026). Fonte oficial em https://www.stj.jus.br
 
 ### Tema 692/STJ (REsp 1.401.560/MT) (auditoria 03/10/2026)
 
@@ -24,7 +24,7 @@ Limites de desconto. Fonte oficial em https://www.planalto.gov.br
 
 ### Tema 692 STJ
 
-Boa-fé objetiva. Fonte oficial em https://www.stj.jus.br
+Tese adversa, já descrita acima: na tutela revogada, a boa-fé não afasta a devolução (auditoria 03/10/2026). Fonte oficial em https://www.stj.jus.br
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
@@ -42,7 +42,7 @@ Refutação. Tese adversa: o Tema 692/STJ ampara a cobrança e obriga a devoluç
 
 Argumento adversário. INSS pode corrigir.
 
-Refutação. Tema 979/STJ veda devolução em erro administrativo.
+Refutação. O Tema 979/STJ admite a cobrança, com desconto de até 30%, salvo se o segurado comprovar boa-fé objetiva. A defesa produz essa prova e verifica se o pagamento decorreu de interpretação errônea da lei, hipótese fora da tese (auditoria 03/10/2026).
 
 ### Argumento 3 — Desconto integral
 
@@ -74,11 +74,11 @@ Argumento adversário. Súmula é interna.
 
 Refutação. STJ adota orientação. AGU vinculou.
 
-### Argumento 8 — Tema 692 STJ afastado
+### Argumento 8 — Tema 692 STJ afasta a boa-fé
 
-Argumento adversário. Não aplicável.
+Argumento adversário. Na tutela revogada, a boa-fé não impede a devolução.
 
-Refutação. Boa-fé objetiva é matriz.
+Refutação. Tese adversa, correta na tutela revogada. O segurado exige o teto de 30% e a prova de que cada parcela decorreu da tutela; a boa-fé objetiva pesa no erro administrativo, pelo Tema 979/STJ (auditoria 03/10/2026).
 
 ### Argumento 9 — Acúmulo indevido
 
