@@ -10,7 +10,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 173 TNU
 
-Deficiência intelectual.
+Trata do impedimento de longo prazo de 2 anos no BPC, não da LC 142; não citar nesta matéria (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -20,7 +20,7 @@ A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-Br
 
 ### Tema 327 TNU
 
-Deficiência feminina e protocolo de gênero.
+Trata do início de prova material rural em nome do cônjuge, não do protocolo de gênero; não citar nesta matéria (auditoria 03/10/2026).
 
 ## 2. Marco legislativo
 
@@ -28,7 +28,7 @@ Deficiência feminina e protocolo de gênero.
 
 Fonte oficial em https://www.planalto.gov.br
 
-### Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015
+### Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 (auditoria 03/10/2026)
 
 Fonte oficial em https://www.gov.br
 
@@ -48,7 +48,7 @@ Refutação. Avaliação biopsicossocial é obrigatória (LC 142/2013, art. 4º,
 
 Argumento adversário. Sim ou não.
 
-Refutação. Lógica fuzzy é exigência da Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Refutação. Lógica fuzzy é exigência da Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 ### Argumento 3 — Sem assistente social
 
@@ -128,7 +128,7 @@ Sexto, monitoramento do grau.
 
 ## 6. Diligência de atualização
 
-Acompanhar Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Acompanhar Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 Revalidar ADI 5760.
 

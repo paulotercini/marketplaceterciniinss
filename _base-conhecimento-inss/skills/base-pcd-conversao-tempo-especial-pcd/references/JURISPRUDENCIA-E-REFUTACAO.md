@@ -10,7 +10,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 173 TNU
 
-Deficiência intelectual.
+Trata do impedimento de longo prazo de 2 anos no BPC, não da LC 142; não citar nesta matéria (auditoria 03/10/2026).
 
 ### Tema 422 STJ
 
@@ -20,7 +20,7 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Tema 694 STJ
 
-Conversão e regra do tempo de prestação.
+Trata do limite de ruído de 90 dB entre 06/03/1997 e 18/11/2003, não da conversão em tempo PCD; não citar nesta matéria (auditoria 03/10/2026).
 
 ## 2. Marco legislativo
 
@@ -90,7 +90,7 @@ Refutação. Aplicação por período de cada grau.
 
 Argumento adversário. Limitação temporal.
 
-Refutação. Tema 694 STJ assegura.
+Refutação. O Decreto 3.048/99, art. 70-F, §1º, não traz limite temporal. A IN 128, art. 310, §1º, restringe a conversão a períodos até 13/11/2019, e a tese contrária deve ser sustentada de forma expressa (auditoria 03/10/2026).
 
 ### Argumento 10 — Sem direito adquirido
 
@@ -118,7 +118,7 @@ Primeiro, mapa segmentado.
 
 Segundo, prova robusta.
 
-Terceiro, fundamentação Temas 422 e 694 STJ.
+Terceiro, fundamentação no Tema 422 STJ e no Decreto 3.048/99, art. 70-F, §1º (auditoria 03/10/2026).
 
 Quarto, regra mais favorável.
 
@@ -128,7 +128,7 @@ Sexto, monitoramento.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 173 TNU.
+
 
 Revalidar ADI 5760.
 

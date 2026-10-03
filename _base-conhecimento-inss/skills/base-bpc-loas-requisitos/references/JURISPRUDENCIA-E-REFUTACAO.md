@@ -44,7 +44,7 @@ Aplicação pró-segurado.
 
 ### Tema 369 TNU
 
-Tese. Não cumulatividade do BPC com outros benefícios da Seguridade.
+Tese. Na aplicação do parágrafo único do art. 34 do Estatuto do Idoso e do art. 20, §14, da LOAS, a renda per capita se calcula com a exclusão do valor de 1 salário mínimo do benefício de idoso ou de pessoa com deficiência, e só o que exceder esse valor entra na divisão (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -102,7 +102,7 @@ Refutação. Prognóstico de 2 anos é estimativa, não necessita efetivação. 
 
 Argumento adversário. Inclusão de todos os moradores na renda.
 
-Refutação. Rol taxativo do art. 20 §1º LOAS. Cônjuge, companheiro, pais, filhos, irmãos não emancipados menores de 21 ou inválidos. Não inclui cunhados, tios, sobrinhos.
+Refutação. Rol taxativo do art. 20 §1º LOAS. Requerente, cônjuge ou companheiro, pais e, na ausência de um deles, madrasta ou padrasto, irmãos solteiros, filhos e enteados solteiros e menores tutelados, desde que vivam sob o mesmo teto (auditoria 03/10/2026). Não inclui cunhados, tios, sobrinhos.
 
 ### Argumento 7 — Revisão bienal que cessa benefício
 

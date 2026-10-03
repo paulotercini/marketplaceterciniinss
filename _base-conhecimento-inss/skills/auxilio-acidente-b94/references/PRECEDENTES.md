@@ -25,7 +25,7 @@
 - **Combinação:** art. 86, §2º, Lei 8.213/91
 
 ### Tema 555/STJ
-- **Tese:** Impossibilidade de recebimento conjunto de auxílio-acidente com aposentadoria quando ambos os fatos geradores forem posteriores a 11/11/1997 (Lei 9.528/97).
+- **Tese:** "A acumulação do auxílio-acidente com proventos de aposentadoria pressupõe que a eclosão da lesão incapacitante e a concessão da aposentadoria sejam anteriores à alteração do art. 86, §§ 2º e 3º, da Lei 8.213/1991, promovida em 11.11.1997." Basta que um dos dois fatos seja posterior ao marco para vedar a acumulação (auditoria 03/10/2026).
 - **Uso:** quando houver discussão sobre cumulação B94 + aposentadoria
 
 ## 2. Súmulas do STJ
@@ -72,7 +72,7 @@
 - **Resultado:** 10 x 2 (maioria)
 - **Tese:** O segurado refiliado como CI ou facultativo pode utilizar o período de graça do vínculo anterior como empregado, doméstico, avulso ou segurado especial para fins de B94, se mais favorável.
 - **Vinculação:** Turmas Recursais
-- **Superou:** PUIL 5002615-35.2020.4.04.7207/SC (29/04/2022)
+- **Prevalece sobre:** PUIL 5002615-35.2020.4.04.7207/SC (29/04/2022), julgado da TRU da 4ª Região, não da TNU, sem efeito vinculante (auditoria 03/10/2026)
 
 ### PUIL 5026380-43.2022.4.02.5001/ES
 - **Julgamento:** 21/10/2025
@@ -83,9 +83,9 @@
 - **Tese 2:** Reafirmação da tese do PUIL 5000733 (período de graça).
 - **Precedente anterior reafirmado (Tese 1):** PUIL 0520365-59.2018.4.05.8100
 
-### PUIL 5002615-35.2020.4.04.7207/SC (SUPERADO)
+### PUIL 5002615-35.2020.4.04.7207/SC, TRU da 4ª Região (SUPERADO)
 - **Julgamento:** 29/04/2022
-- **Tese (superada):** CI não tem direito a B94, mesmo em período de graça
+- **Tese (superada):** CI não tem direito a B94, mesmo em período de graça. Julgado regional da TRU da 4ª Região, não da TNU, sem efeito vinculante (auditoria 03/10/2026)
 - **Status:** SUPERADO pelo PUIL 5000733
 
 ## 6. Precedentes Relevantes dos TRFs

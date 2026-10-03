@@ -46,21 +46,21 @@ Precedente de apoio. Súmula 68 TNU.
 
 Argumento adversário. O PPP indica exposição a ruído, mas não confirma habitualidade e permanência.
 
-Refutação. A exigência legal de habitualidade e permanência, para períodos a partir de 29/04/1995, é atendida pelo exercício da atividade em caráter não eventual e durante a jornada laboral, independentemente de exposição ininterrupta aos agentes. O STF, no Tema 698, e o STJ, em recurso repetitivo, afastaram a interpretação restritiva que exigia exposição contínua e homogênea.
+Refutação. A exigência legal de habitualidade e permanência, para períodos a partir de 29/04/1995, é atendida pelo exercício da atividade em caráter não eventual e durante a jornada laboral, independentemente de exposição ininterrupta aos agentes. O fundamento é o art. 57, §3º, da Lei 8.213/1991, que exige trabalho permanente, não ocasional nem intermitente, e não fala em exposição contínua e homogênea (auditoria 03/10/2026).
 
-Precedente de apoio. STF, Tema 698, e STJ em recurso repetitivo sobre habitualidade e permanência.
+Fundamento de apoio. Art. 57, §3º, da Lei 8.213/1991 (auditoria 03/10/2026).
 
 ## 7. INSS recusa conversão de tempo especial pós EC 103
 
 Argumento adversário. Com a EC 103/2019, a conversão de tempo especial em comum teria sido vedada.
 
-Refutação. A vedação se aplica apenas a atividades exercidas a partir de 14/11/2019, data de publicação da EC 103. O direito adquirido alcança todo o tempo especial prestado até 13/11/2019, inclusive mediante conversão, pela regra de transição.
+Refutação. A vedação se aplica apenas a atividades exercidas a partir de 14/11/2019, dia seguinte à publicação da EC 103 (auditoria 03/10/2026). O direito adquirido alcança todo o tempo especial prestado até 13/11/2019, inclusive mediante conversão, pela regra de transição.
 
-Precedente de apoio. STJ, Tema 694, em combinação com o art. 26 da EC 103/2019.
+Fundamento de apoio. Art. 25, §2º, da EC 103/2019, que assegura a conversão do tempo especial cumprido até 13/11/2019 (auditoria 03/10/2026).
 
 ## 8. INSS aplica limite de ruído mais gravoso retroativamente
 
-Argumento adversário. O INSS indefere especialidade de período anterior a 19/11/2003 por ruído inferior a 85 dB, aplicando retroativamente o limite do Decreto 4.882/2003.
+Argumento adversário. O INSS indefere especialidade de período anterior a 06/03/1997 por ruído entre 80 e 85 dB, aplicando retroativamente o limite do Decreto 4.882/2003 (auditoria 03/10/2026).
 
 Refutação. A alteração do limite por decreto posterior não pode retroagir em prejuízo ao segurado. Aplica-se o limite vigente à época da prestação do serviço, respeitando o direito adquirido. Para períodos anteriores a 05/03/1997, o limite mais benéfico é de 80 dB pelo Decreto 53.831/64.
 
@@ -72,7 +72,7 @@ Argumento adversário. O juiz pode julgar improcedente a ação sem produção d
 
 Refutação. Em aposentadoria especial, a prova técnica é componente estrutural da tese. O indeferimento de perícia ou o julgamento antecipado que desconsidere PPP com vício configura cerceamento de defesa, impugnável por apelação ou embargos. Os Enunciados 91 e 225 FONAJEF admitem prova técnica simplificada mesmo no JEF. A skill `defesa-probatoria-especial` tem a fundamentação completa.
 
-Precedente de apoio. Súmula 198 TFR, Tema 1031 STJ, REsp 2.152.968.
+Precedente de apoio. Súmula 198 TFR e REsp 2.152.968 (auditoria 03/10/2026, retirado o Tema 1031 STJ, que trata do vigilante).
 
 ## Roteiro de aplicação em peça
 

@@ -23,7 +23,7 @@ IN 128/2022. Regras operacionais.
 
 Ofício-Circular 46/2019 DIRBEN. Orientações administrativas.
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais (auditoria 03/10/2026).
 
 ## Marco jurisprudencial
 
@@ -43,7 +43,7 @@ Tema 629 STJ. Coisa julgada em ações rurais, estratégias de repropositura.
 
 Fonte oficial em https://www.stj.jus.br
 
-Tema 642 STJ. Natureza da prova rural.
+Tema 642 STJ. Tese adversa: o segurado especial deve estar no campo ao completar a idade mínima da aposentadoria por idade rural. O caminho do segurado é a ressalva do direito adquirido, quando carência e idade foram preenchidas juntas no passado (auditoria 03/10/2026).
 
 Tema 327 TNU. Perspectiva de gênero e prova rural.
 

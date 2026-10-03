@@ -148,7 +148,7 @@ versa sobre [Y].
 4.2.3. [FATO NOVO/SUPERVENIENTE]. A presente ação se baseia em fato
 ocorrido após o trânsito em julgado da ação anterior.
 
-4.3. Aplica-se, ainda, [Tema 629 STJ / Súmula 239 STF / etc.].
+4.3. Aplica-se, ainda, [Tema 629 STJ / etc.] (auditoria 03/10/2026, retirada a Súmula 239 STF, que é tributária).
 ```
 
 **Cruzar com.** `coisa-julgada-previdenciaria` para análise técnica.

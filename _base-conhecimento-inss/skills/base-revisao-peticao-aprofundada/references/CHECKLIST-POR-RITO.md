@@ -95,7 +95,7 @@ Skills relevantes. `mandado-seguranca-previdenciario`, `ms-competencia-autoridad
 - [ ] Autoridade coatora identificada corretamente (gerente APS, CEAB, JR, CAJ, Pleno do CRPS).
 - [ ] Competência territorial. Foro da sede da autoridade ou domicílio do impetrante (art. 109 §2º CF).
 - [ ] Tempestividade (120 dias - art. 23 Lei 12.016/2009).
-- [ ] Para omissão. Termo inicial renovado diariamente (Súmula 632/STJ).
+- [ ] Para omissão. Termo inicial renovado diariamente, porque a omissão continuada não deflagra o prazo do art. 23 da Lei 12.016/2009 (auditoria 03/10/2026).
 - [ ] Indicação do ato impugnado (comissivo) ou da omissão (omissivo).
 - [ ] Fumus boni iuris demonstrado por prova pré-constituída.
 - [ ] Periculum in mora demonstrado por fatos concretos.

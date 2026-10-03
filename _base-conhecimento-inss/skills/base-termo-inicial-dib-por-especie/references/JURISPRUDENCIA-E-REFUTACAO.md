@@ -28,7 +28,7 @@ DIB auxílio-doença. Fonte oficial em https://www.cjf.jus.br
 
 ### Súmula 22 TNU
 
-DIB. Fonte oficial em https://www.cjf.jus.br
+DIB do benefício assistencial, fixada no requerimento administrativo quando a perícia judicial mostra que a incapacidade já existia nessa data (auditoria 03/10/2026). Fonte oficial em https://www.cjf.jus.br
 
 ### IN INSS 128/2022
 

@@ -16,7 +16,7 @@ Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativ
 
 A CF/88 no art. 226 §3º reconhece a união estável. O Código Civil nos arts. 1.723 a 1.727 disciplina a relação. A Lei 8.213/91 no art. 16 lista os dependentes, com presunção de dependência econômica para companheiro. O art. 22 do Decreto 3.048/99 detalha as provas.
 
-A Lei 13.846/2019 alterou a forma de comprovação, exigindo início de prova material contemporâneo (art. 16 §5º). O Tema 526/STF firmou a impossibilidade de pensão a concubina em concomitância com cônjuge, salvo situações excepcionais. Súmula 63/TNU (enunciado real): a comprovação de união estável para pensão por morte PRESCINDE de início de prova material — aplicável a fatos geradores até a MP 871/2019 (18/01/2019, redação da Súmula de 18/09/2025; auditoria 25/07/2026); para fatos posteriores, vale o art. 16, §5º (prova material contemporânea).
+A Lei 13.846/2019 alterou a forma de comprovação, exigindo início de prova material contemporâneo (art. 16 §5º). O Tema 526/STF firmou a impossibilidade de pensão a concubina em concomitância com cônjuge, sem exceção; é tese adversa, e o caminho é provar a separação de fato do instituidor, que afasta o concubinato e permite a união estável (CC, art. 1.723, §1º; Tema 529/STF) (auditoria 03/10/2026). Súmula 63/TNU (enunciado real): a comprovação de união estável para pensão por morte PRESCINDE de início de prova material — aplicável a fatos geradores até a MP 871/2019 (18/01/2019, redação da Súmula de 18/09/2025; auditoria 25/07/2026); para fatos posteriores, vale o art. 16, §5º (prova material contemporânea).
 
 A CF/88 no art. 201, V e §2º consagra a pensão por morte como benefício previdenciário não inferior ao salário-mínimo. A Portaria DPMF/INSS 991/2022 disciplina os procedimentos administrativos de concessão.
 
@@ -38,9 +38,9 @@ O INSS exige escritura pública. Refute com o art. 1.723 do CC e, para óbito at
 
 O INSS recusa prova testemunhal. Para óbito até 18/01/2019, refute com a Súmula 63/TNU; após, reúna prova material contemporânea (art. 16, §5º).
 
-O INSS questiona a contemporaneidade. Refute com prova continuada e início de prova material em qualquer época.
+O INSS questiona a contemporaneidade. Para óbito desde 18/01/2019, o início de prova material deve ser de até 24 meses antes do óbito, também no processo judicial (art. 16, §5º, da Lei 8.213/91; Tema 371/TNU). Refute com prova continuada desse período e, havendo um só documento nele, com justificação administrativa (IN 128/2022, art. 180, parágrafo único) (auditoria 03/10/2026).
 
-O INSS aplica concomitância com cônjuge. Refute com Tema 526/STF e exceções jurisprudenciais.
+O INSS aplica concomitância com cônjuge. Refute provando a separação de fato do instituidor, que afasta o concubinato (CC, art. 1.723, §1º; Tema 529/STF), pois o Tema 526/STF é tese adversa e não admite exceção (auditoria 03/10/2026).
 
 ## 5. Estratégia processual
 

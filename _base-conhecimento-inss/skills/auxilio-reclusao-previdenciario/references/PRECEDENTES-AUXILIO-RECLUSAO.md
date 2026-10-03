@@ -80,7 +80,7 @@ Todos os auxílios-reclusão cessados pelo INSS em razão de progressão de regi
 
 ### 4.1 Dados
 
-PUIL 5003395-11.2020.4.04.7001. Rel. Juiz Federal David Wilson de Abreu Pardo. TNU, j. 06/05/2022.
+PUIL 5003395-11.2020.4.04.7001. Rel. Juiz Federal David Wilson de Abreu Pardo. TNU, j. 05/05/2022 (auditoria 03/10/2026).
 
 ### 4.2 Tese
 

@@ -85,7 +85,7 @@ Primeiro, necessário demonstrar que o capítulo é autônomo e que o recurso n�
 
 Segundo, INSS pode tentar argumentar que a apelação devolve integralmente. Refutar com art. 1.013 §1º CPC e IRDR 18.
 
-Terceiro, cumprimento provisório contra Fazenda é restrito. Tema 28/STF.
+Terceiro, cumprimento provisório contra Fazenda é restrito. Tema 28/STF [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Quarto, em JEF a dialeticidade é mais rigorosa. Súmula 284/STF.
 

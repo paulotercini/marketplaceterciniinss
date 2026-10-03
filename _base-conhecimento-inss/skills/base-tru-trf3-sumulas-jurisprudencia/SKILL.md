@@ -411,7 +411,7 @@ Processos 0000147-18.2015.4.03.9300, 0000148-03.2015.4.03.9300, 0000149-85.2015.
 
 Reflexo prático. Renda per capita ATÉ 1/2 SM = presunção de miserabilidade que o INSS deve infirmar. Renda per capita ACIMA de 1/2 SM = a parte deve comprovar a miserabilidade por critérios subjetivos.
 
-CONFRONTO com Lei 13.846/2019. A lei posteriormente fixou 1/4 SM como critério objetivo. ATENÇÃO ao tempus regit actum. Para requerimentos anteriores à Lei 13.846/2019, vigora o critério de 1/2 SM da Súmula 21. Para requerimentos posteriores, o critério legal é 1/4 SM com possibilidade de flexibilização (combinar com Súmula 4 TRU 3 + Tema 640/STF).
+CONFRONTO com Lei 13.846/2019. A lei posteriormente fixou 1/4 SM como critério objetivo. ATENÇÃO ao tempus regit actum. Para requerimentos anteriores à Lei 13.846/2019, vigora o critério de 1/2 SM da Súmula 21. Para requerimentos posteriores, o critério legal é 1/4 SM com possibilidade de flexibilização (combinar com Súmula 4 TRU 3 + Tema 640/STJ) (auditoria 03/10/2026).
 
 Cruza com `base-bpc-renda-per-capita-miserabilidade`, `bpc-renda-grupo-familiar`, `analise-bpc-loas`.
 

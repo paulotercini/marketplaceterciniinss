@@ -156,7 +156,7 @@ Quarto, nexo entre o acidente/doença e a sequela.
 
 ## Cenários operacionais pró-segurado
 
-Primeiro, segurado com acidente de qualquer natureza (inclusive doméstico ou de trânsito, não necessariamente de trabalho) que deixou sequela redutora da capacidade. B94 devido. Tema 416 STJ confirma amplitude.
+Primeiro, segurado com acidente de qualquer natureza (inclusive doméstico ou de trânsito, não necessariamente de trabalho) que deixou sequela redutora da capacidade. Sem nexo com o trabalho, o benefício é o auxílio-acidente previdenciário (espécie 36), na Justiça Federal; com nexo, é o B94 acidentário, na Justiça Estadual (art. 109, I, da CF) (auditoria 03/10/2026, retirado o Tema 416 STJ, que fala em lesão decorrente de acidente do trabalho).
 
 Segundo, segurado com sequela não listada no Anexo III do Decreto 3.048/99 mas que reduz a capacidade laboral. Súmula 88 e 89 TNU. Anexo III é exemplificativo.
 
@@ -166,7 +166,7 @@ Quarto, segurado com lesão e aposentadoria anteriores a 11/11/1997. Direito adq
 
 Quinto, segurado com B94 concedido com RMI equivocada. Cabe revisão para incluir verbas da integração, conforme art. 31.
 
-Sexto, segurado com redução auditiva (Tema 322 TNU). Súmula 44 TNU admite o B94 desde que comprovada redução real.
+Sexto, segurado com redução auditiva (art. 86, §4º, da Lei 8.213/91). Súmula 44 STJ e Tema 22 STJ admitem o B94 mesmo abaixo do grau mínimo regulamentar de disacusia, desde que comprovados nexo e redução real (auditoria 03/10/2026, no lugar do Tema 322 TNU e da Súmula 44 TNU).
 
 Sétimo, segurado com B94 cessado indevidamente antes da aposentadoria. Art. 86, §2º. Cessação apenas pela aposentadoria ou óbito. Restabelecimento cabível.
 

@@ -1,6 +1,6 @@
 ---
 name: base-carencia-por-especie-art27a
-description: "Skill base sobre carência previdenciária por espécie e a regra do art. 27-A da Lei 8.213/91, com defesa do segurado contra exigência abusiva de nova carência integral após perda da qualidade. Use SEMPRE que mencionar carência previdenciária, art. 25 Lei 8.213, art. 26 Lei 8.213, art. 27 Lei 8.213, art. 27-A Lei 8.213, Lei 13.846/2019, MP 871/2019, perda qualidade segurado, reingresso carência, 1/3 carência reingresso, metade carência reingresso, carência integral, carência B31, carência B32, carência B21, carência aposentadoria idade, carência aposentadoria tempo, carência salário-maternidade, carência auxílio-acidente, carência BPC, isenção carência, art. 26 isenção, acidente trabalho carência, doença grave carência, Tema 1352 STJ, Tema 365 TNU. Hub para defesa pró-segurado contra exigência integral de carência após reingresso e contra recusa de cômputo. NÃO use para período de graça isolado (skill periodo-graca-qualidade-segurado). Cruza com peticao-previdenciaria e revisao-peticao."
+description: "Skill base sobre carência previdenciária por espécie e a regra do art. 27-A da Lei 8.213/91, com defesa do segurado contra exigência abusiva de nova carência integral após perda da qualidade. Use SEMPRE que mencionar carência previdenciária, art. 25 Lei 8.213, art. 26 Lei 8.213, art. 27 Lei 8.213, art. 27-A Lei 8.213, Lei 13.846/2019, MP 871/2019, perda qualidade segurado, reingresso carência, 1/3 carência reingresso, metade carência reingresso, carência integral, carência B31, carência B32, carência B21, carência aposentadoria idade, carência aposentadoria tempo, carência salário-maternidade, carência auxílio-acidente, carência BPC, isenção carência, art. 26 isenção, acidente trabalho carência, doença grave carência, Tema 365 TNU. Hub para defesa pró-segurado contra exigência integral de carência após reingresso e contra recusa de cômputo. NÃO use para período de graça isolado (skill periodo-graca-qualidade-segurado). Cruza com peticao-previdenciaria e revisao-peticao."
 ---
 
 # Carência por Espécie e art. 27-A da Lei 8.213/91
@@ -11,7 +11,7 @@ Acione SEMPRE que houver discussão sobre cumprimento de carência, especialment
 
 ## 2. Marco normativo
 
-A Lei 8.213/91, no art. 25, estabelece a carência específica de cada benefício. O art. 26 lista hipóteses de isenção. O art. 27 trata da contagem. O art. 27-A, incluído pela MP 871/2019 e convertido na Lei 13.846/2019, disciplina o reingresso.
+A Lei 8.213/91, no art. 25, estabelece a carência específica de cada benefício. O art. 26 lista hipóteses de isenção. O art. 27 trata da contagem. O art. 27-A, incluído pela MP 767/2017, convertida na Lei 13.457/2017, e com redação dada pela MP 871/2019 e pela Lei 13.846/2019, disciplina o reingresso (auditoria 03/10/2026).
 
 ## 3. Eixos centrais pró-segurado
 
@@ -19,17 +19,17 @@ Pensão por morte: SEM carência (art. 26, I). As 18 contribuições mensais (Le
 
 A isenção de carência aplica-se em acidente de trabalho, doença grave (art. 26 II) e doenças listadas em portaria.
 
-O art. 27-A (Lei 13.846/2019) aplica a metade da carência APENAS a auxílio por incapacidade temporária (6), salário-maternidade (5) e auxílio-reclusão (12). No salário-maternidade a fração perdeu aplicação, porque a carência desse benefício é inexigível (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS) (auditoria 03/10/2026). A aposentadoria por idade está FORA do art. 27-A: as 180 contribuições do art. 25, II, somam-se ao longo da vida, e a perda da qualidade de segurado é irrelevante (art. 3º, §1º, Lei 10.666/2003).
+O art. 27-A (Lei 13.846/2019) aplica a metade da carência APENAS a auxílio por incapacidade temporária e aposentadoria por incapacidade permanente (6), salário-maternidade (5) e auxílio-reclusão (12) (auditoria 03/10/2026). No salário-maternidade a fração perdeu aplicação, porque a carência desse benefício é inexigível (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS) (auditoria 03/10/2026). A aposentadoria por idade está FORA do art. 27-A: as 180 contribuições do art. 25, II, somam-se ao longo da vida, e a perda da qualidade de segurado é irrelevante (art. 3º, §1º, Lei 10.666/2003).
 
 A perda da qualidade não apaga as contribuições anteriores. As contribuições somam-se ao reingresso.
 
-A jurisprudência protege o segurado contra exigência integral abusiva (Tema 1352 STJ).
+O próprio art. 27-A protege o segurado contra exigência integral abusiva, pois limita a nova carência à metade (auditoria 03/10/2026).
 
 ## 4. Fragilidades adversárias mais comuns
 
 O INSS exige carência integral após perda. Refute com art. 27-A.
 
-O INSS recusa cômputo de período pretérito. Refute com art. 27-A §1º.
+O INSS recusa cômputo de período pretérito. Refute com o art. 27-A, caput, que exige no reingresso só metade da carência e aproveita as contribuições anteriores (auditoria 03/10/2026).
 
 O INSS recusa isenção de carência em doença grave. Refute com art. 26 II e portarias.
 

@@ -154,7 +154,7 @@ O TRF3 tem jurisprudência firme do **Órgão Especial** no sentido de que o MS 
 
 **Corrente divergente.** Há vertente do próprio Órgão Especial (CC 5015421-22.2020, Rel. Marisa Ferreira dos Santos, e CC 5007662-41.2019, Rel. Nekatschalow) que reconhece a matéria como direito administrativo mas mantém no âmbito das TURMAS da 2ª Seção, não do Órgão Especial. Em qualquer caso, AFASTA da Previdenciária.
 
-Detalhamento integral, com fundamentação verificada em fonte primária (PDF do CC 5026411-72.2020.4.03.0000, Rel. Nelton dos Santos, sessão de 06/07/2026), estratégia pró-segurado com 3 opções de distribuição e petição estratégica para atos urgentes, em `references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md`.
+Detalhamento integral, com fundamentação verificada em fonte primária (PDF do CC 5026411-72.2020.4.03.0000, Rel. Nelton dos Santos, verificado em 06/07/2026) (auditoria 03/10/2026), estratégia pró-segurado com 3 opções de distribuição e petição estratégica para atos urgentes, em `references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md`.
 
 ## O que NÃO está nesta skill
 

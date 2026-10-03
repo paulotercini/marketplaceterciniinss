@@ -10,9 +10,9 @@ Lei 8.742/1993, art. 20, §1º. Rol taxativo.
 
 Lei 8.742/1993, art. 20, §11. Apuração de miserabilidade por outros elementos.
 
-Lei 8.742/1993, art. 20, §12. Exclusões específicas.
+Lei 8.742/1993, art. 20, §12. Inscrição no CPF e no CadÚnico como requisito de concessão, manutenção e revisão. As exclusões de renda estão nos §§9º e 14 (auditoria 03/10/2026).
 
-Lei 8.742/1993, art. 20, §14. Exclusão do benefício de ½ SM.
+Lei 8.742/1993, art. 20, §14. Exclusão do BPC ou do benefício previdenciário de até 1 salário mínimo concedido a idoso acima de 65 anos ou a pessoa com deficiência (auditoria 03/10/2026).
 
 Decreto 6.214/2007. Regulamentação.
 
@@ -20,11 +20,11 @@ Decreto 12.534/2025. Inclui Bolsa Família na renda. Revoga §2º do art. 4º do
 
 Portaria 34/2025 MDS, Anexo I. Deduções de saúde.
 
-Lei 13.982/2020 (temporária da pandemia). Flexibilização emergencial para ½ SM, com decadência.
+Lei 13.982/2020 (pandemia). Fixou a renda igual ou inferior a 1/4 do salário mínimo até 31/12/2020, com veto ao inciso II. O critério de 1/2 salário mínimo veio da Lei 13.981/2020 (vide ADPF 662). Hoje vale 1/4 (Lei 14.176/2021), com ampliação possível até 1/2 pelo §11-A (auditoria 03/10/2026).
 
 ## 2. Rol taxativo do grupo familiar
 
-Cônjuge. Companheiro. Pai. Mãe. Padrasto. Madrasta. Irmão solteiro, não emancipado, menor de 21 ou inválido. Filho biológico ou adotivo. Enteado.
+Requerente. Cônjuge ou companheiro. Pai. Mãe. Madrasta ou padrasto, na ausência de um dos pais. Irmão solteiro. Filho solteiro, biológico ou adotivo. Enteado solteiro. Menor tutelado, conforme o art. 20, §1º, da LOAS (auditoria 03/10/2026).
 
 Excluídos do rol. Cunhado. Tio. Sobrinho. Avó/avô. Neto. Parentes colaterais.
 
@@ -36,7 +36,7 @@ Primeiro, BPC ou aposentadoria até 1 SM de idoso ou PCD no mesmo grupo (art. 20
 
 Segundo, auxílio-inclusão até limite legal.
 
-Terceiro, medicamentos, fraldas, alimentação especial (art. 20, §12).
+Terceiro, medicamentos, fraldas, alimentação especial (art. 20-B, III, da LOAS) (auditoria 03/10/2026).
 
 Quarto, remunerações eventuais.
 
@@ -68,7 +68,7 @@ Tema 185/STJ (REsp 1.112.557). Integração pró-segurada (auditoria 25/07/2026)
 
 RE 580.963/STF. Cômputo de benefício excluído (auditoria 25/07/2026).
 
-Tema 640 TNU. Exclusões específicas.
+Tema 640/STJ (REsp 1.355.052/SP). Benefício previdenciário de 1 salário mínimo recebido por idoso fica fora da renda per capita no pedido de BPC de pessoa com deficiência, por analogia ao parágrafo único do art. 34 do Estatuto do Idoso (auditoria 03/10/2026).
 
 ## 7. Cenários operacionais pró-segurado
 

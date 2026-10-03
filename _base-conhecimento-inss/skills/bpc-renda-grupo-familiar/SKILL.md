@@ -34,9 +34,9 @@ Avós. Netos. Tios. Sobrinhos. Primos. Genros e noras. Cunhados. Irmãos casados
 
 **Tema 73/TNU** — O grupo familiar deve ser definido a partir da interpretação restrita do §1º do art. 20 da LOAS. Parentes não listados ficam excluídos do cômputo.
 
-**PUIL 0016896-32.2022.4.05.8000/AL (TNU)** — Reafirmou a interpretação restritiva do art. 20, §1º. Sobrinhos, genros, noras e irmãos não solteiros não compõem o grupo familiar para fins de renda, mesmo que residam sob o mesmo teto.
+**PUIL 0016896-32.2022.4.05.8000/AL (TNU)** — Tese de julgamento: "O conceito de grupo familiar para fins de concessão de benefício assistencial deve ser interpretado de forma restritiva, excluindo do cálculo da renda per capita aqueles que não residem sob o mesmo teto." O caso envolvia irmã, sem indicação de ser solteira, e sobrinhos, e o pedido foi provido para a Turma Recursal adequar o julgado, nos termos da Questão de Ordem 20 (Rel. Ivana Mafra Marinho, D.E. 24/02/2026) (auditoria 03/10/2026).
 
-**PEDILEF 5001885-13.2023.4.04.7209/SC (TNU, dez/2025)** — Reverteu decisão de Turma Recursal que incluiu irmã casada (curadora) e seu núcleo familiar (cunhado e sobrinhos) na renda per capita. A TNU determinou exclusão integral dessas rendas. Renda total havia sido calculada em R$ 5.750,00 para per capita de R$ 1.150,00. Com a exclusão dos membros fora do rol, o beneficiário ficou isolado para fins de cálculo.
+**PEDILEF 5001885-13.2023.4.04.7209/SC (TNU, dez/2025)** — Proveu o pedido contra acórdão de Turma Recursal que incluiu irmã casada (curadora) e seu núcleo familiar (cunhado e sobrinhos) na renda per capita. A TNU reafirmou o rol taxativo do art. 20, §1º, e devolveu os autos à Turma Recursal para adequação, nos termos da Questão de Ordem 20, sem determinar ela mesma a exclusão integral. Renda total havia sido calculada em R$ 5.750,00 para per capita de R$ 1.150,00. Com a exclusão dos membros fora do rol, o beneficiário ficaria isolado para fins de cálculo (auditoria 03/10/2026).
 
 **Portaria Conjunta nº 3/2018, art. 8º, §1º (mantido pela Portaria 34/2025)** — Não compõem o grupo familiar o irmão, filho ou enteado divorciado, viúvo ou separado de fato, ainda que vivam sob o mesmo teto do requerente.
 
@@ -47,7 +47,7 @@ Avós. Netos. Tios. Sobrinhos. Primos. Genros e noras. Cunhados. Irmãos casados
 **Avó sem guarda — administrador temporário** — Na ausência de tutela, curatela ou guarda, o art. 527, §§6º-8º da IN PRES/INSS 128/2022 permite que a avó (ou outro herdeiro necessário) requeira o BPC como administradora temporária por até 6 meses, firmando compromisso do Anexo XXIX. Após esse prazo, deve comprovar evolução do processo de representação civil.
 
 **Subsidirariedade estatal — ALERTA DE DIVERGÊNCIA**
-PEDILEF 0517397-48.2012.4.05.8300 (TNU, 2017) firmou que o BPC pode ser indeferido se devedores legais de alimentos (art. 1.697 CC) puderem prestá-los sem prejuízo próprio. PEDILEF 0068530-58.2014.4.03.6301 (TNU, 2019) reafirmou.
+PEDILEF 0517397-48.2012.4.05.8300 (TNU, 2017) firmou que o BPC pode ser indeferido se devedores legais de alimentos (art. 1.697 CC) puderem prestá-los sem prejuízo próprio. O PEDILEF 0068530-58.2014.4.03.6301 não foi conhecido pela TNU, nos termos da Questão de Ordem 13 (D.E. 17/03/2020) (auditoria 03/10/2026).
 PORÉM, em 2024 (1005191-76.2021.4.01.3502/GO), a TNU distinguiu que esse entendimento só vale para devedores no rol do Código Civil. Auxílio de cunhado, amigos, vizinhos ou parentes fora do rol alimentar é mera liberalidade e não afasta o BPC.
 Atenção redobrada quando o caso envolver essa polêmica. A defesa deve sempre argumentar que a ajuda é liberalidade, não obrigação alimentar.
 
@@ -71,7 +71,7 @@ Art. 20, §3º da LOAS. Renda per capita igual ou inferior a ¼ do salário mín
 
 **Tema 640/STJ (REsp 1.355.052/SP)** — Benefício previdenciário de até 1 SM recebido por idoso deve ser excluído da renda, por analogia ao art. 34 do Estatuto do Idoso.
 
-**Tema 369/TNU** — Benefício previdenciário superior a 1 SM deve ser considerado integralmente na renda. Não se aplica exclusão parcial.
+**Tema 369/TNU** — Benefício de idoso ou de pessoa com deficiência superior a 1 SM não entra integralmente na renda. Exclui-se o valor de 1 SM, e só o excedente entra na divisão per capita, nos termos do parágrafo único do art. 34 do Estatuto do Idoso e do art. 20, §14, da LOAS (auditoria 03/10/2026).
 
 ### Exclusões Legais de Renda (art. 8º, I, Portaria 34/2025)
 BPC de outro membro idoso ou PCD do grupo familiar. Benefício previdenciário de até 1 SM concedido a idoso 65+ ou PCD. Auxílio-inclusão e remuneração do beneficiário do auxílio-inclusão. Bolsas de estágio e contrato de aprendizagem. Auxílio financeiro por rompimento de barragem.
@@ -110,7 +110,7 @@ O TRF3 consagrou que a aceitação de ajuda de parentes e amigos é indicativo d
 Venda informal de lingeries (~R$ 80/semana). Venda de plantas (~R$ 200/mês). Bicos como pedreiro. Ajudante de pedreiro informal (R$ 800/mês). Trabalho como cuidador eventual.
 
 ### Atividade Laborativa e BPC
-O exercício de atividade remunerada não obsta o recebimento do BPC (art. 21-A LOAS). Se o beneficiário trabalha, o BPC é suspenso (não cessado), e pode ser reativado em até 90 dias após o fim da atividade. Parcelas recebidas durante o trabalho podem ser descontadas, mas não geram devolução se recebidas de boa-fé.
+O exercício de atividade remunerada pela pessoa com deficiência suspende o BPC, sem cessá-lo (art. 21-A LOAS). Extinta a atividade, o beneficiário pode requerer a continuidade do pagamento sem nova perícia nem reavaliação da deficiência (art. 21-A, §1º) (auditoria 03/10/2026). Parcelas recebidas durante o trabalho podem ser descontadas, mas não geram devolução se recebidas de boa-fé.
 
 A TRF4 firmou que a atividade laborativa temporária não enseja devolução de parcelas do BPC recebidas durante o período, sendo admissível apenas o desconto dos meses trabalhados.
 

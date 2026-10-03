@@ -119,7 +119,7 @@ Mesmo conteúdo do Tema 377, especificamente para servidores que já ocupavam do
 
 FAVORÁVEL ao segurado. Aplicação por analogia à acumulação de duas aposentadorias decorrentes de cargos acumuláveis.
 
-### 5.6. Tema 627/STF (RE 658.999)
+### 5.6. Tema 627/STF (RE 658.999) [NÃO CONFIRMADO] (auditoria 03/10/2026)
 
 Pleno. Julgamento 14/05/2014.
 
@@ -213,7 +213,7 @@ Eventual estratégia limita-se a planejamento da DIB para escolher qual benefíc
 
 ### 7.4. Cenário 4. Duas aposentadorias decorrentes de cargos constitucionalmente acumuláveis
 
-Não incide a vedação de acumulação quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999, regime anterior à EC 103; para o redutor do art. 24, ver ADI 7051, Tema 1300/STF e RE 1.510.285 AgR — auditoria 25/07/2026).
+Não incide a vedação de acumulação quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999 [NÃO CONFIRMADO] (auditoria 03/10/2026), regime anterior à EC 103; para o redutor do art. 24, ver ADI 7051, Tema 1300/STF e RE 1.510.285 AgR — auditoria 25/07/2026).
 
 Cada vínculo é considerado isoladamente para o teto remuneratório (Temas 377 e 384).
 
@@ -283,7 +283,7 @@ Tema 359/STF. TRANSITADO EM JULGADO (teto sobre soma).
 
 Temas 377 e 384/STF. TESES VIGENTES (cada vínculo isolado para teto).
 
-Tema 627/STF. TESE VIGENTE (cargos acumuláveis sem vedação).
+Tema 627/STF [NÃO CONFIRMADO]. TESE VIGENTE (cargos acumuláveis sem vedação) (auditoria 03/10/2026).
 
 Aplicação do redutor do art. 24 sobre aposentadoria pré-reforma. MATÉRIA EM CONTROVÉRSIA na Primeira Turma do STF, sem repercussão geral fixada especificamente sobre o ponto.
 

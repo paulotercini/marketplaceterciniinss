@@ -20,7 +20,7 @@ EC 20/98 e EC 103/2019. Não alteraram estruturalmente o B25.
 
 Primeiro, qualidade de segurado na data da prisão.
 
-Segundo, baixa renda do segurado (último salário-de-contribuição ou salário-de-benefício não superior ao teto).
+Segundo, baixa renda do segurado, aferida pela média dos salários de contribuição dos 12 meses anteriores ao mês da prisão (art. 80, §4º, da Lei 8.213/91); o último salário de contribuição vale só para prisões anteriores a 18/01/2019 (auditoria 03/10/2026).
 
 Terceiro, carência de 24 contribuições.
 
@@ -40,7 +40,7 @@ B25 dura enquanto o segurado permanecer em regime fechado. Cessa com a progress�
 
 ## 5. Cenários operacionais pró-segurado
 
-### Cenário 1 — Prisão anterior à Lei 13.846/2019
+### Cenário 1 — Prisão anterior à MP 871/2019 (18/01/2019)
 
 Segurado preso em 05/2018. Aplica regra anterior (Lei 10.666/2003). Admite regime semiaberto. Sem exigência de 24 contribuições como carência rígida. Tempus regit actum.
 
@@ -70,7 +70,7 @@ Segurado preso por impossibilidade de pagar fiança. Situação de baixa renda e
 
 ### Cenário 8 — Segurado que completou aposentadoria antes da prisão
 
-Já aposentado. B25 com base no valor da aposentadoria. Direito integral.
+Já aposentado. Se o segurado está em gozo de aposentadoria, não cabe B25 (art. 80, caput, da Lei 8.213/91); a vedação não alcança quem só reunia os requisitos, sem aposentadoria concedida (auditoria 03/10/2026).
 
 ## 6. Documentos essenciais
 

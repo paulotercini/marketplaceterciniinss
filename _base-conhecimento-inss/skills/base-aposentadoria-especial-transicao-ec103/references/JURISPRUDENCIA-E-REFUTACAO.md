@@ -54,17 +54,17 @@ Aplicação pró-segurado. Garante a conversão de todo tempo especial pré-refo
 
 Vedação constitucional de permanência ou retorno à atividade especial após a aposentadoria especial (auditoria 25/07/2026, corte corrigida).
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://portal.stf.jus.br (auditoria 03/10/2026).
 
-Aplicação pró-segurado. Fundamento para uso de prova alternativa quando PPP não é suficiente.
+Aplicação pró-segurado. Tese adversa; pelo item II, a DIB é a DER mesmo que o segurado continue no labor especial, e o pagamento só cessa se ele permanecer ou retornar à atividade nociva após a implantação (auditoria 03/10/2026).
 
 ### ADI 4827 STF (retorno à atividade especial)
 
-Tese. Há questionamento sobre a extensão do art. 57, §8º, da Lei 8.213/91 (vedação de retorno à atividade especial após a concessão). A jurisprudência flexibiliza em determinadas hipóteses.
+Tese. O STF declarou constitucional a vedação do art. 57, §8º, da Lei 8.213/91 no Tema 709, e a questão está pacificada (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Atenção à modulação e à aplicação em cada caso. Controvérsia ainda ativa.
+Aplicação pró-segurado. Atenção à modulação e à aplicação em cada caso. Não há controvérsia ativa, ver o Tema 709 acima (auditoria 03/10/2026).
 
 ### Tema 1083 STJ
 
@@ -80,7 +80,7 @@ Aplicação pró-segurado. Sem NEN no PPP, o pico de ruído serve de critério, 
 
 Argumento adversário. A atividade especial exige exposição contínua ao agente nocivo.
 
-Refutação. Tema 211 TNU. A habitualidade é suficiente, não a continuidade. Exposição inerente ao curso da jornada basta.
+Refutação. O art. 65 do Decreto 3.048/99 define o trabalho permanente pela exposição indissociável da produção do bem ou da prestação do serviço. Em agentes biológicos, o Tema 211 TNU exige a probabilidade da exposição ocupacional (auditoria 03/10/2026).
 
 ### Argumento 2 — Neutralização por EPI
 

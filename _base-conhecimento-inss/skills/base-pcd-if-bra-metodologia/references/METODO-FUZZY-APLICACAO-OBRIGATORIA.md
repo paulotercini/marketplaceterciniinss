@@ -62,11 +62,11 @@ Razão de ser. Dar peso à limitação mais relevante para aquele tipo de defici
 | Auditiva | A surdez ocorreu antes dos seis anos de idade? |
 | Visual | A pessoa já não enxergava ao nascer? |
 | Motora | A pessoa se desloca exclusivamente em cadeira de rodas? |
-| Intelectual ou mental | A pessoa pode ficar sozinha em segurança? |
+| Intelectual ou mental | Não pode ficar sozinho em segurança? (auditoria 03/10/2026) |
 
 As perguntas costumam constar ao FINAL dos laudos médico e social. Resposta positiva aciona o Fuzzy.
 
-Atenção na deficiência intelectual ou mental. A pergunta é formulada pela positiva ("pode ficar sozinha em segurança?"), de modo que a resposta que aciona o Fuzzy em favor do segurado é a que revela a impossibilidade de permanecer só com segurança. Ler a pergunta com cuidado antes de concluir pela aplicação, e registrar no relatório do assistente a realidade concreta da supervisão que a pessoa exige.
+Atenção na deficiência intelectual ou mental. A pergunta é formulada pela negativa ("não pode ficar sozinho em segurança"), e a resposta afirmativa, que revela a impossibilidade de permanecer só com segurança, aciona o Fuzzy em favor do segurado (auditoria 03/10/2026). Ler a pergunta com cuidado antes de concluir pela aplicação, e registrar no relatório do assistente a realidade concreta da supervisão que a pessoa exige.
 
 ## Checklist de verificação obrigatória (rodar em todo caso)
 

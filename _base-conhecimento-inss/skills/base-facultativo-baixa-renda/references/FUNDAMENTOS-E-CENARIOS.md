@@ -2,7 +2,7 @@
 
 ## 1. Marco normativo aplicável
 
-CF/88, art. 195 §13. Lei 8.212/91, art. 21 §2º II. Lei 8.213/91, arts. 13 e 27. Decreto 3.048/99, art. 199-A. Lei Complementar 123/2006. Lei 12.470/2011. IN INSS 128/2022.
+CF/88, art. 201, §§12 e 13 (auditoria 03/10/2026). Lei 8.212/91, art. 21 §2º II. Lei 8.213/91, arts. 13 e 27. Decreto 3.048/99, art. 199-A. Lei Complementar 123/2006. Lei 12.470/2011. IN INSS 128/2022.
 
 ## 2. Cenário 1 — Dona de casa sem renda
 
@@ -34,7 +34,7 @@ INSS aplica indicador sem fundamentação. Cabe impugnação.
 
 ## 9. Cenário 8 — Aposentadoria por idade FBR
 
-Carência de 180 contribuições. Idade de 60 anos para mulher e 65 para homem (com regras de transição EC 103).
+Carência de 180 contribuições. Idade de 62 anos para mulher, exigida desde 2023 também na transição (art. 18, §1º, e art. 19 da EC 103), e 65 para homem (auditoria 03/10/2026).
 
 ## 10. Cenário 9 — Pensão por morte FBR
 

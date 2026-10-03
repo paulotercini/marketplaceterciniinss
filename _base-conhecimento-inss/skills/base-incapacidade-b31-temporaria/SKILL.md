@@ -13,7 +13,7 @@ Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Fil
 
 Lei 8.213/91, art. 59. Concede B31 ao segurado que, por motivo de doença ou acidente, ficar incapacitado para o trabalho habitual por mais de 15 dias consecutivos.
 
-Lei 8.213/91, art. 60, §11-A. Introduziu o regime de análise documental para concessão e prorrogação de B31, com parecer de verossimilhança, limites de 30 dias por pedido, trava de 180 dias em 12 meses e trava de três indeferimentos.
+Lei 8.213/91, art. 60, §11-A. Na redação da Lei 15.265/2025, autoriza o exame médico-pericial do B31 por telemedicina ou por análise documental, conforme o regulamento. O limite de 30 dias por pedido e as travas de novo requerimento não estão na lei; vêm da Portaria Conjunta 13/2026 (auditoria 03/10/2026).
 
 Portaria Conjunta MPS/INSS 13/2026. Regulamenta a análise documental do B31. Acionar `analise-documental-incapacidade`.
 
@@ -41,7 +41,7 @@ Quarto, incapacidade por mais de 15 dias consecutivos para o trabalho habitual.
 
 Primeiro, segurado empregado afastado por 20 dias com atestado médico. Direito ao B31 a partir do 16º dia, observada a qualidade e carência, ou isenção.
 
-Segundo, segurado com doença do art. 151 da Lei 8.213/91 (AIDS, neoplasia, tuberculose ativa, alienação mental, cegueira, paralisia irreversível, cardiopatia grave, doença de Parkinson, espondiloartrose anquilosante, nefropatia grave, estado avançado de Paget, contaminação radioativa, hepatopatia grave). Isenção de carência. Concessão independente do tempo de contribuição.
+Segundo, segurado com doença do art. 151 da Lei 8.213/91 (AIDS, neoplasia, tuberculose ativa, hanseníase, alienação mental, esclerose múltipla, cegueira, paralisia irreversível, cardiopatia grave, doença de Parkinson, espondiloartrose anquilosante, nefropatia grave, estado avançado de Paget, contaminação radioativa, hepatopatia grave) (auditoria 03/10/2026). Isenção de carência. Concessão independente do tempo de contribuição.
 
 Terceiro, segurado especial rural com incapacidade. Carência cumprida pela atividade rural. Direito ao B31 no valor de um salário mínimo, conforme art. 39, I, da Lei 8.213/91.
 
@@ -88,11 +88,11 @@ Ao buscar precedentes, acione `precedentes-previdenciarios`.
 
 ## Alertas
 
-Primeiro, a DIB do B31 retroage à DII apenas se o requerimento for feito dentro do prazo de 30 dias após a DII para segurado empregado, nos termos do art. 60, §1º, da Lei 8.213/91. Fora desse prazo, DIB na DER.
+Primeiro, a DIB do B31 é o 16º dia do afastamento para o segurado empregado e a DII para os demais segurados, desde que o requerimento seja feito em até 30 dias do afastamento; o art. 60, §1º, da Lei 8.213/91 vale para todo segurado (auditoria 03/10/2026). Fora desse prazo, DIB na DER.
 
 Segundo, a cessação antecipada (Alta Programada) pode ser impugnada via P1 ou MS. Acumular prova médica e contestar a DCB fixada sem perícia.
 
-Terceiro, a trava dos três indeferimentos do art. 60 §11-A impede novo requerimento por 180 dias. Contra essa barreira, em caso de agravamento, MS pela urgência e pela violação do direito ao requerimento.
+Terceiro, a trava de 180 dias não vem do art. 60, §11-A, que só autoriza telemedicina ou análise documental; a Portaria Conjunta 13/2026 [NÃO CONFIRMADO] a aplica à nova análise documental após prorrogação indeferida, e três indeferimentos sucessivos levam à perícia presencial (auditoria 03/10/2026). Contra essa barreira, em caso de agravamento, MS pela urgência e pela violação do direito ao requerimento.
 
 ## Fungibilidade aplicável
 
@@ -142,7 +142,7 @@ Cruzar com `analise-documental-incapacidade`, `admissibilidade-barreiras-crps`, 
 
 ## TRABALHO DOMÉSTICO NÃO REMUNERADO - INCAPACIDADE DA DONA DE CASA (Onda 52)
 
-**Precedente vinculante regional.** TRU 4ª Região, PUIL 5002876-10.2023.4.04.7202/TRF, Rel. Juíza Federal Susana Sbrogio Galia, sessão de 26/06/2026 em SJSC.
+**Precedente regional persuasivo.** TRU 4ª Região, PUIL 5002876-10.2023.4.04.7202/TRF [NÃO CONFIRMADO], Rel. Juíza Federal Susana Sbrogio Galia, sessão de 26/06/2026 em SJSC. Não é julgado da TNU e não vincula a 3ª Região (auditoria 03/10/2026).
 
 **Tese.** A execução de trabalho doméstico não remunerado impõe exigência física e riscos ergonômicos EQUIPARADOS ao trabalho doméstico remunerado, salvo comprovação em sentido contrário.
 
@@ -158,7 +158,7 @@ Não está aqui a aposentadoria por incapacidade permanente B32, objeto de `base
 
 ## Janela de quinze dias do pedido de prorrogação (Onda 115)
 
-O art. 339, § 3º, da IN 128/2022, acrescido pela IN PRES/INSS 212, de 06/08/2026, dispõe que "o segurado poderá requerer a prorrogação nos últimos quinze dias do benefício caso o prazo fixado para a recuperação da capacidade para o trabalho ou para a atividade habitual revele-se insuficiente".
+O art. 339, § 3º, da IN 128/2022, com redação dada pela IN PRES/INSS 212, de 06/08/2026 (auditoria 03/10/2026), dispõe que "o segurado poderá requerer a prorrogação nos últimos quinze dias do benefício caso o prazo fixado para a recuperação da capacidade para o trabalho ou para a atividade habitual revele-se insuficiente".
 
 Consequência operacional. Pedido ANTES da janela pode ser recusado por prematuridade. Pedido DEPOIS da DCB deixa de ser prorrogação e passa a ser novo requerimento, com todas as travas próprias, inclusive as das Portarias Conjuntas de análise documental. Registrar a data limite na agenda do cliente no momento da concessão.
 

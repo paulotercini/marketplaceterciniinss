@@ -282,9 +282,9 @@ A absorção cutânea ocorre pelos poros e pela permeabilidade do EPI.
 
 Apenas luvas de nitrila industrial específica (com certificação CA específica para tolueno) podem ser eficazes, e mesmo assim por tempo limitado.
 
-### 11.2. Súmula 9/STF e Tema 555/STF
+### 11.2. Súmula 9/TNU e Tema 555/STF
 
-Aplicação. EPI ineficaz para neutralizar hidrocarbonetos do Anexo 13 da NR-15.
+Aplicação. EPI ineficaz para neutralizar hidrocarbonetos do Anexo 13 da NR-15. A Súmula 9/TNU é específica do ruído e só se invoca aqui por analogia (auditoria 03/10/2026).
 
 Tema 555/STF. Reconhecimento da exceção da neutralização do EPI para agentes específicos.
 

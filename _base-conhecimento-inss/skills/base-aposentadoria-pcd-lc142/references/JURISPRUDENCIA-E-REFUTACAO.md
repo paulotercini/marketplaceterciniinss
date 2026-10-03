@@ -12,7 +12,7 @@ Aplicação contextual.
 
 ### Súmula 377 STJ
 
-Tese. Cegueira monocular equipara a deficiente para fins de reserva e, por extensão, para aposentadoria PCD.
+Tese. Visão monocular dá direito às vagas reservadas em concurso público. Na aposentadoria PCD, a base é a Lei 14.126/2021 [NÃO CONFIRMADO], e o grau depende do IF-BrA (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -20,51 +20,51 @@ Aplicação pró-segurado.
 
 ### Súmula 552 STJ
 
-Tese. Surdez unilateral — discussão em curso; há posição favorável ao segurado, em particular na LC 142 após a Lei 14.768/2023.
+Tese adversa. Surdez unilateral não qualifica para vagas reservadas em concurso. A Lei 14.768/2023, art. 1º, passou a incluir a perda unilateral total e a bilateral parcial; a unilateral parcial fica fora (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado em releitura.
+Caminho do segurado. Enquadrar a perda na Lei 14.768/2023 e provar o grau pelo IF-BrA.
 
-### Súmula 45 TNU
+### LC 142/2013, art. 6º, §§1º e 2º
 
-Tese. Aproveitamento do tempo anterior à vigência da LC 142 na condição de PCD.
+Tese. Aproveitamento do tempo anterior à vigência da LC 142 na condição de PCD, com a deficiência e o grau certificados na primeira avaliação, vedada a prova exclusivamente testemunhal (Decreto 3.048/99, art. 70-D, §1º) (auditoria 03/10/2026, retirada a Súmula 45/TNU, que trata de salário-maternidade).
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.planalto.gov.br
 
 Aplicação pró-segurado. Abre conversão retroativa.
 
-### Tema 216 TNU
+### Decreto 3.048/99, art. 70-A
 
-Tese. Aferição da deficiência para fins de aposentadoria pela LC 142 considera aspectos biopsicossociais.
+Tese. Aferição da deficiência para fins de aposentadoria pela LC 142 considera aspectos biopsicossociais, em avaliação por equipe multiprofissional e interdisciplinar (auditoria 03/10/2026, retirado o Tema 216/TNU, que trata de aluno-aprendiz).
 
-Fonte oficial em https://www.cjf.jus.br
-
-Aplicação pró-segurado.
-
-### Tema 249 TNU
-
-Tese. DID retroage à condição clinicamente documentada.
-
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.planalto.gov.br
 
 Aplicação pró-segurado.
 
-### Tema 641 TNU
 
-Tese. Revisão de aposentadoria para reclassificação como PCD é admitida.
 
-Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado.
 
-### Tema 452 TNU
 
-Tese. IF-BrA e sua utilização para graduar a deficiência.
 
-Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Lei 15.176/2025
 
@@ -84,7 +84,7 @@ Fonte oficial em https://www.planalto.gov.br
 
 Argumento adversário. DID fixada após os primeiros anos de contribuição, reduzindo o tempo computado como PCD.
 
-Refutação. Documentação pretérita, prova testemunhal, evidências clínicas. Reconstrução da DID pela skill `formacao-documentacao-did-pcd`. Tema 249 TNU.
+Refutação. Documentação pretérita, prova testemunhal, evidências clínicas. Reconstrução da DID pela skill `formacao-documentacao-did-pcd`. LC 142/2013, art. 6º, §1º, e Decreto 3.048/99, art. 70-D, I (auditoria 03/10/2026, retirado o Tema 249/TNU, que trata de IPI de veículo).
 
 ### Argumento 2 — Grau subestimado
 
@@ -96,7 +96,7 @@ Refutação. Impugnação técnica domínio a domínio. Assistente técnico. Lau
 
 Argumento adversário. Segurado já era PCD antes de 2013.
 
-Refutação. Súmula 45 TNU. Aproveitamento retroativo. Conversão.
+Refutação. LC 142/2013, art. 6º, §1º (auditoria 03/10/2026). Aproveitamento retroativo. Conversão.
 
 ### Argumento 4 — Fibromialgia não é deficiência
 
@@ -108,37 +108,37 @@ Refutação. Lei 15.176/2025. Reconhecimento expresso.
 
 Argumento adversário. Apenas surdez bilateral configura.
 
-Refutação. Lei 14.768/2023. Interpretação pró-segurado. Súmula 552 STJ em releitura. Dependendo do caso, surdez unilateral severa configura.
+Refutação. Lei 14.768/2023. O art. 1º inclui a perda unilateral total e a bilateral parcial; a unilateral parcial fica fora e depende da avaliação biopsicossocial (auditoria 03/10/2026).
 
 ### Argumento 6 — Cegueira monocular afasta
 
 Argumento adversário. INSS exige cegueira bilateral.
 
-Refutação. Súmula 377 STJ. Cegueira monocular equipara.
+Refutação. Lei 14.126/2021 [NÃO CONFIRMADO], visão monocular é deficiência visual; o grau depende do IF-BrA (auditoria 03/10/2026).
 
 ### Argumento 7 — Fator previdenciário aplicável
 
 Argumento adversário. INSS aplica fator ao cálculo.
 
-Refutação. LC 142 veda fator previdenciário em regra. 100% da média.
+Refutação. LC 142, art. 9º, I, só aplica o fator previdenciário se resultar em renda mais elevada (auditoria 03/10/2026). 100% da média.
 
 ### Argumento 8 — Conversão de tempo comum em PCD
 
-Argumento adversário. Segurado pleiteia conversão inversa.
+Argumento adversário. INSS nega a conversão do tempo comum em tempo PCD.
 
-Refutação. Conversão inversa é vedada. Honestidade radical pró-segurado.
+Refutação. LC 142, art. 7º, e Decreto 3.048/99, art. 70-E, linhas "De 30" e "De 35" e §2º, admitem a conversão com fator redutor (auditoria 03/10/2026).
 
 ### Argumento 9 — Revisão de aposentadoria comum para PCD
 
 Argumento adversário. Aposentadoria já concedida como comum não admite reclassificação.
 
-Refutação. Tema 641 TNU. Revisão admitida dentro do prazo decadencial do art. 103.
+Refutação. Revisão admitida dentro do prazo decadencial do art. 103 da Lei 8.213/91 (auditoria 03/10/2026, retirado o Tema 641/TNU, não localizado).
 
 ### Argumento 10 — IF-BrA subestima impedimento mental
 
 Argumento adversário. Perícia subestimou transtorno mental.
 
-Refutação. Tema 216 TNU. Domínios sociais e biopsicossociais. Impugnação técnica.
+Refutação. Decreto 3.048/99, art. 70-A, avaliação biopsicossocial (auditoria 03/10/2026). Domínios sociais e biopsicossociais. Impugnação técnica.
 
 ## 3. Estratégia integrada
 
@@ -172,4 +172,4 @@ O IBDP sustenta proteção integral.
 
 ## 5. Diligência de atualização
 
-Revalidar Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015. Acompanhar temas TNU e STJ sobre DID e IF-BrA. Acionar `precedentes-previdenciarios`.
+Revalidar Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 (auditoria 03/10/2026; retirados os Temas 249, 452 e 641/TNU, por tese trocada ou não localizados). Acompanhar temas TNU e STJ sobre DID e IF-BrA. Acionar `precedentes-previdenciarios`.

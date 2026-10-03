@@ -55,7 +55,7 @@ Art. 103 da Lei 8.213/91. Decadência decenal do primeiro pagamento.
 
 Súmula 85 STJ. Prescrição quinquenal das parcelas.
 
-Atenção. Benefícios concedidos antes de 2015 estão, em regra, com decadência consumada. A Súmula 443 STF protege situações específicas. Em pensões derivadas de instituidor falecido em qualquer momento, verificar decadência autônoma dos dependentes.
+Atenção. Benefícios concedidos antes de 2015 estão, em regra, com decadência consumada. A Súmula 443 STF trata de prescrição das prestações e não afasta a decadência do art. 103 (auditoria 03/10/2026). Em pensões derivadas de instituidor falecido em qualquer momento, verificar decadência autônoma dos dependentes.
 
 ## Regra pró-segurado
 

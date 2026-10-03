@@ -33,7 +33,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 173 TNU
 
-Deficiência intelectual e LC 142.
+Trata do impedimento de longo prazo de 2 anos no BPC, não da LC 142; não citar nesta matéria (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -83,7 +83,7 @@ Consequência única. A MENOR pontuação atribuída a uma atividade do domínio
 
 Domínios sensíveis. Auditiva, comunicação e socialização. Visual, mobilidade e vida doméstica. Motora, mobilidade e cuidados pessoais. Intelectual ou mental, vida doméstica e socialização.
 
-Perguntas emblemáticas. Auditiva, a surdez ocorreu antes dos seis anos. Visual, já não enxergava ao nascer. Motora, desloca-se exclusivamente em cadeira de rodas. Intelectual ou mental, pode ficar sozinha em segurança.
+Perguntas emblemáticas. Auditiva, a surdez ocorreu antes dos seis anos. Visual, já não enxergava ao nascer. Motora, desloca-se exclusivamente em cadeira de rodas. Intelectual ou mental, "não pode ficar sozinho em segurança" (auditoria 03/10/2026).
 
 Checklist obrigatório de sete pontos, oito quesitos prontos para a perícia, roteiro de impugnação em cinco blocos e a pendência de nomenclatura entre IF-BrA e IFBrM em `references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`. A verificação do Fuzzy é OBRIGATÓRIA em todo caso de deficiência, antes de aceitar o resultado da avaliação.
 

@@ -2,11 +2,11 @@
 
 ## 1. Precedentes relevantes
 
-### Súmula 632 STJ
+### Súmula 632 STF (auditoria 03/10/2026)
 
 Decadência.
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://portal.stf.jus.br
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 

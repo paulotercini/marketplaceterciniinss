@@ -27,9 +27,9 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 Súmula 45 ex-TFR. Vigência histórica para cômputo do tempo militar. Aplicação supletiva.
 
-Súmula 24 AGU. Contagem recíproca entre RGPS e RPPS.
+Art. 201, §9º, da CF e art. 94 da Lei 8.213/91. Contagem recíproca entre RGPS e RPPS (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
 
-Fonte oficial em https://www.agu.gov.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
 
 ## Espaço pró-segurado
 

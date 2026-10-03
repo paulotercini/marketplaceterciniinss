@@ -31,15 +31,15 @@ Art. 201, §9º, da CF e arts. 94 a 99 da Lei 8.213/91 regem a contagem recípro
 
 Fonte oficial em https://portal.stf.jus.br
 
-Súmula 24 AGU. Contagem recíproca.
+Art. 94 da Lei 8.213/91. Contagem recíproca do tempo de contribuição entre regimes, com compensação financeira (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
 
-Fonte oficial em https://www.agu.gov.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
 
 Tema 609 STJ. Indenização de contribuições para contagem recíproca.
 
 Fonte oficial em https://www.stj.jus.br
 
-Nota corretiva (Onda 66, verificado no DOU de 12/11/2019 via Comet). O Enunciado 6 do CRPS trata do salário-maternidade à gestante demitida sem justa causa, não da CTC. Não há Enunciado do CRPS específico sobre CTC e efeitos entre os Enunciados 1 a 19 vigentes. A tese de CTC e efeitos para contagem recíproca deve ser sustentada pelo art. 96 da Lei 8.213/91, pelo art. 130 da IN 128/2022, pelo Livro IX da Portaria DIRBEN/INSS 998/2022 e pelos Temas 176 STF e 609 STJ.
+Nota corretiva (Onda 66, verificado no DOU de 12/11/2019 via Comet). O Enunciado 6 do CRPS trata do salário-maternidade à gestante demitida sem justa causa, não da CTC. Não há Enunciado do CRPS específico sobre CTC e efeitos entre os Enunciados 1 a 19 vigentes. A tese de CTC e efeitos para contagem recíproca deve ser sustentada pelo art. 96 da Lei 8.213/91, pelo art. 130 da IN 128/2022, pelo Livro IX da Portaria DIRBEN/INSS 998/2022 e pelo Tema 609 STJ (auditoria 03/10/2026, retirado o Tema 176 STF, que trata de ICMS).
 
 ## Espaço pró-segurado
 

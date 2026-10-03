@@ -18,9 +18,9 @@ Permite complementação. Fonte oficial em https://www.planalto.gov.br
 
 Estabilizou o regime FBR. Fonte oficial em https://www.planalto.gov.br
 
-### Tema 219 TNU
 
-Prova rural por analogia. Fonte oficial em https://www.cjf.jus.br
+
+
 
 ### Tema 327 TNU
 
@@ -98,15 +98,15 @@ Refutação. Pensão é direito dos dependentes.
 
 ## 3. Cláusulas doutrinárias de apoio
 
-Sebastião Geraldo de Oliveira reconhece o trabalho doméstico não remunerado.
+Nenhuma posição doutrinária entra aqui sem obra e página conferidas (auditoria 03/10/2026).
 
-Frederico Amado defende a flexibilização.
 
-Hugo Goes destaca a importância do CadÚnico.
 
-Marco Aurélio Serau Junior critica restrições do INSS.
 
-IBDP sustenta interpretação ampliativa.
+
+
+
+
 
 ## 4. Estratégia integrada
 

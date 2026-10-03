@@ -47,7 +47,7 @@ Quarto, hipóteses em que o direito adquirido se consolidou antes de 13/11/2019,
 
 ## Controvérsias vivas
 
-A modulação das ADIs 2110 e 2111 tem interpretação em curso na jurisprudência das 1ª e 2ª Seções do STJ, e na TNU. Há casos em que o segurado com ação já protocolada antes do julgamento pode ter direito preservado.
+A modulação das ADIs 2110 e 2111 tem interpretação em curso na jurisprudência das 1ª e 2ª Seções do STJ, e na TNU. A modulação conhecida dispensa apenas a devolução de valores recebidos e os honorários, sem preservar o direito à revisão [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ## Decadência e prescrição
 
@@ -102,7 +102,7 @@ Segundo, só propor com simulação vantajosa.
 
 Terceiro, decadência decenal é crítica.
 
-Quarto, honorários podem depender do êxito (Tema 1050 STJ). Cautela.
+Quarto, honorários podem depender do êxito (auditoria 03/10/2026, retirada a remissão ao Tema 1050/STJ, que trata da base dos honorários após pagamento administrativo posterior à citação). Cautela.
 
 Quinto, comunicar ao cliente com honestidade radical o risco processual.
 

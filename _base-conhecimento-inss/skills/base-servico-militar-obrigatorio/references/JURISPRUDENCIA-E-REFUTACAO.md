@@ -6,11 +6,11 @@
 
 Aplicação supletiva histórica para cômputo do tempo militar.
 
-### Súmula 24 AGU
+### Art. 94 da Lei 8.213/91
 
-Contagem recíproca entre regimes.
+Contagem recíproca entre regimes, com compensação financeira, também prevista no art. 201, §9º, da CF (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
 
-Fonte oficial em https://www.agu.gov.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
 
 ### PEDILEFs TNU
 

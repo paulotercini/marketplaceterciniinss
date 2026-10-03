@@ -51,9 +51,9 @@ Quando só o segurado apela, o tribunal não pode piorar a sua situação. O efe
 
 Primeiro, sentença contra o INSS até mil salários mínimos dispensa reexame, art. 496, §3º, I.
 
-Segundo, sentença ilíquida não dispensa o reexame, Súmula 490/STJ.
+Segundo, sentença ilíquida não dispensa o reexame, Súmula 490/STJ. Em ação previdenciária, o Tema 1081/STJ [NÃO CONFIRMADO] mitigou a súmula e dispensa a remessa quando o valor é aferível por cálculo e fica abaixo de mil salários mínimos (auditoria 03/10/2026).
 
-Terceiro, no reexame é defeso agravar a condenação da Fazenda, Súmula 45/STJ, o que preserva o resultado favorável ao segurado.
+Terceiro, no reexame é defeso agravar a condenação da Fazenda, Súmula 45/STJ. A súmula protege o INSS, e não o segurado, que só amplia a condenação se apelar (auditoria 03/10/2026).
 
 ## Estratégia pró-segurado
 

@@ -1,6 +1,6 @@
 ---
 name: reafirmacao-der
-description: Skill de reafirmação da DER (Data de Entrada do Requerimento) para concessão ou revisão de benefício mais vantajoso. Use SEMPRE que mencionar reafirmação da DER, DER reafirmada, Tema 995 STJ, Tema 334 STF, melhor benefício, benefício mais vantajoso, art. 577 IN 128, art. 176-D Decreto 3.048, art. 690 IN 77/2015, quatro hipóteses de reafirmação administrativa, art. 33 Portaria 993/2022, art. 34 Portaria 993/2022, reafirmação na análise inicial até a DDB, reafirmação em revisão administrativa, arts. 21 e 22 Portaria 996/2022, reafirmação de ofício pelo INSS, fato superveniente art. 493 CPC, reafirmação administrativa, reafirmação judicial, DIB reafirmada, efeitos financeiros reafirmação, juros mora reafirmação, honorários reafirmação, desaposentação vs reafirmação, PUIL 5001623-70, Enunciado 1 CRPS, Questão de Ordem 20 TNU, concordância formal reafirmação, prequestionamento reafirmação, ou planejamento previdenciário envolvendo mudança de DER. Acionar AUTOMATICAMENTE com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, planejamento-previdenciario quando o caso envolver reafirmação. NÃO use para desaposentação (Tema 503/STF).
+description: Skill de reafirmação da DER (Data de Entrada do Requerimento) para concessão ou revisão de benefício mais vantajoso. Use SEMPRE que mencionar reafirmação da DER, DER reafirmada, Tema 995 STJ, Tema 334 STF, melhor benefício, benefício mais vantajoso, art. 577 IN 128, art. 176-D Decreto 3.048, art. 690 IN 77/2015, quatro hipóteses de reafirmação administrativa, art. 33 Portaria 993/2022, art. 34 Portaria 993/2022, reafirmação na análise inicial até a DDB, reafirmação em revisão administrativa, arts. 21 e 22 Portaria 996/2022, reafirmação de ofício pelo INSS, fato superveniente art. 493 CPC, reafirmação administrativa, reafirmação judicial, DIB reafirmada, efeitos financeiros reafirmação, juros mora reafirmação, honorários reafirmação, desaposentação vs reafirmação, PUIL 5001623-70.2022.4.02.5005/ES, Enunciado 1 CRPS, Questão de Ordem 20 TNU, concordância formal reafirmação, prequestionamento reafirmação, ou planejamento previdenciário envolvendo mudança de DER. Acionar AUTOMATICAMENTE com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, planejamento-previdenciario quando o caso envolver reafirmação. NÃO use para desaposentação (Tema 503/STF).
 ---
 
 # Reafirmação da DER — Skill Hub
@@ -98,7 +98,7 @@ Conferência de 30/07/2026 pela `pesquisa-jurisprudencia-chrome` e por fonte sec
 Fundamento constitucional do direito ao melhor benefício. A TNU utiliza o Tema 334 como pilar para a reafirmação da DER na esfera administrativa.
 
 ### TNU — Tese consolidada (PUIL 5001623-70.2022.4.02.5005/ES)
-**Rel. João Carlos Cabrelon de Oliveira, 06/12/2024**
+**Rel. João Carlos Cabrelon de Oliveira, julgado em 04/12/2024** (auditoria 03/10/2026)
 "Não há óbice à reafirmação da data de entrada do requerimento administrativo para o momento em que o segurado implementou os requisitos para um melhor benefício, enquanto aguarda a análise do seu pleito na via administrativa."
 
 Confirmado por pelo menos 7 julgados da TNU em 2025 (ver references/precedentes-reafirmacao.md).
@@ -130,7 +130,7 @@ Confirmado por pelo menos 7 julgados da TNU em 2025 (ver references/precedentes-
 - **Base normativa** — Tema 334/STF + art. 577, I, IN 128 + Enunciado 1, IV, CRPS.
 - **DIB** — data de implementação dos requisitos para o benefício mais vantajoso.
 - **Honorários** — quando há reforma de improcedência, base até o acórdão.
-- **Status** — CONSOLIDADO para o cenário administrativo (PUIL 5001623-70). Em evolução nos demais cenários.
+- **Status** — CONSOLIDADO para o cenário administrativo (PUIL 5001623-70.2022.4.02.5005/ES, julgado em 04/12/2024) (auditoria 03/10/2026). Em evolução nos demais cenários.
 
 ## 5. Distinção com Desaposentação — Fundamentação Obrigatória
 

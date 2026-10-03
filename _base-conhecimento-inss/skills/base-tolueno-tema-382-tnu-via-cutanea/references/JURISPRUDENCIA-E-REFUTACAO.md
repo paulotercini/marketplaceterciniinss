@@ -4,41 +4,41 @@
 
 ### 1.1. Conteúdo
 
-PUIL 5012678-29.2017.4.04.7000/PR.
+PUIL 5012678-57.2022.4.04.7108/RS.
 
-Relator. Juiz Federal Bianor Arruda Bezerra Neto.
+Relatora. Juíza Federal Lilian Oliveira da Costa Tourinho. Julgado em 15/04/2026.
 
-Tese fixada. "É possível o reconhecimento da especialidade da atividade laboral pela exposição ao agente nocivo benzeno em concentração superior aos limites de tolerância previstos na NR-15 do MTE, mesmo após 13/10/1995, em atenção ao princípio do tempus regit actum, sendo desnecessária a aferição quantitativa para o reconhecimento da nocividade do agente, dada sua classificação como cancerígeno (LINACH/grupo 1)".
+Tese fixada, adversa ao segurado. "A exposição ao tolueno por via cutânea, inclusive na sua forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15)." (auditoria 03/10/2026, corrigidos número, relator e tese; a tese anterior sobre benzeno não é deste tema).
 
-### 1.2. Ratio decidendi (aplicável por analogia ao tolueno)
+### 1.2. Caminho do segurado
 
-Para agentes químicos com nocividade comprovada por mecanismo sistêmico (cancerígeno, absorção cutânea), a quantificação é dispensável.
+Para o tolueno, o enquadramento exige análise quantitativa pelo Anexo 11 da NR-15. O caminho do segurado é provar concentração acima do limite de tolerância, a co-exposição a benzeno ou a ineficácia do EPI (auditoria 03/10/2026).
 
-A presença do agente na atividade já configura o risco juridicamente protegido.
+A simples presença do agente ou o potencial de absorção dérmica não bastam.
 
-### 1.3. Distinguishing impróprio do INSS
+### 1.3. Argumento superado
 
-O INSS frequentemente sustenta que o Tema 382/TNU é restrito ao benzeno, não se estendendo ao tolueno.
+A versão anterior sustentava que a ratio do Tema 382 dispensaria a quantificação do tolueno por absorção cutânea.
 
-Refutação. A ratio do Tema 382 é a desnecessidade de quantificação para agentes com nocividade sistêmica comprovada. O tolueno do Anexo 13 da NR-15 atende essa ratio por absorção cutânea.
+O Tema 382 rejeitou essa tese, que não pode ser usada em peça (auditoria 03/10/2026).
 
-A aplicação restritiva ignora a estrutura argumentativa do julgado.
+
 
 ## 2. Outros precedentes da TNU
 
 ### 2.1. Tema 174/TNU
 
-Súmula 9/STF e Tema 555/STF aplicáveis ao EPI.
+Súmula 9/TNU, específica do ruído e aplicável aqui só por analogia, e Tema 555/STF aplicáveis ao EPI (auditoria 03/10/2026).
 
 Aplicação subsidiária ao tolueno do Anexo 13.
 
-### 2.2. PEDILEF 0136882-37.2014.4.05.8300/PE
+### 2.2. Precedentes não localizados
 
-ATENÇÃO. Verificar inteiro teor antes de citar com número de processo. Não localizado em fonte primária oficial até a data desta skill.
+Os dois PEDILEFs antes citados nesta seção não foram localizados no acervo da TNU nem em fonte oficial e foram retirados (auditoria 03/10/2026).
 
-### 2.3. PEDILEF 5001032-25.2014.4.04.7204/SC
 
-ATENÇÃO. Verificar inteiro teor antes de citar com número de processo. Não localizado em fonte primária oficial até a data desta skill.
+
+
 
 ## 3. Jurisprudência do STJ
 
@@ -56,11 +56,11 @@ Excepcionalmente, a especialidade não é descaracterizada para certos agentes (
 
 Aplicação. EPI ineficaz para hidrocarbonetos aromáticos do Anexo 13.
 
-### 3.3. Súmula 9/STF
+### 3.3. Súmula 9/TNU
 
-"Salário-família. Decisão administrativa não cumprida. Mandado de segurança".
+"O uso de Equipamento de Proteção Individual (EPI), ainda que elimine a insalubridade, no caso de exposição a ruído, não descaracteriza o tempo de serviço especial prestado."
 
-Não é diretamente sobre EPI, mas a doutrina e a jurisprudência aplicam por extensão a doutrina da limitação da retroatividade no contexto previdenciário.
+Trata de EPI e ruído. Para o tolueno, aplica-se só por analogia (auditoria 03/10/2026).
 
 ATENÇÃO. Verificar contexto antes de citar.
 
@@ -102,7 +102,7 @@ Onde há contato cutâneo, aplica-se o Anexo 13 com enquadramento qualitativo.
 
 ### 6.2. Tese 2 do INSS. "O Tema 382/TNU é restrito ao benzeno"
 
-Refutação. A ratio do Tema 382 é a desnecessidade de quantificação para agentes com nocividade sistêmica. O tolueno do Anexo 13 atende essa ratio por absorção cutânea.
+Refutação superada. O Tema 382 trata do próprio tolueno e rejeitou o enquadramento qualitativo pela via cutânea (auditoria 03/10/2026).
 
 Distinguishing impróprio.
 
@@ -180,7 +180,7 @@ Aplicação subsidiária do limite ACGIH 20 ppm.
 
 ### 8.3. Pedido cumulativo
 
-Reconhecimento da co-exposição com benzeno (quando aplicável) com aplicação direta do Tema 382/TNU.
+Reconhecimento da co-exposição com benzeno (quando aplicável) com aplicação do Tema 170/TNU, e não do Tema 382/TNU, que trata do tolueno (auditoria 03/10/2026).
 
 ### 8.4. Pedido subsidiário
 

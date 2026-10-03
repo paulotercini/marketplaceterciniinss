@@ -86,7 +86,7 @@ Em todo atendimento de indeferimento, alertar o cliente. O recurso ordinário di
 2. Violação ao art. 56 da Lei 9.784/99 (recurso por legalidade e mérito sem caução)
 3. Inconstitucionalidade — art. 5º, LV, CF (ampla defesa com recursos)
 4. Violação da legalidade estrita (art. 37, caput, CF)
-5. Incoerência interna com o art. 84 do Regimento (rol taxativo de não conhecimento)
+5. Incoerência interna com o art. 112, caput, do Regimento (rol taxativo de não conhecimento) (auditoria 03/10/2026)
 6. Esvaziamento do duplo grau administrativo
 7. Conflito com o Tema 350/STF e Tema 1124/STJ
 8. Conflito com a ADI 6096/STF (proteção contra atos negativos)

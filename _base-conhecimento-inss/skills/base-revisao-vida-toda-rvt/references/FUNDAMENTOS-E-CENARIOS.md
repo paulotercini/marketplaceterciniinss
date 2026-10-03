@@ -60,7 +60,7 @@ Caso em que sentença transitada em julgado reconheceu a RVT antes de 2024. A mo
 
 ### Cenário D — Ação ajuizada antes do julgamento das ADIs
 
-Alguns tribunais têm reconhecido preservação do direito nas ações ajuizadas antes do termo final da modulação. Verificar na jurisprudência recente de cada Região.
+A modulação conhecida dispensa apenas a devolução de valores recebidos e os honorários, sem preservar o direito à revisão [NÃO CONFIRMADO]; decisão que afirme o contrário precisa de conferência na fonte oficial (auditoria 03/10/2026). Verificar na jurisprudência recente de cada Região.
 
 ### Cenário E — Segurado com contribuições elevadas pré-PBC
 

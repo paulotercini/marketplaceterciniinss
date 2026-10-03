@@ -145,7 +145,7 @@ Indeferimento por "documento não previsto na lista" é fundamentação inválid
 
 ### 5.3. Incisos relevantes (rol consolidado em maio de 2026)
 
-O art. 93 contém atualmente cerca de 36 incisos, com o XXXVI incluído pela Portaria DIRBEN 1209/2024 (declaração do INCRA para remanescentes de comunidades quilombolas) e o XII alterado pela Portaria DIRBEN 1299/2025 (certidão da FUNAI para indígenas).
+O art. 93 contém atualmente cerca de 36 incisos, com o XXXVI incluído pela Portaria DIRBEN 1209/2024 (declaração do INCRA para remanescentes de comunidades quilombolas) e o X alterado pela Portaria DIRBEN 1.079/2022 (certidão da FUNAI para indígenas) (auditoria 03/10/2026).
 
 Documentos com maior valor probatório.
 
@@ -167,7 +167,7 @@ VIII. Licença de ocupação do INCRA ou documento de assentamento.
 
 IX. Comprovante de ITR, DIAC, DIAT.
 
-X. Certidão da FUNAI para indígena (redação da Portaria 1299/2025).
+X. Certidão da FUNAI para indígena (redação da Portaria 1.079/2022) (auditoria 03/10/2026).
 
 XI. Certidão de casamento civil ou religioso ou de união estável.
 
@@ -295,9 +295,9 @@ Armadilha frequente. O INSS recusa documentos antigos do cônjuge (geralmente do
 
 ### 7.3. Aposentadoria por tempo de contribuição com período rural
 
-Período rural anterior a 31/10/1991. Cômputo possível para tempo de contribuição mediante indenização (art. 96, IV, Lei 8.213/91 c/c art. 45-A, Lei 8.212/91).
+Período rural anterior a 31/10/1991. Cômputo como tempo de contribuição independentemente do recolhimento das contribuições, exceto para efeito de carência (art. 55, §2º, Lei 8.213/91). A indenização (art. 96, IV, Lei 8.213/91 c/c art. 45-A, Lei 8.212/91) só se exige na contagem recíproca (auditoria 03/10/2026).
 
-Período rural posterior a 31/10/1991. Computa apenas se o segurado especial recolheu facultativamente como contribuinte individual (art. 25, §1º, Lei 8.212/91, e art. 39, II, Lei 8.213/91).
+Período rural posterior a 31/10/1991. Computa apenas se o segurado especial contribuiu facultativamente nessa mesma condição, e não como contribuinte individual (art. 25, §1º, Lei 8.212/91, e art. 39, II, Lei 8.213/91) (auditoria 03/10/2026).
 
 Aplicação do art. 94, II. Cada bloco rural exige ratificador. Priorizar instrumentos de longa vigência para acionar o §5º.
 
@@ -385,7 +385,7 @@ Estrutura recomendada de fundamentação contra indeferimento por aplicação ri
 
 8. Justificação Administrativa. Quando faltar prova em uma das metades, requerer JA com base em início de prova material (art. 571 da IN 128/2022).
 
-9. Verificação de descaracterizadores. CNPJ ativo (Tema 1115/STJ + art. 112, §4º, IN 128), MEI Rural (LC 155/2016), área acima de 4 módulos fiscais (Tema 1115/STJ), rendimento urbano de membro da família (Súmula 41/TNU).
+9. Verificação de descaracterizadores. CNPJ ativo (art. 112, §4º, IN 128) (auditoria 03/10/2026, retirado o Tema 1115/STJ, que trata do tamanho da propriedade), MEI Rural (LC 155/2016), área acima de 4 módulos fiscais (Tema 1115/STJ), rendimento urbano de membro da família (Súmula 41/TNU).
 
 10. Verificação Tema 1124/STJ. Toda a documentação foi apresentada na via administrativa antes da judicialização?
 
@@ -425,7 +425,7 @@ A Portaria 990 não fixa idade mínima para reconhecimento, mas o Ofício-Circul
 
 ### 10.6. Pegadinha do quilombola e do indígena
 
-A Portaria 1209/2024 (XXXVI) e a Portaria 1299/2025 (X e XII) criaram regimes específicos. Para quilombola, exige declaração do INCRA. Para indígena, exige certidão da FUNAI. A simples autodeclaração étnica e a prova material genérica frequentemente são recusadas administrativamente.
+A Portaria 1209/2024 (XXXVI) e a Portaria 1.079/2022 (X) criaram regimes específicos (auditoria 03/10/2026). Para quilombola, exige declaração do INCRA. Para indígena, exige certidão da FUNAI. A simples autodeclaração étnica e a prova material genérica frequentemente são recusadas administrativamente.
 
 ## 11. Documentos essenciais
 

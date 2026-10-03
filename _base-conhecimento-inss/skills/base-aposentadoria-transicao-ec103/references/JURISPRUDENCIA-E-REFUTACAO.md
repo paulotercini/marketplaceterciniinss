@@ -42,9 +42,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Aplicada analogicamente, afirma que a regra de transição vigente no dia do preenchimento dos requisitos é a regra aplicável, independentemente de mudanças posteriores.
 
-### PUIL 5001623-70.2014.4.04.7000 TNU
+### PUIL 5001623-70.2022.4.02.5005/ES TNU
 
-Tese. É cabível a reafirmação da DER no âmbito administrativo, inclusive para acesso a benefício mais vantajoso.
+Tese. É cabível a reafirmação da DER no âmbito administrativo, inclusive para acesso a benefício mais vantajoso. Julgado em 04/12/2024 (auditoria 03/10/2026, corrigido o número do processo, antes indicado como 5001623-70.2014.4.04.7000).
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -80,7 +80,7 @@ Refutação. Art. 17 da EC 103. A regra se aplica automaticamente a quem estava 
 
 Argumento adversário. A regra da idade progressiva é aplicável a todos, dispensando análise de outras.
 
-Refutação. Art. 4º da EC 103 garante a opção pelas regras de transição. O segurado escolhe a regra mais vantajosa. A opção é direito subjetivo, não faculdade do INSS.
+Refutação. Os arts. 15, 16, 17 e 20 da EC 103 asseguram ao filiado até 13/11/2019 regras de transição alternativas; o art. 4º trata do servidor público federal (auditoria 03/10/2026). O segurado escolhe a regra mais vantajosa. A opção é direito subjetivo, não faculdade do INSS.
 
 ### Argumento 6 — Conversão de tempo especial não aplicável após 13/11/2019
 

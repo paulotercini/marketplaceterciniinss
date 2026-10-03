@@ -30,7 +30,7 @@ Funções de magistério.
 
 ### Tema 1011 STJ
 
-Coordenação pedagógica.
+Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
 
 ### Tema 1091 STF
 
@@ -92,7 +92,7 @@ Não cabe. Aguardar idade ou migrar para outra regra.
 
 ### Cenário J — Professor universitário
 
-Não se enquadra. ADI 3772.
+Não se enquadra. O texto limita a regra à educação infantil e aos ensinos fundamental e médio (CF, art. 201, §8º; EC 103, art. 20, §1º) (auditoria 03/10/2026).
 
 ## 8. Metodologia
 

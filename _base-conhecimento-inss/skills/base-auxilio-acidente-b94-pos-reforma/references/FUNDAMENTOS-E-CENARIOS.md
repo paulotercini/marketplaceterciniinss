@@ -34,7 +34,7 @@ Caráter vitalício até a aposentadoria é decisivo. Enquanto não houver apose
 
 ## 3. Requisitos
 
-Primeiro, acidente de qualquer natureza. Não precisa ser acidente de trabalho. Acidente doméstico, trânsito, desportivo ou outro qualquer gera B94.
+Primeiro, acidente de qualquer natureza. Não precisa ser acidente de trabalho. Acidente doméstico, trânsito, desportivo ou outro qualquer gera o auxílio-acidente previdenciário (espécie 36), na Justiça Federal; o B94 acidentário exige nexo com o trabalho (auditoria 03/10/2026).
 
 Segundo, consolidação das lesões. Fim do tratamento curativo com estabilização do quadro.
 
@@ -52,7 +52,7 @@ Segurado de serraria amputa dois dedos. Após consolidação, B94 com base na S�
 
 ### Cenário 2 — Perda auditiva ocupacional
 
-Segurado exposto a ruído com perda auditiva leve a moderada. Tema 322 TNU. Redução de capacidade para a função habitual. B94 cabível.
+Segurado exposto a ruído com perda auditiva leve a moderada. Art. 86, §4º, da Lei 8.213/91, Tema 22 STJ e Súmula 44 STJ (auditoria 03/10/2026, no lugar do Tema 322 TNU). Redução de capacidade para a função habitual. B94 cabível.
 
 ### Cenário 3 — Sequela fora do Anexo III
 
@@ -60,15 +60,15 @@ Segurado com lesão de joelho que, embora não descrita no Anexo III, reduz a ca
 
 ### Cenário 4 — Acidente de trânsito
 
-Segurado sofre acidente de carro, fratura exposta, com sequela funcional permanente. B94 independente de ser acidente de trabalho.
+Segurado sofre acidente de carro, fratura exposta, com sequela funcional permanente. Auxílio-acidente previdenciário (espécie 36), na Justiça Federal, independente de ser acidente de trabalho (auditoria 03/10/2026).
 
 ### Cenário 5 — B94 após cessação de B31
 
 Segurado em B31 por 18 meses, com consolidação e sequela. Conversão automática em B94. Se o INSS não converte, cabe recurso ou ação.
 
-### Cenário 6 — Acumulação com aposentadoria anterior à Lei 13.846/2019
+### Cenário 6 — Acumulação com aposentadoria posterior a 11/11/1997
 
-Segurado com B94 desde 2015 e aposentadoria em 2018. Direito adquirido à acumulação (Tema 555 STJ).
+Segurado com B94 desde 2015 e aposentadoria em 2018. Não acumula, porque lesão e aposentadoria são posteriores a 11/11/1997 (Tema 555 STJ e Súmula 507 STJ). O B94 cessa na véspera da aposentadoria e seu valor integra o salário-de-contribuição para o cálculo dela (art. 31 da Lei 8.213/91) (auditoria 03/10/2026).
 
 ### Cenário 7 — Cessação indevida de B94
 
@@ -108,7 +108,7 @@ Primeiro, Anexo III é exemplificativo. Nunca se conformar com indeferimento por
 
 Segundo, redução mínima também gera B94. Súmula 89 TNU.
 
-Terceiro, acumulação com aposentadoria é direito adquirido para concessões anteriores à Lei 13.846/2019.
+Terceiro, acumulação com aposentadoria só subsiste quando lesão incapacitante e aposentadoria são anteriores a 11/11/1997 (Tema 555 STJ e Súmula 507 STJ); fora disso, resta a integração do art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
 
 Quarto, cessação apenas pela aposentadoria (art. 86 §3º). Impugnar qualquer outra cessação.
 

@@ -19,7 +19,7 @@ Primeiro, recurso parcial. Impugnado só um capítulo, os demais transitam em ju
 
 Segundo, trânsito em julgado por capítulos. O capítulo não recorrido estabiliza-se antes do fim do processo, tema aprofundado em `base-cpc-coisa-julgada-progressiva`.
 
-Terceiro, execução do incontroverso. O capítulo já estável pode ser cumprido desde logo, sem esperar o julgamento do recurso sobre os demais, IRDR 18/TRF4 e Tema 28/STF.
+Terceiro, execução do incontroverso. O capítulo já estável pode ser cumprido desde logo, sem esperar o julgamento do recurso sobre os demais, IRDR 18/TRF4 e Tema 28/STF [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ## Sucumbência e honorários
 

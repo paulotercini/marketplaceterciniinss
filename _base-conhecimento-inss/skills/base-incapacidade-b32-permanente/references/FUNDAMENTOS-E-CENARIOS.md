@@ -6,7 +6,7 @@ Lei 8.213/91, art. 42. Concede B32 ao segurado que, estando ou não em B31, for 
 
 Lei 8.213/91, art. 42, §2º. Doença ou lesão anterior à filiação não impede o benefício quando a incapacidade decorrer de progressão ou agravamento. Interpretação pró-segurado.
 
-Lei 8.213/91, art. 43. DIB do B32 a partir do dia imediato à cessação do B31, ou do laudo pericial quando houver requerimento direto sem B31 prévio.
+Lei 8.213/91, art. 43. DIB do B32 a partir do dia imediato à cessação do B31. Sem B31 prévio, DIB no 16º dia do afastamento para o segurado empregado e na DII para os demais, ou na DER se entre essas datas decorrerem mais de 30 dias (art. 43, §1º) (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 44. RMI do B32. Após a EC 103/2019, calculada pelo novo regime.
 
@@ -46,7 +46,7 @@ Segurado com B32 desde 2015 é cessado em 2026 por perícia do Programa Revisão
 
 ### Cenário 6 — Reabilitação inviável
 
-Segurado em programa de reabilitação profissional com parecer de inviabilidade. Conversão em B32 pelo art. 62, §2º, da Lei 8.213/91. Súmula 47/TNU para o exame das condições pessoais e sociais, e tutela de urgência para a implantação (auditoria 03/10/2026).
+Segurado em programa de reabilitação profissional com parecer de inviabilidade. Conversão em B32 pelo art. 62, §1º, da Lei 8.213/91. Súmula 47/TNU para o exame das condições pessoais e sociais, e tutela de urgência para a implantação (auditoria 03/10/2026).
 
 ### Cenário 7 — Doença preexistente com agravamento
 

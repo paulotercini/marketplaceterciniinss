@@ -123,13 +123,13 @@ Aplicação subsidiária. Quando o argumento principal (Anexo 13/cutânea) não 
 
 Tese. Em ambientes industriais, o tolueno raramente aparece isolado. A exposição é geralmente conjunta com benzeno (LINACH 1), xileno e etilbenzeno.
 
-Estratégia. Argumentar a co-exposição como agravante. Mesmo se o tolueno isoladamente não for cancerígeno, a presença de benzeno simultânea atrai a aplicação do Tema 382/TNU.
+Estratégia. Argumentar a co-exposição como agravante. Mesmo se o tolueno isoladamente não for cancerígeno, a presença de benzeno simultânea atrai a avaliação qualitativa própria dos cancerígenos, pelo Tema 170/TNU, e não o Tema 382/TNU, que trata do tolueno (auditoria 03/10/2026).
 
-### 6.4. Argumento 4. Distinguishing do Tema 382/TNU para invocar a sua ratio decidendi
+### 6.4. Argumento 4. Tema 382/TNU, tese adversa
 
-Tese. O Tema 382/TNU fixou a desnecessidade da aferição quantitativa para agentes cancerígenos (LINACH 1). Por aplicação analógica e pela ratio decidendi do julgado, agentes do Anexo 13 da NR-15 (absorção cutânea) também não exigem quantificação.
+Tese adversa. O Tema 382/TNU fixou que a exposição ao tolueno por via cutânea, inclusive na forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15) (auditoria 03/10/2026).
 
-Distinguishing. O Tema 382 é aplicado ao benzeno, mas a sua ratio (desnecessidade de quantificação para agentes com absorção sistêmica grave) é aplicável ao tolueno do Anexo 13.
+Caminho do segurado. Provar concentração acima do limite do Anexo 11 da NR-15 ou co-exposição a benzeno, que segue o Tema 170/TNU.
 
 ### 6.5. Argumento 5. Súmula 9/TNU e Tema 555/STF (EPI)
 
@@ -139,11 +139,11 @@ A absorção cutânea ocorre pelo contato direto com a pele. Luvas sintéticas c
 
 Cruzamento com `base-especial-epi`.
 
-### 6.6. Argumento 6. PEDILEF 0136882-37.2014.4.05.8300/PE e PEDILEF 5001032-25.2014.4.04.7204/SC
+### 6.6. Argumento 6. Precedentes da TNU sobre tolueno cutâneo
 
-Tese. Há jurisprudência da TNU reconhecendo o tolueno como agente nocivo qualitativo em hipóteses de exposição cutânea.
+Tese. Não há precedente da TNU localizado que reconheça o tolueno como agente nocivo qualitativo pela via cutânea, e o Tema 382/TNU rejeitou essa tese (auditoria 03/10/2026).
 
-ATENÇÃO. Verificar inteiro teor antes de citar com número de processo. PEDILEF 0136882 e PEDILEF 5001032 NÃO foram localizados em fonte primária oficial até a data desta skill. Verificar no portal da TNU.
+ATENÇÃO. Os dois PEDILEFs antes citados nesta seção não foram localizados no acervo da TNU nem em fonte oficial e foram retirados.
 
 ## 7. Cenários práticos
 

@@ -2,21 +2,21 @@
 
 ## 1. Precedentes vinculantes
 
-### Tema 149 TNU
+### Natimorto e aborto não criminoso (Lei 8.213/91, art. 71; IN 128/2022, art. 358)
 
-Tese. Em caso de aborto espontâneo, o salário-maternidade é devido por 14 dias. Em caso de natimorto após 22 semanas, equipara-se ao parto para fins de salário-maternidade por 120 dias.
+Regra legal, sem tema da TNU. Em caso de aborto não criminoso, o salário-maternidade é devido por 14 dias (IN 128/2022, art. 358, §1º). Em caso de natimorto após 22 semanas, equipara-se ao parto para fins de salário-maternidade por 120 dias (Lei 8.213/91, art. 71; IN 128/2022, art. 358, I) (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurada. Estabelece duração mínima em aborto espontâneo e garante 120 dias em natimorto.
 
-### Tema 245 TNU
+### Carência da facultativa de baixa renda (Lei 8.213/91, art. 25, III)
 
-Tese. Carência de salário-maternidade para segurada facultativa de baixa renda.
+Regra legal, sem tema da TNU. O art. 25, III, exigia 10 contribuições da facultativa, inclusive a de baixa renda.
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurada. Perdeu objeto com a inexigibilidade da carência (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS). O número pede conferência, porque o Tema 245/TNU, em `base-precedentes-catalogo-vinculantes`, trata de invalidação do ato de concessão (auditoria 03/10/2026).
+Aplicação pró-segurada. Perdeu objeto com a inexigibilidade da carência (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS). O Tema 245/TNU, antes citado aqui, trata da invalidação do ato de concessão e não se aplica ao salário-maternidade (auditoria 03/10/2026).
 
 ### Tema 327 TNU
 
@@ -86,7 +86,7 @@ Refutação. Tema 161 STF (RE 778.889). Igualdade com licença-maternidade biol�
 
 Argumento adversário. Natimorto equivale a aborto, 14 dias.
 
-Refutação. Tema 149 TNU. Natimorto após 22 semanas = parto, 120 dias.
+Refutação. Art. 71 da Lei 8.213/91 e art. 358, I, da IN 128/2022 (auditoria 03/10/2026). Natimorto após 22 semanas = parto, 120 dias.
 
 ### Argumento 6 — Transferência ao pai não cabe em óbito pós-parto
 

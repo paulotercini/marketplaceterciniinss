@@ -10,7 +10,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 1011 STJ
 
-Coordenação pedagógica é função de magistério para fins de aposentadoria especial de professor.
+Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -50,7 +50,7 @@ Refutação. ADI 3772 STF e Lei 11.301 incluem direção, coordenação e assess
 
 Argumento adversário. Interpretação ampliativa.
 
-Refutação. ADI 3772 exclui expressamente universitário.
+Refutação. O texto exclui o universitário ao limitar a regra à educação infantil e aos ensinos fundamental e médio (CF, art. 201, §8º; EC 103, art. 15, §3º) (auditoria 03/10/2026).
 
 ### Argumento 3 — Tempo deve ser contínuo
 

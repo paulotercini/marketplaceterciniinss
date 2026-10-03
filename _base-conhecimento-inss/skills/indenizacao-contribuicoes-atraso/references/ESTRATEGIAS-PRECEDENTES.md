@@ -166,7 +166,7 @@ O cálculo apresentado pelo INSS deve ser conferido nos seguintes pontos
 
 | Situação | Conta para carência? | Fundamento |
 |----------|---------------------|------------|
-| Primeira contribuição em dia + atraso posterior sem perda QS | SIM | Art. 27, II, Lei 8.213 + Tema 192/TNU |
+| Primeira contribuição em dia + atraso posterior sem perda QS | SIM | Art. 27, II, Lei 8.213; o Tema 192/TNU é adverso quando o recolhimento ocorre após a perda da QS (auditoria 03/10/2026) |
 | Atraso anterior à primeira contribuição em dia | NÃO | Art. 27, II, Lei 8.213 |
 | Perda da qualidade de segurado + refiliação | Somente após nova contribuição em dia | Art. 28, §4º, RPS (Decreto 10.410) |
 | Segurado empregado | SIM (presunção de recolhimento) | Súmula 75 TNU |

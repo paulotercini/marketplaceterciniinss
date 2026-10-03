@@ -50,7 +50,7 @@ Redigir a tese em chave de valoração jurídica de prova, nunca em chave de ree
 
 **Caso tempo especial por ruído.** Errado, "a perícia provou que o ruído era de 87 dB". Correto, "o PPP, documento técnico oficial, indicou ruído de 87 dB, nível que, à luz do Tema 174/TNU, caracteriza atividade especial, conclusão jurídica que o recorrido, ao exigir NEN em período posterior a 18/11/2003, contrariou."
 
-**Caso segurado especial rural.** Errado, "o segurado é rural, trabalhou na lavoura". Correto, "a certidão do INCRA em nome do grupo familiar constitui razoável início de prova material, nos termos do Tema 218/TNU, valoração jurídica que o recorrido, ao exigir homologação pelo INSS do contrato de arrendamento, contrariou".
+**Caso segurado especial rural.** Errado, "o segurado é rural, trabalhou na lavoura". Correto, "a certidão do INCRA em nome do grupo familiar constitui razoável início de prova material, nos termos do art. 55, §3º, da Lei 8.213/91, valoração jurídica que o recorrido, ao exigir homologação pelo INSS do contrato de arrendamento, contrariou" (auditoria 03/10/2026, retirado o Tema 218/TNU, que trata de outra matéria).
 
 ## Estratégia Contra Inadmissão por Súmula 43 (Matéria Processual)
 

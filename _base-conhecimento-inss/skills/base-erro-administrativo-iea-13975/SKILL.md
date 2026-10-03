@@ -17,7 +17,7 @@ CF/88, art. 5º, XXXIV "a" (direito de petição), LXXVIII (razoável duração 
 
 Lei 9.784/1999, art. 2º (princípios), art. 5º (decidir), art. 6º (forma do requerimento), art. 48 (dever de decidir), art. 49 (prazo de 30 dias prorrogáveis uma vez), art. 53 (poder-dever de autotutela).
 
-Súmula 473 do STF. A Administração pode anular seus próprios atos, quando eivados de vício de legalidade, ou revogá-los por motivo de conveniência ou oportunidade.
+Súmula 473 do STF: "A administração pode anular seus próprios atos, quando eivados de vícios que os tornam ilegais, porque deles não se originam direitos; ou revogá-los, por motivo de conveniência ou oportunidade, respeitados os direitos adquiridos, e ressalvada, em todos os casos, a apreciação judicial." (auditoria 03/10/2026)
 
 Lei 8.213/1991, art. 41-A, §5º. Prazo de 45 dias para o primeiro pagamento de benefício após apresentação da documentação.
 

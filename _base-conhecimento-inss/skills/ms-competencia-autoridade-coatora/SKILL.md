@@ -87,7 +87,7 @@ O impetrante pode escolher entre quatro foros, conforme art. 109, §2º, CF/88, 
 
 Se a autoridade coatora for o Gerente da CEAB/RD/SR I, a sede funcional é em São Paulo/SP, o que fixa a competência na Subseção Judiciária de São Paulo. Mas o impetrante pode igualmente impetrar no foro de seu domicílio.
 
-O TRF3, no CC 5008294-33.2020.4.03.0000 (Órgão Especial, Rel. Des. Fed. André Nabarrete), determinou que o juiz que recebe MS contra a CEAB **não pode declinar da competência** para São Paulo se o impetrante optou pelo foro de seu domicílio. Se entender que a autoridade indicada é incorreta, deve extinguir por ilegitimidade, e não declinar a competência. Competência e legitimidade não se confundem.
+O TRF3, no CC 5008294-33.2020.4.03.0000 (Órgão Especial, Rel. Des. Fed. André Nabarrete), determinou que o juiz que recebe MS contra o Chefe de APS **não pode declinar da competência** para a sede da autoridade se o impetrante optou pelo foro de seu domicílio (auditoria 03/10/2026). Se entender que a autoridade indicada é incorreta, deve extinguir por ilegitimidade, e não declinar a competência. Competência e legitimidade não se confundem.
 
 ### 2.3. Precedente-chave sobre competência territorial em MS contra o INSS
 

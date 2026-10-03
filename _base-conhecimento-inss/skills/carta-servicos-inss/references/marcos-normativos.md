@@ -30,7 +30,7 @@ Documentos comprobatórios incisos do art. 116 IN 128/2022. Tema 327 TNU (cônju
 
 Art. 57 e 58 Lei 8.213/91. Anexo IV Decreto 3.048/99. EC 103/2019 art. 21 (transição).
 
-Ruído (Tema 174 TNU, Tema 317 TNU, Enunciado 13 CRPS revisado 12/2024). EPI (Tema 555 STF, Tema 1090 STJ, Tema 213 TNU, Tema 218 TNU). Agentes biológicos (Tema 383 TNU, Pareceres Fundacentro 2/2025 e 3/2025, Ofício 221/2025/PRES).
+Ruído (Tema 174 TNU, Tema 317 TNU, Enunciado 13 CRPS revisado 12/2024). EPI (Tema 555 STF, Tema 1090 STJ, Tema 213 TNU) (auditoria 03/10/2026, retirado o Tema 218 TNU, que trata de outra matéria). Agentes biológicos (Tema 383 TNU, Pareceres Fundacentro 2/2025 e 3/2025, Ofício 221/2025/PRES).
 
 Conversão de tempo especial em comum até 13/11/2019 (Tema 422 STJ, Súmula 50 TNU).
 

@@ -1,6 +1,6 @@
 # Modelo de Recurso Especial ao CRPS - Versão Enxuta
 
-Modelo de recurso especial à Câmara de Julgamento (CAJ) do CRPS, pró-segurado, em padrão enxuto. Fundamentação normativa pura. Demonstração específica de uma das hipóteses do art. 91 do RICRPS.
+Modelo de recurso especial à Câmara de Julgamento (CAJ) do CRPS, pró-segurado, em padrão enxuto. Fundamentação normativa pura. Cabimento pelo art. 90 do RICRPS; pedido de anulação pelas hipóteses do art. 91, §1º (auditoria 03/10/2026).
 
 ## CABEÇALHO
 
@@ -15,21 +15,21 @@ Benefício nº [NB]
 Recorrente. [Nome do segurado], CPF [XXX.XXX.XXX-XX]
 ```
 
-## CORPO
+## CORPO (auditoria 03/10/2026)
 
 ```
 1. TEMPESTIVIDADE
 
 A intimação do acórdão recorrido ocorreu em DD/MM/AAAA. O presente
 recurso é apresentado em DD/MM/AAAA, dentro do prazo de 30 dias do
-art. 91 do RICRPS (Portaria MPS 125/2026).
+art. 77 do RICRPS (Portaria MPS 125/2026).
 
 
-2. CABIMENTO. HIPÓTESE DO ART. 91 DO RICRPS
+2. CABIMENTO. ART. 90 DO RICRPS
 
-O presente recurso especial fundamenta-se na hipótese do art. 91,
-inciso [I, II, III ou IV] do RICRPS, configurada conforme demonstração
-abaixo.
+O presente recurso especial ataca acórdão de Junta de Recursos em recurso
+ordinário, em matéria fora da alçada exclusiva (art. 89, §3º), e é cabível pelo art. 90 do RICRPS.
+[Se pedir anulação, indicar o inciso do art. 91, §1º, do RICRPS.]
 
 [Escolher UMA hipótese e demonstrar com clareza.]
 
@@ -97,7 +97,7 @@ OAB/SP 331.110
 
 **Tamanho final esperado.** 5 a 8 páginas. Recurso especial exige demonstração técnica da hipótese de cabimento, então é levemente mais longo que o ordinário.
 
-**Diferença chave.** O recurso especial precisa COMPROVAR uma das 4 hipóteses do art. 91 do RICRPS. A simples discordância com a decisão da JR não é hipótese de cabimento.
+**Diferença chave.** O recurso especial cabe contra qualquer acórdão de JR em recurso ordinário (art. 90 do RICRPS), salvo matéria de alçada exclusiva (art. 89, §3º) e decisão de diligência (art. 90, §2º). Se o pedido for de anulação, indicar uma das 8 hipóteses do art. 91, §1º, nenhuma delas de divergência (auditoria 03/10/2026).
 
 **Cuidado especial.**
 
@@ -108,11 +108,11 @@ OAB/SP 331.110
 
 **Vedações específicas.**
 
-- Vedado utilizar recurso especial como segundo recurso ordinário. Se a tese é só de reexame fático, o recurso será inadmitido.
+- Vedado repetir o recurso ordinário: atacar os fundamentos do acórdão da JR. O reexame de fatos e provas é admitido, pois o recurso devolve o conhecimento integral da causa (art. 90, §1º) (auditoria 03/10/2026).
 - Vedado usar jurisprudência judicial como paradigma. Os paradigmas válidos no CRPS são acórdãos do próprio CRPS, enunciados, súmulas e pareceres vinculantes.
 
 **Integração obrigatória com.**
 
-- `recursos-superiores-crps` (skill local) para o detalhamento das 4 hipóteses do art. 91.
+- `recursos-superiores-crps` (skill local) para o cabimento (art. 90) e as 8 hipóteses de anulação do art. 91, §1º (auditoria 03/10/2026).
 - `admissibilidade-barreiras-crps` para verificação de cabimento.
 - `base-revisao-peticao-aprofundada` para auditoria após geração.

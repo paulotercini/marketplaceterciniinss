@@ -57,7 +57,7 @@ Demonstração de que o recurso do INSS é parcial, identificando precisamente q
 
 ### 1.7. Ponto de atenção — Dimensionamento como obrigação de pequeno valor
 
-O Tema 28/STF determina que a classificação como RPV ou precatório observe a "importância total executada", não apenas a parcela incontroversa isoladamente. Se o valor total do crédito (incluindo a parte controvertida) superar 60 salários mínimos, mesmo a parcela incontroversa inferior a esse teto deverá ser expedida como precatório, salvo renúncia ao excedente na execução.
+O Tema 28/STF [NÃO CONFIRMADO] (auditoria 03/10/2026) determina que a classificação como RPV ou precatório observe a "importância total executada", não apenas a parcela incontroversa isoladamente. Se o valor total do crédito (incluindo a parte controvertida) superar 60 salários mínimos, mesmo a parcela incontroversa inferior a esse teto deverá ser expedida como precatório, salvo renúncia ao excedente na execução.
 
 ---
 
@@ -110,7 +110,7 @@ O autor renuncia de maneira expressa ao montante que excede 60 (sessenta) salár
 
 **Risco 3 — Cliente não orientado sobre renúncia na execução.** A renúncia para RPV implica perda real. O advogado deve orientar por escrito sobre o trade-off entre receber rapidamente (RPV, até 60 dias) versus receber integralmente (precatório, prazo indeterminado). Recomenda-se documentar a orientação e a ciência do cliente.
 
-**Risco 4 — Fracionamento vedado.** O art. 17, § 4º, da Lei 10.259/2001 veda a expedição de RPV complementar pelo saldo renunciado. O Tema 28/STF, ao tratar do dimensionamento da obrigação de pequeno valor, determina que se observe a importância total executada, não a parcela individualizada. Não é lícito fracionar o crédito em RPV e precatório para a mesma parte.
+**Risco 4 — Fracionamento vedado.** O art. 17, § 4º, da Lei 10.259/2001 veda a expedição de RPV complementar pelo saldo renunciado. O Tema 28/STF [NÃO CONFIRMADO] (auditoria 03/10/2026), ao tratar do dimensionamento da obrigação de pequeno valor, determina que se observe a importância total executada, não a parcela individualizada. Não é lícito fracionar o crédito em RPV e precatório para a mesma parte.
 
 ---
 

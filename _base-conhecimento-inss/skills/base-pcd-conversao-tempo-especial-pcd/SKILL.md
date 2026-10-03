@@ -47,7 +47,7 @@ Regras de aplicação. §1º do art. 70-E, o grau PREPONDERANTE é aquele em que
 
 Caput. A redução da PCD NÃO acumula, no mesmo período contributivo, com a redução da atividade especial. Escolhe-se uma por período.
 
-§1º. É GARANTIDA a conversão do tempo cumprido em condições especiais (15, 20 ou 25 anos), inclusive da pessoa com deficiência, para os parâmetros da aposentadoria PCD do art. 70-B, se resultar mais favorável, pelas tabelas próprias do §1º.
+§1º. É GARANTIDA a conversão do tempo cumprido em condições especiais (15, 20 ou 25 anos), inclusive da pessoa com deficiência, para os parâmetros da aposentadoria PCD do art. 70-B, se resultar mais favorável, pelas tabelas próprias do §1º. Ressalva: a IN 128, art. 310, §1º, limita a conversão a períodos trabalhados até 13/11/2019; antecipar a limitação ou sustentar a tese contrária de forma expressa (auditoria 03/10/2026).
 
 MULHER (destino Para 15, Para 20, Para 24, Para 25, Para 28). De 15 anos, 1,00, 1,33, 1,60, 1,67, 1,87. De 20 anos, 0,75, 1,00, 1,20, 1,25, 1,40. De 24 anos, 0,63, 0,83, 1,00, 1,04, 1,17. De 25 anos, 0,60, 0,80, 0,96, 1,00, 1,12. De 28 anos, 0,54, 0,71, 0,86, 0,89, 1,00.
 

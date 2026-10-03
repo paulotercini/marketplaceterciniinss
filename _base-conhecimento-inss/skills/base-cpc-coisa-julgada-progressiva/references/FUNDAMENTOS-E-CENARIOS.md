@@ -80,7 +80,7 @@ Refutar com arts. 1.013 §1º CPC e IRDR 18.
 
 ### Cenário H — Cumprimento provisório
 
-Restrito contra Fazenda. Tema 28 STF.
+Restrito contra Fazenda. Tema 28 STF [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### Cenário I — JEF e dialeticidade
 
@@ -102,7 +102,7 @@ Quinto, garantir efeitos.
 
 Risco de devolução integral. Refutar.
 
-Risco de cumprimento provisório. Tema 28 STF.
+Risco de cumprimento provisório. Tema 28 STF [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Risco de dialeticidade rigorosa.
 

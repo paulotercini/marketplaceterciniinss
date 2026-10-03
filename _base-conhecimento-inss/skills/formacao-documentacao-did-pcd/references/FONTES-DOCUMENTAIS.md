@@ -56,7 +56,7 @@ Histórico completo de utilização do plano por CPF. Guias TISS de consultas, e
 
 ### Fundamento legal
 
-RN ANS 389/2015 (direito do beneficiário a informações). LGPD, art. 18, especialmente direito de portabilidade e acesso. Súmula 609/STJ (prazo prescricional de 10 anos para relações de consumo).
+RN ANS 389/2015 (direito do beneficiário a informações). LGPD, art. 18, especialmente direito de portabilidade e acesso. Lei 13.787/2018, art. 6º [NÃO CONFIRMADO] (guarda do prontuário por no mínimo 20 anos a partir do último registro) (auditoria 03/10/2026).
 
 ### Destinatário
 

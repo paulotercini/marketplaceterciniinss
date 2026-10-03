@@ -47,7 +47,7 @@ Contra decisão do INSS. Prazo de 30 dias. Art. 126 Lei 8.213.
 
 ### Recurso especial
 
-Contra acórdão da JR. Prazo 30 dias. Hipóteses restritas de divergência, contrariedade a norma vinculante, prejulgado, súmula ou enunciado.
+Contra qualquer acórdão da JR em recurso ordinário (art. 90 RICRPS), salvo matéria de alçada exclusiva (art. 89, §3º) e decisão de diligência (art. 90, §2º) (auditoria 03/10/2026). Prazo 30 dias.
 
 ### Reclamação ao Pleno
 
@@ -57,7 +57,7 @@ Hipótese excepcional contra decisão contrária a enunciado ou súmula do Pleno
 
 Primeiro, CRPS é via administrativa gratuita, célere e especializada.
 
-Segundo, efeito suspensivo em recurso ordinário permite manutenção do benefício em alguns casos.
+Segundo, o recurso ordinário não tem efeito suspensivo, como regra (art. 61 da Lei 9.784/99), mas o segurado pode pedi-lo quando houver justo receio de prejuízo de difícil ou incerta reparação (art. 61, parágrafo único) (auditoria 03/10/2026).
 
 Terceiro, enunciados e súmulas do CRPS podem favorecer o segurado em muitos temas.
 
@@ -94,8 +94,8 @@ Tamanho esperado.
 Fundamentação preferencial.
 - Constituição, leis, decretos, IN 128/2022, Portarias DIRBEN/INSS, Portaria MPS 125/2026 (RICRPS).
 - Pareceres CONJUR/AGU vinculantes (art. 108 RICRPS).
-- Enunciados, Resoluções e Súmulas do CRPS (art. 114 RICRPS).
-- Julgados judiciais SOMENTE quando vinculantes pelo art. 109 RICRPS (repercussão geral STF, repetitivo STJ, IRDR, IAC, súmula vinculante), em frase curta SEM transcrição de ementa.
+- Enunciados, Resoluções e Súmulas do CRPS (enunciados vinculam pelos arts. 109, §1º, e 124 RICRPS; resoluções não vinculam, art. 126, §2º) (auditoria 03/10/2026).
+- Julgados judiciais SOMENTE nas hipóteses do art. 109 RICRPS: obrigatórios o controle concentrado transitado e a súmula vinculante (§2º); facultativos a repercussão geral STF, o repetitivo STJ, o IRDR e o IAC (§§3º e 4º) (auditoria 03/10/2026), em frase curta SEM transcrição de ementa.
 
 ## MCPs da casa
 

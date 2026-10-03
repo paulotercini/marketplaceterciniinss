@@ -77,7 +77,7 @@ Ferramentas combinadas para nexo causal — tabela NTEP (Lista B/C, Anexo II, De
 
 ## 6. Período de Graça e CI — Tese Nova da TNU
 
-**Maior novidade jurisprudencial sobre B94 dos últimos anos.** A tese anterior (PUIL 5002615-35.2020.4.04.7207/SC, 29/04/2022) que negava B94 ao CI em período de graça foi expressamente superada.
+**Maior novidade jurisprudencial sobre B94 dos últimos anos.** A tese anterior (PUIL 5002615-35.2020.4.04.7207/SC, 29/04/2022, julgado regional da TRU da 4ª Região, não da TNU) que negava B94 ao CI em período de graça foi expressamente superada (auditoria 03/10/2026).
 
 > Para análise completa com fundamentos, requisitos cumulativos, situações práticas e divergência no STJ, ler o arquivo `references/PERIODO-GRACA-CI.md`.
 
@@ -109,7 +109,7 @@ O INSS erra sistematicamente o cálculo, aplicando 50% sobre a RMI do auxílio-d
 
 B94 reconhecido tardiamente (com atrasados prescritos) ainda impacta o cálculo da aposentadoria. A prescrição limita o pagamento de parcelas, não extingue o direito. O reconhecimento do período como devido sustenta a revisão da RMI da aposentadoria (art. 31 da Lei 8.213/91).
 
-**Cumulação vedada** — Súmula 507/STJ + Tema 555/STJ. B94 não acumula com aposentadoria (salvo fato gerador anterior à Lei 9.528/97, 11/11/1997).
+**Cumulação vedada** — Súmula 507/STJ + Tema 555/STJ. B94 não acumula com aposentadoria (salvo lesão incapacitante e aposentadoria ambas anteriores a 11/11/1997, marco da MP 1.596-14/1997, convertida na Lei 9.528/97) (auditoria 03/10/2026).
 
 ## 9. Qualidade de Segurado — Tema 350/TNU
 

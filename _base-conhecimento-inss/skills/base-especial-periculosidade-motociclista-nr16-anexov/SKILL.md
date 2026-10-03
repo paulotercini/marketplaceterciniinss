@@ -13,13 +13,13 @@ Acione SEMPRE que o caso envolver reconhecimento de tempo especial pela periculo
 
 A periculosidade do motociclista decorre do art. 193 §4º CLT, incluído pela Lei 12.997/2014. A NR-16 Anexo V regulamenta as atividades perigosas em motocicleta. A Portaria MTE 2.021/2025 atualiza a regulamentação, especificando hipóteses e excluindo algumas, com adoção de critérios técnicos rigorosos.
 
-A Lei 8.213/91 nos arts. 57 e 58 e o Decreto 3.048/99 admitem o tempo especial por periculosidade quando a categoria está reconhecida em norma regulamentadora vigente. O Tema 132 STJ admite a conversão de tempo especial por periculosidade fora do rol legal quando comprovada a exposição habitual e permanente a risco à integridade.
+A Lei 8.213/91 nos arts. 57 e 58 e o Decreto 3.048/99 admitem o tempo especial por periculosidade quando a categoria está reconhecida em norma regulamentadora vigente. Fora do rol do Anexo IV do Decreto 3.048/99, o pedido se ancora no art. 193, §4º, da CLT e na NR-16, Anexo V, com prova da exposição habitual e permanente ao risco (auditoria 03/10/2026, retirado o Tema 132 STJ, que trata de ISS bancário).
 
 ## 3. Eixos centrais pró-segurado
 
 A NR-16 Anexo V reconhece a atividade do motociclista como perigosa. A redação atualizada pela Portaria MTE 2.021/2025 mantém o reconhecimento de motoristas em motocicleta para deslocamentos profissionais, exceto em situações específicas como mensagens internas e deslocamento eventual.
 
-O argumento do INSS de que motociclista não consta do rol do Anexo IV do Decreto 3.048/99 não exclui o reconhecimento. O Tema 132 STJ admite a periculosidade fora do rol regulamentar.
+O argumento do INSS de que motociclista não consta do rol do Anexo IV do Decreto 3.048/99 não exclui o reconhecimento. O art. 193, §4º, da CLT e a NR-16, Anexo V, qualificam a atividade como perigosa (auditoria 03/10/2026).
 
 A habitualidade e permanência são presumidas em atividade profissional contínua, conforme Súmula 49 TNU e jurisprudência do TRF4.
 
@@ -27,7 +27,7 @@ A exposição ao risco da via pública é caracterizada pela exposição constan
 
 ## 4. Fragilidades adversárias mais comuns
 
-O INSS argumenta que motociclista não consta literalmente no Anexo IV do Decreto 3.048/99. Refute com Tema 132 STJ.
+O INSS argumenta que motociclista não consta literalmente no Anexo IV do Decreto 3.048/99. Refute com o art. 193, §4º, da CLT e a NR-16, Anexo V (auditoria 03/10/2026).
 
 O INSS exige LTCAT específico para periculosidade. Refute com PPP, NR-16 Anexo V e arts. 281 e 282 IN 128/2022.
 

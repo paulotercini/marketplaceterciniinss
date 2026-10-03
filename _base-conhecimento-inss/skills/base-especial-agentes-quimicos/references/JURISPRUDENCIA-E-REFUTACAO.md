@@ -4,11 +4,11 @@
 
 ### Tema 298 TNU
 
-Tese. A partir da vigência da Lei 9.032/95, o enquadramento especial por exposição a hidrocarbonetos exige demonstração de exposição habitual e permanente, admitindo-se a exposição por contato direto, respiratório ou por absorção cutânea.
+Tese adversa. A partir da vigência do Decreto 2.172/97, a indicação genérica de exposição a "hidrocarbonetos" ou "óleos e graxas", ainda que de origem mineral, não é suficiente para caracterizar a atividade como especial, sendo indispensável a especificação do agente nocivo (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Presunção de exposição habitual em postos de combustíveis, oficinas mecânicas, transportadoras, refinarias, laboratórios, indústrias químicas.
+Aplicação pró-segurado. Especificar o agente no PPP e no LTCAT, como benzeno, tolueno ou óleo mineral, e acionar `retificacao-ppp` ou pedir perícia quando a descrição vier genérica (auditoria 03/10/2026).
 
 ### Tema 157 TNU
 
@@ -20,15 +20,15 @@ Aplicação pró-segurado. A aparente desvantagem do Tema 157 se corrige quando 
 
 ### Tema 629 STJ
 
-Tese. Flexibilização probatória em casos de insuficiência de provas no processo previdenciário, autorizando-se prova complementar em juízo, com deveres de cooperação do INSS.
+Tese. A ausência de conteúdo probatório eficaz a instruir a inicial implica a carência de pressuposto de constituição e desenvolvimento válido do processo, impondo sua extinção sem o julgamento do mérito (art. 267, IV, do CPC/73) e a consequente possibilidade de o autor intentar novamente a ação (art. 268 do CPC/73) (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Invocar como fundamento para perícia por similaridade, juntada tardia de documentos e colheita de prova oral complementar.
+Aplicação pró-segurado. Diante de prova insuficiente, pedir a extinção sem resolução do mérito em vez da improcedência, o que preserva nova ação com o PPP ou o LTCAT obtido depois (auditoria 03/10/2026).
 
 ### Tema 1090 STJ
 
-Tese. O EPI não neutraliza a nocividade para agentes cancerígenos da LINACH e agentes biológicos, podendo a jurisprudência firmar outras hipóteses.
+Tese. A informação de EPI no PPP descaracteriza, em princípio, o tempo especial, ressalvadas hipóteses excepcionais que a tese não enumera. Os EDcl no REsp 2.116.343/RJ reconheceram como uma delas a exposição a agentes cancerígenos. O item II põe no autor o ônus de provar a ineficácia, tese adversa que o segurado enfrenta pela impugnação específica do PPP, e o item III faz a dúvida favorecê-lo (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -36,21 +36,21 @@ Aplicação pró-segurado. Combina-se com lista LINACH atualizada, afastando qua
 
 ### Tema 211 TNU
 
-Tese. A habitualidade não exige permanência contínua, bastando exposição não eventual integrada ao curso normal da jornada.
+Tese. "Para aplicação do art. 57, §3º, da Lei 8.213/91 a agentes biológicos, exige-se a probabilidade da exposição ocupacional, avaliando-se o seu caráter indissociável da produção do bem ou da prestação do serviço." A tese vale só para agentes biológicos (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Afasta a tese do INSS de que exposição intermitente descaracteriza especialidade.
+Aplicação pró-segurado. Em agentes biológicos, afasta a exigência de exposição contínua. Em agentes químicos, a exposição inerente à função se sustenta no art. 65 do Decreto 3.048/99 (auditoria 03/10/2026).
 
 ### PEDILEF 0136882-97.2017.4.02.5167/RJ
 
-Tese complementar ao Tema 298 TNU, com hipóteses de presunção de exposição habitual em funções envolvendo graxa, óleo e contato manual.
+Caso de frentista exposto a benzeno, decidido com base no Tema 170/TNU e na Questão de Ordem 20 da TNU, sem relação com o Tema 298 TNU [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
 ### PEDILEF 5001032-41.2022.4.04.7014/PR
 
-Tese complementar sobre agentes químicos em ambientes múltiplos, reconhecendo presunção de exposição por função.
+Caso de exposição a fenol, em que o pedido de uniformização do INSS não foi conhecido e se registrou que o EPI é irrelevante para períodos até 02/12/1998 [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -66,7 +66,7 @@ Refutação. Para agentes do Anexo 13 da NR-15 e da LINACH, a avaliação é qua
 
 Argumento adversário. A exposição não se deu em todos os momentos da jornada, logo falta habitualidade.
 
-Refutação. Tema 211 TNU é expresso. A habitualidade não exige permanência ininterrupta. A exposição inerente à função, ainda que intermitente, basta para configurar especialidade.
+Refutação. O art. 65 do Decreto 3.048/99 define o trabalho permanente pela exposição indissociável da produção do bem ou da prestação do serviço, e a exposição inerente à função atende a esse critério. O Tema 211 TNU vale só para agentes biológicos (auditoria 03/10/2026).
 
 ### Argumento 3 — Frentista pós Lei 9.032/95
 
@@ -96,7 +96,7 @@ Refutação. Para agentes cancerígenos LINACH, não há limite seguro. O reconh
 
 Argumento adversário. O PPP é vago, logo não permite reconhecimento.
 
-Refutação. Acionar `retificacao-ppp` para detalhamento pela empresa. Em juízo, o Tema 629 STJ autoriza flexibilização probatória. Pedir perícia por similaridade ou juntada do LTCAT integral. A regra de cooperação impõe ao INSS colaborar com a instrução.
+Refutação. Acionar `retificacao-ppp` para detalhamento pela empresa. Em juízo, se a prova continuar insuficiente, o Tema 629 STJ leva à extinção sem resolução do mérito, e não à improcedência (auditoria 03/10/2026). Pedir perícia por similaridade ou juntada do LTCAT integral. A regra de cooperação impõe ao INSS colaborar com a instrução.
 
 ### Argumento 8 — Ausência do LTCAT de origem
 
@@ -112,7 +112,7 @@ Segundo, aplicar a tese qualitativa direta para Anexo 13 e LINACH. Aplicar a tes
 
 Terceiro, invocar Tema 1090 STJ e `base-especial-epi` quando houver carimbo de EPI eficaz.
 
-Quarto, invocar Tema 211 TNU para afastar exigência de exposição contínua.
+Quarto, sustentar a habitualidade pela exposição indissociável da função, nos termos do art. 65 do Decreto 3.048/99, e reservar o Tema 211 TNU aos agentes biológicos (auditoria 03/10/2026).
 
 Quinto, invocar Tema 629 STJ quando houver insuficiência probatória documental.
 

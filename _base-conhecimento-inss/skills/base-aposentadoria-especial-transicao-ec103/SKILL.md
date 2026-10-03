@@ -26,7 +26,7 @@ EC 103/2019, art. 19, §1º, I. Regra permanente da aposentadoria especial. Idad
 
 EC 103/2019, art. 25, §2º. Permite a conversão do tempo especial em comum para períodos cumpridos até 13 de novembro de 2019.
 
-Lei 8.213/91, art. 57. Disciplina a aposentadoria especial. Art. 57, §8º, veda o retorno à atividade especial após a concessão, com controvérsia na jurisprudência.
+Lei 8.213/91, art. 57. Disciplina a aposentadoria especial. Art. 57, §8º, veda o retorno à atividade especial após a concessão, vedação que o STF declarou constitucional no Tema 709. É tese adversa, e o caminho do segurado é o item II, que fixa a DIB na DER e só cessa o pagamento se ele permanecer ou retornar ao labor nocivo após a implantação (auditoria 03/10/2026).
 
 Decreto 3.048/99, art. 64 e seguintes. Regulamenta a aposentadoria especial.
 
@@ -46,9 +46,9 @@ Primeiro, segurado com 25 anos de atividade especial completos em 13 de novembro
 
 Segundo, segurado com 20 anos de atividade especial em 13 de novembro de 2019 e continuidade da exposição. Avaliar a transição por pontos (art. 21) conforme anos adicionais. Por exemplo, atingindo 25 anos de exposição e 86 pontos, elegível pela transição.
 
-Terceiro, metalúrgico com 15 anos de atividade especial em 13 de novembro de 2019, continua exposto. Aos 18 anos de exposição, pode converter os 18 anos em comum (art. 25 §2º EC 103) e agregar a tempo comum para outras regras.
+Terceiro, metalúrgico com 15 anos de atividade especial em 13 de novembro de 2019, continua exposto. Aos 18 anos de exposição, só pode converter em comum os 15 anos cumpridos até 13/11/2019 (art. 25 §2º EC 103); os 3 anos posteriores entram sem conversão e se agregam ao tempo comum para outras regras (auditoria 03/10/2026).
 
-Quarto, trabalhador exposto a cancerígenos (LINACH). Aplica-se o art. 64 do Decreto 3.048/99 com especialidade qualitativa. Tema 1090 STJ afasta neutralização por EPI para cancerígenos. Acionar `base-especial-epi` e `base-especial-agentes-quimicos`.
+Quarto, trabalhador exposto a cancerígenos (LINACH). Aplica-se o art. 64 do Decreto 3.048/99 com especialidade qualitativa. O STJ, nos EDcl no REsp 2.116.343/RJ do Tema 1090, reconheceu os cancerígenos como hipótese excepcional em que o EPI não afasta a contagem especial (auditoria 03/10/2026). Acionar `base-especial-epi` e `base-especial-agentes-quimicos`.
 
 Quinto, enfermeiro exposto a agentes biológicos. Tema 211 TNU e Tema 205 TNU. Acionar `base-especial-agentes-biologicos`.
 
@@ -90,9 +90,9 @@ Ao defender prova, acione `defesa-probatoria-especial`.
 
 ## Alertas
 
-Primeiro, a RMI da aposentadoria especial pós-reforma segue a regra do art. 26 EC 103 (60% + 2% por ano excedente ao tempo mínimo). Sem a regra integral do pedágio 100%. O impacto na renda pode ser significativo.
+Primeiro, a RMI da aposentadoria especial pós-reforma segue o art. 26, §2º, IV, e §5º, da EC 103: 60% mais 2% por ano que exceder 20 anos de contribuição, para o homem nas especiais de 20 e 25 anos, ou 15 anos, para a mulher e na especial de 15 anos (auditoria 03/10/2026). Sem a regra integral do pedágio 100%. O impacto na renda pode ser significativo.
 
-Segundo, o art. 57 §8º da Lei 8.213/91 veda o retorno à atividade especial após concessão de aposentadoria especial. A ADI 1721 e julgados posteriores têm controvérsia sobre extensão dessa vedação. Acionar `precedentes-previdenciarios`.
+Segundo, o art. 57 §8º da Lei 8.213/91 veda o retorno à atividade especial após concessão de aposentadoria especial. O STF declarou a vedação constitucional no Tema 709 (RE 791.961), tese adversa cujo item II fixa a DIB na DER e só cessa o pagamento se o segurado permanecer ou retornar ao labor nocivo após a implantação (auditoria 03/10/2026, retirada a ADI 1721, que trata do art. 453 da CLT). Acionar `precedentes-previdenciarios`.
 
 Terceiro, em caso de conversão de tempo especial em comum para períodos pré-reforma, aplicar os fatores tradicionais (1,40 para homem e 1,20 para mulher para risco baixo, com variações). A conversão só é vedada para tempo pós-reforma.
 

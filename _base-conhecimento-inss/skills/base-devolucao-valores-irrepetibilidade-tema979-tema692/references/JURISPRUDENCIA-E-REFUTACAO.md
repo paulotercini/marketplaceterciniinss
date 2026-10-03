@@ -6,17 +6,17 @@
 
 Irrepetibilidade em erro administrativo. Fonte oficial em https://www.stj.jus.br
 
-### Tema 1.034/STJ
+### Tema 692/STJ (REsp 1.401.560/MT) (auditoria 03/10/2026)
 
-Reforma de tutela antecipada e boa-fé. Fonte oficial em https://www.stj.jus.br
+Reforma de tutela antecipada. Tese adversa: obriga a devolução, por desconto de até 30% do benefício em manutenção. O caminho do segurado é a distinção, quando o valor cobrado não decorreu da tutela revogada. Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 34/AGU
 
 Boa-fé na percepção de valores. Fonte oficial em https://www.gov.br/agu
 
-### Súmula Vinculante 35 STF
+### CF, art. 5º, LV (auditoria 03/10/2026)
 
-Contraditório administrativo. Fonte oficial em https://portal.stf.jus.br
+Contraditório administrativo. Fonte oficial em https://www.planalto.gov.br
 
 ### Lei 8.213/91, art. 115
 
@@ -36,7 +36,7 @@ Mora administrativa. Fonte oficial em https://portal.stf.jus.br
 
 Argumento adversário. Tutela revogada exige restituição.
 
-Refutação. Tema 1.034/STJ exige análise da boa-fé objetiva.
+Refutação. Tese adversa: o Tema 692/STJ ampara a cobrança e obriga a devolução, com desconto de até 30% do benefício. O caminho do segurado é a distinção, quando o valor cobrado não decorreu da tutela revogada, e o teto de 30% (auditoria 03/10/2026).
 
 ### Argumento 2 — Erro administrativo permite cobrança
 
@@ -60,7 +60,7 @@ Refutação. Presunção juris tantum de boa-fé. Súmula 34/AGU.
 
 Argumento adversário. Desconto direto.
 
-Refutação. Súmula Vinculante 35 STF exige contraditório.
+Refutação. O art. 5º, LV, da Constituição exige contraditório (auditoria 03/10/2026).
 
 ### Argumento 6 — Natureza não alimentar
 
@@ -90,13 +90,13 @@ Refutação. Análise individualizada.
 
 Argumento adversário. Devolução automática.
 
-Refutação. Tema 1.034/STJ aplicável.
+Refutação. Tese adversa: o Tema 692/STJ também alcança a tutela revogada em segundo grau. O segurado exige o teto de 30% no desconto e a prova da origem de cada parcela cobrada (auditoria 03/10/2026).
 
 ## 3. Cláusulas doutrinárias de apoio
 
 Sebastião Geraldo de Oliveira sustenta a irrepetibilidade.
 
-Frederico Amado defende a aplicação ampla do Tema 1.034/STJ.
+Corrente doutrinária defende a leitura ampla da boa-fé objetiva do segurado (auditoria 03/10/2026).
 
 Hugo Goes admite limite de desconto.
 
@@ -120,4 +120,4 @@ Sexto, conferência da boa-fé.
 
 ## 5. Diligência de atualização
 
-Acompanhar STJ. Revalidar Súmula 34/AGU. Monitorar Tema 1.034.
+Acompanhar STJ. Revalidar Súmula 34/AGU. Monitorar o Tema 692/STJ, tese adversa (auditoria 03/10/2026).

@@ -2,9 +2,9 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 132 STJ
 
-Reconhece a periculosidade fora do rol regulamentar quando comprovada a exposição a risco à integridade. Fonte oficial em https://www.stj.jus.br
+
+O Tema 132 STJ, antes listado aqui, trata de ISS bancário e foi retirado (auditoria 03/10/2026).
 
 ### Súmula 198 TFR
 
@@ -40,7 +40,7 @@ Mototaxistas. Fonte oficial em https://www.planalto.gov.br
 
 Argumento adversário. Sem rol, sem reconhecimento.
 
-Refutação. O Tema 132 STJ admite reconhecimento fora do rol regulamentar. A NR-16 Anexo V supre.
+Refutação. O art. 193, §4º, da CLT qualifica a atividade como perigosa, fora do rol regulamentar previdenciário (auditoria 03/10/2026). A NR-16 Anexo V supre.
 
 ### Argumento 2 — Lei 12.997/2014 não retroage
 
@@ -82,7 +82,7 @@ Refutação. A Lei 8.213/91 admite contribuinte individual com tempo especial. P
 
 Argumento adversário. Norma de outra esfera.
 
-Refutação. A NR-16 é norma técnica integradora. Tema 132 STJ vincula.
+Refutação. A NR-16 é norma técnica integradora. O caput do art. 193 da CLT remete a essa regulamentação (auditoria 03/10/2026).
 
 ### Argumento 9 — Portaria MTE 2.021/2025 restringiu
 
@@ -100,7 +100,7 @@ Refutação. Para fins previdenciários, podem coexistir critérios distintos. T
 
 Sebastião Geraldo de Oliveira reconhece o motociclista como profissional em risco extremo.
 
-Frederico Amado destaca a aplicação do Tema 132 STJ aos motociclistas.
+
 
 Hugo Goes admite a conversão por periculosidade na NR-16 Anexo V.
 
@@ -112,7 +112,7 @@ IBDP defende reconhecimento integral desde o Decreto 53.831/64.
 
 Primeiro, perícia direta ou indireta para comprovar exposição.
 
-Segundo, fundamentação NR-16 Anexo V e Tema 132 STJ.
+Segundo, fundamentação NR-16 Anexo V e art. 193, §4º, da CLT (auditoria 03/10/2026).
 
 Terceiro, conversão de tempo especial.
 
@@ -124,4 +124,4 @@ Sexto, monitoramento de Portarias futuras.
 
 ## 5. Diligência de atualização
 
-Acompanhar Portaria MTE futura. Revalidar Tema 132 STJ. Monitorar TNU sobre periculosidade do motociclista.
+Acompanhar Portaria MTE futura. Monitorar TNU sobre periculosidade do motociclista (auditoria 03/10/2026).

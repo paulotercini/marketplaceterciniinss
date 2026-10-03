@@ -32,9 +32,9 @@ IN 128/2022. Regras operacionais.
 
 Base constitucional direta (auditoria 25/07/2026, retirado o Tema 176/STF, que trata de ICMS).
 
-### Súmula 24 AGU
+### Art. 94 da Lei 8.213/91
 
-Cômputo de tempo em regimes distintos.
+Cômputo recíproco do tempo de contribuição em regimes distintos, com compensação financeira (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
 
 ### Tema 609 STJ
 
@@ -42,7 +42,7 @@ Indenização de contribuições em tempo rural para contagem recíproca.
 
 ### Alerta corretivo Onda 66
 
-O Enunciado 6 do CRPS, conforme redação oficial publicada no DOU de 12/11/2019 e verificada no Comet, NÃO trata de CTC. Ele trata do salário-maternidade à gestante demitida sem justa causa no curso da gravidez. Não existe Enunciado do CRPS entre os Enunciados 1 a 19 vigentes que trate especificamente de CTC e efeitos. A fundamentação normativa da CTC e da contagem recíproca deve remontar ao art. 96 da Lei 8.213/91, art. 130 da IN 128/2022, Livro IX da Portaria DIRBEN/INSS 998/2022, Tema 176 STF e Tema 609 STJ.
+O Enunciado 6 do CRPS, conforme redação oficial publicada no DOU de 12/11/2019 e verificada no Comet, NÃO trata de CTC. Ele trata do salário-maternidade à gestante demitida sem justa causa no curso da gravidez. Não existe Enunciado do CRPS entre os Enunciados 1 a 19 vigentes que trate especificamente de CTC e efeitos. A fundamentação normativa da CTC e da contagem recíproca deve remontar ao art. 96 da Lei 8.213/91, art. 130 da IN 128/2022, Livro IX da Portaria DIRBEN/INSS 998/2022 e Tema 609 STJ (auditoria 03/10/2026, retirado o Tema 176 STF, que trata de ICMS).
 
 ## 5. Cenários pró-segurado
 
