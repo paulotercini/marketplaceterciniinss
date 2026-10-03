@@ -72,7 +72,7 @@ Tese. Doença preexistente agravada pela atividade reconhece nexo acidentário, 
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Reforço para conversão de B91 em B91 acidentária com RMI integral.
+Aplicação pró-segurado. Reforço para conversão de B32 em B92 acidentária com RMI integral.
 
 ## 2. Refutação aos argumentos típicos do INSS
 

@@ -104,9 +104,9 @@ Refutação. Direito ao acompanhante em casos de vulnerabilidade (deficiência, 
 
 ### Argumento 8 — Reavaliação pode ser documental
 
-Argumento adversário. A reavaliação do B91 pode ser feita por análise documental.
+Argumento adversário. A reavaliação do B32 pode ser feita por análise documental.
 
-Refutação. Cessação de B91 em reavaliação exige exame específico com base técnica. Art. 47 da Lei 8.213/91 exige gradualidade. Reavaliações superficiais são impugnáveis.
+Refutação. Cessação de B32 em reavaliação exige exame específico com base técnica. Art. 47 da Lei 8.213/91 exige gradualidade. Reavaliações superficiais são impugnáveis.
 
 ## 3. Estratégia integrada
 

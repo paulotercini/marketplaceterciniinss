@@ -17,7 +17,7 @@ O limbo é a zona em que o INSS diz que o segurado pode trabalhar e o empregador
 
 A TNU decidiu que, nessa situação, o art. 15, II, da Lei 8.213/91 não incide, porque o segurado não deixou de exercer atividade remunerada abrangida pela Previdência Social por vontade própria. A qualidade de segurado se mantém enquanto durar o vínculo, e o período de graça só começa a correr da rescisão contratual.
 
-O ganho prático é grande. Um segurado que ficou seis anos em limbo permanece segurado no sexto ano, o que sustenta B31, B91, B94 e pensão por morte que o INSS indeferiria por perda da qualidade.
+O ganho prático é grande. Um segurado que ficou seis anos em limbo permanece segurado no sexto ano, o que sustenta B31, B32, B94 e pensão por morte que o INSS indeferiria por perda da qualidade.
 
 ## 3. Marco jurisprudencial
 
@@ -95,7 +95,7 @@ Para RAIS, CNIS e o alerta anti-RAC, acionar `base-cnis-acerto-indicadores`.
 Para o ônus da prova da comunicação, acionar `base-cpc-onus-prova-art373`.
 Para as teses literais e o status, acionar `base-precedentes-catalogo-vinculantes`.
 Para o checklist documental, acionar `base-documentos-comprobatorios-in128`.
-Para os benefícios de destino, acionar `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`, `base-auxilio-acidente-b94-pos-reforma` e `pensao-por-morte`.
+Para os benefícios de destino, acionar `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `base-auxilio-acidente-b94-pos-reforma` e `pensao-por-morte`.
 Para o nexo e a estabilidade do art. 118, acionar `ntep-nexo-acidentario`.
 
 ## MCPs da casa

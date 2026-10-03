@@ -134,7 +134,7 @@ XLVII. **Valor da causa não justificado ou ausência de planilha de cálculos.*
 XLVIII. Valor superior ao limite de alçada do JEF (sem renúncia).
 XLIX. **Não formulado pedido de justiça gratuita apesar de juntada declaração de hipossuficiência.**
 L. Ausência ou irregularidade da declaração de hipossuficiência.
-LI. **Em B31/B91/B94, ausência dos itens do art. 129-A da Lei 8.213/91.**
+LI. **Em B31/B32/B94, ausência dos itens do art. 129-A da Lei 8.213/91.**
 LII. Existência de documentos em língua estrangeira sem tradução juramentada.
 
 §3º. No caso de alteração da classe processual OU do número de registro da parte na Receita Federal, deve ser realizada NOVA verificação de prevenção.
@@ -154,7 +154,7 @@ Antes de protocolar QUALQUER inicial JEF TRF3, conferir.
 - [ ] PA INTEGRAL juntado.
 - [ ] Indeferimento administrativo juntado.
 - [ ] Comprovante de prévio requerimento.
-- [ ] Para B31/B91/B94. Documentos do art. 129-A Lei 8.213/91.
+- [ ] Para B31/B32/B94. Documentos do art. 129-A Lei 8.213/91.
 - [ ] Para BPC. CadÚnico atualizado.
 - [ ] Relatório médico com CID e CRM se incapacidade/PCD.
 - [ ] Valor da causa calculado com planilha.
@@ -209,7 +209,7 @@ Aplicação típica. Reconhecimento de tempo rural, união estável, segurada es
 
 ### Seção II - Pauta Incapacidade (Fluxo Especial dos Benefícios por Incapacidade)
 
-Fluxo específico para B31, B91 e B94. CRÍTICO para a advocacia previdenciária pró-segurado.
+Fluxo específico para B31, B32 e B94. CRÍTICO para a advocacia previdenciária pró-segurado.
 
 **Funcionamento. Perícia ANTES da citação do INSS** (art. 129-A §3º Lei 8.213/91).
 
@@ -227,7 +227,7 @@ Fluxo específico para B31, B91 e B94. CRÍTICO para a advocacia previdenciária
 - Tempo médio menor de tramitação.
 - Tutela de urgência mais facilmente analisada após perícia.
 
-**Estratégia.** Em B31/B91/B94 com laudo médico particular robusto, a chance de proposta de acordo da PFE-INSS é significativa. Maximizar pelo aproveitamento desta fase.
+**Estratégia.** Em B31/B32/B94 com laudo médico particular robusto, a chance de proposta de acordo da PFE-INSS é significativa. Maximizar pelo aproveitamento desta fase.
 
 ## REGRAS PROCESSUAIS COMPLEMENTARES
 
@@ -238,7 +238,7 @@ O processo pode ser sobrestado por afetação a tema repetitivo do STJ (Tema 114
 ### Perícias (Capítulo XVI)
 
 Designação. Honorários periciais pagos pelo TRF3.
-Perícia médica. Para B31/B91/B94 e BPC.
+Perícia médica. Para B31/B32/B94 e BPC.
 Perícia social. Para BPC.
 Perícia técnica. Para aposentadoria especial (PPP, LTCAT).
 
@@ -254,7 +254,7 @@ Possibilidade de audiência telepresencial (Seção XI). Acionar `orientacao-cli
 - **Seção V. Execução invertida** (devedor implanta benefício e apura atrasados).
 - Seção VIII. Expedição de RPV/Precatório.
 
-Estratégia. Em sentenças de B91/aposentadoria, a execução invertida é favorável porque o INSS deve implantar o benefício e apurar atrasados. Acompanhar.
+Estratégia. Em sentenças de B32/aposentadoria, a execução invertida é favorável porque o INSS deve implantar o benefício e apurar atrasados. Acompanhar.
 
 ## CHECKLIST POR TIPO DE AÇÃO PRÓ-SEGURADO
 
@@ -267,7 +267,7 @@ Estratégia. Em sentenças de B91/aposentadoria, a execução invertida é favor
 - [ ] PPP se houver tempo especial.
 - [ ] Renúncia ao excedente do teto se aplicável.
 
-### Concessão de B31/B91/B94
+### Concessão de B31/B32/B94
 
 - [ ] PA com indeferimento.
 - [ ] Documentos do art. 129-A Lei 8.213/91 (relatórios médicos, exames, atestados).

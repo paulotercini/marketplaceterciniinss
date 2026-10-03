@@ -50,11 +50,11 @@ Argumento adversário. Reclusão extingue a reabilitação.
 
 Refutação. Os arts. 14 e 29 §2º A e B das Portarias garantem suspensão de 60 dias. O cancelamento imediato é nulo.
 
-### Argumento 4 — Não necessita de RP afasta B91
+### Argumento 4 — Não necessita de RP afasta B32
 
 Argumento adversário. Conclusão de não necessidade afasta conversão em aposentadoria.
 
-Refutação. A conclusão exige fundamentação multidisciplinar do art. 89 da Lei 8.213/91. Em ato exclusivamente médico, há nulidade. Sem reabilitação, deve haver conversão em B91 (art. 62 §2º Lei 8.213/91).
+Refutação. A conclusão exige fundamentação multidisciplinar do art. 89 da Lei 8.213/91. Em ato exclusivamente médico, há nulidade. Sem reabilitação, deve haver conversão em B32 (art. 62 §2º Lei 8.213/91).
 
 ### Argumento 5 — Cessação antes do PRP concluído
 
@@ -76,7 +76,7 @@ Refutação. A Portaria 1.333/2026 admite reagendamento excepcional em até 30 d
 
 ### Argumento 8 — Exigência de novo DER
 
-Argumento adversário. Conversão de B31 em B91 demanda novo requerimento.
+Argumento adversário. Conversão de B31 em B32 demanda novo requerimento.
 
 Refutação. O Tema 1124 STJ vedou a exigência de prévio requerimento administrativo quando o INSS já analisou a incapacidade. Conversão é dever de cooperação.
 
@@ -102,7 +102,7 @@ Hugo Goes aponta que o INSS não pode confundir alta médica com habilitação a
 
 Marco Aurélio Serau Junior critica o uso da "não necessita de RP" como expediente para cessação.
 
-IBDP defende a conversão automática de B31 em B91 quando esgotadas as possibilidades de reabilitação.
+IBDP defende a conversão automática de B31 em B32 quando esgotadas as possibilidades de reabilitação.
 
 ## 4. Estratégia integrada
 
@@ -112,7 +112,7 @@ Segundo, mandado de segurança contra encerramento abusivo, com pedido de limina
 
 Terceiro, recurso ao CRPS contra cessação prematura.
 
-Quarto, ação ordinária para conversão de B31 em B91.
+Quarto, ação ordinária para conversão de B31 em B32.
 
 Quinto, dialeticidade nas razões finais com vinculação aos arts. 62 e 89 da Lei 8.213/91.
 

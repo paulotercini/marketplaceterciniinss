@@ -70,7 +70,7 @@ A revisão prévia da inicial pelo escritório DEVE varrer cada item desta lista
 
 ### XXX. Espécie do benefício
 
-- [ ] Espécie identificada com CLAREZA (B31, B91, B41, B42, B25, B80, B87, B88 etc).
+- [ ] Espécie identificada com CLAREZA (B31, B32, B41, B42, B25, B80, B87, B88 etc).
 
 ### XXXI-XXXIV. Requerimento Administrativo (Tema 1124/STJ aplicável)
 
@@ -140,7 +140,7 @@ A revisão prévia da inicial pelo escritório DEVE varrer cada item desta lista
 
 ## BLOCO E - DOCUMENTAÇÃO ESPECIAL (Itens LI-LII)
 
-### LI. Benefícios por Incapacidade (B31/B91/B94)
+### LI. Benefícios por Incapacidade (B31/B32/B94)
 
 Itens do art. 129-A da Lei 8.213/91.
 
@@ -176,7 +176,7 @@ Conferir XLVI a L. Atenção ao XLIX (pedido EXPRESSO de gratuidade), que muitos
 
 ### Passo 5 - Bloco E (Especial)
 
-Conferir LI (B31/B91/B94) e LII (idiomas estrangeiros).
+Conferir LI (B31/B32/B94) e LII (idiomas estrangeiros).
 
 ### Passo 6 - Validação final
 

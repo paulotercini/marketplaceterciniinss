@@ -80,7 +80,7 @@ Distinguishing.
 - art. 203 V CF não exige.
 - art. 20 LOAS não exige.
 
-## BLOCO C - INCAPACIDADE (B31 B91)
+## BLOCO C - INCAPACIDADE (B31 B32)
 
 ### Súmula 11 - PRÓ
 
@@ -88,7 +88,7 @@ Tema. Qualidade de segurado na DII.
 
 Aplicação. Verificação no INÍCIO DA INCAPACIDADE, não na DER.
 
-Combinar com. art. 13 Lei 8.213/91, `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`.
+Combinar com. art. 13 Lei 8.213/91, `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`.
 
 ## BLOCO D - PENSÃO POR MORTE
 
@@ -223,7 +223,7 @@ Aplicação. Ações de correção do PIS-PASEP.
 | 8 | Idade sem qualidade segurado | PRÓ | Apos. idade |
 | 9 | Tempus regit actum especial | PRÓ | Especial |
 | 10 | Precatório JEF acima 60 SM | NEUTRA | Execução |
-| 11 | Qualidade segurado na DII | PRÓ | B31 B91 |
+| 11 | Qualidade segurado na DII | PRÓ | B31 B32 |
 | 12 | Contribuição 13º | NEUTRA | Base SC |
 | 13 | Requisitos não simultâneos | PRÓ | Apos. idade |
 | 14 | Idoso 65+ um SM excluído | PRÓ | BPC sempre |
@@ -248,7 +248,7 @@ Súmula 23 CONTRA com distinguishing OBRIGATÓRIO.
 
 Súmulas 8, 13, 19 PRÓ.
 
-### Incapacidade B31 B91
+### Incapacidade B31 B32
 
 Súmula 11 PRÓ.
 

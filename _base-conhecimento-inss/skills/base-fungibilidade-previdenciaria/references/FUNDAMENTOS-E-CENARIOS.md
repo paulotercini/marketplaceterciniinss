@@ -58,19 +58,19 @@ Aplicação. Mesmo quando a fungibilidade ampliaria a proteção, o juiz deve oi
 
 ## 3. Cenários típicos por espécie de benefício
 
-### 3.1. Cenário 1. Pedido B91 com perícia de B31
+### 3.1. Cenário 1. Pedido B32 com perícia de B31
 
-Segurado pleiteia aposentadoria por invalidez (B91). Perícia constata incapacidade temporária.
+Segurado pleiteia aposentadoria por invalidez (B32). Perícia constata incapacidade temporária.
 
 Fungibilidade ampliativa. Cabível conceder auxílio-doença (B31). REsp 824.075/PR e jurisprudência consolidada da TNU.
 
 Aplicar Súmula 47/TNU. Análise das condições pessoais e sociais do segurado pode reverter a constatação pericial em invalidez total.
 
-### 3.2. Cenário 2. Pedido B91 com perícia de B94
+### 3.2. Cenário 2. Pedido B32 com perícia de B94
 
-Segurado pleiteia B91. Perícia constata incapacidade parcial e permanente.
+Segurado pleiteia B32. Perícia constata incapacidade parcial e permanente.
 
-Fungibilidade ampliativa controversa. B94 é indenizatório, frequentemente menor que o B91.
+Fungibilidade ampliativa controversa. B94 é indenizatório, frequentemente menor que o B32.
 
 Atenção. Se o segurado já está em B31, conversão para B94 caracteriza redução de amparo. VEDADA pelo REsp 2.246.096/MG.
 
@@ -134,11 +134,11 @@ Fungibilidade depende da qualificação na DER. Efeitos financeiros adequados ao
 
 ## 4. Quando a fungibilidade é vedada
 
-### 4.1. Conversão B91 → B31 quando reduz renda
+### 4.1. Conversão B32 → B31 quando reduz renda
 
 REsp 2.246.096/MG vetou conversão de auxílio-doença em auxílio-acidente sem postulação.
 
-Por extensão, B91 → B31 quando reduz a renda também é vedada se o segurado não postulou.
+Por extensão, B32 → B31 quando reduz a renda também é vedada se o segurado não postulou.
 
 ### 4.2. Conversão para BPC quando o segurado tem benefício previdenciário
 
@@ -166,11 +166,11 @@ Conversão de DIB para data posterior à pleiteada, sem fundamentação adequada
 
 | Cenário | Permitida? | Base |
 |---|---|---|
-| B91 → B31 quando ampliativo | Sim | Jurisprudência TNU |
-| B91 → B94 quando ampliativo | Sim, com cuidado | Tema 416/STJ |
+| B32 → B31 quando ampliativo | Sim | Jurisprudência TNU |
+| B32 → B94 quando ampliativo | Sim, com cuidado | Tema 416/STJ |
 | Aposentadoria comum → especial | Depende admin. | Tema 350/STF |
 | Aposentadoria por idade rural ↔ híbrida | Sim | Tema 1007/STJ |
-| BPC ↔ B31/B91 (ampliativo) | Sim | Tema 217/TNU |
+| BPC ↔ B31/B32 (ampliativo) | Sim | Tema 217/TNU |
 | Aposentadoria comum → PCD | Sim, com admin. | LC 142/2013 |
 | Pensão por morte (dependência) | Sim | Jurisprudência |
 | Salário-maternidade urbana ↔ rural | Sim | Jurisprudência |
@@ -179,7 +179,7 @@ Conversão de DIB para data posterior à pleiteada, sem fundamentação adequada
 
 | Cenário | Vedada? | Base |
 |---|---|---|
-| B91 → B31 quando reduz amparo | Sim | REsp 2.246.096/MG |
+| B32 → B31 quando reduz amparo | Sim | REsp 2.246.096/MG |
 | B91 → B94 sem postulação | Sim | REsp 2.246.096/MG |
 | Aposentadoria → BPC | Sim, em geral | REsp 2.246.096/MG |
 | Pensão com rateio diminuído | Sim, impugnar | Princípio congruência |
@@ -190,7 +190,7 @@ Conversão de DIB para data posterior à pleiteada, sem fundamentação adequada
 
 ### 6.1. Modelo benefícios por incapacidade
 
-"a) concessão de aposentadoria por incapacidade permanente (B91), com DIB na DER de [data], na forma do art. 42 da Lei 8.213/91 e Súmula 47/TNU; e, sucessivamente.
+"a) concessão de aposentadoria por incapacidade permanente (B32), com DIB na DER de [data], na forma do art. 42 da Lei 8.213/91 e Súmula 47/TNU; e, sucessivamente.
 
 b) na hipótese de não acolhimento, concessão de auxílio por incapacidade temporária (B31), com DIB na DER, na forma do art. 59 da Lei 8.213/91; e, sucessivamente.
 
@@ -216,7 +216,7 @@ b) na hipótese de não acolhimento, concessão de aposentadoria por idade híbr
 
 ### 6.4. Modelo BPC e benefícios por incapacidade
 
-"a) concessão de auxílio por incapacidade temporária (B31) ou aposentadoria por incapacidade permanente (B91), conforme prova pericial;
+"a) concessão de auxílio por incapacidade temporária (B31) ou aposentadoria por incapacidade permanente (B32), conforme prova pericial;
 
 b) na ausência de qualidade de segurado, concessão de benefício assistencial (BPC), conforme Tema 217/TNU, observada a oitiva prévia do autor caso o juízo cogite tal conversão".
 

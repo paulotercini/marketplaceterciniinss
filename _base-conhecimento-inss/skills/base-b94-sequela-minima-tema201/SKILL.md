@@ -21,7 +21,7 @@ Antes de qualquer tese de B94, verificar a categoria do segurado na data do acid
 
 Têm direito ao auxílio-acidente (art. 18, §1º, da Lei 8.213/91). Empregado urbano e rural, empregado doméstico (após a LC 150/2015), trabalhador avulso e segurado especial.
 
-NÃO têm direito. Contribuinte individual (Tema 201/TNU) e facultativo. Se o cliente era contribuinte individual na data do acidente, não há B94. Avaliar B31/B91 por incapacidade, se houver, ou verificar se a categoria real era empregado com vínculo mascarado (ação trabalhista para reconhecimento de vínculo pode reverter o cenário).
+NÃO têm direito. Contribuinte individual (Tema 201/TNU) e facultativo. Se o cliente era contribuinte individual na data do acidente, não há B94. Avaliar B31/B32 por incapacidade, se houver, ou verificar se a categoria real era empregado com vínculo mascarado (ação trabalhista para reconhecimento de vínculo pode reverter o cenário).
 
 Segurado especial. Para acidente ou moléstia anterior à Lei 12.873/2013, não se exige recolhimento facultativo (Tema 627/STJ).
 

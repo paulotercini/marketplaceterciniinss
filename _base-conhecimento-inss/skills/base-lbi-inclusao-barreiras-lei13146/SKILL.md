@@ -67,7 +67,7 @@ BPC/LOAS. A LBI é a definição matriz do impedimento de longo prazo. A avalia�
 
 Aposentadoria PCD da LC 142/2013. O grau de deficiência no IF-BrA se decide nos domínios de participação, que são leitura direta da LBI. Barreira não registrada é ponto perdido. Acionar com `base-aposentadoria-pcd-lc142` e `base-pcd-if-bra-metodologia`.
 
-Incapacidade (B31, B91, B92). O art. 34, § 3º, veda a exigência de APTIDÃO PLENA, argumento forte contra o INSS que nega benefício alegando capacidade residual sem posto de trabalho real e acessível, e contra a alta sem reabilitação efetiva. Combinar com `base-reabilitacao-profissional`, `base-limbo-previdenciario-tema300` e `base-incapacidade-b31-temporaria`.
+Incapacidade (B31, B32, B91, B92). O art. 34, § 3º, veda a exigência de APTIDÃO PLENA, argumento forte contra o INSS que nega benefício alegando capacidade residual sem posto de trabalho real e acessível, e contra a alta sem reabilitação efetiva. Combinar com `base-reabilitacao-profissional`, `base-limbo-previdenciario-tema300` e `base-incapacidade-b31-temporaria`.
 
 Perícia e processo. O art. 4º, § 1º, transforma a recusa de adaptação razoável em DISCRIMINAÇÃO, e o art. 79 garante adaptações e tecnologia assistiva no acesso à justiça. Perícia sem intérprete de Libras, sem acessibilidade física ou sem acompanhante quando necessário é nulidade arguível. Acionar com `base-cpc-nulidades-cerceamento` e `base-pericia-medica-federal-telepericia`.
 

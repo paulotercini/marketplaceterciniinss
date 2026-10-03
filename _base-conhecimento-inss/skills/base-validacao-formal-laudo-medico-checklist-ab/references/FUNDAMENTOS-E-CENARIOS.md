@@ -24,11 +24,11 @@ Solicito a reformulação do laudo médico do paciente [Nome], CPF [CPF], data [
 
 8. Caracterização expressa da incapacidade (temporária ou permanente).
 
-9. Para B91, indicar a insuscetibilidade de reabilitação.
+9. Para B32 ou B92, indicar a insuscetibilidade de reabilitação.
 
-10. Para B91 com adicional 25%, indicar a necessidade de auxílio de terceiros.
+10. Para B32 ou B92 com adicional 25%, indicar a necessidade de auxílio de terceiros.
 
-11. Para B92, indicar o nexo causal com o trabalho.
+11. Para B91 ou B92, indicar o nexo causal com o trabalho.
 
 12. Para B94, indicar a sequela e a consolidação das lesões.
 
@@ -112,7 +112,7 @@ Solução. Solicitar inclusão. Para autismo, exigir dupla codificação CID-11 
 
 Vício. Laudo sem data de início da doença ou da deficiência.
 
-Crítico para. B91 (com adicional 25%). Aposentadoria PCD (DID retroativa). BPC (caracterização do impedimento de longo prazo).
+Crítico para. B32 ou B92 (com adicional 25%). Aposentadoria PCD (DID retroativa). BPC (caracterização do impedimento de longo prazo).
 
 Solução. Solicitar fixação da DID com fundamentação documental.
 
@@ -122,7 +122,7 @@ Cruzamento com `formacao-documentacao-did-pcd`.
 
 Vício. Laudo sem data de início da incapacidade.
 
-Crítico para. B31 (cálculo de período retroativo). B91 (DIB).
+Crítico para. B31 (cálculo de período retroativo). B32 (DIB).
 
 Solução. Solicitar fixação da DII com fundamentação documental.
 
@@ -138,7 +138,7 @@ Vício. Laudo apenas faz diagnóstico, sem abordar funcionalidade.
 
 Solução. Para BPC e Aposentadoria PCD, solicitar abordagem da CIF e dos domínios do IF-BrA ou IFBrM.
 
-Para B91, solicitar abordagem da funcionalidade laboral.
+Para B32, solicitar abordagem da funcionalidade laboral.
 
 ### 2.8. Laudo sem assinatura ou ilegível
 
@@ -204,7 +204,7 @@ Art. 290. Pareceres técnicos.
 
 ### 3.8. Portarias Conjuntas MPS/INSS 13/2026, 14/2026 e 15/2026
 
-Análise documental B31, B91, B94 respectivamente.
+Análise documental B31, B91, B94.
 
 ### 3.9. LC 142/2013
 
@@ -238,13 +238,13 @@ Quadro. Paciente com lombalgia crônica. Laudo afirma apenas "L4-L5 com hérnia 
 
 Estratégia. Solicitar reformulação completa pelo Checklist A. Anexar exames de imagem (RM de coluna). Indicar tratamentos realizados e em curso. Fundamentar prognóstico.
 
-### 4.2. Cenário B. B91 sem DII expressa
+### 4.2. Cenário B. B32 sem DII expressa
 
 Quadro. Paciente com cardiopatia grave. Laudo do médico cardiologista não fixa a DII.
 
 Estratégia. Solicitar reformulação com fixação da DII com base em ecocardiograma, internação por descompensação, ou outro evento clínico documentado.
 
-### 4.3. Cenário C. B92 sem nexo causal
+### 4.3. Cenário C. B91 ou B92 sem nexo causal
 
 Quadro. Paciente com LER/DORT por trabalho repetitivo. Laudo do médico do trabalho descreve as patologias mas não afirma o nexo.
 
@@ -326,7 +326,7 @@ Reforço probatório.
 
 Laudo do médico do trabalho da empresa.
 
-Importante para B92 e B94.
+Importante para B91, B92 e B94.
 
 ### 6.4. Médico de pronto-socorro
 
@@ -344,7 +344,7 @@ Para BPC, complementam a avaliação biopsicossocial.
 
 ## 7. Composição do dossiê médico
 
-### 7.1. Dossiê para B31/B91
+### 7.1. Dossiê para B31/B32/B91/B92
 
 Laudo médico atualizado (Checklist A).
 
@@ -358,7 +358,7 @@ Atestados de afastamento.
 
 Atestados de internação.
 
-CAT (se aplicável a B92).
+CAT (se aplicável a B91 ou B92).
 
 ### 7.2. Dossiê para B94
 

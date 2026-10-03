@@ -70,7 +70,7 @@ DER, documentos completos, negativa administrativa. Tutela antecipada cabível.
 
 Cessação sem perícia idônea. Tutela para retomar.
 
-### Cenário C — Implantação de B91
+### Cenário C — Implantação de B32
 
 Laudo judicial favorável. Tutela para implantar.
 

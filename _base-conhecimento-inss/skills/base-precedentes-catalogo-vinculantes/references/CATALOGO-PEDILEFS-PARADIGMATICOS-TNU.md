@@ -130,13 +130,13 @@ Pedido de benefício por incapacidade feito por uma DONA DE CASA. TR de origem h
 
 **Cenário 2.** Segurada especial rural que também realiza trabalho doméstico. Cabe reforço nas alegações de incapacidade para atividade habitual.
 
-**Cenário 3.** Segurada em manutenção de qualidade que exerce trabalho doméstico não remunerado antes da DII. Reforço da noção de "atividade habitual" para fins de B31/B91.
+**Cenário 3.** Segurada em manutenção de qualidade que exerce trabalho doméstico não remunerado antes da DII. Reforço da noção de "atividade habitual" para fins de B31/B32.
 
 ### Cruzamento com Perspectiva de Gênero
 
 Este precedente dialoga com a Resolução CNJ 492/2023 (Protocolo para Julgamento com Perspectiva de Gênero) porque o trabalho doméstico não remunerado é, majoritariamente, realizado por mulheres. A tese uniformiza que este trabalho merece igual proteção previdenciária que o trabalho doméstico formal.
 
-Cruzar com `perspectiva-genero-previdenciario`, `base-facultativo-baixa-renda`, `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`.
+Cruzar com `perspectiva-genero-previdenciario`, `base-facultativo-baixa-renda`, `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`.
 
 ### Efeito Vinculante
 

@@ -27,7 +27,7 @@ Exemplos pertinentes ao segurado.
 
 Caracterização da atividade especial (enquadramento qualitativo de tolueno, ruído, biológicos).
 
-Existência de direito ao benefício (B31, B91, B92, B94, BPC, aposentadoria PCD, pensão).
+Existência de direito ao benefício (B31, B32, B91, B92, B94, BPC, aposentadoria PCD, pensão).
 
 Enquadramento jurídico de situação fática à hipótese normativa.
 

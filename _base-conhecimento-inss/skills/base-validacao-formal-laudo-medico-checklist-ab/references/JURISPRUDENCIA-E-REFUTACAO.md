@@ -12,7 +12,7 @@ Aplicação. Laudo do médico assistente bem fundamentado pode afastar a presun�
 
 "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez".
 
-Aplicação. Laudo do médico assistente complementado por condições pessoais (idade, escolaridade, profissão habitual) pode justificar B91.
+Aplicação. Laudo do médico assistente complementado por condições pessoais (idade, escolaridade, profissão habitual) pode justificar B32.
 
 ### 1.3. Tema 246/TNU
 
@@ -146,7 +146,7 @@ Necessidade de auxílio de terceiros não abordada.
 
 Sequela não caracterizada (B94).
 
-Nexo causal não abordado (B92).
+Nexo causal não abordado (B91 ou B92).
 
 ### 7.2. Pedido de complementação
 
@@ -184,7 +184,7 @@ Apresentar laudo refeito conforme checklist aplicável.
 
 Apresentar laudos complementares (especialista, equipe multidisciplinar).
 
-Cruzamento com `analise-documental-incapacidade`, `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`, `base-auxilio-acidente-b94-pos-reforma`.
+Cruzamento com `analise-documental-incapacidade`, `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `base-auxilio-acidente-b94-pos-reforma`.
 
 ## 10. Mandado de segurança
 
@@ -230,9 +230,9 @@ Aceitação do laudo e nova análise do requerimento.
 
 `base-incapacidade-b31-temporaria` para B31.
 
-`base-incapacidade-b91-permanente` para B91.
+`base-incapacidade-b32-permanente` para B32.
 
-`base-incapacidade-acidentaria-b92` para B92.
+`base-incapacidade-acidentaria-b92` para B91 ou B92.
 
 `base-auxilio-acidente-b94-pos-reforma` para B94.
 
@@ -258,6 +258,6 @@ Aceitação do laudo e nova análise do requerimento.
 
 `base-portarias-dpmf-inss-hub` para Portarias DPMF.
 
-`ntep-nexo-acidentario` para o nexo acidentário em B92.
+`ntep-nexo-acidentario` para o nexo acidentário em B91 ou B92.
 
 `base-pcd-fibromialgia-lei15176` para fibromialgia.

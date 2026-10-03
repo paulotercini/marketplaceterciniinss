@@ -123,4 +123,4 @@ A Lei 13.846/2019 (convertida da MP 871/2019) instituiu o PRBI para revisão de 
 3. Recurso ao CRPS em 30 dias da decisão.
 4. Eventualmente, MS por descumprimento de notificação válida.
 
-Cruzar com `analise-documental-incapacidade`, `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`, `mandado-seguranca-previdenciario`, `admissibilidade-barreiras-crps`.
+Cruzar com `analise-documental-incapacidade`, `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `mandado-seguranca-previdenciario`, `admissibilidade-barreiras-crps`.

@@ -41,7 +41,7 @@ Aplicado especialmente em demandas onde a PROVA TESTEMUNHAL e o DEPOIMENTO PESSO
 
 #### Conceito
 
-Fluxo especial desenvolvido para B31, B91 e B94 (alta demanda).
+Fluxo especial desenvolvido para B31, B32 e B94 (alta demanda).
 
 Funcionamento. PERÍCIA ANTES da citação do INSS (art. 129-A §3º Lei 8.213/91 introduzido pela Lei 13.876/2019 e regulamentado em 2021).
 
@@ -65,7 +65,7 @@ Funcionamento. PERÍCIA ANTES da citação do INSS (art. 129-A §3º Lei 8.213/9
 
 3. **Tutela de urgência mais facilmente analisada.** Após o laudo pericial, o juízo tem elementos sólidos para conceder tutela.
 
-#### Estratégia em B31/B91/B94
+#### Estratégia em B31/B32/B94
 
 1. **Laudo médico particular ROBUSTO ANTES de protocolar.** O laudo do reumatologista, ortopedista, psiquiatra ou cardiologista deve ter qualidade técnica para influenciar o laudo do perito judicial.
 
@@ -100,7 +100,7 @@ Quando a PFE-INSS oferece acordo na fase de resposta após laudo pericial favor�
 
 ### Tipos de perícia no JEF TRF3
 
-**Perícia médica.** Para B31, B91, B94, BPC com deficiência, isenção IR doença grave.
+**Perícia médica.** Para B31, B32, B94, BPC com deficiência, isenção IR doença grave.
 
 **Perícia social.** Para BPC e situações que dependem de avaliação socioeconômica.
 
@@ -119,7 +119,7 @@ O juízo nomeia perito profissional habilitado. O autor pode indicar assistente 
 A parte autora tem prazo para apresentar quesitos. ESSENCIAL para a advocacia pró-segurado preparar quesitos detalhados, particularmente em.
 
 - B31. Comprovação da incapacidade temporária com termo final.
-- B91. Comprovação da incapacidade permanente para QUALQUER atividade habitual.
+- B32. Comprovação da incapacidade permanente para QUALQUER atividade habitual.
 - B94. Comprovação da sequela com redução da capacidade.
 - BPC. Comprovação da deficiência de longo prazo (impedimentos físicos, mentais, intelectuais ou sensoriais por no mínimo 2 anos).
 
@@ -204,7 +204,7 @@ Acionar SEMPRE.
 - `base-revisao-peticao-aprofundada` para auditoria.
 - `base-precedentes-catalogo-vinculantes` para Temas e Súmulas.
 
-Para casos B31/B91/B94, a Pauta Incapacidade é frequentemente o caminho MAIS EFICIENTE quando há laudo médico particular robusto.
+Para casos B31/B32/B94, a Pauta Incapacidade é frequentemente o caminho MAIS EFICIENTE quando há laudo médico particular robusto.
 
 Para casos de tempo rural ou união estável, a Instrução Concentrada acelera significativamente.
 

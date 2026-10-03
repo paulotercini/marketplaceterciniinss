@@ -80,7 +80,7 @@ O B94 paga 50% do salário-de-benefício como compensação pela redução da ca
 
 O segurado pode CONTINUAR trabalhando.
 
-DIB. Dia seguinte ao da cessação do benefício por incapacidade que o originou (B31), ou 30 dias após a CAT.
+DIB. Dia seguinte ao da cessação do benefício por incapacidade que o originou (B31 ou B91), ou 30 dias após a CAT.
 
 Cessação. Pela aposentadoria (vedação MP 1.596-14/1997). Direito adquirido pela Súmula 507/STJ para benefícios anteriores à MP.
 

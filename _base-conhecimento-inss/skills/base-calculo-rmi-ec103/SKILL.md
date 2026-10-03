@@ -1,6 +1,6 @@
 ---
 name: base-calculo-rmi-ec103
-description: "Cálculo da RMI pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar cálculo RMI EC 103, art. 26 EC 103, média 100% PBC, 60% mais 2% ano excedente, divisor mínimo art. 26 §6º, renda mensal inicial pós-reforma, salário-de-benefício pós EC 103, RMI pedágio 100%, RMI 100% média, fator previdenciário afastado regra nova, Tema 1102 STF e modulação, revisão da vida toda, afastar regra 80% maiores, art. 29 Lei 8.213, RMI auxílios, pensão por morte pós-reforma, cálculo B31 B91 B92 B94 pós-reforma, benefícios acima do teto, Tema 1070 STJ concomitantes, art. 31 Lei 8.213 integração auxílio-acidente, Súmula 557 STJ teto. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (Livro II - cálculo do reconhecimento), IN 128/2022. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, base-aposentadoria-transicao-ec103, base-aposentadoria-regra-permanente-ec103, impugnacao-cumprimento-concomitantes e base-legislacao-fontes-primarias."
+description: "Cálculo da RMI pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar cálculo RMI EC 103, art. 26 EC 103, média 100% PBC, 60% mais 2% ano excedente, divisor mínimo art. 26 §6º, renda mensal inicial pós-reforma, salário-de-benefício pós EC 103, RMI pedágio 100%, RMI 100% média, fator previdenciário afastado regra nova, Tema 1102 STF e modulação, revisão da vida toda, afastar regra 80% maiores, art. 29 Lei 8.213, RMI auxílios, pensão por morte pós-reforma, cálculo B31 B32 B91 B92 B94 pós-reforma, benefícios acima do teto, Tema 1070 STJ concomitantes, art. 31 Lei 8.213 integração auxílio-acidente, Súmula 557 STJ teto. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (Livro II - cálculo do reconhecimento), IN 128/2022. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, base-aposentadoria-transicao-ec103, base-aposentadoria-regra-permanente-ec103, impugnacao-cumprimento-concomitantes e base-legislacao-fontes-primarias."
 ---
 
 ## NOTA DA ADI 6309 (12/07/2026)
@@ -40,7 +40,7 @@ No pedágio de 100% (art. 20), aplica-se integralidade. A RMI corresponde a 100%
 
 B31 (auxílio por incapacidade temporária) pós-reforma. 91% da média.
 
-B91 (aposentadoria por incapacidade permanente) pós-reforma. 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher), exceto quando decorrer de acidente de trabalho, quando a RMI é 100% da média (art. 26 §3º II EC 103).
+B32 (aposentadoria por incapacidade permanente) pós-reforma. 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher), exceto quando decorrer de acidente de trabalho, quando a RMI é 100% da média (art. 26 §3º II EC 103).
 
 B92 (aposentadoria por incapacidade permanente acidentária). 100% da média. Manter auditoria de NTEP para conversão B31 para B91 acidentária. Acionar `ntep-nexo-acidentario`.
 
@@ -62,7 +62,7 @@ Terceiro, segurado com 36 anos no pedágio de 50%: RMI = média × fator previde
 
 Quarto, segurado no pedágio de 100%. RMI = 100% da média, vantagem tangível em perfis de alta remuneração.
 
-Quinto, aposentadoria por incapacidade permanente (B91) sem caráter acidentário. RMI = 60% + 2% por ano excedente. Verificar possibilidade de conversão para B92 acidentária, elevando para 100%. Acionar `auditoria-laudo-pericial` e `ntep-nexo-acidentario`.
+Quinto, aposentadoria por incapacidade permanente (B32) sem caráter acidentário. RMI = 60% + 2% por ano excedente. Verificar possibilidade de conversão para B92 acidentária, elevando para 100%. Acionar `auditoria-laudo-pericial` e `ntep-nexo-acidentario`.
 
 Sexto, pensão por morte com 3 dependentes. RMI = 50% + 10% × 3 = 80% do valor da aposentadoria do falecido (ou do valor que ele receberia se fosse se aposentar por incapacidade na data do óbito).
 

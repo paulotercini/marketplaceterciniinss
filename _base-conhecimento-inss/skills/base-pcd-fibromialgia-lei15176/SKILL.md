@@ -71,7 +71,7 @@ Seis eixos obrigatórios. Dor por região e comportamento (com alodínia e hiper
 
 Instrumentos. FIQR, FSQ e CSI, validados em português. Transcrever POR DOMÍNIO ou por item relevante, com data, nunca apenas o escore total. Aplicações seriadas demonstram cronicidade e resistência ao tratamento.
 
-Roteiro completo, modelos de frase, tradução por benefício (B31, B91 e B92 na atividade habitual, LC 142 nos sete domínios do IF-BrA, BPC no impedimento com barreiras), sete anti-patterns e checklist de fechamento em `references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md`. Aplicação obrigatória nos três modelos de relatório médico do escritório e como pauta de quesitos na `auditoria-laudo-pericial`.
+Roteiro completo, modelos de frase, tradução por benefício (B31, B32, B91 e B92 na atividade habitual, LC 142 nos sete domínios do IF-BrA, BPC no impedimento com barreiras), sete anti-patterns e checklist de fechamento em `references/INDIVIDUALIZACAO-ACHADOS-RELATORIO-MEDICO.md`. Aplicação obrigatória nos três modelos de relatório médico do escritório e como pauta de quesitos na `auditoria-laudo-pericial`.
 
 ## Aplicação pró-segurado
 

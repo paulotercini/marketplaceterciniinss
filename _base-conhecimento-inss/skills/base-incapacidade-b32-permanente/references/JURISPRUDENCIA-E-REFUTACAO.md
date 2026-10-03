@@ -1,4 +1,4 @@
-# B91 — Jurisprudência Verificada e Refutação
+# B32 — Jurisprudência Verificada e Refutação
 
 ## 1. Precedentes vinculantes
 
@@ -8,7 +8,7 @@ Tese. Doença preexistente agravada pela atividade reconhece nexo acidentário.
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Afasta a recusa fundada em preexistência e permite conversão em B91 acidentário com RMI de 100%.
+Aplicação pró-segurado. Afasta a recusa fundada em preexistência e permite conversão em B92 acidentário com RMI de 100%.
 
 ### Tema 982 STJ
 
@@ -16,7 +16,7 @@ Tese. Discussão sobre extensão do acréscimo de 25% do art. 45 da Lei 8.213/91
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. O acréscimo é intrínseco ao B91 e pode ser reivindicado também para B31 em situações de grande invalidez, conforme corrente pró-segurado, enquanto o Tema definitivo não se consolida.
+Aplicação pró-segurado. O acréscimo é intrínseco ao B32 e pode ser reivindicado também para B31 em situações de grande invalidez, conforme corrente pró-segurado, enquanto o Tema definitivo não se consolida.
 
 ### Súmula 47 TNU
 
@@ -24,7 +24,7 @@ Tese. Uma vez reconhecido o direito ao benefício por incapacidade pela perícia
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Fundamento para tutela antecipada e implantação imediata do B91.
+Aplicação pró-segurado. Fundamento para tutela antecipada e implantação imediata do B32.
 
 ### Súmula 77 TNU
 
@@ -48,7 +48,7 @@ Tese. A decadência não alcança o direito ao melhor benefício.
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Permite revisão de B91 implantado com vício ou cessação indevida.
+Aplicação pró-segurado. Permite revisão de B32 implantado com vício ou cessação indevida.
 
 ### Súmula 557 STJ
 
@@ -68,21 +68,21 @@ Refutação. Documentação médica robusta com laudo especializado, histórico 
 
 ### Argumento 2 — Possibilidade de reabilitação
 
-Argumento adversário. O segurado pode ser reabilitado para outra atividade e não faz jus ao B91.
+Argumento adversário. O segurado pode ser reabilitado para outra atividade e não faz jus ao B32.
 
 Refutação. O art. 42 exige que a insuscetibilidade seja para atividade que garanta a subsistência, não para qualquer atividade. Avaliação realista do mercado de trabalho, idade, grau de instrução e contexto social. Parecer de inviabilidade do próprio programa de reabilitação é prova definitiva.
 
 ### Argumento 3 — Doença preexistente
 
-Argumento adversário. A doença é anterior à filiação, incabível o B91.
+Argumento adversário. A doença é anterior à filiação, incabível o B32.
 
-Refutação. Art. 42, §2º, da Lei 8.213/91. Ainda que preexistente, se a incapacidade decorrer de progressão ou agravamento, o B91 é devido. Tema 1083 STJ reforça e ainda permite conversão em acidentário.
+Refutação. Art. 42, §2º, da Lei 8.213/91. Ainda que preexistente, se a incapacidade decorrer de progressão ou agravamento, o B32 é devido. Tema 1083 STJ reforça e ainda permite conversão em acidentário.
 
 ### Argumento 4 — Ausência de acidentariedade
 
 Argumento adversário. A doença não tem nexo com o trabalho, RMI de 60% + 2%.
 
-Refutação. NTEP, nexo técnico individual ou laudo ocupacional podem estabelecer a acidentariedade, convertendo B91 em B92 com RMI de 100%. Acionar `ntep-nexo-acidentario`.
+Refutação. NTEP, nexo técnico individual ou laudo ocupacional podem estabelecer a acidentariedade, convertendo B32 em B92 com RMI de 100%. Acionar `ntep-nexo-acidentario`.
 
 ### Argumento 5 — Cessação por reavaliação
 
@@ -94,7 +94,7 @@ Refutação. Art. 47 Lei 8.213/91 exige gradualidade no caso de recuperação pa
 
 Argumento adversário. O INSS não reconhece a necessidade de assistência permanente.
 
-Refutação. Rol do Anexo I do Decreto 3.048/99 não é taxativo. Prova médica e social da assistência permanente é suficiente. O acréscimo é intrínseco ao B91 quando comprovada a grande invalidez.
+Refutação. Rol do Anexo I do Decreto 3.048/99 não é taxativo. Prova médica e social da assistência permanente é suficiente. O acréscimo é intrínseco ao B32 quando comprovada a grande invalidez.
 
 ### Argumento 7 — Perda da qualidade de segurado
 
@@ -104,7 +104,7 @@ Refutação. Acionar `periodo-graca-qualidade-segurado`. Em doença progressiva,
 
 ### Argumento 8 — Trava da análise documental
 
-Argumento adversário. O parecer de verossimilhança da análise documental afasta o B91.
+Argumento adversário. O parecer de verossimilhança da análise documental afasta o B32.
 
 Refutação. Portaria Conjunta 14/2026 não substitui perícia médica. Parecer de verossimilhança é triagem e não vincula juízo. Acionar `analise-documental-incapacidade`.
 
@@ -124,9 +124,9 @@ Sexto, no JEF, Súmula 47 TNU para implantação imediata.
 
 ## 4. Cláusulas doutrinárias de apoio
 
-Frederico Amado, em Direito Previdenciário, sustenta a concessão ampla do B91 quando há prognóstico desfavorável e a conversão em acidentário sempre que possível.
+Frederico Amado, em Direito Previdenciário, sustenta a concessão ampla do B32 quando há prognóstico desfavorável e a conversão em acidentário sempre que possível.
 
-Hugo Goes, em Manual, detalha o B91 e a necessidade de avaliação da assistência permanente.
+Hugo Goes, em Manual, detalha o B32 e a necessidade de avaliação da assistência permanente.
 
 Fábio Zambitte Ibrahim, em Curso, critica a RMI reduzida pós-reforma e defende o reconhecimento do caráter acidentário como estratégia de mitigação.
 

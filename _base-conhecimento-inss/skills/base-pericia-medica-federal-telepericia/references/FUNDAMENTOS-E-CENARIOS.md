@@ -96,7 +96,7 @@ Segurado surdo, sem intérprete de Libras na Teleperícia. Violação do direito
 
 ### Cenário 5 — Reavaliação sem exame específico
 
-Segurado em B91 cessado em reavaliação com laudo que apenas repete o anterior. Impugnação com argumento de ausência de exame real.
+Segurado em B32 cessado em reavaliação com laudo que apenas repete o anterior. Impugnação com argumento de ausência de exame real.
 
 ### Cenário 6 — Perícia domiciliar negada
 
@@ -160,6 +160,6 @@ Quinto, em cerceamento, MS pela urgência e pelo direito à perícia adequada.
 Acionar `orientacao-cliente-pericia` para preparação do segurado.
 Acionar `auditoria-laudo-pericial` para revisão técnica.
 Acionar `analise-documental-incapacidade` para detalhes do regime documental.
-Acionar `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`, `base-incapacidade-acidentaria-b92` e `base-auxilio-acidente-b94-pos-reforma` para benefícios específicos.
+Acionar `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `base-incapacidade-acidentaria-b92` e `base-auxilio-acidente-b94-pos-reforma` para benefícios específicos.
 Acionar `analise-bpc-loas` e `aposentadoria-deficiencia` para perícia biopsicossocial.
 Acionar `mandado-seguranca-previdenciario` em caso de demora ou cerceamento grave.

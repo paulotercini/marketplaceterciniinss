@@ -89,8 +89,8 @@ Acionar `analise-documental-incapacidade` para detalhes da Portaria Conjunta 13/
 Acionar `auditoria-laudo-pericial` para revisão de laudo.
 Acionar `periodo-graca-qualidade-segurado` para qualidade.
 Acionar `ntep-nexo-acidentario` para caráter acidentário.
-Acionar `base-incapacidade-b91-permanente` para conversão em aposentadoria por incapacidade permanente.
-Acionar `base-incapacidade-acidentaria-b92` para caráter acidentário B92.
+Acionar `base-incapacidade-b32-permanente` para conversão em aposentadoria por incapacidade permanente.
+Acionar `base-incapacidade-acidentaria-b92` para caráter acidentário B91 ou B92.
 Acionar `orientacao-cliente-pericia` para orientação do segurado.
 Acionar `lei-13460-usuario-servico-publico` em barreiras ilegais de atendimento.
 

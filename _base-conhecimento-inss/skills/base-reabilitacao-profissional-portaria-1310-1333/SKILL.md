@@ -1,6 +1,6 @@
 ---
 name: base-reabilitacao-profissional-portaria-1310-1333
-description: "Skill base sobre Reabilitação Profissional do INSS regulada pelas Portarias DIRBEN/INSS 1.310/2025 e 1.333/2026, com defesa do segurado contra cessação prematura, suspensão indevida, encerramento abusivo do PRP, recusa de encaminhamento e conversão administrativa de B31 em B91. Use SEMPRE que mencionar reabilitação profissional, RP, PRP, Portaria DIRBEN 1.310/2025, Portaria DIRBEN 1.333/2026, justificativa de faltas em até 7 dias, recusa abandono RP, suspensão 60 dias RP, suspensão recluso, encerramento PRP, retorno ao trabalho, encaminhamento à PMF, agendamento convocatório, não necessita RP, conversão B31 em B91, alta sem reabilitação, art. 89 e 92 da Lei 8.213/91, art. 62 §2º Lei 8.213, certificado de reabilitação, função compatível, mercado de trabalho, equipe de reabilitação. Hub específico para teses pró-segurado em RP. Cruza com mandado-seguranca-previdenciario e peticao-previdenciaria. NÃO use para auxílio-doença comum, aposentadoria por incapacidade isolada ou BPC."
+description: "Skill base sobre Reabilitação Profissional do INSS regulada pelas Portarias DIRBEN/INSS 1.310/2025 e 1.333/2026, com defesa do segurado contra cessação prematura, suspensão indevida, encerramento abusivo do PRP, recusa de encaminhamento e conversão administrativa de B31 em B32. Use SEMPRE que mencionar reabilitação profissional, RP, PRP, Portaria DIRBEN 1.310/2025, Portaria DIRBEN 1.333/2026, justificativa de faltas em até 7 dias, recusa abandono RP, suspensão 60 dias RP, suspensão recluso, encerramento PRP, retorno ao trabalho, encaminhamento à PMF, agendamento convocatório, não necessita RP, conversão B31 em B32, alta sem reabilitação, art. 89 e 92 da Lei 8.213/91, art. 62 §2º Lei 8.213, certificado de reabilitação, função compatível, mercado de trabalho, equipe de reabilitação. Hub específico para teses pró-segurado em RP. Cruza com mandado-seguranca-previdenciario e peticao-previdenciaria. NÃO use para auxílio-doença comum, aposentadoria por incapacidade isolada ou BPC."
 ---
 
 # Reabilitação Profissional pelas Portarias DIRBEN/INSS 1.310/2025 e 1.333/2026
@@ -25,7 +25,7 @@ O retorno ao trabalho com função compatível encerra o PRP com certificado, no
 
 A "não necessita de RP" exige fundamentação técnica. Nas conclusões puramente médicas, sem avaliação social e funcional, o ato é nulo por violação ao art. 89 da Lei 8.213/91.
 
-A conversão administrativa de B31 em B91 deve ocorrer quando comprovada a impossibilidade de reabilitação, sem necessidade de novo requerimento, sob pena de obstaculização indevida pelo INSS.
+A conversão administrativa de B31 em B32 deve ocorrer quando comprovada a impossibilidade de reabilitação, sem necessidade de novo requerimento, sob pena de obstaculização indevida pelo INSS.
 
 ## 4. Fragilidades adversárias mais comuns
 
@@ -35,7 +35,7 @@ O INSS também extingue o benefício antes do encerramento formal do PRP, gerand
 
 ## 5. Estratégia processual
 
-A defesa pró-segurado pivota em mandado de segurança contra ato de encerramento abusivo, ação ordinária para conversão de B31 em B91, e recurso ao CRPS contra cessação prematura. Combinar com as skills `base-incapacidade-b91-permanente`, `base-pericia-medica-federal-telepericia` e `base-ms-liminar-art7-iii`.
+A defesa pró-segurado pivota em mandado de segurança contra ato de encerramento abusivo, ação ordinária para conversão de B31 em B32, e recurso ao CRPS contra cessação prematura. Combinar com as skills `base-incapacidade-b32-permanente`, `base-pericia-medica-federal-telepericia` e `base-ms-liminar-art7-iii`.
 
 ## 6. Documentos essenciais
 

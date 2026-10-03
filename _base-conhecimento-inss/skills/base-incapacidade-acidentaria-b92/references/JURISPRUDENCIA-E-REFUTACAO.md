@@ -8,7 +8,7 @@ Tese. Doença preexistente agravada pela atividade reconhece nexo acidentário.
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Fundamento para converter B91 não acidentário em B92 por concausa.
+Aplicação pró-segurado. Fundamento para converter B32 não acidentário em B92 por concausa.
 
 ### ADI 3931 STF
 
@@ -38,7 +38,7 @@ Tese. A concessão de auxílio-acidente não depende do retorno ao trabalho, bas
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Reforça direito ao B94 após cessação de B92 quando há sequela.
+Aplicação pró-segurado. Reforça direito ao B94 após cessação de B91 quando há sequela.
 
 ### Súmula 47 TNU
 
@@ -126,7 +126,7 @@ Quarto, em casos complexos, perícia de engenharia do trabalho além da médica.
 
 Quinto, contestar desclassificações com recurso ao CRPS ou ação judicial.
 
-Sexto, pedir tutela antecipada para conversão imediata de B91 em B92 com RMI recalculada.
+Sexto, pedir tutela antecipada para conversão imediata de B32 em B92 com RMI recalculada.
 
 Sétimo, em doença preexistente, enfrentar com concausa (art. 21, I, e Tema 1083 STJ).
 

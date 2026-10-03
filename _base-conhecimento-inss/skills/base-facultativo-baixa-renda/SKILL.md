@@ -59,7 +59,7 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 
 **Tese 2.** NÃO SE PRESUME que o(a) segurado(a) facultativo(a), inserido(a) em categoria de filiação previdenciária que não exerce atividade remunerada (Decreto 3.048/99, art. 11), realiza trabalho doméstico com menor exigência física e menos riscos ergonômicos do que o(a) trabalhador(a) doméstico(a) remunerado(a).
 
-**Aplicação pró-segurada.** A dona de casa segurada facultativa (baixa renda ou comum) que fica incapaz para as tarefas domésticas cotidianas tem direito ao B31/B91/B92. INSS ou juiz que negue com base em "atividade doméstica menor esforço" viola esta tese.
+**Aplicação pró-segurada.** A dona de casa segurada facultativa (baixa renda ou comum) que fica incapaz para as tarefas domésticas cotidianas tem direito ao B31/B32. INSS ou juiz que negue com base em "atividade doméstica menor esforço" viola esta tese.
 
 Esta tese vincula regionalmente as Turmas Recursais da 4ª Região. Em outras regiões (TRF3 incluído), usar como precedente persuasivo em conjunto com a Resolução CNJ 492/2023 (Protocolo de Gênero).
 

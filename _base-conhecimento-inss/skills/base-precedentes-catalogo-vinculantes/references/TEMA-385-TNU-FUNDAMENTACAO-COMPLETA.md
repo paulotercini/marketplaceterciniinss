@@ -101,7 +101,7 @@ A Juíza Federal LILIAN OLIVEIRA DA COSTA TOURINHO ficou vencida parcialmente. O
 
 3. **Requisitos autônomos e cumulativos.** Análise da deficiência não se confunde com análise de miserabilidade.
 
-4. **Presunção iuris tantum em segurado com B91.** Se o segurado tem laudo de incapacidade total permanente, presume-se deficiência para fins de BPC. Basta perícia médica, dispensa avaliação social. Cabe pedido cumulativo B91 + BPC ou fungibilidade.
+4. **Presunção iuris tantum em segurado com B32.** Se o segurado tem laudo de incapacidade total permanente, presume-se deficiência para fins de BPC. Basta perícia médica, dispensa avaliação social. Cabe pedido cumulativo B32 + BPC ou fungibilidade.
 
 5. **Sem impedimento moderado, não há BPC.** Alertar cliente. Impedimento leve ou temporário (resolvível em <2 anos) não gera BPC.
 

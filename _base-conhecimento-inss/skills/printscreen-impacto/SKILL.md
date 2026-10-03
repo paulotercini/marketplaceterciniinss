@@ -108,7 +108,7 @@ Inserir o printscreen processado no .docx da petição usando a função `prints
 
 Em petições iniciais de aposentadoria especial, incluir printscreen do PPP (campo 15.3) e do indeferimento (fundamentos superados). Mínimo 1, máximo 3 printscreens.
 
-Em petições de incapacidade (B31/B91), incluir printscreen do laudo pericial (contradição) e/ou exame médico (achado clínico). Mínimo 1, máximo 3.
+Em petições de incapacidade (B31/B32), incluir printscreen do laudo pericial (contradição) e/ou exame médico (achado clínico). Mínimo 1, máximo 3.
 
 Em mandados de segurança, incluir printscreen do ato impugnado com destaque no fundamento violador. Mínimo 1, máximo 2.
 

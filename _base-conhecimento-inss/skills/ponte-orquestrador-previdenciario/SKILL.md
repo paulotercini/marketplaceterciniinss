@@ -37,10 +37,10 @@ Fase 5. `revisao-peticao`.
 
 Skill-ponte dedicada. `ponte-workflow-pensao-por-morte`.
 
-### 3.3 Benefícios por incapacidade (B31, B91, B92, B94)
+### 3.3 Benefícios por incapacidade (B31, B32, B91, B92, B94)
 
 Fase 1. `auditoria-laudo-pericial` quando houver laudo, `analise-documental-incapacidade` para análise documental, `cnis-acerto-indicadores` para qualidade de segurado.
-Fase 2. `base-incapacidade-b31-temporaria`, `base-incapacidade-b91-permanente`, `base-incapacidade-acidentaria-b92`, `base-auxilio-acidente-b94-pos-reforma` ou `base-b94-*` específicas. `base-pericia-medica-federal-telepericia` quando houver Teleperícia.
+Fase 2. `base-incapacidade-b31-temporaria`, `base-incapacidade-b32-permanente`, `base-incapacidade-acidentaria-b92`, `base-auxilio-acidente-b94-pos-reforma` ou `base-b94-*` específicas. `base-pericia-medica-federal-telepericia` quando houver Teleperícia.
 Fase 3. `ntep-nexo-acidentario` quando houver nexo acidentário. `base-jef-previdenciario` para alçada do JEF.
 Fase 4. `peticao-previdenciaria`. Em caso de cessação indevida, `mandado-seguranca-previdenciario`.
 Fase 5. `revisao-peticao`.
@@ -129,7 +129,7 @@ Competência territorial e material via `ms-competencia-autoridade-coatora` em m
 Tempestividade recursal via `admissibilidade-barreiras-crps` em qualquer recurso ao CRPS.
 Período de graça e qualidade de segurado via `periodo-graca-qualidade-segurado` em qualquer benefício.
 
-Limbo previdenciário via `base-limbo-previdenciario-tema300` sempre que a perda da qualidade de segurado for o obstáculo e o CNIS trouxer vínculo em aberto com remunerações zeradas, em qualquer benefício. É gatilho transversal, incide em B31, B91, B94 e pensão por morte, e tem alerta próprio de nunca requerer RAC de baixa do vínculo aberto.
+Limbo previdenciário via `base-limbo-previdenciario-tema300` sempre que a perda da qualidade de segurado for o obstáculo e o CNIS trouxer vínculo em aberto com remunerações zeradas, em qualquer benefício. É gatilho transversal, incide em B31, B32, B94 e pensão por morte, e tem alerta próprio de nunca requerer RAC de baixa do vínculo aberto.
 Reafirmação da DER via `reafirmacao-der` em qualquer concessão com dúvida sobre melhor DIB.
 
 ## 5. Saída esperada

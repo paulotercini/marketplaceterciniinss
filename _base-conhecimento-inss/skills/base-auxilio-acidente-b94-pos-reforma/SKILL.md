@@ -241,7 +241,7 @@ O IBDP sustenta institucionalmente o caráter indenizatório e a proteção cont
 
 ## O que NÃO está nesta skill
 
-Não está aqui o B31 temporário (antes da consolidação), objeto de `base-incapacidade-b31-temporaria`. Não está aqui o B92 (incapacidade permanente acidentária), objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o B91 (incapacidade permanente), objeto de `base-incapacidade-b91-permanente`. Não está aqui a perícia em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`.
+Não está aqui o B31 temporário (antes da consolidação), objeto de `base-incapacidade-b31-temporaria`. Não está aqui o B92 (incapacidade permanente acidentária), objeto de `base-incapacidade-acidentaria-b92`. Não está aqui o B32 (incapacidade permanente), objeto de `base-incapacidade-b32-permanente`. Não está aqui a perícia em detalhe procedimental, objeto de `base-pericia-medica-federal-telepericia`.
 
 ## Anexo III exemplificativo por norma do INSS (Onda 115)
 

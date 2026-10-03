@@ -1,13 +1,13 @@
 ---
 name: ponte-workflow-reabilitacao-profissional
-description: "Workflow pró-segurado de Reabilitação Profissional do INSS, costurando regime das Portarias DIRBEN 1.310/2025 e 1.333/2026, defesa contra cessação prematura, suspensão indevida e encerramento abusivo do PRP, e produção de mandado de segurança ou peça administrativa. Use SEMPRE que mencionar workflow reabilitação, pipeline RP, ação RP, mandado de segurança RP, suspensão PRP, encerramento PRP, recusa de encaminhamento à PMF, conversão administrativa B31 em B91, alta sem reabilitação, retorno ao trabalho não compatível, certificado de reabilitação. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, peticao-previdenciaria. NÃO use para B91 sem componente de reabilitação ou para BPC."
+description: "Workflow pró-segurado de Reabilitação Profissional do INSS, costurando regime das Portarias DIRBEN 1.310/2025 e 1.333/2026, defesa contra cessação prematura, suspensão indevida e encerramento abusivo do PRP, e produção de mandado de segurança ou peça administrativa. Use SEMPRE que mencionar workflow reabilitação, pipeline RP, ação RP, mandado de segurança RP, suspensão PRP, encerramento PRP, recusa de encaminhamento à PMF, conversão administrativa B31 em B32, alta sem reabilitação, retorno ao trabalho não compatível, certificado de reabilitação. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, peticao-previdenciaria. NÃO use para B32 sem componente de reabilitação ou para BPC."
 ---
 
 # Workflow Reabilitação Profissional
 
 ## 1. Quando acionar
 
-Sempre que o caso envolver Programa de Reabilitação Profissional (PRP), suspensão de benefício durante RP, encerramento abusivo, recusa de encaminhamento à PMF, alta sem reabilitação, conversão administrativa de B31 em B91 ou pleito de certificado de reabilitação.
+Sempre que o caso envolver Programa de Reabilitação Profissional (PRP), suspensão de benefício durante RP, encerramento abusivo, recusa de encaminhamento à PMF, alta sem reabilitação, conversão administrativa de B31 em B32 ou pleito de certificado de reabilitação.
 
 ## 2. Pipeline executável
 
@@ -27,7 +27,7 @@ Quando o segurado for PCD encaminhado à RP, acionar `aposentadoria-deficiencia`
 
 ### Passo 4. Identificação da violação
 
-Cessação prematura sem alta médica formalizada. Suspensão por mais de 60 dias sem justificativa legal. Encerramento por abandono sem oportunidade de justificativa em 7 dias. Recusa de encaminhamento à PMF para PRP. Determinação de retorno ao trabalho em função incompatível. Conversão administrativa de B31 em B91 sem cumprir o devido processo administrativo.
+Cessação prematura sem alta médica formalizada. Suspensão por mais de 60 dias sem justificativa legal. Encerramento por abandono sem oportunidade de justificativa em 7 dias. Recusa de encaminhamento à PMF para PRP. Determinação de retorno ao trabalho em função incompatível. Conversão administrativa de B31 em B32 sem cumprir o devido processo administrativo.
 
 ### Passo 5. Definição da via processual
 
@@ -65,7 +65,7 @@ Justificativa de faltas em até 7 dias é direito do segurado pelas Portarias 1.
 
 Suspensão de até 60 dias é regra. Acima disso, INSS deve formalmente encerrar ou retomar o PRP. Limbo administrativo é ilegal.
 
-Conversão administrativa de B31 em B91 sem encaminhamento à RP viola art. 62 §2º da Lei 8.213/91. Pleitear via MS.
+Conversão administrativa de B31 em B32 sem encaminhamento à RP viola art. 62 §2º da Lei 8.213/91. Pleitear via MS.
 
 Função compatível deve respeitar limitações funcionais comprovadas, não basta existir vaga. Recusa de retorno em função incompatível não caracteriza abandono.
 

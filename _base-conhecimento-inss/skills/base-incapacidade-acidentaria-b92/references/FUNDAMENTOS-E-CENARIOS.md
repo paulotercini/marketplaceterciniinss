@@ -50,7 +50,7 @@ Segurado em call center com depressão (CID F32) e transtorno de ansiedade (CID 
 
 ### Cenário 3 — Burnout
 
-Segurado com esgotamento profissional (CID Z73.0 na CID-10 ou QD85 na CID-11). OMS reconhece como fenômeno ocupacional. Portaria MTE 1.419/2024 e NR-1 atualizada. B92 se houver incapacidade.
+Segurado com esgotamento profissional (CID Z73.0 na CID-10 ou QD85 na CID-11). OMS reconhece como fenômeno ocupacional. Portaria MTE 1.419/2024 e NR-1 atualizada. B91 ou B92 se houver incapacidade.
 
 ### Cenário 4 — Acidente de trajeto
 
@@ -58,11 +58,11 @@ Segurado em trajeto residência-trabalho sofre acidente com incapacidade permane
 
 ### Cenário 5 — Doença preexistente agravada
 
-Segurado com hérnia discal anterior à filiação. Trabalho pesado de carregador agravou quadro com incapacidade total. Tema 1083 STJ e art. 21, I (concausa). B92 com conversão do B91 para acidentário.
+Segurado com hérnia discal anterior à filiação. Trabalho pesado de carregador agravou quadro com incapacidade total. Tema 1083 STJ e art. 21, I (concausa). B92 com conversão do B32 para acidentário.
 
 ### Cenário 6 — Acidente com perda de membro
 
-Trabalhador de serraria amputa dedos em acidente. B31 acidentário inicial. Incapacidade residual definitiva. B94 (auxílio-acidente) ou B92 conforme grau de incapacidade.
+Trabalhador de serraria amputa dedos em acidente. B91 acidentário inicial. Incapacidade residual definitiva. B94 (auxílio-acidente) ou B92 conforme grau de incapacidade.
 
 ### Cenário 7 — Câncer ocupacional
 
@@ -101,14 +101,14 @@ Quinto, destacar diferenças percentuais para dimensionar a repercussão econôm
 
 Acionar `ntep-nexo-acidentario` para detalhes do NTEP.
 Acionar `auditoria-laudo-pericial` para revisão de laudo.
-Acionar `base-incapacidade-b31-temporaria` e `base-incapacidade-b91-permanente` para conversões.
+Acionar `base-incapacidade-b31-temporaria` e `base-incapacidade-b32-permanente` para conversões.
 Acionar `base-auxilio-acidente-b94-pos-reforma` para sequelas com redução parcial.
 Acionar `base-calculo-rmi-ec103` para cálculo.
 Acionar `auditoria-ppp` e `base-especial-agentes-quimicos` ou `base-especial-agentes-biologicos` em casos com exposição específica.
 
 ## 7. Alerta estratégico
 
-Primeiro, diferença entre RMI de B91 (60% + 2%) e B92 (100%) é decisiva. Para segurado com 22 anos de contribuição, B91 = 64% da média, B92 = 100%. Investigar sempre.
+Primeiro, diferença entre RMI de B32 (60% + 2%) e B92 (100%) é decisiva. Para segurado com 22 anos de contribuição, B32 = 64% da média, B92 = 100%. Investigar sempre.
 
 Segundo, CAT é prova importante, mas sua ausência não afasta nexo. Enfrentar negativas com documentação técnica e precedentes.
 
