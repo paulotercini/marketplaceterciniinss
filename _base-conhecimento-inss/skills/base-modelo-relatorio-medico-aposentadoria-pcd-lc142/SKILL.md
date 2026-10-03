@@ -171,6 +171,15 @@ Falta de grau. INSS não tem como calcular o multiplicador.
 
 Laudo apenas com diagnóstico sem descrição funcional. Insuficiente.
 
+Data de emissão, CPF e CRM legível. A análise documental do INSS devolve o relatório sem eles (art. 2º da Portaria Conjunta MPS/INSS 13/2026).
+
+Exames de imagem datados e em sequência, com o grau da escala quando houver (Kellgren-Lawrence na artrose). A sequência prova a permanência do impedimento e a data de início.
+
+Limitação em verbos com medida (caminhar X metros, subir X degraus, permanecer em pé X minutos, uso de bengala ou órtese), distribuída pelos domínios.
+
+Relatório de incapacidade copiado. O texto que conclui pela impossibilidade de trabalhar não serve aqui; descreve-se o impedimento e as barreiras.
+
+
 ## 8. Carta ao médico assistente
 
 Em `references/CARTA-AO-MEDICO.md`.

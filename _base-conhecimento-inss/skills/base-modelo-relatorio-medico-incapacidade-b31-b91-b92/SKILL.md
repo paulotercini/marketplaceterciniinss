@@ -9,11 +9,11 @@ description: "Modelo narrativo enxuto (1 folha) de relatório médico para incap
 
 Acione SEMPRE que houver necessidade de gerar modelo de relatório médico para encaminhar a médico assistente, com finalidade de instruir requerimento administrativo ou ação judicial de.
 
-Auxílio por incapacidade temporária (B31, antigo auxílio-doença).
+Auxílio por incapacidade temporária, previdenciário (B31) ou acidentário (B91).
 
-Aposentadoria por incapacidade permanente (B91, antiga aposentadoria por invalidez).
+Aposentadoria por incapacidade permanente, previdenciária (B32) ou acidentária (B92).
 
-Aposentadoria por incapacidade permanente acidentária (B92).
+As espécies seguem a tabela oficial do INSS desde a Onda 165 (03/10/2026). O nome da pasta desta skill foi mantido para não quebrar referências.
 
 A skill é fonte primária pró-segurado para produzir modelo narrativo enxuto (cabe em 1 folha) no estilo do escritório Paulo Roberto Tercini Filho, com variantes por especialidade médica.
 
@@ -21,7 +21,7 @@ A skill é fonte primária pró-segurado para produzir modelo narrativo enxuto (
 
 Narrativo em parágrafos corridos (não checklist com lacunas, salvo variante específica).
 
-Cabe em uma folha A4.
+Cabe em meia página, no máximo uma folha A4, e não cita artigo de lei (Onda 165).
 
 Estrutura. Cabeçalho simples + Diagnósticos (CID-10) + Histórico clínico + Avaliação funcional/prognóstico + Local, data e assinatura.
 
@@ -34,11 +34,14 @@ Tom técnico fluído. Conexão direta entre patologia → limitação → imposs
 ```
 RELATÓRIO MÉDICO
 
-Paciente: [NOME COMPLETO]
-Data de nascimento: [DD/MM/AAAA] — Idade: [XX] anos
+Paciente: [nome completo]. CPF: [000.000.000-00]. Nascimento: [DD/MM/AAAA].
+Profissão: [função e tarefas principais].
+Data de emissão: [DD/MM/AAAA]
 ```
 
 ### 3.2. Diagnósticos
+
+CID com o quarto dígito quando existir, com lado e origem (primária, pós-traumática, secundária). Em artrose, M15 poliartrose, M16 coxartrose, M17 gonartrose, M18 rizartrose, M19 outras artroses e M47 espondilose, e os códigos pós-traumáticos M16.4 e M16.5, M17.2 e M17.3, M18.2 e M18.3 e M19.1 já contam a história do acidente.
 
 ```
 Diagnósticos (CID-10)
@@ -54,21 +57,17 @@ Parágrafo narrativo descrevendo. Data do diagnóstico inicial (DID). Sintomatol
 
 ### 3.4. Avaliação funcional e prognóstico
 
-Parágrafo narrativo abordando. Domínios funcionais comprometidos (autocuidado, mobilidade, vida doméstica, vida laboral, vida social). Prognóstico (favorável, reservado, desfavorável). Resposta ao tratamento. Insuscetibilidade de reabilitação (para B91). Necessidade de assistência permanente (para B91 com adicional 25%).
+Parágrafo narrativo abordando. Domínios funcionais comprometidos (autocuidado, mobilidade, vida doméstica, vida laboral, vida social). Prognóstico (favorável, reservado, desfavorável). Resposta ao tratamento. Insuscetibilidade de reabilitação (permanente, B32 ou B92). Necessidade de assistência permanente (adicional de 25%).
 
-### 3.5. Data de início da incapacidade (DII) e duração estimada
+### 3.5. Duas datas, sempre, DID e DII
 
-Texto direto fixando.
+DID, sempre, com o exame ou atendimento que a documenta. DII, com o marco documental. Se a DID for anterior à filiação ou ao reingresso, o relatório diz que a incapacidade começou com o agravamento do quadro e nomeia o marco, e a petição cita o art. 42, § 2º, e o art. 59, § 1º, da Lei 8.213/1991, conferidos no MCP `normas` em 03/10/2026.
 
-DII (data de início da incapacidade). Com fundamentação documental.
+Temporária (B31 ou B91). Prazo de afastamento em dias.
 
-DID (data de início da doença). Quando relevante.
+Permanente (B32 ou B92). Insuscetibilidade de reabilitação.
 
-Para B31. Período estimado de afastamento.
-
-Para B91. Insuscetibilidade de reabilitação.
-
-Para B92. Nexo causal com o trabalho (acidente, doença ocupacional, equiparação acidente).
+Acidentária (B91 ou B92). Nexo com o trabalho ou o acidente, em uma frase, sem citar lei.
 
 ### 3.6. Encerramento
 
@@ -123,7 +122,7 @@ Tratamentos atuais com posologia.
 
 Evitar afirmações genéricas como "incapacitado". Detalhar QUAIS atividades a patologia inviabiliza.
 
-### 6.2. Para B91
+### 6.2. Para a permanente (B32 ou B92)
 
 Insuscetibilidade de reabilitação é OBRIGATÓRIA.
 
@@ -133,7 +132,7 @@ Histórico de tratamentos prolongados sem melhora.
 
 Se houver necessidade de auxílio de terceiros, indicar para fundamentar adicional 25% (art. 45 da Lei 8.213/91).
 
-### 6.3. Para B92
+### 6.3. Para a acidentária (B91 ou B92)
 
 Nexo causal com o trabalho é OBRIGATÓRIO.
 
@@ -141,19 +140,25 @@ Hipóteses. Acidente típico (art. 19). Doença profissional/ocupacional (art. 2
 
 CAT (Comunicação de Acidente do Trabalho) referenciada quando emitida.
 
+### 6.4. Artrose e doenças degenerativas (M15 a M19, M47, M50 a M54)
+
+O indeferimento típico é "quadro compatível com a idade" ou "doença preexistente". O relatório responde com as duas datas, o grau radiológico datado (Kellgren-Lawrence I a IV), o tratamento esgotado e a limitação em verbos com medida ligada à profissão, e a mesma artrose que não impede o trabalho sentado impede o do pedreiro. Quando o esforço do trabalho agravou o quadro, o relatório diz isso em uma frase e a petição sustenta a concausa do art. 21, I. ATENÇÃO, o art. 20, § 1º, "a", da Lei 8.213/1991 exclui a doença degenerativa do conceito de doença do trabalho, e o INSS usará esse dispositivo. A tese acidentária em artrose depende de demonstrar o agravamento pelo trabalho, e não a causa, e deve ser avaliada caso a caso antes de escolher a espécie e o foro.
+
 ## 7. Armadilhas a evitar
 
 Laudo genérico. "Paciente apresenta CID X.X e está incapacitado". INSUFICIENTE.
 
 Falta de DII. Crítico para todos os benefícios.
 
-Falta de DID. Crítico para B91 com adicional 25% e para casos de doença preexistente (art. 42 §2º Lei 8.213/91 — agravamento).
+Falta de DID. A DID omitida por medo da preexistência entrega ao INSS a tese sem a contraprova, e é a DID com a DII posterior que prova o agravamento.
+
+Falta do quarto dígito do CID em artrose, sem lado e sem origem. Grau radiológico citado como se decidisse o caso. Profissão ausente do relatório. Citação de artigo de lei no corpo do relatório.
 
 Prognóstico vago. "Prognóstico reservado" sem fundamentação. Solicitar detalhamento.
 
-Funcionalidade não abordada. Para B91, sem insuscetibilidade de reabilitação expressa, perícia rejeita.
+Funcionalidade não abordada. Na permanente, sem insuscetibilidade de reabilitação expressa, a perícia rejeita.
 
-Nexo causal não abordado. Para B92, sem indicação expressa do nexo, perícia indefere a tese acidentária.
+Nexo causal não abordado. Na acidentária, sem indicação expressa do nexo, a perícia indefere a tese acidentária.
 
 ## 8. Carta ao médico assistente
 
@@ -175,7 +180,7 @@ Patologia principal e CID.
 
 Especialidade do médico que vai assinar.
 
-Tipo de benefício (B31, B91 ou B92).
+Tipo de benefício (B31, B91, B32 ou B92).
 
 Eu gero o relatório personalizado em formato .docx pronto para ser entregue ao médico assistente.
 

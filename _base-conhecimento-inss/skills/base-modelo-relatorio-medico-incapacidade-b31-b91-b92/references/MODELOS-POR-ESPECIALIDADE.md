@@ -1,5 +1,7 @@
 # Sub-Modelos por Especialidade. Incapacidade B31, B91 e B92
 
+**Onda 165 (03/10/2026).** O relatório entregue ao médico segue a extensão e a ordem do `MODELO-BASE.md` curto, de meia a uma página e sem citar lei. Os sub-modelos abaixo servem como banco de conteúdo por especialidade, para escolher os achados, exames e verbos de cada área, e não como forma a copiar inteira.
+
 ## 1. ORTOPEDISTA
 
 **RELATÓRIO MÉDICO**
@@ -31,7 +33,7 @@ O prognóstico funcional é [reservado / desfavorável], considerando [a cronici
 
 **Data de início da incapacidade e duração estimada**
 
-A DII é fixada em [DD/MM/AAAA], conforme [primeiro atendimento ortopédico / data da lesão / piora documentada]. Recomenda-se afastamento por prazo mínimo de [X dias / X meses / por tempo indeterminado], podendo ser prorrogado conforme evolução. [Para B91: paciente insuscetível de reabilitação profissional]. [Para B92: nexo acidentário documentado em CAT de DD/MM/AAAA].
+A DII é fixada em [DD/MM/AAAA], conforme [primeiro atendimento ortopédico / data da lesão / piora documentada]. Recomenda-se afastamento por prazo mínimo de [X dias / X meses / por tempo indeterminado], podendo ser prorrogado conforme evolução. [Permanente, B32 ou B92: paciente insuscetível de reabilitação profissional]. [Acidentário, B91 ou B92: nexo documentado em CAT de DD/MM/AAAA].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -39,6 +41,30 @@ ________________________________________
 [Nome do Médico]
 Ortopedia e Traumatologia
 CRM [número]
+
+---
+
+## 1-A. ORTOPEDISTA, ARTROSE (M15 a M19 e M47)
+
+**RELATÓRIO MÉDICO**
+
+Paciente: [nome completo]. CPF: [000.000.000-00]. Nascimento: [DD/MM/AAAA].
+Profissão: [função e tarefas principais].
+Diagnóstico: [M17.0 gonartrose primária bilateral / M17.3 gonartrose pós-traumática / M16.0 coxartrose primária bilateral / M18.0 rizartrose bilateral / M15.0 poliartrose / M47.8 espondilose]. [CID secundário, como M23.2 lesão de menisco.]
+
+Acompanho o(a) paciente desde [mês/ano]. A radiografia de [DD/MM/AAAA] mostra artrose grau [II, III ou IV] de Kellgren-Lawrence em [articulação e lado], com [redução do espaço articular, osteófitos, deformidade em varo ou valgo][, com progressão em relação à radiografia de DD/MM/AAAA]. Ao exame, [flexão limitada a X graus, crepitação, derrame, marcha antálgica, uso de bengala].
+
+Já realizou [X sessões de fisioterapia entre mês/ano e mês/ano], usa [medicação, com tempo de uso] e fez infiltração em [DD/MM/AAAA], com [melhora de poucas semanas / sem melhora]. [A artroplastia está indicada e aguarda (fila do SUS) / está contraindicada por (motivo).]
+
+Na função de [profissão], precisa [agachar, ajoelhar, subir escadas ou andaimes, carregar peso, ficar em pé]. Hoje não consegue [agachar / subir mais de X degraus sem apoio / ficar em pé mais de X minutos / carregar mais de X quilos / caminhar mais de X metros], e a tentativa provoca [dor intensa, falseio, risco de queda].
+
+A artrose está documentada desde [DD/MM/AAAA], e a incapacidade para o trabalho começou em [DD/MM/AAAA], quando [a radiografia mostrou progressão / a infiltração falhou / a cirurgia foi indicada]. [Se houver: O esforço de (agachar o dia inteiro, carregar sacos de X quilos) contribuiu para o agravamento. / A artrose é sequela da (fratura ou lesão ligamentar) de DD/MM/AAAA.] Indico afastamento por [X] dias a partir de [DD/MM/AAAA]. [Permanente: O quadro é definitivo e não permite reabilitação para outra atividade, em razão de (artrose grau IV com cirurgia contraindicada, idade e escolaridade).]
+
+[Local], [data por extenso].
+
+[Nome do médico], Ortopedia e Traumatologia, CRM [número legível] e carimbo.
+
+Nota para deficiência (aposentadoria PCD e BPC). A artrose avançada pode fundamentar também o relatório de deficiência, mas o texto é outro, sem concluir pela impossibilidade de trabalhar. Aproveitam-se as radiografias datadas em sequência, que provam o impedimento acima de dois anos, e os verbos com medida nos domínios de mobilidade, cuidados pessoais e vida doméstica.
 
 ---
 
@@ -71,7 +97,7 @@ O prognóstico funcional é [reservado / desfavorável], considerando o tempo de
 
 **Data de início da incapacidade e duração estimada**
 
-A DII é fixada em [DD/MM/AAAA], conforme [primeira consulta psiquiátrica / internação / afastamento documentado]. Recomenda-se afastamento por [X dias / X meses / por tempo indeterminado]. [Para B91: paciente insuscetível de reabilitação profissional]. [Para B92: nexo causal com o ambiente laboral documentado por (CAT, histórico ocupacional, perícia ergonômica)].
+A DII é fixada em [DD/MM/AAAA], conforme [primeira consulta psiquiátrica / internação / afastamento documentado]. Recomenda-se afastamento por [X dias / X meses / por tempo indeterminado]. [Permanente, B32 ou B92: paciente insuscetível de reabilitação profissional]. [Para B92: nexo causal com o ambiente laboral documentado por (CAT, histórico ocupacional, perícia ergonômica)].
 
 [Local], [DD] de [mês] de [ano].
 
@@ -250,9 +276,9 @@ DII (data de início da incapacidade) é OBRIGATÓRIA.
 
 DID (data de início da doença) é importante quando há doença preexistente (art. 42 §2º da Lei 8.213/91 — agravamento).
 
-Para B91. Insuscetibilidade de reabilitação é OBRIGATÓRIA.
+Permanente (B32 ou B92). Insuscetibilidade de reabilitação é OBRIGATÓRIA.
 
-Para B92. Nexo causal com o trabalho é OBRIGATÓRIO (CAT, NTEP automático ou fundamentação técnica).
+Acidentária (B91 ou B92). Nexo causal com o trabalho é OBRIGATÓRIO (CAT, NTEP automático ou fundamentação técnica).
 
 Conectar limitação funcional com atividade laboral concreta do paciente.
 

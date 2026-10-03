@@ -162,6 +162,12 @@ Laudo sem descrição funcional da sequela. "Paciente apresenta sequela de fratu
 
 Laudo sem correlação com a atividade laboral. Sequela genérica sem demonstração de como afeta o trabalho habitual.
 
+Confusão entre acidente e relação de trabalho. O B94 exige acidente de qualquer natureza, inclusive fora do trabalho; o nexo laboral só importa para a natureza acidentária e a competência estadual. Doença degenerativa sem evento traumático não gera B94.
+
+CID sem o código da sequela. Usar o código pós-traumático com quarto dígito (M17.2 ou M17.3 gonartrose pós-traumática, M16.4 ou M16.5 coxartrose pós-traumática, M19.1 artrose pós-traumática de outra articulação, T93 e T92 sequelas de lesões dos membros), ao lado do código da lesão original.
+
+Data e mecanismo do acidente ausentes. Informar a data, o mecanismo e o documento que registra o evento (CAT, boletim de atendimento de urgência, prontuário).
+
 ## 8. Carta ao médico assistente
 
 Em `references/CARTA-AO-MEDICO.md` (instruções específicas para B94).
