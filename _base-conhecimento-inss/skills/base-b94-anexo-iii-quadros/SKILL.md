@@ -54,7 +54,7 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Tema 350 TNU
 
-Concessão e prova.
+Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não concessão ou prova (auditoria 03/10/2026).
 
 ## Anexo III exemplificativo
 

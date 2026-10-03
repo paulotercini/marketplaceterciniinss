@@ -70,7 +70,7 @@ Refutação. Tempus regit actum.
 
 Argumento adversário. Mesma regra.
 
-Refutação. Art. 25 III — 10 para CI.
+Refutação. Não há carência alguma. A exigência do art. 25, III, foi declarada inconstitucional (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]), e o Enunciado 19/CRPS a afasta, mantida só a prova da qualidade de segurada (auditoria 03/10/2026).
 
 ### Argumento 7 — Pensão exige 24
 

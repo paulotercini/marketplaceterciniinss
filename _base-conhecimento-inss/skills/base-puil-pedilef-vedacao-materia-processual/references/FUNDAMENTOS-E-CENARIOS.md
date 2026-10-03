@@ -170,7 +170,7 @@ Tese. Divergência sobre a interpretação do art. 17 da Lei 10.259/2001 quanto 
 
 Paradigma. TR que afasta a aplicação do Tema 1124 por hipótese excepcional.
 
-Norma material. Art. 17 Lei 10.259. Tema 350/STF (revisão dispensa novo PA, demora administrativa, MS preventivo).
+Norma material. Art. 17 Lei 10.259. Tema 350/STF (revisão e restabelecimento dispensam novo requerimento; demora além do prazo legal configura interesse de agir) (auditoria 03/10/2026, retirada a menção a MS preventivo, estranha à tese).
 
 Cruzamento. `base-efeito-translativo-tema-1124-defesa`, `tema-1124-instrucao-administrativa`.
 

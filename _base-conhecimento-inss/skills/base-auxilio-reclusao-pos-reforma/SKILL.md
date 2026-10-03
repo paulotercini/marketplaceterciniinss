@@ -29,7 +29,7 @@ Portaria MPS que define o teto de baixa renda (valor atualizado periodicamente).
 
 Primeiro, qualidade de segurado na data da prisão.
 
-Segundo, baixa renda do segurado na data da prisão, aferida pela média dos 12 salários-de-contribuição imediatamente anteriores (art. 80, §4º, Lei 8.213; divisor fixo 12). O critério do último salário-de-contribuição vale apenas para prisões anteriores à Lei 13.846/2019.
+Segundo, baixa renda do segurado na data da prisão, aferida pela média dos 12 salários-de-contribuição imediatamente anteriores (art. 80, §4º, Lei 8.213; divisor igual ao número de salários existentes, Tema 310/TNU e art. 383, §6º, da IN 128/2022; auditoria 03/10/2026). O critério do último salário-de-contribuição vale apenas para prisões anteriores à Lei 13.846/2019.
 
 Terceiro, carência de 24 contribuições (após Lei 13.846/2019).
 
@@ -41,9 +41,9 @@ Quinto, dependentes no sentido do art. 16.
 
 Primeiro, segurado preso antes da Lei 13.846/2019. Tempus regit actum. Aplica regra anterior, com regime semiaberto admitido e sem exigência de 24 contribuições.
 
-Segundo, segurado desempregado preso. REsp 2.240.220 STJ reconheceu que renda zero atende o critério de baixa renda. Tese pró-dependente.
+Segundo, segurado desempregado preso. Em prisão anterior à MP 871/2019, a ausência de renda atende o critério (Tema 896/STJ); em prisão posterior, vale a média dos 12 meses, e sem salário de contribuição no período há baixa renda (art. 383, §5º, da IN 128/2022) (auditoria 03/10/2026, retirado o REsp 2.240.220, que integra o Tema 1421/STJ).
 
-Terceiro, segurado com renda ligeiramente acima do teto mas com dependentes em situação de vulnerabilidade. Tema 896 STJ flexibiliza critério em casos excepcionais.
+Terceiro, segurado com renda ligeiramente acima do teto. O Tema 1162/STJ admite flexibilizar só em prisão anterior à MP 871/2019 com excesso ínfimo e a veda depois, salvo falta de correção anual do limite (auditoria 03/10/2026, retirado o Tema 896/STJ, que trata da renda zero do desempregado).
 
 Quarto, segurado em regime fechado com progressão posterior. Direito adquirido à manutenção do benefício (segundo corrente pró-dependente).
 
@@ -51,7 +51,7 @@ Quinto, segurado em monitoramento eletrônico (tornozeleira). Discussão sobre e
 
 Sexto, DIB retroativa à data da prisão se requerida em até 180 dias para dependente menor de 16 anos, ou 90 dias para demais. Senão, DIB na DER.
 
-Sétimo, média de 12 salários imediatamente anteriores à prisão (divisor fixo 12) para verificação do critério de baixa renda (Tema 357 TNU).
+Sétimo, média dos salários de contribuição dos 12 meses anteriores à prisão para o critério de baixa renda (art. 80, §4º), com divisor igual ao número de salários existentes (Tema 310/TNU) (auditoria 03/10/2026, retirado o Tema 357/TNU, que trata da progressão de regime).
 
 ## Regra e estratégia
 
@@ -59,9 +59,9 @@ A regra geral é que o B25 é devido aos dependentes enquanto o segurado estiver
 
 Primeiro, verificar data da prisão para definir regime aplicável (antes ou depois da Lei 13.846/2019).
 
-Segundo, em segurado desempregado, invocar REsp 2.240.220 STJ (renda zero = baixa renda).
+Segundo, em segurado desempregado, invocar o Tema 896/STJ se a prisão for anterior à MP 871/2019, e o art. 383, §5º, da IN 128/2022 se posterior (auditoria 03/10/2026).
 
-Terceiro, em renda ligeiramente acima, invocar Tema 896 STJ (flexibilização excepcional).
+Terceiro, em renda ligeiramente acima, invocar o Tema 1162/STJ só em prisão anterior à MP 871/2019 com excesso ínfimo (auditoria 03/10/2026, retirado o Tema 896/STJ, que trata da renda zero do desempregado).
 
 Quarto, em progressão de regime, invocar direito adquirido e manutenção do benefício.
 

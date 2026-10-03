@@ -44,7 +44,7 @@ Arts. 42 a 48 Lei 8.213/91. Acréscimo 25%, art. 45 Lei 8.213/91 e Anexo I Decre
 
 RMI EC 103/2019 art. 26 §2º III (60% mais 2% por ano excedente).
 
-Tema 1083 STJ (agravamento). Portaria Conjunta MPS/INSS 14/2026 (análise documental).
+Art. 42, §2º, da Lei 8.213/91 (agravamento de doença preexistente) (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído). Portaria Conjunta MPS/INSS 14/2026 (análise documental).
 
 ### Aposentadoria por Incapacidade Permanente Acidentária B92
 
@@ -114,7 +114,7 @@ Lei 15.157/2025 (dispensa de reavaliação para impedimento permanente). Decreto
 
 Portaria DPMF/INSS 19/2026 (Teleperícia BPC).
 
-Tema 27 STF (RE 567985, flexibilização do critério de renda). Enunciado 17 CRPS (irrepetibilidade de valores).
+Tema 27 STF (RE 567985, flexibilização do critério de renda). Enunciado 17 CRPS (repetíveis os pagamentos indevidos por erro administrativo, salvo boa-fé objetiva comprovada; no BPC, inciso II, só com má-fé comprovada) (auditoria 03/10/2026).
 
 ### BPC Idoso
 
@@ -134,13 +134,13 @@ Tema 526 STF. Súmula 63 TNU (fatos geradores até a MP 871/2019, redação de 1
 
 Art. 80 Lei 8.213/91. Carência 24 contribuições mensais (Lei 13.846/2019).
 
-Tema 1162 STJ (flexibilização só pré-MP 871/2019, com modulação). Tema 896 STJ. Tema 357 TNU. Tema 310 TNU. Tema 89 STF (renda zero do desempregado). Tema 1421 STJ (REsp 2240220 e 2256869, sem retroação da DIB para menor de 16 anos após 180 dias da prisão). IRDR 35 TRF4 (absorvido).
+Tema 1162 STJ (flexibilização só pré-MP 871/2019, com modulação). Tema 896 STJ (renda zero do desempregado, prisão anterior à MP 871/2019). Tema 357 TNU (progressão para o semiaberto em prisão anterior à MP). Tema 310 TNU (divisor da média). Tema 89 STF (renda do preso, e não dos dependentes) (auditoria 03/10/2026). Tema 1421 STJ (REsp 2240220 e 2256869, sem retroação da DIB para menor de 16 anos após 180 dias da prisão). IRDR 35 TRF4 (absorvido).
 
 ### Salário-Maternidade
 
 Art. 71 e seguintes Lei 8.213/91. LC 146/2014 (prorrogação por morte da mãe). Lei 12.873/2013 (pai adotante).
 
-Carência 10 meses para CI/facultativa (art. 25 III). Isenção carência empregada art. 26 VI.
+Carência inexigível em todas as categorias. O art. 25, III (10 contribuições para CI, facultativa e segurada especial) foi declarado inconstitucional (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]), o Enunciado 19/CRPS exige só a qualidade de segurada, e a empregada já era isenta pelo art. 26, VI (auditoria 03/10/2026).
 
 ### Acerto de CNIS
 

@@ -28,11 +28,11 @@ Aplicação pró-segurado. Contudo, em transição, quando o INSS indefere por u
 
 ### Tema 350 STF
 
-Tese. A decadência do direito à revisão não alcança o direito ao melhor benefício, quando preservada a boa-fé e a inércia administrativa.
+Tese. "A concessão de benefícios previdenciários depende de requerimento do interessado, não se caracterizando ameaça ou lesão a direito antes de sua apreciação e indeferimento pelo INSS. A exigência de prévio requerimento não se confunde com o exaurimento das vias administrativas." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a não incidência da decadência sobre o melhor benefício).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Permite revisão de benefício concedido em transição menos vantajosa, inclusive para migrar para transição mais favorável quando reunidos os requisitos de outra regra na mesma data.
+Aplicação. A revisão para transição mais favorável, reunidos os requisitos de outra regra na mesma data, pode ser pedida diretamente em juízo (exceção do Tema 350/STF para revisão), dentro do prazo do art. 103, que alcança o melhor benefício (Tema 966/STJ) (auditoria 03/10/2026).
 
 ### Súmula 359 STF
 
@@ -62,7 +62,7 @@ Refutação. Tema 334 STF. O direito ao melhor benefício impõe análise compar
 
 Argumento adversário. Concedido o benefício por uma regra, é vedada a mudança para outra.
 
-Refutação. Tema 350 STF. O direito ao melhor benefício persiste mesmo após a concessão, desde que não consumada a decadência de 10 anos. Acionar `decadencia-revisao-previdenciaria`.
+Refutação. Tema 334/STF, observado o Tema 966/STJ (auditoria 03/10/2026, corrigido o número, antes indicado como Tema 350/STF). O direito ao melhor benefício persiste mesmo após a concessão, desde que não consumada a decadência de 10 anos. Acionar `decadencia-revisao-previdenciaria`.
 
 ### Argumento 3 — Impossibilidade de reafirmação da DER
 

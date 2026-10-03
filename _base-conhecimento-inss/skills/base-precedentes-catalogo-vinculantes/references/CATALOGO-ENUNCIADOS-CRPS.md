@@ -4,7 +4,7 @@ REESCRITO INTEGRALMENTE em 11/07/2026 (auditoria de veracidade). Fonte primária
 
 CONVERGÊNCIA (12/07/2026). Este catálogo foi cruzado com a auditoria paralela da Onda 66 (reference AUDITORIA-ENUNCIADOS-CRPS-ONDA-66.md), feita sobre a mesma fonte primária com complemento da Imprensa Nacional. As duas auditorias convergem integralmente nos Enunciados 1, 6, 8, 12, 13 e 17. Os ganhos da Onda 66 (inciso V integral do Enunciado 8, caput e incisos VI e VII do Enunciado 10, data de publicação da Resolução 29/2024) foram incorporados abaixo.
 
-AVISO OPERACIONAL. Antes de transcrever em peça, conferir incisos no PDF oficial. Nos Enunciados 8 e 19 a extração automática do PDF truncou trechos, sinalizados como [TRECHO A CONFERIR NO DOU].
+AVISO OPERACIONAL. Antes de transcrever em peça, conferir incisos no PDF oficial. No Enunciado 8 a extração automática do PDF truncou trecho, sinalizado como [TRECHO A CONFERIR NO DOU]. O Enunciado 19 foi completado em 03/10/2026 com o texto vigente obtido no MCP de enunciados do CRPS, e o Enunciado 10 recebeu pela mesma fonte o caput e os incisos VI e VII (auditoria 03/10/2026).
 
 ## ENUNCIADO 1 (DOU 12/11/2019)
 
@@ -128,6 +128,8 @@ IV - É vedada a conversão de tempo de serviço especial em comum na função d
 
 ## ENUNCIADO 10 (alterado pela Resolução nº 28/CRPS, de 07/07/2023, DOU 02/08/2023, republicada)
 
+A decadência prevista no art. 103-A da Lei nº 8.213/91 não se aplica aos atos administrativos praticados pela Administração Previdenciária tendentes à cessação da manutenção de benefícios ou quotas cuja continuidade da percepção seja indevida em face da legislação previdenciária de regência.
+
 I - O prazo decadencial previsto no art. 103-A da Lei 8.213/91, para revisão dos atos praticados pela Previdência Social antes da Lei nº 9.784/99, somente começa a correr a partir de 1º/02/99.
 
 II - Não se aplica o instituto da decadência às revisões de reajustamento e às estabelecidas em dispositivo legal.
@@ -138,7 +140,11 @@ IV - Não se aplica a decadência prevista no art. 103-A da Lei nº 8.213/91 ao 
 
 V - A decadência prevista no art. 103 da Lei 8.213/91 não se aplica à revisão de atos de indeferimento, cancelamento ou cessação de benefícios.
 
-NOTA DE HARMONIZAÇÃO (12/07/2026, cruzamento com a auditoria da Onda 66). A auditoria paralela da Onda 66, com pesquisa complementar na Imprensa Nacional (in.gov.br), apurou para este Enunciado 10 um caput expresso ("A decadência prevista no art. 103-A da Lei nº 8.213/91 não se aplica aos atos administrativos praticados pela Administração Previdenciária tendentes à cessação da manutenção de benefícios ou quotas cuja continuidade da percepção seja indevida em face da legislação previdenciária de regência") e dois incisos adicionais, VI (vedação de suspensão por falta de documentação após 10 anos da concessão, salvo fraude ou má-fé) e VII (pecúlio), que não constam legíveis do PDF consolidado. Conferir o texto integral na Imprensa Nacional antes de citar caput, VI ou VII. ALERTA ESTRATÉGICO (apurado na Onda 66 e confirmado). O caput e o inciso IV são CONTRA o segurado, afastam a decadência administrativa que o protegeria de cessações tardias em B31, B32 e benefícios de revisão periódica. O uso pró-segurado está no inciso V (indeferimento, cancelamento e cessação impugnáveis a qualquer tempo) e, se confirmado, no inciso VI.
+VI - Transcorridos mais de dez anos da data da concessão do benefício, não poderá haver sua suspensão ou cancelamento na hipótese de o interessado não mais possuir a documentação que instruiu o pedido, exceto em caso de fraude ou má-fé.
+
+VII - O pecúlio previsto no inciso II do artigo 81 da Lei nº 8.213/91, em sua redação original, que não foi pago em vida ao segurado aposentado que retornou à atividade quando dela se afastou, é devido aos seus dependentes ou sucessores, relativamente às contribuições vertidas até 14/04/94, salvo se prescrito.
+
+NOTA DE HARMONIZAÇÃO (12/07/2026, cruzamento com a auditoria da Onda 66). A auditoria paralela da Onda 66, com pesquisa complementar na Imprensa Nacional (in.gov.br), apurou para este Enunciado 10 um caput expresso ("A decadência prevista no art. 103-A da Lei nº 8.213/91 não se aplica aos atos administrativos praticados pela Administração Previdenciária tendentes à cessação da manutenção de benefícios ou quotas cuja continuidade da percepção seja indevida em face da legislação previdenciária de regência") e dois incisos adicionais, VI (vedação de suspensão por falta de documentação após 10 anos da concessão, salvo fraude ou má-fé) e VII (pecúlio), que não constam legíveis do PDF consolidado. Caput e incisos VI e VII conferidos em 03/10/2026 no MCP de enunciados do CRPS, texto vigente desde 02/08/2023, e transcritos acima (auditoria 03/10/2026). ALERTA ESTRATÉGICO (apurado na Onda 66 e confirmado). O caput e o inciso IV são CONTRA o segurado, afastam a decadência administrativa que o protegeria de cessações tardias em B31, B32 e benefícios de revisão periódica. O uso pró-segurado está no inciso V (indeferimento, cancelamento e cessação impugnáveis a qualquer tempo) e no inciso VI.
 
 ## ENUNCIADO 11 (alterado, DOU 06/12/2021)
 
@@ -226,19 +232,27 @@ III - O auxílio por incapacidade temporária e a aposentadoria por incapacidade
 
 IV - O cômputo dos períodos em que o segurado esteve em gozo de benefício por incapacidade, para fins de carência, é aplicável em todo o território brasileiro.
 
-## ENUNCIADO 19 (criado pela Resolução nº 13, de 27/08/2025, DOU 08/09/2025)
+## ENUNCIADO 19 (redação da Resolução nº 13/2026, DOU 13/07/2026 (aprovado pela Resolução nº 13/2025, DOU 08/09/2025))
 
-É inexigível a carência para a concessão do benefício de salário-maternidade, prevista no art. 25, inc. III, da Lei nº 8.213, de 24 de julho de 1991, na redação dada pelo art. 2º da Lei nº 9.876, de 26 de novembro de 1999, e pelo art. 24 da Lei nº 13.846, de 18 de junho de 2019, mantendo-se a necessidade de comprovação da qualidade de segurado, observando-se os seguintes requisitos.
+É inexigível a carência para a concessão do benefício de salário-maternidade, prevista no art. 25, inciso III, da Lei nº 8.213, de 24 de julho de 1991, na redação dada pelo art. 2º da Lei nº 9.876, de 26 de novembro de 1999, e pelo art. 24 da Lei nº 13.846, de 18 de junho de 2019, mantendo-se a necessidade de comprovação da qualidade de segurado, observando-se os seguintes requisitos.
 
-I - O contribuinte individual, na ausência de inscrição formal junto ao INSS, deverá comprovar o efetivo exercício de atividade remunerada, bem como o recolhimento de, ao menos, uma contribuição previdenciária, mediante a apresentação de documentação idônea.
+I - O contribuinte individual, na ausência de inscrição formal junto ao INSS, deverá comprovar o efetivo exercício de atividade remunerada, bem como o recolhimento de, ao menos, uma contribuição previdenciária, mediante a apresentação de documentação idônea;
 
-II - O Segurado Especial que contribui para auferir benefício acima do salário-mínimo deve comprovar o exercício de atividade rural em ao menos um dos 12 meses que antecedem o fato gerador e o recolhimento de ao menos uma contribuição previdenciária;
+II - O segurado especial que contribui para auferir benefício acima do salário-mínimo deve comprovar o exercício de atividade rural em ao menos um dos 12 meses que antecedem o fato gerador e o recolhimento de ao menos uma contribuição previdenciária;
 
-III - Para fins de comprovação da qualidade de segurado, exige-se do Segurado Especial a demonstração, ainda que de forma descontínua, do exercício de atividade rural nos 12 (doze) meses anteriores ao fato gerador, não se exigindo a demonstração de exercício contínuo da atividade durante todo o período, nos termos do art. 39, parágrafo único, da Lei 8.213, de 24 de julho de 1991;
+III - Para fins de comprovação da qualidade de segurado, exige-se do segurado especial a demonstração, ainda que de forma descontínua, do exercício de atividade rural nos 12 meses anteriores ao fato gerador, não se exigindo a demonstração de exercício contínuo da atividade durante todo o período, nos termos do art. 39, parágrafo único, da Lei nº 8.213, de 24 de julho de 1991;
 
-IV e parágrafos - [TRECHO A CONFERIR NO DOU de 08/09/2025, Edição 170, Seção 1, pág. 97. A extração automática truncou o inciso IV e os §§ 1º a 3º, que tratam de contribuinte facultativo (concordância expressa para aproveitamento de contribuições), pagamento de contribuições com parto anterior ao vencimento (remissão ao Enunciado nº 5) e salário-maternidade em atividades concomitantes (art. 98 do Decreto nº 3.048/99).]
+IV - Compete ao segurado facultativo comprovar o pagamento da contribuição previdenciária, observado que a filiação ao Regime Geral de Previdência Social deve estar regularmente constituída antes do fato gerador, nos termos da legislação previdenciária e do Regulamento da Previdência Social; e
 
 V - O segurado que desempenhar atividades concomitantes terá direito ao salário-maternidade em relação a cada uma delas, desde que comprove o efetivo exercício na data do parto, conforme os critérios estabelecidos no art. 98 do Decreto nº 3.048, de 6 de maio de 1999.
+
+§ 1º A convalidação da filiação na qualidade de contribuinte individual para a condição de contribuinte facultativo somente poderá ser efetivada mediante manifestação expressa de concordância por parte do segurado;
+
+§ 2º O pagamento das contribuições previdenciárias devidas pelos segurados contribuinte individual, especial e facultativo deverá ser efetuado até o vencimento da respectiva competência, observado, no que couber, o Enunciado nº 5 do Conselho de Recursos da Previdência Social - CRPS; e
+
+§ 3º Para fins de concessão do salário-maternidade em atividades concomitantes, exige-se a comprovação da contribuição até a data do fato gerador, salvo se presumido o recolhimento, ou, no caso de contribuinte individual por conta própria, se o fato gerador tiver ocorrido antes do prazo legal para pagamento de contribuição em dia, hipóteses em que deve comprovar o exercício da atividade.
+
+Texto vigente desde 13/07/2026, conferido em 03/10/2026 no MCP de enunciados do CRPS. A Resolução nº 13/2026 alterou o inciso IV, que antes dizia apenas "O Contribuinte Facultativo deve comprovar o pagamento da contribuição", e suprimiu do § 2º a expressão "ainda que o parto ocorra em data anterior a esse vencimento", o que importa na leitura de acórdãos anteriores a 13/07/2026 (auditoria 03/10/2026).
 
 ## FONTE
 

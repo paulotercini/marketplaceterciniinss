@@ -25,7 +25,7 @@ A regra geral é o ônus estático, cada parte prova o que alega. A exceção pr
 
 ## Aplicação previdenciária
 
-Primeiro, início de prova material. O tempo rural e o segurado especial exigem início de prova material, art. 55, §3º, da Lei 8.213/91, vedada a prova exclusivamente testemunhal, Súmula 149/STJ. O início de prova material não precisa cobrir todo o período, Súmula 577/STJ e Tema 629/STJ. Acionar `segurado-especial-rural` e `documentos-comprobatorios-in128`.
+Primeiro, início de prova material. O tempo rural e o segurado especial exigem início de prova material, art. 55, §3º, da Lei 8.213/91, vedada a prova exclusivamente testemunhal, Súmula 149/STJ. O início de prova material não precisa cobrir todo o período, Súmula 14/TNU e Súmula 577/STJ (auditoria 03/10/2026, retirado o Tema 629/STJ, que trata da extinção sem mérito por ausência de prova eficaz). Acionar `segurado-especial-rural` e `documentos-comprobatorios-in128`.
 
 Segundo, dados em poder do INSS. CNIS, microficha, PPP arquivado, dossiê e processo administrativo estão com o INSS. Exigir do segurado a prova que só o INSS detém é impor prova diabólica, art. 373, §2º. Requerer a inversão dinâmica.
 

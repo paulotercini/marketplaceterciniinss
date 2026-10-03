@@ -20,11 +20,11 @@ Aplicação pró-segurado. Fundamento constitucional para invocar o Tema 1090 ST
 
 ### Tema 211 TNU
 
-Tese. A habitualidade não exige exposição contínua, bastando exposição não eventual integrada ao curso normal da jornada.
+Tese. "Para aplicação do art. 57, §3º, da Lei 8.213/91 a agentes biológicos, exige-se a probabilidade da exposição ocupacional, avaliando-se o seu caráter indissociável da produção do bem ou da prestação do serviço." (auditoria 03/10/2026, corrigida a síntese anterior, que estendia a tese a todos os agentes).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Afasta a tese administrativa de exposição contínua exigida.
+Aplicação pró-segurado. Em agentes biológicos, afasta a exigência administrativa de exposição contínua (auditoria 03/10/2026).
 
 ### Tema 205 TNU
 
@@ -68,11 +68,11 @@ Aplicação pró-segurado. Atenção à modulação e à aplicação em cada cas
 
 ### Tema 1083 STJ
 
-Tese. Doença preexistente agravada pela atividade reconhece nexo acidentário, ampliando o conceito de B92.
+Tese. O ruído com níveis variados se afere pelo Nível de Exposição Normalizado (NEN); ausente essa informação, adota-se o nível máximo (pico de ruído), com perícia judicial que comprove habitualidade e permanência (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a doença preexistente agravada).
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Reforço para conversão de B32 em B92 acidentária com RMI integral.
+Aplicação pró-segurado. Sem NEN no PPP, o pico de ruído serve de critério, desde que a perícia judicial comprove habitualidade e permanência (auditoria 03/10/2026).
 
 ## 2. Refutação aos argumentos típicos do INSS
 

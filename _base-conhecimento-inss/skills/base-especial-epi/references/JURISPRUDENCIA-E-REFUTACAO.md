@@ -82,7 +82,7 @@ Refutação. O CA comprova apenas a aprovação teórica do equipamento. A efic�
 
 Argumento adversário. O segurado não apresentou documentação técnica sobre a ineficácia.
 
-Refutação. O ônus da prova é do INSS quando o segurado apresenta fundada dúvida, pelo standard probatório atenuado do Tema 213 TNU. A exigência de prova técnica pelo segurado configura inversão indevida do ônus e cerceamento de defesa, impugnável por `defesa-probatoria-especial`.
+Refutação. O ônus de demonstrar a ineficácia do EPI é do autor (Tema 1090/STJ, item II), mas a divergência ou dúvida razoável favorece o segurado (Tema 213/TNU, item II, e Tema 1090/STJ, item III), e o indeferimento da prova técnica requerida para cumprir esse ônus configura cerceamento de defesa, impugnável por `defesa-probatoria-especial` (auditoria 03/10/2026).
 
 ### Argumento 7 — Segurado não pediu perícia
 
@@ -102,7 +102,7 @@ Primeiro, identificar agente principal em cada período do PPP.
 
 Segundo, enquadrar o agente em hipótese do Tema 1090 STJ ou do IRDR 15 TRF4.
 
-Terceiro, invocar Tema 213 TNU para inversão do ônus.
+Terceiro, invocar o Tema 213/TNU para desafiar a informação de EPI eficaz, sem pedir inversão do ônus, rejeitada na razão de decidir do Tema 1090/STJ (auditoria 03/10/2026).
 
 Quarto, demandar documentação de suporte do INSS ou da empresa, via processo ou via `retificacao-ppp`.
 

@@ -14,9 +14,9 @@ Devolução de valores em boa-fé.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Súmula 557 STJ
+### Súmula 557 STJ (não aplicável à desaposentação)
 
-Vedação pacificada em desaposentação.
+Trata da RMI da aposentadoria por invalidez precedida de auxílio-doença (Tema 704/STJ) e não de desaposentação, cuja vedação decorre do Tema 503/STF (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 

@@ -90,7 +90,7 @@ Refutação. A função compatível deve ser real e localizada na região do seg
 
 Argumento adversário. Sequela mínima afasta reabilitação.
 
-Refutação. A Súmula 47/TNU prevê reabilitação em sequela funcional, não somente médica. Critério multidisciplinar prevalece.
+Refutação. A Súmula 47/TNU manda examinar as condições pessoais e sociais quando reconhecida a incapacidade parcial, o que impede reduzir a análise ao dado médico; o critério multidisciplinar prevalece (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a previsão de reabilitação).
 
 ## 3. Cláusulas doutrinárias de apoio
 

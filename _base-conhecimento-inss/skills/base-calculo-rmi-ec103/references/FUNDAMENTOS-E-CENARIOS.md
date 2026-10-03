@@ -46,7 +46,7 @@ Média = R$ 8.000,00. RMI = 100%. Se abaixo do teto, RMI = R$ 8.000,00. Se acima
 
 ### Cenário 4 — B32 não acidentária
 
-Segurado com 22 anos de contribuição (homem). Média = R$ 4.000,00. RMI = 60% + 2% × 2 = 64%. RMI = R$ 2.560,00. Verificar possibilidade de conversão para B92 acidentária pelo Tema 1083 STJ (incapacidade preexistente agravada pela atividade).
+Segurado com 22 anos de contribuição (homem). Média = R$ 4.000,00. RMI = 60% + 2% × 2 = 64%. RMI = R$ 2.560,00. Verificar possibilidade de conversão para B92 acidentária pela concausa do art. 21, I, da Lei 8.213/91, quando a atividade agravou incapacidade preexistente (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído).
 
 ### Cenário 5 — B92 acidentária
 
@@ -82,7 +82,7 @@ Em cumprimento de sentença, a Fábrica de Cálculos do INSS pode apresentar cá
 
 Art. 103 da Lei 8.213/91. Prazo decadencial de 10 anos a partir do primeiro pagamento ou do conhecimento da redução do valor.
 
-Tema 350 STF. A decadência não alcança o direito ao melhor benefício.
+Tema 966/STJ. Incide o prazo decadencial do art. 103 sobre o direito adquirido ao benefício mais vantajoso, tese adversa (auditoria 03/10/2026, corrigida a atribuição ao Tema 350/STF, que trata do prévio requerimento).
 
 Revisão é cabível em caso de:
 Primeiro, contribuição omitida no CNIS e posteriormente acertada.

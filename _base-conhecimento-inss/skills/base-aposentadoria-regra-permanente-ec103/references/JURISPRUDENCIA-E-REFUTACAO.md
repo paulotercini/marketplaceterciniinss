@@ -18,21 +18,21 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Blindagem constitucional da aposentadoria híbrida.
 
-### Tema 245 TNU (carência com perda da qualidade)
+### Perda da qualidade e carência nas aposentadorias programáveis (art. 3º da Lei 10.666/2003)
 
-Tese. Para benefícios anteriores à Lei 13.846/2019, a perda da qualidade de segurado não implica perda da carência já cumprida.
+Fundamento legal. A perda da qualidade de segurado não é considerada para as aposentadorias por tempo de contribuição e especial e, na aposentadoria por idade, desde que cumprida a carência na data do requerimento (art. 3º, caput e §1º, da Lei 10.666/2003); a exigência de metade da carência após nova filiação (art. 27-A da Lei 8.213/91) alcança só auxílio-doença, aposentadoria por invalidez, salário-maternidade e auxílio-reclusão (auditoria 03/10/2026, retirada a atribuição ao Tema 245/TNU, que trata da qualidade de segurado após invalidação de benefício recebido de boa-fé).
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/2003/l10.666.htm
 
-Aplicação pró-segurado. Afasta interpretação restritiva da Lei 13.846/2019 para segurados com carência acumulada antes da vigência.
+Aplicação pró-segurado. Na aposentadoria programável, as contribuições anteriores à perda da qualidade contam para a carência, sem a exigência do art. 27-A (auditoria 03/10/2026).
 
 ### Tema 350 STF
 
-Tese. A decadência do direito à revisão não alcança o direito ao melhor benefício.
+Tese. "A concessão de benefícios previdenciários depende de requerimento do interessado, não se caracterizando ameaça ou lesão a direito antes de sua apreciação e indeferimento pelo INSS. A exigência de prévio requerimento não se confunde com o exaurimento das vias administrativas." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a não incidência da decadência sobre o melhor benefício).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Permite revisão de concessão em regra permanente que poderia ter sido concedida em transição mais vantajosa.
+Aplicação. A revisão para regra de transição mais vantajosa pode ser pedida diretamente em juízo (exceção do Tema 350/STF para revisão), dentro do prazo do art. 103, que alcança o melhor benefício (Tema 966/STJ) (auditoria 03/10/2026).
 
 ### Tema 334 STF (RE 630.501)
 
@@ -74,7 +74,7 @@ Refutação. Tema 1007 STJ. Tempo rural é aproveitável para carência na híbr
 
 Argumento adversário. O segurado perdeu a qualidade de segurado, deve cumprir nova carência integral.
 
-Refutação. Tema 245 TNU. A carência já cumprida é preservada. A perda da qualidade de segurado não zera a carência acumulada para fins de aposentadoria por idade. Acionar `periodo-graca-qualidade-segurado`.
+Refutação. Art. 3º, §1º, da Lei 10.666/2003. Na aposentadoria por idade, a perda da qualidade de segurado não é considerada quando cumprida a carência na data do requerimento, e a carência acumulada se preserva (auditoria 03/10/2026, retirado o Tema 245/TNU, que trata da qualidade de segurado após invalidação de benefício recebido de boa-fé). Acionar `periodo-graca-qualidade-segurado`.
 
 ### Argumento 5 — Exigência de CNIS sem pendências
 
@@ -110,7 +110,7 @@ Terceiro, verificar acerto de CNIS para garantir carência integral.
 
 Quarto, considerar indenização de contribuições faltantes quando estratégico.
 
-Quinto, em caso de indeferimento por suposta falta de carência, impugnar com Tema 245 TNU e `periodo-graca-qualidade-segurado`.
+Quinto, em caso de indeferimento por suposta falta de carência, impugnar com o art. 3º da Lei 10.666/2003 (auditoria 03/10/2026, retirado o Tema 245/TNU) e `periodo-graca-qualidade-segurado`.
 
 Sexto, em caso de CNIS com pendências, impugnar com `cnis-acerto-indicadores`.
 

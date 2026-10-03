@@ -36,7 +36,7 @@ Redução parcial.
 
 ### Tema 350 TNU
 
-Prova.
+Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não matéria de prova (auditoria 03/10/2026).
 
 ## 5. Cenários pró-segurado
 

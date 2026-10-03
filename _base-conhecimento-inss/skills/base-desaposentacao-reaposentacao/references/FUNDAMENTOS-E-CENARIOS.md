@@ -32,9 +32,9 @@ RE 661.256. Desaposentação vedada.
 
 Devolução de valores.
 
-### Súmula 557 STJ
+### Súmula 557 STJ (não aplicável à desaposentação)
 
-Vedação pacificada.
+Trata da RMI da aposentadoria por invalidez precedida de auxílio-doença (Tema 704/STJ) e não de desaposentação, cuja vedação decorre do Tema 503/STF (auditoria 03/10/2026).
 
 ### Tema 995 STJ
 

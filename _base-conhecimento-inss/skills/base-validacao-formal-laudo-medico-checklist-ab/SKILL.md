@@ -159,7 +159,7 @@ Item A.27. Período estimado de incapacidade (B31).
 
 Item A.28. Insuscetibilidade de reabilitação (B32 ou B92).
 
-Item A.29. Nexo causal: para B91 ou B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86; Tema 416 STJ) — nexo laboral só quando se pleiteia a natureza acidentária/competência estadual. Na concausa, o laudo descreve o esforço da função que contribuiu para o agravamento, ainda que não seja a causa única. Em doença degenerativa (artrose), a concausa precisa de descrição concreta do esforço, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho.
+Item A.29. Nexo causal: para B91 ou B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86, caput, da Lei 8.213/91; auditoria 03/10/2026, retirado o Tema 416/STJ, cuja tese fala em acidente do trabalho e trata da lesão mínima) — nexo laboral só quando se pleiteia a natureza acidentária/competência estadual. Na concausa, o laudo descreve o esforço da função que contribuiu para o agravamento, ainda que não seja a causa única. Em doença degenerativa (artrose), a concausa precisa de descrição concreta do esforço, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho.
 
 Item A.30. Caracterização da sequela (B94).
 

@@ -455,7 +455,7 @@ Antes de realizar qualquer análise, leia obrigatoriamente os seguintes arquivos
 
 ## Skills Complementares (acionar conforme pertinência)
 
-- `bpc-renda-grupo-familiar` — Composição do grupo familiar (taxatividade), exclusões de renda, deduções de despesas, renda estrutural vs conjuntural, Enunciado 17/CRPS (irrepetibilidade), legitimidade de herdeiros e auxílio-inclusão
+- `bpc-renda-grupo-familiar` — Composição do grupo familiar (taxatividade), exclusões de renda, deduções de despesas, renda estrutural vs conjuntural, Enunciado 17/CRPS (no BPC, repetição só com má-fé comprovada, inciso II; auditoria 03/10/2026), legitimidade de herdeiros e auxílio-inclusão
 - `decreto-12534-bolsa-familia-bpc` — Quando o caso envolver indeferimento ou cessação por inclusão do Bolsa Família na renda (Decreto 12.534/2025)
 - `fibromialgia-deficiencia` — Quando o impedimento for fibromialgia (Lei 15.176/2025)
 - `avaliacao-cnj-630` — Instrumento biopsicossocial unificado do CNJ (Resolução 630/2025, obrigatório desde 02/03/2026)

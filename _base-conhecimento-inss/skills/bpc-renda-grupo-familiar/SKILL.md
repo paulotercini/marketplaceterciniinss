@@ -88,7 +88,7 @@ Centro-dia não disponível no SUAS — R$ 32,00
 
 Se os gastos reais superarem os valores médios, o interessado pode comprová-los com recibos dos 12 meses anteriores ao requerimento (§7º).
 
-**ALERTA ESTRATÉGICO** — Esses valores são irrisórios. R$ 45,00 para medicamentos e R$ 99,00 para fraldas não refletem a realidade de famílias com PCD grave. Em juízo, requerer a dedução pelos valores reais comprovados, não pelos valores médios. Fundamentar no Tema 38/TNU (admite dedução de gastos com saúde para cálculo da renda) e no art. 20, §11 da LOAS.
+**ALERTA ESTRATÉGICO** — Esses valores são irrisórios. R$ 45,00 para medicamentos e R$ 99,00 para fraldas não refletem a realidade de famílias com PCD grave. Em juízo, requerer a dedução pelos valores reais comprovados, não pelos valores médios. Fundamentar no art. 20, §11, e no art. 20-B, III e §4º, da LOAS, que admite comprovar gastos efetivos acima dos valores médios (auditoria 03/10/2026, retirado o Tema 38/TNU, que trata de incapacidade preexistente).
 
 ### Renda na Data do Requerimento (art. 11, §2º, Portaria 34/2025)
 Para fins de concessão, o INSS deve considerar unicamente a renda identificada na data do requerimento (DER). Afasta a prática abusiva de considerar rendas de períodos anteriores.

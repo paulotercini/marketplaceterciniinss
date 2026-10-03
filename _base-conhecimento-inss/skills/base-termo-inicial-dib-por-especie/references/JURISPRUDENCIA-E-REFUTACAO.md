@@ -4,7 +4,7 @@
 
 ### Tema 350 STF
 
-Salário-de-benefício. Fonte oficial em https://portal.stf.jus.br
+Prévio requerimento administrativo (RE 631.240), e não salário de benefício (auditoria 03/10/2026). Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 995 STJ
 

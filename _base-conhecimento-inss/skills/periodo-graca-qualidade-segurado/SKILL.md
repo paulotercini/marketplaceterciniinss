@@ -167,9 +167,9 @@ A carência de reingresso (art. 27-A da Lei 8.213/91) varia conforme a norma vig
 
 **18/01/2019 a 17/06/2019** (MP 871/2019) — carência integral. Auxílio-reclusão passa a exigir 24 contribuições.
 
-**18/06/2019 em diante** (Lei 13.846/2019) — 1/2 da carência. Auxílio-incapacidade exige 6. Salário-maternidade exige 5. Auxílio-reclusão exige 12.
+**18/06/2019 em diante** (Lei 13.846/2019) — 1/2 da carência. Auxílio-incapacidade exige 6. Salário-maternidade exigia 5, regra superada conforme o parágrafo seguinte (auditoria 03/10/2026). Auxílio-reclusão exige 12.
 
-**Salário-maternidade a partir de 05/04/2024** — não exige mais carência (ADI 2.110/STF), tornando irrelevante a questão do reingresso para este benefício.
+**Salário-maternidade a partir de 05/04/2024** — não exige mais carência (ADI 2.110/STF), tornando irrelevante a questão do reingresso para este benefício. O Enunciado 19/CRPS (Resolução CRPS nº 13/2026, vigente desde 13/07/2026) confirma a inexigibilidade e mantém a prova da qualidade de segurada (auditoria 03/10/2026).
 
 ## 5. §4º DO ART. 15 — EXTENSÃO ATÉ O VENCIMENTO DA CONTRIBUIÇÃO SEGUINTE
 

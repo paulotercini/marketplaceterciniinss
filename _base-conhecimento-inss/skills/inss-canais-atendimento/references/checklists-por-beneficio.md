@@ -400,8 +400,8 @@ A renda do próprio BPC do idoso não integra o cálculo da renda familiar para 
 ### A — Requisitos legais
 
 - Segurada empregada CLT: não precisa de carência — pago pela empresa pelos primeiros 120 dias, depois reembolsado pelo INSS
-- Segurada CI ou facultativa: 10 contribuições mensais de carência
-- Segurada desempregada: carência + qualidade de segurado mantida
+- Segurada CI ou facultativa: sem carência (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS), exigida apenas a qualidade de segurada (auditoria 03/10/2026)
+- Segurada desempregada: qualidade de segurado mantida no período de graça, sem carência (auditoria 03/10/2026)
 
 ### B — Checklist de documentos
 
@@ -413,7 +413,7 @@ A renda do próprio BPC do idoso não integra o cálculo da renda familiar para 
 **Para CI ou facultativa:**
 - [ ] Tudo acima
 - [ ] CTPS ou comprovante de inscrição como CI/facultativa
-- [ ] Extrato CNIS mostrando as 10 contribuições anteriores
+- [ ] Extrato CNIS com a contribuição que mantém a qualidade de segurada, paga até o vencimento da competência, e, para CI sem inscrição formal, prova da atividade remunerada (Enunciado 19/CRPS, I, IV e § 2º) (auditoria 03/10/2026)
 
 **Para salário-maternidade rural:**
 - [ ] Documentos de atividade rural
@@ -423,7 +423,7 @@ A renda do próprio BPC do idoso não integra o cálculo da renda familiar para 
 
 Para empregada CLT, o salário-maternidade é pago pela empresa — o INSS só entra se a empresa não pagar. Se a empresa pagar, ela se reembolsa via compensação da guia de FGTS/INSS.
 
-Para CI que presta serviço a PJ, verificar se as 10 contribuições foram efetivamente recolhidas (pelo CI ou pela empresa contratante).
+Para CI que presta serviço a PJ, não há carência a conferir (Enunciado 19/CRPS). Confere-se a qualidade de segurada, e a falta de recolhimento pela empresa contratante, que responde por ele, não faz a segurada perder essa qualidade (Enunciado 5/CRPS, II) (auditoria 03/10/2026).
 
 ---
 

@@ -20,9 +20,9 @@ Carência de 180 (art. 25 II).
 
 Carência de 18 (Lei 13.846/2019).
 
-## 6. Cenário 5 — Salário-maternidade com 10 contribuições
+## 6. Cenário 5 — Salário-maternidade sem carência (auditoria 03/10/2026)
 
-Carência de 10 para CI e facultativo (art. 25 III).
+Carência inexigível. O art. 25, III, que previa 10 contribuições para CI, facultativa e segurada especial, foi declarado inconstitucional (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]), e o Enunciado 19/CRPS exige só a qualidade de segurada, com os requisitos por categoria em `base-salario-maternidade-pos-reforma` (auditoria 03/10/2026).
 
 ## 7. Cenário 6 — Auxílio-acidente sem carência
 

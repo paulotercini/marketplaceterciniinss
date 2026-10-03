@@ -41,7 +41,7 @@ Auxílio-reclusão e critério de renda. A ampliativa flexibiliza o critério e 
 
 Cotas e duração da pensão pós-reforma. Confira se a peça calculou a cota familiar com os acréscimos por dependente e se a duração considerou a idade do beneficiário e o tempo de união.
 
-Salário-maternidade da desempregada e da rural. A ampliativa mantém o benefício no período de graça e dispensa carência na segurada especial.
+Salário-maternidade da desempregada e da rural. A ampliativa mantém o benefício no período de graça. A carência deixou de ser exigível em todas as categorias (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS), e a conferência recai sobre a qualidade de segurada, inclusive a atividade rural, ainda que descontínua, nos 12 meses anteriores ao fato gerador. Confira se a peça trata a carência como requisito, o que concede ao INSS um ponto indevido (auditoria 03/10/2026).
 
 ## Erros doutrinários frequentes neste tema
 
