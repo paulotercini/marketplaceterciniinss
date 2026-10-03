@@ -40,9 +40,9 @@ O IRDR 15 foi parcialmente ratificado pelo STJ no Tema 1090. A linha prática pa
 
 ## 5. Tema 213 TNU
 
-Tese firmada. Caracterizada a fundada dúvida sobre a eficácia do EPI, aplica-se o standard probatório atenuado em favor do segurado, cabendo ao INSS demonstrar a eficácia concreta do equipamento.
+Tese firmada. A informação no PPP sobre EPI eficaz pode ser desafiada judicialmente pelo segurado, e, havendo dúvida razoável sobre a real eficácia do EPI, o período deve ser reconhecido como especial (auditoria 03/10/2026, retirada a atribuição ao INSS do ônus de provar a eficácia, que o tema não contém e o Tema 1090/STJ, item II, põe no autor).
 
-Aplicação prática. Em todo recurso e peça judicial, deslocar o ônus probatório para a autarquia.
+Aplicação prática. Em todo recurso e peça judicial, impugnar especificamente o PPP e demonstrar a ineficácia por um dos caminhos do item II do Tema 1090/STJ, sem pedir inversão do ônus (auditoria 03/10/2026).
 
 ## 6. Tema 218 TNU e Súmula 87 TNU
 
@@ -78,9 +78,9 @@ Linha argumentativa. Acionar `base-especial-agentes-quimicos` e levar à peça o
 
 ### Cenário 5 — Ausência de documentação suporte
 
-Quando o PPP declara EPI eficaz mas a empresa não apresenta ficha técnica, comprovante de troca periódica, registros de treinamento, ou atestados de certificação vigente, aplica-se a inversão do ônus da prova do Tema 213 TNU.
+Quando o PPP declara EPI eficaz mas a empresa não apresenta ficha técnica, comprovante de troca periódica, registros de treinamento, ou atestados de certificação vigente, essas faltas correspondem aos caminhos (ii) a (iv) do item II do Tema 1090/STJ, cujo ônus é do autor, e sustentam a impugnação específica do PPP admitida no Tema 213/TNU (auditoria 03/10/2026, retirada a inversão do ônus, que nenhum dos dois temas prevê).
 
-Linha argumentativa. Solicitar formalmente à empresa, via `retificacao-ppp`, os documentos de suporte. Na ausência, pedir em juízo a inversão do ônus.
+Linha argumentativa. Solicitar formalmente à empresa, via `retificacao-ppp`, os documentos de suporte. Na ausência, requerer em juízo a exibição dos documentos (arts. 396 e 401 do CPC) e a perícia técnica, sem pedir inversão do ônus, rejeitada na razão de decidir do Tema 1090/STJ (auditoria 03/10/2026).
 
 ### Cenário 6 — Exposição descontínua e intermitência
 

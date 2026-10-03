@@ -61,7 +61,7 @@ Consulte `references/IMPUGNACAO-EPI.md` para roteiro detalhado.
 
 PPP deficiente (sem NEN, sem técnica, sem nome do agente) não é causa de improcedência. É causa de produção de prova pericial. Julgamento antecipado sem perícia quando há controvérsia é nulidade.
 
-Precedentes centrais. REsp 2.152.968/RS (Min. Regina Helena Costa, j. 13/08/2024). Tema 1031/STJ (perícia por similaridade). Súmula 198/TFR. TRF4, AC 5001814-57.2022.4.04.7108 (5ª Turma, j. 17/03/2026, anulação de sentença). Tema 213/TNU (PPP não goza de presunção de veracidade).
+Precedentes centrais. REsp 2.152.968/RS (Min. Regina Helena Costa, j. 13/08/2024). Súmula 198/TFR e art. 369 do CPC para a perícia por similaridade (auditoria 03/10/2026, retirado o Tema 1031/STJ, que trata da especialidade do vigilante). TRF4, AC 5001814-57.2022.4.04.7108 (5ª Turma, j. 17/03/2026, anulação de sentença). Tema 213/TNU (a informação de EPI eficaz no PPP pode ser desafiada judicialmente, e a dúvida razoável favorece o segurado) (auditoria 03/10/2026).
 
 Evidências que justificam perícia (checklist). Pagamento de adicional de insalubridade. IEAN no CNIS. Código GFIP 01. Descrição de atividades com máquinas ruidosas ou produtos químicos. Ruído implausível no PPP. Lista de EPIs que confirma agentes. PPP sem técnica no campo 15.5. PPP com denominação genérica no 15.3. PPP sem NEN. Empresa extinta.
 

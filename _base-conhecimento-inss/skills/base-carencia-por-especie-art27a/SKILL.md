@@ -19,7 +19,7 @@ Pensão por morte: SEM carência (art. 26, I). As 18 contribuições mensais (Le
 
 A isenção de carência aplica-se em acidente de trabalho, doença grave (art. 26 II) e doenças listadas em portaria.
 
-O art. 27-A (Lei 13.846/2019) aplica a metade da carência APENAS a auxílio por incapacidade temporária (6), salário-maternidade (5) e auxílio-reclusão (12). A aposentadoria por idade está FORA do art. 27-A: as 180 contribuições do art. 25, II, somam-se ao longo da vida, e a perda da qualidade de segurado é irrelevante (art. 3º, §1º, Lei 10.666/2003).
+O art. 27-A (Lei 13.846/2019) aplica a metade da carência APENAS a auxílio por incapacidade temporária (6), salário-maternidade (5) e auxílio-reclusão (12). No salário-maternidade a fração perdeu aplicação, porque a carência desse benefício é inexigível (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS) (auditoria 03/10/2026). A aposentadoria por idade está FORA do art. 27-A: as 180 contribuições do art. 25, II, somam-se ao longo da vida, e a perda da qualidade de segurado é irrelevante (art. 3º, §1º, Lei 10.666/2003).
 
 A perda da qualidade não apaga as contribuições anteriores. As contribuições somam-se ao reingresso.
 

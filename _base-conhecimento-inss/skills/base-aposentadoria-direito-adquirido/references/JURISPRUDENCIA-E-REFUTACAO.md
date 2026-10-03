@@ -28,21 +28,21 @@ Aplicação pró-segurado. A vedação da desaposentação não impede a revisã
 
 ### Tema 1102 STF (Revisão da Vida Toda) e modulação
 
-Tese original. O segurado que implementou requisitos antes da Lei 9.876/99 pode ter direito à revisão da vida toda, considerando contribuições anteriores a julho de 1994.
+Tese original. "O segurado que implementou as condições para o benefício previdenciário após a vigência da Lei 9.876/99 e antes da vigência das novas regras da EC 103/2019, tem o direito de optar pela regra definitiva do art. 29, I e II, da Lei 8.213/91, caso esta lhe seja mais favorável." (auditoria 03/10/2026, corrigida a síntese anterior, que indicava implemento antes da Lei 9.876/99).
 
-Modulação em 21 de março de 2024. O STF modulou os efeitos e restringiu a revisão, com impactos em benefícios concedidos ou revisados, exigindo análise de cada caso.
+Em 21/03/2024, nas ADIs 2110 e 2111, o STF declarou constitucional o art. 3º da Lei 9.876/1999, com modulação de efeitos, o que esvaziou a tese (auditoria 03/10/2026, corrigida a atribuição da modulação ao próprio Tema 1102).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Ainda cabível em casos com DIB anterior a 13 de novembro de 2019, sem trânsito em julgado, conforme os parâmetros da modulação. Exige análise individualizada.
+Aplicação. Restrita às hipóteses residuais preservadas pela modulação das ADIs, a aferir em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026).
 
 ### Tema 350 STF
 
-Tese. A decadência do direito à revisão de benefício previdenciário, prevista no art. 103 da Lei 8.213/91, não alcança o pedido relativo à cláusula de direito ao melhor benefício quando implementado antes da decadência.
+Tese. "A concessão de benefícios previdenciários depende de requerimento do interessado, não se caracterizando ameaça ou lesão a direito antes de sua apreciação e indeferimento pelo INSS. A exigência de prévio requerimento não se confunde com o exaurimento das vias administrativas." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a não incidência da decadência sobre o melhor benefício).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Fundamento para invocar revisão por direito adquirido mesmo após 10 anos, quando preservada a boa-fé do segurado e a inércia administrativa.
+Aplicação. Rege o interesse de agir; a decadência do direito ao benefício mais vantajoso segue o Tema 966/STJ, que a admite, tese adversa (auditoria 03/10/2026).
 
 ### IAC 5 TRF4 e IAC 11 TRF4
 
@@ -82,7 +82,7 @@ Refutação. Art. 3º da EC 103 é cláusula de salvaguarda. Quem tinha direito 
 
 Argumento adversário. Após 10 anos, o segurado não pode mais invocar o direito adquirido à regra pré-reforma.
 
-Refutação. Tema 350 STF. A decadência não alcança o direito ao melhor benefício quando preservada a boa-fé e a inércia administrativa. Cada caso exige análise, mas a regra geral é de preservação do direito. Acionar `decadencia-revisao-previdenciaria`.
+Refutação. Sem benefício concedido, não há prazo decadencial para a concessão inicial (Tema 313/STF, item I), e o direito adquirido à regra anterior pode ser exercido a qualquer tempo; já a revisão de benefício concedido para alcançar regra mais vantajosa se sujeita ao prazo do art. 103 (Tema 966/STJ e Tema 334/STF), tese adversa (auditoria 03/10/2026, retirada a atribuição ao Tema 350/STF, que trata do prévio requerimento). Acionar `decadencia-revisao-previdenciaria`.
 
 ### Argumento 6 — Negativa de melhor benefício por vinculação à DER
 

@@ -279,7 +279,7 @@ Súmula 46/TNU: o exercício de atividade urbana intercalada não impede a conce
 
 Súmula 577/STJ. "É possível reconhecer o tempo de serviço rural anterior ao documento mais antigo apresentado, desde que amparado em convincente prova testemunhal colhida sob o contraditório."
 
-Tema 638/STJ (REsp 1.348.633): é possível reconhecer tempo rural anterior ao documento mais antigo apresentado (origem da Súmula 577 STJ). Já o Tema 532/STJ (REsp 1.321.493) mitiga a exigência de prova material para o boia-fria/diarista.
+Tema 638/STJ (REsp 1.348.633): é possível reconhecer tempo rural anterior ao documento mais antigo apresentado (origem da Súmula 577 STJ). Já o Tema 554/STJ (REsp 1.321.493; auditoria 03/10/2026, corrigido o número, antes indicado como Tema 532/STJ, que trata do trabalho urbano de membro do grupo familiar) mitiga a exigência de prova material para o boia-fria/diarista.
 
 ### 7.2. Aposentadoria por idade híbrida
 
@@ -381,7 +381,7 @@ Estrutura recomendada de fundamentação contra indeferimento por aplicação ri
 
 6. Plano B. Documento por metade.
 
-7. Plano C (judicial). Início de prova material de qualquer época + prova testemunhal robusta sob contraditório (Súmula 577/STJ + Tema 532/STJ).
+7. Plano C (judicial). Início de prova material de qualquer época + prova testemunhal robusta sob contraditório (Súmula 577/STJ e Tema 638/STJ, que a originou) (auditoria 03/10/2026, corrigido o número, antes indicado como Tema 532/STJ).
 
 8. Justificação Administrativa. Quando faltar prova em uma das metades, requerer JA com base em início de prova material (art. 571 da IN 128/2022).
 

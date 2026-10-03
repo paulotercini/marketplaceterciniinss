@@ -58,7 +58,7 @@ Reformular cerceamento de defesa, coisa julgada e omissão probatória como ques
 
 **Caso cerceamento em tempo especial.** Errado, "o juiz cerceou a defesa ao indeferir a perícia técnica". Correto, "o direito ao reconhecimento de tempo especial pelo agente ruído, conforme Tema 174/TNU, depende de prova técnica da metodologia NEN, cuja produção foi obstada pelo indeferimento da perícia, configurando supressão do direito material à aposentadoria especial".
 
-**Caso coisa julgada.** Errado, "a coisa julgada impediria a rediscussão". Correto, "a extensão material do direito à averbação de tempo especial reconhecido em ação anterior não pode ser restringida a período ali não demandado, por força do Tema 629/STJ, que delimita a extensão objetiva da coisa julgada em matéria previdenciária".
+**Caso coisa julgada.** Errado, "a coisa julgada impediria a rediscussão". Correto, "a extensão material do direito à averbação de tempo especial reconhecido em ação anterior não pode ser restringida a período ali não demandado, porque o direito à contagem especial de cada período decorre do art. 57 da Lei 8.213/91, e a coisa julgada anterior só alcança os períodos ali decididos" (auditoria 03/10/2026, retirado o Tema 629/STJ, que trata da extinção sem mérito por ausência de prova eficaz).
 
 ## Estratégia Contra QO 18 (Mais de Um Fundamento Suficiente)
 

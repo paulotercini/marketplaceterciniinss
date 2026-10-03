@@ -74,19 +74,19 @@ Aplicação pró-segurado. Específico para disacusia.
 
 ### Tema 350 TNU
 
-Tese. O auxílio-acidente pode ser concedido ainda que o segurado esteja em outro benefício por incapacidade, aguardando a cessação para início do pagamento.
+Tese. "O segurado em gozo de auxílio-acidente, ou que tenha a data da consolidação das lesões até 17 de junho de 2019, mantém a qualidade de segurado por 12 meses a partir da vigência da Lei 13.846/2019." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a concessão do B94 durante outro benefício).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Não há óbice à concessão durante B31 vigente.
+Aplicação pró-segurado. Preserva a qualidade de segurado do titular de auxílio-acidente na transição da Lei 13.846/2019 (auditoria 03/10/2026).
 
 ### Súmula 47 TNU
 
-Tese. Uma vez reconhecido o direito ao benefício por incapacidade, cabe implantação imediata.
+Tese. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez" (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a implantação imediata do benefício).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Extensível ao B94 por analogia para implantação imediata.
+Aplicação. Não rege o B94 nem a implantação imediata; só interessa ao B94 quando a incapacidade parcial abrir discussão de B32 (auditoria 03/10/2026).
 
 ## 2. Refutação aos argumentos típicos do INSS
 
@@ -148,7 +148,7 @@ Terceiro, em acumulação de B94 anterior com aposentadoria, invocar Tema 555 ST
 
 Quarto, em revisão de RMI, invocar o art. 31 da Lei 8.213/91, e não o Tema 862, que é termo inicial.
 
-Quinto, em cessação indevida, restabelecimento imediato com Súmula 47 TNU.
+Quinto, em cessação indevida, restabelecimento com tutela de urgência (art. 300 do CPC) (auditoria 03/10/2026, retirada a Súmula 47/TNU, que trata das condições pessoais na incapacidade parcial).
 
 Sexto, em perda auditiva, usar Tema 322 TNU e Súmula 507 STJ.
 

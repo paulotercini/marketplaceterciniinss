@@ -38,7 +38,7 @@ Fonte oficial em https://www.trf3.jus.br, https://www.trf4.jus.br, https://www.t
 
 Argumento adversário. CNIS registra vínculo como empregado por período curto, logo houve descaracterização.
 
-Refutação. Lei 10.779/2003, art. 2º, I, interpreta exclusividade de forma compatível com economia familiar. Tema 219 TNU. Vínculo acessório não descaracteriza.
+Refutação. Lei 10.779/2003, art. 2º, I, interpreta exclusividade de forma compatível com economia familiar. Vínculo remunerado de até 120 dias, corridos ou intercalados, no ano civil não descaracteriza a condição de segurado especial (art. 11, §9º, III, da Lei 8.213/91) (auditoria 03/10/2026, retirado o Tema 219/TNU, que trata do trabalho rural antes dos 12 anos).
 
 ### Argumento 2 — RGP intermitente
 
@@ -68,7 +68,7 @@ Refutação. Natureza distinta dos benefícios. Salário-maternidade é conting�
 
 Argumento adversário. Sem notas, não há prova.
 
-Refutação. Declaração da colônia, fotografias, testemunhas, CAF, GTA e declaração escrita do segurado são admitidos conforme Tema 348 TNU.
+Refutação. Declaração da colônia, fotografias, testemunhas, CAF, GTA e declaração escrita do segurado são meios de prova admitidos em juízo (art. 369 do CPC) (auditoria 03/10/2026, retirado o Tema 348/TNU, que trata da prorrogação do período de graça do segurado especial por inatividade involuntária).
 
 ### Argumento 7 — Defeso não prorrogado
 

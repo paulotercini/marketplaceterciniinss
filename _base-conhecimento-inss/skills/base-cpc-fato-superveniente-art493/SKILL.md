@@ -25,7 +25,7 @@ IN 128/2022.
 
 ### Tema 995 STJ
 
-REsp 1.727.063, 1.727.064, 1.727.069. Reafirmação da DER para fatos posteriores. Juros a partir da citação se houver resistência. Honorários.
+REsp 1.727.063, 1.727.064, 1.727.069. Reafirmação da DER para fatos posteriores. Juros de mora só se o INSS não implantar o benefício em 45 dias da intimação (EDcl no REsp 1.727.063/SP). Honorários descabidos se o INSS reconhecer a procedência à luz do fato novo (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -69,7 +69,7 @@ Cenário E, laudo pericial judicial altera quadro clínico.
 
 Primeiro, DIB reafirmada é a nova data de implemento.
 
-Segundo, juros a partir da citação se houver resistência do INSS (Tema 995/STJ).
+Segundo, na reafirmação para data posterior ao ajuizamento, juros de mora só se o INSS não implantar o benefício em 45 dias da intimação (EDcl no REsp 1.727.063/SP, Tema 995/STJ); requisitos completos antes do ajuizamento seguem os juros desde a citação, conforme `reafirmacao-der` (auditoria 03/10/2026).
 
 Terceiro, honorários conforme Súmula 111/STJ e Tema 1050/STJ.
 

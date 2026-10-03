@@ -186,7 +186,7 @@
 
 - **Tema 192:** O recolhimento de contribuições em atraso, após a perda da qualidade de segurado, não pode ser computado para fins de carência.
 
-- **Tema 195:** No cálculo das parcelas atrasadas do benefício concedido judicialmente, devem ser compensados todos os valores recebidos em período concomitante em razão de benefício inacumulável. (Vide Tema 1207/STJ).
+- **Tema 195:** No cálculo das parcelas atrasadas do benefício concedido judicialmente, devem ser compensados todos os valores recebidos em período concomitante em razão de benefício inacumulável, sendo que a compensação deve se dar pelo total dos valores recebidos, não se podendo gerar saldo negativo para o segurado. [Parte final completada em 03/10/2026 com o PUIL 5068010-43.2016.4.04.7100, j. 18/09/2020, no acervo TNU do MCP Iurisprudencia. Compensação global, menos protetiva que a compensação mês a mês do Tema 1207/STJ, que prevalece como repetitivo.] (Vide Tema 1207/STJ).
 
 - **Tema 198:** No período anterior a 29/04/1995, é possível qualificar o tempo de serviço como especial por analogia em relação às ocupações previstas nos Decretos 53.831/64 e 83.080/79, justificando a semelhança.
 
@@ -217,7 +217,7 @@
 
 - **Tema 217:** [Tese literal conferida na página oficial em 11/07/2026. Julgado em 21/08/2020, PEDILEF 0002358-97.2015.4.01.3507/GO] "Em relação ao benefício assistencial e aos benefícios por incapacidade, é possível conhecer de um deles em juízo, ainda que não seja o especificamente requerido na via administrativa, desde que preenchidos os requisitos legais, observando-se o contraditório e o disposto no artigo 9º e 10 do CPC." A parte final (contraditório, arts. 9º e 10 do CPC) integra a tese e deve ser enfrentada na peça.
 
-- **Tema 219:** É possível o cômputo do tempo de serviço rural exercido por pessoa com idade inferior a 12 (doze) anos na época da prestação do labor campesino.
+- **Tema 219:** É possível o cômputo do tempo de serviço rural exercido por pessoa com idade inferior a 12 (doze) anos na época da prestação do labor campesino. [Explicitado pela TNU no PUIL 5005824-38.2022.4.04.7111/RS, j. 18/11/2025, em três pontos, mesmos meios de prova dos demais segurados, participação efetiva e indispensabilidade do labor (art. 11, §§ 1º e 6º, da Lei 8.213/91) e vedação de negativa por fundamentação genérica; conferido em 03/10/2026 no acervo TNU do MCP Iurisprudencia.]
 
 - **Tema 220:** 1. O rol do inciso II do art. 26 da lei 8.213/91 é exaustivo. 2. A lista de doenças do art. 151 não é taxativa, admitindo interpretação extensiva. 3. A gravidez de alto risco autoriza a dispensa de carência.
 
@@ -337,13 +337,13 @@
 
 - **Tema 350:** O segurado em gozo de auxílio-acidente, ou que tenha a data da consolidação das lesões até 17 de junho de 2019, mantém a qualidade de segurado por 12 meses a partir da vigência da Lei 13.846/2019.
 
-- **Tema 353:** [Aguardando julgamento]
+- **Tema 353:** [Julgado. Tese conferida em 03/10/2026 no acervo TNU do MCP Iurisprudencia, PUIL 1018409-10.2021.4.01.3200/AM, Rel. Juíza Federal Caroline Medeiros e Silva, com embargos de declaração do INSS rejeitados em acórdão disponibilizado em 18/05/2026; conferir na página oficial do CJF antes de citar em peça] "O cálculo do salário-de-benefício das aposentadorias com fatos geradores entre 13/11/2019 (EC nº 103/2019) e 05/05/2022 (Lei nº 14.331/2022) é realizado sem a exigência de um divisor mínimo, não havendo vedação a um período básico de cálculo composto por contribuição única."
 
 - **Tema 354:** À míngua da existência do Parecer MT-SSMT nº 085/78, é impossível o enquadramento especial da atividade de trabalhador em indústria têxtil por analogia aos códigos 2.5.1 do Decreto 53.831/64 e 1.2.11 do Decreto 83.080/79.
 
 - **Tema 355:** O seminarista em congregação religiosa não se equipara ao aluno aprendiz para fins previdenciários. (Revisão do Tema 66).
 
-- **Tema 357:** [Não há tese firmada]
+- **Tema 357:** [Julgado em 04/12/2024. Tese conferida em 03/10/2026 no acervo TNU do MCP Iurisprudencia, PUIL 5000345-04.2021.4.04.7013/PR, Rel. Juiz Federal Giovani Bigolin; conferir na página oficial do CJF antes de citar em peça] "O beneficio de auxílio-reclusão concedido para fatos geradores ocorridos antes de 18 de janeiro de 2019, data da vigência da MP nº 871, permanece mesmo na hipótese de progressão de regime fechado para o semiaberto (inclusive em caso de monitoramento eletrônico)". Não trata do divisor da média de baixa renda, matéria do Tema 310/TNU.
 
 - **Tema 358:** O benefício de auxílio-reclusão concedido para fatos geradores ocorridos antes de 18/01/2019 (vigência da MP 871) permanece mesmo na hipótese de progressão de regime fechado para o semiaberto.
 

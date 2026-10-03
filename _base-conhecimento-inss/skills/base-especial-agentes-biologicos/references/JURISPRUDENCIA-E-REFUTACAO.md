@@ -62,7 +62,7 @@ Refutação. O Tema 205 TNU dispensa contato direto permanente. A presença em a
 
 Argumento adversário. O campo 15.7 do PPP declara EPI eficaz.
 
-Refutação. A declaração é unilateral e o campo 15.7 registra ENTREGA, não eficácia real em campo. O IRDR 15 do TRF4 reconhece a ineficácia em biológicos, o Tema 383 da TNU e os Pareceres 2/2025 e 3/2025 da Fundacentro sustentam a limitação técnica dos equipamentos, e o Tema 1090 do STJ resolve a dúvida em favor do autor. Combinar com `base-especial-epi` e Tema 213 TNU para inversão do ônus probatório.
+Refutação. A declaração é unilateral e o campo 15.7 registra ENTREGA, não eficácia real em campo. O IRDR 15 do TRF4 reconhece a ineficácia em biológicos, o Tema 383 da TNU e os Pareceres 2/2025 e 3/2025 da Fundacentro sustentam a limitação técnica dos equipamentos, e o Tema 1090 do STJ resolve a dúvida em favor do autor. Combinar com `base-especial-epi` e com o Tema 213/TNU, que admite desafiar judicialmente a informação de EPI eficaz, sem pedir inversão do ônus, rejeitada na razão de decidir do Tema 1090/STJ (auditoria 03/10/2026).
 
 ### Argumento 4 — Rol taxativo do Anexo IV
 

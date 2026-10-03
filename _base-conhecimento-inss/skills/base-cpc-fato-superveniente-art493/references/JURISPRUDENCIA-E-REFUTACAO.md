@@ -56,7 +56,7 @@ Refutação. Tema 995 STJ dispensa quando no curso do processo.
 
 Argumento adversário. Sem resistência, sem juros.
 
-Refutação. Tema 995 STJ fixa juros a partir da citação se houver resistência.
+Refutação. Pelos EDcl no REsp 1.727.063/SP (Tema 995/STJ), na reafirmação posterior ao ajuizamento os juros correm se o INSS não implantar o benefício em 45 dias da intimação; quando os requisitos se completam antes do ajuizamento, os juros correm da citação, conforme `reafirmacao-der` (auditoria 03/10/2026).
 
 ### Argumento 4 — PPP retificado extemporaneamente não vale
 

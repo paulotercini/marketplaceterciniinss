@@ -60,7 +60,7 @@ Fonte oficial em https://www.cjf.jus.br
 
 Argumento adversário. O PPP não quantifica o agente, logo não há como reconhecer a especialidade.
 
-Refutação. Para agentes do Anexo 13 da NR-15 e da LINACH, a avaliação é qualitativa. A exigência de medição quantitativa para esses agentes contraria o próprio regramento do MTE. Aplicação do Tema 298 TNU, do Tema 1090 STJ e da remissão legal expressa do Decreto 3.048/99 à NR-15.
+Refutação. Para agentes do Anexo 13 da NR-15 e da LINACH, a avaliação é qualitativa. A exigência de medição quantitativa para esses agentes contraria o próprio regramento do MTE. Aplicação do Tema 170/TNU, que dispensa a avaliação quantitativa para agentes cancerígenos, e da remissão legal expressa do Decreto 3.048/99 à NR-15 (auditoria 03/10/2026, retirados o Tema 298/TNU, que exige a especificação do agente, e o Tema 1090/STJ, que trata do EPI).
 
 ### Argumento 2 — Exposição esporádica
 

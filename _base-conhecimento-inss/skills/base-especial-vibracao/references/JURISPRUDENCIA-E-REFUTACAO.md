@@ -20,11 +20,11 @@ Aplicação pró-segurado. Afasta a tese do INSS de que a exposição variável 
 
 ### Tema 213 TNU
 
-Tese. Caracterizada a fundada dúvida sobre a eficácia de EPI ou sobre a documentação da exposição, aplica-se standard probatório atenuado em favor do segurado.
+Tese. Caracterizada a fundada dúvida sobre a eficácia do EPI, o período deve ser reconhecido como especial (auditoria 03/10/2026, retirada a extensão à documentação da exposição, estranha à tese).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Invocado para inverter o ônus quando o PPP é omisso sobre métricas de vibração.
+Aplicação pró-segurado. Só quando houver EPI declarado eficaz contra vibração; PPP omisso sobre métricas se resolve por perícia técnica (art. 58, §§ 1º e 4º, da Lei 8.213/91) (auditoria 03/10/2026).
 
 ### Tema 1090 STJ
 

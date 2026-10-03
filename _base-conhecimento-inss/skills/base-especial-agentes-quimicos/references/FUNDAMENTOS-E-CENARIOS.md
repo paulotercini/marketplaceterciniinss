@@ -68,7 +68,7 @@ Tese direta. Enquadramento qualitativo imediato. Não se admite exigência de me
 
 ### Cenário 2 — PPP indica agente do Anexo 11 sem medição quantitativa
 
-Tese. Acionar `retificacao-ppp` para obtenção de medição. Em juízo, inversão do ônus da prova sob Tema 213 TNU combinado com arts. 369 e 370 CPC. Se o LTCAT tiver medição, juntá-la ao processo.
+Tese. Acionar `retificacao-ppp` para obtenção de medição. Em juízo, requerer perícia técnica e a produção de prova pelos arts. 369 e 370 do CPC (auditoria 03/10/2026, retirada a inversão do ônus sob o Tema 213/TNU, que trata da eficácia do EPI). Se o LTCAT tiver medição, juntá-la ao processo.
 
 ### Cenário 3 — Cancerígeno LINACH presente
 

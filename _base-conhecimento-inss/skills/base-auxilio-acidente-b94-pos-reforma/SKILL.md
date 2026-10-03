@@ -182,7 +182,7 @@ Segundo, demonstrar que a sequela, ainda que aparentemente leve, impacta o exerc
 
 Terceiro, em caso de rol do Anexo III, usar como reforço. Em caso fora do rol, usar caráter exemplificativo.
 
-Quarto, em cessação indevida, restabelecer com pedido de implantação imediata (Súmula 47 TNU).
+Quarto, em cessação indevida, restabelecer com pedido de tutela de urgência para implantação imediata (art. 300 do CPC) (auditoria 03/10/2026, retirada a Súmula 47/TNU).
 
 Quinto, quando lesão e aposentadoria forem anteriores a 11/11/1997, reivindicar a acumulação com aposentadoria (Súmula 507 STJ).
 

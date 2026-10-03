@@ -30,9 +30,9 @@ Quinto, dependentes habilitados.
 
 ## 3. Critério de baixa renda
 
-Verificado pela renda mensal bruta do segurado no mês da prisão. Em caso de desemprego, a jurisprudência reconhece renda zero como baixa renda (REsp 2.240.220 STJ).
+Em prisão anterior à MP 871/2019, vale o último salário de contribuição, e o desempregado sem renda atende o critério (Tema 896/STJ). Em prisão posterior, vale a média dos salários de contribuição dos 12 meses anteriores ao mês da prisão (art. 80, §4º, da Lei 8.213/91), e sem salário de contribuição no período o segurado é de baixa renda (art. 383, §5º, da IN 128/2022) (auditoria 03/10/2026, retirado o REsp 2.240.220, que integra o Tema 1421/STJ).
 
-Tema 357 TNU orienta a média de 12 salários-de-contribuição imediatamente anteriores à prisão com divisor fixo 12, mesmo com períodos sem contribuição.
+Havendo menos de 12 salários de contribuição no período, o divisor é o número de salários existentes, e não 12 (Tema 310/TNU e art. 383, §6º, da IN 128/2022) (auditoria 03/10/2026, retirado o Tema 357/TNU, que trata da progressão de regime).
 
 ## 4. Duração e cessação
 
@@ -46,11 +46,11 @@ Segurado preso em 05/2018. Aplica regra anterior (Lei 10.666/2003). Admite regim
 
 ### Cenário 2 — Segurado desempregado
 
-Segurado preso em 2021, desempregado há 8 meses na prisão. Renda zero. Invocar REsp 2.240.220 STJ para reconhecer baixa renda.
+Segurado preso em 2021, desempregado há 8 meses na prisão. Como a prisão é posterior à MP 871/2019, vale a média dos salários de contribuição dos 12 meses anteriores, com divisor igual ao número de salários existentes (Tema 310/TNU); baixa renda automática só sem nenhum salário de contribuição no período (art. 383, §5º, da IN 128/2022). O Tema 896/STJ rege apenas prisões anteriores à MP (auditoria 03/10/2026, retirado o REsp 2.240.220, que integra o Tema 1421/STJ).
 
 ### Cenário 3 — Renda ligeiramente acima do teto
 
-Segurado com último salário R$ 200 acima do teto. Dependentes em extrema vulnerabilidade. Invocar Tema 896 STJ para flexibilização em casos excepcionais.
+Segurado com último salário R$ 200 acima do teto. A flexibilização só cabe em prisão anterior à MP 871/2019 com excedente ínfimo (Tema 1162/STJ, item i); depois da MP é vedada, salvo falta de correção anual do limite (item ii) (auditoria 03/10/2026, retirado o Tema 896/STJ, que trata da renda zero do desempregado).
 
 ### Cenário 4 — Progressão de regime
 

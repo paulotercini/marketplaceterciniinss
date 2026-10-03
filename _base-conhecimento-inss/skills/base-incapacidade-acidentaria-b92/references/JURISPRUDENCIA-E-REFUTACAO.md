@@ -2,11 +2,11 @@
 
 ## 1. Precedentes vinculantes
 
-### Tema 1083 STJ
+### Concausa e agravamento (art. 21, I, da Lei 8.213/91)
 
-Tese. Doença preexistente agravada pela atividade reconhece nexo acidentário.
+Fundamento legal. Equipara-se ao acidente do trabalho o acidente ligado ao trabalho que, embora não tenha sido a causa única, haja contribuído diretamente para a redução ou perda da capacidade (art. 21, I), o que alcança a doença preexistente agravada pela atividade (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído aferido pelo NEN).
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
 
 Aplicação pró-segurado. Fundamento para converter B32 não acidentário em B92 por concausa.
 
@@ -42,19 +42,19 @@ Aplicação pró-segurado. Reforça direito ao B94 após cessação de B91 quand
 
 ### Súmula 47 TNU
 
-Tese. Uma vez reconhecido o direito ao benefício por incapacidade pela perícia judicial, cabe implantação imediata.
+Tese. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez" (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a implantação imediata do benefício).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Fundamento para tutela antecipada em B92.
+Aplicação. Em incapacidade parcial, sustenta o exame das condições pessoais e sociais; na Justiça Estadual acidentária a súmula é apenas persuasiva, e a tutela antecipada se fundamenta no art. 300 do CPC (auditoria 03/10/2026).
 
 ### Súmula 77 TNU
 
-Tese. Não cabe ao INSS desconsiderar perícia judicial em benefício por incapacidade.
+Tese. "O julgador não é obrigado a analisar as condições pessoais e sociais quando não reconhecer a incapacidade do requerente para a sua atividade habitual" (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a prevalência da perícia judicial).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Afasta perícia administrativa que nega acidentariedade contra perícia judicial especializada.
+Aplicação. Súmula adversa. Sem incapacidade para a atividade habitual reconhecida, o juiz pode dispensar o exame das condições pessoais e sociais; o confronto entre perícia administrativa e perícia judicial especializada se resolve pelos arts. 371 e 479 do CPC (auditoria 03/10/2026).
 
 ### Súmula 378 STJ
 
@@ -76,7 +76,7 @@ Refutação. CAT pode ser emitida pelo segurado, sindicato, médico assistente o
 
 Argumento adversário. Trata-se de doença degenerativa ou inerente a grupo etário, excluída pelo art. 20 §1º.
 
-Refutação. Exclusão não é absoluta. O próprio §1º admite reconhecimento em situações específicas. Tema 1083 STJ reconhece concausa quando há agravamento pelo trabalho. Mesmo em doença degenerativa, se o trabalho acelerou ou agravou o quadro, há nexo acidentário.
+Refutação. Exclusão não é absoluta. O próprio §1º admite reconhecimento em situações específicas. O art. 21, I, reconhece a concausa quando o trabalho contribui para o agravamento (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído). Mesmo em doença degenerativa, se o trabalho acelerou ou agravou o quadro, há nexo acidentário.
 
 ### Argumento 3 — Ausência de correspondência CID-CNAE
 
@@ -106,13 +106,13 @@ Refutação. Legislação previdenciária não exige culpa exclusiva do empregad
 
 Argumento adversário. A perícia concluiu que a incapacidade não tem nexo com o trabalho.
 
-Refutação. Perícia administrativa não vincula juízo. Súmula 77 TNU. Perícia judicial especializada em medicina do trabalho ou engenharia do trabalho pode reverter a conclusão.
+Refutação. Perícia administrativa não vincula juízo, que valora a prova pericial com as demais (arts. 371 e 479 do CPC) (auditoria 03/10/2026, retirada a Súmula 77/TNU, que trata da dispensa do exame das condições pessoais). Perícia judicial especializada em medicina do trabalho ou engenharia do trabalho pode reverter a conclusão.
 
 ### Argumento 8 — Doença anterior ao vínculo
 
 Argumento adversário. A doença é preexistente ao vínculo atual, incabível B92.
 
-Refutação. Art. 21, I, e Tema 1083 STJ. Agravamento ou progressão pelo trabalho atual reconhece nexo. B92 por concausa.
+Refutação. Art. 21, I, da Lei 8.213/91 (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído). Agravamento ou progressão pelo trabalho atual reconhece nexo. B92 por concausa.
 
 ## 3. Estratégia integrada
 
@@ -128,7 +128,7 @@ Quinto, contestar desclassificações com recurso ao CRPS ou ação judicial.
 
 Sexto, pedir tutela antecipada para conversão imediata de B32 em B92 com RMI recalculada.
 
-Sétimo, em doença preexistente, enfrentar com concausa (art. 21, I, e Tema 1083 STJ).
+Sétimo, em doença preexistente, enfrentar com concausa (art. 21, I, da Lei 8.213/91) (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído aferido pelo NEN).
 
 Oitavo, em doenças mentais, usar Portaria MTE 1.419/2024, NR-1 e literatura científica.
 

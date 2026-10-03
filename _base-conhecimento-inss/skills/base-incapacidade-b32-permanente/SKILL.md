@@ -58,7 +58,7 @@ Quarto, segurado com grande invalidez (tetraplegia, cegueira total, demência av
 
 Quinto, segurado com cessação indevida de B32 após reavaliação. Impugnar por ausência de recuperação real da capacidade. Acionar `auditoria-laudo-pericial`.
 
-Sexto, segurado em reabilitação profissional com indicação de inviabilidade. Conversão em B32. Súmula 47 TNU para implantação imediata.
+Sexto, segurado em reabilitação profissional com indicação de inviabilidade. Conversão em B32. Súmula 47/TNU para o exame das condições pessoais e sociais, e tutela de urgência para a implantação imediata (auditoria 03/10/2026).
 
 ## Regra e estratégia
 

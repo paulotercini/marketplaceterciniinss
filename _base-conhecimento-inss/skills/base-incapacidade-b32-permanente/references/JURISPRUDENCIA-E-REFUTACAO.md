@@ -2,61 +2,61 @@
 
 ## 1. Precedentes vinculantes
 
-### Tema 1083 STJ
+### Doença preexistente com agravamento (art. 42, §2º, da Lei 8.213/91)
 
-Tese. Doença preexistente agravada pela atividade reconhece nexo acidentário.
+Fundamento legal. A doença ou lesão de que o segurado já era portador ao filiar-se não confere direito ao B32, salvo quando a incapacidade sobrevier por progressão ou agravamento dela (art. 42, §2º); se o trabalho contribuiu para o agravamento, o nexo acidentário se apura pela concausa do art. 21, I (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído aferido pelo NEN).
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
 
 Aplicação pró-segurado. Afasta a recusa fundada em preexistência e permite conversão em B92 acidentário com RMI de 100%.
 
 ### Tema 982 STJ
 
-Tese. Discussão sobre extensão do acréscimo de 25% do art. 45 da Lei 8.213/91 a outros benefícios por incapacidade. Objeto de modulação em 2019 pelo STJ, com repercussão pendente de definição final.
+Tese. "Comprovadas a invalidez e a necessidade de assistência permanente de terceiro, é devido o acréscimo de 25%, previsto no art. 45 da Lei n. 8.213/91, a todos os aposentados pelo RGPS, independentemente da modalidade de aposentadoria." Tese SUPERADA pelo Tema 1095/STF, que não admite a extensão do acréscimo a outras espécies sem previsão legal (auditoria 03/10/2026, corrigida a síntese anterior).
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. O acréscimo é intrínseco ao B32 e pode ser reivindicado também para B31 em situações de grande invalidez, conforme corrente pró-segurado, enquanto o Tema definitivo não se consolida.
+Aplicação. O acréscimo de 25% do art. 45 é próprio do B32 e, depois do Tema 1095/STF, não se estende ao B31 nem às demais aposentadorias; pedir sempre no B32, com prova da assistência permanente (auditoria 03/10/2026).
 
 ### Súmula 47 TNU
 
-Tese. Uma vez reconhecido o direito ao benefício por incapacidade pela perícia judicial, cabe implantação imediata.
+Tese. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez" (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a implantação imediata do benefício).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Fundamento para tutela antecipada e implantação imediata do B32.
+Aplicação pró-segurado. Com incapacidade parcial reconhecida, exige o exame de idade, escolaridade e histórico laboral para a concessão do B32; a implantação imediata depende de tutela de urgência (art. 300 do CPC e art. 4º da Lei 10.259/2001), não desta súmula (auditoria 03/10/2026).
 
 ### Súmula 77 TNU
 
-Tese. Não cabe ao INSS desconsiderar perícia judicial em benefício por incapacidade.
+Tese. "O julgador não é obrigado a analisar as condições pessoais e sociais quando não reconhecer a incapacidade do requerente para a sua atividade habitual" (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a prevalência da perícia judicial).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Afasta prevalência da perícia administrativa sobre a judicial.
+Aplicação. Súmula adversa. Sem incapacidade para a atividade habitual reconhecida, o juiz pode dispensar o exame das condições pessoais e sociais, por isso a prova deve mirar essa incapacidade; a valoração da perícia judicial segue os arts. 371 e 479 do CPC (auditoria 03/10/2026).
 
 ### Tema 246 TNU
 
-Tese. Para fins de benefício por incapacidade, a prova documental robusta pode contrariar perícia administrativa desfavorável.
+Tese, na síntese do catálogo TNU. I - Quando a decisão judicial adotar a estimativa de prazo de recuperação da perícia, o termo inicial é a data do exame. II - Quando o ato de concessão não indicar o tempo de recuperação, o prazo de 120 dias conta-se da data da efetiva implantação (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a superação da perícia administrativa por prova documental).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Fundamento para ação judicial quando perícia documental ou administrativa for desfavorável.
+Aplicação. Rege a data de cessação do benefício temporário fixado em juízo; no B32 só interessa quando a sentença conceder B31 com prazo de recuperação (auditoria 03/10/2026).
 
 ### Tema 350 STF
 
-Tese. A decadência não alcança o direito ao melhor benefício.
+Tese. "A concessão de benefícios previdenciários depende de requerimento do interessado, não se caracterizando ameaça ou lesão a direito antes de sua apreciação e indeferimento pelo INSS. A exigência de prévio requerimento não se confunde com o exaurimento das vias administrativas." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a não incidência da decadência sobre o melhor benefício).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Permite revisão de B32 implantado com vício ou cessação indevida.
+Aplicação pró-segurado. A revisão ou o restabelecimento de B32 cessado pode ser pedido diretamente em juízo, salvo matéria de fato não levada ao INSS (exceção do Tema 350/STF) (auditoria 03/10/2026).
 
 ### Súmula 557 STJ
 
-Tese. A renda mensal inicial do benefício por incapacidade leva em conta todas as contribuições regulares do segurado.
+Tese, pelo Tema 704/STJ, que originou a súmula. A aposentadoria por invalidez decorrente da conversão de auxílio-doença, sem retorno do segurado ao trabalho, é apurada na forma do art. 36, §7º, do Decreto 3.048/99 (auditoria 03/10/2026, corrigida a síntese anterior).
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Afasta exclusões indevidas de contribuições na base de cálculo.
+Aplicação. Regra de cálculo da conversão do auxílio-doença em B32 sem retorno ao trabalho; não trata de exclusão de contribuições (auditoria 03/10/2026).
 
 ## 2. Refutação aos argumentos típicos do INSS
 
@@ -64,7 +64,7 @@ Aplicação pró-segurado. Afasta exclusões indevidas de contribuições na bas
 
 Argumento adversário. A perícia entende que ainda há capacidade laboral ou que a incapacidade é temporária.
 
-Refutação. Documentação médica robusta com laudo especializado, histórico clínico, exames e prognóstico desfavorável afasta conclusão superficial. Tema 246 TNU e Súmula 77 TNU para prevalência da perícia judicial.
+Refutação. Documentação médica robusta com laudo especializado, histórico clínico, exames e prognóstico desfavorável afasta conclusão superficial. Em juízo, a perícia judicial é valorada com as demais provas (arts. 371 e 479 do CPC) (auditoria 03/10/2026, retirados o Tema 246/TNU e a Súmula 77/TNU, que não tratam da prevalência da perícia judicial).
 
 ### Argumento 2 — Possibilidade de reabilitação
 
@@ -76,7 +76,7 @@ Refutação. O art. 42 exige que a insuscetibilidade seja para atividade que gar
 
 Argumento adversário. A doença é anterior à filiação, incabível o B32.
 
-Refutação. Art. 42, §2º, da Lei 8.213/91. Ainda que preexistente, se a incapacidade decorrer de progressão ou agravamento, o B32 é devido. Tema 1083 STJ reforça e ainda permite conversão em acidentário.
+Refutação. Art. 42, §2º, da Lei 8.213/91. Ainda que preexistente, se a incapacidade decorrer de progressão ou agravamento, o B32 é devido. Havendo contribuição do trabalho para o agravamento, cabe conversão em acidentário pela concausa do art. 21, I (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído).
 
 ### Argumento 4 — Ausência de acidentariedade
 
@@ -88,7 +88,7 @@ Refutação. NTEP, nexo técnico individual ou laudo ocupacional podem estabelec
 
 Argumento adversário. A perícia de reavaliação entende que houve recuperação da capacidade.
 
-Refutação. Art. 47 Lei 8.213/91 exige gradualidade no caso de recuperação parcial. Cessação sem exame específico e sem contraditório é impugnável. Restabelecimento via ação judicial ou MS com Súmula 47 TNU.
+Refutação. Art. 47 Lei 8.213/91 exige gradualidade no caso de recuperação parcial. Cessação sem exame específico e sem contraditório é impugnável. Restabelecimento via ação judicial ou MS, sem novo requerimento administrativo (exceção do Tema 350/STF) (auditoria 03/10/2026, retirada a Súmula 47/TNU, que trata das condições pessoais na incapacidade parcial).
 
 ### Argumento 6 — Negativa do acréscimo de 25%
 
@@ -118,9 +118,9 @@ Terceiro, pedir expressamente o acréscimo de 25% do art. 45 quando houver assis
 
 Quarto, em cessação indevida pelo Programa Revisão, restabelecimento com tutela antecipada e perícia judicial.
 
-Quinto, em doença preexistente, enfrentar com art. 42 §2º e Tema 1083 STJ.
+Quinto, em doença preexistente, enfrentar com o art. 42, §2º, e, no acidentário, com o art. 21, I, da Lei 8.213/91 (auditoria 03/10/2026, retirado o Tema 1083/STJ).
 
-Sexto, no JEF, Súmula 47 TNU para implantação imediata.
+Sexto, no JEF, havendo incapacidade parcial, invocar a Súmula 47/TNU para exigir o exame das condições pessoais e sociais; a implantação imediata se pede por tutela de urgência (art. 4º da Lei 10.259/2001) (auditoria 03/10/2026).
 
 ## 4. Cláusulas doutrinárias de apoio
 
@@ -136,4 +136,4 @@ O IBDP sustenta institucionalmente o direito do segurado à proteção integral.
 
 ## 5. Diligência de atualização
 
-Revalidar Portaria Conjunta 14/2026 e normas conexas. Verificar evolução do Tema 982 STJ (acréscimo 25%). Acionar `precedentes-previdenciarios`.
+Revalidar Portaria Conjunta 14/2026 e normas conexas. O Tema 982/STJ (acréscimo de 25%) está superado pelo Tema 1095/STF (auditoria 03/10/2026). Acionar `precedentes-previdenciarios`.

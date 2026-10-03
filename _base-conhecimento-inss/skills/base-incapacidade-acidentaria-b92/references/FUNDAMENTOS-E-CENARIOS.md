@@ -58,7 +58,7 @@ Segurado em trajeto residência-trabalho sofre acidente com incapacidade permane
 
 ### Cenário 5 — Doença preexistente agravada
 
-Segurado com hérnia discal anterior à filiação. Trabalho pesado de carregador agravou quadro com incapacidade total. Tema 1083 STJ e art. 21, I (concausa). B92 com conversão do B32 para acidentário.
+Segurado com hérnia discal anterior à filiação. Trabalho pesado de carregador agravou quadro com incapacidade total. Art. 21, I, da Lei 8.213/91 (concausa) (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído). B92 com conversão do B32 para acidentário.
 
 ### Cenário 6 — Acidente com perda de membro
 
@@ -112,6 +112,6 @@ Primeiro, diferença entre RMI de B32 (60% + 2%) e B92 (100%) é decisiva. Para 
 
 Segundo, CAT é prova importante, mas sua ausência não afasta nexo. Enfrentar negativas com documentação técnica e precedentes.
 
-Terceiro, em doenças preexistentes, usar art. 21 (concausa), art. 42 §2º e Tema 1083 STJ.
+Terceiro, em doenças preexistentes, usar art. 21, I (concausa), e art. 42, §2º, da Lei 8.213/91 (auditoria 03/10/2026, retirado o Tema 1083/STJ).
 
 Quarto, estabilidade do art. 118 é direito paralelo e orienta ação trabalhista em paralelo.

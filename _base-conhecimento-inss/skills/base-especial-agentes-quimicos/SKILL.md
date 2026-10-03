@@ -26,7 +26,7 @@ Exclusivamente pró-segurado. A tese do INSS, quando exige comprovação quantit
 
 A aferição de nocividade por agentes químicos se rege pela Avaliação Qualitativa quando o agente consta de anexo da NR-15 que adote avaliação qualitativa, como os Anexos 13 (agentes diversos) e 14 (agentes biológicos, aqui marcado apenas pela remissão). A avaliação quantitativa só é exigível para agentes cujos Anexos 11 e 12 da NR-15 estabelecem limite de tolerância numérico.
 
-O Tema 298 TNU firmou que, para exposição a agentes cancerígenos constantes da LINACH, o reconhecimento é automático, dispensando limite de tolerância. O Tema 157 TNU afastou a tese de que o simples exercício de atividade de frentista configura especialidade, exigindo que o PPP demonstre exposição efetiva a hidrocarbonetos aromáticos. O Tema 629 STJ tratou da flexibilização probatória em casos de insuficiência de provas.
+O Tema 170/TNU admite aplicar a períodos anteriores a redação do art. 68, §4º, do Decreto 3.048/99 dada pelo Decreto 8.123/2013, com desnecessidade de avaliação quantitativa para agentes cancerígenos; o Tema 298/TNU exige, a partir do Decreto 2.172/97, a especificação do agente, sem bastar a menção genérica a hidrocarbonetos ou óleos e graxas (auditoria 03/10/2026, corrigida a atribuição anterior). O Tema 157 TNU afastou a tese de que o simples exercício de atividade de frentista configura especialidade, exigindo que o PPP demonstre exposição efetiva a hidrocarbonetos aromáticos. O Tema 629 STJ tratou da flexibilização probatória em casos de insuficiência de provas.
 
 ## Regras rígidas de redação
 

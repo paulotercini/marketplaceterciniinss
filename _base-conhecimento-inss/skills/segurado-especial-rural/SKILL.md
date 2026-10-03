@@ -126,7 +126,7 @@ O art. 11, VII, da Lei 8.213/91 não estabelece idade mínima para o segurado es
 
 ### Precedentes
 
-**Tema 219/TNU.** Tese em três pontos. (1) Comprovação segue mesmos meios de prova dos demais segurados. (2) Exige-se participação efetiva e indispensabilidade (art. 11, §§1º e 6º). (3) Vedada negativa por fundamentação genérica ("infância sacrificada", "exploração de mão de obra").
+**Tema 219/TNU**, explicitado no PUIL 5005824-38.2022.4.04.7111/RS (j. 18/11/2025), conforme o acervo TNU do MCP Iurisprudencia (auditoria 03/10/2026). Tese em três pontos. (1) Comprovação segue mesmos meios de prova dos demais segurados. (2) Exige-se participação efetiva e indispensabilidade (art. 11, §§1º e 6º). (3) Vedada negativa por fundamentação genérica ("infância sacrificada", "exploração de mão de obra").
 
 **ACP 5031617-51.2018.4.04.7100/RS + Portaria Conjunta INSS/PFE 7/2020.** INSS obrigado a reconhecer trabalho rural de menor de qualquer idade, desde que comprovado. Abrangência territorial do TRF4.
 

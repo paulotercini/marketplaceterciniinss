@@ -46,11 +46,11 @@ Segurado com B32 desde 2015 é cessado em 2026 por perícia do Programa Revisão
 
 ### Cenário 6 — Reabilitação inviável
 
-Segurado em programa de reabilitação profissional com parecer de inviabilidade. Conversão em B32 pelo art. 62, §2º, da Lei 8.213/91. Súmula 47 TNU para implantação.
+Segurado em programa de reabilitação profissional com parecer de inviabilidade. Conversão em B32 pelo art. 62, §2º, da Lei 8.213/91. Súmula 47/TNU para o exame das condições pessoais e sociais, e tutela de urgência para a implantação (auditoria 03/10/2026).
 
 ### Cenário 7 — Doença preexistente com agravamento
 
-Segurado com artrose lombar prévia à filiação, porém com agravamento por atividade laboral pesada. Art. 42, §2º, da Lei 8.213/91 e Tema 1083 STJ. B32 devido com eventual conversão em acidentário.
+Segurado com artrose lombar prévia à filiação, porém com agravamento por atividade laboral pesada. Art. 42, §2º, da Lei 8.213/91 e, para o acidentário, concausa do art. 21, I (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído). B32 devido com eventual conversão em acidentário.
 
 ### Cenário 8 — Conversão retroativa com efeitos financeiros
 
@@ -75,7 +75,7 @@ Manter documentação médica atualizada permanentemente. Comparecer à perícia
 
 ## 5. Acréscimo de 25% (art. 45)
 
-Pedir expressamente no requerimento administrativo ou na ação judicial. Provar a necessidade de assistência permanente com laudo médico e, quando possível, relatório social. O rol do Anexo I do Decreto 3.048/99 não é taxativo. Tema 982 STJ examina a extensão a outros benefícios, porém o acréscimo é intrínseco ao B32.
+Pedir expressamente no requerimento administrativo ou na ação judicial. Provar a necessidade de assistência permanente com laudo médico e, quando possível, relatório social. O rol do Anexo I do Decreto 3.048/99 não é taxativo. O acréscimo é próprio do B32, e a extensão a outros benefícios, admitida no Tema 982/STJ, foi afastada pelo Tema 1095/STF (auditoria 03/10/2026).
 
 ## 6. Caráter acidentário (B92)
 
@@ -97,8 +97,8 @@ Acionar `tema-1124-instrucao-administrativa` em documentação nova.
 
 Primeiro, RMI do B32 não acidentário pós-reforma é severamente reduzida. Para segurado com 21 anos de contribuição (homem), RMI apenas 62% da média. Imprescindível verificar caráter acidentário para RMI integral.
 
-Segundo, acréscimo de 25% deve ser sempre pedido expressamente. Prova da assistência permanente é fundamental. Extensão a outros benefícios pendente no STJ (Tema 982).
+Segundo, acréscimo de 25% deve ser sempre pedido expressamente. Prova da assistência permanente é fundamental. A extensão a outros benefícios foi afastada pelo Tema 1095/STF, que superou o Tema 982/STJ (auditoria 03/10/2026).
 
 Terceiro, cessação pelo Programa Revisão sem perícia específica é impugnável. Acumular prova médica contemporânea à reavaliação e restabelecer com tutela.
 
-Quarto, no caso de doença preexistente, enfrentar com agravamento e progressão nos termos do art. 42 §2º e do Tema 1083 STJ.
+Quarto, no caso de doença preexistente, enfrentar com agravamento e progressão nos termos do art. 42, §2º, da Lei 8.213/91 (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído aferido pelo NEN).

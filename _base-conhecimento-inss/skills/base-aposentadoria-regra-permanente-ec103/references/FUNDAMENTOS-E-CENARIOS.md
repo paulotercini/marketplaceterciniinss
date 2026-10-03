@@ -61,7 +61,7 @@ Documentos rurais (notas de produtor, DAP, CAF, contratos de arrendamento) quand
 
 Carência de 180 contribuições. Para filiados antes de 24 de julho de 1991, aplica-se a regra de transição do art. 142 da Lei 8.213/91, com tabela progressiva. Filiados após 24 de julho de 1991 seguem a regra de 180 contribuições.
 
-Atenção para a perda e recuperação da qualidade de segurado. O art. 27-A da Lei 8.213/91, com redação da Lei 13.846/2019, exigia 1/2 da carência após novo vínculo para perdeu qualidade. A regra foi afastada pela Tema 245 TNU nos casos anteriores à reforma, mas para períodos pós-reforma, pode ainda ser aplicada. Análise caso a caso. Acionar `periodo-graca-qualidade-segurado`.
+Atenção para a perda e recuperação da qualidade de segurado. O art. 27-A da Lei 8.213/91, com redação da Lei 13.846/2019, exige metade da carência após nova filiação apenas para auxílio-doença, aposentadoria por invalidez, salário-maternidade e auxílio-reclusão; nas aposentadorias programáveis, a perda da qualidade não é considerada (art. 3º, caput e §1º, da Lei 10.666/2003) (auditoria 03/10/2026, retirado o Tema 245/TNU, que trata da qualidade de segurado após invalidação de benefício recebido de boa-fé). Acionar `periodo-graca-qualidade-segurado`.
 
 ## 5. Cruzamento com outras skills
 

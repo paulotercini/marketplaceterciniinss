@@ -86,11 +86,11 @@ Para consulta rápida dos fundamentos, ler o arquivo `references/FUNDAMENTOS.md`
 
 O Tema 1.207/STJ (REsp 2.039.614, 1ª Seção, Rel. Min. Gurgel de Faria, j. 28/06/2024, trânsito fev/2025) é o precedente nacional vinculante sobre compensação de benefício inacumulável em cumprimento de sentença. Tese fixada por unanimidade, sob rito dos repetitivos. A compensação deve ser feita mês a mês, limitada ao valor do título judicial por competência, vedado saldo negativo mensal ou final, vedada execução invertida ou restituição indevida.
 
-O IRDR 14/TRF4 (5023872-14.2017.4.04.0000, trânsito 17/11/2021) e o Tema 195/TNU (j. 18/09/2020) são os precedentes precursores, com teses substancialmente idênticas. O Tema 1.207/STJ prevalece como repetitivo nacional.
+O IRDR 14/TRF4 (5023872-14.2017.4.04.0000, trânsito 17/11/2021) é o precedente precursor, com tese substancialmente idêntica. O Tema 195/TNU (j. 18/09/2020) é diverso e menos protetivo, porque compensa pelo total dos valores e veda apenas o saldo final negativo (auditoria 03/10/2026). O Tema 1.207/STJ prevalece como repetitivo nacional.
 
 A RCIJEF 5001446-98.2024.4.04.7004 (3ª TR Paraná, j. 14/04/2025) estendeu a vedação de saldo negativo e execução invertida também a benefícios concedidos administrativamente em que a compensação traga prejuízo ao segurado.
 
-**Uso obrigatório.** Em toda impugnação ao cumprimento de sentença por atividades concomitantes em que o INSS ou a Cecalc computar saldo negativo em qualquer competência, invocar o Tema 1.207/STJ como fundamento principal, reforçado pelo IRDR 14/TRF4 e Tema 195/TNU. Quando houver cobrança administrativa por concomitância, invocar o RCIJEF 5001446-98.2024.4.04.7004.
+**Uso obrigatório.** Em toda impugnação ao cumprimento de sentença por atividades concomitantes em que o INSS ou a Cecalc computar saldo negativo em qualquer competência, invocar o Tema 1.207/STJ como fundamento principal, reforçado pelo IRDR 14/TRF4; o Tema 195/TNU só reforça a vedação do saldo final negativo e não sustenta a compensação mês a mês (auditoria 03/10/2026). Quando houver cobrança administrativa por concomitância, invocar o RCIJEF 5001446-98.2024.4.04.7004.
 
 ## Tema 1.207/STJ incorporado ao Manual CJF 2026 (Onda 76)
 

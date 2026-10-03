@@ -77,7 +77,7 @@ Esta skill NÃO substitui as skills de CRPS (recurso-especial-crps, admissibilid
 → Leia SEMPRE `references/EPI-ESTRATEGIA-POR-ORGAO.md`.
 
 **O agente nocivo é ruído?**
-→ Leia SEMPRE `references/RUIDO-POR-ORGAO.md`. A divergência entre CRPS (90 dB no período intermediário) e Judiciário (85 dB, Tema 1.083/STJ) pode definir a escolha entre via administrativa e judicial.
+→ Leia SEMPRE `references/RUIDO-POR-ORGAO.md`. De 06/03/1997 a 18/11/2003, CRPS e Judiciário adotam o mesmo limite de 90 dB (Enunciado 13 do CRPS e Tema 694/STJ); a divergência que pode definir a escolha entre via administrativa e judicial está no PPP sem NEN, que o Comunicado CRPS 99/2025 recusa e o Tema 1.083/STJ admite pelo pico de ruído com perícia judicial (auditoria 03/10/2026).
 
 **O PPP indica NR-15 sem NEN expresso?**
 → Via administrativa (CRPS) rejeitará o PPP pelo Comunicado 99/2025. Via judicial aceita com presunção de regularidade (PEDILEF 0001717, TNU novembro/2025). Esta divergência estrutural CRPS/Judiciário é critério de decisão estratégica entre vias, à luz do Tema 1124/STJ.

@@ -108,6 +108,6 @@ Primeiro, sempre iniciar pela auditoria do PPP. Sem PPP auditado, não há cálc
 
 Segundo, converter mentalmente o tempo especial em comum e simular aposentadoria por tempo comum pós-reforma. Comparar com aposentadoria especial pura e com direito adquirido se houver.
 
-Terceiro, em caso de indeferimento administrativo por suposta ausência de habitualidade, invocar Tema 211 TNU e Tema 205 TNU.
+Terceiro, em caso de indeferimento administrativo por suposta ausência de habitualidade, invocar o Enunciado 11, I, do CRPS e, em agentes biológicos, os Temas 211 e 205 da TNU (auditoria 03/10/2026).
 
 Quarto, em caso de negativa por EPI eficaz, invocar Tema 1090 STJ e Tema 555 STF. Acionar `base-especial-epi`.

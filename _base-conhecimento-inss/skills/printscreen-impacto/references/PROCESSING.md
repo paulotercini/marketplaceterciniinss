@@ -500,7 +500,7 @@ printscreen = compose_printscreen(
     highlights=[
         {"type": "highlight", "color": "vermelho", "box": (35, 280, 750, 320)},
         {"type": "annotation", "color": "vermelho", "position": (770, 270),
-         "title": "FUNDAMENTO SUPERADO", "lines": ["Tema 1090/STJ afasta", "neutralização por EPI"]},
+         "title": "FUNDAMENTO IMPUGNÁVEL", "lines": ["Tema 1090/STJ, III: dúvida", "sobre o EPI favorece o autor"]},  # auditoria 03/10/2026, o Tema 1090/STJ não afasta a neutralização por EPI (item I)
     ],
     source_text="Fonte: Despacho decisório INSS — Doc. ID 02 (Evento 1, PROCADM2)",
     output_path="/tmp/indeferimento_printscreen.png",

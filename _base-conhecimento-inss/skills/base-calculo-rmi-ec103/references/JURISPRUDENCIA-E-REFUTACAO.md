@@ -54,11 +54,11 @@ Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Fundamento para inclusão do auxílio-acidente na média da aposentadoria, elevando a RMI.
 
-### Súmula 557 STJ (revisão pelo teto)
+### Tema 76 STF (revisão pelo teto)
 
-Tese. Aposentado sujeito à revisão de benefício pelo teto pode ter RMI ajustada a valores superiores ao teto vigente à DIB quando o teto é posteriormente elevado por emenda constitucional.
+Tese. "Não ofende o ato jurídico perfeito a aplicação imediata do art. 14 da Emenda Constitucional 20/1998 e do art. 5º da Emenda Constitucional 41/2003 aos benefícios previdenciários limitados a teto do regime geral de previdência estabelecido antes da vigência dessas normas, de modo a que passem a observar o novo teto constitucional." (auditoria 03/10/2026, corrigido o número, antes indicado como Súmula 557/STJ, que trata da RMI da aposentadoria por invalidez precedida de auxílio-doença).
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Revisão do teto das EC 20/98 e 41/03 continua viva para benefícios concedidos sob tetos antigos.
 
@@ -110,7 +110,7 @@ Refutação. Art. 31 da Lei 8.213/91. O auxílio-acidente integra o salário-de-
 
 Argumento adversário. O teto vigente na DIB limita a RMI, sem revisão posterior.
 
-Refutação. Súmula 557 STJ. A revisão do teto pelas EC 20/98 e 41/03 permite recálculo com incidência dos novos tetos. Preservação do direito à integralidade.
+Refutação. Tema 76/STF (auditoria 03/10/2026, corrigido o número, antes indicado como Súmula 557/STJ). A revisão do teto pelas EC 20/98 e 41/03 permite recálculo com incidência dos novos tetos. Preservação do direito à integralidade.
 
 ## 3. Estratégia integrada
 

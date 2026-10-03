@@ -16,9 +16,9 @@ Lei 8.213/91, art. 72. Duração de 120 dias.
 
 Lei 8.213/91, art. 73. Pagamento. Empregador reembolsado pelo INSS para empregada.
 
-Lei 8.213/91, art. 25, III. Carência de 10 contribuições para CI, facultativa.
+Lei 8.213/91, art. 25, III. Previa carência de 10 contribuições para CI, facultativa e segurada especial, exigência declarada inconstitucional (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]). O Enunciado 19/CRPS declara a carência inexigível e mantém a prova da qualidade de segurada (auditoria 03/10/2026).
 
-Lei 8.213/91, art. 25, parágrafo único. Segurada especial com 10 meses de atividade rural.
+Lei 8.213/91, art. 25, parágrafo único. Reduzia a carência do inciso III em caso de parto antecipado e perdeu utilidade com a inexigibilidade dessa carência. A segurada especial rege-se pelo art. 39, parágrafo único, com atividade rural, ainda que descontínua, nos 12 meses anteriores ao benefício (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 26, VI. Isenção para empregada, doméstica, avulsa.
 
@@ -30,17 +30,17 @@ Lei 14.457/2022. Prevenção do assédio e tutela da maternidade no trabalho.
 
 Decreto 3.048/99, arts. 93 e seguintes. Regulamenta.
 
-## 2. Carências por categoria
+## 2. Qualidade de segurada por categoria, sem carência (auditoria 03/10/2026)
 
 Empregada, doméstica, trabalhadora avulsa. Isenção pelo art. 26, VI.
 
-Contribuinte individual e facultativa. 10 contribuições (art. 25, III).
+Contribuinte individual. Sem inscrição formal, prova o efetivo exercício de atividade remunerada e o recolhimento de ao menos uma contribuição, com documentação idônea (Enunciado 19/CRPS, I). Facultativa. Prova o pagamento da contribuição, com filiação regularmente constituída antes do fato gerador (inciso IV). Nas duas categorias, a contribuição deve ser paga até o vencimento da competência (§ 2º) (auditoria 03/10/2026).
 
-Segurada especial rural. 10 meses de atividade rural comprovada (art. 25, par. único).
+Segurada especial rural. Atividade rural nos 12 meses anteriores ao fato gerador, ainda que descontínua, sem exigência de exercício contínuo em todo o período (Enunciado 19/CRPS, III, e art. 39, parágrafo único). A que contribui para receber acima do salário mínimo prova atividade rural em ao menos um desses 12 meses e uma contribuição (inciso II) (auditoria 03/10/2026).
 
-Facultativa baixa renda. 10 contribuições no código 1929.
+Facultativa baixa renda. Prova o pagamento no código 1929 e a filiação regular antes do fato gerador (Enunciado 19/CRPS, IV), com o recolhimento validado na forma de `base-facultativo-baixa-renda` (auditoria 03/10/2026).
 
-Desempregada. Qualidade de segurado pelo art. 15. 10 contribuições se categoria anterior exigia.
+Desempregada. Qualidade de segurado pelo art. 15, sem carência, qualquer que seja a categoria anterior (auditoria 03/10/2026).
 
 ## 3. DIB e duração
 
@@ -48,7 +48,7 @@ DIB na data do parto, salvo afastamento antecipado de até 28 dias por atestado 
 
 Em adoção. DIB na data da guarda judicial.
 
-Em aborto/natimorto. DIB na data do evento. Duração de 14 dias ou 120 conforme critério jurisprudencial (Tema 149 TNU e sucessivos).
+Em aborto/natimorto. DIB na data do evento. Duração de 120 dias no parto, inclusive de natimorto (art. 71 da Lei 8.213/91 e art. 358, I, da IN 128/2022), e de duas semanas no aborto não criminoso (art. 93, §5º, do Decreto 3.048/99) (auditoria 03/10/2026, retirado o Tema 149/TNU, que trata do fator previdenciário do professor).
 
 Em óbito da mãe. Transferência ao cônjuge pela duração restante.
 
@@ -62,13 +62,13 @@ Empregada demitida antes do parto. Manteve qualidade. Pagamento direto pelo INSS
 
 Trabalhadora rural em economia familiar. 12 meses de atividade comprovada (autodeclaração + CAF + ITR). 1 salário mínimo por 120 dias.
 
-### Cenário 3 — CI/MEI com 10 contribuições
+### Cenário 3 — CI/MEI com qualidade de segurada (auditoria 03/10/2026)
 
-MEI com 10 contribuições no momento do parto. Direito ao B80 no valor do salário-de-benefício.
+MEI com qualidade de segurada no parto, ainda que com poucas contribuições, desde que pagas até o vencimento da competência (Enunciado 19/CRPS, § 2º) (auditoria 03/10/2026). Direito ao B80 no valor do salário-de-benefício.
 
 ### Cenário 4 — Facultativa baixa renda
 
-Dona de casa de baixa renda com código 1929. 10 contribuições. Salário-mínimo.
+Dona de casa de baixa renda com código 1929, sem carência, com contribuição paga e filiação regular antes do parto (Enunciado 19/CRPS, IV). Salário-mínimo (auditoria 03/10/2026).
 
 ### Cenário 5 — Desempregada em período de graça
 
@@ -124,7 +124,7 @@ Acionar `precedentes-previdenciarios` para jurisprudência.
 
 Primeiro, em empregada desligada antes do parto, qualidade pelo art. 15. Prorrogação em desemprego involuntário.
 
-Segundo, em segurada especial, prova dos 10 meses no período de 12 meses antes do parto.
+Segundo, em segurada especial, prova da atividade rural nos 12 meses antes do parto, ainda que descontínua, sem exigência de 10 meses nem de exercício contínuo (Enunciado 19/CRPS, III) (auditoria 03/10/2026).
 
 Terceiro, em adoção, DIB na guarda judicial, não no trânsito em julgado da adoção.
 
