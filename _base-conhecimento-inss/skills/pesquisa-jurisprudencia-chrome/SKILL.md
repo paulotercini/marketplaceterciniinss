@@ -135,6 +135,20 @@ Consulta ampla devolve volume inútil. `"aposentadoria especial" e "ruído" e "E
 
 Sessão do TRF3 expira. Se a lista vier vazia depois de um tempo parado, recarregar a página inicial e refazer a consulta em vez de insistir na paginação.
 
+## 9. Endereços e técnicas conferidos na auditoria de 03/10/2026
+
+A rodada de verificação em fonte oficial leu pelo navegador súmulas e temas do STF e do STJ, ações de controle concentrado, questões de ordem e súmulas da TNU e enunciados do FONAJEF. O que funcionou fica registrado para as próximas conferências.
+
+STF. A súmula se lê pelo permalink `https://jurisprudencia.stf.jus.br/pages/search/seq-sumula{N}/false`, depois que a página termina de carregar. A página `https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num={N}` identifica o tema, mas a tese literal só aparece em `verAndamentoProcesso.asp?incidente={inc}&numeroProcesso={RE}&classeProcesso=RE&numeroTema={N}`. Embargos e modulação saem de `https://portal.stf.jus.br/processos/abaDecisoes.asp?incidente={inc}`. ADI e ADPF se abrem por `https://portal.stf.jus.br/processos/listarProcessos.asp?classe=ADI&numeroProcesso={N}`, que redireciona para `detalhe.asp?incidente={inc}`. A ementa do próprio acórdão aparece primeiro na pesquisa de jurisprudência com o número entre aspas e ordenação por data de julgamento (`sort=julgamento_data&sortBy=asc`). O portal recusa muitas requisições simultâneas, e não se deve passar de duas por vez.
+
+STJ. O arquivo `www.stj.jus.br/docs_internet/VerbetesSTJ_asc.txt` está desatualizado, para na Súmula 471 e não registra cancelamentos, e por isso não serve de fonte. As súmulas se leem nas Súmulas Anotadas do SCON, em `https://scon.stj.jus.br/SCON/sumstj/toc.jsp?tipo=sumula+ou+su&b=SUMU&p=false&h=true&l=100&numDocsPagina=100&ordenacao=-%40NUM&i=1` (e `i=101`, `i=201` e assim por diante), e as canceladas na mesma página com `inde=(sumula+adj+cancelada).emen,inde.`. O SCON exibe uma verificação automática que passa sozinha em alguns segundos. O tema repetitivo se lê em `https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial={N}&cod_tema_final={N}`, uma consulta por vez, porque o servidor guarda a pesquisa na sessão e consultas paralelas devolvem o tema errado.
+
+CJF e TNU. As questões de ordem estão em `https://www.cjf.jus.br/phpdoc/virtus/questoesdeordem.php` e as súmulas em `https://www.cjf.jus.br/phpdoc/virtus/listaSumulas.php`, ambas com redirecionamento para www2.cjf.jus.br. Os enunciados do FONAJEF de 1 a 110 estão no PDF da lista completa, em `https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/corregedoria-geral-da-justica-federal/enunciados-fonajef/lista-completa-dos-enunciados-do-fonajef.pdf`; os posteriores constam do sítio da AJUFE, que é fonte secundária. O Regimento Interno da TNU (Resolução CJF 586/2019, texto compilado) está em `https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/turma-nacional-de-uniformizacao/regimento_interno/res-586-2019-regimento-interno-da-tnu.pdf`, e por ele o pedido de uniformização tem 15 dias da intimação do acórdão recorrido (art. 12), contados em dias úteis (art. 27, §2º).
+
+TST. Em 03/10/2026 o portal de súmulas do TST não respondeu, e a Súmula 368 ficou em fonte secundária, com [NÃO CONFIRMADO].
+
+Técnica comum. Numa aba aberta no próprio portal, o `javascript_tool` busca as páginas por fetch de mesma origem, extrai o texto e o grava no corpo da página, que se lê por `get_page_text`. O retorno direto do `javascript_tool` é cortado em cerca de mil caracteres e bloqueia texto com endereço que tenha parâmetros. PDF se lê injetando o pdf.js do cdnjs na aba da mesma origem. Cada agente usa a própria aba e a fecha ao terminar.
+
 ## MCP trf3, localizar no servidor e CONFERIR no portal (Onda 144)
 
 Julgado do TRF3 ou de Turma Recursal da 3ª Região passa a ser localizado primeiro no servidor MCP `trf3`, que guarda base local montada da Jurisprudência Unificada do CJF, com a 7ª à 10ª Turma, a 3ª Seção e as Recursais de SP e MS, sem monocráticas.
@@ -159,12 +173,14 @@ Roteiro completo, mecânica do portal e o caso do teste em `references/MCP-TRF3-
 
 ## MCPs da casa
 
-Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
+Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
 
-Legislação. Todo dispositivo citado nesta skill se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo. Para tese de direito adquirido, `redacao_na_data`, que responde por ano. A citação em peça exige a `fonte_oficial` que a resposta devolve. Detalhe em `base-legislacao-fontes-primarias`.
+Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
 
-Jurisprudência do TRF3 e das Turmas Recursais. Localize pelo MCP `trf3`, com `buscar_acordaos_trf3` (consulta, `polo_recorrente`, `resultado`, `orgao_julgador` e datas) e `obter_acordao_trf3` no id devolvido. `resultado` e `polo_recorrente` são inferidos. O achado nasce [NÃO CONFIRMADO] e só entra na peça depois de aberto no portal do TRF3, na forma de `pesquisa-jurisprudencia-chrome`. TNU e CRPS ficam no MCP `iurisprudencia`.
+Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
 
-Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado, chame `precedentes_do_acervo` e leia o campo `corte` da resposta, porque o mesmo número de Tema existe em mais de uma corte. Detalhe em `base-acervo-escritorio`.
+Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
 
 **Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
+
+Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
