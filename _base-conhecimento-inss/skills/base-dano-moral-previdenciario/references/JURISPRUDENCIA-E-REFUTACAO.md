@@ -26,9 +26,9 @@ Responsabilidade objetiva do Estado. Fonte oficial em https://www.planalto.gov.b
 
 Ato ilícito e dever de indenizar. Fonte oficial em https://www.planalto.gov.br
 
-### Tema 372 STJ
+### Dano moral em ações previdenciárias
 
-Dano moral em ações previdenciárias. Fonte oficial em https://www.stj.jus.br
+Ancora-se no art. 37, §6º, da CF (auditoria 03/10/2026, retirado o Tema 372/STJ, que trata do SIMPLES de hospitais).
 
 ### Tema 642 STJ
 

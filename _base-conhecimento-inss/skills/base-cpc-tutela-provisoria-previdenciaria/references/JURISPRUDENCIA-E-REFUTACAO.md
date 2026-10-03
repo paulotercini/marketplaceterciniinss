@@ -34,9 +34,9 @@ RVT. Tese firmada.
 
 Revisão do teto.
 
-### Tema 1085 STJ
+### Estabilização da tutela antecedente
 
-Estabilização (em análise).
+Rege-se pelo art. 304 do CPC (auditoria 03/10/2026, retirado o Tema 1085/STJ, que trata do limite de desconto bancário).
 
 ## 2. Marco legislativo
 
@@ -154,7 +154,7 @@ Sexto, consolidar com julgamento final.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 1085 STJ sobre estabilização.
+Acompanhar a jurisprudência do STJ sobre a estabilização do art. 304 do CPC (auditoria 03/10/2026).
 
 Revalidar modulação da Súmula 729 STF.
 

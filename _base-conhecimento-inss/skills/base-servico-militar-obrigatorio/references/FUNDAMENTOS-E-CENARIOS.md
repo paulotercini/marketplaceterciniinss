@@ -30,9 +30,9 @@ IN 128/2022. Orientações operacionais.
 
 Aplicação supletiva histórica para cômputo.
 
-### Súmula 24 AGU
+### Art. 94 da Lei 8.213/91
 
-Contagem recíproca.
+Contagem recíproca entre RGPS e RPPS, com compensação financeira, também prevista no art. 201, §9º, da CF (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
 
 ### PEDILEFs TNU
 

@@ -44,9 +44,9 @@ RRA e IR.
 
 Honorários.
 
-### Súmula 443 STJ
+### Súmula 345 STJ e art. 85, §1º, CPC
 
-Honorários em execução.
+Honorários em execução contra a Fazenda; a Súmula 345 STJ alcança a execução individual de sentença coletiva, ainda que não embargada (auditoria 03/10/2026, retirada a Súmula 443 STJ, que é penal).
 
 ## 5. Cenários pró-segurado
 

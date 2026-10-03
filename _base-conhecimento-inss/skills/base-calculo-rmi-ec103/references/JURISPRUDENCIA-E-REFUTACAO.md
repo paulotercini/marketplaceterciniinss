@@ -6,11 +6,11 @@
 
 Tese original. Permite a inclusão de contribuições anteriores a julho de 1994 no cálculo da RMI para benefícios em que o método alternativo seja mais vantajoso, desde que preenchidos requisitos específicos.
 
-Modulação em 21 de março de 2024. O STF restringiu a aplicação, com impactos para benefícios concedidos ou revisados, exigindo análise caso a caso dos parâmetros fixados.
+Em 21 de março de 2024, nas ADIs 2110 e 2111, o STF declarou constitucional o art. 3º da Lei 9.876/99, o que esvaziou a tese; a modulação posterior dispensa apenas a devolução de valores recebidos e os honorários, sem preservar a revisão [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Fundamento para revisão de benefícios concedidos antes de 13 de novembro de 2019, com DIB sob a sistemática da Lei 9.876/99, dentro dos limites da modulação.
+Aplicação. Tese esvaziada pelas ADIs 2110 e 2111; eventual hipótese residual se confere em `base-revisao-vida-toda-rvt`.
 
 ### Tema 1070 STJ (Atividades Concomitantes)
 
@@ -20,13 +20,13 @@ Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Fundamenta revisão de RMI em que contribuições de atividades concomitantes foram desconsideradas. Aplicável também no cálculo pós-reforma quando houver contribuições concomitantes a partir de julho de 1994.
 
-### Tema 999 STJ (Exclusão do teto da RMI)
+### Tema 999 STJ (revisão da vida toda)
 
-Tese. A RMI do benefício deve considerar valores integrais das contribuições, independentemente da limitação ao teto no momento do pagamento mensal.
+Tese. "Aplica-se a regra definitiva prevista no art. 29, I e II da Lei 8.213/1991, na apuração do salário de benefício, quando mais favorável do que a regra de transição contida no art. 3º da Lei 9.876/1999, aos Segurados que ingressaram no RGPS até o dia anterior à publicação da Lei 9.876/1999." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a exclusão do teto da RMI).
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Em ações revisionais, o teto de pagamento não reduz a base de cálculo original.
+Aplicação. Tese superada pelas ADIs 2110 e 2111, que declararam constitucional o art. 3º da Lei 9.876/99; ver o Tema 1102 acima. A revisão pelo teto segue o Tema 76/STF, adiante.
 
 ### Tema 334 STF (RE 630.501)
 
@@ -86,7 +86,7 @@ Refutação. Art. 195, §14, da CF, com redação da EC 103. Contribuições aba
 
 Argumento adversário. Salários de contribuição anteriores a julho de 1994 não integram a média.
 
-Refutação. Tema 1102 STF, dentro dos limites da modulação. Cabível em benefícios concedidos até 13 de novembro de 2019 sem trânsito em julgado, observados os critérios fixados.
+Refutação. Tese adversa desde as ADIs 2110 e 2111, que declararam constitucional o art. 3º da Lei 9.876/99; a modulação dispensa apenas a devolução de valores e os honorários [NÃO CONFIRMADO]. O caminho do segurado é a análise caso a caso em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026).
 
 ### Argumento 5 — Desconsideração do caráter acidentário na B92
 
@@ -124,7 +124,7 @@ Quarto, em benefício por incapacidade, verificar caráter acidentário. Acionar
 
 Quinto, em pensão por morte, verificar todos os dependentes elegíveis.
 
-Sexto, em revisão, invocar Tema 350 STF e Tema 1102 STF dentro dos limites da modulação.
+Sexto, em revisão, invocar o Tema 334 STF, observada a decadência admitida pelo Tema 966/STJ, tese adversa que impõe ajuizar em 10 anos, e conferir o Tema 1102 STF à luz das ADIs 2110 e 2111 (auditoria 03/10/2026, corrigida a remissão ao Tema 350/STF, que trata do prévio requerimento).
 
 Sétimo, em cumprimento de sentença, conferir cálculo do INSS linha por linha. Acionar `impugnacao-cumprimento-concomitantes`.
 

@@ -26,11 +26,11 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação. Rege a data de cessação do benefício fixado em juízo, e não a superação da perícia administrativa por documentos (auditoria 03/10/2026).
 
-### Súmula 44 TNU
+### Súmula 44 STJ
 
-Tese. Para efeito de B94, a redução de capacidade é aferida em relação à atividade habitualmente exercida.
+Tese. O grau mínimo de disacusia fixado em ato regulamentar não exclui, por si só, o auxílio-acidente, desde que comprovados o nexo e a redução da capacidade para a atividade habitual (Tema 22 STJ e art. 86, §4º, da Lei 8.213/91) (auditoria 03/10/2026, no lugar da Súmula 44 TNU, que trata da tabela do art. 142).
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Exige avaliação contextualizada, não abstrata.
 

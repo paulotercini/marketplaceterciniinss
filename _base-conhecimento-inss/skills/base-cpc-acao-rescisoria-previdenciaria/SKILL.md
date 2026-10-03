@@ -1,6 +1,6 @@
 ---
 name: base-cpc-acao-rescisoria-previdenciaria
-description: "Ação rescisória previdenciária (art. 966 CPC), prova nova, prova falsa, violação de norma, competência no TRF, prazo decadencial bienal, cabimento contra coisa julgada previdenciária. Use SEMPRE que mencionar ação rescisória previdenciária, art. 966 CPC, art. 975 CPC, prova nova, prova falsa, PPP retificado rescisória, violação de norma jurídica, sentença com erro de fato, coisa julgada previdenciária, desconstituição de sentença, prazo decadencial rescisória, prazo bienal, Enunciado 63 FONAJEF, eficácia preclusiva, cabimento rescisória INSS, cabimento segurado, modulação de precedente. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, coisa-julgada-previdenciaria e decadencia-revisao-previdenciaria."
+description: "Ação rescisória previdenciária (art. 966 CPC), prova nova, prova falsa, violação de norma, competência no TRF, prazo decadencial bienal, cabimento contra coisa julgada previdenciária. Use SEMPRE que mencionar ação rescisória previdenciária, art. 966 CPC, art. 975 CPC, prova nova, prova falsa, PPP retificado rescisória, violação de norma jurídica, sentença com erro de fato, coisa julgada previdenciária, desconstituição de sentença, prazo decadencial rescisória, prazo bienal, Enunciado 44 FONAJEF, eficácia preclusiva, cabimento rescisória INSS, cabimento segurado, modulação de precedente. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, coisa-julgada-previdenciaria e decadencia-revisao-previdenciaria."
 ---
 
 # Ação Rescisória Previdenciária
@@ -35,9 +35,9 @@ Rescisória e discordância jurisprudencial.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Enunciado 63 FONAJEF
+### Enunciado 44 FONAJEF
 
-Cabimento.
+Não cabe ação rescisória no JEF, Enunciado 44 da lista de 2014 [NÃO CONFIRMADO], em linha com o art. 59 da Lei 9.099/1995. A vedação não alcança o procedimento comum, em que a rescisória segue cabível no TRF, art. 966 do CPC (auditoria 03/10/2026).
 
 ### Súmula 343 STF
 
@@ -85,7 +85,7 @@ Prova nova, 2 anos da descoberta, limitado a 5 anos do trânsito (art. 975 §2º
 
 ## Cenários pró-segurado
 
-Cenário A, PPP retificado extemporâneo. Prova nova. Tema 1116 STJ análogo.
+Cenário A, PPP retificado extemporâneo. Prova nova, art. 966, VII, do CPC (auditoria 03/10/2026, retirado o Tema 1116/STJ, que trata de consignado a analfabeto).
 
 Cenário B, laudo pericial novo contradiz anterior. Avaliar erro de fato.
 

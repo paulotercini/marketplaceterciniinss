@@ -317,7 +317,7 @@ Crítica à interpretação restritiva.
 
 Defesa da função uniformizadora ampla.
 
-## 17. Caso paradigma. PUIL 0000810-25.2020.4.03.6314 (Luiz Carlos Vanco)
+## 17. Caso paradigma. PUIL 0000810-25.2020.4.03.6314 (L. C. V.) (auditoria 03/10/2026)
 
 ### 17.1. Quadro
 

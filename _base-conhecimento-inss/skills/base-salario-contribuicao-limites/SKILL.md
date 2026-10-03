@@ -63,7 +63,7 @@ Primeiro, planejamento para elevar o salário-de-contribuição até o teto para
 
 Segundo, requalificação de verbas indevidamente tributadas para aproveitar em cômputo.
 
-Terceiro, discussão sobre natureza das verbas em repetitivos STJ (Tema 985, por exemplo).
+Terceiro, discussão sobre natureza das verbas em repetitivos do STJ. O Tema 985 do STF, já julgado, admite a contribuição patronal sobre o terço constitucional de férias gozadas [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Quarto, revisão preventiva de salário-de-contribuição errado no CNIS.
 

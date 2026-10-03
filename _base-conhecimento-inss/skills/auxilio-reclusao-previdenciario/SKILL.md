@@ -15,7 +15,7 @@ Skill consolidada para orientação, peticionamento e estratégia em casos de au
 
 **Art. 201, IV, CF** — fundamento constitucional do auxílio-reclusão como prestação aos dependentes do segurado de baixa renda.
 
-**EC 103/2019 (art. 27, §2º)** — a partir de 13/11/2019, valor fixo de 1 salário mínimo.
+**EC 103/2019 (art. 27, §1º)**. A partir de 13/11/2019, o valor é calculado na forma da pensão por morte, sem exceder 1 salário mínimo (auditoria 03/10/2026).
 
 **MP 871/2019, convertida na Lei 13.846/2019** — marco temporal divisor. Data de vigência para fins de tempus regit actum é 18/01/2019.
 
@@ -41,7 +41,7 @@ Toda análise de auxílio-reclusão exige, como primeiro passo, identificar se o
 **Regime atual (prisão a partir de 18/01/2019)**
 
 - Regime prisional admitido — exclusivamente regime fechado (art. 80, caput, redação da Lei 13.846/2019).
-- Carência — 24 contribuições mensais (art. 25, IV, Lei 8.213/91, incluído pela Lei 13.846/2019).
+- Carência — 24 contribuições mensais (art. 25, IV, Lei 8.213/91, incluído pela MP 871/2019, convertida na Lei 13.846/2019), exigida para prisões desde 18/01/2019 (IN 128/2022, art. 198, II) (auditoria 03/10/2026).
 - Critério de baixa renda — média aritmética simples dos salários de contribuição dos 12 meses anteriores ao mês do recolhimento à prisão (art. 80, §§3º e 4º).
 - Teto de baixa renda — fixado anualmente por Portaria Interministerial (2025 = R$ 1.906,04; 2026 = verificar portaria vigente).
 - Flexibilização — vedada, exceto se o Executivo não corrigir anualmente o teto (Tema 1162/STJ, tese ii).
@@ -99,7 +99,7 @@ PUIL 5000345-04.2021.4.04.7013/PR, Rel. Juiz Federal Giovani Bigolin, Plenário 
 
 ### 2.4 Tema 310/TNU — divisor da média (DIVERGÊNCIA COM STJ)
 
-PUIL 5003395-11.2020.4.04.7001, Rel. Juiz Federal David Wilson de Abreu Pardo, TNU, j. 06/05/2022.
+PUIL 5003395-11.2020.4.04.7001, Rel. Juiz Federal David Wilson de Abreu Pardo, TNU, j. 05/05/2022 (auditoria 03/10/2026).
 
 **Tese** — a aferição da renda dá-se pela média dos salários de contribuição dos 12 meses anteriores à prisão, computando-se no divisor apenas o número de salários de contribuição efetivamente existentes no período. Se houver contribuição em apenas 6 dos 12 meses, o divisor será 6.
 
@@ -128,7 +128,7 @@ ApCiv 1012773-27.2023.4.06.9999, Rel. Des. Federal Grégore Moreira de Moura, 1�
 
 ### 3.1 Antes de ajuizar
 
-Verificar obrigatoriamente se houve requerimento administrativo (Tema 350/STF, Tema 1124/STJ). Conferir a data da prisão para definir o regime jurídico. Levantar CNIS dos 12 meses anteriores à prisão para calcular a média e o enquadramento como baixa renda. Conferir a Portaria Interministerial do ano da prisão para o teto vigente. Verificar carência de 24 contribuições (se prisão pós-18/06/2019, data da conversão da MP em Lei 13.846).
+Verificar obrigatoriamente se houve requerimento administrativo (Tema 350/STF, Tema 1124/STJ). Conferir a data da prisão para definir o regime jurídico. Levantar CNIS dos 12 meses anteriores à prisão para calcular a média e o enquadramento como baixa renda. Conferir a Portaria Interministerial do ano da prisão para o teto vigente. Verificar carência de 24 contribuições (se prisão a partir de 18/01/2019, vigência da MP 871/2019; IN 128/2022, art. 198, II) (auditoria 03/10/2026).
 
 ### 3.2 Vias processuais e tutela de urgência
 
@@ -172,7 +172,7 @@ Ao receber caso de auxílio-reclusão, verificar sequencialmente.
 
 **5.3 Qualidade de segurado na data da prisão** — verificar último vínculo, contribuições, período de graça.
 
-**5.4 Carência** — se prisão a partir de 18/06/2019, verificar 24 contribuições.
+**5.4 Carência** — se prisão a partir de 18/01/2019, verificar 24 contribuições (IN 128/2022, art. 198, II) (auditoria 03/10/2026).
 
 **5.5 Critério de baixa renda** — calcular conforme o regime temporal. Para prisão pré-MP, último salário ou renda zero (Tema 896). Para prisão pós-MP, média dos 12 meses. Calcular com ambos os divisores (Tema 310 e AREsp 2.819.695). Aplicar o mais favorável.
 

@@ -10,7 +10,7 @@ Fonte oficial em https://pesquisa.apps.tcu.gov.br
 
 ### Súmula 18 TNU
 
-Cômputo de 1932 a 1971, com retribuição mesmo indireta.
+Cômputo com retribuição, mesmo indireta, à conta do orçamento, como contraprestação por labor na execução de bens e serviços para terceiros, sem recorte temporal (redação revista em 14/02/2020, Tema 216) [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Fonte oficial em https://www.jf.jus.br
 
@@ -90,7 +90,7 @@ Refutação. Art. 96 da Lei 8.213/91 e art. 201, §9º, CF. Tempo reconhecido pe
 
 ### Argumento 8 — Período posterior a 1971
 
-Argumento adversário. Súmula 18 TNU limita a 1971.
+Argumento adversário. O período posterior a 1971 não seria computável. A Súmula 18 TNU não traz esse recorte (auditoria 03/10/2026).
 
 Refutação. Verificar o regime da instituição específica. Alguns estabelecimentos mantiveram o regime após 1971. Prova caso a caso.
 

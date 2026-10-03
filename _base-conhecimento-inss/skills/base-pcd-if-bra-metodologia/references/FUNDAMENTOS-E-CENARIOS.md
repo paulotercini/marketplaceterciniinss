@@ -18,7 +18,7 @@ LC 142/2013.
 
 Decreto 8.145/2013.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 Lei 13.146/2015.
 
@@ -32,7 +32,7 @@ Constitucionalidade.
 
 ### Tema 173 TNU
 
-Deficiência intelectual.
+Trata do impedimento de longo prazo de 2 anos no BPC, não da LC 142; não citar nesta matéria (auditoria 03/10/2026).
 
 ### Repercussão social e funcional na avaliação (IF-BrA)
 
@@ -70,7 +70,7 @@ Lei 12.764/2012. Múltiplos domínios.
 
 ### Cenário G — Deficiência intelectual
 
-Tema 173 TNU.
+Domínios sensíveis Vida Doméstica e Socialização, com a questão "não pode ficar sozinho em segurança" (Portaria Interministerial 1/2014, Quadro 2) (auditoria 03/10/2026, retirado o Tema 173/TNU, que trata do BPC).
 
 ## 7. Cenários limitados
 

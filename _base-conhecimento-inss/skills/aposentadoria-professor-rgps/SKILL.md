@@ -9,7 +9,7 @@ Skill para análise, planejamento e peticionamento da aposentadoria do professor
 
 ## 1. CONCEITO DE MAGISTÉRIO — ABRANGÊNCIA
 
-### 1.1 Regra geral (art. 201, §8º, CF + art. 56 Decreto 3.048/99 + art. 250 IN 128/2022)
+### 1.1 Regra geral (art. 201, §8º, CF + art. 54, §2º, Decreto 3.048/99 + art. 250 IN 128/2022) (auditoria 03/10/2026)
 
 A aposentadoria diferenciada do professor exige tempo de contribuição exclusivamente em funções de magistério na educação infantil, ensino fundamental e ensino médio. Professor universitário perdeu a regra diferenciada com a EC 20/98 (16/12/1998), salvo direito adquirido e a regra de transição do art. 9º §2º.
 
@@ -68,7 +68,7 @@ Quem completou os requisitos antes de 13/11/2019 (data de vigência da EC 103) t
 
 ATENÇÃO — A EC 103/2019 reduziu o tempo de contribuição do professor homem de 30 para 25 anos na regra definitiva. As regras de transição mantêm os 30 anos para o homem.
 
-Cálculo da RMI (art. 26, EC 103) — 60% da média de todos os salários de contribuição desde julho/1994 + 2% por ano que exceder 20 anos de contribuição. NÃO há fator previdenciário na regra definitiva (o fator é substituído pelo coeficiente de 60%+2%).
+Cálculo da RMI (art. 26, EC 103) — 60% da média de todos os salários de contribuição desde julho/1994 + 2% por ano que exceder 20 anos de contribuição (homem) ou 15 anos (mulher, art. 26, §5º); a professora com 25 anos recebe 80% (auditoria 03/10/2026). NÃO há fator previdenciário na regra definitiva (o fator é substituído pelo coeficiente de 60%+2%).
 
 ## 4. REGRAS DE TRANSIÇÃO (EC 103/2019)
 
@@ -76,10 +76,10 @@ Aplicam-se a quem já era filiado ao RGPS antes de 13/11/2019 mas não havia com
 
 ### 4.1 Regra de transição por pontos (art. 15, §3º, EC 103/2019)
 
-- **Professor (homem)** — 30 anos de TC em magistério + 96 pontos + 180 meses de carência
-- **Professora (mulher)** — 25 anos de TC em magistério + 86 pontos + 180 meses de carência
+- **Professor (homem)** — 30 anos de TC em magistério + 91 pontos em 2019, mais 1 ponto por ano desde 2020 até 100 (98 em 2026) + 180 meses de carência
+- **Professora (mulher)** — 25 anos de TC em magistério + 81 pontos em 2019, mais 1 ponto por ano desde 2020 até 92 (88 em 2026) + 180 meses de carência
 
-Pontos = idade + tempo de contribuição total. A pontuação é FIXA (não progride anualmente, diferentemente da regra geral).
+Pontos = idade + tempo de contribuição total. A pontuação progride 1 ponto por ano desde 01/01/2020, como na regra geral, com limites de 92 (mulher) e 100 (homem) (EC 103, art. 15, §3º; IN 128, art. 252) (auditoria 03/10/2026).
 
 **Cômputo de tempo diverso na pontuação — art. 257, parágrafo único, Portaria 991.** Para obtenção da pontuação, considera-se todo o tempo de contribuição, inclusive aquele não exercido em funções de magistério, desde que o segurado tenha o mínimo de 25 anos (mulher) ou 30 anos (homem) de magistério exclusivo.
 
@@ -113,12 +113,12 @@ Teto — 60 anos (homem) e 57 anos (mulher). A partir desses limites, a regra de
 
 ### 4.3 Regra de transição por pedágio de 100% (art. 20, §1º, EC 103/2019)
 
-- **Professor (homem)** — 30 anos de TC em magistério + 52 anos de idade + pedágio de 100% + 180 meses de carência
+- **Professor (homem)** — 30 anos de TC em magistério + 55 anos de idade (auditoria 03/10/2026) + pedágio de 100% + 180 meses de carência
 - **Professora (mulher)** — 25 anos de TC em magistério + 52 anos de idade + pedágio de 100% + 180 meses de carência
 
 Pedágio = período adicional de 100% do tempo que faltava em 13/11/2019 para atingir 25 ou 30 anos de contribuição em magistério.
 
-Vantagem — Nesta regra, o cálculo da RMI é feito pela média dos 80% maiores salários multiplicada pelo fator previdenciário (se favorável) ou sem redutor de 60%. É a única regra de transição que permite afastar o coeficiente de 60%+2%.
+Vantagem — Nesta regra, a RMI corresponde a 100% da média de todos os salários de contribuição desde julho/1994, sem fator previdenciário (EC 103, art. 26, §3º, I, c/c art. 20, §2º, II) (auditoria 03/10/2026). É a única regra de transição que permite afastar o coeficiente de 60%+2%.
 
 ## 5. ACRÉSCIMO DO ART. 9º, §2º, EC 20/98 (art. 251, §1º, IN 128/2022)
 
@@ -137,9 +137,9 @@ O professor (inclusive universitário) que não implementou as condições para 
 
 ### 6.1 Incidência do fator previdenciário — Tema 1011/STJ e Tema 1091/STF
 
-O fator previdenciário incide no cálculo da RMI da aposentadoria por tempo de contribuição de professor. O STJ firmou esta tese no Tema 1011, e o STF a confirmou no Tema 1091 (RE 1.221.630/SC, Rel. Min. Dias Toffoli), fixando que a constitucionalidade do fator previdenciário se estende à aposentadoria do professor.
+O fator previdenciário incide no cálculo da RMI da aposentadoria por tempo de contribuição de professor. O STJ firmou esta tese no Tema 1011, para requisitos completados após a Lei 9.876/99. A constitucionalidade dessa incidência sobre o professor é a tese do Tema 960/STF [NÃO CONFIRMADO]; o Tema 1091 (RE 1.221.630/SC, Rel. Min. Dias Toffoli) trata do fator previdenciário em geral (auditoria 03/10/2026).
 
-A única forma de afastar o fator previdenciário é pela regra 85/95 (Lei 13.183/2015), quando os pontos são atingidos. Para professores, o art. 29, §9º, II e III, da Lei 8.213/91 prevê acréscimo de 5 anos no tempo de contribuição exclusivamente para fins de cálculo do fator.
+O fator não incide quando os requisitos se completaram antes da Lei 9.876/99, ressalva da própria tese do Tema 1011/STJ. Depois dela, a via para afastá-lo é a regra 85/95 (Lei 13.183/2015), quando os pontos são atingidos. Para professores, o art. 29, §9º, da Lei 8.213/91 prevê acréscimo de 5 anos ao professor (inciso II) e de 10 anos à professora (inciso III) no tempo de contribuição, exclusivamente para fins de cálculo do fator (auditoria 03/10/2026).
 
 ### 6.2 Precedente TRF4 — Cômputo de tempo diverso no fator e na regra de pontos
 
@@ -157,7 +157,7 @@ Todas as regras de aposentadoria do professor exigem 180 meses de carência (art
 
 ## 8. DOCUMENTAÇÃO COMPROBATÓRIA
 
-Para comprovar o exercício de magistério perante o INSS, a IN 128/2022 (arts. 248-257) exige documentação que demonstre a atividade de magistério na educação básica. Documentos pertinentes incluem CTPS com registro de professor, contrato de trabalho, portaria de nomeação, declaração do empregador com indicação do período e da função exercida, PPP (quando houver), registros em diários de classe e histórico funcional.
+Para comprovar o exercício de magistério perante o INSS, a IN 128/2022 (arts. 250 a 255) (auditoria 03/10/2026) exige documentação que demonstre a atividade de magistério na educação básica. Documentos pertinentes incluem CTPS com registro de professor, contrato de trabalho, portaria de nomeação, declaração do empregador com indicação do período e da função exercida, PPP (quando houver), registros em diários de classe e histórico funcional.
 
 Para cargos híbridos da educação infantil (Lei 15.326/2026), reforçar a prova material com descrição de função constante da lei local ou edital, atos internos da unidade escolar e documentos da rotina pedagógica (planos de aula, relatórios pedagógicos, atas de reuniões).
 

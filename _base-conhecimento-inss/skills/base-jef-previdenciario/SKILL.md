@@ -1,6 +1,6 @@
 ---
 name: base-jef-previdenciario
-description: "Juizado Especial Federal previdenciário, Lei 10.259/2001, competência pelo valor da causa, teto de 60 salários-mínimos, dispensa de reexame necessário, prova técnica simplificada. Use SEMPRE que mencionar JEF, Juizado Especial Federal, Lei 10.259, competência JEF, valor da causa JEF, 60 salários-mínimos JEF, renúncia excedente, prova técnica simplificada, Enunciado FONAJEF, competência absoluta JEF, Tema 1030 STJ, art. 3º Lei 10.259, art. 17 §4º Lei 10.259, teto JEF, art. 12 Lei 10.259, petição inicial JEF, citação JEF, contestação JEF, rito sumaríssimo previdenciário, competência delegada JEF, Tema 1086 STJ, economicidade JEF, simplicidade JEF, oralidade JEF, informalidade, TRF3. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, base-recursos-jef, base-cumprimento-sentenca-rpv-precatorio e defesa-probatoria-especial."
+description: "Juizado Especial Federal previdenciário, Lei 10.259/2001, competência pelo valor da causa, teto de 60 salários-mínimos, dispensa de reexame necessário, prova técnica simplificada. Use SEMPRE que mencionar JEF, Juizado Especial Federal, Lei 10.259, competência JEF, valor da causa JEF, 60 salários-mínimos JEF, renúncia excedente, prova técnica simplificada, Enunciado FONAJEF, competência absoluta JEF, Tema 1030 STJ, art. 3º Lei 10.259, art. 17 §4º Lei 10.259, teto JEF, art. 12 Lei 10.259, petição inicial JEF, citação JEF, contestação JEF, rito sumaríssimo previdenciário, competência delegada JEF, economicidade JEF, simplicidade JEF, oralidade JEF, informalidade, TRF3. Cruza com peticao-previdenciaria, revisao-peticao, precedentes-previdenciarios, base-recursos-jef, base-cumprimento-sentenca-rpv-precatorio e defesa-probatoria-especial."
 ---
 
 # Juizado Especial Federal Previdenciário
@@ -33,7 +33,7 @@ Art. 109, §3º, CF/88, combinado com Súmulas. Competência delegada à Justiç
 
 Tema 1030 STJ. Renúncia ao excedente valor da causa.
 
-Tema 1086 STJ. Alçada JEF e desmembramento.
+Art. 3º, §2º, Lei 10.259/2001. Prestações vincendas entram na alçada pela soma de doze parcelas, e a renúncia do Tema 1030 STJ pode alcançá-las (auditoria 03/10/2026, retirado o Tema 1086/STJ, que trata de licença-prêmio de servidor).
 
 ## Princípios processuais
 

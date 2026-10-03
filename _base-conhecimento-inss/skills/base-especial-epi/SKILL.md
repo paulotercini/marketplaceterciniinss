@@ -1,6 +1,6 @@
 ---
 name: base-especial-epi
-description: "Base de teses de defesa do segurado sobre EPI em aposentadoria especial. Use SEMPRE que mencionar EPI, equipamento de proteção individual, eficácia de EPI, neutralização de nocividade, Tema 555 STF, ARE 664.335, Tema 1090 STJ, Tema 213 TNU, Tema 218 TNU, Tema 383 TNU, IRDR 15 TRF4, Parecer Fundacentro 2/2025 e 3/2025, eficácia versus efetividade, hipóteses excepcionais EPI, standard probatório atenuado, ônus da prova EPI, campo 15.7 PPP, certificado CA, EPI ineficaz para ruído cancerígenos biológicos, art. 284 IN 128, Súmula 87 TNU, EPC versus EPI, primazia EPC, ficha de entrega, troca periódica, higienização, treinamento NR-6, limitação protetor auricular, eficácia real em campo, irrelevância do carimbo eficaz, Frederico Amado, Hugo Goes. Tese LITERAL do Tema 1090 conferida no SCON em 14/08/2026 com os cinco caminhos do ônus, EDcl REsp 2.116.343 cancerígenos, EDcl REsp 2.080.584 lista aberta, modulação afastada, vedação de pedir inversão do art. 373 §1º, Enunciado 18 I Jornada TRF4 contribuinte individual (Onda 109). Traz hipóteses excepcionais firmadas e roteiro pró-segurado. NÃO use para outros agentes isoladamente. Cruza com base-tema383-tnu-fundacentro-epi-biologicos, auditoria-ppp, peticao-previdenciaria e defesa-probatoria-especial."
+description: "Base de teses de defesa do segurado sobre EPI em aposentadoria especial. Use SEMPRE que mencionar EPI, equipamento de proteção individual, eficácia de EPI, neutralização de nocividade, Tema 555 STF, ARE 664.335, Tema 1090 STJ, Tema 213 TNU, Tema 383 TNU, IRDR 15 TRF4, Parecer Fundacentro 2/2025 e 3/2025, eficácia versus efetividade, hipóteses excepcionais EPI, standard probatório atenuado, ônus da prova EPI, campo 15.7 PPP, certificado CA, EPI ineficaz para ruído cancerígenos biológicos, art. 291 IN 128, Súmula 87 TNU, EPC versus EPI, primazia EPC, ficha de entrega, troca periódica, higienização, treinamento NR-6, limitação protetor auricular, eficácia real em campo, irrelevância do carimbo eficaz, Frederico Amado, Hugo Goes. Tese LITERAL do Tema 1090 conferida no SCON em 14/08/2026 com os cinco caminhos do ônus, EDcl REsp 2.116.343 cancerígenos, EDcl REsp 2.080.584 lista aberta, modulação afastada, vedação de pedir inversão do art. 373 §1º, Enunciado 18 I Jornada TRF4 contribuinte individual (Onda 109). Traz hipóteses excepcionais firmadas e roteiro pró-segurado. NÃO use para outros agentes isoladamente. Cruza com base-tema383-tnu-fundacentro-epi-biologicos, auditoria-ppp, peticao-previdenciaria e defesa-probatoria-especial."
 ---
 
 # Base Temática. EPI em Aposentadoria Especial
@@ -24,11 +24,11 @@ A postura é exclusivamente pró-segurado. A tese de neutralização por EPI é,
 
 ## Síntese condensada da tese pró-segurado
 
-O Tema 555 STF admite, como regra geral, que o uso eficaz de EPI afasta a nocividade. Contudo, o próprio STF firmou exceção expressa para ruído e reconheceu a possibilidade de outras exceções em situações concretas. O Tema 1090 STJ, ao enfrentar o IRDR 15 TRF4, firmou hipóteses excepcionais em que o EPI não neutraliza a nocividade, mesmo que o PPP o declare eficaz.
+O Tema 555 STF admite, como regra geral, que o uso eficaz de EPI afasta a nocividade. Contudo, o próprio STF firmou exceção expressa para ruído e reconheceu a possibilidade de outras exceções em situações concretas. O Tema 1090 STJ, ao enfrentar o IRDR 15 TRF4, ressalvou hipóteses excepcionais em que o EPI não afasta a contagem especial, mesmo que o PPP o declare eficaz (auditoria 03/10/2026).
 
-As hipóteses excepcionais incluem exposição a agentes cancerígenos listados na LINACH, agentes biológicos, agentes químicos com absorção cutânea, fumos metálicos de solda, poeiras minerais e qualquer situação em que a ficha técnica do EPI não comprovar eficácia para o agente específico.
+A tese não enumera essas hipóteses. Os EDcl no REsp 2.116.343/RJ reconheceram como uma delas a exposição a agentes cancerígenos. Os EDcl no REsp 2.080.584/PR deixam a lista aberta, o que permite sustentar agentes biológicos, agentes químicos com absorção cutânea, fumos metálicos de solda, poeiras minerais e qualquer situação em que a ficha técnica do EPI não comprovar eficácia para o agente específico (auditoria 03/10/2026).
 
-O Tema 213 TNU, por sua vez, estabeleceu o standard probatório atenuado em favor do segurado, exigindo do INSS prova concreta da eficácia, não bastando o campo 15.7 do PPP anotado como eficaz.
+O Tema 213 TNU, por sua vez, admite que o segurado desafie, por impugnação específica, a informação de EPI eficaz no PPP, e manda reconhecer o período como especial quando houver dúvida razoável sobre a real eficácia (auditoria 03/10/2026).
 
 ## Tema 383/TNU e Pareceres Fundacentro
 
@@ -50,7 +50,7 @@ Detalhamento completo em `base-tema383-tnu-fundacentro-epi-biologicos`.
 
 Primeiro, dois-pontos só antes de citação literal ou de enumeração, nunca antes de miniconclusão (Onda 163).
 
-Segundo, nunca admitir que o ônus de provar a ineficácia do EPI recai sobre o segurado. O ônus é da autarquia, conforme Tema 213 TNU.
+Segundo, o item II do Tema 1090 STJ põe no autor o ônus de provar a ineficácia do EPI quando o PPP o declara eficaz. É tese adversa, e o caminho do segurado é a impugnação específica do PPP com prova por um dos cinco caminhos do item II, para que a dúvida razoável o favoreça, nos termos do Tema 213 TNU e do item III do Tema 1090 STJ (auditoria 03/10/2026).
 
 Terceiro, jurisprudência citada somente após verificação em fonte primária oficial e apenas quando apoiar o segurado.
 

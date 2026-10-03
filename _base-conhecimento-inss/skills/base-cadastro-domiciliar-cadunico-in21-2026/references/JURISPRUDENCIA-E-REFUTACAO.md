@@ -100,17 +100,17 @@ Duração razoável do processo administrativo.
 
 Aplicação. Demora do gestor municipal em realizar o Cadastro Domiciliar configura ofensa a direito.
 
-### 3.4. Tema 979/STJ (REsp 1.401.560)
+### 3.4. Tema 979/STJ (REsp 1.381.734/RN)
 
-Irrepetibilidade de valores recebidos de boa-fé.
+Pagamento indevido por erro administrativo é repetível, salvo quando o segurado comprova boa-fé objetiva (auditoria 03/10/2026).
 
 Aplicação. Beneficiário que teve BPC suspenso indevidamente por falha do gestor municipal não pode ser obrigado a devolver valores recebidos.
 
-### 3.5. Tema 1034/STJ (REsp 1.734.974)
+### 3.5. Tema 692/STJ (REsp 1.401.560/MT)
 
-Irrepetibilidade alcança erro administrativo.
+Tese adversa. A revogação da tutela antecipada obriga a devolver os benefícios recebidos, com desconto de até 30% do benefício em manutenção (auditoria 03/10/2026).
 
-Aplicação. BPC suspenso por erro de gestor municipal é hipótese de irrepetibilidade.
+Aplicação. BPC suspenso por erro de gestor municipal não decorre de tutela revogada, e o segurado afasta o Tema 692 por distinção, com apoio na boa-fé objetiva do Tema 979.
 
 ### 3.6. Súmula 34/AGU
 

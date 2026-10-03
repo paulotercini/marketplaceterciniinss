@@ -85,7 +85,7 @@ A regra prática é. Se o caso aparenta ser processual, reformular o argumento a
 
 ABORDAGEM ERRADA. "O acórdão deve ser anulado por cerceamento de defesa. A perícia técnica era indispensável para comprovar o tempo especial".
 
-Resultado provável. Inadmissão pela Súmula 43/TNU. Decisão monocrática de não admissão. Vide caso concreto Luiz Carlos Vanco (PUIL 0000810-25.2020.4.03.6314).
+Resultado provável. Inadmissão pela Súmula 43/TNU. Decisão monocrática de não admissão. Vide caso concreto L. C. V. (PUIL 0000810-25.2020.4.03.6314) (auditoria 03/10/2026).
 
 ABORDAGEM CORRETA. "Há divergência jurisprudencial sobre a INTERPRETAÇÃO DO ART. 57 DA LEI 8.213/91 e do Anexo IV do Decreto 3.048/99 quanto ao enquadramento qualitativo do agente nocivo X. A Turma Recursal de origem aplicou interpretação restritiva incompatível com o entendimento da Turma paradigma".
 

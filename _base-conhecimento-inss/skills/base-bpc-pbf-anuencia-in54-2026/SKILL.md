@@ -1,6 +1,6 @@
 ---
 name: base-bpc-pbf-anuencia-in54-2026
-description: "Anuência ao desligamento do PBF no requerimento do BPC pela IN 54/SENARC/MDS/2026, vício de consentimento e estratégia pró-segurado. Use SEMPRE que mencionar IN 54/2026 SENARC MDS, anuência PBF BPC, desligamento PBF requerimento BPC, modalidade III art. 2º IN 54, vício de consentimento BPC, Termo Anuência Condicional, Decreto 12.534/2025 BPC PBF, Lei 14.601/2023 PBF, Lei 8.742/93 LOAS, atendente INSS consentimento, segurado vulnerável BPC PBF, MS preventivo desligamento PBF, MS repressivo BPC PBF, retorno PBF indeferimento BPC, irrepetibilidade BPC PBF, Tema 979 STJ, Tema 1034 STJ, Súmula 34 AGU, autotutela art. 53 Lei 9784, vulnerabilidade hipossuficiente, dignidade art. 1º III CF, Convenção Nova Iorque PCD, Decreto 6949/2009. Cruza com analise-bpc-loas, base-bpc-renda-per-capita-miserabilidade, bpc-renda-grupo-familiar, peticao-previdenciaria, mandado-seguranca-previdenciario, base-bpc-loas-requisitos."
+description: "Anuência ao desligamento do PBF no requerimento do BPC pela IN 54/SENARC/MDS/2026, vício de consentimento e estratégia pró-segurado. Use SEMPRE que mencionar IN 54/2026 SENARC MDS, anuência PBF BPC, desligamento PBF requerimento BPC, modalidade III art. 2º IN 54, vício de consentimento BPC, Termo Anuência Condicional, Decreto 12.534/2025 BPC PBF, Lei 14.601/2023 PBF, Lei 8.742/93 LOAS, atendente INSS consentimento, segurado vulnerável BPC PBF, MS preventivo desligamento PBF, MS repressivo BPC PBF, retorno PBF indeferimento BPC, irrepetibilidade BPC PBF, Tema 979 STJ, Tema 692 STJ, Súmula 34 AGU, autotutela art. 53 Lei 9784, vulnerabilidade hipossuficiente, dignidade art. 1º III CF, Convenção Nova Iorque PCD, Decreto 6949/2009. Cruza com analise-bpc-loas, base-bpc-renda-per-capita-miserabilidade, bpc-renda-grupo-familiar, peticao-previdenciaria, mandado-seguranca-previdenciario, base-bpc-loas-requisitos."
 ---
 
 # IN 54/SENARC/MDS/2026. Anuência ao Desligamento do PBF no Requerimento do BPC
@@ -143,7 +143,7 @@ Pedido cumulativo. Indenização por danos morais.
 
 Nas hipóteses em que o segurado teve cessado o PBF e recebeu o BPC, e posteriormente o BPC é cancelado por revisão, o INSS não pode exigir devolução cumulativa dos valores do PBF e do BPC.
 
-Princípio da irrepetibilidade. Tema 979/STJ (REsp 1.401.560). Tema 1034/STJ (REsp 1.734.974). Súmula 34/AGU.
+Princípio da irrepetibilidade. Tema 979/STJ (REsp 1.381.734/RN), pelo qual o pagamento por erro administrativo é repetível, salvo prova da boa-fé objetiva do segurado, que é o caminho da defesa. Tema 692/STJ (REsp 1.401.560/MT), tese adversa que manda devolver o recebido por tutela antecipada revogada; o segurado a afasta por distinção quando não houve tutela revogada (auditoria 03/10/2026). Súmula 34/AGU.
 
 Boa-fé objetiva. Verba alimentar. Vulnerabilidade socioeconômica.
 

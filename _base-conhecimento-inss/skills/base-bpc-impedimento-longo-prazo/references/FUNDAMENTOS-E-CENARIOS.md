@@ -10,7 +10,7 @@ Lei 13.146/2015 (Estatuto da PCD).
 
 Convenção sobre Direitos da Pessoa com Deficiência (Decreto 6.949/2009).
 
-Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014.
+Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026).
 
 Portaria 34/2025 MDS.
 
@@ -55,8 +55,8 @@ Sensoriais. Comunicação e relacionamento interpessoal. Mobilidade. Cuidados pe
 2 — Moderada.
 3 — Grave.
 4 — Completa.
-L — Incapacidade laboral.
-N — Necessidade de cuidados permanentes.
+L — Leve, na escala em letras da Portaria Conjunta MDS/INSS nº 2/2015.
+N — Nenhuma, na mesma escala, que usa ainda M (moderada), G (grave) e C (completa) (auditoria 03/10/2026).
 
 ## 6. Gatilhos de elevação
 

@@ -10,13 +10,13 @@ Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Fundamenta o cômputo de tempo rural mesmo remoto para efeitos de carência na híbrida, sob a regra do art. 48 §3º da Lei 8.213/91.
 
-### Tema 1125 STF
+### Tema 1104 STF
 
-Tese. Confirmada a constitucionalidade da aposentadoria híbrida e do reconhecimento de tempo rural para carência em condições específicas.
+Tese. "É infraconstitucional a controvérsia relativa à definição e ao preenchimento dos requisitos legais necessários para a concessão de aposentadoria híbrida." (auditoria 03/10/2026, corrigido o número, antes indicado como Tema 1125/STF, que trata da carência com auxílio-doença intercalado).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Blindagem constitucional da aposentadoria híbrida.
+Aplicação pró-segurado. Sem repercussão geral, os requisitos da híbrida seguem o Tema 1007/STJ, acima, que admite o tempo rural remoto.
 
 ### Perda da qualidade e carência nas aposentadorias programáveis (art. 3º da Lei 10.666/2003)
 
@@ -42,9 +42,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Fundamenta comparativo obrigatório entre regra permanente e transições.
 
-### Tema 131 TNU (tempo rural segurado especial)
+### Tema 131 TNU (aposentadoria híbrida)
 
-Tese. O tempo rural posterior a 1991 em condição de segurado especial pode ser computado para carência da aposentadoria rural por idade.
+Tese. Na aposentadoria por idade híbrida do art. 48, §3º, da Lei 8.213/91, é irrelevante se a atividade exercida na DER é rural ou urbana [NÃO CONFIRMADO] (auditoria 03/10/2026, corrigida a síntese anterior, que tratava o tema como tempo rural do segurado especial).
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -92,7 +92,7 @@ Refutação. Art. 96 IV da Lei 8.213/91 e Tema 609 STJ. A indenização de contr
 
 Argumento adversário. A DIB é fixada na DER, sem possibilidade de anteceder.
 
-Refutação. Tema 334 STF. A DIB pode ser fixada na data do preenchimento dos requisitos, ainda que anterior à DER, observado o direito ao melhor benefício. Efeitos financeiros retroagem à DER ou à data indicada judicialmente, conforme Tema 995 STJ.
+Refutação. Tema 334 STF. A tese manda calcular a RMI pelo quadro mais favorável, respeitadas a decadência e a prescrição; trata do cálculo e não antecipa a DIB para antes da DER [NÃO CONFIRMADO] (auditoria 03/10/2026). Efeitos financeiros retroagem à DER ou à data indicada judicialmente, conforme Tema 995 STJ.
 
 ### Argumento 8 — Aplicação do fator previdenciário
 

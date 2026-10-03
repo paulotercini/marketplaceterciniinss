@@ -18,7 +18,7 @@ Funções de magistério.
 
 ### Tema 1011 STJ
 
-Coordenação pedagógica.
+Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
 
 ## 2. Marco legislativo
 
@@ -46,13 +46,13 @@ Refutação. Art. 5º XXXVI CF e Súmula 359 STF preservam.
 
 Argumento adversário. Restrição.
 
-Refutação. EC 20 prevê para tempo anterior. Aplicável a proporcional e integral.
+Sem refutação: o bônus vale só na integral, com 35 anos (homem) ou 30 anos (mulher) exclusivamente em magistério (EC 20, art. 9º, §2º; IN 128, art. 251, §1º). O caminho do segurado é provar a exclusividade e invocar o próprio art. 251, §1º, que dispensa idade e período adicional (auditoria 03/10/2026).
 
 ### Argumento 3 — Fator previdenciário incide
 
 Argumento adversário. Lei 9.876.
 
-Refutação. A Súmula 726/STF é anterior à Lei 11.301/2006 e à ADI 3772, que asseguram o cômputo das funções de direção, coordenação e assessoramento pedagógico do professor de carreira (auditoria 25/07/2026).
+Tese adversa: o fator incide quando os requisitos se completam após a Lei 9.876/99 (Tema 1011/STJ; Tema 149/TNU; Tema 960/STF). O caminho do segurado é provar que reuniu os requisitos antes dela; a Súmula 726 não trata do fator (auditoria 03/10/2026).
 
 ### Argumento 4 — Coordenação não conta
 
@@ -64,7 +64,7 @@ Refutação. ADI 3772 e Lei 11.301.
 
 Argumento adversário. Ampliativo.
 
-Refutação. ADI 3772 exclui universitário.
+Sem refutação: o argumento procede e favorece o segurado, pois a IN 128, art. 251, §1º, estende o acréscimo ao professor, inclusive o universitário (auditoria 03/10/2026).
 
 ### Argumento 6 — Bônus somente para aposentadoria sob a EC 20
 

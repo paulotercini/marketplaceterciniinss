@@ -1,13 +1,13 @@
 ---
 name: base-bpc-comprometimento-renda
-description: Skill especializada nos fatores de comprometimento de renda aceitos pelo INSS para fins de dedução da renda per capita no BPC/LOAS (Idoso B87 e Pessoa com Deficiência B88). Cobre as 5 categorias normatizadas (Medicamentos, Consultas e tratamentos de saúde, Fraldas, Alimentação Especial, Proteção Especial - SUAS), valores dedutíveis padrão por categoria, conceito de Renda Comprometida vs Uso Contínuo vs Negativa do Poder Público, documentação comprobatória mínima exigida (notas fiscais, receitas, prescrições, atestados, declarações da rede SUS, comprovantes mensais), base normativa (Lei 14.176/2021 que alterou o §11 do art. 20 da LOAS, Decreto 6.214/2007, Portaria Conjunta MDS/INSS nº 3 de 21/09/2018, Portaria Conjunta MDS/INSS nº 28 de 25/07/2024, Portaria Conjunta DIRBEN/PFE/INSS nº 94 de 03/06/2024) e estratégia pró-segurado para maximizar deduções legítimas. Use SEMPRE que mencionar BPC comprometimento de renda, fatores de comprometimento, dedução da renda per capita, valores dedutíveis BPC, R$ 56 medicamentos, R$ 110 consultas, R$ 120 fraldas, R$ 147 alimentação especial, R$ 40 proteção SUAS, Portaria Conjunta MDS INSS 3/2018, Portaria 28/2024, Portaria 94/2024, comprovante mensal de despesa, Lei 14.176/2021 BPC, negativa do poder público, uso contínuo medicamento, receita médica BPC, alimentação especial nutricionista, fraldas geriátricas dedução, proteção especial SUAS criança idoso. Use AUTOMATICAMENTE em toda análise ou petição de BPC quando a renda per capita superar o limite de 1/4 do salário mínimo, especialmente quando o cliente tiver despesas comprovadas com saúde, alimentação especial, fraldas ou proteção especial. Cruza com base-bpc-loas-requisitos, base-bpc-renda-per-capita-miserabilidade, base-bpc-impedimento-longo-prazo, base-bpc-aposentadoria-pcd-procedimentos, bpc-renda-grupo-familiar (escritório), analise-bpc-loas (escritório), peticao-previdenciaria, base-revisao-peticao-aprofundada, base-legislacao-fontes-primarias. NÃO use para deficiência impedimento longo prazo (use base-bpc-impedimento-longo-prazo) nem cadastro CadÚnico (use base-cadastro-domiciliar-cadunico-in21-2026).
+description: Skill especializada nos fatores de comprometimento de renda aceitos pelo INSS para fins de dedução da renda per capita no BPC/LOAS (Idoso B87 e Pessoa com Deficiência B88). Cobre as 5 categorias normatizadas (Medicamentos, Consultas e tratamentos de saúde, Fraldas, Alimentação Especial, Proteção Especial - SUAS), valores dedutíveis padrão por categoria, conceito de Renda Comprometida vs Uso Contínuo vs Negativa do Poder Público, documentação comprobatória mínima exigida (notas fiscais, receitas, prescrições, atestados, declarações da rede SUS, comprovantes mensais), base normativa (Lei 14.176/2021 que incluiu o §11-A no art. 20 e o art. 20-B na LOAS, Decreto 6.214/2007, Portaria Conjunta MDS/INSS nº 3 de 21/09/2018, Portaria Conjunta MDS/INSS nº 28 de 25/07/2024, Portaria Conjunta DIRBEN/PFE/INSS nº 94 de 03/06/2024) e estratégia pró-segurado para maximizar deduções legítimas. Use SEMPRE que mencionar BPC comprometimento de renda, fatores de comprometimento, dedução da renda per capita, valores dedutíveis BPC, R$ 56 medicamentos, R$ 110 consultas, R$ 120 fraldas, R$ 147 alimentação especial, R$ 40 proteção SUAS, Portaria Conjunta MDS INSS 3/2018, Portaria 28/2024, Portaria 94/2024, comprovante mensal de despesa, Lei 14.176/2021 BPC, negativa do poder público, uso contínuo medicamento, receita médica BPC, alimentação especial nutricionista, fraldas geriátricas dedução, proteção especial SUAS criança idoso. Use AUTOMATICAMENTE em toda análise ou petição de BPC quando a renda per capita superar o limite de 1/4 do salário mínimo, especialmente quando o cliente tiver despesas comprovadas com saúde, alimentação especial, fraldas ou proteção especial. Cruza com base-bpc-loas-requisitos, base-bpc-renda-per-capita-miserabilidade, base-bpc-impedimento-longo-prazo, base-bpc-aposentadoria-pcd-procedimentos, bpc-renda-grupo-familiar (escritório), analise-bpc-loas (escritório), peticao-previdenciaria, base-revisao-peticao-aprofundada, base-legislacao-fontes-primarias. NÃO use para deficiência impedimento longo prazo (use base-bpc-impedimento-longo-prazo) nem cadastro CadÚnico (use base-cadastro-domiciliar-cadunico-in21-2026).
 ---
 
 # Comprometimento de Renda no BPC/LOAS - Skill Pró-Segurado
 
 ## OBJETIVO E POSTURA
 
-Esta skill consolida a sistemática de COMPROMETIMENTO DE RENDA no BPC/LOAS, instrumento previsto no §11 do art. 20 da Lei 8.742/93 (LOAS) com a redação dada pela Lei 14.176/2021 que permite ao INSS deduzir despesas essenciais da renda mensal familiar para fins de aferição da miserabilidade, permitindo a concessão do benefício mesmo quando a renda per capita NOMINAL supera 1/4 do salário mínimo.
+Esta skill consolida a sistemática de COMPROMETIMENTO DE RENDA no BPC/LOAS, instrumento previsto no §11 do art. 20 da Lei 8.742/93 (LOAS), incluído pela Lei 13.146/2015, e no §11-A e no art. 20-B, incluídos pela Lei 14.176/2021 (auditoria 03/10/2026), que permite ao INSS deduzir despesas essenciais da renda mensal familiar para fins de aferição da miserabilidade, permitindo a concessão do benefício mesmo quando a renda per capita NOMINAL supera 1/4 do salário mínimo.
 
 A skill foi criada na Onda 39 (v1.29.0) a partir do documento real do INSS (Comprometimento de Renda Declarado no Requerimento) trazido pelo escritório Paulo Roberto Tercini Filho, confirmando que o INSS adota 5 categorias padronizadas com valores dedutíveis específicos.
 
@@ -19,7 +19,7 @@ A sistemática do comprometimento de renda no BPC tem fundamento normativo escal
 
 **Constituição Federal** - art. 203, V (garantia do benefício de prestação continuada).
 
-**Lei 8.742/93 - LOAS** - art. 20, especialmente §11 (com redação dada pela Lei 14.176/2021) que autorizou a ampliação da miserabilidade considerando despesas comprometedoras essenciais da família.
+**Lei 8.742/93 - LOAS** - art. 20, especialmente §11 (incluído pela Lei 13.146/2015), §11-A e art. 20-B (incluídos pela Lei 14.176/2021) (auditoria 03/10/2026), que autorizaram a ampliação da miserabilidade considerando despesas comprometedoras essenciais da família.
 
 **Lei 14.176/2021** - introduziu a possibilidade do BPC ser concedido a famílias com renda per capita entre 1/4 e 1/2 do salário mínimo quando demonstrado o comprometimento de renda.
 
@@ -162,7 +162,7 @@ O instrumento do comprometimento de renda é DECISIVO. Estratégia em 5 passos.
 
 **Passo 4.** Calcular a renda per capita FAMILIAR APÓS as deduções. Se ficar abaixo de 1/4 do SM, há direito ao BPC pela presunção absoluta de miserabilidade do Tema 185/STJ.
 
-**Passo 5.** Se ainda assim ficar entre 1/4 e 1/2 do SM, sustentar o direito pela presunção relativa do Tema 27/STF + Tema 122/TNU (1/4 SM como presunção relativa) somada à demonstração concreta de despesas.
+**Passo 5.** Se ainda assim ficar entre 1/4 e 1/2 do SM, sustentar o direito pelo Tema 27/STF e pelo Tema 185/STJ, que admitem outros meios de prova da miserabilidade, somados à demonstração concreta de despesas. O Tema 122/TNU é tese adversa, porque torna relativa a presunção abaixo de 1/4 [NÃO CONFIRMADO]; o segurado responde com a presunção absoluta do Tema 185/STJ (auditoria 03/10/2026).
 
 ### Quando a renda per capita está acima de 1/2 do SM
 
@@ -245,7 +245,7 @@ Esta skill deve ser acionada EM CONJUNTO com.
 4. Comparar valor efetivo vs valor padrão da tabela do INSS.
 5. Marcar corretamente cada campo do requerimento (Renda Comprometida, Uso Contínuo, Negativa do Poder Público).
 6. Recalcular renda per capita APÓS as deduções aceitas.
-7. Aplicar Tema 27/STF + Tema 185/STJ + Tema 122/TNU se a renda permanecer entre 1/4 e 1/2 do SM.
+7. Aplicar Tema 27/STF + Tema 185/STJ se a renda permanecer entre 1/4 e 1/2 do SM. O Tema 122/TNU é tese adversa (presunção relativa abaixo de 1/4) [NÃO CONFIRMADO] (auditoria 03/10/2026).
 8. Solicitar laudo social do CRAS quando necessário.
 
 ## ALERTA CRÍTICO DE ATUALIZAÇÃO

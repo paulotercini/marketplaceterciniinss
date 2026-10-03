@@ -109,7 +109,7 @@ Embora esta skill trate especificamente de cerceamento de defesa em aposentadori
 O Tema 382/TNU (PUIL 5012678) fixou tese de que a simples exposição a tolueno por via cutânea, inclusive na forma líquida, **não autoriza** o reconhecimento de atividade especial pela análise qualitativa do Anexo 13 da NR-15. A defesa migrou para frentes argumentativas alternativas. Status do trânsito em julgado deve ser confirmado em `precedentes-previdenciarios` (entrada em `novos_especial_2025_2026.md`) antes de cada peça.
 
 ### Frente 1 — Co-exposição a cancerígenos LINACH Grupo 1
-Em atividades industriais com tolueno (pintura, gráfica, posto de combustíveis, química, plástica, calçadista, metalurgia), há quase sempre co-exposição a **benzeno**, hidrocarbonetos policíclicos aromáticos (HPA), nitroderivados, aminoderivados, óleo mineral usado e outros aromáticos da LINACH. Sustentar Tema 170/TNU integralmente. PEDILEF 5003231 (petróleo e derivados, qualitativa para LINACH) e PEDILEF 0001717-15 são fundamentos diretos.
+Em atividades industriais com tolueno (pintura, gráfica, posto de combustíveis, química, plástica, calçadista, metalurgia), há quase sempre co-exposição a **benzeno**, hidrocarbonetos policíclicos aromáticos (HPA), nitroderivados, aminoderivados, óleo mineral usado e outros aromáticos da LINACH. Sustentar Tema 170/TNU integralmente. PEDILEF 5003231 (petróleo e derivados, qualitativa para LINACH) é fundamento direto (auditoria 03/10/2026, retirado o PEDILEF 0001717-22.2019.4.03.6318/SP, que trata de ruído).
 
 Pedido em juízo. Diligência de retificação do PPP pela empresa para inclusão de agentes coexpostos (acionar `retificacao-ppp`). Subsidiariamente, perícia técnica para constatação da co-exposição.
 

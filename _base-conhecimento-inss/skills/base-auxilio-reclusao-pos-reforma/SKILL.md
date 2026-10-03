@@ -13,7 +13,7 @@ Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Fil
 
 Lei 8.213/91, art. 80. Concessão do auxílio-reclusão aos dependentes do segurado de baixa renda recolhido à prisão em regime fechado.
 
-Lei 8.213/91, art. 80, §1º. Concessão independe de carência quanto ao óbito, mas a MP 871/2019 e Lei 13.846/2019 passaram a exigir 24 contribuições mensais.
+Lei 8.213/91, art. 80, §1º. O requerimento é instruído com certidão judicial do recolhimento efetivo à prisão, e a manutenção exige prova de permanência na condição de presidiário (auditoria 03/10/2026). A carência de 24 contribuições vem do art. 25, IV, incluído pela MP 871/2019 e exigido para prisões desde 18/01/2019.
 
 Lei 8.213/91, art. 25, IV. Carência de 24 contribuições para auxílio-reclusão.
 
@@ -29,17 +29,17 @@ Portaria MPS que define o teto de baixa renda (valor atualizado periodicamente).
 
 Primeiro, qualidade de segurado na data da prisão.
 
-Segundo, baixa renda do segurado na data da prisão, aferida pela média dos 12 salários-de-contribuição imediatamente anteriores (art. 80, §4º, Lei 8.213; divisor igual ao número de salários existentes, Tema 310/TNU e art. 383, §6º, da IN 128/2022; auditoria 03/10/2026). O critério do último salário-de-contribuição vale apenas para prisões anteriores à Lei 13.846/2019.
+Segundo, baixa renda do segurado na data da prisão, aferida pela média dos 12 salários-de-contribuição imediatamente anteriores (art. 80, §4º, Lei 8.213; divisor igual ao número de salários existentes, Tema 310/TNU e art. 383, §6º, da IN 128/2022; auditoria 03/10/2026). O critério do último salário-de-contribuição vale apenas para prisões anteriores a 18/01/2019, vigência da MP 871/2019.
 
-Terceiro, carência de 24 contribuições (após Lei 13.846/2019).
+Terceiro, carência de 24 contribuições (prisão desde 18/01/2019, vigência da MP 871/2019; IN 128/2022, art. 198, II) (auditoria 03/10/2026).
 
-Quarto, recolhimento à prisão em regime fechado (após Lei 13.846/2019, que excluiu regime semiaberto).
+Quarto, recolhimento à prisão em regime fechado (prisão desde 18/01/2019, pela MP 871/2019, convertida na Lei 13.846/2019, que excluiu o regime semiaberto) (auditoria 03/10/2026).
 
 Quinto, dependentes no sentido do art. 16.
 
 ## Cenários operacionais pró-segurado
 
-Primeiro, segurado preso antes da Lei 13.846/2019. Tempus regit actum. Aplica regra anterior, com regime semiaberto admitido e sem exigência de 24 contribuições.
+Primeiro, segurado preso antes de 18/01/2019, vigência da MP 871/2019 (auditoria 03/10/2026). Tempus regit actum. Aplica regra anterior, com regime semiaberto admitido e sem exigência de 24 contribuições.
 
 Segundo, segurado desempregado preso. Em prisão anterior à MP 871/2019, a ausência de renda atende o critério (Tema 896/STJ); em prisão posterior, vale a média dos 12 meses, e sem salário de contribuição no período há baixa renda (art. 383, §5º, da IN 128/2022) (auditoria 03/10/2026, retirado o REsp 2.240.220, que integra o Tema 1421/STJ).
 
@@ -57,7 +57,7 @@ Sétimo, média dos salários de contribuição dos 12 meses anteriores à pris�
 
 A regra geral é que o B25 é devido aos dependentes enquanto o segurado estiver preso em regime fechado. O INSS tende a negar por critério de renda ou por ausência de carência. Enfrentar.
 
-Primeiro, verificar data da prisão para definir regime aplicável (antes ou depois da Lei 13.846/2019).
+Primeiro, verificar data da prisão para definir regime aplicável (antes ou depois de 18/01/2019, vigência da MP 871/2019) (auditoria 03/10/2026).
 
 Segundo, em segurado desempregado, invocar o Tema 896/STJ se a prisão for anterior à MP 871/2019, e o art. 383, §5º, da IN 128/2022 se posterior (auditoria 03/10/2026).
 

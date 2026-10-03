@@ -2,7 +2,7 @@
 
 ## 1. Conceito operacional
 
-A acumulação do B94 com aposentadoria foi vedada pela MP 1.596-14/1997, com marco em 11/11/1997. B94 concedido antes preserva acumulação por direito adquirido. B94 posterior integra ao SB pelo art. 31 da Lei 8.213/91.
+A acumulação do B94 com aposentadoria foi vedada pela MP 1.596-14/1997, com marco em 11/11/1997. Só acumula quando a lesão incapacitante e a aposentadoria são anteriores ao marco (Súmula 507 STJ e Tema 555 STJ). Nos demais casos, o B94 cessa na aposentadoria e integra o salário-de-contribuição pelo art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
 
 ## 2. Fundamento constitucional
 
@@ -42,7 +42,7 @@ Tese literal, conferida na página oficial do STJ em 18/09/2026. "O termo inicia
 
 ### Cenário A — B94 desde 1995
 
-Acumulação. Súmula 507.
+Acumulação só se a aposentadoria também for anterior a 11/11/1997 (Súmula 507 STJ). Com aposentadoria posterior, não acumula e resta a integração do art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
 
 ### Cenário B — B94 cessado indevidamente
 

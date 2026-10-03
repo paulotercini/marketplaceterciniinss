@@ -141,7 +141,7 @@ Antes de redigir os embargos, a auto-pergunta deve ser. "A incoerência que esto
 - [ ] A contradição que aponto está entre dois trechos do MESMO acórdão?
 - [ ] Não estou disfarçando inconformismo de mérito como ED?
 - [ ] Tenho clareza de que ED não substituem REA/recurso ordinário/inominado/REsp?
-- [ ] Prazo de 5 dias (CRPS) / 5 dias (CPC) está sendo respeitado?
+- [ ] Prazo de 30 dias (CRPS, art. 92, §2º) / 5 dias (CPC) está sendo respeitado? (auditoria 03/10/2026)
 - [ ] Peça enxuta, sem extrapolações de mérito?
 
 ## CRUZAMENTO COM OUTRAS SKILLS

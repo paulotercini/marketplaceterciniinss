@@ -8,7 +8,7 @@ Retirada a Súmula 63/TNU na auditoria 25/07/2026; ela trata de união estável 
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Abre o rol do art. 151 para outras moléstias graves, como doenças neuromusculares, esclerose múltipla em casos específicos e outras de igual gravidade comprovada.
+Aplicação pró-segurado. Abre o rol do art. 151 para outras moléstias graves, como doenças neuromusculares e outras de igual gravidade comprovada. Esclerose múltipla e hanseníase já constam do texto do art. 151, na redação da Lei 13.135/2015 (auditoria 03/10/2026).
 
 ### Tema 246 TNU
 
@@ -110,7 +110,7 @@ Refutação. Acionar `periodo-graca-qualidade-segurado`. Art. 15 da Lei 8.213/91
 
 Argumento adversário. A DIB deve ser fixada na DER, não na DII.
 
-Refutação. Art. 60, §1º, da Lei 8.213/91. Para segurado empregado, retroação à DII se requerimento em 30 dias. Para demais segurados, DIB na DII comprovada (auditoria 03/10/2026, retirada a Súmula 47/TNU, que não trata de DIB).
+Refutação. Art. 60, caput e §1º, da Lei 8.213/91. Requerido o benefício em até 30 dias do afastamento, a DIB é o 16º dia para o segurado empregado e a DII comprovada para os demais; depois desse prazo, a DIB é a DER para todo segurado (auditoria 03/10/2026, retirada a Súmula 47/TNU, que não trata de DIB).
 
 ## 3. Estratégia integrada
 

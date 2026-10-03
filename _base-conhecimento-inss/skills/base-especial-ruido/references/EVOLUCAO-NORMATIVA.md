@@ -12,13 +12,13 @@
 
 O Decreto 53.831/64, no código 1.1.6, considerava especial a atividade com exposição a ruído superior a 80 decibéis. O Decreto 83.080/79, no código 1.1.5, elevava o limite para 90 decibéis. A coexistência desses decretos gerou controvérsia resolvida pela jurisprudência em favor da aplicação do limite mais benéfico ao trabalhador, ou seja, 80 dB.
 
-Precedente aplicável no STJ em recurso repetitivo, REsp 1.398.260/PR, fixou a irretroatividade de limite mais gravoso, consolidando a proteção ao direito adquirido.
+No STJ, o REsp 1.398.260/PR (Tema 694, recurso repetitivo) fixou o limite de 90 dB de 06/03/1997 a 18/11/2003 e vedou a aplicação retroativa dos 85 dB do Decreto 4.882/2003. É tese adversa, e o caminho do segurado nesse intervalo é provar exposição acima de 90 dB por LTCAT ou perícia, ou enquadrar o período por outro agente nocivo (auditoria 03/10/2026).
 
 ## Períodos entre 06/03/1997 e 18/11/2003
 
 O Decreto 2.172/97, no Anexo IV código 2.0.1, estabeleceu o limite único de 90 dB. O Decreto 3.048/99, na redação original, manteve o mesmo limite. Nesse intervalo, a jurisprudência consolidou dois pontos importantes.
 
-O primeiro ponto é o afastamento da habitualidade e permanência como elemento a ser exigido de forma absoluta, bastando exposição de forma habitual e permanente, ainda que em intercalação com outros agentes, conforme Tema 698 STF em sentido amplo.
+O primeiro ponto é o afastamento da habitualidade e permanência como elemento a ser exigido de forma absoluta, bastando exposição de forma habitual e permanente, ainda que em intercalação com outros agentes, à luz do art. 57, §3º, da Lei 8.213/1991, que exige trabalho permanente, não ocasional nem intermitente (auditoria 03/10/2026).
 
 O segundo ponto é a admissibilidade da aferição por qualquer técnica que respeitasse a finalidade protetiva, ainda que a exigência formal do NEN somente tenha se consolidado a partir do Decreto 4.882/2003.
 
@@ -38,13 +38,13 @@ Terceiro, a admissibilidade da indicação isolada da NHO-01, sem NEN expresso, 
 
 Ao analisar o PPP, situar cada período na régua acima e verificar o limite vigente à época da prestação laboral. Erro comum do INSS é aplicar limite posterior a período pretérito, descartando especialidade consolidada sob regime mais benéfico.
 
-Em recurso administrativo ou peça judicial, invocar sempre a tese do direito adquirido, demonstrando que a redução de 80 para 85 dB e a redução anterior de 80 para 90 dB não retroagem em prejuízo ao segurado.
+Em recurso administrativo ou peça judicial, invocar sempre a tese do direito adquirido, demonstrando que a elevação de 80 para 90 dB, em 06/03/1997, não retroage em prejuízo do segurado aos períodos anteriores, regidos pelo limite de 80 dB (auditoria 03/10/2026).
 
 ## Fontes primárias
 
 Constituição Federal, arts. 201 e 202.
 Decreto 53.831/1964, código 1.1.6 do Anexo.
-Decreto 83.080/1979, código 1.1.5 do Anexo II.
+Decreto 83.080/1979, código 1.1.5 do Anexo I (auditoria 03/10/2026).
 Decreto 2.172/1997, Anexo IV, código 2.0.1.
 Decreto 3.048/1999, Anexo IV, código 2.0.1, com redação do Decreto 4.882/2003.
 Decreto 4.882/2003.

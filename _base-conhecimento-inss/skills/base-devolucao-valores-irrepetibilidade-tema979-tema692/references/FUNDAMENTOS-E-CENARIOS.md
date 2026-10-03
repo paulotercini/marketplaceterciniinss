@@ -2,11 +2,11 @@
 
 ## 1. Marco normativo aplicável
 
-Lei 8.213/91, art. 115. Decreto 3.048/99, arts. 154 a 157. Súmula 34/AGU. Tema 979/STJ. Tema 1.034/STJ. Súmula Vinculante 35 STF. CC, arts. 884 e 885.
+Lei 8.213/91, art. 115. Decreto 3.048/99, arts. 154 a 157. Súmula 34/AGU. Tema 979/STJ. Tema 692/STJ, tese adversa. CF, art. 5º, LV (auditoria 03/10/2026). CC, arts. 884 e 885.
 
 ## 2. Cenário 1 — Tutela antecipada reformada
 
-Segurado recebe benefício por liminar, mas sentença improcedente reforma. Tema 1.034/STJ veda devolução automática quando há boa-fé objetiva.
+Segurado recebe benefício por liminar, mas sentença improcedente reforma. O Tema 692/STJ, tese adversa, obriga a devolução, com desconto de até 30% do benefício, e não ressalva a boa-fé. O caminho do segurado é a distinção, quando o pagamento não decorreu da liminar, e o teto de 30% (auditoria 03/10/2026).
 
 ## 3. Cenário 2 — Erro administrativo do INSS
 
@@ -30,7 +30,7 @@ Tempo computado equivocadamente pelo INSS. Tema 979/STJ veda devolução.
 
 ## 8. Cenário 7 — Reforma em embargos infringentes
 
-Sentença favorável reformada em segundo grau. Tema 1.034/STJ aplicável.
+Sentença favorável reformada em segundo grau. Tema 692/STJ aplicável, tese adversa: devolução com desconto de até 30% do benefício. O segurado exige esse teto e a prova da origem de cada parcela (auditoria 03/10/2026).
 
 ## 9. Cenário 8 — Decisão monocrática reformada
 

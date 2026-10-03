@@ -53,7 +53,7 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 
 ## TRABALHO DOMÉSTICO NÃO REMUNERADO EQUIPARADO AO REMUNERADO (Onda 52)
 
-**Precedente vinculante regional.** TRU 4ª Região, PUIL 5002876-10.2023.4.04.7202/TRF, Rel. Juíza Federal Susana Sbrogio Galia, sessão de 26/06/2026 em SJSC.
+**Precedente regional.** TRU 4ª Região, sem efeito vinculante (auditoria 03/10/2026), PUIL 5002876-10.2023.4.04.7202/TRF, Rel. Juíza Federal Susana Sbrogio Galia, sessão de 26/06/2026 em SJSC.
 
 **Tese 1.** Salvo comprovação em sentido contrário, a execução de trabalho doméstico não remunerado impõe exigência física e riscos ergonômicos EQUIPARADOS ao trabalho doméstico remunerado.
 

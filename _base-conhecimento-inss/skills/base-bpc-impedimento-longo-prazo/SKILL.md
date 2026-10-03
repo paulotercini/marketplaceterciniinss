@@ -1,6 +1,6 @@
 ---
 name: base-bpc-impedimento-longo-prazo
-description: "BPC/LOAS, impedimento de longo prazo, avaliação biopsicossocial, TCQ e IFBrM, ótica pró-segurado. Use SEMPRE que mencionar impedimento de longo prazo BPC, avaliação biopsicossocial, IFBrM, TCQ Tabela Conclusiva de Qualificadores, Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014, Portaria 34/2025, Portaria 37/2026, Lei 15.157/2025 dispensa reavaliação, avaliação social, avaliação médica, domínios funcionais BPC, gatilho elevação funções corpo, agravante estrutura, prognóstico desfavorável BPC, Teleperícia BPC, Portaria 19/2026, impedimento mínimo 2 anos, impedimento físico mental intelectual sensorial, barreiras CIF Classificação Internacional de Funcionalidade, deficiência biopsicossocial, fibromialgia BPC Lei 15.176/2025, autismo BPC, transtorno mental BPC, esquizofrenia BPC, HIV BPC, menor 16 anos BPC IFBrM, qualificador N L, supressão incisos art 8. Cruza com base-bpc-loas-requisitos, analise-bpc-loas, peticao-previdenciaria, precedentes-previdenciarios e orientacao-cliente-pericia."
+description: "BPC/LOAS, impedimento de longo prazo, avaliação biopsicossocial, TCQ e IFBrM, ótica pró-segurado. Use SEMPRE que mencionar impedimento de longo prazo BPC, avaliação biopsicossocial, IFBrM, TCQ Tabela Conclusiva de Qualificadores, Portaria Conjunta MDS/INSS nº 2, de 30/03/2015, Portaria 34/2025, Portaria 37/2026, Lei 15.157/2025 dispensa reavaliação, avaliação social, avaliação médica, domínios funcionais BPC, gatilho elevação funções corpo, agravante estrutura, prognóstico desfavorável BPC, Teleperícia BPC, Portaria 19/2026, impedimento mínimo 2 anos, impedimento físico mental intelectual sensorial, barreiras CIF Classificação Internacional de Funcionalidade, deficiência biopsicossocial, fibromialgia BPC Lei 15.176/2025, autismo BPC, transtorno mental BPC, esquizofrenia BPC, HIV BPC, menor 16 anos BPC IFBrM, qualificador N L, supressão incisos art 8. Cruza com base-bpc-loas-requisitos, analise-bpc-loas, peticao-previdenciaria, precedentes-previdenciarios e orientacao-cliente-pericia."
 ---
 
 # BPC/LOAS. Impedimento de Longo Prazo e Avaliação Biopsicossocial
@@ -21,7 +21,7 @@ Lei 13.146/2015 (Estatuto da PCD). Referência biopsicossocial da deficiência.
 
 Convenção sobre os Direitos das Pessoas com Deficiência (Decreto 6.949/2009). Base do modelo biopsicossocial.
 
-Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014. Avaliação biopsicossocial, TCQ, IFBrM.
+Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026). Avaliação biopsicossocial, TCQ, IFBrM.
 
 Portaria 34/2025 MDS. Atualiza critérios.
 
@@ -53,9 +53,9 @@ Tabela oficial que combina qualificadores funcionais (médico) e qualificadores 
 
 Qualificadores. 0 (sem dificuldade), 1 (leve), 2 (moderada), 3 (grave), 4 (completa).
 
-Qualificadores especiais. L (labor/incapacidade laboral). N (necessidade de cuidados permanentes).
+Na Portaria Conjunta MDS/INSS nº 2/2015 os qualificadores vêm em letras. N (nenhuma), L (leve), M (moderada), G (grave) e C (completa), na mesma escala acima (auditoria 03/10/2026).
 
-Lei 15.157/2025. Suprime incisos específicos do art. 8º do Decreto 6.214/2007, dispensando reavaliação em impedimento permanente, irreversível e irrecuperável.
+Lei 15.157/2025. Deu nova redação ao §5º do art. 21 da LOAS, que dispensa da avaliação médico-pericial periódica o beneficiário com impedimento permanente, irreversível ou irrecuperável, salvo fundamentada suspeita de fraude ou erro. A supressão dos antigos incisos I e II do art. 8º veio da Portaria Conjunta 37/2026, que reescreveu esse artigo da Portaria Conjunta 2/2015 (auditoria 03/10/2026).
 
 ## IFBrM (Índice de Funcionalidade Brasileiro Modificado, aplicado ao BPC)
 

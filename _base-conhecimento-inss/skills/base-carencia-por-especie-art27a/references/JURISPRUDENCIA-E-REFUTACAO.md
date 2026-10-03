@@ -2,9 +2,9 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 1352 STJ
+### Reingresso e art. 27-A da Lei 8.213/91
 
-Reingresso. Fonte oficial em https://www.stj.jus.br
+O reingresso se rege pelo art. 27-A da Lei 8.213/91, que exige, nos benefícios que enumera, metade da carência a partir da nova filiação. Fonte oficial em https://www.planalto.gov.br (auditoria 03/10/2026).
 
 ### Tema 365 TNU (tese e data conferidas na página oficial do CJF, julgado em 12/11/2025, acórdão publicado em 18/12/2025 — auditoria 25/07/2026, a data antes registrada, 13/11/2025, estava errada)
 
@@ -46,7 +46,7 @@ Refutação. Art. 27-A — metade da carência.
 
 Argumento adversário. Perda apaga.
 
-Refutação. Art. 27-A §1º.
+Refutação. Art. 27-A, caput, que exige no reingresso só metade da carência e aproveita as contribuições anteriores (auditoria 03/10/2026).
 
 ### Argumento 3 — Doença grave sem isenção
 
@@ -76,7 +76,7 @@ Refutação. Não há carência alguma. A exigência do art. 25, III, foi declar
 
 Argumento adversário. Carência alta.
 
-Refutação. Lei 13.846 — 18.
+Refutação. Pensão por morte independe de carência (art. 26, I, da Lei 8.213/91). As 18 contribuições só afetam a duração da cota do cônjuge ou companheiro (art. 77, §2º, V, da Lei 8.213/91) (auditoria 03/10/2026).
 
 ### Argumento 8 — Aposentadoria especial exige 180
 
@@ -98,15 +98,15 @@ Refutação. Art. 26 I.
 
 ## 3. Cláusulas doutrinárias de apoio
 
-Sebastião Geraldo de Oliveira sustenta isenção ampla.
+Nenhuma posição doutrinária entra aqui sem obra e página conferidas (auditoria 03/10/2026).
 
-Frederico Amado defende interpretação favorável.
 
-Hugo Goes admite art. 27-A.
 
-Marco Aurélio Serau Junior critica exigência integral.
 
-IBDP sustenta interpretação pró-segurado.
+
+
+
+
 
 ## 4. Estratégia integrada
 
@@ -124,4 +124,4 @@ Sexto, monitoramento.
 
 ## 5. Diligência de atualização
 
-Acompanhar Tema 1352 STJ. Revalidar Lei 13.846. Monitorar Portarias.
+Revalidar a Lei 13.846 e o art. 27-A (auditoria 03/10/2026). Monitorar Portarias.

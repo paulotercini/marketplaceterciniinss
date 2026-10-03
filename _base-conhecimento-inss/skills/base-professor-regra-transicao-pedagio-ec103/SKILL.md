@@ -33,7 +33,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 1011 STJ
 
-Coordenação pedagógica.
+Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -63,7 +63,7 @@ Segundo, subtrair dos mínimos (25 ou 30).
 
 Terceiro, o resultado é o tempo faltante.
 
-Quarto, dobrar o faltante. Esse é o pedágio.
+Quarto, o pedágio é igual ao faltante (100%, EC 103, art. 20, IV); o dobro do faltante é o tempo total a cumprir após 13/11/2019 (auditoria 03/10/2026).
 
 Quinto, somar ao tempo original para totalizar.
 
@@ -75,7 +75,7 @@ Segundo, a mulher com 24 anos de magistério em 13/11/2019: faltava 1 ano, pedá
 
 Terceiro, funções de magistério contam. Lei 11.301 e ADI 3772.
 
-Quarto, professor universitário NÃO se insere. ADI 3772.
+Quarto, professor universitário NÃO se insere. A exclusão decorre do texto, que limita a regra à educação infantil e aos ensinos fundamental e médio (CF, art. 201, §8º; EC 103, art. 20, §1º) (auditoria 03/10/2026).
 
 ## Cenários pró-segurado
 

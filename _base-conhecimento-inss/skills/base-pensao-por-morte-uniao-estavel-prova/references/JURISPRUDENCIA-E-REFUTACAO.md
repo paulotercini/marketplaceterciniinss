@@ -58,7 +58,7 @@ Refutação. Continuidade demonstrada por documentos pontuais.
 
 Argumento adversário. Concubinato impuro afasta.
 
-Refutação. Tema 526/STF admite exceções (separação de fato).
+Refutação. O Tema 526/STF não admite exceção, mas a separação de fato afasta o próprio concubinato e permite a união estável (CC, art. 1.723, §1º; Tema 529/STF) (auditoria 03/10/2026).
 
 ### Argumento 5 — Início de prova material insuficiente
 

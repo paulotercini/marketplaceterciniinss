@@ -28,15 +28,15 @@ Esta skill consolida o Recurso Especial às Câmaras de Julgamento (arts. 90-91)
 
 Cabível contra decisões das JRs em Recurso Ordinário, dirigido às CAJs (art. 90). Prazo de 30 dias. Efeito devolutivo amplo, abrangendo toda a matéria (art. 90, §1º; art. 146, §2º). NÃO cabe contra decisão de diligência (art. 90, §2º). NÃO cabe em matéria de alçada exclusiva das JRs (art. 89, §3º).
 
-### Hipóteses de Anulação (Art. 91, §1º) — 8 hipóteses taxativas
+### Hipóteses de Anulação (Art. 91, §1º) — 8 hipóteses, sem prejuízo de outras
 
-I. Violação literal de lei, decreto ou ato normativo ministerial
-II. Divergência com decisões de outras CAJs
+I. Falta de fundamentação (auditoria 03/10/2026)
+II. Ausência de análise da documentação e dos pedidos, salvo não conhecimento
 III. Não conhecimento pela JR em desacordo com requisitos legais
 IV. Contrariedade a pareceres vinculantes
-V. Contrariedade a enunciados ou resoluções do CP
-VI. Julgamento por UJ incompetente
-VII. Preterição de formalidades que gere nulidade
+V. Violação a súmulas vinculantes do Ministro e a enunciados do CP
+VI. Falta de prévia remessa à Perícia Médica Federal em matéria exclusivamente médica
+VII. Julgamento em desacordo com parecer técnico fundamentado da Perícia Médica Federal
 VIII. Não aplicação indevida de normas vinculantes (distinguishing/overriding/overruling mal fundamentados)
 
 A Câmara pode apreciar definitivamente o mérito sem devolver à JR (art. 91, §3º). Pedir subsidiariamente na petição.
@@ -50,7 +50,7 @@ Em matéria de alçada exclusiva, mesmo sem recurso especial, cabem PUJ (art. 12
 **Obrigatórios** — Tratados, leis, decretos, atos normativos ministeriais, súmulas vinculantes aprovadas pelo Ministro, enunciados do CP.
 **Facultativos** — STF em repercussão geral transitada; STJ em repetitivo transitado sem RE pendente; demais decisões dos Tribunais Superiores.
 
-A vedação do art. 109, caput, impede as UJs de afastarem lei ou decreto vigente. A violação dessa regra é hipótese de anulação (art. 91, §1º, I) e de Reclamação ao CP.
+A vedação do art. 109, caput, impede as UJs de afastarem lei ou decreto vigente. A violação dessa regra é hipótese de Revisão de Acórdão por violação literal de lei ou decreto (art. 116, I) (auditoria 03/10/2026).
 
 ### Distinguishing, Overriding e Overruling (Art. 114)
 

@@ -64,7 +64,7 @@ Refutação. Capítulos autônomos transitam em separado.
 
 ### Argumento 3 — Execução provisória vedada contra Fazenda
 
-Argumento adversário. Tema 28 STF.
+Argumento adversário. Tema 28 STF [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Refutação. Cabe a execução definitiva da parte transitada.
 
@@ -142,6 +142,6 @@ Sexto, resistir a suspensão.
 
 Acompanhar IRDR 18 TRF4.
 
-Revalidar Tema 28 STF.
+Revalidar Tema 28 STF [NÃO CONFIRMADO] no acórdão do RE 1.205.530 (auditoria 03/10/2026).
 
 Acompanhar modulações do Tema 1030 STJ.

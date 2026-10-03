@@ -4,7 +4,7 @@
 
 ### Tema 555 STF (ARE 664.335)
 
-Tese. A declaração do empregador sobre a eficácia do EPI no PPP não descaracteriza o tempo especial quando se tratar de ruído, e a presunção pode ser afastada em outras situações concretas.
+Tese. I, se o EPI for realmente capaz de neutralizar a nocividade, não há respaldo constitucional à aposentadoria especial. II, na exposição a ruído acima dos limites legais de tolerância, a declaração de eficácia do EPI no PPP não descaracteriza o tempo especial. O item I é desfavorável, mas exige neutralização real (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -12,11 +12,11 @@ Aplicação pró-segurado. Em todo caso de ruído, invocar diretamente. Em outro
 
 ### Tema 1090 STJ
 
-Tese. O uso de EPI eficaz não descaracteriza o tempo especial em hipóteses excepcionais, que incluem agentes cancerígenos da LINACH e agentes biológicos, podendo a jurisprudência firmar outras situações. O ônus da prova de eficácia concreta é do INSS quando houver impugnação específica do segurado.
+Tese. I, a informação de EPI no PPP descaracteriza, em princípio, o tempo especial, ressalvadas hipóteses excepcionais que a tese não enumera; os EDcl no REsp 2.116.343/RJ reconheceram a exposição a cancerígenos como uma delas. II, tese adversa, incumbe ao autor o ônus de provar a ineficácia do EPI, e o segurado o cumpre pela impugnação específica do PPP com prova de um dos cinco caminhos. III, havendo divergência ou dúvida sobre a real eficácia, a conclusão favorece o autor (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Expandir as hipóteses excepcionais por analogia em casos concretos. Invocar o standard probatório atenuado para inverter o ônus da prova.
+Aplicação pró-segurado. Expandir as hipóteses excepcionais por analogia em casos concretos. Invocar o item III para que a dúvida sobre a real eficácia favoreça o segurado, sem pedir inversão do ônus (auditoria 03/10/2026).
 
 ### Tema 213 TNU
 
@@ -24,7 +24,7 @@ Tese. Caracterizada a fundada dúvida sobre a eficácia do EPI, aplica-se standa
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Combinado com Tema 1090 STJ, consolida a inversão do ônus probatório.
+Aplicação pró-segurado. Exige impugnação específica do PPP; feita a impugnação, a dúvida razoável sobre a eficácia favorece o segurado, em linha com o item III do Tema 1090 STJ, sem inversão do ônus (auditoria 03/10/2026).
 
 ### IRDR 15 TRF4
 
@@ -32,9 +32,9 @@ Tese. Lista não taxativa de hipóteses em que a declaração de eficácia do EP
 
 Fonte oficial em https://www.trf4.jus.br
 
-### Tema 218 TNU
+### Art. 291, I, da IN 128/2022, hierarquia entre EPC e EPI
 
-Tese. Prevalência da EPC sobre o EPI.
+Regra. A proteção coletiva vem antes do EPI, admitido só em inviabilidade técnica, insuficiência, provisoriamente até a implementação do EPC ou em caráter complementar ou emergencial (auditoria 03/10/2026, retirado o Tema 218 TNU, que trata de outra matéria).
 
 Aplicação pró-segurado. Ausência ou precariedade de EPC é suficiente para afastar a neutralização, ainda que o PPP declare EPI eficaz.
 
@@ -50,7 +50,7 @@ CORREÇÃO DE AUDITORIA. A versão anterior desta reference atribuía à Súmula
 
 Argumento adversário. O INSS afirma que a própria empresa declara que o EPI é eficaz, logo há presunção de neutralização.
 
-Refutação. A presunção é afastada em todas as hipóteses do Tema 1090 STJ. Mesmo fora dessas hipóteses, a fundada dúvida desloca a conclusão em favor do segurado, por força do Tema 213 TNU. Para períodos anteriores a 03/12/1998, a eficácia declarada é irrelevante por força da Súmula 87 TNU. O segurado não precisa provar a ineficácia. O INSS precisa provar a eficácia concreta, demonstrando ficha técnica, CA vigente, treinamento registrado, troca periódica documentada e fiscalização.
+Refutação. A presunção é afastada em todas as hipóteses do Tema 1090 STJ. Mesmo fora dessas hipóteses, a fundada dúvida desloca a conclusão em favor do segurado, por força do Tema 213 TNU. Para períodos anteriores a 03/12/1998, a eficácia declarada é irrelevante por força da Súmula 87 TNU. O item II do Tema 1090 STJ põe no autor o ônus de provar a ineficácia, tese adversa que o segurado cumpre apontando e provando a falta de ficha técnica, CA vigente, treinamento registrado, troca periódica documentada e fiscalização (auditoria 03/10/2026).
 
 Precedentes. Tema 555 STF, Tema 1090 STJ, Tema 213 TNU e, para períodos anteriores a 03/12/1998, Súmula 87 TNU.
 
@@ -58,13 +58,13 @@ Precedentes. Tema 555 STF, Tema 1090 STJ, Tema 213 TNU e, para períodos anterio
 
 Argumento adversário. O INSS invoca o Tema 555 afirmando que a declaração de eficácia neutraliza a nocividade, salvo para ruído.
 
-Refutação. O STF, no próprio acórdão do ARE 664.335, ressalvou que outras exceções podem ser firmadas em situações concretas. O STJ, no Tema 1090, explicitou pelo menos duas dessas situações, cancerígenos e agentes biológicos. Logo, a exceção não se limita a ruído.
+Refutação. O STF, no próprio acórdão do ARE 664.335, ressalvou que outras exceções podem ser firmadas em situações concretas. O STJ, nos EDcl no REsp 2.116.343/RJ do Tema 1090, reconheceu os agentes cancerígenos como hipótese excepcional, e os EDcl no REsp 2.080.584/PR deixaram a lista aberta (auditoria 03/10/2026). Logo, a exceção não se limita a ruído.
 
 ### Argumento 3 — Ausência de impugnação específica
 
 Argumento adversário. O segurado teria de impugnar especificamente a eficácia do EPI para o ônus ser invertido.
 
-Refutação. A impugnação específica é atendida quando o segurado apresenta agente nocivo enquadrado em hipótese excepcional, ou quando indica a ausência de documentação de suporte. Não é necessário produzir prova técnica do lado do segurado, apenas apontar a fragilidade da declaração unilateral.
+Refutação. A impugnação específica é atendida quando o segurado apresenta agente nocivo enquadrado em hipótese excepcional, ou quando indica a ausência de documentação de suporte. Pelo item II do Tema 1090 STJ, tese adversa, cabe ao segurado provar a ineficácia, e a prova documental desses vícios, ou a perícia, cumpre esse ônus e leva a dúvida ao item III (auditoria 03/10/2026).
 
 ### Argumento 4 — Tema 1090 STJ não alcança o caso
 
@@ -88,13 +88,13 @@ Refutação. O ônus de demonstrar a ineficácia do EPI é do autor (Tema 1090/S
 
 Argumento adversário. O segurado teria perdido a oportunidade de produzir prova técnica.
 
-Refutação. A tese do INSS confunde ônus com preclusão. A prova da eficácia pertence a quem afirma, no caso o INSS. Se o juízo indeferir perícia sem que o INSS produza prova, caracteriza-se cerceamento de defesa. Acionar `defesa-probatoria-especial` para impugnação técnica da decisão.
+Refutação. Pelo item II do Tema 1090 STJ, tese adversa, o ônus de provar a ineficácia é do autor, o que torna a prova técnica indispensável ao segurado. Requerida a perícia, o indeferimento caracteriza cerceamento de defesa (auditoria 03/10/2026). Acionar `defesa-probatoria-especial` para impugnação técnica da decisão.
 
 ### Argumento 8 — Neutralização por EPC ainda que precária
 
 Argumento adversário. A empresa forneceu algum EPC, logo a exposição é neutralizada.
 
-Refutação. O Tema 218 TNU exige eficácia real da EPC. Precariedade ou ausência de manutenção são suficientes para afastar a tese. Requisitar ao processo a documentação de instalação, manutenção e monitoramento do EPC. Sem documentação, inversão do ônus.
+Refutação. A neutralização exige eficácia real da EPC, e o art. 291, I, da IN 128/2022 põe a proteção coletiva antes do EPI. Precariedade ou ausência de manutenção são suficientes para afastar a tese. Requisitar ao processo a documentação de instalação, manutenção e monitoramento do EPC. Sem documentação, cabe impugnação específica do PPP, e a dúvida razoável favorece o segurado pelo Tema 213 TNU (auditoria 03/10/2026).
 
 ## 3. Estratégia integrada
 

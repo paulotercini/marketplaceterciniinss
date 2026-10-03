@@ -2,7 +2,7 @@
 
 ## 1. Fundamentos normativos
 
-EC 103/2019, art. 4º. Opção pelas regras de transição para segurados filiados ao RGPS antes da promulgação, em 13 de novembro de 2019.
+EC 103/2019, arts. 15 a 18, 20 e 21. Regras de transição para segurados filiados ao RGPS até 13 de novembro de 2019; o art. 4º trata do servidor público federal (auditoria 03/10/2026).
 
 EC 103/2019, art. 15. Regra dos pontos progressivos. Exige 35 anos de contribuição (homem) ou 30 anos (mulher), mais soma de idade e tempo que começou em 96 (homem) e 86 (mulher), progredindo 1 ponto por ano até 105 e 100 respectivamente.
 
@@ -14,21 +14,21 @@ EC 103/2019, art. 20. Pedágio de 100%. Exige idade mínima de 60 anos (homem) e
 
 ## 2. Professor nas regras de transição
 
-EC 103/2019, art. 15, §2º. Pontos progressivos para professor. Começa em 81 pontos (mulher) e 91 pontos (homem), com tempo mínimo de 25 anos (mulher) e 30 anos (homem) de magistério.
+EC 103/2019, art. 15, §3º (auditoria 03/10/2026). Pontos progressivos para professor. Começa em 81 pontos (mulher) e 91 pontos (homem), com tempo mínimo de 25 anos (mulher) e 30 anos (homem) de magistério.
 
 EC 103/2019, art. 16, §2º. Idade progressiva do professor. Começa em 51 anos (mulher) e 56 anos (homem).
 
-EC 103/2019, art. 20, §2º. Pedágio de 100% do professor. Idade mínima 52 anos (mulher) e 55 anos (homem), com tempo mínimo de 25 ou 30 anos de magistério.
+EC 103/2019, art. 20, §1º (auditoria 03/10/2026). Pedágio de 100% do professor. Idade mínima 52 anos (mulher) e 55 anos (homem), com tempo mínimo de 25 ou 30 anos de magistério.
 
 ## 3. Cenários operacionais pró-segurado
 
 ### Cenário 1 — Regra dos pontos (art. 15)
 
-Segurado homem com 35 anos de contribuição em 2024 e 61 anos de idade, totalizando 96 pontos. Vigência do ano com pontuação exigida de 100. Aguardar mais 4 anos ou avaliar outra porta.
+Segurado homem com 35 anos de contribuição em 2024 e 61 anos de idade, totalizando 96 pontos. Em 2024 a pontuação exigida do homem é 101, e sobe 1 ponto por ano até 105 em 2028 (auditoria 03/10/2026). Contribuindo, ele soma 2 pontos por ano e alcança 105 em cerca de 4 anos e 6 meses; ou avaliar outra porta.
 
 ### Cenário 2 — Idade progressiva (art. 16)
 
-Segurada mulher com 30 anos de contribuição e 57 anos em 2024. Idade exigida para o ano é 58 anos. Aguardar 1 ano ou avaliar pedágio de 50%, se elegível.
+Segurada mulher com 30 anos de contribuição e 57 anos em 2024. Idade exigida para o ano é 58 anos e 6 meses, com mais 6 meses a cada ano (auditoria 03/10/2026). Aguardar de 2 anos e 6 meses a 3 anos ou avaliar pedágio de 50%, se elegível.
 
 ### Cenário 3 — Pedágio de 50% (art. 17)
 
@@ -40,11 +40,11 @@ Segurado homem com 60 anos em 2024 e 35 anos de contribuição completados em 13
 
 ### Cenário 5 — Comparativo professor
 
-Professora com 25 anos de magistério e 54 anos em 2025. Pela idade progressiva do professor (art. 16, §2º), exige 52 anos mais progressão de 6 meses por ano a partir de 2020. Em 2025, exige 54 anos e 6 meses. Próxima da elegibilidade.
+Professora com 25 anos de magistério e 54 anos em 2025. Pela idade progressiva do professor (art. 16, §2º), exige 51 anos mais progressão de 6 meses por ano a partir de 2020. Em 2025, exige 54 anos, e ela já cumpre o requisito (auditoria 03/10/2026).
 
 ### Cenário 6 — Comparação simultânea
 
-Segurado homem com 36 anos de contribuição e 58 anos em 2026. Elegível pelos pontos (requer 100 pontos, tem 94) ainda não atingido. Elegível pela idade progressiva (requer 62 anos e 6 meses em 2026, não atingido). Elegível pelo pedágio 50% se faltava menos de 2 anos em 13/11/2019. Avaliar caso a caso.
+Segurado homem com 36 anos de contribuição e 58 anos em 2026. Elegível pelos pontos (requer 103 pontos, tem 94) ainda não atingido. Elegível pela idade progressiva (requer 64 anos e 6 meses em 2026, não atingido) (auditoria 03/10/2026). Elegível pelo pedágio 50% se faltava menos de 2 anos em 13/11/2019. Avaliar caso a caso.
 
 ### Cenário 7 — Conversão de tempo especial na transição
 

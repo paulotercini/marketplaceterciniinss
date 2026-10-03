@@ -26,27 +26,27 @@ Lei 9.032/1995, Lei 9.528/1997, Decretos 53.831/1964, 83.080/1979, 2.172/1997 e 
 
 ## 4. Marco jurisprudencial central
 
-### Tema 422 STJ, REsp 1.310.034
+### Tema 546 STJ, REsp 1.310.034
 
-Tese. Aplica-se à conversão a lei vigente à data da prestação do serviço (tempus regit actum).
+Tese. A lei vigente por ocasião da aposentadoria é a aplicável ao direito à conversão entre tempos de serviço especial e comum, independentemente do regime jurídico à época da prestação do serviço (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 694 STJ
+### Tema 546 STJ, conversão de tempo comum em especial
 
-Tese. Conversão de tempo comum em especial nos períodos anteriores à Lei 9.032/1995.
+Tese adversa. A conversão de tempo comum em especial segue a lei vigente na aposentadoria e não alcança quem reuniu os requisitos depois da Lei 9.032/1995, ainda que o período seja anterior. O caminho do segurado é demonstrar direito adquirido, com os requisitos reunidos até 28/04/1995 (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 50 TNU
 
-Tese. Conversão pré-Lei 9.032/1995.
+Tese. É possível a conversão do tempo de serviço especial em comum do trabalho prestado em qualquer período, observado, após a EC 103/2019, o limite de 13/11/2019 do art. 25, §2º (auditoria 03/10/2026).
 
 Fonte oficial em https://www.jf.jus.br
 
 ### Súmula 49 TNU
 
-Tese. Para comprovação de atividade especial, aplica-se o regime vigente à prestação do serviço.
+Tese. Para reconhecimento de condição especial de trabalho antes de 29/4/1995, a exposição a agentes nocivos à saúde ou à integridade física não precisa ocorrer de forma permanente (auditoria 03/10/2026).
 
 ## 5. Cenários pró-segurado
 

@@ -32,7 +32,7 @@ A fórmula aplicada é a seguinte, em texto corrido.
 
 NEN igual a NE mais dez vezes o logaritmo na base dez do quociente entre o tempo de exposição em minutos e quatrocentos e oitenta.
 
-Para jornada de dez horas, ou seja, seiscentos minutos, o acréscimo é de aproximadamente um vírgula noventa e sete decibéis. Assim, um NE declarado de 83,5 dB(A) se transforma em NEN de aproximadamente 85,5 dB(A), ultrapassando o limite de 85 dB(A) e configurando especialidade.
+Para jornada de dez horas, ou seja, seiscentos minutos, o acréscimo é de aproximadamente zero vírgula noventa e sete decibel. Assim, um NE declarado de 84,5 dB(A) se transforma em NEN de aproximadamente 85,5 dB(A), ultrapassando o limite de 85 dB(A) e configurando especialidade (auditoria 03/10/2026).
 
 Documentação probatória requerida inclui contracheques com valores de horas extras pagas, folhas de ponto com registro de jornada efetiva, CNIS com vínculo correspondente e, se for o caso, Reclamação Trabalhista reconhecendo horas extras habituais.
 

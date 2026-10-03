@@ -92,7 +92,7 @@ Refutação. Trânsito em julgado consolida.
 
 ### Argumento 10 — Execução provisória
 
-Argumento adversário. Tema 28 STF.
+Argumento adversário. Tema 28 STF [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Refutação. Obrigação de fazer é imediata, não demanda execução provisória monetária.
 

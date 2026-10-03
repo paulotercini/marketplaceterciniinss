@@ -25,7 +25,7 @@ IN 128/2022.
 
 ### Tema 173 TNU
 
-Deficiência intelectual.
+Trata do impedimento de longo prazo de 2 anos no BPC, não da LC 142; não citar nesta matéria (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 

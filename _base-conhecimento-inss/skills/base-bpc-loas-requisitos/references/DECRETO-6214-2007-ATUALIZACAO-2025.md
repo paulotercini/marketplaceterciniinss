@@ -147,7 +147,7 @@ REVOGADO o §3º que dizia. "A revisão de que trata o caput poderá ser realiza
 
 **ESTRATÉGIA PRÓ-SEGURADO.**
 - Em caso de cessação por reavaliação com critério diferente do da decisão judicial, IMPETRAR MS por descumprimento de coisa julgada.
-- Fundamento. Art. 5º XXXVI CF (coisa julgada), art. 502 e art. 503 CPC, Súmula 343 STF.
+- Fundamento. Art. 5º XXXVI CF (coisa julgada), art. 502 e art. 503 CPC (auditoria 03/10/2026, retirada a Súmula 343/STF, que trata de ação rescisória).
 - Cruzar com `mandado-seguranca-previdenciario`, `coisa-julgada-previdenciaria` e `base-cpc-coisa-julgada-progressiva`.
 
 #### Art. 42, §5º (REVOGADO pelo Decreto 12.534/2025)
@@ -294,8 +294,8 @@ Para benefícios concedidos por sentença transitada em julgado.
 
 **Fundamento.**
 - Art. 5º XXXVI CF.
-- Art. 502 e art. 503 CPC.
-- Súmula 343 STF.
+- Art. 502 e art. 503 CPC (auditoria 03/10/2026, retirada a Súmula 343/STF, que trata de ação rescisória).
+
 
 **Estratégia.** Em caso de reavaliação que aplique critério diferente da sentença, IMPETRAR MS por descumprimento de coisa julgada.
 

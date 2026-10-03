@@ -17,7 +17,7 @@ FASE 1, até novembro de 2021. Correção pelo INPC/IBGE (benefícios previdenci
 
 FASE 2, de dezembro de 2021 a agosto de 2025. Taxa SELIC exclusiva (art. 3º da EC 113/2021), sem cumulação com juros ou correção. A SELIC de ago/2025 (1,16%) computa-se em set/2025.
 
-FASE 3, a partir de setembro de 2025. A EC 136/2025 encerrou a incidência da SELIC da EC 113/2021 na fase pré-requisitório, conforme decidido pelo STF no ARE 1.557.312/SP (Tema 1.419), com modulação nos embargos de declaração. Para BENEFÍCIOS PREVIDENCIÁRIOS voltam os índices próprios da legislação de regência. Correção pelo INPC/IBGE e juros de mora pela TAXA LEGAL, apurada pela SELIC com DEDUÇÃO DO INPC (art. 406 do Código Civil na redação da Lei 14.905/2024, metodologia similar à Resolução CMN 5.171/2024). A taxa legal de set/2025 (1,377047%) computa-se em out/2025.
+FASE 3, a partir de setembro de 2025. A EC 136/2025 encerrou a incidência da SELIC da EC 113/2021 na fase pré-requisitório. O Tema 1.419 do STF (ARE 1.557.312/SP) aplica a SELIC da EC 113/2021 a toda condenação da Fazenda, e os embargos de declaração negaram modulação [NÃO CONFIRMADO] (auditoria 03/10/2026). Para BENEFÍCIOS PREVIDENCIÁRIOS voltam os índices próprios da legislação de regência. Correção pelo INPC/IBGE e juros de mora pela TAXA LEGAL, apurada pela SELIC com DEDUÇÃO DO INPC (art. 406 do Código Civil na redação da Lei 14.905/2024, metodologia similar à Resolução CMN 5.171/2024). A taxa legal de set/2025 (1,377047%) computa-se em out/2025.
 
 Para as CONDENAÇÕES EM GERAL (inclusive BENEFÍCIOS ASSISTENCIAIS, por força da Nota 3 do item 4.3.1.1 do Manual), a fase 3 usa correção pelo IPCA/IBGE (art. 389, parágrafo único, do CC) e juros pela taxa legal com dedução do IPCA.
 
@@ -37,7 +37,7 @@ Critérios específicos. INPC para benefícios previdenciários. Fonte oficial e
 
 ### Tema 1419 STF (ARE 1.557.312/SP)
 
-Encerramento da SELIC da EC 113/2021 na fase pré-requisitório a partir de setembro de 2025, em razão da EC 136/2025, com modulação de efeitos nos embargos de declaração. Registrado conforme o texto oficial do Manual CJF 2026 (Resolução CJF 990/2026), que o aplica expressamente. A tese literal do STF deve ser conferida no portal antes de transcrição em peça.
+A tese aplica a SELIC do art. 3º da EC 113/2021 à atualização de valores em qualquer condenação da Fazenda Pública, e os embargos de 05/2026 negaram a modulação e limitaram a tese à redação original desse artigo [NÃO CONFIRMADO] (auditoria 03/10/2026). O encerramento da SELIC na fase pré-requisitório a partir de setembro de 2025 decorre da EC 136/2025. Registrado conforme o texto oficial do Manual CJF 2026 (Resolução CJF 990/2026), que o aplica expressamente. A tese literal do STF deve ser conferida no portal antes de transcrição em peça.
 
 ### Tema 1207 STJ (REsp 2.039.614)
 
@@ -101,7 +101,7 @@ Primeiro, TR é inconstitucional para correção. Combater sempre.
 
 Segundo, o Manual CJF é o parâmetro que pacifica divergência com a contadoria. A edição vigente é a de 2026 (Resolução CJF 990/2026). Citar edição e item.
 
-Terceiro, os marcos de transição são TRÊS. Dez/2021 (entrada da SELIC), set/2025 (saída da SELIC e entrada da taxa legal) e a modulação do Tema 1419 STF, que deve ser conferida no caso concreto.
+Terceiro, os marcos de transição são DOIS, dez/2021 (entrada da SELIC) e set/2025 (saída da SELIC e entrada da taxa legal). Os embargos do Tema 1419 STF negaram modulação [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Quarto, o INSS e a contadoria erram com frequência na transição. Conferir competência a competência nos meses de virada.
 

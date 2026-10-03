@@ -38,7 +38,7 @@ A partir de 19/11/2003, o Decreto 4.882/2003 alterou o Anexo IV do Decreto 3.048
 
 ### Tese 1. Superação do binarismo NHO-01 vs NR-15
 
-O INSS historicamente recusou PPPs que indicavam NR-15 sem menção expressa ao NEN. A TNU pacificou no Tema 174 que NHO-01 e NR-15 são metodologias válidas para aferição de ruído, desde que, quando se tratar de NR-15, haja referência expressa à apuração pelo NEN. O PEDILEF 0001717 consolidou que a menção à NR-15 no PPP gera presunção relativa de regularidade, cabendo ao INSS demonstrar que a medição foi pontual e sem normalização.
+O INSS historicamente recusou PPPs que indicavam NR-15 sem menção expressa ao NEN. A TNU pacificou no Tema 174 que, a partir de 19/11/2003, a aferição do ruído deve seguir a NHO-01 ou a NR-15, com medição que reflita toda a jornada, vedada a medição pontual, e o PPP deve informar a técnica e a norma utilizadas (auditoria 03/10/2026). O PEDILEF 0001717 consolidou que a menção à NR-15 no PPP gera presunção relativa de regularidade, cabendo ao INSS demonstrar que a medição foi pontual e sem normalização.
 
 Ver `references/JURISPRUDENCIA.md` seção 1 para a tese firmada e os precedentes aplicáveis.
 

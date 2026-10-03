@@ -4,7 +4,7 @@
 
 ### Súmula 507 STJ
 
-Direito adquirido à acumulação.
+Acumulação só quando lesão incapacitante e aposentadoria são anteriores a 11/11/1997. Fora disso é tese adversa, e o caminho do segurado é a integração do art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 

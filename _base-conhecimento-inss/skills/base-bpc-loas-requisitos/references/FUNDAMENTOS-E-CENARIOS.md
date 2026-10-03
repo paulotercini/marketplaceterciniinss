@@ -16,7 +16,7 @@ Lei 8.742/1993, art. 21-A. Suspensão e reabertura em trabalho da PCD.
 
 Decreto 6.214/2007. Regulamentação.
 
-Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014. Avaliação biopsicossocial e TCQ.
+Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026). Avaliação biopsicossocial e TCQ.
 
 Portaria 34/2025 e Portaria 37/2026 MDS. Atualizações.
 

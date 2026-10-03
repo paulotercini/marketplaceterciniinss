@@ -166,11 +166,11 @@ Quadro. TR aplicou Tema 1124 sem oitiva prévia das partes, extinguindo a ação
 
 Estratégia correta.
 
-Tese. Divergência sobre a interpretação do art. 17 da Lei 10.259/2001 quanto ao alcance da exceção do Tema 350/STF.
+Tese. Divergência sobre o alcance da exceção do Tema 350/STF (auditoria 03/10/2026, retirada a remissão ao art. 17 da Lei 10.259/2001, que trata de RPV).
 
 Paradigma. TR que afasta a aplicação do Tema 1124 por hipótese excepcional.
 
-Norma material. Art. 17 Lei 10.259. Tema 350/STF (revisão e restabelecimento dispensam novo requerimento; demora além do prazo legal configura interesse de agir) (auditoria 03/10/2026, retirada a menção a MS preventivo, estranha à tese).
+Norma material. Tema 350/STF (revisão e restabelecimento dispensam novo requerimento; demora além do prazo legal configura interesse de agir) (auditoria 03/10/2026, retirada a menção a MS preventivo, estranha à tese, e a remissão ao art. 17 da Lei 10.259/2001, que trata de RPV).
 
 Cruzamento. `base-efeito-translativo-tema-1124-defesa`, `tema-1124-instrucao-administrativa`.
 
@@ -465,7 +465,7 @@ MS em hipóteses excepcionais.
 | Inversão indevida do ônus DID | Art. 2º LC 142, art. 70-D Decreto 3.048 | base-pcd-did-retroativa |
 | Rejeição prova testemunhal rural | Art. 55 §3º Lei 8.213, Súmula 149/STJ | base-tempo-rural-anterior-1991 |
 | Indeferimento reafirmação DER | Art. 18 Lei 8.213, Tema 995/STJ | reafirmacao-der |
-| Aplicação Tema 1124 de ofício | Art. 17 Lei 10.259, Tema 350/STF | base-efeito-translativo-tema-1124-defesa |
+| Aplicação Tema 1124 de ofício | Tema 350/STF (auditoria 03/10/2026) | base-efeito-translativo-tema-1124-defesa |
 | Não realização perícia documental | Art. 60 §11-A Lei 8.213, Portarias 13/14/15/2026 | analise-documental-incapacidade |
 | Não enfrentamento NTEP | Art. 21-A Lei 8.213, Lista B Anexo II Decreto 3.048 | ntep-nexo-acidentario |
 | Falta avaliação biopsicossocial | Art. 20 §10 LOAS, Portaria Conjunta 2/2014 | analise-bpc-loas |
@@ -483,7 +483,7 @@ Reformular como divergência sobre a interpretação da norma material da revis�
 
 Cruzamento com `base-revisao-vida-toda-rvt`, `base-revisao-teto-buraco-negro-verde`, `base-revisao-art29-melhor-beneficio`.
 
-## 16. Caso paradigma do escritório (Luiz Carlos Vanco, PUIL 0000810-25.2020.4.03.6314)
+## 16. Caso paradigma do escritório (L. C. V., PUIL 0000810-25.2020.4.03.6314) (auditoria 03/10/2026)
 
 Quadro. Aposentadoria por tempo de serviço. Cliente sustentou cerceamento por ausência de perícia técnica em período de 03/12/1998 a 21/10/2019 com agentes químicos.
 

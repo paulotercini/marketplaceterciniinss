@@ -24,15 +24,15 @@ A IN 54/2026, ao expor o segurado vulnerável ao risco de duplo prejuízo (perda
 
 ## 2. Jurisprudência do STJ aplicável
 
-### 2.1. Tema 979/STJ (REsp 1.401.560)
+### 2.1. Tema 979/STJ (REsp 1.381.734/RN)
 
-Tese. Os valores de benefícios previdenciários recebidos a título precário, em razão de antecipação de tutela posteriormente revogada, são irrepetíveis quando recebidos de boa-fé.
+Tese. Pagamento indevido por erro administrativo, material ou operacional, sem interpretação errônea da lei pela Administração, é repetível, com desconto de até 30% do benefício, salvo quando o segurado comprova boa-fé objetiva (auditoria 03/10/2026). O caminho do segurado é provar essa boa-fé, mostrando que não lhe era possível perceber o pagamento indevido.
 
 Aplicação por analogia. Beneficiário do PBF que recebeu valores enquanto pendente análise do BPC não está obrigado a devolução.
 
-### 2.2. Tema 1034/STJ (REsp 1.734.974)
+### 2.2. Tema 692/STJ (REsp 1.401.560/MT)
 
-Tese. A irrepetibilidade alcança benefícios previdenciários recebidos por força de erro administrativo, quando o segurado age de boa-fé.
+Tese adversa. A reforma da decisão que antecipa a tutela obriga o autor a devolver os benefícios previdenciários ou assistenciais recebidos, com desconto de até 30% do benefício em manutenção (auditoria 03/10/2026). O caminho do segurado é a distinção, porque o desligamento do PBF pela IN 54/2026 não decorre de tutela revogada.
 
 Aplicação. Beneficiário do PBF que foi desligado por erro do procedimento da IN 54/2026 não pode ser penalizado.
 

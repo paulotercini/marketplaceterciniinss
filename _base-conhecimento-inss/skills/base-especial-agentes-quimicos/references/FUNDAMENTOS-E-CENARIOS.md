@@ -36,7 +36,7 @@ Aplicação pró-segurado. Em PPP que indica Anexo 13 e atividade laboral coinci
 
 ## 3. Hidrocarbonetos e frentistas
 
-Tema 298 TNU. A partir da Lei 9.032/95, o enquadramento especial por exposição a hidrocarbonetos exige demonstração de exposição habitual e permanente, com contato direto ou por via respiratória. Presumem-se exposição habitual os postos de combustíveis e as operações de abastecimento, transvazamento, limpeza de tanques e contato manual com graxas e óleos.
+Tema 298 TNU. Tese adversa. A partir do Decreto 2.172/97, a indicação genérica de exposição a "hidrocarbonetos" ou "óleos e graxas", ainda que de origem mineral, não basta para caracterizar a atividade especial, e é indispensável a especificação do agente nocivo (auditoria 03/10/2026). O caminho do segurado é exigir que o PPP e o LTCAT nomeiem o agente, como benzeno, tolueno ou óleo mineral, e acionar `retificacao-ppp` quando vierem genéricos.
 
 Tema 157 TNU. Ser frentista não basta por si só a partir da Lei 9.032/95. Exige-se exposição efetiva a hidrocarbonetos aromáticos, demonstrada no PPP.
 
@@ -48,7 +48,7 @@ Enquadramento automático, sem limite de tolerância, sem consideração a EPI.
 
 Aplicação pró-segurado. Verificar se o agente do PPP consta da LINACH atualizada. Se constar, o enquadramento é direto. Exemplos recorrentes são benzeno, formaldeído, sílica cristalina, amianto, fumos de solda oxicorte, hidrocarbonetos policíclicos aromáticos HPA.
 
-Fundamento no Tema 1090 STJ, com referência expressa à LINACH.
+Fundamento nos EDcl no REsp 2.116.343/RJ, do Tema 1090 STJ, que reconheceram a exposição a agentes cancerígenos como hipótese excepcional; a tese do tema não menciona a LINACH (auditoria 03/10/2026).
 
 ## 5. Benzeno, Anexo 13-A
 
@@ -76,7 +76,7 @@ Tese direta. Enquadramento automático. EPI irrelevante. Citar Tema 1090 STJ e l
 
 ### Cenário 4 — Atividade de frentista pós Lei 9.032/95
 
-Tese. Combinar Tema 298 TNU com exposição habitual a hidrocarbonetos aromáticos. Se o PPP não detalhar, acionar `retificacao-ppp`.
+Tese. Atender ao Tema 298 TNU, tese adversa que exige a especificação do agente, com prova de exposição habitual a hidrocarbonetos aromáticos nominados no PPP (auditoria 03/10/2026). Se o PPP não detalhar, acionar `retificacao-ppp`.
 
 ### Cenário 5 — Fumos metálicos de solda
 
@@ -92,7 +92,7 @@ Para agentes que admitem absorção cutânea, como benzeno, tolueno, tricloroeti
 
 ### Cenário 8 — Exposição descontínua
 
-O Tema 211 TNU firmou que a exposição habitual não exige permanência ininterrupta. Exposições intermitentes, mas inerentes à função, configuram especialidade.
+O Tema 211 TNU vale só para agentes biológicos e exige a probabilidade da exposição ocupacional, avaliada pelo caráter indissociável da produção do bem ou da prestação do serviço (auditoria 03/10/2026). Para agentes químicos, a exposição inerente à função se sustenta no art. 65 do Decreto 3.048/99, que define o trabalho permanente pela exposição indissociável da produção do bem ou da prestação do serviço.
 
 ## 8. Roteiro operacional
 

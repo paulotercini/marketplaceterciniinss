@@ -24,7 +24,7 @@ Lei 8.213/91.
 
 ## 4. Marco jurisprudencial central
 
-### Súmula 632 STJ
+### Súmula 632 STF (auditoria 03/10/2026)
 
 Decadência em MS.
 

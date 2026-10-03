@@ -4,7 +4,7 @@
 
 EC 103/2019, art. 26. Estabelece a fórmula de cálculo do salário-de-benefício pós-reforma.
 
-Art. 26, §1º. Para aposentadoria por tempo de contribuição em regra de transição ou permanente, aplica-se 60% da média mais 2% por ano que exceder 20 anos (homem) ou 15 anos (mulher).
+Art. 26, §2º (auditoria 03/10/2026). Para aposentadoria por tempo de contribuição em regra de transição ou permanente, aplica-se 60% da média mais 2% por ano que exceder 20 anos (homem) ou 15 anos (mulher).
 
 Art. 26, §3º, I. Para aposentadoria do pedágio de 100% (art. 20), aplica-se 100% da média.
 
@@ -14,7 +14,7 @@ Lei 8.213/91, art. 61, com a média do art. 26, caput, da EC 103/2019. Para aux�
 
 Art. 26, §2º, III, e §5º. Para aposentadoria por incapacidade permanente (B32) não acidentária, 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher). Para B92 acidentária, 100% da média (art. 26, §3º, II).
 
-Art. 26, §6º. Média calculada sobre 100% das contribuições desde julho de 1994 ou filiação posterior, sem descarte.
+Art. 26, caput. Média calculada sobre 100% das contribuições desde julho de 1994 ou filiação posterior, sem descarte automático; o §6º permite excluir, a pedido, as contribuições que reduzam o valor, mantido o tempo mínimo (auditoria 03/10/2026).
 
 ## 2. Fórmula de cálculo
 
@@ -36,9 +36,9 @@ Passo 6. Resultado é o salário-de-benefício, que corresponde à RMI quando n�
 
 Média = R$ 5.000,00 (exemplo). Tempo excedente a 20 anos = 18 anos. RMI = 60% + 2% × 18 = 96%. RMI = R$ 4.800,00 (desde que abaixo do teto).
 
-### Cenário 2 — Idade progressiva com 15 anos de contribuição (mulher, filiada pós-reforma)
+### Cenário 2 — Regra permanente (art. 19) com 15 anos de contribuição (mulher, filiada pós-reforma)
 
-Média = R$ 3.000,00. Tempo excedente a 15 anos = 0. RMI = 60%. RMI = R$ 1.800,00.
+Média = R$ 3.000,00. Tempo excedente a 15 anos = 0. RMI = 60%. RMI = R$ 1.800,00. O cenário é o da regra permanente, pois a idade progressiva do art. 16 exige filiação até 13/11/2019 e 30 anos de contribuição (auditoria 03/10/2026).
 
 ### Cenário 3 — Pedágio de 100%
 
@@ -80,7 +80,7 @@ Em cumprimento de sentença, a Fábrica de Cálculos do INSS pode apresentar cá
 
 ## 6. Revisão por erro de cálculo
 
-Art. 103 da Lei 8.213/91. Prazo decadencial de 10 anos a partir do primeiro pagamento ou do conhecimento da redução do valor.
+Art. 103 da Lei 8.213/91. Prazo decadencial de 10 anos contado do dia primeiro do mês seguinte ao do recebimento da primeira prestação (inciso I); o inciso II, que conta da ciência do indeferimento, cancelamento ou cessação, deve ser lido com a ADI 6096 (auditoria 03/10/2026).
 
 Tema 966/STJ. Incide o prazo decadencial do art. 103 sobre o direito adquirido ao benefício mais vantajoso, tese adversa (auditoria 03/10/2026, corrigida a atribuição ao Tema 350/STF, que trata do prévio requerimento).
 

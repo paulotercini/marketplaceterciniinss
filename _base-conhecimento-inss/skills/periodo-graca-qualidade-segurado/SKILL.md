@@ -25,7 +25,7 @@ Orientação padrão. Se o segurado está desempregado e já cumpriu carência p
 
 **Art. 15, §2º** — acréscimo de 12 meses se o segurado comprova desemprego involuntário por registro em órgão próprio do Ministério do Trabalho ou da Previdência Social.
 
-**Art. 15, §4º** — qualidade de segurado se mantém até o dia 16 do segundo mês seguinte ao término dos prazos do art. 15 (vencimento da contribuição do mês posterior ao fim do período de graça).
+**Art. 15, §4º** — qualidade de segurado se mantém até o dia 15 do segundo mês seguinte ao término dos prazos do art. 15 (vencimento da contribuição do mês posterior ao fim do período de graça), e a perda ocorre no dia 16 (auditoria 03/10/2026).
 
 **Art. 30, §2º, da Lei 8.212/91** — quando o vencimento de contribuição cai em dia sem expediente bancário, prorroga-se para o próximo dia útil.
 
@@ -45,7 +45,7 @@ O art. 15 estabelece seis hipóteses, não cumuláveis entre si, mas cumuláveis
 
 **Inciso II** — até 12 meses após a cessação das contribuições, para o segurado que deixar de exercer atividade remunerada abrangida pela Previdência Social ou estiver suspenso ou licenciado sem remuneração.
 
-**Inciso III** — até 12 meses após cessação das contribuições, para o segurado acometido de doença de segregação compulsória.
+**Inciso III** — até 12 meses após cessar a segregação, para o segurado acometido de doença de segregação compulsória (auditoria 03/10/2026).
 
 **Inciso IV** — até 12 meses após o livramento, para o segurado detido ou recluso.
 
@@ -93,11 +93,11 @@ O voto condutor reconheceu que a atividade dos segurados especiais se vincula a 
 
 **Cumulatividade** — a prorrogação do Tema 348 é cumulável com o §1º (120 meses de atividade rural sem interrupção que acarrete perda da qualidade), totalizando até 36 meses de período de graça para o segurado especial.
 
-**ALERTA** — o INSS não incorporou administrativamente o Tema 348. Indeferimentos baseados na inaplicabilidade do §2º ao segurado especial devem ser combatidos por recurso ao CRPS ou mandado de segurança. Consultar skill `segurado-especial-rural` para estratégia completa.
+**ALERTA** — o art. 184, §10, da IN 128/2022, na redação da IN PRES/INSS 212/2026, estende a prorrogação por desemprego (§5º) a todas as categorias de segurados obrigatórios, inclusive o segurado especial (auditoria 03/10/2026). Indeferimentos baseados na inaplicabilidade do §2º ao segurado especial devem ser combatidos por recurso ao CRPS ou mandado de segurança. Consultar skill `segurado-especial-rural` para estratégia completa.
 
 ### 2.3 Cessação antecipada da prorrogação por desemprego — IN 188/2025
 
-A IN PRES/INSS 188/2025 (DOU 10/07/2025) acrescentou o §8º ao art. 184 da IN 128/2022, regulamentando três hipóteses de cessação antecipada da prorrogação de 12 meses por desemprego involuntário.
+A IN PRES/INSS 188/2025 (DOU 10/07/2025) deu nova redação ao §8º do art. 184 da IN 128/2022 (auditoria 03/10/2026), regulamentando três hipóteses de cessação antecipada da prorrogação de 12 meses por desemprego involuntário.
 
 **Hipótese 1** — retorno à atividade remunerada que enquadre o segurado como segurado obrigatório. A Portaria DIRBEN/INSS 1301/2025 detalha que a atividade deve gerar salário de contribuição igual ou superior ao limite mínimo mensal, protegendo quem exerce trabalhos informais de baixíssima renda.
 
@@ -175,9 +175,9 @@ A carência de reingresso (art. 27-A da Lei 8.213/91) varia conforme a norma vig
 
 A qualidade de segurado não termina no último dia do prazo dos incisos I a VI. Ela se mantém até a data do vencimento da contribuição do segurado referente ao mês imediatamente posterior ao fim dos prazos fixados no art. 15.
 
-**Na prática** — se o período de graça termina em março/2024, a qualidade se mantém até 16/04/2024 (dia 16 é o vencimento da contribuição de competência março para CI e facultativo). Para empregado, o vencimento da contribuição é dia 7 do mês seguinte (dia 07/04/2024). Verificar calendário de vencimentos conforme a categoria.
+**Na prática** — se o período de graça termina em março/2024, o mês imediatamente posterior é abril/2024, cuja contribuição vence em 15/05/2024 (art. 30, II, da Lei 8.212/91). A qualidade se mantém até 15/05/2024 e a perda ocorre em 16/05/2024. Vale o vencimento do contribuinte individual para todas as categorias, inclusive o empregado (art. 14 do Decreto 3.048/99) (auditoria 03/10/2026).
 
-**IMPORTANTE** — se o dia 16 (ou o dia de vencimento) cai em sábado, domingo ou feriado, a prorrogação automática para o próximo dia útil é a tese do PEDILEF 0002300-36 (seção 3.4 acima), cuja aplicação pelo TRF4 e TRF3 foi reconhecida como paradigma.
+**IMPORTANTE** — se o dia 15, data do vencimento, cai em sábado, domingo ou feriado (auditoria 03/10/2026), a prorrogação para o próximo dia útil decorre do art. 15, §4º, da Lei 8.213/91 c/c o art. 30, §2º, I, da Lei 8.212/91. O PEDILEF 0002300-36 (seção 3.4 acima) só anulou o acórdão e devolveu o caso à Turma Recursal em 17/12/2025, sem fixar tese (auditoria 03/10/2026).
 
 ## 6. INTEGRAÇÕES COM O ECOSSISTEMA DE SKILLS
 
@@ -213,7 +213,7 @@ Ao analisar caso que envolva qualidade de segurado, verificar sequencialmente.
 
 **7.3** Comprovação de desemprego involuntário. Instruir com pelo menos um elemento além da CTPS/CNIS em branco (Tema 1360/STJ). Prova testemunhal isolada é suficiente (Súmula 27, PEDILEF 0015774-47). Contribuinte individual pode invocar prorrogação (Tema 239). Segurado especial tem direito à prorrogação por inatividade involuntária (Tema 348/TNU, transitado 17/06/2025).
 
-**7.4** Aplicar §4º. Verificar se o vencimento da contribuição do mês seguinte ao fim do período de graça cai em dia não útil (tese do PEDILEF 0002300-36).
+**7.4** Aplicar §4º. Verificar se o vencimento da contribuição do mês seguinte ao fim do período de graça cai em dia não útil (art. 30, §2º, I, da Lei 8.212/91; o PEDILEF 0002300-36 só anulou e devolveu o caso, sem fixar tese, auditoria 03/10/2026).
 
 **7.5** Se o segurado fruiu benefício irregular de boa-fé, invocar Tema 245/TNU para manter qualidade durante todo o período de fruição.
 

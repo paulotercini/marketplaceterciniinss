@@ -359,3 +359,73 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Órgão e leading case. MDS, MPS e INSS. Assinam José Wellington Barroso de Araújo Dias, Wolney Queiroz Maciel e Gilberto Waller Júnior. DOU Edição 63, de 02/04/2026, Seção 1, p. 46.
 - Fonte oficial. https://www.in.gov.br/web/dou/-/portaria-conjunta-mds/mps/inss-n-37-1-de-abril-de-2026-697116028
 - Conferido em. 26/07/2026
+
+### SUMULA 15/STJ
+- Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 8). O relatório não registra cancelamento.
+- Tese literal. "Compete à Justiça Estadual processar e julgar os litígios decorrentes de acidente do trabalho"
+- Órgão e leading case. STJ. Órgão e data não registrados no relatório E3.
+- Fonte oficial. https://www.stj.jus.br/docs_internet/VerbetesSTJ_asc.txt
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### SUMULA 44/STJ
+- Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 8, texto lido na fonte oficial). O relatório não registra cancelamento.
+- Tese literal. "A definição, em ato regulamentar, de grau mínimo de disacusia, não exclui, por si só, a concessão do benefício previdenciário"
+- Órgão e leading case. STJ. Órgão e data não registrados no relatório E3.
+- Fonte oficial. https://www.stj.jus.br/docs_internet/VerbetesSTJ_asc.txt
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### SUMULA 45/STJ
+- Situação. texto confirmado na fonte oficial (relatório E3, lote 8). O relatório marcou DIVERGENTE só o uso em cpc-apelacao-efeitos SKILL.md:56, que inverte o efeito da súmula.
+- Tese literal. "…é defeso, ao Tribunal, agravar a condenação imposta à Fazenda Pública" (trecho final, como transcrito no relatório E3). Copiar a redação literal da fonte antes de citar em peça.
+- Órgão e leading case. STJ. Órgão e data não registrados no relatório E3.
+- Fonte oficial. https://www.stj.jus.br/docs_internet/VerbetesSTJ_asc.txt
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### SUMULA 96/TCU
+- Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 2).
+- Tese literal. Não transcrita no relatório E3, que traz só esta síntese: Conta-se como tempo de serviço público o de aluno-aprendiz em Escola Pública Profissional, com retribuição pecuniária à conta do Orçamento. Copiar a redação literal da fonte antes de citar em peça.
+- Órgão e leading case. TCU. Data não registrada no relatório E3.
+- Fonte oficial. https://pesquisa.apps.tcu.gov.br/resultado/sumula/*/NUMERO:96/sinonimos=true (consulta pela REST do TCU)
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### TEMA 132/TST
+- Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 1).
+- Tese literal. "A pretensão de retificação e entrega do Perfil Profissiográfico Previdenciário - PPP é imprescritível"
+- Órgão e leading case. TST, Tema 132 de recursos repetitivos. Processo e data não registrados no relatório E3.
+- Fonte oficial. https://portal.trt3.jus.br/internet/jurisprudencia/incidentes-suscitados-irr-iac-arginc-tst/downloads/tema-132-reafirm-acordao-publicado.pdf
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### SUMULA 598/STJ
+- Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 2).
+- Tese literal. Não transcrita no relatório E3, que traz só esta síntese: Dispensa laudo médico oficial para a isenção judicial de IR por doença grave, se demonstrada por outros meios de prova. Copiar a redação literal da fonte antes de citar em peça.
+- Órgão e leading case. STJ, Primeira Seção, 08/11/2017.
+- Fonte oficial. https://www.stj.jus.br/internet_docs/biblioteca/clippinglegislacao/Sumula_598_2017_primeira_secao.pdf
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### SUMULA 105/STJ
+- Situação. vigente, sem cancelamento (relatório E3, lote 2, CONFIRMADO_FONTE_OFICIAL).
+- Tese literal. "Na ação de mandado de segurança não se admite condenação em honorários advocatícios"
+- Órgão e leading case. STJ, julgada em 26/05/1994.
+- Fonte oficial. https://arquivocidadao.stj.jus.br/index.php/sumula-105
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### TEMA 1076/STJ
+- Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 2).
+- Tese literal. Não transcrita no relatório E3, que traz só esta síntese: Honorários por equidade só se o proveito econômico for inestimável ou irrisório ou o valor da causa muito baixo; vedada se elevados. Copiar a redação literal da fonte antes de citar em peça.
+- Órgão e leading case. STJ, REsp 1.850.512/SP, julgado em 16/03/2022.
+- Fonte oficial. https://www.stj.jus.br/docs_internet/informativos/PDF/Inf0730.pdf
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### TEMA 1178/STJ
+- Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 1). Tese fixada no segundo semestre de 2025, segundo a notícia oficial.
+- Tese literal. "É vedado o uso de critérios objetivos para o indeferimento imediato da gratuidade…" (trecho inicial, como transcrito no relatório E3). Copiar a redação literal da fonte antes de citar em peça.
+- Órgão e leading case. STJ, recurso repetitivo. Processo não registrado no relatório E3.
+- Fonte oficial. https://www.stj.jus.br/sites/portalp/Paginas/Comunicacao/Noticias/2026/28012026-STJ-julgou-42-temas-repetitivos-no-segundo-semestre-de-2025--veja-as-teses-fixadas.aspx
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+
+### SUMULA 37/STJ
+- Situação. CONFIRMADO_FONTE_OFICIAL (relatório E3, lote 6). O relatório não registra cancelamento.
+- Tese literal. "São cumuláveis as indenizações por dano material e dano moral oriundos do mesmo fato"
+- Órgão e leading case. STJ. Órgão e data não registrados no relatório E3.
+- Fonte oficial. scon.stj.jus.br/SCON/sumstj (Súmula 37)
+- Conferido em. 03/10/2026 (auditoria 03/10/2026)

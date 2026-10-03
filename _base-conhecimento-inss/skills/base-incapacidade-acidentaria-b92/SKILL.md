@@ -22,7 +22,7 @@ Lei 8.213/91, art. 21. Lista situações equiparadas a acidente de trabalho, inc
 
 Lei 8.213/91, art. 21-A. Nexo Técnico Epidemiológico (NTEP). Presume a natureza acidentária quando há correspondência entre CID e CNAE da empresa, pela estatística epidemiológica do Ministério.
 
-Decreto 3.048/99, Anexo II. Lista B (agentes patogênicos causadores de doenças profissionais) e Lista C (doenças relacionadas com o trabalho).
+Decreto 3.048/99, Anexo II. Lista A (agentes e fatores de risco ocupacionais), Lista B (doenças relacionadas com o trabalho) [NÃO CONFIRMADO] e Lista C (matriz do NTEP, que relaciona a CID à atividade da empresa, conforme o art. 337, §3º) (auditoria 03/10/2026).
 
 EC 103/2019, art. 26, §3º, II. RMI do B92 (aposentadoria por incapacidade permanente acidentária) é de 100% da média aritmética dos salários de contribuição.
 

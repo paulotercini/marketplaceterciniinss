@@ -36,14 +36,14 @@ Decreto 3.048/99, arts. 105 e seguintes. Regulamentação.
 
 Primeira hipótese. Casamento/união inferior a 2 anos OU óbito sem 18 contribuições do instituidor. Duração de 4 meses.
 
-Segunda hipótese. Casamento/união com 2 ou mais anos E 18 contribuições. Duração varia pela idade do cônjuge na DO.
+Segunda hipótese. Casamento/união com 2 ou mais anos E 18 contribuições. Duração varia pela idade do cônjuge na DO. Para óbitos de 01/03/2015 a 31/12/2020, vale a tabela original da Lei 13.135/2015:
 
 Menos de 21 anos. 3 anos.
 21 a 26 anos. 6 anos.
 27 a 29 anos. 10 anos.
 30 a 40 anos. 15 anos.
 41 a 43 anos. 20 anos.
-44 anos ou mais. Vitalícia.
+44 anos ou mais. Vitalícia. Para óbitos desde 01/01/2021, a Portaria ME 424/2020 (IN 128/2022, art. 375, §8º) fixou: menos de 22 anos, 3 anos; 22 a 27, 6 anos; 28 a 30, 10 anos; 31 a 41, 15 anos; 42 a 44, 20 anos; 45 ou mais, vitalícia (auditoria 03/10/2026).
 
 Terceira hipótese. Cônjuge inválido ou com deficiência. Vitalícia enquanto durar a invalidez/deficiência.
 
@@ -69,7 +69,7 @@ Companheiro por 7 anos. Prova por declaração IR conjunta, conta bancária conj
 
 ### Cenário 3 — Filho inválido
 
-Filho com esquizofrenia grave desde os 17 anos, 25 anos na DO. Pensão devida além dos 21 (Tema 15 TNU e Súmula 37 TNU).
+Filho com esquizofrenia grave desde os 17 anos, 25 anos na DO. Pensão devida além dos 21 (art. 16, I, e art. 77, §2º, II, da Lei 8.213/91) (auditoria 03/10/2026).
 
 ### Cenário 4 — Menor sob guarda
 
@@ -77,7 +77,7 @@ Menor sob guarda judicial do falecido avô. Equiparação a filho para fins prev
 
 ### Cenário 5 — Ex-cônjuge pensionista
 
-Ex-cônjuge com alimentos fixados em separação. Direito à pensão por morte do instituidor (Tema 45 TNU).
+Ex-cônjuge com alimentos fixados em separação. Direito à pensão por morte do instituidor (art. 76, §2º e §3º, da Lei 8.213/91) (auditoria 03/10/2026).
 
 ### Cenário 6 — Concubinato de longa duração
 
@@ -97,7 +97,7 @@ Instituidor CI com recolhimentos irregulares. Dependentes podem indenizar contri
 
 ### Cenário 10 — Pensão acidentária (B93)
 
-Óbito por acidente de trabalho ou doença ocupacional. Pensão B93 com valor integral da aposentadoria a que teria direito (100% sem redução do art. 23 EC 103).
+Óbito por acidente de trabalho ou doença ocupacional. Pensão B93 também segue o art. 23 da EC 103 (cota familiar de 50% mais 10 pontos por dependente), mas a base é a aposentadoria por incapacidade permanente acidentária, de 100% da média (EC 103, art. 26, §3º, II) (auditoria 03/10/2026).
 
 ## 5. Documentos essenciais
 
@@ -126,7 +126,7 @@ Cinco ou mais. 100%.
 
 Terceiro passo. Rateio em partes iguais entre os dependentes da mesma classe.
 
-Quarto passo. Em caso de pensão acidentária (B93), 100% sem redução.
+Quarto passo. Em caso de pensão acidentária (B93), aplicar a cota do art. 23 sobre a aposentadoria-base de 100% da média (auditoria 03/10/2026).
 
 ## 7. Cruzamento com outras skills
 
@@ -143,7 +143,7 @@ Acionar `precedentes-previdenciarios` para jurisprudência.
 
 Primeiro, RMI severamente reduzida pela EC 103/2019. Importante maximizar o número de dependentes reconhecidos para elevar o percentual.
 
-Segundo, duração vitalícia do cônjuge exige idade mínima de 44 anos. Para cônjuges mais jovens, planejar continuidade de renda após o fim da pensão.
+Segundo, duração vitalícia do cônjuge exige idade mínima de 45 anos para óbitos desde 01/01/2021, e de 44 anos para óbitos até 31/12/2020 (auditoria 03/10/2026). Para cônjuges mais jovens, planejar continuidade de renda após o fim da pensão.
 
 Terceiro, prova de união estável é ponto de atrito frequente. Formar conjunto robusto antes do requerimento.
 

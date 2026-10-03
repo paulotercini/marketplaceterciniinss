@@ -16,7 +16,7 @@ Tese. Para o cálculo da RMI, aplica-se a legislação vigente na época em que 
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Consolida o direito ao melhor benefício. O segurado pode optar pela DIB em que os requisitos foram preenchidos com resultado mais favorável, ainda que distinta da DER.
+Aplicação pró-segurado. Consolida o direito ao melhor benefício. A RMI se calcula pelo quadro mais favorável, entre as datas em que os requisitos já estavam reunidos, respeitadas a decadência e a prescrição; a tese trata do cálculo e não antecipa a DIB para antes da DER [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### Tema 503 STF (RE 661.256) e Tema 1124 STJ
 
@@ -34,7 +34,7 @@ Em 21/03/2024, nas ADIs 2110 e 2111, o STF declarou constitucional o art. 3º da
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação. Restrita às hipóteses residuais preservadas pela modulação das ADIs, a aferir em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026).
+Aplicação. A modulação dispensa apenas a devolução de valores recebidos e os honorários, sem preservar a revisão [NÃO CONFIRMADO]; conferir em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026).
 
 ### Tema 350 STF
 
@@ -88,7 +88,7 @@ Refutação. Sem benefício concedido, não há prazo decadencial para a concess
 
 Argumento adversário. O segurado requereu benefício em determinada DER, portanto estaria vinculado àquela data.
 
-Refutação. Tema 334 STF (RE 630.501). O direito ao melhor benefício permite a análise de todas as DIB possíveis, inclusive retroativas, observado o melhor resultado. A vinculação rígida à DER é superada pelo princípio do melhor benefício.
+Refutação. Tema 334 STF (RE 630.501). O direito ao melhor benefício permite calcular a RMI em cada data em que os requisitos já estavam reunidos e adotar a mais favorável, respeitadas a decadência e a prescrição; a DIB e os efeitos financeiros seguem a DER [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### Argumento 7 — Exigência de idade mínima retroativa
 

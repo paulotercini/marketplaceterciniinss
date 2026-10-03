@@ -4,7 +4,7 @@
 
 ### Tema 985 STF
 
-Contribuição sobre verbas, discussão de natureza.
+Incidência da contribuição patronal sobre o terço constitucional de férias gozadas, tema já julgado [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -14,11 +14,11 @@ Incidência sobre 13º.
 
 ### Súmula 207 STF
 
-Vínculo e teto.
+Gratificações habituais, inclusive a de Natal, consideram-se tacitamente convencionadas e integram o salário [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### Súmula 688 STF
 
-Anistiado.
+Legitimidade da contribuição previdenciária sobre o 13º salário [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ## 2. Marco legislativo
 
@@ -46,7 +46,7 @@ Refutação. Natureza remuneratória reconhecida. Integra SC.
 
 Argumento adversário. Dentro do SC.
 
-Refutação. Discussão STJ Tema 985 STF. Natureza indenizatória.
+Refutação. Natureza indenizatória, demonstrada verba a verba pelo art. 28, §9º, da Lei 8.212/91. O Tema 985 do STF não ampara a refutação, pois admitiu a contribuição sobre o terço constitucional de férias gozadas (auditoria 03/10/2026).
 
 ### Argumento 3 — Empregador omitiu contribuição
 
@@ -124,7 +124,7 @@ Quinto, cômputo na RMI.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 985 STF.
+Conferir no portal do STF o acórdão do Tema 985, já julgado (auditoria 03/10/2026).
 
 Revalidar IN RFB 2.110/2022.
 

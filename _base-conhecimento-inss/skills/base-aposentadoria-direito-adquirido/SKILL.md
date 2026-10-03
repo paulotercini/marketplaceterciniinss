@@ -75,7 +75,7 @@ Ao revisar minuta, acione `revisao-peticao`.
 
 Primeiro, o direito adquirido não decai pela simples não fruição. O segurado que preencheu requisitos antes da reforma e continuou trabalhando mantém o direito ao benefício pré-reforma, com cálculo pela regra antiga, conforme Súmula 359 STF e art. 3º EC 103.
 
-Segundo, cuidado com a revisão da vida toda. O art. 3º da Lei 9.876/1999 foi declarado constitucional nas ADIs 2110 e 2111 (21/03/2024), com modulação de efeitos, o que esvaziou a tese do Tema 1102 STF; restam hipóteses residuais, a aferir em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026, corrigida a atribuição da modulação ao próprio Tema 1102).
+Segundo, cuidado com a revisão da vida toda. O art. 3º da Lei 9.876/1999 foi declarado constitucional nas ADIs 2110 e 2111 (21/03/2024), com modulação de efeitos, o que esvaziou a tese do Tema 1102 STF; a modulação dispensa apenas a devolução de valores recebidos e os honorários, sem preservar a revisão [NÃO CONFIRMADO], a conferir em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026, corrigida a atribuição da modulação ao próprio Tema 1102).
 
 Terceiro, a desaposentação foi vedada pelo Tema 503 STF, mas a revisão da aposentadoria por direito adquirido e melhor benefício permanece cabível, inclusive para afastar aplicação indevida do fator previdenciário em quem já atingiu a regra 85/95.
 

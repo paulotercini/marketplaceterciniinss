@@ -34,7 +34,7 @@ Aplicação pró-segurado. Permite inclusão de verbas salariais no cálculo da 
 
 ### Súmula 88 TNU
 
-Tese. A concessão de auxílio-acidente não depende do retorno ao trabalho, bastando a redução da capacidade.
+Tese. "A existência de limitação, ainda que leve, para o desempenho da atividade para o trabalho habitual enseja a concessão do benefício de auxílio-acidente, em observância a tese fixada sob o Tema 416 do Superior Tribunal de Justiça" (auditoria 03/10/2026, texto transcrito pela TNU no PUIL 1001989-31.2020.4.01.3501).
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -56,11 +56,11 @@ Fonte oficial em https://www.cjf.jus.br
 
 Aplicação. Súmula adversa. Sem incapacidade para a atividade habitual reconhecida, o juiz pode dispensar o exame das condições pessoais e sociais; o confronto entre perícia administrativa e perícia judicial especializada se resolve pelos arts. 371 e 479 do CPC (auditoria 03/10/2026).
 
-### Súmula 378 STJ
+### NTEP (art. 21-A da Lei 8.213/91)
 
-Tese. Reconhecida a conformidade entre CID e CNAE, a presunção de nexo causal é aplicável, cabendo ao INSS prova em contrário.
+Fundamento legal. Constatado o nexo técnico epidemiológico entre a atividade da empresa e a entidade mórbida da CID, a perícia do INSS considera caracterizada a natureza acidentária e só deixa de aplicá-lo quando demonstrada a inexistência do nexo (art. 21-A, caput e §1º, da Lei 8.213/91) (auditoria 03/10/2026, retirada a Súmula 378/STJ, que não trata de NTEP).
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
 
 Aplicação pró-segurado. Fortalece o NTEP.
 
@@ -70,7 +70,7 @@ Aplicação pró-segurado. Fortalece o NTEP.
 
 Argumento adversário. Sem CAT emitida pela empresa, não há nexo acidentário.
 
-Refutação. CAT pode ser emitida pelo segurado, sindicato, médico assistente ou autoridade pública (art. 22, §1º, Lei 8.213/91). A ausência de CAT da empresa não afasta nexo. Nexo pode ser comprovado por NTEP, laudo ocupacional, PGR, PPP e outros documentos.
+Refutação. CAT pode ser emitida pelo segurado, sindicato, médico assistente ou autoridade pública (art. 22, §2º, da Lei 8.213/91) (auditoria 03/10/2026). A ausência de CAT da empresa não afasta nexo. Nexo pode ser comprovado por NTEP, laudo ocupacional, PGR, PPP e outros documentos.
 
 ### Argumento 2 — Doença degenerativa inerente
 
@@ -100,7 +100,7 @@ Refutação. Portaria MTE 1.419/2024 atualizou a NR-1 para incluir riscos psicos
 
 Argumento adversário. O segurado foi culpado pelo acidente.
 
-Refutação. Legislação previdenciária não exige culpa exclusiva do empregador. Art. 21, II, da Lei 8.213/91 reconhece concausa. Culpa exclusiva da vítima é excepcional e exige prova robusta.
+Refutação. Legislação previdenciária não exige culpa exclusiva do empregador. Art. 21, I, da Lei 8.213/91 reconhece concausa (auditoria 03/10/2026). Culpa exclusiva da vítima é excepcional e exige prova robusta.
 
 ### Argumento 7 — Desclassificação pela perícia
 

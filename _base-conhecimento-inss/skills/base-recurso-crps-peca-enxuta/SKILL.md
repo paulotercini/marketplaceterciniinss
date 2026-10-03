@@ -1,6 +1,6 @@
 ---
 name: base-recurso-crps-peca-enxuta
-description: Skill de redação enxuta, direta e clara para recursos destinados ao Conselho de Recursos da Previdência Social (CRPS), em postura exclusivamente pró-segurado. Estabelece padrão de peça com fundamentação puramente NORMATIVA (Lei 8.213/91, Lei 8.212/91, Decreto 3.048/99, IN 128/2022, Portarias DIRBEN/INSS, Portaria MPS 125/2026 RICRPS, Pareceres CONJUR/AGU vinculantes, Enunciados do CRPS, Resoluções do CRPS), com vedação ao uso de julgados judiciais (STF, STJ, TNU, TRF) como fundamento principal, pois o CRPS é órgão administrativo vinculado à norma e aos seus próprios precedentes administrativos. Use SEMPRE que redigir ou revisar recurso ordinário à Junta de Recursos (art. 126 Lei 8.213/91, prazo 30 dias), recurso especial à Câmara de Julgamento (hipóteses do art. 91 RICRPS), embargos de declaração ao CRPS (art. 92 RICRPS, prazo 5 dias), agravo ao Pleno (art. 116 RICRPS), Pedido de Uniformização de Jurisprudência (PUJ) ao Conselho Pleno (arts. 120-124 RICRPS), Reclamação ao Pleno por afronta a enunciado, contrarrazões no CRPS, sustentação oral ou memorial CRPS. Use SEMPRE que mencionar peça enxuta CRPS, recurso administrativo INSS, recurso pró-segurado CRPS, fundamentação normativa pura CRPS, sem jurisprudência judicial, Enunciado CRPS, Parecer CONJUR vinculante, Resolução CRPS, recuo 5 cm CRPS, padrão CRPS enxuto. Cruza com base-crps-panorama-geral, ponte-workflow-crps, admissibilidade-barreiras-crps, recursos-superiores-crps, incidentes-instrucao-crps, base-legislacao-fontes-primarias, base-portarias-dpmf-inss-hub, base-revisao-peticao-aprofundada, peticao-previdenciaria, base-peticao-previdenciaria-padrao-visual. NÃO use para peças destinadas ao Poder Judiciário (JEF, rito ordinário, MS, TNU, STJ, STF).
+description: Skill de redação enxuta, direta e clara para recursos destinados ao Conselho de Recursos da Previdência Social (CRPS), em postura exclusivamente pró-segurado. Estabelece padrão de peça com fundamentação puramente NORMATIVA (Lei 8.213/91, Lei 8.212/91, Decreto 3.048/99, IN 128/2022, Portarias DIRBEN/INSS, Portaria MPS 125/2026 RICRPS, Pareceres CONJUR/AGU vinculantes, Enunciados do CRPS, Resoluções do CRPS), com vedação ao uso de julgados judiciais (STF, STJ, TNU, TRF) como fundamento principal, pois o CRPS é órgão administrativo vinculado à norma e aos seus próprios precedentes administrativos. Use SEMPRE que redigir ou revisar recurso ordinário à Junta de Recursos (art. 126 Lei 8.213/91, prazo 30 dias), recurso especial à Câmara de Julgamento (art. 90 RICRPS), embargos de declaração ao CRPS (art. 92 RICRPS, prazo 30 dias), agravo interno ao Pleno (art. 93 RICRPS), Pedido de Uniformização de Jurisprudência (PUJ) ao Conselho Pleno (arts. 120-124 RICRPS), Reclamação ao Pleno por afronta a enunciado, contrarrazões no CRPS, sustentação oral ou memorial CRPS. Use SEMPRE que mencionar peça enxuta CRPS, recurso administrativo INSS, recurso pró-segurado CRPS, fundamentação normativa pura CRPS, sem jurisprudência judicial, Enunciado CRPS, Parecer CONJUR vinculante, Resolução CRPS, recuo 5 cm CRPS, padrão CRPS enxuto. Cruza com base-crps-panorama-geral, ponte-workflow-crps, admissibilidade-barreiras-crps, recursos-superiores-crps, incidentes-instrucao-crps, base-legislacao-fontes-primarias, base-portarias-dpmf-inss-hub, base-revisao-peticao-aprofundada, peticao-previdenciaria, base-peticao-previdenciaria-padrao-visual. NÃO use para peças destinadas ao Poder Judiciário (JEF, rito ordinário, MS, TNU, STJ, STF).
 ---
 
 # Skill de Redação Enxuta para Recursos ao CRPS
@@ -42,7 +42,7 @@ A peça pró-segurado CRPS deve fundamentar-se HIERARQUICAMENTE.
 6. **Portarias DIRBEN/INSS** - 990 a 996/2022, 1.310/2025, 1.333/2026, etc.
 7. **Portaria MPS 125/2026** - RICRPS atual.
 8. **Pareceres CONJUR/AGU vinculantes** - art. 108 RICRPS.
-9. **Resoluções e Enunciados do CRPS** - art. 114 RICRPS.
+9. **Resoluções e Enunciados do CRPS** - Enunciados vinculam (arts. 109, §1º, e 124 RICRPS); Resoluções não vinculam (art. 126, §2º) (auditoria 03/10/2026).
 
 A citação deve preservar redação LITERAL conforme protocolo de 5 níveis da skill `base-legislacao-fontes-primarias`. NUNCA paráfrase como literal.
 
@@ -113,7 +113,7 @@ REGRAS de redação a serem seguidas em TODA peça CRPS.
 **Recurso ordinário típico.** 4 a 6 páginas.
 **Recurso especial.** 5 a 8 páginas (precisa demonstrar divergência ou contrariedade).
 **Embargos de declaração.** 1 a 2 páginas, máximo 3.
-**Agravo ao Pleno (art. 116 RICRPS).** 3 a 5 páginas.
+**Agravo interno ao Pleno (art. 93 RICRPS).** 3 a 5 páginas (auditoria 03/10/2026).
 **PUJ (arts. 120-124).** 5 a 8 páginas.
 **Reclamação.** 3 a 5 páginas.
 **Memorial.** Máximo 2 páginas (regra absoluta do escritório).
@@ -139,15 +139,15 @@ Conforme `base-peticao-previdenciaria-padrao-visual`.
 
 Cabimento. Contra decisão administrativa do INSS (indeferimento, cessação, revisão de ofício). Art. 126 da Lei 8.213/91.
 
-Prazo. 30 dias da ciência (art. 126).
+Prazo. 30 dias da ciência (art. 77 do RICRPS) (auditoria 03/10/2026).
 
 Endereçamento. Junta de Recursos competente.
 
-Efeito. Suspensivo em hipóteses específicas (art. 126 §1º Lei 8.213).
+Efeito. Sem efeito suspensivo, como regra (art. 61 da Lei 9.784/99). Havendo justo receio de prejuízo de difícil ou incerta reparação, o segurado pode pedi-lo à autoridade recorrida ou à imediatamente superior (art. 61, parágrafo único) (auditoria 03/10/2026).
 
 ### Recurso Especial
 
-Cabimento. Contra acórdão da JR nas hipóteses do art. 91 do RICRPS (divergência entre Câmaras, contrariedade a Enunciado, súmula ou parecer vinculante).
+Cabimento. Contra acórdão da JR em recurso ordinário (art. 90 do RICRPS), salvo matéria de alçada exclusiva (art. 89, §3º) e decisão de diligência (art. 90, §2º) (auditoria 03/10/2026).
 
 Prazo. 30 dias da ciência do acórdão.
 
@@ -157,21 +157,21 @@ Endereçamento. Câmara de Julgamento (CAJ) competente em Brasília.
 
 Cabimento. Art. 92 RICRPS. Omissão, contradição, obscuridade ou erro material em acórdão da JR ou CAJ.
 
-Prazo. 5 dias.
+Prazo. 30 dias da ciência do acórdão; erro material a qualquer tempo (art. 92, §2º) (auditoria 03/10/2026).
 
 Forma. Peça MUITO ENXUTA. Indica o vício e propõe o saneamento.
 
 ALERTA TÉCNICO CRÍTICO. A contradição que autoriza embargos de declaração é EXCLUSIVAMENTE a contradição INTERNA ao próprio julgado, entre suas premissas, fundamentos e dispositivo. NÃO se admite embargos por contradição EXTERNA, ou seja, contradição entre o decidido e a prova dos autos, a jurisprudência divergente, a tese da parte ou a legislação invocada. O inconformismo com a conclusão do julgado se enfrenta com recurso especial (REA à CAJ), não com embargos. Embargos opostos com fundamento em contradição externa são rejeitados como manifestamente protelatórios e podem caracterizar litigância de má-fé. Detalhamento em `references/CONTRADICAO-INTERNA-EXTERNA-ED.md`.
 
-### Agravo (art. 116 RICRPS)
+### Agravo Interno (art. 93 RICRPS)
 
-Cabimento. Contra decisão monocrática do Presidente ou relator que não conhecer recurso, declarar perda de objeto, etc.
+Cabimento. Contra decisão que indeferir a admissibilidade de PUJ ou de Reclamação e contra decisão que declarar o impedimento de conselheiro. Petição dirigida à Presidência do Conselho Pleno (auditoria 03/10/2026).
 
-Prazo. 15 dias.
+Prazo. 30 dias da ciência (art. 93, §1º).
 
 ### PUJ - Pedido de Uniformização de Jurisprudência
 
-Cabimento. Arts. 120-124 RICRPS. Quando houver divergência entre Câmaras de Julgamento ou contrariedade a Enunciado do Pleno.
+Cabimento. Arts. 121 e 122 RICRPS. Quando houver divergência na interpretação do direito entre Câmaras de Julgamento, ou entre Juntas em matéria de alçada exclusiva. Contrariedade a Enunciado é caso de Reclamação ao Pleno (art. 123) (auditoria 03/10/2026).
 
 Endereçamento. Conselho Pleno.
 

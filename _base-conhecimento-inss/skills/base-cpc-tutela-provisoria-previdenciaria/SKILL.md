@@ -53,7 +53,7 @@ Cenário D, tutela de evidência em tese firmada (Tema 1102/STF RVT, Tema 76/STF
 
 ## Estabilização (art. 304)
 
-Segurado obtém tutela antecipada antecedente. INSS não recorre. Processo é extinto com estabilização. Art. 304, §5º, CPC exige ação revisional em 2 anos (o §6º trata da ausência de coisa julgada). Tema 1085/STJ em discussão.
+Segurado obtém tutela antecipada antecedente. INSS não recorre. Processo é extinto com estabilização. Art. 304, §5º, CPC exige ação revisional em 2 anos (o §6º trata da ausência de coisa julgada; auditoria 03/10/2026, retirado o Tema 1085/STJ, que trata do limite de desconto bancário).
 
 ## Alertas
 

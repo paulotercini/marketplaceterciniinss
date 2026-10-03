@@ -4,21 +4,21 @@
 
 ### TNU — Tema 219
 
-Tese. Reconhecimento flexibilizado da atividade do segurado especial (aplicável por analogia ao pescador).
+Tese. É possível o cômputo do tempo de serviço rural exercido por pessoa com idade inferior a 12 anos na época da prestação do labor campesino (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Admite prova ampla do pescador em economia familiar.
+Aplicação pró-segurado. Por analogia, sustenta o cômputo da pesca em economia familiar exercida antes dos 12 anos.
 
 ### TNU — Tema 348
 
-Tese. Prova da atividade pesqueira pode ser produzida por documento e testemunha, ainda que o RGP não abranja todo o período.
+Tese. O segurado especial tem direito à prorrogação do período de graça por inatividade involuntária, aplicando-se por analogia o art. 15, §2º, da Lei 8.213/91 (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Admite prova ampla.
+Aplicação pró-segurado. Vale para o pescador artesanal, segurado especial (art. 11, VII, b, da Lei 8.213/91), na manutenção da qualidade de segurado.
 
-### STF — Tema 629
+### STJ, Tema 629 (REsp 1.352.721/SP) (auditoria 03/10/2026)
 
 Tese (contexto de segurado especial, aplicável por analogia). Aceita nova ação em caso de prova nova.
 

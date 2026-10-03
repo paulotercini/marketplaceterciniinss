@@ -14,11 +14,11 @@ Indenização de contribuições para tempo rural contado reciprocamente.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Súmula 24 AGU
+### Art. 94 da Lei 8.213/91
 
-Cômputo entre regimes.
+Cômputo recíproco do tempo de contribuição entre regimes, com compensação financeira (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
 
-Fonte oficial em https://www.agu.gov.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
 
 ### Alerta corretivo Onda 66
 
@@ -142,6 +142,6 @@ Quinto, em caso de recusa, via judicial.
 
 Acompanhar acórdãos do STJ sobre Tema 609.
 
-Acompanhar decisões do STF sobre Tema 176.
+
 
 Revisar IN 128/2022 e regulamentos dos entes públicos.

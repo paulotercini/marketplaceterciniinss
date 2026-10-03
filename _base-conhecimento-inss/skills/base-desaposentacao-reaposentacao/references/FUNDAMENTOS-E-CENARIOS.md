@@ -28,9 +28,9 @@ IN 128/2022.
 
 RE 661.256. Desaposentação vedada.
 
-### Tema 381 STF
+### Devolução de valores (embargos no Tema 503 STF)
 
-Devolução de valores.
+Nos embargos de declaração do RE 661.256 (Tema 503 STF), o STF dispensou a devolução dos valores recebidos de boa-fé até aquele julgamento [NÃO CONFIRMADO]; o Tema 381 STF, antes citado aqui, trata do Estatuto do Idoso em plano de saúde (auditoria 03/10/2026).
 
 ### Súmula 557 STJ (não aplicável à desaposentação)
 
@@ -74,7 +74,7 @@ Honestidade radical. Probabilidade mínima de êxito. Tema 503 STF.
 
 ### Cenário G — Devolução de valores
 
-Tema 381 STF afasta, se boa-fé.
+A modulação nos embargos do Tema 503 STF afasta a devolução do recebido de boa-fé até aquele julgamento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### Cenário H — Cômputo de contribuições pós-DIB
 
@@ -96,7 +96,7 @@ Quinto, requerimento ou ação.
 
 Risco de improcedência em desaposentação isolada. Altíssimo.
 
-Risco de devolução de valores. Afastado por boa-fé (Tema 381 STF).
+Risco de devolução de valores. A modulação do Tema 503 STF protegeu só o recebido de boa-fé até o julgamento dos embargos [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Risco de coisa julgada se houver ação anterior. Verificar.
 
