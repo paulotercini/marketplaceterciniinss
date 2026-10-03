@@ -57,6 +57,8 @@ const tabelaDe = url => (url.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
 
   await pagina.goto(`http://127.0.0.1:${porta}/app.html`);
   await pagina.waitForSelector("#app.logado", { timeout: 15000 });
+  // a ficha só abre com a carga pronta: sem isto a prova corria contra o carregamento
+  await pagina.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
 
   const abrirCadastro = async id => {
     await pagina.evaluate(x => abrirFicha(x), id);
