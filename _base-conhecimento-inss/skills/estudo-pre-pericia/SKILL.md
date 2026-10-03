@@ -122,7 +122,7 @@ BPC. `analise-bpc-loas`, `base-bpc-impedimento-longo-prazo` (com o reference da 
 
 Aposentadoria PCD. `aposentadoria-deficiencia`, `base-aposentadoria-pcd-lc142`, `base-pcd-if-bra-metodologia`, `base-pcd-did-retroativa`, `base-lbi-inclusao-barreiras-lei13146` e o reference APOSENTADORIA-PCD da `orientacao-cliente-pericia`.
 
-Auxílio-acidente. `auxilio-acidente-b94`, `base-auxilio-acidente-b94-pos-reforma`, `base-b94-sequela-minima-tema201`, `base-b94-nexo-acidentario-ntep` e o reference AUXILIO-ACIDENTE da `orientacao-cliente-pericia`.
+Auxílio-acidente. `auxilio-acidente-b94`, `base-auxilio-acidente-b94-pos-reforma`, `base-b94-sequela-minima-sumula88-tnu`, `base-b94-nexo-acidentario-ntep` e o reference AUXILIO-ACIDENTE da `orientacao-cliente-pericia`.
 
 Por patologia, somar a skill temática quando existir (`base-pcd-fibromialgia-lei15176` com o roteiro de individualização da Onda 87, `deficiencia-auditiva-previdenciaria`, TEA nas skills de BPC e PCD).
 

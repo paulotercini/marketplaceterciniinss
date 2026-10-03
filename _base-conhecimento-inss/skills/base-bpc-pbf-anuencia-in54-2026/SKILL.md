@@ -147,7 +147,7 @@ Princípio da irrepetibilidade. Tema 979/STJ (REsp 1.401.560). Tema 1034/STJ (RE
 
 Boa-fé objetiva. Verba alimentar. Vulnerabilidade socioeconômica.
 
-Cruzamento com `base-devolucao-valores-irrepetibilidade-tema979-tema1034`.
+Cruzamento com `base-devolucao-valores-irrepetibilidade-tema979-tema692`.
 
 ## 8. Cenários práticos
 
@@ -237,7 +237,7 @@ ADI 7765 (em construção). Pendente análise de constitucionalidade do Decreto 
 
 `base-dano-moral-previdenciario` para o pedido de indenização.
 
-`base-devolucao-valores-irrepetibilidade-tema979-tema1034` para a vedação à devolução cumulativa.
+`base-devolucao-valores-irrepetibilidade-tema979-tema692` para a vedação à devolução cumulativa.
 
 `tema-1124-instrucao-administrativa` para a instrução administrativa.
 

@@ -1,6 +1,6 @@
 ---
 name: base-b94-integracao-salario-beneficio-art31
-description: "Integração do auxílio-acidente B94 ao salário-de-benefício de aposentadoria pelo ART. 31 da Lei 8.213/91, Súmula 507 STJ e direito adquirido sobre acumulação até a MP 1.596-14/1997. ATENÇÃO, a integração NÃO tem tema repetitivo próprio, e o Tema 862 do STJ é TERMO INICIAL do B94, não integração, erro corrigido na Onda 143. Use SEMPRE que mencionar integração B94 salário-de-benefício, art. 31 Lei 8.213, Súmula 507 STJ, B94 entra na média da aposentadoria, acumulação B94 e aposentadoria, MP 1.596-14/1997, marco temporal 11/11/1997, B94 anterior à aposentadoria, soma B94 salário-de-contribuição, base de cálculo da aposentadoria com B94, RMI com integração de auxílio-acidente, Portaria 991/2022, Portaria 992/2022, TJSP. Cruza com auxilio-acidente-b94, base-precedentes-catalogo-vinculantes, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-tema201 e base-calculo-rmi-ec103."
+description: "Integração do auxílio-acidente B94 ao salário-de-benefício de aposentadoria pelo ART. 31 da Lei 8.213/91, Súmula 507 STJ e direito adquirido sobre acumulação até a MP 1.596-14/1997. ATENÇÃO, a integração NÃO tem tema repetitivo próprio, e o Tema 862 do STJ é TERMO INICIAL do B94, não integração, erro corrigido na Onda 143. Use SEMPRE que mencionar integração B94 salário-de-benefício, art. 31 Lei 8.213, Súmula 507 STJ, B94 entra na média da aposentadoria, acumulação B94 e aposentadoria, MP 1.596-14/1997, marco temporal 11/11/1997, B94 anterior à aposentadoria, soma B94 salário-de-contribuição, base de cálculo da aposentadoria com B94, RMI com integração de auxílio-acidente, Portaria 991/2022, Portaria 992/2022, TJSP. Cruza com auxilio-acidente-b94, base-precedentes-catalogo-vinculantes, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-sumula88-tnu e base-calculo-rmi-ec103."
 ---
 
 # Integração do B94 ao Salário-de-Benefício
@@ -134,9 +134,9 @@ Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já susten
 Para detalhes operacionais, acionar `auxilio-acidente-b94`.
 Para Anexo III, acionar `base-b94-anexo-iii-quadros`.
 Para cessação, acionar `base-b94-cessacao-acumulacao-vedacao`.
-Para sequela mínima, acionar `base-b94-sequela-minima-tema201`.
+Para sequela mínima, acionar `base-b94-sequela-minima-sumula88-tnu`.
 Para RMI, acionar `base-calculo-rmi-ec103`.
 
 ## O que NÃO está nesta skill
 
-Anexo III em `base-b94-anexo-iii-quadros`. Cessação em `base-b94-cessacao-acumulacao-vedacao`. Sequela mínima em `base-b94-sequela-minima-tema201`. Nexo em `base-b94-nexo-acidentario-ntep`.
+Anexo III em `base-b94-anexo-iii-quadros`. Cessação em `base-b94-cessacao-acumulacao-vedacao`. Sequela mínima em `base-b94-sequela-minima-sumula88-tnu`. Nexo em `base-b94-nexo-acidentario-ntep`.

@@ -1,5 +1,5 @@
 ---
-name: base-devolucao-valores-irrepetibilidade-tema979-tema1034
+name: base-devolucao-valores-irrepetibilidade-tema979-tema692
 description: "Skill base sobre irrepetibilidade de valores recebidos a título previdenciário, à luz dos Temas 979 e 1.034/STJ, da Súmula 34/AGU e da boa-fé objetiva. Use SEMPRE que mencionar devolução de valores recebidos, INSS quer cobrar, ressarcimento ao erário, irrepetibilidade, Tema 979 STJ, Tema 1.034 STJ, Súmula 34 AGU, boa-fé objetiva, verba alimentar, descontos no benefício, suspensão por dívida, antecipação de tutela revogada, sentença reformada, devolução em juízo, parcelas vencidas indevidas, alimentos por equiparação, REsp 1.401.560, REsp 1.734.974. Hub teórico para defesa do segurado contra cobrança regressiva pelo INSS, abrangendo benefícios cessados por reforma de tutela, indeferimento posterior, erro administrativo e fraude apurada com sentença. NÃO use para fraude com má-fé comprovada (devolução cabível) nem para cumprimento de sentença em fase executiva (skill própria). Cruza com execucao-cumprimento-previdenciario e peticao-previdenciaria."
 ---
 

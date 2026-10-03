@@ -118,4 +118,4 @@ Quinto, dialeticidade.
 
 ## 10. Integração prática
 
-`auxilio-acidente-b94`, `base-b94-integracao-salario-beneficio-art31`, `base-b94-anexo-iii-quadros`, `base-b94-sequela-minima-tema201`, `decadencia-revisao-previdenciaria`, `peticao-previdenciaria`.
+`auxilio-acidente-b94`, `base-b94-integracao-salario-beneficio-art31`, `base-b94-anexo-iii-quadros`, `base-b94-sequela-minima-sumula88-tnu`, `decadencia-revisao-previdenciaria`, `peticao-previdenciaria`.
