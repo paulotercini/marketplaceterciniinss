@@ -4,7 +4,7 @@
 
 EC 103/2019, art. 21. Regra de transição da aposentadoria especial por pontos. Exige tempo mínimo de 15, 20 ou 25 anos de atividade especial. Pontuação (idade mais tempo de contribuição) de 66, 76 e 86 pontos respectivamente.
 
-EC 103/2019, art. 19, §1º, III. Regra permanente da aposentadoria especial. Idade mínima de 55 anos (risco alto, 15 anos), 58 anos (risco médio, 20 anos) ou 60 anos (risco baixo, 25 anos).
+EC 103/2019, art. 19, §1º, I. Regra permanente da aposentadoria especial. Idade mínima de 55 anos (risco alto, 15 anos), 58 anos (risco médio, 20 anos) ou 60 anos (risco baixo, 25 anos).
 
 EC 103/2019, art. 25, §2º. Permite a conversão de tempo especial em comum para períodos cumpridos até 13 de novembro de 2019.
 
@@ -14,7 +14,7 @@ Lei 8.213/91, art. 57, §3º. Considera-se especial o tempo de trabalho permanen
 
 Lei 8.213/91, art. 57, §8º. Veda o retorno à atividade especial após a concessão.
 
-Decreto 3.048/99, arts. 64 a 69-A. Regulamenta a aposentadoria especial.
+Decreto 3.048/99, arts. 64 a 70. Regulamenta a aposentadoria especial.
 
 ## 2. Tabela de pontos da transição (art. 21 EC 103)
 

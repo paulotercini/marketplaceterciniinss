@@ -23,8 +23,6 @@ Lei 13.134/2015. Alterou a Lei 10.779/2003.
 
 Decreto 8.424/2015. Regulamenta a Lei 10.779/2003.
 
-Decreto 3.048/99, art. 116-A. Regulamentação.
-
 Instruções Normativas do IBAMA. Definem o período de defeso por espécie e por região.
 
 Portarias interministeriais MMA/MPA. Integram o regime.

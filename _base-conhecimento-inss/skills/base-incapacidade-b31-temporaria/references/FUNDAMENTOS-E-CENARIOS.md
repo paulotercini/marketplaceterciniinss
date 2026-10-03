@@ -20,7 +20,7 @@ Lei 8.213/91, art. 27-A. Recuperação da qualidade de segurado.
 
 Lei 8.213/91, art. 42. Vedação de concessão de B31 a quem já era portador da doença quando se filiou, salvo se a incapacidade decorrer de progressão ou agravamento.
 
-EC 103/2019, art. 26, §3º, I. RMI de B31 em 91% da média pela nova sistemática.
+Lei 8.213/91, art. 61, com a média do art. 26, caput, da EC 103/2019. RMI do B31 (e do B91) em 91% do salário de benefício.
 
 Portaria Conjunta MPS/INSS 13/2026. Disciplina o regime de análise documental do B31.
 

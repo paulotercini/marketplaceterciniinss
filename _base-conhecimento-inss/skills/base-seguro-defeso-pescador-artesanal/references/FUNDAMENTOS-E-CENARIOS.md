@@ -20,8 +20,6 @@ Lei 8.213/91, art. 11, VII, b. Pescador artesanal como segurado especial.
 
 Lei 8.213/91, art. 25, parágrafo único. Exigência de 12 meses de atividade pesqueira.
 
-Decreto 3.048/99, art. 116-A. Regulamentação.
-
 Instruções Normativas do IBAMA e portarias interministeriais. Fixam o defeso por espécie e por região.
 
 RGP — Registro Geral da Atividade Pesqueira.

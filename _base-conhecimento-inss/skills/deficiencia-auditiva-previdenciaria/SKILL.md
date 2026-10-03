@@ -168,7 +168,7 @@ Se a surdez for decorrente de acidente (de qualquer natureza, não apenas de tra
 
 **Reserva de vagas em empresas privadas (Lei de Cotas).** Art. 93 da Lei 8.213/91. Empresas com 100 ou mais empregados devem reservar de 2% a 5% para PCDs e reabilitados.
 
-**Intérprete de Libras em órgãos públicos.** Lei 10.436/2002 c/c Decreto 5.626/2005. Direito a atendimento por intérprete em repartições públicas, incluindo o INSS. Na perícia do INSS, o art. 7º da Portaria Interministerial 1/2014 garante intérprete.
+**Intérprete de Libras em órgãos públicos.** Lei 10.436/2002 c/c Decreto 5.626/2005. Direito a atendimento por intérprete em repartições públicas, incluindo o INSS.
 
 ### Direitos Tributários
 

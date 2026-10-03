@@ -139,7 +139,7 @@ Fundamento — o art. 15, I, mantém a qualidade de segurado sem limite de prazo
 
 ### 3.4 Término do período de graça em dia não útil
 
-**PEDILEF 0002300-36.2024.4.05.8109/CE** (atribuído ao Juiz Federal Fábio de Souza Silva, dezembro/2025) — a TNU anulou acórdão da TR do Ceará para que se manifeste sobre a combinação do art. 15, §4º, com o art. 30, §2º, da Lei 8.213/91. A tese é que, se o vencimento da contribuição do mês posterior ao fim do período de graça cai em dia sem expediente bancário (sábado, domingo ou feriado), prorroga-se para o próximo dia útil. Precedente ainda não verificável em fonte primária oficial, mas a fundamentação jurídica é sólida.
+**PEDILEF 0002300-36.2024.4.05.8109/CE** (atribuído ao Juiz Federal Fábio de Souza Silva, dezembro/2025) — a TNU anulou acórdão da TR do Ceará para que se manifeste sobre a combinação do art. 15, §4º, com o art. 30, §2º, da Lei 8.212/91. A tese é que, se o vencimento da contribuição do mês posterior ao fim do período de graça cai em dia sem expediente bancário (sábado, domingo ou feriado), prorroga-se para o próximo dia útil. Precedente ainda não verificável em fonte primária oficial, mas a fundamentação jurídica é sólida.
 
 Fundamento adicional — art. 132, §1º, do Código Civil (prorrogação de prazo que vence em feriado). Art. 3º, §2º, da Lei 12.153/2009 (prorrogação de prazo processual). Interpretação sistemática que impede prejuízo ao segurado por circunstância alheia à sua vontade.
 

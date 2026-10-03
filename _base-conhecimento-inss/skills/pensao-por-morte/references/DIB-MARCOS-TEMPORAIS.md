@@ -50,7 +50,7 @@ Se o menor/incapaz requerer fora do prazo do art. 74, a DIB é a DER. Mas não c
 
 **No JEF** — invocar Tema 81/TNU para obter DIB no óbito. A vinculação do JEF à TNU é direta. O REsp 2.103.603/PB não é aplicável como precedente vinculante no JEF.
 
-**No rito ordinário (Vara Federal)** — a tendência é que o REsp 2.103.603/PB passe a ser seguido. Sustentar DIB no óbito com base nos arts. 79 e 103, parágrafo único, da Lei 8.213/91, c/c art. 198, I, do Código Civil, argumentando que o art. 74 contém regra prescricional material inaplicável a incapaz. Alternativamente, se a DIB for fixada na DER, explorar a imprescritibilidade para garantir todas as parcelas desde então.
+**No rito ordinário (Vara Federal)** — a tendência é que o REsp 2.103.603/PB passe a ser seguido. Sustentar DIB no óbito com base no art. 103, parágrafo único, da Lei 8.213/91 (o art. 79, que também afastava a prescrição contra o pensionista menor, foi revogado pela MP 871/2019, convertida na Lei 13.846/2019), c/c art. 198, I, do Código Civil, argumentando que o art. 74 contém regra prescricional material inaplicável a incapaz. Alternativamente, se a DIB for fixada na DER, explorar a imprescritibilidade para garantir todas as parcelas desde então.
 
 **No CRPS** — o INSS aplica literalmente o art. 74, fixando DIB na DER se fora do prazo. Recurso ao CRPS terá dificuldade de reverter. MS pode ser alternativa.
 

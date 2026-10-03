@@ -74,7 +74,7 @@ O PGR é documento trabalhista (NR-1, itens 1.5.3 a 1.5.7.4), mas descreve o mes
 5 aplicações estratégicas.
 
 1. **Confronto PGR vs PPP** — risco alto no PGR com EPI eficaz no PPP desacredita o formulário previdenciário
-2. **PGR como substituto de LTCAT** — quando empresa extinta ou documento extraviado (art. 261, §1º, IN 128)
+2. **PGR como substituto de LTCAT** — quando empresa extinta ou documento extraviado (art. 277, V, "b", da IN 128/2022)
 3. **Auditoria reversa** — dispensa de PPP por PGR sem risco pode ser impugnada se o PGR foi deficiente
 4. **PGR e EPI** — risco residual moderado/alto no PGR é prova direta de dúvida sobre eficácia (Tese III do Tema 1090)
 5. **Empresa terceirizada** — PGR da tomadora cobre o ambiente real de trabalho

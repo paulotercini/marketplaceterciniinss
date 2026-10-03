@@ -42,7 +42,7 @@ Motociclista (Lei 12.997/2014, NR-16 Anexo V, Portaria MTE 2.021/2025).
 
 Arts. 42 a 48 Lei 8.213/91. Acréscimo 25%, art. 45 Lei 8.213/91 e Anexo I Decreto 3.048/99.
 
-RMI EC 103/2019 art. 26 §3º II (60% mais 2% por ano excedente).
+RMI EC 103/2019 art. 26 §2º III (60% mais 2% por ano excedente).
 
 Tema 1083 STJ (agravamento). Portaria Conjunta MPS/INSS 14/2026 (análise documental).
 

@@ -67,7 +67,7 @@ Ata de assembleia que elegeu o síndico + comprovante de remuneração ou isenç
 
 ### Cooperados
 
-Comprovante de filiação à cooperativa + demonstrativo de pagamento da cooperativa. A cooperativa é equiparada a empresa (art. 22, IV, Lei 8.212/91) e retém a contribuição do cooperado.
+Comprovante de filiação à cooperativa + demonstrativo de pagamento da cooperativa. A cooperativa é equiparada a empresa (art. 15, parágrafo único, da Lei 8.212/91) e arrecada a contribuição do cooperado (art. 4º, §1º, da Lei 10.666/2003).
 
 ### Religiosos (ministros de confissão)
 

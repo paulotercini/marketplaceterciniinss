@@ -90,7 +90,7 @@ Refutação. Recurso parcial delimita. Art. 1.013 §1º CPC.
 
 Argumento adversário. Rito sumário.
 
-Refutação. Não há vedação. Art. 1º §1º Lei 10.259.
+Refutação. Não há vedação. Art. 1º da Lei 10.259/2001.
 
 ### Argumento 8 — Falta de dialeticidade do segurado
 

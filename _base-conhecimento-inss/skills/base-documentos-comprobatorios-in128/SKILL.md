@@ -263,7 +263,7 @@ Cruzar com `base-salario-maternidade-pos-reforma`.
 
 **Documentos do núcleo comum + comprovação de atividade rural.**
 
-Autodeclaração rural com base no art. 94 §5º Lei 8.213/91 (Portaria DIRBEN/INSS específica). Lista exemplificativa.
+Autodeclaração rural (art. 38-B, §2º, da Lei 8.213/91), ratificada na forma dos arts. 92 a 94 da Portaria DIRBEN/INSS 990/2022, cujo art. 94, §5º, admite que um único instrumento ratifique todo o período. Lista exemplificativa.
 
 Material complementar.
 - DAP/CAF (Cadastro Nacional do Agricultor Familiar).

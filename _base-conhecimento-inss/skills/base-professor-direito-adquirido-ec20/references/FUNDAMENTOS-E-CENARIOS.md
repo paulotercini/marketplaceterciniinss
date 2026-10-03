@@ -2,7 +2,7 @@
 
 ## 1. Conceito operacional
 
-Direito adquirido do professor com bônus de 17 por cento mulher e 20 por cento homem sobre o tempo de magistério exercido até 16/12/1998. Art. 9º §2º EC 20/98.
+Direito adquirido do professor com bônus de 17 por cento homem e 20 por cento mulher sobre o tempo de magistério exercido até 16/12/1998. Art. 9º §2º EC 20/98.
 
 ## 2. Fundamento constitucional
 
