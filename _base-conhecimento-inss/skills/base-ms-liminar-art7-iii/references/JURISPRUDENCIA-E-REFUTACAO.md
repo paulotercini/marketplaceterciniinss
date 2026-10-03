@@ -74,11 +74,11 @@ Argumento adversário. Garantia.
 
 Refutação. Justiça gratuita afasta.
 
-### Argumento 6 — Súmula 729 STF
+### Argumento 6 — ADC 4
 
-Argumento adversário. Fazenda.
+Argumento adversário. A decisão na ADC 4 veda tutela contra a Fazenda.
 
-Refutação. Modulada em alimentar.
+Refutação. A Súmula 729 STF afasta a ADC 4 da antecipação de tutela em causa previdenciária (auditoria 03/10/2026).
 
 ### Argumento 7 — Compensação de pagamentos
 
@@ -138,4 +138,4 @@ Acompanhar acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
 
 Revalidar Tema 692/STJ.
 
-Acompanhar modulações da Súmula 729 STF.
+Revalidar a Súmula 729 STF, favorável ao segurado (auditoria 03/10/2026).

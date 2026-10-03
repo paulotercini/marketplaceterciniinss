@@ -49,7 +49,7 @@ Exige indenização para cômputo como tempo de contribuição no RGPS **na apos
 
 ### 2.3 Segurado empregado com vínculo não registrado no CNIS
 
-A obrigação de recolhimento é do empregador (art. 30, I, "a", Lei 8.212/91). O segurado não pode ser prejudicado pela inadimplência do empregador. Presunção de recolhimento reconhecida pela jurisprudência (Súmula 75 TNU). Não se trata de indenização, mas de reconhecimento de vínculo com presunção contributiva.
+A obrigação de recolhimento é do empregador (art. 30, I, "a", Lei 8.212/91). O segurado não pode ser prejudicado pela inadimplência do empregador. A CTPS sem defeito formal goza de presunção relativa de veracidade e prova o tempo de serviço, ainda que o vínculo não conste do CNIS (Súmula 75 TNU) (auditoria 03/10/2026). Não se trata de indenização, mas de reconhecimento de vínculo com presunção contributiva.
 
 ### 2.4 Segurado facultativo
 
@@ -254,7 +254,7 @@ Para consulta completa, acionar a skill **precedentes-previdenciarios**. Precede
 - **Tema 609/STJ** — contagem recíproca de labor rural pré-1991 exige indenização (art. 96, IV, Lei 8.213/91)
 - **Tema 1103/STJ** — juros e multa somente para períodos posteriores à MP 1.523/1996
 - **Tema 192/TNU** — tese adversa: o recolhimento em atraso feito após a perda da qualidade de segurado não conta para carência. O caminho do segurado é recolher o atraso antes da perda, depois da primeira contribuição em dia (art. 27, II, da Lei 8.213/91) (auditoria 03/10/2026)
-- **Tema 988/STJ** — cabimento de agravo de instrumento (hipóteses não taxativas do art. 1.015 CPC)
+- **Tema 988/STJ** — cabimento de agravo de instrumento (taxatividade mitigada do rol do art. 1.015 CPC, com urgência demonstrada) (auditoria 03/10/2026)
 
 ## 11. CHECKLIST DE VERIFICAÇÃO
 

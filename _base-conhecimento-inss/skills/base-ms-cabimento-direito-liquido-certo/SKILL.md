@@ -121,7 +121,7 @@ Primeiro, Súmula 271 STF. Efeitos patrimoniais entre a impetração e o cumprim
 
 Segundo, Súmula 269 STF. Valores anteriores à impetração por ação ordinária.
 
-Terceiro, Tema 394 STJ. Limitação do pagamento pretérito.
+Terceiro, a limitação do pagamento pretérito decorre dessas duas súmulas (auditoria 03/10/2026, retirado o Tema 394/STJ, que trata de depósito judicial e IRPJ).
 
 ## Alertas
 

@@ -21,7 +21,7 @@ Lei 8.213/91, art. 77, §2º. Cessação da pensão. Casamento ou união estáve
 
 Lei 8.213/91, art. 77, §2º, V. Duração da pensão do cônjuge ou companheiro varia pela idade na data do óbito e tempo de casamento/união estável, conforme tabela introduzida pela Lei 13.135/2015.
 
-EC 103/2019, art. 23. Fixa a RMI da pensão em 50% do valor do benefício ou da aposentadoria a que teria direito, acrescidos de 10% por dependente, até o máximo de 100%.
+EC 103/2019, art. 23. Fixa a RMI da pensão em 50% do valor do benefício ou da aposentadoria a que teria direito, acrescidos de 10 pontos percentuais por dependente, até o máximo de 100% (auditoria 03/10/2026).
 
 EC 103/2019, art. 24. Veda a acumulação de mais de uma pensão por morte deixada por cônjuge ou companheiro no MESMO regime (caput), e o filho pode receber as pensões do pai e da mãe (auditoria 03/10/2026); a acumulação de pensão com aposentadoria é PERMITIDA, com percepção integral do benefício mais vantajoso e faixas redutoras sobre o menos vantajoso (§2º).
 

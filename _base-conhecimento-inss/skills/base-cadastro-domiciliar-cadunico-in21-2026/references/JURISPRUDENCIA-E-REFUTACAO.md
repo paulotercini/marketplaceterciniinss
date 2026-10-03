@@ -114,7 +114,7 @@ Aplicação. BPC suspenso por erro de gestor municipal não decorre de tutela re
 
 ### 3.6. Súmula 34/AGU
 
-"Não estão sujeitos à repetição os valores recebidos de boa-fé pelo segurado, em decorrência de erro operacional da Administração Pública".
+"Não estão sujeitos à repetição os valores recebidos de boa-fé pelo servidor público, em decorrência de errônea ou inadequada interpretação da lei por parte da Administração Pública." Esse é o trecho inicial do enunciado, que trata de servidor público. A redação dada pela Portaria AGU nº 516, de 19/09/2025, admite o ressarcimento em erro de cálculo ou operacional, salvo prova de boa-fé objetiva do servidor ou beneficiário. No BPC a súmula serve só por analogia, ao lado do Tema 979/STJ, e o segurado deve demonstrar que não tinha como constatar a falha (auditoria 03/10/2026).
 
 ## 4. Refutação das teses do INSS / CRAS / MDS
 

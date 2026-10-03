@@ -32,7 +32,7 @@ Coisa julgada progressiva.
 
 ### Tema 28 STF
 
-Execução provisória contra Fazenda.
+Precatório ou RPV da parte incontroversa e autônoma transitada em julgado (RE 1.205.530) [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### Súmula 729 STF
 

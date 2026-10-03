@@ -68,7 +68,7 @@ Refutação. O fator de 1,4 para homem e 1,2 para mulher permanece aplicável pa
 
 Argumento adversário. Sem PPP, sem especial.
 
-Refutação. Até 28/04/1995, enquadramento por categoria profissional era admitido. Súmula 49 TNU (auditoria 03/10/2026, retirado o Tema 694 STJ, que trata do limite de ruído).
+Refutação. Até 28/04/1995, enquadramento por categoria profissional era admitido. Nesse período, a exposição também não precisa ser permanente, conforme a Súmula 49 TNU (auditoria 03/10/2026, retirado o Tema 694 STJ, que trata do limite de ruído).
 
 ### Argumento 4 — EPI eficaz bloqueia conversão
 

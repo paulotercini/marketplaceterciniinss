@@ -48,7 +48,7 @@ Segundo, segurado com 20 anos de atividade especial em 13 de novembro de 2019 e 
 
 Terceiro, metalúrgico com 15 anos de atividade especial em 13 de novembro de 2019, continua exposto. Aos 18 anos de exposição, só pode converter em comum os 15 anos cumpridos até 13/11/2019 (art. 25 §2º EC 103); os 3 anos posteriores entram sem conversão e se agregam ao tempo comum para outras regras (auditoria 03/10/2026).
 
-Quarto, trabalhador exposto a cancerígenos (LINACH). Aplica-se o art. 64 do Decreto 3.048/99 com especialidade qualitativa. O STJ, nos EDcl no REsp 2.116.343/RJ do Tema 1090, reconheceu os cancerígenos como hipótese excepcional em que o EPI não afasta a contagem especial (auditoria 03/10/2026). Acionar `base-especial-epi` e `base-especial-agentes-quimicos`.
+Quarto, trabalhador exposto a cancerígenos (LINACH). Aplica-se o art. 68, §4º, do Decreto 3.048/99, que remete à avaliação qualitativa do §2º e ao caput do art. 64. Na redação do Decreto 10.410/2020, medidas de controle que eliminem a nocividade descaracterizam a exposição, texto adverso diante do qual o segurado exige do LTCAT a prova dessa eliminação. O STJ, nos EDcl no REsp 2.116.343/RJ do Tema 1090, reconheceu os cancerígenos como hipótese excepcional em que o EPI não afasta a contagem especial (auditoria 03/10/2026). Acionar `base-especial-epi` e `base-especial-agentes-quimicos`.
 
 Quinto, enfermeiro exposto a agentes biológicos. Tema 211 TNU e Tema 205 TNU. Acionar `base-especial-agentes-biologicos`.
 

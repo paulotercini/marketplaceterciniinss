@@ -112,7 +112,7 @@ Risco de exclusão de função não regência.
 
 Risco de negativa de universitário.
 
-Risco de não aplicar a Súmula 726.
+Risco de o INSS aplicar a Súmula 726 STF, tese adversa superada pela ADI 3772 para direção, coordenação e assessoramento pedagógico na educação básica (auditoria 03/10/2026).
 
 ## 10. Estratégia pró-segurado
 

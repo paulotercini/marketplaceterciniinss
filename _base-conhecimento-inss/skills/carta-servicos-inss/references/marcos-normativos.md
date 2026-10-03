@@ -160,7 +160,7 @@ Comunicado DIVBEN3. Enunciado 5 CRPS.
 
 Decadência art. 103 Lei 8.213/91 (10 anos). Tema 975 STJ. Tema 256 TNU. Tema 1370 STJ. ADI 6096 STF.
 
-Revisão da Vida Toda (Tema 1102 STF, modulação). Revisão art. 29 II (Tema 334 STF, RE 630.501). Revisão do teto (Tema 76 STF, RE 564.354, art. 144 e art. 26 Lei 8.870/94). Revisão IRSM 39,67% (Tema 415 STJ, REsp 1.168.657). Revisão por atividades concomitantes (Tema 1.070 STJ).
+Revisão da Vida Toda (Tema 1102 STF, modulação). Revisão art. 29 II (Tema 334 STF, RE 630.501). Revisão do teto (Tema 76 STF, RE 564.354, art. 144 e art. 26 Lei 8.870/94). Revisão IRSM 39,67% (art. 21, §1º, da Lei 8.880/1994 e Lei 10.999/2004 [NÃO CONFIRMADO]) (auditoria 03/10/2026). Revisão por atividades concomitantes (Tema 1.070 STJ).
 
 ## Critérios de inclusão de novo marco
 

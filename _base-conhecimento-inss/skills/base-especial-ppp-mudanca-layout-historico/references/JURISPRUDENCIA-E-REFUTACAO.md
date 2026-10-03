@@ -94,7 +94,7 @@ Refutação. Direito ao tempo especial é regido pelo regime vigente à época d
 
 Argumento adversário. Sem habitualidade, sem reconhecimento.
 
-Refutação. Habitualidade presumida em atividade contínua. Súmula 49 TNU.
+Refutação. Antes de 29/4/1995, a exposição não precisa ser permanente (Súmula 49 TNU). Depois dessa data, a permanência se demonstra pela descrição das atividades no PPP, quando a exposição é indissociável da prestação do serviço, nos termos do art. 65 do Decreto 3.048/99 (auditoria 03/10/2026).
 
 ## 3. Cláusulas doutrinárias de apoio
 

@@ -8,7 +8,7 @@ EC 103/2019, art. 15. Regra dos pontos progressivos. Exige 35 anos de contribui�
 
 EC 103/2019, art. 16. Regra da idade mínima progressiva. Exige 35 anos de contribuição (homem) ou 30 anos (mulher), mais idade mínima que começou em 61 anos (homem) e 56 anos (mulher), aumentando 6 meses por ano.
 
-EC 103/2019, art. 17. Pedágio de 50%. Para quem em 13 de novembro de 2019 estava a 2 anos ou menos de completar tempo mínimo de 35/30. Soma-se ao tempo restante mais 50% desse tempo.
+EC 103/2019, art. 17. Pedágio de 50%. Para quem em 13 de novembro de 2019 contava mais de 33 anos de contribuição, se homem, ou mais de 28, se mulher, isto é, estava a menos de 2 anos de completar o tempo mínimo de 35/30 (auditoria 03/10/2026). Soma-se ao tempo restante mais 50% desse tempo.
 
 EC 103/2019, art. 20. Pedágio de 100%. Exige idade mínima de 60 anos (homem) e 57 anos (mulher), mais tempo mínimo de 35/30 anos de contribuição, mais 100% do tempo que faltava em 13 de novembro de 2019. RMI de 100% da média, diferentemente das demais transições.
 

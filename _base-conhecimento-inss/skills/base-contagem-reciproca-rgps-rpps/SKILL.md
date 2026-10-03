@@ -35,11 +35,11 @@ Art. 94 da Lei 8.213/91. Contagem recíproca do tempo de contribuição entre re
 
 Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
 
-Tema 609 STJ. Indenização de contribuições para contagem recíproca.
+Tema 609 STJ, tese adversa. O tempo rural anterior à Lei 8.213/91 dá direito à certidão, mas só se computa no regime estatutário com a prova do pagamento das contribuições. Caminho do segurado: no próprio RGPS esse tempo conta sem indenização, salvo para carência (art. 55, §2º, da Lei 8.213/91) (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-Nota corretiva (Onda 66, verificado no DOU de 12/11/2019 via Comet). O Enunciado 6 do CRPS trata do salário-maternidade à gestante demitida sem justa causa, não da CTC. Não há Enunciado do CRPS específico sobre CTC e efeitos entre os Enunciados 1 a 19 vigentes. A tese de CTC e efeitos para contagem recíproca deve ser sustentada pelo art. 96 da Lei 8.213/91, pelo art. 130 da IN 128/2022, pelo Livro IX da Portaria DIRBEN/INSS 998/2022 e pelo Tema 609 STJ (auditoria 03/10/2026, retirado o Tema 176 STF, que trata de ICMS).
+Nota corretiva (Onda 66, verificado no DOU de 12/11/2019 via Comet). O Enunciado 6 do CRPS trata do salário-maternidade à gestante demitida sem justa causa, não da CTC. Não há Enunciado do CRPS específico sobre CTC e efeitos entre os Enunciados 1 a 19 vigentes. A tese de CTC e efeitos para contagem recíproca deve ser sustentada pelo art. 96 da Lei 8.213/91, pelo art. 130 da IN 128/2022 e pelo Livro IX da Portaria DIRBEN/INSS 998/2022; o Tema 609 STJ é tese adversa, porque condiciona o cômputo do tempo rural no RPPS ao pagamento das contribuições (auditoria 03/10/2026, retirado o Tema 176 STF, que trata de ICMS).
 
 ## Espaço pró-segurado
 
@@ -51,7 +51,7 @@ Terceiro, tempo especial reconhecido no RGPS pode ser aproveitado no RPPS, com d
 
 Quarto, tempo de aluno-aprendiz e tempo militar podem ser aproveitados por contagem recíproca.
 
-Quinto, tempo rural pré-1991 pode entrar na contagem recíproca mediante indenização de contribuições, conforme Tema 609 STJ.
+Quinto, tempo rural pré-1991 só entra na contagem recíproca mediante indenização de contribuições, exigida pelo Tema 609 STJ, tese adversa; antes, comparar com a aposentadoria no próprio RGPS, em que esse tempo conta sem indenização (auditoria 03/10/2026).
 
 ## Vedações e restrições
 

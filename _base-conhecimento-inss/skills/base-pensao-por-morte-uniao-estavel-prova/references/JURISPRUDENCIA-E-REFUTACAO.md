@@ -10,10 +10,6 @@ Concubinato impuro. Fonte oficial em https://portal.stf.jus.br
 
 Início de prova material e testemunhal. Fonte oficial em https://www.cjf.jus.br
 
-### Tema 304/TNU
-
-Início de prova material. Fonte oficial em https://www.cjf.jus.br
-
 ### CF/88, art. 226 §3º
 
 Reconhecimento da união estável. Fonte oficial em https://www.planalto.gov.br

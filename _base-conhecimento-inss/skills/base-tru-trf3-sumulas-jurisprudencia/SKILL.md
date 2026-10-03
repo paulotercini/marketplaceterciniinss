@@ -109,7 +109,7 @@ Enunciado 01 do JEFSP. Súmula nº 05 das Turmas Recursais da Seção Judiciári
 
 **FUNDAMENTAL para BPC**. Súmula consagra a tese do critério relativo de miserabilidade, posteriormente confirmada pelo STF na Reclamação 4374 e Recurso Extraordinário 567985, ambos julgados em 2013.
 
-Aplicação atualizada. Combinar com Lei 13.846/2019 (que ampliou o critério para 1/4 SM no Decreto 6.214 mas manteve a possibilidade de flexibilização) + Súmula 79/TNU + Tema 640/STJ.
+Aplicação atualizada. Combinar com o art. 20, §3º, da Lei 8.742/1993, que traz o critério de 1/4 SM desde a redação original (a Lei 13.846/2019 só incluiu o §12, sobre CPF e CadÚnico) + Súmula 79/TNU + Tema 640/STJ (auditoria 03/10/2026).
 
 Em petições de BPC com renda per capita superior a 1/4 SM, esta Súmula é IMPRESCINDÍVEL.
 
@@ -181,7 +181,7 @@ Enunciado 16 do JEFSP. Súmula nº 12 das Turmas Recursais da Seção Judiciári
 
 ### Análise pró-segurado
 
-**FUNDAMENTAL para aposentadoria por idade**. Confirmação regional da Súmula 416/STJ ("É devida a pensão por morte aos dependentes do segurado que, apesar de ter perdido essa qualidade...") aplicada por analogia + Tema 1340/STJ aposentadoria por idade.
+**FUNDAMENTAL para aposentadoria por idade**. Confirmação regional da Súmula 416/STJ ("É devida a pensão por morte aos dependentes do segurado que, apesar de ter perdido essa qualidade...") aplicada por analogia à aposentadoria por idade, com o art. 102, §1º, da Lei 8.213/91 (auditoria 03/10/2026, retirado o Tema 1340/STJ, que trata de home care em plano de saúde).
 
 Em casos onde o segurado completou carência e idade mas perdeu a qualidade de segurado no momento da DER, esta Súmula GARANTE o direito.
 
@@ -267,7 +267,7 @@ SÚMULA 05 do JEFMS. Súmula nº 28 das Turmas Recursais da Seção Judiciária 
 
 ### Análise pró-segurado
 
-CRÍTICA. Confirmação regional da Súmula 44/TNU e do Tema 1340/STJ.
+CRÍTICA. Confirmação regional da Súmula 44/TNU (auditoria 03/10/2026, retirado o Tema 1340/STJ, que trata de home care em plano de saúde).
 
 Aplicação. Segurado pode cumprir a carência em um momento e a idade em outro. NÃO precisam coexistir.
 
@@ -373,7 +373,7 @@ Enunciado nº 06 da Turma Recursal da Seção Judiciária de Mato Grosso do Sul.
 
 **FUNDAMENTAL para aposentadoria por idade urbana**. Aplica a tabela do art. 142 (carência progressiva) para filiados ANTES de 24/07/1991, independentemente de perda da qualidade de segurado.
 
-Combinação com Súmula 8 (TRU 3) e Súmula 416/STJ + Tema 1340/STJ = paradigma sólido para segurados antigos que reingressaram.
+Combinação com Súmula 8 (TRU 3) e Súmula 416/STJ = paradigma sólido para segurados antigos que reingressaram (auditoria 03/10/2026, retirado o Tema 1340/STJ).
 
 Cruza com `aposentadoria-idade-hibrida` e `periodo-graca-qualidade-segurado`.
 
@@ -411,7 +411,7 @@ Processos 0000147-18.2015.4.03.9300, 0000148-03.2015.4.03.9300, 0000149-85.2015.
 
 Reflexo prático. Renda per capita ATÉ 1/2 SM = presunção de miserabilidade que o INSS deve infirmar. Renda per capita ACIMA de 1/2 SM = a parte deve comprovar a miserabilidade por critérios subjetivos.
 
-CONFRONTO com Lei 13.846/2019. A lei posteriormente fixou 1/4 SM como critério objetivo. ATENÇÃO ao tempus regit actum. Para requerimentos anteriores à Lei 13.846/2019, vigora o critério de 1/2 SM da Súmula 21. Para requerimentos posteriores, o critério legal é 1/4 SM com possibilidade de flexibilização (combinar com Súmula 4 TRU 3 + Tema 640/STJ) (auditoria 03/10/2026).
+CONFRONTO com o art. 20, §3º, da Lei 8.742/1993. O critério legal de 1/4 SM está na lei desde a redação original de 1993. A Lei 13.846/2019 não o alterou e apenas incluiu o §12 (inscrição no CPF e no CadÚnico), de modo que não serve de marco temporal. A Súmula 21 relativiza o critério legal com a presunção relativa até 1/2 SM (combinar com Súmula 4 TRU 3 + Tema 640/STJ) (auditoria 03/10/2026).
 
 Cruza com `base-bpc-renda-per-capita-miserabilidade`, `bpc-renda-grupo-familiar`, `analise-bpc-loas`.
 

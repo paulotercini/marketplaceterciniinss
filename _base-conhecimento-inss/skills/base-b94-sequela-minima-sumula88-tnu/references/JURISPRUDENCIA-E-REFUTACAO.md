@@ -2,15 +2,15 @@
 
 ## 1. Precedentes relevantes
 
-### Tema 201 TNU
+### Tema 201 TNU (tese adversa)
 
-Sequela mínima admitida.
+Tese. "O contribuinte individual não faz jus ao auxílio-acidente, diante de expressa exclusão legal." Não trata de sequela mínima (auditoria 03/10/2026). Caminho do segurado. Provar que, na data do acidente, a categoria real era de empregado, doméstico, avulso ou segurado especial (art. 18, §1º, da Lei 8.213/91).
 
 Fonte oficial em https://www.cjf.jus.br
 
 ### Súmula 88 TNU
 
-Exemplificativo.
+Sequela mínima admitida. A limitação, ainda que leve, para a atividade habitual enseja o B94, em linha com o Tema 416 STJ (auditoria 03/10/2026).
 
 ### Súmula 89 TNU
 
@@ -40,7 +40,7 @@ Fonte oficial em https://www.in.gov.br
 
 Argumento adversário. Severidade.
 
-Refutação. Tema 201 TNU admite mínima.
+Refutação. Súmula 88 TNU e Tema 416 STJ admitem a sequela mínima (auditoria 03/10/2026).
 
 ### Argumento 2 — Sem severidade
 
@@ -112,7 +112,7 @@ IBDP.
 
 Primeiro, perícia técnica.
 
-Segundo, fundamentação Tema 201 TNU.
+Segundo, fundamentação na Súmula 88 TNU e no Tema 416 STJ (auditoria 03/10/2026).
 
 Terceiro, recurso ou ação.
 
@@ -124,7 +124,7 @@ Sexto, integração com SB.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 201 TNU.
+Acompanhar o Tema 201 TNU apenas como tese adversa ao contribuinte individual (auditoria 03/10/2026).
 
 Revalidar Súmulas 88 e 89.
 

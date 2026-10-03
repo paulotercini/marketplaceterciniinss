@@ -34,7 +34,7 @@ INSS aplica indicador sem fundamentação. Cabe impugnação.
 
 ## 9. Cenário 8 — Aposentadoria por idade FBR
 
-Carência de 180 contribuições. Idade de 62 anos para mulher, exigida desde 2023 também na transição (art. 18, §1º, e art. 19 da EC 103), e 65 para homem (auditoria 03/10/2026).
+Carência de 180 contribuições. Idade de 62 anos para mulher, exigida desde 2023 também na transição (art. 18, §1º, e art. 19 da EC 103), e 65 para homem. O homem filiado após a EC 103 precisa de 20 anos de tempo de contribuição (art. 19) (auditoria 03/10/2026).
 
 ## 10. Cenário 9 — Pensão por morte FBR
 

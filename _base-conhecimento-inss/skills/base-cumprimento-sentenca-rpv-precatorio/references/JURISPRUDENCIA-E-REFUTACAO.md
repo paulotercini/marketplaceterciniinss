@@ -14,9 +14,9 @@ Benefícios previdenciários.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 96 STJ
+### Prescrição em cumprimento
 
-Prescrição em cumprimento.
+Sem precedente vinculante conferido nesta base (auditoria 03/10/2026, retirado o Tema 96/STJ, que trata de crédito tributário).
 
 ### Tema 368 STF
 

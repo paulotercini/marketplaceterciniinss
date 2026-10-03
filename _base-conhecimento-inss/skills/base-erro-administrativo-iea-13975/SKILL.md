@@ -89,7 +89,7 @@ Em PCD, dada a prioridade legal (Lei 13.146/2015, art. 9º, VII) e a natureza al
 
 ## 6. Eixos pró-segurado
 
-A autotutela é poder-dever, não faculdade. O art. 53 da Lei 9.784/1999 e a Súmula 473 do STF impõem à Administração anular ato eivado de vício de legalidade. A omissão é ilegal por si.
+A autotutela é poder-dever, não faculdade. O art. 53 da Lei 9.784/1999 impõe à Administração anular ato eivado de vício de legalidade, e a Súmula 473 do STF reconhece esse poder (auditoria 03/10/2026). A omissão é ilegal por si.
 
 A vedação de requerimento externo de IEA não exime a Administração do dever de autotutela. O advogado provoca as autoridades nominalmente legitimadas, que têm o poder-dever de abrir a tarefa.
 

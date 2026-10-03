@@ -121,9 +121,9 @@ FAVORÁVEL ao segurado. Aplicação por analogia à acumulação de duas aposent
 
 ### 5.6. Tema 627/STF (RE 658.999) [NÃO CONFIRMADO] (auditoria 03/10/2026)
 
-Pleno. Julgamento 14/05/2014.
+Pleno.
 
-Tese. "Em caso de cargos constitucionalmente acumuláveis, não se aplica a proibição de acumulação de aposentadorias e pensões".
+Tese, em paráfrase a conferir no acórdão do RE 658.999: em cargos constitucionalmente acumuláveis, não se aplica a proibição de acumulação de aposentadorias e pensões [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Decisão por unanimidade.
 

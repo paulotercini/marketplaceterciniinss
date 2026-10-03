@@ -8,7 +8,7 @@ Lei 8.213/91, art. 60. Regula data de início do benefício (DIB). Para segurado
 
 Lei 8.213/91, art. 60, §1º. Para todo segurado, se o requerimento ocorrer após 30 dias do afastamento, a DIB é a DER; dentro desse prazo, vale o caput (auditoria 03/10/2026).
 
-Lei 8.213/91, art. 60, §11-A. Introduzido para viabilizar o regime de análise documental com parecer de verossimilhança. Acionar `analise-documental-incapacidade`.
+Lei 8.213/91, art. 60, §11-A. Permite o exame médico-pericial por telemedicina ou por análise documental, conforme regulamento (auditoria 03/10/2026). Acionar `analise-documental-incapacidade`.
 
 Lei 8.213/91, art. 26, II. Isenção de carência para acidente de qualquer natureza, acidente de trabalho e doenças listadas no art. 151.
 

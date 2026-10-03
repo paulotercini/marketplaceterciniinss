@@ -8,9 +8,9 @@ Devolução obrigatória com teto de 30 por cento (auditoria 25/07/2026, corte c
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Tema 1009 STJ
+### Devolução na tutela antecipada previdenciária
 
-Devolução em tutela antecipada previdenciária.
+Rege-se pelo Tema 692/STJ, acima (auditoria 03/10/2026, retirado o Tema 1009/STJ, que trata de servidor público).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -72,7 +72,7 @@ Refutação. Documentos anexados e tese consolidada conferem probabilidade. Art.
 
 Argumento adversário. Art. 300 §3º CPC.
 
-Atenção (auditoria 25/07/2026). O Tema 692/STJ impõe a devolução na tutela revogada (teto de 30 por cento); a defesa real está nas exceções (BPC, Tema 979/STJ, Tema 1034/STJ) e no caráter alimentar para modular descontos.
+Atenção (auditoria 25/07/2026). O Tema 692/STJ impõe a devolução na tutela revogada (teto de 30 por cento); a tese alcança também o BPC, e o caminho do segurado é a distinção, quando o valor não decorreu da tutela revogada (auditoria 03/10/2026).
 
 ### Argumento 3 — Ausência de perigo de dano
 
@@ -92,11 +92,11 @@ Argumento adversário. Tese não firmada.
 
 Refutação. Temas 1102 STF e 327 STF firmados. Art. 311 II CPC.
 
-### Argumento 6 — Súmula 729 STF veda
+### Argumento 6 — ADC 4 veda
 
-Argumento adversário. Cabeça Fazenda.
+Argumento adversário. A decisão na ADC 4 veda tutela contra a Fazenda.
 
-Refutação. Modulada. Alimentar excepciona.
+Refutação. A Súmula 729 STF afasta a ADC 4 da antecipação de tutela em causa previdenciária (auditoria 03/10/2026).
 
 ### Argumento 7 — Estabilização inaplicável
 
@@ -108,7 +108,7 @@ Refutação. Cabível em tutela antecedente art. 303 se INSS não recorrer.
 
 Argumento adversário. Enriquecimento sem causa.
 
-Atenção (auditoria 25/07/2026). Devolução devida pelo Tema 692/STJ; invocar as exceções reais (BPC, Tema 979/STJ, Tema 1034/STJ).
+Atenção (auditoria 25/07/2026). Devolução devida pelo Tema 692/STJ, que alcança também o BPC; o segurado invoca a distinção, quando o valor não decorreu da tutela revogada, e o teto de 30% (auditoria 03/10/2026).
 
 ### Argumento 9 — Suspensão de segurança
 
@@ -156,6 +156,6 @@ Sexto, consolidar com julgamento final.
 
 Acompanhar a jurisprudência do STJ sobre a estabilização do art. 304 do CPC (auditoria 03/10/2026).
 
-Revalidar modulação da Súmula 729 STF.
+Revalidar a Súmula 729 STF, favorável ao segurado (auditoria 03/10/2026).
 
 Acompanhar o Tema 692/STJ em cumprimento.

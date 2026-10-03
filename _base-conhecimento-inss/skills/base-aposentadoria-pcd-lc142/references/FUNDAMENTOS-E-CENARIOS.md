@@ -8,7 +8,7 @@ LC 142/2013.
 
 Decreto 8.145/2013.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 (auditoria 03/10/2026).
+Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 Lei 15.176/2025 (fibromialgia).
 
@@ -58,7 +58,7 @@ Em ausência de documentação, acionar `formacao-documentacao-did-pcd`.
 
 Aposentadoria por tempo PCD. Com DER após 13/11/2019, média simples de 100% dos salários desde 07/1994 (Decreto 3.048/99, art. 70-J c/c art. 32); os 80% maiores valem só para direito adquirido. Fator previdenciário só se elevar a renda (LC 142, art. 9º, I) (auditoria 03/10/2026). Valor equivalente a 100% da média.
 
-Aposentadoria por idade PCD. 70% da média + 1% por grupo de 12 contribuições adicionais. Verificar regra vigente e Memorando-Circular da DIRBEN.
+Aposentadoria por idade PCD. 70% da média + 1% por grupo de 12 contribuições mensais, até o máximo de 30% (art. 8º, II, da LC 142/2013) (auditoria 03/10/2026). Verificar regra vigente e Memorando-Circular da DIRBEN.
 
 ## 8. Conversão
 

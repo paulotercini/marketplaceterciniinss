@@ -10,7 +10,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 609 STJ
 
-Indenização de contribuições para tempo rural contado reciprocamente.
+Tese adversa. O tempo rural anterior à Lei 8.213/91 dá direito à certidão, mas só se computa no regime estatutário com a prova do pagamento das contribuições. Caminho do segurado: no próprio RGPS esse tempo conta sem indenização, salvo para carência (art. 55, §2º, da Lei 8.213/91) (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -72,7 +72,7 @@ Refutação. Demonstrar desaverbação prévia ou ausência de sobreposição co
 
 Argumento adversário. Tempo rural pós-1991 sem recolhimento.
 
-Refutação. Tema 609 STJ. Possível indenização. Acionar `indenizacao-contribuicoes-atraso`.
+Refutação. Possível indenização das contribuições (auditoria 03/10/2026; o Tema 609 STJ, antes citado aqui, trata do tempo rural anterior a 1991 e é adverso). Acionar `indenizacao-contribuicoes-atraso`.
 
 ### Argumento 5 — Vedação de conversão especial no RPPS
 

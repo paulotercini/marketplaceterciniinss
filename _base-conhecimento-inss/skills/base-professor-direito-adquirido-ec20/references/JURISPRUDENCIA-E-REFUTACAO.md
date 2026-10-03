@@ -62,7 +62,7 @@ Refutação. ADI 3772 e Lei 11.301.
 
 ### Argumento 5 — Universitário também goza
 
-Argumento adversário. Ampliativo.
+Argumento favorável ao segurado (auditoria 03/10/2026). Ampliativo.
 
 Sem refutação: o argumento procede e favorece o segurado, pois a IN 128, art. 251, §1º, estende o acréscimo ao professor, inclusive o universitário (auditoria 03/10/2026).
 
@@ -118,7 +118,7 @@ Primeiro, prova do magistério pré-98.
 
 Segundo, cálculo do bônus.
 
-Terceiro, fundamentação com Súmulas 359 e 726.
+Terceiro, fundamentação com a Súmula 359 do STF. A Súmula 726 do STF, que exclui o tempo fora da sala de aula, é tese adversa. O caminho do segurado é a ADI 3772, que a superou para direção, coordenação e assessoramento pedagógico na educação básica (auditoria 03/10/2026).
 
 Quarto, comparação com EC 103.
 
@@ -128,7 +128,7 @@ Sexto, requerimento e recurso.
 
 ## 6. Diligência de atualização
 
-Acompanhar Súmula 726 STF.
+Acompanhar a Súmula 726 STF como tese adversa, superada pela ADI 3772 para direção, coordenação e assessoramento pedagógico na educação básica (auditoria 03/10/2026).
 
 Revalidar ADI 3772.
 

@@ -10,7 +10,7 @@ Segurado recebe benefício por liminar, mas sentença improcedente reforma. O Te
 
 ## 3. Cenário 2 — Erro administrativo do INSS
 
-INSS concede benefício e depois descobre erro de cálculo ou enquadramento. Tema 979/STJ veda devolução.
+INSS concede benefício e depois descobre erro de cálculo ou enquadramento. O Tema 979/STJ admite a cobrança, com desconto de até 30%, salvo se o segurado comprovar boa-fé objetiva, que é a prova a produzir (auditoria 03/10/2026).
 
 ## 4. Cenário 3 — Acúmulo indevido
 
@@ -26,9 +26,9 @@ Segurado recebe auxílio-doença e mantém atividade incompatível. Cabe anális
 
 ## 7. Cenário 6 — Aposentadoria com tempo descomputado
 
-Tempo computado equivocadamente pelo INSS. Tema 979/STJ veda devolução.
+Tempo computado equivocadamente pelo INSS. Se houve erro administrativo, o Tema 979/STJ admite a cobrança, salvo boa-fé objetiva comprovada pelo segurado, com desconto de até 30% (auditoria 03/10/2026).
 
-## 8. Cenário 7 — Reforma em embargos infringentes
+## 8. Cenário 7 — Reforma na técnica de ampliação do colegiado do art. 942 do CPC (auditoria 03/10/2026)
 
 Sentença favorável reformada em segundo grau. Tema 692/STJ aplicável, tese adversa: devolução com desconto de até 30% do benefício. O segurado exige esse teto e a prova da origem de cada parcela (auditoria 03/10/2026).
 

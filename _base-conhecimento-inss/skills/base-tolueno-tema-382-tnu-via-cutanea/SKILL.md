@@ -117,7 +117,7 @@ Quando há contato cutâneo com tolueno (como em sapateiros, frentistas, polidor
 
 Tese. O limite de tolerância da NR-15 (78 ppm) está desatualizado. A ACGIH recomenda 20 ppm desde 2017. Em medidas acima de 20 ppm, há nocividade comprovada.
 
-Aplicação subsidiária. Quando o argumento principal (Anexo 13/cutânea) não for aceito, sustentar que o limite real de nocividade é 20 ppm conforme recomendação ACGIH atualizada.
+Aplicação subsidiária. Como o Tema 382/TNU afastou o enquadramento qualitativo pela via cutânea (Anexo 13), na análise quantitativa do Anexo 11 cabe sustentar que o limite real de nocividade é 20 ppm conforme recomendação ACGIH atualizada (auditoria 03/10/2026).
 
 ### 6.3. Argumento 3. Co-exposição com outros aromáticos (benzeno, xileno, etilbenzeno)
 

@@ -26,7 +26,7 @@ O Tema 382 rejeitou essa tese, que não pode ser usada em peça (auditoria 03/10
 
 ## 2. Outros precedentes da TNU
 
-### 2.1. Tema 174/TNU
+### 2.1. Súmula 9/TNU e Tema 555/STF
 
 Súmula 9/TNU, específica do ruído e aplicável aqui só por analogia, e Tema 555/STF aplicáveis ao EPI (auditoria 03/10/2026).
 
@@ -100,11 +100,11 @@ Refutação. O tolueno está no Anexo 11 (78 ppm) e no Anexo 13 (absorção cut�
 
 Onde há contato cutâneo, aplica-se o Anexo 13 com enquadramento qualitativo.
 
-### 6.2. Tese 2 do INSS. "O Tema 382/TNU é restrito ao benzeno"
+### 6.2. Tese 2 do INSS. "O Tema 382/TNU afasta o enquadramento qualitativo do tolueno pela via cutânea"
 
 Refutação superada. O Tema 382 trata do próprio tolueno e rejeitou o enquadramento qualitativo pela via cutânea (auditoria 03/10/2026).
 
-Distinguishing impróprio.
+O caminho do segurado é o da seção 1.2, com concentração acima do limite do Anexo 11, co-exposição a benzeno ou ineficácia do EPI (auditoria 03/10/2026).
 
 ### 6.3. Tese 3 do INSS. "EPI marcado como eficaz no PPP descaracteriza"
 
@@ -194,11 +194,11 @@ Implantação imediata do benefício após reconhecimento dos requisitos.
 
 ### 9.1. Cabimento
 
-Quando o INSS indeferir requerimento administrativo de aposentadoria especial com base em interpretação restritiva do Tema 382/TNU.
+Quando o INSS indeferir requerimento administrativo de aposentadoria especial invocando o Tema 382/TNU sem examinar a prova quantitativa do Anexo 11, a co-exposição a benzeno ou a ineficácia do EPI (auditoria 03/10/2026).
 
 ### 9.2. Direito líquido e certo
 
-Reconhecimento do tolueno como agente qualitativo do Anexo 13 da NR-15.
+Reconhecimento da especialidade por prova pré-constituída de concentração acima do limite do Anexo 11 ou de co-exposição a benzeno, pois o Tema 382/TNU afastou o enquadramento qualitativo pela via cutânea (auditoria 03/10/2026).
 
 ### 9.3. Pedido
 
@@ -216,7 +216,7 @@ Concessão da aposentadoria especial. Subsidiariamente, anulação da decisão a
 
 ### 10.3. Hugo Goes
 
-"Manual de Direito Previdenciário". Tolueno como agente do Anexo 13. Aplicação do Tema 382/TNU por analogia.
+"Manual de Direito Previdenciário". Tolueno como agente do Anexo 13, posição que o Tema 382/TNU rejeitou para a via cutânea (auditoria 03/10/2026).
 
 ### 10.4. Fábio Zambitte Ibrahim
 

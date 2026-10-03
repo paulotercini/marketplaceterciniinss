@@ -47,7 +47,7 @@ Em matéria de alçada exclusiva, mesmo sem recurso especial, cabem PUJ (art. 12
 
 ### Observância de Precedentes (Art. 109)
 
-**Obrigatórios** — Tratados, leis, decretos, atos normativos ministeriais, súmulas vinculantes aprovadas pelo Ministro, enunciados do CP.
+**Obrigatórios** — Tratados, leis, decretos, atos normativos ministeriais, súmulas vinculantes aprovadas pelo Ministro, enunciados do CP, decisões do STF transitadas em julgado em controle concentrado (ADI, ADC e ADPF) e súmulas vinculantes do STF (art. 109, §2º) (auditoria 03/10/2026).
 **Facultativos** — STF em repercussão geral transitada; STJ em repetitivo transitado sem RE pendente; demais decisões dos Tribunais Superiores.
 
 A vedação do art. 109, caput, impede as UJs de afastarem lei ou decreto vigente. A violação dessa regra é hipótese de Revisão de Acórdão por violação literal de lei ou decreto (art. 116, I) (auditoria 03/10/2026).

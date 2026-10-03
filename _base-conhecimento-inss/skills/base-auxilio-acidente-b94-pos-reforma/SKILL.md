@@ -32,7 +32,7 @@ Lei 8.213/91, art. 86, §1º. RMI de 50% do salário de benefício. Caráter ind
 
 Lei 8.213/91, art. 86, §2º. DIB a partir do dia seguinte à cessação do B31 que originou a sequela.
 
-Lei 8.213/91, art. 86, §2º (redação da MP 1.596-14/97). Pagamento até a véspera do início de qualquer aposentadoria ou até o óbito.
+Lei 8.213/91, art. 86, §1º (redação da MP 1.596-14/97). Pagamento até a véspera do início de qualquer aposentadoria ou até o óbito (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 31. Integração do B94 ao salário-de-contribuição para fins de cálculo de outros benefícios.
 
@@ -168,7 +168,7 @@ Quinto, segurado com B94 concedido com RMI equivocada. Cabe revisão para inclui
 
 Sexto, segurado com redução auditiva (art. 86, §4º, da Lei 8.213/91). Súmula 44 STJ e Tema 22 STJ admitem o B94 mesmo abaixo do grau mínimo regulamentar de disacusia, desde que comprovados nexo e redução real (auditoria 03/10/2026, no lugar do Tema 322 TNU e da Súmula 44 TNU).
 
-Sétimo, segurado com B94 cessado indevidamente antes da aposentadoria. Art. 86, §2º. Cessação apenas pela aposentadoria ou óbito. Restabelecimento cabível.
+Sétimo, segurado com B94 cessado indevidamente antes da aposentadoria. Art. 86, §1º. Cessação apenas pela aposentadoria ou óbito (auditoria 03/10/2026). Restabelecimento cabível.
 
 Oitavo, segurado com B94 aguardando período de graça. PUIL 5000733 do TNU sobre período de graça em B94 (aplicar com cautela, verificar tese definitiva em `precedentes-previdenciarios`).
 
@@ -217,7 +217,7 @@ Segundo, RMI do B94 é de 50% do salário de benefício, com caráter indenizat�
 
 Terceiro, a vedação da acumulação com aposentadoria vige desde 11/11/1997 (MP 1.596-14, convertida na Lei 9.528/97). Só há direito adquirido quando a lesão incapacitante E a aposentadoria são anteriores a 11/11/1997 (Súmula 507 STJ).
 
-Quarto, o B94 cessa apenas com a aposentadoria ou o óbito do segurado (art. 86, §2º). Cessações intermediárias são impugnáveis.
+Quarto, o B94 cessa apenas com a aposentadoria ou o óbito do segurado (art. 86, §1º; auditoria 03/10/2026). Cessações intermediárias são impugnáveis.
 
 ## Fungibilidade aplicável
 

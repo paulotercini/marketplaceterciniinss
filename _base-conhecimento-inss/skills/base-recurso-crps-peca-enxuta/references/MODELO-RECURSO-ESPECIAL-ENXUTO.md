@@ -33,11 +33,11 @@ ordinário, em matéria fora da alçada exclusiva (art. 89, §3º), e é cabíve
 
 [Escolher UMA hipótese e demonstrar com clareza.]
 
-OPÇÃO 1 (Divergência entre Câmaras).
-Acórdão paradigma. [identificação, data, Câmara].
-Tese divergente. [transcrição literal da tese contrária].
-Tese do acórdão recorrido. [transcrição literal da tese aplicada].
-Demonstração da divergência. [análise objetiva da contrariedade].
+OPÇÃO 1 (Falta de fundamentação ou de análise da documentação e dos pedidos, art. 91, §1º, I e II) (auditoria 03/10/2026).
+Ponto não analisado. [documento, pedido ou alegação, com folha dos autos].
+Trecho do acórdão recorrido. [transcrição literal].
+Relevância do ponto. [efeito sobre o resultado do julgamento].
+Demonstração do vício. [análise objetiva da falta de fundamentação ou de análise].
 
 OPÇÃO 2 (Contrariedade a Enunciado vinculante).
 Enunciado afrontado. [número/CRPS, transcrição literal].

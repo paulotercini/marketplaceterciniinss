@@ -50,9 +50,9 @@ Duração razoável.
 
 Instrução administrativa.
 
-### Tema 394 STJ
+### Pagamento pretérito no MS
 
-Pagamento pretérito.
+Segue as Súmulas 269 e 271 STF (auditoria 03/10/2026, retirado o Tema 394/STJ, que trata de depósito judicial e IRPJ).
 
 ## 5. Cenários pró-segurado
 

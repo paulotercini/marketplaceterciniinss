@@ -54,7 +54,7 @@ Petição recursal CRPS pró-segurado segue estrutura mínima de 4 seções, cad
 
 Indicar data de ciência, prazo recursal (30 dias para ordinário, etc.), data de protocolo. Confirmar legitimidade e interesse.
 
-Modelo. "A decisão impugnada foi cientificada em DD/MM/AAAA conforme [protocolo/extrato/aviso]. O presente recurso é apresentado em DD/MM/AAAA, no prazo de 30 dias do art. 126 da Lei 8.213/91. O segurado tem legitimidade e interesse na reforma."
+Modelo. "A decisão impugnada foi cientificada em DD/MM/AAAA conforme [protocolo/extrato/aviso]. O presente recurso é apresentado em DD/MM/AAAA, no prazo de 30 dias do art. 77 do RICRPS (Portaria MPS 125/2026), em recurso de competência do CRPS (art. 126, I, da Lei 8.213/91). O segurado tem legitimidade e interesse na reforma." (auditoria 03/10/2026)
 
 ### Seção 2 - Dos Fatos Relevantes (3 a 5 parágrafos cronológicos)
 
@@ -161,7 +161,7 @@ Prazo. 30 dias da ciência do acórdão; erro material a qualquer tempo (art. 92
 
 Forma. Peça MUITO ENXUTA. Indica o vício e propõe o saneamento.
 
-ALERTA TÉCNICO CRÍTICO. A contradição que autoriza embargos de declaração é EXCLUSIVAMENTE a contradição INTERNA ao próprio julgado, entre suas premissas, fundamentos e dispositivo. NÃO se admite embargos por contradição EXTERNA, ou seja, contradição entre o decidido e a prova dos autos, a jurisprudência divergente, a tese da parte ou a legislação invocada. O inconformismo com a conclusão do julgado se enfrenta com recurso especial (REA à CAJ), não com embargos. Embargos opostos com fundamento em contradição externa são rejeitados como manifestamente protelatórios e podem caracterizar litigância de má-fé. Detalhamento em `references/CONTRADICAO-INTERNA-EXTERNA-ED.md`.
+ALERTA TÉCNICO CRÍTICO. A contradição que autoriza embargos de declaração é EXCLUSIVAMENTE a contradição INTERNA ao próprio julgado, entre suas premissas, fundamentos e dispositivo. NÃO se admite embargos por contradição EXTERNA, ou seja, contradição entre o decidido e a prova dos autos, a jurisprudência divergente, a tese da parte ou a legislação invocada. O inconformismo com a conclusão do julgado se enfrenta com recurso especial (REA à CAJ), não com embargos. Embargos opostos com fundamento em contradição externa são rejeitados, porque o art. 92, II, do RICRPS define contradição como a incompatibilidade entre a decisão e os seus fundamentos. Novos embargos que repitam fundamentos já apreciados são considerados protelatórios e não interrompem os prazos (art. 92, §10) (auditoria 03/10/2026). Detalhamento em `references/CONTRADICAO-INTERNA-EXTERNA-ED.md`.
 
 ### Agravo Interno (art. 93 RICRPS)
 
@@ -173,13 +173,13 @@ Prazo. 30 dias da ciência (art. 93, §1º).
 
 Cabimento. Arts. 121 e 122 RICRPS. Quando houver divergência na interpretação do direito entre Câmaras de Julgamento, ou entre Juntas em matéria de alçada exclusiva. Contrariedade a Enunciado é caso de Reclamação ao Pleno (art. 123) (auditoria 03/10/2026).
 
-Endereçamento. Conselho Pleno.
+Endereçamento. Presidência da Unidade Julgadora que proferiu o acórdão (art. 121). Admitido, o pedido segue à Presidência do Conselho Pleno para distribuição (art. 122, §3º) (auditoria 03/10/2026).
 
 ### Reclamação ao Pleno
 
 Cabimento. Decisão da CAJ ou JR contrária a Enunciado vinculante do Conselho Pleno.
 
-Endereçamento. Conselho Pleno.
+Endereçamento. Presidência da Unidade Julgadora que proferiu o acórdão (art. 123). Admitida, a Reclamação segue ao Conselho Pleno para distribuição (art. 123, §2º, II) (auditoria 03/10/2026).
 
 ## INTEGRAÇÃO COM OUTRAS SKILLS
 
