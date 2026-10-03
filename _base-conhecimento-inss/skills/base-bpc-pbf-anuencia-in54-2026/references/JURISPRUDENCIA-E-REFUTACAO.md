@@ -24,31 +24,25 @@ A IN 54/2026, ao expor o segurado vulnerável ao risco de duplo prejuízo (perda
 
 ## 2. Jurisprudência do STJ aplicável
 
-### 2.1. Tema 979/STJ (REsp 1.401.560)
+### 2.1. Tema 979/STJ (REsp 1.381.734/RN)
 
-Tese. Os valores de benefícios previdenciários recebidos a título precário, em razão de antecipação de tutela posteriormente revogada, são irrepetíveis quando recebidos de boa-fé.
+Tese. Pagamento indevido por erro administrativo, material ou operacional, sem interpretação errônea da lei pela Administração, é repetível, com desconto de até 30% do benefício, salvo quando o segurado comprova boa-fé objetiva (auditoria 03/10/2026). O caminho do segurado é provar essa boa-fé, mostrando que não lhe era possível perceber o pagamento indevido.
 
 Aplicação por analogia. Beneficiário do PBF que recebeu valores enquanto pendente análise do BPC não está obrigado a devolução.
 
-### 2.2. Tema 1034/STJ (REsp 1.734.974)
+### 2.2. Tema 692/STJ (REsp 1.401.560/MT)
 
-Tese. A irrepetibilidade alcança benefícios previdenciários recebidos por força de erro administrativo, quando o segurado age de boa-fé.
+Tese adversa. A reforma da decisão que antecipa a tutela obriga o autor a devolver os benefícios previdenciários ou assistenciais recebidos, com desconto de até 30% do benefício em manutenção (auditoria 03/10/2026). O caminho do segurado é a distinção, porque o desligamento do PBF pela IN 54/2026 não decorre de tutela revogada.
 
 Aplicação. Beneficiário do PBF que foi desligado por erro do procedimento da IN 54/2026 não pode ser penalizado.
 
 ### 2.3. Súmula 34/AGU
 
-"Não estão sujeitos à repetição os valores recebidos de boa-fé pelo segurado, em decorrência de erro operacional da Administração Pública".
+"Não estão sujeitos à repetição os valores recebidos de boa-fé pelo servidor público, em decorrência de errônea ou inadequada interpretação da lei por parte da Administração Pública." Esse é o trecho inicial do enunciado, que trata de servidor público. A redação dada pela Portaria AGU nº 516, de 19/09/2025, admite o ressarcimento em erro de cálculo ou operacional, salvo prova de boa-fé objetiva do servidor ou beneficiário. No BPC a súmula serve só por analogia, ao lado do Tema 979/STJ, e o segurado deve demonstrar que não tinha como constatar a falha (auditoria 03/10/2026).
 
 ## 3. Jurisprudência do STF
 
-### 3.1. ADI 5751 (ainda em construção)
-
-Discussão sobre a constitucionalidade da composição do grupo familiar e da renda no BPC.
-
-Aplicação por analogia. Restrições infralegais ao BPC têm sido afastadas pelo STF.
-
-### 3.2. RE 567.985 (Tema 27/STF)
+### 3.1. RE 567.985 (Tema 27/STF)
 
 Reconhecimento da inconstitucionalidade da limitação rígida do critério de renda no BPC sem flexibilização.
 
@@ -234,7 +228,7 @@ Estratégia de planejamento social com apoio do CRAS.
 
 `base-dano-moral-previdenciario` para o pedido de indenização.
 
-`base-devolucao-valores-irrepetibilidade-tema979-tema1034` para a vedação à devolução cumulativa.
+`base-devolucao-valores-irrepetibilidade-tema979-tema692` para a vedação à devolução cumulativa.
 
 `tema-1124-instrucao-administrativa` para a instrução administrativa.
 

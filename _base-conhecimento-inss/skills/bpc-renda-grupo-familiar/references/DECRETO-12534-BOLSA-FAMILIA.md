@@ -44,7 +44,7 @@ O BPC e o Bolsa Família atendem a funções distintas e complementares. Nenhum 
 
 ### 3. Conflito com Temas Vinculantes
 
-**Tema 312/STF** — O STF declarou a inconstitucionalidade por omissão parcial do art. 20, §3º da LOAS por excluir do cálculo de renda apenas o BPC de idoso (art. 34 do Estatuto do Idoso), quando deveria excluir também benefícios de valor mínimo de natureza previdenciária ou assistencial. O Decreto 12.534 vai na direção diametralmente oposta, incluindo na renda o que o STF mandou excluir.
+**Tema 312/STF** — O STF declarou a inconstitucionalidade por omissão parcial do parágrafo único do art. 34 do Estatuto do Idoso, que exclui do cálculo de renda apenas o BPC de idoso, quando deveria excluir também benefícios de valor mínimo de natureza previdenciária ou assistencial (auditoria 03/10/2026). O Decreto 12.534 vai na direção diametralmente oposta, incluindo na renda o que o STF mandou excluir.
 
 **Tema 27/STF** — O critério de ¼ do salário mínimo não é absoluto. A vulnerabilidade pode ser demonstrada por outros meios. O Decreto, ao incluir Bolsa Família na renda, pode levar a renda per capita para acima de ¼ SM sem que a família tenha efetivamente saído da miserabilidade.
 

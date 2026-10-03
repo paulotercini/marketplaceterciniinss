@@ -259,4 +259,4 @@ Conectar a sequela à atividade laboral concreta.
 
 Anexo III do Decreto 3.048/99 é exemplificativo (Súmulas 88 e 89/TNU + Tema 416/STJ).
 
-Sequela mínima admite B94 (Tema 201/TNU).
+Sequela mínima admite B94 (Súmula 88/TNU e Tema 416/STJ; auditoria 03/10/2026).

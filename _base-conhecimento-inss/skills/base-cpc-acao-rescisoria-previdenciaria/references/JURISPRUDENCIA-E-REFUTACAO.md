@@ -102,7 +102,7 @@ Refutação. Art. 966 prevê desconstituição.
 
 Argumento adversário. Rito sumário.
 
-Refutação. Enunciado 63 FONAJEF admite.
+Refutação. Tese adversa: o Enunciado 44 FONAJEF e o art. 59 da Lei 9.099/1995 vedam a rescisória no JEF. O caminho do segurado é o procedimento comum, com rescisória no TRF, art. 966 do CPC (auditoria 03/10/2026).
 
 ### Argumento 10 — Cumulação com revisão
 

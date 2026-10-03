@@ -140,13 +140,13 @@ Pelos precedentes catalogados, identifica-se um conjunto de teses estratégicas 
 - Tema 285/TNU (atualização CadÚnico retroativa).
 
 **Incapacidade.**
-- Tema 982/STJ (acréscimo 25% para todas aposentadorias).
+- Tema 982/STJ (acréscimo 25% para todas aposentadorias), superado pelo Tema 1095/STF, que restringe o acréscimo à aposentadoria por incapacidade permanente (auditoria 03/10/2026).
 - Tema 1013/STJ (recebimento conjunto trabalho e benefício retroativo).
 - Tema 220/TNU (gravidez de alto risco dispensa carência).
 - Tema 246/TNU (termo final perícia).
 - Tema 164/TNU (alta programada).
 - Tema 343/TNU (DII na data da perícia excepcional).
-- Tema 1083/STF (incapacidade preexistente).
+- Incapacidade preexistente com agravamento, art. 42, §2º, e art. 59, §1º, da Lei 8.213/91, sem tema vinculante catalogado (auditoria 03/10/2026, retirado o "Tema 1083/STF", ausente do catálogo STF; o Tema 1083/STJ trata de ruído aferido pelo NEN).
 
 **Honorários e juros.**
 - Tema 1050/STJ (base honorários não alterada por pagamento administrativo após citação).
@@ -202,8 +202,8 @@ A reference `ATUALIZACAO-STATUS-2026-06.md` consolida a verificação feita via 
 
 - Tema 30/TNU (cancelado em favor do Tema 692/STJ).
 - Tema 66/TNU (revisado pelo Tema 355).
-- Tema 338/TNU (cancelado em favor do Tema 255).
-- Tema 375/TNU (cancelado em favor do Tema 130).
+- Tema 338/TNU (afetado e pendente, conforme a Rcl 5000246-54.2026.4.90.0000, de 30/06/2026; não foi cancelado em favor do Tema 255) (auditoria 03/10/2026).
+- Tema 130/TNU (cancelado; vigente o Tema 375, PUIL 0077764-65.2008.4.01.3800, D.E. 26/06/2025) (auditoria 03/10/2026).
 - Tema 1066/STF (cancelado em 22/02/2021).
 
 ### Súmula CANCELADA com data corrigida

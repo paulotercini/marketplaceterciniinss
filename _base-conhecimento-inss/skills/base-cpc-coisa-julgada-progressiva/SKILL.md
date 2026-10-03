@@ -31,13 +31,13 @@ Fonte oficial em https://www.trf4.jus.br
 
 ### Tema 28 STF
 
-Execução provisória contra Fazenda.
+Precatório ou RPV da parte incontroversa e autônoma transitada em julgado (RE 1.205.530) [CONFERIDO] (https://portal.stf.jus.br/jurisprudenciaRepercussao/verAndamentoProcesso.asp?incidente=5684509&numeroProcesso=1205530&classeProcesso=RE&numeroTema=28) (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
 ### Súmula 729 STF
 
-Tutela contra Fazenda, modulação.
+Tutela contra Fazenda: a decisão na ADC 4 não se aplica à causa previdenciária (auditoria 03/10/2026).
 
 ### Tema 1030 STJ
 
@@ -85,7 +85,7 @@ Primeiro, necessário demonstrar que o capítulo é autônomo e que o recurso n�
 
 Segundo, INSS pode tentar argumentar que a apelação devolve integralmente. Refutar com art. 1.013 §1º CPC e IRDR 18.
 
-Terceiro, cumprimento provisório contra Fazenda é restrito. Tema 28/STF.
+Terceiro, cumprimento provisório contra Fazenda é restrito, mas a parte incontroversa e autônoma, já transitada em julgado, comporta precatório ou RPV (Tema 28/STF) [CONFERIDO] (auditoria 03/10/2026).
 
 Quarto, em JEF a dialeticidade é mais rigorosa. Súmula 284/STF.
 

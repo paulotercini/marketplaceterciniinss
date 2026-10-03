@@ -20,15 +20,15 @@ Aplicação pró-segurado. Preserva direito conforme regra vigente na DO.
 
 ### Tema 45 TNU
 
-Tese. Ex-cônjuge que recebia alimentos tem direito à pensão por morte em condições de dependência.
+Tese. É devida pensão por morte ao ex-cônjuge que não percebe alimentos, desde que comprovada dependência econômica superveniente à separação, demonstrada em momento anterior ao óbito (auditoria 03/10/2026). Quem recebia alimentos concorre pelo art. 76, §2º, da Lei 8.213/91.
 
 Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado. Inclui ex-cônjuge pensionista alimentícia.
 
-### Tema 15 TNU
+### Filho inválido (Lei 8.213/91, art. 16, I, e art. 77, §2º, II)
 
-Tese. Filho inválido mantém direito à pensão por morte além dos 21 anos.
+Regra legal, sem tema da TNU. Filho inválido mantém direito à pensão por morte além dos 21 anos; o Tema 15 TNU, antes citado aqui, trata de concubinato (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -36,7 +36,7 @@ Aplicação pró-segurado. Garante continuidade da pensão em caso de invalidez.
 
 ### Súmula 37 TNU
 
-Tese. A comprovação da invalidez do dependente para fins de manutenção da pensão deve considerar a invalidez em data anterior à maioridade.
+Tese. A pensão por morte, devida ao filho até os 21 anos de idade, não se prorroga pela pendência do curso universitário (auditoria 03/10/2026). Tese adversa ao filho estudante; o caminho é provar invalidez ou deficiência, que mantém a cota pelo art. 77, §2º, II.
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -44,7 +44,7 @@ Aplicação pró-segurado. Protege filho que se tornou inválido antes dos 21.
 
 ### Tema 81 TNU
 
-Tese. Sobre comprovação de união estável para fins de pensão por morte. Provas materiais podem ser complementadas por testemunhas.
+Tese. Contra os menores impúberes não corre o prazo do art. 74, II, da Lei n. 8.213/91, devendo a pensão por morte ser deferida a partir do óbito do instituidor (auditoria 03/10/2026). Para óbitos desde 18/01/2019 (MP 871/2019), o Tema 1421/STJ afasta a retroação quando o filho menor de 16 anos requer após 180 dias; é tese adversa, e o caminho é requerer dentro desse prazo.
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -52,7 +52,7 @@ Aplicação pró-segurado. Fortalece prova de união estável.
 
 ### Tema 148 TNU
 
-Tese. Sobre dependência econômica dos pais em relação ao filho falecido. Critérios objetivos.
+Tese. A perda da qualidade de segurado constitui óbice à concessão da pensão por morte quando o de cujus não chegou a preencher, antes de sua morte, os requisitos para obtenção de qualquer aposentadoria (auditoria 03/10/2026). Tese adversa; o caminho é provar a qualidade de segurado pelo período de graça ou que o instituidor já reunia os requisitos de alguma aposentadoria.
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -92,13 +92,13 @@ Refutação. Tema 81 TNU. Provas materiais podem ser complementadas por prova te
 
 Argumento adversário. Ex-cônjuge não tem direito à pensão após separação.
 
-Refutação. Tema 45 TNU. Ex-cônjuge que recebia alimentos tem direito à pensão. A dependência é mantida pela percepção dos alimentos.
+Refutação. Art. 76, §2º, da Lei 8.213/91. Ex-cônjuge que recebia alimentos concorre em igualdade com os dependentes do art. 16, I, e, sem alimentos, o Tema 45 TNU admite a pensão com prova de dependência econômica superveniente à separação (auditoria 03/10/2026). A dependência é mantida pela percepção dos alimentos.
 
 ### Argumento 4 — Filho maior sem invalidez atestada
 
 Argumento adversário. Filho maior de 21 anos sem invalidez não é dependente.
 
-Refutação. Tema 15 TNU e Súmula 37 TNU. Filho com invalidez ou deficiência mantém pensão além dos 21. A prova médica é fundamental. Acionar `aposentadoria-deficiencia` para conceito de deficiência.
+Refutação. Art. 16, I, e art. 77, §2º, II, da Lei 8.213/91 (auditoria 03/10/2026). Filho com invalidez ou deficiência mantém pensão além dos 21. A prova médica é fundamental. Acionar `aposentadoria-deficiencia` para conceito de deficiência.
 
 ### Argumento 5 — Menor sob guarda excluído por MP 1.523/96
 
@@ -110,13 +110,13 @@ Refutação. Tema 732/STJ, o menor sob guarda tem direito à pensão comprovada 
 
 Argumento adversário. A nova regra da EC 103/2019 reduziu a RMI para 50% + 10% por dependente.
 
-Refutação. A redução é constitucional mas exige aplicação correta. Direito adquirido preserva regra anterior para óbitos anteriores a 13/11/2019. Pensão acidentária (B93) não sofre redução (100%).
+Refutação. A redução é constitucional mas exige aplicação correta. Direito adquirido preserva regra anterior para óbitos anteriores a 13/11/2019. Na pensão acidentária (B93), a cota do art. 23 incide sobre aposentadoria-base de 100% da média (EC 103, art. 26, §3º, II) (auditoria 03/10/2026).
 
 ### Argumento 7 — Cessação pela duração da tabela
 
 Argumento adversário. Cônjuge jovem terá pensão por prazo limitado.
 
-Refutação. Cônjuge com 44 anos ou mais na DO tem pensão vitalícia. Cônjuge inválido mantém enquanto durar a invalidez. Cônjuge com filho menor pode pedir reanálise quando da maioridade do filho para reavaliação.
+Refutação. Cônjuge com 45 anos ou mais na DO tem pensão vitalícia em óbito desde 01/01/2021, e com 44 anos ou mais em óbito até 31/12/2020 (auditoria 03/10/2026). Cônjuge inválido mantém enquanto durar a invalidez. Cônjuge com filho menor pode pedir reanálise quando da maioridade do filho para reavaliação.
 
 ### Argumento 8 — Concubinato impuro não gera direito
 

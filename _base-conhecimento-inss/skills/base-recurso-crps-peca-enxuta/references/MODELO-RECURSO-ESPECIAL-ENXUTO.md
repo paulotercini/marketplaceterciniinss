@@ -1,6 +1,6 @@
 # Modelo de Recurso Especial ao CRPS - Versão Enxuta
 
-Modelo de recurso especial à Câmara de Julgamento (CAJ) do CRPS, pró-segurado, em padrão enxuto. Fundamentação normativa pura. Demonstração específica de uma das hipóteses do art. 91 do RICRPS.
+Modelo de recurso especial à Câmara de Julgamento (CAJ) do CRPS, pró-segurado, em padrão enxuto. Fundamentação normativa pura. Cabimento pelo art. 90 do RICRPS; pedido de anulação pelas hipóteses do art. 91, §1º (auditoria 03/10/2026).
 
 ## CABEÇALHO
 
@@ -15,29 +15,29 @@ Benefício nº [NB]
 Recorrente. [Nome do segurado], CPF [XXX.XXX.XXX-XX]
 ```
 
-## CORPO
+## CORPO (auditoria 03/10/2026)
 
 ```
 1. TEMPESTIVIDADE
 
 A intimação do acórdão recorrido ocorreu em DD/MM/AAAA. O presente
 recurso é apresentado em DD/MM/AAAA, dentro do prazo de 30 dias do
-art. 91 do RICRPS (Portaria MPS 125/2026).
+art. 77 do RICRPS (Portaria MPS 125/2026).
 
 
-2. CABIMENTO. HIPÓTESE DO ART. 91 DO RICRPS
+2. CABIMENTO. ART. 90 DO RICRPS
 
-O presente recurso especial fundamenta-se na hipótese do art. 91,
-inciso [I, II, III ou IV] do RICRPS, configurada conforme demonstração
-abaixo.
+O presente recurso especial ataca acórdão de Junta de Recursos em recurso
+ordinário, em matéria fora da alçada exclusiva (art. 89, §3º), e é cabível pelo art. 90 do RICRPS.
+[Se pedir anulação, indicar o inciso do art. 91, §1º, do RICRPS.]
 
 [Escolher UMA hipótese e demonstrar com clareza.]
 
-OPÇÃO 1 (Divergência entre Câmaras).
-Acórdão paradigma. [identificação, data, Câmara].
-Tese divergente. [transcrição literal da tese contrária].
-Tese do acórdão recorrido. [transcrição literal da tese aplicada].
-Demonstração da divergência. [análise objetiva da contrariedade].
+OPÇÃO 1 (Falta de fundamentação ou de análise da documentação e dos pedidos, art. 91, §1º, I e II) (auditoria 03/10/2026).
+Ponto não analisado. [documento, pedido ou alegação, com folha dos autos].
+Trecho do acórdão recorrido. [transcrição literal].
+Relevância do ponto. [efeito sobre o resultado do julgamento].
+Demonstração do vício. [análise objetiva da falta de fundamentação ou de análise].
 
 OPÇÃO 2 (Contrariedade a Enunciado vinculante).
 Enunciado afrontado. [número/CRPS, transcrição literal].
@@ -62,8 +62,8 @@ fatos já consolidados em primeira instância.]
 
 4.1. DA TESE PRÓ-SEGURADO CONFORME A NORMA APLICÁVEL
 
-[Mesma estrutura do recurso ordinário, mas centrada na hipótese de
-cabimento do recurso especial. Indicar a tese normativa correta e o
+[Mesma estrutura do recurso ordinário, mas centrada nos fundamentos
+do acórdão da JR (auditoria 03/10/2026). Indicar a tese normativa correta e o
 fundamento legal específico.]
 
 
@@ -81,8 +81,8 @@ reconhecer ao recorrente o direito ao [benefício] desde a DER de
 DD/MM/AAAA.
 
 Caso a Câmara entenda pelo desprovimento, requer expressamente o
-prequestionamento da matéria de direito federal para fins de eventual
-recurso administrativo subsequente.
+pronunciamento sobre cada fundamento deste recurso, para fins de eventuais
+embargos de declaração por omissão (art. 92, III, do RICRPS) (auditoria 03/10/2026).
 
 
 [Cidade], [data].
@@ -95,24 +95,24 @@ OAB/SP 331.110
 
 ## INSTRUÇÕES OPERACIONAIS
 
-**Tamanho final esperado.** 5 a 8 páginas. Recurso especial exige demonstração técnica da hipótese de cabimento, então é levemente mais longo que o ordinário.
+**Tamanho final esperado.** 5 a 8 páginas. O recurso especial não depende de hipótese de cabimento, pois cabe das decisões de JR em recurso ordinário (art. 90 do RICRPS) (auditoria 03/10/2026).
 
-**Diferença chave.** O recurso especial precisa COMPROVAR uma das 4 hipóteses do art. 91 do RICRPS. A simples discordância com a decisão da JR não é hipótese de cabimento.
+**Diferença chave.** O recurso especial cabe contra qualquer acórdão de JR em recurso ordinário (art. 90 do RICRPS), salvo matéria de alçada exclusiva (art. 89, §3º) e decisão de diligência (art. 90, §2º). Se o pedido for de anulação, indicar uma das 8 hipóteses do art. 91, §1º, nenhuma delas de divergência (auditoria 03/10/2026).
 
 **Cuidado especial.**
 
-1. Identificar com PRECISÃO a hipótese de cabimento.
-2. Citar o paradigma (acórdão divergente, enunciado, parecer ou súmula) com transcrição literal.
+1. Se o pedido for de anulação, identificar com PRECISÃO a hipótese do art. 91, §1º (auditoria 03/10/2026).
+2. Citar o paradigma (enunciado, parecer ou súmula vinculante) com transcrição literal (auditoria 03/10/2026).
 3. Demonstrar a CONTRARIEDADE de forma objetiva, sem retórica.
 4. Mostrar que a tese pró-segurado encontra fundamento no normativo.
 
 **Vedações específicas.**
 
-- Vedado utilizar recurso especial como segundo recurso ordinário. Se a tese é só de reexame fático, o recurso será inadmitido.
-- Vedado usar jurisprudência judicial como paradigma. Os paradigmas válidos no CRPS são acórdãos do próprio CRPS, enunciados, súmulas e pareceres vinculantes.
+- Vedado repetir o recurso ordinário: atacar os fundamentos do acórdão da JR. O reexame de fatos e provas é admitido, pois o recurso devolve o conhecimento integral da causa (art. 90, §1º) (auditoria 03/10/2026).
+- Jurisprudência judicial não é vedada. O art. 109 do RICRPS manda observar as decisões do STF em controle concentrado, transitadas em julgado, e as súmulas vinculantes (§2º), e permite observar os temas de repercussão geral transitados em julgado, os repetitivos, IAC e IRDR do STJ e as súmulas dos dois tribunais, nas condições dos §§3º e 4º. Acórdão do próprio CRPS como paradigma de divergência é requisito do Pedido de Uniformização de Jurisprudência (art. 122), não do recurso especial (auditoria 03/10/2026).
 
 **Integração obrigatória com.**
 
-- `recursos-superiores-crps` (skill local) para o detalhamento das 4 hipóteses do art. 91.
+- `recursos-superiores-crps` (skill local) para o cabimento (art. 90) e as 8 hipóteses de anulação do art. 91, §1º (auditoria 03/10/2026).
 - `admissibilidade-barreiras-crps` para verificação de cabimento.
 - `base-revisao-peticao-aprofundada` para auditoria após geração.

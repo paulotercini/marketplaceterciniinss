@@ -88,7 +88,7 @@ Atribuições da Corregedoria-Geral da União. Coordenar atividades correcionais
 
 ## 10. STF. Acesso à informação e direito do usuário
 
-ADPF 690. Reafirmou o direito de acesso à informação pública.
+ADPF 690 (j. 15/03/2021). Determinou ao Ministério da Saúde manter a divulgação diária integral dos dados da Covid-19, em reafirmação do direito de acesso à informação pública (auditoria 03/10/2026).
 
 ADI 6.529. Validade de regulamentações de transparência e dados abertos.
 

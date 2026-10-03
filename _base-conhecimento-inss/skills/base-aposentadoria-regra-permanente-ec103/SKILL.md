@@ -29,7 +29,7 @@ Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, de
 
 Primeiro ramo. Segurados urbanos que ingressaram no RGPS a partir de 14 de novembro de 2019, sem porta de transição. Aplica-se a regra permanente do art. 19 da EC 103. A carência é de 180 contribuições (art. 25, II, da Lei 8.213/91).
 
-Segundo ramo. Segurados filiados ao RGPS antes da reforma, mas para os quais nenhuma regra de transição é mais vantajosa. Podem se enquadrar na regra permanente pela via do art. 4º da EC 103, se for mais favorável.
+Segundo ramo. Segurados filiados ao RGPS antes da reforma, mas para os quais nenhuma regra de transição é mais vantajosa. Para eles, a aposentadoria por idade segue a transição do art. 18 da EC 103 (65 anos, homem; 62 anos, mulher, desde 2023; 15 anos de contribuição para ambos), e não o art. 4º, que trata do servidor público federal (auditoria 03/10/2026).
 
 ## Cenários operacionais pró-segurado
 
@@ -37,7 +37,7 @@ Primeiro, segurado que teve primeiro recolhimento em 2020, aos 45 anos. Atingir�
 
 Segundo, segurada com primeira contribuição em 2005 e filiação contínua após 2019. Aos 62 anos e com 15 anos de contribuição, elegível pela regra permanente. Se tiver 30 anos completos, avaliar comparativo com transições por tempo.
 
-Terceiro, segurado filiado antes da reforma, com idade avançada mas poucos anos de contribuição, sem se enquadrar em transição por tempo. Regra permanente aos 65 anos e 20 anos de contribuição (homem) pode ser a única via, com carência cumprida.
+Terceiro, segurado filiado antes da reforma, com idade avançada mas poucos anos de contribuição, sem se enquadrar em transição por tempo. A transição por idade do art. 18 da EC 103, aos 65 anos e com 15 anos de contribuição (homem), pode ser a única via, com carência cumprida (auditoria 03/10/2026).
 
 Quarto, segurado rural com 60 anos (homem) ou 55 anos (mulher) e 15 anos de atividade rural. Regra permanente rural do art. 48 da Lei 8.213/91, inalterada pela reforma.
 
@@ -45,7 +45,7 @@ Quinto, segurada dona de casa na condição de facultativa de baixa renda. Art. 
 
 ## Regra e estratégia
 
-A regra geral é de que a regra permanente é de último acesso. O planejamento pró-segurado sempre começa pelo direito adquirido, depois percorre as quatro portas de transição, e só recorre à regra permanente quando nenhuma das anteriores é mais vantajosa.
+A regra geral é de que a regra permanente é de último acesso. O planejamento pró-segurado sempre começa pelo direito adquirido, depois percorre as portas de transição dos arts. 15, 16, 17, 18 e 20 da EC 103; para quem era filiado até 13/11/2019, a via residual por idade é o art. 18, com 15 anos de contribuição, e não a regra permanente do art. 19 (auditoria 03/10/2026).
 
 Para segurados com filiação após a reforma, a regra permanente é a única via por tempo e idade (além da aposentadoria por incapacidade permanente e da aposentadoria especial). Contudo, o planejamento pode otimizar contribuições para maximizar a RMI, nos termos do art. 26 da EC 103 (acionar `base-calculo-rmi-ec103`).
 

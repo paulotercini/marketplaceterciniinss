@@ -57,7 +57,7 @@ Não executar desde logo a parte incontroversa quando há recurso parcial.
 
 ## Fontes internas
 
-Leia no repositório as skills `execucao-cumprimento-previdenciario`, `base-cumprimento-sentenca-rpv-precatorio`, `base-juros-correcao-monetaria`, `base-cpc-honorarios-sucumbencia-previdenciaria`, `honorarios-contrato-previdenciario`, `tributacao-beneficios-previdenciarios`, `base-devolucao-valores-irrepetibilidade-tema979-tema1034`, `impugnacao-cumprimento-concomitantes`, `base-cpc-coisa-julgada-progressiva` e `base-rubricas-pagamento-inss`. Confira toda citação de Tema, Súmula ou Enunciado contra `base-precedentes-catalogo-vinculantes/references/CATALOGO-*`. Citação suspeita de homônimo, superação ou tese divergente NÃO se resolve aqui, despache ao agente `verificador-precedentes`.
+Leia no repositório as skills `execucao-cumprimento-previdenciario`, `base-cumprimento-sentenca-rpv-precatorio`, `base-juros-correcao-monetaria`, `base-cpc-honorarios-sucumbencia-previdenciaria`, `honorarios-contrato-previdenciario`, `tributacao-beneficios-previdenciarios`, `base-devolucao-valores-irrepetibilidade-tema979-tema692`, `impugnacao-cumprimento-concomitantes`, `base-cpc-coisa-julgada-progressiva` e `base-rubricas-pagamento-inss`. Confira toda citação de Tema, Súmula ou Enunciado contra `base-precedentes-catalogo-vinculantes/references/CATALOGO-*`. Citação suspeita de homônimo, superação ou tese divergente NÃO se resolve aqui, despache ao agente `verificador-precedentes`.
 
 ## Formato de saída
 

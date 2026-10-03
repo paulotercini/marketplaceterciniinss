@@ -12,9 +12,9 @@ Aplicação pró-segurado. Abre flexibilização.
 
 ### Tema 640/STJ (REsp 1.355.052; corte corrigida na auditoria 25/07/2026)
 
-Tese. Constitucionalidade do art. 20, §3º, mas com possibilidade de interpretação conforme.
+Tese. Aplica-se por analogia o parágrafo único do art. 34 do Estatuto do Idoso ao pedido de BPC de pessoa com deficiência, para que o benefício previdenciário de 1 salário mínimo recebido por idoso não entre no cálculo da renda per capita (auditoria 03/10/2026).
 
-Fonte oficial em https://portal.stf.jus.br
+Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado em leitura integrada.
 
@@ -52,7 +52,7 @@ Aplicação pró-segurado.
 
 ### Tema 369 TNU
 
-Tese. Não cumulatividade do BPC, salvo exceções.
+Tese. Na aplicação do parágrafo único do art. 34 do Estatuto do Idoso e do art. 20, §14, da LOAS, a renda per capita se calcula com a exclusão do valor de 1 salário mínimo do benefício de idoso ou de pessoa com deficiência, e só o que exceder esse valor entra na divisão (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -102,7 +102,7 @@ Refutação. Bolsa de estágio é estipêndio educacional excluído da renda pel
 
 Argumento adversário. Bicos pontuais configuram renda.
 
-Refutação. Rendimentos eventuais são excluídos (exclusões do art. 20, §11 e §12, jurisprudência consolidada).
+Refutação. Rendimentos eventuais são excluídos (art. 20, §11, da LOAS, que admite outros elementos probatórios da miserabilidade, e jurisprudência consolidada) (auditoria 03/10/2026).
 
 ### Argumento 7 — Aposentadoria de 1 SM do marido idoso
 

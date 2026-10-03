@@ -122,7 +122,7 @@ BPC. `analise-bpc-loas`, `base-bpc-impedimento-longo-prazo` (com o reference da 
 
 Aposentadoria PCD. `aposentadoria-deficiencia`, `base-aposentadoria-pcd-lc142`, `base-pcd-if-bra-metodologia`, `base-pcd-did-retroativa`, `base-lbi-inclusao-barreiras-lei13146` e o reference APOSENTADORIA-PCD da `orientacao-cliente-pericia`.
 
-Auxílio-acidente. `auxilio-acidente-b94`, `base-auxilio-acidente-b94-pos-reforma`, `base-b94-sequela-minima-tema201`, `base-b94-nexo-acidentario-ntep` e o reference AUXILIO-ACIDENTE da `orientacao-cliente-pericia`.
+Auxílio-acidente. `auxilio-acidente-b94`, `base-auxilio-acidente-b94-pos-reforma`, `base-b94-sequela-minima-sumula88-tnu`, `base-b94-nexo-acidentario-ntep` e o reference AUXILIO-ACIDENTE da `orientacao-cliente-pericia`.
 
 Por patologia, somar a skill temática quando existir (`base-pcd-fibromialgia-lei15176` com o roteiro de individualização da Onda 87, `deficiencia-auditiva-previdenciaria`, TEA nas skills de BPC e PCD).
 
@@ -142,7 +142,7 @@ Sexta, português correto do padrão do escritório, sem dois-pontos introduzind
 
 ## Nota de grafia (registro de manutenção)
 
-A portaria do IF-BrA aparece na base ora como "Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014", ora como "Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014" (grafia usada pelo usuário e comum na literatura). É a MESMA norma. Pendência de uniformização futura pela grafia do texto oficial, a conferir na fonte primária.
+A portaria do IF-BrA é a Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014, conforme o texto oficial publicado no DOU de 30/01/2014 (auditoria 03/10/2026). A grafia "AGU/MPS/MF/MP/PR", que aparecia em parte da base, está errada e foi uniformizada.
 
 ## Extensão
 

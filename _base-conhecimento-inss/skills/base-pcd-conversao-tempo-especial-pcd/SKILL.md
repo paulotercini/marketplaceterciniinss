@@ -47,7 +47,7 @@ Regras de aplicação. §1º do art. 70-E, o grau PREPONDERANTE é aquele em que
 
 Caput. A redução da PCD NÃO acumula, no mesmo período contributivo, com a redução da atividade especial. Escolhe-se uma por período.
 
-§1º. É GARANTIDA a conversão do tempo cumprido em condições especiais (15, 20 ou 25 anos), inclusive da pessoa com deficiência, para os parâmetros da aposentadoria PCD do art. 70-B, se resultar mais favorável, pelas tabelas próprias do §1º.
+§1º. É GARANTIDA a conversão do tempo cumprido em condições especiais (15, 20 ou 25 anos), inclusive da pessoa com deficiência, para os parâmetros da aposentadoria PCD do art. 70-B, se resultar mais favorável, pelas tabelas próprias do §1º. Ressalva: a IN 128, art. 310, §1º, limita a conversão a períodos trabalhados até 13/11/2019; antecipar a limitação ou sustentar a tese contrária de forma expressa (auditoria 03/10/2026).
 
 MULHER (destino Para 15, Para 20, Para 24, Para 25, Para 28). De 15 anos, 1,00, 1,33, 1,60, 1,67, 1,87. De 20 anos, 0,75, 1,00, 1,20, 1,25, 1,40. De 24 anos, 0,63, 0,83, 1,00, 1,04, 1,17. De 25 anos, 0,60, 0,80, 0,96, 1,00, 1,12. De 28 anos, 0,54, 0,71, 0,86, 0,89, 1,00.
 
@@ -59,7 +59,7 @@ O §3º (conversão para cálculo na aposentadoria por idade PCD) foi REVOGADO p
 
 ## Marco jurisprudencial (conferido, com ressalvas)
 
-ADI 5760/STF. Rel. Min. Alexandre de Moraes, Tribunal Pleno, julgada em 13/09/2019, matéria de direitos da pessoa com deficiência em aposentadoria. Conferir o objeto e o dispositivo exatos no portal do STF antes de citar em peça, o rótulo genérico de constitucionalidade da LC 142 da versão anterior desta skill não foi confirmado.
+ADI 5760/STF. Rel. Min. Alexandre de Moraes, Tribunal Pleno, julgada em 13/09/2019, unânime. Declarou inconstitucional o art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91. Não sustenta tese sobre aposentadoria da pessoa com deficiência nem sobre a LC 142 (auditoria 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=5247635).
 
 Tema 546/STJ (tese literal no catálogo). A lei vigente por ocasião da aposentadoria é a aplicável ao direito à conversão entre tempos de serviço especial e comum, independentemente do regime jurídico à época da prestação do serviço. Usar por analogia para fixar o regime da conversão na DER.
 

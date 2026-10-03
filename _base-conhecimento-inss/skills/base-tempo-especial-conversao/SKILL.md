@@ -1,9 +1,9 @@
 ---
 name: base-tempo-especial-conversao
-description: "Conversão de tempo especial em comum, fator 1,4 (homem) e 1,2 (mulher), marco temporal 13/11/2019 da EC 103/2019, Tema 422 STJ (REsp 1.310.034), Súmula 50 TNU e regime jurídico aplicável. Use SEMPRE que mencionar conversão de tempo especial, fator de conversão, tempo especial em comum, 1,4 homem, 1,2 mulher, art. 70 Decreto 3.048/1999, art. 57 §5º Lei 8.213/91, EC 103/2019 art. 25 §2º, limite 13/11/2019, Tema 422 STJ, REsp 1.310.034, Súmula 50 TNU, tempus regit actum, lei vigente à prestação do serviço, regime jurídico do tempo especial, conversão antes Lei 9.032/1995, conversão de especial para comum, tempo trabalhado antes de 1998, tempo trabalhado entre 1995 e 1998, períodos especiais fracionados, direito adquirido conversão, Portaria 990/2022, Portaria 1.316/2025. Cruza com auditoria-ppp, tempo-especial-peticoes-por-rito, peticao-previdenciaria, base-especial-ruido, base-aposentadoria-especial-transicao-ec103 e precedentes-previdenciarios."
+description: "Conversão de tempo especial em comum, fator 1,4 (homem) e 1,2 (mulher), marco temporal 13/11/2019 da EC 103/2019, Tema 546 STJ (REsp 1.310.034), Tema 422 STJ, Súmula 50 TNU e regime jurídico aplicável. Use SEMPRE que mencionar conversão de tempo especial, fator de conversão, tempo especial em comum, 1,4 homem, 1,2 mulher, art. 70 Decreto 3.048/1999, art. 57 §5º Lei 8.213/91, EC 103/2019 art. 25 §2º, limite 13/11/2019, Tema 422 STJ, Tema 546 STJ, REsp 1.310.034, Súmula 50 TNU, tempus regit actum, lei vigente à prestação do serviço, regime jurídico do tempo especial, conversão antes Lei 9.032/1995, conversão de especial para comum, tempo trabalhado antes de 1998, tempo trabalhado entre 1995 e 1998, períodos especiais fracionados, direito adquirido conversão, Portaria 990/2022, Portaria 1.316/2025. Cruza com auditoria-ppp, tempo-especial-peticoes-por-rito, peticao-previdenciaria, base-especial-ruido, base-aposentadoria-especial-transicao-ec103 e precedentes-previdenciarios."
 ---
 
-## NOTA DA ADI 6309 (12/07/2026)
+## NOTA DA ADI 6309 (julgada em 03/06/2026, registro de 12/07/2026)
 
 O STF, na ADI 6309 julgada em 03/06/2026, declarou CONSTITUCIONAL a vedação de conversão de tempo especial em comum para períodos posteriores a 13/11/2019. O marco temporal desta skill fica reforçado, conversão pelo fator 1,4 ou 1,2 somente para tempo especial prestado ATÉ 13/11/2019 (Tema 422/STJ e art. 25, §2º, da EC 103). Não sustentar mais a inconstitucionalidade da vedação. Na mesma ADI, o STF invalidou a idade mínima da aposentadoria especial, ver base-aposentadoria-especial-transicao-ec103.
 
@@ -34,15 +34,15 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 ## Marco jurisprudencial
 
-Tema 422 STJ, REsp 1.310.034. Julgado em 2013. Fixou que a lei aplicável à conversão é a vigente à data da prestação do serviço. Precedente vinculante.
+Tema 546 STJ, REsp 1.310.034. Fixou que a lei vigente por ocasião da aposentadoria é a aplicável ao direito à conversão entre tempos de serviço especial e comum, independentemente do regime jurídico à época da prestação do serviço. Precedente vinculante (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-Súmula 50 TNU. Conversão do tempo especial em comum para períodos anteriores à Lei 9.032/1995, respeitados os índices vigentes à época.
+Súmula 50 TNU. É possível a conversão do tempo de serviço especial em comum do trabalho prestado em qualquer período. Após a EC 103/2019, o art. 25, §2º, limita a conversão ao tempo cumprido até 13/11/2019 (auditoria 03/10/2026).
 
 Fonte oficial em https://www.jf.jus.br
 
-Tema 694 STJ. Possibilidade de conversão de tempo comum em especial nos períodos anteriores à Lei 9.032/1995.
+Tema 546 STJ, tese adversa nesse ponto. A conversão de tempo comum em especial segue a lei vigente na aposentadoria e não alcança quem reuniu os requisitos depois da Lei 9.032/1995, ainda que o período seja anterior. O caminho do segurado é demonstrar direito adquirido, com os requisitos reunidos até 28/04/1995 (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 

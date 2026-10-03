@@ -84,7 +84,7 @@ ERRATA. A primeira versão desta auditoria declarou inexistentes as Súmulas 88 
 
 - **QUARENTENA LEVANTADA em 12/07/2026, ambos CONFERIDOS pelo inteiro teor (cópias oficiais do ESAJ fornecidas pelo escritório).** AI 2061943-13.2025.8.26.0000, Rel. Des. Richard Pae Kim, 17ª Câmara de Direito Público, julgado em 10/03/2025, unânime, Registro 2025.0000223191, dispensa de novo requerimento administrativo em restabelecimento ou conversão de benefício anteriormente concedido pelo mesmo fato gerador (exceção do Tema 350/STF e Tema 660/STJ), mesmo diante do art. 129-A, II, "a", da Lei 8.213/91. Decisão paradigma do processo 1013616-41.2026.8.26.0381, Juiz Matheus de Souza Parducci Camargo, liberada em 22/05/2026, com o roteiro de emenda em 9 itens (3.1 a 3.9) confirmado literalmente. Dados completos na reference NUCLEO-4-0-TJSP-PADRAO-ACIDENTARIO.md da base-auxilio-acidente-b94-pos-reforma.
 
-- **Pendências da Etapa 3 (rodada complementar).** REsp 2.240.220 e 2.256.869 (auxílio-reclusão), REsp 2.103.603 (pensão), PUIL 5000577-65 e ApCivs TRF3 do contribuinte em dobro, PEDILEFs 0136882 e 5001032 (químicos), IRDRs 15, 18 e 35 do TRF4, demais 150 números CNJ de menor uso.
+- **Pendências da Etapa 3 (rodada complementar).** REsp 2.240.220 e 2.256.869 (auxílio-reclusão), REsp 2.103.603 (pensão), PUIL 5000577-65.2021.4.04.7126/RS (representativo provável, auditoria 03/10/2026) e ApCivs TRF3 do contribuinte em dobro, PEDILEFs 0136882, 5001032-41.2022.4.04.7014/PR e 5001032-25.2014.4.04.7204/SC (químicos; números distintos, o de 2022 existe e trata de fenol, o de 2014 não foi localizado, auditoria 03/10/2026), IRDRs 15, 18 e 35 do TRF4, demais 150 números CNJ de menor uso.
 
 ## ACHADOS DA ETAPA 3B DA AUDITORIA (números remanescentes, 12/07/2026)
 
@@ -98,11 +98,11 @@ ERRATA. A primeira versão desta auditoria declarou inexistentes as Súmulas 88 
 
 - **IRDR 35/TRF4 CONFERIDO.** Processo 5044350-33.2023.4.04.0000, Rel. Des. Federal Cláudia Cristina Cristofani. Matéria absorvida nacionalmente pelo Tema 1421/STJ, citar o repetitivo como fundamento principal.
 
-- **PEDILEF 0136882-97.2017.4.02.5167/RJ CONFERIDO.** Juiz Federal Neian Milhomem Cruz, provimento pela TNU em fevereiro de 2026, hidrocarbonetos, óleos e graxas (contexto do Tema 298/TNU). Número completo agora registrado.
+- **PEDILEF 0136882-97.2017.4.02.5167/RJ.** Juiz Federal Neian Milhomem Cruz, provimento pela TNU em fevereiro de 2026, frentista exposto a benzeno, com base no Tema 170/TNU e na Questão de Ordem 20, sem relação com o Tema 298/TNU [NÃO CONFIRMADO] (auditoria 03/10/2026, retirado o selo CONFERIDO). Número completo agora registrado.
 
-- **Contribuinte em dobro, correção aplicada.** O representativo real da TNU é o PUIL 0003636-92.2018.4.01.3810/MG (Boletim TNU TRF3/GACO 04/2024), recolhimento em dobro só conta se TEMPESTIVO, dentro do período de graça. O "PUIL 5000577-65" antes citado NÃO FOI CONFIRMADO e saiu da skill base-contribuinte-em-dobro-lops-art9.
+- **Contribuinte em dobro, correção aplicada.** O representativo da TNU é o PUIL 5000577-65.2021.4.04.7126/RS [NÃO CONFIRMADO], recolhimento em dobro só conta se TEMPESTIVO, dentro do período de graça. O PUIL 0003636-92.2018.4.01.3810/MG, antes indicado como representativo (Boletim TNU TRF3/GACO 04/2024), trata de registro no CRC (auditoria 03/10/2026).
 
-- **EM QUARENTENA (não verificáveis por fonte pública indexada).** PEDILEF "5001032" (químicos), ApCiv 5002176-54.2023, 5005822-78.2023, 5005407-17.2022 e ApRem 0004116-78.2005 do TRF3. Conferir nos sítios oficiais antes de citar.
+- **EM QUARENTENA (não verificáveis por fonte pública indexada).** PEDILEF 5001032-25.2014.4.04.7204/SC (químicos; o 5001032-41.2022.4.04.7014/PR, de mesmo prefixo, existe, trata de fenol e não está em quarentena, auditoria 03/10/2026), ApCiv 5002176-54.2023, 5005822-78.2023, 5005407-17.2022 e ApRem 0004116-78.2005 do TRF3. Conferir nos sítios oficiais antes de citar.
 
 - **Skills do escritório a atualizar via Settings (fora do repo).** auxilio-reclusao-previdenciario, pensao-por-morte e carta-servicos-inss citam os REsp do Tema 1421 sem o número do tema e sem a direção da tese, e o IRDR 35 sem a nota de absorção.
 
@@ -126,7 +126,7 @@ NÃO CONFIRMADAS NESTA RODADA (quarentena leve, conferir no DOU antes de citar).
 
 - **Pacotes .skill do escritório regenerados na Etapa 5.** pensao-por-morte e auxilio-reclusao-previdenciario atualizados com o Tema 1421/STJ julgado (tese literal, alerta de triagem dos 180 dias, estratégia pós-julgamento) e carta-servicos-inss com o rótulo da Lei 15.108/2025 corrigido (menor sob guarda) e o Tema 1421 incluído.
 
-## ADI 6309/STF JULGADA, APOSENTADORIA ESPECIAL DA EC 103 (registro de 12/07/2026, notícia oficial do STF de 03/06/2026 conferida via navegador)
+## ADI 6309/STF JULGADA EM 03/06/2026, APOSENTADORIA ESPECIAL DA EC 103 (registro de 12/07/2026, notícia oficial do STF de 03/06/2026 conferida via navegador)
 
 Julgamento por maioria em 03/06/2026, ação da CNTI contra dispositivos da EC 103/2019 sobre aposentadoria especial. Três definições.
 

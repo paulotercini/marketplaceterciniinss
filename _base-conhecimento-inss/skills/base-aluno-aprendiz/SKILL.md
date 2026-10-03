@@ -29,7 +29,7 @@ Súmula 96 TCU. Reconhecimento do tempo de aluno-aprendiz para fins de aposentad
 
 Fonte oficial em https://pesquisa.apps.tcu.gov.br
 
-Súmula 18 TNU. "Provado que o aluno-aprendiz de escola pública profissional, no período de 1932 a 1971, recebia remuneração, mesmo que indireta, à conta do orçamento da União, o respectivo tempo de serviço pode ser computado para fins de aposentadoria previdenciária."
+Súmula 18 TNU. Redação revista em 14/02/2020 (Tema 216) [NÃO CONFIRMADO]. O cômputo exige prova simultânea de retribuição, mesmo em auxílios materiais, à conta do orçamento, como contraprestação por labor na execução de bens e serviços destinados a terceiros, sem recorte temporal. Para o segurado, a prova se faz com certidão escolar que descreva as encomendas executadas e a retribuição recebida (auditoria 03/10/2026).
 
 Fonte oficial em https://www.jf.jus.br
 

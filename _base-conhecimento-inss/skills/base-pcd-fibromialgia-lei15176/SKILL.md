@@ -21,7 +21,7 @@ Lei 8.742/93. BPC.
 
 Decreto 6.214/2007.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014.
+Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 ## Marco jurisprudencial
 
@@ -33,7 +33,7 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Repercussão social e funcional na avaliação (IF-BrA)
 
-A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (IF-BrA) (auditoria 03/10/2026) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ### REsp 1.652.998 STJ
 

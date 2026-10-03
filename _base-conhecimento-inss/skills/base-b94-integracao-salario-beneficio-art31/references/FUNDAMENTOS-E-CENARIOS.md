@@ -134,4 +134,4 @@ Quinto, dialeticidade.
 
 ## 10. Integração prática
 
-`auxilio-acidente-b94`, `base-b94-anexo-iii-quadros`, `base-b94-cessacao-acumulacao-vedacao`, `base-b94-sequela-minima-tema201`, `base-calculo-rmi-ec103`, `peticao-previdenciaria`.
+`auxilio-acidente-b94`, `base-b94-anexo-iii-quadros`, `base-b94-cessacao-acumulacao-vedacao`, `base-b94-sequela-minima-sumula88-tnu`, `base-calculo-rmi-ec103`, `peticao-previdenciaria`.

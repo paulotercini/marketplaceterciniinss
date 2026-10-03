@@ -20,7 +20,7 @@ A aplicação das QOs sobre admissibilidade do PEDILEF não pode supor supressã
 
 ## Argumentação Contra Aplicação Formalista da QO 59
 
-Enquanto pendente confirmação oficial da QO 59 em fonte primária, a argumentação contra aplicação formalista deve se estruturar em quatro eixos.
+Confirmada a QO 59 na página oficial do CJF (aprovada por maioria em 15/04/2026, precedente 5007086-55.2020.4.02.5104), a argumentação contra sua aplicação formalista deve se estruturar em quatro eixos (auditoria 03/10/2026).
 
 **Primeiro eixo — Excesso de rigor técnico em microssistema simplificado.** A transposição acrítica do padrão do art. 1.029, §1º, do CPC/2015 (que rege o recurso especial) para o PEDILEF desconsidera a distinção estrutural entre o recurso especial (tribunal de cúpula constitucional) e o PEDILEF (recurso uniformizador em microssistema simplificado). O próprio IEPrev, em texto do Dr. Yoshiaki Yamamoto de 09/12/2024, reconheceu que a TNU, ao aplicar formalismos estranhos aos JEFs, transforma turmas recursais em "bolhas hermenêuticas".
 
@@ -32,7 +32,7 @@ Enquanto pendente confirmação oficial da QO 59 em fonte primária, a argumenta
 
 ## Táticas Pragmáticas de Prevenção
 
-**Tática 1 — Formato tabular obrigatório.** Independentemente da confirmação oficial da QO 59, adotar desde já o formato tabular comparativo paradigma por paradigma. É custo baixo e mitigação alta.
+**Tática 1 — Formato tabular obrigatório.** Com a QO 59 em vigor, adotar o formato tabular comparativo paradigma por paradigma (auditoria 03/10/2026). É custo baixo e mitigação alta.
 
 **Tática 2 — Paradigmas em cascata.** Apresentar pelo menos três paradigmas, priorizando um de outra região recursal e um em tese do STJ (IRDR/IAC/repetitivo/EDiv/PUIL-STJ). A redundância protege contra falha parcial (exemplo, superação superveniente de um dos paradigmas por QO 12).
 
@@ -50,7 +50,7 @@ Redigir a tese em chave de valoração jurídica de prova, nunca em chave de ree
 
 **Caso tempo especial por ruído.** Errado, "a perícia provou que o ruído era de 87 dB". Correto, "o PPP, documento técnico oficial, indicou ruído de 87 dB, nível que, à luz do Tema 174/TNU, caracteriza atividade especial, conclusão jurídica que o recorrido, ao exigir NEN em período posterior a 18/11/2003, contrariou."
 
-**Caso segurado especial rural.** Errado, "o segurado é rural, trabalhou na lavoura". Correto, "a certidão do INCRA em nome do grupo familiar constitui razoável início de prova material, nos termos do Tema 218/TNU, valoração jurídica que o recorrido, ao exigir homologação pelo INSS do contrato de arrendamento, contrariou".
+**Caso segurado especial rural.** Errado, "o segurado é rural, trabalhou na lavoura". Correto, "a certidão do INCRA em nome do grupo familiar constitui razoável início de prova material, nos termos do art. 55, §3º, da Lei 8.213/91, valoração jurídica que o recorrido, ao exigir homologação pelo INSS do contrato de arrendamento, contrariou" (auditoria 03/10/2026, retirado o Tema 218/TNU, que trata de outra matéria).
 
 ## Estratégia Contra Inadmissão por Súmula 43 (Matéria Processual)
 
@@ -58,7 +58,7 @@ Reformular cerceamento de defesa, coisa julgada e omissão probatória como ques
 
 **Caso cerceamento em tempo especial.** Errado, "o juiz cerceou a defesa ao indeferir a perícia técnica". Correto, "o direito ao reconhecimento de tempo especial pelo agente ruído, conforme Tema 174/TNU, depende de prova técnica da metodologia NEN, cuja produção foi obstada pelo indeferimento da perícia, configurando supressão do direito material à aposentadoria especial".
 
-**Caso coisa julgada.** Errado, "a coisa julgada impediria a rediscussão". Correto, "a extensão material do direito à averbação de tempo especial reconhecido em ação anterior não pode ser restringida a período ali não demandado, por força do Tema 629/STJ, que delimita a extensão objetiva da coisa julgada em matéria previdenciária".
+**Caso coisa julgada.** Errado, "a coisa julgada impediria a rediscussão". Correto, "a extensão material do direito à averbação de tempo especial reconhecido em ação anterior não pode ser restringida a período ali não demandado, porque o direito à contagem especial de cada período decorre do art. 57 da Lei 8.213/91, e a coisa julgada anterior só alcança os períodos ali decididos" (auditoria 03/10/2026, retirado o Tema 629/STJ, que trata da extinção sem mérito por ausência de prova eficaz).
 
 ## Estratégia Contra QO 18 (Mais de Um Fundamento Suficiente)
 
@@ -75,8 +75,6 @@ A QO 22 autoriza inadmissão monocrática quando ausente similitude. Contra a de
 ## Argumentação de Reforço — Princípios e Fontes
 
 **Princípio da proteção do segurado.** O sistema previdenciário é finalisticamente voltado à proteção social. A interpretação das normas recursais deve ser compatível com essa finalidade, sob pena de subversão do sistema.
-
-**Súmula 14 do STF (por analogia estrutural).** Não é admissível, por ato normativo infralegal, a criação de óbice ao conhecimento de recurso não previsto em lei. Embora aplicada originalmente a outro contexto, o raciocínio é transponível.
 
 **Protocolo para Julgamento com Perspectiva de Gênero (Resolução CNJ 492/2023).** Em PEDILEF de segurada mulher em contexto rural, doméstico ou informal, invocar o protocolo para reforço contra inadmissão formalista, articulando com a skill `perspectiva-genero-previdenciario`.
 

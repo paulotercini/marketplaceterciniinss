@@ -1,6 +1,6 @@
 ---
 name: base-salario-contribuicao-limites
-description: "Salário-de-contribuição, limites mínimo e máximo (teto), verbas integrantes e não integrantes, base de cálculo da contribuição previdenciária e reflexo no salário-de-benefício. Use SEMPRE que mencionar salário-de-contribuição, teto previdenciário, limite mínimo, art. 28 Lei 8.212, verbas integrantes, verbas não integrantes, adicional noturno, horas extras, comissões, gratificações, PLR, vale-transporte, vale-alimentação, abono, ajuda de custo, diárias, aviso prévio indenizado, férias indenizadas, terço de férias, licença-prêmio, adicional de insalubridade, adicional de periculosidade, base cálculo contribuição, limite 1/12 sobre 13º, Tema 20 STF, incidência RPPS, natureza remuneratória, indenizatória, Portaria 990/2022, Portaria 1.316/2025. Cruza com peticao-previdenciaria, cnis-acerto-indicadores, base-calculo-rmi-ec103, base-aposentadoria-direito-adquirido, base-planejamento-previdenciario e contribuicoes-complementacao-ec103."
+description: "Salário-de-contribuição, limites mínimo e máximo (teto), verbas integrantes e não integrantes, base de cálculo da contribuição previdenciária e reflexo no salário-de-benefício. Use SEMPRE que mencionar salário-de-contribuição, teto previdenciário, limite mínimo, art. 28 Lei 8.212, verbas integrantes, verbas não integrantes, adicional noturno, horas extras, comissões, gratificações, PLR, vale-transporte, vale-alimentação, abono, ajuda de custo, diárias, aviso prévio indenizado, férias indenizadas, terço de férias, licença-prêmio, adicional de insalubridade, adicional de periculosidade, base cálculo contribuição, limite 1/12 sobre 13º, Súmula 688 STF, Tema 20 STF ganhos habituais, incidência RPPS, natureza remuneratória, indenizatória, Portaria 990/2022, Portaria 1.316/2025. Cruza com peticao-previdenciaria, cnis-acerto-indicadores, base-calculo-rmi-ec103, base-aposentadoria-direito-adquirido, base-planejamento-previdenciario e contribuicoes-complementacao-ec103."
 ---
 
 # Salário-de-Contribuição e Limites
@@ -63,7 +63,7 @@ Primeiro, planejamento para elevar o salário-de-contribuição até o teto para
 
 Segundo, requalificação de verbas indevidamente tributadas para aproveitar em cômputo.
 
-Terceiro, discussão sobre natureza das verbas em repetitivos STJ (Tema 985, por exemplo).
+Terceiro, discussão sobre natureza das verbas em repetitivos do STJ. O Tema 985 do STF, já julgado, admite a contribuição patronal sobre o terço constitucional de férias gozadas [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Quarto, revisão preventiva de salário-de-contribuição errado no CNIS.
 

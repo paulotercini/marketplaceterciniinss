@@ -18,7 +18,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 ### Grupo A — Forma e Paradigma
 
-**QO 3/TNU (alterada em 17/04/2024).** (1) Juntada obrigatória do paradigma ou indicação de link válido; (2) para paradigma da TNU no Eproc pós-08/2017, aceita-se o número do processo; (3) providência dispensada para teses firmadas em repetitivo, IRDR, IAC, embargos de divergência, PUIL/STJ, súmula ou jurisprudência dominante do STJ.
+**QO 3/TNU (alterada em 17/04/2024).** (1) Juntada obrigatória do paradigma ou indicação de link válido; (2) para paradigma da TNU no Eproc pós-08/2017, aceita-se o número do processo; (3) providência dispensada para tese da TNU firmada em representativo de controvérsia e para teses firmadas em repetitivo, IRDR, IAC, embargos de divergência, PUIL/STJ, súmula ou jurisprudência dominante do STJ (auditoria 03/10/2026).
 
 **QO 5/TNU (alterada em 15/09/2023).** Jurisprudência dominante do STJ apenas quando extraída de IRDR, IAC, repetitivo, embargos de divergência ou PUIL/STJ.
 
@@ -34,7 +34,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 22/TNU.** Autoriza não conhecimento monocrático quando o recorrido não guarda similitude fática e jurídica com o paradigma.
 
-**QO 59/TNU (PENDENTE CONFIRMAÇÃO OFICIAL).** Segundo fonte secundária, exige descrição comparativa individualizada paradigma por paradigma, confrontando fatos em julgamento e fundamentos determinantes. Ver discussão no SKILL.md principal.
+**QO 59/TNU.** Aprovada por maioria em 15/04/2026 (precedente 5007086-55.2020.4.02.5104), disponibilizada no DJeN em 30/04/2026 e publicada em 04/05/2026. A mera transcrição de ementas não basta; exige descrição comparativa individualizada paradigma por paradigma, confrontando fatos em julgamento e fundamentos determinantes (auditoria 03/10/2026). Ver discussão no SKILL.md principal.
 
 ### Grupo C — Prequestionamento e Impugnação
 
@@ -68,9 +68,9 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 28/TNU.** Havendo incidente regional e nacional simultâneos, julga-se primeiro o regional.
 
-**QO 23/TNU.** Matéria sobrestada por STF, STJ ou TNU implica sobrestamento de novos PEDILEFs, ressalvada análise de tempestividade.
+**QO 23/TNU (alterada em 11/02/2026).** Matéria afetada por STF, STJ ou TNU implica sobrestamento de novos PEDILEFs na origem, ressalvadas as hipóteses de não conhecimento (art. 14, I, do RITNU, e QO 56) (auditoria 03/10/2026).
 
-**QO 11/TNU.** Turma recursal deve sobrestar PEDILEF com matéria já encaminhada à TNU.
+**QO 11/TNU.** Turma recursal deve sobrestar PEDILEF com matéria já encaminhada à TNU. O §1º trata dos pedidos simultâneos e o §2º, do pedido com mais de uma matéria (auditoria 03/10/2026).
 
 **QO 50/TNU.** Vedada intervenção de terceiros no PEDILEF, salvo amicus curiae (art. 138 CPC).
 
@@ -80,7 +80,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 40/TNU (alterada em 18/09/2019).** Agravo contra inadmissão por Súmulas 42 e 43 deve ser interposto nos próprios autos e dirigido à TNU, não como agravo interno à turma de origem.
 
-**QO 29/TNU.** Nas hipóteses das Súmulas 42 e 43, o Presidente, Relator ou Secretaria da TNU devolverá de imediato os autos à turma recursal de origem.
+**QO 29/TNU.** Nas hipóteses das Súmulas 42 e 43, "o Presidente ou o Relator determinará a devolução imediata dos autos" à turma recursal de origem (auditoria 03/10/2026).
 
 **QO 43/TNU.** Contra acórdão em juízo de adequação: (a) se não aplica a tese TNU, cabe reclamação; (b) se aplica mas acrescenta fundamentos novos de fato ou direito, cabe novo PEDILEF quanto a esses, vedada discussão de questões precluídas.
 
@@ -92,7 +92,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 ### Grupo G — Conteúdo do Julgamento
 
-**QO 2/TNU.** Acolhimento do PEDILEF reforma a decisão recursal e gera prejudicialidade do recurso extraordinário, se interposto.
+**QO 2/TNU.** Acolhimento do PEDILEF reforma a decisão recursal, implica a estipulação de honorários advocatícios, se for o caso, e gera prejudicialidade do recurso extraordinário, se interposto (auditoria 03/10/2026).
 
 **QO 20/TNU.** Se a TNU decidir que o PEDILEF deve ser conhecido e provido em matéria de direito, e tal conclusão importar em exame de provas não produzidas ou não apreciadas, o acórdão recursal é anulado, ficando o juiz e a turma recursal vinculados ao entendimento da TNU sobre a matéria de direito.
 
@@ -116,7 +116,7 @@ Art. 14, §4º — Quando a orientação acolhida pela Turma de Uniformização 
 
 **QO 30/TNU.** Sobrestamento de PEDILEF na origem não comporta recurso por ausência de cunho decisório.
 
-**QO 34/TNU.** Antes da distribuição, a Secretaria remete os autos ao MPF se houver interesse de menores ou incapazes.
+**QO 34/TNU.** Antes da distribuição, a Secretaria da TNU encaminha os autos ao Ministério Público se houver interesse de menores ou incapazes (auditoria 03/10/2026).
 
 **QO 42/TNU.** Juiz que funcionou no processo originário não se impede como relator na TNU.
 

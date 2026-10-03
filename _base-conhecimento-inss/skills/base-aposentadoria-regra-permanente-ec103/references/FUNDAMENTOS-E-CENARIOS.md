@@ -4,7 +4,7 @@
 
 Constituição Federal, art. 201, §7º, redação da EC 103/2019. Idades mínimas de 65 anos (homem) e 62 anos (mulher) para o RGPS urbano, mantida a regra de 60 anos (homem) e 55 anos (mulher) para o trabalhador rural e segurado especial.
 
-EC 103/2019, art. 19. Tempo mínimo de contribuição de 20 anos (homem) e 15 anos (mulher). A regra vale para filiados a partir de 14 de novembro de 2019 e para os demais sem transição mais vantajosa.
+EC 103/2019, art. 19. Tempo mínimo de contribuição de 20 anos (homem) e 15 anos (mulher). A regra vale para filiados a partir de 14 de novembro de 2019; quem era filiado até 13 de novembro de 2019 se aposenta por idade pela transição do art. 18 (65 anos, homem; 62 anos, mulher; 15 anos de contribuição) (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 25, II. Carência de 180 contribuições.
 
@@ -22,7 +22,7 @@ Segurada que começou a contribuir em 2021 aos 45 anos. Aos 62 anos (2038), ter�
 
 ### Cenário 2 — Segurado filiado antes da reforma sem transição vantajosa
 
-Segurado que contribuiu esporadicamente entre 1985 e 2019, com 16 anos de contribuição efetivos. Em 2024 aos 60 anos, continua contribuindo. Aos 65 anos com 21 anos de contribuição, elegível pela regra permanente. As transições exigiriam 35 anos de contribuição, inviáveis.
+Segurado que contribuiu esporadicamente entre 1985 e 2019, com 16 anos de contribuição efetivos. Em 2024 aos 60 anos, continua contribuindo. Aos 65 anos com 21 anos de contribuição, elegível pela transição por idade do art. 18 da EC 103, que exige 15 anos de contribuição de quem era filiado até 13/11/2019, e não pela regra permanente (auditoria 03/10/2026). As transições por tempo de contribuição exigiriam 35 anos, inviáveis.
 
 ### Cenário 3 — Facultativa de baixa renda
 
@@ -61,7 +61,7 @@ Documentos rurais (notas de produtor, DAP, CAF, contratos de arrendamento) quand
 
 Carência de 180 contribuições. Para filiados antes de 24 de julho de 1991, aplica-se a regra de transição do art. 142 da Lei 8.213/91, com tabela progressiva. Filiados após 24 de julho de 1991 seguem a regra de 180 contribuições.
 
-Atenção para a perda e recuperação da qualidade de segurado. O art. 27-A da Lei 8.213/91, com redação da Lei 13.846/2019, exigia 1/2 da carência após novo vínculo para perdeu qualidade. A regra foi afastada pela Tema 245 TNU nos casos anteriores à reforma, mas para períodos pós-reforma, pode ainda ser aplicada. Análise caso a caso. Acionar `periodo-graca-qualidade-segurado`.
+Atenção para a perda e recuperação da qualidade de segurado. O art. 27-A da Lei 8.213/91, com redação da Lei 13.846/2019, exige metade da carência após nova filiação apenas para auxílio-doença, aposentadoria por invalidez, salário-maternidade e auxílio-reclusão; nas aposentadorias programáveis, a perda da qualidade não é considerada (art. 3º, caput e §1º, da Lei 10.666/2003) (auditoria 03/10/2026, retirado o Tema 245/TNU, que trata da qualidade de segurado após invalidação de benefício recebido de boa-fé). Acionar `periodo-graca-qualidade-segurado`.
 
 ## 5. Cruzamento com outras skills
 
@@ -75,7 +75,7 @@ Acionar `segurado-especial-rural` para rural.
 
 ## 6. Alerta estratégico
 
-Primeiro, o requerimento pela regra permanente deve ser feito apenas após confirmação de que nenhuma transição é mais vantajosa. A comparação com as quatro transições é obrigatória.
+Primeiro, o requerimento pela regra permanente deve ser feito apenas após confirmação de que nenhuma transição é mais vantajosa. A comparação com as transições dos arts. 15, 16, 17, 18 e 20 da EC 103 é obrigatória; a do art. 18 exige do homem filiado até 13/11/2019 só 15 anos de contribuição (auditoria 03/10/2026).
 
 Segundo, em caso de indeferimento da regra permanente por falta de carência ou tempo, verificar se há pedágio de 50% elegível que permite acesso antecipado.
 

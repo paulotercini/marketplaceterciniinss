@@ -32,7 +32,7 @@ Coisa julgada progressiva.
 
 ### Tema 28 STF
 
-Execução provisória contra Fazenda.
+Precatório ou RPV da parte incontroversa e autônoma transitada em julgado (RE 1.205.530) [CONFERIDO] (https://portal.stf.jus.br/jurisprudenciaRepercussao/verAndamentoProcesso.asp?incidente=5684509&numeroProcesso=1205530&classeProcesso=RE&numeroTema=28) (auditoria 03/10/2026).
 
 ### Súmula 729 STF
 
@@ -80,7 +80,7 @@ Refutar com arts. 1.013 §1º CPC e IRDR 18.
 
 ### Cenário H — Cumprimento provisório
 
-Restrito contra Fazenda. Tema 28 STF.
+Restrito contra Fazenda. A parte incontroversa e autônoma, já transitada em julgado, comporta precatório ou RPV (Tema 28 STF) [CONFERIDO] (auditoria 03/10/2026).
 
 ### Cenário I — JEF e dialeticidade
 
@@ -102,7 +102,7 @@ Quinto, garantir efeitos.
 
 Risco de devolução integral. Refutar.
 
-Risco de cumprimento provisório. Tema 28 STF.
+Risco de cumprimento provisório. A parte incontroversa e autônoma, já transitada em julgado, comporta precatório ou RPV (Tema 28 STF) [CONFERIDO] (auditoria 03/10/2026).
 
 Risco de dialeticidade rigorosa.
 

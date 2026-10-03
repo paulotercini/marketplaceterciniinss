@@ -18,7 +18,7 @@ Lei 8.213/91, art. 42. Concede B32 ao segurado que, estando ou não em B31, for 
 
 Lei 8.213/91, art. 42, §2º. Doença preexistente só exclui o benefício se a incapacidade NÃO decorrer de progressão ou agravamento. Interpretação pró-segurado.
 
-Lei 8.213/91, art. 43. DIB do B32 a partir do dia imediato à cessação do B31, ou do laudo pericial quando houver requerimento direto.
+Lei 8.213/91, art. 43. DIB do B32 a partir do dia imediato à cessação do B31. No requerimento direto, DIB no 16º dia do afastamento para o segurado empregado e na DII para os demais, ou na DER se entre essas datas decorrerem mais de 30 dias (art. 43, §1º) (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 44. A RMI integral, após a reforma, é calculada conforme art. 26 da EC 103.
 
@@ -58,7 +58,7 @@ Quarto, segurado com grande invalidez (tetraplegia, cegueira total, demência av
 
 Quinto, segurado com cessação indevida de B32 após reavaliação. Impugnar por ausência de recuperação real da capacidade. Acionar `auditoria-laudo-pericial`.
 
-Sexto, segurado em reabilitação profissional com indicação de inviabilidade. Conversão em B32. Súmula 47 TNU para implantação imediata.
+Sexto, segurado em reabilitação profissional com indicação de inviabilidade. Conversão em B32. Súmula 47/TNU para o exame das condições pessoais e sociais, e tutela de urgência para a implantação imediata (auditoria 03/10/2026).
 
 ## Regra e estratégia
 

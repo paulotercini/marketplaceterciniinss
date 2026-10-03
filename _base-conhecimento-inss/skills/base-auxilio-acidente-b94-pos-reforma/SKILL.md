@@ -32,7 +32,7 @@ Lei 8.213/91, art. 86, §1º. RMI de 50% do salário de benefício. Caráter ind
 
 Lei 8.213/91, art. 86, §2º. DIB a partir do dia seguinte à cessação do B31 que originou a sequela.
 
-Lei 8.213/91, art. 86, §2º (redação da MP 1.596-14/97). Pagamento até a véspera do início de qualquer aposentadoria ou até o óbito.
+Lei 8.213/91, art. 86, §1º (redação da MP 1.596-14/97). Pagamento até a véspera do início de qualquer aposentadoria ou até o óbito (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 31. Integração do B94 ao salário-de-contribuição para fins de cálculo de outros benefícios.
 
@@ -156,7 +156,7 @@ Quarto, nexo entre o acidente/doença e a sequela.
 
 ## Cenários operacionais pró-segurado
 
-Primeiro, segurado com acidente de qualquer natureza (inclusive doméstico ou de trânsito, não necessariamente de trabalho) que deixou sequela redutora da capacidade. B94 devido. Tema 416 STJ confirma amplitude.
+Primeiro, segurado com acidente de qualquer natureza (inclusive doméstico ou de trânsito, não necessariamente de trabalho) que deixou sequela redutora da capacidade. Sem nexo com o trabalho, o benefício é o auxílio-acidente previdenciário (espécie 36), na Justiça Federal; com nexo, é o B94 acidentário, na Justiça Estadual (art. 109, I, da CF) (auditoria 03/10/2026, retirado o Tema 416 STJ, que fala em lesão decorrente de acidente do trabalho).
 
 Segundo, segurado com sequela não listada no Anexo III do Decreto 3.048/99 mas que reduz a capacidade laboral. Súmula 88 e 89 TNU. Anexo III é exemplificativo.
 
@@ -166,9 +166,9 @@ Quarto, segurado com lesão e aposentadoria anteriores a 11/11/1997. Direito adq
 
 Quinto, segurado com B94 concedido com RMI equivocada. Cabe revisão para incluir verbas da integração, conforme art. 31.
 
-Sexto, segurado com redução auditiva (Tema 322 TNU). Súmula 44 TNU admite o B94 desde que comprovada redução real.
+Sexto, segurado com redução auditiva (art. 86, §4º, da Lei 8.213/91). Súmula 44 STJ e Tema 22 STJ admitem o B94 mesmo abaixo do grau mínimo regulamentar de disacusia, desde que comprovados nexo e redução real (auditoria 03/10/2026, no lugar do Tema 322 TNU e da Súmula 44 TNU).
 
-Sétimo, segurado com B94 cessado indevidamente antes da aposentadoria. Art. 86, §2º. Cessação apenas pela aposentadoria ou óbito. Restabelecimento cabível.
+Sétimo, segurado com B94 cessado indevidamente antes da aposentadoria. Art. 86, §1º. Cessação apenas pela aposentadoria ou óbito (auditoria 03/10/2026). Restabelecimento cabível.
 
 Oitavo, segurado com B94 aguardando período de graça. PUIL 5000733 do TNU sobre período de graça em B94 (aplicar com cautela, verificar tese definitiva em `precedentes-previdenciarios`).
 
@@ -182,7 +182,7 @@ Segundo, demonstrar que a sequela, ainda que aparentemente leve, impacta o exerc
 
 Terceiro, em caso de rol do Anexo III, usar como reforço. Em caso fora do rol, usar caráter exemplificativo.
 
-Quarto, em cessação indevida, restabelecer com pedido de implantação imediata (Súmula 47 TNU).
+Quarto, em cessação indevida, restabelecer com pedido de tutela de urgência para implantação imediata (art. 300 do CPC) (auditoria 03/10/2026, retirada a Súmula 47/TNU).
 
 Quinto, quando lesão e aposentadoria forem anteriores a 11/11/1997, reivindicar a acumulação com aposentadoria (Súmula 507 STJ).
 
@@ -217,7 +217,7 @@ Segundo, RMI do B94 é de 50% do salário de benefício, com caráter indenizat�
 
 Terceiro, a vedação da acumulação com aposentadoria vige desde 11/11/1997 (MP 1.596-14, convertida na Lei 9.528/97). Só há direito adquirido quando a lesão incapacitante E a aposentadoria são anteriores a 11/11/1997 (Súmula 507 STJ).
 
-Quarto, o B94 cessa apenas com a aposentadoria ou o óbito do segurado (art. 86, §2º). Cessações intermediárias são impugnáveis.
+Quarto, o B94 cessa apenas com a aposentadoria ou o óbito do segurado (art. 86, §1º; auditoria 03/10/2026). Cessações intermediárias são impugnáveis.
 
 ## Fungibilidade aplicável
 

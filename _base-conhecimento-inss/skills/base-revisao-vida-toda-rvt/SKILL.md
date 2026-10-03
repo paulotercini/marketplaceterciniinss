@@ -27,7 +27,7 @@ EC 103/2019, art. 26. Nova regra de cálculo para benefícios concedidos após 1
 
 Tese do Tema 1102 (2022): o segurado FILIADO ANTES da Lei 9.876/99 que implementou os requisitos APÓS ela (e antes da EC 103) poderia optar pela regra definitiva do art. 29 da Lei 8.213 em vez da transição do art. 3º da Lei 9.876 — desfecho posterior nas ADIs 2110/2111 (2024) validou o art. 3º e esvaziou a tese.
 
-ADIs 2110 e 2111 STF. Julgadas em 2024. Declararam constitucional o art. 3º da Lei 9.876/1999. Com modulação de efeitos, atingindo a prática da RVT na maior parte dos casos posteriores a novembro/1999.
+ADIs 2110 e 2111 STF. Julgadas em 2024. Declararam constitucional o art. 3º da Lei 9.876/1999. O art. 3º é cogente, e o segurado que nele se enquadra não pode optar pela regra definitiva do art. 29, I e II, da Lei 8.213/91; a modulação (ADI 2111 ED-ED, 10/04/2025) só alcança a devolução de valores e os ônus de sucumbência, como descrito adiante (auditoria 03/10/2026).
 
 [Retirado na auditoria 25/07/2026] O antes citado Tema 1117/STF trata de previdência complementar privada e não tem relação com a RVT.
 
@@ -47,7 +47,7 @@ Quarto, hipóteses em que o direito adquirido se consolidou antes de 13/11/2019,
 
 ## Controvérsias vivas
 
-A modulação das ADIs 2110 e 2111 tem interpretação em curso na jurisprudência das 1ª e 2ª Seções do STJ, e na TNU. Há casos em que o segurado com ação já protocolada antes do julgamento pode ter direito preservado.
+A modulação (ADI 2111 ED-ED, 10/04/2025) só dispensa a devolução dos valores recebidos por decisões judiciais, definitivas ou provisórias, prolatadas até 05/04/2024, e o pagamento de honorários de sucumbência, custas e perícias contábeis nas ações da RVT [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar o direito à revisão (auditoria 03/10/2026).
 
 ## Decadência e prescrição
 
@@ -102,7 +102,7 @@ Segundo, só propor com simulação vantajosa.
 
 Terceiro, decadência decenal é crítica.
 
-Quarto, honorários podem depender do êxito (Tema 1050 STJ). Cautela.
+Quarto, honorários podem depender do êxito (auditoria 03/10/2026, retirada a remissão ao Tema 1050/STJ, que trata da base dos honorários após pagamento administrativo posterior à citação). Cautela.
 
 Quinto, comunicar ao cliente com honestidade radical o risco processual.
 

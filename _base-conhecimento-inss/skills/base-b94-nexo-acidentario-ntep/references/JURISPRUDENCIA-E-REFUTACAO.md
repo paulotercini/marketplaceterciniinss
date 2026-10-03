@@ -20,7 +20,7 @@ Sequela permanente.
 
 ### Tema 350 TNU
 
-Prova.
+Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não matéria de prova (auditoria 03/10/2026).
 
 ## 2. Marco legislativo
 
@@ -126,7 +126,7 @@ Sexto, dialeticidade.
 
 ## 6. Diligência de atualização
 
-Acompanhar ADI 3931 STF.
+ADI 3931 STF julgada improcedente em 20/04/2020, com trânsito em julgado em 13/08/2020; nada a acompanhar (auditoria 03/10/2026).
 
 Revalidar art. 21-A.
 

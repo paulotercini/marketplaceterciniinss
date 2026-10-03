@@ -4,43 +4,43 @@
 
 ### Súmula 47 TNU
 
-Tese. Uma vez reconhecido o direito ao benefício por incapacidade pela perícia judicial, cabe implantação imediata.
+Tese. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez" (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a implantação imediata do benefício).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Fundamento para tutela antecipada em resposta a perícia da PMF desfavorável.
+Aplicação. Com incapacidade parcial reconhecida, exige o exame das condições pessoais e sociais; a tutela de urgência contra perícia da PMF desfavorável se fundamenta no art. 300 do CPC e no art. 4º da Lei 10.259/2001, não nesta súmula (auditoria 03/10/2026).
 
 ### Súmula 77 TNU
 
-Tese. Não cabe ao INSS desconsiderar perícia judicial em benefício por incapacidade.
+Tese. "O julgador não é obrigado a analisar as condições pessoais e sociais quando não reconhecer a incapacidade do requerente para a sua atividade habitual" (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a prevalência da perícia judicial).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Prevalência da perícia judicial sobre a administrativa.
+Aplicação. Súmula adversa. Sem incapacidade para a atividade habitual reconhecida, o juiz pode dispensar o exame das condições pessoais e sociais, por isso a prova deve mirar essa incapacidade; a valoração da perícia judicial segue os arts. 371 e 479 do CPC (auditoria 03/10/2026).
 
 ### Tema 246 TNU
 
-Tese. Para fins de B31, o reconhecimento da incapacidade pode ser feito com base em prova documental robusta, ainda que a perícia administrativa tenha concluído pela capacidade.
+Tese, na síntese do catálogo TNU. I - Quando a decisão judicial adotar a estimativa de prazo de recuperação da perícia, o termo inicial é a data do exame. II - Quando o ato de concessão não indicar o tempo de recuperação, o prazo de 120 dias conta-se da data da efetiva implantação (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a superação da perícia administrativa por prova documental).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Documentação médica pode superar perícia administrativa.
+Aplicação. Rege a data de cessação do benefício fixado em juízo, e não a superação da perícia administrativa por documentos (auditoria 03/10/2026).
 
-### Súmula 44 TNU
+### Súmula 44 STJ
 
-Tese. Para efeito de B94, a redução de capacidade é aferida em relação à atividade habitualmente exercida.
+Tese. O grau mínimo de disacusia fixado em ato regulamentar não exclui, por si só, o auxílio-acidente, desde que comprovados o nexo e a redução da capacidade para a atividade habitual (Tema 22 STJ e art. 86, §4º, da Lei 8.213/91) (auditoria 03/10/2026, no lugar da Súmula 44 TNU, que trata da tabela do art. 142).
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Exige avaliação contextualizada, não abstrata.
 
 ### Tema 350 STF
 
-Tese. A decadência não alcança o direito ao melhor benefício.
+Tese. "A concessão de benefícios previdenciários depende de requerimento do interessado, não se caracterizando ameaça ou lesão a direito antes de sua apreciação e indeferimento pelo INSS. A exigência de prévio requerimento não se confunde com o exaurimento das vias administrativas." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a não incidência da decadência sobre o melhor benefício).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Permite revisão de laudos viciados mesmo após decadência.
+Aplicação. O restabelecimento ou a revisão de benefício cessado com base em laudo viciado pode ser pedido diretamente em juízo, salvo matéria de fato não levada ao INSS; o tema não afasta a decadência (auditoria 03/10/2026).
 
 ### RE 631.240 STF (Tema 350 STF)
 
@@ -64,7 +64,7 @@ Aplicação pró-segurado. Fundamento para MS contra demora em perícia.
 
 Argumento adversário. A análise documental é suficiente para concluir pela capacidade.
 
-Refutação. Análise documental é triagem, não substitui perícia com exame clínico. Cerceamento quando o quadro exige exame físico. Tema 246 TNU permite superação por documentação robusta.
+Refutação. Análise documental é triagem, não substitui perícia com exame clínico. Cerceamento quando o quadro exige exame físico. Em juízo, a documentação médica é valorada com a perícia (arts. 371 e 479 do CPC) (auditoria 03/10/2026, retirado o Tema 246/TNU, que trata da data de cessação).
 
 ### Argumento 2 — Teleperícia equivale a perícia presencial
 
@@ -76,7 +76,7 @@ Refutação. Teleperícia não substitui exame físico quando este é necessári
 
 Argumento adversário. O laudo da PMF é prova técnica e vincula a decisão.
 
-Refutação. Laudo da PMF é uma das provas. Súmula 77 TNU afasta prevalência sobre perícia judicial. Tema 246 TNU permite superação por documentação robusta.
+Refutação. Laudo da PMF é uma das provas. Em juízo, a perícia judicial e a documentação médica são valoradas em conjunto (arts. 371 e 479 do CPC) (auditoria 03/10/2026, retirados a Súmula 77/TNU e o Tema 246/TNU, que não tratam dessa prevalência).
 
 ### Argumento 4 — Segurado recusou Teleperícia sem motivo
 

@@ -59,7 +59,7 @@ Plenário, julgado em 26/10/2016
 ### Tese firmada
 **PUIL 5001623-70.2022.4.02.5005/ES**
 Rel. Juiz Federal João Carlos Cabrelon de Oliveira
-TNU, 06/12/2024
+TNU, julgado em 04/12/2024 (auditoria 03/10/2026)
 Documento 900000273465
 
 "Não há óbice à reafirmação da data de entrada do requerimento administrativo para o momento em que o segurado implementou os requisitos para um melhor benefício, enquanto aguarda a análise do seu pleito na via administrativa."
@@ -70,12 +70,12 @@ Paradigmas citados no voto (4ª TR/RS):
 - Recurso Cível 5009546-58.2023.4.04.7107/RS (1.70)
 - Recurso Cível 5003530-59.2021.4.04.7107/RS (1.71)
 
-### PEDILEF admitido — Reafirmação entre PA e ajuizamento
+### PEDILEF provido — Reafirmação entre PA e ajuizamento
 **PEDILEF 5053159-26.2022.4.02.5101/RJ**
 Rel. Juiz Federal Paulo Roberto Parca de Pinho
-Decisão de admissão em 09/08/2024
+Incidente da parte autora conhecido e provido em 07/08/2024 (auditoria 03/10/2026)
 
-Hipótese específica — reafirmação da DER entre a comunicação da decisão administrativa e o ajuizamento da ação. Turma Recursal do RJ havia entendido que a reafirmação judicial só cabe para momento posterior ao ajuizamento. A TNU admitiu o incidente.
+Hipótese específica — reafirmação da DER entre a comunicação da decisão administrativa e o ajuizamento da ação. Turma Recursal do RJ havia entendido que a reafirmação judicial só cabe para momento posterior ao ajuizamento. A TNU deu provimento ao incidente, com aplicação da Questão de Ordem 20.
 
 ### Precedentes TNU confirmando a tese (2025)
 | Processo | Data | Observação |

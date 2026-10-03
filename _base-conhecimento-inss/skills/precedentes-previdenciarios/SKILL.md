@@ -134,9 +134,9 @@ O Tema 317/TNU (julgado 18/09/2025, após anulação do julgamento anterior) fix
 
 ### Reafirmação da DER
 - Tema STJ 995 (julgado 22/10/2019, trânsito 29/10/2020) ↔ Tema STF 334 (direito ao melhor benefício) ↔ Tema STJ 1124 (fixação de DIB conforme origem da prova)
-- TNU — Tese consolidada (PUIL 5001623-70.2022.4.02.5005/ES, Rel. João Carlos Cabrelon de Oliveira, 06/12/2024) — reafirmação da DER administrativa para melhor benefício, afastada equiparação com desaposentação (Tema 503/STF)
+- TNU — Tese consolidada (PUIL 5001623-70.2022.4.02.5005/ES, Rel. João Carlos Cabrelon de Oliveira, julgado em 04/12/2024) (auditoria 03/10/2026) — reafirmação da DER administrativa para melhor benefício, afastada equiparação com desaposentação (Tema 503/STF)
 - TNU — Juros na reafirmação pré-ajuizamento (Processo 0003337-85.2017.4.03.6303, Rel. Giovani Bigolin, 25/06/2025) — juros desde a citação
-- TNU — 7 precedentes confirmando tese em 2025 (PUILs 5010957-87, 0504516-58, 5001603-94, 5011229-93, 0107628-06, Processo 0002826-46, PEDILEF 5053159-26)
+- TNU — 6 precedentes confirmando tese em 2025 (PUILs 5010957-87, 0504516-58, 5001603-94, 5011229-93, 0107628-06, Processo 0002826-46), além do PEDILEF 5053159-26, provido em 07/08/2024 (auditoria 03/10/2026)
 - TRF3 — ApelRemNec 5007016-49.2019.4.03.6105 (10ª Turma, Rel. Leila Paiva Morrison, 10/05/2023) — MS, reafirmação administrativa para aposentadoria especial
 - TRF4 — AC 5011644-55.2019.4.04.7204/SC — reafirmação "obrigatória" para 95 pontos
 - Para detalhamento completo dos cenários, efeitos financeiros e juros, consultar a skill `reafirmacao-der`
@@ -189,7 +189,7 @@ Precedentes STJ (leitura temporal, restritiva)
 - Tema STF 1300 (julgado 18/12/2025) ↔ Tema TNU 318 (sobrestado, questão resolvida)
 
 ### Acumulação de benefícios e redutor do art. 24 da EC 103/2019
-- ADI 7051/STF (cálculo da pensão, art. 23) ↔ Tema 1300/STF (cálculo aposentadoria por invalidez, art. 26, § 2º, III) ↔ Tema 359/STF (teto sobre soma) ↔ Temas 377 e 384/STF (cada vínculo isolado em cargos acumuláveis) ↔ Tema 627/STF (cargos constitucionalmente acumuláveis sem vedação) ↔ RE 1.510.285/DF AgR (redutor pós-óbito 13/11/2019)
+- ADI 7051/STF (cálculo da pensão, art. 23) ↔ Tema 1300/STF (cálculo aposentadoria por invalidez, art. 26, § 2º, III) ↔ Tema 359/STF (teto sobre soma) ↔ Temas 377 e 384/STF (cada vínculo isolado em cargos acumuláveis) ↔ Tema 627/STF (cargos constitucionalmente acumuláveis fora da vedação do art. 11 da EC 20/98, uso por analogia) (auditoria 03/10/2026) ↔ RE 1.510.285/DF AgR (redutor pós-óbito 13/11/2019)
 - **Controvérsia em construção na Primeira Turma do STF.** Aplicação do redutor sobre aposentadoria pré-reforma quando a pensão é posterior à EC 103/2019. Tese A (Min. Flávio Dino, atribuída) sustenta proteção do § 4º do art. 24. Tese B (Min. Alexandre de Moraes, atribuída) sustenta atração da sistemática integral pelo fato gerador novo. **Ambos os ARE divulgados em redes sociais (1.587.588/PB e 1.475.653/SE) NÃO localizados em fonte primária oficial até maio/2026.** Verificar inteiro teor antes de citar.
 - Súmula 359/STF — instrumento doutrinário central na sustentação do direito adquirido em matéria previdenciária
 - Para detalhamento completo, consultar `references/acumulacao_ec103.md`
@@ -261,7 +261,7 @@ Temas com tese firmada adicionados ou atualizados nesta revisão (março/2026)
 - IRDR 14/TRF4 (28/05/2018, trânsito 17/11/2021) — compensação por competência, limitada ao valor da mensalidade do julgado, vedada dedução de valores a maior na memória de cálculo
 - AR 5020232-32.2019.4.04.0000 (TRF4, 3ª Seção, Rel. Roger Raupp Rios) — 7 balizas de proteção ao segurado no Tema 692 (mínimo existencial, contraditório prévio, vedação de desconto em benefício mínimo)
 - Tema 317/TNU (18/09/2025) — mera menção a "dosimetria" no PPP não presume observância da NHO-01 ou NR-15, exige indicação expressa da norma
-- PUIL 5001623-70.2022.4.02.5005/ES (TNU, 06/12/2024) — tese consolidada de reafirmação da DER administrativa para melhor benefício, com 7+ precedentes TNU de 2025 confirmando
+- PUIL 5001623-70.2022.4.02.5005/ES (TNU, julgado em 04/12/2024) — tese consolidada de reafirmação da DER administrativa para melhor benefício, com ao menos 6 precedentes TNU de 2025 confirmando (auditoria 03/10/2026)
 - Processo 0003337-85.2017.4.03.6303 (TNU, 25/06/2025) — juros moratórios a partir da citação na reafirmação pré-ajuizamento
 
 Fontes primárias para atualização

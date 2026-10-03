@@ -10,29 +10,29 @@ Fonte oficial em https://www.stj.jus.br
 
 Aplicação pró-segurado. Fundamenta o cômputo de tempo rural mesmo remoto para efeitos de carência na híbrida, sob a regra do art. 48 §3º da Lei 8.213/91.
 
-### Tema 1125 STF
+### Tema 1104 STF
 
-Tese. Confirmada a constitucionalidade da aposentadoria híbrida e do reconhecimento de tempo rural para carência em condições específicas.
+Tese. "É infraconstitucional a controvérsia relativa à definição e ao preenchimento dos requisitos legais necessários para a concessão de aposentadoria híbrida." (auditoria 03/10/2026, corrigido o número, antes indicado como Tema 1125/STF, que trata da carência com auxílio-doença intercalado).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Blindagem constitucional da aposentadoria híbrida.
+Aplicação pró-segurado. Sem repercussão geral, os requisitos da híbrida seguem o Tema 1007/STJ, acima, que admite o tempo rural remoto.
 
-### Tema 245 TNU (carência com perda da qualidade)
+### Perda da qualidade e carência nas aposentadorias programáveis (art. 3º da Lei 10.666/2003)
 
-Tese. Para benefícios anteriores à Lei 13.846/2019, a perda da qualidade de segurado não implica perda da carência já cumprida.
+Fundamento legal. A perda da qualidade de segurado não é considerada para as aposentadorias por tempo de contribuição e especial e, na aposentadoria por idade, desde que cumprida a carência na data do requerimento (art. 3º, caput e §1º, da Lei 10.666/2003); a exigência de metade da carência após nova filiação (art. 27-A da Lei 8.213/91) alcança só auxílio-doença, aposentadoria por invalidez, salário-maternidade e auxílio-reclusão (auditoria 03/10/2026, retirada a atribuição ao Tema 245/TNU, que trata da qualidade de segurado após invalidação de benefício recebido de boa-fé).
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/2003/l10.666.htm
 
-Aplicação pró-segurado. Afasta interpretação restritiva da Lei 13.846/2019 para segurados com carência acumulada antes da vigência.
+Aplicação pró-segurado. Na aposentadoria programável, as contribuições anteriores à perda da qualidade contam para a carência, sem a exigência do art. 27-A (auditoria 03/10/2026).
 
 ### Tema 350 STF
 
-Tese. A decadência do direito à revisão não alcança o direito ao melhor benefício.
+Tese. "A concessão de benefícios previdenciários depende de requerimento do interessado, não se caracterizando ameaça ou lesão a direito antes de sua apreciação e indeferimento pelo INSS. A exigência de prévio requerimento não se confunde com o exaurimento das vias administrativas." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a não incidência da decadência sobre o melhor benefício).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Permite revisão de concessão em regra permanente que poderia ter sido concedida em transição mais vantajosa.
+Aplicação. A revisão para regra de transição mais vantajosa pode ser pedida diretamente em juízo (exceção do Tema 350/STF para revisão), dentro do prazo do art. 103, que alcança o melhor benefício (Tema 966/STJ) (auditoria 03/10/2026).
 
 ### Tema 334 STF (RE 630.501)
 
@@ -42,9 +42,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Fundamenta comparativo obrigatório entre regra permanente e transições.
 
-### Tema 131 TNU (tempo rural segurado especial)
+### Tema 131 TNU (aposentadoria híbrida)
 
-Tese. O tempo rural posterior a 1991 em condição de segurado especial pode ser computado para carência da aposentadoria rural por idade.
+Tese. Na aposentadoria por idade híbrida do art. 48, §3º, da Lei 8.213/91, é irrelevante se a atividade exercida na DER é rural ou urbana [NÃO CONFIRMADO] (auditoria 03/10/2026, corrigida a síntese anterior, que tratava o tema como tempo rural do segurado especial).
 
 Fonte oficial em https://www.cjf.jus.br
 
@@ -74,7 +74,7 @@ Refutação. Tema 1007 STJ. Tempo rural é aproveitável para carência na híbr
 
 Argumento adversário. O segurado perdeu a qualidade de segurado, deve cumprir nova carência integral.
 
-Refutação. Tema 245 TNU. A carência já cumprida é preservada. A perda da qualidade de segurado não zera a carência acumulada para fins de aposentadoria por idade. Acionar `periodo-graca-qualidade-segurado`.
+Refutação. Art. 3º, §1º, da Lei 10.666/2003. Na aposentadoria por idade, a perda da qualidade de segurado não é considerada quando cumprida a carência na data do requerimento, e a carência acumulada se preserva (auditoria 03/10/2026, retirado o Tema 245/TNU, que trata da qualidade de segurado após invalidação de benefício recebido de boa-fé). Acionar `periodo-graca-qualidade-segurado`.
 
 ### Argumento 5 — Exigência de CNIS sem pendências
 
@@ -92,7 +92,7 @@ Refutação. Art. 96 IV da Lei 8.213/91 e Tema 609 STJ. A indenização de contr
 
 Argumento adversário. A DIB é fixada na DER, sem possibilidade de anteceder.
 
-Refutação. Tema 334 STF. A DIB pode ser fixada na data do preenchimento dos requisitos, ainda que anterior à DER, observado o direito ao melhor benefício. Efeitos financeiros retroagem à DER ou à data indicada judicialmente, conforme Tema 995 STJ.
+Refutação. Tema 334 STF. A tese manda calcular a RMI pelo quadro mais favorável, respeitadas a decadência e a prescrição; trata do cálculo e não antecipa a DIB para antes da DER [NÃO CONFIRMADO] (auditoria 03/10/2026). Efeitos financeiros retroagem à DER ou à data indicada judicialmente, conforme Tema 995 STJ.
 
 ### Argumento 8 — Aplicação do fator previdenciário
 
@@ -110,7 +110,7 @@ Terceiro, verificar acerto de CNIS para garantir carência integral.
 
 Quarto, considerar indenização de contribuições faltantes quando estratégico.
 
-Quinto, em caso de indeferimento por suposta falta de carência, impugnar com Tema 245 TNU e `periodo-graca-qualidade-segurado`.
+Quinto, em caso de indeferimento por suposta falta de carência, impugnar com o art. 3º da Lei 10.666/2003 (auditoria 03/10/2026, retirado o Tema 245/TNU) e `periodo-graca-qualidade-segurado`.
 
 Sexto, em caso de CNIS com pendências, impugnar com `cnis-acerto-indicadores`.
 

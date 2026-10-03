@@ -96,7 +96,7 @@ Ao redigir.
 
 ## Particularidades do BPC
 
-Lei 8.742/93 (LOAS). Decreto 6.214/2007. Portaria Conjunta SPS/INSS/SNAS 2/2014 (BPC biopsicossocial). Portaria 37/2026 (IFBrM). Portaria 34/2025 (TCQ).
+Lei 8.742/93 (LOAS). Decreto 6.214/2007. Portaria Conjunta MDS/INSS 2/2015 (BPC biopsicossocial) (auditoria 03/10/2026). Portaria 37/2026 (IFBrM). Portaria 34/2025 (TCQ).
 
 Renda per capita ≤ 1/4 SM (regra geral). Tema 27/STF flexibiliza. Decreto 12.534/2025 inclui PBF na renda (discutível).
 

@@ -1,15 +1,15 @@
 ---
 name: base-aposentadoria-especial-transicao-ec103
-description: "Aposentadoria especial de transição da EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar aposentadoria especial pós-reforma, art. 21 EC 103, transição aposentadoria especial, aposentadoria especial de pontos, pontos 66 76 86 aposentadoria especial, art. 19 §1º I EC 103, idade mínima aposentadoria especial pós-reforma, 55 58 60 anos aposentadoria especial, atividade especial 15 20 25 anos pós-reforma, risco alto médio baixo, insalubre periculoso, conversão tempo especial EC 103, art. 25 §2º EC 103, RMI aposentadoria especial pós-reforma, preservação tempo especial antes 13/11/2019, direito ao melhor benefício especial, Tema 709 STF, STF ADI 4827, afastamento art. 57 §8º Lei 8.213, vedação retorno atividade especial, aposentadoria especial agentes cancerígenos, PPP pós-reforma, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, auditoria-ppp, base-especial-ruido, base-especial-epi, base-especial-agentes-quimicos e precedentes-previdenciarios."
+description: "Aposentadoria especial de transição da EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar aposentadoria especial pós-reforma, art. 21 EC 103, transição aposentadoria especial, aposentadoria especial de pontos, pontos 66 76 86 aposentadoria especial, art. 19 §1º I EC 103, idade mínima aposentadoria especial pós-reforma, 55 58 60 anos aposentadoria especial, atividade especial 15 20 25 anos pós-reforma, risco alto médio baixo, insalubre periculoso, conversão tempo especial EC 103, art. 25 §2º EC 103, RMI aposentadoria especial pós-reforma, preservação tempo especial antes 13/11/2019, direito ao melhor benefício especial, Tema 709 STF, afastamento art. 57 §8º Lei 8.213, vedação retorno atividade especial, aposentadoria especial agentes cancerígenos, PPP pós-reforma, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Cruza com peticao-previdenciaria, auditoria-ppp, base-especial-ruido, base-especial-epi, base-especial-agentes-quimicos e precedentes-previdenciarios."
 ---
 
-## ATUALIZAÇÃO CRÍTICA, ADI 6309 JULGADA (12/07/2026, conferida na notícia oficial do STF de 03/06/2026 via navegador)
+## ATUALIZAÇÃO CRÍTICA, ADI 6309 JULGADA EM 03/06/2026 (registro de 12/07/2026, conferida na notícia oficial do STF via navegador)
 
 O STF, por maioria, julgou a ADI 6309 (CNTI) em 03/06/2026 com TRÊS definições distintas sobre a aposentadoria especial da EC 103/2019. Primeira, INCONSTITUCIONAL a exigência de idade mínima para a aposentadoria especial (voto condutor do Min. André Mendonça, a idade mínima obriga quem já cumpriu 15, 20 ou 25 anos de exposição a permanecer exposto ao agente nocivo, contrariando a finalidade protetiva do benefício). Segunda, CONSTITUCIONAL a vedação de conversão de tempo especial em comum para períodos posteriores à reforma. Terceira, CONSTITUCIONAL a nova fórmula de cálculo da especial.
 
 Consequências operacionais. (a) Segurado que completa 15, 20 ou 25 anos de atividade especial após 13/11/2019 pode requerer a aposentadoria especial SEM idade mínima. (b) A regra de transição por pontos do art. 21 da EC 103 segue existindo como alternativa, comparar sempre a RMI dos dois caminhos. (c) Indeferimentos anteriores fundados exclusivamente na falta de idade mínima são revisáveis, observadas decadência e prescrição. (d) A parte da skill que trata a vedação de conversão pós-reforma e o cálculo como pontos atacáveis por inconstitucionalidade está SUPERADA, o STF os validou.
 
-RESSALVAS OBRIGATÓRIAS antes de usar em peça. A notícia oficial não indica o dispositivo exato invalidado nem eventual modulação de efeitos. Conferir a ata de julgamento e o acórdão da ADI 6309 no portal do STF antes de pedir efeitos retroativos ou transcrever o dispositivo. Pedido prospectivo de concessão sem idade mínima está amparado pela decisão de mérito noticiada.
+RESSALVAS OBRIGATÓRIAS antes de usar em peça. O portal do STF registra que o Tribunal, por maioria, declarou inconstitucional apenas o art. 19, §1º, I, alíneas a, b e c, da EC 103/2019, que fixam as idades mínimas de 55, 58 e 60 anos. O acórdão foi publicado em 02/10/2026. O registro não traz tese nem modulação de efeitos, e o inteiro teor ainda não foi lido; conferi-lo antes de pedir efeitos retroativos (auditoria 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=5848987). Pedido prospectivo de concessão sem idade mínima está amparado pela decisão de mérito noticiada.
 
 
 # Aposentadoria Especial na Transição da EC 103/2019
@@ -22,11 +22,11 @@ Skill temática pró-segurado do acervo do escritório Paulo Roberto Tercini Fil
 
 EC 103/2019, art. 21. Regra de transição da aposentadoria especial por pontos. Combina tempo mínimo de exposição (15, 20 ou 25 anos) com soma de idade e tempo de contribuição (66, 76 e 86 pontos respectivamente).
 
-EC 103/2019, art. 19, §1º, I. Regra permanente da aposentadoria especial. Idade mínima (55 anos para risco alto, 58 anos para risco médio, 60 anos para risco baixo) combinada com tempo mínimo de exposição (15, 20 ou 25 anos).
+EC 103/2019, art. 19, §1º, I. Regra permanente da aposentadoria especial. Tempo mínimo de exposição de 15, 20 ou 25 anos. As idades mínimas de 55, 58 e 60 anos das alíneas a, b e c foram declaradas inconstitucionais na ADI 6309 (auditoria 03/10/2026).
 
 EC 103/2019, art. 25, §2º. Permite a conversão do tempo especial em comum para períodos cumpridos até 13 de novembro de 2019.
 
-Lei 8.213/91, art. 57. Disciplina a aposentadoria especial. Art. 57, §8º, veda o retorno à atividade especial após a concessão, com controvérsia na jurisprudência.
+Lei 8.213/91, art. 57. Disciplina a aposentadoria especial. Art. 57, §8º, veda o retorno à atividade especial após a concessão, vedação que o STF declarou constitucional no Tema 709. É tese adversa, e o caminho do segurado é o item II, que fixa a DIB na DER e só cessa o pagamento se ele permanecer ou retornar ao labor nocivo após a implantação (auditoria 03/10/2026).
 
 Decreto 3.048/99, art. 64 e seguintes. Regulamenta a aposentadoria especial.
 
@@ -46,15 +46,15 @@ Primeiro, segurado com 25 anos de atividade especial completos em 13 de novembro
 
 Segundo, segurado com 20 anos de atividade especial em 13 de novembro de 2019 e continuidade da exposição. Avaliar a transição por pontos (art. 21) conforme anos adicionais. Por exemplo, atingindo 25 anos de exposição e 86 pontos, elegível pela transição.
 
-Terceiro, metalúrgico com 15 anos de atividade especial em 13 de novembro de 2019, continua exposto. Aos 18 anos de exposição, pode converter os 18 anos em comum (art. 25 §2º EC 103) e agregar a tempo comum para outras regras.
+Terceiro, metalúrgico com 15 anos de atividade especial em 13 de novembro de 2019, continua exposto. Aos 18 anos de exposição, só pode converter em comum os 15 anos cumpridos até 13/11/2019 (art. 25 §2º EC 103); os 3 anos posteriores entram sem conversão e se agregam ao tempo comum para outras regras (auditoria 03/10/2026).
 
-Quarto, trabalhador exposto a cancerígenos (LINACH). Aplica-se o art. 64 do Decreto 3.048/99 com especialidade qualitativa. Tema 1090 STJ afasta neutralização por EPI para cancerígenos. Acionar `base-especial-epi` e `base-especial-agentes-quimicos`.
+Quarto, trabalhador exposto a cancerígenos (LINACH). Aplica-se o art. 68, §4º, do Decreto 3.048/99, que remete à avaliação qualitativa do §2º e ao caput do art. 64. Na redação do Decreto 10.410/2020, medidas de controle que eliminem a nocividade descaracterizam a exposição, texto adverso diante do qual o segurado exige do LTCAT a prova dessa eliminação. O STJ, nos EDcl no REsp 2.116.343/RJ do Tema 1090, reconheceu os cancerígenos como hipótese excepcional em que o EPI não afasta a contagem especial (auditoria 03/10/2026). Acionar `base-especial-epi` e `base-especial-agentes-quimicos`.
 
 Quinto, enfermeiro exposto a agentes biológicos. Tema 211 TNU e Tema 205 TNU. Acionar `base-especial-agentes-biologicos`.
 
 Sexto, eletricitário exposto a risco elétrico acima de 250V. Tema 210 TNU. Acionar `base-especial-eletricidade-periculosidade`.
 
-Sétimo, segurado que completa 15 anos de exposição a risco alto pós-reforma. Regra permanente (art. 19 §1º I). Idade mínima de 55 anos.
+Sétimo, segurado que completa 15 anos de exposição a risco alto pós-reforma. Regra permanente (art. 19 §1º I). A idade mínima de 55 anos foi declarada inconstitucional na ADI 6309 (auditoria 03/10/2026).
 
 ## Regra e estratégia
 
@@ -64,7 +64,7 @@ Comparativo obrigatório entre quatro cenários. Primeiro, direito adquirido pr�
 
 Em caso de PPP deficiente, acionar `retificacao-ppp` para notificação da empresa.
 
-Em caso de ausência de PPP (empresa extinta ou inadimplente), invocar prova emprestada (IEAN CNIS), PGR ou NR-1 e Enunciado 91 FONAJEF. Acionar `defesa-probatoria-especial`.
+Em caso de ausência de PPP (empresa extinta ou inadimplente), invocar prova emprestada (IEAN CNIS), PGR ou NR-1 e, no JEF, a prova técnica simplificada do Enunciado 225 FONAJEF [NÃO CONFIRMADO]. O Enunciado 91 FONAJEF não supre o PPP e pode ser invocado pelo INSS contra perícia complexa no JEF (auditoria 03/10/2026). Acionar `defesa-probatoria-especial`.
 
 ## MCPs da casa
 
@@ -90,9 +90,9 @@ Ao defender prova, acione `defesa-probatoria-especial`.
 
 ## Alertas
 
-Primeiro, a RMI da aposentadoria especial pós-reforma segue a regra do art. 26 EC 103 (60% + 2% por ano excedente ao tempo mínimo). Sem a regra integral do pedágio 100%. O impacto na renda pode ser significativo.
+Primeiro, a RMI da aposentadoria especial pós-reforma segue o art. 26, §2º, IV, e §5º, da EC 103: 60% mais 2% por ano que exceder 20 anos de contribuição, para o homem nas especiais de 20 e 25 anos, ou 15 anos, para a mulher e na especial de 15 anos (auditoria 03/10/2026). Sem a regra integral do pedágio 100%. O impacto na renda pode ser significativo.
 
-Segundo, o art. 57 §8º da Lei 8.213/91 veda o retorno à atividade especial após concessão de aposentadoria especial. A ADI 1721 e julgados posteriores têm controvérsia sobre extensão dessa vedação. Acionar `precedentes-previdenciarios`.
+Segundo, o art. 57 §8º da Lei 8.213/91 veda o retorno à atividade especial após concessão de aposentadoria especial. O STF declarou a vedação constitucional no Tema 709 (RE 791.961), tese adversa cujo item II fixa a DIB na DER e só cessa o pagamento se o segurado permanecer ou retornar ao labor nocivo após a implantação (auditoria 03/10/2026, retirada a ADI 1721, que trata do art. 453 da CLT). Acionar `precedentes-previdenciarios`.
 
 Terceiro, em caso de conversão de tempo especial em comum para períodos pré-reforma, aplicar os fatores tradicionais (1,40 para homem e 1,20 para mulher para risco baixo, com variações). A conversão só é vedada para tempo pós-reforma.
 

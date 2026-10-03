@@ -363,9 +363,9 @@ A reclamação tem contornos ESTREITOS. As decisões da TNU não têm efeito vin
 
 **QO 10/TNU.** Não cabe PUIL com tese inovadora não ventilada anteriormente.
 
-**QO 13/TNU.** Sobrestamento dos PUIL idênticos em curso.
+**QO 13/TNU (alterada em 18/09/2019).** Não se admite PUIL quando a jurisprudência da TNU se firmou no mesmo sentido do acórdão recorrido (auditoria 03/10/2026).
 
-**QO 17/TNU.** Anulação do acórdão por omissão impugnada em ED.
+**QO 17/TNU.** Anulação do acórdão que decide tema alheio à controvérsia (DJ 17/06/2005); a omissão impugnada em ED é hipótese da QO 47, que remete a esta (auditoria 03/10/2026).
 
 **QO 24/TNU.** Não cabe PUIL contra acórdão no mesmo sentido do STJ.
 
@@ -377,7 +377,7 @@ A reclamação tem contornos ESTREITOS. As decisões da TNU não têm efeito vin
 
 **QO 47/TNU.** Em caso de omissão expressamente impugnada em ED na origem, admite-se anulação do acórdão por PUIL desde que apresentado paradigma válido (Sessão 15.02.2023, precedente 0001361-68.2017.4.03.6327).
 
-**QO 48/TNU.** Precedentes do STF não servem de paradigma em PUIL; o paradigma de TRF é vedado pelo art. 14, §2º, da Lei 10.259/2001 (auditoria 25/07/2026).
+**QO 48/TNU.** Precedentes do STF não servem de paradigma em PUIL (auditoria 03/10/2026).
 
 **QO 49/TNU.** Posterior aglutinação de PUIL a outro afetado como representativo de controvérsia (Sessão 15.09.2023, precedente 5001931-18.2022.4.04.7118).
 
@@ -409,7 +409,7 @@ A reclamação tem contornos ESTREITOS. As decisões da TNU não têm efeito vin
 
 ## 27 DIALETICIDADE RECURSAL
 
-QUESTÃO DE ORDEM 56/TNU (cumulada à orientação geral). O recorrente deve impugnar TODOS os fundamentos autônomos do acórdão recorrido. Falta de impugnação de fundamento autônomo gera inadmissão (analogia à Súmula 283/STF).
+QUESTÃO DE ORDEM 56/TNU. "Não se conhece de pedido de uniformização ... cujas razões recursais não impugnam especificamente os fundamentos do acórdão recorrido" (sessão de 18/09/2025, precedente 5027080-80.2021.4.04.7108/RS). A decisão com mais de um fundamento suficiente exige razões que abranjam TODOS eles, sob pena de inadmissão (QO 18/TNU; analogia à Súmula 283/STF) (auditoria 03/10/2026).
 
 CHECKLIST DE DIALETICIDADE.
 - Identificar TODOS os fundamentos da decisão recorrida (não só o principal).

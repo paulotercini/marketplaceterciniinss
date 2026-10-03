@@ -1,6 +1,6 @@
 ---
 name: base-modelo-relatorio-medico-auxilio-acidente-b94
-description: "Modelo narrativo enxuto (1 folha) de relatório médico para auxílio-acidente B94, com sub-modelos por especialidade. Foco em SEQUELA consolidada e redução da capacidade laborativa. Use SEMPRE que mencionar modelo relatório médico B94, modelo laudo auxílio-acidente, modelo laudo sequela, modelo laudo consolidação lesões, relatório ortopedista B94, relatório psiquiatra B94, relatório reumatologista B94, relatório clínico geral B94, relatório oftalmologista B94, relatório cardiologista B94, sequela permanente, consolidação lesões, redução capacidade laborativa, Anexo III Decreto 3.048, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, nexo acidentário NTEP B94, carta médico B94, gerar relatório auxílio-acidente. Cruza com base-validacao-formal-laudo-medico-checklist-ab, base-auxilio-acidente-b94-pos-reforma, auxilio-acidente-b94, base-b94-anexo-iii-quadros, base-b94-sequela-minima-tema201, base-b94-nexo-acidentario-ntep, auditoria-laudo-pericial, ntep-nexo-acidentario, peticao-previdenciaria."
+description: "Modelo narrativo enxuto (1 folha) de relatório médico para auxílio-acidente B94, com sub-modelos por especialidade. Foco em SEQUELA consolidada e redução da capacidade laborativa. Use SEMPRE que mencionar modelo relatório médico B94, modelo laudo auxílio-acidente, modelo laudo sequela, modelo laudo consolidação lesões, relatório ortopedista B94, relatório psiquiatra B94, relatório reumatologista B94, relatório clínico geral B94, relatório oftalmologista B94, relatório cardiologista B94, sequela permanente, consolidação lesões, redução capacidade laborativa, Anexo III Decreto 3.048, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, nexo acidentário NTEP B94, carta médico B94, gerar relatório auxílio-acidente. Cruza com base-validacao-formal-laudo-medico-checklist-ab, base-auxilio-acidente-b94-pos-reforma, auxilio-acidente-b94, base-b94-anexo-iii-quadros, base-b94-sequela-minima-sumula88-tnu, base-b94-nexo-acidentario-ntep, auditoria-laudo-pericial, ntep-nexo-acidentario, peticao-previdenciaria."
 ---
 
 ## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
@@ -63,7 +63,7 @@ Parágrafo central. Demonstrar irreversibilidade. Material de síntese definitiv
 
 ### 3.5. Nexo causal
 
-Hipótese adicional obrigatória: acidente de QUALQUER natureza (art. 86, caput, Lei 8.213/91; Tema 416 STJ) — o nexo laboral só é exigível quando se pleiteia a natureza acidentária/competência estadual.
+Hipótese adicional obrigatória: acidente de QUALQUER natureza (art. 86, caput, Lei 8.213/91; auditoria 03/10/2026, retirado o Tema 416/STJ, cuja tese fala em acidente do trabalho e trata da lesão mínima) — o nexo laboral só é exigível quando se pleiteia a natureza acidentária/competência estadual.
 
 Indicar expressamente.
 
@@ -136,9 +136,9 @@ Cruzamento com `base-b94-anexo-iii-quadros`.
 
 ### 6.5. Sequela mínima
 
-Tema 201/TNU. Sequela mínima admite B94 se há demonstração funcional.
+Súmula 88/TNU e Tema 416/STJ. Sequela mínima admite B94 se há demonstração funcional (auditoria 03/10/2026).
 
-Cruzamento com `base-b94-sequela-minima-tema201`.
+Cruzamento com `base-b94-sequela-minima-sumula88-tnu`.
 
 ### 6.6. Nexo acidentário
 
@@ -202,7 +202,7 @@ Eu gero o relatório personalizado em formato .docx pronto para entrega ao médi
 
 `base-b94-anexo-iii-quadros` para o Anexo III exemplificativo.
 
-`base-b94-sequela-minima-tema201` para sequela mínima.
+`base-b94-sequela-minima-sumula88-tnu` para sequela mínima.
 
 `base-b94-nexo-acidentario-ntep` para o NTEP em B94.
 

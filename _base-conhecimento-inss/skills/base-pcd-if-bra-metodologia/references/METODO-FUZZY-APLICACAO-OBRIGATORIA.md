@@ -62,11 +62,11 @@ Razão de ser. Dar peso à limitação mais relevante para aquele tipo de defici
 | Auditiva | A surdez ocorreu antes dos seis anos de idade? |
 | Visual | A pessoa já não enxergava ao nascer? |
 | Motora | A pessoa se desloca exclusivamente em cadeira de rodas? |
-| Intelectual ou mental | A pessoa pode ficar sozinha em segurança? |
+| Intelectual ou mental | Não pode ficar sozinho em segurança? (auditoria 03/10/2026) |
 
 As perguntas costumam constar ao FINAL dos laudos médico e social. Resposta positiva aciona o Fuzzy.
 
-Atenção na deficiência intelectual ou mental. A pergunta é formulada pela positiva ("pode ficar sozinha em segurança?"), de modo que a resposta que aciona o Fuzzy em favor do segurado é a que revela a impossibilidade de permanecer só com segurança. Ler a pergunta com cuidado antes de concluir pela aplicação, e registrar no relatório do assistente a realidade concreta da supervisão que a pessoa exige.
+Atenção na deficiência intelectual ou mental. A pergunta é formulada pela negativa ("não pode ficar sozinho em segurança"), e a resposta afirmativa, que revela a impossibilidade de permanecer só com segurança, aciona o Fuzzy em favor do segurado (auditoria 03/10/2026). Ler a pergunta com cuidado antes de concluir pela aplicação, e registrar no relatório do assistente a realidade concreta da supervisão que a pessoa exige.
 
 ## Checklist de verificação obrigatória (rodar em todo caso)
 
@@ -107,6 +107,6 @@ Bloco de pedido. Esclarecimentos e complementação em primeiro lugar. Persistin
 
 ## Rigor de fonte e pendência
 
-Fonte deste reference. Artigo do IEPREV de 03/08/2026, fonte especializada de reconhecida qualidade no meio previdenciário. A mecânica descrita (três hipóteses, replicação da menor pontuação, tabelas de domínios sensíveis e perguntas emblemáticas) é coerente com a estrutura de sete domínios e escala 25/50/75/100 que a base já registra a partir da Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014.
+Fonte deste reference. Artigo do IEPREV de 03/08/2026, fonte especializada de reconhecida qualidade no meio previdenciário. A mecânica descrita (três hipóteses, replicação da menor pontuação, tabelas de domínios sensíveis e perguntas emblemáticas) é coerente com a estrutura de sete domínios e escala 25/50/75/100 que a base já registra a partir da Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 PENDÊNCIA DE CONFERÊNCIA. O artigo nomeia o instrumento como IFBrM (Índice de Funcionalidade Brasileiro Modificado), enquanto a base trata, na aposentadoria PCD da LC 142/2013, do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado) da Portaria Interministerial 1/2014. Os dois instrumentos compartilham a estrutura de sete domínios e a escala de pontuação, e o IFBrM é o nome usado no BPC. Antes de citar o NOME do instrumento em peça, conferir qual se aplica ao benefício do caso, IF-BrA para LC 142 e IFBrM para BPC. A MECÂNICA do Fuzzy aqui descrita vale para a avaliação biopsicossocial em ambos, mas a nomenclatura não é intercambiável em citação formal. Conferir a redação literal da metodologia na Portaria Interministerial 1/2014 pelo repositório da `base-legislacao-fontes-primarias` antes de transcrever regra em peça.

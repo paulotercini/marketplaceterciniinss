@@ -14,11 +14,11 @@ Cobrança por ordinária.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Tema 394 STJ
+### Pagamento pretérito no MS
 
-Pretérito.
+Segue as Súmulas 269 e 271 STF (auditoria 03/10/2026, retirado o Tema 394/STJ, que trata de depósito judicial e IRPJ).
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://portal.stf.jus.br
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
@@ -92,7 +92,7 @@ Refutação. Trânsito em julgado consolida.
 
 ### Argumento 10 — Execução provisória
 
-Argumento adversário. Tema 28 STF.
+Argumento adversário. Não cabe execução contra a Fazenda antes do trânsito em julgado (auditoria 03/10/2026).
 
 Refutação. Obrigação de fazer é imediata, não demanda execução provisória monetária.
 
@@ -126,7 +126,7 @@ Sexto, recursos.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 394 STJ.
+Acompanhar o STJ sobre efeitos patrimoniais do MS (auditoria 03/10/2026, retirado o Tema 394/STJ, que é tributário).
 
 Revalidar Súmulas 269 e 271 STF.
 

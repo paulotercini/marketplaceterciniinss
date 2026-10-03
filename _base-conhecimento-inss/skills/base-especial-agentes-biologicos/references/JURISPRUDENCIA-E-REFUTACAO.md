@@ -36,13 +36,13 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado. Base constitucional para invocar o Tema 1090 STJ como exceção legítima, incluindo biológicos.
 
-### PEDILEF 5000864 (estudo de caso mencionado na TNU)
+### PEDILEF 5000864-96.2023.4.04.7016/PR
 
-Tese. Reconhecimento da especialidade de motorista de SAMU com fundamento no Tema 211, afastando a alegação de exposição eventual.
+Tese. Na aplicação do Tema 211, exige PPP ou LTCAT que demonstre contato direto e efetivo com pacientes; o acórdão não trata de motorista de SAMU [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Precedente concreto para socorristas, motoristas de ambulância e condutores de SAMU.
+Aplicação pró-segurado. Em socorristas e motoristas de ambulância, instruir o pedido com PPP ou LTCAT que descreva o contato direto e efetivo com pacientes (auditoria 03/10/2026).
 
 ## 2. Refutação aos argumentos típicos do INSS
 
@@ -62,7 +62,7 @@ Refutação. O Tema 205 TNU dispensa contato direto permanente. A presença em a
 
 Argumento adversário. O campo 15.7 do PPP declara EPI eficaz.
 
-Refutação. A declaração é unilateral e o campo 15.7 registra ENTREGA, não eficácia real em campo. O IRDR 15 do TRF4 reconhece a ineficácia em biológicos, o Tema 383 da TNU e os Pareceres 2/2025 e 3/2025 da Fundacentro sustentam a limitação técnica dos equipamentos, e o Tema 1090 do STJ resolve a dúvida em favor do autor. Combinar com `base-especial-epi` e Tema 213 TNU para inversão do ônus probatório.
+Refutação. A declaração é unilateral e o campo 15.7 registra ENTREGA, não eficácia real em campo. O IRDR 15 do TRF4 reconhece a ineficácia em biológicos, o Tema 383 da TNU e os Pareceres 2/2025 e 3/2025 da Fundacentro sustentam a limitação técnica dos equipamentos, e o Tema 1090 do STJ resolve a dúvida em favor do autor. Combinar com `base-especial-epi` e com o Tema 213/TNU, que admite desafiar judicialmente a informação de EPI eficaz, sem pedir inversão do ônus, rejeitada na razão de decidir do Tema 1090/STJ (auditoria 03/10/2026).
 
 ### Argumento 4 — Rol taxativo do Anexo IV
 

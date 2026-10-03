@@ -20,7 +20,7 @@ EC 20/98 e EC 103/2019. Não alteraram estruturalmente o B25.
 
 Primeiro, qualidade de segurado na data da prisão.
 
-Segundo, baixa renda do segurado (último salário-de-contribuição ou salário-de-benefício não superior ao teto).
+Segundo, baixa renda do segurado, aferida pela média dos salários de contribuição dos 12 meses anteriores ao mês da prisão (art. 80, §4º, da Lei 8.213/91); o último salário de contribuição vale só para prisões anteriores a 18/01/2019 (auditoria 03/10/2026).
 
 Terceiro, carência de 24 contribuições.
 
@@ -30,9 +30,9 @@ Quinto, dependentes habilitados.
 
 ## 3. Critério de baixa renda
 
-Verificado pela renda mensal bruta do segurado no mês da prisão. Em caso de desemprego, a jurisprudência reconhece renda zero como baixa renda (REsp 2.240.220 STJ).
+Em prisão anterior à MP 871/2019, vale o último salário de contribuição, e o desempregado sem renda atende o critério (Tema 896/STJ). Em prisão posterior, vale a média dos salários de contribuição dos 12 meses anteriores ao mês da prisão (art. 80, §4º, da Lei 8.213/91), e sem salário de contribuição no período o segurado é de baixa renda (art. 383, §5º, da IN 128/2022) (auditoria 03/10/2026, retirado o REsp 2.240.220, que integra o Tema 1421/STJ).
 
-Tema 357 TNU orienta a média de 12 salários-de-contribuição imediatamente anteriores à prisão com divisor fixo 12, mesmo com períodos sem contribuição.
+Havendo menos de 12 salários de contribuição no período, o divisor é o número de salários existentes, e não 12 (Tema 310/TNU e art. 383, §6º, da IN 128/2022) (auditoria 03/10/2026, retirado o Tema 357/TNU, que trata da progressão de regime).
 
 ## 4. Duração e cessação
 
@@ -40,17 +40,17 @@ B25 dura enquanto o segurado permanecer em regime fechado. Cessa com a progress�
 
 ## 5. Cenários operacionais pró-segurado
 
-### Cenário 1 — Prisão anterior à Lei 13.846/2019
+### Cenário 1 — Prisão anterior à MP 871/2019 (18/01/2019)
 
 Segurado preso em 05/2018. Aplica regra anterior (Lei 10.666/2003). Admite regime semiaberto. Sem exigência de 24 contribuições como carência rígida. Tempus regit actum.
 
 ### Cenário 2 — Segurado desempregado
 
-Segurado preso em 2021, desempregado há 8 meses na prisão. Renda zero. Invocar REsp 2.240.220 STJ para reconhecer baixa renda.
+Segurado preso em 2021, desempregado há 8 meses na prisão. Como a prisão é posterior à MP 871/2019, vale a média dos salários de contribuição dos 12 meses anteriores, com divisor igual ao número de salários existentes (Tema 310/TNU); baixa renda automática só sem nenhum salário de contribuição no período (art. 383, §5º, da IN 128/2022). O Tema 896/STJ rege apenas prisões anteriores à MP (auditoria 03/10/2026, retirado o REsp 2.240.220, que integra o Tema 1421/STJ).
 
 ### Cenário 3 — Renda ligeiramente acima do teto
 
-Segurado com último salário R$ 200 acima do teto. Dependentes em extrema vulnerabilidade. Invocar Tema 896 STJ para flexibilização em casos excepcionais.
+Segurado com último salário R$ 200 acima do teto. A flexibilização só cabe em prisão anterior à MP 871/2019 com excedente ínfimo (Tema 1162/STJ, item i); depois da MP é vedada, salvo falta de correção anual do limite (item ii) (auditoria 03/10/2026, retirado o Tema 896/STJ, que trata da renda zero do desempregado).
 
 ### Cenário 4 — Progressão de regime
 
@@ -70,7 +70,7 @@ Segurado preso por impossibilidade de pagar fiança. Situação de baixa renda e
 
 ### Cenário 8 — Segurado que completou aposentadoria antes da prisão
 
-Já aposentado. B25 com base no valor da aposentadoria. Direito integral.
+Já aposentado. Se o segurado está em gozo de aposentadoria, não cabe B25 (art. 80, caput, da Lei 8.213/91); a vedação não alcança quem só reunia os requisitos, sem aposentadoria concedida (auditoria 03/10/2026).
 
 ## 6. Documentos essenciais
 

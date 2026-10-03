@@ -8,15 +8,15 @@ RE 661.256. Desaposentação vedada, por ausência de previsão legal.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Tema 381 STF
+### Devolução de valores em boa-fé
 
-Devolução de valores em boa-fé.
+Nos embargos de declaração do RE 661.256 (Tema 503 STF), o STF dispensou a devolução dos valores recebidos de boa-fé até aquele julgamento [NÃO CONFIRMADO]. O Tema 381 STF, antes citado aqui, trata do Estatuto do Idoso em plano de saúde (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Súmula 557 STJ
+### Súmula 557 STJ (não aplicável à desaposentação)
 
-Vedação pacificada em desaposentação.
+Trata da RMI da aposentadoria por invalidez precedida de auxílio-doença (Tema 704/STJ) e não de desaposentação, cuja vedação decorre do Tema 503/STF (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -56,7 +56,7 @@ Refutação. Honestidade radical. Tese isolada rejeitada. Alternativas existem. 
 
 Argumento adversário. Exigência em caso de renúncia.
 
-Refutação. Tema 381 STF. Boa-fé afasta devolução.
+Refutação. Boa-fé afasta devolução, conforme os embargos de declaração do RE 661.256 (Tema 503 STF) [NÃO CONFIRMADO] (auditoria 03/10/2026, retirado o Tema 381 STF).
 
 ### Argumento 3 — Contribuição pós-DIB sem efeito
 
@@ -92,7 +92,7 @@ Refutação. Tema 334 STF admite direito adquirido em casos específicos. Analis
 
 Argumento adversário. Cálculo.
 
-Refutação. Tema 381 STF. Valor líquido preserva o benefício.
+Refutação. Valor líquido preserva o benefício (auditoria 03/10/2026, retirado o Tema 381 STF).
 
 ### Argumento 9 — Demandas em aberto
 

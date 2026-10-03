@@ -35,9 +35,9 @@ ATENÇÃO. Prazos do CPC são contados em DIAS ÚTEIS (art. 219 CPC), exceto ond
 Prazos.
 - Recurso inominado. 10 dias úteis (art. 42 Lei 9.099/95 c/c art. 1º Lei 10.259/2001).
 - Embargos de declaração. 5 dias úteis.
-- PUIL (à TRU ou TNU). 15 dias úteis (art. 12 RITNU c/c art. 14 Lei 10.259).
+- PUIL à TNU. 15 dias úteis a contar da intimação do acórdão recorrido (art. 12, caput, RITNU; dias úteis pelo art. 27, § 2º). PUIL à TRU. Prazo do regimento da TRU da região, não conferido (auditoria 03/10/2026).
 
-ATENÇÃO. O JEF segue dias úteis também após CPC/15. Verificar Súmula 53/TNU (suspensão de prazo no JEF para recesso forense).
+ATENÇÃO. O JEF segue dias úteis também após CPC/15. Verificar no calendário do tribunal a suspensão de prazo no recesso forense (auditoria 03/10/2026, retirada a Súmula 53/TNU, que trata de incapacidade preexistente ao reingresso).
 
 ### Sub-cenário 1.3 - CRPS (Recursos Administrativos)
 
@@ -52,10 +52,10 @@ ATENÇÃO. Prazos do CRPS são em DIAS CORRIDOS, não em dias úteis. Erro frequ
 ### Sub-cenário 1.4 - TNU (Manual de Admissibilidade Recursal 10ª edição)
 
 Prazos.
-- PUIL/PEDILEF à TNU. 15 dias úteis (art. 12 RITNU).
-- Embargos de declaração na TNU. 5 dias úteis (art. 16 RITNU c/c art. 1.023 CPC).
-- Agravo nos próprios autos contra inadmissão. 15 dias úteis (art. 14 §2º RITNU).
-- Agravo interno contra decisão monocrática. 15 dias úteis (art. 14 §3º RITNU).
+- PUIL/PEDILEF à TNU. 15 dias úteis (art. 12, caput, RITNU; dias úteis pelo art. 27, § 2º).
+- Embargos de declaração na TNU. 5 dias úteis a contar da intimação (art. 30 RITNU c/c art. 1.023 CPC) (auditoria 03/10/2026).
+- Agravo nos próprios autos contra inadmissão. 15 dias úteis (art. 14 §2º RITNU), contra decisão de inadmissibilidade fundada nos incisos I e V do art. 14.
+- Agravo interno contra decisão do relator. 15 dias úteis (art. 29 RITNU). Agravo interno contra decisão de admissibilidade fundada nos incisos II e III do art. 14. 15 dias úteis (art. 14, § 3º, RITNU), julgado pela turma que prolatou o acórdão (auditoria 03/10/2026).
 
 ### Rotina de verificação OBRIGATÓRIA antes de protocolo recursal
 

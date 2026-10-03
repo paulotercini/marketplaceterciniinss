@@ -18,7 +18,7 @@ Decreto 8.424/2015. Regulamenta o seguro-defeso.
 
 Lei 8.213/91, art. 11, VII, b. Pescador artesanal como segurado especial.
 
-Lei 8.213/91, art. 25, parágrafo único. Exigência de 12 meses de atividade pesqueira.
+Lei 10.779/2003. Exigência de 12 meses de atividade pesqueira (auditoria 03/10/2026, o requisito vem da lei específica, e não do art. 25 da Lei 8.213/91).
 
 Instruções Normativas do IBAMA e portarias interministeriais. Fixam o defeso por espécie e por região.
 
@@ -40,7 +40,7 @@ Quinto, apresentar documentos que comprovem a pesca (notas de compra e venda, GT
 
 ## 3. Duração e valor
 
-Três parcelas mensais no valor de 1 salário mínimo. Prorrogável proporcionalmente se o defeso for estendido. Não cumula com outros benefícios, exceto pensão por morte, auxílio-acidente e auxílio-suplementar (art. 2º, §2º).
+Parcelas mensais no valor de 1 salário mínimo, em regra uma por mês de defeso, o que dá 4 parcelas no defeso de 120 dias [NÃO CONFIRMADO] (auditoria 03/10/2026). Prorrogável proporcionalmente se o defeso for estendido. Não cumula com outros benefícios, exceto pensão por morte, auxílio-acidente e auxílio-suplementar (art. 2º, §2º).
 
 ## 4. Procedimento administrativo
 
@@ -52,7 +52,7 @@ O INSS cruza automaticamente os dados com o CNIS e o RGP. Indeferimentos comuns 
 
 ### Cenário 1 — Pescador artesanal com 10 anos de RGP
 
-Defeso de 120 dias. 3 parcelas. Deferimento administrativo.
+Defeso de 120 dias. 4 parcelas [NÃO CONFIRMADO] (auditoria 03/10/2026). Deferimento administrativo.
 
 ### Cenário 2 — Pescadora esposa de pescador
 

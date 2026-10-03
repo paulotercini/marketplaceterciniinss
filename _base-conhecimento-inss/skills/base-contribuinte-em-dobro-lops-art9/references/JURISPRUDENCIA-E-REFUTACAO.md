@@ -10,11 +10,11 @@ Aplicação. Aproveitamento dos períodos de recolhimento independentemente da q
 
 ATENÇÃO. Verificar inteiro teor antes de citar com número de processo.
 
-### 1.2. Súmula 81/TFR
+### 1.2. Prova do recolhimento
 
-"O recolhimento mensal previdenciário, pelo segurado facultativo ou autônomo, basta para fazer prova do exercício de atividade remunerada".
+A Súmula 81 do TFR, antes citada aqui, não tem o texto que lhe era atribuído e saiu da skill (auditoria 03/10/2026).
 
-Aplicação. Reforça a tese de que o recolhimento por si só comprova a contribuição.
+Aplicação. O recolhimento se prova pelas guias pagas e pelo CNIS.
 
 ## 2. Jurisprudência do TRF3
 
@@ -78,7 +78,7 @@ Refutação. Art. 3º da Lei 10.666/2003. A perda da qualidade não afeta o côm
 
 ### 4.3. Tese 3 do INSS. "Não há recolhimentos suficientes"
 
-Refutação. Súmula 81/TFR. O recolhimento basta como prova.
+Refutação. O recolhimento comprovado por guia ou pelo CNIS basta como prova (auditoria 03/10/2026, retirada a Súmula 81/TFR).
 
 A IN 128/2022, art. 21, presume a continuidade pelo recolhimento mensal.
 
@@ -128,7 +128,7 @@ Art. 21 da IN 128/2022.
 
 Art. 92 da IN 128/2022.
 
-Súmula 81/TFR.
+
 
 Tempus regit actum.
 

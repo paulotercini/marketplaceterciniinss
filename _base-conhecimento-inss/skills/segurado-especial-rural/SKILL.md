@@ -67,13 +67,13 @@ Pensão por morte de valor inexpressivo não descaracteriza a condição, aplica
 
 ### Outras hipóteses expressas no art. 112 da IN 128/2022
 
-O art. 112 da IN 128/2022 lista 13 hipóteses que NÃO descaracterizam a condição de segurado especial, incluindo outorga de até 50% do imóvel por meio de contrato de parceria ou meação, exploração da atividade turística por não mais de 120 dias ao ano, exercício de mandato eletivo de vereador, entre outras.
+O art. 112 da IN 128/2022 lista, em 11 incisos, hipóteses que NÃO descaracterizam a condição de segurado especial, incluindo outorga de até 50% de imóvel rural de até quatro módulos fiscais por contrato escrito de parceria, meação ou comodato (auditoria 03/10/2026), exploração da atividade turística por não mais de 120 dias ao ano, exercício de mandato eletivo de vereador, entre outras.
 
 ---
 
 ## O que DESCARACTERIZA o segurado especial
 
-1. Contratação de empregados permanentes (art. 11, VII, "a", 5, Lei 8.213/91)
+1. Contratação de empregados permanentes (art. 11, §§ 1º e 7º, Lei 8.213/91; o §7º admite contratados por prazo determinado até 120 pessoas/dia no ano civil) (auditoria 03/10/2026)
 2. Propriedade ou posse de área superior a 4 módulos fiscais — **ATENÇÃO: Tema 1115/STJ** (REsp 1.947.404/RS, Primeira Seção, Rel. Min. Benedito Gonçalves, j. 23/11/2022, vinculante) fixou que a área superior a 4 módulos fiscais, por si só, NÃO descaracteriza o segurado especial, desde que comprovados os demais requisitos legais (regime de economia familiar, indispensabilidade, ausência de empregados permanentes). Alinhado à Súmula 30/TNU. O INSS frequentemente descaracteriza automaticamente pela extensão da propriedade no SNCR/INCRA. O advogado deve produzir prova robusta de regime de economia familiar para afastar a presunção administrativa. Quando descaracterizado, o produtor migra para CI rural (art. 90, I, IN 128/2022), consultar skill `contribuinte-individual-in128`.
 3. Exercício de atividade urbana com rendimento que torne dispensável a atividade rural
 4. Aposentadoria por outro regime (RPPS ou pelo RGPS em outra categoria)
@@ -109,11 +109,11 @@ Essas bases são as mesmas consultadas pelo INSS no procedimento de ratificaçã
 
 ### Princípios probatórios aplicáveis
 
-1. **Róis exemplificativos.** Todos os róis (art. 106 da Lei, art. 116 da IN) são exemplificativos, conforme Súmula 149/STJ
+1. **Róis exemplificativos.** Todos os róis (art. 106 da Lei, art. 116 da IN) são exemplificativos; o art. 116 da IN 128 usa a expressão "dentre outros" (auditoria 03/10/2026)
 2. **Contemporaneidade flexibilizada.** Quando a ausência de documentos contemporâneos decorrer de informalidade rural ou invisibilização do trabalho feminino (Protocolo de Gênero)
 3. **Prova emprestada do cônjuge.** Tema 327/TNU — documentos do cônjuge constituem início de prova material
-4. **Prova emprestada dos pais.** PUIL 5009034-30.2021.4.03.6119 [verificação parcial — fonte primária CJF não localizada] — documentos dos pais como prova para filhos do mesmo núcleo. Tese já consolidada na jurisprudência da TNU e do STJ por via do Tema 18/TNU e da Súmula 6/TNU, independentemente deste PUIL específico.
-5. **Instrumento ratificador vale para todo o grupo familiar** (art. 116, §2º, I, IN 128)
+4. **Prova emprestada dos pais.** PUIL 5009034-30.2021.4.03.6119 [localizado no MCP TNU, a conferir na fonte oficial] (auditoria 03/10/2026) — documentos dos pais como prova para filhos do mesmo núcleo. Tese já consolidada na jurisprudência da TNU e do STJ por via do Tema 18/TNU e da Súmula 6/TNU, independentemente deste PUIL específico.
+5. **Instrumento ratificador vale para todo o grupo familiar** (art. 116, §3º, I, IN 128) (auditoria 03/10/2026)
 6. **Autodeclaração ratificada automaticamente** pelo cruzamento de bases governamentais (Guia CNIS, Portaria 1.094/2022)
 
 ---
@@ -126,7 +126,7 @@ O art. 11, VII, da Lei 8.213/91 não estabelece idade mínima para o segurado es
 
 ### Precedentes
 
-**Tema 219/TNU.** Tese em três pontos. (1) Comprovação segue mesmos meios de prova dos demais segurados. (2) Exige-se participação efetiva e indispensabilidade (art. 11, §§1º e 6º). (3) Vedada negativa por fundamentação genérica ("infância sacrificada", "exploração de mão de obra").
+**Tema 219/TNU**, explicitado no PUIL 5005824-38.2022.4.04.7111/RS (j. 18/11/2025), conforme o acervo TNU do MCP Iurisprudencia (auditoria 03/10/2026). Tese em três pontos. (1) Comprovação segue mesmos meios de prova dos demais segurados. (2) Exige-se participação efetiva e indispensabilidade (art. 11, §§1º e 6º). (3) Vedada negativa por fundamentação genérica ("infância sacrificada", "exploração de mão de obra").
 
 **ACP 5031617-51.2018.4.04.7100/RS + Portaria Conjunta INSS/PFE 7/2020.** INSS obrigado a reconhecer trabalho rural de menor de qualquer idade, desde que comprovado. Abrangência territorial do TRF4.
 

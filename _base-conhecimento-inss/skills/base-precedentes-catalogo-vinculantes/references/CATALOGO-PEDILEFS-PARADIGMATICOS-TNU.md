@@ -144,7 +144,7 @@ Por ser PUIL regional acolhido, a tese vincula todas as Turmas Recursais da 4ª 
 
 ## PRECEDENTES DO TRF3 - Competência em MS por Mora Administrativa
 
-Bloco dedicado aos conflitos de competência do TRF3 sobre o tema. Verificação em fonte primária do PDF do CC 5026411-72.2020.4.03.0000 (Rel. Nelton dos Santos), sessão em 06/07/2026. Detalhamento operacional em `base-ms-competencia-autoridade-coatora-inss-crps/references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md` (Onda 63).
+Bloco dedicado aos conflitos de competência do TRF3 sobre o tema. Verificação em fonte primária do PDF do CC 5026411-72.2020.4.03.0000 (Rel. Nelton dos Santos), verificado em 06/07/2026 (auditoria 03/10/2026). Detalhamento operacional em `base-ms-competencia-autoridade-coatora-inss-crps/references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md` (Onda 63).
 
 ### Tese firmada pelo Órgão Especial
 

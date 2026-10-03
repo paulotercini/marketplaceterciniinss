@@ -6,9 +6,9 @@ Lei 8.213/91, art. 59. Define o auxílio por incapacidade temporária. Devido ao
 
 Lei 8.213/91, art. 60. Regula data de início do benefício (DIB). Para segurado empregado, a partir do 16º dia de afastamento. Para os demais segurados, a partir da DII comprovada pela perícia.
 
-Lei 8.213/91, art. 60, §1º. Para segurado empregado, retroação da DIB à DII se o requerimento for feito em até 30 dias do afastamento.
+Lei 8.213/91, art. 60, §1º. Para todo segurado, se o requerimento ocorrer após 30 dias do afastamento, a DIB é a DER; dentro desse prazo, vale o caput (auditoria 03/10/2026).
 
-Lei 8.213/91, art. 60, §11-A. Introduzido para viabilizar o regime de análise documental com parecer de verossimilhança. Acionar `analise-documental-incapacidade`.
+Lei 8.213/91, art. 60, §11-A. Permite o exame médico-pericial por telemedicina ou por análise documental, conforme regulamento (auditoria 03/10/2026). Acionar `analise-documental-incapacidade`.
 
 Lei 8.213/91, art. 26, II. Isenção de carência para acidente de qualquer natureza, acidente de trabalho e doenças listadas no art. 151.
 
@@ -18,7 +18,7 @@ Lei 8.213/91, art. 25, I. Carência de 12 contribuições mensais para B31, ress
 
 Lei 8.213/91, art. 27-A. Recuperação da qualidade de segurado.
 
-Lei 8.213/91, art. 42. Vedação de concessão de B31 a quem já era portador da doença quando se filiou, salvo se a incapacidade decorrer de progressão ou agravamento.
+Lei 8.213/91, art. 59, §1º. Vedação de concessão de B31 a quem já era portador da doença quando se filiou, salvo se a incapacidade decorrer de progressão ou agravamento (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 61, com a média do art. 26, caput, da EC 103/2019. RMI do B31 (e do B91) em 91% do salário de benefício.
 
@@ -48,11 +48,11 @@ Segurado com B31 concedido até 01/05/2026. Cessado antecipadamente por alta pro
 
 ### Cenário 6 — Trava dos três indeferimentos
 
-Segurado com três requerimentos indeferidos em 12 meses. Trava de 180 dias para novo requerimento. Em caso de agravamento, MS pela urgência e direito ao requerimento.
+Segurado com três requerimentos indeferidos por análise documental. O pedido seguinte vai à perícia presencial; a espera de 180 dias da Portaria Conjunta 13/2026 [NÃO CONFIRMADO] vale para nova análise documental após prorrogação indeferida e não nasce do art. 60, §11-A (auditoria 03/10/2026). Em caso de agravamento, MS pela urgência e direito ao requerimento.
 
 ### Cenário 7 — Perícia documental inconclusiva
 
-Segurado com B31 indeferido por parecer de verossimilhança negativo. Cabe recurso ao CRPS com novos atestados, exames e laudos. Ou ação judicial com perícia médica. Acionar `auditoria-laudo-pericial`.
+Segurado com B31 indeferido no exame médico-pericial, presencial, por telemedicina ou por análise documental (art. 60, §11-A, da Lei 8.213/91; auditoria 03/10/2026). Cabe recurso ao CRPS com novos atestados, exames e laudos. Ou ação judicial com perícia médica. Acionar `auditoria-laudo-pericial`.
 
 ### Cenário 8 — Limbo previdenciário-trabalhista
 

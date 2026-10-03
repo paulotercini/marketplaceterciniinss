@@ -39,7 +39,7 @@ Primeiro, probabilidade do direito. O caráter alimentar e a urgência concreta 
 
 Segundo, perigo de dano. Presunção pró-segurado em benefício alimentar.
 
-Atenção (risco): o Tema 692 do STJ determina a DEVOLUÇÃO dos valores recebidos por tutela antecipada posteriormente revogada (com desconto de até 30% do benefício). Não o invoque como escudo de boa-fé; a irrepetibilidade deve ser buscada em fundamentos próprios (ex.: benefício assistencial; Tema 979 com boa-fé objetiva), com cautela.
+Atenção (risco): o Tema 692 do STJ determina a DEVOLUÇÃO dos valores recebidos por tutela antecipada posteriormente revogada (com desconto de até 30% do benefício). Não o invoque como escudo de boa-fé; a irrepetibilidade deve ser buscada em fundamentos próprios (ex.: distinção, quando o valor não decorreu da tutela revogada; Tema 979 com boa-fé objetiva, no pagamento por erro administrativo), com cautela, pois a tese revista do Tema 692 alcança também os benefícios assistenciais (auditoria 03/10/2026).
 
 ## Cenários pró-segurado
 
@@ -49,11 +49,11 @@ Cenário B, restabelecimento de B31 cessado sem perícia. Tutela cabível.
 
 Cenário C, implantação de B32 com laudo pericial judicial favorável. Tutela cabível.
 
-Cenário D, tutela de evidência em tese firmada (Tema 1102/STF RVT, Tema 76/STF teto, Tema 1124/STJ).
+Cenário D, tutela de evidência em tese firmada (Tema 76/STF teto). O Tema 1102/STF não serve, pois a ADI 2111 (21/03/2024) declarou cogente o art. 3º da Lei 9.876/99, sem opção pelo art. 29, I e II. O Tema 1124/STJ também não serve, pois trata de interesse de agir e de DIB (auditoria 03/10/2026).
 
 ## Estabilização (art. 304)
 
-Segurado obtém tutela antecipada antecedente. INSS não recorre. Processo é extinto com estabilização. Art. 304, §5º, CPC exige ação revisional em 2 anos (o §6º trata da ausência de coisa julgada). Tema 1085/STJ em discussão.
+Segurado obtém tutela antecipada antecedente. INSS não recorre. Processo é extinto com estabilização. Art. 304, §5º, CPC exige ação revisional em 2 anos (o §6º trata da ausência de coisa julgada; auditoria 03/10/2026, retirado o Tema 1085/STJ, que trata do limite de desconto bancário).
 
 ## Alertas
 

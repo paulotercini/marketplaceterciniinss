@@ -56,7 +56,7 @@ Terceiro, segurado com condições que dificultam a Teleperícia (sem acesso à 
 
 Cuarto, segurado com CID sensorial, psíquico ou cognitivo complexo. Teleperícia inadequada. Exame presencial com especialista.
 
-Quinto, segurado em BPC cuja avaliação biopsicossocial foi superficial. Impugnação com fundamento na Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014 atualizada. Acionar `analise-bpc-loas`.
+Quinto, segurado em BPC cuja avaliação biopsicossocial foi superficial. Impugnação com fundamento na Portaria Conjunta MDS/INSS nº 2, de 30/03/2015, atualizada (auditoria 03/10/2026). Acionar `analise-bpc-loas`.
 
 Sexto, laudo da PMF com erros técnicos ou omissões. Recurso ao CRPS ou ação judicial. Acionar `auditoria-laudo-pericial`.
 

@@ -42,51 +42,51 @@ Aplicação pró-segurado. Fundamenta revisão de RMI para incluir verbas legít
 
 ### Súmula 507 STJ
 
-Tese. A concessão de auxílio-acidente por perda auditiva depende da comprovação da redução da capacidade.
+Tese. "A acumulação de auxílio-acidente com aposentadoria pressupõe que a lesão incapacitante e a aposentadoria sejam anteriores a 11/11/1997, observado o critério do art. 23 da Lei n. 8.213/1991 para definição do momento da lesão nos casos de doença profissional ou do trabalho." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a perda auditiva).
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado em combinação. Confirma B94 em perda auditiva com redução real.
+Aplicação. Favorece só quem tem lesão e aposentadoria anteriores a 11/11/1997; fora disso é tese adversa, e o caminho do segurado é a integração do B94 ao salário-de-contribuição (art. 31 da Lei 8.213/91) (auditoria 03/10/2026).
 
 ### Tema 555 STJ
 
-Tese. A vedação à acumulação de auxílio-acidente com aposentadoria, introduzida pela Lei 9.528/97 e sucessivas, não alcança concessões anteriores (direito adquirido).
+Tese. "A acumulação do auxílio-acidente com proventos de aposentadoria pressupõe que a eclosão da lesão incapacitante e a concessão da aposentadoria sejam anteriores à alteração do art. 86, §§ 2º e 3º, da Lei 8.213/1991, promovida em 11.11.1997." A alteração veio da MP 1.596-14/1997, convertida na Lei 9.528/97 (auditoria 03/10/2026, corrigida a síntese anterior, para a qual bastava a concessão anterior do B94).
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Preserva acumulação em direito adquirido.
+Aplicação. Preserva a acumulação só quando lesão e aposentadoria são anteriores a 11/11/1997; fora disso é tese adversa, e o caminho do segurado é a integração do B94 ao salário-de-contribuição pelo art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
 
 ### Tema 201 TNU
 
-Tese. O B94 não depende de acidente de trabalho stricto sensu, bastando acidente de qualquer natureza.
+Tese adversa. "O contribuinte individual não faz jus ao auxílio-acidente, diante de expressa exclusão legal." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a dispensa de acidente de trabalho).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Amplia acesso.
+Aplicação. Tese adversa ao contribuinte individual; o caminho do segurado é usar o período de graça de vínculo anterior como empregado, doméstico, avulso ou segurado especial (PUIL 5000733-56.2021.4.04.7222/SC da TNU) (auditoria 03/10/2026).
 
 ### Tema 322 TNU
 
-Tese. Na perda auditiva, o B94 é devido quando comprovada a redução da capacidade, considerando o grau de perda e a profissão.
+Tese. "Devem ser computados os valores percebidos a título de auxílio-acidente no período básico de cálculo (PBC) da aposentadoria por idade rural do segurado especial, para fins de incremento da RMI, independentemente do recolhimento de contribuições facultativas." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a perda auditiva).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Específico para disacusia.
+Aplicação pró-segurado. Eleva a RMI da aposentadoria por idade rural do segurado especial que recebeu B94; não trata de disacusia (auditoria 03/10/2026).
 
 ### Tema 350 TNU
 
-Tese. O auxílio-acidente pode ser concedido ainda que o segurado esteja em outro benefício por incapacidade, aguardando a cessação para início do pagamento.
+Tese. "O segurado em gozo de auxílio-acidente, ou que tenha a data da consolidação das lesões até 17 de junho de 2019, mantém a qualidade de segurado por 12 meses a partir da vigência da Lei 13.846/2019." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a concessão do B94 durante outro benefício).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Não há óbice à concessão durante B31 vigente.
+Aplicação pró-segurado. Preserva a qualidade de segurado do titular de auxílio-acidente na transição da Lei 13.846/2019 (auditoria 03/10/2026).
 
 ### Súmula 47 TNU
 
-Tese. Uma vez reconhecido o direito ao benefício por incapacidade, cabe implantação imediata.
+Tese. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez" (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a implantação imediata do benefício).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Extensível ao B94 por analogia para implantação imediata.
+Aplicação. Não rege o B94 nem a implantação imediata; só interessa ao B94 quando a incapacidade parcial abrir discussão de B32 (auditoria 03/10/2026).
 
 ## 2. Refutação aos argumentos típicos do INSS
 
@@ -106,19 +106,19 @@ Refutação. Súmula 89 TNU. Rol é exemplificativo. Cabe perícia para atestar 
 
 Argumento adversário. O acidente foi doméstico ou de trânsito, não de trabalho.
 
-Refutação. Art. 86 fala em acidente de qualquer natureza. Tema 201 TNU. B94 devido independentemente do local ou natureza do acidente.
+Refutação. Art. 86 fala em acidente de qualquer natureza. O auxílio-acidente é devido independentemente do local ou natureza do acidente; sem nexo com o trabalho, a espécie é a 36, na Justiça Federal, e não o B94 acidentário (auditoria 03/10/2026, retirado o Tema 201 TNU, que trata da exclusão do contribuinte individual).
 
 ### Argumento 4 — Perda auditiva não gera B94
 
 Argumento adversário. Perda auditiva leve não justifica B94.
 
-Refutação. Súmula 507 STJ e Tema 322 TNU. Basta a redução real da capacidade para a profissão específica.
+Refutação. Art. 86, §4º, da Lei 8.213/91, Tema 22 STJ e Súmula 44 STJ (auditoria 03/10/2026, no lugar da Súmula 507 STJ e do Tema 322 TNU). Basta a redução real da capacidade para a profissão específica.
 
 ### Argumento 5 — Acumulação vedada com aposentadoria
 
-Argumento adversário. A Lei 13.846/2019 veda acumulação com aposentadoria.
+Argumento adversário. O art. 86, §§1º a 3º, da Lei 8.213/91, na redação da MP 1.596-14/1997, convertida na Lei 9.528/97, veda acumulação com aposentadoria (auditoria 03/10/2026, no lugar da Lei 13.846/2019).
 
-Refutação. Tema 555 STJ. Vedação não alcança concessões anteriores. Direito adquirido à acumulação.
+Refutação. Tema 555 STJ e Súmula 507 STJ. A acumulação subsiste quando a lesão incapacitante e a aposentadoria são anteriores a 11/11/1997. Fora disso, o B94 cessa na véspera da aposentadoria e seu valor integra o salário-de-contribuição pelo art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
 
 ### Argumento 6 — Cessação por cessação de B31
 
@@ -144,13 +144,13 @@ Primeiro, documentar sequela com laudo especializado que correlacione à reduç�
 
 Segundo, em sequela fora do Anexo III, invocar Súmula 89 TNU.
 
-Terceiro, em acumulação de B94 anterior com aposentadoria, invocar Tema 555 STJ.
+Terceiro, em acumulação, invocar o Tema 555 STJ só quando lesão incapacitante e aposentadoria forem anteriores a 11/11/1997; fora disso, pedir a integração do art. 31 da Lei 8.213/91 (auditoria 03/10/2026).
 
 Quarto, em revisão de RMI, invocar o art. 31 da Lei 8.213/91, e não o Tema 862, que é termo inicial.
 
-Quinto, em cessação indevida, restabelecimento imediato com Súmula 47 TNU.
+Quinto, em cessação indevida, restabelecimento com tutela de urgência (art. 300 do CPC) (auditoria 03/10/2026, retirada a Súmula 47/TNU, que trata das condições pessoais na incapacidade parcial).
 
-Sexto, em perda auditiva, usar Tema 322 TNU e Súmula 507 STJ.
+Sexto, em perda auditiva, usar o art. 86, §4º, da Lei 8.213/91, o Tema 22 STJ e a Súmula 44 STJ (auditoria 03/10/2026, no lugar do Tema 322 TNU e da Súmula 507 STJ).
 
 ## 4. Cláusulas doutrinárias de apoio
 

@@ -4,7 +4,7 @@ Checklist exaustivo para uso em toda análise, requerimento administrativo e pet
 
 ## BLOCO A - APURAÇÃO DA RENDA NOMINAL
 
-- [ ] Identificar grupo familiar conforme rol taxativo art. 20 §1º LOAS (com a redação da Lei 13.146/2015 e Lei 14.176/2021).
+- [ ] Identificar grupo familiar conforme rol taxativo art. 20 §1º LOAS (com a redação da Lei 12.435/2011) (auditoria 03/10/2026).
 - [ ] Levantar TODAS as rendas dos membros do grupo familiar (CNIS, declarações, contracheques, NFS-e do MEI).
 - [ ] Calcular renda per capita NOMINAL antes de qualquer dedução.
 - [ ] Verificar exclusões legais (BPC já recebido por outro membro, auxílio-inclusão, parcelas indenizatórias).
@@ -143,7 +143,7 @@ Quando o BPC for indeferido administrativamente apesar do comprometimento de ren
 Se o BPC for indeferido por motivo de renda apesar do comprometimento.
 
 - [ ] Recurso ordinário em 30 dias (art. 126 Lei 8.213/91).
-- [ ] Fundamentar com Lei 14.176/2021 (que alterou o §11 art. 20 LOAS).
+- [ ] Fundamentar com Lei 14.176/2021 (que incluiu o §11-A no art. 20 e o art. 20-B na LOAS; o §11 vem da Lei 13.146/2015) (auditoria 03/10/2026).
 - [ ] Citar Portaria Conjunta MDS/INSS 3/2018 e suas alterações.
 - [ ] Demonstrar o cálculo correto da renda após deduções legítimas.
 - [ ] Acionar `base-recurso-crps-peca-enxuta` para padrão de redação.

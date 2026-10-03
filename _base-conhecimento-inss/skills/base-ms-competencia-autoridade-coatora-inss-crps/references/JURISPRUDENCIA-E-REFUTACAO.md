@@ -4,25 +4,25 @@
 
 ### Tema 374 STF
 
-Foro do impetrante.
+"A regra prevista no § 2º do art. 109 da Constituição Federal também se aplica às ações movidas em face de autarquias federais." A tese não trata de mandado de segurança, e a extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
 ### Súmula 689 STF
 
-Local do ato.
+"O segurado pode ajuizar ação contra a instituição previdenciária perante o juízo federal do seu domicílio ou nas varas federais da Capital do Estado-Membro." (auditoria 03/10/2026)
 
 Fonte oficial em https://portal.stf.jus.br
 
 ### Súmula 206 STJ
 
-Local do benefício.
+"A existência de vara privativa, instituída por lei estadual, não altera a competência territorial resultante das leis de processo." (auditoria 03/10/2026)
 
 Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 376 STJ
 
-Alçada.
+"Compete a turma recursal processar e julgar o mandado de segurança contra ato de juizado especial." (auditoria 03/10/2026)
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
@@ -60,7 +60,7 @@ Refutação. Declínio para foro correto, preservação do ato.
 
 Argumento adversário. Restritivo.
 
-Refutação. Tema 374 STF autoriza.
+Refutação. O Tema 374 STF aplica o art. 109, §2º, CF às ações contra autarquias federais. A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### Argumento 4 — CRPS não é autoridade coatora
 
@@ -96,7 +96,7 @@ Refutação. Portaria do TRF define.
 
 Argumento adversário. Alçada.
 
-Refutação. Súmula 376 STJ afasta alçada para MS.
+Refutação. O art. 3º, §1º, I, da Lei 10.259/2001 exclui o mandado de segurança da competência do JEF. A Súmula 376 STJ cuida só do MS contra ato de juizado especial (auditoria 03/10/2026).
 
 ### Argumento 10 — Inexistência de competência funcional
 
@@ -130,7 +130,7 @@ Quinto, consolidação.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 374 STF.
+Tema 374 STF com trânsito em julgado em 08/12/2016, sem pendência a acompanhar (auditoria 03/10/2026).
 
 Revalidar Portaria 462/2026.
 

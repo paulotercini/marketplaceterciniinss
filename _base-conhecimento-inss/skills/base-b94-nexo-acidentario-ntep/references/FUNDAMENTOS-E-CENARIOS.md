@@ -36,7 +36,7 @@ Sequela permanente.
 
 ### Tema 350 TNU
 
-Prova.
+Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não matéria de prova (auditoria 03/10/2026).
 
 ## 5. Cenários pró-segurado
 
@@ -120,4 +120,4 @@ Quinto, dialeticidade.
 
 ## 10. Integração prática
 
-`auxilio-acidente-b94`, `base-b94-anexo-iii-quadros`, `base-b94-integracao-salario-beneficio-art31`, `base-b94-cessacao-acumulacao-vedacao`, `base-b94-sequela-minima-tema201`, `ntep-nexo-acidentario`, `peticao-previdenciaria`.
+`auxilio-acidente-b94`, `base-b94-anexo-iii-quadros`, `base-b94-integracao-salario-beneficio-art31`, `base-b94-cessacao-acumulacao-vedacao`, `base-b94-sequela-minima-sumula88-tnu`, `ntep-nexo-acidentario`, `peticao-previdenciaria`.

@@ -8,7 +8,7 @@ LC 142/2013.
 
 Decreto 8.145/2013.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 Lei 15.176/2025 (fibromialgia).
 
@@ -40,13 +40,13 @@ Mulher 55 anos com 15 anos de contribuição na condição de PCD.
 
 ## 5. Avaliação biopsicossocial e IF-BrA
 
-IF-BrA. Instrumento Funcional Brasileiro para Aposentadoria.
+IF-BrA. Índice de Funcionalidade Brasileiro Aplicado para fins de classificação e concessão da aposentadoria da pessoa com deficiência (auditoria 03/10/2026).
 
 Composição. Avaliação médica e avaliação social.
 
-Método Fuzzy. Combina pontuações em grau (grave, moderado, leve).
+Método Fuzzy. Replica a menor nota nos domínios sensíveis; o grau sai da pontuação total, de 2.050 a 8.200 (auditoria 03/10/2026).
 
-9 Domínios. Sensorial. Comunicação. Mobilidade. Cuidados pessoais. Vida doméstica. Educação. Trabalho. Vida econômica. Socialização.
+7 Domínios. Sensorial. Comunicação. Mobilidade. Cuidados pessoais. Vida doméstica. Educação, trabalho e vida econômica. Socialização e vida comunitária (auditoria 03/10/2026).
 
 ## 6. DID
 
@@ -56,15 +56,15 @@ Em ausência de documentação, acionar `formacao-documentacao-did-pcd`.
 
 ## 7. Cálculo do benefício
 
-Aposentadoria por tempo PCD. Média simples dos 80% maiores salários desde 07/1994. Sem fator previdenciário. Valor equivalente a 100% da média.
+Aposentadoria por tempo PCD. Com DER após 13/11/2019, média simples de 100% dos salários desde 07/1994 (Decreto 3.048/99, art. 70-J c/c art. 32); os 80% maiores valem só para direito adquirido. Fator previdenciário só se elevar a renda (LC 142, art. 9º, I) (auditoria 03/10/2026). Valor equivalente a 100% da média.
 
-Aposentadoria por idade PCD. 70% da média + 1% por grupo de 12 contribuições adicionais. Verificar regra vigente e Memorando-Circular da DIRBEN.
+Aposentadoria por idade PCD. 70% da média + 1% por grupo de 12 contribuições mensais, até o máximo de 30% (art. 8º, II, da LC 142/2013) (auditoria 03/10/2026). Verificar regra vigente e Memorando-Circular da DIRBEN.
 
 ## 8. Conversão
 
-Conversão tempo PCD → comum. Admitida pelo art. 8º LC 142.
+Conversão tempo PCD → comum. Admitida pelo art. 7º da LC 142 (auditoria 03/10/2026).
 
-Conversão tempo comum → PCD. Vedada.
+Conversão tempo comum → PCD. Admitida com fator redutor (LC 142, art. 7º; Decreto 3.048/99, art. 70-E, §2º) (auditoria 03/10/2026).
 
 Fator de conversão. Depende do grau e gênero.
 
@@ -76,7 +76,7 @@ Lei 15.176/2025. Reconhecimento como deficiência. IF-BrA aplicado com sensibili
 
 Lei 14.768/2023. Aperfeiçoamento da avaliação.
 
-Súmula 552 STJ. Surdez unilateral — discussão em curso.
+Súmula 552 STJ, tese adversa: surdez unilateral não qualifica para vagas reservadas em concurso. A Lei 14.768/2023, art. 1º, inclui a perda unilateral total e a bilateral parcial; a unilateral parcial fica fora (auditoria 03/10/2026).
 
 Acionar `deficiencia-auditiva-previdenciaria`.
 
@@ -112,7 +112,7 @@ DID no nascimento. Tempo integral como PCD. Deferimento.
 
 ### Cenário 8 — Homem com cegueira monocular
 
-Súmula 377 STJ equipara a deficiente. Graus variam. Deferimento conforme IF-BrA.
+Lei 14.126/2021 [NÃO CONFIRMADO] classifica a visão monocular como deficiência visual; a Súmula 377 STJ trata só de vagas em concurso (auditoria 03/10/2026). Graus variam. Deferimento conforme IF-BrA.
 
 ### Cenário 9 — Mulher com sequela de AVC
 
@@ -149,12 +149,12 @@ Primeiro, DID é campo crítico.
 
 Segundo, grau atribuído pode ser impugnado.
 
-Terceiro, fator previdenciário é vedado em regra.
+Terceiro, fator previdenciário só incide se elevar a renda (LC 142, art. 9º, I) (auditoria 03/10/2026).
 
-Quarto, conversão inversa é vedada.
+Quarto, conversão inversa é admitida com fator redutor (Decreto 3.048/99, art. 70-E, §2º) (auditoria 03/10/2026).
 
 Quinto, fibromialgia e deficiência auditiva têm leis específicas.
 
 Sexto, aposentadoria por idade PCD tem regra de cálculo distinta.
 
-Sétimo, Súmula 377 STJ equipara cegueira monocular.
+Sétimo, visão monocular é deficiência visual pela Lei 14.126/2021 [NÃO CONFIRMADO]; a Súmula 377 STJ trata só de vagas em concurso (auditoria 03/10/2026).

@@ -269,7 +269,7 @@ CRM [número]
 
 Todos os modelos focam em IMPEDIMENTO DE LONGO PRAZO (≥ 2 anos) e BARREIRAS enfrentadas.
 
-Abordagem biopsicossocial conforme Portaria Conjunta SPS/INSS/SNAS 2/2014.
+Abordagem biopsicossocial conforme Portaria Conjunta MDS/INSS 2/2015 (auditoria 03/10/2026).
 
 IFBrM com domínios físico, mental, intelectual, sensorial (Portaria 37/2026).
 

@@ -1,13 +1,13 @@
 ---
 name: base-b94-cessacao-acumulacao-vedacao
-description: "Cessação do auxílio-acidente B94 pela aposentadoria, vedação de acumulação após MP 1.596-14/1997, direito adquirido da Súmula 507 STJ, art. 86 §2º Lei 8.213/91 e estratégias contra cessação automática indevida. Use SEMPRE que mencionar cessação B94, B94 cessou pela aposentadoria, vedação acumulação B94 aposentadoria, art. 86 §2º Lei 8.213, MP 1.596-14/1997 vedação, marco temporal 11/11/1997, B94 anterior preservado, Súmula 507 STJ direito adquirido, B94 cessado indevidamente, restabelecimento B94 cessado, retroatividade vedação acumulação, B94 concedido antes 1997, lei velha B94, tempus regit actum B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-art31, base-b94-anexo-iii-quadros, base-b94-sequela-minima-tema201 e decadencia-revisao-previdenciaria."
+description: "Cessação do auxílio-acidente B94 pela aposentadoria, vedação de acumulação após MP 1.596-14/1997, direito adquirido da Súmula 507 STJ, art. 86 §2º Lei 8.213/91 e estratégias contra cessação automática indevida. Use SEMPRE que mencionar cessação B94, B94 cessou pela aposentadoria, vedação acumulação B94 aposentadoria, art. 86 §2º Lei 8.213, MP 1.596-14/1997 vedação, marco temporal 11/11/1997, acumulação só com lesão e aposentadoria anteriores a 11/11/1997, Súmula 507 STJ direito adquirido, B94 cessado indevidamente, restabelecimento B94 cessado, retroatividade vedação acumulação, B94 concedido antes 1997, lei velha B94, tempus regit actum B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-art31, base-b94-anexo-iii-quadros, base-b94-sequela-minima-sumula88-tnu e decadencia-revisao-previdenciaria."
 ---
 
 # Cessação e Vedação de Acumulação do B94
 
 ## Escopo
 
-Skill pró-segurado sobre cessação do B94 pela aposentadoria, vedação de acumulação após MP 1.596-14/1997 e direito adquirido para B94 anteriores.
+Skill pró-segurado sobre cessação do B94 pela aposentadoria, vedação de acumulação após MP 1.596-14/1997 e direito adquirido só quando lesão incapacitante e aposentadoria são anteriores a 11/11/1997 (auditoria 03/10/2026).
 
 ## Marco normativo central
 
@@ -75,7 +75,7 @@ Quarto, restabelecimento via revisão ou MS.
 
 ## Aplicação pró-segurado
 
-Primeiro, identificar DIB do B94.
+Primeiro, identificar a data da lesão incapacitante e a DIB da aposentadoria, porque ambas precisam ser anteriores a 11/11/1997 (auditoria 03/10/2026).
 
 Segundo, comparar com marco temporal.
 
@@ -140,9 +140,9 @@ Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já susten
 Para detalhes operacionais, acionar `auxilio-acidente-b94`.
 Para integração ao SB, acionar `base-b94-integracao-salario-beneficio-art31`.
 Para Anexo III, acionar `base-b94-anexo-iii-quadros`.
-Para sequela mínima, acionar `base-b94-sequela-minima-tema201`.
+Para sequela mínima, acionar `base-b94-sequela-minima-sumula88-tnu`.
 Para decadência, acionar `decadencia-revisao-previdenciaria`.
 
 ## O que NÃO está nesta skill
 
-Integração ao SB em `base-b94-integracao-salario-beneficio-art31`. Anexo III em `base-b94-anexo-iii-quadros`. Sequela mínima em `base-b94-sequela-minima-tema201`.
+Integração ao SB em `base-b94-integracao-salario-beneficio-art31`. Anexo III em `base-b94-anexo-iii-quadros`. Sequela mínima em `base-b94-sequela-minima-sumula88-tnu`.

@@ -61,7 +61,7 @@ Consulte `references/IMPUGNACAO-EPI.md` para roteiro detalhado.
 
 PPP deficiente (sem NEN, sem técnica, sem nome do agente) não é causa de improcedência. É causa de produção de prova pericial. Julgamento antecipado sem perícia quando há controvérsia é nulidade.
 
-Precedentes centrais. REsp 2.152.968/RS (Min. Regina Helena Costa, j. 13/08/2024). Tema 1031/STJ (perícia por similaridade). Súmula 198/TFR. TRF4, AC 5001814-57.2022.4.04.7108 (5ª Turma, j. 17/03/2026, anulação de sentença). Tema 213/TNU (PPP não goza de presunção de veracidade).
+Precedentes centrais. REsp 2.152.968/RS (Min. Regina Helena Costa, j. 13/08/2024). Súmula 198/TFR e art. 369 do CPC para a perícia por similaridade (auditoria 03/10/2026, retirado o Tema 1031/STJ, que trata da especialidade do vigilante). TRF4, AC 5001814-57.2022.4.04.7108 (5ª Turma, j. 17/03/2026, anulação de sentença). Tema 213/TNU (a informação de EPI eficaz no PPP pode ser desafiada judicialmente, e a dúvida razoável favorece o segurado) (auditoria 03/10/2026).
 
 Evidências que justificam perícia (checklist). Pagamento de adicional de insalubridade. IEAN no CNIS. Código GFIP 01. Descrição de atividades com máquinas ruidosas ou produtos químicos. Ruído implausível no PPP. Lista de EPIs que confirma agentes. PPP sem técnica no campo 15.5. PPP com denominação genérica no 15.3. PPP sem NEN. Empresa extinta.
 
@@ -109,7 +109,7 @@ Embora esta skill trate especificamente de cerceamento de defesa em aposentadori
 O Tema 382/TNU (PUIL 5012678) fixou tese de que a simples exposição a tolueno por via cutânea, inclusive na forma líquida, **não autoriza** o reconhecimento de atividade especial pela análise qualitativa do Anexo 13 da NR-15. A defesa migrou para frentes argumentativas alternativas. Status do trânsito em julgado deve ser confirmado em `precedentes-previdenciarios` (entrada em `novos_especial_2025_2026.md`) antes de cada peça.
 
 ### Frente 1 — Co-exposição a cancerígenos LINACH Grupo 1
-Em atividades industriais com tolueno (pintura, gráfica, posto de combustíveis, química, plástica, calçadista, metalurgia), há quase sempre co-exposição a **benzeno**, hidrocarbonetos policíclicos aromáticos (HPA), nitroderivados, aminoderivados, óleo mineral usado e outros aromáticos da LINACH. Sustentar Tema 170/TNU integralmente. PEDILEF 5003231 (petróleo e derivados, qualitativa para LINACH) e PEDILEF 0001717-15 são fundamentos diretos.
+Em atividades industriais com tolueno (pintura, gráfica, posto de combustíveis, química, plástica, calçadista, metalurgia), há quase sempre co-exposição a **benzeno**, hidrocarbonetos policíclicos aromáticos (HPA), nitroderivados, aminoderivados, óleo mineral usado e outros aromáticos da LINACH. Sustentar Tema 170/TNU integralmente. PEDILEF 5003231 (petróleo e derivados, qualitativa para LINACH) é fundamento direto (auditoria 03/10/2026, retirado o PEDILEF 0001717-22.2019.4.03.6318/SP, que trata de ruído).
 
 Pedido em juízo. Diligência de retificação do PPP pela empresa para inclusão de agentes coexpostos (acionar `retificacao-ppp`). Subsidiariamente, perícia técnica para constatação da co-exposição.
 
@@ -129,7 +129,7 @@ Cabível **apenas** quando a medição do PPP está entre 20 e 78 ppm e o caso t
 Risco assumido. Não há tese vinculante TNU/STJ adotando ACGIH como parâmetro substitutivo da NR-15 para fins previdenciários. Empregar como reforço subsidiário, jamais como fundamento isolado.
 
 ### Frente 5 — Cerceamento por julgamento antecipado
-Quando o juiz julgar improcedente sem deferir perícia para apuração de co-exposição cancerígena ou enquadramento por atividade, sustentar cerceamento de defesa. Súmula 198/TFR, Tema 1031/STJ, REsp 2.152.968, arts. 369 e 370 do CPC, Enunciado 91/FONAJEF. Aplicar PARTE II desta skill (`references/CERCEAMENTO-DEFESA.md` quando disponível).
+Quando o juiz julgar improcedente sem deferir perícia para apuração de co-exposição cancerígena ou enquadramento por atividade, sustentar cerceamento de defesa. Súmula 198/TFR, Tema 1031/STJ, REsp 2.152.968, arts. 369 e 370 do CPC, Enunciado 225/FONAJEF [NÃO CONFIRMADO]. O Enunciado 91/FONAJEF não ampara o pedido, porque declara o JEF incompetente para perícia complexa ou onerosa e pode ser invocado pelo INSS (auditoria 03/10/2026). Aplicar PARTE II desta skill (`references/CERCEAMENTO-DEFESA.md` quando disponível).
 
 ### Frente 6 — Diligência via PGR/NR-1 e Portaria MTE 2.021/2025
 A Portaria MTE 2.021/2025 obriga o empregador a disponibilizar laudos caracterizadores de insalubridade ao trabalhador. Usar como alavanca para acesso a PGR, PPRA histórico, LTCAT, laudos NR-15 e NR-16. Aplicar PARTE III desta skill.

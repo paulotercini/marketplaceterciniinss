@@ -1,9 +1,9 @@
 ---
 name: base-tempo-rural-anterior-1991
-description: "Cômputo do tempo de atividade rural anterior a novembro/1991 como tempo de contribuição, vedação de carência sem indenização, Súmula 272 STJ, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ. Use SEMPRE que mencionar tempo rural anterior a 1991, segurado especial pré-1991, boia-fria pré-1991, diarista rural pré-1991, art. 55 §2º Lei 8.213/91, carência tempo rural, Súmula 272 STJ, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ, Tema 642 STJ, prova material rural, prova testemunhal rural, início de prova documental, economia familiar pré-1991, contagem recíproca rural, indenização para carência rural, averbação tempo rural RGPS, Tema 327 TNU gênero rural, certidão rural, Portaria 990/2022, Portaria 1.316/2025. Cruza com segurado-especial-rural, documentos-comprobatorios-in128, peticao-previdenciaria, perspectiva-genero-previdenciario, base-contagem-reciproca-rgps-rpps e indenizacao-contribuicoes-atraso."
+description: "Cômputo do tempo de atividade rural anterior a novembro/1991 como tempo de contribuição, vedação de carência sem indenização (art. 55 §2º Lei 8.213/91), Súmula 272 STJ contribuição facultativa do segurado especial, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ. Use SEMPRE que mencionar tempo rural anterior a 1991, segurado especial pré-1991, boia-fria pré-1991, diarista rural pré-1991, art. 55 §2º Lei 8.213/91, carência tempo rural, Súmula 272 STJ, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ, Tema 642 STJ, prova material rural, prova testemunhal rural, início de prova documental, economia familiar pré-1991, contagem recíproca rural, indenização para carência rural, averbação tempo rural RGPS, Tema 327 TNU documento do cônjuge empregado rural, certidão rural, Portaria 990/2022, Portaria 1.316/2025. Cruza com segurado-especial-rural, documentos-comprobatorios-in128, peticao-previdenciaria, perspectiva-genero-previdenciario, base-contagem-reciproca-rgps-rpps e indenizacao-contribuicoes-atraso."
 ---
 
-> Nota da auditoria de citações (25/07/2026). Súmula 272 STJ (enunciado real): o trabalhador rural, na condição de segurado especial, somente faz jus à aposentadoria por tempo de serviço/contribuição se recolher contribuições facultativas. O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
+> Nota da auditoria de citações (25/07/2026). Súmula 272 STJ (enunciado oficial, tese adversa): "O trabalhador rural, na condição de segurado especial, sujeito à contribuição obrigatória sobre a produção rural comercializada, somente faz jus à aposentadoria por tempo de serviço, se recolher contribuições facultativas" (auditoria 03/10/2026). O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
 
 # Tempo Rural Anterior a Novembro de 1991
 
@@ -23,11 +23,11 @@ IN 128/2022. Regras operacionais.
 
 Ofício-Circular 46/2019 DIRBEN. Orientações administrativas.
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais (auditoria 03/10/2026).
 
 ## Marco jurisprudencial
 
-Súmula 272 STJ (enunciado real): o trabalhador rural, na condição de segurado especial, somente faz jus à aposentadoria por tempo de serviço/contribuição se recolher contribuições facultativas. O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
+Súmula 272 STJ (enunciado oficial, tese adversa): "O trabalhador rural, na condição de segurado especial, sujeito à contribuição obrigatória sobre a produção rural comercializada, somente faz jus à aposentadoria por tempo de serviço, se recolher contribuições facultativas" (auditoria 03/10/2026). O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -43,9 +43,9 @@ Tema 629 STJ. Coisa julgada em ações rurais, estratégias de repropositura.
 
 Fonte oficial em https://www.stj.jus.br
 
-Tema 642 STJ. Natureza da prova rural.
+Tema 642 STJ. Tese adversa: o segurado especial deve estar no campo ao completar a idade mínima da aposentadoria por idade rural. O caminho do segurado é a ressalva do direito adquirido, quando carência e idade foram preenchidas juntas no passado (auditoria 03/10/2026).
 
-Tema 327 TNU. Perspectiva de gênero e prova rural.
+Tema 327 TNU. Perspectiva de gênero e prova rural. A documentação em nome do cônjuge ou companheiro que o qualifica como empregado rural é início de prova material para benefício de segurado especial (auditoria 03/10/2026).
 
 Fonte oficial em https://www.jf.jus.br
 
@@ -57,7 +57,7 @@ Segundo, para fins de carência, o tempo rural pré-1991 não computa, salvo ind
 
 Terceiro, possibilidade de contagem recíproca do tempo rural para o RPPS, mediante indenização de contribuições (Tema 609 STJ).
 
-Quarto, perspectiva de gênero, Tema 327 TNU. Mulher rural pode ter prova flexibilizada.
+Quarto, perspectiva de gênero, Tema 327 TNU. Mulher rural pode ter prova flexibilizada, com início de prova material em documento do cônjuge ou companheiro qualificado como empregado rural (auditoria 03/10/2026).
 
 Quinto, menor de 12 ou 14 anos trabalhador rural. Cômputo admitido em juízo com prova robusta.
 

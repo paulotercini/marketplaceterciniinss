@@ -6,7 +6,7 @@
 
 "O julgador não é obrigado a analisar as condições pessoais e sociais quando não reconhecer a incapacidade do requerente para a sua atividade habitual".
 
-Aplicação. Laudo do médico assistente bem fundamentado pode afastar a presunção da perícia oficial.
+Aplicação. Súmula adversa. Se o laudo não reconhecer incapacidade para a atividade habitual, o julgador pode dispensar o exame das condições pessoais; por isso o relatório do médico assistente deve demonstrar essa incapacidade (auditoria 03/10/2026).
 
 ### 1.2. Súmula 47/TNU
 
@@ -16,13 +16,13 @@ Aplicação. Laudo do médico assistente complementado por condições pessoais 
 
 ### 1.3. Tema 246/TNU
 
-Tese. "Reconhecida a existência de incapacidade laborativa em decorrência de doença ou lesão preexistente à filiação, a aposentadoria por invalidez somente poderá ser concedida se restar configurado o agravamento da doença ou da lesão preexistente, decorrente de evolução natural ou em razão de circunstâncias do próprio trabalho".
+Tese, na síntese do catálogo TNU. I - Quando a decisão judicial adotar a estimativa de prazo de recuperação da perícia, o termo inicial é a data do exame. II - Quando o ato de concessão não indicar o tempo de recuperação, o prazo de 120 dias conta-se da data da efetiva implantação (auditoria 03/10/2026, corrigida a tese anterior, que reproduzia regra de doença preexistente sem correspondência com o tema).
 
-Aplicação. Laudo deve abordar agravamento ou progressão.
+Aplicação. O laudo deve estimar o prazo de recuperação, que conta da data do exame quando adotado pela decisão (auditoria 03/10/2026).
 
-### 1.4. Tema 1083/STJ
+### 1.4. Agravamento de doença preexistente (art. 42, §2º, e art. 59, §1º, da Lei 8.213/91)
 
-Tese. Reconhecimento do agravamento de doença preexistente para fins de incapacidade.
+Fundamento legal. A doença ou lesão anterior à filiação só gera benefício por incapacidade quando a incapacidade sobrevier por progressão ou agravamento (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído aferido pelo NEN).
 
 Aplicação. Laudo deve indicar o quadro inicial e o quadro agravado.
 

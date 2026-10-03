@@ -32,7 +32,7 @@ Reconhecimento amplo do tempo de aluno-aprendiz.
 
 ### Súmula 18 TNU
 
-Cômputo de 1932 a 1971 com retribuição, mesmo indireta.
+Cômputo com retribuição, mesmo indireta, à conta do orçamento, como contraprestação por labor na execução de bens e serviços para terceiros, sem recorte temporal (redação revista em 14/02/2020, Tema 216) [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### PEDILEFs TNU
 

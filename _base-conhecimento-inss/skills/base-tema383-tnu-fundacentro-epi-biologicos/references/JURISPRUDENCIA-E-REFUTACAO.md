@@ -32,7 +32,7 @@ Os Pareceres Fundacentro são prova científica robusta da dúvida sistêmica so
 
 ## 5. Tema 213/TNU. Standard probatório atenuado
 
-"Em casos excepcionais, justifica-se a flexibilização do ônus probatório do segurado quanto à efetividade do EPI declarado no PPP, especialmente diante de elementos que sugiram a inviabilidade ou ineficácia real do equipamento no ambiente de trabalho".
+Tese, na síntese do catálogo TNU. I - A informação no PPP sobre EPI eficaz pode ser desafiada judicialmente pelo segurado. II - Havendo dúvida razoável sobre a real eficácia do EPI, o período deve ser reconhecido como especial (auditoria 03/10/2026, substituído trecho apresentado como literal que não corresponde à tese).
 
 Os Pareceres Fundacentro fornecem elementos sistêmicos que sugerem a inviabilidade real do EPI biológico isolado.
 

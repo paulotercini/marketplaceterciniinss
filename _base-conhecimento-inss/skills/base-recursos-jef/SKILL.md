@@ -49,7 +49,7 @@ Cabível contra acórdão da TNU, quando houver divergência com Tribunal Superi
 
 ### Recurso extraordinário
 
-Cabível ao STF contra acórdão da TNU ou TR, quando houver matéria constitucional. Súmula 640 STF.
+Cabível ao STF contra acórdão de turma recursal, quando houver matéria constitucional (Súmula 640 STF). Contra acórdão da TNU o RE também é admitido, por extensão e sem previsão no enunciado [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### MS contra ato de Turma Recursal
 

@@ -70,7 +70,7 @@ Refutação. Verificar prazo de cada parcela.
 
 Argumento adversário. Eficácia.
 
-Refutação. Causa de pedir diversa, Tema 629 STJ.
+Refutação. Causa de pedir diversa afasta a identidade de ações (art. 337, §2º, do CPC) [NÃO CONFIRMADO] (auditoria 03/10/2026, retirado o Tema 629 STJ, que trata da falta de prova material na inicial).
 
 ### Argumento 7 — Sequela mínima não integra
 

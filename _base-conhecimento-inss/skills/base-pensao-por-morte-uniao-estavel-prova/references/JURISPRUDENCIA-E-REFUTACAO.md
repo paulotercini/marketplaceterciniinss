@@ -8,11 +8,7 @@ Concubinato impuro. Fonte oficial em https://portal.stf.jus.br
 
 ### Súmula 63/TNU (redação de 18/09/2025, fatos geradores até a MP 871/2019 — auditoria 25/07/2026)
 
-Início de prova material e testemunhal. Fonte oficial em https://www.cjf.jus.br
-
-### Tema 304/TNU
-
-Início de prova material. Fonte oficial em https://www.cjf.jus.br
+Para fatos geradores ocorridos até a entrada em vigor da MP 871/2019, a comprovação de união estável para concessão de pensão por morte prescinde de início de prova material (auditoria 03/10/2026). Fonte oficial em https://www.cjf.jus.br
 
 ### CF/88, art. 226 §3º
 
@@ -58,7 +54,7 @@ Refutação. Continuidade demonstrada por documentos pontuais.
 
 Argumento adversário. Concubinato impuro afasta.
 
-Refutação. Tema 526/STF admite exceções (separação de fato).
+Refutação. O Tema 526/STF não admite exceção, mas a separação de fato afasta o próprio concubinato e permite a união estável (CC, art. 1.723, §1º; Tema 529/STF) (auditoria 03/10/2026).
 
 ### Argumento 5 — Início de prova material insuficiente
 

@@ -62,7 +62,7 @@ Se o recurso não for conhecido com base no §7º, impetrar mandado de seguranç
 
 **Autoridade coatora** — Presidente da Junta de Recursos que proferiu a decisão de não conhecimento (consultar skill ms-competencia-autoridade-coatora)
 
-**Competência** — Vara Cível Federal ou Vara Previdenciária Federal do domicílio do segurado (art. 109, §2º, CF; Tema 374/STF)
+**Competência** — Vara Cível Federal ou Vara Previdenciária Federal do domicílio do segurado (art. 109, §2º, CF; Tema 374/STF, que cuida de ações contra autarquias federais; a extensão ao MS é argumento [NÃO CONFIRMADO]) (auditoria 03/10/2026)
 
 **Fundamento** — Direito líquido e certo de recurso administrativo (art. 126, Lei 8.213/91; art. 56, Lei 9.784/99; art. 5º, LV, CF), violado por ato normativo infralegal
 

@@ -21,9 +21,9 @@ Lei 8.213/91, art. 77, §2º. Cessação da pensão. Casamento ou união estáve
 
 Lei 8.213/91, art. 77, §2º, V. Duração da pensão do cônjuge ou companheiro varia pela idade na data do óbito e tempo de casamento/união estável, conforme tabela introduzida pela Lei 13.135/2015.
 
-EC 103/2019, art. 23. Fixa a RMI da pensão em 50% do valor do benefício ou da aposentadoria a que teria direito, acrescidos de 10% por dependente, até o máximo de 100%.
+EC 103/2019, art. 23. Fixa a RMI da pensão em 50% do valor do benefício ou da aposentadoria a que teria direito, acrescidos de 10 pontos percentuais por dependente, até o máximo de 100% (auditoria 03/10/2026).
 
-EC 103/2019, art. 24. Veda a acumulação de mais de uma pensão no MESMO regime (caput); a acumulação de pensão com aposentadoria é PERMITIDA, com percepção integral do benefício mais vantajoso e faixas redutoras sobre o menos vantajoso (§2º).
+EC 103/2019, art. 24. Veda a acumulação de mais de uma pensão por morte deixada por cônjuge ou companheiro no MESMO regime (caput), e o filho pode receber as pensões do pai e da mãe (auditoria 03/10/2026); a acumulação de pensão com aposentadoria é PERMITIDA, com percepção integral do benefício mais vantajoso e faixas redutoras sobre o menos vantajoso (§2º).
 
 Lei 13.846/2019. Introduziu novas regras sobre comprovação de união estável e dependência econômica.
 
@@ -51,11 +51,11 @@ Primeiro, cônjuge com mais de 2 anos de casamento e segurado falecido com mais 
 
 Segundo, companheira em união estável comprovada por provas materiais (declaração IR, conta conjunta, testemunhas, fotos, viagens). Concessão independentemente de registro.
 
-Terceiro, ex-cônjuge beneficiário de pensão alimentícia. Direito à pensão por morte (Tema 45 TNU).
+Terceiro, ex-cônjuge beneficiário de pensão alimentícia. Concorre em igualdade com os dependentes do art. 16, I (art. 76, §2º, da Lei 8.213/91), e, se os alimentos eram temporários, pelo prazo remanescente (§3º). O Tema 45 TNU cobre o ex-cônjuge sem alimentos que prova dependência econômica superveniente à separação (auditoria 03/10/2026).
 
-Quarto, filho inválido ou com deficiência intelectual/mental grave mantém a pensão após os 21 anos (Tema 15 TNU). Atenção: a Súmula 37 TNU trata de outro assunto — veda a prorrogação ao filho universitário.
+Quarto, filho inválido ou com deficiência intelectual/mental grave mantém a pensão após os 21 anos (art. 16, I, e art. 77, §2º, II, da Lei 8.213/91) (auditoria 03/10/2026). Atenção: a Súmula 37 TNU trata de outro assunto — veda a prorrogação ao filho universitário.
 
-Quinto, menor sob guarda equiparado a filho (Tema 732 STJ/STF reconhecido). Direito à pensão por morte do guardião.
+Quinto, menor sob guarda equiparado a filho (Tema 732 STJ, firmado antes da EC 103/2019). Direito à pensão por morte do guardião. Para óbito desde 13/11/2019, há tese adversa no art. 23, §6º, da EC 103, que equipara a filho só o enteado e o menor tutelado; a questão está pendente no Tema 1271/STF, e a defesa sustenta o art. 16, §2º, da Lei 8.213/91, na redação da Lei 15.108/2025 (auditoria 03/10/2026).
 
 Sexto, concubinato de longa duração com dependência econômica. Discussão no STJ e TNU, tese pró-segurada em reconstrução.
 

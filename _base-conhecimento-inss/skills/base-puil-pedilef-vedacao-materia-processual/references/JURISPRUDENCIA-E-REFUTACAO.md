@@ -104,15 +104,15 @@ Aplicação. Em PUIL com múltiplos fundamentos, atacar cada um.
 
 ## 7. Questão de Ordem 35/TNU
 
-Cotejo analítico com identidade fático-jurídica.
+"O conhecimento do pedido de uniformização pressupõe a efetiva apreciação do direito material controvertido" pela turma de que emanou o acórdão (auditoria 03/10/2026).
 
-Aplicação. Cruzamento com `pedilef-cotejo-analitico-tnu`.
+Aplicação. Em contrarrazões, invocar a QO 35 quando a turma recursal não apreciou o direito material; no PUIL do segurado, provocar essa apreciação por embargos de declaração (QO 36/TNU).
 
 ## 8. Questão de Ordem 53/TNU
 
-Recurso especial subsequente à TNU em matéria contrária a jurisprudência dominante do STJ.
+"Configuram paradigma válido para demonstrar a jurisprudência dominante do STJ os embargos de divergência não conhecidos com base na Súmula 168/STJ" (16/10/2024) (auditoria 03/10/2026).
 
-Aplicação. Após PUIL inadmitido, eventual REsp ao STJ.
+Aplicação. No PUIL do segurado, o acórdão de embargos de divergência não conhecidos pela Súmula 168/STJ serve de paradigma da jurisprudência dominante do STJ.
 
 ## 9. Refutação das teses do INSS contra PUIL/PEDILEF do segurado
 
@@ -317,7 +317,7 @@ Crítica à interpretação restritiva.
 
 Defesa da função uniformizadora ampla.
 
-## 17. Caso paradigma. PUIL 0000810-25.2020.4.03.6314 (Luiz Carlos Vanco)
+## 17. Caso paradigma. PUIL 0000810-25.2020.4.03.6314 (L. C. V.) (auditoria 03/10/2026)
 
 ### 17.1. Quadro
 

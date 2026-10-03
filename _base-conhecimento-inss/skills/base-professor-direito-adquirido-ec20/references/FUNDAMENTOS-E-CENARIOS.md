@@ -38,7 +38,7 @@ Funções de magistério.
 
 ### Tema 1011 STJ
 
-Coordenação pedagógica.
+Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
 
 ## 5. Requisitos do bônus
 
@@ -48,13 +48,13 @@ Segundo, ter exercido magistério exclusivamente até essa data.
 
 Terceiro, aplicar 17 por cento ou 20 por cento ao tempo anterior.
 
-Quarto, usar bônus em aposentadoria proporcional ou integral.
+Quarto, usar o bônus só na aposentadoria integral, com 35 anos (homem) ou 30 anos (mulher) exclusivamente em magistério (EC 20, art. 9º, §2º; IN 128, art. 251, §1º) (auditoria 03/10/2026).
 
 ## 6. Cenários pró-segurado
 
 ### Cenário A — Professora com muito tempo antigo
 
-15 anos até 16/12/1998. Bônus 2,55 anos. Total 17,55 + pós.
+15 anos até 16/12/1998. Bônus de 3 anos (20%). Total 18 + pós (auditoria 03/10/2026).
 
 ### Cenário B — Professor com tempo antigo
 
@@ -84,7 +84,7 @@ Não se aplica.
 
 ### Cenário H — Professor universitário
 
-Não se aplica. ADI 3772.
+Aplica-se. O universitário também tem o acréscimo, desde que se aposente com 35 anos (homem) ou 30 anos (mulher) exclusivamente em magistério (IN 128, art. 251, §1º) (auditoria 03/10/2026).
 
 ### Cenário I — Tempo não exclusivo em magistério
 
@@ -112,7 +112,7 @@ Risco de exclusão de função não regência.
 
 Risco de negativa de universitário.
 
-Risco de não aplicar a Súmula 726.
+Risco de o INSS aplicar a Súmula 726 STF, tese adversa superada pela ADI 3772 para direção, coordenação e assessoramento pedagógico na educação básica (auditoria 03/10/2026).
 
 ## 10. Estratégia pró-segurado
 
@@ -122,7 +122,7 @@ Segundo, cálculo do bônus.
 
 Terceiro, fundamentação com art. 5º XXXVI e Súmula 359.
 
-Quarto, Súmula 726 para excluir fator.
+Quarto, afastar o fator só quando os requisitos se completaram antes da Lei 9.876/99 (Tema 1011/STJ; Tema 149/TNU); a Súmula 726 não trata do fator (auditoria 03/10/2026).
 
 Quinto, comparação com EC 103.
 

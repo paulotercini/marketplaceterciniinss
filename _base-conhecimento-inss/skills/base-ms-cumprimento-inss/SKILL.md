@@ -1,6 +1,6 @@
 ---
 name: base-ms-cumprimento-inss
-description: "Cumprimento da ordem em mandado de segurança previdenciário, implantação de benefício, restabelecimento, obrigação de fazer, multa diária art. 497 CPC, crime de desobediência art. 26 Lei 12.016/2009, ofício requisitório e efeitos patrimoniais limitados pelas Súmulas 269 e 271 STF. Use SEMPRE que mencionar cumprimento de MS previdenciário, implantação por MS, ordem judicial INSS, multa diária em MS, astreintes em MS, art. 26 Lei 12.016, crime de desobediência INSS, ofício requisitório MS, Súmula 269 STF, Súmula 271 STF, Tema 394 STJ, efeitos patrimoniais MS, MS para cumprimento de acórdão do CRPS, INSS não implanta decisão do CRPS, demora no cumprimento de acórdão administrativo, revisão de acórdão sem efeito suspensivo, recurso intempestivo do INSS, art. 308 Decreto 3.048/99, art. 581 IN 128/2022, art. 581 §4º exceções, TRF4 RemNec 5000463-92.2026.4.04.7113, cumprimento de decisão MS, limbo pós-sentença, demora de cumprimento INSS. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e execucao-cumprimento-previdenciario."
+description: "Cumprimento da ordem em mandado de segurança previdenciário, implantação de benefício, restabelecimento, obrigação de fazer, multa diária art. 497 CPC, crime de desobediência art. 26 Lei 12.016/2009, ofício requisitório e efeitos patrimoniais limitados pelas Súmulas 269 e 271 STF. Use SEMPRE que mencionar cumprimento de MS previdenciário, implantação por MS, ordem judicial INSS, multa diária em MS, astreintes em MS, art. 26 Lei 12.016, crime de desobediência INSS, ofício requisitório MS, Súmula 269 STF, Súmula 271 STF, efeitos patrimoniais MS, MS para cumprimento de acórdão do CRPS, INSS não implanta decisão do CRPS, demora no cumprimento de acórdão administrativo, revisão de acórdão sem efeito suspensivo, recurso intempestivo do INSS, art. 308 Decreto 3.048/99, art. 581 IN 128/2022, art. 581 §4º exceções, TRF4 RemNec 5000463-92.2026.4.04.7113, cumprimento de decisão MS, limbo pós-sentença, demora de cumprimento INSS. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e execucao-cumprimento-previdenciario."
 ---
 
 # Cumprimento da Ordem em MS Previdenciário
@@ -37,9 +37,9 @@ Fonte oficial em https://portal.stf.jus.br
 
 Cobrança por ação ordinária.
 
-### Tema 394 STJ
+### Pagamento pretérito no MS
 
-Efeitos patrimoniais pretéritos.
+Seguem as Súmulas 269 e 271 STF (auditoria 03/10/2026, retirado o Tema 394/STJ, que trata de depósito judicial e IRPJ).
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
@@ -79,7 +79,7 @@ Primeiro, Súmula 271 STF. Parcelas entre impetração e cumprimento.
 
 Segundo, parcelas anteriores à impetração por ação ordinária.
 
-Terceiro, Tema 394 STJ. Limite.
+Terceiro, esse limite decorre das Súmulas 269 e 271 STF (auditoria 03/10/2026, retirado o Tema 394/STJ, que trata de depósito judicial e IRPJ).
 
 ## Cenários pró-segurado
 
