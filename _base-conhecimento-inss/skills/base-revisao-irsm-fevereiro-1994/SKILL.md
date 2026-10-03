@@ -41,7 +41,7 @@ Quarto, revisão administrativa em curso, em que o INSS aplicou o IRSM em percen
 
 ## Decadência e prescrição
 
-Art. 103 da Lei 8.213/91. Decadência decenal do primeiro pagamento.
+Art. 103 da Lei 8.213/91. Decadência decenal do primeiro pagamento. O Tema 375 da TNU cancelou o Tema 130 e fixou que a decadência para incluir o IRSM de fevereiro de 1994 não se interrompeu pela Medida Provisória 201/2004, convertida na Lei 10.999/2004 (PUIL 0077764-65.2008.4.01.3800, D.E. 26/06/2025). Tese adversa; a revisão segue viável quando o prazo do art. 103, contado do primeiro pagamento, ainda não se esgotou (auditoria 03/10/2026).
 
 Súmula 85 STJ. Prescrição quinquenal das parcelas.
 
@@ -84,7 +84,7 @@ Em revisão geral, acionar `revisao-peticao`.
 
 ## Alertas
 
-Primeiro, após a Lei 10.999/2004 [NÃO CONFIRMADO], o INSS passou a aplicar o IRSM administrativamente (auditoria 03/10/2026). Benefícios concedidos após 2010 tendem a já ter a aplicação. Verificar concretamente.
+Primeiro, após a Lei 10.999/2004 [NÃO CONFIRMADO], o INSS passou a aplicar o IRSM administrativamente (auditoria 03/10/2026, retirado o marco de 2010). Verificar concretamente, na carta de concessão e na memória de cálculo, se o IRSM foi aplicado.
 
 Segundo, decadência decenal é crítica.
 

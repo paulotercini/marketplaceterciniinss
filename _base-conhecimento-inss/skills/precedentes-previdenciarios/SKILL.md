@@ -189,7 +189,7 @@ Precedentes STJ (leitura temporal, restritiva)
 - Tema STF 1300 (julgado 18/12/2025) ↔ Tema TNU 318 (sobrestado, questão resolvida)
 
 ### Acumulação de benefícios e redutor do art. 24 da EC 103/2019
-- ADI 7051/STF (cálculo da pensão, art. 23) ↔ Tema 1300/STF (cálculo aposentadoria por invalidez, art. 26, § 2º, III) ↔ Tema 359/STF (teto sobre soma) ↔ Temas 377 e 384/STF (cada vínculo isolado em cargos acumuláveis) ↔ Tema 627/STF (cargos constitucionalmente acumuláveis sem vedação) ↔ RE 1.510.285/DF AgR (redutor pós-óbito 13/11/2019)
+- ADI 7051/STF (cálculo da pensão, art. 23) ↔ Tema 1300/STF (cálculo aposentadoria por invalidez, art. 26, § 2º, III) ↔ Tema 359/STF (teto sobre soma) ↔ Temas 377 e 384/STF (cada vínculo isolado em cargos acumuláveis) ↔ Tema 627/STF (cargos constitucionalmente acumuláveis fora da vedação do art. 11 da EC 20/98, uso por analogia) (auditoria 03/10/2026) ↔ RE 1.510.285/DF AgR (redutor pós-óbito 13/11/2019)
 - **Controvérsia em construção na Primeira Turma do STF.** Aplicação do redutor sobre aposentadoria pré-reforma quando a pensão é posterior à EC 103/2019. Tese A (Min. Flávio Dino, atribuída) sustenta proteção do § 4º do art. 24. Tese B (Min. Alexandre de Moraes, atribuída) sustenta atração da sistemática integral pelo fato gerador novo. **Ambos os ARE divulgados em redes sociais (1.587.588/PB e 1.475.653/SE) NÃO localizados em fonte primária oficial até maio/2026.** Verificar inteiro teor antes de citar.
 - Súmula 359/STF — instrumento doutrinário central na sustentação do direito adquirido em matéria previdenciária
 - Para detalhamento completo, consultar `references/acumulacao_ec103.md`

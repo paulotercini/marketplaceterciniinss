@@ -59,7 +59,7 @@ O §3º (conversão para cálculo na aposentadoria por idade PCD) foi REVOGADO p
 
 ## Marco jurisprudencial (conferido, com ressalvas)
 
-ADI 5760/STF. Rel. Min. Alexandre de Moraes, Tribunal Pleno, julgada em 13/09/2019, matéria de direitos da pessoa com deficiência em aposentadoria. Conferir o objeto e o dispositivo exatos no portal do STF antes de citar em peça, o rótulo genérico de constitucionalidade da LC 142 da versão anterior desta skill não foi confirmado.
+ADI 5760/STF. Rel. Min. Alexandre de Moraes, Tribunal Pleno, julgada em 13/09/2019, unânime. Declarou inconstitucional o art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91. Não sustenta tese sobre aposentadoria da pessoa com deficiência nem sobre a LC 142 (auditoria 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=5247635).
 
 Tema 546/STJ (tese literal no catálogo). A lei vigente por ocasião da aposentadoria é a aplicável ao direito à conversão entre tempos de serviço especial e comum, independentemente do regime jurídico à época da prestação do serviço. Usar por analogia para fixar o regime da conversão na DER.
 

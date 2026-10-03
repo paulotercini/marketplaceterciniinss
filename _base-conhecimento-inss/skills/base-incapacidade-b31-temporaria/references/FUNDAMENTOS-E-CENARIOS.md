@@ -52,7 +52,7 @@ Segurado com três requerimentos indeferidos por análise documental. O pedido s
 
 ### Cenário 7 — Perícia documental inconclusiva
 
-Segurado com B31 indeferido por parecer de verossimilhança negativo. Cabe recurso ao CRPS com novos atestados, exames e laudos. Ou ação judicial com perícia médica. Acionar `auditoria-laudo-pericial`.
+Segurado com B31 indeferido no exame médico-pericial, presencial, por telemedicina ou por análise documental (art. 60, §11-A, da Lei 8.213/91; auditoria 03/10/2026). Cabe recurso ao CRPS com novos atestados, exames e laudos. Ou ação judicial com perícia médica. Acionar `auditoria-laudo-pericial`.
 
 ### Cenário 8 — Limbo previdenciário-trabalhista
 

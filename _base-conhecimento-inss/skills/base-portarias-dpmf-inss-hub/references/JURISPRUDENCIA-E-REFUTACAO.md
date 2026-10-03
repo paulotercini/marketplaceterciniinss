@@ -48,7 +48,7 @@ IRDR 15/TRF4.
 
 Tema 383/TNU. EPI e agentes biológicos. Pareceres Fundacentro 2 e 3/2025.
 
-### 2.4. Em matéria de BPC (Portaria Conjunta 2/2014)
+### 2.4. Em matéria de BPC (Portaria Conjunta 2/2015) (auditoria 03/10/2026)
 
 Tema 312/STF. Critério econômico do BPC.
 

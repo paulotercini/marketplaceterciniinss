@@ -50,7 +50,7 @@ Hipótese em que o INSS aplicou IRSM em alguns salários e não em outros. Recá
 
 ## 6. Cenários a evitar
 
-### Cenário E — Benefício concedido após 2010 com IRSM aplicado
+### Cenário E — Benefício com IRSM já aplicado
 
 Após a Lei 10.999/2004, aplicação administrativa tornou-se rotineira (auditoria 03/10/2026). Em regra, sem distorção.
 
@@ -106,7 +106,7 @@ Sétimo, cumulação possível com a revisão do teto, quando ambas forem cabív
 
 ## 10. Integração prática
 
-Quando a Carta de Concessão indicar benefício concedido entre março de 1994 e 2010, verificar sempre a aplicação do IRSM.
+Quando a carta de concessão indicar período básico de cálculo com salários de contribuição anteriores a março de 1994, verificar sempre a aplicação do IRSM (auditoria 03/10/2026).
 
 Quando houver pensão derivada, verificar a revisão reflexa e a decadência autônoma.
 

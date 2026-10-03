@@ -58,14 +58,6 @@ Fonte oficial em https://www.gov.br/previdencia/pt-br/assuntos/crps
 
 Aplicação pró-segurado.
 
-### Súmula 63/TNU (união estável; pertinência a conferir — auditoria 25/07/2026)
-
-Redação de 18/09/2025 restrita a fatos geradores até a MP 871/2019; enunciado de pensão por morte, sem aplicação direta ao BPC.
-
-Fonte oficial em https://www.cjf.jus.br
-
-Aplicação pró-segurado.
-
 ## 2. Refutação aos argumentos típicos do INSS
 
 ### Argumento 1 — Renda per capita excedente

@@ -16,19 +16,15 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Enunciados FONAJEF
 
-Padronização interpretativa. Enunciados 91, 95, 225, entre outros, sobre prova e procedimento.
+Padronização interpretativa. Enunciados 91 e 225, entre outros, sobre prova e procedimento (auditoria 03/10/2026).
 
 Fonte oficial em https://www.ajufe.org.br
 
 ### Enunciado 91 FONAJEF
 
-Prova técnica simplificada. Cabível.
+"Os Juizados Especiais Federais são incompetentes para julgar causas que demandem perícias complexas ou onerosas que não se enquadrem no conceito de exame técnico". É tese que o INSS pode invocar, e não autoriza perícia por similaridade nem substitui o PPP. O segurado demonstra que a prova pedida é exame técnico (art. 12 da Lei 10.259/2001) e invoca o Enunciado 225 do XVIII FONAJEF [NÃO CONFIRMADO], que legitima a prova técnica simplificada (auditoria 03/10/2026).
 
-Fonte oficial em https://www.ajufe.org.br
-
-### Enunciado 95 FONAJEF
-
-Documentos novos em sede recursal, parcimônia.
+Fonte oficial em https://www.cjf.jus.br/cjf/corregedoria-da-justica-federal/corregedoria-geral-da-justica-federal/enunciados-fonajef/lista-completa-dos-enunciados-do-fonajef.pdf
 
 ## 2. Marco legislativo
 
@@ -52,7 +48,7 @@ Refutação. Renúncia ao excedente. Tema 1030 STJ.
 
 Argumento adversário. JEF não comporta.
 
-Refutação. Prova técnica simplificada, art. 12 Lei 10.259. Enunciado 91 FONAJEF.
+Refutação. Prova técnica simplificada, art. 12 Lei 10.259, e Enunciado 225 do XVIII FONAJEF [NÃO CONFIRMADO]. O Enunciado 91 FONAJEF é tese adversa, pois afasta do JEF a perícia complexa ou onerosa que não se enquadre no conceito de exame técnico; o caminho do segurado é demonstrar que a prova pedida é exame técnico (auditoria 03/10/2026).
 
 ### Argumento 3 — Dispensa de reexame indevida
 

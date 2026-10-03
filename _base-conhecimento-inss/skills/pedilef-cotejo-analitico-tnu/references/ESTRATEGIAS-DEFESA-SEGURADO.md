@@ -20,7 +20,7 @@ A aplicação das QOs sobre admissibilidade do PEDILEF não pode supor supressã
 
 ## Argumentação Contra Aplicação Formalista da QO 59
 
-Enquanto pendente confirmação oficial da QO 59 em fonte primária, a argumentação contra aplicação formalista deve se estruturar em quatro eixos.
+Confirmada a QO 59 na página oficial do CJF (aprovada por maioria em 15/04/2026, precedente 5007086-55.2020.4.02.5104), a argumentação contra sua aplicação formalista deve se estruturar em quatro eixos (auditoria 03/10/2026).
 
 **Primeiro eixo — Excesso de rigor técnico em microssistema simplificado.** A transposição acrítica do padrão do art. 1.029, §1º, do CPC/2015 (que rege o recurso especial) para o PEDILEF desconsidera a distinção estrutural entre o recurso especial (tribunal de cúpula constitucional) e o PEDILEF (recurso uniformizador em microssistema simplificado). O próprio IEPrev, em texto do Dr. Yoshiaki Yamamoto de 09/12/2024, reconheceu que a TNU, ao aplicar formalismos estranhos aos JEFs, transforma turmas recursais em "bolhas hermenêuticas".
 
@@ -32,7 +32,7 @@ Enquanto pendente confirmação oficial da QO 59 em fonte primária, a argumenta
 
 ## Táticas Pragmáticas de Prevenção
 
-**Tática 1 — Formato tabular obrigatório.** Independentemente da confirmação oficial da QO 59, adotar desde já o formato tabular comparativo paradigma por paradigma. É custo baixo e mitigação alta.
+**Tática 1 — Formato tabular obrigatório.** Com a QO 59 em vigor, adotar o formato tabular comparativo paradigma por paradigma (auditoria 03/10/2026). É custo baixo e mitigação alta.
 
 **Tática 2 — Paradigmas em cascata.** Apresentar pelo menos três paradigmas, priorizando um de outra região recursal e um em tese do STJ (IRDR/IAC/repetitivo/EDiv/PUIL-STJ). A redundância protege contra falha parcial (exemplo, superação superveniente de um dos paradigmas por QO 12).
 
@@ -75,8 +75,6 @@ A QO 22 autoriza inadmissão monocrática quando ausente similitude. Contra a de
 ## Argumentação de Reforço — Princípios e Fontes
 
 **Princípio da proteção do segurado.** O sistema previdenciário é finalisticamente voltado à proteção social. A interpretação das normas recursais deve ser compatível com essa finalidade, sob pena de subversão do sistema.
-
-**Súmula 14 do STF (por analogia estrutural).** Não é admissível, por ato normativo infralegal, a criação de óbice ao conhecimento de recurso não previsto em lei. Embora aplicada originalmente a outro contexto, o raciocínio é transponível.
 
 **Protocolo para Julgamento com Perspectiva de Gênero (Resolução CNJ 492/2023).** Em PEDILEF de segurada mulher em contexto rural, doméstico ou informal, invocar o protocolo para reforço contra inadmissão formalista, articulando com a skill `perspectiva-genero-previdenciario`.
 

@@ -10,9 +10,9 @@ A jurisprudência do STF reconhece a competência da PFE-INSS para avaliar a leg
 
 ## 2. STF. LGPD aplicada à Administração Pública
 
-ADI 6387. Reconhece a aplicabilidade da LGPD ao setor público, com nuances específicas em relação ao tratamento de dados pelo Estado.
+ADI 6387. Cautelar referendada em 07/05/2020 contra a MP 954/2020, que tratava do compartilhamento de dados de usuários de telefonia com o IBGE, e ação julgada prejudicada em 19/11/2020. Não trata da LGPD no setor público (auditoria 03/10/2026).
 
-ADC 51 e ADIs correlatas. Validação da estrutura geral da LGPD.
+ADC 51 e ADIs correlatas. Validação da estrutura geral da LGPD [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ## 3. STJ. Responsabilidade da Administração por incidente de segurança
 

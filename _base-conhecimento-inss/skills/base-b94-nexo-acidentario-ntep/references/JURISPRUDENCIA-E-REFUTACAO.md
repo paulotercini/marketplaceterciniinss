@@ -126,7 +126,7 @@ Sexto, dialeticidade.
 
 ## 6. Diligência de atualização
 
-Acompanhar ADI 3931 STF.
+ADI 3931 STF julgada improcedente em 20/04/2020, com trânsito em julgado em 13/08/2020; nada a acompanhar (auditoria 03/10/2026).
 
 Revalidar art. 21-A.
 

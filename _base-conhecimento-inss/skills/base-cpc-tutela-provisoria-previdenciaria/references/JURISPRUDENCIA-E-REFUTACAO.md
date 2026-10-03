@@ -28,7 +28,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 1102 STF
 
-RVT. Tese firmada.
+RVT. A ADI 2111 (21/03/2024) declarou cogente o art. 3º da Lei 9.876/99, sem opção pelo art. 29, I e II, o que afasta a tese e o seu uso em tutela de evidência (auditoria 03/10/2026).
 
 ### Tema 76 STF
 
@@ -90,7 +90,7 @@ Refutação. Demora impõe dano alimentar. Tutela exigível.
 
 Argumento adversário. Tese não firmada.
 
-Refutação. Temas 1102 STF e 327 STF firmados. Art. 311 II CPC.
+Refutação. Art. 311, II, CPC, quando os fatos se provarem só por documento e houver tese firmada em casos repetitivos ou súmula vinculante aplicável (auditoria 03/10/2026, retirados o Tema 1102 STF, da revisão da vida toda, e o Tema 327 STF, ausente do catálogo).
 
 ### Argumento 6 — ADC 4 veda
 

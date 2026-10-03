@@ -129,7 +129,7 @@ Cabível **apenas** quando a medição do PPP está entre 20 e 78 ppm e o caso t
 Risco assumido. Não há tese vinculante TNU/STJ adotando ACGIH como parâmetro substitutivo da NR-15 para fins previdenciários. Empregar como reforço subsidiário, jamais como fundamento isolado.
 
 ### Frente 5 — Cerceamento por julgamento antecipado
-Quando o juiz julgar improcedente sem deferir perícia para apuração de co-exposição cancerígena ou enquadramento por atividade, sustentar cerceamento de defesa. Súmula 198/TFR, Tema 1031/STJ, REsp 2.152.968, arts. 369 e 370 do CPC, Enunciado 91/FONAJEF. Aplicar PARTE II desta skill (`references/CERCEAMENTO-DEFESA.md` quando disponível).
+Quando o juiz julgar improcedente sem deferir perícia para apuração de co-exposição cancerígena ou enquadramento por atividade, sustentar cerceamento de defesa. Súmula 198/TFR, Tema 1031/STJ, REsp 2.152.968, arts. 369 e 370 do CPC, Enunciado 225/FONAJEF [NÃO CONFIRMADO]. O Enunciado 91/FONAJEF não ampara o pedido, porque declara o JEF incompetente para perícia complexa ou onerosa e pode ser invocado pelo INSS (auditoria 03/10/2026). Aplicar PARTE II desta skill (`references/CERCEAMENTO-DEFESA.md` quando disponível).
 
 ### Frente 6 — Diligência via PGR/NR-1 e Portaria MTE 2.021/2025
 A Portaria MTE 2.021/2025 obriga o empregador a disponibilizar laudos caracterizadores de insalubridade ao trabalhador. Usar como alavanca para acesso a PGR, PPRA histórico, LTCAT, laudos NR-15 e NR-16. Aplicar PARTE III desta skill.

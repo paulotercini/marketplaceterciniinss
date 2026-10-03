@@ -1,6 +1,6 @@
 ---
 name: base-portarias-dpmf-inss-hub
-description: "Hub completo das Portarias DPMF, DIRBEN e correlatas do INSS, aplicáveis a TODA análise de benefício previdenciário. Use SEMPRE que mencionar Portaria DPMF INSS, Portaria DIRBEN INSS, Portaria 990/2022 CNIS RAC Livro I, Portaria 991/2022 concessão revisão Livro II, Portaria 992/2022 manutenção Livro III (NÃO cálculo RMI), Portaria 993/2022 processo administrativo Livro IV, Portaria 994/2022 acumulação Livro V, Portaria 995/2022 acordos internacionais Livro VI, Portaria 996/2022 recursos Livro VII, Portaria 1316/2025, Portarias 1056/2022 1231/2024 1309/2025 1318/2025 IEA, Portarias 1310/2025 1333/2026 reabilitação, Portaria MPS 462/2026 RICRPS, Portarias 1079/2022 1209/2024 1240/2024 1251/2025 1299/2025 alterações 990, Portaria 19/2026 Teleperícia, Portarias Conjuntas 13 14 15/2026 análise documental B31 B91 B94, Portaria MTP 672/2021 EPI, Portaria 6734/2020 PCMSO, Portaria Conjunta SPS INSS SNAS 2/2014 BPC, Portaria Interministerial 1/2015 IF-BrA. Taxonomia corrigida das Portarias 990 a 996/2022 verificada contra fontes oficiais em 31/05/2026. Cruza com cnis-acerto-indicadores, base-erro-administrativo-iea-13975, base-segurado-especial-autodeclaracao-arts-92-93-94, peticao-previdenciaria, precedentes-previdenciarios, base-legislacao-fontes-primarias."
+description: "Hub completo das Portarias DPMF, DIRBEN e correlatas do INSS, aplicáveis a TODA análise de benefício previdenciário. Use SEMPRE que mencionar Portaria DPMF INSS, Portaria DIRBEN INSS, Portaria 990/2022 CNIS RAC Livro I, Portaria 991/2022 concessão revisão Livro II, Portaria 992/2022 manutenção Livro III (NÃO cálculo RMI), Portaria 993/2022 processo administrativo Livro IV, Portaria 994/2022 acumulação Livro V, Portaria 995/2022 acordos internacionais Livro VI, Portaria 996/2022 recursos Livro VII, Portaria 1316/2025, Portarias 1056/2022 1231/2024 1309/2025 1318/2025 IEA, Portarias 1310/2025 1333/2026 reabilitação, Portaria MPS 462/2026 RICRPS, Portarias 1079/2022 1209/2024 1240/2024 1251/2025 1299/2025 alterações 990, Portaria 19/2026 Teleperícia, Portarias Conjuntas 13 14 15/2026 análise documental B31 B91 B94, Portaria MTP 672/2021 EPI, Portaria 6734/2020 PCMSO, Portaria Conjunta MDS INSS 2/2015 BPC, Portaria Interministerial 1/2014 IF-BrA. Taxonomia corrigida das Portarias 990 a 996/2022 verificada contra fontes oficiais em 31/05/2026. Cruza com cnis-acerto-indicadores, base-erro-administrativo-iea-13975, base-segurado-especial-autodeclaracao-arts-92-93-94, peticao-previdenciaria, precedentes-previdenciarios, base-legislacao-fontes-primarias."
 ---
 
 # Hub das Portarias DPMF, DIRBEN e correlatas. INSS
@@ -173,7 +173,7 @@ Disciplina o Programa de Controle Médico de Saúde Ocupacional (PCMSO).
 
 Aplicação. Documentação ambiental para B31, B32, B91, B92, B94 e aposentadoria especial. Cruza com NR-32 e PGR.
 
-## 14. Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014
+## 14. Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026)
 
 Disciplina a avaliação biopsicossocial para aposentadoria PCD da LC 142/2013.
 
@@ -181,7 +181,7 @@ Sete domínios. Função e estrutura do corpo, atividades e participação, fato
 
 Aplicação. Análise de aposentadoria PCD. Detalhamento em `base-pcd-if-bra-metodologia` e `base-aposentadoria-pcd-lc142`.
 
-## 15. Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014
+## 15. Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026)
 
 Disciplina a avaliação biopsicossocial do BPC/LOAS.
 
@@ -207,8 +207,8 @@ Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-lon
 | Autodeclaração rural | DPMF/INSS 990 arts. 92-94 (e alterações) | base-segurado-especial-autodeclaracao-arts-92-93-94 |
 | EPI (CA) | MTP 672/2021 | base-especial-epi, base-tema383-tnu-fundacentro-epi-biologicos |
 | PCMSO | MTP 6734/2020 | (transversal em saúde ocupacional) |
-| IF-BrA aposentadoria PCD | Interministerial 1/2015 | base-pcd-if-bra-metodologia |
-| BPC biopsicossocial | Conjunta SPS/INSS/SNAS 2/2014 | base-bpc-impedimento-longo-prazo |
+| IF-BrA aposentadoria PCD | Interministerial 1/2014 (auditoria 03/10/2026) | base-pcd-if-bra-metodologia |
+| BPC biopsicossocial | Conjunta MDS/INSS 2/2015 (auditoria 03/10/2026) | base-bpc-impedimento-longo-prazo |
 
 ## 17. Aplicação a cada análise de benefício
 
@@ -226,7 +226,7 @@ Portarias correlatas. Portaria 990/2022 para CNIS. Portaria 991/2022 para proced
 
 ### 17.4. Aposentadoria PCD
 
-Portarias correlatas. Portaria Interministerial 1/2015 para IF-BrA. Portaria 991/2022 para procedimento.
+Portarias correlatas. Portaria Interministerial 1/2014 para IF-BrA (auditoria 03/10/2026). Portaria 991/2022 para procedimento.
 
 ### 17.5. Auxílio-doença, aposentadoria por invalidez, auxílio-acidente
 
@@ -238,7 +238,7 @@ Portaria 991/2022 para procedimento de reconhecimento e cálculo. Portaria 992/2
 
 ### 17.7. BPC/LOAS
 
-Portaria Conjunta SPS/INSS/SNAS 2/2014 para avaliação biopsicossocial. Portaria 991/2022 para procedimento.
+Portaria Conjunta MDS/INSS 2/2015 para avaliação biopsicossocial (auditoria 03/10/2026). Portaria 991/2022 para procedimento.
 
 ### 17.8. Salário-maternidade
 

@@ -129,7 +129,7 @@ Skills relevantes. `base-tnu-admissibilidade-manual` (OBRIGATÓRIA), `pedilef-co
 - [ ] Acórdão é de MÉRITO, não de tutela provisória (QO 54/TNU).
 - [ ] Acórdão recorrido NÃO está alinhado ao STJ (QO 24/TNU).
 - [ ] Prequestionamento (QO 10 + QO 35 + QO 36/TNU + Súmulas 282 e 356 STF + art. 1.025 CPC).
-- [ ] Tese central do PUIL coincide com a do recurso inominado (não inovadora - QO 10/TNU).
+- [ ] Tese central do PUIL ventilada nas fases anteriores do processo e apreciada expressamente pela turma recursal (não inovadora, QO 10/TNU) (auditoria 03/10/2026).
 - [ ] Não há reexame de matéria de fato (Súmula 42/TNU).
 - [ ] Não há matéria processual (Súmula 43/TNU).
 - [ ] Tese revestida como direito material previdenciário.

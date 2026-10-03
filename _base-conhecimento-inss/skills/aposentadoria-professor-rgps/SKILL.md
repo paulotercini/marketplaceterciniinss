@@ -137,7 +137,7 @@ O professor (inclusive universitário) que não implementou as condições para 
 
 ### 6.1 Incidência do fator previdenciário — Tema 1011/STJ e Tema 1091/STF
 
-O fator previdenciário incide no cálculo da RMI da aposentadoria por tempo de contribuição de professor. O STJ firmou esta tese no Tema 1011, para requisitos completados após a Lei 9.876/99. A constitucionalidade dessa incidência sobre o professor é a tese do Tema 960/STF [NÃO CONFIRMADO]; o Tema 1091 (RE 1.221.630/SC, Rel. Min. Dias Toffoli) trata do fator previdenciário em geral (auditoria 03/10/2026).
+O fator previdenciário incide no cálculo da RMI da aposentadoria por tempo de contribuição de professor. O STJ firmou esta tese no Tema 1011, para requisitos completados após a Lei 9.876/99. A constitucionalidade dessa incidência sobre o professor é a tese registrada no Tema 960/STF (RE 1.029.608), que teve repercussão geral negada por ser matéria infraconstitucional, com trânsito em 26/09/2017 [CONFERIDO no portal do STF]. Tese desfavorável, que não alcança quem reuniu os requisitos antes da Lei 9.876/99 nem as regras de transição do professor da EC 103/2019, calculadas pelo art. 26 da emenda; o Tema 1091 (RE 1.221.630/SC, Rel. Min. Dias Toffoli) trata do fator previdenciário em geral (auditoria 03/10/2026).
 
 O fator não incide quando os requisitos se completaram antes da Lei 9.876/99, ressalva da própria tese do Tema 1011/STJ. Depois dela, a via para afastá-lo é a regra 85/95 (Lei 13.183/2015), quando os pontos são atingidos. Para professores, o art. 29, §9º, da Lei 8.213/91 prevê acréscimo de 5 anos ao professor (inciso II) e de 10 anos à professora (inciso III) no tempo de contribuição, exclusivamente para fins de cálculo do fator (auditoria 03/10/2026).
 

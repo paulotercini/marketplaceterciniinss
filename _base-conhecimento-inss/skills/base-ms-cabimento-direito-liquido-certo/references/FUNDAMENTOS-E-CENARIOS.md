@@ -40,7 +40,7 @@ Compensação tributária.
 
 ### Súmula 628 STJ
 
-Arquivamento de PA.
+Teoria da encampação: vínculo hierárquico, defesa do mérito nas informações e ausência de modificação de competência (auditoria 03/10/2026).
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
@@ -66,7 +66,7 @@ Lei 13.460/2017.
 
 ### Cenário C — Arquivamento sem fundamentação
 
-Súmula 628 STJ.
+Súmula 628 STJ, teoria da encampação, útil se houver erro na indicação da autoridade coatora (auditoria 03/10/2026).
 
 ### Cenário D — Negativa por vício formal
 
@@ -78,7 +78,7 @@ MS por omissão.
 
 ### Cenário F — Reabertura de PA
 
-Súmula 628 STJ.
+Súmula 628 STJ, teoria da encampação, útil se houver erro na indicação da autoridade coatora (auditoria 03/10/2026).
 
 ### Cenário G — Complementação de contribuição
 

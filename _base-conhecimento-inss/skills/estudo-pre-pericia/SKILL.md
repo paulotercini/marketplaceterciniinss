@@ -142,7 +142,7 @@ Sexta, português correto do padrão do escritório, sem dois-pontos introduzind
 
 ## Nota de grafia (registro de manutenção)
 
-A portaria do IF-BrA aparece na base ora como "Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014", ora como "Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014" (grafia usada pelo usuário e comum na literatura). É a MESMA norma. Pendência de uniformização futura pela grafia do texto oficial, a conferir na fonte primária.
+A portaria do IF-BrA é a Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014, conforme o texto oficial publicado no DOU de 30/01/2014 (auditoria 03/10/2026). A grafia "AGU/MPS/MF/MP/PR", que aparecia em parte da base, está errada e foi uniformizada.
 
 ## Extensão
 

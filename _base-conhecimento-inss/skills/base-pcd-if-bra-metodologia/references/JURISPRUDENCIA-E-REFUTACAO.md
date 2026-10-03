@@ -4,7 +4,7 @@
 
 ### ADI 5760 STF
 
-LC 142 e avaliação biopsicossocial.
+Objeto real. Declarou inconstitucional o art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91 (Rel. Min. Alexandre de Moraes, 13/09/2019, unânime). Não sustenta tese sobre aposentadoria da pessoa com deficiência nem sobre a avaliação biopsicossocial (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -130,6 +130,6 @@ Sexto, monitoramento do grau.
 
 Acompanhar Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
-Revalidar ADI 5760.
+ADI 5760 conferida; trata da cota de pessoas com deficiência do art. 93 da Lei 8.213/91 e não serve a esta skill (auditoria 03/10/2026).
 
 Monitorar Lei 15.176/2025 e Lei 14.768/2023.

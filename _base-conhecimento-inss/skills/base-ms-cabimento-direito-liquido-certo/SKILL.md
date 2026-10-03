@@ -33,7 +33,7 @@ Concessão de MS não produz efeitos patrimoniais.
 
 ### Súmula 213 STJ
 
-MS é instrumento de compensação tributária.
+"O mandado de segurança constitui ação adequada para a declaração do direito à compensação tributária." Súmula tributária; no previdenciário, o uso é por analogia (auditoria 03/10/2026).
 
 ### Súmula 628 STJ
 

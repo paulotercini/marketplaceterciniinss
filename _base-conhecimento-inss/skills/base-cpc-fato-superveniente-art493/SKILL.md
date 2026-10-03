@@ -35,7 +35,7 @@ Direito adquirido ao melhor benefício. Harmonia com superveniência.
 
 ### Questão de Ordem 20 TNU
 
-Reafirmação e DIB.
+Provido o pedido de uniformização em matéria de direito que exija prova não produzida ou não apreciada, anula-se a decisão da turma recursal, e o juiz e a turma ficam vinculados à tese de direito fixada (DJ 11/09/2006) (auditoria 03/10/2026).
 
 ## Conceito operacional
 

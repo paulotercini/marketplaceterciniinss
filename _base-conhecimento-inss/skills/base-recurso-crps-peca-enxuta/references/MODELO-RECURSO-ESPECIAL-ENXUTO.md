@@ -62,8 +62,8 @@ fatos já consolidados em primeira instância.]
 
 4.1. DA TESE PRÓ-SEGURADO CONFORME A NORMA APLICÁVEL
 
-[Mesma estrutura do recurso ordinário, mas centrada na hipótese de
-cabimento do recurso especial. Indicar a tese normativa correta e o
+[Mesma estrutura do recurso ordinário, mas centrada nos fundamentos
+do acórdão da JR (auditoria 03/10/2026). Indicar a tese normativa correta e o
 fundamento legal específico.]
 
 
@@ -81,8 +81,8 @@ reconhecer ao recorrente o direito ao [benefício] desde a DER de
 DD/MM/AAAA.
 
 Caso a Câmara entenda pelo desprovimento, requer expressamente o
-prequestionamento da matéria de direito federal para fins de eventual
-recurso administrativo subsequente.
+pronunciamento sobre cada fundamento deste recurso, para fins de eventuais
+embargos de declaração por omissão (art. 92, III, do RICRPS) (auditoria 03/10/2026).
 
 
 [Cidade], [data].
@@ -95,14 +95,14 @@ OAB/SP 331.110
 
 ## INSTRUÇÕES OPERACIONAIS
 
-**Tamanho final esperado.** 5 a 8 páginas. Recurso especial exige demonstração técnica da hipótese de cabimento, então é levemente mais longo que o ordinário.
+**Tamanho final esperado.** 5 a 8 páginas. O recurso especial não depende de hipótese de cabimento, pois cabe das decisões de JR em recurso ordinário (art. 90 do RICRPS) (auditoria 03/10/2026).
 
 **Diferença chave.** O recurso especial cabe contra qualquer acórdão de JR em recurso ordinário (art. 90 do RICRPS), salvo matéria de alçada exclusiva (art. 89, §3º) e decisão de diligência (art. 90, §2º). Se o pedido for de anulação, indicar uma das 8 hipóteses do art. 91, §1º, nenhuma delas de divergência (auditoria 03/10/2026).
 
 **Cuidado especial.**
 
-1. Identificar com PRECISÃO a hipótese de cabimento.
-2. Citar o paradigma (acórdão divergente, enunciado, parecer ou súmula) com transcrição literal.
+1. Se o pedido for de anulação, identificar com PRECISÃO a hipótese do art. 91, §1º (auditoria 03/10/2026).
+2. Citar o paradigma (enunciado, parecer ou súmula vinculante) com transcrição literal (auditoria 03/10/2026).
 3. Demonstrar a CONTRARIEDADE de forma objetiva, sem retórica.
 4. Mostrar que a tese pró-segurado encontra fundamento no normativo.
 

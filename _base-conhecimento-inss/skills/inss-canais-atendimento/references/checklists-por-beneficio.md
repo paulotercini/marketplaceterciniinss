@@ -400,7 +400,7 @@ A renda do próprio BPC do idoso não integra o cálculo da renda familiar para 
 ### A — Requisitos legais
 
 - Segurada empregada CLT: não precisa de carência — pago pela empresa pelos primeiros 120 dias, depois reembolsado pelo INSS
-- Segurada CI ou facultativa: sem carência (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]; Enunciado 19/CRPS), exigida apenas a qualidade de segurada (auditoria 03/10/2026)
+- Segurada CI ou facultativa: sem carência (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]; Enunciado 19/CRPS), exigida apenas a qualidade de segurada (auditoria 03/10/2026)
 - Segurada desempregada: qualidade de segurado mantida no período de graça, sem carência (auditoria 03/10/2026)
 
 ### B — Checklist de documentos

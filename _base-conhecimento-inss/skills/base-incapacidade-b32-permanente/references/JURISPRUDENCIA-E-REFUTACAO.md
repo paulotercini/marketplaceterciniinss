@@ -52,7 +52,7 @@ Aplicação pró-segurado. A revisão ou o restabelecimento de B32 cessado pode 
 
 ### Súmula 557 STJ
 
-Tese, pelo Tema 704/STJ, que originou a súmula. A aposentadoria por invalidez decorrente da conversão de auxílio-doença, sem retorno do segurado ao trabalho, é apurada na forma do art. 36, §7º, do Decreto 3.048/99 (auditoria 03/10/2026, corrigida a síntese anterior).
+Texto oficial. "A renda mensal inicial (RMI) alusiva ao benefício de aposentadoria por invalidez precedido de auxílio-doença será apurada na forma do art. 36, § 7º, do Decreto n. 3.048/1999, observando-se, porém, os critérios previstos no art. 29, § 5º, da Lei n. 8.213/1991, quando intercalados períodos de afastamento e de atividade laboral." (1ª Seção, 09/12/2015, DJe 15/12/2015). A primeira parte vem do Tema 704/STJ; a ressalva final manda aplicar o art. 29, §5º, quando houve retorno ao trabalho entre os afastamentos (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 

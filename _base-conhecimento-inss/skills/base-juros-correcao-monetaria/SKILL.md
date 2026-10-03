@@ -33,7 +33,7 @@ Inconstitucionalidade parcial do art. 1º-F. IPCA-E para correção das condena�
 
 ### Tema 905 STJ (REsps 1.492.221, 1.495.144 e 1.495.146)
 
-Critérios específicos. INPC para benefícios previdenciários. Fonte oficial em https://www.stj.jus.br
+Critérios específicos. INPC para benefícios previdenciários após a Lei 11.430/2006 e juros de mora pela remuneração da caderneta de poupança (item 3.2), ressalvada a coisa julgada que tenha fixado índices diversos (item 4) [CONFERIDO] (auditoria 03/10/2026). Fonte oficial em https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=905&cod_tema_final=905
 
 ### Tema 1419 STF (ARE 1.557.312/SP)
 
@@ -49,7 +49,7 @@ Juros de mora da citação em benefícios. Fonte oficial em https://www.stj.jus.
 
 ### Súmula 148 STJ
 
-Correção monetária plena desde cada vencimento (revogou a aplicação da Súmula 71 TFR, ressalvada coisa julgada que a tenha determinado).
+Correção monetária plena desde cada vencimento (o enunciado não menciona a Súmula 71 TFR, tida por superada [NÃO CONFIRMADO], ressalvada coisa julgada que a tenha determinado) (auditoria 03/10/2026).
 
 ## Notas operacionais do Manual 2026 (uso direto em impugnação de cálculo)
 

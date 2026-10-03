@@ -89,7 +89,7 @@ Eventual estratégia limita-se a planejamento da DIB para escolher qual benefíc
 
 ### 4.4. Cenário 4. Duas aposentadorias decorrentes de cargos constitucionalmente acumuláveis
 
-Não incide a vedação de acumulação quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999, regime anterior à EC 103; para o redutor do art. 24, ver ADI 7051, Tema 1300/STF e RE 1.510.285 AgR — auditoria 25/07/2026).
+Não incide a vedação de acumulação do art. 11 da EC 20/98 quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999 (auditoria 03/10/2026), regime anterior à EC 103; para o redutor do art. 24, ver ADI 7051, Tema 1300/STF e RE 1.510.285 AgR — auditoria 25/07/2026).
 
 Cada vínculo é considerado isoladamente para fins de teto remuneratório (Temas 377 e 384/STF).
 

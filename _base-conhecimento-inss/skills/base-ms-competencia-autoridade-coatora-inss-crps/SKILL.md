@@ -23,7 +23,7 @@ Portaria 462/2026 CRPS.
 
 ### Tema 374 STF
 
-Foro do domicílio do impetrante em ações contra autarquia.
+"A regra prevista no § 2º do art. 109 da Constituição Federal também se aplica às ações movidas em face de autarquias federais." A tese não trata de mandado de segurança, e a extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -41,7 +41,7 @@ Primeiro, art. 109 §2º CF. Ações contra autarquia federal podem ser ajuizada
 
 Segundo, em MS, prevalece o local da sede funcional da autoridade coatora.
 
-Terceiro, Tema 374 STF. Beneficiário pode optar pelo foro do domicílio.
+Terceiro, Tema 374 STF. Nas ações contra autarquias federais, o autor pode optar pelo foro do seu domicílio (art. 109, §2º, CF). A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ## Competência material
 

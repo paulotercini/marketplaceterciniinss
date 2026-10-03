@@ -42,13 +42,7 @@ Aplicação. Beneficiário do PBF que foi desligado por erro do procedimento da 
 
 ## 3. Jurisprudência do STF
 
-### 3.1. ADI 5751 (ainda em construção)
-
-Discussão sobre a constitucionalidade da composição do grupo familiar e da renda no BPC.
-
-Aplicação por analogia. Restrições infralegais ao BPC têm sido afastadas pelo STF.
-
-### 3.2. RE 567.985 (Tema 27/STF)
+### 3.1. RE 567.985 (Tema 27/STF)
 
 Reconhecimento da inconstitucionalidade da limitação rígida do critério de renda no BPC sem flexibilização.
 

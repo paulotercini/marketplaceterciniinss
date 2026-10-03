@@ -91,7 +91,7 @@ Todo conjunto de quesitos em ação de conversão ou reconhecimento de natureza 
 6. A incapacidade guarda nexo de causalidade ou concausalidade com a atividade laboral
 7. Fixar a data de início da doença (DID) e a data de início da incapacidade (DII)
 
-**Assistente técnico** — Altamente recomendável. O assistente técnico pode acompanhar a perícia, formular quesitos complementares e elaborar parecer divergente (art. 472, CPC). O parecer técnico do assistente é prova autônoma e pode superar o laudo pericial em robustez (auditoria 03/10/2026, retirado o Tema 339/STJ, que trata de liberação de veículo retido).
+**Assistente técnico** — Altamente recomendável. O assistente técnico pode acompanhar a perícia, formular quesitos complementares e elaborar parecer divergente (art. 477, §1º, CPC). O parecer técnico do assistente é prova autônoma e pode superar o laudo pericial em robustez (auditoria 03/10/2026, retirado o Tema 339/STJ, que trata de liberação de veículo retido, e corrigido o art. 472).
 
 ### 3.4. Tema 1124/STJ — Interesse de Agir
 

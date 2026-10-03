@@ -20,13 +20,9 @@ Duração razoável do processo.
 
 Fonte oficial em https://portal.stf.jus.br
 
-### Enunciado 95 FONAJEF
-
-Prova nova em recurso, parcimônia.
-
 ### Enunciado 91 FONAJEF
 
-Prova técnica simplificada.
+"Os Juizados Especiais Federais são incompetentes para julgar causas que demandem perícias complexas ou onerosas que não se enquadrem no conceito de exame técnico". É tese que o INSS pode invocar, e não autoriza perícia por similaridade nem substitui o PPP. Para a prova técnica simplificada, o segurado invoca o Enunciado 225 do XVIII FONAJEF [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ## 2. Marco legislativo
 

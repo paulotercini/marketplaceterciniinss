@@ -294,7 +294,7 @@ Lei 14.181/2021 reforça proteção. Banco Central regulamenta. RMC (cartão con
 
 ### Alerta 2 - Consignação sindical sem filiação expressa
 
-Filiação a sindicato/associação NÃO PRESUMIDA. ADI 5794/STF declarou inconstitucionalidade do desconto compulsório (após Reforma Trabalhista). PROVOCAR. Devolução administrativa ou judicial.
+Filiação a sindicato/associação NÃO PRESUMIDA. O art. 115, V, da Lei 8.213/91 só admitia o desconto de mensalidade associativa autorizada pelo filiado, e a Lei 15.327/2026 revogou esse inciso (auditoria 03/10/2026, retirada a ADI 5794/STF, que declarou constitucional a contribuição sindical facultativa da Reforma Trabalhista). PROVOCAR. Devolução administrativa ou judicial.
 
 ### Alerta 3 - IR retido sobre benefício isento (doença grave)
 

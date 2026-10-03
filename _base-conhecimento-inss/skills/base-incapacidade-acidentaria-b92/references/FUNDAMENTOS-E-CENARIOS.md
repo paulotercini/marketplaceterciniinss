@@ -34,7 +34,7 @@ Primeira, Nexo Técnico Profissional (CID em Lista B). Doença tipicamente ocupa
 
 Segunda, Nexo Técnico do Trabalho, pelas Listas A e B do Anexo II [NÃO CONFIRMADO], e não pela Lista C, que é a matriz do NTEP (auditoria 03/10/2026). Doença relacionada ao trabalho.
 
-Terceira, NTEP (art. 21-A). Correspondência CID-CNAE pela estatística epidemiológica. Inverte o ônus da prova em favor do segurado. Decorre da Lei 11.430/2006, que incluiu o art. 21-A; a ADI 3931/STF [NÃO CONFIRMADO] apenas confirmou sua constitucionalidade (auditoria 03/10/2026).
+Terceira, NTEP (art. 21-A). Correspondência CID-CNAE pela estatística epidemiológica. Inverte o ônus da prova em favor do segurado. Decorre da Lei 11.430/2006, que incluiu o art. 21-A; a ADI 3931/STF [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=2541930] apenas confirmou sua constitucionalidade (auditoria 03/10/2026).
 
 Quarta (subsidiária), Nexo Individual. Perícia técnica demonstra o nexo no caso concreto, mesmo sem enquadramento nas listas ou no NTEP.
 

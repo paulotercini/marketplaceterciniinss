@@ -14,7 +14,7 @@ Sequela mínima admitida. A limitação, ainda que leve, para a atividade habitu
 
 ### Súmula 89 TNU
 
-Sequela permanente.
+Tese adversa, limite negativo. Texto. "Não há direito à concessão de benefício de auxílio-acidente quando, após consolidação das lesões decorrentes de acidente de qualquer natureza, resultarem sequelas que não reduzem a capacidade laborativa habitual nem sequer demandam dispêndio de maior esforço na execução da atividade habitual." Transcrito no PUIL 1007890-32.2024.4.01.3600 (TNU, D.E. 21/08/2026). O caminho do segurado é provar redução ou maior esforço na atividade habitual, ainda que leve, pela Súmula 88/TNU e pelo Tema 416/STJ (auditoria 03/10/2026).
 
 ### Tema 416 STJ
 

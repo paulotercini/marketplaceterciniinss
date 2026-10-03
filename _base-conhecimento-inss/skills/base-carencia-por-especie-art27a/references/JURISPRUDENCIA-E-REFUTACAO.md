@@ -70,7 +70,7 @@ Refutação. Tempus regit actum.
 
 Argumento adversário. Mesma regra.
 
-Refutação. Não há carência alguma. A exigência do art. 25, III, foi declarada inconstitucional (ADI 2110/STF [NÃO CONFIRMADO na fonte oficial em 03/10/2026]), e o Enunciado 19/CRPS a afasta, mantida só a prova da qualidade de segurada (auditoria 03/10/2026).
+Refutação. Não há carência alguma. A exigência do art. 25, III, foi declarada inconstitucional (ADI 2110/STF [CONFERIDO em 03/10/2026, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795150]), e o Enunciado 19/CRPS a afasta, mantida só a prova da qualidade de segurada (auditoria 03/10/2026).
 
 ### Argumento 7 — Pensão exige 24
 

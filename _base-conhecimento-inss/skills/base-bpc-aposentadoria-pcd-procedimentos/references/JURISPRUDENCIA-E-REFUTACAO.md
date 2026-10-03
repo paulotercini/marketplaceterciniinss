@@ -28,7 +28,7 @@ Aplicação pró-segurado.
 
 ### Súmula 376 STJ
 
-Tese. Competência da Justiça Federal ou JEF em demandas previdenciárias.
+Tese. "Compete a turma recursal processar e julgar o mandado de segurança contra ato de juizado especial." (auditoria 03/10/2026)
 
 Fonte oficial em https://www.stj.jus.br
 

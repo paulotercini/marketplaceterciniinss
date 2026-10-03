@@ -16,7 +16,7 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Tema 1091 STF
 
-Professor e magistério.
+Constitucionalidade do fator previdenciário (RE 1.221.630, trânsito em 27/06/2020). Tese. "É constitucional o fator previdenciário previsto no art. 29, caput, incisos e parágrafos, da Lei nº 8.213/91, com a redação dada pelo art. 2º da Lei nº 9.876/99." Tese adversa, sem efeito nesta regra, cujo valor se calcula pelo art. 26, §2º, I, da EC 103/2019, sem fator (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -132,7 +132,7 @@ Sexto, escolha da mais vantajosa.
 
 ## 6. Diligência de atualização
 
-Acompanhar Tema 1091 STF.
+Tema 1091 STF transitado em julgado em 27/06/2020; nada a acompanhar (auditoria 03/10/2026).
 
 Revalidar ADI 3772 e Tema 1011.
 

@@ -4,7 +4,7 @@
 
 ### Tema 810 STF
 
-IPCA-E e juros, modulação.
+IPCA-E [NÃO CONFIRMADO] e juros, sem modulação (embargos rejeitados em 03/10/2019) (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 

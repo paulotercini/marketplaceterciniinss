@@ -177,7 +177,7 @@ Endereçamento. Presidência da Unidade Julgadora que proferiu o acórdão (art.
 
 ### Reclamação ao Pleno
 
-Cabimento. Decisão da CAJ ou JR contrária a Enunciado vinculante do Conselho Pleno.
+Cabimento. Acórdão de JR em matéria de alçada, ou de CAJ em recurso especial, que infrinja parecer vinculante da Consultoria Jurídica ou da AGU, súmula vinculante, Enunciado do Conselho Pleno ou norma vinculante nas hipóteses de distinção (art. 123, I a IV) (auditoria 03/10/2026).
 
 Endereçamento. Presidência da Unidade Julgadora que proferiu o acórdão (art. 123). Admitida, a Reclamação segue ao Conselho Pleno para distribuição (art. 123, §2º, II) (auditoria 03/10/2026).
 

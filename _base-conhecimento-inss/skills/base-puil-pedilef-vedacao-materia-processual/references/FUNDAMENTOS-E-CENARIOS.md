@@ -194,11 +194,11 @@ Quadro. BPC indeferido após avaliação biopsicossocial considerada superficial
 
 Estratégia correta.
 
-Tese. Divergência sobre a interpretação do art. 20, § 10, da LOAS e da Portaria Conjunta SPS/INSS/SNAS 2/2014 quanto ao standard de avaliação biopsicossocial.
+Tese. Divergência sobre a interpretação do art. 20, § 10, da LOAS e da Portaria Conjunta MDS/INSS 2/2015 (auditoria 03/10/2026) quanto ao standard de avaliação biopsicossocial.
 
 Paradigma. TR que reconhece exigência mais rigorosa.
 
-Norma material. Art. 20 §10 LOAS. Portaria Conjunta 2/2014.
+Norma material. Art. 20 §10 LOAS. Portaria Conjunta 2/2015 (auditoria 03/10/2026).
 
 Cruzamento. `analise-bpc-loas`, `base-bpc-loas-requisitos`, `base-bpc-impedimento-longo-prazo`.
 
@@ -386,7 +386,7 @@ Eventual paradigma adicional.
 
 ### 10.1. Cabimento excepcional
 
-Súmula 267/STF. MS contra ato judicial passível de recurso é incabível, exceto em hipóteses extremas.
+Súmula 267/STF. "Não cabe mandado de segurança contra ato judicial passível de recurso ou correição." A exceção para decisão teratológica é construção posterior e não consta do enunciado [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### 10.2. Hipóteses
 
@@ -468,7 +468,7 @@ MS em hipóteses excepcionais.
 | Aplicação Tema 1124 de ofício | Tema 350/STF (auditoria 03/10/2026) | base-efeito-translativo-tema-1124-defesa |
 | Não realização perícia documental | Art. 60 §11-A Lei 8.213, Portarias 13/14/15/2026 | analise-documental-incapacidade |
 | Não enfrentamento NTEP | Art. 21-A Lei 8.213, Lista B Anexo II Decreto 3.048 | ntep-nexo-acidentario |
-| Falta avaliação biopsicossocial | Art. 20 §10 LOAS, Portaria Conjunta 2/2014 | analise-bpc-loas |
+| Falta avaliação biopsicossocial | Art. 20 §10 LOAS, Portaria Conjunta 2/2015 (auditoria 03/10/2026) | analise-bpc-loas |
 | Erro em IF-BrA | Art. 2º LC 142, Portaria Interministerial 1/2014 | base-pcd-if-bra-metodologia |
 | Erro em IFBrM | Art. 20 §10 LOAS, Portaria 37/2026 | base-bpc-impedimento-longo-prazo |
 | Carência exigida indevidamente | Art. 26 Lei 8.213, art. 27-A | base-carencia-por-especie-art27a |

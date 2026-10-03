@@ -30,11 +30,11 @@ Lei 9.494/97.
 
 ### Súmula 212 STJ
 
-Compensação tributária.
+Compensação tributária. Súmula CANCELADA pela 1ª Seção em 14/09/2022 (PS 375, DJe 19/09/2022) (auditoria 03/10/2026).
 
 ### Súmula 405 STF
 
-Efeitos.
+Denegada a segurança, a liminar fica sem efeito, com retroação (auditoria 03/10/2026).
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 

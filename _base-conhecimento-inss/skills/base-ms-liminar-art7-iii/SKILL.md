@@ -1,9 +1,9 @@
 ---
 name: base-ms-liminar-art7-iii
-description: "Liminar em mandado de segurança previdenciário (art. 7º III Lei 12.016/2009), fumus boni iuris, periculum in mora, requisitos pró-segurado, vedações, impedimentos e rito do agravo contra decisão liminar. Use SEMPRE que mencionar liminar em MS previdenciário, art. 7º III Lei 12.016, fumus boni iuris MS, periculum in mora MS, concessão de liminar INSS, suspensão de liminar, agravo de instrumento MS, revogação de liminar, implantação liminar de benefício, restabelecimento liminar, liminar contra CEAB, liminar contra CRPS, liminar pericial, Súmula 212 STJ, vedação de compensação tributária, caráter irreversível. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e peticao-previdenciaria."
+description: "Liminar em mandado de segurança previdenciário (art. 7º III Lei 12.016/2009), fumus boni iuris, periculum in mora, requisitos pró-segurado, vedações, impedimentos e rito do agravo contra decisão liminar. Use SEMPRE que mencionar liminar em MS previdenciário, art. 7º III Lei 12.016, fumus boni iuris MS, periculum in mora MS, concessão de liminar INSS, suspensão de liminar, agravo de instrumento MS, revogação de liminar, implantação liminar de benefício, restabelecimento liminar, liminar contra CEAB, liminar contra CRPS, liminar pericial, Súmula 212 STJ cancelada, vedação de compensação tributária, caráter irreversível. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e peticao-previdenciaria."
 ---
 
-> Nota da auditoria de citações (25/07/2026). A Súmula 212 STJ foi CANCELADA pela 1ª Seção em 2022, em decorrência da ADI 4.296.
+> Nota da auditoria de citações (25/07/2026). A Súmula 212 STJ foi CANCELADA pela 1ª Seção em 14/09/2022 (PS 375, DJe 19/09/2022). A nota oficial do STJ não registra a ADI 4.296 como causa [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 # Liminar em MS Previdenciário
 
@@ -25,15 +25,15 @@ Lei 9.494/97. Restrições.
 
 ## Marco jurisprudencial
 
-A Súmula 212 STJ foi CANCELADA pela 1ª Seção em 2022, em decorrência da ADI 4.296.
+A Súmula 212 STJ foi CANCELADA pela 1ª Seção em 14/09/2022 (PS 375, DJe 19/09/2022). A nota oficial do STJ não registra a ADI 4.296 como causa [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
-Compensação tributária via liminar vedada.
+O enunciado cancelado vedava a compensação tributária por liminar (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 405 STF
 
-Concessão e efeitos.
+Denegada a segurança, a liminar fica sem efeito, com retroação. A regra pesa contra o impetrante; o caminho do segurado é instruir a inicial com prova pré-constituída completa (auditoria 03/10/2026).
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 

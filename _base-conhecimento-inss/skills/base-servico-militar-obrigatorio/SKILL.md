@@ -1,6 +1,6 @@
 ---
 name: base-servico-militar-obrigatorio
-description: "Cômputo do tempo de serviço militar obrigatório como tempo de contribuição e contagem recíproca. Use SEMPRE que mencionar tempo militar, serviço militar obrigatório, caserna, tiro de guerra, Exército, Marinha, Aeronáutica, Lei 4.375/1964, art. 55 I Lei 8.213/91, certidão de tempo de serviço militar, cômputo militar RGPS, militar temporário, soldado, marinheiro, aprendiz de marinheiro, Colégio Militar, ESPCEX, reservista, certificado de dispensa de incorporação, certidão de reservista, prorrogação engajamento, período de graça militar, tempo militar carência, contagem recíproca militar RPPS, art. 201 §9º CF, Súmula 45 ex-TFR, Decreto 3.048/1999, militar desvinculado, baixa sem CTC, Portaria 990/2022, Portaria 1.316/2025. Cruza com cnis-acerto-indicadores, documentos-comprobatorios-in128, peticao-previdenciaria, base-contagem-reciproca-rgps-rpps e precedentes-previdenciarios."
+description: "Cômputo do tempo de serviço militar obrigatório como tempo de contribuição e contagem recíproca. Use SEMPRE que mencionar tempo militar, serviço militar obrigatório, caserna, tiro de guerra, Exército, Marinha, Aeronáutica, Lei 4.375/1964, art. 55 I Lei 8.213/91, certidão de tempo de serviço militar, cômputo militar RGPS, militar temporário, soldado, marinheiro, aprendiz de marinheiro, Colégio Militar, ESPCEX, reservista, certificado de dispensa de incorporação, certidão de reservista, prorrogação engajamento, período de graça militar, tempo militar carência, contagem recíproca militar RPPS, art. 201 §9º CF, Decreto 3.048/1999, militar desvinculado, baixa sem CTC, Portaria 990/2022, Portaria 1.316/2025. Cruza com cnis-acerto-indicadores, documentos-comprobatorios-in128, peticao-previdenciaria, base-contagem-reciproca-rgps-rpps e precedentes-previdenciarios."
 ---
 
 # Tempo de Serviço Militar Obrigatório
@@ -25,7 +25,7 @@ Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do 
 
 ## Marco jurisprudencial
 
-Súmula 45 ex-TFR. Vigência histórica para cômputo do tempo militar. Aplicação supletiva.
+Art. 55, I, da Lei 8.213/91. O tempo de serviço militar, inclusive o voluntário, conta ainda que anterior à filiação ao RGPS, desde que não contado para inatividade remunerada nas Forças Armadas ou aposentadoria no serviço público (auditoria 03/10/2026, retirada a Súmula 45 do TFR, que trata de multas fiscais segundo fonte secundária).
 
 Art. 201, §9º, da CF e art. 94 da Lei 8.213/91. Contagem recíproca entre RGPS e RPPS (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
 

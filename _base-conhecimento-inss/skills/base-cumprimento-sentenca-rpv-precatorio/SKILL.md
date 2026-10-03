@@ -29,7 +29,7 @@ Tema 1050 STJ. Proveito econômico em honorários.
 
 ### Tema 810 STF
 
-Correção monetária pelo IPCA-E e juros pela remuneração da caderneta de poupança, sem modulação, que os embargos de declaração no RE 870.947 rejeitaram [NÃO CONFIRMADO]. No benefício previdenciário, a correção segue o INPC do Tema 905/STJ [NÃO CONFIRMADO]. SELIC unificada a partir de 09/12/2021 (auditoria 03/10/2026).
+Correção monetária pelo IPCA-E [NÃO CONFIRMADO] e juros pela remuneração da caderneta de poupança, sem modulação, que os embargos de declaração no RE 870.947 rejeitaram em 03/10/2019 [CONFERIDO] (https://portal.stf.jus.br/processos/abaDecisoes.asp?incidente=4723934). No benefício previdenciário, a correção segue o INPC do Tema 905/STJ [CONFERIDO]. SELIC unificada a partir de 09/12/2021 (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -55,7 +55,7 @@ Honorários sobre parcelas vencidas até a sentença.
 
 ### Súmula 345 STJ e art. 85, §1º, CPC
 
-Honorários em execução contra a Fazenda (a Súmula 443 STJ é matéria penal — não usar).
+Honorários na execução individual de sentença proferida em ação coletiva, ainda que não embargada (Súmula 345 STJ). Nas demais execuções vale o art. 85, §1º, CPC, salvo a exceção do §7º para o precatório sem impugnação (auditoria 03/10/2026). A Súmula 443 STJ é matéria penal, não usar.
 
 ## Espaço pró-segurado
 

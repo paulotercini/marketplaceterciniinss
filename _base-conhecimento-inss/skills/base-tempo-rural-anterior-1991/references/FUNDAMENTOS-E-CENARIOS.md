@@ -26,7 +26,7 @@ Lei 11.718/2008. Autodeclaração e períodos de descontinuidade.
 
 ### Súmula 272 STJ
 
-Cômputo do tempo rural, vedada carência sem indenização.
+Tese adversa: o segurado especial só faz jus à aposentadoria por tempo de serviço se recolher contribuições facultativas. O tempo rural anterior a 11/1991 se computa sem contribuição, exceto para carência, pelo art. 55, §2º, da Lei 8.213/91 (auditoria 03/10/2026).
 
 ### Súmula 149 STJ
 

@@ -10,7 +10,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 20 STF
 
-Incidência sobre 13º.
+Tese. "A contribuição social a cargo do empregador incide sobre ganhos habituais do empregado, quer anteriores ou posteriores à Emenda Constitucional nº 20/1998." Para o 13º salário, a fonte é a Súmula 688 STF (auditoria 03/10/2026).
 
 ### Súmula 207 STF
 
@@ -18,7 +18,7 @@ Gratificações habituais, inclusive a de Natal, consideram-se tacitamente conve
 
 ### Súmula 688 STF
 
-Legitimidade da contribuição previdenciária sobre o 13º salário [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Legitimidade da contribuição previdenciária sobre o 13º salário [CONFERIDO em 03/10/2026, https://jurisprudencia.stf.jus.br/pages/search/seq-sumula688/false] (auditoria 03/10/2026).
 
 ## 2. Marco legislativo
 
@@ -64,7 +64,7 @@ Refutação. Contribuição acima do teto não gera SB acima, mas integra contag
 
 Argumento adversário. Parcela separada.
 
-Refutação. 13º integra o SC anual. Tema 20 STF.
+Refutação. 13º integra o SC anual. Súmula 688 STF (auditoria 03/10/2026).
 
 ### Argumento 6 — Contribuição contribuinte individual abaixo do mínimo
 

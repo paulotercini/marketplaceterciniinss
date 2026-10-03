@@ -38,8 +38,8 @@ Portarias correlatas mais antigas e ainda relevantes.
 
 | Ano | Portaria | Tema |
 |---|---|---|
-| 2014 | Conjunta SPS/INSS/SNAS 2 | BPC biopsicossocial, TCQ |
-| 2015 | Interministerial AGU/MPS/MF/MP/PR 1 | IF-BrA aposentadoria PCD (LC 142) |
+| 2014 | Interministerial AGU/MPS/MF/SEDH/MP 1 (auditoria 03/10/2026) | IF-BrA aposentadoria PCD (LC 142) |
+| 2015 | Conjunta MDS/INSS 2 (auditoria 03/10/2026) | BPC biopsicossocial, TCQ |
 | 2015 | PRES/INSS 1.165 | PFE-INSS Regional |
 
 ## 3. Cenários típicos de aplicação cruzada
@@ -82,7 +82,7 @@ MTP 6.734/2020 (PCMSO).
 
 Portarias incidentes.
 
-Interministerial AGU/MPS/MF/MP/PR 1/2015 (IF-BrA).
+Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (IF-BrA) (auditoria 03/10/2026).
 
 DPMF/INSS 991/2022 (procedimento).
 
@@ -110,7 +110,7 @@ DPMF/INSS 992/2022 (manutenção do benefício).
 
 Portarias incidentes.
 
-Conjunta SPS/INSS/SNAS 2/2014 (avaliação biopsicossocial).
+Conjunta MDS/INSS 2/2015 (avaliação biopsicossocial) (auditoria 03/10/2026).
 
 DPMF/INSS 991/2022 (procedimento).
 

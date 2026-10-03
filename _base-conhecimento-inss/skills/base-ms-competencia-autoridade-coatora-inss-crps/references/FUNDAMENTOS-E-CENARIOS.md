@@ -24,19 +24,19 @@ Portaria 462/2026 CRPS.
 
 ### Tema 374 STF
 
-Foro do impetrante.
+Foro do art. 109, §2º, CF nas ações contra autarquias federais, à escolha do autor. A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### Súmula 689 STF
 
-Competência do local do ato.
+"O segurado pode ajuizar ação contra a instituição previdenciária perante o juízo federal do seu domicílio ou nas varas federais da Capital do Estado-Membro." (auditoria 03/10/2026)
 
 ### Súmula 206 STJ
 
-Competência no local do benefício.
+"A existência de vara privativa, instituída por lei estadual, não altera a competência territorial resultante das leis de processo." (auditoria 03/10/2026)
 
 ### Súmula 376 STJ
 
-MS e alçada.
+"Compete a turma recursal processar e julgar o mandado de segurança contra ato de juizado especial." (auditoria 03/10/2026)
 
 ## 5. Cenários pró-segurado
 

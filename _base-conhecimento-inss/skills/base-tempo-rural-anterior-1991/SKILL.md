@@ -1,9 +1,9 @@
 ---
 name: base-tempo-rural-anterior-1991
-description: "Cômputo do tempo de atividade rural anterior a novembro/1991 como tempo de contribuição, vedação de carência sem indenização, Súmula 272 STJ, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ. Use SEMPRE que mencionar tempo rural anterior a 1991, segurado especial pré-1991, boia-fria pré-1991, diarista rural pré-1991, art. 55 §2º Lei 8.213/91, carência tempo rural, Súmula 272 STJ, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ, Tema 642 STJ, prova material rural, prova testemunhal rural, início de prova documental, economia familiar pré-1991, contagem recíproca rural, indenização para carência rural, averbação tempo rural RGPS, Tema 327 TNU gênero rural, certidão rural, Portaria 990/2022, Portaria 1.316/2025. Cruza com segurado-especial-rural, documentos-comprobatorios-in128, peticao-previdenciaria, perspectiva-genero-previdenciario, base-contagem-reciproca-rgps-rpps e indenizacao-contribuicoes-atraso."
+description: "Cômputo do tempo de atividade rural anterior a novembro/1991 como tempo de contribuição, vedação de carência sem indenização (art. 55 §2º Lei 8.213/91), Súmula 272 STJ contribuição facultativa do segurado especial, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ. Use SEMPRE que mencionar tempo rural anterior a 1991, segurado especial pré-1991, boia-fria pré-1991, diarista rural pré-1991, art. 55 §2º Lei 8.213/91, carência tempo rural, Súmula 272 STJ, Súmula 149 STJ, Súmula 577 STJ, Tema 629 STJ, Tema 642 STJ, prova material rural, prova testemunhal rural, início de prova documental, economia familiar pré-1991, contagem recíproca rural, indenização para carência rural, averbação tempo rural RGPS, Tema 327 TNU gênero rural, certidão rural, Portaria 990/2022, Portaria 1.316/2025. Cruza com segurado-especial-rural, documentos-comprobatorios-in128, peticao-previdenciaria, perspectiva-genero-previdenciario, base-contagem-reciproca-rgps-rpps e indenizacao-contribuicoes-atraso."
 ---
 
-> Nota da auditoria de citações (25/07/2026). Súmula 272 STJ (enunciado real): o trabalhador rural, na condição de segurado especial, somente faz jus à aposentadoria por tempo de serviço/contribuição se recolher contribuições facultativas. O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
+> Nota da auditoria de citações (25/07/2026). Súmula 272 STJ (enunciado oficial, tese adversa): "O trabalhador rural, na condição de segurado especial, sujeito à contribuição obrigatória sobre a produção rural comercializada, somente faz jus à aposentadoria por tempo de serviço, se recolher contribuições facultativas" (auditoria 03/10/2026). O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
 
 # Tempo Rural Anterior a Novembro de 1991
 
@@ -27,7 +27,7 @@ Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores d
 
 ## Marco jurisprudencial
 
-Súmula 272 STJ (enunciado real): o trabalhador rural, na condição de segurado especial, somente faz jus à aposentadoria por tempo de serviço/contribuição se recolher contribuições facultativas. O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
+Súmula 272 STJ (enunciado oficial, tese adversa): "O trabalhador rural, na condição de segurado especial, sujeito à contribuição obrigatória sobre a produção rural comercializada, somente faz jus à aposentadoria por tempo de serviço, se recolher contribuições facultativas" (auditoria 03/10/2026). O cômputo do tempo rural sem recolhimento, vedada a carência, é regra do art. 55, §2º, da Lei 8.213/91.
 
 Fonte oficial em https://www.stj.jus.br
 

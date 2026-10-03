@@ -27,7 +27,7 @@ Toda peça de PEDILEF em favor do segurado deve incluir, no tópico da demonstra
 
 ### Tabela Comparativa — Múltiplos Paradigmas
 
-Quando houver mais de um paradigma, repetir o quadro inteiro para cada um. Vedada a fusão de paradigmas distintos em uma única tabela, porque isso viola o princípio da análise individualizada (posição da QO 59/TNU pendente de confirmação oficial e posição já consolidada pela QO 22/TNU).
+Quando houver mais de um paradigma, repetir o quadro inteiro para cada um. Vedada a fusão de paradigmas distintos em uma única tabela, porque isso viola o princípio da análise individualizada (posição da QO 59/TNU, aprovada em 15/04/2026, e posição já consolidada pela QO 22/TNU) (auditoria 03/10/2026).
 
 ## Checklist da Etapa 1 (Fatos)
 
@@ -69,7 +69,7 @@ Em rito recursal TNU, com destaque argumentativo denso, conforme padrão do escr
 
 **IV. Paradigma(s) — Identificação e Validade.** Juntada ou indicação de link (QO 3). Verificação de não superação (QO 12). Verificação de validade subjetiva (QO 48 — não STF; QO 5 — STJ apenas em modalidades admitidas).
 
-**V. Cotejo Analítico.** Quadro comparativo paradigma por paradigma, precedido de introdução textual que antecipa a divergência e sucedido por síntese que integra os elementos. Obrigatório após QO 59 (pendente confirmação) o formato tabular explícito.
+**V. Cotejo Analítico.** Quadro comparativo paradigma por paradigma, precedido de introdução textual que antecipa a divergência e sucedido por síntese que integra os elementos. Obrigatório o formato tabular explícito, conforme a QO 59/TNU (auditoria 03/10/2026).
 
 **VI. Mérito da Questão Uniformizada.** Sustentação da tese do segurado com fundamento normativo, precedentes e elementos probatórios do caso concreto.
 
