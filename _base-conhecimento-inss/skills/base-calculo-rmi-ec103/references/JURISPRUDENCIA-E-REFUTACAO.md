@@ -68,7 +68,7 @@ Aplicação pró-segurado. Revisão do teto das EC 20/98 e 41/03 continua viva p
 
 Argumento adversário. O percentual aplicado é o vigente na data do requerimento, sem análise de tempo excedente.
 
-Refutação. Art. 26, §2º, I, da EC 103. A RMI cresce em 2% a cada ano excedente a 20 (homem) ou 15 (mulher). O cálculo deve incorporar cada ano adicional comprovado, inclusive com tempo especial convertido e reconhecimento judicial.
+Refutação. Art. 26, §§ 2º e 5º, da EC 103. A RMI cresce em 2% a cada ano excedente a 20 (homem) ou 15 (mulher). O cálculo deve incorporar cada ano adicional comprovado, inclusive com tempo especial convertido e reconhecimento judicial.
 
 ### Argumento 2 — Desconsideração de salários de contribuição concomitantes
 
@@ -92,7 +92,7 @@ Refutação. Tema 1102 STF, dentro dos limites da modulação. Cabível em benef
 
 Argumento adversário. A B32 ou B92 é sempre calculada em 60% + 2% por ano excedente, sem integralidade.
 
-Refutação. Art. 26, §3º, III, da EC 103 combinado com §2º, II. B92 acidentária tem RMI de 100% da média. Acionar `ntep-nexo-acidentario` para conversão e `auditoria-laudo-pericial`.
+Refutação. Art. 26, §3º, II, da EC 103 (ressalva expressa do §2º, III). B92 acidentária tem RMI de 100% da média. Acionar `ntep-nexo-acidentario` para conversão e `auditoria-laudo-pericial`.
 
 ### Argumento 6 — Pensão por morte com RMI fixa de 60%
 

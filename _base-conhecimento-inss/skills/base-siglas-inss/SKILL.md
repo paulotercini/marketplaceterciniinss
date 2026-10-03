@@ -254,9 +254,11 @@ Benefício permanente por incapacidade laboral total, insuscetível de reabilita
 
 Benefício indenizatório por sequela de acidente de qualquer natureza que não seja do trabalho (art. 86 da Lei 8.213/91). Competência da Justiça Federal, no JEF até 60 salários mínimos.
 
-### B58 - Aposentadoria do Anistiado Político
+### B58 - Aposentadoria Excepcional do Anistiado (Lei 6.683/79)
 
-### B83 - Aposentadoria por Idade do Pescador Artesanal (rural)
+### B83 - Aposentadoria por Invalidez (ex-SASSE)
+
+Espécie residual da antiga carteira do SASSE. O pescador artesanal se aposenta por idade como segurado especial (B41), sem espécie própria. O salário-maternidade tem espécie única (B80), em todas as hipóteses.
 
 ## 6 BLOCO F - DOCUMENTOS E CONSULTAS
 

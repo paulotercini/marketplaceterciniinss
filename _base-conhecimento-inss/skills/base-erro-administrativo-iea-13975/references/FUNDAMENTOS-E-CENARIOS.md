@@ -69,9 +69,9 @@ VI. Chefias dos Serviços de Gerenciamento e Relacionamento com o Cidadão, SGRE
 VII. Chefias dos SGBEN e de suas seções vinculadas.
 VIII. Chefias das Coordenações, Divisões e Serviços das Superintendências Regionais das COBEN e COREC.
 
-## 4. Vedação expressa de requerimento externo
+## 4. Vedação de requerimento externo
 
-O art. 26, §9º, da Portaria DIRBEN/INSS 1.309/2025 (norma vigente, alterada pela Portaria 1.318/2025) firma. "A indicação de erro administrativo é um ato interno e em hipótese nenhuma poderá ser objeto de requerimento externo".
+O art. 13, §9º, da Portaria DIRBEN/INSS 1.056/2022, na redação da Portaria 1.231/2024, ambas revogadas pelo art. 44 da Portaria 1.309/2025, firmava. "A indicação de erro administrativo é um ato interno e em hipótese nenhuma poderá ser objeto de requerimento externo". A Portaria 1.309/2025 não reproduziu a vedação, e o seu art. 26 vai só até o §8º, com o §1º enumerando quem abre a tarefa (auditoria 03/10/2026).
 
 Daí decorre a recusa do INSS em abrir a tarefa por petição direta do advogado. É justamente por isso que a estratégia correta consiste em provocar as autoridades nominalmente legitimadas (gerente da APS, chefes da SARD/SAMB/SADJ/SAMC/SGREC/SAREC, chefe do SGBEN, COBEN/COREC da Superintendência) para que, no exercício de seu poder-dever de autotutela (art. 53 da Lei 9.784/1999 e Súmula 473 do STF), abram a IEA de ofício.
 

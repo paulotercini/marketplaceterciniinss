@@ -41,7 +41,7 @@ O Benefício de Prestação Continuada está previsto no art. 203, inciso V, da 
 ### Lei 8.742/93 (LOAS)
 O art. 20 da LOAS regulamenta o BPC e estabelece os requisitos essenciais. O §2º define pessoa com deficiência como aquela que tem impedimento de longo prazo de natureza física, mental, intelectual ou sensorial, o qual, em interação com uma ou mais barreiras, pode obstruir sua participação plena e efetiva na sociedade em igualdade de condições com as demais pessoas. O §3º fixa o critério de renda familiar per capita igual ou inferior a 1/4 do salário mínimo. O §10 exige que a avaliação de deficiência seja médica e social, realizada pela perícia médica e pelo serviço social do INSS.
 
-O conceito de impedimento de longo prazo está no §10-A do art. 20, que o define como aquele que produza efeitos pelo prazo mínimo de 2 anos.
+O conceito de impedimento de longo prazo está no §10 do art. 20, que o define como aquele que produza efeitos pelo prazo mínimo de 2 anos.
 
 ### Lei 13.146/2015 (Estatuto da Pessoa com Deficiência)
 O art. 2º reforça o conceito biopsicossocial de deficiência e a avaliação baseada na CIF. O §1º determina que a avaliação de deficiência, quando necessária, será biopsicossocial, realizada por equipe multiprofissional e interdisciplinar. Essa lei é fundamental para argumentar que a avaliação não pode se limitar ao aspecto médico, devendo considerar as barreiras sociais, ambientais e atitudinais.
@@ -290,7 +290,7 @@ Os dois gatilhos de elevação de Funções do Corpo (Agravante de Estrutura e P
 
 O autista é pessoa com deficiência por presunção legal absoluta, fundamento de hierarquia constitucional e legal especial. O **Decreto 6.949/2009** promulgou a Convenção da ONU sobre os Direitos das Pessoas com Deficiência com status de emenda constitucional (CF, art. 5º, §3º). A **Lei 12.764/2012 (Lei Berenice Piana), art. 1º, §2º**, dispõe textualmente que "a pessoa com transtorno do espectro autista é considerada pessoa com deficiência, para todos os efeitos legais". O **Decreto 8.368/2014** regulamenta a Lei 12.764. A **Lei 13.146/2015 (LBI), art. 2º**, traz o conceito biopsicossocial. A **Lei 13.977/2020** instituiu a CIPTEA com validade nacional. A **Lei 14.626/2023** incluiu o autismo no rol de cordão de girassol.
 
-A consequência jurídica é direta. Para o BPC, o autista não precisa provar que o TEA é deficiência, isso é dado pela lei. Precisa provar **impedimento de longo prazo** (art. 20, §10-A, LOAS) e **renda familiar per capita igual ou inferior a 1/4 do salário mínimo**, flexibilizado pelo Tema 27/STF (RE 567.985 e RE 580.963) e Tema 185/STJ (REsp 1.112.557/MG).
+A consequência jurídica é direta. Para o BPC, o autista não precisa provar que o TEA é deficiência, isso é dado pela lei. Precisa provar **impedimento de longo prazo** (art. 20, §10, LOAS) e **renda familiar per capita igual ou inferior a 1/4 do salário mínimo**, flexibilizado pelo Tema 27/STF (RE 567.985 e RE 580.963) e Tema 185/STJ (REsp 1.112.557/MG).
 
 ### Alerta crítico — Tema 376/TNU em julgamento
 
@@ -330,7 +330,7 @@ Manter, simultaneamente, três conjuntos de documentos. **Primeiro**, a CIPTEA v
 
 ### Impedimento de longo prazo no TEA — natureza vitalícia
 
-O requisito do art. 20, §10-A, da LOAS (mínimo de 2 anos) é cumprido com folga absoluta no TEA, dada sua natureza vitalícia. **O INSS não pode confundir impedimento de longo prazo com incapacidade laboral permanente** — são institutos distintos. Impedimento de longo prazo é estrutural, perceptivo, funcional, e sua duração é ditada pela natureza do quadro. No TEA, impedimento existe desde o nascimento e perdura por toda a vida. Indeferimento por suposta ausência de longo prazo em diagnóstico de TEA é tecnicamente insustentável e ponto óbvio de impugnação.
+O requisito do art. 20, §10, da LOAS (mínimo de 2 anos) é cumprido com folga absoluta no TEA, dada sua natureza vitalícia. **O INSS não pode confundir impedimento de longo prazo com incapacidade laboral permanente** — são institutos distintos. Impedimento de longo prazo é estrutural, perceptivo, funcional, e sua duração é ditada pela natureza do quadro. No TEA, impedimento existe desde o nascimento e perdura por toda a vida. Indeferimento por suposta ausência de longo prazo em diagnóstico de TEA é tecnicamente insustentável e ponto óbvio de impugnação.
 
 ### Domínios biopsicossociais tipicamente afetados pelo TEA
 

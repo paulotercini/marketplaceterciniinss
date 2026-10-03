@@ -63,7 +63,7 @@ A partir da Lei 13.846/2019, o requerimento exige certidão judicial que ateste 
 
 ### 1.6 Cessação do benefício
 
-O auxílio-reclusão cessa nas hipóteses do art. 80, §§1º e 2º, e art. 117 do Decreto 3.048/99. As principais causas são a soltura, a fuga, a progressão para regime aberto (no regime pós-MP 871, também a progressão para semiaberto), o óbito do segurado (quando se converte em pensão por morte, se cabível), e a perda da qualidade de dependente.
+O auxílio-reclusão cessa nas hipóteses do art. 392 da IN 128/2022, e o art. 117 do Decreto 3.048/99 o mantém apenas enquanto o segurado permanecer em regime fechado. As principais causas são a soltura, a fuga, a progressão para regime aberto (no regime pós-MP 871, também a progressão para semiaberto), o óbito do segurado (quando se converte em pensão por morte, se cabível), e a perda da qualidade de dependente.
 
 ## 2. PRECEDENTES VINCULANTES E PERSUASIVOS
 

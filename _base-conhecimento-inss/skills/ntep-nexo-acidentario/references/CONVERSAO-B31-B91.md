@@ -120,7 +120,7 @@ Art. 86, Lei 8.213/91 — Devido quando, após consolidação das lesões decorr
 
 ### 4.4. Base de Cálculo
 
-Para fatos geradores anteriores a 13/11/2019 (EC 103/2019), o B92 (aposentadoria por invalidez acidentária) correspondia a 100% do salário de benefício, sem aplicação de fator previdenciário. Para fatos geradores a partir da EC 103/2019, a regra é a mesma do benefício previdenciário (60% + 2% por ano acima de 20 anos de contribuição, com piso de 100% em caso de acidente de trabalho, conforme art. 26, §3º, III, EC 103/2019). A dispensa de carência (art. 26, II, Lei 8.213/91) permanece em ambos os casos.
+Para fatos geradores anteriores a 13/11/2019 (EC 103/2019), o B92 (aposentadoria por invalidez acidentária) correspondia a 100% do salário de benefício, sem aplicação de fator previdenciário. Para fatos geradores a partir da EC 103/2019, o B92 corresponde a 100% da média aritmética dos salários de contribuição (art. 26, §3º, II, da EC 103/2019), e não à regra de 60% mais 2% por ano excedente, que vale para o B32 (art. 26, §2º, III). A dispensa de carência (art. 26, II, Lei 8.213/91) permanece em ambos os casos.
 
 ### 4.5. Ação Indenizatória
 

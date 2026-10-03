@@ -18,7 +18,7 @@ Decreto 3.048/99, Anexo II, Lista A. Agentes físicos.
 Decreto 3.048/99, Anexo II, Lista B. Doenças profissionais e do trabalho.
 Decreto 3.048/99, Anexo II, Lista C. Doenças relacionadas com o trabalho.
 
-EC 103/2019, art. 26, §3º, III, combinado com §2º, II. RMI B92 = 100% da média.
+EC 103/2019, art. 26, §3º, II (ressalva expressa do §2º, III). RMI B92 = 100% da média.
 
 Lei 8.213/91, art. 118. Estabilidade provisória de 12 meses após cessação do B91 acidentário (reintegração trabalhista).
 

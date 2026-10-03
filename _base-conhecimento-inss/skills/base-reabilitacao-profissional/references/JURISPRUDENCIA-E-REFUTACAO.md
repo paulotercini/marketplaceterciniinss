@@ -98,7 +98,7 @@ Refutação. Reabilitação pressupõe inserção efetiva no mercado. Sem ela, r
 
 Argumento adversário. Reabilitação em qualquer atividade.
 
-Refutação. Art. 62 §2º Decreto 3.048. Atividade compatível com a condição do segurado.
+Refutação. Lei 8.213/91, art. 62, §2º. Atividade compatível com a condição do segurado.
 
 ### Argumento 10 — Perda da qualidade de segurado durante PRP
 

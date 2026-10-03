@@ -6,13 +6,13 @@ EC 103/2019, art. 26. Estabelece a fórmula de cálculo do salário-de-benefíci
 
 Art. 26, §1º. Para aposentadoria por tempo de contribuição em regra de transição ou permanente, aplica-se 60% da média mais 2% por ano que exceder 20 anos (homem) ou 15 anos (mulher).
 
-Art. 26, §2º, I. Para aposentadoria do pedágio de 100% (art. 20), aplica-se 100% da média.
+Art. 26, §3º, I. Para aposentadoria do pedágio de 100% (art. 20), aplica-se 100% da média.
 
 Art. 26, §2º, II. Para aposentadoria do servidor público pela regra específica, regra própria.
 
-Art. 26, §3º, I. Para auxílio por incapacidade temporária (B31), 91% da média.
+Lei 8.213/91, art. 61, com a média do art. 26, caput, da EC 103/2019. Para auxílio por incapacidade temporária (B31 e B91), 91% do salário de benefício.
 
-Art. 26, §3º, II. Para aposentadoria por incapacidade permanente (B32) não acidentária, 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher). Para B92 acidentária, 100% da média (art. 26, §3º, III combinado com art. 26, §2º, II).
+Art. 26, §2º, III, e §5º. Para aposentadoria por incapacidade permanente (B32) não acidentária, 60% da média mais 2% por ano excedente a 20 (homem) ou 15 (mulher). Para B92 acidentária, 100% da média (art. 26, §3º, II).
 
 Art. 26, §6º. Média calculada sobre 100% das contribuições desde julho de 1994 ou filiação posterior, sem descarte.
 

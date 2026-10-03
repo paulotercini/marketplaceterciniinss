@@ -115,7 +115,7 @@ Exercentes de mandato eletivo (vereadores, prefeitos, governadores etc.) vincula
 
 ### Cooperados (Inciso XIII)
 
-Associados de cooperativa que prestam serviço a terceiros por intermédio da cooperativa. A cooperativa é equiparada a empresa para fins de retenção e recolhimento (art. 22, IV, Lei 8.212/91).
+Associados de cooperativa que prestam serviço a terceiros por intermédio da cooperativa. A cooperativa é equiparada a empresa (art. 15, parágrafo único, da Lei 8.212/91) e arrecada e recolhe a contribuição do cooperado (art. 4º, §1º, da Lei 10.666/2003).
 
 ### Condutores e autônomos de transporte (Incisos XXXI e XVII)
 

@@ -32,7 +32,7 @@ Fonte oficial em https://www.stj.jus.br
 
 ## 2. Marco legislativo
 
-### Lei 8.213/91, arts. 126 e 127
+### Lei 8.213/91, art. 126
 
 Fonte oficial em https://www.planalto.gov.br
 

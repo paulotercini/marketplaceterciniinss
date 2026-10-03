@@ -132,7 +132,7 @@ Ao redigir inicial, conferir.
 
 ### Sub-cenário 5.1 - Cumprimento de Exigência
 
-Prazo de 30 dias para cumprir exigência no INSS (art. 678 IN 128/2022). Contar.
+Prazo de 30 dias para cumprir exigência no INSS (art. 566 da IN 128/2022, prazo mínimo contado da ciência e prorrogável por igual período). Contar.
 1. Data da exigência.
 2. Data DE HOJE.
 3. ALERTA se faltar menos de 7 dias.
@@ -174,7 +174,7 @@ TZ='America/Sao_Paulo' date -d "$DATA_BASE + 15 days" '+%d/%m/%Y'
 | Rescisória 2 anos | Em rescisória | data + art. 975 CPC | CRÍTICO se <6 meses |
 | DCB B31 | Antes de orientar cliente | data + INFBEN | CRÍTICO se <30 dias |
 | Reavaliação BPC | Em manutenção BPC | data + Decreto 6.214 | IMPORTANTE |
-| Cumprir exigência | Em qualquer exigência | data + art. 678 IN 128 | BLOQUEANTE |
+| Cumprir exigência | Em qualquer exigência | data + art. 566 IN 128 | BLOQUEANTE |
 
 ## REGRA DE OURO
 

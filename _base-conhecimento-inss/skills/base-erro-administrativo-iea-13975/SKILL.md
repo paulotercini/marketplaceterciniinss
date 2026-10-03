@@ -9,7 +9,7 @@ description: "Indicação de Erro Administrativo (IEA, código 13975) e autotute
 
 Acione SEMPRE que houver erro material, formal ou de mérito em processo administrativo do INSS que justifique autotutela, e o servidor responsável recusar abrir a tarefa interna 13975 ou se omitir além do prazo. Acione também em caso de conclusão sem perícia, indeferimento sem fundamentação, juntada indevida de documento de terceiro, exigência abusiva, ou qualquer ato viciado que reclame revisão de ofício.
 
-A IEA é instrumento interno de provocação da autotutela. Não pode ser objeto de requerimento externo, conforme texto literal do art. 26, §9º da Portaria DIRBEN/INSS 1.309/2025 (norma vigente, alterada pela Portaria DIRBEN/INSS 1.318/2025). Daí a estratégia ser provocar nominalmente as autoridades legitimadas a abrir a tarefa.
+A IEA é instrumento interno de provocação da autotutela. O art. 26, §1º, da Portaria DIRBEN/INSS 1.309/2025 (norma vigente, alterada pela Portaria DIRBEN/INSS 1.318/2025) restringe a abertura da tarefa às chefias que enumera. A vedação textual de requerimento externo constava do art. 13, §9º, da Portaria 1.056/2022, na redação da Portaria 1.231/2024, ambas revogadas, e não foi reproduzida na Portaria 1.309/2025, cujo art. 26 vai só até o §8º (auditoria 03/10/2026). Daí a estratégia ser provocar nominalmente as autoridades legitimadas a abrir a tarefa.
 
 ## 2. Marco normativo
 

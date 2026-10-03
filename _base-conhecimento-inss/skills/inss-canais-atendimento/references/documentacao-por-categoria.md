@@ -115,7 +115,7 @@ O INSS não pode exigir documentos que já constem nos sistemas públicos — so
 
 **Regra especial:** documento em nome de qualquer integrante do grupo familiar (cônjuge, filho, pai) pode servir como início de prova material para o segurado especial.
 
-**Atenção:** para períodos anteriores a 31/12/2010 e benefício no valor de um salário mínimo, é dispensada a identificação da empresa no documento de prova (art. 571, parágrafo único, IN 128/2022).
+**Atenção:** para o empregado rural e o contribuinte individual rural eventual, em benefício de um salário mínimo, os períodos de atividade comprovados até 31/12/2010 contam para a carência ainda que descontínuos (arts. 203, parágrafo único, I, e 204, §1º, da IN 128/2022).
 
 ---
 

@@ -14,9 +14,9 @@ Lei 8.213/91, art. 45. Acréscimo de 25% ao valor do benefício para quem necess
 
 Lei 8.213/91, arts. 46 a 48. Regulam a recuperação da capacidade, o retorno ao trabalho e a cessação do B32, com regras de gradualidade no caso de recuperação parcial (art. 47).
 
-EC 103/2019, art. 26, §3º, II. RMI do B32 não acidentário é de 60% da média, acrescidos de 2% por ano excedente a 20 anos para o homem e 15 anos para a mulher.
+EC 103/2019, art. 26, §2º, III, e §5º. RMI do B32 não acidentário é de 60% da média, acrescidos de 2% por ano excedente a 20 anos para o homem e 15 anos para a mulher.
 
-EC 103/2019, art. 26, §3º, III, combinado com §2º, II. RMI do B92 acidentário (por acidente de trabalho ou doença ocupacional) é de 100% da média.
+EC 103/2019, art. 26, §3º, II (ressalva expressa do §2º, III). RMI do B92 acidentário (por acidente de trabalho ou doença ocupacional) é de 100% da média.
 
 Portaria Conjunta MPS/INSS 14/2026. Amplia, em caráter transitório, de 30 para 90 dias o limite de duração do B31 concedido por análise documental, prorrogada por 365 dias pela Portaria Conjunta MPS/INSS 43/2026 (DOU de 21/09/2026). Não é a norma da análise documental do B32. Acionar `analise-documental-incapacidade`.
 

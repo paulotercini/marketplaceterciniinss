@@ -11,9 +11,9 @@ Skill de visão de conjunto do Conselho de Recursos da Previdência Social, órg
 
 ## Marco normativo central
 
-Lei 8.213/91, arts. 126 e 127. Recurso no CRPS.
+Lei 8.213/91, art. 126 (o art. 127 foi revogado pela Lei 9.711/1998). Recurso no CRPS.
 
-Decreto 3.048/99, arts. 303 a 310.
+Decreto 3.048/99, arts. 303 a 309 (o art. 310 está revogado).
 
 Portaria MDSA 116/2017 (Regimento Interno), sucessivamente revisada.
 

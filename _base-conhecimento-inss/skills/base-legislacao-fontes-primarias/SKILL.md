@@ -206,6 +206,16 @@ A skill NUNCA registra "verificação não realizada" antes de esgotar os 4 nív
 
 **Operação.** Esta skill é fonte de URLs oficiais e do repositório literal. A execução da cascata é responsabilidade da skill `base-revisao-peticao-aprofundada` quando acionada durante revisão de petição.
 
+## Auditoria mecânica das citações normativas (Onda 167)
+
+O script `scripts/auditoria_normas.py` varre skills e agentes, extrai cada citação de artigo, parágrafo e inciso e a confere no banco local do MCP `normas`, sem internet. Roda com `python scripts/auditoria_normas.py --so-problemas` depois de cada lote de Ondas, e com `--demo` para o autoteste.
+
+A saída classifica cada ocorrência em artigo inexistente, revogado, parágrafo inexistente ou só em redação anterior, inciso inexistente e número divergente. Achado não é erro certo. A base é fotografia de 31/05/2026, e norma posterior aparece como inexistente, como os arts. 369-A, 532, §4º, e 566, §9º, da IN 128/2022, incluídos pela IN PRES/INSS 212, de 06/08/2026 (DOU de 11/08/2026). Todo achado se confere na fonte oficial antes da correção.
+
+O script confere a existência do dispositivo, e não a fidelidade da paráfrase. A paráfrase se confere pela leitura do campo `texto` de `obter_artigo`, e a primeira rodada (03/10/2026) mostrou o padrão de erro mais frequente, que é o dispositivo existente atribuído ao conteúdo errado, como o art. 26, §3º, II, da EC 103/2019 citado para a regra de 60% mais 2%, que está no §2º, III.
+
+Normas citadas na base e ausentes do banco exigem fonte oficial a cada uso. As mais frequentes na rodada de 03/10/2026 foram o Decreto 6.214/2007, a IN PRES/INSS 21/2026, a Lei 10.779/2003, o Decreto 10.410/2020, a Lei 8.870/1994, a Portaria Conjunta MPS/INSS 13/2026, a Lei 13.709/2018 e a IN PRES/INSS 212/2026.
+
 ## MCPs da casa
 
 Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
