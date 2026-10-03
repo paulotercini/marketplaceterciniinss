@@ -155,9 +155,29 @@ Cada processo chega ao CRM com o link da ficha (`show.do?processo.codigo=…`),
 que abre na sua sessão do e-SAJ, e com o nome das partes, que é o que
 permite vincular processo novo a cliente pelo nome.
 
+**Cumprimento de sentença e RPV (desde 1.12.0).** A ficha de cada processo
+lista os seus incidentes (cumprimento de sentença, requisição de pagamento),
+e a extensão lê todos eles na mesma rodada, estejam ou não nos favoritos.
+
+**Recursos dentro do recurso (desde 1.12.0).** No 2º grau, os embargos de
+declaração e o agravo interno de uma apelação têm o mesmo número dela e não
+aparecem nos favoritos nem na consulta por OAB. Para todo número com
+processo no 2º grau, ou com o 1º grau "em grau de recurso", a extensão
+consulta o número no 2º grau e lê cada registro da caixa "Selecione o
+processo" que a rodada ainda não leu. Cada processo leva as cinco
+movimentações mais recentes, e o CRM grava as que ainda não conhece.
+
 **Processo que não está nos favoritos "X a Y", nem no CRM, nem na consulta
 por OAB não é visto.** As pastas "Processos / Parte 1…3" dos favoritos ficam
 de fora de propósito: são o acervo antigo, quase todo extinto.
+
+## Atualizar a extensão
+
+A versão instalada é a da pasta `extensao` carregada em `chrome://extensions`,
+e a pasta não se atualiza sozinha. O popup mostra a versão instalada e avisa
+quando a publicada na `main` é outra. Para atualizar: na pasta do repositório
+no computador, `git pull`; depois, em `chrome://extensions`, o botão ↻ da
+extensão (ou "Atualizar"). Não precisa reinstalar nem entrar de novo no CRM.
 
 ## 🔁 Atualizar tudo — desde 1.9.0
 
