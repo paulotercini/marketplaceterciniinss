@@ -15,7 +15,7 @@ A aposentadoria diferenciada do professor exige tempo de contribuição exclusiv
 
 ### 1.2 Funções de magistério — ADI 3772/STF e Lei 11.301/2006
 
-O STF, na ADI 3772 (DJe 27/03/2009), declarou constitucionais as funções de direção de unidade escolar e coordenação e assessoramento pedagógico como atividades de magistério, quando exercidas por professores na educação básica, nos termos da Lei 11.301/2006.
+O STF, na ADI 3772 (Plenário, j. 29/10/2008, Rel. p/ acórdão Min. Ricardo Lewandowski, DJe 27/03/2009, republicado em 29/10/2009), julgou parcialmente procedente a ação, com interpretação conforme ao art. 1º da Lei 11.301/2006 (que acrescentou o § 2º ao art. 67 da Lei 9.394/1996), para assentar que as funções de direção, coordenação e assessoramento pedagógico integram a carreira do magistério, desde que exercidas, em estabelecimentos de ensino básico, por professores de carreira, excluídos os especialistas em educação (auditoria 03/10/2026).
 
 Enquadram-se, portanto, não apenas a regência de classe em sala de aula, mas também a preparação de aulas, correção de provas, atendimento a pais e alunos, coordenação pedagógica e direção de unidade escolar.
 

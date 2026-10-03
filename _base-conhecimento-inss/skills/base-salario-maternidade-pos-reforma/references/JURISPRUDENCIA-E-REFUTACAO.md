@@ -74,7 +74,7 @@ Refutação. Os 10 meses deixaram de ser exigíveis como carência (ADI 2110/STF
 
 Argumento adversário. Adoção de criança mais velha tem licença reduzida.
 
-Refutação. Tema 782 STF (RE 778.889), aplicado por analogia (auditoria 03/10/2026). Igualdade com licença-maternidade biológica. 120 dias independentes da idade.
+Refutação. Tema 344 TNU, precedente específico do RGPS, fixou que é devido o salário-maternidade pelo prazo de 120 dias ao segurado ou segurada adotante de menor de dezoito anos de idade (auditoria 03/10/2026). Tema 782 STF (RE 778.889), aplicado por analogia (auditoria 03/10/2026). Igualdade com licença-maternidade biológica. 120 dias independentes da idade.
 
 ### Argumento 5 — Natimorto = aborto
 

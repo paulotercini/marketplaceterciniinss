@@ -34,7 +34,7 @@ Irritação ocular. Conjuntivite química.
 
 ### 3.1. Decreto 53.831/64
 
-Código 1.2.10. Hidrocarbonetos.
+Código 1.2.11. Tóxicos orgânicos, entre eles os hidrocarbonetos. O código 1.2.10 trata de sílica, asbesto e outras poeiras (auditoria 03/10/2026).
 
 Aplicação até 28/04/1995 (categoria + agente).
 
@@ -54,7 +54,7 @@ A partir de 28/04/1995, exige-se prova de exposição ao agente.
 
 ### 3.4. Decreto 2.172/97 e Decreto 3.048/99 (Anexo IV)
 
-Código 1.0.19. Hidrocarbonetos aromáticos.
+Código 1.0.19. Outras substâncias químicas. O Grupo I cita o diisocianato de tolueno (TDI), e o código não nomeia o tolueno (auditoria 03/10/2026).
 
 Aplicação a partir de 06/03/1997.
 

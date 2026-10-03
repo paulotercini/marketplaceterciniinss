@@ -29,7 +29,7 @@ Cotejar significa confrontar, não transcrever. A mera juntada de ementas é ins
 
 O PEDILEF atravessa cascata de filtros antes do mérito. Cada filtro é causa autônoma de não conhecimento, o que torna estratégico antecipar cada um deles.
 
-**Tempestividade**. Prazo único para os incidentes nacional e regional, contado da intimação do acórdão da turma recursal (QO 32/TNU). O número de dias não foi conferido no RITNU (Resolução CJF 586/2019) [NÃO CONFIRMADO]; na dúvida, protocolar em dez dias (auditoria 03/10/2026). Não se admite PEDILEF nacional contra acórdão de turma regional que apenas manteve o acórdão recursal pelos mesmos fundamentos.
+**Tempestividade**. O pedido de uniformização dirigido à TNU é interposto perante a turma recursal ou regional de origem, em 15 (quinze) dias a contar da intimação do acórdão recorrido (art. 12, caput, do RITNU, Resolução CJF 586/2019, texto compilado do portal do CJF, lido em 03/10/2026), contados só os dias úteis (art. 27, § 2º). Os incidentes nacional e regional têm prazo único, contado da intimação do acórdão da turma recursal (QO 32/TNU) (auditoria 03/10/2026). Não se admite PEDILEF nacional contra acórdão de turma regional que apenas manteve o acórdão recursal pelos mesmos fundamentos.
 
 **Matéria de direito material**. O art. 14, caput, restringe PEDILEF a direito material. A Súmula 42/TNU veda reexame de fatos. A Súmula 43/TNU veda matéria processual. Essa restrição é ponto sensível de tensão, já problematizado pelo próprio IEPrev em texto crítico à TNU, mas permanece formalmente em vigor.
 

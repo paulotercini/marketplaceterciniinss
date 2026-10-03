@@ -22,7 +22,7 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 729 STF
 
-Tutela contra Fazenda.
+Texto oficial, "A decisão na Ação Direta de Constitucionalidade 4 não se aplica à antecipação de tutela em causa de natureza previdenciária." [CONFERIDO, https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=30&sumula=2705] (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 

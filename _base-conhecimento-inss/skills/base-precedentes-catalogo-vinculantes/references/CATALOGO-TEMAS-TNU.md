@@ -140,7 +140,7 @@
 
 - **Tema 125:** O marco inicial para a contagem do prazo decadencial do benefício de pensão por morte transcorre independentemente do benefício do segurado instituidor.
 
-- **Tema 130:** O início do prazo decadencial para revisar a RMI com base no IRSM de fevereiro de 1994 (39,67%) é a data de entrada em vigor da Medida Provisória n. 201, de 26/07/2004.
+- **Tema 130:** [CANCELADO no julgamento do Tema 375, PUIL 0077764-65.2008.4.01.3800, D.E. 26/06/2025, conferido em 03/10/2026 no acervo TNU do MCP Iurisprudencia. Tese superada, não citar como vigente (auditoria 03/10/2026)] Redação cancelada. O início do prazo decadencial para revisar a RMI com base no IRSM de fevereiro de 1994 (39,67%) é a data de entrada em vigor da Medida Provisória n. 201, de 26/07/2004.
 
 - **Tema 134:** A revisão do benefício de aposentadoria por invalidez decorrente da conversão do auxílio-doença (art. 29, II, Lei 8.213/91) sujeita-se ao prazo decadencial do art. 103. O prazo decadencial para revisão pelo art. 29, II, se inicia em 15/04/2010 (Memorando-Circular 21/DIRBEN/PFEINSS).
 
@@ -357,7 +357,7 @@
 
 - **Tema 371:** [Julgado em 18/09/2025, por unanimidade, PUIL 0501240-21.2022.4.05.8503/SE, Rel. Juiz Federal João Carlos Cabrelon de Oliveira. Tese literal conferida em 03/10/2026 no acervo TNU do MCP Iurisprudencia; conferir na página oficial do CJF antes de citar em peça] "1. É aplicável ao processo judicial a exigência de início de prova material de união estável e de dependência econômica, produzido em período não superior a 24 (vinte e quatro) meses anteriores ao fato gerador do benefício, nos termos do § 5º do art. 16 da Lei nº 8.213/1991, acrescentado pela Lei nº 13.846/2019. 2. Tratando-se de norma de direito material, essa exigência somente se aplica aos fatos geradores ocorridos a partir da vigência da MP nº 871/2019, posteriormente convertida na Lei nº 13.846/2019". ALERTA. O item 1 é tese CONTRA o segurado. Caminho do segurado, fato gerador anterior à MP 871/2019 (item 2 e nova redação da Súmula 63/TNU, aprovada no mesmo julgamento) ou motivo de força maior ou caso fortuito, exceção do próprio § 5º. (auditoria 03/10/2026)
 
-- **Tema 375:** [Cancelado em favor do Tema 130]
+- **Tema 375:** [Julgado como representativo de controvérsia, com cancelamento do Tema 130, PUIL 0077764-65.2008.4.01.3800/MG, Rel. Juiz Federal João Carlos Cabrelon de Oliveira, D.E. 26/06/2025. Tese literal conferida em 03/10/2026 no acervo TNU do MCP Iurisprudencia; conferir na página oficial do CJF antes de citar em peça] "A decadência do direito de revisar o ato inicial de concessão de benefício previdenciário, com a inclusão do Índice de Reajuste do Salário Mínimo (IRSM) de 39,67% na atualização do salário de contribuição de fevereiro de 1994, não se interrompeu pela publicação da Medida Provisória nº 201/2004, convertida na Lei nº 10.999/2004, restando superada a tese firmada pela TNU no julgamento do Tema nº 130." Tese adversa ao segurado. Caminho do segurado, demonstrar que a revisão foi pedida, na via administrativa ou judicial, antes do fim do prazo decenal do art. 103 da Lei 8.213/91 (auditoria 03/10/2026).
 
 - **Tema 376:** O diagnóstico de Transtorno do Espectro Autista (TEA) não dispensa a avaliação biopsicossocial para a caracterização da condição de Pessoa com Deficiência para fins de BPC/LOAS.
 

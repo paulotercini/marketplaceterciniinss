@@ -1,6 +1,6 @@
 ---
 name: base-tolueno-tema-382-tnu-via-cutanea
-description: "Tolueno via cutânea e Tema 382/TNU (PEDILEF 5012678-57.2022.4.04.7108/RS, julgado em 15/04/2026, tese CONTRA o enquadramento qualitativo pela via cutânea), com estratégia residual pró-segurado pela via quantitativa do Anexo 11 da NR-15, co-exposição a benzeno e EPI. Use SEMPRE que mencionar tolueno, Tema 382 TNU, PUIL 5012678, tolueno via cutânea, tolueno absorção dérmica, tolueno Anexo 13 NR-15, tolueno 78 ppm, ACGIH 20 ppm tolueno, distinção tolueno benzeno, LINACH, hidrocarboneto aromático tolueno, NR-15 Anexo 11 12 13, exposição cutânea tolueno, sapateiro tolueno, gráfica tolueno, oficina mecânica tolueno, indústria tintas tolueno, frentista tolueno, EPI tolueno, Tema 555 STF, Tema 1090 STJ, Súmula 9 TNU, NHO-08, neurotoxicidade tolueno, fetotoxicidade tolueno, art. 57 §3º Lei 8.213, art. 58 PPP tolueno, IRDR 15 TRF4, PEDILEF 0136882, PEDILEF 5001032, Decreto 53831 codigo 1.2.10. Cruza com auditoria-ppp, base-especial-agentes-quimicos, base-especial-epi, defesa-probatoria-especial, peticao-previdenciaria, precedentes-previdenciarios."
+description: "Tolueno via cutânea e Tema 382/TNU (PEDILEF 5012678-57.2022.4.04.7108/RS, julgado em 15/04/2026, tese CONTRA o enquadramento qualitativo pela via cutânea), com estratégia residual pró-segurado pela via quantitativa do Anexo 11 da NR-15, co-exposição a benzeno e EPI. Use SEMPRE que mencionar tolueno, Tema 382 TNU, PUIL 5012678, tolueno via cutânea, tolueno absorção dérmica, tolueno Anexo 13 NR-15, tolueno 78 ppm, ACGIH 20 ppm tolueno, distinção tolueno benzeno, LINACH, hidrocarboneto aromático tolueno, NR-15 Anexo 11 12 13, exposição cutânea tolueno, sapateiro tolueno, gráfica tolueno, oficina mecânica tolueno, indústria tintas tolueno, frentista tolueno, EPI tolueno, Tema 555 STF, Tema 1090 STJ, Súmula 9 TNU, NHO-08, neurotoxicidade tolueno, fetotoxicidade tolueno, art. 57 §3º Lei 8.213, art. 58 PPP tolueno, IRDR 15 TRF4, Decreto 53831 codigo 1.2.11. Cruza com auditoria-ppp, base-especial-agentes-quimicos, base-especial-epi, defesa-probatoria-especial, peticao-previdenciaria, precedentes-previdenciarios."
 ---
 
 # Tolueno via Cutânea. Tema 382/TNU e Estratégia Residual Pós-Julgamento
@@ -33,9 +33,9 @@ C6H6.
 
 LINACH Grupo 1 (cancerígeno comprovado para humanos).
 
-NR-15, Anexo 13-A. Limite de tolerância 1 ppm (anteriormente 1 ppm também).
+NR-15, Anexo 13-A. Valor de referência tecnológico (VRT-MPT) de 1 ppm, e não limite de tolerância [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
-Lei 13.467/2017 e Portaria MTb 1.109/2016. Regulamentação específica do benzeno.
+Portaria MTb 1.109/2016. Regulamentação específica do benzeno (auditoria 03/10/2026).
 
 Reconhecido cancerígeno. Não admite exposição segura. Enquadramento qualitativo.
 
@@ -73,9 +73,9 @@ Quinto. Casos com trânsito em julgado favorável anteriores ao Tema 382 não s�
 
 ### 5.1. Decreto 53.831/64
 
-Código 1.2.10. Hidrocarbonetos. Tolueno enquadrado como agente químico.
+Código 1.2.11. Tóxicos orgânicos, entre eles os hidrocarbonetos. Tolueno enquadrado como agente químico (auditoria 03/10/2026).
 
-Código 1.2.11. Resíduos de hidrocarbonetos.
+O código 1.2.10 trata de sílica, asbesto e outras poeiras, e não de hidrocarbonetos.
 
 Aplicação até 28/04/1995 (categoria profissional + agente).
 
@@ -85,15 +85,15 @@ Aplicação até 05/03/1997 (atividade nociva).
 
 Código 1.2.10. Hidrocarbonetos.
 
-Código 1.2.11. Resíduos.
+Código 1.2.11. Outros tóxicos e associação de agentes (auditoria 03/10/2026).
 
 Aplicação até 05/03/1997.
 
 ### 5.3. Decreto 2.172/97 (e Decreto 3.048/99, Anexo IV)
 
-Código 1.0.19. Hidrocarbonetos aromáticos.
+Código 1.0.19. Outras substâncias químicas. O Grupo I cita o diisocianato de tolueno (TDI), composto distinto do tolueno (auditoria 03/10/2026).
 
-Tolueno enquadrado como hidrocarboneto aromático.
+O código 1.0.19 não nomeia o tolueno.
 
 Aplicação a partir de 06/03/1997.
 

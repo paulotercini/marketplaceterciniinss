@@ -49,7 +49,7 @@ Cenário B, restabelecimento de B31 cessado sem perícia. Tutela cabível.
 
 Cenário C, implantação de B32 com laudo pericial judicial favorável. Tutela cabível.
 
-Cenário D, tutela de evidência em tese firmada (Tema 76/STF teto, Tema 1124/STJ). O Tema 1102/STF não serve, pois a ADI 2111 (21/03/2024) declarou cogente o art. 3º da Lei 9.876/99, sem opção pelo art. 29, I e II (auditoria 03/10/2026).
+Cenário D, tutela de evidência em tese firmada (Tema 76/STF teto). O Tema 1102/STF não serve, pois a ADI 2111 (21/03/2024) declarou cogente o art. 3º da Lei 9.876/99, sem opção pelo art. 29, I e II. O Tema 1124/STJ também não serve, pois trata de interesse de agir e de DIB (auditoria 03/10/2026).
 
 ## Estabilização (art. 304)
 

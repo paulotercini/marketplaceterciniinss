@@ -60,7 +60,7 @@ Caso em que sentença transitada em julgado reconheceu a RVT antes de 2024. A mo
 
 ### Cenário D — Ação ajuizada antes do julgamento das ADIs
 
-A modulação conhecida dispensa apenas a devolução de valores recebidos e os honorários, sem preservar o direito à revisão [NÃO CONFIRMADO]; decisão que afirme o contrário precisa de conferência na fonte oficial (auditoria 03/10/2026). Verificar na jurisprudência recente de cada Região.
+A modulação (ADI 2111 ED-ED, 10/04/2025) só dispensa a devolução dos valores recebidos por decisões judiciais, definitivas ou provisórias, prolatadas até 05/04/2024, e o pagamento de honorários de sucumbência, custas e perícias contábeis nas ações da RVT [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar o direito à revisão; decisão que afirme o contrário precisa de conferência na fonte oficial (auditoria 03/10/2026). Verificar na jurisprudência recente de cada Região.
 
 ### Cenário E — Segurado com contribuições elevadas pré-PBC
 

@@ -6,7 +6,7 @@
 
 Tese original. Permite a inclusão de contribuições anteriores a julho de 1994 no cálculo da RMI para benefícios em que o método alternativo seja mais vantajoso, desde que preenchidos requisitos específicos.
 
-Em 21 de março de 2024, nas ADIs 2110 e 2111, o STF declarou constitucional o art. 3º da Lei 9.876/99, o que esvaziou a tese; a modulação posterior dispensa apenas a devolução de valores recebidos e os honorários, sem preservar a revisão [NÃO CONFIRMADO] (auditoria 03/10/2026).
+Em 21 de março de 2024, nas ADIs 2110 e 2111, o STF declarou constitucional o art. 3º da Lei 9.876/99, o que esvaziou a tese; a modulação posterior (ADI 2111 ED-ED, 10/04/2025) só dispensa a devolução dos valores recebidos por decisões judiciais, definitivas ou provisórias, prolatadas até 05/04/2024, e o pagamento de honorários de sucumbência, custas e perícias contábeis nas ações da Revisão da Vida Toda [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar a revisão (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -86,7 +86,7 @@ Refutação. Art. 195, §14, da CF, com redação da EC 103. Contribuições aba
 
 Argumento adversário. Salários de contribuição anteriores a julho de 1994 não integram a média.
 
-Refutação. Tese adversa desde as ADIs 2110 e 2111, que declararam constitucional o art. 3º da Lei 9.876/99; a modulação dispensa apenas a devolução de valores e os honorários [NÃO CONFIRMADO]. O caminho do segurado é a análise caso a caso em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026).
+Refutação. Tese adversa desde as ADIs 2110 e 2111, que declararam constitucional o art. 3º da Lei 9.876/99; a modulação só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149]. O caminho do segurado é a análise caso a caso em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026).
 
 ### Argumento 5 — Desconsideração do caráter acidentário na B92
 
