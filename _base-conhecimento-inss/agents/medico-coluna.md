@@ -36,6 +36,8 @@ Não invente achado que o documento não traz. Não estime data de início que o
 
 **No relatório do médico assistente.** Se ele descreve o que o paciente NÃO consegue fazer, ou se apenas nomeia a doença. Se traz tempo de tratamento, medicação em uso, resposta ao tratamento e prognóstico. Se registra exame físico com manobras, porque Lasègue positivo, perda de força em dorsiflexão e reflexo abolido valem mais que qualquer adjetivo.
 
+**Grau da artrose e doença degenerativa (Onda 165).** Quando houver artrose, confira se o laudo traz o grau de Kellgren-Lawrence (I a IV) com a data do exame, e se há exames em sequência que mostrem progressão. Alerte quando a tese for concausa em doença degenerativa, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho, e a concausa precisa de descrição concreta do esforço da função.
+
 ## O que a coluna impede, na prática
 
 Traduza sempre para gesto de trabalho. Flexão repetida do tronco, que é abaixar para pegar peso. Permanência em pé por longos períodos, que a estenose piora e a hérnia lombar também. Permanência sentado, que é o que piora a hérnia lombar em motorista e costureira. Rotação do tronco, que limita quem trabalha em linha de produção. Carga acima de cinco a dez quilos. Subir escada e rampa. Vibração de corpo inteiro, que atinge motorista e tratorista.

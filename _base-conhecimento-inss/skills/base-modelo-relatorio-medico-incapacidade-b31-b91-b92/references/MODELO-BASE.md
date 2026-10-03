@@ -1,77 +1,36 @@
-# Modelo Base. Relatório Médico para Incapacidade (B31, B91, B92)
+# Modelo Base. Relatório Médico para Incapacidade
 
-## Estrutura para 1 folha
+Onda 165, 03/10/2026. Versão curta, de meia a uma página, a pedido do titular. Serve à incapacidade temporária (B31 previdenciária e B91 acidentária) e à permanente (B32 previdenciária e B92 acidentária), pela tabela oficial de espécies do INSS.
 
-Texto narrativo. Substituir os campos entre colchetes. Cabe em uma página A4.
+O relatório não cita artigo de lei. A fundamentação jurídica fica na petição, e o médico escreve só o que examinou e o que os exames mostram, porque o laudo que cita a lei parece redigido pelo advogado e perde peso na perícia. Atende aos requisitos do art. 2º da Portaria Conjunta MPS/INSS 13/2026, que são a identificação do requerente, a data de emissão, o diagnóstico por extenso ou CID e a assinatura com identificação legível do emitente.
 
 ---
 
 **RELATÓRIO MÉDICO**
 
-**Paciente:** [NOME COMPLETO]
-**Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+Paciente: [nome completo]. CPF: [000.000.000-00]. Nascimento: [DD/MM/AAAA].
+Profissão: [função e tarefas principais].
+Diagnóstico: [CID com o quarto dígito], [nome, lado e origem, primária ou pós-traumática]. [CID secundário, se houver.]
 
-**Diagnósticos (CID-10)**
+Acompanho o(a) paciente desde [mês/ano]. A doença foi diagnosticada em [DD/MM/AAAA] por [exame ou consulta], e o exame de [DD/MM/AAAA] mostra [achado objetivo, com o grau da escala quando houver]. Ao exame físico, [sinais com medida, como flexão limitada a 90 graus, marcha antálgica, uso de bengala].
 
-[CID principal] — [Nome técnico da patologia]
-[CID secundário] — [Nome técnico da patologia]
-[CID adicional, se houver] — [Nome técnico da patologia]
+Já realizou [fisioterapia, com número de sessões e período], usa [medicação, com tempo de uso] e [fez infiltração em DD/MM/AAAA / tem cirurgia indicada, realizada ou contraindicada], sem melhora suficiente para voltar ao trabalho.
 
-**Histórico clínico**
+Na função de [profissão], precisa [tarefas que a função exige]. Hoje não consegue [permanecer em pé mais de X minutos / carregar mais de X quilos / subir escadas / agachar], e a tentativa provoca [dor, falseio, risco de queda], de modo que não pode exercer essa atividade.
 
-Paciente em acompanhamento [especialidade] desde [mês/ano], com diagnóstico de [patologia principal]. O quadro [iniciou-se de forma insidiosa / decorreu de evento agudo em DD/MM/AAAA / agravou-se progressivamente a partir de DD/MM/AAAA]. Apresenta [descrição clínica detalhada dos sintomas atuais, incluindo localização, intensidade, frequência, fatores de agravo e melhora].
+A doença está documentada desde [DD/MM/AAAA], e a incapacidade para o trabalho começou em [DD/MM/AAAA], quando [marco, como a piora no exame, a falha do tratamento ou a indicação cirúrgica]. [Se houver: O esforço de (tarefa) contribuiu para o agravamento do quadro. / O quadro decorre do acidente de DD/MM/AAAA.] Indico afastamento por [X] dias a partir de [DD/MM/AAAA]. [Permanente: O quadro é definitivo e não permite reabilitação para outra atividade, em razão de (motivo).] [Se for o caso: Necessita da ajuda de outra pessoa para (banho, vestir-se, locomover-se).]
 
-Os exames complementares confirmam o diagnóstico, destacando-se [exame de imagem ou laboratorial com data e achados objetivos]. O tratamento instituído inclui [medicamentos com posologia, fisioterapia, intervenções cirúrgicas realizadas ou pendentes, acompanhamento ambulatorial], com [resposta terapêutica limitada / sem melhora significativa / estabilidade apenas sob medicação contínua].
+[Local], [data por extenso].
 
-Concomitantemente, apresenta [comorbidades relevantes, se aplicável, com CID e impacto funcional]. A presença simultânea destas condições potencializa as limitações funcionais, agravando o quadro global.
-
-O paciente exerce a atividade laboral de [função habitual], que exige [demandas físicas e cognitivas da atividade]. As manifestações clínicas descritas são incompatíveis com essas demandas, em razão de [descrição da incompatibilidade entre patologia e demanda laboral].
-
-**Avaliação funcional e prognóstico**
-
-O quadro clínico atual compromete a capacidade laborativa para a atividade habitual, em razão de [limitações funcionais objetivas]. As manifestações álgicas, funcionais e/ou cognitivas impedem o desempenho de [atividades específicas que a profissão exige], expondo o paciente a risco de agravamento das lesões e/ou prejuízo à sua segurança e à de terceiros.
-
-O prognóstico funcional é [reservado / desfavorável / com possibilidade de melhora a longo prazo / sem perspectiva de remissão], considerando [a cronicidade do quadro, a refratariedade ao tratamento, a natureza degenerativa da patologia, a presença de comorbidades agravantes].
-
-**Data de início da incapacidade e duração estimada**
-
-A data de início da incapacidade (DII) é fixada em [DD/MM/AAAA], conforme [exame, internação, atendimento médico ou afastamento documentado].
-
-[Para B31]. Recomenda-se afastamento das atividades laborativas pelo prazo mínimo de [X] dias, podendo ser prorrogado conforme evolução clínica. Não há previsão de alta no curto prazo nem retorno seguro à atividade habitual antes de [estabilização do quadro, conclusão de tratamento cirúrgico, reabilitação fisioterápica].
-
-[Para B91]. O quadro caracteriza incapacidade permanente para toda e qualquer atividade laboral, sendo o paciente INSUSCETÍVEL DE REABILITAÇÃO PROFISSIONAL, em razão de [fundamentação técnica detalhada]. [Se aplicável: O paciente NECESSITA DE ASSISTÊNCIA PERMANENTE DE TERCEIROS para a realização das atividades básicas de vida diária, em razão de (justificativa), fazendo jus ao adicional de 25% previsto no art. 45 da Lei 8.213/91].
-
-[Para B92]. O quadro decorre de [acidente típico de trabalho em DD/MM/AAAA, ocorrido em (descrição)] / [doença ocupacional caracterizada pela exposição a (agente nocivo) durante o exercício da função de (atividade)] / [doença equiparada a acidente do trabalho nos termos do art. 21 da Lei 8.213/91]. O nexo causal entre a patologia e a atividade laborativa está [comprovado pelo NTEP automático em razão da correlação CID-CNAE / documentado por CAT emitida em DD/MM/AAAA / fundamentado pelos seguintes elementos clínicos e ocupacionais].
-
-[Local], [DD] de [mês] de [ano].
-
-________________________________________
-[Nome do Médico]
-[Especialidade]
-CRM [número]
+[Nome do médico], [especialidade], CRM [número legível] e carimbo.
 
 ---
 
-## Notas de orientação ao médico assistente
+## Orientação ao médico assistente
 
-Ao redigir.
-
-1. Seja específico nos diagnósticos. Use CID-10 ou CID-11 expresso, com nome técnico.
-
-2. Documente DID (data de início da doença) e DII (data de início da incapacidade) com fundamentação documental. Não invente datas. Use eventos clínicos documentados (exames, internações, primeiro atendimento).
-
-3. Descreva exames com data e achados objetivos.
-
-4. Para B91, JAMAIS omita a afirmação de insuscetibilidade de reabilitação. Sem isso, a perícia oficial rejeita.
-
-5. Para B92, indique expressamente o nexo causal com o trabalho e referencie a CAT se houver.
-
-6. Para B31, indique período estimado de afastamento, não fique em prazos abertos demais que invalidam.
-
-7. Conecte cada limitação funcional com a atividade laboral concreta do paciente.
-
-8. Em caso de comorbidades, mostre como elas se potencializam, não apenas as liste.
-
-9. Prognóstico fundamentado tecnicamente. Não use "prognóstico reservado" sem justificar.
-
-10. Assine, carimbe e mantenha cópia no prontuário.
+1. Data de emissão, CPF e CRM legível são exigidos pela análise documental do INSS, e o relatório sem eles volta.
+2. CID com o quarto dígito, porque M17.0 (artrose primária dos dois joelhos) e M17.3 (artrose pós-traumática) contam histórias diferentes.
+3. As duas datas, sempre. A data em que a doença começou e a data em que a incapacidade começou, cada uma com o exame ou atendimento que a prova. Doença antiga não impede o benefício quando a incapacidade veio depois, por agravamento.
+4. A limitação em verbos com medida, ligada à profissão. "Não permanece em pé mais de vinte minutos e a função de pedreiro exige o dia inteiro" convence, e "incapacitado" não.
+5. O grau no exame de imagem ajuda, mas não decide. O que decide é o que o paciente não consegue fazer.
+6. Prazo em dias na incapacidade temporária e, na permanente, a frase de que o quadro não permite reabilitação para outra atividade.

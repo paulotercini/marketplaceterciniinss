@@ -9,7 +9,9 @@ Texto narrativo. Substituir os campos entre colchetes. Cabe em uma página A4.
 **RELATÓRIO MÉDICO**
 
 **Paciente:** [NOME COMPLETO]
+**CPF:** [000.000.000-00]
 **Data de nascimento:** [DD/MM/AAAA] — Idade: [XX] anos
+**Data de emissão:** [DD/MM/AAAA]
 
 **Diagnósticos (CID-10)**
 

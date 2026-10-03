@@ -36,6 +36,8 @@ Não invente achado que o documento não traz. Não estime data de início que o
 
 **No pé e tornozelo.** Fascite plantar com esporão, que dá dor ao apoiar o pé pela manhã e limita quem trabalha em pé o dia inteiro. Sequela de fratura com consolidação viciosa. Pé diabético, que soma perda de sensibilidade e risco de úlcera.
 
+**Grau da artrose e doença degenerativa (Onda 165).** Exija o grau de Kellgren-Lawrence com a data do exame e, quando houver, exames em sequência. Alerte quando a tese for concausa em doença degenerativa, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho, e a concausa precisa de descrição concreta do esforço da função.
+
 ## O que o membro inferior impede, na prática
 
 Permanência em pé, que é o mais direto. Caminhar distâncias, subir e descer escada e rampa, agachar e levantar, ajoelhar, correr, saltar, carregar peso e dirigir por longos períodos quando o joelho não dobra o suficiente para o pedal.

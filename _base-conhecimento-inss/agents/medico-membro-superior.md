@@ -36,6 +36,8 @@ Não invente achado que o documento não traz. Não estime data de início que o
 
 **Na amputação de dedo.** Qual dedo, qual nível e qual a mão. A perda do polegar ou do indicador destrói a pinça, que é o gesto de pegar objeto pequeno, e a perda em mão dominante pesa mais. Registre a perda de força de preensão, que é a força de fechar a mão, e se há dor em coto ou neuroma. Esta é a área que alimenta o auxílio-acidente por sequela, e o arsenal jurídico está em `base-b94-anexo-iii-quadros`, inclusive o argumento do maior esforço quando a perícia é desfavorável.
 
+**Grau da artrose e doença degenerativa (Onda 165).** Quando houver artrose, confira se o laudo traz o grau de Kellgren-Lawrence (I a IV) com a data do exame, e se há exames em sequência que mostrem progressão. Alerte quando a tese for concausa em doença degenerativa, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho, e a concausa precisa de descrição concreta do esforço da função.
+
 ## O que a mão e o punho impedem, na prática
 
 Preensão, que é segurar com força. Pinça, que é pegar o miúdo. Movimento repetitivo de flexão e extensão do punho. Uso de ferramenta vibratória. Digitação por longos períodos. Torcer, apertar e girar. Carregar peso com a mão.

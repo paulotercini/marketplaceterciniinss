@@ -1,48 +1,48 @@
-# Modelo de relatório de incapacidade (B31)
+# Modelo de relatório de incapacidade
 
-Para benefício por incapacidade temporária. Foco na impossibilidade atual de trabalhar, na DII e no prognóstico.
+Serve à incapacidade temporária (B31 previdenciária, B91 acidentária) e à permanente (B32 previdenciária, B92 acidentária). Onda 165, 03/10/2026: alinhado ao modelo curto de `base-modelo-relatorio-medico-incapacidade-b31-b91-b92/references/MODELO-BASE.md`, que prevalece em caso de divergência.
 
 ## O que o relatório precisa conter
 
-1. Identificação completa do paciente, com nome e, se houver, número do requerimento ou benefício.
-2. Diagnósticos com CID-10, data de início do acompanhamento e do tratamento.
-3. Descrição objetiva das limitações funcionais, indicando movimentos e tarefas comprometidos e como isso impede a atividade habitual.
-4. DII, desde quando o quadro impede o trabalho, ancorada no histórico.
-5. Prognóstico e estimativa de duração. Recomendar 180 dias ou prazo indeterminado.
-6. Local, data, assinatura e carimbo com CRM. Assinatura pode ser eletrônica.
+1. Nome, CPF, data de nascimento, profissão e data de emissão.
+2. Diagnóstico com CID e quarto dígito, lado e origem (primária ou pós-traumática).
+3. Exames datados com o achado objetivo e o grau da escala quando houver.
+4. Tratamento realizado, com sessões, medicação e tempo de uso, e situação cirúrgica.
+5. Limitação em verbos com medida, ligada às tarefas da profissão.
+6. Duas datas, a do início da doença e a do início da incapacidade, cada uma com o documento que a prova.
+7. Prazo de afastamento em dias ou, na permanente, a frase de que o quadro não permite reabilitação para outra atividade.
+8. Local, data, assinatura, CRM legível e carimbo. O relatório não cita artigo de lei.
 
 ## Estrutura do relatório
 
 ```
-RELATÓRIO MÉDICO   (centralizado, negrito)
+RELATÓRIO MÉDICO
 
-A paciente [nome], [idade] anos, [profissão], encontra-se em acompanhamento
-[especialidade] neste serviço desde [data], em razão de [doença] (CID-10 [código])
-e [doença] (CID-10 [código]).
+Paciente: [nome]. CPF: [número]. Nascimento: [data].
+Profissão: [função e tarefas].
+Diagnóstico: [CID com quarto dígito], [nome, lado e origem].
 
-[Parágrafo de achados objetivos: exames de imagem, marcadores laboratoriais com
-valor, data e referência, tratamento em uso e resposta. Aqui entra a interpretação
-de qualquer notação pericial adversa.]
+Acompanho o(a) paciente desde [mês/ano]. A doença foi diagnosticada em [data]
+por [exame], e o exame de [data] mostra [achado e grau]. Ao exame físico, [sinais
+com medida].
 
-[Parágrafo de limitações funcionais amarradas à profissão real.]
+Já realizou [tratamento], sem melhora suficiente para voltar ao trabalho.
 
-A incapacidade para o trabalho está presente desde [DII], com agravamento progressivo
-a despeito do tratamento instituído.
+Na função de [profissão], precisa [tarefas]. Hoje não consegue [limitações com
+medida], de modo que não pode exercer essa atividade.
 
-Trata-se de doença crônica, de curso progressivo e com [dano estrutural / refratariedade]
-documentado, sem perspectiva de recuperação funcional a curto prazo. Indico o
-afastamento das atividades laborais por [prazo], com reavaliação periódica.
+A doença está documentada desde [DID], e a incapacidade começou em [DII], quando
+[marco]. Indico afastamento por [X] dias a partir de [data].
 
-Local, data.
-
-[nome do médico], [especialidade], CRM [número].
+[Local], [data].
+[Nome do médico], [especialidade], CRM [número legível] e carimbo.
 ```
 
 ## Entregar três blocos
 
 Quando o usuário pedir um modelo para o médico, entregue no mesmo arquivo:
 
-1. A orientação do que o relatório precisa conter (os 6 itens acima).
+1. A orientação do que o relatório precisa conter (os itens acima).
 2. O modelo com lacunas mínimas, já com os CIDs e doenças do caso preenchidos.
 3. Um exemplo completo preenchido com os dados reais, para o médico ver o nível de detalhe esperado.
 

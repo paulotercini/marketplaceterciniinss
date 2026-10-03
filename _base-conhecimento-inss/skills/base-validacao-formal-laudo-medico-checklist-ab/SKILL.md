@@ -107,6 +107,8 @@ Item A.8. Data exata de emissão do laudo.
 
 Item A.9. CID-10 ou CID-11 expresso.
 
+Item A.9a. CID com o quarto dígito quando existir (M17.0 e M17.3 indicam origem e lateralidade diferentes; o código de três caracteres esconde a origem pós-traumática).
+
 Item A.10. Descrição do quadro clínico.
 
 Item A.11. Sintomas atuais detalhados.
@@ -115,9 +117,9 @@ Item A.12. Histórico da doença (DID).
 
 ### 4.3. Curso da doença
 
-Item A.13. Data de início da doença (DID) com fundamentação documental.
+Item A.13. Data de início da doença (DID) com marcador documental (exame, consulta ou prontuário datado).
 
-Item A.14. Data de início da incapacidade (DII) com fundamentação.
+Item A.14. Data de início da incapacidade (DII) com marcador documental próprio, distinto do da DID. As duas datas são obrigatórias; data única é vício (6.10).
 
 Item A.15. Evolução da doença (estável, progressiva, regressiva).
 
@@ -131,15 +133,19 @@ Item A.18. Prognóstico (favorável, reservado, desfavorável).
 
 Item A.19. Limitações funcionais para o trabalho habitual.
 
+Item A.19a. Limitação em verbos com medida (permanecer em pé X minutos, carregar X quilos, caminhar X metros), ligada às tarefas da profissão declarada.
+
 Item A.20. Limitações funcionais para outras atividades.
 
 Item A.21. Repercussão na vida diária.
 
-Item A.22. Necessidade de auxílio de terceiros (B91 com adicional 25%).
+Item A.22. Necessidade de auxílio de terceiros (B32 ou B92, adicional de 25%).
 
 ### 4.5. Exames complementares
 
 Item A.23. Lista de exames realizados com datas.
+
+Item A.23a. Grau na escala de imagem com a data do exame, quando a doença tiver escala (Kellgren-Lawrence I a IV na artrose). Exames em sequência demonstram a progressão.
 
 Item A.24. Resultados dos exames.
 
@@ -151,9 +157,9 @@ Item A.26. Caracterização expressa da incapacidade (temporária ou permanente)
 
 Item A.27. Período estimado de incapacidade (B31).
 
-Item A.28. Insuscetibilidade de reabilitação (B91).
+Item A.28. Insuscetibilidade de reabilitação (B32 ou B92).
 
-Item A.29. Nexo causal: para B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86; Tema 416 STJ) — nexo laboral só quando se pleiteia a natureza acidentária/competência estadual.
+Item A.29. Nexo causal: para B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86; Tema 416 STJ) — nexo laboral só quando se pleiteia a natureza acidentária/competência estadual. Na concausa, o laudo descreve o esforço da função que contribuiu para o agravamento, ainda que não seja a causa única. Em doença degenerativa (artrose), a concausa precisa de descrição concreta do esforço, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho.
 
 Item A.30. Caracterização da sequela (B94).
 
@@ -164,6 +170,8 @@ Item A.31. Assinatura do médico.
 Item A.32. Carimbo com CRM.
 
 Item A.33. Carimbo da clínica ou hospital.
+
+Item A.34. Requisitos do art. 2º da Portaria Conjunta MPS/INSS 13/2026: identificação do requerente (nome e CPF), data de emissão, diagnóstico por extenso ou CID, assinatura e identificação legível do emitente com registro no conselho.
 
 ## 5. Checklist B. Validação de laudo para deficiência (BPC, aposentadoria PCD)
 
@@ -319,6 +327,18 @@ Laudo menciona exames mas não os anexa.
 
 Solicitar todos os exames mencionados.
 
+### 6.9. Vício de grau sem função
+
+Laudo informa o grau no exame de imagem, mas não descreve o que o paciente deixou de conseguir fazer. O perito decide pela função, não pela imagem.
+
+Pedir ao médico a limitação em verbos com medida, ligada à profissão.
+
+### 6.10. Vício de data única
+
+Laudo traz só a data do diagnóstico, ou só a data do afastamento. Sem a DID e a DII separadas, cada uma com seu marcador, o INSS fixa a DII na data da filiação ou antes dela e alega preexistência.
+
+Pedir as duas datas, com o documento que prova cada uma, e o marco do agravamento quando a doença é anterior à filiação.
+
 ## 7. Estratégia de refazimento de laudo
 
 ### 7.1. Notificação ao médico assistente
@@ -351,13 +371,13 @@ Foco. Período estimado de incapacidade.
 
 Cruzamento com `analise-documental-incapacidade` e `base-incapacidade-b31-temporaria`.
 
-### 8.2. B91 (aposentadoria por incapacidade permanente)
+### 8.2. B32 (aposentadoria por incapacidade permanente previdenciária)
 
 Checklist A com ênfase na insuscetibilidade de reabilitação.
 
 Cruzamento com `base-incapacidade-b91-permanente`.
 
-### 8.3. B92 (aposentadoria por incapacidade permanente acidentária)
+### 8.3. B92 (aposentadoria por incapacidade permanente acidentária) e B91 (auxílio por incapacidade temporária acidentário)
 
 Checklist A com ênfase no nexo causal acidentário.
 

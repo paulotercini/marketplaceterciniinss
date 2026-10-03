@@ -213,41 +213,44 @@ Espécie 21 = pensão por morte previdenciária urbana ou rural. Cruzar com `pen
 
 Benefício temporário por incapacidade laboral.
 
-### B91 - Aposentadoria por Incapacidade Permanente (antiga Aposentadoria por Invalidez)
+### B91 - Auxílio por Incapacidade Temporária Acidentário (antigo Auxílio-Doença por Acidente do Trabalho)
 
-Benefício permanente por incapacidade laboral total.
+B31 acidentário. Competência da Justiça Estadual. Espécies conferidas na tabela de espécies do INSS em 03/10/2026 (Onda 165), que corrigiu a troca entre B91 e B32 que esta skill trazia.
 
-### B92 - Aposentadoria por Incapacidade Permanente Acidentária
+### B92 - Aposentadoria por Incapacidade Permanente Acidentária (antiga Aposentadoria por Invalidez por Acidente do Trabalho)
 
-B91 acidentário. Competência da Justiça Estadual.
+B32 acidentário. Competência da Justiça Estadual.
 
-### B94 - Auxílio-Acidente
+### B94 - Auxílio-Acidente por Acidente do Trabalho
 
 Benefício indenizatório por sequela de acidente. Competência da Justiça Estadual. Cruzar com `auxilio-acidente-b94` e `base-auxilio-acidente-b94-pos-reforma`.
 
-### B41/B42 - Aposentadorias por Idade (Urbana / Rural)
+### B41 - Aposentadoria por Idade (urbana, rural e híbrida)
 
-### B45 - Aposentadoria por Idade do Trabalhador Rural
+### B42 - Aposentadoria por Tempo de Contribuição
 
-### B46 - Aposentadoria por Idade do Trabalhador Urbano
+### B46 - Aposentadoria Especial
+
+### B57 - Aposentadoria por Tempo de Serviço de Professor
 
 ### B25 - Auxílio-Reclusão
 
 ### B80 - Salário-Maternidade
 
-### B81 - Salário-Maternidade Acidentário
 
 ### B87 - BPC - Benefício de Prestação Continuada da Pessoa com Deficiência
 
 ### B88 - BPC - Benefício de Prestação Continuada do Idoso
 
-### B57 - Pensão por Morte de Trabalhador Rural
+### B93 - Pensão por Morte por Acidente do Trabalho
 
-### B23 - Pensão por Morte Rural
+### B23 - Pensão por Morte de Ex-Combatente
 
-### B32 - Auxílio por Incapacidade Temporária Acidentário (B31 acidentário)
+### B32 - Aposentadoria por Incapacidade Permanente Previdenciária (antiga Aposentadoria por Invalidez)
 
-### B36 - Salário-Família
+Benefício permanente por incapacidade laboral total, insuscetível de reabilitação.
+
+### B36 - Auxílio-Acidente Previdenciário
 
 ### B58 - Aposentadoria do Anistiado Político
 
