@@ -90,3 +90,22 @@ document.getElementById('b-esaj').onclick = () => rodar('esaj');
 document.getElementById('cfg').onclick = e => {
   e.preventDefault(); chrome.runtime.openOptionsPage();
 };
+
+// [03.10.2026] A VERSÃO INSTALADA É A DA PASTA, e a pasta não se atualiza
+// sozinha: o Paulo rodou uma semana com a 1.11 depois de a 1.12 existir, sem
+// aviso nenhum. O manifesto da main no GitHub diz qual é a versão publicada;
+// quando difere da instalada, o popup avisa. Sem rede, nada aparece.
+const VERSAO_PUBLICADA = 'https://raw.githubusercontent.com/paulotercini/marketplaceterciniinss/main/crm/fase2/extensao/manifest.json';
+(async () => {
+  const minha = chrome.runtime.getManifest().version;
+  const el = document.getElementById('versao');
+  el.textContent = `extensão ${minha}`;
+  try {
+    const r = await fetch(VERSAO_PUBLICADA, { cache: 'no-store' });
+    const { version } = await r.json();
+    if (version && version !== minha) {
+      el.style.color = '#B4530A';
+      el.textContent = `⚠ extensão ${minha} instalada; a publicada é a ${version} — atualize a pasta (git pull) e recarregue a extensão em chrome://extensions`;
+    }
+  } catch (e) { /* sem rede ou sem GitHub: fica só a versão instalada */ }
+})();

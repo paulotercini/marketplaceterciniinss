@@ -24,6 +24,7 @@
 // anotado no navegador e, por 7 dias, não é consultado de novo — é onde vai
 // a maior parte do acervo antigo. Uma rodada completa semanal confere todos.
 (() => {
+  if (window !== window.top) return;      // só o quadro de cima coleta (a reinjeção vai a todos)
   if (window.__crmColetorNoAr) return;
   window.__crmColetorNoAr = true;
 
@@ -108,15 +109,47 @@
       partes: ficha.partes || p.partes || null, situacao: ficha.situacao || null,
       principal: ficha.principal || null, tipo: ficha.tipo || null,
       link: p.link || (codigo ? `https://${host}${p.grau === '2º grau' ? '/cposg' : '/cpopg'}/show.do?processo.codigo=${codigo}` : null),
-      movimento: null };
+      incidentes: REG.lerIncidentesFicha(html), movimento: null };
     if (!codigo || !out.numero) return { ...out, semFicha: true };   // sem número não há como o CRM casar
     await espera(900);
     const mv = REG.lerMovimentacoesHtml((await baixarComPaciencia(g.movs(codigo), rot)).html);
-    const m = mv[0];
     // a mais recente primeiro; o e-SAJ não dá hora — 00:00 mantém estável a
-    // chave "data+hora" da tela de importação
-    out.movimento = m ? { data: m.data, hora: '00:00', texto: m.detalhe ? `${m.texto} — ${m.detalhe}` : m.texto } : null;
+    // chave "data+hora" da tela de importação. [02.10.2026] vão as CINCO que
+    // o e-SAJ devolve, e não só a última: entre uma rodada e outra o processo
+    // anda mais de um passo (os embargos de um caso tiveram "Julgado
+    // virtualmente", "Acórdão registrado" e "Expedido Certidão" em dois dias),
+    // e o CRM grava só as que ainda não conhece
+    out.movimentos = mv.slice(0, 5).map(m => ({ data: m.data, hora: '00:00',
+      texto: m.detalhe ? `${m.texto} — ${m.detalhe}` : m.texto }));
+    out.movimento = out.movimentos[0] || null;
     return out;
+  }
+
+  // [02.10.2026] OS RECURSOS DENTRO DO RECURSO. No 2º grau, os embargos de
+  // declaração e o agravo interno de uma apelação têm o MESMO número e código
+  // próprio, e não aparecem na consulta por OAB nem nos favoritos: só na
+  // consulta por número, na caixa "Selecione o processo", dentro do recurso
+  // principal. Era por isso que o julgamento dos embargos de um caso não
+  // chegava ao CRM: a extensão lia só a apelação. Para cada número com algo no
+  // 2º grau, ou com o 1º grau "em grau de recurso", a consulta por número
+  // lista todos os códigos, e o que a rodada ainda não leu entra nela.
+  async function lerRecursosDoNumero(numero, vistos, lidos) {
+    const rot = 'e-SAJ 2º grau';
+    let falhas = 0;
+    const r = await baixarComPaciencia(REG.urlBuscaNumero('2º grau', numero), rot);
+    const direto = REG.codigoDaUrl(r.url);
+    const codigos = direto ? [{ codigo: direto, classe: null }] : REG.lerSelecaoHtml(r.html);
+    for (const s of codigos) {
+      if (vistos.has('2º grau:' + s.codigo)) continue;
+      await espera(900);
+      try {
+        const x = await lerProcesso({ numero, grau: '2º grau', origem: 'recurso', codigo: s.codigo,
+          classe: s.classe || null, link: `https://${host}/cposg/show.do?processo.codigo=${s.codigo}` }, rot);
+        if (x.semFicha) { falhas++; continue; }
+        vistos.add('2º grau:' + (x.codigo || x.numero)); lidos.push(x);
+      } catch (e) { falhas++; }
+    }
+    return falhas;
   }
 
   window.crmRodar = async () => {
@@ -180,7 +213,21 @@
           const k = x.grau + ':' + (x.codigo || x.numero);
           if (vistos.has(k)) continue;
           vistos.add(k); lidos.push(x);
+          // [03.10.2026] os incidentes que a ficha lista (cumprimento de
+          // sentença, RPV) entram no fim da fila, se a rodada ainda não os
+          // tem — antes só os favoritados eram lidos
+          for (const inc of x.incidentes || [])
+            if (!vistos.has(x.grau + ':' + inc.codigo) && !fila.some(f => f.codigo === inc.codigo))
+              fila.push({ numero: x.numero, grau: x.grau, origem: 'incidente', codigo: inc.codigo, classe: inc.classe,
+                link: `https://${host}${x.grau === '2º grau' ? '/cposg' : '/cpopg'}/show.do?processo.codigo=${inc.codigo}` });
         } catch (e) { falhas++; }
+      }
+      const comRecurso = [...new Set(lidos.filter(x => x.grau === '2º grau' || /grau de recurso/i.test(x.situacao || ''))
+        .map(x => x.numero).filter(Boolean))];
+      for (let i = 0; i < comRecurso.length; i++) {
+        faixa(`e-SAJ 2º grau: recursos de ${i + 1} de ${comRecurso.length} — ${comRecurso[i]}…`);
+        await espera(1200);
+        try { falhas += await lerRecursosDoNumero(comRecurso[i], vistos, lidos); } catch (e) { falhas++; }
       }
       await chrome.storage.local.set({ [ARQ]: arq });
       if (!lidos.length) { faixaErr(`nenhum processo lido (${falhas} falharam) — o e-SAJ está respondendo?`); return { erro: 'vazio' }; }
@@ -194,10 +241,10 @@
           .map(p => ({ numero: p.numero, classe: p.classe, partes: p.partes, orgao: p.orgao, assunto: p.assunto || null,
                        distribuido: p.distribuido || null, situacao: p.situacao, codigo: p.codigo, link: p.link,
                        principal: p.principal || null, tipo: p.tipo || null,
-                       movimento: p.movimento, id: null, ca: null }));
+                       movimento: p.movimento, movimentos: p.movimentos || null, id: null, ca: null }));
         if (!processos.length) continue;
         await CRM.enviar('pje', { versao: 1, fonte: 'pje-acervo', sistema: 'esaj', tribunal: 'TJSP', grau, host, oab, quando,
-                                  parcial: falhas > 0 || pulados > 0, processos });
+                                  parcial: falhas > 0, pulados, processos });
       }
       await chrome.storage.local.set({ ultima_esaj: quando, ...(rapido ? {} : { ultima_esaj_full: quando }) });
       faixaOk(`✔ ${lidos.length} processos do e-SAJ entregues ao CRM${falhas ? ` (${falhas} sem ficha ou sem resposta)` : ''}${rapido ? ' (modo rápido)' : ''} — confira em 📥 Importar.`);

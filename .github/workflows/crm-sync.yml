@@ -1,15 +1,25 @@
 name: CRM — sincronização To Do → banco
+# o nome de cada rodada diz quem a disparou (o 🩺 do CRM mostra isso)
+run-name: ${{ github.event_name == 'schedule' && 'rodada de reserva do GitHub' || inputs.auditar == 'sim' && 'rodada com auditoria' || inputs.origem == 'automatica' && 'rodada automática' || 'disparo manual' }}
 
 on:
   schedule:
-    # de hora em hora, 07h–20h BRT (10h–23h UTC), TODO DIA. Domingo estava de
-    # fora, e num domingo de trabalho o CRM passava o dia inteiro parado sem
-    # ninguém entender por quê (20.09.2026).
-    # [24.09.2026] no minuto :00 o GitHub enfileira e DESCARTA rodadas (das 14
-    # previstas por dia, disparava 4, com até 1h de atraso). Minuto fora do
-    # pico e duas marcas por hora: o que o GitHub perder, a marca seguinte pega.
+    # RESERVA. Desde a E3 (29.09.2026) quem dispara a cada 10 minutos, das
+    # 07h00 às 20h50, é o próprio banco (crm/fase2/schema_disparo.sql), porque
+    # este agendamento atrasa e descarta rodadas: das 28 marcas por dia,
+    # rodavam de 3 a 5. Fica como reserva para o dia em que o token do disparo
+    # vencer. Minuto fora do pico (24.09.2026): no :00 o GitHub descarta mais.
     - cron: '13,43 10-23 * * *'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      origem:
+        description: 'quem disparou (automatica = o banco, a cada 10 minutos)'
+        required: false
+        default: 'manual'
+      auditar:
+        description: 'sim = roda também a auditoria To Do × CRM'
+        required: false
+        default: 'nao'
 
 concurrency:
   group: crm-sync
@@ -112,5 +122,17 @@ jobs:
           # opcional; sem ela os itens "Padrão" são só ignorados
           SENHA_PADRAO_MEUINSS: ${{ secrets.SENHA_PADRAO_MEUINSS }}
         run: python crm/fase2/migrar.py
+
+      # E4 · auditoria To Do × CRM (a rodada das 06h50 e o botão do CRM):
+      # compara a leitura desta rodada com o banco e grava as diferenças em
+      # todo_auditoria. O repositório é público, então o log só tem números;
+      # nomes e datas ficam no banco, que só a equipe lê.
+      - name: Auditoria To Do × CRM
+        if: steps.seg.outputs.tem == 'true' && inputs.auditar == 'sim'
+        continue-on-error: true
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python crm/auditoria_todo.py
       # crm/data/crm.json contém dados sensíveis: fica só no runner efêmero —
       # NUNCA subir como artefato nem commitar.

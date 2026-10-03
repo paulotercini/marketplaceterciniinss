@@ -406,7 +406,7 @@ LIMITE_FAXINA = 300     # fantasmas encerrados por rodada, para a mudança ser v
 LIMITE_RECUSADAS = 25   # acima disso a rodada falha: não é caso isolado, é pane
 
 
-def casos_movidos(mapa, banco, minimo_seguro=50):
+def casos_movidos(mapa, banco, minimo_seguro=50, ja_no_banco=None):
     """Acerta o que a MUDANÇA DE LISTA no To Do quebra.
 
     Mover a tarefa de lista faz a Microsoft apagar e recriar a tarefa com id
@@ -421,9 +421,13 @@ def casos_movidos(mapa, banco, minimo_seguro=50):
 
     A trava `minimo_seguro` existe porque um crawl incompleto do To Do faria
     esta função encerrar a carteira inteira. Abaixo disso, ela não encerra nada.
+
+    `ja_no_banco` (tarefas que o banco já tem) vem pronto quando o banco
+    mandou só os casos órfãos em `banco`, e não a carteira inteira (E2).
     """
     vivos = {k.get("todo_task_id") for k in mapa.get("casos") or []}
-    ja_no_banco = {c["todo_task_id"] for c in banco}
+    if ja_no_banco is None:
+        ja_no_banco = {c["todo_task_id"] for c in banco}
     # casos do banco cuja tarefa sumiu do To Do, do mais novo para o mais velho
     orfaos = [c for c in banco
               if c.get("fase") != "encerrado" and c["todo_task_id"] not in vivos]
@@ -728,6 +732,37 @@ def _rest_todas(url, chave, caminho, pagina=1000):
         salto += pagina
 
 
+def existentes_no_banco(url, chave, mapa):
+    """[E2 · 29.09.2026] O QUE A RODADA PRECISA SABER DO BANCO, CALCULADO LÁ.
+
+    O plano gratuito do Supabase dá 5 GB de tráfego de saída por mês. Para
+    remapear ids, reconhecer mudança de lista e preservar processo/NB, a rodada
+    baixava a carteira inteira de casos e o CPF de todos os clientes (1,2 MB),
+    e a sincronização a cada 10 minutos faria disso 100 MB por dia. Agora ela
+    manda ao banco as tarefas que leu (entrada, que não conta) e recebe só as
+    exceções (crm/fase2/schema_sync_leve.sql), algumas dezenas de KB.
+
+    Devolve None quando o banco não tem a função ou respondeu fora do esperado:
+    a rodada segue pelo caminho antigo, que continua certo, só mais caro.
+    """
+    casos = [k for k in mapa.get("casos") or [] if k.get("todo_task_id")]
+    vivos = sorted({k["todo_task_id"] for k in casos})
+    consultar = sorted({(l.get("detalhes") or {}).get("todo_task_id")
+                        for l in mapa.get("lembretes") or []} - {None} - set(vivos))
+    sem_numero = sorted({k["todo_task_id"] for k in casos
+                         if not (k.get("processo") and k.get("nb"))})
+    try:
+        r = _rest(url, chave, "POST", "/rest/v1/rpc/crm_sync_existentes",
+                  {"vivos": vivos, "consultar": consultar, "sem_numero": sem_numero})
+    except Exception:                      # noqa: BLE001 — sem a função, o caminho antigo
+        return None
+    if not isinstance(r, dict) or any(c not in r for c in
+                                      ("clientes", "trocas", "novas", "orfaos", "numeros")):
+        return None
+    r["consultar"] = consultar
+    return r
+
+
 def subir_rest(mapa):
     url = (os.environ.get("SUPABASE_URL") or "").strip()
     chave = (os.environ.get("SUPABASE_SERVICE_KEY") or "").strip()
@@ -747,21 +782,40 @@ def subir_rest(mapa):
             out.append(l)
         return out
 
+    # E2 · o banco responde só as exceções; sem a função, o caminho antigo
+    ex = existentes_no_banco(url, chave, mapa)
+    print("  consulta ao banco: " + ("só as exceções (E2)" if ex is not None
+                                     else "carteira inteira (sem crm_sync_existentes)"))
+
     # clientes que já existem no banco pelo CPF (inclusive cadastrados no app,
     # que têm id aleatório): o id determinístico cede ao que está lá, senão o
     # unique do CPF recusa a pessoa e a chave estrangeira derruba o caso dela
-    cli_exist = _rest_todas(url, chave,
-                            "/rest/v1/clientes?cpf=not.is.null&select=id,cpf")
-    nc = remapear_clientes(mapa, {(c.get("cpf") or "").strip(): c["id"]
-                                  for c in cli_exist if (c.get("cpf") or "").strip()})
+    if ex is not None:
+        cpf_para_id = {cpf: cid for cpf, cid in ex["clientes"]}
+    else:
+        cli_exist = _rest_todas(url, chave,
+                                "/rest/v1/clientes?cpf=not.is.null&select=id,cpf")
+        cpf_para_id = {(c.get("cpf") or "").strip(): c["id"]
+                       for c in cli_exist if (c.get("cpf") or "").strip()}
+    nc = remapear_clientes(mapa, cpf_para_id)
     if nc:
         print(f"  clientes remapeados para ids já existentes: {nc}")
 
     # casos que já existem no banco (inclusive criados no app): remapear
-    exist = _rest_todas(url, chave,
-                        "/rest/v1/casos?todo_task_id=not.is.null"
-                        "&select=id,todo_task_id,processo,nb,cliente_id,titulo,fase")
-    n = remapear_casos(mapa, {c["todo_task_id"]: c["id"] for c in exist})
+    if ex is not None:
+        trocas = {tid: kid for tid, kid in ex["trocas"]}
+        novas = set(ex["novas"])
+        # só os órfãos: quem já está no banco vem de "tarefa lida e não nova"
+        exist = ex["orfaos"]
+        ja_no_banco = {k["todo_task_id"] for k in mapa["casos"]
+                       if k.get("todo_task_id") and k["todo_task_id"] not in novas}
+    else:
+        exist = _rest_todas(url, chave,
+                            "/rest/v1/casos?todo_task_id=not.is.null"
+                            "&select=id,todo_task_id,processo,nb,cliente_id,titulo,fase")
+        trocas = {c["todo_task_id"]: c["id"] for c in exist}
+        ja_no_banco = None
+    n = remapear_casos(mapa, trocas)
     if n:
         print(f"  casos remapeados para ids já existentes: {n}")
 
@@ -774,7 +828,7 @@ def subir_rest(mapa):
     # A FAXINA NÃO PODE DERRUBAR A SINCRONIZAÇÃO. Ela é melhoria; o que não
     # pode faltar é o To Do chegar ao CRM. Qualquer tropeço aqui vira aviso.
     try:
-        adotados, encerrar = casos_movidos(mapa, exist)
+        adotados, encerrar = casos_movidos(mapa, exist, ja_no_banco=ja_no_banco)
         if adotados:
             print(f"  casos que mudaram de lista no To Do (id novo, mesmo caso): {adotados}")
         if encerrar:
@@ -806,7 +860,23 @@ def subir_rest(mapa):
     # o CNJ que o Paulo tinha acabado de vincular pela coleta do PJe (e a
     # importação voltava a perguntar pelos mesmos processos). To Do com valor
     # continua mandando; To Do vazio deixa o que o app gravou.
-    guardado = {c["id"]: c for c in exist}
+    if ex is not None:
+        # o mesmo "o que o banco tem" do caminho antigo, montado das exceções:
+        # tarefa já conhecida (com os números guardados, se chegou sem eles) e
+        # caso órfão, que o adotado herda com processo e NB
+        numeros = {tid: (proc, nb) for tid, proc, nb in ex["numeros"]}
+        guardado = {}
+        for k in mapa["casos"]:
+            if k.get("todo_task_id") in ja_no_banco:
+                proc, nb = numeros.get(k["todo_task_id"], (None, None))
+                guardado[k["id"]] = {"processo": proc, "nb": nb}
+        for o in exist:
+            guardado[o["id"]] = o
+        exist_por_task = {tid: trocas.get(tid) or uid("caso", tid)
+                          for tid in ex["consultar"] if tid not in novas}
+    else:
+        guardado = {c["id"]: c for c in exist}
+        exist_por_task = {c["todo_task_id"]: c["id"] for c in exist}
     resgatados = 0
     for k in mapa["casos"]:
         b = guardado.get(k["id"])
@@ -897,10 +967,15 @@ def subir_rest(mapa):
         por_caso = {k["id"]: k for k in mapa["casos"] if k["id"] in novos_escr}
         # o campos é um jsonb inteiro: sem ler o que já está lá, o PATCH
         # apagaria os dados civis e os documentos pedidos no app
+        # E2 · só o cadastro de quem tem tarefa nova no Escritório, e não o
+        # de todos os clientes (eram 280 KB a cada rodada)
         campos_banco = {}
+        afetados = sorted({k["cliente_id"] for k in por_caso.values() if k.get("cliente_id")})
         try:
-            for c in _rest_todas(url, chave, "/rest/v1/clientes?select=id,campos"):
-                campos_banco[c["id"]] = c.get("campos") or {}
+            for i in range(0, len(afetados), 100):
+                for c in _rest_todas(url, chave, "/rest/v1/clientes?select=id,campos"
+                                     f"&id=in.({','.join(afetados[i:i + 100])})"):
+                    campos_banco[c["id"]] = c.get("campos") or {}
         except BancoRecusou:
             campos_banco = None
         if campos_banco is None:
@@ -983,7 +1058,6 @@ def subir_rest(mapa):
     except BancoRecusou:
         lemb_exist = None                    # banco sem a tabela: só avisa adiante
     if lemb_exist is not None and mapa.get("lembretes"):
-        exist_por_task = {c["todo_task_id"]: c["id"] for c in exist}
         convertidos = {l["origem_caso"] for l in lemb_exist.values()
                        if l.get("origem_caso")}
         mantidos = []

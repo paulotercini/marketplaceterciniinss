@@ -118,3 +118,132 @@ test('as movimentações do 2º grau: classes com sufixo Processo', () => {
   const mv = R.lerMovimentacoesHtml(MOVS_SG);
   assert.deepStrictEqual(mv, [{ data: '2021-08-09', hora: null, texto: 'Processo Baixado', detalhe: 'Nos termos da Resolução 123/2020' }]);
 });
+
+// [02.10.2026] OS RECURSOS DENTRO DO RECURSO NO 2º GRAU. A consulta por número
+// de um processo com embargos de declaração na apelação não cai na ficha:
+// devolve a caixa "Selecione o processo", com o recurso principal e, dentro
+// dele, os incidentes. Estrutura igual à vista ao vivo; número e códigos fictícios.
+const SELECAO = `<section class="modal__lista-processos__item"> <div class="modal__lista-processos__item__header"> <div class="modal__lista-processos__item__header modal__process-choice"> <input class="custom-radio" type="radio" name="processoSelecionado" id="processoSelecionado" value="RI00ABCDE0000"> <div> <em class="modal__lista-processos__item__header modal__process-choice__number">0001234-56.2025.8.26.0368</em> <em class="modal__process-choice__instancia d-ib">2º Grau</em> <em class="modal__process-choice__instancia d-ib ml-10">Julgado</em> </div> </div> <div class="modal__lista-processos__item__header__process-info"> <div class="modal__lista-processos__item__header__process-info__content"> <div class="modal__lista-processos__item__header__process-info__content__item">Apela&ccedil;&atilde;o C&iacute;vel</div> <div class="modal__lista-processos__item__header__process-info__content__item data">20/05/2026</div> </div> </div> </div> <!-- FILHOS --> <div class="modal__lista-processos__item__body"> <div> <button class="modal__lista-processos__item__body__expand" id="btnExpand"> <span class="icon glyph glyph-chevron-down" id="toggleIcon"></span> <span class="text">Incidentes, a&ccedil;&otilde;es acidentais, recursos e execu&ccedil;&otilde;es de senten&ccedil;as(1)</span> </button> </div> <div class="list__hierarquia-dependentes" id="exibindoDependentes"> <div class="list__hierarquia-dependentes__item mt-0"> <label class="list__dependentes_row"> <input class="custom-radio" type="radio" name="processoSelecionado" id="processoSelecionado" value="RI00ABCDF12KW"> <div class="list__hierarquia-dependentes__item__label__info"> <em class="list__hierarquia-dependentes__item__label__info__title"> 50000 - Embargos de Declara&ccedil;&atilde;o C&iacute;vel (Julgado) </em> <em class="list__hierarquia-dependentes__item__label__info__data ">04/08/2026</em> </div> </label> </div> </div> </div> </section>`;
+
+test('a caixa "Selecione o processo": o recurso principal e os embargos dentro dele, cada um com o seu código', () => {
+  assert.deepStrictEqual(R.lerSelecaoHtml(SELECAO), [
+    { codigo: 'RI00ABCDE0000', classe: 'Apelação Cível', incidente: false },
+    { codigo: 'RI00ABCDF12KW', classe: 'Embargos de Declaração Cível', incidente: true }]);
+  assert.deepStrictEqual(R.lerSelecaoHtml(PAGINA), [], 'a lista da OAB não é a caixa');
+  assert.equal(R.lerFichaHtml(SELECAO), null, 'a caixa não é ficha');
+});
+
+// a ficha do recurso dentro do recurso: sem id=numeroProcesso e sem
+// containerDadosPrincipaisProcesso; cabeçalho "Recurso" + unj-larger, a
+// situação em span.unj-tag e o órgão em #orgaoJulgadorProcesso
+const FICHA_REC = `<div class="row"> <div class="col-md-13"> <!--principal --> <!-- incidente --> <span class="unj-label">Recurso</span> <div> <span class="unj-larger"> Embargos de Declara&ccedil;&atilde;o C&iacute;vel (0001234-56.2025.8.26.0368)&nbsp; </span> </div> <span class="unj-tag">Julgado</span> </div> </div>
+<div class="row"><div class="col-md-4"><span class="unj-label"> Assunto </span><div><span id="assuntoProcesso">Servidor P&uacute;blico</span></div></div>
+<div class="col-md-3"><span class="unj-label">Se&ccedil;&atilde;o</span><div><span id="secaoProcesso">Direito P&uacute;blico</span></div></div>
+<div class="col-md-3"><span class="unj-label">&Oacute;rg&atilde;o Julgador</span><div><span id="orgaoJulgadorProcesso">3&ordf; C&acirc;mara de Direito P&uacute;blico</span></div></div>
+<div class="col-md-3"><span class="unj-label">Processo Principal</span><div><a class="processoPrinc" href="/cposg/show.do?processo.codigo=RI00ABCDE0000">0001234-56.2025.8.26.0368</a></div></div></div>
+<table id="tablePartesPrincipais"><tr><td class="label"><span class="tipoDeParticipacao">Embargte:</span></td><td class="nomeParteEAdvogado">Fulana Fict&iacute;cia<br><span>Advogado:</span> Paulo Roberto Tercini Filho</td></tr>
+<tr><td class="label"><span class="tipoDeParticipacao">Embargdo:</span></td><td class="nomeParteEAdvogado">Munic&iacute;pio Fict&iacute;cio</td></tr></table>
+<div id="containerMovimentacoesAjax"></div>`;
+
+test('a ficha do recurso dentro do recurso (embargos na apelação): reconhecida, com situação, órgão e o processo principal', () => {
+  assert.ok(R.ehFicha(FICHA_REC), 'sem isto a coleta descartava os embargos');
+  const f = R.lerFichaHtml(FICHA_REC);
+  assert.equal(f.numero, '0001234-56.2025.8.26.0368');
+  assert.equal(f.classe, 'Embargos de Declaração Cível');
+  assert.equal(f.tipo, 'Recurso');
+  assert.equal(f.situacao, 'Julgado');
+  assert.equal(f.principal, '0001234-56.2025.8.26.0368');
+  assert.equal(f.orgao, '3ª Câmara de Direito Público');
+  assert.equal(f.partes, 'Embargte Fulana Fictícia X Embargdo Município Fictício');
+});
+
+// [02.10.2026] A RODADA INTEIRA, com o e-SAJ fingido: o esaj.js roda num
+// contexto à parte, com fetch, favoritos e a fila do CRM de mentira. Prova que
+// o número com apelação vai à consulta por número no 2º grau, que os embargos
+// da caixa "Selecione o processo" entram na coleta com código, processo
+// principal e as cinco movimentações, e que a apelação não é lida duas vezes.
+const vm = require('vm');
+const fs = require('fs');
+const path = require('path');
+const NUM = '0001234-56.2025.8.26.0368', AP = 'RI00ABCDE0000', ED = 'RI00ABCDF12KW', PG = 'PG00ABCDE0000', CS = 'PG00ABCDE0001';
+// o bloco de incidentes da ficha do 1º grau, como visto ao vivo em 03.10.2026
+const BLOCO_INC = `<h2 class="subtitle tituloDoBloco">Incidentes, a&ccedil;&otilde;es incidentais, recursos e execu&ccedil;&otilde;es de senten&ccedil;as</h2>
+<table><tr class="label"><th>Recebido em</th><th class="label">Classe</th></tr><tr class="fundoClaro"><td>05/01/2026</td>
+<td><a class="incidente" href="/cpopg/show.do?processo.codigo=${CS}&amp;processo.foro=368" target="_top"> Cumprimento de Senten&ccedil;a contra a Fazenda P&uacute;blica &nbsp;(${NUM}) </a></td></tr></table>`;
+
+test('os incidentes listados na ficha: código e classe, sem o número', () => {
+  assert.deepStrictEqual(R.lerIncidentesFicha(BLOCO_INC + BLOCO_INC),
+    [{ codigo: CS, classe: 'Cumprimento de Sentença contra a Fazenda Pública' }]);
+  assert.deepStrictEqual(R.lerIncidentesFicha(FICHA), []);
+});
+const movs = (sg, n) => `<tbody>${Array.from({ length: n }, (_, i) => `<tr class="containerMovimentacao"><td class="dataMovimentacao${sg ? 'Processo' : ''}">0${i + 1}/09/2026</td><td></td><td class="descricaoMovimentacao${sg ? 'Processo' : ''}">Movimento ${i + 1}</td></tr>`).join('')}</tbody>`;
+const ficha = (situacao, extra = '') => `<span id="numeroProcesso">${NUM}</span><span id="labelSituacaoProcesso" class="unj-tag">${situacao}</span><span id="classeProcesso">Apela&ccedil;&atilde;o C&iacute;vel</span>${extra}`;
+function rodada(favoritos, situacao1g) {
+  const pedidos = [], enviados = [];
+  const responde = (url, html) => ({ ok: true, status: 200, url, text: async () => html, json: async () => JSON.parse(html) });
+  const fetch = async u => {
+    const url = 'https://esaj.tjsp.jus.br' + u;
+    pedidos.push(u);
+    if (u.startsWith('/tarefas-adv/')) return responde(url, '{"oabs":[{"stringOab":"331110SP"}]}');
+    if (/NUMOAB/.test(u)) return responde(url, '<p>Não existem informações disponíveis para os parâmetros informados.</p>');
+    if (/^\/cpopg\/search\.do.*NUMPROC/.test(u)) return responde(`https://esaj.tjsp.jus.br/cpopg/show.do?processo.codigo=${PG}`, ficha(situacao1g, BLOCO_INC));
+    if (u.startsWith(`/cpopg/show.do?processo.codigo=${CS}`)) return responde(url, FICHA_INC.replace(/0000035-73\.2026\.8\.26\.0381/g, NUM));
+    if (/^\/cposg\/search\.do.*NUMPROC/.test(u)) return responde(url, SELECAO.replace(/0001234-56\.2025\.8\.26\.0368/g, NUM));
+    if (u.startsWith(`/cposg/show.do?processo.codigo=${AP}`)) return responde(url, ficha('Julgado'));
+    if (u.startsWith(`/cposg/show.do?processo.codigo=${ED}`)) return responde(url, FICHA_REC);
+    if (u.startsWith('/cposg/carregarMovimentacoesAjax.do')) return responde(url, movs(true, u.endsWith(ED) ? 6 : 2));
+    if (u.startsWith('/cpopg/carregarMovimentacoesAjax.do')) return responde(url, movs(false, 1));
+    throw new Error('pedido inesperado ' + u);
+  };
+  const nada = () => {};
+  const ctx = { location: { host: 'esaj.tjsp.jus.br' }, fetch, ESAJ_REGRAS: R, Math, Date, Promise,
+    setTimeout: f => { f(); return 0; }, faixa: nada, faixaOk: nada, faixaErr: nada, someFaixa: nada,
+    chrome: { storage: { local: { get: async () => ({}), set: async () => {} } } },
+    CRM: { favoritosEsaj: async () => ({ favoritos }), processosTjsp: async () => ({ numeros: [NUM], fichas: 1 }),
+           enviar: async (fonte, dados) => { enviados.push(dados); return true; } } };
+  ctx.window = ctx; ctx.top = ctx;           // o quadro de cima: num iframe o coletor não sobe
+  vm.createContext(ctx);
+  vm.runInContext(fs.readFileSync(path.join(__dirname, '..', 'esaj.js'), 'utf8'), ctx);
+  // o JSON tira os objetos do outro contexto (outro Object), que o
+  // deepStrictEqual não aceita como iguais
+  return ctx.window.crmRodar().then(r => JSON.parse(JSON.stringify({ r, pedidos, enviados })));
+}
+
+test('rodada: a apelação dos favoritos leva aos embargos, que entram com código, principal e cinco movimentações', async () => {
+  const { r, pedidos, enviados } = await rodada([{ numero: NUM, grau: '2º grau', codigo: AP, foro: null }], null);
+  assert.deepStrictEqual(r, { ok: 2, falhas: 0 });
+  assert.equal(enviados.length, 1);
+  const [sg] = enviados;
+  assert.equal(sg.grau, '2º grau');
+  const [ap, ed] = sg.processos;
+  assert.equal(ap.codigo, AP);
+  assert.equal(ed.codigo, ED);
+  assert.equal(ed.numero, NUM);
+  assert.equal(ed.principal, NUM);
+  assert.equal(ed.tipo, 'Recurso');
+  assert.equal(ed.classe, 'Embargos de Declaração Cível');
+  assert.equal(ed.movimentos.length, 5, 'as cinco mais recentes, não as seis');
+  assert.deepStrictEqual(ed.movimento, ed.movimentos[0]);
+  assert.deepStrictEqual(ed.movimentos[0], { data: '2026-09-01', hora: '00:00', texto: 'Movimento 1' });
+  assert.equal(pedidos.filter(u => u.startsWith(`/cposg/show.do?processo.codigo=${AP}`)).length, 1, 'a apelação não é lida duas vezes');
+  assert.equal(pedidos.filter(u => /^\/cposg\/search\.do.*NUMPROC/.test(u)).length, 1);
+});
+
+test('rodada: o 1º grau "em grau de recurso" sem favorito no 2º grau leva à apelação e aos embargos', async () => {
+  const { r, enviados } = await rodada([], 'Em grau de recurso');
+  assert.deepStrictEqual(r, { ok: 4, falhas: 0 });
+  assert.deepStrictEqual(enviados.map(e => [e.grau, e.processos.map(p => p.codigo).join(',')]),
+    [['1º grau', `${PG},${CS}`], ['2º grau', `${AP},${ED}`]]);
+  const cs = enviados[0].processos[1];
+  assert.equal(cs.principal, NUM, 'o cumprimento listado na ficha entra com o processo principal');
+  assert.equal(cs.tipo, 'Incidente');
+  assert.equal(enviados[0].parcial, false);
+  assert.equal(enviados[0].pulados, 0);
+});
+
+test('rodada: o 1º grau que não está em recurso não faz consulta no 2º grau', async () => {
+  const { pedidos, enviados } = await rodada([], 'Em andamento');
+  assert.equal(pedidos.filter(u => u.startsWith('/cposg/') && /NUMPROC/.test(u)).length, 0);
+  assert.deepStrictEqual(enviados.map(e => e.grau), ['1º grau']);
+  assert.equal(pedidos.filter(u => u.startsWith(`/cpopg/show.do?processo.codigo=${CS}`)).length, 1, 'o cumprimento da ficha é lido uma vez');
+});

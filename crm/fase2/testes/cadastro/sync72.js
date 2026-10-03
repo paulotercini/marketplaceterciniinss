@@ -49,7 +49,11 @@ FIX.config_app = [{ chave: "gh_token", valor: "ghp_ficticio" },
           { id: 9902, status: "completed", conclusion: "failure", event: "schedule",
             created_at: "2026-08-24T11:00:00Z", html_url: "https://github.com/x/2" },
           { id: 9901, status: "completed", conclusion: "success", event: "workflow_dispatch",
-            created_at: "2026-08-24T10:00:00Z", html_url: "https://github.com/x/3" }] }) });
+            created_at: "2026-08-24T10:00:00Z", html_url: "https://github.com/x/3" },
+          // E3 · o nome da rodada (run-name) diz quem disparou
+          { id: 9900, status: "completed", conclusion: "success", event: "workflow_dispatch",
+            name: "CRM — sincronização To Do → banco", display_title: "rodada automática",
+            created_at: "2026-08-24T09:50:00Z", html_url: "https://github.com/x/4" }] }) });
     return rota.fulfill({ status: 404, body: "?" });
   });
   await ctx.route(SUPA + "/**", rota => {
@@ -82,8 +86,8 @@ FIX.config_app = [{ chave: "gh_token", valor: "ghp_ficticio" },
   conf("a caixa lista as rodadas com verde e vermelha",
     await p.evaluate(() => { const c = document.querySelector(".modal-cx") || document.body;
       const t = c.textContent; return /Rodadas da sincronização/.test(t) &&
-        /🟢/.test(t) && /🔴/.test(t) && /rodada de hora em hora/.test(t) &&
-        /disparo manual/.test(t); }));
+        /🟢/.test(t) && /🔴/.test(t) && /rodada de reserva do GitHub/.test(t) &&
+        /disparo manual/.test(t) && /rodada automática/.test(t); }));
   conf("a falha oferece o 'qual passo falhou?' e a dica do token do Graph",
     await p.evaluate(() => { const t = document.body.textContent;
       return /qual passo falhou\?/.test(t) && /GRAPH_REFRESH_TOKEN/.test(t); }));

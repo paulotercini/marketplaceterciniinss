@@ -317,6 +317,8 @@ def test_remapeamento_enxerga_alem_da_primeira_pagina(monkeypatch):
     postados = []
 
     def falso_rest(url, chave, metodo, caminho, corpo=None, prefer=None):
+        if "/rpc/" in caminho:
+            return None          # banco sem a função do E2: é o caminho antigo que se testa aqui
         if metodo != "GET":
             postados.extend(corpo)
             return
@@ -889,3 +891,153 @@ def test_mudanca_de_lista_ainda_e_reconhecida_com_o_titulo_antigo():
         minimo_seguro=1)
     assert (ado, encerrar) == (1, [])
     assert m["casos"][0]["id"] == "caso-velho"
+
+
+# ── E2 · a rodada pergunta ao banco só as exceções (29.09.2026) ─────────────
+# O plano gratuito do Supabase tem 5 GB de tráfego por mês, e a rodada baixava
+# a carteira inteira de casos e o CPF de todos os clientes (1,2 MB) para
+# remapear ids, reconhecer mudança de lista e preservar processo/NB. A função
+# crm_sync_existentes devolve só as exceções. As provas abaixo rodam a MESMA
+# carteira pelos dois caminhos e exigem o mesmo resultado, byte a byte.
+
+def _banco_e2(casos, clientes, campos=None, lembretes=(), rpc=True, log=None):
+    """Banco falso com a função do E2 (rpc=True) ou sem ela (caminho antigo).
+    A função falsa segue a mesma regra do SQL de schema_sync_leve.sql."""
+    enviados, patches = {}, {}
+
+    def falso(url, chave, metodo, caminho, corpo=None, prefer=None):
+        tabela = caminho.split("?")[0].rsplit("/", 1)[-1]
+        if log is not None:
+            log.append((metodo, caminho, corpo if "/rpc/" in caminho else None))
+        if "/rpc/" in caminho:
+            if not rpc:
+                raise migrar.BancoRecusou("o banco recusou POST em 'crm_sync_existentes' (404): PGRST202")
+            vivos, semnum = set(corpo["vivos"]), set(corpo["sem_numero"])
+            pedidas = vivos | set(corpo["consultar"])
+            ks = [c for c in casos if c.get("todo_task_id")]
+            return {
+                "clientes": [[c["cpf"].strip(), c["id"]] for c in clientes
+                             if (c.get("cpf") or "").strip()
+                             and c["id"] != migrar.uid("cliente", "cpf", c["cpf"].strip())],
+                "trocas": [[c["todo_task_id"], c["id"]] for c in ks if c["todo_task_id"] in pedidas
+                           and c["id"] != migrar.uid("caso", c["todo_task_id"])],
+                "novas": sorted(p for p in pedidas if not any(c["todo_task_id"] == p for c in ks)),
+                "orfaos": [dict(c) for c in ks
+                           if c.get("fase") != "encerrado" and c["todo_task_id"] not in vivos],
+                "numeros": [[c["todo_task_id"], c.get("processo"), c.get("nb")] for c in ks
+                            if c["todo_task_id"] in semnum and (c.get("processo") or c.get("nb"))],
+            }
+        if metodo == "GET":
+            if tabela == "casos" and "todo_task_id=not.is.null" in caminho and "aposentadoria" not in caminho:
+                return [dict(c) for c in casos if c.get("todo_task_id")]
+            if tabela == "clientes" and "cpf=not.is.null" in caminho:
+                return [dict(c) for c in clientes if c.get("cpf")]
+            if tabela == "clientes" and "campos" in caminho:
+                ids = caminho.split("id=in.(")[1].split(")")[0].split(",") if "id=in.(" in caminho else None
+                return [{"id": i, "campos": v} for i, v in (campos or {}).items() if ids is None or i in ids]
+            if tabela == "lembretes":
+                return [dict(l) for l in lembretes]
+            return []
+        if metodo == "PATCH" and tabela == "clientes":
+            patches[caminho.split("id=eq.")[-1]] = corpo
+            return None
+        if isinstance(corpo, list):
+            enviados.setdefault(tabela, []).extend(corpo)
+        return None
+    return falso, enviados, patches
+
+
+def _carteira_e2():
+    tarefas = [
+        # cliente cadastrado no app (id fora do padrão) com caso criado no app
+        t("👪 Judicial", "Fulana #00000000191", cpf="00000000191", id="jud"),
+        # mudou de lista no To Do: tarefa nova, caso antigo órfão no banco
+        t("🖥 Conselho de Recursos", "Beltrano #00000000272", cpf="00000000272", id="nova-cons",
+          andamentos=[{"data": "2026-09-20", "inicial": "P", "autor": "Paulo",
+                       "texto": "Recurso protocolado."}]),
+        # Pagamentos e Escritório novos: não viram caso
+        t("💵 Pagamentos", "Fulana #00000000191", cpf="00000000191", id="pg",
+          checklist=[{"id": "i1", "texto": "1ª parcela 500", "feito": False}]),
+        t("🙋 Escritório", "Ciclana #00000000353", cpf="00000000353", id="esc",
+          andamentos=[{"data": "2026-09-21", "inicial": "A", "autor": "Amanda",
+                       "texto": "Pedimos a certidão."}]),
+        # 🙏 cujo caso antigo já virou lembrete à mão
+        t("🙏 Aposentadorias Futuras", "Dirceu #00000000434", cpf="00000000434", id="apf"),
+    ]
+    m = migrar.mapear(crm_json(tarefas))
+    cli_b = migrar.uid("cliente", "cpf", "00000000272")
+    casos = [
+        {"id": "caso-app", "todo_task_id": "jud", "cliente_id": "cli-app", "titulo": "Fulana",
+         "fase": "judicial", "processo": "0001234-56.2026.8.26.0368", "nb": None},
+        {"id": "caso-velho", "todo_task_id": "antiga", "cliente_id": cli_b, "titulo": "Beltrano",
+         "fase": "inss", "processo": None, "nb": "1234567890"},
+        {"id": migrar.uid("caso", "apf"), "todo_task_id": "apf", "cliente_id": "cli-d",
+         "titulo": "Dirceu", "fase": "aposentadoria_futura", "processo": None, "nb": None},
+        {"id": "encerrado-x", "todo_task_id": "sumiu-faz-tempo", "cliente_id": "cli-z",
+         "titulo": "Zé", "fase": "encerrado", "processo": None, "nb": None},
+    ]
+    clientes = [{"id": "cli-app", "cpf": "00000000191"},
+                {"id": cli_b, "cpf": "00000000272"}]
+    cli_c = migrar.uid("cliente", "cpf", "00000000353")
+    campos = {cli_c: {"civil": {"rg": "12.345.678-9"}},
+              "cli-de-fora": {"civil": {"rg": "não deveria ser lido"}}}
+    lembretes = [{"id": "lemb-mao", "titulo": "Aposentadoria", "proximo_em": None,
+                  "intervalo_meses": None, "ativo": True, "responsavel_id": None,
+                  "origem_caso": migrar.uid("caso", "apf")}]
+    return m, casos, clientes, campos, lembretes
+
+
+def _roda_e2(monkeypatch, rpc):
+    import copy, json
+    m, casos, clientes, campos, lembretes = _carteira_e2()
+    log = []
+    falso, enviados, patches = _banco_e2(casos, clientes, campos, lembretes, rpc=rpc, log=log)
+    monkeypatch.setattr(migrar, "_rest", falso)
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_KEY", "chave")
+    monkeypatch.setattr(migrar, "anti_eco", lambda a, b: a)
+    monkeypatch.setattr(migrar, "tarefas_docs_de", lambda a: [])
+    migrar.subir_rest(copy.deepcopy(m))
+    ordena = lambda xs: sorted(json.dumps(x, sort_keys=True, ensure_ascii=False) for x in xs)
+    return {k: ordena(v) for k, v in enviados.items() if k != "config_app"}, patches, log
+
+
+def test_e2_o_caminho_leve_grava_exatamente_o_mesmo_que_o_antigo(monkeypatch):
+    antigo, p_antigo, _ = _roda_e2(monkeypatch, rpc=False)
+    leve, p_leve, _ = _roda_e2(monkeypatch, rpc=True)
+    assert leve == antigo, "o caminho leve gravou diferente do antigo"
+    assert p_leve == p_antigo, "o cadastro do Escritório saiu diferente"
+
+
+def test_e2_preserva_o_que_o_caminho_antigo_preservava(monkeypatch):
+    import json
+    leve, patches, _ = _roda_e2(monkeypatch, rpc=True)
+    casos = {c["todo_task_id"]: c for c in map(json.loads, leve["casos"])}
+    # caso criado no app: mantém o id e ganha de volta o processo do banco
+    assert casos["jud"]["id"] == "caso-app"
+    assert casos["jud"]["processo"] == "0001234-56.2026.8.26.0368", "o processo do banco foi apagado"
+    assert casos["jud"]["cliente_id"] == "cli-app", "o cliente do app foi duplicado"
+    # mudança de lista: o caso novo assume o antigo e leva o NB dele
+    assert casos["nova-cons"]["id"] == "caso-velho"
+    assert casos["nova-cons"]["nb"] == "1234567890", "o NB do caso antigo se perdeu na mudança de lista"
+    # Pagamentos e Escritório novos continuam sem virar caso
+    assert "pg" not in casos and "esc" not in casos
+    # 🙏 convertido à mão não ganha um segundo lembrete
+    assert not leve.get("lembretes"), "nasceu lembrete em duplicidade"
+    # o Escritório não apagou os dados civis do cadastro
+    (campos,) = patches.values()
+    assert campos["campos"]["civil"]["rg"] == "12.345.678-9"
+
+
+def test_e2_nao_baixa_a_carteira_inteira(monkeypatch):
+    _, _, log = _roda_e2(monkeypatch, rpc=True)
+    gets = [c for met, c, _ in log if met == "GET"]
+    assert not any("/casos?todo_task_id=not.is.null&select=id,todo_task_id" in c for c in gets), \
+        "ainda baixou todos os casos"
+    assert not any("/clientes?cpf=not.is.null" in c for c in gets), "ainda baixou o CPF de todos"
+    (campos_get,) = [c for c in gets if "/clientes?select=id,campos" in c]
+    assert "id=in.(" in campos_get, "o cadastro de todos os clientes voltou a ser lido"
+    (pedido,) = [corpo for met, c, corpo in log if "/rpc/" in c]
+    assert set(pedido["vivos"]) == {"jud", "nova-cons", "pg", "esc"}
+    assert pedido["consultar"] == ["apf"]
+    assert set(pedido["sem_numero"]) == {"jud", "nova-cons", "pg", "esc"}

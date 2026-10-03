@@ -1,5 +1,38 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## Extensão 1.12.0 · checagem completa (03.10.2026)
+
+Pedida pelo Paulo. Lido todo o código da extensão e a fila `coletas` ao vivo. Erros e correções, na mesma 1.12.0 (ainda não publicada):
+
+1. **Cumprimento de sentença fora dos favoritos não era lido.** No 1º grau a consulta por número cai direto na ficha do principal; o cumprimento e a RPV só aparecem no bloco "Incidentes" da ficha (`a.incidente`, conferido ao vivo). `lerIncidentesFicha()` lê o bloco e `esaj.js` põe os códigos no fim da fila da rodada. Prova no harness (`rodada` em esaj-regras.test.js).
+2. **Entrega sem segunda chance.** `enviar()` falhava à primeira queda de rede ou 5xx e perdia minutos de leitura; agora três tentativas com pausa (4xx continua erro na hora).
+3. **e-Recursos consultava os dois sistemas para todo recurso**, mesmo depois de achar; agora o sistema que listou o acervo vem primeiro e a consulta para no acerto. Metade das chamadas e das pausas. Prova: testes/crps.test.js.
+4. **`esaj.js` e `crps.js` sem a guarda do quadro de cima** que `pje.js` e `eproc.js` têm; a reinjeção do fundo vai a todos os frames. Guarda posta; `crps.js` passou a marcar `__crmColetorNoAr` (o "testar a página" dizia que o coletor não subiu).
+5. **`parcial` sempre verdadeiro no e-SAJ** porque o modo rápido pula arquivados (46 de 46 coletas). Agora `parcial` é só falha; `pulados` vai à parte.
+6. **Versão instalada sem aviso.** O popup compara a versão instalada com o manifesto da `main` no GitHub e avisa quando difere (o PC ficou na 1.11 sem ninguém saber).
+7. **`coletas` cresce sem fim** (25 MB em dois meses, 220 KB por coleta do e-Recursos): pg_cron `faxina-coletas` em `schema_carga_incremental.sql` apaga aplicada há mais de 30 dias.
+
+Conferido e sem defeito: PJe (retomada, modo rápido), eproc, PAT, crachá do Supabase (nenhum POST recusado em 24 h nos logs), favoritos. Fica para depois: a chave do arquivado no e-SAJ é por número, e incidente com o mesmo número herda a marca do principal (sem efeito hoje, porque incidente vem sem situação).
+
+## F158 · versão 10.62 · extensão 1.12.0 · recursos dentro do recurso no e-SAJ (02.10.2026)
+
+Motivo: o julgamento dos embargos de declaração na apelação de um caso (01/10, "Julgado virtualmente, rejeitaram os embargos") não chegou ao CRM. No 2º grau, os embargos e o agravo interno têm o MESMO número da apelação e código próprio, e só aparecem na consulta por número, na caixa "Selecione o processo" (`input[name=processoSelecionado]`, os de dentro em `.list__hierarquia-dependentes`). A ficha deles não tem `#numeroProcesso` nem `#containerDadosPrincipaisProcesso`, e a extensão entregava só o último movimento de cada processo.
+
+Extensão 1.12.0: `esaj-regras.js` ganha `lerSelecaoHtml()` (código, classe, incidente) e `ehFicha()` reconhece `#tablePartesPrincipais`, com a situação em `span.unj-tag`; `esaj.js` ganha `lerRecursosDoNumero()`, que consulta por número no 2º grau todo número lido no 2º grau ou com o 1º grau "em grau de recurso" e lê os códigos ainda não lidos, e cada processo leva `movimentos` (as cinco mais recentes). CRM: `conferirPje()` trata embargos de declaração e agravo interno como incidente (chave `mov:<número>:<código>:…`), grava de `movimentos` o que não conhece desde `ultimasDatasPje()` (sem histórico, os últimos 7 dias; a mais recente sempre), e incidente não preenche classe, ajuizamento, órgão nem link da ficha. Conferido ao vivo no e-SAJ com as regras novas (caixa com 2 códigos, as duas fichas lidas, 5 movimentações dos embargos). Provas: testes/cadastro/esaj158.js e extensao/testes/esaj-regras.test.js (rodada inteira com o e-SAJ fingido).
+
+## F157 · versão 10.61 · tráfego do Supabase, sincronização a cada 10 min e auditoria (29.09.2026)
+
+Motivo: a organização do Supabase (plano gratuito, 5 GB de tráfego de saída por mês) gastou 10,19 GB no ciclo iniciado em 02/09/2026, com tolerância até 29/09/2026. Cada abertura do CRM baixava ~18 MB (casos 11,8 MB, metade em `datajud`, `datajud_multi` e `crps`), cerca de 1.030 cargas desde 02/08. O Supabase mede o tráfego antes da compressão do Cloudflare. Quatro partes, cada uma com seu SQL, aplicado na publicação:
+
+1. **E1 · carga incremental** (`schema_carga_incremental.sql`). `mudou_em` nas seis tabelas grandes, com `a_sem_mudanca` (`suppress_redundant_updates_trigger`, a regravação idêntica da sincronização não conta) antes de `b_mudou_em`; `apagados` (tabela, id, em) por gatilho de DELETE; `toca_lembrete` (aviso novo muda o lembrete); pg_cron `faxina-apagados`. No CRM, `INCREMENTAIS`, `cargaIncremental()` com 2 min de folga (o carimbo é o início da gravação), `D._marcas`/`D._cheiaEm` guardados na sessão do IndexedDB, carga completa semanal, e `vigiarMudancas()` a cada 3 min (`carregar({leve})` nunca faz carga completa; `telaOcupada()` espera ficha, caixa, foco e texto não gravado). Sem `mudou_em` no banco, tudo segue como antes. Prova: incremental_e1.js.
+2. **E2 · sincronização leve** (`schema_sync_leve.sql`). `crm_sync_existentes(vivos, consultar, sem_numero)` devolve só clientes e casos com id fora do padrão (uuid5 igual ao do migrar), tarefas novas, órfãos (com processo/NB) e números a preservar; `migrar.existentes_no_banco()` monta com isso o mesmo `guardado`/`exist_por_task` do caminho antigo, que continua de reserva. O `campos` do Escritório só dos clientes afetados. Prova: test_crm_fase2.py (`test_e2_*`, os dois caminhos gravam igual).
+3. **E3 · disparo a cada 10 min** (`schema_disparo.sql`, só depois do crm-sync.yml novo na main). `disparar_sync_todo(auditar)` lê `gh_token` dentro do banco e chama o `workflow_dispatch` com `origem`/`auditar`; guarda em `config_app.sync_disparo` o status do disparo anterior. pg_cron `sync-todo-10min` (`*/10 10-23 * * *` UTC) e `auditoria-todo` (06h50). O agendamento do GitHub fica como reserva; `run-name` diz quem disparou. No CRM, `syncAtrasada()` (âmbar com 25 min no horário) e `problemaDisparo()` (⚠ para o admin).
+4. **E4 · auditoria** (`schema_auditoria.sql`, `crm/auditoria_todo.py`). `crm_auditoria_extrato()` manda marcas md5 de 10 caracteres (dia|texto, título); `comparar()` usa o `migrar.mapear()` como régua e grava `todo_auditoria` (tipos em `TIPOS_AUDITORIA`) e o resumo em `config_app.auditoria_todo`. Tela `renderAuditoria()` no menu da conta (admin), linhas só da lista aberta, botão "auditar agora". Provas: test_auditoria_todo.py e auditoria_e4.js.
+
+## F156 · versão 10.60 · papel de cada processo e escolha do principal (29.09.2026)
+
+Cada item de `casos.processos` pode ter `papel` ("acao", "ms" ou "cumprimento"). Sem escolha, `processosDoCaso()` lê o papel da classe (`papelDaClasse`: rótulo do incidente, classe do DataJud do número ou `classe_judicial` do principal). O quadro `gerenciaProcessos()` mostra o seletor Ação · MS · Cumprimento e o botão "tornar principal". `salvarProcessos(casoId, lista, principalNum)` mantém o principal atual enquanto ele for nosso e acompanhado; ao trocar, guarda `classe/orgao/ajuizado` da ficha no número antigo e traz os do novo (ou vazio, com `datajud` tirado de `datajud_multi`). `trilhaParalela()` passa a achar o MS pelo papel. Prova: testes/cadastro/papel156.js.
+
 ## F153 · versão 10.57 · passo a passo do colaborador novo (27.09.2026)
 
 `passoColaboradorAgenda()` entra no `cardLigarAgenda()` só para o admin: roteiro de `adicionarColaborador`, `revogarColaborador` e `listarColaboradores` do Code.gs, com link direto para o projeto do Apps Script (`AGENDA_SCRIPT_EDITOR`). Implantação real: projeto 1cfpCFF…, versão 1, URL em `AGENDA_URL_PADRAO`.

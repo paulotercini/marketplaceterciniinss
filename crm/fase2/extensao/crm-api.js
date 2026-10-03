@@ -105,15 +105,25 @@ async function fetchTeimoso(url, opts) {
 }
 
 // uma coleta = uma linha na fila. O CRM decide o que fazer com ela.
+// [03.10.2026] a coleta é o produto de minutos de leitura do portal: queda
+// de rede ou 5xx na entrega não pode jogá-la fora — três tentativas, com
+// pausa. Recusa de verdade (4xx) continua sendo erro na hora.
 export async function enviar(fonte, dados) {
   const { url } = await config();
-  const r = await fetchTeimoso(`${url}/rest/v1/coletas`, {
-    method: 'POST',
-    headers: { ...await cabecalhos(), Prefer: 'return=minimal' },
-    body: JSON.stringify({ fonte, dados }),
-  });
-  if (!r.ok) throw new Error(`o CRM recusou (${r.status}): ${(await r.text()).slice(0, 120)}`);
-  return true;
+  const corpo = JSON.stringify({ fonte, dados });
+  for (let tent = 0; ; tent++) {
+    let r;
+    try {
+      r = await fetchTeimoso(`${url}/rest/v1/coletas`, {
+        method: 'POST', headers: { ...await cabecalhos(), Prefer: 'return=minimal' }, body: corpo });
+    } catch (e) {
+      if (tent >= 2) throw new Error(`não consegui entregar ao CRM (${e.message || e})`);
+      await new Promise(res => setTimeout(res, 5000 * (tent + 1))); continue;
+    }
+    if (r.ok) return true;
+    if (r.status < 500 || tent >= 2) throw new Error(`o CRM recusou (${r.status}): ${(await r.text()).slice(0, 120)}`);
+    await new Promise(res => setTimeout(res, 5000 * (tent + 1)));
+  }
 }
 
 // Os processos que o CRM quer que sejam consultados no e-Recursos.
