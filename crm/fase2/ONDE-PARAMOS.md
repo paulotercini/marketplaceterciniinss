@@ -1,5 +1,9 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F159 · versão 10.63 · o próximo passo sai do movimento (03.10.2026)
+
+Pedido do Paulo depois da comparação com o GoJus: ligar a tarefa ao andamento que a motivou e dar cabeçalho ao andamento judicial. O elo já existia (`responde_a` + `andamento_tarefas`, o 📌 dar seguimento, o carimbo `[PRAZO]` e o catálogo F92); o que faltava era o movimento alimentar o 📌 e mostrar o que já se fez a partir dele. `movimentoJudicial(texto)` lê fonte, ato, data e número do texto da coleta (591 de 591 andamentos `pje` dos últimos 30 dias casam); `proximoPassoDoMovimento()` escolhe o item do catálogo pelo ato (sentença → recurso inominado no JEF ou apelação; acórdão, "Julgado virtualmente" e "Deliberado em Sessão - Julgado - Mérito" → embargos; laudo → manifestação; contestação → réplica; contrarrazões; emenda; "prazo de N dias"; "Prazo: dd/mm/aaaa" vira data fatal direta; "Cumprimento de Sentença Iniciada" não é sentença). `abrirSeguimento()` pré-preenche "intimado em" com a data do movimento, o catálogo, a data fatal e o passo, com a linha "💡 sugerido pelo movimento"; nada grava sem o clique. `seguimentoHtml(filhos)` resume os filhos (`responde_a`) do movimento, prazo do carimbo e tarefas de quem, na `caixaPje` (aba Judicial, de `D._andsFicha`) e em `linhaNovidade` (uma consulta das não lidas por `responde_a=in`, cache `segNovidades`). Prova: testes/cadastro/prazo159.js. O fumaca.js passou a esperar a carga (`D.cliPorId`), corrida antiga.
+
 ## Extensão 1.12.0 · checagem completa (03.10.2026)
 
 Pedida pelo Paulo. Lido todo o código da extensão e a fila `coletas` ao vivo. Erros e correções, na mesma 1.12.0 (ainda não publicada):
