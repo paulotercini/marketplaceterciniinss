@@ -106,12 +106,12 @@ O STF sustenta que ED não servem para corrigir suposto error in judicando, apen
 Embargos de declaração opostos com fundamento em contradição EXTERNA acarretam.
 
 1. **Rejeição liminar dos embargos.**
-2. **Não interrompem o prazo do recurso seguinte** (art. 1.026 CPC, parágrafos sobre embargos protelatórios). No CRPS, a oposição tempestiva interrompe os prazos (art. 92, §3º). Os novos embargos que repitam fundamentos já apreciados são tidos por protelatórios e não interrompem os prazos (art. 92, §10, do RICRPS) (auditoria 03/10/2026).
+2. **Limite à reiteração.** Na via judicial, os embargos interrompem o prazo do recurso seguinte (art. 1.026, caput, do CPC), mas não se admitem novos embargos se os dois anteriores foram considerados protelatórios (art. 1.026, §4º) (auditoria 03/10/2026). No CRPS, a oposição tempestiva interrompe os prazos (art. 92, §3º). Os novos embargos que repitam fundamentos já apreciados são tidos por protelatórios e não interrompem os prazos (art. 92, §10, do RICRPS) (auditoria 03/10/2026).
 3. **Multa por embargos protelatórios** (art. 1.026 §2º CPC) - até 2% sobre o valor atualizado da causa, com agravamento para até 10% na reiteração. Só na via judicial, pois o RICRPS não prevê multa (auditoria 03/10/2026).
 4. **Caracterização de litigância de má-fé** (art. 80 CPC; no CRPS, art. 70, VI e VII, do RICRPS) (auditoria 03/10/2026).
 5. **Pode contar contra o segurado** em outros pleitos.
 
-Em ações previdenciárias com isenção de custas (art. 129 par. único Lei 8.213/91), a multa por embargos protelatórios NÃO É afastada, embora os honorários sucumbenciais sim.
+Nas ações acidentárias, cujo procedimento judicial é isento de custas e de verbas de sucumbência (art. 129, parágrafo único, da Lei 8.213/91), a multa por embargos protelatórios NÃO É afastada, embora os honorários sucumbenciais sim. A isenção alcança só esse procedimento judicial acidentário, e não as demais ações previdenciárias (auditoria 03/10/2026).
 
 ## ESTRATÉGIA PRÓ-SEGURADO
 

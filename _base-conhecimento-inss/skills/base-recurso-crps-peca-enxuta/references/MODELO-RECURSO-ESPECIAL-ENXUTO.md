@@ -109,7 +109,7 @@ OAB/SP 331.110
 **Vedações específicas.**
 
 - Vedado repetir o recurso ordinário: atacar os fundamentos do acórdão da JR. O reexame de fatos e provas é admitido, pois o recurso devolve o conhecimento integral da causa (art. 90, §1º) (auditoria 03/10/2026).
-- Vedado usar jurisprudência judicial como paradigma. Os paradigmas válidos no CRPS são acórdãos do próprio CRPS, enunciados, súmulas e pareceres vinculantes.
+- Jurisprudência judicial não é vedada. O art. 109 do RICRPS manda observar as decisões do STF em controle concentrado, transitadas em julgado, e as súmulas vinculantes (§2º), e permite observar os temas de repercussão geral transitados em julgado, os repetitivos, IAC e IRDR do STJ e as súmulas dos dois tribunais, nas condições dos §§3º e 4º. Acórdão do próprio CRPS como paradigma de divergência é requisito do Pedido de Uniformização de Jurisprudência (art. 122), não do recurso especial (auditoria 03/10/2026).
 
 **Integração obrigatória com.**
 

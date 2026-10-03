@@ -4,9 +4,9 @@
 
 ### ADI 3772 STF
 
-Funções de magistério.
+Funções de magistério. Julgamento em 29/10/2008, procedência parcial com interpretação conforme ao art. 1º da Lei 11.301/2006. Tese da ementa: "As funções de direção, coordenação e assessoramento pedagógico integram a carreira do magistério, desde que exercidos, em estabelecimentos de ensino básico, por professores de carreira, excluídos os especialistas em educação, fazendo jus aqueles que as desempenham ao regime especial de aposentadoria estabelecido nos arts. 40, § 5º, e 201, § 8º, da Constituição Federal." (auditoria 03/10/2026)
 
-Fonte oficial em https://portal.stf.jus.br
+Fonte oficial em https://portal.stf.jus.br/processos/detalhe.asp?incidente=2399227
 
 ### Tema 1011 STJ
 

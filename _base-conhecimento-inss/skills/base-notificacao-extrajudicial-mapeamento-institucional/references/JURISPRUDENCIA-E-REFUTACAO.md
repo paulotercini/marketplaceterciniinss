@@ -74,7 +74,7 @@ Art. 26. Comportamento do impetrado.
 
 ## 8. Competência
 
-A Justiça Federal é competente para causas em que o INSS seja parte (CF, art. 109, I). A Súmula 376 STJ não rege o tema, pois cuida do MS contra ato de juizado especial (auditoria 03/10/2026). Foro do domicílio do autor (CF art. 109, §2º) ou do domicílio funcional da autoridade coatora (Lei 12.016/2009, art. 2º).
+A Justiça Federal é competente para causas em que o INSS seja parte (CF, art. 109, I). A Súmula 376 STJ não rege o tema, pois cuida do MS contra ato de juizado especial (auditoria 03/10/2026). Foro do domicílio do autor (CF art. 109, §2º) ou da sede funcional da autoridade coatora. O art. 2º da Lei 12.016/2009 não trata de foro; só define quando a autoridade coatora é federal (auditoria 03/10/2026).
 
 ## 9. Refutação a alegações comuns do INSS em MS por omissão
 

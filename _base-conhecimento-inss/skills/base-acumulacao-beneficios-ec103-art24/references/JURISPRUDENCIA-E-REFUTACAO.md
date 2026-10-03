@@ -8,9 +8,9 @@ Plenário. Rel. Min. Roberto Barroso. Sessão virtual encerrada em 23/06/2023, j
 
 Tese fixada. "É constitucional o art. 23, caput, da Emenda Constitucional nº 103/2019, que fixa novos critérios de cálculo para a pensão por morte no Regime Geral e nos Regimes Próprios de Previdência Social".
 
-Vencidos. Min. Edson Fachin e Min. Rosa Weber.
+Vencidos parcialmente. Min. Edson Fachin e Min. Rosa Weber.
 
-Resultado. 8x2.
+Resultado. Improcedente, por maioria (auditoria 03/10/2026).
 
 Status. DESFAVORÁVEL ao segurado em relação ao mérito da pensão pós-reforma.
 

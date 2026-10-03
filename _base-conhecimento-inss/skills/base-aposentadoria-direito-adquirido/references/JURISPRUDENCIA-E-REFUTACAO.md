@@ -34,7 +34,7 @@ Em 21/03/2024, nas ADIs 2110 e 2111, o STF declarou constitucional o art. 3º da
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação. A modulação dispensa apenas a devolução de valores recebidos e os honorários, sem preservar a revisão [NÃO CONFIRMADO]; conferir em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026).
+Aplicação. A modulação (ADI 2111 ED-ED, 10/04/2025) só dispensa a devolução dos valores recebidos por decisões judiciais, definitivas ou provisórias, prolatadas até 05/04/2024, e o pagamento de honorários de sucumbência, custas e perícias contábeis nas ações da Revisão da Vida Toda [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar a revisão; detalhes em `base-revisao-vida-toda-rvt` (auditoria 03/10/2026).
 
 ### Tema 350 STF
 

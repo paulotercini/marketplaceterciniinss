@@ -2,7 +2,7 @@
 
 ## 1. Marco normativo aplicável
 
-CF/88, arts. 5º X, 37 §6º. CC, arts. 186 e 927. Lei 8.213/91, arts. 71 a 75 (responsabilidade do INSS pela liquidação). Súmula 37 STJ (auditoria 03/10/2026). Súmula 326 STJ.
+CF/88, arts. 5º X, 37 §6º. CC, arts. 186 e 927 (auditoria 03/10/2026, retirada a remissão aos arts. 71 a 75 da Lei 8.213/91, que tratam de salário-maternidade e pensão por morte). Súmula 37 STJ (auditoria 03/10/2026). Súmula 326 STJ.
 
 ## 2. Cenário 1 — Cessação indevida de auxílio-doença
 

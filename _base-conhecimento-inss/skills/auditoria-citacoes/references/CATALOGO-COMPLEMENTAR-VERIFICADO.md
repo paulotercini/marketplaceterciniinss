@@ -42,7 +42,7 @@ Quinto, o ID do item segue a normalização do script (exemplos, `TEMA 995/STJ`,
 - Conferido em. 25/07/2026
 
 ### TEMA 1030/STJ
-- Situação. vigente (tese fixada em 29/10/2020 e ajustada em embargos de declaração em 20/05/2021)
+- Situação. vigente (tese fixada em 28/10/2020 e ajustada em embargos de declaração, com data de 01/07/2021 no portal de repetitivos, relatório C2; auditoria 03/10/2026)
 - Tese literal. "Ao autor que deseje litigar no âmbito de juizado especial federal cível, é lícito renunciar, de modo expresso e para fins de atribuição de valor à causa, ao montante que exceda os 60 salários mínimos previstos no artigo 3º, caput, da Lei 10.259/2001, aí incluídas, sendo o caso, até 12 prestações vincendas, nos termos do artigo 3º, § 2º, da referida lei, combinado com o artigo 292, §§ 1º e 2º, do Código de Processo Civil de 2015."
 - Redação literal do portal de repetitivos, corrigida nos embargos de declaração e lida em 03/10/2026 (relatório C2; auditoria 03/10/2026). "Ao autor que deseje litigar no âmbito de Juizado Especial Federal Cível, é lícito renunciar, de modo expresso e para fins de atribuição de valor à causa, ao montante que exceda os 60 (sessenta) salários mínimos previstos no art. 3º, caput, da Lei 10.259/2001, aí incluídas, sendo o caso, até doze prestações vincendas, nos termos do art. 3º, § 2º, da referida lei, c/c o art. 292, §§ 1º e 2º, do CPC/2015." Trânsito em julgado em 20/09/2021. Fonte oficial, https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=1030&cod_tema_final=1030
 - Órgão e leading case. STJ, Primeira Seção, REsp 1.807.665, Rel. Min. Sérgio Kukina.
@@ -254,18 +254,18 @@ Quinto, o ID do item segue a normalização do script (exemplos, `TEMA 995/STJ`,
 - Conferido em. 25/07/2026
 
 ### SUMULA 726/STF
-- Situação. vigente, RESTRITIVA, mitigada pela Lei 11.301/2006 e pela ADI 3772
+- Situação. vigente, RESTRITIVA, mitigada pela Lei 11.301/2006 e pela ADI 3772. O STF, no AI 595589 AgR (2ª Turma, Rel. Min. Joaquim Barbosa, j. 23/11/2010, DJe 07/12/2010), registrou que a ADI 3772 "superou a jurisprudência consolidada no verbete 726 da Súmula" (lido no portal de jurisprudência do STF) (auditoria 03/10/2026)
 - Tese literal. "Para efeito de aposentadoria especial de professores, não se computa o tempo de serviço prestado fora da sala de aula."
 - Órgão e leading case. STF, DJ 11/12/2003.
 - Fonte oficial. https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=30&sumula=1498
 - Conferido em. 25/07/2026
 
 ### ADI 3772
-- Situação. julgada, procedente em parte com interpretação conforme, transitada em julgado
+- Situação. julgada, procedente em parte com interpretação conforme, transitada em julgado em 16/11/2009 (auditoria 03/10/2026)
 - Tese literal. "As funções de direção, coordenação e assessoramento pedagógico integram a carreira do magistério, desde que exercidos, em estabelecimentos de ensino básico, por professores de carreira, excluídos os especialistas em educação, fazendo jus aqueles que as desempenham ao regime especial de aposentadoria estabelecido nos arts. 40, § 5º, e 201, § 8º, da Constituição Federal."
-- Órgão e leading case. STF, Plenário, Rel. Min. Ayres Britto, Red. p/ acórdão Min. Ricardo Lewandowski, j. 29/10/2008, DJE 27/03/2009.
-- Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=2541930
-- Conferido em. 25/07/2026
+- Órgão e leading case. STF, Plenário, Rel. Min. Ayres Britto, Red. p/ acórdão Min. Ricardo Lewandowski, j. 29/10/2008, DJE 27/03/2009, republicado em 29/10/2009 após embargos de declaração (erro material na ementa). Objeto, art. 1º da Lei 11.301/2006, que acrescentou o § 2º ao art. 67 da Lei 9.394/1996 (auditoria 03/10/2026).
+- Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=2399227 (processo) e jurisprudencia.stf.jus.br, pesquisa "ADI 3772" ordenada por data de julgamento (ementa). O endereço antes registrado, incidente 2541930, é o da ADI 3931 (auditoria 03/10/2026).
+- Conferido em. 03/10/2026
 
 ## Temas de repercussão geral do STF conferidos na página oficial do tema (rodada 2, 25/07/2026)
 
@@ -963,42 +963,12 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Uso indevido corrigido em 03/10/2026: a base o usava para admitir ação rescisória no JEF, que o Enunciado 44/FONAJEF veda.
 - Conferido em. 03/10/2026 (auditoria 03/10/2026)
 
-### ENUNCIADO 225/FONAJEF
-- Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Não lido em portal oficial, porque a lista do CJF só vai até o Enunciado 110. Texto lido na página da AJUFE, que organiza o FONAJEF. Confirmar na fonte oficial antes de citar em peça.
-- Tese literal. Texto da página da AJUFE, "A prova técnica simplificada é legítima para análise de pedidos de benefícios previdenciários e assistenciais"
-- Órgão e leading case. XVIII FONAJEF.
-- Fonte secundária. https://www.ajufe.org.br/foruns/fonajef/enunciados-fonajef/enunciados-xviii-fonajef/enunciado-n-225
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
-
-### SUMULA 160/TFR
-- Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça.
-- Tese literal. Trecho, como transcrito no relatório C3, "A suspeita de fraude ... não enseja, de plano, a sua suspensão ou cancelamento, mas dependerá de apuração em procedimento administrativo".
-- Órgão e leading case. TFR. Data não registrada no relatório C3.
-- Fonte secundária. https://www.legjur.com/sumula/tfr/160
-- Uso indevido corrigido em 03/10/2026: a base dizia que a súmula admite dano moral. Ela exige apuração em procedimento administrativo antes da suspensão ou do cancelamento por suspeita de fraude.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
-
-### SUMULA 260/TFR
-- Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça. A expressão "anteriores à CF/88", que aparece na base, é glosa e não texto da súmula.
-- Tese literal. Trecho, como transcrito no relatório C3, "No primeiro reajuste do benefício previdenciário deve-se aplicar o índice integral do aumento verificado, independentemente do mês da concessão ...".
-- Órgão e leading case. TFR. Data não registrada no relatório C3.
-- Fonte secundária. https://www.legjur.com/sumula/tfr/260
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
-
-### SUMULA 71/TFR
-- Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça. A LegJur a lista como em vigor; a revogação pela Súmula 148/STJ, afirmada na base, não foi verificada.
-- Tese literal. "A correção monetária incide sobre as prestações de benefícios previdenciários em atraso, observado o critério do salário mínimo vigente na época da liquidação da obrigação"
-- Órgão e leading case. TFR. Data não registrada no relatório C3.
-- Fonte secundária. https://www.legjur.com/sumula/tfr/71
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
-
-### SUMULA 45/TFR
-- Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça.
-- Tese literal. "As multas fiscais, sejam moratórias ou punitivas, estão sujeitas à correção monetária"
-- Órgão e leading case. TFR. Data não registrada no relatório C3.
-- Fonte secundária. https://www.legjur.com/sumula/tfr/45
-- Uso indevido corrigido em 03/10/2026: a base a citava para o cômputo do tempo de serviço militar.
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+Fonte secundária, não conta como conferido (auditoria 03/10/2026). Ficam sem título ### para que o script não os registre como conferidos. O texto foi lido fora do portal oficial e precisa ser confirmado na fonte oficial antes de citar em peça.
+- ENUNCIADO 225/FONAJEF. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Não lido em portal oficial, porque a lista do CJF só vai até o Enunciado 110. Texto lido na página da AJUFE, que organiza o FONAJEF. Confirmar na fonte oficial antes de citar em peça. Tese literal. Texto da página da AJUFE, "A prova técnica simplificada é legítima para análise de pedidos de benefícios previdenciários e assistenciais". Órgão e leading case. XVIII FONAJEF. Fonte secundária. https://www.ajufe.org.br/foruns/fonajef/enunciados-fonajef/enunciados-xviii-fonajef/enunciado-n-225. Lido em 03/10/2026.
+- SUMULA 160/TFR. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça. Tese literal. Trecho, como transcrito no relatório C3, "A suspeita de fraude ... não enseja, de plano, a sua suspensão ou cancelamento, mas dependerá de apuração em procedimento administrativo". Órgão e leading case. TFR. Data não registrada no relatório C3. Fonte secundária. https://www.legjur.com/sumula/tfr/160. Uso indevido corrigido em 03/10/2026: a base dizia que a súmula admite dano moral. Ela exige apuração em procedimento administrativo antes da suspensão ou do cancelamento por suspeita de fraude. Lido em 03/10/2026.
+- SUMULA 260/TFR. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça. A expressão "anteriores à CF/88", que aparece na base, é glosa e não texto da súmula. Tese literal. Trecho, como transcrito no relatório C3, "No primeiro reajuste do benefício previdenciário deve-se aplicar o índice integral do aumento verificado, independentemente do mês da concessão ...". Órgão e leading case. TFR. Data não registrada no relatório C3. Fonte secundária. https://www.legjur.com/sumula/tfr/260. Lido em 03/10/2026.
+- SUMULA 71/TFR. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça. A LegJur a lista como em vigor; a revogação pela Súmula 148/STJ, afirmada na base, não foi verificada. Tese literal. "A correção monetária incide sobre as prestações de benefícios previdenciários em atraso, observado o critério do salário mínimo vigente na época da liquidação da obrigação". Órgão e leading case. TFR. Data não registrada no relatório C3. Fonte secundária. https://www.legjur.com/sumula/tfr/71. Lido em 03/10/2026.
+- SUMULA 45/TFR. Situação. PROVAVEL_FONTE_SECUNDARIA (relatório C3). Texto lido só na LegJur, que declara pendente a conferência com a fonte oficial. Confirmar na fonte oficial antes de citar em peça. Tese literal. "As multas fiscais, sejam moratórias ou punitivas, estão sujeitas à correção monetária". Órgão e leading case. TFR. Data não registrada no relatório C3. Fonte secundária. https://www.legjur.com/sumula/tfr/45. Uso indevido corrigido em 03/10/2026: a base a citava para o cômputo do tempo de serviço militar. Lido em 03/10/2026.
 
 Homônimos do STJ a evitar (auditoria 03/10/2026). Ficam sem título ### para que o script não os registre como conferidos. Cada número existe no STJ, mas trata de outro assunto e não serve como precedente previdenciário.
 - TEMA 394/STJ. Depósito judicial e IRPJ, matéria tributária (REsp 1.168.038/SP).

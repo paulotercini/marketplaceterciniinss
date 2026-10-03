@@ -79,7 +79,7 @@ Tese. "É constitucional o art. 23, caput, da Emenda Constitucional nº 103/2019
 
 Vencidos parcialmente. Min. Edson Fachin e Min. Rosa Weber.
 
-Resultado. 8x2. Decisão DESFAVORÁVEL ao segurado em relação ao mérito da pensão pós-reforma.
+Resultado. Improcedente, por maioria (auditoria 03/10/2026). Decisão DESFAVORÁVEL ao segurado em relação ao mérito da pensão pós-reforma. O caminho do segurado é o direito adquirido para óbito anterior a 13/11/2019 e, havendo dependente inválido ou com deficiência intelectual, mental ou grave, a pensão de 100% do art. 23, § 2º, I, da EC 103/2019, até o teto do RGPS (auditoria 03/10/2026).
 
 ### 5.2. Tema 1300/STF (RE 1.469.150)
 

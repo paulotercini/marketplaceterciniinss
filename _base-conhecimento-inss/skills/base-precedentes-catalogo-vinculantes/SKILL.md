@@ -202,8 +202,8 @@ A reference `ATUALIZACAO-STATUS-2026-06.md` consolida a verificação feita via 
 
 - Tema 30/TNU (cancelado em favor do Tema 692/STJ).
 - Tema 66/TNU (revisado pelo Tema 355).
-- Tema 338/TNU (cancelado em favor do Tema 255).
-- Tema 375/TNU (cancelado em favor do Tema 130).
+- Tema 338/TNU (afetado e pendente, conforme a Rcl 5000246-54.2026.4.90.0000, de 30/06/2026; não foi cancelado em favor do Tema 255) (auditoria 03/10/2026).
+- Tema 130/TNU (cancelado; vigente o Tema 375, PUIL 0077764-65.2008.4.01.3800, D.E. 26/06/2025) (auditoria 03/10/2026).
 - Tema 1066/STF (cancelado em 22/02/2021).
 
 ### Súmula CANCELADA com data corrigida

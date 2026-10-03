@@ -177,7 +177,7 @@ Aplicação. Documentação ambiental para B31, B32, B91, B92, B94 e aposentador
 
 Disciplina a avaliação biopsicossocial para aposentadoria PCD da LC 142/2013.
 
-Sete domínios. Função e estrutura do corpo, atividades e participação, fatores ambientais, fatores pessoais, IF-BrA e lógica fuzzy.
+Sete domínios do IF-BrA, com 41 atividades. Sensorial; comunicação; mobilidade; cuidados pessoais; vida doméstica; educação, trabalho e vida econômica; socialização e vida comunitária. A pontuação aplica o modelo linguístico Fuzzy (auditoria 03/10/2026).
 
 Aplicação. Análise de aposentadoria PCD. Detalhamento em `base-pcd-if-bra-metodologia` e `base-aposentadoria-pcd-lc142`.
 
@@ -185,7 +185,7 @@ Aplicação. Análise de aposentadoria PCD. Detalhamento em `base-pcd-if-bra-met
 
 Disciplina a avaliação biopsicossocial do BPC/LOAS.
 
-TCQ (Teste de Conjugação Qualitativa). Lógica de avaliação multidisciplinar.
+TCQ, Tabela Conclusiva de Qualificadores do Anexo IV, prevista no art. 8º (auditoria 03/10/2026). Lógica de avaliação multidisciplinar.
 
 Aplicação. Análise do BPC para PCD. Detalhamento em `base-bpc-impedimento-longo-prazo` e `analise-bpc-loas`.
 

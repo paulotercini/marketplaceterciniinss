@@ -44,7 +44,7 @@ Os dois PEDILEFs antes citados nesta seção não foram localizados no acervo da
 
 ### 3.1. Tema 1090/STJ
 
-Tese. EPI marcado como eficaz no PPP não impede a utilização de outros meios de prova para descaracterizar a sua eficácia.
+Tese. A informação de EPI no PPP descaracteriza, em princípio, o tempo especial, ressalvadas hipóteses excepcionais (item I). Cabe ao autor provar a ineficácia do EPI (item II, tese adversa), e a dúvida sobre a real eficácia favorece o autor (item III) (auditoria 03/10/2026).
 
 Aplicação. Pode-se demonstrar a ineficácia do EPI fornecido para tolueno cutâneo.
 
@@ -82,9 +82,9 @@ Verificar inteiro teor das decisões antes de citar com número de processo.
 
 ### 5.2. TRF4
 
-IRDR 15/TRF4. Tese sobre EPI e standard probatório.
+IRDR 15/TRF4. Tese sobre EPI e standard probatório, sem fonte conferida [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
-Aplicação. Standard probatório atenuado para hipóteses de absorção cutânea.
+Aplicação. Tese vencida. O standard atenuado e a inversão do ônus não se sustentam após o Tema 1090/STJ, que pôs no autor o ônus de provar a ineficácia do EPI e rejeitou a inversão. O caminho do segurado é a impugnação específica do PPP na causa de pedir (Tema 213/TNU) (auditoria 03/10/2026).
 
 ### 5.3. TJSP
 
@@ -114,7 +114,7 @@ A eficácia exige certificação CA específica para o agente, troca periódica,
 
 ### 6.4. Tese 4 do INSS. "ACGIH 20 ppm não é norma brasileira"
 
-Refutação. A ACGIH é referência técnica internacional reconhecida pela jurisprudência da TNU e do STJ. Aplica-se subsidiariamente quando a NR-15 está desatualizada.
+Refutação. A ACGIH é referência técnica internacional (auditoria 03/10/2026). Aplica-se subsidiariamente quando a NR-15 está desatualizada.
 
 ### 6.5. Tese 5 do INSS. "Não há prova de exposição cutânea"
 
@@ -130,7 +130,7 @@ FISPQ dos produtos manipulados.
 
 Prova testemunhal.
 
-Inversão do ônus da prova nos termos do IRDR 15/TRF4.
+Impugnação específica do PPP na causa de pedir, pelo Tema 213/TNU. A inversão do ônus atribuída ao IRDR 15/TRF4 é tese vencida após o Tema 1090/STJ (auditoria 03/10/2026).
 
 ### 6.6. Tese 6 do INSS. "A categoria profissional foi extinta em 1995"
 
@@ -148,11 +148,11 @@ Art. 57 da Lei 8.213/91.
 
 Art. 58 da Lei 8.213/91 (PPP).
 
-Decreto 53.831/64, código 1.2.10.
+Decreto 53.831/64, código 1.2.11 (auditoria 03/10/2026).
 
 Decreto 83.080/79, código 1.2.10.
 
-Decreto 2.172/97 e Decreto 3.048/99, Anexo IV, código 1.0.19.
+Decreto 2.172/97 e Decreto 3.048/99, Anexo IV, código 1.0.19, outras substâncias químicas, que não nomeia o tolueno (auditoria 03/10/2026).
 
 NR-15, Anexos 11 e 13.
 
@@ -212,7 +212,7 @@ Concessão da aposentadoria especial. Subsidiariamente, anulação da decisão a
 
 ### 10.2. Frederico Amado
 
-"Direito Previdenciário". Anexo 13 da NR-15 como rol taxativo qualitativo. Inversão do ônus da prova. Para o tolueno pela via cutânea, o Tema 382/TNU afasta o Anexo 13 (auditoria 03/10/2026).
+"Direito Previdenciário". Anexo 13 da NR-15 como rol taxativo qualitativo. Inversão do ônus da prova, tese vencida após o Tema 1090/STJ. Para o tolueno pela via cutânea, o Tema 382/TNU afasta o Anexo 13 (auditoria 03/10/2026).
 
 ### 10.3. Hugo Goes
 
@@ -226,11 +226,11 @@ Concessão da aposentadoria especial. Subsidiariamente, anulação da decisão a
 
 "Direito Previdenciário Esquematizado". Anexo 13 da NR-15 e enquadramento qualitativo. Doutrina pró-segurado, sem aplicação ao tolueno pela via cutânea após o Tema 382/TNU (auditoria 03/10/2026).
 
-## 11. Inversão do ônus da prova (IRDR 15/TRF4)
+## 11. Ônus da prova da ineficácia do EPI (Tema 1090/STJ e Tema 213/TNU)
 
 ### 11.1. Aplicação
 
-Quando o PPP indica tolueno com concentração acima do limite do Anexo 11, cabe ao INSS desconstruir a nocividade. A simples indicação do agente não basta após o Tema 382/TNU (auditoria 03/10/2026).
+Quando o PPP indica tolueno com concentração acima do limite do Anexo 11, a exposição está provada. Se o PPP declarar EPI eficaz, o autor deve impugná-lo de forma específica na causa de pedir (Tema 213/TNU) e provar a ineficácia (item II do Tema 1090/STJ, tese adversa), e a dúvida o favorece (item III). A inversão do ônus atribuída ao IRDR 15/TRF4 é tese vencida, e a simples indicação do agente não basta após o Tema 382/TNU (auditoria 03/10/2026).
 
 ### 11.2. Pedidos correlatos
 

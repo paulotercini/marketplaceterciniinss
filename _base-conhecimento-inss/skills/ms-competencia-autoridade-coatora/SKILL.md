@@ -73,7 +73,7 @@ Pessoa jurídica interessada é a **União Federal** (a Perícia Médica Federal
 
 ### 2.1. Regra geral (faculdade do impetrante)
 
-O impetrante pode escolher entre quatro foros, conforme art. 109, §2º, CF/88, Tema 374/STF (RE 627.709/DF, Rel. Min. Ricardo Lewandowski, j. 20/08/2014) e AgR no RE 736.971/RS (2ª Turma, j. 04/05/2020).
+O impetrante pode escolher entre quatro foros, conforme art. 109, §2º, CF/88, Tema 374/STF (RE 627.709/DF, Rel. Min. Ricardo Lewandowski, j. 20/08/2014) e AgR no RE 736.971/RS (2ª Turma, j. 04/05/2020) [NÃO CONFIRMADO]. O Tema 374 trata das ações contra autarquias federais; a extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 **Foro 1.** Subseção judiciária do **domicílio do impetrante**. É a opção mais utilizada e recomendada por facilitar o acesso à justiça.
 
