@@ -206,6 +206,18 @@ A skill NUNCA registra "verificação não realizada" antes de esgotar os 4 nív
 
 **Operação.** Esta skill é fonte de URLs oficiais e do repositório literal. A execução da cascata é responsabilidade da skill `base-revisao-peticao-aprofundada` quando acionada durante revisão de petição.
 
+## Protocolo de pesquisa obrigatória nas MCPs (Onda 169)
+
+Todas as skills remetem a este protocolo pelo bloco "MCPs da casa". A regra é uma só. Norma, súmula, tema, enunciado ou acórdão só entra em peça, parecer ou orientação depois de localizado no MCP próprio e lido na fonte oficial, e até lá leva [NÃO CONFIRMADO].
+
+Cada tipo de citação tem um MCP de primeira via. O dispositivo de lei, decreto, emenda e portaria do corpus local se lê no `normas`, por `obter_artigo` e `redacao_na_data`. A IN 128/2022 se lê também no `norma_inss` do `iurisprudencia`, texto consolidado pelo INSS e versionado parágrafo a parágrafo, que já traz alterações ausentes da base local, como o art. 369-A incluído pela IN PRES/INSS 212, de 06/08/2026. O mesmo `norma_inss`, com `norma` igual a `portaria-conjunta-94`, traz as ações civis públicas que o INSS cumpre, com a situação de cada uma. O enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, com a redação vigente e as anteriores. O acórdão da TNU se localiza em `buscar_acordaos_tnu`, pelo número CNJ ou por termo. O acórdão do TRF3 se localiza no `trf3` local e, nas Turmas Recursais, também em `buscar_acordaos_trf3_jef`, que consulta o tribunal ao vivo. Tema e súmula se conferem antes no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`.
+
+As coberturas foram medidas em 03/10/2026. A base local de normas é fotografia de 31/05/2026. O MCP da TNU cobre de 18/01/2019 a 02/10/2026, e o PEDILEF anterior a 2019 só aparece citado em acórdão posterior. O `trf3` local cobre acórdãos de 10/2021 a 09/2026, sem o Órgão Especial e sem as 3ª, 4ª e 6ª Turmas, e o JEF ao vivo não alcança a 2ª Seção e aceita de 12 a 15 consultas por minuto. Ausência em MCP não prova inexistência.
+
+Os portais do STF, do STJ (repetitivos e SCON), do CJF e do TST recusam o acesso automatizado por WebFetch, e a leitura oficial desses itens se faz pelo navegador do usuário, com os endereços e a técnica da seção 9 de `pesquisa-jurisprudencia-chrome`. O arquivo de verbetes do STJ (www.stj.jus.br/docs_internet/VerbetesSTJ_asc.txt) abre por WebFetch, mas está desatualizado e não serve de fonte. O que foi lido em fonte oficial fica registrado no catálogo complementar da `auditoria-citacoes`, que as próximas auditorias reconhecem. A cota de WebSearch de uma sessão se esgota em cerca de duzentas buscas, e a conferência em massa deve poupá-la.
+
+A auditoria da base usa três scripts, rodados depois de cada lote de Ondas. O `scripts/auditoria_normas.py`, nesta skill, confere a existência de artigo, parágrafo e inciso no banco do `normas`. O `auditoria_citacoes.py` e o `triagem_catalogo.py`, na `auditoria-citacoes`, extraem os precedentes e os cruzam com o catálogo. Os erros mais frequentes da rodada de 03/10/2026 foram o número de tema atribuído a assunto de outro tema, o homônimo de outra corte (Súmula 632 do STJ e do STF, Súmula 44 da TNU e do STJ, Tema 640 do STJ e do STF) e o dispositivo existente citado para conteúdo que está em outro parágrafo, como o art. 26, §3º, II, da EC 103/2019 citado para a regra de 60% mais 2%, que está no §2º, III.
+
 ## Auditoria mecânica das citações normativas (Onda 167)
 
 O script `scripts/auditoria_normas.py` varre skills e agentes, extrai cada citação de artigo, parágrafo e inciso e a confere no banco local do MCP `normas`, sem internet. Roda com `python scripts/auditoria_normas.py --so-problemas` depois de cada lote de Ondas, e com `--demo` para o autoteste.
@@ -218,12 +230,14 @@ Normas citadas na base e ausentes do banco exigem fonte oficial a cada uso. As m
 
 ## MCPs da casa
 
-Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].
+Pesquisa obrigatória (Onda 169). Nenhuma norma, súmula, tema, enunciado ou acórdão citado nesta skill entra em peça, parecer ou orientação sem passar antes pelo MCP próprio, e nenhum MCP autoriza sozinho a marca [CONFERIDO]. O achado nasce [NÃO CONFIRMADO] e só sobe a [CONFERIDO] depois de lido na fonte oficial, na forma de `pesquisa-jurisprudencia-chrome`.
 
-Legislação. Todo dispositivo citado nesta skill se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo. Para tese de direito adquirido, `redacao_na_data`, que responde por ano. A citação em peça exige a `fonte_oficial` que a resposta devolve. Detalhe em `base-legislacao-fontes-primarias`.
+Legislação. O dispositivo se transcreve do MCP `normas`, por `obter_artigo` no identificador da norma e no número do artigo (exemplo, `lei-8213-1991` e `57`), lendo o campo `texto` e a última ocorrência de cada parágrafo, e a redação de outra época se lê por `redacao_na_data`. A IN 128/2022 se confere também pelo `norma_inss` do MCP `iurisprudencia`, que versiona parágrafo a parágrafo e já traz alterações ausentes da base local, como as da IN PRES/INSS 212/2026. Norma ausente das duas bases exige a fonte oficial a cada uso.
 
-Jurisprudência do TRF3 e das Turmas Recursais. Localize pelo MCP `trf3`, com `buscar_acordaos_trf3` (consulta, `polo_recorrente`, `resultado`, `orgao_julgador` e datas) e `obter_acordao_trf3` no id devolvido. `resultado` e `polo_recorrente` são inferidos. O achado nasce [NÃO CONFIRMADO] e só entra na peça depois de aberto no portal do TRF3, na forma de `pesquisa-jurisprudencia-chrome`. TNU e CRPS ficam no MCP `iurisprudencia`.
+Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `base-precedentes-catalogo-vinculantes` e no catálogo complementar da `auditoria-citacoes`, com atenção ao homônimo de outra corte. Enunciado do CRPS se lê em `enunciados_pleno_inss_crps`, na redação vigente e nas anteriores. Acórdão da TNU se localiza em `buscar_acordaos_tnu`. Acórdão do TRF3 e das Turmas Recursais se localiza em `buscar_acordaos_trf3`, na base local, e em `buscar_acordaos_trf3_jef`, consulta ao vivo. Ação civil pública que o INSS cumpre se lê no `norma_inss`, Portaria Conjunta 94/2024.
 
-Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já sustentou neste tema. Comece por `buscar_tese_acervo` com os termos centrais desta skill e, achando trecho útil, leia o argumento inteiro com `obter_trecho_acervo`. Para saber em que peças um precedente já foi usado, chame `precedentes_do_acervo` e leia o campo `corte` da resposta, porque o mesmo número de Tema existe em mais de uma corte. Detalhe em `base-acervo-escritorio`.
+Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
 
 **Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
+
+Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
