@@ -41,7 +41,7 @@ Funções de magistério.
 
 ### Tema 1011 STJ
 
-Coordenação pedagógica.
+Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
 
 ## Bônus da EC 20/98 (art. 9º §2º)
 
@@ -49,7 +49,7 @@ Primeiro, aplicável a quem era professor em 16/12/1998.
 
 Segundo, bônus de 17 por cento (homem) e 20 por cento (mulher) sobre o tempo de magistério até 16/12/1998 (EC 20/98, art. 9º, §2º).
 
-Terceiro, aplicável na aposentadoria proporcional e em conversão.
+Terceiro, aplicável só na aposentadoria integral, com 35 anos (homem) ou 30 anos (mulher) exclusivamente em magistério (EC 20, art. 9º, §2º; IN 128, art. 251, §1º) (auditoria 03/10/2026).
 
 Quarto, preservado como direito adquirido.
 
@@ -81,7 +81,7 @@ Primeiro, bônus exige tempo efetivo em magistério até 16/12/1998.
 
 Segundo, requer comprovação formal.
 
-Terceiro, não se aplica a professor universitário. ADI 3772.
+Terceiro, aplica-se também ao professor universitário (IN 128, art. 251, §1º) (auditoria 03/10/2026).
 
 Quarto, verificar o impacto do fator previdenciário no cálculo pré-reforma. Atenção: a Súmula 726 STF não trata de fator — trata do cômputo do tempo fora da sala de aula.
 

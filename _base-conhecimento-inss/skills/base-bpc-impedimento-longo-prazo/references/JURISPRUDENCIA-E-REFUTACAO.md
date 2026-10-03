@@ -18,35 +18,27 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação pró-segurado (renda, mas aplicável por analogia ao conceito de impedimento).
 
-### Súmula 63/TNU (união estável; pertinência a conferir — auditoria 25/07/2026)
 
-Redação de 18/09/2025 restrita a fatos geradores até a MP 871/2019; enunciado de pensão por morte, sem aplicação direta ao BPC.
 
-Fonte oficial em https://www.cjf.jus.br
+Retirado o Tema 74/TNU, que não trata de avaliação biopsicossocial (auditoria 03/10/2026).
 
-Aplicação pró-segurado.
 
-### Tema 74 TNU
 
-Tese. Aferição biopsicossocial abrange aspectos sociais, não apenas médicos.
 
-Fonte oficial em https://www.cjf.jus.br
-
-Aplicação pró-segurado. Sustenta análise social robusta.
 
 ### Tema 173 TNU
 
-Tese. Impedimento de longo prazo e prognóstico favorável em doença tratável (posição controvertida; defender a posição pró-segurado).
+Tese. Para o BPC, o conceito de pessoa com deficiência exige impedimento de longo prazo com duração mínima de 2 anos (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
 Aplicação pró-segurado em releitura.
 
-### Súmula 37 TNU
 
-Tese. Comprovação da invalidez por prova emprestada (aplicável analogicamente).
 
-Fonte oficial em https://www.cjf.jus.br
+Retirada a Súmula 37/TNU, que trata da pensão do filho até 21 anos e não da prova emprestada (auditoria 03/10/2026).
+
+
 
 ### Lei 15.157/2025
 

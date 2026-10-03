@@ -44,7 +44,7 @@ Métrica principal. A(8).
 
 ### Cenário 1 — Motorista profissional de caminhão ou ônibus
 
-Vibração de corpo inteiro. Enquadramento viável quando o PPP mede aren superior ao nível de ação da NHO-09. Em PPP omisso, acionar `retificacao-ppp` e invocar Tema 213 TNU para inversão do ônus.
+Vibração de corpo inteiro. Enquadramento viável quando o PPP mede aren superior ao nível de ação da NHO-09. Em PPP omisso, acionar `retificacao-ppp` e requerer perícia técnica (art. 58, §§ 1º e 4º, da Lei 8.213/91) (auditoria 03/10/2026, retirado o Tema 213/TNU, que trata da eficácia do EPI e não inverte o ônus da prova).
 
 ### Cenário 2 — Tratorista rural ou de movimentação de terra
 
@@ -84,7 +84,7 @@ Primeiro, identificar se a exposição é de corpo inteiro ou mão-braço pela f
 
 Segundo, verificar no PPP o agente e a métrica. aren e VDV para corpo inteiro, A(8) para mão-braço.
 
-Terceiro, se o PPP for omisso, acionar `retificacao-ppp` e invocar Tema 213 TNU.
+Terceiro, se o PPP for omisso, acionar `retificacao-ppp` e requerer perícia técnica (art. 58, §§ 1º e 4º, da Lei 8.213/91) (auditoria 03/10/2026, retirado o Tema 213/TNU).
 
 Quarto, invocar o Parecer 00212/2024 CONJUR-MTP e as NHO-09 e NHO-10 como parâmetros técnicos.
 

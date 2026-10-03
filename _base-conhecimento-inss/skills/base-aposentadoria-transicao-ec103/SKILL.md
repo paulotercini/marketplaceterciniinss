@@ -19,7 +19,7 @@ EC 103/2019, art. 17. Pedágio de 50% sobre o tempo faltante em 13 de novembro d
 
 EC 103/2019, art. 20. Pedágio de 100% sobre o tempo faltante em 13 de novembro de 2019. Exige idade mínima (57 mulher, 60 homem) e pagamento integral do dobro do tempo restante.
 
-EC 103/2019, art. 4º. Opção pelas regras de transição para quem está filiado ao RGPS antes da promulgação.
+EC 103/2019, arts. 15 a 18, 20 e 21. Regras de transição para quem já era filiado ao RGPS em 13 de novembro de 2019; o art. 4º trata do servidor público federal (auditoria 03/10/2026).
 
 Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
@@ -53,7 +53,7 @@ A regra geral da escolha cabe ao segurado, sempre comparando as quatro transiç�
 
 Fazer simulação detalhada em cada porta de transição, com apuração de DIB, RMI e renda mensal líquida em cada hipótese. Comparar com direito adquirido eventualmente presente (acionar `base-aposentadoria-direito-adquirido`) e com a regra permanente (acionar `base-aposentadoria-regra-permanente-ec103`).
 
-Quando houver divergência entre RMI administrativa e a calculada pelo advogado, impugnar com base no art. 4º da EC 103 e no direito de escolha.
+Quando houver divergência entre RMI administrativa e a calculada pelo advogado, impugnar com base nos arts. 15 a 18 e 20 da EC 103 e no direito de escolha (auditoria 03/10/2026, corrigida a remissão ao art. 4º, que trata do servidor público federal).
 
 ## MCPs da casa
 

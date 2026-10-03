@@ -12,13 +12,13 @@ ESTRATÉGIA PRÓ-SEGURADO. Antes de protocolar PUIL, conferir alinhamento entre 
 
 ## QO 13/TNU
 
-Sobrestamento dos PUIL idênticos em curso, aguardando definição em representativo de controvérsia.
+Alterada em 18/09/2019. Não se admite PUIL quando a jurisprudência da TNU se firmou no mesmo sentido do acórdão recorrido (auditoria 03/10/2026).
 
-APLICAÇÃO. Quando há tese idêntica afetada como representativo, os demais PUIL ficam sobrestados (art. 16 §5º RITNU).
+APLICAÇÃO. Em contrarrazões a PUIL do INSS, invocar a QO 13 quando o acórdão recorrido seguir a jurisprudência firmada da TNU; no PUIL do segurado, demonstrar que essa jurisprudência não se firmou ou foi superada. O sobrestamento por tese idêntica afetada como representativo é regra das QOs 23 e 57 (art. 16 §5º RITNU) (auditoria 03/10/2026).
 
 ## QO 17/TNU
 
-Anulação do acórdão da TR quando há omissão expressamente impugnada em ED não sanada.
+Quando o acórdão decidir tema alheio à controvérsia, a TNU deve anular o julgado (DJ 17/06/2005). A omissão expressamente impugnada em ED é hipótese da QO 47, que remete a esta (auditoria 03/10/2026).
 
 APLICAÇÃO. Combinada com QO 47/TNU, permite anulação do acórdão recorrido por PUIL quando a omissão foi impugnada em ED, apresentado paradigma válido.
 
@@ -66,7 +66,7 @@ ESTRATÉGIA PRÓ-SEGURADO. Em casos de omissão sistemática da TR sobre teses d
 
 "Precedentes do Supremo Tribunal Federal não se prestam como paradigmas válidos, para fins de admissão do pedido nacional de uniformização de interpretação de lei federal previsto no art. 14, § 2º, da Lei nº 10.259/01." (texto publicado em 07/08/2023; auditoria 25/07/2026, corrigida a formulação anterior, que atribuía a QO ao paradigma de TRF)
 
-APLICAÇÃO. TRFs são tribunais ordinários, não compõem o microssistema dos juizados. STF, TST e TSE também são paradigmas inválidos.
+APLICAÇÃO. O texto da QO 48 trata só de precedente do STF. Acórdão de TRF, TST ou TSE também não serve de paradigma, mas pelo rol do art. 14, § 2º, da Lei 10.259/01 (Turmas Recursais de regiões diferentes, súmula ou jurisprudência dominante do STJ), e não pela QO 48 (auditoria 03/10/2026).
 
 ESTRATÉGIA PRÓ-SEGURADO. Quando houver acórdão favorável de TRF, buscar acórdão equivalente de outra TR ou Súmula do STJ no mesmo sentido como paradigma válido.
 
@@ -124,7 +124,7 @@ Antes de protocolar qualquer recurso destinado à TNU, conferir.
 - [ ] QO 24 - Acórdão recorrido NÃO está alinhado a STJ (PUIL) ou ESTÁ alinhado (contrarrazões).
 - [ ] QO 35 + QO 36 - Tese foi enfrentada na TR ou ED foram opostos.
 - [ ] QO 40 - Recurso correto contra inadmissão por Súmula 42/43.
-- [ ] QO 48 - Paradigma válido (não TRF, STF, TST, TSE).
+- [ ] QO 48 - Paradigma válido (não STF; TRF, TST e TSE ficam fora do rol do art. 14, § 2º, da Lei 10.259/01) (auditoria 03/10/2026).
 - [ ] QO 51 - Não pleitear IRDR no PUIL.
 - [ ] QO 52 - Considerar honorários na reclamação.
 - [ ] QO 54 - Acórdão é de mérito, não de tutela provisória.

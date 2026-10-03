@@ -67,7 +67,7 @@ No âmbito previdenciário, o MS é a via preferencial sempre que a questão for
 
 **Pedido no MS.** Anulação da decisão administrativa e reabertura do PA com formulação de nova exigência e oportunização do contraditório. Prazo de cumprimento de 40 dias (Ofício Circular 37/2025/SEP/CNJ) ou 45 dias (art. 174, Decreto 3.048/99).
 
-**Precedentes verificados.** TRF1, 1ª Turma, AMS 1004475-66.2022.4.01.3000, Des. Fed. Eduardo Morais da Rocha, PJe 24/07/2024 (BPC indeferido por vínculo em aberto sem carta de exigência). TRF3, 2ª Vara Federal de Mogi das Cruzes, Proc. 5001807-05.2025.4.03.6133 (reabertura PA por não análise de documentos rurais).
+**Precedentes verificados.** TRF1, 1ª Turma, AMS 1004475-66.2022.4.01.3000, Des. Fed. Eduardo Morais da Rocha, PJe 24/07/2024 (BPC indeferido por vínculo em aberto sem carta de exigência). Sentença em mandado de segurança da 2ª Vara Federal de Mogi das Cruzes (primeiro grau, sem acórdão do TRF3), Proc. 5001807-05.2025.4.03.6133 [NÃO CONFIRMADO] (reabertura PA por não análise de documentos rurais) (auditoria 03/10/2026).
 
 **Conexão com Portarias 13/14/15-2026.** No regime de análise documental para B31/B91/B94, o INSS deve cumprir as exigências documentais mínimas das Portarias. Indeferimento sem observância dessas exigências é atacável por MS.
 

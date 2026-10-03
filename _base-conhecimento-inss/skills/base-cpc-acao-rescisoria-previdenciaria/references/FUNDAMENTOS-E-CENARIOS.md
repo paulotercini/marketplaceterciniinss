@@ -40,9 +40,9 @@ Rescisória e divergência.
 
 Interpretação divergente.
 
-### Enunciado 63 FONAJEF
+### Enunciado 44 FONAJEF
 
-Rescisória no JEF.
+Não cabe ação rescisória no JEF, em linha com o art. 59 da Lei 9.099/1995. Tese adversa; o caminho do segurado é o procedimento comum, com rescisória no TRF (auditoria 03/10/2026).
 
 ### Tema 629 STJ
 

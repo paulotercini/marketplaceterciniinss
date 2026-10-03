@@ -71,7 +71,7 @@ Lei 8.742/93 (LOAS).
 
 Decreto 6.214/2007.
 
-Portaria Conjunta SPS/INSS/SNAS 2/2014. Avaliação biopsicossocial.
+Portaria Conjunta MDS/INSS 2/2015 (auditoria 03/10/2026). Avaliação biopsicossocial.
 
 Portaria 34/2025. TCQ.
 
@@ -81,7 +81,7 @@ Lei 15.157/2025. Dispensa de reavaliação.
 
 LC 142/2013. Aposentadoria PCD.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014. IF-BrA.
+Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (auditoria 03/10/2026). IF-BrA.
 
 ## 4. Checklist A. Validação de laudo para incapacidade (B31, B32, B91, B92, B94)
 
@@ -159,7 +159,7 @@ Item A.27. Período estimado de incapacidade (B31).
 
 Item A.28. Insuscetibilidade de reabilitação (B32 ou B92).
 
-Item A.29. Nexo causal: para B91 ou B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86; Tema 416 STJ) — nexo laboral só quando se pleiteia a natureza acidentária/competência estadual. Na concausa, o laudo descreve o esforço da função que contribuiu para o agravamento, ainda que não seja a causa única. Em doença degenerativa (artrose), a concausa precisa de descrição concreta do esforço, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho.
+Item A.29. Nexo causal: para B91 ou B92, nexo com o trabalho (arts. 19 a 21-A da Lei 8.213/91); para B94, basta acidente de QUALQUER natureza (art. 86, caput, da Lei 8.213/91; auditoria 03/10/2026, retirado o Tema 416/STJ, cuja tese fala em acidente do trabalho e trata da lesão mínima) — nexo laboral só quando se pleiteia a natureza acidentária/competência estadual. Na concausa, o laudo descreve o esforço da função que contribuiu para o agravamento, ainda que não seja a causa única. Em doença degenerativa (artrose), a concausa precisa de descrição concreta do esforço, porque o art. 20, §1º, "a", da Lei 8.213/91 exclui a doença degenerativa do conceito de doença do trabalho.
 
 Item A.30. Caracterização da sequela (B94).
 

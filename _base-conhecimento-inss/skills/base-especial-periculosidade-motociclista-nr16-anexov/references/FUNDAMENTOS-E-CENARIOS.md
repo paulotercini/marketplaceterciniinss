@@ -42,7 +42,7 @@ Capacete e demais EPIs não neutralizam a periculosidade. O risco de acidente de
 
 ## 11. Cenário 10 — Empresa extinta ou sem PPP
 
-Permitida a perícia indireta e a prova testemunhal nos termos da Súmula 198 TFR e do Tema 1031 STJ.
+Permitida a perícia indireta, por similaridade, nos termos da Súmula 198 do TFR e do art. 369 do CPC, com a prova testemunhal como complemento (auditoria 03/10/2026, retirado o Tema 1031/STJ, que trata da especialidade do vigilante).
 
 ## 12. Documentos essenciais
 

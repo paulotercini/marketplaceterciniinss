@@ -1,6 +1,6 @@
 ---
 name: base-ms-decadencia-omissao-demora
-description: "Decadência em mandado de segurança previdenciário (art. 23 Lei 12.016/2009), prazo de 120 dias, termo inicial em ato comissivo e omissivo, renovação em omissão, Súmula 632 STJ, demora INSS e duração razoável do processo administrativo pelo acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021). Use SEMPRE que mencionar decadência em MS, prazo 120 dias, art. 23 Lei 12.016, termo inicial MS, ato comissivo, ato omissivo, renovação em omissão, Súmula 632 STJ, demora INSS MS, acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021), duração razoável PA, art. 49 Lei 9.784/1999, Lei 13.460/2017, paralisação administrativa. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e lei-13460-usuario-servico-publico."
+description: "Decadência em mandado de segurança previdenciário (art. 23 Lei 12.016/2009), prazo de 120 dias, termo inicial em ato comissivo e omissivo, renovação em omissão, Súmula 632 STF, demora INSS e duração razoável do processo administrativo pelo acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021). Use SEMPRE que mencionar decadência em MS, prazo 120 dias, art. 23 Lei 12.016, termo inicial MS, ato comissivo, ato omissivo, renovação em omissão, Súmula 632 STF, demora INSS MS, acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021), duração razoável PA, art. 49 Lei 9.784/1999, Lei 13.460/2017, paralisação administrativa. Cruza com mandado-seguranca-previdenciario, ms-competencia-autoridade-coatora, base-ms-cabimento-direito-liquido-certo, base-ms-competencia-autoridade-coatora-inss-crps e lei-13460-usuario-servico-publico."
 ---
 
 # Decadência e Omissão em MS Previdenciário
@@ -21,11 +21,11 @@ Lei 8.213/91, art. 52.
 
 ## Marco jurisprudencial
 
-### Súmula 632 STJ
+### Súmula 632 STF (auditoria 03/10/2026)
 
-Decadência e suspensão.
+"É constitucional lei que fixa o prazo de decadência para a impetração de mandado de segurança."
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://portal.stf.jus.br
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
@@ -35,7 +35,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 374 STF
 
-Foro.
+Foro do art. 109, §2º, CF nas ações contra autarquias federais, à escolha do autor. A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ## Regra geral
 

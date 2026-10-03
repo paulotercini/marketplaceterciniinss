@@ -30,11 +30,11 @@ Confirma a inclusão de direção, coordenação e assessoramento como funções
 
 ### Tema 1011 STJ
 
-Coordenação pedagógica como magistério.
+Incide o fator previdenciário na aposentadoria por tempo de contribuição do professor quando os requisitos se completam após a Lei 9.876/99. Tese adversa; quem reuniu os requisitos antes dela escapa do fator. Coordenação pedagógica como magistério vem da ADI 3772 e do Tema 965/STF (RPPS), não deste tema (auditoria 03/10/2026).
 
 ### Tema 1091 STF
 
-Tempo de professor e magistério.
+Constitucionalidade do fator previdenciário (RE 1.221.630, trânsito em 27/06/2020). Tese. "É constitucional o fator previdenciário previsto no art. 29, caput, incisos e parágrafos, da Lei nº 8.213/91, com a redação dada pelo art. 2º da Lei nº 9.876/99." Tese adversa, sem efeito nesta regra, cujo valor se calcula pelo art. 26, §2º, I, da EC 103/2019, sem fator (auditoria 03/10/2026).
 
 ### Súmula 726/STF (restritiva) e sua mitigação
 
@@ -42,19 +42,19 @@ Texto real. "Para efeito de aposentadoria especial de professores, não se compu
 
 ## 5. Pontuação progressiva
 
-2020, 81 mulher, 91 homem.
+2019, 81 mulher, 91 homem; 2020, 82 mulher, 92 homem (auditoria 03/10/2026).
 
-2021, 82 mulher, 92 homem.
+2021, 83 mulher, 93 homem.
 
-2022, 83 mulher, 93 homem.
+2022, 84 mulher, 94 homem.
 
-2023, 84 mulher, 94 homem.
+2023, 85 mulher, 95 homem.
 
-2024, 85 mulher, 95 homem.
+2024, 86 mulher, 96 homem.
 
-2025, 86 mulher, 96 homem.
+2025, 87 mulher, 97 homem.
 
-2026, 87 mulher, 97 homem.
+2026, 88 mulher, 98 homem.
 
 Limite, 92 mulher, 100 homem.
 
@@ -62,11 +62,11 @@ Limite, 92 mulher, 100 homem.
 
 ### Cenário A — Professora com 25 anos de magistério em 2026
 
-Idade 62, pontos 87. Aposenta-se.
+Idade 63, pontos 88, o mínimo exigido em 2026. Aposenta-se (auditoria 03/10/2026).
 
 ### Cenário B — Professor com 30 anos em 2026
 
-Idade 67, pontos 97. Aposenta-se.
+Idade 68, pontos 98, o mínimo exigido em 2026. Aposenta-se (auditoria 03/10/2026).
 
 ### Cenário C — Coordenadora pedagógica
 
@@ -90,7 +90,7 @@ Somente magistério conta para regra de pontos. Outras atividades em regra geral
 
 ### Cenário H — Professor universitário
 
-Não se enquadra. ADI 3772 exclui.
+Não se enquadra. O texto limita a regra à educação infantil e aos ensinos fundamental e médio (CF, art. 201, §8º; EC 103, art. 15, §3º) (auditoria 03/10/2026).
 
 ## 7. Cenários limitados
 

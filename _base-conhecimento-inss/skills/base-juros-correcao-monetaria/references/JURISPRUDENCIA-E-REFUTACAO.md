@@ -4,7 +4,7 @@
 
 ### Tema 810 STF
 
-IPCA-E, juros poupança, modulação.
+IPCA-E [NÃO CONFIRMADO], juros poupança, sem modulação (embargos rejeitados em 03/10/2019) (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -28,7 +28,7 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 362 STJ
 
-Juros sobre honorários.
+Correção monetária do dano moral, "A correção monetária do valor da indenização do dano moral incide desde a data do arbitramento." Não trata de juros nem de honorários e serve só ao pedido cumulado de dano moral (auditoria 03/10/2026).
 
 ## 2. Marco legislativo
 
@@ -92,7 +92,7 @@ Refutação. Súmula 85 STJ, quinquênio anterior ao ajuizamento.
 
 Argumento adversário. Dispensa.
 
-Refutação. Súmula 362 STJ. Juros sobre honorários devidos.
+Refutação. Juros sobre honorários devidos. Fixados em quantia certa, incidem desde o trânsito em julgado da decisão (art. 85, §16, CPC) (auditoria 03/10/2026, retirada a Súmula 362 STJ, que trata de correção do dano moral).
 
 ### Argumento 9 — Fixação de juros remuneratórios
 

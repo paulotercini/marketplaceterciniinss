@@ -1,6 +1,6 @@
 ---
 name: base-pcd-if-bra-metodologia
-description: "Metodologia do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado) para aposentadoria da pessoa com deficiência da LC 142/2013, sete domínios, escala genebra, lógica fuzzy, pontuação por grau e definição de leve, moderada ou grave. Use SEMPRE que mencionar IF-BrA, Índice de Funcionalidade Brasileiro Aplicado, lógica fuzzy LC 142, sete domínios deficiência, sensorial cognição mobilidade interações domésticas educação trabalho, escala genebra IF-BrA, pontuação 25 50 75 100 IF-BrA, método fuzzy, modelo linguístico fuzzy, domínios sensíveis, perguntas emblemáticas, replicação da menor pontuação, ausência de auxílio de terceiros, 41 atividades funcionais, quesitos fuzzy, impugnação por não aplicação do fuzzy, deficiência leve moderada grave LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014, conversão tempo deficiência, perícia biopsicossocial, avaliação funcional INSS, médico assistente social INSS. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-did-retroativa, base-pcd-conversao-tempo-especial-pcd, base-pcd-fibromialgia-lei15176 e formacao-documentacao-did-pcd."
+description: "Metodologia do IF-BrA (Índice de Funcionalidade Brasileiro Aplicado) para aposentadoria da pessoa com deficiência da LC 142/2013, sete domínios, escala genebra, lógica fuzzy, pontuação por grau e definição de leve, moderada ou grave. Use SEMPRE que mencionar IF-BrA, Índice de Funcionalidade Brasileiro Aplicado, lógica fuzzy LC 142, sete domínios deficiência, sensorial cognição mobilidade interações domésticas educação trabalho, escala genebra IF-BrA, pontuação 25 50 75 100 IF-BrA, método fuzzy, modelo linguístico fuzzy, domínios sensíveis, perguntas emblemáticas, replicação da menor pontuação, ausência de auxílio de terceiros, 41 atividades funcionais, quesitos fuzzy, impugnação por não aplicação do fuzzy, deficiência leve moderada grave LC 142, Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014, conversão tempo deficiência, perícia biopsicossocial, avaliação funcional INSS, médico assistente social INSS. Cruza com aposentadoria-deficiencia, peticao-previdenciaria, revisao-peticao, base-pcd-did-retroativa, base-pcd-conversao-tempo-especial-pcd, base-pcd-fibromialgia-lei15176 e formacao-documentacao-did-pcd."
 ---
 
 # Metodologia do IF-BrA na Aposentadoria PCD
@@ -17,7 +17,7 @@ LC 142/2013.
 
 Decreto 8.145/2013.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014.
+Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 IN 128/2022.
 
@@ -27,19 +27,19 @@ Lei 13.146/2015, Estatuto da PCD.
 
 ### ADI 5760 STF
 
-Constitucionalidade da LC 142.
+Objeto real. Declarou inconstitucional o art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91 (Rel. Min. Alexandre de Moraes, 13/09/2019, unânime). Não sustenta tese sobre aposentadoria da pessoa com deficiência nem sobre a avaliação biopsicossocial (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 173 TNU
 
-Deficiência intelectual e LC 142.
+Trata do impedimento de longo prazo de 2 anos no BPC, não da LC 142; não citar nesta matéria (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
 ### Repercussão social e funcional na avaliação (IF-BrA)
 
-A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (IF-BrA) (auditoria 03/10/2026) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ## Sete domínios do IF-BrA
 
@@ -73,7 +73,7 @@ Quarto, conversão de tempo aplicável a cada grau.
 
 ## Modelo Linguístico Fuzzy — VERIFICAÇÃO OBRIGATÓRIA (Onda 106)
 
-A Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014 adotou a lógica fuzzy. A mecânica é objetiva e sua omissão é erro técnico atacável.
+A Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026) adotou a lógica fuzzy. A mecânica é objetiva e sua omissão é erro técnico atacável.
 
 Ordem da avaliação. Primeiro pontuam-se as 41 atividades. SEGUNDO verifica-se a necessidade de aplicar o Fuzzy. Só então se somam os pontos e se define o grau. Perito que soma direto pulou etapa e produziu resultado viciado.
 
@@ -83,7 +83,7 @@ Consequência única. A MENOR pontuação atribuída a uma atividade do domínio
 
 Domínios sensíveis. Auditiva, comunicação e socialização. Visual, mobilidade e vida doméstica. Motora, mobilidade e cuidados pessoais. Intelectual ou mental, vida doméstica e socialização.
 
-Perguntas emblemáticas. Auditiva, a surdez ocorreu antes dos seis anos. Visual, já não enxergava ao nascer. Motora, desloca-se exclusivamente em cadeira de rodas. Intelectual ou mental, pode ficar sozinha em segurança.
+Perguntas emblemáticas. Auditiva, a surdez ocorreu antes dos seis anos. Visual, já não enxergava ao nascer. Motora, desloca-se exclusivamente em cadeira de rodas. Intelectual ou mental, "não pode ficar sozinho em segurança" (auditoria 03/10/2026).
 
 Checklist obrigatório de sete pontos, oito quesitos prontos para a perícia, roteiro de impugnação em cinco blocos e a pendência de nomenclatura entre IF-BrA e IFBrM em `references/METODO-FUZZY-APLICACAO-OBRIGATORIA.md`. A verificação do Fuzzy é OBRIGATÓRIA em todo caso de deficiência, antes de aceitar o resultado da avaliação.
 

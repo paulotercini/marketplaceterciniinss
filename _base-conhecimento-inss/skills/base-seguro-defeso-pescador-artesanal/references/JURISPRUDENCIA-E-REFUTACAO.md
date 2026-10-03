@@ -4,21 +4,21 @@
 
 ### TNU — Tema 219
 
-Tese. Reconhecimento flexibilizado da atividade do segurado especial (aplicável por analogia ao pescador).
+Tese. É possível o cômputo do tempo de serviço rural exercido por pessoa com idade inferior a 12 anos na época da prestação do labor campesino (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Admite prova ampla do pescador em economia familiar.
+Aplicação pró-segurado. Por analogia, sustenta o cômputo da pesca em economia familiar exercida antes dos 12 anos.
 
 ### TNU — Tema 348
 
-Tese. Prova da atividade pesqueira pode ser produzida por documento e testemunha, ainda que o RGP não abranja todo o período.
+Tese. O segurado especial tem direito à prorrogação do período de graça por inatividade involuntária, aplicando-se por analogia o art. 15, §2º, da Lei 8.213/91 (auditoria 03/10/2026).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Admite prova ampla.
+Aplicação pró-segurado. Vale para o pescador artesanal, segurado especial (art. 11, VII, b, da Lei 8.213/91), na manutenção da qualidade de segurado.
 
-### STF — Tema 629
+### STJ, Tema 629 (REsp 1.352.721/SP) (auditoria 03/10/2026)
 
 Tese (contexto de segurado especial, aplicável por analogia). Aceita nova ação em caso de prova nova.
 
@@ -38,7 +38,7 @@ Fonte oficial em https://www.trf3.jus.br, https://www.trf4.jus.br, https://www.t
 
 Argumento adversário. CNIS registra vínculo como empregado por período curto, logo houve descaracterização.
 
-Refutação. Lei 10.779/2003, art. 2º, I, interpreta exclusividade de forma compatível com economia familiar. Tema 219 TNU. Vínculo acessório não descaracteriza.
+Refutação. Lei 10.779/2003, art. 2º, I, interpreta exclusividade de forma compatível com economia familiar. Vínculo remunerado de até 120 dias, corridos ou intercalados, no ano civil não descaracteriza a condição de segurado especial (art. 11, §9º, III, da Lei 8.213/91) (auditoria 03/10/2026, retirado o Tema 219/TNU, que trata do trabalho rural antes dos 12 anos).
 
 ### Argumento 2 — RGP intermitente
 
@@ -68,7 +68,7 @@ Refutação. Natureza distinta dos benefícios. Salário-maternidade é conting�
 
 Argumento adversário. Sem notas, não há prova.
 
-Refutação. Declaração da colônia, fotografias, testemunhas, CAF, GTA e declaração escrita do segurado são admitidos conforme Tema 348 TNU.
+Refutação. Declaração da colônia, fotografias, testemunhas, CAF, GTA e declaração escrita do segurado são meios de prova admitidos em juízo (art. 369 do CPC) (auditoria 03/10/2026, retirado o Tema 348/TNU, que trata da prorrogação do período de graça do segurado especial por inatividade involuntária).
 
 ### Argumento 7 — Defeso não prorrogado
 

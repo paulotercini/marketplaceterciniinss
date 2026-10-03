@@ -9,7 +9,7 @@ Esta referência complementa a skill `precedentes-previdenciarios` com precedent
 ## STJ — Temas Repetitivos
 
 ### Tema 297/STJ [BASE]
-Rol do art. 106 da Lei 8.213/91 é exemplificativo. Outros documentos podem ser aceitos como início de prova material.
+Tese adversa. A prova exclusivamente testemunhal não basta para comprovar a atividade rurícola (Súmula 149/STJ). O caminho do segurado é o início de prova material, e o art. 116 da IN 128 admite documentos além dos listados ("dentre outros") (auditoria 03/10/2026).
 
 ### Tema 554/STJ [BASE]
 Prova testemunhal pode estender período reconhecido por início de prova material, sem configurar prova exclusivamente testemunhal.
@@ -41,13 +41,13 @@ PEDILEF 0504229-18.2022.4.05.8400/RN.
 
 ### PUIL 1001293-53.2020.4.01.3805/MG [VERIFICADO — CATALOGADO]
 **Tese.** O reconhecimento do tempo rural em regime de economia familiar não se limita à subsistência, nem a determinado tipo de cultura, podendo incluir a produção para comercialização, desde que comprovada a atividade em condições de mútua dependência e colaboração, sem utilização de empregados permanentes.
-**Publicação.** 11 de novembro (data do post que referencia).
+**Publicação.** D.E. 23/10/2025 (auditoria 03/10/2026).
 **Relevância.** Bloqueia o argumento do INSS de que notas fiscais de valor alto ou produção comercial descaracterizam o segurado especial. Alinhado ao art. 109, §1º, da IN 128/2022.
 
-### PUIL 5009034-30.2021.4.03.6119 [VERIFICAÇÃO PARCIAL]
+### PUIL 5009034-30.2021.4.03.6119 [LOCALIZADO NO MCP TNU, A CONFERIR NA FONTE OFICIAL]
 **Tese.** Documentos em nome dos pais constituem início de prova material para os filhos do mesmo núcleo familiar, aplicando-se o Protocolo de Julgamento com Perspectiva de Gênero do CNJ.
 **Relevância.** Extensão do Tema 327/TNU (cônjuge) para a relação pais-filhos.
-**Ressalva.** Fonte da informação é publicação de Prof. Frederico Martins (EPREV/Instagram). Não localizado em fonte primária do CJF até 28/03/2026. A tese, contudo, já é consolidada na TNU pelo Tema 18 e pela Súmula 6/TNU, independentemente deste PUIL específico.
+**Ressalva.** Fonte da informação é publicação de Prof. Frederico Martins (EPREV/Instagram). Localizado no MCP TNU, a conferir na fonte oficial (auditoria 03/10/2026). A tese, contudo, já é consolidada na TNU pelo Tema 18 e pela Súmula 6/TNU, independentemente deste PUIL específico.
 
 ---
 

@@ -45,11 +45,11 @@ Responsável direto pelo recolhimento (art. 30, II, Lei 8.212/91). Pode indeniza
 
 Exige indenização para cômputo como tempo de contribuição no RGPS **na aposentadoria por tempo de contribuição**. A base de cálculo observa a legislação vigente à época da prestação, prevalecendo o salário mínimo como referência. Para contagem recíproca (RPPS), a indenização é exigida inclusive para labor anterior a 31/10/1991 (Tema 609/STJ).
 
-**EXCEÇÃO IMPORTANTE — Aposentadoria por idade híbrida.** A jurisprudência predominante (TNU, PEDILEF 0001508-25.2020.4.01.3500, j. 08/02/2024; TRF3; TRF4; ACP 5038261-15.2015.4.04.7100/RS com efeitos nacionais) dispensa indenização para cômputo de atividade rural pós-1991 como carência na aposentadoria por idade híbrida (art. 48, §3º, Lei 8.213/91). O art. 257-A, II, da IN 128/2022 também dispensa contribuições para a híbrida. A dispensa é pacífica para segurado especial e empregado rural. Para contribuinte individual rural, o INSS tende a resistir na via administrativa, mas o TRF4 dispensa inclusive para CI na aposentadoria híbrida. Consultar skill `aposentadoria-idade-hibrida` para regime completo.
+**EXCEÇÃO IMPORTANTE — Aposentadoria por idade híbrida.** A jurisprudência predominante (TNU, PEDILEF 1008411-25.2020.4.01.3500 (auditoria 03/10/2026), j. 08/02/2024; TRF3; TRF4; ACP 5038261-15.2015.4.04.7100/RS com efeitos nacionais) dispensa indenização para cômputo de atividade rural pós-1991 como carência na aposentadoria por idade híbrida (art. 48, §3º, Lei 8.213/91). O art. 257-A, II, da IN 128/2022, que dispensava contribuições para a híbrida, foi revogado pela IN 188/2025 (auditoria 03/10/2026). A dispensa é pacífica para segurado especial e empregado rural. Para contribuinte individual rural, o INSS tende a resistir na via administrativa, mas o TRF4 dispensa inclusive para CI na aposentadoria híbrida. Consultar skill `aposentadoria-idade-hibrida` para regime completo.
 
 ### 2.3 Segurado empregado com vínculo não registrado no CNIS
 
-A obrigação de recolhimento é do empregador (art. 30, I, "a", Lei 8.212/91). O segurado não pode ser prejudicado pela inadimplência do empregador. Presunção de recolhimento reconhecida pela jurisprudência (Súmula 75 TNU). Não se trata de indenização, mas de reconhecimento de vínculo com presunção contributiva.
+A obrigação de recolhimento é do empregador (art. 30, I, "a", Lei 8.212/91). O segurado não pode ser prejudicado pela inadimplência do empregador. A CTPS sem defeito formal goza de presunção relativa de veracidade e prova o tempo de serviço, ainda que o vínculo não conste do CNIS (Súmula 75 TNU) (auditoria 03/10/2026). Não se trata de indenização, mas de reconhecimento de vínculo com presunção contributiva.
 
 ### 2.4 Segurado facultativo
 
@@ -74,11 +74,11 @@ Regras do Enunciado 5
 
 ### 3.2 Art. 92 da IN 128/2022 — presunção de continuidade da atividade
 
-O art. 92 da IN 128/2022 é a ferramenta central para resolver a comprovação sem necessidade de provas documentais mês a mês. Quando o contribuinte individual possui ao menos uma contribuição recolhida em dia no passado e NÃO deu baixa formal na atividade, o INSS presume a continuidade do exercício da atividade para todo o período subsequente.
+O art. 92 da IN 128/2022 é a ferramenta central para resolver a comprovação sem necessidade de provas documentais mês a mês. Quando a atividade de contribuinte individual está cadastrada no CNIS sem evidência de interrupção ou encerramento (art. 92, I) (auditoria 03/10/2026), o INSS presume a continuidade do exercício da atividade para todo o período subsequente.
 
 Hipóteses do art. 92
 
-- Inciso I — quando há atividade cadastrada no CNIS e contribuição recolhida, presume-se continuidade até baixa formal
+- Inciso I — quando há atividade cadastrada no CNIS, nessa condição, sem evidência de interrupção ou encerramento, o período se considera comprovado (auditoria 03/10/2026)
 - Inciso II — quando inexiste atividade cadastrada mas há contribuição recolhida em qualquer inscrição, a data de início é considerada como o primeiro dia da competência da primeira contribuição sem atraso na condição de CI
 
 Exceções e limitações
@@ -213,7 +213,7 @@ Contribuições recolhidas com atraso referentes a competências anteriores à d
 
 ### 8.2 Exceção — manutenção da qualidade de segurado
 
-A vedação não se aplica quando o recolhimento em atraso refere-se a competências POSTERIORES ao início do período de carência (primeira contribuição em dia) e não houve perda da qualidade de segurado. Nesse caso, as contribuições recolhidas com atraso contam para carência. Tema 192/TNU confirma esse entendimento.
+A vedação não se aplica quando o recolhimento em atraso refere-se a competências POSTERIORES ao início do período de carência (primeira contribuição em dia) e não houve perda da qualidade de segurado. Nesse caso, as contribuições recolhidas com atraso contam para carência. O Tema 192/TNU é tese adversa, pois nega o cômputo para carência do recolhimento em atraso feito após a perda da qualidade de segurado. O caminho do segurado é ter a primeira contribuição em dia e recolher o atraso antes da perda da qualidade (auditoria 03/10/2026).
 
 ### 8.3 Restrição do Decreto 10.410/2020 (art. 28, II, §4º, RPS)
 
@@ -253,8 +253,8 @@ Para consulta completa, acionar a skill **precedentes-previdenciarios**. Precede
 
 - **Tema 609/STJ** — contagem recíproca de labor rural pré-1991 exige indenização (art. 96, IV, Lei 8.213/91)
 - **Tema 1103/STJ** — juros e multa somente para períodos posteriores à MP 1.523/1996
-- **Tema 192/TNU** — contribuinte individual com recolhimento em atraso posterior à primeira contribuição em dia conta para carência se mantida qualidade de segurado
-- **Tema 988/STJ** — cabimento de agravo de instrumento (hipóteses não taxativas do art. 1.015 CPC)
+- **Tema 192/TNU** — tese adversa: o recolhimento em atraso feito após a perda da qualidade de segurado não conta para carência. O caminho do segurado é recolher o atraso antes da perda, depois da primeira contribuição em dia (art. 27, II, da Lei 8.213/91) (auditoria 03/10/2026)
+- **Tema 988/STJ** — cabimento de agravo de instrumento (taxatividade mitigada do rol do art. 1.015 CPC, com urgência demonstrada) (auditoria 03/10/2026)
 
 ## 11. CHECKLIST DE VERIFICAÇÃO
 

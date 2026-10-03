@@ -140,7 +140,7 @@ A ementa dos embargos (item 3) qualifica as situações do voto como exemplos, c
 
 ### 5.1. Conversão prejudicial sem postulação
 
-A jurisprudência do STJ no REsp 2.246.096/MG vedou a conversão de B91 (auxílio-doença acidentário) em B94 (auxílio-acidente) sem postulação do segurado, quando isso reduz o valor recebido. O fundamento é a violação aos arts. 141 e 492 do CPC.
+A jurisprudência do STJ no REsp 2.246.096/MG vedou a conversão de ofício do auxílio-doença em auxílio-acidente sem postulação do segurado (auditoria 03/10/2026, retirada a espécie B91, que o acórdão não indica), quando isso reduz o valor recebido. O fundamento é a violação aos arts. 141 e 492 do CPC.
 
 ### 5.2. Reformatio in pejus
 

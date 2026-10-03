@@ -18,7 +18,7 @@ LC 142/2013.
 
 Decreto 8.145/2013.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015.
+Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026).
 
 Lei 13.146/2015.
 
@@ -28,15 +28,15 @@ IN 128/2022.
 
 ### ADI 5760 STF
 
-Constitucionalidade.
+Objeto real. Declarou inconstitucional o art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91 (Rel. Min. Alexandre de Moraes, 13/09/2019, unânime). Não sustenta tese sobre aposentadoria da pessoa com deficiência nem sobre a avaliação biopsicossocial (auditoria 03/10/2026).
 
 ### Tema 173 TNU
 
-Deficiência intelectual.
+Trata do impedimento de longo prazo de 2 anos no BPC, não da LC 142; não citar nesta matéria (auditoria 03/10/2026).
 
 ### Repercussão social e funcional na avaliação (IF-BrA)
 
-A exigência decorre da Portaria Interministerial AGU/MPS/MF/MP/PR 1/2014 (IF-BrA) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
+A exigência decorre da Portaria Interministerial AGU/MPS/MF/SEDH/MP 1/2014 (IF-BrA) (auditoria 03/10/2026) e da LC 142/2013 (auditoria 25/07/2026, retirado o Tema 305/TNU, que trata de auxílio emergencial).
 
 ## 5. Sete domínios
 
@@ -70,7 +70,7 @@ Lei 12.764/2012. Múltiplos domínios.
 
 ### Cenário G — Deficiência intelectual
 
-Tema 173 TNU.
+Domínios sensíveis Vida Doméstica e Socialização, com a questão "não pode ficar sozinho em segurança" (Portaria Interministerial 1/2014, Quadro 2) (auditoria 03/10/2026, retirado o Tema 173/TNU, que trata do BPC).
 
 ## 7. Cenários limitados
 

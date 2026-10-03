@@ -29,7 +29,7 @@ O laudo deve abordar.
 
 Funcionalidade conforme CIF (Classificação Internacional de Funcionalidade).
 
-Sete domínios do IF-BrA (Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014).
+Sete domínios do IF-BrA (Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014) (auditoria 03/10/2026).
 
 Barreiras enfrentadas (físicas, atitudinais, de comunicação, tecnológicas).
 

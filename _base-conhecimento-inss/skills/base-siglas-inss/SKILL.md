@@ -23,7 +23,7 @@ Banco de dados mantido pela DATAPREV e administrado pelo INSS. Contém vínculos
 
 ### CTPS - Carteira de Trabalho e Previdência Social
 
-Documento de prova de vínculo empregatício. Tem presunção de veracidade (Súmula 12 TST). Atualmente, digital pelo eSocial, mas a versão física segue válida.
+Documento de prova de vínculo empregatício. Tem presunção relativa de veracidade (Súmula 12 TST; auditoria 03/10/2026). Atualmente, digital pelo eSocial, mas a versão física segue válida.
 
 ### CADPF - Cadastro da Pessoa Física
 

@@ -189,7 +189,7 @@ ATENÇÃO. Mandado de segurança NÃO é cabível no JEF. Para MS contra INSS, u
 
 **Cálculo do valor.** Soma das parcelas vencidas + 12 vincendas (art. 292 §§1º e 2º CPC + art. 3º §2º Lei 10.259).
 
-**Renúncia ao excedente.** Tema 1030/STJ. "Ao autor que deseje litigar no âmbito de Juizado Especial Federal Cível, é lícito renunciar, de modo expresso e para fins de atribuição de valor à causa, ao montante que exceda os 60 salários mínimos previstos no artigo 3º, caput, da Lei nº 10.259/2001, aí incluídas, sendo o caso, até doze prestações vincendas."
+**Renúncia ao excedente.** Tema 1030/STJ. "Ao autor que deseje litigar no âmbito de Juizado Especial Federal Cível, é lícito renunciar, de modo expresso e para fins de atribuição de valor à causa, ao montante que exceda os 60 (sessenta) salários mínimos previstos no art. 3º, caput, da Lei 10.259/2001, aí incluídas, sendo o caso, até doze prestações vincendas, nos termos do art. 3º, § 2º, da referida lei, c/c o art. 292, §§ 1º e 2º, do CPC/2015." (auditoria 03/10/2026)
 
 Estratégia pró-segurado. Em causas próximas do limite, calcular se a renúncia é vantajosa vs ajuizar na Vara Federal Comum. A renúncia é IRREVOGÁVEL.
 

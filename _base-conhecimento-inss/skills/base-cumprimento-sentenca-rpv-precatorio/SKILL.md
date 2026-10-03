@@ -1,6 +1,6 @@
 ---
 name: base-cumprimento-sentenca-rpv-precatorio
-description: "Cumprimento de sentença contra o INSS, expedição de RPV e precatório, juros e correção monetária, honorários, tributação e destaque. Use SEMPRE que mencionar cumprimento de sentença previdenciário, execução INSS, RPV, precatório, art. 100 CF, art. 17 Lei 10.259, Lei 11.960/2009, Tema 810 STF, Tema 905 STJ, Tema 96 STJ, art. 85 CPC, honorários sucumbenciais, Súmula 111 STJ, Tema 1050 STJ, destaque honorários, IR sobre atrasados, RRA art. 12-A Lei 7.713, Tema 368 STF, deságio precatório, teto RPV, 60 salários-mínimos, parcelamento, expedição de ofício, dialeticidade recursal execução, impugnação ao cumprimento, IRDR 18 TRF4. Cruza com execucao-cumprimento-previdenciario, peticao-previdenciaria, tributacao-beneficios-previdenciarios, honorarios-contrato-previdenciario e impugnacao-cumprimento-concomitantes."
+description: "Cumprimento de sentença contra o INSS, expedição de RPV e precatório, juros e correção monetária, honorários, tributação e destaque. Use SEMPRE que mencionar cumprimento de sentença previdenciário, execução INSS, RPV, precatório, art. 100 CF, art. 17 Lei 10.259, Lei 11.960/2009, Tema 810 STF, Tema 905 STJ, art. 85 CPC, honorários sucumbenciais, Súmula 111 STJ, Tema 1050 STJ, destaque honorários, IR sobre atrasados, RRA art. 12-A Lei 7.713, Tema 368 STF, deságio precatório, teto RPV, 60 salários-mínimos, parcelamento, expedição de ofício, dialeticidade recursal execução, impugnação ao cumprimento, IRDR 18 TRF4. Cruza com execucao-cumprimento-previdenciario, peticao-previdenciaria, tributacao-beneficios-previdenciarios, honorarios-contrato-previdenciario e impugnacao-cumprimento-concomitantes."
 ---
 
 # Cumprimento de Sentença Previdenciário. RPV e Precatório
@@ -29,7 +29,7 @@ Tema 1050 STJ. Proveito econômico em honorários.
 
 ### Tema 810 STF
 
-Correção monetária pelo IPCA-E e juros pela remuneração da caderneta de poupança, com modulação. SELIC unificada a partir de 09/12/2021.
+Correção monetária pelo IPCA-E [NÃO CONFIRMADO] e juros pela remuneração da caderneta de poupança, sem modulação, que os embargos de declaração no RE 870.947 rejeitaram em 03/10/2019 [CONFERIDO] (https://portal.stf.jus.br/processos/abaDecisoes.asp?incidente=4723934). No benefício previdenciário, a correção segue o INPC do Tema 905/STJ [CONFERIDO]. SELIC unificada a partir de 09/12/2021 (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -39,9 +39,9 @@ Juros e correção em benefícios previdenciários.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 96 STJ
+### Prescrição em cumprimento
 
-Prescrição em cumprimento.
+Sem precedente vinculante conferido nesta base (auditoria 03/10/2026, retirado o Tema 96/STJ, que trata de crédito tributário).
 
 ### Tema 368 STF
 
@@ -55,7 +55,7 @@ Honorários sobre parcelas vencidas até a sentença.
 
 ### Súmula 345 STJ e art. 85, §1º, CPC
 
-Honorários em execução contra a Fazenda (a Súmula 443 STJ é matéria penal — não usar).
+Honorários na execução individual de sentença proferida em ação coletiva, ainda que não embargada (Súmula 345 STJ). Nas demais execuções vale o art. 85, §1º, CPC, salvo a exceção do §7º para o precatório sem impugnação (auditoria 03/10/2026). A Súmula 443 STJ é matéria penal, não usar.
 
 ## Espaço pró-segurado
 
@@ -119,7 +119,7 @@ Quinto, impugnação do INSS exige resposta técnica pelo segurado.
 
 ## Manual de Cálculos CJF 2026 e EC 136/2025 (Onda 76)
 
-A edição 2026 do Manual de Cálculos da Justiça Federal (Resolução CJF 990, de 03/07/2026) incorporou o encerramento da SELIC do art. 3º da EC 113/2021 na fase pré-requisitório a partir de setembro de 2025, por força da EC 136/2025 e do Tema 1419 STF (ARE 1.557.312/SP, com modulação nos embargos). Para benefícios previdenciários, de set/2025 em diante, correção pelo INPC e juros pela taxa legal (SELIC com dedução do INPC, art. 406 do CC na redação da Lei 14.905/2024). O Manual também trouxe diretrizes novas para as planilhas de cálculo destinadas à expedição de requisições, que devem apresentar todos os dados necessários ao ofício requisitório (Nota 5 do item 4.3.1.1). Quadros completos, consolidação de dez/2021 e tabela da taxa legal em `base-juros-correcao-monetaria/references/MANUAL-CJF-2026-QUADROS.md`.
+A edição 2026 do Manual de Cálculos da Justiça Federal (Resolução CJF 990, de 03/07/2026) incorporou o encerramento da SELIC do art. 3º da EC 113/2021 na fase pré-requisitório a partir de setembro de 2025, por força da EC 136/2025. O Tema 1419 STF (ARE 1.557.312/SP) aplica a SELIC da EC 113/2021 a toda condenação da Fazenda, e os embargos de 05/2026 negaram modulação [NÃO CONFIRMADO] (auditoria 03/10/2026). Para benefícios previdenciários, de set/2025 em diante, correção pelo INPC e juros pela taxa legal (SELIC com dedução do INPC, art. 406 do CC na redação da Lei 14.905/2024). O Manual também trouxe diretrizes novas para as planilhas de cálculo destinadas à expedição de requisições, que devem apresentar todos os dados necessários ao ofício requisitório (Nota 5 do item 4.3.1.1). Quadros completos, consolidação de dez/2021 e tabela da taxa legal em `base-juros-correcao-monetaria/references/MANUAL-CJF-2026-QUADROS.md`.
 
 ## Hub de portarias administrativas
 

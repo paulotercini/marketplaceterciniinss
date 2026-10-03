@@ -8,7 +8,7 @@ O art. 5º, inciso XXXVI, da Constituição Federal protege o direito adquirido 
 
 Lei 8.213/91, art. 52. Aposentadoria por tempo de contribuição integral (35 anos para homem e 30 anos para mulher), sob regras vigentes até a reforma.
 
-Lei 8.213/91, art. 53. Tabela de aposentadoria proporcional (30 anos para homem, 25 anos para mulher, com pedágio de 20% sobre o tempo faltante em 16 de dezembro de 1998).
+Lei 8.213/91, art. 53. Tabela de aposentadoria proporcional (30 anos para homem, 25 anos para mulher, com pedágio de 40% sobre o tempo faltante em 16 de dezembro de 1998 e idade mínima de 53 anos, homem, e 48 anos, mulher, pelo art. 9º, §1º, da EC 20/98 (revogado pelo art. 35, II, da EC 103/2019; aplica-se por direito adquirido a quem reuniu os requisitos até 13/11/2019), a quem não tinha o tempo naquela data) (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 56. Aposentadoria do professor com 30 anos de magistério (homem) e 25 anos (mulher), cobertura pela Lei 11.301/2006 e Lei 9.394/96.
 
@@ -28,11 +28,11 @@ Segurada mulher com 30 anos completos de contribuição em 13 de novembro de 201
 
 ### Cenário 3 — Regra 85/95 progressiva
 
-Soma de idade mais tempo de contribuição atingiu o pontual vigente na data (86/96 ou 87/97). Direito adquirido à aposentadoria sem fator previdenciário, mesmo que o segurado tenha continuado trabalhando após.
+Soma de idade mais tempo de contribuição atingiu a pontuação vigente na data: 85/95 até 30/12/2018 e 86/96 de 31/12/2018 a 13/11/2019 (art. 29-C, §2º, da Lei 8.213/91); a pontuação 87/97 só valeria a partir de 31/12/2020, depois da reforma (auditoria 03/10/2026). Direito adquirido à aposentadoria sem fator previdenciário, mesmo que o segurado tenha continuado trabalhando após.
 
 ### Cenário 4 — Aposentadoria proporcional EC 20/98
 
-Segurado (homem) com 53 anos de idade, 30 anos de contribuição mais pedágio de 20% sobre o tempo faltante em dezembro de 1998. Segurada (mulher) com 48 anos de idade, 25 anos de contribuição mais pedágio de 20%. Direito adquirido à aposentadoria proporcional com coeficiente da tabela do art. 53 da Lei 8.213/91.
+Segurado (homem) com 53 anos de idade, 30 anos de contribuição mais pedágio de 40% sobre o tempo faltante em dezembro de 1998. Segurada (mulher) com 48 anos de idade, 25 anos de contribuição mais pedágio de 40%. Direito adquirido à aposentadoria proporcional com coeficiente de 70%, mais 5% por ano que supere essa soma, até 100% (art. 9º, §1º, da EC 20/98 (revogado pelo art. 35, II, da EC 103/2019; aplica-se por direito adquirido a quem reuniu os requisitos até 13/11/2019)) (auditoria 03/10/2026).
 
 ### Cenário 5 — Professor magistério
 
@@ -44,7 +44,7 @@ Segurada especial (mulher) com 55 anos e 15 anos de atividade rural em 13 de nov
 
 ### Cenário 7 — Aposentadoria especial pré-reforma
 
-Segurado com 25 anos de atividade especial em alto risco (insalubre), ou 20 anos em risco médio, ou 15 anos em risco alto, até 13 de novembro de 2019. Direito adquirido à aposentadoria especial sob regra anterior, sem idade mínima, sem pedágio e sem incidência do fator previdenciário, se DER até a reforma.
+Segurado com 25 anos de atividade especial nos casos gerais, ou 20 anos nos de risco intermediário, ou 15 anos nos de maior risco, conforme o Anexo IV do Decreto 3.048/99 (auditoria 03/10/2026), até 13 de novembro de 2019. Direito adquirido à aposentadoria especial sob regra anterior, sem idade mínima, sem pedágio e sem incidência do fator previdenciário, se DER até a reforma.
 
 ### Cenário 8 — Segurado que continuou trabalhando após implementar requisitos
 

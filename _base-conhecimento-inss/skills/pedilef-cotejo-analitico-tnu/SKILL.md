@@ -29,7 +29,7 @@ Cotejar significa confrontar, não transcrever. A mera juntada de ementas é ins
 
 O PEDILEF atravessa cascata de filtros antes do mérito. Cada filtro é causa autônoma de não conhecimento, o que torna estratégico antecipar cada um deles.
 
-**Tempestividade**. Prazo de dez dias a contar da intimação do acórdão recorrido (art. 14, §1º). A QO 32/TNU é clara. Não se admite PEDILEF nacional contra acórdão de turma regional que apenas manteve o acórdão recursal pelos mesmos fundamentos.
+**Tempestividade**. O pedido de uniformização dirigido à TNU é interposto perante a turma recursal ou regional de origem, em 15 (quinze) dias a contar da intimação do acórdão recorrido (art. 12, caput, do RITNU, Resolução CJF 586/2019, texto compilado do portal do CJF, lido em 03/10/2026), contados só os dias úteis (art. 27, § 2º). Os incidentes nacional e regional têm prazo único, contado da intimação do acórdão da turma recursal (QO 32/TNU) (auditoria 03/10/2026). Não se admite PEDILEF nacional contra acórdão de turma regional que apenas manteve o acórdão recursal pelos mesmos fundamentos.
 
 **Matéria de direito material**. O art. 14, caput, restringe PEDILEF a direito material. A Súmula 42/TNU veda reexame de fatos. A Súmula 43/TNU veda matéria processual. Essa restrição é ponto sensível de tensão, já problematizado pelo próprio IEPrev em texto crítico à TNU, mas permanece formalmente em vigor.
 
@@ -43,15 +43,15 @@ O PEDILEF atravessa cascata de filtros antes do mérito. Cada filtro é causa au
 
 **Tese já firmada**. QO 13/TNU veda PEDILEF contra acórdão em sentido da jurisprudência da TNU. QO 24/TNU veda PEDILEF contra acórdão no mesmo sentido de orientação do STJ em IRDR, IAC ou repetitivo.
 
-## Alerta sobre a QO 59/TNU (PENDENTE CONFIRMAÇÃO)
+## Alerta sobre a QO 59/TNU
 
-Há reporte em fonte secundária qualificada (IEPrev, Dr. Yoshiaki Yamamoto, artigo de 24/04/2026) de aprovação da QO 59 na sessão da TNU de 15/04/2026, presidida pela primeira vez pelo Ministro Reynaldo Soares da Fonseca. A sessão de 15/04/2026 está confirmada em fonte primária do TRF2, mas a redação oficial da QO 59 não foi localizada no portal oficial do CJF nem no DJeNacional pelas buscas realizadas em 24/04/2026.
+Há reporte em fonte secundária qualificada (IEPrev, Dr. Yoshiaki Yamamoto, artigo de 24/04/2026) de aprovação da QO 59 na sessão da TNU de 15/04/2026, presidida pela primeira vez pelo Ministro Reynaldo Soares da Fonseca. A página oficial do CJF confirma a QO 59, aprovada por maioria em 15/04/2026 no precedente 5007086-55.2020.4.02.5104, disponibilizada no DJeN em 30/04/2026 e publicada em 04/05/2026 (auditoria 03/10/2026).
 
-**Texto reportado (não confirmado oficialmente).** "A mera transcrição de ementas é insuficiente para a caracterização do cotejo analítico. A demonstração da divergência entre o acórdão recorrido e o paradigma deve ser feita considerando-se, de forma individual, cada paradigma invocado, mediante a descrição comparativa entre: (a) os fatos em julgamento do acórdão recorrido e no acórdão paradigma; (b) os fundamentos determinantes para o julgamento do acórdão recorrido e do paradigma."
+**Texto reportado em fonte secundária, com substância conferida na página oficial do CJF (auditoria 03/10/2026).** "A mera transcrição de ementas é insuficiente para a caracterização do cotejo analítico. A demonstração da divergência entre o acórdão recorrido e o paradigma deve ser feita considerando-se, de forma individual, cada paradigma invocado, mediante a descrição comparativa entre: (a) os fatos em julgamento do acórdão recorrido e no acórdão paradigma; (b) os fundamentos determinantes para o julgamento do acórdão recorrido e do paradigma."
 
-**Regra operacional do escritório.** Até a confirmação em fonte primária (DJeNacional ou página oficial do CJF https://www.cjf.jus.br/phpdoc/virtus/questoesdeordem.php), a QO 59 não deve ser citada como fundamento isolado em petição. Pode ser citada como reforço argumentativo acompanhada de indicação da fonte secundária e ressalva expressa. A partir da confirmação oficial, deve ser incorporada como fundamento principal.
+**Regra operacional do escritório.** Confirmada na página oficial do CJF (https://www.cjf.jus.br/phpdoc/virtus/questoesdeordem.php), a QO 59 pode ser citada como fundamento principal, com a data de aprovação e o precedente (auditoria 03/10/2026).
 
-**Impacto prático.** Se confirmada, a QO 59 formaliza padrão técnico que já decorria das QOs 3, 12, 22 e 26 e da jurisprudência consolidada do STJ, TSE e TST. O risco não está na novidade substantiva, mas na aplicação formalista que pode eliminar em sede de admissibilidade peças materialmente suficientes, porém sem formato tabular explícito. A skill adota, por precaução, padrão tabular obrigatório a partir desta data.
+**Impacto prático.** A QO 59 formaliza padrão técnico que já decorria das QOs 3, 12, 22 e 26 e da jurisprudência consolidada do STJ, TSE e TST. O risco não está na novidade substantiva, mas na aplicação formalista que pode eliminar em sede de admissibilidade peças materialmente suficientes, porém sem formato tabular explícito. A skill adota, por precaução, padrão tabular obrigatório a partir desta data (auditoria 03/10/2026).
 
 ## Súmulas 42 e 43 — Armadilhas Centrais
 
@@ -77,11 +77,11 @@ O PEDILEF exige enfrentamento específico de cada fundamento do acórdão recorr
 
 ## Reclamação, Agravo e Revisão
 
-Contra decisão que aplica a tese TNU em juízo de adequação de forma incompleta, cabe reclamação (QO 43/TNU, alínea "a"). Quando o acórdão em adequação aplica a tese mas acrescenta fundamentos de fato ou direito novos, cabe novo PEDILEF quanto aos fundamentos novos (QO 43/TNU, alínea "b"). Contra inadmissão por súmula 42 ou 43, cabe agravo nos próprios autos dirigido à TNU (QO 40/TNU, não à turma de origem.
+Contra decisão que, em juízo de adequação, deixa de aplicar a tese da TNU, cabe reclamação (QO 43/TNU, alínea "a") (auditoria 03/10/2026). Quando o acórdão em adequação aplica a tese mas acrescenta fundamentos de fato ou direito novos, cabe novo PEDILEF quanto aos fundamentos novos (QO 43/TNU, alínea "b"). Contra inadmissão por súmula 42 ou 43, cabe agravo nos próprios autos dirigido à TNU (QO 40/TNU), não à turma de origem.
 
 ## Efeito do Julgamento e Aproveitamento
 
-A QO 2/TNU consolida que o acolhimento do PEDILEF reforma a decisão recursal. A QO 38/TNU autoriza a TNU a aplicar o direito ao caso concreto quando a matéria for só de direito ou quando fato e direito não exigirem reexame probatório. A QO 20/TNU é central quando necessário reexame probatório não realizado, caso em que a TNU anula o acórdão recursal vinculando as instâncias inferiores à tese de direito.
+A QO 2/TNU consolida que o acolhimento do PEDILEF reforma a decisão recursal, com estipulação de honorários advocatícios, se for o caso, e prejudicialidade do recurso extraordinário (auditoria 03/10/2026). A QO 38/TNU autoriza a TNU a aplicar o direito ao caso concreto quando a matéria for só de direito ou quando fato e direito não exigirem reexame probatório. A QO 20/TNU é central quando necessário reexame probatório não realizado, caso em que a TNU anula o acórdão recursal vinculando as instâncias inferiores à tese de direito.
 
 ## Articulação com Outras Skills
 

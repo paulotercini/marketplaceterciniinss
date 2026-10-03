@@ -38,7 +38,7 @@ A partir de 19/11/2003, o Decreto 4.882/2003 alterou o Anexo IV do Decreto 3.048
 
 ### Tese 1. Superação do binarismo NHO-01 vs NR-15
 
-O INSS historicamente recusou PPPs que indicavam NR-15 sem menção expressa ao NEN. A TNU pacificou no Tema 174 que NHO-01 e NR-15 são metodologias válidas para aferição de ruído, desde que, quando se tratar de NR-15, haja referência expressa à apuração pelo NEN. O PEDILEF 0001717 consolidou que a menção à NR-15 no PPP gera presunção relativa de regularidade, cabendo ao INSS demonstrar que a medição foi pontual e sem normalização.
+O INSS historicamente recusou PPPs que indicavam NR-15 sem menção expressa ao NEN. A TNU pacificou no Tema 174 que, a partir de 19/11/2003, a aferição do ruído deve seguir a NHO-01 ou a NR-15, com medição que reflita toda a jornada, vedada a medição pontual, e o PPP deve informar a técnica e a norma utilizadas (auditoria 03/10/2026). O PEDILEF 0001717 consolidou que a menção à NR-15 no PPP gera presunção relativa de regularidade, cabendo ao INSS demonstrar que a medição foi pontual e sem normalização.
 
 Ver `references/JURISPRUDENCIA.md` seção 1 para a tese firmada e os precedentes aplicáveis.
 
@@ -54,7 +54,7 @@ Em sessão de 09/12/2024, o Conselho Pleno do CRPS revogou o inciso III do Enunc
 
 ### Tese 4. Normalização por jornada efetiva
 
-Quando o ruído declarado no campo 15.4 do PPP está na faixa de 82 a 85 dB(A) sem normalização e o segurado cumpria habitualmente jornada superior a 480 minutos em virtude de horas extras frequentes, cabe solicitar a normalização pela fórmula da NHO-01 com fator 10, aplicando NEN igual a NE mais dez vezes o logaritmo na base dez do quociente entre o tempo de exposição em minutos e 480. Esse cálculo com frequência eleva o resultado acima de 85 dB(A), configurando especialidade no período pós 18/11/2003. A comprovação da jornada se faz por contracheques, folhas de ponto, Reclamação Trabalhista e CNIS.
+Quando o ruído declarado no campo 15.4 do PPP fica pouco abaixo de 85 dB(A) sem normalização e o segurado cumpria habitualmente jornada superior a 480 minutos em virtude de horas extras frequentes, cabe solicitar a normalização pela fórmula da NHO-01 com fator 10, aplicando NEN igual a NE mais dez vezes o logaritmo na base dez do quociente entre o tempo de exposição em minutos e 480. Esse cálculo só eleva o resultado acima de 85 dB(A), configurando especialidade no período pós 18/11/2003, quando o valor medido está perto do limite. Em jornada de 600 minutos, o acréscimo é de 0,97 dB, e só valores a partir de 84,1 dB(A) passam de 85 dB(A) (auditoria 03/10/2026). A comprovação da jornada se faz por contracheques, folhas de ponto, Reclamação Trabalhista e CNIS.
 
 O passo a passo aplicado está em `references/CENARIOS-ENQUADRAMENTO.md` cenário 5.
 

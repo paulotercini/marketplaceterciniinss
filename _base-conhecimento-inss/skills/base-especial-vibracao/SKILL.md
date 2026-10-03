@@ -36,7 +36,7 @@ Segundo, nunca admitir que a ausência de limite expresso nos Decretos 2.172/97 
 
 Terceiro, jurisprudência somente após verificação em fonte primária oficial.
 
-Quarto, quando o PPP for omisso, acionar `retificacao-ppp` e Tema 213 TNU para inversão do ônus.
+Quarto, quando o PPP for omisso, acionar `retificacao-ppp` e requerer perícia técnica, porque o PPP deve refletir o LTCAT e as atividades do trabalhador (art. 58, §§ 1º e 4º, da Lei 8.213/91) (auditoria 03/10/2026, retirado o Tema 213/TNU, que trata da eficácia do EPI e não inverte o ônus da prova).
 
 ## Hub de portarias administrativas
 

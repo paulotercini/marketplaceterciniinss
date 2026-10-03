@@ -73,7 +73,7 @@ Pessoa jurídica interessada é a **União Federal** (a Perícia Médica Federal
 
 ### 2.1. Regra geral (faculdade do impetrante)
 
-O impetrante pode escolher entre quatro foros, conforme art. 109, §2º, CF/88, Tema 374/STF (RE 627.709/DF, Rel. Min. Ricardo Lewandowski, j. 20/08/2014) e AgR no RE 736.971/RS (2ª Turma, j. 04/05/2020).
+O impetrante pode escolher entre quatro foros, conforme art. 109, §2º, CF/88, Tema 374/STF (RE 627.709/DF, Rel. Min. Ricardo Lewandowski, j. 20/08/2014) e AgR no RE 736.971/RS (2ª Turma, j. 04/05/2020) [NÃO CONFIRMADO]. O Tema 374 trata das ações contra autarquias federais; a extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 **Foro 1.** Subseção judiciária do **domicílio do impetrante**. É a opção mais utilizada e recomendada por facilitar o acesso à justiça.
 
@@ -81,13 +81,13 @@ O impetrante pode escolher entre quatro foros, conforme art. 109, §2º, CF/88, 
 
 **Foro 3.** **Capital do estado-membro** onde o segurado tem domicílio (Súmula 689/STF).
 
-**Foro 4.** **Distrito Federal** (Súmula 689/STF).
+**Foro 4.** **Distrito Federal** (art. 109, §2º, CF/88) (auditoria 03/10/2026).
 
 ### 2.2. Aplicação ao MS contra CEAB
 
 Se a autoridade coatora for o Gerente da CEAB/RD/SR I, a sede funcional é em São Paulo/SP, o que fixa a competência na Subseção Judiciária de São Paulo. Mas o impetrante pode igualmente impetrar no foro de seu domicílio.
 
-O TRF3, no CC 5008294-33.2020.4.03.0000 (Órgão Especial, Rel. Des. Fed. André Nabarrete), determinou que o juiz que recebe MS contra a CEAB **não pode declinar da competência** para São Paulo se o impetrante optou pelo foro de seu domicílio. Se entender que a autoridade indicada é incorreta, deve extinguir por ilegitimidade, e não declinar a competência. Competência e legitimidade não se confundem.
+O TRF3, no CC 5008294-33.2020.4.03.0000 (Órgão Especial, Rel. Des. Fed. André Nabarrete), determinou que o juiz que recebe MS contra o Chefe de APS **não pode declinar da competência** para a sede da autoridade se o impetrante optou pelo foro de seu domicílio (auditoria 03/10/2026). Se entender que a autoridade indicada é incorreta, deve extinguir por ilegitimidade, e não declinar a competência. Competência e legitimidade não se confundem.
 
 ### 2.3. Precedente-chave sobre competência territorial em MS contra o INSS
 

@@ -26,15 +26,15 @@ Resoluções CJF.
 
 ### Tema 810 STF
 
-IPCA-E e juros poupança, com modulação.
+IPCA-E [NÃO CONFIRMADO] e juros poupança, sem modulação (embargos rejeitados em 03/10/2019) (auditoria 03/10/2026).
 
 ### Tema 905 STJ
 
 Benefícios previdenciários e critérios específicos.
 
-### Tema 96 STJ
+### Prescrição em cumprimento
 
-Prescrição em cumprimento.
+Sem precedente vinculante conferido nesta base (auditoria 03/10/2026, retirado o Tema 96/STJ, que trata de crédito tributário).
 
 ### Tema 368 STF
 
@@ -44,9 +44,9 @@ RRA e IR.
 
 Honorários.
 
-### Súmula 443 STJ
+### Súmula 345 STJ e art. 85, §1º, CPC
 
-Honorários em execução.
+Honorários em execução contra a Fazenda; a Súmula 345 STJ alcança a execução individual de sentença coletiva, ainda que não embargada (auditoria 03/10/2026, retirada a Súmula 443 STJ, que é penal).
 
 ## 5. Cenários pró-segurado
 

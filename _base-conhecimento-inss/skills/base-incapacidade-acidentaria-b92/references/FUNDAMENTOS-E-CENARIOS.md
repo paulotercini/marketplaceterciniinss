@@ -14,9 +14,9 @@ Lei 8.213/91, art. 21. Situações equiparadas a acidente de trabalho. Incisos I
 
 Lei 8.213/91, art. 21-A. NTEP. Presunção legal quando há correspondência CID-CNAE.
 
-Decreto 3.048/99, Anexo II, Lista A. Agentes físicos.
+Decreto 3.048/99, Anexo II, Lista A. Agentes e fatores de risco ocupacionais, não só físicos [NÃO CONFIRMADO] (auditoria 03/10/2026).
 Decreto 3.048/99, Anexo II, Lista B. Doenças profissionais e do trabalho.
-Decreto 3.048/99, Anexo II, Lista C. Doenças relacionadas com o trabalho.
+Decreto 3.048/99, Anexo II, Lista C. Matriz do NTEP, que relaciona a CID à atividade da empresa (art. 337, §3º, do Decreto 3.048/99) (auditoria 03/10/2026).
 
 EC 103/2019, art. 26, §3º, II (ressalva expressa do §2º, III). RMI B92 = 100% da média.
 
@@ -32,9 +32,9 @@ Três vias principais de reconhecimento.
 
 Primeira, Nexo Técnico Profissional (CID em Lista B). Doença tipicamente ocupacional.
 
-Segunda, Nexo Técnico do Trabalho (CID em Lista C). Doença relacionada ao trabalho.
+Segunda, Nexo Técnico do Trabalho, pelas Listas A e B do Anexo II [NÃO CONFIRMADO], e não pela Lista C, que é a matriz do NTEP (auditoria 03/10/2026). Doença relacionada ao trabalho.
 
-Terceira, NTEP (art. 21-A). Correspondência CID-CNAE pela estatística epidemiológica. Inverte o ônus da prova em favor do segurado. Decorre da ADI 3931/STF.
+Terceira, NTEP (art. 21-A). Correspondência CID-CNAE pela estatística epidemiológica. Inverte o ônus da prova em favor do segurado. Decorre da Lei 11.430/2006, que incluiu o art. 21-A; a ADI 3931/STF [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=2541930] apenas confirmou sua constitucionalidade (auditoria 03/10/2026).
 
 Quarta (subsidiária), Nexo Individual. Perícia técnica demonstra o nexo no caso concreto, mesmo sem enquadramento nas listas ou no NTEP.
 
@@ -58,7 +58,7 @@ Segurado em trajeto residência-trabalho sofre acidente com incapacidade permane
 
 ### Cenário 5 — Doença preexistente agravada
 
-Segurado com hérnia discal anterior à filiação. Trabalho pesado de carregador agravou quadro com incapacidade total. Tema 1083 STJ e art. 21, I (concausa). B92 com conversão do B32 para acidentário.
+Segurado com hérnia discal anterior à filiação. Trabalho pesado de carregador agravou quadro com incapacidade total. Art. 21, I, da Lei 8.213/91 (concausa) (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído). B92 com conversão do B32 para acidentário.
 
 ### Cenário 6 — Acidente com perda de membro
 
@@ -112,6 +112,6 @@ Primeiro, diferença entre RMI de B32 (60% + 2%) e B92 (100%) é decisiva. Para 
 
 Segundo, CAT é prova importante, mas sua ausência não afasta nexo. Enfrentar negativas com documentação técnica e precedentes.
 
-Terceiro, em doenças preexistentes, usar art. 21 (concausa), art. 42 §2º e Tema 1083 STJ.
+Terceiro, em doenças preexistentes, usar art. 21, I (concausa), e art. 42, §2º, da Lei 8.213/91 (auditoria 03/10/2026, retirado o Tema 1083/STJ).
 
 Quarto, estabilidade do art. 118 é direito paralelo e orienta ação trabalhista em paralelo.

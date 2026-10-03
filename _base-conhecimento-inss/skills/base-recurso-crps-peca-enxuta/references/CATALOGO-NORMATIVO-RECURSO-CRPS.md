@@ -50,8 +50,8 @@ Artigos centrais para recursos.
 - Art. 89 a 93. Reabilitação profissional.
 - Art. 103. Decadência.
 - Art. 118. Estabilidade.
-- **Art. 126.** Recurso ao CRPS - prazo 30 dias.
-- Art. 127. Disposições gerais sobre recurso.
+- **Art. 126.** Recurso ao CRPS. Prazo de 30 dias no art. 77 do RICRPS; o art. 127 foi revogado pela Lei 9.711/98 (auditoria 03/10/2026).
+
 
 **Lei 8.212/91.** Custeio da Seguridade Social. Última alteração Lei 15.363/2026.
 
@@ -121,7 +121,7 @@ ALERTA. A Portaria 992 NÃO é cálculo de RMI. Cálculo está em IN 128/2022 e 
 
 ## NÍVEL 7 - PORTARIA MPS 125/2026 (RICRPS)
 
-**Regimento Interno do CRPS.** 154 artigos. Substitui Portaria 462/2026 mencionada em skills anteriores. Versão consolidada até 20/03/2026, com alterações pelas Portarias MPS 235/2026 e 462/2026 (revogou art. 153).
+**Regimento Interno do CRPS.** 154 artigos. A Portaria MPS 462/2026, citada em skills anteriores, não é outro regimento: ela altera a Portaria 125/2026, entre outros pontos nos §§7º e 8º do art. 112 (auditoria 03/10/2026). Versão consolidada até 20/03/2026, com alterações pelas Portarias MPS 235/2026 e 462/2026 (revogou art. 153).
 
 Artigos centrais do RICRPS para recursos pró-segurado.
 - Art. 85. Desistência.
@@ -130,36 +130,36 @@ Artigos centrais do RICRPS para recursos pró-segurado.
 - Art. 89. Alçada exclusiva.
 - Art. 90 e 91. Recurso especial.
 - Art. 92. Embargos de declaração.
-- Art. 93. Revisão de acórdão.
+- Art. 93. Agravo interno (auditoria 03/10/2026).
 - Art. 108. Pareceres CONJUR/AGU vinculantes.
-- Art. 109. Precedentes judiciais (RG STF, repetitivos STJ, IRDR, IAC, súmula vinculante).
+- Art. 109. Precedentes judiciais. Observância obrigatória do controle concentrado transitado e da súmula vinculante (§2º); facultativa da RG do STF, dos repetitivos do STJ, do IRDR e do IAC (§§3º e 4º) (auditoria 03/10/2026).
 - Art. 110. Decisão monocrática.
-- Art. 112. Prazos.
+- Art. 112. Causas de não conhecimento e relevação da intempestividade. Prazos nos arts. 77 e 78 (auditoria 03/10/2026).
 - Art. 114. Normas vinculantes do CRPS.
 - Art. 115. Decisões.
-- Art. 116. Agravo ao Pleno.
+- Art. 116. Revisão de acórdão (auditoria 03/10/2026).
 - Art. 117 §4º. Cumprimento.
 - Art. 120 a 124. PUJ - Pedido de Uniformização de Jurisprudência.
 
 ## NÍVEL 8 - PARECERES CONJUR/AGU VINCULANTES
 
-Por força do art. 108 do RICRPS, pareceres da CONJUR/AGU aprovados pelo Advogado-Geral da União são VINCULANTES para o CRPS e INSS. Citar sempre que houver parecer pertinente.
+Por força do art. 108 do RICRPS, pareceres da CONJUR aprovados pelo Ministro de Estado são VINCULANTES para o CRPS e INSS; pareceres da AGU vinculam quando aprovados pelo Presidente da República (art. 40 da LC 73/93) (auditoria 03/10/2026). Citar sempre que houver parecer pertinente.
 
 Operacional. Antes de citar parecer, acionar a skill `precedentes-previdenciarios` para confirmar vigência.
 
 ## NÍVEL 9 - ENUNCIADOS, RESOLUÇÕES E SÚMULAS DO CRPS
 
-**Enunciados do Conselho Pleno do CRPS.** Vinculantes ao CRPS por força do art. 114 do RICRPS. Enunciado relevante pró-segurado deve ser citado literalmente.
+**Enunciados do Conselho Pleno do CRPS.** Vinculantes ao CRPS por força dos arts. 109, §1º, e 124 do RICRPS (auditoria 03/10/2026). Enunciado relevante pró-segurado deve ser citado literalmente.
 
 **Súmulas do CRPS.** Igualmente vinculantes.
 
-**Resoluções do CRPS.** Quando interpretativas, têm força similar.
+**Resoluções do CRPS.** Não têm caráter vinculante (art. 126, §2º, do RICRPS) (auditoria 03/10/2026).
 
 Operacional. Os 18 Enunciados do CRPS catalogados nas preferências do escritório estão disponíveis para consulta. Verificar antes de citar.
 
 ## NÍVEL 10 - PRECEDENTES JUDICIAIS (USO EXCEPCIONAL)
 
-Por força do art. 109 do RICRPS, o CRPS vincula-se a.
+Pelo art. 109 do RICRPS, o CRPS deve observar a súmula vinculante e o controle concentrado do STF transitado em julgado (§2º). Os demais itens abaixo apenas poderão ser observados, nas condições dos §§3º e 4º (auditoria 03/10/2026).
 
 - Repercussão geral do STF.
 - Recursos repetitivos do STJ.

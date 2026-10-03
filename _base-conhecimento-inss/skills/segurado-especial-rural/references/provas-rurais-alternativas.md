@@ -86,7 +86,7 @@ Para instrução robusta, combinar documentos em três camadas
 
 **Súmula 149/STJ.** A prova exclusivamente testemunhal não basta para comprovação de atividade rurícola, para efeito de obtenção de benefício previdenciário.
 
-**Tema 297/STJ.** O rol de documentos do art. 106 da Lei 8.213/91 é meramente exemplificativo. Outros documentos podem ser aceitos como início de prova material.
+**Tema 297/STJ.** Reafirma a Súmula 149/STJ: a prova exclusivamente testemunhal não basta. O caminho do segurado é o início de prova material, e o art. 116 da IN 128 admite documentos além dos listados ("dentre outros") (auditoria 03/10/2026).
 
 **Tema 554/STJ.** Para fins de comprovação do tempo de serviço rural, é possível a utilização de prova testemunhal para estender o período reconhecido por início de prova material, sem que isso configure prova exclusivamente testemunhal.
 

@@ -16,7 +16,7 @@ Tese. Constitucionalidade do art. 3º da Lei 9.876/1999. Modulação de efeitos.
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação. Limita a RVT às hipóteses residuais preservadas pela modulação.
+Aplicação. Tese adversa à RVT; a modulação (ADI 2111 ED-ED, 10/04/2025) só dispensa a devolução dos valores recebidos por decisões judiciais, definitivas ou provisórias, prolatadas até 05/04/2024, e o pagamento de honorários de sucumbência, custas e perícias contábeis nas ações da RVT [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar a revisão (auditoria 03/10/2026).
 
 ### [Retirado na auditoria 25/07/2026] Tema 1117/STF
 
@@ -70,13 +70,13 @@ Fonte oficial em https://www.planalto.gov.br
 
 Argumento adversário. Não cabe a RVT porque o art. 3º é constitucional.
 
-Refutação. As ADIs 2110 e 2111 reconheceram constitucionalidade mas modularam efeitos. Situações preservadas continuam aptas a revisão. Verificar a situação concreta do segurado.
+Refutação. Tese adversa: as ADIs 2110 e 2111 declararam constitucional o art. 3º, e a modulação só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149] (auditoria 03/10/2026). Verificar a situação concreta do segurado.
 
 ### Argumento 2 — Fim da RVT com as ADIs
 
 Argumento adversário. RVT não cabe mais após 2024.
 
-Refutação. Regra geral é restrição, não extinção. Há hipóteses residuais preservadas pela modulação. Coisa julgada, direito adquirido e vantagem concreta devem ser analisados caso a caso.
+Refutação. Tese adversa em regra, pois a modulação só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149], sem preservar a revisão (auditoria 03/10/2026). Coisa julgada, direito adquirido e vantagem concreta devem ser analisados caso a caso.
 
 ### Argumento 3 — Decadência
 
@@ -100,7 +100,7 @@ Refutação. Se o INSS fez a simulação, exigir memória de cálculo detalhada.
 
 Argumento adversário. Ação deve ser extinta.
 
-Refutação. Verificar critérios da modulação. Em regra, ações protocoladas antes do julgamento podem ter proteção específica. Sustentar segurança jurídica e boa-fé.
+Refutação. Verificar critérios da modulação, que só dispensa a devolução dos valores recebidos por decisões judiciais prolatadas até 05/04/2024 e o pagamento de honorários de sucumbência, custas e perícias contábeis [CONFERIDO, https://portal.stf.jus.br/processos/detalhe.asp?incidente=1795149] (auditoria 03/10/2026). Sustentar segurança jurídica e boa-fé.
 
 ### Argumento 7 — Benefício pós EC 103/2019
 

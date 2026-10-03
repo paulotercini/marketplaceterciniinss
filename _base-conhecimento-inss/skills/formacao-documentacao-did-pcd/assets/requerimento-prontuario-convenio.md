@@ -30,7 +30,7 @@ A RN ANS 389/2015 regulamenta a transparência das informações das operadoras 
 
 A Lei 8.078/90 (Código de Defesa do Consumidor), no art. 43, assegura o acesso do consumidor a informações existentes em cadastros sobre sua pessoa.
 
-A Súmula 609 do STJ estabelece o prazo prescricional de dez anos para relações de consumo, o que reforça o interesse jurídico no resgate de informações da última década.
+A Lei 13.787/2018, art. 6º [NÃO CONFIRMADO], fixa em 20 anos, contados do último registro, o prazo mínimo de guarda do prontuário, o que reforça o interesse jurídico no resgate dessas informações (auditoria 03/10/2026).
 
 Prazo solicitado
 

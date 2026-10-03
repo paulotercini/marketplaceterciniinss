@@ -1,9 +1,9 @@
 ---
 name: base-calculo-rmi-ec103
-description: "Cálculo da RMI pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar cálculo RMI EC 103, art. 26 EC 103, média 100% PBC, 60% mais 2% ano excedente, divisor mínimo art. 26 §6º, renda mensal inicial pós-reforma, salário-de-benefício pós EC 103, RMI pedágio 100%, RMI 100% média, fator previdenciário afastado regra nova, Tema 1102 STF e modulação, revisão da vida toda, afastar regra 80% maiores, art. 29 Lei 8.213, RMI auxílios, pensão por morte pós-reforma, cálculo B31 B32 B91 B92 B94 pós-reforma, benefícios acima do teto, Tema 1070 STJ concomitantes, art. 31 Lei 8.213 integração auxílio-acidente, Súmula 557 STJ teto. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (Livro II - cálculo do reconhecimento), IN 128/2022. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, base-aposentadoria-transicao-ec103, base-aposentadoria-regra-permanente-ec103, impugnacao-cumprimento-concomitantes e base-legislacao-fontes-primarias."
+description: "Cálculo da RMI pós EC 103/2019, ótica exclusiva do segurado. Use SEMPRE que mencionar cálculo RMI EC 103, art. 26 EC 103, média 100% PBC, 60% mais 2% ano excedente, exclusão de contribuições art. 26 §6º, renda mensal inicial pós-reforma, salário-de-benefício pós EC 103, RMI pedágio 100%, RMI 100% média, fator previdenciário afastado regra nova, Tema 1102 STF e modulação, revisão da vida toda, afastar regra 80% maiores, art. 29 Lei 8.213, RMI auxílios, pensão por morte pós-reforma, cálculo B31 B32 B91 B92 B94 pós-reforma, benefícios acima do teto, Tema 1070 STJ concomitantes, art. 31 Lei 8.213 integração auxílio-acidente, Tema 76 STF teto. Postura pró-segurado, Portaria 990/2022, Portaria 1.316/2025, Portaria 991/2022 (Livro II - cálculo do reconhecimento), IN 128/2022. Cruza com peticao-previdenciaria, precedentes-previdenciarios, revisao-peticao, base-aposentadoria-transicao-ec103, base-aposentadoria-regra-permanente-ec103, impugnacao-cumprimento-concomitantes e base-legislacao-fontes-primarias."
 ---
 
-## NOTA DA ADI 6309 (12/07/2026)
+## NOTA DA ADI 6309 (julgada em 03/06/2026, registro de 12/07/2026)
 
 O STF, na ADI 6309 julgada em 03/06/2026, declarou CONSTITUCIONAL a fórmula de cálculo da aposentadoria especial pós-EC 103 (60% mais 2% ao ano excedente). Não sustentar mais a inconstitucionalidade do cálculo da especial por esta via. Na mesma ADI foi invalidada a idade mínima da especial, o que altera o momento de aquisição do direito, ver base-aposentadoria-especial-transicao-ec103.
 
@@ -20,9 +20,9 @@ EC 103/2019, art. 26. Fixa a nova fórmula de cálculo. Média aritmética simpl
 
 EC 103/2019, art. 26, §6º. Faculdade PRÓ-SEGURADO de excluir do cálculo as contribuições que reduzam o benefício, mantido o tempo mínimo. O divisor mínimo de 108 contribuições é o art. 135-A da Lei 8.213/91 (Lei 14.331/2022).
 
-EC 103/2019, art. 26, §2º. A RMI não pode ser inferior ao salário mínimo nem superior ao teto do RGPS.
+EC 103/2019, art. 26, §1º. A média fica limitada ao teto do RGPS; o piso de um salário mínimo vem do art. 201, §2º, da CF, e o §2º do art. 26 fixa os 60% com acréscimo de 2% por ano (auditoria 03/10/2026).
 
-Constituição Federal, art. 201, §2º. Irredutibilidade do valor do benefício e do teto constitucional.
+Constituição Federal, art. 201, §2º. Nenhum benefício que substitua o salário de contribuição ou o rendimento do trabalho do segurado terá valor mensal inferior ao salário mínimo; a irredutibilidade do valor dos benefícios está no art. 194, parágrafo único, IV (auditoria 03/10/2026).
 
 Lei 8.213/91, art. 29 (para benefícios pré-reforma) e art. 29-C (professor pré-reforma).
 
@@ -70,9 +70,9 @@ Sexto, pensão por morte com 3 dependentes. RMI = 50% + 10% × 3 = 80% do valor 
 
 Verificar salários de contribuição mais altos em momentos específicos (horas extras habituais, comissões) — atenção: o 13º salário NÃO integra o salário de benefício desde a Lei 8.870/94 (art. 29, §3º).
 
-Afastar descarte indevido dos 80% maiores salários. A regra da Lei 9.876/99 de descarte dos 20% menores foi afastada pela EC 103 para benefícios pós-reforma. A fórmula é 100% das contribuições, o que pode ser mais vantajoso para perfis com muitos salários altos.
+Afastar descarte indevido dos 80% maiores salários. A regra da Lei 9.876/99 de descarte dos 20% menores foi afastada pela EC 103 para benefícios pós-reforma. A fórmula é 100% das contribuições, cuja média nunca supera a dos 80% maiores; o alívio possível é a exclusão do art. 26, §6º (auditoria 03/10/2026).
 
-Atenção ao divisor mínimo do art. 26 §6º. O divisor é 100% das competências desde julho de 1994 ou da filiação, o que pode gerar média inferior se houve muitas contribuições em valores baixos. Em revisões, a análise do divisor é crítica.
+Atenção à média do art. 26, caput, da EC 103. Ela usa 100% das competências desde julho de 1994 ou da filiação, o que pode gerar média inferior se houve muitas contribuições em valores baixos; o §6º permite excluí-las, mantido o tempo mínimo (auditoria 03/10/2026). Em revisões, a análise do divisor é crítica.
 
 ## MCPs da casa
 

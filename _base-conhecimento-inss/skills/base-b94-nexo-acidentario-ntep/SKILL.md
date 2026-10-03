@@ -1,6 +1,6 @@
 ---
 name: base-b94-nexo-acidentario-ntep
-description: "Nexo acidentário do B94, NTEP, art. 21-A Lei 8.213/91, Lista B Anexo II Decreto 3.048/99, conversão B31 para B91 com pedido de B94, ADI 3931 STF, presunção e refutação INSS. Use SEMPRE que mencionar nexo acidentário B94, NTEP B94, art. 21-A B94, Lista B B94, conversão B31 B91 com B94, ADI 3931 STF, presunção NTEP, refutação NTEP INSS, doença ocupacional B94, acidente trabalho B94, CAT B94, CNAE CID B94, concausa B94, doença equiparada acidente, art. 19 21 Lei 8.213, equiparação acidente, agressão trabalho B94, viagem serviço B94, refeição descanso B94, contaminação acidental B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-integracao-salario-beneficio-art31, base-b94-sequela-minima-tema201 e ntep-nexo-acidentario."
+description: "Nexo acidentário do B94, NTEP, art. 21-A Lei 8.213/91, Lista B Anexo II Decreto 3.048/99, conversão B31 para B91 com pedido de B94, ADI 3931 STF, presunção e refutação INSS. Use SEMPRE que mencionar nexo acidentário B94, NTEP B94, art. 21-A B94, Lista B B94, conversão B31 B91 com B94, ADI 3931 STF, presunção NTEP, refutação NTEP INSS, doença ocupacional B94, acidente trabalho B94, CAT B94, CNAE CID B94, concausa B94, doença equiparada acidente, art. 19 21 Lei 8.213, equiparação acidente, agressão trabalho B94, viagem serviço B94, refeição descanso B94, contaminação acidental B94, Portaria 991/2022, TJSP. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-anexo-iii-quadros, base-b94-integracao-salario-beneficio-art31, base-b94-sequela-minima-sumula88-tnu e ntep-nexo-acidentario."
 ---
 
 ## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
@@ -58,7 +58,7 @@ Sequela permanente.
 
 ### Tema 350 TNU
 
-Prova.
+Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não matéria de prova (auditoria 03/10/2026).
 
 ## NTEP
 
@@ -147,9 +147,9 @@ Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já susten
 Para detalhes operacionais, acionar `auxilio-acidente-b94`.
 Para Anexo III, acionar `base-b94-anexo-iii-quadros`.
 Para integração ao SB, acionar `base-b94-integracao-salario-beneficio-art31`.
-Para sequela mínima, acionar `base-b94-sequela-minima-tema201`.
+Para sequela mínima, acionar `base-b94-sequela-minima-sumula88-tnu`.
 Para NTEP geral, acionar `ntep-nexo-acidentario`.
 
 ## O que NÃO está nesta skill
 
-Anexo III em `base-b94-anexo-iii-quadros`. Sequela mínima em `base-b94-sequela-minima-tema201`. NTEP geral em `ntep-nexo-acidentario`.
+Anexo III em `base-b94-anexo-iii-quadros`. Sequela mínima em `base-b94-sequela-minima-sumula88-tnu`. NTEP geral em `ntep-nexo-acidentario`.

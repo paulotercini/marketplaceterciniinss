@@ -62,7 +62,7 @@ Nota do Manual. Os juros de 70% da SELIC mensalizada, quando esta for igual ou i
 
 ## Notas do item 4.3.1.1 (transcrição fiel condensada)
 
-Nota 1. A Súmula 71 do TFR foi revogada pela Súmula 148 do STJ. Se houver coisa julgada determinando a Súmula 71, aplicam-se seus critérios (variação do salário mínimo até o ajuizamento, REsp 72.163).
+Nota 1. A Súmula 71 do TFR foi superada pela Súmula 148 do STJ, cujo enunciado não a menciona [NÃO CONFIRMADO] (auditoria 03/10/2026). Se houver coisa julgada determinando a Súmula 71, aplicam-se seus critérios (variação do salário mínimo até o ajuizamento, REsp 72.163 [NÃO CONFIRMADO]).
 
 Nota 2. O termo inicial da correção monetária é o MÊS DE COMPETÊNCIA, não o mês de pagamento.
 

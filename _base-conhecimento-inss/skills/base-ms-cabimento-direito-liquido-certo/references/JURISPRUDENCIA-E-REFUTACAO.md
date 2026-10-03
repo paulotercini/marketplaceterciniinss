@@ -22,7 +22,7 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 628 STJ
 
-Arquivamento.
+"A teoria da encampação é aplicada no mandado de segurança quando presentes, cumulativamente, os seguintes requisitos: a) existência de vínculo hierárquico entre a autoridade que prestou informações e a que ordenou a prática do ato impugnado; b) manifestação a respeito do mérito nas informações prestadas; e c) ausência de modificação de competência estabelecida na Constituição Federal." (auditoria 03/10/2026)
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
@@ -32,9 +32,9 @@ Duração razoável.
 
 Instrução administrativa.
 
-### Tema 394 STJ
+### Pagamento pretérito no MS
 
-Pagamento pretérito.
+Segue as Súmulas 269 e 271 STF (auditoria 03/10/2026, retirado o Tema 394/STJ, que trata de depósito judicial e IRPJ).
 
 ## 2. Marco legislativo
 

@@ -8,15 +8,15 @@ Súmula 6/TNU. Certidão de casamento civil ou religioso onde o cônjuge é qual
 
 Súmula 14/TNU. "Para a concessão de aposentadoria rural por idade, não se exige que o início de prova material corresponda a todo o período equivalente à carência do benefício."
 
-Súmula 30/TNU. Tratamento do segurado especial em casos particulares.
+Súmula 30/TNU. O imóvel superior ao módulo rural não afasta, por si só, a qualidade de segurado especial, se comprovada a exploração em regime de economia familiar (PUIL 5003245-83.2018.4.04.7006) [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Súmula 34/TNU. Contemporaneidade do início de prova material à época dos fatos.
 
-Súmula 41/TNU. "A circunstância de um ou alguns dos integrantes da família do segurado especial exercer atividade urbana não descaracteriza a condição do segurado especial".
+Súmula 41/TNU. A atividade urbana de um dos integrantes do núcleo familiar não descaracteriza, por si só, o segurado especial, condição que se examina no caso concreto (auditoria 03/10/2026, paráfrase sem aspas; conferir o texto oficial antes de citar literalmente).
 
 Súmula 46/TNU. Atividade urbana intercalada não impede o benefício rural.
 
-Súmula 73/TNU. "O exercício de atividade urbana intercalada não impede a concessão de benefício previdenciário de trabalhador rural, condição que deve ser analisada no caso concreto."
+Súmula 46/TNU (auditoria 03/10/2026, antes atribuída à Súmula 73/TNU, que trata do benefício por incapacidade intercalado). "O exercício de atividade urbana intercalada não impede a concessão de benefício previdenciário de trabalhador rural, condição que deve ser analisada no caso concreto."
 
 ## 2. Súmulas STJ aplicáveis
 
@@ -92,7 +92,7 @@ Súmula 577/STJ. Prova testemunhal pode levar tempo rural anterior ao documento 
 
 ### 7.3. "Atividade não foi ininterrupta"
 
-Refutação. Súmula 73/TNU. Não é exigida atividade ininterrupta na carência rural.
+Refutação. Art. 39, I, e art. 48, §2º, da Lei 8.213/91 admitem a atividade rural "ainda que de forma descontínua". Não é exigida atividade ininterrupta na carência rural (auditoria 03/10/2026, retirada a Súmula 73/TNU, que trata do benefício por incapacidade intercalado).
 
 Súmula 46/TNU. Atividade urbana intercalada não impede o benefício rural.
 

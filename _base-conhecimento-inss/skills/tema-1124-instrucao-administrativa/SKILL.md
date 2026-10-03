@@ -93,7 +93,7 @@ Em revisões de benefício em manutenção, quando há apresentação de novos e
 
 ## INTERAÇÃO COM A DECADÊNCIA, A ARMADILHA PROCESSUAL
 
-Se o segurado ajuíza revisão com documento apresentado só em juízo e o juiz extingue sem mérito, o segurado precisa voltar à via administrativa. Se o prazo decadencial de 10 anos já tiver se esgotado, o direito à revisão pode estar perdido, e o ajuizamento não interrompe esse prazo (art. 207 do Código Civil, Tema 975/STJ). O pedido de revisão administrativa é a única via que gera prazo autônomo, conforme o Tema 256/TNU, hoje em discussão no Tema 1370/STJ.
+Se o segurado ajuíza revisão com documento apresentado só em juízo e o juiz extingue sem mérito, o segurado precisa voltar à via administrativa. Se o prazo decadencial de 10 anos já tiver se esgotado, o direito à revisão pode estar perdido, e o ajuizamento não interrompe esse prazo (art. 207 do Código Civil) (auditoria 03/10/2026). O pedido de revisão administrativa é a única via que gera prazo autônomo, conforme o Tema 256/TNU, hoje em discussão no Tema 1370/STJ.
 
 **Procedimento obrigatório.** Havendo risco de extinção em revisão e prazo decadencial próximo do fim, protocolar de imediato o pedido de revisão administrativa com toda a documentação, guardar o comprovante e consultar a skill decadencia-revisao-previdenciaria. A ação só se mantém em paralelo quando o documento judicial se enquadrar na exceção da prova complementar do item 1.6.
 

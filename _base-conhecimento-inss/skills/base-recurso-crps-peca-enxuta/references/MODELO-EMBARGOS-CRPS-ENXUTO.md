@@ -20,13 +20,13 @@ Benefício nº [NB]
 Embargante. [Nome do segurado], CPF [XXX.XXX.XXX-XX]
 ```
 
-## CORPO
+## CORPO (auditoria 03/10/2026)
 
 ```
 1. TEMPESTIVIDADE
 
 Intimação em DD/MM/AAAA. Embargos protocolados em DD/MM/AAAA, dentro
-do prazo de 5 dias do art. 92 do RICRPS (Portaria MPS 125/2026).
+do prazo de 30 dias do art. 92, §2º, do RICRPS (Portaria MPS 125/2026).
 
 
 2. DO VÍCIO

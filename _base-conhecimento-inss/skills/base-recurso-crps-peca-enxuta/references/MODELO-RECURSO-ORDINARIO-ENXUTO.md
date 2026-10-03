@@ -15,14 +15,14 @@ Recorrente. [Nome do segurado], CPF [XXX.XXX.XXX-XX]
 Decisão recorrida. [DC, data, fundamento]
 ```
 
-## CORPO
+## CORPO (auditoria 03/10/2026)
 
 ```
 1. TEMPESTIVIDADE E ADMISSIBILIDADE
 
 A decisão de [indeferimento/cessação] foi cientificada ao segurado em
 DD/MM/AAAA. O presente recurso é apresentado em DD/MM/AAAA, dentro do
-prazo de 30 dias do art. 126 da Lei 8.213/91. O recorrente tem
+prazo de 30 dias do art. 77 do RICRPS (Portaria MPS 125/2026), aplicável ao recurso previsto no art. 126 da Lei 8.213/91. O recorrente tem
 legitimidade e interesse na reforma. Não houve renúncia tácita nem
 ajuizamento de ação judicial sobre a mesma matéria.
 

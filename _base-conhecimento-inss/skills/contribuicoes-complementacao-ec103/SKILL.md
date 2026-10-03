@@ -1,6 +1,6 @@
 ---
 name: contribuicoes-complementacao-ec103
-description: "Skill de contribuições previdenciárias, complementação EC103, recolhimento trimestral, contribuições abaixo do mínimo e qualidade de segurado. Use SEMPRE que mencionar complementação EC103, art. 195 §14 CF, DARF 1872/1873, código GPS errado, recolhimento trimestral, códigos 1104/1457/1503/1163/1554, ICOMPL-VR-SM-EC103, IAGRUP, PSC-MEN-SM-EC103, Tema 349 TNU, PUIL 5000078, contribuição empregado abaixo mínimo, presunção contribuição 1973-1994, art. 21 IN 128, período de graça arts. 44/53/54 Portaria 991, GPS diferença valor devido, RetGPS, agrupamento/utilização excedente. Acionar com indicadores-cnis, inss-rac-formularios, peticao-previdenciaria, segurado-especial-rural. NÃO use para RMI, aposentadoria especial ou BPC/LOAS."
+description: "Skill de contribuições previdenciárias, complementação EC103, recolhimento trimestral, contribuições abaixo do mínimo e qualidade de segurado. Use SEMPRE que mencionar complementação EC103, art. 195 §14 CF, DARF 1872/1873, código GPS errado, recolhimento trimestral, códigos 1104/1457/1503/1163/1554, ICOMPL-VR-SM-EC103, IAGRUP, PSC-MEN-SM-EC103, Tema 349 TNU, PUIL 5000078-47.2022.4.04.7126 TRU4, contribuição empregado abaixo mínimo, presunção contribuição 1973-1994, art. 21 IN 128, período de graça arts. 44/53/54 Portaria 991, GPS diferença valor devido, RetGPS, agrupamento/utilização excedente. Acionar com indicadores-cnis, inss-rac-formularios, peticao-previdenciaria, segurado-especial-rural. NÃO use para RMI, aposentadoria especial ou BPC/LOAS."
 ---
 
 # Contribuições Previdenciárias, Complementação EC103 e Qualidade de Segurado
@@ -78,7 +78,7 @@ Criado pela Portaria PRES/INSS 1.553/2023. Destinado a CI autônomo (GPS), segur
 
 ### Regras comuns
 
-A complementação pode ser feita a qualquer tempo, sem decadência. Em caso de falecimento, dependentes podem solicitar ajustes até 15 de janeiro do ano seguinte ao óbito (art. 19-E, §7º). Após o dia 15 do mês seguinte à competência, incidem multa de 0,33%/dia (limite 20%) e juros SELIC. Valor mínimo da GPS é R$ 10,00 (art. 238 IN RFB 2.110/2022).
+A complementação pode ser feita a qualquer tempo, sem decadência. Em caso de falecimento, dependentes podem solicitar ajustes até o dia 15 de janeiro subsequente ao ano civil correspondente às competências ajustadas (art. 19-E, §§4º e 7º, do Decreto 3.048/99) (auditoria 03/10/2026). Após o dia 15 do mês seguinte à competência, incidem multa de 0,33%/dia (limite 20%) e juros SELIC. Valor mínimo da GPS é R$ 10,00 (art. 238 IN RFB 2.110/2022).
 
 ### Situações não contempladas pelos serviços
 
@@ -118,7 +118,7 @@ O art. 195, §14, da CF restringe apenas "tempo de contribuição". O Decreto 10
 
 **PUIL 5000078-47.2022.4.04.7126 — TRU/TRF4.** Julgado em 15/12/2023, relatora Juíza Federal Erika Giovanini Reupke. Em se tratando de segurado empregado e empregado doméstico, recolhimentos com base em remuneração inferior ao limite mínimo não impedem manutenção da qualidade de segurado nem cômputo como carência para benefício por incapacidade. Decreto 10.410/2020 extrapolou função regulamentar.
 
-**PUIL 1001783-60.2024.4.01.3506/GO — TNU.** Julgado em 12/12/2025, relator Juiz Federal João Carlos Cabrelon de Oliveira, por unanimidade. Contribuição com código incorreto (1007 em vez de 1163) mas valor correto de 11% vale para qualidade de segurado e carência. Erro formal não prejudica o segurado. Analogia com Tema 349 TNU.
+**PUIL 1001783-60.2024.4.01.3506/GO — TNU.** Julgado em sessão virtual de 03 a 10/12/2025, D.E. 12/12/2025 (auditoria 03/10/2026), relator Juiz Federal João Carlos Cabrelon de Oliveira, por unanimidade. Contribuição com código incorreto (1007 em vez de 1163) mas valor correto de 11% vale para qualidade de segurado e carência. Erro formal não prejudica o segurado. Analogia com Tema 349 TNU.
 
 ### Estratégia advocatícia
 
@@ -180,7 +180,7 @@ Art. 53 Portaria 991/2022 — prorrogação de +12 meses quando mais de 120 cont
 
 ### IN 188/2025 — cessação antecipada da prorrogação por desemprego
 
-A IN PRES/INSS 188/2025 (DOU 10/07/2025) acrescentou §8º ao art. 184 da IN 128/2022 com três hipóteses de cessação antecipada da prorrogação de 12 meses por desemprego. Retorno à atividade remunerada (com salário de contribuição mínimo, conforme Portaria 1301/2025), recebimento de benefício por incapacidade ou recebimento de salário-maternidade. A cessação é imediata, mas inicia novo período de graça pelo art. 15, II.
+A IN PRES/INSS 188/2025 (DOU 10/07/2025) deu nova redação ao §8º do art. 184 da IN 128/2022 (auditoria 03/10/2026) com três hipóteses de cessação antecipada da prorrogação de 12 meses por desemprego. Retorno à atividade remunerada (com salário de contribuição mínimo, conforme Portaria 1301/2025), recebimento de benefício por incapacidade ou recebimento de salário-maternidade. A cessação é imediata, mas inicia novo período de graça pelo art. 15, II.
 
 ### Prazos máximos por situação
 
@@ -200,7 +200,7 @@ Cessação de atividade remunerada — base 12 meses + 12 (se +120 contribuiçõ
 
 **Tema 349/TNU** (j. 16/10/2024) — contribuição abaixo do mínimo não impede qualidade de segurado. RE ao STF admitido em março/2025.
 
-**PEDILEF 0002300-36.2024.4.05.8109/CE** (dezembro/2025) — término do período de graça em dia sem expediente bancário prorroga para o próximo dia útil (art. 15 §4º c/c art. 30 §2º).
+**PEDILEF 0002300-36.2024.4.05.8109/CE** (D.E. 17/12/2025) — a TNU só anulou o acórdão e devolveu o caso à Turma Recursal, sem fixar tese. A prorrogação para o dia útil seguinte, quando o fim do período de graça cai em dia sem expediente bancário, decorre do art. 15, §4º, da Lei 8.213/91 c/c o art. 30, §2º, I, da Lei 8.212/91 (auditoria 03/10/2026).
 
 ---
 

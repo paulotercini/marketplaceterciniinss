@@ -2,27 +2,27 @@
 
 ## 1. Precedentes vinculantes
 
-### Tema 422 STJ, REsp 1.310.034
+### Tema 546 STJ, REsp 1.310.034
 
-Tese. Lei aplicável à conversão é a vigente à prestação do serviço.
+Tese. A lei vigente por ocasião da aposentadoria é a aplicável ao direito à conversão entre tempos de serviço especial e comum, independentemente do regime jurídico à época da prestação do serviço (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 694 STJ
+### Tema 546 STJ, conversão de tempo comum em especial
 
-Tese. Conversão de tempo comum em especial anterior à Lei 9.032/1995.
+Tese adversa. A conversão de tempo comum em especial segue a lei vigente na aposentadoria e não alcança quem reuniu os requisitos depois da Lei 9.032/1995, ainda que o período seja anterior. O caminho do segurado é demonstrar direito adquirido, com os requisitos reunidos até 28/04/1995 (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 
 ### Súmula 50 TNU
 
-Tese. Conversão pré-Lei 9.032/1995.
+Tese. É possível a conversão do tempo de serviço especial em comum do trabalho prestado em qualquer período, observado, após a EC 103/2019, o limite de 13/11/2019 do art. 25, §2º (auditoria 03/10/2026).
 
 Fonte oficial em https://www.jf.jus.br
 
 ### Súmula 49 TNU
 
-Tese. Regime vigente à prestação do serviço.
+Tese. Para reconhecimento de condição especial de trabalho antes de 29/4/1995, a exposição a agentes nocivos à saúde ou à integridade física não precisa ocorrer de forma permanente (auditoria 03/10/2026).
 
 ### Tema 350 STF
 
@@ -68,7 +68,7 @@ Refutação. O fator de 1,4 para homem e 1,2 para mulher permanece aplicável pa
 
 Argumento adversário. Sem PPP, sem especial.
 
-Refutação. Até 28/04/1995, enquadramento por categoria profissional era admitido. Súmula 49 TNU e Tema 694 STJ.
+Refutação. Até 28/04/1995, enquadramento por categoria profissional era admitido. Nesse período, a exposição também não precisa ser permanente, conforme a Súmula 49 TNU (auditoria 03/10/2026, retirado o Tema 694 STJ, que trata do limite de ruído).
 
 ### Argumento 4 — EPI eficaz bloqueia conversão
 

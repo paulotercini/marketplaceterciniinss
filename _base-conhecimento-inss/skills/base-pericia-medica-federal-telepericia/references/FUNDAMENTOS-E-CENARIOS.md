@@ -20,9 +20,9 @@ Portaria Conjunta MPS/INSS 15/2026. Análise documental B94.
 
 Portaria DPMF/INSS 19/2026. Teleperícia. Regula videoconferência, requisitos técnicos, hipóteses de cabimento e direito à perícia presencial subsidiária.
 
-Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014 e sucessores. Avaliação biopsicossocial BPC.
+Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026) e sucessores. Avaliação biopsicossocial BPC.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2015. IF-BrA para aposentadoria PCD.
+Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026). IF-BrA para aposentadoria PCD.
 
 Resoluções CFM 2.314/2022 e 2.378/2024. Ética em telemedicina.
 
@@ -108,7 +108,7 @@ Laudo da PMF sem CID explícito e sem fundamentação técnica. Impugnação por
 
 ### Cenário 8 — BPC com avaliação incompleta
 
-BPC indeferido com avaliação biopsicossocial superficial. Impugnação com base na Portaria Conjunta SPS/INSS/SNAS nº 2, de 19/09/2014.
+BPC indeferido com avaliação biopsicossocial superficial. Impugnação com base na Portaria Conjunta MDS/INSS nº 2, de 30/03/2015 (auditoria 03/10/2026).
 
 ## 6. Documentos essenciais
 

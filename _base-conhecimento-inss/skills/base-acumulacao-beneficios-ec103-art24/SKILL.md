@@ -73,13 +73,13 @@ Fundamentos. Art. 5º, XXXVI, CF. Art. 24, § 4º, EC 103/2019. Súmula 359/STF.
 
 ### 5.1. ADI 7051. Constitucionalidade do art. 23 (cálculo da pensão)
 
-Plenário. Rel. Min. Roberto Barroso. Julgada em 23/06/2023.
+Plenário. Rel. Min. Roberto Barroso. Sessão virtual encerrada em 23/06/2023, julgamento registrado no portal em 26/06/2023 (auditoria 03/10/2026).
 
 Tese. "É constitucional o art. 23, caput, da Emenda Constitucional nº 103/2019, que fixa novos critérios de cálculo para a pensão por morte no Regime Geral e nos Regimes Próprios de Previdência Social".
 
-Vencidos. Min. Edson Fachin e Min. Rosa Weber.
+Vencidos parcialmente. Min. Edson Fachin e Min. Rosa Weber.
 
-Resultado. 8x2. Decisão DESFAVORÁVEL ao segurado em relação ao mérito da pensão pós-reforma.
+Resultado. Improcedente, por maioria (auditoria 03/10/2026). Decisão DESFAVORÁVEL ao segurado em relação ao mérito da pensão pós-reforma. O caminho do segurado é o direito adquirido para óbito anterior a 13/11/2019 e, havendo dependente inválido ou com deficiência intelectual, mental ou grave, a pensão de 100% do art. 23, § 2º, I, da EC 103/2019, até o teto do RGPS (auditoria 03/10/2026).
 
 ### 5.2. Tema 1300/STF (RE 1.469.150)
 
@@ -119,15 +119,15 @@ Mesmo conteúdo do Tema 377, especificamente para servidores que já ocupavam do
 
 FAVORÁVEL ao segurado. Aplicação por analogia à acumulação de duas aposentadorias decorrentes de cargos acumuláveis.
 
-### 5.6. Tema 627/STF (RE 658.999)
+### 5.6. Tema 627/STF (RE 658.999) [CONFERIDO] (auditoria 03/10/2026)
 
-Pleno. Julgamento 14/05/2014.
+Pleno.
 
-Tese. "Em caso de cargos constitucionalmente acumuláveis, não se aplica a proibição de acumulação de aposentadorias e pensões".
+Tese. "Em se tratando de cargos constitucionalmente acumuláveis, descabe aplicar a vedação de acumulação de aposentadorias e pensões contida na parte final do artigo 11 da Emenda Constitucional 20/98, porquanto destinada apenas aos casos de que trata, ou seja, aos reingressos no serviço público por meio de concurso público antes da publicação da referida emenda e que envolvam cargos inacumuláveis." Plenário Virtual, mérito em 17/12/2022, trânsito em 21/04/2023 (auditoria 03/10/2026).
 
 Decisão por unanimidade.
 
-FAVORÁVEL ao segurado. Reforça que a vedação genérica do art. 24 não atinge as hipóteses de cargos acumuláveis (art. 37, XVI, CF).
+FAVORÁVEL ao segurado, por analogia, pois a tese se restringe ao art. 11 da EC 20/98. Reforça que a vedação genérica do art. 24 não atinge as hipóteses de cargos acumuláveis (art. 37, XVI, CF).
 
 ### 5.7. RE 1.510.285/DF AgR
 
@@ -213,7 +213,7 @@ Eventual estratégia limita-se a planejamento da DIB para escolher qual benefíc
 
 ### 7.4. Cenário 4. Duas aposentadorias decorrentes de cargos constitucionalmente acumuláveis
 
-Não incide a vedação de acumulação quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999, regime anterior à EC 103; para o redutor do art. 24, ver ADI 7051, Tema 1300/STF e RE 1.510.285 AgR — auditoria 25/07/2026).
+Não incide a vedação de acumulação quando os cargos são constitucionalmente acumuláveis (Tema 627/STF, RE 658.999 [CONFERIDO] (auditoria 03/10/2026), vedação do art. 11 da EC 20/98, regime anterior à EC 103; para o redutor do art. 24, ver ADI 7051, Tema 1300/STF e RE 1.510.285 AgR — auditoria 25/07/2026).
 
 Cada vínculo é considerado isoladamente para o teto remuneratório (Temas 377 e 384).
 
@@ -275,7 +275,7 @@ Demonstrativo do impacto financeiro da aplicação do redutor.
 
 ## 10. Status do tema
 
-ADI 7051. TRANSITADO EM JULGADO (constitucionalidade do art. 23 confirmada).
+ADI 7051. TRANSITADO EM JULGADO em 26/10/2023 (constitucionalidade do art. 23, caput, confirmada) [CONFERIDO] (auditoria 03/10/2026).
 
 Tema 1300/STF. TRANSITADO EM JULGADO em 2025/2026 (constitucionalidade do art. 26, § 2º, III).
 
@@ -283,7 +283,7 @@ Tema 359/STF. TRANSITADO EM JULGADO (teto sobre soma).
 
 Temas 377 e 384/STF. TESES VIGENTES (cada vínculo isolado para teto).
 
-Tema 627/STF. TESE VIGENTE (cargos acumuláveis sem vedação).
+Tema 627/STF [CONFERIDO]. TRANSITADO EM JULGADO em 21/04/2023 (cargos acumuláveis fora da vedação do art. 11 da EC 20/98; no art. 24 da EC 103, uso por analogia) (auditoria 03/10/2026).
 
 Aplicação do redutor do art. 24 sobre aposentadoria pré-reforma. MATÉRIA EM CONTROVÉRSIA na Primeira Turma do STF, sem repercussão geral fixada especificamente sobre o ponto.
 

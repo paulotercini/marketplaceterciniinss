@@ -69,7 +69,7 @@ O fato é a prestação de trabalho com subordinação, habitualidade e remunera
 
 ### Desemprego involuntário (período de graça, art. 15, § 2º)
 
-O fato é a situação de desemprego involuntário após o último vínculo, para estender o período de graça. O registro no SINE ou o seguro-desemprego ajudam mas não são indispensáveis, a prova testemunhal supre (Tema 255/TNU na linha da TNU sobre a comprovação). Depoimento precisa da procura ativa por trabalho, bicos sem vínculo não descaracterizam por si. Consultar `periodo-graca-qualidade-segurado`.
+O fato é a situação de desemprego involuntário após o último vínculo, para estender o período de graça. O registro no SINE ou o seguro-desemprego ajudam mas não são indispensáveis, a prova testemunhal supre (Tema 1360/STJ e Súmula 27/TNU; auditoria 03/10/2026, retirado o Tema 255/TNU, que trata da prorrogação por mais de 120 contribuições). Depoimento precisa da procura ativa por trabalho, bicos sem vínculo não descaracterizam por si. Consultar `periodo-graca-qualidade-segurado`.
 
 ### Tempo especial com empresa extinta
 

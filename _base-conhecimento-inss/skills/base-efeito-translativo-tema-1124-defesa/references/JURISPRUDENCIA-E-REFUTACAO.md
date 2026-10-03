@@ -72,11 +72,11 @@ Tema 1124/STJ na perspectiva do efeito translativo.
 
 Limite da Súmula 98/STJ. Multa autorizada quando os embargos rediscutem matéria pacificada (auditoria 25/07/2026).
 
-Ratifica a Súmula 98/STJ. Não há caráter protelatório nos embargos prequestionadores.
+O segurado preserva a proteção da Súmula 98/STJ ao prequestionar sem rediscutir a matéria pacificada (auditoria 03/10/2026).
 
 ### 5.2. Aplicação
 
-Reforça a estratégia de embargos exaustivos para prequestionamento.
+Orienta embargos de prequestionamento objetivos, restritos à omissão (auditoria 03/10/2026).
 
 ## 6. [Corrigido na auditoria 25/07/2026] Prequestionamento ficto
 
@@ -292,7 +292,7 @@ Inaplicabilidade do Tema 1124 às ações ajuizadas antes da publicação da tes
 
 ### 16.1. Cabimento excepcional
 
-Súmula 267/STF. MS contra ato judicial passível de recurso é incabível, exceto em hipóteses extremas.
+Súmula 267/STF. "Não cabe mandado de segurança contra ato judicial passível de recurso ou correição." A exceção para decisão teratológica é construção posterior e não consta do enunciado [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### 16.2. Hipóteses
 

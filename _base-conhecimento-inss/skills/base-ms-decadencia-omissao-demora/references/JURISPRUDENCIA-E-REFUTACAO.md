@@ -2,11 +2,11 @@
 
 ## 1. Precedentes relevantes
 
-### Súmula 632 STJ
+### Súmula 632 STF (auditoria 03/10/2026)
 
 Decadência.
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://portal.stf.jus.br
 
 ### acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021)
 
@@ -16,11 +16,11 @@ Fonte oficial em https://portal.stf.jus.br
 
 ### Tema 374 STF
 
-Foro.
+Foro do art. 109, §2º, CF nas ações contra autarquias federais, à escolha do autor. A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### Súmula 405 STF
 
-Efeitos.
+Denegada a segurança, a liminar fica sem efeito, com retroação (auditoria 03/10/2026).
 
 ## 2. Marco legislativo
 

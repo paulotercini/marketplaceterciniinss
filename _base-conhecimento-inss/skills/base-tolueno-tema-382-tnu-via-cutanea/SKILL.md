@@ -1,6 +1,6 @@
 ---
 name: base-tolueno-tema-382-tnu-via-cutanea
-description: "Tolueno via cutânea e Tema 382/TNU (PEDILEF 5012678-57.2022.4.04.7108/RS, julgado em 15/04/2026, tese CONTRA o enquadramento qualitativo pela via cutânea), com estratégia residual pró-segurado pela via quantitativa do Anexo 11 da NR-15, co-exposição a benzeno e EPI. Use SEMPRE que mencionar tolueno, Tema 382 TNU, PUIL 5012678, tolueno via cutânea, tolueno absorção dérmica, tolueno Anexo 13 NR-15, tolueno 78 ppm, ACGIH 20 ppm tolueno, distinção tolueno benzeno, LINACH, hidrocarboneto aromático tolueno, NR-15 Anexo 11 12 13, exposição cutânea tolueno, sapateiro tolueno, gráfica tolueno, oficina mecânica tolueno, indústria tintas tolueno, frentista tolueno, EPI tolueno, Tema 555 STF, Tema 1090 STJ, Súmula 9 TNU, NHO-08, neurotoxicidade tolueno, fetotoxicidade tolueno, art. 57 §3º Lei 8.213, art. 58 PPP tolueno, IRDR 15 TRF4, PEDILEF 0136882, PEDILEF 5001032, Decreto 53831 codigo 1.2.10. Cruza com auditoria-ppp, base-especial-agentes-quimicos, base-especial-epi, defesa-probatoria-especial, peticao-previdenciaria, precedentes-previdenciarios."
+description: "Tolueno via cutânea e Tema 382/TNU (PEDILEF 5012678-57.2022.4.04.7108/RS, julgado em 15/04/2026, tese CONTRA o enquadramento qualitativo pela via cutânea), com estratégia residual pró-segurado pela via quantitativa do Anexo 11 da NR-15, co-exposição a benzeno e EPI. Use SEMPRE que mencionar tolueno, Tema 382 TNU, PUIL 5012678, tolueno via cutânea, tolueno absorção dérmica, tolueno Anexo 13 NR-15, tolueno 78 ppm, ACGIH 20 ppm tolueno, distinção tolueno benzeno, LINACH, hidrocarboneto aromático tolueno, NR-15 Anexo 11 12 13, exposição cutânea tolueno, sapateiro tolueno, gráfica tolueno, oficina mecânica tolueno, indústria tintas tolueno, frentista tolueno, EPI tolueno, Tema 555 STF, Tema 1090 STJ, Súmula 9 TNU, NHO-08, neurotoxicidade tolueno, fetotoxicidade tolueno, art. 57 §3º Lei 8.213, art. 58 PPP tolueno, IRDR 15 TRF4, Decreto 53831 codigo 1.2.11. Cruza com auditoria-ppp, base-especial-agentes-quimicos, base-especial-epi, defesa-probatoria-especial, peticao-previdenciaria, precedentes-previdenciarios."
 ---
 
 # Tolueno via Cutânea. Tema 382/TNU e Estratégia Residual Pós-Julgamento
@@ -33,9 +33,9 @@ C6H6.
 
 LINACH Grupo 1 (cancerígeno comprovado para humanos).
 
-NR-15, Anexo 13-A. Limite de tolerância 1 ppm (anteriormente 1 ppm também).
+NR-15, Anexo 13-A. Valor de referência tecnológico (VRT-MPT) de 1 ppm, e não limite de tolerância [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
-Lei 13.467/2017 e Portaria MTb 1.109/2016. Regulamentação específica do benzeno.
+Portaria MTb 1.109/2016. Regulamentação específica do benzeno (auditoria 03/10/2026).
 
 Reconhecido cancerígeno. Não admite exposição segura. Enquadramento qualitativo.
 
@@ -47,9 +47,9 @@ LINACH NÃO é classificação primária. ACGIH classifica como A4 (inadequado p
 
 NR-15, Anexo 11. Limite de tolerância 78 ppm para 48 horas/semana.
 
-Anexo 13 da NR-15. Tolueno listado entre as substâncias com absorção também pela via cutânea.
+Anexo 11 da NR-15, item 5. Tolueno assinalado na coluna de absorção também pela pele, o que exige luvas adequadas na manipulação. O agente não consta do Anexo 13, segundo o acórdão do Tema 382/TNU (auditoria 03/10/2026).
 
-ACGIH (2017). Recomendação de redução do limite para 20 ppm em razão de neurotoxicidade.
+ACGIH. Limite de 20 ppm para 8 horas diárias e 40 semanais, citado no acórdão do Tema 382/TNU, com base em neurotoxicidade, perda auditiva e visual e toxicidade reprodutiva (auditoria 03/10/2026).
 
 NHO-08 da Fundacentro. Procedimento de avaliação da exposição a vapores orgânicos.
 
@@ -73,9 +73,9 @@ Quinto. Casos com trânsito em julgado favorável anteriores ao Tema 382 não s�
 
 ### 5.1. Decreto 53.831/64
 
-Código 1.2.10. Hidrocarbonetos. Tolueno enquadrado como agente químico.
+Código 1.2.11. Tóxicos orgânicos, entre eles os hidrocarbonetos. Tolueno enquadrado como agente químico (auditoria 03/10/2026).
 
-Código 1.2.11. Resíduos de hidrocarbonetos.
+O código 1.2.10 trata de sílica, asbesto e outras poeiras, e não de hidrocarbonetos.
 
 Aplicação até 28/04/1995 (categoria profissional + agente).
 
@@ -85,15 +85,15 @@ Aplicação até 05/03/1997 (atividade nociva).
 
 Código 1.2.10. Hidrocarbonetos.
 
-Código 1.2.11. Resíduos.
+Código 1.2.11. Outros tóxicos e associação de agentes (auditoria 03/10/2026).
 
 Aplicação até 05/03/1997.
 
 ### 5.3. Decreto 2.172/97 (e Decreto 3.048/99, Anexo IV)
 
-Código 1.0.19. Hidrocarbonetos aromáticos.
+Código 1.0.19. Outras substâncias químicas. O Grupo I cita o diisocianato de tolueno (TDI), composto distinto do tolueno (auditoria 03/10/2026).
 
-Tolueno enquadrado como hidrocarboneto aromático.
+O código 1.0.19 não nomeia o tolueno.
 
 Aplicação a partir de 06/03/1997.
 
@@ -101,49 +101,49 @@ Aplicação a partir de 06/03/1997.
 
 Anexo 11. Agentes químicos com limite de tolerância. Tolueno 78 ppm para 48 horas/semana.
 
-Anexo 13. Agentes químicos com risco grave por absorção cutânea. Tolueno expressamente listado.
+Anexo 13. Avaliação qualitativa de agentes químicos. Segundo o acórdão do Tema 382/TNU, essa avaliação é subsidiária e fica excluída quando o agente consta dos Anexos 11 ou 12, e o tolueno é previsto apenas no Anexo 11 (auditoria 03/10/2026).
 
 Aplicação. A NR-15 é norma técnica complementar ao Decreto 3.048/99 e ao Anexo IV.
 
 ## 6. Argumentação contra o INSS
 
-### 6.1. Argumento 1. Vincular o tolueno ao regime do Anexo 13 (cutânea), não ao Anexo 11 (concentração no ar)
+### 6.1. Argumento 1. Enquadramento qualitativo pelo Anexo 13, tese superada pelo Tema 382/TNU
 
-Tese. A NR-15 prevê dois regimes distintos para o tolueno. Anexo 11 trata da exposição respiratória e exige aferição quantitativa pelo limite de tolerância. Anexo 13 trata da absorção cutânea e dispensa quantificação.
+Tese superada. A versão anterior sustentava dois regimes para o tolueno, com o Anexo 13 a dispensar a quantificação na absorção cutânea. O Tema 382/TNU rejeitou essa tese, e o tolueno se avalia pelo limite de tolerância do Anexo 11 (auditoria 03/10/2026).
 
-Quando há contato cutâneo com tolueno (como em sapateiros, frentistas, polidores), aplica-se o Anexo 13, com enquadramento qualitativo.
+Caminho do segurado. Mesmo com contato cutâneo (sapateiros, frentistas, polidores), o pedido se funda na medição acima do limite do Anexo 11 ou na co-exposição a benzeno, que segue o Tema 170/TNU.
 
 ### 6.2. Argumento 2. ACGIH 20 ppm como reforço subsidiário
 
-Tese. O limite de tolerância da NR-15 (78 ppm) está desatualizado. A ACGIH recomenda 20 ppm desde 2017. Em medidas acima de 20 ppm, há nocividade comprovada.
+Tese. O limite de tolerância da NR-15 (78 ppm) está desatualizado. A ACGIH adota 20 ppm, valor citado no acórdão do Tema 382/TNU (auditoria 03/10/2026). Em medidas acima de 20 ppm, cabe sustentar a nocividade.
 
-Aplicação subsidiária. Quando o argumento principal (Anexo 13/cutânea) não for aceito, sustentar que o limite real de nocividade é 20 ppm conforme recomendação ACGIH atualizada.
+Aplicação subsidiária. Como o Tema 382/TNU afastou o enquadramento qualitativo pela via cutânea (Anexo 13), na análise quantitativa do Anexo 11 cabe sustentar que o limite real de nocividade é 20 ppm conforme recomendação ACGIH atualizada (auditoria 03/10/2026).
 
 ### 6.3. Argumento 3. Co-exposição com outros aromáticos (benzeno, xileno, etilbenzeno)
 
 Tese. Em ambientes industriais, o tolueno raramente aparece isolado. A exposição é geralmente conjunta com benzeno (LINACH 1), xileno e etilbenzeno.
 
-Estratégia. Argumentar a co-exposição como agravante. Mesmo se o tolueno isoladamente não for cancerígeno, a presença de benzeno simultânea atrai a aplicação do Tema 382/TNU.
+Estratégia. Argumentar a co-exposição como agravante. Mesmo se o tolueno isoladamente não for cancerígeno, a presença de benzeno simultânea atrai a avaliação qualitativa própria dos cancerígenos, pelo Tema 170/TNU, e não o Tema 382/TNU, que trata do tolueno (auditoria 03/10/2026).
 
-### 6.4. Argumento 4. Distinguishing do Tema 382/TNU para invocar a sua ratio decidendi
+### 6.4. Argumento 4. Tema 382/TNU, tese adversa
 
-Tese. O Tema 382/TNU fixou a desnecessidade da aferição quantitativa para agentes cancerígenos (LINACH 1). Por aplicação analógica e pela ratio decidendi do julgado, agentes do Anexo 13 da NR-15 (absorção cutânea) também não exigem quantificação.
+Tese adversa. O Tema 382/TNU fixou que a exposição ao tolueno por via cutânea, inclusive na forma líquida, não autoriza o reconhecimento da atividade especial por análise qualitativa (Anexo 13, NR-15) (auditoria 03/10/2026).
 
-Distinguishing. O Tema 382 é aplicado ao benzeno, mas a sua ratio (desnecessidade de quantificação para agentes com absorção sistêmica grave) é aplicável ao tolueno do Anexo 13.
+Caminho do segurado. Provar concentração acima do limite do Anexo 11 da NR-15 ou co-exposição a benzeno, que segue o Tema 170/TNU.
 
 ### 6.5. Argumento 5. Súmula 9/TNU e Tema 555/STF (EPI)
 
-Tese. EPI ineficaz para neutralizar agentes cutâneos do Anexo 13.
+Tese. Com concentração acima do limite do Anexo 11, o EPI só neutraliza a exposição se incluir luvas adequadas, que o item 5 desse Anexo exige para agentes absorvidos pela pele, como o tolueno (auditoria 03/10/2026).
 
 A absorção cutânea ocorre pelo contato direto com a pele. Luvas sintéticas comuns (látex, nitrila não certificadas) NÃO são eficazes contra hidrocarbonetos aromáticos. Apenas luvas de nitrila industrial específica para químicos, com certificação CA específica para o agente, podem ser eficazes.
 
 Cruzamento com `base-especial-epi`.
 
-### 6.6. Argumento 6. PEDILEF 0136882-37.2014.4.05.8300/PE e PEDILEF 5001032-25.2014.4.04.7204/SC
+### 6.6. Argumento 6. Precedentes da TNU sobre tolueno cutâneo
 
-Tese. Há jurisprudência da TNU reconhecendo o tolueno como agente nocivo qualitativo em hipóteses de exposição cutânea.
+Tese. Não há precedente da TNU localizado que reconheça o tolueno como agente nocivo qualitativo pela via cutânea, e o Tema 382/TNU rejeitou essa tese (auditoria 03/10/2026).
 
-ATENÇÃO. Verificar inteiro teor antes de citar com número de processo. PEDILEF 0136882 e PEDILEF 5001032 NÃO foram localizados em fonte primária oficial até a data desta skill. Verificar no portal da TNU.
+ATENÇÃO. Os dois PEDILEFs antes citados nesta seção não foram localizados no acervo da TNU nem em fonte oficial e foram retirados.
 
 ## 7. Cenários práticos
 
@@ -151,7 +151,7 @@ ATENÇÃO. Verificar inteiro teor antes de citar com número de processo. PEDILE
 
 Atividade típica. Aplicação de cola de sapateiro (contém tolueno em proporções variáveis).
 
-Estratégia. PPP com campo 15.3 = "tolueno" + campo 15.4 = "exposição cutânea ao Anexo 13 da NR-15" + campo 15.7 = "EPI ineficaz".
+Estratégia. PPP com campo 15.3 = "tolueno" + campo 15.4 com a concentração medida pelo Anexo 11 da NR-15 + campo 15.7 = "EPI ineficaz". O contato cutâneo isolado não basta, pelo Tema 382/TNU (auditoria 03/10/2026).
 
 Cruzamento com `auditoria-ppp` para validação do PPP.
 
@@ -159,25 +159,25 @@ Cruzamento com `auditoria-ppp` para validação do PPP.
 
 Atividade típica. Operação de máquinas com tinta off-set (contém tolueno como diluente).
 
-Estratégia. PPP com indicação de manuseio de solventes + Anexo 13 + co-exposição com xileno e etilbenzeno.
+Estratégia. PPP com indicação de manuseio de solventes + medição pelo Anexo 11 + co-exposição com xileno e etilbenzeno (auditoria 03/10/2026).
 
 ### 7.3. Cenário C. Oficina mecânica
 
 Atividade típica. Manuseio de gasolina (contém tolueno e benzeno) + lavagem de peças com solventes orgânicos.
 
-Estratégia. Co-exposição com benzeno (Tema 382/TNU diretamente aplicável) + tolueno do Anexo 13.
+Estratégia. Co-exposição com benzeno, avaliado qualitativamente pelo Tema 170/TNU, + tolueno pela medição do Anexo 11 (auditoria 03/10/2026).
 
 ### 7.4. Cenário D. Indústria de tintas
 
 Atividade típica. Operação de máquinas com tinta esmalte sintético (contém tolueno como solvente).
 
-Estratégia. Anexo 13 + ACGIH 20 ppm + co-exposição com xileno.
+Estratégia. Medição pelo Anexo 11 + ACGIH 20 ppm + co-exposição com xileno (auditoria 03/10/2026).
 
 ### 7.5. Cenário E. Frentista
 
 Atividade típica. Abastecimento de combustível (gasolina contém tolueno + benzeno).
 
-Estratégia. Tema 382/TNU para o benzeno (cancerígeno) + tolueno do Anexo 13 cumulativamente.
+Estratégia. Tema 170/TNU para o benzeno (cancerígeno) + tolueno pela medição do Anexo 11 (auditoria 03/10/2026).
 
 Cruzamento com `precedentes-previdenciarios` para o Tema 382 e com `base-especial-agentes-quimicos`.
 
@@ -195,7 +195,7 @@ Cruzamento com `retificacao-ppp`.
 
 Se houver aferição quantitativa, comparar com NR-15 (78 ppm) e ACGIH (20 ppm).
 
-Se não houver aferição quantitativa, sustentar a aplicação do Anexo 13 (qualitativa).
+Se não houver aferição quantitativa, impugnar o PPP e requerer o LTCAT com a medição, pois o Tema 382/TNU afastou a análise qualitativa pelo Anexo 13 (auditoria 03/10/2026).
 
 ### 8.3. Verificar o campo 15.5 (técnica utilizada)
 
@@ -211,7 +211,7 @@ Cruzamento com `base-especial-epi`.
 
 ### 8.5. Verificar o campo de observações
 
-Eventual menção a "exposição cutânea", "contato com a pele", "absorção cutânea" reforça o enquadramento pelo Anexo 13.
+Eventual menção a "exposição cutânea", "contato com a pele", "absorção cutânea" não basta para o enquadramento após o Tema 382/TNU, mas reforça a exigência de luvas adequadas na discussão do EPI (auditoria 03/10/2026).
 
 ## 9. Estratégia processual
 
@@ -219,9 +219,9 @@ Eventual menção a "exposição cutânea", "contato com a pele", "absorção cu
 
 Recurso ordinário com fundamentação em.
 
-Anexo 13 da NR-15 (taxatividade).
+Anexo 11 da NR-15, com medição acima do limite de tolerância (auditoria 03/10/2026).
 
-Tema 382/TNU (ratio decidendi por analogia).
+Tema 382/TNU, tese adversa, a enfrentar com a prova quantitativa do Anexo 11 ou com a co-exposição a benzeno pelo Tema 170/TNU (auditoria 03/10/2026).
 
 ACGIH 20 ppm (subsidiário).
 

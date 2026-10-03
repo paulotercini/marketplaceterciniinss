@@ -3,7 +3,7 @@
 ## 1. Evolução Jurisprudencial
 
 ### Tese anterior (superada)
-**PUIL 5002615-35.2020.4.04.7207/SC (29/04/2022)** — a TNU havia fixado que o segurado contribuinte individual não tem direito ao B94, na forma do art. 18, §1º, da Lei 8.213/91, ainda que, em relação à relação empregatícia anterior, esteja em período de graça. **Esta tese foi expressamente superada.**
+**PUIL 5002615-35.2020.4.04.7207/SC (29/04/2022)** — a TRU da 4ª Região, e não a TNU, havia fixado, em julgado regional sem efeito vinculante (auditoria 03/10/2026), que o segurado contribuinte individual não tem direito ao B94, na forma do art. 18, §1º, da Lei 8.213/91, ainda que, em relação à relação empregatícia anterior, esteja em período de graça. **Esta tese foi expressamente superada.**
 
 ### Tese vigente
 **PUIL 5000733-56.2021.4.04.7222/SC (14/05/2025)** — decisão por maioria de 10 x 2. Relator originário (vencido) Juiz Federal Nagibe de Melo Jorge Neto. Relator para o acórdão Juiz Federal Ivanir Cesar Ireno Junior.
@@ -69,7 +69,7 @@ Para fazer jus ao B94 com base nesta tese, todos os seguintes requisitos devem e
 |----------|-------|
 | Regra geral (após cessar contribuições/vínculo) | 12 meses |
 | Mais de 120 contribuições sem interrupção que acarrete perda da qualidade | +12 meses (24 total) |
-| Desemprego comprovado (registro DRT/CTPS) | +12 meses (36 total) |
+| Desemprego comprovado (registro no SINE ou recebimento de seguro-desemprego, art. 184, §5º, da IN 128/2022) (auditoria 03/10/2026) | +12 meses (36 total) |
 | Durante recebimento de auxílio-doença | Tempo do benefício (suspende o prazo) |
 | Até 12 meses após cessar auxílio-doença | 12 meses |
 

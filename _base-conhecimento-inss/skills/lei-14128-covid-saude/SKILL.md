@@ -111,7 +111,7 @@ A vinculação formal é restrita ao microssistema dos JEFs, mas a tese vem send
 
 A pesquisa nos seis TRFs revela orientação **uniformemente pró-beneficiário**. Não há TRF com posição majoritária em sentido contrário.
 
-**TRF3** (jurisdição do escritório). 2ª Turma, Des. Wilson Zauhy (caso Gilberto Miguel × União, médica falecida em 27/01/2021), reconheceu desnecessidade de prévio requerimento administrativo e desnecessidade de perícia médica federal em ação judicial. 3ª Turma, AC 5001042-87.2023.4.03.6138 (enfermeira de UBS de Barretos/SP), confirmou condenação de R$ 160.000,00 a filha e companheiro. JF Campo Grande/MS condenou em R$ 400.850,00 viúva e dois filhos de fisioterapeuta.
+**TRF3** (jurisdição do escritório). 2ª Turma, Des. Wilson Zauhy (caso G. M. × União, médica falecida em 27/01/2021) (auditoria 03/10/2026), reconheceu desnecessidade de prévio requerimento administrativo e desnecessidade de perícia médica federal em ação judicial. 3ª Turma, AC 5001042-87.2023.4.03.6138 (enfermeira de UBS de Barretos/SP), confirmou condenação de R$ 160.000,00 a filha e companheiro. JF Campo Grande/MS condenou em R$ 400.850,00 viúva e dois filhos de fisioterapeuta.
 
 **TRF1**. 12ª Turma, Desa. Ana Carolina Roman, manteve sentença de procedência em favor de companheiro e filha de técnica de enfermagem falecida.
 

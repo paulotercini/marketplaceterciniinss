@@ -4,7 +4,7 @@
 
 ### Tema 810 STF
 
-IPCA-E e juros, modulação.
+IPCA-E [NÃO CONFIRMADO] e juros, sem modulação (embargos rejeitados em 03/10/2019) (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -14,9 +14,9 @@ Benefícios previdenciários.
 
 Fonte oficial em https://www.stj.jus.br
 
-### Tema 96 STJ
+### Prescrição em cumprimento
 
-Prescrição em cumprimento.
+Sem precedente vinculante conferido nesta base (auditoria 03/10/2026, retirado o Tema 96/STJ, que trata de crédito tributário).
 
 ### Tema 368 STF
 

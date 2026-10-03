@@ -4,13 +4,13 @@
 
 ### 1.1. ADI 7051. Constitucionalidade do art. 23 da EC 103/2019
 
-Plenário. Rel. Min. Roberto Barroso. Julgada em 23/06/2023.
+Plenário. Rel. Min. Roberto Barroso. Sessão virtual encerrada em 23/06/2023, julgamento registrado no portal em 26/06/2023 (auditoria 03/10/2026).
 
 Tese fixada. "É constitucional o art. 23, caput, da Emenda Constitucional nº 103/2019, que fixa novos critérios de cálculo para a pensão por morte no Regime Geral e nos Regimes Próprios de Previdência Social".
 
-Vencidos. Min. Edson Fachin e Min. Rosa Weber.
+Vencidos parcialmente. Min. Edson Fachin e Min. Rosa Weber.
 
-Resultado. 8x2.
+Resultado. Improcedente, por maioria (auditoria 03/10/2026).
 
 Status. DESFAVORÁVEL ao segurado em relação ao mérito da pensão pós-reforma.
 
@@ -66,15 +66,15 @@ Aplicação por analogia à acumulação de duas aposentadorias decorrentes de c
 
 ### 1.6. Tema 627/STF (RE 658.999)
 
-Pleno. Julgamento 14/05/2014.
+Plenário Virtual. Mérito em 17/12/2022, acórdão de 22/03/2023, trânsito em 21/04/2023 (auditoria 03/10/2026).
 
-Tese fixada. "Em caso de cargos constitucionalmente acumuláveis, não se aplica a proibição de acumulação de aposentadorias e pensões".
+Tese fixada. "Em se tratando de cargos constitucionalmente acumuláveis, descabe aplicar a vedação de acumulação de aposentadorias e pensões contida na parte final do artigo 11 da Emenda Constitucional 20/98, porquanto destinada apenas aos casos de que trata, ou seja, aos reingressos no serviço público por meio de concurso público antes da publicação da referida emenda e que envolvam cargos inacumuláveis." [CONFERIDO]
 
 Decisão por unanimidade.
 
 Status. FAVORÁVEL ao segurado.
 
-Aplicação. Reforça que a vedação genérica do art. 24 não atinge as hipóteses de cargos acumuláveis (art. 37, XVI, CF).
+Aplicação, por analogia, pois a tese se restringe ao art. 11 da EC 20/98. Reforça que a vedação genérica do art. 24 não atinge as hipóteses de cargos acumuláveis (art. 37, XVI, CF).
 
 ### 1.7. RE 1.510.285/DF AgR
 

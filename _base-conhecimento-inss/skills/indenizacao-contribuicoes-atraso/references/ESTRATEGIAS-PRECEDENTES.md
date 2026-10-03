@@ -115,7 +115,7 @@ O segurado ajuíza ação de concessão de aposentadoria alegando tempo de contr
 
 ### 3.2 Agravo de instrumento — fundamentos
 
-1. **Cabimento** — Tema 988/STJ (rol não taxativo do art. 1.015 CPC), pois a decisão que indefere o depósito gera inutilidade do julgamento da apelação
+1. **Cabimento** — Tema 988/STJ (taxatividade mitigada do rol do art. 1.015 CPC, com urgência demonstrada) (auditoria 03/10/2026), pois a decisão que indefere o depósito gera inutilidade do julgamento da apelação
 2. **Tutela recursal** — art. 1.019, I, CPC (efeito suspensivo ou antecipação)
 3. **Risco de dano** — art. 995, parágrafo único, CPC (sentença condicionada a evento futuro e incerto viola art. 492, parágrafo único, CPC)
 4. **Probabilidade de direito** — atividade já reconhecida, indenização já calculada pelo INSS, segurado disposto a pagar
@@ -166,10 +166,10 @@ O cálculo apresentado pelo INSS deve ser conferido nos seguintes pontos
 
 | Situação | Conta para carência? | Fundamento |
 |----------|---------------------|------------|
-| Primeira contribuição em dia + atraso posterior sem perda QS | SIM | Art. 27, II, Lei 8.213 + Tema 192/TNU |
+| Primeira contribuição em dia + atraso posterior sem perda QS | SIM | Art. 27, II, Lei 8.213; o Tema 192/TNU é adverso quando o recolhimento ocorre após a perda da QS (auditoria 03/10/2026) |
 | Atraso anterior à primeira contribuição em dia | NÃO | Art. 27, II, Lei 8.213 |
 | Perda da qualidade de segurado + refiliação | Somente após nova contribuição em dia | Art. 28, §4º, RPS (Decreto 10.410) |
-| Segurado empregado | SIM (presunção de recolhimento) | Súmula 75 TNU |
+| Segurado empregado | SIM (recolhimento a cargo do empregador) | Art. 27, I, Lei 8.213; a CTPS sem defeito formal prova o vínculo, ainda que ausente do CNIS (Súmula 75 TNU) (auditoria 03/10/2026) |
 | Labor rural anterior a 1991 (RGPS) | NÃO exige contribuição | Art. 55, §2º, Lei 8.213 |
 
 ### 5.2 Argumentos contra a restrição do art. 28, §4º, RPS

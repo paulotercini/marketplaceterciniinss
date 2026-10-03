@@ -16,7 +16,7 @@ Tema. Idade mínima sem qualidade de segurado.
 
 Aplicação. Segurado que completou idade mas perdeu qualidade. Direito preservado se atingiu carência.
 
-Combinar com. Súmula 416/STJ, Tema 1340/STJ, art. 102 §1º Lei 8.213/91.
+Combinar com. Súmula 416/STJ, art. 102 §1º Lei 8.213/91 (auditoria 03/10/2026, retirado o Tema 1340/STJ).
 
 ### Súmula 13 - PRÓ
 
@@ -32,7 +32,7 @@ Tema. Carência art. 142 para filiados pré-24/07/1991.
 
 Aplicação. Tabela progressiva preservada ainda que perdida a qualidade de segurado.
 
-Combinar com. Súmula 8, art. 142 Lei 8.213/91, Tema 1340/STJ.
+Combinar com. Súmula 8, art. 142 Lei 8.213/91 (auditoria 03/10/2026, retirado o Tema 1340/STJ).
 
 ## BLOCO B - BPC LOAS
 

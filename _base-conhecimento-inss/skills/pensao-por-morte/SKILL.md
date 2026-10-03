@@ -87,13 +87,13 @@ A legislação não prevê expressamente o neto como dependente. A jurisprudênc
 
 ### 2.5 Menor sob guarda judicial
 
-A Lei 9.528/1997 excluiu o menor sob guarda do rol de dependentes. A Lei 15.108/2025 reincluiu o menor sob guarda judicial como dependente previdenciário. Verificar data do óbito para saber qual lei se aplica (tempus regit actum para o fato gerador, mas a nova lei pode favorecer o segurado se vigente na data do óbito).
+A Lei 9.528/1997 excluiu o menor sob guarda do rol de dependentes. A Lei 15.108/2025 reincluiu o menor sob guarda judicial no art. 16, §2º, da Lei 8.213/91, desde que não possua condições suficientes para o próprio sustento e educação. Há tese adversa no art. 23, §6º, da EC 103/2019, que para a pensão equipara a filho só o enteado e o menor tutelado; o conflito está pendente no Tema 1271/STF, e a defesa sustenta a redação da Lei 15.108/2025 e o art. 33, §3º, do ECA (auditoria 03/10/2026). Verificar data do óbito para saber qual lei se aplica (tempus regit actum para o fato gerador, mas a nova lei pode favorecer o segurado se vigente na data do óbito).
 
 ## 3. COMPROVAÇÃO DE UNIÃO ESTÁVEL
 
-### 3.1 Documentação (IN 128/2022, art. 8º)
+### 3.1 Documentação (Decreto 3.048/1999, art. 22, §3º; IN 128/2022, art. 180)
 
-O rol de 18 documentos do art. 8º é **exemplificativo**, não taxativo. Documentos de mesmo tipo são admitidos (art. 8º, §2º). Não é obrigatório comprovar mesmo domicílio. A prova testemunhal pode complementar a prova documental, seja por justificação administrativa (no INSS), seja por audiência (no Judiciário).
+O rol do art. 22, §3º, do Decreto 3.048/1999 (17 incisos, um deles revogado) é **exemplificativo**, não taxativo. O art. 180 da IN 128/2022 exige duas provas materiais contemporâneas, uma delas dos 24 meses anteriores ao óbito, e admite justificação administrativa quando houver um só documento desse período (auditoria 03/10/2026). Documentos de mesmo tipo são admitidos [NÃO CONFIRMADO]. Não é obrigatório comprovar mesmo domicílio. A prova testemunhal pode complementar a prova documental, seja por justificação administrativa (no INSS), seja por audiência (no Judiciário).
 
 ### 3.2 Contemporaneidade de 24 meses (art. 16, §5º)
 
@@ -109,9 +109,9 @@ Segunda parte — por se tratar de norma de direito material, a exigência somen
 
 **Exceção** — mesmo após a MP 871/2019, admite-se prova exclusivamente testemunhal na ocorrência de motivo de força maior ou caso fortuito (art. 16, §5º, parte final).
 
-### 3.3 Requisito temporal de 2 anos para pensão vitalícia (art. 77, §2º, V, "c", "6")
+### 3.3 Requisito temporal de 2 anos de casamento ou união estável (art. 77, §2º, V, alíneas b e c)
 
-Para pensão de duração superior a 3 anos quando o cônjuge/companheiro tiver menos de 44 anos na data do óbito, exige-se casamento ou união estável de pelo menos 2 anos.
+Em qualquer idade do cônjuge ou companheiro, a pensão por mais de 4 meses exige casamento ou união estável iniciados pelo menos 2 anos antes do óbito e 18 contribuições mensais do instituidor. Faltando um dos dois, a pensão dura 4 meses (alínea b), salvo óbito por acidente de qualquer natureza ou por doença profissional ou do trabalho (§2º-A). Nas durações da alínea c, o art. 16, §6º, exige ainda início de prova material da união estável por pelo menos 2 anos antes do óbito (auditoria 03/10/2026).
 
 **Aproveitamento do tempo de casamento anterior** — TRU/4ª Região, proc. 5007070-29.2018.4.04.7202, Rel. Marina Vasques Duarte, j. 18/05/2020. Quando o casal divorciado retoma a união por novo casamento ou união estável, o tempo do casamento anterior pode ser aproveitado para preencher o requisito de 2 anos.
 
@@ -153,7 +153,7 @@ Regra geral — 12 meses após cessação das contribuições ou do benefício p
 
 > Para regime jurídico completo do período de graça, incluindo todas as teses e precedentes, consultar skill `periodo-graca-qualidade-segurado`.
 
-**Incorporação ao patrimônio jurídico das 120 contribuições** — Tema 255/TNU (j. 16/10/2020) e TRF4, AC 5015395-67.2021.4.04.7208/SC (9ª Turma, Rel. Des. Paulo Afonso Brum Vaz, j. 16/05/2023) firmaram que o pagamento de 120+ contribuições incorpora-se definitivamente ao patrimônio jurídico do segurado, sendo exercível em qualquer filiação posterior, a qualquer tempo, independentemente de nova perda da qualidade. **ALERTA — Tema 1352/STJ [PENDENTE]** (afetação junho/2025, processos suspensos) pode restringir a tese ao uso único.
+**Incorporação ao patrimônio jurídico das 120 contribuições** — Tema 255/TNU (j. 16/10/2020) e TRF4, AC 5015395-67.2021.4.04.7208/SC (9ª Turma, Rel. Des. Paulo Afonso Brum Vaz, j. 16/05/2023) firmaram que o pagamento de 120+ contribuições incorpora-se definitivamente ao patrimônio jurídico do segurado, sendo exercível em qualquer filiação posterior, a qualquer tempo, independentemente de nova perda da qualidade. **ALERTA — Tema 1352/STJ [PENDENTE]** (afetação junho/2025, suspensos apenas os recursos especiais e os agravos em recurso especial) (auditoria 03/10/2026) pode restringir a tese ao uso único.
 
 **Cômputo das 120 contribuições — restrição do Tema 365/TNU** (j. 12/11/2025, auditoria 25/07/2026, rodada 2, data conferida na pagina oficial do CJF) — períodos de gozo de benefício por incapacidade intercalados NÃO contam para as 120 contribuições. Somente contribuições efetivamente pagas.
 
@@ -165,7 +165,7 @@ Regra geral — 12 meses após cessação das contribuições ou do benefício p
 
 **Contribuições abaixo do mínimo — Tema 349/TNU** (j. 16/10/2024) — contribuição inferior ao mínimo não impede o reconhecimento da qualidade de segurado, mesmo após a EC 103/2019. RE ao STF admitido em março/2025.
 
-**Término em dia não útil** — PEDILEF 0002300-36.2024.4.05.8109/CE (dezembro/2025) sustenta que o vencimento do §4º em dia sem expediente bancário prorroga para o próximo dia útil (art. 30, §2º, Lei 8.212/91). Tese aplicável em casos limítrofes de pensão por morte em que o óbito ocorra poucos dias após o fim teórico do período.
+**Término em dia não útil** — PEDILEF 0002300-36.2024.4.05.8109/CE (D.E. 17/12/2025) só anulou o acórdão e devolveu o processo à origem, sem fixar tese (auditoria 03/10/2026). O argumento é que o vencimento do §4º em dia sem expediente bancário prorroga para o próximo dia útil (art. 30, §2º, Lei 8.212/91). Argumento aplicável em casos limítrofes de pensão por morte em que o óbito ocorra poucos dias após o fim teórico do período.
 
 **Súmula 27/TNU** — a ausência de registro formal de desemprego não impede o reconhecimento do período de graça. O desemprego involuntário pode ser comprovado por outros meios de prova.
 
@@ -255,7 +255,7 @@ Precedente favorável — TRF6, proc. 1005296-74.2022.4.01.3807. Óbito em 01/01
 
 A duração varia conforme a idade do beneficiário na data do óbito e o tempo de casamento/união estável.
 
-Pensão vitalícia — apenas se o beneficiário tiver 44 anos ou mais na data do óbito (com casamento/união estável de pelo menos 2 anos e 18 contribuições mensais do instituidor).
+Pensão vitalícia — apenas se o beneficiário tiver 45 anos ou mais na data do óbito ocorrido desde 01/01/2021, ou 44 anos ou mais no óbito até 31/12/2020 (com casamento/união estável de pelo menos 2 anos e 18 contribuições mensais do instituidor). Para óbitos desde 01/01/2021, as demais faixas são 3 anos (menos de 22), 6 anos (22 a 27), 10 anos (28 a 30), 15 anos (31 a 41) e 20 anos (42 a 44), pela Portaria ME 424/2020 e pelo art. 375, §8º, da IN 128/2022 (auditoria 03/10/2026).
 
 Se o casamento/união tiver menos de 2 anos ou o instituidor tiver menos de 18 contribuições — pensão de 4 meses.
 
@@ -265,7 +265,7 @@ Ao completar 21 anos, salvo se inválido ou com deficiência.
 
 ### 6.3 Perda da qualidade de dependente
 
-Art. 77, §2º — a parte individual cessada é revertida aos demais dependentes.
+Art. 77, §1º. A parte individual cessada é revertida aos demais dependentes. Após a EC 103/2019, a cota de 10 pontos percentuais de quem perde a qualidade de dependente não reverte aos demais, salvo se restarem 5 ou mais dependentes, caso em que se preserva 100% (art. 23, §1º); em óbito anterior a 13/11/2019, a reversão do §1º segue integral (auditoria 03/10/2026).
 
 ## 7. COMPLEMENTAÇÃO DE CONTRIBUIÇÕES POST MORTEM
 
@@ -319,7 +319,7 @@ Acionar `peticao-previdenciaria` para formatação, `precedentes-previdenciarios
 
 ### 9.2 Ao auditar decisão administrativa ou judicial
 
-Acionar `base-auditoria-adversarial-decisao-judicial` para auditoria da decisão. Verificar se a DIB foi fixada conforme o marco temporal correto. Verificar se houve aplicação indevida do REsp 2.103.603/PB para limitar DIB de menor no JEF (onde o Tema 81/TNU prevalece). Verificar aplicação do Tema 371/TNU sobre contemporaneidade de 24 meses.
+Acionar `base-auditoria-adversarial-decisao-judicial` para auditoria da decisão. Verificar se a DIB foi fixada conforme o marco temporal correto. Verificar se houve aplicação indevida do REsp 2.103.603/PB para limitar DIB de menor no JEF (onde o Tema 81/TNU prevalece para óbitos anteriores a 18/01/2019; para os posteriores rege o Tema 1421/STJ, auditoria 03/10/2026). Verificar aplicação do Tema 371/TNU sobre contemporaneidade de 24 meses.
 
 ### 9.3 Ao orientar documentação
 

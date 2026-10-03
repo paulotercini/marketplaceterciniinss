@@ -20,11 +20,11 @@ Aplicação pró-segurado. Fundamento constitucional para invocar o Tema 1090 ST
 
 ### Tema 211 TNU
 
-Tese. A habitualidade não exige exposição contínua, bastando exposição não eventual integrada ao curso normal da jornada.
+Tese. "Para aplicação do art. 57, §3º, da Lei 8.213/91 a agentes biológicos, exige-se a probabilidade da exposição ocupacional, avaliando-se o seu caráter indissociável da produção do bem ou da prestação do serviço." (auditoria 03/10/2026, corrigida a síntese anterior, que estendia a tese a todos os agentes).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Afasta a tese administrativa de exposição contínua exigida.
+Aplicação pró-segurado. Em agentes biológicos, afasta a exigência administrativa de exposição contínua (auditoria 03/10/2026).
 
 ### Tema 205 TNU
 
@@ -54,25 +54,25 @@ Aplicação pró-segurado. Garante a conversão de todo tempo especial pré-refo
 
 Vedação constitucional de permanência ou retorno à atividade especial após a aposentadoria especial (auditoria 25/07/2026, corte corrigida).
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://portal.stf.jus.br (auditoria 03/10/2026).
 
-Aplicação pró-segurado. Fundamento para uso de prova alternativa quando PPP não é suficiente.
+Aplicação pró-segurado. Tese adversa; pelo item II, a DIB é a DER mesmo que o segurado continue no labor especial, e o pagamento só cessa se ele permanecer ou retornar à atividade nociva após a implantação (auditoria 03/10/2026).
 
-### ADI 4827 STF (retorno à atividade especial)
+A ADI 4827, antes citada aqui, trata de lei de Alagoas sobre o efetivo da Polícia Militar e não de aposentadoria especial; o retorno à atividade especial está no Tema 709 acima (auditoria 03/10/2026).
 
-Tese. Há questionamento sobre a extensão do art. 57, §8º, da Lei 8.213/91 (vedação de retorno à atividade especial após a concessão). A jurisprudência flexibiliza em determinadas hipóteses.
 
-Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Atenção à modulação e à aplicação em cada caso. Controvérsia ainda ativa.
+
+
+
 
 ### Tema 1083 STJ
 
-Tese. Doença preexistente agravada pela atividade reconhece nexo acidentário, ampliando o conceito de B92.
+Tese. O ruído com níveis variados se afere pelo Nível de Exposição Normalizado (NEN); ausente essa informação, adota-se o nível máximo (pico de ruído), com perícia judicial que comprove habitualidade e permanência (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a doença preexistente agravada).
 
 Fonte oficial em https://www.stj.jus.br
 
-Aplicação pró-segurado. Reforço para conversão de B32 em B92 acidentária com RMI integral.
+Aplicação pró-segurado. Sem NEN no PPP, o pico de ruído serve de critério, desde que a perícia judicial comprove habitualidade e permanência (auditoria 03/10/2026).
 
 ## 2. Refutação aos argumentos típicos do INSS
 
@@ -80,7 +80,7 @@ Aplicação pró-segurado. Reforço para conversão de B32 em B92 acidentária c
 
 Argumento adversário. A atividade especial exige exposição contínua ao agente nocivo.
 
-Refutação. Tema 211 TNU. A habitualidade é suficiente, não a continuidade. Exposição inerente ao curso da jornada basta.
+Refutação. O art. 65 do Decreto 3.048/99 define o trabalho permanente pela exposição indissociável da produção do bem ou da prestação do serviço. Em agentes biológicos, o Tema 211 TNU exige a probabilidade da exposição ocupacional (auditoria 03/10/2026).
 
 ### Argumento 2 — Neutralização por EPI
 

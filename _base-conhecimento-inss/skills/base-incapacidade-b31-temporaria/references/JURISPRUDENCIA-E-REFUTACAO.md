@@ -6,17 +6,17 @@
 
 Retirada a Súmula 63/TNU na auditoria 25/07/2026; ela trata de união estável em pensão por morte, não de carência.
 
-Fonte oficial em https://www.cjf.jus.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm (auditoria 03/10/2026)
 
-Aplicação pró-segurado. Abre o rol do art. 151 para outras moléstias graves, como doenças neuromusculares, esclerose múltipla em casos específicos e outras de igual gravidade comprovada.
+Aplicação pró-segurado. Abre o rol do art. 151 para outras moléstias graves, como doenças neuromusculares e outras de igual gravidade comprovada. Esclerose múltipla e hanseníase já constam do texto do art. 151, na redação da Lei 13.135/2015 (auditoria 03/10/2026).
 
 ### Tema 246 TNU
 
-Tese. Para fins de B31, o reconhecimento da incapacidade laboral pode ser feito com base em prova documental robusta, ainda que a perícia administrativa tenha concluído pela capacidade.
+Tese, na síntese do catálogo TNU. I - Quando a decisão judicial adotar a estimativa de prazo de recuperação da perícia, o termo inicial é a data do exame. II - Quando o ato de concessão não indicar o tempo de recuperação, o prazo de 120 dias conta-se da data da efetiva implantação (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a superação da perícia administrativa por prova documental).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Fundamento para ação judicial com perícia judicial contraditando perícia administrativa.
+Aplicação. Rege a DCB do B31 fixado em juízo, que conta da data do exame quando adotado o prazo estimado na perícia, ou 120 dias da implantação quando não houver prazo (auditoria 03/10/2026).
 
 ### Limbo previdenciário. Tema 300 da TNU e Tema 1421 do STF (corrigido na Onda 70, 20/07/2026)
 
@@ -32,35 +32,35 @@ Roteiro probatório em oito graus, defesa antecipada e teses literais em `base-l
 
 ### Súmula 47 TNU
 
-Tese. Uma vez reconhecido o direito ao B31 pela perícia judicial, cabe implantação imediata do benefício, com efeitos retroativos à DII.
+Tese. "Uma vez reconhecida a incapacidade parcial para o trabalho, o juiz deve analisar as condições pessoais e sociais do segurado para a concessão de aposentadoria por invalidez" (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a implantação imediata do benefício).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Fundamento para tutela antecipada no JEF.
+Aplicação. Quando a perícia reconhecer incapacidade parcial, sustenta o exame das condições pessoais e sociais rumo ao B32; a implantação imediata do B31 se pede por tutela de urgência (art. 4º da Lei 10.259/2001 e art. 300 do CPC) (auditoria 03/10/2026).
 
-### Tema 1083 STJ
+### Doença preexistente com agravamento (art. 59, §1º, da Lei 8.213/91)
 
-Tese. Doença preexistente agravada pela atividade reconhece nexo acidentário.
+Fundamento legal. Não é devido o auxílio-doença ao segurado que se filiar já portador da doença ou lesão, exceto quando a incapacidade sobrevier por progressão ou agravamento (art. 59, §1º); se o trabalho contribuiu para o agravamento, o nexo acidentário se apura pela concausa do art. 21, I (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído aferido pelo NEN).
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm
 
 Aplicação pró-segurado. Refuta tese de doença preexistente para excluir o B31. Acionar `base-incapacidade-acidentaria-b92` para conversão em acidentário.
 
 ### Tema 350 STF
 
-Tese. A decadência não alcança o direito ao melhor benefício.
+Tese. "A concessão de benefícios previdenciários depende de requerimento do interessado, não se caracterizando ameaça ou lesão a direito antes de sua apreciação e indeferimento pelo INSS. A exigência de prévio requerimento não se confunde com o exaurimento das vias administrativas." (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía ao tema a não incidência da decadência sobre o melhor benefício).
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Permite revisão de B31 cessado indevidamente.
+Aplicação pró-segurado. O restabelecimento de B31 cessado pode ser pedido diretamente em juízo, salvo matéria de fato não levada ao INSS (exceção do Tema 350/STF) (auditoria 03/10/2026).
 
 ### Súmula 77 TNU
 
-Tese. Não cabe ao INSS desconsiderar perícia judicial para fins de concessão ou manutenção de benefício por incapacidade.
+Tese. "O julgador não é obrigado a analisar as condições pessoais e sociais quando não reconhecer a incapacidade do requerente para a sua atividade habitual" (auditoria 03/10/2026, corrigida a síntese anterior, que atribuía à súmula a prevalência da perícia judicial).
 
 Fonte oficial em https://www.cjf.jus.br
 
-Aplicação pró-segurado. Afasta prevalência da perícia administrativa sobre a judicial.
+Aplicação. Súmula adversa. Sem incapacidade para a atividade habitual reconhecida, o juiz pode dispensar o exame das condições pessoais e sociais, por isso a prova deve mirar essa incapacidade; a valoração da perícia judicial segue os arts. 371 e 479 do CPC (auditoria 03/10/2026).
 
 ## 2. Refutação aos argumentos típicos do INSS
 
@@ -68,7 +68,7 @@ Aplicação pró-segurado. Afasta prevalência da perícia administrativa sobre 
 
 Argumento adversário. A perícia administrativa é prova suficiente e afasta a concessão.
 
-Refutação. Tema 246 TNU. A perícia administrativa não tem caráter vinculante sobre o juízo. Documentação médica robusta pode ser suficiente para obter o B31 em sede judicial.
+Refutação. A perícia administrativa não tem caráter vinculante sobre o juízo, que valora a prova pericial com as demais (arts. 371 e 479 do CPC) (auditoria 03/10/2026, retirado o Tema 246/TNU, que trata da data de cessação). Documentação médica robusta pode ser suficiente para obter o B31 em sede judicial.
 
 ### Argumento 2 — Ausência de carência
 
@@ -80,7 +80,7 @@ Refutação. Art. 26, II, e art. 151 da Lei 8.213/91 (auditoria 25/07/2026). Se 
 
 Argumento adversário. A doença é preexistente à filiação, incabível o benefício.
 
-Refutação. Art. 42, §2º, da Lei 8.213/91. Ainda que preexistente, se a incapacidade decorrer de progressão ou agravamento, o B31 é devido. Tema 1083 STJ reforça.
+Refutação. Art. 59, §1º, da Lei 8.213/91. Ainda que preexistente, se a incapacidade decorrer de progressão ou agravamento, o B31 é devido (auditoria 03/10/2026, retirado o Tema 1083/STJ, que trata de ruído, e ajustado o dispositivo, pois o art. 42, §2º, rege o B32).
 
 ### Argumento 4 — Perícia documental desfavorável
 
@@ -92,7 +92,7 @@ Refutação. Portaria Conjunta 13/2026 não afasta a perícia judicial. O parece
 
 Argumento adversário. A cessação antecipada é legítima por alta programada.
 
-Refutação. A cessação sem perícia médica específica viola o direito ao contraditório e ampla defesa. Cabe P1 e recurso ou MS. Súmula 47 TNU para implantação.
+Refutação. A cessação sem perícia médica específica viola o direito ao contraditório e ampla defesa. Cabe P1 e recurso ou MS, com tutela de urgência para a implantação (auditoria 03/10/2026, retirada a Súmula 47/TNU, que trata das condições pessoais na incapacidade parcial).
 
 ### Argumento 6 — Trava dos três indeferimentos
 
@@ -110,7 +110,7 @@ Refutação. Acionar `periodo-graca-qualidade-segurado`. Art. 15 da Lei 8.213/91
 
 Argumento adversário. A DIB deve ser fixada na DER, não na DII.
 
-Refutação. Art. 60, §1º, da Lei 8.213/91. Para segurado empregado, retroação à DII se requerimento em 30 dias. Para demais segurados, DIB na DII comprovada. Súmula 47 TNU.
+Refutação. Art. 60, caput e §1º, da Lei 8.213/91. Requerido o benefício em até 30 dias do afastamento, a DIB é o 16º dia para o segurado empregado e a DII comprovada para os demais; depois desse prazo, a DIB é a DER para todo segurado (auditoria 03/10/2026, retirada a Súmula 47/TNU, que não trata de DIB).
 
 ## 3. Estratégia integrada
 

@@ -108,7 +108,7 @@ Tema 1124/STJ na perspectiva do efeito translativo.
 
 Limite da Súmula 98/STJ. Multa autorizada quando os embargos rediscutem matéria pacificada (auditoria 25/07/2026).
 
-Ratifica a Súmula 98/STJ.
+O segurado preserva a proteção da Súmula 98/STJ ao prequestionar sem rediscutir a matéria pacificada (auditoria 03/10/2026).
 
 Não há caráter protelatório nos embargos prequestionadores.
 
@@ -287,7 +287,7 @@ Em caso de decisão teratológica.
 
 Quando inexistir recurso adequado.
 
-Súmula 267/STF. MS contra ato judicial passível de recurso é incabível, exceto em hipóteses extremas.
+Súmula 267/STF. "Não cabe mandado de segurança contra ato judicial passível de recurso ou correição." A exceção para decisão teratológica é construção posterior e não consta do enunciado [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ### 9.2. Hipóteses de cabimento
 

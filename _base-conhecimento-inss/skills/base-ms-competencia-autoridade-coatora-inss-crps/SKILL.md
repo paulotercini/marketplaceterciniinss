@@ -23,7 +23,7 @@ Portaria 462/2026 CRPS.
 
 ### Tema 374 STF
 
-Foro do domicílio do impetrante em ações contra autarquia.
+"A regra prevista no § 2º do art. 109 da Constituição Federal também se aplica às ações movidas em face de autarquias federais." A tese não trata de mandado de segurança, e a extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -41,7 +41,7 @@ Primeiro, art. 109 §2º CF. Ações contra autarquia federal podem ser ajuizada
 
 Segundo, em MS, prevalece o local da sede funcional da autoridade coatora.
 
-Terceiro, Tema 374 STF. Beneficiário pode optar pelo foro do domicílio.
+Terceiro, Tema 374 STF. Nas ações contra autarquias federais, o autor pode optar pelo foro do seu domicílio (art. 109, §2º, CF). A extensão ao MS é argumento [NÃO CONFIRMADO] (auditoria 03/10/2026).
 
 ## Competência material
 
@@ -154,7 +154,7 @@ O TRF3 tem jurisprudência firme do **Órgão Especial** no sentido de que o MS 
 
 **Corrente divergente.** Há vertente do próprio Órgão Especial (CC 5015421-22.2020, Rel. Marisa Ferreira dos Santos, e CC 5007662-41.2019, Rel. Nekatschalow) que reconhece a matéria como direito administrativo mas mantém no âmbito das TURMAS da 2ª Seção, não do Órgão Especial. Em qualquer caso, AFASTA da Previdenciária.
 
-Detalhamento integral, com fundamentação verificada em fonte primária (PDF do CC 5026411-72.2020.4.03.0000, Rel. Nelton dos Santos, sessão de 06/07/2026), estratégia pró-segurado com 3 opções de distribuição e petição estratégica para atos urgentes, em `references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md`.
+Detalhamento integral, com fundamentação verificada em fonte primária (PDF do CC 5026411-72.2020.4.03.0000, Rel. Nelton dos Santos, verificado em 06/07/2026) (auditoria 03/10/2026), estratégia pró-segurado com 3 opções de distribuição e petição estratégica para atos urgentes, em `references/COMPETENCIA-TRF3-MS-MORA-ADMINISTRATIVA.md`.
 
 ## O que NÃO está nesta skill
 

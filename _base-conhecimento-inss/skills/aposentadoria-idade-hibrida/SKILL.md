@@ -18,7 +18,7 @@ description: "Skill de aposentadoria por idade urbana, rural e híbrida (art. 48
 - EC 103/2019, art. 18 (regra de transição)
 - Decreto 3.048/99, art. 51 (aposentadoria por idade urbana), art. 56 (rural), art. 57 (híbrida)
 - IN PRES/INSS 128/2022, arts. 215, 256 a 260 (aposentadoria por idade geral e rural)
-- IN PRES/INSS 128/2022, art. 257 e 257-A (aposentadoria híbrida — alterados pelas INs 151/2023 e 188/2025)
+- IN PRES/INSS 128/2022, art. 257 (aposentadoria híbrida, alterado pelas INs 141/2022, 151/2023 e 188/2025; o art. 257-A foi revogado pela IN 188/2025) (auditoria 03/10/2026)
 - IN PRES/INSS 188/2025 (dispensa de qualidade de segurado e exercício de atividade na DER para híbrida)
 - ACP 5038261-15.2015.4.04.7100/RS (efeitos nacionais — INSS obrigado a conceder híbrida sem exigir contribuição para período rural)
 
@@ -46,7 +46,7 @@ Mulher 60 anos, homem 65 anos, carência conforme tabela do art. 142 da Lei 8.21
 
 ### Requisitos
 
-Mulher 55 anos, homem 60 anos (art. 48, §1º, Lei 8.213/91 — a EC 103/2019 não alterou a idade do trabalhador rural). Carência de 180 meses de atividade rural (art. 25, II, c/c art. 48, §2º). Valor equivalente a um salário mínimo (art. 48, §2º).
+Mulher 55 anos, homem 60 anos (art. 48, §1º, Lei 8.213/91 — a EC 103/2019 não alterou a idade do trabalhador rural). Carência de 180 meses de atividade rural (art. 25, II, c/c art. 48, §2º). Valor equivalente a um salário mínimo para o segurado especial (art. 39, I) (auditoria 03/10/2026).
 
 ### Segurado especial
 
@@ -110,13 +110,13 @@ Segue a regra de cálculo geral (art. 29, I, Lei 8.213/91 ou EC 103/2019), não 
 
 **Não há tese vinculante do STJ específica para o pós-1991 na aposentadoria híbrida.** O Tema 1007 é textualmente restrito ao pré-1991. Esta é uma lacuna.
 
-**TNU — PEDILEF 0001508-25.2020.4.01.3500** (Rel. Juiz Federal Neian Milhomem Cruz, j. 08/02/2024). Decisão paradigmática que firmou expressamente ser irrelevante se o período rural foi prestado antes ou depois da Lei 8.213/91, para fins de carência na aposentadoria por idade híbrida.
+**TNU — PEDILEF 1008411-25.2020.4.01.3500** (Rel. Juiz Federal Neian Milhomem Cruz, j. 08/02/2024) (auditoria 03/10/2026). Decisão paradigmática que firmou expressamente ser irrelevante se o período rural foi prestado antes ou depois da Lei 8.213/91, para fins de carência na aposentadoria por idade híbrida.
 
 **TRF4.** Posição consolidada de que a aposentadoria híbrida dispensa contribuição para período rural pós-1991, distinguindo da aposentadoria por tempo de contribuição (que exige indenização). ACP 5038261-15.2015.4.04.7100/RS com efeitos nacionais reforça essa posição.
 
 **TRF3.** 9ª Turma Recursal aplica a mesma orientação, dispensando contribuição para rural pós-1991 na aposentadoria híbrida.
 
-**INSS — IN 128/2022, art. 257-A, II** (incluído pela IN 151/2023). Assegura a híbrida independentemente da efetivação de contribuições relativas ao tempo de atividade comprovada como trabalhador rural. O §2º menciona apenas que os períodos anteriores a 01/11/1991 são computados como carência, gerando ambiguidade sobre o pós-1991.
+**INSS — IN 128/2022, art. 257, §1º, I e II** (redação da IN 188/2025). Assegura a híbrida independentemente de o segurado exercer atividade rural ou urbana e de possuir qualidade de segurado ao tempo do requerimento ou do implemento dos requisitos. O art. 257-A, cujo inciso II dispensava as contribuições do tempo rural, foi revogado pela IN 188/2025. Para o rural pós-1991 sem contribuição, o fundamento é a jurisprudência acima (auditoria 03/10/2026).
 
 ### Tratamento por categoria de segurado rural (pós-1991)
 
@@ -128,9 +128,9 @@ Segue a regra de cálculo geral (art. 29, I, Lei 8.213/91 ou EC 103/2019), não 
 
 **Contribuinte individual rural.** Categoria mais controversa. O INSS tende a exigir contribuição ou indenização na via administrativa. Na via judicial, TRF4 dispensa indenização na aposentadoria híbrida mesmo para CI rural pós-1991. Ponto de atenção que exige estratégia específica no caso concreto.
 
-### ALERTA — Tema 1104/STF (pendente)
+### Tema 1104/STF (sem repercussão geral, matéria infraconstitucional)
 
-O STF reconheceu repercussão geral no RE 1.281.909/SP (Tema 1104) para discutir a constitucionalidade do cômputo de tempo rural sem contribuição à luz do princípio da prévia fonte de custeio (art. 195, §5º, CF/88). O mérito NÃO foi julgado até março de 2026. Se a tese do INSS prevalecer, pode impactar tanto o Tema 1007/STJ quanto o cômputo de rural pós-1991. Monitorar.
+O STF reconheceu a ausência de repercussão geral no RE 1.281.909/SP (Tema 1104), por ser infraconstitucional a controvérsia sobre a definição e o preenchimento dos requisitos legais da aposentadoria híbrida (auditoria 03/10/2026). Não há mérito pendente no STF, e a tese do Tema 1007/STJ é definitiva.
 
 ---
 
@@ -205,7 +205,7 @@ Consultar skill `segurado-especial-rural` para tratamento completo das hipótese
 
 ## Alertas operacionais
 
-1. **Tema 1104/STF está pendente.** Se o STF decidir pela inconstitucionalidade do cômputo de rural sem contribuição, toda a estrutura da aposentadoria híbrida será impactada. Monitorar e alertar o cliente sobre o risco.
+1. **Tema 1104/STF sem repercussão geral.** O STF fixou que a controvérsia sobre os requisitos da aposentadoria híbrida é infraconstitucional, e a tese do Tema 1007/STJ é definitiva (auditoria 03/10/2026). Não há julgamento pendente no STF a monitorar.
 
 2. **IN 188/2025 não eliminou toda a resistência administrativa.** Embora dispense qualidade de segurado, o INSS ainda pode criar dificuldades no cômputo de rural pós-1991 para CI. Preparar documentação robusta.
 

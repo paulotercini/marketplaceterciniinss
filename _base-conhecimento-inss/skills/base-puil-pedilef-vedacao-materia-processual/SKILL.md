@@ -85,7 +85,7 @@ A regra prática é. Se o caso aparenta ser processual, reformular o argumento a
 
 ABORDAGEM ERRADA. "O acórdão deve ser anulado por cerceamento de defesa. A perícia técnica era indispensável para comprovar o tempo especial".
 
-Resultado provável. Inadmissão pela Súmula 43/TNU. Decisão monocrática de não admissão. Vide caso concreto Luiz Carlos Vanco (PUIL 0000810-25.2020.4.03.6314).
+Resultado provável. Inadmissão pela Súmula 43/TNU. Decisão monocrática de não admissão. Vide caso concreto L. C. V. (PUIL 0000810-25.2020.4.03.6314) (auditoria 03/10/2026).
 
 ABORDAGEM CORRETA. "Há divergência jurisprudencial sobre a INTERPRETAÇÃO DO ART. 57 DA LEI 8.213/91 e do Anexo IV do Decreto 3.048/99 quanto ao enquadramento qualitativo do agente nocivo X. A Turma Recursal de origem aplicou interpretação restritiva incompatível com o entendimento da Turma paradigma".
 
@@ -323,7 +323,7 @@ Crítica à interpretação restritiva que esvazia o instrumento de uniformizaç
 | Aplicação de Tema 1124 de ofício | Art. 18 da Lei 8.213/91, Tema 350/STF | base-efeito-translativo-tema-1124-defesa |
 | Não realização de perícia documental | Art. 60 §11-A Lei 8.213, Portarias 13/14/15/2026 | analise-documental-incapacidade |
 | Não enfrentamento de NTEP | Art. 21-A Lei 8.213, Lista B Anexo II Decreto 3.048 | ntep-nexo-acidentario |
-| Falta de avaliação biopsicossocial | Art. 20 §10 LOAS, Portaria Conjunta 2/2014 | analise-bpc-loas |
+| Falta de avaliação biopsicossocial | Art. 20 §10 LOAS, Portaria Conjunta 2/2015 (auditoria 03/10/2026) | analise-bpc-loas |
 
 ## 18. O que NÃO está nesta skill
 

@@ -20,7 +20,7 @@ O erro mais grave que um advogado pode cometer ao peticionar tempo especial é t
    - JEF (petição inicial ou recurso inominado) → `references/JEF-TEMPO-ESPECIAL.md`
    - Rito ordinário federal (petição inicial, apelação, TRF3) → `references/RITO-COMUM-TRF3-TEMPO-ESPECIAL.md`
 4. Leia SEMPRE `references/EPI-ESTRATEGIA-POR-ORGAO.md` quando houver controvérsia sobre EPI
-5. Leia SEMPRE `references/RUIDO-POR-ORGAO.md` quando o agente nocivo for ruído (Enunciados 12 e 13 do CRPS, Temas 174 e 317 da TNU, Tema 1.083/STJ, posicionamento TRF3 e TRU 3ª Região)
+5. Leia SEMPRE a skill `base-especial-ruido` quando o agente nocivo for ruído (auditoria 03/10/2026, a remissão anterior apontava arquivo inexistente)
 6. Aplique as regras de transposição ao redigir a petição
 6. Acione a skill `peticao-previdenciaria` para formatação do .docx
 7. Acione a skill `regras-tutela-urgencia` para verificar a política de urgência
@@ -77,7 +77,7 @@ Esta skill NÃO substitui as skills de CRPS (recurso-especial-crps, admissibilid
 → Leia SEMPRE `references/EPI-ESTRATEGIA-POR-ORGAO.md`.
 
 **O agente nocivo é ruído?**
-→ Leia SEMPRE `references/RUIDO-POR-ORGAO.md`. A divergência entre CRPS (90 dB no período intermediário) e Judiciário (85 dB, Tema 1.083/STJ) pode definir a escolha entre via administrativa e judicial.
+→ Leia SEMPRE a skill `base-especial-ruido`. De 06/03/1997 a 18/11/2003, CRPS e Judiciário adotam o mesmo limite de 90 dB (Enunciado 13 do CRPS e Tema 694/STJ); a divergência que pode definir a escolha entre via administrativa e judicial está no PPP sem NEN, que o Comunicado CRPS 99/2025 recusa e o Tema 1.083/STJ admite pelo pico de ruído com perícia judicial (auditoria 03/10/2026).
 
 **O PPP indica NR-15 sem NEN expresso?**
 → Via administrativa (CRPS) rejeitará o PPP pelo Comunicado 99/2025. Via judicial aceita com presunção de regularidade (PEDILEF 0001717, TNU novembro/2025). Esta divergência estrutural CRPS/Judiciário é critério de decisão estratégica entre vias, à luz do Tema 1124/STJ.
@@ -100,7 +100,7 @@ Esta skill NÃO substitui as skills de CRPS (recurso-especial-crps, admissibilid
 - `references/JEF-TEMPO-ESPECIAL.md` – Posicionamento e estratégia perante o JEF e Turma Recursal
 - `references/RITO-COMUM-TRF3-TEMPO-ESPECIAL.md` – Posicionamento e estratégia perante Varas Federais e TRF3
 - `references/EPI-ESTRATEGIA-POR-ORGAO.md` – Tratamento da questão do EPI conforme o órgão julgador
-- `references/RUIDO-POR-ORGAO.md` – Posicionamento clássico e recente de CRPS, JEF/TNU e TRF3 sobre ruído (Enunciados 12 e 13, Temas 174, 317 e 1.083, Q=3 vs. Q=5, medição pontual, dosimetria, quadros comparativos)
+- skill `base-especial-ruido`, com as teses de defesa do segurado em aposentadoria especial por ruído (auditoria 03/10/2026, a remissão anterior apontava arquivo inexistente)
 
 ## Extensão
 

@@ -4,7 +4,7 @@
 
 ### Súmula 272 STJ
 
-Cômputo, vedada carência sem indenização.
+Tese adversa. "O trabalhador rural, na condição de segurado especial, sujeito à contribuição obrigatória sobre a produção rural comercializada, somente faz jus à aposentadoria por tempo de serviço, se recolher contribuições facultativas." O caminho do segurado é o art. 55, §2º, da Lei 8.213/91, que computa o tempo rural anterior a 11/1991 sem contribuição, exceto para carência (auditoria 03/10/2026).
 
 Fonte oficial em https://www.stj.jus.br
 

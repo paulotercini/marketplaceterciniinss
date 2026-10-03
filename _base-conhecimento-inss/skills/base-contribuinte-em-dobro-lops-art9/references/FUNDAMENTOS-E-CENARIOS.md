@@ -150,7 +150,7 @@ Estratégia. Aplicação direta dos Níveis 1 e 2.
 
 Quadro. Cliente sem todos os carnês, mas com indicação na microficha.
 
-Estratégia. Aplicação da Súmula 81/TFR (recolhimento basta como prova). Justificação Administrativa para complementar.
+Estratégia. Usar a indicação da microficha como prova do recolhimento (auditoria 03/10/2026, retirada a Súmula 81/TFR). Justificação Administrativa para complementar.
 
 Cruzamento com `documentos-comprobatorios-in128`.
 

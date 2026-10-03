@@ -34,7 +34,7 @@ Aplicação. Barreira dominante.
 
 ### Súmula 443 STF
 
-Tese. Sobre sobrevida de direitos em situações especiais de reajuste.
+Tese. Trata da prescrição das prestações, e não de decadência: se o próprio direito não foi negado antes do prazo, a prescrição não atinge o fundo do direito [NÃO CONFIRMADO] (auditoria 03/10/2026, corrigida a síntese anterior).
 
 Fonte oficial em https://portal.stf.jus.br
 

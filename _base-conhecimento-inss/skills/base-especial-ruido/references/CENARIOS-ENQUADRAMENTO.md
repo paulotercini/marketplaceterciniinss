@@ -26,13 +26,13 @@ Em recurso, citar o PEDILEF 0001717, reforçando que a menção à NR-15 gera pr
 
 ## Cenário 5 — Ruído em faixa limítrofe com jornada superior a 480 minutos
 
-O PPP traz exposição a ruído na faixa de 82 a 85 dB(A) sem normalização, e o segurado cumpria habitualmente jornada superior a 480 minutos em virtude de horas extras. A tese do segurado é pedir a normalização pela fórmula da NHO-01.
+O PPP traz exposição a ruído pouco abaixo de 85 dB(A) sem normalização, e o segurado cumpria habitualmente jornada superior a 480 minutos em virtude de horas extras (auditoria 03/10/2026). A tese do segurado é pedir a normalização pela fórmula da NHO-01.
 
 A fórmula aplicada é a seguinte, em texto corrido.
 
 NEN igual a NE mais dez vezes o logaritmo na base dez do quociente entre o tempo de exposição em minutos e quatrocentos e oitenta.
 
-Para jornada de dez horas, ou seja, seiscentos minutos, o acréscimo é de aproximadamente um vírgula noventa e sete decibéis. Assim, um NE declarado de 83,5 dB(A) se transforma em NEN de aproximadamente 85,5 dB(A), ultrapassando o limite de 85 dB(A) e configurando especialidade.
+Para jornada de dez horas, ou seja, seiscentos minutos, o acréscimo é de aproximadamente zero vírgula noventa e sete decibel. Assim, um NE declarado de 84,5 dB(A) se transforma em NEN de aproximadamente 85,5 dB(A), ultrapassando o limite de 85 dB(A) e configurando especialidade. Com essa jornada, só valores a partir de 84,1 dB(A) passam de 85 dB(A) (auditoria 03/10/2026).
 
 Documentação probatória requerida inclui contracheques com valores de horas extras pagas, folhas de ponto com registro de jornada efetiva, CNIS com vínculo correspondente e, se for o caso, Reclamação Trabalhista reconhecendo horas extras habituais.
 
@@ -46,7 +46,7 @@ Etapa segunda é apresentar o LTCAT e o PGR ou PPRA como documentos complementar
 
 Etapa terceira é, se a prova documental não resolver, oficiar a empresa para retificação do PPP. A skill `retificacao-ppp` automatiza o expediente.
 
-Etapa quarta é pedido de perícia indireta por similaridade, com invocação do art. 369 e art. 370 CPC e dos Enunciados 91 e 225 FONAJEF. Skill `defesa-probatoria-especial` cobre esse ponto.
+Etapa quarta é pedido de perícia indireta por similaridade, com invocação do art. 369 e art. 370 CPC e do Enunciado 225 FONAJEF. O Enunciado 91 FONAJEF não autoriza perícia por similaridade e limita a competência do JEF para perícias complexas ou onerosas (auditoria 03/10/2026). Skill `defesa-probatoria-especial` cobre esse ponto.
 
 ## Cenário 7 — Exposição mista com múltiplos agentes
 

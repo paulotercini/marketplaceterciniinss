@@ -1,6 +1,6 @@
 ---
 name: base-aposentadoria-pcd-lc142
-description: "Aposentadoria da pessoa com deficiência pela LC 142/2013, ótica pró-segurado. Use SEMPRE que mencionar LC 142, LC 142/2013, aposentadoria PCD, aposentadoria por tempo de contribuição PCD, aposentadoria por idade PCD, IF-BrA, IFBr, grau de deficiência, método Fuzzy, avaliação biopsicossocial LC 142, Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014, domínios da deficiência PCD, pontuação IF-BrA, conversão tempo deficiência tempo comum, impedimento longo prazo LC 142, fibromialgia como deficiência Lei 15.176/2025, CID M79.7, DID Data Início Deficiência, formação documentação DID, idade PCD 55 60, tempo PCD 20 25 28 30 33, reconhecimento retroativo deficiência, cegueira monocular Súmula 377, deficiência auditiva Lei 14.768/2023, fator vedado LC 142, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona aposentadoria-deficiencia. Cruza com aposentadoria-deficiencia, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, formacao-documentacao-did-pcd e precedentes-previdenciarios."
+description: "Aposentadoria da pessoa com deficiência pela LC 142/2013, ótica pró-segurado. Use SEMPRE que mencionar LC 142, LC 142/2013, aposentadoria PCD, aposentadoria por tempo de contribuição PCD, aposentadoria por idade PCD, IF-BrA, IFBr, grau de deficiência, método Fuzzy, avaliação biopsicossocial LC 142, Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014, domínios da deficiência PCD, pontuação IF-BrA, conversão tempo deficiência tempo comum, impedimento longo prazo LC 142, fibromialgia como deficiência Lei 15.176/2025, CID M79.7, DID Data Início Deficiência, formação documentação DID, idade PCD 55 60, tempo PCD 20 25 28 30 33, reconhecimento retroativo deficiência, visão monocular, deficiência auditiva Lei 14.768/2023, fator previdenciário se mais vantajoso LC 142, Portaria 991/2022 (reconhecimento), Portaria 992/2022 (manutenção). Aciona aposentadoria-deficiencia. Cruza com aposentadoria-deficiencia, base-bpc-impedimento-longo-prazo, peticao-previdenciaria, formacao-documentacao-did-pcd e precedentes-previdenciarios."
 ---
 
 # Aposentadoria da Pessoa com Deficiência. LC 142/2013
@@ -19,13 +19,13 @@ LC 142/2013, art. 3º. Requisitos por tempo de contribuição, variáveis confor
 
 LC 142/2013, art. 4º. Requisitos por idade.
 
-LC 142/2013, art. 5º. Cálculo dos benefícios (salário de benefício pela média aritmética simples dos 80% maiores salários, sem fator previdenciário em regra).
+LC 142/2013, art. 5º. Grau de deficiência atestado por perícia própria do INSS. Art. 8º. Renda de 100% do salário de benefício, ou 70% mais 1% por grupo de 12 contribuições, até 30%, na idade. Com DER após 13/11/2019, a média é de 100% dos salários (Decreto 3.048/99, arts. 70-J e 32); os 80% maiores valem só para direito adquirido. Fator previdenciário só se elevar a renda (art. 9º, I) (auditoria 03/10/2026).
 
-LC 142/2013, art. 8º. Conversão de tempo de deficiência em tempo comum e vice-versa.
+LC 142/2013, art. 7º. Conversão de tempo de deficiência em tempo comum e vice-versa (auditoria 03/10/2026).
 
 Decreto 8.145/2013. Regulamento.
 
-Portaria Interministerial AGU/MPS/MF/MP/PR nº 1, de 27/01/2014. IF-BrA, domínios, método Fuzzy.
+Portaria Interministerial AGU/MPS/MF/SEDH/MP nº 1, de 27/01/2014 (auditoria 03/10/2026). IF-BrA, domínios, método Fuzzy.
 
 Lei 15.176/2025. Fibromialgia reconhecida como deficiência.
 
@@ -33,7 +33,7 @@ Lei 14.768/2023. Aperfeiçoamento da avaliação de deficiência auditiva.
 
 Lei 13.146/2015 (Estatuto da PCD). Conceito biopsicossocial.
 
-Súmula 45 TNU. Aproveitamento de tempo PCD, anterior à LC 142.
+LC 142/2013, art. 6º, §§1º e 2º, e Decreto 3.048/99, art. 70-D, §1º. Aproveitamento de tempo PCD anterior à LC 142, com a deficiência certificada na primeira avaliação, vedada a prova exclusivamente testemunhal (auditoria 03/10/2026).
 
 EC 103/2019, art. 22 (e §2º). Preserva a aposentadoria PCD fora da regra geral.
 
@@ -59,11 +59,11 @@ Mulher 55 anos com 15 anos de contribuição na condição de PCD.
 
 ## Avaliação biopsicossocial. IF-BrA e Fuzzy
 
-Diferente do BPC. Aqui usa-se IF-BrA (não IFBrM). Aplica-se método Fuzzy para conversão da pontuação em grau.
+Diferente do BPC. Aqui usa-se IF-BrA (não IFBrM). Aplica-se o método Fuzzy, que corrige a nota nos domínios sensíveis de cada tipo de deficiência, sem converter pontuação em grau (auditoria 03/10/2026).
 
 Domínios IF-BrA (sete, conforme a Portaria Interministerial nº 1/2014): Primeiro, sensorial. Segundo, comunicação. Terceiro, mobilidade. Quarto, cuidados pessoais. Quinto, vida doméstica. Sexto, educação, trabalho e vida econômica (domínio único). Sétimo, socialização e vida comunitária.
 
-Pontuação. Cada domínio é pontuado. O método Fuzzy combina as pontuações para classificar em grave, moderado ou leve.
+Pontuação. Cada uma das 41 atividades recebe 25, 50, 75 ou 100 de cada um dos dois avaliadores, com total de 2.050 a 8.200. Grave até 5.739, moderada de 5.740 a 6.354, leve de 6.355 a 7.584; com 7.585 ou mais, a pontuação é insuficiente. O Fuzzy apenas replica a menor nota no domínio sensível (auditoria 03/10/2026).
 
 Avaliação médica + avaliação social. Ambas obrigatórias.
 
@@ -75,13 +75,13 @@ Efeitos. Define o tempo de contribuição como PCD. Converte tempo posterior à 
 
 ## Cálculo do benefício
 
-Regra da LC 142. Média aritmética simples dos 80% maiores salários desde 07/1994. Sem fator previdenciário em regra. 100% da média (não 60% + 2% por ano excedente, regra geral do art. 26 da EC 103).
+Regra da LC 142. Com DER após 13/11/2019, média aritmética simples de 100% dos salários desde 07/1994 (Decreto 3.048/99, art. 70-J c/c art. 32); os 80% maiores valem só para direito adquirido até essa data (auditoria 03/10/2026). Sem fator previdenciário em regra. 100% da média (não 60% + 2% por ano excedente, regra geral do art. 26 da EC 103).
 
-Exceção. Em aposentadoria por idade PCD, 70% da média + 1% por grupo de 12 contribuições adicionais (verificar regra vigente).
+Exceção. Em aposentadoria por idade PCD, 70% da média + 1% por grupo de 12 contribuições mensais, até o máximo de 30% (art. 8º, II, da LC 142/2013; verificar regra vigente) (auditoria 03/10/2026).
 
 ## Conversão de tempo
 
-Tempo PCD pode ser convertido em tempo comum. Fatores variáveis conforme grau e gênero. A conversão inversa (comum em PCD) é vedada.
+Tempo PCD pode ser convertido em tempo comum. Fatores variáveis conforme grau e gênero. A conversão inversa (comum em PCD) também é admitida, com fator redutor (LC 142, art. 7º; Decreto 3.048/99, art. 70-E, linhas "De 30" e "De 35", e §2º) (auditoria 03/10/2026).
 
 ## Fibromialgia pela Lei 15.176/2025
 
@@ -89,7 +89,7 @@ Reconhecimento expresso como deficiência. Aplica-se IF-BrA para mensurar grau. 
 
 ## Deficiência auditiva pela Lei 14.768/2023
 
-Aperfeiçoa a avaliação. Surdez unilateral pode configurar deficiência (revisitar Súmula 552 STJ). Cegueira monocular equiparada por analogia (Súmula 377 STJ).
+Aperfeiçoa a avaliação. Pelo art. 1º, a perda unilateral total e a bilateral parcial configuram deficiência auditiva; a unilateral parcial fica fora. Visão monocular é deficiência visual pela Lei 14.126/2021 [NÃO CONFIRMADO], e o grau depende do IF-BrA (auditoria 03/10/2026).
 
 ## Regra e estratégia pró-segurado
 
@@ -137,17 +137,17 @@ Precedentes em `precedentes-previdenciarios`.
 
 Primeiro, LC 142 é autônoma em relação à EC 103.
 
-Segundo, fator previdenciário é vedado em regra.
+Segundo, fator previdenciário só incide se elevar a renda (LC 142, art. 9º, I) (auditoria 03/10/2026).
 
 Terceiro, DID é o grande campo de disputa.
 
-Quarto, conversão inversa (comum em PCD) é vedada.
+Quarto, conversão inversa (comum em PCD) é admitida com fator redutor (Decreto 3.048/99, art. 70-E, §2º) (auditoria 03/10/2026).
 
 Quinto, fibromialgia é deficiência pela Lei 15.176/2025.
 
 Sexto, deficiência auditiva pela Lei 14.768/2023.
 
-Sétimo, cegueira monocular equiparada pela Súmula 377 STJ.
+Sétimo, visão monocular é deficiência visual pela Lei 14.126/2021 [NÃO CONFIRMADO], com grau aferido pelo IF-BrA (auditoria 03/10/2026).
 
 ## Fungibilidade aplicável
 

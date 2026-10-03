@@ -107,7 +107,7 @@ Tese fixada (Tema 14 do TRF4)
 
 Relação com o Tema 1.207/STJ. O IRDR 14 é a origem regional da tese que o STJ posteriormente consolidou em âmbito nacional. As teses são substancialmente idênticas. O IRDR 14 permanece aplicável diretamente no TRF4 e pode ser invocado como precedente persuasivo em outros TRFs.
 
-## 12. Tema 195/TNU — Vedação de Saldo Negativo
+## 12. Tema 195/TNU, Compensação pelo Total com Vedação Apenas do Saldo Final Negativo (auditoria 03/10/2026)
 
 PEDILEF 5068010-43.2016.4.04.7100
 TNU, Rel. Juíza Federal Isadora Segalla Afanasieff

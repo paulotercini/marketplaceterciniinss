@@ -26,13 +26,13 @@ IN 128/2022. Orientações operacionais.
 
 ## 4. Marco jurisprudencial central
 
-### Súmula 45 ex-TFR
+### Art. 55, I, da Lei 8.213/91
 
-Aplicação supletiva histórica para cômputo.
+O tempo de serviço militar, inclusive o voluntário, conta ainda que anterior à filiação ao RGPS, desde que não contado para inatividade remunerada nas Forças Armadas ou aposentadoria no serviço público (auditoria 03/10/2026, retirada a Súmula 45 do TFR, que trata de multas fiscais segundo fonte secundária).
 
-### Súmula 24 AGU
+### Art. 94 da Lei 8.213/91
 
-Contagem recíproca.
+Contagem recíproca entre RGPS e RPPS, com compensação financeira, também prevista no art. 201, §9º, da CF (auditoria 03/10/2026, retirada a Súmula 24 da AGU, que trata de aluno-aprendiz).
 
 ### PEDILEFs TNU
 

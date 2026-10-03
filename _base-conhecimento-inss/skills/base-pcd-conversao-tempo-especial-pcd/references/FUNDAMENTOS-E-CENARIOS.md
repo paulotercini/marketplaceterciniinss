@@ -24,11 +24,11 @@ IN 128/2022.
 
 ### ADI 5760 STF
 
-LC 142.
+Objeto real. Declarou inconstitucional o art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91 (Rel. Min. Alexandre de Moraes, 13/09/2019, unânime). Não sustenta tese sobre aposentadoria da pessoa com deficiência (auditoria 03/10/2026).
 
 ### Tema 173 TNU
 
-Deficiência intelectual.
+Trata do impedimento de longo prazo de 2 anos no BPC, não da LC 142; não citar nesta matéria (auditoria 03/10/2026).
 
 ### Tema 422 STJ
 
@@ -36,13 +36,13 @@ Conversão de tempo especial.
 
 ### Tema 694 STJ
 
-Conversão e regra do tempo de prestação.
+Trata do limite de ruído de 90 dB entre 06/03/1997 e 18/11/2003, não da conversão em tempo PCD; não citar nesta matéria (auditoria 03/10/2026).
 
 ## 5. Tabela de multiplicadores
 
-Mulher. Grave 0,8333. Moderada 0,9333. Leve 1,000.
+Mulher, tabela do art. 70-E do Decreto 3.048/99 (destino Para 20, 24, 28 e 30). De 20 anos, 1,00, 1,20, 1,40, 1,50. De 24 anos, 0,83, 1,00, 1,17, 1,25. De 28 anos, 0,71, 0,86, 1,00, 1,07. De 30 anos, 0,67, 0,80, 0,93, 1,00 (auditoria 03/10/2026).
 
-Homem. Grave 0,8571. Moderada 0,9428. Leve 1,000.
+Homem (destino Para 25, 29, 33 e 35). De 25 anos, 1,00, 1,16, 1,32, 1,40. De 29 anos, 0,86, 1,00, 1,14, 1,21. De 33 anos, 0,76, 0,88, 1,00, 1,06. De 35 anos, 0,71, 0,83, 0,94, 1,00.
 
 ## 6. Cenários pró-segurado
 
@@ -120,7 +120,7 @@ Segundo, prova robusta.
 
 Terceiro, regra mais favorável.
 
-Quarto, fundamentação Temas 422 e 694 STJ.
+Quarto, fundamentação no Tema 422 STJ e no Decreto 3.048/99, art. 70-F, §1º (auditoria 03/10/2026).
 
 Quinto, recurso.
 

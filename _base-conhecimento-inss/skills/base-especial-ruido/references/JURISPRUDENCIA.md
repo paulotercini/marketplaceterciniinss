@@ -4,11 +4,11 @@ Todas as teses abaixo foram verificadas em fontes primárias oficiais. Quando o 
 
 ## 1. Tema 174 TNU — NHO-01 e NR-15 como metodologias válidas
 
-Tese firmada. É válido o reconhecimento de tempo especial por ruído quando a aferição se der pela NHO-01 da FUNDACENTRO ou pela NR-15, desde que esta última conste acompanhada da apuração pelo NEN.
+Tese firmada. A partir de 19/11/2003, a aferição do ruído contínuo ou intermitente deve usar a NHO-01 da FUNDACENTRO ou a NR-15, com medição que reflita toda a jornada, vedada a medição pontual, e o PPP deve informar a técnica e a norma. Havendo omissão ou dúvida sobre a metodologia, o PPP não basta e deve ser apresentado o LTCAT (auditoria 03/10/2026).
 
 Fonte oficial. Turma Nacional de Uniformização. Pesquisa no sistema de jurisprudência da TNU em https://www.cjf.jus.br
 
-Aplicação prática para o segurado. Em todo recurso administrativo ou inicial, invocar o Tema 174 para afastar indeferimento baseado na mera ausência da NHO-01. A tese se aplica inclusive para períodos anteriores a 19/11/2003 por extensão lógica.
+Aplicação prática para o segurado. Em todo recurso administrativo ou inicial, invocar o Tema 174 para afastar indeferimento baseado na mera ausência da NHO-01. A tese vale para períodos a partir de 19/11/2003; para os anteriores, a referência administrativa é o inciso II do Enunciado 13 do CRPS (auditoria 03/10/2026).
 
 ## 2. Tema 317 TNU — Indicação da norma técnica
 
@@ -64,11 +64,11 @@ Fonte oficial. Turma Nacional de Uniformização.
 
 Aplicação prática para o segurado. Em caso de PPP baseado em LTCAT posterior ao período, invocar a Súmula 68 para afastar a tese do INSS de extemporaneidade.
 
-## 8. Tema 694 STJ — Conversão de tempo especial em comum
+## 8. Art. 25, §2º, da EC 103/2019 — Conversão de tempo especial em comum
 
-Tese firmada. A conversão de tempo especial em comum é direito adquirido para atividades exercidas até 13/11/2019, data de publicação da EC 103/2019.
+Regra constitucional. A conversão de tempo especial em comum é assegurada para atividades exercidas até 13/11/2019, data de publicação da EC 103/2019, e vedada para o tempo posterior (auditoria 03/10/2026).
 
-Fonte oficial. STJ, REsp repetitivo. Acessar em https://www.stj.jus.br
+Fonte oficial. Art. 25, §2º, da EC 103/2019, em https://www.planalto.gov.br (auditoria 03/10/2026).
 
 Aplicação prática para o segurado. Em planejamento previdenciário, identificar todo tempo especial pré EC 103 como convertível em tempo comum, com acréscimo de 40% para homens e 20% para mulheres.
 

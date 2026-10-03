@@ -1,6 +1,6 @@
 ---
 name: base-revisao-irsm-fevereiro-1994
-description: "Revisão pelo IRSM de fevereiro/1994 (39,67%) sobre os salários de contribuição anteriores à conversão em URV, com fundamento no art. 21 da Lei 8.880/1994 e Tema 415 STJ (REsp 1.168.657). Use SEMPRE que mencionar revisão do IRSM, revisão pelo IRSM de fevereiro de 1994, IRSM 39,67%, Índice de Reajuste do Salário Mínimo, Plano Real, conversão para URV, Lei 8.880/1994, art. 21 Lei 8.880, Tema 415 STJ, REsp 1.168.657, salários de contribuição anteriores a março de 1994, recomposição de salários de contribuição, correção inflacionária SC, RMI com IRSM, benefícios com DIB entre março de 1994 e fevereiro de 1998, decadência IRSM, prescrição quinquenal parcelas IRSM, revisão reflexa em pensão por morte. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103, base-revisao-teto-buraco-negro-verde e precedentes-previdenciarios."
+description: "Revisão pelo IRSM de fevereiro/1994 (39,67%) sobre os salários de contribuição anteriores à conversão em URV, com fundamento no art. 21, §1º, da Lei 8.880/1994. Use SEMPRE que mencionar revisão do IRSM, revisão pelo IRSM de fevereiro de 1994, IRSM 39,67%, Índice de Reajuste do Salário Mínimo, Plano Real, conversão para URV, Lei 8.880/1994, art. 21 Lei 8.880, Lei 10.999/2004, salários de contribuição anteriores a março de 1994, recomposição de salários de contribuição, correção inflacionária SC, RMI com IRSM, benefícios com DIB entre março de 1994 e fevereiro de 1998, decadência IRSM, prescrição quinquenal parcelas IRSM, revisão reflexa em pensão por morte. Cruza com decadencia-revisao-previdenciaria, peticao-previdenciaria, revisao-peticao, base-calculo-rmi-ec103, base-revisao-teto-buraco-negro-verde e precedentes-previdenciarios."
 ---
 
 # Revisão pelo IRSM de Fevereiro/1994
@@ -19,13 +19,13 @@ Lei 8.213/91, art. 29. Cálculo do Salário de Benefício.
 
 Lei 8.213/91, art. 103. Decadência decenal.
 
-## Marco jurisprudencial
+## Fundamento da revisão
 
-Tema 415 STJ, REsp 1.168.657 (repetitivo). Fixou tese pela aplicação do IRSM de fevereiro de 1994, no percentual de 39,67%, aos salários de contribuição anteriores à conversão em URV, antes do cálculo do Salário de Benefício. Precedente vinculante.
+A correção dos salários de contribuição anteriores a março de 1994 vai até o mês de fevereiro de 1994 (art. 21, §1º, da Lei 8.880/1994), o que inclui o IRSM de fevereiro de 1994, de 39,67%, antes da conversão em URV e do cálculo do Salário de Benefício. A Lei 10.999/2004 autorizou a revisão administrativa nesses termos [NÃO CONFIRMADO]. O Tema 415 do STJ, antes citado aqui, trata de entrega de carnês de IPTU (auditoria 03/10/2026).
 
-Fonte oficial em https://www.stj.jus.br
+Fonte oficial em https://www.planalto.gov.br
 
-Aplicação obrigatória pelo INSS após o julgamento do repetitivo.
+Aplicação administrativa pelo INSS a partir dessa lei, e não de julgamento repetitivo (auditoria 03/10/2026).
 
 Súmula 85 STJ. Prescrição quinquenal das parcelas.
 
@@ -41,7 +41,7 @@ Quarto, revisão administrativa em curso, em que o INSS aplicou o IRSM em percen
 
 ## Decadência e prescrição
 
-Art. 103 da Lei 8.213/91. Decadência decenal do primeiro pagamento.
+Art. 103 da Lei 8.213/91. Decadência decenal do primeiro pagamento. O Tema 375 da TNU cancelou o Tema 130 e fixou que a decadência para incluir o IRSM de fevereiro de 1994 não se interrompeu pela Medida Provisória 201/2004, convertida na Lei 10.999/2004 (PUIL 0077764-65.2008.4.01.3800, D.E. 26/06/2025). Tese adversa; a revisão segue viável quando o prazo do art. 103, contado do primeiro pagamento, ainda não se esgotou (auditoria 03/10/2026).
 
 Súmula 85 STJ. Prescrição quinquenal das parcelas.
 
@@ -84,7 +84,7 @@ Em revisão geral, acionar `revisao-peticao`.
 
 ## Alertas
 
-Primeiro, após o Tema 415 STJ, o INSS passou a aplicar o IRSM administrativamente. Benefícios concedidos após 2010 tendem a já ter a aplicação. Verificar concretamente.
+Primeiro, após a Lei 10.999/2004 [NÃO CONFIRMADO], o INSS passou a aplicar o IRSM administrativamente (auditoria 03/10/2026, retirado o marco de 2010). Verificar concretamente, na carta de concessão e na memória de cálculo, se o IRSM foi aplicado.
 
 Segundo, decadência decenal é crítica.
 
@@ -100,7 +100,7 @@ Hub das Portarias DPMF/DIRBEN/INSS aplicáveis a este benefício. Acionar `base-
 
 Wladimir Novaes Martinez, análise da conversão em URV.
 
-Frederico Amado, Tema 415 STJ.
+Frederico Amado, revisão do IRSM (auditoria 03/10/2026).
 
 Hugo Goes, cálculo com IRSM.
 

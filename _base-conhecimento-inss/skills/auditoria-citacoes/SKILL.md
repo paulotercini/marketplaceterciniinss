@@ -129,6 +129,16 @@ A auditoria varre skills e Modelos Ouro. Passa a varrer também as citações IM
 
 Achando na base um tema atribuído a assunto diverso do catálogo, verificar se a atribuição veio de ementa copiada. Vindo, a correção é dupla, corrige-se a citação e registra-se que o acórdão de origem a contém, para que ninguém a reintroduza ao reler o mesmo julgado.
 
+## Lições da auditoria de veracidade (Onda 168)
+
+A rodada de 03/10/2026 encontrou três padrões de erro, nesta ordem de frequência. O primeiro é o número de tema ou de súmula atribuído ao assunto de outro precedente, como a Súmula 47 da TNU apresentada como regra de implantação imediata, quando ela trata das condições pessoais e sociais na incapacidade parcial. O segundo é o homônimo de outra corte, como a Súmula 632 do STJ (seguro) citada no lugar da Súmula 632 do STF (prazo do mandado de segurança), a Súmula 44 da TNU no lugar da Súmula 44 do STJ e o Tema 640 do STJ citado como do STF. O terceiro é a decisão real com número de processo, data ou resultado trocados.
+
+A Etapa 2 passou a ter o `scripts/triagem_catalogo.py`, que cruza a saída do `auditoria_citacoes.py` com o catálogo e aponta três suspeitas. São elas o número ausente do catálogo, o número que só existe em outra corte e a descrição colada à citação sem palavra em comum com a tese catalogada. O extrator deixou de contar a Súmula Vinculante como súmula comum do STF.
+
+A Etapa 3 trabalha em lotes de no máximo doze itens, com resposta de uma linha por item, porque lotes maiores esgotaram o limite de saída dos verificadores. Os portais do STF, do STJ, do CJF e do TST recusam o acesso automatizado por WebFetch. A conferência desses itens se faz no navegador, na forma da `pesquisa-jurisprudencia-chrome`, e a de TNU e TRF3 começa pelo MCP `iurisprudencia`. A cota de buscas na web de uma sessão se esgota em cerca de duzentas consultas, e a conferência em massa deve poupá-la.
+
+Nome de pasta com número de precedente errado se corrige pela regra da Onda 143, com `git mv` e atualização de todas as referências. Na rodada, `base-b94-sequela-minima-tema201` passou a `base-b94-sequela-minima-sumula88-tnu` e `base-devolucao-valores-irrepetibilidade-tema979-tema1034` passou a `base-devolucao-valores-irrepetibilidade-tema979-tema692`.
+
 ## MCPs da casa
 
 Antes de redigir, consulte os três servidores locais do plugin, nesta ordem. Os três localizam e não conferem, e nenhum autoriza a marca [CONFERIDO].

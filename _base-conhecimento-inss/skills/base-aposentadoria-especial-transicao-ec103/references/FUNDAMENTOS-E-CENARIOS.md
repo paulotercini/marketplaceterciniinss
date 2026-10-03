@@ -35,7 +35,7 @@ Direito adquirido à aposentadoria especial pré-reforma. Acionar `base-aposenta
 
 ### Cenário 2 — Metalúrgico com 22 anos em 13/11/2019
 
-Se continuar exposto até 25 anos e atingir 86 pontos (idade mais tempo), elegível pela transição por pontos. Se preferir, converte os 25 anos em comum pelo fator 1,40 (somente períodos até 13/11/2019) e agrega a tempo comum para outras regras. Comparação obrigatória.
+Se continuar exposto até 25 anos e atingir 86 pontos (idade mais tempo), elegível pela transição por pontos. Se preferir, converte em comum pelo fator 1,40 só os 22 anos cumpridos até 13/11/2019; os anos posteriores entram sem conversão e se agregam ao tempo comum para outras regras (auditoria 03/10/2026). Comparação obrigatória.
 
 ### Cenário 3 — Enfermeira com 18 anos de exposição a biológicos em 13/11/2019
 
@@ -63,11 +63,11 @@ Segurado com 18 anos de atividade especial (risco baixo) em 13/11/2019. Convers�
 
 ## 4. Agentes nocivos e classificação de risco
 
-Risco alto. Substâncias químicas cancerígenas (LINACH), radiações ionizantes, amianto, sílica, agentes biológicos em alguns cenários. 15 anos.
+Quinze anos, pelo art. 285, I, da Portaria DIRBEN 991/2022. Mineração subterrânea em frentes de produção, com exposição à associação de agentes físicos, químicos ou biológicos (auditoria 03/10/2026).
 
-Risco médio. Ruído acima dos limites, calor, frio, vibração de corpo inteiro, alguns químicos, biológicos em hospitais e similares. 20 anos.
+Vinte anos, pelo art. 285, II. Exposição ao amianto e mineração subterrânea afastada das frentes de produção, com associação de agentes (auditoria 03/10/2026).
 
-Risco baixo. Agentes em menor concentração ou nocividade relativa. 25 anos.
+Vinte e cinco anos, pelo art. 285, III, para as demais situações, entre elas cancerígenos da LINACH, radiações ionizantes, sílica, agentes biológicos, ruído, calor e vibração (auditoria 03/10/2026).
 
 A classificação específica depende do quadro anexo ao Decreto 3.048/99 e da jurisprudência consolidada. Em caso de dúvida, aplicar a interpretação mais favorável ao segurado.
 
@@ -108,6 +108,6 @@ Primeiro, sempre iniciar pela auditoria do PPP. Sem PPP auditado, não há cálc
 
 Segundo, converter mentalmente o tempo especial em comum e simular aposentadoria por tempo comum pós-reforma. Comparar com aposentadoria especial pura e com direito adquirido se houver.
 
-Terceiro, em caso de indeferimento administrativo por suposta ausência de habitualidade, invocar Tema 211 TNU e Tema 205 TNU.
+Terceiro, em caso de indeferimento administrativo por suposta ausência de habitualidade, invocar o Enunciado 11, I, do CRPS e, em agentes biológicos, os Temas 211 e 205 da TNU (auditoria 03/10/2026).
 
 Quarto, em caso de negativa por EPI eficaz, invocar Tema 1090 STJ e Tema 555 STF. Acionar `base-especial-epi`.

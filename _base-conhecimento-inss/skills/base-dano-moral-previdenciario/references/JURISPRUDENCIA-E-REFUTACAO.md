@@ -2,17 +2,17 @@
 
 ## 1. Precedentes relevantes
 
-### Súmula 387 STJ
+### Súmula 37 STJ
 
-Cumulação de danos morais e materiais. Fonte oficial em https://www.stj.jus.br
+Cumulação de dano material e dano moral, "São cumuláveis as indenizações por dano material e dano moral oriundos do mesmo fato". A Súmula 387 STJ, antes citada aqui, trata de dano estético e dano moral (auditoria 03/10/2026). Fonte oficial em https://scon.stj.jus.br/SCON/sumstj
 
 ### Súmula 326 STJ
 
-Honorários e dano moral. Fonte oficial em https://www.stj.jus.br
+Sucumbência no dano moral, "Na ação de indenização por dano moral, a condenação em montante inferior ao postulado na inicial não implica sucumbência recíproca." (auditoria 03/10/2026). Fonte oficial em https://scon.stj.jus.br/SCON/sumstj
 
 ### Súmula 160 TFR
 
-Cessação indevida. Fonte oficial em https://www.cjf.jus.br
+Suspeita de fraude não autoriza, de plano, suspender ou cancelar o benefício, o que depende de apuração em procedimento administrativo [NÃO CONFIRMADO]. Texto lido só em fonte secundária. O dano moral vem da jurisprudência, não da súmula (auditoria 03/10/2026).
 
 ### CF/88, art. 5º X
 
@@ -26,9 +26,9 @@ Responsabilidade objetiva do Estado. Fonte oficial em https://www.planalto.gov.b
 
 Ato ilícito e dever de indenizar. Fonte oficial em https://www.planalto.gov.br
 
-### Tema 372 STJ
+### Dano moral em ações previdenciárias
 
-Dano moral em ações previdenciárias. Fonte oficial em https://www.stj.jus.br
+Ancora-se no art. 37, §6º, da CF (auditoria 03/10/2026, retirado o Tema 372/STJ, que trata do SIMPLES de hospitais).
 
 ### Tema 642 STJ
 
@@ -82,7 +82,7 @@ Refutação. Responsabilidade objetiva do INSS pelo art. 37 §6º CF.
 
 Argumento adversário. Não cabe cumulação.
 
-Refutação. Súmula 387 STJ admite cumulação.
+Refutação. Súmula 37 STJ admite a cumulação de dano material e dano moral oriundos do mesmo fato (auditoria 03/10/2026).
 
 ### Argumento 9 — Quantum excessivo
 
@@ -124,4 +124,4 @@ Sexto, conferência de cumprimento.
 
 ## 5. Diligência de atualização
 
-Acompanhar STJ sobre quantum. Revalidar Súmula 387 STJ. Monitorar acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).
+Acompanhar STJ sobre quantum. Súmula 37 STJ conferida no SCON (auditoria 03/10/2026). Monitorar acordo do RE 1.171.152/STF (ex-Tema 1066, cancelado em 22/02/2021).

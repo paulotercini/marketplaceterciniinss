@@ -1,6 +1,6 @@
 ---
 name: base-b94-anexo-iii-quadros
-description: "Anexo III do Decreto 3.048/99 e quadros exemplificativos do auxílio-acidente B94, caráter exemplificativo, sequelas além do rol, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, perda parcial e função residual, redução da capacidade laborativa para o trabalho habitual. Use SEMPRE que mencionar Anexo III Decreto 3.048, quadros do auxílio-acidente, sequela enquadrável B94, rol exemplificativo, sequela fora do anexo, redução parcial da capacidade laborativa, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, função residual, perda anatômica, perda funcional B94, capacidade habitual reduzida, ofensa estética B94, ofensa funcional, Portaria 991/2022, TJSP. Inclui o arsenal de MAIOR ESFORÇO e perda de dedo (Onda 124), acionado por perícia desfavorável B94, laudo nega incapacidade, amputação de dedo, quirodáctilo, função de pinça, órgão preensor, maior esforço, art. 104 II revogado, Tema 416 STJ. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-art31, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-tema201 e base-b94-nexo-acidentario-ntep."
+description: "Anexo III do Decreto 3.048/99 e quadros exemplificativos do auxílio-acidente B94, caráter exemplificativo, sequelas além do rol, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, perda parcial e função residual, redução da capacidade laborativa para o trabalho habitual. Use SEMPRE que mencionar Anexo III Decreto 3.048, quadros do auxílio-acidente, sequela enquadrável B94, rol exemplificativo, sequela fora do anexo, redução parcial da capacidade laborativa, Súmula 88 TNU, Súmula 89 TNU, Tema 416 STJ, função residual, perda anatômica, perda funcional B94, capacidade habitual reduzida, ofensa estética B94, ofensa funcional, Portaria 991/2022, TJSP. Inclui o arsenal de MAIOR ESFORÇO e perda de dedo (Onda 124), acionado por perícia desfavorável B94, laudo nega incapacidade, amputação de dedo, quirodáctilo, função de pinça, órgão preensor, maior esforço, art. 104 II revogado, Tema 416 STJ. Cruza com auxilio-acidente-b94, auditoria-laudo-pericial, peticao-previdenciaria, base-b94-integracao-salario-beneficio-art31, base-b94-cessacao-acumulacao-vedacao, base-b94-sequela-minima-sumula88-tnu e base-b94-nexo-acidentario-ntep."
 ---
 
 ## NOTA DE AUDITORIA (11/07/2026, com errata da mesma data)
@@ -54,7 +54,7 @@ Fonte oficial em https://www.stj.jus.br
 
 ### Tema 350 TNU
 
-Concessão e prova.
+Qualidade de segurado do titular de auxílio-acidente por 12 meses a partir da Lei 13.846/2019, e não concessão ou prova (auditoria 03/10/2026).
 
 ## Anexo III exemplificativo
 
@@ -133,12 +133,12 @@ Acervo do escritório. Consulte pelo MCP `acervo` o que o escritório já susten
 Para detalhes operacionais, acionar `auxilio-acidente-b94`.
 Para integração ao salário-de-benefício, acionar `base-b94-integracao-salario-beneficio-art31`.
 Para cessação e acumulação, acionar `base-b94-cessacao-acumulacao-vedacao`.
-Para sequela mínima, acionar `base-b94-sequela-minima-tema201`.
+Para sequela mínima, acionar `base-b94-sequela-minima-sumula88-tnu`.
 Para nexo, acionar `base-b94-nexo-acidentario-ntep`.
 
 ## O que NÃO está nesta skill
 
-Integração ao SB em `base-b94-integracao-salario-beneficio-art31`. Cessação em `base-b94-cessacao-acumulacao-vedacao`. Sequela mínima em `base-b94-sequela-minima-tema201`. Nexo em `base-b94-nexo-acidentario-ntep`.
+Integração ao SB em `base-b94-integracao-salario-beneficio-art31`. Cessação em `base-b94-cessacao-acumulacao-vedacao`. Sequela mínima em `base-b94-sequela-minima-sumula88-tnu`. Nexo em `base-b94-nexo-acidentario-ntep`.
 
 ## O INSS reconhece o Anexo III como EXEMPLIFICATIVO (Onda 115)
 

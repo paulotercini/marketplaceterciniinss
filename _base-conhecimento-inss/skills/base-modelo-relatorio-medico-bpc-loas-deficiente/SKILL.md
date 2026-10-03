@@ -1,6 +1,6 @@
 ---
 name: base-modelo-relatorio-medico-bpc-loas-deficiente
-description: "Modelo narrativo enxuto (1 folha) de relatório médico para BPC/LOAS da pessoa com deficiência, abordagem biopsicossocial, IFBrM, impedimento de longo prazo e sub-modelos por especialidade. Use SEMPRE que mencionar modelo relatório médico BPC, modelo laudo BPC LOAS, modelo laudo IFBrM, modelo laudo biopsicossocial, relatório ortopedista BPC, relatório psiquiatra BPC, relatório reumatologista BPC, relatório clínico geral BPC, relatório oftalmologista BPC, relatório cardiologista BPC, BPC criança, BPC menor 16 anos, impedimento longo prazo 2 anos, barreiras CIF, Portaria Conjunta 2/2014, Portaria 37/2026 IFBrM, Lei 15.157/2025, Lei 15.176/2025 fibromialgia, carta médico BPC. Cruza com base-validacao-formal-laudo-medico-checklist-ab, analise-bpc-loas, base-bpc-loas-requisitos, base-bpc-impedimento-longo-prazo, base-bpc-aposentadoria-pcd-procedimentos, base-bpc-renda-per-capita-miserabilidade, bpc-renda-grupo-familiar, peticao-previdenciaria."
+description: "Modelo narrativo enxuto (1 folha) de relatório médico para BPC/LOAS da pessoa com deficiência, abordagem biopsicossocial, IFBrM, impedimento de longo prazo e sub-modelos por especialidade. Use SEMPRE que mencionar modelo relatório médico BPC, modelo laudo BPC LOAS, modelo laudo IFBrM, modelo laudo biopsicossocial, relatório ortopedista BPC, relatório psiquiatra BPC, relatório reumatologista BPC, relatório clínico geral BPC, relatório oftalmologista BPC, relatório cardiologista BPC, BPC criança, BPC menor 16 anos, impedimento longo prazo 2 anos, barreiras CIF, Portaria Conjunta 2/2015, Portaria 37/2026 IFBrM, Lei 15.157/2025, Lei 15.176/2025 fibromialgia, carta médico BPC. Cruza com base-validacao-formal-laudo-medico-checklist-ab, analise-bpc-loas, base-bpc-loas-requisitos, base-bpc-impedimento-longo-prazo, base-bpc-aposentadoria-pcd-procedimentos, base-bpc-renda-per-capita-miserabilidade, bpc-renda-grupo-familiar, peticao-previdenciaria."
 ---
 
 # Modelo de Relatório Médico para BPC/LOAS Deficiente
@@ -13,7 +13,7 @@ A skill é fonte primária pró-segurado para produzir modelo narrativo enxuto (
 
 Impedimento de longo prazo (mínimo 2 anos, art. 20 §10 da LOAS).
 
-Avaliação biopsicossocial conforme Portaria Conjunta SPS/INSS/SNAS 2/2014.
+Avaliação biopsicossocial conforme Portaria Conjunta MDS/INSS 2/2015 (auditoria 03/10/2026).
 
 IFBrM (Índice de Funcionalidade Brasileiro Modificado), Portaria 37/2026.
 
