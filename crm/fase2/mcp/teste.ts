@@ -206,6 +206,9 @@ T.clientes[1].telefone = "(16) 98888-0002";
 const r8 = await call("rascunhar_whatsapp", { cliente_id: CLI2, texto: "Bom dia, falta o comprovante de endereço." });
 conf("cliente que nunca escreveu: abre a conversa pelo telefone da ficha e deixa o rascunho", r8.includes("Nada foi enviado")
   && T.zap_conversas.some((c) => c.chave === "88880002") && T.zap_mensagens.at(-1).status === "rascunho");
+T.clientes[1].telefones = [{ numero: "16999990001", obs: "Aurélia (vizinha que cuida do benefício)", zap: false }];
+conf("ler pelo cliente acha a conversa de quem tem o número na lista da ficha",
+  (await call("ler_conversa_whatsapp", { cliente_id: CLI2 })).includes("Chegou carta do INSS"));
 const az = await call("whatsapp_para_anotacao", { mensagem_id: ZM, caso_id: CASO });
 conf("levar ao caso chama zap_virar_andamento com o autor", az.includes("Aposentadoria por idade rural")
   && T["rpc/zap_virar_andamento"]?.at(-1)?.p_mensagem === ZM && T["rpc/zap_virar_andamento"].at(-1).p_autor === EU);
