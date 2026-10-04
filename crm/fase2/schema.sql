@@ -2178,3 +2178,48 @@ alter table andamentos add constraint andamentos_origem_check
 alter table andamentos add column if not exists origem_id text;
 create unique index if not exists andamentos_origem_unica
   on andamentos (caso_id, origem, origem_id) where origem_id is not null;
+
+-- ══ WhatsApp: número da lista da ficha também acha o cliente ══════════════
+-- O cliente que escreve de um número da lista da ficha (o da filha, o segundo
+-- WhatsApp) também cai na ficha certa. O telefone principal tem preferência.
+-- (substitui o zap_abrir acima; a lista veio do checklist do To Do,
+-- crm/fase2/telefones_todo.py)
+create or replace function cliente_do_fone(p_chave text) returns uuid
+language sql stable set search_path = public as $$
+  select coalesce(
+    (select id from clientes where fone_chave(telefone) = p_chave limit 1),
+    (select c.id from clientes c
+      where jsonb_typeof(c.telefones) = 'array'
+        and exists (select 1 from jsonb_array_elements(c.telefones) t
+                     where fone_chave(t->>'numero') = p_chave)
+      limit 1))
+$$;
+
+create or replace function zap_abrir(p_telefone text, p_nome text default null)
+returns uuid
+language plpgsql security definer set search_path = public as $$
+declare v_chave text; v_id uuid; v_cli uuid; v_lead uuid;
+begin
+  v_chave := fone_chave(p_telefone);
+  if v_chave is null or length(v_chave) < 8 then
+    raise exception 'telefone inválido: %', p_telefone;
+  end if;
+  select id into v_id from zap_conversas where chave = v_chave;
+  if v_id is not null then
+    update zap_conversas set
+      nome_perfil = coalesce(nullif(trim(p_nome),''), nome_perfil),
+      cliente_id  = coalesce(cliente_id, cliente_do_fone(v_chave))
+     where id = v_id;
+    return v_id;
+  end if;
+  v_cli := cliente_do_fone(v_chave);
+  if v_cli is null then
+    select id into v_lead from leads
+     where fone_chave(telefone) = v_chave and etapa not in ('fechado','perdido')
+     order by criado_em desc limit 1;
+  end if;
+  insert into zap_conversas (telefone, nome_perfil, cliente_id, lead_id)
+  values (p_telefone, nullif(trim(p_nome),''), v_cli, v_lead)
+  returning id into v_id;
+  return v_id;
+end $$;
