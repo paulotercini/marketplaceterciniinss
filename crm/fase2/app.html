@@ -3211,7 +3211,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.66</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.67</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -17506,7 +17506,11 @@ function lcNumeros(k){
   const linha = (rot, itens, add, tit) => `<div class="lc-linha"><span class="lc-k">${rot}</span>${itens.join("")}
     <button class="lc-add" onclick="${add}" title="${esc(tit)}" aria-label="${esc(tit)}">+</button></div>`;
   const partes = [];
-  if(nbs.length) partes.push(linha("NB", nbs.map(n=>lcCop(fmtNb(n),"NB")), `lcNovoNb('${k.id}')`, "acrescentar outro NB"));
+  // F162 · o NB principal se troca ali mesmo (o + só acrescenta outro)
+  if(nbs.length) partes.push(linha("NB", [
+      `<span id="lcnb-nb-${k.id}">${k.nb?lcCop(fmtNb(k.nb),"NB"):""}<button class="lapis" title="trocar ou apagar o NB principal" onclick="editarFato('${k.id}','nb','lcnb')">✎</button></span>`,
+      ...nbs.filter(n=>n!==String(k.nb||"").trim()).map(n=>lcCop(fmtNb(n),"NB"))],
+    `lcNovoNb('${k.id}')`, "acrescentar outro NB"));
   if(nups.length) partes.push(linha("E-SisREC", nups.map(n=>lcCop(formatarNup(n),"Número do recurso")), `lcNovoNup('${k.id}')`, "acrescentar outro recurso"));
   if(procs.length) partes.push(linha("Judicial", [
       ...procs.map(p=>`<span class="lc-f">${lcCop(fmtProc(p.numero),"Número do processo")}${

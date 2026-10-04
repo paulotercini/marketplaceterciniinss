@@ -1839,3 +1839,10 @@ armadilhas de cada fase.
 3. Se quiser o pré-caso também para clientes que JÁ têm casos (um caso novo
    se desenhando ao lado dos existentes), é uma evolução pequena: hoje o
    bloco aparece só para quem não tem caso nenhum.
+
+## 10.67 · F162 · trocar o NB na linha do caso
+
+O NB principal ganhou um ✎ na própria linha do caso (números). Antes só havia
+o "+", que acrescenta um NB secundário e não substitui o principal; a troca
+ficava escondida no "mais informações" do cartão de fatos. O lápis usa o mesmo
+`editarFato` (campo `nb`) e mantém os NBs secundários. Prova: `nb162.js` (3/3).
