@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Autorizar acesso ao CRM</title>
+<!-- MCP do CRM · etapa 1. O Supabase Auth (servidor OAuth 2.1) manda o
+     colaborador para cá com ?authorization_id=… quando o Claude ou outro
+     assistente pede para ler o CRM. Esta página usa a mesma configuração e a
+     mesma sessão que o CRM guarda neste aparelho (crm_cfg e crm_sessao); sem
+     sessão, pede o e-mail e a senha do CRM. Nada além do consentimento. -->
+<style>
+:root{--bg:#F8F8F6;--fg:#121212;--cinza:#4A4944;--claro:#686660;--borda:#E7E6E1;--cartao:#fff;
+  --pet:#0E5C58;--pet-f:#E6F0EF;--venc:#B3261E;--f:"IBM Plex Sans","Segoe UI",system-ui,-apple-system,sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#141615;--fg:#ECEBE6;--cinza:#C7C5BD;--claro:#9A988F;--borda:#2C2F2D;
+  --cartao:#1B1D1C;--pet:#5FB8B1;--pet-f:#17302E;--venc:#F08C83;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px 16px;background:var(--bg);color:var(--fg);font:15px/1.55 var(--f)}
+main{width:100%;max-width:440px;background:var(--cartao);border:1px solid var(--borda);border-radius:16px;padding:24px;display:grid;gap:14px}
+h1{margin:0;font:600 20px/1.25 Georgia,serif}
+p{margin:0;color:var(--cinza)}
+b{color:var(--fg);font-weight:600}
+ul{margin:0;padding-left:18px;color:var(--cinza)}
+label{display:grid;gap:4px;font-size:13px;color:var(--claro)}
+input{font:inherit;padding:9px 11px;border:1px solid var(--borda);border-radius:8px;background:var(--bg);color:var(--fg)}
+.linha{display:flex;gap:10px;flex-wrap:wrap}
+button{font:inherit;font-weight:600;padding:10px 18px;border-radius:999px;border:1px solid var(--borda);background:var(--cartao);color:var(--fg);cursor:pointer}
+button.sim{background:var(--pet);border-color:var(--pet);color:#fff}
+button:disabled{opacity:.6;cursor:default}
+.erro{color:var(--venc)}
+.miudo{font-size:12.5px;color:var(--claro)}
+</style>
+</head>
+<body>
+<main id="caixa"><p>Carregando…</p></main>
+<script>
+(function(){
+  const caixa = document.getElementById("caixa");
+  const id = new URLSearchParams(location.search).get("authorization_id");
+  const ler = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
+  const guardar = (k,v) => { try{ localStorage.setItem(k,v); }catch(e){} };
+  const esc = s => String(s??"").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  let cfg = null; try{ cfg = JSON.parse(ler("crm_cfg")||"null"); }catch(e){}
+  let sessao = null; try{ sessao = JSON.parse(ler("crm_sessao")||"null"); }catch(e){}
+  const mostrar = html => { caixa.innerHTML = html; };
+
+  if(!id) return mostrar(`<h1>Nada a autorizar</h1><p>Esta página só se abre a partir do pedido de um assistente, como o Claude.</p>`);
+  if(!cfg || !cfg.url || !cfg.key)
+    return mostrar(`<h1>Abra o CRM primeiro</h1><p>Este aparelho ainda não tem o endereço do banco. Abra o
+      <a href="../../">CRM</a>, entre uma vez e volte ao assistente para tentar de novo.</p>`);
+  const AUTH = cfg.url.replace(/\/$/,"") + "/auth/v1";
+  const pedir = (caminho, op={}) => fetch(AUTH + caminho, {...op, headers:{apikey:cfg.key, "Content-Type":"application/json",
+    ...(sessao?{Authorization:"Bearer "+sessao.access_token}:{}), ...(op.headers||{})}});
+
+  async function renovar(){
+    if(!sessao || !sessao.refresh_token) return false;
+    const r = await fetch(AUTH + "/token?grant_type=refresh_token", {method:"POST",
+      headers:{apikey:cfg.key,"Content-Type":"application/json"}, body:JSON.stringify({refresh_token:sessao.refresh_token})});
+    if(!r.ok) return false;
+    sessao = await r.json(); guardar("crm_sessao", JSON.stringify(sessao)); return true;
+  }
+  function pedirLogin(msg){
+    mostrar(`<h1>Entre com a conta do CRM</h1>
+      <p>Um assistente pediu para ler o CRM em seu nome. Entre com o mesmo e-mail e senha do CRM para decidir.</p>
+      ${msg?`<p class="erro">${esc(msg)}</p>`:""}
+      <form id="f" style="display:grid;gap:10px">
+        <label>E-mail<input id="em" type="email" autocomplete="username" required></label>
+        <label>Senha<input id="se" type="password" autocomplete="current-password" required></label>
+        <div class="linha"><button class="sim" id="ent">Entrar</button></div>
+      </form>`);
+    document.getElementById("f").onsubmit = async ev => {
+      ev.preventDefault();
+      const bt = document.getElementById("ent"); bt.disabled = true;
+      const r = await fetch(AUTH + "/token?grant_type=password", {method:"POST",
+        headers:{apikey:cfg.key,"Content-Type":"application/json"},
+        body:JSON.stringify({email:document.getElementById("em").value.trim(), password:document.getElementById("se").value})}).catch(()=>null);
+      if(!r || !r.ok) return pedirLogin("E-mail ou senha não conferem.");
+      sessao = await r.json(); guardar("crm_sessao", JSON.stringify(sessao)); detalhes();
+    };
+  }
+  async function detalhes(){
+    let r = await pedir(`/oauth/authorizations/${encodeURIComponent(id)}`);
+    if(r.status===401 && await renovar()) r = await pedir(`/oauth/authorizations/${encodeURIComponent(id)}`);
+    if(r.status===401 || r.status===403) return pedirLogin();
+    const d = await r.json().catch(()=>({}));
+    if(!r.ok) return mostrar(`<h1>Pedido inválido</h1><p class="erro">${esc(d.msg||d.error_description||("erro "+r.status))}</p>
+      <p>O pedido pode ter vencido. Volte ao assistente e conecte de novo.</p>`);
+    if(d.redirect_url) return location.assign(d.redirect_url);   // já autorizado antes
+    const nome = (d.client && (d.client.client_name || d.client.client_id)) || "um assistente";
+    mostrar(`<h1>Autorizar ${esc(nome)}?</h1>
+      <p><b>${esc(nome)}</b> quer ler o CRM do escritório em nome de <b>${esc(d.user && d.user.email)}</b>.</p>
+      <ul><li>clientes, casos e anotações</li><li>agenda, tarefas e prazos</li><li>novidades dos portais e a equipe</li></ul>
+      <p class="miudo">Só leitura. Senhas do Meu INSS e do gov.br ficam de fora. O acesso vale enquanto você for colaborador ativo e pode ser revogado no assistente.</p>
+      <div class="linha"><button class="sim" id="sim">Autorizar</button><button id="nao">Recusar</button></div>
+      <p class="miudo">Retorno para ${esc(d.redirect_uri||"")}</p>`);
+    const decidir = async acao => {
+      document.querySelectorAll("button").forEach(b=>b.disabled=true);
+      const c = await pedir(`/oauth/authorizations/${encodeURIComponent(id)}/consent`, {method:"POST", body:JSON.stringify({action:acao})});
+      const j = await c.json().catch(()=>({}));
+      if(j.redirect_url) return location.assign(j.redirect_url);
+      mostrar(`<h1>Não deu certo</h1><p class="erro">${esc(j.msg||j.error_description||("erro "+c.status))}</p>`);
+    };
+    document.getElementById("sim").onclick = () => decidir("approve");
+    document.getElementById("nao").onclick = () => decidir("deny");
+  }
+  (sessao ? detalhes() : Promise.resolve(pedirLogin())).catch(e => mostrar(`<h1>Sem conexão</h1><p class="erro">${esc(e.message)}</p>`));
+})();
+</script>
+</body>
+</html>
