@@ -1883,3 +1883,10 @@ Prova: `prazo168.js` (contraste ≥ 4,5; falha na 10.71, passa na 10.72).
 
 A seção Parceria saiu do cartão Parentes ou amigos: ela já está no canto
 direito do nome (F163). Prova em `limpa165.js`.
+
+## 10.74 · F170 · aba Perícias só com perícia agendada
+
+A aba Perícias aparece só com perícia de hoje em diante e não cancelada (ou
+quando já está aberta). Anotar no caso "perícia agendada para DD/MM às HHhMM"
+já cria o agendamento (extrairEvento) e a aba surge. Prova: `pericia170.js`.
+Suíte: 97/101, falhando só as quatro de data.
