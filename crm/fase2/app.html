@@ -16092,7 +16092,7 @@ function painelDireito(c){
     <div class="form-linha ad-topo" style="align-items:center;gap:10px;margin-bottom:6px">
       <div class="ad-idade-hoje">${idade==null
         ? `<b>Idade</b> <span class="meio-sub">sem data de nascimento na ficha — preencha na Identificação</span>`
-        : `<b>${idade} anos</b> <span class="meio-sub">nascido${c.sexo==="F"?"a":""} em ${esc(fmt(dnIso(c.dn)))} · hoje ${esc(fmt(hoje()))}</span>`}</div>
+        : `<b>${idade} anos</b> <span class="meio-sub">${({F:"nascida",M:"nascido"})[civilDe(c).sexo]||"nascido(a)"} em ${esc(fmt(dnIso(c.dn)))} · hoje ${esc(fmt(hoje()))}</span>`}</div>
       <span class="meio-sub" style="margin-left:auto">parceria</span>${chipParceria(c, ks)}${seletorParceria(c, ks, "parc-sel-ad")}
       ${botaoAbrirCnis(c, false)}
     </div>
