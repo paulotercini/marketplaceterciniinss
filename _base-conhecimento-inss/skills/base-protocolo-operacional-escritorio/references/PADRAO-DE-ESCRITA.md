@@ -29,6 +29,7 @@ A coluna Origem distingue o que o titular FIXOU do que foi PROPOSTO nesta Onda p
 | Documento | Teto | Origem |
 |---|---|---|
 | Resposta em chat | O tamanho da pergunta, um parágrafo para pergunta de uma linha | Fixado, 22/09/2026 |
+| Resposta em chat com pesquisa | Até 3 parágrafos, até 3 dados concretos, julgado pela corrente e lista no anexo | Fixado, 04/10/2026 |
 | Parecer | 1 página | Fixado, protocolo regra 4 |
 | Análise da Vida Completa | Conclusão no topo, sem teto de páginas | Fixado, protocolo regra 4 |
 | Anotação `(C)` no To Do | 2 a 3 linhas | Fixado, protocolo regra 1 |
@@ -84,6 +85,20 @@ Explicação didática em documento interno. Remover.
 Relatório de revisão que empilha os pareceres dos agentes em vez de consolidar. Deduplicar, ordenar por severidade, uma página por agente e duas no consolidado.
 
 Achado sem consequência, listado para justificar o parecer. Não entra. Sem achado, uma linha dizendo isso.
+
+## Resposta de chat com pesquisa (Onda 171, 04/10/2026)
+
+O titular mostrou uma resposta sobre enquadramento de trabalhador rural que dividia o TRF3 em três correntes e identificava nove julgados por número, Turma, relator e data. A queixa foi literal, "tudo isso cansa a minha leitura e faz com que eu demore para responder". A regra abaixo foi fixada em seguida e vale para toda resposta de chat que nasça de pesquisa de norma, precedente ou acervo.
+
+O chat entrega a decisão, e o anexo entrega a prova da pesquisa. A resposta tem até três parágrafos, e pergunta de uma linha continua recebendo um só. Na forma completa, o primeiro traz a recomendação e o pedido a fazer. O segundo traz o fundamento decisivo. O terceiro traz o risco principal e o modo de neutralizá-lo. Corrente desfavorável entra pelo efeito que produz no caso, em uma frase.
+
+Cada resposta leva no máximo três dados concretos, como número de processo, data, valor ou prazo, e só os que mudam a decisão ou exigem providência do titular. Julgado se cita pela corrente e pelo órgão, como em "duas Turmas do TRF3 admitem o enquadramento", sem número de processo, relator ou data. Tema e súmula se nomeiam pelo número, porque o número é o nome do precedente.
+
+A lista completa vai em planilha anexa (.xlsx), uma linha por julgado, com os campos da ficha do achado da `pesquisa-jurisprudencia-chrome` (seção 7) e a marcação de conferência de cada um. A mesma lista alimenta a peça. No chat, uma frase final informa a situação da conferência, como "os julgados ainda não foram abertos no portal" ou "todos conferidos no portal em 04/10/2026". Enquanto a personalização do titular não trouxer a regra de marcação em frase única, sugerida em 04/10/2026, a marcação continua julgado a julgado, mas dentro do anexo.
+
+Relatório de agente e saída de MCP são insumo. O chat recebe a síntese, e o detalhe que valer a pena guardar vai ao anexo.
+
+Exemplo de forma, com os fatos do caso trocados por marcadores. "Recomendo pedir o período em [empregador agroindustrial] como principal, com reafirmação da DER, e o período em [segundo empregador] como sucessivo. Parte das Turmas do TRF3 enquadra por categoria o rural de empresa agroindustrial até 28/04/1995, só com CTPS e PPP, que já estão no processo administrativo. O risco é a corrente que segue o PUIL 452/PE, que exige prova do agente nocivo, e prova feita só em juízo leva a DIB para a citação (Tema 1124/STJ). Os julgados ainda não foram abertos no portal, e a lista está na planilha anexa."
 
 ## Cruzamentos
 

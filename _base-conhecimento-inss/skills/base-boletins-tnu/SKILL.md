@@ -69,6 +69,8 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
+Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
 ## Integração com outras skills
 
 `base-precedentes-catalogo-vinculantes` é o destino das teses promovidas. `pesquisa-jurisprudencia-chrome` dá o protocolo de conferência e a base oficial do CJF para julgados recentes. `base-tnu-admissibilidade-manual` e `pedilef-cotejo-analitico-tnu` cuidam da admissibilidade e do cotejo quando o caso for de PUIL. `base-recursos-jef` e `base-tru-trf3-sumulas-jurisprudencia` completam o quadro do microssistema dos Juizados. O agente `verificador-precedentes` pode usar este acervo como fonte local antes de sair para a rede.

@@ -123,6 +123,8 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
+Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
 ## Integração com outras skills
 
 `estudo-pre-pericia` é a irmã para o ato pericial, mesma etapa zero, mesmo espírito. `triagem-caso` fornece o dossiê. As skills de matéria listadas no mapa fornecem o mérito. `especificacao-provas` na fase anterior (é ela que pede a audiência com fatos controvertidos delimitados). `base-cpc-nulidades-cerceamento` quando a audiência for indeferida. Após a audiência, o relato alimenta memoriais pela `peticao-previdenciaria`.

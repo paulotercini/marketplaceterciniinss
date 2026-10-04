@@ -112,6 +112,8 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
+Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
 ## O que NÃO está nesta skill
 
 A responsabilidade do empregador pelos salários do período é matéria trabalhista e não se resolve aqui. O dano moral pelo limbo depende de conferência do IRR 88 e está em quarentena. O cômputo do período de limbo como tempo de contribuição ou carência não foi decidido pela TNU e não pode ser afirmado como tese vinculante.
