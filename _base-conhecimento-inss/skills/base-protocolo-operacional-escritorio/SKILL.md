@@ -111,6 +111,8 @@ Vigente desde 09/09/2026. Extraído das correções que o titular fez ao longo d
 
 **Resposta em chat tem o tamanho da pergunta.** Fixado em 22/09/2026. Pergunta de uma linha recebe um parágrafo, e a resposta abre pelo veredito. Precedente, alerta e via judicial só entram quando pedidos ou quando mudam a resposta. A skill carregada informa o conteúdo, não dita o formato, e o que ela manda "sempre alertar" vale para peça e parecer, não para conversa. Pergunta que já traz a resposta certa recebe a confirmação em uma frase e o que a corrige, se houver.
 
+**Pesquisa entregue no chat, fixada em 04/10/2026.** A resposta que nasce de pesquisa tem até três parágrafos, recomendação, fundamento decisivo e risco, e no máximo três dados concretos. Julgado se cita pela corrente e pelo órgão, sem número, relator ou data, e a lista completa vai em planilha anexa, com a marcação de cada julgado. Detalhe e exemplo em `references/PADRAO-DE-ESCRITA.md`, seção "Resposta de chat com pesquisa".
+
 **Um ponto decisivo por documento.** Antes de escrever, nomear em uma frase o que decide o caso. O texto existe para provar essa frase. O que não a serve não entra.
 
 **Só o dado que decide.** Nome do segurado, idade, datas de nascimento, histórico sem consequência, explicação repetida, ato burocrático já visível no andamento, conversa de circunstância. Nada disso entra em síntese, quadro, tabela ou anotação. Tabela cheia cansa e esconde, tabela com três linhas mostra.
@@ -146,3 +148,5 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 **Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
 
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
+
+Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.

@@ -109,6 +109,8 @@ Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`,
 
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".
 
+Entrega no chat (Onda 171). O achado chega ao titular pela corrente e pelo órgão, sem número de processo, relator ou data, em até três parágrafos e com no máximo três dados concretos. A lista completa, com a marcação de cada item, vai em planilha anexa e na peça, na forma de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md`.
+
 ## Integração com outras skills
 
 Este roteiro é o ponto de entrada. A Fase 0 produz o mapa de ataque. Para arquitetar o recurso por rito, acionar `ponte-workflow-recurso-sentenca`. Para redigir a peça escolhida, acionar `peticao-previdenciaria`. Para auditar a peça, acionar `revisao-peticao`.
