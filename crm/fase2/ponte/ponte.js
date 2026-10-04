@@ -166,7 +166,7 @@ async function conectar() {
 async function entrou(m, baixar) {
   if (N.deveIgnorar(m)) return;
   if (m.key.fromMe) return;        // o que sai daqui já é gravado na fila
-  const fone = N.jidParaFone(m.key.remoteJid);
+  const fone = N.foneDaMensagem(m);
   if (N.chaveFone(fone).length < 8) return;
 
   const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: m.pushName || null });

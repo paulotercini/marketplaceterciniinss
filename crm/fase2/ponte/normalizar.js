@@ -15,6 +15,16 @@ const ehStatus = jid => String(jid || "").startsWith("status@");
 // '5516999990000@s.whatsapp.net' -> '5516999990000'
 const jidParaFone = jid => soDigitos(String(jid || "").split("@")[0].split(":")[0]);
 
+// O WhatsApp passou a esconder o número de parte dos contatos atrás de um id
+// de privacidade ('119928724144327@lid'). Esse id não é telefone: não acha o
+// cliente e não serve para responder. O número verdadeiro vem ao lado, em
+// key.senderPn; sem ele, fica o id, que ao menos guarda a conversa.
+const foneDaMensagem = m => {
+  const k = (m && m.key) || {};
+  const jid = String(k.remoteJid || "").endsWith("@lid") && k.senderPn ? k.senderPn : k.remoteJid;
+  return jidParaFone(jid);
+};
+
 // Mensagem que não é conversa: recibo de entrega, reação, apagamento, chave
 // de criptografia. Entra no fluxo do Baileys e não pode virar linha na tela.
 const TIPOS_MUDOS = ["protocolMessage", "reactionMessage", "senderKeyDistributionMessage",
@@ -96,6 +106,6 @@ function quandoWa(m) {
   return new Date(s * 1000).toISOString();
 }
 
-module.exports = { soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone,
+module.exports = { soDigitos, chaveFone, ehGrupo, ehStatus, jidParaFone, foneDaMensagem,
                    miolo, tipoDaMensagem, textoDaMensagem, deveIgnorar,
                    nomeSeguro, quandoWa };
