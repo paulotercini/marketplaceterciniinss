@@ -204,10 +204,14 @@ sudo journalctl -u ponte-zap -f      # acompanhar
 ```powershell
 npm install -g pm2 pm2-windows-startup
 pm2-startup install
-pm2 start ponte.js --name ponte-zap
+pm2 start ecosystem.config.js     # a ponte e a transcrição dos áudios
 pm2 save
 pm2 logs ponte-zap
 ```
+
+O `ecosystem.config.js` desta pasta liga os dois programas e os reinicia se
+caírem. O `pm2-startup` os traz de volta quando o Windows liga e a conta do
+usuário entra (é no login, não antes dele).
 
 ---
 
