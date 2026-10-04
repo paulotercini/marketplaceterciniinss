@@ -55,7 +55,7 @@ const SUPA = "https://ficticio.supabase.co";
   conf("Parentes ou amigos fica recolhido num ＋", !t.cartao && t.botaoPar);
   await p.evaluate(() => [...document.querySelectorAll("button.cad-mini")].find(b => /Parentes ou amigos/.test(b.textContent)).click());
   await p.waitForSelector("text=Parentes ou Amigos");
-  conf("o ＋ abre o cartão Parentes ou amigos", await p.evaluate(() => [...document.querySelectorAll(".cad-tit")].some(x => /Parentes ou Amigos/i.test(x.textContent))));
+  conf("o ＋ abre o cartão Parentes ou amigos, sem repetir a parceria (F169)", await p.evaluate(() => [...document.querySelectorAll(".cad-tit")].some(x => /Parentes ou Amigos/i.test(x.textContent)) && !document.getElementById("parc-sel-lig") && document.querySelectorAll("#parc-sel-id").length === 1));
   await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.campos = {...(c.campos || {}), precasos: [{ id: "pc1", criado_em: new Date().toISOString(), so_lembrete: false }]}; repintarFicha(); }, CLI_CHEIO);
   const depois = await p.evaluate(() => [...[...document.querySelectorAll(".sub-menu")].find(m => /Identificação/.test(m.textContent)).querySelectorAll("button:not(.trilho-mais)")].map(b => b.textContent.trim()));
   conf("com atendimento aberto voltam Triagem, Documentos e Mensagens", ["Documentos", "Mensagens"].every(x => depois.some(d => d.includes(x))));

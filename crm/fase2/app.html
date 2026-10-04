@@ -3221,7 +3221,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.72</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.73</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12446,7 +12446,6 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${fichaIdentificacao(c, creds)}
     ${(()=>{
       const prots = [...new Set(ks.flatMap(k=>k.protocolos||[]))];
-      const parcs = [...new Set(ks.map(k=>k.parceria).filter(Boolean))];
       return `
     ${/* segundo cartão: quem este cliente é para o INSS e a quem ele se liga.
          Eram três blocos soltos, cada um com moldura própria, empilhados
@@ -12471,16 +12470,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
         <span style="font-size:13px;color:var(--cinza)">Cada protocolo está na aba
           <b>Casos</b> do processo dele, em "De onde partiu", e todos juntos na
           <b>Triagem</b>, no passo "Requerimentos anteriores".</span></div>`:""}
-      ${/* F23 · a parceria ganhou nome de advogado editável daqui: o campo é do
-           CASO (k.parceria) e a pesquisa e a lista 🤝 Parcerias já leem ele —
-           faltava onde ESCREVER sem abrir o processo. */""}
-      ${/* F127 · a parceria mudou-se para o lado do nome (em verde) e para a
-           Análise de Direito; aqui fica só o atalho */""}
-      <div class="id-secao"><label>Parceria <small>(a pesquisa encontra o cliente por este nome, e a lista Parcerias agrupa)</small></label>
-        ${chipParceria(c, ks) || `<span style="font-size:13px;color:var(--cinza)">sem parceria</span>`}
-        ${seletorParceria(c, ks, "parc-sel-lig")}
-        ${parcs.filter(pa=>limparParceria(pa)!==parceriaDe(c, ks)).map(pa=>`<span class="chip neutro" title="anotado no To Do">${esc(pa)}</span>`).join(" ")}
-      </div>
+      ${/* F169 · a parceria saiu daqui: já está no canto direito do nome */""}
       <div class="id-secao"><label>Parentes ou amigos <small>(cliente da base abre a ficha; outra pessoa fica anotada)</small></label>
         ${blocoParentes(c, vincs, "cad")}
       </div>

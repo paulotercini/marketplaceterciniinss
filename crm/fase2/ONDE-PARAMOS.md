@@ -1878,3 +1878,8 @@ Na coluna esquerda do caso, a linha do prazo fatal herdava a letra branca do
 o texto sumia. Agora o texto é escuro e a data e o "faltam/venceu" saem em
 vermelho. Só o prazo com origem sofria; o sem descrição tinha o âmbar por cima.
 Prova: `prazo168.js` (contraste ≥ 4,5; falha na 10.71, passa na 10.72).
+
+## 10.73 · F169 · parceria fora do cartão Parentes ou amigos
+
+A seção Parceria saiu do cartão Parentes ou amigos: ela já está no canto
+direito do nome (F163). Prova em `limpa165.js`.
