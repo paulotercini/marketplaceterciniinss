@@ -64,7 +64,11 @@ const COL_CASO = "id,cliente_id,titulo,beneficio,especie,fase,etapa,mover_para,p
 const COL_CLIENTE = "id,nome,cpf,dn,telefone,cidade,uf,profissao,estado_civil,sexo,campos,criado_em";
 
 // ── as ferramentas ─────────────────────────────────────────────────────────
-export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
+export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?: string }) {
+  // a conta do assistente (papel "assistente_ia") roda sozinha nas rotinas
+  // agendadas: lê, anota e cria tarefa, mas não conclui, não reagenda e não
+  // altera o caso. Essas decisões ficam com quem é gente.
+  const robo = eu.papel === "assistente_ia";
   const server = new McpServer({ name: "crm-tercini", version: "0.5.0" });
   const leitura = { readOnlyHint: true, openWorldHint: false };
   const escrita = { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false };
@@ -310,7 +314,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
     return texto(out);
   });
 
-  server.registerTool("concluir_tarefa", {
+  if (!robo) server.registerTool("concluir_tarefa", {
     title: "Concluir tarefa",
     description: "Dá baixa numa tarefa aberta, como o botão ✔ do CRM: marca concluída e grava na linha do tempo, em resposta ao pedido, o que foi feito. Se informar o número do protocolo, ele entra na ficha do caso. O tarefa_id vem de agenda ou de tarefas_caso.",
     inputSchema: z.object({
@@ -342,7 +346,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
     return texto(`Tarefa concluída no caso "${k?.titulo}" de ${k?.cliente}, por ${eu.nome}.${extra}`);
   });
 
-  server.registerTool("reagendar_tarefa", {
+  if (!robo) server.registerTool("reagendar_tarefa", {
     title: "Reagendar tarefa",
     description: "Muda a data de uma tarefa aberta e anota na linha do tempo a data antiga, a nova e o motivo.",
     inputSchema: z.object({ tarefa_id: ID, nova_data: DATA, motivo: z.string().max(500).optional() }),
@@ -365,7 +369,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
   const CAMPOS: Record<string, string> = { etapa: "etapa", resultado: "resultado", decisao_em: "data da decisão",
     exigencia_prazo: "prazo da exigência", exigencia_descricao: "exigência", der: "DER", dib: "DIB", dcb: "DCB", nb: "NB" };
   const DATAS = new Set(["decisao_em", "exigencia_prazo", "der", "dib", "dcb"]);
-  server.registerTool("atualizar_caso", {
+  if (!robo) server.registerTool("atualizar_caso", {
     title: "Atualizar dados do caso",
     description: "Altera a etapa, o resultado (deferido, indeferido, acordo, desistencia), a data da decisão, a exigência do INSS (descrição e prazo), DER, DIB, DCB ou NB de um caso. Grava na linha do tempo cada campo com o valor anterior e o novo. Para apagar um campo, mande texto vazio. Fase, prazo fatal e encerramento ficam no CRM. A etapa precisa ser uma das da fase do caso (ficha_cliente mostra a fase).",
     inputSchema: z.object({
@@ -554,7 +558,7 @@ export async function atender(req: Request, base = URL_SB, chave = ANON): Promis
   if (!u.ok) return nega("sessão vencida ou inválida");
   const user = await u.json();
   const db = bancoDe(token, base, chave);
-  const [eu] = await db(`colaboradores?select=id,nome,ativo&auth_id=eq.${user.id}`).catch(() => []);
+  const [eu] = await db(`colaboradores?select=id,nome,ativo,papel&auth_id=eq.${user.id}`).catch(() => []);
   if (!eu || eu.ativo === false) return json({ error: "forbidden", error_description: "só colaborador ativo do escritório" }, 403, cors);
   const resp = await createMcpHandler(() => criarServidor(db, eu)).fetch(req);
   const h = new Headers(resp.headers); for (const [k, v] of Object.entries(cors)) h.set(k, v);
