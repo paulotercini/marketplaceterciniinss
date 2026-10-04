@@ -18,6 +18,12 @@ t.test("telefone: formatos diferentes, mesma pessoa", () => {
   a.equal(N.jidParaFone("5516999990000:12@s.whatsapp.net"), "5516999990000");
 });
 
+t.test("contato com id de privacidade (@lid): vale o número de verdade", () => {
+  a.equal(N.foneDaMensagem(msg({ conversation: "oi" }, { key: { remoteJid: "119928724144327@lid", senderPn: "5516999990000@s.whatsapp.net", id: "WA2" } })), "5516999990000");
+  a.equal(N.foneDaMensagem(msg({ conversation: "oi" })), "5516999990000");
+  a.equal(N.foneDaMensagem(msg({ conversation: "oi" }, { key: { remoteJid: "119928724144327@lid", id: "WA3" } })), "119928724144327");
+});
+
 t.test("texto simples e texto com citação", () => {
   a.equal(N.textoDaMensagem(msg({ conversation: "Doutor, saiu a perícia?" })),
           "Doutor, saiu a perícia?");
