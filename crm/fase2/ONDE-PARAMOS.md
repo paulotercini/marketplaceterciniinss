@@ -1,5 +1,9 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## Assistente Claude e triagem matinal (04.10.2026)
+
+O colaborador "Claude" (papel assistente_ia, login paulotercini+claude@hotmail.com, ligado pelo gatilho ligar_colaborador) é a conta das rotinas. No conector ele não conclui, não reagenda e não altera o caso. O Claude.ai não aceita dois conectores com o mesmo endereço; o do assistente usa .../functions/v1/mcp-crm/assistente, a mesma função, que anuncia o próprio endereço como recurso (RFC 9728). O Supabase prende o pedido OAuth à primeira conta que o consulta: a página de consentimento pergunta "Com qual conta?" antes de consultar. Tarefa agendada "Triagem matinal do CRM" (trig_01LN6YaRUGeZggnd1QEmgybA), 4h45 de segunda a sexta, usa só as ferramentas CRM_Tercini_assistente, com trava de identidade. Rodada de teste de 04.10 aprovada na trava; sem movimentos no último dia, nada gravado.
+
 ## F161 · ✦ Claude no caso (04.10.2026, versão 10.66)
 
 Botão "✦ Claude" no cabeçalho de cada caso (`linhaCaso`), com cinco ações (`CLAUDE_ACOES`): situação do caso, mensagem ao cliente, ler a última decisão e propor o resultado, próximas providências e registrar atendimento. Cada uma abre `https://claude.ai/new?q=` ou `claude://claude.ai/new?q=` (escolha guardada em `crm_claude_onde`) com o pedido pré-preenchido, que o colaborador revisa e envia. O link leva só `caso_id` e `cliente_id`; nome, CPF e texto do cliente nunca passam por endereço. O Claude busca o resto pelo conector `mcp-crm`. A ajuda do menu mostra o endereço do conector para a primeira instalação. Prova `testes/cadastro/claude161.js` (8/8). Na suíte, 4 provas (cnj71, extracoes, paineis, planejado124) já falhavam na main antes desta versão, por data.
