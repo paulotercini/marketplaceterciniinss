@@ -1,5 +1,9 @@
 # Onde paramos — 26.09.2026, versão 10.39
 
+## F161 · ✦ Claude no caso (04.10.2026, versão 10.66)
+
+Botão "✦ Claude" no cabeçalho de cada caso (`linhaCaso`), com cinco ações (`CLAUDE_ACOES`): situação do caso, mensagem ao cliente, ler a última decisão e propor o resultado, próximas providências e registrar atendimento. Cada uma abre `https://claude.ai/new?q=` ou `claude://claude.ai/new?q=` (escolha guardada em `crm_claude_onde`) com o pedido pré-preenchido, que o colaborador revisa e envia. O link leva só `caso_id` e `cliente_id`; nome, CPF e texto do cliente nunca passam por endereço. O Claude busca o resto pelo conector `mcp-crm`. A ajuda do menu mostra o endereço do conector para a primeira instalação. Prova `testes/cadastro/claude161.js` (8/8). Na suíte, 4 provas (cnj71, extracoes, paineis, planejado124) já falhavam na main antes desta versão, por data.
+
 ## MCP do CRM · etapas 3, 4 e 5 (04.10.2026)
 
 Etapa 3, fechar o ciclo: `tarefas_caso` (lê), `concluir_tarefa` (como o ✔ do CRM: concluida_em, anotação "✔ …" respondendo ao pedido, protocolo de 6+ dígitos vai para casos.protocolos), `reagendar_tarefa` (anota data antiga, nova e motivo) e `atualizar_caso` (etapa, resultado, decisao_em, exigência, DER, DIB, DCB, NB; grava anotação "✎ Caso atualizado. campo: antes → depois", que serve de desfazer). A etapa é conferida contra `ETAPAS`, espelho de `ETAPAS_POR_FASE`. Fase, prazo fatal e encerramento ficam fora, porque no CRM movem a lista do To Do (F64) e lançam honorários; se a tarefa concluída carregava o carimbo [PRAZO], o conector avisa que o prazo fatal segue no caso. `casos_com_decisao_sem_resultado` lista casos com "deferid/concedid/acordo homologado" na linha do tempo e resultado vazio (paginado de mil em mil, o teto do PostgREST), para preencher com confirmação. A agenda passou a devolver o `tarefa_id`.
