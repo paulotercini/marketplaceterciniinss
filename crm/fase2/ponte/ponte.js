@@ -307,8 +307,16 @@ async function recuperarMidias(s = sock) {
   log(`recuperar mídia: fim — ${recuperadas - antes} mídia(s) recuperada(s)`);
 }
 async function importarHistorico(chats, messages, baixar) {
-  const clientes = await sb("/rest/v1/clientes?select=telefone&telefone=not.is.null");
-  const chaves = new Set(clientes.map(c => N.chaveFone(c.telefone)).filter(k => k.length === 8));
+  // o principal e os da lista da ficha (o da filha, o segundo WhatsApp)
+  // o PostgREST entrega no máximo 1000 linhas por vez: vem em páginas
+  const clientes = [];
+  for (let ini = 0; ; ini += 1000) {
+    const lote = await sb(`/rest/v1/clientes?select=telefone,telefones&order=id&offset=${ini}&limit=1000`);
+    clientes.push(...lote);
+    if (lote.length < 1000) break;
+  }
+  const nums = clientes.flatMap(c => [c.telefone, ...(Array.isArray(c.telefones) ? c.telefones.map(t => t && t.numero) : [])]);
+  const chaves = new Set(nums.map(N.chaveFone).filter(k => k.length === 8));
   const grupos = N.agruparHistorico(chats, messages, chaves);
   if (!grupos.size) return;
   log(`histórico: ${messages.length} mensagem(ns) no lote, ${grupos.size} conversa(s) de cliente`);
