@@ -33,7 +33,9 @@ base-conhecimento-inss/
 
 ## Servidores MCP
 
-O plugin sobe três servidores locais declarados em `.mcp.json`. O `normas` responde pela legislação, o `trf3` pela jurisprudência do TRF3 e das Turmas Recursais da 3ª Região, e o `acervo` pelo que o próprio escritório já escreveu. TNU e CRPS ficam no servidor `iurisprudencia`, externo ao plugin. Os quatro localizam e não conferem. Nenhum autoriza a marca [CONFERIDO], que só nasce da fonte oficial aberta no navegador. A regra de uso está no bloco "MCPs da casa" de cada skill e de cada agente. Requisito, `uv` no PATH, sem o qual nenhum dos três sobe.
+O plugin sobe três servidores locais e um remoto, todos declarados em `.mcp.json`. O `normas` responde pela legislação, o `trf3` pela jurisprudência do TRF3 e das Turmas Recursais da 3ª Região, e o `acervo` pelo que o próprio escritório já escreveu. TNU e CRPS ficam no servidor `iurisprudencia`, externo ao plugin. Os quatro localizam e não conferem. Nenhum autoriza a marca [CONFERIDO], que só nasce da fonte oficial aberta no navegador. A regra de uso está no bloco "MCPs da casa" de cada skill e de cada agente. Requisito, `uv` no PATH, sem o qual nenhum dos três sobe.
+
+O quarto conector do plugin é o `crm`, o CRM Tercini, servidor remoto na Edge Function `mcp-crm` do Supabase, também declarado em `.mcp.json`. No primeiro uso o Claude pede login, e só colaborador ativo do escritório passa. Seis ferramentas leem (`buscar_clientes`, `ficha_cliente`, `anotacoes_caso`, `agenda`, `novidades`, `equipe`) e duas escrevem (`registrar_anotacao`, `criar_tarefa`). A escrita só acrescenta, sai com o autor logado e aparece na linha do tempo do CRM como feita "via assistente". Quem já ligou o CRM Tercini como conector do claude.ai vê as mesmas ferramentas em dobro e pode manter um só dos dois.
 
 ## Governança editorial
 

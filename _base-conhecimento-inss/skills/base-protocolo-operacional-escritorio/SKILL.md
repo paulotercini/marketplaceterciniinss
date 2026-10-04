@@ -145,6 +145,8 @@ Jurisprudência. Tema, súmula e enunciado se conferem primeiro no catálogo `ba
 
 Acervo do escritório. O que o escritório já sustentou se lê no MCP `acervo`, por `buscar_tese_acervo`, `obter_trecho_acervo` e `precedentes_do_acervo`, cujo campo `corte` evita o homônimo. Detalhe em `base-acervo-escritorio`.
 
+CRM do escritório. A ficha, as anotações e a agenda de cada caso se leem no MCP `crm`, o CRM Tercini, por `buscar_clientes`, `ficha_cliente`, `anotacoes_caso`, `agenda`, `novidades` e `equipe`. As ferramentas `registrar_anotacao` e `criar_tarefa` gravam em nome do colaborador logado, só acrescentam e só se usam quando o titular pedir o registro. Dado de cliente lido no CRM não sai para o repositório nem para skill.
+
 **Vedação.** O acervo existe para o advogado LER o que já sustentou. Reaproveitamento automático de texto de um cliente em peça de outro é VEDADO. O trecho é ponto de partida para redação nova, conferida contra os autos e contra a legislação vigente na data. O trecho é anonimizado, e o arquivo de origem não é.
 
 Protocolo completo, coberturas e limites medidos em `base-legislacao-fontes-primarias`, seção "Protocolo de pesquisa obrigatória nas MCPs".

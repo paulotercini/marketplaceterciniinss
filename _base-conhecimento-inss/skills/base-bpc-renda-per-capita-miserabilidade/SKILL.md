@@ -29,7 +29,7 @@ Decreto 6.214/2007, art. 4º, §2º (revogado). Antes do Decreto 12.534/2025, Bo
 
 Decreto 12.534/2025. Passou a incluir o Bolsa Família na renda. Retrocesso social em discussão.
 
-Portaria 34/2025 MDS, Anexo I. Regulamenta deduções de despesas de saúde.
+Portaria Conjunta MDS/INSS 34/2025, art. 8º, §§ 4º a 7º, e Anexo I. Regulamenta as deduções de despesas de saúde. Os valores do Anexo I vigoram desde 30/09/2026 na redação da Portaria Conjunta MDS/INSS 45/2026 [CONFERIDO, DOU, 04/10/2026].
 
 CF/88, art. 203, V. Garantia constitucional do BPC à pessoa com deficiência e ao idoso sem meios de prover a própria manutenção.
 
@@ -67,7 +67,7 @@ Tema 27 STF abre a flexibilização em caso concreto. REsp 1.112.557 STJ autoriz
 
 ## Deduções de despesas de saúde
 
-Portaria 34/2025 MDS, Anexo I. Medicamentos, fraldas, suplementos, órteses, próteses. Provas por nota fiscal e receituário. Impacto direto na renda per capita.
+Portaria Conjunta MDS/INSS 34/2025, art. 8º, §4º. Deduzem-se exclusivamente os gastos com tratamentos de saúde, médicos, fraldas, alimentos especiais e medicamentos não fornecidos pelo SUS, e com o Centro-dia não prestado pelo SUAS, de natureza contínua [CONFERIDO, DOU, 04/10/2026]. Órtese, prótese e suplemento não estão nominados, e enquadrá-los como tratamento de saúde é tese. Cada categoria se deduz uma vez pelo valor médio do Anexo I, na redação da Portaria Conjunta MDS/INSS 45/2026, e o gasto efetivo maior se prova pelos recibos dos doze meses anteriores ao requerimento (§§ 6º e 7º). Ver `base-bpc-comprometimento-renda`.
 
 ## Regra e estratégia pró-segurado
 

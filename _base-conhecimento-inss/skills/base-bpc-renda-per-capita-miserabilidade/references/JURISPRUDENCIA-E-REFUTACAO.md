@@ -126,7 +126,7 @@ Refutação. Arguição incidental de inconstitucionalidade do Decreto 12.534/20
 
 Argumento adversário. Despesas de saúde não foram consideradas.
 
-Refutação. Portaria 34/2025 MDS, Anexo I. Medicamentos, fraldas, alimentação especial são deduções expressas. Juntar notas fiscais e receituários.
+Refutação. Portaria Conjunta MDS/INSS 34/2025, art. 8º, §§ 4º a 7º, e Anexo I, na redação da Portaria Conjunta MDS/INSS 45/2026. Medicamentos, fraldas e alimentação especial são deduções expressas, e o gasto efetivo acima do valor médio se prova com os recibos dos doze meses anteriores ao requerimento (§7º). Juntar notas fiscais e receituários.
 
 ## 3. Estratégia integrada
 

@@ -83,12 +83,12 @@ Para CADA categoria com despesa, juntar.
 ## BLOCO D - CÁLCULO DA RENDA APÓS DEDUÇÕES
 
 - [ ] Somar despesas mensais comprovadas por categoria.
-- [ ] Comparar com valores padrão da tabela do INSS (jun/2026).
+- [ ] Comparar com os valores padrão do Anexo I da Portaria Conjunta MDS/INSS 34/2025, na redação da Portaria Conjunta MDS/INSS 45/2026, vigente desde 30/09/2026.
   - Medicamentos. R$ 56,00.
   - Consultas e tratamentos. R$ 110,00.
   - Fraldas. R$ 120,00.
   - Alimentação Especial. R$ 147,00.
-  - Proteção Especial - SUAS. R$ 40,00.
+  - Centro-dia (SUAS). R$ 40,00.
 - [ ] Aplicar o MAIOR valor (efetivo OU padrão).
 - [ ] Subtrair total das deduções da renda familiar bruta.
 - [ ] Recalcular renda per capita APÓS deduções.
