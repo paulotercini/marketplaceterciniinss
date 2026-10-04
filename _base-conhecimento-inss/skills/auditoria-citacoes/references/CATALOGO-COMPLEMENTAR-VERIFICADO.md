@@ -212,7 +212,7 @@ Quinto, o ID do item segue a normalização do script (exemplos, `TEMA 995/STJ`,
 - Conferido em. 25/07/2026
 
 ### TEMA 905/STJ
-- Situação. vigente (para o período anterior à EC 113/2021, que unificou juros e correção pela SELIC a partir de 09/12/2021)
+- Situação. vigente até 11/2021; de 12/2021 a 08/2025 vale a SELIC do art. 3º da EC 113/2021 (Tema 1419/STF) e, a partir de 09/2025, o regime do Manual CJF 2026 (Onda 173)
 - Tese literal. "As condenações impostas à Fazenda Pública de natureza previdenciária sujeitam-se à incidência do INPC, para fins de correção monetária, no que se refere ao período posterior à vigência da Lei 11.430/2006, que incluiu o art. 41-A na Lei 8.213/91. Quanto aos juros de mora, incidem segundo a remuneração oficial da caderneta de poupança (art. 1º-F da Lei 9.494/97, com redação dada pela Lei n. 11.960/2009)." (item 3.2 da tese)
 - Órgão e leading case. STJ, Primeira Seção, REsp 1.495.146/MG, Rel. Min. Mauro Campbell Marques, j. 22/02/2018, DJe 02/03/2018.
 - Fonte oficial. https://processo.stj.jus.br/SCON/recrep/toc.jsp?LREF=REPETITIVOS&tema=%27905%27
@@ -266,6 +266,41 @@ Quinto, o ID do item segue a normalização do script (exemplos, `TEMA 995/STJ`,
 - Órgão e leading case. STF, Plenário, Rel. Min. Ayres Britto, Red. p/ acórdão Min. Ricardo Lewandowski, j. 29/10/2008, DJE 27/03/2009, republicado em 29/10/2009 após embargos de declaração (erro material na ementa). Objeto, art. 1º da Lei 11.301/2006, que acrescentou o § 2º ao art. 67 da Lei 9.394/1996 (auditoria 03/10/2026).
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=2399227 (processo) e jurisprudencia.stf.jus.br, pesquisa "ADI 3772" ordenada por data de julgamento (ementa). O endereço antes registrado, incidente 2541930, é o da ADI 3931 (auditoria 03/10/2026).
 - Conferido em. 03/10/2026
+
+### SUMULA 501/STF
+- Situação. vigente (aprovada; conferida na pesquisa de súmulas do STF em 04/10/2026)
+- Tese literal. "Compete à Justiça ordinária estadual o processo e o julgamento, em ambas as instâncias, das causas de acidente do trabalho, ainda que promovidas contra a União, suas autarquias, emprêsas públicas ou sociedades de economia mista."
+- Órgão e leading case. STF, aprovação em 03/12/1969.
+- Fonte oficial. https://jurisprudencia.stf.jus.br/pages/search?base=sumulas (pesquisa "acidente do trabalho" "justiça ordinária estadual")
+- Conferido em. 04/10/2026
+
+### SUMULA 37/TNU
+- Situação. vigente, TESE ADVERSA (não se cita a favor do segurado)
+- Tese literal. "A pensão por morte, devida ao filho até os 21 anos de idade, não se prorroga pela pendência do curso universitário."
+- Órgão e leading case. TNU, DJ de 20/06/2007, p. 798.
+- Fonte oficial. https://www2.cjf.jus.br/phpdoc/virtus/listaSumulas.php
+- Conferido em. 04/10/2026
+
+### ADI 4296
+- Situação. julgada parcialmente procedente; trânsito em julgado certificado em 20/10/2021
+- Tese literal. Decisão de julgamento: "julgou parcialmente procedente o pedido para declarar a inconstitucionalidade do art. 7º, § 2º, e do art. 22, § 2º, da Lei nº 12.016/2009, nos termos do voto do Ministro Alexandre de Moraes, Redator para o acórdão".
+- Órgão e leading case. STF, Plenário, Rel. Min. Marco Aurélio, redator do acórdão Min. Alexandre de Moraes, j. 09/06/2021, acórdão publicado no DJe de 11/10/2021.
+- Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=3755382
+- Conferido em. 04/10/2026
+
+### TEMA 1419/STF
+- Situação. trânsito em julgado em 16/09/2026; embargos rejeitados, sem modulação
+- Tese literal. "A taxa SELIC, prevista no art. 3º da EC 113/2021, é aplicável para a atualização de valores em qualquer discussão ou condenação da Fazenda Pública, inclusive na cobrança judicial de créditos tributários." Embargos de declaração, sessão virtual de 8 a 15/05/2026: "rejeitou os embargos de declaração e o pedido de modulação de efeitos da decisão embargada; e (ii) acolheu a argumentação do parecer da Procuradoria-Geral da República, apenas para esclarecer que a tese jurídica firmada no Tema 1.419 tem aplicação restrita ao período de vigência da redação original do art. 3° da Emenda Constitucional nº 113/2021, não havendo projeção automática de seus efeitos ao novo regime instituído pelo art. 3° da Emenda Constitucional 136/2025".
+- Órgão e leading case. STF, Plenário, ARE 1.557.312/SP, RG reconhecida em 30/08/2025.
+- Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=1419
+- Conferido em. 04/10/2026
+
+### TEMA 1190/STJ
+- Situação. acórdão publicado em 01/07/2024, RE pendente (Tema 1442/STF), com modulação; TESE ADVERSA ao advogado do exequente
+- Tese literal. "Na ausência de impugnação à pretensão executória, não são devidos honorários advocatícios sucumbenciais em cumprimento de sentença contra a Fazenda Pública, ainda que o crédito esteja submetido a pagamento por meio de Requisição de Pequeno Valor - RPV." Modulação: "a tese repetitiva deve ser aplicada apenas nos cumprimentos de sentença iniciados após a publicação deste acórdão."
+- Órgão e leading case. STJ, Primeira Seção, REsp 2.029.636/SP, Rel. Min. Maria Thereza de Assis Moura, j. 20/06/2024.
+- Fonte oficial. https://processo.stj.jus.br/repetitivos/temas_repetitivos/pesquisa.jsp?novaConsulta=true&tipo_pesquisa=T&cod_tema_inicial=1190&cod_tema_final=1190
+- Conferido em. 04/10/2026
 
 ## Temas de repercussão geral do STF conferidos na página oficial do tema (rodada 2, 25/07/2026)
 
@@ -332,7 +367,7 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Conferido em. 25/07/2026
 
 ### TEMA 1271/STF
-- Situação. MÉRITO PENDENTE. RG reconhecida em 18/09/2023 (acórdão publicado 22/09/2023). SUSPENSÃO NACIONAL desde 21/01/2025. Parecer da PGR pelo não provimento em 15/04/2026; conclusos ao relator em 16/04/2026. RE 1.442.021, Rel. Min. André Mendonça.
+- Situação. MÉRITO PENDENTE. RG reconhecida em 18/09/2023 (acórdão publicado 22/09/2023). SUSPENSÃO NACIONAL desde 21/01/2025. Parecer da PGR pelo não provimento em 15/04/2026; conclusos ao relator em 16/04/2026. RE 1.442.021, Rel. Min. André Mendonça. O recorrente é o INSS (aba Partes, conferida em 04/10/2026), de modo que o parecer pelo não provimento é favorável ao dependente.
 - Tese literal. Título oficial. "Exclusão da criança e do adolescente sob guarda do rol de beneficiários, na condição de dependentes, do segurado do Regime Geral de Previdência Social, implementada pelo art. 23 da Emenda Constitucional nº 103/2019."
 - Fonte oficial. https://portal.stf.jus.br/jurisprudenciaRepercussao/verAndamentoProcesso.asp?incidente=6661561&numeroProcesso=1442021&classeProcesso=RE&numeroTema=1271
 - Conferido em. 25/07/2026
@@ -984,6 +1019,8 @@ Homônimos do STF a evitar (auditoria 03/10/2026). Ficam sem título ### pela me
 - TEMA 20/STF. RE 565.160, mérito em 29/03/2017, trânsito em julgado em 31/08/2017. Assunto real, alcance de folha de salários: "A contribuição social a cargo do empregador incide sobre ganhos habituais do empregado, quer anteriores ou posteriores à Emenda Constitucional nº 20/1998." Não usar para a incidência da contribuição sobre o 13º salário, que é da Súmula 688/STF. Fonte oficial, https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=20.
 - TEMA 1054/STF. RE 1.182.189, Rel. Min. Edson Fachin, mérito em 25/04/2023 (Plenário Virtual), trânsito em julgado em 05/08/2023. Assunto real: "O Conselho Federal e os Conselhos Seccionais da Ordem dos Advogados do Brasil não estão obrigados a prestar contas ao Tribunal de Contas da União nem a qualquer outra entidade externa." Não usar para tempo no RPPS e direito adquirido. Fonte oficial, https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=1054.
 - TEMA 161/STF. RE 598.099/MS, Rel. Min. Gilmar Mendes, mérito em 10/08/2011, trânsito em julgado em 01/03/2013. Assunto real: "O candidato aprovado em concurso público dentro do número de vagas previsto no edital possui direito subjetivo à nomeação." Não usar para licença adotante ou salário-maternidade, matéria do Tema 782/STF (RE 778.889). Fonte oficial, https://portal.stf.jus.br/jurisprudenciaRepercussao/tema.asp?num=161.
+- SUMULA VINCULANTE 9. Cancelada; tratava do art. 127 da Lei 7.210/1984 (LEP), remição e falta grave. Lida no portal do STF em 04/10/2026 (Onda 173). Não usar em matéria previdenciária; os Modelos Ouro a citavam na aposentadoria especial. Fonte oficial, https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=26&sumula=1212.
+- RE 1.054.232. Não localizado na pesquisa processual do portal do STF em 04/10/2026 (Onda 173). A base o citava na revisão do teto; não citar.
 - ADI 4827. Lei 7.372/2012 de Alagoas, efetivo da Polícia Militar; procedente em parte em 27/09/2019; Rel. Min. Alexandre de Moraes. Não usar para aposentadoria especial; a base a citava em duplicidade com o Tema 709/STF. Fonte oficial, https://portal.stf.jus.br/processos/detalhe.asp?incidente=4281129.
 - ADI 5751. Taxa judiciária de Sergipe, ação do Conselho Federal da OAB; improcedente em 21/06/2021; Rel. Min. Luís Roberto Barroso. Tese, em síntese do relatório C1B: o valor da causa pode ser base de cálculo se a lei fixar limites máximos. Não usar para BPC. Fonte oficial, https://portal.stf.jus.br/processos/detalhe.asp?incidente=5231964.
 - ADI 5760. Art. 16-A da Lei 7.573/1986, que excluía os marítimos embarcados do cálculo da cota de pessoas com deficiência do art. 93 da Lei 8.213/91; procedente, por unanimidade, em 13/09/2019; Rel. Min. Alexandre de Moraes. Não usar para aposentadoria da pessoa com deficiência. Fonte oficial, https://portal.stf.jus.br/processos/detalhe.asp?incidente=5247635.

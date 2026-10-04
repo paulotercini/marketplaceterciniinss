@@ -29,7 +29,7 @@ Tema 1050 STJ. Proveito econômico em honorários.
 
 ### Tema 810 STF
 
-Correção monetária pelo IPCA-E [NÃO CONFIRMADO] e juros pela remuneração da caderneta de poupança, sem modulação, que os embargos de declaração no RE 870.947 rejeitaram em 03/10/2019 [CONFERIDO] (https://portal.stf.jus.br/processos/abaDecisoes.asp?incidente=4723934). No benefício previdenciário, a correção segue o INPC do Tema 905/STJ [CONFERIDO]. SELIC unificada a partir de 09/12/2021 (auditoria 03/10/2026).
+Correção monetária pelo IPCA-E [NÃO CONFIRMADO] e juros pela remuneração da caderneta de poupança, sem modulação, que os embargos de declaração no RE 870.947 rejeitaram em 03/10/2019 [CONFERIDO] (https://portal.stf.jus.br/processos/abaDecisoes.asp?incidente=4723934). No benefício previdenciário, a correção segue o INPC do Tema 905/STJ [CONFERIDO]. SELIC de 12/2021 a 08/2025 (art. 3º da EC 113/2021; Tema 1419/STF [CONFERIDO]) e, a partir de 09/2025, INPC com juros pela taxa legal (Manual CJF 2026), conferido na Onda 173.
 
 Fonte oficial em https://portal.stf.jus.br
 
@@ -123,7 +123,7 @@ Quinto, impugnação do INSS exige resposta técnica pelo segurado.
 
 ## Manual de Cálculos CJF 2026 e EC 136/2025 (Onda 76)
 
-A edição 2026 do Manual de Cálculos da Justiça Federal (Resolução CJF 990, de 03/07/2026) incorporou o encerramento da SELIC do art. 3º da EC 113/2021 na fase pré-requisitório a partir de setembro de 2025, por força da EC 136/2025. O Tema 1419 STF (ARE 1.557.312/SP) aplica a SELIC da EC 113/2021 a toda condenação da Fazenda, e os embargos de 05/2026 negaram modulação [NÃO CONFIRMADO] (auditoria 03/10/2026). Para benefícios previdenciários, de set/2025 em diante, correção pelo INPC e juros pela taxa legal (SELIC com dedução do INPC, art. 406 do CC na redação da Lei 14.905/2024). O Manual também trouxe diretrizes novas para as planilhas de cálculo destinadas à expedição de requisições, que devem apresentar todos os dados necessários ao ofício requisitório (Nota 5 do item 4.3.1.1). Quadros completos, consolidação de dez/2021 e tabela da taxa legal em `base-juros-correcao-monetaria/references/MANUAL-CJF-2026-QUADROS.md`.
+A edição 2026 do Manual de Cálculos da Justiça Federal (Resolução CJF 990, de 03/07/2026) incorporou o encerramento da SELIC do art. 3º da EC 113/2021 na fase pré-requisitório a partir de setembro de 2025, por força da EC 136/2025. O Tema 1419 STF (ARE 1.557.312/SP) aplica a SELIC da EC 113/2021 a toda condenação da Fazenda, e os embargos de 05/2026 negaram modulação e restringiram a tese à redação original do art. 3º [CONFERIDO, portal do STF, 04/10/2026]. Para benefícios previdenciários, de set/2025 em diante, correção pelo INPC e juros pela taxa legal (SELIC com dedução do INPC, art. 406 do CC na redação da Lei 14.905/2024). O Manual também trouxe diretrizes novas para as planilhas de cálculo destinadas à expedição de requisições, que devem apresentar todos os dados necessários ao ofício requisitório (Nota 5 do item 4.3.1.1). Quadros completos, consolidação de dez/2021 e tabela da taxa legal em `base-juros-correcao-monetaria/references/MANUAL-CJF-2026-QUADROS.md`.
 
 ## Hub de portarias administrativas
 
