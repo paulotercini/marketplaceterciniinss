@@ -1,4 +1,5 @@
-// WHATSAPP NA FICHA. A aba Mensagens (e o Cadastro, junto dos telefones) mostra a última mensagem da conversa da ponte e
+// WHATSAPP NA FICHA. O botão ao lado do nome abre as mensagens só para ler,
+// com o áudio transcrito; a aba Mensagens (e o Cadastro) mostra a última mensagem da conversa da ponte e
 // leva direto a ela; conversa sem cliente ganha "vincular a cliente", que liga
 // a conversa à ficha escolhida. Dados fictícios.
 const { chromium } = require("playwright");
@@ -13,6 +14,12 @@ const ZAPS = [
     status: "aberta", nao_lidas: 2, ultima_em: "2026-10-01T13:00:00Z", ultimo_texto: "Chegou carta do INSS", bot_ativo: true },
   { id: ZAP_SOLTA, telefone: "5511988887777", nome_perfil: "Filha da cliente", cliente_id: null, lead_id: null, atendente_id: null,
     status: "aberta", nao_lidas: 0, ultima_em: "2026-10-02T13:00:00Z", ultimo_texto: "Sou a filha dela", bot_ativo: true },
+];
+const MSGS = [
+  { id: "m1", direcao: "entrada", tipo: "texto", texto: "Chegou carta do INSS", status: "entregue", criado_em: "2026-10-01T13:00:00Z" },
+  { id: "m2", direcao: "entrada", tipo: "audio", texto: "marcando a perícia para o dia 20", midia_url: "zap/x/a1.ogg", status: "entregue", criado_em: "2026-10-01T13:01:00Z" },
+  { id: "m3", direcao: "entrada", tipo: "audio", texto: null, midia_url: "zap/x/a2.ogg", status: "entregue", criado_em: "2026-10-01T13:02:00Z" },
+  { id: "m4", direcao: "saida", autor_id: null, por_bot: true, tipo: "texto", texto: "Recebemos sua mensagem", status: "enviada", criado_em: "2026-10-01T13:03:00Z" },
 ];
 
 (async () => {
@@ -41,7 +48,7 @@ const ZAPS = [
     }
     if (m !== "GET") return rota.fulfill({ status: 204, body: "" });
     const t = (u.match(/\/rest\/v1\/([a-z_]+)/) || [])[1];
-    let corpo = t === "zap_conversas" ? ZAPS : t === "zap_mensagens" ? [] : (FIX[t] || []);
+    let corpo = t === "zap_conversas" ? ZAPS : t === "zap_mensagens" ? MSGS : (FIX[t] || []);
     const f = u.match(/cliente_id=eq\.([0-9a-f-]+)/);
     if (f) corpo = corpo.filter(x => x.cliente_id === f[1]);
     return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(corpo) });
@@ -55,18 +62,35 @@ const ZAPS = [
   await p.waitForSelector("#app.logado");
   await p.waitForFunction(() => typeof D !== "undefined" && D.cliPorId && D.cliPorId.size > 0);
 
-  // a ficha mostra a conversa da ponte e leva a ela
+  // o botão ao lado do nome abre as mensagens, só para ler, com o áudio transcrito
   await p.evaluate(cli => abrirFicha(cli), CLI_CHEIO);
+  await p.waitForSelector('.det-topo button[onclick^="verZapCliente"]');
+  conf("o topo da ficha tem o botão 💬 WhatsApp com as novas", /WhatsApp.*2 novas/.test(await p.textContent('.det-topo button[onclick^="verZapCliente"]')));
+  await p.click('.det-topo button[onclick^="verZapCliente"]');
+  await p.waitForSelector("#modal .zap-msgs .zap-b");
+  const jan = await p.textContent("#modal .zap-msgs");
+  conf("a janela traz texto, áudio transcrito e áudio ainda transcrevendo", jan.includes("Chegou carta do INSS")
+    && jan.includes("🎤 marcando a perícia para o dia 20") && jan.includes("transcrevendo…") && jan.includes("robô"));
+  conf("a janela é só leitura: sem caixa de resposta", !(await p.$("#modal textarea")) && !(await p.$("#modal #zap-txt")));
+  await p.waitForFunction(() => !(D.zapFicha || []).some(z => z.nao_lidas));
+  conf("abrir zera as novas", patches.some(x => /zap_conversas\?id=in\./.test(x.u) && x.b.nao_lidas === 0));
+  await p.evaluate(() => fecharCaixa());
+
+  // a aba Mensagens também mostra a última e abre a mesma janela
   await p.waitForSelector('button.mt[data-vv="0"]');
   await p.click('button.mt[data-vv="0"]');
   await p.evaluate(() => irSubCad("mensagens"));
   await p.waitForSelector('.painel[data-p="0"].ativo .zap-ping');
-  const ping = await p.textContent('.painel[data-p="0"].ativo .zap-ping');
-  conf("a ficha mostra a última mensagem do WhatsApp e as não lidas", ping.includes("Chegou carta do INSS") && ping.includes("2 não lidas"));
+  conf("a aba Mensagens mostra a última mensagem", (await p.textContent('.painel[data-p="0"].ativo .zap-ping')).includes("Chegou carta do INSS"));
   await p.click('.painel[data-p="0"].ativo .zap-ping button');
-  await p.waitForSelector(".zap-topo");
-  conf("“abrir conversa” leva à tela do WhatsApp com a conversa aberta",
-    await p.evaluate(id => visao === "whatsapp" && zapAberta === id, ZAP_CLI));
+  await p.waitForSelector("#modal .zap-msgs .zap-b");
+  conf("“ler mensagens” abre a janela de leitura", (await p.textContent("#modal h3")).includes("WhatsApp"));
+  await p.evaluate(() => fecharCaixa());
+
+  // na tela do WhatsApp, a conversa de cliente mostra “abrir ficha”
+  await p.evaluate(() => irPara("whatsapp"));
+  await p.waitForFunction(() => zapConvs.length);
+  await p.evaluate(id => abrirConversa(id), ZAP_CLI);
   conf("conversa de cliente mostra “abrir ficha” e não “vincular”",
     (await p.textContent(".zap-topo")).includes("abrir ficha") && !(await p.textContent(".zap-topo")).includes("vincular"));
 
@@ -81,7 +105,8 @@ const ZAPS = [
   await p.waitForFunction(id => (zapConvs.find(c => c.id === id) || {}).cliente_id, ZAP_SOLTA);
   const pt = patches.find(x => x.u.includes(`zap_conversas?id=eq.${ZAP_SOLTA}`));
   conf("vincular grava o cliente na conversa e limpa o prospecto", pt && pt.b.cliente_id === CLI_CHEIO && pt.b.lead_id === null);
-  conf("depois de vincular o cabeçalho passa a “abrir ficha”", (await p.textContent(".zap-topo")).includes("abrir ficha"));
+  conf("depois de vincular o cabeçalho passa a “abrir ficha”", await p.waitForFunction(() =>
+    (document.querySelector(".zap-topo")?.textContent || "").includes("abrir ficha"), null, { timeout: 5000 }).then(() => true, () => false));
 
   for (const [n, v] of ok) console.log(`${v ? "PASSOU" : "FALHOU"}  ${n}`);
   console.log(`erros de console: ${erros.length ? erros.join(" | ") : "nenhum"}`);

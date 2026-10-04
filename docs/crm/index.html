@@ -10088,8 +10088,62 @@ async function virarAndamento(msgId){
   document.querySelectorAll("[data-zk]").forEach(b=>b.onclick=()=>gravar(b.dataset.zk));
 }
 
-// Da ficha para a conversa: renderWhats recarrega e abre a zapAberta
-function abrirZapDaFicha(id){ zapAberta = id; irPara("whatsapp"); }
+// ── As mensagens do cliente, só para ler, a partir da ficha ───────────────
+// Quem abre a ficha não precisa ir ao WhatsApp: o botão ao lado do nome abre
+// tudo o que o cliente mandou e o que o escritório respondeu, em ordem. Áudio
+// vem transcrito (crm/fase2/ponte/transcrever.py, Whisper nesta máquina);
+// enquanto a transcrição não chega, aparece "transcrevendo…".
+function botaoZapCliente(cliId){
+  const zs = D.zapFicha||[];
+  if(!zs.length) return "";
+  const n = zs.reduce((s,z)=>s+(z.nao_lidas||0),0);
+  return `<button class="btn-mini" onclick="verZapCliente('${cliId}')"
+    style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:500"
+    title="ler as mensagens de WhatsApp deste cliente">💬 WhatsApp${n?` <b>(${n} nova${n>1?"s":""})</b>`:""}</button>`;
+}
+async function verZapCliente(cliId){
+  const zs = D.zapFicha||[]; if(!zs.length) return;
+  const ids = zs.map(z=>z.id).join(",");
+  const ms = await todas("zap_mensagens",
+    `select=id,direcao,autor_id,por_bot,tipo,texto,midia_url,midia_nome,status,quando_wa,criado_em&conversa_id=in.(${ids})&direcao=neq.interna&status=neq.rascunho&order=seq.desc&limit=300`)
+    .catch(()=>null);
+  if(ms===null) return aviso("Não consegui carregar as mensagens");
+  ms.reverse();
+  let dia = "";
+  const linhas = ms.map(m=>{
+    const q = m.quando_wa||m.criado_em, d = fmtTS(q);
+    const sep = d!==dia ? (dia=d, `<div class="meio-sub" style="text-align:center;margin:10px 0 4px">${d}</div>`) : "";
+    const quem = m.direcao==="entrada" ? "" : m.por_bot&&!m.autor_id ? "robô" : (D.colPorId.get(m.autor_id)?.nome||"escritório");
+    let corpo;
+    if(m.tipo==="audio") corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url||"")}')">▶ ouvir</button> `
+      + (m.texto ? `<i>🎤 ${esc(m.texto)}</i>` : `<span class="meio-sub">🎤 transcrevendo…</span>`);
+    else if(m.midia_url) corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url)}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
+      + (m.texto?`<div>${esc(m.texto)}</div>`:"");
+    else corpo = esc(m.texto||`[${m.tipo}]`);
+    return sep + `<div class="zap-b ${m.direcao}" style="max-width:85%">
+      ${quem?`<div class="autor">${esc(quem)}</div>`:""}<div class="txt">${corpo}</div>
+      <div class="pe">${horaSP(q)}${m.status==="erro"?" · não enviou":""}</div></div>`;
+  });
+  const cli = D.cliPorId.get(cliId);
+  caixa(`<h3>💬 WhatsApp · ${esc(cli?.nome||"")}</h3>
+    <p class="meio-sub">Só leitura. ${zs.map(z=>esc(z.telefone||"")).join(" · ")}</p>
+    <div class="zap-msgs" style="max-height:65vh;overflow:auto;display:flex;flex-direction:column;gap:4px">
+      ${linhas.join("") || `<p class="meio-sub">Nenhuma mensagem ainda.</p>`}</div>`);
+  const caixaMsgs = document.querySelector("#modal .zap-msgs"); if(caixaMsgs) caixaMsgs.scrollTop = caixaMsgs.scrollHeight;
+  // abrir é ler: zera o "novas" do botão
+  const lidas = zs.filter(z=>z.nao_lidas);
+  if(lidas.length){
+    await api(`/rest/v1/zap_conversas?id=in.(${lidas.map(z=>z.id).join(",")})`,{method:"PATCH",
+      headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
+    lidas.forEach(z=>z.nao_lidas=0);
+  }
+}
+async function abrirArquivoZap(caminho){
+  if(!caminho) return;
+  const guia = window.open("","_blank");
+  try{ const u = await linkArquivo(caminho); if(guia) guia.location=u; else window.location=u; }
+  catch(e){ if(guia) guia.close(); aviso("Não consegui abrir o arquivo"); }
+}
 
 // Cliente que escreve de outro número (o da filha, o do vizinho) não casa pelo
 // telefone. Quem atende sabe quem é: liga a conversa à ficha na mão. Não mexe
@@ -11986,6 +12040,7 @@ function pintarFicha(){
       ${c.telefone?`<button class="btn-mini" onclick="abrirSmbot('${c.id}')"
         style="background:#EDF8F1;border-color:#BFE3CC;color:#128C4B;font-weight:500"
         title="abre o SMBot numa aba e copia o telefone do cliente — é só colar na busca do atendimento">💬 SMBot</button>`:""}
+      ${botaoZapCliente(cliId)}
       ${stCli}
       ${chipAgendaCliente(c)}
       <button class="fechar nao-cel" onclick="fecharFicha()">✕</button></div>
@@ -15005,7 +15060,7 @@ function ultimoZap(){
   if(p) return `<div class="zap-ping">💬 WhatsApp${p.ultima_em?` em ${fmtTS(p.ultima_em)} às ${horaSP(p.ultima_em)}`:""}`
     + (p.ultimo_texto?`: “${esc(p.ultimo_texto.slice(0,70))}${p.ultimo_texto.length>70?"…":""}”`:"")
     + (p.nao_lidas?` <span class="chip">${p.nao_lidas} não lida${p.nao_lidas>1?"s":""}</span>`:"")
-    + ` <button class="btn-mini" onclick="abrirZapDaFicha('${p.id}')">abrir conversa</button></div>`;
+    + ` <button class="btn-mini" onclick="verZapCliente(clienteAberto)">ler mensagens</button></div>`;
   const z=(D.convFicha||[])[0];
   if(!z) return "";
   const quando=`${fmtTS(z.criado_em)} às ${horaSP(z.criado_em)}`;
