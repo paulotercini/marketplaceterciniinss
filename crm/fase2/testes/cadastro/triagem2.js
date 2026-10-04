@@ -59,6 +59,12 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
     await p.evaluate(x => abrirFicha(x), cli);
     await p.waitForSelector('button.mt[data-vv="0"]');
     await p.click('button.mt[data-vv="0"]');
+    // F165 · a Triagem só aparece com atendimento em curso: abre-se um pelo
+    // + atendimento, como o colaborador faria
+    if (await p.$(".sub-menu .atend-novo")) {
+      await p.click(".sub-menu .atend-novo");
+      await p.waitForTimeout(400);
+    }
     await p.evaluate(() => irSubCad("triagem"));
     await p.waitForSelector(".tri-lista");
     await p.waitForTimeout(250);
@@ -171,6 +177,10 @@ FIX.casos[0] = { ...FIX.casos[0], beneficio: "" };
     escritos.some(x => x.t === "andamentos" && /triagem conferida/.test(x.corpo.texto || "")));
 
   // sem pendência → Anotações limpas
+  // o carregar() do encerramento repôs a fixtura e levou o pré-caso que só
+  // existia na memória; sem atendimento em curso a Triagem some (F165), então
+  // reabre-se um pelo + atendimento
+  await abrir(CLI_CHEIO);
   await p.evaluate(cli => { const c = D.cliPorId.get(cli);
     c.campos = { ...(c.campos || {}), atendimento: [] };
     const t = {};

@@ -1855,3 +1855,18 @@ representante aparece ali ("representada por …", concordando com o sexo do
 cliente) e se edita no clique. O campo separado da grade saiu. A parceria
 (chip e seletor) foi para o canto direito do mesmo cartão. Prova: `rep163.js`
 (3/3); `gestao160.js` ajustado ao novo prefixo (15/15).
+
+## 10.71 · F164 a F167 · ficha limpa, o atendimento como porta
+
+- F164: o cartão Parentes ou Amigos (protocolos, parceria, parentes) fica
+  recolhido num botão "＋ Parentes ou amigos" (Set `parentesAbertos`).
+- F165: sem atendimento em curso (pré-caso vivo), o Cadastro mostra só a
+  Identificação e o "+ atendimento", agora em destaque (azul, `.atend-novo`).
+  Anotações, Triagem, Documentos e Mensagens surgem com o atendimento. Exceção:
+  pré-caso recém-removido mantém as Anotações, onde mora o ↺ restaurar.
+- F166: o caso abre nos andamentos do Escritório (subAba "escritorio"), não
+  mais no Caso completo; Lembretes passou a ser a última aba, após Honorários.
+- F167: Análise de Direito só aparece com caso, com análise salva ou com a
+  triagem encerrada; cliente novo vê só Cadastro.
+Prova nova: `limpa165.js` (8/8). Dezesseis provas antigas ajustadas ao fluxo
+novo. Suíte: 95/99, falhando só as quatro de data já conhecidas.

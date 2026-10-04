@@ -8,8 +8,8 @@
 //   3. incapacidade exige a via (administrativo ou judicial) antes de gerar
 //   4. Somente gerar lembrete: Anotações some e as anotações aparecem na
 //      aba Lembretes
-//   5. cliente com caso: sem Anotações à toa, com "+ atendimento" e com o
-//      botão Documentos (que só nasce com o caso)
+//   5. cliente com caso: sem Anotações à toa, com "+ atendimento"; F165:
+//      Triagem e Documentos só aparecem com o atendimento em curso
 const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
@@ -70,6 +70,14 @@ FIX.documentos_beneficio.push(
   const trilho = () => p.evaluate(() =>
     [...document.querySelectorAll('.painel[data-p="0"].ativo .sub-menu button')].map(b => b.innerText.trim()));
   await p.evaluate(cli => abrirFicha(cli), CLI_VAZIO);
+  await p.waitForSelector(".sub-menu .atend-novo");
+  await p.waitForTimeout(300);
+  // F165 · sem atendimento em curso, mesmo triado, o trilho é só a
+  // Identificação e o + atendimento; a mesa nasce do clique
+  const t0 = await trilho();
+  conf(`F165 · triado sem atendimento: só Identificação e + atendimento (${t0.join(" · ")})`,
+    t0.length === 2 && /^Identificação/.test(t0[0]) && /\+ atendimento/.test(t0[1]));
+  await p.click(".sub-menu .atend-novo");
   await p.waitForSelector(".caixa-atend");
   await p.waitForTimeout(300);
 
@@ -86,8 +94,10 @@ FIX.documentos_beneficio.push(
   await p.waitForTimeout(500);
   conf("reabrir traz a Triagem de volta ao trilho",
     (await trilho()).some(x => /Triagem/.test(x)));
-  conf("e some com as Anotações até novo encerramento",
-    !(await trilho()).some(x => /Anotações/.test(x)));
+  // F165 · com o atendimento em curso (o pré-caso do +), as Anotações ficam
+  // no trilho ao lado da Triagem reaberta
+  conf("F165 · e as Anotações continuam, porque há atendimento em curso",
+    (await trilho()).some(x => /Anotações/.test(x)));
   conf("o rastro da reabertura fica gravado",
     escritos.some(x => x.m === "PATCH" && x.t === "clientes"
       && /reaberta/.test(JSON.stringify(x.corpo)) && !/"atendimento"/.test(JSON.stringify((x.corpo.triagem || {}).atendimento || null))));
@@ -98,8 +108,7 @@ FIX.documentos_beneficio.push(
   await p.waitForTimeout(400);
 
   // ── 2. o fluxo na ordem ─────────────────────────────────────────────────
-  await p.evaluate(cli => novoPreCaso(cli), CLI_VAZIO);
-  await p.waitForTimeout(500);
+  // o pré-caso já nasceu no + atendimento da seção 1 (F165)
   // F55: honorários vive recolhido (o resumo mora no summary) — a ordem dos
   // blocos se confere pela ESTRUTURA (textContent), não pela visibilidade
   const rotulos = await p.evaluate(() =>
@@ -245,16 +254,20 @@ FIX.documentos_beneficio.push(
   await p.click('button.mt[data-vv="0"]');
   await p.waitForTimeout(400);
   const tCheio = await trilho();
-  conf(`com caso: Documentos no trilho, Triagem ainda aberta, Anotações recolhida (${tCheio.join(" · ")})`,
-    tCheio.some(x => /Documentos/.test(x)) && tCheio.some(x => /Triagem/.test(x))
-    && !tCheio.some(x => /^Anotações/.test(x))
-    && tCheio.some(x => /\+ atendimento/.test(x)));
+  // F165 · com caso e sem atendimento em curso, o trilho também é só a
+  // Identificação e o + atendimento
+  conf(`F165 · com caso e sem atendimento: só Identificação e + atendimento (${tCheio.join(" · ")})`,
+    tCheio.length === 2 && /^Identificação/.test(tCheio[0])
+    && /\+ atendimento/.test(tCheio[1]));
   await p.evaluate(() => { const b = [...document.querySelectorAll('.painel[data-p="0"].ativo .sub-menu button')]
     .find(x => /\+ atendimento/.test(x.innerText)); if (b) b.click(); });
   await p.waitForTimeout(600);
-  conf("o + atendimento abre a mesa também para quem já tem caso",
+  const tAt = await trilho();
+  conf(`o + atendimento abre a mesa também para quem já tem caso (${tAt.join(" · ")})`,
     await p.evaluate(() => !!document.querySelector(".caixa-atend"))
-    && (await trilho()).some(x => /Anotações/.test(x)));
+    && tAt.some(x => /Anotações/.test(x)));
+  conf("F165 · e com ele surgem Triagem e Documentos",
+    tAt.some(x => /Triagem/.test(x)) && tAt.some(x => /Documentos/.test(x)));
 
   // ── 7. F31: o menu Documentos incorporou a Consulta ─────────────────────
   conf("o botão Consulta saiu do trilho",

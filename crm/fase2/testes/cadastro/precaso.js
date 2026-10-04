@@ -82,10 +82,20 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
 
   // ── 2. o trilho do fluxo (F30): triagem encerrada some, Documentos só
   //       nasce com o caso, Consulta e Mensagens têm casa própria ──────────
-  const divisoes = await p.evaluate(() =>
+  const lerTrilho = () => p.evaluate(() =>
     [...document.querySelectorAll('.painel[data-p="0"].ativo .sub-menu')[0].querySelectorAll("button")]
       .map(b => b.innerText.trim()));
-  conf(`o trilho do cliente triado sem caso (${divisoes.join(" · ")})`,
+  // F165 · sem atendimento em curso, mesmo triado, o trilho é só a
+  // Identificação e o + atendimento; o resto nasce do clique nele
+  const antes = await lerTrilho();
+  conf(`F165 · triado sem atendimento: só Identificação e + atendimento (${antes.join(" · ")})`,
+    antes.length === 2 && /^Identificação/.test(antes[0]) && /\+ atendimento/.test(antes[1]));
+  escritos.length = 0;
+  await p.click(".sub-menu .atend-novo");
+  await p.waitForTimeout(500);
+  const escritosMais = [...escritos];   // o pré-caso nasce aqui (seção 3)
+  const divisoes = await lerTrilho();
+  conf(`o trilho do cliente triado sem caso, com atendimento (${divisoes.join(" · ")})`,
     /Identificação/.test(divisoes[0]) && divisoes.some(x => /Anotações/.test(x))
     && divisoes.some(x => /Documentos/.test(x))     // F31: carrega a Consulta
     && divisoes.some(x => /Mensagens/.test(x))
@@ -101,11 +111,9 @@ FIX.colaboradores.push({ id: COL2, nome: "Amanda Ficticia", inicial: "A", cor: "
 
   // ── 3. o pré-caso ───────────────────────────────────────────────────────
   conf("o bloco do pré-caso está na mesa", await p.$(".pc-bloco"));
-  escritos.length = 0;
-  await p.evaluate(cli => novoPreCaso(cli), CLI_VAZIO);
-  await p.waitForTimeout(500);
+  // o + atendimento da seção 2 já criou o pré-caso (F165)
   conf("acrescentar cria o pré-caso com autor e data",
-    escritos.some(x => x.m === "PATCH" && x.t === "clientes"
+    escritosMais.some(x => x.m === "PATCH" && x.t === "clientes"
       && (x.corpo.campos.precasos || []).some(pc => pc.quem === EU && pc.em)));
   conf("o cartão amarelo do pré-caso aparece", await p.$(".pc-cartao"));
 

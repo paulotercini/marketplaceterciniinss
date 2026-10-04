@@ -2299,6 +2299,9 @@ html[data-tema="v10"] .sub-menu:has(button[onclick*="irSubCad"])::before{content
 html[data-tema="v10"] .sub-menu:has(button[onclick*="irSubDireito"])::before{content:"ANÁLISE"}
 html[data-tema="v10"] .sub-menu.fontes::before{content:"FONTE"}
 html[data-tema="v10"] .sub-menu .trilho-mais{align-self:center;margin-left:auto}
+/* F165 · o + atendimento em destaque: é por ele que o colaborador começa */
+html body .sub-menu .trilho-mais.atend-novo{background:var(--azul);border-color:var(--azul);color:#fff;font-weight:700;padding:6px 14px;font-size:13.5px}
+@media (hover:hover) and (pointer:fine){html body .sub-menu .trilho-mais.atend-novo:hover{filter:brightness(1.1)}}
 html[data-tema="v10"] .sub-menu button{border:none;background:none;border-radius:0;border-bottom:2px solid transparent;margin-bottom:-1px;
   padding:8px 11px 9px;font-size:13px;font-weight:500;color:var(--cinza)}
 @media (hover:hover) and (pointer:fine){html[data-tema="v10"] .sub-menu button:hover{color:var(--texto)}}
@@ -3214,7 +3217,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.68</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.71</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -3505,7 +3508,7 @@ let D = {};          // dados carregados: colaboradores, clientes, casos, ...
 let visao = "meudia", filtroColab = null, filtroVencidas = false, buscaTxt = "", clienteAberto = null, abaAtiva = 2, casoSel = null;
 let secRecolhida = new Set();   // F79: seções do Meu Dia recolhidas (sobrevive às repinturas)
 let fasesAbertas = new Set();   // F82: fases do Caso completo abertas à mão (tema v10), por caso:fase
-let subAba = ler("crm_subaba") || "tudo", instSel = 0;   // F45 · Caso completo primeiro
+let subAba = ler("crm_subaba") || "escritorio", instSel = 0;   // F166 · o caso abre nos andamentos do Escritório
 let subCad = ler("crm_subcad") || "";   // divisão aberta do Cadastro
 // qual PROCESSO do caso está sendo olhado (número, "" = o principal) e de que
 // FONTE: a consulta oficial do CNJ ou a coleta do PJe. Duas listas de
@@ -11812,7 +11815,7 @@ function escolherProcesso(cliId, ativos){
   document.getElementById("modal").style.display="block";
 }
 function escolhido(cliId, casoId){
-  casoSel = casoId;
+  casoSel = casoId; subAba = "escritorio";   // F166
   document.getElementById("modal").style.display="none";
   if(cliId===clienteAberto) repintarFicha(); else abrirFicha(cliId);
 }
@@ -11941,7 +11944,7 @@ async function abrirFicha(cliId){
     }
     instSel = 0; tudoSoMarcos = false;    // escolhas do cliente ANTERIOR não vazam
     procSel = ""; nupSel = ""; fonteCnj = "";   // idem: processo e fonte (F71: PJe padrão)
-    subAba = "tudo";   // F45 · abrir um cliente É abrir o Caso completo (pedido do Paulo)
+    subAba = "escritorio";   // F166 · abrir um caso é abrir os andamentos do Escritório (era o Caso completo, F45)
   }
   clienteAberto = cliId;
   document.getElementById("app").classList.add("detalhe-aberto");
@@ -12101,10 +12104,11 @@ function pintarFicha(){
       ${/* Documentos saiu do menu (08.98): ele é passo do atendimento, e o
            atendimento começa no Cadastro — o botão está lá dentro */""}
       <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">Cadastro</button>
-      ${temLemb ? `<button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>` : ""}
       ${/* ⚖️ F48 · sempre visível: cliente sem análise vê o convite a fazer
            a primeira — é assim que o histórico começa a existir */""}
-      <button class="mt ${abaAtiva===8?"on":""}" data-vv="8">Análise de Direito${(n=>n?` (${n})`:"")(analisesDe(cliId).length)}</button>
+      ${/* F167 · a Análise de Direito só depois da triagem (ou com caso, ou
+           com análise já feita): cliente novo vê Cadastro e mais nada */""}
+      ${(ks.length || analisesDe(cliId).length || triagemFechada(c)) ? `<button class="mt ${abaAtiva===8?"on":""}" data-vv="8">Análise de Direito${(n=>n?` (${n})`:"")(analisesDe(cliId).length)}</button>` : ""}
       ${/* F127 · o CNIS abre em outra aba de qualquer lugar da ficha */""}
       ${cnisDe(c)&&cnisDe(c).caminho?`<button class="mt" onclick="abrirCnis('${cliId}')" title="abre o extrato guardado em outra aba">Abrir CNIS ↗</button>`:""}
       ${/* o menu tem só as cinco divisões do cliente (pedido do Paulo):
@@ -12119,6 +12123,8 @@ function pintarFicha(){
           (n=>n>1?` (${n})`:"")(processosDe(ks).length)} ▾</button>` : ""}
       ${evs.length ? `<button class="mt ${abaAtiva===3?"on":""}" data-vv="3">Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}</button>` : ""}
       ${(ks.length || pagK.length || pgs.length) ? `<button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>` : ""}
+      ${/* F166 · Lembretes por último, depois de Honorários */""}
+      ${temLemb ? `<button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>` : ""}
     </div>
     <button class="cel-tudo" onclick="fichaTudo()">⋯ mostrar tudo da ficha</button>
   </div>
@@ -12400,6 +12406,14 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     anotacoes: pcsVivos.length>0 || (triFechada && semCaso && !pcsAll.length),
     documentos: depois,   // F31: carrega a Consulta junto — abre com o portão
     mensagens: depois};
+  // F165 · sem atendimento em curso a ficha mostra só a Identificação (com ou
+  // sem caso): Anotações, Triagem, Documentos e Mensagens surgem quando se
+  // abre o + atendimento — é o fluxo que o colaborador segue
+  if(!pcsVivos.length){
+    vis.triagem = vis.documentos = vis.mensagens = false;
+    // pré-caso recém-removido: as Anotações ficam, porque o ↺ restaurar mora na mesa
+    vis.anotacoes = !!(c.campos||{}).pc_lixeira;
+  }
   // valores antigos gravados: "atendimento" era o trilho interno de
   // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
@@ -12414,7 +12428,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
       ${SUB_CAD.filter(([v])=>vis[v])
         .map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
         v==="anotacoes"&&semCaso?` <span class="meio-sub">•</span>`:""}</button>`).join("")}
-      ${(!vis.anotacoes && (triFechada || !semCaso)) ? `<button class="trilho-mais" style="align-self:center"
+      ${!pcsVivos.length ? `<button class="trilho-mais atend-novo" style="align-self:center"
         title="abrir um atendimento novo — pode virar caso novo ou só lembrete"
         onclick="novoAtendimento('${c.id}')">+ atendimento</button>` : ""}
     </div>
@@ -12433,8 +12447,13 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${/* segundo cartão: quem este cliente é para o INSS e a quem ele se liga.
          Eram três blocos soltos, cada um com moldura própria, empilhados
          abaixo do cartão. Agora falam a mesma língua visual do de cima. */""}
+    ${/* F164 · o cartão inteiro só abre no ＋ (pedido do Paulo: tela limpa) */""}
+    ${!parentesAbertos.has(c.id) ? `<button class="cad-mini" style="margin-top:10px" aria-expanded="false"
+        onclick="parentesAbertos.add('${c.id}');repintarFicha()">${CAD_IC.mais}Parentes ou amigos</button>` : `
     <div class="cad-cartao">
-      <div class="cad-tit"><span class="cad-ic">${CAD_IC.duplas}</span>Parentes ou Amigos</div>
+      <div class="cad-tit"><span class="cad-ic">${CAD_IC.duplas}</span>Parentes ou Amigos
+        <button class="cad-mini" style="margin-left:auto" aria-expanded="true" title="recolher"
+          onclick="parentesAbertos.delete('${c.id}');repintarFicha()">− recolher</button></div>
       ${/* O protocolo NÃO mora mais aqui. Ele é do CASO, não do cliente: cada
            protocolo é um requerimento, com a sua DER, o seu benefício e o seu
            desfecho. Achatados numa fileira só, três protocolos de três casos
@@ -12461,7 +12480,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
       <div class="id-secao"><label>Parentes ou amigos <small>(cliente da base abre a ficha; outra pessoa fica anotada)</small></label>
         ${blocoParentes(c, vincs, "cad")}
       </div>
-    </div>
+    </div>`}
     <details id="mais-opcoes" style="margin-top:14px"><summary style="cursor:pointer;color:var(--cinza)"><span class="cad-ic">${CAD_IC.engren}</span> Mais opções — cadastrar outra credencial, vincular pasta, agendar atendimento</summary>
       ${/* F23 · a credencial saiu daqui (a senha do Meu INSS já se cadastra no
            próprio campo da grade). No lugar, o registro avulso: a observação
@@ -14458,7 +14477,7 @@ function menuProcessos(ev, ks){
     const v=it.dataset.mp;
     fecharMenuProcessos();
     if(v==="__novo__"){ abaAtiva=7; }
-    else { casoSel=v||null; abaAtiva=2; }
+    else { casoSel=v||null; abaAtiva=2; subAba="escritorio"; }   // F166
     repintarFicha();
   });
   setTimeout(()=>document.addEventListener("click", fecharMenuProcessos, {once:true}));
@@ -22698,6 +22717,7 @@ function cadCampoCnis(c){
       ${botaoInserirCnis(c)}</div>
   </div>`;
 }
+const parentesAbertos = new Set();   // F164 · clientes com o cartão Parentes ou amigos aberto
 function fichaIdentificacao(c, creds){
   const falta = cadFaltando(c);
   const tels = telefonesDe(c);

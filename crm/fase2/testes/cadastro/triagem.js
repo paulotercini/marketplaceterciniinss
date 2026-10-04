@@ -77,6 +77,12 @@ FIX.casos.push(
     });
     await p.waitForSelector('button.mt[data-vv="0"]');
     await p.click('button.mt[data-vv="0"]');
+    // F165 · a Triagem só aparece com atendimento em curso: abre-se um pelo
+    // + atendimento, como o colaborador faria
+    if (await p.$(".sub-menu .atend-novo")) {
+      await p.click(".sub-menu .atend-novo");
+      await p.waitForTimeout(400);
+    }
     await p.evaluate(() => irSubCad("triagem"));
     await p.waitForSelector('.painel[data-p="0"].ativo .tri-passo');
     await p.waitForTimeout(250);

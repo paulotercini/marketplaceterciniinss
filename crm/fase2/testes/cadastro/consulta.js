@@ -52,6 +52,12 @@ FIX.clientes[1] = { ...FIX.clientes[1], triagem: { atendimento:
     await p.evaluate(x => abrirFicha(x), id);
     await p.waitForSelector('button.mt[data-vv="0"]');
     await p.click('button.mt[data-vv="0"]');
+    // F165 · Documentos (onde mora a Consulta) só aparece com atendimento em
+    // curso: abre-se um pelo + atendimento
+    if (await p.$(".sub-menu .atend-novo")) {
+      await p.click(".sub-menu .atend-novo");
+      await p.waitForTimeout(400);
+    }
     await p.evaluate(() => irSubCad("consulta"));
     await p.waitForSelector('.painel[data-p="0"].ativo .cad-cartao');
     await p.waitForTimeout(250);

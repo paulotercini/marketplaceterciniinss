@@ -332,12 +332,26 @@ FIX.colaboradores = [...FIX.colaboradores,
   conf("cliente novo NÃO vê a aba Lembretes",
     await p.evaluate(() => ![...document.querySelectorAll(".menu-topo .mt")]
       .some(b => /Lembretes/.test(b.textContent))));
-  conf("nem o botão Anotações — só Identificação e Triagem",
+  // F165 · sem atendimento em curso, o trilho é só a Identificação e o
+  // + atendimento em destaque (antes abria direto na Triagem)
+  conf("F165 · nem Anotações nem Triagem — só Identificação e o + atendimento",
     await p.evaluate(() => {
       const subs = [...document.querySelectorAll(".sub-menu:not(.anot-trilho) button")].map(b => b.textContent.trim());
-      return !subs.some(x => /Anota/.test(x)) && subs.some(x => /Triagem/.test(x));
+      return subs.length === 2 && /^Identificação/.test(subs[0]) && /\+ atendimento/.test(subs[1]);
     }));
-  conf("a ficha do cliente novo abre direto na Triagem",
+  conf("F165 · a ficha do cliente novo abre na Identificação",
+    await p.evaluate(() => !document.querySelector(".tri-lista") && !!document.querySelector(".sub-menu button.on")
+      && /^Identificação/.test(document.querySelector(".sub-menu button.on").textContent.trim())));
+  // F167 · a Análise de Direito só depois da triagem: cliente novo vê só Cadastro
+  conf("F167 · cliente novo vê no menu de cima só o Cadastro",
+    await p.evaluate(() => { const mt = [...document.querySelectorAll(".menu-topo .mt")].map(b => b.textContent.trim());
+      return mt.length === 1 && /^Cadastro/.test(mt[0]); }));
+  // o + atendimento abre a Triagem, e o relato do balcão está dentro dela
+  await p.click(".sub-menu .atend-novo");
+  await p.waitForTimeout(500);
+  await p.evaluate(() => irSubCad("triagem"));
+  await p.waitForTimeout(400);
+  conf("F165 · com o + atendimento, a Triagem aparece no trilho",
     await p.evaluate(() => !!document.querySelector(".tri-lista")));
   conf("e o relato do balcão aparece DENTRO da Triagem até ela se encerrar",
     /marido falecido/.test(await p.evaluate(() =>

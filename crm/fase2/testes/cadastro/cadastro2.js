@@ -116,6 +116,10 @@ FIX.credenciais = [{ id: "cr1", cliente_id: CLI_CHEIO, tipo: "meu_inss",
     pintarFicha(); }, [CLI_CHEIO, CASO1]);
   await p.waitForSelector('button.mt[data-vv="0"]');
   await p.click('button.mt[data-vv="0"]');
+  // F165 · a Triagem só aparece com atendimento em curso: abre-se um pelo
+  // + atendimento, como o colaborador faria
+  await p.click(".sub-menu .atend-novo");
+  await p.waitForTimeout(400);
   await p.evaluate(() => irSubCad("triagem"));
   await p.waitForSelector(".tri-lista");
   await p.evaluate(([cli, it]) => gravarCnisLido(cli, lerCnisPdf(it)), [CLI_CHEIO, ITENS_CNIS]);
@@ -180,6 +184,10 @@ FIX.credenciais = [{ id: "cr1", cliente_id: CLI_CHEIO, tipo: "meu_inss",
     path: path.join(__dirname, "f19-cpf-senha.png") });
 
   // ── 4. o protocolo saiu da Identificação ────────────────────────────────
+  // F164 · o aviso de onde o protocolo mora fica no cartão Parentes ou
+  // amigos, que nasce recolhido: abre-se como o botão faria
+  await p.evaluate(cli => { parentesAbertos.add(cli); repintarFicha(); }, CLI_CHEIO);
+  await p.waitForTimeout(300);
   const ident = await p.innerText('.painel[data-p="0"].ativo');
   conf("o número do protocolo não é mais listado na Identificação",
     !/1234567890/.test(ident) && !/9876543210/.test(ident));

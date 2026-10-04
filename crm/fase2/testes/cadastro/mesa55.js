@@ -62,10 +62,13 @@ FIX.colaboradores.push({ id: EU2, auth_id: null, nome: "Marcos Fictício", inici
   await irMesa(CLI_VAZIO);
   await p.waitForTimeout(700);
 
-  // 1) a linha-guia fala com o leigo: sem atendimento aberto, diz por onde começar
-  conf("a linha-guia âmbar diz o que falta (sem atendimento: abrir o passo 1)",
-    await p.evaluate(() => { const g = document.querySelector(".mesa-guia.falta");
-      return g && /Falta fazer/.test(g.textContent) && /abrir o atendimento/.test(g.textContent); }));
+  // 1) sem atendimento aberto, quem diz por onde começar é o trilho: F165 ·
+  //    a mesa só existe com atendimento em curso, e no lugar dela fica o
+  //    + atendimento em destaque (era a linha-guia âmbar "abrir o atendimento")
+  conf("F165 · sem atendimento, o trilho oferece o + atendimento e a mesa não aparece",
+    await p.evaluate(() => !!document.querySelector(".sub-menu .atend-novo")
+      && !document.querySelector(".caixa-atend")
+      && ![...document.querySelectorAll(".sub-menu button")].some(b => /Anotações/.test(b.textContent))));
 
   // 2) espécie + natureza definidas COM a ficha aberta: o bloco NÃO recolhe
   //    embaixo da mão de quem edita (mexeu → fica aberto)

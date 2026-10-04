@@ -180,7 +180,10 @@ FIX.clientes[0] = { ...FIX.clientes[0], cpf: CPF_DOC };
   conf("cliente ainda sem CPF na ficha não é barrado", confId.semCpf.ok);
 
   // ── 5. o que fica gravado ───────────────────────────────────────────────
-  await p.evaluate(cli => abrirFicha(cli).then(() => { abaAtiva = 0; subCad = "triagem"; pintarFicha(); }),
+  // F165 · a Triagem só aparece com atendimento em curso: abre-se um pelo
+  // + atendimento antes de ir até ela
+  await p.evaluate(cli => abrirFicha(cli).then(() => novoAtendimento(cli))
+    .then(() => { abaAtiva = 0; subCad = "triagem"; pintarFicha(); }),
     CLI_CHEIO);
   await p.waitForSelector(".tri-lista");
   await p.waitForTimeout(300);
