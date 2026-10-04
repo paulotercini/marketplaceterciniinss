@@ -134,7 +134,7 @@ JA é frequentemente necessária para períodos antigos sem documentação — v
 
 - 15, 20 ou 25 anos de atividade especial (conforme o agente nocivo)
 - Exposição permanente, não ocasional nem intermitente
-- Pós-EC 103/2019: regras de transição com requisito de idade adicional (55/58/60 anos conforme o tempo exigido)
+- Pós-EC 103/2019: filiado até 13/11/2019 pela transição de pontos do art. 21 (66, 76 ou 86 pontos), conforme a IN 128/2022, art. 262; filiado a partir de 14/11/2019 pela regra do art. 19, §1º, I, da EC 103. As idades de 55, 58 e 60 anos dessa regra foram declaradas inconstitucionais na ADI 6309 (STF, j. 03/06/2026), mas o Decreto 3.048/99, art. 64, e a IN 128/2022, art. 260, ainda as reproduziam em 04/10/2026. Ressalvados o direito adquirido de quem completou o tempo até 13/11/2019 (art. 3º da EC 103) e a tese de opção do filiado anterior pela regra sem idade (Decreto 3.048/99, art. 188-P, caput). Ver `base-aposentadoria-especial-transicao-ec103` antes de orientar o cliente.
 - Carência: 180 contribuições mensais
 
 ### B — Checklist de documentos

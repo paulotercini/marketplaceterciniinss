@@ -2,11 +2,11 @@
 
 ## 1. Fundamentos normativos
 
-EC 103/2019, art. 21. Regra de transição da aposentadoria especial por pontos. Exige tempo mínimo de 15, 20 ou 25 anos de atividade especial. Pontuação (idade mais tempo de contribuição) de 66, 76 e 86 pontos respectivamente.
+EC 103/2019, art. 21. Regra de transição da aposentadoria especial por pontos. Exige tempo mínimo de 15, 20 ou 25 anos de atividade especial. Pontuação (idade mais tempo de contribuição) de 66, 76 e 86 pontos respectivamente. A IN 128/2022, art. 262, aplica essa regra ao filiado até 13/11/2019. O Decreto 3.048/99, art. 188-P, caput, ressalva a esse segurado o direito de opção pela aposentadoria do art. 64 [CONFERIDO, norma_inss e Planalto, 04/10/2026]. Não foi objeto da ADI 6309 e permanece em vigor.
 
-EC 103/2019, art. 19, §1º, I. Regra permanente da aposentadoria especial. Idade mínima de 55 anos (risco alto, 15 anos), 58 anos (risco médio, 20 anos) ou 60 anos (risco baixo, 25 anos).
+EC 103/2019, art. 19, §1º, I. Regra permanente da aposentadoria especial, que a IN 128/2022, art. 260, aplica ao filiado a partir de 14/11/2019. Exige exposição de 15, 20 ou 25 anos e carência. As idades de 55, 58 e 60 anos das alíneas a, b e c foram declaradas inconstitucionais na ADI 6309 (STF, Plenário, j. 03/06/2026, Red. p/ acórdão Min. André Mendonça, 6 votos a 5, acórdão no DJe de 02/10/2026) [CONFERIDO, inteiro teor, Onda 170]. O Decreto 3.048/99, art. 64, I a III, e a IN 128/2022, art. 260, I a III, ainda reproduziam essas idades em 04/10/2026. A opção do filiado anterior à reforma por esta regra, agora sem idade, é tese a sustentar, detalhada no alerta de alcance da SKILL.md.
 
-EC 103/2019, art. 25, §2º. Permite a conversão de tempo especial em comum para períodos cumpridos até 13 de novembro de 2019.
+EC 103/2019, art. 25, §2º. Permite a conversão de tempo especial em comum para períodos cumpridos até 13 de novembro de 2019 e a veda para o tempo posterior. Declarado constitucional na ADI 6309, por 9 votos a 2.
 
 Lei 8.213/91, art. 57. Disciplina a aposentadoria especial.
 
@@ -90,7 +90,7 @@ Homem. Fator 1,40 para risco baixo (25 anos). Fator 1,75 para risco médio (20 a
 
 Mulher. Fator 1,20 para risco baixo. Fator 1,50 para risco médio. Fator 2,00 para risco alto.
 
-Após 13/11/2019. Conversão vedada. Apenas utilização em aposentadoria especial pura.
+Após 13/11/2019. Conversão vedada (art. 25, §2º, da EC 103, constitucional na ADI 6309). Apenas utilização em aposentadoria especial pura.
 
 ## 7. Cruzamento com outras skills
 

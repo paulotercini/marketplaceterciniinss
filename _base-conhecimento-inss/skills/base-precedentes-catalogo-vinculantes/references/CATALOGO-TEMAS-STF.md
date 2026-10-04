@@ -58,7 +58,7 @@
 
 - **Tema 529:** A preexistência de casamento ou de união estável de um dos conviventes, ressalvada a exceção do artigo 1.723, § 1º, do Código Civil, impede o reconhecimento de novo vínculo referente ao mesmo período, inclusive para fins previdenciários, em virtude da consagração do dever de fidelidade e da monogamia pelo ordenamento jurídico-constitucional brasileiro.
 
-- **Tema 555:** I - O direito à aposentadoria especial pressupõe a efetiva exposição do trabalhador a agente nocivo à sua saúde, de modo que, se o EPI for realmente capaz de neutralizar a nocividade não haverá respaldo constitucional à aposentadoria especial; II - Na hipótese de exposição do trabalhador a ruído acima dos limites legais de tolerância, a declaração do empregador, no âmbito do PPP, no sentido da eficácia do EPI, não descaracteriza o tempo de serviço especial para aposentadoria.
+- **Tema 555:** I - O direito à aposentadoria especial pressupõe a efetiva exposição do trabalhador a agente nocivo à sua saúde, de modo que, se o EPI for realmente capaz de neutralizar a nocividade não haverá respaldo constitucional à aposentadoria especial; II - Na hipótese de exposição do trabalhador a ruído acima dos limites legais de tolerância, a declaração do empregador, no âmbito do Perfil Profissiográfico Previdenciário (PPP), no sentido da eficácia do Equipamento de Proteção Individual – EPI, não descaracteriza o tempo de serviço especial para aposentadoria. [Texto literal conferido no portal do STF em 04/10/2026]
 
 - **Tema 568:** A questão do direito à revisão da renda mensal do benefício previdenciário em equivalência aos índices de reajuste aplicados aos tetos dos salários-de-contribuição tem natureza infraconstitucional.
 
@@ -80,7 +80,7 @@
 
 - **Tema 701:** A questão do direito dos trabalhadores rurais ao pagamento do seguro-defeso tem natureza infraconstitucional.
 
-- **Tema 709:** I) É constitucional a vedação de continuidade da percepção de aposentadoria especial se o beneficiário permanece laborando em atividade especial. II) Nas hipóteses em que o segurado solicitar a aposentadoria e continuar a exercer o labor especial, a data de início do benefício será a data de entrada do requerimento. Efetivada a implantação do benefício, cessará o pagamento caso verificado o retorno ao labor nocivo.
+- **Tema 709:** I) É constitucional a vedação de continuidade da percepção de aposentadoria especial se o beneficiário permanece laborando em atividade especial ou a ela retorna, seja essa atividade especial aquela que ensejou a aposentação precoce ou não. II) Nas hipóteses em que o segurado solicitar a aposentadoria e continuar a exercer o labor especial, a data de início do benefício será a data de entrada do requerimento, remontando a esse marco, inclusive, os efeitos financeiros. Efetivada, contudo, seja na via administrativa, seja na judicial a implantação do benefício, uma vez verificado o retorno ao labor nocivo ou sua continuidade, cessará o pagamento do benefício previdenciário em questão. [Texto literal conferido no portal do STF e na transcrição do acórdão da ADI 6309, pp. 149 e 150, em 04/10/2026; a redação anterior deste catálogo estava truncada]
 
 - **Tema 728:** São constitucionais os índices de correção monetária adotados pelo INSS para reajustar os benefícios previdenciários nos anos de 1997, 1999, 2000, 2001, 2002 e 2003.
 

@@ -126,19 +126,21 @@ NÃO CONFIRMADAS NESTA RODADA (quarentena leve, conferir no DOU antes de citar).
 
 - **Pacotes .skill do escritório regenerados na Etapa 5.** pensao-por-morte e auxilio-reclusao-previdenciario atualizados com o Tema 1421/STJ julgado (tese literal, alerta de triagem dos 180 dias, estratégia pós-julgamento) e carta-servicos-inss com o rótulo da Lei 15.108/2025 corrigido (menor sob guarda) e o Tema 1421 incluído.
 
-## ADI 6309/STF JULGADA EM 03/06/2026, APOSENTADORIA ESPECIAL DA EC 103 (registro de 12/07/2026, notícia oficial do STF de 03/06/2026 conferida via navegador)
+## ADI 6309/STF JULGADA EM 03/06/2026, APOSENTADORIA ESPECIAL DA EC 103 (registro de 12/07/2026, revisto pelo inteiro teor na Onda 170, 04/10/2026)
 
-Julgamento por maioria em 03/06/2026, ação da CNTI contra dispositivos da EC 103/2019 sobre aposentadoria especial. Três definições.
+STF, Plenário, ação da CNTI contra dispositivos da EC 103/2019 sobre aposentadoria especial. Relator Min. Luís Roberto Barroso, vencido em parte, e Redator do acórdão Min. André Mendonça. Sessão presencial de 03/06/2026, ata no DJe de 11/06/2026, decisão publicada no DOU de 12/06/2026 (Seção 1, edição 108, p. 1) e acórdão no DJe de 02/10/2026 [CONFERIDO, inteiro teor de 217 páginas e portal do STF, 04/10/2026]. Três definições.
 
-1. INCONSTITUCIONAL a idade mínima para a aposentadoria especial. Voto condutor do Min. André Mendonça (a exigência obriga quem já cumpriu os períodos de exposição a permanecer no agente nocivo, contrariando a finalidade protetiva), acompanhado por Nunes Marques, Dias Toffoli e Cármen Lúcia, com Edson Fachin e Rosa Weber também pela inconstitucionalidade. Vencidos na íntegra o relator Barroso (aposentado), Gilmar Mendes, Alexandre de Moraes, Cristiano Zanin e Luiz Fux.
+1. INCONSTITUCIONAL a idade mínima do art. 19, §1º, I, alíneas a, b e c (55, 58 e 60 anos), por 6 votos a 5. Formaram a maioria André Mendonça, Nunes Marques, Dias Toffoli e Cármen Lúcia, que julgavam a ação parcialmente procedente, e Edson Fachin e Rosa Weber, que a julgavam totalmente procedente. Ficaram vencidos no ponto Luís Roberto Barroso, Gilmar Mendes, Alexandre de Moraes, Cristiano Zanin e Luiz Fux, que julgavam a ação totalmente improcedente. O acórdão os registra como "vencidos parcialmente", porque prevaleceram nos outros dois pontos (correção da Onda 170 ao registro anterior, que os dava como vencidos na íntegra e qualificava o Relator como aposentado sem fonte).
 
-2. CONSTITUCIONAL a vedação de conversão de tempo especial em comum para períodos posteriores à reforma.
+2. CONSTITUCIONAL a vedação de conversão de tempo especial em comum para períodos posteriores a 13/11/2019 (art. 25, §2º), por 9 votos a 2, vencidos Edson Fachin e Rosa Weber.
 
-3. CONSTITUCIONAL a nova fórmula de cálculo da aposentadoria especial.
+3. CONSTITUCIONAL a forma de cálculo do art. 26, §2º, IV, por 9 votos a 2, vencidos Edson Fachin e Rosa Weber.
 
-Efeitos nas skills. Notas inseridas em base-aposentadoria-especial-transicao-ec103, base-tempo-especial-conversao e base-calculo-rmi-ec103. Teses de inconstitucionalidade da vedação de conversão e do cálculo estão SUPERADAS. Concessão de especial sem idade mínima amparada para quem completa 15, 20 ou 25 anos de exposição, e indeferimentos por falta de idade são revisáveis.
+Flávio Dino não votou, por suceder Rosa Weber. O acórdão não fixa tese de julgamento e não modula efeitos. Até 04/10/2026, o andamento não registra embargos de declaração nem trânsito em julgado, e o prazo de embargos corre desde a publicação de 02/10/2026.
 
-PENDÊNCIA OBRIGATÓRIA. Conferir na ata de julgamento e no acórdão o dispositivo exato invalidado e eventual modulação de efeitos ANTES de pedir retroativos. A notícia oficial não traz esses dados. Skills do escritório impactadas para pacote futuro, auditoria-ppp, tempo-especial-peticoes-por-rito e carta-servicos-inss.
+Efeitos nas skills. Notas revistas em base-aposentadoria-especial-transicao-ec103 (e nas duas referências), base-tempo-especial-conversao e base-calculo-rmi-ec103. Teses de inconstitucionalidade da vedação de conversão e do cálculo estão SUPERADAS. A concessão sem idade mínima pela regra do art. 19, §1º, I, está amparada, mas a IN 128/2022 aplica essa regra só ao filiado a partir de 14/11/2019 (art. 260) e dá ao filiado até 13/11/2019 os pontos do art. 21 (art. 262). Para o filiado anterior à reforma, a regra sem idade é tese de opção, ancorada no Decreto 3.048/99, art. 188-P, caput, e não decisão do STF. O art. 21 não foi objeto da ação. Correção da Onda 170 à frase anterior, que estendia a concessão sem idade a todo segurado que completasse o tempo de exposição.
+
+Pendência encerrada. Dispositivo, placar e ausência de modulação conferidos no inteiro teor em 04/10/2026. Pendência nova, acompanhar no portal eventual embargo com pedido de modulação. Skills do escritório fora do plugin a revisar em pacote próprio, auditoria-ppp, tempo-especial-peticoes-por-rito e carta-servicos-inss.
 
 ## REsp 2.270.389/RS CONFERIDO POR INTEIRO TEOR (registro de 12/07/2026, PDF fornecido pelo escritório)
 

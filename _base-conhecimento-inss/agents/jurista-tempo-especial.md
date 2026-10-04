@@ -43,6 +43,8 @@ Extemporaneidade do laudo. A ampliativa aceita laudo posterior porque a evoluç�
 
 Pontos do art. 21 da EC 103. A pontuação da aposentadoria especial de transição (66, 76 e 86 pontos conforme 15, 20 ou 25 anos de exposição) é FIXA, o art. 21 NÃO progride. A progressão anual é dos arts. 15 e 16, que tratam de outras aposentadorias. Confira se o parecer ou a peça não aplicou progressão ao art. 21, porque isso adia indevidamente a DER e faz o segurado perder meses de benefício.
 
+ADI 6309 do STF. A idade mínima de 55, 58 e 60 anos do art. 19, §1º, I, alíneas a, b e c, da EC 103 foi declarada inconstitucional por 6 votos a 5. A vedação de conversão do art. 25, §2º, e o cálculo do art. 26, §2º, IV, foram declarados constitucionais por 9 votos a 2 (Plenário, Red. p/ acórdão Min. André Mendonça, j. 03/06/2026, acórdão no DJe de 02/10/2026, sem tese e sem modulação). Confira se a peça ou o parecer ainda exige idade na regra do art. 19, §1º, I, ainda sustenta a inconstitucionalidade da vedação de conversão ou do cálculo, ou estende a decisão ao art. 21, que não foi impugnado. Para o filiado até 13/11/2019, a regra sem idade é tese de opção (Decreto 3.048/99, art. 188-P, caput) e deve vir rotulada como tese, com pedido sucessivo pelos pontos. Detalhe em `base-aposentadoria-especial-transicao-ec103`.
+
 Conversão após 13/11/2019. Confira o marco temporal e a preservação do direito adquirido, e se a peça não misturou regime da prestação com regime da DER.
 
 ## Erros doutrinários frequentes neste tema

@@ -2,9 +2,19 @@
 
 ## 1. Precedentes vinculantes
 
+### ADI 6309/STF (aposentadoria especial da EC 103)
+
+Dispositivo. "O Tribunal, por maioria, julgou parcialmente procedente a ação direta, declarando-se a inconstitucionalidade apenas do art. 19, § 1º, I, alíneas a, b e c, da EC nº 103/2019". STF, Plenário, Rel. Min. Luís Roberto Barroso (vencido em parte), Red. p/ acórdão Min. André Mendonça, j. 03/06/2026, acórdão no DJe de 02/10/2026 [CONFERIDO, inteiro teor e portal do STF, 04/10/2026].
+
+Placar. Idade mínima inconstitucional por 6 votos a 5. Vedação de conversão (art. 25, §2º) e forma de cálculo (art. 26, §2º, IV) constitucionais por 9 votos a 2. Sem tese de julgamento e sem modulação de efeitos. Até 04/10/2026, sem embargos registrados e sem trânsito certificado, com prazo de embargos em curso desde a publicação de 02/10/2026.
+
+Fonte oficial em https://portal.stf.jus.br/processos/detalhe.asp?incidente=5848987
+
+Aplicação pró-segurado. Afasta a idade de 55, 58 e 60 anos da regra do art. 19, §1º, I. Não alcança o art. 21 (pontos), que não foi impugnado. O alcance para o filiado anterior à reforma depende da tese de opção descrita na SKILL.md. Detalhe no topo da SKILL.md.
+
 ### Tema 1090 STJ
 
-Tese. O uso de EPI eficaz não descaracteriza o tempo especial em hipóteses excepcionais, podendo a jurisprudência firmar situações além de cancerígenos e biológicos.
+Tese. Ler a redação literal em `base-especial-epi/references/TEMA-1090-STJ-TESE-LITERAL-E-ROTEIRO.md` antes de citar. A síntese anterior desta referência foi retirada na Onda 170 por não reproduzir a tese.
 
 Fonte oficial em https://www.stj.jus.br
 
@@ -12,11 +22,11 @@ Aplicação pró-segurado. Base para afastar a tese administrativa de neutraliza
 
 ### Tema 555 STF (ARE 664.335)
 
-Tese. A declaração de eficácia do EPI não descaracteriza automaticamente o tempo especial em todas as situações. Cabe jurisprudência firmar exceções.
+Tese literal. "I - O direito à aposentadoria especial pressupõe a efetiva exposição do trabalhador a agente nocivo à sua saúde, de modo que, se o EPI for realmente capaz de neutralizar a nocividade não haverá respaldo constitucional à aposentadoria especial; II - Na hipótese de exposição do trabalhador a ruído acima dos limites legais de tolerância, a declaração do empregador, no âmbito do Perfil Profissiográfico Previdenciário (PPP), no sentido da eficácia do Equipamento de Proteção Individual – EPI, não descaracteriza o tempo de serviço especial para aposentadoria." [CONFERIDO, portal do STF, 04/10/2026; corrigida na Onda 170 a síntese anterior, que atribuía à tese uma abertura genérica a exceções que o texto não contém]
 
 Fonte oficial em https://portal.stf.jus.br
 
-Aplicação pró-segurado. Fundamento constitucional para invocar o Tema 1090 STJ como exceção legítima.
+Aplicação pró-segurado. O item II protege o segurado exposto a ruído. O item I é adverso apenas quando o EPI for realmente capaz de neutralizar a nocividade. Ônus da prova e dúvida sobre a eficácia se trabalham pelo Tema 1090 do STJ, na redação literal. A ADI 6309 usou o item I como premissa para afirmar que a aposentadoria especial depende da exposição efetiva e não neutralizada (ementa, item 9).
 
 ### Tema 211 TNU
 
@@ -52,7 +62,7 @@ Aplicação pró-segurado. Garante a conversão de todo tempo especial pré-refo
 
 ### Tema 709/STF (RE 791.961)
 
-Vedação constitucional de permanência ou retorno à atividade especial após a aposentadoria especial (auditoria 25/07/2026, corte corrigida).
+Tese literal. "I) É constitucional a vedação de continuidade da percepção de aposentadoria especial se o beneficiário permanece laborando em atividade especial ou a ela retorna, seja essa atividade especial aquela que ensejou a aposentação precoce ou não. II) Nas hipóteses em que o segurado solicitar a aposentadoria e continuar a exercer o labor especial, a data de início do benefício será a data de entrada do requerimento, remontando a esse marco, inclusive, os efeitos financeiros. Efetivada, contudo, seja na via administrativa, seja na judicial a implantação do benefício, uma vez verificado o retorno ao labor nocivo ou sua continuidade, cessará o pagamento do benefício previdenciário em questão." [CONFERIDO, portal do STF e transcrição no acórdão da ADI 6309, pp. 149 e 150, 04/10/2026]
 
 Fonte oficial em https://portal.stf.jus.br (auditoria 03/10/2026).
 
@@ -92,7 +102,7 @@ Refutação. Tema 1090 STJ e Tema 555 STF. Em hipóteses excepcionais, especialm
 
 Argumento adversário. A conversão de tempo especial em comum foi totalmente vedada após a reforma.
 
-Refutação. Art. 25, §2º, da EC 103/2019 (auditoria 25/07/2026, retirado o Tema 942/STJ, que trata de cheque). A conversão permanece viva para períodos cumpridos até 13 de novembro de 2019. A vedação só alcança tempo pós-reforma.
+Refutação. Art. 25, §2º, da EC 103/2019 (auditoria 25/07/2026, retirado o Tema 942/STJ, que trata de cheque). A conversão permanece viva para períodos cumpridos até 13 de novembro de 2019. A vedação só alcança tempo pós-reforma. A ADI 6309 confirmou a validade da regra e registrou na ementa que a EC 103 "assegurou a possibilidade de conversão do tempo de trabalho anterior à sua edição" (item 6).
 
 ### Argumento 4 — Aplicação de regra permanente em quem tinha direito adquirido
 
@@ -122,7 +132,19 @@ Refutação. Tema 174 TNU e metodologia consolidada. A NHO-01 aceita dosimetria 
 
 Argumento adversário. A regra permanente é aplicada automaticamente após 13 de novembro de 2019.
 
-Refutação. Tema 334 STF e art. 4º da EC 103. Comparativo obrigatório com a transição por pontos (art. 21) é direito do segurado.
+Refutação. Tema 334 do STF (quadro mais favorável ao beneficiário), usado por analogia, porque trata do cálculo da renda e não da escolha entre regras de acesso, e Decreto 3.048/99, art. 188-P, caput, que ressalva ao filiado até 13/11/2019 o direito de opção pela aposentadoria do art. 64. Comparativo obrigatório com a transição por pontos (art. 21) é direito do segurado (Onda 170, retirada a menção ao art. 4º da EC 103, que trata da transição do servidor público).
+
+### Argumento 9 — Exigência de idade mínima após a ADI 6309
+
+Argumento adversário. O Decreto 3.048/99, art. 64, I a III, e a IN 128/2022, art. 260, I a III, exigem 55, 58 ou 60 anos de idade.
+
+Refutação. As idades reproduzem o art. 19, §1º, I, alíneas a, b e c, da EC 103, declarado inconstitucional na ADI 6309. A declaração tem eficácia contra todos e efeito vinculante sobre a Administração Pública federal (Lei 9.868/1999, art. 28, parágrafo único) [CONFERIDO, Planalto, 04/10/2026]. Sustentar que as idades do decreto e da IN perderam fundamento, porque o art. 57 da Lei 8.213/91 não prevê idade mínima (texto transcrito no voto do Min. Alexandre de Moraes, p. 105) e a regra constitucional que elas repetiam foi invalidada. O STF não declarou, por arrastamento, a inconstitucionalidade do art. 64 do Decreto nem do art. 260 da IN, e por isso o fundamento principal é o efeito vinculante.
+
+### Argumento 10 — Filiado até 13/11/2019 só se aposenta pelos pontos do art. 21
+
+Argumento adversário. A IN 128/2022, art. 262, aplica ao filiado até 13/11/2019 apenas a pontuação de 66, 76 ou 86 pontos.
+
+Refutação, como TESE a sustentar. O §1º do art. 19 da EC 103 não limita o alcance pela data de filiação, ao contrário do caput. O Decreto 3.048/99, art. 188-P, caput, ressalva ao filiado até 13/11/2019 o direito de opção pela aposentadoria do art. 64 [CONFERIDO, Planalto, 04/10/2026]. A regra de transição existe para atenuar a mudança, como registra o voto do Min. Cristiano Zanin na própria ADI 6309 ao reproduzir a manifestação da AGU (p. 168, voto vencido no ponto da idade), e não pode impor ao segurado antigo requisito mais gravoso que o do novo. Contra-argumento a enfrentar, a AGU sustentou nos autos que as regras de transição "aplicam-se a todos aqueles que já eram segurados" do RGPS (pp. 15 e 132). O STF não decidiu esse ponto na ADI 6309. Formular pedido principal pela regra sem idade e pedido sucessivo pelos pontos.
 
 ## 3. Estratégia integrada
 
