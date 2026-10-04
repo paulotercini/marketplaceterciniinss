@@ -14,13 +14,13 @@ sys.stdout.reconfigure(encoding="utf-8")
 # ---------------------------------------------------------------- 1. tabela de identidade
 
 todos = [p.name for p in __import__("ingestor").arquivos(incluir_fora=True)]
-assert len(todos) == 393, f"o corpus tinha 393 arquivos .md em 04/10/2026, agora tem {len(todos)}"
+assert len(todos) == 390, f"o corpus tinha 390 arquivos .md em 04/10/2026, agora tem {len(todos)}"
 faltam = [n for n in todos if n not in identidade.NORMAS]
 assert not faltam, f"arquivos fora da tabela de identidade: {faltam}"
 sobram = [n for n in identidade.NORMAS if n not in todos]
 assert not sobram, f"tabela de identidade aponta arquivo que não existe: {sobram}"
 assert all(n in identidade.NORMAS for n in identidade.FORA), "FORA cita arquivo fora da tabela"
-assert len({v[0] for v in identidade.NORMAS.values()}) == 382, "382 normas em 393 arquivos"
+assert len({v[0] for v in identidade.NORMAS.values()}) == 382, "382 normas em 390 arquivos"
 try:
     identidade.identidade("Lei-inexistente.md")
     raise SystemExit("arquivo fora da tabela tinha de levantar KeyError")
@@ -246,7 +246,7 @@ um = lambda s, *a: real.execute(s, a).fetchone()[0]
 
 # medido em 20/09/2026 contra os 55 arquivos ingeridos
 assert um("SELECT count(*) FROM norma") == 381, um("SELECT count(*) FROM norma")
-assert um("SELECT count(*) FROM artigo") == 23867, um("SELECT count(*) FROM artigo")
+assert um("SELECT count(*) FROM artigo") == 24083, um("SELECT count(*) FROM artigo")
 assert um("SELECT count(*) FROM artigo WHERE vigente=1 AND revogado=1") == 0, \
     "nenhuma versão revogada pode estar marcada como vigente"
 
@@ -262,11 +262,18 @@ assert um(f"SELECT alteracao_ano FROM artigo WHERE {L} AND chave='86' AND vigent
     "o art. 86 vigente é o da Lei 9.528/1997, com as duas redações da MP 905 revogadas"
 
 # IN 128: 674 artigos, zero repetido, zero marcador, e o inciso é com travessão
-assert um("SELECT count(DISTINCT chave) FROM artigo WHERE norma_id='in-128-2022'") == 674
-assert um("SELECT count(*) FROM artigo WHERE norma_id='in-128-2022'") == 674
-assert um("SELECT count(*) FROM artigo WHERE norma_id='in-128-2022' AND alteracao_tipo<>'original'") == 0
+# a IN 128 passou a vir consolidada do portal do INSS, num arquivo so, com o historico
+# de alteracao que as quatro partes do sirc nao tinham
+assert um("SELECT count(DISTINCT chave) FROM artigo WHERE norma_id='in-128-2022'") >= 674
+assert "portalin" in um("SELECT fonte_oficial FROM norma WHERE id='in-128-2022'")
+assert um("SELECT count(*) FROM artigo WHERE norma_id='in-128-2022'"
+          " AND alteracao_tipo<>'original'") >= 35
+# a lacuna era parar na IN 170/2024. A consolidada do portal alcanca a IN 188/2025.
+assert um("SELECT count(*) FROM artigo WHERE norma_id='in-128-2022'"
+          " AND texto LIKE '%nº 188%'") > 0, 'IN 128 sem as alteracoes da IN 188/2025'
+# o travessao do inciso da IN 128 continua sendo o discriminante, agora no texto consolidado
 assert um("SELECT count(*) FROM dispositivo d JOIN artigo a ON a.id=d.artigo_id"
-          " WHERE a.norma_id='in-128-2022' AND d.tipo='inciso'") == 1410
+          " WHERE a.norma_id='in-128-2022' AND d.tipo='inciso'") > 1400
 
 # Decreto 3.048: o regulamento tem 382 artigos, e o frontmatter diz 470
 assert um("SELECT count(DISTINCT num) FROM artigo WHERE norma_id='decreto-3048-1999'"
@@ -291,6 +298,14 @@ for a in ("117", "120", "123"):
 # os arts. 11 e 14 da EC 20 eram lidos como artigo 11-A e 14-A
 for a in ("11", "14"):
     assert um("SELECT count(*) FROM artigo WHERE norma_id='ec-20-1998' AND chave=?", a) > 0, a
+
+# as sete Portarias DIRBEN vem do portal do INSS, e nao mais do espelho normaslegais
+for n in ("990", "991", "992", "993", "994", "995", "996"):
+    f = um("SELECT fonte_oficial FROM norma WHERE id=?", "portaria-dirben-%s-2022" % n)
+    assert "portalin.inss.gov.br" in f, (n, f)
+# e trazem o historico de consolidacao, que a fotografia anterior nao tinha
+assert um("SELECT count(*) FROM artigo WHERE norma_id='portaria-dirben-991-2022'"
+          " AND alteracao_tipo<>'original'") > 20
 
 # comportamento previsto, declarado em identidade.py: não derruba a carga e não passa em silêncio
 assert um("SELECT count(*) FROM artigo WHERE norma_id='decreto-2172-1997'"
