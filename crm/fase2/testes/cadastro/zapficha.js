@@ -20,6 +20,7 @@ const MSGS = [
   { id: "m2", direcao: "entrada", tipo: "audio", texto: "marcando a perícia para o dia 20", midia_url: "zap/x/a1.ogg", status: "entregue", criado_em: "2026-10-01T13:01:00Z" },
   { id: "m3", direcao: "entrada", tipo: "audio", texto: null, midia_url: "zap/x/a2.ogg", status: "entregue", criado_em: "2026-10-01T13:02:00Z" },
   { id: "m4", direcao: "saida", autor_id: null, por_bot: true, tipo: "texto", texto: "Recebemos sua mensagem", status: "enviada", criado_em: "2026-10-01T13:03:00Z" },
+  { id: "m5", direcao: "entrada", tipo: "audio", texto: "[mídia não baixada]", midia_url: null, status: "entregue", criado_em: "2026-10-01T13:04:00Z" },
 ];
 
 (async () => {
@@ -73,6 +74,8 @@ const MSGS = [
   const jan = await p.textContent("#modal .zap-msgs");
   conf("a janela traz texto, áudio transcrito e áudio ainda transcrevendo", jan.includes("Chegou carta do INSS")
     && jan.includes("🎤 marcando a perícia para o dia 20") && jan.includes("transcrevendo…") && jan.includes("robô"));
+  conf("áudio antigo sem arquivo diz que não foi baixado e não oferece ouvir", jan.includes("áudio antigo, não baixado")
+    && (await p.$$eval("#modal .zap-b", bs => bs.filter(b => b.textContent.includes("não baixado") && b.querySelector("button")).length)) === 0);
   conf("a janela é só leitura: sem caixa de resposta", !(await p.$("#modal textarea")) && !(await p.$("#modal #zap-txt")));
   await p.waitForFunction(() => !(D.zapFicha || []).some(z => z.nao_lidas));
   conf("abrir zera as novas", patches.some(x => /zap_conversas\?id=in\./.test(x.u) && x.b.nao_lidas === 0));
