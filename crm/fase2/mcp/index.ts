@@ -652,8 +652,16 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
     inputSchema: z.object({ ...QUAL_CONVERSA, texto: z.string().min(2).max(4000) }),
     annotations: escrita,
   }, async ({ texto: txt, ...qual }) => {
-    const c = await conversaDe(qual);
-    if (!c) return texto("Conversa não encontrada; nada foi gravado. A conversa nasce quando o cliente escreve ou alguém a abre no CRM.");
+    let c = await conversaDe(qual);
+    // cliente que nunca escreveu: abre a conversa pelo telefone da ficha
+    if (!c && qual.cliente_id) {
+      const [cli] = await db(`clientes?select=nome,telefone&id=eq.${qual.cliente_id}`);
+      if (cli && soDig(cli.telefone).length >= 10) {
+        await db("rpc/zap_abrir", { p_telefone: soDig(cli.telefone), p_nome: cli.nome });
+        c = await conversaDe({ telefone: cli.telefone });
+      }
+    }
+    if (!c) return texto("Conversa não encontrada e o cliente não tem telefone no cadastro; nada foi gravado.");
     await db("zap_mensagens", { conversa_id: c.id, direcao: "saida", autor_id: eu.id, por_bot: true, tipo: "texto", texto: txt.trim(), status: "rascunho" });
     return texto(`Rascunho deixado na conversa com ${c.nome_perfil || c.telefone}. Nada foi enviado: confira no CRM e aperte "enviar".`);
   });

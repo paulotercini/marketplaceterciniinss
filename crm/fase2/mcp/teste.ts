@@ -54,6 +54,12 @@ const fake = Deno.serve({ port: 0, onListen() {} }, async (req) => {
     const rows = (T[t] || []).filter((r) => r.id === id); rows.forEach((r) => Object.assign(r, b));
     return Response.json(rows);
   }
+  if (req.method === "POST" && u.pathname.endsWith("/rpc/zap_abrir")) {
+    const b = await req.json(), id = crypto.randomUUID();
+    T.zap_conversas.push({ id, telefone: b.p_telefone, chave: String(b.p_telefone).replace(/\D/g, "").slice(-8), nome_perfil: b.p_nome,
+      cliente_id: null, lead_id: null, atendente_id: null, status: "aberta", nao_lidas: 0, ultima_em: null, ultimo_texto: null, bot_ativo: true });
+    return Response.json(id);
+  }
   if (req.method === "POST") {
     const t = u.pathname.replace("/rest/v1/", ""), b = await req.json();
     const novos = (Array.isArray(b) ? b : [b]).map((r: any) => ({ id: crypto.randomUUID(), ...r }));
@@ -194,6 +200,12 @@ const novo = T.zap_mensagens.at(-1);
 conf("o rascunho NÃO vai para a fila e não cala o bot", T.zap_mensagens.length === nz + 1 && novo.status === "rascunho" && novo.direcao === "saida"
   && novo.por_bot === true && novo.autor_id === EU && dz.includes("Nada foi enviado"));
 conf("conversa inexistente não grava rascunho", (await call("rascunhar_whatsapp", { telefone: "11 0000-0000", texto: "oi" })).includes("não encontrada") && T.zap_mensagens.length === nz + 1);
+const CLI2 = "c0000000-0000-0000-0000-000000000002";
+conf("cliente sem telefone e sem conversa não grava", (await call("rascunhar_whatsapp", { cliente_id: CLI2, texto: "oi" })).includes("não tem telefone") && T.zap_mensagens.length === nz + 1);
+T.clientes[1].telefone = "(16) 98888-0002";
+const r8 = await call("rascunhar_whatsapp", { cliente_id: CLI2, texto: "Bom dia, falta o comprovante de endereço." });
+conf("cliente que nunca escreveu: abre a conversa pelo telefone da ficha e deixa o rascunho", r8.includes("Nada foi enviado")
+  && T.zap_conversas.some((c) => c.chave === "88880002") && T.zap_mensagens.at(-1).status === "rascunho");
 const az = await call("whatsapp_para_anotacao", { mensagem_id: ZM, caso_id: CASO });
 conf("levar ao caso chama zap_virar_andamento com o autor", az.includes("Aposentadoria por idade rural")
   && T["rpc/zap_virar_andamento"]?.at(-1)?.p_mensagem === ZM && T["rpc/zap_virar_andamento"].at(-1).p_autor === EU);
@@ -215,7 +227,7 @@ await call("registrar_anotacao", { caso_id: CASO, texto: "🔎 Conferência de c
 conf("cliente conferido sai da fila por 90 dias", !(await call("casos_para_completar", {})).includes("Aurélia"));
 
 conf("a escrita só toca andamentos, tarefas, casos, cadastro e rascunho do WhatsApp", pedidos.filter((p) => !p.startsWith("GET")).every((p) =>
-  /^POST \/rest\/v1\/(andamentos|andamento_tarefas|zap_mensagens|rpc\/zap_virar_andamento)$/.test(p) || /^PATCH \/rest\/v1\/(andamento_tarefas|casos|clientes)\?id=eq\./.test(p)));
+  /^POST \/rest\/v1\/(andamentos|andamento_tarefas|zap_mensagens|rpc\/zap_virar_andamento|rpc\/zap_abrir)$/.test(p) || /^PATCH \/rest\/v1\/(andamento_tarefas|casos|clientes)\?id=eq\./.test(p)));
 
 // a conta do assistente não conclui, não reagenda e não altera o caso
 T.colaboradores[0].papel = "assistente_ia";
