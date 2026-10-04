@@ -21,7 +21,7 @@ Lei 4.375/1964. Lei do Serviço Militar.
 
 Decreto 3.048/1999, art. 19, III, a. Equivalência do tempo militar ao tempo de contribuição.
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
 ## Marco jurisprudencial
 

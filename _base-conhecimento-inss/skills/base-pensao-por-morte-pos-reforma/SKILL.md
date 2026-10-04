@@ -31,9 +31,9 @@ Lei 15.108/2025. Atualização pontual sobre pensão por morte (verificar vigên
 
 Portaria DIRBEN 4/2025. Disciplina administrativa sobre pensão por morte no INSS.
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 CF/88, art. 201, V e §2º. Pensão por morte como benefício previdenciário não inferior ao salário-mínimo.
 

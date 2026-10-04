@@ -23,7 +23,7 @@ IN 128/2022. Regras operacionais.
 
 Ofício-Circular 46/2019 DIRBEN. Orientações administrativas.
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
 ## Marco jurisprudencial
 

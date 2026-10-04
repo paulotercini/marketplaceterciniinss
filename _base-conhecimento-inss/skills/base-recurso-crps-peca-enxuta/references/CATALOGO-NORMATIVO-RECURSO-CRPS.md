@@ -89,7 +89,7 @@ Atenção. O HTML consolidado do Planalto pode estar defasado em relação a alt
 
 **Decreto 6.214/2007.** Regulamento do BPC.
 
-**Decreto 53.831/1964.** Quadro Anexo de agentes nocivos. Aplicável para enquadramento por categoria profissional até 28/04/1995, por força das Súmulas 198/TFR e 555/STJ (admitida a citação pontual destas súmulas judiciais em razão da consolidação histórica).
+**Decreto 53.831/1964.** Quadro Anexo de agentes nocivos. Aplicável para enquadramento por categoria profissional até 28/04/1995, por força da Súmula 198/TFR (admitida a citação pontual desta súmula judicial em razão da consolidação histórica).
 
 ## NÍVEL 5 - INSTRUÇÕES NORMATIVAS
 

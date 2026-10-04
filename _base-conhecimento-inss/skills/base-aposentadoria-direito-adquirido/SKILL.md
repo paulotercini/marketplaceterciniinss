@@ -21,11 +21,11 @@ Lei 13.183/2015. Instituiu a regra 85/95 progressiva que continua aplicável a q
 
 EC 20/1998, art. 9º. Transição: integral com pedágio de 20% (caput) e proporcional com pedágio de 40% sobre o tempo faltante em 16/12/1998 (§1º), ambas com idade mínima de 53 anos (homem) ou 48 anos (mulher).
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Cenários operacionais pró-segurado
 

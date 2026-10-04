@@ -60,11 +60,40 @@ def ler_tudo():
                                          "ano": ano, "titulo": titulo,
                                          "arquivos": [], "artigos": [], "metas": [], "textos": []})
         d["arquivos"].append(caminho.name)
-        d["artigos"].extend(lido["artigos"])
+        d["artigos"].extend(lido["artigos"] or trechos(lido["preambulo"], caminho.name))
         d["metas"].append(lido["meta"])
         d["textos"].append(lido["preambulo"])
         d["textos"].extend(a["texto"] for a in lido["artigos"])
     return normas, desconhecidos
+
+
+def trechos(corpo, arquivo, tamanho=1800):
+    """Arquivo sem artigo nenhum vira trecho buscavel, com chave t1, t2 e assim por diante.
+    Sao os Anexos II a IV do Decreto 3.048, que trazem o quadro de agentes nocivos em
+    pseudo-tabela, e o Anexo VI da Portaria 1851. Sem isto, busca por ruido ou por agente
+    quimico nao alcanca o Decreto 3.048, que e o caso que mais pesa na aposentadoria especial."""
+    # a pseudo-tabela do anexo nao tem marcador de dispositivo, entao o reagrupar junta o
+    # documento inteiro numa linha so. Por isso o corte e por tamanho, e nao so por linha.
+    linhas = []
+    for l in corpo.split(chr(10)):
+        l = l.strip()
+        while len(l) > tamanho:
+            corte = l.rfind(" ", 0, tamanho) or tamanho
+            linhas.append(l[:corte]); l = l[corte:].lstrip()
+        if l:
+            linhas.append(l)
+    blocos, atual = [], []
+    for l in linhas:
+        atual.append(l)
+        if sum(len(x) for x in atual) >= tamanho:
+            blocos.append(atual); atual = []
+    if atual:
+        blocos.append(atual)
+    return [{"chave": "t%d" % i, "num": i, "sufixo": "", "parte": "texto", "contexto": "",
+             "alteracao_tipo": "original", "alteracao_norma": "", "alteracao_ano": None,
+             "marcador": "", "revogado": 0, "versao": 1, "total_versoes": 1, "vigente": 1,
+             "texto": chr(10).join(b), "arquivo": arquivo, "linha": 0}
+            for i, b in enumerate(blocos, 1)]
 
 
 def _consolidar_meta(d):

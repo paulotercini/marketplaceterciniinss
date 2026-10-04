@@ -32,9 +32,9 @@ EC 103/2019, art. 26, §3º, II. RMI da aposentadoria por incapacidade permanent
 
 Portaria Conjunta MPS/INSS 14/2026. Amplia, em caráter transitório, de 30 para 90 dias o limite de duração do B31 concedido por análise documental, prorrogada por 365 dias pela Portaria Conjunta MPS/INSS 43/2026 (DOU de 21/09/2026). Não é a norma da análise documental do B91. Acionar `analise-documental-incapacidade`.
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
-Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Requisitos cumulativos
 
