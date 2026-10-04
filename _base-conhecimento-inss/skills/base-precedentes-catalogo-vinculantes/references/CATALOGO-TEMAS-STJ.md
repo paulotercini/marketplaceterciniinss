@@ -40,9 +40,9 @@ Este documento reúne teses firmadas pelo Superior Tribunal de Justiça (STJ) em
 
 - **Tema 544:** O suporte de incidência do prazo decadencial previsto no art. 103 da Lei 8.213/1991 é o direito de revisão dos benefícios, e não o direito ao benefício previdenciário. Incide o prazo de decadência no direito de revisão dos benefícios concedidos ou indeferidos anteriormente a esse preceito normativo, com termo a quo a contar da sua vigência (28.6.1997).
 
-- **Tema 546:** A lei vigente por ocasião da aposentadoria é a aplicável ao direito à conversão entre tempos de serviço especial e comum, independentemente do regime jurídico à época da prestação do serviço. É possível a conversão para as aposentadorias submetidas ao regime da Lei 8.213/1991.
+- **Tema 546:** [Tese literal conferida no portal do STJ em 04/10/2026 (Onda 174)] "A lei vigente por ocasião da aposentadoria é a aplicável ao direito à conversão entre tempos de serviço especial e comum, independentemente do regime jurídico à época da prestação do serviço." A frase sobre a conversão nas aposentadorias da Lei 8.213/1991, que a versão anterior desta linha trazia, não integra a tese.
 
-- **Tema 554:** Aplica-se a Súmula 149/STJ aos trabalhadores rurais denominados 'boias-frias', sendo imprescindível a apresentação de início de prova material. A aplicação da súmula é mitigada se a reduzida prova material for complementada por idônea e robusta prova testemunhal.
+- **Tema 554:** [Tese literal conferida no portal do STJ em 04/10/2026 (Onda 174)] "Aplica-se a Súmula 149/STJ ('A prova exclusivamente testemunhal não basta à comprovação da atividade rurícola, para efeitos da obtenção de benefício previdenciário') aos trabalhadores rurais denominados 'boias-frias', sendo imprescindível a apresentação de início de prova material. Por outro lado, considerando a inerente dificuldade probatória da condição de trabalhador campesino, a apresentação de prova material somente sobre parte do lapso temporal pretendido não implica violação da Súmula 149/STJ, cuja aplicação é mitigada se a reduzida prova material for complementada por idônea e robusta prova testemunhal." USO, citar pela segunda frase, que é a favorável.
 
 - **Tema 555:** A acumulação do auxílio-acidente com proventos de aposentadoria pressupõe que a eclosão da lesão incapacitante e a concessão da aposentadoria sejam anteriores à alteração do art. 86, §§ 2º e 3º, da Lei 8.213/1991, promovida em 11.11.1997. (Originou a Súmula 507/STJ)
 
@@ -56,13 +56,13 @@ Este documento reúne teses firmadas pelo Superior Tribunal de Justiça (STJ) em
 
 - **Tema 627:** O segurado especial, cujo acidente ou moléstia é anterior à vigência da Lei n. 12.873/2013, não precisa comprovar o recolhimento de contribuição como segurado facultativo para ter direito ao auxílio-acidente.
 
-- **Tema 629:** A ausência de conteúdo probatório eficaz a instruir a inicial implica a carência de pressuposto de constituição e desenvolvimento válido do processo, impondo sua extinção sem o julgamento do mérito (art. 267, IV do CPC/73) e a consequente possibilidade de o autor intentar novamente a ação (art. 268 do CPC/73).
+- **Tema 629:** [Tese literal conferida no portal do STJ em 04/10/2026 (Onda 174)] "A ausência de conteúdo probatório eficaz a instruir a inicial, conforme determina o art. 283 do CPC, implica a carência de pressuposto de constituição e desenvolvimento válido do processo, impondo sua extinção sem o julgamento do mérito (art. 267, IV do CPC) e a consequente possibilidade de o autor intentar novamente a ação (art. 268 do CPC), caso reúna os elementos necessários à tal iniciativa." Os artigos citados são do CPC/1973.
 
 - **Tema 638:** Mostra-se possível o reconhecimento de tempo de serviço rural anterior ao documento mais antigo, desde que amparado por convincente prova testemunhal, colhida sob contraditório. (Originou a Súmula 577/STJ)
 
 - **Tema 640:** Aplica-se o parágrafo único do artigo 34 do Estatuto do Idoso (Lei n. 10.741/03), por analogia, a pedido de benefício assistencial feito por pessoa com deficiência a fim de que benefício previdenciário recebido por idoso, no valor de um salário mínimo, não seja computado no cálculo da renda per capita.
 
-- **Tema 642:** O segurado especial tem que estar laborando no campo, quando completar a idade mínima para se aposentar por idade rural. Ressalvada a hipótese do direito adquirido, em que o segurado especial, embora não tenha requerido sua aposentadoria, preenchera de forma concomitante, no passado, ambos os requisitos (carência e idade).
+- **Tema 642:** [Tese literal conferida no portal do STJ em 04/10/2026 (Onda 174)] "O segurado especial tem que estar laborando no campo, quando completar a idade mínima para se aposentar por idade rural, momento em que poderá requerer seu benefício. Ressalvada a hipótese do direito adquirido, em que o segurado especial, embora não tenha requerido sua aposentadoria por idade rural, preenchera de forma concomitante, no passado, ambos os requisitos carência e idade." USO, citar pela ressalva do direito adquirido; a primeira frase é adversa.
 
 - **Tema 643:** Não há falar em restabelecimento da pensão por morte ao beneficiário, maior de 21 anos e não inválido, diante da taxatividade da lei previdenciária, porquanto não é dado ao Poder Judiciário legislar positivamente.
 
@@ -78,7 +78,7 @@ Este documento reúne teses firmadas pelo Superior Tribunal de Justiça (STJ) em
 
 - **Tema 704:** A aposentadoria por invalidez decorrente da conversão de auxílio-doença, sem retorno do segurado ao trabalho, será apurada na forma estabelecida no art. 36, § 7º, do Decreto 3.048/99. (Originou a Súmula 557/STJ)
 
-- **Tema 732:** O menor sob guarda tem direito à concessão do benefício de pensão por morte do seu mantenedor, comprovada sua dependência econômica, nos termos do art. 33, § 3º do Estatuto da Criança e do Adolescente, ainda que o óbito seja posterior à Lei 9.528/97.
+- **Tema 732:** O menor sob guarda tem direito à concessão do benefício de pensão por morte do seu mantenedor, comprovada sua dependência econômica, nos termos do art. 33, § 3º do Estatuto da Criança e do Adolescente, ainda que o óbito do instituidor da pensão seja posterior à vigência da Medida Provisória 1.523/96, reeditada e convertida na Lei 9.528/97. Funda-se essa conclusão na qualidade de lei especial do Estatuto da Criança e do Adolescente (8.069/90), frente à legislação previdenciária. [Tese literal conferida no portal do STJ em 04/10/2026 (Onda 174). REsp 1411258/RS, trânsito em 09/03/2023]
 
 - **Tema 862:** O termo inicial do auxílio-acidente deve recair no dia seguinte ao da cessação do auxílio-doença que lhe deu origem, conforme determina o art. 86, § 2º, da Lei 8.213/91, observando-se a prescrição quinquenal da Súmula 85/STJ.
 
@@ -94,7 +94,7 @@ Este documento reúne teses firmadas pelo Superior Tribunal de Justiça (STJ) em
 
 - **Tema 982:** Comprovadas a invalidez e a necessidade de assistência permanente de terceiro, é devido o acréscimo de 25%, previsto no art. 45 da Lei n. 8.213/91, a todos os aposentados pelo RGPS, independentemente da modalidade de aposentadoria.
 
-- **Tema 995:** É possível a reafirmação da DER (Data de Entrada do Requerimento) para o momento em que implementados os requisitos para a concessão do benefício, mesmo que isso se dê no interstício entre o ajuizamento da ação e a entrega da prestação jurisdicional nas instâncias ordinárias.
+- **Tema 995:** [Tese literal conferida no portal do STJ em 04/10/2026 (Onda 174)] "É possível a reafirmação da DER (Data de Entrada do Requerimento) para o momento em que implementados os requisitos para a concessão do benefício, mesmo que isso se dê no interstício entre o ajuizamento da ação e a entrega da prestação jurisdicional nas instâncias ordinárias, nos termos dos arts. 493 e 933 do CPC/2015, observada a causa de pedir."
 
 - **Tema 998:** O Segurado que exerce atividades em condições especiais, quando em gozo de auxílio-doença, seja acidentário ou previdenciário, faz jus ao cômputo desse mesmo período como tempo de serviço especial.
 

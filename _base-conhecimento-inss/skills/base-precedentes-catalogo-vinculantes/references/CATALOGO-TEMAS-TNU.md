@@ -213,7 +213,7 @@
 
 - **Tema 214:** O processo de industrialização rudimentar por meio do carvoejamento não descaracteriza a condição de segurado especial.
 
-- **Tema 216:** Para fins previdenciários, o cômputo do tempo de serviço como aluno-aprendiz exige comprovação simultânea de: (i) retribuição; (ii) à conta do Orçamento; (iii) contraprestação por labor; (iv) na execução de bens e serviços a terceiros. (Revisão da Súmula 18/TNU).
+- **Tema 216:** Para fins previdenciários, o cômputo do tempo de serviço prestado como aluno-aprendiz exige a comprovação de que, durante o período de aprendizado, houve simultaneamente: (i) retribuição consubstanciada em prestação pecuniária ou em auxílios materiais; (ii) à conta do Orçamento; (iii) a título de contraprestação por labor; (iv) na execução de bens e serviços destinados a terceiros. (alterada a redação da Súmula 18/TNU). [Tese literal conferida no portal do CJF em 04/10/2026 (Onda 174). PEDILEF 0525048-76.2017.4.05.8100/CE, julgado em 14/02/2020, trânsito em 06/05/2020]
 
 - **Tema 217:** [Tese literal conferida na página oficial em 11/07/2026. Julgado em 21/08/2020, PEDILEF 0002358-97.2015.4.01.3507/GO] "Em relação ao benefício assistencial e aos benefícios por incapacidade, é possível conhecer de um deles em juízo, ainda que não seja o especificamente requerido na via administrativa, desde que preenchidos os requisitos legais, observando-se o contraditório e o disposto no artigo 9º e 10 do CPC." A parte final (contraditório, arts. 9º e 10 do CPC) integra a tese e deve ser enfrentada na peça.
 
@@ -241,7 +241,7 @@
 
 - **Tema 245:** A invalidação do ato de concessão de benefício previdenciário não impede a aplicação do art. 15, I da Lei 8.213/91 ao segurado de boa-fé.
 
-- **Tema 246:** I - Quando a decisão judicial adotar a estimativa de prazo de recuperação da perícia, o termo inicial é a data do exame. II - Quando o ato de concessão não indicar o tempo de recuperação, o prazo de 120 dias conta-se da data da efetiva implantação.
+- **Tema 246:** I - Quando a decisão judicial adotar a estimativa de prazo de recuperação da capacidade prevista na perícia, o termo inicial é a data da realização do exame, sem prejuízo do disposto no art. 479 do CPC, devendo ser garantido prazo mínimo de 30 dias, desde a implantação, para viabilizar o pedido administrativo de prorrogação. II - quando o ato de concessão (administrativa ou judicial) não indicar o tempo de recuperação da capacidade, o prazo de 120 dias, previsto no § 9º, do art. 60 da Lei 8.213/91, deve ser contado a partir da data da efetiva implantação ou restabelecimento do benefício no sistema de gestão de benefícios da autarquia. [Tese literal conferida no portal do CJF em 04/10/2026 (Onda 174). PEDILEF 0500881-37.2018.4.05.8204/PB, julgado em 20/11/2020, trânsito em 29/01/2021]
 
 - **Tema 247:** A pretensão de expedição de novo precatório ou RPV, após o cancelamento previsto na Lei nº 13.463/2017, prescreve em cinco anos. (Lei declarada inconstitucional na ADI 5755).
 

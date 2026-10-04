@@ -157,7 +157,9 @@ Por que este exemplo é o padrão. Bate o olho e entende. As datas que aparecem 
 
 **Limite de linhas (apertado na Onda 118).** Máximo 6 linhas, com os acessórios (custas, honorários, AJG) agrupados em linha única. UM fundamento por linha, o mais forte. Empilhar três dispositivos e dois temas na mesma célula transforma o resumo em nova argumentação, que é exatamente o que ele existe para evitar.
 
-### Combinação de Componentes [REFORMADA NA ONDA 118]
+### Combinação de Componentes [REFORMADA NA ONDA 118, OPCIONAL DESDE A ONDA 174]
+
+Na Onda 174 o titular fixou o Método Tercini, cuja petição não leva síntese inicial nem quadro-resumo, porque a ordem fixa de seções já entrega ao julgador, nas primeiras linhas de DOS FATOS, o benefício, o indeferimento e a virada. Por isso o componente Visual Law passa a ser opcional nas peças judiciais e administrativas, e entra só quando o titular pedir ou quando a matéria exigir tabela (períodos especiais, contribuições, grupo familiar e renda), até três por peça. O memorial mantém o quadro-resumo. As regras abaixo valem quando o componente for usado.
 
 **Teto de TRÊS componentes por peça, sendo o quadro-resumo sempre um deles.** A regra anterior mandava empilhar os cinco na inicial típica, e o resultado eram peças carregadas que cansavam a leitura. Visual Law funciona por contraste, e cinco tabelas não contrastam com nada.
 

@@ -165,6 +165,10 @@ A Camada 6 da revisão roda o mesmo medidor antes de qualquer outra camada.
 
 O titular relatou que as peças continuavam truncadas e de difícil compreensão, e aprovou a calibragem em que o parágrafo passa a ter de quatro a cinco linhas, com teto de seis, a frase de 15 a 35 palavras e as transições se tornam obrigatórias. Também aprovou a retirada de proibições sem utilidade no texto jurídico formal, como a vedação absoluta de dois-pontos e a lista que tratava termos técnicos como adjetivos. As medidas, a lista de transições, o que continua vedado e os parágrafos-modelo estão em `peticao-previdenciaria/references/ESTILO-MODELO.md`.
 
+## Método Tercini de petição (Onda 174, 04/10/2026)
+
+O titular entregou o seu próprio modelo de petição inicial de benefício por incapacidade e determinou que todas as peças, em todos os temas, sigam a forma e a escrita dele. O método extraído está em `peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md` e prevalece sobre o `ESTILO-MODELO.md` na estrutura, nas fórmulas e na voz, mantidas as medidas da Onda 163. A petição inicial tem ordem fixa (inexistência de ação com o mesmo objeto, fatos com a subseção do fato decisivo, direito do benefício, requerimentos, valor da causa, fecho e quesitos), a parte é "a Parte Autora", o INSS é "a Autarquia Federal" depois da primeira menção, o documento vem com emitente, data e trecho literal em negrito e itálico, a lei é transcrita antes de aplicada e o fecho é "Termos em que," e "Pede deferimento.". Os 72 Modelos Ouro 2.0 foram reescritos no método na mesma data.
+
 ## Persuasão com base empírica (Onda 157, 26/09/2026)
 
 O titular pediu escrita de fácil interpretação, formal e jurídica, mas extremamente convincente, e sugeriu a programação neurolinguística. A pesquisa descartou a PNL e adotou nove técnicas, oito com eficácia medida em juízes, advogados ou leitores em geral e uma por inferência declarada, todas aplicadas sobre fato verdadeiro e prova que está nos autos. A Onda 160 incorporou o estudo de consolidação do titular, com o fundamento clássico, os limites do CPC e as cautelas sobre a evidência.

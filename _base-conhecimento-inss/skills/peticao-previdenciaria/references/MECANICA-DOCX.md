@@ -76,8 +76,9 @@ Footer das páginas seguintes é vazio. **Não exibir número de página** em ne
 
 Exemplos por tipo de peça.
 
-- **JEF judicial**: "EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) FEDERAL DO EGRÉGIO JUIZADO ESPECIAL FEDERAL DE [CIDADE], ESTADO DE SÃO PAULO."
-- **Rito ordinário**: "EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) FEDERAL DA ___ VARA FEDERAL DA SUBSEÇÃO JUDICIÁRIA DE [CIDADE], SEÇÃO JUDICIÁRIA DE SÃO PAULO."
+- **JEF judicial** (forma do titular, Onda 174): "EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) FEDERAL DO EGRÉGIO JUIZADO ESPECIAL FEDERAL DA SUBSEÇÃO DE [CATANDUVA/SP]". É também o endereçamento da interposição do recurso inominado, das contrarrazões e das petições intermediárias no JEF.
+- **Rito ordinário**: "EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) FEDERAL DA [__] VARA FEDERAL DA SUBSEÇÃO JUDICIÁRIA DE [CIDADE/SP]".
+- **Ação acidentária**: "EXCELENTÍSSIMO(A) SENHOR(A) DOUTOR(A) JUIZ(A) DE DIREITO DA [VARA/NÚCLEO] DA COMARCA DE [CIDADE/SP]".
 - **Mandado de segurança**: idêntico ao rito ordinário, dirigido à Vara Cível Federal ou Vara Previdenciária competente (consultar skills `mandado-seguranca-previdenciario` e `ms-competencia-autoridade-coatora`).
 - **Turma Recursal**: "EXCELENTÍSSIMO SENHOR DOUTOR JUIZ FEDERAL PRESIDENTE DA EGRÉGIA TURMA RECURSAL DOS JUIZADOS ESPECIAIS FEDERAIS DA 3ª REGIÃO."
 - **CRPS**: "ILMO. SR. PRESIDENTE E DEMAIS MEMBROS DA __ CÂMARA DE JULGAMENTO DO CONSELHO DE RECURSOS DA PREVIDÊNCIA SOCIAL (CRPS)" ou "ILMO. SR. PRESIDENTE E DEMAIS MEMBROS DA __ JUNTA DE RECURSOS DO CONSELHO DE RECURSOS DA PREVIDÊNCIA SOCIAL (CRPS)".
@@ -92,16 +93,13 @@ Exemplos por tipo de peça.
 
 ### Qualificação das Partes
 
-A qualificação é redigida em parágrafo único de texto corrido, com recuo de primeira linha de 2 cm (judicial) ou 4 cm (CRPS), alinhado justificado.
+Forma do titular (Onda 174, `METODO-PETICAO-TERCINI.md`), em três blocos com recuo de primeira linha de 2 cm (judicial) ou 4 cm (CRPS), alinhados justificados.
 
-Elementos do parágrafo de qualificação na ordem.
+1. Parágrafo de qualificação. "**[Qualificação copiada da procuração]**, por seu advogado que esta subscreve (procuração em anexo), vem, respeitosamente, à presença de Vossa Excelência, propor a presente". A qualificação civil é a da procuração, com o nome em caixa alta e negrito.
+2. Nome da ação em linha própria, centralizado, em negrito e caixa alta (`# AÇÃO JUDICIAL PARA CONCESSÃO DE ...` no Markdown).
+3. Parágrafo de encerramento. "que move em face do **INSTITUTO NACIONAL DO SEGURO SOCIAL (INSS)**, Gerência Executiva na cidade de São José do Rio Preto-SP, localizado na Avenida Bady Bassit, nº 3.268, 4º andar, Centro, São José do Rio Preto/SP, CEP 15.025-000, pelas razões de fato e de direito a seguir expostas."
 
-1. Nome do autor em **CAIXA ALTA + NEGRITO** (inline, sem parágrafo isolado)
-2. Qualificação civil (nacionalidade, estado civil, profissão, RG, CPF, endereço)
-3. Conexão com a peça ("vem, respeitosamente, perante V. Exa., propor a presente")
-4. **Nome da ação em CAIXA ALTA + NEGRITO**, inline, no próprio parágrafo de qualificação (não em parágrafo isolado destacado)
-5. "que move em face do INSTITUTO NACIONAL DO SEGURO SOCIAL – INSS", com **INSS em CAIXA ALTA + NEGRITO**
-6. Encerramento ("pelos fatos e fundamentos a seguir expostos")
+Nas peças intermediárias o parágrafo de qualificação é "**[NOME DA PARTE AUTORA]**, já qualificada nos autos do processo em epígrafe, que move em face do **INSTITUTO NACIONAL DO SEGURO SOCIAL (INSS)**, por seu advogado que esta subscreve, vem, respeitosamente, à presença de Vossa Excelência", seguido do nome da peça.
 
 ### Títulos de Seção — Tabela Preta
 
@@ -133,7 +131,7 @@ Elementos do parágrafo de qualificação na ordem.
 - `3. DO MÉRITO`
 - `3.1. DA IMPUGNAÇÃO OBJETIVA DA PONTUAÇÃO ATRIBUÍDA PELO PERITO MÉDICO`
 - `4. DA REAFIRMAÇÃO DA DER`
-- `5. DOS PEDIDOS`
+- `5. REQUERIMENTOS` (título literal do titular, sem DA/DO, como QUESITOS)
 
 **Regra de títulos formais (Onda 162, 29/09/2026, determinação do titular para TODAS as peças).** O título de seção é formal, jurídico, numerado e nominal. Começa por DA, DO, DOS ou DAS e nomeia o instituto, o requisito, o vício ou o pedido, como os exemplos reais acima, em no máximo doze palavras e de preferência em uma linha da tabela preta. O título não traz fato, data, número, valor, ID, nome de documento do caso, adjetivo, advérbio nem juízo de valor, e não antecipa a conclusão.
 
@@ -148,8 +146,9 @@ O `scripts/medir_peca.py` confere os títulos e aponta como achado IMPORTANTE o 
 
 ### Fechamento e Assinatura
 
-- "Pede deferimento." ou "Nestes Termos, Pede e Espera Deferimento."
-- Local e data: "Monte Alto – SP, [data por extenso]." A unidade federativa é OBRIGATÓRIA, no mesmo padrão do rodapé timbrado e da carta de retificação de PPP, com travessão curto. Exemplo, "Monte Alto – SP, 10 de setembro de 2026."
+- "Termos em que," e "Pede deferimento.", cada um em parágrafo próprio, sem recuo (forma do titular, Onda 174).
+- Local e data: "Monte Alto/SP, [data por extenso]." A unidade federativa é OBRIGATÓRIA. Exemplo, "Monte Alto/SP, 10 de setembro de 2026."
+- O conversor mantém fecho e assinatura na mesma página.
 - Assinatura centralizada, com espaçamento maior antes (line break ou parágrafo vazio):
   - **PAULO ROBERTO TERCINI FILHO** (Bookman Old Style 12pt, negrito, caixa alta, centralizado)
   - **OAB/SP 331.110** (Bookman Old Style 12pt, negrito, centralizado)
@@ -159,8 +158,8 @@ O `scripts/medir_peca.py` confere os títulos e aponta como achado IMPORTANTE o 
 Recurso Inominado, Pedido de Uniformização à TNU, Agravo Interno e Recurso Especial ao CRPS possuem duas partes na mesma peça.
 
 1. **Petição de encaminhamento** dirigida ao juízo ou presidente do órgão, com identificação das partes, fundamentação do cabimento e pedido de remessa. Termina com assinatura
-2. Quebra de página
-3. **Razões recursais** com cabeçalho próprio centralizado em caixa alta espaçada (ex. "E G R É G I A   T U R M A   R E C U R S A L" ou "COLENDA TURMA / EMÉRITOS JULGADORES"), identificação das partes (Recorrente/Apelante/Agravante e Recorrido/Apelado/Agravado) e desenvolvimento da fundamentação com os títulos pretos numerados
+2. Quebra de página (`@quebra`)
+3. **Razões recursais** com cabeçalho próprio centralizado em caixa alta (`# RAZÕES DO RECURSO INOMINADO`, seguido de "EGRÉGIA TURMA RECURSAL" ou "COLENDA TURMA, EMÉRITOS JULGADORES"), identificação das partes (Recorrente/Apelante/Agravante e Recorrido/Apelado/Agravado) e desenvolvimento da fundamentação com os títulos pretos numerados
 
 ---
 

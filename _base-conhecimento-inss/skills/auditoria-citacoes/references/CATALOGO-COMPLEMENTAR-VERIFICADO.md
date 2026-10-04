@@ -672,11 +672,11 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Conferido em. 03/10/2026 (auditoria 03/10/2026)
 
 ### ADI 6096
-- Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1B). Julgada em 13/10/2020, por 6 votos a 5. Embargos rejeitados em 14/06/2021.
-- Tese literal. Não transcrita no relatório C1B, que traz só esta síntese: inconstitucional o art. 24 da Lei 13.846/2019, na parte em que deu nova redação ao art. 103 da Lei 8.213/91. Copiar a redação literal da fonte antes de citar em peça.
+- Situação. CONFIRMADO_FONTE_OFICIAL, andamento lido no portal na Onda 174. Sessão virtual de 02/10/2020 a 09/10/2020 (o relatório C1B registra 13/10/2020), por 6 votos a 5. Embargos rejeitados em 14/06/2021. Trânsito em julgado em 03/08/2021. Efeito prático, o art. 103 da Lei 8.213/91 aplica-se na redação da Lei 10.839/2004.
+- Tese literal. Não há tese fixada. Dispositivo, "julgou parcialmente procedente o pedido, declarando a inconstitucionalidade do art. 24 da Lei nº 13.846/2019 no que deu nova redação ao art. 103 da Lei nº 8.213/1991".
 - Órgão e leading case. STF, Rel. Min. Edson Fachin. Vencidos Marco Aurélio, Dias Toffoli, Gilmar Mendes, Luís Roberto Barroso e Luiz Fux.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=5647251
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 04/10/2026 (portal, Onda 174)
 
 ### ADI 6309
 - Situação. CONFIRMADO_FONTE_OFICIAL, inteiro teor lido na Onda 170. Julgamento na sessão presencial de 03/06/2026, acórdão datado de 08/06/2026, ata no DJe de 11/06/2026, decisão publicada no DOU de 12/06/2026 (Seção 1, edição 108, p. 1), acórdão no DJe de 02/10/2026. Inteiro teor de 217 páginas, com código de autenticação C1BF-E5C1-9306-C208 na ementa e no acórdão (pp. 1 a 6). Sem tese de julgamento e sem modulação de efeitos. Até 04/10/2026, sem embargos de declaração registrados e sem trânsito certificado, com prazo de embargos em curso desde a publicação de 02/10/2026. A data de 12/07/2026 que aparece em títulos da base é a do registro na base, não a do julgamento.
