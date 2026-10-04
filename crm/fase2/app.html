@@ -3221,7 +3221,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.75</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.76</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11943,7 +11943,11 @@ async function abrirFicha(cliId){
     abaAtiva = temCaso ? 2 : 0;
     if(!temCaso && !SUB_CAD.some(([x])=>x===subCad)){
       const pcsA=precasosDe(c);
-      subCad = !triagemFechada(c) ? "triagem"
+      // F172 · sem atendimento aberto e com anotações (lista 🙋 Escritório),
+      // a ficha abre na Análise de Direito, onde elas estão
+      const temNotas=notasDoTodo(c), vivosA=pcsA.some(p=>!p.so_lembrete);
+      subCad = (temNotas && !vivosA) ? "direito"
+        : !triagemFechada(c) ? "triagem"
         : (pcsA.some(p=>!p.so_lembrete)||!pcsA.length) ? "anotacoes" : "identificacao";
     }
     instSel = 0; tudoSoMarcos = false;    // escolhas do cliente ANTERIOR não vazam
@@ -12418,7 +12422,8 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
   }
   // F171 · Análise de Direito: com caso, com análise já salva, ou no
   // atendimento depois da triagem encerrada (a análise vem depois da triagem e dos documentos)
-  vis.direito = !semCaso || analisesDe(c.id).length>0 || (pcsVivos.length>0 && triFechada) || !!adPre;
+  vis.direito = !semCaso || analisesDe(c.id).length>0 || (pcsVivos.length>0 && triFechada) || !!adPre
+    || notasDoTodo(c);   // F172 · anotações vindas da lista 🙋 Escritório do To Do
   // valores antigos gravados: "atendimento" era o trilho interno de
   // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
@@ -16056,8 +16061,14 @@ function feedTriagem(c, ks){
   return grupos;
 }
 function feedAnotacoes(c){
-  return ((c.campos||{}).atendimento||[])
-    .map(n=>({ts: Date.parse(n.em)||0, texto: n.texto||"", quem: n.quem||"", em: n.em}))
+  // F172 · junto das anotações do cadastro, os andamentos dos casos que ainda
+  // estão na fase Escritório (a lista 🙋 Escritório do To Do de antes da 08.99)
+  const doEscr = (D._andsFicha||[]).filter(a=>{ const k=D.casoPorId.get(a.caso_id);
+      return k && k.cliente_id===c.id && k.fase==="escritorio" && a.texto; })
+    .map(a=>({ts: Date.parse(a.criado_em)||0, texto: a.texto, em: a.criado_em,
+      quem: ((D.colPorId.get(a.autor_id)||{}).nome||"").split(" ")[0]}));
+  return [...((c.campos||{}).atendimento||[])
+    .map(n=>({ts: Date.parse(n.em)||0, texto: n.texto||"", quem: n.quem||"", em: n.em})), ...doEscr]
     .sort((a,b)=>b.ts-a.ts);
 }
 function quadrosDireito(c, ks){
@@ -16072,9 +16083,29 @@ function quadrosDireito(c, ks){
       ${grupo("pendente", "Não conferido", tri.pendente)}
       ${grupo("ok", "Sem pendência", tri.ok)}
     </div>` : "")
-    + (anot.length ? `<div class="ad-quadro ad-q-anot"><div class="rotulo-caso">Anotações</div>
-      <ul class="ad-feed">${anot.map(f=>`<li class="anot">${esc(f.texto)}<span class="ad-quem">${f.quem?esc(f.quem):"—"}${f.em?` · ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>
-    </div>` : "");
+    // F172 · as anotações do cliente (inclusive as que vieram da lista
+    // 🙋 Escritório do To Do) ficam aqui, e se anota daqui mesmo
+    + `<div class="ad-quadro ad-q-anot"><div class="rotulo-caso">Anotações</div>
+      <div class="form-linha" style="margin:4px 0 8px">
+        <textarea id="ad-anot" rows="2" style="flex:1;min-width:220px" placeholder="anotar sobre este cliente (fica nas Anotações e aqui)"
+          onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();anotarNoDireito('${c.id}');}"></textarea>
+        <button class="btn-mini forte" style="align-self:flex-start" onclick="anotarNoDireito('${c.id}')">anotar</button></div>
+      ${anot.length ? `<ul class="ad-feed">${anot.map(f=>`<li class="anot">${esc(f.texto)}<span class="ad-quem">${f.quem?esc(f.quem):"—"}${f.em?` · ${esc(fmt(f.em))}`:""}</span></li>`).join("")}</ul>`
+        : `<p class="meio-sub" style="margin:0">nenhuma anotação ainda</p>`}
+    </div>`;
+}
+// F172 · o cliente tem anotações vindas do To Do (lista 🙋 Escritório)?
+const notasDoTodo = c => ((c.campos||{}).atendimento||[]).some(n=>n.origem==="todo");
+async function anotarNoDireito(cliId){
+  const c = D.cliPorId.get(cliId), ta = document.getElementById("ad-anot"); if(!c || !ta) return;
+  const texto = (ta.value||"").trim(); if(!texto) return aviso("Escreva a anotação");
+  const nota = {id: crypto.randomUUID(), em: new Date().toISOString(), quem: (eu.nome||"").split(" ")[0], texto, origem: "app"};
+  const campos = {...(c.campos||{}), atendimento: [...((c.campos||{}).atendimento||[]), nota]};
+  try{
+    await api(`/rest/v1/clientes?id=eq.${cliId}`,{method:"PATCH",headers:{Prefer:"return=minimal"},
+      body:JSON.stringify({campos})});
+  }catch(e){ return aviso("Não consegui guardar a anotação — tente de novo"); }
+  c.campos = campos; aviso("Anotação guardada", false); repintarFicha();
 }
 function painelDireito(c){
   if(D.analises===null)
