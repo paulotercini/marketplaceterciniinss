@@ -77,18 +77,20 @@ Art. 20, §3º da LOAS. Renda per capita igual ou inferior a ¼ do salário mín
 BPC de outro membro idoso ou PCD do grupo familiar. Benefício previdenciário de até 1 SM concedido a idoso 65+ ou PCD. Auxílio-inclusão e remuneração do beneficiário do auxílio-inclusão. Bolsas de estágio e contrato de aprendizagem. Auxílio financeiro por rompimento de barragem.
 
 ### Deduções de Despesas com Saúde (art. 8º, §4º-§7º, Portaria 34/2025)
-Gastos com saúde não cobertos pelo SUS podem ser deduzidos da renda bruta. Valores médios previstos no Anexo I da Portaria 34/2025.
+Gastos com saúde não cobertos pelo SUS podem ser deduzidos da renda bruta, uma vez por categoria, pelo valor médio do Anexo I da Portaria Conjunta MDS/INSS 34/2025 (art. 8º, §6º).
 
-**Valores dedutíveis (por categoria)**
-Medicamentos não disponíveis no SUS — R$ 45,00
-Consultas e tratamentos não disponíveis no SUS — R$ 90,00
-Fraldas não disponíveis no SUS — R$ 99,00
-Alimentação especial não disponível no SUS — R$ 121,00
-Centro-dia não disponível no SUAS — R$ 32,00
+**Valores dedutíveis por categoria, na redação da Portaria Conjunta MDS/INSS 45/2026 (DOU de 30/09/2026, em vigor na publicação)** [CONFERIDO, DOU, 04/10/2026]
+Medicamentos não disponíveis no SUS — R$ 56,00
+Consultas e tratamentos médicos não disponíveis no SUS — R$ 110,00
+Fraldas não disponíveis no SUS — R$ 120,00
+Alimentação especial não disponível no SUS — R$ 147,00
+Centro-dia não disponível no SUAS — R$ 40,00
+
+Até 29/09/2026 valiam os valores da redação original do Anexo I (DOU de 10/10/2025), R$ 45,00, R$ 90,00, R$ 99,00, R$ 121,00 e R$ 32,00, na mesma ordem. A Portaria 45/2026 não traz regra de transição. Para requerimento com DER anterior ainda em análise ou em revisão, sustentar a aplicação dos valores novos, por expressarem a média atualizada do gasto que a norma manda deduzir, e tratar o ponto como tese.
 
 Se os gastos reais superarem os valores médios, o interessado pode comprová-los com recibos dos 12 meses anteriores ao requerimento (§7º).
 
-**ALERTA ESTRATÉGICO** — Esses valores são irrisórios. R$ 45,00 para medicamentos e R$ 99,00 para fraldas não refletem a realidade de famílias com PCD grave. Em juízo, requerer a dedução pelos valores reais comprovados, não pelos valores médios. Fundamentar no art. 20, §11, e no art. 20-B, III e §4º, da LOAS, que admite comprovar gastos efetivos acima dos valores médios (auditoria 03/10/2026, retirado o Tema 38/TNU, que trata de incapacidade preexistente).
+**ALERTA ESTRATÉGICO** — Esses valores são irrisórios. R$ 56,00 para medicamentos e R$ 120,00 para fraldas não refletem a realidade de famílias com PCD grave. Em juízo, requerer a dedução pelos valores reais comprovados, não pelos valores médios. Fundamentar no art. 20, §11, e no art. 20-B, III e §4º, da LOAS, que admite comprovar gastos efetivos acima dos valores médios (auditoria 03/10/2026, retirado o Tema 38/TNU, que trata de incapacidade preexistente).
 
 ### Renda na Data do Requerimento (art. 11, §2º, Portaria 34/2025)
 Para fins de concessão, o INSS deve considerar unicamente a renda identificada na data do requerimento (DER). Afasta a prática abusiva de considerar rendas de períodos anteriores.

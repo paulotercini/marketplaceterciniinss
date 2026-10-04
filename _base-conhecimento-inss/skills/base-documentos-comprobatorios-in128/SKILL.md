@@ -229,7 +229,7 @@ Cruzar com `auxilio-reclusao-previdenciario`.
 **Documentos específicos.**
 - Inscrição no CadÚnico ATUALIZADA (máx. 24 meses).
 - Comprovantes de renda de cada membro.
-- Comprovantes de despesas (Anexo I Portaria 34/2025 sobre comprometimento de renda).
+- Comprovantes de despesas (Portaria Conjunta MDS/INSS 34/2025, art. 8º, §§ 4º a 7º, e Anexo I na redação da Portaria Conjunta MDS/INSS 45/2026), com os recibos dos doze meses anteriores ao requerimento quando o gasto efetivo superar o valor médio.
 - Laudo médico completo (modelo `base-modelo-relatorio-medico-bpc-loas-deficiente`).
 - Exames complementares.
 - Histórico social.

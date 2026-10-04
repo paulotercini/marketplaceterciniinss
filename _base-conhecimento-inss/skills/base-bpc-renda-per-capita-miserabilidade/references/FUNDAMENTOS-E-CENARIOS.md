@@ -18,7 +18,7 @@ Decreto 6.214/2007. Regulamentação.
 
 Decreto 12.534/2025. Inclui Bolsa Família na renda. Revoga §2º do art. 4º do Decreto 6.214/2007.
 
-Portaria 34/2025 MDS, Anexo I. Deduções de saúde.
+Portaria Conjunta MDS/INSS 34/2025, art. 8º, §§ 4º a 7º, e Anexo I, este na redação da Portaria Conjunta MDS/INSS 45/2026, vigente desde 30/09/2026. Deduções de saúde.
 
 Lei 13.982/2020 (pandemia). Fixou a renda igual ou inferior a 1/4 do salário mínimo até 31/12/2020, com veto ao inciso II. O critério de 1/2 salário mínimo veio da Lei 13.981/2020 (vide ADPF 662). Hoje vale 1/4 (Lei 14.176/2021), com ampliação possível até 1/2 pelo §11-A (auditoria 03/10/2026).
 
@@ -48,7 +48,7 @@ Sétimo, transferências emergenciais temporárias (verificar regra vigente, dis
 
 ## 4. Deduções de saúde
 
-Portaria 34/2025 MDS, Anexo I. Medicamentos prescritos e não fornecidos pelo SUS, fraldas, alimentos especiais, órteses, próteses. Provas por notas fiscais e receituários.
+Portaria Conjunta MDS/INSS 34/2025, art. 8º, §4º. Medicamentos, tratamentos de saúde e médicos, fraldas e alimentos especiais não fornecidos pelo SUS, e Centro-dia não prestado pelo SUAS. Órtese e prótese não estão nominadas, e seu enquadramento como tratamento de saúde é tese. Provas por notas fiscais e receituários, com os valores médios do Anexo I na redação da Portaria Conjunta MDS/INSS 45/2026.
 
 Impacto. Subtração da renda familiar bruta.
 

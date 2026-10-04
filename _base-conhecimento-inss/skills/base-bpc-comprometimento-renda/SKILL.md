@@ -39,7 +39,7 @@ O INSS adota 5 categorias FECHADAS de comprometimento aceitas, conforme campo do
 
 Despesa mensal com medicamentos prescritos por profissional habilitado para tratamento contínuo do requerente ou de membro do grupo familiar.
 
-**Valor dedutível padrão por categoria.** R$ 56,00 (valor de referência observado em jun/2026, sujeito à atualização pela Portaria correspondente).
+**Valor dedutível padrão por categoria.** R$ 56,00 (Anexo I da Portaria Conjunta MDS/INSS 34/2025, na redação da Portaria Conjunta MDS/INSS 45/2026, DOU de 30/09/2026, em vigor na publicação [CONFERIDO, DOU, 04/10/2026]).
 
 **Documentação comprobatória mínima.**
 - Receituário/prescrição médica do profissional habilitado.
@@ -210,7 +210,7 @@ Estratégia residual. Pleitear dedução por todas as categorias com valor real 
 
 Os valores dedutíveis padrão são atualizados periodicamente. A skill `base-revisao-peticao-aprofundada` (Onda 33-36) deve ser acionada para conferir os valores vigentes via protocolo de verificação dinâmica (Nível 2 - WebFetch direto na URL oficial gov.br/inss e in.gov.br) antes de citar valores em peças.
 
-**Valores observados em jun/2026 (sujeitos a atualização).**
+**Valores vigentes desde 30/09/2026**, fixados pela Portaria Conjunta MDS/INSS 45/2026, que deu nova redação ao Anexo I da Portaria Conjunta MDS/INSS 34/2025 [CONFERIDO, DOU de 30/09/2026, Edição 185, Seção 1, p. 43, lido em 04/10/2026]. A Onda 39 registrou os mesmos números a partir de documento do INSS observado em jun/2026, antes da publicação. Até 29/09/2026, a redação original do Anexo I fixava R$ 45,00, R$ 90,00, R$ 99,00, R$ 121,00 e R$ 32,00, na ordem da tabela. A norma também está no MCP `normas`, como `portaria-conjunta-45-2026`.
 
 | Categoria | Valor Padrão |
 |---|---|
@@ -218,7 +218,7 @@ Os valores dedutíveis padrão são atualizados periodicamente. A skill `base-re
 | Consultas e tratamentos de saúde | R$ 110,00 |
 | Fraldas | R$ 120,00 |
 | Alimentação Especial | R$ 147,00 |
-| Proteção Especial - SUAS | R$ 40,00 |
+| Centro-dia (SUAS) | R$ 40,00 |
 | **Total padrão por requerente** | **R$ 473,00** |
 
 ## INTEGRAÇÃO COM OUTRAS SKILLS
