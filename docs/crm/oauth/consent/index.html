@@ -58,11 +58,14 @@ button:disabled{opacity:.6;cursor:default}
     const r = await fetch(AUTH + "/token?grant_type=refresh_token", {method:"POST",
       headers:{apikey:cfg.key,"Content-Type":"application/json"}, body:JSON.stringify({refresh_token:sessao.refresh_token})});
     if(!r.ok) return false;
-    sessao = await r.json(); guardar("crm_sessao", JSON.stringify(sessao)); return true;
+    sessao = await r.json(); if(!outra) guardar("crm_sessao", JSON.stringify(sessao)); return true;
   }
+  // "outra conta": autoriza o conector em nome de outro login (a conta do
+  // assistente, nas rotinas agendadas) sem trocar a sessão do CRM deste aparelho
+  let outra = false;
   function pedirLogin(msg){
     mostrar(`<h1>Entre com a conta do CRM</h1>
-      <p>Um assistente pediu para ler o CRM em seu nome. Entre com o mesmo e-mail e senha do CRM para decidir.</p>
+      <p>Um assistente pediu acesso ao CRM. Entre com o mesmo e-mail e senha do CRM para decidir.</p>
       ${msg?`<p class="erro">${esc(msg)}</p>`:""}
       <form id="f" style="display:grid;gap:10px">
         <label>E-mail<input id="em" type="email" autocomplete="username" required></label>
@@ -76,7 +79,7 @@ button:disabled{opacity:.6;cursor:default}
         headers:{apikey:cfg.key,"Content-Type":"application/json"},
         body:JSON.stringify({email:document.getElementById("em").value.trim(), password:document.getElementById("se").value})}).catch(()=>null);
       if(!r || !r.ok) return pedirLogin("E-mail ou senha não conferem.");
-      sessao = await r.json(); guardar("crm_sessao", JSON.stringify(sessao)); detalhes();
+      sessao = await r.json(); if(!outra) guardar("crm_sessao", JSON.stringify(sessao)); detalhes();
     };
   }
   async function detalhes(){
@@ -89,9 +92,9 @@ button:disabled{opacity:.6;cursor:default}
     if(d.redirect_url) return location.assign(d.redirect_url);   // já autorizado antes
     const nome = (d.client && (d.client.client_name || d.client.client_id)) || "um assistente";
     mostrar(`<h1>Autorizar ${esc(nome)}?</h1>
-      <p><b>${esc(nome)}</b> quer ler o CRM do escritório em nome de <b>${esc(d.user && d.user.email)}</b>.</p>
+      <p><b>${esc(nome)}</b> quer usar o CRM do escritório em nome de <b>${esc(d.user && d.user.email)}</b>.</p>
       <ul><li>clientes, casos e anotações</li><li>agenda, tarefas e prazos</li><li>novidades dos portais e a equipe</li></ul>
-      <p class="miudo">Só leitura. Senhas do Meu INSS e do gov.br ficam de fora. O acesso vale enquanto você for colaborador ativo e pode ser revogado no assistente.</p>
+      <p class="miudo">Lê os dados e registra anotações e tarefas, sempre com o seu nome; não apaga nada. Senhas do Meu INSS e do gov.br ficam de fora. O acesso vale enquanto você for colaborador ativo e pode ser revogado no assistente.</p>
       <div class="linha"><button class="sim" id="sim">Autorizar</button><button id="nao">Recusar</button></div>
       <p class="miudo">Retorno para ${esc(d.redirect_uri||"")}</p>`);
     const decidir = async acao => {
@@ -104,7 +107,21 @@ button:disabled{opacity:.6;cursor:default}
     document.getElementById("sim").onclick = () => decidir("approve");
     document.getElementById("nao").onclick = () => decidir("deny");
   }
-  (sessao ? detalhes() : Promise.resolve(pedirLogin())).catch(e => mostrar(`<h1>Sem conexão</h1><p class="erro">${esc(e.message)}</p>`));
+  // O Supabase prende o pedido à primeira conta que o consulta. Por isso a
+  // escolha da conta vem ANTES de qualquer consulta: com sessão guardada, a
+  // página pergunta se continua com ela ou entra com outra (a do assistente).
+  function escolherConta(){
+    let email = "";
+    try{ email = JSON.parse(atob(sessao.access_token.split(".")[1].replace(/-/g,"+").replace(/_/g,"/"))).email || ""; }catch(e){}
+    mostrar(`<h1>Com qual conta?</h1>
+      <p>Um assistente pediu acesso ao CRM. Escolha a conta em nome da qual ele vai trabalhar.</p>
+      <div class="linha"><button class="sim" id="mesma">Continuar como ${esc(email || "a conta deste aparelho")}</button>
+      <button id="outra2">Entrar com outra conta</button></div>`);
+    document.getElementById("mesma").onclick = () => detalhes().catch(falha);
+    document.getElementById("outra2").onclick = () => { outra = true; sessao = null; pedirLogin(); };
+  }
+  const falha = e => mostrar(`<h1>Sem conexão</h1><p class="erro">${esc(e.message)}</p>`);
+  (sessao ? Promise.resolve(escolherConta()) : Promise.resolve(pedirLogin())).catch(falha);
 })();
 </script>
 </body>
