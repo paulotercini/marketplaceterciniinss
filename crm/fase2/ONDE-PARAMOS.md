@@ -1846,3 +1846,12 @@ O NB principal ganhou um ✎ na própria linha do caso (números). Antes só hav
 o "+", que acrescenta um NB secundário e não substitui o principal; a troca
 ficava escondida no "mais informações" do cartão de fatos. O lápis usa o mesmo
 `editarFato` (campo `nb`) e mantém os NBs secundários. Prova: `nb162.js` (3/3).
+
+## 10.68 · F163 · representante ao lado do nome, parceria no canto direito
+
+Na Identificação, o cartão do nome ganhou o botão "＋ representante legal",
+que abre os campos (nome, CPF, qualidade) logo abaixo do nome; preenchido, o
+representante aparece ali ("representada por …", concordando com o sexo do
+cliente) e se edita no clique. O campo separado da grade saiu. A parceria
+(chip e seletor) foi para o canto direito do mesmo cartão. Prova: `rep163.js`
+(3/3); `gestao160.js` ajustado ao novo prefixo (15/15).
