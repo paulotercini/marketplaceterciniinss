@@ -3221,7 +3221,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.73</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.74</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12125,7 +12125,11 @@ function pintarFicha(){
       ${ks.length ? `<button class="mt mt-proc ${abaAtiva===2?"on":""}" id="btn-processos"
         title="${(kk=>kk?"caso aberto: "+esc(tituloCaso(kk)):"escolher o caso do cliente")(casoSel&&D.casoPorId.get(casoSel))}">Casos${
           (n=>n>1?` (${n})`:"")(processosDe(ks).length)} ▾</button>` : ""}
-      ${evs.length ? `<button class="mt ${abaAtiva===3?"on":""}" data-vv="3">Perícias${(n=>n?` (${n})`:"")(evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}</button>` : ""}
+      ${/* F170 · Perícias só com perícia AGENDADA (de hoje em diante, não
+           cancelada). A anotação do caso "perícia agendada para 05/10 às
+           9h40" já cria o agendamento (extrairEvento), e a aba aparece */""}
+      ${(n=>(n||abaAtiva===3) ? `<button class="mt ${abaAtiva===3?"on":""}" data-vv="3">Perícias${n?` (${n})`:""}</button>` : "")(
+        evs.filter(e=>dataSP(e.data_hora)>=hoje()&&e.status!=="cancelada").length)}
       ${(ks.length || pagK.length || pgs.length) ? `<button class="mt ${abaAtiva===4?"on":""}" data-vv="4">Honorários${(pagK.length+pgs.length)?` (${pagK.length+pgs.length})`:""}</button>` : ""}
       ${/* F166 · Lembretes por último, depois de Honorários */""}
       ${temLemb ? `<button class="mt ${abaAtiva===9?"on":""}" data-vv="9">Lembretes${(n=>n?` (${n})`:"")(lembretesDo(cliId).length)}</button>` : ""}
