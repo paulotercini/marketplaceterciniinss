@@ -538,8 +538,12 @@ const ETAPAS: Record<string, string[]> = {
 };
 
 // ── a porta: descoberta OAuth, token e colaborador ativo ───────────────────
-export function metadados(base = URL_SB) {
-  return { resource: `${base}/functions/v1/${FUNCAO}`, authorization_servers: [`${base}/auth/v1`],
+// O Claude não aceita dois conectores com o mesmo endereço; a conta do
+// assistente usa .../mcp-crm/assistente, que é a mesma função. Cada endereço
+// anuncia a si mesmo como recurso, como o RFC 9728 exige.
+const sufixoDe = (caminho: string) => (/\/mcp-crm(\/[a-z]+)(?:\/|$)/.exec(caminho)?.[1]) || "";
+export function metadados(base = URL_SB, sufixo = "") {
+  return { resource: `${base}/functions/v1/${FUNCAO}${sufixo}`, authorization_servers: [`${base}/auth/v1`],
     scopes_supported: [], bearer_methods_supported: ["header"], resource_name: "CRM Tercini" };
 }
 const cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Headers": "authorization, content-type, mcp-protocol-version, mcp-session-id", "Access-Control-Allow-Methods": "GET, POST, OPTIONS" };
@@ -549,9 +553,10 @@ const json = (o: unknown, status = 200, extra: Record<string, string> = {}) =>
 export async function atender(req: Request, base = URL_SB, chave = ANON): Promise<Response> {
   const url = new URL(req.url);
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
-  if (url.pathname.endsWith("/.well-known/oauth-protected-resource")) return json(metadados(base));
+  const sufixo = sufixoDe(url.pathname);
+  if (url.pathname.endsWith("/.well-known/oauth-protected-resource")) return json(metadados(base, sufixo));
   const nega = (msg: string) => json({ error: "invalid_token", error_description: msg }, 401, {
-    "WWW-Authenticate": `Bearer resource_metadata="${base}/functions/v1/${FUNCAO}/.well-known/oauth-protected-resource"` });
+    "WWW-Authenticate": `Bearer resource_metadata="${base}/functions/v1/${FUNCAO}${sufixo}/.well-known/oauth-protected-resource"` });
   const token = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "");
   if (!token) return nega("entre com a sua conta do CRM");
   const u = await fetch(`${base}/auth/v1/user`, { headers: { apikey: chave, Authorization: `Bearer ${token}` } });
