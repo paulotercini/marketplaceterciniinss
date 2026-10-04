@@ -1,4 +1,6 @@
-// MCP DO CRM (etapa 1: leitura · etapa 2: anotação e tarefa) · Edge Function `mcp-crm`
+// MCP DO CRM · Edge Function `mcp-crm`
+// etapa 1: leitura · etapa 2: anotação e tarefa · etapa 3: concluir, reagendar
+// e atualizar o caso · etapa 4: documentos do caso · etapa 5: comandos prontos
 //
 // O Claude (ou o ChatGPT) se liga a este endereço como conector personalizado:
 //   https://<projeto>.supabase.co/functions/v1/mcp-crm
@@ -8,28 +10,41 @@
 // exatamente como o CRM faz no navegador; só colaborador ativo passa.
 //
 // Fica de fora, de propósito: a tabela de credenciais (senhas do Meu INSS e
-// do gov.br). A escrita (etapa 2) só acrescenta: anotação e tarefa, sempre com
-// o colaborador logado como autor e origem_id "mcp:…", que a linha do tempo
-// mostra como "via assistente". Nada se apaga nem se altera por aqui.
+// do gov.br). Toda escrita leva o colaborador logado como autor e origem_id
+// "mcp:…", que a linha do tempo mostra como "via assistente". Nada se apaga.
+// O que ALTERA (etapa 3) deixa uma anotação com o valor anterior de cada
+// campo, para desfazer à mão. Fase, prazo fatal e encerramento ficam no CRM,
+// porque lá movem a lista do To Do e lançam honorários.
 import { createMcpHandler, McpServer } from "npm:@modelcontextprotocol/server@^2.3.0";
 import { z } from "npm:zod@^4";
+import { extractText, getDocumentProxy } from "npm:unpdf@^1";
 
 const URL_SB = (Deno.env.get("SUPABASE_URL") || "").replace(/\/$/, "");
 const ANON = Deno.env.get("SUPABASE_ANON_KEY") || "";
 const FUNCAO = "mcp-crm";
 
 // ── o banco, com o token de quem pediu ─────────────────────────────────────
-export type Banco = (caminho: string, corpo?: unknown) => Promise<any>;
+export type Banco = ((caminho: string, corpo?: unknown, metodo?: "POST" | "PATCH") => Promise<any>)
+  & { baixar: (caminho: string) => Promise<{ bytes: Uint8Array; tipo: string }> };
+const BUCKET = "anexos";
 export function bancoDe(token: string, base = URL_SB, chave = ANON): Banco {
-  return async (caminho: string, corpo?: unknown) => {
+  const auth = { apikey: chave, Authorization: `Bearer ${token}` };
+  const db = async (caminho: string, corpo?: unknown, metodo: "POST" | "PATCH" = "POST") => {
     const r = await fetch(`${base}/rest/v1/${caminho}`, {
-      headers: { apikey: chave, Authorization: `Bearer ${token}`, Accept: "application/json",
+      headers: { ...auth, Accept: "application/json",
         ...(corpo ? { "Content-Type": "application/json", Prefer: "return=representation" } : {}) },
-      ...(corpo ? { method: "POST", body: JSON.stringify(corpo) } : {}),
+      ...(corpo ? { method: metodo, body: JSON.stringify(corpo) } : {}),
     });
     if (!r.ok) throw new Error(`banco respondeu ${r.status}: ${(await r.text()).slice(0, 200)}`);
     return r.json();
   };
+  // o arquivo sai do Storage com o token de quem pediu: a mesma regra do CRM
+  const baixar = async (caminho: string) => {
+    const r = await fetch(`${base}/storage/v1/object/authenticated/${BUCKET}/${caminho.split("/").map(encodeURIComponent).join("/")}`, { headers: auth });
+    if (!r.ok) throw new Error(`arquivo indisponível (${r.status})`);
+    return { bytes: new Uint8Array(await r.arrayBuffer()), tipo: r.headers.get("content-type") || "" };
+  };
+  return Object.assign(db, { baixar });
 }
 
 const hojeSP = () => new Date().toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
@@ -50,7 +65,7 @@ const COL_CLIENTE = "id,nome,cpf,dn,telefone,cidade,uf,profissao,estado_civil,se
 
 // ── as ferramentas ─────────────────────────────────────────────────────────
 export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
-  const server = new McpServer({ name: "crm-tercini", version: "0.2.0" });
+  const server = new McpServer({ name: "crm-tercini", version: "0.5.0" });
   const leitura = { readOnlyHint: true, openWorldHint: false };
   const escrita = { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false };
   let cols: Map<string, any> | null = null;
@@ -132,7 +147,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
 
   server.registerTool("agenda", {
     title: "Agenda e prazos",
-    description: "O que tem data num período: tarefas abertas (de quem e o que fazer), prazos fatais dos casos e perícias, audiências e julgamentos agendados. Por padrão, as tarefas de quem pergunta, de hoje a 7 dias, incluindo as vencidas.",
+    description: "O que tem data num período: tarefas abertas (de quem e o que fazer, com o tarefa_id para concluir ou reagendar), prazos fatais dos casos e perícias, audiências e julgamentos agendados. Por padrão, as tarefas de quem pergunta, de hoje a 7 dias, incluindo as vencidas.",
     inputSchema: z.object({
       dias: z.number().int().min(0).max(90).default(7).describe("quantos dias à frente"),
       quem: z.string().default("eu").describe("'eu', 'todos' ou o nome ou a inicial de um colaborador"),
@@ -148,7 +163,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
       if (!alvo) return texto(`Não achei colaborador "${quem}".`);
       col = alvo.id;
     }
-    const tfs = await db(`andamento_tarefas?select=caso_id,andamento_id,colaborador_id,lembrar_em,natureza,papel&concluida_em=is.null&lembrar_em=gte.${de}&lembrar_em=lte.${ate}${col ? `&colaborador_id=eq.${col}` : ""}&order=lembrar_em&limit=200`);
+    const tfs = await db(`andamento_tarefas?select=id,caso_id,andamento_id,colaborador_id,lembrar_em,natureza,papel&concluida_em=is.null&lembrar_em=gte.${de}&lembrar_em=lte.${ate}${col ? `&colaborador_id=eq.${col}` : ""}&order=lembrar_em&limit=200`);
     const pzs = await db(`casos?select=id,cliente_id,titulo,prazo,lembrar_motivo&prazo=gte.${de}&prazo=lte.${ate}&fase=neq.encerrado&order=prazo&limit=200`);
     const evs = await db(`eventos?select=caso_id,tipo,data_hora,local&status=eq.agendada&data_hora=gte.${hj}&data_hora=lte.${ate}T23:59:59&order=data_hora&limit=100`);
     const textos = tfs.length ? new Map((await db(`andamentos?select=id,texto&id=in.${lista(tfs.map((t: any) => t.andamento_id))}`)).map((a: any) => [a.id, a.texto])) : new Map();
@@ -159,7 +174,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
       const k = casos.get(t.caso_id);
       itens.push({ data: t.lembrar_em, tipo: t.papel === "revisa" ? "revisar" : (t.natureza || "compromisso"),
         cliente: clientes.get(k?.cliente_id) || "", caso: k?.titulo || "", quem: await nomeCol(t.colaborador_id),
-        o_que: String(textos.get(t.andamento_id) || "").slice(0, 240), caso_id: t.caso_id });
+        o_que: String(textos.get(t.andamento_id) || "").slice(0, 240), caso_id: t.caso_id, tarefa_id: t.id });
     }
     for (const k of pzs) itens.push({ data: k.prazo, tipo: "PRAZO FATAL", cliente: clientes.get(k.cliente_id) || "",
       caso: k.titulo, o_que: k.lembrar_motivo || "", caso_id: k.id });
@@ -274,8 +289,249 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
       + (rev && !execs.some((x) => x.id === rev.id) ? `, com revisão de ${rev.nome}` : "") + `. Atribuída por ${eu.nome}.`);
   });
 
+  // ── etapa 3: fechar o ciclo e atualizar o caso ───────────────────────────
+  const tarefaAberta = async (tarefa_id: string) => {
+    const [t] = await db(`andamento_tarefas?select=id,caso_id,andamento_id,colaborador_id,lembrar_em,papel,concluida_em&id=eq.${tarefa_id}`);
+    return t;
+  };
+
+  server.registerTool("tarefas_caso", {
+    title: "Tarefas do caso",
+    description: "As tarefas abertas de um caso, com o tarefa_id, o responsável, a data e o que fazer. Use antes de concluir_tarefa ou reagendar_tarefa.",
+    inputSchema: z.object({ caso_id: ID }),
+    annotations: leitura,
+  }, async ({ caso_id }) => {
+    const tfs = await db(`andamento_tarefas?select=id,andamento_id,colaborador_id,lembrar_em,natureza,papel&caso_id=eq.${caso_id}&concluida_em=is.null&order=lembrar_em`);
+    if (!tfs.length) return texto("Nenhuma tarefa aberta neste caso.");
+    const textos = new Map((await db(`andamentos?select=id,texto&id=in.${lista(tfs.map((t: any) => t.andamento_id))}`)).map((a: any) => [a.id, a.texto]));
+    const out = [];
+    for (const t of tfs) out.push({ tarefa_id: t.id, quem: await nomeCol(t.colaborador_id), papel: t.papel, natureza: t.natureza,
+      data: br(t.lembrar_em), vencida: t.lembrar_em < hojeSP() || undefined, o_que: String(textos.get(t.andamento_id) || "").slice(0, 300) });
+    return texto(out);
+  });
+
+  server.registerTool("concluir_tarefa", {
+    title: "Concluir tarefa",
+    description: "Dá baixa numa tarefa aberta, como o botão ✔ do CRM: marca concluída e grava na linha do tempo, em resposta ao pedido, o que foi feito. Se informar o número do protocolo, ele entra na ficha do caso. O tarefa_id vem de agenda ou de tarefas_caso.",
+    inputSchema: z.object({
+      tarefa_id: ID,
+      o_que_foi_feito: z.string().max(2000).optional(),
+      protocolo: z.string().optional().describe("número do protocolo gerado, se houver"),
+    }),
+    annotations: escrita,
+  }, async ({ tarefa_id, o_que_foi_feito, protocolo }) => {
+    const t = await tarefaAberta(tarefa_id);
+    if (!t) return texto("Tarefa não encontrada; nada foi gravado.");
+    if (t.concluida_em) return texto("Esta tarefa já estava concluída; nada foi gravado.");
+    const k = await casoComCliente(t.caso_id);
+    await db(`andamento_tarefas?id=eq.${tarefa_id}`, { concluida_em: new Date().toISOString() }, "PATCH");
+    const prot = soDig(protocolo);
+    await anotar(t.caso_id, "✔ " + ((o_que_foi_feito || "").trim() || "Tarefa concluída") + (prot.length >= 6 ? ` — Protocolo: ${prot}` : ""),
+      { responde_a: t.andamento_id });
+    let extra = "";
+    if (prot.length >= 6) {
+      const [c] = await db(`casos?select=protocolos&id=eq.${t.caso_id}`);
+      const ps = Array.isArray(c?.protocolos) ? c.protocolos : [];
+      if (!ps.includes(prot)) { await db(`casos?id=eq.${t.caso_id}`, { protocolos: [...ps, prot] }, "PATCH"); extra = ` O protocolo ${prot} entrou na ficha.`; }
+    }
+    // o vínculo com o prazo fatal (F64) mexe na lista do To Do: fica no CRM
+    const [orig] = await db(`andamentos?select=texto&id=eq.${t.andamento_id}`);
+    const [cp] = await db(`casos?select=prazo&id=eq.${t.caso_id}`);
+    if (cp?.prazo && String(orig?.texto || "").includes(`[PRAZO ${br(cp.prazo).replace(/\//g, ".")}]`))
+      extra += ` O prazo fatal de ${br(cp.prazo)} continua no caso; dê a baixa dele pelo CRM.`;
+    return texto(`Tarefa concluída no caso "${k?.titulo}" de ${k?.cliente}, por ${eu.nome}.${extra}`);
+  });
+
+  server.registerTool("reagendar_tarefa", {
+    title: "Reagendar tarefa",
+    description: "Muda a data de uma tarefa aberta e anota na linha do tempo a data antiga, a nova e o motivo.",
+    inputSchema: z.object({ tarefa_id: ID, nova_data: DATA, motivo: z.string().max(500).optional() }),
+    annotations: escrita,
+  }, async ({ tarefa_id, nova_data, motivo }) => {
+    const dia = isoDe(nova_data);
+    if (!dia) return texto(`Data "${nova_data}" inválida; use AAAA-MM-DD ou DD/MM/AAAA. Nada foi gravado.`);
+    if (dia < hojeSP()) return texto(`A data ${br(dia)} já passou. Nada foi gravado.`);
+    const t = await tarefaAberta(tarefa_id);
+    if (!t || t.concluida_em) return texto("Tarefa aberta não encontrada; nada foi gravado.");
+    if (t.lembrar_em === dia) return texto(`A tarefa já está em ${br(dia)}; nada mudou.`);
+    await db(`andamento_tarefas?id=eq.${tarefa_id}`, { lembrar_em: dia }, "PATCH");
+    const quem = await nomeCol(t.colaborador_id);
+    await anotar(t.caso_id, `🗓 Tarefa de ${quem} reagendada de ${br(t.lembrar_em)} para ${br(dia)}` + (motivo?.trim() ? `. Motivo: ${motivo.trim()}` : "."),
+      { responde_a: t.andamento_id });
+    return texto(`Tarefa de ${quem} reagendada de ${br(t.lembrar_em)} para ${br(dia)}.`);
+  });
+
+  // os campos que o assistente pode mudar e como cada um aparece na anotação
+  const CAMPOS: Record<string, string> = { etapa: "etapa", resultado: "resultado", decisao_em: "data da decisão",
+    exigencia_prazo: "prazo da exigência", exigencia_descricao: "exigência", der: "DER", dib: "DIB", dcb: "DCB", nb: "NB" };
+  const DATAS = new Set(["decisao_em", "exigencia_prazo", "der", "dib", "dcb"]);
+  server.registerTool("atualizar_caso", {
+    title: "Atualizar dados do caso",
+    description: "Altera a etapa, o resultado (deferido, indeferido, acordo, desistencia), a data da decisão, a exigência do INSS (descrição e prazo), DER, DIB, DCB ou NB de um caso. Grava na linha do tempo cada campo com o valor anterior e o novo. Para apagar um campo, mande texto vazio. Fase, prazo fatal e encerramento ficam no CRM. A etapa precisa ser uma das da fase do caso (ficha_cliente mostra a fase).",
+    inputSchema: z.object({
+      caso_id: ID,
+      etapa: z.string().optional(),
+      resultado: z.enum(["deferido", "indeferido", "acordo", "desistencia", ""]).optional(),
+      decisao_em: DATA.optional(), exigencia_prazo: DATA.optional(), exigencia_descricao: z.string().max(1000).optional(),
+      der: DATA.optional(), dib: DATA.optional(), dcb: DATA.optional(), nb: z.string().optional(),
+      motivo: z.string().max(500).optional().describe("de onde veio a informação (ex.: carta de concessão de 12/09)"),
+    }),
+    annotations: escrita,
+  }, async (args) => {
+    const [k] = await db(`casos?select=id,cliente_id,titulo,fase,${Object.keys(CAMPOS).join(",")}&id=eq.${args.caso_id}`);
+    if (!k) return texto("Caso não encontrado; nada foi gravado.");
+    const novo: Record<string, unknown> = {}, linhas: string[] = [];
+    for (const c of Object.keys(CAMPOS)) {
+      const v = (args as any)[c];
+      if (v === undefined) continue;
+      let val: string | null = String(v).trim() || null;
+      if (val && DATAS.has(c)) { val = isoDe(val); if (!val) return texto(`${CAMPOS[c]} com data inválida; nada foi gravado.`); }
+      if (val && c === "nb") val = soDig(val);
+      if (val && c === "etapa") {
+        const ok = ETAPAS[k.fase] || [];
+        if (!ok.includes(val)) return texto(`A etapa "${val}" não existe na fase ${k.fase}. Use uma destas: ${ok.join(", ") || "(esta fase não tem etapas)"}. Nada foi gravado.`);
+      }
+      if ((k[c] ?? null) === val) continue;
+      novo[c] = val;
+      const fmtv = (x: any) => x == null || x === "" ? "vazio" : DATAS.has(c) ? br(String(x)) : String(x);
+      linhas.push(`${CAMPOS[c]}: ${fmtv(k[c])} → ${fmtv(val)}`);
+    }
+    if (!linhas.length) return texto("Nada a mudar: os valores já são esses.");
+    await db(`casos?id=eq.${args.caso_id}`, novo, "PATCH");
+    const cli = (await clientesDe([k.cliente_id])).get(k.cliente_id) || "";
+    await anotar(args.caso_id, `✎ Caso atualizado. ${linhas.join("; ")}.` + (args.motivo?.trim() ? ` Fonte: ${args.motivo.trim()}.` : "")
+      + (novo.resultado === "deferido" ? " Benefício CONCEDIDO. 🎉" : ""));
+    return texto(`Caso "${k.titulo}" de ${cli} atualizado. ${linhas.join("; ")}. O valor anterior ficou anotado na linha do tempo.`);
+  });
+
+  server.registerTool("casos_com_decisao_sem_resultado", {
+    title: "Casos com decisão escrita e sem resultado",
+    description: "Casos em que a linha do tempo fala em deferimento, indeferimento, concessão ou acordo, mas o campo resultado está vazio. Traz o trecho e a data de cada anotação para conferir e, só com a confirmação de quem pediu, preencher com atualizar_caso (resultado e decisao_em).",
+    inputSchema: z.object({ limite: z.number().int().min(1).max(50).default(15), pular: z.number().int().min(0).default(0) }),
+    annotations: leitura,
+  }, async ({ limite, pular }) => {
+    // o PostgREST devolve no máximo mil linhas por pedido: pagina até esgotar
+    const as: any[] = [];
+    for (let o = 0; o < 10000; o += 1000) {
+      const pg = await db(`andamentos?select=caso_id,criado_em,origem,texto&excluir=is.false&or=(texto.ilike.*deferid*,texto.ilike.*concedid*,texto.ilike.*acordo homologado*)&order=criado_em.desc,id&offset=${o}&limit=1000`);
+      as.push(...pg); if (pg.length < 1000) break;
+    }
+    const ultima = new Map<string, any>();
+    for (const a of as) if (!ultima.has(a.caso_id)) ultima.set(a.caso_id, a);
+    const sem: any[] = [];
+    const ids = [...ultima.keys()];
+    for (let i = 0; i < ids.length; i += 150)
+      sem.push(...await db(`casos?select=id,cliente_id,titulo,fase&resultado=is.null&id=in.${lista(ids.slice(i, i + 150))}`));
+    const fatia = sem.slice(pular, pular + limite);
+    const clientes = await clientesDe(fatia.map((k: any) => k.cliente_id));
+    if (!fatia.length) return texto("Nenhum caso pendente nesta faixa.");
+    return texto({ total_pendentes: sem.length, mostrando: `${pular + 1} a ${pular + fatia.length}`, casos: fatia.map((k: any) => {
+      const a = ultima.get(k.id);
+      return { caso_id: k.id, cliente: clientes.get(k.cliente_id) || "", caso: k.titulo, fase: k.fase,
+        anotacao_em: br(String(a.criado_em).slice(0, 10)), fonte: a.origem, trecho: String(a.texto).slice(0, 400) };
+    }) });
+  });
+
+  // ── etapa 4: documentos do caso ──────────────────────────────────────────
+  // três fontes: os anexos enviados pelo CRM, as decisões do CRPS que a coleta
+  // guardou no Storage (casos.crps) e o link da pasta do cliente no Drive
+  const docsDoCaso = async (caso_id: string) => {
+    const [k] = await db(`casos?select=id,cliente_id,titulo,crps&id=eq.${caso_id}`);
+    if (!k) return null;
+    const anexos = await db(`anexos?select=id,nome,caminho,tipo,tamanho,criado_em,caso_id&or=(caso_id.eq.${caso_id},and(caso_id.is.null,cliente_id.eq.${k.cliente_id}))&order=criado_em.desc`);
+    const docs: any[] = anexos.map((a: any) => ({ documento: `anexo:${a.id}`, nome: a.nome, tipo: a.tipo,
+      enviado_em: br(String(a.criado_em).slice(0, 10)), do_cliente: !a.caso_id || undefined, caminho: a.caminho }));
+    for (const bl of (Array.isArray(k.crps) ? k.crps : []))
+      for (const e of (bl.eventos || []))
+        for (const f of (e.arquivos || [])) if (f.storage)
+          docs.push({ documento: `crps:${f.storage}`, nome: f.nome || "decisão do CRPS", tipo: "application/pdf",
+            data: e.data || "", nup: bl.nup, resumo: Array.isArray(f.resumo?.linhas) ? f.resumo.linhas.join(" ") : undefined, caminho: f.storage });
+    const [c] = await db(`clientes?select=campos&id=eq.${k.cliente_id}`);
+    return { k, docs, drive: c?.campos?.pasta_drive || null };
+  };
+
+  server.registerTool("documentos_caso", {
+    title: "Documentos do caso",
+    description: "Lista os documentos guardados no CRM para um caso: anexos (do caso e da ficha do cliente) e decisões do CRPS coletadas, com o identificador para ler_documento. Informa também o link da pasta do cliente no Google Drive, quando cadastrado.",
+    inputSchema: z.object({ caso_id: ID }),
+    annotations: leitura,
+  }, async ({ caso_id }) => {
+    const r = await docsDoCaso(caso_id);
+    if (!r) return texto("Caso não encontrado.");
+    return texto({ caso: r.k.titulo, pasta_drive: r.drive, documentos: r.docs.map(({ caminho, ...d }) => d),
+      aviso: r.docs.length ? undefined : "Nenhum documento guardado no CRM para este caso; os documentos do cliente ficam na pasta do Drive." });
+  });
+
+  server.registerTool("ler_documento", {
+    title: "Ler documento do caso",
+    description: "Lê um documento listado por documentos_caso. PDF com texto volta como texto (em partes de 40 mil caracteres; use 'inicio' para continuar); imagem volta como imagem. PDF digitalizado sem camada de texto não é lido aqui.",
+    inputSchema: z.object({ caso_id: ID, documento: z.string().regex(/^(anexo|crps):.+/), inicio: z.number().int().min(0).default(0) }),
+    annotations: leitura,
+  }, async ({ caso_id, documento, inicio }) => {
+    const r = await docsDoCaso(caso_id);
+    if (!r) return texto("Caso não encontrado.");
+    const d = r.docs.find((x) => x.documento === documento);
+    if (!d) return texto("Este documento não pertence a este caso.");
+    const { bytes, tipo } = await db.baixar(d.caminho);
+    if (bytes.length > 15e6) return texto("Arquivo grande demais para ler por aqui (mais de 15 MB); abra pelo CRM.");
+    const mime = (d.tipo || tipo || "").toLowerCase();
+    if (mime.startsWith("image/")) {
+      let b = ""; for (let i = 0; i < bytes.length; i += 0x8000) b += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+      return { content: [{ type: "image" as const, data: btoa(b), mimeType: mime }] };
+    }
+    if (!mime.includes("pdf") && !/\.pdf$/i.test(d.nome || "")) {
+      if (mime.startsWith("text/")) return texto(new TextDecoder().decode(bytes).slice(inicio, inicio + 40000));
+      return texto(`Formato ${mime || "desconhecido"} não é lido por aqui; abra pelo CRM.`);
+    }
+    const { text, totalPages } = await extractText(await getDocumentProxy(bytes), { mergePages: true });
+    const t = String(text || "").trim();
+    if (t.length < 50) return texto(`O PDF "${d.nome}" (${totalPages} página(s)) é digitalizado, sem texto. Abra pelo CRM ou pela pasta do Drive.`);
+    const parte = t.slice(inicio, inicio + 40000);
+    return texto(`${d.nome} · ${totalPages} página(s) · caracteres ${inicio + 1} a ${inicio + parte.length} de ${t.length}`
+      + (inicio + parte.length < t.length ? ` · continue com inicio=${inicio + parte.length}` : "") + `\n\n${parte}`);
+  });
+
+  // ── etapa 5: comandos prontos (prompts do MCP) ───────────────────────────
+  const ESTILO = "Responda em português formal, com a conclusão primeiro, em parágrafos curtos e sem listas. Não invente dado que não veio das ferramentas.";
+  const prompt = (txt: string) => ({ messages: [{ role: "user" as const, content: { type: "text" as const, text: `${txt}\n\n${ESTILO}` } }] });
+  server.registerPrompt("resumo_do_dia", { title: "Resumo do meu dia",
+    description: "Tarefas de hoje e vencidas, prazos e agendamentos, e o que chegou dos portais desde ontem." },
+    () => prompt("Use as ferramentas do CRM Tercini. Chame agenda com dias=0 e incluir_vencidas=true, e novidades com dias=1. Diga primeiro o que vence hoje e o que está vencido, depois as perícias e audiências, e por último os movimentos dos portais que pedem providência. Indique o tarefa_id de cada tarefa, para eu poder concluir ou reagendar."));
+  server.registerPrompt("situacao_do_caso", { title: "Situação completa do caso",
+    description: "Ficha, linha do tempo, tarefas e documentos de um cliente, num resumo só.",
+    argsSchema: z.object({ cliente: z.string().describe("nome, CPF, processo ou NB") }) },
+    ({ cliente }) => prompt(`Use as ferramentas do CRM Tercini para o cliente "${cliente}": buscar_clientes, ficha_cliente, e para cada caso aberto anotacoes_caso (25 últimas), tarefas_caso e documentos_caso. Diga onde cada caso está (fase e etapa), o que foi feito por último, o que está pendente e com quem, e o próximo prazo.`));
+  server.registerPrompt("novidades_dos_portais", { title: "Novidades dos portais",
+    description: "Movimentos do INSS, do PJe e do CRPS num período, com o que pedem de providência.",
+    argsSchema: z.object({ dias: z.string().default("3").describe("quantos dias para trás") }) },
+    ({ dias }) => prompt(`Use novidades do CRM Tercini com dias=${Number(dias) || 3}. Agrupe por cliente e diga, para cada movimento, se pede providência do escritório e qual.`));
+  server.registerPrompt("registrar_atendimento", { title: "Registrar atendimento",
+    description: "Grava o relato de um atendimento no caso certo e propõe as tarefas que dele decorrem.",
+    argsSchema: z.object({ cliente: z.string(), relato: z.string().describe("o que aconteceu no atendimento") }) },
+    ({ cliente, relato }) => prompt(`Localize o cliente "${cliente}" no CRM Tercini (buscar_clientes e ficha_cliente) e identifique o caso a que o relato se refere; se houver dúvida entre casos, pergunte. Mostre-me o texto da anotação antes de gravar com registrar_anotacao. Depois proponha as tarefas que decorrem do relato (responsável, data e revisor) e só crie com criar_tarefa as que eu aprovar.\n\nRelato: ${relato}`));
+  server.registerPrompt("preencher_resultados", { title: "Preencher resultados pendentes",
+    description: "Confere os casos com decisão escrita nas anotações e resultado vazio, e preenche com a sua confirmação.",
+    argsSchema: z.object({ quantos: z.string().default("10") }) },
+    ({ quantos }) => prompt(`Use casos_com_decisao_sem_resultado do CRM Tercini com limite=${Number(quantos) || 10}. Para cada caso, leia o trecho e, se preciso, anotacoes_caso com busca "deferid" ou "indeferid". Proponha o resultado (deferido, indeferido, acordo ou desistencia) e a data da decisão, indicando a anotação que sustenta cada proposta, e marque como duvidoso o que não for inequívoco. Só grave com atualizar_caso, informando o motivo, depois que eu confirmar cada um.`));
+  server.registerPrompt("agenda_da_equipe", { title: "Agenda da equipe",
+    description: "A carga de tarefas de cada colaborador na semana, com o que está vencido.",
+    argsSchema: z.object({ dias: z.string().default("7") }) },
+    ({ dias }) => prompt(`Use equipe e agenda do CRM Tercini com quem="todos" e dias=${Number(dias) || 7}. Diga, por colaborador, quantas tarefas tem, quantas estão vencidas e quais são as mais urgentes, e aponte quem está sobrecarregado.`));
+
   return server;
 }
+
+// as etapas de cada fase · espelho de ETAPAS_POR_FASE em crm/fase2/app.html
+// (acrescentou lá, acrescente aqui também)
+const ETAPAS: Record<string, string[]> = {
+  escritorio: ["em atendimento", "reunindo documentos", "análise de direito", "aguardando o cliente"],
+  inss: ["requerimento protocolado", "aguardando perícia", "perícia realizada", "em exigência", "aguardando análise", "decidido"],
+  conselho: ["recurso protocolado", "aguardando distribuição", "em diligência", "em pauta", "julgado"],
+  judicial: ["ação distribuída", "aguardando citação", "contestação apresentada", "perícia designada", "perícia realizada", "aguardando sentença", "sentença publicada", "em recurso"],
+  peticao_inicial: ["a redigir", "redigida", "a protocolar"],
+  pagamento: ["aguardando implantação", "benefício implantado", "aguardando RPV", "RPV expedida", "recebido"],
+  aposentadoria_futura: ["monitorando", "documentação em dia", "pronto para protocolar"],
+};
 
 // ── a porta: descoberta OAuth, token e colaborador ativo ───────────────────
 export function metadados(base = URL_SB) {
