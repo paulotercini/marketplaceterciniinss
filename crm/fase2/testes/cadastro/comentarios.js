@@ -139,6 +139,10 @@ FIX.andamentos.push({ id: AND1, caso_id: CASO1, autor_id: EU2, origem: "app",
   await p.evaluate(() => fecharFicha(false));
   await p.evaluate(cli => abrirFicha(cli), CLI_VAZIO);
   await p.waitForTimeout(800);
+  // F165 · cliente novo abre na Identificação; a mesa das anotações nasce
+  // do + atendimento
+  await p.click(".sub-menu .atend-novo");
+  await p.waitForTimeout(500);
   conf("os chips PARA estão na anotação do atendimento (3 iniciais)",
     (await p.evaluate(() => document.querySelectorAll(".at-eq").length)) === 3);
   await p.fill("#at-nota", "Separar a certidão rural e ligar avisando do prazo.");

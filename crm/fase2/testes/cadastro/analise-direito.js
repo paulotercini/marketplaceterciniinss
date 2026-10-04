@@ -184,6 +184,12 @@ FIX.lembretes = [{ id: "l0000000-0000-0000-0000-00000000f481", cliente_id: CLI_C
   // 10) F49 · o trilho do PRIMEIRO atendimento: triagem → anotações → análise
   await p.evaluate(cli => abrirFicha(cli), CLI_VAZIO);
   await p.waitForTimeout(900);
+  // F165 · cliente novo abre na Identificação: a Triagem só aparece depois
+  // do + atendimento, que é o passo que o colaborador dá
+  await p.click(".sub-menu .atend-novo");
+  await p.waitForTimeout(500);
+  await p.evaluate(() => irSubCad("triagem"));
+  await p.waitForTimeout(400);
   // F127 · a linha diz que os cenários ainda não foram registrados e leva
   // à Análise de Direito, onde os passos da triagem já vão aparecendo
   conf("na TRIAGEM aparece o elo âmbar: cenários ainda não registrados",

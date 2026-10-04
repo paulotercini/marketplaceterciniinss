@@ -101,9 +101,11 @@ FIX.casos[0].prazo = DAQUI3;
       return p.evaluate(() => abaAtiva === 0); })());
 
   // ── as notas na lista: pílula colorida no começo, vencida vira pendência
-  await p.evaluate(() => { const c = D.cliPorId.get(clienteAberto);
+  // F165 · as Anotações só aparecem com atendimento em curso: abre-se um
+  // pelo + atendimento (que já leva às Anotações)
+  await p.evaluate(async () => { const c = D.cliPorId.get(clienteAberto);
     c.triagem = { ...(c.triagem || {}), atendimento: { em: hoje(), quem: eu.id, passos: 8, conferidos: 8 } };
-    irSubCad("anotacoes"); });
+    await novoAtendimento(clienteAberto); });
   await p.waitForTimeout(500);
   conf("a nota futura abre a linha com 📅 volta em azul",
     await p.evaluate(() => [...document.querySelectorAll('[data-p="0"] .chip.volta-chip')]

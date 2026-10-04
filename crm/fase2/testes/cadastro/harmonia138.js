@@ -123,6 +123,9 @@ FIX.andamentos.push({ id: "a3000000-0000-0000-0000-000000000009", caso_id: CASO1
     const r = c && c.getBoundingClientRect(); return r ? Math.round(r.width) : 0; });
   conf(`a tarefa tem o círculo de concluir visível (${ck}px)`, ck >= 20);
   await p.evaluate(c => abrirFicha(c), CLI_CHEIO); await p.waitForTimeout(1000);
+  // F166 · o caso abre nos andamentos do Escritório; o que se mede aqui é o
+  // Caso completo
+  await p.evaluate(() => irSubAba("tudo")); await p.waitForTimeout(300);
   const tl = await p.evaluate(() => {
     const bl = [...document.querySelectorAll('.painel[data-p="2"] .timeline li.dia-bloco')];
     const lis = [...document.querySelectorAll('.painel[data-p="2"] .timeline li.tl-of')];

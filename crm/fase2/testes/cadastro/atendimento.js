@@ -102,6 +102,12 @@ FAMILIAS.forEach(([ben], i) => {
     await p.evaluate(x => abrirFicha(x), cli);
     await p.waitForSelector('button.mt[data-vv="0"]');
     await p.click('button.mt[data-vv="0"]');
+    // F165 · sem atendimento em curso só a Identificação aparece: a Triagem
+    // nasce do + atendimento
+    if (await p.$(".sub-menu .atend-novo")) {
+      await p.click(".sub-menu .atend-novo");
+      await p.waitForTimeout(400);
+    }
     await p.evaluate(() => irSubCad("triagem"));
     await p.waitForSelector(".tri-lista");
     await p.waitForTimeout(200);
