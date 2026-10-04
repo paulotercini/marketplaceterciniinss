@@ -2504,6 +2504,10 @@ html[data-tema="v10"] .fixar-caso{display:inline-flex;align-items:center;gap:6px
 html[data-tema="v10"] .fixar-caso:hover{color:var(--prox);border-color:var(--prox)}
 html[data-tema="v10"] .painel[data-p="2"] .caso{border:none;background:#F3F2EE;border-radius:10px}
 /* ── F113 · a janela das espécies ──────────────────────────────────────── */
+.lc-claude{border:1px solid var(--borda);background:var(--branco);color:var(--azul-escuro);border-radius:999px;padding:3px 11px;font:inherit;font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap}
+@media (hover:hover) and (pointer:fine){.lc-claude:hover{background:var(--azul-fundo)}}
+.cl-onde{display:flex;gap:14px;margin:10px 0 2px;font-size:12.5px;color:var(--texto-suave,#5c5b56)}
+.cl-ajuda{font-size:12px;color:var(--texto-suave,#5c5b56);margin:10px 0 0;line-height:1.45}
 .esp-lista{max-height:52vh;max-height:52dvh;overflow:auto;margin-top:8px;border:1px solid var(--borda-suave);border-radius:8px;padding:4px 6px}
 .esp-fam-rot{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--cinza-claro);padding:10px 6px 4px}
 .esp-it{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:none;background:none;padding:6px 8px;border-radius:6px;font:inherit;font-size:13px;color:var(--texto);cursor:pointer}
@@ -3207,7 +3211,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.65</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.66</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -11738,6 +11742,45 @@ function caixa(html){
         <button class="btn-mini" onclick="fecharCaixa()" title="fechar">✕</button></div>
     </div></div>`;
 }
+// F161 · ✦ CLAUDE NO CASO. O botão abre o Claude (site ou aplicativo de mesa)
+// com o pedido já escrito, para revisar e enviar. O link leva SÓ os ids do
+// caso e do cliente: nome, CPF e texto do cliente não passam por endereço,
+// que fica em histórico e em registro de servidor. O Claude busca o resto
+// pelo conector CRM Tercini (crm/fase2/mcp), com o login de quem clicou.
+const CLAUDE_ESTILO = "Responda em português formal, com a conclusão primeiro, em parágrafos curtos.";
+const CLAUDE_ACOES = [
+  ["situacao", "Situação do caso", (k)=>`Use o conector CRM Tercini. Chame ficha_cliente com cliente_id ${k.cliente_id} e, para o caso ${k.id}, anotacoes_caso, tarefas_caso e documentos_caso. Diga onde o caso está (fase e etapa), o que foi feito por último, o que está pendente e com quem, e o próximo prazo.`],
+  ["cliente", "Mensagem ao cliente sobre o andamento", (k)=>`Use o conector CRM Tercini. Leia ficha_cliente com cliente_id ${k.cliente_id} e anotacoes_caso do caso ${k.id}. Redija uma mensagem curta de WhatsApp ao cliente explicando em que pé está o caso, em linguagem simples, sem prometer resultado nem prazo que o INSS ou o juízo não tenham fixado.`],
+  ["decisao", "Ler a última decisão e propor o resultado", (k)=>`Use o conector CRM Tercini. Para o caso ${k.id}, liste documentos_caso e leia com ler_documento a decisão mais recente; se não houver documento, procure a decisão em anotacoes_caso. Diga o que foi decidido, a data e o prazo de recurso. Proponha o resultado e a data da decisão e só grave com atualizar_caso depois que eu confirmar.`],
+  ["proximos", "Próximas providências e tarefas", (k)=>`Use o conector CRM Tercini. Leia ficha_cliente com cliente_id ${k.cliente_id}, anotacoes_caso e tarefas_caso do caso ${k.id}, e equipe. Proponha as próximas providências com responsável, data e revisor, e crie com criar_tarefa só as que eu aprovar.`],
+  ["atendimento", "Registrar o atendimento de hoje", (k)=>`Use o conector CRM Tercini, caso ${k.id} (cliente_id ${k.cliente_id}). Vou relatar um atendimento. Mostre o texto da anotação antes de gravar com registrar_anotacao e proponha as tarefas que decorrem dele, criando com criar_tarefa só as que eu aprovar.\n\nRelato: `],
+];
+function menuClaude(casoId){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const onde = ler("crm_claude_onde") || "web";
+  caixa(`<h3 style="margin:0 0 4px">✦ Claude <small class="meio-sub">· ${esc(tituloCaso(k))}</small></h3>
+    <p class="meio-sub" style="margin:0">Abre o Claude com o pedido escrito. Revise e envie; nada é gravado no CRM sem a sua confirmação.</p>
+    <div class="esp-lista">${CLAUDE_ACOES.map(([id,rot])=>`<button class="esp-it" onclick="abrirClaude('${casoId}','${id}')">${esc(rot)}</button>`).join("")}</div>
+    <div class="cl-onde" role="radiogroup" aria-label="onde abrir">
+      <label><input type="radio" name="cl-onde" value="web" ${onde==="web"?"checked":""} onchange="guardar('crm_claude_onde','web')"> no navegador</label>
+      <label><input type="radio" name="cl-onde" value="app" ${onde==="app"?"checked":""} onchange="guardar('crm_claude_onde','app')"> no aplicativo de mesa</label>
+    </div>
+    <p class="cl-ajuda">Primeira vez? O Claude precisa do conector do CRM: Configurações › Conectores › Adicionar conector personalizado, nome <b>CRM Tercini</b>, endereço <span class="cop" data-cop="${esc(CLAUDE_MCP_URL())}" data-cop-msg="endereço copiado" title="clique para copiar">${esc(CLAUDE_MCP_URL())}</span>. Entre com o mesmo e-mail e senha do CRM.</p>`);
+}
+const CLAUDE_MCP_URL = () => CONFIG.SUPABASE_URL.replace(/\/$/,"") + "/functions/v1/mcp-crm";
+function linkClaude(k, acao, onde){
+  const a = CLAUDE_ACOES.find(x=>x[0]===acao); if(!a) return null;
+  const q = encodeURIComponent(a[2](k) + (acao==="atendimento" ? "" : `\n\n${CLAUDE_ESTILO}`));
+  return (onde==="app" ? "claude://claude.ai/new?q=" : "https://claude.ai/new?q=") + q;
+}
+function abrirClaude(casoId, acao){
+  const k = D.casoPorId.get(casoId); if(!k) return;
+  const onde = ler("crm_claude_onde") || "web", url = linkClaude(k, acao, onde);
+  if(!url) return;
+  fecharCaixa();
+  if(onde==="app") location.href = url;          // esquema claude:// não abre em aba nova
+  else window.open(url, "_blank", "noopener");
+}
 function fecharCaixa(){
   const m = document.getElementById("modal");
   m.style.display="none"; m.innerHTML="";
@@ -17619,6 +17662,7 @@ function linhaCaso(k){
       <button class="lapis" title="trocar a espécie ou o pedido deste caso" onclick="escolherEspecie('${k.id}')">✎</button>
       ${k.natureza?`<span class="chip nat-chip" title="natureza do pedido">${esc(rotNatureza(k.natureza))}</span>`:""}
       ${k.urgente?`<span class="chip urg">Urgente</span>`:""}
+      <button class="lc-claude" onclick="menuClaude('${k.id}')" title="pedir ao Claude sobre este caso (abre o Claude com o pedido escrito)">✦ Claude</button>
       </div>
       <div class="lc-placa">
       <span class="lc-f"><span class="lc-k">DER</span>${k.der
