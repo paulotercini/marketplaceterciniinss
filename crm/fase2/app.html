@@ -9822,7 +9822,8 @@ function pintarConversa(){
     `<div class="zap-topo">
        <span>${avatarZap(c)}<b>${esc(nomeDaConversa(c))}</b>
          <span style="font-weight:400"> · ${esc(c.telefone||"")}</span></span>
-       ${cli?`<button class="btn-mini" onclick="abrirFicha('${cli.id}')">abrir ficha</button>`:""}
+       ${cli?`<button class="btn-mini" onclick="abrirFicha('${cli.id}')">abrir ficha</button>`
+            :`<button class="btn-mini" onclick="vincularConversa()">vincular a cliente</button>`}
        ${at?`<span class="eq-ini on" style="--cor-eq:${at.cor}" title="${esc(at.nome)}">${esc(at.inicial)}</span>`
           :`<button class="btn-mini" onclick="assumirConversa()">assumir</button>`}
        <button class="btn-mini" onclick="transferirConversa()">transferir</button>
@@ -10085,6 +10086,33 @@ async function virarAndamento(msgId){
        ${esc(k.titulo||k.beneficio||"processo")} ${k.processo?`<span class="chip neutro">${esc(k.processo)}</span>`:""}
      </button>`).join("")}`);
   document.querySelectorAll("[data-zk]").forEach(b=>b.onclick=()=>gravar(b.dataset.zk));
+}
+
+// Da ficha para a conversa: renderWhats recarrega e abre a zapAberta
+function abrirZapDaFicha(id){ zapAberta = id; irPara("whatsapp"); }
+
+// Cliente que escreve de outro número (o da filha, o do vizinho) não casa pelo
+// telefone. Quem atende sabe quem é: liga a conversa à ficha na mão. Não mexe
+// no cadastro; o telefone da ficha continua sendo o que o cliente informou.
+function vincularConversa(){
+  caixa(`<h3>Vincular a conversa a um cliente</h3>
+    <input id="zv-busca" placeholder="nome ou CPF" style="width:100%" autocomplete="off">
+    <div id="zv-res" style="margin-top:8px"></div>`);
+  const inp = document.getElementById("zv-busca"), res = document.getElementById("zv-res");
+  inp.focus();
+  inp.oninput = () => {
+    const achados = pesquisar(inp.value).slice(0, 8);
+    res.innerHTML = achados.map(c=>`<button class="btn-rap" data-zv="${c.id}" style="display:block;width:100%;margin:4px 0;text-align:left">
+        ${esc(c.nome)} ${c.cidade?`<span class="meio-sub">· ${esc(c.cidade)}</span>`:""}</button>`).join("")
+      || (inp.value.trim().length>2 ? `<p class="meio-sub">ninguém com esse nome</p>` : "");
+    res.querySelectorAll("[data-zv]").forEach(b=>b.onclick=async()=>{
+      fecharCaixa();
+      await api(`/rest/v1/zap_conversas?id=eq.${zapAberta}`,{method:"PATCH",
+        headers:{Prefer:"return=minimal"}, body:JSON.stringify({cliente_id:b.dataset.zv, lead_id:null})});
+      aviso(`Conversa vinculada a ${D.cliPorId.get(b.dataset.zv)?.nome||"cliente"} ✔`);
+      await recarregarZap();
+    });
+  };
 }
 
 function ajudaQR(){
@@ -11802,6 +11830,7 @@ function buscarFicha(cliId, ids){
       todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
       todas("conversas",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
       ids?todas("andamento_tarefas",`select=*&caso_id=in.(${ids})`).catch(()=>[]):[],
+      todas("zap_conversas",`select=id,ultima_em,ultimo_texto,nao_lidas&cliente_id=eq.${cliId}&order=ultima_em.desc.nullslast`).catch(()=>[]),
     ]);
 }
 const preFicha = new Map();   // cliId -> {p, em, escritas}
@@ -11854,10 +11883,11 @@ async function abrirFicha(cliId){
     // repintar o mesmo cliente depois de gravar busca de novo, sempre)
     const pre = trocouCliente && preFicha.get(cliId);
     preFicha.delete(cliId);
-    const [ands, creds, vincs, anexos, convs, tarefasF] = await
+    const [ands, creds, vincs, anexos, convs, tarefasF, zapsF] = await
       ((pre && Date.now()-pre.em < 20000 && pre.escritas===escritas) ? pre.p : buscarFicha(cliId, ids));
     D.anexos = anexos;
     D.convFicha = convs;
+    D.zapFicha = zapsF;
     D.tarefasFicha = tarefasF;
     D._andsFicha = ands;
     D._ficha = { cliId, creds, vincs };   // o que a pintura usa além do D global
@@ -14285,7 +14315,7 @@ function painelPagamentosFicha(ks, ands, pgs, pagK){
 
 // aba 5 da ficha — extraída da pintarFicha (era um literal de 22 linhas)
 function painelMensagensFicha(c, ks, evs){
-  return `
+  return `${ultimoZap()}
     <p class="meio-sub">Mensagens prontas, já preenchidas com os dados deste cliente — copie e cole no WhatsApp.</p>
     ${D.modelos.map(m=>{
       const ev = evs.find(e=>dataSP(e.data_hora)>=hoje() &&
@@ -14968,7 +14998,14 @@ function copiarMsgCadunico(cliId, casoId){
 // conteúdo fica no painel deles. O que o CRM precisa mostrar, então, é o
 // "quando": ninguém deixa de responder porque a mensagem morreu num painel
 // que só uma pessoa abre.
+// A ponte (zap_conversas) traz a conversa inteira: aí a ficha mostra a última
+// mensagem e leva direto à conversa. O SMBot fica como plano B.
 function ultimoZap(){
+  const p=(D.zapFicha||[])[0];
+  if(p) return `<div class="zap-ping">💬 WhatsApp${p.ultima_em?` em ${fmtTS(p.ultima_em)} às ${horaSP(p.ultima_em)}`:""}`
+    + (p.ultimo_texto?`: “${esc(p.ultimo_texto.slice(0,70))}${p.ultimo_texto.length>70?"…":""}”`:"")
+    + (p.nao_lidas?` <span class="chip">${p.nao_lidas} não lida${p.nao_lidas>1?"s":""}</span>`:"")
+    + ` <button class="btn-mini" onclick="abrirZapDaFicha('${p.id}')">abrir conversa</button></div>`;
   const z=(D.convFicha||[])[0];
   if(!z) return "";
   const quando=`${fmtTS(z.criado_em)} às ${horaSP(z.criado_em)}`;
