@@ -6,13 +6,13 @@ const { chromium } = require("playwright");
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
-const { FIX, SESSAO, CLI_CHEIO } = require("./fixturas");
+const { FIX, SESSAO, CLI_CHEIO, CLI_VAZIO } = require("./fixturas");
 const SUPA = "https://ficticio.supabase.co";
 const ZAP_CLI = "d1000000-0000-0000-0000-000000000001", ZAP_SOLTA = "d1000000-0000-0000-0000-000000000002";
 const ZAPS = [
-  { id: ZAP_CLI, telefone: "5516999990001", nome_perfil: "Cliente Ficta", cliente_id: CLI_CHEIO, lead_id: null, atendente_id: null,
+  { id: ZAP_CLI, telefone: "5516999990001", chave: "99990001", nome_perfil: "Cliente Ficta", cliente_id: CLI_CHEIO, lead_id: null, atendente_id: null,
     status: "aberta", nao_lidas: 2, ultima_em: "2026-10-01T13:00:00Z", ultimo_texto: "Chegou carta do INSS", bot_ativo: true },
-  { id: ZAP_SOLTA, telefone: "5511988887777", nome_perfil: "Filha da cliente", cliente_id: null, lead_id: null, atendente_id: null,
+  { id: ZAP_SOLTA, telefone: "5511988887777", chave: "88887777", nome_perfil: "Filha da cliente", cliente_id: null, lead_id: null, atendente_id: null,
     status: "aberta", nao_lidas: 0, ultima_em: "2026-10-02T13:00:00Z", ultimo_texto: "Sou a filha dela", bot_ativo: true },
 ];
 const MSGS = [
@@ -51,6 +51,8 @@ const MSGS = [
     let corpo = t === "zap_conversas" ? ZAPS : t === "zap_mensagens" ? MSGS : (FIX[t] || []);
     const f = u.match(/cliente_id=eq\.([0-9a-f-]+)/);
     if (f) corpo = corpo.filter(x => x.cliente_id === f[1]);
+    const ou = decodeURIComponent(u).match(/or=\(cliente_id\.eq\.([0-9a-f-]+)(?:,chave\.in\.\(([\d,]+)\))?\)/);
+    if (ou) corpo = corpo.filter(x => x.cliente_id === ou[1] || (ou[2] || "").split(",").includes(x.chave));
     return rota.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(corpo) });
   });
   await ctx.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
@@ -93,6 +95,17 @@ const MSGS = [
   await p.evaluate(id => abrirConversa(id), ZAP_CLI);
   conf("conversa de cliente mostra “abrir ficha” e não “vincular”",
     (await p.textContent(".zap-topo")).includes("abrir ficha") && !(await p.textContent(".zap-topo")).includes("vincular"));
+
+  // quem cuida do benefício de outro: o número dele na ficha do outro traz a conversa
+  await p.evaluate(cli => { const c = D.cliPorId.get(cli); c.telefone = "(16) 99999-0001";
+    c.telefones = [{ numero: "16999990001", obs: "Fulana (namorada)", zap: true }]; }, CLI_VAZIO);
+  await p.evaluate(cli => abrirFicha(cli), CLI_VAZIO);
+  await p.waitForSelector('.det-topo button[onclick^="verZapCliente"]');
+  await p.click('.det-topo button[onclick^="verZapCliente"]');
+  await p.waitForSelector("#modal .zap-msgs .zap-b");
+  const cab = await p.textContent("#modal .meio-sub");
+  conf("a ficha de quem tem o número na lista mostra a conversa, dizendo de quem é", cab.includes("conversa de") && cab.includes("Fulana (namorada)"));
+  await p.evaluate(() => fecharCaixa());
 
   // a conversa solta ganha o vincular, que liga à ficha escolhida
   await p.evaluate(id => abrirConversa(id), ZAP_SOLTA);

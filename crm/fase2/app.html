@@ -10129,7 +10129,9 @@ async function verZapCliente(cliId){
   });
   const cli = D.cliPorId.get(cliId);
   caixa(`<h3>💬 WhatsApp · ${esc(cli?.nome||"")}</h3>
-    <p class="meio-sub">Só leitura. ${zs.map(z=>esc(z.telefone||"")).join(" · ")}</p>
+    <p class="meio-sub">Só leitura. ${zs.map(z=>esc(z.cliente_id && z.cliente_id!==cliId
+        ? `${z.telefone||""} (conversa de ${D.cliPorId.get(z.cliente_id)?.nome||z.nome_perfil||"outro contato"}${obsDoNumero(cliId,z.telefone)?", "+obsDoNumero(cliId,z.telefone):""})`
+        : (z.telefone||""))).join(" · ")}</p>
     <div class="zap-msgs" style="max-height:65vh;overflow:auto;display:flex;flex-direction:column;gap:4px">
       ${linhas.join("") || `<p class="meio-sub">Nenhuma mensagem ainda.</p>`}</div>`);
   const caixaMsgs = document.querySelector("#modal .zap-msgs"); if(caixaMsgs) caixaMsgs.scrollTop = caixaMsgs.scrollHeight;
@@ -10140,6 +10142,17 @@ async function verZapCliente(cliId){
       headers:{Prefer:"return=minimal"}, body:JSON.stringify({nao_lidas:0})}).catch(()=>{});
     lidas.forEach(z=>z.nao_lidas=0);
   }
+}
+// os 8 últimos dígitos de cada telefone da ficha: a mesma chave do zap_conversas
+function chavesDoCliente(cliId){
+  const c = D.cliPorId.get(cliId); if(!c) return [];
+  return [...new Set([c.telefone, ...telefonesDe(c).map(t=>t.numero)]
+    .map(n=>String(n||"").replace(/\D/g,"").slice(-8)).filter(k=>k.length===8))];
+}
+function obsDoNumero(cliId, tel){
+  const c = D.cliPorId.get(cliId), k = String(tel||"").replace(/\D/g,"").slice(-8);
+  const t = c && telefonesDe(c).find(t=>String(t.numero||"").replace(/\D/g,"").slice(-8)===k);
+  return t && t.obs && t.obs!=="principal" ? t.obs : "";
 }
 async function abrirArquivoZap(caminho){
   if(!caminho) return;
@@ -11887,7 +11900,11 @@ function buscarFicha(cliId, ids){
       todas("anexos",`select=*&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
       todas("conversas",`select=criado_em,texto,de_cliente&cliente_id=eq.${cliId}&order=criado_em.desc`).catch(()=>[]),
       ids?todas("andamento_tarefas",`select=*&caso_id=in.(${ids})`).catch(()=>[]):[],
-      todas("zap_conversas",`select=id,ultima_em,ultimo_texto,nao_lidas&cliente_id=eq.${cliId}&order=ultima_em.desc.nullslast`).catch(()=>[]),
+      // a conversa é de um cliente só, mas quem cuida do benefício de outro
+      // (a namorada, o marido) tem o número na lista dele: aparece nas duas fichas
+      todas("zap_conversas",`select=id,ultima_em,ultimo_texto,nao_lidas,telefone,nome_perfil,cliente_id&or=(${
+        ["cliente_id.eq."+cliId, ...(chavesDoCliente(cliId).length?[`chave.in.(${chavesDoCliente(cliId).join(",")})`]:[])].join(",")
+      })&order=ultima_em.desc.nullslast`).catch(()=>[]),
     ]);
 }
 const preFicha = new Map();   // cliId -> {p, em, escritas}

@@ -596,7 +596,15 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
       : soDig(a.telefone).length >= 8 ? `chave=eq.${soDig(a.telefone).slice(-8)}` : null;
     if (!filtro) return null;
     const [c] = await db(`zap_conversas?select=${COL_ZAP}&${filtro}&order=ultima_em.desc.nullslast&limit=1`);
-    return c || null;
+    if (c || !a.cliente_id || a.conversa_id) return c || null;
+    // quem cuida do benefício de outro (a namorada, o marido) tem o número na
+    // lista da ficha: a conversa é dele, mas vale para este cliente também
+    const [cli] = await db(`clientes?select=telefone,telefones&id=eq.${a.cliente_id}`);
+    const ks = [...new Set([cli?.telefone, ...(Array.isArray(cli?.telefones) ? cli.telefones.map((t: any) => t?.numero) : [])]
+      .map((n) => soDig(n).slice(-8)).filter((k) => k.length === 8))];
+    if (!ks.length) return null;
+    const [d] = await db(`zap_conversas?select=${COL_ZAP}&chave=in.${lista(ks)}&order=ultima_em.desc.nullslast&limit=1`);
+    return d || null;
   };
   const QUAL_CONVERSA = {
     conversa_id: ID.optional(), cliente_id: ID.optional(),
