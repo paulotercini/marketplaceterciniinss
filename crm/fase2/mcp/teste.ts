@@ -174,6 +174,14 @@ conf("o comando leva o argumento ao texto", String(pg.corpo?.result?.messages?.[
 conf("a escrita só toca andamentos, tarefas e casos", pedidos.filter((p) => !p.startsWith("GET")).every((p) =>
   /^POST \/rest\/v1\/(andamentos|andamento_tarefas)$/.test(p) || /^PATCH \/rest\/v1\/(andamento_tarefas|casos)\?id=eq\./.test(p)));
 
+// a conta do assistente não conclui, não reagenda e não altera o caso
+T.colaboradores[0].papel = "assistente_ia";
+const tlr = await rpc("tools/list", {}, "tok-bom", 8);
+const nr = (tlr.corpo?.result?.tools || []).map((t: any) => t.name);
+conf("a conta do assistente fica sem concluir, reagendar e atualizar, e mantém anotar e criar tarefa", nr.length === 12
+  && !nr.includes("concluir_tarefa") && !nr.includes("reagendar_tarefa") && !nr.includes("atualizar_caso") && nr.includes("registrar_anotacao") && nr.includes("criar_tarefa"));
+T.colaboradores[0].papel = undefined;
+
 // colaborador inativo não passa
 T.colaboradores[0].ativo = false;
 conf("colaborador inativo recebe 403", (await rpc("tools/list", {}, "tok-bom", 4)).status === 403);
