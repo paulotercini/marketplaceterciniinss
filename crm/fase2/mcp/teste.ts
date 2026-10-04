@@ -5,6 +5,7 @@ import { atender } from "./index.ts";
 
 const EU = "11111111-1111-1111-1111-111111111111", AUTH = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
 const CLI = "c0000000-0000-0000-0000-000000000001", CASO = "b0000000-0000-0000-0000-000000000001";
+const ZAP = "d1000000-0000-0000-0000-000000000001", ZM = "d0000000-0000-0000-0000-000000000001";
 const hj = new Date().toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const T: Record<string, any[]> = {
   colaboradores: [{ id: EU, auth_id: AUTH, nome: "Paulo Tercini", inicial: "P", cargo: "advogado", ativo: true },
@@ -22,6 +23,10 @@ const T: Record<string, any[]> = {
     { id: "a3", caso_id: "b0000000-0000-0000-0000-000000000002", autor_id: null, origem: "pat", excluir: false, criado_em: "2026-09-15T12:00:00Z", texto: "INSS: benefício deferido em 12/09/2026." }],
   andamento_tarefas: [{ id: "f0000000-0000-0000-0000-000000000001", caso_id: CASO, andamento_id: "a1", colaborador_id: EU, lembrar_em: hj, natureza: "compromisso", papel: "executa", concluida_em: null }],
   eventos: [],
+  zap_conversas: [{ id: ZAP, telefone: "5516999990001", chave: "99990001", nome_perfil: "Aurélia", cliente_id: CLI, lead_id: null,
+    atendente_id: null, status: "aberta", nao_lidas: 1, ultima_em: "2026-10-01T13:00:00Z", ultimo_texto: "Chegou carta do INSS", bot_ativo: true }],
+  zap_mensagens: [{ id: ZM, conversa_id: ZAP, direcao: "entrada", autor_id: null, por_bot: false, tipo: "texto", texto: "Chegou carta do INSS", status: "enviada", criado_em: "2026-10-01T13:00:00Z" },
+    { id: "d0000000-0000-0000-0000-000000000002", conversa_id: ZAP, direcao: "interna", autor_id: EU, por_bot: false, tipo: "texto", texto: "ver exigência", status: "interna", criado_em: "2026-10-01T12:00:00Z" }],
   credenciais: [{ id: "x", cliente_id: CLI, tipo: "meu_inss", valor: "SENHA-NAO-PODE-SAIR" }],
 };
 const pedidos: string[] = [];
@@ -96,8 +101,8 @@ const ini = await rpc("initialize", { protocolVersion: "2025-06-18", capabilitie
 conf("initialize responde com o nome do servidor", ini.corpo?.result?.serverInfo?.name === "crm-tercini");
 const tl = await rpc("tools/list", {}, "tok-bom", 2);
 const nomes = (tl.corpo?.result?.tools || []).map((t: any) => t.name).sort();
-conf(`as quinze ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "concluir_tarefa", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_documento", "novidades", "reagendar_tarefa", "registrar_anotacao", "tarefas_caso"]));
-const ESCREVE = ["atualizar_caso", "concluir_tarefa", "criar_tarefa", "reagendar_tarefa", "registrar_anotacao"];
+conf(`as dezenove ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "tarefas_caso", "whatsapp_para_anotacao"]));
+const ESCREVE = ["atualizar_caso", "concluir_tarefa", "criar_tarefa", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "whatsapp_para_anotacao"];
 conf("leitura marcada só leitura e escrita marcada não destrutiva", (tl.corpo?.result?.tools || []).every((t: any) =>
   ESCREVE.includes(t.name) ? t.annotations?.readOnlyHint === false && t.annotations?.destructiveHint === false : t.annotations?.readOnlyHint));
 
@@ -177,14 +182,30 @@ conf(`seis comandos prontos (${pn.join(",")})`, JSON.stringify(pn) === JSON.stri
 const pg = await rpc("prompts/get", { name: "situacao_do_caso", arguments: { cliente: "Aurélia" } }, "tok-bom", 7);
 conf("o comando leva o argumento ao texto", String(pg.corpo?.result?.messages?.[0]?.content?.text || "").includes('"Aurélia"'));
 
-conf("a escrita só toca andamentos, tarefas e casos", pedidos.filter((p) => !p.startsWith("GET")).every((p) =>
-  /^POST \/rest\/v1\/(andamentos|andamento_tarefas)$/.test(p) || /^PATCH \/rest\/v1\/(andamento_tarefas|casos)\?id=eq\./.test(p)));
+// etapa 6 · WhatsApp
+const lz = await call("conversas_whatsapp", {});
+conf("conversas_whatsapp traz a conversa com o nome do cliente e o não-lidas", lz.includes(`conversa_id:${ZAP}`) && lz.includes("Aurélia Ficta de Souza") && lz.includes("1 não lida"));
+const rz = await call("ler_conversa_whatsapp", { telefone: "(16) 99999-0001" });
+conf("ler pelo telefone acha a conversa e separa cliente de nota interna", rz.includes("cliente: Chegou carta do INSS") && rz.includes("nota interna de Paulo Tercini") && rz.includes(`mensagem_id:${ZM}`));
+const nz = T.zap_mensagens.length;
+const dz = await call("rascunhar_whatsapp", { cliente_id: CLI, texto: "Bom dia! Pode mandar a foto da carta?" });
+const novo = T.zap_mensagens.at(-1);
+conf("o rascunho NÃO vai para a fila e não cala o bot", T.zap_mensagens.length === nz + 1 && novo.status === "rascunho" && novo.direcao === "saida"
+  && novo.por_bot === true && novo.autor_id === EU && dz.includes("Nada foi enviado"));
+conf("conversa inexistente não grava rascunho", (await call("rascunhar_whatsapp", { telefone: "11 0000-0000", texto: "oi" })).includes("não encontrada") && T.zap_mensagens.length === nz + 1);
+const az = await call("whatsapp_para_anotacao", { mensagem_id: ZM, caso_id: CASO });
+conf("levar ao caso chama zap_virar_andamento com o autor", az.includes("Aposentadoria por idade rural")
+  && T["rpc/zap_virar_andamento"]?.at(-1)?.p_mensagem === ZM && T["rpc/zap_virar_andamento"].at(-1).p_autor === EU);
+conf("nenhuma ferramenta põe mensagem na fila de envio", !T.zap_mensagens.some((m) => m.status === "fila"));
+
+conf("a escrita só toca andamentos, tarefas, casos e rascunho do WhatsApp", pedidos.filter((p) => !p.startsWith("GET")).every((p) =>
+  /^POST \/rest\/v1\/(andamentos|andamento_tarefas|zap_mensagens|rpc\/zap_virar_andamento)$/.test(p) || /^PATCH \/rest\/v1\/(andamento_tarefas|casos)\?id=eq\./.test(p)));
 
 // a conta do assistente não conclui, não reagenda e não altera o caso
 T.colaboradores[0].papel = "assistente_ia";
 const tlr = await rpc("tools/list", {}, "tok-bom", 8);
 const nr = (tlr.corpo?.result?.tools || []).map((t: any) => t.name);
-conf("a conta do assistente fica sem concluir, reagendar e atualizar, e mantém anotar e criar tarefa", nr.length === 12
+conf("a conta do assistente fica sem concluir, reagendar e atualizar, e mantém anotar e criar tarefa", nr.length === 16
   && !nr.includes("concluir_tarefa") && !nr.includes("reagendar_tarefa") && !nr.includes("atualizar_caso") && nr.includes("registrar_anotacao") && nr.includes("criar_tarefa"));
 T.colaboradores[0].papel = undefined;
 

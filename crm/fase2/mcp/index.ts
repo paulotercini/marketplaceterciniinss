@@ -1,6 +1,7 @@
 // MCP DO CRM · Edge Function `mcp-crm`
 // etapa 1: leitura · etapa 2: anotação e tarefa · etapa 3: concluir, reagendar
 // e atualizar o caso · etapa 4: documentos do caso · etapa 5: comandos prontos
+// etapa 6: WhatsApp (ler, rascunhar e levar ao caso; enviar fica com gente)
 //
 // O Claude (ou o ChatGPT) se liga a este endereço como conector personalizado:
 //   https://<projeto>.supabase.co/functions/v1/mcp-crm
@@ -69,7 +70,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
   // agendadas: lê, anota e cria tarefa, mas não conclui, não reagenda e não
   // altera o caso. Essas decisões ficam com quem é gente.
   const robo = eu.papel === "assistente_ia";
-  const server = new McpServer({ name: "crm-tercini", version: "0.5.0" });
+  const server = new McpServer({ name: "crm-tercini", version: "0.6.0" });
   const leitura = { readOnlyHint: true, openWorldHint: false };
   const escrita = { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false };
   let cols: Map<string, any> | null = null;
@@ -493,6 +494,92 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string; papel?:
     const parte = t.slice(inicio, inicio + 40000);
     return texto(`${d.nome} · ${totalPages} página(s) · caracteres ${inicio + 1} a ${inicio + parte.length} de ${t.length}`
       + (inicio + parte.length < t.length ? ` · continue com inicio=${inicio + parte.length}` : "") + `\n\n${parte}`);
+  });
+
+  // ── etapa 6: WhatsApp (as conversas que a ponte grava em zap_*) ──────────
+  // A IA lê e RASCUNHA; quem envia é gente, no botão "enviar" do CRM, que
+  // muda o status de 'rascunho' para 'fila' e a ponte leva. O rascunho vai
+  // com por_bot=true: assim não dispara zap_humano_assumiu, que calaria o bot
+  // da conversa por uma mensagem que talvez nunca saia.
+  const COL_ZAP = "id,telefone,nome_perfil,cliente_id,lead_id,atendente_id,status,nao_lidas,ultima_em,ultimo_texto,bot_ativo";
+  const hora = (iso?: string | null) => iso ? new Date(iso).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", dateStyle: "short", timeStyle: "short" }) : "";
+  const conversaDe = async (a: { conversa_id?: string; cliente_id?: string; telefone?: string }) => {
+    const filtro = a.conversa_id ? `id=eq.${a.conversa_id}` : a.cliente_id ? `cliente_id=eq.${a.cliente_id}`
+      : soDig(a.telefone).length >= 8 ? `chave=eq.${soDig(a.telefone).slice(-8)}` : null;
+    if (!filtro) return null;
+    const [c] = await db(`zap_conversas?select=${COL_ZAP}&${filtro}&order=ultima_em.desc.nullslast&limit=1`);
+    return c || null;
+  };
+  const QUAL_CONVERSA = {
+    conversa_id: ID.optional(), cliente_id: ID.optional(),
+    telefone: z.string().optional().describe("qualquer formato; compara pelos 8 últimos dígitos"),
+  };
+
+  server.registerTool("conversas_whatsapp", {
+    title: "Conversas do WhatsApp",
+    description: "Lista as conversas do WhatsApp do escritório, das mais recentes para as mais antigas, com o cliente vinculado, a última mensagem e quantas estão sem ler. Use o conversa_id em ler_conversa_whatsapp.",
+    inputSchema: z.object({
+      so_nao_lidas: z.boolean().default(false),
+      status: z.enum(["aberta", "pendente", "resolvida", "todas"]).default("todas"),
+      minhas: z.boolean().default(false).describe("só as que estão com quem está conectado"),
+      limite: z.number().int().min(1).max(50).default(20),
+    }),
+    annotations: leitura,
+  }, async ({ so_nao_lidas, status, minhas, limite }) => {
+    const rows = await db(`zap_conversas?select=${COL_ZAP}&order=ultima_em.desc.nullslast&limit=${limite}`
+      + (so_nao_lidas ? "&nao_lidas=gt.0" : "") + (status !== "todas" ? `&status=eq.${status}` : "") + (minhas ? `&atendente_id=eq.${eu.id}` : ""));
+    if (!rows.length) return texto("Nenhuma conversa com esse filtro.");
+    const nomes = await clientesDe(rows.map((c: any) => c.cliente_id).filter(Boolean));
+    const linhas = await Promise.all(rows.map(async (c: any) =>
+      `conversa_id:${c.id} · ${nomes.get(c.cliente_id) || c.nome_perfil || "sem nome"} (${c.telefone})`
+      + (c.cliente_id ? ` · cliente_id:${c.cliente_id}` : c.lead_id ? " · prospecto" : " · sem cadastro")
+      + ` · ${c.status}${c.nao_lidas ? ` · ${c.nao_lidas} não lida(s)` : ""}`
+      + (c.atendente_id ? ` · com ${await nomeCol(c.atendente_id)}` : c.bot_ativo ? " · bot" : "")
+      + `\n  ${hora(c.ultima_em)}: ${c.ultimo_texto || ""}`));
+    return texto(linhas.join("\n"));
+  });
+
+  server.registerTool("ler_conversa_whatsapp", {
+    title: "Ler conversa do WhatsApp",
+    description: "Traz as últimas mensagens de uma conversa do WhatsApp, em ordem, indicando quem falou (cliente, equipe, bot ou nota interna). Informe conversa_id, cliente_id ou telefone. Cada mensagem vem com o mensagem_id, para whatsapp_para_anotacao.",
+    inputSchema: z.object({ ...QUAL_CONVERSA, quantas: z.number().int().min(1).max(100).default(30) }),
+    annotations: leitura,
+  }, async ({ quantas, ...qual }) => {
+    const c = await conversaDe(qual);
+    if (!c) return texto("Conversa não encontrada.");
+    const msgs = (await db(`zap_mensagens?select=id,direcao,autor_id,por_bot,tipo,texto,midia_nome,status,quando_wa,criado_em&conversa_id=eq.${c.id}&order=seq.desc&limit=${quantas}`)).reverse();
+    const cli = c.cliente_id ? (await clientesDe([c.cliente_id])).get(c.cliente_id) : "";
+    const quem = async (m: any) => m.direcao === "entrada" ? "cliente" : m.direcao === "interna" ? `nota interna de ${await nomeCol(m.autor_id) || "equipe"}`
+      : m.por_bot && !m.autor_id ? "bot" : (await nomeCol(m.autor_id)) || "escritório";
+    const linhas = await Promise.all(msgs.map(async (m: any) => `[${hora(m.quando_wa || m.criado_em)}] ${await quem(m)}`
+      + (m.status === "rascunho" ? " (RASCUNHO, não enviado)" : m.status === "erro" ? " (NÃO ENVIOU)" : "")
+      + `: ${m.texto?.trim() || `[${m.tipo}]`}${m.midia_nome ? ` 📎 ${m.midia_nome}` : ""} · mensagem_id:${m.id}`));
+    return texto(`Conversa ${c.id} com ${cli || c.nome_perfil || "sem nome"} (${c.telefone})`
+      + (c.cliente_id ? `, cliente_id:${c.cliente_id}` : ", sem cliente vinculado") + `, ${c.status}.\n\n${linhas.join("\n") || "Sem mensagens."}`);
+  });
+
+  server.registerTool("rascunhar_whatsapp", {
+    title: "Rascunhar resposta no WhatsApp",
+    description: "Deixa uma resposta como RASCUNHO na conversa do WhatsApp. Ela NÃO é enviada: aparece no CRM em amarelo, e um colaborador confere e aperta 'enviar'. Escreva como o escritório fala com o cliente: cordial, simples, sem juridiquês e sem prometer resultado.",
+    inputSchema: z.object({ ...QUAL_CONVERSA, texto: z.string().min(2).max(4000) }),
+    annotations: escrita,
+  }, async ({ texto: txt, ...qual }) => {
+    const c = await conversaDe(qual);
+    if (!c) return texto("Conversa não encontrada; nada foi gravado. A conversa nasce quando o cliente escreve ou alguém a abre no CRM.");
+    await db("zap_mensagens", { conversa_id: c.id, direcao: "saida", autor_id: eu.id, por_bot: true, tipo: "texto", texto: txt.trim(), status: "rascunho" });
+    return texto(`Rascunho deixado na conversa com ${c.nome_perfil || c.telefone}. Nada foi enviado: confira no CRM e aperte "enviar".`);
+  });
+
+  server.registerTool("whatsapp_para_anotacao", {
+    title: "Levar mensagem do WhatsApp ao caso",
+    description: "Registra uma mensagem do WhatsApp na linha do tempo de um caso, com a origem 'whatsapp' (o mesmo que o botão '↪ andamento' do CRM). Repetir não duplica. Para resumir vários trechos, prefira registrar_anotacao com o resumo.",
+    inputSchema: z.object({ mensagem_id: ID, caso_id: ID }),
+    annotations: escrita,
+  }, async ({ mensagem_id, caso_id }) => {
+    const k = await casoComCliente(caso_id);
+    if (!k) return texto("Caso não encontrado; nada foi gravado.");
+    await db("rpc/zap_virar_andamento", { p_mensagem: mensagem_id, p_caso: caso_id, p_autor: eu.id });
+    return texto(`Mensagem registrada no caso "${k.titulo}" de ${k.cliente}.`);
   });
 
   // ── etapa 5: comandos prontos (prompts do MCP) ───────────────────────────
