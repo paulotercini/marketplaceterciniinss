@@ -1890,3 +1890,13 @@ A aba Perícias aparece só com perícia de hoje em diante e não cancelada (ou
 quando já está aberta). Anotar no caso "perícia agendada para DD/MM às HHhMM"
 já cria o agendamento (extrairEvento) e a aba surge. Prova: `pericia170.js`.
 Suíte: 97/101, falhando só as quatro de data.
+
+## 10.75 · F171 · Análise de Direito dentro do Cadastro
+
+A Análise de Direito saiu do menu do topo e virou item do sub-menu do Cadastro,
+depois de Documentos e antes de Mensagens, seguindo o fluxo do atendimento:
+Identificação, Triagem, Anotações, Documentos, Análise de Direito, Mensagens.
+Aparece com caso, com análise salva ou no atendimento com a triagem encerrada.
+Os atalhos (nota de aposentadoria futura, lista Análise de Direito) abrem ali.
+O painel 8 da ficha saiu. Provas ajustadas: analise-direito, triagem, fluxo,
+limpa165. Suíte: 97/101, falhando só as quatro de data.

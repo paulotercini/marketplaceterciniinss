@@ -50,7 +50,7 @@ const SUPA = "https://ficticio.supabase.co";
     atend: (() => { const b = document.querySelector(".sub-menu .atend-novo"); return b ? getComputedStyle(b).color : ""; })(),
     cartao: [...document.querySelectorAll(".cad-tit")].some(x => /Parentes ou Amigos/i.test(x.textContent)),
     botaoPar: [...document.querySelectorAll("button.cad-mini")].some(b => /Parentes ou amigos/.test(b.textContent)) }), CLI_CHEIO);
-  conf("cliente com caso e sem atendimento vê só a Identificação (até com Documentos guardado)", t.temCaso && !t.vivos && t.abas.join("|") === "Identificação");
+  conf("cliente com caso e sem atendimento vê Identificação e Análise de Direito, sem Triagem, Documentos e Mensagens", t.temCaso && !t.vivos && t.abas.join("|") === "Identificação|Análise de Direito");   // F171: com caso, a análise fica à mão
   conf("o + atendimento aparece em destaque, com letra branca", t.atend === "rgb(255, 255, 255)");
   conf("Parentes ou amigos fica recolhido num ＋", !t.cartao && t.botaoPar);
   await p.evaluate(() => [...document.querySelectorAll("button.cad-mini")].find(b => /Parentes ou amigos/.test(b.textContent)).click());
