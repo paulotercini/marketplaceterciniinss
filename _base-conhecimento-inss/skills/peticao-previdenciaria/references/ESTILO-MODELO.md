@@ -2,6 +2,8 @@
 
 Onda 163, 29/09/2026. Calibragem aprovada pelo titular, que pediu texto compreensível, humano, formal e jurídico, no registro fluido que ele aprecia nas peças produzidas pelo ChatGPT e pelo Manus. Esta referência é lida ANTES de redigir qualquer peça, e os parágrafos abaixo são o padrão a imitar em extensão, ritmo e encadeamento. Os casos são fictícios e servem apenas ao estilo.
 
+**Onda 174, 04/10/2026.** A estrutura, as fórmulas e a voz das peças passaram a ser as do `METODO-PETICAO-TERCINI.md`, extraído do modelo do próprio titular, que prevalece sobre esta referência em caso de diferença. Daqui continuam valendo as medidas, as transições e as vedações. Nos exemplos abaixo, a peça entregue escreve "a Parte Autora" e, depois da primeira menção na seção, "a Autarquia Federal", e o documento é citado por ID nas peças intermediárias e "em anexo" na petição inicial.
+
 ## As medidas
 
 O parágrafo tem de quatro a cinco linhas, com teto de seis, o que no papel do escritório corresponde a 40 a 55 palavras, com teto de 65. A frase tem de 15 a 35 palavras e passa de 45 só em citação literal. Cada parágrafo desenvolve uma ideia em três ou quatro frases ligadas entre si, e cada parágrafo, a partir do segundo da seção, abre retomando o anterior. O acervo do escritório, medido em 20/09/2026, tem mediana de 42 palavras por parágrafo e percentil 90 de 75, de modo que a nova medida corresponde ao que o titular já escrevia.

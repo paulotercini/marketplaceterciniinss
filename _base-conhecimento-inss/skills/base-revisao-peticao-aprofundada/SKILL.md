@@ -232,8 +232,9 @@ Itens auditados:
 - Recuo de 2 cm (rito judicial) ou 4 cm (CRPS).
 - Rodapé do escritório.
 - **Dois-pontos** só antes de citação literal ou enumeração, nunca antes de miniconclusão (Onda 163).
-- Documentos referenciados por ID, não por "documento em anexo".
-- Estrutura mínima da peça compatível com o rito.
+- Documentos referenciados por ID nas peças intermediárias, e "em anexo" na petição inicial e no mandado de segurança, sempre com emitente, data e trecho decisivo em negrito e itálico (Onda 174).
+- Estrutura do Método Tercini (`peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md`, Onda 174). Na petição inicial, endereçamento, qualificação copiada da procuração, nome da ação centralizado, 1. DA INEXISTÊNCIA DE AÇÃO JUDICIAL COM O MESMO OBJETO, 2. DOS FATOS com a subseção do fato decisivo, 3. DO [BENEFÍCIO] com a lei transcrita antes de aplicada, seções adicionais, REQUERIMENTOS na ordem do método, valor da causa pelo art. 292 do CPC, fecho "Termos em que," e "Pede deferimento." e QUESITOS quando houver perícia. Nas demais peças, o esqueleto da seção 4 do método. Desvio de ordem ou de fórmula é achado IMPORTANTE.
+- Voz do titular. "a Parte Autora", "a Autarquia Federal" depois da primeira menção na seção, virada "Entretanto, está equivocado o entendimento da Autarquia Federal" e fecho do direito "Deste modo, Excelência".
 
 ### Camada 2 - Conformidade Normativa
 

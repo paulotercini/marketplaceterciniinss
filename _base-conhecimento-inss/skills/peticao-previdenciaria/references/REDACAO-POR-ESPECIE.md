@@ -2,6 +2,8 @@
 
 Onda 137 (11/09/2026). Texto do titular, preservado com edição mínima. É a amostra de voz que calibra toda peça, e a `humanizador-tedson` a usa como referência. Os exemplos são hipotéticos, e os campos entre colchetes devem corresponder aos autos.
 
+Onda 174 (04/10/2026). Os pares abaixo continuam calibrando o conteúdo do parágrafo, e a forma da peça segue o `METODO-PETICAO-TERCINI.md`. Na peça entregue, "o autor" e "a autora" dos exemplos viram "a Parte Autora", o INSS vira "a Autarquia Federal" depois da primeira menção na seção, e o documento é citado com emitente, data e trecho literal em negrito e itálico.
+
 ## A fórmula do parágrafo argumentativo
 
 O padrão a adotar é afirmar o fato, localizar a prova, explicar sua relevância e formular a consequência pretendida, com firmeza proporcional ao que os autos efetivamente demonstram. Na escrita previdenciária, a precisão sobre datas, atividade profissional e documentos dá mais força ao argumento do que expressões solenes.

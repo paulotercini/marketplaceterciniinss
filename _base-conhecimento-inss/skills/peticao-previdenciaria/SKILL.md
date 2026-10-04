@@ -1,6 +1,6 @@
 ---
 name: peticao-previdenciaria
-description: "Criação de petições previdenciárias no padrão do escritório Paulo Roberto Tercini Filho (OAB/SP 331.110), incluindo política de tutela de urgência e liminar. Use SEMPRE que pedir para redigir, criar, gerar ou montar qualquer petição, recurso, contestação, embargos, agravo, pedido de uniformização, recurso administrativo, recurso especial ao CRPS, mandado de segurança ou qualquer peça processual previdenciária. Use quando mencionar petição inicial, recurso inominado, embargos de declaração, agravo interno, pedido TNU, recurso ordinário, recurso especial CRPS, ação de concessão, ação de restabelecimento, pensão por morte, aposentadoria, auxílio-doença, BPC/LOAS, tutela de urgência, tutela antecipada, liminar, antecipação de tutela, medida liminar. Fase 0, consultar o MCP acervo, vedado reaproveitar texto de um cliente em peça de outro. NÃO use para análise de casos, pareceres ou respostas que não resultem em documento formal. Onda 140, redação em Markdown, medição por medir_peca.py e conversão por md2docx.js."
+description: "Criação de petições previdenciárias no padrão do escritório Paulo Roberto Tercini Filho (OAB/SP 331.110), incluindo política de tutela de urgência e liminar. Use SEMPRE que pedir para redigir, criar, gerar ou montar qualquer petição, recurso, contestação, embargos, agravo, pedido de uniformização, recurso administrativo, recurso especial ao CRPS, mandado de segurança ou qualquer peça processual previdenciária. Use quando mencionar petição inicial, recurso inominado, embargos de declaração, agravo interno, pedido TNU, recurso ordinário, recurso especial CRPS, ação de concessão, ação de restabelecimento, pensão por morte, aposentadoria, auxílio-doença, BPC/LOAS, tutela de urgência, tutela antecipada, liminar, antecipação de tutela, medida liminar. Fase 0, consultar o MCP acervo, vedado reaproveitar texto de um cliente em peça de outro. NÃO use para análise de casos, pareceres ou respostas que não resultem em documento formal. Toda peça segue o Método Tercini (Onda 174), em Markdown medido e convertido."
 ---
 
 # Petições Previdenciárias do Escritório Paulo Tercini
@@ -29,21 +29,29 @@ A forma de pesquisar, os filtros confiáveis e os que não são, e o que foi med
 
 **Fase 3, converter.** Rodar `node scripts/md2docx.js peca.md saida.docx --logo <caminho da logo>` (na primeira vez, `npm install` dentro de `scripts/`, que instala o `docx`) (com `--crps` para recuo de 4 cm nas peças administrativas). O script aplica cabeçalho, logo, fonte, margens, títulos pretos, citações recuadas, tabelas e o fecho com local, data e assinatura. Depois, converter em PDF e abrir a primeira página para conferência visual, como sempre.
 
+## O método do titular (Onda 174), lido antes de redigir
+
+Toda peça, em todos os temas, segue `references/METODO-PETICAO-TERCINI.md`, extraído do modelo de petição inicial de incapacidade redigido pelo titular e fixado por ele como padrão do escritório. O método prevalece sobre `references/ESTILO-MODELO.md` na estrutura, nas fórmulas e na voz, e as medidas de parágrafo da Onda 163 continuam valendo. A petição inicial pronta, na gramática do conversor, está em `references/EXEMPLAR-PI-INCAPACIDADE.md`, e cada Modelo Ouro 2.0 traz o esqueleto da sua espécie já no método.
+
+Na petição inicial a ordem é fixa. Endereçamento, qualificação copiada da procuração, nome da ação centralizado, INSS com a Gerência Executiva de São José do Rio Preto, e as seções 1. DA INEXISTÊNCIA DE AÇÃO JUDICIAL COM O MESMO OBJETO, 2. DOS FATOS (com a subseção do fato decisivo), 3. DO [BENEFÍCIO], eventuais seções adicionais e REQUERIMENTOS, seguidos de valor da causa, fecho e, havendo perícia, QUESITOS. As demais peças seguem o esqueleto da seção 4 do método.
+
+A voz é a do titular. A parte é "a Parte Autora", o réu é "o Instituto Nacional do Seguro Social – INSS" e depois "a Autarquia Federal", a virada dos fatos é "Entretanto, está equivocado o entendimento da Autarquia Federal, pois..., senão vejamos", e o direito fecha por "Deste modo, Excelência, ... como medida de direito e de justiça". O documento é descrito pelo emitente, pelo registro profissional e pela data, com o trecho decisivo transcrito em ***"negrito e itálico"***, e a lei é transcrita em recuo, só no que decide, antes do parágrafo que a aplica ao caso.
+
 ## O estilo, calibrado no papel do escritório
 
 Uma linha da peça, em Bookman Old Style 12, A4, margens do escritório, recuo de 2 cm e espaçamento 1,5, tem cerca de DEZ palavras. Medido em 16/09/2026 com soffice e pdftotext. Portanto, **o parágrafo de quatro a cinco linhas tem de 40 a 55 palavras, e o teto de seis linhas corresponde a 65**, que é o que o medidor cobra desde a Onda 163. Um parágrafo bom tem três ou quatro frases de 15 a 35 palavras, ligadas por transições, e desenvolve uma única ideia com começo, meio e fim. Os parágrafos-modelo estão em `references/ESTILO-MODELO.md`, lidos antes de redigir.
 
 Não se escreve um parágrafo de oitenta palavras para cortar depois, porque o corte é o que produz o texto picado. Escreve-se dentro da medida desde a primeira versão. O medidor também recusa frases soltas em sequência, aponta a frase acima de 45 palavras e o parágrafo sem transição, e recusa adjetivo de intensidade, fórmula vazia, documento sem ID e dispositivo legal citado sem a frase que explica por que se aplica ao caso.
 
-A voz é a que o titular fixou em `references/REDACAO-POR-ESPECIE.md`, com os pares de redação genérica e precisa por espécie. Antes de redigir, ler o bloco da espécie. A fórmula do parágrafo argumentativo é afirmar o fato, localizar a prova por ID, explicar a relevância e formular a consequência, e a peça abre pela controvérsia, de modo que o leitor saiba em três linhas qual é o benefício, por que foi negado e o que precisa decidir.
+A voz é a que o titular fixou em `references/REDACAO-POR-ESPECIE.md`, com os pares de redação genérica e precisa por espécie. Antes de redigir, ler o bloco da espécie. A fórmula do parágrafo argumentativo é afirmar o fato, localizar a prova (por ID nos autos, e "em anexo" na petição inicial e no mandado de segurança), explicar a relevância e formular a consequência, e a peça abre pela controvérsia, de modo que o leitor saiba em três linhas qual é o benefício, por que foi negado e o que precisa decidir.
 
 A persuasão segue as nove técnicas da seção "Persuasão com base empírica" de `base-protocolo-operacional-escritorio/references/PADRAO-DE-ESCRITA.md` (Ondas 157 e 160), lidas antes da redação. Na prática, o fato vem com número, data e ID, a narrativa segue a ordem de causa e consequência, o primeiro número lido é o do segurado, o argumento mais forte abre a seção, e o que o INSS já reconheceu serve de premissa. A defesa previsível do INSS é nomeada e refutada em parágrafo próprio, o que obriga o julgador a enfrentá-la (art. 489, § 1º, IV, do CPC), e a pretensão é descrita como aplicação ordinária de norma e precedente, nunca como pedido de exceção. Nenhuma técnica de PNL entra na peça. Em todas as peças, os títulos são formais e nominais, conforme a regra de títulos de `references/MECANICA-DOCX.md`, e a persuasão fica na primeira frase da seção, nunca no título.
 
 ## Gramática do Markdown da peça
 
-`@endereco: texto` produz o endereçamento em negrito e caixa alta. `@processo: texto` produz a linha do processo. O parágrafo de qualificação é texto comum, com o nome do autor, o nome da ação e o INSS em `**negrito**`, tudo inline, sem parágrafo isolado. `## 1. TÍTULO` produz a tabela preta, e `### 1.1. SUBTÍTULO` também. `> texto` produz citação recuada em itálico, reservada a transcrição literal de lei ou ementa. `| a | b |` produz tabela, e a primeira coluna sai em negrito, o que serve ao quadro-resumo. `@fecho` produz "Nestes termos, pede deferimento.", a linha "Monte Alto – SP, [data por extenso]." e a assinatura. Todo o resto é parágrafo justificado com recuo.
+`@endereco: texto` produz o endereçamento em negrito e caixa alta. `@processo: texto` produz a linha do processo. O parágrafo de qualificação é texto comum, com a qualificação e o INSS em `**negrito**`. `# TEXTO` produz a linha centralizada em negrito e caixa alta, usada no nome da ação ou do recurso, em "RAZÕES DO RECURSO INOMINADO" e em "QUESITOS". `## 1. TÍTULO` produz a tabela preta, e `### 1.1. SUBTÍTULO` também. `> texto` produz citação recuada em itálico, reservada a transcrição literal de lei, tese ou ementa, um parágrafo do dispositivo por bloco. `***"trecho"***` produz o trecho literal de documento em negrito e itálico. `| a | b |` produz tabela, e a primeira coluna sai em negrito. `@quebra` produz quebra de página, usada entre a interposição e as razões do recurso. `@fecho` produz "Termos em que,", "Pede deferimento.", a linha "Monte Alto/SP, [data por extenso]." e a assinatura, mantidos na mesma página. Todo o resto é parágrafo justificado com recuo.
 
-Endereçamentos por tipo de peça, qualificação, a regra de títulos formais e nominais (Onda 162) e peças de duas partes estão em `references/MECANICA-DOCX.md`, e o modelo consulta essa referência para o TEXTO desses elementos, nunca para a formatação. Os componentes Visual Law, no máximo três por peça com o quadro-resumo sempre entre eles, estão em `references/VISUAL-LAW.md`.
+Endereçamentos por tipo de peça, qualificação, a regra de títulos formais e nominais (Onda 162) e peças de duas partes estão em `references/MECANICA-DOCX.md`, e o modelo consulta essa referência para o TEXTO desses elementos, nunca para a formatação. Os componentes Visual Law, opcionais desde a Onda 174 e no máximo três por peça, estão em `references/VISUAL-LAW.md`, e a petição no método do titular não leva síntese inicial nem quadro-resumo.
 
 ## Regras Críticas de Estilo do Escritório
 
@@ -72,7 +80,7 @@ A peça é escrita em linguagem formal e jurídica, mas simples, no estilo que o
 
 **Pedidos específicos.** Cada pedido nomeia a providência, o benefício ou período a que se refere e o fundamento que o sustenta, em coerência com os fatos narrados. Pedido genérico, do tipo "seja julgada procedente a ação", só aparece como fecho depois dos pedidos concretos.
 
-**Sobre os dois-pontos.** Admitidos antes de citação literal e de enumeração, vedados antes de miniconclusão. Quando o complemento cabe no período, entra por conectivo ou subordinação, e nunca por frases curtas em sequência. Travessão longo como separador de ideias segue vedado. Travessão curto é permitido em referências como "Monte Alto – SP" ou "INSTITUTO NACIONAL DO SEGURO SOCIAL – INSS".
+**Sobre os dois-pontos.** Admitidos antes de citação literal e de enumeração, vedados antes de miniconclusão. Quando o complemento cabe no período, entra por conectivo ou subordinação, e nunca por frases curtas em sequência. Travessão longo como separador de ideias segue vedado. Travessão curto é permitido só em referências como "Dr. [nome] – CRM nº [__]" e "Instituto Nacional do Seguro Social – INSS".
 
 ---
 
@@ -104,15 +112,15 @@ Citações longas (ementas, trechos de lei) devem ser formatadas em **itálico**
 
 ---
 
-## Seção Obrigatória — Efeitos Financeiros (Petições Iniciais de Concessão e Revisão)
+## Proteção obrigatória dos efeitos financeiros (Petições Iniciais de Concessão e Revisão)
 
-Toda petição inicial de concessão ou revisão de benefício previdenciário DEVE conter uma seção própria intitulada "DOS EFEITOS FINANCEIROS", sem acréscimo de data ou de fato no título (regra de títulos da Onda 162), renderizada com o título preto padrão.
+Toda petição inicial de concessão ou revisão protege o termo inicial na DER, e o método do titular (Onda 174) define onde. Quando toda a prova integrou o processo administrativo, DOS FATOS afirma que os documentos em anexo foram apresentados ao INSS na DER e o item 3 dos REQUERIMENTOS fixa o termo inicial na DER. Quando há documento que não foi ao INSS, duas ou mais DERs, prova técnica judicial que confirma documento do processo administrativo ou omissão do INSS em emitir exigência, entra a seção adicional "DOS EFEITOS FINANCEIROS", sem acréscimo de data ou de fato no título (regra de títulos da Onda 162), entre a seção do benefício e os REQUERIMENTOS.
 
-Esta seção é obrigatória porque o Tema 1124/STJ condiciona o termo inicial dos efeitos financeiros ao momento em que a prova foi produzida. Sem fundamentação expressa, o juiz pode deslocar a DIB da DER para a citação, causando perda substancial de atrasados.
+A proteção é obrigatória porque o Tema 1124/STJ condiciona o termo inicial dos efeitos financeiros ao momento em que a prova foi produzida. Sem fundamentação expressa, o juiz pode deslocar a DIB da DER para a citação, causando perda substancial de atrasados.
 
 **Conteúdo obrigatório.**
 
-1. Classificar expressamente cada documento essencial em uma das três categorias, identificando por ID no PJe.
+1. Classificar expressamente cada documento essencial em uma das três categorias, identificando-o pelo emitente e pela data (na inicial o documento segue "em anexo").
 
    a) **Já apresentado ao INSS na DER** — documento que integrava o processo administrativo desde o requerimento. Enquadra o caso no cenário 2.1 do Tema 1124 (DIB na DER)
 
@@ -126,7 +134,7 @@ Esta seção é obrigatória porque o Tema 1124/STJ condiciona o termo inicial d
 
 4. Se houver duas ou mais DERs, demonstrar a continuidade do conjunto probatório entre elas, indicando que os documentos da DER posterior "apenas confirmaram" o acervo já existente, para preservar os efeitos financeiros desde a DER mais antiga
 
-**Posição na petição.** Após a fundamentação de mérito (ex. "DO DIREITO", "DA ATIVIDADE ESPECIAL", "DA INCAPACIDADE") e antes dos pedidos. Em petições com múltiplas causas de pedir, a seção de efeitos financeiros é a última antes dos pedidos.
+**Posição na petição.** Como seção adicional, depois da seção do benefício (por exemplo, "3. DA APOSENTADORIA ESPECIAL") e de eventual DA REAFIRMAÇÃO DA DER, sempre a última antes dos REQUERIMENTOS.
 
 **Exceções.** Não incluir esta seção em embargos de declaração, agravos internos, recursos ao CRPS (salvo quando o mérito recursal envolver efeitos financeiros) ou mandados de segurança.
 
@@ -138,7 +146,7 @@ O pedido de gratuidade de justiça não deve ser genérico. A hipossuficiência 
 
 **Técnica obrigatória.** Quando renda e despesas do segurado estiverem disponíveis, a seção de gratuidade contém tabela de receitas e despesas com três colunas: "Receita/Despesa", "Valor" e "Documento (ID)". Lista o rendimento mensal total, as despesas fixas comprovadas (aluguel, plano de saúde, alimentação, medicamentos, contas básicas) e a renda livre resultante. Cada linha referencia o documento comprobatório por ID no PJe.
 
-**Posição.** Em petições iniciais de concessão e restabelecimento, pode figurar como primeira seção numerada (antes dos fatos) ou como preliminar.
+**Posição.** No método do titular, a gratuidade é o item 2 dos REQUERIMENTOS, pelos arts. 98 e 99 do CPC, nunca pelo art. 4º da Lei 1.060/50, revogado pelo art. 1.072, III, do CPC. A tabela entra como seção adicional só quando houver dado concreto e risco real de impugnação, e na réplica quando o INSS impugnar a gratuidade.
 
 **Quando não usar a tabela.** Se os dados não estiverem disponíveis, usar formulação direta com referência à autodeclaração e ao art. 99 §3º do CPC, sem tabela. A tabela só agrega valor quando os dados são concretos e documentados.
 
@@ -146,8 +154,8 @@ O pedido de gratuidade de justiça não deve ser genérico. A hipossuficiência 
 
 ## Pedidos
 
-- Introduzidos por "Diante do exposto, requer" ou fórmula similar
-- Itens com letras minúsculas (a, b, c, d...) ou algarismos arábicos (1, 2, 3...)
+- Seção final com o título literal "REQUERIMENTOS", introduzida por "Ante o exposto, requer:"
+- Itens em algarismos arábicos, na ordem do método (citação, gratuidade, condenação com correção e juros "na forma do Manual de Cálculos da Justiça Federal", subsidiário em 3.1, custas e honorários só no rito ordinário, provas), seguidos do valor da causa pelo art. 292, §§ 1º e 2º, do CPC
 - Sem recuo especial diferenciado, alinhamento justificado
 - Recuo de primeira linha mantido conforme o padrão do rito
 
@@ -223,13 +231,13 @@ Em vez de dizer que é urgente, demonstrar a urgência. A técnica exige três e
 
 1. **Prejuízo real, mensurável e imediato.** Quantificar o dano concreto (meses sem renda, valor das despesas médicas não custeadas, risco clínico documentado), sempre com referência a documento comprobatório por ID.
 
-2. **Primeira página para gerar impacto.** Usar o espaço da primeira página (quadro-resumo) para trazer os elementos fáticos principais e resumir o objeto urgente da petição. O julgador deve compreender a urgência antes de virar a página.
+2. **Primeira página para gerar impacto.** Usar o espaço da primeira página (o início de DOS FATOS, ou o quadro-resumo quando o titular o pedir) para trazer os elementos fáticos principais e resumir o objeto urgente da petição. O julgador deve compreender a urgência antes de virar a página.
 
 3. **Peso das consequências nos ombros do julgador.** Demonstrar que a demora gera consequência irreversível. Não é "o autor precisa do benefício com urgência". É "sem a concessão, o autor ficará sem acesso ao tratamento quimioterápico iniciado em [data], conforme relatório médico ID [xxx], com risco de progressão tumoral documentado no parecer ID [yyy]".
 
 ### Estrutura de Réplica Previdenciária
 
-Quando a peça solicitada for réplica (art. 350 do CPC), seguir a estrutura abaixo em vez do formato tradicional de "contestação da contestação".
+Quando a peça solicitada for réplica (art. 350 do CPC), seguir a estrutura abaixo em vez do formato tradicional de "contestação da contestação". No esqueleto do método, as seções 1 e 2 abaixo formam "1. DA CONTESTAÇÃO" e "2. DAS RAZÕES PARA REJEITAR A DEFESA", e o pedido de prova entra nos REQUERIMENTOS.
 
 **Seção 1 — Delimitação dos pontos controvertidos e incontroversos.** Tabela de três colunas no padrão Visual Law preto/branco. Coluna 1, "Fato alegado na inicial". Coluna 2, "Impugnação pelo INSS". Coluna 3, "Situação processual" com rótulo `[INCONTROVERSO]` ou `[CONTROVERTIDO]`. Cada fato relevante da inicial é classificado com base na contestação. Fatos não impugnados especificamente presumem-se verdadeiros (art. 341 CPC). Essa tabela coloca o autor no controle da narrativa e orienta a leitura do juiz.
 

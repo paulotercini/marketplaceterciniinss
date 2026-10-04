@@ -17,7 +17,7 @@ Toda petição do escritório em favor de pessoa física deve conter um Parágra
 
 ## Posição na peça
 
-Um único parágrafo, ao final da última seção argumentativa, imediatamente antes dos pedidos. Em memoriais, é o primeiro parágrafo, porque ali o tempo de leitura é menor. Em embargos de declaração, fecha a seção da omissão ou contradição, costurado ao vício apontado.
+Um único parágrafo, ao final da última seção argumentativa, imediatamente antes dos pedidos. No método do titular (Onda 174, `peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md`), fica no fim da seção do benefício, depois do pedido subsidiário e imediatamente antes do fecho do direito "Deste modo, Excelência, ... como medida de direito e de justiça", ao qual se liga por transição. Em memoriais, é o primeiro parágrafo, porque ali o tempo de leitura é menor. Em embargos de declaração, fecha a seção da omissão ou contradição, costurado ao vício apontado.
 
 ## Método em quatro passos
 

@@ -25,6 +25,9 @@ final. NAO protocole, NAO envie nada, NAO sobrescreva arquivos. So prepare.
 - Leia tambem os anexos da tarefa (`todo_anexo.py`).
 - Localize e leia a **peticao inicial ja existente** (subpasta `Claude`) e o
   **MODELO OURO** correspondente (beneficio + esfera) na pasta Peticoes Ouro.
+- Leia o `peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md` (Onda 174). A
+  peca ajustada segue a ordem de secoes, as formulas e a voz do titular, e a
+  conferencia do item 7 inclui a estrutura do metodo, alem das citacoes e do visual.
 
 ## 3. Conferencia de citacoes (anti-citacao falsa)
 - Para CADA sumula, Tema (STF/STJ/TNU), Enunciado CRPS, REsp/precedente e

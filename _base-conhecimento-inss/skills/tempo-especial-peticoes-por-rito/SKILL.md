@@ -7,7 +7,7 @@ description: "Skill para transposição de análise de PPP em petições de temp
 
 ## Visão Geral
 
-Esta skill converte o resultado da análise de PPP (produzida pelas skills `auditoria-ppp` e `ppp-agentes-especializados`) em petições adaptadas ao rito processual e ao posicionamento específico do órgão julgador. A mesma tese de tempo especial exige argumentação, estrutura, ênfase probatória e fundamentação normativa diferentes conforme tramite perante o CRPS, o JEF ou o rito ordinário do TRF3.
+Esta skill converte o resultado da análise de PPP (produzida pelas skills `auditoria-ppp` e `ppp-agentes-especializados`) em petições adaptadas ao rito processual e ao posicionamento específico do órgão julgador. A mesma tese de tempo especial exige argumentação, estrutura, ênfase probatória e fundamentação normativa diferentes conforme tramite perante o CRPS, o JEF ou o rito ordinário do TRF3. Em qualquer rito, a forma da peça é a do `peticao-previdenciaria/references/METODO-PETICAO-TERCINI.md` (Onda 174), com o Perfil Profissiográfico Previdenciário descrito pelo emitente e pela data e o trecho do agente nocivo transcrito em negrito e itálico, e o esqueleto pronto está nos Modelos Ouro 2.0 de aposentadoria especial.
 
 O erro mais grave que um advogado pode cometer ao peticionar tempo especial é tratar todos os ritos e órgãos julgadores como se fossem idênticos. Cada instância tem sua cultura decisória, seus precedentes dominantes, seu grau de receptividade a determinados argumentos e suas limitações normativas. Esta skill mapeia essas diferenças e orienta a redação.
 

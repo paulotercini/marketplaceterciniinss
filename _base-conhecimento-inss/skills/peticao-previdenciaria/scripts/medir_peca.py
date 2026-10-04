@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Medidor mecânico de peça previdenciária. Onda 140 (16/09/2026).
+"""Medidor mecânico de peça previdenciária. Onda 140 (16/09/2026), ajustado na Onda 174 ao método do titular (REQUERIMENTOS, documento "em anexo" na inicial, linha "# " do nome da ação).
 
 Lê a peça em Markdown e devolve PASSA ou FALHA com a lista exata do que
 está fora do padrão de escrita do escritório. A skill NÃO entrega peça
@@ -27,7 +27,7 @@ ADJ_VEDADOS = r'\b(manifestamente|flagrante(?:mente)?|absurd[oa]|basilares?|indu
 FORMULAS_VAZIAS = r'(?i)\b(é cediço|é de se ver|como se sabe|insta salientar|cumpre ressaltar|mister se faz|resta claro|resta evidente|à luz dos mais comezinhos|os mais basilares|princípios de justiça)\b'
 ART_RX = r'\b(art(?:igo)?s?\.?\s*\d+[º°]?(?:[-\.]?[A-Z])?)'
 CONECTIVO_RX = r'(?i)\b(além disso|soma-se a isso|também|porque|uma vez que|já que|visto que|por isso|por essa razão|por esse motivo|de modo que|assim|dessa forma|desse modo|portanto|logo|ocorre que|todavia|contudo|entretanto|no entanto|ainda assim|mesmo diante|nem se diga|tampouco|na sequência|a partir de então|em seguida|nesse contexto|nesse ponto|com efeito|isso porque|de fato|embora|pois|razão pela qual|diante disso)\b'
-EXPLICA_RX = r'(?i)(porque|pois|uma vez que|na medida em que|de modo que|razão pela qual|o que significa|isto é|ou seja|aplica-se|incide|toma como referência|exige|prevê|estabelece|assegura|garante|dispõe|determina)'
+EXPLICA_RX = r'(?i)(porque|pois|uma vez que|na medida em que|de modo que|razão pela qual|o que significa|isto é|ou seja|aplica-se|incide|toma como referência|exige|exigid|prevê|previst|estabelece|assegura|garante|dispõe|disposto|determina|haja vista|a seguir|declara)'   # Onda 174, a transcrição anunciada (a seguir demonstrados) é a explicação no método do titular
 
 def paragrafos(md):
     """Divide em blocos, ignorando títulos, tabelas, citações recuadas e linhas de estrutura."""
@@ -50,7 +50,7 @@ def titulos(md):
     """Títulos de seção em Markdown, sem os # e sem a numeração."""
     out=[]
     for linha in md.splitlines():
-        if linha.startswith('#'):
+        if linha.startswith('##'):   # '# ' é a linha centralizada do nome da ação ou das RAZÕES, não título de seção (Onda 174)
             t=re.sub(r'^#+\s*','',linha).strip()
             t=re.sub(r'^([IVXLC]+|\d+(\.\d+)*)[\.\s\-–]+','',t).strip()
             if t: out.append(t)
@@ -70,10 +70,12 @@ def medir(md, tipo):
             continue   # qualificação civil é parágrafo único por padrão do escritório
         if n>PARAG_MAX:
             achados.append(('IMPORTANTE', f'Parágrafo com {n} palavras (~{-(-n//PAL_LINHA)} linhas) em "{sec}". Teto 65, cerca de seis linhas. Dividir em dois parágrafos ligados por transição, ou retirar o que não decide.', p[:110]))
-        elif n<PARAG_MIN and not re.match(r'(?i)^(requer|pede|nestes termos|termos em que|pelo exposto|diante do exposto|ante o exposto)', p):
+        elif n<PARAG_MIN and not re.search(r'(?i)requeriment|pedido|quesito', sec) and not re.match(r'(?i)^(requer|pede|nestes termos|termos em que|pelo exposto|diante do exposto|ante o exposto|\d+(\.\d+)*\.\s)', p):
             achados.append(('MENOR', f'Parágrafo com {n} palavras em "{sec}". Abaixo de 2 linhas, provável frase-decreto ou ideia não desenvolvida.', p[:110]))
+    LISTA_RX = r'(?i)requeriment|pedido|quesito'   # Onda 174, itens numerados de requerimentos e quesitos não são prosa
     # 2. truncamento, sequencia de frases curtas
     for sec,p in ps:
+        if re.search(LISTA_RX, sec): continue
         fs=frases(p); seq=0
         for f in fs:
             seq = seq+1 if len(f.split())<FRASE_CURTA else 0
@@ -81,6 +83,7 @@ def medir(md, tipo):
                 achados.append(('IMPORTANTE', f'Texto truncado em "{sec}", {SEQ_CURTAS} ou mais frases seguidas com menos de {FRASE_CURTA} palavras. Encadear por conectivo ou subordinação.', p[:110])); break
     # 2b. frase longa e parágrafo sem conectivo (Onda 163)
     for sec,p in ps:
+        if re.search(LISTA_RX, sec): continue
         fs=frases(p)
         for f in fs:
             if len(f.split())>FRASE_LONGA:
@@ -96,7 +99,7 @@ def medir(md, tipo):
     # 4. artigos sem explicacao, por secao
     por_sec={}
     for sec,p in ps:
-        if re.search(r'(?i)pedido', sec): continue   # no pedido o fundamento é citado por natureza
+        if re.search(r'(?i)pedido|requeriment', sec): continue   # no pedido o fundamento é citado por natureza
         arts=re.findall(ART_RX, p)
         if arts and not re.search(EXPLICA_RX, p):
             por_sec.setdefault(sec,[]).extend(arts)
@@ -108,14 +111,15 @@ def medir(md, tipo):
         m=re.search(r'([^\s]+)\s*:\s+(\S+)', p)
         if m and not p.startswith('"') and re.search(r'[a-zà-ú\)]:\s+[a-zà-úA-Z]', p) and not re.search(r'(?i)(seguinte|seguintes|termos|verbis|literal|abaixo|a saber|dispõe|estabelece|prevê|determina|assim redigid[oa]|in verbis):\s', p) and not re.search(r':\s+(["“]|[a-zI]\)|\d+[\.\)]|[IVX]+\s*[-–])', p):
             achados.append(('MENOR', f'Dois-pontos antes de complemento que não é citação nem enumeração, em "{sec}". Trocar por conectivo ou subordinação, sem picar o período.', p[:110]))
-    # 6. "conforme anexo" sem ID
+    # 6. "conforme anexo" sem ID. Na inicial e no MS ainda não há ID, e o documento é referido "em anexo" (Onda 174, método do titular)
     for sec,p in ps:
+        if tipo in ('inicial','ms'): break
         if re.search(r'(?i)(conforme|documento[s]?)\s+(em\s+)?anexo', p) and not re.search(r'\bID\s*\d', p):
             achados.append(('IMPORTANTE', f'Referência a documento sem ID em "{sec}". No PJe, todo documento entra por ID.', p[:110]))
     # 8. titulos formais e nominais (Onda 162)
     for t in titulos(md):
         erros=[]
-        if not re.match(r'(?i)^D(A|O|AS|OS)\s', t): erros.append('não começa por DA, DO, DOS ou DAS')
+        if not re.match(r'(?i)^D(A|O|AS|OS)\s', t) and not re.match(r'(?i)^(REQUERIMENTOS|QUESITOS)$', t): erros.append('não começa por DA, DO, DOS ou DAS')
         if len(t.split())>TITULO_MAX: erros.append(f'{len(t.split())} palavras, teto {TITULO_MAX}')
         if re.search(TITULO_DADO_RX, t): erros.append('traz ano, data, número, valor ou ID')
         v=re.search(TITULO_VALOR_RX, t)
