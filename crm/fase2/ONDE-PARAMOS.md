@@ -1900,3 +1900,12 @@ Aparece com caso, com análise salva ou no atendimento com a triagem encerrada.
 Os atalhos (nota de aposentadoria futura, lista Análise de Direito) abrem ali.
 O painel 8 da ficha saiu. Provas ajustadas: analise-direito, triagem, fluxo,
 limpa165. Suíte: 97/101, falhando só as quatro de data.
+
+## 10.76 · F172 · anotações da lista Escritório na Análise de Direito
+
+O quadro Anotações da Análise de Direito aparece sempre e ganhou o campo de
+anotar (grava em clientes.campos.atendimento, `anotarNoDireito`). Ele junta as
+anotações do cadastro e os andamentos dos casos ainda na fase Escritório.
+Cliente sem caso com anotações vindas do To Do (origem "todo", 63 clientes)
+passa a ver a Análise de Direito e abre nela. Prova: `escritorio172.js` (5/5).
+Suíte: 98/102, falhando só as quatro de data.
