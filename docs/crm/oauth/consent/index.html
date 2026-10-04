@@ -58,8 +58,11 @@ button:disabled{opacity:.6;cursor:default}
     const r = await fetch(AUTH + "/token?grant_type=refresh_token", {method:"POST",
       headers:{apikey:cfg.key,"Content-Type":"application/json"}, body:JSON.stringify({refresh_token:sessao.refresh_token})});
     if(!r.ok) return false;
-    sessao = await r.json(); guardar("crm_sessao", JSON.stringify(sessao)); return true;
+    sessao = await r.json(); if(!outra) guardar("crm_sessao", JSON.stringify(sessao)); return true;
   }
+  // "outra conta": autoriza o conector em nome de outro login (a conta do
+  // assistente, nas rotinas agendadas) sem trocar a sessão do CRM deste aparelho
+  let outra = false;
   function pedirLogin(msg){
     mostrar(`<h1>Entre com a conta do CRM</h1>
       <p>Um assistente pediu para ler o CRM em seu nome. Entre com o mesmo e-mail e senha do CRM para decidir.</p>
@@ -76,7 +79,7 @@ button:disabled{opacity:.6;cursor:default}
         headers:{apikey:cfg.key,"Content-Type":"application/json"},
         body:JSON.stringify({email:document.getElementById("em").value.trim(), password:document.getElementById("se").value})}).catch(()=>null);
       if(!r || !r.ok) return pedirLogin("E-mail ou senha não conferem.");
-      sessao = await r.json(); guardar("crm_sessao", JSON.stringify(sessao)); detalhes();
+      sessao = await r.json(); if(!outra) guardar("crm_sessao", JSON.stringify(sessao)); detalhes();
     };
   }
   async function detalhes(){
@@ -93,7 +96,8 @@ button:disabled{opacity:.6;cursor:default}
       <ul><li>clientes, casos e anotações</li><li>agenda, tarefas e prazos</li><li>novidades dos portais e a equipe</li></ul>
       <p class="miudo">Só leitura. Senhas do Meu INSS e do gov.br ficam de fora. O acesso vale enquanto você for colaborador ativo e pode ser revogado no assistente.</p>
       <div class="linha"><button class="sim" id="sim">Autorizar</button><button id="nao">Recusar</button></div>
-      <p class="miudo">Retorno para ${esc(d.redirect_uri||"")}</p>`);
+      <p class="miudo">Retorno para ${esc(d.redirect_uri||"")} · <a href="#" id="outra">entrar com outra conta</a></p>`);
+    document.getElementById("outra").onclick = ev => { ev.preventDefault(); outra = true; sessao = null; pedirLogin(); };
     const decidir = async acao => {
       document.querySelectorAll("button").forEach(b=>b.disabled=true);
       const c = await pedir(`/oauth/authorizations/${encodeURIComponent(id)}/consent`, {method:"POST", body:JSON.stringify({action:acao})});
