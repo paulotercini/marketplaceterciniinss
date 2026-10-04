@@ -7,7 +7,8 @@ const EU = "11111111-1111-1111-1111-111111111111", AUTH = "aaaaaaaa-aaaa-aaaa-aa
 const CLI = "c0000000-0000-0000-0000-000000000001", CASO = "b0000000-0000-0000-0000-000000000001";
 const hj = new Date().toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
 const T: Record<string, any[]> = {
-  colaboradores: [{ id: EU, auth_id: AUTH, nome: "Paulo Tercini", inicial: "P", cargo: "advogado", ativo: true }],
+  colaboradores: [{ id: EU, auth_id: AUTH, nome: "Paulo Tercini", inicial: "P", cargo: "advogado", ativo: true },
+    { id: "22222222-2222-2222-2222-222222222222", auth_id: null, nome: "Amanda Ficta", inicial: "A", cargo: "assistente", ativo: true }],
   clientes: [{ id: CLI, nome: "Aurélia Ficta de Souza", cpf: "12345678909", dn: "14031962", telefone: "(16) 99999-0001",
     cidade: "Monte Alto", uf: "SP", campos: { civil: { origem: "indicação" } }, criado_em: "2026-01-10T12:00:00Z" }],
   casos: [{ id: CASO, cliente_id: CLI, titulo: "Aposentadoria por idade rural", especie: "B41", fase: "inss",
@@ -19,9 +20,15 @@ const T: Record<string, any[]> = {
   credenciais: [{ id: "x", cliente_id: CLI, tipo: "meu_inss", valor: "SENHA-NAO-PODE-SAIR" }],
 };
 const pedidos: string[] = [];
-const fake = Deno.serve({ port: 0, onListen() {} }, (req) => {
+const fake = Deno.serve({ port: 0, onListen() {} }, async (req) => {
   const u = new URL(req.url);
-  pedidos.push(u.pathname + u.search);
+  pedidos.push(req.method + " " + u.pathname + u.search);
+  if (req.method === "POST") {
+    const t = u.pathname.replace("/rest/v1/", ""), b = await req.json();
+    const novos = (Array.isArray(b) ? b : [b]).map((r: any) => ({ id: crypto.randomUUID(), ...r }));
+    (T[t] ||= []).push(...novos);
+    return Response.json(novos, { status: 201 });
+  }
   if (u.pathname === "/auth/v1/user")
     return req.headers.get("authorization") === "Bearer tok-bom" ? Response.json({ id: AUTH }) : new Response("no", { status: 401 });
   const t = u.pathname.replace("/rest/v1/", "");
@@ -56,8 +63,10 @@ const ini = await rpc("initialize", { protocolVersion: "2025-06-18", capabilitie
 conf("initialize responde com o nome do servidor", ini.corpo?.result?.serverInfo?.name === "crm-tercini");
 const tl = await rpc("tools/list", {}, "tok-bom", 2);
 const nomes = (tl.corpo?.result?.tools || []).map((t: any) => t.name).sort();
-conf(`as seis ferramentas de leitura (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "buscar_clientes", "equipe", "ficha_cliente", "novidades"]));
-conf("todas marcadas como só leitura", (tl.corpo?.result?.tools || []).every((t: any) => t.annotations?.readOnlyHint));
+conf(`as oito ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "buscar_clientes", "criar_tarefa", "equipe", "ficha_cliente", "novidades", "registrar_anotacao"]));
+const ESCREVE = ["criar_tarefa", "registrar_anotacao"];
+conf("leitura marcada só leitura e escrita marcada não destrutiva", (tl.corpo?.result?.tools || []).every((t: any) =>
+  ESCREVE.includes(t.name) ? t.annotations?.readOnlyHint === false && t.annotations?.destructiveHint === false : t.annotations?.readOnlyHint));
 
 const call = async (name: string, args: unknown) => {
   const r = await rpc("tools/call", { name, arguments: args }, "tok-bom", 3);
@@ -74,6 +83,25 @@ conf("a agenda traz a tarefa e o prazo fatal de hoje", ag.includes("compromisso"
 const nov = await call("novidades", { dias: 3 });
 conf("novidades traz o movimento do PAT", nov.includes("exigência emitida") && !nov.includes("notas de produtor"));
 conf("nenhuma chamada tocou a tabela de credenciais", !pedidos.some((p) => p.includes("credenciais")) && !(busca + ficha + notas + ag + nov).includes("SENHA"));
+
+// etapa 2 · escrita
+const nAnd = () => T.andamentos.length, nTf = () => T.andamento_tarefas.length;
+const r1 = await call("registrar_anotacao", { caso_id: CASO, texto: "Cliente trouxe as notas de produtor." });
+const nova = T.andamentos.at(-1);
+conf("registrar_anotacao grava com o autor logado e a marca mcp", r1.includes("Aurélia Ficta") && nova.autor_id === EU && nova.origem === "app" && /^mcp:/.test(nova.origem_id) && nova.texto === "Cliente trouxe as notas de produtor.");
+const amanha = new Date(Date.now() + 864e5).toLocaleDateString("sv", { timeZone: "America/Sao_Paulo" });
+const a0 = nAnd(), t0 = nTf();
+const r2 = await call("criar_tarefa", { caso_id: CASO, o_que: "Protocolar o cumprimento da exigência", data: amanha.split("-").reverse().join("/"), para: ["A"], revisor: "Paulo" });
+const tfs = T.andamento_tarefas.slice(t0);
+conf("criar_tarefa grava a anotação, a executora e o revisor", r2.includes("Amanda Ficta") && r2.includes("revisão de Paulo") && nAnd() === a0 + 1 && tfs.length === 2
+  && tfs.every((t: any) => t.andamento_id === T.andamentos.at(-1).id && t.atribuido_por === EU && t.lembrar_em === amanha)
+  && tfs.find((t: any) => t.papel === "revisa")?.colaborador_id === EU && tfs.find((t: any) => t.papel === "executa")?.colaborador_id !== EU);
+const a1 = nAnd(), t1 = nTf();
+const r3 = await call("criar_tarefa", { caso_id: CASO, o_que: "Algo atrasado", data: "2020-01-01" });
+const r4 = await call("criar_tarefa", { caso_id: CASO, o_que: "Para ninguém", data: amanha, para: ["Zé"] });
+const r5 = await call("registrar_anotacao", { caso_id: "b0000000-0000-0000-0000-000000000999", texto: "caso que não existe" });
+conf("data passada, colaborador inexistente e caso inexistente não gravam nada", /já passou/.test(r3) && /Não achei/.test(r4) && /não encontrado/.test(r5) && nAnd() === a1 && nTf() === t1);
+conf("a escrita só faz POST em andamentos e andamento_tarefas", pedidos.filter((p) => !p.startsWith("GET")).every((p) => /^POST \/rest\/v1\/(andamentos|andamento_tarefas)$/.test(p)));
 
 // colaborador inativo não passa
 T.colaboradores[0].ativo = false;

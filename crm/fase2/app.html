@@ -3207,7 +3207,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.64</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.65</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -18527,7 +18527,7 @@ function comentario(a, resposta, reacoes){
       },new Map())].map(([e,quem])=>`<span class="chip" title="${esc(quem.join(", "))}">${e} ${quem.join(" ")}</span>`).join("")}</span>`
     : "";
   return `<span class="quando" title="${esc(co?co.nome:"—")}"><span class="avatar mini" style="background:${cor}">${esc(co?co.inicial:"·")}</span><span class="q-dt">${fmtTS(a.criado_em)}</span></span>
-    <span class="texto"><b class="autor-nome" style="color:${cor}">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${horaSP(a.criado_em)}</span><br>${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${destacarMencoes(esc(tp?tp.resto:a.texto))}${chipsReacao}${resposta||""}</span>
+    <span class="texto"><b class="autor-nome" style="color:${cor}">${esc(co?co.nome.split(" ")[0]:"—")}</b><span class="tl-hora">${horaSP(a.criado_em)}</span>${String(a.origem_id||"").startsWith("mcp:")?`<span class="tl-hora" title="registrado pelo assistente (Claude ou ChatGPT) em nome de quem está indicado">· via assistente</span>`:""}<br>${tp?`<span class="chip ${tp.cor} tipo-tl">${esc(tp.rot)}</span>`:""}${destacarMencoes(esc(tp?tp.resto:a.texto))}${chipsReacao}${resposta||""}</span>
     ${sinaisHtml(a)}
     ${vistos(a)}
     <span class="tl-acoes">
