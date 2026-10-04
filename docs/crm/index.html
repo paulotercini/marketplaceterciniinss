@@ -1244,6 +1244,9 @@
   .cad-campo.vazio .cad-v{color:#9B3B3B;font-weight:400;font-size:13.5px}
   /* F127 · a parceria em VERDE ao lado do nome, na Identificação e no
      cabeçalho da ficha; e a lista de parceiros para escolher */
+  /* F163 · parceria no canto direito do nome; o representante logo abaixo */
+  .cad-parc{margin-left:auto;display:inline-flex;align-items:center;gap:8px}
+  .cad-rep{font-size:13.5px;font-weight:600;margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;cursor:pointer}
   .chip.parc{background:var(--verde-f);color:var(--verde);border:1px solid #BFE3CC;font-weight:700}
   .chip.parc .cli-parc-k{color:var(--verde);opacity:.75;font-weight:600;font-size:10px;text-transform:uppercase;margin-right:4px}
   .parc-sel{font-size:12.5px;border:1px solid #BFE3CC;border-radius:6px;padding:3px 6px;background:var(--branco);color:var(--verde);font-family:inherit}
@@ -3211,7 +3214,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.67</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.68</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -22401,18 +22404,19 @@ function fraseRepresentante(c){
   return `, neste ato ${rep} por ${r.nome}${r.cpf?`, inscrito(a) no CPF nº ${fmtCpf(r.cpf)}`:""}${
     r.qualidade?`, na qualidade de ${r.qualidade}`:""}`;
 }
-function cadCampoRepresentante(c){
+// F163 · o representante mora sob o nome: o ＋ ao lado do nome abre os campos
+// aqui, e preenchido ele aparece numa linha que se edita no clique
+function cadLinhaRepresentante(c){
   const r = representanteDe(c);
-  return `<div class="cad-campo cad-c8${r?"":" vazio"}"
-      onclick="if(!this.querySelector('#rep-nome'))editarRepresentante('${c.id}')" style="cursor:pointer">
-    <label>Representante legal <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
-    <div class="cad-v" id="campo-representante">${r?esc(linhaRepresentante(r)):"só quando outra pessoa assina pelo cliente"}</div>
-  </div>`;
+  return `<div class="cad-rep" id="campo-representante" onclick="event.stopPropagation();if(!this.querySelector('#rep-nome'))editarRepresentante('${c.id}')"
+      ${r?`title="alterar o representante legal"`:`hidden`}>${r?`<span class="cad-apoio">${({F:"representada",M:"representado"})[civilDe(c).sexo]||"representado(a)"} por</span> ${esc(linhaRepresentante(r))}
+      <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button>`:""}</div>`;
 }
 function editarRepresentante(cliId){
   const c = D.cliPorId.get(cliId), cx = document.getElementById("campo-representante");
   if(!c || !cx) return;
   const r = representanteDe(c) || {};
+  cx.hidden = false;
   cx.innerHTML = `<div class="cad-end" onclick="event.stopPropagation()">
     <div class="cad-linha" style="margin-top:0">
       <input id="rep-nome" value="${esc(r.nome||"")}" placeholder="nome completo de quem assina" style="flex:1;min-width:200px">
@@ -22692,8 +22696,11 @@ function fichaIdentificacao(c, creds){
       <div class="cad-campo cad-c12" onclick="if(!this.querySelector('#ed-campo'))editarCampo('nome','${c.id}')" style="cursor:pointer">
         <label>Nome completo <button class="cad-lap" title="alterar">${CAD_IC.lapis}</button></label>
         <div class="cad-v grande" id="campo-nome">${esc(c.nome)}
-          ${chipParceria(c, ks)}
-          ${seletorParceria(c, ks, "parc-sel-id")}</div>
+          ${representanteDe(c)?"":`<button class="cad-mini" title="inserir o representante legal (curador, mãe, tutor)"
+            onclick="event.stopPropagation();editarRepresentante('${c.id}')">${CAD_IC.mais}representante legal</button>`}
+          ${/* F163 · a parceria no canto direito do cartão do nome */""}
+          <span class="cad-parc">${chipParceria(c, ks)}${seletorParceria(c, ks, "parc-sel-id")}</span></div>
+        ${cadLinhaRepresentante(c)}
       </div>
       ${/* CPF e nascimento pediam o lápis; o resto da grade aceita clique no
            cartão inteiro. Alvo de 4px contra alvo de 240px, na mesma tela. */""}
@@ -22742,10 +22749,8 @@ function fichaIdentificacao(c, creds){
       ${cadCampo(c, "pis_nit", 4, undefined, {rot:"PIS / NIT (todos)"})}
       ${cadCampoCnis(c)}
 
-      ${/* F160 · a origem e o representante legal, lado a lado: um diz de
-           onde o cliente veio, o outro quem assina por ele */""}
+      ${/* F163 · o representante legal subiu para o cartão do nome */""}
       ${cadCampo(c, "origem", 4)}
-      ${cadCampoRepresentante(c)}
 
       ${outrasCreds.map(cr=>cadCampoSenha(c, cr.tipo, "Senha "+esc(cr.tipo.replace("_"," ")), cr)).join("")}
       ${cadCampoPasta(c)}

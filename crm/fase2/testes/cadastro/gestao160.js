@@ -170,7 +170,7 @@ FIX.leads = [{ id: "l1", nome: "Prospecto Fictício Alves", telefone: "(16) 9999
     proc: corpoDoDoc("proc_adm", c, "").corpo,
     contrato: preencherModeloDoc("CONTRATANTE: " + QUALIF + ".", c, ""),
     sem: preencherModeloDoc("CONTRATANTE: " + QUALIF + ".", D.cliPorId.get(vazio), "") }; }, [CLI_CHEIO, CLI_VAZIO]);
-  conf("a Identificação mostra nome, CPF e qualidade", doc.linha === "Benedita Ficta de Souza · CPF 987.654.321-00 · curadora");
+  conf("a Identificação mostra nome, CPF e qualidade", doc.linha.replace(/^representad[oa](\(a\))? por\s+/, "") === "Benedita Ficta de Souza · CPF 987.654.321-00 · curadora");
   conf("a procuração sai com “neste ato representada por …, na qualidade de curadora” depois do CEP", /CEP _+, neste ato representada por Benedita Ficta de Souza, inscrito\(a\) no CPF nº 987\.654\.321-00, na qualidade de curadora,/.test(doc.proc));
   conf("a qualificação do contrato recebe o mesmo trecho e o cliente sem representante não muda", /na qualidade de curadora\./.test(doc.contrato) && !/representad|<REPRESENTANTE>/.test(doc.sem) && /CEP _+\./.test(doc.sem));
 
