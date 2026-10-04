@@ -3221,7 +3221,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.74</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.75</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
@@ -12110,9 +12110,7 @@ function pintarFicha(){
       <button class="mt ${abaAtiva===0?"on":""}" data-vv="0">Cadastro</button>
       ${/* ⚖️ F48 · sempre visível: cliente sem análise vê o convite a fazer
            a primeira — é assim que o histórico começa a existir */""}
-      ${/* F167 · a Análise de Direito só depois da triagem (ou com caso, ou
-           com análise já feita): cliente novo vê Cadastro e mais nada */""}
-      ${(ks.length || analisesDe(cliId).length || triagemFechada(c)) ? `<button class="mt ${abaAtiva===8?"on":""}" data-vv="8">Análise de Direito${(n=>n?` (${n})`:"")(analisesDe(cliId).length)}</button>` : ""}
+      ${/* F171 · a Análise de Direito mudou-se para dentro do Cadastro */""}
       ${/* F127 · o CNIS abre em outra aba de qualquer lugar da ficha */""}
       ${cnisDe(c)&&cnisDe(c).caminho?`<button class="mt" onclick="abrirCnis('${cliId}')" title="abre o extrato guardado em outra aba">Abrir CNIS ↗</button>`:""}
       ${/* o menu tem só as cinco divisões do cliente (pedido do Paulo):
@@ -12228,10 +12226,6 @@ function pintarFicha(){
       <button onclick="novoCaso('${c.id}')">Criar caso</button>
     </div>
     <p class="meio-sub">O caso nasce aqui e a sincronização cria a tarefa correspondente no To Do, na lista da fase.</p>
-  </div>
-
-  <div class="painel ${abaAtiva===8?"ativo":""}" data-p="8">
-    ${abaAtiva===8 ? painelDireito(c) : ""}
   </div>
 
   <div class="painel ${abaAtiva===9?"ativo":""}" data-p="9">
@@ -12422,6 +12416,9 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     // pré-caso recém-removido: as Anotações ficam, porque o ↺ restaurar mora na mesa
     vis.anotacoes = !!(c.campos||{}).pc_lixeira;
   }
+  // F171 · Análise de Direito: com caso, com análise já salva, ou no
+  // atendimento depois da triagem encerrada (a análise vem depois da triagem e dos documentos)
+  vis.direito = !semCaso || analisesDe(c.id).length>0 || (pcsVivos.length>0 && triFechada) || !!adPre;
   // valores antigos gravados: "atendimento" era o trilho interno de
   // Anotações; "consulta" virou seção do painel Documentos (F31)
   let cd = subCad==="atendimento" ? "anotacoes"
@@ -12435,6 +12432,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     <div class="sub-menu" style="width:100%">
       ${SUB_CAD.filter(([v])=>vis[v])
         .map(([v,r])=>`<button class="${cd===v?"on":""}" onclick="irSubCad('${v}')">${r}${
+        v==="direito"&&analisesDe(c.id).length?` (${analisesDe(c.id).length})`:""}${
         v==="anotacoes"&&semCaso?` <span class="meio-sub">•</span>`:""}</button>`).join("")}
       ${!pcsVivos.length ? `<button class="trilho-mais atend-novo" style="align-self:center"
         title="abrir um atendimento novo — pode virar caso novo ou só lembrete"
@@ -12444,6 +12442,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
     ${cd==="documentos" ? caixaDocumentos(c, ks) + catalogoNoCadastro(c, ks) + painelConsulta(c) : ""}
     ${cd==="anotacoes" ? caixaAtendimento(c, ks) : ""}
     ${cd==="mensagens" ? painelMensagensFicha(c, ks, evs) : ""}
+    ${cd==="direito" ? painelDireito(c) : ""}
     ${cd!=="identificacao" ? "" : `
     ${/* a aposentadoria provável mudou-se para a aba 🔔 Lembretes: é aviso de
          data que chega, não dado de cadastro (pedido do Paulo) */""}
@@ -12531,7 +12530,7 @@ function painelCadastroFicha(c, ks, creds, vincs, evs){
 // menos no trilho, e o painel traz documentos, catálogo e consulta juntos
 const SUB_CAD = [["identificacao","Identificação"],["triagem","Triagem"],
                  ["anotacoes","Anotações"],["documentos","Documentos"],
-                 ["mensagens","Mensagens"]];
+                 ["direito","Análise de Direito"],["mensagens","Mensagens"]];
 const SUB_ANOT = [["atendimento","Atendimento"],
                   ["consulta","Consulta"],["mensagens","Mensagens"]];
 let subAnot = ler("crm_subanot") || "atendimento";
@@ -15991,7 +15990,7 @@ function notaViraAnalise(lembId, i){
   const l=(D.lembretes||[]).find(x=>x.id===lembId); if(!l) return;
   const n=((l.detalhes||{}).anotacoes||[])[i]; if(!n) return;
   adPre={data:n.data||hoje(), texto:n.texto||"", lembId, i};
-  abaAtiva=8; repintarFicha();
+  abaAtiva=0; subCad="direito"; repintarFicha();   // F171
   const d=document.getElementById("ad-novo"); if(d) d.scrollIntoView({block:"start"});
 }
 // o aviso de época reusa a máquina que já existe: aposentadorias + avisoApos
@@ -16113,7 +16112,9 @@ function painelDireito(c){
 // ── a visão global da barra lateral: Análises | Dashboard ─────────────────
 let subDireito = ler("crm_subdireito") || "analises";
 function irSubDireito(s){ subDireito=s; guardar("crm_subdireito", s); render(); }
-function abrirDireitoDe(cliId){ abaAtiva=8; abrirFicha(cliId); }
+function abrirDireitoDe(cliId){   // F171 · a análise mora no Cadastro
+  return Promise.resolve(abrirFicha(cliId)).then(()=>{ abaAtiva=0; subCad="direito"; repintarFicha(); });
+}
 function renderDireito(){
   tituloLista("⚖️ Análise de Direito");
   const sub=document.getElementById("sub-lista"), meio=document.getElementById("conteudo-meio");

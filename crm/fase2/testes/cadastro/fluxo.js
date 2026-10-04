@@ -256,9 +256,10 @@ FIX.documentos_beneficio.push(
   const tCheio = await trilho();
   // F165 · com caso e sem atendimento em curso, o trilho também é só a
   // Identificação e o + atendimento
-  conf(`F165 · com caso e sem atendimento: só Identificação e + atendimento (${tCheio.join(" · ")})`,
-    tCheio.length === 2 && /^Identificação/.test(tCheio[0])
-    && /\+ atendimento/.test(tCheio[1]));
+  // (F171: com caso, a Análise de Direito também fica no trilho)
+  conf(`F165 · com caso e sem atendimento: Identificação, Análise de Direito e + atendimento (${tCheio.join(" · ")})`,
+    tCheio.length === 3 && /^Identificação/.test(tCheio[0]) && /^Análise de Direito/.test(tCheio[1])
+    && /\+ atendimento/.test(tCheio[2]));
   await p.evaluate(() => { const b = [...document.querySelectorAll('.painel[data-p="0"].ativo .sub-menu button')]
     .find(x => /\+ atendimento/.test(x.innerText)); if (b) b.click(); });
   await p.waitForTimeout(600);

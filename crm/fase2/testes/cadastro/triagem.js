@@ -190,23 +190,23 @@ FIX.casos.push(
     await p.evaluate(cli => { const v = triagemDe(D.cliPorId.get(cli)).vinculo; return v && v.tipo === "empregado" && v.desde === "2015-03"; }, CLI_CHEIO2));
 
   // cada passo respondido já está na Análise de Direito, com quem respondeu
-  await p.evaluate(() => { abaAtiva = 8; repintarFicha(); });
+  await p.evaluate(() => { abaAtiva = 0; subCad = "direito"; repintarFicha(); /* F171 · a análise mora no Cadastro */ });
   await p.waitForTimeout(400);
   // F129 · a triagem fica num quadro próprio, agrupada pela cor da resposta
-  const feed = await p.evaluate(() => [...document.querySelectorAll('.painel[data-p="8"] .ad-q-tri .ad-grupo.atencao li')].map(x => x.textContent));
+  const feed = await p.evaluate(() => [...document.querySelectorAll('.painel[data-p="0"] .ad-q-tri .ad-grupo.atencao li')].map(x => x.textContent));
   conf(`a Análise de Direito lista os três passos respondidos no quadro da triagem, no grupo Atenção (${feed.length} linhas)`,
-    feed.length === 3 && (await p.evaluate(() => /Atenção/.test(document.querySelector('.painel[data-p="8"] .ad-q-tri .ad-grupo.atencao .ad-grupo-tit').textContent))));
+    feed.length === 3 && (await p.evaluate(() => /Atenção/.test(document.querySelector('.painel[data-p="0"] .ad-q-tri .ad-grupo.atencao .ad-grupo-tit').textContent))));
   conf("do mais novo para o mais velho", /Benefício ativo/.test(feed[0]) && /Indicadores/.test(feed[1]) && /CNIS/.test(feed[2]));
   conf("cada linha traz o texto explícito e quem respondeu, sem repetir a cor em cada item",
     /vínculo\(s\) sem data fim/.test(feed[2]) && !/— atenção\./.test(feed[2]) && /Paulo/.test(feed[2]));
   conf("o quadro da triagem é separado do das anotações",
-    await p.evaluate(() => !!document.querySelector('.painel[data-p="8"] .ad-q-tri') && !document.querySelector('.painel[data-p="8"] .ad-q-tri .ad-feed')));
+    await p.evaluate(() => !!document.querySelector('.painel[data-p="0"] .ad-q-tri') && !document.querySelector('.painel[data-p="0"] .ad-q-tri .ad-feed')));
   conf("a Análise de Direito tem o botão de abrir o CNIS",
-    await p.evaluate(() => /Abrir CNIS/.test(document.querySelector('.painel[data-p="8"]').textContent)));
+    await p.evaluate(() => /Abrir CNIS/.test(document.querySelector('.painel[data-p="0"]').textContent)));
   conf("a aba da ficha também",
     await p.evaluate(() => [...document.querySelectorAll(".menu-topo .mt")].some(b => /Abrir CNIS/.test(b.textContent))));
   conf("sem a explicação embaixo",
-    !(await p.evaluate(() => /memória do escritório para a próxima conversa/.test(document.querySelector('.painel[data-p="8"]').textContent))));
+    !(await p.evaluate(() => /memória do escritório para a próxima conversa/.test(document.querySelector('.painel[data-p="0"]').textContent))));
   await p.evaluate(() => { abaAtiva = 0; repintarFicha(); });
   await p.waitForTimeout(300);
 
