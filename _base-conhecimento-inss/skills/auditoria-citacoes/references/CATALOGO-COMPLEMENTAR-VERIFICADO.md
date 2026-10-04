@@ -644,11 +644,12 @@ Nas páginas tema.asp do portal do STF constam título, descrição, leading cas
 - Conferido em. 03/10/2026 (auditoria 03/10/2026)
 
 ### ADI 6309
-- Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1B). Julgamento presencial em 03/06/2026, ata publicada em 11/06/2026, acórdão publicado em 02/10/2026. O registro do portal não traz tese nem modulação, e o inteiro teor não foi lido. A data de 12/07/2026 que aparece em títulos da base é a do registro na base, não a do julgamento.
-- Tese literal. Dispositivo, "O Tribunal, por maioria, julgou parcialmente procedente a ação direta, declarando-se a inconstitucionalidade apenas do art. 19, § 1º, I, alíneas a, b e c, da EC nº 103/2019".
-- Órgão e leading case. STF, Rel. Min. Luís Roberto Barroso (vencido em parte), redator do acórdão Min. André Mendonça. Autora, CNTI.
+- Situação. CONFIRMADO_FONTE_OFICIAL, inteiro teor lido na Onda 170. Julgamento na sessão presencial de 03/06/2026, acórdão datado de 08/06/2026, ata no DJe de 11/06/2026, decisão publicada no DOU de 12/06/2026 (Seção 1, edição 108, p. 1), acórdão no DJe de 02/10/2026. Inteiro teor de 217 páginas, com código de autenticação C1BF-E5C1-9306-C208 na ementa e no acórdão (pp. 1 a 6). Sem tese de julgamento e sem modulação de efeitos. Até 04/10/2026, sem embargos de declaração registrados e sem trânsito certificado, com prazo de embargos em curso desde a publicação de 02/10/2026. A data de 12/07/2026 que aparece em títulos da base é a do registro na base, não a do julgamento.
+- Tese literal. Não há tese fixada. Dispositivo, "O Tribunal, por maioria, julgou parcialmente procedente a ação direta, declarando-se a inconstitucionalidade apenas do art. 19, § 1º, I, alíneas a, b e c, da EC nº 103/2019".
+- Placar. Idade mínima do art. 19, §1º, I, alíneas a, b e c, inconstitucional por 6 a 5 (André Mendonça, Nunes Marques, Dias Toffoli, Cármen Lúcia, Edson Fachin e Rosa Weber, contra Luís Roberto Barroso, Gilmar Mendes, Alexandre de Moraes, Cristiano Zanin e Luiz Fux). Art. 25, §2º, e art. 26, §2º, IV, constitucionais por 9 a 2, vencidos Edson Fachin e Rosa Weber. Flávio Dino não votou.
+- Órgão e leading case. STF, Plenário, Rel. Min. Luís Roberto Barroso (vencido em parte), redator do acórdão Min. André Mendonça. Autora, CNTI.
 - Fonte oficial. https://portal.stf.jus.br/processos/detalhe.asp?incidente=5848987
-- Conferido em. 03/10/2026 (auditoria 03/10/2026)
+- Conferido em. 04/10/2026 (inteiro teor e portal, Onda 170)
 
 ### ADI 6970
 - Situação. CONFIRMADO_FONTE_OFICIAL (relatório C1B). Julgada em 16/08/2022, por unanimidade, trânsito em julgado em 21/09/2022.
