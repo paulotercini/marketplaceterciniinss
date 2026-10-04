@@ -14,13 +14,13 @@ sys.stdout.reconfigure(encoding="utf-8")
 # ---------------------------------------------------------------- 1. tabela de identidade
 
 todos = [p.name for p in __import__("ingestor").arquivos(incluir_fora=True)]
-assert len(todos) == 61, f"o corpus tinha 61 arquivos .md em 22/09/2026 (60 + Portaria Conjunta 43/2026), agora tem {len(todos)}"
+assert len(todos) == 393, f"o corpus tinha 393 arquivos .md em 04/10/2026, agora tem {len(todos)}"
 faltam = [n for n in todos if n not in identidade.NORMAS]
 assert not faltam, f"arquivos fora da tabela de identidade: {faltam}"
 sobram = [n for n in identidade.NORMAS if n not in todos]
 assert not sobram, f"tabela de identidade aponta arquivo que não existe: {sobram}"
 assert all(n in identidade.NORMAS for n in identidade.FORA), "FORA cita arquivo fora da tabela"
-assert len({v[0] for v in identidade.NORMAS.values()}) == 53, "53 normas em 61 arquivos"
+assert len({v[0] for v in identidade.NORMAS.values()}) == 382, "382 normas em 393 arquivos"
 try:
     identidade.identidade("Lei-inexistente.md")
     raise SystemExit("arquivo fora da tabela tinha de levantar KeyError")
@@ -58,6 +58,11 @@ assert artigos("Art 3º - Fica revogado o decreto anterior.")[0]["chave"] == "3"
 # sufixo de artigo, com e sem ordinal antes
 assert artigos("**Art. 21-A.** A perícia médica.")[0]["chave"] == "21-A"
 assert artigos("**Art. 6º-F.** Fica instituído o CadÚnico.")[0]["chave"] == "6-F"
+
+# "Art. 11 - A vedação" é o art. 11, não o 11-A: o sufixo vem colado no hífen. Era o defeito
+# que sumia com os arts. 11 e 14 da EC 20/1998.
+a = artigos("Art. 11 - A vedação prevista no art. 37 não se aplica.")
+assert a[0]["chave"] == "11" and a[0]["texto"].startswith("A vedação"), a
 
 # caput vazio na linha do cabeçalho e corpo no bloco seguinte: 9 casos na Lei 8.213
 a = artigos("**Art. 86.**\n\nO auxílio-acidente será concedido. (Redação dada pela Lei nº 9.528, de 1997)")
@@ -99,6 +104,13 @@ assert [x["rotulo"] for x in d] == ["§ 1º", "§ 2º"], d
 # o compilado empilha também a redação do parágrafo, e o rótulo repete
 d = parser.dispositivos("Caput.\n§ 1º Primeira.\n§ 1º Segunda. (Redação dada pela Lei nº 9.032, de 1995)")
 assert [x["ocorrencia"] for x in d] == [1, 2], d
+
+# o § com letra existe, 18 no art. 60 da Lei 8.213 (§ 11-A a § 11-I)
+d = parser.dispositivos("Caput. § 11. Primeiro. § 11-A. Com letra. § 11-B. Outra.")
+assert [x["rotulo"] for x in d] == ["§ 11º", "§ 11º-A", "§ 11º-B"], d
+# remissão interna não abre dispositivo: "observado o disposto no § 5º" partia o § 1º em dois
+d = parser.dispositivos("§ 1º Vale o prazo, observado o disposto no § 5º, até a cessação.")
+assert len(d) == 1 and d[0]["rotulo"] == "§ 1º", d
 
 # quebra de linha dura no meio da frase, Portarias 991 a 995, zero linha em branco
 a = artigos("Art. 2º Os dependentes de uma mesma classe concorrem entre si em\nigualdade de condições.\n"
@@ -232,9 +244,9 @@ except Exception:
 
 um = lambda s, *a: real.execute(s, a).fetchone()[0]
 
-# medido em 22/09/2026 contra os 56 arquivos ingeridos (Onda 154 acrescentou a Portaria Conjunta 43/2026, 3 artigos)
-assert um("SELECT count(*) FROM norma") == 49, um("SELECT count(*) FROM norma")
-assert um("SELECT count(*) FROM artigo") == 6731, um("SELECT count(*) FROM artigo")
+# medido em 20/09/2026 contra os 55 arquivos ingeridos
+assert um("SELECT count(*) FROM norma") == 381, um("SELECT count(*) FROM norma")
+assert um("SELECT count(*) FROM artigo") == 23867, um("SELECT count(*) FROM artigo")
 assert um("SELECT count(*) FROM artigo WHERE vigente=1 AND revogado=1") == 0, \
     "nenhuma versão revogada pode estar marcada como vigente"
 
@@ -259,7 +271,8 @@ assert um("SELECT count(*) FROM dispositivo d JOIN artigo a ON a.id=d.artigo_id"
 # Decreto 3.048: o regulamento tem 382 artigos, e o frontmatter diz 470
 assert um("SELECT count(DISTINCT num) FROM artigo WHERE norma_id='decreto-3048-1999'"
           " AND parte<>'principal'") == 382
-assert um("SELECT count(DISTINCT parte) FROM artigo WHERE norma_id='decreto-3048-1999'") == 2
+# tres partes: o decreto, o regulamento e os Anexos II a IV, que entram como trecho
+assert um("SELECT count(DISTINCT parte) FROM artigo WHERE norma_id='decreto-3048-1999'") == 3
 
 # CF e ADCT no mesmo arquivo: 139 números coincidem, e a chave escopada por parte os separa
 assert um("SELECT count(*) FROM (SELECT chave FROM artigo WHERE norma_id='cf-1988' AND parte='principal'"
@@ -270,6 +283,15 @@ assert len(banco.obter(real, "cf-1988", "92")["partes_com_este_artigo"]) == 2
 assert um("SELECT count(*) FROM artigo WHERE norma_id='lei-13105-2015' AND chave='1046'") == 1
 assert um("SELECT count(*) FROM artigo WHERE norma_id='lei-13105-2015' AND num>999") >= 76
 
+# a quebra de pagina do PDF () escondia 20 artigos da Portaria MPS 125, entre eles os
+# arts. 117, 120 e 123, que a consulta devolvia como nao localizados
+for a in ("117", "120", "123"):
+    assert um("SELECT count(*) FROM artigo WHERE norma_id='portaria-mps-125-2026'"
+              " AND chave=?", a) > 0, f"MPS 125 sem o art. {a}"
+# os arts. 11 e 14 da EC 20 eram lidos como artigo 11-A e 14-A
+for a in ("11", "14"):
+    assert um("SELECT count(*) FROM artigo WHERE norma_id='ec-20-1998' AND chave=?", a) > 0, a
+
 # comportamento previsto, declarado em identidade.py: não derruba a carga e não passa em silêncio
 assert um("SELECT count(*) FROM artigo WHERE norma_id='decreto-2172-1997'"
           " AND alteracao_tipo<>'original'") == 0, "Decreto 2.172 sem marcador é caso previsto"
@@ -279,15 +301,26 @@ for nid in identidade.CASOS_PREVISTOS:
     assert um("SELECT count(*) FROM norma WHERE id=?", nid) == 1, f"caso previsto sumiu: {nid}"
 
 # nenhum arquivo excluído entrou, e a exclusão é declarada
+# a coleta de 04/10/2026 trouxe da fonte oficial, com frontmatter completo, tres das quatro
+# normas que estavam fora por falta de fonte, data e hash. Só a Portaria 914/2021 segue fora,
+# porque a pagina do DOU dela nao rende artigo nenhum.
 assert um("SELECT count(*) FROM norma WHERE id IN ('portaria-inss-1851-2025','decreto-6214-2007',"
-          "'portaria-dirben-998-2022','portaria-inss-914-2021')") == 0
-assert um("SELECT count(*) FROM artigo WHERE arquivo LIKE '%anexos-II-III-IV%'") == 0
+          "'portaria-dirben-998-2022')") == 3
+assert um("SELECT count(*) FROM norma WHERE id='portaria-inss-914-2021'") == 0
+# os Anexos II a IV do Decreto 3.048 nao tem artigo e entram como trecho buscavel, senao
+# busca por ruido ou agente quimico nao alcanca o quadro de agentes nocivos
+assert um("SELECT count(*) FROM artigo WHERE arquivo LIKE '%anexos-II-III-IV%'") > 60
+assert banco.buscar(real, "ruido", norma="decreto-3048-1999")["total"] > 0
+assert banco.buscar(real, "benzeno", norma="decreto-3048-1999")["total"] > 0
 
 # toda norma na base tem fonte e data, que é a razão de os três sem frontmatter ficarem fora
 assert um("SELECT count(*) FROM norma WHERE fonte_oficial='' OR data_download=''") == 0
 
 # nenhum '#' de Markdown no texto gravado: antes da correção eram 247 artigos
-assert um("SELECT count(*) FROM artigo WHERE texto LIKE '%#%'") == 0,     um("SELECT group_concat(id) FROM artigo WHERE texto LIKE '%#%'")
+# nenhum '#' de Markdown ABRINDO linha. O '#' no meio do texto existe e é legítimo, como a
+# nota de rodapé (#) do quadro de agentes biológicos da Portaria MTP 6.734/2020.
+CABECALHO = "texto LIKE '#%' OR texto LIKE '%' || char(10) || '#%'"
+assert um(f"SELECT count(*) FROM artigo WHERE {CABECALHO}") == 0,     um(f"SELECT group_concat(id) FROM artigo WHERE {CABECALHO}")
 assert um(f"SELECT texto FROM artigo WHERE {L} AND chave='86' AND vigente=1").endswith(
     "(Vigência encerrada)"), "o art. 86 não pode terminar no título da Subseção XII"
 

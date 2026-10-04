@@ -26,9 +26,9 @@ Constituição Federal, art. 201, §2º. Irredutibilidade do valor do benefício
 
 Lei 8.213/91, art. 29 (para benefícios pré-reforma) e art. 29-C (professor pré-reforma).
 
-Portaria DPMF/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
+Portaria DIRBEN/INSS 990/2022 (alterada pela Portaria 1.316/2025). Indicadores do CNIS, formulários RAC e regras operacionais.
 
-Portaria DPMF/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
+Portaria DIRBEN/INSS 992/2022. Manutenção de benefícios, folha de pagamento, descontos, suspensão e cessação (Livro III).
 
 ## Regra permanente e pedágio 100%
 

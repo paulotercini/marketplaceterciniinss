@@ -10,7 +10,7 @@ description: "Skill base sobre prova de união estável para fins de pensão por
 Acione SEMPRE que houver pedido de pensão por morte fundado em união estável, especialmente em casos de início de prova material insuficiente, exigência de escritura pública, contemporaneidade questionada ou concubinato impuro.
 
 
-Portaria DPMF/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
+Portaria DIRBEN/INSS 991/2022. Procedimentos de concessão, revisão administrativa e instrução do benefício.
 
 ## 2. Marco normativo
 
@@ -18,7 +18,7 @@ A CF/88 no art. 226 §3º reconhece a união estável. O Código Civil nos arts.
 
 A Lei 13.846/2019 alterou a forma de comprovação, exigindo início de prova material contemporâneo (art. 16 §5º). O Tema 526/STF firmou a impossibilidade de pensão a concubina em concomitância com cônjuge, salvo situações excepcionais. Súmula 63/TNU (enunciado real): a comprovação de união estável para pensão por morte PRESCINDE de início de prova material — aplicável a fatos geradores até a MP 871/2019 (18/01/2019, redação da Súmula de 18/09/2025; auditoria 25/07/2026); para fatos posteriores, vale o art. 16, §5º (prova material contemporânea).
 
-A CF/88 no art. 201, V e §2º consagra a pensão por morte como benefício previdenciário não inferior ao salário-mínimo. A Portaria DPMF/INSS 991/2022 disciplina os procedimentos administrativos de concessão.
+A CF/88 no art. 201, V e §2º consagra a pensão por morte como benefício previdenciário não inferior ao salário-mínimo. A Portaria DIRBEN/INSS 991/2022 disciplina os procedimentos administrativos de concessão.
 
 ## 3. Eixos centrais pró-segurado
 

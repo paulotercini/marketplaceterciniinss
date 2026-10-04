@@ -12,9 +12,9 @@ A vigência das Portarias DIRBEN é dinâmica. Recomenda-se verificação no DOU
 |---|---|---|
 | 2020 | MTP 6.734 | PCMSO (NR-7) |
 | 2021 | MTP 672 | EPI (CA) |
-| 2022 | DPMF/INSS 990 | CNIS, indicadores, RAC |
-| 2022 | DPMF/INSS 991 | Concessão e revisão administrativa |
-| 2022 | DPMF/INSS 992 | Cálculo da RMI |
+| 2022 | DIRBEN/INSS 990 | CNIS, indicadores, RAC |
+| 2022 | DIRBEN/INSS 991 | Concessão e revisão administrativa |
+| 2022 | DIRBEN/INSS 992 | Cálculo da RMI |
 | 2022 | DIRBEN 1.005 | Ajustes na 990 |
 | 2022 | DIRBEN 1.056 | Supervisão Técnica e IEA (originária) |
 | 2022 | DIRBEN 1.079 | Inclusão art. 94 §5º (flexibilização autodeclaração) |
@@ -48,11 +48,11 @@ Portarias correlatas mais antigas e ainda relevantes.
 
 Portarias incidentes.
 
-DPMF/INSS 990/2022 (CNIS, indicadores, RAC) e arts. 92-94 (autodeclaração).
+DIRBEN/INSS 990/2022 (CNIS, indicadores, RAC) e arts. 92-94 (autodeclaração).
 
-DPMF/INSS 991/2022 (procedimento de concessão).
+DIRBEN/INSS 991/2022 (procedimento de concessão).
 
-DPMF/INSS 992/2022 (manutenção do benefício, folha, descontos, suspensão e cessação).
+DIRBEN/INSS 992/2022 (manutenção do benefício, folha, descontos, suspensão e cessação).
 
 Portarias DIRBEN 1.079/2022 (art. 94 §5º), 1.209/2024 (quilombolas), 1.240/2024 (formulários RAC), 1.299/2025 (indígenas).
 
@@ -60,19 +60,19 @@ Portarias DIRBEN 1.079/2022 (art. 94 §5º), 1.209/2024 (quilombolas), 1.240/202
 
 Portarias incidentes.
 
-DPMF/INSS 990/2022 (CNIS, indicadores).
+DIRBEN/INSS 990/2022 (CNIS, indicadores).
 
-DPMF/INSS 991/2022 (procedimento).
+DIRBEN/INSS 991/2022 (procedimento).
 
-DPMF/INSS 992/2022 (manutenção do benefício, folha, descontos, suspensão e cessação).
+DIRBEN/INSS 992/2022 (manutenção do benefício, folha, descontos, suspensão e cessação).
 
 ### 3.3. Aposentadoria especial
 
 Portarias incidentes.
 
-DPMF/INSS 990/2022 (CNIS).
+DIRBEN/INSS 990/2022 (CNIS).
 
-DPMF/INSS 991/2022 (procedimento).
+DIRBEN/INSS 991/2022 (procedimento).
 
 MTP 672/2021 (EPI, CA).
 
@@ -84,7 +84,7 @@ Portarias incidentes.
 
 Interministerial AGU/MPS/MF/MP/PR 1/2015 (IF-BrA).
 
-DPMF/INSS 991/2022 (procedimento).
+DIRBEN/INSS 991/2022 (procedimento).
 
 ### 3.5. Auxílio-doença, aposentadoria por invalidez, auxílio-acidente
 
@@ -96,15 +96,15 @@ DPMF/INSS 19/2026 (Teleperícia).
 
 DIRBEN 1.310/2025 e 1.333/2026 (reabilitação).
 
-DPMF/INSS 991/2022 (procedimento).
+DIRBEN/INSS 991/2022 (procedimento).
 
 ### 3.6. Pensão por morte
 
 Portarias incidentes.
 
-DPMF/INSS 991/2022 (procedimento).
+DIRBEN/INSS 991/2022 (procedimento).
 
-DPMF/INSS 992/2022 (manutenção do benefício).
+DIRBEN/INSS 992/2022 (manutenção do benefício).
 
 ### 3.7. BPC/LOAS
 
@@ -112,13 +112,13 @@ Portarias incidentes.
 
 Conjunta SPS/INSS/SNAS 2/2014 (avaliação biopsicossocial).
 
-DPMF/INSS 991/2022 (procedimento).
+DIRBEN/INSS 991/2022 (procedimento).
 
 ### 3.8. Salário-maternidade
 
 Portarias incidentes.
 
-DPMF/INSS 991/2022 (procedimento).
+DIRBEN/INSS 991/2022 (procedimento).
 
 Em rural, arts. 92-94 da 990 (autodeclaração).
 
@@ -126,7 +126,7 @@ Em rural, arts. 92-94 da 990 (autodeclaração).
 
 Portarias incidentes.
 
-DPMF/INSS 991/2022 (procedimento).
+DIRBEN/INSS 991/2022 (procedimento).
 
 ### 3.10. Recurso administrativo CRPS
 

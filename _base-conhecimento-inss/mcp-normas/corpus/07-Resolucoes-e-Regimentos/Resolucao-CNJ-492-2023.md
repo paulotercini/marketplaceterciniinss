@@ -1,0 +1,164 @@
+---
+fonte_oficial: https://atos.cnj.jus.br/atos/detalhar/4986
+data_download: 2026-10-04
+hash_sha256: 4f5c75ba033bae7fd0661f4013cc64dd5820dd9290e34ae6f1ce593d99d32473
+metodo_captura: coletor.py, HTTP com User-Agent de navegador
+ultima_alteracao_conhecida: não identificada (sem marcador de alteração no texto)
+total_artigos_aprox: 7
+---
+
+# Resolução CNJ nº 492, de 17/03/2023
+
+Identificação
+
+Resolução Nº 492 de 17/03/2023
+
+Apelido
+
+---
+
+Temas
+
+Responsabilidade Social;
+Direitos Humanos;
+Igualdade de Gênero;
+
+Ementa
+
+Estabelece, para adoção de Perspectiva de Gênero nos julgamentos em todo o Poder Judiciário, as diretrizes do protocolo aprovado pelo Grupo de Trabalho constituído pela Portaria CNJ n. 27/2021, institui obrigatoriedade de capacitação de magistrados e magistradas, relacionada a direitos humanos, gênero, raça e etnia, em perspectiva interseccional, e cria o Comitê de Acompanhamento e Capacitação sobre Julgamento com Perspectiva de Gênero no Poder Judiciário e o Comitê de Incentivo à Participação Institucional Feminina no Poder Judiciário.
+
+Situação
+
+Vigente
+
+Situação STF
+
+---
+
+Origem
+
+Presidência
+
+Fonte
+
+DJe/CNJ nº 53/2023, de 20 de março de 2023, p. 2-4.
+
+Alteração
+
+Legislação Correlata
+
+Portaria n. 329, de 16 de novembro de 2023
+
+Portaria n. 27, de 2 de fevereiro de 2021
+
+Decreto n. 4.377, de 13 de setembro de 2022 - Convenção das Nações Unidas sobre a Eliminação de Todas as Formas de Discriminação contra a Mulher
+
+Decreto n. 65.810, de 8 de dezembro de 1969 - Convenção das Nações Unidas sobre a Eliminação de Todas as Formas de Discriminação Racial
+
+Decreto n. 4.377, de 13 de setembro de 2002 - Convenção sobre a Eliminação de todas as Formas de Discriminação contra as Mulheres - CEDAW
+
+Decreto n. 1.973, de 1 de agosto de 1996 - Convenção Interamericana para Prevenir, Punir e Erradicar a Violência contra a Mulher – Convenção de Belém do Pará
+
+Recomendação n. 33, item 29, “a”, do CEDAW
+
+ADPF n. 779 - STF
+
+ADI n. 4424 - STF
+
+ADC n. 19 - STF
+
+Resolução n. 255, de 4 de setembro de 2018
+
+Resolução n. 254, de 4 de setembro de 2018
+
+Resolução n. 364, de 12 de janeiro de 2021
+
+Observação / CUMPRDEC / CONSULTA
+
+Cumprdec 0002111-78.2023.2.00.0000
+
+CONSULTA 0001902-12.2023.2.00.0000
+
+Texto
+
+Texto Original
+Texto Compilado
+A PRESIDENTE DO CONSELHO NACIONAL DE JUSTIÇA (CNJ), no uso de suas atribuições legais e regimentais,
+
+CONSIDERANDO o objetivo fundamental da República Federativa do Brasil de promoção do bem de todos e todas, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação (art. 3º, IV, da Constituição Federal);
+
+CONSIDERANDO a garantia constitucional da igualdade em direitos e obrigações entre homens e mulheres (art. 5º, I da Constituição Federal);
+
+CONSIDERANDO que a igualdade de gênero constitui expressão da cidadania e da dignidade humana, princípios fundamentais da República Federativa do Brasil e valores do Estado Democrático de Direito;
+
+CONSIDERANDO a Convenção das Nações Unidas sobre a Eliminação de Todas as Formas de Discriminação contra a Mulher (Decreto n. 4.377/2022);
+
+CONSIDERANDO a Convenção Interamericana para Prevenir, Punir e Erradicar a Violência contra a Mulher – Convenção de Belém do Pará (Decreto n. 1973/1996);
+
+CONSIDERANDO a Convenção das Nações Unidas sobre a Eliminação de Todas as Formas de Discriminação Racial;
+
+CONSIDERANDO o dever de todos e todas se absterem de incorrer em ato ou prática de discriminação, bem como o de zelar para que autoridades e instituições públicas atuem em conformidade com essa obrigação, em todas as esferas, para fins de alcance da isonomia entre mulheres e homens (art. 2º, b-g; e 3º, Convenção sobre a Eliminação de todas as Formas de Discriminação contra as Mulheres - CEDAW);
+
+CONSIDERANDO os deveres impostos para se modificar padrões socioculturais, com vistas a alcançar a superação de costumes que estejam baseados na ideia de inferioridade ou superioridade de qualquer dos sexos (art. 5º, a e b, CEDAW);
+
+CONSIDERANDO o dever de promoção de capacitação de todos os atores do sistema de justiça a respeito da violência de gênero (art. 8, “c”, da Convenção de Belém do Pará), bem como de adequar medidas que contribuam para a erradicação de costumes que alicerçam essa modalidade de violência (art. 8, “g”, da Convenção de Belém do Pará);
+
+CONSIDERANDO o dever de promoção de conscientização e capacitação a todos os agentes do sistema de justiça para eliminar os estereótipos de gênero e incorporar a perspectiva de gênero em todos os aspectos do sistema de justiça (Recomendação n. 33, item 29, “a”, do CEDAW);
+
+CONSIDERANDO o que dispõe a Sentença da Corte Interamericana de Direitos Humanos, de 7 de setembro de 2021, no Caso Márcia Barbosa de Souza e outros Vs. Brasil;
+
+CONSIDERANDO as decisões proferidas na ADPF n. 779, na ADI n. 4424, na ADC n. 19;
+
+CONSIDERANDO a Resolução CNJ n. 255/2018, que institui a Política Nacional de Incentivo à Participação Institucional Feminina no Poder Judiciário;
+
+CONSIDERANDO a Resolução CNJ n. 254/2018, que institui a Política Judiciária Nacional de enfrentamento à violência contra as Mulheres pelo Poder Judiciário;
+
+CONSIDERANDO a aprovação da Meta 9 de 2023 pelo CNJ, que consiste em "Estimular a inovação no Poder Judiciário: Implantar, no ano de 2023, um projeto oriundo do laboratório de inovação, com avaliação de benefícios à sociedade e relacionado à Agenda 2030", aprofundando a integração da Agenda 2030 ao Poder Judiciário;
+
+CONSIDERANDO as atribuições da Unidade de Monitoramento e Fiscalização das Decisões e Deliberações da Corte Interamericana de Direitos Humanos do Conselho Nacional de Justiça, instituída por meio da Resolução CNJ n. 364/2021;
+
+CONSIDERANDO o Objetivo de Desenvolvimento Sustentável (ODS) n. 5, constante da Agenda 2030, da Organização das Nações Unidas (ONU), que preconiza “alcançar a igualdade de gênero e empoderar todas as mulheres e meninas”;
+
+CONSIDERANDO o deliberado pelo Plenário do CNJ no procedimento de Ato Normativo n. 0001071-61.2023.2.00.0000, na 3ª Sessão Ordinária, realizada em 14 de março de 2023;
+
+RESOLVE:
+
+Art. 1º Para a adoção de Perspectiva de Gênero nos julgamentos dos órgãos do Poder Judiciário, ficam estabelecidas as diretrizes constantes do protocolo aprovado pelo Grupo de Trabalho constituído pela Portaria CNJ n. 27/2021.
+
+Art. 2º Os tribunais, em colaboração com as escolas da magistratura, promoverão cursos de formação inicial e formação continuada que incluam, obrigatoriamente, os conteúdos relativos aos direitos humanos, gênero, raça e etnia, conforme as diretrizes previstas no Protocolo para Julgamento com Perspectiva de Gênero, os quais deverão ser disponibilizados com periodicidade mínima anual.
+
+§1º A capacitação de magistradas e magistrados nas temáticas relacionadas a direitos humanos, gênero, raça e etnia, conforme artigo anterior, constará nos regulamentos para concessão do Prêmio CNJ de Qualidade.
+
+§2º Os tribunais providenciarão meios para facilitar o acesso ao Protocolo para Julgamento com Perspectiva de Gênero ao público interno e externo mediante QRCode, card eletrônico, link ou outro recurso de comunicação social nas dependências do tribunal, no sítio do tribunal e na sua intranet, tornando-o uma ferramenta de consulta para as unidades judiciárias, operadores e operadoras do direito e auxiliares do juízo.
+
+Art. 3º Fica instituído, no âmbito do Conselho Nacional de Justiça, o Comitê de Acompanhamento e Capacitação sobre Julgamento com Perspectiva de Gênero no Poder Judiciário, em caráter nacional e permanente.
+
+Art. 4º Caberá ao Comitê:
+
+I – acompanhar o cumprimento da presente Resolução;
+
+II – elaborar estudos e propor medidas concretas de aperfeiçoamento do sistema de justiça quanto às causas que envolvam direitos humanos, gênero, raça e etnia, em perspectiva interseccional.
+
+III – organizar fóruns permanentes anuais de sensibilização sobre o julgamento com perspectiva de gênero nos órgãos do Poder Judiciário, com a participação de outros segmentos do poder público e da sociedade civil, para a discussão de temas relacionados com as atividades do Comitê;
+
+IV – realizar cooperação interinstitucional, dentro dos limites de sua finalidade, com entidades de natureza jurídica e social do país e do exterior que atuam na referida temática;
+
+V – realizar reuniões periódicas ordinárias, ou extraordinárias, sempre que for necessário, para a condução dos trabalhos do Comitê;
+
+VI – solicitar a cooperação judicial com tribunais e outras instituições;
+
+VII – participar de eventos promovidos por entes públicos ou entidades privadas sobre temas relacionados aos objetivos do Comitê;
+
+Art. 5º O Comitê será coordenado por um Conselheiro ou Conselheira do Conselho Nacional de Justiça, assegurada a participação de representantes da Justiça Estadual, Federal, do Trabalho, Eleitoral e Militar, Escola Nacional de Formação e Aperfeiçoamento de Magistrados (Enfam), Escola Nacional de Formação e Aperfeiçoamento de Magistrados do Trabalho (Enamat), Ordem dos Advogados do Brasil (OAB), assim como de representantes da academia e da sociedade civil.
+
+Parágrafo primeiro. A composição do Comitê observará a pluralidade de gênero e raça, bem como, na medida do possível, a participação de integrantes que expressem a diversidade presente na sociedade nacional.
+
+Art. 6º Alterar o art. 3º da Resolução CNJ n. 255/2018, que passa a apresentar a seguinte redação:
+
+"Art. 3º A Política de que trata esta Resolução deverá ser implementada pelo Conselho Nacional de Justiça por meio do Comitê de Incentivo à Participação Institucional Feminina no Poder Judiciário, responsável pela elaboração de estudos, análise de cenários, diálogo com os tribunais e proposições concretas para a ampliação da representação feminina, sob a supervisão de Conselheiro ou Conselheira e de Juiz ou Juíza Auxiliar da Presidência do Conselho Nacional de Justiça, indicados pela sua Presidência.
+
+Parágrafo único. O Comitê de Acompanhamento e Capacitação sobre Julgamento com Perspectiva de Gênero no Poder Judiciário e o Comitê de Incentivo à Participação Institucional Feminina no Poder Judiciário atuarão de forma articulada."
+
+Art. 7º Esta Resolução entra em vigor na data de sua publicação.
+
+Ministra ROSA WEBER
