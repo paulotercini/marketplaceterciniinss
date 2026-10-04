@@ -67,6 +67,7 @@ const fake = Deno.serve({ port: 0, onListen() {} }, async (req) => {
   for (const [k, v] of u.searchParams) {
     const m = /^eq\.(.*)$/.exec(v); if (m && k in (rows[0] || {})) rows = rows.filter((r) => String(r[k]) === m[1]);
     if (v === "is.null" && rows.some((r) => k in r)) rows = rows.filter((r) => r[k] == null);
+    const lk = /^like\.(.*)\*$/.exec(v); if (lk) rows = rows.filter((r) => String(r[k] ?? "").startsWith(lk[1]));
     const n = /^in\.\((.*)\)$/.exec(v); if (n && k in (rows[0] || {})) rows = rows.filter((r) => n[1].split(",").includes(String(r[k])));
   }
   return Response.json(rows);
@@ -101,8 +102,8 @@ const ini = await rpc("initialize", { protocolVersion: "2025-06-18", capabilitie
 conf("initialize responde com o nome do servidor", ini.corpo?.result?.serverInfo?.name === "crm-tercini");
 const tl = await rpc("tools/list", {}, "tok-bom", 2);
 const nomes = (tl.corpo?.result?.tools || []).map((t: any) => t.name).sort();
-conf(`as dezenove ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "tarefas_caso", "whatsapp_para_anotacao"]));
-const ESCREVE = ["atualizar_caso", "concluir_tarefa", "criar_tarefa", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "whatsapp_para_anotacao"];
+conf(`as vinte e uma ferramentas (${nomes.join(",")})`, JSON.stringify(nomes) === JSON.stringify(["agenda", "anotacoes_caso", "atualizar_caso", "buscar_clientes", "casos_com_decisao_sem_resultado", "casos_para_completar", "completar_cadastro", "concluir_tarefa", "conversas_whatsapp", "criar_tarefa", "documentos_caso", "equipe", "ficha_cliente", "ler_conversa_whatsapp", "ler_documento", "novidades", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "tarefas_caso", "whatsapp_para_anotacao"]));
+const ESCREVE = ["atualizar_caso", "completar_cadastro", "concluir_tarefa", "criar_tarefa", "rascunhar_whatsapp", "reagendar_tarefa", "registrar_anotacao", "whatsapp_para_anotacao"];
 conf("leitura marcada só leitura e escrita marcada não destrutiva", (tl.corpo?.result?.tools || []).every((t: any) =>
   ESCREVE.includes(t.name) ? t.annotations?.readOnlyHint === false && t.annotations?.destructiveHint === false : t.annotations?.readOnlyHint));
 
@@ -198,15 +199,35 @@ conf("levar ao caso chama zap_virar_andamento com o autor", az.includes("Aposent
   && T["rpc/zap_virar_andamento"]?.at(-1)?.p_mensagem === ZM && T["rpc/zap_virar_andamento"].at(-1).p_autor === EU);
 conf("nenhuma ferramenta põe mensagem na fila de envio", !T.zap_mensagens.some((m) => m.status === "fila"));
 
-conf("a escrita só toca andamentos, tarefas, casos e rascunho do WhatsApp", pedidos.filter((p) => !p.startsWith("GET")).every((p) =>
-  /^POST \/rest\/v1\/(andamentos|andamento_tarefas|zap_mensagens|rpc\/zap_virar_andamento)$/.test(p) || /^PATCH \/rest\/v1\/(andamento_tarefas|casos)\?id=eq\./.test(p)));
+// etapa 7 · completar o cadastro: só o que está em branco, divergência anotada
+const fila0 = await call("casos_para_completar", {});
+conf("a fila de lacunas traz os clientes com o que falta", fila0.includes("Bento Ficto") && fila0.includes("faltam:") && fila0.includes("nome da mãe"));
+const cli0 = T.clientes[0];
+const rc7 = await call("completar_cadastro", { cliente_id: CLI, fonte: "RG na pasta do Drive", nome_mae: "Maria Ficta",
+  cidade: "Ribeirão Preto", uf: "sp", nascimento: "14/03/1962" });
+conf("preenche o que está em branco e não troca o que já existe", cli0.nome_mae === "Maria Ficta" && cli0.cidade === "Monte Alto"
+  && rc7.includes("nome da mãe: Maria Ficta") && rc7.includes("Divergência a conferir") && rc7.includes("cidade (no CRM: Monte Alto"));
+conf("a divergência vira anotação importante com a fonte", T.andamentos.at(-1).texto.includes("Fonte: RG na pasta do Drive") && T.andamentos.at(-1).importante === true);
+conf("nascimento e UF iguais não viram divergência", !rc7.includes("nascimento (no CRM") && !rc7.includes("UF (no CRM"));
+const rep7 = await call("completar_cadastro", { cliente_id: CLI, fonte: "RG na pasta", nome_mae: "Maria Ficta" });
+conf("repetir não grava nada", rep7.includes("Nada a mudar"));
+await call("registrar_anotacao", { caso_id: CASO, texto: "🔎 Conferência de cadastro: nome da mãe preenchido pelo RG." });
+conf("cliente conferido sai da fila por 90 dias", !(await call("casos_para_completar", {})).includes("Aurélia"));
+
+conf("a escrita só toca andamentos, tarefas, casos, cadastro e rascunho do WhatsApp", pedidos.filter((p) => !p.startsWith("GET")).every((p) =>
+  /^POST \/rest\/v1\/(andamentos|andamento_tarefas|zap_mensagens|rpc\/zap_virar_andamento)$/.test(p) || /^PATCH \/rest\/v1\/(andamento_tarefas|casos|clientes)\?id=eq\./.test(p)));
 
 // a conta do assistente não conclui, não reagenda e não altera o caso
 T.colaboradores[0].papel = "assistente_ia";
 const tlr = await rpc("tools/list", {}, "tok-bom", 8);
 const nr = (tlr.corpo?.result?.tools || []).map((t: any) => t.name);
-conf("a conta do assistente fica sem concluir, reagendar e atualizar, e mantém anotar e criar tarefa", nr.length === 16
-  && !nr.includes("concluir_tarefa") && !nr.includes("reagendar_tarefa") && !nr.includes("atualizar_caso") && nr.includes("registrar_anotacao") && nr.includes("criar_tarefa"));
+conf("a conta do assistente fica sem concluir e reagendar, e mantém anotar, criar tarefa, atualizar e completar", nr.length === 19
+  && !nr.includes("concluir_tarefa") && !nr.includes("reagendar_tarefa") && nr.includes("atualizar_caso") && nr.includes("completar_cadastro")
+  && nr.includes("registrar_anotacao") && nr.includes("criar_tarefa"));
+const casoR = T.casos[0], nbAntes = casoR.nb;
+const ra = await call("atualizar_caso", { caso_id: CASO, nb: "999.888.777-6", dcb: "30/11/2026", motivo: "carta de concessão" });
+conf("o assistente só preenche: NB que já existe fica, DCB vazia entra", casoR.nb === nbAntes && casoR.dcb === "2026-11-30"
+  && ra.includes("Não alterado, porque já estava preenchido") && ra.includes("NB (no CRM: " + nbAntes));
 T.colaboradores[0].papel = undefined;
 
 // colaborador inativo não passa
