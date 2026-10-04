@@ -170,12 +170,24 @@ async function conectar() {
 }
 
 // ── chegou mensagem ───────────────────────────────────────────────────────
+// id de privacidade (@lid) -> telefone, aprendido no que o cliente manda; serve
+// para achar a conversa quando quem escreve é o escritório
+const lidParaFone = new Map();
+
 async function entrou(m, baixar) {
   if (N.deveIgnorar(m)) return;
-  if (m.key.fromMe) return;        // o que sai daqui já é gravado na fila
-  const fone = N.foneDaMensagem(m);
+  const fone = N.foneDaMensagem(m, lidParaFone);
   if (N.chaveFone(fone).length < 8) return;
-
+  if (m.key.fromMe) {
+    // o que o escritório responde pelo celular também entra na conversa. O que
+    // saiu pela fila do CRM já está gravado: a pausa deixa a fila gravar o
+    // externo_id antes, e gravar() não duplica mensagem já conhecida
+    await espera(4000);
+    const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: null });
+    const linha = await gravar(m, baixar, conversa, "saida", "enviada");
+    if (!linha.repetida) log("→ (celular)", fone, (linha.texto || `[${linha.tipo}]`).slice(0, 60));
+    return;
+  }
   const conversa = await rpc("zap_abrir", { p_telefone: fone, p_nome: m.pushName || null });
   const linha = await gravar(m, baixar, conversa, "entrada", "entregue");
   guardarFoto(conversa, m.key.remoteJid);
@@ -258,6 +270,7 @@ async function baixarMidia(m, baixar, conversa, tipo) {
 // do mesmo número ao mesmo tempo brigariam pela mesma conversa.
 let filaHistorico = Promise.resolve();
 function receberHistorico({ chats, messages, syncType }, baixar) {
+  for (const c of chats || []) if (String(c.id).endsWith("@lid") && c.pnJid) lidParaFone.set(c.id, c.pnJid);
   filaHistorico = filaHistorico.then(() => importarHistorico(chats, messages, baixar))
     .catch(e => log("histórico:", e.message))
     .then(() => { if (syncType === SOB_PEDIDO && esperandoPagina) esperandoPagina(messages); });

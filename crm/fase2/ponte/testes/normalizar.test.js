@@ -24,6 +24,16 @@ t.test("contato com id de privacidade (@lid): vale o número de verdade", () => 
   a.equal(N.foneDaMensagem(msg({ conversation: "oi" }, { key: { remoteJid: "119928724144327@lid", id: "WA3" } })), "119928724144327");
 });
 
+t.test("o que sai do escritório numa conversa @lid: o número vem do mapa aprendido", () => {
+  const mapa = new Map();
+  const entra = msg({ conversation: "oi" }, { key: { remoteJid: "2222@lid", senderPn: "5516999990000@s.whatsapp.net", id: "E1" } });
+  const sai = msg({ conversation: "bom dia" }, { key: { remoteJid: "2222@lid", senderPn: "5516981409271@s.whatsapp.net", fromMe: true, id: "S1" } });
+  a.equal(N.foneDaMensagem(sai, mapa), "");                 // sem mapa: não se sabe de quem é
+  a.equal(N.foneDaMensagem(entra, mapa), "5516999990000");  // o cliente ensina o mapa
+  a.equal(N.foneDaMensagem(sai, mapa), "5516999990000");    // nunca o nosso próprio número
+  a.equal(N.foneDaMensagem(msg({ conversation: "x" }, { key: { remoteJid: "5516977776666@s.whatsapp.net", fromMe: true, id: "S2" } })), "5516977776666");
+});
+
 t.test("histórico: só cliente entra, @lid acha o número, ordem por data", () => {
   const h = (jid, ts, extra = {}) => ({ key: { remoteJid: jid, id: "H" + ts, fromMe: false, ...extra },
     messageTimestamp: ts, message: { conversation: "msg " + ts } });
