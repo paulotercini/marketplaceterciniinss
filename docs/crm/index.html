@@ -10118,7 +10118,13 @@ async function verZapCliente(cliId){
     const sep = d!==dia ? (dia=d, `<div class="meio-sub" style="text-align:center;margin:10px 0 4px">${d}</div>`) : "";
     const quem = m.direcao==="entrada" ? "" : m.por_bot&&!m.autor_id ? "robô" : (D.colPorId.get(m.autor_id)?.nome||"escritório");
     let corpo;
-    if(m.tipo==="audio") corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url||"")}')">▶ ouvir</button> `
+    // mídia antiga do histórico vem com o link vencido: só o registro chegou,
+    // o arquivo continua no celular (a ponte grava "[mídia não baixada]")
+    const semArq = !m.midia_url && m.tipo!=="texto";
+    const resto = (m.texto||"").replace("[mídia não baixada]","").trim();
+    if(semArq) corpo = `<span class="meio-sub">${m.tipo==="audio"?"🎤 áudio":"📎 "+esc(m.tipo)} antigo, não baixado — só no celular</span>`
+      + (resto?`<div>${esc(resto)}</div>`:"");
+    else if(m.tipo==="audio") corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url)}')">▶ ouvir</button> `
       + (m.texto ? `<i>🎤 ${esc(m.texto)}</i>` : `<span class="meio-sub">🎤 transcrevendo…</span>`);
     else if(m.midia_url) corpo = `<button class="btn-mini" onclick="abrirArquivoZap('${escJs(m.midia_url)}')">📎 ${esc(m.midia_nome||m.tipo)}</button>`
       + (m.texto?`<div>${esc(m.texto)}</div>`:"");
