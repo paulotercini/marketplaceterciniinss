@@ -1,4 +1,4 @@
-// MCP DO CRM (etapa 1: só leitura) · Edge Function do Supabase `mcp-crm`
+// MCP DO CRM (etapa 1: leitura · etapa 2: anotação e tarefa) · Edge Function `mcp-crm`
 //
 // O Claude (ou o ChatGPT) se liga a este endereço como conector personalizado:
 //   https://<projeto>.supabase.co/functions/v1/mcp-crm
@@ -8,7 +8,9 @@
 // exatamente como o CRM faz no navegador; só colaborador ativo passa.
 //
 // Fica de fora, de propósito: a tabela de credenciais (senhas do Meu INSS e
-// do gov.br) e qualquer escrita. A escrita é a etapa 2.
+// do gov.br). A escrita (etapa 2) só acrescenta: anotação e tarefa, sempre com
+// o colaborador logado como autor e origem_id "mcp:…", que a linha do tempo
+// mostra como "via assistente". Nada se apaga nem se altera por aqui.
 import { createMcpHandler, McpServer } from "npm:@modelcontextprotocol/server@^2.3.0";
 import { z } from "npm:zod@^4";
 
@@ -17,11 +19,13 @@ const ANON = Deno.env.get("SUPABASE_ANON_KEY") || "";
 const FUNCAO = "mcp-crm";
 
 // ── o banco, com o token de quem pediu ─────────────────────────────────────
-export type Banco = (caminho: string) => Promise<any>;
+export type Banco = (caminho: string, corpo?: unknown) => Promise<any>;
 export function bancoDe(token: string, base = URL_SB, chave = ANON): Banco {
-  return async (caminho: string) => {
+  return async (caminho: string, corpo?: unknown) => {
     const r = await fetch(`${base}/rest/v1/${caminho}`, {
-      headers: { apikey: chave, Authorization: `Bearer ${token}`, Accept: "application/json" },
+      headers: { apikey: chave, Authorization: `Bearer ${token}`, Accept: "application/json",
+        ...(corpo ? { "Content-Type": "application/json", Prefer: "return=representation" } : {}) },
+      ...(corpo ? { method: "POST", body: JSON.stringify(corpo) } : {}),
     });
     if (!r.ok) throw new Error(`banco respondeu ${r.status}: ${(await r.text()).slice(0, 200)}`);
     return r.json();
@@ -46,12 +50,20 @@ const COL_CLIENTE = "id,nome,cpf,dn,telefone,cidade,uf,profissao,estado_civil,se
 
 // ── as ferramentas ─────────────────────────────────────────────────────────
 export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
-  const server = new McpServer({ name: "crm-tercini", version: "0.1.0" });
+  const server = new McpServer({ name: "crm-tercini", version: "0.2.0" });
   const leitura = { readOnlyHint: true, openWorldHint: false };
+  const escrita = { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false };
   let cols: Map<string, any> | null = null;
   const colaboradores = async () => {
     if (!cols) cols = new Map((await db("colaboradores?select=id,nome,inicial,cargo,ativo")).map((c: any) => [c.id, c]));
     return cols;
+  };
+  // a inicial exata primeiro: "A" acharia "Paulo" pelo nome, que contém "a"
+  const acharCol = async (quem: string) => {
+    if (quem === "eu") return (await colaboradores()).get(eu.id) || eu;
+    const q = quem.trim().toLowerCase(), ativos = [...(await colaboradores()).values()].filter((c: any) => c.ativo !== false);
+    return ativos.find((c: any) => c.inicial?.toLowerCase() === q)
+      || (q.length > 1 ? ativos.find((c: any) => c.nome?.toLowerCase().includes(q)) : undefined);
   };
   const nomeCol = async (id?: string | null) => (id && (await colaboradores()).get(id)?.nome) || "";
   const clientesDe = async (ids: string[]) => ids.length
@@ -132,8 +144,7 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
     let col: string | null = eu.id;
     if (quem === "todos") col = null;
     else if (quem !== "eu") {
-      const alvo = [...(await colaboradores()).values()].find((c: any) =>
-        c.inicial?.toLowerCase() === quem.toLowerCase() || c.nome?.toLowerCase().includes(quem.toLowerCase()));
+      const alvo = await acharCol(quem);
       if (!alvo) return texto(`Não achei colaborador "${quem}".`);
       col = alvo.id;
     }
@@ -188,6 +199,80 @@ export function criarServidor(db: Banco, eu: { id: string; nome: string }) {
     annotations: leitura,
   }, async () => texto([...(await colaboradores()).values()].filter((c: any) => c.ativo !== false)
     .map((c: any) => ({ nome: c.nome, inicial: c.inicial, cargo: c.cargo, voce: c.id === eu.id || undefined }))));
+
+  // ── etapa 2: escrever ────────────────────────────────────────────────────
+  // o caso tem que existir e vir com o nome do cliente, para a confirmação
+  // dizer ONDE gravou; um id errado vira recusa, não anotação perdida
+  const casoComCliente = async (caso_id: string) => {
+    const [k] = await db(`casos?select=id,cliente_id,titulo&id=eq.${caso_id}`);
+    if (!k) return null;
+    return { ...k, cliente: (await clientesDe([k.cliente_id])).get(k.cliente_id) || "" };
+  };
+  const anotar = async (caso_id: string, txt: string, extra: Record<string, unknown> = {}) => {
+    const [a] = await db("andamentos", { caso_id, autor_id: eu.id, texto: txt.trim(), origem: "app",
+      origem_id: `mcp:${crypto.randomUUID()}`, ...extra });
+    return a;
+  };
+  const DATA = z.string().describe("AAAA-MM-DD ou DD/MM/AAAA");
+  const isoDe = (d: string) => {
+    const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(d.trim());
+    const iso = m ? `${m[3]}-${m[2]}-${m[1]}` : d.trim();
+    return /^\d{4}-\d{2}-\d{2}$/.test(iso) && !isNaN(Date.parse(iso + "T12:00:00Z")) ? iso : null;
+  };
+
+  server.registerTool("registrar_anotacao", {
+    title: "Registrar anotação no caso",
+    description: "Grava uma anotação na linha do tempo de um caso, em nome de quem está conectado (aparece no CRM com o autor e a marca 'via assistente'). Use o caso_id que vem de ficha_cliente. Não cria tarefa; para isso use criar_tarefa.",
+    inputSchema: z.object({
+      caso_id: ID,
+      texto: z.string().min(3).max(4000),
+      importante: z.boolean().default(false),
+      urgente: z.boolean().default(false),
+    }),
+    annotations: escrita,
+  }, async ({ caso_id, texto: txt, importante, urgente }) => {
+    const k = await casoComCliente(caso_id);
+    if (!k) return texto("Caso não encontrado; nada foi gravado.");
+    await anotar(caso_id, txt, { importante, urgente });
+    return texto(`Anotação gravada no caso "${k.titulo}" de ${k.cliente}, em nome de ${eu.nome}.`);
+  });
+
+  server.registerTool("criar_tarefa", {
+    title: "Criar tarefa no caso",
+    description: "Cria uma tarefa num caso: grava o texto como anotação e põe na agenda de cada responsável na data indicada, com um revisor opcional. Quem cria fica registrado como autor e como quem atribuiu. Responsáveis e revisor pelo nome, pela inicial ou 'eu'.",
+    inputSchema: z.object({
+      caso_id: ID,
+      o_que: z.string().min(3).max(2000).describe("o que deve ser feito"),
+      data: DATA,
+      para: z.array(z.string()).min(1).max(6).default(["eu"]).describe("responsáveis: 'eu', nome ou inicial"),
+      revisor: z.string().optional().describe("quem revisa: nome ou inicial"),
+      natureza: z.enum(["compromisso", "lembrete"]).default("compromisso"),
+    }),
+    annotations: escrita,
+  }, async ({ caso_id, o_que, data, para, revisor, natureza }) => {
+    const dia = isoDe(data);
+    if (!dia) return texto(`Data "${data}" inválida; use AAAA-MM-DD ou DD/MM/AAAA. Nada foi gravado.`);
+    if (dia < hojeSP()) return texto(`A data ${br(dia)} já passou. Nada foi gravado.`);
+    const execs: any[] = [];
+    for (const q of para) {
+      const c = await acharCol(q);
+      if (!c) return texto(`Não achei colaborador ativo "${q}". Nada foi gravado.`);
+      if (!execs.some((x) => x.id === c.id)) execs.push(c);
+    }
+    const rev = revisor ? await acharCol(revisor) : null;
+    if (revisor && !rev) return texto(`Não achei colaborador ativo "${revisor}" para revisar. Nada foi gravado.`);
+    const k = await casoComCliente(caso_id);
+    if (!k) return texto("Caso não encontrado; nada foi gravado.");
+    const a = await anotar(caso_id, o_que);
+    const linhas = execs.map((c) => ({ andamento_id: a.id, caso_id, colaborador_id: c.id, atribuido_por: eu.id,
+      lembrar_em: dia, natureza, papel: "executa" }));
+    if (rev && !execs.some((x) => x.id === rev.id))
+      linhas.push({ andamento_id: a.id, caso_id, colaborador_id: rev.id, atribuido_por: eu.id, lembrar_em: dia, natureza, papel: "revisa" });
+    try { await db("andamento_tarefas", linhas); }
+    catch (e) { return texto(`A anotação foi gravada, mas a tarefa não entrou na agenda (${(e as Error).message}). Crie a tarefa pelo CRM.`); }
+    return texto(`Tarefa criada no caso "${k.titulo}" de ${k.cliente} para ${br(dia)}: ${execs.map((c) => c.nome).join(", ")}`
+      + (rev && !execs.some((x) => x.id === rev.id) ? `, com revisão de ${rev.nome}` : "") + `. Atribuída por ${eu.nome}.`);
+  });
 
   return server;
 }
