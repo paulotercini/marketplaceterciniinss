@@ -84,6 +84,12 @@ await sem.text();
 conf("sem token responde 401 com resource_metadata", sem.status === 401 && /resource_metadata=".*\/functions\/v1\/mcp-crm\/\.well-known\/oauth-protected-resource"/.test(sem.headers.get("www-authenticate") || ""));
 const meta = await (await atender(new Request(`${BASE}/functions/v1/mcp-crm/.well-known/oauth-protected-resource`), BASE, "anon")).json();
 conf("a descoberta aponta o servidor de autorização do Supabase", meta.authorization_servers[0] === `${BASE}/auth/v1` && meta.resource.endsWith("/functions/v1/mcp-crm"));
+const semA = await atender(new Request(`${BASE}/functions/v1/mcp-crm/assistente`, { method: "POST", body: "{}" }), BASE, "anon"); await semA.text();
+const metaA = await (await atender(new Request(`${BASE}/functions/v1/mcp-crm/assistente/.well-known/oauth-protected-resource`), BASE, "anon")).json();
+conf("o endereço do assistente anuncia a si mesmo como recurso", /mcp-crm\/assistente\/\.well-known/.test(semA.headers.get("www-authenticate") || "") && metaA.resource.endsWith("/functions/v1/mcp-crm/assistente"));
+const iniA = await atender(new Request(`${BASE}/functions/v1/mcp-crm/assistente`, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json, text/event-stream", Authorization: "Bearer tok-bom", "mcp-protocol-version": "2025-06-18" },
+  body: JSON.stringify({ jsonrpc: "2.0", id: 9, method: "tools/list", params: {} }) }), BASE, "anon");
+conf("o endereço do assistente atende o MCP", iniA.status === 200 && (await iniA.text()).includes("buscar_clientes"));
 conf("token inválido é recusado", (await rpc("tools/list", {}, "tok-ruim")).status === 401);
 
 const ini = await rpc("initialize", { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "teste", version: "1" } });
