@@ -33,7 +33,7 @@ Fonte oficial em https://portal.stf.jus.br
 
 Súmula 260 ex-TFR. Reajuste integral dos benefícios pela maior variação salarial antes da Lei 6.423/1977.
 
-RE 937.595 e RE 1.054.232. Aplicação do Tema 327 com correção monetária.
+Tema 930 STF, RE 937.595 [CONFERIDO, portal do STF, 04/10/2026]. O buraco negro não está, em tese, excluído da readequação aos tetos das EC 20/1998 e 41/2003, aferida caso a caso pelos parâmetros do RE 564.354. O RE 1.054.232 não foi localizado no portal do STF e não se cita. O Tema 975 STJ é tese adversa de decadência e não se cita na readequação ao teto, que não revisa o ato de concessão (Onda 173).
 
 ## Espaço pró-segurado
 

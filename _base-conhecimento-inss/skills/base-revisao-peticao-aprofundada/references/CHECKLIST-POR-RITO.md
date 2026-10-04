@@ -232,7 +232,7 @@ Skills relevantes. `execucao-cumprimento-previdenciario`, `base-cumprimento-sent
 - [ ] Tempestividade do cumprimento (5 anos prescricionais).
 - [ ] Cálculos compatíveis com a sentença e com a planilha CJF.
 - [ ] Juros e correção conforme Tema 810/STF e Tema 905/STJ.
-- [ ] SELIC a partir de 09/12/2021 (EC 113/2021).
+- [ ] SELIC só de 12/2021 a 08/2025 (EC 113/2021; Tema 1419/STF) e, a partir de 09/2025, INPC (IPCA no BPC) com taxa legal (Manual CJF 2026).
 - [ ] Honorários (Súmula 111/STJ, Tema 1050/STJ, art. 85 §11 CPC).
 - [ ] Base de cálculo dos honorários conforme Súmula 111.
 - [ ] Destaque de honorários (art. 22 §4º EAOAB).

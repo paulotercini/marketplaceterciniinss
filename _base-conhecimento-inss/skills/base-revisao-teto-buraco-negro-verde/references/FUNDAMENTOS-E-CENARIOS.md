@@ -46,11 +46,11 @@ Critério de reajuste pela maior variação até a Lei 6.423/1977.
 
 ### REsp 1.554.596 STJ
 
-Incidência da decadência nas revisões do teto.
+ERRO corrigido na Onda 173. É leading case do Tema 999 STJ (revisão da vida toda) e não trata de decadência no teto. Não citar nesta matéria.
 
-### RE 937.595 STF
+### Tema 930 STF, RE 937.595
 
-Aplicação concreta do Tema 327.
+[CONFERIDO, portal do STF, 04/10/2026] Os benefícios concedidos entre 05.10.1988 e 05.04.1991 (período do buraco negro) não estão, em tese, excluídos da possibilidade de readequação segundo os tetos instituídos pelas EC´s nº 20/1998 e 41/2003, a ser aferida caso a caso, conforme os parâmetros definidos no julgamento do RE 564.354, em regime de repercussão geral.
 
 ## 5. Buraco negro — outubro de 1988 a abril de 1991
 

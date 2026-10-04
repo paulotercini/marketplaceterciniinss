@@ -172,7 +172,7 @@ Os honorários de sucumbência pertencem ao advogado (art. 23 do Estatuto da OAB
 
 ### 4.4. Atualização monetária e juros
 
-Os critérios de atualização seguem o Tema 810/STF (RE 870.947, Rel. Min. Luiz Fux) para a Justiça Federal, com IPCA-E para correção monetária e juros de mora pela taxa SELIC a partir da EC 113/2021 (art. 3º), que unificou correção e juros em taxa SELIC para condenações contra a Fazenda Pública a partir de 09/12/2021.
+Os critérios de atualização seguem o Manual de Cálculos da Justiça Federal 2026 (Resolução CJF 990/2026), em três fases. Até 11/2021, Temas 810/STF e 905/STJ (INPC no benefício previdenciário e juros da poupança). De 12/2021 a 08/2025, SELIC única (art. 3º da EC 113/2021; Tema 1419/STF [CONFERIDO]). A partir de 09/2025, INPC com juros pela taxa legal (IPCA no assistencial), e, na fase de requisitório, o art. 3º da EC 113/2021 na redação da EC 136/2025 (Onda 173).
 
 ### 4.5. Imposto de renda sobre atrasados
 

@@ -10,33 +10,27 @@ Fonte oficial em https://portal.stf.jus.br
 
 Aplicação. Fundamento nuclear.
 
-### RE 937.595 STF
+### Tema 930 STF, RE 937.595
 
-Tese. Aplicação concreta do Tema 327 sobre benefícios de aposentadoria e pensão.
+Tese literal [CONFERIDO, portal do STF, 04/10/2026]. "Os benefícios concedidos entre 05.10.1988 e 05.04.1991 (período do buraco negro) não estão, em tese, excluídos da possibilidade de readequação segundo os tetos instituídos pelas EC´s nº 20/1998 e 41/2003, a ser aferida caso a caso, conforme os parâmetros definidos no julgamento do RE 564.354, em regime de repercussão geral." Trânsito em julgado em 10/06/2017.
 
-Fonte oficial em https://portal.stf.jus.br
+Aplicação. Buraco negro. A numeração antiga desta entrada ("Tema 327") estava errada e foi corrigida na Onda 173.
 
 ### RE 1.054.232 STF
 
-Tese. Questões acessórias de correção monetária na revisão do teto.
-
-Fonte oficial em https://portal.stf.jus.br
+Não localizado na pesquisa processual do portal do STF em 04/10/2026. Não citar.
 
 ### Tema 975 STJ
 
-Tese. Decadência decenal do art. 103. Aplicação plena na revisão do teto.
-
-Fonte oficial em https://www.stj.jus.br
+Tese ADVERSA (CATALOGO-TEMAS-STJ). Aplica a decadência decenal do art. 103 às questões não apreciadas no ato de concessão. Não se cita para a readequação ao teto, que não revisa o ato de concessão, porque aplica o novo teto ao benefício em manutenção (Tema 76 STF). Precedente específico do STJ sobre a não incidência da decadência na readequação, Não localizado nesta conferência; Você deve verificar isso antes de citar (Onda 173).
 
 ### REsp 1.554.596 STJ
 
-Tese. Decadência em revisão do teto.
-
-Fonte oficial em https://www.stj.jus.br
+ERRO corrigido na Onda 173. O REsp 1.554.596 é leading case do Tema 999 STJ (revisão da vida toda), conferido no portal do STJ em 04/10/2026, e não trata de decadência na revisão do teto. Não citar nesta matéria.
 
 ### Súmula 260 ex-TFR
 
-Tese. Reajuste pela maior variação.
+Tese. Reajuste pela maior variação. Não trata da readequação ao teto.
 
 Aplicação supletiva, preservada até edição de norma posterior.
 
@@ -84,7 +78,7 @@ Refutação. Verificar causa de pedir. Se a ação anterior tratou apenas de uma
 
 ### Argumento 4 — Aplicação automática pelo INSS
 
-Argumento adversário. O INSS já aplicou o Tema 327 administrativamente.
+Argumento adversário. O INSS já aplicou o Tema 76 STF administrativamente.
 
 Refutação. Verificar extrato de pagamento e memória de cálculo. Na prática, aplicações parciais são frequentes. Recálculo independente obrigatório.
 
@@ -156,7 +150,7 @@ Sexto, pedido de implantação imediata após trânsito em julgado.
 
 ## 6. Diligência de atualização
 
-Acompanhar acórdãos do STF e STJ sobre Tema 327 e pensões derivadas.
+Acompanhar acórdãos do STF e STJ sobre Tema 76 STF e Tema 930 STF e pensões derivadas.
 
 Acompanhar IACs e IRDRs dos TRFs sobre decadência autônoma para dependentes.
 

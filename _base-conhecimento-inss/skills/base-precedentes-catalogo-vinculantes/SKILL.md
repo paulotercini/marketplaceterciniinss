@@ -153,7 +153,7 @@ Pelos precedentes catalogados, identifica-se um conjunto de teses estratégicas 
 - Tema 1105/STJ (Súmula 111 mantida no CPC/2015).
 - Tema 1044/STJ (honorários periciais).
 - Tema 1232/STJ (honorários em MS).
-- Tema 1419/STF (ARE 1.557.312/SP, encerramento da SELIC da EC 113/2021 na fase pré-requisitório a partir de set/2025, por força da EC 136/2025, com modulação nos ED. Registrado na Onda 76 conforme o texto oficial do Manual de Cálculos CJF 2026, Resolução CJF 990/2026, que o aplica expressamente. Conferir a tese literal no portal do STF antes de transcrever em peça. Regime resultante para benefícios previdenciários, INPC mais taxa legal com dedução do INPC, ver base-juros-correcao-monetaria).
+- Tema 1419/STF (ARE 1.557.312/SP, SELIC do art. 3º da EC 113/2021 em qualquer condenação da Fazenda, tese literal conferida no portal do STF em 04/10/2026, Onda 173. Os embargos (sessão de 8 a 15/05/2026) REJEITARAM a modulação e restringiram a tese à redação original do art. 3º, sem projeção ao regime da EC 136/2025. Trânsito em 16/09/2026. O Manual CJF 2026 (Resolução CJF 990/2026) encerra a SELIC na fase pré-requisitório a partir de set/2025. Regime resultante para benefícios previdenciários, INPC mais taxa legal com dedução do INPC, ver base-juros-correcao-monetaria).
 - Tema 1207/STJ (REsp 2.039.614, compensação de benefício inacumulável recebida na via administrativa feita mês a mês, no limite do título judicial por competência, vedado saldo negativo. Incorporado como Nota 6 do item 4.3.1.1 do Manual CJF 2026. ATENÇÃO ao homônimo, não confundir com o Tema 1207/STF, que trata do art. 3º da EC 47/2005, matéria estranha à previdenciária, conforme auditoria de 25/07/2026).
 
 **Atividades concomitantes.**
