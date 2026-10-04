@@ -1870,3 +1870,11 @@ cliente) e se edita no clique. O campo separado da grade saiu. A parceria
   triagem encerrada; cliente novo vê só Cadastro.
 Prova nova: `limpa165.js` (8/8). Dezesseis provas antigas ajustadas ao fluxo
 novo. Suíte: 95/99, falhando só as quatro de data já conhecidas.
+
+## 10.72 · F168 · prazo fatal legível na coluna do caso
+
+Na coluna esquerda do caso, a linha do prazo fatal herdava a letra branca do
+`.pz-fatal` (feita para o quadro de fundo vermelho), mas ali o fundo é branco:
+o texto sumia. Agora o texto é escuro e a data e o "faltam/venceu" saem em
+vermelho. Só o prazo com origem sofria; o sem descrição tinha o âmbar por cima.
+Prova: `prazo168.js` (contraste ≥ 4,5; falha na 10.71, passa na 10.72).

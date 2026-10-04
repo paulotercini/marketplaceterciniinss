@@ -2933,6 +2933,10 @@ html[data-tema="v10"] .caso-esq .pz .pz-tipo{flex:1;min-width:0;font-size:11px;w
 html[data-tema="v10"] .caso-esq .pz .pz-rel{flex:none;font-size:11.5px}
 html[data-tema="v10"] .caso-esq .pz.pz-venceu .pz-rel,html[data-tema="v10"] .caso-esq .pz.pz-venceu .pz-data{color:var(--venc-tinta)}
 html[data-tema="v10"] .caso-esq .pz.pz-fatal{box-shadow:inset 3px 0 0 var(--venc-tinta)}
+/* F168 · na coluna do caso o prazo fatal não tem fundo vermelho: a letra branca
+   herdada do .pz-fatal sumia no branco. Texto escuro e a data em vermelho. */
+html[data-tema="v10"] .caso-esq .pz.pz-fatal,html[data-tema="v10"] .caso-esq .pz.pz-fatal .pz-tipo{color:var(--texto)}
+html[data-tema="v10"] .caso-esq .pz.pz-fatal .pz-data,html[data-tema="v10"] .caso-esq .pz.pz-fatal .pz-rel{color:var(--venc-tinta)}
 html[data-tema="v10"] .caso-esq .pz.pz-semmotivo{box-shadow:inset 3px 0 0 var(--hoje-tinta)}
 /* a linha inteira é o botão: o "saber mais" cobre a linha, sem texto à vista */
 html[data-tema="v10"] .caso-esq .pz .pz-mais{position:absolute;inset:0;margin:0;opacity:0;border:0;border-radius:0;min-height:0;cursor:pointer}
@@ -3217,7 +3221,7 @@ html[data-tema="v10"] .sk-tl-txt{flex:1;display:flex;flex-direction:column;gap:8
        Sem formulário, o botão simplesmente não responde — e o aviso abaixo
        explica o que fazer. -->
   <div class="cx-login">
-    <h1>CRM Tercini <span class="versao">· versão 10.71</span></h1>
+    <h1>CRM Tercini <span class="versao">· versão 10.72</span></h1>
     <div id="sem-js">
       <strong>⚠ Este navegador não está rodando o sistema.</strong>
       <p>Quase sempre é porque o arquivo foi aberto <em>dentro</em> de outro
