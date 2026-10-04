@@ -137,18 +137,6 @@ NORMAS = {
         "decreto-10995-2022", "decreto", "10995", 2022,
         "Decreto nº 10.995, de 14 de março de 2022 — estrutura regimental do INSS"),
 
-    "IN-128-2022-INSS-parte1-arts-1-170.md": (
-        "in-128-2022", "in", "128", 2022,
-        "Instrução Normativa PRES/INSS nº 128, de 28 de março de 2022"),
-    "IN-128-2022-INSS-parte2-arts-171-340.md": (
-        "in-128-2022", "in", "128", 2022,
-        "Instrução Normativa PRES/INSS nº 128, de 28 de março de 2022"),
-    "IN-128-2022-INSS-parte3-arts-341-510.md": (
-        "in-128-2022", "in", "128", 2022,
-        "Instrução Normativa PRES/INSS nº 128, de 28 de março de 2022"),
-    "IN-128-2022-INSS-parte4-arts-511-674.md": (
-        "in-128-2022", "in", "128", 2022,
-        "Instrução Normativa PRES/INSS nº 128, de 28 de março de 2022"),
 
     "Portaria-Interministerial-1-2014-IF-BrA.md": (
         "portaria-interministerial-1-2014", "portaria", "1", 2014,
@@ -1202,6 +1190,11 @@ NORMAS = {
     "Resolucao-PRES-INSS-691-2019.md": (
         "resolucao-inss-691-2019", "resolucao", "691", 2019,
         "Resolução PRES/INSS nº 691, de 25/07/2019"),
+
+    # consolidada do portal do INSS, em 04/10/2026, no lugar das 4 partes do sirc
+    "IN-128-2022-INSS-consolidada-portalin.md": (
+        "in-128-2022", "in", "128", 2022,
+        "Instrução Normativa PRES/INSS nº 128, de 28 de março de 2022"),
 }
 
 # arquivo -> motivo de ficar fora do banco. Sai na visão geral, para o vazio ser declarado e
@@ -1222,11 +1215,15 @@ CASOS_PREVISTOS = {
         "258 artigos e zero marcador de alteração. É a redação de 1997 como publicada, revogada "
         "pelo Decreto 3.048/1999, e serve de texto histórico. Não é falha de extração",
     "in-128-2022":
-        "674 artigos e zero marcador. Fotografia consolidada até a IN 170/2024, sem histórico "
-        "interno. Os anexos I a XXIX não estão no corpus",
+        "741 artigos num arquivo só, da rota /in do portalin.inss.gov.br, recoletada em "
+        "04/10/2026 no lugar das quatro partes do sirc.gov.br, que paravam na IN 170/2024 e não "
+        "tinham marcador. Agora traz 414 marcadores de consolidação. Os anexos I a XXIX "
+        "continuam fora do corpus",
     "portaria-dirben-991-2022":
-        "569 artigos e zero marcador, sendo 2 da portaria e 567 do Livro II anexo. Fotografia "
-        "consolidada, e o texto vem com quebra de linha dura no meio da frase",
+        "584 artigos, recoletados em 04/10/2026 do portalin.inss.gov.br, que é o portal do "
+        "próprio INSS, no lugar do espelho normaslegais.com.br que a captura de maio usou. "
+        "Agora traz os marcadores de consolidação, 23 deles, que a fotografia anterior não "
+        "tinha. O mesmo vale para as Portarias 990, 992 a 996",
     "cf-1988":
         "um arquivo com duas partes, corpo permanente e ADCT. 139 números de artigo existem nas "
         "duas, então a chave é sempre escopada por parte",
